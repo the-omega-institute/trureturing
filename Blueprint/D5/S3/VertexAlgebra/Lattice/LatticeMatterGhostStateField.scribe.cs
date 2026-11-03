@@ -24,7 +24,7 @@ internal sealed class LatticeMatterGhostStateFieldDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("For any D, matter states u,v, ghost states a,b, integer n and actual tail bounds M,G, the coefficient is the finsum over k of Ym(u)[[k]]v tensor Yg(a)[[n-1-k]]b. Its support lies in n-G <= k <= M-1 and n >= M+G kills it."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticematterghoststatefield-stateField-truncation"),
+                DescribeId.Create("latticematterghoststatefield-statefield-truncation"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostStateField.stateField_truncation"),
                 H("All original algebraic states and inputs truncate"),
                 StatementSource.WithoutFormula(),
@@ -32,7 +32,7 @@ internal sealed class LatticeMatterGhostStateFieldDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("For every original tensor field state s and original algebraic input x, one integer N kills every normalized mode n >= N. The construction descends through both tensor relations using pointwise finite support."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticematterghoststatefield-stateField-vacuum-creation"),
+                DescribeId.Create("latticematterghoststatefield-statefield-vacuum-creation"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostStateField.stateField_vacuum_creation"),
                 H("The original vacuum and all-state creation"),
                 StatementSource.WithoutFormula(),
@@ -40,7 +40,7 @@ internal sealed class LatticeMatterGhostStateFieldDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("Y(vacuum) is the identity field, mode -1 on the vacuum creates every state, every nonnegative vacuum coefficient vanishes, and the original tensor translation kills the vacuum."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticematterghoststatefield-stateField-covariance"),
+                DescribeId.Create("latticematterghoststatefield-statefield-covariance"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostStateField.stateField_covariance"),
                 H("The actual translation acts on every coefficient"),
                 StatementSource.WithoutFormula(),
@@ -48,7 +48,7 @@ internal sealed class LatticeMatterGhostStateFieldDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("The tensor sum of original matter translation and original ghost L(-1) has commutator with mode n equal to -n times mode n-1, for every original field state."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticematterghoststatefield-stateField-parity"),
+                DescribeId.Create("latticematterghoststatefield-statefield-parity"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostStateField.stateField_parity"),
                 H("Original ghost parity acts on the full field"),
                 StatementSource.WithoutFormula(),
@@ -72,7 +72,7 @@ internal sealed class LatticeMatterGhostStateFieldDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("For every D and arbitrary complex H, mode zero of omega_m tensor ket{1} plus vac_m tensor Jg equals LatticeBRST.totalCharge(D,H). The exact integer reindex m=k-1 identifies the original matter coupling T, and the ghost term is the original anomalous Qg."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticematterghoststatefield-stateField-locality"),
+                DescribeId.Create("latticematterghoststatefield-statefield-locality"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostStateField.stateField_locality"),
                 H("Signed locality has an actual finite-support proof"),
                 StatementSource.WithoutFormula(),
