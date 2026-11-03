@@ -33,7 +33,7 @@ open BajnokBeattyOddWrapPositiveCone BajnokBeattyOddWrapSingleCrossing
 open BajnokBeattyOddWrapReturnCounts
 open Finset
 
-private theorem sum_cubic (q : ℝ) (r : ℕ) :
+theorem sum_cubic (q : ℝ) (r : ℕ) :
     (∑ i ∈ Finset.range r, (q+2*(i : ℝ)+1)^3) =
       (r : ℝ)*(q+r)*((q+r)^2+(r : ℝ)^2-1) := by
   induction r with
