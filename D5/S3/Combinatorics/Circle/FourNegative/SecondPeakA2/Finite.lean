@@ -11,6 +11,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QTwoStructural
 set_option autoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2
 open D5.S3.Combinatorics.Circle.FourNegative
+open private q_two_boundary_good
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QTwoStructural
 
 structure BoundaryRow where
   p : ℕ
@@ -27,8 +29,6 @@ def BoundaryRow.Check (r : BoundaryRow) : Prop :=
     r.m &&& r.M=r.m ∧ Windows r.p r.q r.h r.v r.m r.M r.before
 
 def boundaryRows : List BoundaryRow := [
-  ⟨4,2,1,4,6,7,true⟩,
-  ⟨4,2,2,5,10,14,false⟩,
   ⟨4,4,1,6,16,20,true⟩,
   ⟨4,4,2,6,32,40,true⟩,
   ⟨4,8,1,5,44,46,false⟩,
@@ -65,7 +65,7 @@ def boundaryRows : List BoundaryRow := [
 private theorem boundary_checked : ∀ r∈boundaryRows, r.Check := by
   simp only [boundaryRows,List.mem_cons,List.mem_nil_iff,or_false]
   intro r hr
-  rcases hr with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;> (unfold BoundaryRow.Check Windows; decide)
+  rcases hr with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;> (unfold BoundaryRow.Check Windows; decide)
 
 private theorem boundary_good (r : BoundaryRow) (hr : r∈boundaryRows) :
     Good r.p r.q r.h r.v r.m r.M r.before := by
@@ -79,8 +79,8 @@ theorem finite_exists (p q h : ℕ)
     ∃ v m M : ℕ, ∃ before : Bool, Good p q h v m M before := by
   rcases hp with rfl|rfl|rfl|rfl <;>
     rcases hq with rfl|rfl|rfl|rfl|rfl <;> rcases hh with rfl|rfl
-  · exact ⟨4,6,7,true,boundary_good ⟨4,2,1,4,6,7,true⟩ (by decide)⟩
-  · exact ⟨5,10,14,false,boundary_good ⟨4,2,2,5,10,14,false⟩ (by decide)⟩
+  · exact ⟨5,5,7,false,by simpa using q_two_boundary_good 0⟩
+  · exact ⟨5,10,15,false,by simpa using q_two_boundary_good 1⟩
   · exact ⟨6,16,20,true,boundary_good ⟨4,4,1,6,16,20,true⟩ (by decide)⟩
   · exact ⟨6,32,40,true,boundary_good ⟨4,4,2,6,32,40,true⟩ (by decide)⟩
   · exact ⟨5,44,46,false,boundary_good ⟨4,8,1,5,44,46,false⟩ (by decide)⟩

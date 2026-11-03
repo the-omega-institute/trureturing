@@ -172,4 +172,40 @@ theorem q_two_dyadic_good (P H : ℕ) (hP : 3 ≤ P) :
     exact submask_shift _ _ H hs
   · simpa only [hvcast,hmcast,hMcast,Nat.cast_ofNat] using hw
 
+/- The late fresh charge admits one affine selector at every scale, including
+   h=1 and h=2. This supplements the modulus-nine p>=8 construction. -/
+private theorem q_two_boundary_windows (h : ℤ) (hh : 1 ≤ h) :
+    Windows 4 2 h 5 (5*h) (8*h-1) false := by
+  intro r
+  fin_cases r
+  all_goals
+    constructor <;> constructor
+  all_goals
+    dsimp [SecondPeakHighD.oldEnds,SecondPeakHighD.newEnds,
+      SecondPeakHighD.oldHeads,SecondPeakHighD.newHeads,SecondPeakHighD.A,
+      SecondPeakHighD.B,SecondPeakHighD.L,SecondPeakHighD.K,SecondPeakHighD.SU,
+      SecondPeakHighD.SV,SecondPeakHighD.SW,SecondPeakHighD.Y,
+      SecondPeakHighD.Z,SecondPeakHighD.T]
+    <;> ring_nf <;> omega
+
+private theorem q_two_boundary_good (H : ℕ) :
+    Good 4 2 (2^H) 5 (5*2^H) (8*2^H-1) false := by
+  have hh : 1 ≤ (2:ℕ)^H := Nat.one_le_two_pow
+  have hpow : (2:ℕ)^(H+3)=8*2^H := by
+    rw [pow_add]
+    norm_num
+    omega
+  have hm : 5*2^H < (2:ℕ)^(H+3) := by rw [hpow]; omega
+  have hs := SecondPeakHighD.submask_predecessor (H+3) 1 (5*2^H)
+    (by omega) hm
+  simp only [mul_one,hpow] at hs
+  have hcast : ((8*2^H-1:ℕ):ℤ)=8*((2^H:ℕ):ℤ)-1 := by
+    rw [Nat.cast_sub (by omega : 1 ≤ 8*2^H)]
+    push_cast
+    rfl
+  refine ⟨by norm_num,by norm_num,by omega,by omega,hs,?_⟩
+  have hw := q_two_boundary_windows ((2^H:ℕ):ℤ) (by exact_mod_cast hh)
+  simpa only [Nat.cast_ofNat,Nat.cast_mul,hcast] using hw
+
+
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2
