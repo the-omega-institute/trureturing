@@ -1,0 +1,30 @@
+**假设 2.6（原同记录 F 与具名支持双返回）。** 以下合同沿用 C118 定义 140.1、式 (140.2)–(140.5)，在定理 3.1 选出的同空间复坐标内解释。每个非零指定资料 $(S:A\to B,U:B\to A,q)$ 都是原事件及原标量 $q>0$。令
+
+$$
+E_S=S^\dagger(u_B),\quad P=\operatorname{supp}E_S,
+\quad G_S=S(u_A),\quad Q_S=\operatorname{supp}G_S.
+\tag{2.4}
+$$
+
+此处及以下状态映射的 $\dagger$ 是普通迹对偶，不能混作原 $g^0$ 伴随或已命名物理返回。$P,Q_S$ 各位于一个原简单块；原 $U$ 满足
+
+$$
+U(Y)=PU(Q_SYQ_S)P,
+\qquad US(X)=qX\ (X\in P\mathcal A_AP),
+\qquad SU(Y)=qY\ (Y\in Q_S\mathcal A_BQ_S).
+\tag{2.5}
+$$
+
+反向资料 $(U,S,q)$ 也在指定族中，使用同一个 $q$。角只是原代数内的数学角，不另供应压缩对象。
+
+对每条原事件 $f$，F 给该同一原实现的实际有限联合细记录及原遗忘
+
+$$
+\widehat\Phi_f(X)=(S_a(X))_{a\in L_f},
+\qquad d_B\widehat\Phi_f=\Phi_f=\sum_{a\in L_f}S_a,
+\qquad d_B((Y_a)_a)=\sum_aY_a,
+\tag{2.6}
+$$
+
+每个非零 $S_a$ 都有上述指定原资料。零支保留标签而不需逆。F 也量化原联合标签箭头、遗忘、所有返回及其全部有限合法接续；原细记录及分组不由任意数学 Kraus 标签替换。F 在结论中只为原返回细支的一算子形式消费；全事件 CP 的证明独立消费 R。
+
