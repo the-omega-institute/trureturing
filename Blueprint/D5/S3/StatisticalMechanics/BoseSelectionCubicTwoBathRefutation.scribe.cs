@@ -101,7 +101,10 @@ internal sealed class BoseSelectionCubicTwoBathRefutationDocument : IScribeDocum
                             + "in violating 3 5 makes the interior of violating 3 5 nonempty. If claim held, its "
                             + "instance at d = 3 and m = 5 would identify that interior with the empty set, "
                             + "contradicting the exhibited point. Hence the generic two-bath bound is false."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("schnell-ketzmerick-eckardt-2018-bose-selection-cubic-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula AsymFormula()
     {

@@ -60,6 +60,10 @@ $$\neg (\forall (d: \mathbb{R}), (((0: \mathbb{R}) < d) \Rightarrow (\forall (m:
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/schnell-ketzmerick-eckardt-2018-bose-selection-cubic-refutation` (refuted) by `D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"schnell-ketzmerick-eckardt-2018-bose-selection-cubic-refutation","declaration_gid":"D5/S3/StatisticalMechanics/BoseSelectionCubicTwoBathRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Schnell, Alexander; Ketzmerick, Roland; Eckardt, André (2018). *On the number of Bose-selected modes in driven-dissipative ideal Bose gases*. DOI: [10.1103/PhysRevE.97.032136](https://doi.org/10.1103/PhysRevE.97.032136). URL: <https://arxiv.org/abs/1802.04088v2>.
