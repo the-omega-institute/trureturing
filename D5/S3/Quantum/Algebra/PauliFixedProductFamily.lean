@@ -708,7 +708,7 @@ private theorem spin_commutator (a b c : J) :
     -(toLp 2 (Matrix.vecCons 0
       (crossProduct ![(C a b) 1,(C a b) 2,(C a b) 3] ![c 1,c 2,c 3])))
   rw [hv,cross_cross_eq_smul_sub_smul]
-  ext i; fin_cases i <;> simp [spin,Matrix.vec3_dotProduct] <;> ring
+  ext i; fin_cases i <;> simp [spin] <;> ring
 
 private theorem curvature_bound (i j k : Fin 4) : ‖curvature i j k‖≤1 := by
   have hc (a b : J) : ‖C a b‖≤‖a‖*‖b‖ := by
@@ -735,7 +735,8 @@ private theorem curvature_attained : ‖curvature 1 2 2‖=1 := by
       ext i; fin_cases i <;> rfl
     rw [hv,cross_cross_eq_smul_sub_smul]
     ext i; fin_cases i <;> norm_num [e,PiLp.single_apply,Matrix.vec3_dotProduct]
-  simp [h,e]
+  rw [h]
+  simp [e]
 
 /-- Exact local constants, with attaining inputs rather than only upper bounds. -/
 theorem exact_constants (t : ℝ) :
