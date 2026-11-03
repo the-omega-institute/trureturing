@@ -89,10 +89,10 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 Seq(Forall, Sp, X("n"), Geq, D(1), Comma, Sp, Forall, Sp, X("r"), Geq, D(2), Comma, Sp,
                     Forall, Sp, X("Y"), Comma, Sp,
                     Open, Forall, Sp, X("i"), Leq, X("j"), Comma, Sp,
-                    Sub(X("Y"), X("i"), X("j")), Geq, D(0), Close, Implies, Sp,
+                    Sub(X("Y"), X("i"), X("j")), Geq, D(0), Close, Implies, Sp, Open,
                     Open, Exists, Sp, X("E"), Comma, Sp, Call("StarExtension", D(0), Rho, X("E")), Close,
                     Iff,
-                    Open, Exists, Sp, X("E"), Comma, Sp, Call("CompleteExtension", Rho, X("E")), Close),
+                    Open, Exists, Sp, X("E"), Comma, Sp, Call("CompleteExtension", Rho, X("E")), Close, Close),
                 "Here n and r are natural numbers, Y is an arbitrary real n by n array, and i and j range "
                 + "over Fin(n). The operator rho is the Dicke sum above. This is an equivalence of existence predicates "
                 + "for every register count at least two and every local dimension at least one. "
