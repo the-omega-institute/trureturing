@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLawRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kok-jaco-addition-law-refutation` (refuted) by `D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLawRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kok-jaco-addition-law-refutation","declaration_gid":"D5/S3/ConceptDynamics/GraphColoring/JacoAdditionLawRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Johan Kok; Paul Fisher; Bettina Wilkens; Mokhwetha Mabula; Vivian Mukungunugwa (2014). *Characteristics of Finite Jaco Graphs, J_n(1), n in N*. DOI: [10.48550/arXiv.1404.0484](https://doi.org/10.48550/arXiv.1404.0484).
