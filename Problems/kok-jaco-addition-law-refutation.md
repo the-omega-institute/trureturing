@@ -112,8 +112,7 @@ The owning Scribe attaches the typed `Refuted` resolution only to result,
 using this dossier and the resolvable
 [kok2014finitejaco source note](../Library/Certificates/kok2014finitejaco.md).
 The full formula above includes both original branches and all admissible
-orders. Source statement and attribution use CC BY 3.0; no third-party
-executable code is imported.
+orders. Source statement and attribution use CC BY 3.0; no executable code is copied from the article.
 
 Current scoped compilation and declaration reports supply exact statement,
 input identities and accepted axiom evidence. Frozen resolution binding

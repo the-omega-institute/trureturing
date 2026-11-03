@@ -34,8 +34,7 @@ each forward arc once as a simple edge and preserves ordinary total degree.
 
 The source metadata links [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
 The statement and notation are adapted with attribution to the five authors.
-The source includes a Creative Commons attribution notice. No external
-executable code is imported.
+The source includes a Creative Commons attribution notice. No executable code is copied from the article.
 
 Kok's later [arXiv:2507.16500v1](https://arxiv.org/abs/2507.16500v1), Table 1,
 is prior published numerical data containing the degree values used in the
