@@ -99,25 +99,28 @@ internal sealed class PlasticPowerCollisionsDocument : IScribeDocumentDefinition
     {
         Formula Sol(byte u, byte v, bool negative) => And(Eq(V("u"),D(u)),
             Eq(V("v"),negative ? Seq(Minus,D(v)) : D(v)));
-        return Disp(Root(All("u",Z(),All("v",Z(),IffF(Eq(Sub(Pow(V("u")),Pow(V("v"))),D(1)),
-            Cases([Sol(1,4,true),Sol(2,1,true),Sol(3,1,false),Sol(5,4,false)])))));
+        var body = IffF(Eq(Sub(Pow(V("u")),Pow(V("v"))),D(1)),
+            Cases([Sol(1,4,true),Sol(2,1,true),Sol(3,1,false),Sol(5,4,false)]));
+        return Disp(Root(All("u",Z(),All("v",Z(),body))));
     }
     private static Formula Normalized()
     {
         Formula Sol(byte d, byte a, byte b) => And(Eq(V("d"),D(d)),And(Eq(V("a"),D(a)),Eq(V("b"),D(b))));
         var eq = Eq(Add(D(1),Pow(V("d"))),Add(Pow(V("a")),Pow(V("b"))));
-        return Disp(Root(All("d",Z(),All("a",Z(),All("b",Z(),
-            Imp(Le(D(1),V("a")),Imp(Le(V("a"),V("b")),Imp(Lt(V("b"),V("d")),
-            IffF(eq,Cases([Sol(4,2,3),Sol(6,3,5),Sol(7,5,5),Sol(9,5,8)])))))))));
+        var body = IffF(eq,Cases([Sol(4,2,3),Sol(6,3,5),Sol(7,5,5),Sol(9,5,8)]));
+        body = Imp(Le(D(1),V("a")),Imp(Le(V("a"),V("b")),Imp(Lt(V("b"),V("d")),body)));
+        body = All("d",Z(),All("a",Z(),All("b",Z(),body)));
+        return Disp(Root(body));
     }
     private static Formula Sorted()
     {
         Formula Sol(byte d, byte a, byte b) => And(Eq(V("j"),Add(V("i"),D(d))),
             And(Eq(V("k"),Add(V("i"),D(a))),Eq(V("l"),Add(V("i"),D(b)))));
         var eq = Eq(Add(Pow(V("i")),Pow(V("j"))),Add(Pow(V("k")),Pow(V("l"))));
-        return Disp(Root(All("i",Z(),All("j",Z(),All("k",Z(),All("l",Z(),
-            Imp(Le(V("i"),V("j")),Imp(Le(V("k"),V("l")),Imp(Lt(V("i"),V("k")),
-            IffF(eq,Cases([Sol(4,2,3),Sol(6,3,5),Sol(7,5,5),Sol(9,5,8)]))))))))));
+        var body = IffF(eq,Cases([Sol(4,2,3),Sol(6,3,5),Sol(7,5,5),Sol(9,5,8)]));
+        body = Imp(Le(V("i"),V("j")),Imp(Le(V("k"),V("l")),Imp(Lt(V("i"),V("k")),body)));
+        body = All("i",Z(),All("j",Z(),All("k",Z(),All("l",Z(),body))));
+        return Disp(Root(body));
     }
     private static Formula Fiber() => Disp(WithE(All("x",R(),Le(Card(SetOf("p",PairType(),
         And(InPairs("p"),And(Le(Part("p",1),Part("p",2)),Eq(SumPair("p"),V("x")))))),D(2)))));

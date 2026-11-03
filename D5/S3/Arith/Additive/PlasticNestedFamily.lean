@@ -9,6 +9,8 @@
 import D5.S3.Arith.Additive.PlasticPowerCollisions
 import Mathlib.NumberTheory.Real.GoldenRatio
 
+/-! Native real power sets for the complete original nested-family theorem. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -17,30 +19,36 @@ namespace D5.S3.Arith.Additive.PlasticNestedFamily
 open scoped Pointwise
 open D5.S3.Arith.Additive.PlasticPowerCollisions
 
-private theorem golden_normalized (s : ℝ) (hs : 1 < s) (hsq : s^2 = s+1)
+private theorem golden_normalized (s : ℝ) (hs : 1 < s) (hsq : s ^ 2 = s+1)
     (d a b : ℤ) (ha : 1 ≤ a) (hab : a ≤ b) (hbd : b < d)
-    (h : 1+s^d = s^a+s^b) : d=3 ∧ a=2 ∧ b=2 := by
+    (h : 1+s ^ d = s ^ a+s ^ b) : d=3 ∧ a=2 ∧ b=2 := by
   have hspos : 0 < s := by linarith
   have hs0 : s ≠ 0 := ne_of_gt hspos
   have hm := zpow_right_strictMono₀ hs
-  have htwo : 2 < s^(2:ℤ) := by norm_num only [zpow_ofNat]; linarith
-  have hgap : s^(d-b) = 1+s^(a-b)-s^(-b) := by
+  have htwo : 2 < s ^ (2:ℤ) := by norm_num only [zpow_ofNat]; linarith
+  have hgap : s ^ (d-b) = 1+s ^ (a-b)-s ^ (-b) := by
     simp only [zpow_sub₀ hs0,zpow_neg]
     field_simp
     nlinarith
-  have hgap2 : d-b < 2 := hm.lt_iff_lt.1 (show s^(d-b) < s^(2:ℤ) by
-    have hx : s^(a-b) ≤ 1 := zpow_le_one_of_nonpos₀ (le_of_lt hs) (by omega)
-    have hy : 0 < s^(-b) := zpow_pos hspos _
-    linarith)
+  have hgap2 : d-b < 2 := hm.lt_iff_lt.1 (show s ^ (d-b) < s ^ (2:ℤ) by
+    have hx : s ^ (a-b) ≤ 1 := zpow_le_one_of_nonpos₀ (le_of_lt hs) (by omega)
+    have hy : 0 < s ^ (-b) := zpow_pos hspos _
+    exact lt_trans (show s ^ (d-b) < 2 by linarith) htwo)
   have hd : d=b+1 := by omega
-  have hdiff : s^a-s^(b-1) = 1 := by
-    rw [hd,zpow_add₀ hs0,zpow_one] at h
-    rw [zpow_sub₀ hs0,zpow_one]
-    field_simp
+  have hinv : s-1=s ^ (-1:ℤ) := by
+    norm_num only [zpow_neg,zpow_one]
+    rw [inv_eq_one_div]
+    apply (eq_div_iff hs0).2
     nlinarith [hsq]
+  have hshift : s ^ (b-1)=s ^ b*(s-1) := by
+    rw [show b-1=b+(-1) by omega,zpow_add₀ hs0,hinv]
+  have hdiff : s ^ a-s ^ (b-1) = 1 := by
+    rw [hd,zpow_add₀ hs0,zpow_one] at h
+    rw [hshift]
+    nlinarith
   have hba : b-1 < a := hm.lt_iff_lt.1 (by linarith)
   have hab' : a=b := by omega
-  have he : s^(a-2)=1 := by
+  have he : s ^ (a-2)=1 := by
     rw [hab'] at hdiff ⊢
     simp only [zpow_sub₀ hs0,zpow_one,zpow_ofNat] at hdiff ⊢
     field_simp at hdiff ⊢
@@ -50,14 +58,14 @@ private theorem golden_normalized (s : ℝ) (hs : 1 < s) (hsq : s^2 = s+1)
     omega
   omega
 
-private theorem golden_sorted (s : ℝ) (hs : 1 < s) (hsq : s^2 = s+1)
+private theorem golden_sorted (s : ℝ) (hs : 1 < s) (hsq : s ^ 2 = s+1)
     (i j k l : ℤ) (_hij : i ≤ j) (hkl : k ≤ l) (hik : i < k)
-    (he : s^i+s^j = s^k+s^l) : j=i+3 := by
+    (he : s ^ i+s ^ j = s ^ k+s ^ l) : j=i+3 := by
   have hspos : 0 < s := by linarith
   have hs0 : s ≠ 0 := ne_of_gt hspos
   have hm := zpow_right_strictMono₀ hs
   have hlj : l<j := hm.lt_iff_lt.1 (by have := hm hik; linarith)
-  have hn : 1+s^(j-i)=s^(k-i)+s^(l-i) := by
+  have hn : 1+s ^ (j-i)=s ^ (k-i)+s ^ (l-i) := by
     simp only [zpow_sub₀ hs0]
     field_simp
     nlinarith
@@ -65,17 +73,17 @@ private theorem golden_sorted (s : ℝ) (hs : 1 < s) (hsq : s^2 = s+1)
     (by omega) (by omega) (by omega) hn
   omega
 
-private theorem golden_sum_lower (s : ℝ) (hs : 1 < s) (hsq : s^2 = s+1)
+private theorem golden_sum_lower (s : ℝ) (hs : 1 < s) (hsq : s ^ 2 = s+1)
     (n : ℕ) (hn : 7 ≤ n) :
     n*(n+1)/2 ≤
-      (((Finset.Icc (0:ℤ) ((n:ℤ)-1)).image (fun e => s^e)) +
-       ((Finset.Icc (0:ℤ) ((n:ℤ)-1)).image (fun e => s^e))).card + (n-3) := by
+      (((Finset.Icc (0:ℤ) ((n:ℤ)-1)).image (fun e => s ^ e)) +
+       ((Finset.Icc (0:ℤ) ((n:ℤ)-1)).image (fun e => s ^ e))).card + (n-3) := by
   classical
   let E := Finset.Icc (0:ℤ) ((n:ℤ)-1)
   let P := (E ×ˢ E).filter (fun p => p.1 ≤ p.2)
   let O := P.filter (fun p => p.2=p.1+3)
   let Q := P.filter (fun p => p.2≠p.1+3)
-  let f : ℤ × ℤ → ℝ := fun p => s^p.1+s^p.2
+  let f : ℤ × ℤ → ℝ := fun p => s ^ p.1+s ^ p.2
   have hinj : Set.InjOn f Q := by
     intro p hp q hq he
     obtain ⟨hpP,hpn⟩ := Finset.mem_filter.1 hp
@@ -88,15 +96,15 @@ private theorem golden_sum_lower (s : ℝ) (hs : 1 < s) (hsq : s^2 = s+1)
     · rcases lt_or_gt_of_ne heq with hlt | hgt
       · exact (hpn (golden_sorted s hs hsq _ _ _ _ hp hq hlt he)).elim
       · exact (hqn (golden_sorted s hs hsq _ _ _ _ hq hp hgt he.symm)).elim
-  have hsub : Q.image f ⊆ E.image (fun e => s^e) + E.image (fun e => s^e) := by
+  have hsub : Q.image f ⊆ E.image (fun e => s ^ e) + E.image (fun e => s ^ e) := by
     intro x hx
     obtain ⟨p,hp,rfl⟩ := Finset.mem_image.1 hx
     obtain ⟨hp,_⟩ := Finset.mem_filter.1 hp
     obtain ⟨hp,_⟩ := Finset.mem_filter.1 hp
     obtain ⟨hp1,hp2⟩ := Finset.mem_product.1 hp
-    exact Finset.mem_add.2 ⟨s^p.1,Finset.mem_image.2 ⟨_,hp1,rfl⟩,
-      s^p.2,Finset.mem_image.2 ⟨_,hp2,rfl⟩,rfl⟩
-  have hQ : Q.card ≤ (E.image (fun e => s^e) + E.image (fun e => s^e)).card := by
+    exact Finset.mem_add.2 ⟨s ^ p.1,Finset.mem_image.2 ⟨_,hp1,rfl⟩,
+      s ^ p.2,Finset.mem_image.2 ⟨_,hp2,rfl⟩,rfl⟩
+  have hQ : Q.card ≤ (E.image (fun e => s ^ e) + E.image (fun e => s ^ e)).card := by
     rw [← Finset.card_image_of_injOn hinj]
     exact Finset.card_le_card hsub
   have hO : O = (Finset.Icc (0:ℤ) ((n:ℤ)-4)).image (fun t => (t,t+3)) := by
@@ -146,36 +154,36 @@ private theorem golden_sum_lower (s : ℝ) (hs : 1 < s) (hsq : s^2 = s+1)
   rw [hcardO,hcardP,Nat.choose_two_right] at hpart
   have hnn : n+1-1=n := by omega
   rw [hnn,Nat.mul_comm (n+1) n] at hpart
-  change n*(n+1)/2 ≤ (E.image (fun e => s^e) + E.image (fun e => s^e)).card+(n-3)
+  change n*(n+1)/2 ≤ (E.image (fun e => s ^ e) + E.image (fun e => s ^ e)).card+(n-3)
   omega
 
 /-- Complete original Theorem 2.1, with the same native real power set in every clause.
 Natural indices n ≥ 7 parametrize exactly the original integer indices n ≥ 7. -/
-theorem whole_theorem_two_one (r : ℝ) (hr : 1 < r) (hroot : r^3=r+1)
+theorem whole_theorem_two_one (r : ℝ) (hr : 1 < r) (hroot : r ^ 3=r+1)
     (n : ℕ) (hn : 7 ≤ n) :
     let E : Finset ℤ := {0,3} ∪ Finset.Icc 5 ((n:ℤ)+2)
     let F : Finset ℤ := {0,3} ∪ Finset.Icc 5 ((n:ℤ)+3)
-    let B := E.image (fun e => r^e)
-    let Bnext := F.image (fun e => r^e)
-    let G := (Finset.Icc (0:ℤ) ((n:ℤ)-1)).image (fun e => Real.goldenRatio^e)
+    let B := E.image (fun e => r ^ e)
+    let Bnext := F.image (fun e => r ^ e)
+    let G := (Finset.Icc (0:ℤ) ((n:ℤ)-1)).image (fun e => Real.goldenRatio ^ e)
     B ⊂ Bnext ∧ B.card=n ∧
       (B*B).card=2*n+2 ∧ (B*B).card ≤ 3*n-4 ∧
       (B+B).card = n*(n+1)/2 -
         (n-1+(n-8)+(n-9)+(n-11)+(if 8 ≤ n then 1 else 0)+(if 10 ≤ n then 1 else 0)) ∧
       (B+B).card ≤ (G+G).card-2 ∧
-      (n=7 → B=({0,3,5,6,7,8,9}:Finset ℤ).image (fun e => r^e)) := by
+      (n=7 → B=({0,3,5,6,7,8,9}:Finset ℤ).image (fun e => r ^ e)) := by
   classical
   dsimp only
   let E : Finset ℤ := {0,3} ∪ Finset.Icc 5 ((n:ℤ)+2)
   let F : Finset ℤ := {0,3} ∪ Finset.Icc 5 ((n:ℤ)+3)
-  let B := E.image (fun e => r^e)
-  let Bnext := F.image (fun e => r^e)
-  let G := (Finset.Icc (0:ℤ) ((n:ℤ)-1)).image (fun e => Real.goldenRatio^e)
+  let B := E.image (fun e => r ^ e)
+  let Bnext := F.image (fun e => r ^ e)
+  let G := (Finset.Icc (0:ℤ) ((n:ℤ)-1)).image (fun e => Real.goldenRatio ^ e)
   change B ⊂ Bnext ∧ B.card=n ∧ (B*B).card=2*n+2 ∧ (B*B).card ≤ 3*n-4 ∧
     (B+B).card = n*(n+1)/2 -
       (n-1+(n-8)+(n-9)+(n-11)+(if 8 ≤ n then 1 else 0)+(if 10 ≤ n then 1 else 0)) ∧
     (B+B).card ≤ (G+G).card-2 ∧
-    (n=7 → B=({0,3,5,6,7,8,9}:Finset ℤ).image (fun e => r^e))
+    (n=7 → B=({0,3,5,6,7,8,9}:Finset ℤ).image (fun e => r ^ e))
   have hr0 : r ≠ 0 := by linarith
   have hm := zpow_right_strictMono₀ hr
   have hcardE : E.card=n := by
@@ -201,7 +209,7 @@ theorem whole_theorem_two_one (r : ℝ) (hr : 1 < r) (hroot : r^3=r+1)
         Finset.mem_Icc] at ht ⊢
       omega
     · intro he
-      have hh : r^((n:ℤ)+3) ∈ Bnext := Finset.mem_image.2
+      have hh : r ^ ((n:ℤ)+3) ∈ Bnext := Finset.mem_image.2
         ⟨(n:ℤ)+3,Finset.mem_union.2 (Or.inr (Finset.mem_Icc.2 ⟨by omega,le_refl _⟩)),rfl⟩
       rw [← he] at hh
       obtain ⟨i,hi,hei⟩ := Finset.mem_image.1 hh
@@ -233,7 +241,7 @@ theorem whole_theorem_two_one (r : ℝ) (hr : 1 < r) (hroot : r^3=r+1)
           have hb : t-a ∈ E := Finset.mem_union.2 (Or.inr (Finset.mem_Icc.2
             ⟨by dsimp [a]; omega,by dsimp [a]; omega⟩))
           exact Finset.mem_add.2 ⟨a,ha,t-a,hb,by ring⟩
-  have hprod : B*B=(E+E).image (fun e => r^e) := by
+  have hprod : B*B=(E+E).image (fun e => r ^ e) := by
     ext x
     constructor
     · intro hx
@@ -245,8 +253,8 @@ theorem whole_theorem_two_one (r : ℝ) (hr : 1 < r) (hroot : r^3=r+1)
     · intro hx
       obtain ⟨k,hk,rfl⟩ := Finset.mem_image.1 hx
       obtain ⟨i,hi,j,hj,rfl⟩ := Finset.mem_add.1 hk
-      exact Finset.mem_mul.2 ⟨r^i,Finset.mem_image.2 ⟨i,hi,rfl⟩,
-        r^j,Finset.mem_image.2 ⟨j,hj,rfl⟩,(zpow_add₀ hr0 _ _).symm⟩
+      exact Finset.mem_mul.2 ⟨r ^ i,Finset.mem_image.2 ⟨i,hi,rfl⟩,
+        r ^ j,Finset.mem_image.2 ⟨j,hj,rfl⟩,(zpow_add₀ hr0 _ _).symm⟩
   have hprodcard : (B*B).card=2*n+2 := by
     rw [hprod,Finset.card_image_of_injective _ hm.injective,hEE,
       Finset.card_union_of_disjoint]
@@ -268,8 +276,10 @@ theorem whole_theorem_two_one (r : ℝ) (hr : 1 < r) (hroot : r^3=r+1)
   refine ⟨hnest,hcardB,hprodcard,by omega,by omega,?_,?_⟩
   · omega
   · intro he
-    subst n
-    have hE : E=({0,3,5,6,7,8,9}:Finset ℤ) := by decide
-    exact congrArg (fun T : Finset ℤ => T.image (fun e => r^e)) hE
+    have hE : E=({0,3,5,6,7,8,9}:Finset ℤ) := by
+      dsimp [E]
+      rw [he]
+      decide
+    exact congrArg (fun T : Finset ℤ => T.image (fun e => r ^ e)) hE
 
 end D5.S3.Arith.Additive.PlasticNestedFamily
