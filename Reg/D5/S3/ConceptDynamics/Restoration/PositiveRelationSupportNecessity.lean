@@ -13,14 +13,14 @@ open LeanInformationAudit
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-universe u v w z
+universe u_1 u_2 u_3 u_4
 
 /-- Source parameters retain both full injections. The observed state is the source relation. -/
-abbrev Params := Σ A : Type u, Σ B : Type v, Σ L : Type w, Σ R : Type z,
+abbrev Params := Σ A : Type u_1, Σ B : Type u_2, Σ L : Type u_3, Σ R : Type u_4,
   Σ _ : A ↪ L, B ↪ R
 
 abbrev signature : Signature where
-  Params := Params.{u,v,w,z}
+  Params := Params.{u_1,u_2,u_3,u_4}
   State p := SetRel p.1 p.2.1
   Role := Unit
   finiteRole := inferInstance
@@ -29,16 +29,16 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u,v,w,z} := realize signature
+def actual : Realization signature.{u_1,u_2,u_3,u_4} := realize signature
   (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2) (fun e => nomatch e)
 
-def enlarged : Realization signature.{u,v,w,z} := realize signature
+def enlarged : Realization signature.{u_1,u_2,u_3,u_4} := realize signature
   (fun _ _ _ => Set.univ) (fun e => nomatch e)
 
 abbrev leftArena : Arena where
-  signature := signature.{u,v,w,z}
+  signature := signature.{u_1,u_2,u_3,u_4}
   Law obs := ∀
-    {A : Type u} {B : Type v} {L : Type w} {R : Type z}
+    {A : Type u_1} {B : Type u_2} {L : Type u_3} {R : Type u_4}
     (E : SetRel A B) (left : A ↪ L) (right : B ↪ R)
     (D : SetRel L R) (attained : D ⊆ obs.readout () ⟨A, B, L, R, left, right⟩ E)
     (a : A) (incident : ∃ b, (a, b) ∈ E)
@@ -50,9 +50,9 @@ abbrev leftArena : Arena where
       transport E alternative right ≠ transport E left right
 
 abbrev rightArena : Arena where
-  signature := signature.{u,v,w,z}
+  signature := signature.{u_1,u_2,u_3,u_4}
   Law obs := ∀
-    {A : Type u} {B : Type v} {L : Type w} {R : Type z}
+    {A : Type u_1} {B : Type u_2} {L : Type u_3} {R : Type u_4}
     (E : SetRel A B) (left : A ↪ L) (right : B ↪ R)
     (D : SetRel L R) (attained : D ⊆ obs.readout () ⟨A, B, L, R, left, right⟩ E)
     (b : B) (incident : ∃ a, (a, b) ∈ E)
@@ -64,9 +64,9 @@ abbrev rightArena : Arena where
       transport E left alternative ≠ transport E left right
 
 abbrev supportArena : Arena where
-  signature := signature.{u,v,w,z}
+  signature := signature.{u_1,u_2,u_3,u_4}
   Law obs := ∀
-    {A : Type u} {B : Type v} {L : Type w} {R : Type z}
+    {A : Type u_1} {B : Type u_2} {L : Type u_3} {R : Type u_4}
     [Fintype A] [Fintype B] [Fintype L] [Fintype R]
     [DecidableEq L] [DecidableEq R]
     (E : SetRel A B) (left : A ↪ L) (right : B ↪ R)
@@ -85,20 +85,20 @@ abbrev supportArena : Arena where
     ∀ samples : List (L × R), samples.toFinset = D →
       max (Fintype.card A) (Fintype.card B) ≤ samples.length
 
-abbrev SA := ULift.{u} Unit
-abbrev SB := ULift.{v} Unit
-abbrev SL := ULift.{w} Bool
-abbrev SR := ULift.{z} Bool
+abbrev SA := ULift.{u_1} Unit
+abbrev SB := ULift.{u_2} Unit
+abbrev SL := ULift.{u_3} Bool
+abbrev SR := ULift.{u_4} Bool
 
-def sampleLeft : SA.{u} ↪ SL.{w} :=
+def sampleLeft : SA.{u_1} ↪ SL.{u_3} :=
   ⟨fun _ => ⟨false⟩, fun _ _ _ => Subsingleton.elim _ _⟩
-def sampleRight : SB.{v} ↪ SR.{z} :=
+def sampleRight : SB.{u_2} ↪ SR.{u_4} :=
   ⟨fun _ => ⟨false⟩, fun _ _ _ => Subsingleton.elim _ _⟩
 
-def sample : Params.{u,v,w,z} :=
+def sample : Params.{u_1,u_2,u_3,u_4} :=
   ⟨SA, SB, SL, SR, sampleLeft, sampleRight⟩
 
-private theorem actual_dependence : ObservationalDependence signature.{u,v,w,z} actual := by
+private theorem actual_dependence : ObservationalDependence signature.{u_1,u_2,u_3,u_4} actual := by
   intro i
   refine ⟨sample, ∅, Set.univ, ?_⟩
   intro heq
@@ -109,9 +109,9 @@ private theorem actual_dependence : ObservationalDependence signature.{u,v,w,z} 
   obtain ⟨p, hp, _⟩ := present
   exact hp
 
-private theorem left_enlarged_fails : ¬ leftArena.{u,v,w,z}.Law enlarged := by
+private theorem left_enlarged_fails : ¬ leftArena.{u_1,u_2,u_3,u_4}.Law enlarged := by
   intro h
-  let D : SetRel SL.{w} SR.{z} := {(ULift.up true, ULift.up true)}
+  let D : SetRel SL.{u_3} SR.{u_4} := {(ULift.up true, ULift.up true)}
   obtain ⟨alternative, _, _, preserves, _⟩ := h Set.univ sampleLeft sampleRight D
     (by intro p hp; exact Set.mem_univ _) (ULift.up ()) ⟨ULift.up (), Set.mem_univ _⟩
     (by
@@ -127,9 +127,9 @@ private theorem left_enlarged_fails : ¬ leftArena.{u,v,w,z}.Law enlarged := by
   have impossible : false = true := congrArg ULift.down (congrArg Prod.snd hp)
   cases impossible
 
-private theorem right_enlarged_fails : ¬ rightArena.{u,v,w,z}.Law enlarged := by
+private theorem right_enlarged_fails : ¬ rightArena.{u_1,u_2,u_3,u_4}.Law enlarged := by
   intro h
-  let D : SetRel SL.{w} SR.{z} := {(ULift.up true, ULift.up true)}
+  let D : SetRel SL.{u_3} SR.{u_4} := {(ULift.up true, ULift.up true)}
   obtain ⟨alternative, _, _, preserves, _⟩ := h Set.univ sampleLeft sampleRight D
     (by intro p hp; exact Set.mem_univ _) (ULift.up ()) ⟨ULift.up (), Set.mem_univ _⟩
     (by
@@ -145,10 +145,10 @@ private theorem right_enlarged_fails : ¬ rightArena.{u,v,w,z}.Law enlarged := b
   have impossible : false = true := congrArg ULift.down (congrArg Prod.fst hp)
   cases impossible
 
-private theorem support_enlarged_fails : ¬ supportArena.{u,v,w,z}.Law enlarged := by
+private theorem support_enlarged_fails : ¬ supportArena.{u_1,u_2,u_3,u_4}.Law enlarged := by
   classical
   intro h
-  have constant : ∀ (l : SA.{u} ↪ SL.{w}) (r : SB.{v} ↪ SR.{z}),
+  have constant : ∀ (l : SA.{u_1} ↪ SL.{u_3}) (r : SB.{u_2} ↪ SR.{u_4}),
       ((Finset.univ : Finset (SL × SR)) : SetRel SL SR) ⊆ transport Set.univ l r →
       transport Set.univ l r = transport Set.univ sampleLeft sampleRight := by
     intro l r subset
@@ -170,11 +170,11 @@ private theorem support_enlarged_fails : ¬ supportArena.{u,v,w,z}.Law enlarged 
   have bad : false = true := congrArg ULift.down ha
   cases bad
 
-def leftFamily : Registration leftArena.{u,v,w,z}
-    (type_of% (@unexposed_left_label_competitor.{u,v,w,z})) where
-  actual := realize signature.{u,v,w,z} actual.readout actual.anchor
+def leftFamily : Registration leftArena.{u_1,u_2,u_3,u_4}
+    (type_of% (@unexposed_left_label_competitor.{u_1,u_2,u_3,u_4})) where
+  actual := realize signature.{u_1,u_2,u_3,u_4} actual.readout actual.anchor
   bridge := Iff.rfl
-  variation := ⟨@unexposed_left_label_competitor.{u,v,w,z}, enlarged, left_enlarged_fails⟩
+  variation := ⟨@unexposed_left_label_competitor.{u_1,u_2,u_3,u_4}, enlarged, left_enlarged_fails⟩
   sensitivity := by
     constructor
     · intro i
@@ -186,8 +186,8 @@ def leftFamily : Registration leftArena.{u,v,w,z}
   dependence := actual_dependence
 
 noncomputable def leftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@unexposed_left_label_competitor.{u,v,w,z})
-    (Realization signature.{u,v,w,z}) (type_of% (@transport.{u,v,w,z})) Unit where
+    (@unexposed_left_label_competitor.{u_1,u_2,u_3,u_4})
+    (Realization signature.{u_1,u_2,u_3,u_4}) (type_of% (@transport.{u_1,u_2,u_3,u_4})) Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Restoration.PositiveRelationSupportNecessity.leftUnit
   realizationName := `Reg.D5.S3.ConceptDynamics.Restoration.PositiveRelationSupportNecessity.leftFamily
   realizationSource := none
@@ -199,7 +199,7 @@ noncomputable def leftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,
   realization := .source leftArena ⟨leftFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
-  readout := some (realize signature.{u,v,w,z} actual.readout actual.anchor)
+  readout := some (realize signature.{u_1,u_2,u_3,u_4} actual.readout actual.anchor)
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
@@ -221,11 +221,11 @@ noncomputable def leftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,
 #print axioms leftFamily
 #print axioms leftRegistration
 
-def rightFamily : Registration rightArena.{u,v,w,z}
-    (type_of% (@unexposed_right_label_competitor.{u,v,w,z})) where
-  actual := realize signature.{u,v,w,z} actual.readout actual.anchor
+def rightFamily : Registration rightArena.{u_1,u_2,u_3,u_4}
+    (type_of% (@unexposed_right_label_competitor.{u_1,u_2,u_3,u_4})) where
+  actual := realize signature.{u_1,u_2,u_3,u_4} actual.readout actual.anchor
   bridge := Iff.rfl
-  variation := ⟨@unexposed_right_label_competitor.{u,v,w,z}, enlarged, right_enlarged_fails⟩
+  variation := ⟨@unexposed_right_label_competitor.{u_1,u_2,u_3,u_4}, enlarged, right_enlarged_fails⟩
   sensitivity := by
     constructor
     · intro i
@@ -237,8 +237,8 @@ def rightFamily : Registration rightArena.{u,v,w,z}
   dependence := actual_dependence
 
 noncomputable def rightRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@unexposed_right_label_competitor.{u,v,w,z})
-    (Realization signature.{u,v,w,z}) (type_of% (@transport.{u,v,w,z})) Unit where
+    (@unexposed_right_label_competitor.{u_1,u_2,u_3,u_4})
+    (Realization signature.{u_1,u_2,u_3,u_4}) (type_of% (@transport.{u_1,u_2,u_3,u_4})) Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Restoration.PositiveRelationSupportNecessity.rightUnit
   realizationName := `Reg.D5.S3.ConceptDynamics.Restoration.PositiveRelationSupportNecessity.rightFamily
   realizationSource := none
@@ -250,7 +250,7 @@ noncomputable def rightRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_
   realization := .source rightArena ⟨rightFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
-  readout := some (realize signature.{u,v,w,z} actual.readout actual.anchor)
+  readout := some (realize signature.{u_1,u_2,u_3,u_4} actual.readout actual.anchor)
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
@@ -272,11 +272,11 @@ noncomputable def rightRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_
 #print axioms rightFamily
 #print axioms rightRegistration
 
-def supportFamily : Registration supportArena.{u,v,w,z}
-    (type_of% (@positive_certificate_support_lower_bound.{u,v,w,z})) where
-  actual := realize signature.{u,v,w,z} actual.readout actual.anchor
+def supportFamily : Registration supportArena.{u_1,u_2,u_3,u_4}
+    (type_of% (@positive_certificate_support_lower_bound.{u_1,u_2,u_3,u_4})) where
+  actual := realize signature.{u_1,u_2,u_3,u_4} actual.readout actual.anchor
   bridge := Iff.rfl
-  variation := ⟨@positive_certificate_support_lower_bound.{u,v,w,z}, enlarged, support_enlarged_fails⟩
+  variation := ⟨@positive_certificate_support_lower_bound.{u_1,u_2,u_3,u_4}, enlarged, support_enlarged_fails⟩
   sensitivity := by
     constructor
     · intro i
@@ -288,8 +288,8 @@ def supportFamily : Registration supportArena.{u,v,w,z}
   dependence := actual_dependence
 
 noncomputable def supportRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@positive_certificate_support_lower_bound.{u,v,w,z})
-    (Realization signature.{u,v,w,z}) (type_of% (@transport.{u,v,w,z})) Unit where
+    (@positive_certificate_support_lower_bound.{u_1,u_2,u_3,u_4})
+    (Realization signature.{u_1,u_2,u_3,u_4}) (type_of% (@transport.{u_1,u_2,u_3,u_4})) Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Restoration.PositiveRelationSupportNecessity.supportUnit
   realizationName := `Reg.D5.S3.ConceptDynamics.Restoration.PositiveRelationSupportNecessity.supportFamily
   realizationSource := none
@@ -301,7 +301,7 @@ noncomputable def supportRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source supportArena ⟨supportFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
-  readout := some (realize signature.{u,v,w,z} actual.readout actual.anchor)
+  readout := some (realize signature.{u_1,u_2,u_3,u_4} actual.readout actual.anchor)
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
