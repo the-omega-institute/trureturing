@@ -106,6 +106,10 @@ $$\forall k \in \mathrm{Nat},\; (7 \le k) \Rightarrow (\forall i \in \mathrm{Nat
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/JacoDirectedPathCount.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kok-jaco-directed-path-count` (proved) by `D5/S3/ConceptDynamics/GraphColoring/JacoDirectedPathCount.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kok-jaco-directed-path-count","declaration_gid":"D5/S3/ConceptDynamics/GraphColoring/JacoDirectedPathCount.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Johan Kok, Paul Fisher, Bettina Wilkens, Mokhwetha Mabula, Vivian Mukungunugwa (2014). *Characteristics of Jaco Graphs, J_infinity(a), a in N*. URL: <https://arxiv.org/abs/1404.1714v1>.
