@@ -27,14 +27,21 @@ internal sealed class ProgressionSubshiftDocument : IScribeDocumentDefinition
             + "Mathlib PiNat.metricSpaceOfDiscreteUniformity supplies exactly the first-disagreement metric d(x,y)=2^(-firstDiff(x,y)), with zero distance on equal points, and the actual product topology and uniformity. "
             + "The arithmetic-progression construction and its use for Meddaugh--Stephens Question 5.6 are attributed to Pro.")),
         Thm("progression-closed", "progression_legal_closed", "Closedness of all progression constraints", St(
-            Seq(Forall, Sp, Id("ell"), Comma, Sp, Call("IsClosed", Call("ProgressionLegal", Id("ell"))))),
+            Seq(Forall, Sp, Id("ell"), Colon, Sp, Mathbb, Grp(Id("N")), Sp, To, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
+                Call("IsClosed", Seq(OpenBrace, Id("x"), Colon, Sp, Mathbb, Grp(Id("N")), Sp, To, Sp, Id("ReturnBit"), Sp,
+                    Mid, Sp, Call("ProgressionLegal", Id("ell"), Id("x")), CloseBrace)))),
             "A fixed progression condition is a finite union of closed coordinate cylinders. Intersect over all starts and positive differences. The finite-alphabet product is compact, hence its closed carrier subtype is compact."),
         Paragraph(Text("All natural shifts preserve the constraints. Prepending a zero yields a legal preimage whenever ell(p)>0 for every positive p, so the continuous left shift is onto. "
             + "Deleting ones preserves every already satisfied constraint. The all-zero point is legal under the same positive-length assumption; the configuration 10-infinity is legal when all lengths are at least two.")),
         Thm("progression-zero-gap", "progression_join_legal", "Zero-gap joining without new forbidden progressions", St(
-            Seq(Forall, Sp, Seq(Id("ell"), Comma, Id("x"), Comma, Id("y"), Comma, Id("a"), Comma, Id("b"), Comma, Id("n")), Comma),
-            Seq(Call("ProgressionLegal", Id("ell"), Id("x")), Sp, Land, Sp, Call("ProgressionLegal", Id("ell"), Id("y")), Comma),
-            Seq(Id("n"), Sp, Ge, Sp, Seq(Id("a"), Plus, Call("max", Id("a"), Id("b"))), Sp, Rightarrow, Sp,
+            Seq(Forall, Sp, Id("ell"), Colon, Sp, Mathbb, Grp(Id("N")), Sp, To, Sp, Mathbb, Grp(Id("N")), Comma),
+            Seq(Open, Forall, Sp, Id("p"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
+                D(0), Lt, Id("p"), Sp, Rightarrow, Sp, D(3), Le, Call("ell", Id("p")), Close, Sp, Rightarrow),
+            Seq(Forall, Sp, Id("x"), Comma, Id("y"), Colon, Sp, Mathbb, Grp(Id("N")), Sp, To, Sp, Id("ReturnBit"), Comma, Sp,
+                Call("ProgressionLegal", Id("ell"), Id("x")), Sp, Rightarrow, Sp,
+                Call("ProgressionLegal", Id("ell"), Id("y")), Sp, Rightarrow),
+            Seq(Forall, Sp, Id("a"), Comma, Id("b"), Comma, Id("n"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
+                Id("a"), Plus, Call("max", Id("a"), Id("b")), Le, Id("n"), Sp, Rightarrow, Sp,
                 Call("ProgressionLegal", Id("ell"), Call("progressionJoin", Id("x"), Id("y"), Id("a"), Id("b"), Id("n"))))),
             "Assume ell(p)>=3 for all positive p. Keep x on [0,a), y shifted to [n,n+b), and put zeros elsewhere. A progression with p<=max(a,b) starting in the first word cannot cross the gap, by induction on its index. "
             + "At p>max(a,b), at most one progression term lies in each word; its first three terms cannot all be supported. A progression starting in the second word contradicts legality of y. "

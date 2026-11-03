@@ -37,13 +37,19 @@ internal sealed class QuadraticRotationHittingDocument : IScribeDocumentDefiniti
             "For a positive step use j=floor(fract(tau-theta)/|e|); for a negative step use floor(fract(theta-tau)/|e|). Floor inequalities give j|e|<1 and a residual of absolute value at most |e|. "
             + "The signed integer part is kept explicitly, so the estimate includes wrap-around."),
         Thm("quarter-hitting", "badly_approximable_quarter_hitting", "Uniform hitting from a badly-approximable bound", St(
-            Seq(Id("kappa"), Gt, D(0), Comma, Sp, Forall, Sp, Id("k"), Gt, D(0), Comma,
-                Sp, Seq(Frac, Grp(Id("kappa")), Grp(Id("k"))), Le, Seq(Bar, Id("k"), Id("alpha"), Minus, Call("round", Seq(Id("k"), Id("alpha"))), Bar)),
-            Seq(Forall, Sp, Id("p"), Gt, D(0), Comma, Sp, Forall, Sp, Id("theta"), Comma, Sp,
-                D(0), Le, Sp, Id("a"), Le, Seq(Frac, Grp(D(3)), Grp(D(4))), Sp, Rightarrow),
-            Seq(Exists, Sp, Id("j"), Sp, InMacro, Sp, Id("N"), Comma, Sp, Id("j"), Le, Seq(Frac, Grp(D(2,5,6), Id("p")), Grp(Id("kappa"))), Comma,
-                Sp, Call("fract", Seq(Id("theta"), Plus, Id("j"), Id("p"), Id("alpha"))), Sp, InMacro, Sp, Seq(OpenBracket, Id("a"), Comma, Id("a"), Plus, Frac, Grp(D(1)), Grp(D(4)), CloseBracket))),
-            "Dirichlet at n=16 supplies 1<=q<=16 with beta=|qp alpha-round(qp alpha)|<=1/17. The lower approximation bound gives beta>=kappa/(qp)>0. "
+            Seq(Forall, Sp, Alpha, Comma, Kappa, Sp, InMacro, Sp, Mathbb, Grp(Id("R")), Comma, Sp,
+                D(0), Lt, Kappa, Sp, Rightarrow),
+            Seq(Open, Forall, Sp, Id("k"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
+                D(0), Lt, Id("k"), Sp, Rightarrow, Sp, Frac, Grp(Kappa), Grp(Id("k")), Le,
+                Bar, Id("k"), Cdot, Alpha, Minus, Call("round", Seq(Id("k"), Cdot, Alpha)), Bar, Close, Sp, Rightarrow),
+            Seq(Forall, Sp, Id("p"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp, D(0), Lt, Id("p"), Sp, Rightarrow, Sp,
+                Forall, Sp, Theta, Comma, Id("a"), Sp, InMacro, Sp, Mathbb, Grp(Id("R")), Comma, Sp,
+                D(0), Le, Id("a"), Sp, Rightarrow, Sp, Id("a"), Le, Frac, Grp(D(3)), Grp(D(4)), Sp, Rightarrow),
+            Seq(Exists, Sp, Id("j"), Sp, InMacro, Sp, Mathbb, Grp(Id("N")), Comma, Sp,
+                Id("j"), Le, Frac, Grp(D(2,5,6), Cdot, Id("p")), Grp(Kappa), Sp, Land, Sp,
+                Call("fract", Seq(Theta, Plus, Id("j"), Cdot, Id("p"), Cdot, Alpha)), Sp, InMacro, Sp,
+                OpenBracket, Id("a"), Comma, Id("a"), Plus, Frac, Grp(D(1)), Grp(D(4)), CloseBracket)),
+            "Natural numbers and rounded integers in real expressions denote their canonical real coercions. Dirichlet at n=16 supplies 1<=q<=16 with beta=|qp alpha-round(qp alpha)|<=1/17. The lower approximation bound gives beta>=kappa/(qp)>0. "
             + "Aim the signed mesh at a+1/8. Its error beta stays strictly inside the quarter interval, and its integer lift identifies the correct fractional representative. "
             + "Its original index is jq<=q/beta<=q^2 p/kappa<=256p/kappa. The specialized theorem sqrt_two_scaled_quarter_hitting gives the integral bound 256 M(M+3)p.")
         )));
