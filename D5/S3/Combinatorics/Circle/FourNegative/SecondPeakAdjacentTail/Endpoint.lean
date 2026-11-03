@@ -12,14 +12,14 @@ import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 import Batteries.Tactic.OpenPrivate
 
-set_option maxErrors 1
+set_option maxErrors 20
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail
 open private A B L K SU SV SW E F Common Residual StocksAndResidual HighResidual Windows ceilDiv residueRepresentative chooseM3 chooseV2 chooseM2
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
-open SourceWidth
+open SourceWidth PeriodicShortening RunFirstEarTransport
 open private actual_nat_joint_iff
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private zero_period_transport

@@ -10,7 +10,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 import Batteries.Tactic.OpenPrivate
 
-set_option maxErrors 1
+set_option maxErrors 20
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
@@ -136,14 +136,12 @@ private theorem physical_strips (a b c d v m : ℕ)
     · simpa [w,word,P,t] using hzold
   let pre := P 0 ++ [t 0]
   let post := P 1 ++ t 1 :: P 2 ++ t 2 :: P 3 ++ [t 3]
-  have hw : w=pre++post := by simp [w,word,pre,post,List.append_assoc]
+  have hw : w=pre++post := by simp [w,word,pre,post,P,t,List.append_assoc]
   have hlen : pre.length=d := by dsimp [pre,P,bank]; simp; omega
   have hear : insertAt k w d=pre++k::post := by
     rw [hw,←hlen]
     simp [insertAt]
-  have newstrip : InStrip g N 0 (insertAt k w d) := by
-    rw [hear]
-    change InStrip g N 0 (P 0 ++ t 0 :: (k::P 1) ++ t 1 :: P 2 ++ t 2 :: P 3 ++ [t 3])
+  have aux : InStrip g N 0 (P 0 ++ t 0 :: (k::P 1) ++ t 1 :: P 2 ++ t 2 :: P 3 ++ [t 3]) := by
     apply four_strip g (P 0) (k::P 1) (P 2) (P 3) (t 0) (t 1) (t 2) (t 3) N 0
       (fun i hi => (pos 0 i hi).2) ?_
       (fun i hi => (pos 2 i hi).2) (fun i hi => (pos 3 i hi).2) le_rfl
@@ -170,6 +168,9 @@ private theorem physical_strips (a b c d v m : ℕ)
         simp [pre,post,List.append_assoc]
       rw [hform,sumform]
       simpa using hznew
-  exact ⟨hp,by dsimp [k]; omega,oldstrip,newstrip⟩
+  have newstrip : InStrip g N 0 (insertAt k w d) := by
+    rw [hear]
+    simpa only [pre,post,List.append_assoc,List.singleton_append,List.cons_append] using aux
+  exact ⟨hp,by omega,oldstrip,newstrip⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail
