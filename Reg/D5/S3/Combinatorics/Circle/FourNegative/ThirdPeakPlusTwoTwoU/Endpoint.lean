@@ -92,7 +92,7 @@ private theorem zero_new : OriginalOrder 18 0 (earWord 17 identityWord 0) := by
     simp [hf,modulus]
 private theorem bad_old : ¬OriginalOrder 17 2 identityWord := by
   intro h
-  have hh := h.2.2 12
+  have hh := h.2.2 16
   norm_num [identityWord,List.finRange_succ,actualSource,centered,modulus] at hh
 private theorem bad_new : ¬OriginalOrder 18 1 (earWord 17 identityWord 0) := by
   intro h

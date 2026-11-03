@@ -45,10 +45,10 @@ private theorem high_selection (x t m : ℤ) (hx : 8≤x) (ht : 8*x≤t)
   have hd0 : 0≤D x t 0 v0 := by simpa [D] using hraw0
   have hd1 : D x t 0 v0<2*B x t := by simpa [D] using hraw1
   have hlm : L x t<2*m*B x t := by
-    apply (mul_lt_mul_left (by omega : 0<x)).mp
+    by_contra hh
     have he : x*(2*m*B x t)=4*t*B x t := by linear_combination B x t*hm
-    rw [he]
-    exact hstock
+    have hmul := mul_le_mul_of_nonneg_left (show 2*m*B x t≤L x t by omega) hxpos.le
+    linarith only [he,hmul,hstock]
   have hvm : v0≤m := rounding_upper (B x t) (L x t) m v0 hb hlm (by simpa [D] using hd1)
   have hmstock : 4*m≤t := by
     have hh := mul_le_mul_of_nonneg_right hx hm0
@@ -113,7 +113,7 @@ private theorem small_selection (t m : ℤ) (ht : 128≤t) (hm : 2*m=t) :
   have hdpos : 0≤di i := by
     by_cases he : i=0
     · simpa [he,di] using hd0
-    · have hip : i-1<i := by omega
+    · have hip : i-1< i := by omega
       have hnot := Nat.find_min hex (show i-1<Nat.find hex from hip)
       have hprev : A 4 t≤ti (i-1) := by
         have hile : i-1≤6 := by omega

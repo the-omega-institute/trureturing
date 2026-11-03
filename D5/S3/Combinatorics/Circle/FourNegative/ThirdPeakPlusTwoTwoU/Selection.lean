@@ -91,17 +91,17 @@ private theorem general_select (x y t : ℤ) (hy : 4≤y) (hx : 2*y≤x) (ht : 8
     · simpa only [window,hvcast] using And.intro hTlow hT
   by_cases h0 : T0≤A x y t-1
   · apply finish 0 (by omega) v0 (by simpa [v0] using hstock 0 ⟨by omega,by omega⟩)
-    · rw [hD0]; exact ⟨hd0.1,by omega⟩
-    · simpa only [hD0,T0] using h0
+    · simp only [Nat.cast_ofNat, hD0]; exact ⟨hd0.1,by omega⟩
+    · simpa only [Nat.cast_ofNat,hD0,T0] using h0
   · have hd1pos := hnext1 (by omega)
     by_cases h1 : T1≤A x y t-1
     · apply finish 1 (by omega) v1 (by simpa [v1] using hstock 1 ⟨by omega,by omega⟩)
-      · rw [hD1]; exact ⟨hd1pos.le,by omega⟩
-      · simpa only [hD1,T1] using h1
+      · simp only [Nat.cast_ofNat, hD1]; exact ⟨hd1pos.le,by omega⟩
+      · simpa only [Nat.cast_ofNat,hD1,T1] using h1
     · have hd2pos := hnext2 (by omega)
       apply finish 2 (by omega) v2 (by simpa [v2] using hstock 2 ⟨by omega,by omega⟩)
-      · rw [hD2]; exact ⟨hd2pos.le,by omega⟩
-      · simpa only [hD2,T2] using hT2
+      · simp only [Nat.cast_ofNat, hD2]; exact ⟨hd2pos.le,by omega⟩
+      · simpa only [Nat.cast_ofNat,hD2,T2] using hT2
 
 private theorem boundary_mod0 (x v : ℤ) (hx : 8≤x) (hv : 5*v=8*x+7) :
     window (D x 4 (4*x) 0 v) (A x 4 (4*x)) ∧

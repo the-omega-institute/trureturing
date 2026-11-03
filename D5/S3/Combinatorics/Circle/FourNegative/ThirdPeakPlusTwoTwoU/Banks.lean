@@ -81,10 +81,10 @@ private theorem banks_inventory (a b c d : ℕ)
   apply Multiset.coe_eq_coe.mp
   change (word a b c d u v : Multiset ℕ)=(List.range (a+b+c+d) : Multiset ℕ)
   rw [←canonical_inventory a b c d ha hb hc hd]
-  simp only [←Multiset.coe_add,Multiset.coe_singleton,Multiset.coe_cons]
+  simp only [←Multiset.coe_add,Multiset.coe_singleton,←Multiset.cons_coe,←Multiset.singleton_add]
   rw [←hs0,←hs1]
   dsimp [word,pre,post,banks,terminals]
-  simp only [←Multiset.coe_add,Multiset.coe_singleton,Multiset.coe_cons]
+  simp only [←Multiset.coe_add,Multiset.coe_singleton,←Multiset.cons_coe,←Multiset.singleton_add]
   ac_rfl
 
 private theorem banks_good (a b c d : ℕ)
