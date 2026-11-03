@@ -1,0 +1,37 @@
+**Theorem 17.2 (exact source and event domain).** The reachable terms are
+exactly $\mathcal D$. For every $t\in\mathcal D$, $\mathcal H(t)$ is exactly
+the set of linear extensions of the labelled finite order (AA.67).
+Every prefix of every such extension is an actual legal source execution.
+Moreover the labelled causal order, even without a chosen linear extension,
+recovers $t$.
+
+Proof. A split creates a left $\beta$ and a right $\alpha$; neither operation
+turns anything into $\alpha$. This proves the necessary leaf condition.
+Conversely construct a target subtree from its specified birth type:
+promote a born-$\alpha$ root if its target is not $\alpha$; split if its
+target is a branch; then construct both children with their prescribed
+birth types. A born-$\beta$ target cannot be $\alpha$ by the leaf condition.
+Induction on the target term proves reachability.
+
+Every actual event has its creating split and its earlier local promotion,
+if required, before it, and occurs only once. Thus its word is an extension.
+Conversely take the next event of an extension. Its logical position has
+already been created, by its parent split or by initialization. If it is
+$P_p$, that position is still the born-$\alpha$ leaf: a split there would
+have required this promotion earlier. If it is $S_p$, its required promotion
+has occurred, or it was born $\beta$. No descendant event can have consumed
+this leaf, because every such event requires $S_p$ earlier. The proposed
+operation is therefore enabled. Induction proves legality at every prefix
+and the final term prescribed by (AA.67).
+
+For reconstruction, the present logical positions are the root together
+with both children of every listed split. A position is a branch exactly
+when its split is listed. At a remaining leaf it is $\beta$ exactly when
+it was born $\beta$ or its promotion is listed, and otherwise is $\alpha$.
+The empty event set recovers the initial $\alpha$. This also proves that
+causal membership and serial order are different observations. The generic
+finite-poset execution/extension principle is the existing
+`EnabledPathSwapConnectivity.result`; the source-specific obligation above
+identifies its enabled events with the actual operations (AA.65).
+$\square$
+

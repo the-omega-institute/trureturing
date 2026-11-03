@@ -29,8 +29,9 @@ local instance (p : Prop) : Decidable p := Classical.propDecidable p
 open private radial_div_bound radial_majorant_integrable radial_div_uniform_bound
   inner_arc_decay from
   D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksIntegralControl
-open private admissibleRemainder suffixConstant leadingOneRemainder from
+open private suffixConstant from
   D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksSourceInduction
+open D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksSourceInduction (admissibleRemainder leadingOneRemainder)
 
 private def polynomialPrimitive : Polynomial ℝ → Polynomial ℝ := fun P ↦
   P.sum fun n a ↦ Polynomial.C (a / (n + 1 : ℝ)) * Polynomial.X ^ (n + 1)
@@ -696,7 +697,7 @@ private theorem leading_remainder_common_ray_limit : ∀ (q : ℕ) (suffix : Lis
       ring
     simpa [F, Complex.ofReal_mul] using
       hcombined.congr' (Filter.EventuallyEq.symm hformula)
-private theorem split_leading_ones : ∀ ks : List ℕ+,
+theorem split_leading_ones : ∀ ks : List ℕ+,
     ∃ q suffix, ks = List.replicate q (1 : ℕ+) ++ suffix ∧
       (suffix = [] ∨ ∃ first rest, suffix = first :: rest ∧ 1 < (first : ℕ)) := by
   intro ks
