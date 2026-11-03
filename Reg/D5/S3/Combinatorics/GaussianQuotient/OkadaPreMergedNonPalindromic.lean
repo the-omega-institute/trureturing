@@ -136,10 +136,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have ha : StrictMono (fun i : Fin 2 => 2 * i.val) := by
     intro i j hij
     change i.val < j.val at hij
+    change 2 * i.val < 2 * j.val
     omega
   have hb : StrictMono (fun i : Fin 2 => 2 * i.val + 2) := by
     intro i j hij
     change i.val < j.val at hij
+    change 2 * i.val + 2 < 2 * j.val + 2
     omega
   have hp : IsAlmostPalindromic (0 : Polynomial ℤ) := by
     simpa [IsAlmostPalindromic] using (List.Palindrome.nil : ([] : List ℤ).Palindrome)
@@ -170,7 +172,8 @@ def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic.width_two_iff)
       (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic.WidthTwo.unit
+  unitName :=
+    `Reg.D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic.WidthTwo.unit
   realizationName :=
     `Reg.D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic.WidthTwo.source_registration
   realizationSource := none
