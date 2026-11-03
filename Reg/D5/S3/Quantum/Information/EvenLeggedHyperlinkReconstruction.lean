@@ -80,7 +80,12 @@ theorem rejected_law : ¬ arena.Law rejected := by
       omega
     simp only [S, he]
   have hbad := hrec 2 S hzero hcompl {0}
-  simp [rejected, realize, S] at hbad
+  change S {0} =
+    ∑ I ∈ (Finset.univ : Finset (Fin 2)).powerset.filter
+      (fun I => Even I.card ∧ I ≠ ∅), ((0 : ℚ) : ℝ) * hyperlink S I at hbad
+  simp only [Rat.cast_zero, zero_mul, Finset.sum_const_zero] at hbad
+  have hone : S {0} = 1 := by simp only [S, Finset.card_singleton, ite_true]
+  exact one_ne_zero (hone.symm.trans hbad)
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -247,9 +252,12 @@ private theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
 private theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro i
   refine ⟨⟨ULift.{u_1} Unit, fun I => (I.card : ℝ)⟩, ∅, {ULift.up ()}, ?_⟩
-  simpa only [actual, realize, hyperlink_zeta, Finset.card_empty,
-    Finset.card_singleton, Nat.cast_zero, Nat.cast_one] using
-      (zero_ne_one : (0 : ℝ) ≠ 1)
+  let v : Finset (ULift.{u_1} Unit) → ℝ := fun I => (I.card : ℝ)
+  change hyperlink (fun A => ∑ K ∈ A.powerset, v K) ∅ ≠
+    hyperlink (fun A => ∑ K ∈ A.powerset, v K) {ULift.up ()}
+  rw [hyperlink_zeta, hyperlink_zeta]
+  simpa only [v, Finset.card_empty, Finset.card_singleton, Nat.cast_zero, Nat.cast_one]
+    using (zero_ne_one : (0 : ℝ) ≠ 1)
 
 def source_registration : Registration arena.{u_1} (type_of% (@hyperlink_zeta.{u_1})) where
   actual := actual

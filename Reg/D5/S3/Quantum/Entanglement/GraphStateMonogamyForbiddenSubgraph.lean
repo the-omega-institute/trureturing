@@ -63,7 +63,8 @@ private theorem entropy_bot {V : Type} [Fintype V] [DecidableEq V] (A : Finset V
     entropy (⊥ : SimpleGraph V) A = 0 := by
   have hz : cut (⊥ : SimpleGraph V) A = 0 := by
     ext a b
-    simp [cut, SimpleGraph.adjMatrix]
+    simp only [cut, Matrix.submatrix_apply, SimpleGraph.adjMatrix_apply,
+      SimpleGraph.bot_adj, ite_false, Matrix.zero_apply]
   unfold entropy
   rw [hz, Matrix.rank_zero]
 
@@ -82,7 +83,9 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := h (⊥ : SimpleGraph Unit) ∅
-  simp [rejected, realize, entropy_bot] at he
+  change entropy (⊥ : SimpleGraph Unit) _ = 1 at he
+  rw [entropy_bot] at he
+  exact Nat.zero_ne_one he
 
 def source_registration : Registration arena (type_of% (@compl_eq)) where
   actual := actual
@@ -145,7 +148,9 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := h (⊥ : SimpleGraph Unit) (Equiv.refl Unit) ∅
-  simp [rejected, realize, entropy_bot] at he
+  change 1 = entropy (⊥ : SimpleGraph Unit) _ at he
+  rw [entropy_bot] at he
+  exact Nat.one_ne_zero he
 
 def source_registration : Registration arena (type_of% (@relabel)) where
   actual := actual
@@ -208,7 +213,9 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := h (⊥ : SimpleGraph Unit) () ∅
-  simp [rejected, realize, entropy_bot] at he
+  change 1 = entropy (⊥ : SimpleGraph Unit) ∅ at he
+  rw [entropy_bot] at he
+  exact Nat.one_ne_zero he
 
 def source_registration : Registration arena (type_of% (@lc_eq)) where
   actual := actual
