@@ -8,8 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.SmallWindows
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.LargePContinuous
 
-/-! All-h large-p construction for the unchanged A2 rows.  This is an
-uncompiled source draft; no physical bank or source certificate is copied. -/
+/-! All-h large-p construction for the unchanged A2 rows. -/
 set_option autoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH
 open SecondPeakA2

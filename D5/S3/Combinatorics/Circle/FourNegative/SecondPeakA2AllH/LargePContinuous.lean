@@ -9,7 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.ContinuousCover
 
 /-! The same three exact chains, with the corrected all-h lower epsilon.
 
-`chain8`, `chain16`, and `chain32` are imported from the canonical A2 draft;
+`chain8`, `chain16`, and `chain32` are imported from the canonical A2 module;
 only their interval interpretation is re-proved here with
 `5/(8*(z+1))-1/(8*64*z)`.  Thus no finite grid in p or h enters the proof.
 -/

@@ -9,8 +9,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.Exhaustion
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.SmallSelection
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.LargeP
 
-/-! Uncompiled all-H selection using the observed small selector and the
-large_p_allh_good interface exported by LargeP. -/
+/-! All-H selection using the small selector and the consumed
+large_p_allh_good construction from LargeP. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH

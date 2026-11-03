@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.AllSelection
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.Physical
 
-/-! Source draft only: full original a=2 endpoint at every b>d.
+/-! Full original a=2 endpoint at every b>d.
 The unrestricted Circle statement is unchanged and remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
