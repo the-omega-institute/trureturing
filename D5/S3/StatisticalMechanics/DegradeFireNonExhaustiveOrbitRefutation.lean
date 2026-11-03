@@ -8,14 +8,12 @@
 
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
+
+/-! A saturated degrade-and-fire flow with a non-exhaustive periodic trajectory. -/
 
 set_option autoImplicit false
 set_option linter.style.longLine false
-
-/-! A saturated degrade-and-fire flow with a non-exhaustive periodic trajectory. -/
 
 namespace D5.S3.StatisticalMechanics.DegradeFireNonExhaustiveOrbitRefutation
 
@@ -82,7 +80,7 @@ private theorem before_threshold (i : Fin 9) (t : ℝ) (ht : 0 ≤ t)
     (hτ : t < times i) (j : Fin 3) :
     (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) t) j := by
   fin_cases i <;> fin_cases j <;>
-    norm_num [times, states, coupling, flow, mulVec, dotProduct, Fin.sum_univ_succ] at * <;>
+    norm_num [times, states, coupling, flow, mulVec, dotProduct, Fin.sum_univ_succ] at ht hτ ⊢ <;>
     simp only [max_def] <;> split_ifs <;> linarith
 
 private theorem at_threshold (i : Fin 9) :
@@ -100,7 +98,7 @@ private theorem flow_distinct (i : Fin 9) (t : ℝ) (ht : 0 ≤ t)
     (hτ : t ≤ times i) : Function.Injective (flow (states i) t) := by
   apply injective_three
   all_goals
-    fin_cases i <;> norm_num [times, states, flow] at * <;>
+    fin_cases i <;> norm_num [times, states, flow] at ht hτ ⊢ <;>
       simp only [max_def] <;> split_ifs <;> linarith
 
 private theorem state_distinct (i : Fin 9) : Function.Injective (states i) := by
