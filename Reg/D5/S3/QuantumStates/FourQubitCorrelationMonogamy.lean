@@ -49,10 +49,6 @@ private def parityVector : (Fin 4 → Fin 2) → ℂ :=
 private theorem product_normalized : star productVector ⬝ᵥ productVector = 1 := by
   simp [productVector, Pi.star_single]
 
-private theorem parity_normalized : star parityVector ⬝ᵥ parityVector = 1 := by
-  norm_num [parityVector, star_add, Pi.star_single, add_dotProduct, dotProduct_add,
-    single_dotProduct, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
-
 private theorem trace_single (a b : Fin 4 → Fin 2) (x y : ℂ)
     (M : Matrix (Fin 4 → Fin 2) (Fin 4 → Fin 2) ℂ) :
     trace (vecMulVec (Pi.single a x) (Pi.single b y) * M) = x * (y * M b a) := by
