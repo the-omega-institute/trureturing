@@ -57,9 +57,13 @@ private theorem generic_M_second (x p q h D : ℤ)
     by_contra hn
     have ht:=mul_nonneg (show 0≤2*M-Y x p q h by omega) hL.le
     nlinarith only [stock,hr1,ht,hDL]
-  have hMcap : 2*M≤Y x p q h-2 := by dsimp [Y] at hMlt ⊢; omega
+  have hMcap : 2*M≤Y x p q h-2 := by
+    have heven : Y x p q h=2*(h*T x p q) := by dsimp [Y]; ring
+    omega
   refine ⟨hlo,hMcap,?_⟩
   intro v m before
+  change 0≤oldEnds x p q h v m M 1 ∧ oldEnds x p q h v m M 1≤B x p q h-1 ∧
+    0≤newEnds x p q h v m M before 1 ∧ newEnds x p q h v m M before 1≤SU x p q h-1
   have hs0 : 0≤oldEnds x p q h v m M 1 := by dsimp [oldEnds]; nlinarith only [hr0]
   have hs1 : oldEnds x p q h v m M 1<2*D*L x p q := by dsimp [oldEnds]; nlinarith only [hr1]
   have hsB : oldEnds x p q h v m M 1<B x p q h := by
@@ -75,7 +79,7 @@ private theorem generic_M_second (x p q h D : ℤ)
     rw [second_charge]
     nlinarith only [hs1,slack,hDL,hprod]
   refine ⟨hs0,by omega,hT0,?_⟩
-  dsimp [newEnds,SU] at hTlt ⊢
+  dsimp only [SU]
   omega
 
 private theorem complete_row_bounds (x p q h v m M : ℤ) (before : Bool)
@@ -177,12 +181,17 @@ private theorem remainder_bounds (x p q h D e : ℤ)
     nlinarith only [hvpq,this]
   have hm:=generic_M_second x p q h D hx hp hq hh hD
   have hR:=first_remainder_identity (A x p q h) (L x p q) (K x p q h) p q h e j hj.2.2.2
+  have hSeq : oldEnds x p q h v m M 0=j*C x p q h-F := by
+    calc
+      oldEnds x p q h v m M 0=2*(v*A x p q h+m*L x p q-K x p q h) := by
+        dsimp [oldEnds]; ring
+      _=j*C x p q h-F := hR
   have hS0 : 0≤oldEnds x p q h v m M 0 := by
-    dsimp [oldEnds,v,m,C] at *
-    nlinarith only [hR,hj.2.1]
+    rw [hSeq]
+    exact hj.2.1
   have hSlt : oldEnds x p q h v m M 0<2*C x p q h := by
-    dsimp [oldEnds,v,m,C] at *
-    nlinarith only [hR,hj.2.2.1]
+    rw [hSeq]
+    exact hj.2.2.1
   have hY : 0<Y x p q h := by dsimp [Y,T]; positivity
   have hQ : 0<Z x q+1 := by dsimp [Z]; positivity
   have hDY : D<Y x p q h := by
@@ -236,6 +245,7 @@ private theorem tail_cap (x p q h e : ℤ)
         | exact int_tail_R16q4 x p q h ht.1 ht.2.1 ht.2.2 hh
     nlinarith only [ht',hFeq,hx])
   have he1 : e=1 := by nlinarith only [he,ht.2.1,hx]
+  change 2*parityJ F (C x p q h) e<p
   rw [he1]
   apply parity_odd_cap F (C x p q h) p hF hC hfour
   have ht':=int_tail_R16odd x p q h ht.1 ht.2.1.symm ht.2.2 hh
@@ -257,7 +267,7 @@ private theorem generic_selection (a P Q H : ℕ) (ha : 3≤a) (hP : 2≤P) (hQ 
   have hx : 8≤x := by have :=pow_mono_int 3 a ha; norm_num at this; exact this
   have hp : 4≤p := by have :=pow_mono_int 2 P hP; norm_num at this; exact this
   have hq : 2≤q := by have :=pow_mono_int 1 Q hQ; norm_num at this; exact this
-  have hh : 1≤h := by dsimp [h]; positivity
+  have hh : 1≤h := by dsimp [h]; exact_mod_cast (Nat.one_le_two_pow (n:=H))
   have hD : 2*D=h*p := by
     dsimp [D,h,p]
     calc
@@ -284,8 +294,9 @@ private theorem generic_selection (a P Q H : ℕ) (ha : 3≤a) (hP : 2≤P) (hQ 
     have hfour : 4∣p := by
       refine ⟨2^(P-2),?_⟩
       dsimp [p]
-      rw [show P=(P-2)+2 by omega,pow_add]
-      ring
+      calc
+        (2:ℤ)^P=2^((P-2)+2) := by congr 1; omega
+        _=4*2^(P-2) := by rw [pow_add]; ring
     have hcap:=tail_cap x p q h e hx hp hq hh he hfour htail
     let j:=parityJ (2*K x p q h-(2*p*q-e)*A x p q h) (C x p q h) e
     let v:=p*q-(e+j)/2
@@ -410,8 +421,9 @@ theorem small_a_selection (a P Q H : ℕ) (ha : a=3 ∨ a=4)
         rowBounds (2^a) (2^P) (2^Q) (2^H) v m M before := by
     have hqr : ∃ s : ℕ, 2^Q=8*2^s := by
       refine ⟨Q-3,?_⟩
-      rw [show Q=(Q-3)+3 by omega,pow_add]
-      ring
+      calc
+        (2:ℕ)^Q=2^((Q-3)+3) := by congr 1; omega
+        _=8*2^(Q-3) := by rw [pow_add]; ring
     obtain ⟨v,m,M,hs,_,hb⟩:=scaled_residue_selection (2^P) (2^Q) (H-2) hp hqr
     refine ⟨v,m,M,true,rfl,hs,?_⟩
     simpa only [ha8,h_split H hH,Nat.cast_pow,Nat.cast_ofNat,
