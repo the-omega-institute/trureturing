@@ -10,9 +10,10 @@ import D5.S3.Arith.Robin.ActualContinuousFactorialCompensation.Basic
 import D5.S3.Arith.FactorialRatio.GridAntidiagonalTrafficBound
 import Mathlib.Analysis.SpecialFunctions.Stirling
 
-/-! Robbins' public step bound is telescoped and its limit is supplied by
-Mathlib's Stirling theorem. The factorial residual is the original arithmetic
-object from ActualFactorialRobinHighDerivative. -/
+/-! The logarithmic factorial envelope is supplied by the original Grid owner;
+its proof telescopes Mathlib's Robbins step to the Stirling limit. The
+factorial residual is the original arithmetic object from
+ActualFactorialRobinHighDerivative. -/
 
 noncomputable section
 set_option autoImplicit false
