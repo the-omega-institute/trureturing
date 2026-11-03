@@ -8,12 +8,6 @@
 
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Basic.Real.Sign
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Topology.Algebra.Order.Field
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 /-! The cubic two-bath family has a strictly positive signed-Pfaffian kernel on a nonempty
 open set. This refutes the generic non-Ohmic bound preregistered in issue #25984; the Ohmic
@@ -83,13 +77,16 @@ private theorem spectral_three (x : ℝ) : spectral 3 x = x ^ 3 := by
 
 private theorem asym_skew {m : ℕ} (ε F G : Fin m → ℝ) (i j : Fin m) :
     asym 3 ε F G j i = -asym 3 ε F G i j := by
-  unfold asym
+  rw [asym, asym]
   rw [spectral_three, spectral_three]
+  rw [weight]
+  simp only [weight]
   ring
 
 private theorem pfaffian_kernel (a : Matrix (Fin 5) (Fin 5) ℝ)
     (h : ∀ i j, a j i = -a i j) : a *ᵥ pfaffianVector a = 0 := by
   have hd (i : Fin 5) : a i i = 0 := by linarith [h i i]
+  rw [pfaffianVector]
   ext i
   fin_cases i <;>
     norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, pfaffianVector, hd,
@@ -99,7 +96,7 @@ private theorem pfaffian_kernel (a : Matrix (Fin 5) (Fin 5) ℝ)
 private theorem couplingDomain_open : IsOpen couplingDomain := by
   change IsOpen ({p : (Fin 5 → ℝ) × (Fin 5 → ℝ) × (Fin 5 → ℝ) |
     ∀ i, 0 < p.2.1 i} ∩ {p | ∀ i, 0 < p.2.2 i})
-  simp only [setOf_forall]
+  simp only [ofPred_forall]
   apply IsOpen.inter <;> apply isOpen_iInter_of_finite <;> intro i <;>
     exact isOpen_lt continuous_const (by fun_prop)
 
@@ -114,7 +111,7 @@ private theorem asym_continuousOn (i j : Fin 5) :
   apply ContinuousAt.continuousWithinAt
   unfold asym
   simp_rw [spectral_three]
-  unfold weight
+  simp only [weight]
   fun_prop (disch := assumption)
 
 private theorem pfaffian_continuousOn (i : Fin 5) :
@@ -124,6 +121,7 @@ private theorem pfaffian_continuousOn (i : Fin 5) :
   fin_cases i <;> dsimp [pfaffianVector] <;> fun_prop
 
 private theorem neighborhood_open : IsOpen neighborhood := by
+  rw [neighborhood]
   have h : IsOpen (⋂ i : Fin 5, couplingDomain ∩
       (fun p => pfaffianVector (asym 3 p.1 p.2.1 p.2.2) i) ⁻¹' Ioi 0) :=
     isOpen_iInter_of_finite fun i =>
@@ -134,6 +132,7 @@ private theorem neighborhood_open : IsOpen neighborhood := by
   exact ⟨fun hp i => ⟨hp.1, hp.2 i⟩, fun hp => ⟨(hp 0).1, fun i => (hp i).2⟩⟩
 
 private theorem base_mem : base ∈ neighborhood := by
+  rw [neighborhood, base]
   refine ⟨⟨?_, ?_⟩, ?_⟩ <;> intro i <;> fin_cases i <;>
     norm_num [base, pfaffianVector, asym, spectral_three, weight, Fin.sum_univ_succ]
 
