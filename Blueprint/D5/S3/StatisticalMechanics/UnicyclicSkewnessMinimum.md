@@ -56,7 +56,21 @@ $$\forall (n: \mathbb{N}), (\forall (x: \operatorname{Fin}\left(n\right) \to \ma
 
 For every natural n and every real vector x indexed by Fin n, this functional is three times the square of the second power sum minus twice the third power sum. Its definition requires neither positivity nor membership in the simplex.
 
-**Theorem 1.5 (Skewness as a functional of normalized inverse rates).**
+**Theorem 1.5 (Normalized inverse rates belong to the standard simplex).**
+
+$$\forall (n: \mathbb{N}), (((0: \mathbb{N}) < n) \to (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \to ((\lambda (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, 1, \lambda (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)})) \in \operatorname{stdSimplex}\left(\mathbb{R}, \operatorname{Fin}\left(n\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum.normalized_simplex` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
+
+*Commentary.*
+
+For every positive natural n and every positive real rate vector k on Fin n, the inverse rates divided by their first power sum are nonnegative and sum to one.
+
+**Theorem 1.6 (Skewness as a functional of normalized inverse rates).**
 
 $$\forall (n: \mathbb{N}), (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness}\left(k\right) = \operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.simplexFunctional}\left(\lambda (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, 1, \lambda (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)})\right)))$$
 
@@ -70,7 +84,7 @@ $$\forall (n: \mathbb{N}), (\forall (k: \operatorname{Fin}\left(n\right) \to \ma
 
 For every natural n and every real rate vector k, skewness equals simplexFunctional evaluated at the inverse rates divided by their first power sum. The identity uses total real division and needs no positivity or nonzero-denominator hypothesis. It follows by moving the common denominator outside each power sum.
 
-**Theorem 1.6 (The sharp lower bound and its attaining rates).**
+**Theorem 1.7 (The sharp lower bound and its attaining rates).**
 
 $$\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.claim}$$
 
@@ -104,6 +118,7 @@ Finally fix n ≥ 2. The explicit rates put minimumValue n in the set of positiv
 
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum.claim`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum.minimumValue`
+- Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum.normalized_simplex`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum.simplexFunctional`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum.skewness`
