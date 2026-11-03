@@ -387,6 +387,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_claim_refuses_exact_symlink")]
     [InlineData("pool_claim_concurrency_has_one_winner")]
     [InlineData("pool_capacity_and_pressure_use_one_owner")]
+    [InlineData("pool_sweep_excludes_paths_owned_by_commit_age_cleanup")]
+    [InlineData("pool_exclusion_keeps_candidate_resolution_failure_local")]
     [InlineData("pool_return_accepts_squash_and_merge_histories")]
     [InlineData("pool_sweep_confirms_returned_tip_beyond_stale_tracking")]
     [InlineData("pool_sweep_refuses_non_dev_idle_tip")]

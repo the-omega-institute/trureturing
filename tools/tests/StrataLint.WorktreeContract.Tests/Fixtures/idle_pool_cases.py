@@ -687,6 +687,50 @@ class IdlePoolCases:
             self.assertEqual(3, sum(row["outcome"] == "removed" for row in result["items"]))
         self.assertFalse(any(target.exists() for target in idle))
 
+    def pool_sweep_excludes_paths_owned_by_commit_age_cleanup(self):
+        import worktree_pool as pool
+        self.make_idle(self.tree, self.base)
+        result = json.loads(self.run_protocol("pool", "--dev", self.base, "--force",
+                                             "--exclude-path", self.tree).stdout)
+        self.assertEqual([], result["items"])
+        self.assertTrue(self.tree.exists())
+        other = self.root / "other-idle"
+        self.g(self.main, "worktree", "add", "-b", "lane/governance/other", other, self.base)
+        self.make_idle(other, self.base)
+        with patch.object(pool, "available_fraction", return_value=0.04):
+            result = pool.sweep(self.main, self.base, force=True, exclude_paths=[self.tree])
+        self.assertEqual([str(other)], [row["path"] for row in result["items"]])
+        self.assertEqual("removed", result["items"][0]["outcome"])
+        self.assertTrue(self.tree.exists())
+        self.assertFalse(other.exists())
+
+    def pool_exclusion_keeps_candidate_resolution_failure_local(self):
+        import worktree_pool as pool
+        self.make_idle(self.tree, self.base)
+        other = self.root / "zz-healthy-idle"
+        self.g(self.main, "worktree", "add", "-b", "lane/governance/healthy", other, self.base)
+        self.make_idle(other, self.base)
+        resolve = Path.resolve
+        remaining_failures = 0
+        def broken_candidate(path, *args, **kwargs):
+            nonlocal remaining_failures
+            if path == self.tree and remaining_failures:
+                remaining_failures -= 1
+                raise OSError("unreadable candidate path")
+            return resolve(path, *args, **kwargs)
+        for exclusions in ([], [self.root / "unrelated-owner"]):
+            remaining_failures = 2 if exclusions else 1
+            with self.subTest(exclusions=exclusions), \
+                 patch.object(Path, "resolve", broken_candidate), \
+                 patch.object(pool, "available_fraction", return_value=0.04):
+                result = pool.sweep(self.main, self.base, force=False, exclude_paths=exclusions)
+            self.assertNotIn("failure", result)
+            by_path = {row["path"]: row for row in result["items"]}
+            self.assertEqual("sweep_failed", by_path[str(self.tree)]["outcome"])
+            self.assertEqual("would_remove", by_path[str(other)]["outcome"], result)
+            self.assertTrue(self.tree.exists())
+            self.assertTrue(other.exists())
+
     def pool_sweep_confirms_returned_tip_beyond_stale_tracking(self):
         import worktree_pool as pool
         (self.main / "owned").write_text("new dev\n")

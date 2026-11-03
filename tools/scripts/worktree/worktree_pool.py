@@ -105,7 +105,7 @@ def pool_failure(receipt, stage, error):
     receipt["status"] = "failed"
 
 
-def sweep_locked(source, dev, force=False):
+def sweep_locked(source, dev, force=False, exclude_paths=()):
     """The caller holds the clone's pool operation scope; effects survive every failure."""
     receipt = pool_receipt()
     outcomes = receipt["items"]
@@ -115,8 +115,19 @@ def sweep_locked(source, dev, force=False):
     try:
         inventory_rows = inventory(source)
         source = Path(inventory_rows[0]["worktree"])
-        rows = [dict(path=item["worktree"], branch=item.get("branch"), head=item.get("HEAD"))
-                for item in inventory_rows if idle_reference(item.get("branch", ""))]
+        excluded = {str(Path(path).resolve()) for path in exclude_paths}
+        rows = []
+        for item in inventory_rows:
+            if not idle_reference(item.get("branch", "")):
+                continue
+            if excluded:
+                try:
+                    if str(Path(item["worktree"]).resolve()) in excluded:
+                        continue
+                except (OSError, RuntimeError):
+                    # Candidate inspection owns this path's failure and continuation.
+                    pass
+            rows.append(dict(path=item["worktree"], branch=item.get("branch"), head=item.get("HEAD")))
         for observed in rows:
             path = Path(observed["path"])
             stage = "inspect"
@@ -187,12 +198,12 @@ def sweep_locked(source, dev, force=False):
     return receipt
 
 
-def sweep(source, dev, force=False):
+def sweep(source, dev, force=False, exclude_paths=()):
     receipt = pool_receipt()
     try:
         with ExitStack() as stack:
             acquire(stack, source, "operation:idle-pool", True)
-            receipt = sweep_locked(source, dev, force)
+            receipt = sweep_locked(source, dev, force, exclude_paths)
     except Exception as error:
         pool_failure(receipt, "pool_scope", error)
     return receipt

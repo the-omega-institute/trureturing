@@ -176,7 +176,7 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Fact]
-    public void IdlePoolBypassesAutomaticAgeButAllowsNamedRemoval()
+    public void OldIdleTreeUsesAutomaticCommitAgeRemoval()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -192,10 +192,7 @@ public sealed partial class WorktreeCommandTests
             new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration));
 
         Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(idle));
-        Assert.Contains("idle_pool", result.Output, StringComparison.Ordinal);
-        var removed = WorktreeCommand.Run(repository.Path, ["remove", "--names", "idle"]);
-        Assert.True(removed.Success, removed.Error);
+        Assert.Contains("head_commit_age", result.Output, StringComparison.Ordinal);
         Assert.False(Directory.Exists(idle));
     }
 
