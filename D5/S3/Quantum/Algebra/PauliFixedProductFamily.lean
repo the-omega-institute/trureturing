@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Algebra/PauliFixedProductFamily
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.CrossProduct, mathlib/module/Mathlib.Analysis.InnerProductSpace.TensorProduct]
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Algebra/PauliFixedProductLinear.actual_strict_improvement; premises=D5/S3/Quantum/Algebra/PauliFixedProductFamily.full_report
    digest: Fixed spin products and the actual real parametric Pauli action. -/
 
 import Mathlib.Analysis.InnerProductSpace.TensorProduct
@@ -192,9 +192,6 @@ private theorem c_basis (i j : Fin 4) :
 private theorem e_apply (i j : Fin 4) : e i j = if i=j then 1 else 0 := by
   simp [e, PiLp.single_apply, eq_comm]
 
-private theorem e_inner (i j : Fin 4) : inner ℝ (e i) (e j) = if i=j then 1 else 0 := by
-  simp [e, EuclideanSpace.inner_single_left, PiLp.single_apply]
-
 /-- The full unaveraged report, over all ordered complete product-basis labels. -/
 def reportSquared (t : ℝ) : ℝ :=
   ∑ i : Fin 4, ∑ j : Fin 4, ∑ k : Fin 4, ∑ l : Fin 4,
@@ -262,6 +259,12 @@ private theorem report_row_z (k l : Fin 4) :
   all_goals norm_num [e]
 
 
+/-- The complete local orthonormal basis. -/
+def localBasis : OrthonormalBasis (Fin 4) ℝ J := EuclideanSpace.basisFun (Fin 4) ℝ
+/-- The complete joint orthonormal basis with the product positive inner product. -/
+def jointBasis : OrthonormalBasis (Fin 4 × Fin 4) ℝ V :=
+  localBasis.tensorProduct localBasis
+
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 10000000 in
 private theorem e_zero_basis (i j k l m n : Fin 4) :
@@ -279,16 +282,77 @@ private theorem block_one (i j : Fin 4) :
     (∑ k : Fin 4, ∑ l : Fin 4, ∑ m : Fin 4, ∑ n : Fin 4,
       ‖E 1 (e i ⊗ₜ e j) (e k ⊗ₜ e l) (e m ⊗ₜ e n)‖^2)=
       if (i=0 ∧ j≠0) ∨ (i≠0 ∧ j=0) then 48 else 0 := by
+  have hswap (a b : V) : a+b-(b+a)=0 := by abel
+  have hcancel (a b : V) : a-b+ -a= -b := by abel
   by_cases hz : i=0 ∧ j=3
   · rcases hz with ⟨rfl,rfl⟩
     simp_rw [report_row_z]
     norm_num [Fin.sum_univ_succ]
-  · fin_cases i <;> fin_cases j <;>
-      norm_num [Fin.sum_univ_succ,E,m_tmul,gamma_tmul,d_split,s_basis,c_basis,
+  · fin_cases i <;> fin_cases j
+    all_goals norm_num at hz
+    all_goals norm_num [Fin.sum_univ_succ,E,m_tmul,gamma_tmul,d_split,s_basis,c_basis,
         e_apply,map_add,map_sub,map_neg,TensorProduct.add_tmul,TensorProduct.sub_tmul,
         TensorProduct.tmul_add,TensorProduct.tmul_sub,TensorProduct.neg_tmul,
-        TensorProduct.tmul_neg] at hz ⊢
+        TensorProduct.tmul_neg]
     all_goals norm_num [e]
+    all_goals norm_num [hswap,hcancel,e]
+
+
+private theorem e_add_h (t : ℝ) (H K X Y : V) :
+    E t (H+K) X Y=E t H X Y+E t K X Y := by
+  simp only [E,map_add,LinearMap.add_apply]
+  abel
+private theorem e_smul_h (t r : ℝ) (H X Y : V) :
+    E t (r • H) X Y=r • E t H X Y := by
+  simp only [E,map_smul,LinearMap.smul_apply,smul_sub]
+private theorem e_add_x (t : ℝ) (H X X' Y : V) :
+    E t H (X+X') Y=E t H X Y+E t H X' Y := by
+  simp only [E,map_add,LinearMap.add_apply]
+  abel
+private theorem e_smul_x (t r : ℝ) (H X Y : V) :
+    E t H (r • X) Y=r • E t H X Y := by
+  simp only [E,map_smul,LinearMap.smul_apply,smul_sub]
+private theorem e_add_y (t : ℝ) (H X Y Y' : V) :
+    E t H X (Y+Y')=E t H X Y+E t H X Y' := by
+  simp only [E,map_add,LinearMap.add_apply]
+  abel
+private theorem e_smul_y (t r : ℝ) (H X Y : V) :
+    E t H X (r • Y)=r • E t H X Y := by
+  simp only [E,map_smul,LinearMap.smul_apply,smul_sub]
+
+private theorem e_zero_all (H X Y : V) : E 0 H X Y=0 := by
+  have hspan (Z : V) : Z∈Submodule.span ℝ (Set.range jointBasis) := by
+    rw [←jointBasis.coe_toBasis,jointBasis.toBasis.span_eq]
+    trivial
+  refine Submodule.span_induction ?_ ?_ ?_ ?_ (hspan H)
+  · rintro H ⟨p,rfl⟩
+    refine Submodule.span_induction ?_ ?_ ?_ ?_ (hspan X)
+    · rintro X ⟨q,rfl⟩
+      refine Submodule.span_induction ?_ ?_ ?_ ?_ (hspan Y)
+      · rintro Y ⟨r,rfl⟩
+        simpa [jointBasis,localBasis,OrthonormalBasis.tensorProduct_apply',
+          EuclideanSpace.basisFun_apply,e] using
+          e_zero_basis p.1 p.2 q.1 q.2 r.1 r.2
+      · simp [E]
+      · intro a b _ _ ha hb
+        rw [e_add_y,ha,hb,zero_add]
+      · intro r a _ ha
+        rw [e_smul_y,ha,smul_zero]
+    · simp [E]
+    · intro a b _ _ ha hb
+      rw [e_add_x,ha,hb,zero_add]
+    · intro r a _ ha
+      rw [e_smul_x,ha,smul_zero]
+  · simp [E]
+  · intro a b _ _ ha hb
+    rw [e_add_h,ha,hb,zero_add]
+  · intro r a _ ha
+    rw [e_smul_h,ha,smul_zero]
+
+/-- The actual trilinear residual scales on every input of the actual joint carrier. -/
+theorem residual_scaling (t : ℝ) (H X Y : V) : E t H X Y=t • E 1 H X Y := by
+  rw [e_affine,e_zero_all]
+  simp
 
 /-- The complete 16 by 16 by 16 actual residual, with all output coordinates, has this exact square. -/
 theorem full_report (t : ℝ) : reportSquared t=288*t^2 := by
@@ -298,17 +362,11 @@ theorem full_report (t : ℝ) : reportSquared t=288*t^2 := by
     norm_num [Fin.sum_univ_succ]
   have hscale : reportSquared t=t^2*reportSquared 1 := by
     unfold reportSquared
-    simp_rw [e_affine t,e_zero_basis,sub_zero,zero_add,norm_smul,Real.norm_eq_abs,
+    simp_rw [residual_scaling t,norm_smul,Real.norm_eq_abs,
       mul_pow,sq_abs]
     simp_rw [← Finset.mul_sum]
   rw [hscale,hone]
   ring
-
-/-- The complete local orthonormal basis. -/
-def localBasis : OrthonormalBasis (Fin 4) ℝ J := EuclideanSpace.basisFun (Fin 4) ℝ
-/-- The complete joint orthonormal basis with the product positive inner product. -/
-def jointBasis : OrthonormalBasis (Fin 4 × Fin 4) ℝ V :=
-  localBasis.tensorProduct localBasis
 
 /-- The same fixed products satisfy the complete all-input realization contract. -/
 theorem family_contract (t : ℝ) :
@@ -322,7 +380,7 @@ theorem family_contract (t : ℝ) :
     (∀ X Y : V, M X Y=M Y X) ∧
     (∀ X : V, M (e 0 ⊗ₜ e 0) X=X) ∧
     (∀ X Y Z : V, inner ℝ (M X Y) Z=inner ℝ X (M Y Z)) ∧
-    (∀ X : V, 0≤inner ℝ X X ∧ (inner ℝ X X=0 ↔ X=0)) ∧
+    (∀ X : V, 0 ≤ inner ℝ X X ∧ (inner ℝ X X=0 ↔ X=0)) ∧
     (∀ a b c d : J,
       M (a ⊗ₜ e 0) (c ⊗ₜ d)=S a c ⊗ₜ d ∧
       M (e 0 ⊗ₜ b) (c ⊗ₜ d)=c ⊗ₜ S b d ∧
@@ -332,11 +390,12 @@ theorem family_contract (t : ℝ) :
   refine ⟨by simp [J],?_,?_,?_,s_comm,s_unit,s_frob,d_derivation t,?_,
     fixed_product_laws.1,fixed_product_laws.2.1,fixed_product_laws.2.2,?_,
     all_input_contract t,full_report t⟩
-  · simpa [V,J] using (Module.finrank_tensorProduct ℝ J J)
+  · simp [V,J]
   · intro i
-    rfl
+    simp [localBasis,e,EuclideanSpace.basisFun_apply]
   · intro i j
-    exact OrthonormalBasis.tensorProduct_apply _ _ _ _
+    simp [jointBasis,localBasis,e,OrthonormalBasis.tensorProduct_apply,
+      EuclideanSpace.basisFun_apply]
   · ext i; fin_cases i <;> norm_num [D,C,cross,cross_apply,shift,e,PiLp.single_apply]
   · intro X
     exact ⟨real_inner_self_nonneg,inner_self_eq_zero⟩

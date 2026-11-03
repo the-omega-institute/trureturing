@@ -99,14 +99,26 @@ private theorem unit_attained (t : ℝ) : ‖D t (e 0) (e 1)‖ = |t| := by
   rw [heq, norm_smul]
   simp [e]
 
+/-- The actual unit generator as a continuous operator on the fixed Euclidean space. -/
+def unitOperator (t : ℝ) : J →L[ℝ] J := (D t (e 0)).toContinuousLinearMap
+
+private theorem unit_opnorm (t : ℝ) : ‖unitOperator t‖=|t| := by
+  apply le_antisymm
+  · exact (unitOperator t).opNorm_le_bound (abs_nonneg t) (unit_bound t)
+  · have hh := (unitOperator t).le_opNorm (e 1)
+    change ‖D t (e 0) (e 1)‖≤‖unitOperator t‖*‖e 1‖ at hh
+    rw [unit_attained] at hh
+    simpa [e] using hh
+
 /-- The original local defect and unit-generator bounds are attained in the same family. -/
 theorem exact_defects (t : ℝ) :
     IsGreatest {r : ℝ | ∃ a : J, ‖a‖=1 ∧ r=‖D t a a‖} (|t|/2) ∧
     IsGreatest {r : ℝ | ∃ b : J, ‖b‖=1 ∧ r=‖D t (e 0) b‖} |t| ∧
     (∀ a b : J, ‖S a b‖ ≤ Real.sqrt 2*‖a‖*‖b‖) ∧
-    (∀ a b : J, ‖D t a b‖ ≤ Real.sqrt (1+t^2)*‖a‖*‖b‖) := by
+    (∀ a b : J, ‖D t a b‖ ≤ Real.sqrt (1+t^2)*‖a‖*‖b‖) ∧
+    ‖unitOperator t‖=|t| := by
   refine ⟨⟨⟨balanced, balanced_norm, (self_attained t).symm⟩, ?_⟩,
-    ⟨⟨e 1, by simp [e], (unit_attained t).symm⟩, ?_⟩, spin_bound, d_bound t⟩
+    ⟨⟨e 1, by simp [e], (unit_attained t).symm⟩, ?_⟩, spin_bound, d_bound t,unit_opnorm t⟩
   · rintro r ⟨a, ha, rfl⟩
     simpa [ha] using self_bound t a
   · rintro r ⟨b, hb, rfl⟩
@@ -391,18 +403,103 @@ private theorem label_eigenvalues (t lam : ℝ) :
         norm_num [e,PiLp.single_apply] at hh
       · ext i; fin_cases i <;> simp [label_gram_coordinates,e,PiLp.single_apply] <;> ring
 
-/-- Both exact spectra are computed on the same local action. -/
-theorem exact_label_data (t : ℝ) :
-    (∀ a : J, labelGram t a=toLp 2 ![2*t^2*a 0+2*t*a 3,2*a 1,2*a 2,2*t*a 0+2*a 3]) ∧
-    (∀ lam : ℝ, (∃ a : J, a≠0 ∧ labelGram t a=lam • a) ↔
-      lam=0 ∨ lam=2 ∨ lam=2*(1+t^2)) ∧
-    IsLeast {lam : ℝ | 0<lam ∧ ∃ a : J, a≠0 ∧ actionGram t a=lam • a} 2 := by
-  refine ⟨label_gram_coordinates t,label_eigenvalues t,⟨⟨by norm_num,?_⟩,?_⟩⟩
+/-- The positive spectrum of the actual action Gram. -/
+def positiveActionSpectrum (t : ℝ) : Set ℝ :=
+  {lam : ℝ | 0<lam ∧ ∃ a : J, a≠0 ∧ actionGram t a=lam • a}
+/-- The square root of the actual least positive action eigenvalue. -/
+def actionGap (t : ℝ) : ℝ := Real.sqrt (sInf (positiveActionSpectrum t))
+
+private theorem minimum_positive (t : ℝ) : IsLeast (positiveActionSpectrum t) 2 := by
+  refine ⟨⟨by norm_num,?_⟩,?_⟩
   · exact (gram_eigenvalues t 2).2 (Or.inr (Or.inr rfl))
   · rintro lam ⟨hpos,heig⟩
     rcases (gram_eigenvalues t lam).1 heig with h|h|h
     · linarith
     · rw [h]; positivity
     · linarith
+
+/-- Both exact spectra and the actual positive square-root gap belong to the same local action. -/
+theorem exact_label_data (t : ℝ) :
+    (∀ a : J, labelGram t a=toLp 2 ![2*t^2*a 0+2*t*a 3,2*a 1,2*a 2,2*t*a 0+2*a 3]) ∧
+    (∀ lam : ℝ, (∃ a : J, a≠0 ∧ labelGram t a=lam • a) ↔
+      lam=0 ∨ lam=2 ∨ lam=2*(1+t^2)) ∧
+    IsLeast (positiveActionSpectrum t) 2 ∧ actionGap t=Real.sqrt 2 := by
+  refine ⟨label_gram_coordinates t,label_eigenvalues t,minimum_positive t,?_⟩
+  unfold actionGap
+  rw [(minimum_positive t).csInf_eq]
+
+/-- The common kernel of the actual complete action table. -/
+def commonFixed (t : ℝ) : Submodule ℝ J := ⨅ i : Fin 4, (D t (e i)).ker
+
+private theorem fixed_mem (t : ℝ) (a : J) :
+    a∈commonFixed t ↔ ∃ r : ℝ, a=r • e 0 := by
+  simp only [commonFixed,Submodule.mem_iInf,LinearMap.mem_ker]
+  exact (common_kernel t a).trans (scalar_axis a)
+
+private theorem support_orthogonal (t : ℝ) (a : J) :
+    a∈(commonFixed t).orthogonal ↔ a 0=0 := by
+  rw [Submodule.mem_orthogonal]
+  constructor
+  · intro h
+    have he0 : e 0∈commonFixed t := (fixed_mem t (e 0)).2 ⟨1,by simp⟩
+    have hh := h (e 0) he0
+    simpa [e,EuclideanSpace.inner_single_left] using hh
+  · intro ha b hb
+    rcases (fixed_mem t b).1 hb with ⟨r,rfl⟩
+    simp [e,EuclideanSpace.inner_single_left,ha]
+
+private theorem spectral_lower (t : ℝ) (a : J) (ha : a∈actionSupport t) :
+    2*‖a‖^2≤inner ℝ a (actionGram t a) := by
+  have h0 := (support_coordinates t a).1 ha
+  have heq : inner ℝ a (actionGram t a)=2*‖a‖^2+t^2*(a 1^2+a 2^2) := by
+    simp [gram_coordinates,PiLp.inner_apply,EuclideanSpace.real_norm_sq_eq,
+      Fin.sum_univ_succ,RCLike.inner_apply,h0]
+    <;> ring
+  rw [heq]
+  positivity
+
+/-- The positive support has an attained uniform gap, and the label and action kernels differ. -/
+theorem exact_support_gap (t : ℝ) :
+    actionSupport t=(commonFixed t).orthogonal ∧
+    (∀ a : J, a∈actionSupport t → 2*‖a‖^2≤inner ℝ a (actionGram t a)) ∧
+    (e 3∈actionSupport t ∧ ‖e 3‖=1 ∧ actionGram t (e 3)=2 • e 3) ∧
+    D t≠0 ∧
+    (t≠0 → (∃ a : J, D t a a≠0) ∧ D t (e 0)≠0 ∧
+      (D t).ker≠commonFixed t) ∧
+    (∀ a : J, D 0 a a=0) ∧ D 0 (e 0)=0 := by
+  refine ⟨?_,spectral_lower t,⟨?_,by simp [e],?_⟩,?_,?_,?_,?_⟩
+  · ext a
+    exact (support_coordinates t a).trans (support_orthogonal t a).symm
+  · exact (support_coordinates t (e 3)).2 (by simp [e,PiLp.single_apply])
+  · ext i; fin_cases i <;> simp [gram_coordinates,e,PiLp.single_apply]
+  · intro h
+    have he := congrArg (fun F : J →ₗ[ℝ] J →ₗ[ℝ] J => F (e 1) (e 2)) h
+    have he3 : D t (e 1) (e 2)=e 3 := by
+      ext i; fin_cases i <;> norm_num [D,C,cross,cross_apply,shift,e,PiLp.single_apply]
+    rw [he3] at he
+    have hh := congrArg (fun a : J => a 3) he
+    norm_num [e,PiLp.single_apply] at hh
+  · intro ht
+    have hp : 0<|t| := abs_pos.mpr ht
+    have hself : D t balanced balanced≠0 := by
+      intro h
+      have hh := self_attained t
+      rw [h,norm_zero] at hh
+      linarith
+    have hunit : D t (e 0)≠0 := by
+      intro h
+      have hh := unit_attained t
+      rw [h,LinearMap.zero_apply,norm_zero] at hh
+      linarith
+    refine ⟨⟨balanced,hself⟩,hunit,?_⟩
+    intro hk
+    have hmem : e 0∈commonFixed t := (fixed_mem t (e 0)).2 ⟨1,by simp⟩
+    rw [←hk] at hmem
+    exact hunit hmem
+  · intro a
+    ext i; fin_cases i <;> simp [D,C,cross,cross_apply,shift] <;> ring
+  · apply LinearMap.ext
+    intro a
+    ext i; fin_cases i <;> simp [D,C,cross,cross_apply,shift,e,PiLp.single_apply]
 
 end D5.S3.Quantum.Algebra.PauliFixedProductFamily
