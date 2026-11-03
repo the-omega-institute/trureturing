@@ -85,7 +85,7 @@ private def g₀ : Matrix (Fin 4) (Fin 4) ℂ :=
      -1, -1, 1, -1;
      -1, -1, -1, 1]
 
-private def T (a₁ a₂ a₃ h : ℂ) (α β γ : ℂ) : Matrix (Fin 4) (Fin 4) ℂ :=
+private def T (h : ℂ) (α β γ : ℂ) : Matrix (Fin 4) (Fin 4) ℂ :=
   !![-β * γ * h, -α * γ * h, α * β * h, -2;
       β * γ * h, -α * γ * h, -α * β * h, -2;
       -β * γ * h, α * γ * h, -α * β * h, -2;
@@ -94,8 +94,8 @@ private def T (a₁ a₂ a₃ h : ℂ) (α β γ : ℂ) : Matrix (Fin 4) (Fin 4)
 private theorem euler_top_identity (a₁ a₂ a₃ h α β γ : ℂ)
     (hα : α ^ 2 = a₁) (hβ : β ^ 2 = a₂) (hγ : γ ^ 2 = a₃) :
     ∀ X : Fin 4 → ℂ,
-      T a₁ a₂ a₃ h α β γ *ᵥ eulerPhi a₁ a₂ a₃ h X =
-        (-1 / 8 : ℂ) • (g₀ *ᵥ cremona (T a₁ a₂ a₃ h α β γ *ᵥ X)) := by
+      T h α β γ *ᵥ eulerPhi a₁ a₂ a₃ h X =
+        (-1 / 8 : ℂ) • (g₀ *ᵥ cremona (T h α β γ *ᵥ X)) := by
   intro X
   rw [← hα, ← hβ, ← hγ]
   funext i
@@ -105,8 +105,8 @@ private theorem euler_top_identity (a₁ a₂ a₃ h α β γ : ℂ)
       Matrix.one_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
     ring
 
-private theorem det_T (a₁ a₂ a₃ h α β γ : ℂ) :
-    (T a₁ a₂ a₃ h α β γ).det = 32 * α ^ 2 * β ^ 2 * γ ^ 2 * h ^ 3 := by
+private theorem det_T (h α β γ : ℂ) :
+    (T h α β γ).det = 32 * α ^ 2 * β ^ 2 * γ ^ 2 * h ^ 3 := by
   simp [T, Matrix.det_succ_row_zero, Matrix.det_fin_three,
     Fin.sum_univ_succ, Matrix.submatrix, Matrix.one_apply, Fin.succAbove]
   ring
@@ -128,26 +128,40 @@ private theorem whitening
           ∀ i j : Fin 3, i ≠ j → mu i ≠ mu j := by
   sorry
 
+private def liftP (P : Matrix (Fin 3) (Fin 3) ℝ) :
+    Matrix (Fin 4) (Fin 4) ℂ :=
+  fun i j =>
+    if hi : i.val < 3 then
+      if hj : j.val < 3 then
+        complexMatrix P ⟨i.val, hi⟩ ⟨j.val, hj⟩
+      else 0
+    else if hj : j.val < 3 then 0 else 1
+
+private def eulerCoefficients (P : Matrix (Fin 3) (Fin 3) ℝ) (mu : Fin 3 → ℝ) :
+    Fin 3 → ℂ :=
+  ![4 / (P.det : ℂ) * ((mu 2 : ℂ) - mu 1),
+    4 / (P.det : ℂ) * ((mu 0 : ℂ) - mu 2),
+    4 / (P.det : ℂ) * ((mu 1 : ℂ) - mu 0)]
+
 private theorem covariance
     (A B : Matrix (Fin 3) (Fin 3) ℝ) (h : ℝ)
     (P : Matrix (Fin 3) (Fin 3) ℝ) (mu : Fin 3 → ℝ)
     (hP : IsUnit P.det)
     (hA : Pᵀ * A * P = 1) (hB : Pᵀ * B * P = diagonal mu)
     (ha : ∀ i j : Fin 3, i ≠ j → mu i ≠ mu j) :
-    ∃ a₁ a₂ a₃ α β γ : ℂ,
-      α ^ 2 = a₁ ∧ β ^ 2 = a₂ ∧ γ ^ 2 = a₃ ∧
-        ∀ X : Fin 4 → ℂ,
-          kahan A B h X =
-            (fun i => X i) := by
+    ∀ Z : Fin 4 → ℂ,
+      kahan A B h (liftP P *ᵥ Z) =
+        liftP P *ᵥ eulerPhi (eulerCoefficients P mu 0)
+          (eulerCoefficients P mu 1) (eulerCoefficients P mu 2) (h : ℂ) Z := by
   sorry
 
 private theorem assembly
     (he : ∀ (a₁ a₂ a₃ h α β γ : ℂ), α ^ 2 = a₁ → β ^ 2 = a₂ → γ ^ 2 = a₃ →
       ∀ X : Fin 4 → ℂ,
-        T a₁ a₂ a₃ h α β γ *ᵥ eulerPhi a₁ a₂ a₃ h X =
-          (-1 / 8 : ℂ) • (g₀ *ᵥ cremona (T a₁ a₂ a₃ h α β γ *ᵥ X)))
-    (hd : ∀ (a₁ a₂ a₃ h α β γ : ℂ),
-      (T a₁ a₂ a₃ h α β γ).det = 32 * α ^ 2 * β ^ 2 * γ ^ 2 * h ^ 3)
+        T h α β γ *ᵥ eulerPhi a₁ a₂ a₃ h X =
+          (-1 / 8 : ℂ) • (g₀ *ᵥ cremona (T h α β γ *ᵥ X)))
+    (hd : ∀ (h α β γ : ℂ),
+      (T h α β γ).det = 32 * α ^ 2 * β ^ 2 * γ ^ 2 * h ^ 3)
     (hg : IsUnit g₀.det)
     (hw : ∀ (A B : Matrix (Fin 3) (Fin 3) ℝ), A.PosDef → B.PosDef →
       (∀ t : ℝ, 2 ≤ (B - t • A).rank) →
@@ -159,9 +173,10 @@ private theorem assembly
       (P : Matrix (Fin 3) (Fin 3) ℝ) (mu : Fin 3 → ℝ), IsUnit P.det →
       Pᵀ * A * P = 1 → Pᵀ * B * P = diagonal mu →
       (∀ i j : Fin 3, i ≠ j → mu i ≠ mu j) →
-      ∃ a₁ a₂ a₃ α β γ : ℂ,
-        α ^ 2 = a₁ ∧ β ^ 2 = a₂ ∧ γ ^ 2 = a₃ ∧
-          ∀ X : Fin 4 → ℂ, kahan A B h X = X) :
+      ∀ Z : Fin 4 → ℂ,
+        kahan A B h (liftP P *ᵥ Z) =
+          liftP P *ᵥ eulerPhi (eulerCoefficients P mu 0)
+            (eulerCoefficients P mu 1) (eulerCoefficients P mu 2) (h : ℂ) Z) :
     claim := by
   sorry
 
@@ -170,7 +185,7 @@ theorem result : claim := by
   · intro a₁ a₂ a₃ h α β γ hα hβ hγ
     exact euler_top_identity a₁ a₂ a₃ h α β γ hα hβ hγ
   · intro a₁ a₂ a₃ h α β γ
-    exact det_T a₁ a₂ a₃ h α β γ
+    exact det_T h α β γ
   · exact g₀_unit
   · intro A B hA hB hrank
     exact whitening A B hA hB hrank
