@@ -145,9 +145,8 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
     rw [inner_matrix_col_col, ← star_eq_conjTranspose, Unitary.coe_star_mul_self]
     exact one_apply_eq k
   have hqsum : ∑ k, q k = 1 := by
-    simpa only [hq,
-      D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation.measurementProjector] using
-      D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.sum_projectors u
+    convert D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.sum_projectors u using 1
+    exact Finset.sum_congr rfl fun k _ => hq k
   have hqcomm (i : ι) (hi : i ∈ s) (k : Fin d) : q k * a i = a i * q k := by
     let c := diag (star (u : Matrix (Fin d) (Fin d) ℂ) * a i *
       (u : Matrix (Fin d) (Fin d) ℂ))
