@@ -24,17 +24,6 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
                     + "(ε, 1 − ε, 0) and (0, ε, 1 − ε). This is the matrix of Section 4, "
                     + "lines 239–247. The definition allows every real ε; positivity and the threshold "
                     + "restrictions enter the claim.", AssessedProvenance.FromLiterature(Source)),
-            Describe.Lean(
-                DescribeId.Create("flow"), DeclarationHandle.Create(Module + ".flow"),
-                H("Degradation with saturation at zero"),
-                StatementSource.FromAuthor(Disp(FlowFormula())),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(
-                    Text("The coordinate cutoff "), Ref("D5/S3/Geometry/FiniteCoordinateTruncation.cut"),
-                    Text(" gives flow(s,t)(j) = max(s(j) − t, 0). Thus each positive coordinate decreases "
-                        + "at unit speed and then remains zero, as in lines 52–64. The definition is total "
-                        + "for real t and arbitrary real coordinates; a run uses nonnegative elapsed times."))),
-                DescribeRole.Definition),
             Node("reset", "reset", "Resetting one coordinate", ResetFormula(),
                 "Replace coordinate i of x by the real number 1 and leave every other coordinate unchanged. "
                     + "This is the instantaneous firing rule in lines 56–64.",
@@ -127,10 +116,6 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
             At(Qualified("Matrix", "circulant"),
                 Vector(Subtract(RealNumber(1), X("ε")), X("ε"), RealNumber(0)))));
 
-    private static Formula FlowFormula() => All("s", Configuration(), All("t", Reals(),
-        Equal(Typed(Call("flow", X("s"), X("t")), Configuration()),
-            At(Qualified("D5", "S3", "Geometry", "FiniteCoordinateTruncation", "cut"), X("t"), X("s")))));
-
     private static Formula ResetFormula() => All("x", Configuration(), All("i", Cells(),
         Equal(Typed(Call("reset", X("x"), X("i")), Configuration()),
             At(Qualified("Function", "update"), X("x"), X("i"), RealNumber(1)))));
@@ -179,7 +164,9 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
                 Imp(Less(X("ε"), Subtract(RealNumber(1), X("θ"))), conclusion))))));
     }
 
-    private static Formula Segment(Formula t) => Call("flow", At(X("s"), X("k")), t);
+    private static Formula Segment(Formula t) => At(
+        Qualified("D5", "S3", "Geometry", "FiniteCoordinateTruncation", "cut"),
+        t, At(X("s"), X("k")));
     private static Formula Repressor(Formula t, Formula j) => At(
         At(Qualified("Matrix", "mulVec"), Call("coupling", X("ε")), Segment(t)), j);
     private static Formula Cells() => At(Qualified("Fin"), NatNumber(3));

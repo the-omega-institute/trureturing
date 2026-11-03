@@ -23,21 +23,18 @@ open D5.S3.Geometry.FiniteCoordinateTruncation (cut)
 noncomputable def coupling (ε : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
   circulant ![1 - ε, ε, 0]
 
-noncomputable def flow (s : Fin 3 → ℝ) (t : ℝ) : Fin 3 → ℝ :=
-  cut t s
-
 noncomputable def reset (x : Fin 3 → ℝ) (i : Fin 3) : Fin 3 → ℝ :=
   Function.update x i 1
 
 def IsRun (ε θ : ℝ) (s : ℕ → Fin 3 → ℝ) (lab : ℕ → Fin 3)
     (τ : ℕ → ℝ) : Prop :=
   ∀ k, 0 < τ k ∧
-    (∀ t, 0 ≤ t → t < τ k → ∀ j, θ < (coupling ε *ᵥ flow (s k) t) j) ∧
-    (coupling ε *ᵥ flow (s k) (τ k)) (lab k) ≤ θ ∧
-    (∀ j, j ≠ lab k → θ < (coupling ε *ᵥ flow (s k) (τ k)) j) ∧
-    (∀ t, 0 ≤ t → t ≤ τ k → Function.Injective (flow (s k) t)) ∧
+    (∀ t, 0 ≤ t → t < τ k → ∀ j, θ < (coupling ε *ᵥ cut t (s k)) j) ∧
+    (coupling ε *ᵥ cut (τ k) (s k)) (lab k) ≤ θ ∧
+    (∀ j, j ≠ lab k → θ < (coupling ε *ᵥ cut (τ k) (s k)) j) ∧
+    (∀ t, 0 ≤ t → t ≤ τ k → Function.Injective (cut t (s k))) ∧
     Function.Injective (s (k + 1)) ∧
-    s (k + 1) = reset (flow (s k) (τ k)) (lab k)
+    s (k + 1) = reset (cut (τ k) (s k)) (lab k)
 
 def IsPeriodic (s : ℕ → Fin 3 → ℝ) : Prop :=
   ∃ p > 0, ∀ k, s (k + p) = s k
@@ -82,28 +79,28 @@ private theorem duration_positive (i : Fin 9) : 0 < times i := by
   fin_cases i <;> norm_num
 
 private theorem before_threshold (i : Fin 9) (t : ℝ) (hτ : t < times i) (j : Fin 3) :
-    (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) t) j := by
-  delta times states coupling flow cut at *
+    (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ cut t (states i)) j := by
+  delta times states coupling cut at *
   fin_cases i <;> fin_cases j <;>
     norm_num [circulant_apply, mulVec, vec3_dotProduct, vecHead, vecTail] at hτ ⊢ <;>
     simp only [max_def] <;> split_ifs <;> linarith
 
 private theorem at_threshold (i : Fin 9) :
-    (coupling (4 / 5) *ᵥ flow (states i) (times i)) (labels i) ≤ (3 / 20 : ℝ) := by
-  delta times states labels coupling flow cut
+    (coupling (4 / 5) *ᵥ cut (times i) (states i)) (labels i) ≤ (3 / 20 : ℝ) := by
+  delta times states labels coupling cut
   fin_cases i <;> norm_num [circulant_apply, mulVec, vec3_dotProduct, vecHead, vecTail]
 
 private theorem other_above (i : Fin 9) (j : Fin 3) (hj : j ≠ labels i) :
-    (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) (times i)) j := by
-  delta times states labels coupling flow cut at *
+    (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ cut (times i) (states i)) j := by
+  delta times states labels coupling cut at *
   fin_cases i <;> fin_cases j <;>
     norm_num [circulant_apply, mulVec, vec3_dotProduct, vecHead, vecTail] at *
 
-private theorem flow_distinct (i : Fin 9) (t : ℝ) (hτ : t ≤ times i) :
-    Function.Injective (flow (states i) t) := by
+private theorem cut_distinct (i : Fin 9) (t : ℝ) (hτ : t ≤ times i) :
+    Function.Injective (cut t (states i)) := by
   apply injective_three
   all_goals
-    delta times states flow cut at *
+    delta times states cut at *
     fin_cases i <;> norm_num at hτ ⊢ <;>
       simp only [max_def] <;> split_ifs <;> linarith
 
@@ -112,23 +109,23 @@ private theorem state_distinct (i : Fin 9) : Function.Injective (states i) := by
   apply injective_three <;> fin_cases i <;> norm_num
 
 private theorem reset_verified (i : Fin 9) :
-    states (i + 1) = reset (flow (states i) (times i)) (labels i) := by
-  delta states times labels reset flow cut
+    states (i + 1) = reset (cut (times i) (states i)) (labels i) := by
+  delta states times labels reset cut
   ext j
   fin_cases i <;> fin_cases j <;> norm_num [Function.update]
 
 private theorem block_verified (i : Fin 9) :
     0 < times i ∧
     (∀ t, 0 ≤ t → t < times i → ∀ j,
-      (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) t) j) ∧
-    (coupling (4 / 5) *ᵥ flow (states i) (times i)) (labels i) ≤ (3 / 20 : ℝ) ∧
+      (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ cut t (states i)) j) ∧
+    (coupling (4 / 5) *ᵥ cut (times i) (states i)) (labels i) ≤ (3 / 20 : ℝ) ∧
     (∀ j, j ≠ labels i →
-      (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) (times i)) j) ∧
-    (∀ t, 0 ≤ t → t ≤ times i → Function.Injective (flow (states i) t)) ∧
+      (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ cut (times i) (states i)) j) ∧
+    (∀ t, 0 ≤ t → t ≤ times i → Function.Injective (cut t (states i))) ∧
     Function.Injective (states (i + 1)) ∧
-    states (i + 1) = reset (flow (states i) (times i)) (labels i) := by
+    states (i + 1) = reset (cut (times i) (states i)) (labels i) := by
   exact ⟨duration_positive i, fun t _ hτ j => before_threshold i t hτ j,
-    at_threshold i, other_above i, fun t _ hτ => flow_distinct i t hτ,
+    at_threshold i, other_above i, fun t _ hτ => cut_distinct i t hτ,
     state_distinct (i + 1), reset_verified i⟩
 
 private theorem run_verified : IsRun (4 / 5) (3 / 20) orbit firing duration := by
