@@ -130,6 +130,38 @@ private lemma kraus_trace_bound {a b J : Type*}
     _ ≤ ‖B‖ * traceNorm X := re_trace_mul_le B X
     _ ≤ c * traceNorm X := mul_le_mul_of_nonneg_right hBnorm (traceNorm_nonneg _)
 
+private lemma unital_kraus_trace_bound {a J : Type*}
+    [Fintype a] [DecidableEq a] [Fintype J]
+    (v : OrthonormalBasis a ℂ E) (M : J → Matrix a a ℂ)
+    (hs : ∑ j, (M j)ᴴ * M j = 1) (X : Matrix a a ℂ) :
+    traceNorm (∑ j, M j * X * (M j)ᴴ) ≤ traceNorm X := by
+  classical
+  let L : J → E →ₗ[ℂ] E := fun j => Matrix.toLin v.toBasis v.toBasis (M j)
+  have hgram : ∑ j, (L j).adjoint.comp (L j) = LinearMap.id := by
+    apply (LinearMap.toMatrix v.toBasis v.toBasis).injective
+    simpa only [map_sum, LinearMap.toMatrix_comp v.toBasis v.toBasis v.toBasis,
+      LinearMap.toMatrix_adjoint, LinearMap.toMatrix_toLin, LinearMap.toMatrix_id, L] using hs
+  have hen (x : E) : ∑ j, ‖L j x‖^2 = ‖x‖^2 := by
+    calc
+      _ = (inner ℂ ((∑ j, (L j).adjoint.comp (L j)) x) x).re := by
+        simp only [LinearMap.sum_apply, LinearMap.comp_apply]
+        rw [sum_inner, Complex.re_sum]
+        apply Finset.sum_congr rfl
+        intro j _
+        rw [LinearMap.adjoint_inner_left, norm_sq_eq_re_inner (𝕜 := ℂ)]
+      _ = ‖x‖^2 := by
+        rw [hgram, LinearMap.id_apply]
+        exact (norm_sq_eq_re_inner (𝕜 := ℂ) x).symm
+  have hadj (T : E →L[ℂ] E) :
+      ‖(∑ j, (L j).adjoint.comp (T.toLinearMap.comp (L j))).toContinuousLinearMap‖
+        ≤ (1:ℝ)*‖T‖ := by
+    apply D5.S3.Quantum.Matrix.UniformVarianceCentering.kraus_adjoint_norm_le L 1 (by norm_num)
+    intro x hx
+    rw [hen, hx]
+    norm_num
+  have hz := kraus_trace_bound v v L 1 (by norm_num) hadj X
+  simpa only [L, LinearMap.toMatrix_toLin, one_mul] using hz
+
 private def referenceLift (n : ℕ) (L : E →ₗ[ℂ] F) :
     PiLp 2 (fun _ : Fin n => E) →ₗ[ℂ] PiLp 2 (fun _ : Fin n => F) where
   toFun x := WithLp.toLp 2 (fun r => L (x r))
@@ -499,6 +531,7 @@ variable {I : Type*} [Fintype I] [DecidableEq I]
   [∀ i, InnerProductSpace ℂ (E i)] [∀ i, FiniteDimensional ℂ (E i)]
 
 set_option maxHeartbeats 4000000 in
+-- Dependent block and reference coordinates require extended elaboration.
 /-- The actual center-pinched channel and centered Kraus family have the global
 complete-reference defect bound, from variance only inside each input block. -/
 theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
@@ -524,6 +557,7 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
       (∑ t, (A t)ᴴ * A t = 1) ∧
       (∑ t, (B t)ᴴ * B t = Q) ∧
       (∀ Y, (centerPinching P Y).trace = Y.trace) ∧
+      (∀ Y i, P i * centerPinching P Y = centerPinching P Y * P i) ∧
       (∀ X, (∀ i, P i * X = X * P i) →
         let K := centerPinching P (∑ j, M j * X * M j)
         let Phi := centerPinching P (∑ j, H j * X * H j)
@@ -696,26 +730,9 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
   have hQle : Q ≤ (5*δ : ℝ) • 1 := by
     have hz := (CStarAlgebra.norm_le_iff_le_algebraMap Q (by positivity) hQpos).mp hqnorm
     simpa only [Algebra.algebraMap_eq_smul_one] using hz
-  have hchannel (X) : traceNorm (∑ t, A t * X * (A t)ᴴ) ≤ traceNorm X := by
-    let L := fun t => Matrix.toLin v.toBasis v.toBasis (A t)
-    have hgram : ∑ t, (L t).adjoint.comp (L t) = LinearMap.id := by
-      apply (LinearMap.toMatrix v.toBasis v.toBasis).injective
-      simpa only [map_sum, LinearMap.toMatrix_comp v.toBasis v.toBasis v.toBasis,
-        LinearMap.toMatrix_adjoint, LinearMap.toMatrix_toLin, LinearMap.toMatrix_id, L] using hgA
-    have hen (x : U) : ∑ t, ‖L t x‖^2 = ‖x‖^2 := by
-      have heq := congrArg (fun T : U →ₗ[ℂ] U => (inner ℂ x (T x)).re) hgram
-      simp only [LinearMap.sum_apply, LinearMap.comp_apply, inner_sum,
-        Complex.re_sum, LinearMap.adjoint_inner_right, LinearMap.id_apply] at heq
-      simpa only [← norm_sq_eq_re_inner (𝕜 := ℂ)] using heq
-    have hadj (T : U →L[ℂ] U) :
-        ‖(∑ t, (L t).adjoint.comp (T.toLinearMap.comp (L t))).toContinuousLinearMap‖
-          ≤ (1:ℝ)*‖T‖ := by
-      apply kraus_adjoint_norm_le L 1 (by norm_num)
-      intro x hx
-      rw [hen, hx]; norm_num
-    have hz := kraus_trace_bound v v L 1 (by norm_num) hadj X
-    simpa only [L, LinearMap.toMatrix_toLin, one_mul] using hz
-  refine ⟨hQle, hgA, hgB, ?_, ?_⟩
+  have hchannel (X) : traceNorm (∑ t, A t * X * (A t)ᴴ) ≤ traceNorm X :=
+    unital_kraus_trace_bound v A hgA X
+  refine ⟨hQle, hgA, hgB, ?_, ?_, ?_⟩
   · intro Y
     calc
       _ = ∑ i, (Y*(P i*P i)).trace := by
@@ -725,6 +742,14 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
         simpa only [Matrix.mul_assoc] using Matrix.trace_mul_comm (P i) (Y*P i)
       _ = Y.trace := by
         simp only [hpp, ← Matrix.trace_sum, ← Matrix.mul_sum, hsP, Matrix.mul_one]
+  · intro Y i
+    have hl : P i * centerPinching P Y = P i * Y * P i := by
+      simp only [centerPinching, Matrix.mul_sum, ← Matrix.mul_assoc, hPP]
+      simp
+    have hr : centerPinching P Y * P i = P i * Y * P i := by
+      simp only [centerPinching, Matrix.sum_mul, Matrix.mul_assoc, hPP]
+      simp [Matrix.mul_assoc]
+    exact hl.trans hr.symm
   · intro X hX
     have hpin := pinch_id P hpp hsP X hX
     have hk : centerPinching P (∑ j, M j*X*M j) = ∑ t, B t*X*(B t)ᴴ := by

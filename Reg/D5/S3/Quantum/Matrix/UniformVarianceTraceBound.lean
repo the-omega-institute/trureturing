@@ -269,6 +269,7 @@ abbrev globalArena : Arena where
       (∑ t, (A t)ᴴ * A t = 1) ∧
       (∑ t, (B t)ᴴ * B t = Q) ∧
       (∀ Y, (centerPinching P Y).trace = Y.trace) ∧
+      (∀ Y i, P i * centerPinching P Y = centerPinching P Y * P i) ∧
       (∀ X, (∀ i, P i * X = X * P i) →
         let K := centerPinching P (∑ j, M j * X * M j)
         let Phi := centerPinching P (∑ j, H j * X * H j)
@@ -291,7 +292,7 @@ private theorem global_rejected_law : ¬ globalArena.{u,v,w}.Law rejected := by
     (fun j => nomatch j.down) (Subsingleton.elim _ _) 0 (by norm_num)
     (by intro i; exact nomatch i.down) (fun i => nomatch i.down)
     (by intro i; exact nomatch i.down) 0
-  have hb := (hz.2.2.2.2 0 (by intro i; exact nomatch i.down)).2.2.2.1
+  have hb := (hz.2.2.2.2.2 0 (by intro i; exact nomatch i.down)).2.2.2.1
   change (1:ℝ) ≤ min 2 (10*0) * _ at hb
   norm_num at hb
 

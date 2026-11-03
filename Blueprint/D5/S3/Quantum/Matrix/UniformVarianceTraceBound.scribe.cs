@@ -41,7 +41,7 @@ internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinit
             Blocks(
                 Paragraph(Text("Let H be the actual Hilbert direct sum of an arbitrary finite family of finite-dimensional complex spaces E(i). The same arbitrary Hermitian ambient family h(j) satisfies sum(j) h(j) squared equals I. Assume a nonnegative delta and the ambient variance bound for every unit vector within each input block; no variance premise on vectors mixing centers is imposed. The block anchors are unit whenever their block is nonzero. The theorem quantifies over every natural reference size n, including zero, and every complex input X commuting with all actual amplified center projections P(i). This is exactly the amplified original direct-sum algebra, with arbitrary off-diagonal reference entries.")),
                 Paragraph(Text("At each reference, H(j) is the matrix of Ref(h(j)), M(j) the matrix of the same Ref(ell(j)), and C(Y)=sum(i) P(i)Y P(i). The center-dependent c(j) and ell(j)=h(j)-c(j) are those of the centering theorem. Set Q=C(sum(j) M(j) squared), A(j,i,k)=P(k)H(j)P(i), B(j,i,k)=P(k)M(j)P(i), Phi(X)=C(sum(j) H(j)XH(j)), and K(X)=C(sum(j) M(j)XM(j)). These are actual formulas, not assumed conclusions or fields of an auxiliary model.")),
-                Paragraph(Text("The conclusions are Q at most 5 delta I in matrix order; sum A adjoint A equals I; sum B adjoint B equals Q; and ordinary trace preservation of C on every ambient matrix. For every legal X, K(X)=sum B X B adjoint, Phi(X)=sum A X A adjoint, X-Phi(X)={Q,X}/2-K(X), and traceNorm(X-Phi(X)) at most min(2,10 delta) traceNorm(X). The ordinary trace of Phi(X) equals that of X, and positivity of X implies positivity of both Phi(X) and K(X) at every reference. For every ambient test Y, Tr(K(X)Y)=Tr(X sum B adjoint Y B). Thus this actual adjoint sends I to Q, and the same Kraus witnesses provide complete positivity and trace preservation of Phi at every reference. No state or Hermiticity restriction is placed on X or Y.")),
+                Paragraph(Text("The conclusions are Q at most 5 delta I in matrix order; sum A adjoint A equals I; sum B adjoint B equals Q; ordinary trace preservation of C on every ambient matrix, and commutation of C(Y) with every P(i). Thus the actual pinching has its range in the original direct-sum algebra. For every legal X, K(X)=sum B X B adjoint, Phi(X)=sum A X A adjoint, X-Phi(X)={Q,X}/2-K(X), and traceNorm(X-Phi(X)) at most min(2,10 delta) traceNorm(X). The ordinary trace of Phi(X) equals that of X, and positivity of X implies positivity of both Phi(X) and K(X) at every reference. For every ambient test Y, Tr(K(X)Y)=Tr(X sum B adjoint Y B). Thus this actual adjoint sends I to Q, and the same Kraus witnesses provide complete positivity and trace preservation of Phi at every reference. No state or Hermiticity restriction is placed on X or Y.")),
                 Paragraph(Text("The ambient matrix trace is the ordinary unnormalized trace; center pinching preserves it, giving the sum trace on the embedded direct-sum algebra. The proof never compares that norm to a dimension-weighted surrogate. The live blockwise ambient energy estimate bounds Q and the same K. The central scalars commute with legal X and are scalar at each projection edge; expansion cancels exactly their linear and quadratic cross terms after center pinching. The anticommutator and K give 10 delta on arbitrary complex inputs through trace-norm duality. The actual unital Hermitian family and complete pinching give the independent channel contraction used for the cap 2. Transfers between distinct centers remain in both Q and K.")),
                 Paragraph(Text("This proves the conditional global inference in original C109 equations 86.3 through 86.5 and its complete-reference min(2,10 delta) estimate. The source is AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96, Theorem 86.1 proof. The same actual S/H family, support and pseudoinverse normalization, Hermitian Kraus construction, Hilbert-Schmidt spectral bridge and variance premise with delta=beta, and final actual filter and whole-family normalization remain separate open obligations. The original full Theorem 86.1 is not claimed complete. No independent mathematical novelty is assigned to the pinching, trace duality or central cancellation helpers."))),
             DescribeRole.Theorem)
@@ -55,7 +55,7 @@ internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinit
         var variance=All("x",F.Id("E"),Implies(Unit(x),Leq(
             Sum("j",F.Id("J"),Sq(Norm(Sub(App(hj,x),Mul(Mean(x),x))))),d)));
         var assumptions=And(All("j",F.Id("J"),Call("IsSymmetric",hj)),
-            And(Eqn(Sum("j",F.Id("J"),Mul(hj,hj)),Call("Id",Call("Ltwo",F.Id("I"),F.Id("E")))),
+            And(Eqn(Sum("j",F.Id("J"),Mul(hj,hj)),Call("Id",F.Id("E"))),
                 And(Leq(D(0),d),And(variance,Implies(ExistsUnit(),Unit(e))))));
         var re=Call("Ltwo",Call("Fin",n),F.Id("E"));
         var a=Call("Fin",Call("FiniteRank",re));
@@ -63,7 +63,7 @@ internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinit
         var hjm=At(F.Id("H"),j); var mj=At(F.Id("M"),j); var q=F.Id("Q"); var xx=F.Id("X");
         var defH=All("j",F.Id("J"),Eqn(hjm,
             Call("MatrixOf",Call("stdBasis",re),Call("stdBasis",re),Call("Ref",n,hj))));
-        var defM=All("j",F.Id("J"),Eqn(mj,Sub(hjm,Mul(Mean(e),F.Id("I")))));
+        var defM=All("j",F.Id("J"),Eqn(mj,Sub(hjm,Mul(Mean(e),Call("Id",a)))));
         var defQ=Eqn(q,Sum("j",F.Id("J"),Mul(Adj(mj),mj)));
         var defect=Sub(xx,Sum("j",F.Id("J"),Mul(hjm,Mul(xx,Adj(hjm)))));
         var identity=Eqn(defect,Sub(Mul(Frac(D(1),D(2)),
@@ -196,7 +196,8 @@ internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinit
         var conclusions=Conj(Leq(q,Mul(Mul(D(5),Delta),Call("Id",rank))),
             Eqn(Sum("t",tt,Mul(Adj(at),at)),Call("Id",rank)),
             Eqn(Sum("t",tt,Mul(Adj(bt),bt)),q),
-            All("Y",mat,Eqn(Call("Tr",Pinch(y)),Call("Tr",y))),input);
+            All("Y",mat,Eqn(Call("Tr",Pinch(y)),Call("Tr",y))),
+            All("Y",mat,All("i",F.Id("I"),Eqn(Mul(Pi(i),Pinch(y)),Mul(Pinch(y),Pi(i))))),input);
         var refResult=All("n",Seq(Mathbb,Grp(F.Id("N"))),Quantify(Implies(definitions,conclusions),
             ("P",Call("Family",F.Id("I"),mat)),("H",Call("Family",F.Id("J"),mat)),
             ("M",Call("Family",F.Id("J"),mat)),("Q",mat),
