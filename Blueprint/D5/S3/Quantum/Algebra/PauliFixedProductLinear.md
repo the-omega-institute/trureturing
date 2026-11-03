@@ -53,4 +53,4 @@ Half of the positive endpoint gives an actual parameter with a nonzero diagonal 
 - Truth anchor: `D5/S3/Quantum/Algebra/PauliFixedProductLinear.actual_strict_improvement`
 - Truth anchor: `D5/S3/Quantum/Algebra/PauliFixedProductLinear.nonempty_improvement`
 - Truth anchor: `D5/S3/Quantum/Algebra/PauliFixedProductLinear.small_interval_nonempty`
-- Dependency: [D5/S3/Quantum/Algebra/PauliLocalBounds](PauliLocalBounds.md)
+- Dependency: [D5/S3/Quantum/Algebra/PauliFixedProductFamily](PauliFixedProductFamily.md)
