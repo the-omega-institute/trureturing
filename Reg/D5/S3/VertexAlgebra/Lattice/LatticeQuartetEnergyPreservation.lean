@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.VertexAlgebra.Lattice.LatticeRelativeTransverseGround
+import D5.S3.VertexAlgebra.Lattice.LatticeQuartetEnergyPreservation
 import Reg.D5.S3.VertexAlgebra.Lattice.LatticeQuartetOperators
 
 /-! Full-telescope source-family attempts. Exact source selection and binding
