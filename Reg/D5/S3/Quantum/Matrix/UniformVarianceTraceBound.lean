@@ -337,7 +337,12 @@ def global_registration :
     owner := `D5.S3.Quantum.Matrix.UniformVarianceTraceBound
     definition := none
     coordinates := #[1]
-    readouts := #[] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }

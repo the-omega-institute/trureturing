@@ -388,9 +388,8 @@ def blockInclusion (i : I) : E i →ₗᵢ[ℂ] PiLp 2 E where
       map_smul' := fun c x => by
         apply PiLp.ext
         intro k
-        by_cases hk : k = i
-        · subst k; simp
-        · simp [PiLp.single_eq_of_ne hk] }
+        change Pi.single i (c • x) k = c • Pi.single i x k
+        simp only [Pi.single_smul, Pi.smul_apply] }
   norm_map' := PiLp.norm_single _ _
 
 /-- Orthogonal projection onto an actual center summand, without compressing h. -/

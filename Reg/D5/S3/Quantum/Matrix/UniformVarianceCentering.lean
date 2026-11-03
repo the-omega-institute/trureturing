@@ -240,7 +240,12 @@ def directSum_registration :
     owner := `D5.S3.Quantum.Matrix.UniformVarianceCentering
     definition := none
     coordinates := #[1]
-    readouts := #[] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -308,7 +313,12 @@ def adjoint_registration :
     owner := `D5.S3.Quantum.Matrix.UniformVarianceCentering
     definition := none
     coordinates := #[1]
-    readouts := #[] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
