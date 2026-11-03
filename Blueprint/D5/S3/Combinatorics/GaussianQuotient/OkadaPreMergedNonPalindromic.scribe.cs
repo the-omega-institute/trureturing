@@ -163,7 +163,7 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
                         + "palindromic exactly when min(a(1) − a(0), b(1) − b(0)) = 1. "
                         + "Indices are zero based, and subtraction is natural subtraction. "
                         + "The cases a(0) = 0 and a(1) = b(0) are included. "
-                        + "This is Theorem 2 of Ma–Zhang v2, DOI 10.5281/zenodo.23927424. "
+                        + "This is Theorem 2 of the cited proof note, revision two. "
                         + "The base and weight are one and the degree shift is zero.")),
                     Paragraph(Text(
                         "If both gaps are at least two, the same factorial-quotient calculation "
