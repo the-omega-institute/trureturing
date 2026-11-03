@@ -1,0 +1,16 @@
+**Theorem 5.2 (current orbit, exact inverse directions and task kernel).**
+Let $\mathcal S^\#(A,w)$ be Literal Space modulo only $G_K$, and let
+$\mathcal M^\#$ be the numerical current predictor modulo that same
+transport, with context fixed. On the actual all-owner-split image:
+
+1. Literal Space evaluates Boundary and determines its current orbit.
+   Boundary recovers exactly $\mathcal S^\#$, and
+   $\mathcal S^\#$ and $\mathcal M^\#$ recover one another.
+2. These current numerical kernels equal the complete continuation
+   service kernel. Distinct literal branch-polarity partners are not
+   identified as literal spatial reconstructions.
+3. Time recovers the entrance orbit $(T,x)/G_K$ and the actual current
+   orbit by (SC.10). Conversely that entrance orbit determines all
+   mathematical values of the fixed performed Time window. Neither
+   direction manufactures provenance or an old preparation journal.
+

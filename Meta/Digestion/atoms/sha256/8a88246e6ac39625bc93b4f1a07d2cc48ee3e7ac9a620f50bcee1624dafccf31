@@ -1,0 +1,4 @@
+**(C1a) Lemma 2.2 (no deterministic arrival).** For every fixed $T>0$, the probability of an arrival at exactly $T$ is zero.
+
+**Proof.** A contact at $T$ implies $Z_T=e$, which is null by the positive-time e-start density. A source-mode $E$ at $T>\varepsilon$ implies $Z_{T-\varepsilon}=e$, also null, and it cannot occur earlier than $\varepsilon$. At $T=\varepsilon$, the small-excursion Levy mass is infinite while the long-excursion normalizer is finite; hence the atom at zero duration is zero. A killed timeout $D$ at $T$ implies a prior $E$ at one of the countably many values $T-k\delta$. Local finiteness of releases completes the proof. ∎
+

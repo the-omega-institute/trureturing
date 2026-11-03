@@ -153,21 +153,21 @@ theorem petz_output_support_projection
   intro x hx
   exact M.outputSupport hx
 
--- The actual spectral matrices and the two channel Schwarz congruences require this budget.
+-- The actual spectral matrices and the channel Schwarz congruence require this budget.
 set_option maxHeartbeats 1000000 in
-/-- The actual supported square-root columns force the actual Petz core to recover
-the input state. The inequality is obtained from channel Schwarz, and its PSD
-remainder vanishes by the actual channel trace pairing. -/
-theorem petz_core_recovery_of_support_columns
+/-- The actual Petz core majorizes both the full adjoint amplitude and its
+input-support columns, and has the actual input trace. These facts do not
+assume equality of the square-root columns. -/
+theorem petz_core_schwarz_and_trace
     {Φ : QuantumChannel a b} {ρ σ : DensityState a}
-    (M : SupportedRelativeModularModel Φ ρ σ)
-    (hcolumns :
-      (cfc Real.sqrt M.data.S * M.data.Ψ
-        (spectralInverseSqrt M.data.Q * cfc Real.sqrt M.data.T)) *
-        spectralSupport M.data.R = cfc Real.sqrt M.data.R) :
-    cfc Real.sqrt M.data.S * M.data.Ψ
-      (spectralInverseSqrt M.data.Q * M.data.T * spectralInverseSqrt M.data.Q) *
-      cfc Real.sqrt M.data.S = M.data.R := by
+    (M : SupportedRelativeModularModel Φ ρ σ) :
+    let H := cfc Real.sqrt M.data.S
+    let W := spectralInverseSqrt M.data.Q
+    let Y := W * cfc Real.sqrt M.data.T
+    let A := H * M.data.Ψ Y
+    let C := A * spectralSupport M.data.R
+    let N := H * M.data.Ψ (W * M.data.T * W) * H
+    A * Aᴴ ≤ N ∧ C * Cᴴ ≤ N ∧ N.trace = M.data.R.trace := by
   let R := M.data.R
   let S := M.data.S
   let T := M.data.T
@@ -178,14 +178,8 @@ theorem petz_core_recovery_of_support_columns
   let A := H * M.data.Ψ Y
   let N := H * M.data.Ψ (W * T * W) * H
   have hH : Hᴴ = H := (cfc_predicate _ S : IsSelfAdjoint H).star_eq
-  have hroot : (cfc Real.sqrt R)ᴴ = cfc Real.sqrt R :=
-    (cfc_predicate _ R : IsSelfAdjoint (cfc Real.sqrt R)).star_eq
   obtain ⟨hPR, hPRPR, _, _⟩ := support_spectral_facts R M.data.hR
-  obtain ⟨hPQ, _, hW, hWQW⟩ := support_spectral_facts Q M.data.hQ
-  have hlow : R ≤ A * Aᴴ := by
-    rw [← sqrt_square R M.data.hR]
-    exact projection_column_lower_bound A (spectralSupport R) (cfc Real.sqrt R)
-      hPR hPRPR hroot hcolumns
+  obtain ⟨_, _, hW, hWQW⟩ := support_spectral_facts Q M.data.hQ
   have hYY : Y * Yᴴ = W * T * W := by
     have hTroot : (cfc Real.sqrt T)ᴴ = cfc Real.sqrt T :=
       (cfc_predicate _ T : IsSelfAdjoint (cfc Real.sqrt T)).star_eq
@@ -201,6 +195,25 @@ theorem petz_core_recovery_of_support_columns
     apply Matrix.le_iff.mpr
     simpa only [A, N, Matrix.mul_sub, Matrix.sub_mul, Matrix.conjTranspose_mul,
       hH, Matrix.mul_assoc, hYY] using h
+  have hprojection :
+      (A * spectralSupport R) * (A * spectralSupport R)ᴴ ≤ A * Aᴴ := by
+    have hp : (1 - spectralSupport R)ᴴ * (1 - spectralSupport R) =
+        1 - spectralSupport R := by
+      simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hPR,
+        Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one, hPRPR]
+      abel
+    have hpos : (1 - spectralSupport R).PosSemidef := by
+      rw [← hp]
+      exact Matrix.posSemidef_conjTranspose_mul_self _
+    have hAP : (A * spectralSupport R) * (A * spectralSupport R)ᴴ =
+        A * spectralSupport R * Aᴴ := by
+      rw [Matrix.conjTranspose_mul, hPR]
+      calc
+        _ = A * (spectralSupport R * spectralSupport R) * Aᴴ := by noncomm_ring
+        _ = A * spectralSupport R * Aᴴ := by rw [hPRPR]
+    have h := hpos.mul_mul_conjTranspose_same A
+    apply Matrix.le_iff.mpr
+    simpa only [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, hAP] using h
   have hPT : spectralSupport Q * T = T := petz_output_support_projection M
   have htrace : N.trace = R.trace := by
     calc
@@ -216,9 +229,44 @@ theorem petz_core_recovery_of_support_columns
         change Matrix.trace (CStarMatrix.ofMatrix.symm (Φ.mapState ρ).1) =
           Matrix.trace (CStarMatrix.ofMatrix.symm ρ.1)
         exact (Φ.mapState ρ).2.2.trans ρ.2.2.symm
+  exact ⟨hupp, hprojection.trans hupp, htrace⟩
+
+set_option maxHeartbeats 1000000 in
+/-- The actual supported square-root columns force the actual Petz core to recover
+the input state. The lower bound and trace rigidity use the common actual
+Schwarz and trace supplier. -/
+theorem petz_core_recovery_of_support_columns
+    {Φ : QuantumChannel a b} {ρ σ : DensityState a}
+    (M : SupportedRelativeModularModel Φ ρ σ)
+    (hcolumns :
+      (cfc Real.sqrt M.data.S * M.data.Ψ
+        (spectralInverseSqrt M.data.Q * cfc Real.sqrt M.data.T)) *
+        spectralSupport M.data.R = cfc Real.sqrt M.data.R) :
+    cfc Real.sqrt M.data.S * M.data.Ψ
+      (spectralInverseSqrt M.data.Q * M.data.T * spectralInverseSqrt M.data.Q) *
+      cfc Real.sqrt M.data.S = M.data.R := by
+
+  let R := M.data.R
+  let S := M.data.S
+  let T := M.data.T
+  let Q := M.data.Q
+  let H := cfc Real.sqrt S
+  let W := spectralInverseSqrt Q
+  let Y := W * cfc Real.sqrt T
+  let A := H * M.data.Ψ Y
+  let N := H * M.data.Ψ (W * T * W) * H
+  have hroot : (cfc Real.sqrt R)ᴴ = cfc Real.sqrt R :=
+    (cfc_predicate _ R : IsSelfAdjoint (cfc Real.sqrt R)).star_eq
+  obtain ⟨hPR, hPRPR, _, _⟩ := support_spectral_facts R M.data.hR
+  have hlow : R ≤ A * Aᴴ := by
+    rw [← sqrt_square R M.data.hR]
+    exact projection_column_lower_bound A (spectralSupport R) (cfc Real.sqrt R)
+      hPR hPRPR hroot hcolumns
+  obtain ⟨hupp, _, htrace⟩ := petz_core_schwarz_and_trace M
   exact trace_rigidity R N (hlow.trans hupp) htrace
 
 #print axioms petz_output_support_projection
+#print axioms petz_core_schwarz_and_trace
 #print axioms petz_core_recovery_of_support_columns
 
 end D5.S3.Quantum.Recovery.PetzSchwarzRecovery

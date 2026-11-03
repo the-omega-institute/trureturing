@@ -1,0 +1,29 @@
+**Definition 1.1 (complete domain).** Fix a declared maximum degree $d\ge1$ and put $m=d+1$. Let $\mathcal W_d$ consist of triples $(P,g,\delta)$, where $P$ is a strictly entrywise positive real $2\times2$ matrix of rank one and trace one,
+
+$$
+g(t)=\sum_{k=0}^d\beta_k t^k,\qquad \beta\in\mathbb R^m\setminus\{0\},\qquad \delta\in\mathbb R.
+$$
+
+The actual degree may be smaller than $d$, including zero. There are no restrictions on coefficient signs, sampled roots, repeated roots, or the constant drift.
+
+Set
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\quad A_i=E_iA_{i-1},\quad
+z_i=g(i)\operatorname{tr}(A_iP)+\delta,
+\tag{1.1}
+$$
+
+where each chronological action $E_i$ is exactly one $M$ or one $J$, immediately followed by its read. The initial read counts, so $N$ reads have original clocks $0,\ldots,N-1$. All constructions use one trajectory, without resets, copies, skipped reads, unread compound actions, empty-action reads, clock renumbering, or another sensor. A deterministic protocol may choose actions, stopping, and its answer from the entire actual history. No regularity of these choices is assumed.
+
+An unnormalized positive rank-one pair $(R,G)$ represents the normalized target
+
+$$
+P=R/\operatorname{tr}R,\qquad g=(\operatorname{tr}R)G.
+\tag{1.2}
+$$
+
+Indeed $g(i)\operatorname{tr}(A_iP)=G(i)\operatorname{tr}(A_iR)$. The equivalence is $(R,G)\sim(cR,G/c)$ for $c>0$; the drift is a separate coordinate.
+

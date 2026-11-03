@@ -1,0 +1,54 @@
+**Definition 1.1 (The labelled positive domain).** Let $a,b,c$ be integers
+with $2\le a\le b\le c$, and put $n=a+b+c$. Fix the disjoint labelled sets
+
+$$
+A=\{u_1,\ldots,u_a\},\qquad
+B=\{v_1,\ldots,v_b\},\qquad
+C=\{w_1,\ldots,w_c\}.
+$$
+
+The actual graph $K_{a,b,c}$ has vertex set $V=A\sqcup B\sqcup C$ and edge
+set $E=E_{AB}\sqcup E_{AC}\sqcup E_{BC}$, where $E_{IJ}$ consists of all
+unordered pairs with one endpoint in $I$ and one in $J$. Its conductance
+vector ranges over
+
+$$
+\mathcal P_{a,b,c}=(0,\infty)^E=(0,\infty)^{ab+ac+bc}.
+\tag{1.1}
+$$
+
+Each original edge coordinate is independent, finite and strictly
+positive. Extend $g$ by zero on same-part pairs. Write
+
+$$
+d_x(g)=\sum_{y\ne x}g_{\{x,y\}},\qquad
+(L(g)z)_x=\sum_{y\ne x}g_{\{x,y\}}(z_x-z_y),
+\qquad
+\langle z,z'\rangle=\sum_{x\in V}z_xz'_x.
+\tag{1.2}
+$$
+
+Thus $L$ is the ordinary Laplacian with counting measure, and
+
+$$
+z^{\mathsf T}L(g)z=\sum_{\{x,y\}\in E}g_{\{x,y\}}(z_x-z_y)^2.
+\tag{1.3}
+$$
+
+Its eigenvalues, including multiplicities on all $n$ original vertices,
+are $0=\lambda_1(g)<\lambda_2(g)\le\cdots\le\lambda_n(g)$. For distinct
+$p,q\in V$, take the harmonic voltage $h$ with $h_p=1$, $h_q=0$ and
+$(L(g)h)_x=0$ for $x\notin\{p,q\}$, and set
+
+$$
+r_g(p,q)=\frac1{(L(g)h)_p},\qquad
+R(g)=\sum_{\{p,q\}\subseteq V,\ p\ne q}r_g(p,q),\qquad
+F(g)=\lambda_2(g)R(g).
+\tag{1.4}
+$$
+
+Every unordered pair of distinct original vertices occurs once in $R$,
+including pairs in a common part. There is no conductance budget,
+symmetry restriction, vertex identification, or imposed trace or rank
+condition in $\mathcal P_{a,b,c}$.
+

@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:a13d2888ff6de3c3a8e14661fdbf15577afafd33c250632a8e07f1b9037a6c30
+  normalized_sha256: sha256:a13d2888ff6de3c3a8e14661fdbf15577afafd33c250632a8e07f1b9037a6c30
+cas_ref: sha256:a13d2888ff6de3c3a8e14661fdbf15577afafd33c250632a8e07f1b9037a6c30
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.IsQubitSICProjector
+    target_statement_id: sha256:a7917536e8f55a5cf06d2789387a96d8e30c3b9a49d8fb8c4172ad864d61c23d
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.IsUnitVectorQubitSIC
+    target_statement_id: sha256:8afa51a887de7e334b03e9a52ebf7b589751ea4a1b877d023181b5a9ed1f2549
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.isQubitSICProjector_iff_exists_unitVectorQubitSIC
+    target_statement_id: sha256:8802281f110f76f4bdba3d722834e0644f96b94fabdf2a88b83839f23626d7d8
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.qubit_sic_matrices_and_per_qubit_traces
+    target_statement_id: sha256:d9d9d91a25a25759ce99c81c33e08334acd89377cae9b65998f4e5db262dca79
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicMatrixA
+    target_statement_id: sha256:9c6c8d80cc8c4aea91212665e9e0cf7abf85b9c08a593b194edadc287f1c028f
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicOverlapB
+    target_statement_id: sha256:18a8e43c567734d8e109e940d1ab8468b96e0a03dfa38e2db41d4500e187dbc9
+receipts:
+  unresolved_subitems: []

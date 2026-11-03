@@ -1,0 +1,24 @@
+#### 命题 4.3（保留完整指针时测量仍为等距）
+
+给完整 PVM $\{\Pi_s\}$，映射
+
+$$
+T\psi=\sum_s\Pi_s\psi\otimes\lvert s\rangle
+$$
+
+满足 $T^\dagger T=I$，故为单射。丢弃指针才得到数据通道
+
+$$
+\Delta(\rho)=\sum_s\Pi_s\rho\Pi_s.
+$$
+
+**证明。**
+
+指针正交使 $\langle T\phi,T\psi\rangle=\sum_s\langle\phi,\Pi_s\psi\rangle=\langle\phi,\psi\rangle$。对 $T\rho T^\dagger$ 对指针取偏迹，只有同标签项留下。
+
+∎
+
+<a id="statement-4-4"></a>
+
+<a id="prop-dephase"></a>
+

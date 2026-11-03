@@ -1,0 +1,63 @@
+**Definition 22.1 (Four finite coefficient families).** Write
+$R=\sum_{i=0}^{18}R_i(p,v)x^i$, padding with zero coefficients
+under every specialization. Use the ordered interval pairs
+
+$$
+\mathcal E=
+\bigl((0,1/5),(3/10,2/5),(2/5,3/5),(3/5,4/5)\bigr).
+\tag{22.3}
+$$
+
+For $(\alpha,\beta)\in\mathcal E$ define
+
+$$
+Q_{\alpha\beta}(z;p,w)
+ =(1+z)^{18}R\left(\frac{\alpha+\beta z}{1+z},p,11p/2+w\right)
+ =\sum_{k=0}^{18}q_{\alpha\beta,k}(p,w)z^k.
+\tag{22.4}
+$$
+
+There are $4\cdot19=76$ coefficient polynomials, defined exactly by
+
+$$
+q_{\alpha\beta,k}(p,w)=
+ \sum_{i=0}^{18}R_i(p,11p/2+w)
+ \sum_{j=\max(0,k-18+i)}^{\min(i,k)}
+   \binom ij\binom{18-i}{k-j}\alpha^{i-j}\beta^j.
+\tag{22.5}
+$$
+
+A zero exponent, including $0^0$, has value one. Empty sums are zero.
+Thus this formula also defines the family with $\alpha=0$.
+For evaluation only, make the exact translation
+
+$$
+P=p+90,\qquad W=w+10,\qquad
+q_{\alpha\beta,k}(P-90,W-10)
+       =\sum_{j=0}^{m}\sum_{l=0}^{n}e_{jl}P^jW^l,
+\tag{22.6}
+$$
+
+where $m,n$ are the actual coordinate degrees of this polynomial,
+zero coefficients being inserted. The zero polynomial has $m=n=0$.
+Evaluate (22.6) by Horner in $W$ for each row $j$, then by Horner
+in $P$, in both cases starting with the highest degree and proceeding
+down to the constant coefficient. This fixes both the polynomial
+normalization and the order of all interval operations.
+
+For a nonzero real polynomial, Descartes' rule bounds its positive
+roots counted with multiplicity by the coefficient sign variation,
+after zero coefficients are omitted. The fractional linear map in
+(22.4) is a bijection from $z>0$ to $x\in(\alpha,\beta)$;
+its derivative is $(\beta-\alpha)/(1+z)^2>0$.
+The nonzero factor $(1+z)^{18}$ therefore preserves multiplicity at
+these roots. Also
+
+$$
+q_{\alpha\beta,0}=R(\alpha,p,v),\qquad
+q_{\alpha\beta,18}=R(\beta,p,v).
+\tag{22.7}
+$$
+
+These endpoint identities are valid even if the degree in $x$ drops.
+

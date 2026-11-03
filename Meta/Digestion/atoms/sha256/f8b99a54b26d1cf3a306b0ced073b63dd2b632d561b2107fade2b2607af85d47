@@ -1,0 +1,55 @@
+**命题 35.4（原完整复 $K$ 的实际有限相容修正）。** 定义 35.3 的构造对每个充分小 $E$ 满足
+
+$$
+h_E\in D(\mathscr A),\qquad
+\|h_E\|_2=O(E^{-1/2}),\qquad
+E\langle h_E,v\rangle=-\langle C_E,v\rangle\quad(v\in K).
+\tag{35.15}
+$$
+
+$h_E$ 紧支撑。令 $R_E=(\mathscr A+E)(U_E+h_E)$，则 $R_E$ 是紧支撑的实际 $L^2$ 函数，且
+
+$$
+\langle R_E,v\rangle=0\qquad(v\in K).
+\tag{35.16}
+$$
+
+归一化系数的精确极限为
+
+$$
+d(E)\longrightarrow d_*=(0,-G_{\rm pow}^{-1}J_{\rm pow},0),
+\qquad J_{\rm pow}=(J_{\nu_i}(\alpha_i))_{\nu_i<1}.
+\tag{35.17}
+$$
+
+非空真零、幂、临界块的对角反演尺度分别为 $E^{-1}$、$E^{-\nu_i}$、$(ET)^{-1}$；混合幂由整个 $G_{\rm pow}$ 控制，不能逐指数丢弃物理交叉项。
+
+证明。定理 34.3 的原场乘法与表示定理结论给出每个 $\chi_Tv_i\in D(\mathscr A)$；$\chi$ 在极点附近恒为一，故不改变原极点闭包。有限和给出 $h_E\in D(\mathscr A)$。矩阵恒等式为
+
+$$
+\Gamma=\operatorname{diag}(\kappa)M\operatorname{diag}(\kappa).
+$$
+
+实基使这些矩阵实对称，(35.14) 因而给出
+
+$$
+E\langle h_E,v_j\rangle/\kappa_j
+       =\sum_i d_iM_{ij}=-B_j.
+$$
+
+按第二变量的复反线性延拓，方程对原完整复 $K$ 成立。反演尺度来自此加权矩阵恒等式及有限维逆的连续性，不是原预解式界；(35.12)--(35.13) 亦直接给出 (35.17)。
+
+对 $\chi_Tv_i$ 的质量再次应用定理 34.3，此时其截断取为 $\chi$，得到这些向量除以 $\kappa_i$ 后的物理 Gram 乘 $E$ 有界。$d(E)$ 有界，故 $\|h_E\|_2=O(E^{-1/2})$。
+
+每个 $v\in K$ 是原全测试局部形式零能解。$h_E$ 是紧支撑原自由形式向量，可由原紧光滑 core 在固定更大紧集上逼近，故 $q(h_E,v)=0$。其原算子像由 (34.15) 的环带乘法公式给出，是紧支撑 $L^2$ 函数，于是 $\langle\mathscr Ah_E,v\rangle=0$。结合 (35.4)、(35.15)，
+
+$$
+\langle R_E,v\rangle
+ =\langle C_E,v\rangle+\langle\mathscr Ah_E,v\rangle
+                            +E\langle h_E,v\rangle=0.
+$$
+
+$C_E$、$h_E$、$\mathscr Ah_E$ 均紧支撑，所写残差配对均为普通局部物理 $L^2$ 配对。$\square$
+
+(35.15) 针对真实右端给出有限相容修正，不是假定未知解存在；它未给出 $\|R_E\|_2=o(\sqrt E)$。
+

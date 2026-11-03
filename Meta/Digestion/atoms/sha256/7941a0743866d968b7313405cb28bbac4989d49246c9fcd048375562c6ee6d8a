@@ -1,0 +1,19 @@
+**Definition 16.1 (the paid zero-update comparator).** Choose the
+leftmost shortest public leaf $p_*$, so $|p_*|=\delta$. Maintain a
+binary-encoded interval $[l,z]$, initially $[K,2K-1]$. While $l<z$,
+form
+
+$$
+ s=l+\lfloor(z-l+1)/2\rfloor,
+ \qquad\text{submit the literal }\tau_\pi(p_*R^s).
+ \tag{GPO.50}
+$$
+
+On presence one set $l=s$; on zero set $z=s-1$. At the resulting
+singleton retain $k=l$. For each original leaf $i=1,\ldots,n$,
+submit once the whole literal $\tau_\pi(p_iR^{k-1}LL)$ and use its
+paid bit for $x_i$. Assemble $u_x$ using the public scaffold and these
+actually acquired labels. Write the pair $(u_x,k)$ into owned readable
+backing, preserving its same-root binding and current grants. There
+are no source updates in this procedure.
+

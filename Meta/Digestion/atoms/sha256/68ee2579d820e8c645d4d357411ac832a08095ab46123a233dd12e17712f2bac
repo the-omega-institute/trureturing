@@ -1,0 +1,16 @@
+**Theorem 6.1 (Linear relation).** For every $n\ge1$ and every trace-preserving linear map $\Lambda$ on $M_{2^n}(\mathbb C)$,
+
+$$
+3\sum_{k=0}^{n-1}(-2)^kF_k(\Lambda)+(-2)^nF(\Lambda)=1 .
+$$
+
+**Proof.** By Theorem 4.1 and Convention 2.1 the left-hand side is $\sum_{w=0}^{n}c_wQ_w$. The coefficient of $Q_0$ is $c_0=3\sum_{k=0}^{n-1}(-2)^k+(-2)^n=(1-(-2)^n)+(-2)^n=1$. For $1\le w\le n$, $F$ does not involve $Q_w$, and
+
+$$
+c_w=3\cdot3^{-w}\sum_{k=0}^{n-1}(-2)^k(-1)^k\binom{w-1}{k}=3^{1-w}\sum_{k=0}^{w-1}2^k\binom{w-1}{k}=3^{1-w}\,3^{w-1}=1,
+$$
+
+using $\binom{w-1}{k}=0$ for $k\ge w$ and $w-1\le n-1$. Hence the left-hand side equals $\sum_wQ_w=\sum_\beta q_\beta=1$ by trace preservation (Convention 2.1). $\square$
+
+Stance: suspected-novel.
+

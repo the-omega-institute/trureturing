@@ -1,0 +1,11 @@
+**Theorem 53.1 (complete finite-word recovery criterion without length advice).** Fix any acquired original source and integer $H\ge0$. On the disjoint union
+
+$$
+\mathcal U_H=\coprod_{L\ge0}\{0,\ldots,H\}^L,
+\tag{53.1}
+$$
+
+the native endpoint map $u\mapsto X(u)$ is injective if and only if $H<a$.
+
+Proof. If two endpoints agree, Theorem 52.3 first gives equal lengths. For $H<a$, Theorem 45.2 then gives equal words, since their common preparation terms cancel and their forced endpoints agree. Conversely, for $H\ge a$ reuse exactly the equal-length collision supplier of Theorem 45.2. With its computed $R,C$, it constructs distinct words $U,V\in\{0,\ldots,a\}^{\ell}$, where $\ell=N+aC$ suffices, with $E_\ell(U)=E_\ell(V)$. Adding the same $T^\ell x_*$ gives $X(U)=X(V)$. These words lie in $\mathcal U_H$. No new collision hypothesis or irreducible factor is substituted. $\square$
+

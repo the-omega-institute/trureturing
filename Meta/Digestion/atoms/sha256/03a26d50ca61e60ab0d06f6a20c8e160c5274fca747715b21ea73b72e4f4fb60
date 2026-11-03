@@ -1,0 +1,43 @@
+**Definition 18.1 (Fixed-phase parameters and auxiliary marginal functions).** Fix an integer $k\ge4$ and a real number $0<\eta<1/4$, and put
+
+$$
+\begin{gathered}
+L=k+1,\qquad A(k,\eta)=\left\lceil\frac{2^{16}L^2}{\eta}\right\rceil,\\
+a\in\mathbb Z,\quad a\ge A(k,\eta),\qquad
+\frac k2+\eta\le\lambda\le\frac{k+1}{2}-\eta,\qquad
+\delta=\frac\lambda a,\\
+r=a+1,\quad s=a+2,\quad n=a+1-k,\quad c=2a+1,\\
+q=r-\delta,\quad \theta=1-\delta,\quad \gamma=c\delta,\quad
+\mu=\frac qs,\quad \tau=\frac{3(2a+3)\delta}{r^2}.
+\end{gathered}
+\tag{18.1}
+$$
+
+The actual-law domain is exactly Definition 11.1: nonnegative masses $x_T$ on all nonempty $T\subseteq[s]$, of total one, with $\mathbb E_x|T|=q$ and actual marginals $y_i=\mathbb P_x(i\in T)\ge\tau$. Its energy is the $H(x)$ of Definition 1.1. All expectations and marginals belong to this same law. In particular no support, symmetry, connectedness, or strictly positive atom-mass condition is imposed. Write $J=[s]\setminus T$ and $\bar x_J=x_{[s]\setminus J}$ for proper subsets $J\subsetneq[s]$.
+
+For $z>0$ set
+
+$$
+f(z)=\frac{a^2}{z}+\frac{c\theta}{z^2},\qquad
+g(z)=\frac{r^2}{z}-\frac\gamma{z^2}.
+\tag{18.2}
+$$
+
+Given $P\subseteq[s]$ with $|P|=k$ and $h\notin P$, put $N=[s]\setminus(P\cup\{h\})$ and define
+
+$$
+\begin{aligned}
+\mathcal G_{P,h}(y)
+&=\sum_{i\in P}f(y_i)+\frac{r^2}{y_h}
+ +\frac{c(\sum_{i\in P}y_i+\delta-k)}{y_h^2}
+ +\sum_{j\in N}g(y_j),\\
+\mathcal B&=[9/10,1]^s,\qquad
+\mathcal B_q=\{y\in\mathcal B:\sum_i y_i=q\},\\
+v(u,w)&=\frac{q-ku-w}{n},\qquad D(u)=ku+\delta-k,\\
+F_k(u,w)&=k f(u)+\frac{r^2}{w}+\frac{cD(u)}{w^2}+n g(v(u,w)).
+\end{aligned}
+\tag{18.3}
+$$
+
+These are auxiliary functions; membership in $\mathcal B_q$ does not assert realizability by an actual law. The normalization $H$ and the subtractand $B$ remain (1.1). The graph normalization cited there uses the convention of Albalahi et al., DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), §1, p.109, which drops $1/\sqrt2$ in defining CDSO; no finite-graph extremal theorem is assumed here. The parameter range (18.1) is disjoint from §17.
+

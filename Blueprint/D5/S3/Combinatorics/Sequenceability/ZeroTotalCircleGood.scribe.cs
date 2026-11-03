@@ -9,6 +9,15 @@ internal sealed class ZeroTotalCircleGoodDocument : IScribeDocumentDefinition
         "Zero total connects circular arcs to actual Good intervals",
         H("Zero total connects circular arcs to actual Good intervals"),
         Blocks(
+            Describe.Lean(DescribeId.Create("rotated-two-runs"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/ZeroTotalCircleGood.rotated_two_runs"),
+                H("One of two circular runs survives any rooting"),
+                StatementSource.FromAuthor(RotatedStatement()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "This existing list lemma is exposed for direct reuse by PrivatePairBooleanDescent. "
+                    + "For arbitrary lists u,v,w, if u followed by v is a rotation of w, then u or v "
+                    + "is a contiguous interval of w. It needs no group structure or decidable equality; "
+                    + "empty runs are allowed. The original proof is unchanged."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("main-result"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/ZeroTotalCircleGood.good_iff_no_zero_arc"),
                 H("Zero total connects circular arcs to actual Good intervals"), StatementSource.FromAuthor(Statement()), AssessedProvenance.FromRepo(),
@@ -25,6 +34,18 @@ internal sealed class ZeroTotalCircleGoodDocument : IScribeDocumentDefinition
                     + "a linear interval. Consequently a zero circular arc makes every rooting bad. Conversely "
                     + "a bad proper interval supplies its actual finite label set and its circular arc. This "
                     + "proves the exact bridge without weakening the interval convention.")))));
+
+    private static Formula RotatedStatement()
+    {
+        var g = FormulaDsl.Id("G"); var u = FormulaDsl.Id("u"); var v = FormulaDsl.Id("v");
+        var w = FormulaDsl.Id("w"); var p = FormulaDsl.Id("p"); var q = FormulaDsl.Id("q");
+        Formula Interval(Formula t) => new Formula.Bind(FormulaQuantifier.Exists,
+            FormulaIdentifier.Create("p"), C("List", g), new Formula.Bind(FormulaQuantifier.Exists,
+                FormulaIdentifier.Create("q"), C("List", g), E(w, C("append", p, C("append", t, q)))));
+        return Disp(A("G", C("Type"), A("u", C("List", g), A("v", C("List", g), A("w", C("List", g),
+            Imp(C("IsRotated", C("append", u, v), w),
+                new Formula.Logic(Interval(u), FormulaLogicOperator.Or, Interval(v))))))));
+    }
 
     private static Formula Statement() =>
         Disp(

@@ -1,0 +1,20 @@
+**Theorem 25.3 (strictness with a completely specified finite prior program).** There is a total computable unique-pulse program $b$ for which $H_b$ is undecidable. Its rational prior has all the decidability, sparsity and local-isolation properties of Theorem 25.2, and $\tau_b$ is decidable when an exact rational is supplied. Yet no ordinary effective stationary or forward controller acquires even that bit pointwise finitely from the specified floor ports. In particular ordinary-metric isolation and semantic right-local homogeneity do not supply an enumerable sound complete stopping family, even for this decidable prior and binary target.
+
+More generally every computably enumerable set occurs as $H_b$ for a public total computable first-hit program satisfying (25.1). Hence Theorem 25.2 realizes every such hit degree as the conditional acquisition degree of this rational prior construction; it does not introduce an oracle into the actual model.
+
+Proof. For a fixed computable enumerator of a set $A$, let $A(e,t)$ be the decidable predicate that $e$ has appeared during its first $t$ computation steps. Define $b(e,t)=1$ exactly when $A(e,t)$ holds and $A(e,s)$ fails for every $s<t$. This is a finite bounded test for each $(e,t)$, has at most one hit per row, and has a hit exactly for $e\in A$. The first-occurrence construction is classical; the consequence for rational acquisition is Theorem 25.2.
+
+One explicit finite presentation of an undecidable instance uses the pinned partial-recursive code evaluator. Let $c_e=\operatorname{ofNatCode}(e)$ and
+
+$$
+A(e,t)\ \Longleftrightarrow\
+\operatorname{evaln}(t,c_e,0)\ne\mathrm{none},
+\qquad
+b(e,t)=1\ \Longleftrightarrow\ A(e,t)\land\forall s<t,\neg A(e,s).
+\tag{25.7}
+$$
+
+Here `Nat.Partrec.Code.ofNatCode` and `Nat.Partrec.Code.evaln` have exactly the definitions in [PartrecCode.lean at the pinned revision](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/PartrecCode.lean). The code decoder is a terminating recursion on its integer argument, and `evaln` is the finite resource-bounded evaluator; `primrec_evaln` supplies its primitive recursiveness. Thus (25.7), including its bounded earlier-stage test, is a public total finite-program specification independent of the unknown $x$. `evaln_complete` and `evaln_sound` identify existence of a successful finite evaluation with termination of $c_e$ on $0$. The code numbering represents every code effectively. If this $H_b$ were decidable, composing its decision with code encoding would decide code termination at $0$, contrary to `ComputablePred.halting_problem 0` in [Halting.lean at the same revision](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/Halting.lean). The corresponding recursively enumerable termination predicate is `halting_problem_re 0`. These are mature computability suppliers with their exact fixed-input domain, not claims that the new rational bridge is already a kernel theorem.
+
+Apply Theorem 25.2 with $O=\varnothing$. Conditions 1–6 all fail for this instance, while the membership and isolation conclusions still hold. The bit as a function of an exact encoded rational is computed simply by testing integrality. Its failure of acquisition is therefore a failure of obtaining a usable finite stopping distinction from the allowed reports, not a failure to compute the bit after exact input has been acquired. A source-dependent program that already selected the row's hit status would change Assumption 24.1 and is excluded. $\square$
+

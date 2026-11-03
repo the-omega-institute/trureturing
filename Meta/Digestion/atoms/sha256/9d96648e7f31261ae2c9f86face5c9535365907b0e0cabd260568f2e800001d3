@@ -1,0 +1,29 @@
+**Definition 144.1 (Positive constants from the same finite rows).**
+Let $T$ be exactly the $34\times34$ minor in (142.7)–(142.8), and put
+
+$$
+\begin{gathered}
+\Lambda=\frac{\displaystyle\sum_{j,k=1}^{34}
+                         |\operatorname{cof}_{jk}(T)|}{|\det T|},
+\qquad p=1+\sqrt3,\qquad B=(8/b+13p)\Lambda,\\
+m_0=\frac58-b=\frac{9-4\sqrt2}{24},\qquad
+\kappa=\frac{\sqrt2(2+b)B}{m_0},\\
+K=\tau+\tfrac12(\sqrt{34}/8+b),\qquad R_*=pK,\\
+Z_*=\frac{[1+\tfrac p2(1+b)]B+\kappa R_*}{\tau},\qquad
+c=\frac1{2(\kappa+B+Z_*)},\\
+C=\tfrac12\max\{2K,2b,1,2\tau\},\qquad
+J=1+\frac5{2\tau},\qquad M=\sqrt2 C,\\
+R=1+\frac{2JM}{c},\qquad G=\frac M c,\\
+E=\tfrac12\left[b(R^2+1)
+       +2G\{(\tau+b/2)R+(b/2)R^2\}\right],\\
+\eta_0=\min\left\{1,\frac1{4R},\frac1{2G},\frac1{40000E}\right\},
+\qquad a_- =\frac1{20000K},\qquad a_+=G.
+\end{gathered}
+\tag{144.1}
+$$
+
+Cofactors here mean their finite determinant sums with entries given
+by (142.1), (142.6) and (142.7). Thus (144.1) consists solely of
+specified finite arithmetic, absolute values, radicals and finite
+maxima or minima; it contains no optimization over hypotheses.
+

@@ -1,0 +1,42 @@
+**Corollary 138.2 (Only the justified nonlinear gap bound; repo-derived).**
+For every source, $A,f$ in Definition 135.1, retain the original
+nonlinear minima $\mu_a(\eta),\nu_a(\eta)$ of Definition 126.2
+and the supplied $E,\eta_*$ of (126.7), without enlarging that
+interval. Then
+
+$$
+0\le\nu_a(\eta)-\mu_a(\eta)
+ \le C_{\rm ref}\epsilon_N\eta+2E\eta^2
+                    \qquad(0<\eta\le\eta_*).
+\tag{138.6}
+$$
+
+In particular, zero defect, including every source in Proposition
+137.1, gives only
+
+$$
+0\le\nu_a(\eta)-\mu_a(\eta)\le2E\eta^2.
+\tag{138.7}
+$$
+
+*Proof.* The zero-retention feasible set is contained in the full
+complex-retention feasible set, so $\mu_a\le\nu_a$. The two
+full-law estimates of Theorem 126.3 give on exactly its interval
+
+$$
+\nu_a(\eta)-\mu_a(\eta)
+ \le\eta(n_a-m_a)+2E\eta^2.
+$$
+
+Insert (136.2) to prove (138.6); set $\epsilon_N=0$ for (138.7).
+These estimates compare the original nonlinear laws, not a chosen
+lift outside their image. The tangent midpoint proof establishes
+no symmetry theorem for that nonlinear image. Accordingly (138.7)
+does not assert equality of the nonlinear minima or determine an
+endpoint type from §132. Formula (136.2) makes positive defect
+necessary for a positive full tangent gap, but gives no converse.
+Concrete positive-gap existence, evaluation of the original finite
+gap $\delta_f$, and the nonlinear endpoint type for the order-four
+family remain unresolved by these statements. All source and $A$
+endpoints excluded in Definition 125.1 remain excluded. $\square$
+

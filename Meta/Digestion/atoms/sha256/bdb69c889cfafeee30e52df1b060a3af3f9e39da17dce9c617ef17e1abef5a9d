@@ -1,0 +1,20 @@
+**Proposition 85.5 (current-image inverses and legal use).** These four
+current expressions recover one another on each declared image, with both
+identities and agreement of all routes. At $g\le2$, powers of $A$
+are invertible on $\operatorname{im}A$; at $g=3$, $L_c$ has full
+column rank. Thus Space/Memory recover $c$ by a rational left inverse,
+Time by $R^{-1}$ or $R_c^{-1}$, and Boundary by a left inverse of
+its germ restricted to the current image. The restriction is essential
+at $g=2$; no whole-space inverse is used. Evaluating from $c$ gives
+the inverse identities. Each $c$ has an actual original preimage under
+$A$, so these images are attained. Convention 75.2 identifies their
+kernels with full current service on the fixed context.
+
+For actual use select the current value $q$ at an omitted inherited
+binding from the installed state and actually Add it at a readable terminal;
+Hold; Read there. This costs one Add, Hold and Read, gives the predicted
+sum and updates the full predictor. It can leave the declared current
+image, so no unperformed re-assay or historical inverse is inferred.
+If fresh Time measurements are wanted, their sampling experiment must
+actually be executed and paid. Bare Ticks never manufacture new records.
+

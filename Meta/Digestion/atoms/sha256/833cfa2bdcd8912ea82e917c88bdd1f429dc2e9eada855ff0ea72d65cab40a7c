@@ -1,0 +1,38 @@
+#### 定理 2.6（有限补丁的归一化五模式编码）
+
+设 $Q\subset\mathbb{R}^4$ 非空有限，$R>\max_{q\in Q}\left\lVert q\right\rVert$，在开球 $\left\lVert q\right\rVert <R$ 上定义
+
+$$
+\Psi_R(q)=\left(\frac qR,\sqrt{1-\frac{\left\lVert q\right\rVert ^2}{R^2}}\right)\in\mathbb{R}^5\subset\mathbb{C}^5,
+ \qquad \widehat U_D=U_D\oplus1 .
+$$
+
+则 $\left\lVert \Psi_R(q)\right\rVert =1$、该编码单射，且
+
+$$
+\widehat U_D\Psi_R(q)=\Psi_R(U_Dq).
+$$
+
+其前两个输出振幅等于 $\pi_D(q)/(\sqrt2R)$。
+
+**证明。**
+
+范数式由定义给出；前四坐标恢复 $q$，故单射。正交性使 $\left\lVert U_Dq\right\rVert =\left\lVert q\right\rVert$，所以第五分量保持不变，前四分量线性输运，再用 [(3)](#eq-completion)。
+
+∎
+
+同一个门处理整个有限补丁，径向信息也未被归一化抹去。不过有符号坐标位于振幅中，计算基概率只给平方；恢复符号需要相位参考及相干读出。整个无界铺砌没有一个有限 $R$ 满足该编码条件；无限位置寄存器或额外尺度、地址记录是不同模型。
+
+定理 [2.4](#statement-2-4) 还允许更紧的三复模式编码
+
+$$
+\widetilde\Psi_R(q)=
+ \left(\frac{x+i x^\star}{R},
+       \sqrt{1-\frac{\left\lVert q\right\rVert ^2}{R^2}}\right)\in\mathbb{C}^3.
+$$
+
+$M_D\oplus1$ 使前两复振幅的实部给 $\pi_D(q)/(\sqrt2R)$，第三分量不变，证明与定理 [2.6](#statement-2-6) 相同。
+它可以放入 AURIC 五模式中的三个模式，剩余两个模式置零；这种嵌入仍不证明原生 $K$ 能执行该门。
+
+<a id="statement-2-7"></a>
+

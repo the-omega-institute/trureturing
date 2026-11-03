@@ -1,0 +1,91 @@
+**Proposition 15.6 (Ordered exact cap competition and its crossings).**
+Let $t=h+1$, $a\ge4$ and, for an integer $j\ge1$, set
+
+$$
+\begin{gathered}
+D_j(a)=\frac{4(a+j)^3+3(a+j)^2+(a+j)}{a-1}+a+2j,\\
+\tau_j(a)=\frac{j(j+1)}{a-1}
+ \left(\sqrt{1+\frac{(a-1)D_j(a)}{j(j+1)}}-1\right)-1.
+\end{gathered}
+\tag{15.28}
+$$
+
+The polynomial continuation of the cap energies has signed adjacent
+differences
+
+$$
+\Delta_j:=S_{j+1}-S_j
+=D_j(a)-2t-\frac{(a-1)t^2}{j(j+1)}.
+\tag{15.29}
+$$
+
+For $h\ge0$, this difference is positive, zero or negative as
+$h<\tau_j$, $h=\tau_j$ or $h>\tau_j$, respectively. The thresholds
+are strictly increasing in $j$. The cap sequence is strictly convex
+in its integer index. Therefore its minimum on any consecutive
+finite index interval has either one winning index or exactly two
+adjacent winning indices; at $h=\tau_j$ those indices are $j,j+1$
+whenever both belong to that interval. There are no triple ties.
+
+For each fixed finite index range, uniformly in that range,
+
+$$
+\frac{\tau_j(a)}{\sqrt a}=2\sqrt{j(j+1)}+O(a^{-1/2}).
+\tag{15.30}
+$$
+
+In the high-ratio interval of Theorem 15.5, this is the exact
+competition for $M$. More explicitly, set $\tau_0=-\infty$ and
+$\tau_{J_R}=+\infty$ only as endpoint conventions for this finite
+competition. Index $j$ wins exactly when
+$\tau_{j-1}\le h\le\tau_j$, with the natural endpoint omissions.
+Each real crossing $\tau_j$, $2\le j<J_R$, lying in the claimed
+high-ratio interval is an actual crossing of the full unrestricted
+value whenever $h=\tau_j$ is an admissible integer. If it is not an
+integer, the same threshold gives the exact switch between integer
+budgets. A threshold outside the interval makes no assertion of a
+crossing inside it. On the lower interval all winning indices are
+$1,2$ as in Theorem 14.5, so globally there are still at most two
+adjacent winning indices, with all their equality classes included.
+
+**Proof.** Write the tail term as
+
+$$
+\frac{(t-j)^2(a+j-1)}j
+=\frac{(a-1)t^2}{j}-2(a-1)t+(a-1)j+t^2-2tj+j^2.
+$$
+
+The adjacent difference of the core term, with $m=a+j$, is
+$\{(m+1)^3m-m^3(m-1)\}/(a-1)=(4m^3+3m^2+m)/(a-1)$.
+Their sum is (15.29). Since $D_j(a)>0$, the quadratic in $t$ is
+strictly decreasing for $t\ge0$ and has one positive root, precisely
+$t=\tau_j+1$. Its sign gives the asserted comparison for $h\ge0$.
+Moreover
+
+$$
+\Delta_{j+1}-\Delta_j
+=\frac{12m^2+18m+8}{a-1}+2
+ +\frac{2(a-1)t^2}{j(j+1)(j+2)}>0.
+\tag{15.31}
+$$
+
+This proves strict convexity and shows that the positive roots in
+$t$ strictly increase: at the root of $\Delta_j$, $\Delta_{j+1}>0$
+and has its zero later. At a root, differences before it are strictly
+negative and those after it strictly positive. This proves the
+global finite-sequence tie and winner assertions, not merely equality
+of the two compared terms.
+
+For fixed $j$, $D_j(a)=4a^2+O_j(a)$. Inserting this into the positive
+root in (15.28) gives (15.30), with a bounded error before division
+by $\sqrt a$. All constants are uniform for finitely many indices.
+In particular $\tau_1/\sqrt a\to2\sqrt2<7/2$ and
+$\tau_2/\sqrt a\to2\sqrt6>4$. This proves the overlap assertion in
+Theorem 15.5. Within its higher interval, (15.27) transfers the exact
+finite competition to $M$, and the endpoint conventions give its
+winner test. Every cap used there is admissible because $h\ge J_R$.
+For bounded indices, the thresholds themselves also exceed the
+corresponding indices eventually, by (15.30). The restrictions on
+which thresholds lie in the interval therefore preserve both the
+original integer domain and the fixed upper ratio. ∎
+

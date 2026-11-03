@@ -1,0 +1,53 @@
+**Theorem 23.1 (The parent surface and its regular response covering).**
+The surface $\mathcal S$ of (22.2) is smooth and real analytic. Define
+
+$$
+H_{\rm reg}=\det\frac{\partial(F_{\rm par},P_5,P_6)}
+ {\partial(r,b,\epsilon)},\qquad
+D_{\rm crit}=\mathscr A(\{s\in\mathcal S_O:H_{\rm reg}(s)=0\}).
+\tag{23.1}
+$$
+
+Then $D_{\rm crit}$ is closed relative to $O$. For every connected
+component $\Omega$ of $O\setminus D_{\rm crit}$ with nonempty inverse
+image, $\mathscr A:\mathscr A^{-1}(\Omega)\to\Omega$ is a finite
+covering with constant positive fiber cardinality. Continuous paths
+lift uniquely from a specified initial world; analytic paths have
+analytic lifts.
+
+**Proof.** Where $\Lambda\ne0$, $(F_{\rm par})_\epsilon\ne0$.
+Where $\Lambda=0$, (19.1) forces $b=1/8$. The exhaustive singular
+roots cited in Section 15 satisfy
+$\Lambda=\varphi_{\rm sing}/(960jn)$ at that width. They are simple:
+at fixed $b$, $j''=n''=-2/b$ gives
+
+$$
+(1/j)''=2(j')^2/j^3+2/(bj^2)>0,\qquad
+(1/n)''=2(n')^2/n^3+2/(bn^2)>0.
+$$
+
+Hence $\Lambda''<0$. The inherited opposite signs at the two root
+isolations put positive values between the roots; concavity forces
+strictly positive derivative at the lower root and strictly negative
+derivative at the upper one. Thus $\Lambda_r\ne0$. At $b=1/8$,
+$K_5=0$, so $P_5\ne24$ implies $\epsilon\ne0$ and
+$(F_{\rm par})_r=\epsilon\Lambda_r\ne0$. This proves smoothness
+including every allowed singular source. Smoothness of this surface
+is distinct from regularity of the response differential: adjoining
+$dF_{\rm par}$ to $dP_5,dP_6$ proves that $H_{\rm reg}\ne0$ is
+exactly invertibility of the response map on the tangent plane.
+
+A convergent sequence of critical labels inside $O$ has a convergent
+subsequence of critical preimages by Theorem 22.1. Its strict limit
+is still critical, proving relative closedness. Apply the classical
+proper local diffeomorphism covering argument to this particular map.
+Each regular fiber is discrete and compact, hence finite. Choose
+disjoint inverse neighborhoods at its finitely many points. Additional
+preimages at arbitrarily nearby labels would, by properness, have a
+subsequential limit in that same fiber, a contradiction. A smaller
+neighborhood is evenly covered. The image is open by local inversion
+and closed by properness, so it is the whole connected component.
+Cardinality is locally constant and therefore constant. Inverse charts
+give unique lifts; properness prevents termination at an interior path
+time. Analytic inverse charts give analytic lifts. ∎
+

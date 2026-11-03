@@ -1,0 +1,33 @@
+**Proposition 2.3 (native action correspondence retained).** For every
+original finite-variation relative command $\gamma=(a_c,b_c)$ with
+terminal data $A_c=a_c(T)$, $B_c=b_c(T)$ and
+$J_c=\int_0^T a_c\,db_c$, right multiplication by
+$(A_c,B_c,0,J_c)$ gives
+
+$$
+(x,y,w)\longmapsto(x+A_c,y+B_c,w+J_c+xB_c).
+\tag{2.7}
+$$
+
+Its image under $\Psi$ is exactly
+
+$$
+(k,\alpha,\beta)\longmapsto
+ \bigl(k+A_c,[\alpha+B_c/2],
+  [\beta+(1/2-k/r)B_c-J_c/r]\bigr).
+\tag{2.8}
+$$
+
+The complete legal domain is
+$k+\min a_c>0$, $k+\max a_c<H_{\rm n}$, with the original
+pulled-back domain under concatenation. All ten readouts are (1.4).
+
+Proof. This is [F, Proposition 7.2]: substitute the actual group product
+in (1.3), and do so at every prefix. Composing two products gives the
+original cross term $A_cB_c'$, so composition and all inverse routes in
+Proposition 2.1 agree wherever the full guard holds. The coordinate $z$
+is unchanged by this deterministic command. This statement does not
+assert that native commands are installed interventions on the
+autonomous diffusion, or that its generator descends through $\Psi$.
+$\square$
+

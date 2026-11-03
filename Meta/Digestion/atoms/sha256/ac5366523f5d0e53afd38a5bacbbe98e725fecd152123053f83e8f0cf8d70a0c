@@ -1,0 +1,32 @@
+**Definition 33.1 (the installed source-blind acquisition program).**
+Let
+
+$$
+ m=2d\quad(\mathscr R_d),\qquad
+ m=2K-1\quad(\mathscr M_K),\qquad
+ m=r\quad\text{for the public-row benchmark}.
+ \tag{GPO.80}
+$$
+
+Assume the actual common initialization, service binding and authentic
+promise of Definition 27.1, with the appropriate public finite integer
+input. The program begins with no source bit, an empty acquired word,
+the actual update counter zero and the known alpha seed. Its local
+working registers, tree/list workspaces, literal buffers and retention
+are ordinary accessible owned backing. Its finite instruction scheme
+is independent of the unknown stream; loop counters and data capacity
+may grow with the supplied bound and run. This specification is an
+ideal native local program, not a claim of physical installation or a
+new Lean implementation.
+
+For $m>0$, repeatedly execute real updates. At cut $s\ge3$, list
+in actual chronological order the births of update $s-1$ and, until
+$m$ bits have been obtained, make one stationary literal query
+$\operatorname{Read}(p_j aa)$ for each such birth. Append its actual
+reply as $z_j$. If the target count is not reached, finish that whole
+batch before the next update. When $m$ is reached, stop issuing source
+updates, synthesize the canonical behavioral generator of Lemma 29.2
+or 30.2, or use the public row, and compute the current labelled tree
+and generator phase. The final partial batch need not be read to its
+end. All computation, copying and output take their own localSteps.
+

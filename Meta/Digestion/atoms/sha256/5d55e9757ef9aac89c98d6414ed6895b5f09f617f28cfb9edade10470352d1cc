@@ -1,0 +1,18 @@
+**Corollary 17.2 (a finite exit criterion away from the golden crossing).** Define
+
+$$
+\ell_T(b)=\min\{j\ge1:b\notin I_{T+j-1}\},
+\tag{17.2}
+$$
+
+with value $+\infty$ if this set is empty. For $b\in I_T\setminus\{\phi\}$ this is finite and at least $2$, while $\ell_T(\phi)=+\infty$. For every known $H,D$, formula (16.1) is equivalently $C_T=r_1$ when $r_1\ge\ell_T(b)$ and $C_T=r_2$ otherwise.
+
+**Proof.** The intervals are nested by (11.2)–(11.3), contain $\phi$ strictly by Theorem 9.1, and have length
+
+$$
+U_S-L_S=\frac1{F_{S-1}F_S}\longrightarrow0.
+\tag{17.3}
+$$
+
+Cassini gives the equality, and the Fibonacci recurrence gives unbounded denominators. Thus every fixed $b\ne\phi$ is outside all sufficiently late intervals. Nesting includes the equality endpoints in the exit side, and (16.1) proves the claimed reformulation. This criterion does not change the original degree budget or assume that a comparison of arbitrary real inputs is effectively decidable. $\square$
+

@@ -1,0 +1,27 @@
+**Proposition 37.4 (least recurrence and endpoint transfer).** The monic polynomial
+
+$$
+q(z)=z^N+\sum_{j=0}^{N-1}q_j z^j,\qquad
+H_{N-1}(q_j)_{j<N}=-(m_N,\ldots,m_{2N-1})^{\mathsf T}
+$$
+
+is the characteristic polynomial of the actual $T$. Its degree is the least order of a monic recurrence holding for all nonnegative shifts of the impulse law. In particular
+
+$$
+m_{s+N}=-\sum_{j<N}q_jm_{s+j}\quad(s\ge0).
+$$
+
+The endpoint transfer is the rational function
+
+$$
+F_T(z)=e_0^{\mathsf T}(zI-T)^{-1}e_0
+=\frac{\det(zI-T_{\{1,\ldots,N-1\}})}{\det(zI-T)}
+=\sum_{j\ge0}m_jz^{-j-1}.
+$$
+
+The empty determinant in the numerator is $1$. In reduced form the monic denominator of $F_T$ is $q$, without cancellation. These are finite rational polynomial data, not an infinite response-query capability.
+
+**Proof.** The solve is nonsingular. Its equations say that $q(T)e_0$ is orthogonal to each member of the basis $T^i e_0$, $i<N$, so $q(T)e_0=0$. It follows that $q(T)$ vanishes on every $T^i e_0$, since it commutes with $T$. Thus $q(T)=0$. No nonzero polynomial of degree below $N$ can annihilate $e_0$ by Lemma 37.1. Equivalently the coefficient multiplication on this basis is the companion-shaped matrix of $q$; the existing coefficient-multiplication characteristic-polynomial result gives $\det(zI-T)=q(z)$. The recurrence follows by multiplying $q(T)e_0=0$ by $e_0^{\mathsf T}T^s$.
+
+If a smaller monic scalar recurrence held at every shift, its polynomial evaluated at $T$ on $e_0$ would again be orthogonal to all $T^i e_0$, hence zero, contradicting independence. The transfer formula is the cofactor identity and its Laurent expansion is the formal geometric-series identity at infinity. A cancellation would leave a smaller monic denominator; multiplication of the Laurent series by that denominator would yield a smaller all-shift recurrence, the same contradiction. The Hankel solve, cofactor polynomial arithmetic or path continuants compute the stated finite encoding from earned data. $\square$
+

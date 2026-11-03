@@ -1,0 +1,12 @@
+**Corollary 34.2 (an exact bounded-motion criterion).** For given $b,h$, acquisition on $P_b$ of any of these targets with at most $h$ actions everywhere is equivalent to acquisition with at most $h$ actions only at the endpoint, and both are equivalent to the finite arithmetic test
+
+$$
+\exists u\in\{L,R\}^{\le h}:\quad
+c_u+b d_u\in\{1,2,4,8,\ldots\}.
+\tag{34.4}
+$$
+
+The test and attaining original-target controller are those just constructed. The assertion does not infer acquisition from the existential test alone: (34.1)–(34.3) provide the actual one-source realization and its stopping proof. In particular $m(b)=0$ exactly when $b$ is a power of two. For such $b$ the empty prefix and $q_b$ already isolate the endpoint, after which the no-motion dyadic decoder recovers every exact original view pointwise finitely. This is not exact acquisition on the full rational carrier: the public sparse prior is essential.
+
+Proof. The equivalences follow from Theorem 34.1 and Definition 33.3's finite decision. At length zero the matrix is the identity, so its endpoint denominator is exactly $b$. $\square$
+

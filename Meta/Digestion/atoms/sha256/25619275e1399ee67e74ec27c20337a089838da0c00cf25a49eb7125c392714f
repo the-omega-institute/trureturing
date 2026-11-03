@@ -1,0 +1,36 @@
+**Theorem 2.2 (uniform admissibility and cycle ranks).** Every member of Definition 1.1 is rational and symmetric, and satisfies
+
+$$
+\tfrac14 I<T<\tfrac34 I.
+\tag{CL.9}
+$$
+
+Thus $T$ and $I-T$ are positive definite. Its positive off-diagonal graph is connected, has no negative off-diagonal entries, and has exactly the leaves $\ell_1,\ldots,\ell_b$. At $S=0$ it has $b+4$ edges and cycle rank one; at $S>0$ it has $b+5$ edges and cycle rank two.
+
+**Proof.** Rationality and symmetry follow from (CL.3)–(CL.4). The absolute row sums of $A_0$ are $1$ at a leaf, $b+1$ at $c$, $4$ at $d$, $2$ at $e$ and $3$ at $f$. Their maximum is $b+1$ because $b\ge3$. For an eigenvector of $A_0$, choose a coordinate of maximum absolute value; the eigenvalue equation at that coordinate gives $|\lambda|\le b+1$. Symmetry makes all eigenvalues real. Orthogonality of $Q$ preserves the spectrum, so every eigenvalue $\mu$ of $T$ obeys
+
+$$
+\frac14+\frac3{4N}
+=\frac12-\frac{b+1}{4N}
+\le\mu\le
+\frac12+\frac{b+1}{4N}
+=\frac34-\frac3{4N}.
+\tag{CL.10}
+$$
+
+This proves the strict inequalities in (CL.9).
+
+For the off-diagonal entries,
+
+$$
+C>0,\qquad
+C^2-S^2=1-2S^2\ge7/25,\qquad
+2C-S\ge1,\qquad 2S+C>0.
+$$
+
+The entry $ce$ is positive exactly when $S>0$. Multiplication by $\epsilon>0$ preserves these signs. Thus the graph always contains every leaf-to-$c$ edge, the edge $cd$, and the triangle $def$; the only additional edge is $ce$ when $S>0$. It is connected.
+
+At $S=0$ the degrees of $c,d,e,f$ are respectively $b+1,3,2,2$. At $S>0$ they are $b+2,3,3,2$. Consequently none is a leaf and all declared leaves have degree one. Here the graph ignores diagonal entries: a diagonal coefficient is an onsite coefficient, not an extra loop edge. For a connected undirected graph the cycle rank is $|E|-|V|+1$. The counts above give one and two. $\square$
+
+The word “cyclic” here means that the positive off-diagonal graph contains a cycle. It does not mean that any single leaf vector is a cyclic vector for $T$.
+

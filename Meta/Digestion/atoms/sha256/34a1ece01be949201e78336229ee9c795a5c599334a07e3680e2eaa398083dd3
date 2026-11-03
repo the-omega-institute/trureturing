@@ -1,0 +1,40 @@
+**Theorem 6.1 (Density limit and complete near-minimum structure).** Let $\ell_n\ge1$ be any prescribed integer sequence with $\ell_n/n\to\alpha\in[0,1)$. Then eventually $\ell_n\le n-3$ and
+
+$$
+\lim_{n\to\infty}nE^\ast(n,\ell_n)=F(\alpha)=\frac{2+14\alpha}{(1+\alpha)^2}.
+$$
+
+For any $G_n\in\mathcal G(n,\ell_n)$ the following conditions are equivalent:
+
+1. $E(G_n)-E^\ast(n,\ell_n)=o(1/n)$.
+2. $nE(G_n)\to F(\alpha)$.
+3. Eventually $G_n\in\mathcal B(n,\ell_n)$ up to relabelling, and its hub degrees satisfy $|D_{1,n}-D_{2,n}|/n\to0$.
+
+For these sequences both hub degrees divided by $n$ tend to $(1+\alpha)/2$, the proportion of common degree-two neighbors tends to $\alpha$, and the proportion of leaves at each hub tends to $(1-\alpha)/2$. They can be transformed to $H_{n,\ell_n}$ with $o(n)$ leaf moves, each preserving $n$ and $\ell_n$.
+
+**Proof.** Since $1-\alpha>0$, eventually $n-\ell_n\ge3$. Theorem 4.2 gives the exact minimum there. To evaluate it, the remainder identity in Theorem 5.2, applied to the actual nonnegative edge counts at a hub, gives for $x\ge b\ge2$
+
+$$
+0\le\left(\frac1{2x}+\frac{3b}{2x^2}\right)-M_b(x)
+\le\frac{(x-b)+16b}{8x^4}
+=\frac{x+15b}{8x^4}\le\frac2{x^3}.
+$$
+
+This keeps the $b/x^2$ term when $b$ is of order $n$. For $H_{n,\ell_n}$ set $b=\ell_n+1$ and $D_i\in\{\lfloor m/2\rfloor,\lceil m/2\rceil\}$. Then $b/n\to\alpha$ and $D_i/n\to(1+\alpha)/2$. Multiplying the estimate by $n$ yields
+
+$$
+nE^\ast(n,\ell_n)\longrightarrow
+\frac2{1+\alpha}+\frac{12\alpha}{(1+\alpha)^2}=F(\alpha).
+$$
+
+This proves the equivalence of conditions 1 and 2. If condition 2 holds, $F(\alpha)\le49/12<17/4$ implies $nE(G_n)<17/4$ eventually. Theorem 4.1 then gives exact membership in $\mathcal B(n,\ell_n)$ and $D_{i,n}/n\ge49/425$. Put $z_{i,n}=D_{i,n}/n$ and $\beta_n=(\ell_n+1)/n$. The same hub estimate, uniformly on these actual degrees, gives
+
+$$
+nE(G_n)=h_{\beta_n}(z_{1,n})+h_{\beta_n}(z_{2,n})+O(n^{-2}),
+\qquad z_{1,n}+z_{2,n}=m/n\to1+\alpha.
+$$
+
+Every subsequential limit of $(z_{1,n},z_{2,n})$ lies in $[49/425,1]^2$ and has sum $1+\alpha$. Strict convexity of $h_\alpha$ from Theorem 5.3 shows that its energy equals $F(\alpha)$ only at the balanced pair. Condition 2 forces every such limit to be that pair. Thus $z_{i,n}\to(1+\alpha)/2$, proving condition 3.
+
+Conversely, condition 3 and $D_{1,n}+D_{2,n}=m$ force the same two degree limits. They are positive, so the expansion applies and gives condition 2. There are exactly $\ell_n+1$ common neighbors. Subtracting their number from each hub degree gives the two leaf counts and their stated limits. Moving leaves from the larger hub to the smaller until their degrees differ by at most one takes at most $|D_{1,n}-D_{2,n}|/2+1=o(n)$ moves. Each move changes only the hub incident to one leaf and preserves the common-neighbor core, connectedness, simplicity and both integer budgets. ∎
+

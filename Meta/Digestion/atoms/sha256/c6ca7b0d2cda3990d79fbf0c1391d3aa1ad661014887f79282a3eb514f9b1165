@@ -1,0 +1,36 @@
+**命题 74.1（小幅重新准备的全族模型）。** 存在满足 C107 的完整通常有限量子比较类，包含零预算模型及趋近零预算的正预算模型；每个正预算模型都不满足原来的精确射线合同。
+
+证明。对每个有限对象 $\mathcal A=\bigoplus_\alpha M_{d_\alpha}$，取 $D=\sum_\alpha d_\alpha$ 及 $\sigma_{\mathcal A}=1_{\mathcal A}/D$。令 $0\le p\le1$，定义
+
+$$
+T^p_{E,F}(\rho)=(1-p)\sqrt E\,\rho\,\sqrt E
+ +p\operatorname{Tr}(E\rho)\sigma_{\mathcal A}.
+\tag{74.1}
+$$
+
+这是两个相同成功效果的完全正分支的凸组合，故成功效果为 $E$，共同调暗及同一个 $m_p(x,y)=(1-p)\sqrt{xy}$ 成立。完整菜单供应每个分支及其标签补全；C103 的条件仍全部成立。这个重新准备项在多个中心块之间也会转移质量。对框架切口 $P$，其全部框架位置数为 $r$ 时，
+
+$$
+P(T^p_E)^*(1-P)P=p(1-r/D)PEP.
+\tag{74.2}
+$$
+
+故 $\lambda_{M_p}\le p$。取已有任意大块、秩一 $P$ 及 $E=P$，该比值为 $p(1-1/d)$，于是 $\lambda_{M_p}=p$。同一输入上实际输出与平方根输出的迹距离为 $2p(1-1/d)$；另一方面两条成功分支之差的范数至多 $2p\|E\|$，故
+
+$$
+\mathfrak D(M_p)=2p,\qquad
+\eta_{M_p}\ge p,\qquad
+\delta_{M_p}\le2\sqrt3p.
+\tag{74.3}
+$$
+
+这些上确界由有限块阶趋大来逼近，不主张某个有限阶取得极限。由 (72.3)，也可直接由相同效果的概率比较得到
+
+$$
+\mathfrak Q_{\mathscr C}(\varepsilon)\le2\varepsilon,
+\qquad \chi_{\mathscr C}(r,\varepsilon)\le r/2+\varepsilon.
+\tag{74.4}
+$$
+
+所以整个 $p\in[0,1]$ 类满足 C107，并有非平凡的正预算趋零族。$p>0$、总维数至少二时，$T_P(P)=(1-p)P+p\sigma_{\mathcal A}\ne P$，精确射线校准确实不成立。这说明新条件允许真实串扰，不是把精确前提改一个名字。∎
+

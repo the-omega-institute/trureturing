@@ -1,0 +1,69 @@
+**Theorem 106.3 (The completion variable seen by the original terminal).**
+Define the following fixed source constants and vectors on $\mathbb C^3$:
+
+$$
+\begin{gathered}
+\eta=\langle q,\ell\rangle=(\sqrt2+1)/\sqrt{12},\quad
+b=\eta^2=(3+2\sqrt2)/12,\quad
+\alpha=\langle f,Uq\rangle=\sqrt6/4,\\
+a_+=P_+Uq,\qquad t=\eta\alpha f,\qquad
+D=a_+a_+^\dagger+\alpha^2ff^\dagger,\\
+\kappa=T^\dagger\zeta\in H,\qquad h=B^\dagger\kappa\in\mathbb C^3.
+\end{gathered}
+\tag{106.3}
+$$
+
+Then $\|\kappa\|=1$, $\|h\|\le1$, and the compression of the returned
+terminal to $R\otimes\operatorname{span}\{f_0,f_1\}$, using $B$ on
+both system blocks, is exactly
+
+$$
+\left.\mathsf J^\dagger F_1\mathsf J\right|_{R\otimes R_{\rm env}}
+=\begin{pmatrix}D&th^\dagger\\ht^\dagger&bhh^\dagger\end{pmatrix}.
+\tag{106.4}
+$$
+
+Every $h$ in the closed complex unit ball occurs for a full completion.
+Formula (106.4) is a terminal compression only; it is not the full
+returned state or a permission to discard its off-code part.
+
+Proof. The five actual columns give
+
+$$
+\mathcal M=\operatorname{span}\{u_Hf_0,u_Hf_1,z_Hf_0,z_Hf_1,
+                                    v_H(f_0+f_1)/\sqrt2\},\qquad
+\mathcal M^\perp=\operatorname{span}\{\zeta\}\oplus\mathcal T^\perp.
+\tag{106.5}
+$$
+
+Tensor signs are suppressed only in this span formula. Since $F_1$
+annihilates $\mathcal T^\perp$, its compression to $\mathcal M^\perp$
+is $b\zeta\zeta^\dagger$. Thus the lower-right block in (106.4) is
+$bhh^\dagger$. The upper-left block is
+
+$$
+B^\dagger\mathcal V^\dagger F_1\mathcal VB
+ =\tfrac12(U^\dagger EU+WU^\dagger EUW)=D.
+\tag{106.6}
+$$
+
+For the cross block, the original $K_0,K_1$ give
+
+$$
+B^\dagger\mathcal V^\dagger F_1\zeta
+ =\frac\eta2(U^\dagger q-WU^\dagger q)
+ =\eta\alpha f=t.
+\tag{106.7}
+$$
+
+Here $U^\dagger=U$ and $W=I_3-2ff^\dagger$. This proves all four
+blocks. Conversely, for any $\|h\|\le1$ choose a unit $\kappa\in H$
+with $B^\dagger\kappa=h$, using the two-dimensional $R^\perp$ for
+the remaining norm. A unitary $T:H\to\mathcal M^\perp$ taking
+$\kappa$ to $\zeta$ exists by orthonormal-basis completion and satisfies
+$T^\dagger\zeta=\kappa$. Equations (106.2) and (106.5) then give a
+full completion with that $h$. Orthonormal completion is the standard
+finite-dimensional dilation step already used in Environment Record
+Memory, Theorem 2.2; the source-specific content here is its exact
+terminal dependence (106.3)–(106.7). $\square$
+

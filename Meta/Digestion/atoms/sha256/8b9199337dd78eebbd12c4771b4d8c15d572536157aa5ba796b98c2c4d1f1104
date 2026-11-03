@@ -1,0 +1,28 @@
+**Definition 8.4 (All inverse-transport substitutions).** Every row below acts identically on the two color tuples. These substitutions use the inverse transport in Equation 5.3 and the cycle bases in Equation 5.2; the AS scalar stays separate. The nonzero determinants give invertibility for all twenty-three rows.
+
+| Row | Substitution on $(a,b,c,d)$ | Determinant |
+| --- | --- | --- |
+| $S auto$ | $(-a,-b,-c,-d)$ | $1$ |
+| $C auto$ | $(-a,-b,-c,a+c+d)$ | $-1$ |
+| $P auto$ | $(a,b,a-b-d,a-b+c-d)$ | $1$ |
+| $C1:H$ | $(-a+b,-a,-c,-d)$ | $1$ |
+| $C1:X$ | $(b,c,-a,-d)$ | $1$ |
+| $C3:H$ | $(a-b,c,-a,-d)$ | $-1$ |
+| $C3:X$ | $(b,a,c,d)$ | $-1$ |
+| $C4:H$ | $(b,a,c,a-b+d)$ | $-1$ |
+| $C4:X$ | $(-a+b,c,a,-a-d)$ | $-1$ |
+| $P2:H$ | $(-a,b,-a+c,-a+d)$ | $-1$ |
+| $P2:X$ | $(b-c+d,b,-a,c)$ | $-1$ |
+| $P3:H$ | $(a-d,a-b-d,-a,c)$ | $-1$ |
+| $P3:X$ | $(-a,b,-a+c,-2a+d)$ | $-1$ |
+| $P5:H$ | $(a,-b,b+c,b+d)$ | $-1$ |
+| $P5:X$ | $(a+c-d,a,-b,-c)$ | $1$ |
+| $P6:H$ | $(-b-d,-a,b,c)$ | $-1$ |
+| $P6:X$ | $(a,-b,b+c,2b+d)$ | $-1$ |
+| $C5:H$ | $(-b,-a+b,-c,-d)$ | $-1$ |
+| $C5:X$ | $(-a+2b,b,c,a-b+d)$ | $-1$ |
+| $C7:H$ | $(a,b,d,c)$ | $-1$ |
+| $C7:X$ | $(a,b,-c,d)$ | $-1$ |
+| $K1:H$ | $(a,-d,b,a-c+d)$ | $1$ |
+| $K1:X$ | $(-c,b,-a,-b-c+d)$ | $-1$ |
+

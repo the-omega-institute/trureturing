@@ -1,0 +1,25 @@
+**Corollary 3.2 (the exact hypothetical and attainable counts).** For a
+fixed aligned core of least period $p$, the hypothetical residue trials
+have exactly $p^2$ complete local behaviours. A presentation of period
+$u$ has $u^2$ seed trials but only $p^2$ behaviours, each represented by
+$(u/p)^2$ pairs. If $\mathcal A$ is any specified set of actually attainable
+integer seed pairs for the source/cone comparison under consideration,
+its behaviour count is exactly
+
+$$
+ \bigl|\{(A_1\bmod p,A_2\bmod p):(A_1,A_2)\in\mathcal A\}\bigr|,
+ \tag{PCR.7}
+$$
+
+and can be smaller. These assertions include zero with $p=1$.
+
+Proof. Distinct pairs modulo $p$ are separated by Theorem 3.1 at the
+same sufficient finite cut, and every residue trial is defined in
+Definition 1.3. Reduction from $u$ to its divisor $p$ has $u/p$ lifts
+per coordinate. Restricting this exact classification to $\mathcal A$
+gives (PCR.7). Nothing proves that $\mathcal A$ is the full residue
+square. Nor does cardinality require two physical registers: one encoded
+finite register can represent a pair. Integer clocks differing by
+multiples of $p$ are not distinguished, and no exterior forest is
+reconstructed. $\square$
+

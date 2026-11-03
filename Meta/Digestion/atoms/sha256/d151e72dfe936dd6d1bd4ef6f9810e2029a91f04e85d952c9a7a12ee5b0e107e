@@ -1,0 +1,34 @@
+**Definition 5.3 (history and contact quantifiers remain separate).**
+[N, Theorem 18.2] recovers the Revuz-normalized stopped source clock
+from the exact continuous output history and completed genuine
+preparation-return gaps, with its spectral denominator and original
+time units. [N, Definition 28.2] says that its finite approximations
+do not themselves derive that clock recovery. These are different
+observation domains, with compatible conclusions. A current cover
+point contains neither such a history nor its clock construction.
+
+The noncontact conditional-density question and the full-history
+reflection/sign question require separate proofs, observation
+records and stopping/contact domains. Theorem 3.1 supplies neither
+of those proofs. In particular a claimed noncontact density result
+would imply, for a record-measurable exact estimator, zero success
+off contact. If genuine contact identifies $z_R=0$, the complete
+success identity is
+
+$$
+\mathbb P\{\widehat z=z_R\}
+ =\mathbb P\{v_R=0,\ \widehat z=0\},\qquad v=(x,y,w),
+\tag{5.1}
+$$
+
+conditional on those density and contact premises. It is the
+optimal success probability, attained by the zero estimator, that
+equals $\mathbb P\{v_R=0\}$; this equality does not hold for every
+estimator. Already $R=0$, $z_R=0$, $\widehat z\equiv1$ gives
+success zero and contact probability one. Likewise equal positive
+and negative conditional sign masses at a random contact do not
+give the deterministic-positive-time value $1/2$: at the source
+both strict sign events are empty. This records the exact
+quantifier boundaries without claiming either adjacent theorem
+from finite-cover reduction.
+

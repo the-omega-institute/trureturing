@@ -1,0 +1,11 @@
+**定义 83.3（实际 common image 中的 feasible task fibres）。** 对一个固定 finite $n\ge1$，令 $T_n=(F^n)^\dagger$ 作用于 real Hermitian space $\mathcal H_3$。给定 finite task catalogue $A_1,\ldots,A_N\in\mathcal H_3$ 与各阈值 $\epsilon_i\ge0$，定义
+
+$$
+\mathscr K=\left\{J\subseteq\{1,\ldots,N\}:\quad
+ \exists\mathcal D\ {\rm CPTP},\quad
+ \|T_n\mathcal D^\dagger(A_i)-A_i\|_{\rm op}\le\epsilon_i
+ \text{ for every }i\in J\right\}.
+$$
+
+$\varnothing\in\mathscr K$，且该 family 向下封闭。其 source 仍为全部 qutrit densities，decoder 仍按固定 tasks 与 horizon 选择；对 Hermitian $A_i$，loss 是 absolute expectation error，只有当 $A_i$ 为 effect 时才是 event-probability error。定义中一个 fibre 只享有一个共同 map。
+

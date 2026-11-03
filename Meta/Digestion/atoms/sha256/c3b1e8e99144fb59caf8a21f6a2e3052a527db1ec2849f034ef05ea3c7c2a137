@@ -1,0 +1,12 @@
+# Recursive relational observation: joint-kernel towers and the minimal predictive core
+
+本卷把有限深度联合核塔、档案 law 残余、完整未来行为商和四种表示运输接到同一个
+最小预测边界上。它回答的是一个表示问题：在声明的测试族内，观察者为了决定所有
+允许的未来响应，至少需要保留哪一个关系商。
+
+全文只讨论带类型的经典实际来源、有限前缀闭合测试和有限或可数的离散输出。它是
+理论推导，不新增 Lean 声明，不把逆极限完成解释成物理时空，也不把数学上的商或
+law 表当作观察者已经取得的输入。与 [统一联合律桥](RECURSIVE_RELATIONAL_OBSERVATION_UNIFIED_JOINT_LAW_BRIDGE.md)
+和 [联合核线程实现](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_KERNEL_THREAD_REALIZATION.md)
+的符号保持一致。
+

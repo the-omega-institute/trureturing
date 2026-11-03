@@ -1,0 +1,15 @@
+**Corollary 37.2 (joint bill, rather than coordinatewise independent optima).** With $K_1,R_1,Q_1$ and $m=K_1+R_1I$ defined after this new origin, the exact combined counts are
+
+$$
+\begin{aligned}
+P&=2L-1,&S&=c,&\mathrm{Reset}&=0,\\
+\mathrm{Read}&=L+R_{\rm mark}+b(I+1)+K_1+R_1b(I+1),\\
+\mathrm{Add}&=2L+c+b(I+1)+1+m,\\
+\mathrm{Tick}&=2I+1+m,\\
+\mathrm{Hold}&=L+2I+5+K_1+R_1(I+1)+Q_1.
+\end{aligned}
+\tag{NLBAII.49}
+$$
+
+Proof. Concatenate the actual schedule of Theorem 36.2, one actual origin Add and Hold, and the actual binary schedule of Theorem 33.4. They act on the same unchanged graph after acquisition, so their $b,N,I$ agree. Resource bytes and work concatenate at their actual widths and overlap only through actually retained objects. During binary use the source field has the new integer bound of Theorem 33.4; arbitrary-width acquisition data still retained as output or scratch must be added to simultaneous memory until actually released. No component of this joint vector is borrowed from the integer-age/Reset entrance or a separately optimized scalar experiment. $\square$
+

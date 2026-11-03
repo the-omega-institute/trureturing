@@ -1,0 +1,21 @@
+**Definition 52.1 (two actual preparations and a passive window).** From the allocated zero alpha seed actually perform
+
+$$
+P_\epsilon;S_\epsilon;P_R;S_R;P_{RR}.
+\tag{52.1}
+$$
+
+The resulting term is $t=\langle\beta,\langle\beta,\beta\rangle\rangle$, with eight material vertices, $L=3$, $I=5$, and first terminal $e=LL$. In one run perform Add$(2,1)$; Add$(3,-1)$; Tick. In the comparison run perform Add$(2,0)$; Add$(3,0)$; Tick. The fields at these cuts are respectively
+
+$$
+\delta=e_{RL}-e_{RR},\qquad 0.
+\tag{52.2}
+$$
+
+Now actually perform Hold; Read(1), followed by eight repetitions of Tick; Hold; Read(1). This is a paid nine-scalar passive window, not just a proposed set of tests. Then actually perform
+
+$$
+S_{RL};\operatorname{Tick}^{6};\operatorname{Read}(1);\operatorname{Hold}.
+\tag{52.3}
+$$
+

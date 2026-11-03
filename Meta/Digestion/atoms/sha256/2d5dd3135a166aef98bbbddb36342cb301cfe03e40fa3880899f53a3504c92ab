@@ -1,0 +1,22 @@
+**定理 8.1（有限联合方向网的正性证书）。** 令 $q=md$，$J=J^\dagger$、$\|J\|_{\operatorname{op}}\le M$。若秩一投影族 $\{Q_s\}$ 是全部秩一投影的迹范数 $\eta$ 网，且 $\operatorname{Tr}(Q_sJ)\ge-\delta$，则
+
+<a id="eq-8-1"></a>
+
+$$
+J\succeq-\nu I_q,
+\qquad\nu=\delta+M\eta.
+\tag{8.1}
+$$
+
+证明：任意秩一 $Q$ 与某个 $Q_s$ 距离至多 $\eta$，故 $\operatorname{Tr}(QJ)\ge-\delta-M\eta$。
+
+乘积方向不足以证明完全正性。转置映射 $T(X)=X^{\mathsf T}$ 的 Choi 矩阵为交换算子除以 $d$；乘积向量上期望非负，但反对称子空间有本征值 $-1/d$。有限网也只能给余量：取未测试方向 $u$，令
+
+<a id="eq-8-u01"></a>
+
+$$
+J=\frac{I-a|u\rangle\langle u|}{q-a}
+$$
+
+即可在有限测试上非负、在 $u$ 上为负。
+

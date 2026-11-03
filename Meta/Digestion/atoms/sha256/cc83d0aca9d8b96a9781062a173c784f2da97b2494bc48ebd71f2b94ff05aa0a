@@ -1,0 +1,53 @@
+**Theorem 66.2 (supplied inverse on the actual current image).** At every
+synchronized cut of Theorem 66.1, let $u$ be the actual reachable current
+term. Select the same four independently meaningful current contents
+as Definition 56.1, with the fixed binding and authority as common
+context:
+
+| View | Exact selected content on this source |
+| --- | --- |
+| Space | Rooted oriented material-address support of $C(u)$, excluding observer-record edges |
+| Boundary | Terminal-material-address antichain of that $C(u)$, including unary beta markers |
+| Time | Labelled causal successful-source-event order $E(u)$ of AA Definition 17.1 |
+| Memory | Actually retained current constructor word, with retained callable binding and current rights |
+
+On their exact reachable images these contents mutually recover one
+another by the supplied AA §17 and AAII Theorem 56.2 maps. All routes
+agree and commute with every completed original $Q_A$ request, its full
+reply and its settled source successor. Their task kernel is exactly
+equality of $u$, with this common context fixed.
+
+Proof. Source operations preserve reachability in $\mathcal D$.
+Material prefix closure converts Boundary to Space, and maximal material
+addresses convert Space to Boundary. Arity parsing of valid $C(u)$
+decodes terminal alpha, unary beta and binary branch, so either recovers
+$u$. At a beta logical leaf $p$ its material terminal address is $pL$;
+at an alpha it is $p$. Omitting those unary markers would change this
+inverse and is not allowed.
+
+For Time, AA Theorem 17.2 uses the labelled membership of splits and
+promotions, and their causal dependencies. Children are born from their
+parent split. A position is a branch exactly when its split is present;
+a remaining leaf is beta exactly when born beta or promoted, otherwise
+alpha. Conversely $u$ specifies precisely those events and the supplied
+causal edges. This reconstructs the causal order, not an old serial
+extension, the acquisition bit choices or failed-call chronology.
+Memory parses to $u$ by Theorem 66.1, and encoding a recovered $u$ gives
+its current constructor content. Such re-encoding does not recover
+private backing names or create the supplied authority.
+
+All conversions thus decode and re-encode the same $u$ on actual images.
+Their inverse and triangle identities follow there. Theorem 66.1 gives
+the same complete reply and actual logical successor $u'$ for each
+completed operation. A success adds exactly its actual labelled event
+and applies the corresponding source template; refusals and BadFrame
+preserve the selected contents. Reapplying the supplied maps to $u'$
+gives the same updated view along every route, proving commutation.
+For task separation, take the first differing constructor of unequal
+ordered terms after descending through common branches. Its position
+is present in both. A single original $P$ there gives respectively
+Growth, wrong-type refusal or branch refusal for alpha, beta or branch.
+Thus unequal terms are $Q_A$-distinguishable without a Tag port, while
+equal terms have the entire same task by the preceding induction.
+$\square$
+

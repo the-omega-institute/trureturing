@@ -1,0 +1,27 @@
+**Definition 1.2 (mixed native images).** For $k,m\ge0$, a mixed template
+has grammar
+
+$$
+A::=g\mid T_{n_j+c}\mid\rho^a(z_i)\mid\langle A,A\rangle,
+\qquad 1\le j\le k,\quad 1\le i\le m,
+\tag{NIC.2}
+$$
+
+where $g$ is a fixed finite native tree and $a,c\in\mathbb N$ are fixed.
+Its arguments range over $\mathbb N^k\times\mathcal T^m$, with repeated
+names shared. A positive image piece consists of a tuple $F$ of such
+templates and a conjunction $P$ of affine integer equalities in
+$\mathbf n\in\mathbb N^k$. Its domain before signed tests is precisely
+
+$$
+\{\mathbf n:P(\mathbf n)\}\times\mathcal T^m.
+\tag{NIC.3}
+$$
+
+The product includes accidental equalities among different $z_i$. There
+are no residual shape restrictions, positive residual equations or
+normality predicates in (NIC.3). A finite image cover means equality
+with a finite union of these images. Different pieces and different
+arguments of one piece may give the same original tuple. It provides no
+unique coordinates or observable choice of piece or arguments.
+

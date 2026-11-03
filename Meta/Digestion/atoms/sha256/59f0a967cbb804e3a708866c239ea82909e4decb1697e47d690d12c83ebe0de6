@@ -1,0 +1,29 @@
+**Definition 101.2 (supplies used for acquisition).** Write $(e_j)_{j\ge1}$
+for a real orthonormal eigenbasis of $\mathscr G_0$ with positive
+eigenvalues $\lambda_j$ in increasing order, counting multiplicity.
+The retained form spectral representation and biased counting result give
+
+$$
+\mathcal E(F)=\sum_{j\ge1}\lambda_j|\langle F,e_j\rangle|^2,\qquad
+\frac jB\le\lambda_j\le\frac j b,\quad
+\lambda_1\ge\varphi^{-1},\qquad B=\frac{2\varphi}{b}.
+\tag{101.2}
+$$
+
+For $0<t<1$, use the source's first mass crossing
+$A_t=\{p\ne\varnothing:m(p)\le t<m(p^-)\}$ and $k_t=|A_t|$.
+Its cylinders partition $\Omega$; $bt<m(p)\le t$ and
+$1/t\le k_t<1/(bt)$. The orthogonal cylinder-mean projection $Q_t$
+fixes constants and commutes with $\Pi$. Its inherited suffix estimate,
+applied to the least-energy increments of a centered $F$, is
+
+$$
+(Q_tF)|_{[p]}=\mu_p(F):=\frac1{m(p)}\int_{[p]}F\,dM,\qquad
+\|F-Q_tF\|_2^2\le\varphi t\,\mathcal E(F).
+\tag{101.3}
+$$
+
+These are Biased Boundary (1.2)–(1.3), (2.1), (2.4)–(2.8), for its
+actual biased law and operator. Its $s$ remains comparison time; read counts
+are not $s$, a metric heat-kernel scale, or physical duration.
+

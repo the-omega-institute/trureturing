@@ -30,7 +30,7 @@ def weight (K : A → B → R → Matrix O I ℂ) (a : A) (b : B) (o : O) (i : I
   ∑ r, Complex.normSq (K a b r o i)
 
 omit [Fintype O] [DecidableEq O] [Fintype B] in
-private theorem diagonal_entry_expansion
+theorem diagonal_entry_expansion
     (K : R → Matrix O I ℂ) (p : I → ℂ) (o o' : O) :
     MatrixMap.of_kraus K K (Matrix.diagonal p) o o' =
       ∑ i, (∑ r, K r o i * (starRingEnd ℂ) (K r o' i)) * p i := by

@@ -1,0 +1,14 @@
+**Proposition 42.1 (original-unit root cyclicity is not arbitrary-native cyclicity).** There is a reachable original native term with an unobservable rational field for root-only fixed-geometry Tick/Read/Add/Hold. Thus Theorem 35.1 cannot be promoted from combs to all native material trees with the same unit law.
+
+Proof. Take $t=\langle\beta,\beta\rangle$, reachable by $P_{\varepsilon};S_{\varepsilon};P_R$. Its material consists of the root, two beta roots and their two markers. In the order root, left root, left marker, right root, right marker, put $z=(0,1,1,-1,-1)$. Directly from the five unit-adjacency row equations, $A_tz=z$ and $e^{\mathsf T}z=0$. The zero field and $z$ therefore have identical root Read histories. Under any common root Add the field difference remains $z$, and under Tick it remains $z$; Hold and Read preserve it. Induction gives identical complete outputs under every finite adaptive root-only continuation with geometry fixed.
+
+Both fields can in fact be prepared with the original growth and root controls alone. Zero needs only the legal growth word. For $z$, first construct $u_1=\langle\beta,\alpha\rangle$. Its four-cell root matrix is cyclic by Theorem 35.1, so four Tick/Add rounds with reversed coefficients $K_1^{-1}(0,2,2,0)^{\mathsf T}$ prepare the field $(0,2,2,0)$. Now execute $P_R$, obtaining $t$ with fresh-zero field $y=(0,2,2,0,0)$. On $t$,
+
+$$
+A_t^3y=(6,4,4,2,2),\qquad
+A_te=(0,1,0,1,0),\qquad
+A_t^2e=(2,0,1,0,1).
+$$
+
+The three actual rounds Tick; Add$(-3)$, Tick; Add$(-3)$, Tick; Add$(0)$ therefore end at $A_t^3y-3A_t^2e-3A_te=z$. With one Hold for the coefficient computation and one final Hold, this chosen preparation uses two $P$, one $S$, seven Ticks, seven Adds, two Holds and no Reads. No terminal preparation port is used. Growth after attachment could break the symmetry and is not ruled out as another acquisition method. The obstruction is precisely to the stronger fixed-geometry root-cyclicity assertion. $\square$
+

@@ -1,0 +1,65 @@
+**Proposition 19.1 (Eight budgets without a cyclic recurrence).** For every $h\in\mathcal K_4$, with arbitrary independent positive integers $h_0,h_1,h_2,h_3$ and $t=h_4$, the complete cancellation family remains
+
+$$
+\begin{gathered}
+h_5=t+h_0,\qquad h_6=t+2h_0+h_1,\\
+h_7=t+4h_0+2h_1+h_2,\qquad
+h_8=t+8h_0+4h_1+2h_2+h_3.
+\end{gathered}
+\tag{85}
+$$
+
+For the original matrices $\mathsf B_i$ in (2), its budgets satisfy
+
+$$
+J_0=\frac{54h_0+18h_1+6h_2+2h_3+h_4}{80},\qquad
+J_{i+1}=3J_i-2h_i\quad(0\le i\le6).
+\tag{86}
+$$
+
+All eight quantities $J_0,\ldots,J_7$ are thereby determined. No identification of $J_8$ with $J_0$ is made.
+
+*Proof.* Formula (85) is the whole $r=4$ specialization of Theorem 4.2 and is reused in full. To compute the first budget, direct multiplication by $3I-M$ gives
+
+$$
+(3I-M)^{-1}b_0
+ =\frac1{3280}(2187,729,243,81,27,9,3,1,1)^T.
+\tag{87}
+$$
+
+For instance the coordinates numbered $1$ through $7$ satisfy $3c_j=c_{j-1}$, the last satisfies $c_8=c_7$, and $3c_0-\sum_{j=0}^8c_j=1$; these are all nine equations. Since $\mathsf B_0=(3I-M)^{-1}$, substitution of (85) into $h$ times (87) gives
+
+$$
+3280J_0=2214h_0+738h_1+246h_2+82h_3+41t,
+$$
+
+which is the first identity in (86).
+
+For the remaining identities put $D=M-I$ and $E=M-2I$. The original definition of $\mathsf B_i$ gives, using commuting rational functions of $M$,
+
+$$
+\begin{aligned}
+\mathsf B_{i+1}-3\mathsf B_i
+&=-2(3I-M)^{-1}
+ +2ED^{-1}\bigl(M^i(M-3I)+2I\bigr)(3I-M)^{-1}\\
+&=-2D^{-1}(I+EM^i).
+\end{aligned}
+\tag{88}
+$$
+
+All inverses here exist by the supplied simple spectrum. The source columns satisfy $Mb_j=b_0+b_{j+1}$ for $0\le j<8$. Iterating this equality gives
+
+$$
+b_i=M^i b_0-\sum_{j=0}^{i-1}M^j b_0
+   =D^{-1}(EM^i+I)b_0\quad(0\le i\le7),
+\tag{89}
+$$
+
+with an empty sum when $i=0$. Combining (88)–(89) for $0\le i\le6$ proves
+
+$$
+(\mathsf B_{i+1}-3\mathsf B_i)b_0=-2b_i.
+$$
+
+Multiplication by $h$ proves the second identity in (86). This latter calculation in fact holds for every row $h$; only the simplified initial value used cancellation. Thus (86) applies to every positive integer choice in (85), with no restriction to one minimizing row or to a fixed marker. $\square$
+

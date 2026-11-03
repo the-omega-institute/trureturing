@@ -26,6 +26,20 @@ internal sealed class ChannelTimeReversalNoGoDocument : IScribeDocumentDefinitio
             Node("channeltimereversal-density-trace", "Pauli spectral projectors have trace one", DensityTraceFormula(),
                 "For every axis index a in Fin 3 and Boolean sign e, the spectral projector of the Pauli axis a with sign e has trace one.",
                 "density_trace"),
+            Node("channeltimereversal-pauli-expansion", "Expansion in the qubit Pauli basis", PauliExpansionFormula(),
+                "Every complex two-by-two matrix is the sum of its trace component and its three Pauli components.",
+                "pauli_expansion"),
+            Node("channeltimereversal-sigma-trace", "Pauli axes have zero trace", SigmaTraceFormula(),
+                "Each of the three qubit Pauli axes has trace zero.",
+                "sigma_trace"),
+            Describe.Lean(DescribeId.Create("channeltimereversal-spin-flip"),
+                DeclarationHandle.Create(Prefix + "J"), H("Qubit spin flip"),
+                StatementSource.FromAuthor(SpinFlipDefinitionFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The complex-linear qubit spin flip transposes a matrix and conjugates it by the second Pauli axis."))),
+                DescribeRole.Definition),
+            Node("channeltimereversal-spin-flip-action", "Trace formula for the qubit spin flip", SpinFlipActionFormula(),
+                "For every complex two-by-two matrix X, the spin flip sends X to its trace times the identity minus X.",
+                "J_apply"),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"), H("Time-reversal symmetries do not exist"),
                 StatementSource.FromAuthor(Disp(ClaimBody())), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For dimensions at least three, Bi_basic forces three finite-block identities; diagonal_contradiction makes the positive block have trace zero, contradicting its trace one. For qubits, finite_pauli_identity and unital_reversed identify the action on unital channels. The pure_preimage and pure_density_rotation lemmas supply a unitary rotation of a pure replacement preimage. The forced_witness_output identity then gives diag(9/8, -1/8), whose negative diagonal entry proves inverse_unitary_no_go. Double transposition preserves complete positivity, trace preservation and convex mixtures, is involutive, and sends conjugation by the transpose of U to conjugation by star U. Composing with this transformation reduces the transpose target to the adjoint target."))), DescribeRole.Theorem,
@@ -43,6 +57,31 @@ internal sealed class ChannelTimeReversalNoGoDocument : IScribeDocumentDefinitio
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+    private static Formula SpinFlip() => Qualified(
+        "D5", "S3", "QuantumChannels", "ChannelTimeReversalNoGo", "QubitUnital", "J");
+    private static Formula SpinFlipDefinitionFormula() => Disp(Eq(SpinFlip(),
+        Comp(Call("unitaryChannel",
+            QCall("D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction", "pauli", D(1))),
+            QCall("LinearEquiv", "toLinearMap",
+                QCall("Matrix", "transposeLinearEquiv", Fin(D(2)), Fin(D(2)), C, C)))));
+    private static Formula SpinFlipActionFormula() => Disp(All("X", Mat(D(2)),
+        Eq(App(SpinFlip(), V("X")),
+            Sub(Scalar(QCall("Matrix", "trace", V("X")), Cast(D(1), Mat(D(2)))), V("X")))));
+    private static Formula PauliExpansionFormula()
+    {
+        Formula x = V("X"), b = V("b");
+        Formula pauli = QCall("D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction", "pauli", b);
+        Formula trace(Formula value) => QCall("Matrix", "trace", value);
+        Formula half(Formula value) => new Formula.Fraction(value, D(2));
+        Formula product = new Formula.Binary(pauli, FormulaBinaryOperator.Multiply, x);
+        Formula components = Seq(F.Sum, Underscore, Grp(Seq(b, Colon, Sp, Fin(D(3)))),
+            Parenthesized(Scalar(half(trace(product)), pauli)));
+        return Disp(All("X", Mat(D(2)), Eq(x,
+            Add(Scalar(half(trace(x)), Cast(D(1), Mat(D(2)))), components))));
+    }
+    private static Formula SigmaTraceFormula() =>
+        Disp(All("a", Fin(D(3)), Eq(QCall("Matrix", "trace",
+            QCall("D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction", "pauli", V("a"))), D(0))));
     private static Formula DensityPsdFormula() =>
         Disp(All("a", Call("Fin", D(3)), All("e", V("Bool"),
             QCall("Matrix", "PosSemidef", Spectral(V("a"), V("e"))))));

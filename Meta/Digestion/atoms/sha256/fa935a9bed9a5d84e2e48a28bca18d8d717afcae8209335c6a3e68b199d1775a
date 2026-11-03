@@ -1,0 +1,11 @@
+**Definition 57.4 (scope of sharpness).** Equation (AAII.15) optimizes
+only fresh source vertices for deterministic exact entry recovery with
+the declared guards and no extra readout. It is not a minimum number
+of calls, a total-work or bit-price optimum, a randomized expected-cost
+bound, or a physical disturbance principle. A supplied nondestructive
+Tag or Native Read would distinguish leaf types without these promotions;
+that stronger information interface is outside the competitor class.
+The bound also does not characterize the cheaper task of predicting
+only a chosen proper quotient of entry behavior or learning only a
+changed current endpoint without reporting the entry.
+

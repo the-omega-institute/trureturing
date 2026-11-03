@@ -1,0 +1,36 @@
+#### 定理 5.2（完整记录的等距递归）
+
+令不同历史标签正交，定义
+
+$$
+T_t(\lvert h\rangle \otimes\psi)
+=\sum_a\lvert ha\rangle \otimes M_{a|h}\psi .
+$$
+
+则 $T_t^\dagger T_t=I$。从空记录及单位输入 $\psi$ 出发，深度 $t$ 的完整状态为
+
+$$
+\Phi_t=\sum_{h=a_1\cdots a_t}\lvert h\rangle \otimes M_h\psi,\qquad
+M_h=M_{a_t|a_1\cdots a_{t-1}}\cdots M_{a_1|\varnothing},
+$$
+
+并且 $\left\lVert \Phi_t\right\rVert =1$。记录概率为 $\left\lVert M_h\psi\right\rVert ^2$；非零记录的条件态为 $M_h\psi/\left\lVert M_h\psi\right\rVert$。
+
+**证明。**
+
+不同父历史 $h,k$ 的全部延伸标签互相正交。同一父历史内，
+
+$$
+\langle T_t(h\otimes\phi),T_t(h\otimes\psi)\rangle
+=\sum_a\langle\phi,M_{a|h}^\dagger M_{a|h}\psi\rangle
+=\langle\phi,\psi\rangle .
+$$
+
+所以映射等距。反复代入得到有序积与单位范数；记录分支的范数平方和归一化给最后两式。
+
+∎
+
+每个有限深度的此类等距过程都能在预备空白辅助寄存器、保留全部输出的较大空间中延拓为酉网络：将等距像的正交基补为全空间正交基即可。增长等距自身若非满射，不能直接称为同一空间上的酉算子。其条件分支的归一化则是非线性的描述更新，不能用它替代完整等距。
+
+<a id="statement-5-3"></a>
+

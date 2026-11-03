@@ -1,0 +1,15 @@
+**Theorem 66.2 (returned-cut recovery, routes and task kernel).** On Definition 66.1's exact actual image, each expression determines the other three numerical expressions, the original pulse length, the historical endpoint and the actual present endpoint. Every recovery route agrees. These data have exactly the same kernel as the complete current original continuation task on this fixed image. The maps respect pulse concatenation at historical pulse cuts and passage through the prescribed diagnostic. They also respect every finite legal primitive continuation for which the claimed initial and final view domains are met; intervening all-field prediction is always provided by Theorem 65.2.
+
+**Proof.** From Boundary apply $\mathcal O_N^{-1}$ to get $x_{\rm hist}$, Theorem 64.2 to get Time, and $T^{N-1}$ to get actual Space and hence Memory. From Space invert $T^{N-1}$, which is possible because $T$ is positive definite, obtaining the historical endpoint and the same inverse. From Memory first use $\mathcal O_N^{-1}$ to get $x_{\rm now}$ and proceed as from Space. From Time use (52.1) for $x_{\rm hist}$, then (65.1)–(65.2) for all other numerical data. These are equalities on the same jointly realized process. A reconstructed numerical window is equal to the recorded window; its actual observation is the supplied diagnostic, not an additional conclusion about a computation. Every route factors through the unique original word and these two deterministic endpoints, proving route agreement.
+
+Equal present fields give equal full future output/successor behavior by Theorem 65.2. Conversely if two present fields differ, their difference has nonzero image under invertible $\mathcal O_N$. Consequently Read followed by at most $N-1$ returning Ticks distinguishes a coordinate of that image, using the actual legal ports. Thus full continuation equivalence is exactly equality of $x_{\rm now}$. Invertible $T^{N-1}$ and Theorem 53.1 make this exactly equality of the original allowed pulse list on the declared image. This proves the kernel assertion without identifying complete old journals with current state outside that image.
+
+For pulse dynamics, (59.3)'s vector analogue follows directly from the same affine updates:
+
+$$
+X(ut)=T^{|t|}X(u)+\sum_{i<|t|}t_iT^{|t|-1-i}b.
+\tag{66.1}
+$$
+
+Applying the diagnostic after the concatenated word gives the actual present field $T^{N-1}X(ut)$. Transport through these equalities proves compatibility for formation of pulse lists followed by their diagnostic. This is not an instruction to append $t$ from the already advanced returned state and call its pulse list $ut$. For a primitive continuation starting at a returned cut, use the actual present field as its initial field, not $x_{\rm hist}$. Theorem 65.2 gives its actual successors and all outputs. Whenever the ending cut also meets Definition 66.1 with its specified original-origin history and diagnostic, the inverse just proved recovers that ending cut's unique data. Composition therefore agrees with the direct recovery there. No assertion that every primitive continuation remains in this inverse domain is needed. $\square$
+

@@ -1,0 +1,29 @@
+### 命题 19.3（完全正过程、仪器与测量更新）
+
+有限维完全正映射有表示
+$\mathcal N(X)=\sum_rK_rXK_r^\dagger$；
+保迹当且仅当 $\sum_rK_r^\dagger K_r=I$。
+对给定仪器 $\mathcal J_e$，$\sum_e\mathcal J_e$ 保迹，
+测量概率与条件态为
+
+$$
+p_e=\operatorname{Tr}\mathcal J_e(\rho),\qquad
+ \rho\mid e=\frac{\mathcal J_e(\rho)}{p_e}\quad(p_e>0).
+$$
+
+效果 $E_e=\mathcal J_e^*(I)$ 满足 $\sum_eE_e=I$。
+
+**证明。**
+完全正性使 Choi 矩阵
+$C_{\mathcal N}=\sum_{i,j}E_{ij}\otimes\mathcal N(E_{ij})$
+为正。将其分解成有限个正秩一项，把每个向量重排成矩阵 $K_r$，
+比较矩阵单位系数，即得到 Kraus 表示。
+对全部 $X$ 比较迹，得到保迹充要条件。
+仪器的分支迹给出非负且总和为一的概率，除以非零概率即得归一条件态。
+
+同一组效果可以对应不同的 $\mathcal J_e$；
+因此 Born 概率不会独自选定唯一测量扰动。
+Lüders 更新 $P_e\rho P_e/\operatorname{Tr}(\rho P_e)$ 对应特定投影仪器，
+必须保留这个仪器条件。v90 的全结果读出与恢复定理适用于相应完整通道，
+不会将归一后的非线性条件态映射当作 CPTP。
+

@@ -1,0 +1,19 @@
+**Lemma 4.2 (P2).** The case $b=m$ is impossible.
+
+**Proof.** In that case the $m-1$ sign-changing retained-clock intervals through exponent $m-1$ force degree exactly $m-1$. Their distinct roots exhaust the degree, so all roots are real and simple, strictly before the first clock carrying exponent $m-1$.
+
+Both exponents $m,m+1$ are available, since $m+1\le K$. Their retained clocks, in increasing order, are later than every root. If a nonzero polynomial with roots $z_1,\ldots,z_{m-1}$ is evaluated to the right of all its roots, then
+
+$$
+\frac{d}{dt}\log|R(t)|=\sum_{\ell=1}^{m-1}\frac1{t-z_\ell}>0.
+\tag{4.2}
+$$
+
+Therefore its magnitude strictly increases there. But $u_{m-1},u_m,u_{m+1}$ have the same sign and $u_{m+1}=u_m+u_{m-1}$, so
+
+$$
+|u_{m+1}|>|u_m|,\qquad |1/u_{m+1}|<|1/u_m|.
+$$
+
+This contradicts the required values at those two increasing clocks. If one exponent is repeated, use either occurrence consistent with increasing exponent order; all its occurrences remain beyond the roots. Thus $b\le m-1$. $\square$
+

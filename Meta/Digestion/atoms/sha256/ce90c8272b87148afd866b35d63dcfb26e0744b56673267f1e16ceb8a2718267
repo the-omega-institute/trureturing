@@ -1,0 +1,14 @@
+**Theorem 4.1 (full inverse without knowing the gaps).** The map
+$F_A:\mathcal H_A\to\coprod_{t\in\mathcal D}\mathbb Q^{V_t}$ is injective.
+The following local exact procedure on its image recovers the unique
+entire $h$, including all its gaps.
+
+At a non-alpha pair $(t,y)$, repeatedly replace $y$ by $T_t^{-1}y$ while
+$y$ is strictly positive in every coordinate, counting these inversions.
+At the first zero coordinate stop. If the counter is $q$, the zeros are
+exactly one of these two possibilities:
+
+| Fresh zeros and current literal constructor | Recovered last event and collapse |
+| --- | --- |
+| $\{pL\}$ and a logical beta at $p$ | $P_p$; replace that beta by alpha and delete $pL$ |
+| $\{pLL,pR\}$ and literally $\langle\beta,\alpha\rangle$ at $p$ | $S_p$; replace that branch by beta and delete $pLL,pR$, retaining $pL$ |

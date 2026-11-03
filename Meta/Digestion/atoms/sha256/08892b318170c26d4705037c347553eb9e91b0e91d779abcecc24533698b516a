@@ -1,0 +1,56 @@
+### 证明
+
+Schur 余量具有最小值表示：
+
+$$
+\mathcal E
+=
+\min_{\alpha}
+\begin{pmatrix}-\alpha\\1\end{pmatrix}^{\!*}
+H_+
+\begin{pmatrix}-\alpha\\1\end{pmatrix}.
+$$
+
+由式 (11)，
+
+$$
+\mathcal E\ge r\,\mathcal E_L,
+$$
+
+其中 $\mathcal E_L$ 是三角核 $L-|u-v|$ 的相应余量。
+
+令
+
+$$
+\ell=x-a,\qquad h=b-x.
+$$
+
+因为 $(a,b)$ 内没有旧节点，三角核对 $x$ 在该区间上是仿射的。因此新点对所有旧节点的关系都满足
+
+$$
+H_L(x,y)
+=
+\frac{h}{\ell+h}H_L(a,y)
++
+\frac{\ell}{\ell+h}H_L(b,y).
+$$
+
+这说明只使用两个相邻端点的线性插值，就已经给出了三角核中的正交投影。其剩余平方范数为
+
+$$
+\begin{aligned}
+\mathcal E_L
+&=
+L-\frac{h}{\ell+h}(L-\ell)
+-\frac{\ell}{\ell+h}(L-h)\\
+&=\frac{2\ell h}{\ell+h}.
+\end{aligned}
+$$
+
+代回即得式 (13)。证毕。
+
+**于是，“继续细分、继续加入关系”在这个窗口内可以进行任意多个有限步骤，并且每一步都有实际核提供的正预算。**
+
+---
+
+<a id="section-5"></a>

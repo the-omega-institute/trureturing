@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:215c188bff68a3be54bed8796bcd7c9ab2ee03140d41b5da3e1fc60347126cfe
+  normalized_sha256: sha256:215c188bff68a3be54bed8796bcd7c9ab2ee03140d41b5da3e1fc60347126cfe
+cas_ref: sha256:215c188bff68a3be54bed8796bcd7c9ab2ee03140d41b5da3e1fc60347126cfe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure notation definition (Definition 1.2: shared spectral parameters S, d, a, b) formalized by public Lean definitions specS, specD, specA, specB in D5/S3/Quantum/Dynamics/LaplacianTwoLevelTreeSpectralBound and consumed by covered Definition 1.1 and Theorem 2.1.'
+    previous_atom_id: 027880b068c8f3d3f746576859920e5e383e69c63a9c777ee40900cd12312e8c
+    next_atom_id: 2c716c71541ef29aae4adb4779ea8383233e1bfd68cb03a59a654c8cc9edfbf1

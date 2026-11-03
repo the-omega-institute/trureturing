@@ -1,0 +1,33 @@
+**Definition 128.1 (the full original telescope and the single-density pencil).** Retain Definition 127.1 in full, together with all its inherited source, endpoint, native-parameter, process and readout hypotheses from §§115–126. In particular, every original finite $a,\eta,t,d>0$ is allowed and $\Delta _1=\Delta _2=d$. The group is the original $G=H^1\times\mathbb R$ with its original product and raw Haar measure $\mu$, the unit-source field is the original $\Gamma$, the endpoint is the actual $H=H_{\rm end}$ with selector $A(u)=\rho C(u)$, and $h$ is the coefficient-positive normalized zero vector. The full form, transformed operator, source and clock remain
+
+$$
+\begin{gathered}
+m=h^2\mu,\qquad U_hv=hv,\qquad K=U_h^{-1}H_{\rm end}U_h,
+\qquad T_s=e^{-sK},\\
+D(H_{\rm end}^{1/2})=\mathcal Q_c\dotplus\mathbb Ch,
+\qquad q_{H_{\rm end}}[y+ch]=\overline q_c[y],\\
+\mathscr E[u,v]=\int_{G\setminus\{e\}}
+\left(a\sum_{j=1}^3\overline{X_ju}X_jv+
+\eta\overline{\partial_wu}\partial_wv\right)dm,\\
+P=T_d,\qquad g=g_t,\qquad g_{t+d}=Pg_t.
+\end{gathered}
+\tag{128.1}
+$$
+
+The conservative diffusion starts at the same $e$ at time zero, in the original clock. Its densities satisfy $g_s\in L^2(m)$, $g_s>0$ almost everywhere and $\int g_s\,dm=1$ for $s>0$, as in (117.2)–(117.3). These explicit objects do not replace or restrict the full inherited telescope.
+
+For real $\alpha,\beta,\gamma$ use exactly the original quadratic form
+
+$$
+\begin{aligned}
+\varphi&=\alpha g+\beta Pg,\\
+Q(v)=q_{\alpha,\beta,\gamma}(v)
+&=\int\varphi vPv\,dm+\gamma\int gvP^2v\,dm,\\
+q(v)=q_{\alpha,0,\gamma}(v)
+&=\int g v(\alpha P+\gamma P^2)v\,dm.
+\end{aligned}
+\tag{128.2}
+$$
+
+Its domain is the real bounded Borel $m$-class space $\mathcal V_G$ of Definition 127.1. For every Borel $E$ with $m(E)>0$, the spaces $\mathcal V_E$ and $\mathcal V_E^{\rm lin}=\ker\Lambda_E$ are precisely (127.3), with the original fixed pointwise Borel simplex tuple $f$, distinct labels $i,j$, signs $\sigma$, common-readout trilinear form $\mathcal C$ and exact equations $\ell_{yzw}$ of (125.2). For emission overlaps the set remains $E=\{f_i\ge\kappa,f_j\ge\kappa\}$ with $\kappa>0$. No equations are imposed on $\mathcal V_E$ itself. Negative index retains exactly the finite-dimensional strictly negative symmetric-polar-form meaning of Definition 127.1.
+

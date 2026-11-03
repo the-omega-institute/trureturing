@@ -1,0 +1,39 @@
+**Definition 27.1 (the selected continuation task and its views).** Fix
+$\chi$, the installation, current bindings/rights and SelectedReady of
+§26. The task $Q_\chi$ permits exactly the seven selected-mode request
+kinds, comparing each request's legality, complete literal reply and
+settled successor relevant to further such requests. Its selectors may
+read the acquired selected result, current source, current request and
+pending fields as specified, but not the sealed old archive. At Ready
+these pending fields are empty. The semantic state is
+
+$$
+K_\chi=(t,\nu_\chi(w)),
+\quad\text{equivalently }(t,\mathcal V_\chi(w)).
+\tag{AA.92}
+$$
+
+The joint process still includes actual allocation, conversion, busy
+phases, old archived material and printing. The task exposes no raw
+allocation names, obsolete workspace identities, primitive runtime,
+current capacity, archive version or complete controller chronology.
+The old archive has no future $Q_\chi$ use. Thus its omission cannot
+hide an admitted selector input or relevant successor effect. Content
+and binding equalities use the rooted oriented reference relations in
+this installation, modulo spelling of fresh names.
+
+Space $S_\chi$ is the actual source-edge support $S_0$ with attached
+source-indexed selected side words. Boundary $B_\chi$ is the actual
+terminal source antichain $B_0$ with those same local annotations.
+Neither contains all input/controller history; they expose source
+incidence and a restricted ordering supplement. Time $T_\chi$ is the
+labelled causal generation order $T_c$ together with the actual selected
+serial word $\nu_\chi(w)$. It exposes causal creation/lifecycle precedence
+and chosen-event precedence, not duration or the entire serial extension.
+Memory $M_\chi$ selects the actually retained source fields, selected
+preorder descriptors/cells with their source bindings, readable backing
+and callable selected entry under current rights. It excludes old full
+archive fields and obsolete scratch. This is a selection of constructed
+material with an independently specified entry, not an invented answer
+table or a view defined by a desired inverse.
+

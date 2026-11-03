@@ -1,0 +1,8 @@
+Induction in (1.1)–(1.2) gives the pathwise identities
+
+$$
+X_n(v)=B_{S_n(v)},\qquad
+2X_n(v)-1=\sigma_{S_n(v)}.
+\tag{2.4}
+$$
+

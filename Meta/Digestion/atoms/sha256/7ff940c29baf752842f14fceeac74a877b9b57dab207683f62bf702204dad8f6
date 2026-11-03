@@ -1,0 +1,15 @@
+**Proposition 9.2 (one attained same-run account).** The following resource coordinates can be attained together for the protocol and predictor described above. They are upper accounts for an explicit representation, not a claim that every implementation has these costs.
+
+| Coordinate | Acquisition and retained use |
+| --- | --- |
+| Actual source calls through installation | one leaf Add of the supplied unit, two Ticks, one Read$_e$, one Hold; zero Resets and zero leaf Reads |
+| Complete received outputs | one exact rational $y$ and four fixed acknowledgements |
+| Paid input and selection | pulse $1$, the selected roster entry $\ell_1$, command tags and framing; literal leaf selection uses $O(\log N)$ bits |
+| Additional installation | one authentic native $e$-read port, its reference/units, right and backing; no interior input port |
+| Source law store | a sparse native coefficient list with $N+2E\le3b+14$ nonzero entries, plus incidence/address data |
+| Source current field and Tick scratch | $N$ exact field words and a separate $N$-word output vector for an out-of-place Tick |
+| Observer fixed data | common code, the family/template, $b,N,\epsilon$, roster and command/port reference data |
+| Observer source-dependent memory | earned $C,S$, current $N$-vector $z$, acquired $y$ and the fixed-size acquisition word |
+| Observer scratch | a separate $N$-vector for its out-of-place Tick, integer/rational decoding work and output buffers |
+| Optional extra retained outputs | any literal native law list or redundant $x=Qz$ copy, and any later full command/output journal |
+| Continued service | every actual source call, predictor update, rational input/output word and storage at its current width is charged |

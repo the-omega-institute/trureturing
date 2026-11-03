@@ -1,0 +1,17 @@
+**Theorem 78.2 (both inverse identities for the sparse Time image).** On (78.1), each expression in Definition 78.1 recovers $(u,f)$ and every other expression. Both inverse identities hold on their exact images, all routes agree, and their equivalence is the complete canonical current-continuation kernel of Convention 75.2.
+
+**Proof.** Space recovers the rooted term by the ordered-root supplier; here $b=L+c\ge4$. Memory directly provides it. For Boundary, the complete metric reconstructs the entire unit tree, including subdivisions, then the same root theorem gives $u$ and (75.1) gives $f=C^{\mathsf T}B$.
+
+Time first recovers $u$ from $E(u)$. Use §59.1's priority predecessor parser: beta maps to alpha, alpha fails, the literal pair $\langle\beta,\alpha\rangle$ maps to beta **before** general pair recursion, and every other pair requires both recursive parses. Check $\mathcal D$ and $L\ge3$. No $\rho$-image has root alpha; hence a pair of recursive images cannot be the special pair. Induction gives $\delta\rho=\mathrm{Id}$, and induction on an accepted parse gives $\rho\delta=\mathrm{Id}$. Thus $t=\delta(u)$, the retained old-address inclusion, $W,D,m_0,M,v$ are all determined. Apply (77.5) to the actual selected $y$ and combine with saved $z$. This reconstructs exactly $x$ and the physically attained $f$ of (77.2).
+
+Conversely, from $(u,f)\in\mathcal R$, parse $t$. Old vertices are precisely current internal vertices by (77.1). Restrict $f$ there to obtain $x$, including $z=x|_{T_0}$ and $h=x|_W$. Form $m=m_0+Dh$ and compute exactly the selected $y=v+Mh$. Reconstruct $E(u)$, the complete metric, $K^{\mathsf T}f$ and the canonical predictor. These are the very numerical outputs of the specified sparse run. Every $f$ in (78.1) is realizable: its restriction is an allowed arbitrary old entry, and Theorem 77.2 attains it. Hence decoding after encoding is identity on $\mathcal R$, and encoding after decoding is identity on each stated expression image. Alleged data outside these images are rejected by structural checks and re-encoding, not by a provenance test.
+
+Writing the encoding and decoding of expression $i$ as $E_i,R_i$, the actual conversions are $E_jR_i$. The two identities give
+
+$$
+(E_kR_j)(E_jR_i)=E_kR_i,
+\tag{78.2}
+$$
+
+so all routes and round trips agree. Convention 75.2 identifies precisely their fixed-context continuation kernel. Raw-map equality or authority is not a consequence of a numerical inverse. $\square$
+

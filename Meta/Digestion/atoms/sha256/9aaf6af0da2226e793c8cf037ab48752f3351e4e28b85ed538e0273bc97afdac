@@ -1,0 +1,19 @@
+**Definition 1.1 (Caterpillars and admissibility).** For a positive integer vector
+$a=(a_0,\ldots,a_{\ell-1})$, let $C_a$ consist of the path
+$v_0\cdots v_{\ell-1}$ and $a_i-1$ distinct pendant vertices adjacent only to
+$v_i$, for each $i$. Thus $|V(C_a)|=\sum_i a_i$; a part equal to one has no
+pendant vertices. The admissible vectors are the singleton $(1)$ and the
+nonempty positive vectors whose first and last parts are at least two. This
+is the domain of [P1, Definition 2.1], with spine indices decreased by one.
+
+For integers $m\geq0$ and $j\geq1$, write $j^m$ for a word of $m$ copies of
+$j$, including the empty word $j^0$, and put
+
+$$
+G_{m,j}=C_{(5,j^m,4,3)},\qquad H_{m,j}=C_{(4,j^m,5,3)}.
+$$
+
+Both vectors are admissible, have $m+3$ spine vertices and have
+$5+mj+4+3=12+mj$ actual vertices. In particular, neither $m=0$ nor $j=1$
+is excluded.
+

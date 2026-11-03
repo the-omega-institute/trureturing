@@ -1,0 +1,376 @@
+**定理 17.2（Every ground vector for locally bipartite or odd-cycle
+neighborhoods）。** For every $H$ in Definition 17.1,
+
+$$
+\ker(K-EI)\subseteq\operatorname{ran}P.
+\tag{17.3}
+$$
+
+The space $\mathcal N$ is nonzero and reduces $K$. With precisely
+the original $E$ in (17.2),
+
+$$
+\begin{aligned}
+g&=\min\operatorname{spec}(K|_{\mathcal N})-E>0,\\
+K-EI&\succeq g(I-P),\\
+\|(I-P)\phi\|^2
+&\leq\frac{\langle\phi,K\phi\rangle-E}{g}
+\qquad(\phi\in\mathcal H_m,\ \|\phi\|=1).
+\end{aligned}
+\tag{17.4}
+$$
+
+These are whole-space assertions for arbitrary complex states,
+including every feasible weight, all sector components and their
+superpositions, and arbitrary entanglement.
+
+Proof. Consume the complete Boolean chain representation in the
+owning volume, (6.6)–(6.12), specialized in (13.4)–(13.5) and
+(16.2). To fix all normalizations, its one-fibre orthonormal vectors
+are
+
+$$
+\begin{aligned}
+|1,-1\rangle&=|\varnothing\rangle,&
+|1,0\rangle&=\frac{|\{1\}\rangle+|\{2\}\rangle}{\sqrt2},&
+|1,1\rangle&=|\{1,2\}\rangle,\\
+\chi=|0,0\rangle&=\frac{|\{1\}\rangle-|\{2\}\rangle}{\sqrt2}.
+\end{aligned}
+\tag{17.5}
+$$
+
+The triplet is the symmetric subspace $V_1$ and the singlet is
+$V_0=\mathbb C\chi$. Both multiplicities are one. On these spaces
+$n_i=I+Z_i$, the ladders $J_i^\pm=L_i^{\ast},L_i$ annihilate
+$\chi$, and their spin-one coefficients are
+$\sqrt{(1\mp x)(2\pm x)}$ for the move $x\mapsto x\pm1$.
+The representation gives the orthogonal reducing decomposition
+
+$$
+\begin{aligned}
+\mathcal H_m&\cong
+\bigoplus_{\boldsymbol J\in\{0,1\}^m}
+\left(\bigotimes_iV_{J_i}\right)_{\sum_iZ_i=0},\\
+K_{\boldsymbol J}
+&=\sum_{\{i,j\}\in E(H)}
+ (J_i^+J_j^-+J_i^-J_j^+).
+\end{aligned}
+\tag{17.6}
+$$
+
+The summand for $\boldsymbol J$ includes every configuration
+$|x_i|\leq J_i$, $\sum_i x_i=0$, with all complex coefficients.
+Each summand is nonempty because each integer spin has weight zero.
+The projection $P$ selects exactly $\boldsymbol J=(1,\ldots,1)$.
+Thus no input symmetry has been assumed.
+
+The primary representation parameters are Srinivasan,
+[Theorem 1.2 and pp. 3–5](https://arxiv.org/pdf/1001.0280v2),
+Boolean rank $2$, starting rank $t_i=1-J_i$ and up operator $L_i^*$;
+and Feinsilver,
+[§§3–4, Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2),
+principal number $2-2t_i=2J_i$, $T=L_i^*$, $T^*=L_i$.
+The two-letter counts $(2-n_i,n_i)$ in the complete
+[OccupancyWordSectors supplier](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean),
+including sector_words_card_multinomial, its counting recurrences
+and sector_gram, and its
+[Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs)
+give the normalizations in (17.5), including occupancies zero and two.
+For the [collective-oscillator supplier](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md),
+the algebraic map is $d=m$, $N=2$, $g=0$, $e=1$, $B=A(H)$,
+$a_i=L_i/\sqrt2$ and $H_2=\hbar K/2$; no excitation truncation
+is made. The singleton-difference definition in
+[TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its
+[Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs)
+gives exactly the coefficient-one moves in (17.6).
+In Apte–Parekh–Sud,
+[v3, Definition 1 and Fact 2](https://arxiv.org/html/2506.03441v3),
+the blow-up has $2m$ vertices and the token number is $m$.
+The shifted XY block $WI/2-K$ in that Fact is a different operator.
+Neither refutation conclusion is used to infer confinement.
+
+Suppose a summand of (17.6) with at least one $J_i=0$ attains $E$.
+Choose a unit ground vector in it and fix one such site $p$.
+At every other zero-spin site replace its factor $\chi$ by
+$|1,0\rangle$, keeping the remaining vector unchanged. Each such
+factor is initially one-dimensional, so this operation is defined
+even when all other sites are entangled. Both factors have weight
+zero and zero expectation of every spin component. The original
+operator has no intrafibre term; all incident edge expectations
+are consequently zero before and after this replacement.
+Its total weight and energy expectation therefore stay zero and
+$E$, respectively. Since $K-EI\succeq0$ on the whole original
+carrier, a unit vector of expectation $E$ is an actual ground vector:
+expand it in an orthonormal eigenbasis and use the nonnegativity of
+every eigenvalue minus $E$. Repeat at all the other zero-spin sites.
+
+This is only the nonstrict $0\to1$ comparison already used in
+(7.4)–(7.5), (13.6) and the proof of Theorem 16.3. Its general
+bilinear-spin source is Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and the concluding fixed-magnetization
+paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+Here maximal spin $s_i=1$, variable spin $t_i=J_i$, total
+magnetization $M=0$, and the coupling tensor is
+$\operatorname{diag}(2a_{ij},2a_{ij},0)$, where $a=A(H)$.
+That existence/nonstrict comparison alone does not give (17.3).
+
+We have obtained a unit actual ground vector
+$\Psi=\chi_p\otimes f$ with spin one at every site other than $p$.
+It satisfies $K_{H-p}f=Ef$ and $\sum_{i\ne p}Z_if=0$.
+Write
+
+$$
+A=N_H(p),\quad R=V(H)\setminus(\{p\}\cup A),\quad
+B_A^\pm=\sum_{i\in A}J_i^\pm,\quad Z_A=\sum_{i\in A}Z_i.
+\tag{17.7}
+$$
+
+Connectedness and $m\geq2$ imply $A\ne\varnothing$.
+Replace $\chi_p$ by $|1,0\rangle_p$. The same expectation argument
+makes the result an actual ground vector at the same $E$.
+Its eigenvector equation, resolved into the orthogonal local
+weights $1,0,-1$ at $p$, gives
+
+$$
+0=\sqrt2\,|1,1\rangle_p\otimes B_A^-f
+ +\sqrt2\,|1,-1\rangle_p\otimes B_A^+f,
+\qquad B_A^-f=B_A^+f=0.
+\tag{17.8}
+$$
+
+Since $[B_A^+,B_A^-]=2Z_A$, also $Z_Af=0$.
+The spin-chain coefficients, or the Casimir identity, imply that
+$f$ lies in the entire total-singlet subspace on $A$ tensored with
+the space on $R$. All singlet multiplicity spaces are retained.
+The original total-weight constraint then implies $Z_Rf=0$.
+
+Let $\Pi_A$ be the projection onto that whole singlet subspace.
+For any $i\in A$,
+
+$$
+\Pi_A X_i\Pi_A=\Pi_A Y_i\Pi_A=\Pi_A Z_i\Pi_A=0.
+\tag{17.9}
+$$
+
+Indeed, simultaneous rotations of $A$ act as the identity on every
+singlet copy. Rotation by $\pi$ about an orthogonal axis changes
+the sign of the chosen component; sandwiching by $\Pi_A$ therefore
+equates the operator to its negative. Thus (17.9) applies to
+entangled vectors in the entire singlet tensor spectator space.
+In particular all edges from $A$ to $R$ have zero expectation in
+$f$. Set
+
+$$
+\rho_R=\operatorname{tr}_A|f\rangle\langle f|,\qquad
+a=\langle f,K_Af\rangle,\qquad
+b=\operatorname{tr}(\rho_RK_R),\qquad E=a+b.
+\tag{17.10}
+$$
+
+Here $K_U$ denotes the sum of (17.6)'s actual edges with both
+endpoints in $U$, on the spin-one factors there. The density
+$\rho_R$ has trace one and is supported on $Z_R=0$.
+If $R=\varnothing$, use its factor $\mathbb C$, $\rho_R=1$,
+$K_R=0$, $b=0$. No local minimum has replaced the whole-space $E$.
+
+First suppose $G_p$ is bipartite or $C_5$.
+The owning volume supplies a unit zero-weight ground vector $u_A$
+of $K_A$ that is not annihilated by both $B_A^+$ and $B_A^-$.
+For bipartite graphs this is the complete local argument
+(7.6)–(7.10), consumed at spin $S=1$; it includes disconnected
+and edgeless neighborhoods. For $C_5$ it is the local argument in
+the proof of Theorem 15.2, (15.4)–(15.8), also at $S=1$.
+Precisely, a singlet ground energy would satisfy
+$-12<e_A<-8$ by (15.8), while simultaneous rotations of its
+eigenvector equation give $T_z u=(e_A/4)u$ with
+$T_z=\sum_{\{i,j\}\in E(C_5)}Z_iZ_j$ integer diagonal.
+Thus $e_A\in4\mathbb Z$, a contradiction. These are supplied
+local results, not a new local spectral theorem.
+
+Let $e_A$ be this zero-weight ground energy. Since $Z_Af=0$,
+$a\geq e_A$. On the original carrier consider
+
+$$
+\rho=|\chi_p\rangle\langle\chi_p|\otimes
+ |u_A\rangle\langle u_A|\otimes\rho_R.
+\tag{17.11}
+$$
+
+Its total weight is zero. Each $\langle u_A,J_i^\pm u_A\rangle=0$
+because the ladders change total weight. All crossing edges and
+all edges incident to $p$ therefore have zero expectation.
+The variational principle on the full carrier gives
+$E\leq\operatorname{tr}(K\rho)=e_A+b\leq a+b=E$.
+Diagonalize this same $\rho_R$ into unit weight-zero vectors $h_c$
+with positive weights. Each
+$\chi_p\otimes u_A\otimes h_c$ has expectation at least $E$;
+their average is $E$, so each is an actual ground vector.
+Release $p$ in any one of them. Equation (17.8) now forces
+$(B_A^-u_A)\otimes h_c=(B_A^+u_A)\otimes h_c=0$,
+contradicting the choice of $u_A$.
+
+It remains to treat the cycle alternatives $C_3$ and odd $C_n$
+with $n\geq7$. Put $D=\{p\}\cup A$; its induced graph is the
+actual wheel $K_1\vee C_n$, including $K_4$ when $n=3$.
+We use supplied singlet estimates and supplied trial vectors on
+this induced graph, at exactly spin one and total weight zero.
+
+For $n=3$, on the singlet subspace of the three spin-one sites,
+
+$$
+0=\left(\sum_{i\in A}\boldsymbol J_i\right)^2
+=6I+2\sum_{\{i,j\}\subseteq A}\boldsymbol J_i\cdot\boldsymbol J_j.
+\tag{17.12}
+$$
+
+Rotations equate the three same-axis expectations. Since
+$K_A=2\sum_{\{i,j\}\subseteq A}(X_iX_j+Y_iY_j)$, they give
+$a=-4$. These identities hold for any density supported on the
+singlet space, including the reduced density of our $f$.
+The owning volume's actual four-site trial (13.13)–(13.14) is
+
+$$
+d_1=\frac{|1,-1\rangle-|0,0\rangle+|-1,1\rangle}{\sqrt3},
+\qquad v_D=(d_1)_{p,a_1}\otimes(d_1)_{a_2,a_3},
+\qquad \langle v_D,K_Dv_D\rangle=-\frac{16}{3}<-4.
+\tag{17.13}
+$$
+
+Here $A=\{a_1,a_2,a_3\}$ and the two coordinates in each ket of
+$d_1$ are magnetic weights of two actual triplet sites, not Boolean
+coordinates. This is the classical spin-one pair singlet,
+[NIST DLMF (34.1.1), (34.3.1)](https://dlmf.nist.gov/34.3#E1),
+with coupled spin zero. Its pair edge has expectation $-8/3$;
+the four edges joining different pairs have expectation zero.
+In particular $v_D$ is normalized and has total weight zero.
+
+For odd $n\geq7$, consume the singlet estimate (16.15)–(16.16)
+on the whole cycle. Its coupling parameters are three spins one:
+the two neighbors have spin $q=0,1,2$, and coupling to the central
+spin one gives $l=|q-1|,\ldots,q+1$.
+The Casimir eigenvalue
+$\{l(l+1)-2-q(q+1)\}/2$ is at least $-3$.
+Summing these local operators counts each isotropic cycle edge
+twice and gives $H_{\rm iso}\succeq-3nI/2$.
+On a singlet, rotation equates the three same-axis expectations,
+so $\langle K_A\rangle=(4/3)\langle H_{\rm iso}\rangle\geq-2n$.
+These are the triangle and coupling rules of
+[DLMF §§34.1–34.3](https://dlmf.nist.gov/34.1), used at their
+spin-one hypotheses in the owning volume. By linearity the same
+bound holds for any singlet-supported density. Consequently
+
+$$
+a\geq-2n.
+\tag{17.14}
+$$
+
+The supplied trial in (16.4)–(16.10), with the strict comparison
+(16.11)–(16.12), is an actual normalized vector on these $n+1$
+original two-coordinate fibres. In explicit parameters, let
+$r=(n-1)/2$, $u_j=e^{2\pi\mathrm i rj/n}$, and put
+
+$$
+w_p=-1,\qquad w_j=\frac{u_j+1/10}{1+u_j/10},\qquad
+v_D(T)=\binom{2(n+1)}{n+1}^{-1/2}
+ \prod_{(i,c)\in T}w_i\quad(|T|=n+1).
+\tag{17.15}
+$$
+
+Each phase has modulus one, so $v_D$ has norm one. It is
+within-fibre invariant, hence belongs to the actual spin-one
+factors, and has total weight zero. The supplied estimate is
+
+$$
+\langle v_D,K_Dv_D\rangle
+\leq-\frac{4n(n+1)}{2n+1}
+ \left(\frac{49}{50}\cos\frac\pi n+\frac7{100}\right)
+<-2n\leq a.
+\tag{17.16}
+$$
+
+This use is of the explicit trial, not of a minimum over a
+symmetric-input carrier. Its subset phase count is the intermediate
+in the owning volume (3.5)–(3.7) and (16.9)–(16.10), with parameters
+$N_D=2(n+1)$, $k_D=n+1$, $s=2$.
+The complete count, including private proof-local counting_identity,
+W_move, phi40_norm, phi40_energy and choose_ratio40 in
+[CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and its
+[Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs),
+supplies this counting mechanism; its fixed instance has $N=200$,
+$k=100$, $s=40$, and its refutation is not used as a confinement
+premise. The classical fixed-magnetization trial in
+Bärwinkel–Schmidt–Schnack,
+[§§2.2–2.3, (14)–(21)](https://arxiv.org/pdf/cond-mat/0210458v2),
+assumes cyclic coupling. Here the consumed bound is the explicit
+wheel calculation of Section 16, not a generalization of those
+classical bounds beyond their hypotheses.
+
+For either cycle case form the density on the entire original carrier
+
+$$
+\widetilde\rho=|v_D\rangle\langle v_D|\otimes\rho_R.
+\tag{17.17}
+$$
+
+It has global weight zero. Every one-site ladder expectation of
+$v_D$ is zero, since $v_D$ has definite total weight zero.
+Thus every actual edge between $D$ and $R$ has zero expectation
+in (17.17). In the old state, the edges from $p$ have zero
+expectation because it is a singlet, and those from $A$ to $R$
+have zero expectation by (17.9). The same outside marginal
+$\rho_R$ retains exactly the energy $b$ of all edges within $R$.
+No edge or attachment has been removed. Equations (17.13) or
+(17.16) consequently imply
+
+$$
+\operatorname{tr}(K\widetilde\rho)
+=\langle v_D,K_Dv_D\rangle+b<a+b=E,
+\tag{17.18}
+$$
+
+contrary to the whole-carrier variational principle.
+The local weight-zero factors in this trial were available because
+(17.8) forced the singlet condition on the supposed ground vector;
+no separate-filling premise was placed on that vector or on the
+original carrier.
+
+The supplied same-state replacement arguments (13.9)–(13.14),
+(15.10)–(15.13) and (16.17)–(16.18) underlie this comparison.
+Their two-auxiliary precedent is Benassi–Lees–Ueltschi,
+[v3, §4.3, Lemma 9 and (4.12)–(4.17)](https://arxiv.org/pdf/1510.03215v3),
+DOI [10.1007/s10955-016-1580-2](https://doi.org/10.1007/s10955-016-1580-2).
+Their $R^i$ is the sum of two spin-half operators. Their strictness
+uses a negative Hamiltonian and nonnegative product couplings in
+directions 1 and 3; that statement is not applied to positive
+adjacency on the present nonbipartite bases.
+The additional graph-domain inference here is that the supplied
+wheel trials may be used on $H[\{p\}\cup N_H(p)]$ while keeping
+this same outside marginal. Together with the supplied bipartite
+and five-cycle obstructions, this excludes every deficient sector
+for the entire class (17.1), with arbitrary legal attachments.
+It does not assert a new representation theorem, isolated-wheel
+theorem or classical local spectral package.
+
+Every deficient summand of (17.6) has now been excluded from the
+actual eigenvalue $E$. An arbitrary complex ground vector decomposes
+into these orthogonal reducing summands, and any nonzero component
+would itself be an $E$-ground vector. Hence it lies entirely in the
+all-spin-one summand, proving (17.3) with all superpositions and
+entanglement retained.
+
+The original vector $\chi_p\otimes\bigotimes_{i\ne p}|1,0\rangle_i$
+has exactly $m$ particles and is a nonzero vector in $\mathcal N$.
+All fibre permutations commute with $K$, so $P$ commutes with $K$
+and $\mathcal N$ reduces it. Its spectrum is finite and nonempty,
+and (17.3) excludes $E$ from that spectrum. Since $E$ was the
+whole-space minimum, $g>0$. On $\operatorname{ran}P$,
+$K-EI\succeq0$; on $\mathcal N$, $K-EI\succeq gI$.
+Adding the two reducing quadratic forms proves (17.4), and taking
+a normalized complex-vector expectation gives its mass inequality.
+This is the finite-spectrum consequence already used in (13.3),
+(15.2) and (16.14); it yields no exact value of $E$, numerical
+lower bound for $g$ or rate. $\square$
+

@@ -1,0 +1,48 @@
+**引理 10.2（有限支付的份额范围）。** 置
+
+$$
+u_m=\frac{3X_m}{2\sqrt{3m}},
+\qquad \tau_m=\frac{1-u_m}{u_m}.
+\tag{10.4}
+$$
+
+对每个 $m\ge4$，有
+
+$$
+\frac12<u_m<1-\frac1{\sqrt6},
+\qquad
+0<\tau_m<1,
+\qquad
+Y_m>\sqrt{\frac2m}.
+\tag{10.5}
+$$
+
+**证明。** 定理 5.1 的 (5.4) 给出
+
+$$
+u_m=\sqrt3\int_0^1h_3(t)\mu_m(t)\,dt,
+\qquad
+\mu_m(t)=\mathbb E\sqrt{\operatorname{Bin}(m,t)/m},
+$$
+
+其中 $h_3(t)>0$。定理 5.1 的 (5.6)、(5.9) 已给出 $u_m>1/2$：$m=4$ 时 $u_4>1287/2500$，而 $m\ge5$ 时 $u_m\ge u_5>53/100$。另一方面，有限 Jensen 不等式给出 $\mu_m(t)\le\sqrt t$，因而
+
+$$
+u_m\le u_\infty:=\sqrt3\int_0^1h_3(t)\sqrt t\,dt
+=\frac67-\frac{2\sqrt6}{35}-\frac{8\sqrt3}{105}.
+$$
+
+由 $\sqrt6>61/25$、$\sqrt3>17/10$，有
+
+$$
+u_\infty<\frac{1544}{2625}<\frac{59}{100}.
+$$
+
+又 $\sqrt6>61/25>100/41$，故 $1-1/\sqrt6>36/61>59/100$。于是 $u_m<1-1/\sqrt6$，再由 (10.2) 写成
+
+$$
+Y_m=\frac{2\sqrt3}{\sqrt m}(1-u_m)
+$$
+
+即得 $Y_m>\sqrt{2/m}$；其余两项随 (10.4) 立即成立。∎
+

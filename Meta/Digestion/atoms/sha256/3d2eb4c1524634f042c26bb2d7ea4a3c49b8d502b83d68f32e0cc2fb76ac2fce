@@ -1,0 +1,17 @@
+**(B3) Theorem 4.1 (literal current-source optimum).** Let $P_f$ and $P_P$ be the one-read joint laws on $G\times\{0,1,3,B\}$:
+
+$$
+P_f(dp,i)=\mu_t(dp)f_i(p),\qquad P_P(dp,i)=\mu_t(dp)1_{P_i}(p).
+$$
+
+Then
+
+$$
+\inf_P\operatorname{TV}(P_P,P_f)=E,
+\tag{4.1}
+$$
+
+and the infimum is attained by the first-maximizer partition, with any Borel tie rule. For uniform $f_i=1/4$, every partition has joint distance exactly $3/4$ at every fixed positive endpoint. This joint statement remains true for a partition that happens to purify a label pair.
+
+**Proof.** At a point $p$, a deterministic label is a point mass and the conditional distance from $f(p)$ is $1-f_{a(p)}(p)$. Integrating gives (4.1), and choosing a maximizer gives attainment. For uniform $f$, the conditional distance is $3/4$ at every point. A record-only pair equality does not preserve the literal current point, so it cannot improve this joint distance. ∎
+

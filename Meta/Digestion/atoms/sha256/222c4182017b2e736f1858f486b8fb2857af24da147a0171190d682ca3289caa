@@ -1,0 +1,8 @@
+本题最直接的项目来源大多是*本轮深入阅读的已有结果*，而非这次提交新增的 RH 突破：
+
+1. [《FIB-ATOM 与 Robin 的约数尺度几何》](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/AURIC_FIB_ROBIN_DIVISOR_SCALE_GEOMETRY.md)，尤其 §§1–6、9、12，已把四块关联、素数指数、独立相位的平方平均和 Robin 判据接在一起。
+
+2. [《算术三角与 RH 管线续篇 II》](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/AURIC_FIB_ATOM_TYPED_BRIDGES_AND_ARITHMETIC_TRIANGLE_RH_PIPELINE_CONTINUATION_II.md) §63，已提出条件性的五态概率场、Cayley 圆与 RH 接口；它明确保留自然算术来源与全局谱识别的缺口。
+
+3. [《RH 离线零点与横向谱相变》](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/RH_OFFLINE_ZERO_LEE_YANG_INSTANTANEOUS_PHASE_TRANSITION_THEORY.md)增订一 A3–A4、增订二 B6–B7，已区分局部 Euler 圆与 completed 临界圆，并给出有限 hard-core 多项式的正行列式表示。
+

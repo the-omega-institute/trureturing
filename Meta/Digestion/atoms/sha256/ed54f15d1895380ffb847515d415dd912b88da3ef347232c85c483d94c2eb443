@@ -1,0 +1,17 @@
+**Corollary 17.3 (a triangle in the original coordinates).** Let
+
+$$
+C=(1/2,40003/120000),\qquad
+\mathcal V=\operatorname{conv}\{A,B,C\}.
+$$
+
+For every $a,b,c\ge0$ with $a+b+c=1$, the original map at $(\lambda,q)=aA+bB+cC$ is Schwarz for every complex input and every complex probe. Such a point lies outside $\mathcal C_{\rm declared}$ exactly when $c>0$; in particular every positive barycentric weight at the third vertex strictly escapes that hull. All three vertices and all closed edges are included.
+
+**Proof.** The suppliers for $A,B$ are those in Theorem 16.1, and Theorem 16.2 supplies $C$. Apply the convexity identity of Remark 4.4 successively to these original maps. This gives the asserted inequality for every complex input and probe, including zero probes, without a new assumption on support. Affinity gives
+
+$$
+2\lambda+3q=2+\frac{3c}{40000}.
+$$
+
+If $c>0$, Proposition 17.2 separates the point. If $c=0$, it is on $[A,B]\subset\mathcal C_{\rm declared}$. This is the direct convex consequence of the three endpoint suppliers. ∎
+

@@ -1,0 +1,59 @@
+**定理 22.1（任意尺度下按自身实际 Fiedler 值归一化）。** 固定任意
+$R_0>0$。令 $\epsilon_k\in(0,1]$ 是任意趋于零的序列，
+$p^{\epsilon_k}=(1-\epsilon_k)p^*+\epsilon_k p^0$，并令
+
+$$
+c_i[k]=\alpha_k\frac{7T(p^{\epsilon_k})}{R_0p_i^{\epsilon_k}},
+\qquad \alpha_k\in(0,\infty)
+\tag{22.1}
+$$
+
+为任意独立选择的正尺度。写 $\lambda_k=\lambda_2(L(c[k]))$。
+则每个 $c[k]$ 都是原七点计数质量上的有限严格正电导，且
+
+$$
+\lambda_kR(c[k])\longrightarrow 7+49b<10<U_7\le B_7,
+\tag{22.2}
+$$
+
+其按各自实际 $\lambda_k$ 归一化的坐标满足
+
+$$
+\frac{c_i[k]}{\lambda_k}\longrightarrow
+\begin{cases}
+3/7,&i=0,1,\\
+3a/(7b),&i=4,\\
++\infty,&i=2,3,5,6.
+\end{cases} \tag{22.3}
+$$
+
+$\alpha_k=1$ 时每个 $R(c[k])=R_0$；任意尺度时
+$R(c[k])=R_0/\alpha_k$。这些是次优逃逸序列，均不是最大化序列。
+
+**证明。** 所有 $\epsilon_k>0$ 使七个概率坐标严格为正。
+$p^{\epsilon_k}\to p^*$，而 $p^*$ 是非顶点，所以定理 5.1 的完整非顶点
+连续性及 (20.3) 给出
+
+$$
+\rho(p^{\epsilon_k})\to3a/7>0,\qquad
+T(p^{\epsilon_k})\to(3a/7)(1+7b).
+$$
+
+式 (20.2) 与电导缩放律给出 (22.2)，并且对每个 $i,k$ 精确地有
+
+$$
+\lambda_k=\alpha_k\frac{7T(p^{\epsilon_k})}{R_0\rho(p^{\epsilon_k})},
+\qquad \frac{c_i[k]}{\lambda_k}
+=\frac{\rho(p^{\epsilon_k})}{p_i^{\epsilon_k}}.
+\tag{22.4}
+$$
+
+在 $i=0,1$，分母趋于 $a$；在 $i=4$，分母趋于 $b>0$；
+其它四个分母恰为 $\epsilon_k/7\to0$，此处不要求单调。
+因此 (22.3) 对任意 $\alpha_k>0$ 都成立。
+当 $\alpha_k=1$，这些四个原始电导本身也趋于正无穷，因为其分子趋于
+$7T_*/R_0>0$。一般尺度下，(22.3) 确定的是按自身实际谱值归一化后的逃逸。
+定理 7.2 的完整近最大点紧性还给出：任何目标趋于 $B_7$ 的正序列，其
+概率坐标最终有共同的严格正下界。这里四个概率坐标趋零，故这些序列不能
+最大化；式 (22.2) 更明确地给出了它们与可行均匀值之间的严格差距。∎
+

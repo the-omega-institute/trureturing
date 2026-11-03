@@ -1,0 +1,13 @@
+## Local AME realization and normalization
+Order the central legs toward A,B,C,D and use
+
+    T_O = q^(-1) sum_(x,y) |x,y,x+y,x-y>.
+
+At each outer vertex order the legs (central,loop,boundary1,boundary2). Use
+
+    T_a = q^(-1) sum_(u,v) |u,v,u+a v,u-a v>,
+
+with a=1,t,1,s at A,B,C,D, respectively. Contract paired internal indices using Kronecker deltas in their displayed bases. No change of coordinates around a loop is assumed. Every pair of the four linear forms u,v,u+av,u-av is independent because a!=0 and 2!=0. Any two labels therefore uniquely determine u,v, proving each normalized local tensor is AME(4,q).
+
+A consistent internal assignment is uniquely specified by x,y,z,w, where z and w are the actual AB and CD edge coordinates. Each boundary support tuple is distinct: the first pair determines x,z, the second determines y, and the third determines w. Every amplitude before normalization is q^(-5). Its norm is q^(-3), giving the displayed normalized amplitude q^(-2). Choosing normalized maximally entangled edge contractions only changes the common scalar before normalization.
+

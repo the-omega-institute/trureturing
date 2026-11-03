@@ -1,0 +1,54 @@
+**Definition 23.1 (supplemental coin entrance and bounded search).**
+Keep all premises and source actions of Definition 9.1. Add a paid
+observer-owned stream of independent fair local bits, independent of
+the actual source, cut and prior controller state. Charge generated
+and consumed bits, buffering, scratch and control writes. The coins
+neither observe nor advance the source. The original entrance alone
+does not assert this coin grant. The stationary interval covers every
+realized operation through normalization, retained writes and the
+actual completed handoff; an expected operation count supplies no
+fixed-duration lease.
+
+After earning $H$, put
+
+$$
+S=d+H+2,\quad L=2d+1,\quad m=256H,\quad
+R=\min\{r\text{ odd}:r\ge\lceil\log_2(64(H+2))\rceil\}.
+\tag{ACR.97}
+$$
+
+An estimate of a present cone is the median of $R$ block means,
+each containing $m$ independent physical depth walks of Definition
+13.1. Every walk uses fresh fair directions and includes its terminal
+absence Read. Store integer block sums; division by the common $m$
+is just a comparison convention. Only $R$ sums need be retained.
+
+All search operations have the following guards. Every Read operand
+is materialized as a complete original-root literal of length at most
+$H$. A depth walk stops at its first absent-child test; it may never
+submit a longer word or execute more than $H$ tests. Before estimating
+a proposed child, test its presence and reject an absent start.
+Before taking a search edge, test both child literals and reject unless
+both are present. Compare fresh child estimates to choose a larger
+or smaller child, with a fixed tie rule. If a required search edge
+cannot be taken within these length and iteration bounds, return FAIL.
+Each requested search path has its prescribed finite length; a guessed
+rank never changes these bounds.
+
+A cut attempt estimates the root, rounds $3\widehat\mu/2+2/3$
+to the nearest integer with a fixed tie rule, and rejects a proposed
+$\nu\notin[n_0,H]$. It constructs $x$ by $\nu-1$ successive
+larger-child choices. It constructs $y$ by $k$ smaller-child choices
+if $\nu=2k+1$, or $k-1$ such choices if $\nu=2k$. Finally it
+executes the actual root certificate (ACR.94), including its positive
+test. The cut is certified only if that certificate passes.
+
+Once the cut and first $j-1$ bits are certified, a birth attempt
+constructs the actual early parent as in Definition 22.1, estimates
+its two children, and proposes the orientation of the larger estimate.
+Starting at that proposed child, it constructs a suffix of exactly
+$t_j=n-\tau_j$ edges by successive larger-child choices. It then
+executes (ACR.95). Only a passing reply appends a certified bit. FAIL
+leaves the certified cut and prefix unchanged. In particular a rejected
+proposal creates no first-disagreement claim.
+

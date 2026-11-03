@@ -1,0 +1,11 @@
+**Theorem 129.2 (distinct bounded multipliers in every positive angular sector).** Under Definition 129.1, let $f,w$ be real, globally essentially bounded, rotation-invariant functions on the original $G$. Suppose $f$ is smooth and nonconstant on the connected full-measure set $\Omega=\{x^2+y^2>0\}$. For every real $c$, the form
+$$
+q(v)=\operatorname{Re}\langle fv,Pv\rangle_m
+       +c\operatorname{Re}\langle wv,P^2v\rangle_m                         \tag{129.1}
+$$
+has a bounded real negative test in each positive angular frequency. Consequently its negative index on the required real bounded Borel classes is infinite. No sign assumption on $f,w,c$ is needed. Smoothness of $w$ is unnecessary.
+
+The two multipliers in (129.1) remain distinct throughout the proof.
+
+**Proof of Theorem 129.2.**
+

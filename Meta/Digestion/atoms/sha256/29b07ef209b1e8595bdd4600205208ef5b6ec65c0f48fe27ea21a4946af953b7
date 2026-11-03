@@ -1,0 +1,32 @@
+**定义 4.1（完整记录仪器）。** 在有限维复载体上，完整记录仪器是完全正映射族
+$\Phi=\{\Phi_a:\mathcal L(A)\to\mathcal L(B_a)\}$，满足
+
+<a id="eq-4-u01"></a>
+
+$$
+\sum_a\operatorname{Tr}\Phi_a(X)=\operatorname{Tr}X,
+\qquad E_a=\Phi_a^*(I).
+$$
+
+完整记录提升为
+
+<a id="eq-4-u02"></a>
+
+$$
+\operatorname{Inst}_\Phi(X)=\bigoplus_a\Phi_a(X),
+$$
+
+不同分支的载体须事先给定共同识别。若记录未来还可以相干重组，它应留在量子载体内，而不能预先当作直和中的经典标签；同一经典仪器也不唯一指定一个相干控制实现。
+
+并定义
+
+<a id="eq-4-u03"></a>
+
+$$
+D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1,
+\qquad
+\delta(\Phi,\Psi)=\tfrac12\|\operatorname{Inst}_\Phi-\operatorname{Inst}_\Psi\|_\diamond.
+$$
+
+<a id="lem-4-1"></a>
+

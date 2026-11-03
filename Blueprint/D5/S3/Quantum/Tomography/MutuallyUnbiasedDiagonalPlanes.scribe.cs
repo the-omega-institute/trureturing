@@ -11,6 +11,45 @@ internal sealed class MutuallyUnbiasedDiagonalPlanesDocument : IScribeDocumentDe
         H("Mutually Unbiased Diagonal Planes"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("mutually-unbiased-coordinate-projector-two"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.coordinateProjectorTwo"),
+                H("The two coordinate projectors"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    Parenthesized(Seq(Named("coordinateProjectorTwo"), Colon, Sp,
+                        new Formula.TypeArrow(new Formula.Apply(Named("Fin"), [D(2)]),
+                            new Formula.Apply(Named("Matrix"),
+                                [new Formula.Apply(Named("Fin"), [D(2)]),
+                                 new Formula.Apply(Named("Fin"), [D(2)]),
+                                 Seq(Mathbb, Grp(F.Id("C")))])))),
+                    FormulaRelationOperator.Equal,
+                    Seq(Bang, OpenBracket,
+                        Seq(Bang, Bang, OpenBracket, D(1), Comma, D(0), Semi,
+                            D(0), Comma, D(0), CloseBracket), Comma,
+                        Seq(Bang, Bang, OpenBracket, D(0), Comma, D(0), Semi,
+                            D(0), Comma, D(1), CloseBracket), CloseBracket)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The two complex qubit coordinate projectors select the first and second basis vectors."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("mutually-unbiased-coordinate-context-two"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.coordinateContextTwo"),
+                H("The coordinate rank-one context"),
+                StatementSource.FromAuthor(Disp(new Formula.Relation(
+                    new Formula.Apply(
+                        Seq(Operatorname, Grp(F.Id("RankOneContext")), Dot,
+                            Operatorname, Grp(F.Id("projector"))),
+                        [Parenthesized(Seq(Named("coordinateContextTwo"), Colon, Sp,
+                            new Formula.Apply(Named("RankOneContext"), [D(2)])))]),
+                    FormulaRelationOperator.Equal,
+                    Seq(Operatorname, Grp(F.Id("coordinateProjectorTwo")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The context has coordinateProjectorTwo as its projector family. Each member is Hermitian, idempotent and trace one, and compresses every matrix X to trace(PX) times P. The two members sum to the identity. These properties supply the rankOne and resolvesIdentity fields of RankOneContext; its projector family determines the context because the other fields are proofs."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("mutually-unbiased-diagonal-planes"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes."
@@ -41,6 +80,9 @@ internal sealed class MutuallyUnbiasedDiagonalPlanesDocument : IScribeDocumentDe
                             + "compositions. Repository, pinned-library, and Loogle searches found "
                             + "no theorem packaging these clauses on the same carriers."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula Apply(string name, params Formula[] arguments)
     {

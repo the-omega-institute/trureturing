@@ -1,0 +1,81 @@
+**Lemma 17.1 (finite integer ambiguity or arbitrarily large common observations).** Let $A:\mathbb R^k\to\mathbb R^r$ be any real linear map, let $K,W$ be as in Definition 16.1, and put
+
+$$
+\Gamma=\{j\in\mathbb Z^k:Aj\in W\},\qquad
+V=\operatorname{span}_{\mathbb R}\Gamma,\qquad
+S_{\epsilon}=\{j\in\mathbb Z^k:Aj\in\epsilon\Delta K\}.
+\tag{17.1}
+$$
+
+For each prescribed $\epsilon>0$, the following are equivalent:
+
+1. $\ker A\cap V=\{0\}$.
+2. $S_{\epsilon}$ is finite.
+3. For the centers $At$, $t\in\mathbb N_0^k$, the translates $At+\epsilon K$ have a finite upper bound on the number containing any one point, counting distinct $t$ separately.
+
+More strongly, failure of item 1 gives, for every positive integer $Q$, more than $Q$ distinct nonnegative integer vectors whose translated supports have one common point. A single common translation of all centers leaves every assertion unchanged. This is an arithmetic lemma; the source bridge is (16.3).
+
+Proof. Choose linearly independent $v_1,\ldots,v_d\in\Gamma$ spanning $V$; such a finite choice exists by finite-dimensional linear algebra. They need not be a basis of $\Gamma$ over $\mathbb Z$. Let $B$ be the $k\times d$ matrix with these columns. If $V=\{0\}$, then $\Gamma=\{0\}$, $S_\epsilon=\{0\}$ and no two distinct centers can share an observation. This includes $k=0$.
+
+Suppose item 1 holds and $d>0$. The columns of $AB$ are independent. Choose a set $I$ of $d$ native rows for which $D=(AB)_I$ is invertible. In the maximum norm put
+
+$$
+\beta=\max_{1\le a\le k}\sum_{i=1}^d|B_{ai}|,
+\qquad \gamma=\max_{1\le i\le d}\sum_{j=1}^d|(D^{-1})_{ij}|,
+\qquad \kappa_A=\beta\gamma.
+\tag{17.2}
+$$
+
+For $x=Bc\in V$, the identity $c=D^{-1}(Ax)_I$ gives the supplied finite-dimensional inverse estimate
+
+$$
+\|x\|_\infty\le\kappa_A\|Ax\|_\infty.
+\tag{17.3}
+$$
+
+With $R=\max_{a\in K}\|a\|_\infty$, every $j\in S_\epsilon$ lies in $\Gamma\subseteq V$ and obeys
+
+$$
+\|j\|_\infty\le 2\epsilon R\kappa_A.
+\tag{17.4}
+$$
+
+There are finitely many integer vectors in this coordinate box, proving item 2. Set $\kappa_A=0$ in the case $V=\{0\}$. The estimate is only on $V$, not on all of $\mathbb R^k$; that restriction is essential for singular supports. If several centers share a point, subtracting any one count vector injects their count vectors into $S_\epsilon$ by (16.5)'s vector calculation. Thus item 2 implies item 3, with bound $|S_\epsilon|$.
+
+For the converse suppose item 1 fails. Then $d>0$ and $s=\operatorname{rank}(AB)<d$. All columns of $AB$ lie in $W$. For each integer $N\ge0$ and $n\in\{0,\ldots,N\}^d$, define
+
+$$
+(b_N)_a=N\sum_{i=1}^d|B_{ai}|,\qquad t_n=b_N+Bn.
+\tag{17.5}
+$$
+
+These are nonnegative integer vectors, since $b_N$ compensates every possibly negative coordinate of $Bn$. They are distinct because $B$ is injective. Their native centers are $Ab_N+ABn$. This translation is what makes signed integer directions into legal nonnegative counts; no signed count is executed.
+
+If $s=0$, all these centers are identical. Since $0\in K$, they have that common allowed observation for every $\epsilon$, even zero. Choose $(N+1)^d>Q$.
+
+If $s>0$, choose a basis $c_1,\ldots,c_s$ of the image of $AB$, with matrix $C$, and write $AB=CF$. Here each $c_i\in W$ and $F$ is an $s\times d$ real matrix. Choose $\rho>0$ such that
+
+$$
+\{w\in W:\|w\|_\infty\le\rho\}\subseteq K;
+\tag{17.6}
+$$
+
+this follows from $0\in\operatorname{relint}K$, by taking a smaller closed ball in its relative neighborhood. Put $G=\sum_i\|c_i\|_\infty>0$, $H=\max_i\sum_j|F_{ij}|>0$ and $h=\epsilon\rho/(2G)>0$. The $(N+1)^d$ vectors $Fn$ lie in $[-HN,HN]^s$. At most $(2HN/h+3)^s$ half-open cubes of side $h$ meet that box. Because $d>s$, choose $N$ with
+
+$$
+(N+1)^d>Q(2HN/h+3)^s.
+\tag{17.7}
+$$
+
+One cube contains images of more than $Q$ distinct $n$; coincident images still count their different integer inputs. Fix one of them, $n_0$, and set $y_*=Ab_N+ABn_0$. For every selected $n$,
+
+$$
+y_*-At_n=CF(n_0-n)\in W,\qquad
+\|CF(n_0-n)\|_\infty<Gh=\epsilon\rho/2.
+\tag{17.8}
+$$
+
+Thus (17.6) gives $y_*\in At_n+\epsilon K$ simultaneously for all selected vectors. This proves the stronger failure of item 3. Subtracting $t_{n_0}$ from these arbitrarily large families also produces arbitrarily many distinct elements of $S_\epsilon$, so item 2 fails. Adding a fixed vector to every center just adds it to $y_*$. The proof uses exact membership in $W$ before using a norm estimate; small ambient distance alone would not imply overlap for a singular support. $\square$
+
+The inverse bound in (17.3) is the existing finite-dimensional supplier, corresponding to pinned mathlib's `LinearMap.exists_antilipschitzWith` and `LinearMap.injective_iff_antilipschitz` on $A|_V$. The new step is selecting the real span of the integer subgroup with image in the actual support space, and proving the same-support obstruction by (17.5)–(17.8). Neither a lattice assumption on $A\mathbb Z^k$ nor an effective method for computing $\Gamma$ is presupposed.
+

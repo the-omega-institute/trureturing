@@ -1,0 +1,6 @@
+Use three separate structures:
+
+- GlobalVisibility with \(P,U,v\);
+- IndependentSourceNoise with the eight tables \(P_S\);
+- LocalOutputChannel with stochastic matrices.
+

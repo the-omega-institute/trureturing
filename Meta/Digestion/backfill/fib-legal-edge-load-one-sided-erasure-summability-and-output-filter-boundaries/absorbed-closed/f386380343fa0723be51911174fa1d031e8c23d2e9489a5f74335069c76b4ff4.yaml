@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f386380343fa0723be51911174fa1d031e8c23d2e9489a5f74335069c76b4ff4
+  normalized_sha256: sha256:f386380343fa0723be51911174fa1d031e8c23d2e9489a5f74335069c76b4ff4
+cas_ref: sha256:f386380343fa0723be51911174fa1d031e8c23d2e9489a5f74335069c76b4ff4
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.component_restriction
+    target_statement_id: sha256:c8e9ba034969989b529709ea27a403f7093cf7a142f1488591d2ad47e36e6686
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.original_rectangle_occurrence
+    target_statement_id: sha256:207ed3f849946e3421c9beabace3d065588671c22e8fb817932deb2393617846
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.route_word_past_factor
+    target_statement_id: sha256:4f1329ec59e14a72aa7b510704ec686e3ed9d66a12ea385d82805bb081ba479e
+receipts:
+  unresolved_subitems: []

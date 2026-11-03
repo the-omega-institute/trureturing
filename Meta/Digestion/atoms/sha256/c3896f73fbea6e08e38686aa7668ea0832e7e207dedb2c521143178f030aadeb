@@ -1,0 +1,15 @@
+**Definition 2.3 (four distinct descent assertions).** The following
+assertions concern this particular $\Omega$, $\pi$ and clock.
+
+1. Coefficient symmetry means $\partial_\beta A=0$ and
+   $\partial_\beta\rho=0$ on $\Omega$.
+2. Differential projectability means $\mathscr G(Uf)$ is basic for every
+   $f\in C_c^\infty(B)$.
+3. Completed invariance means $H_t\mathcal H\subset\mathcal H$ for every
+   $t\ge0$, for the Friedrichs semigroup (2.3).
+4. All-start killed descent means that the pushforward killed path law is
+   the same for every two interior representatives with the same $\pi$.
+   The common laws form a diffusion on $B$ in the original time, with
+   death at the exit of its height from $I$. Projection sends the upstairs
+   cemetery point to the downstairs cemetery point.
+

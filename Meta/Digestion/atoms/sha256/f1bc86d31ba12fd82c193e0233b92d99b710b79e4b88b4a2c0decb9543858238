@@ -1,0 +1,63 @@
+### 定理 6：有效解质量的 KL 变分刻画
+
+对任意支持于 $S_F$ 的概率分布 $P$，若 $s_F>0$，有
+
+$$
+D_{\mathrm{KL}}(P\|Q_F)
+=
+D_{\mathrm{KL}}
+\bigl(P\|Q_F(\cdot\mid S_F)\bigr)
+-\log s_F.
+$$
+
+因此
+
+$$
+\boxed{
+-\log s_F
+=
+\inf_{\operatorname{supp}P\subseteq S_F}
+D_{\mathrm{KL}}(P\|Q_F).
+}
+$$
+
+并且
+
+$$
+\boxed{
+s_F\ge
+\exp[-D_{\mathrm{KL}}(P\|Q_F)].
+}
+$$
+
+这里采用自然对数。
+
+<a id="theorem-6-proof"></a>
+
+#### 证明
+
+在 $w\in S_F$ 上，
+
+$$
+Q_F(w)=s_FQ_F(w\mid S_F).
+$$
+
+代入 KL 定义：
+
+$$
+\begin{aligned}
+D(P\|Q_F)
+&=
+\sum_{w\in S_F}P(w)
+\log
+\frac{P(w)}
+{s_FQ_F(w\mid S_F)}\\
+&=
+D(P\|Q_F(\cdot\mid S_F))
+-\log s_F.
+\end{aligned}
+$$
+
+KL 非负；取 $P=Q_F(\cdot\mid S_F)$ 时达到下确界。证毕。
+
+> 

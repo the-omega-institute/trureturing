@@ -1,0 +1,68 @@
+**Theorem 5.3 (The hub boundary and the unique global optimizing profile).** In the domain of Definition 5.1,
+
+$$
+J_s(x)\ge\frac1{2y_i}\quad(1\le i\le s),\qquad
+J_s(x)\ge\frac{s^2}{2\sum_Sx_S/|S|}\ge\frac{s^2}{2}.
+$$
+
+Thus any fixed-$s$ profile sequence with a hub mass tending to zero has diverging energy. Over every finite $s\ge2$,
+
+$$
+\min_{\substack{s\ge2\\x\in\mathcal P_s(\alpha)}}J_s(x)=F(\alpha).
+$$
+
+The only minimizing profile, up to exchange of hub labels, has
+
+$$
+s=2,\qquad x_{\{1,2\}}=\alpha,\qquad
+x_{\{1\}}=x_{\{2\}}=\frac{1-\alpha}{2}.
+$$
+
+Every $s\ge3$ profile has $J_s(x)-F(\alpha)\ge5/12$.
+
+**Proof.** The $i$th summand in $2J_s$ is
+
+$$
+\frac{\sum_{S\ni i}|S|^2x_S}{y_i^2}\ge\frac{\sum_{S\ni i}x_S}{y_i^2}=\frac1{y_i},
+$$
+
+which proves the first bound and the divergence assertion. For the joint bound use all pairs $(S,i)$ with $i\in S$. Their exact marginal identity is
+
+$$
+\sum_S\sum_{i\in S}\frac{x_S}{y_i}=s.
+$$
+
+Cauchy–Schwarz, applied with factors $\sqrt{x_S}|S|/y_i$ and $\sqrt{x_S}/|S|$, gives
+
+$$
+s^2\le
+\left(\sum_Sx_S|S|^2\sum_{i\in S}y_i^{-2}\right)
+\left(\sum_Sx_S/|S|\right)=2J_s(x)\sum_Sx_S/|S|.
+$$
+
+Zero-mass types contribute zero to both factors, so no positive-type assumption is used. The second factor is positive and at most one. Hence $J_s\ge s^2/2$.
+
+The exact identity
+
+$$
+\frac{49}{12}-F(\alpha)=\frac{(7\alpha-5)^2}{12(1+\alpha)^2}\ge0
+$$
+
+shows that every $s\ge3$ has $J_s\ge9/2>49/12\ge F(\alpha)$, with gap at least $5/12$. Thus it remains to optimize $s=2$. Its constraints imply
+
+$$
+x_{\{1,2\}}=\alpha,\qquad y_1+y_2=1+\alpha,\qquad
+J_2(x)=h_\alpha(y_1)+h_\alpha(y_2),
+\quad h_\alpha(y)=\frac1{2y}+\frac{3\alpha}{2y^2}.
+$$
+
+For every $y>0$,
+
+$$
+h_\alpha''(y)=\frac1{y^3}+\frac{9\alpha}{y^4}>0.
+$$
+
+Strict convexity therefore gives the unique minimum at $y_1=y_2=(1+\alpha)/2$, with value $F(\alpha)$. The corresponding singleton masses are $(1-\alpha)/2>0$ and the shared mass is $\alpha\ge0$, so this profile is feasible, including at $\alpha=0$. It is realized at every prescribed budget sequence by Theorem 5.2, or by $H_{n,\ell_n}$ directly. No compactness assumption over unbounded $s$ is needed, because the bound $J_s\ge s^2/2$ excludes all $s\ge3$.
+
+The formally possible one-hub probability array at $\alpha=0$ is not part of this variational problem: an actual two-layer simple connected graph with one sink is a star and has $\ell=0$. Theorem 3.1 excludes such a limit from any bounded-energy sequence with $\ell_n\ge1$. Likewise an additional hub of vanishing normalized degree cannot be suppressed inside a bounded-energy sequence, since Theorem 2.1 gives $nE(G_n)\ge n/((2+C/n)D_{i,n})$. ∎
+

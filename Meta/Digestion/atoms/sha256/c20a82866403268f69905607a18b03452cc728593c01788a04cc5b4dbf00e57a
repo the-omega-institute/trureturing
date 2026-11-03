@@ -1,0 +1,15 @@
+**定义 52.1（只有一个未知孔的上下文）。** 令
+
+$$
+A_0=\alpha,\quad A_{j+1}=\langle A_j,A_j\rangle,\qquad
+F_0[x]=x,\quad F_{j+1}[x]=\langle F_j[x],A_j\rangle.
+\tag{52.1}
+$$
+
+$F_j$ 只有一个孔，已知右侧树不依赖未知 $x$，且 $F_j[\alpha]=A_j$。
+记 $B_j=F_j[\beta]$。$A_j,B_j$ 均有 $2^j$ 个叶、$2^{j+1}-1$ 个总节点；
+上下文的孔外固定部分有 $2^j-1$ 个叶。$j$ 是孔深度，不是展开后的树大小。
+这里请求的根到上下文操作是
+$\pi_\alpha^X\mapsto\pi_{A_j}^X$、$\pi_\beta^X\mapsto\pi_{B_j}^X$，
+而不是取得原树标签后的语法运算。
+

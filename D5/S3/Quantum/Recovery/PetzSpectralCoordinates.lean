@@ -43,7 +43,7 @@ theorem cfc_spectral_sum {n : Type*} [Fintype n] [DecidableEq n]
   intro i hi
   ring
 
-private theorem cfc_supported_sum {n : Type*} [Fintype n] [DecidableEq n]
+theorem cfc_supported_sum {n : Type*} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : H.PosSemidef) (f : ℝ → ℝ) (hf : f 0 = 0) :
     cfc f H = ∑ i : {i : n // 0 < hH.1.eigenvalues i},
       (f (hH.1.eigenvalues i.1) : ℂ) •

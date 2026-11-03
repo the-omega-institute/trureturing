@@ -1,0 +1,28 @@
+## 18. Attribution and mathematical correspondence
+
+The supplied **FIB Linear Gain-Ray Capacity and Hermite Readouts** is the prior source for the full model, universal-collinearity and countable-cover reduction, mixed obstruction through $2m$ reads, pure-$M$ Hermite obstruction, exact $2d+3$ fixed-acquisition threshold, $2d+4$ mixed construction, pure-terminal bridge, and $4d+5$ complete-target construction. Their correspondence here is:
+
+| Prior supplied source | Present self-contained use |
+| --- | --- |
+| Sections 1–2 | Sections 1–3: full domain, exact output, universal reduction, and Baire covering |
+| Section 3 | Sections 2, 11, and Lemma 15.1: mixed span, earlier budgets, and pure-terminal ambiguity |
+| Sections 4–5 | Section 12: spectral jets, both endpoint inequalities, exact gain/drift, and fixed-acquisition sharpness |
+| Section 6 | Section 14: shifted Euler jets and the strictly positive mixed scale |
+| Section 7 | Theorem 16.1: shared root counting and the four-matrix source reconstruction |
+| Sections 8–9 | Sections 16–18: quantifier boundaries and inherited credits |
+
+That source attributes the cubic mixed-word and finite-palette obstruction to **FIB Self-Calibrating Relation Mathematics IV**, Theorem 10.2, and its conventions to that volume's Definitions 1.1 and 10.1. These are inherited attributions, not claims of independent consultation. The complete proofs needed here are supplied above; nested references are not treated as verified additional inputs.
+
+The supplied **critical mixed classification**, results B–H, is the source of the critical three-span claim, the syzygy alternatives, legal-word candidates, exceptional-source obstruction strategy, positive $JJ$ condition, and degree-one mixed conclusion. Sections 4–10 and 13 give complete proofs of those claims, including the zero-numerator syzygy case, the rank-three contradiction after deleting $m-2$ nodes, precise original-clock interpolation, realization of the negative-ratio stratum, and obstruction to every countable palette on that stratum. Result A there is prior universal-reduction material already credited to the Hermite source.
+
+The degree-one complete-target consequence is proved separately in Theorem 15.2 using one common open family and source ambiguities for both identity-bearing words. Its justification is not an inference from separate fixed-word palette failures. This common-open-domain bridge is used only at degree one. It is independent of the separate per-word palette failures and is not transferred to degrees two or three.
+
+The supplied **JJ quadratic/cubic feasibility proofs**, lemmas Q, L, S, and C, supply the positive interpolation exclusions added to the critical classification. Their exact correspondence is:
+
+| Supplied proof | Present self-contained result |
+| --- | --- |
+| Q | Lemma 13.2: quadratic reflection, recurrence contradiction, and both edge calculations |
+| L | Lemma 13.3: two fourth-difference equations and every positive-parameter sign interval |
+| S | Lemma 13.4: six centered original clocks and incompatible difference/sum equations |
+| C | Theorem 13.5: every cubic gap, including the verified positive shifted parameter at $a=1$ |
+| Capacity corollary | Corollary 13.6: sharp fixed mixed eight/ten thresholds using the classification and credited mixed upper construction |

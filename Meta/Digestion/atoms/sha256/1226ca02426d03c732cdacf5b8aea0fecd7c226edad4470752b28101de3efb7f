@@ -1,0 +1,24 @@
+**Definition 24.2 (the actual periodic-branch source).** Let the actual image consist of the following distinct states, all of the one type:
+
+$$
+X=\{o,w,v,s\}\ \sqcup\ \{t_j:1\le j\le13\}
+ \ \sqcup\ \{c_{m,j}:m\in\{3,7,4\},\ 0\le j<m\}.
+\tag{24.2}
+$$
+
+The fixed actual root is $o$. In transition formulas only write $t_0=v$. Put
+
+$$
+W_3=aab,\qquad W_7=aaaaabb,\qquad W_4=aaab.
+\tag{24.3}
+$$
+
+The entire legal transition table outside the cycles is
+
+| Actual state | Successor under $a$ | Successor under $b$ |
+| --- | --- | --- |
+| $o$ | $v$ | $w$ |
+| $w$ | $t_5$ | $t_{13}$ |
+| $t_j$, $1\le j\le13$ | $t_{j-1}$ | illegal |
+| $v$ | $c_{3,0}$ | $s$ |
+| $s$ | $c_{7,0}$ | $c_{4,0}$ |

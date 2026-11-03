@@ -1,0 +1,49 @@
+**Theorem 82.2 (every-source exact classification horizon).** Consider
+procedures uniformly correct on all sources of Definition 80.1 from its
+zero cut. For each negative source, with first departure $r$, no such
+procedure can issue an exact compatibility classification before its
+$2r$th actual Tick. For each positive $N$-path source it cannot do so
+before its $2N$th actual Tick. This holds almost surely for a uniformly
+zero-error randomized procedure. The bound allows every command in the
+reduced menu, arbitrary adaptive rational inputs and arbitrary finite
+local processing. Theorem 81.1 attains the bound on each source.
+
+**Proof.** Fix an actual negative source first. Its $r$-vertex stem path
+in Proposition 78.4 is a positive rival with the same $a,c$ and moments
+through $2r-1$. Give the rival its own zero field, corresponding genuine
+endpoint binding and the same public observable context. These are two
+alternative actual installations, not a claimed identity of their
+material. Lemma 82.1 makes all complete transcripts equal before the
+$2r$th Tick. The required binary classifications are opposite, so an
+exact uniformly correct procedure cannot stop there on the negative
+source.
+
+Now fix any positive endpoint path of $N$ vertices. Attach two new leaves
+to its far endpoint. For $N\ge2$ that vertex changes from degree one to
+three; for $N=1$ the old singleton changes from degree zero to two.
+The resulting tree is subcubic and negative at the old port. It has first
+departure $r=N$, $h_r=2$, and the original positive path is its truncated
+stem. Proposition 78.4 again gives equality through $2N-1$ and first
+difference $2c^{2N}$ at $2N$. The same transcript argument prohibits early
+certification on this individually fixed positive source.
+
+For randomization couple the same source-independent tape on each fixed
+pair. A positive-probability early exact report on the first source has
+the same report on the rival. Removing the null error events on that
+fixed pair makes this a positive-probability wrong report on one source,
+contradicting uniform zero error. Thus the lower horizon holds almost
+surely. The paid trial reaches exactly $2r$ or $2N$, respectively, and
+returns the justified answer there. $\square$
+
+The horizon concerns commanded source Ticks in this information model.
+It is not a lower bound of $2r+1$ Reads, an input-amplitude bound, a
+minimum bit/work/reset count, or a total resource ordering. A supplied
+roster, order cap, accessible coefficient, additional scalar port,
+timing channel or informative entry field changes the evidence available
+in Lemma 82.1. Such a different service needs its own lower-bound proof.
+The contracting instance in (79.2) preserves both rivals, so this horizon
+also holds in that explicitly uniformly enclosed subclass. A different
+extra spectral restriction must be checked on the rivals before the
+bound is transported to it. Finite precision is not an assumption here:
+every equality, norm and zero test uses literal exact rational data.
+

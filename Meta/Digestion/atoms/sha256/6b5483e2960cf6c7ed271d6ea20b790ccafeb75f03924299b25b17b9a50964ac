@@ -1,0 +1,28 @@
+**定义 9.1（全部正竞争者的 Fourier 坐标）。** 固定整数 $n\ge5$。
+沿用定义 4.1 的实际环、计数内积、开单纯形与全部无序点对电阻，
+并直接使用定理 5.1–8.1 的全部结论。置
+$\theta=2\pi/n$、$z=e^{\mathrm i\theta}$，所有 Fourier 下标按模 $n$ 解释，并定义
+
+$$
+\begin{aligned}
+d_k&=1-z^{-k},&
+\mu_k&=|d_k|^{-2}=\frac1{4\sin^2(\pi k/n)}
+ &&(1\le k<n),\\
+q_k(p)&=\sum_{i=0}^{n-1}p_i z^{ki},&
+q_0&=1,&q_{n-k}&=\overline q_k,\\
+\tau_n&=\frac1n\sum_{k=1}^{n-1}\mu_k=\frac{n^2-1}{12n},&
+\rho_n&=\frac{\mu_1}{n},&
+T_n&=\tau_n-2\rho_n,\\
+E_n(p)&=\frac1n\sum_{k=2}^{n-2}\mu_k|q_k(p)|^2,&
+\beta_n&=\frac{\tau_n}{\rho_n},&
+U_n&=n\beta_n.
+\end{aligned} \tag{9.1}
+$$
+
+这里 $E_n$ 排除第一模及其共轭模；$T_n>0$ 是均匀点的互补谱迹。
+经典有限三角和可由 $g(X)=(X^n-1)/(X-1)$ 在 $X=1$ 的两次对数微分得到：
+对 $\zeta^n=1,\zeta\ne1$，
+$\sum(1-\zeta)^{-1}=(n-1)/2$，
+$\sum(1-\zeta)^{-2}=(n-1)^2/4-(n-1)(n-2)/3$；
+再用 $\mu_k=(1-z^k)^{-1}-(1-z^k)^{-2}$ 即得 (9.1) 的 $\tau_n$。
+

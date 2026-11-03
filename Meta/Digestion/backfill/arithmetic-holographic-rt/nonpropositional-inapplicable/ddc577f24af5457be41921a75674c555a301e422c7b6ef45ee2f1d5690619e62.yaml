@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ddc577f24af5457be41921a75674c555a301e422c7b6ef45ee2f1d5690619e62
+  normalized_sha256: sha256:ddc577f24af5457be41921a75674c555a301e422c7b6ef45ee2f1d5690619e62
+cas_ref: sha256:ddc577f24af5457be41921a75674c555a301e422c7b6ef45ee2f1d5690619e62
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional scope and historical verification-status commentary. It excludes conformal-block dominance, quasi-probability positivity, a CFT realization of independent CPTP coarse-graining, a continuous gravity dictionary and original gravitational RT. It asserts no new mathematical obstruction. The finite conditional theorem is checked separately; this receipt does not establish any physical matching premise.
+    previous_atom_id: ff653559af4beb39acbf276f1526fdc1101eb1b333386c4bc8be5ed08f41c68f
+    next_atom_id: 79b69d6e7267f5e079e21d8e2f6605fbf09d9b81a42bd4275e3ea5b66b418502

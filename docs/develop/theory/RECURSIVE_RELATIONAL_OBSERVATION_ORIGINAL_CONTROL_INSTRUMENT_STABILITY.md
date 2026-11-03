@@ -1299,3 +1299,174 @@ programme. Theorems 8.1–10.1 establish the bounded analytic obstruction
 without assuming those missing bridges or completing that programme.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 12. Scalar triangular controls and survival
+
+**Theorem 12.1 (uniform scalar resource bounds and survival discontinuity).**
+Fix real numbers $0<c<1/2$ and $\phi\in\mathbb R$, put
+$a=c/2$, $Z=1-2c$, $b=(c,c,Z)$ and $I=[0,1]$, and retain the original
+control class of Definition 1.1. For $n\in\mathbb N$, $n\ge1$,
+$j\in\mathbb N$ and $t\in\mathbb R$, define
+
+$$
+\begin{aligned}
+\tau_{n,j}(t)&=\max\bigl(0,\min(t-j/n,(j+1)/n-t)\bigr),\\
+C_n(t)&=\frac c2\sum_{j=0}^{n-1}\tau_{n,j}(t),\\
+k_n(t)&=\frac c2-\frac{C_n(t)}{2-t}\quad(t\ne2),
+\qquad k_n(2)=\frac c2,\qquad q(t)=\phi.
+\end{aligned}
+\tag{ST.1}
+$$
+
+The value at $2$ specifies a total real function and does not affect its
+restriction to $I$. For a real function $k$, let $k'(t)$ mean its ordinary
+real derivative when it exists, with value zero otherwise, and set
+
+$$
+\begin{aligned}
+h_c[k](t)&=\frac{\max(k'(t),0)}{k(t)}
+            +\frac{\max(-k'(t),0)}{c-k(t)},\\
+S_c[k](t)&=\exp\left(-\int_0^t h_c[k](u)\,du\right),\\
+L(k,q)&=\int_0^1\sqrt{k'(t)^2+q'(t)^2}\,dt,\qquad
+Q(k,q)=\int_0^1\bigl(k'(t)^2+q'(t)^2\bigr)\,dt.
+\end{aligned}
+\tag{ST.2}
+$$
+
+Division by zero in the total hazard formula is assigned value zero.
+All integrals are real interval integrals with Lebesgue measure; an
+integral with reversed endpoints has the opposite sign, and a nonintegrable
+integrand is assigned integral zero. Write $V_I(f)$
+for the extended nonnegative total variation of $f$ on $I$; finite real
+upper bounds below are included in the extended nonnegative reals.
+
+For every $n\ge1$ the following assertions hold simultaneously.
+
+1. The base $b$ is valid, and $(k_n,q)$ is an original control of duration
+   one. It has a finite piecewise-$C^1$ partition with continuous derivative
+   rates on each closed piece, and both coordinates are absolutely
+   continuous on $I$. Its endpoints satisfy $k_n(0)=k_n(1)=a$.
+   For every natural $j<n$, including all endpoints of the displayed legs,
+
+   $$
+   \begin{aligned}
+   C_n(t)&=\frac c2(t-j/n)
+     &&\left(j/n\le t\le(j+1/2)/n\right),\\
+   C_n(t)&=\frac c2((j+1)/n-t)
+     &&\left((j+1/2)/n\le t\le(j+1)/n\right).
+   \end{aligned}
+   \tag{ST.3}
+   $$
+
+2. For every $t\in I$,
+
+   $$
+   \frac c4\le k_n(t)\le\frac c2,\qquad
+   |k_n(t)-a|\le\frac{c}{4n},\qquad
+   0<m:=\min(c/4,1-2c)\le p_i(k_n(t))
+   \quad(i\in\{0,1,2,3,13\}).
+   \tag{ST.4}
+   $$
+
+   The function $k_n$ is Lipschitz on $I$ with constant $3c/4$, and
+
+   $$
+   \begin{gathered}
+   V_I(q)=0,\qquad V_I(k_n)\le3c/4,\qquad
+   q'(t)=0\quad(t\in\mathbb R),\\
+   L(k_n,q)\le3c/4,\qquad Q(k_n,q)\le9c^2/16.
+   \end{gathered}
+   \tag{ST.5}
+   $$
+
+   Both integrands defining $L(k_n,q)$ and $Q(k_n,q)$ are interval
+   integrable on $[0,1]$. For Lebesgue-almost every real $t$, membership
+   $t\in I$ implies
+
+   $$
+   h_c[k_n](t)=\frac1{2-t},\qquad |k_n'(t)|\le3c/4.
+   \tag{ST.6}
+   $$
+
+3. For every $t\in I$, the hazard is interval integrable from $0$ to $t$
+   and $S_c[k_n](t)=1-t/2$. The waiting pair $(t\mapsto a,q)$ is an
+   original control on the same base and duration, and, for every real $t$,
+   its hazard is zero and its survival is one.
+
+Moreover, for every real $\varepsilon>0$ there is a natural $N\ge1$ such
+that every natural $n\ge N$ is an original control as above and satisfies
+$|k_n(t)-a|<\varepsilon$ for every $t\in I$. Nevertheless, for every
+natural $n\ge1$,
+
+$$
+\left|S_c[k_n](1)-S_c[t\mapsto a](1)\right|=\frac12,
+\qquad
+\bigl(S_c[k_{n+1}](1)\bigr)_{n\in\mathbb N}
+\not\longrightarrow S_c[t\mapsto a](1).
+\tag{ST.7}
+$$
+
+These assertions concern the scalar hazard and the coordinate costs in
+(ST.2). They impose no common upper bound on the number of pieces.
+
+Proof. At any $t\in[j/n,(j+1)/n]$ all tents except the $j$th vanish;
+neighboring tents are also zero at a shared endpoint. The remaining tent
+is the smaller of the two distances to the cycle endpoints. Splitting at
+the midpoint gives (ST.3), continuity of $C_n$, $C_n(0)=C_n(1)=0$, and
+$0\le C_n(t)\le c/(4n)$ on $I$. Since $2-t\ge1$ and $n\ge1$, (ST.1)
+gives the height bounds and error estimate in (ST.4). The five probabilities
+are $(k_n,c-k_n,Z,c-k_n,k_n)$; each is at least $m>0$. The equal base
+coordinates are positive, $Z>0$, and $2c+Z=1$, so the base is valid.
+
+On every open rising leg $C_n'=c/2$, and on every open falling leg
+$C_n'=-c/2$. Differentiating (ST.1) gives
+
+$$
+k_n'=-\frac{C_n'}{2-t}-\frac{C_n}{(2-t)^2}
+ =\begin{cases}
+ -(c-k_n)/(2-t),&\text{on rising legs},\\
+ k_n/(2-t),&\text{on falling legs}.
+ \end{cases}
+\tag{ST.8}
+$$
+
+The expressions extend continuously to each closed leg. Together with the
+constant phase they supply a finite piecewise-$C^1$ partition at the times
+$j/(2n)$, $0\le j\le2n$. Integrating the continuous rates on each piece
+and telescoping, including a partition truncated at any point of $I$,
+expresses each coordinate as its initial value plus an integral of an
+integrable derivative. Thus both coordinates are absolutely continuous.
+The constant phase has finite variation, and the strict probability
+bounds give the remaining original-control conditions. Formula (ST.1)
+at the endpoints gives $k_n(0)=k_n(1)=a$.
+
+The derivative formula before the case split and the bounds on $C_n$
+give $|k_n'|\le c/2+c/(4n)\le3c/4$ off the finite corner set.
+Absolute continuity and the fundamental theorem on every subinterval
+then give $|k_n(y)-k_n(x)|\le(3c/4)|y-x|$ for $x,y\in I$.
+Summing over partitions proves the variation bound. The phase derivative
+and variation are zero. Its length integrand is therefore $|k_n'|$,
+which is integrable by absolute continuity. The squared derivative is
+measurable and dominated almost everywhere by $9c^2/16$ on the unit
+interval, hence integrable. Integrating these two bounds proves (ST.5).
+
+The height lies strictly between $0$ and $c$. In (ST.8) the rising-leg
+derivative is negative and the falling-leg derivative positive.
+Substitution into (ST.2) gives $h_c[k_n](t)=1/(2-t)$ away from the finite
+corner set, proving (ST.6). The latter function is continuous on $I$, so
+the actual hazard is interval integrable from $0$ to every $t\in I$.
+Its integral is $-\log(1-t/2)$, as follows by differentiating this
+primitive and evaluating at zero. Exponentiation proves
+$S_c[k_n](t)=1-t/2$. For waiting, both coordinates are constant, their
+probability coordinates are strictly positive, and their derivatives
+vanish on all of $\mathbb R$. Thus waiting is an original control and
+has zero hazard and survival one at every real time.
+
+Given $\varepsilon>0$, choose a natural $M>c/(4\varepsilon)$ and set
+$N=M+1$. For every $n\ge N$, (ST.4) gives
+$|k_n(t)-a|\le c/(4n)<\varepsilon$ on $I$, while all the original-control
+and resource conclusions remain valid. At time one the actual survival
+is $1/2$ for every $n\ge1$, whereas waiting has survival one. This proves
+the discrepancy in (ST.7). The sequence indexed by $n+1$ is constantly
+$1/2$; uniqueness of real limits excludes convergence to one. $\square$

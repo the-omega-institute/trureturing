@@ -1,0 +1,48 @@
+**Theorem 79.2 (complete two-omission defect).** For every tree of Definition 79.1,
+
+$$
+\begin{aligned}
+\dim_{\mathbb Q}\mathcal W&=g-1,\\
+\operatorname{spec}(A|_{\mathcal W\otimes\mathbb R})
+&=\{2\cos(q\pi/g):1\le q<g\},\\
+\dim_{\mathbb Q}(\mathcal W\cap\operatorname{im}A)&=g-1-\epsilon_g.
+\end{aligned}
+\tag{79.3}
+$$
+
+Each listed eigenvalue is simple **within the hidden subspace**; the full $A$ can have other eigenvectors with that same eigenvalue. For the finite observation stack
+
+$$
+\mathcal O_S=\begin{bmatrix}C_S\\C_SA\\\vdots\\C_SA^{N-1}\end{bmatrix},
+\tag{79.4}
+$$
+
+its rank is $N-g+1$, and its restriction to $\operatorname{im}A$ has rank $r-(g-1-\epsilon_g)$.
+
+**Proof.** Cayley–Hamilton expresses $A^N$ as a rational combination of its smaller powers and, by multiplying and induction, every later power the same way. Hence $\mathcal W=\ker\mathcal O_S$. The kernel is $A$-invariant because vanishing at all future epochs is preserved by one additional $A$. After extension to $\mathbb R$, the restriction of symmetric $A$ to this invariant subspace is symmetric, and therefore has an orthonormal eigenbasis. It suffices first to classify a real eigenvector $h$ of $A$ with $h_s=0$ for every $s\in S$.
+
+Root each component off the $a$-to-$b_*$ path toward its path attachment. Peel it from the farthest vertices inward. Vertices with no children in this rooting are original leaves, hence measured, and their values are zero. At such a zero leaf the eigen-equation forces its sole parent value to zero. Inductively, when all children of a component vertex are zero, that vertex is already zero if it has a child, because a processed child's equation forced it; if it has no child it was a measured terminal. Its own equation then forces its parent to zero. This proves all off-path coordinates are zero and finally forces the attached path coordinate $h_{v_j}$ to zero for each $j\in\mathcal J$.
+
+The remaining equations are exactly the unit-adjacency eigen-equations on the $(d+1)$-vertex path, with zeros at those attachment positions. Conversely, any path eigenvector with these zeros extends by zero off the path to a full-tree eigenvector. At an off-path root its equation sees the zero attachment; other off-path equations are zero; the path equations are unchanged. This proves both directions of the reduction, including all attachment equations.
+
+The path has $m_*-1$ vertices. Its eigenvectors and eigenvalues are
+
+$$
+\psi_h(v_j)=\sin\bigl((j+1)h\pi/m_*\bigr),\qquad
+\lambda_h=2\cos(h\pi/m_*),\qquad 1\le h<m_*.
+\tag{79.5}
+$$
+
+The sine addition formula proves the neighbour-sum recurrence, with virtual endpoint values zero at indices $0,m_*$. These $m_*-1$ eigenvalues are distinct because cosine is strictly decreasing on $(0,\pi)$; the nonzero eigenvectors therefore form a basis. Their attachment zeros are precisely
+
+$$
+m_*\mid (j+1)h\quad\text{for every }j\in\mathcal J.
+\tag{79.6}
+$$
+
+Write $a_j=j+1$. If (79.6) holds, a Bézout integer combination of $m_*$ and the $a_j$ gives $m_*\mid gh$, equivalently $m_*/g\mid h$. Conversely, $m_*/g\mid h$ and $g\mid a_j$ imply (79.6). The admissible indices are exactly $h=q m_*/g$, $1\le q<g$. Every resulting zero-extended vector vanishes on $S$ at every epoch, since it is an eigenvector. The invariant-subspace eigenbasis above shows there are no other hidden dimensions. This proves the first two real statements of (79.3).
+
+The rational matrix (79.4) has the same rank over $\mathbb Q$ and $\mathbb R$: the existence of a nonzero minor determines rank over either field. Its rational nullity is thus also $g-1$.
+
+For symmetric $A$, $\operatorname{im}A=(\ker A)^\perp$. Its restriction to $\operatorname{im}A$ is injective: if $z=Ay$ and $Az=0$, then $z^{\mathsf T}z=y^{\mathsf T}Az=0$, so $z=0$. Equivalently $\ker A^n=\ker A$ for every $n\ge1$. One may see the latter directly from $A^2z=0\Rightarrow\|Az\|^2=z^{\mathsf T}A^2z=0$, followed by induction. Every nonzero-eigenvalue hidden vector lies in $\operatorname{im}A$; among (79.5) exactly one eigenvalue is zero if $g$ is even, and none is zero if $g$ is odd. This proves the third formula over $\mathbb R$. The intersection is defined by rational linear equations and images, so the same minor-rank argument transfers its dimension to $\mathbb Q$. Rank-nullity on the whole space and on $\operatorname{im}A$ gives the two claimed ranks. $\square$
+

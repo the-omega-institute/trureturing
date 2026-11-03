@@ -1,0 +1,21 @@
+**Definition 17.3 (persistent material and raw-label growth).** The material and field templates are exactly NLBA Assumption 10.2. At an enabled $P_p$, retain the old terminal at $p$, attach a fresh marker at $pL$, and set its field to zero. At an enabled $S_p$, retain the old root at $p$ as a branch, reuse its old marker at $pL$ as the left logical $\beta$ root, and attach fresh vertices at $pLL$ and $pR$, both initialized to zero. Every old material address and every old field value persist. Thus, for the actual inclusion $i$ of old vertices,
+
+$$
+x'_{i(v)}=x_v\quad(v\text{ old}),
+\qquad x'_z=0\quad(z\text{ fresh}).
+\tag{NLBAII.3}
+$$
+
+The raw binding has the following additional installed lifecycle. If the acted terminal carried raw label $j$, then
+
+$$
+\begin{array}{c|c|c}
+\text{edit}&\text{inherited label}&\text{other new label}\\ \hline
+P_p&\lambda'(j)=pL&\text{none}\\
+S_p&\lambda'(j)=pLL&\lambda'(n+1)=pR.
+\end{array}
+\tag{NLBAII.4}
+$$
+
+All other old raw bindings remain unchanged; a split increases the length from $n$ to $n+1$. The original Growth reply supplies no new raw-label payload. The appended label is known from this installed rule and the maintained length, not inferred from an allocation name. Binding, dispatch and grants in (NLBAII.4) are substantive premises. They are not conclusions of numeric field inversion. This installation replaces initial ordered-roster advice by a particular persistent raw-label contract and permits active acquisition; it is not a strict weakening of the whole NLBA ordered installation.
+

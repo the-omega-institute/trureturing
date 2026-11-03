@@ -40,21 +40,9 @@ $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}
 
 The generator is the image of the corresponding free-algebra generator under the quotient algebra homomorphism. Paper E_i is generator(i-1).
 
-**Definition 1.4 (Permutation code).**
+**Definition 1.4 (Lexicographically minimal word).**
 
-$$\forall N : \mathbb{N}, \forall sigma : \operatorname{Perm}\left(\operatorname{Fin}\left(N\right)\right), \forall i : \operatorname{Fin}\left(N\right), \operatorname{code}\left(N, sigma, i\right) = \operatorname{card}\left(\operatorname{filter}\left((\lambda k : \operatorname{Fin}\left(N\right), (k < i) \land (\operatorname{symm}\left(sigma\right)\left(i\right) < \operatorname{symm}\left(sigma\right)\left(k\right))), \operatorname{univ}\left(\operatorname{Fin}\left(N\right)\right)\right)\right)$$
-
-*Formalization.* `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.code` (`✓ std3`).
-
-*Citation.* Hivert, Florent; Scott, Jeanne (2026). *Diagrammatic Okada monoid and cellularity of the Okada algebra*. DOI: [10.48550/arXiv.2609.01440](https://doi.org/10.48550/arXiv.2609.01440). URL: <https://arxiv.org/abs/2609.01440v1>.
-
-*Commentary.*
-
-Definition 3.3, pages 10–11: "The code of a permutation σ ∈ S_N is the N-tuple code(σ) = (c₁, …, c_N) where c_i := #{k < i | σ⁻¹(k) > σ⁻¹(i)}." Finset.card is cardinality, filter retains precisely the elements satisfying its predicate, and symm is the inverse permutation.
-
-**Definition 1.5 (Lexicographically minimal word).**
-
-$$\forall N : \mathbb{N}, \forall sigma : \operatorname{Perm}\left(\operatorname{Fin}\left(N\right)\right), \operatorname{lexmin}\left(N, sigma\right) = \operatorname{flatMap}\left((\lambda i : \operatorname{Fin}\left(N\right), \operatorname{map}\left((\lambda j : \operatorname{Fin}\left(\operatorname{val}\left(i\right)\right), \operatorname{Fin.mk}\left(\operatorname{val}\left(j\right), \operatorname{Nat.lt_{of_{lt_{of_{le}}}}}\left(\operatorname{Fin.isLt}\left(j\right), \operatorname{Nat.le_{sub_{one_{of_{lt}}}}}\left(\operatorname{Fin.isLt}\left(i\right)\right)\right)\right)), \operatorname{filter}\left((\lambda j : \operatorname{Fin}\left(\operatorname{val}\left(i\right)\right), \operatorname{natSub}\left(\operatorname{val}\left(i\right), \operatorname{code}\left(N, sigma, i\right)\right) \le \operatorname{val}\left(j\right)), \operatorname{reverse}\left(\operatorname{finRange}\left(\operatorname{val}\left(i\right)\right)\right)\right)\right)), \operatorname{finRange}\left(N\right)\right)$$
+$$\forall N : \mathbb{N}, \forall sigma : \operatorname{Perm}\left(\operatorname{Fin}\left(N\right)\right), \operatorname{lexmin}\left(N, sigma\right) = \operatorname{flatMap}\left((\lambda i : \operatorname{Fin}\left(N\right), \operatorname{map}\left((\lambda j : \operatorname{Fin}\left(\operatorname{val}\left(i\right)\right), \operatorname{Fin.mk}\left(\operatorname{val}\left(j\right), \operatorname{Nat.lt_{of_{lt_{of_{le}}}}}\left(\operatorname{Fin.isLt}\left(j\right), \operatorname{Nat.le_{sub_{one_{of_{lt}}}}}\left(\operatorname{Fin.isLt}\left(i\right)\right)\right)\right)), \operatorname{filter}\left((\lambda j : \operatorname{Fin}\left(\operatorname{val}\left(i\right)\right), \operatorname{natSub}\left(\operatorname{val}\left(i\right), \operatorname{LiangSaganPinnacle.Result.iota}\left(sigma, i\right)\right) \le \operatorname{val}\left(j\right)), \operatorname{reverse}\left(\operatorname{finRange}\left(\operatorname{val}\left(i\right)\right)\right)\right)\right)), \operatorname{finRange}\left(N\right)\right)$$
 
 *Formalization.* `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.lexmin` (`✓ std3`).
 
@@ -62,9 +50,11 @@ $$\forall N : \mathbb{N}, \forall sigma : \operatorname{Perm}\left(\operatorname
 
 *Commentary.*
 
-Page 11: "It is well known that the product ∏_(i=1)^n s_{i−1}s_{i−2} ··· s_{i−c_i} is the lexicographically minimal reduced factorization of the permutations σ. We denote the associated index word by LexMin(σ)." finRange lists Fin elements increasingly. Each block is reversed and filtered to the last code(σ,i) entries, then converted to generator indices. flatMap concatenates the blocks in increasing i order.
+Definition 3.3, pages 10–11: "The code of a permutation σ ∈ S_N is the N-tuple code(σ) = (c₁, …, c_N) where c_i := #{k < i | σ⁻¹(k) > σ⁻¹(i)}." Finset.card is cardinality, filter retains precisely the elements satisfying its predicate, and symm is the inverse permutation. The code coordinate c_i is exactly Liang–Sagan iota(σ,i). Page 11: "It is well known that the product ∏_(i=1)^n s_{i−1}s_{i−2} ··· s_{i−c_i} is the lexicographically minimal reduced factorization of the permutations σ. We denote the associated index word by LexMin(σ)." finRange lists Fin elements increasingly. Each block is reversed and filtered to the last iota(σ,i) entries, then converted to generator indices. flatMap concatenates the blocks in increasing i order.
 
-**Definition 1.6 (Lexmin algebra elements).**
+Here iota is `D5/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result.iota`.
+
+**Definition 1.5 (Lexmin algebra elements).**
 
 $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}\left(K\right)] \forall X : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 1\right)\right) \to K, \forall Y : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 2\right)\right) \to K, \forall sigma : \operatorname{Perm}\left(\operatorname{Fin}\left(N\right)\right), \operatorname{lexElement}\left(N, K, X, Y, sigma\right) = \operatorname{prod}\left(\operatorname{map}\left(\operatorname{generator}\left(N, K, X, Y\right), \operatorname{lexmin}\left(N, sigma\right)\right)\right)$$
 
@@ -76,7 +66,7 @@ $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}
 
 Definition 3.4, page 11: "Fix a family of generators (g_i) of a monoid or an algebra. To a permutation σ we associate the element g_σ defined by g_σ := g_LexMin(σ) = ∏_(i=1)^n g_{i−1}g_{i−2} ··· g_{i−c_i}, where (c₁, …, c_N) = code(σ), and the product is increasing with i." prod of a list is its ordered product, including the unit for the empty word.
 
-**Definition 1.7 (Regular-trace Gram matrix).**
+**Definition 1.6 (Regular-trace Gram matrix).**
 
 $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}\left(K\right)] \forall X : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 1\right)\right) \to K, \forall Y : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 2\right)\right) \to K, \forall sigma : \operatorname{Perm}\left(\operatorname{Fin}\left(N\right)\right), \forall tau : \operatorname{Perm}\left(\operatorname{Fin}\left(N\right)\right), \operatorname{regularGram}\left(N, K, X, Y\right)\left(sigma, tau\right) = \operatorname{trace}\left(K, \operatorname{Presented}\left(N, K, X, Y\right), \operatorname{lmul}\left(K, \operatorname{Presented}\left(N, K, X, Y\right), \operatorname{lexElement}\left(N, K, X, Y, sigma\right)\right) \cdot \operatorname{lmul}\left(K, \operatorname{Presented}\left(N, K, X, Y\right), \operatorname{lexElement}\left(N, K, X, Y, tau\right)\right)\right)$$
 
@@ -88,7 +78,7 @@ $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}
 
 Page 60: "Recall the discriminant of the Okada algebra is determinant of the N! × N! matrix G_N with entries given by [G_N]_{σ,τ} := tr [ϱ^reg(E_σ)ϱ^reg(E_τ)] where ϱ^reg is the left-regular representation of O_N(X,Y) and σ, τ ∈ S_N." lmul(K,A,z) denotes left multiplication by z on A. trace(K,A,f) is the trace of the linear endomorphism f. The dimension and basis used for this trace are proved at the rational rank-three specialization.
 
-**Definition 1.8 (Fibonacci-set predicate).**
+**Definition 1.7 (Fibonacci-set predicate).**
 
 $$\forall N : \mathbb{N}, \forall S : \operatorname{Finset}\left(\operatorname{Fin}\left(N\right)\right), (\operatorname{IsFibonacciSet}\left(N, S\right)) \Leftrightarrow ((\operatorname{mod}\left(\operatorname{card}\left(S\right), 2\right) = \operatorname{mod}\left(N, 2\right)) \land (\forall s : \operatorname{Fin}\left(N\right), (s \in S) \Rightarrow (\operatorname{mod}\left(\operatorname{val}\left(s\right) + 1, 2\right) = \operatorname{mod}\left(\operatorname{card}\left(\operatorname{filter}\left((\lambda t : \operatorname{Fin}\left(N\right), t < s), S\right)\right) + 1, 2\right))))$$
 
@@ -100,7 +90,7 @@ $$\forall N : \mathbb{N}, \forall S : \operatorname{Finset}\left(\operatorname{F
 
 Definition 4.5, page 33: "A Fibonacci set of rank N is a subset S = {s₁ < s₂ < ··· < s_k} of [N] whose size k has the same parity as N and such that s_i has the same parity as i for all i ∈ {1, …, k}." mod is natural-number remainder. Counting the members less than s gives its zero-based rank in the increasing enumeration. val of a Fin element extracts its natural label.
 
-**Definition 1.9 (Fibonacci-set carrier).**
+**Definition 1.8 (Fibonacci-set carrier).**
 
 $$\forall N : \mathbb{N}, \operatorname{FibonacciSet}\left(N\right) = \{S : \operatorname{Finset}\left(\operatorname{Fin}\left(N\right)\right) \mid \operatorname{IsFibonacciSet}\left(N, S\right)\}$$
 
@@ -112,7 +102,7 @@ $$\forall N : \mathbb{N}, \operatorname{FibonacciSet}\left(N\right) = \{S : \ope
 
 The subtype carries a finite set together with the Fibonacci-set predicate. Its finite enumeration and decidable equality are the existing subtype instances.
 
-**Definition 1.10 (Incidence data for a half diagram).**
+**Definition 1.9 (Incidence data for a half diagram).**
 
 $$\forall N : \mathbb{N}, \operatorname{HalfData}\left(N\right) = (\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(N\right)) \times (\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(N\right))$$
 
@@ -124,7 +114,7 @@ $$\forall N : \mathbb{N}, \operatorname{HalfData}\left(N\right) = (\operatorname
 
 Half-diagram incidence is encoded by a partner map and a label map, both on Fin(N). A fixed partner is a propagating endpoint. Arc and endpoint labels are shifted down by one from the paper.
 
-**Definition 1.11 (Valid labelled half diagrams).**
+**Definition 1.10 (Valid labelled half diagrams).**
 
 $$\forall N : \mathbb{N}, \forall H : \operatorname{HalfData}\left(N\right), (\operatorname{HalfValid}\left(N, H\right)) \Leftrightarrow ((\forall i : \operatorname{Fin}\left(N\right), \operatorname{fst}\left(H\right)\left(\operatorname{fst}\left(H\right)\left(i\right)\right) = i) \land ((\forall i : \operatorname{Fin}\left(N\right), \operatorname{snd}\left(H\right)\left(\operatorname{fst}\left(H\right)\left(i\right)\right) = \operatorname{snd}\left(H\right)\left(i\right)) \land ((\forall i : \operatorname{Fin}\left(N\right), (\operatorname{snd}\left(H\right)\left(i\right) \le i) \land (\operatorname{mod}\left(\operatorname{val}\left(\operatorname{snd}\left(H\right)\left(i\right)\right), 2\right) = \operatorname{mod}\left(\operatorname{val}\left(\operatorname{min}\left(i, \operatorname{fst}\left(H\right)\left(i\right)\right)\right), 2\right))) \land ((\forall i : \operatorname{Fin}\left(N\right), \forall j : \operatorname{Fin}\left(N\right), (i < \operatorname{fst}\left(H\right)\left(i\right)) \Rightarrow ((\operatorname{fst}\left(H\right)\left(j\right) = j) \Rightarrow (\neg ((i < j) \land (j < \operatorname{fst}\left(H\right)\left(i\right)))))) \land ((\forall i : \operatorname{Fin}\left(N\right), \forall j : \operatorname{Fin}\left(N\right), (i < \operatorname{fst}\left(H\right)\left(i\right)) \Rightarrow ((j < \operatorname{fst}\left(H\right)\left(j\right)) \Rightarrow ((i < j) \Rightarrow ((j < \operatorname{fst}\left(H\right)\left(i\right)) \Rightarrow (\operatorname{fst}\left(H\right)\left(j\right) < \operatorname{fst}\left(H\right)\left(i\right)))))) \land ((\forall i : \operatorname{Fin}\left(N\right), \forall j : \operatorname{Fin}\left(N\right), (i < \operatorname{fst}\left(H\right)\left(i\right)) \Rightarrow ((j < \operatorname{fst}\left(H\right)\left(j\right)) \Rightarrow ((i < j) \Rightarrow ((\operatorname{fst}\left(H\right)\left(j\right) < \operatorname{fst}\left(H\right)\left(i\right)) \Rightarrow (\operatorname{snd}\left(H\right)\left(i\right) < \operatorname{snd}\left(H\right)\left(j\right)))))) \land ((\forall i : \operatorname{Fin}\left(N\right), \forall j : \operatorname{Fin}\left(N\right), (\operatorname{fst}\left(H\right)\left(i\right) = i) \Rightarrow ((j < \operatorname{fst}\left(H\right)\left(j\right)) \Rightarrow ((i < j) \Rightarrow (\operatorname{snd}\left(H\right)\left(i\right) < \operatorname{snd}\left(H\right)\left(j\right))))) \land (\forall i : \operatorname{Fin}\left(N\right), \forall j : \operatorname{Fin}\left(N\right), (\operatorname{fst}\left(H\right)\left(i\right) = i) \Rightarrow ((\operatorname{fst}\left(H\right)\left(j\right) = j) \Rightarrow ((i < j) \Rightarrow (\operatorname{snd}\left(H\right)\left(i\right) < \operatorname{snd}\left(H\right)\left(j\right))))))))))))$$
 
@@ -136,7 +126,7 @@ $$\forall N : \mathbb{N}, \forall H : \operatorname{HalfData}\left(N\right), (\o
 
 Definition 3.39, page 23: "A labelled, non-crossing arc-diagram is called an Okada arc-diagram if the following conditions are satisfied: (1) the label of each arc a — b must be at least 1 and at most min(|a|, |b|), (2) the label of each arc a — b must have the same parity as min(|a|, |b|). (3) if an arc a — b is nested in an arc c — d then the label of a — b is strictly larger than the label of c — d." Page 31: "A half Okada arc-diagram H is a labelled, non-crossing half arc-diagram which satisfies Conditions 1 to 3, or, equivalently, if gluing H with its mirror produces a valid Okada arc-diagram." The eight conjuncts encode involutivity, label constancy along an arc, bounds and parity, absence of a propagating point under a nonpropagating arc, noncrossing, and the three nested label orders. fst and snd project incidence data.
 
-**Definition 1.12 (Half-diagram carrier).**
+**Definition 1.11 (Half-diagram carrier).**
 
 $$\forall N : \mathbb{N}, \operatorname{HalfDiagram}\left(N\right) = \{H : \operatorname{HalfData}\left(N\right) \mid \operatorname{HalfValid}\left(N, H\right)\}$$
 
@@ -148,7 +138,7 @@ $$\forall N : \mathbb{N}, \operatorname{HalfDiagram}\left(N\right) = \{H : \oper
 
 A half diagram consists of its incidence data and the validity predicate. Incidence identifies diagrams up to planar isotopy.
 
-**Definition 1.13 (Propagating endpoints).**
+**Definition 1.12 (Propagating endpoints).**
 
 $$\forall N : \mathbb{N}, \forall H : \operatorname{HalfDiagram}\left(N\right), \operatorname{propagatingIndices}\left(N, H\right) = \operatorname{filter}\left((\lambda i : \operatorname{Fin}\left(N\right), \operatorname{fst}\left(\operatorname{val}\left(H\right)\right)\left(i\right) = i), \operatorname{univ}\left(\operatorname{Fin}\left(N\right)\right)\right)$$
 
@@ -160,7 +150,7 @@ $$\forall N : \mathbb{N}, \forall H : \operatorname{HalfDiagram}\left(N\right), 
 
 Definition 4.3, page 31: "The propagating index set of a half Okada arc-diagram H of rank N is the subset PInd(H) of [N] containing the indices of the nodes of its propagating arcs." Precisely the fixed points of the partner map propagate.
 
-**Definition 1.14 (Propagating labels).**
+**Definition 1.13 (Propagating labels).**
 
 $$\forall N : \mathbb{N}, \forall H : \operatorname{HalfDiagram}\left(N\right), \operatorname{propagatingLabels}\left(N, H\right) = \operatorname{image}\left(\operatorname{snd}\left(\operatorname{val}\left(H\right)\right), \operatorname{propagatingIndices}\left(N, H\right)\right)$$
 
@@ -172,7 +162,7 @@ $$\forall N : \mathbb{N}, \forall H : \operatorname{HalfDiagram}\left(N\right), 
 
 Definition 4.3, page 31: "The propagating label set of a half Okada arc-diagram H of rank N is the subset PLab(H) of [N] containing the labels of its propagating arcs." The image of the fixed points under the label map is a finite set, with duplicates removed by Finset.image.
 
-**Definition 1.15 (Full diagrams).**
+**Definition 1.14 (Full diagrams).**
 
 $$\forall N : \mathbb{N}, \operatorname{Diagram}\left(N\right) = \{HK : (\operatorname{HalfDiagram}\left(N\right)) \times (\operatorname{HalfDiagram}\left(N\right)) \mid \operatorname{propagatingLabels}\left(N, \operatorname{fst}\left(HK\right)\right) = \operatorname{propagatingLabels}\left(N, \operatorname{snd}\left(HK\right)\right)\}$$
 
@@ -184,7 +174,7 @@ $$\forall N : \mathbb{N}, \operatorname{Diagram}\left(N\right) = \{HK : (\operat
 
 Lemma 4.4 (Gluing lemma), page 33, identifies a full diagram with a pair of valid halves having equal propagating label sets. Subtype.val extracts this pair.
 
-**Definition 1.16 (Gluing halves).**
+**Definition 1.15 (Gluing halves).**
 
 $$\forall N : \mathbb{N}, \forall H : \operatorname{HalfDiagram}\left(N\right), \forall L : \operatorname{HalfDiagram}\left(N\right), \forall h : \operatorname{propagatingLabels}\left(N, H\right) = \operatorname{propagatingLabels}\left(N, L\right), \operatorname{val}\left(\operatorname{glue}\left(N, H, L, h\right)\right) = (H, L)$$
 
@@ -196,7 +186,7 @@ $$\forall N : \mathbb{N}, \forall H : \operatorname{HalfDiagram}\left(N\right), 
 
 Gluing lemma, page 33: "Moreover if L and R are two Okada half arc-diagrams such that PLab(L) = PLab(R), then there is a unique Okada arc-diagram L ⋈ R such that |L ⋈ R⟩ = L and ⟨L ⋈ R| = R." glue stores the ordered pair and the equality proof. The formula displays its underlying pair; h is used as the gluing proof argument.
 
-**Definition 1.17 (Signed arc data).**
+**Definition 1.16 (Signed arc data).**
 
 $$\operatorname{Arc} = (\mathbb{Z}) \times ((\mathbb{N}) \times (\mathbb{Z}))$$
 
@@ -208,7 +198,7 @@ $$\operatorname{Arc} = (\mathbb{Z}) \times ((\mathbb{N}) \times (\mathbb{Z}))$$
 
 An arc is a signed left endpoint, a positive paper label, and a signed right endpoint. The tuple is right associated.
 
-**Definition 1.18 (Undirected labelled-arc lookup).**
+**Definition 1.17 (Undirected labelled-arc lookup).**
 
 $$\forall arcs : \operatorname{List}\left(\operatorname{Arc}\right), \forall i : \mathbb{Z}, \forall label : \mathbb{N}, \forall j : \mathbb{Z}, \operatorname{hasArc}\left(arcs, i, label, j\right) = \operatorname{any}\left((\lambda a : \operatorname{Arc}, \operatorname{band}\left(\operatorname{beq}\left(\operatorname{fst}\left(\operatorname{snd}\left(a\right)\right), label\right), \operatorname{bor}\left(\operatorname{band}\left(\operatorname{beq}\left(\operatorname{fst}\left(a\right), i\right), \operatorname{beq}\left(\operatorname{snd}\left(\operatorname{snd}\left(a\right)\right), j\right)\right), \operatorname{band}\left(\operatorname{beq}\left(\operatorname{fst}\left(a\right), j\right), \operatorname{beq}\left(\operatorname{snd}\left(\operatorname{snd}\left(a\right)\right), i\right)\right)\right)\right)), arcs\right)$$
 
@@ -220,7 +210,7 @@ $$\forall arcs : \operatorname{List}\left(\operatorname{Arc}\right), \forall i :
 
 hasArc is Boolean lookup in a list of arc triples. beq denotes Boolean equality, band and bor are Boolean conjunction and disjunction, and any is existential Boolean list search. Reversing the endpoints preserves lookup.
 
-**Definition 1.19 (Signed arcs of glued halves).**
+**Definition 1.18 (Signed arcs of glued halves).**
 
 $$\forall N : \mathbb{N}, \forall D : \operatorname{Diagram}\left(N\right), \operatorname{diagramArcs}\left(N, D\right) = \operatorname{append}\left(\operatorname{append}\left(\operatorname{filterMap}\left((\lambda i : \operatorname{Fin}\left(N\right), \operatorname{ite}\left(i < \operatorname{fst}\left(\operatorname{val}\left(\operatorname{fst}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(i\right), \operatorname{some}\left((\operatorname{castZ}\left(\operatorname{val}\left(i\right) + 1\right), (\operatorname{val}\left(\operatorname{snd}\left(\operatorname{val}\left(\operatorname{fst}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(i\right)\right) + 1, \operatorname{castZ}\left(\operatorname{val}\left(\operatorname{fst}\left(\operatorname{val}\left(\operatorname{fst}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(i\right)\right) + 1\right)))\right), \operatorname{none}\right)), \operatorname{finRange}\left(N\right)\right), \operatorname{filterMap}\left((\lambda i : \operatorname{Fin}\left(N\right), \operatorname{ite}\left(i < \operatorname{fst}\left(\operatorname{val}\left(\operatorname{snd}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(i\right), \operatorname{some}\left((-\operatorname{castZ}\left(\operatorname{val}\left(i\right) + 1\right), (\operatorname{val}\left(\operatorname{snd}\left(\operatorname{val}\left(\operatorname{snd}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(i\right)\right) + 1, -\operatorname{castZ}\left(\operatorname{val}\left(\operatorname{fst}\left(\operatorname{val}\left(\operatorname{snd}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(i\right)\right) + 1\right)))\right), \operatorname{none}\right)), \operatorname{finRange}\left(N\right)\right)\right), \operatorname{filterMap}\left((\lambda i : \operatorname{Fin}\left(N\right), \operatorname{ite}\left(\operatorname{fst}\left(\operatorname{val}\left(\operatorname{fst}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(i\right) = i, \operatorname{some}\left((\operatorname{castZ}\left(\operatorname{val}\left(i\right) + 1\right), (\operatorname{val}\left(\operatorname{snd}\left(\operatorname{val}\left(\operatorname{fst}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(i\right)\right) + 1, -\operatorname{castZ}\left(\operatorname{val}\left(\operatorname{getD}\left(\operatorname{find}\left((\lambda j : \operatorname{Fin}\left(N\right), (\operatorname{fst}\left(\operatorname{val}\left(\operatorname{snd}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(j\right) = j) \land (\operatorname{snd}\left(\operatorname{val}\left(\operatorname{snd}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(j\right) = \operatorname{snd}\left(\operatorname{val}\left(\operatorname{fst}\left(\operatorname{val}\left(D\right)\right)\right)\right)\left(i\right))), \operatorname{finRange}\left(N\right)\right), i\right)\right) + 1\right)))\right), \operatorname{none}\right)), \operatorname{finRange}\left(N\right)\right)\right)$$
 
@@ -232,7 +222,7 @@ $$\forall N : \mathbb{N}, \forall D : \operatorname{Diagram}\left(N\right), \ope
 
 The first list records left nonpropagating arcs, the second right nonpropagating arcs with negative endpoints, and the third propagating arcs. For each left propagating endpoint, find searches for the right fixed point with the same label. getD uses that left index if the search fails. This fallback is explicit in the expression; all rank-three arcs used in the refutation are checked. filterMap discards none and retains the value of some.
 
-**Definition 1.20 (Recursive diagram flattening).**
+**Definition 1.19 (Recursive diagram flattening).**
 
 $$\forall arcs : \operatorname{List}\left(\operatorname{Arc}\right), (\operatorname{flattenWord}\left(0, arcs\right) = []) \land (\forall n : \mathbb{N}, \operatorname{flattenWord}\left(n + 1, arcs\right) = \operatorname{ite}\left(\operatorname{hasArc}\left(arcs, \operatorname{castZ}\left(n + 1\right), n + 1, -\operatorname{castZ}\left(n + 1\right)\right), \operatorname{flattenWord}\left(n, \operatorname{filter}\left((\lambda a : \operatorname{Arc}, \operatorname{boolNot}\left(\operatorname{hasArc}\left([a], \operatorname{castZ}\left(n + 1\right), n + 1, -\operatorname{castZ}\left(n + 1\right)\right)\right)), arcs\right)\right), \operatorname{let}\left(\operatorname{foldl}\left(\operatorname{max}, 0, \operatorname{filter}\left((\lambda d : \mathbb{N}, \operatorname{band}\left(\operatorname{decide}\left(0 < d\right), \operatorname{hasArc}\left(arcs, -\operatorname{castZ}\left(d\right), d, -\operatorname{castZ}\left(d + 1\right)\right)\right)), \operatorname{range}\left(n + 1\right)\right)\right), (\lambda d : \mathbb{N}, \operatorname{append}\left(\operatorname{flattenWord}\left(n, \operatorname{map}\left((\lambda a : \operatorname{Arc}, ((\lambda t : \mathbb{Z}, \operatorname{ite}\left(t = \operatorname{castZ}\left(n + 1\right), -\operatorname{castZ}\left(n\right), \operatorname{ite}\left((t < 0) \land (d + 2 \le \operatorname{natAbs}\left(t\right)), -\operatorname{castZ}\left(\operatorname{natSub}\left(\operatorname{natAbs}\left(t\right), 2\right)\right), t\right)\right))\left(\operatorname{fst}\left(a\right)\right), (\operatorname{fst}\left(\operatorname{snd}\left(a\right)\right), (\lambda t : \mathbb{Z}, \operatorname{ite}\left(t = \operatorname{castZ}\left(n + 1\right), -\operatorname{castZ}\left(n\right), \operatorname{ite}\left((t < 0) \land (d + 2 \le \operatorname{natAbs}\left(t\right)), -\operatorname{castZ}\left(\operatorname{natSub}\left(\operatorname{natAbs}\left(t\right), 2\right)\right), t\right)\right))\left(\operatorname{snd}\left(\operatorname{snd}\left(a\right)\right)\right)))), \operatorname{filter}\left((\lambda a : \operatorname{Arc}, \operatorname{boolNot}\left(\operatorname{hasArc}\left([a], -\operatorname{castZ}\left(d\right), d, -\operatorname{castZ}\left(d + 1\right)\right)\right)), arcs\right)\right)\right), \operatorname{filter}\left((\lambda i : \mathbb{N}, d \le i), \operatorname{map}\left((\lambda i : \mathbb{N}, i + 1), \operatorname{reverse}\left(\operatorname{range}\left(n\right)\right)\right)\right)\right))\right)\right))$$
 
@@ -244,7 +234,7 @@ $$\forall arcs : \operatorname{List}\left(\operatorname{Arc}\right), (\operatorn
 
 Definition 3.55 and Proposition 3.56, pages 27–28, flatten the largest right descent after removing a top identity arc. The formula gives the implemented recursion, including the largest eligible descent d (foldl(max,0)) and the endpoint relabelling. A boolNot predicate removes the selected arc. natAbs is integer absolute value valued in the naturals; castZ is the natural-to-integer cast. Correctness of this recursion for arbitrary rank is not asserted here. Its six rank-three values are checked in the proof.
 
-**Definition 1.21 (Diagram words in the quotient).**
+**Definition 1.20 (Diagram words in the quotient).**
 
 $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}\left(K\right)] \forall X : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 1\right)\right) \to K, \forall Y : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 2\right)\right) \to K, \forall D : \operatorname{Diagram}\left(N\right), \operatorname{diagramElement}\left(N, K, X, Y, D\right) = \operatorname{prod}\left(\operatorname{map}\left((\lambda i : \mathbb{N}, \operatorname{dite}\left((0 < i) \land (i < N), (\lambda h : (0 < i) \land (i < N), \operatorname{generator}\left(N, K, X, Y, \operatorname{Fin.mk}\left(\operatorname{natSub}\left(i, 1\right), \operatorname{Nat.sub_{lt_{sub_{right}}}}\left(\operatorname{Nat.succ_{le_{of_{lt}}}}\left(\operatorname{fst}\left(h\right)\right), \operatorname{snd}\left(h\right)\right)\right)\right)), 0\right)), \operatorname{flattenWord}\left(N, \operatorname{diagramArcs}\left(N, D\right)\right)\right)\right)$$
 
@@ -256,7 +246,7 @@ $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}
 
 The flattened positive word is mapped to quotient generators and multiplied in order. An index outside 0 < i < N contributes zero. At rank three every index in the six flattened words is within this interval.
 
-**Definition 1.22 (Totalized diagram coordinates).**
+**Definition 1.21 (Totalized diagram coordinates).**
 
 $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}\left(K\right)] \forall X : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 1\right)\right) \to K, \forall Y : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 2\right)\right) \to K, \forall D : \operatorname{Diagram}\left(N\right), \forall z : \operatorname{Presented}\left(N, K, X, Y\right), \operatorname{diagramCoefficient}\left(N, K, X, Y, D, z\right) = \operatorname{dite}\left(\operatorname{Bijective}\left(\operatorname{Fintype.linearCombination}\left(K, \operatorname{diagramElement}\left(N, K, X, Y\right)\right)\right), (\lambda h : \operatorname{Bijective}\left(\operatorname{Fintype.linearCombination}\left(K, \operatorname{diagramElement}\left(N, K, X, Y\right)\right)\right), \operatorname{symm}\left(\operatorname{ofBijective}\left(\operatorname{Fintype.linearCombination}\left(K, \operatorname{diagramElement}\left(N, K, X, Y\right)\right), h\right)\right)\left(z, D\right)), 0\right)$$
 
@@ -268,7 +258,7 @@ $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}
 
 If diagram expansion is bijective, coefficient extraction is evaluation of its inverse linear equivalence. Otherwise it is zero. The symbol h is the proof of bijectivity used in ofBijective; dite binds it in the positive branch. General diagram-basis bijectivity remains unproved in this module. The proof establishes bijectivity at N = 3 over Q with X = (1,2), Y = (1), so the zero branch is unused there.
 
-**Definition 1.23 (Half diagrams in a cell).**
+**Definition 1.22 (Half diagrams in a cell).**
 
 $$\forall N : \mathbb{N}, \forall S : \operatorname{FibonacciSet}\left(N\right), \operatorname{CellHalf}\left(N, S\right) = \{H : \operatorname{HalfDiagram}\left(N\right) \mid \operatorname{propagatingLabels}\left(N, H\right) = \operatorname{val}\left(S\right)\}$$
 
@@ -280,7 +270,7 @@ $$\forall N : \mathbb{N}, \forall S : \operatorname{FibonacciSet}\left(N\right),
 
 Section 6.1, Restriction and induction of cell modules, equation (35), page 50: "The left O_N(X,Y) cell module V^S associated to S ∈ 𝕐𝔽𝕊_N can be realized by the vector space spanned by rank N half Okada arc-diagrams |D⟩ such that PLab|D⟩ = S equipped with the left action • obtained by extending linearly the formula E_C • |D⟩ := {λ(C,D) |C · D⟩ if PLab(C · D) = S; 0 otherwise} where D ∈ O_N(X,Y)." CellHalf is this basis index set; its cardinality supplies dim(Fib(S)) in the conjecture.
 
-**Definition 1.24 (Action on a half-diagram cell).**
+**Definition 1.23 (Action on a half-diagram cell).**
 
 $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}\left(K\right)] \forall X : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 1\right)\right) \to K, \forall Y : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 2\right)\right) \to K, \forall S : \operatorname{FibonacciSet}\left(N\right), \forall z : \operatorname{Presented}\left(N, K, X, Y\right), \forall v : \operatorname{CellHalf}\left(N, S\right) \to K, \forall H : \operatorname{CellHalf}\left(N, S\right), \operatorname{cellAction}\left(N, K, X, Y, S, z, v\right)\left(H\right) = \sum_{L : \operatorname{CellHalf}\left(N, S\right)} v\left(L\right) \cdot \operatorname{diagramCoefficient}\left(N, K, X, Y, \operatorname{glue}\left(N, \operatorname{val}\left(H\right), \operatorname{val}\left(L\right), \operatorname{trans}\left(\operatorname{prop}\left(H\right), \operatorname{symm}\left(\operatorname{prop}\left(L\right)\right)\right)\right), z \cdot \operatorname{diagramElement}\left(N, K, X, Y, \operatorname{glue}\left(N, \operatorname{val}\left(L\right), \operatorname{val}\left(L\right), \operatorname{rfl}\left(\operatorname{propagatingLabels}\left(N, \operatorname{val}\left(L\right)\right)\right)\right)\right)\right)$$
 
@@ -292,7 +282,7 @@ $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}
 
 Equation (35), Section 6.1, page 50: the action retains the output half with the prescribed propagating labels. The coordinate at H sums over input halves L, multiplying their vector coefficients by the coefficient of H glued to L in z times the representative of L glued to itself. At rank three, these coefficients are independent of the ket used to represent each input half.
 
-**Definition 1.25 (The cell-form coefficients).**
+**Definition 1.24 (The cell-form coefficients).**
 
 $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}\left(K\right)] \forall X : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 1\right)\right) \to K, \forall Y : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 2\right)\right) \to K, \forall S : \operatorname{FibonacciSet}\left(N\right), \forall H : \operatorname{CellHalf}\left(N, S\right), \forall L : \operatorname{CellHalf}\left(N, S\right), \operatorname{cellForm}\left(N, K, X, Y, S, H, L\right) = \operatorname{dite}\left((\exists c : K, \operatorname{cellAction}\left(N, K, X, Y, S, \operatorname{diagramElement}\left(N, K, X, Y, \operatorname{glue}\left(N, \operatorname{val}\left(H\right), \operatorname{val}\left(H\right), \operatorname{rfl}\left(\operatorname{propagatingLabels}\left(N, \operatorname{val}\left(H\right)\right)\right)\right)\right), \operatorname{Pi.single}\left(L, 1\right)\right) = \operatorname{smul}\left(c, \operatorname{Pi.single}\left(H, 1\right)\right)), (\lambda h : (\exists c : K, \operatorname{cellAction}\left(N, K, X, Y, S, \operatorname{diagramElement}\left(N, K, X, Y, \operatorname{glue}\left(N, \operatorname{val}\left(H\right), \operatorname{val}\left(H\right), \operatorname{rfl}\left(\operatorname{propagatingLabels}\left(N, \operatorname{val}\left(H\right)\right)\right)\right)\right), \operatorname{Pi.single}\left(L, 1\right)\right) = \operatorname{smul}\left(c, \operatorname{Pi.single}\left(H, 1\right)\right)), \operatorname{Classical.choose}\left(h\right)), 0\right)$$
 
@@ -304,7 +294,7 @@ $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}
 
 Definition 7.7, page 60: "Let S be a rank N Fibonacci set and let V^S be the associated cell module of O_N(X,Y). Attached to this module is an O_N(X,Y)-invariant bilinear form φ_S: V^S × V^S → 𝕂 implicitly defined for two half diagrams H, K with propagating sets PLab(H) = PLab(K) = S by E_{H ⋈ H} • K = φ_S(H,K) H." The definition selects the scalar c satisfying this action equation. Pi.single(H,1) is the half-diagram basis vector; choose(h) selects a scalar from the existence proof h. If no scalar satisfies the equation the value is zero. At rank three the proof establishes existence, the full equation including off-support components, and agreement of this scalar with the diagram coordinate used for the Gram matrices. The solution is unique because its H coordinate is c. General existence and action laws are not proved here.
 
-**Definition 1.26 (Cell Gram matrices).**
+**Definition 1.25 (Cell Gram matrices).**
 
 $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}\left(K\right)] \forall X : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 1\right)\right) \to K, \forall Y : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 2\right)\right) \to K, \forall S : \operatorname{FibonacciSet}\left(N\right), \forall H : \operatorname{CellHalf}\left(N, S\right), \forall L : \operatorname{CellHalf}\left(N, S\right), \operatorname{cellGram}\left(N, K, X, Y, S\right)\left(H, L\right) = \operatorname{cellForm}\left(N, K, X, Y, S, H, L\right)$$
 
@@ -316,7 +306,7 @@ $$\forall N : \mathbb{N}, \forall K : \operatorname{Type}, [\operatorname{Field}
 
 Page 60: "The Gram matrix G^S_N of the bilinear form φ_S is the dim V^S × dim V^S matrix whose entries are given by [G^S_N]_{H,K} := φ_S(H,K)." Its index set is exactly CellHalf(N,S).
 
-**Definition 1.27 (Hivert--Scott Conjecture 7.9).**
+**Definition 1.26 (Hivert--Scott Conjecture 7.9).**
 
 $$(claim) \Leftrightarrow (\forall N : \mathbb{N}, (0 < N) \Rightarrow (\forall K : \operatorname{Type}, [\operatorname{Field}\left(K\right)] \forall X : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 1\right)\right) \to K, \forall Y : \operatorname{Fin}\left(\operatorname{natSub}\left(N, 2\right)\right) \to K, \operatorname{det}\left(\operatorname{regularGram}\left(N, K, X, Y\right)\right) = \prod_{S : \operatorname{FibonacciSet}\left(N\right)} (\operatorname{det}\left(\operatorname{cellGram}\left(N, K, X, Y, S\right)\right))^{2 \cdot \operatorname{card}\left(\operatorname{CellHalf}\left(N, S\right)\right)}))$$
 
@@ -328,7 +318,7 @@ $$(claim) \Leftrightarrow (\forall N : \mathbb{N}, (0 < N) \Rightarrow (\forall 
 
 Conjecture 7.9, page 60: "det G_N = ∏_{S ∈ 𝕐𝔽𝕊_N} [det G^S_N]^{2 dim(Fib(S))}." The preamble specifies regular trace, not a normalized trace. The claim quantifies over every positive N, every field in Lean Type, and all parameter sequences. Perm(Fin(N)) indexes the lexmin basis, FibonacciSet(N) indexes the cells, and card(CellHalf(N,S)) encodes dim(Fib(S)). The universal coordinate encoding has the totalization boundary stated above; the specialization that disproves the identity has a checked diagram basis and the source's defining cell-form equation.
 
-**Theorem 1.28 (Refutation at rank three).**
+**Theorem 1.27 (Refutation at rank three).**
 
 $$\neg claim$$
 
@@ -346,6 +336,7 @@ At N = 3 over Q with X = (1,2), Y = (1), the quotient words (1,E₁,E₂,E₁E�
 
 ## References
 
+- Truth anchor: `D5/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result.iota`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.Arc`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.CellHalf`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.Diagram`
@@ -360,7 +351,6 @@ At N = 3 over Q with X = (1,2), Y = (1), the quotient words (1,E₁,E₂,E₁E�
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.cellForm`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.cellGram`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.claim`
-- Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.code`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.diagramArcs`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.diagramCoefficient`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.diagramElement`
@@ -374,3 +364,4 @@ At N = 3 over Q with X = (1,2), Y = (1), the quotient words (1,E₁,E₂,E₁E�
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.propagatingLabels`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.regularGram`
 - Truth anchor: `D5/S0/Certificates/Combinatorics/OkadaDiscriminantRefutation.result`
+- Dependency: [D5/S0/Certificates/Combinatorics/LiangSaganPinnacle/Result](LiangSaganPinnacle/Result.md)

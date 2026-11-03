@@ -1,0 +1,17 @@
+**例 5.4（局部三轴相融仍不足）。**
+对量子位投影 $P_n=(I+n\cdot\sigma)/2$，$\left\lVert n\right\rVert=1$，令
+
+$$
+\mu(P_n)=\frac{1+n_z^3}{2},\qquad \mu(0)=0,\quad\mu(I)=1.
+$$
+
+它非负、连续，且 $\mu(P_n)+\mu(P_{-n})=1$。
+对任一正交标架 $(n_1,n_2,n_3)$，
+$\sum_i n_{i,z}^6\le(\sum_i n_{i,z}^2)^3=1$；取 $r=\sum_i n_{i,z}^3n_i$，
+便有 $r\cdot n_i=n_{i,z}^3$、$\|r\|^2=\sum_i n_{i,z}^6\le1$，故每一组三轴都有一个拟合态。
+但标准三轴迫使候选全局态的 Bloch 向量为 $(0,0,1)$；
+在 $n_z=1/2$ 时该态给 $3/4$，本赋值给 $9/16$。
+因此它不能扩张为全效果相融赋值。
+
+<a id="prop:classicalrecursion"></a>
+

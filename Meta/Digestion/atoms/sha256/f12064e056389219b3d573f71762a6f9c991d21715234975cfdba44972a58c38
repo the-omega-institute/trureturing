@@ -1,0 +1,122 @@
+**Theorem 3.2 (Universal strict bound and unique boundary equality).**
+For every integer triple $2\le a\le b\le c$ and every
+$g\in\mathcal P_{a,b,c}$,
+
+$$
+F(g)<U_n.
+\tag{3.2}
+$$
+
+On the auxiliary normalized nonnegative domain,
+
+$$
+R(g)\le U_n\qquad(g\in\mathcal C_{a,b,c}).
+\tag{3.3}
+$$
+
+Equality in (3.3) exists if and only if $c=a+b$. In that case its
+unique original-labelled assignment is
+
+$$
+g^\star_e=
+\begin{cases}
+0,&e\in E_{AB},\\
+1/c,&e\in E_{AC}\sqcup E_{BC}.
+\end{cases}
+\tag{3.4}
+$$
+
+This connected boundary assignment is not a member of
+$\mathcal P_{a,b,c}$. The positive equality class in (3.2) is empty.
+
+*Proof.* For any connected nonnegative $g$, normalize by
+$t=\lambda_2(g)$ as in Lemma 2.1. Write
+
+$$
+q_k=\frac{\lambda_k(g)}t-1\ge0\quad(2\le k\le n),\qquad
+\Delta=\sum_{k=2}^n\frac{q_k}{1+q_k}.
+$$
+
+The eigenvalues of $H$ are $0$ on constants and the $q_k$ on
+$\mathbf1^\perp$, so their sum is $S\ge1$. The elementary comparison
+cited in Convention 1.3 follows term by term from $q_k\le S$:
+
+$$
+\Delta\ge\sum_{k=2}^n\frac{q_k}{1+S}
+=\frac S{1+S}\ge\frac12.
+\tag{3.5}
+$$
+
+Using (1.5) gives
+
+$$
+\frac{F(g)}n
+=\sum_{k=2}^n\frac1{1+q_k}
+=n-1-\Delta\le n-\frac32.
+\tag{3.6}
+$$
+
+Equality forces $S=1$, because $S/(1+S)$ is strictly increasing.
+For each $q_k>0$, equality in the first comparison of (3.5) forces
+$q_k=S$. Since $S>0$, precisely one $q_k$ is positive. Thus equality
+in (3.6) requires
+
+$$
+S=1,\qquad \operatorname{rank}H=1.
+\tag{3.7}
+$$
+
+Conversely (3.7) gives equality. These are consequences of equality,
+not restrictions on competitors.
+
+Suppose (3.7) holds. Factor $H=hh^{\mathsf T}$ with
+$\|h\|^2=\operatorname{tr}H=1$. Since $H\mathbf1=0$ and $h\ne0$,
+$\sum_xh_x=0$. Lemma 2.1 says that $H(e_x-e_y)=0$ whenever $x,y$
+lie in one part. Hence $h_x=h_y$ on each part. For two distinct
+vertices $x,y$ of that part, $L(\widehat g)_{xy}=0$, and therefore
+
+$$
+h_xh_y=H_{xy}=\frac1n.
+$$
+
+Each part contains at least two vertices, including all size-two
+cases, so its common value is $\sigma_I/\sqrt n$ for a sign
+$\sigma_I\in\{-1,1\}$. The zero-sum condition is
+
+$$
+a\sigma_A+b\sigma_B+c\sigma_C=0.
+\tag{3.8}
+$$
+
+The signs cannot all agree. Thus one part size must equal the sum of
+the other two; under $2\le a\le b\le c$ this is exactly $c=a+b$.
+The only possible signs, up to simultaneous reversal, are then
+$\sigma_A=\sigma_B=-\sigma_C$. For vertices in different parts,
+$L(\widehat g)=P+hh^{\mathsf T}$ now gives
+
+$$
+\widehat g_{\{x,y\}}
+=\frac1n-h_xh_y
+=\frac{1-\sigma_I\sigma_J}{n}.
+\tag{3.9}
+$$
+
+Since $n=2c$, these are exactly (3.4). In particular, the necessary
+$AB$ coordinates are zero. This excludes equality for every strictly
+positive original assignment, proving (3.2).
+
+For sufficiency in the nonnegative domain, apply the whole balanced
+bipartite theorem through the actual-object map in Convention 1.3.
+The assignment (3.4) is the uniform normalized $K_{c,c}$ assignment
+on the same $2c$ vertices, with connected support, $\lambda_2=1$,
+and
+
+$$
+R(g^\star)=c(4c-3)=2c\left(2c-\frac32\right)=U_n.
+\tag{3.10}
+$$
+
+Its full spectrum is $0$, $1$ with multiplicity $n-2$, and $2$.
+Equations (3.8)–(3.9) show uniqueness of the actual edge coordinates,
+rather than uniqueness only up to permutations. ∎
+

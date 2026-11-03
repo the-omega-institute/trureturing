@@ -1,0 +1,30 @@
+**Corollary 11.1 (Shared-context sufficient inequality on the original optimizer).** For fixed $N\ge1$, $n\ge1$ and disjoint nonempty interior intervals $C_j$, define
+
+$$
+\Lambda_{N,n}(\pi_n;\{C_j\})=
+\sum_jc_{|C_j|}\sum_{a,b\in\{0,1\}}
+\operatorname{tail}_{N^2}\bigl(S_{C_j}^{a,b}(\pi_n)\bigr).
+\tag{11.1}
+$$
+
+If
+
+$$
+\Lambda_{N,n}(\pi_n;\{C_j\})>
+\tau=2(3-2\sqrt2)-\frac1{24},
+\tag{11.2}
+$$
+
+then $C_N<c_\star$ on the entire original $\Theta_N$ of (1.3).
+
+Proof. The fixed-producer geometric entropy-tail bound of [Stripping, Theorems 3.1, 5.1 and 6.5][SC-S], together with the same-law whole-half-line comparison of [Entropy erasure, Theorem 3.1][SC-H], supplies $A_{P_\theta}<\infty$ for every fixed finite $\theta\in\Theta_N$. Specifically, the comparison bounds each $e_L(j),e_R(j)$ by half the geometrically decreasing $R_j$ of Stripping; their square roots are summable. The zero-tail case has the same conclusion. This reuse needs no band, identifiability, irreducibility, aperiodicity or uniformity over $\Theta_N$.
+
+Suppose a single $\theta\in\Theta_N$ attained $d(P_\theta)=c_\star$. Its band follows from [Universal, Theorem 3.1][U]. The just cited root sum and [Attainment, Theorem 1.5 and Corollary 9.1][SC-A] give strong zero for that same actual law and its original full-exterior predictors. [Guarded, Corollary 6.4][SC-G] therefore applies to that $J_\theta/P_\theta$ and gives
+
+$$
+\mathcal R_{N,n}\le(n+2)c_\star-\kappa_n-\frac1{24}\le\tau.
+\tag{11.3}
+$$
+
+Its guarded kernels are the actual conditional laws supplied by [Guarded, Theorem 6.2][SC-G], not laws inferred from a rank converse. Theorem 9.2 with $p=\pi_n$ gives $\mathcal R_{N,n}\ge\Lambda_{N,n}(\pi_n;\{C_j\})$, contradicting (11.2). Thus no $\theta\in\Theta_N$ attains $c_\star$. The fixed-dimension maximum theorem [Universal, Theorem 6.2][U] then makes the gap strict: $C_N=\max_{\theta\in\Theta_N}d(P_\theta)<c_\star$. All implications apply to the entire original domain, including stationary mixtures, structural zeros, zero stationary masses, reducibility, periodicity and redundant presentations. $\square$
+

@@ -1,0 +1,12 @@
+## 附录 A. 符号与来源界限
+
+| 符号 | 含义 |
+|---|---|
+| $\zeta(s)$、$\xi(s)$ | Riemann 函数与其标准完成 |
+| $\omega=e^{3\pi i/5}$ | 黄金门相位；避免与 Riemann $\zeta$ 同名 |
+| $Z_{\rm div}(n)$ | 约数倒数和；不是 $\zeta(s)$ |
+| $\mathcal Z_T(u)$ | 闭路行列式的倒数；讨论极点时不称它们为零点 |
+| $x=p^{-s}$ | 局部 Euler 变量；$\vert x\vert =1$ 对应 $\Re s=0$ |
+| $z_\rho=1-1/\rho$ | 零点 Cayley 变量；$\vert z_\rho\vert =1$ 对应 $\Re\rho=1/2$ |
+| $\eta_\square$ | 四角概率 log-odds；与镜像法向 $\eta_{\rm mir}$ 区分 |
+| $k$、$\kappa$ | 分别为整数块计数与五模式概率纤维坐标 |

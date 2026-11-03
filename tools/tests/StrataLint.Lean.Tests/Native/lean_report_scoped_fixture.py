@@ -237,11 +237,15 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.logs = self.root / 'scoped logs'
 
     def scoped(self, targets, success=True):
+        self.compiler_preparation = ''
         if self.compiler_seed is not None:
             # Restore both tools in the workspace used by scoped production.
             # Compiler preparation must not compile any project/report inputs.
-            prepared = self.run_lake('--no-build', '-d', 'tools/lean-inspector-reg', 'build',
-                                     'leanInspector/reportInspector', 'leanInspector/inputDiscovery')
+            # Rebuild the reader whose source may have changed; the staged
+            # report reader remains available to the scoped production entry.
+            prepared = self.run_lake('-d', 'tools/lean-inspector-reg', 'build',
+                                     'leanInspector/inputDiscovery')
+            self.compiler_preparation = prepared.stdout + prepared.stderr
             self.record_result('compiler-restore', dict(raw_exit=prepared.returncode,
                 stdout=prepared.stdout, stderr=prepared.stderr))
         result = self.guarded_command(['/bin/bash', str(self.root / 'tools/scripts/report/lean-report-scoped.sh'),
@@ -249,6 +253,11 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         return result
+
+    def reader_build_output(self):
+        return self.compiler_preparation + ''.join(
+            (self.logs / (phase + '.' + stream + '.log')).read_text()
+            for phase in ('scope', 'report') for stream in ('stdout', 'stderr'))
 
     def verify(self, targets, success=True):
         result = self.guarded_command(['/bin/bash', str(self.root / 'tools/scripts/report/lean-report-input.sh'),
@@ -293,8 +302,28 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertIn('D5/S0/Carrier/Missing.lean', failed.stdout + failed.stderr)
         self.assertFalse(publication.member(self.output, '.input.attestation').exists())
 
+    def test_native_scope_reuses_unchanged_staged_readers(self):
+        self.scoped('D5.A')
+        self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'})
+        work = json.loads((self.logs / 'work.json').read_text())
+        self.assertEqual(work['extracted_module_names'], ['D5.A', 'D5.B'])
+        self.assertEqual(work['compiled_module_names'], ['D5.A', 'D5.B'],
+                         '[FAIL] scoped_entry_reuses_unchanged_staged_readers')
+        self.assertNotRegex(self.reader_build_output(),
+            r'(?m)^[^\s]+ \[\d+/\d+\](?: \(Optional\))? Built '
+            r'(?:leanInspector/)?(?:LeanInformationAudit(?:\.[^\s:()]+)*|Inspector|inputDiscovery|reportInspector)'
+            r'(?::[^\s()]+)?(?: \([^()\r\n]*\))?$',
+            '[FAIL] unchanged_staged_readers_are_reused_across_all_build_windows')
+        for name in ('reportInspector', 'inputDiscovery'):
+            program = self.root / '.lake/build/lean-inspector/producer/bin' / name
+            self.assertTrue(program.is_file(), '[FAIL] both_staged_readers_are_available')
+        self.verify('D5.A')
+
     def test_native_scope_uses_only_explicit_module_facets(self):
         self.ensure()
+        # A changed reader must rebuild even when its prior compiler artifact is staged.
+        reader = self.root / 'tools/lean-inspector/LeanInformationAudit/Contract/InputDiscovery.lean'
+        reader.write_text(reader.read_text() + '\n-- scoped reader input change\n')
         canonical = self.root / '.lake/build/stratalint/raw-lean-report.json'
         canonical.parent.mkdir(parents=True, exist_ok=True)
         canonical.write_text('deliberately unreadable full report')
@@ -311,6 +340,11 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.write('D5/Alone.lean', 'this sibling deliberately does not compile\n')
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = '["reg/Reg"]'
         self.scoped('D5.A')
+        self.assertRegex(self.reader_build_output(),
+            r'(?m)^[^\s]+ \[\d+/\d+\](?: \(Optional\))? Built '
+            r'(?:leanInspector/)?LeanInformationAudit\.Contract\.InputDiscovery(?::lean)?'
+            r'(?: \([^()\r\n]*\))?$',
+            '[FAIL] changed_staged_reader_is_rebuilt_across_setup_and_scope')
         self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'}, '[FAIL] report_is_exact_import_closure')
         phases = [json.loads(line) for line in (self.logs / 'native-phases.jsonl').read_text().splitlines()]
         inspections = [row for row in phases if row['phase'] == 'native-inspect' and row['boundary'] == 'start']

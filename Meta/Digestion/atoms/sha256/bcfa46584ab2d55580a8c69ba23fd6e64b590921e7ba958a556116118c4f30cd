@@ -1,0 +1,27 @@
+**Definition 102.1 (two independently variable coefficient parities).**
+Retain exactly Definition 82.1's seven-cell source, unit seed, actual
+quaternary encoding, cleared late entrance, original growth and six-operation
+service, authentic maps/rights, complete serial framing and sufficient finite
+backing. For $p\in\{0,1\}$ let $\mathcal C_p$ consist of the finite monic
+polynomials supported on exponents of parity $p$, with every lower
+coefficient in $\{0,1,2,3\}$. If $P\in\mathcal C_p$ and
+$Q\in\mathcal C_{1-p}$ with $\deg Q>\deg P$, then $P+Q$ is exactly
+one polynomial $F_w$ of (82.1). Its degree is the actual word length;
+its descending lower coefficients are the chronological digits. Distinct
+such polynomials therefore name distinct admitted words, without an
+identification of leading zero digits or a supplied length cutoff.
+
+For any frozen finite receiver path, denote a successful Read's homogeneous
+row by $\rho$ and its affine offset by $a$. Lemmas 76.1 and 82.2 give
+an effective parity $p$ for which
+
+$$
+\rho Q(A)e=0\quad(Q\in\mathcal C_{1-p}),\qquad
+\operatorname{reply}(P+Q)=a+\rho P(A)e.
+\tag{102.1}
+$$
+
+A zero row may be assigned either parity. A row and its offset are frozen
+only after the complete preceding replies have fixed the actual commands,
+growth inclusions, addresses, rational operands and number of Ticks.
+

@@ -1,0 +1,102 @@
+**Theorem 107.2 (Source-specific necessary and sufficient terminal test).**
+Put $c_\theta=\cos\theta$, $s_\theta=\sin\theta$ and
+
+$$
+\begin{aligned}
+K(h)&=s_\theta^2th^\dagger+c_\theta^2ht^\dagger
+       +i s_\theta c_\theta(D-bhh^\dagger),\\
+H_z(C,h)&=\operatorname{Herm}\bigl(z W V_0^\dagger C^\dagger
+                                      K(h)CV_0\bigr),\qquad
+\operatorname{Herm}(A)=(A+A^\dagger)/2.
+\end{aligned}
+\tag{107.3}
+$$
+
+For any two retention parameters $\gamma,\gamma'$, $z=\gamma-\gamma'$,
+any original histories $u,w$, and both original terminal outcomes, the
+exact unconditioned laws are
+
+$$
+\begin{aligned}
+p_\gamma(u,w,1)&=\operatorname{Tr}[F_1\mathcal R_{\gamma,w}(r_u)],\\
+p_\gamma(u,w,0)&=a_w\operatorname{Tr}r_u-p_\gamma(u,w,1),\\
+p_\gamma(u,w,1)-p_{\gamma'}(u,w,1)
+ &=a_w\operatorname{Tr}[r_uH_z(C_w,h)].
+\end{aligned}
+\tag{107.4}
+$$
+
+The outcome-$0$ difference is the negative of the outcome-$1$ difference.
+Thus this particular history and terminal distinguish the parameters
+if and only if the last scalar in (107.4) is nonzero. For the nine
+original prefix events $r_i$ of Definition 93.1, a specified collection
+$\mathcal W$ of intermediate histories is blind on every one of these
+events if and only if
+
+$$
+H_z(C_w,h)=0\qquad(w\in\mathcal W).
+\tag{107.5}
+$$
+
+All of (107.2) and the corresponding archive/reference outputs extend
+by tensoring with the identity on every finite untouched reference.
+No state after the original effects-only terminal is specified.
+
+For completeness the full five-input version of the returned map is
+also fixed. Let $\widehat K_{\theta,j}$ be the original five-dimensional
+Kraus operators (72.6), and define
+
+$$
+\widehat L_{wj}y
+ =\mathsf J(\widetilde C_w\widehat K_{\theta,j}y\otimes g_j).
+\tag{107.7}
+$$
+
+In (107.2), replacing $L_{wj}$ by $\widehat L_{wj}$ and the prefactor
+$a_w/2$ by $a_w$ gives $\widehat{\mathcal R}_{\gamma,w}(Y)$ on every
+$Y\in M_5$. It restricts to (107.2) on $Y=BXB^\dagger$ and includes
+every off-code output and untouched reference.
+
+Proof. The measured intermediate branches remain
+$a_w\operatorname{Ad}_{C_w}$ on the system even when the retained
+record is entangled with it. This is their original full-code and
+spectator contract. Applying (101.6), then these branches, then the
+same forward $\mathsf J$ gives (107.2). Each $L_{wj}$ is an isometry and
+$L_{w1}^\dagger L_{w0}=0$, since $g_1\perp g_0$ before the return.
+Consequently $\operatorname{Tr}\mathcal R_{\gamma,w}(X)
+=a_w\operatorname{Tr}X$, independently of $\gamma$.
+Complete positivity follows from the positive coefficient matrix
+$\left(\begin{smallmatrix}1&\gamma\\\bar\gamma&1\end{smallmatrix}\right)$;
+these facts also hold with an untouched reference.
+The range of each original $\widehat K_{\theta,j}$ is in $R$, so the
+intermediate branch identity applies also after every full five-input
+emission. Equation (106.8) then gives (107.7) and its stated full-input
+map without altering any ready column.
+
+Rotating the two record blocks of (106.4) into the original $g$ basis
+gives its row-$1$, column-$0$ block exactly as
+
+$$
+(i s_\theta,c_\theta)
+\begin{pmatrix}D&th^\dagger\\ht^\dagger&bhh^\dagger\end{pmatrix}
+\binom{c_\theta}{-i s_\theta}=K(h).
+\tag{107.6}
+$$
+
+Therefore $L_{w1}^\dagger F_1L_{w0}
+=V_1^\dagger C_w^\dagger K(h)C_wV_0$.
+Taking the trace of the two cross terms, and using $V_1=V_0W$,
+proves (107.4). The real trace against a Hermitian input is its pairing
+with $H_z$. Since the nine $r_i$ span $\operatorname{Herm}_3$, their
+pairings vanish exactly when that Hermitian matrix is zero.
+
+For any fixed pair of prefix and intermediate schedules, summing
+(107.4) over all their actual histories and both terminal outcomes gives
+one. The return contributes no rejection or discarded branch. Every
+original history, including those different from a chosen witness, is
+retained. On a reference $Z$, its unnormalized final visible output is
+$\operatorname{Tr}_{\mathcal H}[(F_b\otimes I_Z)
+(\mathcal R_{\gamma,w}\otimes\operatorname{id}_Z)(X)]$; this gives the
+terminal/archive/reference law without inventing a system successor for
+that terminal. $\square$
+

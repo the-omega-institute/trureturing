@@ -14,6 +14,7 @@ internal sealed class LiTheilHarrowChuangPurifyCloneRefutationDocument : IScribe
         "A symmetric quantum channel has one-site worst-case infidelity at most one sixth, while purify-and-clone has risk at least one fifth in system and environment dimension two.",
         H("Purify-and-clone is not optimal for one-site worst-case risk"),
         Blocks(
+            Node("vecPure_rank_one", VecPureRankOneFormula(), "A trace-one outer product of a complex vector with its adjoint has rank one.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Node("sqFidelity", FidelityFormula(), "Squared Uhlmann fidelity is (Tr √(√α β √α))². The formula uses the real part of the trace of the positive square root.", AssessedProvenance.FromLiterature(Source)),
             Node("purifications", PurificationsFormula(), "Section S3 A, p. 8: “That is, C(ρ) is the convex hull of all m-tensor powers of purifications of ρ.” Here purifications r rho is the set of trace-one positive rank-one matrices whose environment partial trace is rho. The range of the conversion from DensityState is exactly the set of ordinary density matrices.", AssessedProvenance.FromLiterature(Source)),
             Node("oneSiteMarginal", MarginalFormula(), "The two choices retain the first and second joint system-environment sites. The environment inside a retained site is not discarded.", AssessedProvenance.FromLiterature(Source)),
@@ -28,7 +29,7 @@ internal sealed class LiTheilHarrowChuangPurifyCloneRefutationDocument : IScribe
             Node("result", new Formula.Not(Parenthesized(ClaimBody())), "In dimension d = r = 2, clone the system with the two-dimensional Werner cloner and tensor its output with one third of the symmetric environment projector, then reorder the registers into two sites. Its Kraus operators give a completely positive trace-preserving channel. Both-sided symmetric support holds. A four-element Pauli average puts rho tensor I/2 in the common target convex hull for every input. Matrix square-root order gives fidelity at least 5/6 for this channel. For the pure zero input, every target has fidelity at most 4/5 with the purify-and-clone marginal. Thus the respective worst-case risks are at most 1/6 and at least 1/5. The universal inequality fails. The all-site and average risks and a strict-improvement family in arbitrary dimensions are not asserted.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("li-theil-harrow-chuang-2026-purify-and-clone-optimality"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, Formula formula, string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("lthc-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(name), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
+        Describe.Lean(DescribeId.Create("lthc-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(name), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula C(string name, params Formula[] args) => args.Length == 0 ? Q(name) : new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
@@ -70,6 +71,12 @@ internal sealed class LiTheilHarrowChuangPurifyCloneRefutationDocument : IScribe
     private static Formula Instances(Formula a, Formula body) => Seq(OpenBracket, C("Fintype", a), CloseBracket, Sp, OpenBracket, C("DecidableEq", a), CloseBracket, Comma, Sp, body);
     private static Formula Generic(Formula body) => All("a", C("Type"), Instances(V("a"), body));
     private static Formula Dimensions(Formula body) => All("d", Field("N"), All("r", Field("N"), body));
+
+    private static Formula VecPureRankOneFormula()
+    {
+        Formula v = V("v"), pure = At(Q("Matrix", "vecMulVec"), v, C("star", v));
+        return Generic(All("v", Arrow(V("a"), Field("C")), Imp(Eqn(Trace(pure), D(1)), Eqn(Rank(pure), D(1)))));
+    }
 
     private static Formula FidelityFormula()
     {

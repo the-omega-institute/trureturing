@@ -1,0 +1,82 @@
+**Theorem 12.2 (An exact two-control deficit identity).** For either
+$E=C,D$ and every source and bias pair of Definition 1.1,
+
+$$
+\begin{aligned}
+ \Delta={}&2I_P-\ell_E
+ +I(U:C\mid D)_\Omega+I(U:D\mid C)_\Omega
+ +I(V:E\mid\bar E)_\Omega.
+\end{aligned}
+\tag{12.3}
+$$
+
+Consequently
+
+$$
+ \Delta\geq2I_P-\min\{\ell_C,\ell_D\}.
+\tag{12.4}
+$$
+
+Proof.
+The probabilities in (12.2) are nonnegative and sum to one, and each
+quantum branch is a unitary conjugate of $\rho$. Since $KL=LK$, the
+$CD$ marginal of $\Omega$ is exactly $R$. Conditioning on $U=u$ gives
+$K^uPK^u$; conditioning on $V=v$ gives $L^vQL^v$. These are product
+unitary conjugations, so the entropy of each joint conditional state,
+and of each of its one-qubit margins, is independent of the control
+value. The classical-quantum entropy formula
+
+$$
+ S\left(\sum_j p_j|j\rangle\langle j|\otimes A_j\right)
+ =H(p)+\sum_jp_jS(A_j)
+$$
+
+follows by diagonalizing each block. Applying it to these actual
+marginal states gives
+
+$$
+\begin{aligned}
+ I(U:CD)_\Omega&=g,& I(U:E)_\Omega&=h_E,\\
+ I(V:CD)_\Omega&=k,& I(V:E)_\Omega&=\ell_E.
+\end{aligned}
+\tag{12.5}
+$$
+
+The mutual-information chain rule therefore yields
+
+$$
+\begin{aligned}
+ I(U:C\mid D)_\Omega&=g-h_D,&
+ I(U:D\mid C)_\Omega&=g-h_C,\\
+ I(V:E\mid\bar E)_\Omega&=k-\ell_{\bar E}.
+\end{aligned}
+\tag{12.6}
+$$
+
+These conditional mutual informations are nonnegative by strong
+subadditivity (Lieb and Ruskai, *Proof of the strong subadditivity of
+quantum-mechanical entropy*, 1973; also Watrous, *The Theory of Quantum
+Information*).
+
+The complete endpoint mutual informations obey the exact balances
+
+$$
+ I_R-I_P=h-g,\qquad I_R-I_Q=\ell-k.
+$$
+
+Thus $I_Q=I_P+h-g-\ell+k$. Substitution into the unchanged original
+budget (1.4), followed by (12.6), gives
+
+$$
+\begin{aligned}
+ \Delta
+ &=2I_P+2g-h+k-\ell\\
+ &=2I_P-\ell_E+(g-h_D)+(g-h_C)+(k-\ell_{\bar E}),
+\end{aligned}
+$$
+
+which is (12.3). No endpoint mutual information was discarded in this
+identity. Applying strong subadditivity gives
+$\Delta\geq2I_P-\ell_E$ for both choices of $E$; their larger lower
+bound is (12.4).
+

@@ -1,0 +1,68 @@
+#### 定理 7.4（全部两两黄金概率仍不确定相干关系）
+
+对两种种子 $s=0,2$，取历史 $\psi_j^{(s)}=K^j\lvert s\rangle$。设
+$t=\langle s\rvert \mathcal P\lvert s\rangle$，分别为 $a,\delta$，并记
+
+$$
+k_t(n)=\langle s\rvert K^n\lvert s\rangle =\omega^n[(1-t)+t\omega^n].
+$$
+
+两族全部带标签的两两转移概率相同：
+
+<a id="equation-8"></a>
+
+<a id="eq-allpairs"></a>
+
+$$
+|k_t(n)|^2=1-t(1-t)|1-\omega^n|^2,
+\qquad t(1-t)=a\delta.
+\tag{8}
+$$
+
+但三历史 $0,1,2$ 的闭路量满足
+
+<a id="equation-9"></a>
+
+<a id="eq-goldbarg"></a>
+
+$$
+\boxed{B_\delta=\varphi^{-4}\omega,\qquad
+B_a=\varphi^{-4}\bar\omega,}
+\qquad B_t=k_t(1)^2k_t(-2).
+\tag{9}
+$$
+
+所以保持全部历史标签的共同酉与射线相位重选，不能把两族相互变换。
+
+**证明。**
+
+引理 [7.2](#lem-gold) 的幂公式给 $k_t$，直接展开模平方给式 [(8)](#eq-allpairs)。两种种子满足 $a+\delta=1$，故右侧完全相同。
+
+令 $z=\omega$。由 $z^2+az+1=0$ 得 $z^{-2}=a(z-1)$。三个指数之和为零，整体相位消去，且
+
+$$
+B_\delta=(a+\delta z)^2(a+\delta z^{-2}).
+$$
+
+用 $\delta=a^2=1-a$ 逐项化简得
+
+$$
+(a+\delta z)^2=\delta(a+z),\qquad
+a+\delta z^{-2}=\delta(1+az),
+$$
+
+$$
+(a+z)(1+az)=z.
+$$
+
+所以 $B_\delta=\delta^2z=\varphi^{-4}\omega$。再记
+$h_t(n)=1-t+tz^n$，则 $h_{1-t}(n)=z^n\overline{h_t(n)}$。对指数 $1,1,-2$ 相乘给 $B_a=\overline{B_\delta}$。因 $\omega$ 非实，两者不同；闭路量在所述变换下不变，得到结论。
+
+∎
+
+这是对*全部两历史投影接口*的反例；它没有说两种初态在一切读口下都不可区分，固定模式 PVM 在起点就能区分 $\lvert 0\rangle$ 和 $\lvert 2\rangle$。所有整数历史都可由 $K^9=K^{-1}$ 表为有限正向原生字，故没有隐藏调用任意连续相位门。
+
+<a id="statement-7-5"></a>
+
+<a id="prop-triangle"></a>
+

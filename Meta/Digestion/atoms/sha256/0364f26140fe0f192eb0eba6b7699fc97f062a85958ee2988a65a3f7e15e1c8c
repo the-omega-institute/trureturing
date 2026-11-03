@@ -1,0 +1,13 @@
+## 3. Uniform transition-window theorem
+
+For $j\ge1$ write $t_j=F_{j-1}/F_j$. Define the positive open cells
+
+$$
+I_2=(1,\infty),\qquad
+I_b=\begin{cases}
+(t_b,t_{b-2}),&b\ge4\text{ even},\\
+(t_{b-2},t_b),&b\ge3\text{ odd}.
+\end{cases}
+\tag{3.1}
+$$
+

@@ -8,6 +8,7 @@
 import D5.S3.Combinatorics.Circle.GeometricSourceRelocation
 import D5.S3.Combinatorics.Circle.TwoRunSource
 import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+import Mathlib.Logic.Equiv.Fin.Rotate
 
 /-! # Actual cross-modulus periodic charges -/
 
@@ -40,7 +41,7 @@ def charge (d w : ℕ) (i : Fin d) : ℤ :=
   z / 2 + z % 2
 
 set_option maxHeartbeats 2000000 in
-private theorem digit_data (d w : ℕ) (hd : 2 ≤ d)
+theorem digit_data (d w : ℕ) (hd : 2 ≤ d)
     (hw : w ≤ 2 ^ (d - 1) - 1) (i : Fin d) :
     0 ≤ charge d w i ∧
     actualSource d w i = (2 : ℤ) ^ i.val * w - ((2 : ℤ) ^ d - 1) * charge d w i ∧
@@ -120,6 +121,34 @@ private theorem digit_data (d w : ℕ) (hd : 2 ≤ d)
   · rw [haeq, hyeq, he]; dsimp [a, y]; ring
 
 
+/-- Total charge in the native old-source phase. -/
+theorem charge_sum (d w : ℕ) (hd : 2 ≤ d)
+    (hw : w ≤ 2 ^ (d - 1) - 1) :
+    (∑ i : Fin d, charge d w i) = (w : ℤ) := by
+  let q : ℤ := 2 ^ d
+  let a := actualSource d w
+  let e := charge d w
+  have hq : 4 ≤ q := by
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hd
+    norm_num at this; exact this
+  have hdigit := digit_data d w hd hw
+  have hasum : (∑ i : Fin d, a i) = 0 :=
+    (ZeroSumSubsets.source_cycle (by omega : 0 < d) w).2.1
+  have hpow : (∑ i : Fin d, (2 : ℤ) ^ i.val) = q - 1 := by
+    rw [Fin.sum_univ_eq_sum_range]
+    have h := geom_sum_mul (2 : ℤ) d
+    norm_num at h
+    exact h
+  have heq : (∑ i : Fin d, a i) =
+      (∑ i : Fin d, (2 : ℤ) ^ i.val) * w - (q - 1) * ∑ i : Fin d, e i := by
+    calc
+      _ = ∑ i : Fin d, ((2 : ℤ) ^ i.val * w - (q - 1) * e i) :=
+        Finset.sum_congr rfl (fun i _ => (hdigit i).2.1)
+      _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.mul_sum]
+  rw [hasum, hpow] at heq
+  nlinarith
+
+
 theorem geom_mono (d : ℕ) (hd : 1 ≤ d) {r m : ℕ} (hr : r ≤ m) :
     (geom d r : ℤ) ≤ (geom d m : ℤ) := by
   have hq : (2 : ℤ) ≤ 2 ^ d := by
@@ -189,21 +218,12 @@ theorem periodic_source_equations
       exact_mod_cast (show w + 1 ≤ 2 ^ (d - 1) by have := Nat.one_le_two_pow (n := d - 1); omega)
     omega
   have hdigit := digit_data d w hd hw
-  have hasum : (∑ i : Fin d, a i) = 0 := (ZeroSumSubsets.source_cycle (by omega : 0 < d) w).2.1
   have hpow : (∑ i : Fin d, (2 : ℤ) ^ i.val) = q - 1 := by
     rw [Fin.sum_univ_eq_sum_range]
     have h := geom_sum_mul (2 : ℤ) d
     norm_num at h
     exact h
-  have hesum : (∑ i : Fin d, e i) = (w : ℤ) := by
-    have heq : (∑ i : Fin d, a i) =
-        (∑ i : Fin d, (2 : ℤ) ^ i.val) * w - (q - 1) * ∑ i : Fin d, e i := by
-      calc
-        _ = ∑ i : Fin d, ((2 : ℤ) ^ i.val * w - (q - 1) * e i) :=
-          Finset.sum_congr rfl (fun i _ => (hdigit i).2.1)
-        _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.mul_sum]
-    rw [hasum, hpow] at heq
-    nlinarith
+  have hesum : (∑ i : Fin d, e i) = (w : ℤ) := charge_sum d w hd hw
   have hfsum (r : ℕ) : (∑ i : Fin d, f r i) = (w : ℤ) * q ^ r := by
     dsimp [f]
     rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul, hpow, hesum]
@@ -293,6 +313,96 @@ theorem periodic_source_equations
   dsimp [f, G, a, e, q] at *
   linear_combination (geom d (m - 1) : ℤ) * ha -
     ((2 : ℤ) ^ d) ^ (m - 1) * hy + 2 * actualSource d w i * hg - charge d w i * hr
+
+set_option maxHeartbeats 2000000 in
+/-- Exact native old-value and charge alignment across a dyadic phase shift. -/
+theorem native_charge_alignment (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a)
+    (hb : 2 ^ h * a < 2 ^ (d - 1)) (i : Fin d) :
+    let tau := (finRotate d : Equiv.Perm (Fin d)) ^ h
+    actualSource d (2 ^ h * a) i = actualSource d a (tau i) ∧
+    charge d (2 ^ h * a) i = charge d a (tau i) +
+      (if (tau i).val < h then (2 : ℤ) ^ (tau i).val * a else 0) := by
+  let tau := (finRotate d : Equiv.Perm (Fin d)) ^ h
+  let j := tau i
+  have hab : a ≤ 2 ^ h * a := by
+    have := Nat.one_le_two_pow (n := h)
+    nlinarith
+  have hp : 2 ^ h < 2 ^ (d - 1) := by nlinarith
+  have hh : h < d - 1 := (Nat.pow_lt_pow_iff_right (by omega : 1 < 2)).mp hp
+  have hr : j.val = (i.val + h) % d := by
+    have he := congrFun (finCycle_eq_finRotate_iterate (k := (⟨h, by omega⟩ : Fin d))) i
+    have hv := congrArg Fin.val he
+    simpa [j, tau, Equiv.Perm.coe_pow, finCycle, Fin.val_add] using hv.symm
+  have da := digit_data d a hd (by omega) j
+  have db := digit_data d (2 ^ h * a) hd (by omega) i
+  obtain ⟨hM, ho⟩ := TwoRunSource.modulus_positive_odd d (by omega)
+  have hM' : 0 < (2 : ℤ) ^ d - 1 := hM
+  change actualSource d (2 ^ h * a) i = actualSource d a j ∧
+    charge d (2 ^ h * a) i =
+      charge d a j + (if j.val < h then (2 : ℤ) ^ j.val * a else 0)
+  by_cases hw : i.val + h < d
+  · have hj : j.val = i.val + h := by rw [hr, Nat.mod_eq_of_lt hw]
+    have hjh : ¬ j.val < h := by omega
+    have he : (2 : ℤ) ^ i.val * (2 ^ h * a : ℕ) = (2 : ℤ) ^ j.val * a := by
+      rw [hj, pow_add, Nat.cast_mul, Nat.cast_pow, Nat.cast_ofNat]
+      ring
+    have hv : actualSource d (2 ^ h * a) i = actualSource d a j := by
+      unfold actualSource
+      rw [he]
+    refine ⟨hv, ?_⟩
+    rw [if_neg hjh, add_zero]
+    have ea := da.2.1
+    have eb := db.2.1
+    rw [he, hv] at eb
+    nlinarith
+  · have hij : i.val + h < d + d := by omega
+    have hj : j.val = i.val + h - d := by
+      rw [hr, Nat.mod_eq_sub_mod (by omega), Nat.mod_eq_of_lt (by omega)]
+    have hjh : j.val < h := by omega
+    have huN : 2 ^ j.val * a ≤ 2 ^ h * a :=
+      Nat.mul_le_mul_right a (Nat.pow_le_pow_right (by omega) (by omega))
+    have hu : 0 ≤ (2 : ℤ) ^ j.val * a := by positivity
+    have hhalf : modulus d / 2 = (2 : ℤ) ^ (d - 1) - 1 := by
+      unfold modulus
+      have hp : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
+        conv_lhs => rw [show d = (d - 1) + 1 by omega, pow_succ]
+        ring
+      rw [hp]
+      omega
+    have huB : (2 : ℤ) ^ j.val * a ≤ modulus d / 2 := by
+      rw [hhalf]
+      have ht : (2 : ℤ) ^ j.val * a + 1 ≤ (2 : ℤ) ^ (d - 1) := by
+        exact_mod_cast (show 2 ^ j.val * a + 1 ≤ 2 ^ (d - 1) by omega)
+      omega
+    have hva : actualSource d a j = (2 : ℤ) ^ j.val * a := by
+      exact centered_unique hM ho (centered_bounds hM ho _) ⟨by omega, huB⟩
+        (centered_mod _ _)
+    have he : (2 : ℤ) ^ i.val * (2 ^ h * a : ℕ) =
+        (2 : ℤ) ^ d * ((2 : ℤ) ^ j.val * a) := by
+      rw [Nat.cast_mul, Nat.cast_pow, Nat.cast_ofNat, ← mul_assoc, ← pow_add,
+        show i.val + h = d + j.val by omega, pow_add]
+      ring
+    have hvb : actualSource d (2 ^ h * a) i = (2 : ℤ) ^ j.val * a := by
+      unfold actualSource
+      rw [he]
+      have he' : (2 : ℤ) ^ d * ((2 : ℤ) ^ j.val * a) =
+          (2 : ℤ) ^ j.val * a + ((2 : ℤ) ^ j.val * a) * modulus d := by
+        unfold modulus
+        ring
+      calc
+        _ = centered (modulus d) ((2 : ℤ) ^ j.val * a) :=
+          centered_congr (by rw [he', Int.add_mul_emod_self_right])
+        _ = _ := hva
+    have hqa : charge d a j = 0 := by
+      have ea := da.2.1
+      rw [hva] at ea
+      nlinarith
+    have hqb : charge d (2 ^ h * a) i = (2 : ℤ) ^ j.val * a := by
+      have eb := db.2.1
+      rw [he, hvb] at eb
+      nlinarith
+    exact ⟨hvb.trans hva.symm, by rw [if_pos hjh, hqa, hqb, zero_add]⟩
+
 
 #check @periodic_source_equations
 #print axioms periodic_source_equations

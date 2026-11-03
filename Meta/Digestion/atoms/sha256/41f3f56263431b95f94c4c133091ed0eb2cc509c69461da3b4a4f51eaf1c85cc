@@ -1,0 +1,47 @@
+## 42. An isolated ordered J/M intersection at the forbidden base
+
+Retain the complete-world domain, clocks, entire child and independent
+pair predicate of Definitions 1.1–1.2. The zero-safe parent and its
+whole-world converse remain (19.1)–(19.2); all response functions in
+Sections 42–46 are exactly the rational circuit (31.4), with the same
+whole gain and fixed drift supplied by Lemma 2.2. Only the local
+construction uses the regular chart $\Lambda\ne0$. The singular branch
+of the parent remains part of every entire-child quantifier.
+
+The notation for this local intersection is independent of Section 40.
+Here $A=(r_A,b_A),B=(r_B,b_B),C=(r_C,b_C)$ are three variable sources;
+in particular $r_A$ is not fixed at $1/4$. They are not the four sources
+of Proposition 40.1, and $A$ is not the fold map of (31.1). The response
+symbols $p,v,a,m$ below equal $R_p,R_v,R_a,R_m$ in (31.4). In the
+local-intersection source, $e,B_0,c$ correspond respectively to
+$\epsilon,B_{\rm par},c_{\rm src}$ here. Its boxes $Y,X$ are denoted
+$Y_{\cap},X_{\cap}$ here; neither is $X_{\rm J}$, $\mathcal B_{\rm f}$,
+$\mathcal U$ or $\mathcal V$. The reduced map $G$, six-variable map $F$,
+centers $\bar u,\bar x$ and matrices $L_3,L_6$ are local to these
+sections. The root symbols $u_{\cap},x_{\cap}$ replace that source's
+$u_*,x_*$ and do not denote Section 40's $x_*$. That source's common
+base reading $v_*$ is written $v_{\cap}$. The interval scale
+$\sigma_{\cap}$ below replaces that source's $S$; it is not the
+polynomial $S$ of Definition 2.1.
+
+The reflection used in the construction is inherited parent geometry.
+At $b=1/8$ on the regular chart, (19.1)–(19.2) give
+
+$$
+\epsilon=0,\qquad d=24,\qquad
+ g=h,\quad h(s)=\frac85(s-1)(s-3)(s-5),\qquad p=24.
+\tag{42.1}
+$$
+
+For $1/8<r<1$ the reflected source has $r'=9/8-r$, and
+
+$$
+n(r)=1/8+9r-8r^2=n(9/8-r),\qquad U=5/4,\qquad
+h(5)=0,\quad h(6)=24,\quad h(7)=384/5.
+\tag{42.2}
+$$
+
+Thus the two regular sources $(r,1/8),(9/8-r,1/8)$ have equal
+$p,v,m$, by (31.4); both are strict. This reflection is context for
+the isolated intersection, rather than an additional result.
+

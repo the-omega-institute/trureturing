@@ -1,0 +1,67 @@
+**Theorem 7.2 (Capacity-constrained density limit and necessary and sufficient near-minimum structure).** Fix either admissible class of Theorem 6.1 and a prescribed integer sequence $\ell_n$ with
+
+$$
+L_r(n)\le\ell_n\le U_r(n)\text{ eventually},\qquad
+\frac{\ell_n}{n}\longrightarrow\alpha\in[r-2,r-1].
+$$
+
+Then
+
+$$
+nE_r^{\min}(n,\ell_n)\longrightarrow F_r(1+\alpha).\tag{7.1}
+$$
+
+For any sequence $G_n\in\mathcal A_r(n,\ell_n)$, the following are equivalent:
+
+1. $E(G_n)-E_r^{\min}(n,\ell_n)=o(1/n)$;
+2. $nE(G_n)\to F_r(1+\alpha)$;
+3. eventually $G_n$ is an actual two-layer graph with exactly $r$ degree-oriented sinks, and, for its source counts and hub degrees with $N=n-r$,
+
+$$
+\frac1N\sum_{|T|\le r-2}a_T\longrightarrow0,\qquad
+\frac{D_i}{N}-\frac{q_r}{r}\longrightarrow0\quad(1\le i\le r),
+\qquad q_r=\frac{n-1+\ell_n}{n-r};\tag{7.2}
+$$
+
+4. eventually $G_n$ has exactly those $r$ actual sinks and source–sink structure, and its single profile satisfies
+
+$$
+\|x^{(n)}-x^*(q_r)\|_1\longrightarrow0.\tag{7.3}
+$$
+
+In the unrestricted class this includes $r=9$ with every $\alpha\in[7,8]$, and $r=10$ with every $\alpha\in[8,9]$; for general $r\ge5$ the second class retains its minimum-degree hypothesis. Labels of the $r$ sinks may be chosen separately at each order; the limiting candidate is permutation invariant. In particular every hub degree divided by $n$ tends to $(1+\alpha)/r$. These conclusions allow $o(n)$ low-cardinality sources and unbounded sublinear hub imbalances. They do not assert finite disappearance of exceptional sources or a bounded difference of hub degrees.
+
+**Proof.** Theorem 6.1 gives the exact minimum at every sufficiently large order. For its balanced graph, $q_r\to1+\alpha$, $y_i=q_r/r+O(1/N)$, and the actual-edge error (6.3) together with (5.2) gives
+
+$$
+E_r^{\min}(n,\ell_n)=\frac{F_r(q_r)}N+O_r(n^{-3}).\tag{7.4}
+$$
+
+Since $n/N\to1$, this proves (7.1) and the equivalence of 1 and 2.
+
+Assume 1. The limit is bounded by $r^3/2$, because $F_r$ increases to $F_r(r)=r^3/2$. Thus $E(G_n)\le C_0/n$ eventually. The fixed-cost reduction of the sink-incidence volume, Theorem 3.1, applies to these actual graphs. It supplies their two-layer structure, a bounded number of sinks and the positive bound $D_i/n\ge1/(3C_0)$ for every actual sink. Capacity supplies $s\ge r$; no hub with a vanishing normalized degree has been suppressed. If $s>r$ along any infinite subsequence, (6.5) gives
+
+$$
+\liminf n\bigl(E(G_n)-E_r^{\min}(n,\ell_n)\bigr)\ge\widehat\gamma>0
+$$
+
+on that subsequence, contradicting 1. This exclusion uses (3.6) or (4.2) when $q_s>r$, so it remains valid at $\alpha=r-1$. Eventually $s=r$.
+
+For the actual $r$-sink array let $\Delta_n=J_r(x^{(n)})-F_r(q_r)\ge0$. Equations (6.3) and (7.4) imply
+
+$$
+\Delta_n=N\bigl(E(G_n)-E_r^{\min}(n,\ell_n)\bigr)+O_r(n^{-2})\longrightarrow0.
+$$
+
+Theorem 3.1 yields (7.2) and (7.3), including the explicit estimate (3.2). This proves 3 and 4. Conversely 3 implies 4 directly from (3.4), independently of a presumed small energy gap.
+
+Finally assume 4. Then every marginal tends to $(1+\alpha)/r>0$, so the bounded source degrees and positive linear hub degrees allow the actual-edge expansion. The functional $J_r$ is continuous there, and $x^*(q_r)\to x^*(1+\alpha)$, hence
+
+$$
+nE(G_n)=\frac nN J_r(x^{(n)})+O_r(n^{-2})\longrightarrow F_r(1+\alpha).
+$$
+
+This proves 2 and completes all equivalences.
+
+The endpoint capacity hypotheses cannot be replaced by their density limits: $\alpha$ alone does not specify the least feasible integer hub count. At $\alpha=r-2$ the candidate full mass tends to zero, but its exact count is still $c\ge r$ at every finite order, connecting the entire construction. At $\alpha=r-1$ the missing-one masses may vanish, and $b=0$ gives an actual complete bipartite graph. All proofs above allow these zero-mass limits. ∎
+

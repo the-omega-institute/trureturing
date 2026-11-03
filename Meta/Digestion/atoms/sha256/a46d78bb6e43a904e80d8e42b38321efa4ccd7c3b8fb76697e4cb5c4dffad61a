@@ -1,0 +1,45 @@
+## 94. Same-channel task error and full-state testing
+
+At the same actual limiting channel, keep the decoder permissions of
+§93 and distinguish two input tests. The no-reference full-state quantity
+of the owning terminal source is
+
+$$
+\mu_\infty=\min_{D\ {\rm CPTP}}
+ \max_{\rho\in\mathsf D(\mathbb C^3)}
+ \frac12\|D\Phi_0(\rho)-\rho\|_1=\frac23,
+\tag{94.1}
+$$
+
+whereas the stabilized half-diamond quantity, whose reference is
+untouched and available only in the input test, is
+
+$$
+\delta_\infty=\min_{D\ {\rm CPTP}}
+ \frac12\|D\Phi_0-\operatorname{id}\|_\diamond=\frac45.
+\tag{94.2}
+$$
+
+These are supplied by the exact no-reference and stabilized terminal
+results from the full-state source at revision
+88e708c6e499168a6bf79cabb6bd08d4e62fb6fb (§§105--111). The reference is never a decoder input.
+In particular $\mu_\infty\le\delta_\infty$ and the exact gap is
+$\delta_\infty-\mu_\infty=2/15$. No finite no-reference value for
+$n\ge2$ is thereby supplied; those finite minimax problems remain open
+where the owning source leaves them open.
+
+The phase-optimal map $D_*$ makes the distinction concrete. Since
+$\Phi_0(P_2)=(P_1+P_2)/2$ and $D_*$ sends the lower subspace to $P_1$,
+
+$$
+D_*\Phi_0(P_2)=P_1,\qquad
+\frac12\|P_1-P_2\|_1=1.
+\tag{94.3}
+$$
+
+Thus a single map can be optimal for every member of the restricted
+phase family while performing badly on a full-state probe. Equation
+(94.3) is only an explicit distinction for the supplied map; it is not a
+new full-state minimax theorem and does not duplicate the proof of
+(94.1) or (94.2).
+

@@ -8,6 +8,7 @@ url: https://dlmf.nist.gov/10.32.E9
 claim: "DLMF 10.32.9 gives the hyperbolic integral representation of the modified Bessel function K."
 strata_touched:
   - D5/S3/Analytic/GammaGammaNBU/Result
+  - D5/S3/Analytic/GauntBesselTail/Result
 license: citation-only
 triage: anchor
 ---

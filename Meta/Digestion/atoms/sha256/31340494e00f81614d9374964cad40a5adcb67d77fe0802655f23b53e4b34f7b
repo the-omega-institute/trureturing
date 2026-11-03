@@ -1,0 +1,20 @@
+## 22. Stationary-Q endpoint sensors and the deterministic handoff boundary
+
+This continuation concerns the stationary native $Q$ experiment already
+defined in [FIB long-time phase diffusion](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md),
+especially Definitions 55.1 and 62.1 and Theorems 63.1--67.1. Those sections
+supply continuous wrapped $v$ observation, magnitude and shifted-height
+recovery, actual-law overlap, and eventual $v$-only resolution. The results
+below add a fixed endpoint interface and a specific observation-selected
+interface. They do not replace the source or turn its stipulated law into an
+acquired preparation.
+
+Write **L** for that long-time phase-diffusion source and **G** for
+[FIB two-control Green stability](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md).
+The operative source versions are their originals at
+[`07368f7b05cc5b1f9f1393c7b24100c22e67aa0d`](https://github.com/the-omega-institute/trureturing/tree/07368f7b05cc5b1f9f1393c7b24100c22e67aa0d/docs/develop/theory):
+G Definition 25.1 and equations (25.2)--(25.5) fix the probabilities,
+periods, coefficients and clock; L Definitions 35.1, 55.1 and 62.1 fix
+the admissibility margins and the stationary experiment. The raw killed
+source of G is not the stationary $Q$ law used here.
+

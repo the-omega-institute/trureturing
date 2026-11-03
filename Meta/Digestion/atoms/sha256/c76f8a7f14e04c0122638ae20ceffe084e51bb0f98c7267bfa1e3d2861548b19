@@ -1,0 +1,84 @@
+**Theorem 126.3 (The original finite and full thresholds to first order; repo-derived).**
+With $R,G$ from (126.3), let
+
+$$
+E=\mathcal E(R,G)>0,\qquad
+\eta_* =\min\left\{1,\frac A{2R},\frac{1-A}{2R},\frac1{2G}\right\}>0.
+\tag{126.7}
+$$
+
+For every $0<\eta\le\eta_*$, both minima in (126.6) exist and are
+positive, and the four explicit error bounds are
+
+$$
+\begin{aligned}
+|\mu_f(\eta)-\eta m_f|&\le E\eta^2,&
+|\nu_f(\eta)-\eta n_f|&\le E\eta^2,\\
+|\mu_a(\eta)-\eta m_a|&\le E\eta^2,&
+|\nu_a(\eta)-\eta n_a|&\le E\eta^2.
+\end{aligned}
+\tag{126.8}
+$$
+
+Every compact $\mu_j$ minimiser, and every $\nu_j$ minimiser with
+retention set to zero, has the form
+
+$$
+h=-Ae+\eta z,\qquad \gamma=\eta g,\qquad
+\|z\|\le R,\quad |g|\le G.
+\tag{126.9}
+$$
+
+All these statements hold for each fixed source, $A$ and $f$ as
+quantified in Definition 125.1; no uniform assertion as $A\to0$ or
+$A\to1$ is made.
+
+*Proof.* The anchor and $h_\#(\eta)$ are in the unit ball on the
+stated interval. Continuity of $d_j$ and compactness, already established
+in Theorem 124.2, prove existence for $\nu_j$ as well as $\mu_j$.
+The same reflected trial as in (124.8) gives
+
+$$
+\alpha_{\mathfrak s}A\eta\le\mu_j(\eta)
+ \le\nu_j(\eta)\le d_j(0,h_\#(\eta);h_0(\eta))\le M\eta.
+\tag{126.10}
+$$
+
+In particular both minima are positive. For any minimiser of either
+problem, (122.4) gives $D_0\le M\eta/\underline c$.
+The actual branch localisation (124.11) then gives
+
+$$
+\|h-h_\#(\eta)\|
+ \le\frac{J_1M\eta}{A\underline c},\qquad
+|\gamma|\le\frac{M\eta}{\underline c}.
+\tag{126.11}
+$$
+
+Writing $h=-Ae+\eta z$ proves (126.9) for every minimiser.
+This step does not select a favourable subsequence or a favourable
+minimiser.
+
+Conversely, every coefficient minimiser in Theorem 126.1 lifts to
+an admissible reflection-side point on the entire interval (126.7):
+
+$$
+\|-Ae+\eta z\|\le A+\eta R\le\frac{1+A}2<1,\qquad
+\operatorname{Re}(e^\dagger(-Ae+\eta z))\le-A+\eta R\le-A/2,
+\qquad |\eta g|\le1/2.
+\tag{126.12}
+$$
+
+The anchor obeys $\|h_0(\eta)\|\le A+\eta\le(1+A)/2<1$ as well.
+For an unrestricted coefficient minimiser, (125.7) and (126.12)
+therefore give $\mu_j\le\eta m_j+E\eta^2$.
+For a nonlinear compact minimiser, (126.9) and (125.7) instead give
+$\mu_j\ge\eta\mathcal F_j(z,g)-E\eta^2\ge\eta m_j-E\eta^2$.
+These prove the two $\mu_j$ bounds. Applying the same two arguments
+with $g=0$ throughout proves the two $\nu_j$ bounds.
+The uniform estimate (125.11) applies to every actual history, so
+this proof of the full-law bounds uses its own supremum and does not
+assert that the finite decoder is an exact norming set for it.
+Every lift is realised by the one-completion construction of Theorem
+106.3, with its original emission and single forward return. $\square$
+

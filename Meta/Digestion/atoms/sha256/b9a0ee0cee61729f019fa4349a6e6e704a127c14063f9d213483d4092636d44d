@@ -1,0 +1,30 @@
+**Equation 5.10 (`eq:linkK`).**
+
+$$
+F_K(a,b,c,d)+F_P(a,-d,b,a-c+d)
+                  -F_P(-c,b,-a,-b-c+d)=0.
+$$
+
+In every abbreviated formula the identical substitution acts on
+$(r,s,t,u)$. All the maps in these triples are invertible. The actual
+occupied-edge evacuation above is what makes them valid for arbitrary
+leg populations on the central skeleton edge.
+
+For one illustrative flag check, in $C1:H$ the changed cycles are
+$(1^+,2^+,3^-)$ and $(1^-,6^+,5^+)$. The map in Section 8 sends
+them to $(3^-,5^+,1^-)$ and $(3^+,9^-,4^+)$. The first is positive
+at target vertex 2 and the second negative at target vertex 1. Taking
+all six source vertices gives the reversed-source set $\{2\}$.
+For $C7:H$ the cycle $(7^+,8^+,8^-)$ maps to
+$(8^-,9^+,9^-)$ at $B$'s loop vertex. Both loop flags are essential.
+As a cycle calculation,
+
+$$
+Q_C(a,b,c,d)=(a+b-d,-a-b,-a+d,a,b,d,-c+d,c,d).
+$$
+
+After deleting coordinate 1, the original chord coordinates of a
+pulled target cycle in $C1:H$ are $(z_2,z_4,-z_8,-z_6)$. Inserting the
+four target cycle columns yields $(-a+b,-a,-c,-d)$ as claimed. These
+examples exhibit separately the AS comparison and the cycle transport. $\square$
+

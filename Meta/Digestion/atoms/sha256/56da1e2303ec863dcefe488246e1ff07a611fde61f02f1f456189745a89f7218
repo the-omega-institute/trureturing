@@ -1,0 +1,66 @@
+**Definition 1.1 (the inherited full endpoint).** The source in this
+volume is the single original conservative diffusion of
+[the endpoint appendix, §112](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md)
+and [Appendix II, §§115–116](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md).
+Write these suppliers as [E] and [S], and write
+[Native free diffusion descent, §§7–10](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md)
+as [N]. Their objects, without a change of units or extension, are
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\quad e=(0,0,0,0),\quad
+(x,y,z,w)(x',y',z',w')=(x+x',y+y',z+z',w+w'+xy'),\\
+d\mu=dx\,dy\,dz\,dw,\quad
+X_1=\partial_x,\quad X_2=\partial_y+x\partial_w,\quad
+X_3=\partial_z,\quad L=-\sum_{j=1}^3X_j^2,\\
+L\Gamma=\delta_e,\quad \deg\Gamma=-3,\quad
+a,\eta>0,\quad g_c=16\sqrt{a\eta},\\
+S_{\min}=(aL-\eta\partial_w^2-g_c\Gamma)
+                   |_{C_c^\infty(G\setminus\{e\};\mathbb C)}.
+\end{gathered}
+\tag{1.1}
+$$
+
+The field $\Gamma$ is the original unit-source Green field, not an
+adjustable attraction. Let $h$ be its supplied coefficient-positive
+normalized zero state. The symbols $A,C$ mean exactly the maximal-domain
+coefficients of [E, (112.1)–(112.5)], including their normalization;
+$c_h=C(h)>0$ and $\rho=A(h)/C(h)$. In particular the Friedrichs
+operator $F$ has $D(F)=\{C=0\}$, the closed minimal domain has
+$A=C=0$, and the actual full operator is
+
+$$
+\begin{gathered}
+D(H)=\{u\in D(S_{\min}^*):A(u)=\rho C(u)\},\quad Hu=S_{\min}^*u,
+\quad H\ge0,\quad\ker H=\mathbb Ch,\quad H\ne F,\\
+m=h^2\mu,\quad m(G)=1,\quad J_hv=hv,\quad
+K=J_h^{-1}HJ_h,\quad T_t=e^{-tK}.
+\end{gathered}
+\tag{1.2}
+$$
+
+The entire complex form is retained. Explicitly, $\mathscr V_0$ is
+the closure of $C_c^\infty(G\setminus\{e\};\mathbb C)$ in the norm
+given by $\|v\|_{L^2(m)}^2+\mathscr E[v]$, and
+
+$$
+\begin{gathered}
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,\qquad
+\mathscr E[v,u]=\int_Gh^2\left(
+ a\sum_{j=1}^3\overline{X_jv}X_ju+
+ \eta\overline{\partial_wv}\partial_wu\right)d\mu,\\
+D(K)=\{v\in\mathscr V:hv\in D(S_{\min}^*),\ A(hv)=\rho C(hv)\}.
+\end{gathered}
+\tag{1.3}
+$$
+
+These are [S, (115.14)–(115.17)], with the derivatives on the constant
+summand equal to zero. The semigroup is selfadjoint and conservative
+in $L^2(m)$. Off $e$, $h$ is smooth and strictly positive. We use the
+legitimate source start $\mathbb P_e$ of [S, Theorem 116.4], and its
+original elapsed time $t$. A properly exceptional set $N$ is $m$-null
+and excludes $e$. No ordinary value $h(e)$ is assigned. Contact with
+$e$ is followed by conservative continuation with zero ordinary
+residence time, rather than killing or holding. Hilbert pairings are
+antilinear in the first argument.
+

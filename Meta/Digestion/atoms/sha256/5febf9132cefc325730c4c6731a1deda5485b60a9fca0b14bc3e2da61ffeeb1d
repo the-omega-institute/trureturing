@@ -1,0 +1,22 @@
+**Proposition 145.2 (The finite certificate's remaining norm boundary).**
+Theorems 143.2–145.1 supply the strict gap and physical endpoint for
+$d_f$ with its literal 117-row maximum. They supply no strict gap
+$\delta_a$, no strict nonlinear inequality $\nu_a>\mu_a$ and no
+determined endpoint type for the separate full-history norm $d_a$.
+
+*Proof.* The lower witness (143.3) uses actual histories and therefore
+also gives $n_a\ge163/4000$. The upper certificate (143.10)–(143.12)
+contains exactly the histories of length at most two. It has no
+inequality for another history and gives no bound $m_a\le813/20000$.
+The already valid inequalities $m_f\le m_a$ and $n_f\le n_a$ do not
+bound $n_a-m_a$ from below by $n_f-m_f$. Likewise (144.2) compares
+norms, not their respective nonlinear optimum differences or their
+endpoint types. Thus no identification of the two norms is involved.
+The unresolved additional requirement is an original all-history
+upper certificate paired with an appropriate lower witness, or a
+separate exact nonlinear argument for the full-history minima.
+The finite nonlinear conclusion is conditional on the original
+return premises VI Assumption 106.2. It asserts neither an explicit
+nonlinear argmin or exact optimum value nor global originality or
+a resolution of an external named open problem. $\square$
+

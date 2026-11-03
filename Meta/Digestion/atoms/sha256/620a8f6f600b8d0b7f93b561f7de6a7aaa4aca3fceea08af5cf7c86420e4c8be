@@ -1,0 +1,51 @@
+**Theorem 22.6 (classification of fixed $D$ endpoint sensors).** Fix
+$t>0$ and a countable-output Borel sensor $q$ as in (22.3). On every paired
+nonzero magnitude $r$, the boundary record
+
+$$
+\mathsf O_{q,t}=\bigl((e^{iv_a})_{0\leq a\leq t},
+q((D_t-D_0)\bmod2\pi)\bigr)
+\tag{22.12}
+$$
+
+admits one parameter-independent Borel decoder for the signed calibration
+and the full lifted original prefix if and only if
+
+$$
+\lambda_{\mathbb T}\{z:q(z)=q(-z)\}=0.
+\tag{22.13}
+$$
+
+The assertion is parameterwise almost sure for every fixed $\kappa$; its
+null set may depend on $t$ and $\kappa$. The zero branch $\kappa=0$ is already
+resolved by the inherited magnitude theorem and needs no endpoint reply.
+
+**Proof (sufficiency).** From the $v$ prefix recover $r,U$ by Theorem 63.1.
+When the admissible candidate set is a singleton, choose it. On a paired
+fiber, compute $\Xi_t$ from (22.7) and the two candidate replies
+$q(\Xi_t)$ and $q(-\Xi_t)$. By (22.9), the wrapped $\Xi_t$ has a
+strictly positive density on $\mathbb T$. Condition (22.13) therefore makes
+the two candidate replies unequal almost surely. Comparing the observed
+reply selects $\eta$, and then $\kappa=\eta r$ and
+$K_{[0,t]}=U_{[0,t]}+\alpha_\kappa$ are recovered.
+
+**Proof (necessity).** Suppose $C=\{z:q(z)=q(-z)\}$ has positive Haar
+measure. Conditional on any common $U$ path, (22.9) gives positive
+probability that $\Xi_t\bmod2\pi\in C$. Restrict (22.11) to this event in
+$E_+\cap E_-$ and use its positive common submeasure. On that submeasure
+the complete $v$ records and endpoint replies agree literally for the two
+signs, while $\kappa$ and every height coordinate differ. More explicitly,
+weight the common reference by
+$\mathbf1_{E_+\cap E_-}\mathbf1_{\{\Xi_t\bmod2\pi\in C\}}
+\min(f_+,f_-)$ to obtain a finite measure of strictly positive mass.
+It is dominated by each actual sign law on the common $(U,V)$ space.
+The two observation maps coincide there. Correctness under each actual law
+would force one common observation to receive both distinct sign labels
+almost everywhere under this positive measure, a contradiction. Equivalently,
+normalize the two restrictions to this collision set: they are mutually
+absolutely continuous probability laws and cannot have a mass-one versus
+mass-zero separating event. This is the null-set principle of
+`equivalent_probability_laws_exclude_perfect_separator` and its posterior
+interior companion; no equivalence of the unrestricted sign laws is needed.
+Hence (22.13) is necessary. $\square$
+

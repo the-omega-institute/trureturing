@@ -1,0 +1,16 @@
+**Proposition 4.4 (Universal depth-two correct-mass bound).** Every tree
+in (2.3) satisfies
+
+$$
+\sum_{x,y}m(C_{xy})\le S_2,
+\qquad S_2=\frac a2+a\eta+a^2\eta.
+\tag{4.10}
+$$
+
+Proof. Lemma 4.1 bounds $B_1$ by $a\eta$. Lemmas 4.2 and 4.3
+bound $B_0$ by $a/2+a^2\eta$ for either possible parity of $t_0$.
+Their sum gives (4.10). The second addresses on the two first-reply
+branches were allowed to differ. Every integer address, both first
+parities, both orientations of adjacency, repeated edges, disjoint
+edges and every target incidence have been included. $\square$
+

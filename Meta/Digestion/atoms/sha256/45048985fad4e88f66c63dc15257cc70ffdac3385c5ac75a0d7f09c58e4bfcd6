@@ -1,0 +1,29 @@
+**推论 14.2（闭合的全点对电阻和目标）。** 令
+$K=A^{-1}$、$v=Ke$、$\ell=e^{\mathsf T}Ke$、
+$\tau=h/(1+h\ell)$。对任意 $h>0$，
+
+$$
+\begin{aligned}
+K_h&=K-\tau vv^{\mathsf T},\\
+R_h&=R_P-n\tau\|v\|^2,\qquad
+R_{\mathrm{eff},h}(a,b)=\ell/(1+h\ell).
+\end{aligned} \tag{14.3}
+$$
+
+若 (14.1) 成立，则
+
+$$
+\lambda_2(L_h)R_h
+=\lambda_3\left[R_P-
+ n\,\frac{h}{1+h\ell}\sum_{j=2}^n\frac{\gamma_j^2}{\lambda_j^2}\right]. \tag{14.4}
+$$
+
+证明。直接相乘验证秩一逆公式给出第一式，
+取迹并用 $R=n\operatorname{tr}_H K$ 得到第二式；
+取 $e$ 的二次型得到端点电阻式。
+谱分解给出 $\|Ke\|^2=\sum_j\gamma_j^2/\lambda_j^2$，
+再由定理 14.1 得 (14.4)。
+逆与全点对迹的经典输入仍是
+[Ghosh–Boyd–Saberi，DOI:10.1137/050645452](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf)
+§§2.4–2.5 的电阻公式。∎
+

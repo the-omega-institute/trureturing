@@ -1,0 +1,6 @@
+Here is one update $U$ on this state space. Given a state and a name $a$, use the last vertex of $P$ and the known deterministic graph to find its legal edge with that name. This is a computation from the stored vertex and $a$, not acquisition of a current source endpoint or edge identifier. If no edge exists, leave the state unchanged; this defines a total update without adding a state. For an existing edge there are three cases:
+
+1. An internal cyclic edge not completing the lap from the stored entry is appended to $P$, leaving every residue unchanged.
+2. An internal edge completing that lap erases the current proper-arc suffix and returns the reduced path to that entry. Increment the residue for this component by one modulo $q$, leaving the earlier residues unchanged. On a self-loop the suffix is empty and the same rule increments the residue.
+3. An edge leaving the current SCC is appended to $P$, preserving all old residues. If the new component is cyclic, introduce its residue at zero.
+

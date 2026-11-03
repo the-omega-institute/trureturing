@@ -1,0 +1,4 @@
+**Corollary 47.3 (the exact failure boundary).** For each fixed acquired source, a pulse-word inverse valid at all retained finite lengths from current native state and the earned law exists exactly when $H<a$. At $H\ge a$, current Boundary and predictive Memory still support exact future prediction as in Theorem 40.2, while some earlier pulse words remain indistinguishable unless past information is retained. This obstruction neither applies to an archive that distinguishes them nor contradicts the original passive phase inverse.
+
+Proof. The positive direction is Theorem 45.2 with finite decoding, and the negative direction is Theorem 47.1. Future prediction uses the already supplied current-state invariant. Definition 39.1's passive domain has no Add pulses, and its Time is the acquired passive root transcript rather than the controlled input word of Definition 44.1. Proposition 47.2 accounts for the archive alternative explicitly. $\square$
+

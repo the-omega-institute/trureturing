@@ -340,4 +340,120 @@ def sqrtAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms sqrtFamily
 
 end
+
+noncomputable section
+
+abbrev logSplitArena : Arena where
+  signature := signature
+  Law R := ∀ {U : ℕ}, 0 < U →
+    R.readout () () U = (∑ p ∈ U.primeFactors, Real.log p) +
+      ∑ p ∈ U.primeFactors, ((U.factorization p - 1 : ℕ) : ℝ) * Real.log p
+
+private theorem log_split_rejected : ¬ logSplitArena.Law growthRejected := by
+  intro h
+  have hh := h (U := 2) (by norm_num)
+  have ha := log_factorization_split (U := 2) (by norm_num)
+  change 0 = _ at hh
+  have hlog := Real.log_pos (by norm_num : (1 : ℝ) < 2)
+  norm_num only [Nat.cast_ofNat] at ha
+  linarith only [ha, hh, hlog]
+
+def logSplitFamily : Registration logSplitArena (type_of% @log_factorization_split) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨log_factorization_split, growthRejected, log_split_rejected⟩
+  sensitivity := ⟨fun i => ⟨growthRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, log_split_rejected⟩,
+    fun i => nomatch i⟩
+  dependence := dependence
+
+abbrev massMonoArena : Arena where
+  signature := signature
+  Law R := ∀ {A B : ℕ}, 0 < A → 0 < B → A ∣ B →
+    R.readout () () A ≤
+      ∑ p ∈ B.primeFactors, ((B.factorization p - 1 : ℕ) : ℝ) * Real.log p
+
+def massMonoRejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private theorem mass_mono_rejected : ¬ massMonoArena.Law massMonoRejected := by
+  intro h
+  have hh := h (A := 1) (B := 1) (by norm_num) (by norm_num) (by norm_num)
+  norm_num [massMonoRejected, realize] at hh
+
+def massMonoFamily : Registration massMonoArena (type_of% @higher_layer_mass_mono) where
+  actual := higherActual
+  bridge := Iff.rfl
+  variation := ⟨higher_layer_mass_mono, massMonoRejected, mass_mono_rejected⟩
+  sensitivity := ⟨fun i => ⟨massMonoRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, mass_mono_rejected⟩,
+    fun i => nomatch i⟩
+  dependence := higher_dependence
+
+def logSplitAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@log_factorization_split) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.EulerLayerInventoryGrowth.log_factorization_split.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.EulerLayerInventoryGrowth.logSplitFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨logSplitArena⟩
+  objectArena := .source ⟨logSplitArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source logSplitArena ⟨logSplitFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.EulerLayerInventoryGrowth
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def massMonoAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@higher_layer_mass_mono) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.EulerLayerInventoryGrowth.higher_layer_mass_mono.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.EulerLayerInventoryGrowth.massMonoFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨massMonoArena⟩
+  objectArena := .source ⟨massMonoArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source massMonoArena ⟨massMonoFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature higherActual.readout higherActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.EulerLayerInventoryGrowth
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end
+
 end Reg.D5.S3.Arith.Robin.EulerLayerInventoryGrowth

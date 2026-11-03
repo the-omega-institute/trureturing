@@ -1,0 +1,37 @@
+# Uniform finite-moment cancellation of prefix correlations
+
+## Abstract
+
+Vanishing sufficiently many atomic moments uniformly suppresses every fixed continuously weighted prefix correlation relative to its energy.
+
+Let D>0, w:R to C be continuous on [-D,D], and epsilon>0. For any finite type I, any real nodes x(i) in [0,D] and complex coefficients a(i), put F(v)=sum_i (if x(i)<=v then a(i) else 0), E=integral over R of norm(F(v)) squared, and C(s)=integral over R of conjugate(F(v+s)) F(v). All integrals use Lebesgue measure. The continuous weight is required only on the integration window.
+
+**Theorem 1.1 (One moment order for all finite atomic families).**
+
+Lean statement: `D5/S3/Analytic/Interpolation/FiniteMomentCorrelation.finite_moment_correlation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/FiniteMomentCorrelation.finite_moment_correlation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every D>0, continuous complex w on [-D,D] and epsilon>0, there exists a natural N>=1 such that, for every finite index type I in an arbitrary universe, all x:I to R in [0,D] and all a:I to C satisfying sum_i a(i) x(i)^r=0 for every natural r<N, norm(integral from -D to D of w(s) C(s))<=epsilon E. The existential N precedes the quantification over I, its Fintype instance, the nodes and the coefficients. Empty types, repeated or unsorted nodes, overlapping positive and negative masses, zero coefficients and E=0 are all included. There is no separation, cardinality or coefficient-norm bound.
+
+The public shifted_hinge_prefix_energy identity in AtomicPrefixEnergy gives C(s)=-sum_i,j conjugate(a(i)) a(j) max(x(i)-x(j)-s,0) and norm(C(s))<=E when the zeroth moment vanishes. Its finite hinge expression also gives continuity of C. These are the actual translated prefix correlations, not an independent surrogate kernel.
+
+For a complex polynomial p, applying exists_polynomial_primitive from Analytic.Entire.ExponentialPolynomial twice constructs Q with Q''=p. For d in [-D,D], the part of the hinge integral above d is zero. Below d, an explicit primitive of p(s)(d-s) is (d-s)Q'(s)+Q(s). Consequently integral from -D to D of p(s) max(d-s,0)=Q(d)-Q(-D)-(d+D)Q'(-D). Define R(X)=Q(X)-Q(-D)-(X+D)Q'(-D). No affine boundary term is discarded.
+
+For fixed i the polynomial R(x(i)-X) has degree at most degree(R), including when R is zero or constant. Taking N=natDegree(R)+1 makes sum_j a(j) R(x(i)-x(j)) vanish by the original moments. Multiplication by conjugate(a(i)) and the finite i sum preserve zero. Substituting the public hinge identity and passing only finite sums through integrals gives integral p(s) C(s)=0. The orientation is x(i)-x(j): the j coefficients are not conjugated, so these are exactly the supplied moments.
+
+Choose delta=epsilon/(2D). Apply the pinned Mathlib exists_polynomial_near_of_continuousOn separately to Re(w) and Im(w), with error delta/2 in each. Mapping the real coefficient polynomials into C and combining them with the imaginary unit gives norm(p(s)-w(s))<delta on [-D,D]. Select the resulting R and N before selecting any atomic family. Then norm(integral w C)=norm(integral (w-p)C)<=2D delta E=epsilon E. ContinuousOn integrability on the compact window justifies the subtraction; the finite interval volume is exactly 2D. There is no division by E and no nondegeneracy condition.
+
+An exact exponential application takes w(s)=exp(-lambda abs(s)) and bridge tolerance epsilon/lambda squared, for lambda>0. Combining the bridge with exponential_prefix_energy gives norm(Q_lambda-2 lambda E)<=epsilon E uniformly over all families with the selected moment order. Choosing epsilon=lambda yields Re(Q_lambda)>=lambda E. For finitely many lambdas, the maximum of their moment orders suffices; higher moments imply every smaller moment constraint.
+
+This bridge supplies the finite-kernel step of the alternative route toward AURIC prime-power difference coupling, finite-codimension positivity and the root-scale Robin budget, Section 5, Theorem 2. For the true series P(t)=sum over k>=1 of c_k exp(-lambda_k abs(t)), c_k=1/(2k(2k+1)), lambda_k=2k+1/2, the coefficients are summable while sum c_k lambda_k diverges. The planned next inference uses finitely many improved exponential lower bounds and nonnegative remaining exponential energies, then subtracts the finite smooth/ramp curvature cost M_D E. The series-to-quadratic-form and actual-perturbation identities still need their own proofs. This theorem concerns neither the full actual kernel nor RH, and supplies no sublinear bound m(D)=o(D).
+
+## References
+
+- Truth anchor: `D5/S3/Analytic/Interpolation/FiniteMomentCorrelation.finite_moment_correlation`
+- Dependency: [D5/S3/Analytic/Entire/ExponentialPolynomial](../Entire/ExponentialPolynomial.md)
+- Dependency: [D5/S3/Analytic/Interpolation/AtomicPrefixEnergy](AtomicPrefixEnergy.md)

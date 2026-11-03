@@ -179,18 +179,18 @@ theorem finite_cycle_is_silent {m : Nat} {S : System m}
   intro live
   exact (Nat.lt_irrefl _) (strict live)
 
-private def LeafAt (X : CompletionTree) (p : Address) (b : Bool) : Prop :=
+def LeafAt (X : CompletionTree) (p : Address) (b : Bool) : Prop :=
   completionReadout p X = if b then Reply.alpha else Reply.beta
 
-private theorem leafAt_leaf (c : Bool) (p : Address) (b : Bool) :
+theorem leafAt_leaf (c : Bool) (p : Address) (b : Bool) :
     LeafAt (leaf c) p b ↔ p = [] ∧ c = b := by
   cases p <;> cases c <;> cases b <;> simp [LeafAt, completionReadout, leaf]
 
-private theorem leafAt_node_nil (l r : CompletionTree) (b : Bool) :
+theorem leafAt_node_nil (l r : CompletionTree) (b : Bool) :
     ¬ LeafAt (node l r) [] b := by
   cases b <;> simp [LeafAt, completionReadout, node]
 
-private theorem leafAt_node_cons (l r : CompletionTree) (c : Bool) (p : Address) (b : Bool) :
+theorem leafAt_node_cons (l r : CompletionTree) (c : Bool) (p : Address) (b : Bool) :
     LeafAt (node l r) (c :: p) b ↔ LeafAt (if c then r else l) p b := by
   cases c <;> rfl
 
@@ -213,7 +213,7 @@ private theorem leafAt_root (X : CompletionTree) (b : Bool) :
       have tag := congrArg (fun T => (PFunctor.M.dest T).1) h
       simp [leaf, node] at tag
 
-private def LeafBelow (X Y : CompletionTree) : Prop :=
+def LeafBelow (X Y : CompletionTree) : Prop :=
   ∀ p b, LeafAt X p b → LeafAt Y p b
 
 private theorem leafBelow_refl (X : CompletionTree) : LeafBelow X X := fun _ _ h => h
@@ -222,11 +222,11 @@ private theorem leafBelow_trans {X Y Z : CompletionTree}
     (h : LeafBelow X Y) (k : LeafBelow Y Z) : LeafBelow X Z :=
   fun p b hp => k p b (h p b hp)
 
-private theorem leafBelow_leaf {b : Bool} {X : CompletionTree}
+theorem leafBelow_leaf {b : Bool} {X : CompletionTree}
     (h : LeafBelow (leaf b) X) : X = leaf b :=
   (leafAt_root X b).mp (h [] b ((leafAt_leaf b [] b).mpr ⟨rfl, rfl⟩))
 
-private theorem leafBelow_children {l r s t : CompletionTree}
+theorem leafBelow_children {l r s t : CompletionTree}
     (h : LeafBelow (node l r) (node s t)) (b : Bool) :
     LeafBelow (if b then r else l) (if b then t else s) := by
   intro p c hp
@@ -254,13 +254,13 @@ private theorem leafBelow_ext {X Y : CompletionTree}
       | node_case s t =>
         exact ih (leafBelow_children h b) (leafBelow_children k b)
 
-private theorem omega_no_leaf (p : Address) (b : Bool) : ¬ LeafAt Omega p b := by
+theorem omega_no_leaf (p : Address) (b : Bool) : ¬ LeafAt Omega p b := by
   have full : Full (p.length + 1) Omega := by
     simpa only [iterate_omega] using iterate_full (p.length + 1) Omega
   have branch := full p (by omega)
   cases b <;> simp [LeafAt, branch]
 
-private theorem omega_below (X : CompletionTree) : LeafBelow Omega X :=
+theorem omega_below (X : CompletionTree) : LeafBelow Omega X :=
   fun p b h => (omega_no_leaf p b h).elim
 
 private def child (b : Bool) (X : CompletionTree) : CompletionTree :=
@@ -271,7 +271,7 @@ private def child (b : Bool) (X : CompletionTree) : CompletionTree :=
 private theorem child_node (b : Bool) (l r : CompletionTree) :
     child b (node l r) = if b then r else l := by cases b <;> rfl
 
-private def Increasing (C : Nat → CompletionTree) : Prop :=
+def Increasing (C : Nat → CompletionTree) : Prop :=
   ∀ n k, n ≤ k → LeafBelow (C n) (C k)
 
 private noncomputable def nativeLimitStep (C : Nat → CompletionTree) :
@@ -280,7 +280,7 @@ private noncomputable def nativeLimitStep (C : Nat → CompletionTree) :
   exact if h : ∃ b n, C n = leaf b then ⟨.inl (Classical.choose h), Empty.elim⟩
     else ⟨.inr (), fun b n => child b (C n)⟩
 
-private noncomputable def nativeLimit (C : Nat → CompletionTree) : CompletionTree :=
+noncomputable def nativeLimit (C : Nat → CompletionTree) : CompletionTree :=
   PFunctor.M.corec nativeLimitStep C
 
 private theorem chain_leaf_bound {C : Nat → CompletionTree} (inc : Increasing C)
@@ -347,7 +347,7 @@ private theorem child_increasing {C : Nat → CompletionTree} (inc : Increasing 
       rw [en, ek, child_node, child_node]
       exact leafBelow_children (by simpa only [en, ek] using inc n k h) b
 
-private theorem nativeLimit_leaves (C : Nat → CompletionTree) (inc : Increasing C)
+theorem nativeLimit_leaves (C : Nat → CompletionTree) (inc : Increasing C)
     (p : Address) (b : Bool) :
     LeafAt (nativeLimit C) p b ↔ ∃ n, LeafAt (C n) p b := by
   classical
@@ -443,7 +443,7 @@ private theorem iterate_leafBelow (a : Nat) {X Y : CompletionTree} (h : LeafBelo
     rw [Function.iterate_succ_apply', Function.iterate_succ_apply']
     exact rho_leafBelow ih
 
-private def LeafLimit (C : Nat → CompletionTree) (X : CompletionTree) : Prop :=
+def LeafLimit (C : Nat → CompletionTree) (X : CompletionTree) : Prop :=
   ∀ p b, LeafAt X p b ↔ ∃ n, LeafAt (C n) p b
 
 private theorem rho_leafLimit {C : Nat → CompletionTree} {X : CompletionTree}
@@ -487,7 +487,7 @@ private theorem node_leafLimit {C D : Nat → CompletionTree} {X Y : CompletionT
     · simpa only [leafAt_node_cons, Bool.false_eq_true, ite_false] using hx p b
     · simpa only [leafAt_node_cons, ite_true] using hy p b
 
-private theorem value_leafBelow {m : Nat} {v w : Fin m → CompletionTree}
+theorem value_leafBelow {m : Nat} {v w : Fin m → CompletionTree}
     (h : ∀ i, LeafBelow (v i) (w i)) (E : Expr m) :
     LeafBelow (value v E) (value w E) := by
   induction E with
@@ -496,7 +496,7 @@ private theorem value_leafBelow {m : Nat} {v w : Fin m → CompletionTree}
   | var a i => exact iterate_leafBelow a (h i)
   | pair A B ihA ihB => exact node_leafBelow ihA ihB
 
-private theorem value_leafLimit {m : Nat} {C : Nat → Fin m → CompletionTree}
+theorem value_leafLimit {m : Nat} {C : Nat → Fin m → CompletionTree}
     {v : Fin m → CompletionTree} (h : ∀ i, LeafLimit (fun n => C n i) (v i))
     (E : Expr m) : LeafLimit (fun n => value (C n) E) (value v E) := by
   induction E with
@@ -505,7 +505,7 @@ private theorem value_leafLimit {m : Nat} {C : Nat → Fin m → CompletionTree}
   | var a i => exact iterate_leafLimit a (h i)
   | pair A B ihA ihB => exact node_leafLimit ihA ihB
 
-private theorem leafLimit_unique {C : Nat → CompletionTree} {X Y : CompletionTree}
+theorem leafLimit_unique {C : Nat → CompletionTree} {X Y : CompletionTree}
     (hx : LeafLimit C X) (hy : LeafLimit C Y) : X = Y :=
   leafBelow_ext (fun p b hp => (hy p b).mpr ((hx p b).mp hp))
     (fun p b hp => (hx p b).mpr ((hy p b).mp hp))
@@ -521,7 +521,7 @@ def BoundaryValid {m : Nat} (S : System m) (B : Fin m → Prop)
     (v : Fin m → CompletionTree) : Prop :=
   ∀ i E, B i → S i = some E → v i = value v E
 
-private noncomputable def extensionStep {m : Nat} (S : System m)
+noncomputable def extensionStep {m : Nat} (S : System m)
     (B : Fin m → Prop) (v : Fin m → CompletionTree) (w : Fin m → CompletionTree) :
     Fin m → CompletionTree := by
   classical
@@ -542,7 +542,7 @@ private theorem extensionStep_mono {m : Nat} (S : System m) (B : Fin m → Prop)
     | none => exact leafBelow_refl _
     | some E => exact value_leafBelow h E
 
-private theorem extensionStep_limit {m : Nat} (S : System m) (B : Fin m → Prop)
+theorem extensionStep_limit {m : Nat} (S : System m) (B : Fin m → Prop)
     (v : Fin m → CompletionTree) {C : Nat → Fin m → CompletionTree}
     {w : Fin m → CompletionTree} (h : ∀ i, LeafLimit (fun n => C n i) (w i)) :
     ∀ i, LeafLimit (fun n => extensionStep S B v (C n) i)
@@ -561,12 +561,12 @@ private theorem extensionStep_limit {m : Nat} (S : System m) (B : Fin m → Prop
       exact ⟨fun hp => ⟨0, hp⟩, fun ⟨_, hp⟩ => hp⟩
     | some E => exact value_leafLimit h E
 
-private noncomputable def extensionIterate {m : Nat} (S : System m)
+noncomputable def extensionIterate {m : Nat} (S : System m)
     (B : Fin m → Prop) (v : Fin m → CompletionTree) : Nat → Fin m → CompletionTree
   | 0 => fun _ => Omega
   | n+1 => extensionStep S B v (extensionIterate S B v n)
 
-private theorem extensionIterate_mono {m : Nat} (S : System m)
+theorem extensionIterate_mono {m : Nat} (S : System m)
     (B : Fin m → Prop) (v : Fin m → CompletionTree) :
     ∀ n k, n ≤ k → ∀ i, LeafBelow (extensionIterate S B v n i)
       (extensionIterate S B v k i) := by

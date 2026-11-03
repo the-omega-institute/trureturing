@@ -1,0 +1,8 @@
+**Definition 32.1 (sampled domain and common callable context).** Fix the origin and retained earned context of Definition 30.1. Consider completed Sample cuts, with all retained updates finished and no pending frame. Write $v=w0^I$ for the actual binary chain at such a cut, including the zero steps actually executed inside that last Sample. Define four numerical expressions by their different source meanings:
+
+| Expression | Content at this sampled cut |
+| --- | --- |
+| Space | The unrooted unit material tree, complete canonical linear leaf order, and actual present field $x_v$, modulo order-preserving graph isomorphism |
+| Time | The actual labelled successful original-$P/S$ causal birth/lifecycle order $E(u)$ and the actual binary input chain $v$ since the new origin |
+| Boundary | The canonical terminal impulse-onset table of the actual unit law, with diagonal zero, and the literal trailing window $(y_0,\ldots,y_I)$ received by the last Sample |
+| Memory | The retained current recursive original term, full current predictive vector $x_v$, and canonical ordinal-to-material-terminal table |

@@ -1,0 +1,32 @@
+**Theorem 24.2 (exact count and endpoint-conditioned extra information).**
+For all such sources, seeds and $t\ge0$,
+
+$$
+ |H_c(t)|=F_{t+1},\qquad
+ M_{c,t}\ge\left\lceil\frac{F_{t+1}}{|J_{c,t}|}\right\rceil
+          \ge\left\lceil\frac{F_{t+1}}{K_s}\right\rceil.
+\tag{PCR.62}
+$$
+
+If $w\mapsto(\pi_{c,t}(w),\lambda(w))$ is injective, then
+$|\operatorname{range}(\lambda)|\ge M_{c,t}$. In particular a uniform
+fixed-length binary supplement needs at least
+$b^{\rm cond}_{c,t}=\lceil\log_2 M_{c,t}\rceil$ bits. This bound is
+attainable set theoretically by numbering each endpoint fiber; it does
+not assert a cheap fiber computation or an online update interface.
+
+Proof. At every node exactly one named child has delay one and the other
+has delay two, regardless of the consumed bit. For any actual core-only
+node let $h(t)$ count its descendants at exact relative normalization
+time $t$, and set $h(u)=0$ for $u<0$. At zero only the empty suffix is
+possible. Induction on $t$ gives the same count at every node, since
+partition by the first edge gives $h(t)=h(t-1)+h(t-2)$ for $t\ge1$,
+with $h(0)=1$. Hence $h(t)=F_{t+1}$, including $h(1)=1$.
+Positive delays also make each layer prefix-incomparable. It is nonempty
+at every nonnegative integer time. Its endpoint fibers partition it;
+the largest has at least the ceiling of the average size. Injectivity
+requires different supplements within each fiber. Fiber ranks reuse the
+same alphabet of size $M_{c,t}$, proving attainability of that alphabet
+size. Constants have one endpoint, but have $F_{t+1}$ addresses, rather
+than one address at every time. At $t=0,1$ this count is one. $\square$
+

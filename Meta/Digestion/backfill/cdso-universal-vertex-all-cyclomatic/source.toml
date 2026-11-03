@@ -1,0 +1,5 @@
+source_id = "cdso-universal-vertex-all-cyclomatic"
+path = "docs/develop/theory/CDSO_UNIVERSAL_VERTEX_ALL_CYCLOMATIC.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,32 @@
+**定义 1.1（spider and ordinary power）。** Fix integers $m\ge 2$ and $k\ge 1$, and choose integers
+
+$$
+\ell_1,\ldots,\ell_m\ge k+1.
+$$
+
+Let
+
+$$
+V=\{c\}\,\cup\,\{(i,d):1\le i\le m,\ 1\le d\le \ell_i\},
+\qquad
+N=|V|=1+\sum_{i=1}^m\ell_i.
+$$
+
+The spider $T$ has center $c$ and the $i$th leg $(i,1),\ldots,(i,\ell_i)$, with consecutive vertices joined. Its distance is
+
+$$
+\delta(c,(i,d))=d,
+$$
+
+and, for leg vertices,
+
+$$
+\delta((i,d),(j,e))=
+\begin{cases}
+|d-e|,&i=j,\\
+d+e,&i\ne j.
+\end{cases}
+$$
+
+The ordinary distance-at-most-$k$ power $G=T^k$ has the same vertex set and has an edge between distinct vertices precisely when their $T$-distance is at most $k$.
+

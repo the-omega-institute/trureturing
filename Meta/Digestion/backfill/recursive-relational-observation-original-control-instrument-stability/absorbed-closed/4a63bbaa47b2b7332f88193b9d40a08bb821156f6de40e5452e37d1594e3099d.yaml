@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4a63bbaa47b2b7332f88193b9d40a08bb821156f6de40e5452e37d1594e3099d
+  normalized_sha256: sha256:4a63bbaa47b2b7332f88193b9d40a08bb821156f6de40e5452e37d1594e3099d
+cas_ref: sha256:4a63bbaa47b2b7332f88193b9d40a08bb821156f6de40e5452e37d1594e3099d
+coverage_gids:
+  - gid: D5/S3/Quantum/Fibers/OriginalControlSurvivalInstability.uniform_height_survival_discontinuity
+    target_statement_id: sha256:c6a259ed3fd85fbff4be3c6fc53abbe43fc1421501e34d6b17aa248121b41d75
+receipts:
+  unresolved_subitems: []

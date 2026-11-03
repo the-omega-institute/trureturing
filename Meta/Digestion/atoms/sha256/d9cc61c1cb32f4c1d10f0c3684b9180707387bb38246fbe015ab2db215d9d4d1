@@ -1,0 +1,87 @@
+## 1. The full domain and the critical original-clock problem
+
+Fix a declared maximum degree $d\ge1$ and put $m=d+1$. A world is a triple $(P,g,\delta)$ in which $P$ is a strictly entrywise positive real $2\times2$ matrix of rank one and trace one, and
+
+$$
+g(t)=\sum_{j=0}^{m-1}\beta_jt^j,\qquad
+\beta\in\mathbb R^m\setminus\{0\},\qquad \delta\in\mathbb R.
+\tag{1.1}
+$$
+
+The entire declared coefficient vector is the target of gain extraction. Every lower actual degree, every coefficient sign, sampled and repeated gain roots, constant nonzero gains, and every real constant drift remain in the domain. Let
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+z_i=g(i)\operatorname{tr}(A_iP)+\delta,
+\tag{1.2}
+$$
+
+where each individual chronological action $E_i$ is $M$ or $J$ and has its immediate read. The initial read counts. Thus $N$ reads have original clocks $0,\ldots,N-1$. There is one trajectory, with no reset, copy, skipped read, unread compound action, extra sensor, inverse acquisition action, empty-action read, or clock renumbering.
+
+For a terminal word $w$, a fixed linear full-gain-ray output is
+
+$$
+C_w(z_0,\ldots,z_{N-1})^{\mathsf T}=s\beta,\qquad s\ne0.
+\tag{1.3}
+$$
+
+Either sign of $s$ is permitted. A countable palette contains at most countably many preassigned real matrices per terminal word; its history-dependent selector need have no regularity. Matrix entries that depend on observations are outside this mechanism. A preassigned acquisition word is independent of observations. Adaptive gain extraction and recovery of the complete normalized triple $(P,g,\delta)$ are separate problems.
+
+The critical mixed budget is $N=2m+1$. This volume concerns the positive $JJ$ criterion at that budget, uniformly for
+
+$$
+m\ge5,\qquad K=2m-2,\qquad
+a\in\{0,\ldots,K\},\qquad \rho>0,
+\tag{1.4}
+$$
+
+and the chronological word
+
+$$
+w_a=M^aJJM^{K-a}.
+\tag{1.5}
+$$
+
+Put $r=a+1$ and $T=\{0,\ldots,2m\}\setminus\{r\}$. Directly from $J^2=I$,
+
+$$
+A_r=JM^a,\qquad
+A_i=M^{k_i}\quad(i\in T),\qquad
+k_i=\begin{cases}i,&i\le a,\\i-2,&i\ge a+2.\end{cases}
+\tag{1.6}
+$$
+
+The outlier at clock $r$ is acquired. Its eventual output coefficient may be zero. The matrix $M^a$ is acquired twice, at the distinct original clocks $a$ and $a+2$. In retained-clock order the exponent list is
+
+$$
+0,1,\ldots,a,\ a,a+1,\ldots,K.
+\tag{1.7}
+$$
+
+Let $F_{-1}=1,F_0=0,F_1=1$ and $F_{k+2}=F_{k+1}+F_k$. Since $M^2=M+I$, induction gives $M^k=F_{k-1}I+F_kM$ for $k\ge0$. Define
+
+$$
+u_k=F_{k-1}-\rho F_k,\qquad
+u_0=1,\quad u_1=-\rho,\quad u_{k+2}=u_{k+1}+u_k.
+\tag{1.8}
+$$
+
+A positive interpolation candidate means a real polynomial $R$ with $\deg R\le m-1$ satisfying every equation
+
+$$
+R(k)=\frac1{u_k}\quad(0\le k\le a),\qquad
+R(k+2)=\frac1{u_k}\quad(a\le k\le K),
+\tag{1.9}
+$$
+
+with
+
+$$
+u_k\ne0\quad(0\le k\le K).
+\tag{1.10}
+$$
+
+Thus $R(a)=R(a+2)=1/u_a$. Every exponent in $0,\ldots,K$ occurs in (1.9). Exponent notation is auxiliary algebra; the interpolation nodes in (1.9) are the original acquired clocks.
+

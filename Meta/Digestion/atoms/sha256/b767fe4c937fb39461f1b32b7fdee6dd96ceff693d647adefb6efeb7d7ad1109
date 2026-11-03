@@ -1,0 +1,105 @@
+**Theorem 7.1 (Exact structure at small excess).** Let $\ell\ge1$ be an integer, put
+
+$$
+N(\ell)=30(\ell+14)^2,
+$$
+
+and let $n\ge N(\ell)$. If $G\in\mathcal G(n,\ell)$ satisfies $E(G)\le3/n$, then $G$ is obtained from $K_{2,\ell+1}$ by attaching all remaining $n-\ell-3$ vertices as leaves to the two vertices in its part of size two. The numbers of leaves at these two hubs need not be equal. The hubs are nonadjacent, and each has degree at least $2n/15$. Stance: repo-derived.
+
+**Proof.** Put $K=\ell+14$ and $m=n-1+\ell$. The threshold gives
+
+$$
+n\ge30K^2\ge6750>\frac{3375}{2},\qquad
+n>5(\ell-1),\qquad n>\ell-1.
+$$
+
+For the latter two inequalities it suffices to note that
+
+$$
+30(\ell+14)^2-5(\ell-1)=30\ell^2+835\ell+5885>0.
+$$
+
+For $0\le r\le1$, rationalization gives
+
+$$
+g(r):=\sqrt{1+r^2}-1
+=\frac{r^2}{\sqrt{1+r^2}+1},\qquad
+\frac25r^2\le g(r)\le\frac12r^2.
+$$
+
+Indeed, the denominator is at least $2$ and at most $1+\sqrt2<5/2$. Each edge cost is nonnegative and is a summand of $E(G)$. Thus, for every edge $uv$,
+
+$$
+\left(\frac{\min(d_u,d_v)}{\max(d_u,d_v)}\right)^2
+\le\frac{15}{2n}<1.
+$$
+
+Orient every edge from its endpoint of smaller degree to its endpoint of larger degree. The inequality excludes equal-degree endpoints. A sink means a vertex of outgoing degree zero, and a source means a vertex of incoming degree zero. Since $G$ is connected and $n>1$, every vertex has positive degree.
+
+Let $S$ be the set of sinks, $s=|S|$, and let $k_v$ be the outgoing degree of $v$. A vertex of maximum degree is a sink, so $s\ge1$. If a sink has degree $D$, every incident edge contributes at least $2/(5D^2)$, because its other endpoint has positive degree at most $D$. Consequently
+
+$$
+\frac3n\ge E(G)\ge\frac{2}{5D},\qquad D\ge\frac{2n}{15}.
+$$
+
+The sinks are independent: an edge between two of them would give one an outgoing edge. Hence each edge is incident to at most one sink, and
+
+$$
+\frac{2ns}{15}\le\sum_{v\in S}d_v\le m<2n.
+$$
+
+It follows that $s\le14$. Counting outgoing edges once gives the exact identity
+
+$$
+\sum_v(k_v-1)=m-n=\ell-1,
+\qquad
+\sum_{v:k_v\ge2}(k_v-1)=\ell-1+s.
+$$
+
+For every vertex with $k_v\ge2$ this implies $k_v\le\ell+s\le K$; vertices with outgoing degree zero or one satisfy the same bound.
+
+Suppose that some vertex $v$ has both an incoming and an outgoing edge. Write $d=d_v$, $k=k_v\le K$ and $j=d-k\ge1$ for its incoming degree. An outgoing edge joins it to a vertex of degree at most $n-1$, so the edge-ratio bound yields
+
+$$
+d\le(n-1)\sqrt{\frac{15}{2n}}<\sqrt{\frac{15n}{2}}.
+$$
+
+Each incoming edge contributes at least $2/(5d^2)$. If $d<2K$, even one incoming edge gives
+
+$$
+E(G)\ge\frac{2}{5d^2}>\frac1{10K^2}\ge\frac3n,
+$$
+
+a contradiction. If $d\ge2K$, then $j=d-k\ge d/2$, whence
+
+$$
+E(G)\ge\frac{2j}{5d^2}\ge\frac1{5d}
+>\frac1{5\sqrt{15n/2}}>\frac3n.
+$$
+
+The last inequality is equivalent to $n>3375/2$. This is again a contradiction. Therefore every vertex is either a source or a sink, and every edge joins a source to a sink.
+
+In particular, each edge meets exactly one sink, so $\sum_{v\in S}d_v=m$. Summing the lower estimate on the edges at each sink and applying Cauchy–Schwarz to these actual degrees gives
+
+$$
+E(G)\ge\frac25\sum_{v\in S}\frac1{d_v}
+\ge\frac{2s^2}{5m}.
+$$
+
+If $s\ge3$, then
+
+$$
+E(G)\ge\frac{18}{5m}>\frac3n,
+$$
+
+where the strict inequality is equivalent to $n>5(\ell-1)$. If $s=1$, simplicity and connectedness force every other vertex to be a leaf at the single sink, making $G$ a star and $\ell=0$. Thus $s=2$.
+
+Every source now has degree one or two. Let $q$ be the number of sources of degree two. Summing degrees on the source side of this bipartition gives
+
+$$
+m=(n-2-q)+2q=n-2+q,
+\qquad q=\ell+1.
+$$
+
+Each such source is adjacent to both sinks; all other sources are leaves at one sink. This is exactly the asserted graph, and the lower bounds on the hub degrees were proved above. ∎
+

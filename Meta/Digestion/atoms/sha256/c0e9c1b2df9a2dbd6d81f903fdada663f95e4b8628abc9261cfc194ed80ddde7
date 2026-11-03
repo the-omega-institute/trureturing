@@ -1,0 +1,177 @@
+**Theorem 3.1 (contact classification and the exact recovery optimum).**
+For every source, preparation, independent seed and visible stopping
+rule of §1, let
+$\pi_R=\mathbb P_e(z_R\in\cdot\mid\mathcal H_R)$. Then
+
+$$
+\begin{cases}
+\pi_R=\delta_0,&v_R=0,\\
+\pi_R\sim\operatorname{Leb}_{\mathbb R},&v_R\ne0.
+\end{cases}
+\tag{3.1}
+$$
+
+Equivalence is on the whole real line, not just non-atomicity on a
+smaller support. Consequently every real $\mathcal H_R$-measurable
+estimate $\widehat z$ satisfies the exact identity
+
+$$
+\mathbb P_e(\widehat z=z_R)
+ =\mathbb P_e(v_R=0,\ \widehat z=0)
+ \le\mathbb P_e(v_R=0).
+\tag{3.2}
+$$
+
+The maximum is attained by $\widehat z=0$. Exact full current-state
+recovery from this record is possible almost surely if and only if
+$R$ is a source contact almost surely. At every deterministic $t>0$
+every such real estimator has exact success probability zero. On
+$R\le\theta_I$ these conclusions apply equally to the exact native
+prefix (2.1), including its recovered stopped source clock.
+
+Proof. The contact part follows from (2.4), with $z_0=0$ also covering
+$R=0$. For the other part we localize only a final observed noncontact
+interval; no change of measure across the singular source is needed.
+
+On $G\setminus\{e\}$, the local generator of the actual process is
+
+$$
+\begin{aligned}
+\mathcal D_h&=\mathcal D_0+b,\\
+\mathcal D_0&=a(X_1^2+X_2^2+X_3^2)+\eta\partial_w^2,\\
+b&=2a\sum_{j=1}^3(X_j\log h)X_j
+             +2\eta(\partial_w\log h)\partial_w.
+\end{aligned}
+\tag{3.3}
+$$
+
+This follows by expanding $-h^{-1}H(hf)$ on punctured compact tests
+and using $Hh=0$ there; the local full-form generator agrees with it.
+Its noise frame is globally Lipschitz and nonsingular since $a,\eta>0$.
+A reference process for $\mathcal D_0$ has independent standard
+Brownian motions $B^1,\ldots,B^4$ and equations
+
+$$
+\begin{aligned}
+dx&=\sqrt{2a}\,dB^1,&dy&=\sqrt{2a}\,dB^2,\\
+dz&=\sqrt{2a}\,dB^3,&dw&=x\sqrt{2a}\,dB^2+\sqrt{2\eta}\,dB^4.
+\end{aligned}
+\tag{3.4}
+$$
+
+There is no omitted Itô correction: $X_2x=0$. In particular the
+future visible triple does not use the fresh $B^3$.
+
+Fix a rational $s>0$, an integer $T>s$, and a bounded rational open
+box $D\subset\mathbb R^3$ whose closure avoids zero. Define the
+observed event
+
+$$
+E_{s,T,D}=\{s<R\le T,\ v_{[s,R]}\subset D\}.
+\tag{3.5}
+$$
+
+It belongs to $\mathcal H_R$. For each positive integer $M$ restrict
+further to
+$E_M=E_{s,T,D}\cap\{\sup_{s\le t\le R}|z_t|<M\}$.
+The latter event need not be observed. On a compact neighborhood of
+$\overline D\times[-M,M]$, the original drift is smooth and its
+Brownian-frame coefficients
+
+$$
+\vartheta=\bigl(\sqrt{2a}X_1\log h,
+ \sqrt{2a}X_2\log h,\sqrt{2a}X_3\log h,
+ \sqrt{2\eta}\partial_w\log h\bigr)
+\tag{3.6}
+$$
+
+are bounded. The neighborhood avoids $e$ for every hidden coordinate
+because $0\notin\overline D$. Choose a smooth compact cutoff equal
+to one there and multiply $\vartheta$ by it, extending by zero.
+The resulting drift perturbation of (3.4) is smooth with compact
+support. Both this cutoff process and (3.4) are nonexplosive, with
+globally Lipschitz noise and drift. On $[s,T]$ their path laws are
+equivalent: the Girsanov density is
+
+$$
+\exp\left(\int_s^T\vartheta^{(M)}\!\cdot dB
+                   -\tfrac12\int_s^T|\vartheta^{(M)}|^2dt\right)>0.
+\tag{3.7}
+$$
+
+Boundedness gives the martingale condition on this finite horizon.
+This is also the finite-path theorem of Elworthy–Le Jan–Li cited in
+§8. It is applied to the cutoff processes on all of $\mathbb R^4$,
+not to the original singular process globally.
+
+To retain the actual past, give both reference and cutoff continuations
+the same joint distribution of $U$ and the entire actual source past
+through $s$, and start at its actual endpoint. Their fresh Brownian
+increments are independent of this past. Equivalence remains true
+after integrating these conditional continuation laws. Off $e$,
+local smooth martingale-problem uniqueness identifies the actual
+continuation and the cutoff continuation up to exit from
+$D\times(-M,M)$. On $E_M$ that exit is strictly later than $R$.
+Nonanticipation makes $R$ and its stopped record determined before
+the exit. Thus the original and the single free-reference law have
+equivalent stopped-path restrictions on $E_M$. This statement concerns
+only information through $R$; no assertion about their continuations
+after the exit is used. Events outside $R\le T$ can be given a
+cemetery stopped-record value in this comparison.
+
+Every continuous hidden path on $[s,R]$ is bounded, so
+$E_{s,T,D}=\bigcup_M E_M$ under either law. The same free reference
+is used for every $M$; only its equivalent cutoff comparison varies.
+Hence the two stopped-path laws restricted to $E_{s,T,D}$ are
+equivalent. Indeed an event has zero mass on the union exactly when
+it has zero mass on each $E_M$. Pushforward gives equivalence of the
+joint laws of the stopped visible record and $z_R$ on this observed
+event.
+
+Under the free reference, conditional on the full past through $s$,
+$U$ and the stopped visible record, the time $R>s$ is fixed and the
+fresh $B^3$ is independent. Therefore the endpoint law is
+
+$$
+N\bigl(z_s,\,2a(R-s)\bigr).
+\tag{3.8}
+$$
+
+It has a strictly positive density on all $\mathbb R$. Disintegrating
+away the extra true past gives a mixture of such densities, still
+equivalent to Lebesgue measure, for almost every observed record in
+$E_{s,T,D}$.
+
+Here is the conditional-measure step explicitly. If the reference
+joint law is $\lambda(dq)\,k(q,dz)$ and an equivalent joint law has
+positive finite density $L(q,z)$, its conditional law is
+
+$$
+\frac{L(q,z)\,k(q,dz)}{\int L(q,u)k(q,du)}.
+\tag{3.9}
+$$
+
+The denominator is finite and positive for almost every record.
+Thus conditional equivalence is preserved. This is conditional Bayes
+disintegration; it does not say the original posterior is Gaussian.
+Applying it on the observed event (3.5) gives the second part of
+(3.1) there.
+
+On every path with $v_R\ne0$, continuity supplies some final interval
+$[s,R]$ and such a box $D$; $R>0$ because $v_0=0$. Rational $s$,
+rational boxes and integer $T$ give a countable cover of that event.
+The conditional equivalence therefore holds on the whole noncontact
+branch, without an uncountable exceptional-set argument.
+
+An atomless conditional law assigns zero mass to the singleton
+$\{\widehat z(q)\}$, also when the singleton depends measurably on
+the record. Equivalently its graph is null for record law times
+Lebesgue measure. Conditioning on the two branches proves (3.2).
+The visible endpoint is in the record; on contact the full endpoint
+is $e$, and off contact its remaining coordinate cannot be recovered.
+This proves the full-state criterion. Finally [S, Theorem 117.2]
+gives $\mathbb P_e(\mathbf Z_t\in dp)=g_t(p)m(dp)$ for each $t>0$;
+since $m(\{e\})=0$, the contact probability at that fixed time is
+zero. Proposition 2.1 and (2.6) give the native-prefix assertions.
+$\square$
+

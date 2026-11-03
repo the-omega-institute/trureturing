@@ -1,0 +1,63 @@
+#### 定理 10.2（外部唯一延拓与局部同统计给擦除纠错）
+
+假设：
+
+1.  在 $\bigcup_iC_i$ 上，$c_B=c'_B$ 蕴含 $c=c'$；
+
+2.  $\sum_{c\in C_i:c_A=a}p(c)=p_A(a)$ 与逻辑类 $i$ 无关。
+
+则擦除整个 $A$ 后，存在只作用于 $B$ 的量子通道，可精确恢复任意逻辑密度矩阵及其与参考系统的关联。
+
+**证明。**
+
+第一条件使不同配置在 $B$ 上正交，故
+
+<a id="eq-erasurecriterion"></a>
+
+$$
+\operatorname{Tr}_B\lvert i_L\rangle\langle j_L\rvert
+=\delta_{ij}\sum_a p_A(a)\lvert a\rangle\langle a\rvert.
+\tag{18}
+$$
+
+为直接构造恢复，忽略 $p_A(a)=0$ 的标签，并定义
+
+$$
+\lvert \chi_{i,a}\rangle=
+\frac{1}{\sqrt{p_A(a)}}\sum_{\substack{c\in C_i\\c_A=a}}
+\sqrt{p(c)}e^{i\theta_c}\lvert c_B\rangle.
+$$
+
+这组向量对全部 $(i,a)$ 正交归一。
+编码可写为
+$\lvert i_L\rangle=\sum_a\sqrt{p_A(a)}\lvert a\rangle_A\lvert \chi_{i,a}\rangle_B$。
+令 $S=\operatorname{span}\{\chi_{i,a}\}$，定义支撑上的等距解码
+$W\chi_{i,a}=\lvert i\rangle_L\lvert a\rangle_E$，并令 $W=0$ 于 $S^\perp$。
+取 $\Pi=W^\dagger W$，任取固定输出态 $\omega_0$，定义
+
+$$
+\widetilde{\mathcal D}(\tau)
+=W\tau W^\dagger+\operatorname{Tr}[(I-\Pi)\tau]\,\omega_0.
+$$
+
+第一项完全正；若 $\omega_0=\sum_\beta\lambda_\beta\lvert f_\beta\rangle\langle f_\beta\rvert$，
+且 $\{e_\alpha\}$ 是 $S^\perp$ 的正交基，
+补偿项的 Kraus 算符为 $\sqrt{\lambda_\beta}\lvert f_\beta\rangle\langle e_\alpha\rvert$，故也完全正。
+两项迹之和为 $\operatorname{Tr}\tau$，所以它是 CPTP 通道。
+对任意逻辑矩阵 $\rho=\sum_{i,j}\rho_{ij}\lvert i\rangle\langle j\rvert$，直接代入得
+
+$$
+\widetilde{\mathcal D}\!\left(\operatorname{Tr}_A\operatorname{Enc}(\rho)\right)
+=\rho\otimes\sum_a p_A(a)\lvert a\rangle\langle a\rvert_E.
+$$
+
+再丢弃 $E$ 就精确恢复 $\rho$。
+等式对所有矩阵单位成立，张量任意参考系统恒等操作仍成立，故参考关联也恢复。 ∎
+
+恢复器一般依赖这些固定相位；仅知道配置支撑及概率，不能指定相干解码。
+这体现了标准量子纠错的逻辑：擦除区域不能获得任何逻辑信息，
+而整体关联仍将信息保存在其补集。（[17](#ref-knill)）
+“不知道自己处于哪一种整体铺砌”在此可以成为编码机制，而不是概率无约束的理由。
+
+<a id="statement-10-3"></a>
+

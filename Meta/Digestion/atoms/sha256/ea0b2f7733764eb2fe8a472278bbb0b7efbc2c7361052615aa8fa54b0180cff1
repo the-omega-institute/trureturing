@@ -1,0 +1,30 @@
+**Proposition 6.1 (Exponential physical waiting lengths).** For each fixed component in Proposition 4.2, gaps and the physical waiting length to a completed copy of $w$ have a positive exponential moment at an anchor, uniformly over its finitely many predictive states. There are constants $C<\infty$, $\beta>0$, depending on the producer and component, such that the probability that a stationary spatial interval of length $j$ contains no complete guard is at most $Ce^{-\beta j}$. The same bound holds for negative spatial intervals.
+
+Proof. In (4.8), telescoping gives
+
+$$
+\alpha_cT_0^n\mathbf1
+=1-\sum_{k=0}^{n-1}\alpha_cT_0^kb_0\longrightarrow0.
+\tag{6.1}
+$$
+
+Restrict $T_0$ to the finite survival states reachable from $\alpha_c$. A reachable closed class with no absorption would give positive eternal-survival probability, contradicting (6.1). The restricted substochastic matrix therefore has spectral radius below $1$, so its powers decay exponentially. This proves $\sum_g e^{tg}f_c(g)<\infty$ for some $t>0$. The finite row family permits one common positive $t$; the predictive quotient uses the same rows. Neither full-matrix transience nor a reverse-time transition rule is needed.
+
+Let $k$ be the number of gaps in $w$, $Y=G_0+\cdots+G_{k-1}$ the physical trial length, and $S_k$ its final predictive state. Define
+
+$$
+D_t(s,u)=\mathbb E_s[e^{tY}\mathbf1_{\{(G_0,\ldots,G_{k-1})\ne w,\ S_k=u\}}],
+\quad
+h_t(s)=\mathbb E_s[e^{tY}\mathbf1_{\{(G_0,\ldots,G_{k-1})=w\}}].
+\tag{6.2}
+$$
+
+Iterated conditioning and the finite row moments make these finite and continuous at $t=0$ for small $t\ge0$. Since $\|D_0\|_\infty\le1-\varepsilon$, choose $t>0$ with $\|D_t\|_\infty<1$. The exponential moment of the physical length through the first successful disjoint trial is the convergent geometric sum
+
+$$
+\sum_{n\ge0}D_t^nh_t.
+\tag{6.3}
+$$
+
+A guard at a stationary origin is reached by first reaching the next anchor and then using (6.3). Palm inversion [R, (11.7)][R] weights a gap of length $g$ by $g/\mu$ and chooses its spatial offset. Its forward residual thus has an exponential moment at any smaller positive exponent, because $g e^{t'g}\le C_t e^{tg}$ when $0<t'<t$. The bound on (6.3) is uniform in the state reached there; integrating it gives an exponential stationary waiting tail. Completion within a window supplies a whole guard inside it. Translation invariance sends the event of no complete guard in a positive interval to that for a negative interval of equal length. This uses stationarity, not a reverse Markov assumption. $\square$
+

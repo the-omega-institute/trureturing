@@ -1311,3 +1311,178 @@ The complete supplied DEV VI and VII provide Section 17's current cubic frontier
 The companion *FIB Positive JJ Sign Transitions and Reciprocal Extrapolation*, Sections 3–10, supplies the all-degree transition-window refinement of the unresolved positive criterion. Its P1–P8 arguments and exact residual equations preserve the original-clock interpolation and determinant obligation. These are supplied mathematical results and current scope corrections to the two substantive volumes.
 
 ## 追加锚（本行以下为增补区）
+
+## 19. One open source domain for all bounded three-dimensional words
+
+Let $\mathcal S$ be the complete source domain of Section 1: the strictly entrywise positive real rank-one trace-one $2\times2$ matrices. Openness below is relative to its two-dimensional charts (2.4)–(2.5). For each integer $a\ge0$ define the auxiliary source transformations
+
+$$
+\mathcal T_a(P)=M^{-a}P^{\mathsf T}M^a,
+\qquad
+\mathcal R(P)=JP^{\mathsf T}J.
+\tag{19.1}
+$$
+
+The inverses in (19.1) are algebraic devices for constructing alternative sources; they are not acquisition actions.
+
+**Lemma 19.1 (simultaneous strictly positive partners).** For every integer $L\ge1$ there is a nonempty open set $\mathcal U_L\subset\mathcal S$ such that, for every $P\in\mathcal U_L$, all of
+
+$$
+\mathcal T_0(P),\ldots,\mathcal T_L(P),\mathcal R(P)
+\tag{19.2}
+$$
+
+are legal sources distinct from $P$. The pair $P,\mathcal T_a(P)$ has equal traces against every matrix in
+
+$$
+H_a=\operatorname{span}\{I,M,JM^a\},
+\tag{19.3}
+$$
+
+and $P,\mathcal R(P)$ has equal traces against every matrix in
+
+$$
+H_*=\operatorname{span}\{I,J,MJ\}.
+\tag{19.4}
+$$
+
+**Proof.** Similarity and transposition show that each $\mathcal T_a$ preserves rank and trace; symmetry of $M$ also makes it an involution. Directly, using cyclicity and invariance of trace under transposition,
+
+$$
+\begin{aligned}
+\operatorname{tr}(M\mathcal T_a(P))
+ &=\operatorname{tr}(MP^{\mathsf T})=\operatorname{tr}(MP),\\
+\operatorname{tr}(JM^a\mathcal T_a(P))
+ &=\operatorname{tr}(M^aJP^{\mathsf T})
+ =\operatorname{tr}(JM^aP).
+\end{aligned}
+\tag{19.5}
+$$
+
+Together with trace preservation these prove (19.3). For a trace-one matrix written as in (2.5), with $b=\theta(1-\theta)/c$, one has
+
+$$
+\mathcal R(P)=\begin{pmatrix}\theta&b\\c&1-\theta\end{pmatrix},
+\qquad
+\operatorname{tr}(JP)=b+c,
+\qquad
+\operatorname{tr}(MJP)=1+b.
+\tag{19.6}
+$$
+
+Thus $\mathcal R$ preserves $\mathcal S$ and (19.4), and is distinct from $P$ exactly when $\theta\ne1/2$.
+
+It remains to make all partners in (19.2) positive and distinct on the same open set. Use the orthonormal eigenvectors $\nu,w$ and interval $\mathcal I=(-\phi,\phi^{-1})$ from (16.4), and the supplied sources
+
+$$
+P_x=\nu(\nu+xw)^{\mathsf T},\qquad
+Q_y=(\nu+yw)\nu^{\mathsf T}
+\qquad(x,y\in\mathcal I).
+\tag{19.7}
+$$
+
+These sources are strictly positive, rank one and trace one by the positivity calculation in Theorem 16.3. In the basis $\nu,w$ the matrices of $P_x,Q_y$ are respectively
+
+$$
+\begin{pmatrix}1&x\\0&0\end{pmatrix},
+\qquad
+\begin{pmatrix}1&0\\y&0\end{pmatrix}.
+$$
+
+Since $M$ is diagonal there with entries $\phi,\psi$, where $\psi=-\phi^{-1}$, (19.1) gives the exact relation
+
+$$
+\mathcal T_a(P_x)=Q_{(\phi/\psi)^a x}
+=Q_{(-\phi^2)^a x}.
+\tag{19.8}
+$$
+
+Choose
+
+$$
+x_0=\tfrac14\phi^{-(2L+1)}>0.
+\tag{19.9}
+$$
+
+For every $0\le a\le L$,
+
+$$
+0<|(-\phi^2)^a x_0|\le\frac1{4\phi}<\phi^{-1}<\phi.
+\tag{19.10}
+$$
+
+Hence $x_0$ and all the partner parameters in (19.8) lie in $\mathcal I$. Both off-diagonal positions in the displayed eigenbasis show $P_{x_0}\ne Q_{(-\phi^2)^a x_0}$: equality would force $x_0=0$. In the original basis,
+
+$$
+(P_{x_0})_{22}=\frac{\phi^2+\phi x_0}{1+\phi^2}>\frac12,
+\tag{19.11}
+$$
+
+so $\mathcal R(P_{x_0})\ne P_{x_0}$ as well. Define
+
+$$
+\mathcal U_L=\left\{P\in\mathcal S:
+P_{11}\ne P_{22},\quad
+\mathcal T_a(P)\in\mathcal S\setminus\{P\}
+\ \text{for every integer }0\le a\le L
+\right\}.
+\tag{19.12}
+$$
+
+Each condition is open, the transformations already preserve rank and trace, and there are finitely many conditions. Equations (19.8)–(19.11) put $P_{x_0}$ in this set. Thus $\mathcal U_L$ is nonempty and open and has all the required properties. In particular the argument has produced an open two-dimensional source domain, rather than retaining only the crossing fiber (19.7). $\square$
+
+**Lemma 19.2 (common-domain ambiguity for every three-dimensional word).** Fix $L\ge1$. Let $w$ be any mixed legal word with at most $L$ actions and with three-dimensional cumulative-matrix span. For every $P\in\mathcal U_L$ there is a distinct $P'\in\mathcal S$ with
+
+$$
+\operatorname{tr}(A_iP')=\operatorname{tr}(A_iP)
+\quad\text{at every acquired clock of }w.
+\tag{19.13}
+$$
+
+Consequently no deterministic protocol correct for the complete target on the whole domain can terminate on such a word at a world with source in $\mathcal U_L$. This consequence allows arbitrary nonlinear answers and requires no gain-output mechanism.
+
+**Proof.** Apply the supplied legal-word classification, Lemma 6.1. Write $w=M^aJ^bM^c$, with $a,c\ge0$, $a+c>0$, $b>0$, and with $b$ even if $a,c>0$.
+
+If $a\ge1$, its cumulative span is $H_a$: the initial run lies in $\operatorname{span}\{I,M\}$, the $J$ block toggles $M^a$ and $JM^a$, and any final run is permitted only after an even $J$ block and returns to powers of $M$. Here $a\le L$, so take $P'=\mathcal T_a(P)$. If $a=0$, then $c\ge1$. For even $b$ the span is $H_0$, since the final matrices are $M^k$; take $P'=\mathcal T_0(P)$. For odd $b$ the final matrices are $M^kJ$, and (2.3) makes the span $H_*$; take $P'=\mathcal R(P)$. Lemma 19.1 supplies legality, distinctness and (19.13) in every case, on the same $\mathcal U_L$.
+
+Keep exactly the same whole nonzero gain $g$ and the same drift $\delta$ in the two worlds. Equation (19.13) makes all word reads equal, including the initial read and every immediate read, regardless of gain roots or signs. If the first world follows $w$ under a deterministic protocol, induction on its actual history forces the second world to make the same action and stopping decisions at every prefix. It therefore terminates on $w$ with the same answer. The targets differ in $P$, contradicting whole-domain correctness. This proves the asserted prohibition on terminal branches without any regularity assumption. $\square$
+
+## 20. All-degree critical complete-target impossibility
+
+**Theorem 20.1 (critical complete-target exclusion).** For every declared integer $d\ge1$, there is no deterministic full-domain protocol that, with uniformly at most $2d+3$ reads, both returns the exact actual normalized triple $(P,g,\delta)$ and outputs a nonzero full gain ray by a countable preassigned palette of fixed real matrices per terminal word. The domain and acquisitions are exactly (1.1)–(1.3). In particular all actual degree drops, sampled and repeated roots, coefficient signs, and real constant drifts are allowed; actions, stopping, answers and palette selection may be arbitrary functions of actual history. Thus
+
+$$
+N_d^{\mathrm{lin}}\ge2d+4\qquad(d\ge1).
+\tag{20.1}
+$$
+
+**Proof.** Put $m=d+1$ and suppose such a protocol has uniform read bound $2m+1$. There are only finitely many terminal words at this bound. Set $L=2m$ and restrict attention to all worlds in the nonempty open parameter domain
+
+$$
+\mathcal D_L=\mathcal U_L\times
+(\mathbb R^m\setminus\{0\})\times\mathbb R.
+\tag{20.2}
+$$
+
+This is a subdomain used to disprove correctness on the entire original domain, not an extra promise supplied to the protocol.
+
+The supplied pure-terminal bridge, Lemma 15.1, excludes every pure terminal word at every world. Lemma 19.2 excludes every mixed terminal word with three-dimensional cumulative span at every world of (20.2), with the same $\mathcal U_L$ for all these words. Consider each remaining mixed word $w$. If it has at most $2m$ reads, Theorem 11.1 says it has no nonzero universal identity. If it has $2m+1$ reads, Theorem 4.1 says a nonzero identity would force its cumulative span to be three, a case already excluded from terminal branches on (20.2). Therefore every word still available to the protocol on (20.2) has no nonzero universal identity.
+
+For completeness, apply the countable-covering argument to this particular common open domain. Fix one available word $w$ and one matrix $C$ in its palette that succeeds somewhere on (20.2). In source chart (2.4), the collinearity equations are the wedge polynomials (3.2), after multiplying by the positive denominator $1+xr$. At least one is a nonzero polynomial. Otherwise $CZ_w$ would be collinear with every $\beta$ on the full world domain; Lemma 3.1 and success at the specified world would give a nonzero universal identity, which has just been excluded. A nonzero real polynomial cannot vanish on a nonempty open set, so its zero set is closed and nowhere dense relative to (20.2) in this chart. Every successful world for this pair $(w,C)$ lies in that zero set. Pairs successful nowhere on (20.2) can be discarded.
+
+There are finitely many available words and countably many matrices per word. Correctness and the uniform stopping bound would make their successful sets cover (20.2): every actual world there must terminate on one of these words and select one of these matrices with nonzero output. The Euclidean Baire principle of Section 3 forbids this countable cover by nowhere dense polynomial zero sets. This is the contradiction.
+
+No decision set or selection set was assumed measurable, continuous or otherwise regular. The alternative world in Lemma 19.2 realizes the complete same literal word history, and the covering step is taken on the common open domain (20.2), so the argument applies to arbitrary adaptive protocols. The integer read count converts exclusion through $2m+1=2d+3$ into (20.1). $\square$
+
+The source transformations and common open domain in Section 19 supply the additional bridge beyond the degree-one Theorem 15.2. Theorem 20.1 strengthens the general lower bound in Section 16 and in [*FIB Moving-Trace Recovery and Sharp Calibrated Continuations*, Section 7](FIB_MOVING_TRACE_RECOVERY_AND_SHARP_CALIBRATED_CONTINUATIONS.md#7-prior-results-new-contribution-and-remaining-boundaries). Combining it with the credited complete-target construction of Theorem 16.2 gives the current interval
+
+$$
+2d+4\le N_d^{\mathrm{lin}}\le3d+5\qquad(d\ge1).
+\tag{20.3}
+$$
+
+The matching complete-target upper bound $2d+4$ is not established. The separate optimal calibrated and prescribed-prefix counts retain the hypotheses of Theorem 16.3. Unrestricted nonlinear global complete recovery, including the unrestricted cubic eight-read existence question, is not decided by Theorem 20.1 because its final covering step uses the countable fixed-linear gain-output contract.
+
+The proof uses the supplied critical span theorem (Theorem 4.1), legal-word classification (Lemma 6.1), shorter mixed-word obstruction (Theorem 11.1), pure-terminal bridge (Lemma 15.1), and universal-collinearity and Euclidean covering facts of Section 3. Its positive witnesses reuse the eigenvectors and legal crossing sources of Theorem 16.3, with the conjugated-transpose partners (19.8) and the finite open intersection (19.12). These model-specific partners and their simultaneous actual-history consequence are the added content. Transposition, similarity, openness of strict inequalities and the Euclidean Baire principle are elementary or classical intermediate tools.
+
+## 追加锚（本行以下为增补区）

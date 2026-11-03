@@ -18,7 +18,8 @@ public sealed partial class CleanLanesCommandTests
         using var fixture = new CleanLanesFixture();
         var parent = fixture.AddLandedLane("harness/failed-parent");
         var child = fixture.AddNestedWorktree(parent);
-        CleanLanesFixture.Git(child, "commit", "--allow-empty", "-m", "retained nested work");
+        CleanLanesFixture.GitAt(child, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+            "commit", "--allow-empty", "-m", "retained nested work");
         fixture.LockLane(parent, "worktree-init:malformed");
         var runner = fixture.CreateRunner((file, args, _) =>
         {
@@ -27,10 +28,10 @@ public sealed partial class CleanLanesCommandTests
             throw new Win32Exception("nested qualification unavailable");
         });
         var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
-        Assert.False(result.Success);
-        AssertQualificationPublicExit(result, force, 2);
+        Assert.True(result.Success, result.Error);
+        AssertQualificationPublicExit(result, force, 0);
         Assert.Equal(1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
-        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         Assert.Contains("nested qualification unavailable", ReasonFor(result.Output, parent));
         Assert.Contains(ReadItems(result.Output), item => ItemMatches(item, parent, "failed", ReasonFor(result.Output, parent)));
         Assert.True(Directory.Exists(parent));
@@ -50,7 +51,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData(true, "noncanonical")]
     [InlineData(false, "invalid_success")]
     [InlineData(true, "invalid_success")]
-    public void LockedQualificationFailureRetainsTreeAndFailsAggregate(bool force, string failure)
+    public void LockedQualificationFailureRetainsTreeAndWarns(bool force, string failure)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/qualification-failure");
@@ -71,8 +72,8 @@ public sealed partial class CleanLanesCommandTests
 
         var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
 
-        Assert.False(result.Success);
-        Assert.NotEqual(0, result.ExitCode);
+        Assert.True(result.Success, result.Error);
+        AssertQualificationPublicExit(result, force, 0);
         var reason = ReasonFor(result.Output, lane);
         Assert.StartsWith("qualification_failed:", reason);
         Assert.Contains(failure switch
@@ -86,7 +87,7 @@ public sealed partial class CleanLanesCommandTests
         }, reason);
         Assert.Contains(ReadItems(result.Output), item => ItemMatches(item, lane, "failed", reason));
         Assert.Equal(1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
-        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         Assert.True(Directory.Exists(lane));
         Assert.DoesNotContain(runner.Invocations, call => IsProtocol(call.Arguments, "remove")
             && !call.Arguments.Contains("--preview"));

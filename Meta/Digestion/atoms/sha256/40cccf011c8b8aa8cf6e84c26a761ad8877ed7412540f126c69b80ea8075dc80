@@ -1,0 +1,33 @@
+### 定义 7.1（有向有限观察图）
+
+<a id="def-c117-diagram"></a>
+
+设 $(I,\leq)$ 为非空有向偏序集，即任意 $i,j$ 都有共同上界。每个 $i$ 对应有限维复 $C^*$ 代数 $\mathcal A_i$；当 $i\leq j$ 时，给定保单位、单射的 $*$-同态
+
+$$
+\iota_{ji}:\mathcal A_i\longrightarrow\mathcal A_j,
+ \qquad
+ \iota_{ii}=\operatorname{id},\qquad
+ \iota_{ki}=\iota_{kj}\iota_{ji}.
+$$
+
+每个窗口还给定正归一化线性泛函 $\omega_i$，即
+
+$$
+\omega_i(1)=1,\qquad \omega_i(a^*a)\geq0.
+$$
+
+它们构成一致有限态族，是指
+
+<a id="eq-c117-state-consistency"></a>
+
+$$
+\omega_j\circ\iota_{ji}=\omega_i
+ \qquad(i\leq j).
+\tag{11}
+$$
+
+在完整矩阵窗口中，$\omega_i(a)=\operatorname{Tr}(\rho_i a)$，其中 $\rho_i\geq0$、$\operatorname{Tr}\rho_i=1$；有限直和窗口采用对应的分块密度矩阵。
+
+这里的嵌入保留加法、乘法、伴随与单位，因此保留已经指定的算符关系。共同细化还须尊重原有系统标签和独立性约定，不能为了凑出一个共同模型而把两个独立系统改认成同一个系统。有向性及一致性是候选的明确条件；存在共同语法起点，并不自动保证它们。
+

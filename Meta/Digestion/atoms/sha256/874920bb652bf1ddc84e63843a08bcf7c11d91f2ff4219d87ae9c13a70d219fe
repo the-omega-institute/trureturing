@@ -1,0 +1,41 @@
+**定义 84.1（可达空间与未来零观察子空间）。** 容许竞争者的实线性载体 $V$ 为任意维；$s_0\in V$ 是一个制备，$B_0,B_1,B_N$ 是三个固定线性映射，$u,e$ 是质量和是效果泛函。若另给正锥，要求这些对象在合法状态上给非负两终端质量，$B_0+B_1$ 与 $B_N$ 保持质量；下面的线性结论不从中假设复 Hilbert 结构。记
+
+$$
+\begin{aligned}
+\mathscr R&=\operatorname{span}_{\mathbb R}\{B_ws_0:w\in\{0,1,N\}^*\},\\
+\mathscr N&=\{x\in\mathscr R:
+ u(B_vx)=e(B_vx)=0\ \text{对每个合法有限后缀 }v\}.
+\end{aligned}
+\tag{84.1}
+$$
+
+$\mathscr N$ 是子空间，且对每个 $B_a$ 不变：检验 $B_ax$ 的后缀 $v$ 就是检验 $x$ 的后缀 $av$，因为 $B_{av}=B_vB_a$。补效果 $u-e$ 自动为零。$\mathscr R/\mathscr N$ 称可达预测商；这里的零是所有合法未来都看不见，而非隐藏向量相等。
+
+沿用 V §93 的 $u_1=\varnothing,u_2,\ldots,u_9$ 与
+$(h_1,\ldots,h_8)=(\varnothing,0,1,00,10,000,010,100)$。定义
+
+$$
+\begin{gathered}
+x_i=B_{u_i}s_0,\qquad
+X\alpha=\sum_{i=1}^9\alpha_i x_i,\qquad
+R\alpha=\sum_{i=1}^9\alpha_i r_i,\\
+Cx=(u(x),e(B_{h_1}x),\ldots,e(B_{h_8}x))^{\mathsf T},\\
+\mathcal L Y=(\operatorname{Tr}Y,
+ \operatorname{Tr}(EA_{h_1}Y),\ldots,
+ \operatorname{Tr}(EA_{h_8}Y))^{\mathsf T}.
+\end{gathered}
+\tag{84.2}
+$$
+
+$R:\mathbb R^9\to Q$、$\mathcal L:Q\to\mathbb R^9$ 均可逆；$C$ 定义在 $\mathscr R$，不是预先给定的量子坐标。第零行是无后缀质量，第一个非迹行才是无后缀是概率，两者不可混同。
+
+假设竞争者匹配实际四表，准确地说
+
+$$
+CX=H=\mathcal LR,\qquad
+CB_aX=H^a=\mathcal LA_aR\quad(a=0,1,N).
+\tag{84.3}
+$$
+
+这只使用 $p(u_i h_t,1)$、$p(u_i a h_t,1)$ 及相应无后缀双终端和，仍保留全部原始权重。$H$ 可逆，所以 $C$ 在 $\operatorname{im}X$ 上满秩、$x_i$ 独立；尚未证明它们张成整个 $\mathscr R$ 或预测商。
+

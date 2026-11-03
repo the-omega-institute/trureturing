@@ -60,12 +60,12 @@ private instance edgeDecidable : DecidableRel Edge := fun s t =>
 
 private def T : Matrix State State ℤ := fun s t => if Edge s t then 1 else 0
 
-private def pathWeight {α : Type*} (M : Matrix α α ℤ) {n : ℕ}
+def pathWeight {α : Type*} (M : Matrix α α ℤ) {n : ℕ}
     (u : α) (f : Fin n → α) (v : α) : ℤ :=
   let g : Fin (n + 1) → α := Fin.cons u f
   (∏ i : Fin n, M (g i.castSucc) (g i.succ)) * M (g (Fin.last n)) v
 
-private theorem sum_pathWeight {α : Type*} [Fintype α] [DecidableEq α]
+theorem sum_pathWeight {α : Type*} [Fintype α] [DecidableEq α]
     (M : Matrix α α ℤ) (n : ℕ) (u v : α) :
     (∑ f : Fin n → α, pathWeight M u f v) = (M ^ (n + 1)) u v := by
   induction n generalizing u with

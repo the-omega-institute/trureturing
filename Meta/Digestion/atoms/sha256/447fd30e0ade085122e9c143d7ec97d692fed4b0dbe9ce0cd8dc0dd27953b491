@@ -1,0 +1,18 @@
+**Lemma 39.3 (legality, exhaustive lifecycle and one actual distance code).** Every split in (NLBAII.52) is enabled. The old labels bind exactly the $v_i$, and all other current labels have exactly (NLBAII.53)'s bindings. The anchor remains $z$, and on this one actual final graph
+
+$$
+d_{C(u)}(z,v_0)=3,\qquad
+d_{C(u)}(z,v_i)=D_0+i+4\quad(1\le i<L).
+\tag{NLBAII.56}
+$$
+
+These $L$ distances are pairwise distinct and their maximum is $D$. The graph has $L+K$ terminals and $N=3L+2K-1$ material vertices, and every cell is still zero.
+
+Proof. The source correspondence of the all-$P$ supplier applies to the growth-channel restriction of §17: its branch/type replies and old/fresh material templates are identical. Promotions leave all logical branch positions fixed and move only their acted terminal labels. Consequently the saved initial terminal in cone $i$ is $p_i$ for $\eta_i=\alpha$ and $p_iL$ for $\eta_i=\beta$, and after normalization either one carries its old label at $q_i$. This establishes the starting correspondence without identifying $j_i$.
+
+Since $\delta_i\le D_0$, every $k_i$ is positive. At stage $s$ of cone $i$, the target $p_iL^s$ is beta: the previous split, if any, created precisely its left beta. Different original leaf addresses are incomparable, so edits in other cones preserve this target. Each success has the full original kind/address reply and finite return; there is no hidden type test or new source opcode. The persistent-label rule moves the same inherited label one further left and appends (NLBAII.53)'s label at the new right alpha. Later targets lie strictly in the continuing left chain or in other cones, so those right terminals persist. Induction proves (NLBAII.53)–(NLBAII.55). The $L$ inherited and $K$ appended assignments are disjoint and exhaust the current terminals.
+
+For $i>0$, the path from the original $q_0=p_0L$ to $q_i$ first uses its edge to $p_0$. Replacing that first vertex by $z=p_0R$ changes neither the length nor the rest of this external path. Growth in cone zero leaves the external path unchanged. Each of the $k_i$ left-chain splits extends the inherited terminal in cone $i$ by exactly one edge, so its distance from $z$ is $\delta_i+k_i=D_0+i+4$. In cone zero there is just one split, and the path $p_0R,p_0,p_0L,p_0LL$ has length three. This proves (NLBAII.56). The other distances start at $D_0+5>3$, increase with $i$, and end at $D_0+L+3=D$.
+
+The normalized material size is $3L-1$, and each split adds two vertices and one terminal. Thus the stated sizes follow. The attachment was wholly zero, and only old-value-preserving growth with fresh zero cells has occurred, so the whole field remains zero. All loops terminate: normalization terminates by its supplier, and every later count and address is computed from its earned finite output. $\square$
+

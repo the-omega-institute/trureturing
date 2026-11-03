@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:62db51a8aca2b00e816771df9a612348d40561748dde5fb779fd16f9efca735d
+  normalized_sha256: sha256:62db51a8aca2b00e816771df9a612348d40561748dde5fb779fd16f9efca735d
+cas_ref: sha256:62db51a8aca2b00e816771df9a612348d40561748dde5fb779fd16f9efca735d
+coverage_gids:
+  - gid: D5/S3/Fourier/CharacterSelection/SimplexTwoCochainL2Projection.averageEdge
+    target_statement_id: sha256:a5a0226582bf50f27dbca050f4ebd4caf2fd1b9789e7b3c142157466b0118584
+  - gid: D5/S3/Fourier/CharacterSelection/SimplexTwoCochainL2Projection.contraction
+    target_statement_id: sha256:508cc11b705d331642ab8945d726d80cdb2359c8e68637ac46834e1f165fbd7b
+  - gid: D5/S3/Fourier/CharacterSelection/SimplexTwoCochainL2Projection.edgeCoboundary
+    target_statement_id: sha256:1bc07aeeddc03e5685dddf130c4ff50d1c1872506179999cc9efaa05f0e8c2d7
+  - gid: D5/S3/Fourier/CharacterSelection/SimplexTwoCochainL2Projection.tetraDefect
+    target_statement_id: sha256:7533660e9d796ecd25f325f856b0971d04d6578d4d1cec8cae69f60a9e99cf56
+  - gid: D5/S3/Fourier/CharacterSelection/SimplexTwoCochainL2Projection.tetra_defect_energy_eq_and_optimal
+    target_statement_id: sha256:627aed402e0ffabaadaac36e1d0b285e21c8fedfc642a8e9ee4403bad98a06f5
+receipts:
+  unresolved_subitems: []

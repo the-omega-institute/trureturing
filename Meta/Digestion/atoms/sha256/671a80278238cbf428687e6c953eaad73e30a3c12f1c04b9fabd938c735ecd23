@@ -1,0 +1,17 @@
+**Definition 1.1 (Ordinary exponent).** For a finite alphabet $B$, write $`B^*`$ for its free monoid. A factor is a contiguous subword. A positive integer $p\le |z|$ is a period of a nonempty finite word $z=z_0\cdots z_{|z|-1}$ if $z_j=z_{j+p}$ for $0\le j<|z|-p$. Write $\operatorname{per}(z)$ for its least period. For a one-sided infinite word $x$, its ordinary critical exponent is the extended real number
+
+$$
+E(x)=\sup\left\{\frac{|z|}{\operatorname{per}(z)}:
+ z\text{ is a nonempty finite factor of }x\right\}.
+$$
+
+If $E(x)=+\infty$, put $`E^*(x)=+\infty`$; otherwise put
+
+$$
+E^*(x)=\lim_{N\to\infty}\sup\left\{
+\frac{|z|}{\operatorname{per}(z)}:
+ z\text{ is a factor of }x,\ |z|\ge N\right\}.
+$$
+
+These are the conventions in Dvořáková and Pelantová, *The limit of repetition thresholds of rich sequences*, [arXiv:2509.06104v1, Introduction](https://arxiv.org/html/2509.06104v1#S1), published in *The Electronic Journal of Combinatorics* 33(2), P2.15, [doi:10.37236/14600](https://doi.org/10.37236/14600). All numbered source results cited below use the arXiv version.
+

@@ -1,0 +1,55 @@
+**Proposition 65.2 (literal acquisition account).** For GLOBAL and LOCAL,
+on every terminating run,
+
+$$
+\begin{aligned}
+\#\text{completed guards}&=n,&
+G&=P_++S_+,&\Delta&=P_++2S_+,\\
+I_{\rm acq}&=2D+4n,&
+O_{\rm acq}&=5n+2D_s,\\
+|C(t)|&=n+b,&|C(u_{\rm end})|&=n+b+\Delta,\\
+\#\text{entry constructors}&=n,&
+\#\text{current constructors}&=n+2S_+.
+\end{aligned}
+\tag{AAII.32}
+$$
+
+There are $n$ separate End/acknowledgement/Return cycles beyond those
+literal bits. The two result words together have $4n+4S_+$ constructor
+payload bits, on distinct owned backing. Acquisition makes $4\Delta$
+located source-field assignments under AA Proposition 22.1's convention.
+Under root-based navigation and parent-chain return it uses $D$ logical
+child-link descents and $D$ parent-link ascents. In expectation,
+
+$$
+\begin{aligned}
+\mathbb E G&=qa+(1-q)b_V,&
+\mathbb E\Delta&=qa+2(1-q)b_V,\\
+\mathbb E O_{\rm acq}&=5n+2qD_\alpha+2(1-q)D_{\beta V},\\
+\mathbb E\#P\text{ attempts}&=n-L+qL,&
+\mathbb E\#S\text{ attempts}&=(1-q)L.
+\end{aligned}
+\tag{AAII.33}
+$$
+
+Proof. Theorem 62.3 visits exactly the $n$ original nodes, including
+branches, and no newborn node. Every original request has length
+$2|p|+4$. Every reply has five bits plus $2|p|$ when it is a success,
+by Definition 53.3, regardless of whether its kind is $P$ or $S$.
+This proves the traffic sums. Original material has one vertex per
+logical node and one marker per beta. Each success uses its original
+one- or two-vertex template and only a split adds two logical nodes.
+Two payload bits per constructor prove the code count. Those same
+templates use four or eight source-field assignments. All targets are
+original present positions; edits in other leaf cones do not change
+their root depths or parent paths, proving the navigation counts.
+
+There are exactly $L$ eligible original nodes: the root and the right
+child of each of the $L-1$ original branches. This counts branches among
+eligible nodes and is generally larger than $m$. Every other original
+node is $L$-ending and receives $P$. At each eligible node the $P$
+probability is $q$ in either implementation. Summing these marginals
+proves the attempt counts. Only original alpha and eligible beta leaves
+can succeed, with the probabilities in (AAII.29); weighting them by
+address depths gives the expected reply count. $\square$
+

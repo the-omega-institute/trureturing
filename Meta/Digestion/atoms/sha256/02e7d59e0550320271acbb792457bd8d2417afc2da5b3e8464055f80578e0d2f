@@ -1,0 +1,4 @@
+**Corollary 53.2 (binary recovery and the actual failure boundary).** Every acquired original source admits complete endpoint recovery of every finite binary pulse word, including its length, because $1<a$. The zero-only menu is also injective across all finite lengths. If $H\ge a$, the length remains recoverable as a function of the endpoint on its integer image, but the full word is not: the obstruction is already within a single length stratum. The short-horizon conclusions of Corollary 45.3 remain exact: no same-length collision at $L\le N$, and one at $L=N+1$ exactly when $H\ge h$, where $h=\max_j|q_j|$.
+
+Proof. Apply Theorem 53.1 for $H=1$ and $H=0$, and Theorem 52.3 for length alone. The supplied equal-length conclusions and collisions are unchanged by removing length advice. $\square$
+

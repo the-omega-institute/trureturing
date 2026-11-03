@@ -1,0 +1,27 @@
+**Proposition 22.5 (strict extension, with serial collision preserved).**
+The block domain strictly extends the single-birth separated domain
+after identifying a singleton block with its member. The run
+
+$$
+P_\varepsilon K S_\varepsilon K
+ (S_LP_R)
+\tag{22.3}
+$$
+
+and the run with last block $(P_RS_L)$ are admitted, have identical
+block Time and endpoint, and have different chosen serial orders.
+They are outside Definition 3.2's single-birth separation.
+The unseparated counterpair in Boundary 4.4 remains a collision.
+
+Proof. After $P_\varepsilon$ and $S_\varepsilon$ the logical children
+are beta at $L$ and alpha at $R$. Thus $S_L$ and $P_R$ are enabled
+at distinct pre-block leaves, and commute by Theorem 21.2.
+The preceding two gaps are positive; the final gap is allowed zero.
+There is no Tick between those last two births, violating the old
+single-birth domain. Every singleton-block history has the old
+recurrence, so its inverse agrees by Theorem 4.1.
+Boundary 4.4's all-unticked pair performs dependent edits in the
+original root cone and is not a single independent block. Its two
+raw zero-extended fields remain one at root and zero elsewhere;
+none of the present arguments changes that computation. $\square$
+

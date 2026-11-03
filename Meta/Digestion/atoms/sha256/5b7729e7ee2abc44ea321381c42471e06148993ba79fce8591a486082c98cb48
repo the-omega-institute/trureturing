@@ -1,0 +1,19 @@
+**Lemma 11.2 (Small identities and discriminant divisors).** Over
+$\mathbb Q[p,v]$, $T_5$ is squarefree and
+
+$$
+T_5^2\mid E,\qquad T_5^2\mid F.
+\tag{11.2}
+$$
+
+Proof. Here are the finite coefficient substitutions needed for this
+assertion. A rational substitution is evaluated by multiplying by the
+indicated constant or polynomial denominator to the degree of the
+substituted variable, and then using convolution. Zero means the resulting
+polynomial is identically zero, not a value at one point.
+
+| Height-one factor | Carrier root $x_*$ | Terminal root $z_*$ |
+| --- | --- | --- |
+| $p-24$ | $(v-84)/30$ | $(32v-1128)/5$ |
+| $55p-28v-1572$ | $-(v+42)/33$ | $(184v-60)/55$ |
+| $58p-23v-1350$ | $(4v+144)/(v-138)$ | $(381v-1770)/116$ |

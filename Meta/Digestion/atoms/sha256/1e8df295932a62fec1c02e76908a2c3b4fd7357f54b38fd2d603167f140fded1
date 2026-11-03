@@ -1,0 +1,19 @@
+#### 命题 8.1（每个 qubit 特殊酉变换的两反射表示）
+
+任意 $U\in SU(2)$ 可写为 $U=(a\cdot\sigma)(b\cdot\sigma)$，
+其中 $a,b$ 为单位实向量。
+
+**证明。**
+
+写 $U=cI+is\,n\cdot\sigma$，$c^2+s^2=1,s\ge0$。
+在 $s>0$ 时选单位 $a\perp n$，令
+$b=ca+s(n\times a)$，则 $|b|=1,a\cdot b=c,a\times b=sn$。
+Pauli 乘法律给所需乘积；$s=0$ 时取 $b=\pm a$。
+
+∎
+
+这是一项表示定理：若两反射能够随目标重新标定，所有 $SU(2)$ 变换都有这种形式。
+对一对固定非平行反射，则有更具体的控制边界。
+
+<a id="statement-8-2"></a>
+

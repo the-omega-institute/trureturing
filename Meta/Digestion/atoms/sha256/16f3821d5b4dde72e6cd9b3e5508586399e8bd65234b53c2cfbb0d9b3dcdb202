@@ -1,0 +1,16 @@
+**Attribution 17.3 (the new consumer and the distinct clock classes).** Proposition 13.1 already supplies the two-phase member (13.1) and its posterior; Sections 13--15 own its presentation and quotient obstructions. Theorem 17.2 uses that example as a member of one class-wide exclusion, without asserting a new two-phase example. It also covers its nonrenewal and non-finite-visible-memory features. In fact, under that example's Palm law at a one, the phases have weights $2/5,3/5$. Multiplication of its transition probabilities for consecutive gaps of length two gives
+
+$$
+P^{\rm Palm}(G=2)=\frac25\frac14+\frac35\frac13=\frac3{10},\qquad
+P^{\rm Palm}(G_1=2,G_2=2)=\frac25\left(\frac14\right)^2
+                       +\frac35\left(\frac13\right)^2
+=\frac{11}{120}\ne\frac9{100}.
+\tag{17.26}
+$$
+
+Thus the proper-renewal exclusions do not cover this member. Its two distinct free posterior values in (13.2) remain possible under either phase after every finite legal record, as shown in Proposition 13.1; by [Finite visible memory, Proposition 2.2][ClockVisible], no finite visible order can have this posterior. The all-renewal and whole three-state exclusions retain their separate scope in [Uniform renewal, Theorems 10.3 and 11.4][ClockRenewal]; neither theorem is used in (17.20)--(17.21). No minimal-state claim is needed for this consumer.
+
+The family in [Visible tail phase, Sections 9--15][ClockGap] is different: its zero waiting edges keep the waiting phase fixed, and successive occupied events advance it. Its anchored Palm phase is not asserted invariant under arbitrary finite bit changes. Here every edge advances the clock, and the transition-frequency profile (17.8) is unchanged by every finite bit modification. The latter invariant field is precisely what makes the original-loss contrast (17.20) possible. The class-wide theorem combines this quotient recovery, its actual full-exterior posterior, saturated agreement for fixed original versions and the mixed contrast; no general finite-state identification or generic scoring theorem is claimed as a new result.
+
+The coordinate-conditional Brier scoring framework is classical: [Dawid, Lauritzen and Parry, *Proper Local Scoring Rules on Discrete Sample Spaces*, arXiv:1104.2224v2, Section 4.2, Example 4.4, equation (14)](https://arxiv.org/html/1104.2224v2) is the sum of squared errors against full coordinate-conditional probabilities. Its everywhere-positive product-space discussion does not itself supply the hard-no11 class exclusion. [van Enter and Verbitskiy, *Erasure entropies and Gibbs Measures*, arXiv:1001.3122v1, Theorem 6, equation (8)](https://arxiv.org/html/1001.3122v1) represents Shannon erasure entropy by a common Gibbs specification and obtains affinity on measures consistent with that specification. It does not give this Brier nonattainment statement or replace the fixed-version argument (17.16)--(17.17). Finite-chain occupation, probability extension, martingale convergence and countable nonsingular saturation retain classical credit. Theorem 17.2 is a repository derivation relative to the stated suppliers, with no claim of literature priority.
+

@@ -1,0 +1,19 @@
+**Definition 12.1 (The dictionary and its parameters).** Retain the original $u_7$ of Definition 1.2 with $r=3$, and put
+
+$$
+\begin{gathered}
+p=a,\qquad
+(\eta(0),\ldots,\eta(6))
+=(a,ab,abb,ac,acc,accdcc,accdccddccdcc),\\
+q_i=a^{-1}\eta(i),\qquad
+(q_0,\ldots,q_6)=(\varepsilon,b,bb,c,cc,ccdcc,ccdccddccdcc),\\
+h=(1,2,3,2,3,6,13),\qquad x=\eta(u_7),\qquad
+L=\frac1{3-\Lambda},\qquad e_3=1+L=2+\frac1{\Lambda^3-1},
+\end{gathered}
+\tag{43}
+$$
+
+where $a,b,c,d$ are four distinct letters and $\Lambda>2$ satisfies $\Lambda^3(\Lambda-2)=1$. The notation $a^{-1}\eta(i)$ means deletion of the displayed initial letter, not inversion in a group. All critical exponents are those of Definition 1.1.
+
+The source inputs used below are Dvořáková–Pelantová, [*The limit of repetition thresholds of rich sequences*, arXiv:2509.06104v1](https://arxiv.org/pdf/2509.06104v1), Theorem 5, §§3–4, Lemmas 8–10, Proposition 19 and Appendix Lemmas 20–21. Their spectral parameter $d$ is $3$, their source alphabet is $\{0,\ldots,6\}$, and their Perron equation is exactly the equation in (43). Proposition 19 instead uses $d$ for the source alphabet size: its applicable instance is $d=7$. The corresponding journal results are Theorem 5, Lemmas 9–11, Proposition 20 and Appendix Lemmas 21–22 in [EJC 33(2), P2.15](https://www.combinatorics.org/ojs/index.php/eljc/article/download/v33i2p15/pdf/). Source extension and return descriptions also occur in Dvořáková–Klouda–Pelantová, [*The asymptotic repetition threshold of sequences rich in palindromes*, arXiv:2409.06849v1](https://arxiv.org/pdf/2409.06849v1), Proposition 4, Corollary 5, Definition 8 and Propositions 15 and 19, with source-size parameter $d=7$. These results supply the source classifications and the criteria; the dictionary (43), its boundary estimates and its equality classification are the additional inferences here.
+

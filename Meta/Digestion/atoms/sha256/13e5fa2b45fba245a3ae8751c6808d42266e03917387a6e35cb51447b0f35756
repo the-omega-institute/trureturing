@@ -1,0 +1,14 @@
+**Corollary 81.3 (an actual unbounded header saving, with the supplied
+rounding boundary).** On Theorem 60.3's reachable family $t_h$, whose
+nonunit radices are $2,4,\ldots,2h$, both installations admit the
+stated original framed schedule. They have the same $P_0=S_0'=h+1$
+and $V=3h+4$; for $h\ge1$ the global layout uses one rather than $h$
+headers and $G=\lceil h+\log_2(h!)\rceil$ rather than
+$B=\sum_{j=1}^h\lceil\log_2(2j)\rceil$ data cells. The header saving
+$h-1$ is unbounded over finite endpoints. This reuses that family's
+reachability and exact counts. By the already supplied uniform bound
+$B/G\to1$, it establishes no asymptotically nonvanishing fractional
+payload saving. It establishes no total material, work, latency, energy,
+lifetime or minimax optimum. Simultaneous buffers and the repeated
+whole-source scans of §80 remain on the same execution account.
+

@@ -5,7 +5,7 @@ year: 2026
 title: Reduced-frequency applications to the actual C68 columns
 doi: null
 url: https://arxiv.org/abs/2610.12234v2
-claim: Repo-derived source-conditional applications to actual bare-J4 C68 columns give the original-W0 endpoint for all nonunit reduced frequencies and strict bounds on physical reduced frequencies with a small valuation-one good-prime product, retaining all sixth-power repetitions and one original coupled envelope. The powerful sector retains its U^(27/13+epsilon) raw bound; the parameterized extension has raw exponent E((1+eta)/2) for each fixed 0<=eta<(13-5sqrt6)/3. The sharper dominant-annulus dependence and the small sector up to U^(1/5) for both original and exact redesigned cutoffs remain valid. Full C68, other branches, J40, signed Robin restoration and RH remain unresolved.
+claim: Repo-derived source-conditional applications to actual bare-J4 C68 columns give the original-W0 endpoint for all nonunit reduced frequencies and strict bounds on physical reduced frequencies with a small valuation-one good-prime product, retaining all sixth-power repetitions and one original coupled envelope. The powerful sector retains its U^(27/13+epsilon) raw bound; the parameterized extension has raw exponent E((1+eta)/2) for each fixed 0<=eta<(13-5sqrt6)/3. The sharper dominant-annulus dependence and the small sector up to U^(1/5) for both original and exact redesigned cutoffs remain valid. An explicit mixed planar/log Fourier producer supplies the common envelope for fixed original local profiles; any preceding signed component/height aggregate still requires its own bound. Full C68, other branches, J40, signed Robin restoration and RH remain unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -18,7 +18,7 @@ of the [Liu source card](../Analytic/liu2026quasirh.md), the
 [complete-dual application](liu2026quasirhdual.md), and the
 [joint mixed-Mobius and residue companion](liu2026quasirhresidue.md).
 C1–C50 remain in the source card, C51–C76 in the complete-dual owner,
-and R1–R46 in the residue companion. C77–C113 belong only to this note.
+and R1–R46 in the residue companion. C77–C119 belong only to this note.
 The deductions are conditional paper mathematics, without a source-proof
 audit or Lean certification.
 The [actual mixed-sixth companion](liu2026quasirhmixedsixth.md) gives the
@@ -202,7 +202,9 @@ with the original Fourier shell seminorms included. This is the common
 base-envelope contract of R43–R46. An envelope supplied only for its
 $\eta=h^{-2}$ component costs the fixed factor $h^2$ to recover this
 base envelope. No allowance restarts per $r,a$, mask or component;
-no derivative acts on $b^{(\circ)}$.
+no derivative acts on $b^{(\circ)}$. For the fixed original-$W_0$ local
+inputs specified in C114–C119 below, that construction supplies this
+envelope; it does not supply an unspecified preceding signed aggregate.
 
 **Counting every repetition and restoring the original scale.** Ordinary
 ideal counting, with all six units and the original finite $S$ labels,
@@ -1486,3 +1488,204 @@ logarithmic-control, physical density and the actual finite
 coupled envelope as premises; they certify neither those source
 proofs nor Lean, originality, full C68, J40, signed Robin
 restoration or RH.
+
+
+## The common measure produced by the original fixed local kernel
+
+This is an explicit application of the existing Fourier calculus to
+C57–C59, supplying the profile-envelope premise of the identical bare
+C80–C113 consumers. Retain their corefree/common-$e=1$,
+$C=\mathfrak b=D_{\rm src}=1$, $q=L=U$ branch, the genuine fixed
+ideal-ray quotient and total class of R43, $\zeta_i=1$, and no extra
+angular multiplier. Use the original fixed smooth radial $w$ and four
+fixed smooth annular profiles $V_i$, with $D=\sqrt U$ and
+$A=U^{1/12}$. The arithmetic coefficient is the literal C57
+$b_A=\mu+K_A$ with its original $W_0$ divisor cutoff. Both factor
+annuli, every squarefree/gcd/deletion mask, collision zero, orientation,
+$\xi$, C56 multiplier, unit and $S$ label remain. This application
+constructs no preceding signed component/height family.
+
+The reused tools are the pinned primary's `lem:kernel-seminorms`,
+`lem:smooth-calculus` and `eq:inverse-log-fourier`–
+`eq:inverse-fourier-moment`, together with C56's planar normalization
+and R43's full finite Fourier mass. No new Fourier continuity theorem
+or arithmetic estimate is asserted. In particular, the initial
+marked-inverse polynomial in `eq:initial-residual-polynomial` is not
+identified with C57's two-factor convolution.
+
+**Include the row in the same transform.** Choose a fixed smooth
+$\theta:[0,\infty)\to[0,1]$, equal to one on $[0,1]$ and zero on
+$[2,\infty)$. Put $R_j=2^j$ and
+
+$$
+\begin{aligned}
+ \kappa_0(y)&=\theta(|y|^2),\\
+ \kappa_j(y)&=\theta(|y|^2)-\theta(2|y|^2)\quad(j\ge1),\\
+ \sum_{j\ge0}\kappa_j(k/\sqrt{R_jU})&=1.
+\end{aligned}
+\tag{C114}
+$$
+
+The last identity telescopes for every $k$, including zero. The
+arithmetic sum here still excludes $k=0$. Before any inversion retain
+the fixed row restrictions
+$\mathcal K_0=\{k:0<q_k\le2U\}$ and
+$\mathcal K_j=\{k:R_jU/2\le q_k\le2R_jU\}$ for $j\ge1$,
+intersected with their original physical-row restrictions and labels.
+They contain the respective supports of $\kappa_j$ and remain outside
+the separation. Individual separated integrands do not acquire shell
+support merely because their integral has it.
+
+Write $x_i=q_{d_i}/D$, $\ell_i=\log x_i$, and $p=\prod_i x_i$.
+On $\mathbb C\times\mathbb R^4$ define the single ambient profile
+
+$$
+\begin{aligned}
+ G_j(y,\boldsymbol\ell)
+  ={}&\kappa_j(y)V_1(e^{\ell_1})V_2(e^{\ell_2})
+       \overline{V_3(e^{\ell_3})V_4(e^{\ell_4})}
+       e^{-\sum_i\ell_i/2}\\
+    &\quad\times\widehat w\!\left(
+          \sqrt{R_j}e^{-\sum_i\ell_i/2}y\right),\\
+ \widehat G_j(\eta,\boldsymbol\xi)
+  ={}&\int_{\mathbb C\times\mathbb R^4}
+       G_j(v,\boldsymbol u)e_K(-v\eta)
+       e^{-i\boldsymbol\xi\cdot\boldsymbol u}
+       \,d\mu(v)\,d\boldsymbol u.
+\end{aligned}
+\tag{C115}
+$$
+
+There are six real transform coordinates. With $y=k/\sqrt{R_jU}$,
+$|\sqrt{R_j}p^{-1/2}y|^2=q_k/(Up)$, so this is exactly C59's
+kernel, including its inverse-root power, rather than a new rowwise
+test. Let $\chi_i$ be fixed real annular cutoffs equal to one on
+$\operatorname{supp}V_i$. Mixed inversion gives, for all $x_i>0$,
+
+$$
+\begin{aligned}
+ &\kappa_j(y)\Psi_{q_k/U}(\boldsymbol x)\\
+ &\quad=(2\pi)^{-4}
+   \int_{\mathbb C\times\mathbb R^4}
+       \widehat G_j(\eta,\boldsymbol\xi)e_K(y\eta)
+       \prod_{i=1}^4[\chi_i(x_i)x_i^{i\xi_i}]
+       \,d\mu(\eta)\,d\boldsymbol\xi.
+\end{aligned}
+\tag{C116}
+$$
+
+The planar pairing in real coordinates has matrix
+$(2/\sqrt3)\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$
+in the convention $\exp(2\pi i\langle v,\eta\rangle)$.
+Its determinant has absolute value $4/3$; the factors
+$d\mu=(2/\sqrt3)d\operatorname{Leb}$ in both variables therefore
+make planar inversion self-dual. Only the four log coordinates
+contribute $(2\pi)^{-4}$. The first side receives
+$\chi_1x_1^{i\xi_1},\chi_2x_2^{i\xi_2}$; the conjugated side
+receives $\chi_3x_3^{-i\xi_3},\chi_4x_4^{-i\xi_4}$.
+This changes only the smooth profile presentation, with the original
+$V_i$ retained exactly in the common density; it does not replace
+$b_A$, choose independent kernels, or differentiate arithmetic weights.
+
+C116 holds pointwise on the unchanged arithmetic tuple set. It does
+not factor a cross-column gcd indicator. Retain every such detector
+in its existing arithmetic reduction. At each already reduced C68
+bilinear contraction, keep $e_K(k\eta/\sqrt{R_jU})$ outside the
+columns and use its modulus one in Cauchy on the same restricted
+$k$ set $\mathcal K_j$. The resulting column seminorms have only
+fixed polynomial $\boldsymbol\xi$ costs. Taking the transform
+separately at each actual $k$ would not provide this common density.
+
+**One finite order pays all shells.** For fixed annular boxes set
+$P_N(V)=\max_{0\le r\le N}\sup_{x>0}|(x\partial_x)^rV(x)|$,
+and use the primary's Schwartz seminorm $s_m(w)$ in two real
+coordinates. For prescribed $H,B\ge0$, take
+$N=2\lceil(H+7)/2\rceil>H+6$ and
+$m=2N+2\lceil B\rceil+2$. The existing finite Fourier estimate in
+six dimensions and its fixed-pairing version give
+
+$$
+ \int |\widehat G_j(\eta,\boldsymbol\xi)|
+       (1+|\eta|+|\boldsymbol\xi|)^H
+       \,d\mu(\eta)\,d\boldsymbol\xi
+ \ll_{H,B,\theta,\mathrm{boxes}}
+       s_m(w)\prod_{i=1}^4P_N(V_i)(1+R_j)^{-B}.
+\tag{C117}
+$$
+
+Indeed, on $j\ge1$ the fixed planar support has
+$1/2\le|y|^2\le2$ and the log box is fixed. Derivatives through
+order $N$ consume at most $N$ powers of $\sqrt{R_j}$, absorbed
+by the Schwartz decay of $\widehat w$. The primary's finite-seminorm
+bound transfers that control to the displayed $s_m(w)$.
+The $j=0$ ball is smooth in its two planar coordinates at zero;
+no logarithmic row coordinate or half-line extension is used.
+
+For the actual fixed finite label table write its coefficients as
+$a_{\lambda,\chi,\psi}$, with
+$M_{\rm fin}=\sum_{\lambda,\chi,\psi}|a_{\lambda,\chi,\psi}|$.
+The label $\lambda$ contains only original unit/$S$ labels when
+these are split externally; they may instead remain in the row sets.
+For each copy of R43's bare table,
+$a_{\chi,\psi}=h^{-2}\overline{\chi(\sigma)\psi(\sigma)}$ and
+$\sum_{\chi,\psi}|a_{\chi,\psi}|=1$.
+Its trivial coefficient $h^{-2}$ is not the full mass.
+On the disjoint union of shells and finite labels take counting
+measure and define
+
+$$
+\begin{aligned}
+ dc&=(2\pi)^{-4}a_{\lambda,\chi,\psi}
+       \widehat G_j(\eta,\boldsymbol\xi)
+       \,d\mu(\eta)\,d\boldsymbol\xi,\\
+ \int(1+R_j)^b(1+|\eta|+|\boldsymbol\xi|)^H\,|dc|
+ &\ll_{H,b,\theta,\mathrm{boxes}}
+       M_{\rm fin}s_m(w)\prod_iP_N(V_i),\qquad b\ge0.
+\end{aligned}
+\tag{C118}
+$$
+
+For C118 choose C117 once with $B=b+2$ and its corresponding
+orders; $\sum_{j\ge0}(1+2^j)^{-2}\le4/3$.
+Choose $H$ at least the combined polynomial cost of both child
+seminorms and all analytic consumers being used, and choose their
+finite order $J$ once. Then this same measure satisfies
+$\int|dc_j|\mathcal H_{1,J}\mathcal H_{2,J}
+ \ll\mathcal N_{{\rm base},J}(1+R_j)^{-b}$,
+with one $U$-independent $\mathcal N_{{\rm base},J}$ for fixed
+inputs. A family is admitted if this displayed finite input-seminorm
+product has an actually supplied polylogarithmic bound.
+Kernel decay is paid once in the expanded bilinear form. No budget
+restarts at a row, reduced part, sixth-power repetition, mask, mode,
+component or shell. The exceptional $r=1$ rows are restored in this
+identity, without asserting any new bound for their arithmetic sum.
+
+**Which premise is supplied.** For precisely these fixed original
+local inputs, C118 supplies the base-envelope contract of C82,
+C91–C92 and C96–C97, and hence that premise for C98–C113 on the
+identical branch. R43–R45 may use the same base profile measure for
+the same original-$W_0$ local kernel. None of their other source,
+contour, density or sector hypotheses is discharged. R46 uses the
+different redesigned arithmetic cutoff $W_U$; this construction
+neither substitutes it for $W_0$ nor transfers R46's strict bound
+to the original realization.
+
+For a preceding signed component/height measure $d\Lambda_U(t)$,
+the required extra input is an actual producer and a bound of the form
+
+$$
+ \int |d\Lambda_U(t)|\,M_{\rm fin}(t)
+       s_m(w_t)\prod_iP_N(V_{i,t})\ll(\log(2U))^C,
+\tag{C119}
+$$
+
+with the specified common finite orders, including all original
+polynomial height costs. Fixed per-profile control alone does not
+imply C119. For generalized angular tables their actual weighted
+Fourier variation is also required, and R43 is not a substitute.
+Thus the fixed-input local envelope is explicitly supplied, while
+an unspecified larger signed family retains its original premise.
+There is no improved arithmetic exponent, saving for H or the complete
+M46 remainder, full C68/J40 restoration, signed Robin estimate or RH
+proof. These are conditional application formulas, without a source
+major-proof audit, Lean certification or literature-priority claim.

@@ -1,0 +1,12 @@
+**Lemma 52.2 (the integral annihilator ideal and its leading coefficients).** For every $P\in\mathbb Z[z]$,
+
+$$
+P(T)b=0\quad\Longleftrightarrow\quad
+P=qS\text{ for some }S\in\mathbb Z[z].
+\tag{52.3}
+$$
+
+Consequently every nonzero integral annihilator of $b$ has leading coefficient divisible by $a$; in particular there is no monic integral annihilator.
+
+Proof. This is the arbitrary-polynomial argument of Proposition 44.3: divide over $\mathbb Q$ by $\bar q$; the remainder has degree below $N$ and vanishes on $b$, so independence of $b,Tb,\ldots,T^{N-1}b$ makes it zero. Gauss's primitive-divisibility lemma then gives an integral quotient by $q$. Conversely $q(T)=0$. For nonzero $S$, the leading coefficient of $qS$ is $a$ times the nonzero integral leading coefficient of $S$. Since $a\ge2$, it cannot be one. This uses the whole earned polynomial, with no irreducibility premise or selection of one eigenvalue. $\square$
+

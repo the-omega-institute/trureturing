@@ -1,0 +1,31 @@
+**Proposition 4.3 (the matched-source pair remains distinguished).**
+With public $d=2$, source A $z=111\cdots$ at cut $11$ and source B
+$z=0111\cdots$ at cut $12$ both have $h=10$. Their cones at $aa$
+have identical complete presence support, rank nine, normalized cut
+eight and 109 nodes, but their authentic outputs are respectively
+$(1111,11)$ and $(0111,12)$. Both belong to the original comparison
+domain. The complete protocol above distinguishes them.
+
+**Proof.** Source A has order one. Source B has the singular order-two
+presentation $s_{i+2}=s_{i+1}$ with seed $01$. Both have the aligned
+all-one core. After the root birth all later bits are one. In A the
+$a$ child has rank ten; in B it also has rank ten, since it was the
+root's initial alpha child at the later cut. Their $a$-spines therefore
+have total height ten. The $aa$ child has rank nine in both, and every
+later orientation in it is one. This proves identical local support;
+its node count is $2F_{10}-1=109$. For this $d$, $\ell=2$, $s_*=5$
+and $L=8$, so Theorem 2.1 actually selects this same $aa$ cone in
+both sources. Its acquired data and the recovered core alone cannot
+separate the requested outputs.
+
+At the root their child heights are respectively $(9,8)$ and $(9,10)$.
+Theorem 4.2's subsequent root and early-child calls acquire the
+corresponding heights and recover the distinct cuts and first bits.
+For a direct paid separator, $ba^9$ is absent in A and present in B:
+the $b$ ranks are respectively nine and eleven and all subsequent
+orientations are one. No restriction of the comparison domain is
+involved. Likewise, in $\mathscr R_1$ at cut four, $000\cdots$ and
+$1000\cdots$ share the zero core but have prefixes $00$ and $10$;
+$\operatorname{Read}(bba)$ is respectively one and zero. The transient
+must be recovered by the global consumer. $\square$
+

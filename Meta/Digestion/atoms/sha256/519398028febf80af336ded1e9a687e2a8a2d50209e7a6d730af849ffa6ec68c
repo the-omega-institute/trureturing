@@ -1,0 +1,23 @@
+**Definition 40.1 (the retained callable state).** At the origin and every later completed cut retain the real source binding, current rights and phase, the acquired current recursive term, its material-address-to-coordinate table, the unit adjacency representation and the exact current predictive vector $\widehat x$. Retain separate scratch for a Tick or growth update, parser and actual pending bits, finite counters, output backing and return cursor. The initialization is $\widehat x=e$ in Theorem 37.1; at a sampled return it is the advanced field in (UFS.93).
+
+The guard selector is the actual backed address $p$ and counter. Preparation controls are actual computed rational coefficients in reverse order. Next's bit is received and backed before use. A future growth address or rational operand is an actual received finite packet, not a hidden selector oracle. A finite adaptive caller can use previously returned actual outputs and its own retained inputs; its records and selection work are charged. No part of this definition supplies an arbitrary native tree as free input to a numerical inverse.
+
+The service forwards actual calls on the retained binding and consumes the entire actual reply. It updates and commits the local record before exposing the next completed cut. Its exact primitive prediction and record updates are:
+
+| Case | Complete output | Committed numerical/material successor |
+| --- | --- | --- |
+| Read | literal rational $e^{\mathsf T}\widehat x$ | identity |
+| Add$(q)$ | ACK | $\widehat x+qe$ |
+| Tick | ACK | $A_u\widehat x$ |
+| Hold | ACK | identity |
+| enabled $P_p$ | original Growth$(P,p)$ | original term edit, old-coordinate values retained, fresh $pL$ zero |
+| enabled $S_p$ | original Growth$(S,p)$ | original term edit, old-coordinate values retained, fresh $pLL,pR$ zero |
+| absent, branch or wrong-type growth target | corresponding distinct original refusal | identity |
+| complete malformed/unsupported packet | BadFrame | no inner operation; identity source |
+| proper incomplete packet | no completed reply | its real acquired prefix and pending parser state |
+| missing rights or unavailable phase | no completed reply; primitive disabled | no primitive source transition |
+
+After growth, rebuild the finite material table and adjacency on the actual old-vertex inclusion, retaining the original root coordinate and real dispatcher binding. No field is read at a newly created internal coordinate; fresh zeros come from the installed growth law. A BadFrame consumes the malformed packet and returns to Ready after output and cleanup; an incomplete packet does not. A disabled invocation is not silently replaced by a tagged refusal. Pending source edits, outputs and returns are real phases, not extra completed cuts. There is no range branch for root-only Read/Add, and every unsupported constructor, history, Reset or terminal-label request is covered by the malformed/unsupported row, not an invented auxiliary port.
+
+Valid Next and Sample wrappers expose their complete ordered inner replies and computed results. For a fixed codec, use three-bit request tags for Next, Sample, Recall and Length; Next has one bit payload and the others none. Other tags or excess payload are BadFrame. Each reply has a fixed three-bit result tag, a list of length-delimited complete inner reply frames and its typed result payload. Encode every list/frame length by Assumption 34.2's nonnegative-integer code; encode a word by its coded length followed by its actual bits. Next has no further result beyond its four inner replies. Sample appends the coded list of its $N$ canonical rational values and the pre-window word and coded length. Recall appends the decoded word, and Length its coded length. BadFrame has no inner frames or result payload. Outer End, local acknowledgement and Return complete each enabled wrapper. Invalid complete wrapper input returns BadFrame without inner calls, and a proper prefix remains pending. Optional Recall and Length are admitted only while the binary-origin promise is maintained: actually Hold, enumerate from the current predictive field as in Theorem 38.2, and return that ACK followed by the decoded current chain or its length. These are backed computations after an actual Hold, not a source word oracle. On arbitrary controls or growth the wrapper admission flag is cleared; no off-image termination claim is made. Read/Hold and the admitted binary wrappers preserve it.
+

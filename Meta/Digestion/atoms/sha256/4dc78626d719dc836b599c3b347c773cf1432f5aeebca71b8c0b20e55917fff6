@@ -1,0 +1,87 @@
+**定义 19.1（完整单位来源核与非恒定增益像）。** Let
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+\mathcal P=\left\{\begin{pmatrix}a&b\\c&1-a\end{pmatrix}:
+0<a<1,\ b,c>0,\ bc=a(1-a)\right\}.
+$$
+
+
+Set $S=\{(w,e):w\in\{J,M\}^7,\ e\in\{0,1\}\}$, and fix an arbitrary complete tuple $\mathbf P\in\mathcal P^S$. Repetitions are allowed. For a nonempty chronological prefix $v=E_1\cdots E_i$, put $A_v=E_i\cdots E_1$, let $S_v$ be its descendant slots, and let $q_v$ be the first descendant under $J<M$, $0<1$. Define
+
+$$
+t_v(P)=\operatorname{tr}(A_vP),\qquad
+\ell_v(P)=(t_v(P)-1,\ it_v(P),\ i^2t_v(P),\ i^3t_v(P)).
+$$
+
+
+The matrix $B$ has all rows
+
+$$
+(Bx)_{v,q}=\ell_v(P_q)x_q-\ell_v(P_{q_v})x_{q_v},
+\qquad q\in S_v\setminus\{q_v\},\quad 1\le |v|\le7.
+$$
+
+
+Thus $B$ is the original $1538\times1024$ matrix, containing all $254$ prefixes. Throughout,
+
+$$
+V=\ker B\subseteq\mathbb R^{1024},\qquad
+G_qx=x_q,\qquad D_wx=x_{(w,0)}-x_{(w,1)}\in\mathbb R^4.
+$$
+
+
+There is no restriction to a subspace of this kernel. Write
+
+$$
+g_q(T)=\sum_{r=0}^3x_{qr}T^r,\qquad k_q=g_q(0),\qquad\delta_q=-k_q.
+$$
+
+
+These are polynomial-valued or scalar-valued linear maps on $V$. Zero blocks are permitted in every linear identity below. A nonzero block represents the original legal gain and its normalized drift. For any prefix, the equations defining $V$ give a common response map $R_v$, realized by every descendant:
+
+$$
+R_v=t_v(P_q)g_q(|v|)-k_q\qquad(q\in S_v).
+$$
+
+
+Assume only the unit-signature source condition
+
+$$
+\sigma(P_{j_0})=\sigma(P_{j_1})=1,
+\qquad \sigma(P)=b+c,\qquad j_e=(J^7,e).
+\tag{19.1}
+$$
+
+
+No condition is imposed on the other $254$ sources.
+
+Let $\mathcal C_3=\{p\in\mathbb R[T]:\deg p\le3,\ p(0)=0\}$. The complete $J^7$ coupling of [J-signature, Theorem 4.1](FIB_ORIGINAL_ROOT_J_SIGNATURE_COUPLING_AND_HISTORY_FIBER_DECODER.md) gives the well-defined linear map
+
+$$
+\mathscr H:V\longrightarrow\mathcal C_3,\qquad
+p=\mathscr Hx=g_{j_0}-g_{j_0}(0)=g_{j_1}-g_{j_1}(0).
+\tag{19.2}
+$$
+
+
+Indeed, the differences of the two gains minus their constant difference vanish at the four even clocks $0,2,4,6$. Since both sources have unit signature, every pure-$J$ common response is $R_{J^i}=p(i)$. This also allows independent constant offsets in the two gains; no equality of their constants is asserted.
+
+Define scalar linear maps on this same $V$:
+
+$$
+m=\frac{p(1)+p(3)}2,\qquad
+\Delta=p(3)-p(1),\qquad E=3p(4)-2p(2),
+$$
+
+
+$$
+\kappa=p(6)-p(5),\qquad \lambda=p(7)-p(5).
+\tag{19.3}
+$$
+
+
+All ranks below are ranks of maps on $V$.
+
+

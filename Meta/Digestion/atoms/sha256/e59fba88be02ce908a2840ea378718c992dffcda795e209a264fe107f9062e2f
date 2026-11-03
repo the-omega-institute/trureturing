@@ -1,0 +1,106 @@
+**Theorem 44.2 (same-world reduction and explicit error geometry).** For any fixed chart and positive $\alpha,\beta$, the original compatible worlds at that source correspond exactly to pairs $(q,\xi)$ satisfying
+
+$$
+ q\in\mathbb R^p\setminus\{0\},\qquad
+ |\xi_i|\le\delta\ (0\le i<L),\qquad
+ C_\nu q+W\xi=b.
+ \tag{44.4}
+$$
+
+The correspondence sets $Q(\tau)=\sum_{j=0}^{p-1}q_j\tau^j$, $H=(\alpha+\beta)Q$ and obtains the unique whole $D\in\Pi_d$ by interpolation of
+
+$$
+ R_i=y_i-B_{\nu,i}Q(i)-\xi_i.
+ \tag{44.5}
+$$
+
+Consequently the allowed gain vectors, before imposing $q\ne0$, form the empty or compact polytope
+
+$$
+ K_\nu(\alpha,\beta)=\{q:b-C_\nu q\in Z_\delta\}.
+ \tag{44.6}
+$$
+
+The following concrete lists describe the error geometry, with no dependence on source parameters. For every $(r-1)$-element subset $J\subset\{0,\ldots,L-1\}$, define the coefficient vector $n_J\in\mathbb R^r$ and positive scalar $h_J$ by
+
+$$
+ \rho_J(\tau)=\prod_{j\in J}(\tau-j)
+             =\sum_{a=0}^{r-1}(n_J)_a\tau^a,
+ \qquad h_J=\sum_{i=0}^{L-1}|\omega_i\rho_J(i)|.
+ \tag{44.7}
+$$
+
+Then, including $\delta=0$,
+
+$$
+ t\in Z_\delta
+ \quad\Longleftrightarrow\quad
+       \eta n_J^{\mathsf T}t\le\delta h_J
+       \quad\text{for every }(J,\eta),\quad \eta\in\{+1,-1\}.
+ \tag{44.8}
+$$
+
+There are
+
+$$
+ F=2\binom{L}{r-1}
+ \tag{44.9}
+$$
+
+signed facet labels. For a second list let $G\subset\{0,\ldots,L-2\}$ have at most $r-1$ elements and let $\epsilon\in\{+1,-1\}$. Define
+
+$$
+ \sigma_i^{\epsilon,G}
+    =\operatorname{sgn}(\omega_i)\epsilon
+                    (-1)^{|\{j\in G:j<i\}|},\qquad
+ v_{\epsilon,G}=W\sigma^{\epsilon,G}.
+ \tag{44.10}
+$$
+
+These are precisely the distinct vertices of $Z_1$. In particular
+
+$$
+ Z_\delta=\delta\operatorname{conv}\{v_{\epsilon,G}\},\qquad
+ V=2\sum_{j=0}^{r-1}\binom{L-1}{j}
+ \tag{44.11}
+$$
+
+is the vertex count for $Z_1$, even though $Z_0=\{0\}$. $F$ and $V$ count labels and vertices, respectively, not arithmetic operations.
+
+**Proof.** The Lagrange formula with the weights (44.2) gives
+
+$$
+ \sum_{i=0}^{L-1}\omega_i i^m=0\quad(0\le m\le L-2).
+ \tag{44.12}
+$$
+
+Indeed interpolate $\tau^m$ at all $L$ clocks and compare the coefficient of $\tau^{L-1}$. This is an immediate use of the standard Lagrange formula and barycentric weights in Berrut–Trefethen, equations (2.1) and (3.2), rather than a new interpolation theorem. Since $(r-1)+d=L-2$, $W$ annihilates every sampled polynomial in $\Pi_d$. Any $r$ columns of $W$ are independent: their determinant is a nonzero product of the selected weights and a Vandermonde determinant at distinct clocks. Thus $\operatorname{rank}W=r$, and dimension gives
+
+$$
+ \ker W=\{(D(i))_{i=0}^{L-1}:D\in\Pi_d\}.
+ \tag{44.13}
+$$
+
+Applying $W$ to the original equation (37.3) with raw errors gives (44.4). Conversely (44.4) makes (44.5) lie in this kernel, so it is the evaluation vector of one unique polynomial of degree at most $d$. Interpolation at the fixed clocks $0,\ldots,d$ recovers that polynomial, and (44.13) makes it agree at every remaining paid clock. This proves the exact correspondence, not just separate gain and drift feasibility. It includes every original $(P,H,D,\xi)$ by taking its own $q=\operatorname{coeff}(H)/(\alpha+\beta)$ and its own error vector.
+
+Equation (44.6) follows by projecting over that common box. It is exactly the projection onto $q$ of the coefficient polytope in Lemma 37.2. Hence it is compact when nonempty. Equivalently, $C_\nu$ is injective: $C_\nu q=0$ would make $B_\nu Q$ a sampled drift polynomial by (44.13), contradicting (37.4) unless $q=0$. This also directly bounds the inverse image of the bounded set $b-Z_\delta$.
+
+For completeness the required finite-dimensional polyhedral steps are standard: a polytope is the intersection of its facet halfspaces and the convex hull of its vertices. They are used here in their real-coefficient form, as in Kaibel's polyhedral structure and face results. Their particular normals and vertices in (44.7) and (44.10) can be determined directly. For any direction $n$, maximizing $n^{\mathsf T}W\xi$ over $[-1,1]^L$ fixes $\xi_i=\operatorname{sgn}(n^{\mathsf T}g_i)$ when this scalar is nonzero and leaves the other coordinates free. The exposed face is therefore a translate of the sum of the segments $[-g_i,g_i]$ on which $n^{\mathsf T}g_i=0$. Its dimension is the rank of those generators.
+
+A nonzero $n$ corresponds to the polynomial $\rho(\tau)=\sum_{a<r}n_a\tau^a$. It annihilates $g_i$ exactly when $\rho(i)=0$, and so annihilates at most $r-1$ generators. Every such set is independent. A facet has dimension $r-1$, so its zero set has exactly $r-1$ clocks and its polynomial is a nonzero scalar multiple of $\rho_J$. Conversely each $J$ in (44.7) gives such a facet. Its two support constants are exactly $h_J$. This proves (44.8) for $\delta>0$.
+
+For $\delta=0$, both signs in (44.8) imply $n_J^{\mathsf T}t=0$ for every $J$. These $n_J$ span $\mathbb R^r$: choose any $r$ clocks and delete each one in turn; the resulting $r$ polynomials $\rho_J$ are nonzero at their respective omitted clock and zero at the others, hence are independent. Thus $t=0$, proving the zero-radius case without dividing by $\delta$.
+
+A vertex of the full-dimensional $Z_1$ has an exposing direction off all finitely many hyperplanes $n^{\mathsf T}g_i=0$: its strict exposing directions contain an open set, and a finite union of proper hyperplanes cannot fill that set. For such a direction its unique box maximizer has signs $\operatorname{sgn}(\omega_i)\operatorname{sgn}(\rho(i))$. The sequence $\operatorname{sgn}(\rho(i))$ changes sign at most $r-1$ times, since every change requires a distinct real root between adjacent clocks. This gives (44.10).
+
+Conversely, for every displayed $(\epsilon,G)$ the polynomial
+
+$$
+ \rho_{\epsilon,G}(\tau)
+       =\epsilon(-1)^{|G|}
+                   \prod_{j\in G}(\tau-j-1/2)
+ \tag{44.14}
+$$
+
+has precisely those nonzero sample signs and has degree at most $r-1$. Its direction uniquely maximizes the box at $\sigma^{\epsilon,G}$, so its image is an exposed vertex. Two different sign vectors in this list cannot have the same image: the direction exposing the first uniquely maximizes on the entire box, and would also maximize at the second if their images agreed. Counting the initial sign and the change locations proves (44.11). No list of all $2^L$ box corners is generated by the construction. $\square$
+

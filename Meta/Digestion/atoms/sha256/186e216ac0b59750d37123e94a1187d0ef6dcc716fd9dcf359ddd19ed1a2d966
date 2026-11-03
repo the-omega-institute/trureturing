@@ -1,0 +1,61 @@
+**Proposition 42.1 (exact remainder beyond every prescribed weak Taylor depth).** Retain the single record $y^{\rm E}$ and radius one of (41.1). For each integer $n\ge0$, put $m=\max\{1,n\}$. There is a family of legal whole worlds, at the same five original clocks, indexed by $0<r\le1/8$, with $\|P_r\|_{\max}=1/r$, such that the only violated raw constraint is at clock $3$ and its exact excess over radius one is
+
+$$
+       \eta_m(r)=\frac34 r^{m+1}(1+r-r^{m+1})>0.
+ \tag{42.1}
+$$
+
+In particular every signed raw slack has a Taylor expansion at $r=0$ whose first nonzero coefficient through order $n$, if there is one, is nonnegative. The clock-$3$ slack vanishes through order $n$, yet is strictly negative at every positive $r$. All the worlds are compatible at radius $1+\eta_m(r)$, and none is compatible at radius one.
+
+**Proof.** Set
+
+$$
+ \begin{gathered}
+ t_r=1-r^m,\qquad u_r=r^{-1},\qquad
+ v_r=r\,t_r(1-t_r),\\
+ P_r=\begin{pmatrix}1-t_r&u_r\\v_r&t_r\end{pmatrix},\qquad
+ h_r=\frac34r,\qquad b_r=u_r+v_r+t_r,\qquad
+ D_r=\frac32-h_rb_r.
+ \end{gathered}
+ \tag{42.2}
+$$
+
+For every positive parameter in the stated interval, all source entries are positive, the trace is one, and $u_rv_r=t_r(1-t_r)$ gives determinant zero. Its largest entry is $1/r$. The one whole constant gain $h_r$ is nonzero and the one whole constant drift is $D_r$. Substitution into all five reports, without a truncated expansion, gives
+
+$$
+ \begin{aligned}
+ z_0&=\frac34+\frac34r^{m+1}
+                         -\frac34r^{m+2}(1-r^m),\\
+ z_1&=\frac32,\\
+ z_2&=\frac32+\frac34r,\\
+ z_3&=\frac32+\frac34r^{m+1}(1+r-r^{m+1}),\\
+ z_4&=\frac94+\frac34r(2-r^m).
+ \end{aligned}
+ \tag{42.3}
+$$
+
+Here $z_3-z_1=h_r(1+v_r-t_r)$ is the same exact contrast as (41.6). For $r\le1/8$, $3/4\le z_0\le3/4+3/256<1$, $z_2\in[3/2,51/32]$, and $9/4\le z_4\le39/16<5/2$. These prove all raw constraints except clock $3$; clock $1$ is exactly active with $y_1-z_1=1$. At clock $3$, $z_3-y_3=1+\eta_m(r)$, where the factor in (42.1) is positive. The remaining signed constraint at that clock has slack $2+\eta_m(r)>0$.
+
+The reports and their signed slacks are polynomials in $r$ and extend to $r=0$. Every slack except the active clock-$1$ slack and the violating clock-$3$ slack has a strictly positive constant term. The clock-$1$ active slack is identically zero; the violating clock-$3$ slack is exactly
+
+$$
+ 1-(z_3-y_3)
+       =-\frac34r^{m+1}
+        -\frac34r^{m+2}
+        +\frac34r^{2m+2}
+       =-\frac34r^{m+1}+O(r^{m+2}).
+ \tag{42.4}
+$$
+
+Thus its coefficients through the prescribed depth $n\le m$ are all zero, with a strictly negative leading coefficient at the next displayed order. Formula (42.4), together with the positive exact factor in (42.1), specifies both the remainder and its sign for the whole positive interval; it is not a claim inferred from a finite truncation. This proves every assertion. $\square$
+
+The auxiliary $12$ gain in this family is $u_rh_r=3/4$, and $D_r\to3/4$, an interior point of (41.3). In chart (37.1) its exact source parameters are
+
+$$
+              \alpha=r^{m+1},\qquad
+              \beta=r-r^{m+1},\qquad s=r.
+ \tag{42.5}
+$$
+
+The endpoint ratio $t_r=\beta/s$ therefore approaches one at an arbitrary prescribed polynomial rate, while the escaping entry is always $1/r$. This exhibits why weak nonnegative finite jets along a proposed family cannot by themselves certify exact-radius compatibility: a strictly negative slack can first appear beyond that chosen depth even with nonzero limiting auxiliary gain. It does not contradict effective finite-order bounds obtained using the full polynomial system and correctly selected algebraic cells. Theorem 40.1 uses that full system and exact signs; it does not promote the weak jets of these deliberately chosen arcs into passing evidence.
+

@@ -1,0 +1,111 @@
+**定理 8.1（任何内点局部最大值的 Fiedler 重数恰为二）。** 固定 $n\ge5$。
+若实际正环的电导 $c$ 是尺度不变量 $\lambda_2R$ 的局部最大点，
+或是任意固定 $R_0>0$ 水平上 $\lambda_2$ 的局部最大点，则
+
+$$
+\lambda_2(L(c))=\lambda_3(L(c))<\lambda_4(L(c)).
+\tag{8.1}
+$$
+
+因此 (8.1) 适用于定理 7.1 的每一个全局最大点。
+
+证明。先在 $p\in\Delta^\circ$ 上证明 $\rho(p)$ 在 $\Phi$ 的局部最大点
+不能单重。暂设它单重，取单位最大特征向量 $u\in H$，并记
+
+$$
+v_i=a_i-\bar a(p),\qquad h_i=\langle u,v_i\rangle,\qquad
+T=T(p),\quad\rho=\rho(p),\quad\beta=\frac T\rho.
+$$
+
+若 $\xi\in\mathbb R^n$ 满足 $\sum_i\xi_i=0$，协方差的一阶变化为
+$\sum_i\xi_i v_i v_i^{\mathsf T}$。
+简单特征值的 Rayleigh 展开（与 (6.4) 的谱隙配方论证相同）给出
+
+$$
+D\Phi(p)[\xi]=\frac n\rho
+\sum_i\xi_i\bigl(\|v_i\|^2-\beta h_i^2\bigr).
+\tag{8.2}
+$$
+
+局部最大点允许所有这样的双向变化，故括号对 $i$ 为常数；
+其 $p$ 加权和是 $T-\beta\rho=0$，所以
+
+$$
+\|v_i\|^2=\beta h_i^2\qquad\text{对所有 }i.
+\tag{8.3}
+$$
+
+仿射无关性和 $p_i>0$ 保证 $\bar a(p)\ne a_i$，所以每个 $v_i\ne0$，
+继而每个 $h_i\ne0$。定义
+
+$$
+S=\sum_i\frac{p_i}{h_i},\qquad
+w=\sum_i\frac{p_i v_i}{h_i},\qquad
+C=\sum_i\frac{p_i}{h_i}v_i v_i^{\mathsf T}.
+$$
+
+由 $\sum_i p_iv_i=0$、$\sum_i p_i h_i=0$ 以及 (8.3)，有
+
+$$
+\langle u,w\rangle=1,\qquad Cu=0,\qquad\operatorname{tr}C=0,
+\qquad \|w\|^2<\sum_i p_i\left\|\frac{v_i}{h_i}\right\|^2=\beta.
+\tag{8.4}
+$$
+
+最后的不等式严格：平方范数的加权凸性取等号要求所有 $v_i/h_i$ 相同，
+这会使全部 $v_i$ 共线，与 $n$ 个 $a_i$ 在 $n-1\ge2$ 维空间中
+仿射无关相矛盾。
+
+对充分小的正负 $t$，令
+
+$$
+p_i(t)=\frac{p_i(1+t/h_i)}{1+tS},\qquad d(t)=1+tS.
+$$
+
+这些坐标严格为正、总和为 $1$，并在 $t=0$ 回到 $p$。
+相对于旧均值，新均值为 $tw/d(t)$，故有精确公式
+
+$$
+M(p(t))=\frac{M(p)+tC}{d(t)}
+-\frac{t^2}{d(t)^2}ww^{\mathsf T},\qquad
+T(p(t))=\frac{T}{d(t)}-\frac{t^2}{d(t)^2}\|w\|^2.
+\tag{8.5}
+$$
+
+因 $Cu=0$，第一项在 $\mathbb Ru\oplus u^\perp$ 上是块对角的，
+$u$ 方向特征值为 $\rho/d(t)$。
+单重性保证它与另一块的最大特征值保持一个固定正谱隙。
+第二项的交叉块为 $O(t^2)$，且其 $u,u$ 元为 $-t^2/d(t)^2$，
+因为 $\langle u,w\rangle=1$。与 (6.4) 相同的配方上界和取 $u$ 的下界给出
+
+$$
+\rho(p(t))=\frac{\rho}{d(t)}-\frac{t^2}{d(t)^2}+O(t^4).
+$$
+
+代回 (8.5)，得到
+
+$$
+\Phi(p(t))=n\beta+
+\frac n\rho\bigl(\beta-\|w\|^2\bigr)t^2+O(t^3)>\Phi(p)
+$$
+
+对所有充分小的非零 $t$ 成立，违背局部最大性。
+这证明最大特征值必须至少二重；整个论证没有假定其它特征值单重。
+
+由 (5.5)，$M(p)$ 的最大特征空间与 $L(c)$ 的 Fiedler 特征空间相同。
+而实际正环上任意特征值 $\lambda$ 的特征向量满足
+
+$$
+c_i x_{i+1}=(c_{i-1}+c_i-\lambda)x_i-c_{i-1}x_{i-1},
+$$
+
+顶点和边指标按周期解释。因 $c_i>0$，两个相邻坐标唯一确定其余坐标，
+所以每个特征空间维数至多为 $2$。
+实对称性使代数重数也至多为 $2$，故 Fiedler 重数恰为 $2$，即 (8.1)。
+
+最后，$c\mapsto(p,s)$ 是正电导空间到
+$\Delta^\circ\times(0,\infty)$ 的光滑双射，逆为 $c_i=1/(sp_i)$。
+$\lambda_2R$ 只依赖 $p$。在 $R=R_0$ 水平上，式 (5.5) 将 $s$ 唯一确定为
+$R_0/(nT(p))$，式 (7.3) 给出双向连续的参数化，
+其目标为 $\Phi(p)/R_0$。因此两种局部最大性都归于刚证明的情形。∎
+

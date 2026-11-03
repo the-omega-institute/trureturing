@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:7bb35b6e455c55f8592e98e46ee50b059f23283034d53b1a95c62898ced1ef75
+  normalized_sha256: sha256:7bb35b6e455c55f8592e98e46ee50b059f23283034d53b1a95c62898ced1ef75
+cas_ref: sha256:7bb35b6e455c55f8592e98e46ee50b059f23283034d53b1a95c62898ced1ef75
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCounting.actual_spectral_counting
+    target_statement_id: sha256:88e7bad81c9401785489f7ad505543ab2000383b4eedc0cb01ebc4a055e4893e
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.actual_compact_resolvent
+    target_statement_id: sha256:81fa82e923d7f22320584528a9f72de39a6a14cee5077eac1b511634de7de805
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.actual_positive_spectral_exhaustion
+    target_statement_id: sha256:6a5f89060b8ed6dcfafda8defbf324be95da43b0f2844b58db1a5059e12776e2
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryOperator.actual_self_adjoint_realization
+    target_statement_id: sha256:fa58c9b7b6bbe7f5fa650a8d33d3d8b25eb703271d279781f017b8926b9d59c3
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.actual_polar_domains_resolvent
+    target_statement_id: sha256:e673bf26e73549233dfdf1df41020daf5b0e16047d2f4cadaaa40f357171c06d
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryStopping.actual_stopping_partition
+    target_statement_id: sha256:6649cf425767f3402a2a6eb7286fe2f0d5edaed029b352c2c3052b371bc50f5e
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryStopping.actual_stopping_residual
+    target_statement_id: sha256:c90e682d1a60b849b2e3bf31868da268a481286e04828e1f09d2fdbdaf326e88
+receipts:
+  unresolved_subitems: []

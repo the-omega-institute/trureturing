@@ -1,0 +1,37 @@
+#### 推论 5.2（分离内部块的乘法律与对数级数）
+
+若 $R$ 的诱导图分解为无交叉边的分量 $R_1,\ldots,R_m$，
+则上式关系参数满足
+
+$$
+\eta_{\mathrm{odds}}=\prod_{j=1}^m\eta_j,\qquad
+\theta=\sum_{j=1}^m\theta_j,\quad\theta_j=\log\eta_j,
+$$
+
+其中每个 $\eta_j$ 由定理 [5.1](#thm-elimination) 在 $R_j$ 上的四个配分函数比给出。
+进一步，固定非退化 $r,X,Y$，以
+$\theta_n=\sum_{j\le n}\theta_j$ 定义补全律 $p_{\theta_n}$。
+若 $\sum_{j\ge1}|\theta_j|<\infty$，则存在有限 $\theta_\infty$，且
+
+$$
+\boxed{
+\operatorname{TV}(p_{\theta_n},p_{\theta_\infty})
+\le\frac r8\sum_{j>n}|\theta_j|.
+}
+$$
+
+**证明。**
+
+无交叉边的独立集与权重逐分量分解，故各个配分函数是分量配分函数的乘积，
+四项比也逐分量相乘。对数将其转成加法。
+绝对可和给 $\theta_n\to\theta_\infty$，应用定理 [4.3](#thm-odds) 得尾和界。
+
+∎
+
+这给“递归类似级数”一个确切实现：每一块提供有效耦合，归一化补全将耦合转换成概率律，
+可和尾项控制完整概率误差。级数结论在固定边缘的补全族中成立；
+若改变真实图时三轴也改变，需要再控制边缘变化。
+它没有凭有限公式自动构造一个无限图的实际 Gibbs 来源。
+
+<a id="section-6"></a>
+

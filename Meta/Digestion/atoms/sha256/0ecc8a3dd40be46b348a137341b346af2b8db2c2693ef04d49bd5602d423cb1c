@@ -1,0 +1,30 @@
+**Theorem 97.4 (a rational bijection on the completed-cut image).**
+$H_s$ maps $V_+$ bijectively onto $V_+$. For every $k\ge0$, after
+$k$ actually performed fragments,
+
+$$
+w_k=H_s^k A^Mz\in V_+,
+\qquad
+z=(A|_{V_+})^{-M}(H_s|_{V_+})^{-k}w_k.
+\tag{97.5}
+$$
+
+**Proof.** The leading $A$ in (97.4) puts every successor in $V_+$.
+If $H_sw=0$ with $w\in V_+$, then
+$(I+e_se_s^{\mathsf T})w\in\ker A$. Its inner product with $w$
+is zero by orthogonality, while it is also
+$\|w\|^2+w_s^2$. Hence $w=0$. Finite dimension gives bijectivity.
+Its representing matrix in the rational basis $U$ is nonsingular
+rational, so elimination computes its rational inverse. Induction on
+the actual fragments proves the first formula. Applying the restricted
+inverses in the displayed order gives the second; no commutation of
+$A$ and $H_s$ is assumed. $\square$
+
+The intermediate field after Add need not belong to $V_+$. The theorem
+concerns completed fragments, with the real Read at its intermediate
+field and the actual final Tick included. The existing predictor
+tracks all these intermediate states and also every other sufficiently
+backed original-menu continuation. Arbitrary such growth or control
+can leave this historical chart; it does not preserve (97.5) merely
+because current prediction continues to work.
+

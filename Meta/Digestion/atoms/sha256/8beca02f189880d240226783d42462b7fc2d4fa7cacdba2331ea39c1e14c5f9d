@@ -1,0 +1,124 @@
+**Lemma 14.3 (A uniform cost for every nonsingleton tail event).** Under (14.2), let $C$ and $D$ be the sets of Lemma 14.2 and put
+$$
+B=|T\cap D|,\qquad L=|T\cap C|,\qquad A=\{B>0\},
+$$
+$$
+u=\sum_{j\in D}t_j,\qquad t_j=y_j,\qquad
+\delta=\max_{j\in D}t_j,\qquad c=\min_{i\in C}y_i.
+$$
+Uniformly in $1\le h\le R\sqrt a$,
+$$
+\mathbb P(A,K\ge2)=O_R(ha^{-5/2}),
+\tag{14.10}
+$$
+$$
+\delta\le\frac{1+O_R(\sqrt{h/a})}{\sqrt2\,a^{3/2}},\qquad
+c\ge1-O_R\!\left(a^{-1}+\sqrt h\,a^{-3/4}\right).
+\tag{14.11}
+$$
+Consequently every such law satisfies the strict deficit-payment condition (13.18) for all sufficiently large $a$, with one threshold depending only on $R$.
+
+**Proof.** Use the polynomial and scalar remainder from Lemma 13.4:
+$$
+Q(L)=\alpha-\beta L+L^3\ge0,\quad
+\alpha=a(a+1)(2a+1),\quad \beta=3a^2+3a+1,
+$$
+$$
+\mathcal A_a(u)=\frac{r^2(a^2+3a+1+au)}{(a-u)^2}.
+$$
+That lemma's algebraic certificate (13.5) is valid for varying $h$ whenever $a^2\ge3h(2a+1)$, which holds uniformly here. In fact $a^2\ge6h(2a+1)$ eventually, so the same proof gives
+$$
+d(x)\ge H_D-u\mathcal A_a(u)+\mathbb E Q(L)+\mathcal S_f,
+\qquad
+\mathcal S_f\ge\frac{a^2}{2}\sum_{i\in C}\left(y_i-\frac{a-u}{r}\right)^2.
+\tag{14.12}
+$$
+Indeed $y_i\ge u/h$ and
+$$
+f_u''(y)=\frac{2(a^2y-3(2a+1)u)}{y^4}\ge a^2
+\quad(u/h\le y\le1)
+$$
+under the stronger arithmetic condition. This proves the stated strong Jensen remainder without a core floor assumption.
+
+Lemma 14.2 gives $t_j<b/a$ and $u\le bh/a=O_R(a^{-1/2})$. Consequently $\mathcal A_a(u)=O_R(a^2)$. Define the positive number
+$$
+\eta=\sqrt{\alpha-\mathcal A_a(u)}
+=\sqrt2\,a^{3/2}+O_R(\sqrt a).
+\tag{14.13}
+$$
+For one realized type in $A$, put
+$$
+V=\sum_{j\in T\cap D}t_j^{-1},\qquad
+W=K^2\sum_{j\in T\cap D}t_j^{-2},\qquad
+F=W+Q(L)-\mathcal A_a(u)B-2\eta V.
+$$
+If $K=1$, then $B=1,L=0$, so for $T=\{j\}$,
+$$
+F=(t_j^{-1}-\eta)^2.
+\tag{14.14}
+$$
+There is a constant $\kappa_R>0$ such that every type in $A$ with $K\ge2$ satisfies
+$$
+F\ge\kappa_Ra^3.
+\tag{14.15}
+$$
+To prove this, first take $2\le K\le\sqrt a$. Completing each square gives
+$$
+W-2\eta V\ge-\frac{B\eta^2}{K^2}\ge-\frac{\eta^2}{2}.
+$$
+Since $B,L\le K\le\sqrt a$,
+$$
+F\ge\alpha-\beta\sqrt a-\mathcal A_a(u)\sqrt a-\eta^2/2
+\ge a^3/2
+$$
+for sufficiently large $a$. If $K>\sqrt a$, every reciprocal $z=t_j^{-1}$ is greater than $a/b$. Equation (14.13) then implies $2\eta z\le K^2z^2/2$ uniformly for large $a$. Hence
+$$
+W-2\eta V\ge\frac{K^2}{2}\sum_{j\in T\cap D}t_j^{-2}
+\ge\frac{Ba^3}{2b^2}.
+$$
+Using $Q(L)\ge0$ and $\mathcal A_a(u)=O_R(a^2)$ gives $F\ge Ba^3/(4b^2)$. Thus (14.15) holds with $\kappa_R=\min\{1/2,1/(4b^2)\}$ after increasing the threshold. This argument treats the actual $B,L,K$ together; it never chooses them independently.
+
+As $\mathbb E V=h$ and $\mathbb E B=u$, (14.12) becomes
+$$
+d(x)\ge2\eta h+\mathbb E[F;A]+\mathbb E[Q(L);A^c]+\mathcal S_f.
+\tag{14.16}
+$$
+All three terms after $2\eta h$ are nonnegative. Comparing (14.16) with (14.1), using (14.13), proves
+$$
+\mathbb E[F;A]+\mathbb E[Q(L);A^c]+\mathcal S_f
+\le C_Rh\sqrt a
+\tag{14.17}
+$$
+for a finite constant $C_R$. Equations (14.15) and (14.17) prove (14.10). Equations (14.12) and (14.17) also give
+$$
+\sum_{i\in C}\left(y_i-\frac{a-u}{r}\right)^2
+=O_R(ha^{-3/2}),
+$$
+which proves the assertion about $c$ in (14.11), since $u=O_R(a^{-1/2})$.
+
+It remains to control each tail marginal, rather than its average. Write $q=\mathbb P(A,K\ge2)$ and $x_j=x_{\{j\}}$. For each $j\in D$,
+$$
+0\le t_j-x_j\le q,\qquad \eta q=O_R(h/a)=o_R(1).
+\tag{14.18}
+$$
+If $t_j\ge1/\eta$, then (14.18) implies $x_j\ge t_j/2$ eventually. With $w=\eta t_j\ge1$, (14.14) and (14.17) yield
+$$
+\frac{\eta}{2}\frac{(w-1)^2}{w}
+\le x_j(t_j^{-1}-\eta)^2\le C_Rh\sqrt a,
+\qquad
+\frac{(w-1)^2}{w}=O_R(h/a).
+$$
+For $w\ge1$, the last inequality implies $w-1=O_R(\sqrt{h/a}+h/a)=O_R(\sqrt{h/a})$. Marginals less than $1/\eta$ already satisfy this upper bound. Equation (14.13) proves the bound on $\delta$ in (14.11).
+
+Since $h\le R\sqrt a$, these estimates imply uniformly
+$$
+\delta^2\le\frac{1+O_R(a^{-1/4})}{2a^3},\qquad
+c\ge1-O_R(a^{-1/2}).
+$$
+Finally $\max\{\alpha,\beta\}=(2+O(a^{-1}))a^3$. Therefore
+$$
+\frac3{\delta^2}\ge(6-o_R(1))a^3
+>\frac{\max\{\alpha,\beta\}}{c^2}=(2+o_R(1))a^3
+$$
+for all sufficiently large $a$, proving the strict condition. ∎
+

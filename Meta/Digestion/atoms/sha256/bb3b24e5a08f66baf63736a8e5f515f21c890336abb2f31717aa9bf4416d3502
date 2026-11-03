@@ -1,0 +1,69 @@
+**Definition 15.2.1 (The factor families and their exact matrices).**
+For each $z>0$ use either of the following families. Arrays below are
+indexed by the original clocks $0,\ldots,7$, with terminal action $M$.
+
+$$
+\begin{array}{c|c|c|c}
+\text{family}&(b,r)&\text{legal parameter}&\kappa\\ \hline
+\mathrm a&(t,1-zt)&0<t<1/z&1\\
+\mathrm b&(zt,t)&0<t<1&z
+\end{array}
+\tag{15.6}
+$$
+
+Their traces are $(A_i+B_it)/\kappa$, where
+
+$$
+\begin{aligned}
+A^{\mathrm a}&=(1,z,1,z+1,1,z+2,z+3,2z+5),\\
+B^{\mathrm a}&=(0,1-z^2,1,1-z-z^2,2,3-z-z^2,5-z-z^2,
+                    8-2z-2z^2),\\
+A^{\mathrm b}&=(z,1,z,1,z,z+1,2z+1,3z+2),\\
+B^{\mathrm b}&=(0,z^2-1,z^2,z^2+z-1,2z^2,3z^2+z-1,
+                    5z^2+z-1,8z^2+2z-2).
+\end{aligned}
+\tag{15.7}
+$$
+
+For either family define the seven-by-eight polynomial matrix
+
+$$
+F(z)_{i,\cdot}=
+\bigl((A_i i^k-\kappa\mathbf1_{k=0})_{k=0}^3,
+      (B_i i^k)_{k=0}^3\bigr),\qquad 1\le i\le7.
+\tag{15.8}
+$$
+
+All column indices in the next definition start at zero. Set
+
+$$
+\begin{gathered}
+\nu_{\mathrm a}=48,\quad\nu_{\mathrm b}=48z^3,\qquad
+V_j(z)=\frac{(-1)^{j+1}\det F_{\widehat j}(z)}{\nu},\quad0\le j\le7,\\
+H_*(t)=\sum_{k=0}^3V_kt^k,\qquad
+K_*(t)=\sum_{k=0}^3V_{k+4}t^k,\\
+C_{i,\cdot}=
+(A_iK_*(i)-\kappa K_*(0),\ B_iK_*(i),\ -B_iH_*(i)),
+\quad1\le i\le4,\\
+Y=\kappa(24,147/5,24,18)^{\mathsf T},\qquad
+D=\det C_{\{1,2,3\},\{0,1,2\}}.
+\end{gathered}
+\tag{15.9}
+$$
+
+Here $F_{\widehat j}$ deletes column $j$. Define $Q_{\mathrm a}$ and
+$Q_{\mathrm b}$ by the exact divisions
+
+$$
+\begin{aligned}
+\det[C\mid Y]&=-\frac{1296}{5}(z^2+3z+1)^2Q_{\mathrm a}(z),\\
+\det[C\mid Y]&=-\frac{1296}{5}z^4(z^2-z-1)^2Q_{\mathrm b}(z),
+\end{aligned}
+\tag{15.10}
+$$
+
+respectively. Finally let $N_k$ be the remainder modulo the appropriate
+$Q$ of the determinant obtained from $C$'s first three rows by replacing
+column $k$ with $Y$'s first three entries, for $k=0,1,2$.
+Every remainder is the ordinary polynomial remainder over $\mathbb Q$.
+

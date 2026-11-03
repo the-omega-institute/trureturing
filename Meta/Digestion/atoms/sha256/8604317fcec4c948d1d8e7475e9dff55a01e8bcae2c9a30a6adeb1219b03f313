@@ -1,0 +1,13 @@
+### 7.2 有限高度下的匹配精度界
+
+对整数 $H\ge1$，定义
+
+$$
+D_H=\{(a,b)\in\Gamma_d:\left\lVert a\right\rVert_\infty,\left\lVert b\right\rVert_\infty\le H\},
+\quad
+\delta_H=\min_{\substack{u,v\in D_H\\u\ne v}}
+\left\lVert P_+u-P_+v\right\rVert_\infty.
+$$
+
+<a id="statement-7-3"></a>
+

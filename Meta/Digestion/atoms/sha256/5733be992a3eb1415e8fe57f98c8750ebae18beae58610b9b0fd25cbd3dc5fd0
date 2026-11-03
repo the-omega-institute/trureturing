@@ -1,0 +1,186 @@
+**引理 130.1（全元组、双尾部的复配分比较）。** 取原 $S_Q,\mathcal D,\ell,c_0,\eta$，
+并对 $\operatorname{Re}z>0$ 定义
+
+$$
+\begin{aligned}
+G_y(z)&=J_P(z,y),\\
+\mathcal C_s(z,y)&=B^{|H|}Z_L(z)\mathcal J_s(z,y),
+ &s&\in\{0,\eta\},\\
+\mathcal C_P(z,y)&=e^{zc_0}\mathcal C_\eta(z,y).
+\end{aligned}
+\tag{130.1}
+$$
+
+其中 $Z_L(z)=\sum_{m_{H^c}}e^{-zS_{H^c}(m)}$ 精确保留每个原低元组。
+存在固定 $c,C>0$，使对每个 $a\in[1,2]$，在整个闭圆盘 $|z-a|\le h$ 上，
+
+$$
+\begin{aligned}
+&\frac{|J_s^{\rm count}(z,y)-\mathcal C_s(z,y)|}{\mathcal C_s(a,y)}
+ +\frac{|G_y(z)-\mathcal C_P(z,y)|}{\mathcal C_P(a,y)}\\
+&\hspace{15mm}\le \mathcal E_Q:=
+ \exp\{-\mu Q^3/64+CQ^2\}
+ +\exp\{-cQ^4+L+CQ^2\},\qquad |y|\le R.
+\end{aligned}
+\tag{130.2}
+$$
+
+分母均在实点 $a$ 取值；并未在复点除以可能为零的配分函数。
+
+**证明。** 先列出实比较分母及低组的共同界。对实 $b$ 在
+$[1-2h,2+2h]$，(128.7) 给
+
+$$
+\frac{Z_L(b)}{Z_L(a)}\le e^{Cm_Q},\qquad a\in[1,2].
+\tag{130.3}
+$$
+
+它只是每个低组的 $U/D_*$ 比值相乘。若需把 $b>2$ 作为实基点，
+Jensen 在参数 $2$ 及 (128.7) 的 $k=1$ 给
+$Z_j(b)/Z_j(2)=\mathbb E_{2,j}e^{-(b-2)S_j}\ge e^{-(b-2)K(1)}$。
+$b<1$ 时用单调性 $Z_j(b)\ge Z_j(1)$。
+因此所有实基点在所列扩展区间也有同样共同常数的单组上下界。
+对固定自然数 $k$，从 $b-1/2\ge1/4$ 与
+$x^ke^{-x/4}\le[4(k+1)]^k$ 得该扩展区间上的单组惊讶矩界；
+独立低组乘积的第 $k$ 矩至多 $[C(k+1)]^{C(k+1)}(1+m_Q)^k$。
+这是对 (128.7) 的直接使用，不把低组改为 Gaussian。
+
+令 $n_H=|H|$，$Z_H^G(b)=\prod_{H}\sqrt{2\pi v_j/b}$。
+把 Gaussian 积分除以这个无输出常数，(123.15)、(129.4)、(129.5) 给
+
+$$
+c_R\sigma e^{-C_R/\delta}\le
+ \frac{\mathcal J_s(b,y)}{Z_H^G(b)}
+ \le C_R\sigma e^{C_R/\delta},\qquad s\in\{0,\eta\}.
+\tag{130.4}
+$$
+
+这里核积分与概率密度相差精确因子 $\sqrt{2\pi}\sigma/\sqrt b$，
+而 $|K_H(t_b)-t_b(V+\sqrt\delta y)|\le C_R/\delta$，
+$\sqrt\delta/\sqrt{W_H}\asymp1$。所以同输出核在两个实阶数之比满足
+
+$$
+\frac{\mathcal C_s(b,y)}{\mathcal C_s(a,y)}\le e^{CQ^2},
+\qquad |b-a|\le2h,
+\tag{130.5}
+$$
+
+因为 $Z_H^G(b)/Z_H^G(a)=(a/b)^{n_H/2}$，$m_Q\le CQ^2$。
+(130.4) 中的 $\sigma$ 在此精确抵消。
+
+现在取高组中心盒的全部格元。原 (126.3)–(126.4) 对每个接上的原低元组给
+
+$$
+\begin{gathered}
+|S_H-S_G|\le\epsilon_Q\le\operatorname{poly}(Q)e^{-\chi Q^3/2},\\
+|T_x-T_G|/\sigma\le\eta_Q
+ \le\operatorname{poly}(Q)
+ \{e^{-(c_q/2-l)Q^3}+e^{-(c_q-2\chi-l)Q^3}\},\\
+|\mathcal D-\mathcal D_G|\le d_Q
+ \le\operatorname{poly}(Q)e^{-(c_q/2-\chi)Q^3}.
+\end{gathered}
+\tag{130.6}
+$$
+
+中心盒内 $|\mathcal D_G|\le\operatorname{poly}(Q)$，故
+$|s\mathcal D^2-s\mathcal D_G^2|\le\operatorname{poly}(Q)d_Q$。
+这些都是逐元组界，未删去任何总偏差或低组情形。
+
+写 $b=\operatorname{Re}z$、$U=(T_G-y)/\sigma$。
+对任意两个实势能 $A,B$，基本积分恒等式
+
+$$
+e^{-zA}-e^{-zB}=-z(A-B)\int_0^1e^{-z[(1-v)B+vA]}\,dv
+\tag{130.7}
+$$
+
+使 $|z|\le3$ 的整个圆盘受到同一实 $b$ 的支配。
+(130.6) 和 $|\lambda_y-U^2/2|\le\eta_Q|U|+\eta_Q^2/2$ 给中心格元误差至多
+
+$$
+C(\epsilon_Q+\operatorname{poly}(Q)d_Q+\eta_Q)
+ (1+|U|)e^{C\eta_Q|U|}
+ e^{-b(S_G+S_L+U^2/2+s\mathcal D_G^2)}.
+\tag{130.8}
+$$
+
+系数中的额外固定多项式一并吸收入 $\operatorname{poly}(Q)$。
+用 $C\eta_Q|U|\le \eta_QU^2+C^2\eta_Q/4$ 把线性指数吸收进
+相对变化 $O(\eta_Q)$ 的邻近宽度。引理 129.2 的同输出插入与邻近宽度结论
+使 (130.8) 的总积分至多
+$\operatorname{poly}(Q)(\epsilon_Q+d_Q+\eta_Q)\mathcal C_s(b,y)$。
+格元体积恰为 $B^{-n_H}$；$e^{-zS_L}$ 未改变，
+其复模求和恰为 $Z_L(b)$。除以 $\mathcal C_s(a,y)$ 时只用 (130.5)，
+不再付 $\sigma^{-1}$。这证明整个复圆盘上的中心部分。
+
+还要包括全部离散尾部与全部连续尾部。对 $b\ge1-2h$，
+复核的模不超过一，秩一选择因子的模也不超过一。
+原有限二项的 Gaussian 惊讶包络与半 escort 界 (128.7)，以及原正态尾，分别给
+
+$$
+\mathbb P_{b,H}^{\rm bin}\{\text{高组中心盒外}\}
+ +\mathbb P_{b,H}^{G}\{\text{中心格元并集外}\}
+ \le e^{-cQ^4+Cm_Q}.
+\tag{130.9}
+$$
+
+具体地，对某个坏坐标先从 $e^{-bS_j}$ 留出固定正比例，
+$S_j\ge cz_j^2-C$ 在 $|z_j|>Q^2$ 给 $e^{-cQ^4}$；
+剩余配分由 $Z_j(1/2)$ 支付，分母由 $D_*\sqrt{C_j+1}$ 支付。
+对至多 $CQ^2$ 个坐标求并。Gaussian 同样留出一半二次势能，
+格元边界相差 $O(C_j^{-1/2})$，阈值最终至少 $Q^2/2$，所以仍有该尾指数。
+所有有限端点都在离散尾部内。
+无输出高二项常数与 $B^{n_H}Z_H^G(b)$ 的比由同一中心格元估计及这两个尾部趋于一；
+此处无需输出分母。
+
+于是两种完整尾部在除以 (130.4) 的实际比较分母后，至多
+
+$$
+\exp\{-cQ^4+L+CQ^2\}.
+\tag{130.10}
+$$
+
+这里只用一次 $\sigma^{-1}=e^L$。没有在尾部对似然求导，也没有引入
+$\sigma^{-2k}$。对全部复点同时成立的零阶 raw 估计将承担后面的所有导数。
+由 (130.6)、$\log q=c_qQ^3+O(1)$ 和 (128.1)，中心部分可放宽为
+$e^{-\mu Q^3/64+CQ^2}$。这证明 $J_s^{\rm count}$ 的 (130.2)。
+
+为了回接完整选择，先记录固定电荷插入的比较。在上述同一中心格元插入
+$1+|\mathcal D|^6$，逐元组误差用 (130.6)；Gaussian 条件矩用 (129.6) 的 $k=3$。
+离散全盒有 $|\mathcal D|\le CB$，故插入的最大成本为 $e^{CQ^3}$；
+它被 (130.9) 的 $Q^4$ 指数吸收。连续尾部用 Cauchy–Schwarz 与
+无输出 $\mathcal D_G$ 的第十二矩，其上界为常数。
+所以在实 $b\in[1-h,2+h]$ 的原计数同输出律中，
+
+$$
+\frac{\sum_m(1+|\mathcal D(m)|^6)e^{-bA_y(m)}}{J_0^{\rm count}(b,y)}\le C.
+\tag{130.11}
+$$
+
+实基点区间的小扩展使用 (130.3) 后说明的单组上下界，中心与双尾部证明完全相同。
+即便 $\sigma$ 最慢趋零，该插入的 Gaussian 证明也没有逆噪声成本。
+
+最后使用原全盒二次选择估计 (124.2)。由于
+$\ell,\ell_2\le C\delta^5$，对 $b=\operatorname{Re}z\ge1-h$，(130.7) 给
+
+$$
+|e^{z\ell(m)}-e^{z\ell_2(m)}|
+ \le C|\ell(m)-\ell_2(m)|
+ \le Cq^{-1/2}(1+|\mathcal D(m)|^3).
+\tag{130.12}
+$$
+
+这个不等式在整个原盒成立；两种选择势在极端元组可有很大的负值，
+仍不影响上界。乘 $e^{-bA_y}$ 并用 (130.11)，有
+
+$$
+|G_y(z)-e^{zc_0}J_\eta^{\rm count}(z,y)|
+ \le Cq^{-1/2}J_0^{\rm count}(b,y).
+\tag{130.13}
+$$
+
+$J_0^{\rm count}(b,y)/\mathcal C_P(a,y)\le e^{CQ^2}$ 由已证实 raw 比较、
+(130.5) 及 (129.5) 的零阶部分给出。
+合并 (130.13) 和 $s=\eta$ 的全圆盘比较，即得第二条 (130.2)。
+原全部多重度、全低组幂及完整选择因此都在 raw 估计中。∎
+

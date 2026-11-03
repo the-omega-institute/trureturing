@@ -1,0 +1,23 @@
+**Definition 2.2 (partitions, names and guards).** Their whole-subtree partitions are
+
+$$
+\begin{aligned}
+\pi_0&=\{\{LLL,LRL\},\{LLR\},\{LRR\},\{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_1&=\{\{LRL\},\{LRR\},\{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_2&=\{\{LLL\},\{LLR\},\{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_3&=\{\{LLL,LRL\},\{LLR\},\{LRR\},\{RRL\},\{RRR\}\},\\
+\pi_4&=\{\{LLL,LRL\},\{LLR\},\{LRR\},\{RLL\},\{RLR\}\}.
+\end{aligned}
+\tag{POC.8}
+$$
+
+Every two different blocks assert disequality. The following data are also part of each entire output:
+
+| Row | Ordered reached holes | First-member name vector | All absent cuts and concrete guard |
+| --- | --- | --- | --- |
+| $R_0=R_*$ | $LLL,LLR,LRL,LRR,RLL,RLR,RRL,RRR$ | $(0,1,0,3,4,5,4,7)$ | None |
+| $R_1$ | $LRL,LRR,RLL,RLR,RRL,RRR$ | $(0,1,2,3,2,5)$ | $LLL,LLR$; beta at $LL$ |
+| $R_2$ | $LLL,LLR,RLL,RLR,RRL,RRR$ | $(0,1,2,3,2,5)$ | $LRL,LRR$; beta at $LR$ |
+| $R_3$ | $LLL,LLR,LRL,LRR,RRL,RRR$ | $(0,1,0,3,4,5)$ | $RLL,RLR$; beta at $RL$ |
+| $R_4$ | $LLL,LLR,LRL,LRR,RLL,RLR$ | $(0,1,0,3,4,5)$ | $RRL,RRR$; beta at $RR$ |
+

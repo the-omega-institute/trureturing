@@ -1,0 +1,129 @@
+**定理 92.1（完整原生记录不能逼近一个数学秩一效果）。** 对定义 91.1 的每个源和每一个允许的 $N$，存在一个数学秩一投影 $P_N$ 及 Hermitian 见证 $Z_N=2P_N-I_3$，使
+
+$$
+\operatorname{Tr}(Z_NP_N)=1,\qquad
+\sup_{F\in\mathcal B_N}\operatorname{Tr}(Z_NF)\le\frac34,
+\qquad
+\inf_{F\in\mathcal B_N}\|P_N-F\|_\infty\ge\frac1{12}.
+\tag{92.1}
+$$
+
+同一个 $P_N$ 适用于全部有限长度、全部外定时序及全部接受系数。$P_N$ 可以只依赖 $N$ 与原 $f$，不依赖 $d$ 或 $\theta$；其定义不供应谱标定、物理制备、测量或新端口。
+
+证明。先构造单位向量 $v_N$，使所有整数 $m\ge0$ 都满足
+
+$$
+\frac18\le |f^\dagger N^m v_N|^2\le\frac78.
+\tag{92.2}
+$$
+
+取 $N$ 的任一正交归一特征基 $z_1,z_2,z_3$，并重排使
+$t_1=|f^\dagger z_1|^2=\max_j|f^\dagger z_j|^2$。由 $\sum_jt_j=1$，有 $t_1\ge1/3$。若 $t_1\le7/8$，置 $v_N=z_1$ 即得 (92.2)。若 $t_1>7/8$，置 $v_N=(z_1+z_2)/\sqrt2$。因 $t_2\le1-t_1$，三角不等式给每个 $m$ 的振幅上下界，平方后得到
+
+$$
+\begin{aligned}
+|f^\dagger N^m v_N|^2
+&\ge\frac12\big(\sqrt{t_1}-\sqrt{1-t_1}\big)^2
+ =\frac12-\sqrt{t_1(1-t_1)}
+ \ge\frac{4-\sqrt7}{8}>\frac18,\\
+|f^\dagger N^m v_N|^2
+&\le\frac12\big(\sqrt{t_1}+\sqrt{1-t_1}\big)^2
+ =\frac12+\sqrt{t_1(1-t_1)}
+ \le\frac{4+\sqrt7}{8}<\frac78.
+\end{aligned}
+\tag{92.3}
+$$
+
+这里使用 $t_1(1-t_1)\le7/64$；特征值简并和任意特征相位均在此证明内。置 $P_N=v_Nv_N^\dagger$。令
+
+$$
+T_m=N^{-m}WN^m.
+\tag{92.4}
+$$
+
+这是数学 Heisenberg 共轭，$T_m=T_m^\dagger=T_m^{-1}$，没有调用逆控制。由 (91.1)、(92.2) 及 $q\perp f$，有
+
+$$
+\begin{aligned}
+|v_N^\dagger T_mv_N|
+ &=\big|1-2|f^\dagger N^mv_N|^2\big|\le\frac34,\\
+|q^\dagger N^mv_N|^2
+ &\le1-|f^\dagger N^mv_N|^2\le\frac78.
+\end{aligned}
+\tag{92.5}
+$$
+
+以下直接估计完整记录 (91.4)。为简记写 $P=P_N$、$v=v_N$、$Z=2P-I_3$。对任一秩一投影 $R$，令 $x=\operatorname{Tr}(PR)\in[0,1]$。则对任意 $\alpha,\beta\in[0,1]$，
+
+$$
+\begin{aligned}
+\operatorname{Tr}\big(Z[\alpha R+\beta(I_3-R)]\big)
+ &=\alpha(2x-1)-2\beta x\\
+ &\le(2x-1)_+,\qquad t_+=\max\{t,0\}.
+\end{aligned}
+\tag{92.6}
+$$
+
+所以补终端结果及其任意接受系数已包括在估计内。
+
+若 $s$ 无仪器位置，则其历史为 $N^m$，$R=N^{-m}EN^m$。由 (92.5) 有 $x\le7/8$，故 (92.6) 给 $\operatorname{Tr}(ZF_{s,a})\le3/4$。这包括空时序。
+
+若 $s$ 有 $k\ge1$ 个仪器位置，设其第一处仪器之前恰有 $m$ 次 $N$。固定第一处之后的任一完整标签历史 $t$，成对比较
+
+$$
+w_0=N^m0t,\qquad w_1=N^m1t.
+\tag{92.7}
+$$
+
+同一外定时序保证两条历史的后续操作与 $U_t$ 完全相同；$t$ 包括其全部后续 $N$ 和原生标签。按实际时间顺序，
+
+$$
+\begin{gathered}
+U_{w_j}=U_tV_jN^m,\\
+R_{w_0}=N^{-m}V_0^\dagger U_t^\dagger EU_tV_0N^m,
+\qquad R_{w_1}=T_mR_{w_0}T_m.
+\end{gathered}
+\tag{92.8}
+$$
+
+置 $x=\operatorname{Tr}(PR_{w_0})$、$y=\operatorname{Tr}(PR_{w_1})$。则
+
+$$
+x+y=\operatorname{Tr}\big[R_{w_0}(P+T_mPT_m)\big]
+ \le1+|v^\dagger T_mv|\le\frac74.
+\tag{92.9}
+$$
+
+中间一步可由两个单位向量 $v,T_mv$ 的 Gram 矩阵得到：$P+T_mPT_m$ 的非零本征值为 $1\pm|v^\dagger T_mv|$。又 $x,y\le1$，故
+
+$$
+\begin{aligned}
+(2x-1)_++(2y-1)_+
+ &=\max\{0,2x-1,2y-1,2x+2y-2\}\\
+ &\le\frac32.
+\end{aligned}
+\tag{92.10}
+$$
+
+对 (92.7) 的两条历史各用 (92.6)。它们的四个终端接受系数可以彼此独立、任意依赖完整标签记录；(92.10) 仍给这一对未乘权贡献至多 $3/2$。共有 $2^{k-1}$ 对，每条历史的原质量因子都是 $2^{-k}$，所以
+
+$$
+\operatorname{Tr}(ZF_{s,a})
+ \le2^{-k}\,2^{k-1}\,\frac32=\frac34.
+\tag{92.11}
+$$
+
+这一步求和包含整个记录树，而不是只比较擦除标签后的系统秩。标签依赖控制会破坏 (92.8) 的共同 $U_t$，不属于本定理的时序域。
+
+线性连续泛函 $F\mapsto\operatorname{Tr}(ZF)$ 的同一界在数学凸组合及范数闭包下保持。$Z$ 的本征值为 $1,-1,-1$，故其迹范数为三。最后，
+
+$$
+\frac14\le\operatorname{Tr}\big[Z(P-F)\big]
+ \le\|Z\|_1\|P-F\|_\infty
+ =3\|P-F\|_\infty
+\qquad(F\in\mathcal B_N).
+\tag{92.12}
+$$
+
+得到全部 (92.1)。证明保持原 $1/2$ 分支和两终端质量，未对任何标签条件化。∎
+

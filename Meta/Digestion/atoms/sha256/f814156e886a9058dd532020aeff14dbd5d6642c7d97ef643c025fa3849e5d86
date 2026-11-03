@@ -1,0 +1,49 @@
+**Definition 22.1 (local birth wiring, with separate tasks).** The
+following service replaces the single global $\pi$ of Assumption
+1.2(1),(7). It does not change the source algebra (GPO.1). At each
+actual branch there are distinguishable physical children $a,b$ and
+a local bijection to its semantic children $L,R$. That bijection
+persists as long as the branch persists. An old branch and its links
+persist under substitution. When a beta leaf splits, one actual hidden
+wiring bit places its semantic beta/alpha children at $a,b$ in either
+order. All finite assignments at all births are legal. No probability
+law, independence law or accessible law tying these choices to the past
+is postulated. The choices are actual actuator inputs and material
+relations, in addition to the labels and substitution; they are not
+free advice to the observer.
+
+Keep one stable bound root, total paid absolute physical-word presence
+Read, localStep, serial forward applyRho and stop. Only a common
+completion acknowledgement is exposed by an update. Full physical
+labels, the writer, past epochs, link creation, allocation identities,
+capacity, runtime and private choices provide no additional channel.
+Control, code, grants and initial accessible backing are common at
+fixed public inputs. Finite-work progress, owned growing readable
+backing, current rights and reference maintenance remain paid installed
+premises. Reads and declared acquisition phases are stationary; no
+concurrent updates, reroot, reset, inverse, clone or historical root is
+supplied. Each old-node update substitutes exactly once at the old
+leaves, as in Proposition 9.3, with the new local wiring in place of a
+global one. Every request, word, computation, allocation and retained
+write is paid.
+
+There are three distinct targets below. The arbitrary-original task
+starts at an authentic $\rho^{2k}u$, with $k\ge1$ and authentic
+$1\le A\le n=\ell(u)\le B<2A$, and asks which semantic original
+$u$ is recoverable. The known-seed task starts at the actual known
+alpha leaf, counts completed updates as $n$, and asks for the full
+physical presence map after the next update, predicted at the current
+cut. Historical calibration instead returns the labelled physical
+state of a preceding cut after one real update. Original identity,
+current prediction and historical recovery are not interchangeable
+claims. The symbol $n$ denotes original leaf count only in §23 and
+completed-update count only in §§24–25.
+
+Write $\operatorname{phys}(t)$ for a labelled tree in its actual
+physical $a/b$ order, and $\operatorname{sh}$ for label erasure.
+Write $[t]$ for rooted label-preserving unordered isomorphism: it
+forgets all child order but retains every branch, leaf and label.
+These are occurrence trees, without subtree sharing or word
+associativity. An unordered isomorphism is not an acquired local
+semantic adapter.
+

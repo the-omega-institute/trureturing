@@ -1,0 +1,29 @@
+**Definition 33.3 (one uniform two-catalogue controller).** Keep the paid
+spine, $H=2h+1$, $S=d+H+2$, shallow exploration, rank certificates and
+proper-candidate verifier of Definitions 28.1--28.3. Fix two finite lists.
+The generic list $G$ is zero followed by all constant-coefficient-one
+row/seed presentations, ordered by increasing order $u\le d$ and then
+binary order as in Definition 28.1. Its prefix through order $r$ has
+$G_r=(2\,4^r+1)/3$ entries. The periodic list $L$ is zero followed by
+all nonempty $(u,W)$ with $u\le d$, ordered by $|W|$, then $u$, then
+lexicographic order of the increasing support tuple. Let $j_L(y)$ be the
+first index in $L$ representing $y$, or infinity if none does; indexing
+starts at one. These are fixed code lists, not source replies.
+
+Run stages $b=0,\ldots,\lceil\log_2G_d\rceil$. At stage $b$, each
+frontier search streams the first $\min(2^b,|G|)$ entries of $G$ and
+the first $\min(2^b,|L|)$ entries of $L$. A generic entry uses both
+bounded integer clocks of (ACR.119); a periodic entry uses all $u^2$
+residue pairs and Lemma 33.2. The zero entry uses no clocks. For each
+entry and clock pair enumerate every allowed rank $q$. Keep every
+presence, length, descent and numerical guard of Definition 28.1, and
+recombine heights and reconstruct early parents as in Definition 28.3.
+On each failed stage overwrite its data and double the prefix budget.
+
+Return only after constructing the provisional $2d$-prefix, solving its
+Hankel equations and passing the actual proper-candidate verifier of
+Corollary 22.3. No period, support, phase, clock, law, core degree or
+sparsity promise is read. Local rank certificates authenticate positive
+frontier heights; recombined heights and the prefix remain provisional
+until that final verifier passes. The spine is earned once.
+

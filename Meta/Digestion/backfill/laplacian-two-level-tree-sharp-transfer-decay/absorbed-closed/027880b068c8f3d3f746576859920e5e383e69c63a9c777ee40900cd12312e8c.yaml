@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:027880b068c8f3d3f746576859920e5e383e69c63a9c777ee40900cd12312e8c
+  normalized_sha256: sha256:027880b068c8f3d3f746576859920e5e383e69c63a9c777ee40900cd12312e8c
+cas_ref: sha256:027880b068c8f3d3f746576859920e5e383e69c63a9c777ee40900cd12312e8c
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/LaplacianTwoLevelTreeSpectralBound.twoLevelTree_leaf_dynamics_and_invariance
+    target_statement_id: sha256:c2ffaa020e66f404cf0fc68838e8bcccaf18a7169eae38243d16180d98d9cb05
+receipts:
+  unresolved_subitems: []

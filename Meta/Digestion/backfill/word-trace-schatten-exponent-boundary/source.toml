@@ -1,0 +1,5 @@
+source_id = "word-trace-schatten-exponent-boundary"
+path = "docs/develop/theory/WORD_TRACE_SCHATTEN_EXPONENT_BOUNDARY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

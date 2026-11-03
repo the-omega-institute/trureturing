@@ -1,0 +1,72 @@
+**Proposition 8.1 (An actual past-visible producer).** In the state order $(q_0,q_1,e_0,e_1,o_0,o_1)$ define
+
+$$
+M_0=\begin{pmatrix}
+0&0&1&0&0&0\\
+0&0&0&1&0&0\\
+0&0&0&0&297/400&0\\
+0&0&0&0&0&303/400\\
+0&0&25/33&0&0&0\\
+0&0&0&75/101&0&0
+\end{pmatrix},\qquad
+M_1=\begin{pmatrix}
+0&0&0&0&0&0\\
+0&0&0&0&0&0\\
+103/400&0&0&0&0&0\\
+97/400&0&0&0&0&0\\
+0&8/33&0&0&0&0\\
+0&26/101&0&0&0&0
+\end{pmatrix},
+\tag{8.1}
+$$
+
+and
+
+$$
+\lambda=\left(\frac{679}{5912},\frac{63}{739},\frac{194}{739},
+\frac{144}{739},\frac{28809}{147800},\frac{2727}{18475}\right).
+\tag{8.2}
+$$
+
+These parameters belong to $\Theta_6$. Their actual stationary law satisfies Definition 4.1 with contexts $c\in\{0,1\}$ equal to previous-gap parity,
+
+$$
+\tau_g(c)=g\pmod2,\qquad r_c=\delta_{q_c}.
+\tag{8.3}
+$$
+
+Its actual gap rows, Palm weights, row means and intensity are
+
+$$
+\begin{gathered}
+f_c(g)=\frac14\left(\frac34\right)^{g-2}A_{c,g\bmod2},\qquad
+(A_{c,p})_{c,p=0,1}=
+\begin{pmatrix}103/100&24/25\\97/100&26/25\end{pmatrix},\\
+\nu=(97,72)/169,\qquad
+\sum_g gf_0(g)=872/175,\qquad\sum_g gf_1(g)=878/175,\\
+\mu=5912/1183,\qquad\iota=1183/5912.
+\end{gathered}
+\tag{8.4}
+$$
+
+Proof. Every displayed entry is nonnegative and each row of $M_0+M_1$ sums to one. Direct substitution gives $\lambda\mathbf1=1$ and $\lambda(M_0+M_1)=\lambda$. Every $1$ edge ends at a $q$ state, whose $M_1$ row is zero, so $M_1^2=0$. The positive-edge graph is strongly connected: each $q_c$ reaches $e_c$, each $e_c$ reaches $q_0$ and $o_c$, and each $o_c$ reaches $e_c$ and $q_1$. Its finite stationary chain is recurrent and ergodic; positive-frequency $1$ edges therefore yield anchors unbounded in both directions.
+
+After an anchor the state is a $q_c$ and the next symbol is forced zero. Starting from $q_c$, a gap of even length ends by $e_c\to q_0$ and a gap of odd length ends by $o_c\to q_1$. The two-step zero-survival products are
+
+$$
+\frac{297}{400}\frac{25}{33}
+=\frac{303}{400}\frac{75}{101}=\frac9{16}.
+\tag{8.5}
+$$
+
+The gap-$2$ masses are $103/400,97/400$; the gap-$3$ masses are $9/50,39/200$. Equation (8.5) then proves every row formula in (8.4) by increments of two. The post-anchor state is exactly $q_{g\bmod2}$, not a hidden mixture depending on earlier history. At a current anchor the nearest strict-left anchor is at relative position $-g$, so its distance $g$ gives the previous-gap parity by a fixed strict-left visible function. The actual post-anchor hidden state is consequently $q_c$ for this visible $c$, so conditioning on the entire marked event history gives exactly the reset (8.3).
+
+Summing the even-gap probabilities gives the actual context transition matrix
+
+$$
+K=\begin{pmatrix}103/175&72/175\\97/175&78/175\end{pmatrix},
+\tag{8.6}
+$$
+
+whose stationary row is $(97,72)/169$. Geometric sums and their first derivatives at $9/16$ give normalization and the means in (8.4). Weighting those means by $\nu$ gives $\mu$; alternatively the actual intensity $\lambda M_1\mathbf1$ equals $1183/5912=1/\mu$. Thus all Palm quantities belong to this same stationary producer. $\square$
+

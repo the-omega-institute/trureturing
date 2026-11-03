@@ -1,0 +1,16 @@
+**Proposition 13.1 (attained call vectors).** For A, execute exactly the
+paid seed, $h\in\mathcal H_A$ with $n$ growths and $Q$ Ticks, and the
+assay of length $I=n$. For C, execute exactly the paid seed, a word of
+length $n$, and Construction 10.1. With final $b,N,I$ as in (2.1), the
+same-run counts are:
+
+| Coordinate through the completed assay | A | C |
+| --- | --- | --- |
+| Reset | $1$ | $1$ |
+| Add | $1$ | $1$ |
+| Read | $1+b(I+1)$ exact calls | $1+b(n+1)$ digital calls |
+| Tick, including actual inner clocks | $Q+I$ | $2n$ |
+| Hold | $I+2$ | $n+2$ |
+| successful growth transactions | $n$ raw | $n$ inner raw and $n$ outward |
+| fixed field acknowledgement payloads | $Q+2I+4$ | $3n+4$ |
+| actual nuisance bits for valid Reads | none | $1+b(n+1)$ |

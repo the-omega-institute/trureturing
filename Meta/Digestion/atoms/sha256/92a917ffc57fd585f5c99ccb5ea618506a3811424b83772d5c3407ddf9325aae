@@ -1,0 +1,49 @@
+**Lemma 6.1 (Step probabilities and finite mean gap count).** Fix any $q\in(0,1)$ with $\Delta(q)>0$. At an interior walk coordinate under source $i$, the probabilities of an upward, downward and holding update are respectively
+
+$$
+u_i=p_i(1-t),\qquad v_i=(1-p_i)t,\qquad
+w_i=p_it+(1-p_i)(1-t)=1-u_i-v_i.
+\tag{6.1}
+$$
+
+Both $u_i,v_i$ are positive. Let $J_0=0$, freeze the walk at its first boundary, and let
+
+$$
+N=\inf\{n\ge0:|J_n|=L\}.
+\tag{6.2}
+$$
+
+Thus $N$ counts completed post-first-tick gaps through the terminal one. Under each source,
+
+$$
+u_0-v_0=-d,\qquad u_1-v_1=d,\qquad
+\mathbb E_{i,q}N\le\frac Ld=\frac{2L}{\Delta(q)}<\infty,
+\qquad \mathsf P_{i,q}(N<\infty)=1.
+\tag{6.3}
+$$
+
+Proof. For a potential pair in Lemma 5.1, its proposed increment is $A_n-C_n$. It is $+1$ exactly on $(A_n,C_n)=(1,0)$, and $-1$ exactly on $(0,1)$. The other two pairs give increment zero. This proves (6.1), its stochastic normalization and positivity. Direct subtraction gives
+
+$$
+u_i-v_i=p_i-t,
+\tag{6.4}
+$$
+
+which has the two stated signs by the midpoint choice. No label-dependent table or initialization is used.
+
+For the stopping proof, let $\mathcal F_n$ contain $\tau$, the first $n$ complete gaps and their coins. Use only past blocks in this filtration, so the next block retains its independent law. Define the analytical signed coordinate $V_n=-J_n$ under source zero and $V_n=J_n$ under source one. The sign is for the proof; it is not given to the machine. Before $N$ its conditional drift is $d$, and after $N$ it is zero. For every finite integer $m\ge1$, summing finitely many conditional expectations gives
+
+$$
+\begin{aligned}
+\mathbb E_i V_m
+&=d\sum_{n=0}^{m-1}\mathsf P_i(N>n)
+=d\,\mathbb E_i(N\wedge m),\\
+\mathbb E_i(N\wedge m)&\le\frac Ld,
+\end{aligned}
+\tag{6.5}
+$$
+
+where $V_0=0$ and $V_m\le L$ were used. Monotone convergence now gives the finite mean bound in (6.3). An extended nonnegative random variable with finite mean is finite almost surely, proving the other assertion. This proves finite stopping before any unbounded stopping formula is invoked.
+
+The same finite-horizon calculation from an arbitrary tick-boundary state $(j,1)$ gives a mean at most $(L-V_0)/d\le2L/d$. Holding steps require no exceptional argument: they have zero increment and are already included in (6.5). A boundary cannot be overshot, since each move has size one and the table absorbs upon reaching it. All statements include $L=1$. $\square$
+

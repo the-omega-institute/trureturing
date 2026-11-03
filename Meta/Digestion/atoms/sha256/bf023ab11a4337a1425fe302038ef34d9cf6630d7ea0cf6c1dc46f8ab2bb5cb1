@@ -1,0 +1,42 @@
+**Lemma 68.3 (two round trips and exact birth-typed image).** On all finite
+terms, $K(J(u))=u$. The domain of successful $K$ is exactly $\mathcal R$,
+and $J(K(r))=r$ for every $r\in\mathcal R$. Consequently $J$ is injective,
+and its exact image on reachable LAB entries is
+
+$$
+\mathcal I:=J[\mathcal D]=\mathcal R\cap\mathcal D.
+$$
+
+Proof. Every encoded term has root alpha or branch. For a leaf alpha the
+first round trip is the first rule. For beta it is the sentinel rule.
+For an original branch, both encoded children have root different from
+beta, so the encoded branch cannot be the sentinel. The recursive rule
+and the two induction hypotheses return the original branch. This proves
+the first round trip by structural induction.
+
+Induct on a successful decoder computation. Its alpha case lies in the
+first range rule, its sentinel case in the second, and its recursive pair
+case in the third by the induction hypotheses. Conversely induction on
+the range grammar gives a successful computation: in its third case the
+left child has root different from beta, so the sentinel case does not
+interfere. The same induction proves the second round trip. Applying
+$K$ to an equality of encoded terms proves injectivity.
+
+Encoding preserves every original alpha leaf at its original address.
+The only added alpha leaves are the right children of original beta
+leaves. Hence an $L$-ending alpha in $J(u)$ exists exactly when one existed
+in $u$. For the reverse implication, an $L$-ending alpha in $u$ persists;
+for the forward implication, any new alpha ends in $R$. Thus
+$u\in\mathcal D$ if and only if $J(u)\in\mathcal D$. Every $J(u)$ lies in
+$\mathcal R$. If $r\in\mathcal R\cap\mathcal D$, put $u=K(r)$; then
+$J(u)=r$, and the just-proved equivalence gives $u\in\mathcal D$.
+This proves the displayed image equality, including the singleton entry
+alpha. $\square$
+
+The encoding is not FARG's simultaneous substitution $\rho$: in
+particular $J(\alpha)=\alpha$ whereas $\rho(\alpha)=\beta$.
+The round trips are ordinary syntax facts. Their use below requires an
+actual guard execution reaching $J(t)$ and an earned word for $t$.
+A syntax inverse by itself supplies neither that execution nor a guard
+observation of an unknown entry.
+

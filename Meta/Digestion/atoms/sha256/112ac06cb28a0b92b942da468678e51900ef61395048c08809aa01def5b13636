@@ -1,0 +1,22 @@
+**Lemma 3.1 (Closed form of $Q_t$ on two-node self-conjugate grids).** For every $t\ge2$ and all $x,y$,
+
+$$
+\sum_{d=0}^{t-2}(-1)^d\binom{t}{d+2}\,h_{d+1}(x,y)=t-h_{t-1}(1-x,\,1-y)
+$$
+
+as polynomials. Consequently, for $w=a+ib$ with $w\ne1$ and $z=(-w,-\overline{w})$,
+
+$$
+Q_t(z_1+1,z_2+1)=\frac{t-h_{t-1}(w,\overline{w})}{t(t-1)(1-a)} .
+$$
+
+In particular $Q_2(z_1+1,z_2+1)=1$ for every such grid. Stance: suspected-novel (see Section 7).
+
+**Proof.** Put $j=d+2$, so $(-1)^d=(-1)^j$ and the left side is $\sum_{j=2}^{t}(-1)^j\binom{t}{j}h_{j-1}(x,y)$. Multiply by $x-y$ and use $(x-y)h_{j-1}(x,y)=x^j-y^j$. The binomial theorem gives $\sum_{j=0}^{t}(-1)^j\binom{t}{j}(x^j-y^j)=(1-x)^t-(1-y)^t$; the terms $j=0$ and $j=1$ of this sum are $0$ and $-t(x-y)$. Hence
+
+$$
+(x-y)\sum_{j=2}^{t}(-1)^j\binom{t}{j}h_{j-1}(x,y)=(1-x)^t-(1-y)^t+t(x-y).
+$$
+
+Since $(1-x)-(1-y)=-(x-y)$, the right side equals $(x-y)\bigl(t-h_{t-1}(1-x,1-y)\bigr)$. Both sides of the claimed identity are polynomials, and their difference times the nonzero polynomial $x-y$ vanishes in the integral domain $\mathbb{Z}[x,y]$, so the identity holds. For the consequence take $(x,y)=(1-w,1-\overline{w})$, so that $(1-x,1-y)=(w,\overline{w})$, and divide by $\binom{t}{2}e_1(\zeta)=\tfrac{t(t-1)}{2}\cdot2(1-a)$, which is nonzero because $w\ne1$ and $\lvert w\rvert\le1$ force $a<1$. For $t=2$ the numerator is $2-2a$ and the denominator is $2(1-a)$. $\square$
+

@@ -1,0 +1,12 @@
+**推论 12.4（原参数下的两个窗口与实际动作）。** Let $D_0\in\mathbb R$, $\lambda\ne0$, $Y\in\mathbb R$ and $y=(Y-D_0)/\lambda$. At the literal parent $H_J(Y)$ of (5.1), a two-target $L_2$ set in an actual fifth-$J$ child exists exactly for $y\in\mathcal I$. Every such pair is the image under $\Phi_{D_0,\lambda}$ of the pair (11.6), has drift $D_0$, and has actual fifth-$J$ response $D_0$. On these normalized windows, every successful whole-parent decoder by clock seven must choose fifth $M$ and, after actual response $D_0$, sixth $M$.
+
+All same-parent inclusions, arbitrary-cardinality gluing implications and conditional equivalences of Theorems 12.2–12.3 transport by $\Phi_{D_0,\lambda}$. In the finer consumer the actual fifth response is $D_0$, the sixth-$J$ response is
+
+$$
+D_0+\lambda\beta_y=2D_0+\frac{48\lambda}{5}-Y,
+$$
+
+and an arbitrary normalized sixth-$M$ response $v$ becomes $D_0+\lambda v$.
+
+Proof. Apply the bijection of Lemma 9.2 to Theorems 10.1, 11.1 and 12.1–12.3 and to each of their actual history arguments. The two windows are imposed on $y=(Y-D_0)/\lambda$, so negative $\lambda$ requires no assumption about the order of physical $Y$ endpoints. Every transported family shares the entire corresponding $H_J(Y)$; the displayed sixth response follows by substitution. These conditional implications do not supply a family satisfying the fifth-$M$ $L_2$ premise or the finer sixth-$M$ $L_1$ premise. ∎
+

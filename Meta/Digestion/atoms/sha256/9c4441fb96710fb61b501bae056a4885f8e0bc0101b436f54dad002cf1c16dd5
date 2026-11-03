@@ -1,0 +1,4 @@
+## 40. Long-gap fourteen-gon: sharp three-core bound and exact fifteen-partition profile
+
+This appendix presents the supplied computer-assisted finite proof of the sharp three-core bound and its exact fifteen-partition profile. Published B-39.4 already gives $A\le5005$, and B-39.5 already gives the original-family strict bound $|\mathcal F|\le33258=L-126$. That original residual/classification consumer is supplied by §39. The distinct result here is the exact core objective: its uniform maximum is $4290$, matching the existing lower construction B-37.8, and the other fourteen normalized partitions have exact maximum $3690$. These are core counts, not maxima of total family size. The full reductions and table are given here; executable code and finite data belong to the private companion in §40.6.
+

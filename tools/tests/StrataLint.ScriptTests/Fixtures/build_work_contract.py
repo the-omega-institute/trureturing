@@ -1,4 +1,5 @@
 """Invocation-local Lean build work at the inspector's two build boundaries."""
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -14,7 +15,7 @@ REPO = Path(__file__).resolve().parents[4]
 
 
 class BuildWorkContracts(unittest.TestCase):
-    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False, ci_budget=False, fib_failure=0, fib_selected=False):
+    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False, ci_budget=False, fib_failure=0, fib_selected=False, native_phases=()):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
         self.addCleanup(temp.cleanup)
         root = Path(temp.name)
@@ -64,15 +65,22 @@ class BuildWorkContracts(unittest.TestCase):
             (logs / "report.exit.log").write_text("0")
             (logs / "report.stdout.log").write_text("✔ [1/1] Built Probe\nBuild completed successfully (1 jobs).\n")
             (logs / "report.stderr.log").write_text("")
+            (logs / "native-phases.jsonl").write_text('{"phase":"stale","boundary":"start","monotonic_ms":999}\n')
+            (logs / "native-work.jsonl").write_text('{"kind":"extract","count":999}\n')
         if native_work:
             path = root / "tools/scripts/worktree/lean-cache-run.sh"
             path.write_text(path.read_text().replace("cat <<'LOG'", "printf '%s\\n' '{\"kind\":\"extract\",\"count\":1}' >> \"$STRATALINT_INSPECTOR_ACTIVITY\"\ncat <<'LOG'"))
+        if native_phases:
+            path = root / "tools/scripts/worktree/lean-cache-run.sh"
+            text = "".join("printf '%s\\n' '" + json.dumps(row) + "' >> \"$STRATALINT_INSPECTOR_PHASES\"\n"
+                           for row in native_phases)
+            path.write_text(path.read_text().replace("cat <<'LOG'", text + "cat <<'LOG'"))
         if recorder_failure:
             script("tools/lean-inspector/build_work.py",
                    "import sys\nprint('LEAN_BUILD_WORK_UNKNOWN recorder unavailable', file=sys.stderr)\nsys.exit(2)\n")
         env = dict(os.environ, STRATALINT_INSPECTOR_SUPERVISED="1", LAKE_BIN=str(lake),
                    LAKE_ARGUMENTS=str(root / "lake-arguments"),
-                   STRATALINT_LEAN_PRODUCER_DLL=str(producer), GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
+                   STRATALINT_LEAN_PRODUCER_DLL=str(producer), GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2", GITHUB_JOB="current", GITHUB_SHA="event-sha",
                    STRATALINT_LEAN_BUILD_WORK_FILE=str(fact),
                    STRATALINT_FIB_REGRESSIONS_SELECTED='true' if fib_selected else 'false',
                    STRATALINT_LEAN_BUILD_TARGETS='["Probe"]' if targets else '[]')
@@ -103,6 +111,77 @@ class BuildWorkContracts(unittest.TestCase):
         result = subprocess.run(entry,
                                 env=env, capture_output=True, text=True)
         return result, fact, root
+
+    def exported(self, result):
+        return [json.loads(line.split(' ', 1)[1]) for line in result.stdout.splitlines()
+                if line.startswith('LEAN_INSPECTOR_OBSERVATION ')]
+
+    def test_success_exports_complete_raw_streams_with_invocation_binding(self):
+        phases = [dict(phase='native-inspect', operation='extract', module='D5.Probe',
+                       boundary=boundary, monotonic_ms=value)
+                  for boundary, value in (('start', 17), ('finish', 23))]
+        result, _, root = self.invoke(reused=False, targets=False, native_work=True, native_phases=phases)
+        self.assertEqual(0, result.returncode, result.stderr)
+        rows = self.exported(result)
+        binding = rows[0]
+        self.assertEqual(('binding', '17', '2', 'current', 'event-sha', 0),
+            tuple(binding[key] for key in ('kind', 'run_id', 'run_attempt', 'job', 'github_sha', 'inspector_exit')))
+        self.assertEqual(str(root / 'report.json'), binding['report'])
+        self.assertEqual(['report'], binding['phases'])
+        self.assertEqual('end', rows[-1]['kind'])
+        self.assertEqual(1, len({row['invocation_id'] for row in rows}))
+        for name in ('native-phases.jsonl', 'native-work.jsonl'):
+            records = [row for row in rows if row['kind'] == 'record' and row['stream'] == name]
+            raw = ''.join(row['raw'] for row in records).encode()
+            self.assertEqual((root / 'report.json.logs' / name).read_bytes(), raw)
+            self.assertEqual(list(range(1, len(records) + 1)), [row['line'] for row in records])
+            trailer = next(row for row in rows if row['kind'] == 'stream-end' and row['stream'] == name)
+            self.assertEqual(('complete', len(records), hashlib.sha256(raw).hexdigest()),
+                             (trailer['status'], trailer['lines'], trailer['sha256']))
+        self.assertEqual(phases, [json.loads(row['raw']) for row in rows
+                                  if row.get('stream') == 'native-phases.jsonl' and row['kind'] == 'record'])
+
+    def test_export_on_failure_keeps_exit_and_no_success_fact(self):
+        result, fact, _ = self.invoke(reused=False, targets=False, failure=23,
+            native_phases=[dict(phase='native-inspect', boundary='start', monotonic_ms=1)])
+        self.assertEqual(23, result.returncode, result.stderr)
+        self.assertFalse(fact.exists())
+        rows = self.exported(result)
+        self.assertEqual(23, rows[0]['inspector_exit'])
+        self.assertEqual(1, len([row for row in rows if row['kind'] == 'record']))
+
+    def test_reuse_exports_empty_current_streams_without_stale_observations(self):
+        result, _, root = self.invoke(targets=False, stale_logs=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        rows = self.exported(result)
+        self.assertFalse(any(row['kind'] == 'record' for row in rows))
+        self.assertEqual([0, 0], [row['lines'] for row in rows if row['kind'] == 'stream-end'])
+
+    def test_export_binds_actual_checkout_and_report_and_preserves_partial_raw_line(self):
+        root, logs, _ = self.recorder_inputs()
+        subprocess.run(['git', 'init', '-q', str(root)], check=True)
+        subprocess.run(['git', '-C', str(root), '-c', 'user.name=Fixture', '-c',
+                        'user.email=fixture@example.invalid', 'commit', '--allow-empty', '-qm', 'fixture'], check=True)
+        checkout = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
+        report = root / 'report.json'
+        report.write_bytes(b'{"modules":[]}\n')
+        raw = b'{"phase":"native-inspect","boundary":"start"}\npartial'
+        (logs / 'native-phases.jsonl').write_bytes(raw)
+        result = subprocess.run([sys.executable, '-B', str(root / 'build_work.py'), '--export',
+            str(root), str(logs), str(report), '143', 'report'], capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        rows = self.exported(result)
+        self.assertEqual(checkout, rows[0]['checkout_sha'])
+        self.assertEqual(hashlib.sha256(report.read_bytes()).hexdigest(), rows[0]['report_sha256'])
+        self.assertEqual(raw, ''.join(row['raw'] for row in rows
+            if row['kind'] == 'record' and row['stream'] == 'native-phases.jsonl').encode())
+        (logs / 'native-phases.jsonl').unlink()
+        result = subprocess.run([sys.executable, '-B', str(root / 'build_work.py'), '--export',
+            str(root), str(logs), str(report), '0'], capture_output=True, text=True)
+        rows2 = self.exported(result)
+        self.assertNotEqual(rows[0]['invocation_id'], rows2[0]['invocation_id'])
+        missing = next(row for row in rows2 if row.get('stream') == 'native-phases.jsonl')
+        self.assertEqual(('unavailable', None), (missing['status'], missing['sha256']))
 
     def test_lake_output_filter_preserves_build_failure_and_default_failure_threshold(self):
         for reused in (True, False):

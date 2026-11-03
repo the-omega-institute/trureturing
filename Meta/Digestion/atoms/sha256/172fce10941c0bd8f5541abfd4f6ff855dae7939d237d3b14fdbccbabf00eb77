@@ -1,0 +1,20 @@
+## 4. 黄金门中的反射与相位：继承并核对项目结果
+
+项目原生三位置矩阵为[\[2\]](#bib-repov15) [\[3\]](#bib-repoborn)
+
+<a id="eq-eq:native"></a>
+
+```math
+Q=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}
+ =\begin{pmatrix}\sqrt x\\x\end{pmatrix}
+   \begin{pmatrix}\sqrt x&x\end{pmatrix},\qquad
+ \mathcal P=n_Ln_R+(1-n_L)(1-n_R)Q_C,
+ \quad K=\zeta[I+(\zeta-1)\mathcal P].\tag{6}
+```
+
+因为  $x+x^2=1$ ， $Q$  是秩一投影；两个邻居控制条件互斥，故  $\mathcal P$  是实正交投影。
+投影相位门的一般形式属于广义量子 Householder 变换的框架；其固定地址普适性仍需另外证明。[\[12\]](#bib-householder)
+
+
+<a id="stmt-4-1"></a>
+

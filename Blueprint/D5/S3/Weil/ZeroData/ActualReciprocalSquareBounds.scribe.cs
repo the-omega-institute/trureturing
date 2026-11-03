@@ -94,6 +94,27 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                     "literal cutoff |Im(actualZero k)| ≤ T and gives ncard ≤ floor(2*T^2) for " +
                     "every T ≥ 10, without a filtered family or RH premise.")),
                 Describe.Lean(
+                    DescribeId.Create("actualcomplexpairweighthassum"),
+                    DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_complex_pairWeight_hasSum"),
+                    H("Complete Complex First Li Mass"), StatementSource.WithoutFormula(),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("The normalized xi resolvent gives the multiplicity-weighted complex first Li mass. Taking real parts yields the real pair-weight mass; transporting the complex sum to every analytic occurrence supplies the complete integrated series."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("firstlimasssplit"),
+                    DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_split"),
+                    H("First Li Mass Normalization"), StatementSource.WithoutFormula(),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("The first Li mass equals 2 plus the Euler constant minus twice log 2 minus log pi. This normalization supplies the height estimates and the scalar cancellation in the integrated explicit formula."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("zeroendpointlogderiv"),
+                    DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.zero_endpoint_logDeriv"),
+                    H("Xi Logarithmic Derivative at Zero"), StatementSource.WithoutFormula(),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("The logarithmic derivative of xi at zero is minus half the first Li mass. Reflection gives the endpoint at one, and the zero endpoint normalizes the complete resolvent."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("actualreciprocalsquarebounds"),
                     DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_inverse_square_mass_le_height"),
                     H("Complete Height-Derived Inverse Square Mass"),

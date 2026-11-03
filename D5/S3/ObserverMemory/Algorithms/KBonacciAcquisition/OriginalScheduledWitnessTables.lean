@@ -215,7 +215,7 @@ by its defining existential and may be chosen once for each of these finitely ma
 abbrev Catalog (stop : Bool) (L : ℕ) :=
   {f : (Fin L → Bool) → Fin (L + 1) // InCatalog stop L f}
 
-private theorem gate_tv {S J : Type*} [MeasurableSpace S] [MeasurableSpace J]
+theorem gate_tv {S J : Type*} [MeasurableSpace S] [MeasurableSpace J]
     (mu : Measure S) (D : Set S) (f g : S → J)
     (hf : Measurable f) (hg : Measurable g) (agree : ∀ s ∈ D, f s = g s) :
     measurableTotalVariation (mu.map f) (mu.map g) ≤ mu (Dᶜ) := by

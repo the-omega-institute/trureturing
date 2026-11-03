@@ -1,0 +1,48 @@
+**Theorem 10.1 (Motion of the actual M-collision base).** For the
+analytic family in Definition 9.1,
+
+$$
+\|\beta'(2/5)\|_\infty>18.
+$$
+
+After restricting $I$ to a smaller connected open interval about
+$2/5$, the map $\beta$ is injective. It therefore gives an analytic
+arc of pairwise different acquired children. Every child on this arc
+contains the two distinct complete worlds $W_2(\lambda),W_3(\lambda)$
+with equal actual terminal-M readings at clock $7$.
+
+Proof. The parameter is the first world's diagonal coordinate, so
+its derivative is exactly $1$. At $\lambda _0$, the chain rule gives
+
+$$
+\begin{pmatrix}p'\\v'\end{pmatrix}
+=D\Phi(2/5,b_{0*})\begin{pmatrix}1\\b_0'\end{pmatrix},
+\qquad
+v_b p'-p_b v'=p_rv_b-p_bv_r=\Delta.
+$$
+
+Lemma 9.3 implies $|\Delta|>45129$ and
+
+$$
+|v_b|+|p_b|\le\frac{1673536106+725498393}{10^6}<2400.
+$$
+
+Consequently
+
+$$
+45129<|\Delta|
+\le(|v_b|+|p_b|)\max(|p'|,|v'|)
+<2400\|\beta'(2/5)\|_\infty.
+$$
+
+Since $45129/2400=15043/800>18$, the asserted bound follows.
+At least one component of $\beta'$ is nonzero at $2/5$. Its derivative
+is continuous, so it keeps a strict sign on a smaller interval.
+That component is strictly monotone there, proving injectivity of
+$\beta$. The strict guards and exact equalities in Definition 9.1
+hold on this restriction. Distinct base labels give different
+acquired readings and hence different children by Definition 1.2.
+Every constructed world continues to use its own entire nonzero
+polynomial gain and its own fixed drift at all acquired and terminal
+clocks. ∎
+

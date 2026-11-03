@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:054fdc15ec02d181ffdfdb793a253d16ef238b1187fc559b1131833ea7607f88
+  normalized_sha256: sha256:054fdc15ec02d181ffdfdb793a253d16ef238b1187fc559b1131833ea7607f88
+cas_ref: sha256:054fdc15ec02d181ffdfdb793a253d16ef238b1187fc559b1131833ea7607f88
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream closure of the complete original Theorem 10.1; no usable project frozen GID covers this incidence-array family. Finset.sum_comm, Finset.sum_add_distrib, Finset.sum_const, Finset.card_erase_of_mem, Finset.erase_inj and Fintype.sum_subtype_add_sum_subtype supply finite-law normalization, mean, actual marginals, moments and the native nonempty-subset expectation bridge. Relation.ReflTransGen.mono and Relation.reflTransGen_eq_self supply the support partition closure. Real.rpow_add, Real.rpow_mul, Real.rpow_natCast, Real.div_rpow, Real.sqrt_eq_rpow and Real.sq_sqrt supply scale and rational-subfamily identities. tendsto_natCast_atTop_atTop, tendsto_inv_atTop_zero, tendsto_rpow_neg_atTop, tendsto_natCast_div_add_atTop, Filter.Tendsto.div, Filter.Tendsto.rpow_const and Filter.Tendsto.comp supply both natural-index limits, the square-normalized zero limit and both rational-subfamily limits. Filter.Eventually.exists, Filter.Tendsto.eventually and gt_mem_nhds supply the quantified failure of every positive uniform quadratic gap. Instantiation, logical composition, finite sums and algebraic normalization preserve every integer a>=4, every real 0<epsilon<=1/a including its upper endpoint, one actual positive-marginal law on all nonempty subsets, the native K and U observables, both exact formulas, exactly two support components, both limits and all integers b>=2 in the rational subfamily. The source graph normalization and prescribed-budget bridge retain their separate scope; no optimum or exact connected graph realization at every budget is asserted. The existing order-seven graph refutation is not coverage for this array theorem. No new D5 declaration or audit wrapper is retained.
+    previous_atom_id: 81d58bc5ab34b18ec2aae1150943e605ef1c06184662397345fa2de6199049b3
+    next_atom_id: c3eb7b8bbfec1944ae53ada524461687f17782089d4b9d8dba0f66830440f1f3

@@ -1,0 +1,17 @@
+## 1. 项目快照、连续性与本轮问题
+
+本轮核对的公开 `dev` 快照为
+`23a4ae6f843d1635869b7656fb6bd681121447a8`。
+该提交时间为 2026-10-30 02:29:21（Asia/Singapore），标题为“消化 Fibonacci 解析接口与统一联合律桥接追加内容”（#23795）。相对 v17 的 `d3c5bc7…`，理论目录有七条路径变化：四新增、三修改，当前理论树含 1010 个文件。五模式金字塔、黄金门及相干重构的相关定义没有因这次提交而改变。
+
+新增的 [v16《预测、递归、最优化与变分》](https://github.com/the-omega-institute/trureturing/blob/23a4ae6f843d1635869b7656fb6bd681121447a8/docs/develop/theory/AURIC_PREDICTION_RECURSION_OPTIMIZATION_AND_VARIATION_V16.md)是此前文稿的项目转录，属于研究连续性，不构成独立验证。[合法边载荷文档](https://github.com/the-omega-institute/trureturing/blob/23a4ae6f843d1635869b7656fb6bd681121447a8/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_RENEWAL_CLOSURE_SEPARATION_AND_OBSERVABLE_DEPENDENCE.md)新增 §§31--32 研究规定平稳标记律中的严格不达性，其中的离散相位不是本篇的量子相位。本轮核对的相关来源仍未提供本题所需的“塌缩等于剖分”或“整门自代入保编织”定理。
+
+本轮重新深入读取、且与问题直接相关的已有来源是
+[《五模式最小纯记录扩张》](https://github.com/the-omega-institute/trureturing/blob/23a4ae6f843d1635869b7656fb6bd681121447a8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MINIMAL_RECORD_DILATIONS.md)。其 §§1--6 区分完整输入上的共同等距实现、后继辅助的精确边记录，以及环境单独识别边的记录任务；在它规定的十五正边模型中，三个最小环境维数分别为 $2,4,15$。该模型的配置顺序是 $(0,1,13,3,2)$，并带一个二维内部因子；不能直接当成本文顺序 $(0,1,2,3,13)$ 下的同一个 $5\times5$ 标量矩阵。
+
+“临界矩阵”在本轮检索的相关关键文件中没有一个已经确认的统一定义。本文采用以下具体解释继续推进：研究黄金门矩阵及其非平凡二维块中的复参数 $\zeta$，把它提升为内部酉算符。若以后引入另一种临界矩阵，必须重新核对它的输入输出空间与相容方程。
+
+本文的核心路线是：<em>先固定隐藏关系的纤维，再问什么仪器能够产生它的条件分支；先固定门的算符结构，再问递归替换保持哪些恒等式。</em>这使“全部由相融递归决定”的思想成为可检查的数学条件。
+
+<a id="sec-2"></a>
+

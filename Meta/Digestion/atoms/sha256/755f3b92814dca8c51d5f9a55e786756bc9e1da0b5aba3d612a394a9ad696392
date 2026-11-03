@@ -1,0 +1,82 @@
+**Theorem 3.1 (Exact bipartite maximum and separation).** For every finite connected simple undirected unweighted bipartite graph $G$ of order $n\ge2$, with the observable (1.1),
+
+$$
+T_A(G)\le n-\frac52+\frac{3}{2(n-1)},
+\tag{3.1}
+$$
+
+with equality if and only if $G\cong K_{1,n-1}$.
+
+If $G$ is a nonstar, then necessarily $n\ge4$, and
+
+$$
+T_A(G)\le n-\frac52,
+\tag{3.2}
+$$
+
+with equality if and only if $n=4$ and $G\cong C_4$. In particular, every such nonstar satisfies
+
+$$
+T_A(K_{1,n-1})-T_A(G)\ge\frac{3}{2(n-1)},
+\tag{3.3}
+$$
+
+with equality if and only if $G\cong C_4$.
+
+**Proof.** Connectivity gives $r\ge1$ in Definition 1.2. If $r\ge2$, Theorem 2.1 gives the strict form of (3.2). In particular (3.1) is then strict, since $3/[2(n-1)]>0$.
+
+Suppose $r=1$. Every row of $B$ is a nonzero scalar multiple of a chosen nonzero binary row. At a position where that row equals one, another nonzero binary row must also equal one; its scalar is therefore one. All rows coincide. No column is zero, so that common row is all ones. Thus $B=\mathbf1_p\mathbf1_q^{\mathsf T}$ and $G=K_{p,q}$, with $p,q\ge1$, $p+q=n$.
+
+For clarity the exact trace of this family follows directly from the cited spectral formula (1.1). The two nonzero eigenvalues are $\pm\sqrt{pq}$, with respective unit eigenvectors
+
+$$
+u_+=\frac1{\sqrt2}
+       \begin{pmatrix}\mathbf1_p/\sqrt p\\\mathbf1_q/\sqrt q\end{pmatrix},
+\qquad
+u_-=\frac1{\sqrt2}
+       \begin{pmatrix}\mathbf1_p/\sqrt p\\-\mathbf1_q/\sqrt q\end{pmatrix}.
+\tag{3.4}
+$$
+
+Hence $(E_\pm)_{vv}=1/(2p)$ on $X$ and $1/(2q)$ on $Y$, while
+
+$$
+E_0=\operatorname{diag}\left(I_p-\frac1p\mathbf1_p\mathbf1_p^{\mathsf T},
+                           I_q-\frac1q\mathbf1_q\mathbf1_q^{\mathsf T}\right).
+\tag{3.5}
+$$
+
+Formula (3.5) includes its zero blocks when $p=1$ or $q=1$, and it vanishes entirely when $p=q=1$. There is therefore no exceptional multiplicity case in the calculation
+
+$$
+\begin{aligned}
+T_A(K_{p,q})
+ &=p\left[\left(1-\frac1p\right)^2+\frac1{2p^2}\right]
+  +q\left[\left(1-\frac1q\right)^2+\frac1{2q^2}\right]\\
+ &=n-4+\frac32\left(\frac1p+\frac1q\right).
+\end{aligned}
+\tag{3.6}
+$$
+
+In particular the star trace is the published value of Godsil–Guo–Sinkovic, *Average mixing matrix of trees*, Electronic Journal of Linear Algebra **34**, 269–282, [DOI:10.13001/1081-3810.3746, Lemma 2.2](https://journals.uwyo.edu/index.php/ela/article/download/1877/1877): for $K_{1,m}$ it is $(2m^2-3m+3)/(2m)$. With $m=n-1$, this equals
+
+$$
+T_A(K_{1,n-1})=n-\frac52+\frac{3}{2(n-1)}.
+\tag{3.7}
+$$
+
+Only the trace formula from that lemma is used; no assertion about the rank of a star's average mixing matrix enters the proof.
+
+If one of $p,q$ equals one, $G$ is a star and (3.7) gives equality in (3.1). Otherwise $p,q\ge2$, so $n\ge4$ and
+
+$$
+\frac1p+\frac1q\le\frac12+\frac12=1,
+\tag{3.8}
+$$
+
+with equality exactly when $p=q=2$. By (3.6), these nonstar rank-two graphs satisfy (3.2), with equality exactly at $K_{2,2}\cong C_4$. All ranks at least four have strict inequality by Theorem 2.1. This proves (3.2) and its full equality classification, and also excludes every nonstar from equality in (3.1).
+
+At order two connectivity forces the single edge $K_2=K_{1,1}$, for which (3.6) gives $T_A=1$; the right side of (3.1) is one. At order three a connected bipartite graph has part sizes one and two and is $K_{1,2}$, for which $T_A=5/4$ by (3.6). Thus every nonstar does indeed have order at least four, and every smaller order in the stated domain has been included.
+
+Finally subtract (3.2) from (3.7) to obtain (3.3). Equality in the subtraction is equivalent to equality in (3.2), already classified as $C_4$. Its trace is $3/2$, the order-four star trace is two, and their difference is $1/2=3/[2(4-1)]$. $\square$
+

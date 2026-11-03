@@ -1,0 +1,23 @@
+**Lemma 60.2 (event supply below ambiguous branches).** For every
+birth-admissible subtree $u$, define $h(u)$ by the same local formula as
+in (AAII.16). Then
+
+$$
+e_b(u)=0\ \Longrightarrow\ h(u)=0,\qquad
+e_b(u)>0\ \Longrightarrow\ e_b(u)\ge2h(u)+1.
+\tag{AAII.17}
+$$
+
+Proof. An admissible leaf has event count zero, except for beta born
+alpha, whose count is one; all have $h=0$. An alpha leaf born beta is
+inadmissible. At a branch write $x=e_\beta(u_L)$, $y=e_\alpha(u_R)$,
+$a=h(u_L)$ and $b'=h(u_R)$. Its forced root prefix has length
+$\kappa_\alpha=2$ or $\kappa_\beta=1$, so
+$e_b(u)=\kappa_b+x+y>0$. If both child counts are positive, induction
+gives $x\ge2a+1$, $y\ge2b'+1$, and
+$h(u)=a+b'+1$. Hence $e_b(u)\ge2h(u)+1$. If precisely one count is
+positive, the other child's $h$ is zero by induction, and the positive
+child alone gives $x+y\ge2h(u)+1$. If both vanish, $h(u)=0$ and the
+nonempty root prefix suffices. These cases also prove that a zero event
+count has no ambiguous branch. $\square$
+

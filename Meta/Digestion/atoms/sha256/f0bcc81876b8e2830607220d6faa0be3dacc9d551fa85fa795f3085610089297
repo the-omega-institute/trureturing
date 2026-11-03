@@ -1,0 +1,26 @@
+**Assumption 4.1 (Scope of the fair-source calculation).** The hypotheses for (2.1)–(3.5) are exactly Assumption 1.1. In particular, (2.6) uses independent fair initial and fresh coins; it supplies no corresponding cancellation for biased or dependent opinion coins or for deterministic initial configurations. A stationary replacement changes the joint law of the initial sources. Continuous-time or single-vertex update schedules change (1.1) and its time histories. Signed weights change the nonnegative integer multiplicities used in (2.2). None of these replacements is included among the hypotheses of the stated results.
+
+The degree-dependent antecedent [5] supplies, in the same synchronous graph class, the bound
+
+$$
+\operatorname{Var}(W_t)
+\geq\frac{\varepsilon^{\deg(u)+2}}{2}
+       \left\lfloor\frac{t}{d+1}\right\rfloor
+$$
+
+and the consequent exclusion of sublinear variance. That conclusion is an existing input to the mathematical context; Theorem 2.1 adds the finite-time collision identity, its exact remainder and equality criterion, and a lower coefficient independent of degree or spacing. The upper bound of order $t$ and the linear/logarithmic alternative belong to [1, Section 2.2, equation (7) and Lemma 2.3]. Its asymptotic normality result is [1, Section 2.3, Theorem 2.7]. No new central limit theorem, graph-distinguishability conclusion, or graph-specific asymptotic variance coefficient is asserted here.
+
+The remaining optimal-constant problem in the present domain is to determine the infimum (3.1) between the two endpoints of (3.2), and whether it is attained. The equality criterion in Theorem 2.1 concerns the first comparison in (2.3); it does not answer this optimization problem.
+
+**Mathematical citations.**
+
+[1] I. Benjamini, H. Helman Tov and M. Zhukovskii, *Global information from local observations of the noisy voter model on a graph*, [arXiv:2207.01224v2](https://arxiv.org/pdf/2207.01224v2). Section 1, p. 2, specifies the synchronous law; Section 2 defines the finite graphical histories; Section 2.2, pp. 5–6, specifies the repetition statistic and variance question; Section 2.4, pp. 12–13, uses four-history coalescence and fair colouring; the proof of Theorem 6.1, pp. 28–29, supplies the star-centre transition used in (3.6). The journal publication locator is DOI [10.1214/23-AOP1637](https://doi.org/10.1214/23-AOP1637); all mathematical locators here refer to the explicitly specified arXiv version. DOI [10.1016/j.physa.2026.131974](https://doi.org/10.1016/j.physa.2026.131974) is a related citation locator, not a theorem input to these proofs.
+
+[2] R. Pymar and N. Rivera, *Asymptotic behaviour of the noisy voter model density process*, [arXiv:2112.01478v2](https://arxiv.org/pdf/2112.01478v2), Sections 1.2 and 2.2. Its finite-state discrete-time chain updates one uniformly selected vertex at a step using a transition matrix $P$; its density statistic $\sum_x\pi(x)\xi(x)$ is evaluated for $\xi$ sampled from its stationary law $\Gamma$. Proposition 11 gives its stationary duality. These are different update, initial-law and observable domains from (1.1)–(1.3); that stationary density theorem is not a supplier of (2.1) or (3.2).
+
+[3] P. Caddeo and E. Lubetzky, *The noisy voter model with general initial conditions*, [arXiv:2507.16188v1](https://arxiv.org/pdf/2507.16188v1), Sections 1 and 2. Its updates are driven by independent rate-one Poisson clocks, with a uniform choice among its opinion states at a refresh. Its main mixing results treat deterministic initial configurations on families of bounded-degree finite graphs with subexponential ball growth. Proposition 2.5 gives stationary spatial eigenfunction-variance formulas. Neither this continuous-time stationary variance nor those mixing statements replace the synchronous finite-time repetition law here. The state-count notation $q$ in that paper is distinct from the copy probability $q=1-\varepsilon$ used here.
+
+[4] R. O'Donnell, *Analysis of Boolean Functions*, Chapter 1, Fourier characters on the uniform discrete cube and their orthogonality, [arXiv:2105.10386v1](https://arxiv.org/pdf/2105.10386v1). For the degree-two characters needed here, the elementary cancellation is displayed explicitly in (2.6).
+
+[5] *The repetition-count variance of the noisy voter model*, [mathematical antecedent](../../../Problems/benjamini-helman-tov-zhukovskii-2023-noisy-voter-repetition-variance.md), with the degree-dependent estimate supplied by [RepetitionVarianceLinear](../../../D5/S3/StatisticalMechanics/NoisyVoter/RepetitionVarianceLinear.lean), specifically its `product_explicitBound` and `model_explicitBound`. The source law correspondence and the non-sublinearity conclusion are inherited; they are not new conclusions of this volume.
+

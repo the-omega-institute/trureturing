@@ -1,0 +1,40 @@
+**Proposition 23.3 (sliding, selected calls and actual block append).**
+A real Tick, Hold and all-terminal Read, with oldest $Y$ epoch dropped,
+give the views of $hK$ and actual field $T_tv$. A real independent
+block $B$ of $k$ current-leaf births followed by a fresh exact assay
+has represented history and actual return
+
+$$
+H=hK^nB,\qquad
+v'=T_{t[B]}^{n+k}\iota_BT_t^nx_h.
+\tag{23.2}
+$$
+
+Both histories belong to $\mathcal H_{\rm blk}$, and any finite
+composition of these operations remains in its acquired image.
+One actual internal selector is the least address of the recovered
+last block, or root if no block, followed by left descent to a current
+logical leaf and its enabled $P/S$.
+
+Proof. Sliding retains precisely epochs $1,\ldots,n+1$ of the old
+uninterrupted field, giving $O_nT_tx_h$ and current
+$T_t^{n+1}x_h$, including the alpha case $n=0$.
+For (23.2), the old assay's $n$ Ticks have actually occurred before
+the new raw calls. If a previous block exists then $n\ge1$, providing
+the necessary positive added internal gap; otherwise the appended
+block is the first and no internal-gap test applies.
+Each of its $k$ members is a real serial raw growth, producing
+$\iota_Bv$. Its new tree has $I'=n+k$, so the fresh assay gives
+(23.2). Theorems 22.2 and 23.2 apply to that actual $H$.
+Finite induction proves closure under these operations.
+
+The selected old address remains a logical position. Left descent
+in earned code reaches a real leaf, whose type fixes enabled $P/S$.
+The retained dispatcher and rights execute it as one such singleton
+block, with actual Growth/Return and synchronized prediction.
+It is not a free selector port. Before claiming fresh erased-history
+acquisition, clear or isolate the old reconstructed history and
+predictor advice with their actual charges. Arbitrary dependent
+unticked growth, Add or Reset remains legal current service but
+has no asserted closure in this historical image. $\square$
+

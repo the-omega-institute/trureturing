@@ -1,0 +1,16 @@
+**Lemma 45.2 (actual producer for every signed rational input).** Starting at that zero seed, the following successful word builds $T_k$. For $i=1,\ldots,k$, put $r=R^{i-1}$ and perform
+
+$$
+P_r;\ S_r;\ S_{rL};\ P_{rLR};
+$$
+
+then perform $P_{R^k}$. It uses $2k+1$ promotions and $2k$ splits, has $6k+2$ material vertices and $2k+1$ terminals, and earns their ordered correspondence. For every $a=(a_1,\ldots,a_k)\in\mathbb Q^k$, a provider then performs, in increasing $i$,
+
+$$
+\operatorname{Add}(2i-1,a_i);\operatorname{Add}(2i,-a_i),
+$$
+
+with no Tick. Its actual field is $Za$. Every zero operand is still an actual completed Add.
+
+**Proof.** At each spine position $r$, the first two events make $\langle\beta,\alpha\rangle$. Splitting its left beta and promoting that split's right alpha make the left subtree $c$; the right spine position is still alpha. The final promotion makes the last spine beta. This proves the term and the successful guards inductively. A promotion adds one vertex and a split adds two, giving $1+(2k+1)+4k=6k+2$. Its logical leaves are the $2k$ cherry betas and the final beta. The maintained roster places $z_i,z'_i$ at $2i-1,2i$. Growth and the initial allocation have supplied only zeros; the two actual Adds therefore establish the displayed field, independently for every coordinate, sign and zero. $\square$
+

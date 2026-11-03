@@ -1,0 +1,14 @@
+#### 定义 9.1（量子承载的门历史程序）
+
+取有限组正交程序标签 $\lvert u\rangle ,\lvert v\rangle$，其关联矩阵为已知酉 $U_u,V_v$。在程序与数据联合载体上定义
+
+$$
+\widehat R=\sum_{u,v}\lvert uv\rangle \langle uv\rvert \otimes V_v^\dagger U_u.
+$$
+
+联合来源 $\Sigma$ 可包含程序之间、程序与数据之间的相关和纠缠。
+
+<a id="statement-9-2"></a>
+
+<a id="prop-program"></a>
+

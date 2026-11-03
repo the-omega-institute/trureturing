@@ -1,0 +1,62 @@
+**Proposition 11.3 (The three-vertex residual condition).**
+Set $w=C_{02}$, $q=C_{12}$ and $z=C_{01}$. The edge $12$ is additional
+to the native menu. Define
+
+$$
+\ell=\frac{|w|^2}{Z}-(r-X-Y),\qquad
+h=X-\frac{|q|^2}{Z}.
+\tag{11.3}
+$$
+
+The reference residual satisfies
+
+$$
+R_{00}=\kappa-\ell,\qquad R_{11}=h-\kappa,\qquad
+z=\frac{w\overline q}{Z}+R_{10}.
+\tag{11.4}
+$$
+
+Consequently
+
+$$
+\ell\le\kappa\le h,\qquad
+\left|z-\frac{w\overline q}{Z}\right|^2
+\le(\kappa-\ell)(h-\kappa).
+\tag{11.5}
+$$
+
+Together, these conditions are equivalent to positivity of the principal
+$\rho$ block on $\{2,0,1\}$, for the declared $Z>0$. They concern this
+$3\times3$ block only, not positivity of the whole $5\times5$ matrix.
+For a pure state $R=0$ and $z=w\overline q/Z$.
+
+Proof. The entries of $v$ are $v_0=\overline w/\sqrt Z$ and
+$v_1=\overline q/\sqrt Z$. Thus
+$(vv^\dagger)_{10}=w\overline q/Z$, proving the orientation in (11.4).
+The two affine diagonals give the remaining identities. In reference-first
+order the principal block is
+
+$$
+\begin{pmatrix}
+Z&w&q\\
+\overline w&r-X-Y+\kappa&\overline z\\
+\overline q&z&X-\kappa
+\end{pmatrix}.
+$$
+
+Its Schur complement is the Hermitian matrix
+
+$$
+\begin{pmatrix}
+\kappa-\ell&\overline{z-w\overline q/Z}\\
+z-w\overline q/Z&h-\kappa
+\end{pmatrix}.
+$$
+
+Such a two-by-two matrix is PSD exactly when its two diagonals and
+determinant are nonnegative, including zero-diagonal cases. This gives
+both directions of (11.5). In the full matrix other residual entries
+remain unspecified. The normalized version is the reference disk of
+[Hidden Relations C-9.2][G11]; the displayed matrices specify its
+probability weights and conjugations for the current source. $\square$
+

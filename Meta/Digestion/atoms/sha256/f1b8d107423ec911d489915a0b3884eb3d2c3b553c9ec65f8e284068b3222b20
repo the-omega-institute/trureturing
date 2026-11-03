@@ -1,0 +1,34 @@
+**Theorem 11.3 (Unrestricted profile comparison at every capacity phase).** For every integer $r\ge5$, every finite $s\ge r$ and every profile of Definition 1.1 with $q\in[r-1,r]$,
+
+$$
+J_s(x)\ge F_r(q).
+$$
+
+Equality holds exactly for $s=r$ and $x=x^*(q)$, up to relabeling. If $s>r$, its common datum satisfies the stronger bound (11.2), in particular
+
+$$
+J_s(x)\ge F_r(q)+(r-1)+\frac1{2r}.\tag{11.6}
+$$
+
+For arbitrary $q\ge r$, every profile with finite $s\ge r+1$ also satisfies, for each $2\le\beta\le\kappa_r$,
+
+$$
+2J_s(x)\ge r^3+\beta(s-r)+(D-\beta)(q-r).
+\tag{11.7}
+$$
+
+Here $D-\beta>0$; in particular $\beta=2$ gives $J_s(x)\ge r^3/2+1$. The bound (11.7) does not require $q\le r$.
+
+The interval comparison includes every $r\ge11$ and every mean in Definition 8.3, without the support hypothesis of Theorem 4.1 or the upper-density restriction of Theorem 8.1. It extends the comparison and equality statement of Theorem 3.2 to all $r\ge5$. Its domain is $s\ge r$; at $q=r-1$ it does not exclude the separate class $s=r-1$.
+
+**Proof.** If $s>r$, Definition 11.1 transfers the profile to one common datum, and Theorem 11.2 applies. If $s=r$, Theorem 3.1 supplies the inequality and its complete equality class, including both endpoints. This uses the existing fixed-$r$ equality theorem without any hypothesis on low cardinalities.
+
+For (11.7), apply Theorem 2.1 on its unrestricted mean domain. Since $f_r(r)=r^3$,
+
+$$
+f_r(q)+\beta(s-q)
+=r^3+\beta(s-r)+(D-\beta)(q-r).
+$$
+
+The admissible range of $\beta$ is nonempty, since $\kappa_r\ge2$. As proved in Theorem 2.1, $\kappa_r\le2a^2<D$, so the last coefficient is positive. For $s\ge r+1$ and $q\ge r$, taking $\beta=2$ gives the asserted gap above $r^3/2$. ∎
+

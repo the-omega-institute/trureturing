@@ -35,7 +35,8 @@ internal static class WorktreeCommand
         + "StrataLint worktree publish --branch NAME [--commit REV] | "
         + "StrataLint worktree finalize --branch NAME --writers-joined | "
         + "StrataLint worktree return [--pr N] --writers-joined | "
-        + "StrataLint worktree ensure-cache [--path DIR] | "
+        + "StrataLint worktree ensure-cache [--path DIR] [--restore-dependencies] | "
+        + "StrataLint worktree ensure-cache [--path DIR] [--restore-dependencies] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree with-cache-reader [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree validate-branch --branch NAME | "
@@ -141,6 +142,11 @@ internal static class WorktreeCommand
                 if (LeanPinSet.TryReadWorktree(options.Path, out var reason) is null)
                     throw new InvalidOperationException(reason);
                 return reused;
+            }
+            if (Environment.GetEnvironmentVariable("WORKTREE_REQUIRE_DISK_CHECK") == "1")
+            {
+                var disk = WorktreeProtocolCommand.CheckCreationDisk(options.Source, options.Path, runner);
+                if (!disk.Success) return disk;
             }
             initializationScope = WorktreeInitializationScope.Acquire(options.Source, options.Path, options.Branch);
             halfBuiltRecovered = ValidatePreflight(options, runner);

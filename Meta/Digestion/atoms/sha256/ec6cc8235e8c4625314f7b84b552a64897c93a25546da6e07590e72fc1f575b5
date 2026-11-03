@@ -1,0 +1,53 @@
+**Theorem 78.3 (U5 lower bound: every exact transfer pays the missing rank).**
+Under the complete entrance-information contract of Definition 78.1, any exact
+pointwise-finite adaptive protocol on the same material uses at least
+
+$$
+N-d
+\tag{78.3}
+$$
+
+fresh scalar Reads on every terminating input path. No field report is required.
+Here an exact deterministic protocol, or a protocol with a fixed field-independent
+random tape, must be correct and terminate on every rational entry.
+
+**Proof.** Fix one actual terminating path at $x$, with $r$ fresh successful
+Reads and $k$ Ticks. Freeze its complete actual command/operand sequence, replies,
+local choices and stop. Along this sequence the source field after $t$ Ticks is
+$A^t x+q_t$, where $q_t$ is the offset from the Adds already performed. A fresh
+Read at terminal $\ell$ then has row $e_\ell^{\mathsf T}A^t$ and offset
+$e_\ell^{\mathsf T}q_t$. Stack its $r$ rows into $O$.
+
+For every $\eta\in\ker M\cap\ker O$ compare the actual executions at $x$ and
+$x+\eta$. Initially their **whole receiver states** agree by
+$\rho_\kappa(M(x+\eta))=\rho_\kappa(Mx)$, their material/bindings/rights and
+control phases agree, and their source fields differ by $\eta$. Induct on the
+completed calls, retaining equality of the whole receiver state and pending
+input/output control, and source-field difference $A^t\eta$. Equal receiver
+state and the common fixed program/tape select the same next entire input,
+address, rational operand and local work. An Add translates both fields equally;
+a Tick multiplies the difference by $A$; Read and Hold preserve it. Every Read
+has equal literal rational values because its row in $O$ annihilates $\eta$.
+Consequently its entire encoding, framing and return agree too. ACKs, guards,
+refusals, range and malformed-frame replies are identical by the installed
+semantics and common material/authority. A proper incomplete frame leaves the
+same real pending bytes/state in both executions; completion introduces only the
+same call and declared reply. All receiver updates, including retained records,
+selectors, counters, parser and stopping control, are deterministic from these
+identical inputs and complete outputs. No hidden resource channel supplies a
+further distinction. Thus the induction preserves all its assertions, including
+the same termination decision and the same final Add offset $q$.
+
+Both entries lie in the all-$\mathbb Q^N$ task domain, so correctness gives
+$F\eta=A^k\eta$. Lemma 78.2 forces $\eta=0$. Hence $[M;O]$ has rank $N$;
+its first block has rank $d$ and its second has at most $r$ rows, yielding
+$r\ge N-d$. The proof freezes a realized path only to prove that every point of
+this affine fibre realizes the same complete path; it does not assume that
+adaptivity or its control state is initially field-independent beyond $Mx$.
+
+For a field-independent random tape with zero error and almost-sure termination
+separately for every rational entry, intersect those probability-one events over
+the countable set $\mathbb Q^N$. On the resulting probability-one set of tapes
+the same deterministic proof applies simultaneously to every entry. Thus the
+bound also holds almost surely for each entry under that contract. $\square$
+

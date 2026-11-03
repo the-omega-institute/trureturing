@@ -1,0 +1,14 @@
+**Convention 2.2 (The functions $F_t$ and $G_t^{\pm}$).** For $t\ge2$ and real $a,b$ put $w=a+ib$ and
+
+$$
+F_t(a,b)=t(t-1)(1-a)-t+h_{t-1}(w,\overline{w}),\qquad G_t^{\pm}(a,b)=t(t-1)\,a\pm h_{t-1}(w,\overline{w}).
+$$
+
+Since $h_{t-1}$ has real coefficients and is symmetric, $h_{t-1}(w,\overline{w})$ is real and is a polynomial in $a$ and $b^2$; hence $F_t$ and $G_t^{\pm}$ are real polynomials, even in $b$. For $\lvert w\rvert\le1$ the $m+1$ monomials of $h_m(w,\overline{w})$ all have modulus $\lvert w\rvert^m$, so
+
+$$
+\lvert h_m(w,\overline{w})\rvert\le(m+1)\,\lvert w\rvert^{m}\le m+1 .
+$$
+
+Stance: repo-derived (notation and an elementary bound used throughout).
+

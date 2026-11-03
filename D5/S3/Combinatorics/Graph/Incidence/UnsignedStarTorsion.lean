@@ -112,6 +112,29 @@ private theorem nonbipartite_potential {A : Type*} [AddCommGroup A]
     t r + t r = -t r + t r := congrArg (fun x => x + t r) hc
     _ = 0 := neg_add_cancel _
 
+/-- The exact integer unsigned star map is injective on a connected
+nonbipartite original graph. This consumed corollary keeps the general
+nonbipartite potential theorem private in its owning module. -/
+theorem starMap_injective
+    (hc : (g.graphAfterDeleting ∅).Connected)
+    (hn : ¬ (g.graphAfterDeleting ∅).IsBipartite) :
+    Function.Injective g.starMap := by
+  intro a b hab
+  have hadj : ∀ ⦃u v⦄, (g.graphAfterDeleting ∅).Adj u v →
+      (a u - b u) + (a v - b v) = 0 := by
+    rintro u v ⟨i, _, h | h⟩
+    all_goals
+      have he := congrFun hab i
+      change a (g.left i) + a (g.right i) =
+        b (g.left i) + b (g.right i) at he
+      rw [h.1, h.2] at he
+      omega
+  obtain ⟨c, hcc, ht⟩ := nonbipartite_potential hc hn
+    (fun v => a v - b v) hadj
+  funext v
+  have hv := ht v
+  omega
+
 private theorem edge_residues (k : ℕ) (z : X → ℤ) (a : V → ℤ)
     (ha : ∀ i, (k : ℤ) * z i = g.starMap a i) :
     ∀ ⦃u v⦄, (g.graphAfterDeleting ∅).Adj u v →

@@ -1,0 +1,29 @@
+**Proposition 46.2 (One five-cycle and one seven-cycle).**
+For $r=s=1$ the graph has ten vertices and
+
+$$
+D=113,\qquad d=11,\qquad M=8,\qquad
+\operatorname{type}(R)=9,\qquad
+\operatorname{pd}_P R=102,\qquad
+\mathcal F_{102}=P(-110)\oplus P(-108)^8.
+\tag{46.7}
+$$
+
+The eight degree-five canonical generators have all coordinates two
+on the seven-cycle, and the five-cycle private triples are exactly
+
+$$
+\{(x,1,z):x,z\in\{1,2\}\}
+\ \cup\ \{(1,2,1),(1,2,2),(2,2,1),(1,3,1)\}.
+\tag{46.8}
+$$
+
+Proof. With a single seven-cycle, condition (45.5) forces that
+branch to be $\nu_{C,2}$. Formula (46.3) gives exactly the eight
+triples in (46.8), so this lists every degree-five generator.
+The degree-three generator is $(3;\mathbf1_V)$.
+Substitution in (46.1) gives $D=5\cdot13+2\cdot3\cdot8=113$,
+$d=3+3+5=11$ and $M=8(45-44)=8$. The quotient basis gives
+type nine. Formula (46.2) gives length $113-11=102$ and
+shifts $113-3=110$, $113-5=108$, proving (46.7). $\square$
+

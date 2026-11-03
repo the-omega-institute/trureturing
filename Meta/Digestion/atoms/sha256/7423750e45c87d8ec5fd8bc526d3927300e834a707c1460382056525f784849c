@@ -1,0 +1,59 @@
+**Theorem 27.4 (both inverse laws and the current-cut restriction).**
+For every authentic $(d,P)$ and every $j\in\mathbb N_{>0}$ and
+$v\in\{a,b\}^*$, Definition 27.3 terminates and gives
+
+$$
+ Q_s(U_s(j))=j,\qquad U_s(Q_s(v))=v.
+\tag{PCR.75}
+$$
+
+Its returned descriptors, bit, branch time and normalization origin
+are those of the actual source. In particular $U_s(1)=\varepsilon$,
+with creation $(0,\alpha)$, beta origin one, branch time two and
+$(A,B)=(1,2)$. The already-occurred versions restrict these inverse
+maps exactly to
+
+$$
+ \{j:1\le j\le F_{n+1}-1\}
+ \quad\longleftrightarrow\quad
+ \{v:e_v+1\le n\}.
+\tag{PCR.76}
+$$
+
+Both sets are empty at $n=0,1$. A word can be present and have no
+occurred branching event: creation, beta normalization and branching
+are separate cuts in (PCR.69). In particular root presence at cut zero
+does not make birth ordinal one an already-occurred event.
+
+Proof. Full-source synthesis supplies the same all-index stream by
+ACR Theorems 21.2 and 21.4, including its seed and singular part.
+Theorem 17.2 then proves word descent correct at every step. It uses
+only earlier actual event bits; the strict increase $A_{ux}>A_u$
+also rules out a recursive request for its own unknown orientation.
+The returned initial label and creation time follow the actual child
+rule, not the child's possibly later beta label.
+
+For ordinal descent, the subtree rooted at a word has exactly one
+child of normalization delay one and one of delay two, even in a
+transient. Its exact remaining-time count $f(u)$ therefore satisfies
+$f(0)=f(1)=1$, $f(u)=f(u-1)+f(u-2)$ for $u\ge2$, and zero count
+at negative remaining times. Thus $f(u)=F_{u+1}$, and (PCR.74) gives
+its actual ordered first-letter block sizes. The words in an exact
+layer are prefix-incomparable, because every edge has positive delay.
+Hence the whole $a$ block precedes the whole $b$ block in physical
+order. At every selection, $0\le q<F_{u+1}$ and the selected block
+is nonempty; the new rank is in its exact range. Remaining time
+strictly decreases, so descent terminates after at most $t$ letters.
+At zero the only suffix is empty, of rank zero. Induction on remaining
+time proves that the output is precisely the required beta-layer
+member. Theorem 27.2 then proves both identities in (PCR.75), the
+root tuple and every output field. This is the all-root specialization
+of the beta-list inverse already used in [ACR, Proposition 10.2][ACR];
+no new inverse-existence claim is needed.
+
+An event in batch $\tau$ occurs precisely at update $\tau$. Summing
+batch sizes through $n$ gives $F_{n+1}-1$ for $n\ge1$, also zero at
+$n=0$. This proves (PCR.76) and the guard, including a batch at $n$
+itself. A hypothetical future event computed from supplied source data
+provides no evidence that the actual source has reached it. $\square$
+

@@ -1,0 +1,18 @@
+## 48. Full-parent reconstruction without a regular-chart restriction
+
+Use the source coordinates of (19.1):
+
+$$
+\begin{gathered}
+c_{\rm src}=r(1-r)/b,\quad j=b+c_{\rm src},\quad n=j+r,\quad
+T=1+b,\quad U=1+2b,\quad\epsilon=d-24,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\\
+B_{\rm par}=6/T-2/U=2(2+5b)/(TU)>0,\\
+D_{\rm par}=\frac{24}{5}(b-1/8)B_{\rm par}.
+\end{gathered}
+\tag{48.1}
+$$
+
+The symbol $D_{\rm par}$ is the constant term in the parent equation,
+not the regular-chart denominator of Section 31.
+

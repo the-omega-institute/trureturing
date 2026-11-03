@@ -1,0 +1,23 @@
+**Theorem 7.4 (Quadratic descent and failure of convex symmetrization).** If $\delta=\lambda/a$ with fixed $0<\lambda<1$, then for all sufficiently large $a$ the choice $\varepsilon=(2r-1)\delta/r^2$ in (7.2) is feasible and
+
+$$
+\mathcal H(\varepsilon)
+=H_d-\frac{8\lambda^2}{a^2}+O_\lambda(a^{-3}).\tag{7.8}
+$$
+
+The remainder and feasibility threshold can be taken uniformly on each compact interval $0<\lambda_-\le\lambda\le\lambda_+<1$. The nonlinear functional $H$ on the full law domain is not convex for any $0<\delta<1/r$.
+
+**Proof.** On each such compact interval the mass upper bound in (7.3) is $(1-\lambda)/a+O(a^{-2})$, whereas $\varepsilon=2\lambda/a^2+O(a^{-3})$ and $\mu=1+O(a^{-1})$. Thus (7.3) holds uniformly eventually. In addition to (7.5), the exact second derivative at zero is
+
+$$
+\mathcal H''(0)
+=4r^2(1+2/a)\mu^{-3}
+ -\frac{24(2r-1)\delta}{a\mu^4}.
+$$
+
+On $0\le z\le\varepsilon$, all denominators in the first three derivatives stay bounded away from zero. Differentiating (7.4) three times therefore gives $\mathcal H'''(z)=O(a^2)$ uniformly on the compact parameter interval. The linear Taylor term at $\varepsilon$ is
+$-16\lambda^2/a^2+O(a^{-3})$, the quadratic term is
+$8\lambda^2/a^2+O(a^{-3})$, and the third-order remainder is $O(a^2\varepsilon^3)=O(a^{-4})$. This proves (7.8).
+
+For the convexity assertion choose any strict descent from Theorem 7.2 and average its law over every label permutation. This average is the fully symmetric mixture of $a$- and $r$-subsets from Lemma 1.2 and has energy $H_d$. Every law being averaged has the same smaller energy $\mathcal H(\varepsilon)$. A convex functional would give $H_d\le\mathcal H(\varepsilon)$, a contradiction. This argument uses actual feasible laws and does not treat the $w_i$ and $y_i$ as independent variables. ∎
+

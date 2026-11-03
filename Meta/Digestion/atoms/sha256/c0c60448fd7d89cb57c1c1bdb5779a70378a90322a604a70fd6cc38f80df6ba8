@@ -1,0 +1,19 @@
+### 62.8. N9：正分母的精确末比较多项式
+
+在定理 62.4 的全部过滤下，定义以下多项式：
+
+$$
+\begin{aligned}
+B_p&=8L_p-K_p=8s-23+(7-s)\rho,\\
+C_p&=32L_p-K_p=32s-47+(31-s)\rho,\\
+A_p&=s+4-4q,\\
+W_p^{\rm pol}&=D_p[17+(s-U-2)\rho]+2\ell\rho^2V_p,\\
+P_J&=D_p[7+(U+2-s)\rho]-2\ell\rho^2V_p+2q\rho B_p,\\
+P_M&=48D_p^2-(96q\rho L_p+2A_p\rho C_p)D_p
++(2\rho V_p-4D_p)W_p^{\rm pol}.
+\end{aligned}
+\tag{62.37}
+$$
+
+$W_p^{\rm pol}$ 是多项式名，不是例外世界 $W_p$。
+

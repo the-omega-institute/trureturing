@@ -1,0 +1,176 @@
+**Theorem 18.2 (an earned-horizon, approximation-robust obstruction).**
+For every integer $k\ge2$, take the admitted actual source with public
+$d=1$, coefficient $c_0=1$, seed $s_0=1$, and completed cut $n=2k+4$.
+Its first chronological parent is $p_1=\varepsilon$ at $t_1=2$.
+Proposition 9.2 actually earns
+
+$$
+ h=n-1=2k+3,\qquad H=2n-1=4k+7.
+ \tag{ACR.61}
+$$
+
+Writing $g_k=g_{s,n,1}$ on this earned cube, for every
+$0\le\epsilon<1/2$ one has
+
+$$
+ \rho_\epsilon(g_k)\ge
+ \frac5{24}(1-2\epsilon)\left(\frac2{\sqrt3}\right)^k,
+ \qquad
+ \rho_{1/64}(g_k)\ge
+ \frac{155}{768}\left(\frac2{\sqrt3}\right)^{(H-7)/4}.
+ \tag{ACR.62}
+$$
+
+In particular no single polynomial $M(d,H)$ bounds
+$\rho_{1/64}(g_{s,n,j})$ for all admitted actual sources, mature cuts
+and required early siblings. This is a lower bound for the specified
+approximate nonconstant Walsh norm.
+
+Proof. The all-index recurrence $s_{i+1}=s_i$ with seed one produces
+$z_j=1$ at every birth. Under GPO Definition 27.1, every actual split
+therefore puts beta at $a$ and alpha at $b$. The root first splits at
+update two, and its two child ranks at cut $n$ are $n-1,n-2$ by
+Definition 10.1. Every proper prefix on the physical $a$-ray is initially
+beta, so (ACR.7) gives $b(a^\ell)=\ell+1$ for $\ell\ge1$.
+The actual spine acquisition consequently returns (ACR.61). The cut is
+mature since $N(2)=4\le n$. Neither its law nor its age is entry advice.
+
+In any cone of rank $q\ge2$ on this source, a physical $a$ step lowers
+rank by one, and a physical $b$ step lowers rank by two. Both terminal
+ranks zero and one have depth zero. For a tape $u$ put
+
+$$
+ A_0=0,\qquad A_\ell=\sum_{i=1}^\ell(1+u_i)\quad(0\le\ell\le H),
+ \qquad T_m=\min\{0\le\ell\le H:A_\ell\ge m\}\quad(0\le m\le H).
+ \tag{ACR.63}
+$$
+
+For $q\ge1$ its actual terminal depth is $T_{q-1}$: before the first
+crossing the residual rank is at least two, and at the crossing it is
+zero or one. For the two child cones the needed crossings occur within
+$H$ positions, since all increments are at least one and the largest
+threshold is $n-2<H$. Thus, with the same locally restarted physical
+tape in the two cones,
+
+$$
+ g_k(u)=T_{n-2}-T_{n-3}
+       =\mathbf1_{\{A_\ell=n-3\text{ for some }0\le\ell\le H\}}.
+ \tag{ACR.64}
+$$
+
+Indeed a hit of $n-3$ requires exactly one more step to cross $n-2$;
+an overshoot of $n-3$ is exactly $n-2$, crossing both thresholds at
+once. This derives the observable from actual support and the actual
+first parent. It introduces no rank or label sensor.
+
+Restrict the first $k$ coordinates to free $x\in\{0,1\}^k$ and fix
+all remaining physical directions to $a,b,a,b,\ldots$ through position
+$H$. Write $w=|x|$. At the end of the free block, $A_k=k+w\le2k$,
+strictly below $n-3=2k+1$; no earlier hit is possible. The remaining
+distance is $k+1-w$. The alternating tail has partial sums
+$0,1,3,4,6,7,\ldots$, precisely the nonnegative integers with residues
+zero or one modulo three. Its $H-k=3k+7$ positions suffice even to
+cross the larger remaining threshold $k+2$. Hence this coordinate
+restriction $R$ of the actual tape cube satisfies
+
+$$
+ g_k(Rx)=f_k(x):=1-\mathbf1_{\{|x|\equiv r_k\pmod3\}},
+ \qquad r_k\equiv k-1\pmod3.
+ \tag{ACR.65}
+$$
+
+This substitution is used only in the norm proof; it is not a claim
+that the restricted tape law is uniform on the original cube.
+
+Here is the restriction inequality with its constant term accounted
+for. For any real $p$ on the original cube and fixed tail $v$, expansion
+in characters gives, for every $A\subseteq[k]$,
+
+$$
+ \widehat{p(\cdot,v)}(A)=
+ \sum_{B\subseteq\{k+1,\ldots,H\}}
+       \widehat p(A\cup B)\chi_B(v),\qquad
+ \rho(p\circ R)\le\rho(p).
+ \tag{ACR.66}
+$$
+
+To prove the inequality, take absolute values and sum only over
+nonempty $A$. The groups $A\cup B$ are disjoint for distinct $A$,
+and each such group contains only nonempty original supports. The
+original constant can contribute only to the restricted constant.
+Uniform approximation error also cannot increase under $R$.
+
+For completeness, the required approximation lower bound for this
+specific modular restriction has an elementary dual proof. Let
+$\omega=e^{2\pi i/3}$, $a=(1+\omega)/2$, $b=(1-\omega)/2$, so
+$|a|=1/2$ and $|b|=\sqrt3/2$. The root-of-unity identity
+
+$$
+ I_r(x):=\mathbf1_{\{|x|\equiv r\pmod3\}}
+ =\frac{1+\omega^{-r}\omega^{|x|}
+             +\omega^{-2r}\omega^{2|x|}}3
+ \tag{ACR.67}
+$$
+
+gives $\widehat{\omega^{|x|}}(A)=a^{k-|A|}b^{|A|}$ by factoring
+the uniform sum into its $k$ coordinates. The other term is its
+complex conjugate after multiplication by its phase. Thus, for every
+nonempty $A$,
+
+$$
+ \begin{aligned}
+ |\widehat f_k(A)|
+ &\le\frac23(1/2)^{k-|A|}(\sqrt3/2)^{|A|}
+ \le\frac23(\sqrt3/2)^k,\\
+ \left|\pi_k-\frac13\right|&\le\frac2{3\,2^k},\qquad
+ \pi_k:=\mathbb E_U I_{r_k}\in[1/6,1/2],\qquad
+ \operatorname{Var}_U(f_k)=\pi_k(1-\pi_k)\ge\frac5{36}.
+ \end{aligned}
+ \tag{ACR.68}
+$$
+
+The estimate for $\pi_k$ is (ACR.67) at the empty Fourier support;
+its stated interval uses $k\ge2$. Set $\psi=f_k-\mathbb E_U f_k$.
+Then $\mathbb E_U\psi=0$, $\mathbb E_U f_k\psi=\operatorname{Var}_U(f_k)$
+and $\mathbb E_U|\psi|=2\operatorname{Var}_U(f_k)$, the last equality
+following by evaluating the two values of the Boolean $f_k$.
+For any real $q$ with $\|q-f_k\|_\infty\le\epsilon$, orthogonality of
+the finite character basis gives
+
+$$
+ \begin{aligned}
+ (1-2\epsilon)\operatorname{Var}_U(f_k)
+ &\le\mathbb E_U q\psi
+ =\sum_{A\ne\varnothing}\widehat q(A)\widehat\psi(A)\\
+ &\le\rho(q)\max_{A\ne\varnothing}|\widehat f_k(A)|.
+ \end{aligned}
+ \tag{ACR.69}
+$$
+
+The first inequality uses the pointwise approximation at every input,
+not merely correlation of $f_k$ with itself. Combining (ACR.68)--(ACR.69)
+gives $\rho(q)\ge(5/24)(1-2\epsilon)(2/\sqrt3)^k$.
+For any allowed approximant $p$ to $g_k$, take $q=p\circ R$ and apply
+(ACR.65)--(ACR.66). This proves the infimum bound in (ACR.62), including
+all real nonsymmetric approximants of unrestricted degree.
+
+There is no unpriced constant-coefficient loophole: since $g_k,f_k$
+take values in $\{0,1\}$, any such $p,q$ obey
+$|\widehat p(\varnothing)|,|\widehat q(\varnothing)|\le1+\epsilon$,
+in particular $65/64$ at the specified error. More strongly,
+$\widehat\psi(\varnothing)=0$ removes their constants exactly from
+(ACR.69). The bound is directly on $\rho$, rather than a full-norm
+bound with its constant silently discarded. Substituting
+$\epsilon=1/64$ yields $5\cdot31/(24\cdot32)=155/768$.
+As $H=4k+7$ and $d=1$, the exponential dominates every polynomial in
+$d+H$, proving the last assertion.
+
+The Fourier framework and the distinction between exact and pointwise
+approximate norm are classical; [Ada--Fawzi--Kulkarni, §2 and Theorem
+3.4][ACR-AFK] study the approximate full norm for symmetric Boolean
+functions. Their theorem is not needed for the explicit modular dual
+above. The repo-derived content is the actual-origin stopping identity,
+its earned-horizon restriction and the resulting quantified bound on
+(ACR.58). This is ordinary conditional mathematics, with no additional
+Lean certificate or worldwide novelty claim. $\square$
+

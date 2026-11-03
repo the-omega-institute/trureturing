@@ -1,0 +1,26 @@
+**Corollary 4.3 (exact selector integrability test).** For a joint replacement,
+finite paid mean is equivalent to
+$$
+\sum_{h<\infty}\nu(H=h)K_h<\infty,\qquad
+\nu(H=\infty)=0\ \text{or}\ I_\mu<\infty.
+$$
+For a general original policy put $\beta_m=\nu(H>2m)$,
+$\gamma_m=\nu(H>2m+1)$, and let $d_m(u)$ indicate odd/odd replay at $2m$
+on $\{H>2m\}$. Its exact cost is
+$$
+\begin{aligned}
+C={}&\nu(H>0)+\sum_{m\ge0}\gamma_m(bM_m+aM_{m+1})\\
+&+\sum_{m\ge1}\left[\beta_mM_m+
+ v_m\int_{\{H>2m\}}d_m(u)\,\nu(du)\right].
+\end{aligned}
+$$
+Each bracket is nonnegative; the signed corrections are absolutely summable.
+Hence it is finite exactly when the nonnegative baseline series obtained by
+omitting the $v_m$ terms is finite. In particular, $I_\mu=\infty$ and
+$\nu(H=\infty)=0$ alone do not ensure finite mean.
+
+**Proof.** The first claim is integration of $K_H$. For the second, sum the
+actual survival events $\{H>t,\tau>t\}$ before query $t+1$, using the original
+seed event and the PG27 cylinder mass at each depth. Absolute summability follows
+from $\sum_m|v_m|<1$, so no divergent baseline can be cancelled. $\square$
+

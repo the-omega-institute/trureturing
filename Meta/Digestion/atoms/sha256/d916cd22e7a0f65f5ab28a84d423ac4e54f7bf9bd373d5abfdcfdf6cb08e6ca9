@@ -1,0 +1,107 @@
+**Theorem 29.1 (streamed resource bound).** There is an implementation
+of Definition 28.3 in the sequential bit model of §21 with, for
+an absolute constant $C$ and $S=d+H+2$,
+
+$$
+ \begin{aligned}
+ Q_{\rm acq}&\le C(d+1)^{19}(H+1)4^r,&
+ M_{\rm acq}&\le H,&J_{\rm acq}&\le HQ_{\rm acq},\\
+ C_{\rm acq},W_{\rm acq}&\le CS^{40}4^r,&
+ V_{\rm acq}&\le CS^3,&U_{\rm source}&=0.
+ \end{aligned}
+ \tag{ACR.121}
+$$
+
+Here $Q$ counts paid source Reads, $M$ the maximum complete physical
+literal, $J$ its cumulative traffic, $C$ local bit work, $W$ every
+cumulative local bit write and $V$ peak owned visited backing.
+The bounds include preparation, the paid spine, all failed stages,
+local and final certificates, counters, copying, scratch initialization
+and the actual retained acquisition output. They are every-execution
+bounds on each admitted input. No archive of trials is retained.
+
+Proof. There are at most $4d+1$ height calls per stage: one at the
+root and two per proposed birth. At each call the shallow exploration
+has $O((d+1)^2)$ nodes by (ACR.118). Its starts and child tests have
+the same order of Reads. Each nonterminal frontier has at most
+$O((d+1)^{16})$ clock pairs and at most $H$ rank choices.
+The number of core presentations through order $R$ is
+
+$$
+ 1+\sum_{u=1}^R2^{u-1}2^u
+ =1+\tfrac12\sum_{u=1}^R4^u=O(4^R).
+ \tag{ACR.122}
+$$
+
+Each model/rank trial makes at most three certificate Reads. Rejecting
+a trial early only decreases this number. Therefore all trial and
+shallow Reads at stage $R$ are bounded by
+$C(d+1)^{19}(H+1)4^R$. The final proper verifier adds at most
+$2d+3$ Reads. Summing through the actual stopping stage, which is
+at most $r$, uses $\sum_{R=0}^r4^R\le4^{r+1}/3$; there is no
+extra factor $r$ on the exponential term. The spine's $2k$ Reads
+fit the same bound. Its maximum literal is at most $2h<H$;
+all subsequent literals obey the cap $H$. This proves $Q,M,J$.
+
+For local work and writes, all integers are stored in binary. An
+arbitrary enumerated clock has positive seeds below $F_{2m+4}$,
+not constant-size machine words. Up to normalized time $k\le H$,
+its values are at most $F_{k+1}\max(A_1,A_2)$. Sibling masses and
+the at-most-$H$ terms in (ACR.115) give all model indices at most
+$O((H+1)2^{H+2m+4})$. Thus every index, clock value, mass and
+intermediate sum has $O(H+\log(d+2))=O(S)$ bits. Counters over
+core rows and seeds use $O(R+1)\le O(S)$ bits, even though their
+ranges can be exponential. No logarithmic-in-$S$ bound is imposed
+on those catalogue counters.
+
+A concrete storage layout retains a depth-first shallow tree and its
+heights, at most two early-parent old trees, a constant number of
+current literal paths with immutable descriptors, a Fibonacci table,
+one core row/seed, its companion-power scratch, the two clock seeds,
+one trial certificate, one Hankel matrix, the proposed prefix and
+cut, and the finite loop/scan counters. A shallow tree has
+$O((d+1)^2)$ entries, each of width $O(S)$; everything else fits
+$O(S^3)$ bits as well. In particular a path has at most $H$ entries
+of width $O(S)$, the Fibonacci and clock tables have $O(H)$ entries
+of width $O(S)$, and matrix scratch needs $O(d^2)$ bits. Buffers
+are overwritten between trials and stages. A serial loop counter,
+not a stored catalogue or period table, generates each presentation.
+This gives the peak backing claim, including temporary address and
+copy operands.
+
+For explicit operation bounds before sequential scans, constructing
+a certificate uses $O(H+1)$ path edges. At one edge, (ACR.115)
+adds at most $H$ integers of $O(S)$ bits. Repeated squaring of a
+binary $u\times u$ companion matrix at an $O(S)$-bit exponent
+uses $O((u+1)^3S)$ elementary binary-array operations. Recomputing
+this at each path edge, rather than assuming reusable powers for
+free, costs $O(S^5)$ such operations per trial. Fibonacci generation,
+rank bookkeeping, path copies and clock additions have smaller
+polynomial counts. Including explicit counter/operand maintenance
+allows a common bound $O(S^6)$ indexed binary operations per trial.
+
+Implement each indexed access by scanning the actual $O(S^3)$-cell
+layout, using represented indices, markers and paid head returns.
+Even allowing $O(S)$ counter work and writes at every scanned cell,
+this is at most $O(S^4)$ work and writes per indexed operation.
+Consequently $O(S^{12})$ is a conservative sequential work/write
+bound for a full trial, including its complete root literals and
+all initialized scratch. This is a loose upper bound, not an
+optimized exponent or a physical unit-cost addressing convention.
+
+There are at most $CS^{20}4^r$ trials through the stopping stage,
+by the same count that proved the Read bound. All remaining shallow
+traversals, Gaussian elimination, early-tree rebuilds, proper-verifier
+witness construction and initial spine bookkeeping have polynomial
+counts on the displayed layout. For example the early trees have
+$O(d+1)$ nodes, and Gaussian elimination uses $O((d+1)^3)$ binary
+row operations before scans. The proper verifier constructs only
+$O((d+1)(H+1))$ witness edges, each by forward companion powers
+and sibling sums. These terms fit $CS^{20}4^r$ after scans.
+Multiplying the trial bounds gives $CS^{32}4^r$; the stated common
+$CS^{40}4^r$ envelope absorbs these additional operations, loop
+setup and final output copies. Every bit write counted in a scan,
+carry, counter, marker, discarded candidate or final retained field
+is included in $W$. No favorable average over stages or sources
+has been used. $\square$
+

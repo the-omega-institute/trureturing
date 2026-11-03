@@ -1,0 +1,2 @@
+**Scope 61.3 (digit limitations).** For every coprime $1\le r<s$, Theorem 60.1 is an exact signed-length classification and Theorem 61.1 gives the stated sufficient bounded-digit recovery domain. The necessity direction of Theorem 61.2 is restricted to $r=1$. The signed collision construction (60.6) places no bound on $A,B$, and cannot be substituted as a bounded-digit converse for $r>1$. No such general converse is asserted. The equal-length signed collision in Theorem 60.1 also explains why the signed-length task is strictly less than recovery of a signed word.
+

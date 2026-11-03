@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e00522aab461fa8de97487d4ed3bf24027d5ca22b89762dbeb16a5e18451094d
+  normalized_sha256: sha256:e00522aab461fa8de97487d4ed3bf24027d5ca22b89762dbeb16a5e18451094d
+cas_ref: sha256:e00522aab461fa8de97487d4ed3bf24027d5ca22b89762dbeb16a5e18451094d
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/NoisyVoter/RectangularSupport.rectangular_history_support
+    target_statement_id: sha256:012f8ae13e9bd027cfc409ed6d764b18224f5caaeaabfa1923dccccbfaadb9d8
+receipts:
+  unresolved_subitems: []

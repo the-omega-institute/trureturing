@@ -1,0 +1,17 @@
+**定义 5.1（Cut, restricted matching and signed violation）。** For a finite unit-weight graph $G$, let $C(G)$ be the maximum number of edges crossing a vertex cut. Let $M_k(G)$ be the maximum cardinality of a matching with at most $k$ edges. In the convention of Apte–Parekh–Sud v2, Appendix D.2, Conjecture 7, the proposed inequality is
+
+$$
+E(s,k)\geq-\frac{C(G_s)+M_k(G_s)}2,
+\qquad 1\leq k\leq\left\lfloor\frac{ms}{2}\right\rfloor.
+\tag{5.1}
+$$
+
+The signed violation of this particular inequality at $(s,k)$ is
+
+$$
+\mathcal V(s,k)=-\frac{C(G_s)+M_k(G_s)}2-E(s,k).
+\tag{5.2}
+$$
+
+Thus positive sign means failure of (5.1), negative sign means strict validity at that instance, and zero means equality.
+

@@ -1,0 +1,32 @@
+**Definition 6.3 (decoder and matrix orientation).** For a positive rational first take its unique reduced positive pair. Define the word decoder by
+
+$$
+\begin{aligned}
+\operatorname{dec}(1,1)&=\varepsilon,\\
+\operatorname{dec}(p,q)&=\operatorname{dec}(p,q-p)L&& (p<q),\\
+\operatorname{dec}(p,q)&=\operatorname{dec}(p-q,q)R&& (p>q).
+\end{aligned}
+$$
+
+Appending, rather than prepending, the peeled last action gives chronological order. If $\operatorname{enc}$ executes a word from $(1,1)$, then
+
+$$
+\operatorname{dec}(\operatorname{enc}(w))=w,\qquad
+\operatorname{enc}(\operatorname{dec}(p,q))=(p,q).
+$$
+
+With column vectors the matrices are
+
+$$
+G_L=\begin{pmatrix}1&0\\1&1\end{pmatrix},\qquad
+G_R=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+For chronological $w=a_1\cdots a_k$,
+
+$$
+\operatorname{enc}(w)=G_{a_k}\cdots G_{a_1}\binom11.
+$$
+
+In [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean), `false` denotes $L$, `true` denotes $R$, and `wordMatrix` obeys $W(aw)=G_aW(w)$. Therefore the chronological pair formula is $W(\operatorname{reverse}w)(1,1)^{\mathsf t}$, not $W(w)(1,1)^{\mathsf t}$. For example executing $LR$ gives $(3,2)$, whereas $G_LG_R(1,1)^{\mathsf t}=(2,3)$. Both generators have determinant one.
+

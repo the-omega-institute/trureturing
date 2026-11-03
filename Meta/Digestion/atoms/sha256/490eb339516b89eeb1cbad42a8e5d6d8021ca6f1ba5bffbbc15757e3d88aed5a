@@ -1,0 +1,23 @@
+**Definition 97.3 (one genuinely performed feedback fragment).**
+Fix one canonical terminal $s$, for example the first in the earned
+canonical order. At a completed cut with synchronized actual field
+$w\in V_+$, compute $q=w_s$ from the acquired predictor and actually
+perform
+
+$$
+\operatorname{Add}(s,q);\ \operatorname{Read}(s);\
+\operatorname{Tick};\ \operatorname{Hold}.
+\tag{97.3}
+$$
+
+Consume each complete reply and update the predictor at each call.
+The scalar reply is $2w_s$, and the completed successor is
+
+$$
+H_sw=A(I+e_se_s^{\mathsf T})w.
+\tag{97.4}
+$$
+
+This is installed, selected continued use, not an unperformed response
+prediction substituted for a measurement.
+

@@ -1,0 +1,49 @@
+### 定理 6.5（精确平均守恒可以弱化误差条件）
+
+在同一信息性仪器模型中，改为假设每个实际历史上
+
+$$
+\sum_y\operatorname{Tr}\bigl(P\mathcal I_{y|h_n}(\rho_n)\bigr)=q_n,
+ \qquad d_n(h_n)\longrightarrow0\quad\text{几乎必然}.
+$$
+
+则不需要误差可求和，仍有$q_n\to q_\infty\in\{0,1\}$几乎必然，且
+
+$$
+\mathbb{P}(q_\infty=1)=q_0.
+$$
+
+对全部状态的算子条件$\sum_y\mathcal I_{y|h_n}^*(P)=P$是平均守恒的充分条件。
+
+**证明。**
+
+精确平均守恒使$q_n$为有界鞅，故几乎必然及$L^2$收敛。
+令$A_n=\mathbb{E}[(q_{n+1}-q_n)^2\mid\mathcal F_n]$。
+正交鞅增量给
+
+$$
+\mathbb{E}\sum_{n\ge0}A_n
+ =\mathbb{E} q_\infty^2-q_0^2\le q_0(1-q_0)<\infty,
+$$
+
+所以$\sum_nA_n<\infty$几乎必然。
+精确均值使
+
+$$
+A_n=V(q_n)-\mathbb{E}[V(q_{n+1})\mid\mathcal F_n]
+ \ge c_*V(q_n)^2-d_n(h_n),
+$$
+
+其中最后一步使用引理 [lem:impurity](#lem:impurity)。
+若$V(q_\infty)>0$，因$q_n$收敛且$d_n(h_n)\to0$，
+右侧最终大于一个严格正的常数，违反$\sum_nA_n<\infty$。
+故极限二值；有界鞅保均值给精确选择质量。
+
+∎
+
+这条定理给另一条取得稳定读出的路线：
+先由内部对称或守恒关系证明平均指针权重精确保留，再只要求实际仪器渐近精确。
+本证明不提供式 [式 eq:occupancy](#eq:occupancy) 那样的显式驻留次数界；
+它也不把任意小的非守恒误差当作精确守恒。
+
+<a id="cor:goldport"></a>

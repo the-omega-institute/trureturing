@@ -1,0 +1,39 @@
+**Corollary 8.3 (Balanced graphs with unrestricted competitors).** For
+every integer $m\ge2$, on the labelled $K_{m,m,m}$ with all $3m^2$
+original conductances independently positive,
+
+$$
+M_{m,m,m}=m(9m-5),\qquad h^*_e=\frac1{2m}.
+\tag{8.7}
+$$
+Equality holds precisely on the unique constant ray
+$g_e=\tau/(2m)$, $\tau>0$, with actual spectrum
+$0$ once, $\tau$ with multiplicity $3m-3$, and $3\tau/2$ with
+multiplicity two. Every arbitrary positive sequence is maximizing
+exactly when $g_{j,e}/\lambda_2(g_j)\to1/(2m)$ for every original edge.
+For every $R_0>0$ the unique exact-level maximizer has
+
+$$
+g_e=\frac{9m-5}{2R_0}\quad(e\in E),\qquad
+\lambda_2(g)=\frac{m(9m-5)}{R_0},
+\tag{8.8}
+$$
+and an exact-level sequence is maximizing exactly when all its original
+edge coordinates tend to the values in (8.8).
+
+*Proof.* Substitute $a=b=c=m$, $n=3m$, $\eta=1/4$ in Theorems 7.3
+and 8.2. The two final spectral entries in (7.11) coincide and their
+multiplicities add. The classical value at the uniform assignment is
+already supplied by Bapat–Karimi–Liu,
+[*Kirchhoff Index and Degree Kirchhoff Index of Complete Multipartite
+Graphs*, arXiv:1611.09457v1](https://arxiv.org/pdf/1611.09457v1),
+Proposition 3.3 and Corollary 3.5: on the unweighted $K_{m,m,m}$ their
+positive spectrum is $2m$ with multiplicity $3m-3$ and $3m$ with
+multiplicity two, and their unordered-pair Kirchhoff index is
+$(9m-5)/2$. Their vertices and unit conductances are the same original
+ones here, so multiplying that index by $2m$ gives (8.7)'s value at
+uniform weights. The unrestricted upper comparison, equality necessity
+and both sequence equivalences asserted here follow instead from
+Theorems 7.3 and 8.2, which apply to every independent positive
+assignment. ∎
+

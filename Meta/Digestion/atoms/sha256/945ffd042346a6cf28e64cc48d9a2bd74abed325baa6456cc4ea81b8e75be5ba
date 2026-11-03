@@ -1,0 +1,14 @@
+**Proposition 116.1 (one joined bill).** Put $m=\max\{1,k-d\}$ for the
+mandatory-both task. In coordinates
+$(P,S,\mathrm{Read}_0,\mathrm{Read}_+,\mathrm{Add},\mathrm{Tick},\mathrm{Hold})$
+the single marker-prepared run has the following exact source-call counts.
+All zero operands are executed, and no unused general-preparation bill
+is substituted for this actual marker run.
+
+| Actual segment/cut | Source-call vector |
+| --- | --- |
+| Build zero $u$, marker preparation, fresh growth, displayed cancellation, late advice/clearing cut | $(b,2a+3c-1,k,0,6k,5,7)$ |
+| Late window through readiness | $(0,0,m,1,0,1,1)$ |
+| Readiness through performed Add/Hold use | $(0,0,0,0,1,0,1)$ |
+| Joined run through used cut | $(b,2a+3c-1,k+m,1,6k+1,6,9)$ |
+| Optional additional designated-value export | $(0,0,1,0,0,0,0)$ |

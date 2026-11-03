@@ -1,0 +1,103 @@
+**Theorem 31.2 (computable attainment on all histories).** There is one
+computable, horizon-independent recorder $R_*$ realizing (IV.91), with
+update from exactly $(U,J,e)$ and cleared finite paid scratch, such that
+(IV.82) holds for every legal finite history. There are absolute
+constants $C_T,C_P$ such that, for every integer $N\ge1$ and every
+legal history $h$ of exactly $N$ events,
+
+$$
+T_*(h)\le C_T N\log_2(N+2),\qquad p_*(h)\le C_P N.
+\tag{IV.92}
+$$
+
+The peak includes every intermediate word during snapshot rewriting.
+The assertion bounds cumulative edits, not the maximum individual
+update by $O(\log N)$.
+
+**Proof.** Given $(U,J)$ at a settled cut, first compute $n=a+2c-1$.
+If $n=0$, return the known alpha from the empty word. Otherwise compute
+$b=b(n)$ and parse the first complete $\sigma$ tree from the head of
+$J$. On the actual image this is precisely the grade-$b$ snapshot in
+(IV.91); parsing supplies its end without an extra delimiter. Starting
+from that ordered tree in scratch, replay exactly $n-b$ ordinal chunks.
+At each iteration the scratch tree determines its ordered logical leaves,
+$L_i$, the width $w_i$, and the leaf of the encoded rank. That leaf has
+exactly one enabled kind, $P$ at alpha and $S$ at beta, and its ordered
+position gives the address. Apply that edit in scratch. The induction in
+[AAII Theorem 94.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md#94-a-raw-ordinal-stream-and-its-source-conditioned-inverse)
+uses only equality of the starting scratch tree and the actual starting
+tree. With the snapshot as its base, it therefore recovers each actual
+subsequent tree and consumes exactly the suffix in (IV.91). Zero-width
+iterations still advance the known replay count. It ends at the actual
+current term, proving (IV.82). In particular this use of replay does not
+assume an ordered current-source input: $U$ supplies only the stopping
+grade, just as in the adapter of Theorem 29.2.
+
+For update, decode the old ordered term from $(U,J)$ in scratch and
+locate the supplied actual event $e=(\mathrm{kind},p)$. Its guard is
+satisfied because it is an actual enabled event. Compute its pre-event
+rank, width and new term in scratch. If $n+1\notin\mathcal S$, append
+exactly its padded ordinal chunk. Then $b(n+1)=b(n)$, so (IV.91) is
+preserved. If $n+1\in\mathcal S$, prepare $\sigma(t(he))$ in scratch,
+POP every bit of the old word, and APPEND every bit of that serialization
+in order. The new word is the snapshot with empty suffix required by
+$b(n+1)=n+1$. Every POP and APPEND is charged; neither deletion of the
+old snapshot nor copying of the new one is free. This includes the first
+event: grade one is a snapshot grade and its word is $\sigma(\beta)$.
+The actual source event is supplied, not selected by the recorder.
+
+The input tree and word are finite. Parsing, addressed lookup,
+simulation, rank calculation, schedule arithmetic, and each finite replay
+therefore terminate with finite backing. The prepared snapshot and all
+replay trees, cursors, ranks, counters, event data and schedule data are
+transient paid scratch, cleared before the next settled cut. During the
+busy update only scratch supports the finite discrepancy; intermediate
+records need not satisfy (IV.82). No earlier snapshot is retained
+elsewhere after rewriting. Thus neither the construction nor its inverse
+uses a hidden persistent clock, tree copy or auxiliary advice.
+
+For the resource bounds fix a current grade $M=2^j\le n<2M$.
+Its last snapshot grade $b$ is in this same epoch, and $0\le n-b<\Delta_j$.
+Before event $i\le n$ the leaf count is at most $i\le n<2^{j+1}$,
+so each chunk has at most $j+1$ bits. Hence
+
+$$
+|J_*(h)|\le4b+2+(\Delta_j-1)(j+1)
+\le8M+2+M\le11n.
+\tag{IV.93}
+$$
+
+At a snapshot rewrite, the record first decreases to empty and then
+grows to the new serialization. Its length never exceeds the larger of
+the old and new settled lengths. A non-snapshot append is monotone in
+length. Applying (IV.93) also to earlier settled grades proves
+$p_*(h)\le11N$, including the initial word and all busy intermediates.
+An output buffer in scratch is separately paid, not an extra uncounted
+record channel at a settled cut.
+
+There are exactly $M$ new event grades in $[M,2M)$. The non-snapshot
+appends there cost at most $M(j+1)$ altogether. Since $2^j\ge j+1$,
+$\Delta_j\ge M/(2(j+1))$, and the number of snapshot grades is
+$\lceil M/\Delta_j\rceil\le2(j+1)+1$. At a snapshot grade $s$ the actual
+rewrite costs
+
+$$
+|J_*(h_{s-1})|+|\sigma(t(h_s))|
+\le11(s-1)+4s+2\le17s<34M.
+\tag{IV.94}
+$$
+
+Thus the entire epoch, or any partial epoch starting at $M$, costs at
+most a fixed constant times $M(j+1)$. If $2^K\le N<2^{K+1}$,
+
+$$
+\sum_{j=0}^K 2^j(j+1)
+\le(K+1)(2^{K+1}-1)\le2N(K+1)
+=O(N\log_2(N+2)).
+\tag{IV.95}
+$$
+
+This proves (IV.92) with constants independent of $N$, the history and
+any future horizon. It proves no bound on all separately paid resources.
+$\square$
+

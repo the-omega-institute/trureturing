@@ -124,7 +124,21 @@ $$(\operatorname{D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness.
 
 The final paragraph of Section III conjectures a violation for every initial pure data qubit. Here the norm is the Euclidean norm on complex coordinate functions, obtained with WithLp.toLp 2. For each unit data vector, the four real parameters and a unit data-measurement vector may be chosen separately. Every preparation must have positive probability, and S must exceed four. The labeling is fixed to x = 2m + n.
 
-**Theorem 1.11 (Every pure data qubit admits the violation).**
+**Theorem 1.11 (Normalization in two coordinates).**
+
+$$\forall (d: (\operatorname{Fin}\left(2\right) \to \mathbb{C})), (\left\lVert (\operatorname{WithLp.toLp}\left(2, d\right): \operatorname{EuclideanSpace}\left(\mathbb{C}, \operatorname{Fin}\left(2\right)\right)) \right\rVert = 1) \Rightarrow (\operatorname{Complex.normSq}\left(d\left(0\right)\right) + \operatorname{Complex.normSq}\left(d\left(1\right)\right) = 1)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DelayedRemoteControlDimensionWitness.unit_coordinates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Peicun Lin, Dongyang Wang, Yong Liu, Anqi Huang (2026). *Nonclassicality of a delayed remote-controlled quantum computing model*. DOI: [10.48550/arXiv.2606.31103](https://doi.org/10.48550/arXiv.2606.31103). URL: <https://arxiv.org/abs/2606.31103v1>.
+
+*Commentary.*
+
+The squared moduli of the two coordinates of a Euclidean-unit complex qubit sum to one.
+
+**Theorem 1.12 (Every pure data qubit admits the violation).**
 
 $$\operatorname{D5.S3.Quantum.Measurement.DelayedRemoteControlDimensionWitness.claim}$$
 
@@ -155,5 +169,6 @@ For a Euclidean-unit data vector d, choose β = 0, δ = −arg(conj(d₀)·d₁)
 - Truth anchor: `D5/S3/Quantum/Measurement/DelayedRemoteControlDimensionWitness.prepProb`
 - Truth anchor: `D5/S3/Quantum/Measurement/DelayedRemoteControlDimensionWitness.remote`
 - Truth anchor: `D5/S3/Quantum/Measurement/DelayedRemoteControlDimensionWitness.result`
+- Truth anchor: `D5/S3/Quantum/Measurement/DelayedRemoteControlDimensionWitness.unit_coordinates`
 - Dependency: [D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence](../Information/BinaryStabilizerLocalInequivalence.md)
 - Dependency: [D5/S3/QuantumBounds/CHSHWitness](../../QuantumBounds/CHSHWitness.md)

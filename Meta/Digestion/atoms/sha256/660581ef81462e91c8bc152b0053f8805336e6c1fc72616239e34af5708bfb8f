@@ -1,0 +1,17 @@
+**定理 12.3（五个新词在同一完整核上的同源守卫失败）。** Fix any complete legal $256$-source tuple and its original whole $V=\ker B=\mathcal U$, with all $254$ prefixes and the full $1538\times1024$ matrix. If for any $w\in\mathcal W_{\mathrm{new}}$ its two slot sources are equal, then
+
+$$
+D_w|_V=0,\qquad
+\operatorname{rank}[B;D_w]=\operatorname{rank}B.
+\tag{12.14}
+$$
+
+
+Consequently that original same-source separation guard fails. Any tuple satisfying every original guard must have unequal sources at each of these five leaves; together with the ten supplied instances the same necessity holds on all of $\mathcal W_{JJJ}$.
+
+Proof. For any $x\in V$, the full matrix equations make the two slots realize the same response at every ancestor of their leaf. When their fixed sources agree at $P$, subtracting those equations says that the complete four-component coefficient difference is in $\ker T_w(P)$. By Theorem 12.2 this difference is zero, including its constant coefficient and thus its normalized drift difference. Since $x$ is arbitrary in the original $V$, this proves $D_w|_V=0$. A linear map vanishing on $\ker B$ has all rows in the row space of $B$, giving the rank equality. Equal sources also make the source-inequality alternative false, so Definition 2.2's applicable full guard fails. For the ten old instances use Theorem 6.1 and the existing Theorem 8.2 directly. The other $254$ sources are unrestricted in every such comparison; no separate branch witness or restricted kernel was substituted for $V$. ∎
+
+Section 12 is a repository-derived synthesis from this volume's Definitions 2.1–2.2 and 3.2, positive-trace result 3.1, Theorem 6.1, and the same-source interface used in Theorem 8.2. The full original consumer agrees with [IV, Definitions 13.1–13.2 and Theorem 13.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md). The mathematical source version is `1eef3601bb81023352394a59bcb682b0c9b57cd8`; no external priority or exhaustive literature claim is made. The fifteen-word statement retains ten supplied cases and adds exactly the five instances named in (12.2), through the explicit model-specific interpolation and positivity contradictions above. No separate generic readout-space or finite-subspace theorem is introduced.
+
+These exclusions give no nonvanishing gain guard for any slot, and no acquisition of an unknown source. They do not prove a common full-tree response space has a nonzero projection onto the affected slots, produce a simultaneous legal coefficient vector, or decide the complete original-root problem. Unequal leaf sources may distinguish complete targets even when gain coefficients agree; different leaves may repeat sources. Arbitrary real constant drift, nonzero gains of any degree at most three and either sign, degree drops, sampled or repeated roots, all original clocks, both actions and early stops remain in the original domain.
+

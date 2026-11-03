@@ -1,0 +1,29 @@
+**Construction 5.1 (the existing forcing supplier on the earned tree).**
+At a handoff after any $h\in\mathcal H_A$, let $t=t(h)$, $N=N(t)$,
+$b=b(t)$, $I=I(t)=n$. The terminal address antichain $B_0$ and its actual
+order were earned from the known alpha and actual Growth replies. Its
+prefix closure is $V_t$ and arity parses $t$, including alpha and beta.
+Let $J=[e_{\ell_1},\ldots,e_{\ell_b}]$ in that actual order, and set
+
+$$
+O_I=\begin{bmatrix}J^{\mathsf T}\\J^{\mathsf T}T_t\\
+\vdots\\J^{\mathsf T}T_t^I\end{bmatrix}.
+\tag{5.1}
+$$
+
+AAII Proposition 87.2 supplies a computed rational $D_I$ with
+$D_IO_I=\operatorname{Id}$. Its hypotheses are exactly the earned rooted
+tree, symmetric law (2.2) and terminal $J$ here. The supplied deepest-
+unmarked-vertex forcing equation, in these parameters, is
+
+$$
+e_u=8T_te_v-4e_v-\sum_{\substack{z\sim v\\z\ne u}}e_z.
+\tag{5.2}
+$$
+
+It constructs all coordinate expressions in at most $I$ additions of
+vertices to the marked set, giving the asserted finite matrix. This is
+a use of that already proved construction, not a new observability or
+root-recognition theorem. At alpha $I=0,D_0=\operatorname{Id}$; beta
+uses its one unary-marker step.
+

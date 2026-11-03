@@ -1,0 +1,26 @@
+**假设 1.1（同一双臂图上的联合参数比较源）。** 固定 $a,b>0$、$a+b=1$，记 $p_0=a,p_1=b$。令 $\Lambda$ 为 $(0,1)^2$ 上的任意 Borel 概率测度，先抽取一次 $(Q_L,Q_R)\sim\Lambda$，独立抽取根位 $X_0$，其中 $\Pr(X_0=x)=p_x$。条件于同一个三元组 $(Q_L,Q_R,X_0)$，两条外向 Markov 臂相互独立；左臂始终使用 $Q_L$，右臂始终使用 $Q_R$，各臂的转移矩阵为
+
+$$
+P_q=\begin{pmatrix}1-q&q\\1&0\end{pmatrix}.
+\tag{CPI.1}
+$$
+
+原始可见种子 $U$ 的空间 $(\mathcal U,\mathcal E)$ 为任意可测空间，律为概率测度 $\lambda$，并独立于全部源变量。一个具体的联合实现为
+
+$$
+\begin{aligned}
+\Omega&=\mathcal U\times(0,1)^2\times\{0,1\}
+                \times[0,1]^{\{L,R\}\times\mathbb N_{>0}},\\
+\mathbb P&=\lambda\otimes\Lambda\otimes(p_0\delta_0+p_1\delta_1)
+                \otimes\operatorname{Leb}^{\otimes(\{L,R\}\times\mathbb N_{>0})},\\
+Z_{s,0}&=X_0,\qquad
+Z_{s,n}=\mathbf1_{\{Z_{s,n-1}=0\}}\mathbf1_{\{V_{s,n}<Q_s\}},
+\quad s\in\{L,R\},\ n\ge1.
+\end{aligned}
+\tag{CPI.2}
+$$
+
+这里 $V$ 是最后一个因子的坐标族，$\operatorname{Leb}$ 是 $[0,1]$ 上的均匀概率测度。递推在每个有限坐标上 Borel 可测，故给出可测的完整源。把 $Z_{L,n}$ 放在顶点 $-n$、$Z_{R,n}$ 放在顶点 $n$，共同的 $Z_{L,0}=Z_{R,0}=X_0$ 放在根。每个固定参数及根下，两个独立均匀坐标族确实产生式（CPI.1）的两条条件独立臂。参数不在换臂、新边或新测试时重抽。
+
+这是明确另定义的比较源。原共同参数源仍是 [Process Geometry 定义27.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 的源；本卷定理2.2、3.1及命题4.1–4.2为此比较源上的 `repo-derived` 推导。紧区间矩唯一性与多项式逼近仅在定理3.1内部作为既有中间步骤使用，亦见 [Terminal Event Experiment 定理3.1(d)](RECURSIVE_RELATIONAL_OBSERVATION_TERMINAL_EVENT_EXPERIMENT.md) 中对原源的应用。
+

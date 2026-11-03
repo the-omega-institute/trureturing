@@ -1,0 +1,37 @@
+**Definition 27.1 (global and normalized descriptors).** Keep the complete
+entrance of Definition 9.1, including the actual alpha origin, physical
+order $a<b$, simultaneous old-leaf replacement and the actuator's actual
+lexicographic birth order. Write $s_i=z_{i+1}$ for $i\ge0$, and let $E$
+be the forward shift on these semi-infinite sequences. Its least monic
+all-index annihilator has the unique factorization
+
+$$
+ m_s(E)=E^a g(E),\qquad g(0)=1,\qquad r=\deg g,\qquad a+r\le d.
+ \tag{ACR.110}
+$$
+
+For the zero sequence take $m_s=g=1$ and $a=r=0$. These are properties
+of the actual source, not numerical inputs. In particular $a$ is not an
+unbounded eventual-law onset: it belongs to the original all-index
+order bound. The source's law, these factors, its seed and cut remain
+erased at entry.
+
+For any physical address $p$, retain the global immutable descriptor
+$(b_p,\sigma_p)$ of Definition 2.1, and its branch time
+$\tau_p=b_p+2-\mathbf1_{\sigma_p=\beta}$. A current beta label does
+not change the initial label $\sigma_p$. Put $e_p=\tau_p-1$. At this
+cut $p$ is one beta leaf. Its normalized local origin is that cut,
+with root descriptor $(0,\beta)$ and root branch time one. If $p$ has
+rank $q\ge2$ at actual cut $n$, the normalized cut is
+
+$$
+ n-e_p=q-1,\qquad \tau_p=n-q+2.
+ \tag{ACR.111}
+$$
+
+Both initial-alpha and initial-beta cases have this same normalization,
+by [NRW, Lemma 2.1][ACR-NRW]. For alpha, $b_p=e_p-1$; for beta,
+$b_p=e_p$. Only the normalized root descriptor changes in this
+coordinate description; global creation descriptors remain immutable.
+No $e_p$, descriptor, rank or clock is thereby supplied to the observer.
+

@@ -1,0 +1,29 @@
+Apply this bound to each component $W$ of $Q_k-S$. Its size is at most
+$N/2$, so $|\partial_E W|\ge|W|$; all its outgoing edges end in $S$.
+Summing over the components counts each edge to $S$ once. Since every
+cube vertex has degree $k$,
+
+$$
+N-|S|=\sum_W|W|\le\sum_W|\partial_E W|
+=|E(S,V(Q_k)\setminus S)|\le k|S|.
+\tag{IV.104}
+$$
+
+This includes the empty-complement case. Thus
+$|S|\ge\lceil N/(k+1)\rceil$ and
+$C_v=|S|-|I|\ge\lceil N/(k+1)\rceil-|B_D(v)|$.
+A tree of maximum degree three has at most $3\cdot2^{i-1}$ vertices at
+distance $i\ge1$ from a fixed vertex. Therefore
+$|B_D(v)|\le1+3\sum_{i=0}^{D-1}2^i=3\cdot2^D-2$, also for $D=0$
+with the empty sum. Root and truncation only reduce this count.
+Every component of $T-B_D(v)$ lies in an original component of
+$T-\{v\}$. Hence a fibre counted by $C_v$ is counted by $F_v$.
+Nonnegativity completes (IV.102). $\square$
+
+The original-branch qualification is essential. Different fine
+components of $T-B_D(v)$ need not be more than $2D$ apart: for
+$v=\varepsilon$, $D=1$, the words $00$ and $01$ are in different fine
+components at distance two. Equation (IV.103) is used only across
+original incident branches. Nor does the weighted choice assert a
+fixed-representative embedding of the cube.
+

@@ -1,0 +1,11 @@
+**Definition 7.2 (meaning and recovery table).** All rows below refer
+to one jointly realized path and, when used, its coupled service and
+actual native consumer. A record is retained only if the stated
+experiment grants or acquires it.
+
+| Expression | Independently specified meaning | Recovery established here or reused |
+| --- | --- | --- |
+| Space | The actual point $\mathbf Z_t\in G$; separately, its native height and two phases where $\Psi$ is defined | Projection gives the native point; (1.4) and its two nonzero pairs give the inverse between that native point and its current boundary outputs. The full point has the hidden-law obstructions of §§3–6. |
+| Time | Original elapsed time, actual source contacts and their completed-gap chronology | The exact history gives the stopped normalized source clock by (2.5)–(2.6). A clock value alone has no state inverse supplied here. |
+| Boundary | The ordered ten native coherence outputs, together with their height observation exit | Its based continuous prefix gives the stopped visible triple by (2.2)–(2.3). Its entire held history has the separate sign-risk theorem. |
+| Memory | A chosen observer's acquired and retained prefix, timestamps, request status and computed controller state | Projected releases are retained in $\mathcal J_i$ and suffice for the existing consumer. They do not disclose actual noncontact $z$. The full continuous history is only an upper-information comparison experiment. |

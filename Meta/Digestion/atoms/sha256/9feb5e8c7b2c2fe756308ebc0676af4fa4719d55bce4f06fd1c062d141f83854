@@ -1,0 +1,12 @@
+**Definition 77.1 (a source-bound digit extraction).** At a valid Ready
+record, to obtain the digit of an actual current branch $v$, copy its
+root-bound $G$ bits into backed $Q$. Scan actual logical branches in
+preorder from the actual source root. At each branch compute its radix
+by the two child counts of Definition 48.1, replace $Q$ by its quotient
+on division by that radix, and retain the remainder if this is $v$.
+Stop there. A known forced coordinate can instead return zero without
+reading a record. For $F=1$, all coordinates are forced and no record
+exists. Retain navigation/return references while scanning; no global
+array of digits is created. The repeated scans, comparisons, bit reads,
+coefficient arithmetic and division buffers are all charged.
+

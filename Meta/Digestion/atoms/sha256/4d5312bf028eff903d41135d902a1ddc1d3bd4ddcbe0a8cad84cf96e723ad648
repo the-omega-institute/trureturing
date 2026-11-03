@@ -1,0 +1,49 @@
+**定理 5.3（三查询上限的充分实验律坐标）。** 在假设1.1的任意联合先验下，使用不读取原种子的三个有限设计
+
+$$
+w_L=LLL,\qquad w_R=RRR,\qquad w_C=LR.
+\tag{CPI.28}
+$$
+
+各设计的查询上限至多为三。由它们的整个取得律读取五个概率坐标
+
+$$
+\alpha_L=S_2^{LLL},\quad \beta_L=S_3^{LLL},\qquad
+\alpha_R=S_2^{RRR},\quad \beta_R=S_3^{RRR},\qquad
+\gamma=S_2^{LR}.
+\tag{CPI.29}
+$$
+
+则实际源内的精确恢复式为
+
+$$
+\begin{aligned}
+\alpha_L&=\int x\,d\Lambda,&
+\beta_L&=a\int x^2\,d\Lambda+b\int x\,d\Lambda,\\
+\alpha_R&=\int y\,d\Lambda,&
+\beta_R&=a\int y^2\,d\Lambda+b\int y\,d\Lambda,\\
+\gamma&=a\int xy\,d\Lambda+b.
+\end{aligned}
+\tag{CPI.30}
+$$
+
+特别地，这些有限深度的律坐标给出关系缺口
+
+$$
+\begin{aligned}
+\mathcal K
+&=\frac{\beta_L+\beta_R-b(\alpha_L+\alpha_R)-2\gamma+2b}{a}\\
+&=\int(x-y)^2\,\Lambda(dx,dy),\\
+\mathcal K=0&\quad\Longleftrightarrow\quad\Lambda(\mathsf D)=1.
+\end{aligned}
+\tag{CPI.31}
+$$
+
+因此，在比较合法有限测试的整个律族、并以每次测试最大取得深度计资源的意义下，两查询不足而三查询足够。这不是设计数、分支数或多次实际运行的总费用最小性结论。
+
+证明。对 $LLL$ 固定根零，前两步全零的实际位串为 $010$，质量 $x$；前三步全零为 $0101$，质量 $x^2$。固定根一，相应位串为 $101$、$1010$，二者质量均为 $x$。先按独立根质量 $a,b$ 混合，再对同一 $\Lambda$ 积分，得到式（CPI.30）的左两式。$RRR$ 完全同理，使用 $y$。对 $LR$，根零时两条首次新边各自要求 $0\to1$，仅在固定同一参数对与根之后才以条件独立性相乘，质量为 $xy$；根一时两次都是确定的 $1\to0$，质量为一。这给出最后一式。所有事件都在第一次标记前实际取得；例如 $LLL$ 不能从第一步已经标记的运行中补读第三边。
+
+由 $a>0$，式（CPI.30）分别恢复 $\int x^2d\Lambda=(\beta_L-b\alpha_L)/a$、$\int y^2d\Lambda=(\beta_R-b\alpha_R)/a$ 和 $\int xy\,d\Lambda=(\gamma-b)/a$。在这三个实际源积分中展开同一个平方，即得式（CPI.31）。其零点集恰为 $\mathsf D$；非负积分为零推出零点集有全质量，理由与定理3.1内部的零积分步骤相同，不要求参数独立、边缘相同、有限支撑或先验正则密度。
+
+定理5.2的两个见证在式（CPI.31）下分别给 $0$ 与 $1/16$：后一个先验的两原子都满足 $|x-y|=1/4$。所以本结论确实分开了整个两查询律族合并的实际源。五个坐标是事件概率，不是某一份记录中的五个事件指标；有限取得深度也不提供这些实数的精确求值、有效相等测试、重复源或完整 $\Lambda$ 恢复算法。证毕。
+

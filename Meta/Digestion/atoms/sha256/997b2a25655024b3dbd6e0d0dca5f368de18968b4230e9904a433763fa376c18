@@ -1,0 +1,23 @@
+### 115.3 Response functions and the distinguishing table
+
+Use the persistent-register capacities $D_{\rm read},D_{\rm blind}$ of §108.1: read may inspect $\kappa$, blind may not. Both use one fixed initial value and the same register for acquisition and frozen output. Blind inputs include public parameters, acquired $\rho$, synchronous old/new bare fields, current completed marker, original generic parser phase and the already completed continue/first-freeze event. They exclude control copies, private persistent phases, prefix histories, future decisions and an extra output register.
+
+For each positive active address, define the canonical response $g_u:\mathcal F_b\to[D_\rho]$ of §114.3: replay the initialized fixed selector on $uy$ and return the original canonical rank at its first freeze. Here $D_\rho$ is the maximum positive selected-fiber size, including the original two terminal Stop blocks. Set $D=\max_\rho D_\rho$ and
+
+$$
+H_{\rm resp}(\pi^-)=\max\left(\{1,D\}\cup
+\{|\{g_u:u\in W_b\}|:\rho\in\{0,1\},\ c<58,\ N_b>0\}\right).
+$$
+
+This counts distinct future code functions at each shared bare address; it does not count minimal register values when actual decision events remain inputs.
+
+At $\rho=1$, let $u_i$ be the length-three one-hot word and $p_i=1^{27}u_i$. All three are active at $b=(30,28,1)$. The compatible suffixes have one one. With $y_1=10^{27}$ and $y_3=0010^{25}$:
+
+| Active past | $g_{p_i}(y_1)$ | $g_{p_i}(y_3)$ | Acquired $z$ |
+| --- | ---: | ---: | ---: |
+| $p_1$ | 0 | 0 | 0 |
+| $p_2$ | 1 | 0 | 1 |
+| $p_3$ | 0 | 1 | 0 |
+
+For every other compatible suffix of weight one, all three rows return singleton rank 0. At $j=1$ the selected pair is $(p_1,p_2)$ in colex order; at $j=3$ it is $(p_2,p_3)$, after adjoining the same zeros and triggering one. The excluded member is delayed and receives singleton rank 0. Thus these are three distinct full functions, although $p_1,p_3$ have the same acquired register value.
+

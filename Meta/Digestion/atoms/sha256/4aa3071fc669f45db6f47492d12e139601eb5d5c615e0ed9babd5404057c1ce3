@@ -1,0 +1,39 @@
+**Theorem 96.1 (one additional Tick per cycle removes the comb alias).**
+For each $u_m$ of Definition 95.1, keep the same arbitrary rational
+entrance, table, rights, leaf order, original service and future task.
+Insert exactly one extra Tick;Hold at the end of each cycle, giving
+$L=b+1$. The $N$-cycle record determines both $x$ and the actual
+endpoint $A^{(b+1)N}x$. The simultaneous bills are
+
+$$
+\begin{array}{c|ccc}
+\text{run}&\mathrm{Read}&\mathrm{Tick}&\mathrm{Hold}\\ \hline
+L=b&bN&bN&bN\\
+L=b+1&bN&(b+1)N&(b+1)N.
+\end{array}
+\tag{96.1}
+$$
+
+**Proof.** The repaired period is odd, and this very $A$ is invertible
+by Theorem 95.2. Equation (94.5) gives $\ker S_{b+1}=0$. Form the
+rational scan matrix from the earned graph, keep $N$ independent rows
+by exact pivots, and solve their square system from the actually
+received entries. This recovers $x$; apply the known $A$ exactly
+$(b+1)N$ times locally to obtain the actual endpoint proved in (94.1),
+and initialize NLBAII Theorem 64.1's full-state invariant there.
+Every actual Tick and reply in (96.1) is still executed.
+
+The two rows are separate full schedules begun at the same admitted
+entrance; they are not successive trials on one unchanged field.
+The difference in their receiver bills is exactly $N$ extra Tick and
+$N$ extra Hold, with no new Read or sensor. The repaired run needs
+no primer, Reset, growth or changed initial field. No minimum period,
+minimum cycle count, total-cost dominance or optimum is asserted.
+$\square$
+
+This does not replace NLBAII Theorem 62.1: without the serial-clock
+restriction, its already sufficient rank$(A)$-Read current acquisition
+uses fewer Reads than this redundant $bN$-Read assay. The result here
+identifies and repairs the specified clock's loss of information on
+an unchanged specimen and task.
+

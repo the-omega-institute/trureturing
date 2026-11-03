@@ -1,0 +1,7 @@
+## 11. Prescribed finite budgets at the transition scale
+
+Write $W(G)=2NE(G)$ for the graph energy in Definition 9.1 and
+$Q(G)=H(x_G)$ for the quadratic energy of its actual neighborhood law in
+Lemma 9.2. All constants in this section may depend on a fixed compact
+interval $I=[\rho_-,\rho_+]\subset(0,\infty)$, and on no other parameters.
+

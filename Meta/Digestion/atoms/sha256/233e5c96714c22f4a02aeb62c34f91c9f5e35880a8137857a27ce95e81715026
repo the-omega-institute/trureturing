@@ -1,0 +1,68 @@
+**Lemma 66.4 (Uniform exhaustive root rectangles).** Put $\rho=10^{-12}$ and $\sigma=10^{-24}$. In the following table each row specifies the exact Gaussian-rational centre $c=\operatorname{Re}c+i\operatorname{Im}c$. On every real $(p,v)\in\mathcal B_*$, the indicated polynomial has exactly one zero in the rectangle
+
+$$
+|\operatorname{Re}(x-c)|\le\rho,\qquad |\operatorname{Im}(x-c)|\le\rho. \tag{66.5}
+$$
+
+For a real centre this zero is real. Each zero lies in the smaller rectangle with $\rho$ replaced by $\sigma$. The eighteen $R$ rectangles exhaust all its complex roots, and the three $F_0$ rectangles exhaust all its complex roots.
+
+| Polynomial | Index | $\operatorname{Re}c$ | $\operatorname{Im}c$ |
+| --- | --- | --- | --- |
+| $R$ | 0 | $-4.4456018496430476255084308867226941368478$ | $0$ |
+| $R$ | 1 | $-1.3960913833252000635532565337091008407111$ | $0$ |
+| $R$ | 2 | $-1.3367773229729508691137384013103149327534$ | $0$ |
+| $R$ | 3 | $-1.3317500199574795120070031691555736550906$ | $0$ |
+| $R$ | 4 | $-1.1918275779629799043040789640343846279088$ | $0$ |
+| $R$ | 5 | $-1.1318389558362942853399530198752644616268$ | $0$ |
+| $R$ | 6 | $-1.0946327270963536193480655459922145687844$ | $0$ |
+| $R$ | 7 | $-0.3979561498320068203790677829921342455391$ | $0$ |
+| $R$ | 8 | $0.3549410397767158302233672842010199020803$ | $0$ |
+| $R$ | 9 | $0.4799723815645249004417903320577171426405$ | $0$ |
+| $R$ | 10 | $1.2236055502512175044814340191249725198430$ | $0$ |
+| $R$ | 11 | $1.4448053440162424804958404016071704680738$ | $0$ |
+| $R$ | 12 | $5.8477237005395326611385391944777539159123$ | $0$ |
+| $R$ | 13 | $5.8485513508859666460210391010131406006945$ | $0$ |
+| $R$ | 14 | $0.6972289686840034189043663693248429197356$ | $-0.1161110933488964046141522395468234074515$ |
+| $R$ | 15 | $0.6972289686840034189043663693248429197356$ | $0.1161110933488964046141522395468234074515$ |
+| $R$ | 16 | $0.8620293017101553026663874107927443949746$ | $-0.0326900792590044079795851745687301165823$ |
+| $R$ | 17 | $0.8620293017101553026663874107927443949746$ | $0.0326900792590044079795851745687301165823$ |
+| $F0$ | 0 | $-3.7947042767818410754177515062671600311838$ | $0$ |
+| $F0$ | 1 | $-0.9782331943877242154258535040382862156920$ | $0$ |
+| $F0$ | 2 | $0.3192757117656374584384742840419988882714$ | $0$ |
+
+Proof. For $\mathscr P\in\{R,F_0\}$ and a displayed centre, form the exact finite expansion
+
+$$
+\mathscr P(c+z,p_c+u,v_c+w)=\sum_{\ell,j,k}a_{\ell jk}z^\ell u^j w^k. \tag{66.6}
+$$
+
+For a real rational $q$, define
+
+$$
+\operatorname{rnd}_{100}(q)=10^{-100}\lfloor10^{100}q+1/2\rfloor,
+$$
+
+and extend it componentwise to Gaussian rationals. Set $\gamma=\operatorname{rnd}_{100}(1/a_{100})$, use $|a+ib|_1=|a|+|b|$, and put $s=\rho$ at real centres and $s=2\rho$ otherwise. The finite rational sums
+
+$$
+\begin{aligned} \eta&=\sum_{j,k}|\gamma a_{0jk}|_1\delta^{j+k},\\ q&=|1-\gamma a_{100}|_1+ \sum_{\substack{\ell\ge1,j,k\ge0\\(\ell,j,k)\ne(1,0,0)}} \ell|\gamma a_{\ell jk}|_1s^{\ell-1}\delta^{j+k} \end{aligned} \tag{66.7}
+$$
+
+satisfy, at every one of the twenty-one centres,
+
+$$
+\eta<2\cdot10^{-25},\qquad q<3\cdot10^{-9},\qquad \eta+q\rho<\rho,\qquad \frac{\eta}{1-q}<\sigma. \tag{66.8}
+$$
+
+These are rational inequalities obtained from (66.3), (66.6) and the printed centres. The coefficient of $x^{18}$ in $R$ is uniformly enclosed by
+
+$$
+1873044541936855184250 \le[x^{18}]R\le1873044541936855184251, \tag{66.9}
+$$
+
+and the leading coefficient of $F_0$ is $405$.
+
+For fixed real $(p,v)\in\mathcal B_*$, apply the map $x\mapsto x-\gamma\mathscr P(x,p,v)$ to the real interval $[c-\rho,c+\rho]$ when $c$ is real, and to the rectangle (66.5) otherwise. In each case (66.7) bounds its centre displacement and its derivative's induced maximum norm, so (66.8) makes it a contraction into the interior. For a complex rectangle, $|z|_1\le2\rho$ explains the value of $s$; complex multiplication has maximum-norm operator bound $|\cdot|_1$. The contraction argument of Theorem 4.3 therefore gives one zero in each specified set, real at every real centre, with displacement at most $\eta/(1-q)$.
+
+All eighteen $R$ rectangles are pairwise disjoint, as are the three $F_0$ rectangles: for every two relevant centres, at least one coordinate differs by more than $2\rho$. Since the degrees remain eighteen and three by (66.9), these distinct zeros exhaust the roots and give exactly one complex zero in each rectangle, including those with real centres. In particular this conclusion is not inferred from an incomplete list of numerical roots. ∎
+

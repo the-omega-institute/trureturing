@@ -1,0 +1,40 @@
+**Theorem 92.2 (joint attained split and entry-Read coordinates).**
+Take $J=\{1,\ldots,k\}$. Exactly these $k$ splits produce
+$M=11k+1$ cells and a full allowed observation stack. The same
+specimen admits an actual entry assay and physical old-cell return
+using
+
+$$
+\begin{gathered}
+\operatorname{split}=k,\qquad \text{fresh cells}=2k,\qquad
+\operatorname{Read}=N=9k+1,\qquad\operatorname{Add}=M=11k+1,\\
+\operatorname{Tick}=H+L,\qquad
+\operatorname{Hold}=H+L+2,
+\qquad H,L\le9k.
+\end{gathered}
+\tag{92.1}
+$$
+
+Its actual final field is $Ex$, with the installed full predictor.
+The split/cell bounds of Theorem 92.1 and the original-entry Read
+bound of Theorem 88.1 are attained jointly. The $N$-Read statement
+is not a current-only Read lower bound.
+
+**Proof.** With every module repaired, the elimination order in
+Theorem 91.2 is literally a zero-forcing order: guards color their
+owners and $h_i$; the tail and zero side vertices force the spine;
+the $h_i$ force $c_i$; fresh $f_i$ force $\ell_i$; then
+$c_i,r_i,\ell_i,m_i$ force the remaining coordinates. The allowed
+set has $k$ guards, one tail and $k$ fresh right leaves, hence
+$s=2k+1$. The existing forcing-coordinate construction supplies
+full rank through $F=M-s=9k$.
+
+Apply exactly (88.1), (88.3) and (88.4) with this earned graph,
+its own $E,C$ and this forcing horizon. The row matrix $R_e$
+recovers the arbitrary old $x$ from $N$ performed allowed Reads;
+the $M$ selected allowed control columns return its actual advanced
+field to $Ex$. All Adds avoid the inherited mask and include zero
+operands. This proves the endpoint and every count in (92.1),
+without invoking the larger arbitrary-mask replacement or borrowing
+its different material. $\square$
+

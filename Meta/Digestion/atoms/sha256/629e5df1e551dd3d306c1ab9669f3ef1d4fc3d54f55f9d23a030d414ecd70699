@@ -1,0 +1,11 @@
+**命题 1.3（对角推送精确还原原共同源）。** 对任意 $(0,1)$ 上的 Borel 概率测度 $\mu$，令 $\Delta(q)=(q,q)$。在假设1.1中取 $\Lambda=\Delta_\#\mu$，则源、原种子及任意定义1.2策略的全部实际档案的联合律，等于 PG27 在相同 $a,b,\mu,\lambda$ 与相同策略下的联合律。反之，若式（CPI.4）成立，令 $\mu=(\operatorname{pr}_L)_\#\Lambda$，则 $\Lambda=\Delta_\#\mu$。
+
+证明。原源也可由式（CPI.2）的独立均匀族实现，只须把两处 $Q_s$ 都代入同一次抽出的 $Q\sim\mu$。映射
+
+$$
+(u,q,x,v)\longmapsto(u,(q,q),x,v)
+\tag{CPI.5}
+$$
+
+把该原始乘积测度推送为 $\lambda\otimes\Delta_\#\mu\otimes(p_0\delta_0+p_1\delta_1)\otimes\operatorname{Leb}^{\otimes(\{L,R\}\times\mathbb N_{>0})}$。递推给出的每一个源位逐坐标相同；策略读取同一原种子、同一已获词，所以按步归纳得到相同动作、回答和首次标记时间，吸收后的拒绝也相同。因此上述全部联合律相同。反向，在 $\mathsf D$ 上恒有 $(Q_L,Q_R)=\Delta(Q_L)$，对任意 Borel 集推送即得 $\Lambda=\Delta_\#\mu$。没有把两个独立参数的相同边缘当成逐点相同。证毕。
+

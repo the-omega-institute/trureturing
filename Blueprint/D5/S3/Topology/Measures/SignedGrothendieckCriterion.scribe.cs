@@ -116,5 +116,29 @@ internal sealed class SignedGrothendieckCriterionDocument : IScribeDocumentDefin
                         + "For each double-dual Phi, the selected centered sequence therefore tends to zero under Phi. Filter.tendsto_of_subseq_tendsto applies because the initial selector was arbitrary; adding back Phi(FInf) proves full weak convergence. "
                         + "This is a generic analytic implication using classical signed representation, uniform boundedness, raw splitting and clopen selection. It does not assume the earlier diagonal-TV hypothesis H. "
                         + "No CH construction or instance of O is supplied, and neither the full signed-ball endpoint nor an anti-homeomorphism conclusion nor a solution of Problem 8.2 follows here."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("eventually-eq-of-signed-clopen-oscillation"),
+                DeclarationHandle.Create("D5/S3/Topology/Measures/SignedGrothendieckCriterion.eventually_eq_of_signed_clopen_oscillation"),
+                H("Every convergent point sequence is eventually its limit"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Topology/kania2026talagrand")),
+                Blocks(
+                    Paragraph(Text(
+                        "Let K be an arbitrary compact Hausdorff zero-dimensional space with its Borel measurable structure, and assume exactly the signed clopen oscillation property O above. "
+                        + "For every sequence x from the natural numbers to K and every p in K, if x tends to p then x(n)=p for all sufficiently large n. "
+                        + "There is no metrizability, first-countability, injectivity or distinctness premise on x.")),
+                    Paragraph(Text(
+                        "If x is injective, use the actual positive Dirac measures at x(n), converted to signed measures, and the measurable singletons E(n)={x(n)}. "
+                        + "Their total variations are exactly those Dirac measures, are regular, have mass one, and vanish outside their pairwise disjoint carriers. "
+                        + "Regularity follows by pushing the regular Dirac measure on Unit along the constant map, using inner regularity and finiteness. "
+                        + "The signed functional of the Dirac measure at a evaluates every continuous g as g(a). Continuity therefore gives scalar convergence to evaluation at p. "
+                        + "The disjoint norm-one contradiction used by the oscillation criterion excludes this injective convergent sequence.")),
+                    Paragraph(Text(
+                        "If the range of a convergent sequence were infinite, embed the natural numbers in that range and choose an original index for each embedded value. "
+                        + "The index selector and the selected point sequence are injective. An injective natural-number selector tends to infinity, so the selected sequence still tends to p, contradicting the injective case. "
+                        + "The range is thus finite. Its difference with {p} is closed in the Hausdorff space, and its complement is a neighborhood of p. "
+                        + "Eventually x lies in that complement and in its own range, forcing x(n)=p. "
+                        + "This implication assumes O; it supplies no instance of O or CH construction."))),
                 DescribeRole.Theorem))));
 }

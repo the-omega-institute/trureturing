@@ -1,0 +1,79 @@
+**Theorem 7.2 (Explicit original-metric fixed-dimension gap).** For
+every integer $n\ge0$, every $0<Z<2/3$, every allowed preparation, and every
+finite-error model $A\in\mathfrak F_{\le n}(Z)$,
+
+$$
+\operatorname{err}(A)^2>4ZH+\Gamma_{\mathrm{exp}}(n,Z),
+\qquad \Gamma_{\mathrm{exp}}(n,Z)>0.
+\tag{7.6}
+$$
+
+Every model, including an infinite-error one, therefore satisfies the
+corresponding nonstrict lower bound. For the capacity,
+
+$$
+e_n^{\mathrm{aff}}(Z)^2
+\ge4ZH+\Gamma_{\mathrm{exp}}(n,Z)>4ZH,
+\tag{7.7}
+$$
+
+and equivalently
+
+$$
+e_n^{\mathrm{aff}}(Z)-e_*
+\ge
+\frac{\Gamma_{\mathrm{exp}}(n,Z)}
+{\sqrt{4ZH+\Gamma_{\mathrm{exp}}(n,Z)}+\sqrt{4ZH}}
+>0.
+\tag{7.8}
+$$
+
+**Proof 7.2.** The choice (7.3) obeys
+
+$$
+0<Lh=H(2\eta-\eta^2)<H,\qquad
+H-Lh=H(1-\eta)^2>0,
+$$
+
+$$
+\eta_h=1-\sqrt{1-Lh/H}
+=1-\sqrt{(1-\eta)^2}=\eta.
+\tag{7.9}
+$$
+
+Thus every point of the chain in Lemma 6.1 is an actual strictly
+interior state. Use that lemma at $m=B_Z$. Theorem 1.3 and (6.4)
+give
+
+$$
+\rho<d_{N,B_Z}\le J_{B_Z}(v)
+\le\eta+\sqrt{\rho_0^2+\frac{\Delta}{16Hh}}.
+\tag{7.10}
+$$
+
+Consequently the square root is strictly greater than
+$\rho-\eta=\rho_0+\eta>0$. Squaring gives
+
+$$
+\Delta>
+16Hh\left((\rho_0+\eta)^2-\rho_0^2\right)
+=\Gamma_{\mathrm{exp}}(n,Z).
+\tag{7.11}
+$$
+
+Both factors $2\eta-\eta^2=\eta(2-\eta)$ and
+$(\rho_0+\eta)^2-\rho_0^2=\eta(2\rho_0+\eta)$ are positive.
+Since $H>0$ and $L>0$, this also proves the positivity in (7.6).
+An infinite-error model obeys the finite nonstrict bound automatically.
+For finite errors, take the infimum of the bound
+$\operatorname{err}(A)\ge\sqrt{4ZH+\Gamma_{\mathrm{exp}}}$ to
+obtain (7.7). Rationalizing the difference of square roots gives
+(7.8). $\square$
+
+The modelwise inequality proved here is strict. The stated capacity
+inequality is nonstrict; strictness is not passed through an infimum.
+No minimizer at fixed dimension is inferred. All parameters of all
+models and all preparations remain variable within the quantifiers:
+only the homogeneous size bound $d+1\le n+1$ and the fixed source
+parameter $Z$ enter the constants.
+

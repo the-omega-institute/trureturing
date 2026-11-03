@@ -1,0 +1,20 @@
+**Theorem 13.1 (Ordinary exponent of the dictionary).** For the very same $u_7$ and $\eta$ in (43),
+
+$$
+E(x)=e_3.
+\tag{44}
+$$
+
+*Proof.* The source is uniformly recurrent, since its defining substitution is primitive. A nonerasing image of a uniformly recurrent word is uniformly recurrent: a sufficiently long output factor contains the image of a sufficiently long source factor, and the bounded gaps of each source factor give bounded output gaps. The source is aperiodic; in particular its supplied finite value $E^*(u_7)=e_3$ precludes eventual periodicity. If $x$ were eventually periodic, the successive gaps between its marker letters would give an eventually periodic sequence of the distinct words $q_i$. Decoding them would make $u_7$ eventually periodic. Hence $x$ is aperiodic as well.
+
+We may therefore apply the supplied ordinary-exponent Theorem 5 to $x$: it suffices to prove $|v|\le L|R'|$ for every bispecial factor $v$ of $x$ and every return word $R'$ to $v$. This criterion covers every finite factor and its least period; it is not an asymptotic criterion.
+
+First suppose $v$ does not contain $a$. For the empty factor the ratio is zero. For the eight nonempty factors in Theorem 12.2 the following lower bounds on the distance $P=|R'|$ suffice.
+
+| $v$ | Lower bound on $P$ | Upper bound on $|v|/P$ |
+|---|---:|---:|
+| $b,c,d$ | $1$ | $1$ |
+| $cc$ | $3$ | $2/3$ |
+| $ccd,dcc$ | $3$ | $1$ |
+| $dccd$ | $4$ | $1$ |
+| $ccdcc$ | $6$ | $5/6$ |

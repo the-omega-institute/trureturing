@@ -1,0 +1,39 @@
+# Positive charge determines original Boolean geometry
+
+## Abstract
+
+Positive charge determines original Boolean geometry
+
+Let H be any finite family of Boolean supports on an arbitrary coordinate type X. Its module M is the integer span of the coefficient-one original rows. Complete supports are all nonempty proper subsets of Omega with indicator in M; the vertices are ALL their inclusion-minimal members. The neighbourhood of each original coordinate records its actual minimal-row incidences. Ordinary adjacency uses a shared coordinate other than q. The ordinary-component inventory contains every connected, closed, ungrounded bipartite component in both orientations. Its signed charge is the number of q-terminals on the left minus that number on the right; d is the gcd of the absolute charges.
+
+**Theorem 1.1 (Original positive charge gives a coefficient-one ledger or an avoiding permutation).**
+
+Lean statement: `D5/S3/Combinatorics/Sequenceability/PositiveChargeGeometry.original_positive_charge_target`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Sequenceability/PositiveChargeGeometry.original_positive_charge_target` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assume q belongs to Omega, its terminal count r is at least two, every other original coordinate belongs to at most two minimal rows, and the actual ordinary-component charge gcd is r. Then either a literal unit row, or a difference of two distinct unit rows, has an integer ledger in the ORIGINAL H with leading coefficient ONE; otherwise a literal permutation of ALL Omega avoids EVERY Complete support as an infix. Geometry, rank, colouring, selector, component, PortCycle and primitive endpoints are conclusions of the proof, never extra assumptions. No rational division, saturation or scaled replacement is used.
+
+The existing disjoint minimal-zero decomposition is applied to the quotient of the original integer coordinate module by M. It supplies both pairwise disjointness and union coverage for every Complete row, so its indicator is the coefficient-one sum of the chosen original minimal indicators. This is the only recursive decomposition supplier.
+
+Since every absolute component charge is at most r, a nonzero charge divisible by d=r must have absolute value r. Orient this component so that all terminals lie on its left. Along ordinary edges, a potential-kernel vector alternates sign. Its ORIGINAL q equation is r times the common terminal value, so that value and then the entire component vanish over the integers. Retaining q is essential to this injectivity.
+
+A potential that is Boolean, zero at q and negative on a component coefficient contradicts this injectivity: its Boolean support is Complete and decomposes into disjoint minimal rows with coefficients zero or one. Two explicit integer test potentials now force the left side to equal the entire terminal family and force every pair of terminals to have a common right neighbour. Inclusion minimality gives each right row at least two terminal neighbours. The incidence bound identifies this raw inventory with the original ordinary-component inventory.
+
+When no right row meets every terminal, choose actual endpoints and an injective finite rank. Component closure separates all exterior rows from the component. Encode every exterior ORIGINAL coordinate as an edge, with a distinct free leaf for each private coordinate; parallel IDs remain distinct. Primitive failure excludes intersecting size-two minimal rows by an exact unit-difference relation. This excludes the odd degree-two obstruction, so the existing TwoColours theorem supplies exterior mixedness. The previously proved original port construction then supplies the nonuniversal avoiding word.
+
+For a universal right neighbour bzero, primitive failure supplies two distinct terminals u,v each with two non-q original ports. In the two-terminal one-port exception, subtracting the original opposite row from the other terminal row gives an actual coefficient-one unit difference. Choose four distinct IDs l,rho,a,b with l,rho on bzero and a on u, b on v. Colour l and b red, rho and a blue. All terminals receive blue, every q-free minimal row receives both colours, and all unused coordinates remain in the word.
+
+The universal word consists of the red coordinates except l, followed by l,q,rho, followed by the blue coordinates except rho. If a Complete infix contains q, its disjoint decomposition selects exactly one terminal t. For t=v the red witness b forces the excluded l across the interval. For t different from v a blue port forces the excluded rho. Exact original neighbourhoods exclude every additional supplier, including exterior rows. If q is absent, mixedness forces the q separator. This covers every Complete union and every original coordinate, including parallel, private, unused and exterior IDs.
+
+These are repository-derived symbolic incidence and integer-potential arguments composed with the existing disjoint decomposition, TwoColours and Hamilton/port results. The statement closes only d=r with r at least two. Charge dichotomy, the zero-charge branch, arbitrary full Good orderings and adaptive merge are separate obligations; no literature priority or full ordering conclusion is asserted.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Sequenceability/PositiveChargeGeometry.original_positive_charge_target`
+- Dependency: [D5/S3/Combinatorics/Graph/EdgeColouring/TwoColours](../Graph/EdgeColouring/TwoColours.md)
+- Dependency: [D5/S3/Combinatorics/Sequenceability/PositiveChargeIncidence](PositiveChargeIncidence.md)

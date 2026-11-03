@@ -1,0 +1,8 @@
+**Definition 8.1 (four independently exposed data).** Restrict this paragraph to the actual acquisition image (CL.17), followed by the Hold of Definition 6.2. All entries share the same common installation and promised native correspondence.
+
+| View | Exposed data and their independent meaning |
+| --- | --- |
+| Space | The actual weighted native graph, its diagonal coefficients, and its present native field $x_*$ |
+| Time | The ordered actual command/reply word Add$(1,1)$, Tick, Tick, Read$_e$, Hold, including its four acknowledgements and acquired scalar |
+| Boundary | The leaf response $F_L(z)=H(zI-T)^{-1}B$ and the present authentic interior boundary value $y=x_e$ |
+| Memory | The earned parameter pair and the current template-coordinate predictor $(C,S,z_*)$, with the rules in Theorem 6.3 |

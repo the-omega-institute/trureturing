@@ -4924,3 +4924,15 @@ $$
 因此，本卷得到的是一个范围边界：三维可见接口与三维物理环境之间还需要全旋转不变性、忠实地混合补空间的操作，或对环境方向的可达与观测假设。命题 117.2–117.3 的中心坐标也可以解释为内部记忆；它们不构成物理第四空间轴的断言。原生 FIB 是否提供这些附加控制、读出和共同来源接缝，仍是未决桥接问题。
 
 ## 追加锚（本行以下为增补区）
+
+<a id="v9-not"></a>
+
+## 118. 未知单份 qubit 的最优 NOT 与一般维数校正
+
+本节完整正文与证明见[续卷同节](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION_QUANTUM_CHANNEL_CONTINUATION.md#v9-not)；编号与原链接入口保留。
+
+<a id="v9-clean-record"></a>
+
+## 119. 带置换相位的纯记录消费者与参考稳定误差
+
+本节完整正文与证明见[续卷同节](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION_QUANTUM_CHANNEL_CONTINUATION.md#v9-clean-record)；编号与原链接入口保留。

@@ -1,0 +1,61 @@
+**Corollary 79.1 (same-constrained-class sharp coefficient).** Under
+Definition 78.1, put
+
+$$
+I_r^{\mathsf Q_K}(T)=
+\inf_{\mathsf V\in\mathcal C^{\mathsf Q_K}_{\mathrm{crit},r}}
+                     D(\mathsf V_T\Vert\mathbb P_T).
+\tag{79.1}
+$$
+
+The constrained class is nonempty, and
+
+$$
+\lim_{T\to\infty}
+\frac{I_r^{\mathsf Q_K}(T)-\lambda T}{\log(1+T)}=\nu(m,r).
+\tag{79.2}
+$$
+
+Moreover,
+
+$$
+\begin{aligned}
+\inf_{\mathsf V\in\mathcal C^{\mathsf Q_K}_{\mathrm{crit},r}}
+\liminf_{T\to\infty}
+\frac{D(\mathsf V_T\Vert\mathbb P_T)-\lambda T}{\log(1+T)}
+ &=\nu(m,r),\\
+\inf_{\mathsf V\in\mathcal C^{\mathsf Q_K}_{\mathrm{crit},r}}
+\limsup_{T\to\infty}
+\frac{D(\mathsf V_T\Vert\mathbb P_T)-\lambda T}{\log(1+T)}
+ &=\nu(m,r).
+\end{aligned}
+\tag{79.3}
+$$
+
+Proof. Theorem 78.2 supplies one member of the stated constrained
+class. For every member, its full prefix gives probability one to
+$E_T=\{\zeta>T,\ |X_t|<r\sqrt{1+t}\text{ for every real }0\le t\le T\}$.
+The pointwise support entropy inequality (77.4), equivalently the
+one used in Q Corollary 74.2, therefore gives
+$D(\mathsf V_T\Vert\mathbb P_T)\ge-\log\mathbb P(E_T)$ for every
+finite $T>0$. Here $\mathbb P(E_T)>0$ follows also from the supported
+witness's finite-prefix absolute continuity. Taking the infimum in
+this finite-$T$ inequality and bounding above by the same single
+witness yields
+
+$$
+-\log\mathbb P(E_T)\le I_r^{\mathsf Q_K}(T)
+ \le D((\mathsf V^{\mathsf Q_K}_\star)_T\Vert\mathbb P_T).
+\tag{79.4}
+$$
+
+Subtract $\lambda T$ and divide by $\log(1+T)>0$.
+Q (74.10) evaluates the left limit and Theorem 78.2 evaluates the
+right limit; squeezing proves (79.2), without any exchange of an
+infimum and a limit. Q (74.11) bounds every member's liminf, hence
+also its limsup, below by $\nu$. The same witness has a limit equal
+to $\nu$, proving both equalities in (79.3). Every infimum here is
+over the same class of consistent infinite laws preserving the entire
+height-path measure. No separately chosen finite-horizon minimizers
+are used. $\square$
+

@@ -1,0 +1,16 @@
+**命题 265.1（不可检测隐藏增长模式）。** 取
+
+$$
+A=
+\begin{pmatrix}
+1.1&0\\
+0&0.5
+\end{pmatrix},
+\qquad
+C=\begin{pmatrix}0&1\end{pmatrix},
+\qquad
+B=\begin{pmatrix}0\\1\end{pmatrix}.
+$$
+
+第一坐标完全不可观测且不受控制输入影响。两个初态只在第一坐标上不同，会产生相同的全部输出，但差异按 \(1.1^t\) 增长。
+

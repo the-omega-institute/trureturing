@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ba58739a1ac02c19b07b7ae3795d66fdf3cdbb81d6c02246182a2ebc717f6b80
+  normalized_sha256: sha256:ba58739a1ac02c19b07b7ae3795d66fdf3cdbb81d6c02246182a2ebc717f6b80
+cas_ref: sha256:ba58739a1ac02c19b07b7ae3795d66fdf3cdbb81d6c02246182a2ebc717f6b80
+coverage_gids:
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyGeneratingFunction.prony_generating_function_hasSum
+    target_statement_id: sha256:bd646e17d8a2c1e41e9cba12f9bf9a9edca7ecac75235ed35b918ca6eb2d5311
+  - gid: D5/S3/Combinatorics/Graph/PathCHS/PathCHSNormBCSRemark43.hsymm_partial_fractions
+    target_statement_id: sha256:5cab2a4a5c088853a3d9426b4fe3d00c416d69135128b683b8f99753ee08e88f
+receipts:
+  unresolved_subitems: []

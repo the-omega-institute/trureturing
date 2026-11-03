@@ -1,0 +1,34 @@
+**Lemma 13.2 (Q: quadratic obstruction at every gap).** For $m=3$, every $0\le a\le4$ and every $p>0$, no $R\in\mathcal P_2$ satisfies (13.2).
+
+**Proof.** Suppose otherwise. Writing $R(t)=At^2+Ct+D$ and subtracting its equal values at $a,a+2$ gives $C=-2A(a+1)$. Hence
+
+$$
+R(t)=A(t-a-1)^2+B.
+$$
+
+This includes the constant and lower-degree cases. For $1\le a\le3$, clocks $a-1,a+3$ are both retained and symmetric about $a+1$. Their exponents are $a-1,a+1$, so equality of their values and nonzero denominators give $u_{a-1}=u_{a+1}$. The recurrence $u_{a+1}=u_a+u_{a-1}$ forces $u_a=0$, contradicting (13.2).
+
+At $a=0$, $R(0)=R(2)=1$, so $R(t)=1+ct(t-2)$. At clock $3$, exponent $1$, this gives $1+3c=-1/p$, whence $c=-(p+1)/(3p)$. The next two retained clocks give
+
+$$
+R(4)=-\frac{5p+8}{3p}=\frac1{1-p},\qquad
+R(5)=-\frac{4p+5}{p}=\frac1{1-2p}.
+$$
+
+The denominators are nonzero under the candidate assumptions. Multiplying the two equalities gives, respectively,
+
+$$
+5p^2=8,\qquad 8p^2+5p-5=0.
+$$
+
+Substituting the first into the second gives $39/5+5p=0$, impossible for $p>0$.
+
+At $a=4$, the equal values at clocks $4,6$ put the axis at $5$. Since $R(0)=1$, write $R(t)=1+ct(t-10)$. The clock-$1$ equation gives $c=(p+1)/(9p)$. Clocks $2,3$ still have exponents $2,3$, so
+
+$$
+R(2)=-\frac{7p+16}{9p}=\frac1{1-p},\qquad
+R(3)=-\frac{4p+7}{3p}=\frac1{1-2p}.
+$$
+
+These imply $7p^2=16$ and $8p^2+7p-7=0$. Together they give $79/7+7p=0$, again impossible. The interior cases and these two edges exhaust every gap. No determinant hypothesis was used. $\square$
+

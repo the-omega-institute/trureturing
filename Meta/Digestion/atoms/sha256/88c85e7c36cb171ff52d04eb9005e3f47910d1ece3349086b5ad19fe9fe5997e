@@ -1,0 +1,62 @@
+## 3. 与联合核塔的精确比较
+
+沿用联合核线程卷的
+
+$$
+Q_n=Z/K_n,
+\qquad
+L_K=\varprojlim Q_n,
+\qquad
+\eta_K(z)=([z]_{K_n})_n,
+\qquad
+B_K=\eta_K[Z].
+$$
+
+假设
+
+$$
+\boxed{
+K_n\subseteq A_n^{\mathrm{law}}\qquad(n\ge0).
+}
+\tag{MPC.9}
+$$
+
+这是联合核细化给出的安全方向；随机情形不能把它改写成无条件相等。
+
+由 (MPC.9) 定义有限层商映射
+
+$$
+\phi_n:Q_n\longrightarrow C_n^A,
+\qquad
+\phi_n([z]_{K_n})=[z]_{A_n^{\mathrm{law}}}.
+\tag{MPC.10}
+$$
+
+它是良定义且满射，并满足
+
+$$
+s_n\phi_{n+1}=\phi_np_n.
+\tag{MPC.11}
+$$
+
+因此逐坐标得到逆极限映射
+
+$$
+\Phi:L_K\longrightarrow L_A,
+\qquad
+\Phi((x_n)_n)=(\phi_n(x_n))_n.
+\tag{MPC.12}
+$$
+
+记 $q_\infty:Z\to C_{\mathscr T}$ 为完整未来行为商的规范投影。则
+
+$$
+\Phi\circ\eta_K=\theta\circ q_\infty,
+\qquad
+\boxed{\Phi[B_K]=B_A.}
+\tag{MPC.13}
+$$
+
+这里的第二个等式只比较真实来源像；它不声称 $\Phi$ 把所有完成线程都提升为
+真实来源。
+

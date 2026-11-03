@@ -78,7 +78,31 @@ $$\forall n \in \mathit{Nat}, A \in \operatorname{CountMat}\left(n, n\right), m 
 
 powerMaximum(A,m) is Finset.univ.sup of (A^m)(i,j) over Fin n × Fin n. Its value is zero for n=0. For positive order it is the ordinary maximum of the entries of A^m.
 
-**Theorem 1.7 (The quantitative square-order bound).**
+**Theorem 1.7 (Counting numbered paths).**
+
+$$\forall n \in \mathit{Nat}, A \in \operatorname{CountMat}\left(n, n\right), d \in \mathit{Nat}, i \in \operatorname{Fin}\left(n\right), j \in \operatorname{Fin}\left(n\right),\; \operatorname{Finite}\left(\operatorname{FinitePath}\left(A, d, i, j\right)\right) \land \operatorname{NatCard}\left(\operatorname{FinitePath}\left(A, d, i, j\right)\right) = \operatorname{entry}\left(\operatorname{power}\left(A, d\right), i, j\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/OriginalResponseControls.numbered_path_count` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite numbered length-d paths from i to j have cardinality (A^d)(i,j), also for d=0 and empty dimensions. At zero length the fiber is a singleton exactly when the endpoints agree. At a successor length, split off the first numbered edge and count the dependent sum over its target. This is the existing counting argument used by the square-order bound.
+
+**Theorem 1.8 (The individual factor bound).**
+
+$$\forall n \in \mathit{Nat}, k \in \mathit{Nat}, m \in \mathit{Nat}, A \in \operatorname{CountMat}\left(n, n\right), B \in \operatorname{CountMat}\left(k, k\right), R \in \operatorname{CountMat}\left(n, k\right), S \in \operatorname{CountMat}\left(k, n\right),\; \left(\operatorname{RowEssential}\left(B\right) \land \left(\operatorname{HasNumberedPathEquiv}\left(R, S, A, m\right) \land \operatorname{HasNumberedPathEquiv}\left(S, R, B, m\right)\right)\right) \Rightarrow \left(\forall i \in \operatorname{Fin}\left(n\right), j \in \operatorname{Fin}\left(k\right),\; \operatorname{entry}\left(R, i, j\right) \le \operatorname{powerMaximum}\left(A, m\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/OriginalResponseControls.factor_entry_upper` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+RowEssential(B) means a nonzero entry in every row of B. For arbitrary R and S with the two displayed numbered path equivalences, each entry R(i,j) is bounded by powerMaximum(A,m). Recover an S edge from the inverse B-path bijection and inject the R fiber into the corresponding A-path fiber. Counting paths and taking the maximum proves the inequality. This factors the existing square_order_upper argument so that the same bound also supplies the unrestricted finite search.
+
+**Theorem 1.9 (The quantitative square-order bound).**
 
 $$\forall n \in \mathit{Nat}, k \in \mathit{Nat}, m \in \mathit{Nat}, A \in \operatorname{CountMat}\left(n, n\right), B \in \operatorname{CountMat}\left(k, k\right), R \in \operatorname{CountMat}\left(n, k\right), S \in \operatorname{CountMat}\left(k, n\right),\; \forall c \in \operatorname{CompatibleCertificate}\left(A, B, R, S, m\right),\; \operatorname{cardEdge}\left(R\right) \le n \cdot k \cdot \operatorname{powerMaximum}\left(A, m\right)$$
 
@@ -90,7 +114,7 @@ $$\forall n \in \mathit{Nat}, k \in \mathit{Nat}, m \in \mathit{Nat}, A \in \ope
 
 Choose a numbered S edge leaving each target vertex. Pairing it with an R edge and applying psiA injects that R fiber into a length-m A-path fiber. The standard path count is (A^m)(i,l), hence each R entry is at most powerMaximum(A,m). Summing over n times k entries gives the displayed bound, including empty dimensions.
 
-**Theorem 1.8 (Bounds on the same diamond factors).**
+**Theorem 1.10 (Bounds on the same diamond factors).**
 
 $$\forall n \in \mathit{Nat}, k \in \mathit{Nat}, m \in \mathit{Nat}, A \in \operatorname{CountMat}\left(n, n\right), B \in \operatorname{CountMat}\left(k, k\right), R \in \operatorname{CountMat}\left(n, k\right), S \in \operatorname{CountMat}\left(k, n\right),\; \forall c \in \operatorname{CompatibleCertificate}\left(A, B, R, S, m\right),\; \exists D \in \operatorname{CountMat}\left(\operatorname{rightFirstOrder}\left(c\right), \operatorname{leftFirstOrder}\left(c\right)\right),\; \operatorname{leftFirstMatrix}\left(c\right) = \operatorname{intersection}\left(c\right) \cdot D \land \left(\operatorname{rightFirstMatrix}\left(c\right) = D \cdot \operatorname{intersection}\left(c\right) \land \left(\operatorname{EntryBound}\left(\operatorname{intersection}\left(c\right), \operatorname{max}\left(\operatorname{cardEdge}\left(R\right), \operatorname{max}\left(\operatorname{cardEdge}\left(A\right), \operatorname{cardEdge}\left(B\right)\right)\right)\right) \land \operatorname{EntryBound}\left(D, \operatorname{max}\left(\operatorname{cardEdge}\left(R\right), \operatorname{max}\left(\operatorname{cardEdge}\left(A\right), \operatorname{cardEdge}\left(B\right)\right)\right)\right)\right)\right)$$
 
@@ -102,7 +126,7 @@ $$\forall n \in \mathit{Nat}, k \in \mathit{Nat}, m \in \mathit{Nat}, A \in \ope
 
 Let IL and IJ be first-left column membership and first-right row membership, SL and SJ their representative selectors, and P=IL IJ. The leftFirstMatrix is IL C SL and rightFirstMatrix is SJ C IJ for C=c.squareMatrix. FirstResponseDiamond supplies one D satisfying IL C SL=P D and SJ C IJ=D P. Every P entry is at most q. For a column h of P, choose u=firstRightRep(h) and g=firstLeftClass(u). The u summand gives P(g,h)≥1, so D(h,f)≤P(g,h)D(h,f)≤(P D)(g,f)≤bound≤max(q,bound). The conclusion bounds this same D with both factor equations. It does not assert a representative-entry formula for D.
 
-**Theorem 1.9 (Controls from the original four maps).**
+**Theorem 1.11 (Controls from the original four maps).**
 
 $$\forall n \in \mathit{Nat}, k \in \mathit{Nat}, m \in \mathit{Nat}, A \in \operatorname{CountMat}\left(n, n\right), B \in \operatorname{CountMat}\left(k, k\right), R \in \operatorname{CountMat}\left(n, k\right), S \in \operatorname{CountMat}\left(k, n\right),\; \forall phiR \in \operatorname{NumberedEdgePairEquiv}\left(A, R, R, B\right), phiS \in \operatorname{NumberedEdgePairEquiv}\left(B, S, S, A\right), psiA \in \operatorname{NumberedPathEquiv}\left(R, S, A, m\right), psiB \in \operatorname{NumberedPathEquiv}\left(S, R, B, m\right),\; \left(\operatorname{Essential}\left(A\right) \land \left(\operatorname{Essential}\left(B\right) \land \left(1 \le m \land \left(\operatorname{BalancedA}\left(\mathit{phiR}, \mathit{phiS}, \mathit{psiA}\right) \land \operatorname{BalancedB}\left(\mathit{phiR}, \mathit{phiS}, \mathit{psiB}\right)\right)\right)\right)\right) \Rightarrow \left(\left(\operatorname{cardEdge}\left(R\right) = \operatorname{sumEntries}\left(R\right) \land \left(\operatorname{max}\left(n, k\right) \le \operatorname{cardEdge}\left(R\right) \land \operatorname{cardEdge}\left(R\right) \le n \cdot k \cdot \operatorname{powerMaximum}\left(A, m\right)\right)\right) \land \operatorname{BothResponseLegControls}\left(\operatorname{balancedCertificate}\left(A, B, R, S, m, \mathit{phiR}, \mathit{phiS}, \mathit{psiA}, \mathit{psiB}\right), \operatorname{cardEdge}\left(R\right), \operatorname{max}\left(\operatorname{cardEdge}\left(A\right), \operatorname{cardEdge}\left(B\right)\right)\right)\right)$$
 
@@ -121,6 +145,8 @@ The quotient-fiber argument and the same-D inequality use the original numbered 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalResponseControls.NodeControl`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalResponseControls.ResponseControl`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalResponseControls.balanced_sweep`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalResponseControls.factor_entry_upper`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalResponseControls.numbered_path_count`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalResponseControls.originalBalancedResponseControls`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalResponseControls.powerMaximum`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalResponseControls.square_diamond_controls`

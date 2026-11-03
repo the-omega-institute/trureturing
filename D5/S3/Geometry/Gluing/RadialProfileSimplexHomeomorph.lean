@@ -199,15 +199,15 @@ def ray (i : Fin 4) (u : Opposite i) (r : Radius) : Simplex :=
     (convex_stdSimplex ℝ (Fin 4)) (vertex i).property u.val.property
       (by have := r.property.2; linarith) r.property.1 (by ring)⟩
 
-private theorem ray_at (i : Fin 4) (u : Opposite i) (r : Radius) :
+theorem ray_at (i : Fin 4) (u : Opposite i) (r : Radius) :
     (ray i u r).val i = 1 - (r : ℝ) := by
   simp [ray, vertex, u.property]
 
-private theorem ray_other (i : Fin 4) (u : Opposite i) (r : Radius) (j : Fin 4)
+theorem ray_other (i : Fin 4) (u : Opposite i) (r : Radius) (j : Fin 4)
     (h : j ≠ i) : (ray i u r).val j = (r : ℝ) * u.val.val j := by
   simp [ray, vertex, h]
 
-private theorem simplex_pair (x : Simplex) {i j : Fin 4} (h : i ≠ j) :
+theorem simplex_pair (x : Simplex) {i j : Fin 4} (h : i ≠ j) :
     x.val i + x.val j ≤ 1 := by
   have hs : ∑ k ∈ ({i, j} : Finset (Fin 4)), x.val k ≤ ∑ k, x.val k :=
     Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _) (by
@@ -239,7 +239,7 @@ private theorem opposite_nonempty (i : Fin 4) : Nonempty (Opposite i) := by
   obtain ⟨j, hj⟩ := exists_ne i
   exact ⟨⟨vertex j, by simp [vertex, Ne.symm hj]⟩⟩
 
-private theorem ray_cover (x : Simplex) (i : Fin 4) (hi : 1 / 2 ≤ x.val i) :
+theorem ray_cover (x : Simplex) (i : Fin 4) (hi : 1 / 2 ≤ x.val i) :
     ∃ (u : Opposite i) (r : Radius), ray i u r = x := by
   have hx := mem_Icc_of_mem_stdSimplex x.property i
   let r : Radius := ⟨1 - x.val i, ⟨sub_nonneg.mpr hx.2, by linarith⟩⟩
@@ -290,11 +290,11 @@ private theorem ray_cover (x : Simplex) (i : Fin 4) (hi : 1 / 2 ≤ x.val i) :
 
 abbrev Charts := (Σ i : Fin 4, Opposite i × Radius) ⊕ Central
 
-private def project : Charts → Simplex
+def project : Charts → Simplex
   | .inl ⟨i, u, r⟩ => ray i u r
   | .inr x => x.val
 
-private theorem project_surjective : Function.Surjective project := by
+theorem project_surjective : Function.Surjective project := by
   intro x
   by_cases hc : ∀ i, x.val i ≤ 1 / 2
   · exact ⟨.inr ⟨x, hc⟩, rfl⟩
@@ -303,10 +303,10 @@ private theorem project_surjective : Function.Surjective project := by
     obtain ⟨u, r, h⟩ := ray_cover x i hi.le
     exact ⟨.inl ⟨i, u, r⟩, h⟩
 
-private def zeroRadius : Radius := ⟨0, by norm_num⟩
-private def halfRadius : Radius := ⟨1 / 2, by norm_num⟩
+def zeroRadius : Radius := ⟨0, by norm_num⟩
+def halfRadius : Radius := ⟨1 / 2, by norm_num⟩
 
-private def onChart (α : ∀ i, Opposite i → ProfileRange)
+def onChart (α : ∀ i, Opposite i → ProfileRange)
     (k : ProfileRange → Radius → Radius) : Charts → Simplex
   | .inl ⟨i, u, r⟩ => ray i u (k (α i u) r)
   | .inr x => x.val
@@ -365,11 +365,11 @@ private theorem onChart_fiber (α : ∀ i, Opposite i → ProfileRange)
       exact (hcc i u r x hpq.symm).symm
 
 /-- Evaluation from radial charts. The fiber lemma removes all chart-choice ambiguity. -/
-private def move (α : ∀ i, Opposite i → ProfileRange)
+def move (α : ∀ i, Opposite i → ProfileRange)
     (k : ProfileRange → Radius → Radius) (x : Simplex) : Simplex :=
   if ∃ i, x = vertex i then x else onChart α k (Function.surjInv project_surjective x)
 
-private theorem move_project (α : ∀ i, Opposite i → ProfileRange)
+theorem move_project (α : ∀ i, Opposite i → ProfileRange)
     (k : ProfileRange → Radius → Radius)
     (hzero : ∀ a, k a zeroRadius = zeroRadius)
     (hhalf : ∀ a, k a halfRadius = halfRadius) (p : Charts) :
@@ -414,7 +414,7 @@ private theorem continuous_project : Continuous project := by
   · exact continuous_sigma fun i => continuous_ray i
   · exact continuous_subtype_val
 
-private theorem continuous_move (α : ∀ i, Opposite i → ProfileRange)
+theorem continuous_move (α : ∀ i, Opposite i → ProfileRange)
     (hα : ∀ i, Continuous (α i)) (k : ProfileRange → Radius → Radius)
     (hk : Continuous (fun p : ProfileRange × Radius => k p.1 p.2))
     (hzero : ∀ a, k a zeroRadius = zeroRadius)
@@ -537,7 +537,7 @@ def permuteOpposite (ρ : Equiv.Perm (Fin 4)) (i : Fin 4) (u : Opposite i) :
     Opposite (ρ i) :=
   ⟨permute ρ u.val, by simpa only [permute, Equiv.symm_apply_apply] using u.property⟩
 
-private theorem permute_ray (ρ : Equiv.Perm (Fin 4)) (i : Fin 4)
+theorem permute_ray (ρ : Equiv.Perm (Fin 4)) (i : Fin 4)
     (u : Opposite i) (r : Radius) :
     permute ρ (ray i u r) = ray (ρ i) (permuteOpposite ρ i u) r := by
   apply Subtype.ext

@@ -1,0 +1,4 @@
+For every inclusive
+$h\in\mathbb N$, a terminating finite construction returns actual
+$u_i(h)\in D_i$ agreeing through $h$ with this single $\Lambda$.
+In particular $J_B(h)$ holds at every depth. 

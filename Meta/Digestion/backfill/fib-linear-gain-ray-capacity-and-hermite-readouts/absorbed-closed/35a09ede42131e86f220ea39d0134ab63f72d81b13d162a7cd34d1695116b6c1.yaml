@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:35a09ede42131e86f220ea39d0134ab63f72d81b13d162a7cd34d1695116b6c1
+  normalized_sha256: sha256:35a09ede42131e86f220ea39d0134ab63f72d81b13d162a7cd34d1695116b6c1
+cas_ref: sha256:35a09ede42131e86f220ea39d0134ab63f72d81b13d162a7cd34d1695116b6c1
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/GainRayJets.jetMap_bijective
+    target_statement_id: sha256:3d621ddee8141efb3e7a9f14a582c065fd48c9ca42c602377016904961b59157
+  - gid: D5/S3/Observer/Linear/GainRayJets.jet_ofFn
+    target_statement_id: sha256:18007235c9af424a9145d16e42b12df4902f21a5cc8cd300062ca2a3c848330f
+  - gid: D5/S3/Observer/Linear/GainRayJets.pureM_spectral
+    target_statement_id: sha256:57ccbd31ae7f4ff9b400a86299f7a8068fda3ed749601e4cd01a429011c033a5
+receipts:
+  unresolved_subitems: []

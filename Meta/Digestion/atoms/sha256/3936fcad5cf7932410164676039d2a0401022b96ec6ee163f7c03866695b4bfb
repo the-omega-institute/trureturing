@@ -1,0 +1,72 @@
+**定理 94.1（有限表强制公平、可逆酉分支和所有数学词）。** 在定理 93.2 的条件下，
+
+$$
+C_0=2B_0,\qquad C_1=2B_1,\qquad C_N=B_N
+\tag{94.1}
+$$
+
+都是完整 $M_3(\mathbb C)$ 上的 CPTP 映射，并各有完整 CPTP 逆，因而各自为酉共轭。它们通过同一个 $T$ 满足
+
+$$
+C_a=T\operatorname{Ad}_{U_a}T^{-1},\qquad
+C_w=T\operatorname{Ad}_{U_w}T^{-1},\qquad
+B_w=2^{-k(w)}C_w
+\tag{94.2}
+$$
+
+对每个字母和每个有限正向词成立。这尚未选定三个酉代表的共同坐标；该共同性由后面的单态／单效果论证确定。
+
+证明。插入质量行逐列给
+
+$$
+\operatorname{Tr}(B_js_i)
+=H^j_{0i}
+=\operatorname{Tr}(A_jr_i)
+=\tfrac12\operatorname{Tr}r_i
+=\tfrac12\operatorname{Tr}s_i,\qquad j=0,1.
+\tag{94.3}
+$$
+
+$s_i$ 是整个竞争 Hermitian 空间的基，故
+$B_j^*(I_3)=I_3/2$ 在全矩阵域成立。CP 由假设 91.2 给出，故 $2B_j$ CPTP。$C_N$ 的全域 CPTP 性本来就是前提。这一步使用插入的质量和秩九；原先只假设 $B_0+B_1$ TP 并不能推出逐支公平。因子二是证明中映射的代数缩放，没有对实验分支条件化或给予强迫标签的操作。
+
+由 (93.7) 立即得字母层的 (94.2)，然后按实际时间顺序复合得每个词的恒等式。固定映射在所有词上复用是前提；这里不把有限数据拟合到任意时间相关竞争者。
+
+对每个 $a$，$\operatorname{Ad}_{U_a}$ 属于紧酉共轭群。有限个本征相位的同时回归给 $n_\nu\to\infty$，且
+
+$$
+\operatorname{Ad}_{U_a}^{\,n_\nu}\longrightarrow\mathrm{id},\qquad
+C_a^{\,n_\nu-1}\longrightarrow
+T\operatorname{Ad}_{U_a}^{-1}T^{-1}=C_a^{-1}.
+\tag{94.4}
+$$
+
+可选 $n_\nu\ge2$；若阶有限，则取其阶的正倍数。每个 $C_a^{n_\nu-1}$ 都是全域 CPTP。有限维中 Choi 正锥及 TP 线性约束均闭，故其超算子极限 $C_a^{-1}$ 也是全域 CPTP。这在使用任何逆分类以前，已经给出
+$C_a^{-1}C_a=\mathrm{id}$ 对所有复矩阵成立，特别包括所有密度矩阵，而不只包括已制备轨道。
+
+此时才应用 Nayak–Sen，[*Invertible Quantum Operations and Perfect Encryption of Quantum States*](https://arxiv.org/html/quant-ph/0605041v4)，定理 2.1：其输入为 CPTP
+$\mathcal E:M_p\to M_q$ 及 CPTP 左逆 $\mathcal D$，满足
+$\mathcal D\mathcal E(\rho)=\rho$ 对每个输入密度矩阵成立。本处
+$\mathcal E=C_a$、$\mathcal D=C_a^{-1}$、$p=q=3$，辅助维数
+$\lfloor q/p\rfloor=1$，所以 $C_a$ 为酉共轭。实线性可逆、预测商可逆或一个轨道上的逆均不足以单独调用该结果；(94.4) 补足的正是完整矩阵逆条件。
+
+(93.7) 与 (94.2) 还直接给
+
+$$
+\begin{aligned}
+T(\operatorname{Ad}_{U_w}\rho_0)&=C_w\sigma_0,\\
+C_w^*F&=(T^{-1})^*(U_w^\dagger EU_w).
+\end{aligned}
+\tag{94.5}
+$$
+
+因此对所有有限词，
+
+$$
+\operatorname{Tr}(FB_w\sigma_0)=\operatorname{Tr}(EA_w\rho_0),\qquad
+\operatorname{Tr}(B_w\sigma_0)=2^{-k(w)}.
+\tag{94.6}
+$$
+
+相减给补终端结果也相等。这些未测词等式是固定全域模型和有限秩九数据的数学后果，不是额外假定已观测的无限表。(94.4) 中的极限、归一化证明映射及逆均不授予新的物理控制。∎
+

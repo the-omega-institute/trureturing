@@ -1,0 +1,90 @@
+**Theorem 13.1 (Exhaustive rank-one classification).** Among all
+$h\in\mathcal C_{a,b,c}$ for an exterior triple, assignments with
+$\operatorname{rank}(L(h)-P)=1$ exist if and only if $a=2$.
+They are exactly the following assignments: choose an entire original
+part $S=\{s_1,s_2\}$ of size two, apply (12.3) to every edge from
+$S$ to $V\setminus S$, and set every original edge between the other
+two parts to zero. There are exactly two such normalized assignments
+when $a=2<b$, and exactly four when $a=b=2$. Their common product is
+
+$$
+T_n=n\left(n-2+\frac1{n-2}\right).
+\tag{13.1}
+$$
+
+No strictly positive original assignment has rank-one excess after
+normalization by its own $\lambda_2$. This classification imposes no
+rank restriction on unrestricted maximizers.
+
+*Proof.* Factor $L(h)-P=vv^{\mathsf T}$, where $v\ne0$ and
+$\sum_xv_x=0$. At distinct vertices of the same original part,
+nonadjacency gives
+
+$$
+ v_xv_y=\frac1n.
+\tag{13.2}
+$$
+
+Thus all entries in any one part have the same nonzero sign. If the
+part has at least three vertices, comparing (13.2) for three labels
+shows that all its entries equal either $1/\sqrt n$ or $-1/\sqrt n$.
+In particular this holds for $C$, since $c>a+b\ge4$. Reverse $v$
+if necessary so that $v_w=-1/\sqrt n$ for every $w\in C$.
+
+For $x\notin C$, original conductance nonnegativity gives
+$0\le h_{xw}=1/n+v_x/\sqrt n$, hence $v_x\ge-1/\sqrt n$.
+A negative size-two part must also have both entries $-1/\sqrt n$:
+their absolute values are at most $1/\sqrt n$ and their product is
+$1/n$ by (13.2). Thus every negative part is uniform at that value.
+A positive part of size at least three is uniform at $1/\sqrt n$.
+A positive size-two part has entries $t/\sqrt n$ and
+$1/(t\sqrt n)$ for some $t>0$.
+
+If both $A$ and $B$ are positive, then all their entries must actually
+be $1/\sqrt n$. Indeed a nonuniform positive size-two pair has one
+entry greater than $1/\sqrt n$, while any other positive part has an
+entry at least $1/\sqrt n$; their cross conductance
+$1/n-v_xv_y$ would be negative. With both parts uniform positive,
+the sum of $v$ is $(a+b-c)/\sqrt n\ne0$, impossible.
+If both parts are negative, the sum is negative, also impossible.
+There is therefore exactly one positive part $S$. If it had size at
+least three, its uniform value would give total sum
+$(2|S|-n)/\sqrt n<0$, because $|S|\le a+b<c$.
+It must have size two; all other entries are $-1/\sqrt n$.
+The zero-sum condition is now
+
+$$
+ t+t^{-1}=n-2.
+\tag{13.3}
+$$
+
+There are exactly two positive roots, interchanged by $t\mapsto t^{-1}$,
+since $n>4$. The two conductances from these hubs to every other
+vertex are $(1+t)/n$ and $(1+t^{-1})/n$. Their sum is $1$ and their
+product is $1/n$, so they are exactly
+
+$$
+ \tfrac12\left(1+\sqrt{\frac{n-4}{n}}\right),\qquad
+ \tfrac12\left(1-\sqrt{\frac{n-4}{n}}\right).
+$$
+
+Between any two vertices outside $S$, the rank-one formula gives
+$h_{xy}=1/n-1/n=0$ whenever that pair is an original edge. This
+proves necessity of every coordinate.
+
+Conversely each listed assignment is exactly the whole two-hub
+supplier on $K_{2,n-2}$, with the two hubs mapped to the entire
+original part $S$ and every other original vertex a leaf. Its support
+is connected. The supplier gives full spectrum $0$, $1$ with
+multiplicity $n-2$, and $n-2$ once, so $\lambda_2=1$, excess rank one
+and product (13.1). All retained coordinates are positive.
+Only $A$ can have size two when $a=2<b$; when $a=b=2$, either $A$
+or $B$ can be chosen. For each choice the two unequal hub values give
+two distinct labelled assignments. Assignments with different chosen
+parts also differ: an edge from the other size-two part to $C$ is
+zero for one and positive for the other. This gives the stated counts
+and proves nonexistence if $a>2$. Each listed assignment has a whole
+nonempty original edge class zero, proving the positive-domain
+exclusion. No step assumes or concludes that unrestricted optimizers
+have rank-one excess. ∎
+

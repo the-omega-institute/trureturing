@@ -1,0 +1,35 @@
+#### 命题 8.3（二维相对读出的几何约束）
+
+<a id="prop:qubitgeom"></a>
+
+对
+$\psi_{\theta,\phi}=\cos(\theta/2)\lvert 0\rangle+ e^{i\phi}\sin(\theta/2)\lvert 1\rangle$，
+
+$$
+\chi=\frac14
+ \begin{pmatrix}
+ 1&i\sin\theta\\-i\sin\theta&\sin^2\theta
+ \end{pmatrix},\qquad
+ ds^2=\frac14(d\theta^2+\sin^2\theta\,d\phi^2),\qquad
+ \mathscr F_{\theta\phi}=\frac12\sin\theta.
+ \tag{39}
+$$
+
+式 (38) 在此取等。
+
+**证明。**
+
+直接求两个偏导：
+$\langle\psi,\partial_\theta\psi\rangle=0$、
+$\langle\psi,\partial_\phi\psi\rangle=i\sin^2(\theta/2)$、
+$\langle\partial_\theta\psi,\partial_\phi\psi\rangle=i\sin\theta/4$。
+投去相位分量给式 (39)；其行列式为零。
+
+∎
+
+这把二元态的三维 Bloch 读出与一个两局部坐标的几何联系起来：
+归一化、度量和相位曲率共享同一约束。
+它是 v28 二元读出结构的几何延伸，不是物理空间恰好三维的证明。（[3](#ref-v28)）
+
+<a id="statement-8-4"></a>
+

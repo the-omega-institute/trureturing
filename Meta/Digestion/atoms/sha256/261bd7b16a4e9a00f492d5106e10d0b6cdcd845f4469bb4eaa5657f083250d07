@@ -1,0 +1,119 @@
+**定理 48.1（每条阶乘网格的正上极限）。** 设 $(\tau,D)$ 是定义 44.1 的共享 $\epsilon$ 合格规则。固定 $t\in(0,1)$ 及 $0<\epsilon<b_t$。对每个 $0<d<d_t$ 和每个符号 $s\in\{-1,1\}$，令
+
+$$
+\delta_k=\frac{s d}{k!},\qquad k\ge2.
+$$
+
+则
+
+$$
+\boxed{\quad
+\limsup_{k\to\infty}
+\frac{\delta_k^2\mathbb E_{t,t+\delta_k}\tau}{\ell(|\delta_k|)}
+\ge\frac{\beta_t^2}{16C_t}>0.
+\quad}
+\tag{48.1}
+$$
+
+因此两个单侧的完整参数上极限分别满足
+
+$$
+\limsup_{\substack{\delta\to0\\s\delta>0}}
+\frac{\delta^2\mathbb E_{t,t+\delta}\tau}{\ell(|\delta|)}
+\ge\frac{\beta_t^2}{16C_t},\qquad s=-1,1.
+\tag{48.2}
+$$
+
+**证明。** 固定其中一个 $d,s$，简写 $\beta=\beta_t$、$C=C_t$。假设（48.1）的左侧严格小于右侧，选正数 $a$ 严格位于二者之间。若任意晚的网格点仍有无穷期望，所需上极限已经为无穷；故反设下从某点起期望有限，且
+
+$$
+\mathbb E_{\delta_k}\tau\le a\delta_k^{-2}\ell(|\delta_k|).
+$$
+
+初等阶乘界
+
+$$
+\lfloor k/2\rfloor\log(k/2)\le\log(k!)\le k\log k
+$$
+
+给出 $\log\log(k!)=\log k+\log\log k+O(1)$。固定的 $d$ 及 $\ell$ 定义中的 $e$ 不改变比值极限，因而
+
+$$
+\frac{\ell(d/k!)}{\log k}\longrightarrow1,
+\qquad
+\mathbb E_{\delta_k}\tau\le2a\delta_k^{-2}\log k
+\quad\text{最终成立}.
+\tag{48.3}
+$$
+
+取确定整数时域
+
+$$
+r_k=\left\lceil\frac{8a}{\beta}\delta_k^{-2}\log k\right\rceil.
+\tag{48.4}
+$$
+
+其未取整值的相邻比趋于无穷，故从某点起严格递增。Markov 不等式给出
+
+$$
+P_{\delta_k}(\tau>r_k)\le\beta/4.
+\tag{48.5}
+$$
+
+另一方面，$\delta_k^2=\delta_{k-1}^2/k^2$，所以
+
+$$
+r_{k-1}\delta_k^2
+\le\frac{8a}{\beta}\frac{\log(k-1)}{k^2}+\delta_k^2\longrightarrow0.
+\tag{48.6}
+$$
+
+在前一个确定时域使用（45.1），并用（46.3）的对角线不终止质量，得到
+
+$$
+\begin{aligned}
+P_{\delta_k}(\tau>r_{k-1})
+&\ge P_0(\tau>r_{k-1})-|\delta_k|\sqrt{Cr_{k-1}/2}\\
+&\ge\beta-o(1)\ge3\beta/4
+\end{aligned}
+\tag{48.7}
+$$
+
+最终成立。只考虑同时满足上述界的充分大指标，定义同一停止映射的不交区间事件
+
+$$
+A_k=\{r_{k-1}<\tau\le r_k\},\qquad
+\nu_k=P_{\delta_k}(A_k),\quad v_k=P_0(A_k)
+$$
+
+满足 $\nu_k\ge\beta/2$，而 $\sum_kv_k\le1$。事件 $A_k$ 为 $\mathcal F_{r_k}$ 可测。确定时域相对熵及投影到其指标给出
+
+$$
+\operatorname{kl}(\nu_k,v_k)
+\le Cr_k\delta_k^2
+\le\frac{8Ca}{\beta}\log k+C\delta_k^2.
+\tag{48.8}
+$$
+
+共同有限支撑保证 $\nu_k>0$ 时 $v_k>0$。二元熵 $H(u)=-u\log u-(1-u)\log(1-u)$ 满足 $\log2-H(u)=\operatorname{kl}(u,1/2)\ge0$。因此对 $0<v<1$，
+
+$$
+\operatorname{kl}(u,v)
+=u\log(1/v)+(1-u)\log(1/(1-v))-H(u)
+\ge u\log(1/v)-\log2.
+\tag{48.9}
+$$
+
+端点按 $0\log0=0$ 解释；$v=1$ 时有限相对熵迫使 $u=1$，以下概率下界亦自动成立。由 $\nu_k\ge\beta/2$、$\delta_k^2\le d^2$ 得
+
+$$
+v_k\ge
+\exp\left[-\frac{2(Cd^2+\log2)}\beta\right]
+ k^{-16Ca/\beta^2}.
+\tag{48.10}
+$$
+
+指数 $16Ca/\beta^2<1$，故右侧的级数发散，例如与 $\int_1^R x^{-16Ca/\beta^2}\,dx$ 比较即可。这与同一个 $P_0$ 下的不交事件总概率至多为一矛盾，证明（48.1）。每个符号及每个固定 $d$ 都可独立作此论证；完整单侧上极限不小于其网格子列上极限，得（48.2）。$\square$
+
+本证明只使用固定时域比较和同一映射的不交停止区间。它既不假设窗口增量独立，也不把任意规则归约为某个全局检验，不限制为间隔规则；没有使用 Farrell 定理、迭代对数律或无界可选停止。$\ell(\Delta)\to\infty$，所以在上述固定 $t,\epsilon$ 的任一单侧穿孔邻域上，共享合格规则不能有一致 $O(\Delta^{-2})$ 或一致 $o(\Delta^{-2}\ell(\Delta))$ 的期望上界。此结论是上极限，尚不是每个充分小分离度都满足的正对数迭代下界；第 52 节给出对此加强的反例。
+

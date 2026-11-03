@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c414665c8c990d94e861230d611243d69a1ae095699a2396281d8db3e87a544e
+  normalized_sha256: sha256:c414665c8c990d94e861230d611243d69a1ae095699a2396281d8db3e87a544e
+cas_ref: sha256:c414665c8c990d94e861230d611243d69a1ae095699a2396281d8db3e87a544e
+coverage_gids:
+  - gid: D5/S3/Geometry/Polygons/PolygonStrictNormalization.original_normalized_strict
+    target_statement_id: sha256:a91dc40836d20332fa8d22d8b08fe4670f5848783e4c9401d3fe966782e0de92
+receipts:
+  unresolved_subitems: []

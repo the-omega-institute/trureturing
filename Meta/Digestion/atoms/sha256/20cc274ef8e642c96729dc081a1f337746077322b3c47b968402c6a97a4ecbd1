@@ -1,0 +1,4 @@
+## 9. Optional all-interior-parameter family using the credited fallback
+
+The endpoint theorem needs no fallback. This section records the existing fixed classifier so that a design may also be selected at every interior $q$ without assuming a global sign for $\Delta(q)$. The construction, sum-four certificate, threshold and performance in this section are supplied by the continuation's Definition 26.1, Lemmas 26.2–26.3 and Theorem 26.4, also restated in Section 8 of the uniform companion. Their argument is exposed here as conditional source credit; it is not additional upper-construction content.
+

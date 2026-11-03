@@ -1,0 +1,31 @@
+**推论 10.1（三轴量子位的概率与半角）。**
+在定理 [4.2](#thm:clifford) 的二维旋量表示中，
+每个态唯一写为
+
+$$
+\rho=\frac{I+r\cdot\sigma}{2},\qquad\left\lVert r\right\rVert\le1.
+$$
+
+对单位方向 $n$，$P_n=(I+n\cdot\sigma)/2$，有
+
+$$
+p(n|r)=\frac{1+r\cdot n}{2}.
+$$
+
+若纯态方向 $m$ 与读出方向 $n$ 夹角为 $\theta$，
+则 $p=\cos^2(\theta/2)$。
+
+证明。
+$I,\sigma_x,\sigma_y,\sigma_z$ 是 Hermitian 二阶矩阵的实基。
+迹一固定标量项，$(r\cdot\sigma)^2=\left\lVert r\right\rVert^2I$
+使本征值为 $(1\pm\left\lVert r\right\rVert)/2$。
+正性给球条件；迹正交关系给概率，单位方向代入半角恒等式。
+证毕。
+
+如果三个读口确实是一个已知量子位的完整 Pauli 层析，
+它们的期望固定就意味着该位的密度态固定。
+仍可能变化的是联合关联、与环境的相关性或未知生成元，
+而不是另有一个被完整单体层析遗漏的单体态参数。
+
+<a id="thm:uncertainty"></a>
+

@@ -1,0 +1,9 @@
+**Definition 1.2 (The original quotient).** The original space $\mathcal{P}_{g,\boldsymbol\ell}$ is the rational span of
+connected such graphs with first Betti number $g$ and ordinary color
+population $\boldsymbol\ell$, modulo AS, oriented IHX, and CL. AS reverses
+one three-cycle with scalar $-1$. CL exchanges two neighboring ordinary
+legs along a path between their attachment vertices, with the path
+orders unchanged. It applies to different ordinary colors too. Anchors
+never participate in CL. In particular a marked leg is an ordinary
+singleton color, not an anchor. This is the quotient of the primary source [Kuperberg](../../../Library/Topology/kuperberg2026oddvas.md), without extra graph relations.
+

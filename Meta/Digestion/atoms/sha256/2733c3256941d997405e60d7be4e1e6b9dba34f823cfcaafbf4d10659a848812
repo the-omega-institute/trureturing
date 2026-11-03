@@ -1,0 +1,33 @@
+**Theorem 4.1 (phase rigidity for four nonzero kernel entries).** Suppose a prefix in $\mathscr G$ has all four kernel entries nonzero. In (3.3) this is exactly $a,b,c,d>0$. After conjugating the entire history by $J$ if necessary, its three noninitial signed images are strictly positive and
+$$
+A_if=f+m_ir_0,\qquad 1\le m_1<m_2<m_3.
+\tag{4.1}
+$$
+Every mixed-sign recorded image satisfying its kernel level comes from the identity endpoint; no nonidentity invariant endpoint occurs in the mixed phase.
+
+**Proof.** Follow $f=(a,-b)^{\mathsf T}$ through its actual sequence of unread atoms as an auxiliary signed vector. While its signs remain mixed, its positive magnitude is at most $a$ and its negative magnitude is at most $b$. The atom $J$ swaps their positions. The atom $M$ keeps one coordinate and replaces the other by the sum: if that sum retains a mixed sign pattern, the affected sign magnitude has decreased by the opposite magnitude. If the sum is zero or has the other sign, the vector enters a closed same-sign orthant. Both closed same-sign orthants are preserved by subsequent $M,J$ atoms.
+
+At a recorded mixed image $v$ with $\ell v=t>0$, the orientation $(-,+)$ is impossible because $c,d>0$. In the other orientation write $v=(A,-B)^{\mathsf T}$, with $0<A\le a$, $0<B\le b$. Its level equation is $cA+dB=ca+db$, forcing $A=a$, $B=b$.
+
+A nonnegative integral unimodular matrix fixing $f$ must be $I$. To prove this, write it as $(\begin{smallmatrix}h&u\\g&e\end{smallmatrix})$. The fixed-vector equations give
+$$
+a(h-1)=bu,\qquad b(e-1)=ag.
+$$
+Coprimality yields $h=1+bv$, $u=av$, $g=bw$, $e=1+aw$ for nonnegative integers $v,w$. Its determinant is $1+bv+aw$, so absolute determinant one gives $v=w=0$. Thus every invariant mixed endpoint is $I$.
+
+Rank three excludes $I$ and repeated matrices among $A_1,A_2,A_3$, since their three differences are independent. Each $A_if$ is primitive because $A_i$ is integral unimodular. A boundary same-sign image would therefore be a signed coordinate unit. Its level would be one of $c,-c,d,-d$, whereas
+$$
+t=ac+bd\ge c+d>\max(c,d).
+$$
+This is impossible. All three noninitial images are strictly in one same-sign orthant, and they cannot switch between those orthants along the history.
+
+If that orthant is negative, put
+$$
+A_i'=JA_iJ,\qquad f'=-Jf=\binom b{-a},\qquad
+\ell'=-\ell J=(d,-c).
+\tag{4.2}
+$$
+Then $A_i'f'=-JA_if$ is positive, $f'\ell'=JNJ$, and $W_i'=JW_iJ$ is a legal forward word. This includes empty multipliers, whose conjugates have matrix $JJ=I$. This is a correspondence of histories, with the same recorded indices.
+
+In the positive branch, the second coordinate of (3.4) gives $m_i\ge1$. Along positive columns, $J$ preserves the coordinate sum and every $M$ strictly increases it. The coordinate sum on the level line increases strictly with $m$. If successive $m_i$ were equal, a realizing transition could contain no $M$ and would have matrix $I$ or $J$. The latter could fix this primitive positive column only at $(1,1)^{\mathsf T}$, whose level $c-d$ is smaller than $t$. The former repeats the endpoint. Both are excluded. This proves the strict inequalities in (4.1). ∎
+

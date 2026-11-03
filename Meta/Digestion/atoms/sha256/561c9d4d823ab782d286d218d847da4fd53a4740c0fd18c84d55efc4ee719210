@@ -1,0 +1,39 @@
+**定义 9.1（容量选择器与联合损失）。** 保持前述原始 PG27 来源、原种子 $U$、正根先验 $p_0=a,p_1=b$ 及实际付费边数。把可由全零回放决定的终端选择记为
+
+$$
+\mathsf S=\{0,1\}\cup\{2N+1:N\ge0\}\cup\{(2N,\mathsf A),(2N,\mathsf B):N\ge1\}\cup\{\infty\}.
+$$
+
+其容量映射为
+
+$$
+\begin{array}{c|c|c}
+s&c(s)=(c_0,c_1)&k(s)\\ \hline
+0&(0,0)&K_0\\
+1&(1,0)&K_1\\
+2N+1&(N+1,N)&K_{2N+1}\\
+(2N,\mathsf A)&(N,N)&K_{2N}\\
+(2N,\mathsf B)&(N+1,N-1)&K_{2N}\\
+\infty&(\infty,\infty)&K_\infty.
+\end{array}
+$$
+
+这里 $K_h$ 是 [Stopped Mean Spatial Risk 定理 3.2](RECURSIVE_RELATIONAL_OBSERVATION_STOPPED_MEAN_SPATIAL_RISK.md) 的实际付费均值，$K_\infty$ 取该卷定理 4.1 的扩展值；约定 $q^\infty=0$。偶数深度的 $\mathsf A$ 与 $\mathsf B$ 保留为不同选择，即使它们有同一个实际均值。一个容量选择器是可测映射 $\sigma:U\to\mathsf S$；其分布只允许来自原种子的可测划分，不预先加入一个混合器。
+
+令 $D$ 是非空可测动作空间，$L:(0,1)\times\{0,1\}\times D\to\mathbb R$ 有界且联合可测。写
+
+$$
+\begin{aligned}
+r_{xj}&=\inf_{d\in D}p_x\int(1-q)q^jL(q,x,d)\,\mu(dq),\\
+w_L&=\sum_{x=0}^1\sum_{j\ge0}r_{xj},\\
+ t_L(c)&=\inf_{d\in D}\sum_{x=0}^1p_x\int q^{c_x}L(q,x,d)\,\mu(dq),\\
+\mathcal R_L(c)&=\sum_{x=0}^1\sum_{j<c_x}r_{xj}+t_L(c),\\
+\kappa(c)&=\sum_{x=0}^1p_x\int q^{c_x}\,\mu(dq).
+\end{aligned}
+\tag{RRO.35}
+$$
+
+空和及 $c_x=\infty$ 的项均为零。由于 $L$ 有界且
+$\sum_{x,j}p_x\int(1-q)q^j\,d\mu=1$，$w_L$ 是有限实数。令
+$\Delta_L=\sup L-\inf L$，其中上下确界在整个声明的 $(q,x,d)$ 域上取。
+

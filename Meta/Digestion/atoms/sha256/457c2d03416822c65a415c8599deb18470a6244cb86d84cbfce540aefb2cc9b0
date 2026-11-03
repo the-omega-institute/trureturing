@@ -1,0 +1,18 @@
+**Theorem 48.1 (exact-state information lower bound).** Fix a promised acquired source and $1\le H<a$. For every fixed length $L$, its actual pulse menu realizes exactly $(H+1)^L$ distinct native endpoints. All of them, simultaneously for every finite $L$, lie in the bounded box
+
+$$
+\prod_{i=0}^{N-1}[0,(H+1)s_i],\qquad s=(I-T)^{-1}b.
+$$
+
+Any fixed-width binary representation that distinguishes all the configurations on this length stratum, with a common decoder and the shared acquired context, needs at least
+
+$$
+\left\lceil L\log_2(H+1)\right\rceil
+$$
+
+variable data bits. This applies also to the full predictive vector, since its map from the native field is invertible.
+
+Proof. The actual finite controller can drive any of the $(H+1)^L$ allowed words. Theorem 45.2 makes their endpoints distinct. Every term $T^jb$ is entrywise nonnegative, and their sum is $s$. The authentic acquired-phase term $T^{2N+L}b$ is one of those terms, so it is bounded entrywise by $s$; the pulse term is bounded by $Hs$. This proves the same fixed box for all $L$, preserving the actual nonzero initial phase.
+
+If a fixed-width representation had $r$ variable bits, it would have at most $2^r$ values. Distinguishing the realized endpoints forces $2^r\ge(H+1)^L$ and hence the displayed ceiling. The observation inverse transports distinctness to predictive Memory. A reference to varying external backing counts that backing as part of the representation; a common law description can be shared because it does not vary among these words. The bound concerns fixed-width distinguishability, not a lower bound for every individual variable-length codeword. $\square$
+

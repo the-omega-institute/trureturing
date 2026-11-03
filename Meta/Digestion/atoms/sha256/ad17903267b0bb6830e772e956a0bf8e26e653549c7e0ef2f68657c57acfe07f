@@ -1,0 +1,53 @@
+**Theorem 5.1 (exact $\eta=0$ fiber).** Set
+
+$$
+L=\sqrt{1+\phi^2},\qquad
+\nu=\frac1L\begin{pmatrix}1\\\phi\end{pmatrix},\qquad
+w=\frac1L\begin{pmatrix}-\phi\\1\end{pmatrix},\qquad
+\mathcal I=(-\phi,\phi^{-1}).
+\tag{5.1}
+$$
+
+The entire legal source fiber $\operatorname{tr}(MP)=\phi$, equivalently $\eta=0$, is exactly
+
+$$
+\mathcal F=
+\{P_x=\nu(\nu+xw)^{\mathsf T}:x\in\mathcal I\}
+\ \cup\
+\{Q_y=(\nu+yw)\nu^{\mathsf T}:y\in\mathcal I\}.
+\tag{5.2}
+$$
+
+These are two open line segments intersecting only at the strictly entrywise positive projector $P_*=\nu\nu^{\mathsf T}=\Pi_+$. For every $i\ge0$ and every $P\in\mathcal F$,
+
+$$
+\operatorname{tr}(M^iP)=\phi^i.
+\tag{5.3}
+$$
+
+**Proof.** The vectors $\nu,w$ are orthonormal, with $M\nu=\phi\nu$ and $Mw=\psi w$. In this basis, write an arbitrary real source as $\left(\begin{smallmatrix}a&b\\c&e\end{smallmatrix}\right)$. Trace one and $\operatorname{tr}(MP)=\phi$ give
+
+$$
+a+e=1,\qquad \phi a+\psi e=\phi,
+$$
+
+so $a=1,e=0$. Rank one is then equivalent to $bc=0$, since the matrix is nonzero and its determinant is $-bc$. If $c=0$ it is $P_b$; if $b=0$ it is $Q_c$. This exhausts the algebraic fiber.
+
+Because both entries of $\nu$ are positive, $P_x$ is strictly entrywise positive exactly when both entries of $\nu+xw$ are positive. These entries are $(1-\phi x)/L$ and $(\phi+x)/L$, giving precisely $-\phi<x<\phi^{-1}$. The same argument gives that interval for $Q_y$. Throughout these intervals the matrices have trace one and rank one. Thus imposing actual strict positivity gives exactly (5.2), without additional branches or endpoints.
+
+If $P_x=Q_y$, then $x\nu w^{\mathsf T}=yw\nu^{\mathsf T}$. Multiplying on the right by $\nu$ gives $y=0$, followed by $x=0$. The intersection is therefore just $P_*$, which is the spectral projector onto the $\phi$ eigenspace. Its entries are all strictly positive. From (2.2), $t_P=\phi\alpha+\psi(1-\alpha)$ equals $\phi$ if and only if $\alpha=1$, equivalently $\eta=0$.
+
+Finally,
+
+$$
+\operatorname{tr}(M^iP_x)=(\nu+xw)^{\mathsf T}M^i\nu=\phi^i,
+$$
+
+and
+
+$$
+\operatorname{tr}(M^iQ_y)=\nu^{\mathsf T}M^i(\nu+yw)=\phi^i.
+$$
+
+Here orthogonality eliminates the $w$ component, and symmetry of $M$ permits the second equality. These prove (5.3). $\square$
+

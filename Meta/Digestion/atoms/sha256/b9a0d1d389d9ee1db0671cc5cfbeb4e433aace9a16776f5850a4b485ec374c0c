@@ -1,0 +1,37 @@
+**定义 86.1（已供应静态 labels 的 continuum task）。** 固定一个实数 $0<q\le1/1000$，固定 horizon $n=2$，使用约定 85.1 的同一 actual channel、fair chronology、全部 complex qutrit inputs 与终端权限。任务为定理 83.1 的整个 phase circle $E_\varphi(q)$，$\varphi\in\mathbb R/(2\pi\mathbb Z)$。对每个 fixed terminal CPTP map，令
+
+$$
+L_{\mathcal D}(\varphi)
+ =\|\mathcal N^\dagger\mathcal D^\dagger(E_\varphi(q))-E_\varphi(q)\|_{\rm op}.
+$$
+
+给定 $\delta\ge0$，$M_q(\delta)$ 是能够满足
+
+$$
+\forall\varphi\ \exists j\in\{1,\ldots,M\},\qquad
+L_{\mathcal D_j}(\varphi)\le\eta_2(q)+\delta
+\tag{86.1}
+$$
+
+的最小正整数 $M$；不存在有限 dictionary 时取 $+\infty$。每个 $\mathcal D_j$ 必须是一个在整个 $M_3(\mathbb C)$ 上定义、与未知输入无关的 fixed CPTP map。一个已供应的 deterministic static task label 只能选择 $j$，不能在同一 label 内继续按 phase 调整 map；该 label 不携带额外 history 或输入资料。既不要求 selection fibres 连续或可测，也不供应取得 phase 的操作。这里比较的是 projection-probability error，非 whole-identity recovery 的 reference-sensitive channel error。
+
+以下参数全部直接取自定理 81.4 的唯一 admissible root $R=R(q)$ 及其 $y,d,\vartheta,\gamma,w,\eta$，其中 $\eta=\eta_2(q)$。为显式给出 constants，记
+
+$$
+\begin{gathered}
+y=\frac{(R-1)(2-R)}{6R},\qquad
+ d=\frac{24q-R(R-1)(2-R)}{2(5R^2-8)},\qquad
+\vartheta=\frac{R^2-1}{3},\quad
+\gamma=\sqrt{\vartheta(1-\vartheta)},\\
+w=\frac\gamma{2R},\qquad \eta=\frac{3y+d}{4},\qquad
+h=\sqrt{q(1-q)},\\
+m_+=\frac{(2-R)(R+1)}{2R^2},\qquad
+\mu=\frac{(R-1)(R+2)}{2R^2},\\
+A_q=\mu(w-h)^2,\qquad
+B_q=\frac{h^2}{\eta+d}+\frac h2+h^2.
+\end{gathered}
+\tag{86.2}
+$$
+
+定理 81.4 与 83.1 已给出 $0<d<y/3$、$\eta>d$、$w^2=y(1-y)$ 与 $w>h$，故 $A_q,B_q>0$。admissible-root existence、uniqueness、attainment 与这些 strict inequalities 均复用原证明。
+

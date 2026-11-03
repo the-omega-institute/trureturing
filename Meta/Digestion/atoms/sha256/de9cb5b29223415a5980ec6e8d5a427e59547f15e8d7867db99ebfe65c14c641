@@ -1,0 +1,8 @@
+**Remark 3.9 (Small numbers of parties).** For $\mathtt q=3$ every $\sigma\in\Pi_2(3)$ has block sizes $2$ and $1$, its coefficient is $3-2-1=0$, and Theorem 3.8 reduces to the tautology $S_3^{(3)}=S_3^{(3)}$. For $\mathtt q=4$ the coefficients are $-2$ for the four cuts with block sizes $3$ and $1$ and $-1$ for the three cuts with block sizes $2$ and $2$:
+
+$$
+S_3^{(4)}=\frac19\Bigg[3\sum_{\pi\in\Pi_3(4)}S_3^{(3)}(\pi)-2\sum_{|X|=1}S_3^{(2)}(\{X,Y\})-\sum_{|X|=|Y|=2}S_3^{(2)}(\{X,Y\})\Bigg].
+$$
+
+Stance: repo-derived.
+

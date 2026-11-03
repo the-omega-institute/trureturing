@@ -1,0 +1,40 @@
+## 5. Fixed positive clock and law-level recovery
+
+For a fixed $\Delta>0$, define the collision profile
+
+$$
+C_f(k)=\sum_i\langle g_tf_i,T_{k\Delta}f_i\rangle_m,\qquad k\geq1,
+$$
+
+and put $R=1-J=\int g_t\sum_i f_i^2dm$. The next result uses all positive lags of one fixed clock, not a shrinking physical delay.
+
+**(B4) Theorem 5.1 (positive-lag collision inversion).**
+
+$$
+R=\lim_{n\to\infty}\sum_{k=1}^n(-1)^{k+1}{n\choose k}C_f(k).
+\tag{5.1}
+$$
+
+Thus an exact complete positive-lag collision profile determines $J$. It need not determine $f$, its cells, the current source point, the full word law, or an installed evaluator.
+
+**Proof.** Let $Q=T_\Delta$. Functional calculus gives a nonnegative self-adjoint contraction. Since $Q=\exp(-\Delta K)$, its kernel is zero: every finite spectral value has strictly positive multiplier. Zero may still be a limit point of the spectrum. The polynomial
+
+$$
+B_n=I-(I-Q)^n=\sum_{k=1}^n(-1)^{k+1}{n\choose k}Q^k
+$$
+
+converges strongly to $I$: the multiplier $1-(1-q)^n$ tends to one for every $q>0$ and is bounded by one, while the spectral projection at $q=0$ vanishes. Pair $B_n$ with $g_tf_i$ and $f_i$, both in $L^2(m)$, and sum over $i$. This is the displayed formula. The cross spectral measures need not be positive, so no stationary moment argument is used. The coefficient absolute sum is $2^n-1$; an error $\varepsilon$ in each supplied collision can be amplified by at most $(2^n-1)\varepsilon$, in addition to an uncontrolled truncation bias. A finite passive word does not provide the complete profile. ∎
+
+**(B5) Theorem 5.2 (complete-law criterion).** The following are equivalent:
+
+1. one partition matches $C_f(k)$ for every $k\geq1$;
+2. one partition matches every finite word law at times $t+n\Delta$;
+3. $J=0$;
+4. $f$ is vertex-valued $m$-almost everywhere.
+
+The deterministic complete-law class is therefore the zero-deficit subset of the stochastic class.
+
+**Proof.** For a partition, $\sum_i1_{P_i}^2=1$, so its collision limit is one. If all positive-lag collisions agree, Theorem 5.1 forces $R=1$ and hence $J=0$. Full word equality implies collision equality by projection. If $J=0$, repair $f$ on one Borel null set; the countably many positive sampling states avoid it almost surely, so every word law agrees. Uniform $f$ has $C_f(k)=1/4$, $J=3/4$, and gives a concrete failure. The partition supplied by the fixed-pair theorem may depend on $k$; it does not contradict the common-partition criterion. ∎
+
+For every deterministic partition and every $J>0$ detector, some finite positive lag witnesses a discrepancy, but the witness may depend on the partition and detector. No uniform finite witness horizon or positive margin follows.
+

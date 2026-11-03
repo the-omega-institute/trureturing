@@ -1,0 +1,28 @@
+**Definition 116.2 (selected cells, supplemental register and decoder).** For a fixed actual seed and bare address $b=(c,\beta,h)$, put
+
+$$
+\begin{aligned}
+U_b&=\{u\in\{0,1\}^c:|u|=\beta,\ b_\rho(u)=b\},\\
+\mathcal F_b&=\left\{y\in\{0,1\}^{n-c}:|y|=\ell-\beta,\
+             \sum_{i>c}v_i y_i=h\right\},\qquad N_b=|\mathcal F_b|,\\
+W_b&=\{u\in U_b:\text{no prefix of }u\text{, including }u,\text{ has been selected}\},\\
+\mathcal S_b&=\{u\in U_b:\text{the first selection is exactly at }u\},\\
+\mathcal S_n^{\rho,e}&=\{u\in\mathcal S_{(n,\ell,0)}:u_n=e\},\qquad e\in\{0,1\}.
+\end{aligned}
+$$
+
+Suffix indices retain their original full-word positions. These sets are defined on all marker prefixes, without acceptance pruning. In particular $W_b$ is the after-decision active set. The original source rectangle of §§102.2 and 104.2 says that every pair in $U_b\times\mathcal F_b$ is realized by a positive zero-return accepted history with this seed. A causal selector deletes whole past rows, so the corresponding selected and active rectangles are $\mathcal S_b\times\mathcal F_b$ and $W_b\times\mathcal F_b$.
+
+Use the original capacities
+
+$$
+D_\rho=\max\left(\{0\}\cup
+ \{|\mathcal S_b|:c<n,\ N_b>0\}\cup
+ \{|\mathcal S_n^{\rho,0}|,|\mathcal S_n^{\rho,1}|\}\right),
+\qquad D=\max_{\rho\in\mathbb F_{2^d}}D_\rho.
+$$
+
+Colex orders words by their largest differing coordinate, with 0 before 1 and ranks starting at 0. For each public instance fix the original total function $\mathscr D_\pi$ of §§110.3, 113.2 and 114.1 on its entire nonnegative-integer code domain. At a nonterminal address it inverts rank $z$ in the entire $\mathcal S_b$; at a terminal accepting address it uses the entire block $\mathcal S_n^{\rho,e}$ after the actual $\mathrm{Stop}_e$ is delivered. Its original interface checks and fixed empty-word default are retained. A zero-completion nonterminal address that passes those checks still has its original dictionary outputs at every legal rank. There is no added $N_b>0$ check, suffix-consistency test or truncation of the integer domain to the register's emitted values.
+
+The receiver obtains just one frozen $(\rho,\ell,c,\beta,h)$, frozen $z$, actual remaining marker suffix $Y$, and actual original Stop. It receives no selector state, other snapshot, delivery-time reading or history. $D_{\rm read}$ and $D_{\rm blind}$ minimize the size of one supplemental persistent alphabet $\mathcal Z$ for this same decoder, with the same fixed initial value 0 before seed acquisition and the same register for acquisition and frozen output. Co-read may inspect the paid selector control $\kappa$. Blind may inspect only the original public parameters and acquired $\rho$, synchronous old/new bare fields, current completed marker, its own current $z$, original paid generic parser/root/unselected/frozen/final-marker/Stop phases, and the actually completed continue/first-freeze event. There is no custom phase, private persistent mode, selector address or copy of $\kappa$, past-label stream, prefix, acquisition transcript, future decision or future marker input. Non-marker events and previously frozen paths hold $z$. A triggering transaction writes the new value before the original first-freeze latch.
+

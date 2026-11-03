@@ -1,0 +1,76 @@
+## 2. 有限联合核下降的精确合同
+
+给定带类型动作 $a:\tau\to\upsilon$。动作的合法域 $D_a\subseteq Z_\tau$、
+拒绝原因、成功后继、事件、记录和终止都属于同一个合同。以下使用把非法尝试
+也写成显式拒绝分支的总合同，保留其终端和记录，不把未定义行当成合法行。
+固定带接口类型标签的终端集 $F_a$，与来源状态不交。总合同定义如下；随后定义
+扩展后继投影
+
+$$
+J_a^{\mathrm{tot}}(z;\cdot)
+ \in \operatorname{Prob}\!\bigl(E_a\times(Z_\upsilon\sqcup F_a)\times R_a\bigr),
+ \qquad
+\sum_{e,\bar z,r}J_a^{\mathrm{tot}}(z;e,\bar z,r)=1
+ \quad(z\in Z_\tau).
+$$
+
+在 $D_a$ 上，$J_a^{\mathrm{tot}}(z;\cdot)$ 等于 UJLB 的 $J_a(z;\cdot)$；在
+$Z_\tau\setminus D_a$ 上，合同预先声明拒绝事件
+$e_a^{\mathrm{rej}}(z)\in E_a$、带类型的拒绝终端
+$f_a^{\mathrm{rej}}(z)\in F_a$ 及拒绝记录 $r_a^{\mathrm{rej}}(z)$，并令
+
+$$
+J_a^{\mathrm{tot}}(z;\cdot)
+ =\delta_{\bigl(e_a^{\mathrm{rej}}(z),\,f_a^{\mathrm{rej}}(z),\,r_a^{\mathrm{rej}}(z)\bigr)}.
+$$
+
+因此 (JKT.1)--(JKT.4) 中的原始核统一指 $J_a^{\mathrm{tot}}$；所有非法输入、
+拒绝质量和终端质量均由这个总行定义。
+
+$$
+q^\sharp_{a,n}:Z_\upsilon\sqcup F_a\longrightarrow Q_{n,\upsilon}\sqcup F_a,
+\qquad
+q^\sharp_{a,n}(z')=[z']_{K_n},\quad q^\sharp_{a,n}(f)=f.
+$$
+
+对有限或可数来源，移位下降的合同是：对每个 $n\ge0$、同类型的
+$z,u\in Z_\tau$，若 $z\,K_{n+1}\,u$（即属于同一 $Q_{n+1}$ 输入类），则
+
+$$
+\mathbf 1_{D_a}(z)=\mathbf 1_{D_a}(u),
+$$
+
+并且对每个事件 $e\in E_a$、记录 $r\in R_a$ 及
+$y\in Q_{n,\upsilon}\sqcup F_a$，有完整联合等式
+
+$$
+\sum_{\bar z:\,q^\sharp_{a,n}(\bar z)=y}
+ J_a^{\mathrm{tot}}(z;e,\bar z,r)
+=
+\sum_{\bar u:\,q^\sharp_{a,n}(\bar u)=y}
+ J_a^{\mathrm{tot}}(u;e,\bar u,r).
+\tag{JKT.1}
+$$
+
+求和只合并成功后继的 $K_n$ 类，每个固定终端单独保留。不能只比较事件、记录、
+后继或时钟的边缘；影响 selector、合法性、继续动作或读数的字段必须留在联合
+输出中。若另要求 $z\,K_n\,u$ 时也有相同合法性和上述 $K_n$ 输出联合 law，
+则得到可选的更强同层 lumpability；它可支持 $Q_n\to Q_n$ 的核，但不是移位
+$Q_{n+1}\to Q_n$ 合同的必要前提。
+
+式 (JKT.1) 给出局部移位下降；与第1节继承的 $K_0=\ker o$、闭合递归细化和
+前缀／串接闭合的同一测试族一起，才可沿有限策略树归纳，得到 UJLB 的安全方向
+
+$$
+\boxed{K_n\subseteq A_n^{\mathrm{law}}.}
+$$
+
+这里 $A_n^{\mathrm{law}}$ 仍按该测试族全部深度不超过 $n$ 的完整轨迹 law 定义；
+任意嵌套等价关系加 (JKT.1) 并不足以推出此包含。只有再有 UJLB 的续接 law
+对 $K_{n-1}$ 类封闭及统一可识别性假设（例如共同支持分割或适当的类 law
+仿射独立性）时，才可提升为
+$K_n=A_n^{\mathrm{law}}$。随机合同中不得把这个条件等式写成定义，也不得把
+$K_n$ 与 $A_n^{\mathrm{law}}$ 无条件识别。相关 law 与一次取得的区别见
+[统一联合律桥](RECURSIVE_RELATIONAL_OBSERVATION_UNIFIED_JOINT_LAW_BRIDGE.md)
+第1节及[法则残余与一次运行分离](RECURSIVE_RELATIONAL_OBSERVATION_LAW_RUN_RESIDUAL.md)。
+

@@ -1,0 +1,19 @@
+**定义 58.1（循环分布词与实际平稳律）。** 固定有限 $m\ge1$，每个 $j\in\mathbb Z/m\mathbb Z$ 给定任意概率质量函数 $f_j$，支撑于 $\{2,3,\ldots\}$，均值有限。允许零质量、有限支撑及周期支撑。事件空间上规定同一个两侧概率律 $Q_f$：
+
+$$
+Q_f(C=c,G_k=g_k\ (-u\le k<v))
+=\frac1m\prod_{k=-u}^{v-1}f_{c+k}(g_k),\qquad u,v\ge0.
+\tag{58.1}
+$$
+
+相位指标模 $m$。记 $\bar\mu=m^{-1}\sum_j\sum_g g f_j(g)$。对事件移位
+$\mathsf S(C,(G_k))=(C+1,(G_{k+1}))$，采用 [更新闭包卷][CG-R] 定义 2.1 的整数悬挂，对应零数 $g_k^{\rm zero}=G_k-1$：
+
+$$
+\Omega_f=\{(C,G,s):0\le s<G_0\},\qquad
+\widehat Q_f(dC,dG,s)=\bar\mu^{-1}Q_f(dC,dG).
+\tag{58.2}
+$$
+
+原整数移位 $\mathsf V$ 在 $s<G_0-1$ 时使 $s$ 加一，在屋顶使事件基点变为 $\mathsf S(C,G)$ 并将 $s$ 置零。输出 $X_i=\mathbf1_{\{\mathsf V^i\text{ 的偏移为零}\}}$，其律为 $P_f$。在偏移零的事件赋予标记 $C$，以后每次事件标记加一。这规定了一份联合平稳标记律，不是对不同长度分别拟合的分布。
+

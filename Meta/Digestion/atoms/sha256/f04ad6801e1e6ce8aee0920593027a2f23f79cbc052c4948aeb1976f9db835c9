@@ -1,0 +1,12 @@
+## 18. Attribution and mathematical correspondence
+
+The supplied **FIB Linear Gain-Ray Capacity and Hermite Readouts** is the prior source for the full model, universal-collinearity and countable-cover reduction, mixed obstruction through $2m$ reads, pure-$M$ Hermite obstruction, exact $2d+3$ fixed-acquisition threshold, $2d+4$ mixed construction, pure-terminal bridge, and $4d+5$ complete-target construction. Their correspondence here is:
+
+| Prior supplied source | Present self-contained use |
+| --- | --- |
+| Sections 1–2 | Sections 1–3: full domain, exact output, universal reduction, and Baire covering |
+| Section 3 | Sections 2, 11, and Lemma 15.1: mixed span, earlier budgets, and pure-terminal ambiguity |
+| Sections 4–5 | Section 12: spectral jets, both endpoint inequalities, exact gain/drift, and fixed-acquisition sharpness |
+| Section 6 | Section 14: shifted Euler jets and the strictly positive mixed scale |
+| Section 7 | Theorem 16.1: shared root counting and the four-matrix source reconstruction |
+| Sections 8–9 | Sections 16–18: quantifier boundaries and inherited credits |

@@ -1,0 +1,5 @@
+source_id = "fib-atom-escape-risk-feature-interactions"
+path = "docs/develop/theory/FIB_ATOM_ESCAPE_RISK_FEATURE_INTERACTIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

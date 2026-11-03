@@ -1,0 +1,47 @@
+**Corollary 79.2 (actual LAB material, with no free change of port or law).**
+Let $t$ be any reachable term of
+[Atomic Generation Acquisition, Definitions 17.1 and 17.3](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md).
+Use its actual material vertices $C(t)$ and their unit adjacency in
+(77.1). At the original root, compatibility holds exactly for $t=\alpha$
+or $t=\beta$. If $t$ has a logical branch below the root, compatibility
+fails for every selection of a material vertex as port. More generally
+the exact criterion at any granted port is (78.5).
+
+**Proof.** The material encoding has a terminal for $\alpha$, a unary root
+and terminal marker for $\beta$, and a binary root with the two material
+children for a branch. Its underlying graph is a finite connected simple
+tree of maximum degree three. Alpha and beta are endpoint paths at their
+original roots. Every branch term has degree two at that root, which
+fails the endpoint-port condition even when the underlying material graph
+is a path. A logical branch below the root has its parent edge and its
+two child edges, hence degree three. Its material tree is not a path,
+so no selected port satisfies (78.5). Apply Theorem 78.3 to these actual
+vertices and coefficients. $\square$
+
+The corollary is conditional on the field law and actual scalar port
+being installed on those vertices. LAB's addressed $P/S$ guards do not
+supply a scalar field, a full Reset, a different port binding or the law
+$aI+cA$. In the unit native field specialization $a=0,c=1$, the law is
+exactly $A$; no contraction is inferred. If a contracting uniform example
+is required, $a=1/2,c=1/8$ supplies it explicitly. Indeed
+
+$$
+|z^{\mathsf T}Az|
+ \le\sum_{\{v,w\}\in E}(z_v^2+z_w^2)
+ =\sum_v\deg(v)z_v^2\le3\|z\|^2,
+\qquad \tfrac18I\le T\le\tfrac78I.
+\tag{79.2}
+$$
+
+The first inequality follows from $2|z_vz_w|\le z_v^2+z_w^2$.
+Thus $0<T<I$ in that example, on every tree under consideration. This is
+an additional uniform law, not an implementation of it by LAB growth.
+The condition $c>0$ is also substantive: at $c=0$ every tree has the
+same singleton response $m_k=a^k$.
+
+A supplied complete degree-one roster of size at least three already
+excludes a path. In particular the public source promise of
+[Native Leaf Boundary Acquisition, Definition 1.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION.md)
+already settles that negative topology question. The next scalar trial
+claims acquisition only in the distinct service without such a roster.
+

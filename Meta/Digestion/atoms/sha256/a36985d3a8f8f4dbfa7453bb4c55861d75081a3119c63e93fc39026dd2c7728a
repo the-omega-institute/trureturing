@@ -1,0 +1,50 @@
+**Definition 1.1 (supports and literal counts).** Put
+$\mathbb N=\{0,1,2,\ldots\}$. Let $t:\mathbb N\to\{0,1\}$ be determined by
+
+$$
+t_0=0,\qquad t_{2m}=t_m,\qquad t_{2m+1}=1-t_m
+\qquad(m\in\mathbb N),
+$$
+
+and define the evil and odious supports by
+
+$$
+E=\{a\in\mathbb N:t_a=0\},\qquad
+O=\{a\in\mathbb N:t_a=1\}.
+$$
+
+For every integer $k\geq1$ and every $n\in\mathbb N$, set
+
+$$
+\begin{aligned}
+r_k(n)&=\#\{(a_1,\ldots,a_k)\in E^k:a_1+\cdots+a_k=n\},\\
+s_k(n)&=\#\{(a_1,\ldots,a_k)\in O^k:a_1+\cdots+a_k=n\}.
+\end{aligned}
+$$
+
+Coordinates are ordered and repetitions are allowed. These are the conventions
+of Allouche--Shallit, [*Additive properties of the evil and odious numbers and
+similar sequences*, arXiv:2112.13627v3](https://arxiv.org/pdf/2112.13627v3),
+equations (2)--(3). Write $a_r=\mathbf1_E$ and $a_s=\mathbf1_O$. For
+$x\in\{r,s\}$ the defining recursion gives
+
+$$
+a_x(2q)+a_x(2q+1)=1\qquad(q\in\mathbb N). \tag{1.1}
+$$
+
+We use the standard ordered-convolution and composition-count inputs from
+Sándor--Yang, [*On the monotonicity of higher-fold representation functions*,
+arXiv:2606.28849v1](https://arxiv.org/pdf/2606.28849v1), Lemmas 4.2--4.3:
+
+$$
+x_{k+1}(n)=\sum_{j=0}^{n}a_x(j)x_k(n-j),\qquad
+0\leq x_k(n)\leq\binom{n+k-1}{k-1}. \tag{1.2}
+$$
+
+Here the convolution follows by fixing the last coordinate $j$ of the ordered
+tuple. For the bound, the unrestricted nonnegative $k$-tuples with sum $n$
+are in bijection with placements of $k-1$ separators among $n+k-1$ positions;
+restricting their coordinates to $E$ or $O$ cannot increase their number.
+For $k=1$ there are no separators and the unrestricted count is $1$.
+These inputs concern ordered tuples, including the endpoint $j=n$.
+

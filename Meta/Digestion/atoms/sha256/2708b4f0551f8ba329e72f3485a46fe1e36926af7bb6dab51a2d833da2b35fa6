@@ -1,0 +1,38 @@
+**Theorem 9.3 (exact data-to-boundary correspondence).** At a common
+mature $T$ and for the same literal-prefix convention, (PCR.24) is a
+canonical mathematical representative of complete local future presence
+behaviour in this actual source comparison domain. Acquired complete
+support determines it, and it determines that support. Two such supports
+are equal if and only if their normalized descriptors agree. Equivalently,
+for nonzero cores this is equality of original aligned $y$, its least
+$g$, and both clock operators. Restricting to any specified attainable
+source/cone family preserves the equivalence without enlarging that
+family to hypothetical trials.
+
+Proof. Theorem 2.1 extracts the acquired chronological record and $T$;
+Theorems 8.2 and 9.2 give the stated deterministic map. The evaluator in
+Theorem 10.2 below reconstructs all finite indexed supports from the
+boundary. For the converse and uniqueness reuse Theorem 4.1: equal
+mature supports give the same original aligned core and both clock
+seeds modulo its least period $p$. On (PCR.25),
+
+$$
+ x^h=1\quad\Longleftrightarrow\quad E^h y=y
+ \quad\Longleftrightarrow\quad p\mid h
+ \qquad(h\in\mathbb Z).
+ \tag{PCR.28}
+$$
+
+The first equivalence uses injectivity and invertibility, the second
+is the least-period fact already used by Theorem 3.1. Thus equality of
+operators is exactly the *existing* least-period clock classification.
+No residues need be computed in order to compare their coefficient
+strings. Equal descriptors give equal local forward behaviour by that
+classification or by the evaluator. For zero all clock information is
+omitted; the two constants are distinguished by their core descriptors.
+One can reconstruct a finite support by the original finite replacement
+rule through $T$ or by enumerating finite words with the evaluator;
+that expanded output keeps its full cost. There is no efficient
+whole-support-output claim. The classification is used, not reproved as
+a new clock theorem. $\square$
+

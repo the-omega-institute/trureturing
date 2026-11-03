@@ -1,0 +1,24 @@
+### 黄金门的新结果说明：极限闭包与有限实现必须分别分析
+
+V15 已经把固定黄金门写成
+
+$$
+K=\zeta[I+(\zeta-1)\mathcal P],
+\qquad
+\zeta=e^{3\pi i/5},
+\qquad
+\mathcal P^2=\mathcal P.
+$$
+
+因而
+
+$$
+K^{10}=I.
+$$
+
+单个地址反复使用只有十种幂；更丰富的能力来自不同地址上的非交换作用。V15 在明确的编码桥和外部 Fibonacci 编织密度定理下，给出编码近似普适性。[来源：V15 §3–6](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)
+
+同一稿件还给出一个很有启发性的精确障碍。
+
+<a id="theorem-7"></a>
+

@@ -9,7 +9,7 @@ internal sealed class ActualSourceJensenFixedWindowDocument : IScribeDocumentDef
     private static readonly LibraryNoteRef ThetaSource =
         LibraryNoteRef.Create("D5/L/Analytic/romik2021orthogonal");
     private static readonly LibraryNoteRef HermiteZeros =
-        LibraryNoteRef.Create("D5/L/Analytic/nist2026dlmforthogonalzeros");
+        LibraryNoteRef.Create("D5/L/Zeros/nist2026dlmforthogonalzeros");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The normalized all-mode theta source has a fixed-window actual-node target and an original-disk occurrence target.",

@@ -734,7 +734,7 @@ private theorem first_order_unique {f g a : PowerSeries ℚ}
   · simpa [mul_comm] using hf
   · simpa [mul_comm] using hg
 
-private theorem expSeries_add {f g : PowerSeries ℚ}
+theorem expSeries_add {f g : PowerSeries ℚ}
     (hf : constantCoeff f = 0) (hg : constantCoeff g = 0) :
     (PowerSeries.subst (f + g) (exp ℚ)) = (PowerSeries.subst f (exp ℚ)) * (PowerSeries.subst g (exp ℚ)) := by
   apply first_order_unique (a := derivative f + derivative g)

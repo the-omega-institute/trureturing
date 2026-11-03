@@ -4,6 +4,8 @@
 
 Complete actual future laws and universal screening
 
+The past_prefix_cylinder declaration exposes the existing exact reversal of a finite marked-past prefix and its unchanged proof. OriginalRectangleOccurrence consumes this identity when extending its prescribed-route calculation to every measurable event of the complete marked past.
+
 **Theorem 1.1 (The original state marginal at every cut).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalFutureScreening.state_mass`

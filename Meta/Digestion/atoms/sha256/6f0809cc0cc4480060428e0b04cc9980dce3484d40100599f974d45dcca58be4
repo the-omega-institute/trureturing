@@ -1,0 +1,37 @@
+**Theorem 24.3 (source-specific stationary replacement and usable stopping).** Under Assumption 24.1, for each fixed public $(P_\pi,\tau_\pi)$ and fixed conditional $O$, the following are equivalent:
+
+1. A stationary $O$-controller acquires the original target pointwise finitely.
+2. A forward $O$-controller acquires that same original target pointwise finitely.
+3. There is an $O$-computably enumerable sound complete family of labeled cells as in Definition 24.2.
+
+The correspondence between controllers and enumerators is effective from their finite codes and the declared interfaces. Without the effectiveness requirement, existence of a sound complete family of cells is equivalent to the semantic condition
+
+$$
+\forall x\in P_\pi\ \exists\epsilon>0\ \forall y\in P_\pi:\quad
+x\le y<x+\epsilon\ \Longrightarrow\ \tau_\pi(y)=\tau_\pi(x).
+\tag{24.3}
+$$
+
+Condition (24.3) alone does not assert an enumerable family or an executable stopping rule. No equality of actual action archives, final physical cuts, durations or resource vectors is implied by the stationary/forward output equivalence.
+
+Proof. First turn a forward program into a stationary one, retaining its computation, oracle access and known chronological probe prefix $u$ in simulated memory. When the simulated program requests $q_M$ at that attained cut, compute $D=\Lambda_M$ and obtain the stationary report $k=q_D(x)$ at the original cut. Set
+
+$$
+r=\frac{2k+1}{2D}>0,
+\qquad
+\text{return to the simulation }\lfloor M f_u(r)\rfloor.
+\tag{24.4}
+$$
+
+The rational $r$ belongs to the same raw $D$-cell as $x$, including the $k=0$ cell. Theorem 15.2, applied at the original cut, says precisely that $q_D$ determines the whole scale-$M$ future profile. Consequently (24.4) is exactly $q_M(f_u(x))$. This uses that theorem's already established sharp divisibility result, without rederiving its cut or LCM classification. It also makes its factor effective: the midpoint, $\Lambda_M$, the fractional map and its floor are computed by finite integer and rational arithmetic. The matrix for chronological $u$ is `wordMatrix` of $\operatorname{reverse}u$, as in Definition 6.3; alternatively append an action by left-multiplying the current column-action matrix by its generator. No source inverse is executed.
+
+Each simulated action updates this finite known word or matrix and leaves the actual stationary source unchanged. Identical returned reports and the same fixed oracle preserve the original program's choices inductively. A promised terminating run has finitely many actions, reads and computations; replacing each read by the finite calculation above still terminates and returns the identical original-target string. Conversely a stationary program is a forward program that chooses no actions. Thus 1 and 2 are equivalent effectively. The construction may request much larger scales and use different arithmetic and memory; it is a termination and output correspondence.
+
+For 1 implies 3 use the standard halting-branch enumeration, spelling out its interface here. Dovetail bounded simulations of the stationary program on all finite lists of guessed nonnegative integer replies. Supply a guessed reply whenever it asks for a floor report, and resolve its ordinary computation and oracle queries relative to the fixed $O$. For every simulation that terminates using its available guessed replies and emits a complete label $\ell$, list the actually requested scale/reply pairs as $s$ and emit $(s,\ell)$. This is an $O$-enumeration: the guessed lists and step bounds have effective finite encodings. If an original $y$ belongs to $C_\pi(s)$, induction on requests reproduces that very terminating computation on $y$, so correctness of the controller implies (24.2). A guessed list with no promised realization causes no exception. Conversely each promised actual run has a finite reply list and a finite termination bound, and its labeled cell is eventually listed. This proves completeness.
+
+For 3 implies 1 run the enumerator, and test each emitted $s$ by its finitely many stationary exact reports. Output its label when every reported integer agrees. Every such test is finite, the source is unchanged, and soundness gives correctness. For a promised $x$, some matching cell is emitted after finitely many enumeration steps and earlier tests, so the program stops. One may cache reports, but caching is not required for this proof. These two constructions are the elementary finite-realizer argument cited in Definition 24.2, with exact finite service semantics supplied here.
+
+A finite cell containing $x$ contains a relative right neighborhood of $x$: each of its upper endpoints $(k_i+1)/D_i$ is strictly greater than $x$, so take a positive number smaller than all their distances from $x$. Its lower endpoints are at most $x$. A sound complete family therefore implies (24.3). Conversely write $x=p/q$ in reduced positive form. Given the radius in (24.3), choose a positive multiple $D$ of $q$ with $1/D<\epsilon$. Then $Dx$ is an integer and its exact cell is $[x,x+1/D)\cap\mathbb Q$, homogeneous relative to $P_\pi$. Taking all semantically sound labeled cells covers the prior. This collection is countable but need not be computably enumerable. The proof chooses $D$ from the exact mathematical $x$ and a semantic radius; it gives no controller either datum. Section 25 supplies the strict failure of the effective implication.
+
+A universal procedure deciding semantic soundness for every candidate cell and label is a stronger demand than these constructions use. A decidable acceptance test for a sound complete subfamily is sufficient, but an enumerable subfamily already suffices; neither all homogeneous cells nor a decision of their universal property is needed. If an enumeration-stage witness is added to a certificate, its bounded generation can of course be checked decidably. Thus the criterion does not posit a strict separation between enumerable proof systems and checkers with such witnesses. It distinguishes a usable sound complete enumeration from semantic homogeneity and from a universal decision of homogeneity. $\square$
+

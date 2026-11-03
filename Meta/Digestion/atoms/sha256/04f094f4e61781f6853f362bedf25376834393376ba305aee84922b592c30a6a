@@ -1,0 +1,52 @@
+**Theorem 21.2 (exact task recovery and route agreement).** On the stated
+Ready domain, $S_0,B_0,T_c,M_c$ separately have exactly the $Q_c$ task
+kernel and recover one another. Likewise $S_g,B_g,T_g,M_g$ separately have
+exactly the $Q_g$ task kernel and recover one another. All these mathematical
+recovery routes agree on their declared actual images. They commute with
+the declared tasks' lawful settled operations, including the complete
+Next reply and its actual successor. The bare $S_0,B_0,T_c$ cannot generally
+recover $T_g$, even if $T_s$ is additionally supplied. No inverse for
+$T_{\rm ctl}$ or for arbitrary busy cuts is asserted.
+
+Proof. Definition 17.3 converts $S_0$ and $B_0$ and decodes $t$.
+Theorem 17.2 converts $t$ to and from $T_c$. Traversing the actual backing
+of $M_c$ gives the same term; the fixed retained driver and rights describe
+its source-backed memory expression. All $Q_c$ replies and source updates
+are functions of this $t$. Conversely distinct finite ordered labelled
+terms have different Tag replies at some logical address: descend through
+common branches to their first different constructor or leaf type. Thus
+$Q_c$ equivalence is exactly equality of $t$, giving each asserted kernel.
+Different acquired tapes do not affect this smaller task, because it has
+neither recall nor a selector reading them.
+
+For the full task, source decoding and Theorem 19.2 reconstruct $w$ from
+either supplemented geometry or $M_g$'s readable backing. In the reverse
+direction execute the supplied finite $w$ from the known $\alpha$, with
+its specified ancestral appends, to reconstruct exactly $t,\mathcal W$;
+then take source support, terminals or the corresponding retained-object
+description. This mathematical reconstruction does not install new rights
+from a description. The actual callable object exists by §20, under its
+separate present-access premises. Every algorithm uses the same $w$ and
+actual-source interpretation, so every route returns the view of that same
+semantic state. Inverse and triangle identities follow from these explicit
+round trips, not from choosing independently compatible representatives.
+
+Equal $t,\mathcal W$ gives identical guards, recalls, selected leaves,
+replies and source/record updates by §§19–20. For a successful event $e$,
+its reconstructed word becomes $we$ under either order of recovery and
+update. A refusal or ordinary query leaves $w$ unchanged; Next either
+refuses or chooses the same $e$ by the same recalled event and current
+left descent, then makes that very update. Induction gives agreement for
+every finite request sequence and all its settled successors. Distinct
+words are separated by FetchGrowth at a first differing index, or by
+in-range versus OutOfRange if one is a proper prefix. Hence the task
+kernel is exactly equality of $w$, separately for each full view.
+
+Equation (AA.75) proves the stated failure for the bare views plus split
+order. Finally two executions differing only by an extra completed Tag
+query have identical $t,w,\mathcal W$ but different $T_{\rm ctl}$. During
+Receive an acquired index prefix or during Maintain an unprocessed ancestor
+also changes the next lawful controller action while settled source data
+alone omit it. These distinctions explain both the Ready restriction and
+the separate chronology domains. $\square$
+

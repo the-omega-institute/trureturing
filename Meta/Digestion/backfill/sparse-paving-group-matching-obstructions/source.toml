@@ -1,0 +1,5 @@
+source_id = "sparse-paving-group-matching-obstructions"
+path = "docs/develop/theory/SPARSE_PAVING_GROUP_MATCHING_OBSTRUCTIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

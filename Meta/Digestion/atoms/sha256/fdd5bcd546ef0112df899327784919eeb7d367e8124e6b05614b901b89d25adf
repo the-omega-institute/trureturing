@@ -1,0 +1,29 @@
+**Lemma 22.4 (causal Borel versions).** For every $t>0$, $r$,
+$U_{[0,t]}$, and the integrals in (22.7)--(22.8) have parameter-independent
+Borel versions computed from the supplied $v$ prefix. A version can be
+chosen simultaneously for all positive times outside one null set for each
+fixed $\mathbf Q_\kappa$.
+
+**Proof.** Theorem 63.1 of the inherited source supplies $r$ and $U$ from
+the nested quadratic-variation construction, including the zero leaf. On a
+compact interior localization $B_r$ is bounded away from zero and the ratios
+in (22.7)--(22.8) have bounded derivatives. Dyadic left sums against $V$ have
+squared error $O(2^{-n})$ by the martingale isometry and maximal inequality.
+For completeness, the localized height increment bound is
+$\mathbf E|U_s-U_{j2^{-n}}|^2\leq C2^{-n}$ when
+$j2^{-n}\leq s\leq(j+1)2^{-n}$. Smoothness of each ratio gives the same
+bound for its integrand error, and the isometry and maximal inequality give
+the stated squared uniform error. Markov's inequality at threshold
+$2^{-n/4}$ bounds the failure probability by $C2^{-n/2}$, a summable
+series. Borel--Cantelli therefore gives uniform almost-sure convergence on
+that localization. Intersect over finitely many
+ratios, integer horizons and countably many compact localizations. The
+resulting limits are Borel prefix functionals; assign a fixed default off
+their convergence and range domain. Every finite $Q$ path lies in one of the
+localizations. Left sums include the last partial interval at the current
+endpoint; the recovered $r,U$ and all operations are jointly Borel in that
+positive-time record. The initial values are obtained by continuity from
+the positive-time reconstruction, without revealing an initial height port.
+This introduces neither a random-driver port nor a finite
+numerical algorithm. $\square$
+

@@ -1,0 +1,36 @@
+**定理 8.4（候选几何交换的相位障碍）。**
+定理 [3.3](#thm:hodge) 的 $U_{\rm rel}$，
+即使乘任意整体相位，也不在定理 [8.3](#thm:so5) 的群中。
+在原等待、完整读及 Stop 菜单内，
+任何没有量子旁路或额外量子存储的确定性有限协议通道 $\Phi$ 都有
+
+$$
+\sup_\rho\frac12\left\lVert \Phi(\rho)-U_{\rm rel}\rho U_{\rm rel}^\dagger\right\rVert_1
+\ge\frac12.
+$$
+
+证明。
+$\widetilde U=D^\dagger U_{\rm rel}D$ 固定 $|0\rangle$，
+交换 $|1\rangle,|3\rangle$，且
+$\widetilde U|2\rangle=\mathrm{i}|13\rangle$、
+$\widetilde U|13\rangle=-\mathrm{i}|2\rangle$。
+若乘整体相位后为实，$00$ 项迫使该相位为实，
+而 $13,2$ 项仍纯虚，矛盾。
+
+原菜单在 $D$ 帧中所有等待、模式投影和反馈叶 Kraus 矩阵都为实；
+经典随机混合后仍把实密度矩阵送到实密度矩阵。
+取 $r=(|0\rangle+|2\rangle)/\sqrt2$，
+目标为 $y=(|0\rangle+\mathrm{i}|13\rangle)/\sqrt2$。
+对任意实密度矩阵 $\sigma$，
+$\langle y,\sigma y\rangle=(\sigma_{00}+\sigma_{13,13})/2\le1/2$，
+而目标纯态对 $|y\rangle\langle y|$ 的概率为一。
+迹距离的效果界给下界 $1/2$，共轭回原基即可。
+证毕。
+
+这是[seams](#ref-seams) 定理 32.2 的障碍。
+用于证明距离的效果不因此成为原菜单中的可调用读口。
+另一算子 $DU_{\rm rel}D^\dagger$ 给相同标签置换却有不同相对相位，
+并属于独立三控制群；这说明仅看模式置换不能识别完整量子门。
+
+<a id="thm:u5"></a>
+

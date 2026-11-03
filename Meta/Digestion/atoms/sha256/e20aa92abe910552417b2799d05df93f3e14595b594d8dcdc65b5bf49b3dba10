@@ -1,0 +1,6 @@
+**Lemma 39.2 (why the one-scale test controls all smaller scales).** For each $\nu$, the following are equivalent:
+
+1. $\mathsf{Pass}_\nu(y,\delta)$ is true.
+2. For every $0<s<\varepsilon$, there is $0<x<s$ with $\Phi_\nu(x,s-x)$.
+3. There is a sequence $s_n\downarrow0$ and $0<x_n<s_n$ with $\Phi_\nu(x_n,s_n-x_n)$.
+

@@ -1,0 +1,84 @@
+**Lemma 15.2 (Uniform finite-index localization with a strict cap
+margin).** Fix $R\ge4$, set $C_R=R^2+10$ and
+$J=\lceil4C_R\rceil$. For all sufficiently large $a$, uniformly over
+$7/2\le q=h/\sqrt a\le R$, one has $h\ge J$. Put
+$U=\min_{1\le k\le J}S_k$. Every actual law with $H\le U$ has the
+threshold partition of Lemma 7.1, with
+
+$$
+\begin{gathered}
+|C|=a+j,\quad |D|=h+1-j,\quad 2\le j\le J,\\
+y_i\ge c_0=(8C_R+1)^{-1}\ (i\in C),\qquad
+0<y_k<b/a\ (k\in D),\quad b=4C_R,\\
+\frac{q^2}{j^2}>\frac52,\qquad
+v:=a\mathbb P(T\cap D\ne\varnothing)=j+O_R(a^{-1/2}).
+\end{gathered}
+\tag{15.3}
+$$
+
+For $u=\sum_{k\in D}y_k$ this implies $u>\ell_j$ and
+$u=O_R(a^{-1/2})$. The threshold partition is unique. Constants in
+this section depend only on the fixed $R$, not on the law or labels.
+
+**Proof.** For bounded $k$, direct expansion of (15.1) gives
+
+$$
+\frac{S_k-B_0(a)}{a^2}
+=g_k(q)+O_R(a^{-1/2}),\qquad g_k(q)=q^2/k+4k-2.
+\tag{15.4}
+$$
+
+The choice $k=1$ gives $U\le a^3+C_Ra^2$ eventually. Lemma 7.1
+with lower ratio $7/2$ gives its actual partition, $1\le j\le J$,
+$v$ bounded below, $v\le j+O_R(a^{-1/2})$, and
+
+$$
+\frac{H-B_0(a)}{a^2}
+\ge q^2/v+2v+2j-2-O_R(a^{-1/2}).
+\tag{15.5}
+$$
+
+Its threshold construction gives the displayed $b,c_0$ and
+$u\le bn/a=O_R(a^{-1/2})$. In particular these sets are recovered
+from the actual marginals, with $b/a<c_0$ eventually.
+
+Let $\phi_j(q)=\min_{0<w\le j}(q^2/w+2w+2j-2)$, and denote the
+leading value in Theorem 7.2 by $\mathcal U(q)$. That theorem's scalar
+evaluation says $\min_j\phi_j(q)=\mathcal U(q)$, and, since
+$q\ge7/2>\sqrt2$, this is also $\min_k g_k(q)$. Its minimizing
+integers obey (7.24), hence are at most $J$. Therefore (15.4) gives
+$U\le B_0+a^2\mathcal U(q)+O_R(a^{3/2})$. Replacing $v$ by
+$w=\min(v,j)$ in (15.5) costs $O_R(a^{-1/2})$, so
+
+$$
+0\le\phi_j(q)-\mathcal U(q)\le O_R(a^{-1/2}).
+\tag{15.6}
+$$
+
+At an exact scalar minimum in this compact ratio interval, the
+phase description (7.22) excludes $j=1$. For $j=2$ it gives
+$q^2/j^2\ge49/16$, and for $j\ge3$ it gives
+$q^2/j^2\ge4(j-1)/j\ge8/3$. Thus none of the compact sets
+
+$$
+\{(q,1):7/2\le q\le R\},\qquad
+\{(q,j):7/2\le q\le R,\ 2\le j\le J,\ q^2/j^2\le5/2\}
+$$
+
+contains a zero of $\phi_j(q)-\mathcal U(q)$. Its continuity and
+the finite index range give a positive gap on their union, ignoring
+empty sets. Equation (15.6) excludes that union eventually. This
+proves the index and strict-margin assertions in (15.3).
+
+For this same actual $j$, $H\le U\le S_j$. Comparing (15.4)--(15.5)
+after clipping $v$ gives
+
+$$
+0\le q^2/w+2w-(q^2/j+2j)\le O_R(a^{-1/2}).
+$$
+
+On $0<w\le j$ the derivative $2-q^2/w^2$ is at most $-1/2$.
+Consequently $j-w=O_R(a^{-1/2})$, proving the assertion about $v$.
+Finally $au\ge v=j+O_R(a^{-1/2})$, whereas
+$a\ell_j=j-1+O_R(a^{-1})$. Hence $u>\ell_j$ eventually. ∎
+

@@ -10,6 +10,15 @@ internal sealed class OriginalControlCompositionDocument : IScribeDocumentDefini
         "Arbitrary finite original controls admit exact chronological concatenation.",
         H("Composition of Original Controls"),
         Blocks(Describe.Lean(
+            DescribeId.Create("original-absolute-continuity"),
+            DeclarationHandle.Create("D5/S3/Quantum/Fibers/OriginalControlComposition.original_ac"),
+            H("Absolute continuity of both original control coordinates"),
+            StatementSource.FromAuthor(OriginalAbsoluteContinuity()),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("For every base b, real duration T and real functions k and chi, OriginalControl(b,T,k,chi) implies absolute continuity of both coordinates on the complete interval from zero to T. No ValidBase hypothesis or strict positivity of T is added. The original control predicate itself requires T>=0, continuity of both coordinates, strict membership of k in the open probability fiber, finite variation of chi, and either absolute continuity of both coordinates or a finite piecewise C1 partition with continuous rates on every closed piece.")),
+                Paragraph(Text("The absolute-continuity alternative supplies the conclusion directly. In the finite piecewise C1 alternative, each continuous rate is integrable on its closed piece and agrees with the coordinate derivative in the interior. Truncate the partition at an arbitrary x in [0,T], apply the interval fundamental theorem on each truncated nonempty piece, and telescope the increments. Repeated partition times contribute zero. This gives f(x)=f(0)+integral from zero to x of f prime for each of k and chi. The derivative is interval integrable on the complete interval, so its integral primitive is absolutely continuous. Equality on the closed interval transfers this property to the original coordinate. The argument includes T=0."))),
+            DescribeRole.Theorem), Describe.Lean(
             DescribeId.Create("concatenate-original"),
             DeclarationHandle.Create("D5/S3/Quantum/Fibers/OriginalControlComposition.concatenate_original"),
             H("Exact control and integral composition"),
@@ -69,6 +78,16 @@ internal sealed class OriginalControlCompositionDocument : IScribeDocumentDefini
 
     private static Formula R => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Apply(Formula f, Formula t) => Seq(f, Open, t, Close);
+    private static Formula OriginalAbsoluteContinuity()
+    {
+        Formula b = F.Id("b"), t = F.Id("T"), k = F.Id("k"), chi = F.Id("chi");
+        return Disp(Seq(
+            Forall, Sp, b, Colon, Call("Base"), Comma, Sp, t, Colon, R, Comma, Sp,
+            k, Comma, chi, Colon, Seq(R, To, Sp, R), Comma, Sp,
+            Call("OriginalControl", b, t, k, chi), Rightarrow, Sp,
+            Open, Call("AbsolutelyContinuousOnInterval", k, D(0), t), Land, Sp,
+            Call("AbsolutelyContinuousOnInterval", chi, D(0), t), Close));
+    }
     private static Formula Statement()
     {
         Formula b=F.Id("b"), t=F.Id("T"), s=F.Id("S"), k=F.Id("k"), chi=F.Id("chi");

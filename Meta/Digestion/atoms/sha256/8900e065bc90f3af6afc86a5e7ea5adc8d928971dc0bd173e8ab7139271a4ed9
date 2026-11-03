@@ -1,0 +1,17 @@
+**Attribution 7.1 (Supplier results and the precise increment).** The
+mathematical source identities are the following two existing volumes.
+The ordinary finite-product and decision-tree proof above is
+self-contained within their original law and protocol.
+
+| Source and section | Inherited content and role |
+| --- | --- |
+| `FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md`, Proposition 2.1 and (2.2) | The stationary four-state hidden-visible law, its independent uniform phase, iid spins and original separator clock. |
+| Original, Lemma 3.1 and §8 | Complementary-spin product mechanism and complete-half-line endpoint recovery. The latter grants no paid-read operation here. |
+| Original, Definition 9.1, Theorem 9.2 and (9.4)–(9.5) | The full protocol contract, unchanged endpoint indices, finite source-section interface and finite-product likelihood comparison. |
+| Original, Theorem 10.1 and (10.4) | Sharp selective count-only coefficients and fully paid selective witnesses. In particular $e_2=b^2/(a^2+b^2)$ is inherited. |
+| Original, Theorems 11.1–11.3 | Sharp all-zero terminal-record envelope, its integrated record-type bound and forced zero-record mass under a return budget. |
+| Original, Theorem 11.4 | The exact almost-sure-return one-read minimum (6.3), with a deterministic one-paid-call attainer. |
+| `FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md`, §§1–2 | The same law, endpoint table, contract, return/risk notation and existing finite-record estimates. |
+| Risk, Theorem 3.1 | A universal return-mass correction for finite budgets, without a general optimality assertion. |
+| Risk, Theorem 4.1 | The exact universal one-read return-mass envelope, its seed-event equality criterion and the same almost-sure-return one-read minimum (6.3). |
+| Risk, Theorem 5.1 and §6 | A finite paid-probe/local-block upper family and its exact cost formulas, together with the unresolved larger frontier questions. |

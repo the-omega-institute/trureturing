@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9ac16615f86ff167a62ae8e6ddcfdf7e4348fa5f9864cc0a9a919b1e69dab9c2
+  normalized_sha256: sha256:9ac16615f86ff167a62ae8e6ddcfdf7e4348fa5f9864cc0a9a919b1e69dab9c2
+cas_ref: sha256:9ac16615f86ff167a62ae8e6ddcfdf7e4348fa5f9864cc0a9a919b1e69dab9c2
+coverage_gids:
+  - gid: D5/S3/Quantum/Magic/ParitySectorEntropyGap.evenExtrinsicFormula
+    target_statement_id: sha256:41ac0bdf55f8fad34dcadcec79773996189894df70d9bc8629abeef6bc465dfd
+  - gid: D5/S3/Quantum/Magic/ParitySectorEntropyGap.oddExtrinsicFormula
+    target_statement_id: sha256:a6d440eb9d2696dc47db0599fe72a645c0f3a72eeb3a6bb65e3078d7b6aecd49
+  - gid: D5/S3/Quantum/Magic/ParitySectorEntropyGap.parity_sector_extrinsic_terms
+    target_statement_id: sha256:634c95b6ff0b8b0dc894bb6e005c9a33c314be6cb84df37d0bd0a2f24dd7f932
+receipts:
+  unresolved_subitems: []

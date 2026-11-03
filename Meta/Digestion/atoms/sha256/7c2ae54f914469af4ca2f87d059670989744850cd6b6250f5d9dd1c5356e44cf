@@ -1,0 +1,2 @@
+**Remark 4.3 (Small cases).** The corollary gives $\Delta M(E_3)=1/10$, $\Delta M(O_3)=1/2$, $\Delta M(E_5)=1/10$, $\Delta M(O_5)=3/10$, $\Delta M(E_7)=4/35$, $\Delta M(O_7)=1/5$, $\Delta M(E_9)=13/140$ and $\Delta M(O_9)=13/70$. For $O_3$ the sector is one-dimensional, $I(1)=1$, and the gap $1/2$ equals the linear stabilizer entropy of cited fact (b) of the unique state $(|1\rangle-|2\rangle)/\sqrt2$ of $O_3$, as it must since $1-I(1)=0$. Stance: repo-derived (instances of Corollary 4.2).
+

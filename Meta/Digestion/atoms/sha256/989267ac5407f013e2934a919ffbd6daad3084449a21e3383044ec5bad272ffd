@@ -1,0 +1,4 @@
+**Lemma 46.1 (the original passive blind directions).** On the fixed original tree $T_k$, every root moment of every $w_i$ vanishes. Common adaptive field experiments using that tree, even with terminal Adds and Reset, cannot recover the arbitrary amplitudes from the cleared handoff.
+
+**Proof.** Swapping the two beta arms of cherry $p_i$ fixes $o$, commutes with the old adjacency and sends $w_i$ to $-w_i$. Thus $e_o^{\mathsf T}A^nw_i=0$ for every $n\ge0$. For two inputs differing only in this direction, a common Add cancels in the field difference, Tick applies $A$, Hold and Read preserve it, and Reset kills it. Root replies agree at every stage, so a deterministic adaptive controller chooses the same subsequent controls. This argument concerns field experiments with the original topology; it does not assert blindness after the asymmetric edits below. $\square$
+

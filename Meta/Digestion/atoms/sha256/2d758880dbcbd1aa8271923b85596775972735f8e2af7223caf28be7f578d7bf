@@ -1,0 +1,19 @@
+#### 定义 4.1（约数响应）
+
+写 $n=\prod_{p\mid n}p^{a_p}$，定义
+
+$$
+Z_{\rm div}(n)=\sum_{d\mid n}\frac1d
+=\frac{\sigma_1(n)}n,\qquad
+\sigma_1(n)=\sum_{d\mid n}d.
+$$
+
+对每个素数方向给独立圆周变量 $\theta_p$，令
+
+$$
+A_n(\boldsymbol\theta)=
+\prod_{p\mid n}\left(\sum_{k=0}^{a_p}p^{-k/2}e^{ik\theta_p}\right).
+$$
+
+<a id="thm-robinparseval"></a>
+

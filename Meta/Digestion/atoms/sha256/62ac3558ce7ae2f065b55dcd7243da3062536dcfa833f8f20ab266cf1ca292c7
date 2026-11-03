@@ -1,0 +1,51 @@
+**Definition 8.1 (the local request and its authentic data).** Keep
+Definitions 1.1--1.3 without a restriction on the period, a square-free
+hypothesis or a supplied minimal presentation. The public order bound is
+$d\ge0$ for the original all-index stream, including its transient. Fix
+one retained actual root binding and a present full physical prefix $v$
+of length $m$. Its normalized origin is the *same* cut $e=\tau_v-1$
+throughout this construction; the current local age is $T=n-e\ge0$.
+Assume genuinely core-only future evolution in the sense of Definition
+1.2. Neither a recurring finite word nor a finite transcript proves that
+premise. ACR Theorem 27.3's physical-depth cutoff is one sufficient
+supplier. No local origin is physically reset and no relative port is
+introduced.
+
+The requested family is, for all finite physical suffixes $w$ and all
+$u\ge0$,
+
+$$
+ \mathcal P_v(T;u,w)=\mathbf1_{vw\in S^{\rm actual}_{n+u}}.
+ \tag{PCR.21}
+$$
+
+Every actual request submits the complete literal $vw$ at the original
+root. A value for $u>0$ before those updates is a prediction; an actual
+reply at that future cut requires the completed original-source updates.
+This family includes every suffix, empty or absent, and every finite
+serial adaptive continuation of local literals and original updates.
+Words outside this cone are not part of (PCR.21). An arbitrary global
+literal service still needs its own earned global descriptor, as in GPO
+Theorem 39.4. In particular this local interface does not replace the
+original acquisition of $(P,n)$.
+
+For $d>0$ put $s=\min\{j\ge1:F_j\ge2d\}$. A sufficient *acquired
+record* consists of $v,T$ and the first $2d$ entries of each of
+$W_s,W_{s+1},W_{s+2}$, with authentic common-source chronological
+provenance, $T\ge s+3$, and the preceding core-only premise. Provenance means that these are the actual physical
+lexicographic actuator words at these indexed updates, not independently
+sorted semantic words, conjectured shifts or oracle samples. An acquired
+complete ordered support with its paid terminal absence tests supplies
+this record by Theorem 2.1. A different supplier must prove these same
+properties and charge its own acquisition and transfer. For $d=0$ the
+core is zero, no batches are needed, and an authentic $T$ suffices.
+
+The service premises are genuine retained binding, grants, finite local
+progress and enough growing owned readable backing. The stationary
+completed-cut interval covers all actual acquisition, conversion,
+allocations, scratch and retained writes and the completed installation.
+If already acquired data are transferred, their readable materialization,
+root/origin association, finite transfer work and writes are part of the
+supplier. Completion, exclusivity and survival of the binding are physical
+premises, not consequences of the algebra.
+

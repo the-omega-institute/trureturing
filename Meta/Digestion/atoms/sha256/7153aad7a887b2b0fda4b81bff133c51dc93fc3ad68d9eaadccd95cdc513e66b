@@ -1,0 +1,28 @@
+**Definition 2.1 (literal exteriors).** Write $h_p=\square_p$ and $(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR)$. The complete rows $R_j=(C_j,\pi_j)$ have exteriors
+
+$$
+\begin{aligned}
+C_0&=\left\langle
+ \left\langle\langle h_{LLL},h_{LLR}\rangle,\langle h_{LRL},h_{LRR}\rangle\right\rangle,
+ \left\langle\langle h_{RLL},h_{RLR}\rangle,\langle h_{RRL},h_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_1&=\left\langle
+ \left\langle\beta,\langle h_{LRL},h_{LRR}\rangle\right\rangle,
+ \left\langle\langle h_{RLL},h_{RLR}\rangle,\langle h_{RRL},h_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_2&=\left\langle
+ \left\langle\langle h_{LLL},h_{LLR}\rangle,\beta\right\rangle,
+ \left\langle\langle h_{RLL},h_{RLR}\rangle,\langle h_{RRL},h_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_3&=\left\langle
+ \left\langle\langle h_{LLL},h_{LLR}\rangle,\langle h_{LRL},h_{LRR}\rangle\right\rangle,
+ \left\langle\beta,\langle h_{RRL},h_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_4&=\left\langle
+ \left\langle\langle h_{LLL},h_{LLR}\rangle,\langle h_{LRL},h_{LRR}\rangle\right\rangle,
+ \left\langle\langle h_{RLL},h_{RLR}\rangle,\beta\right\rangle
+\right\rangle.
+\end{aligned}
+\tag{POC.7}
+$$
+

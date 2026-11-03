@@ -48,7 +48,7 @@ private theorem ratio_pos {n : ℕ} (hn : 3 ≤ n) : 0 < robinRatio n := by
   exact div_pos (div_pos hs (by exact_mod_cast (show 0 < n by omega)))
     (mul_pos (Real.exp_pos _) (log_domains hn).2)
 
-private theorem abundancy_mono {n L : ℕ} (hn : 1 ≤ n) (hL : 1 ≤ L)
+theorem abundancy_mono {n L : ℕ} (hn : 1 ≤ n) (hL : 1 ≤ L)
     (hd : n ∣ L) :
     (ArithmeticFunction.sigma 1 n : ℝ) / n ≤
       (ArithmeticFunction.sigma 1 L : ℝ) / L := by

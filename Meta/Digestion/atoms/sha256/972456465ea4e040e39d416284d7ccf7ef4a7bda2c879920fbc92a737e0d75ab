@@ -1,0 +1,13 @@
+**Theorem 28.2 (exact ordered-prefix correspondence).** In Definition
+27.1, for every $n\ge2$, the following statements hold without any
+finite-law promise.
+
+1. $S_n$ and $\partial S_n$ determine one another and determine $n$.
+2. For two streams at that cut, equality of physical incidence is
+   equivalent to equality of their first $v_n$ birth bits. There are
+   explicit finite maps between $S_n$ and $(n,z_1\cdots z_{v_n})$.
+   These maps also recover exactly $\mathcal T_n^{<}$.
+3. The full labelled physical state $X_n$ is equivalent to
+   $(n,z_1\cdots z_{B_n})$. Conditional on $S_n$, only the newest
+   batch of $F_{n-1}$ bits remains to specify that state.
+

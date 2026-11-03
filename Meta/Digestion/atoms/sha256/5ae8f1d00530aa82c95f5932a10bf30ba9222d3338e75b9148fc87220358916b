@@ -1,0 +1,29 @@
+**约定 13.1（实际圈、谱坐标与目标）。** 本章至第 17 章中，$p\ge3$ 为奇素数，$L=2p$，所有站点均为带标号的 $\mathbb Z/(2p)\mathbb Z$。每条边权与每个顶点质量均为 $1$，
+
+$$
+H_t=2I-A_{2p}+t\operatorname{diag}(v),\qquad
+P(\lambda,t)=\det(\lambda I-H_t),\qquad
+Q_j(\lambda,t)=\det(\lambda I-H_t^{(j)}).
+$$
+
+$H_t^{(j)}$ 仅同时删除第 $j$ 行列；其余对角元仍为 $2+tv_i$，不改为删点后图的度数。首一 gcd 记为 $g_j\in\mathbb R(t)[\lambda]$。持续节点、$\operatorname{Bad}(v)$ 与 $\operatorname{Shared}(v)$ 分别采用约定 2.1 以及母卷约定 2.4、2.5；特别地，
+
+$$
+\operatorname{Shared}(v)\iff
+\exists O\in O(2p,\mathbb R),\quad
+O\ne I,\ O\ne-I,\quad
+O\Delta_{2p}=\Delta_{2p}O,\quad
+O\operatorname{diag}(v)=\operatorname{diag}(v)O.
+$$
+
+这里的 $O$ 遍历实际实正交矩阵。开放问题 8.5 对应的断言为
+
+$$
+T:\quad \forall\text{奇素数 }p\ge11\quad
+\forall v\in\{-1,1\}^{2p},\qquad
+\operatorname{Bad}(v)\Longrightarrow\operatorname{Shared}(v).
+\tag{13.1}
+$$
+
+下文采用 $x=2-\lambda$。关于 $\lambda$ 的首一多项式 $f$ 的 $x$ 坐标首一版本为 $(-1)^{\deg f}f(2-x,t)$。长度 $p-1$ 为偶数，因而该长度的连分式行列式在两种坐标下均首一。
+

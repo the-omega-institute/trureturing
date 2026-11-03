@@ -1,0 +1,49 @@
+### 定理 9.2（十类时探测的点态度规恢复与最小性）
+
+取基$e_0,e_1,e_2,e_3$，其中$e_0$类时。
+对充分小的$\varepsilon>0$，十个方向
+
+$$
+e_0;\qquad e_0\pm\varepsilon e_i\ (i=1,2,3);
+ \qquad e_0+\varepsilon(e_i+e_j)\ (i<j)
+$$
+
+均类时。记其平方钟读数为$m_0,m_i^\pm,m_{ij}$，令$G=-g$，则
+
+$$
+\boxed{\begin{aligned}
+ G_{00}&=m_0,\\
+ G_{0i}&=\frac{m_i^+-m_i^-}{4\varepsilon},\\
+ G_{ii}&=\frac{m_i^++m_i^--2m_0}{2\varepsilon^2},\\
+ G_{ij}&=\frac{m_{ij}-m_i^+-m_j^++m_0}{2\varepsilon^2}\quad(i<j).
+ \end{aligned}}
+ \tag{15}
+$$
+
+在不预先固定某些分量或单位归一的任意四维 Lorentz 二次型类内，
+少于十个固定方向的标量读数一般不能唯一恢复该形式。
+
+**证明。**
+
+类时锥开且上述方向在$\varepsilon\to0$时都趋于$e_0$，故可共取一个正$\varepsilon$。
+展开
+
+$$
+m_i^\pm=G_{00}\pm2\varepsilon G_{0i}+\varepsilon^2G_{ii},
+$$
+
+两式相减、相加给前两组恢复；另外
+
+$$
+m_{ij}=G_{00}+2\varepsilon(G_{0i}+G_{0j})
+ +\varepsilon^2(G_{ii}+G_{jj}+2G_{ij}),
+$$
+
+给最后一式，十个分量全部确定。
+对最小性，$\operatorname{Sym}^2(V_x^*)$的维数为十。
+少于十个线性评价$G\mapsto G(v_i,v_i)$有非零共同核$H$。
+充分小的$G+tH$保持非退化符号和已有方向的类时性，但所有读数相同。
+
+∎
+
+<a id="eq:metricerror"></a>

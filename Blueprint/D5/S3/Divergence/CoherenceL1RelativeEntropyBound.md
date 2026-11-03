@@ -94,7 +94,31 @@ $$\forall (n: \mathbb{N}), \forall (P: \operatorname{Matrix}\left(\operatorname{
 
 The reflection associated with a Hermitian idempotent matrix is unitary.
 
-**Definition 1.8 (Conjecture 7).**
+**Theorem 1.8 (Hermitian coherence from the upper triangle).**
+
+$$\forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{Matrix}.\operatorname{IsHermitian} (rho)) \Rightarrow (\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{CorrelatedCoherenceMonogamyRefutation}.\operatorname{l1Coherence} (rho) = 2 \cdot \sum_{k: \operatorname{Fin}\left(n\right)} (\operatorname{norm}\left(\operatorname{WithLp}.\operatorname{toLp} (1, ((j: \operatorname{Fin}\left(n\right)) \mapsto \operatorname{if} k < j \operatorname{then} rho (k, j) \operatorname{else} 0))\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.coherenceL1_eq_twice_upper` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a Hermitian matrix, the l1 coherence equals twice the sum of the l1 norms of the strict upper rows.
+
+**Theorem 1.9 (Squared norm as a dot product).**
+
+$$\forall (n: \mathbb{N}), \forall (v: \operatorname{Fin}\left(n\right) \to \mathbb{C}), \operatorname{dotProduct}\left(v, \operatorname{star}\left(v\right)\right) = \operatorname{ofReal}\left(\sum_{j: \operatorname{Fin}\left(n\right)} (\operatorname{norm}\left(v (j)\right)^{2})\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.vector_dot_star` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The dot product of a complex vector with its entrywise conjugate is the complex embedding of the sum of its squared coordinate norms.
+
+**Definition 1.10 (Conjecture 7).**
 
 $$claim \Leftrightarrow \forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{IsState}\left(rho\right)) \Rightarrow (\operatorname{coherenceRel}\left(rho\right) \le \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{CorrelatedCoherenceMonogamyRefutation}.\operatorname{l1Coherence} (rho))$$
 
@@ -106,7 +130,7 @@ $$claim \Leftrightarrow \forall (n: \mathbb{N}), \forall (rho: \operatorname{Mat
 
 Section III.2, printed p. 5, verbatim: “Conjecture 7. For all states ρ, C_{l1}(ρ) ≥ C_r(ρ).” Here n ranges over every natural number and rho over every complex n by n matrix. The state predicate imposes positive semidefiniteness and unit trace, including singular states.
 
-**Theorem 1.9 (The coherence inequality).**
+**Theorem 1.11 (The coherence inequality).**
 
 $$\forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{IsState}\left(rho\right)) \Rightarrow (\operatorname{coherenceRel}\left(rho\right) \le \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{CorrelatedCoherenceMonogamyRefutation}.\operatorname{l1Coherence} (rho))$$
 
@@ -128,11 +152,13 @@ A binary pinching is the average of a state and its conjugate by the unitary ref
 
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.IsState`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.claim`
+- Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.coherenceL1_eq_twice_upper`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.coherenceRel`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.reflection`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.reflection_hermitian`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.reflection_unitary`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.result`
+- Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.vector_dot_star`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.vonNeumann2`
 - Truth anchor: `D5/S3/Quantum/Information/CorrelatedCoherenceMonogamyRefutation.l1Coherence`
 - Dependency: [D5/S3/Divergence/AudenaertBinaryHolevoBound](AudenaertBinaryHolevoBound.md)

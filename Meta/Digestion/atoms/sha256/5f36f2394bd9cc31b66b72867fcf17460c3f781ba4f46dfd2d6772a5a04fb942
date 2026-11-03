@@ -1,0 +1,19 @@
+**定义 9.3（B：实际双侧面滤子）。** 对 $C_o$ 的每个面 $F$，包括零面与全面，选择同一原系统中的实际成功事件 $\mathsf p_F$，其响应映射为 $P_F$。存在正幂等映射 $Q_F$，使
+
+$$
+\begin{gathered}
+P_F^2=P_F,\quad Q_F^2=Q_F,\quad
+\operatorname{im}_+P_F=F=\ker_+Q_F,\qquad
+\operatorname{im}_+Q_F=\ker_+P_F,\\
+\operatorname{im}_+P_F^*=\ker_+Q_F^*,\qquad
+\operatorname{im}_+Q_F^*=\ker_+P_F^*,\\
+u_oP_F\le u_o,\quad u_oQ_F\le u_o,\quad
+P_F^*u_o+Q_F^*u_o=u_o.
+\end{gathered}
+\tag{9.2}
+$$
+
+这里 $\operatorname{im}_+P=\operatorname{im}P\cap C_o$，$\ker_+P=\ker P\cap C_o$，对偶式在 $C_o^*$ 上解释；$P^*e=e\circ P$。每个 $P_F$ 把纯态射线送到纯态射线或零。要求的是纯射线保持，不是把 $P_F$ 作为过程锥的极射线；特别不排除跨多个中心扇区的面。
+
+$\mathsf p_F$ 是一个实际可调用、已终止设备的成功分支，设备的所有失败叶均有原记录。其两种使用——单独调用及下文指定的参考接续——在 $\mathsf H$ 中。式 (9.2) 不要求 $P_F+Q_F=I$，也不声称两个分别可调用的面分支已经装在同一个实际测试中。原参考旁的行动在未归一化层面按张量恒等解释，不把相关旁观系统替换为乘积态。
+

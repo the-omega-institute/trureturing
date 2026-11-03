@@ -1,0 +1,5 @@
+source_id = "mills-remainder-parameter-classification"
+path = "docs/develop/theory/MILLS_REMAINDER_PARAMETER_CLASSIFICATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

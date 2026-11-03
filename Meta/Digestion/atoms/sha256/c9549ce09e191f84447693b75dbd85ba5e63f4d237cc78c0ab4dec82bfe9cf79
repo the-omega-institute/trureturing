@@ -1,0 +1,50 @@
+**引理 18.2（四个 J 祖先对全部后代的约束）。** Under (18.1),
+$\alpha,\Delta\in V^*$ are linearly independent. Reuse the
+polynomials of E-zero, Definition 4.1,
+
+$$
+u(T)=\frac{T^3-9T^2+23T}{15},\qquad
+v(T)=\frac{T(T-2)(T-4)}6.
+\tag{18.3}
+$$
+
+Every slot $q\in\mathcal D_{J^4}$ satisfies, as identities on $V$,
+
+$$
+g_q=k_q+\alpha u-\frac{\Delta}{t_q}v,\qquad
+(t_q-1)(k_q+\alpha)=0.
+\tag{18.4}
+$$
+
+In particular $k_q=-\alpha$ when $t_q\ne1$, whereas $t_q=1$
+does not by itself fix $k_q$.
+
+Proof. E-zero, Lemma 7.2 gives
+$\operatorname{rank}(G_{j_0}|_V)
+=\operatorname{rank}((\alpha,\Delta,\beta)|_V)$ under the common
+nonunit signature and $E_J|_V=0$. Hence (18.1) makes
+$\alpha,\Delta$ independent. The same history coordinates give
+
+$$
+r_2=\frac65\alpha,\qquad r_4=\frac45\alpha,\qquad
+r_1=\alpha-\frac\Delta2,\qquad r_3=\alpha+\frac\Delta2.
+\tag{18.5}
+$$
+
+Indeed $E_J=3r_4-2r_2$, $\alpha=5r_2/6$,
+$\Delta=r_3-r_1$, and $\beta=(r_1+r_3)/2-\alpha$.
+For any $q\in\mathcal D_{J^4}$ put $p_q=g_q-k_q$.
+The even ancestor reads give $p_q(2)=6\alpha/5$ and
+$p_q(4)=4\alpha/5$. The polynomial $p_q-\alpha u$ has roots
+$0,2,4$ and degree at most three, so is a scalar multiple of $v$,
+including the zero multiple. Since $u(1)=u(3)=1$ and
+$v(3)-v(1)=-1$, the odd ancestor difference
+$\Delta=t_q(p_q(3)-p_q(1))$ makes this multiple $-\Delta/t_q$.
+The average of the two odd ancestor reads is then
+$(t_q-1)k_q+t_q\alpha$. By (18.5) it equals $\alpha$, giving
+the second identity (18.4). All these arguments apply to each
+$x\in V$, including its zero blocks, and therefore establish map
+identities on $V$. The interpolation step divides only by $t_q>0$;
+the conclusion $k_q=-\alpha$ uses the stated $t_q\ne1$ branch.
+No fifth read or unit-signature exclusion was used. ∎
+

@@ -1,0 +1,21 @@
+**Proposition 46.3 (agreement of recovery routes and subsequent actual use).** In the regime $H<a$, the numerical Space, Time and predictive Memory of Definition 46.1 determine one another on their declared actual images, with the shared acquired context. The paid Boundary window determines the same pulse endpoint and Time. Every numerical recovery route through these data agrees. The retained installation after Theorem 46.2 supports every finite common legal adaptive continuation, predicting all its outputs and actual successors, including subsequent rational Add inputs when authorized.
+
+Proof. Time computes $x_L$ by Proposition 44.3 and then $w=\mathcal O_Nx_L$. Space computes $w$, and Memory recovers $x_L$ by the supplied observation inverse. Each computes the same unique pulse word by Theorem 45.2 and the finite decoding in Theorem 46.2. Thus every route factors through this same actual native field and its unique word. The numerical boundary window gives that field by the same inverse. From Time or Space one may calculate its predicted window, but only actual Read/Tick calls acquire that window's source provenance and advance its cut.
+
+At the new held cut the invariant of Theorem 40.2 holds with $\widehat x=x_{\rm now}$ and $w_{\rm now}=\mathcal O_Nx_{\rm now}$. Its proof applies to every rational current vector, so use it directly for subsequent calls. For clarity, writing $\bar q=q/a$, the predictive Tick update is
+
+$$
+w'_j=w_{j+1}\ (j<N-1),\qquad
+w'_{N-1}=-\sum_{j<N}(q_j/a)w_j,
+$$
+
+and Add$(v)$ replaces $w_j$ by $w_j+v\mu_j$. The actual service and record use the same supplied $v$, source binding and serialized calls. These identities give the intermediate Tick root, Add acknowledgement and final Read separately. Equal prior replies also give equal adaptive choices, exactly as in Theorem 40.2. This reuses its complete-action invariant; no journal inverse follows from that invariant alone.
+
+On a pulse cut before diagnostic Ticks, appending one actual pulse satisfies
+
+$$
+x_{L+1}=Tx_L+u_Lb,\qquad E_{L+1}=TE_L+u_Lb.
+$$
+
+The inverse at the earned length $L+1$ therefore returns exactly the old word followed by $u_L$. After diagnostic Ticks, continued prediction starts at the advanced actual field. A later consecutive pulse block may use that retained field as its known initial phase; the same affine difference and injectivity argument applies, with its own retained block length. It is not asserted to have started at $x_*$ without those intervening Ticks. $\square$
+

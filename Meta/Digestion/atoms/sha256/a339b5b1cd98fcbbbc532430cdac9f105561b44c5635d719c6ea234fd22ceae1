@@ -1,0 +1,50 @@
+**Definition 28.1 (mature inputs and the source-specific composite).**
+The excursion input is Fukushima--Tanaka,
+[*Poisson point processes attached to symmetric diffusions*,
+DOI 10.1016/j.anihpb.2004.10.004, §3.1, Theorem 3.1,
+(3.4)--(3.12)](https://www.numdam.org/item/AIHPB_2005__41_3_419_0.pdf).
+Its $S,a,S_0,m,p_t^0,\mu_t$ are exactly
+$G,e,M,h^2\mu,P_t^0,q_tm$ here; the recurrent-point hypotheses
+are those already checked in Theorem 15.2. Independent Poisson
+restriction, scalar subordinator mixing, strong Markov restarting
+and finite deterministic interpolation are mature methods.
+The age-$\epsilon$ announcement keeps their information in the
+original filtration instead of revealing the selected excursion's
+future duration. No separate general excursion theorem is asserted.
+
+Lambert--Simatos,
+[*The weak convergence of regenerative processes using some excursion
+path decompositions*, DOI 10.1214/12-AIHP531, §3.2, (3) and
+Lemma 3.1](https://www.numdam.org/item/10.1214/12-AIHP531.pdf),
+uses truncation of excursions with a size functional. With size
+$\zeta$, its whole-excursion retention criterion involves lifetime;
+it is not itself a causal acquisition rule. Formula (24.7) instead
+announces elapsed age, and (25.2) covers its still-unannounced prefix
+by continuity in the same original time. No uniform resource or
+regenerative convergence hypothesis is borrowed from that paper.
+Yano, [*Functional limit theorems for processes pieced together from
+excursions*, arXiv:1309.2652v3, Definition 2.3, Remark 2.4 and
+Theorem 2.5](https://arxiv.org/html/1309.2652v3), distinguishes path
+convergence from lifetime convergence. Its general limit theorem is
+not invoked: the own-exit argument is (27.2)--(27.3) with the original
+wall-crossing supplier. Chaumont--Uribe Bravo,
+[*Markovian bridges: weak continuity and pathwise constructions*,
+arXiv:0905.2155v3, Theorem 1 and (H1)--(H3)](https://arxiv.org/html/0905.2155v3),
+requires a Feller family and appropriate transition-density continuity
+for its endpoint bridges. No unverified such hypothesis at $e$ is
+used in (24.1)--(24.4).
+
+The repo-derived composite is the specific timed laws and their
+recursive original-source coupling, original-filtration release
+ceiling, and prospective finite actual-native consumer with the
+same-time ten-output/censored-own-exit limit (27.1). Its source
+trace, full complex selector and killed domain are §§15--16 and
+[S, §§115--116]; its original partial-action map is §7. The connector
+geometry, real chronology, guards and deterministic estimates are
+reused from [GL, Lemma 17.1], Theorems 17.2 and 22.2, not new
+steering theory. The Brownian-target causal contracts of [GL,
+§§26--40] and its paid-point contract of §41 have different source
+laws and observations. They neither install (25.1) nor transfer a
+Brownian estimate to the original source here. No almost-sure fixed
+hard tube or Brownian resource rate is asserted by (27.1).
+

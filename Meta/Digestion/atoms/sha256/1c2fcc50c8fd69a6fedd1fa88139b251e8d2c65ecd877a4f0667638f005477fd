@@ -1,0 +1,43 @@
+**Theorem 81.2 (positive-branch continued use, and the negative limit).**
+After a positive output, the same actual reference and rights support a
+full-field predictor for every finite common adaptive continuation of
+Definition 80.1, initialized at $J_r^{2r}e_0$. In distance coordinates
+its outputs and actual successors agree at every completed cut. On the
+negative branch the certificate retains actual callable access at (81.1)
+but does not identify the whole tree or initialize a full-field predictor.
+
+**Proof.** For a positive result $r=N$ and the same-specimen permutation
+$U$ of (78.7) is defined on every actual cell. Compute locally, while
+held, $\widehat x=J_N^{2N}e_0$. Equation (81.1) gives $\widehat x=Ux$.
+For Reset set $\widehat x=0$; for Add$(u)$ set
+$\widehat x=\widehat x+ue_0$; for Tick set
+$\widehat x=J_N\widehat x$; for Read and Hold leave it unchanged. Predict
+$e_0^{\mathsf T}\widehat x$ on Read and the fixed acknowledgement on the
+other valid commands. The source's five successor formulas and (78.7)
+preserve $\widehat x=Ux$ in each case. Complete rejections preserve both
+fields; incomplete frames have no completed successor and retain their
+actual pending bytes. Commit updates and output processing serially.
+Equal prior replies select the same next command and rational operand
+under a common adaptive policy, so induction proves the complete claim,
+including a common source-independent random tape when used. This is
+the supplied predictor-induction principle of §40 applied at a genuinely
+earned uniform path, with the present acknowledgement-only Tick and
+additional Reset explicitly respected. It creates no new right.
+
+On a negative source choose a leaf beyond or at the first departure
+frontier and attach one further vertex to it. Such a leaf exists in a
+forward component in Lemma 78.1; in the $r=1$ case choose any leaf other
+than an interior port. Its distance from $o$ is at least $r$. The extension
+is still a finite simple subcubic tree, with the same $a,c$, and is still
+negative. Reaching the new edge and returning requires at least $2r+2$
+steps, so its moments through $2r$, its returned certificate and all
+trial replies agree with the original negative source. Its order differs.
+If the extended old leaf is at distance $L$, their moments first differ
+at $2L+2$: the unique new outward-and-return walk contributes
+$c^{2L+2}$ and has no stays. A later unit trial can therefore distinguish
+their scalar continuations as well. Thus the finite negative record does
+not identify the full tree or a uniform complete predictor for both. The
+actual experiment has still advanced its own specimen to (81.1), with
+its own retained access. No local reconstruction of its remaining field
+or acquisition of other ports follows. $\square$
+

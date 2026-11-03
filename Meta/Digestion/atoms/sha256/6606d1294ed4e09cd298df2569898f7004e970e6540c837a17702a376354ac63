@@ -1,0 +1,21 @@
+**Definition 1.1 (actual model and legal history).** Set
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+$$
+A predetermined legal history has $A_0=I$ and $A_{i+1}=W_iA_i$, where each $W_i$ is a fixed finite forward word in $M,J$, possibly empty. Products act on the left and execute from right to left. Thus chronological $(M,J)$ implements $U$, and chronological $(J,M)$ implements $L$. The five scalar readings below have indices exactly $0,1,2,3,4$. Every scalar read advances this index, including a read after an empty word; unread atoms do not advance it.
+
+The effective source and observations are
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad
+p,q,r,s>0,\qquad ps=qr,
+$$
+$$
+z_i=(1+ik)\operatorname{tr}(A_iS)+\delta,
+\qquad k\in\mathbb R,\qquad D(\tau)=\delta\quad(\tau\in\mathbb R).
+\tag{1.1}
+$$
+The target is the whole $(S,k,D)$. Sampled zero and negative gains are included. In original gain parameters, $S=\alpha R$, $k=\beta/\alpha$, with $\alpha>0$ and arbitrary real $\beta$.
+

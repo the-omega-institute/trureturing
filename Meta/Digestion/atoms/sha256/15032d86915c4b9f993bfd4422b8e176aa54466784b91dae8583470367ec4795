@@ -1,0 +1,49 @@
+#### 定理 8.2（Cayley 临界线判据）
+
+有
+
+<a id="eq-cayley"></a>
+
+$$
+|z_\rho|^2-1=\frac{1-2\operatorname{Re}\rho}{|\rho|^2},
+\qquad
+|z_\rho|=1 \Longleftrightarrow \operatorname{Re}\rho=\frac12. \tag{14}
+$$
+
+当 $\rho\ne0,1$，
+
+$$
+z_{1-\rho}=z_\rho^{-1},\qquad
+z_{1-\overline\rho}=\overline{z_\rho}^{ -1},
+\qquad \rho=\frac1{1-z_\rho}.
+$$
+
+因此 RH 等价于全部 $\xi$ 零点的 Cayley 像位于单位圆。
+
+**证明。**
+
+$|\rho-1|^2-|\rho|^2=1-2\operatorname{Re}\rho$，除以 $|\rho|^2$ 即得主式。其余等式直接代入，并使用 $\rho\ne0,1$。逆式还表明不同有限 $\rho$ 有不同的 $z_\rho$，且 $z_\rho\ne1$。
+
+∎
+
+> **编者局部表示适配。** 原 TikZ 图在单文件 Markdown 中用围栏等宽文本作双平面坐标示意；坐标轴、临界线、零点标记、变换箭头、单位圆、排除点、面板文字与原图注均保留。字符间距不表示数值比例；`*` 为实心零点标记，`o` 为空心排除点。
+
+<a id="figure-1"></a>
+
+```text
+             Im s                                           Im z
+               ^                                              ^
+               |       |                                 .----|----.
+               |     ρ *                               .'     |     '.
+               |       |         z = 1 - 1/s          /       |       \
+               |       |        ------------>        |        |        |
+---------------+-------+------> Re s               --+--------+--------o--> Re z
+               |      1/2                            |        |        | 1
+               |       |                              \       |       /
+               |       |                               '.     |     .'
+               |       |                                 '----|----'
+               |       |                                      |
+          完成函数的临界线                               零点的 Cayley 圆
+           Re s = 1/2                                    |z| = 1, z != 1
+```
+

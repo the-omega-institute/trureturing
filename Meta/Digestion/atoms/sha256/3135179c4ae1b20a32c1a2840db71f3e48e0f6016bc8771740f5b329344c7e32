@@ -1,0 +1,34 @@
+### 定义 14.3（给定纯 $N$ 前缀的共同来源系统）
+
+沿用定义 12.1 的 $a_i(R),b_j^{(q)}(R)$。置
+
+$$
+ \begin{aligned}
+ B_q&=\begin{cases}\{0,\ldots,k-1\},&q\le k-2,\\
+                         \{0,\ldots,k-2\},&q=k-1,
+          \end{cases}\\
+ A_i(x,v)&=\sum_{h=0}^{k-1-i}x_hv_{h+i},\\
+ P_{\varepsilon}(R)&=\prod_{i=0}^{k-1}
+                  [a_i(R)-\varepsilon,a_i(R)+\varepsilon].
+ \end{aligned}
+\tag{14.3}
+$$
+
+对 $u=(u_0,\ldots,u_q)$，令 $\mathsf C_q(R,u)$ 表示存在同一组
+$x,v\in\mathbb R_{>0}^k$ 使
+
+$$
+ \begin{aligned}
+ \sum_{h=0}^{k-1-q}x_h&=1,\\
+ |A_i(x,v)-u_i|&\le\varepsilon &&(0\le i\le q),\\
+ |v_j-b_j^{(q)}(R)|&\le2\varepsilon &&(j\in B_q).
+ \end{aligned}
+\tag{14.4}
+$$
+
+这是一个有限实变量的严格正共同来源可行性系统；没有把每行分别可解视为
+共同可解，也没有将 $x,v>0$ 放宽为非负。$q=k-1$ 时归一化为 $x_0=1$，
+从而 $A_{k-1}(x,v)=v_{k-1}$；已取得的 $u_{k-1}$ 同时约束这个真值。
+此时 $j=k-1$ 不属于 $B_q$，因为那里没有第二份未来报告或第二个误差变量。
+$P_{\varepsilon}(R)$ 仅用于有限量词，不是提供给运行的反事实读数。
+

@@ -1,0 +1,21 @@
+## 12. Mathematical citations for the shared-context criterion
+
+[Guarded][SC-G], *FIB harmonic-edge load: guarded replacement, attainment and conditional-rank obstruction*, Lemma 8.1 supplies the constant $c_m$ on the hard legal completion graph, including singleton and forcing cases. Definition 6.3 supplies the all-cut nonnegative-rank family; Theorem 6.2 and Corollary 6.4 supply the actual-law guarded conditional and its budget. Propositions 3.2–3.3 and Lemmas 4.2–4.3 of the present volume supply the stationary mixture, actual conditional weights, independent-fit bound and classifier; Theorem 5.1 is its rank-two global/local separation. These remain the suppliers for Theorems 9.2 and 10.1.
+
+[Intrinsic][SC-I], *FIB harmonic-edge load: intrinsic-null kernels, dual residuals and presentation obstruction*, §2 supplies the finite-realization context-rank mechanism. [Whitebox][SC-W], *FIB atom machine-learning whitebox*, Theorem 43.5 supplies the weighted projection/spectral-tail mechanism in a different readout problem. [Product-upper and phase-cut rank][SC-P], §23 concerns upper Schmidt-tail bounds for coherent square-root probability amplitudes. Those matrices and upper bounds are different from the weighted conditional probability tables and lower Brier-discrepancy bound in (9.2)–(9.4).
+
+[Dawid–Lauritzen–Parry][SC-DLP], *Proper local scoring rules on discrete sample spaces*, §4.2, Example 4.4 and (14), gives the conditional Brier/ratio-matching background. Its everywhere-positive product-space hypotheses are not a substitute for the hard no11 graph coercivity cited above. [Balle–Panangaden–Precup][SC-BPP], *A Canonical Form for Weighted Automata and Applications to Approximate Minimization*, §2.2, treats real weighted realizations and Hankel rank factorization. No positive stationary realization converse is used here. [Eckart–Young][SC-EY], *The Approximation of One Matrix by Another of Lower Rank*, is the classical matrix approximation reference; the full lower-bound argument needed here is (9.9). The discrepancy application and its common-law comparison in §§9–11 are a synthesis of these tools, without a literature-priority assertion.
+
+[Stripping][SC-S], *Equivalent-mass stripping and exponential terminal information*, Theorems 3.1, 5.1 and 6.5, gives fixed-producer geometric entropy tails on the original full domain. [Entropy erasure][SC-H], *Entropy gaps and actual erased-center influence*, Theorem 3.1, compares those tails with both actual complete-half-line erasure defects. [Attainment][SC-A], *Attainment, strong-zero equivalence and finite-optimizer comparison*, Theorem 1.5 and Corollary 9.1, supplies the attainment-to-strong-zero bridge under the resulting root sum. The constants remain law-dependent, and the common-law spectral premise (11.5) is separate from every one of these suppliers.
+
+[SC-G]: FIB_LEGAL_EDGE_LOAD_GUARDED_REPLACEMENT_ATTAINMENT_AND_CONDITIONAL_RANK_OBSTRUCTION.md
+[SC-I]: FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md
+[SC-W]: FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[SC-P]: FIB_LEGAL_EDGE_LOAD_PRODUCT_UPPER_EDGE_FIELD_STABILITY_AND_PHASE_CUT_RANK.md
+[SC-S]: FIB_LEGAL_EDGE_LOAD_EQUIVALENT_MASS_STRIPPING_EXPONENTIAL_TERMINAL_INFORMATION.md
+[SC-H]: FIB_LEGAL_EDGE_LOAD_ENTROPY_ERASURE_INFLUENCE_WEIGHTED_MOMENT.md
+[SC-A]: FIB_LEGAL_EDGE_LOAD_ATTAINMENT_STRONG_ZERO_EQUIVALENCE_AND_FINITE_OPTIMIZER_COMPARISON.md
+[SC-DLP]: https://arxiv.org/html/1104.2224v2
+[SC-BPP]: https://arxiv.org/html/1501.06841v3
+[SC-EY]: https://doi.org/10.1007/BF02288367
+

@@ -1,0 +1,29 @@
+**Proposition 3.2 (writer, source and advice prices).** In Theorem 3.1,
+the new raw writer contains exactly $Q$ physical Read entries and $J$
+localStep entries, with all $W$ literal letters and all full replies.
+Its semantic Read epochs are $2k$, hidden from acquisition control.
+A self-delimiting binary serialization has payload
+
+$$
+ O\bigl(J+W+Q\Lambda\bigr)
+ \tag{GPO.13}
+$$
+
+besides any old prefix, capability and storage metadata. If the original
+composition is $(x_0,y_0)$, actual source material has
+$x_0F_{2k+1}+y_0F_{2k+2}$ leaves and twice that number minus one nodes.
+Retained advice additionally costs $b(A)+b(B)$ bits before framing.
+These costs coexist with (GPO.10), rather than being bounded by $Q$ alone.
+
+Proof. The event counts follow from Assumption 1.2's writer and zero
+updates. Encode event type with constant overhead, word length and epoch
+with self-delimiting binary fields, the literal letters themselves, and
+the full constant-width reply. Each length and epoch field costs
+$O(\Lambda)$ bits, by (GPO.10); a localStep marker costs constant space.
+This proves (GPO.13). The source count is exactly the composition supplier
+equation (ABT.35.8), not an acquired size operand. Advice is two positive binary
+integers. All old source preparation, authentication, service work,
+backing, output copies, retention lifetime and installation prices remain
+Assumption 1.2's separate coordinates. In particular small added call
+count does not imply small physical source or complete memory. $\square$
+

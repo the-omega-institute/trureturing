@@ -1,0 +1,5 @@
+source_id = "stabilizer-multientropy-replica-three"
+path = "docs/develop/theory/STABILIZER_MULTIENTROPY_REPLICA_THREE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

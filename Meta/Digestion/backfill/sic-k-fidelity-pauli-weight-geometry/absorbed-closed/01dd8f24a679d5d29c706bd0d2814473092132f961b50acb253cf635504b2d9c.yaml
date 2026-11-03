@@ -1,0 +1,26 @@
+fingerprints:
+  raw_sha256: sha256:01dd8f24a679d5d29c706bd0d2814473092132f961b50acb253cf635504b2d9c
+  normalized_sha256: sha256:01dd8f24a679d5d29c706bd0d2814473092132f961b50acb253cf635504b2d9c
+cas_ref: sha256:01dd8f24a679d5d29c706bd0d2814473092132f961b50acb253cf635504b2d9c
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityAchievableRegion.achievableRegion_zero_characterization
+    target_statement_id: sha256:0c74d451cf50fdc0ca7e610e8d5c06b8a5c08d7384e56ef933ab685c18be6c1f
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.IsQubitSICProjector
+    target_statement_id: sha256:a7917536e8f55a5cf06d2789387a96d8e30c3b9a49d8fb8c4172ad864d61c23d
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.IsUnitVectorQubitSIC
+    target_statement_id: sha256:8afa51a887de7e334b03e9a52ebf7b589751ea4a1b877d023181b5a9ed1f2549
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.cp_kFidelity_alternating_truncation_bound
+    target_statement_id: sha256:c3e06d9b99a88feb1d3fc95921a67de20d934c9fd4052d9ebb72f68687e53474
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.isQubitSICProjector_iff_exists_unitVectorQubitSIC
+    target_statement_id: sha256:8802281f110f76f4bdba3d722834e0644f96b94fabdf2a88b83839f23626d7d8
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.kFidelity_eq_pauliWeight_alternating_sum
+    target_statement_id: sha256:d1f2e2e494fb347692ece53b17d205d987ab2fc849654ee66ff8666f050db290
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauli_process_matrix_and_fidelity_characterization
+    target_statement_id: sha256:40cb8dae686be2e11075b2f774230b2db0834564ee6ac3fa4b7c52202608d5ca
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.qubit_sic_matrices_and_per_qubit_traces
+    target_statement_id: sha256:d9d9d91a25a25759ce99c81c33e08334acd89377cae9b65998f4e5db262dca79
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - a9402e53bf6e4c580a8ff48abe838d5bbb9b600a3dd65a9d61618db7e8b56b31
+    - 5fa48b338e9549a3852a8e298ead16b3b9e8a50f3ec3e63db5de13286a49cfb7

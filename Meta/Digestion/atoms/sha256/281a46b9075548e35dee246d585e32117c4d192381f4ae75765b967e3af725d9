@@ -1,0 +1,68 @@
+**定理 10.2（本源全部参数分数的有限一致近似判据）。** 在定义10.1的两种合同中，任意精度的有限近似有相同的充要条件：
+
+$$
+\begin{aligned}
+&\forall\varepsilon>0\ \exists(Z,E,A)\quad
+   \mathcal E_{\rm sc}(E,A)\le\varepsilon\\
+\Longleftrightarrow\quad&
+\forall\varepsilon>0\ \exists(Z,E,\kappa)\quad
+   \mathcal E_{\rm pr}(E,\kappa)\le\varepsilon\\
+\Longleftrightarrow\quad& \alpha>0.
+\end{aligned}
+\tag{TEE.39}
+$$
+
+第二行还可以要求自身条件律校准。更精确地，在任意有限编码和相应回答上取下确界，有
+
+$$
+\begin{array}{c|cc}
+ &\inf\mathcal E_{\rm sc}&\inf\mathcal E_{\rm pr}\\ \hline
+\alpha>0&0&0\\
+\alpha=0&1/2&1
+\end{array}
+\tag{TEE.40}
+$$
+
+当 $\alpha=0$ 时，标量阈值 $1/2$ 由常值答案达到，每个有限概率方案的误差都等于 $1$，故严格小于这些阈值的要求不可能。零误差的有限方案在任一合同下存在，当且仅当 $\mu$ 是 Dirac；$\alpha>0$ 且非 Dirac 时，表中两个零下确界均不能由有限方案达到。
+
+证明。令有限正测度 $\rho(dq)=(1-q)\mu(dq)$。它与 $\mu$ 等价且有相同本质上端点，$\nu_r=q^r\rho/z_r$。对任意 $0<c<d<s$，有 $\rho((d,s]\cap\Omega)>0$，并且
+
+$$
+\nu_r((0,c])\le
+\frac{\rho((0,c])}{\rho((d,s]\cap\Omega)}
+\left(\frac cd\right)^r\longrightarrow0.
+\tag{TEE.41}
+$$
+
+因此后验质量集中到任意上端邻域；将测度视为 $[0,1]$ 上的测度时，它们弱收敛到 $\delta_s$。这只用幂倾斜的上、下区间比较，不假设密度、有限支撑或有限均值。
+
+若 $\alpha>0$，必有 $s<1$。支配收敛给出
+
+$$
+\frac{z_r}{s^r}=\int(1-q)(q/s)^r\mu(dq)
+\longrightarrow(1-s)\alpha>0,
+\qquad
+w_r:=\nu_r(\{s\})=
+\frac{(1-s)\alpha s^r}{z_r}\longrightarrow1.
+\tag{TEE.42}
+$$
+
+又因 $z_{r+1}\le sz_r$，$w_r$ 非递减。写 $d_r=1-w_r$，则 $d_r\downarrow0$，且 $d_{\rm TV}(\nu_r,\delta_s)=d_r$。保留有限多个小秩，其余秩合并，已经给有限概率近似；定理10.3给出更强的自身条件律校准版本。
+
+现在设 $\alpha=0$。对 $\delta>0$，记 $V_\delta=(s-\delta,s)\cap\Omega$；随着 $\delta\downarrow0$，这些集合下降到空集。对每个固定的 $\Omega$ 上可数可加概率测度 $P$，$P(V_\delta)\to0$。对每个固定 $\delta$，式（TEE.41）和 $\nu_r(\{s\})=0$ 给 $\nu_r(V_\delta)\to1$。特别地，对每个固定 $j$，
+
+$$
+\lim_{r\to\infty}d_{\rm TV}(\nu_j,\nu_r)=1.
+\tag{TEE.43}
+$$
+
+确实，先取 $\delta$ 使 $\nu_j(V_\delta)$ 小，再使 $r$ 大，距离即任意接近一。
+
+固定任意 $u,x$，有限编码在无穷多秩上必有一个无界状态纤维。固定该纤维中的 $j$，再取其中趋于无穷的 $r$。若标量误差为 $\varepsilon$，对每个 $f$，两者经过同一个答案，故 $|v_j(f)-v_r(f)|\le2\varepsilon$。由（TEE.37）和（TEE.43）得 $\varepsilon\ge1/2$。一个状态上恒取 $A(f)=1/2$ 给反向上界。它连常数零的分数都回答 $1/2$，所以只属于原标量合同，不能充当一个概率后验。
+
+对于概率合同，有限集合 $\{\kappa_z:z\in Z\}$ 可同时满足 $\max_z\kappa_z(V_\delta)<\eta$，再取大秩使 $\nu_r(V_\delta)>1-\eta$。无论此秩被编码到哪个状态，距离均至少 $1-2\eta$。令 $\eta\downarrow0$，每个有限方案的上确界恰为一。这一步使用可数可加性；不能用一个附着在开区间外端点上的形式质量代替这些测度。
+
+最后，Dirac 先验下定理2.3(a)给出一个状态的零误差方案。非 Dirac 时，同一定理给出 $r\mapsto\nu_r$ 单射。固定 $u,x$，若有限编码有零误差，同一状态中的两秩对所有指标分数相等，故后验相等，违反单射。这里直接使用既有的精确类别判据，不再为它另造一个后验类或矩阵秩判据。
+
+上述倾斜是经典指数族中间步骤：在 $t=\log q$ 坐标和基测度 $(\log)_\#\rho$ 下，密度正比于 $e^{rt}$。Csiszár–Matúš, *Closures of exponential families*, [arXiv:math/0503653v1](https://arxiv.org/abs/math/0503653v1), §2.2及§3，DOI [10.1214/009117904000000766](https://doi.org/10.1214/009117904000000766)，研究一般指数族的变差闭包；此处直接证明所需单端点情形，再将它接到本源的实际秩、两种回答合同和校准取得。一般指数族闭包结果本身不作为本节的新命题。证毕。
+

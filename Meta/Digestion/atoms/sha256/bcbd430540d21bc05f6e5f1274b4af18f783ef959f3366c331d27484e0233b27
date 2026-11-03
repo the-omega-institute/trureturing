@@ -1,0 +1,69 @@
+**Theorem 9.2 (executable acquisition of the two operators).** The
+record of Definition 8.1 determines (PCR.24) by finite binary linear
+algebra, polynomial arithmetic and $s-1$ reverse operator transitions.
+There is no period enumeration, factorization, multiplicative-order
+calculation or discrete logarithm. Every inverted element is a proved
+unit, including for a genuinely repeated-factor core.
+
+Proof. First apply Theorem 8.2. For nonzero $y$, the classical
+annihilator ideal says that the map
+
+$$
+ R_g\longrightarrow\operatorname{span}_{\mathbb F_2}\{E^i y:i\ge0\},
+ \qquad a\longmapsto a(E)y
+ \tag{PCR.25}
+$$
+
+is well defined and injective: its polynomial kernel is exactly $(g)$.
+It is onto by the definition of that span. This is the polynomial-module
+correspondence of [Shoup, Theorem 18.1 and Exercise 18.5][PCR-SHO], applied to the
+*acquired* $g,y$, not to a different companion family. The first $r$
+entries distinguish its elements. Indeed $a(E)y$ satisfies $g$; if its
+first $r$ entries vanish, forward recurrence makes it identically zero,
+and then injectivity gives $a=0$.
+
+Consequently $H_r(y)=(y_{i+j})_{0\le i,j<r}$ is nonsingular. Generate
+its needed entries from the acquired recurrence and seed. For $k=s,s+1$
+solve
+
+$$
+ H_r(y)\,q^{(k)}=(W_k(1),\ldots,W_k(r))^{\mathsf T},\qquad
+ \widehat Q_k=\sum_{j<r}q^{(k)}_j x^j,
+ \tag{PCR.26}
+$$
+
+where $W_k(i)$ has zero-based word coordinate $i$. The right side is
+acquired: $r+1\le2d$. The operator $x^{I_k}$ is one solution, since
+its action on $y$ is $EW_k$. Uniqueness proves
+$\widehat Q_k=x^{I_k}$. In particular these elements are units because
+$g(0)=1$ makes $x$ a unit. They are not guessed logarithms. This is correctness on the authentic
+acquired input, not an off-image test certifying that arbitrary supplied
+words came from the actual source.
+
+In the commutative unit group the actual clock recurrence becomes
+
+$$
+ Q_{k+2}=Q_{k+1}Q_k,\qquad
+ (Q_k,Q_{k+1})\longmapsto(Q_{k+1},Q_kQ_{k+1}),\qquad
+ (A,B)\longmapsto(BA^{-1},A)
+ \tag{PCR.27}
+$$
+
+for the forward map and its inverse. Start at the acquired pair
+$(\widehat Q_s,\widehat Q_{s+1})$ and apply the inverse $s-1$ times.
+This produces exactly $(Q_1,Q_2)$. Extended Euclid in
+$\mathbb F_2[X]$ computes each inverse modulo $g$; it inverts a unit,
+not an arbitrary nonzero element of a presumed field. The inverses and
+subsequent products remain in $\langle x\rangle$. Since $s=O(\log(d+2))$,
+this takes polynomial work and writes.
+
+For zero there is no ring inversion. For the all-one core $r=1$,
+$g=X+1$, $x=Q_1=Q_2=1$ and $\lambda(1)=1$. A nonminimal original
+presentation is harmless because the inverse has computed the least
+$g$ first. PSA Proposition 3.2's padding counterexample shows why
+replacing it by a redundant modulus is unjustified. The exact relation
+between the ordinary-series connection polynomial and this forward
+polynomial is $C(D)=D^r g(D^{-1})$, as in PSA Theorem 3.1 and [Massey,
+Theorems 3--4][MAS]. None of these steps replaces the original $K_d$ by a
+minimal core descriptor. $\square$
+

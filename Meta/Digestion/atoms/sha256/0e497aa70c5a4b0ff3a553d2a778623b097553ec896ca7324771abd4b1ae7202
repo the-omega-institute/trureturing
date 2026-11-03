@@ -1,0 +1,27 @@
+## 41. Four-world scope and the original independent pairs
+
+The record rectangle $\mathcal U$ of Definition 12.1 lies
+inside $172<v<173$; Proposition 40.1 has $127.80<v_{\rm J}<127.81$ and therefore
+lies outside that rectangle. The new incidence includes both signs of
+$\Lambda$, without claiming that those signs classify all collisions.
+The construction disproves global terminal-J injectivity on the full
+strict parent, by actual complete-world collisions rather than critical
+response points.
+
+The four listed M responses are different. This does not prove
+terminal-M injectivity on their entire child: an additional world could
+share one of these responses, or two additional worlds could form a
+pair. It also does not exclude a different base with both required
+collision pairs. The unresolved original obligation is still to
+produce one entire $C(p,v)$ with $p\ne24$ containing a J pair and a
+possibly different M pair, or to prove impossibility for all such bases.
+
+The zero-safe parent theorem and the literal response formulas are
+reused at their stated scope from Section 19 and Lemma 2.2. The seven-variable incidence, exact rational isolating box,
+its actual J pair, four distinct M images and resulting local family
+are the model-specific derivation here. The contraction and implicit
+function theorems are classical tools used in that derivation. The pole-free existential
+construction licenses no universal exclusion of $\Lambda=0$,
+zero gain samples, lower degrees, repeated roots or zero drift.
+
+

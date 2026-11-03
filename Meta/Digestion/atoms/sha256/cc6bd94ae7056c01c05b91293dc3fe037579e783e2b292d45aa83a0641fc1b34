@@ -1,0 +1,47 @@
+**Lemma 6.5 (exact family, labels and finite-$y$ regular images).** The
+entire fiber of (NIC.28) and its guarded record is $D^*$. Its exact
+$r_0$ and $r_1$ strata are
+
+$$
+D_0^*=\{U(y,y):y\in\mathcal T\},\qquad
+D_1^*=\{U(F(y),y):y\in\mathcal T\},
+\tag{NIC.32}
+$$
+
+and the $r_2$ stratum is given by $x\ne y$ and $x\ne F(y)$.
+For every regular native language $H\subseteq D^*$, the set
+
+$$
+Y_H=\{y:\exists x\ U(x,y)\in H\}
+\tag{NIC.33}
+$$
+
+is finite.
+
+Proof. The literals force the original skeleton
+$\langle x,\langle y,\langle\alpha,z\rangle\rangle\rangle$.
+Both endpoints of the signed equality are reached, and their whole
+subtrees are $y,z$. Thus the record forces $y=z$, and conversely every
+$U(x,y)$ satisfies the old root row, literals and both guards. At $Q$
+the hole values are exactly $x,y,F(y)$. Since $F(y)$ has one more leaf
+than finite $y$, these last two values differ. The three stated
+partitions are therefore exhaustive with exactly the displayed
+conditions. The first two are attained for each $y$. The third is
+attained, for example, by $y=\alpha,x=\beta$. This proves the source
+and label statements directly, agreeing with [NLC, Lemma 8.2 and
+Proposition 8.5][NLC].
+
+Take a complete deterministic bottom-up automaton for $H$, using the
+subset construction recalled in Lemma 6.3 if needed. Denote the state
+of a native subtree $y$ by $q(y)$. For any $y,z\in Y_H$ with the same
+state choose an accepted $U(x,y)$. Replace only the occurrence of $y$
+at address $RL$ by $z$, leaving $x$ and the copy at $RRR$ unchanged.
+Determinism propagates the unchanged state to the root, so the result
+$\langle x,\langle z,\langle\alpha,y\rangle\rangle\rangle$ is still
+accepted. Containment $H\subseteq D^*$ forces its subtrees at $RL,RRR$
+to agree. Thus $z=y$. The state map is injective on $Y_H$, so $Y_H$ has
+at most as many elements as this finite automaton has states. In
+particular every regular projection contained in $D^*$ has finitely
+many actual $y$ values, even when its $x$ values are unbounded.
+$\square$
+

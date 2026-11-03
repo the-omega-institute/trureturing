@@ -1,0 +1,20 @@
+**Theorem 46.3 (triangular actual observation).** Define the integer matrix
+
+$$
+M_{ij}=e_o^{\mathsf T}B^{h_i}\iota w_j.
+$$
+
+Then $M_{ij}=0$ for $i<j$ and $M_{ii}=2$. Consequently the actual $k$ scalars in (46.1) recover every rational input by
+
+$$
+a_i=\frac12\left(y_i-\sum_{j<i}M_{ij}a_j\right),
+\qquad 1\le i\le k.
+\tag{46.2}
+$$
+
+This includes $a_i=0$ and either sign, without positivity, nonvanishing, separation or bounded-digit assumptions.
+
+**Proof.** An entry of $B^n$ counts length-$n$ walks between its coordinates. For fixed $j$, walks from $o$ to $z_j$ or $z'_j$ that avoid the two new edges of this cherry pair by swapping its two old arms. Edits in other disjoint cherries do not obstruct this pairing. A walk that uses one of this cherry's new edges and ends at $z_j$ has length at least $d_j+2$: an excursion to a new pendant vertex and back costs two beyond the original shortest path. At exactly that length there are precisely two such walks. One takes the detour $q_j,f_j,q_j$ and then finishes the shortest path to $z_j$; the other follows the shortest path to $z_j$ and takes $z_j,e_j,z_j$. Tree uniqueness excludes any other shortest walk or additional detour. A walk using either of these new edges and ending at $z'_j$ has length at least $d_j+4$, since it must return through the cherry junction to the opposite arm. Thus the difference of the two walk counts is zero below $d_j+2$ and is exactly two at $d_j+2=h_j$. With $h_i<h_j$ for $i<j$, the triangular assertions follow. Its nonzero diagonal gives (46.2) over $\mathbb Q$. All its rows are the actually executed reads of Definition 46.2, rather than a counterfactual table. $\square$
+
+The recovered input describes the preparation cut, while the retained source is at $x_{\rm now}$ in (46.1). In particular the last Read and Hold do not undo the preceding Ticks. Every intermediate source field in this acquisition is explicitly $B^r\iota Za$, $0\le r\le H$; every acquisition edit before these Ticks is the corresponding zero extension of $Za$. These formulas give all physical successors as well as the literal replies.
+

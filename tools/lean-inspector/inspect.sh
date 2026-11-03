@@ -75,6 +75,9 @@ finish() {
       cat "$LOG_DIR/native-phases.jsonl" >&2 || true
     fi
   fi
+  # Export before a later invocation truncates these local streams. This uses
+  # the existing caller log transport on success as well as failure.
+  python3 -B "$SCRIPT_DIR/build_work.py" --export "$REPOSITORY" "$LOG_DIR" "$OUTPUT" "$rc" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
   rm -rf -- "$STARTUP_LOG_DIR" || true
   resource_observe lean-inspector-finish "$REPOSITORY" || true
   exit "$rc"

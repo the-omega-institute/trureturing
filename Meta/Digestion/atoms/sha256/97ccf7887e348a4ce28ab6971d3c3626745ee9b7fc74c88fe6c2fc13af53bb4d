@@ -1,0 +1,50 @@
+**Theorem 128.2 (every positive angular sector for the original $\beta=0$ pencil).** Under Definition 128.1, for every $\alpha\ne0$ and every real $\gamma$, the form $q$ in (128.2) has a bounded real negative test in every positive angular-frequency subspace of $\mathcal V_G$. Tests chosen at distinct positive angular frequencies are mutually orthogonal for its real symmetric polar form. Consequently
+
+$$
+\begin{gathered}
+n_-(q|_{\mathcal V_G})=\infty,\\
+n_-(q|_{\mathcal V_E})=n_-(q|_{\mathcal V_E^{\rm lin}})=\infty
+\qquad(m(E)>0).
+\end{gathered}
+\tag{128.3}
+$$
+
+The sector assertion is global. The local conclusions in (128.3) follow from Proposition 127.2 and (127.4)–(127.5); an arbitrary $E$ need not be rotation invariant, and no sectorwise localization is asserted.
+
+In particular, with the original event's restrictions $\gamma\ne0$, $(\alpha,\beta)\ne(0,0)$ and $m\{\varphi<0,\varphi+\gamma g<0\}=0$, this settles the entire $\beta=0$ part outside Theorem 127.3's strict comparable interval. Its coefficient ranges are
+
+$$
+\alpha>0,\quad\gamma\le-\alpha;
+\qquad\text{or}\qquad
+\alpha<0,\quad\gamma\ge-\alpha.
+\tag{128.4}
+$$
+
+The theorem also allows $\gamma=0$. The high-energy comparison and the removal of a fixed low-energy projection below provide the additional source-specific argument. Spectral calculus, adjoint factorization, three-lines interpolation and Cauchy's estimate are standard ingredients; the actual local elliptic estimates, rotation action and original-source nonstationarity are inherited hypotheses and results of §§115–127. Positivity of an unweighted spectral operator will be deduced only inside the contradiction assumption of sector nonnegativity. No weighted ordering follows merely from $P^2\le P$.
+
+**Proof.** Use the Jacobian-one symmetric coordinates
+$\xi=w-xy/2$, and cylindrical coordinates $(r,\theta,z,\xi)$ on
+$\Omega=\{r>0\}$. The original rotation action fixes $g=g_t$, $h$,
+and $m$, and commutes with the actual $K$ and all its spectral
+projections, by §§120 and 122. All statements below concern that actual
+extension. Work temporarily over the complex Hilbert space $L^2(m)$.
+For a fixed positive integer $\ell$, let $\mathcal L_\ell$ be its
+angular-character subspace and $K_\ell$ the self-adjoint restriction of
+$K$. This space contains the genuine compact punctured core tests
+$$
+ u_N=e^{i\ell\theta}\chi(r,z,\xi)
+       e^{iN\zeta\cdot(r,z,\xi)},
+ \qquad \chi\in C_c^\infty((0,\infty)\times\mathbb R^2),
+$$
+with real $\chi$ and fixed nonzero $\zeta\in\mathbb R^3$.
+
+Put $R=\alpha P+\gamma P^2$, restricted to this sector when necessary.
+For bounded complex $v\in\mathcal L_\ell$, define
+$$
+ q_{\mathbb C}(v)=\operatorname{Re}\langle gv,Rv\rangle_m.
+$$
+Here and below $\langle u,v\rangle_m=\int\overline u v\,dm$.
+The operators $P,P^2,R$ preserve bounded classes; $gv\in L^2(m)$.
+Suppose, for contradiction, that $q_{\mathbb C}$ is nonnegative on all
+bounded vectors in this sector.
+

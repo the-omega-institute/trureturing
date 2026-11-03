@@ -1,0 +1,39 @@
+## 33. Uniform exact differential inequalities
+
+Put
+$$
+ r_{\rm f,c}=313793361815/10^{12},\qquad
+ \mathcal B_{\rm f}=[r_{\rm f,c}-10^{-6},r_{\rm f,c}+10^{-6}]\times[1-10^{-6},1+10^{-6}].
+ \tag{33.1}
+$$
+The closed box lies in the strict source domain and contains
+$(\alpha_{\rm f},1)$ in its interior. For a function $f$, write
+$$
+ \begin{gathered}
+ t=-p_r/p_b,\qquad \mathcal{L}f=f_r+tf_b,\\
+ T_f=f_{rr}+2tf_{rb}+t^2f_{bb},\\
+ \kappa=T_v-(v_b/p_b)T_p,\\
+ \zeta=\{v_{rb}+tv_{bb}-(v_b/p_b)(p_{rb}+tp_{bb})\}/p_b.
+ \end{gathered}
+ \tag{33.2}
+$$
+Here $T_f$ denotes a quadratic form with the value of $t$ at the
+point; it does not differentiate $t$. All the following inequalities
+hold throughout the whole box, not just at its center:
+
+| Quantity | Strict lower bound | Strict upper bound |
+| --- | ---: | ---: |
+| $D$ | $-44$ | $-43$ |
+| $H$ | $-44$ | $-43$ |
+| $d$ | $30$ | $31$ |
+| $p$ | $82$ | $83$ |
+| $v$ | $444$ | $445$ |
+| $p_r$ | $7$ | $8$ |
+| $p_b$ | $96$ | $97$ |
+| $v_r$ | $44$ | $46$ |
+| $v_b$ | $553$ | $557$ |
+| $t$ | $-82/1000$ | $-79/1000$ |
+| $\kappa$ | $111$ | $130$ |
+| $\mathcal{L}a$ | $556$ | $561$ |
+| $\mathcal{L}m$ | $133$ | $141$ |
+| $\zeta$ | $-1$ | $0$ |

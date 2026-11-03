@@ -1,0 +1,13 @@
+## 3. Universal identities and the covering principle
+
+For an auxiliary real matrix $S$, put $a_i(S)=\operatorname{tr}(A_iS)$. A nonzero universal identity is a pair $(C,L)$, $L\ne0$, with
+
+$$
+C\mathbf1=0,\qquad
+C\operatorname{diag}(a(S))V=\operatorname{tr}(LS)I_m
+\quad\text{for every }S\in\operatorname{Mat}_2(\mathbb R).
+\tag{3.1}
+$$
+
+Auxiliary $S$ are a way to express linear identities, not additional physical sources.
+

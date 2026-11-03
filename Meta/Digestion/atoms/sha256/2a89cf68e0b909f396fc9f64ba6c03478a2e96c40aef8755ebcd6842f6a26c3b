@@ -1,0 +1,21 @@
+**Theorem 19.2 (Whole-component singleton).** For every real $p<0,v$
+and every actual negative nonzero-drift F0 locator $W$,
+
+$$
+C(p,v)=\{W\}.
+\tag{19.5}
+$$
+
+The quantifier over this entire child includes unused companions,
+singular sources, zero drift, lower gain degrees, all allowed signs,
+sampled zeros, repeated gain roots, and every failure of an algebraic
+inverse chart. The locator need not be an endpoint in either terminal
+pair. No equality of gains or drifts between distinct candidate worlds
+is assumed.
+
+The proof uses the entire strict source classification in the proof of
+S, Theorem 3.2, the all-world carrier of S, Theorem 4.1, and the
+undivided quadratic X, (14.8)–(14.10). Sections 20–23 give the
+source-specific uniform exclusions needed to pass from those suppliers
+to the entire-child conclusion.
+

@@ -1,0 +1,16 @@
+**Definition 77.1 (earned marked family).** Start with the arbitrary attachment of Assumption 34.1: $t\in\mathcal D$ with $a$ alpha leaves, $c$ beta leaves, $L=a+c\ge3$, arbitrary rational entry $x$ on its material set $V_0$, and arbitrary exhaustive authentic raw map $\lambda_0$. Execute exactly §34.2's no-Tick arming, structural probes, current-label scans and rearming. Before overwriting each original terminal retain its actual Read value $z$, finally put into original canonical order using the earned map. Complete the marking Hold. The earned current term and map are $u=\rho(t)$ and $\lambda$.
+
+Let $T_0$ be the original material terminals and $W=V_0\setminus T_0$. Let $D:\mathbb Q^q\longrightarrow\mathbb Q^N$ inject the $W$ coordinates in fixed material-address order. The original marking and persistent-cell proofs give
+
+$$
+\begin{aligned}
+|V_0|&=2L+c-1=I,& b&=L+c,&N&=3L+2c-1,\\
+q=|W|&=L+c-1=b-1,&I&=N-b,\\
+m&=m_0+Dh,&h&=x|_W,\\
+(m_0)_v&=0\ (v\in W),&(m_0)_v&=1\ (v\notin W).
+\end{aligned}
+\tag{77.1}
+$$
+
+Every old vertex is now internal, and the fresh vertices are exactly the current terminals. On fixed $t,\lambda_0,z$, every previous marking reply is independent of arbitrary $h\in\mathbb Q^q$. No Tick transported an internal value into a marking Read. Saved $z$ is acquired information about the overwritten original terminals, not prior advice about $h$.
+

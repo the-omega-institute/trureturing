@@ -1,0 +1,60 @@
+**Definition 55.1 (Width slopes and response transform).** With exactly
+the polynomials $H_0,H_1,H_2,H_3$ of (47.2), set
+
+$$
+\alpha_{\rm w}=\frac{5H_0}{3TH_2},\qquad
+\beta_{\rm w}=-\frac{H_1}{TH_2},\qquad
+\gamma_{\rm w}=-\frac{H_3}{TUH_2}.
+\tag{55.1}
+$$
+
+Let $\mathsf V$ consist of columns one, two and four of $L_{\rm w}$:
+
+$$
+\mathsf V=
+\begin{pmatrix}
+\mathsf C_5&\mathsf A_5&5U\\
+\mathsf C_6&\mathsf A_6&32U\\
+2\mathsf C_7&2\mathsf A_7&105U
+\end{pmatrix}.
+\tag{55.2}
+$$
+
+For the prescribed triple $(p,v,w)$ define
+
+$$
+q_{\rm rec}=
+\begin{pmatrix}
+p-24-U\mathsf C_5\\
+v-24-2U\mathsf C_6\\
+w-24-3U\mathsf C_7
+\end{pmatrix},\qquad
+\begin{pmatrix}X\\Y\\Z\end{pmatrix}=\mathsf V^{-1}q_{\rm rec}.
+\tag{55.3}
+$$
+
+The inverse is completely explicit: its three rows are
+
+$$
+\begin{aligned}
+(\mathsf V^{-1})_{1,\bullet}
+&=\frac1{3H_2}\bigl(
+10(110b^2-808b-519),\quad
+25(b^2-128b-108),\quad
+-10(6b^2-136b-107)\bigr),\\
+(\mathsf V^{-1})_{2,\bullet}
+&=\frac1{H_2}\bigl(
+-2(4400b^2+12032b+4041),\quad
+-5(40b^2-437b-666),\quad
+30(4b-3)(4b+7)\bigr),\\
+(\mathsf V^{-1})_{3,\bullet}
+&=\frac1{UH_2}\bigl(
+-12(99b+274),\quad32(31b+108),\quad-(139b+542)\bigr).
+\end{aligned}
+\tag{55.4}
+$$
+
+Every defining denominator here is positive for $b>0$, since
+$T=1+b>0$, $U=1+2b>0$ and $H_2=11209b+37242>0$.
+No zero of $H_0,H_1$ or $H_3$ is excluded.
+

@@ -1,0 +1,13 @@
+## 5. 内部结构如何生成关系；递归为什么像级数
+
+项目新 hard-core 文稿定义有限简单图 $G$ 上的实际共同活动度律
+
+$$
+\mathbb P(I)=\lambda^{|I|}/Z_G(\lambda),\qquad
+Z_G(\lambda)=\sum_{I\ \mathrm{独立}}\lambda^{|I|},\quad\lambda>0.
+$$
+
+下述命题从这一明确前提继续推导，不把合法支撑本身当成 Gibbs 来源。[[7](#ref-hardcore)]
+
+<a id="thm-elimination"></a>
+

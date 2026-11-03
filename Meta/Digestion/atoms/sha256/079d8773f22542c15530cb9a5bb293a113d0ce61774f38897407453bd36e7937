@@ -1,0 +1,38 @@
+**Corollary 35.2 (connected fibres and logarithmic updates).** Under
+Theorem 35.1's hypotheses, if every $R_x$ is connected in the word tree,
+then
+
+$$
+3\cdot2^D-2\ge\left\lceil\frac{2^k}{k+1}\right\rceil,
+\qquad
+D\ge\max\!\left(0,\left\lceil\log_2
+\frac{\lceil2^k/(k+1)\rceil+2}{3}\right\rceil\right).
+\tag{IV.105}
+$$
+
+In particular $D\ge k-\log_2(12k)$. Without connectivity, for any fixed
+real constants $c\ge0,c_0$, a family with integer
+$D(k)\le c\log_2 k+c_0$ has one cut $v=v_k$ with
+
+$$
+C_v\ge\max\!\left(0,\left\lceil\frac{2^k}{k+1}\right\rceil
+-3\cdot2^{c_0}k^c+2\right).
+\tag{IV.106}
+$$
+
+For all sufficiently large $k$ this is at least $2^k/(2(k+1))$.
+Each counted assignment has two record words in different original
+branches, each outside the same ball, at distance at least $2D(k)+2$.
+
+**Proof.** A connected vertex subset of a tree contains the unique path
+between any two of its vertices. If it avoids $B_D(v)$, it therefore
+lies in one component of the complement, so $F_v=C_v=0$. Equation
+(IV.102), followed by rearrangement and integer rounding, proves
+(IV.105). Dropping its positive additive term gives
+$D\ge k-\log_2(3(k+1))\ge k-\log_2(12k)$. Substituting the assumed
+upper bound on $D(k)$ into (IV.102) proves (IV.106); exponential growth
+eventually exceeds twice the fixed polynomial loss. Equation (IV.103)
+gives the separation of the two words. These are counts of assignments
+across one common cut, not counts of histories, update events, word
+vertices or all connected components. $\square$
+

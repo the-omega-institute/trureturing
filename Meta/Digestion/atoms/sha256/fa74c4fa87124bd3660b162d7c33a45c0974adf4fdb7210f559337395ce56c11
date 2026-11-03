@@ -1,0 +1,9 @@
+**定义 74.1（取得切面与因子关系）。** 实际取得前沿保留已经消费的有序输入、尚未 WR 的 latch 材料、请求阶段、owner、权限、pending event 和实际计数器。它按
+
+$$
+\text{acquire}\to\text{latch}\to\text{write}\to\text{request complete}
+\to\text{seal}\to\text{deliver}
+$$
+
+区分不同切面。bit 一旦由 IN 消费，即使尚未 WR，也不能在 replay 中再次作为未来输入索取。对两个观察 $f,g$，只有在实际域上存在 $q$ 使 $f=q\circ g$，才称 $f$ 由 $g$ 因子化；等价义务是 $f$ 在每个 $g$-纤维上恒定。因此 acquired frontier、replay key、当前公开值与 exact chronology 不是未经证明就嵌套的集合链。
+
