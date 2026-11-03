@@ -102,7 +102,7 @@ private theorem bank_inventory (a b c d v m : ℕ)
         ↑(chamberLabels (b-1) (d+c) m ++ chamberLabels (b-1) (d+c) ((2^(b-1)-1) ^^^ m)) +
         ↑(List.range' (d+c+b) (a-1)) + {d-1}+{d+c-1}+{d+c+b-1}+{a+b+c+d-1} := by
       dsimp [word,bank,terminal]
-      simp only [←Multiset.coe_add,Multiset.cons_coe, Multiset.cons_add,Multiset.coe_nil]
+      simp only [←Multiset.coe_add,←Multiset.cons_coe, ←Multiset.singleton_add,Multiset.coe_nil]
       ac_rfl
     _=↑(List.range' 0 (d-1)) + ↑(List.range' d (c-1)) +
         ↑(List.range' (d+c) (b-1)) + ↑(List.range' (d+c+b) (a-1)) +
@@ -150,7 +150,8 @@ private theorem bank_masses (a b c d v m : ℕ)
       ((chamberLabels len off ((2^len-1) ^^^ mask)).map f).sum=
         (((2^len-1:ℕ):ℤ)-(mask:ℤ))*head := by
     obtain ⟨hs,hpart⟩ := native_partition len 0 mask hmask
-    try dsimp only [pow_zero,mul_one,one_mul] at hs hpart
+    simp only [pow_zero,mul_one,one_mul] at hs
+    simp only [pow_zero,mul_one,one_mul,Nat.add_zero,Nat.sub_self] at hpart
     have hcap : mask<2^len := by have := Nat.two_pow_pos len; omega
     have hcomp : ((2^len-1) ^^^ mask)<2^len := by simpa using MaskPartition.qcap hpart
     have castsum := congrArg (fun n : ℕ => (n:ℤ)) hs

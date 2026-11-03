@@ -7,7 +7,7 @@ internal sealed class EndpointDocument : IScribeDocumentDefinition
         H("Every natural 2<=a<c, d=c+1<b"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-source-second-peak-adjacent-tail-joint-lift"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/Endpoint.actualSource_second_peak_middle_gap_joint_lift"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/Endpoint.actualSource_second_peak_adjacent_tail_joint_lift"),
                 H("One old permutation and its single literal fresh insertion"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(

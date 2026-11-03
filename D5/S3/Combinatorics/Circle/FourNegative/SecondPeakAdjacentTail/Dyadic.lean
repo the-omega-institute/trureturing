@@ -56,6 +56,7 @@ private theorem dyadic_residue (a c shift : ℕ) (ha : 1 ≤ a) :
     exact (hbase.pow ell).mul (Int.ModEq.refl u)
   rw [quotient_parity] at hp
   refine ⟨he,hj,hu,hux,?_⟩
+  change (2:ℤ)^(c+shift)%(x+1)=(if ell%2=0 then u else x+1-u)
   by_cases hpar : ell%2=0
   · simp only [hpar,if_true,one_mul] at hp ⊢
     exact hp.eq.trans (Int.emod_eq_of_lt (show 0 ≤ u by omega) (show u < x+1 by omega))
@@ -155,13 +156,7 @@ private theorem plus_two_orthant_bounds (a c : ℕ) (ha : 4≤a) (hac : a<c) :
   · intro hp
     change ell%2=0 at hp
     have he2 : 2≤ell := by
-      have hell : 0<ell := by
-        by_contra hn
-        have he0 : ell=0 := by omega
-        have hbad := he'
-        rw [he0] at hbad
-        simp only [Nat.mul_zero,Nat.zero_add] at hbad
-        omega
+      have hell : 0<ell := Nat.div_pos (by omega) (by omega)
       omega
     have hpow : x^2≤x^ell := pow_le_pow_right₀ (by omega) he2
     nlinarith
@@ -175,13 +170,7 @@ private theorem plus_two_orthant_bounds (a c : ℕ) (ha : 4≤a) (hac : a<c) :
         simpa using pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) (show 3≤j by omega)
       omega
     have he3 : 3≤ell := by
-      have hell : 0<ell := by
-        by_contra hn
-        have he0 : ell=0 := by omega
-        have hbad := he'
-        rw [he0] at hbad
-        simp only [Nat.mul_zero,Nat.zero_add] at hbad
-        omega
+      have hell : 0<ell := Nat.div_pos (by omega) (by omega)
       by_contra hn
       have he1 : ell=1 := by omega
       rw [he1] at he'
