@@ -41,7 +41,9 @@ private theorem first_zero_form (bits : List Bool) :
     cases bit
     · exact Or.inr ⟨0, bits, rfl⟩
     · rcases ih with all | ⟨a, rest, cut⟩
-      · exact Or.inl (by simpa only [List.length_cons, List.replicate_succ] using congrArg (List.cons true) all)
+      · exact Or.inl (by
+          simpa only [List.length_cons, List.replicate_succ] using
+            congrArg (List.cons true) all)
       · exact Or.inr ⟨a + 1, rest, by simp [List.replicate_succ, cut]⟩
 
 private theorem root_merge (k m : ℕ) (hk : 2 ≤ k) (hm : 4 ≤ m) (short : m < k)
@@ -375,7 +377,8 @@ private theorem band_walk {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
     ∀ t, t ≤ Q → ∃ b tail, d = t + b ∧ tail < Q * m ∧
       (∀ i, i < t → pi (some v) (bandArchive pi v i) = .inr (bandWord pi v i)) ∧
       ∀ j : ZMod (Q * m + 1),
-        (∀ i, i < t → wordIncrement (Q * m) (-j + ((i * m : ℕ) : ZMod (Q * m + 1))) (bandWord pi v i) = 0) →
+        (∀ i, i < t → wordIncrement (Q * m)
+          (-j + ((i * m : ℕ) : ZMod (Q * m + 1))) (bandWord pi v i) = 0) →
         ∃ c, NativeExecute pi b (some ⟨v, -j + ((t * m : ℕ) : ZMod (Q * m + 1)), tail⟩)
           (some v) (bandArchive pi v t) =
           some (initialLabel Q m labels bottom (some ⟨v, -j, 0⟩), c) := by
@@ -397,7 +400,8 @@ private theorem band_walk {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
     refine ⟨d, 0, by omega, by nlinarith, ?_, ?_⟩
     · intro i hi; omega
     · intro j _
-      simpa only [Nat.zero_mul, Nat.cast_zero, add_zero, bandArchive] using native (-j) 0 (by nlinarith)
+      simpa only [Nat.zero_mul, Nat.cast_zero, add_zero, bandArchive] using
+        native (-j) 0 (by nlinarith)
   | succ t ih =>
     intro ht
     obtain ⟨b, tail, budget, tailBound, chosenBefore, success⟩ := ih (by omega)
@@ -540,7 +544,8 @@ theorem even_adaptive_lower {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ 
   intro x
   have band (n : ℕ) (hn : n = 1 ∨ n = 2) :
       ∀ i, i < Q → wordIncrement (Q * m)
-        (-((n : ℕ) : ZMod (Q * m + 1)) + ((i * m : ℕ) : ZMod (Q * m + 1))) (bandWord pi 0 i) = 0 := by
+        (-((n : ℕ) : ZMod (Q * m + 1)) + ((i * m : ℕ) : ZMod (Q * m + 1)))
+        (bandWord pi 0 i) = 0 := by
     intro i hi
     apply band_response Q m i n hQ hm hi hn
     intro eq
@@ -570,8 +575,10 @@ private def rootWord (m : ℕ) : Fin m → Bool :=
 private def middleWord (m : ℕ) : Fin m → Bool :=
   fun i => decide (i.val % 2 = if m % 2 = 0 then 1 else 0)
 
-private def queryWord (m : ℕ) : Fin m → Bool := fun i => decide (i.val = 1)
-private def finalWord (m : ℕ) : Fin m → Bool := fun i => decide (i.val = 0)
+/-- The literal word 01 followed by zeros. -/
+def queryWord (m : ℕ) : Fin m → Bool := fun i => decide (i.val = 1)
+/-- The literal word 1 followed by zeros. -/
+def finalWord (m : ℕ) : Fin m → Bool := fun i => decide (i.val = 0)
 
 /-- The original odd/even streams, with every literal zero and every paid block retained. -/
 def attainingWords (Q m : ℕ) : List (Fin m → Bool) :=
@@ -628,12 +635,8 @@ private theorem root_cut (m : ℕ) (hm : 4 ≤ m) :
   refine ⟨List.ofFn (fun i : Fin n => rootWord (n + 4) ⟨i.val + 4, by have := i.isLt; omega⟩), ?_⟩
   simp only [List.ofFn_succ, List.replicate_succ, List.replicate_zero, List.nil_append,
     List.cons_append]
-  change (true :: true :: true :: false :: List.ofFn _) =
-    (true :: true :: true :: false :: List.ofFn _)
-  simp only [List.cons.injEq, true_and]
-  apply congrArg List.ofFn
-  funext i
-  rfl
+  simp only [rootWord, Fin.val_zero, Fin.val_succ]
+  norm_num
 
 private theorem root_named_execution (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
     (v : ZMod 2) (phase : ZMod (Q * m + 1)) (s : ℕ) (hs : s < Q * m) :
@@ -681,7 +684,7 @@ private theorem root_mask (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hj : j �
       norm_num [extendedBit, rootWord, bitScalar, show 0 < m by omega,
         show 1 < m by omega, show 2 < m by omega, show 3 < m by omega,
         show (0 : ℕ) ≠ m by omega, show (1 : ℕ) ≠ m by omega,
-        show (2 : ℕ) ≠ m by omega, show (3 : ℕ) ≠ m by omega]
+        show (2 : ℕ) ≠ m by omega, show (3 : ℕ) ≠ m by omega] <;> try decide
   · by_cases inside : j < m
     · have prev : j - 1 < m := by omega
       rcases Nat.mod_two_eq_zero_or_one j with parity | parity
@@ -712,7 +715,8 @@ private theorem middle_mask (Q m t i : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hi : 
   rw [response_at Q m t i hQ hm hi]
   by_cases start : i = 0
   · subst i
-    by_cases even : m % 2 = 0 <;> simp [extendedBit, middleWord, bitScalar, even, show 0 < m by omega]
+    by_cases even : m % 2 = 0 <;>
+      simp [extendedBit, middleWord, bitScalar, even, show 0 < m by omega]
   · by_cases finish : i = m
     · subst i
       have prev : m - 1 < m := by omega
@@ -802,9 +806,8 @@ private theorem scan_support (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hj : j
         simp [scanWord, root_mask Q m m hQ hm (by nlinarith), even]
       · by_cases second : t = 1
         · subst t
-          have eq : m = 1 * m + 0 := by omega
-          rw [scanWord, ite_eq_right (by omega), eq, middle_mask Q m 1 0 hQ hm (by omega),
-            ite_eq_left ⟨even, rfl⟩]
+          have hit := middle_mask Q m 1 0 hQ hm (by omega)
+          simpa [scanWord, even] using hit
         · apply response_off Q m t m hQ hm ht (by nlinarith)
           have mul := Nat.mul_le_mul_right m (show 2 ≤ t by omega)
           exact Or.inl (by nlinarith)
@@ -822,13 +825,13 @@ private theorem attaining_query (Q m : ℕ) (hQ : 2 ≤ Q) :
     (attainingWords Q m)[Q]? = some (queryWord m) := by
   obtain ⟨q, eq⟩ : ∃ q, Q = q + 1 := ⟨Q - 1, by omega⟩
   subst Q
-  simp [attainingWords, List.getElem?_append]
+  simp [attainingWords]
 
 private theorem attaining_final (Q m : ℕ) (hQ : 2 ≤ Q) (even : m % 2 = 0) :
     (attainingWords Q m)[Q + 1]? = some (finalWord m) := by
   obtain ⟨q, eq⟩ : ∃ q, Q = q + 1 := ⟨Q - 1, by omega⟩
   subst Q
-  simp [attainingWords, List.getElem?_append, even]
+  simp [attainingWords, even]
 
 private theorem named_profile (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
     (v : ZMod 2) (j : ZMod (Q * m + 1)) (s : ℕ) (hs : s < Q * m - 3) :
@@ -838,9 +841,9 @@ private theorem named_profile (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
   have ex := root_named_execution Q m hQ hm v (-j) s (by omega)
   rw [ite_eq_left hs] at ex
   change endpointDifferences (some v)
-    ((rootWord m, endpointReading (runBits (Q * m) (rootWord m) (some ⟨v, -j, s⟩))) ::
+    (((rootWord m, endpointReading (runBits (Q * m) (rootWord m) (some ⟨v, -j, s⟩))) ::
       scriptArchive (attainingWords Q m).tail
-        (runBits (Q * m) (rootWord m) (some ⟨v, -j, s⟩))).map Prod.snd = _
+        (runBits (Q * m) (rootWord m) (some ⟨v, -j, s⟩))).map Prod.snd) = _
   rw [ex]
   simp only [List.map_cons, endpointReading, endpointDifferences]
   have phase : -j + (m : ℕ) = -(j - (m : ℕ)) := by ring
@@ -856,7 +859,7 @@ private theorem query_mask (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hj : j �
       (-((j : ℕ) : ZMod (Q * m + 1)) + ((Q * m : ℕ) : ZMod (Q * m + 1)))
       (queryWord m) = if j = 0 ∨ j = 1 then 1 else 0 := by
   have total := ZMod.natCast_self (Q * m + 1)
-  rw [Nat.cast_add, Nat.cast_one] at total
+  rw [Nat.cast_add, Nat.cast_one, Nat.cast_mul] at total
   have phase : -((j : ℕ) : ZMod (Q * m + 1)) + ((Q * m : ℕ) : ZMod (Q * m + 1)) =
       -((j + 1 : ℕ) : ZMod (Q * m + 1)) := by
     push_cast
@@ -868,7 +871,7 @@ private theorem query_mask (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hj : j �
     · subst j; simp [extendedBit, queryWord, bitScalar, show 1 < m by omega,
         show 2 < m by omega]
     · have ne : j + 1 ≠ 1 := by omega
-      simp [extendedBit, queryWord, bitScalar, j0, j1, ne]
+      simp [extendedBit, queryWord, bitScalar, j0, j1]
 
 private theorem final_band_mask (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
     (band : j = 1 ∨ j = 2 ∨ j = m) :
@@ -876,31 +879,36 @@ private theorem final_band_mask (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
       (-((j : ℕ) : ZMod (Q * m + 1)) + (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)))
       (finalWord m) = if j = m then 1 else 0 := by
   have total := ZMod.natCast_self (Q * m + 1)
-  rw [Nat.cast_add, Nat.cast_one] at total
-  rcases band with rfl | rfl | rfl
-  · let n := Q * m + 2 - m
-    have hn : m < n ∧ n < Q * m + 1 := by dsimp [n]; nlinarith
+  rw [Nat.cast_add, Nat.cast_one, Nat.cast_mul] at total
+  rcases band with eq | eq | eq
+  · subst j
+    let n := Q * m + 3 - m
+    have product : 2 * m ≤ Q * m := by nlinarith
+    have hn : m < n ∧ n < Q * m + 1 := by dsimp [n]; omega
     have phase : -((1 : ℕ) : ZMod (Q * m + 1)) +
-        (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)) = -((n : ℕ) : ZMod (Q * m + 1)) := by
-      dsimp [n]
-      rw [Nat.cast_sub (by nlinarith : m ≤ Q * m + 2)]
-      push_cast
-      linear_combination total
-    rw [phase, derivative_at Q m n hQ hm hn.2]
-    simp [extendedBit, show ¬ n < m by omega, show n ≠ 0 by omega,
-      show ¬ n - 1 < m by omega, show (1 : ℕ) ≠ m by omega]
-  · let n := Q * m + 3 - m
-    have hn : m < n ∧ n < Q * m + 1 := by dsimp [n]; nlinarith
-    have phase : -((2 : ℕ) : ZMod (Q * m + 1)) +
         (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)) = -((n : ℕ) : ZMod (Q * m + 1)) := by
       dsimp [n]
       rw [Nat.cast_sub (by nlinarith : m ≤ Q * m + 3)]
       push_cast
-      linear_combination total
+      linear_combination 2 * total
+    rw [phase, derivative_at Q m n hQ hm hn.2]
+    simp [extendedBit, show ¬ n < m by omega, show n ≠ 0 by omega,
+      show ¬ n - 1 < m by omega, show (1 : ℕ) ≠ m by omega]
+  · subst j
+    let n := Q * m + 4 - m
+    have product : 2 * m ≤ Q * m := by nlinarith
+    have hn : m < n ∧ n < Q * m + 1 := by dsimp [n]; omega
+    have phase : -((2 : ℕ) : ZMod (Q * m + 1)) +
+        (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)) = -((n : ℕ) : ZMod (Q * m + 1)) := by
+      dsimp [n]
+      rw [Nat.cast_sub (by nlinarith : m ≤ Q * m + 4)]
+      push_cast
+      linear_combination 2 * total
     rw [phase, derivative_at Q m n hQ hm hn.2]
     simp [extendedBit, show ¬ n < m by omega, show n ≠ 0 by omega,
       show ¬ n - 1 < m by omega, show (2 : ℕ) ≠ m by omega]
-  · have phase : -((m : ℕ) : ZMod (Q * m + 1)) +
+  · subst j
+    have phase : -((m : ℕ) : ZMod (Q * m + 1)) +
         (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)) = -((1 : ℕ) : ZMod (Q * m + 1)) := by
       push_cast
       linear_combination total
@@ -919,7 +927,10 @@ private theorem profile_band_identifies (Q m i j : ℕ) (hQ : 2 ≤ Q) (hm : 4 �
     rw [profile_index, profile_index, attaining_scan Q m t hQ ht] at eq
     simp only [Option.map_some, Option.some.injEq] at eq
     have zero := (scan_support Q m i hQ hm (by rcases hi with rfl | rfl <;> nlinarith)).mpr
-      (by rcases hi with h | h; exact Or.inl h; exact Or.inr (Or.inl h)) t ht
+      (by
+        rcases hi with h | h
+        · exact Or.inl h
+        · exact Or.inr (Or.inl h)) t ht
     exact eq.symm.trans zero
   have query := readat Q
   rw [profile_index, profile_index, attaining_query Q m hQ] at query
@@ -927,14 +938,15 @@ private theorem profile_band_identifies (Q m i j : ℕ) (hQ : 2 ≤ Q) (hm : 4 �
   rw [query_mask Q m i hQ hm (by rcases hi with rfl | rfl <;> omega),
     query_mask Q m j hQ hm (by rcases supported with rfl | rfl | ⟨_, rfl⟩ <;> omega)] at query
   rcases hi with rfl | rfl
-  · rcases supported with rfl | rfl | ⟨even, rfl⟩
-    · rfl
-    · norm_num at query
-    · simp [show m ≠ 0 by omega, show m ≠ 1 by omega] at query
-  · rcases supported with rfl | rfl | ⟨even, rfl⟩
-    · norm_num at query
-    · rfl
-    · have last := readat (Q + 1)
+  · rcases supported with eq | eq | ⟨even, eq⟩
+    · exact eq.symm
+    · subst j; norm_num at query
+    · subst j; simp [show m ≠ 0 by omega, show m ≠ 1 by omega] at query
+  · rcases supported with eq | eq | ⟨even, eq⟩
+    · subst j; norm_num at query
+    · exact eq.symm
+    · subst j
+      have last := readat (Q + 1)
       rw [profile_index, profile_index, attaining_final Q m hQ even] at last
       simp only [Option.map_some, Option.some.injEq] at last
       rw [final_band_mask Q m 2 hQ hm (Or.inr (Or.inl rfl)),
@@ -1011,7 +1023,7 @@ private theorem archive_decode {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 �
   have h : ∃ (p : ZMod (Q * m + 1)) (r : ℕ), r < Q * m ∧
       scriptArchive (attainingWords Q m) (some ⟨v, p, r⟩) =
         scriptArchive (attainingWords Q m) (some ⟨v, phase, s⟩) := ⟨phase, s, hs, rfl⟩
-  rw [archiveDecoder, dif_pos h]
+  rw [archiveDecoder, dite_eq_left h]
   have fact := Classical.choose_spec (Classical.choose_spec h)
   exact archive_separates Q m hQ hm labels bottom v _ _ _ _ fact.1 hs fact.2
 
@@ -1027,7 +1039,7 @@ private theorem baseline_lower {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 �
   let tri (i : Fin 3) := labels (Fin.castLE (by decide : 3 ≤ 4) i)
   have trinj : Function.Injective tri := distinct.comp (by
     intro i j h
-    exact Fin.ext (congrArg Fin.val h))
+    exact Fin.ext (congrArg (fun x : Fin 4 => x.val) h))
   have range : Set.range sample = Set.range tri := by
     ext y
     constructor
@@ -1038,30 +1050,47 @@ private theorem baseline_lower {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 �
       by_cases one : i.val = 1
       · exact ⟨1, by simp [tri, one]⟩
       · by_cases two : i.val = 2
-        · exact ⟨2, by simp [tri, one, two]⟩
+        · exact ⟨2, by simp [tri, two]⟩
         · exact ⟨0, by simp [tri, one, two]⟩
     · rintro ⟨c, rfl⟩
       fin_cases c
-      all_goals
-        refine ⟨⟨_, by omega⟩, ?_⟩
+      · refine ⟨⟨0, by omega⟩, ?_⟩
         dsimp only [sample]
-        rw [low_label Q m hQ hm labels bottom 0 _ (by nlinarith)]
+        rw [low_label Q m hQ hm labels bottom 0 0 (by nlinarith)]
+        norm_num [tri]
+      · refine ⟨⟨1, by omega⟩, ?_⟩
+        dsimp only [sample]
+        rw [low_label Q m hQ hm labels bottom 0 1 (by nlinarith)]
+        norm_num [tri]
+      · refine ⟨⟨2, by omega⟩, ?_⟩
+        dsimp only [sample]
+        rw [low_label Q m hQ hm labels bottom 0 2 (by nlinarith)]
         norm_num [tri]
   have card : Nat.card (Set.range sample) = 3 := by
     rw [range, Nat.card_range_of_injective trinj, Nat.card_fin]
   have gcd : Nat.gcd m (Q * m + 1) = 1 := by
     rw [Nat.mul_comm Q m, Nat.gcd_mul_left_add_right]
     simp
+  let g := Nat.gcd m (Q * m + 1)
+  have g1 : g = 1 := gcd
+  let originalSample (j : Fin (m / g)) := initialLabel Q m labels bottom
+    (some ⟨(0 : ZMod 2), -((j.val * g : ℕ) : ZMod (Q * m + 1)), 0⟩)
+  have count : Nat.card (Set.range originalSample) = 3 := by
+    dsimp only [originalSample]
+    conv_lhs => rw [g1, Nat.div_one]
+    simpa only [Nat.mul_one, sample] using card
   have lower := original_cost_lower (Q * m) m (by nlinarith) (by omega) (by nlinarith)
     (initialLabel Q m labels bottom) 0 alphabet
-  simp only [gcd, Nat.div_one, Nat.mul_one] at lower
+    (show 3 ≤ Nat.card (Set.range originalSample) by rw [count])
   have wait : (Q * m + 1) / m = Q := by
     apply Nat.div_eq_of_lt_le <;> nlinarith
+  change (((((Q * m + 1) / g) / (m / g)) +
+    Nat.clog 2 (Nat.card (Set.range originalSample)) - 1 : ℕ) : ℕ∞) ≤ _ at lower
+  rw [count, g1] at lower
   have bound : ((Q + 1 : ℕ) : ℕ∞) ≤
       OriginalFiberCost (Q * m) m (by nlinarith) alphabet (initialLabel Q m labels bottom) 0 := by
-    have applied := lower (by simpa only [sample] using (show 3 ≤ Nat.card (Set.range sample) by omega))
-    simpa only [sample, card, wait, show Nat.clog 2 3 = 2 by decide,
-      show Q + 2 - 1 = Q + 1 by omega] using applied
+    simpa only [Nat.div_one, wait, show Nat.clog 2 3 = 2 by decide,
+      show Q + 2 - 1 = Q + 1 by omega] using lower
   obtain ⟨pi, legal, bot, correct⟩ := feasible
   have fiber : OriginalFiberFeasible (Q * m) m (by nlinarith) alphabet
       (initialLabel Q m labels bottom) 0 d := by
@@ -1077,6 +1106,15 @@ private theorem baseline_lower {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 �
     iInf_le_of_le ⟨d, fiber⟩ le_rfl
   exact_mod_cast bound.trans finite
 
+private theorem literal_end_tails (m : ℕ) (hm : 4 ≤ m) (s : ℕ) :
+    tailAfter s (queryWord m) = 0 ∧ tailAfter s (finalWord m) = 0 := by
+  obtain ⟨n, rfl⟩ : ∃ n, m = n + 1 := ⟨m - 1, by omega⟩
+  constructor
+  · apply last_false_tail
+    simp [queryWord, show n ≠ 1 by omega]
+  · apply last_false_tail
+    simp [finalWord, show n ≠ 0 by omega]
+
 /-- Both original global prices and the complete same-history attaining trace.
 The initial bottom branch returns freely; every other branch retains the full
 literal stream and returns its original immutable target. -/
@@ -1089,6 +1127,13 @@ theorem original_threshold_three {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4
     GlobalPresetPrice (Q * m) m (by nlinarith) alphabet (initialLabel Q m labels bottom) =
       (fee : ℕ∞) ∧
     (attainingWords Q m).length = fee ∧
+    (∀ s, tailAfter s (queryWord m) = 0 ∧ tailAfter s (finalWord m) = 0) ∧
+    (attainingWords 2 4).map List.ofFn =
+      [[true,true,true,false], [false,true,false,true],
+        [false,true,false,false], [true,false,false,false]] ∧
+    (attainingWords 2 5).map List.ofFn =
+      [[true,true,true,false,true], [true,false,true,false,true],
+        [false,true,false,false,false]] ∧
     ∀ history : List (AllowedBlock (Q * m) m alphabet),
       let w := history.flatMap (fun a => List.ofFn a.val)
       let f := initialLabel Q m labels bottom
@@ -1129,9 +1174,9 @@ theorem original_threshold_three {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4
   refine ⟨FullPositiveWindowPrice.price_exact _ _
     (preset_inclusion _ _ _ _ _ _ upper) lower,
     FullPositiveWindowPrice.price_exact _ _ upper
-      (fun d h => lower d (preset_inclusion _ _ _ _ _ _ h)), len, ?_⟩
+      (fun d h => lower d (preset_inclusion _ _ _ _ _ _ h)), len,
+      literal_end_tails m hm, by decide, by decide, ?_⟩
   intro history
-  dsimp only
   let w := history.flatMap (fun a => List.ofFn a.val)
   let f := initialLabel Q m labels bottom
   let decode := archiveDecoder Q m labels bottom
@@ -1167,8 +1212,10 @@ theorem original_threshold_three {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4
     dsimp only at script
     rw [initial] at script
     have same (ar : NarrowWindowCost.Archive m) :
-        pi (some q.value) ar = finalSelector 0 (attainingWords Q m) (decode q.value) (some q.value) ar := rfl
-    have trace := (FullPositiveWindowPrice.trace_congr _ _ (some q.value) same _ _ [] _).mpr script.1
+        pi (some q.value) ar =
+          finalSelector 0 (attainingWords Q m) (decode q.value) (some q.value) ar := rfl
+    have trace :=
+      (FullPositiveWindowPrice.trace_congr _ _ (some q.value) same _ _ [] _).mpr script.1
     change decode q.value (scriptArchive (attainingWords Q m) (some q)) = f (some q) at decoded
     rw [decoded] at trace
     simp only [initial, Option.some_ne_none, ite_false, endpointReading] at output ⊢
