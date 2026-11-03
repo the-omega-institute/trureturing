@@ -7,11 +7,7 @@
    digest: Three product observables have useless pairs and a useful triple. -/
 
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
-import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Resource.CompositeConeDuality
-import D5.S3.Observer.Conditioning.UnreadStateOrthogonalProjection
-import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
-import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix
 import D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation
 import D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
