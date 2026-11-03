@@ -20,7 +20,7 @@ negative Laurent coefficients. The external root is an independent parameter.
 
 set_option autoImplicit false
 noncomputable section
-open scoped BigOperators Topology ENNReal
+open scoped BigOperators Topology ENNReal NNReal
 open Filter Metric
 
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicAnalytic
@@ -46,7 +46,9 @@ private lemma H_hasFPowerSeries :
 private lemma H_differentiableAt {v : ℂ} (hv : ‖v‖ < 1) :
     DifferentiableAt ℂ H v := by
   apply (H_hasFPowerSeries.analyticAt_of_mem ?_).differentiableAt
-  simpa [edist_dist, dist_eq_norm, ENNReal.ofReal_lt_one] using hv
+  change edist v 0 < 1
+  rw [edist_dist, dist_zero_right, ENNReal.ofReal_lt_one]
+  exact hv
 
 /-- The external point need not lie in the convergence disk of H. -/
 def beta (b : ℂ) : ℝ := min 1 ‖b‖
@@ -131,7 +133,7 @@ private lemma kernels_differentiable_a {b a x : ℂ} (hb : b ≠ 0) (hroot : ℂ
       DifferentiableAt ℂ (fun u => UT b hroot u x) a := by
   obtain ⟨ha, hab, habx, ha1, hxa, _, _⟩ := annulus_conditions hb hinner houter
   have hquot : DifferentiableAt ℂ (fun u : ℂ => x / u) a :=
-    differentiableAt_const.div differentiableAt_id ha
+    (differentiableAt_const x).div differentiableAt_id ha
   have hw : DifferentiableAt ℂ (fun u => omega u x) a :=
     ((H_differentiableAt ha1).div differentiableAt_id ha).mul
       ((H_differentiableAt hxa).comp a hquot)
@@ -233,9 +235,7 @@ private lemma negativeContour_bound {K : ℂ → ℂ} (s : ℕ) {r M : ℝ}
   have h := circleIntegral.norm_two_pi_i_inv_smul_integral_le_of_norm_le_const hr hbound
   change ‖(2 * Real.pi * Complex.I)⁻¹ *
     (∮ a in C(0, r), K a * a ^ s)‖ ≤ r * (M * r ^ s) at h
-  convert h using 1
-  rw [pow_succ]
-  ring
+  simpa only [negativeContour, pow_succ, mul_assoc, mul_comm, mul_left_comm] using h
 
 private lemma kernel_circle_bound {b x : ℂ} (hb : b ≠ 0) (root : ℂ) {r : ℝ}
     (hr0 : 0 < r) (hinner : ‖x‖ / beta b < r) (houter : r < beta b) :
@@ -277,7 +277,7 @@ private lemma scalarC_differentiableAt {x : ℂ} (hx : ‖x‖ < 1) :
   obtain ⟨hF, hF', _⟩ := D5.S3.Analytic.OriginalHalfBinomialPeriod.picard_fuchs hx
   have hne := OriginalGaussianPeriodIdentity.period_ne_zero hx
   exact (differentiableAt_id.div_const 2).sub
-    (((differentiableAt_id.mul (differentiableAt_const.sub differentiableAt_id)).mul
+    (((differentiableAt_id.mul ((differentiableAt_const (1 : ℂ)).sub differentiableAt_id)).mul
       hF').div hF hne)
 
 private lemma kernels_differentiable_x {b a x : ℂ} (hb : b ≠ 0) (root : ℂ)
@@ -325,17 +325,22 @@ private lemma kernels_continuous_joint {b a x : ℂ} (hb : b ≠ 0) (root : ℂ)
       ContinuousAt (fun ax : ℂ × ℂ => UT b root ax.1 ax.2) (a, x) := by
   obtain ⟨ha, hab, habx, ha1, hxa, hxb, hx1⟩ := annulus_conditions hb hinner houter
   have hHa : ContinuousAt (fun ax : ℂ × ℂ => H ax.1) (a, x) :=
-    (H_differentiableAt ha1).continuousAt.comp continuousAt_fst
+    (H_differentiableAt ha1).continuousAt.comp'
+      (f := fun ax : ℂ × ℂ => ax.1) (x := (a, x)) continuousAt_fst
   have hHxa : ContinuousAt (fun ax : ℂ × ℂ => H (ax.2 / ax.1)) (a, x) :=
-    (H_differentiableAt hxa).continuousAt.comp (continuousAt_snd.div continuousAt_fst ha)
+    (H_differentiableAt hxa).continuousAt.comp'
+      (f := fun ax : ℂ × ℂ => ax.2 / ax.1) (x := (a, x))
+      (continuousAt_snd.div continuousAt_fst ha)
   have hHxb : ContinuousAt (fun ax : ℂ × ℂ => H (ax.2 / b)) (a, x) :=
-    (H_differentiableAt hxb).continuousAt.comp (continuousAt_snd.div_const b)
+    (H_differentiableAt hxb).continuousAt.comp'
+      (f := fun ax : ℂ × ℂ => ax.2 / b) (x := (a, x)) (continuousAt_snd.div_const b)
   have hw : ContinuousAt (fun ax : ℂ × ℂ => omega ax.1 ax.2) (a, x) :=
     (hHa.div continuousAt_fst ha).mul hHxa
   have he : ContinuousAt (fun ax : ℂ × ℂ => externalOmega b root ax.2) (a, x) :=
     hHxb.const_mul _
   have hC : ContinuousAt (fun ax : ℂ × ℂ => scalarC ax.2) (a, x) :=
-    (scalarC_differentiableAt hx1).continuousAt.comp continuousAt_snd
+    (scalarC_differentiableAt hx1).continuousAt.comp'
+      (f := fun ax : ℂ × ℂ => ax.2) (x := (a, x)) continuousAt_snd
   have hN : ContinuousAt (fun ax : ℂ × ℂ => polarNumerator ax.1 b ax.2) (a, x) := by
     unfold polarNumerator
     fun_prop
@@ -495,7 +500,7 @@ private lemma normalized_summable {c : ℕ → ℂ} {z : ℂ} {r M : ℝ}
   have hden : 1 ≤ ‖(Real.sqrt (n + 1 : ℝ) : ℂ)‖ := by
     simpa only [Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (Real.sqrt_nonneg _)] using
-      (Real.one_le_sqrt.mpr (by positivity : (1 : ℝ) ≤ n + 1))
+      (Real.one_le_sqrt.mpr (by have hn : (0 : ℝ) ≤ n := Nat.cast_nonneg n; linarith : (1 : ℝ) ≤ n + 1))
   calc
     _ = (‖c (n + 1)‖ / ‖z‖ ^ (n + 1)) /
         ‖(Real.sqrt (n + 1 : ℝ) : ℂ)‖ := by
@@ -529,10 +534,13 @@ theorem normalized_coefficients_mem {b z : ℂ} (root : ℂ)
   obtain ⟨r, rho, hr0, hinner, hrz, _, _⟩ := sewing_radii hz0 hz
   obtain ⟨M, _, hM⟩ := coefficients_bound hb hx root hr0 hinner (hrz.trans hz)
   have hp : Summable (fun n => ‖pValue b root z n‖) :=
-    normalized_summable hz0 hr0.le hrz (fun s => (hM s).1)
+    normalized_summable (c := fun s => Tcoeff b root s (z ^ 2))
+      (z := z) (r := r) (M := M) hz0 hr0.le hrz (fun s => (hM s).1)
   have hq : Summable (fun n => ‖qValue b root z n‖) :=
-    normalized_summable hz0 hr0.le hrz (fun s => (hM s).2)
-  exact ⟨hp, hq, memℓp_two_of_summable_norm hp, memℓp_two_of_summable_norm hq⟩
+    normalized_summable (c := fun s => Ucoeff b root s (z ^ 2))
+      (z := z) (r := r) (M := M) hz0 hr0.le hrz (fun s => (hM s).2)
+  exact ⟨hp, hq, memℓp_two_of_summable_norm (f := pValue b root z) hp,
+    memℓp_two_of_summable_norm (f := qValue b root z) hq⟩
 
 /-- The actual external row uses the given root, not an evaluation of H at b. -/
 def eValue (b hb z : ℂ) (n : ℕ) : ℂ :=
@@ -552,7 +560,7 @@ private lemma currentRow_outer_bound {b : ℂ} (hb : b ≠ 0) (root : ℂ)
     Metric.eball_subset_eball (binomialSeries_radius_ge_one (a := (1 / 2 : ℂ))) hrhoball
   have hg : Summable (fun k : ℕ => ‖Ring.choose (1 / 2 : ℂ) k‖ * rho ^ k) := by
     simpa [binomialSeries, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul,
-      norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hrho] using
+      norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hrho, mul_comm] using
       (binomialSeries ℂ (1 / 2 : ℂ)).summable_norm_apply hrhorad
   let B := ∑' k : ℕ, ‖Ring.choose (1 / 2 : ℂ) k‖ * rho ^ k
   have hB0 : 0 ≤ B := tsum_nonneg (fun k => by positivity)
@@ -612,7 +620,7 @@ private lemma external_majorant {b : ℂ} (hb : b ≠ 0) (root : ℂ)
   have hden : 1 ≤ ‖(Real.sqrt (n + 1 : ℝ) : ℂ)‖ := by
     simpa only [Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (Real.sqrt_nonneg _)] using
-      (Real.one_le_sqrt.mpr (by positivity : (1 : ℝ) ≤ n + 1))
+      (Real.one_le_sqrt.mpr (by have hn : (0 : ℝ) ≤ n := Nat.cast_nonneg n; linarith : (1 : ℝ) ≤ n + 1))
   have hcs : ‖currentRow b root (n + 1)‖ ≤
       M * (n + 1 : ℝ) * ((n + 1 : ℕ) + 1 : ℝ) / rho ^ (n + 1) := by
     apply (le_div_iff₀ (pow_pos hrho _)).mpr

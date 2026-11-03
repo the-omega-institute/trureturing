@@ -7,8 +7,6 @@
    digest: Explicit finite polynomials in the original neck coordinate represent every positive modulus coefficient of the literal TT and UT kernels. -/
 
 /-
-  SOURCE ONLY, UNCOMPILED.
-
   This module keeps the two literal kernels from
   OriginalGaussianCubicKernel.  It derives their all-degree finite polynomial
   class membership directly from the displayed PowerSeries(LaurentSeries)
@@ -358,6 +356,116 @@ private lemma PTPoly_degree (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd : 1 ≤ d
       (by simpa only [zero_add] using QPoly_degree d hb0 hd)
   · exact CPoly_degree d b hb
 
+private abbrev PE : Polynomial ℂ →+* LaurentSeries ℂ :=
+  (HahnSeries.ofPowerSeries ℤ ℂ).comp Polynomial.coeToPowerSeries.ringHom
+
+private lemma PE_coe (p : Polynomial ℂ) : PE p = (p : LaurentSeries ℂ) :=
+  RatFunc.coe_coe p
+
+private lemma PE_C (c : ℂ) : PE (Polynomial.C c) = HahnSeries.C c := by
+  simp [PE, Polynomial.coeToPowerSeries.ringHom, Polynomial.coe_C]
+
+private lemma PE_X : PE Polynomial.X = HahnSeries.single 1 (1 : ℂ) := by
+  simp [PE, Polynomial.coeToPowerSeries.ringHom, Polynomial.coe_X]
+
+private lemma PE_monomial (n : ℕ) (c : ℂ) :
+    PE (Polynomial.monomial n c) = HahnSeries.single (n : ℤ) c := by
+  rw [← Polynomial.C_mul_X_pow_eq_monomial, map_mul, map_pow, PE_C, PE_X,
+    HahnSeries.single_pow, HahnSeries.C_apply, HahnSeries.single_mul_single]
+  simp
+
+private lemma omega_product_term {b hb : ℂ} (hb0 : b ≠ 0)
+    (n i : ℕ) (hi : i ≤ n) :
+    omegaCoefficient i * HahnSeries.C (hb * h (n - i) / b ^ (n - i + 1)) =
+      HahnSeries.single (-(n : ℤ) - 1) (1 : ℂ) * (H : LaurentSeries ℂ) *
+        HahnSeries.C (hb / b) *
+        PE (Polynomial.monomial (n - i)
+          (h i * h (n - i) * (b ^ (n - i))⁻¹)) := by
+  have he : -(n : ℤ) - 1 + ((n - i : ℕ) : ℤ) = -(i : ℤ) - 1 := by omega
+  rw [omegaCoefficient, PE_monomial, HahnSeries.C_apply, HahnSeries.C_apply]
+  have hs :
+      (HahnSeries.single (-(n : ℤ) - 1) (1 : ℂ) : LaurentSeries ℂ) *
+        HahnSeries.single 0 (hb / b) *
+        HahnSeries.single ((n - i : ℕ) : ℤ)
+          (h i * h (n - i) * (b ^ (n - i))⁻¹) =
+        HahnSeries.single (-(i : ℤ) - 1)
+          (h i * (hb * h (n - i) / b ^ (n - i + 1))) := by
+    simp only [HahnSeries.single_mul_single, add_zero, one_mul, he]
+    congr 1
+    rw [pow_succ]
+    field_simp [hb0, pow_ne_zero _ hb0]
+    <;> ring
+  calc
+    _ = (H : LaurentSeries ℂ) *
+        (HahnSeries.single (-(i : ℤ) - 1) (h i) *
+          HahnSeries.single 0 (hb * h (n - i) / b ^ (n - i + 1))) := by ring
+    _ = (H : LaurentSeries ℂ) *
+        (HahnSeries.single (-(n : ℤ) - 1) (1 : ℂ) *
+          HahnSeries.single 0 (hb / b) *
+          HahnSeries.single ((n - i : ℕ) : ℤ)
+            (h i * h (n - i) * (b ^ (n - i))⁻¹)) := by
+      rw [hs, HahnSeries.single_mul_single, add_zero]
+    _ = _ := by ring
+
+private lemma omega_product_coefficient (n : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) :
+    PowerSeries.coeff n (formalOmega * formalExternalOmega b hb) =
+      HahnSeries.single (-(n : ℤ) - 1) (1 : ℂ) *
+        (H : LaurentSeries ℂ) * HahnSeries.C (hb / b) * PE (APoly n b) := by
+  rw [PowerSeries.coeff_mul,
+    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
+  simp only [formalOmega, formalExternalOmega, PowerSeries.coeff_mk, APoly,
+    map_sum, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro i hi
+  exact omega_product_term hb0 n i (by simpa only [Finset.mem_range, Nat.lt_succ_iff] using hi)
+
+private lemma scalar_omega_term (d l i j : ℕ) {b hb : ℂ} (hb0 : b ≠ 0)
+    (hl : l < d) (hij : i + j = d - (l + 1)) :
+    HahnSeries.C (PowerSeries.coeff (l + 1) scalarCSeries) *
+        (omegaCoefficient i * HahnSeries.C (hb * h j / b ^ (j + 1))) =
+      HahnSeries.single (-(d : ℤ)) (1 : ℂ) * (H : LaurentSeries ℂ) *
+        PE (Polynomial.monomial (d - i - 1)
+          ((hb / b) * PowerSeries.coeff (l + 1) scalarCSeries *
+            h i * h j * (b ^ j)⁻¹)) := by
+  have he : -(d : ℤ) + ((d - i - 1 : ℕ) : ℤ) = -(i : ℤ) - 1 := by omega
+  rw [omegaCoefficient, PE_monomial]
+  calc
+    _ = (H : LaurentSeries ℂ) *
+        (HahnSeries.single (-(i : ℤ) - 1) (h i) *
+          HahnSeries.C (hb * h j / b ^ (j + 1)) *
+          HahnSeries.C (PowerSeries.coeff (l + 1) scalarCSeries)) := by ring
+    _ = (H : LaurentSeries ℂ) *
+        (HahnSeries.single (-(d : ℤ)) (1 : ℂ) *
+          HahnSeries.single ((d - i - 1 : ℕ) : ℤ)
+            ((hb / b) * PowerSeries.coeff (l + 1) scalarCSeries *
+              h i * h j * (b ^ j)⁻¹)) := by
+      simp only [HahnSeries.C_apply, HahnSeries.single_mul_single, add_zero,
+        one_mul, he]
+      congr 2
+      rw [pow_succ]
+      field_simp [hb0, pow_ne_zero _ hb0]
+      <;> ring
+    _ = _ := by ring
+
+private lemma scalar_product_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) :
+    PowerSeries.coeff d ((formalOmega * formalExternalOmega b hb) *
+      PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries) =
+      HahnSeries.single (-(d : ℤ)) (1 : ℂ) * (H : LaurentSeries ℂ) *
+        PE (CPoly d b hb) := by
+  have hc0 : PowerSeries.coeff 0 scalarCSeries = 0 := by simp [scalarCSeries]
+  rw [mul_comm, PowerSeries.coeff_mul,
+    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk, Finset.sum_range_succ']
+  simp only [PowerSeries.coeff_map, hc0, map_zero, zero_mul, add_zero, zero_add]
+  simp only [CPoly, map_sum, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro l hl
+  rw [PowerSeries.coeff_mul]
+  simp only [formalOmega, formalExternalOmega, PowerSeries.coeff_mk, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro ij hij
+  exact scalar_omega_term d l ij.1 ij.2 hb0 (Finset.mem_range.mp hl)
+    (Finset.HasAntidiagonal.mem_antidiagonal.mp hij)
+
 /- A literal coefficient expansion.  `aSeries` and `bSeries` are unfolded only
    here; all sums are finite because PowerSeries.coeff_mul uses the natural
    antidiagonal. -/
@@ -366,37 +474,77 @@ private lemma literal_tt_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd 
       HahnSeries.single (-(d : ℤ)) (1 : ℂ) *
         (H : LaurentSeries ℂ) * (PTPoly d b hb : LaurentSeries ℂ) := by
   classical
-  have hq := QPoly_factor d hb0 hd
-  have hscalar : PowerSeries.coeff 0 scalarCSeries = 0 := by
-    simp [scalarCSeries]
-  change PowerSeries.coeff d
-    (formalOmega * formalExternalOmega b hb *
-      ((PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) *
-          PowerSeries.C (HahnSeries.C b) *
-          (PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) +
-            PowerSeries.C (HahnSeries.C b)) +
-        2 * (1 + PowerSeries.X) * PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) *
-          PowerSeries.C (HahnSeries.C b) +
-        PowerSeries.X * (PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) +
-          PowerSeries.C (HahnSeries.C b))) *
-        (2 * (PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) -
-          PowerSeries.C (HahnSeries.C b)) ^ 2)⁻¹ +
-      PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries)) = _
-  rw [PowerSeries.coeff_mul]
-  simp only [PowerSeries.coeff_mk, PowerSeries.coeff_mul,
-    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk,
-    PowerSeries.coeff_C, PowerSeries.coeff_map, hscalar]
-  /- The remaining finite Laurent calculation is exactly:
-       a⁻¹ H(a) · (hb/b)H(x/a)H(x/b) · polar/(2(a-b)²)
-         = single(-d) H(a) (hb/(2b)) Q_d(a),
-     with the scalar sum equal to `CPoly`.  `field_simp [hb0]` clears only
-     finite powers of b, and `ring` closes the coefficient identities. -/
-  simp only [formalOmega, formalExternalOmega, PowerSeries.coeff_mk,
-    HahnSeries.coeff_single_mul, LaurentSeries.coeff_coe_powerSeries,
-    HahnSeries.coeff_single, if_true, if_false]
-  field_simp [hb0]
-  ring_nf
-  simpa only [PTPoly, CPoly, QPoly]
+  let a : LaurentSeries ℂ := HahnSeries.single 1 1
+  let B : LaurentSeries ℂ := HahnSeries.C b
+  let F := formalOmega * formalExternalOmega b hb
+  let SC := PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries
+  let N0 := a * B * (a + B + 2)
+  let N1 := 2 * a * B + a + B
+  have hden : (2 * (PowerSeries.C a - PowerSeries.C B) ^ 2 : AnnulusSeries) =
+      PowerSeries.C (2 * (a - B) ^ 2) := by
+    simp only [map_mul, map_pow, map_sub, map_ofNat]
+  have hshape : cubicTTSeries b hb =
+      (F * PowerSeries.C N0 + (F * PowerSeries.X) * PowerSeries.C N1) *
+        PowerSeries.C ((2 * (a - B) ^ 2)⁻¹) + F * SC := by
+    change F * ((PowerSeries.C a * PowerSeries.C B * (PowerSeries.C a + PowerSeries.C B) +
+      2 * (1 + PowerSeries.X) * PowerSeries.C a * PowerSeries.C B +
+      PowerSeries.X * (PowerSeries.C a + PowerSeries.C B)) *
+      (2 * (PowerSeries.C a - PowerSeries.C B) ^ 2)⁻¹ + SC) = _
+    rw [hden, PowerSeries.C_inv]
+    simp only [N0, N1, map_mul, map_add, map_ofNat]
+    ring
+  have hshift : PowerSeries.coeff d (F * PowerSeries.X) =
+      PowerSeries.coeff (d - 1) F := by
+    conv_lhs => rw [← Nat.sub_add_cancel hd]
+    simpa only [pow_one] using PowerSeries.coeff_mul_X_pow F 1 (d - 1)
+  have hs : (HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) : LaurentSeries ℂ) * a =
+      HahnSeries.single (-(d : ℤ)) 1 := by
+    have he : -(d : ℤ) - 1 + 1 = -(d : ℤ) := by omega
+    simp only [a, HahnSeries.single_mul_single, mul_one, he]
+  have hs' : (HahnSeries.single (-((d - 1 : ℕ) : ℤ) - 1) (1 : ℂ) : LaurentSeries ℂ) =
+      HahnSeries.single (-(d : ℤ)) 1 := by
+    have he : -((d - 1 : ℕ) : ℤ) - 1 = -(d : ℤ) := by omega
+    rw [he]
+  have hnum : PowerSeries.coeff d F * N0 + PowerSeries.coeff (d - 1) F * N1 =
+      HahnSeries.single (-(d : ℤ)) (1 : ℂ) * (H : LaurentSeries ℂ) *
+        HahnSeries.C (hb / b) * PE (MPoly d b) := by
+    rw [omega_product_coefficient d hb0, omega_product_coefficient (d - 1) hb0, hs']
+    simp only [MPoly, map_add, map_mul, PE_C, PE_X]
+    change _ = HahnSeries.single (-(d : ℤ)) 1 * (H : LaurentSeries ℂ) *
+      HahnSeries.C (hb / b) *
+        (B * (a + B + HahnSeries.C 2) * PE (APoly d b) + N1 * PE (APoly (d - 1) b))
+    rw [map_ofNat]
+    calc
+      _ = ((HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) : LaurentSeries ℂ) * a) *
+          (H : LaurentSeries ℂ) * HahnSeries.C (hb / b) *
+            (B * (a + B + 2) * PE (APoly d b)) +
+          HahnSeries.single (-(d : ℤ)) 1 * (H : LaurentSeries ℂ) *
+            HahnSeries.C (hb / b) * PE (APoly (d - 1) b) * N1 := by dsimp [N0]; ring
+      _ = _ := by rw [hs]; ring
+  have hdiff : a - B ≠ 0 := by
+    intro he
+    have hc := congrArg (fun q : LaurentSeries ℂ => q.coeff 1) he
+    norm_num [a, B, HahnSeries.coeff_sub, HahnSeries.C_apply, HahnSeries.coeff_single] at hc
+  have hq : PE (MPoly d b) = (a - B) ^ 2 * PE (QPoly d b) := by
+    rw [QPoly_factor d hb0 hd, map_mul, map_pow, map_sub, PE_X, PE_C]
+  have hc : HahnSeries.C (hb / b) * (a - B) ^ 2 * (2 * (a - B) ^ 2)⁻¹ =
+      HahnSeries.C (hb / (2 * b)) := by
+    have hscalar : hb / (2 * b) = (hb / b) / 2 := by ring
+    have hemb : HahnSeries.C (hb / (2 * b)) =
+        (HahnSeries.C (hb / b) : LaurentSeries ℂ) / 2 := by
+      simp only [hscalar, map_div₀, map_ofNat]
+    rw [hemb]
+    field_simp [hdiff]
+    <;> ring
+  rw [hshape, map_add, PowerSeries.coeff_mul_C, map_add, PowerSeries.coeff_mul_C,
+    PowerSeries.coeff_mul_C, hshift, hnum, hq, scalar_product_coefficient d hb0]
+  rw [← PE_coe (PTPoly d b hb)]
+  simp only [PTPoly, map_add, map_mul, PE_C]
+  calc
+    _ = HahnSeries.single (-(d : ℤ)) 1 * (H : LaurentSeries ℂ) *
+        (HahnSeries.C (hb / b) * (a - B) ^ 2 * (2 * (a - B) ^ 2)⁻¹) * PE (QPoly d b) +
+        HahnSeries.single (-(d : ℤ)) 1 * (H : LaurentSeries ℂ) * PE (CPoly d b hb) := by ring
+    _ = _ := by rw [hc]; ring
 
 /- UT finite numerator.  The first antidiagonal splits i+j+n=d-1 and the
    second splits i+j+n=d-2.  The displayed monomials are the three terms of
@@ -579,42 +727,227 @@ private lemma ut_denominator_coefficient {b : ℂ} (hb0 : b ≠ 0) (n : ℕ) :
     push_cast
     simp only [neg_add, sub_eq_add_neg]
 
-set_option maxHeartbeats 800000 in
+private lemma ut_triple_coefficient {b hb : ℂ} (hb0 : b ≠ 0) (i j n : ℕ) :
+    omegaCoefficient i * HahnSeries.C (hb * h j / b ^ (j + 1)) *
+      (HahnSeries.C ((n + 1 : ℂ) / 2) *
+        HahnSeries.single (-(n : ℤ) - 2) ((b ^ (n + 2))⁻¹)) =
+      (H : LaurentSeries ℂ) * HahnSeries.single (-(i : ℤ) - 1 + (-(n : ℤ) - 2))
+        ((hb / b) * h i * h j * (b ^ (j + n + 2))⁻¹ * ((n + 1 : ℂ) / 2)) := by
+  rw [omegaCoefficient]
+  calc
+    _ = (H : LaurentSeries ℂ) *
+        (HahnSeries.single (-(i : ℤ) - 1) (h i) *
+          HahnSeries.C (hb * h j / b ^ (j + 1)) *
+          HahnSeries.C ((n + 1 : ℂ) / 2) *
+          HahnSeries.single (-(n : ℤ) - 2) ((b ^ (n + 2))⁻¹)) := by ring
+    _ = _ := by
+      simp only [HahnSeries.C_apply, HahnSeries.single_mul_single, add_zero]
+      congr 2
+      simp only [pow_add, pow_succ]
+      field_simp [hb0, pow_ne_zero _ hb0]
+      <;> ring
+
+private lemma ut_shift_monomial (s t : ℤ) (k e : ℕ) (r c : ℂ)
+    (he : s + k = t + e) :
+    -((HahnSeries.single s r : LaurentSeries ℂ) * PE (Polynomial.monomial k c)) =
+      HahnSeries.single t (1 : ℂ) * PE (Polynomial.monomial e (-(r * c))) := by
+  rw [PE_monomial, PE_monomial, HahnSeries.single_mul_single,
+    HahnSeries.single_mul_single, one_mul, HahnSeries.single_neg, he]
+
+private lemma ut_first_numerator (b : ℂ) :
+    (HahnSeries.single 1 (1 : ℂ) : LaurentSeries ℂ) * HahnSeries.C b *
+      (HahnSeries.single 1 (1 : ℂ) + HahnSeries.C b + 2) =
+    PE (Polynomial.monomial 2 b + Polynomial.monomial 1 (b ^ 2) +
+      Polynomial.monomial 1 (2 * b)) := by
+  simp only [← Polynomial.C_mul_X_pow_eq_monomial, map_add, map_mul, map_pow,
+    PE_C, PE_X, map_ofNat, pow_one]
+  ring
+
+private lemma ut_second_numerator (b : ℂ) :
+    (HahnSeries.single 1 (1 : ℂ) : LaurentSeries ℂ) + HahnSeries.C b +
+      2 * HahnSeries.single 1 (1 : ℂ) * HahnSeries.C b =
+    PE (Polynomial.monomial 1 1 + Polynomial.monomial 0 b +
+      Polynomial.monomial 1 (2 * b)) := by
+  simp only [← Polynomial.C_mul_X_pow_eq_monomial, map_add, map_mul, map_pow,
+    PE_C, PE_X, map_ofNat, map_one, pow_one, pow_zero, mul_one, one_mul]
+  ring
+
+private lemma ut_first_term (d i j n : ℕ) (hsum : i + j + n = d - 1)
+    (hd : 1 ≤ d) (b r : ℂ) :
+    -((HahnSeries.single (-(i : ℤ) - 1 + (-(n : ℤ) - 2)) r : LaurentSeries ℂ) *
+      (HahnSeries.single 1 (1 : ℂ) * HahnSeries.C b *
+        (HahnSeries.single 1 (1 : ℂ) + HahnSeries.C b + 2))) =
+      HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) *
+        PE (Polynomial.monomial (d - i - n) (-(r * b)) +
+          Polynomial.monomial (d - i - n - 1) (-(r * b ^ 2)) +
+          Polynomial.monomial (d - i - n - 1) (-(r * (2 * b)))) := by
+  rw [ut_first_numerator]
+  simp only [map_add, mul_add, neg_add]
+  congr 2
+  · exact ut_shift_monomial _ _ _ _ _ _ (by omega)
+  · exact ut_shift_monomial _ _ _ _ _ _ (by omega)
+  · exact ut_shift_monomial _ _ _ _ _ _ (by omega)
+
+private lemma ut_second_term (d i j n : ℕ) (hsum : i + j + n = d - 2)
+    (hd : 2 ≤ d) (b r : ℂ) :
+    -((HahnSeries.single (-(i : ℤ) - 1 + (-(n : ℤ) - 2)) r : LaurentSeries ℂ) *
+      (HahnSeries.single 1 (1 : ℂ) + HahnSeries.C b +
+        2 * HahnSeries.single 1 (1 : ℂ) * HahnSeries.C b)) =
+      HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) *
+        PE (Polynomial.monomial (d - i - n - 1) (-r) +
+          Polynomial.monomial (d - i - n - 2) (-(r * b)) +
+          Polynomial.monomial (d - i - n - 1) (-(r * (2 * b)))) := by
+  rw [ut_second_numerator]
+  simp only [map_add, mul_add, neg_add]
+  have h1 := ut_shift_monomial (-(i : ℤ) - 1 + (-(n : ℤ) - 2))
+    (-(d : ℤ) - 1) 1 (d - i - n - 1) r 1 (by omega)
+  simp only [mul_one] at h1
+  rw [h1, ut_shift_monomial (-(i : ℤ) - 1 + (-(n : ℤ) - 2)) (-(d : ℤ) - 1) 0 (d - i - n - 2) r b (by omega),
+    ut_shift_monomial (-(i : ℤ) - 1 + (-(n : ℤ) - 2)) (-(d : ℤ) - 1) 1 (d - i - n - 1) r (2 * b) (by omega)]
+
+private abbrev utWeight (b hb : ℂ) (i j n : ℕ) : ℂ :=
+  (hb / b) * h i * h j * (b ^ (j + n + 2))⁻¹ * ((n + 1 : ℂ) / 2)
+
+private lemma ut_kernel_coefficient (m : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) :
+    PowerSeries.coeff m (formalOmega * (formalExternalOmega b hb *
+      (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2)⁻¹)) =
+      ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal m,
+        ∑ jn ∈ Finset.HasAntidiagonal.antidiagonal ij.2,
+          (H : LaurentSeries ℂ) *
+            HahnSeries.single (-(ij.1 : ℤ) - 1 + (-(jn.2 : ℤ) - 2))
+              (utWeight b hb ij.1 jn.1 jn.2) := by
+  rw [PowerSeries.coeff_mul]
+  apply Finset.sum_congr rfl
+  intro ij hij
+  rw [PowerSeries.coeff_mul, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro jn hjn
+  simp only [formalOmega, formalExternalOmega, PowerSeries.coeff_mk,
+    ut_denominator_coefficient hb0]
+  rw [← mul_assoc]
+  exact ut_triple_coefficient hb0 ij.1 jn.1 jn.2
+
+private lemma ut_first_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd : 1 ≤ d) :
+    -(PowerSeries.coeff (d - 1) (formalOmega * (formalExternalOmega b hb *
+        (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2)⁻¹)) *
+      (HahnSeries.single 1 (1 : ℂ) * HahnSeries.C b *
+        (HahnSeries.single 1 (1 : ℂ) + HahnSeries.C b + 2))) =
+      HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) * (H : LaurentSeries ℂ) *
+        PE (UMain1 d b hb) := by
+  rw [ut_kernel_coefficient (d - 1) hb0]
+  simp only [UMain1, map_sum, Finset.mul_sum, Finset.sum_mul,
+    ← Finset.sum_neg_distrib]
+  apply Finset.sum_congr rfl
+  intro ij hij
+  apply Finset.sum_congr rfl
+  intro jn hjn
+  have hsum : ij.1 + jn.1 + jn.2 = d - 1 := by
+    have h1 := Finset.HasAntidiagonal.mem_antidiagonal.mp hij
+    have h2 := Finset.HasAntidiagonal.mem_antidiagonal.mp hjn
+    omega
+  rw [mul_assoc, ← mul_neg, ut_first_term d ij.1 jn.1 jn.2 hsum hd]
+  ring
+
+private lemma ut_second_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd : 2 ≤ d) :
+    -(PowerSeries.coeff (d - 2) (formalOmega * (formalExternalOmega b hb *
+        (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2)⁻¹)) *
+      (HahnSeries.single 1 (1 : ℂ) + HahnSeries.C b +
+        2 * HahnSeries.single 1 (1 : ℂ) * HahnSeries.C b)) =
+      HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) * (H : LaurentSeries ℂ) *
+        PE (UMain2 d b hb) := by
+  rw [ut_kernel_coefficient (d - 2) hb0]
+  simp only [UMain2, if_pos hd, map_sum, Finset.mul_sum, Finset.sum_mul,
+    ← Finset.sum_neg_distrib]
+  apply Finset.sum_congr rfl
+  intro ij hij
+  apply Finset.sum_congr rfl
+  intro jn hjn
+  have hsum : ij.1 + jn.1 + jn.2 = d - 2 := by
+    have h1 := Finset.HasAntidiagonal.mem_antidiagonal.mp hij
+    have h2 := Finset.HasAntidiagonal.mem_antidiagonal.mp hjn
+    omega
+  rw [mul_assoc, ← mul_neg, ut_second_term d ij.1 jn.1 jn.2 hsum hd]
+  ring
+
+private lemma UCPoly_shift (d : ℕ) (b hb : ℂ) :
+    UCPoly d b hb = -(Polynomial.X * CPoly d b hb) := by
+  simp only [UCPoly, CPoly, Finset.mul_sum, ← Finset.sum_neg_distrib,
+    Polynomial.X_mul_monomial]
+  apply Finset.sum_congr rfl
+  intro l hl
+  apply Finset.sum_congr rfl
+  intro ij hij
+  have h1 := Finset.mem_range.mp hl
+  have h2 := Finset.HasAntidiagonal.mem_antidiagonal.mp hij
+  have he : d - ij.1 - 1 + 1 = d - ij.1 := by omega
+  rw [map_neg, he]
+
+private lemma ut_scalar_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) :
+    -(PowerSeries.coeff d ((formalOmega * formalExternalOmega b hb) *
+      PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries)) =
+      HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) * (H : LaurentSeries ℂ) *
+        PE (UCPoly d b hb) := by
+  rw [scalar_product_coefficient d hb0, UCPoly_shift, map_neg, map_mul, PE_X]
+  have hs : (HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) : LaurentSeries ℂ) *
+      HahnSeries.single 1 1 = HahnSeries.single (-(d : ℤ)) 1 := by
+    have he : -(d : ℤ) - 1 + 1 = -(d : ℤ) := by omega
+    simp only [HahnSeries.single_mul_single, mul_one, he]
+  calc
+    _ = -((HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) * HahnSeries.single 1 1) *
+        (H : LaurentSeries ℂ) * PE (CPoly d b hb)) := by rw [hs]
+    _ = _ := by ring
+
 private lemma literal_ut_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd : 1 ≤ d) :
     PowerSeries.coeff d (cubicUTSeries b hb) =
       HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) *
         (H : LaurentSeries ℂ) * (PUPoly d b hb : LaurentSeries ℂ) := by
   classical
-  have hscalar : PowerSeries.coeff 0 scalarCSeries = 0 := by
-    simp [scalarCSeries]
-  have hu : (HahnSeries.single 1 b : LaurentSeries ℂ) ≠ 0 :=
-    HahnSeries.single_ne_zero hb0
-  have hunit (n : ℕ) := ut_denominator_coefficient hb0 n
-
-  change PowerSeries.coeff d
-    (-(formalOmega * formalExternalOmega b hb) *
-      (PowerSeries.X *
-          (PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) *
-            PowerSeries.C (HahnSeries.C b) *
-              (PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) +
-                PowerSeries.C (HahnSeries.C b) + 2) +
-            PowerSeries.X *
-              (PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) +
-                PowerSeries.C (HahnSeries.C b) +
-                2 * PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) *
-                  PowerSeries.C (HahnSeries.C b))) *
-        (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2)⁻¹ +
-      PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries)) = _
-  rw [PowerSeries.coeff_mul]
-  simp only [map_neg, PowerSeries.coeff_mul,
-    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk,
-    PowerSeries.coeff_mk, PowerSeries.coeff_map, hscalar]
-  simp only [formalOmega, formalExternalOmega, PowerSeries.coeff_mk,
-    HahnSeries.coeff_single_mul, LaurentSeries.coeff_coe_powerSeries,
-    HahnSeries.coeff_single, if_true, if_false, hunit]
-  field_simp [hb0]
-  ring_nf
-  simpa [PUPoly, UMain, UMain1, UMain2, UCPoly]
+  let a : LaurentSeries ℂ := HahnSeries.single 1 1
+  let B : LaurentSeries ℂ := HahnSeries.C b
+  let F := formalOmega * formalExternalOmega b hb
+  let SC := PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries
+  let J : AnnulusSeries := (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2)⁻¹
+  let K := formalOmega * (formalExternalOmega b hb * J)
+  let N0 := a * B * (a + B + 2)
+  let N1 := a + B + 2 * a * B
+  have hab : PowerSeries.C a * PowerSeries.C B =
+      (PowerSeries.C (HahnSeries.single 1 b) : AnnulusSeries) := by
+    rw [← map_mul]
+    congr 1
+    simp only [a, B, HahnSeries.C_apply, HahnSeries.single_mul_single, add_zero, one_mul]
+  have hshape : cubicUTSeries b hb =
+      -((K * PowerSeries.X) * PowerSeries.C N0 +
+        (K * PowerSeries.X ^ 2) * PowerSeries.C N1 + F * SC) := by
+    change -(formalOmega * formalExternalOmega b hb) *
+      (PowerSeries.X * (PowerSeries.C a * PowerSeries.C B *
+        (PowerSeries.C a + PowerSeries.C B + 2) +
+          PowerSeries.X * (PowerSeries.C a + PowerSeries.C B +
+            2 * PowerSeries.C a * PowerSeries.C B)) *
+        (2 * (PowerSeries.C a * PowerSeries.C B - PowerSeries.X) ^ 2)⁻¹ + SC) = _
+    conv_lhs => arg 2; arg 1; arg 2; rw [hab]
+    dsimp only [K, J, F, N0, N1]
+    simp only [map_add, map_mul, map_ofNat]
+    ring
+  have hshift1 : PowerSeries.coeff d (K * PowerSeries.X) =
+      PowerSeries.coeff (d - 1) K := by
+    simpa only [pow_one, if_pos hd] using PowerSeries.coeff_mul_X_pow' K 1 d
+  have hshift2 := PowerSeries.coeff_mul_X_pow' K 2 d
+  have hfirst : -(PowerSeries.coeff (d - 1) K * N0) =
+      HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) * (H : LaurentSeries ℂ) *
+        PE (UMain1 d b hb) := ut_first_coefficient d hb0 hd
+  have hscalar : -(PowerSeries.coeff d (F * SC)) =
+      HahnSeries.single (-(d : ℤ) - 1) (1 : ℂ) * (H : LaurentSeries ℂ) *
+        PE (UCPoly d b hb) := ut_scalar_coefficient d hb0
+  rw [hshape, map_neg, map_add, map_add, PowerSeries.coeff_mul_C,
+    PowerSeries.coeff_mul_C, hshift1, hshift2, neg_add, neg_add, hfirst, hscalar,
+    ← PE_coe (PUPoly d b hb)]
+  by_cases hd2 : 2 ≤ d
+  · rw [if_pos hd2, ut_second_coefficient d hb0 hd2]
+    simp only [PUPoly, UMain, map_add]
+    ring
+  · rw [if_neg hd2, zero_mul, neg_zero, add_zero]
+    simp only [PUPoly, UMain, UMain2, if_neg hd2, add_zero, map_add]
+    ring
 
 /-- Actual all-degree TT finite-class membership for the literal kernel. -/
 theorem cubicTT_finite_class (b hb : ℂ) (hb0 : b ≠ 0) (d : ℕ) (hd : 1 ≤ d) :

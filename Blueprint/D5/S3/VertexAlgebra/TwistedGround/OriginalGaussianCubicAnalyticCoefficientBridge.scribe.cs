@@ -8,7 +8,7 @@ internal sealed class OriginalGaussianCubicAnalyticCoefficientBridgeDocument : I
         "Original Gaussian Cubic Analytic Coefficient Bridge",
         H("Original Gaussian Cubic Analytic Coefficient Bridge"),
         Blocks(
-            Paragraph(Text("The actual half-binomial, inverse-period and literal kernel power series are integrated on fixed contours with proved continuity and termwise convergence. The outputs remain the original coefficients.")),
+            Paragraph(Text("The original half-binomial series is absolutely convergent. Uniqueness of its finite Cauchy products identifies the reciprocal of the nonvanishing original period with its formal inverse series. Continuity on the two actual oriented circles and Fubini give fixed-contour Taylor expansions and the genuine iterated contour coefficients, for arbitrary external amplitude.")),
             Paragraph(Text("These sources are an implementation checkpoint. Native verification and independent admission review are separate requirements; no official acceptance or physical realization is asserted. Full four-halfmode geometry, two-source transport, identityK crossing, Monster moonshine, VOA/CFT/anomaly/fusion, complete string theory and AdS/CFT remain unfinished.")),
             Describe.Lean(
                 DescribeId.Create("h-hassum"),

@@ -14,10 +14,10 @@ internal sealed class OriginalGaussianCubicFiniteClassDocument : IScribeDocument
                 DescribeId.Create("cubictt-finite-class"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicFiniteClass.cubicTT_finite_class"),
                 H("cubicTT_finite_class"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("cubicTT finite class."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The literal product coefficient is a finite antidiagonal convolution embedded into the original Laurent field. The polar numerator has a double root at the external coordinate; its monic quotient cancels the original squared denominator. The zero constant term of the scalar series gives the remaining finite polynomial. These constructions yield degree strictly below the positive modulus degree, for arbitrary external amplitude."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("cubicut-finite-class"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicFiniteClass.cubicUT_finite_class"),
                 H("cubicUT_finite_class"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("cubicUT finite class."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The actual inverse-series coefficient is combined with two finite antidiagonal sums. Each of the six original numerator monomials is embedded with its exact Laurent shift and negative pullback sign; the scalar contribution is the negative coordinate shift of the TT scalar polynomial. The constructed polynomial has degree at most the modulus degree. No root, sewing, resolvent or desired correspondence is assumed."))), DescribeRole.Theorem))));
 }

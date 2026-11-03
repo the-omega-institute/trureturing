@@ -8,7 +8,7 @@ internal sealed class OriginalGaussianCubicAnalyticDocument : IScribeDocumentDef
         "Original Gaussian Cubic Analytic",
         H("Original Gaussian Cubic Analytic"),
         Blocks(
-            Paragraph(Text("The literal cubic has contour bounds and absolutely convergent modulus expansions on the original annulus. The external current gives an lp 2 vector analytic on norm z less than beta b, including zero.")),
+            Paragraph(Text("The literal cubic has contour bounds and absolutely convergent modulus expansions on the original annulus. Fixed strict radii give geometric bounds for the normalized original coefficients. The original finite current row is summed as an lp 2 vector, with locally uniform convergence and complex analyticity on norm z less than beta b, including zero and arbitrary external amplitude.")),
             Paragraph(Text("These sources are an implementation checkpoint. Native verification and independent admission review are separate requirements; no official acceptance or physical realization is asserted. Full four-halfmode geometry, two-source transport, identityK crossing, Monster moonshine, VOA/CFT/anomaly/fusion, complete string theory and AdS/CFT remain unfinished.")),
             Describe.Lean(
                 DescribeId.Create("omega-inversion"),

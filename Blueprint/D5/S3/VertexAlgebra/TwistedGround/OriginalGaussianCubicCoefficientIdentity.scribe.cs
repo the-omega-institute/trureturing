@@ -14,5 +14,5 @@ internal sealed class OriginalGaussianCubicCoefficientIdentityDocument : IScribe
                 DescribeId.Create("cubic-original-coefficient-identity"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicCoefficientIdentity.cubic_original_coefficient_identity"),
                 H("cubic_original_coefficient_identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("cubic original coefficient identity."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The explicit finite TT and UT polynomials are reconstructed as original Laurent coefficients. The existing residue cancellation and signed sewing equations then give every original coefficient recurrence, including the current row at modulus degree zero. No desired coefficient identity is assumed."))), DescribeRole.Theorem))));
 }

@@ -20,20 +20,21 @@ annular variable. The external amplitude remains an arbitrary complex number.
 
 set_option autoImplicit false
 noncomputable section
-open scoped BigOperators Topology ENNReal
+open scoped BigOperators Topology ENNReal NNReal
 open Filter Metric Set MeasureTheory
 
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicAnalyticCoefficientBridge
 
 open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
-open OriginalGaussianCubicKernel OriginalGaussianCubicAnalytic
+open OriginalGaussianCubicKernel OriginalGaussianCubicAnalytic OriginalGaussianMatrix OriginalGaussianResolvent
 
 private lemma beta_positive {b : ℂ} (hb : b ≠ 0) : 0 < beta b :=
   lt_min (by norm_num) (norm_pos_iff.mpr hb)
 
 private lemma mem_complex_eball {x : ℂ} {R : ℝ≥0} :
     x ∈ eball (0 : ℂ) (R : ℝ≥0∞) ↔ ‖x‖ < (R : ℝ) := by
-  simp only [mem_eball_zero_iff, enorm_lt_coe, ← coe_nnnorm, NNReal.coe_lt_coe]
+  rw [mem_eball_zero_iff, enorm_lt_coe]
+  exact NNReal.coe_lt_coe.symm
 
 private lemma half_norm_bound (n : ℕ) : ‖halfBinomial n‖ ≤ 1 := by
   rw [halfBinomial_eq_signed_centralWeight, norm_mul, norm_pow]
@@ -76,8 +77,10 @@ private lemma scalar_product_hasSum {p q : PowerSeries ℂ} {x u v : ℂ}
   rw [hp.tsum_eq, hq.tsum_eq] at h
   convert h using 1
   funext n
-  rw [PowerSeries.coeff_mul, Finset.sum_mul,
-    Finset.Nat.sum_antidiagonal_eq_sum_range_succ]
+  rw [PowerSeries.coeff_mul, Finset.sum_mul]
+  change (∑ ij ∈ Finset.HasAntidiagonal.antidiagonal n,
+    (PowerSeries.coeff ij.1 p * PowerSeries.coeff ij.2 q) * x ^ n) = _
+  rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   apply Finset.sum_congr rfl
   intro k hk
   have hkn : k + (n - k) = n := Nat.add_sub_of_le (Nat.le_of_lt_succ (Finset.mem_range.mp hk))
@@ -106,7 +109,12 @@ private lemma scalar_coefficients_sub {f g : ℂ → ℂ} {p q : PowerSeries ℂ
     (hq : HasFPowerSeriesAt g (.ofScalars ℂ (fun n => PowerSeries.coeff n q)) 0) :
     HasFPowerSeriesAt (fun x => f x - g x)
       (.ofScalars ℂ (fun n => PowerSeries.coeff n (p - q))) 0 := by
-  simpa only [map_sub, FormalMultilinearSeries.ofScalars_sub] using hp.sub hq
+  have he : (fun n => PowerSeries.coeff n (p - q)) =
+      (fun n => PowerSeries.coeff n p) - (fun n => PowerSeries.coeff n q) := by
+    funext n
+    exact map_sub _ _ _
+  rw [he, FormalMultilinearSeries.ofScalars_sub]
+  exact hp.sub hq
 
 private lemma scalar_coefficients_const (c : ℂ) :
     HasFPowerSeriesAt (fun _ : ℂ => c)
@@ -132,7 +140,7 @@ private lemma scalar_coefficients_X :
     intro n hn
     simp [PowerSeries.coeff_X, hn]
   simpa only [FormalMultilinearSeries.coeff_ofScalars, zero_add, smul_eq_mul,
-    PowerSeries.coeff_one_X, pow_one, one_mul, mul_comm] using hs
+    PowerSeries.coeff_one_X, pow_one, one_mul, mul_one, mul_comm] using hs
 
 private lemma scalar_coefficients_injective {p q : PowerSeries ℂ}
     (h : FormalMultilinearSeries.ofScalars ℂ (fun n => PowerSeries.coeff n p) =
@@ -147,11 +155,12 @@ private lemma period_original_hasSum {x : ℂ} (hx : ‖x‖ < 1) :
   have hs : Summable (fun n : ℕ => ‖halfBinomial n ^ 2 * x ^ n‖) := by
     apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _)
       (fun n => ?_) (summable_geometric_of_lt_one (norm_nonneg x) hx)
-    rw [norm_mul, norm_pow]
+    rw [norm_mul, norm_pow x n]
     have hn : ‖halfBinomial n ^ 2‖ ≤ 1 := by
       simpa [norm_pow] using pow_le_pow_left₀ (norm_nonneg _) (half_norm_bound n) 2
     exact (mul_le_mul_of_nonneg_right hn (pow_nonneg (norm_nonneg x) n)).trans_eq (one_mul _)
-  simpa only [periodSeries, PowerSeries.coeff_mk] using hs.of_norm.hasSum
+  simpa only [periodSeries, PowerSeries.coeff_mk,
+    D5.S3.Analytic.OriginalHalfBinomialPeriod.period] using hs.of_norm.hasSum
 
 private lemma period_coefficients_at :
     HasFPowerSeriesAt D5.S3.Analytic.OriginalHalfBinomialPeriod.period
@@ -228,6 +237,7 @@ private lemma period_derivative_original_hasSum {x : ℂ} (hx : ‖x‖ < 1) :
     exact ((hasDerivAt_pow n w).const_mul _).differentiableAt.differentiableWithinAt
   have hsum := Complex.hasSum_deriv_of_summable_norm hs hd isOpen_ball hb
     (show x ∈ ball (0 : ℂ) r by simpa using hxr)
+  change HasSum _ (deriv D5.S3.Analytic.OriginalHalfBinomialPeriod.period x) at hsum
   have hshift := (hasSum_nat_add_iff' 1).mpr hsum
   simp only [Finset.sum_range_one, deriv_const_mul_field, deriv_pow_field,
     Nat.cast_zero, zero_mul, mul_zero, sub_zero, Nat.add_sub_cancel] at hshift
@@ -276,7 +286,7 @@ theorem scalarC_powerSeries {eta : ℝ≥0} (heta : 0 < eta) (heta1 : (eta : ℝ
     obtain ⟨hF, hF', _⟩ := D5.S3.Analytic.OriginalHalfBinomialPeriod.picard_fuchs hx1
     have hn := OriginalGaussianPeriodIdentity.period_ne_zero hx1
     exact ((differentiableAt_id.div_const 2).sub
-      (((differentiableAt_id.mul (differentiableAt_const.sub differentiableAt_id)).mul
+      (((differentiableAt_id.mul ((differentiableAt_const (1 : ℂ)).sub differentiableAt_id)).mul
         hF').div hF hn)).differentiableWithinAt
   have hC := hD.hasFPowerSeriesOnBall heta
   have he := scalarC_coefficients_at.eq_formalMultilinearSeries hC.hasFPowerSeriesAt
@@ -286,8 +296,8 @@ private lemma C_continuousAt {x : ℂ} (hx : ‖x‖ < 1) :
     ContinuousAt scalarC x := by
   obtain ⟨eta, hxeta, heta1⟩ := exists_between hx
   have heta : 0 < eta := (norm_nonneg x).trans_lt hxeta
-  have h := scalarC_powerSeries (eta := ⟨eta, heta.le⟩) heta heta1
-  exact (h.analyticAt_of_mem ((mem_complex_eball (R := ⟨eta, heta.le⟩)).mpr hxeta)).continuousAt
+  have h := scalarC_powerSeries (eta := (⟨eta, heta.le⟩ : ℝ≥0)) heta heta1
+  exact (h.analyticAt_of_mem ((mem_complex_eball (R := (⟨eta, heta.le⟩ : ℝ≥0))).mpr hxeta)).continuousAt
 
 /-- The literal squared polar inverses have the expected convergent expansions. -/
 theorem polar_inverse_hasSum {a b x : ℂ} (hb : b ≠ 0)
@@ -329,7 +339,8 @@ theorem literal_factor_hasSum {b a x : ℂ} (hb : b ≠ 0) (root : ℂ)
   have ha0 : 0 < ‖a‖ := by
     by_contra hn
     have : ‖a‖ = 0 := le_antisymm (le_of_not_gt hn) (norm_nonneg a)
-    simp [this] at hx
+    rw [this, zero_mul] at hx
+    exact (not_lt_of_ge (norm_nonneg x)) hx
   have ha1 : ‖a‖ < 1 := ha.trans_le (min_le_left _ _)
   have hab : ‖a‖ < ‖b‖ := ha.trans_le (min_le_right _ _)
   have hxa : ‖x‖ < ‖a‖ := hx.trans_le
@@ -346,10 +357,12 @@ theorem literal_factor_hasSum {b a x : ℂ} (hb : b ≠ 0) (root : ℂ)
   obtain ⟨hT, hU⟩ := polar_inverse_hasSum hb hab hxab
   obtain ⟨eta, hxeta, heta1⟩ := exists_between hx1
   have heta : 0 < eta := (norm_nonneg x).trans_lt hxeta
-  have hmem : x ∈ eball (0 : ℂ) (⟨eta, heta.le⟩ : ℝ≥0) :=
-    (mem_complex_eball (R := ⟨eta, heta.le⟩)).mpr hxeta
-  have hI := (period_inverse_powerSeries (eta := ⟨eta, heta.le⟩) heta heta1).hasSum hmem
-  have hC := (scalarC_powerSeries (eta := ⟨eta, heta.le⟩) heta heta1).hasSum hmem
+  have hmem : x ∈ eball (0 : ℂ) (ENNReal.ofReal eta) := by
+    rw [Metric.mem_eball, edist_dist, dist_zero_right, ENNReal.ofReal_lt_ofReal_iff heta]
+    exact hxeta
+  rw [ENNReal.ofReal_eq_coe_nnreal heta.le] at hmem
+  have hI := (period_inverse_powerSeries (eta := (⟨eta, heta.le⟩ : ℝ≥0)) heta heta1).hasSum hmem
+  have hC := (scalarC_powerSeries (eta := (⟨eta, heta.le⟩ : ℝ≥0)) heta heta1).hasSum hmem
   refine ⟨hHa, ?_, ?_, hT, hU, period_original_hasSum hx1,
     period_derivative_original_hasSum hx1, ?_, ?_⟩
   · convert hHxa using 1
@@ -357,10 +370,11 @@ theorem literal_factor_hasSum {b a x : ℂ} (hb : b ≠ 0) (root : ℂ)
     rw [div_pow]
     ring
   · convert hE using 1
-    funext n
-    rw [div_pow, pow_succ]
-    field_simp [hb]
-    <;> ring
+    · funext n
+      rw [div_pow, pow_succ]
+      field_simp [hb]
+      <;> ring
+    · rfl
   · simpa only [FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul, zero_add] using hI
   · simpa only [FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul, zero_add] using hC
 
@@ -372,7 +386,8 @@ private lemma kernel_continuity {b a x : ℂ} (hb : b ≠ 0) (root : ℂ)
   have ha0 : 0 < ‖a‖ := by
     by_contra hn
     have : ‖a‖ = 0 := le_antisymm (le_of_not_gt hn) (norm_nonneg a)
-    simp [this] at hx
+    rw [this, zero_mul] at hx
+    exact (not_lt_of_ge (norm_nonneg x)) hx
   have hane : a ≠ 0 := norm_pos_iff.mp ha0
   have ha1 : ‖a‖ < 1 := ha.trans_le (min_le_left _ _)
   have hab : ‖a‖ < ‖b‖ := ha.trans_le (min_le_right _ _)
@@ -386,13 +401,15 @@ private lemma kernel_continuity {b a x : ℂ} (hb : b ≠ 0) (root : ℂ)
   have hTne : a - b ≠ 0 := sub_ne_zero.mpr (ne_of_apply_ne norm hab.ne)
   have hUne : a * b - x ≠ 0 := sub_ne_zero.mpr (ne_of_apply_ne norm hxab.ne')
   have hHa : ContinuousAt (fun ax : ℂ × ℂ => H ax.1) (a, x) :=
-    (H_continuousAt ha1).comp continuousAt_fst
+    (H_continuousAt ha1).comp'
+      (f := fun ax : ℂ × ℂ => ax.1) (x := (a, x)) continuousAt_fst
   have hHxa : ContinuousAt (fun ax : ℂ × ℂ => H (ax.2 / ax.1)) (a, x) :=
-    (H_continuousAt (by rw [norm_div]; exact (div_lt_one ha0).mpr hxa)).comp
+    (H_continuousAt (by rw [norm_div]; exact (div_lt_one ha0).mpr hxa)).comp'
+      (f := fun ax : ℂ × ℂ => ax.2 / ax.1) (x := (a, x))
       (continuousAt_snd.div continuousAt_fst hane)
   have hHxb : ContinuousAt (fun ax : ℂ × ℂ => H (ax.2 / b)) (a, x) :=
-    (H_continuousAt (by rw [norm_div]; exact (div_lt_one (norm_pos_iff.mpr hb)).mpr hxb)).comp
-      (continuousAt_snd.div_const b)
+    (H_continuousAt (by rw [norm_div]; exact (div_lt_one (norm_pos_iff.mpr hb)).mpr hxb)).comp'
+      (f := fun ax : ℂ × ℂ => ax.2 / b) (x := (a, x)) (continuousAt_snd.div_const b)
   have hw : ContinuousAt (fun ax : ℂ × ℂ => omega ax.1 ax.2) (a, x) :=
     (hHa.div continuousAt_fst hane).mul hHxa
   have he : ContinuousAt (fun ax : ℂ × ℂ => externalOmega b root ax.2) (a, x) :=
@@ -401,17 +418,20 @@ private lemma kernel_continuity {b a x : ℂ} (hb : b ≠ 0) (root : ℂ)
     unfold polarNumerator
     fun_prop
   have hC : ContinuousAt (fun ax : ℂ × ℂ => scalarC ax.2) (a, x) :=
-    (C_continuousAt hx1).comp continuousAt_snd
+    (C_continuousAt hx1).comp'
+      (f := fun ax : ℂ × ℂ => ax.2) (x := (a, x)) continuousAt_snd
   have hT : ContinuousAt (fun ax : ℂ × ℂ => (2 * (ax.1 - b) ^ 2)⁻¹) (a, x) :=
     (by fun_prop : ContinuousAt (fun ax : ℂ × ℂ => 2 * (ax.1 - b) ^ 2) (a, x)).inv₀
       (mul_ne_zero (by norm_num) (pow_ne_zero _ hTne))
   have hU : ContinuousAt (fun ax : ℂ × ℂ => (2 * (ax.1 * b - ax.2) ^ 2)⁻¹) (a, x) :=
     (by fun_prop : ContinuousAt (fun ax : ℂ × ℂ => 2 * (ax.1 * b - ax.2) ^ 2) (a, x)).inv₀
       (mul_ne_zero (by norm_num) (pow_ne_zero _ hUne))
-  constructor
-  · simpa only [TT, div_eq_mul_inv] using (hw.mul he).mul ((hN.mul hT).add hC)
-  · simpa only [UT, div_eq_mul_inv] using (hw.mul he).neg.mul
-      (((continuousAt_snd.mul hN).mul hU).add hC)
+  have hTden : (2 * (a - b) ^ 2 : ℂ) ≠ 0 :=
+    mul_ne_zero (by norm_num) (pow_ne_zero _ hTne)
+  have hUden : (2 * (a * b - x) ^ 2 : ℂ) ≠ 0 :=
+    mul_ne_zero (by norm_num) (pow_ne_zero _ hUne)
+  exact ⟨(hw.mul he).mul ((hN.div (by fun_prop) hTden).add hC),
+    (hw.mul he).neg.mul (((continuousAt_snd.mul hN).div (by fun_prop) hUden).add hC)⟩
 
 private lemma kernels_continuousOn {b : ℂ} (hb : b ≠ 0) (root : ℂ)
     {r eta : ℝ} (hrb : r < beta b) (hetab : eta < r * beta b) :
@@ -439,7 +459,9 @@ private lemma negativeContour_continuousOn {K : ℂ → ℂ → ℂ} (s : ℕ)
   have hJ : Continuous J.uncurry := by
     have hk : Continuous (fun xt : closedBall (0 : ℂ) eta × ℝ =>
         K (circleMap 0 r xt.2) xt.1) :=
-      hK.comp_continuous (by fun_prop)
+      hK.comp_continuous
+        (f := fun xt : closedBall (0 : ℂ) eta × ℝ =>
+          (circleMap 0 r xt.2, (xt.1 : ℂ))) (by fun_prop)
         (fun xt => ⟨circleMap_mem_sphere _ hr _, xt.1.2⟩)
     dsimp [J, Function.uncurry]
     have hd : Continuous (fun xt : closedBall (0 : ℂ) eta × ℝ =>
@@ -451,6 +473,8 @@ private lemma negativeContour_continuousOn {K : ℂ → ℂ → ℂ} (s : ℕ)
       ∫ t in Icc 0 (2 * Real.pi), J x t) :=
     continuous_parametric_integral_of_continuous hJ isCompact_Icc
   rw [continuousOn_iff_continuous_domRestrict]
+  change Continuous (fun x : closedBall (0 : ℂ) eta =>
+    negativeContour (fun a => K a x) s r)
   simpa only [negativeContour, circleIntegral_def_Icc, smul_eq_mul, J] using
     hc.const_mul ((2 * Real.pi * Complex.I)⁻¹)
 
@@ -467,7 +491,9 @@ private lemma circleIntegral_swap {G : ℂ → ℂ → ℂ} {r eta : ℝ}
   have hJ : Continuous J := by
     have hg : Continuous (fun ts : ℝ × ℝ =>
         G (circleMap 0 r ts.1) (circleMap 0 eta ts.2)) :=
-      hG.comp_continuous (by fun_prop)
+      hG.comp_continuous
+        (f := fun ts : ℝ × ℝ => (circleMap 0 r ts.1, circleMap 0 eta ts.2))
+        (by fun_prop)
         (fun _ => ⟨circleMap_mem_sphere _ hr _, circleMap_mem_sphere _ heta _⟩)
     dsimp [J]
     simp only [deriv_circleMap]
@@ -477,7 +503,7 @@ private lemma circleIntegral_swap {G : ℂ → ℂ → ℂ} {r eta : ℝ}
       (volume.restrict (Icc 0 (2 * Real.pi)))) := by
     rw [Measure.prod_restrict]
     exact hJ.continuousOn.integrableOn_compact (isCompact_Icc.prod isCompact_Icc)
-  have hf := integral_integral_swap hi
+  have hf := integral_integral_swap (f := fun t u : ℝ => J (t, u)) hi
   simp_rw [circleIntegral_def_Icc, smul_eq_mul]
   simp_rw [← integral_const_mul]
   convert hf using 1 <;> congr 1 <;> funext t <;> congr 1 <;> funext u <;>
@@ -530,8 +556,9 @@ private lemma negativeContour_cauchy {K : ℂ → ℂ → ℂ} (s : ℕ)
       intro xi _
       dsimp [G]
       ring
-    rw [he, (hD a ha).circleIntegral_sub_inv_smul (by simpa using hx)]
-    simp only [smul_eq_mul]
+    have hformula := (hD a ha).circleIntegral_sub_inv_smul (by simpa using hx)
+    simp only [smul_eq_mul] at hformula
+    rw [he, hformula]
     dsimp [c]
     field_simp [Complex.two_pi_I_ne_zero]
     <;> ring
@@ -554,12 +581,20 @@ private lemma integrated_powerSeries {K : ℂ → ℂ → ℂ} (s : ℕ)
       0 (ENNReal.ofReal eta) := by
   have hi : CircleIntegrable (fun x => negativeContour (fun a => K a x) s r) 0 eta :=
     ((negativeContour_continuousOn s hr hK).mono sphere_subset_closedBall).circleIntegrable heta.le
-  have hp := hasFPowerSeriesOn_cauchy_integral (R := ⟨eta, heta.le⟩) hi
+  have hp := hasFPowerSeriesOn_cauchy_integral (R := (⟨eta, heta.le⟩ : ℝ≥0)) hi
     (show (0 : ℝ≥0) < ⟨eta, heta.le⟩ from heta)
-  have hc := hp.congr (fun x hx => by
-    have hx' : ‖x‖ < eta := (mem_complex_eball (R := ⟨eta, heta.le⟩)).mp hx
-    simpa only [smul_eq_mul] using negativeContour_cauchy s hr heta hK hD hx')
-  simpa only [← ENNReal.ofReal_coe_nnreal] using hc
+  have hp' : HasFPowerSeriesOnBall
+      (fun x => (2 * Real.pi * Complex.I)⁻¹ •
+        ∮ xi in C(0, eta), (xi - x)⁻¹ • negativeContour (fun a => K a xi) s r)
+      (cauchyPowerSeries (fun x => negativeContour (fun a => K a x) s r) 0 eta)
+      0 (ENNReal.ofReal eta) := by
+    convert hp using 1 <;> first | rfl | exact ENNReal.ofReal_eq_coe_nnreal heta.le
+  have hc := hp'.congr (fun x hx => by
+    have hx' : ‖x‖ < eta := by
+      rw [Metric.mem_eball, edist_dist, dist_zero_right, ENNReal.ofReal_lt_ofReal_iff heta] at hx
+      exact hx
+    simpa only [smul_eq_mul, NNReal.coe_mk] using negativeContour_cauchy s hr heta hK hD hx')
+  exact hc
 
 private lemma cauchy_coefficient_eq (f : ℂ → ℂ) (d : ℕ) (eta : ℝ) :
     (cauchyPowerSeries f 0 eta).coeff d =
@@ -639,15 +674,25 @@ private lemma literal_differentiable_closedBall {b a : ℂ} (hb : b ≠ 0) (root
   obtain ⟨R, hetaR, hRb⟩ := exists_between hetab
   have hR : 0 < R := heta.trans hetaR
   have ha : ‖a‖ = r := by simpa using har
-  obtain ⟨hT, hU⟩ := literal_modulus_series hb root (by simpa [ha] using hrb)
-    (eta := ⟨R, hR.le⟩) hR (by simpa [ha] using hRb)
+  obtain ⟨hT, hU⟩ := literal_modulus_series (a := a) hb root (by simpa [ha] using hrb)
+    (eta := (⟨R, hR.le⟩ : ℝ≥0)) hR (by change R < ‖a‖ * beta b; simpa [ha] using hRb)
   have hmem (x : ℂ) (hx : x ∈ closedBall (0 : ℂ) eta) :
-      x ∈ eball (0 : ℂ) (⟨R, hR.le⟩ : ℝ≥0) := by
+      x ∈ eball (0 : ℂ) (ENNReal.ofReal R) := by
     have hxeta : ‖x‖ ≤ eta := by simpa using hx
     have : ‖x‖ < R := hxeta.trans_lt hetaR
-    exact (mem_complex_eball (R := ⟨R, hR.le⟩)).mpr this
-  exact ⟨fun x hx => (hT.analyticAt_of_mem (hmem x hx)).differentiableAt.differentiableWithinAt,
-    fun x hx => (hU.analyticAt_of_mem (hmem x hx)).differentiableAt.differentiableWithinAt⟩
+    rw [Metric.mem_eball, edist_dist, dist_zero_right, ENNReal.ofReal_lt_ofReal_iff hR]
+    exact this
+  constructor
+  · intro x hx
+    apply (hT.analyticAt_of_mem ?_).differentiableAt.differentiableWithinAt
+    erw [← ENNReal.ofReal_coe_nnreal]
+    change x ∈ eball (0 : ℂ) (ENNReal.ofReal R)
+    exact hmem x hx
+  · intro x hx
+    apply (hU.analyticAt_of_mem ?_).differentiableAt.differentiableWithinAt
+    erw [← ENNReal.ofReal_coe_nnreal]
+    change x ∈ eball (0 : ℂ) (ENNReal.ofReal R)
+    exact hmem x hx
 
 /-- The parameterized inner integrals are continuous on every strict closed disk;
 their outer coefficient integrals are genuine integrable circle integrals. -/
@@ -700,7 +745,7 @@ theorem integrated_literal_hasSum {b x : ℂ} (hb : b ≠ 0) (root : ℂ) (s : �
   obtain ⟨hT, hU⟩ := integrated_literal_powerSeries hb root s hr hrb heta hetab
   have hmem : x ∈ eball (0 : ℂ) (ENNReal.ofReal eta) := by
     rw [ENNReal.ofReal_eq_coe_nnreal heta.le]
-    exact (mem_complex_eball (R := ⟨eta, heta.le⟩)).mpr hx
+    exact (mem_complex_eball (R := (⟨eta, heta.le⟩ : ℝ≥0))).mpr hx
   have hxB : ‖x‖ < beta b ^ 2 := by
     have hB := beta_positive hb
     have hprod : r * beta b < beta b ^ 2 := by nlinarith
@@ -832,7 +877,7 @@ theorem original_coefficients_analytic {b x : ℂ} (hb : b ≠ 0) (root : ℂ) (
   obtain ⟨hT, hU⟩ := integrated_literal_powerSeries hb root s hr hrb heta hetab
   have hmem : x ∈ eball (0 : ℂ) (ENNReal.ofReal eta) := by
     rw [ENNReal.ofReal_eq_coe_nnreal heta.le]
-    exact (mem_complex_eball (R := ⟨eta, heta.le⟩)).mpr hxeta
+    exact (mem_complex_eball (R := (⟨eta, heta.le⟩ : ℝ≥0))).mpr hxeta
   have heq : (fun w => negativeContour (fun a => TT b root a w) s r) =ᶠ[𝓝 x]
       Tcoeff b root s ∧
       (fun w => negativeContour (fun a => UT b root a w) s r) =ᶠ[𝓝 x]

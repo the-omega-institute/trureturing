@@ -19,7 +19,7 @@ LaurentSeries; they do not change the kernels or their annular integrals.
 
 set_option autoImplicit false
 noncomputable section
-open scoped BigOperators Topology ENNReal
+open scoped BigOperators Topology ENNReal NNReal
 open Filter Metric Set MeasureTheory
 
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicAnalyticLaurentBridge
@@ -44,7 +44,7 @@ private lemma product_hasSum {p q : PS} {a u v : ℂ}
   convert h using 1
   funext n
   rw [PowerSeries.coeff_mul, Finset.sum_mul,
-    Finset.Nat.sum_antidiagonal_eq_sum_range_succ]
+    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   apply Finset.sum_congr rfl
   intro j hj
   have he : j + (n - j) = n := Nat.add_sub_of_le
@@ -117,15 +117,21 @@ private lemma normal_mul {P Q : BPS} {a v F G : ℂ}
     rw [PowerSeries.coeff_mul]
     have h := scalarSum_finset (Finset.HasAntidiagonal.antidiagonal d)
       (fun ij => PowerSeries.coeff ij.1 P * PowerSeries.coeff ij.2 Q) a
-      (fun ij _ => (scalarSum_mul (hP ij.1) (hQ ij.2)).2)
+      (fun ij _ => (scalarSum_mul (p := PowerSeries.coeff ij.1 P)
+        (q := PowerSeries.coeff ij.2 Q) (a := a) (hP ij.1) (hQ ij.2)).2)
     have he (i j : ℕ) :
         scalarSum (PowerSeries.coeff i P * PowerSeries.coeff j Q) a =
           scalarSum (PowerSeries.coeff i P) a * scalarSum (PowerSeries.coeff j Q) a :=
-      (scalarSum_mul (hP i) (hQ j)).1
+      (scalarSum_mul (p := PowerSeries.coeff i P)
+        (q := PowerSeries.coeff j Q) (a := a) (hP i) (hQ j)).1
     simpa only [he] using h
   let p : PS := PowerSeries.mk (fun d => scalarSum (PowerSeries.coeff d P) a)
   let q : PS := PowerSeries.mk (fun d => scalarSum (PowerSeries.coeff d Q) a)
-  have hm := product_hasSum (p := p) (q := q) hF hG
+  have hp : HasSum (fun d : ℕ => PowerSeries.coeff d p * v ^ d) F := by
+    simpa only [p, PowerSeries.coeff_mk] using hF
+  have hq : HasSum (fun d : ℕ => PowerSeries.coeff d q * v ^ d) G := by
+    simpa only [q, PowerSeries.coeff_mk] using hG
+  have hm := product_hasSum (p := p) (q := q) (a := v) (u := F) (v := G) hp hq
   refine ⟨fun d => (hc d).2, ?_⟩
   have he (d : ℕ) : PowerSeries.coeff d (p * q) =
       scalarSum (PowerSeries.coeff d (P * Q)) a := by
@@ -224,16 +230,20 @@ private lemma pole_coeff {b : ℂ} (hb : b ≠ 0) (n : ℕ) :
     PowerSeries.invUnitsSub_mul_sub (Units.mk0 b hb)
   have hq : q * (2 * (PowerSeries.X - PowerSeries.C b) ^ 2) = 1 := by
     have hn : PowerSeries.C (1 / 2 : ℂ) * (2 : PS) = 1 := by
-      norm_num [← map_ofNat, ← map_mul]
+      rw [← map_ofNat (PowerSeries.C : ℂ →+* PS) 2, ← map_mul]
+      norm_num
     calc
       _ = (PowerSeries.C (1 / 2 : ℂ) * 2) *
           (p * (PowerSeries.C b - PowerSeries.X)) ^ 2 := by dsimp [q]; ring
       _ = 1 := by rw [hn, hp]; simp
   have heq : q = poleSeries b :=
-    (PowerSeries.eq_inv_iff_mul_eq_one (by simp [hb] :
+    (PowerSeries.eq_inv_iff_mul_eq_one (by simp only [map_mul, map_pow, map_sub, map_ofNat,
+        PowerSeries.constantCoeff_X, PowerSeries.constantCoeff_C]; norm_num [hb] :
       PowerSeries.constantCoeff (2 * (PowerSeries.X - PowerSeries.C b) ^ 2 : PS) ≠ 0)).mpr hq
-  rw [← heq, q, PowerSeries.coeff_C_mul, pow_two, PowerSeries.coeff_mul,
-    Finset.Nat.sum_antidiagonal_eq_sum_range_succ]
+  rw [← heq]
+  dsimp only [q]
+  rw [PowerSeries.coeff_C_mul, pow_two, PowerSeries.coeff_mul,
+    Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   have hterm (j : ℕ) (hj : j ∈ Finset.range (n + 1)) :
       PowerSeries.coeff j p * PowerSeries.coeff (n - j) p = (b ^ (n + 2))⁻¹ := by
     have hjn : j ≤ n := Nat.le_of_lt_succ (Finset.mem_range.mp hj)
@@ -251,7 +261,8 @@ private lemma pole_hasSum {a b : ℂ} (hb : b ≠ 0) (ha : ‖a‖ < ‖b‖) :
       ((2 * (a - b) ^ 2)⁻¹) := by
   have h := (Complex.one_div_sub_sq_hasFPowerSeriesOnBall_zero hb).hasSum
     (show a ∈ eball (0 : ℂ) ‖b‖ₑ by
-      simpa only [mem_eball_zero_iff, enorm_lt_coe, ← coe_nnnorm, NNReal.coe_lt_coe] using ha)
+      rw [mem_eball_zero_iff]
+      exact ENNReal.coe_lt_coe.mpr (NNReal.coe_lt_coe.mp ha))
   convert h.mul_left (1 / 2 : ℂ) using 1
   · funext n
     simp only [pole_coeff hb, FormalMultilinearSeries.ofScalars_apply_eq,
@@ -327,10 +338,12 @@ private lemma regular_evaluation {b a v : ℂ} (hb : b ≠ 0) (root : ℂ)
       (a * v) ^ n) (scalarC (a * v)) := by
     obtain ⟨eta, hxe, he1⟩ := exists_between hav1
     have he : 0 < eta := (norm_nonneg _).trans_lt hxe
-    have h := (scalarC_powerSeries (eta := ⟨eta, he.le⟩) he he1).hasSum
-      (show a * v ∈ eball (0 : ℂ) (⟨eta, he.le⟩ : ℝ≥0∞) by
-        simpa only [mem_eball_zero_iff, enorm_lt_coe, ← coe_nnnorm,
-          NNReal.coe_lt_coe] using hxe)
+    have h := (scalarC_powerSeries (eta := (⟨eta, he.le⟩ : NNReal)) he he1).hasSum
+      (by
+        erw [← ENNReal.ofReal_coe_nnreal]
+        change a * v ∈ eball (0 : ℂ) (ENNReal.ofReal eta)
+        rw [Metric.mem_eball, edist_dist, dist_zero_right, ENNReal.ofReal_lt_ofReal_iff he]
+        exact hxe)
     simpa only [FormalMultilinearSeries.ofScalars_apply_eq, zero_add, smul_eq_mul] using h
   have hHA := normal_horizontal (v := v)
     (show HasSum (fun n : ℕ => PowerSeries.coeff n halfSeries * a ^ n) (H a) by
@@ -338,8 +351,8 @@ private lemma regular_evaluation {b a v : ℂ} (hb : b ≠ 0) (root : ℂ)
   have hHV := normal_vertical (a := a)
     (show HasSum (fun n : ℕ => PowerSeries.coeff n halfSeries * v ^ n) (H v) by
       simpa only [halfSeries, PowerSeries.coeff_mk] using (H_hasSum hv1).1)
-  have hExt := normal_diagonal hE
-  have hCs := normal_diagonal hC
+  have hExt := normal_diagonal (a := a) (v := v) hE
+  have hCs := normal_diagonal (a := a) (v := v) hC
   have hPA := normal_horizontal (v := v) (pole_hasSum hb hab)
   have hPV := normal_vertical (a := a) (pole_hasSum hb hvb)
   have hconst (c : ℂ) := normal_horizontal (v := v)
@@ -357,29 +370,29 @@ private lemma regular_evaluation {b a v : ℂ} (hb : b ≠ 0) (root : ℂ)
       ‖PowerSeries.coeff j (PowerSeries.coeff d (2 : BPS)) * a ^ j‖)) ∧
       HasSum (fun d : ℕ => scalarSum (PowerSeries.coeff d (2 : BPS)) a * v ^ d) 2 := by
     simpa only [map_ofNat] using hconst 2
-  have hAB := normal_mul hA.1 hB.1 hA.2 hB.2
-  have hTwoAB := normal_mul hTwo.1 hAB.1 hTwo.2 hAB.2
-  have hABplus := normal_add hA.1 hB.1 hA.2 hB.2
-  have hN0 := normal_mul hB.1
-    (normal_add hABplus.1 hTwo.1 hABplus.2 hTwo.2).1 hB.2
-    (normal_add hABplus.1 hTwo.1 hABplus.2 hTwo.2).2
-  have hN1 := normal_mul hV.1
-    (normal_add (normal_add hTwoAB.1 hA.1 hTwoAB.2 hA.2).1 hB.1
-      (normal_add hTwoAB.1 hA.1 hTwoAB.2 hA.2).2 hB.2).1 hV.2
-    (normal_add (normal_add hTwoAB.1 hA.1 hTwoAB.2 hA.2).1 hB.1
-      (normal_add hTwoAB.1 hA.1 hTwoAB.2 hA.2).2 hB.2).2
-  have hN := normal_add hN0.1 hN1.1 hN0.2 hN1.2
-  have hBase0 := normal_mul hHA.1 hHV.1 hHA.2 hHV.2
-  have hBase := normal_mul hBase0.1 hExt.1 hBase0.2 hExt.2
-  have hAN := normal_mul hA.1 hN.1 hA.2 hN.2
-  have hVN := normal_mul hV.1 hN.1 hV.2 hN.2
-  have hTpolar := normal_mul hAN.1 hPA.1 hAN.2 hPA.2
-  have hUpolar := normal_mul hVN.1 hPV.1 hVN.2 hPV.2
-  have hTbracket := normal_add hTpolar.1 hCs.1 hTpolar.2 hCs.2
-  have hUbracket := normal_add hUpolar.1 hCs.1 hUpolar.2 hCs.2
-  have hT := normal_mul hBase.1 hTbracket.1 hBase.2 hTbracket.2
-  have hMinus := normal_neg hBase.1 hBase.2
-  have hU := normal_mul hMinus.1 hUbracket.1 hMinus.2 hUbracket.2
+  have hAB := normal_mul (a := a) (v := v) hA.1 hB.1 hA.2 hB.2
+  have hTwoAB := normal_mul (a := a) (v := v) hTwo.1 hAB.1 hTwo.2 hAB.2
+  have hABplus := normal_add (a := a) (v := v) hA.1 hB.1 hA.2 hB.2
+  have hN0 := normal_mul (a := a) (v := v) hB.1
+    (normal_add (a := a) (v := v) hABplus.1 hTwo.1 hABplus.2 hTwo.2).1 hB.2
+    (normal_add (a := a) (v := v) hABplus.1 hTwo.1 hABplus.2 hTwo.2).2
+  have hN1 := normal_mul (a := a) (v := v) hV.1
+    (normal_add (a := a) (v := v) (normal_add (a := a) (v := v) hTwoAB.1 hA.1 hTwoAB.2 hA.2).1 hB.1
+      (normal_add (a := a) (v := v) hTwoAB.1 hA.1 hTwoAB.2 hA.2).2 hB.2).1 hV.2
+    (normal_add (a := a) (v := v) (normal_add (a := a) (v := v) hTwoAB.1 hA.1 hTwoAB.2 hA.2).1 hB.1
+      (normal_add (a := a) (v := v) hTwoAB.1 hA.1 hTwoAB.2 hA.2).2 hB.2).2
+  have hN := normal_add (a := a) (v := v) hN0.1 hN1.1 hN0.2 hN1.2
+  have hBase0 := normal_mul (a := a) (v := v) hHA.1 hHV.1 hHA.2 hHV.2
+  have hBase := normal_mul (a := a) (v := v) hBase0.1 hExt.1 hBase0.2 hExt.2
+  have hAN := normal_mul (a := a) (v := v) hA.1 hN.1 hA.2 hN.2
+  have hVN := normal_mul (a := a) (v := v) hV.1 hN.1 hV.2 hN.2
+  have hTpolar := normal_mul (a := a) (v := v) hAN.1 hPA.1 hAN.2 hPA.2
+  have hUpolar := normal_mul (a := a) (v := v) hVN.1 hPV.1 hVN.2 hPV.2
+  have hTbracket := normal_add (a := a) (v := v) hTpolar.1 hCs.1 hTpolar.2 hCs.2
+  have hUbracket := normal_add (a := a) (v := v) hUpolar.1 hCs.1 hUpolar.2 hCs.2
+  have hT := normal_mul (a := a) (v := v) hBase.1 hTbracket.1 hBase.2 hTbracket.2
+  have hMinus := normal_neg (a := a) (v := v) hBase.1 hBase.2
+  have hU := normal_mul (a := a) (v := v) hMinus.1 hUbracket.1 hMinus.2 hUbracket.2
   exact ⟨by simpa only [regularTT, regularNumerator, PowerSeries.map_X,
       div_eq_mul_inv] using hT,
     by simpa only [regularUT, regularNumerator, PowerSeries.map_X,
@@ -450,7 +463,8 @@ private lemma omega_regularization :
       PowerSeries.map inclusion
         (PowerSeries.C halfSeries * PowerSeries.map (PowerSeries.C : ℂ →+* PS) halfSeries) := by
   dsimp only
-  ext d
+  apply PowerSeries.ext
+  intro d
   simp only [PowerSeries.coeff_C_mul, PowerSeries.coeff_rescale, formalOmega,
     PowerSeries.coeff_mk, omegaCoefficient, PowerSeries.coeff_map,
     PowerSeries.coeff_C_mul, inclusion, map_mul, PowerSeries.coeff_map,
@@ -508,7 +522,8 @@ private lemma regular_formal {b : ℂ} (hb : b ≠ 0) (root : ℂ) :
       (2 * (A - BB) ^ 2)⁻¹ := by
     have hi : inclusion (poleSeries b) = (2 * (a - B) ^ 2)⁻¹ := by
       rw [poleSeries, inclusion_inverse (2 * (PowerSeries.X - PowerSeries.C b) ^ 2)
-        (by simp [hb])]
+        (by simp only [map_mul, map_pow, map_sub, map_ofNat,
+        PowerSeries.constantCoeff_X, PowerSeries.constantCoeff_C]; norm_num [hb])]
       congr 1
       simp only [map_mul, map_ofNat, map_pow, map_sub, inclusion,
         HahnSeries.ofPowerSeries_X, HahnSeries.ofPowerSeries_C, a, B]
@@ -520,18 +535,24 @@ private lemma regular_formal {b : ℂ} (hb : b ≠ 0) (root : ℂ) :
       (2 * (BB - V) ^ 2)⁻¹ := by
     have hcomp : inclusion.comp (PowerSeries.C : ℂ →+* PS) =
         (HahnSeries.C : ℂ →+* LaurentSeries ℂ) := by
-      ext c
+      apply RingHom.ext
+      intro c
       exact HahnSeries.ofPowerSeries_C c
+    change (((PowerSeries.map inclusion).comp
+      (PowerSeries.map (PowerSeries.C : ℂ →+* PS))) (poleSeries b)) = _
     rw [← PowerSeries.map_comp, hcomp, poleSeries,
       map_inverse (HahnSeries.C : ℂ →+* LaurentSeries ℂ)
-        (2 * (PowerSeries.X - PowerSeries.C b) ^ 2) (by simp [hb])]
+        (2 * (PowerSeries.X - PowerSeries.C b) ^ 2) (by simp only [map_mul, map_pow, map_sub, map_ofNat,
+        PowerSeries.constantCoeff_X, PowerSeries.constantCoeff_C]; norm_num [hb])]
     congr 1
     simp only [map_mul, map_ofNat, map_pow, map_sub, PowerSeries.map_X,
       PowerSeries.map_C, BB, V]
     ring
   have hden0 : PowerSeries.constantCoeff
       (2 * (PowerSeries.C (a * B) - (PowerSeries.X : AnnulusSeries)) ^ 2) ≠ 0 := by
-    simp [ha, hB]
+    simp only [map_mul, map_pow, map_sub, map_ofNat,
+      PowerSeries.constantCoeff_X, PowerSeries.constantCoeff_C]
+    exact mul_ne_zero (by norm_num) (pow_ne_zero _ (by simpa using mul_ne_zero ha hB))
   have hden : PowerSeries.rescale a
       ((2 * (PowerSeries.C (a * B) - (PowerSeries.X : AnnulusSeries)) ^ 2)⁻¹) =
       PowerSeries.C (a⁻¹ ^ 2) * (2 * (BB - V) ^ 2)⁻¹ := by
@@ -783,12 +804,13 @@ private lemma original_fixed_a_coefficients {b a : ℂ} (hb : b ≠ 0) (root : �
       zero_add, mul_comm] using (hxseries x (by simpa using hx)).2
   obtain ⟨hcT, hcU⟩ := literal_modulus_series hb root ha
     (eta := ⟨eta, heta.le⟩) heta hetab
-  exact ⟨by simpa only [FormalMultilinearSeries.coeff_ofScalars] using
+  constructor
+  · simpa only [FormalMultilinearSeries.coeff_ofScalars] using
       congrArg (fun p : FormalMultilinearSeries ℂ ℂ ℂ => p.coeff d)
-        (hcT.hasFPowerSeriesAt.eq_formalMultilinearSeries hT),
-    by simpa only [FormalMultilinearSeries.coeff_ofScalars] using
+        (hcT.hasFPowerSeriesAt.eq_formalMultilinearSeries hT)
+  · simpa only [FormalMultilinearSeries.coeff_ofScalars] using
       congrArg (fun p : FormalMultilinearSeries ℂ ℂ ℂ => p.coeff d)
-        (hcU.hasFPowerSeriesAt.eq_formalMultilinearSeries hU)⟩
+        (hcU.hasFPowerSeriesAt.eq_formalMultilinearSeries hU)
 
 /-- The actual two circle integrals equal the existing formal cubic
 coefficients. The amplitude is arbitrary, so in particular both geometric
@@ -806,7 +828,7 @@ theorem doubleContour_eq_negativeCoefficient {b : ℂ} (hb : b ≠ 0) (root : �
       (by simpa only [hna] using hrb) heta (by simpa only [hna] using hetab) d
   have hnormal := regular_evaluation (a := (r : ℂ)) (v := 0) hb root
     (by simpa only [Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr] using hrb)
-    (by simpa using lt_min (by norm_num : (0 : ℝ) < 1) (norm_pos_iff.mpr hb))
+    (by simpa only [norm_zero] using (lt_min (by norm_num : (0 : ℝ) < 1) (norm_pos_iff.mpr hb) : 0 < min 1 ‖b‖))
   have hTp : Summable (fun j : ℕ =>
       ‖PowerSeries.coeff j (PowerSeries.coeff d (regularTT b root))‖ * r ^ j) := by
     simpa only [norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs,
@@ -825,6 +847,7 @@ theorem doubleContour_eq_negativeCoefficient {b : ℂ} (hb : b ≠ 0) (root : �
         congr 1
         apply circleIntegral.integral_congr hr.le
         intro a ha
+        dsimp only
         rw [(hcircle a ha).1]
       _ = _ := shifted_series_contour _ s d hr hTp
   · rw [hU, regular_formal_coefficient hUf s d]
@@ -835,6 +858,7 @@ theorem doubleContour_eq_negativeCoefficient {b : ℂ} (hb : b ≠ 0) (root : �
         congr 1
         apply circleIntegral.integral_congr hr.le
         intro a ha
+        dsimp only
         rw [(hcircle a ha).2]
       _ = _ := shifted_series_contour _ s d hr hUp
 
@@ -958,12 +982,14 @@ theorem evaluated_original_sewing {b x : ℂ} (hb : b ≠ 0) (root : ℂ)
     simpa only [hUinner] using hUW.prod
   have hTswap : (∑' n : ℕ, ∑' t : ℕ, WT (t, n)) =
       ∑' t : ℕ, k t * Tcoeff b root (t + 1) x := by
-    rw [hTW.tsum_comm]
-    simp only [hTinner]
+    calc
+      _ = ∑' t : ℕ, ∑' n : ℕ, WT (t, n) := hTW.tsum_comm.symm
+      _ = _ := tsum_congr hTinner
   have hUswap : (∑' n : ℕ, ∑' t : ℕ, WU (t, n)) =
       ∑' t : ℕ, k t * Ucoeff b root (t + 1) x := by
-    rw [hUW.tsum_comm]
-    simp only [hUinner]
+    calc
+      _ = ∑' t : ℕ, ∑' n : ℕ, WU (t, n) := hUW.tsum_comm.symm
+      _ = _ := tsum_congr hUinner
   have hTouter : HasSum (fun n : ℕ => ∑' t : ℕ, WT (t, n))
       (∑' t : ℕ, k t * Tcoeff b root (t + 1) x) := by
     rw [← hTswap]
@@ -1055,7 +1081,7 @@ private lemma normalized_matrix_row {z : ℂ} (hz : z ≠ 0) (n m : ℕ) (c : �
   rw [OriginalGaussianMatrix.matrixEntry, pow_add, hpow]
   field_simp [sqrt_index_ne_zero n, sqrt_index_ne_zero m, hz, hm]
   <;> ring_nf
-  <;> simp only [sqrt_index_sq m]
+  <;> try simp only [sqrt_index_sq m]
   <;> ring
 
 /-- The Hilbert vectors are formed from the actual contour coefficients
@@ -1085,6 +1111,7 @@ theorem original_hilbert_correspondence {b z : ℂ} (root : ℂ)
       OriginalGaussianMatrix.matrixEntry z (n + 1) (m + 1) * q m) =
         -(0 : OriginalGaussianResolvent.H) n := by
     obtain ⟨_, _, hT, _⟩ := evaluated_original_sewing hb root hroot (n + 1) (by omega) hx
+    simp only [lp.coeFn_zero, Pi.zero_apply, neg_zero]
     change pValue b root z n + (∑' m : ℕ,
       OriginalGaussianMatrix.matrixEntry z (n + 1) (m + 1) * qValue b root z m) = 0
     simp only [pValue, qValue, normalized_matrix_row hzN, tsum_mul_left]

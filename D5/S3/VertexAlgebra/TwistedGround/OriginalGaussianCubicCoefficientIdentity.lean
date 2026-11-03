@@ -46,7 +46,7 @@ private lemma inversion_root_half : inversionRoot * halfSeries = 1 := by
   have hhalf : halfSeries = PowerSeries.binomialSeries ℂ (-1 / 2 : ℂ) := by
     ext j
     simp only [halfSeries, PowerSeries.coeff_mk,
-      PowerSeries.binomialSeries_coeff, halfBinomial_choose]
+      PowerSeries.binomialSeries_coeff, halfBinomial_choose, smul_eq_mul, mul_one]
   rw [hhalf, inversionRoot, ← PowerSeries.binomialSeries_add,
     show (1 / 2 : ℂ) + -1 / 2 = 0 by norm_num,
     PowerSeries.binomialSeries_zero]
@@ -100,7 +100,7 @@ private lemma finite_binomial_inversion (N : ℕ) (p : Polynomial ℂ)
         (PowerSeries.monomial j (PowerSeries.coeff j
           (halfSeries * (p : PowerSeries ℂ))) * inversionRoot) := by
       rw [PowerSeries.trunc_apply N (halfSeries * (p : PowerSeries ℂ)),
-        Finset.Nat.Ico_zero_eq_range]
+        Nat.Ico_zero_eq_range]
       change PowerSeries.trunc N (inversionRoot *
         Polynomial.coeToPowerSeries.ringHom (∑ j ∈ Finset.range N,
           Polynomial.monomial j (PowerSeries.coeff j
@@ -121,6 +121,7 @@ private lemma finite_binomial_inversion (N : ℕ) (p : Polynomial ℂ)
       rw [inversion_trunc_monomial N j hjN]
       have hlength : N - j = (N - 1 - j) + 1 := by omega
       rw [hlength]
+      rfl
 
 /- Equation (60). The only generic hypotheses are a finite polynomial
 representation and its actual Laurent residue. Both are discharged from
@@ -227,9 +228,11 @@ private lemma finite_binomial_reconstruction (N : ℕ) (hN : 1 ≤ N)
           (((finiteCurrentNumerator t : PowerSeries ℂ) * halfSeries :
             PowerSeries ℂ) : LaurentSeries ℂ) := by
         rw [PowerSeries.coe_mul]
+        rfl
       _ = HahnSeries.C (y j / (t : ℂ)) * finiteCurrentLaurent t := by
         rw [finiteCurrentLaurent, HahnSeries.C_apply, ← mul_assoc,
           HahnSeries.single_mul_single, zero_add, div_mul_cancel₀ _ ht0]
+        rw [PowerSeries.coe_mul]
 
 /- Extract the whole regular tail, with the original order pairScalar s t.
 This is the same finite inversion, not a second uniqueness assumption. -/
@@ -271,19 +274,20 @@ theorem cubic_original_coefficient_identity : CubicOriginalCoefficientIdentity :
         have hK' : PowerSeries.coeff n (cubicUTSeries b hb) =
             HahnSeries.single (-((n + 1 : ℕ) : ℤ)) (1 : ℂ) *
               (halfSeries : LaurentSeries ℂ) * (p : LaurentSeries ℂ) := by
-          simpa only [Nat.cast_add, Nat.cast_one, neg_add] using hK
+          simpa only [Nat.cast_add, Nat.cast_one, neg_add, sub_eq_add_neg] using hK
         have hregular := reconstructed_regular_coefficient (n + 1) (by omega)
           p hp (PowerSeries.coeff n (cubicUTSeries b hb)) hK'
           (cubicUT_residue_zero b hb hb0 n) s hs
         simp only [Nat.add_sub_cancel] at hregular
         rw [hregular]
+        rfl
     · rw [if_pos hsd]
       obtain ⟨n, rfl⟩ : ∃ n : ℕ, d = s + n := ⟨d - s, by omega⟩
       simp only [Nat.add_sub_cancel_left]
       rw [cubic_ut_signed_sewing b hb hb0 s hs n]
       by_cases hn : n = 0
       · subst n
-        simp [cubic_tt_degree_zero_currentRow b hb hb0 s hs]
+        simpa using cubic_tt_degree_zero_currentRow b hb hb0 s hs
       · have hne : s + n ≠ s := by omega
         rw [if_neg hne]
         simp only [neg_zero, zero_sub]
