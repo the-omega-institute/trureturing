@@ -80,16 +80,25 @@ private lemma lowerBound_negative : lowerBound < 0 := by
 
 private lemma f_strict_scale (t z : ℝ) (ht : 0 < t) (htz : t < z)
     (hz : 0 < z) (hneg : z * (3 * z - 2) * (15 * z ^ 2 - 20 * z + 6) < 0) :
-    t ^ 4 * (z * (3 * z - 2) * (15 * z ^ 2 - 20 * z + 6)) > f z := by sorry
+    t ^ 4 * (z * (3 * z - 2) * (15 * z ^ 2 - 20 * z + 6)) > f z := by
+  have ht4 : t ^ 4 < z ^ 4 := pow_lt_pow_left₀ htz (le_of_lt ht) (by norm_num)
+  have hmul := mul_lt_mul_of_neg_right ht4 hneg
+  dsimp [f]
+  convert hmul using 1 <;> ring
 
-private lemma normalized_product {n : ℕ} (k : Fin n → ℝ)
-    (hk : ∀ i, 0 < k i) :
+private lemma normalized_product {n : ℕ} (k : Fin n → ℝ) :
     skewness k * kurtosis k =
-      (3 * p k ^ 2 - 2 * q k) * (15 * p k ^ 2 - 20 * q k + 6 * r k / p k) := by sorry
+      (3 * p k ^ 2 - 2 * q k) * (15 * p k ^ 2 - 20 * q k + 6 * r k / p k) := by
+  rw [D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness_normalized,
+    D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.normalized]
+  delta D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.simplexFunctional
+    p q r normalizedRates
+  ring
 
 private lemma product_nonnegative (p q r : ℝ) (hp : 0 < p)
     (hprod : 0 ≤ (3 * p ^ 2 - 2 * q) * (15 * p ^ 2 - 20 * q + 6 * r / p)) :
-    lowerBound < (3 * p ^ 2 - 2 * q) * (15 * p ^ 2 - 20 * q + 6 * r / p) := by sorry
+    lowerBound < (3 * p ^ 2 - 2 * q) * (15 * p ^ 2 - 20 * q + 6 * r / p) := by
+  exact lt_of_lt_of_le lowerBound_negative hprod
 
 private lemma product_skew_negative (p q r : ℝ) (hp : 0 < p) (hq : 0 ≤ q)
     (hqr : q ^ 2 ≤ p * r) (hr : r < p ^ 2)
