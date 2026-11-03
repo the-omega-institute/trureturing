@@ -1,0 +1,41 @@
+**Unresolved mathematical obligations 40.7.** Theorem 40.2 removes
+mixed competitors inside $\mathcal C_{34}$ at $0<\xi\le4$ from
+the full comparison problem. Theorem 40.4 excludes only mixed
+minimizing branches that approach the selected feedback graph in its
+specified relative range. At either $b=\alpha$ or $b=\beta$,
+if $\mathcal A_b=\mathcal G_b$, Theorem 39.6 and Theorem 40.4
+imply that all global minimizers on sufficiently nearby levels are
+pure. This does not exclude coalescing pure competing branches.
+If there are additional endpoint minimizers, separated mixed limits
+are not excluded by that argument.
+
+The outstanding original comparison is still
+
+$$
+ M_\sigma(w,\xi)\ge N_{\mathrm{geo}}(\xi)+\kappa\xi
+\tag{40.31}
+$$
+
+for every realizable $w\in\mathcal W$ and every admissible original
+sign on the required preceding levels, together with its complete
+attained equality preimage in actual $\operatorname{Dens}_2\times U(4)$.
+Every mixed arc, singular endpoint, zero amplitude, sign tie and
+actual unitary lift outside the proved neighborhood remains subject
+to that comparison. The geometric comparison beyond level four is
+also not established here. Sections 38--39 already give strict
+full-domain competitors below the selected geometric value at
+positive levels below four; (40.31) cannot hold through that entire
+range. No all-$\mathcal W$ certificate is asserted.
+
+The exact evaluation of $\alpha$ and $\beta$, their possible
+coincidence, the full equality sets at both boundaries, the inclusion
+or exclusion of the exhaustive-equality endpoint, the identities
+and exhaustion of the first competing actual branches, and the
+required right-side behavior beyond their existing conditional
+conclusions remain unresolved. The determinant-zero case of the
+phase variation still needs its higher-order and global comparison.
+An effect-arc margin, a local purity neighborhood, a scalar threshold,
+an unattained core-infimum tie or a strict failure window is not a
+selected first-loss boundary. The full original first-loss goal is
+unchanged.
+
