@@ -133,20 +133,21 @@ private lemma weighted_orthogonality (i j : Fin 3) (h : i ≠ j) :
   have h2 := phase_quadratic
   have hr : (Real.sqrt 5 : ℂ) ^ 2 = 5 := by
     exact_mod_cast Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
-  have hi : i = 0 ∨ i = 1 ∨ i = 2 := by omega
-  have hj : j = 0 ∨ j = 1 ∨ j = 2 := by omega
-  rcases hi with rfl | rfl | rfl <;> rcases hj with rfl | rfl | rfl
+  fin_cases i <;> fin_cases j
   all_goals try exact (h rfl).elim
   all_goals
-    rw [point.eq_1, phases.eq_1]
-    simp only [Fin.sum_univ_succ, Matrix.cons_val_zero,
+    simp only [point.eq_1, phases.eq_1, Fin.sum_univ_succ, Matrix.cons_val_zero,
       Matrix.cons_val_one, Matrix.cons_val_two,
       Matrix.cons_val_succ, Matrix.cons_val_fin_one, Matrix.vecHead, Matrix.vecTail,
       Function.comp_apply]
-    simp only [h2, h3, h4, h7, h9, map_one, map_neg, map_mul, map_sub,
+    simp only [h2, h3, h4, h7, h9, map_one, map_neg, map_add, map_mul, map_sub, map_ofNat,
       map_div₀, Complex.conj_ofReal, hc]
     push_cast
     norm_num only [map_ofNat]
+    ring_nf
+  all_goals
+    try simp only [map_one, map_neg, map_add, map_mul, map_sub, map_ofNat,
+      map_div₀, Complex.conj_ofReal, hc]
     ring_nf
   all_goals
     have hr3 : (Real.sqrt 5 : ℂ) ^ 3 = 5 * (Real.sqrt 5 : ℂ) := by
@@ -160,7 +161,7 @@ private lemma weighted_orthogonality (i j : Fin 3) (h : i ≠ j) :
   all_goals
     rw [h2]
     push_cast
-    linear_combination -ζ * hr / 20
+    ring_nf <;> simp only [hr] <;> ring
 
 private lemma state_diagonal (i : Fin 3) (k : Fin 4) :
     state i k * conj (state i k) = (point k : ℂ) := by
@@ -232,43 +233,34 @@ private lemma permutation_pairing (σ : Equiv.Perm (Fin 4)) (q : Fin 4 → ℝ)
       (he : q 0 * q a = q b * q c) :
       q 0 * q 1 = q 2 * q 3 ∨ q 0 * q 2 = q 1 * q 3 ∨
         q 0 * q 3 = q 1 * q 2 := by
-    have ha_cases : a = 1 ∨ a = 2 ∨ a = 3 := by omega
-    rcases ha_cases with rfl | rfl | rfl
-    · have hs : (b = 2 ∧ c = 3) ∨ (b = 3 ∧ c = 2) := by omega
-      rcases hs with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
-      · exact Or.inl he
-      · exact Or.inl (by simpa only [mul_comm] using he)
-    · have hs : (b = 1 ∧ c = 3) ∨ (b = 3 ∧ c = 1) := by omega
-      rcases hs with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
-      · exact Or.inr (Or.inl he)
-      · exact Or.inr (Or.inl (by simpa only [mul_comm] using he))
-    · have hs : (b = 1 ∧ c = 2) ∨ (b = 2 ∧ c = 1) := by omega
-      rcases hs with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
-      · exact Or.inr (Or.inr he)
-      · exact Or.inr (Or.inr (by simpa only [mul_comm] using he))
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> simp_all [mul_comm]
+    all_goals exact Or.inl ((mul_comm (q 0) (q 1)).trans he)
   obtain ⟨i, hi⟩ := σ.surjective 0
   have hn (a b : Fin 4) (hab : a ≠ b) : σ a ≠ σ b := σ.injective.ne hab
   have hn0 (a : Fin 4) (ha : a ≠ i) : σ a ≠ 0 := by
     rw [← hi]
     exact σ.injective.ne ha
-  have hi_cases : i = 0 ∨ i = 1 ∨ i = 2 ∨ i = 3 := by omega
-  rcases hi_cases with rfl | rfl | rfl | rfl
-  · apply aux (σ 3) (σ 1) (σ 2)
+  fin_cases i
+  · change σ 0 = 0 at hi
+    apply aux (σ 3) (σ 1) (σ 2)
     all_goals first
       | exact hn0 _ (by decide)
       | exact hn _ _ (by decide)
       | simpa only [hi] using h
-  · apply aux (σ 2) (σ 0) (σ 3)
+  · change σ 1 = 0 at hi
+    apply aux (σ 2) (σ 0) (σ 3)
     all_goals first
       | exact hn0 _ (by decide)
       | exact hn _ _ (by decide)
       | simpa only [hi] using h.symm
-  · apply aux (σ 1) (σ 0) (σ 3)
+  · change σ 2 = 0 at hi
+    apply aux (σ 1) (σ 0) (σ 3)
     all_goals first
       | exact hn0 _ (by decide)
       | exact hn _ _ (by decide)
       | simpa only [hi, mul_comm] using h.symm
-  · apply aux (σ 0) (σ 1) (σ 2)
+  · change σ 3 = 0 at hi
+    apply aux (σ 0) (σ 1) (σ 2)
     all_goals first
       | exact hn0 _ (by decide)
       | exact hn _ _ (by decide)
