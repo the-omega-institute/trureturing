@@ -183,7 +183,7 @@ private def Ladder (k : ℕ) (H : SimpleGraph (Fin k)) : Prop :=
 
 open Classical in
 /-- The adjacency block of `G` with rows in `A` and columns outside `A`, over `ZMod 2`. -/
-private noncomputable def cut {V : Type} [DecidableEq V] (G : SimpleGraph V) (A : Finset V) :
+noncomputable def cut {V : Type} [DecidableEq V] (G : SimpleGraph V) (A : Finset V) :
     Matrix {x // x ∈ A} {x // x ∉ A} (ZMod 2) :=
   (G.adjMatrix (ZMod 2)).submatrix Subtype.val Subtype.val
 

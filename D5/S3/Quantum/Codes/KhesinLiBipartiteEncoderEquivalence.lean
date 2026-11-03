@@ -7,10 +7,12 @@
    digest: Bipartite encoder equivalence reduces to permutations and binary row additions. -/
 
 import D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses
+import D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
 import Mathlib.LinearAlgebra.Matrix.ElementaryRowOperations
 import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.Data.Nat.Choose.Sum
+import Mathlib.FieldTheory.Finiteness
 
 /-! Khesin–Li, arXiv:2406.12083v1, Conjecture 8.3, under the decoration-free
 operation-generated reading of preregistration #26139. Both sides have only input–output edges.
@@ -18,9 +20,10 @@ The quantum equivalence of Definition 6.2 and Conjecture 6.3 are outside this st
 
 namespace D5.S3.Quantum.Codes.KhesinLiBipartiteEncoderEquivalence
 
-open D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses (Step addInputRow)
-open D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph (entropy)
+open D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses (Step addInputRow lc_source)
+open D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph (lc entropy cut)
 open Matrix
+open scoped BigOperators
 
 /-- A bipartite form has no edges within either the inputs or the outputs. -/
 def IsBipartiteForm {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n)) : Prop :=
@@ -68,26 +71,192 @@ private theorem bipartite_profile {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n)
     (hG : IsBipartiteForm G) (S : Finset (Fin n)) :
     entropy G (S.map Function.Embedding.inr) =
       ((biadjacency G).submatrix id (fun a : S => (a : Fin n))).rank := by
-  sorry
+  classical
+  let A := S.map (Function.Embedding.inr : Fin n ↪ Fin k ⊕ Fin n)
+  let r : S ≃ {x // x ∈ A} := Equiv.ofBijective
+    (fun a => ⟨Sum.inr a.1, Finset.mem_map.mpr ⟨a.1, a.2, rfl⟩⟩)
+    ⟨by
+      intro a b hab
+      exact Subtype.ext (Sum.inr.inj (congrArg Subtype.val hab)), by
+      intro x
+      obtain ⟨a, ha, hx⟩ := Finset.mem_map.mp x.2
+      exact ⟨⟨a, ha⟩, Subtype.ext hx⟩⟩
+  let M := (cut G A).submatrix r (Equiv.refl _)
+  let D := (biadjacency G).submatrix id (fun a : S => (a : Fin n))
+  have hi (i : Fin k) : Sum.inl i ∉ A := by simp only [A, Finset.mem_map]; tauto
+  have hc (i : Fin k) : M.col ⟨Sum.inl i, hi i⟩ = D.transpose.col i := by
+    funext a
+    change (if G.Adj (Sum.inr a.1) (Sum.inl i) then (1 : ZMod 2) else 0) =
+      if G.Adj (Sum.inl i) (Sum.inr a.1) then 1 else 0
+    rw [G.adj_comm]
+  have hz (a : Fin n) (ha : Sum.inr a ∉ A) : M.col ⟨Sum.inr a, ha⟩ = 0 := by
+    funext b
+    change (if G.Adj (Sum.inr b.1) (Sum.inr a) then (1 : ZMod 2) else 0) = 0
+    exact ite_eq_right (hG.2 b.1 a)
+  have hspan : Submodule.span (ZMod 2) (Set.range M.col) =
+      Submodule.span (ZMod 2) (Set.range D.transpose.col) := by
+    apply le_antisymm
+    · apply Submodule.span_le.mpr
+      rintro _ ⟨x, rfl⟩
+      obtain ⟨x, hx⟩ := x
+      cases x with
+      | inl i =>
+        rw [hc]
+        exact Submodule.subset_span ⟨i, rfl⟩
+      | inr a =>
+        rw [hz a hx]
+        exact Submodule.zero_mem _
+    · apply Submodule.span_le.mpr
+      rintro _ ⟨i, rfl⟩
+      rw [← hc i]
+      exact Submodule.subset_span ⟨⟨Sum.inl i, hi i⟩, rfl⟩
+  calc
+    entropy G (S.map Function.Embedding.inr) = M.rank :=
+      (Matrix.rank_submatrix (cut G A) r (Equiv.refl _)).symm
+    _ = D.transpose.rank := by
+      rw [Matrix.rank_eq_finrank_span_cols, Matrix.rank_eq_finrank_span_cols, hspan]
+    _ = D.rank := Matrix.rank_transpose D
 
 private theorem supported_kernel_card {k n : ℕ} (B : Matrix (Fin k) (Fin n) (ZMod 2))
     (S : Finset (Fin n)) :
     Nat.card {u : Fin n → ZMod 2 // B *ᵥ u = 0 ∧ Function.support u ⊆ (S : Set (Fin n))} =
       2 ^ (S.card - (B.submatrix id (fun a : S => (a : Fin n))).rank) := by
-  sorry
+  classical
+  let D := B.submatrix id (fun a : S => (a : Fin n))
+  let E : (S → ZMod 2) → Fin n → ZMod 2 :=
+    fun u a => if h : a ∈ S then u ⟨a, h⟩ else 0
+  have hE (u : S → ZMod 2) : B *ᵥ E u = D *ᵥ u := by
+    ext i
+    change (∑ a, B i a * (if h : a ∈ S then u ⟨a, h⟩ else 0)) =
+      ∑ a : S, B i a * u a
+    simp only [mul_dite, mul_zero]
+    exact (Finset.sum_attach_eq_sum_dite S (fun a => B i a * u a)).symm
+  have hzero (u : Fin n → ZMod 2) (hu : Function.support u ⊆ (S : Set (Fin n)))
+      (a : Fin n) (ha : a ∉ S) : u a = 0 := by
+    by_contra hn
+    exact ha (hu hn)
+  let e : (LinearMap.ker D.mulVecLin) ≃
+      {u : Fin n → ZMod 2 // B *ᵥ u = 0 ∧ Function.support u ⊆ (S : Set (Fin n))} :=
+    { toFun := fun u => ⟨E u, by
+        constructor
+        · rw [hE]; exact u.2
+        · intro a ha
+          by_contra hn
+          change a ∉ S at hn
+          exact ha (by simp only [E, dite_eq_right hn])⟩
+      invFun := fun u => ⟨fun a => u.1 a, by
+        rw [LinearMap.mem_ker, Matrix.mulVecLin_apply, ← hE]
+        convert u.2.1 using 1
+        congr 1
+        funext a
+        by_cases ha : a ∈ S
+        · simp only [E, dite_eq_left ha]
+        · simp only [E, dite_eq_right ha, hzero u.1 u.2.2 a ha]⟩
+      left_inv := fun u => by
+        apply Subtype.ext
+        funext a
+        simp only [E, dite_eq_left a.2]
+      right_inv := fun u => by
+        apply Subtype.ext
+        funext a
+        by_cases ha : a ∈ S
+        · simp only [E, dite_eq_left ha]
+        · simp only [E, dite_eq_right ha, hzero u.1 u.2.2 a ha] }
+  rw [← Nat.card_congr e, Nat.card_eq_fintype_card,
+    Module.card_eq_pow_finrank (K := ZMod 2),
+    ZMod.card]
+  congr 1
+  have hr := D.mulVecLin.finrank_range_add_finrank_ker
+  change D.rank + Module.finrank (ZMod 2) (LinearMap.ker D.mulVecLin) = _ at hr
+  have hd : Module.finrank (ZMod 2) (S → ZMod 2) = S.card := by simp
+  rw [hd] at hr
+  change Module.finrank (ZMod 2) (LinearMap.ker D.mulVecLin) = S.card - D.rank
+  omega
 
 private theorem kernel_recovery {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 2))
     (h : ∀ S : Finset (Fin n),
       Nat.card {u : Fin n → ZMod 2 // B *ᵥ u = 0 ∧ Function.support u ⊆ (S : Set (Fin n))} =
       Nat.card {u : Fin n → ZMod 2 // C *ᵥ u = 0 ∧ Function.support u ⊆ (S : Set (Fin n))}) :
     LinearMap.ker B.mulVecLin = LinearMap.ker C.mulVecLin := by
-  sorry
+  classical
+  let b : Finset (Fin n) → Fin n → ZMod 2 := fun T a => if a ∈ T then 1 else 0
+  have hs (T : Finset (Fin n)) : Function.support (b T) = (T : Set (Fin n)) := by
+    ext a
+    simp only [Function.mem_support, b, ne_eq, Finset.mem_coe]
+    split_ifs <;> simp_all
+  have hb : Function.Bijective b := by
+    constructor
+    · intro T U hTU
+      apply Finset.coe_injective
+      rw [← hs T, ← hs U, hTU]
+    · intro u
+      refine ⟨Finset.univ.filter (fun a => u a ≠ 0), ?_⟩
+      funext a
+      have binary : ∀ x : ZMod 2, x = 0 ∨ x = 1 := by decide
+      rcases binary (u a) with ha | ha
+      · simp only [b, Finset.mem_filter, Finset.mem_univ, true_and, ha, ne_eq,
+          not_true_eq_false, ite_false]
+      · simp only [b, Finset.mem_filter, Finset.mem_univ, true_and, ha, ne_eq,
+          one_ne_zero, not_false_eq_true, ite_true]
+  let e := Equiv.ofBijective b hb
+  have hc (D : Matrix (Fin k) (Fin n) (ZMod 2)) (S : Finset (Fin n)) :
+      Nat.card {u : Fin n → ZMod 2 // D *ᵥ u = 0 ∧ Function.support u ⊆ (S : Set (Fin n))} =
+        ∑ T ∈ S.powerset, if D *ᵥ b T = 0 then (1 : ℕ) else 0 := by
+    let eS := Equiv.subtypeEquiv e (p := fun T => D *ᵥ b T = 0 ∧ T ⊆ S)
+      (q := fun u => D *ᵥ u = 0 ∧ Function.support u ⊆ (S : Set (Fin n)))
+      (fun T => by change (_ ∧ T ⊆ S) ↔ (_ ∧ Function.support (b T) ⊆ _)
+                   rw [hs]; rfl)
+    rw [← Nat.card_congr eS, Nat.card_eq_fintype_card, Fintype.card_subtype]
+    have hf : Finset.univ.filter (fun T => D *ᵥ b T = 0 ∧ T ⊆ S) =
+        S.powerset.filter (fun T => D *ᵥ b T = 0) := by
+      ext T
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_powerset,
+        and_comm]
+    rw [hf, Finset.sum_boole]
+    rfl
+  let f : Matrix (Fin k) (Fin n) (ZMod 2) → Finset (Fin n) → ℝ :=
+    fun D T => if D *ᵥ b T = 0 then 1 else 0
+  have hf : (fun S : Finset (Fin n) => ∑ T ∈ S.powerset, f B T) =
+      (fun S : Finset (Fin n) => ∑ T ∈ S.powerset, f C T) := by
+    funext S
+    have hS := h S
+    rw [hc B S, hc C S] at hS
+    dsimp only [f]
+    exact_mod_cast hS
+  have hmem (T : Finset (Fin n)) : B *ᵥ b T = 0 ↔ C *ᵥ b T = 0 := by
+    have he := congrArg
+      (fun F => D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.hyperlink F T) hf
+    rw [D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.hyperlink_zeta,
+      D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.hyperlink_zeta] at he
+    dsimp only [f] at he
+    split_ifs at he <;> simp_all
+  ext u
+  obtain ⟨T, rfl⟩ := hb.surjective u
+  exact hmem T
 
 private theorem kernels_row_spaces {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 2))
     (h : LinearMap.ker B.mulVecLin = LinearMap.ker C.mulVecLin) :
     Submodule.span (ZMod 2) (Set.range B.row) =
       Submodule.span (ZMod 2) (Set.range C.row) := by
-  sorry
+  classical
+  apply Subspace.dualAnnihilator_inj.mp
+  ext φ
+  obtain ⟨u, rfl⟩ := (Module.piEquiv (Fin n) (ZMod 2) (ZMod 2)).surjective φ
+  have hD (D : Matrix (Fin k) (Fin n) (ZMod 2)) :
+      Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u ∈
+        (Submodule.span (ZMod 2) (Set.range D.row)).dualAnnihilator ↔
+        u ∈ LinearMap.ker D.mulVecLin := by
+    change (Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u ∈
+      ((Submodule.span (ZMod 2) (Set.range D.row)).dualAnnihilator :
+        Set (Module.Dual (ZMod 2) (Fin n → ZMod 2)))) ↔ _
+    rw [Submodule.coe_dualAnnihilator_span]
+    change (Set.range D.row ⊆
+      (LinearMap.ker (Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u) : Set _)) ↔ _
+    rw [Set.range_subset_iff]
+    simp only [SetLike.mem_coe, LinearMap.mem_ker, Module.piEquiv_apply_apply,
+      smul_eq_mul, Matrix.mulVecLin_apply, funext_iff, Matrix.mulVec,
+      dotProduct, Pi.zero_apply, Matrix.row]
+  rw [hD B, hD C, h]
 
 private theorem row_spaces_unit {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 2))
     (h : Submodule.span (ZMod 2) (Set.range B.row) =

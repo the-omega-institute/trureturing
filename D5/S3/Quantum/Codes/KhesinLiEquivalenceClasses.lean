@@ -150,7 +150,7 @@ namespace D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses
 
 set_option maxHeartbeats 1000000
 
-private theorem lc_source {V : Type} (G : SimpleGraph V) (v : V) :
+theorem lc_source {V : Type} (G : SimpleGraph V) (v : V) :
     lc G v = SimpleGraph.fromRel (fun x y => Xor (G.Adj x y) (G.Adj v x ∧ G.Adj v y)) := by
   ext x y
   rw [SimpleGraph.fromRel_adj]
