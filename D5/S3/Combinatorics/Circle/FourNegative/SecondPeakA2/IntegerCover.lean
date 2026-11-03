@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/IntegerCover
    mirror-E: none(waiver:physical-source-family-registration)
-   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: Original a2 near-b construction: IntegerCover and its physical source consumer. -/
 import Mathlib.Data.Int.DivMod
