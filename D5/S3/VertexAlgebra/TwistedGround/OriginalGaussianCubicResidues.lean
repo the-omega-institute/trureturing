@@ -163,10 +163,6 @@ private lemma lift_mul (f g : PowerSeries ℂ) : lift (f * g) = lift f * lift g 
 
 private lemma lift_one : lift (1 : PowerSeries ℂ) = 1 := by simp [lift]
 
-private lemma da_lift (f : PowerSeries ℂ) : da (lift f) = 0 := by
-  ext n
-  simp [da, lift, dl_const]
-
 private lemma da_a : da aSeries = 1 := by
   rw [aSeries, da_C]
   change PowerSeries.C (dl neckVariable) = PowerSeries.C 1

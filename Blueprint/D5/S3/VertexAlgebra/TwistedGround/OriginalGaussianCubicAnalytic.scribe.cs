@@ -11,11 +11,6 @@ internal sealed class OriginalGaussianCubicAnalyticDocument : IScribeDocumentDef
             Paragraph(Text("The literal cubic has contour bounds and absolutely convergent modulus expansions on the original annulus. Fixed strict radii give geometric bounds for the normalized original coefficients. The original finite current row is summed as an lp 2 vector, with locally uniform convergence and complex analyticity on norm z less than beta b, including zero and arbitrary external amplitude.")),
             Paragraph(Text("These sources are an implementation checkpoint. Native verification and independent admission review are separate requirements; no official acceptance or physical realization is asserted. Full four-halfmode geometry, two-source transport, identityK crossing, Monster moonshine, VOA/CFT/anomaly/fusion, complete string theory and AdS/CFT remain unfinished.")),
             Describe.Lean(
-                DescribeId.Create("omega-inversion"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalytic.omega_inversion"),
-                H("omega_inversion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("omega inversion."))), DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("coefficients-on-fixed-contour"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalytic.coefficients_on_fixed_contour"),
                 H("coefficients_on_fixed_contour"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -69,15 +64,5 @@ internal sealed class OriginalGaussianCubicAnalyticDocument : IScribeDocumentDef
                 DescribeId.Create("eseries-first-order"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalytic.eSeries_first_order"),
                 H("eSeries_first_order"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("eSeries first order."))), DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("kernel-inversion"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalytic.kernel_inversion"),
-                H("kernel_inversion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("kernel inversion."))), DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("coefficients-external-linear"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalytic.coefficients_external_linear"),
-                H("coefficients_external_linear"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("coefficients external linear."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("eSeries first order."))), DescribeRole.Theorem))));
 }

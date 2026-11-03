@@ -21,11 +21,6 @@ internal sealed class OriginalGaussianCubicKernelDocument : IScribeDocumentDefin
                 H("scalar_normalization_iff"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The original annular residue equation fixes the external complex scalar to scalarC; the proof uses nonvanishing of the actual period."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("annular-normalization-with-primitive"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicKernel.annular_normalization_with_primitive"),
-                H("annular_normalization_with_primitive"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("An arbitrary sequence of Laurent primitives contributes zero residue, so the original normalization equation has the same unique scalar."))), DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("original-coefficient-equations-iff"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicKernel.original_coefficient_equations_iff"),
                 H("original_coefficient_equations_iff"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

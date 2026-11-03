@@ -49,16 +49,6 @@ private lemma rootSeries_coeff (n : ℕ) :
     PowerSeries.coeff n rootSeries = Ring.choose (1 / 2 : ℂ) n := by
   simp [rootSeries, PowerSeries.binomialSeries_coeff]
 
-private lemma halfSeries_binomial :
-    halfSeries = PowerSeries.binomialSeries ℂ (-1 / 2 : ℂ) := by
-  ext n
-  simp [halfSeries, PowerSeries.binomialSeries_coeff, halfBinomial_choose]
-
-private lemma root_mul_half : rootSeries * halfSeries = 1 := by
-  rw [halfSeries_binomial, rootSeries, ← PowerSeries.binomialSeries_add,
-    show (1 / 2 : ℂ) + -1 / 2 = 0 by norm_num,
-    PowerSeries.binomialSeries_zero]
-
 /-- The actual finite numerator in c_s, before its s/hypotenuse factors. -/
 def finiteCurrentNumerator (s : ℕ) : Polynomial ℂ :=
   PowerSeries.trunc (s + 1) rootSeries
@@ -68,53 +58,6 @@ This is a basis current; neither cubic is defined using it. -/
 def finiteCurrentLaurent (s : ℕ) : LaurentSeries ℂ :=
   HahnSeries.single (-(s : ℤ) - 1) (s : ℂ) *
     (((finiteCurrentNumerator s : PowerSeries ℂ) * halfSeries) : LaurentSeries ℂ)
-
-theorem finite_current_numerator_degree (s : ℕ) :
-    (finiteCurrentNumerator s).degree < (s + 1 : ℕ) :=
-  PowerSeries.degree_trunc_lt rootSeries (s + 1)
-
-private lemma current_truncated_product (s : ℕ) :
-    PowerSeries.trunc (s + 1)
-      ((finiteCurrentNumerator s : PowerSeries ℂ) * halfSeries) = 1 := by
-  rw [finiteCurrentNumerator, PowerSeries.trunc_trunc_mul,
-    root_mul_half, PowerSeries.trunc_one]
-
-private lemma current_product_low (s n : ℕ) (hn : n < s + 1) :
-    PowerSeries.coeff n
-      ((finiteCurrentNumerator s : PowerSeries ℂ) * halfSeries) =
-        if n = 0 then 1 else 0 := by
-  have h := congrArg (fun p : Polynomial ℂ => p.coeff n)
-    (current_truncated_product s)
-  simpa only [PowerSeries.coeff_trunc, if_pos hn, Polynomial.coeff_one] using h
-
-/-- Every negative exponent is accounted for, including the residue.
-No positivity assumption on s is necessary for this totalized formula. -/
-theorem finite_current_negative_coeff (s : ℕ) (k : ℤ) (hk : k < 0) :
-    (finiteCurrentLaurent s).coeff k =
-      if k = -(s : ℤ) - 1 then (s : ℂ) else 0 := by
-  rw [finiteCurrentLaurent, HahnSeries.coeff_single_mul, ← PowerSeries.coe_mul]
-  have he : k - (-(s : ℤ) - 1) = k + s + 1 := by omega
-  rw [he]
-  by_cases hneg : k + (s : ℤ) + 1 < 0
-  · rw [PowerSeries.coeff_coe, if_pos hneg, mul_zero,
-      if_neg (by omega : k ≠ -(s : ℤ) - 1)]
-  · let n : ℕ := (k + (s : ℤ) + 1).toNat
-    have hncast : (n : ℤ) = k + (s : ℤ) + 1 :=
-      Int.toNat_of_nonneg (le_of_not_gt hneg)
-    have hn : n < s + 1 := by omega
-    rw [← hncast, LaurentSeries.coeff_coe_powerSeries, current_product_low s n hn]
-    by_cases heq : k = -(s : ℤ) - 1
-    · have hn0 : n = 0 := by omega
-      simp only [heq, hn0, ite_true, mul_one]
-    · have hn0 : n ≠ 0 := by omega
-      simp only [heq, hn0, ite_false, mul_zero]
-
-theorem finite_current_residue (s : ℕ) :
-    (finiteCurrentLaurent s).coeff (-1) = 0 := by
-  rw [finite_current_negative_coeff s (-1) (by norm_num)]
-  by_cases hs : s = 0
-  · simp [hs]
-  · rw [if_neg (by omega : (-1 : ℤ) ≠ -(s : ℤ) - 1)]
 
 private lemma current_product_as_sum (s n : ℕ) (hsn : s ≤ n) :
     PowerSeries.coeff n
@@ -169,104 +112,6 @@ theorem finite_current_regular_coeff (s t : ℕ) (ht : 0 < t) :
   unfold pairScalar
   rw [add_comm (t : ℂ) (s : ℂ)]
   ring
-
-private lemma current_numerator_eval (b : ℂ) (s : ℕ) :
-    (finiteCurrentNumerator s).eval b =
-      ∑ k ∈ Finset.range (s + 1), Ring.choose (1 / 2 : ℂ) k * b ^ k := by
-  simpa only [finiteCurrentNumerator, Polynomial.eval₂_id, RingHom.id_apply,
-    rootSeries_coeff] using
-    (PowerSeries.eval₂_trunc_eq_sum_range b (RingHom.id ℂ) (s + 1) rootSeries)
-
-/-- Exact binding to the supplied original row. Both signs of hb remain.
-The identity even holds at totalized b=0; no external restriction is added. -/
-theorem currentRow_eq_finite_numerator (b hb : ℂ) (s : ℕ) :
-    currentRow b hb s =
-      (s : ℂ) * hb * (finiteCurrentNumerator s).eval b / b ^ (s + 1) := by
-  rw [currentRow, current_numerator_eval, ← Finset.sum_div]
-  ring
-
-/- Native finite uniqueness. These adapters are private and are actually
-used by the following numerator uniqueness theorem. There is no cubic
-normalization or target identity among their hypotheses. -/
-private lemma cancel_half_trunc (N : ℕ) (f : PowerSeries ℂ)
-    (h : PowerSeries.trunc N (halfSeries * f) = 0) :
-    PowerSeries.trunc N f = 0 := by
-  have hmul := congrArg (fun p : Polynomial ℂ =>
-    PowerSeries.trunc N (rootSeries * (p : PowerSeries ℂ))) h
-  simpa only [PowerSeries.trunc_mul_trunc, ← mul_assoc, root_mul_half,
-    one_mul, Polynomial.coe_zero, mul_zero, map_zero] using hmul
-
-private lemma polynomial_zero_of_half_trunc (N : ℕ) (p : Polynomial ℂ)
-    (hdeg : p.degree < N)
-    (h : PowerSeries.trunc N (halfSeries * (p : PowerSeries ℂ)) = 0) : p = 0 := by
-  have hp := cancel_half_trunc N (p : PowerSeries ℂ) h
-  apply Polynomial.ext
-  intro n
-  rw [Polynomial.coeff_zero]
-  by_cases hn : n < N
-  · have hc := congrArg (fun q : Polynomial ℂ => q.coeff n) hp
-    simpa only [PowerSeries.coeff_trunc, if_pos hn, Polynomial.coeff_coe,
-      Polynomial.coeff_zero] using hc
-  · exact (Polynomial.degree_lt_iff_coeff_zero p N).mp hdeg n (le_of_not_gt hn)
-
-/-- In the proposed finite class the current numerator is forced by its
-principal part. This concerns the explicit basis current only; finite-class
-membership of the literal cubic still has to be derived. -/
-theorem finite_current_numerator_unique (s : ℕ) (p : Polynomial ℂ)
-    (hdeg : p.degree < (s + 1 : ℕ))
-    (h : PowerSeries.trunc (s + 1) (halfSeries * (p : PowerSeries ℂ)) = 1) :
-    p = finiteCurrentNumerator s := by
-  apply sub_eq_zero.mp
-  apply polynomial_zero_of_half_trunc (s + 1) (p - finiteCurrentNumerator s)
-  · exact (Polynomial.degree_sub_le _ _).trans_lt
-      (max_lt hdeg (finite_current_numerator_degree s))
-  · have hcurrent : PowerSeries.trunc (s + 1)
-        (halfSeries * (finiteCurrentNumerator s : PowerSeries ℂ)) = 1 := by
-      rw [mul_comm]
-      exact current_truncated_product s
-    rw [Polynomial.coe_sub, mul_sub, map_sub, h, hcurrent, sub_self]
-
-/-- The original external-root hypothesis excludes the branch point.
-Neither a principal square-root convention nor positivity is used. -/
-theorem external_root_exclusions (b hb : ℂ) (hroot : (1 + b) * hb ^ 2 = 1) :
-    hb ≠ 0 ∧ b ≠ -1 := by
-  constructor
-  · intro h
-    rw [h] at hroot
-    norm_num at hroot
-  · intro h
-    rw [h] at hroot
-    norm_num at hroot
-
-/-- The derivative numerator is written out to avoid a new curve API. -/
-private def cubicDerivative (x a : ℂ) : ℂ :=
-  3 * a ^ 2 + 2 * (1 + x) * a + x
-
-/-- Exact identity behind the literal TT total derivative. -/
-theorem literal_polar_derivative_identity (x a b : ℂ) :
-    a * (a - b) ^ 2 - cubicDerivative x a * (a - b) + 2 * cubic x a =
-      polar x a b := by
-  unfold cubicDerivative cubic polar
-  ring
-
-/-- Exact expansions, with no degree cutoff: the two diagonal coefficients
-are 2P(b), P'(b). The root cancellation must still be applied to the actual
-formalOmega and externalOmega, on both sheets, in the remaining proof. -/
-theorem literal_diagonal_polynomials (x b v : ℂ) :
-    polar x (b + v) b =
-      2 * cubic x b + cubicDerivative x b * v + b * v ^ 2 ∧
-    cubic x (b + v) = cubic x b + cubicDerivative x b * v +
-      (3 * b + 1 + x) * v ^ 2 + v ^ 3 := by
-  constructor <;> simp only [polar, cubic, cubicDerivative] <;> ring
-
-/-- Cleared finite rational pullback of the literal polar. This is NOT
-substitution of x/u into unrestricted iterated formal power series. -/
-theorem literal_pullback_polar (x u b : ℂ) (hu : u ≠ 0) :
-    u ^ 2 * polar x (x / u) b =
-      x * (u * b * (u + b + 2) + x * (u + b + 2 * u * b)) := by
-  unfold polar
-  field_simp [hu]
-  <;> ring
 
 private lemma scalarCSeries_constant_zero : PowerSeries.constantCoeff scalarCSeries = 0 := by
   simp [scalarCSeries]

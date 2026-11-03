@@ -116,7 +116,7 @@ private lemma first_coefficient_bound (n : ℕ) :
     _ ≤ (n + 1 : ℝ) * 1 := by rw [he]; gcongr; exact coefficient_norm_le _
     _ ≤ (n + 1 : ℝ) ^ 2 := by nlinarith
 
-private lemma period_derivative {z : ℂ} (hz : ‖z‖ < 1) :
+lemma period_derivative {z : ℂ} (hz : ‖z‖ < 1) :
     HasSum (fun n : ℕ => firstCoefficient n * z ^ n) (deriv period z) ∧
       DifferentiableAt ℂ period z := by
   apply series_derivative coefficient _ hz

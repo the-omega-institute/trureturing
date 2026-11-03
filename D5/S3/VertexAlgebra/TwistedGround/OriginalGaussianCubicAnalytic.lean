@@ -119,14 +119,6 @@ private lemma sewing_radii {b z : ℂ} (hz0 : 0 < ‖z‖) (hz : ‖z‖ < beta 
   exact ⟨r, rho, lt_of_le_of_lt (div_nonneg (norm_nonneg _) hB.le) hrInner,
     hrInner, hrz, hzrho, hrho⟩
 
-/-- The literal differential acquires a minus sign under the neck inversion. -/
-theorem omega_inversion (u x : ℂ) (hu : u ≠ 0) (hx : x ≠ 0) :
-    omega (x / u) x * (-x / u ^ 2) = -omega u x := by
-  have hquot : x / (x / u) = u := by field_simp [hu, hx]
-  rw [omega, hquot, omega]
-  field_simp [hu, hx]
-  <;> ring
-
 private lemma kernels_differentiable_a {b a x : ℂ} (hb : b ≠ 0) (hroot : ℂ)
     (hinner : ‖x‖ / beta b < ‖a‖) (houter : ‖a‖ < beta b) :
     DifferentiableAt ℂ (fun u => TT b hroot u x) a ∧
@@ -733,50 +725,5 @@ theorem eSeries_first_order {b : ℂ} (hb : b ≠ 0) (root : ℂ) :
     Asymptotics.IsBigO (𝓝 (0 : ℂ)) (eSeries b root) (fun z : ℂ => z) := by
   have h := (eSeries_differentiableAt (z := (0 : ℂ)) root (by simpa using beta_pos hb)).isBigO_sub
   simpa only [eSeries_zero, sub_zero] using h
-
-/-- The whole literal TT kernel pulls back to UT, including its scalar term. -/
-theorem kernel_inversion (b root u x : ℂ) (hu : u ≠ 0) (hx : x ≠ 0)
-    (hpolar : u * b ≠ x) :
-    TT b root (x / u) x * (-x / u ^ 2) = UT b root u x := by
-  have hden : x / u - b ≠ 0 := by
-    intro h
-    have h' : x = b * u := (div_eq_iff hu).mp (sub_eq_zero.mp h)
-    exact hpolar (by rw [h']; ring)
-  have hP : polarNumerator (x / u) b x / (2 * (x / u - b) ^ 2) =
-      x * polarNumerator u b x / (2 * (u * b - x) ^ 2) := by
-    unfold polarNumerator
-    field_simp [hu, hden, sub_ne_zero.mpr hpolar]
-    <;> ring
-  unfold TT
-  rw [hP]
-  calc
-    _ = (omega (x / u) x * (-x / u ^ 2)) * externalOmega b root x *
-        (x * polarNumerator u b x / (2 * (u * b - x) ^ 2) + scalarC x) := by ring
-    _ = _ := by
-      rw [omega_inversion u x hu hx]
-      unfold UT
-      ring
-
-/-- Both external-root signs, and all complex scalar multiples, are retained. -/
-theorem coefficients_external_linear (c b root : ℂ) (s : ℕ) (x : ℂ) :
-    Tcoeff b (c * root) s x = c * Tcoeff b root s x ∧
-      Ucoeff b (c * root) s x = c * Ucoeff b root s x := by
-  have hT : (fun a => TT b (c * root) a x * a ^ s) =
-      fun a => c * (TT b root a x * a ^ s) := by
-    funext a
-    unfold TT externalOmega
-    ring
-  have hU : (fun a => UT b (c * root) a x * a ^ s) =
-      fun a => c * (UT b root a x * a ^ s) := by
-    funext a
-    unfold UT externalOmega
-    ring
-  constructor
-  · unfold Tcoeff negativeContour
-    rw [hT, circleIntegral.integral_const_mul]
-    ring
-  · unfold Ucoeff negativeContour
-    rw [hU, circleIntegral.integral_const_mul]
-    ring
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicAnalytic

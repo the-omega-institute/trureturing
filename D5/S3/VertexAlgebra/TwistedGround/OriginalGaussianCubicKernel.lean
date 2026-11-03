@@ -83,12 +83,6 @@ private lemma first_moment_residue_zero :
   simp [omegaCoefficient, HahnSeries.coeff_single_mul,
     PowerSeries.coeff_coe, halfSeries]
 
-/-- A Laurent primitive contributes no residue, coefficient by coefficient.
-This is the exact algebraic reason the polar's total derivative disappears. -/
-private lemma derivative_residue (p : LaurentSeries ℂ) :
-    (LaurentSeries.derivative ℂ p).coeff (-1) = 0 := by
-  simp [LaurentSeries.derivative, LaurentSeries.hasseDeriv_coeff]
-
 private lemma moment_coefficient_recurrence (n : ℕ) :
     halfBinomial n * halfBinomial (n + 1) =
       2 * (n + 1 : ℂ) * halfBinomial (n + 1) ^ 2 -
@@ -117,37 +111,10 @@ private lemma period_hasSum {x : ℂ} (hx : ‖x‖ < 1) :
     mul_le_mul_of_nonneg_right (coefficient_norm_le_one n)
       (pow_nonneg (norm_nonneg x) n)
 
-/- This exposes the private coefficient-derivative supplier in
-   OriginalHalfBinomialPeriod, using the same Mathlib locally uniform
-   differentiation API; it does not introduce a different period. -/
 private lemma period_derivative_hasSum {x : ℂ} (hx : ‖x‖ < 1) :
     HasSum (fun n : ℕ => (n + 1 : ℂ) * halfBinomial (n + 1) ^ 2 * x ^ n)
       (deriv F x) := by
-  obtain ⟨r, hxr, hr1⟩ := exists_between hx
-  have hr : 0 < r := lt_of_le_of_lt (norm_nonneg x) hxr
-  have hs : Summable (fun n : ℕ => r ^ n) :=
-    summable_geometric_of_lt_one hr.le hr1
-  have hb (n : ℕ) (w : ℂ) (hw : w ∈ Metric.ball (0 : ℂ) r) :
-      ‖halfBinomial n ^ 2 * w ^ n‖ ≤ r ^ n := by
-    rw [norm_mul, norm_pow w n]
-    exact (mul_le_mul_of_nonneg_right (coefficient_norm_le_one n)
-      (pow_nonneg (norm_nonneg w) n)).trans (by
-        simpa using pow_le_pow_left₀ (norm_nonneg w)
-          (show ‖w‖ ≤ r by exact (by simpa using hw : ‖w‖ < r).le) n)
-  have hd (n : ℕ) : DifferentiableOn ℂ
-      (fun w : ℂ => halfBinomial n ^ 2 * w ^ n) (Metric.ball 0 r) := by
-    intro w _
-    exact ((hasDerivAt_pow n w).const_mul _).differentiableAt.differentiableWithinAt
-  have hsum := Complex.hasSum_deriv_of_summable_norm hs hd Metric.isOpen_ball hb
-    (show x ∈ Metric.ball (0 : ℂ) r by simpa using hxr)
-  have hshift := (hasSum_nat_add_iff' 1).mpr hsum
-  simp only [Finset.sum_range_one, deriv_const_mul_field, deriv_pow_field,
-    Nat.cast_zero, zero_mul, mul_zero, sub_zero, Nat.add_sub_cancel] at hshift
-  convert hshift using 1
-  · ext n
-    simp only [Nat.cast_add, Nat.cast_one]
-    ring
-  · rfl
+  exact (D5.S3.Analytic.OriginalHalfBinomialPeriod.period_derivative hx).1
 
 def annularMoment (x : ℂ) : ℂ :=
   ∑' n : ℕ, (omegaCoefficient (n + 1)).coeff (-2) * x ^ (n + 1)
@@ -195,17 +162,6 @@ theorem scalar_normalization_iff {x : ℂ} (hx : ‖x‖ < 1) (c : ℂ) :
     rw [h]
     field_simp [hF]
     ring
-
-/- The analytic sum of these residues is the very same period, not a
-geometrically renamed normalization. All primitives disappear exactly. -/
-theorem annular_normalization_with_primitive {x : ℂ} (hx : ‖x‖ < 1)
-    (primitive : ℕ → LaurentSeries ℂ) (c : ℂ) :
-    ((∑' n : ℕ, ((omegaCoefficient (n + 1)).coeff (-2) +
-        (LaurentSeries.derivative ℂ (primitive n)).coeff (-1)) * x ^ (n + 1)) / 2 +
-      c * (∑' n : ℕ, (omegaCoefficient n).coeff (-1) * x ^ n) = 0) ↔
-      c = scalarC x := by
-  simp only [derivative_residue, add_zero, omega_residue]
-  exact scalar_normalization_iff hx c
 
 /- Actual original signed Gaussian, including the identity term of the
 mixed block. H is indexed by n : Nat for original positive index n+1. -/
@@ -635,7 +591,6 @@ end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel
 
 #print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.scalar_normalization_iff
 
-#print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.annular_normalization_with_primitive
 
 #print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.original_coefficient_equations_iff
 

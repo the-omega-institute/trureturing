@@ -35,6 +35,18 @@ internal sealed class OriginalHalfBinomialPeriodDocument : IScribeDocumentDefini
             Minus, Frac, Grp(D(1)), Grp(D(4)), Call("period", z), Eq, D(0)));
     }
 
+    private static Formula PeriodDerivativeFormula()
+    {
+        var z = F.Id("z");
+        var n = F.Id("n");
+        return Disp(Seq(Forall, Sp, z, InMacro, Sp, ComplexNumbers, Comma, Sp,
+            Vert, Sp, z, Sp, Vert, Lt, D(1), Rightarrow, Sp,
+            Call("HasSum", Seq(n, Mapsto, Open, n, Plus, D(1), Close,
+                Call("halfBinomial", Seq(n, Plus, D(1))), Caret, Grp(D(2)),
+                z, Caret, Grp(n)), Call("deriv", F.Id("period"), z)),
+            Land, Sp, Call("DifferentiableAt", ComplexNumbers, F.Id("period"), z)));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The complex analytic period of the original half-binomial coefficients.",
         H("The original period equation"), Blocks(
@@ -43,6 +55,11 @@ internal sealed class OriginalHalfBinomialPeriodDocument : IScribeDocumentDefini
                 StatementSource.FromAuthor(PeriodFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every complex z the period is the infinite sum of halfBinomial(n) squared times z to the n. The coefficient halfBinomial(n) is the original product of -1/2-j for 0 <= j < n divided by n factorial. The definition uses the complex sum, with the usual totalized value when a series is not summable. All convergence and differential claims below are restricted to the open unit disk."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("original-half-binomial-period-derivative"),
+                DeclarationHandle.Create(Prefix + "period_derivative"), H("The original derivative series"),
+                StatementSource.FromAuthor(PeriodDerivativeFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every complex z of norm less than one, the series with nth term (n+1) halfBinomial(n+1) squared times z to the n sums to the complex derivative of period at z, and period is complex differentiable there. The original firstCoefficient definition is (n+1) times coefficient(n+1), where coefficient(n) is halfBinomial(n) squared. The annular moment and analytic coefficient proofs use this same derivative series, including at zero."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-half-binomial-period-picard-fuchs"),
                 DeclarationHandle.Create(Prefix + "picard_fuchs"), H("The full complex disk equation"),
                 StatementSource.FromAuthor(PicardFuchsFormula()), AssessedProvenance.FromRepo(),

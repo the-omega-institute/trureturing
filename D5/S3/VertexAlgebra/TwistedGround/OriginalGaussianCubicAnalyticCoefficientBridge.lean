@@ -220,31 +220,11 @@ theorem period_inverse_powerSeries {eta : ℝ≥0} (heta : 0 < eta) (heta1 : (et
 private lemma period_derivative_original_hasSum {x : ℂ} (hx : ‖x‖ < 1) :
     HasSum (fun n : ℕ => PowerSeries.coeff n (PowerSeries.derivative periodSeries) * x ^ n)
       (deriv D5.S3.Analytic.OriginalHalfBinomialPeriod.period x) := by
-  obtain ⟨r, hxr, hr1⟩ := exists_between hx
-  have hr : 0 < r := lt_of_le_of_lt (norm_nonneg x) hxr
-  have hs := summable_geometric_of_lt_one hr.le hr1
-  have hb (n : ℕ) (w : ℂ) (hw : w ∈ ball (0 : ℂ) r) :
-      ‖halfBinomial n ^ 2 * w ^ n‖ ≤ r ^ n := by
-    rw [norm_mul, norm_pow w n]
-    have hn : ‖halfBinomial n ^ 2‖ ≤ 1 := by
-      simpa [norm_pow] using pow_le_pow_left₀ (norm_nonneg _) (half_norm_bound n) 2
-    exact (mul_le_mul_of_nonneg_right hn (pow_nonneg (norm_nonneg w) n)).trans (by
-      simpa only [one_mul] using pow_le_pow_left₀ (norm_nonneg w)
-        (show ‖w‖ ≤ r from (by simpa using hw : ‖w‖ < r).le) n)
-  have hd (n : ℕ) : DifferentiableOn ℂ
-      (fun w : ℂ => halfBinomial n ^ 2 * w ^ n) (ball 0 r) := by
-    intro w _
-    exact ((hasDerivAt_pow n w).const_mul _).differentiableAt.differentiableWithinAt
-  have hsum := Complex.hasSum_deriv_of_summable_norm hs hd isOpen_ball hb
-    (show x ∈ ball (0 : ℂ) r by simpa using hxr)
-  change HasSum _ (deriv D5.S3.Analytic.OriginalHalfBinomialPeriod.period x) at hsum
-  have hshift := (hasSum_nat_add_iff' 1).mpr hsum
-  simp only [Finset.sum_range_one, deriv_const_mul_field, deriv_pow_field,
-    Nat.cast_zero, zero_mul, mul_zero, sub_zero, Nat.add_sub_cancel] at hshift
-  convert hshift using 1
+  convert (D5.S3.Analytic.OriginalHalfBinomialPeriod.period_derivative hx).1 using 1
   funext n
-  simp only [PowerSeries.coeff_derivative, periodSeries, PowerSeries.coeff_mk,
-    Nat.cast_add, Nat.cast_one]
+  simp only [PowerSeries.coeff_derivative, periodSeries, PowerSeries.coeff_mk]
+  change halfBinomial (n + 1) ^ 2 * (n + 1 : ℂ) * x ^ n =
+    ((n + 1 : ℂ) * halfBinomial (n + 1) ^ 2) * x ^ n
   ring
 
 private lemma scalarC_coefficients_at :
