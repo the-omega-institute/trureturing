@@ -118,8 +118,16 @@ private theorem projector : compProj qzero [2, 2, 2] = box := by
   have h1 : qint qzero 1 = 1 := by norm_num [qint.eq_1, Finset.sum_range_succ]
   have hstep (a k : ℕ) : jw qzero 6 a (k + 1) = jw qzero 6 a k +
       (qint qzero k / qint qzero (k + 1)) •
-        (jw qzero 6 a k * gen 6 (-qzero - qzero⁻¹) (a + k) * jw qzero 6 a k) := rfl
-  have hz (a : ℕ) : jw qzero 6 a 0 = 1 := rfl
+        (jw qzero 6 a k * gen 6 (-qzero - qzero⁻¹) (a + k) * jw qzero 6 a k) := by
+    unfold jw
+    exact Nat.rec_add_one (C := fun _ => TL 6 (-qzero - qzero⁻¹)) 1
+      (fun k p => p + (qint qzero k / qint qzero (k + 1)) •
+        (p * gen 6 (-qzero - qzero⁻¹) (a + k) * p)) k
+  have hz (a : ℕ) : jw qzero 6 a 0 = 1 := by
+    unfold jw
+    exact Nat.rec_zero (C := fun _ => TL 6 (-qzero - qzero⁻¹)) 1
+      (fun k p => p + (qint qzero k / qint qzero (k + 1)) •
+        (p * gen 6 (-qzero - qzero⁻¹) (a + k) * p))
   have hb (a : ℕ) : jw qzero 6 a 2 =
       1 + (Real.sqrt 3 : ℂ)⁻¹ • gen 6 (-qzero - qzero⁻¹) (a + 1) := by
     rw [hstep a 1, hstep a 0, hz]
