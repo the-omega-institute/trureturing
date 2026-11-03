@@ -1,0 +1,6 @@
+**定义 26.3（文献对应与本候选的数学边界）。** 两个局部模身份 (20.1) 的成熟先例正是 [Barnum–Wilce，*Local tomography and the Jordan structure of quantum theory*，arXiv:1202.4513v2，引言 Hanche-Olsen 定理的式 (1)](https://arxiv.org/html/1202.4513v2)。该定理原本假设局部为 JB／Euclidean Jordan 代数，并假设其与量子比特的张量空间已经带 Jordan 乘法。其 Proposition 1 另外使用可因子化的齐次自对偶概率理论、局部层析复合及一个量子比特。这里不从这些尚未给出的前件循环取得 Jordan 性。
+
+动力对应与复结合表示的中间工具沿用定理 21.2 所引仓内结果及 [Niestegge，§5](https://arxiv.org/html/1402.0158v2)；一般复合理论的背景见 [Kapustin，arXiv:1303.6917v4，Theorem 3.1](https://arxiv.org/html/1303.6917v4) 和定义 19.3 的 Grgin–Petersen 文献。Kapustin 的对象一开始已有 Lie 代数及单体关联结构；这里的交替、Jacobi 与实际联合模板不作为这样的输入。
+
+C99 在当前有限正 Frobenius 合同下的仓内综合推导是：保值条件作用强迫局部自守和共同曲率比例；两方实际比较的全部剩余恰为中心关联空间上的对称三次型；一次实际活动提升消掉这块自由，从而认证原二元量子张量关系。既有 Jordan 模身份、成熟表示工具与有限完全正判据均不主张为新发现；上述综合也不据限定文献核对主张原创优先权。有限维、正性、张量载体、局部活动、条件作用和逐边可再延伸都是明列前件；无限维极限、空间时空结构、特定物理动力学和经验实现不属于这些定理的结论。
+

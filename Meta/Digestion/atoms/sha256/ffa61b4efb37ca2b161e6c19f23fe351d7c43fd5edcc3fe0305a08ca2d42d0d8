@@ -1,0 +1,90 @@
+**Proposition 5.5 (eight-Read gap, decoding and overlap).** For
+$j=1,2,3,4$ Read (UJB.7706) at slot indices
+
+$$
+b_{A,j}=15(j-1)+1,\qquad b_{T,j}=15(j-1)+8.
+\tag{UJB.7709}
+$$
+
+Let $E$ be the event that all eight replies are $\beta$, equivalently
+that the first bits of the first four left fields and the first four
+right fields are all zero. Then
+
+$$
+\Pr_1(E)-\Pr_0(E)=\frac{56}{158731093125}>0.
+\tag{UJB.7710}
+$$
+
+Choosing source $1$ on $E$ and source $0$ otherwise has equal-prior
+success $1/2+28/158731093125$. This is an attained value, without an
+optimality claim. For every fixed $N$, even complete decoding of the
+endpoint leaves equal-prior Bayes error at least
+$\tfrac12\,1944^{1-N}>0$.
+
+Proof. A uniform injection into $K$ binary words of a fixed length
+assigns distinct words to $s$ distinct selected vertices. Exactly
+$K/2$ words have first bit zero, so the probability that those $s$
+labels all have first bit zero is $f_K(s)=(K/2)_s/(K)_s$. Conditional
+on $H_4=(\pi,\sigma)$, the event probability is consequently
+$f_{128}(|\pi|)f_{256}(|\sigma|)$, using independence of the two full
+injections. Apply Theorem 4.2's complete signed law, not just a
+selected equality event. Its only prescribed-equality discrepancies
+are the six ordered distinct pairs of matchings. For each matching its
+refinements consist of itself, two one-pair splittings and the discrete
+partition, with inversion weights $1,-1,-1,1$. Thus its weighted
+contribution is
+
+$$
+\begin{aligned}
+g(K)&=f_K(2)-2f_K(3)+f_K(4)
+     =\frac{((K/2)_2)^2}{(K)_4},\\
+g(128)&=\frac{1008}{15875},\qquad
+g(256)=\frac{4064}{64515}.
+\end{aligned}
+\tag{UJB.7711}
+$$
+
+For the identity, write $a=K/2$ and put the three terms over $(K)_4$;
+after factoring $(a)_2$, the remaining factor is
+$(K-2)(K-3)-2(a-2)(K-3)+(a-2)(a-3)=a(a-1)$.
+Using the actual $H_1-H_0=209952$ from (UJB.7506), the gap is exactly
+
+$$
+\frac{6\cdot209952}{1944^4}\,
+\frac{1008}{15875}\,\frac{4064}{64515}
+=\frac{56}{158731093125}.
+\tag{UJB.7712}
+$$
+
+This sign corresponds to zeros because the actual operand is $q_bL$:
+$D_0$ returns $\beta$ there. A test of local $LL$ has a different
+reply table and is not the event in (UJB.7709). The eight operand
+lengths in sample order are $2,9,17,24,32,39,47,54$, with sum $224$
+and maximum $54$. These are sufficient literal lengths in addition
+to the eight invocation charges.
+
+For overlap, let all $N$ actual edge draws equal one edge. This has
+probability $M^{1-N}$ under either source. Its two codewords are an
+independent uniform pair $(u,v)\in\{0,1\}^7\times\{0,1\}^8$.
+Moreover the converse holds: if all left fields agree and all right
+fields agree, injectivity forces all paired edges to be that same
+edge. Thus, for each fixed $(u,v)$, the endpoint whose $N$ fields all
+equal $(u,v)$ has exact mass
+
+$$
+\mu_i^N(\{t(u,v)\})=\frac{1944^{1-N}}{128\cdot256},
+\qquad i=0,1.
+\tag{UJB.7713}
+$$
+
+Summing these distinct endpoints gives a common full-tree sublaw of
+mass $1944^{1-N}$. On this sublaw a common decision has the same
+distribution for both sources, even with arbitrary independent coins
+and the entire decoded tree. It makes equal-prior error at least half
+that mass. More generally, prior masses $p_0,p_1>0$ give error at
+least $\min(p_0,p_1)1944^{1-N}$. Every transcript is a channel from
+this fixed tree and the source-independent installation and seed, so
+further Reads or source-free processing cannot remove this common
+sublaw. There is no finite zero-error source identification at fixed
+$N$, even after the full inverse of Proposition 5.3. $\square$
+

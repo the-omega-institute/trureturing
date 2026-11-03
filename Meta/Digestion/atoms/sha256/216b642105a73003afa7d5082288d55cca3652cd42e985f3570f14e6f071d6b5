@@ -1,0 +1,55 @@
+**Proposition 22.1 (located construction counts).** In a finite completed
+LAB run let $P,S,N$ be the numbers of successful promotions, splits and
+all generation events, including those chosen by Next. Let $a,c$ be the
+current leaf counts and let
+
+$$
+D=\sum_{e\text{ in the actual generation word}}|\operatorname{addr}(e)|.
+\tag{AA.77}
+$$
+
+Then the source has
+
+$$
+P=c,\qquad S=a+c-1,\qquad N=a+2c-1,\qquad
+V=1+P+2S=2a+3c-1
+\tag{AA.78}
+$$
+
+physical vertices. The literal routing construction has exactly $S$ tape
+headers, $D$ tape cells and $D$ side-bit appends. These are persistent
+objects in addition to the driver, bindings and service work.
+
+Under the field conventions of Assumption 20.1, source parent/left/right
+initialization and attachment use exactly $3+4P+8S$ located field
+assignments. Auxiliary source-header slots, header initialization/binding
+and tape initialization/linking use exactly
+
+$$
+V+3S+4D
+\tag{AA.79}
+$$
+
+further located data-field assignments. This is an explicit construction
+account, excluding allocation/grant operations, reference-bit expansion,
+register assignments, tests, navigation, input, output, acknowledgement
+and cleanup. Those remain charged; neither formula is a total tariff.
+
+Proof. A promotion increases the $\beta$ count by one and adds one source
+marker; a split increases the $\alpha$ count by one, leaves the $\beta$
+count unchanged and adds two source vertices. Starting from $\alpha$ gives
+(AA.78). An event at depth $d$ has exactly $d$ proper logical ancestors,
+so its maintenance creates $d$ tape cells. Summing gives $D$; each split
+creates exactly its one header.
+
+The initial root has three initialized source fields. A promotion initializes
+its marker's three source fields and writes the old root's left link.
+A split initializes six fields on two fresh vertices and writes its two
+attachments; all reused parent fields remain correct. Every source vertex
+also initializes one null auxiliary slot, giving $V$. Each split initializes
+two header fields and binds its source slot, giving $3S$. At a located
+header, append initializes a cell's bit and null next field, then writes
+either the old tail's next or the empty head, and finally the header tail.
+That is four field assignments in either case. No other source or tape
+content field is changed by the specified construction. $\square$
+

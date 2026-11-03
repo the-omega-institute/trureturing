@@ -1,0 +1,37 @@
+**Scope 5.7 (suppliers and remaining conditions).** This is a
+`repo-derived` source-specific application: Proposition 3.2 and
+Theorems 3.3/4.2 supply the actual group/edge adapter and signed sample
+law; IV37.1 supplies the legal bit-slot construction; AA17.1–17.3
+supply guards and the syntax/material/boundary/causal-order inverses;
+NCO2.3 and NCO4.1 supply the all-word locality and fixed-source
+adaptive-cylinder methods in their own domains. The graph
+homomorphism/inversion method is classical, as cited in §§3–4
+([Lovász–Szegedy, §§2.1, 2.4](https://arxiv.org/abs/math/0408173v2));
+the random-function interaction framework is also prior
+([Maurer, Random Systems](https://crypto.ethz.ch/publications/Maurer02.html)).
+The additional content is their explicit actual-source/native-operand
+correspondence, the partial-field argument with shared full injections,
+and this exact seven/eight-invocation result. It asserts no new general
+graph, coding or adaptive-interaction theorem, and no broader literature
+originality claim. The proofs here are ordinary mathematics, not Lean
+verification.
+
+The distinction between globally shared injections and freshly sampled
+labels is essential: independent injections redrawn for every sample
+would make all $N$ codeword pairs iid uniform under both sources,
+erasing even the full-tree difference. Observer blindness is also
+essential: a preparer retaining $z$ can compute $E$ before any observer
+Read. These are different contracts from Assumption 5.2. Full uniform
+injections are a sufficient specification, not a proved weakest one.
+
+This finite preparation realizes a stationary native observation law
+under added access assumptions. It supplies no autonomous native
+sampler for the hidden group law or injections, no native isolation or
+handoff service, and no changing-source joint kernel or ongoing
+same-source fork/sample mechanism. The costs of those mechanisms,
+installation, computation, navigation and all memory beyond the
+sufficient payload remain separate. No minimum-memory bound or
+optimum eight-Read accuracy follows here. The general autonomous
+recovery problem for space, time, boundary, memory and recursive
+observation remains unresolved by this conditional result.
+
