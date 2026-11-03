@@ -6,6 +6,7 @@
    utility: none
    digest: Bipartite encoder equivalence reduces to permutations and binary row additions. -/
 
+import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
 import D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses
 import D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
 import Mathlib.FieldTheory.Finiteness
@@ -18,6 +19,7 @@ namespace D5.S3.Quantum.Codes.KhesinLiBipartiteEncoderEquivalence
 
 open D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses (Step addInputRow lc_source lc_adj)
 open D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph (lc entropy cut)
+open D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity (binary)
 open Matrix
 open scoped BigOperators
 
@@ -464,7 +466,6 @@ private theorem kernel_recovery {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 
     · intro u
       refine ⟨Finset.univ.filter (fun a => u a ≠ 0), ?_⟩
       funext a
-      have binary : ∀ x : ZMod 2, x = 0 ∨ x = 1 := by decide
       rcases binary (u a) with ha | ha
       · simp only [b, Finset.mem_filter, Finset.mem_univ, true_and, ha, ne_eq,
           not_true_eq_false, ite_false]
@@ -584,12 +585,10 @@ private theorem realize_row_equivalence {k n : ℕ} (G H : SimpleGraph (Fin k �
         funext i
         have hi : D i ≠ 0 := (Finset.prod_ne_zero_iff.mp (by
           simpa only [Matrix.det_diagonal] using hD)) i (Finset.mem_univ i)
-        have binary : ∀ x : ZMod 2, x = 0 ∨ x = 1 := by decide
         exact (binary (D i)).resolve_left hi
       refine ⟨J, hJ, ?_, .refl⟩
       rw [hones, Matrix.diagonal_one, Matrix.one_mul]
     · intro t J hJ
-      have binary : ∀ x : ZMod 2, x = 0 ∨ x = 1 := by decide
       rcases binary t.c with ht | ht
       · refine ⟨J, hJ, ?_, .refl⟩
         change biadjacency J = Matrix.transvection t.i t.j t.c * biadjacency J
