@@ -18,6 +18,11 @@ namespace D5.S1.Dynamics.Shadowing
 
 def quadraticProgressionLength (p : ℕ) : ℕ := p ^ 2 + 3
 
+/-- Delete precisely the selected coordinates, preserving every other symbol. -/
+noncomputable def eraseCoordinates (c : ℕ → ReturnBit) (E : Set ℕ) : ℕ → ReturnBit := by
+  classical
+  exact fun k => if k ∈ E then returnZero else c k
+
 /-- Separated quarter masks cannot occur at two phases less than one eighth
 apart, including across the integer boundary. -/
 theorem quarter_masks_separated (u v : ℝ) (hu : Int.fract u ∈ Icc (1 / 8 : ℝ) (3 / 8))
@@ -56,6 +61,7 @@ theorem quadratic_progression_neighborhood_two_shadowing :
     have hs2 : Real.sqrt 2 < 2 := by nlinarith
     dsimp [α, M]
     push_cast
+    rw [← mul_div_assoc]
     apply (div_lt_iff₀ (by positivity : (0 : ℝ) < 32 * ((R : ℝ) + 1))).2
     nlinarith [mul_lt_mul_of_pos_left hs2 (show (0 : ℝ) < (R : ℝ) + 1 by positivity)]
   refine ⟨(1 / 2 : ℝ) ^ D, by positivity, fun z hz => ?_⟩
@@ -63,7 +69,8 @@ theorem quadratic_progression_neighborhood_two_shadowing :
   have hover : ∀ i j, j ≤ D + 1 → c (i + j) = (z i).1 j := by
     apply diagonal_splice_overlap
     intro i j hj
-    exact PiNat.apply_eq_of_dist_lt (hz i) hj
+    simpa only [progressionShift, shift_apply, Nat.add_comm] using
+      PiNat.apply_eq_of_dist_lt (hz i) hj
   have hsmall : ∀ s p : ℕ, 0 < p → p ≤ P →
       ∃ j < quadraticProgressionLength p, c (s + j * p) = returnZero := by
     intro s p hp hpP
@@ -72,9 +79,11 @@ theorem quadratic_progression_neighborhood_two_shadowing :
       have hj' : j ≤ p ^ 2 + 2 := by change j < p ^ 2 + 3 at hj; omega
       have hpow := Nat.pow_le_pow_left hpP 2
       have hmul := Nat.mul_le_mul (show j ≤ P ^ 2 + 2 by omega) hpP
-      have hmax := le_max_right R (P ^ 3 + 2 * P)
-      dsimp [D]
-      nlinarith
+      calc
+        j * p ≤ (P ^ 2 + 2) * P := hmul
+        _ = P ^ 3 + 2 * P := by ring
+        _ ≤ D := le_max_right _ _
+        _ ≤ D + 1 := Nat.le_succ _
     refine ⟨j, hj, ?_⟩
     rw [hover s (j * p) hjspan]
     simpa using hzero
@@ -99,7 +108,7 @@ theorem quadratic_progression_neighborhood_two_shadowing :
     by_cases h : ∀ j ≤ R, i + j ∉ E₀
     · exact Or.inl h
     · right
-      push_neg at h
+      push Not at h
       obtain ⟨j, hj, hjE⟩ := h
       intro k hk hkE
       have hsep := quarter_masks_separated _ _ hjE hkE
@@ -119,26 +128,31 @@ theorem quadratic_progression_neighborhood_two_shadowing :
     · change j < p ^ 2 + 3
       change j ≤ P * p at hj
       nlinarith
-    · convert hjhit using 1 <;> dsimp [α] <;> push_cast <;> ring
+    · have heq : (((s + j * p : ℕ) : ℝ) * α) =
+          (s : ℝ) * α + (j : ℝ) * p * (Real.sqrt 2 / M) := by
+        dsimp [α]
+        push_cast
+        ring
+      simpa only [heq] using hjhit
   classical
-  let a : ℕ → ReturnBit := fun k => if k ∈ E₀ then returnZero else c k
-  let b : ℕ → ReturnBit := fun k => if k ∈ E₁ then returnZero else c k
+  let a := eraseCoordinates c E₀
+  let b := eraseCoordinates c E₁
   have hlegal (E : Set ℕ) (hit : ∀ s p, 0 < p → P < p →
       ∃ j < quadraticProgressionLength p, s + j * p ∈ E) :
-      ProgressionLegal quadraticProgressionLength (fun k => if k ∈ E then returnZero else c k) := by
+      ProgressionLegal quadraticProgressionLength (eraseCoordinates c E) := by
     intro s p hp
     by_cases hpP : p ≤ P
     · obtain ⟨j, hj, hzero⟩ := hsmall s p hp hpP
-      exact ⟨j, hj, by simp [hzero]⟩
+      exact ⟨j, hj, by simp [eraseCoordinates, hzero]⟩
     · obtain ⟨j, hj, hE⟩ := hit s p hp (by omega)
-      exact ⟨j, hj, by simp [hE]⟩
+      exact ⟨j, hj, by simp [eraseCoordinates, hE]⟩
   let A : ProgressionPoint quadraticProgressionLength := ⟨a, hlegal E₀ (by
     intro s p hp hpP
-    simpa only [E₀, mem_setOf_eq, show (1 / 8 : ℝ) + 1 / 4 = 3 / 8 by norm_num] using
+    simpa only [E₀, mem_ofPred_eq, show (1 / 8 : ℝ) + 1 / 4 = 3 / 8 by norm_num] using
       hhit (1 / 8) (by norm_num) (by norm_num) s p hp hpP)⟩
   let B : ProgressionPoint quadraticProgressionLength := ⟨b, hlegal E₁ (by
     intro s p hp hpP
-    simpa only [E₁, mem_setOf_eq, show (5 / 8 : ℝ) + 1 / 4 = 7 / 8 by norm_num] using
+    simpa only [E₁, mem_ofPred_eq, show (5 / 8 : ℝ) + 1 / 4 = 7 / 8 by norm_num] using
       hhit (5 / 8) (by norm_num) (by norm_num) s p hp hpP)⟩
   refine ⟨A, B, ?_, fun i => ?_⟩
   · apply lt_of_le_of_lt _ hR
@@ -146,7 +160,7 @@ theorem quadratic_progression_neighborhood_two_shadowing :
     apply PiNat.mem_cylinder_iff_dist_le.mp
     intro j hj
     have hinit := hinitial j (by omega)
-    simp [a, b, hinit]
+    simp [a, b, eraseCoordinates, hinit]
   · rcases hwindow i with h | h
     · left
       apply lt_of_le_of_lt _ hR
@@ -155,7 +169,7 @@ theorem quadratic_progression_neighborhood_two_shadowing :
       intro j hj
       rw [progression_shift_iterate]
       change a (i + j) = _
-      rw [show a (i + j) = c (i + j) by simp [a, h j (by omega)]]
+      rw [show a (i + j) = c (i + j) by simp [a, eraseCoordinates, h j (by omega)]]
       exact hover i j (by have := le_max_left R (P ^ 3 + 2 * P); dsimp [D]; omega)
     · right
       apply lt_of_le_of_lt _ hR
@@ -164,7 +178,7 @@ theorem quadratic_progression_neighborhood_two_shadowing :
       intro j hj
       rw [progression_shift_iterate]
       change b (i + j) = _
-      rw [show b (i + j) = c (i + j) by simp [b, h j (by omega)]]
+      rw [show b (i + j) = c (i + j) by simp [b, eraseCoordinates, h j (by omega)]]
       exact hover i j (by have := le_max_left R (P ^ 3 + 2 * P); dsimp [D]; omega)
 
 end D5.S1.Dynamics.Shadowing

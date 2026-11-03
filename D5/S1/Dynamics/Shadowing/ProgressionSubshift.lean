@@ -64,14 +64,6 @@ theorem progression_shift_iterate (ℓ : ℕ → ℕ) (x : ProgressionPoint ℓ)
     | succ i ih => simp only [iterate_succ_apply', progressionShift, ih]
   rw [h, shift_one_iterate_apply]
 
-/-- Replacing ones by zeros preserves every already satisfied support constraint. -/
-theorem progression_legal_hereditary {ℓ : ℕ → ℕ} {x y : ℕ → ReturnBit}
-    (hx : ProgressionLegal ℓ x) (hxy : ∀ k, x k = returnZero → y k = returnZero) :
-    ProgressionLegal ℓ y := by
-  intro s p hp
-  obtain ⟨j, hj, hz⟩ := hx s p hp
-  exact ⟨j, hj, hxy _ hz⟩
-
 theorem progression_zero_legal {ℓ : ℕ → ℕ} (hℓ : ∀ p, 0 < p → 0 < ℓ p) :
     ProgressionLegal ℓ (fun _ => returnZero) := by
   intro s p hp
@@ -87,7 +79,9 @@ theorem progression_prepend_zero_legal {ℓ : ℕ → ℕ}
     refine ⟨j, hj, ?_⟩
     change (if s + 1 + j * p = 0 then _ else _) = _
     rw [ite_eq_right (by omega)]
-    convert hz using 1 <;> congr 1 <;> omega
+    convert hz using 1
+    congr 1
+    omega
 
 theorem progression_shift_surjective {ℓ : ℕ → ℕ}
     (hℓ : ∀ p, 0 < p → 0 < ℓ p) : Surjective (progressionShift ℓ) := by

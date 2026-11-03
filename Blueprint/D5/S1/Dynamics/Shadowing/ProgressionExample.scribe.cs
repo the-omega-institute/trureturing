@@ -1,0 +1,52 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Shadowing;
+
+internal sealed class ProgressionExampleDocument : IScribeDocumentDefinition
+{
+    private const string Owner = "D5/S1/Dynamics/Shadowing/ProgressionExample.";
+    private static Formula Id(string s) => F.Id(s);
+    private static Formula Call(string s, params Formula[] args)
+    {
+        var items = new List<Formula> { Seq(Operatorname, Grp(Id(s))), Open };
+        for (var i = 0; i < args.Length; i++) { if (i > 0) items.AddRange([Comma, Sp]); items.Add(args[i]); }
+        items.Add(Close); return Seq([.. items]);
+    }
+    private static Formula St(params Formula[] lines) => Disp(new Formula.Aligned([.. lines]));
+    private static DocumentBlock.Describe Thm(string key, string decl, string title, Formula formula, string text, OpenProblemResolutionClaim? resolution = null) =>
+        Describe.Lean(DescribeId.Create(key), DeclarationHandle.Create(Owner + decl), H(title),
+            StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(text))), DescribeRole.Theorem, resolution);
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A weakly mixing compact metric system with neighborhood two-shadowing and without dense nonempty small periodic sets.",
+        H("The Full Progression Example for Question 5.6"), Blocks(
+        Paragraph(Text("Jonathan Meddaugh and Elyssa Stephens, Shadowing with small diameter sets of bounded cardinality, arXiv:2509.04312v1, Question 5.6 asks: "
+            + "Is there a weakly mixing system which has the neighborhood N-shadowing property (N>1) that does not have dense small periodic sets? "
+            + "Use the intended nonempty meaning of a small periodic set. The printed definition omits nonemptiness; allowing the empty set would trivialize it. "
+            + "The phase space is X={x in {0,1}^N : for every s>=0,p>=1 some j<=p^2+2 has x(s+jp)=0}, with the genuine first-disagreement metric, and the one-sided left shift sigma. "
+            + "No homeomorphism hypothesis is imposed by the source's compact metric system definition.")),
+        Paragraph(Text("The arithmetic-progression construction, constants and rotation deletion method are attributed to Pro.")),
+        Thm("progression-square-transitivity", "progression_shift_product_transitive", "Weak mixing on all nonempty product open sets", St(
+            Seq(Forall, Sp, Seq(Id("U"), Comma, Sp, Id("V")), Sp, Subseteq, Sp, Seq(Id("X"), Times, Sp, Id("X")), Comma),
+            Seq(Call("IsOpen", Id("U")), Sp, Land, Sp, Call("IsOpen", Id("V")), Sp, Land,
+                Sp, Call("Nonempty", Id("U")), Sp, Land, Sp, Call("Nonempty", Id("V")), Sp, Rightarrow),
+            Seq(Exists, Sp, Seq(Id("n"), Comma, Sp, Id("z")), Comma, Sp, Id("z"), Sp, InMacro, Sp, Id("U"), Sp, Land,
+                Sp, Seq(Open, Call("iterate", Id("sigma"), Id("n"), Call("fst", Id("z"))), Comma, Sp, Call("iterate", Id("sigma"), Id("n"), Call("snd", Id("z"))), Close), Sp, InMacro, Sp, Id("V"))),
+            "For arbitrary nonempty open U,V in X times X, choose contained nonempty open rectangles. Apply open-set mixing to each coordinate pair. "
+            + "The maximum of their two thresholds supplies one common hitting time and two points, proving transitivity of the square map."),
+        Thm("full-q56-progression-example", "quadratic_progression_example", "The full compact-system existence conclusion", St(
+            Seq(Call("Nonempty", Id("X")), Sp, Land, Sp, Call("CompactSpace", Id("X"))),
+            Seq(Call("Continuous", Id("sigma")), Sp, Land, Sp, Call("Surjective", Id("sigma"))),
+            Seq(Call("ProductTransitive", Id("sigma")), Sp, Land, Sp, Call("NeighborhoodTwoShadowing", Id("sigma"))),
+            Seq(Exists, Sp, Id("U"), Comma, Sp, Call("IsClopen", Id("U")), Sp, Land, Sp,
+                Call("Nonempty", Id("U")), Sp, Land, Sp, Call("NoNonemptyPeriodicSubset", Id("U")))),
+            "The all-zero configuration witnesses nonemptiness, and the closed finite-alphabet carrier is compact. Zero-prepending gives surjectivity, while zero-gap joining gives mixing and hence product transitivity. "
+            + "The exact original neighborhood contract holds with the single fixed N=2 for all accuracies and all infinite natural-time pseudo-orbits. "
+            + "Take U=[1], containing 10-infinity. For every p>0 it contains no nonempty B with sigma^p(B) subset B; hence it contains no nonempty compact B with sigma^p(B)=B. "
+            + "One nonempty open obstruction negates density of nonempty small periodic sets. This is the complete intended existence conclusion, not a finite instance or a conditional mask statement.",
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("meddaugh-stephens-2025-mixing-small-periodic-sets"), ResolutionKind.Proved))
+        )));
+}
