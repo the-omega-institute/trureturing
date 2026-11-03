@@ -87,7 +87,9 @@ private theorem expectation_gap_sq_le_four_variance (T : E →ₗ[ℝ] E) (hT : 
       simp only [mean,z,map_smul,map_add,hTa',hTb',real_inner_smul_left,
         real_inner_smul_right,inner_add_left,inner_add_right,
         real_inner_self_eq_norm_sq,ha,hb,hab,hba,one_pow,mul_one,one_mul,mul_zero,zero_mul,add_zero,zero_add]
-      nlinarith [ht]
+      calc
+        _ = (l+u)*t^2 := by ring
+        _ = (l+u)/2 := by rw [ht]; ring
     have he : ‖T z - mean T z • z‖^2 = (u-l)^2/4 := by
       have hevec : T z - mean T z • z =
           (t*(l-(l+u)/2)) • a + (t*(u-(l+u)/2)) • b := by
@@ -234,6 +236,40 @@ private lemma complex_centering {J : Type*} [Fintype J]
     exact hv z hz
   exact uniform_block_centering W A hs δ hδ hv' e he x hx
 
+private lemma kraus_adjoint_norm_le {J : Type*} [Fintype J]
+    (L : J → G →ₗ[ℂ] H) (b : ℝ) (hb : 0 ≤ b)
+    (hv : ∀ x : G, ‖x‖ = 1 → ∑ j, ‖L j x‖^2 ≤ b)
+    (A : H →L[ℂ] H) :
+    ‖(∑ j, (L j).adjoint.comp (A.toLinearMap.comp (L j))).toContinuousLinearMap‖
+      ≤ b*‖A‖ := by
+  classical
+  apply ContinuousLinearMap.opNorm_le_of_re_inner_le (mul_nonneg hb (norm_nonneg A))
+  intro x y hx hy
+  change (inner ℂ ((∑ j, (L j).adjoint.comp
+    (A.toLinearMap.comp (L j))).toContinuousLinearMap x) y).re ≤ b*‖A‖
+  have hs : 0 ≤ ∑ j, ‖L j x‖*‖L j y‖ :=
+    Finset.sum_nonneg (fun j _ => mul_nonneg (norm_nonneg _) (norm_nonneg _))
+  have hcs := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ
+    (fun j => ‖L j x‖) (fun j => ‖L j y‖)
+  have hprod : (∑ j, ‖L j x‖*‖L j y‖)^2 ≤ b^2 := by
+    exact hcs.trans (by
+      simpa only [pow_two] using mul_le_mul (hv x hx) (hv y hy)
+        (Finset.sum_nonneg (fun j _ => sq_nonneg _)) hb)
+  have hsum : ∑ j, ‖L j x‖*‖L j y‖ ≤ b := (sq_le_sq₀ hs hb).mp hprod
+  calc
+    _ = ∑ j, (inner ℂ (A (L j x)) (L j y)).re := by
+      simp only [LinearMap.coe_toContinuousLinearMap',LinearMap.sum_apply,
+        LinearMap.comp_apply,sum_inner,Complex.re_sum,LinearMap.adjoint_inner_left,
+        ContinuousLinearMap.coe_coe]
+    _ ≤ ∑ j, ‖A‖*‖L j x‖*‖L j y‖ := by
+      apply Finset.sum_le_sum
+      intro j _
+      exact (Complex.re_le_norm _).trans ((norm_inner_le_norm _ _).trans
+        (mul_le_mul_of_nonneg_right (A.le_opNorm _) (norm_nonneg _)))
+    _ = ‖A‖*(∑ j, ‖L j x‖*‖L j y‖) := by rw [Finset.mul_sum]; congr 1; ext j; ring
+    _ ≤ ‖A‖*b := mul_le_mul_of_nonneg_left hsum (norm_nonneg _)
+    _ = _ := mul_comm _ _
+
 /-- Blockwise centering bounds the complete ambient Gram operator, including leakage. -/
 theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
     (V : G →ₗᵢ[ℂ] H) (h : J → H →ₗ[ℂ] H)
@@ -249,7 +285,10 @@ theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
       (∑ j, ‖L j x‖^2 ≤ 5*δ)) ∧
     (∀ x : G, (inner ℂ x (Q x)).re = ∑ j, ‖L j x‖^2 ∧
       (inner ℂ x (Q x)).re ≤ (5*δ)*‖x‖^2) ∧
-    ‖Q.toContinuousLinearMap‖ ≤ 5*δ := by
+    ‖Q.toContinuousLinearMap‖ ≤ 5*δ ∧
+    (∀ A : H →L[ℂ] H,
+      ‖(∑ j, (L j).adjoint.comp (A.toLinearMap.comp (L j))).toContinuousLinearMap‖
+        ≤ (5*δ)*‖A‖) := by
   classical
   dsimp only
   let c : J → ℝ := fun j => (inner ℂ (V e) (h j (V e))).re
@@ -263,7 +302,9 @@ theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
       (∑ j, ‖L j x‖^2 ≤ 5*δ) := by
     simpa only [hL,c] using complex_centering V h hh δ hδ hv e x (he ⟨x,hx⟩) hx
   have hgram (x : G) : (inner ℂ x (Q x)).re = ∑ j, ‖L j x‖^2 := by
-    simp [Q,LinearMap.adjoint_inner_right,inner_self_eq_norm_sq_to_K]
+    simp only [Q,LinearMap.sum_apply,LinearMap.comp_apply,inner_sum,Complex.re_sum,
+      LinearMap.adjoint_inner_right]
+    exact Finset.sum_congr rfl (fun j _ => (norm_sq_eq_re_inner (𝕜 := ℂ) (L j x)).symm)
   have hb (x : G) : (inner ℂ x (Q x)).re ≤ (5*δ)*‖x‖^2 := by
     rw [hgram]
     by_cases hx : x = 0
@@ -272,27 +313,30 @@ theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
     let z : G := (‖x‖⁻¹ : ℂ) • x
     have hz : ‖z‖ = 1 := by simp [z,norm_smul,Real.norm_eq_abs,abs_of_nonneg (norm_nonneg x),hn]
     have heq (j : J) : ‖L j x‖^2 = ‖x‖^2 * ‖L j z‖^2 := by
-      simp only [z,map_smul,norm_smul,Complex.norm_real,Real.norm_eq_abs,abs_inv,abs_norm,mul_pow,inv_pow]
+      simp only [z,map_smul,norm_smul,norm_inv,Complex.norm_real,Real.norm_eq_abs,abs_inv,abs_norm,mul_pow,inv_pow]
       field_simp [hn]
     simp_rw [heq]
     rw [← Finset.mul_sum]
     calc
       _ ≤ ‖x‖^2 * (5*δ) := mul_le_mul_of_nonneg_left (hc z hz).2 (sq_nonneg _)
       _ = _ := mul_comm _ _
-  refine ⟨hc,fun x => ⟨hgram x,hb x⟩,?_⟩
-  have hsym : Q.IsSymmetric := LinearMap.isSymmetric_sum _ (fun j _ =>
-    LinearMap.isSymmetric_adjoint_comp_self (L j))
-  rw [ContinuousLinearMap.norm_eq_iSup_rayleighQuotient Q.toContinuousLinearMap hsym]
-  apply ciSup_le
-  intro x
-  have hp : 0 ≤ (inner ℂ (x : G) (Q x)).re := by rw [hgram]; positivity
-  simp only [ContinuousLinearMap.rayleighQuotient,ContinuousLinearMap.reApplyInnerSelf_apply,
-    LinearMap.coe_toContinuousLinearMap', inner_re_symm]
-  change |(inner ℂ x (Q x)).re / ‖x‖^2| ≤ 5*δ
-  rw [abs_of_nonneg (div_nonneg hp (sq_nonneg _))]
-  by_cases hx : x = 0
-  · simpa [hx] using mul_nonneg (by norm_num : (0:ℝ) ≤ 5) hδ
-  · exact (div_le_iff₀ (sq_pos_of_pos (norm_pos_iff.mpr hx))).mpr (hb x)
+  refine ⟨hc,fun x => ⟨hgram x,hb x⟩,?_,?_⟩
+  ·
+    have hsym : Q.IsSymmetric := LinearMap.isSymmetric_sum _ (fun j _ =>
+      LinearMap.isSymmetric_adjoint_comp_self (L j))
+    rw [ContinuousLinearMap.norm_eq_iSup_rayleighQuotient Q.toContinuousLinearMap hsym]
+    apply ciSup_le
+    intro x
+    have hp : 0 ≤ (inner ℂ (x : G) (Q x)).re := by rw [hgram]; positivity
+    simp only [ContinuousLinearMap.rayleighQuotient,ContinuousLinearMap.reApplyInnerSelf_apply,
+      LinearMap.coe_toContinuousLinearMap', inner_re_symm]
+    change |(inner ℂ x (Q x)).re / ‖x‖^2| ≤ 5*δ
+    rw [abs_of_nonneg (div_nonneg hp (sq_nonneg _))]
+    by_cases hx : x = 0
+    · simpa [hx] using mul_nonneg (by norm_num : (0:ℝ) ≤ 5) hδ
+    · exact (div_le_iff₀ (sq_pos_of_pos (norm_pos_iff.mpr hx))).mpr (hb x)
+  · intro A
+    exact kraus_adjoint_norm_le L (5*δ) (by positivity) (fun x hx => (hc x hx).2) A
 
 end Complex
 

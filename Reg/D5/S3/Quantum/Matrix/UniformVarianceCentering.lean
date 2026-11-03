@@ -38,11 +38,11 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature.{v}
-  Law R := ∀ {H : Type u} {G : Type v} {J : Type w}
+  Law R := ∀ {H : Type u} {G : Type v}
     [hn : NormedAddCommGroup H] [hi : InnerProductSpace ℂ H]
     [hf : FiniteDimensional ℂ H]
     [gn : NormedAddCommGroup G] [gi : InnerProductSpace ℂ G]
-    [gf : FiniteDimensional ℂ G] [Fintype J]
+    [gf : FiniteDimensional ℂ G] {J : Type w} [Fintype J]
     (V : G →ₗᵢ[ℂ] H) (h : J → H →ₗ[ℂ] H)
     (_hh : ∀ j, (h j).IsSymmetric) (δ : ℝ) (_hδ : 0 ≤ δ)
     (_hv : ∀ x : G, ‖x‖ = 1 →
@@ -56,19 +56,23 @@ abbrev arena : Arena where
       (∑ j, ‖L j x‖^2 ≤ 5*δ)) ∧
     (∀ x : G, (inner ℂ x (Q x)).re = ∑ j, ‖L j x‖^2 ∧
       (inner ℂ x (Q x)).re ≤ (5*δ)*‖x‖^2) ∧
-    R.readout () ⟨G,gn,gi,gf⟩ Q ≤ 5*δ
+    R.readout () ⟨G,gn,gi,gf⟩ Q ≤ 5*δ ∧
+    (∀ A : H →L[ℂ] H,
+      ‖(∑ j, (L j).adjoint.comp (A.toLinearMap.comp (L j))).toContinuousLinearMap‖
+        ≤ (5*δ)*‖A‖)
 
 private theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
   intro h
   let G := ULift.{v} ℂ
-  let H := ULift.{u} G
-  let V : G →ₗᵢ[ℂ] H := LinearIsometryEquiv.ulift.symm.toLinearIsometry
+  let H := ULift.{u} ℂ
+  let V : G →ₗᵢ[ℂ] H := LinearIsometryEquiv.ulift.symm.toLinearIsometry.comp
+    LinearIsometryEquiv.ulift.toLinearIsometry
   have he : ‖(⟨1⟩ : G)‖ = 1 := by simp
-  have hh := @h H G (ULift.{w} Empty) inferInstance inferInstance inferInstance
-    inferInstance inferInstance inferInstance inferInstance
+  have hh := @h H G inferInstance inferInstance inferInstance
+    inferInstance inferInstance inferInstance (ULift.{w} Empty) inferInstance
     V (fun j => nomatch j.down) (fun j => nomatch j.down) 0 (by norm_num)
     (by intro x hx; simp) ⟨1⟩ (fun _ => he)
-  have hbad := hh.2.2
+  have hbad := hh.2.2.1
   change (1 : ℝ) ≤ 5*0 at hbad
   norm_num at hbad
 
