@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Resource.CompositeConeDuality
+import D5.S3.Observer.Conditioning
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix.Positivity
 
@@ -209,15 +210,20 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
     simp only [Matrix.mul_assoc]
   have hσsum : σ = ∑ k, p k * ρ * p k := by
     exact Finset.sum_congr rfl fun k _ => hσ k
+  have hrecord : D5.S3.Observer.Conditioning.IsRecordMeasurement p := by
+    refine ⟨fun k => (hph k).eq, hpid, ?_, hpsum⟩
+    intro k l hkl
+    change (φ (e k) ⊗ₖ (1 : Matrix (Fin d) (Fin d) ℂ)) *
+      (φ (e l) ⊗ₖ (1 : Matrix (Fin d) (Fin d) ℂ)) = 0
+    rw [← mul_kronecker_mul, ← map_mul]
+    have horth : e k * e l = 0 := by
+      simp only [e, diagonal_single]
+      apply Matrix.single_mul_single_of_ne
+      exact hkl
+    rw [horth, map_zero, zero_kronecker]
   have ht : trace σ = 1 := by
-    rw [hσsum, trace_sum]
-    calc
-      ∑ k, trace (p k * ρ * p k) = ∑ k, trace (ρ * p k) := by
-        apply Finset.sum_congr rfl
-        intro k _
-        rw [trace_mul_cycle, hpid, trace_mul_comm]
-      _ = trace (ρ * ∑ k, p k) := by rw [Finset.mul_sum, trace_sum]
-      _ = 1 := by rw [hpsum, mul_one, hρ.2]
+    rw [hσsum]
+    exact (D5.S3.Observer.Conditioning.unreadState_trace hrecord ρ).trans hρ.2
   refine ⟨σ, ⟨?_, ht⟩, ?_, ?_⟩
   · rw [hσsum]
     apply posSemidef_sum
