@@ -14,7 +14,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
         "Star and complete graph Bose symmetric fully PPT extensions of unnormalized Dicke diagonal operators.",
         H("Dicke diagonal extension cones"),
         Blocks(
-            Paragraph(Text("The register set I and local alphabet L are finite. A computational basis index "
+            Paragraph(Text("The register set I and local alphabet L are finite; r is the cardinality of I. A computational basis index "
                 + "is a function from I to L, so matrices act on the actual tensor product of the local "
                 + "complex spaces. Two selected registers a and b are distinct and ordered. "
                 + "Every partial trace below is unnormalized.")),
@@ -30,7 +30,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
             Node("edgeMarginal", "The unnormalized two-register marginal",
                 Seq(Sub(Call("M", X("a"), X("b"), X("E")), X("u"), X("v")), Eq,
                     new Formula.Subscript(Sum, X("c")),
-                    Sub(X("E"), Call("fill", X("u"), X("c")), Call("fill", X("v"), X("c"))),
+                    Sub(X("E"), Call("fill", X("u"), X("c")), Call("fill", X("v"), X("c")))),
                 "M(a,b,E) is partialTraceRight of E reindexed by the inverse factor split. "
                 + "The sum is over every computational basis label of the complement, including its single empty "
                 + "label when there are exactly two registers. There is no dimension factor.",
@@ -51,7 +51,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 Seq(Rho, Eq, new Formula.Subscript(Sum, Seq(X("i"), Leq, X("j"))),
                     Sub(X("Y"), X("i"), X("j")), Sp,
                     Sub(X("D"), X("i"), X("j")),
-                    new Formula.Superscript(Sub(X("D"), X("i"), X("j")), Star)),
+                    new Formula.Power(Sub(X("D"), X("i"), X("j")), Star)),
                 "The coefficients are arbitrary real numbers at the definition level. "
                 + "The equivalence theorem restricts every upper-triangular coefficient to be nonnegative. "
                 + "Each summand is its coefficient times the outer product of the actual Dicke vector "
@@ -60,7 +60,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
             Node("FullyPPT", "Every proper nonempty PPT cut",
                 Seq(Call("FullyPPT", X("E")), Iff, Forall, Sp, X("S"), Subseteq, X("I"), Comma, Sp,
                     Seq(Emptyset, Neq, X("S"), Neq, X("I")), Implies,
-                    Call("PSD", new Formula.Superscript(X("E"), Sub(X("T"), X("S"))))),
+                    Call("PSD", new Formula.Power(X("E"), Sub(X("T"), X("S"))))),
                 "S ranges over all subsets of the register set. The condition applies to each nonempty "
                 + "proper S. At the matrix-entry level partialTransposeOn exchanges the row and column "
                 + "labels exactly at the sites of S, in the standard tensor basis.",
@@ -115,6 +115,16 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
             H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
+    private static Formula Seq(params Formula[] items)
+    {
+        var spaced = new System.Collections.Generic.List<Formula>();
+        foreach (var item in items)
+        {
+            if (spaced.Count != 0) spaced.Add(Sp);
+            spaced.Add(item);
+        }
+        return F.Seq(spaced.ToArray());
+    }
     private static Formula X(string name) => F.Id(name);
     private static Formula Sub(Formula value, params Formula[] indices) =>
         new Formula.Subscript(value, Seq(indices));
