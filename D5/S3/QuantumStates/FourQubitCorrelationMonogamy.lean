@@ -113,9 +113,24 @@ private lemma group_bound (ρ : DensityState (Fin 4 → Fin 2)) (k : Fin 3) :
 private lemma partition_sum (f : Fin 3 → Fin 3 → Fin 3 → ℝ) :
     (∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3, f X i j) =
       ∑ k : Fin 3, ∑ X : Fin 3, ∑ j : Fin 3, f X (k + X) j := by
-  simp only [Fin.sum_univ_three]
-  norm_num
-  ring
+  calc
+    _ = ∑ X : Fin 3, ∑ j : Fin 3, ∑ i : Fin 3, f X i j := by
+      apply Finset.sum_congr rfl
+      intro X hX
+      rw [Finset.sum_comm]
+    _ = ∑ X : Fin 3, ∑ j : Fin 3, ∑ k : Fin 3, f X (k + X) j := by
+      apply Finset.sum_congr rfl
+      intro X hX
+      apply Finset.sum_congr rfl
+      intro j hj
+      symm
+      exact Equiv.sum_comp (Equiv.addRight X) (fun k : Fin 3 => f X k j)
+    _ = ∑ X : Fin 3, ∑ k : Fin 3, ∑ j : Fin 3, f X (k + X) j := by
+      apply Finset.sum_congr rfl
+      intro X hX
+      rw [Finset.sum_comm]
+    _ = ∑ k : Fin 3, ∑ X : Fin 3, ∑ j : Fin 3, f X (k + X) j := by
+      rw [Finset.sum_comm]
 
 private lemma density_bound (ρ : DensityState (Fin 4 → Fin 2)) :
     ∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3,
