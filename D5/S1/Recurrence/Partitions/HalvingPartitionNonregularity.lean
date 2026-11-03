@@ -7,7 +7,7 @@
    digest: Exact ordered-list count and unrestricted binary matrix-family question. -/
 
 import Mathlib.Combinatorics.Enumerative.Composition
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.Algebra.LinearRecurrence
 import Mathlib.SetTheory.Cardinal.Finite
 
@@ -468,7 +468,7 @@ private theorem dyadic_plateau (m r : ℕ) (hm : 2 ≤ m) (hr : 1 ≤ r)
       have h := threshold_mono hqr
       exact ⟨hq, by omega⟩
   let f : Fin r → Threshold m := fun i =>
-    ⟨⟨i.val + 1, by omega⟩, (hpred _).mpr ⟨by omega, by omega⟩⟩
+    ⟨⟨i.val + 1, by omega⟩, (hpred _).mpr ⟨(by change 1 ≤ i.val + 1; omega), (by change i.val + 1 ≤ r; omega)⟩⟩
   have hb : Function.Bijective f := by
     constructor
     · intro i j h
@@ -527,7 +527,7 @@ private theorem dyadic_matrix_recurrence (a : ℕ → ℤ) (ha : MatrixFamily a)
     hpower, hread, Pi.zero_apply] at h
   change a (2 ^ (n + d + 2) + 1) =
     ∑ i : Fin d, -(M0.charpoly.coeff i.val) * a (2 ^ (n + i.val + 2) + 1)
-  rw [Fin.sum_univ_eq_sum_range]
+  rw [Fin.sum_univ_eq_sum_range (fun i => -M0.charpoly.coeff i * a (2 ^ (n + i + 2) + 1)) d]
   simp only [neg_mul, Finset.sum_neg_distrib]
   linarith
 
@@ -547,11 +547,11 @@ private theorem source_nonregularity : claim := by
     rw [Finset.sum_sub_distrib]
     change _ - _ = _
     rw [show n + E.order + 1 + 2 = (n + 1) + E.order + 2 by omega]
-    exact congrArg₂ (· - ·) h1 h0
+    simpa only [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using congrArg₂ (· - ·) h1 h0
   let r := E.order + 2
   have hr : 1 ≤ r := by dsimp [r]; omega
   have hpow : E.order ≤ 2 ^ r := by
-    have h := Nat.lt_two_pow_self r
+    have h : r < 2 ^ r := Nat.lt_two_pow_self
     dsimp [r] at *
     omega
   let start := 2 ^ r + r - 1
