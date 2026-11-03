@@ -84,8 +84,7 @@ theorem dependence : ObservationalDependence signature actual := by
   refine ⟨⟨0, ⟨0, 0⟩⟩, zeroInput, (fun _ => 0), ?_⟩
   intro he
   have h0 := congrFun he 0
-  simp [Fin.snoc_castSucc, actual, realize, zeroInput, kahan, kahanMatrix,
-    nambuLinearPart] at h0
+  simp [actual, realize, zeroInput, kahan, kahanMatrix] at h0
 
 theorem actual_law : arena.Law actual := by
   exact result
