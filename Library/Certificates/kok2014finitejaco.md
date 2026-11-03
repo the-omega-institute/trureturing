@@ -13,6 +13,10 @@ triage: anchor
 
 # Characteristics of finite Jaco graphs
 
+## Verified locator
+
+- DOI: https://doi.org/10.48550/arXiv.1404.0484
+
 Johan Kok, Paul Fisher, Bettina Wilkens, Mokhwetha Mabula and Vivian
 Mukungunugwa, [arXiv:1404.0484v1](https://arxiv.org/abs/1404.0484v1),
 *Characteristics of Finite Jaco Graphs, J_n(1), n in N*.
@@ -20,6 +24,8 @@ The [primary PDF](https://arxiv.org/pdf/1404.0484v1) locates the conjectured
 addition assertion at Theorem 2.10 on printed page 7 and the explicit open
 problem on printed page 11. Definitions 1.1--1.4 and 1.7 on printed page 2
 specify the recursive graph, its Jaconian vertices and ordinary total degree.
+
+## Source interpretation
 
 The original theorem states, for distinct n,m at least three, that the maximum
 degree of J_(n+m)(1) equals the sum of the two maximum degrees if J_n(1) or
