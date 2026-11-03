@@ -6,7 +6,7 @@ internal sealed class BcGhostStateFieldDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Fermionic/BcGhostStateField.";
     private static DocumentBlock Node(string name, string title, string prose) => Describe.Lean(
-        DescribeId.Create("bc-state-field-" + name.Replace("_", "-")),
+        DescribeId.Create("bc-state-field-" + name.Replace("_", "-").ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
