@@ -1,12 +1,45 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/Selection
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/Selection
+   mirror-E: none(waiver:adjacent-tail-physical-source)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Integer mask selection in the low and high dyadic regimes. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.HighBCertificates
-import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusThreeCertificates
-import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusTwoCertificates
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusThreeLarge
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusThreeAtTwo
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusThreeAtThree
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusThreeAtFour
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusTwoLarge
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusTwoAtTwo
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusTwoAtThree
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Dyadic
+import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail
+open private A B L K SU SV SW E F Common Residual StocksAndResidual HighResidual Windows ceilDiv residueRepresentative chooseM3 chooseV2 chooseM2
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
+open private PlusTwo.positive_1 PlusTwo.negative_1 PlusTwo.positive_2 PlusTwo.negative_2 PlusTwo.positive_4 PlusTwo.negative_4 PlusTwo.positive_large PlusTwo.negative_large
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusTwoLarge
+open private PlusTwo.small_a2_cmod0 PlusTwo.small_a2_cmod1 PlusTwo.small_a2_cmod2 PlusTwo.small_a2_cmod3
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusTwoAtTwo
+open private PlusTwo.small_a3_cmod0 PlusTwo.small_a3_cmod1 PlusTwo.small_a3_cmod2 PlusTwo.small_a3_cmod3 PlusTwo.small_a3_cmod4 PlusTwo.small_a3_cmod5
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusTwoAtThree
+open private PlusThree.positive_1 PlusThree.negative_1 PlusThree.positive_2 PlusThree.negative_2 PlusThree.positive_4 PlusThree.negative_4 PlusThree.positive_8 PlusThree.negative_8 PlusThree.positive_large PlusThree.negative_large
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusThreeLarge
+open private PlusThree.small_a2_cmod0 PlusThree.small_a2_cmod1 PlusThree.small_a2_cmod2 PlusThree.small_a2_cmod3
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusThreeAtTwo
+open private PlusThree.small_a3_cmod0 PlusThree.small_a3_cmod1 PlusThree.small_a3_cmod2 PlusThree.small_a3_cmod3 PlusThree.small_a3_cmod4 PlusThree.small_a3_cmod5
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusThreeAtThree
+open private PlusThree.small_a4_cmod0 PlusThree.small_a4_cmod1 PlusThree.small_a4_cmod2 PlusThree.small_a4_cmod3 PlusThree.small_a4_cmod4 PlusThree.small_a4_cmod5 PlusThree.small_a4_cmod6 PlusThree.small_a4_cmod7
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PlusThreeAtFour
+open private HighB.common HighB.large_b HighB.a_at_least_three HighB.a_two_b_c_plus_four_r1 HighB.a_two_b_c_plus_four_r2 HighB.a_two_b_c_plus_four_r3 HighB.a_two_b_c_plus_four_r4
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.HighBCertificates
+
 open private periodic_nonnegative_inverse dyadic_residue_integer_quotient
+  dyadic_small_or_large dyadic_residue plus_two_orthant_bounds
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Dyadic
 
 private theorem common_bounds (x z q : ℚ) (hx : 4≤x) (hz : 2*x≤z) (hq : 4≤q) :

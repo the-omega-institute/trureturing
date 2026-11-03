@@ -1,9 +1,19 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/Dyadic
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/Dyadic
+   mirror-E: none(waiver:adjacent-tail-physical-source)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Unbounded dyadic residue and integer quotient identities. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 import Mathlib.Data.Int.ModEq
+import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail
+open private A B L K SU SV SW E F Common Residual StocksAndResidual HighResidual Windows ceilDiv residueRepresentative chooseM3 chooseV2 chooseM2
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 
 private theorem quotient_parity (ell : ℕ) :
     (-1 : ℤ)^ell=if ell%2=0 then 1 else -1 := by
@@ -48,13 +58,13 @@ private theorem dyadic_residue (a c shift : ℕ) (ha : 1 ≤ a) :
   refine ⟨he,hj,hu,hux,?_⟩
   by_cases hpar : ell%2=0
   · simp only [hpar,if_true,one_mul] at hp ⊢
-    exact hp.eq.trans (Int.emod_eq_of_lt (by omega) (by omega))
+    exact hp.eq.trans (Int.emod_eq_of_lt (show 0 ≤ u by omega) (show u < x+1 by omega))
   · simp only [hpar,if_false,neg_one_mul] at hp ⊢
     have hrep : Int.ModEq (x+1) (-u) (x+1-u) := by
       apply Int.modEq_iff_dvd.mpr
       refine ⟨1,?_⟩
       ring
-    exact (hp.trans hrep).eq.trans (Int.emod_eq_of_lt (by omega) (by omega))
+    exact (hp.trans hrep).eq.trans (Int.emod_eq_of_lt (show 0 ≤ x+1-u by omega) (show x+1-u < x+1 by omega))
 
 /-! The residue identity also supplies the integer quotient used by the mask
 selectors.  This is the divisibility step that cannot be replaced by a
@@ -104,7 +114,8 @@ private theorem periodic_nonnegative_inverse (a c c0 : ℕ) (ha : 1≤a)
     have hp := hbase.pow 2
     simpa only [show 2*a=a*2 by omega,pow_mul,neg_one_sq] using hp
   have reduce (n : ℕ) : Int.ModEq h ((2:ℤ)^n) ((2:ℤ)^(n%(2*a))) := by
-    have he : n=2*a*(n/(2*a))+n%(2*a) := by omega
+    have he : n=2*a*(n/(2*a))+n%(2*a) := by
+      simpa [Nat.add_comm] using (Nat.mod_add_div n (2*a)).symm
     conv_lhs => rw [he,pow_add,pow_mul]
     simpa only [one_pow,one_mul] using
       (hperiod.pow (n/(2*a))).mul (Int.ModEq.refl ((2:ℤ)^(n%(2*a))))
@@ -131,6 +142,9 @@ private theorem plus_two_orthant_bounds (a c : ℕ) (ha : 4≤a) (hac : a<c) :
   let z : ℤ := 2^c
   let u : ℤ := 2^j
   obtain ⟨he,hj,hu,hux,hr⟩ := dyadic_residue a c 2 (by omega)
+  change j < a at hj
+  change 1 ≤ u at hu
+  change 2*u ≤ x at hux
   have he' : c+2=a*ell+j := he
   have hx : 16≤x := by simpa [x] using pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) ha
   have hz : 4*z=u*x^ell := by
@@ -139,6 +153,7 @@ private theorem plus_two_orthant_bounds (a c : ℕ) (ha : 4≤a) (hac : a<c) :
       _=u*x^ell := by rw [he',pow_add,pow_mul]; dsimp [u,x]; ring
   constructor
   · intro hp
+    change ell%2=0 at hp
     have he2 : 2≤ell := by
       have hell : 0<ell := by
         by_contra hn
@@ -151,6 +166,8 @@ private theorem plus_two_orthant_bounds (a c : ℕ) (ha : 4≤a) (hac : a<c) :
     have hpow : x^2≤x^ell := pow_le_pow_right₀ (by omega) he2
     nlinarith
   · intro hp hu4
+    change ell%2=1 at hp
+    change u ≤ 4 at hu4
     have hj2 : j≤2 := by
       by_contra hn
       have h8 : 8≤u := by
@@ -170,7 +187,12 @@ private theorem plus_two_orthant_bounds (a c : ℕ) (ha : 4≤a) (hac : a<c) :
       rw [he1] at he'
       omega
     have hpow : x^3≤x^ell := pow_le_pow_right₀ (by omega) he3
-    have hx3 : 4*x^2≤u*x^3 := by nlinarith [sq_nonneg x]
+    have hx3 : 4*x^2≤u*x^3 := by
+      calc
+        4*x^2 ≤ x*x^2 := mul_le_mul_of_nonneg_right (by omega) (sq_nonneg x)
+        _ = x^3 := by ring
+        _ ≤ u*x^3 := le_mul_of_one_le_left (by positivity) hu
+    have hh := mul_le_mul_of_nonneg_left hpow (show 0 ≤ u by omega)
     nlinarith
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail

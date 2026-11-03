@@ -1,10 +1,20 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/PhysicalBanks
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/PhysicalBanks
+   mirror-E: none(waiver:adjacent-tail-physical-source)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Literal physical label partition and paired weighted masses. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.NativeMasks
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
+import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail
+open private A B L K SU SV SW E F Common Residual StocksAndResidual HighResidual Windows ceilDiv residueRepresentative chooseM3 chooseV2 chooseM2
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 open SourceWidth
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 open private MaskPartition MaskPartition.qcap native_partition
@@ -29,9 +39,9 @@ private def word (a b c d v m : ℕ) : List ℕ :=
 private theorem bank_good (a b c d v m : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
     (j : Fin 4) (i : ℕ) (hi : i∈bank a b c d v m j) :
-    i<size a b c d ∧ i∉negatives a b c d := by
+    i < size a b c d ∧ i∉negatives a b c d := by
   have masked (len off mask : ℕ) (hm : i∈chamberLabels len off mask) :
-      off≤i ∧ i<off+len := by
+      off ≤ i ∧ i < off+len := by
     obtain ⟨e,he,_,hei⟩ := (chamberLabels_mem _ _ _ _).mp hm
     omega
   fin_cases j
@@ -74,7 +84,6 @@ private theorem bank_inventory (a b c d v m : ℕ)
     simp only [Nat.zero_add] at h0
     rw [h0,merge d c (by omega),merge (d+c) b (by omega)]
     rw [show a+b+c+d-1=(d+c+b)+a-1 by omega,merge (d+c+b) a (by omega)]
-    simp only [←List.append_assoc]
     have hdc : List.range' 0 d ++ List.range' d c=List.range' 0 (d+c) := by
       simpa only [Nat.zero_add] using (List.range'_append_1 (s:=0) (m:=d) (n:=c))
     have hdcb : List.range' 0 (d+c) ++ List.range' (d+c) b=List.range' 0 (d+c+b) := by
@@ -93,7 +102,7 @@ private theorem bank_inventory (a b c d v m : ℕ)
         ↑(chamberLabels (b-1) (d+c) m ++ chamberLabels (b-1) (d+c) ((2^(b-1)-1) ^^^ m)) +
         ↑(List.range' (d+c+b) (a-1)) + {d-1}+{d+c-1}+{d+c+b-1}+{a+b+c+d-1} := by
       dsimp [word,bank,terminal]
-      simp only [←Multiset.coe_add,Multiset.coe_cons,Multiset.coe_nil]
+      simp only [←Multiset.coe_add,Multiset.cons_coe, Multiset.cons_add,Multiset.coe_nil]
       ac_rfl
     _=↑(List.range' 0 (d-1)) + ↑(List.range' d (c-1)) +
         ↑(List.range' (d+c) (b-1)) + ↑(List.range' (d+c+b) (a-1)) +
@@ -141,7 +150,7 @@ private theorem bank_masses (a b c d v m : ℕ)
       ((chamberLabels len off ((2^len-1) ^^^ mask)).map f).sum=
         (((2^len-1:ℕ):ℤ)-(mask:ℤ))*head := by
     obtain ⟨hs,hpart⟩ := native_partition len 0 mask hmask
-    dsimp only [pow_zero,mul_one,one_mul] at hs hpart
+    try dsimp only [pow_zero,mul_one,one_mul] at hs hpart
     have hcap : mask<2^len := by have := Nat.two_pow_pos len; omega
     have hcomp : ((2^len-1) ^^^ mask)<2^len := by simpa using MaskPartition.qcap hpart
     have castsum := congrArg (fun n : ℕ => (n:ℤ)) hs
@@ -156,14 +165,14 @@ private theorem bank_masses (a b c d v m : ℕ)
   obtain ⟨vm,vc⟩ := split_sum (c-1) d v hv (H 1) vseries
   have fu := full 0
   have fx := full 3
-  dsimp [chainStart,chainLength] at fu fx
-  dsimp [bank]
-  simp only [List.map_append,List.sum_append,fu,fx,wm,vm,wc,vc]
+  change ((List.range' 0 (d-1)).map f).sum=C 0 at fu
+  change ((List.range' (d+c+b) (a-1)).map f).sum=C 3 at fx
+  change ((List.range' 0 (d-1)).map f).sum=C 0 ∧
+    (((List.range' (d+c+b) (a-1) ++ chamberLabels (b-1) (d+c) m ++ chamberLabels (c-1) d v)).map f).sum=C 3+(m:ℤ)*H 2+(v:ℤ)*H 1 ∧
+    ((chamberLabels (b-1) (d+c) ((2^(b-1)-1) ^^^ m)).map f).sum=C 2-(m:ℤ)*H 2 ∧
+    ((chamberLabels (c-1) d ((2^(c-1)-1) ^^^ v)).map f).sum=C 1-(v:ℤ)*H 1
+  rw [List.map_append,List.map_append,List.sum_append,List.sum_append,fu,fx,wm,vm,wc,vc]
   dsimp [C,chainLength]
-  constructor
-  · rfl
-  constructor
-  · rfl
-  constructor <;> ring
+  exact ⟨rfl,rfl,by ring,by ring⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail

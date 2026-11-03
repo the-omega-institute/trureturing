@@ -1,8 +1,18 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/Rounding
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/Rounding
+   mirror-E: none(waiver:adjacent-tail-physical-source)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Integer ceiling construction for the high ratio regime. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Selection
+import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail
+open private A B L K SU SV SW E F Common Residual StocksAndResidual HighResidual Windows ceilDiv residueRepresentative chooseM3 chooseV2 chooseM2
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 open private ceilDiv ceilDiv_spec ceilDiv_unique ceilDiv_stock residual_identity windows_of_residual
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 open private common_bounds continuous_second_bound

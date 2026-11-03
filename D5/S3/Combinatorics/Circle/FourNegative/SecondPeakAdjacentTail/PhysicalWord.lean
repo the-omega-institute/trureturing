@@ -1,11 +1,21 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/PhysicalWord
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/PhysicalWord
+   mirror-E: none(waiver:adjacent-tail-physical-source)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Paired physical strip construction with one literal insertion. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PhysicalBanks
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
+import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail
+open private A B L K SU SV SW E F Common Residual StocksAndResidual HighResidual Windows ceilDiv residueRepresentative chooseM3 chooseV2 chooseM2
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 open SourceWidth
 open private bank terminal word bank_good bank_inventory bank_masses
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PhysicalBanks

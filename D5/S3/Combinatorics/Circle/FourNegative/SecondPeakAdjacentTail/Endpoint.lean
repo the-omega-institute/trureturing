@@ -1,18 +1,28 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/Endpoint
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/Endpoint
+   mirror-E: none(waiver:adjacent-tail-physical-source)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Joint physical lift for every original adjacent-tail quadruple. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Rounding
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PhysicalWord
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.BoundaryWords
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
+import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail
+open private A B L K SU SV SW E F Common Residual StocksAndResidual HighResidual Windows ceilDiv residueRepresentative chooseM3 chooseV2 chooseM2
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 open SourceWidth
 open private actual_nat_joint_iff
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private zero_period_transport
-  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 open private physical_strips
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PhysicalWord
 open private base newBase sourceMod oldValue newValue size
@@ -25,7 +35,9 @@ open private low_integer_selection
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Selection
 open private high_integer_selection
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Rounding
-open private common_bounds windows_of_residual
+open private common_bounds
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Selection
+open private windows_of_residual
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 
 /-- The exact selector interface consumed by the physical packet.  It is an

@@ -1,14 +1,23 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/HighBCertificates
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakAdjacentTail/HighBCertificates
+   mirror-E: none(waiver:adjacent-tail-physical-source)
+   anchors: [mathlib/module/Mathlib.Tactic]
+   utility: none
+   digest: Exact polynomial inequalities for adjacent-tail mask selection. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 
-/-! Exact universal polynomial certificates. Independently regenerated from the
-source heads and mask formulas; no finite-grid inference. Uncompiled draft. -/
+import Batteries.Tactic.OpenPrivate
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.HighB
+open private A B L K SU SV SW E F Common Residual StocksAndResidual HighResidual Windows ceilDiv residueRepresentative chooseM3 chooseV2 chooseM2
+  from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 
-theorem common (X Z Q : ℚ)
+private theorem common (X Z Q : ℚ)
     (hX : 0 ≤ X) (hZ : 0 ≤ Z) (hQ : 0 ≤ Q) :
     Common ((4 + X)) ((8 + Z + (2 * X))) ((4 + Q)) := by
   dsimp only [Common, HighResidual, StocksAndResidual, Residual]
@@ -77,7 +86,7 @@ theorem common (X Z Q : ℚ)
     have side : (0 : ℚ) ≤ (16 + (2 * Z) + (4 * X) + (((-1) + ((1 / 2) * (4 + Q) * (8 + Z + (2 * X)))) * (9 + Z + (2 * X) + (2 * ((8 + Z + (2 * X)) ^ 2) * (5 + X)))) + ((-1) * ((8 + Z + (2 * X)) ^ 2) * (4 + Q)) + ((-1) * (4 + Q) * (8 + Z + (2 * X))) + ((-2) * ((8 + Z + (2 * X)) ^ 3) * (4 + Q)) + (2 * (4 + X) * (8 + Z + (2 * X))) + (2 * ((8 + Z + (2 * X)) ^ 2) * (4 + Q) * (4 + X))) := (mul_nonneg_iff_of_pos_left scale_pos).mp scaled
     convert side using 1 <;> dsimp [A,B,L,K,SU,SV,SW,E,F] <;> field_simp <;> ring
 
-theorem large_b (X Z Q : ℚ)
+private theorem large_b (X Z Q : ℚ)
     (hX : 0 ≤ X) (hZ : 0 ≤ Z) (hQ : 0 ≤ Q) :
     0 ≤ ((-32) + ((-7) * X) + ((-4) * Z) + ((-8) * ((8 + Z + (2 * X)) ^ 2) * (5 + X)) + (((8 + Z + (2 * X)) ^ 2) * (4 + X) * (32 + Q)) + ((4 + X) * (32 + Q) * (8 + Z + (2 * X))) + ((-2) * (32 + Q) * (8 + Z + (2 * X)) * (9 + Z + (2 * X)))) := by
   dsimp only [Common, HighResidual, StocksAndResidual, Residual]
@@ -91,7 +100,7 @@ theorem large_b (X Z Q : ℚ)
   have side : (0 : ℚ) ≤ ((-32) + ((-7) * X) + ((-4) * Z) + ((-8) * ((8 + Z + (2 * X)) ^ 2) * (5 + X)) + (((8 + Z + (2 * X)) ^ 2) * (4 + X) * (32 + Q)) + ((4 + X) * (32 + Q) * (8 + Z + (2 * X))) + ((-2) * (32 + Q) * (8 + Z + (2 * X)) * (9 + Z + (2 * X)))) := (mul_nonneg_iff_of_pos_left scale_pos).mp scaled
   convert side using 1 <;> dsimp [A,B,L,K,SU,SV,SW,E,F] <;> field_simp <;> ring
 
-theorem a_at_least_three (X Z Q : ℚ)
+private theorem a_at_least_three (X Z Q : ℚ)
     (hX : 0 ≤ X) (hZ : 0 ≤ Z) (hQ : 0 ≤ Q) :
     0 ≤ ((-60) + ((-7) * X) + ((-4) * Z) + ((-8) * ((16 + Z + (2 * X)) ^ 2) * (9 + X)) + (((16 + Z + (2 * X)) ^ 2) * (8 + X) * (16 + Q)) + ((8 + X) * (16 + Q) * (16 + Z + (2 * X))) + ((-2) * (16 + Q) * (16 + Z + (2 * X)) * (17 + Z + (2 * X)))) := by
   dsimp only [Common, HighResidual, StocksAndResidual, Residual]
@@ -105,7 +114,7 @@ theorem a_at_least_three (X Z Q : ℚ)
   have side : (0 : ℚ) ≤ ((-60) + ((-7) * X) + ((-4) * Z) + ((-8) * ((16 + Z + (2 * X)) ^ 2) * (9 + X)) + (((16 + Z + (2 * X)) ^ 2) * (8 + X) * (16 + Q)) + ((8 + X) * (16 + Q) * (16 + Z + (2 * X))) + ((-2) * (16 + Q) * (16 + Z + (2 * X)) * (17 + Z + (2 * X)))) := (mul_nonneg_iff_of_pos_left scale_pos).mp scaled
   convert side using 1 <;> dsimp [A,B,L,K,SU,SV,SW,E,F] <;> field_simp <;> ring
 
-theorem a_two_b_c_plus_four_r1 (T : ℚ)
+private theorem a_two_b_c_plus_four_r1 (T : ℚ)
     (hT : 0 ≤ T) :
     HighResidual ((16 + (5 * T))) ((40 + (16 * T))) := by
   dsimp only [Common, HighResidual, StocksAndResidual, Residual]
@@ -174,7 +183,7 @@ theorem a_two_b_c_plus_four_r1 (T : ℚ)
     have side : (0 : ℚ) ≤ (900 + ((-416) * ((16 + (5 * T)) ^ 2)) + (128 * ((16 + (5 * T)) ^ 3)) + (280 * T) + ((-2) * (40 + (16 * T)) * (17 + (5 * T) + (20 * ((16 + (5 * T)) ^ 2))))) := (mul_nonneg_iff_of_pos_left scale_pos).mp scaled
     convert side using 1 <;> dsimp [A,B,L,K,SU,SV,SW,E,F] <;> field_simp <;> ring
 
-theorem a_two_b_c_plus_four_r2 (T : ℚ)
+private theorem a_two_b_c_plus_four_r2 (T : ℚ)
     (hT : 0 ≤ T) :
     HighResidual ((32 + (5 * T))) ((91 + (16 * T))) := by
   dsimp only [Common, HighResidual, StocksAndResidual, Residual]
@@ -243,7 +252,7 @@ theorem a_two_b_c_plus_four_r2 (T : ℚ)
     have side : (0 : ℚ) ≤ (1796 + ((-416) * ((32 + (5 * T)) ^ 2)) + (128 * ((32 + (5 * T)) ^ 3)) + (280 * T) + ((-2) * (91 + (16 * T)) * (33 + (5 * T) + (20 * ((32 + (5 * T)) ^ 2))))) := (mul_nonneg_iff_of_pos_left scale_pos).mp scaled
     convert side using 1 <;> dsimp [A,B,L,K,SU,SV,SW,E,F] <;> field_simp <;> ring
 
-theorem a_two_b_c_plus_four_r3 (T : ℚ)
+private theorem a_two_b_c_plus_four_r3 (T : ℚ)
     (hT : 0 ≤ T) :
     HighResidual ((8 + (5 * T))) ((15 + (16 * T))) := by
   dsimp only [Common, HighResidual, StocksAndResidual, Residual]
@@ -312,7 +321,7 @@ theorem a_two_b_c_plus_four_r3 (T : ℚ)
     have side : (0 : ℚ) ≤ (452 + ((-416) * ((8 + (5 * T)) ^ 2)) + (128 * ((8 + (5 * T)) ^ 3)) + (280 * T) + ((-2) * (15 + (16 * T)) * (9 + (5 * T) + (20 * ((8 + (5 * T)) ^ 2))))) := (mul_nonneg_iff_of_pos_left scale_pos).mp scaled
     convert side using 1 <;> dsimp [A,B,L,K,SU,SV,SW,E,F] <;> field_simp <;> ring
 
-theorem a_two_b_c_plus_four_r4 (T : ℚ)
+private theorem a_two_b_c_plus_four_r4 (T : ℚ)
     (hT : 0 ≤ T) :
     HighResidual ((64 + (5 * T))) ((194 + (16 * T))) := by
   dsimp only [Common, HighResidual, StocksAndResidual, Residual]
