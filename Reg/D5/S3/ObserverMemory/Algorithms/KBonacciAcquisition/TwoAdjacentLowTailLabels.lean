@@ -75,7 +75,7 @@ def evidence : Registration arena.{u}
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.even_adaptive_lower.{u})
-    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+    (type_of% (realize signature.{u} actual.{u}.readout actual.{u}.anchor)) Unit Unit := {
   unitName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.even_adaptive_lower.__information_unit,
   realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.evidence,
   realizationSource := none,
@@ -87,14 +87,14 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
   realization := .source arena.{u} ⟨evidence.{u}⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize signature actual.readout actual.anchor),
+  readout := some (realize signature.{u} actual.{u}.readout actual.{u}.anchor),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels,
     definition := none,
     coordinates := #[0, 1, 2, 6, 8],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "type", "fn", "arg"],
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "domain", "fn", "arg"],
       stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 
@@ -103,7 +103,7 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
 
 namespace Whole
 @[reducible] def signature : Signature where
-  Params := ℕ × ℕ
+  Params := Σ _Q : ℕ, ℕ
   State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
@@ -124,7 +124,7 @@ def rejected : Realization signature := realize signature
     (alphabet : Bool),
     let fee := Q + 1 + (if m % 2 = 0 then 1 else 0)
     GlobalAdaptivePrice (Q * m) m (by nlinarith) alphabet (initialLabel Q m labels bottom) =
-      R.readout () (Q, m) fee ∧
+      R.readout () ⟨Q, m⟩ fee ∧
     GlobalPresetPrice (Q * m) m (by nlinarith) alphabet (initialLabel Q m labels bottom) =
       (fee : ℕ∞) ∧
     (attainingWords Q m).length = fee ∧
@@ -175,7 +175,7 @@ def evidence : Registration arena.{u}
   dependence := by
     intro i
     cases i
-    exact ⟨(2, 4), 0, 1, by decide⟩
+    exact ⟨⟨2, 4⟩, 0, 1, by decide⟩
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.original_threshold_three.{u})

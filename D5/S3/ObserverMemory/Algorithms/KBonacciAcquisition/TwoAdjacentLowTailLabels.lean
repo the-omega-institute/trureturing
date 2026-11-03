@@ -854,66 +854,85 @@ private theorem named_profile (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
       (by have := root_named_tail Q m hQ hm; omega)]
   rfl
 
-private theorem query_mask (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hj : j ≤ m) :
+private theorem query_full_mask (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hj : j ≤ Q * m) :
     wordIncrement (Q * m)
       (-((j : ℕ) : ZMod (Q * m + 1)) + ((Q * m : ℕ) : ZMod (Q * m + 1)))
       (queryWord m) = if j = 0 ∨ j = 1 then 1 else 0 := by
+  by_cases last : j = Q * m
+  · subst j
+    have phase : -((Q * m : ℕ) : ZMod (Q * m + 1)) +
+        ((Q * m : ℕ) : ZMod (Q * m + 1)) = -((0 : ℕ) : ZMod (Q * m + 1)) := by ring
+    rw [phase, derivative_at Q m 0 hQ hm (by nlinarith)]
+    simp [extendedBit, queryWord, bitScalar, show 0 < m by omega,
+      show Q * m ≠ 0 by nlinarith, show Q * m ≠ 1 by nlinarith]
+  · have total := ZMod.natCast_self (Q * m + 1)
+    rw [Nat.cast_add, Nat.cast_one, Nat.cast_mul] at total
+    have phase : -((j : ℕ) : ZMod (Q * m + 1)) + ((Q * m : ℕ) : ZMod (Q * m + 1)) =
+        -((j + 1 : ℕ) : ZMod (Q * m + 1)) := by
+      push_cast
+      linear_combination total
+    rw [phase, derivative_at Q m (j + 1) hQ hm (by omega)]
+    by_cases j0 : j = 0
+    · subst j; simp [extendedBit, queryWord, bitScalar, show 1 < m by omega]
+    · by_cases j1 : j = 1
+      · subst j; simp [extendedBit, queryWord, bitScalar, show 1 < m by omega,
+          show 2 < m by omega]
+      · have ne : j + 1 ≠ 1 := by omega
+        simp [extendedBit, queryWord, bitScalar, j0, j1]
+
+private theorem query_mask (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hj : j ≤ m) :
+    wordIncrement (Q * m)
+      (-((j : ℕ) : ZMod (Q * m + 1)) + ((Q * m : ℕ) : ZMod (Q * m + 1)))
+      (queryWord m) = if j = 0 ∨ j = 1 then 1 else 0 :=
+  query_full_mask Q m j hQ hm (by nlinarith)
+
+private theorem final_full_mask (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
+    (hj : j ≤ Q * m) :
+    wordIncrement (Q * m)
+      (-((j : ℕ) : ZMod (Q * m + 1)) + (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)))
+      (finalWord m) = if j = m - 1 ∨ j = m then 1 else 0 := by
   have total := ZMod.natCast_self (Q * m + 1)
   rw [Nat.cast_add, Nat.cast_one, Nat.cast_mul] at total
-  have phase : -((j : ℕ) : ZMod (Q * m + 1)) + ((Q * m : ℕ) : ZMod (Q * m + 1)) =
-      -((j + 1 : ℕ) : ZMod (Q * m + 1)) := by
-    push_cast
-    linear_combination total
-  rw [phase, derivative_at Q m (j + 1) hQ hm (by nlinarith)]
-  by_cases j0 : j = 0
-  · subst j; simp [extendedBit, queryWord, bitScalar, show 1 < m by omega]
-  · by_cases j1 : j = 1
-    · subst j; simp [extendedBit, queryWord, bitScalar, show 1 < m by omega,
-        show 2 < m by omega]
-    · have ne : j + 1 ≠ 1 := by omega
-      simp [extendedBit, queryWord, bitScalar, j0, j1]
+  have product : 2 * m ≤ Q * m := by nlinarith
+  by_cases after : m - 1 ≤ j
+  · let n := j + 1 - m
+    have hn : n < Q * m + 1 := by dsimp [n]; omega
+    have phase : -((j : ℕ) : ZMod (Q * m + 1)) +
+        (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)) = -((n : ℕ) : ZMod (Q * m + 1)) := by
+      dsimp [n]
+      rw [Nat.cast_sub (by omega : m ≤ j + 1)]
+      push_cast
+      linear_combination total
+    rw [phase, derivative_at Q m n hQ hm hn]
+    have test : (j = m - 1 ∨ j = m) ↔ (n = 0 ∨ n = 1) := by dsimp [n]; omega
+    simp only [test]
+    by_cases zero : n = 0
+    · rw [zero]
+      simp [extendedBit, finalWord, bitScalar, show 0 < m by omega]
+    · by_cases one : n = 1
+      · rw [one]
+        simp [extendedBit, finalWord, bitScalar, show 0 < m by omega, show 1 < m by omega]
+      · simp [extendedBit, finalWord, bitScalar, zero, one, show n - 1 ≠ 0 by omega]
+  · let n := Q * m + 2 + j - m
+    have hn : m < n ∧ n < Q * m + 1 := by dsimp [n]; omega
+    have phase : -((j : ℕ) : ZMod (Q * m + 1)) +
+        (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)) = -((n : ℕ) : ZMod (Q * m + 1)) := by
+      dsimp [n]
+      rw [Nat.cast_sub (by omega : m ≤ Q * m + 2 + j)]
+      push_cast
+      linear_combination 2 * total
+    rw [phase, derivative_at Q m n hQ hm hn.2]
+    simp [extendedBit, show ¬ n < m by omega, show n ≠ 0 by omega,
+      show ¬ n - 1 < m by omega, show j ≠ m - 1 by omega, show j ≠ m by omega]
 
 private theorem final_band_mask (Q m j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
     (band : j = 1 ∨ j = 2 ∨ j = m) :
     wordIncrement (Q * m)
       (-((j : ℕ) : ZMod (Q * m + 1)) + (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)))
       (finalWord m) = if j = m then 1 else 0 := by
-  have total := ZMod.natCast_self (Q * m + 1)
-  rw [Nat.cast_add, Nat.cast_one, Nat.cast_mul] at total
-  rcases band with eq | eq | eq
-  · subst j
-    let n := Q * m + 3 - m
-    have product : 2 * m ≤ Q * m := by nlinarith
-    have hn : m < n ∧ n < Q * m + 1 := by dsimp [n]; omega
-    have phase : -((1 : ℕ) : ZMod (Q * m + 1)) +
-        (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)) = -((n : ℕ) : ZMod (Q * m + 1)) := by
-      dsimp [n]
-      rw [Nat.cast_sub (by nlinarith : m ≤ Q * m + 3)]
-      push_cast
-      linear_combination 2 * total
-    rw [phase, derivative_at Q m n hQ hm hn.2]
-    simp [extendedBit, show ¬ n < m by omega, show n ≠ 0 by omega,
-      show ¬ n - 1 < m by omega, show (1 : ℕ) ≠ m by omega]
-  · subst j
-    let n := Q * m + 4 - m
-    have product : 2 * m ≤ Q * m := by nlinarith
-    have hn : m < n ∧ n < Q * m + 1 := by dsimp [n]; omega
-    have phase : -((2 : ℕ) : ZMod (Q * m + 1)) +
-        (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)) = -((n : ℕ) : ZMod (Q * m + 1)) := by
-      dsimp [n]
-      rw [Nat.cast_sub (by nlinarith : m ≤ Q * m + 4)]
-      push_cast
-      linear_combination 2 * total
-    rw [phase, derivative_at Q m n hQ hm hn.2]
-    simp [extendedBit, show ¬ n < m by omega, show n ≠ 0 by omega,
-      show ¬ n - 1 < m by omega, show (2 : ℕ) ≠ m by omega]
-  · subst j
-    have phase : -((m : ℕ) : ZMod (Q * m + 1)) +
-        (((Q + 1) * m : ℕ) : ZMod (Q * m + 1)) = -((1 : ℕ) : ZMod (Q * m + 1)) := by
-      push_cast
-      linear_combination total
-    rw [phase, derivative_at Q m 1 hQ hm (by nlinarith)]
-    simp [extendedBit, finalWord, bitScalar, show 0 < m by omega, show 1 < m by omega]
+  rw [final_full_mask Q m j hQ hm (by rcases band with h | h | h <;> subst j <;> nlinarith)]
+  have different : j ≠ m - 1 := by rcases band with h | h | h <;> omega
+  simp [different]
 
 private theorem profile_band_identifies (Q m i j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
     (hi : i = 1 ∨ i = 2) (hj : j ≤ Q * m)
