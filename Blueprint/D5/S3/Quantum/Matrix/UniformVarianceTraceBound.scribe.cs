@@ -61,7 +61,7 @@ internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinit
             All("M",Call("Family",F.Id("J"),mat),All("Q",mat,
                 Implies(And(defH,And(defM,defQ)),All("X",mat,
                     And(identity,Leq(Call("traceNorm",defect),
-                        Mul(Mul(D(10),d),Call("traceNorm",xx))))))))));
+                        Mul(Mul(D(1,0),d),Call("traceNorm",xx))))))))));
         return All("E",F.Id("Type"),All("J",F.Id("Type"),
             Seq(Instances("E"),Comma,Sp,OpenBracket,Call("Fintype",F.Id("J")),CloseBracket,
                 Comma,Sp,All("h",Call("Family",F.Id("J"),
