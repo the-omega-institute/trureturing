@@ -181,7 +181,8 @@ private lemma centered_defect_identity {a J : Type*}
         Matrix.conjTranspose_one, hH j]
       simp
     rw [hm]
-    simp only [sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, one_mul, mul_one]
+    simp only [sub_mul, mul_sub, Algebra.smul_mul_assoc (R := ℂ),
+      Algebra.mul_smul_comm (R := ℂ), one_mul, mul_one]
     module
   have ht := congrArg (fun f : J → Matrix a a ℂ => ∑ j, f j) (funext hj)
   simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib,
