@@ -4,11 +4,14 @@ from contextlib import ExitStack, redirect_stdout
 from io import StringIO
 import json
 import os
+import re
+import select
 from pathlib import Path
 import shutil
 import subprocess
 import sys
 import time
+from types import SimpleNamespace
 from unittest.mock import patch
 import uuid
 
@@ -406,6 +409,193 @@ class IdlePoolCases:
         (metadata / "MERGE_HEAD").unlink()
         result = self.run_protocol("return", "--path", self.main, "--pr", "42", "--writers-joined", expect=73, env=self.pool_env)
         self.assertIn("main_worktree", result.stderr)
+
+    def age_task_head_log(self, age=5 * 3600):
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        timestamp = int(time.time()) - age
+        log = metadata / "logs/HEAD"
+        log.write_bytes(re.sub(rb" [0-9]+ ([+-][0-9]{4})(?=\t|\n|$)",
+                               lambda match: b" " + str(timestamp).encode() + b" " + match[1],
+                               log.read_bytes()))
+        return timestamp
+
+    def dormant_task(self):
+        timestamp = int(time.time()) - 5 * 3600
+        (self.tree / "owned").write_text("unmerged task\n")
+        with patch.dict(os.environ, GIT_COMMITTER_DATE="@" + str(timestamp) + " +0000"):
+            self.g(self.tree, "commit", "-am", "Unmerged dormant task")
+        self.age_task_head_log()
+        return self.g(self.tree, "rev-parse", "HEAD").strip()
+
+    def dormant_options(self, path=None):
+        return SimpleNamespace(source=self.main, path=path, branch="lane/math/next",
+                               base=self.base, skip_restore=True)
+
+    def pool_claim_reuses_dormant_unmerged_task_and_cache(self):
+        task = self.dormant_task()
+        (self.main / ".git/info/exclude").write_text(".lake/\n")
+        cache = self.tree / ".lake/build/cache"
+        cache.parent.mkdir(parents=True)
+        cache.write_bytes(b"warm cache\n")
+        result = json.loads(self.pool_claim().stdout)
+        self.assertEqual("claimed", result["status"])
+        self.assertEqual("refs/heads/" + self.branch, result["previous_branch"])
+        self.assertEqual("unchanged", result["checkpoint"]["status"])
+        self.assertEqual(task, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertEqual("unmerged task\n", self.g(self.main, "show", self.branch + ":owned"))
+        self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+        self.assertEqual(b"warm cache\n", cache.read_bytes())
+        self.assertLessEqual(result["previous_last_use"], time.time() - 4 * 3600)
+        # The new allocation protects this same directory from another immediate claim.
+        self.assertEqual("no_idle", json.loads(self.pool_claim(branch="lane/math/again").stdout)["status"])
+
+    def pool_claim_checkpoints_dormant_dirty_and_detached_work(self):
+        for detached in (False, True):
+            with self.subTest(detached=detached):
+                if detached:
+                    (self.tree / ".gitignore").unlink()
+                    self.g(self.tree, "switch", "--detach", self.base)
+                else:
+                    self.dormant_task()
+                (self.tree / "owned").write_text("saved working snapshot\n")
+                (self.tree / "ordinary").write_text("saved untracked\n")
+                self.g(self.tree, "add", "owned")
+                timestamp = self.age_task_head_log()
+                # Detached HEAD must also name an old commit, rather than today's baseline.
+                if detached:
+                    with patch.dict(os.environ, GIT_COMMITTER_DATE="@" + str(timestamp) + " +0000"):
+                        self.g(self.tree, "commit", "-m", "Old detached source")
+                    (self.tree / "owned").write_text("saved working snapshot\n")
+                    self.age_task_head_log()
+                shutil.rmtree(self.tree / "dir")
+                for name in ("owned", "ordinary", "."):
+                    os.utime(self.tree / name, (timestamp, timestamp))
+                result = json.loads(self.pool_claim(branch="lane/math/saved-" + str(detached)).stdout)
+                self.assertEqual("committed", result["checkpoint"]["status"])
+                retained = result["previous_branch"]
+                self.assertTrue(retained.startswith("refs/heads/lane/governance/recovery-") if detached
+                                else retained == "refs/heads/" + self.branch)
+                self.assertEqual("saved working snapshot\n", self.g(self.main, "show", retained + ":owned"))
+                self.assertEqual("saved untracked\n", self.g(self.main, "show", retained + ":ordinary"))
+                self.assertEqual("", self.g(self.main, "ls-tree", retained, "--", "dir"))
+                self.assertEqual(result["checkpoint"]["commit"], self.g(self.main, "rev-parse", retained).strip())
+                self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+
+    def pool_claim_retains_active_process_cwd_file_and_argv(self):
+        self.dormant_task()
+        for kind in ("cwd", "file", "argv"):
+            with self.subTest(kind=kind):
+                code = ('import sys; ' + ('held=open(sys.argv[1]); ' if kind == "file" else '')
+                        + 'print("ready",flush=True); sys.stdin.readline()')
+                arguments = [sys.executable, "-c", code]
+                if kind != "cwd":
+                    arguments.append(str(self.tree / "owned"))
+                job = subprocess.Popen(arguments, cwd=self.tree if kind == "cwd" else self.root,
+                    stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                self.jobs.append(job)
+                self.jobs_settled = False
+                self.assertTrue(select.select([job.stdout], [], [], 10)[0])
+                self.assertEqual("ready\n", job.stdout.readline())
+                try:
+                    self.assertEqual("no_idle", json.loads(self.pool_claim().stdout)["status"])
+                    self.assertIn("task_active_process", self.pool_claim(path=self.tree, expect=73).stderr)
+                    self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+                finally:
+                    job.communicate("joined\n", timeout=10)
+        self.assertEqual("claimed", json.loads(self.pool_claim().stdout)["status"])
+
+    def pool_claim_retains_active_idle_tree(self):
+        self.pool_return()
+        code = 'import sys; print("ready",flush=True); sys.stdin.readline()'
+        job = subprocess.Popen([sys.executable, "-c", code], cwd=self.tree,
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        self.jobs.append(job)
+        self.jobs_settled = False
+        self.assertTrue(select.select([job.stdout], [], [], 10)[0])
+        self.assertEqual("ready\n", job.stdout.readline())
+        try:
+            self.assertEqual("no_idle", json.loads(self.pool_claim().stdout)["status"])
+        finally:
+            job.communicate("joined\n", timeout=10)
+        self.assertEqual("claimed", json.loads(self.pool_claim().stdout)["status"])
+
+    def pool_claim_retains_recent_checkout_allocation_and_source(self):
+        import worktree_pool as pool
+        task = self.dormant_task()
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        boundary = self.age_task_head_log(age=4 * 3600)
+        with patch.object(pool.time, "time", return_value=boundary + 4 * 3600), \
+                patch.object(pool, "task_users", side_effect=AssertionError("four-hour boundary inspected")):
+            self.assertEqual("no_idle", pool.claim(self.dormant_options())["status"])
+        for kind in ("checkout", "allocation", "source"):
+            with self.subTest(kind=kind):
+                self.age_task_head_log()
+                if kind == "checkout":
+                    self.g(self.tree, "switch", "--detach", task)
+                elif kind == "allocation":
+                    self.g(self.tree, "switch", self.branch)
+                    self.age_task_head_log()
+                    pool.allocation_record(self.tree, metadata, task)
+                else:
+                    (self.tree / "owned").write_text("recent ordinary source\n")
+                # Recent trees must be rejected before any process or cache inspection.
+                with patch.object(pool, "task_users", side_effect=AssertionError("recent task inspected")):
+                    self.assertEqual("no_idle", pool.claim(self.dormant_options())["status"])
+                self.assertFalse(self.g(self.main, "for-each-ref", "refs/heads/lane/math/next").strip())
+
+    def pool_claim_keeps_task_identity_lock_and_operation_guards(self):
+        self.dormant_task()
+        self.assertIn("main_worktree", self.pool_claim(path=self.main, expect=73).stderr)
+        alias = self.root / "alias"
+        alias.symlink_to(self.tree, target_is_directory=True)
+        self.assertIn("linked_tree", self.pool_claim(path=alias, expect=73).stderr)
+        holder = self.hold()
+        self.assertIn("busy_scope:tree:", self.pool_claim(path=self.tree, expect=73).stderr)
+        holder.communicate("joined\n", timeout=10)
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        for reason in ("intentional", "worktree-init:" + uuid.uuid4().hex):
+            self.g(self.main, "worktree", "lock", "--reason", reason, self.tree)
+            self.assertEqual("no_idle", json.loads(self.pool_claim().stdout)["status"])
+            self.g(self.main, "worktree", "unlock", self.tree)
+        (metadata / "MERGE_HEAD").write_text(self.base + "\n")
+        self.assertIn("unfinished_operation:MERGE_HEAD", self.pool_claim(path=self.tree, expect=73).stderr)
+        (metadata / "MERGE_HEAD").unlink()
+        (self.tree / ".lake").symlink_to(self.root, target_is_directory=True)
+        self.assertIn("linked_cache", self.pool_claim(path=self.tree, expect=73).stderr)
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+
+    def pool_claim_dormant_task_updates_pins_and_rechecks_activity(self):
+        import worktree_pool as pool
+        self.dormant_task()
+        (self.main / "lean-toolchain").write_text("updated toolchain\n")
+        (self.main / "lake-manifest.json").write_text('{"packages":[],"version":1}\n')
+        self.g(self.main, "commit", "-am", "Updated pins")
+        base = self.g(self.main, "rev-parse", "HEAD").strip()
+        calls = []
+        def becoming_active(paths):
+            calls.append(paths)
+            return set() if len(calls) == 1 else {self.tree / "owned"}
+        with patch.object(pool, "task_users", side_effect=becoming_active):
+            self.assertEqual("no_idle", pool.claim(self.dormant_options())["status"])
+        self.assertGreaterEqual(len(calls), 2)
+        self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
+        result = json.loads(self.pool_claim(base=base).stdout)
+        self.assertEqual("claimed", result["status"])
+        self.assertEqual("updated toolchain\n", (self.tree / "lean-toolchain").read_text())
+        self.assertEqual("unmerged task\n", self.g(self.main, "show", self.branch + ":owned"))
+
+    def pool_claim_low_disk_only_blocks_new_allocation(self):
+        import worktree_pool as pool
+        host = pool.host_cleanup()
+        with patch.dict(os.environ, WORKTREE_REQUIRE_DISK_CHECK="1"), \
+                patch.object(host, "check_disk", side_effect=host.LowDiskSpace("WORKTREE_LOW_DISK")) as disk:
+            with self.assertRaisesRegex(Exception, "WORKTREE_LOW_DISK"):
+                pool.claim(self.dormant_options())
+            disk.assert_called_once()
+            self.dormant_task()
+            disk.reset_mock()
+            self.assertEqual("claimed", pool.claim(self.dormant_options())["status"])
+            disk.assert_not_called()
 
     def pool_claim_writes_immutable_allocation_and_preserves_cache(self):
         self.pool_return()

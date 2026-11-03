@@ -41,7 +41,7 @@ def worktree_modules():
 def macos_active_paths():
     """Read absolute paths held by the current user's processes."""
     try:
-        result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fftn"],
+        result = subprocess.run(["lsof", "-nP", "-l", "-a", "-u", str(os.getuid()), "-Fftn"],
                                 capture_output=True, text=True, timeout=120)
     except (OSError, subprocess.SubprocessError) as error:
         raise OSError("activity_unobservable") from error

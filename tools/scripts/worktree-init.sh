@@ -18,7 +18,14 @@ ALLOW_LOW_DISK="${5-0}"
 cd "$ROOT"
 disk_arguments=(check-disk --path "$ROOT" --path "$TARGET")
 if [[ "$ALLOW_LOW_DISK" == 1 ]]; then disk_arguments+=(--allow-low-disk); fi
-python3 -B "$ROOT/tools/scripts/host-cleanup.py" "${disk_arguments[@]}"
+unset WORKTREE_REQUIRE_DISK_CHECK
+if [[ "${WORKTREE_PREFER_IDLE:-0}" == 1 && "$ALLOW_LOW_DISK" == 0 ]]; then
+  # Reusing an existing directory needs no new checkout allocation.
+  # The pool checks disk space before returning permission to create a sibling.
+  export WORKTREE_REQUIRE_DISK_CHECK=1
+else
+  python3 -B "$ROOT/tools/scripts/host-cleanup.py" "${disk_arguments[@]}"
+fi
 
 creation_arguments=()
 if [[ "${WORKTREE_PREFER_IDLE:-0}" == 1 ]]; then creation_arguments+=(--prefer-idle); fi

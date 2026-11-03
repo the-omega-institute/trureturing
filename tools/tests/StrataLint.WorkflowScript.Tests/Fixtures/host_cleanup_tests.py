@@ -356,7 +356,7 @@ class HostCleanupTests(unittest.TestCase):
             "if args[0]=='-B': args.pop(0)\n"
             "sys.argv=args\nrunpy.run_path(args[0],run_name='__main__')\n")
         dotnet = bin_dir / "dotnet"
-        dotnet.write_text("#!/bin/sh\nprintf 'DOTNET_INVOKED\\n'\n")
+        dotnet.write_text("#!/bin/sh\nprintf 'DOTNET_INVOKED\\nDISK_CHECK_PENDING=%s\\n' \"${WORKTREE_REQUIRE_DISK_CHECK:-0}\"\n")
         python.chmod(0o700)
         dotnet.chmod(0o700)
         env = dict(os.environ, PATH=str(bin_dir) + os.pathsep + os.environ["PATH"], TEST_DISK_FREE="4")
@@ -377,6 +377,13 @@ class HostCleanupTests(unittest.TestCase):
         invalid = subprocess.run(arguments + ["ALLOW_LOW_DISK=2"], cwd=self.root, env=env, capture_output=True, text=True)
         self.assertNotEqual(0, invalid.returncode)
         self.assertNotIn("DOTNET_INVOKED", invalid.stdout)
+        implicit = subprocess.run([arg for arg in arguments if not arg.startswith("DEST=")],
+                                  cwd=self.root, env=env, capture_output=True, text=True)
+        self.assertEqual(0, implicit.returncode, implicit.stderr)
+        self.assertIn("DOTNET_INVOKED", implicit.stdout)
+        self.assertIn("DISK_CHECK_PENDING=1", implicit.stdout)
+        self.assertNotIn("WORKTREE_LOW_DISK", implicit.stderr)
+        self.assertIn("DISK_CHECK_PENDING=0", allowed.stdout)
 
     def test_cleanup_make_forwards_paths_flags_and_literal_shell_characters(self):
         repository = self.root / "checkout with spaces"
@@ -545,6 +552,33 @@ class HostCleanupTests(unittest.TestCase):
         result = next(item for item in items if item.get("path") == str(artifact))
         self.assertEqual(("kept", "changed"), (result["action"], result["reason"]))
         self.assertTrue(artifact.exists())
+
+    def test_remnant_activity_scope_covers_isolated_name_before_deletion(self):
+        main = self.root / "main"
+        main.mkdir()
+        remnant = self.root / "main-residue"
+        remnant.mkdir()
+        os.utime(remnant, (self.cutoff - 10, self.cutoff - 10))
+        options = cleanup.argparse.Namespace(repository=main, base="base", codex_home=self.root / "codex",
+            sshx_home=self.root / "sshx", tmp_root=[], min_age_hours=1,
+            delete=True, verbose=False)
+        observations = []
+        def activity(root, scopes=(), *, include_sampler_argv=False):
+            observations.append((scopes, include_sampler_argv))
+            return {isolated for isolated in self.root.glob("main-residue-cleanup-*")
+                    if any(isolated == scope or scope in isolated.parents for scope in scopes)}
+        output = io.StringIO()
+        with patch.object(cleanup, "active_paths", side_effect=activity), \
+             patch.object(cleanup, "registered_worktrees", return_value=[main]), \
+             patch.object(cleanup, "remnant_candidates", return_value=[remnant]), \
+             patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(output):
+            self.assertEqual(0, cleanup.run_clean(options))
+        self.assertEqual([((), False), ((self.root,), True), ((self.root,), True)], observations)
+        items = [json.loads(line) for line in output.getvalue().splitlines()]
+        result = next(item for item in items if item.get("category") == "worktree_remnant")
+        self.assertEqual(("kept", "changed"), (result["action"], result["reason"]))
+        self.assertTrue(remnant.exists())
+        self.assertEqual([], list(self.root.glob("main-residue-cleanup-*")))
 
     def test_activity_command_reuses_sampler_and_fails_closed(self):
         output = io.StringIO()
