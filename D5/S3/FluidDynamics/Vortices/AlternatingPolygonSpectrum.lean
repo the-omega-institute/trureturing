@@ -71,7 +71,13 @@ private lemma block_determinant (m : ℕ) (hm : 3 ≤ m) :
 private lemma inverse_chord_fourier (m : ℕ) (hm : 3 ≤ m) :
     ∃ w : Fin (2 * m) → ℝ,
       ∀ k : Fin (2 * m),
-        w k - w ⟨0, by omega⟩ = -(k.val : ℝ) * (2 * m - k.val) / 2 := by sorry
+        w k - w ⟨0, by omega⟩ = -(k.val : ℝ) * (2 * m - k.val) / 2 := by
+  refine ⟨fun k => -(k.val : ℝ) * (2 * m - k.val) / 2, ?_⟩
+  intro k
+  have hk : k.val < 2 * m := k.isLt
+  simp only
+  rw [Nat.cast_sub (Nat.le_of_lt hk)]
+  ring
 
 private lemma circulant_spectrum (m : ℕ) (hm : 3 ≤ m) :
     ∀ k : ℕ, k ≤ 2 * m →
