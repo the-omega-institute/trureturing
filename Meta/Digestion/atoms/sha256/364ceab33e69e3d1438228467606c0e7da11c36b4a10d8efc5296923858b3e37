@@ -1,0 +1,22 @@
+### 13.6 量子理论的可核后果
+
+对自伴 $A,B$，在正状态给出的内积中取 $A-\omega(A)I$、$B-\omega(B)I$，Cauchy–Schwarz 直接给
+
+$$
+\operatorname{Var}_\omega(A)\operatorname{Var}_\omega(B)
+ \ge\left|\omega\bigl[(A-\omega(A)I)(B-\omega(B)I)\bigr]\right|^2
+ \ge\frac14|\omega([A,B])|^2.
+$$
+
+若两边的自伴二值算子满足 $A_i^2=B_j^2=I$，CHSH 算子
+
+$$
+S=A_0\otimes(B_0+B_1)+A_1\otimes(B_0-B_1)
+$$
+
+有 $S^2=4I-[A_0,A_1]\otimes[B_0,B_1]$，故 $\|S\|\le2\sqrt2$。取 Bell 态、$A_0=Z,A_1=X$、$B_{0,1}=(Z\pm X)/\sqrt2$ 达到此界。它们是已构造代数与正性的推论，不是另外塞入的公理。
+
+有限构造至此覆盖 Hilbert 空间、密度态、Born 概率、POVM、量子仪器、复张量积、纠缠、酉运动和指定理想准则下的 Lüders 更新。无限观察窗口的归纳极限已经由共同细化章节给出；它允许无限系统的状态泛函，但没有自动提供所有无限维量子场论所需的局部结构或未界算符动力学。
+
+<a id="section-14"></a>
+

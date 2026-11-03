@@ -1,0 +1,44 @@
+### 定理 6.2（起点比较形成带支持的群胚）
+
+<a id="thm-c117-origin-transport"></a>
+
+令 $T_{ba}=V_bV_a^*$。则
+
+$$
+T_{ba}^*T_{ba}=\Pi_a,\qquad
+ T_{ba}T_{ba}^*=\Pi_b,
+ \qquad T_{ba}V_a=V_b.
+$$
+
+因此它在合法像空间之间等距、满射，并满足
+
+<a id="eq-c117-cocycle"></a>
+
+$$
+\boxed{T_{ab}=T_{ba}^*,\qquad T_{aa}=\Pi_a,
+ \qquad T_{cb}T_{ba}=T_{ca}.}
+\tag{10}
+$$
+
+**证明。**
+全部等式来自 $V_i^*V_i=I_H$。例如
+
+$$
+T_{ba}^*T_{ba}=V_aV_b^*V_bV_a^*=\Pi_a,
+ \qquad
+ T_{cb}T_{ba}=V_cV_b^*V_bV_a^*=V_cV_a^*.
+$$
+
+同样计算得到其余结论。对编码态还有
+$T_{ba}(V_a\rho V_a^*)T_{ba}^*=V_b\rho V_b^*$。
+
+身份算子是合法支持上的 $\Pi_a$，不是整个 $E_a$ 上的恒等。相应 CP 映射 $X\mapsto T_{ba}XT_{ba}^*$ 在支持于 $\Pi_a$ 的输入上保迹，在任意更大输入域上则一般只有不增迹性质。域与支持必须随比较接口一起保存。
+
+对于纯复位表示 $V_a\psi=a\otimes W_a\psi$，比较具体为
+
+$$
+T_{ba}=\lvert b\rangle\langle a\rvert\otimes W_bW_a^*.
+$$
+
+若记录取最小维数，$W_a$ 满射到其记录空间；否则仍须保留其像投影，不能把未使用的记录方向也算成合法输入。
+
