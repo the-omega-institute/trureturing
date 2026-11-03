@@ -227,7 +227,9 @@ private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
   have hpq : p k ^ 2 ≤ q k := by
     simpa only [p, q] using
       second_sq_le_third (normalizedRates k) hx.1
-        (by simpa only [normalizedRates, powerSum, pow_one] using hx.2)
+        (by
+          change (∑ i, ((k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)) ^ 1) = 1
+          simpa only [pow_one] using hx.2)
   have hskew_lower : -(1 / 16 : ℝ) ≤ 3 * p k ^ 2 - 2 * q k := by
     have hmin := (D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.result n hn).2
       ⟨k, hk, rfl⟩
