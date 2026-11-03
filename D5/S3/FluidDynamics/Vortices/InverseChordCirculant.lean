@@ -7,6 +7,8 @@
    digest: spectrum of the alternating inverse-chord block product. -/
 
 import D5.S3.Quantum.Matrix.CirculantCharpoly
+import D5.S3.Fourier.FullBispectrumStability
+import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic
 import Mathlib.NumberTheory.Bernoulli
@@ -45,8 +47,7 @@ private theorem circulant_product_det (N : ℕ) [NeZero N] (b c : ZMod N → ℂ
       rw [Matrix.smul_mul, one_mul]
     rw [hy, ← sub_mul]
     congr 1
-    ext i j
-    by_cases h : i = j <;> simp [h]
+    rw [Matrix.smul_one_eq_diagonal, Matrix.diagonal_sub]
   have he' := congrArg Matrix.det he
   rw [Matrix.det_mul, Matrix.det_mul, Matrix.det_diagonal] at he'
   exact mul_left_cancel₀ hd (by simpa only [mul_comm (transform N).det] using he')
@@ -62,7 +63,8 @@ private lemma half_character (m : ℕ) [NeZero (2 * m)] :
   push_cast
   convert Complex.exp_pi_mul_I using 1
   congr 1
-  field_simp
+  apply (div_eq_iff (mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0) hm)).mpr
+  ring
 
 /-- Alternating signs shift the Fourier modes by half the even period. -/
 private theorem alternating_chord_dft (m : ℕ) [NeZero (2 * m)] (k : ZMod (2 * m)) :
@@ -134,18 +136,17 @@ private lemma modeValue_laplacian (N : ℕ) [NeZero N] (k : ZMod N) :
 private lemma dft_shift (N : ℕ) [NeZero N] (f : ZMod N → ℂ) (a k : ZMod N) :
     ZMod.dft (fun j => f (j + a)) k =
       ZMod.stdAddChar (a * k) * ZMod.dft f k := by
-  have h := congr_fun (Fourier.fourierIntegral_comp_add_right ZMod.toCircle
-    MeasureTheory.Measure.count f a) k
-  rw [← ZMod.dft_eq_fourier, ← ZMod.dft_eq_fourier] at h
-  simpa only [Function.comp_def, Circle.smul_def, smul_eq_mul, ZMod.stdAddChar_apply] using h
+  simpa only [sub_neg_eq_add, mul_neg, neg_neg, mul_comm] using
+    D5.S3.Fourier.FullBispectrumStability.dft_translation f (-a) k
+
+private lemma spectrum_fin_val (N : ℕ) [NeZero N] (j : Fin N) :
+    ((ZMod.finEquiv N) j).val = j.val := by
+  rw [D5.S3.ConceptDynamics.Coding.CountedOrderTypeGyration.finEquiv_eq_natCast]
+  exact ZMod.val_natCast_of_lt j.isLt
 
 private lemma modeValue_sum (N : ℕ) [NeZero N] : ∑ k : ZMod N, modeValue N k = 0 := by
   rw [← (ZMod.finEquiv N).toEquiv.sum_comp]
-  have hv (k : Fin N) : ((ZMod.finEquiv N).toEquiv k).val = k.val := by
-    cases N with
-    | zero => exact (NeZero.ne 0 rfl).elim
-    | succ N => rfl
-  simp only [modeValue, hv]
+  simp only [modeValue, RingEquiv.toEquiv_eq_coe, EquivLike.coe_coe, spectrum_fin_val]
   rw [Fin.sum_univ_eq_sum_range (fun k : ℕ =>
     ((N : ℂ) ^ 2 - 1) / 12 - (k : ℂ) * ((N : ℂ) - k) / 2)]
   have h1q := sum_range_pow N 1
@@ -173,18 +174,14 @@ private lemma modeValue_sum (N : ℕ) [NeZero N] : ∑ k : ZMod N, modeValue N k
 private lemma chord_multiplier (N : ℕ) [NeZero N] (l : ZMod N) :
     ZMod.stdAddChar l + ZMod.stdAddChar (-l) - 2 =
       -4 * (Real.sin (Real.pi * (l.val : ℝ) / N) : ℂ) ^ 2 := by
-  let t : ℝ := Real.pi * (l.val : ℝ) / N
-  have he : ZMod.stdAddChar l = Complex.exp ((2 * t : ℝ) * Complex.I) := by
-    rw [← ZMod.natCast_zmod_val l, ← Int.cast_natCast, ZMod.stdAddChar_coe]
-    congr 1
-    dsimp [t]
-    push_cast
-    ring
-  rw [AddChar.map_neg_eq_conj, he, Complex.exp_ofReal_mul_I]
-  simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
-  rw [Real.cos_two_mul_eq_one_sub]
-  push_cast
-  dsimp [t]
+  have hp := D5.S3.Quantum.Matrix.CirculantCharpoly.character_pair N 1 l.val l.val_le
+  have hnl : ((N - l.val : ℕ) : ZMod N) = -l := by
+    rw [Nat.cast_sub l.val_le]
+    simp
+  simp only [Nat.cast_one, one_mul, ZMod.natCast_zmod_val, hnl] at hp
+  rw [hp]
+  have ha : 2 * Real.pi * 1 * l.val / N = 2 * (Real.pi * (l.val : ℝ) / N) := by ring
+  rw [ha, Real.cos_two_mul_eq_one_sub]
   push_cast
   ring
 
@@ -220,7 +217,7 @@ private lemma modeValue_dft (N : ℕ) [NeZero N] :
   by_cases hl : l = 0
   · subst l
     rw [ZMod.dft_apply_zero, modeValue_sum]
-    simp [chordWeight]
+    simp [chordWeight.eq_1]
   have h := dft_modeValue_laplacian N l hl
   rw [chord_multiplier] at h
   have hN : (0 : ℝ) < N := by exact_mod_cast NeZero.pos N
@@ -232,7 +229,7 @@ private lemma modeValue_dft (N : ℕ) [NeZero N] :
     exact mul_lt_mul_of_pos_left hllt Real.pi_pos
   have hs : (Real.sin (Real.pi * (l.val : ℝ) / N) : ℂ) ≠ 0 := by
     exact_mod_cast (Real.sin_pos_of_pos_of_lt_pi ha0 haπ).ne'
-  simp only [chordWeight, ite_eq_right hl, Complex.ofReal_div, Complex.ofReal_one,
+  simp only [chordWeight.eq_1, ite_eq_right hl, Complex.ofReal_div, Complex.ofReal_one,
     Complex.ofReal_mul, Complex.ofReal_ofNat, Complex.ofReal_pow]
   field_simp
   linear_combination -h
@@ -265,12 +262,6 @@ def blockB (m : ℕ) : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ :=
 
 def blockC (m : ℕ) : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ :=
   ((diagonalWeight m + 1) • 1 - weights m) * chargeMatrix m
-
-private lemma spectrum_fin_val (N : ℕ) [NeZero N] (j : Fin N) :
-    ((ZMod.finEquiv N) j).val = j.val := by
-  cases N with
-  | zero => exact Fin.elim0 j
-  | succ N => rfl
 
 private lemma spectrum_weights (m : ℕ) [NeZero (2 * m)] :
     weights m = Matrix.circulant (fun l : Fin (2 * m) =>
@@ -387,14 +378,11 @@ theorem product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : ℝ) :
     (((-1 : ℝ)^l.val * InverseChordCirculant.chordWeight (2 * m) l : ℝ) : ℂ)
   let a := diagonalWeight m
   have hscalar (r : ℝ) : F (r • 1) = (r : ℂ) • 1 := by
-    ext i j
-    change ((r * (1 : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ)
-      (e.symm i) (e.symm j) : ℝ) : ℂ) = _
-    by_cases hij : i = j
-    · subst j
-      simp
-    · have hne : e.symm i ≠ e.symm j := fun h => hij (e.symm.injective h)
-      simp [hij, hne]
+    change Complex.ofRealHom.mapMatrix
+      (Matrix.reindexAlgEquiv ℝ ℝ e.toEquiv (r • 1)) = _
+    rw [map_smul, map_one, Matrix.smul_one_eq_diagonal, RingHom.mapMatrix_apply,
+      Matrix.diagonal_map (map_zero _), ← Matrix.smul_one_eq_diagonal]
+    rfl
   have hW : F (weights m) = Matrix.circulant w := by
     ext i j
     change ((weights m (e.symm i) (e.symm j) : ℝ) : ℂ) = w (i-j)
@@ -447,13 +435,12 @@ theorem product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : ℝ) :
     rw [map_sub, hscalar, hW]
     rw [show b = Pi.single 0 (a+1 : ℂ) - w by simp only [b, Complex.ofReal_add,
       Complex.ofReal_one], Matrix.circulant_sub, Matrix.circulant_single]
-    ext i j
-    simp [Matrix.scalar, Matrix.smul_apply, Matrix.one_apply, Matrix.diagonal_apply]
+    rw [Complex.ofReal_add, Complex.ofReal_one]
+    exact congrArg (fun M => M - Matrix.circulant w) (Matrix.smul_one_eq_diagonal _)
   have hc : F (a • 1 - chargeMatrix m * weights m * chargeMatrix m) = Matrix.circulant c := by
     rw [map_sub, hscalar, hU, show c = Pi.single 0 (a : ℂ) - u from rfl,
       Matrix.circulant_sub, Matrix.circulant_single]
-    ext i j
-    simp [Matrix.scalar, Matrix.smul_apply, Matrix.one_apply, Matrix.diagonal_apply]
+    exact congrArg (fun M => M - Matrix.circulant u) (Matrix.smul_one_eq_diagonal _)
   have hsingle (z : ℂ) (k : ZMod (2 * m)) : ZMod.dft (Pi.single 0 z) k = z := by
     simp [ZMod.dft_apply, Pi.single_apply]
   have hmode (k : ZMod (2 * m)) :
@@ -480,8 +467,5 @@ theorem product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : ℝ) :
   rw [map_prod Complex.ofRealHom]; simp only [Complex.ofRealHom_eq_coe, Complex.ofReal_sub]
   exact Equiv.prod_comp (Equiv.addRight (m : ZMod (2 * m)))
     (fun k => (y : ℂ) - (gamma m k : ℂ))
-
-#print axioms alternating_weight_sum
-#print axioms product_spectrum
 
 end D5.S3.FluidDynamics.Vortices.InverseChordCirculant

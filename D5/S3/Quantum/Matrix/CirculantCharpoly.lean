@@ -80,7 +80,7 @@ private lemma odd_prod {A : Type*} [CommMonoid A] (m : ℕ) (g : ℕ → A) :
   rw [← prod_mul_distrib, ← Ico_add_one_right_eq_Icc, prod_Ico_eq_prod_range]
   simp only [Nat.add_sub_cancel, show 1 + (m + m) = 2 * m + 1 by omega]
 
-private lemma character_pair (n : ℕ) [NeZero n] (j l : ℕ) (hl : l ≤ n) :
+lemma character_pair (n : ℕ) [NeZero n] (j l : ℕ) (hl : l ≤ n) :
     ZMod.stdAddChar ((j : ZMod n) * (l : ZMod n)) +
       ZMod.stdAddChar ((j : ZMod n) * ((n - l : ℕ) : ZMod n)) =
         (2 * Real.cos (2 * Real.pi * j * l / n) : ℝ) := by

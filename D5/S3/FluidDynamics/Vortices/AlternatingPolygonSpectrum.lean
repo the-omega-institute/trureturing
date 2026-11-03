@@ -6,7 +6,7 @@
    utility: none
    digest: Barry–Kevrekidis alternating vortex polygon spectrum and distinct real pairs. -/
 
-import D5.S3.Quantum.Matrix.CirculantCharpoly
+import D5.S3.ConceptDynamics.ObservationTopology.CircleGraphCharts
 import D5.S3.FluidDynamics.Vortices.InverseChordCirculant
 
 /-! Alternating vortex polygon equilibrium, Jacobian and real spectrum. -/
@@ -117,9 +117,8 @@ private lemma chord_sq (N : ℕ) (j k : Fin N) :
   let b := 2 * Real.pi * (k.val + 1 : ℝ) / N
   have hab : (a - b) / 2 = Real.pi * ((j.val : ℝ) - k.val) / N := by dsimp [a, b]; ring
   change (Real.cos a - Real.cos b)^2 + (Real.sin a - Real.sin b)^2 = _
-  rw [← hab, Real.cos_sub_cos, Real.sin_sub_sin]
-  have hunit := Real.sin_sq_add_cos_sq ((a + b) / 2)
-  linear_combination 4 * Real.sin ((a - b) / 2)^2 * hunit
+  simpa only [sub_zero, Real.cos_zero, mul_one, ← pow_two, hab] using
+    D5.S3.ConceptDynamics.ObservationTopology.HarmonicSensors.PairedDelayGeometry.planar_chord_dot a b 0
 
 private lemma chord_sq_ne_zero (N : ℕ) (j k : Fin N) (hjk : j ≠ k) :
     (polygon N (Sum.inl j) - polygon N (Sum.inl k))^2 +
@@ -306,7 +305,7 @@ private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
   let d := fun j k : Fin (2 * m) =>
     (z (Sum.inl j)-z (Sum.inl k))^2 + (z (Sum.inr j)-z (Sum.inr k))^2
   have hcharge : ∑ k : Fin (2 * m), charge (2 * m) k = 0 := by
-    delta charge; simp only [pow_add, neg_one_sq, mul_one]
+    simp only [charge.eq_1]; simp only [pow_add, neg_one_sq, mul_one]
     rw [Fin.sum_neg_one_pow]; simp
   have hsum (j : Fin (2 * m)) (v : Fin (2 * m) → ℝ)
       (hp : ∀ k, k ≠ j →
@@ -370,7 +369,7 @@ private lemma rotation_mul_transpose (N : ℕ) :
   simp only [Matrix.diagonal_transpose, Matrix.diagonal_mul_diagonal]
   have hu (j : Fin N) :
       (polygon N (Sum.inl j))^2 + (polygon N (Sum.inr j))^2 = 1 :=
-    (add_comm _ _).trans (Real.sin_sq_add_cos_sq (2*Real.pi*(j.val+1:ℝ)/N))
+    Real.cos_sq_add_sin_sq (2*Real.pi*(j.val+1:ℝ)/N)
   ext p q
   rcases p with j | j <;> rcases q with k | k
   all_goals
@@ -433,9 +432,9 @@ private lemma rotated_jacobian_off_diagonal (m : ℕ) (j k : Fin (2 * m)) (hjk :
   let y := fun l => polygon (2*m) (Sum.inr l)
   let d := (x j-x k)^2 + (y j-y k)^2
   have hj : (x j)^2 + (y j)^2 = 1 :=
-    (add_comm _ _).trans (Real.sin_sq_add_cos_sq (2*Real.pi*(j.val+1:ℝ)/((2*m:ℕ):ℝ)))
+    Real.cos_sq_add_sin_sq (2*Real.pi*(j.val+1:ℝ)/((2*m:ℕ):ℝ))
   have hk : (x k)^2 + (y k)^2 = 1 :=
-    (add_comm _ _).trans (Real.sin_sq_add_cos_sq (2*Real.pi*(k.val+1:ℝ)/((2*m:ℕ):ℝ)))
+    Real.cos_sq_add_sin_sq (2*Real.pi*(k.val+1:ℝ)/((2*m:ℕ):ℝ))
   have hd : d ≠ 0 := chord_sq_ne_zero (2*m) j k hjk
   have hw : weights m j k = 1 / d := by
     rw [weights, ite_eq_right hjk]
@@ -526,7 +525,7 @@ private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m
   let sy := ∑ k : Fin (2*m), if k = j then 0 else charge (2*m) k*(y j-y k)/d k
   let w := ∑ k : Fin (2*m), if k = j then 0 else charge (2*m) k/d k
   have hu (k : Fin (2 * m)) : (x k)^2+(y k)^2 = 1 :=
-    (add_comm _ _).trans (Real.sin_sq_add_cos_sq (2*Real.pi*(k.val+1:ℝ)/((2*m:ℕ):ℝ)))
+    Real.cos_sq_add_sin_sq (2*Real.pi*(k.val+1:ℝ)/((2*m:ℕ):ℝ))
   have hA : ((x j)^2-(y j)^2)*T - 2*x j*y j*U = x j*sy-y j*sx := by
     dsimp only [T, U, sx, sy]
     simp_rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
