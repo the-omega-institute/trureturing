@@ -551,7 +551,7 @@ private lemma one_rate_spectral (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i
     rw [OriginalActualFourier.rho,
       integral_withDensity_eq_integral_toReal_smul hdm (by simp)]
     simp only [ENNReal.toReal_ofReal (OriginalActualFourier.density_nonneg A _), smul_eq_mul]
-    rw [← integral_ofReal]
+    rw [← integral_complex_ofReal]
     simp_rw [hpoint]
     rw [integral_finsetSum _ (fun i _ => integrable_finsetSum _ (fun j _ => hfi i j))]
     simp_rw [integral_finsetSum _ (fun j _ => hfi _ j), integral_const_mul, hres]
@@ -614,6 +614,6 @@ theorem complete_positive_mixture_spectral_identity
   · have h := integral_tsum_of_summable_integral_norm (fun n => (ht n).1) hs
     have hq := (Complex.hasSum_re (quadratic_mixture_hasSum x a)).tsum_eq
     rw [← hq]
-    simpa only [(ht _).2] using h
+    simpa only [(ht _).2, pMultiplier, pTerm] using h
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate

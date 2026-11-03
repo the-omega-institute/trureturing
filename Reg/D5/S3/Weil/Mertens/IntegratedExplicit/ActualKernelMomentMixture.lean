@@ -135,4 +135,68 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end Multiplier
 
+/- The actual complex real-part readout is selected in the full spectral
+   statement; the literal actual density and integrability clause are fixed. -/
+namespace Spectral
+abbrev signature : Signature := Mixture.signature
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {I : Type u} [Fintype I]
+    (D : ℝ) (hD : 0 ≤ D) (x : I → ℝ) (a : I → ℂ)
+    (hx : ∀ i, x i ∈ Icc (0 : ℝ) D) (ha : ∑ i, a i = 0),
+    Integrable pMultiplier (OriginalActualFourier.rho («prefix» x a)) ∧
+      R.readout () () (quadratic x a P) =
+        ∫ ξ, pMultiplier ξ ∂OriginalActualFourier.rho («prefix» x a)
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have h0 := @h (ULift.{u} Empty) inferInstance 0 (by norm_num)
+    (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp)
+  have he := h0.2
+  norm_num [rejected, realize, OriginalActualFourier.rho,
+    OriginalActualFourier.density, OriginalActualFourier.Ahat, «prefix»] at he
+def family : Registration arena.{u}
+    (type_of% @complete_positive_mixture_spectral_identity.{u}) where
+  actual := Mixture.actual
+  bridge := Iff.rfl
+  variation := ⟨@complete_positive_mixture_spectral_identity.{u}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law Mixture.actual rejected rejected_law
+  dependence := by
+    intro i
+    exact ⟨(), 0, 1, by change (0 : ℂ).re ≠ (1 : ℂ).re; norm_num⟩
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@complete_positive_mixture_spectral_identity.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.complete_positive_mixture_spectral_identity.audit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentMixture.Spectral.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z.re) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentMixture
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Spectral
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentMixture
