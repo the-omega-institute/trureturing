@@ -2426,3 +2426,605 @@ therefore forbids treating this partial storage account as the complete
 service account of §6. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 18. Literal primitive locations for the field interpreter
+
+**Definition 18.1 (native control boundary ML-P).** Keep precisely ML-I's
+individual binary and reference-field accesses, reference assignment,
+null/equality/arity tests, supplied finite transition graph, finite bit
+connections and current granted rights. A vertex of this native finite
+transition graph carries one such primitive action and its fixed literal
+field selector. Following its wired zero/one successor is the supplied
+finite-control transition; its selection, successor-reference access and
+control-reference assignment are charged. A field read returns into its
+retained bit or reference read latch. A field write and the following
+primitive occur at different cuts. Tests and writes are different vertices.
+A read's return latch is part of that primitive's result, not a promise of
+a later unrepresented read result.
+
+This boundary is the finite transition graph already supplied by ML-I,
+not a new evaluator instruction. Its primitive labels do not include
+an encoded-opcode dispatcher, a variable selector, word arithmetic,
+validation of a compound frame, or a field-interpreter step. Describing
+the mathematical primitive graph in Python or C does not require a second
+simulation of that host language. Conversely the interpreted field graph
+of Definition 15.1 is data: its operation, selector and continuations are
+actually read by the native graph below. Treating that entire interpreted
+operation as a native vertex would not meet this definition.
+
+A native graph's fixed field selector is wiring attached to that vertex.
+For example, the vertices reading fields zero and one are distinct native
+locations; a variable two-valued selector must first traverse its actual
+bit-test tree. A tuple naming a finite native location is a mathematical
+encoding of that location, not an uncharged variable arithmetic register.
+All such locations and their wiring belong to the installed material.
+
+**Definition 18.2 (interpreter state).** An interpreted vertex retains
+its five operation bits, sixteen selector bits, two operand references
+and two successor references, as in Definition 15.1. A reference-register
+object has one reference and no binary field. A binary-register object
+has one binary field and no reference. The remaining payload layouts are
+four references/eight bits for reserve cells, two references/no bits for
+directory forks, and no references/32768 bits for pages. Layout tests are
+local ML-I arity tests; a whole grammar or arithmetic validity check is
+not hidden in one of them.
+
+The native interpreter has nine separately backed reference registers
+PC, old PC, a, b, zero, one, rx, ry and destination. Its binary registers are
+five operation fields, sixteen selector fields, predicate, bx, occupied,
+waiting, ended and acknowledged. It additionally retains the current
+native location, reference read result, saved reference, address latch
+and binary read result. These locations and latches persist during every
+operation. Bounded scan positions and instruction phases are expanded
+into distinct native vertices. They have no multibit update instruction.
+In particular a clear of sixteen fields consists of sixteen writes,
+and a bit-copy read and its destination write have an intervening cut.
+
+At fetch, read the actual five code fields into their five separate
+register locations, one at a time. Do the same for all sixteen selector
+fields, then capture the four actual code references. Dispatch through
+a high-to-low five-bit test tree. Reset predicate and destination through
+separate literal assignments. Each operation requiring a selector tests
+all sixteen selector fields through a finite tree. Its admissible leaves
+are respectively 0–3, 0–7, 0–32767, 0–1 or 0–1 for reference cells,
+binary cells, pages, Boolean constants or directory edges. All other
+leaves refuse. No runtime integer-to-field conversion supplies a leaf.
+
+The operation paths are the following primitive compositions. A source
+reference is first captured; a dereference uses the retained actual
+address latch. Copies to destinations happen only after source capture.
+
+| Interpreted operation | Native path after fetch and local layout checks |
+| --- | --- |
+| put / test | Select literal zero/one and write the actual bit register; or read its field and test the captured bit. |
+| copy / bind | Read the actual source register, or the already captured literal code binding, then write the actual destination register. |
+| null / equal | Capture the one/two reference values, retain both for equality, perform the declared test and write predicate through its selected literal path. |
+| get / set | Select one of four literal reference-field accesses, capture the read or source value, then write its actual destination. |
+| read / write | Select one of eight literal binary-field accesses; preserve the captured bit until its separate write. |
+| edge / page | Select one of two literal directory links or one of 32768 literal page fields. Page selection has fifteen low selector tests and rejects a set high selector bit. |
+| indirect | Read the actual saved continuation register, test its code layout, and assign destination. |
+| emit | Read the actual input bit, retain bx and occupied, transfer that bit at the supplied output, then clear occupied. |
+| End / Ack / Return | Execute the supplied connection operation, retaining its phase flags. Ack requires ended; Return requires acknowledged. |
+| wait / goto / fault | Set waiting and finish the current operation; continue; or refuse without another completed operation. |
+
+Commit tests destination for null. A nonnull destination becomes PC;
+otherwise the captured predicate selects the captured one/zero reference.
+The old PC remains in its separate reference register through completion;
+the next-PC assignment precedes the next fetch. The next native
+instruction is determined by the installed native graph and its captured
+values, never by an observer's decoding of a B state or an output list.
+The arbitrary generic B program continues to use actual next/jump
+references, independently of the immutable image's 64-bit address bank.
+
+**Definition 18.3 (primitive-prefix interpretation).** At a native cut
+retain the current interpreted fields, the actual old PC, current interpreted vertex,
+the prefix of captured operation/selector/reference fields, operand
+snapshots, current native location, read/address latches, any performed
+field write and the uncompleted continuation assignment. Before an
+interpreted write, its effect is pending. After it, that exact write is
+present, while the operation remains busy until continuation completion.
+During emission the occupied bit and bx specify the actual unsent bit.
+No partly written operand bank is mistaken for a completed new opcode.
+Before its effect the state relates to the source operation with that effect
+pending; after the effect it relates to its intended successor with control
+commit pending. Recovering an overwritten old auxiliary field is not asserted.
+The driver separately retains the old logical head/control and its pending
+growth interpretation as required by Definition 15.2. A busy native state is
+not another completed field or B operation.
+
+**Theorem 18.4 (all-component forward and completed-operation converse).**
+For every finite well-typed field graph of Definition 15.1, every valid
+owned binding of its registers, directory/pages and sufficient finite
+reserve, ML-P realizes every completed field transition by a finite
+native primitive path with Definition 18.3's interpretation at every
+intermediate cut. Conversely every completed operation on this installed
+native path is exactly the next interpreted field operation on those
+same actual objects, up to one consistent reference renaming at
+installation. This assertion covers every component state in that valid
+family, all allowed field selectors, all finite histories and waiting
+prefixes. It is not inferred from a number of sampled programs.
+
+Proof. Five one-bit reads determine the actual encoded operation;
+sixteen further reads determine its actual selector. The separate latch
+writes leave their prefix available at all intervening cuts. The four
+reference captures preserve the actual operand bindings and both
+successors. No write to an interpreted operand occurs in this prefix.
+Induction on the depth of a binary selector tree shows that its current
+location represents exactly the already read selector prefix, and that
+its eventual valid leaf is the literal selector with those bits. An
+invalid prefix has only the refusal continuation. The same argument
+applies to operation dispatch.
+
+For a reference copy, the source is captured before the destination
+write, so aliases have their original source meaning. A get captures
+the actual cell reference and reads the selected one of its four
+fields. A set captures both actual cell and value before the selected
+write. These are precisely the old field transition, including all
+source/destination coincidences. Bit reads/writes use the same argument
+with a separate binary latch. Directory and page paths have, respectively,
+two and 32768 possible literal leaves; uniqueness of their selector
+prefixes proves their exact physical field access. Null, equality and
+bit tests use the captured operands and have exactly their declared
+truth values. Local layout checks are true on the valid family and
+prevent field access on a wrong local layout. The trusted code/binding
+invariant prevents an interpreted program from acquiring native control
+vertices as an indirect field-program continuation.
+
+The finite continuation-binding path stores the actual captured code
+reference. An indirect path reads that saved reference and retains it
+as destination. For conditional paths predicate has the value of the
+specified test; all other paths retain its reset zero. Therefore commit
+assigns exactly the interpreted successor, once. Neither a scratch
+write nor a test enables another commit. The emission path transfers
+only its backed bx, and cannot clear occupied before that transfer.
+The three response-phase paths enforce the stated End/Ack/Return order.
+After commit, a native gate reads the actual waiting bit and tests its
+captured value. One loops back to that read; zero proceeds to fetch.
+An actual resume signal writes zero through the supplied input binding.
+Even individual primitive stepping in the paused gate performs no new
+code fetch or field commit. After resume the next gate read passes;
+a previously captured one can add one finite loop. The outer author
+scheduler only groups or pauses these already guarded transitions.
+Delaying a granted primitive or supplied connection completion retains
+its waiting cut and supplies no invented completion.
+
+Every path just described is a path of the finite native graph. Its
+enabled-operation length is finite: after the required resume, the
+gate passes on its next read, selector depth is bounded by sixteen and
+operand access templates are finite lists. Paused gate prefixes commit
+nothing. Thus forward realization holds for
+each operation. The cases exhaust the operation algebra and contain
+only their stated effects. Induction on completed operations proves the
+converse and composition for any finite history. The induction also
+preserves the prefix invariant, since the next primitive either extends
+a capture, performs its named write/test, or completes its named
+continuation. No eventual halt is used. $\square$
+
+**Corollary 18.5 (actual consumers and unrestricted finite domains).**
+After the chronological relocation in §19, the native path supplies
+Theorems 15.3, 15.5, 16.2 and 16.4 with actual field transitions, for
+every finite generic B program/input/prefix, every valid fixed image
+and every finite input/returned-word conversion on their original
+assumptions. Both forward and completed-macro converse statements of
+the generic B driver follow, including busy growth, proper-ancestor
+appends, both crossings, repeated marks and nonhalting prefixes.
+
+Proof. Apply Theorem 18.4 to each transition of the existing finite
+component graphs, using the old/intended state and saved continuations
+already retained in §§15–16. Their field transitions are unchanged;
+therefore their earlier inductions compose with the primitive-prefix
+interpretation. A chosen reserve bounds the owned material supplied
+for one finite prefix; choosing a larger finite reserve covers any
+larger finite demand. It imposes no common bound on a program, an input,
+$N$, rational components, indices, cylinders or the length of a run.
+The 64-bit premise belongs only to that fixed image's addresses and
+its proved address arithmetic. $\square$
+
+## 19. Chronological installation with retained literal source material
+
+**Definition 19.1 (literal source and the initial ML-I boundary).** The
+public installation input is the complete uncompressed image of
+Definition 14.1, the encoded finite field graph, the complete native
+interpreter graph, register bindings, received component input and all
+chosen reserve cells. It contains no hidden source-dependent answers.
+Its byte provenance is the unchanged A interface and code image; the
+field graph is the composition of the existing public decoder, driver,
+converter, output scanner and routing templates. All source objects
+are actually retained, including unused reserve and padding pages.
+
+For each source payload object introduce one descriptor with three
+actual references: payload, next descriptor and initially null forward.
+The descriptors form a finite chain. Payload reference fields point to
+the corresponding descriptors, so relocation does not decode a numerical
+object identifier. Each payload additionally has one retained directory
+link. Layouts are the six fixed payload layouts in Definition 18.2.
+Every source/descriptor object has its supplied current grant. This
+literal public input is a separately supplied initial ML-I object;
+forming it is not called an installer transition or erased from its
+retained census. No claim is made that a gzip inflater executed on ML-I.
+The selected installer receives the full uncompressed input and keeps
+it. Its real target is constructed below, even when keeping both copies
+is more expensive than an alternative representation.
+
+As in Assumption 1.2, execution begins with a supplied native finite
+transition graph and its authorized actual bindings. Here that fixed
+initial graph is the literal installer and per-bit initializer graph;
+its entire material and grants are counted from the first cut. This
+uses the original ML-I primitive-control premise. It is not a new
+operation that allocates, links or fills the eventual driver in bulk.
+The code, decoder and executing interpreter beyond this initial base
+are all targets of the chronological copy. This conditional initial
+control premise is not a physical bootstrapping or bare P/S theorem.
+
+**Definition 19.2 (initializer control and grants).** The initializer
+retains descriptor head/current cursor, pending target, target-directory
+head/tail, source-next latch, read-reference latch, source-payload latch,
+target latch, a separately bound actual entry descriptor and its current
+native location. Native execution's read,
+saved-reference, address and current-location latches remain reserved
+at the same cuts. The bit initializer retains actual source/target
+binary-bank bindings, current native bit vertex, read bit and completion
+flag. This bit header belongs to the instance; its initial source,
+target and native-location bindings are null. Immutable primitive wiring
+may be reused with separately supplied state headers, each counted from
+its first cut. Shared-job union accounting remains the separate original
+obligation in Definition 20.4. Allocation returns an actual fresh object
+with its known layout;
+a separate grant delivery is required before linking it into the target
+directory. While that delivery is pending, the new object, its grant
+slot, whole payload and directory link are already counted.
+
+The initializer's outer control is a literal finite graph. A sequence
+of six local arity tests selects one known allocation layout. For each
+layout, each reference-field position has its own literal clear vertex;
+there is no changing multibit offset. The allocated target's directory
+link is cleared, its actual object is linked at the old target tail,
+the tail is advanced, and the descriptor's forward field receives that
+actual target. These are separate writes, with their intermediate cuts.
+Only then are payload references individually cleared and payload bits
+copied by Definition 19.3. Read the current descriptor's actual next
+reference, assign the current cursor and test for end. At chain end,
+restore the actual head and begin the relocation pass.
+
+For every literal payload-reference position, relocation reads the
+source field. Null remains null. For a nonnull descriptor reference,
+read its actual forward field and reject a missing target. Write that
+actual target reference into the current target's literal field.
+Advance to the next source descriptor through the same read/assign/test
+sequence. After the last relocation, read the bound entry descriptor's
+actual forward field, refuse a null result, then write that captured
+target into the execution-location slot in a separate primitive. Native
+execution reuses this very slot; an observer's source-to-target map does
+not install or replace its entry. A target address is never reconstructed
+from a source index.
+The finite field positions are fixed native vertices; the arbitrarily
+long source chain is traversed by its actual next references.
+
+**Definition 19.3 (binary initializer graph).** For each supported
+positive bit width $h\in\{1,3,8,21,32768\}$ retain an actual chain
+of $3h$ native vertices. At field $i$ its three successive vertices
+write binary zero to the target's literal field $i$, read source field
+$i$ into the retained bit latch, then write that latch to target field
+$i$. The last write's next link is the first clear for field $i+1$,
+or a shared completion vertex. That separate vertex sets the completion
+flag and returns. Reuse clears that flag in its own native write before
+binding source, target and entry; no header is reset in bulk. All selectors here are literal wiring of
+these vertices. There is no runtime increment of a field index and no
+word-copy instruction. A scheduler may execute many vertices before
+returning to its host, but the same primitive state is available after
+any one of them.
+
+The private C implementation stores these actual linked vertices and
+executes one switch case per primitive vertex. Its source and target
+byte buffers are the same backing subsequently read by the native
+interpreter; a second host constructor does not replace the copied
+fields. The scheduler's step limit and counters are independent
+inspection, not machine operands. C compilation is an implementation
+of this stated mathematical primitive model, without a claim about
+physical transistors or an erasing machine beneath the model.
+
+**Theorem 19.4 (chronological all-source installation correspondence).**
+For every finite valid literal source graph of Definition 19.1, with
+its initial granted native installer and a sufficient fresh grant for
+each requested target, Definitions 19.2–19.3 terminate. They construct
+an injective target copy preserving every payload bit, every null and
+all reference equalities and links. Each initialized code field, page,
+operand binding, reserve successor and entry continuation is the one
+actually consumed by ML-P. At every incomplete cut there is a unique
+allocated-target prefix, a current pending grant/clear/copy/relocation,
+its actual cursor/latches and a specified uncompleted suffix. Conversely
+an installation reaching completion through these phases has precisely
+that copy, with no skipped descriptor, field or grant.
+
+Proof. Induct on the source descriptor chain in pass one. Fresh
+allocation and grant delivery give a distinct authorized target for
+that descriptor. Before linking, pending retains it; after linking,
+the actual directory head/tail retain it. No future grant overwrites
+an earlier target. The forward write records that same reference.
+Induction on the literal reference-clear vertices gives binary-null
+reference fields, each with its explicit initialization occurrence.
+
+For a bit bank of width $h$, after $i$ triples the first $i$ fields
+are exactly the source prefix. At the next clear the new field is zero;
+after the source read its actual value is in the latch; after the write
+it agrees with the source. All other target fields still have their
+actual prior values. The next link leads to exactly the next triple.
+This proves the invariant at every one of the $3h$ cuts and its final
+bit equality. It proves the same sequence whether the host scheduler
+runs one vertex or a batch. No tariff multiplication establishes any
+part of this induction: the target writes occur in that actual order.
+
+Source-next traversal advances exactly one actual chain link, so the
+first pass visits every descriptor once and ends. All its forwards
+are now defined and distinct. In pass two, a null source field yields
+null; a descriptor field yields exactly that descriptor's recorded
+target. Thus after its first $i$ reference writes the target's first
+$i$ references are the transported source references. All old source
+links are still present, so later relocation cannot change this lookup.
+Induct on positions and then descriptors to obtain the entire graph
+isomorphism. Initial PC and all saved code/data bindings are transported
+by this same map, including sharing and cycles in payload links.
+Only the descriptor enumeration chain is required acyclic.
+The final entry read obtains the entry descriptor's same transported
+target, and the separate control write delivers it without a numerical
+address or observer lookup. The read/null-test/write cuts retain both
+actual entry references and are part of installation.
+
+Each source object has one of six finite layouts. Both outer traversals
+and each finite field list terminate. The finite source determines a
+finite number of allocations and grants. Delaying a supplied grant
+preserves its pending state and is not a completion. There is only one
+path to installation completion after the final relocation; hence its
+completed converse follows from the same prefix invariants. Subsequent
+execution uses the written target fields by construction, and Theorem
+18.4 applies there. $\square$
+
+## 20. Common installation cuts, exact charges and the remaining service
+
+**Definition 20.1 (one retained census).** Let the source descriptor
+count be $n$, the sum of payload reference arities be $r$ and the sum
+of payload binary widths be $b$. Source payloads and descriptors occupy
+$2n$ granted objects, $r+4n$ reference slots and $b$ payload bits. The
+four extra reference slots per source object are its payload directory
+link and its descriptor's payload/next/forward fields. Target objects
+have their own directory link and grant. Let $j=98404$ be the retained
+bit-initializer vertex count, and let $\ell$ be the actual outer
+initializer graph's vertex count. A bit vertex has twenty-two literal
+binary fields and one next reference; an outer initializer vertex has
+twenty-one literal fields and its actual successor/binding references.
+The complete native interpreter is already among the $n$ payloads;
+it is not free initial-control material.
+
+At an installation cut let $A$ be exactly the allocated target set,
+including a not-yet-linked pending object. Write $r_A,b_A$ for its
+payload arity sums. The live counts are the counts of that source,
+the whole initial native graph and its latches, and
+
+$$
+|A|\text{ objects},\qquad r_A+|A|\text{ references},\qquad
+b_A\text{ payload bits}.
+\tag{ML.24}
+$$
+
+Each live object has its one actual grant slot, even when delivery is
+pending. Initial bit-control vertices, outer-control vertices and both
+initializer state headers retain explicit grant fields supplied as one;
+source payloads/descriptors and target objects retain their own fields.
+Multiply all reference slots by the one chosen width $w$,
+then add payload/literal bits and these grant slots. The chosen $w$
+fits every source, target, descriptor, native vertex and null binding.
+It depends on this finite material, not on the 64-bit image-address
+premise. Neither a receipt nor a retained root outside this component
+is silently identified with an initializer object.
+
+**Theorem 20.2 (census, incremental charges and peak agree).** At every
+initializer cut, independent traversal of its actual target directory,
+plus the still-unlinked pending target if distinct, has precisely the
+allocated set $A$ of (ML.24). Incremental object/field charges equal
+that census. The source and all partial target material coexist at
+these cuts. Completed relocation keeps the entire source, target,
+initial native graph and grants. Their retained storage is therefore
+the peak of this installation; no early source deletion or incompatible
+single-component peaks reduce it.
+
+The bit initializer executes exactly $b$ target-bit initializations,
+$b$ source-bit reads and $b$ target-bit writes. Reference initialization
+executes exactly $r$ writes. Pass two executes exactly $r$ source-field
+reads and $r$ target-field writes, together with its actual null tests
+and forward reads. Each source/header reference read separately counts
+its returned initializer-latch write; each source-bit read counts its
+binary-latch write. Binding the actual bit-graph entry counts both its
+literal-reference read and its cursor assignment. Allocation counts
+its returned-reference latch. These effect coordinates accompany the
+same primitive occurrences and do not invent extra primitive steps.
+Every advancing native occurrence has its selection, successor-reference
+read and control-reference assignment. A terminal refusal counts its
+selection and refusal, with no unperformed successor read or assignment. Allocation,
+directory linking, forward writes, grants and cursor operations have
+their separate actual event coordinates and reference-width traffic.
+These counts are component counts on this one timeline, not ML.16 for
+a complete evaluator/session.
+
+Proof. An allocation adds exactly its known payload fields, one
+directory link and one grant slot. Before directory attachment it is
+reachable from pending. Attaching it introduces no new object; advancing
+tail or forward preserves the same set. When a later pending object
+replaces it, the old one is already retained by the directory. The
+pending/directoried union therefore grows by exactly one object per
+allocation. Inductively its arity sums agree with incremental charges.
+All null fields, cleared bits and unused reserve remain material;
+initialization and extraction do not remove their slots.
+
+The source descriptor chain, source payloads and fixed initial control
+are unchanged. Partial targets add the nonnegative coordinates of
+(ML.24); no transition removes a source or target. Thus completed
+allocation attains the maximum retained coordinates, including during
+relocation. Theorem 19.4 gives one triple per payload bit and one clear
+and relocation per payload reference, proving the displayed operation
+counts. Following each actual native vertex contributes its stated
+control events. The outer graph's grants and list operations have
+exactly their own occurrences. This establishes agreement on these
+same chronological cuts rather than by adding unrelated maxima.
+$\square$
+
+**Proposition 20.3 (omission discriminators).** Removing one counted
+source-bit read while retaining all installed target bits falsifies
+the exact initializer event census. Removing a real native field read
+while retaining its executing vertex falsifies the primitive event
+census. Replacing the first encoded put-one in an emission graph by
+encoded goto changes its emitted bit from one to its initialized zero.
+Premature Ack, Return without Ack, a selector four on a four-reference
+cell, and exhausted reserve have no completed lawful successor.
+
+Proof. Theorem 19.4 requires each actual source bit to pass its read
+vertex, so the first omission gives $b-1$ instead of $b$. Each native
+read vertex contributes exactly one read occurrence; omitting it from
+charges disagrees with that occurrence enumeration. In the mutation
+example the skipped put is the only pre-emission write of one, so the
+bit remains zero. The other cases fail their explicit guard/tree
+before their prohibited effect can commit. $\square$
+
+**Definition 20.4 (remaining original integration objects).** The
+native field engine and chronological public-material installation
+are component dependencies of the original service, under ML-I's
+initial primitive-control and actual-source-input premises. They do
+not supply a completed received-command/frame/parser/loader or its
+semantic validation, a backed Evaluate/Read/Predict/Close controller,
+the unchanged physical original-root Read handoff, the original-source
+receipt/index cache, shared-job directory, cleanup, width migration or
+an entire source/observer common timeline. Existing `session.records[-1]`
+and `framing.Print.emitted` retain their operational roles and their
+uncompleted backing obligations. A law evaluator still cannot provide
+an actual Read reply. All earlier work roots and original source
+provenance remain required for later composition.
+
+The original strict findings `ML-N-evaluator-execution` and
+`ML-Cost-full-evaluator-session` remain. Completing these two component
+dependencies does not declare B complete or release C. D and fresh
+independent acceptance remain subsequent obligations. Ordinary
+correspondence is a conditional mathematical proof, not a new Lean
+verification, physical realization, encoding minimum, full serial-history
+recovery or quantum frontend. The initial-control premise is explicit;
+removing ML-I allocation/field/control rights would require a different
+theorem. The native field and installation graphs introduce no such
+rights for the original observation source.
+
+**Definition 20.5 (source correspondence and evidence use).** The
+executable definitions are `native_engine.Core.build` and
+`NativeEngine.microtick` for §§18–18.5, `native_install.Installer` and
+`native_bits.initialize` for §19, and their actual directory traversal
+and event counters for §20. The connected caller composes the unchanged
+`field_decoder.lower`, `field_graph.loader/driver/growth` and
+`field_io.conversions/output_decoder/print_buffer`. Its production mode
+is the original conversion/driver/output path. Its additional probe
+mode is a real installed caller of the same decoder, transferring its
+actual result fields with End/Ack/Return; it does not inject an
+instruction into the production driver. Native conversion and output
+checks consume these installed primitive paths.
+
+All-image byte provenance and the A interface are unchanged. The source
+and license scope in §9 and §§10–14 remains: NWMG and the licensed stack
+compiler supply their existing structural simulations; §§18–20 are an
+ordinary repository-derived implementation/refinement and accounting
+argument. The later C119/C123 conditional comparison/filter results do
+not supply an original-port service, a LAB-native quantum map or any
+missing literal controller. No new literature novelty is claimed.
+Exact finite author results corroborate their stated component cases;
+the all-family conclusions use Theorems 18.4 and 19.4, with all their
+premises. Result data and reproducible experiment sources are private;
+process logs and model reasoning are not theory evidence.
+
+## 追加锚（本行以下为增补区）
+
+
+## 21. Exact storage of the selected native installation
+
+**Definition 21.1 (literal layout counts).** In Definition 20.1's
+notation, the selected outer initializer graph has $\ell=167$ actual
+vertices, with three reference slots each: zero successor, one successor
+and a literal binding, null when unused. Its twenty-one binary fields
+encode a five-bit primitive label and sixteen-bit literal. The literal
+binding at a bit-bank entry is the actual first bit-initializer vertex,
+not a dictionary lookup or a numerical graph-address conversion.
+
+The bit-initializer graphs, including their one shared completion vertex,
+have exactly
+
+$$
+j=3(1+3+8+21+32768)+1=98404
+\tag{ML.25}
+$$
+
+vertices. Each carries a fixed twelve-bit byte position, eight-bit
+one-hot field mask, two-bit primitive label and one actual next link.
+These are literal native location labels/wiring. The C runner's limit
+and occurrence counters are independent scheduler/inspection data.
+There are no running multibit byte or field counters in the graph.
+The C occurrence counters are external instrumentation modulo
+$2^{64}$. Each bounded scheduler batch is shorter than that modulus;
+its modular counter differences are added to unbounded external integer
+coordinates. Counter rollover changes no primitive, reference, result
+or original program/input domain.
+The bit initializer's retained state has three reference bindings
+(source bank, target bank, native location) and two binary flags.
+The remaining header reserves fifteen actual reference locations and
+two flags: the ten outer descriptor/target/latch references and its
+native location, plus the four native execution locations/latches;
+its binary flags are outer completion and the execution read-bit latch.
+The execution's old-PC register is a separate payload object among the
+$n$ copied source objects, in addition to its current PC.
+
+**Theorem 21.2 (completed census and reference traffic).** The selected
+completed source-plus-target installation has exactly
+
+$$
+\begin{aligned}
+O&=3n+98573,\\
+R&=2r+5n+98923,\\
+B&=2b+2168399,\\
+S&=B+wR+O.
+\end{aligned}
+\tag{ML.26}
+$$
+
+Here $B$ counts payload and literal binary fields, and the final $O$
+counts the one grant slot per object. At an earlier cut replace the
+target's $n,r,b$ contribution by $|A|,r_A,b_A$ as in (ML.24).
+Null and pending fields retain their full width. After installation,
+reserve extraction changes no term of this census.
+
+For primitive traffic, a reference-field/register read or write, a
+reference-latch assignment, and a native successor/current-location
+read or assignment each transport their actual $w$ reference bits.
+Code-reference reads are a classified subset of reference-field reads;
+code-bit reads are a classified subset of binary-field reads. These
+subset counters are not added a second time to the corresponding
+total-field coordinate. A field read's returned latch remains charged
+in the distinct latch-write coordinate. Tests, bit assignments,
+connection transfers, grants and directory operations retain their
+separate coordinates. A completed interpreted operation has exactly
+21 code-bit reads and four code-reference reads, followed by its
+actual operand/selection/write/commit path.
+
+Proof. Source payloads and descriptors contribute $2n$ objects,
+$r+4n$ references and $b$ payload bits. Targets contribute $n$ objects,
+$r+n$ references and $b$ payload bits. The outer header contributes
+one object, fifteen references and two bits. The initial bit graph
+and its state contribute $j+1$ objects, $j+3$ references and $22j+2$
+bits. The outer graph adds 167 objects, 501 references and 3507 bits.
+Adding gives (ML.26). The two flags and three bit-initializer bindings
+are not duplicated in the outer header. All grants are counted once
+by the final $O$. Theorem 20.2 gives the earlier cuts and peak.
+
+Each primitive reference occurrence has the declared width $w$, so
+its bit traffic is that width times its actual occurrence count. Its
+read-result latch is a different stored location and has its own
+write coordinate. Classified subset counters refer to those same
+occurrences. The initial fetch's five, sixteen and four literal-read
+paths give the last assertion; all subsequent decisions use the
+captured fields. Theorem 18.4 determines their actual path, rather
+than assigning the same price to every interpreted operation.
+$\square$
+
+## 追加锚（本行以下为增补区）
