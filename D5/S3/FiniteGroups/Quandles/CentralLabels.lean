@@ -6,7 +6,7 @@
    utility: none
    digest: Central-label classification of all good involutions of a whole-group conjugation quandle. -/
 
-import D5.S0.Certificates.Groups.TaGoodInvolutionBoundRefutation
+import D5.S3.FiniteGroups.Quandles.ConjugationSubquandle
 import Mathlib.GroupTheory.Subgroup.Center
 import Mathlib.Algebra.Group.ConjFinite
 import Mathlib.Tactic.Group
@@ -114,7 +114,7 @@ def goodLabelEquiv : Good G ≃ Label G where
 
 /-- Reuse the repository's subquandle definition on the entire carrier. -/
 def wholeGoodEquiv [Fintype G] [DecidableEq G] :
-    Good G ≃ D5.S0.Certificates.Groups.TaGoodInvolutionBoundRefutation.Good
+    Good G ≃ D5.S3.FiniteGroups.Quandles.ConjugationSubquandle.Good
       (Finset.univ : Finset G) (by intro x hx y hy; exact Finset.mem_univ _) where
   toFun ρ := by
     refine ⟨fun x => ⟨ρ.val x.val, Finset.mem_univ _⟩, ?_, ?_⟩

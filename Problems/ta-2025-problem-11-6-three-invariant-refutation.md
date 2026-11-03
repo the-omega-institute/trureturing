@@ -5,7 +5,7 @@ doi: 10.48550/arXiv.2505.08090
 url: https://arxiv.org/abs/2505.08090v5
 triage: theorem
 motivation_gids:
-  - D5/S0/Certificates/Groups/TaThreeInvariantRefutation.result
+  - D5/S3/FiniteGroups/Quandles/TaThreeInvariantRefutation.result
 ---
 
 # Ta Problem 11.6: three invariants do not determine the count
@@ -76,12 +76,13 @@ Those obligations occur on the live path to the full Lean result.
 ## Evidence
 
 The mathematical source is
-`D5/S0/Certificates/Groups/TaThreeInvariantRefutation.lean` with literal
+`D5/S3/FiniteGroups/Quandles/TaThreeInvariantRefutation.lean` with literal
 `claim : Prop` and `result : Not claim`. The two complete counts are the
 conjunction `good_counts`, consumed by `result`. General classification and
 factorization live in `D5/S3/FiniteGroups/Quandles/CentralLabels.lean` and
 `BlockCounting.lean`, and the counts use the existing whole-carrier Good
-interface from the repository's 11.7 module.
+interface from `D5/S3/FiniteGroups/Quandles/ConjugationSubquandle.lean`,
+shared with the repository's 11.7 refutation.
 
 This dossier does not certify independent review, admission, frozen status,
 required CI, merge, official acceptance, priority, or a solved-problem KPI.

@@ -109,7 +109,7 @@ theorem good_card [Fintype B] (D : Data G B Z C) :
 
 /-- The same factorization for the repository's original subquandle interface. -/
 theorem whole_good_card [Fintype G] [DecidableEq G] [Fintype B] (D : Data G B Z C) :
-    Nat.card (D5.S0.Certificates.Groups.TaGoodInvolutionBoundRefutation.Good
+    Nat.card (D5.S3.FiniteGroups.Quandles.ConjugationSubquandle.Good
       (Finset.univ : Finset G) (by intro x _ y _; exact Finset.mem_univ _)) =
       ∏ b, Nat.card (Local D.dest b) := by
   rw [← Nat.card_congr (wholeGoodEquiv (G := G))]

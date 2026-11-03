@@ -1,9 +1,9 @@
-/- GID: D5/S0/Certificates/Groups/TaThreeInvariantRefutation
+/- GID: D5/S3/FiniteGroups/Quandles/TaThreeInvariantRefutation
    generality: I
-   mirror-B: D5/B/S0/Certificates/Groups/TaThreeInvariantRefutation
+   mirror-B: D5/B/S3/FiniteGroups/Quandles/TaThreeInvariantRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/Groups/TaThreeInvariantRefutation.claim; result=D5/S0/Certificates/Groups/TaThreeInvariantRefutation.result; claim=D5/S0/Certificates/Groups/TaThreeInvariantRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/FiniteGroups/Quandles/TaThreeInvariantRefutation.claim; result=D5/S3/FiniteGroups/Quandles/TaThreeInvariantRefutation.result; claim=D5/S3/FiniteGroups/Quandles/TaThreeInvariantRefutation.claim
    digest: Full three-invariant counterexample to Ta Problem 11.6. -/
 
 /- admission_basis: open-problem-resolution (#25997).
@@ -27,7 +27,7 @@ Mathlib semidirect products; all finite certificate obligations are checked
 by kernel reduction, and the complete central-label bijection supplies
 exhaustiveness of the good-map counts. -/
 
-namespace D5.S0.Certificates.Groups.TaThreeInvariantRefutation
+namespace D5.S3.FiniteGroups.Quandles.TaThreeInvariantRefutation
 
 open D5.S3.FiniteGroups.Quandles
 open BlockCounting
@@ -452,7 +452,7 @@ private theorem local_counts7 : ∀ b : Fin 7,
 /-- Cardinality of all good maps of the whole conjugation quandle, using
 exactly the existing repository definition. -/
 noncomputable def goodCount (G : Type*) [Group G] [Fintype G] [DecidableEq G] : ℕ :=
-  Nat.card (D5.S0.Certificates.Groups.TaGoodInvolutionBoundRefutation.Good
+  Nat.card (D5.S3.FiniteGroups.Quandles.ConjugationSubquandle.Good
     (Finset.univ : Finset G) (by intro x _ y _; exact Finset.mem_univ _))
 
 set_option maxHeartbeats 8000000 in
@@ -516,4 +516,4 @@ theorem result : ¬ claim := by
 
 #print axioms result
 
-end D5.S0.Certificates.Groups.TaThreeInvariantRefutation
+end D5.S3.FiniteGroups.Quandles.TaThreeInvariantRefutation

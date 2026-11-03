@@ -7,8 +7,9 @@ doi: 10.48550/arXiv.2505.08090
 url: https://arxiv.org/abs/2505.08090v5
 claim: "Problems 11.6 and 11.7 ask respectively whether three group invariants determine the whole-group good-involution count, and whether the Corollary 6.12 bound is always strict under its two lower bounds."
 strata_touched:
-  - D5/S0/Certificates/Groups/TaGoodInvolutionBoundRefutation
-  - D5/S0/Certificates/Groups/TaThreeInvariantRefutation
+  - D5/S3/FiniteGroups/Quandles/ConjugationSubquandle
+  - D5/S3/FiniteGroups/Quandles/TaGoodInvolutionBoundRefutation
+  - D5/S3/FiniteGroups/Quandles/TaThreeInvariantRefutation
   - D5/S3/FiniteGroups/Quandles/CentralLabels
   - D5/S3/FiniteGroups/Quandles/BlockCounting
 license: citation-only

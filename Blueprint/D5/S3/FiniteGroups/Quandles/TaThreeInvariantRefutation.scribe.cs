@@ -1,11 +1,11 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates.Groups;
+namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.Quandles;
 
 internal sealed class TaThreeInvariantRefutationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S0/Certificates/Groups/TaThreeInvariantRefutation.";
+    private const string Prefix = "D5/S3/FiniteGroups/Quandles/TaThreeInvariantRefutation.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Certificates/ta2025goodinvolutions");
 
