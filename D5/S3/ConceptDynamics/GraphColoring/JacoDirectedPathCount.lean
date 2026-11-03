@@ -152,7 +152,9 @@ theorem path_count_foundations (n : ℕ+) :
   refine ⟨inferInstance, inferInstance, ?_, ?_⟩
   · unfold psi
     split_ifs with hn
-    · exact Nat.card_pos
+    · have he : (⟨n.val, hn⟩ : ℕ+) = n := Subtype.ext rfl
+      rw [he]
+      exact Nat.card_pos
     · exact (hn n.property).elim
   · intro r hr
     exact ⟨(truncationEquiv r 1 n hr).trans (truncationEquiv n.val 1 n le_rfl).symm,
@@ -186,6 +188,8 @@ private theorem endpoint_fib (l : ℕ) :
       rw [ih] at h
       rw [show l + 1 + 2 = l + 3 by omega, endpoint_eq_beatty, h]
       have hf := Nat.fib_add_two (n := l + 2)
+      rw [show l + 2 + 1 = l + 3 by omega,
+        show l + 2 + 2 = l + 1 + 3 by omega] at hf
       omega
 
 private theorem reachable_prefix (l : ℕ) (n : ℕ+) :
