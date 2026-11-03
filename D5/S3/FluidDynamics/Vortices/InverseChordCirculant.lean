@@ -10,9 +10,6 @@ import D5.S3.Quantum.Matrix.CirculantCharpoly
 import D5.S3.Fourier.SparseGeneratorFamily
 import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
 import D5.S3.ArithUnits.MercaCosetFiberLift
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Tactic
-import Mathlib.NumberTheory.Bernoulli
 
 /-! Fourier analysis of the inverse squared chord kernel on a finite cyclic group. -/
 
