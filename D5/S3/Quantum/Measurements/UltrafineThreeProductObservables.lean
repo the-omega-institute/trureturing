@@ -336,6 +336,7 @@ private lemma pairs_useless (i j : Fin 3) (hij : i ≠ j) : IsUseless obs {i, j}
 
 private lemma hamiltonian_hermitian : hamiltonian.IsHermitian := by
   have ho (i : Fin 3) : (obs i).IsHermitian := by
+    rw [obs.eq_1]
     exact Matrix.kroneckerMap_IsHermitian (factors_hermitian i).1 (factors_hermitian i).2
   rw [hamiltonian.eq_1]
   exact ((ho 0).add (ho 1)).add (ho 2)
