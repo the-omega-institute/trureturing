@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.claim; result=D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.result; claim=D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.claim
    digest: A four-level cooling transition excludes every finite ground-space thermal operation. -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 
@@ -82,12 +82,15 @@ private lemma levels_valid : StrictMono levels ∧
   norm_num [StrictMono, Fin.forall_fin_succ, levels.eq_1]
 
 private lemma kraus_complete : (∑ i, (kraus i)ᴴ * kraus i) = 1 := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    norm_num [kraus.eq_1, Fin.sum_univ_two, Fin.sum_univ_four, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, Complex.star_def, map_ofNat, map_div₀, map_mul]
-  all_goals ring_nf
-  all_goals norm_num
+  have hk (a : Fin 2) : kraus a = diagonal (fun i => factor i a) := by
+    rw [kraus.eq_1]
+    fin_cases a <;> apply congrArg diagonal <;>
+      funext i <;> fin_cases i <;> rfl
+  simp_rw [hk]
+  apply D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_complete
+  intro i
+  fin_cases i <;> norm_num [factor.eq_1, Fin.sum_univ_two, Complex.sq_norm,
+    Complex.normSq_apply]
 
 private lemma sigma_diagonal (j : Fin 4) : sigma j j = 1 / 4 := by
   fin_cases j <;>
