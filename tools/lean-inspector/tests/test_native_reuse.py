@@ -198,7 +198,11 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
         targets = ['leanInspector/LeanInformationAudit', 'leanInspector/reportInspector',
                    'leanInspectorInterface/LeanInformationAuditInterface', 'reg/Reg']
         self.reg_package()
-        self.build()  # Restore the native fixture's private compiler stage.
+        # Restore the same compiler materials without producing an unrelated
+        # report before this case has installed its production configuration.
+        self.ensure()
+        self.restore_compiler()
+        self.check_cold_project(self)
         root_config = self.root / 'lakefile.toml'
         source = root_config.read_text()
         start = source.index('[[lean_lib]]\nname = "LeanInformationAudit"\n')
@@ -251,6 +255,8 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
                 stdout=result.stdout, stderr=result.stderr, targets=targets), paths)
             return result
 
+        self.assertFalse(output.exists(), '[FAIL] configured_report_must_start_cold')
+        self.assertEqual(self.stamps(), {}, '[FAIL] no_report_before_configured_production')
         initial = entry('production-initial')
         self.assertEqual(initial.returncode, 0, initial.stdout + initial.stderr)
         expected = output.read_bytes()
@@ -337,7 +343,9 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
             policy['producer_scopes']['lean-report']['include'].append(dict(pattern=path, optional=False))
         self.write('lean-report-inputs.json', json.dumps(policy))
         compiler_seed = self.compiler_seed
-        self.build()  # installs the collection's private compiler stage
+        self.ensure()
+        self.restore_compiler()
+        self.check_cold_project(self)
         # Observe the real entry's Lake calls without replacing compilation.
         calls = self.root / 'entry-lake-calls.jsonl'
         self.write('entry-tools/lake', '#!/usr/bin/env python3\nimport json, os, sys\n'
@@ -353,6 +361,7 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
         def clear_calls():
             calls.write_text('')
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
+        self.assertEqual(self.stamps(), {}, '[FAIL] first_entry_must_produce_its_cold_report')
         first = self.inspect(phase='initial-publication')
         fact = self.root / 'build/lean-cache/build-work.json'
         self.assertTrue(fact.is_file(), '[FAIL] invocation_work_fact')
