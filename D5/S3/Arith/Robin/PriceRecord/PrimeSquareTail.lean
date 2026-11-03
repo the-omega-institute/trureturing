@@ -238,7 +238,7 @@ private theorem logKernel_continuous {y z : ℝ} (hy : 1 < y) (k : ℕ) :
   apply continuousOn_const.div
     ((continuousOn_id.pow 2).mul ((Real.continuousOn_log.mono ?_).pow k))
   · intro t ht
-    exact mul_ne_zero (pow_ne_zero _ (show id t ≠ 0 from (lt_trans (by linarith : 0 < y) ht.1).ne'))
+    exact mul_ne_zero (pow_ne_zero _ (show id t ≠ 0 from (lt_of_lt_of_le (by linarith : 0 < y) ht.1).ne'))
       (pow_ne_zero _ (Real.log_pos (hy.trans_le ht.1)).ne')
   · intro t ht
     exact ne_of_gt (lt_trans (by norm_num : (0 : ℝ) < 1) (hy.trans_le ht.1))
@@ -344,7 +344,7 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
       (((hasDerivAt_id t).pow 2).mul (Real.hasDerivAt_log ht0))
       (mul_ne_zero (pow_ne_zero 2 ht0) hLt) using 1 <;>
       dsimp [f, d, logKernel]
-    · simp only [pow_one]
+    · funext u; simp [f, logKernel]
     · field_simp; ring
   have hdcont : ContinuousOn d (Set.Icc y z) := by
     apply ContinuousOn.sub
@@ -420,7 +420,10 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
       apply one_div_le_one_div_of_le (by dsimp [logEndpoint]; positivity :
         0 < y * Real.log y ^ 9)
       exact mul_le_mul ht.1 hpow (by positivity) hy0.le
-    have hdneg : d t ≤ 0 := by dsimp [d]; positivity
+    have hdneg : d t ≤ 0 := by
+      dsimp [d]
+      exact sub_nonpos.mpr ((div_nonpos_of_nonpos_of_nonneg (by norm_num) (by positivity)).trans
+        (by positivity))
     have hfpos : 0 ≤ f t := by dsimp [f, logKernel]; positivity
     constructor
     · calc
@@ -472,8 +475,8 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
   have heq : (∑ p ∈ (Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ) ^ 2) -
       (∫ t in y..z, logKernel 1 t) =
       f z * (θ z - z) - f y * (θ y - y) - (∫ t in y..z, d t * (θ t - t)) := by
-    rw [heqint] at habel
-    linarith
+    rw [habel, heqint, ← hmain]
+    ring
   rw [heq]
   exact (abs_sub _ _).trans (add_le_add
     ((abs_sub _ _).trans (add_le_add (hbound z ⟨hyz, le_rfl⟩).1
