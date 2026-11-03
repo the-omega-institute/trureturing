@@ -32,7 +32,7 @@ private theorem ceil_bounds (n den : ℤ) (hd : 0<den) :
   have hs := Int.emod_lt_of_pos (n+den-1) hd
   have he := Int.ediv_mul_add_emod (n+den-1) den
   dsimp [ceilDiv]
-  nlinarith only [hr,hs,he]
+  constructor <;> nlinarith only [hr,hs,he]
 
 private theorem ceil_unique (n den q : ℤ) (hd : 0<den)
     (hq : (q-1)*den<n ∧ n≤q*den) : ceilDiv n den=q := by

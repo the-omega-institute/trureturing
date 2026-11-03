@@ -148,7 +148,7 @@ private theorem realize_split (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 
   have hlen := hp.length_eq
   simp only [List.length_append,List.length_range] at hlen
   refine ⟨pre++post,hp,ho,pre.length,by dsimp [size]; omega,?_⟩
-  simpa only [insertAt,List.take_append_of_le_length (le_refl pre.length),
+  simpa only [insertAt,size,List.take_append_of_le_length (le_refl pre.length),
     List.drop_append_of_le_length (le_refl pre.length),List.take_length,List.drop_length,
     List.nil_append] using hn
 
