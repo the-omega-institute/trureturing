@@ -152,7 +152,8 @@ private theorem whitening
       using Unitary.coe_star_mul_self Q
   have hQK : (Q : Matrix (Fin 3) (Fin 3) ℝ)ᵀ * K * Q = diagonal mu := by
     simpa only [Q, mu, Unitary.conjStarAlgAut_star_apply, Matrix.star_eq_conjTranspose,
-      Matrix.conjTranspose_eq_transpose_of_trivial, Function.comp_def, RCLike.ofReal_real_eq_id, id_eq]
+      Matrix.conjTranspose_eq_transpose_of_trivial, Function.comp_def,
+      RCLike.ofReal_real_eq_id, id_eq]
       using hK.conjStarAlgAut_star_eigenvectorUnitary
   let P := S * (Q : Matrix (Fin 3) (Fin 3) ℝ)
   have hPd : IsUnit P.det := by
@@ -211,23 +212,159 @@ private theorem liftP_unit (P : Matrix (Fin 3) (Fin 3) ℝ) (hP : IsUnit P.det) 
   rw [hd]
   exact hP.map (algebraMap ℝ ℂ)
 
+private theorem liftP_action (P : Matrix (Fin 3) (Fin 3) ℝ) (X : Fin 4 → ℂ) :
+    liftP P *ᵥ X =
+      Fin.snoc (complexMatrix P *ᵥ (fun i : Fin 3 => X i.castSucc)) (X 3) := by
+  funext i
+  refine Fin.lastCases ?_ (fun j => ?_) i
+  · rw [Fin.snoc_last]
+    simp [liftP, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+  · rw [Fin.snoc_castSucc]
+    fin_cases j <;>
+      simp [liftP, complexMatrix, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+
 private def eulerCoefficients (P : Matrix (Fin 3) (Fin 3) ℝ) (mu : Fin 3 → ℝ) :
     Fin 3 → ℂ :=
   ![4 / (P.det : ℂ) * ((mu 2 : ℂ) - mu 1),
     4 / (P.det : ℂ) * ((mu 0 : ℂ) - mu 2),
     4 / (P.det : ℂ) * ((mu 1 : ℂ) - mu 0)]
 
+private theorem cross_matrix_adjugate (Q : Matrix (Fin 3) (Fin 3) ℂ)
+    (u v : Fin 3 → ℂ) :
+    crossProduct (Q *ᵥ u) (Q *ᵥ v) = Q.adjugateᵀ *ᵥ crossProduct u v := by
+  funext i
+  fin_cases i <;>
+    simp [cross_apply, Matrix.adjugate_fin_three, Matrix.mulVec, dotProduct,
+      Fin.sum_univ_succ] <;> ring
+
+private theorem adjugate_scaled_inverse (Q : Matrix (Fin 3) (Fin 3) ℂ)
+    (hQ : IsUnit Q.det) : Q.adjugate = Q.det • Q⁻¹ := by
+  apply Matrix.ext_of_mulVec_single
+  intro i
+  simpa only [Matrix.cramer_eq_adjugate_mulVec, Matrix.smul_mulVec] using
+    (Matrix.det_smul_inv_mulVec_eq_cramer Q (Pi.single i 1) hQ).symm
+
+private theorem adjugate_conjugate (Q M : Matrix (Fin 3) (Fin 3) ℂ)
+    (hQ : IsUnit Q.det) :
+    (Q * M * Q⁻¹).adjugate = Q * M.adjugate * Q⁻¹ := by
+  rw [Matrix.adjugate_mul_distrib, Matrix.adjugate_mul_distrib,
+    adjugate_scaled_inverse Q hQ,
+    adjugate_scaled_inverse Q⁻¹ (Matrix.isUnit_nonsing_inv_det Q hQ),
+    Matrix.nonsing_inv_nonsing_inv _ hQ, Matrix.det_nonsing_inv, Ring.inverse_eq_inv]
+  simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+    mul_inv_cancel₀ (isUnit_iff_ne_zero.mp hQ), one_smul, Matrix.mul_assoc]
+
+private theorem cross_inverse_transpose (Q : Matrix (Fin 3) (Fin 3) ℂ)
+    (hQ : IsUnit Q.det) (u v : Fin 3 → ℂ) :
+    crossProduct (Qᵀ⁻¹ *ᵥ u) (Qᵀ⁻¹ *ᵥ v) =
+      Q.det⁻¹ • (Q *ᵥ crossProduct u v) := by
+  rw [cross_matrix_adjugate, adjugate_scaled_inverse Qᵀ⁻¹
+    (Matrix.isUnit_nonsing_inv_det Qᵀ (by simpa using hQ)), Matrix.transpose_smul,
+    Matrix.nonsing_inv_nonsing_inv _ (by simpa using hQ), Matrix.transpose_transpose,
+    Matrix.det_nonsing_inv, Matrix.det_transpose, Ring.inverse_eq_inv, Matrix.smul_mulVec]
+
+private theorem nambu_action (A B : Matrix (Fin 3) (Fin 3) ℝ)
+    (x v : Fin 3 → ℂ) :
+    nambuLinearPart A B x *ᵥ v =
+      crossProduct (complexMatrix A *ᵥ x) (complexMatrix B *ᵥ v) +
+        crossProduct (complexMatrix A *ᵥ v) (complexMatrix B *ᵥ x) := by
+  funext i
+  fin_cases i <;>
+    simp [nambuLinearPart, cross_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;> ring
+
 private theorem covariance
     (A B : Matrix (Fin 3) (Fin 3) ℝ) (h : ℝ)
     (P : Matrix (Fin 3) (Fin 3) ℝ) (mu : Fin 3 → ℝ)
     (hP : IsUnit P.det)
-    (hA : Pᵀ * A * P = 1) (hB : Pᵀ * B * P = diagonal mu)
-    (ha : ∀ i j : Fin 3, i ≠ j → mu i ≠ mu j) :
+    (hA : Pᵀ * A * P = 1) (hB : Pᵀ * B * P = diagonal mu) :
     ∀ Z : Fin 4 → ℂ,
       kahan A B h (liftP P *ᵥ Z) =
         liftP P *ᵥ eulerPhi (eulerCoefficients P mu 0)
           (eulerCoefficients P mu 1) (eulerCoefficients P mu 2) (h : ℂ) Z := by
-  sorry
+  intro Z
+  let Q := complexMatrix P
+  let D : Matrix (Fin 3) (Fin 3) ℂ := diagonal (fun i => (mu i : ℂ))
+  let a := eulerCoefficients P mu
+  have hdQ : Q.det = (P.det : ℂ) := (RingHom.map_det (algebraMap ℝ ℂ) P).symm
+  have hQ : IsUnit Q.det := by
+    rw [hdQ]
+    exact hP.map (algebraMap ℝ ℂ)
+  have hQt : IsUnit Qᵀ.det := by simpa only [Matrix.det_transpose] using hQ
+  have hcA : Qᵀ * complexMatrix A * Q = 1 := by
+    change Pᵀ.map (algebraMap ℝ ℂ) * A.map (algebraMap ℝ ℂ) *
+      P.map (algebraMap ℝ ℂ) = 1
+    rw [← Matrix.map_mul, ← Matrix.map_mul, hA]
+    exact Matrix.map_one _ (map_zero _) (map_one _)
+  have hcB : Qᵀ * complexMatrix B * Q = D := by
+    change Pᵀ.map (algebraMap ℝ ℂ) * B.map (algebraMap ℝ ℂ) *
+      P.map (algebraMap ℝ ℂ) = diagonal (fun i => (mu i : ℂ))
+    rw [← Matrix.map_mul, ← Matrix.map_mul, hB,
+      Matrix.diagonal_map (map_zero (algebraMap ℝ ℂ))]
+    rfl
+  have hAP : complexMatrix A * Q = Qᵀ⁻¹ := by
+    calc
+      _ = Qᵀ⁻¹ * (Qᵀ * complexMatrix A * Q) := by
+        rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hQt,
+          Matrix.one_mul]
+      _ = _ := by rw [hcA, Matrix.mul_one]
+  have hBP : complexMatrix B * Q = Qᵀ⁻¹ * D := by
+    calc
+      _ = Qᵀ⁻¹ * (Qᵀ * complexMatrix B * Q) := by
+        rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hQt,
+          Matrix.one_mul]
+      _ = _ := by rw [hcB]
+  have hJ (y v : Fin 3 → ℂ) :
+      Q.det⁻¹ • (crossProduct y (D *ᵥ v) + crossProduct v (D *ᵥ y)) =
+        (1 / 4 : ℂ) • (eulerJacobian (a 0) (a 1) (a 2) y *ᵥ v) := by
+    rw [hdQ]
+    funext i
+    fin_cases i <;>
+      simp [D, a, eulerCoefficients, eulerJacobian, cross_apply,
+        Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;> ring
+  have hL (y v : Fin 3 → ℂ) :
+      nambuLinearPart A B (Q *ᵥ y) *ᵥ (Q *ᵥ v) =
+        (1 / 4 : ℂ) • (Q *ᵥ (eulerJacobian (a 0) (a 1) (a 2) y *ᵥ v)) := by
+    rw [nambu_action]
+    simp only [Matrix.mulVec_mulVec, hAP, hBP]
+    rw [← Matrix.mulVec_mulVec y Qᵀ⁻¹ D, ← Matrix.mulVec_mulVec v Qᵀ⁻¹ D,
+      cross_inverse_transpose Q hQ, cross_inverse_transpose Q hQ,
+      ← smul_add, ← Matrix.mulVec_add, ← Matrix.mulVec_smul, hJ, Matrix.mulVec_smul]
+    simp only [Matrix.mulVec_mulVec]
+  have hLM (y : Fin 3 → ℂ) :
+      nambuLinearPart A B (Q *ᵥ y) * Q =
+        (1 / 4 : ℂ) • (Q * eulerJacobian (a 0) (a 1) (a 2) y) := by
+    apply Matrix.ext_of_mulVec_single
+    intro j
+    simpa only [Matrix.mulVec_mulVec, Matrix.smul_mulVec] using hL y (Pi.single j 1)
+  let M := eulerMatrix (a 0) (a 1) (a 2) (h : ℂ) Z
+  have hX : (fun i : Fin 3 => (liftP P *ᵥ Z) i.castSucc) =
+      Q *ᵥ (fun i : Fin 3 => Z i.castSucc) := by
+    rw [liftP_action]
+    simp only [Fin.snoc_castSucc]
+    rfl
+  have hW : (liftP P *ᵥ Z) 3 = Z 3 := by rw [liftP_action]; rfl
+  have hMQ : kahanMatrix A B h (liftP P *ᵥ Z) * Q = Q * M := by
+    dsimp only [kahanMatrix]
+    rw [hX, hW, Matrix.sub_mul, Matrix.smul_mul, Matrix.smul_mul,
+      Matrix.one_mul, hLM, smul_smul]
+    dsimp only [M, eulerMatrix]
+    rw [Matrix.mul_sub, Matrix.mul_smul, Matrix.mul_one, Matrix.mul_smul]
+    congr 2
+    ring
+  have hM : kahanMatrix A B h (liftP P *ᵥ Z) = Q * M * Q⁻¹ := by
+    calc
+      _ = (kahanMatrix A B h (liftP P *ᵥ Z) * Q) * Q⁻¹ :=
+        (Matrix.mul_nonsing_inv_cancel_right Q _ hQ).symm
+      _ = _ := by rw [hMQ]
+  rw [kahan, hM, adjugate_conjugate Q M hQ,
+    Matrix.det_conj ((Matrix.isUnit_iff_isUnit_det _).mpr hQ), hX,
+    liftP_action]
+  dsimp only [eulerPhi]
+  simp only [Fin.snoc_castSucc]
+  congr 1
+  rw [Matrix.mulVec_mulVec, Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hQ,
+    Matrix.mul_one]
+  exact (Matrix.mulVec_mulVec _ Q M.adjugate).symm
 
 private theorem assembly
     (he : ∀ (a₁ a₂ a₃ h α β γ : ℂ), α ^ 2 = a₁ → β ^ 2 = a₂ → γ ^ 2 = a₃ →
@@ -246,7 +383,6 @@ private theorem assembly
     (hc : ∀ (A B : Matrix (Fin 3) (Fin 3) ℝ) (h : ℝ)
       (P : Matrix (Fin 3) (Fin 3) ℝ) (mu : Fin 3 → ℝ), IsUnit P.det →
       Pᵀ * A * P = 1 → Pᵀ * B * P = diagonal mu →
-      (∀ i j : Fin 3, i ≠ j → mu i ≠ mu j) →
       ∀ Z : Fin 4 → ℂ,
         kahan A B h (liftP P *ᵥ Z) =
           liftP P *ᵥ eulerPhi (eulerCoefficients P mu 0)
@@ -288,7 +424,7 @@ private theorem assembly
   · intro X
     have hRX : R *ᵥ (R⁻¹ *ᵥ X) = X := by
       rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hR, Matrix.one_mulVec]
-    have hcov := hc A B h P mu hP hPA hPB hmu (R⁻¹ *ᵥ X)
+    have hcov := hc A B h P mu hP hPA hPB (R⁻¹ *ᵥ X)
     change kahan A B h (R *ᵥ (R⁻¹ *ᵥ X)) =
       R *ᵥ eulerPhi (a 0) (a 1) (a 2) (h : ℂ) (R⁻¹ *ᵥ X) at hcov
     rw [hRX] at hcov
@@ -316,8 +452,45 @@ theorem result : claim := by
   · exact g₀_unit
   · intro A B hA hB hrank
     exact whitening A B hA hB hrank
-  · intro A B h P mu hP hA hB ha
-    exact covariance A B h P mu hP hA hB ha
+  · intro A B h P mu hP hA hB
+    exact covariance A B h P mu hP hA hB
+
+run_cmd do
+  let root := `D5.S3.FluidDynamics.Solitons.NambuKahanCremonaDecomposition.result
+  let claimName := `D5.S3.FluidDynamics.Solitons.NambuKahanCremonaDecomposition.claim
+  let auditEnv ← Lean.importModules
+    #[{ module := `D5.S3.FluidDynamics.Solitons.NambuKahanCremonaDecomposition }] {}
+  let auditEnv := auditEnv.setExporting false
+  let some owner := auditEnv.getModuleIdxFor? root | throwError "missing module index"
+  let mut owned : Array Lean.Name := #[]
+  for (name, _) in auditEnv.constants.toList do
+    if auditEnv.getModuleIdxFor? name == some owner then
+      owned := owned.push name
+  owned := owned.qsort Lean.Name.quickLt
+  let mut pending := #[root, claimName]
+  let mut seen : Lean.NameSet := {}
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if seen.contains name then continue
+    seen := seen.insert name
+    if let some info := auditEnv.find? name then
+      pending := pending ++ info.type.getUsedConstants
+      if let some value := info.value? (allowOpaque := true) then
+        pending := pending ++ value.getUsedConstants
+  let unused := owned.filter (fun name => !seen.contains name)
+  let axioms := seen.toList.filter fun name =>
+    if let some (.axiomInfo _) := auditEnv.find? name then true else false
+  let json := Lean.Json.mkObj [
+    ("module", Lean.toJson auditEnv.allImportedModuleNames[owner.toNat]!.toString),
+    ("owned", Lean.toJson (owned.map Lean.Name.toString)),
+    ("unused", Lean.toJson (unused.map Lean.Name.toString)),
+    ("axioms", Lean.toJson (axioms.map Lean.Name.toString)),
+    ("closure_size", Lean.toJson seen.size)]
+  IO.FS.writeFile "scratch-lane-math-op-nambu-kahan-cremona/closure-audit.json" json.pretty
+  logInfo m!"CLOSURE_AUDIT owned={owned.size} unused={unused} axioms={axioms}"
+
+#print axioms result
 
 end
 
