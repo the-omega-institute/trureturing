@@ -111,3 +111,125 @@ def registration :
 
 end
 end Reg.D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
+
+namespace Reg.D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
+namespace Anticommutator
+
+open _root_.D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open scoped BigOperators
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+universe u v
+
+/-- Evaluate the source linear-combination operator at its coefficient vector. -/
+abbrev signature : Signature where
+  Params := Σ _R : Type u, Σ ι : Type v, ι → ℂ
+  State p := (Sigma.fst (Sigma.snd p) → ℂ) → Sigma.fst p
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Sigma.fst p
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u, v} :=
+  realize signature (fun _ p op => op (Sigma.snd (Sigma.snd p))) (fun e => nomatch e)
+
+def rejected : Realization signature.{u, v} :=
+  realize signature (fun _ _ op => op (fun _ => 0)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u, v}
+  Law r := ∀ {R : Type u} [Ring R] [Algebra ℂ R]
+    {ι : Type v} [Fintype ι] [DecidableEq ι]
+    (g : ι → R) (_hsq : ∀ j, g j * g j = 1)
+    (_hanti : ∀ j k, j ≠ k → g j * g k = -(g k * g j)) (c d : ι → ℂ),
+    r.readout () ⟨R, ι, c⟩ (Fintype.linearCombination ℂ g) *
+        Fintype.linearCombination ℂ g d +
+      Fintype.linearCombination ℂ g d * Fintype.linearCombination ℂ g c =
+        (2 * ∑ j, c j * d j) • (1 : R)
+
+theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
+  intro h
+  have he := @h (ULift.{u} ℂ) inferInstance inferInstance
+    (ULift.{v} Unit) inferInstance inferInstance (fun _ => 1)
+    (by intro j; simp) (by intro j k hjk; exact (hjk (Subsingleton.elim j k)).elim)
+    (fun _ => 1) (fun _ => 1)
+  have hd := congrArg ULift.down he
+  norm_num [rejected, realize, Fintype.linearCombination_apply] at hd
+
+theorem dependence : ObservationalDependence signature.{u, v} actual := by
+  intro i
+  refine ⟨⟨ULift.{u} Bool, ULift.{v} Unit, fun _ => 0⟩,
+    (fun _ => ⟨false⟩), (fun _ => ⟨true⟩), ?_⟩
+  intro h
+  have hd := congrArg ULift.down h
+  change false = true at hd
+  cases hd
+
+def source_registration :
+    Registration arena.{u, v} (type_of% @cliffordLinear_anticommutator.{u, v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨cliffordLinear_anticommutator, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@cliffordLinear_anticommutator.{u, v})
+      (Realization signature.{u, v}) Unit Unit := {
+  unitName := .str
+    (.str
+      `Reg.D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
+      "Anticommutator")
+    "unit"
+  realizationName := .str
+    (.str
+      `Reg.D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
+      "Anticommutator")
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p op => op (Sigma.snd (Sigma.snd p))) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
+    definition := none
+    coordinates := #[0, 3, 9]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "fn", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end
+end Anticommutator
+end Reg.D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
