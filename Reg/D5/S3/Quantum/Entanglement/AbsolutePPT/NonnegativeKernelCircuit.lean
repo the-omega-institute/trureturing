@@ -464,7 +464,7 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
     definition := none
-    coordinates := #[0, 4, 6, 7, 10, 12]
+    coordinates := #[0, 1, 2, 3, 4, 5, 6, 7, 10, 12]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "body",
