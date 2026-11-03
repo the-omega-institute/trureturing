@@ -117,7 +117,7 @@ private theorem row_checks (a b c d u v : ℕ)
   all_goals dsimp only [f,F,P,AA,ear,C,rowBase] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 hstart win0 win1 win2 win3 ⊢
   all_goals simp only [ite_true,ite_false,Bool.false_eq_true,terminals,
     Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
-    Matrix.cons_val_succ] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 hstart win0 win1 win2 win3 ⊢
+    Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ'] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 hstart win0 win1 win2 win3 ⊢
   all_goals refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,True.intro⟩
   all_goals nlinarith only [mass0,mass1,mass2,mass3,nn0.1,nn0.2,nn1.1,nn1.2,
     nn2.1,nn2.2,nn3.1,nn3.2,hstart,win0.1,win0.2,win1.1,win1.2,win2.1,win2.2,win3.1,win3.2]
@@ -179,7 +179,7 @@ private theorem physical_strips (a b c d u v : ℕ)
     have hh:=(chain_values a b c d ha hb hc hd).1 0
     omega
   have markedpos:=withEar_positive (newValue a b c d) (size a b c d) 2 bs earpos (positive true)
-  have markedneg : ∀ b∈withEar (size a b c d) 2 bs, newValue a b c d b.2≤0 := by
+  have markedneg : ∀ pkt∈withEar (size a b c d) 2 bs, newValue a b c d pkt.2≤0 := by
     intro pkt hmem
     have hn : pkt.2∈bs.map Prod.snd := by
       rw [←withEar_negatives (size a b c d) 2 bs]

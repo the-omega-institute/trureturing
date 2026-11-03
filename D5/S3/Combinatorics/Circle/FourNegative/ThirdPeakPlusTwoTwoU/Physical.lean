@@ -43,11 +43,11 @@ private theorem selected_windows (a b d : ℕ) (hb : 2≤b) (hba : b<a)
   have hp : (2:ℤ)^(d+2)=4*(2:ℤ)^d := by rw [pow_add]; norm_num; ring
   have hbase : base a b (d+2) d=![A x y t,B x y t,L x y t,K x y t] := by
     funext r
-    fin_cases r <;> dsimp [base,A,B,L,K,x,y,t] <;> simp only [hp] <;> ring
+    fin_cases r <;> dsimp [base,A,B,L,K,x,y,t] <;> (try simp only [hp]) <;> ring
   have hnew : newBase a b (d+2) d=![2*A x y t,SU x y t,SV x y t,SW x y t] := by
     funext r
     fin_cases r <;> dsimp [newBase,base,charge,SU,SV,SW,A,B,L,K,x,y,t] <;>
-      simp only [hp] <;> ring
+      (try simp only [hp]) <;> ring
   have oldRows : rowSeams a b (d+2) d false u v=
       ![oldFirst x y t u,oldSecond x y t u,D x y t u v,0] := by
     funext r
@@ -65,15 +65,15 @@ private theorem selected_windows (a b d : ℕ) (hb : 2≤b) (hba : b<a)
   refine ⟨u,v,hu,hv,?_⟩
   intro side r
   cases side <;> fin_cases r
-  · simpa only [oldRows,oldHeads,Matrix.cons_val_zero] using hf.1
-  · simpa only [oldRows,oldHeads,Matrix.cons_val_one] using hf.2.2.1
-  · simpa only [oldRows,oldHeads,Matrix.cons_val_two] using ho
-  · simpa only [oldRows,oldHeads,Matrix.cons_val_three,window] using
+  · simpa only [oldRows,oldHeads,Matrix.cons_val_zero,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ'] using hf.1
+  · simpa only [oldRows,oldHeads,Matrix.cons_val_one,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ'] using hf.2.2.1
+  · simpa only [oldRows,oldHeads,Matrix.cons_val_two,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ'] using ho
+  · simpa only [oldRows,oldHeads,Matrix.cons_val_three,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ',window] using
       (show 0≤(0:ℤ) ∧ 0≤B x y t-1 by omega)
-  · simpa only [newRows,newHeads,Matrix.cons_val_zero] using hf.2.1
-  · simpa only [newRows,newHeads,Matrix.cons_val_one] using hf.2.2.2
-  · simpa only [newRows,newHeads,Matrix.cons_val_two] using hn
-  · simpa only [newRows,newHeads,Matrix.cons_val_three,window] using
+  · simpa only [newRows,newHeads,Matrix.cons_val_zero,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ'] using hf.2.1
+  · simpa only [newRows,newHeads,Matrix.cons_val_one,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ'] using hf.2.2.2
+  · simpa only [newRows,newHeads,Matrix.cons_val_two,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ'] using hn
+  · simpa only [newRows,newHeads,Matrix.cons_val_three,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ',window] using
       (show 0≤(0:ℤ) ∧ 0≤SU x y t-1 by omega)
 
 /- The eight doubled heights below are derived from the actual bank sums and
@@ -179,7 +179,9 @@ private theorem bank_strips (a b c d u v : ℕ)
       · intro b hb' i hi
         simp only [bs',bs,ite_false,Bool.false_eq_true,List.mem_cons,List.mem_nil_iff,or_false] at hb'
         rcases hb' with rfl|rfl|rfl|rfl
-        all_goals exact pos false _ i hi
+        all_goals first
+          | exact pos false 0 i hi | exact pos false 1 i hi
+          | exact pos false 2 i hi | exact pos false 3 i hi
       · intro b hb' i hi
         simp only [bs',bs,ite_true,withEar,List.mem_cons,List.mem_nil_iff,or_false] at hb'
         rcases hb' with rfl|rfl|rfl|rfl
@@ -220,11 +222,10 @@ private theorem bank_strips (a b c d u v : ℕ)
         List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,
         zero_add,f,fresh]
     all_goals simp only [rowSeams,rowHeads] at win0 win1 win2 win3
-    all_goals dsimp only [F,AA,E,C,f] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3
-      nt0 nt1 nt2 nt3 hstart win0 win1 win2 win3 ⊢
-    all_goals simp only [ite_true,ite_false,Bool.false_eq_true,P,fresh,
-      Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at
-        mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 nt0 nt1 nt2 nt3 win0 win1 win2 win3 ⊢
+    all_goals
+      dsimp only [F,AA,E,C,f,rowBase] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 nt0 nt1 nt2 nt3 hstart win0 win1 win2 win3 ⊢
+    all_goals simp only [ite_true,ite_false,Bool.false_eq_true,P,T,terminals,fresh,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ',
+      Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 nt0 nt1 nt2 nt3 win0 win1 win2 win3 ⊢
     all_goals refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,True.intro⟩
     all_goals nlinarith only [mass0,mass1,mass2,mass3,nn0,nn1,nn2,nn3,
       nt0,nt1,nt2,nt3,hstart,win0.1,win0.2,win1.1,win1.2,win2.1,win2.2,win3.1,win3.2]
