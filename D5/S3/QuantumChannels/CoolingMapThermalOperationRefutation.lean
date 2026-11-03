@@ -289,14 +289,9 @@ private lemma population_support {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ)
     intro k
     have hcol (a : Fin m) :
         (∑ p : Fin 4 × Fin m, Complex.normSq (U p (k, a))) = 1 := by
-      have hu := congrArg
-        (fun M : Matrix (Fin 4 × Fin m) (Fin 4 × Fin m) ℂ => M (k, a) (k, a))
-        (Matrix.mem_unitaryGroup_iff'.mp U.2)
-      simp only [Matrix.star_eq_conjTranspose, Matrix.mul_apply,
-        Matrix.conjTranspose_apply, Matrix.one_apply_eq] at hu
-      apply Complex.ofReal_injective
-      simpa only [Complex.ofReal_sum, Complex.ofReal_one,
-        Complex.normSq_eq_conj_mul_self, Complex.star_def] using hu
+      simpa only [RHLinalg.normSqMatrix, Matrix.of_apply, Complex.sq_norm] using
+        (sum_col_of_mem_doublyStochastic
+          (RHLinalg.normSqMatrix_mem_doublyStochastic_of_unitary U.property) (k, a))
     change (∑ j : Fin 4, ∑ a ∈ groundSet e, ∑ b : Fin m,
       Complex.normSq (U (j, b) (k, a))) = _
     rw [Finset.sum_comm]
