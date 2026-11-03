@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Information.CovarianceSumBound
 import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
-import D5.S3.Quantum.Measurements.CliffordJointMeasurability.CliffordPathRealizations
+import D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
 
 /-! Squared two-body Pauli correlations of four qubits sum to at most three. -/
 
@@ -79,14 +79,13 @@ private lemma anticommuting_family_bound {n α : Type*}
     exact (isSelfAdjoint_sum Finset.univ fun i _ =>
       ((hP i).smul (by simp [IsSelfAdjoint])).isSelfAdjoint).isHermitian
   have hHsq : H * H = (s : ℂ) • (1 : Matrix n n ℂ) := by
-    simp only [H, Finset.sum_mul_sum, smul_mul_smul]
-    rw [majorana_quadratic_symmetrization P hsq hanti]
-    have hsym (i j : α) : (a i : ℂ) * (a j : ℂ) - (a j : ℂ) * (a i : ℂ) = 0 :=
-      sub_eq_zero.mpr (mul_comm _ _)
-    simp_rw [hsym]
-    simp only [zero_smul, Finset.sum_const_zero, smul_zero, add_zero]
-    congr 1
-    simp only [s, Complex.ofReal_sum, pow_two, Complex.ofReal_mul]
+    apply (smul_right_injective (Matrix n n ℂ) (by norm_num : (2 : ℂ) ≠ 0))
+    dsimp only
+    rw [two_smul, ← mul_smul]
+    simpa only [H, s, Fintype.linearCombination_apply, Complex.ofReal_sum, pow_two,
+      Complex.ofReal_mul] using
+      D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum.cliffordLinear_anticommutator
+        P hsq hanti (fun i => (a i : ℂ)) (fun i => (a i : ℂ))
   have hEH : expectation ρ H = s := by
     simp only [expectation, H, Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum,
       Matrix.trace_smul, Complex.re_sum, smul_eq_mul, Complex.mul_re,

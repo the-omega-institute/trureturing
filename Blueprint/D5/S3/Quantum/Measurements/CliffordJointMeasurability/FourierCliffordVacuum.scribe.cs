@@ -16,6 +16,10 @@ internal sealed class FourierCliffordVacuumDocument : IScribeDocumentDefinition
             Node("car-nilpotent", "Vanishing self-anticommutator", NilpotentFormula(),
                 "In a complex algebra with compatible star, a vanishing self-anticommutator forces the square to vanish. Type* allows the algebra to lie in any universe.",
                 "CAR_nilpotent", DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Node("linear-anticommutator", "Anticommutator of linear combinations",
+                LinearAnticommutatorFormula(),
+                "For pairwise anticommuting involutions in a complex algebra, the anticommutator of two linear combinations is twice the bilinear pairing of their coefficients times the identity.",
+                "cliffordLinear_anticommutator", DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("averaging", "averaging", F0(),
                 "The displayed expression defines averaging.", "averaging",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
@@ -79,6 +83,36 @@ internal sealed class FourierCliffordVacuumDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula LinearAnticommutatorFormula() => Disp(new Formula.Aligned([
+        Seq(Forall, Sp, OpenBrace, F.Id("R"), Sp, Colon, Sp, Call("Type"), Star, CloseBrace,
+            Sp, OpenBrace, F.Id("iota"), Sp, Colon, Sp, Call("Type"), Star, CloseBrace, Comma),
+        Seq(OpenBracket, Call("Ring"), Sp, F.Id("R"), CloseBracket, Sp,
+            OpenBracket, Call("Algebra"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, F.Id("R"),
+            CloseBracket, Sp, OpenBracket, Call("Fintype"), Sp, F.Id("iota"), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq"), Sp, F.Id("iota"), CloseBracket, Comma),
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id("g"), Sp, Colon, Sp, F.Id("iota"), Sp, To,
+            Sp, F.Id("R"))), Comma),
+        Seq(Parenthesized(Seq(Forall, Sp, F.Id("j"), Comma, Sp, F.Id("g"), Sp, F.Id("j"),
+            Sp, Cdot, Sp, F.Id("g"), Sp, F.Id("j"), Sp, Eq, Sp, D(1))), Sp, To),
+        Seq(Parenthesized(Seq(Forall, Sp, F.Id("j"), Sp, F.Id("k"), Comma, Sp,
+            F.Id("j"), Sp, Neq, Sp, F.Id("k"), Sp, To, Sp,
+            F.Id("g"), Sp, F.Id("j"), Sp, Cdot, Sp, F.Id("g"), Sp, F.Id("k"), Sp, Eq,
+            Sp, Minus, Parenthesized(Seq(F.Id("g"), Sp, F.Id("k"), Sp, Cdot, Sp,
+                F.Id("g"), Sp, F.Id("j"))))), Sp, To),
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id("c"), Sp, F.Id("d"), Sp, Colon, Sp,
+            F.Id("iota"), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("C"))))), Comma),
+        Seq(LinearSum("c"), Sp, Cdot, Sp, LinearSum("d"), Sp, Plus, Sp,
+            LinearSum("d"), Sp, Cdot, Sp, LinearSum("c"), Sp, Eq, Sp,
+            Parenthesized(Seq(D(2), Sp, Cdot, Sp, Sum, Underscore, Grp(F.Id("j")), Sp,
+                F.Id("c"), Sp, F.Id("j"), Sp, Cdot, Sp, F.Id("d"), Sp, F.Id("j"))),
+            Sp, Cdot, Sp, Parenthesized(Seq(D(1), Sp, Colon, Sp, F.Id("R"))))
+    ]));
+
+    private static Formula LinearSum(string coefficient) => Parenthesized(Seq(
+        Sum, Underscore, Grp(F.Id("j")), Sp, F.Id(coefficient), Sp, F.Id("j"), Sp,
+        Cdot, Sp, F.Id("g"), Sp, F.Id("j")));
+
     private static Formula NilpotentFormula() => Disp(new Formula.Aligned([
         Seq(Forall, Sp, OpenBrace, F.Id("R"), Colon, Seq(Call("Type"), Star), CloseBrace, Comma),
         Seq(Grp(), OpenBracket, Call("Ring"), Sp, F.Id("R"), CloseBracket, Comma),
