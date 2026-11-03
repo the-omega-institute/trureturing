@@ -8,10 +8,6 @@
 
 import D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses
 import D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
-import Mathlib.LinearAlgebra.Matrix.Transvection
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.FieldTheory.Finiteness
 
 /-! Khesin–Li, arXiv:2406.12083v1, Conjecture 8.3, under the decoration-free
