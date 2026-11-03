@@ -56,7 +56,7 @@ internal sealed class HermiteTieRecurrenceDocument : IScribeDocumentDefinition
     private static Formula Some(string n, Formula t, Formula b) => Seq(Exists,Sp,F.Id(n),Colon,t,Comma,Sp,b);
     private static Formula G(Formula n) => new Formula.Apply(F.Id("g"),[n]);
     private static Formula Z(Formula n) => Par(Seq(G(n),Colon,Ints()));
-    private static Formula Sub(Formula n, int j) => Seq(n,Minus,D(j));
+    private static Formula Sub(Formula n, byte j) => Seq(n,Minus,D(j));
     private static Formula Index(Formula k, Formula n) => And(Leq(D(1),n),Equal(k,G(n)));
     private static Formula ClaimBody()
     {
