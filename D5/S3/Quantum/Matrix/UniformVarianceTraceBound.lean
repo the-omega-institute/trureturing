@@ -65,4 +65,91 @@ private lemma re_trace_mul_le {a : Type*} [Fintype a] [DecidableEq a]
     _ = ‖B‖ * ∑ i, Real.sqrt (hH.eigenvalues i) := by rw [Finset.sum_mul,mul_comm]
     _ ≤ ‖B‖ * traceNorm X := mul_le_mul_of_nonneg_left hmass (norm_nonneg _)
 
+
+section Hilbert
+variable {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
+  [FiniteDimensional ℂ E] [NormedAddCommGroup F] [InnerProductSpace ℂ F]
+  [FiniteDimensional ℂ F]
+
+private def operator {a : Type*} [Fintype a] [DecidableEq a]
+    (v : OrthonormalBasis a ℂ E) :
+    Matrix a a ℂ ≃⋆ₐ[ℂ] (E →L[ℂ] E) :=
+  (LinearMap.toMatrixOrthonormal v).symm.trans
+    { LinearMap.toContinuousLinearMap with
+      map_mul' := fun _ _ => rfl
+      map_star' := LinearMap.adjoint_toContinuousLinearMap }
+
+private lemma kraus_trace_bound {a b J : Type*}
+    [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] [Fintype J]
+    (v : OrthonormalBasis a ℂ E) (w : OrthonormalBasis b ℂ F)
+    (L : J → E →ₗ[ℂ] F) (c : ℝ) (hc : 0 ≤ c)
+    (hK : ∀ A : F →L[ℂ] F,
+      ‖(∑ j, (L j).adjoint.comp (A.toLinearMap.comp (L j))).toContinuousLinearMap‖
+        ≤ c*‖A‖)
+    (X : Matrix a a ℂ) :
+    let M := fun j => LinearMap.toMatrix v.toBasis w.toBasis (L j)
+    traceNorm (∑ j, M j * X * (M j)ᴴ) ≤ c*traceNorm X := by
+  classical
+  let M := fun j => LinearMap.toMatrix v.toBasis w.toBasis (L j)
+  change traceNorm (∑ j, M j * X * (M j)ᴴ) ≤ c*traceNorm X
+  obtain ⟨U,hU⟩ := (traceNorm_eq_max_re_tr_U (∑ j, M j * X * (M j)ᴴ)).1
+  let A := operator w U.val
+  let B : Matrix a a ℂ := ∑ j, (M j)ᴴ * U.val * M j
+  have hBmap : operator v B =
+      (∑ j, (L j).adjoint.comp (A.toLinearMap.comp (L j))).toContinuousLinearMap := by
+    change (Matrix.toLin v.toBasis v.toBasis B).toContinuousLinearMap = _
+    congr 1
+    simp only [B,map_sum,Matrix.toLin_mul v.toBasis w.toBasis v.toBasis,
+      Matrix.toLin_mul w.toBasis w.toBasis v.toBasis,
+      Matrix.toLin_conjTranspose, M,Matrix.toLin_toMatrix]
+    rfl
+  have hBnorm : ‖B‖ ≤ c := by
+    have hh := hK A
+    rw [← hBmap,StarAlgEquiv.norm_map,show ‖A‖ = ‖U.val‖ from StarAlgEquiv.norm_map _ _] at hh
+    have hUnorm : ‖U.val‖ ≤ 1 := by
+      have hu := CStarRing.norm_coe_unitary_mul U (1 : Matrix b b ℂ)
+      simpa using hu.le.trans norm_one_le
+    exact hh.trans (by simpa using mul_le_mul_of_nonneg_left hUnorm hc)
+  have ht : (U.val * (∑ j, M j * X * (M j)ᴴ)).trace = (B*X).trace := by
+    simp only [B,Matrix.mul_sum,Matrix.sum_mul,Matrix.trace_sum]
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [Matrix.trace_mul_comm _ (M j)ᴴ]
+    simp only [Matrix.mul_assoc]
+  calc
+    _ = (B*X).trace.re := hU.symm.trans (congrArg Complex.re ht)
+    _ ≤ ‖B‖ * traceNorm X := re_trace_mul_le B X
+    _ ≤ c * traceNorm X := mul_le_mul_of_nonneg_right hBnorm (traceNorm_nonneg _)
+
+private def referenceLift (n : ℕ) (L : E →ₗ[ℂ] F) :
+    PiLp 2 (fun _ : Fin n => E) →ₗ[ℂ] PiLp 2 (fun _ : Fin n => F) where
+  toFun x := WithLp.toLp 2 (fun r => L (x r))
+  map_add' x y := by ext r; exact L.map_add (x r) (y r)
+  map_smul' c x := by ext r; exact L.map_smul c (x r)
+
+/-- The same actual ambient centered Kraus family controls the undivided trace
+norm on every complex input at every finite reference size. -/
+theorem hermitian_centered_kraus_trace_bound {J : Type*} [Fintype J]
+    (V : E →ₗᵢ[ℂ] F) (h : J → F →ₗ[ℂ] F)
+    (hh : ∀ j, (h j).IsSymmetric) (δ : ℝ) (hδ : 0 ≤ δ)
+    (hv : ∀ x : E, ‖x‖ = 1 →
+      ∑ j, ‖h j (V x) - (inner ℂ (V x) (h j (V x))).re • V x‖^2 ≤ δ)
+    (e : E) (he : (∃ x : E, ‖x‖ = 1) → ‖e‖ = 1) :
+    let c : J → ℝ := fun j => (inner ℂ (V e) (h j (V e))).re
+    let L : J → E →ₗ[ℂ] F := fun j => (h j).comp V.toLinearMap - (c j : ℂ) • V.toLinearMap
+    ∀ n : ℕ,
+      let v := stdOrthonormalBasis ℂ (PiLp 2 (fun _ : Fin n => E))
+      let w := stdOrthonormalBasis ℂ (PiLp 2 (fun _ : Fin n => F))
+      let M := fun j => LinearMap.toMatrix v.toBasis w.toBasis (referenceLift n (L j))
+      ∀ X, traceNorm (∑ j, M j * X * (M j)ᴴ) ≤ (5*δ)*traceNorm X := by
+  classical
+  have hp := D5.S3.Quantum.Matrix.UniformVarianceCentering.hermitian_block_centering_and_gram_bound
+    V h hh δ hδ hv e he
+  dsimp only
+  intro n
+  apply kraus_trace_bound
+  · positivity
+  · exact hp.2.2.2.2 n
+
+end Hilbert
 end D5.S3.Quantum.Matrix.UniformVarianceTraceBound
