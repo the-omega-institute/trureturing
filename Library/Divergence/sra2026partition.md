@@ -59,3 +59,7 @@ three-point program; formalizing this published supplier does not finish
 that original research goal. Empty row or column dimensions have zero Gram
 trace; an empty SPD-sum partition is possible only in empty row dimension.
 The formal statements keep every finite type and add no Nonempty premise.
+
+The faithful dependent-family registration audit is unfinished and tracked in
+[issue 26265](https://github.com/the-omega-institute/trureturing/issues/26265).
+The issue is neither a proof nor a validated registration.

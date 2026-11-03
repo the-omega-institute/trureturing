@@ -59,7 +59,7 @@ private lemma rootTrace_smul {A : Matrix d d ℂ} (hA : A.PosSemidef)
     rpow_smul hG (c ^ q) (Real.rpow_nonneg hc.le _) (1 / q),
     ← Real.rpow_mul hc.le, mul_one_div_cancel hq.ne', Real.rpow_one,
     Matrix.trace_smul]
-  simp [Complex.smul_re]
+  simp
 
 private lemma rootTrace_add_posDef {A B : Matrix d d ℂ}
     (hA : A.PosDef) (hB : B.PosDef) (Z : Matrix d d ℂ) (hZ : IsUnit Z)
@@ -97,10 +97,10 @@ theorem rootTrace_add {A B Z : Matrix d d ℂ}
     rootTrace q Z (A + B) ≤ rootTrace q Z A + rootTrace q Z B := by
   let R := fun (M : Matrix d d ℂ) (ε : ℝ) => M + ε • (1 : Matrix d d ℂ)
   have hpd (M : Matrix d d ℂ) (hM : M.PosSemidef) {ε : ℝ} (hε : 0 < ε) :
-      (R M ε).PosDef := hM.posSemidef_add (Matrix.PosDef.one.smul hε)
+      (R M ε).PosDef := Matrix.PosDef.posSemidef_add hM (Matrix.PosDef.one.smul hε)
   have hlim (M : Matrix d d ℂ) : Tendsto (R M) (𝓝[Set.Ioi 0] 0) (𝓝 M) := by
     have ht : Tendsto (fun ε : ℝ => ε) (𝓝[Set.Ioi 0] 0) (𝓝 0) :=
-      tendsto_id'.mono_left inf_le_left
+      tendsto_id'.mpr inf_le_left
     have hc : Tendsto (fun _ : ℝ => M) (𝓝[Set.Ioi 0] 0) (𝓝 M) := tendsto_const_nhds
     simpa only [zero_smul, add_zero] using hc.add (ht.smul_const (1 : Matrix d d ℂ))
   have hpsd (M : Matrix d d ℂ) (hM : M.PosSemidef) :
@@ -129,13 +129,18 @@ theorem rootTrace_sum {ι : Type*} (s : Finset ι) (A : ι → Matrix d d ℂ)
   classical
   have hq0 : q ≠ 0 := by linarith [hq.1]
   induction s using Finset.induction_on with
-  | empty => simp [rootTrace, tracePower, CFC.zero_rpow hq0, CFC.zero_rpow (one_div_ne_zero hq0)]
+  | empty =>
+    simp only [Finset.sum_empty]
+    change (Matrix.trace (CFC.rpow (Zᴴ * CFC.rpow 0 q * Z) (1 / q))).re ≤ 0
+    rw [CFC.zero_rpow (A := Matrix d d ℂ) hq0, Matrix.mul_zero, Matrix.zero_mul,
+      CFC.zero_rpow (A := Matrix d d ℂ) (one_div_ne_zero hq0)]
+    simp
   | @insert j s hj ih =>
     rw [Finset.sum_insert hj, Finset.sum_insert hj]
     have hs : (∑ i ∈ s, A i).PosSemidef := by
       exact Matrix.posSemidef_sum s (fun i hi => hA i (Finset.mem_insert_of_mem hi))
     exact (rootTrace_add (hA j (Finset.mem_insert_self _ _)) hs hZ hq).trans
-      (add_le_add_left (ih (fun i hi => hA i (Finset.mem_insert_of_mem hi))) _)
+      (add_le_add le_rfl (ih (fun i hi => hA i (Finset.mem_insert_of_mem hi))))
 
 /-- Actual rectangular Schatten functional, expressed through its row Gram square root.
 Its pth power is Tr(XX*)^(p/2); zero singular values are retained. -/
@@ -153,14 +158,16 @@ private lemma rectangularNorm_rpow {c : Type*} [Fintype c]
 private lemma rectangularNorm_square (X : Matrix d d ℂ) {p : ℝ} (hp : 0 < p) :
     rectangularNorm X p = schattenNorm X p := by
   apply (Real.rpow_left_inj (schattenNorm_nonneg _ _) (schattenNorm_nonneg _ _) hp.ne').mp
+  change rectangularNorm X p ^ p = schattenNorm X p ^ p
   rw [rectangularNorm_rpow X hp, norm_rpow_rowGram X hp]
 
 private lemma square_power {A : Matrix d d ℂ} (hA : A.PosSemidef)
     {r : ℝ} (hr : 0 ≤ r) : A ^ r * A ^ r = A ^ (2 * r) := by
-  rw [← pow_two, ← CFC.rpow_natCast (A ^ r) 2,
-    CFC.rpow_rpow_of_exponent_nonneg A r 2 hr (by norm_num) hA.nonneg]
-  congr 1
-  ring
+  calc
+    _ = (A ^ r) ^ (2 : ℕ) := (pow_two _).symm
+    _ = CFC.rpow (A ^ r) 2 := (CFC.rpow_natCast (A ^ r) 2).symm
+    _ = A ^ (r * 2) := CFC.rpow_rpow_of_exponent_nonneg A r 2 hr (by norm_num) hA.nonneg
+    _ = A ^ (2 * r) := by congr 1; ring
 
 private lemma rootTrace_as_gram {A M : Matrix d d ℂ}
     (hA : A.PosSemidef) (hM : M.PosSemidef) {p : ℝ} (hp : 0 < p) :
@@ -227,9 +234,9 @@ theorem partition_rectangular {ι c : Type*} [Fintype ι] [Fintype c]
   congr 1
   have hP : (Hj j ^ (1 / p))ᴴ = Hj j ^ (1 / p) :=
     CFC.rpow_nonneg.isSelfAdjoint.star_eq
-  simp only [M, K, Matrix.conjTranspose_mul, hK,
-    hP, Matrix.conjTranspose_conjTranspose,
-    Matrix.mul_assoc]
+  change (Hj j ^ (1 / p) * K * X) * (Hj j ^ (1 / p) * K * X)ᴴ =
+    Hj j ^ (1 / p) * M * Hj j ^ (1 / p)
+  simp only [Matrix.conjTranspose_mul, hK, hP, M, Matrix.mul_assoc]
 
 /-- The full square-matrix statement in the existing, attributed Schatten functional. -/
 theorem partition {ι : Type*} [Fintype ι]
