@@ -110,7 +110,7 @@ def source_registration : Registration arena.{u,v,w}
   dependence := dependence
 
 def registration :
-    LeanInformationAudit.Contract.Registration
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@hermitian_centered_kraus_trace_bound.{u,v,w}) (Realization signature) Unit Unit := {
   unitName := `D5.S3.Quantum.Matrix.UniformVarianceTraceBound.hermitian_centered_kraus_trace_bound.__information_unit
   realizationName := ``source_registration
@@ -200,7 +200,7 @@ def defect_source_registration : Registration defectArena.{u,w}
   dependence := dependence
 
 def defect_registration :
-    LeanInformationAudit.Contract.Registration
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@hermitian_unital_kraus_defect_trace_bound.{u,w}) (Realization signature) Unit Unit := {
   unitName := `D5.S3.Quantum.Matrix.UniformVarianceTraceBound.hermitian_unital_kraus_defect_trace_bound.__information_unit
   realizationName := ``defect_source_registration
