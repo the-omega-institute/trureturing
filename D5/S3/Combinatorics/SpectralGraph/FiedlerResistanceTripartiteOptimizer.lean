@@ -513,6 +513,7 @@ private lemma boundary_matrix {a b c : ℕ} (hc : 0<c) (hbal : c=a+b) :
     ext i
     simp [M,Matrix.add_mulVec,Matrix.sub_mulVec,Matrix.smul_mulVec,
       Matrix.vecMulVec_mulVec,Matrix.one_mulVec,proj_mul,dotProduct,signs_sum hbal,hn]
+    exact Or.inr (signs_sum hbal)
   have hoff (i j : Fin n) (hij : i ≠ j) : wLap (K3 a b c) (boundary a b c) i j=M i j := by
     dsimp [M]
     simp only [wLap,if_neg hij,Matrix.add_apply,Matrix.sub_apply,Matrix.one_apply,
@@ -523,18 +524,18 @@ private lemma boundary_matrix {a b c : ℕ} (hc : 0<c) (hbal : c=a+b) :
     by_cases hi : part a b c i=2 <;> by_cases hj : part a b c j=2
     · simp [hi,hj]
     · have hp : part a b c i ≠ part a b c j := by intro h; exact hj (h ▸ hi)
-      simp [hi,hj,hp,hnC,inv_mul_eq_div]
-      field_simp
+      simp [hi,hj,hp,Ne.symm hj,hnC,inv_mul_eq_div]
+      field_simp <;> ring
     · have hp : part a b c i ≠ part a b c j := by intro h; exact hi (h.symm ▸ hj)
-      simp [hi,hj,hp,hnC,inv_mul_eq_div]
-      field_simp
+      simp [hi,hj,hp,Ne.symm hi,hnC,inv_mul_eq_div]
+      field_simp <;> ring
     · simp [hi,hj]
   ext i j
   by_cases hij : i=j
   · subst j
     have hL := congrFun (lap_one (K3 a b c) (boundary a b c)) i
     have hMi := congrFun hM i
-    simp only [Matrix.mulVec,Pi.one_apply,mul_one,Pi.zero_apply] at hL hMi
+    simp only [Matrix.mulVec,dotProduct,Pi.one_apply,mul_one,Pi.zero_apply] at hL hMi
     have hsum : (∑ j,(wLap (K3 a b c) (boundary a b c) i j-M i j))=0 := by
       rw [Finset.sum_sub_distrib,hL,hMi,sub_self]
     rw [Finset.sum_eq_single i] at hsum
@@ -569,5 +570,227 @@ private lemma boundary_lambda {a b c : ℕ} (ha : 2 ≤ a) (hc : 0<c) (hbal : c=
     rw [dotProduct_comm,delta_dot]
     simp [i,j,signs,part_va]
   simp [hz]
+
+
+/-- Multiplicities of the actual native Hermitian Laplacian eigenvalues. -/
+def FullSpectrum {a b c : ℕ} (w : Sym2 (Fin (a+b+c)) → ℝ) : Prop :=
+  let e := (lap_hermitian (K3 a b c) w).eigenvalues
+  (univ.filter fun i => e i=0).card=1 ∧
+  (univ.filter fun i => e i=1).card=a+b+c-2 ∧
+  (univ.filter fun i => e i=2).card=1 ∧
+  ∀ i,e i=0 ∨ e i=1 ∨ e i=2
+
+private lemma boundary_spectrum {a b c : ℕ} (ha : 2 ≤ a) (hc : 0<c) (hbal : c=a+b) :
+    FullSpectrum (boundary a b c) ∧
+    totalRes (K3 a b c) (boundary a b c)=(a+b+c:ℕ)*((a+b+c:ℕ)-(3:ℝ)/2) := by
+  classical
+  let n := a+b+c
+  let G := K3 a b c
+  let w := boundary a b c
+  let σ := signs a b c
+  let e := (lap_hermitian G w).eigenvalues
+  have hn : (n:ℝ) ≠ 0 := by dsimp [n]; positivity
+  have hM := boundary_matrix hc hbal
+  change wLap G w=1-constProj n+(n:ℝ)⁻¹ • Matrix.vecMulVec σ σ at hM
+  have hL := lap_psd G w boundary_nonneg
+  have hB := normalized_shift (by omega) G w hL (boundary_lambda ha hc hbal)
+  have hzero : (univ.filter fun i => e i=0).card=1 := zero_count (by omega) G w hB
+  have hLs : wLap G w *ᵥ σ=(2:ℝ) • σ := by
+    rw [hM,Matrix.add_mulVec,Matrix.sub_mulVec,Matrix.one_mulVec,
+      Matrix.smul_mulVec,Matrix.vecMulVec_mulVec]
+    have hp : constProj n *ᵥ σ=0 := by
+      ext i; simp only [proj_mul,Pi.zero_apply]
+      rw [show (∑ i,σ i)=0 from signs_sum hbal]; simp
+    rw [hp,sub_zero]
+    ext i
+    simp only [Pi.add_apply,Pi.smul_apply,smul_eq_mul,op_smul_eq_mul,σ,signs_sq]
+    change σ i+(n:ℝ)⁻¹*(σ i*(n:ℝ))=2*σ i
+    field_simp
+    <;> ring
+  have hcases (i : Fin n) : e i=0 ∨ e i=1 ∨ e i=2 := by
+    by_cases hi0 : e i=0
+    · exact Or.inl hi0
+    by_cases hi2 : e i=2
+    · exact Or.inr (Or.inr hi2)
+    let x : Fin n → ℝ := ⇑((lap_hermitian G w).eigenvectorBasis i)
+    have hx : x ≠ 0 := (WithLp.ofLp_eq_zero 2).ne.2
+      ((lap_hermitian G w).eigenvectorBasis.orthonormal.ne_zero i)
+    have he : wLap G w *ᵥ x=e i • x := (lap_hermitian G w).mulVec_eigenvectorBasis i
+    have hsum : (∑ k,x k)=0 := by
+      have hh := lap_sum G w x
+      rw [he] at hh
+      simp only [Pi.smul_apply,smul_eq_mul,← Finset.mul_sum] at hh
+      exact (mul_eq_zero.mp hh).resolve_left hi0
+    have hd : dotProduct σ x=0 := by
+      have hh := (lap_hermitian G w).star_dotProduct_mulVec_comm σ x
+      simp only [star_trivial,he,hLs,dotProduct_smul,smul_eq_mul] at hh
+      rw [dotProduct_comm x σ] at hh
+      have hz : (e i-2)*dotProduct σ x=0 := by linear_combination hh
+      exact (mul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr hi2)
+    have hxL : wLap G w *ᵥ x=x := by
+      rw [hM,Matrix.add_mulVec,Matrix.sub_mulVec,Matrix.one_mulVec,
+        Matrix.smul_mulVec,Matrix.vecMulVec_mulVec,hd]
+      have hp : constProj n *ᵥ x=0 := by ext k; simp [proj_mul,hsum]
+      simp [hp]
+    obtain ⟨k,hk⟩ : ∃ k,x k ≠ 0 := by
+      by_contra! h; exact hx (funext h)
+    have hh := congrFun (he.symm.trans hxL) k
+    simp only [Pi.smul_apply,smul_eq_mul] at hh
+    have hz : (e i-1)*x k=0 := by linear_combination hh
+    exact Or.inr (Or.inl (sub_eq_zero.mp ((mul_eq_zero.mp hz).resolve_right hk)))
+  have htrace : (wLap G w).trace=(n:ℝ) := by
+    rw [hM,Matrix.trace_add,Matrix.trace_sub,Matrix.trace_one,Matrix.trace_smul,
+      Matrix.trace_vecMulVec]
+    rw [show dotProduct σ σ=(n:ℝ) from signs_sq]
+    have hp : (constProj n).trace=1 := by simp [Matrix.trace,constProj,hn]
+    rw [hp]
+    simp only [Fintype.card_fin]
+    change (n:ℝ)-1+(n:ℝ)⁻¹*(n:ℝ)=(n:ℝ)
+    rw [inv_mul_cancel₀ hn]
+    ring
+  let o := (univ.filter fun i => e i=1).card
+  let d := (univ.filter fun i => e i=2).card
+  have hcount : (1:ℝ)+o+d=n := by
+    have hh : (∑ i : Fin n,((if e i=0 then (1:ℝ) else 0)+
+        (if e i=1 then 1 else 0)+(if e i=2 then 1 else 0)))=n := by
+      calc
+        _=∑ i : Fin n,(1:ℝ) := by
+          apply Finset.sum_congr rfl
+          intro i hi
+          rcases hcases i with h | h | h <;> simp [h]
+        _=_ := by simp
+    have hh' : ((univ.filter fun i => e i=0).card:ℝ)+o+d=n := by
+      simpa [Finset.sum_add_distrib,o,d] using hh
+    rw [hzero] at hh'
+    simpa using hh'
+  have hsum : (o:ℝ)+2*d=n := by
+    have hh : (∑ i : Fin n,e i)=
+        ∑ i : Fin n,((if e i=1 then (1:ℝ) else 0)+2*(if e i=2 then 1 else 0)) := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      rcases hcases i with h | h | h <;> simp [h]
+    have htrace' := htrace
+    rw [(lap_hermitian G w).trace_eq_sum_eigenvalues] at htrace'
+    change (∑ i,e i)=(n:ℝ) at htrace'
+    rw [htrace'] at hh
+    rw [Finset.sum_add_distrib,← Finset.mul_sum] at hh
+    simpa only [Finset.sum_boole] using hh.symm
+  have hdR : (d:ℝ)=1 := by linarith only [hcount,hsum]
+  have hd : d=1 := by exact_mod_cast hdR
+  have hoR : (o:ℝ)=(n:ℝ)-2 := by linarith only [hsum,hdR]
+  have ho : o=n-2 := by
+    have hn2 : 2 ≤ n := by dsimp [n]; omega
+    exact_mod_cast (show (o:ℝ)=((n-2:ℕ):ℝ) by simpa [Nat.cast_sub hn2] using hoR)
+  refine ⟨⟨hzero,ho,hd,hcases⟩,?_⟩
+  rw [resistance_spectral (by omega) G w hL hB]
+  have hinv : (∑ i : Fin n,(e i)⁻¹)=(n:ℝ)-3/2 := by
+    have hh : (∑ i : Fin n,(e i)⁻¹)=
+        ∑ i : Fin n,((if e i=1 then (1:ℝ) else 0)+(1/2)*(if e i=2 then 1 else 0)) := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      rcases hcases i with h | h | h <;> norm_num [h]
+    rw [hh]
+    have hh' : (∑ i : Fin n,((if e i=1 then (1:ℝ) else 0)+(1/2)*(if e i=2 then 1 else 0)))=
+        (o:ℝ)+(1/2)*d := by
+      rw [Finset.sum_add_distrib,← Finset.mul_sum]
+      simp only [Finset.sum_boole]
+      rfl
+    rw [hh',hdR,hoR]
+    ring
+  change (n:ℝ)*(∑ i,(e i)⁻¹)=(n:ℝ)*((n:ℝ)-3/2)
+  rw [hinv]
+
+
+private lemma boundary_edges {a b c : ℕ} (i j : Fin (a+b+c)) (hij : (K3 a b c).Adj i j) :
+    boundary a b c s(i,j)=if part a b c i=2 ∨ part a b c j=2 then 1/(c:ℝ) else 0 := by
+  by_cases hi : part a b c i=2 <;> by_cases hj : part a b c j=2
+  · exact (hij (hi.trans hj.symm)).elim
+  · simp [boundary,Sym2.lift_mk,hi,hj,one_div]
+  · simp [boundary,Sym2.lift_mk,hi,hj,one_div]
+  · simp [boundary,Sym2.lift_mk,hi,hj]
+
+/-- The complete original tripartite endpoint, with uniqueness only on actual edges. -/
+def Theorem32 (a b c : ℕ) : Prop :=
+  let G := K3 a b c
+  let U := (a+b+c:ℕ)*((a+b+c:ℕ)-(3:ℝ)/2)
+  (∀ w : Sym2 (Fin (a+b+c)) → ℝ, (∀ i j,G.Adj i j → 0<w s(i,j)) →
+    0<lambda2 G w ∧ lambda2 G w*totalRes G w<U) ∧
+  (∀ w : Sym2 (Fin (a+b+c)) → ℝ, (∀ i j,G.Adj i j → 0 ≤ w s(i,j)) →
+    lambda2 G w=1 → (support G w).Connected ∧ totalRes G w ≤ U ∧
+      (totalRes G w=U ↔ c=a+b ∧ ∀ i j,G.Adj i j → w s(i,j)=boundary a b c s(i,j))) ∧
+  ((∃ w : Sym2 (Fin (a+b+c)) → ℝ, (∀ i j,G.Adj i j → 0 ≤ w s(i,j)) ∧
+    lambda2 G w=1 ∧ totalRes G w=U) ↔ c=a+b) ∧
+  (c=a+b → (∀ i j,G.Adj i j → 0 ≤ boundary a b c s(i,j)) ∧
+    (support G (boundary a b c)).Connected ∧ lambda2 G (boundary a b c)=1 ∧
+    totalRes G (boundary a b c)=U ∧ FullSpectrum (boundary a b c) ∧
+    ¬ (∀ i j,G.Adj i j → 0<boundary a b c s(i,j)))
+
+/-- Universal strict product bound and the unique balanced normalized boundary. -/
+theorem result {a b c : ℕ} (ha : 2 ≤ a) (hab : a ≤ b) (hbc : b ≤ c) :
+    Theorem32 a b c := by
+  classical
+  let G := K3 a b c
+  let U := (a+b+c:ℕ)*((a+b+c:ℕ)-(3:ℝ)/2)
+  have hb : 2 ≤ b := le_trans ha hab
+  have hc : 2 ≤ c := le_trans hb hbc
+  have ha0 : 0<a := by omega
+  have hc0 : 0<c := by omega
+  let i := va a b c ⟨0,ha0⟩
+  let j := vb a b c ⟨0,by omega⟩
+  have hij : G.Adj i j := by simp [G,K3,i,j,part_va,part_vb]
+  have hbd0 : boundary a b c s(i,j)=0 := by
+    simp [boundary,Sym2.lift_mk,i,j,part_va,part_vb]
+  have hnorm (w : Sym2 (Fin (a+b+c)) → ℝ)
+      (hw : ∀ i j,G.Adj i j → 0 ≤ w s(i,j)) (ht : lambda2 G w=1) :
+      (support G w).Connected ∧ totalRes G w ≤ U ∧
+      (totalRes G w=U ↔ c=a+b ∧ ∀ i j,G.Adj i j → w s(i,j)=boundary a b c s(i,j)) := by
+    have hL := lap_psd G w hw
+    have hB := normalized_shift (by omega) G w hL ht
+    have hprod := product_ceiling ha hb hc w hL hB
+    have ht' : lambda2 (K3 a b c) w=1 := ht
+    refine ⟨connected_of_shift (by omega) G w hw hB,?_,?_⟩
+    · simpa [ht',U,G] using hprod.1
+    · constructor
+      · intro he
+        obtain ⟨hbal,hedges⟩ := equality_coordinates ha hab hbc w hL hB (by simpa [ht',G,U] using he)
+        refine ⟨hbal,?_⟩
+        intro p q hpq
+        rw [boundary_edges p q hpq,hedges p q hpq,ht']
+      · rintro ⟨hbal,hedges⟩
+        have hE : ∀ e ∈ G.edgeSet,w e=boundary a b c e := by
+          intro e he
+          induction e using Sym2.ind with
+          | _ p q => exact hedges p q (by simpa only [SimpleGraph.mem_edgeSet] using he)
+        rw [(invariants_congr G w (boundary a b c) hE).2]
+        exact (boundary_spectrum ha hc0 hbal).2
+  change (∀ w,(∀ p q,G.Adj p q → 0<w s(p,q)) →
+      0<lambda2 G w ∧ lambda2 G w*totalRes G w<U) ∧ _
+  refine ⟨?_,hnorm,?_,?_⟩
+  · intro w hw
+    have hL := lap_psd G w (fun p q hpq => (hw p q hpq).le)
+    have hB := positive_shift (by omega) G (K3_connected ha0 hc0) w hw
+    have hs := lambda_spectral (by omega) G w hL hB
+    refine ⟨hs.1,lt_of_le_of_ne (product_ceiling ha hb hc w hL hB).1 ?_⟩
+    intro he
+    obtain ⟨hbal,hedges⟩ := equality_coordinates ha hab hbc w hL hB he
+    have hz := hedges i j hij
+    have hp := hw i j hij
+    simp [i,j,part_va,part_vb] at hz
+    change w s(i,j)=0 at hz
+    linarith only [hz,hp]
+  · constructor
+    · rintro ⟨w,hw,ht,he⟩
+      exact ((hnorm w hw ht).2.2.mp he).1
+    · intro hbal
+      exact ⟨boundary a b c,boundary_nonneg,boundary_lambda ha hc0 hbal,
+        (boundary_spectrum ha hc0 hbal).2⟩
+  · intro hbal
+    have ht := boundary_lambda ha hc0 hbal
+    obtain ⟨hsp,hR⟩ := boundary_spectrum ha hc0 hbal
+    refine ⟨boundary_nonneg,(hnorm _ boundary_nonneg ht).1,ht,hR,hsp,?_⟩
+    intro hw
+    have hh := hw i j hij
+    rw [hbd0] at hh
+    exact (lt_irrefl 0) hh
 
 end D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceTripartiteOptimizer
