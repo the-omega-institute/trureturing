@@ -16,7 +16,12 @@ This module has no finite computational certificate of its own. -/
 
 import D5.S3.FiniteGroups.Quandles.CentralLabels
 import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Data.Fintype.Sets
 import Mathlib.SetTheory.Cardinal.Finite
+
+/-! Complete central-label block factorization, used by the whole-group
+counterexample to Ta Problem 11.6. -/
 
 namespace D5.S3.FiniteGroups.Quandles.BlockCounting
 
@@ -41,6 +46,12 @@ structure Data (G B Z : Type*) [Group G] (C : B → Type*) where
 The label equality on a paired class is what counts a two-cycle's weight once. -/
 def Local (d : ∀ b, C b → Z → C b) (b : B) :=
   {f : C b → Z // ∀ i, f (d b i (f i)) = f i}
+
+instance (d : ∀ b, C b → Z → C b) (b : B)
+    [Fintype (C b)] [DecidableEq (C b)] [Fintype Z] [DecidableEq Z] :
+    Fintype (Local d b) := by
+  unfold Local
+  infer_instance
 
 private theorem label_repr (D : Data G B Z C) (z : Label G) (x : G) :
     z.val x = z.val (D.repr (D.code x)) := by
@@ -99,7 +110,7 @@ theorem good_card [Fintype B] (D : Data G B Z C) :
 /-- The same factorization for the repository's original subquandle interface. -/
 theorem whole_good_card [Fintype G] [DecidableEq G] [Fintype B] (D : Data G B Z C) :
     Nat.card (D5.S0.Certificates.Groups.TaGoodInvolutionBoundRefutation.Good
-      (Finset.univ : Finset G) (by intro x hx y hy; exact Finset.mem_univ _)) =
+      (Finset.univ : Finset G) (by intro x _ y _; exact Finset.mem_univ _)) =
       ∏ b, Nat.card (Local D.dest b) := by
   rw [← Nat.card_congr (wholeGoodEquiv (G := G))]
   exact good_card D

@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates.Groups;
 
@@ -46,7 +47,8 @@ internal sealed class TaThreeInvariantRefutationDocument : IScribeDocumentDefini
                 + "only on those three numbers.", DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("ta116-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("The determination fails"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+                StatementSource.FromAuthor(F.Disp(new Formula.Not(F.Id("claim")))),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Both native groups are nonabelian and have invariant triple (64,4,22). "
                     + "The center enumerations cover every central element. The complete "
@@ -65,8 +67,19 @@ internal sealed class TaThreeInvariantRefutationDocument : IScribeDocumentDefini
 
     private static DocumentBlock Node(string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
-            DescribeId.Create("ta116-" + declaration.ToLowerInvariant()),
+            DescribeId.Create("ta116-" + declaration.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+            Statement(declaration), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+    private static StatementSource Statement(string name) => name == "good_counts"
+        ? StatementSource.FromAuthor(F.Disp(new Formula.Logic(
+            new Formula.Relation(Call("goodCount", Call("Gr", F.Id("false"))),
+                FormulaRelationOperator.Equal, new Formula.Number(8847360)),
+            FormulaLogicOperator.And,
+            new Formula.Relation(Call("goodCount", Call("Gr", F.Id("true"))),
+                FormulaRelationOperator.Equal, new Formula.Number(2160000)))))
+        : StatementSource.WithoutFormula();
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(F.Seq(F.Operatorname, F.Grp(F.Id(name))), [.. arguments]);
 }
