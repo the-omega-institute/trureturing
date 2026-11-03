@@ -52,3 +52,5 @@ The two endpoints add the exact full-series logarithmic estimate and the normali
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture.complete_positive_mixture_spectral_identity`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture.pMultiplier_logarithmic_bounds`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentArithmetic](ActualKernelMomentArithmetic.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/OriginalActualFourier](OriginalActualFourier.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/OriginalAngularResolvent](OriginalAngularResolvent.md)
