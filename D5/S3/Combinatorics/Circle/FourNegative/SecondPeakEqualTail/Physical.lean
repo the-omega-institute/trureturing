@@ -191,17 +191,17 @@ private theorem physical_joint (a b c alpha M v J : ℕ) (early : Bool)
     have eqsum : (ln.map g).sum=A+(l.map g).sum := by
       dsimp [ln]
       simp only [List.map_append,List.sum_append,List.map_cons,List.sum_cons,
-        List.map_nil,List.sum_nil,add_zero,nsum0,nsum1]
-      change e0+((P 0).map g).sum+g (T 0)+(e1+((P 1).map g).sum)+
-        g (T 1)+((P 2).map g).sum+g (T 2)+((P 3).map g).sum+g (T 3)=_
+        List.map_nil,List.sum_nil,add_zero]
+      rw [nsum0,nsum1]
+      simp [Pn,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
+        Matrix.cons_val_three,Matrix.vecHead,Matrix.vecTail]
       simp only [l,word,List.map_append,List.sum_append,List.map_cons,List.sum_cons,
         List.map_nil,List.sum_nil,add_zero]
       linarith only [headd]
     rw [eqsum]
     exact hgzero
   have npos (j : Fin 4) (i : ℕ) (hi : i∈Pn j) : 0 ≤ g i := by
-    fin_cases j <;> cases early <;> simp only [Pn,Bool.false_eq_true,ite_false,ite_true,
-      List.nil_append,List.mem_cons,List.not_mem_nil,or_false] at hi
+    fin_cases j <;> cases early <;> simp [Pn] at hi
     all_goals first
       | exact (pos _ i hi).2
       | rcases hi with rfl|hi
@@ -214,14 +214,20 @@ private theorem physical_joint (a b c alpha M v J : ℕ) (early : Bool)
     · constructor <;> omega
     · constructor <;> omega
     · constructor <;> omega
-    · simpa only [ln,zero_add] using lnzero
+    · simpa [ln,Pn,zero_add] using lnzero
   have hcut : cut ≤ k := by
-    have hlen := hp.length_eq
-    simp only [List.length_range] at hlen
-    dsimp [l,word] at hlen
-    simp only [List.length_append,List.length_cons,List.length_singleton] at hlen
+    have hlen : l.length = k := by
+      have h := hp.length_eq
+      simpa only [List.length_range] using h
+    have hpre : (P 0).length + 1 ≤ l.length := by
+      dsimp [P,l,word]
+      simp only [List.length_append,List.length_cons,List.length_singleton]
+      omega
+    have hP0 : (P 0).length + 1 ≤ k := by omega
     dsimp [cut]
-    split_ifs <;> omega
+    split_ifs
+    · omega
+    · exact hP0
   have hinsert : insertAt k l cut=ln := by
     cases early
     · let pre := P 0++[T 0]
@@ -229,11 +235,16 @@ private theorem physical_joint (a b c alpha M v J : ℕ) (early : Bool)
       have hl : l=pre++post := by simp [l,word,pre,post,P,T,List.append_assoc]
       have hcl : cut=pre.length := by simp [cut,pre]
       rw [hl,hcl]
-      simp [insertAt,pre,post,ln,Pn,List.append_assoc]
+      change insertAt k (pre ++ post) (pre.length + 0) = _
+      unfold insertAt
+      rw [List.take_length_add_append, List.drop_length_add_append]
+      simp [pre,post,ln,Pn,List.append_assoc]
     · simp [cut,insertAt,ln,Pn,l,word,P,T]
   apply (actual_nat_joint_iff a b c c ha hb hc hc).mpr
   refine ⟨l,hp,oldstrip,cut,hcut,?_⟩
-  rw [hinsert]
-  exact newstrip
+  have hfinal : InStrip g N 0 (insertAt k l cut) := by
+    rw [hinsert]
+    exact newstrip
+  simpa [size,k] using hfinal
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail

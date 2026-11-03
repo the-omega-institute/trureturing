@@ -71,8 +71,13 @@ private theorem selector_exists (a r t : ℕ) (ha : 2≤a) (hr : 1≤r) :
     dsimp [selectorGates]
     simp only [Nat.cast_zero,Nat.cast_sub (Nat.one_le_two_pow : 1≤(2:ℕ)^r),
       Nat.cast_pow,Nat.cast_ofNat,Nat.cast_one]
-    convert large_windows ((2:ℤ)^a) ((2:ℤ)^r) ((2:ℤ)^t) hx hpx hs i using 1 <;>
-      congr 2 <;> nlinarith only [quarter,half]
+    have hm4 : (4:ℤ) * (2^r-1) = 4*(2:ℤ)^r-4 := by ring
+    have hv4 : (4:ℤ) * (2:ℤ)^(a-2) = (2:ℤ)^a := by
+      nlinarith only [quarter]
+    have hj4 : (4:ℤ) * (2:ℤ)^(a-1) = 2*(2:ℤ)^a := by
+      nlinarith only [half]
+    rw [hm4,hv4,hj4]
+    exact large_windows ((2:ℤ)^a) ((2:ℤ)^r) ((2:ℤ)^t) hx hpx hs i
   by_cases hmiddle : r=a-1
   · subst r
     by_cases ha2 : a=2
@@ -88,9 +93,8 @@ private theorem selector_exists (a r t : ℕ) (ha : 2≤a) (hr : 1≤r) :
           norm_num at h ⊢
           exact h
         intro i
-        simpa only [selectorGates,Nat.cast_zero,Nat.cast_ofNat,
-          show (2:ℤ)^2=4 by norm_num,pow_one,show 4*(2:ℤ)=8 by norm_num,
-          show 4*(1:ℤ)=4 by norm_num,ite_true] using special_high_windows ((2:ℤ)^t) hs2 i
+        simpa [selectorGates,scaledGates,A,B,L,K,SU,SV,SW] using
+          special_high_windows ((2:ℤ)^t) hs2 i
     · have ha3 : 3≤a := by omega
       refine ⟨0,2^a-2,2^(a-2)+1,2^(a-1)+2,true,middle_masks a ha3,?_⟩
       have hp4 : (4:ℤ)≤2^(a-1) := by
@@ -103,8 +107,14 @@ private theorem selector_exists (a r t : ℕ) (ha : 2≤a) (hr : 1≤r) :
         have h := Nat.pow_le_pow_right (by decide : 0<2) (show 1≤a by omega)
         norm_num at h ⊢; exact h),
         Nat.cast_add,Nat.cast_pow,Nat.cast_ofNat,Nat.cast_one]
-      convert middle_windows ((2:ℤ)^(a-1)) ((2:ℤ)^t) hp4 hs i using 1 <;>
-        congr 2 <;> nlinarith only [quarter,half]
+      have hxeq : (2:ℤ)^a = 2*(2:ℤ)^(a-1) := half.symm
+      have hmeq : (4:ℤ)*((2:ℤ)^a-2) = 8*(2:ℤ)^(a-1)-8 := by
+        nlinarith only [half]
+      have hveq : (4:ℤ)*((2:ℤ)^(a-2)+1) = 2*(2:ℤ)^(a-1)+4 := by
+        nlinarith only [quarter,half]
+      have hjeq : (4:ℤ)*((2:ℤ)^(a-1)+2) = 4*(2:ℤ)^(a-1)+8 := by ring
+      rw [hmeq,hveq,hjeq,hxeq]
+      exact middle_windows ((2:ℤ)^(a-1)) ((2:ℤ)^t) hp4 hs i
   have har : r+2≤a := by omega
   obtain ⟨l,hal⟩ := Nat.exists_eq_add_of_le har
   have ae : a=r+l+2 := by omega
@@ -132,8 +142,16 @@ private theorem selector_exists (a r t : ℕ) (ha : 2≤a) (hr : 1≤r) :
     simp only [Nat.cast_sub hm,Nat.cast_add,Nat.cast_mul,Nat.cast_pow,
       Nat.cast_ofNat,Nat.cast_one]
     rw [show r+2+l=r+l+2 by omega,xeq,jrel]
-    convert small_l_less_windows ((2:ℤ)^l) ((2:ℤ)^r) ((2:ℤ)^t) he hpe hs i using 1 <;>
-      congr 2 <;> ring
+    have hm4 : (4:ℤ)*(2*(2:ℤ)^r*((2:ℤ)^l+1)-2) =
+        8*(2:ℤ)^r*((2:ℤ)^l+1)-8 := by ring
+    have hv4 : (4:ℤ)*((2:ℤ)^l*((2:ℤ)^r+1)) =
+        4*(2:ℤ)^r*(2:ℤ)^l+4*(2:ℤ)^l := by ring
+    have hj4 : 2*(2:ℤ)^(r+l+2)+8*(2:ℤ)^l =
+        8*(2:ℤ)^r*(2:ℤ)^l+8*(2:ℤ)^l := by
+      rw [xeq]
+      ring
+    rw [hm4,hv4,hj4]
+    exact small_l_less_windows ((2:ℤ)^l) ((2:ℤ)^r) ((2:ℤ)^t) he hpe hs i
   · have hrl : r≤l := by omega
     refine ⟨2^l+2^(l-r),2*2^r*(2^l+2^(l-r)+1)-2,2^l*(2^r+1),
       2^(r+l+1)+2^(l+1),true,by simpa [Nat.add_comm,Nat.add_left_comm,Nat.add_assoc] using small_ge_masks r l hr hrl,?_⟩
@@ -151,7 +169,20 @@ private theorem selector_exists (a r t : ℕ) (ha : 2≤a) (hr : 1≤r) :
     simp only [Nat.cast_sub hm,Nat.cast_add,Nat.cast_mul,Nat.cast_pow,
       Nat.cast_ofNat,Nat.cast_one]
     rw [show r+2+l=r+l+2 by omega,xeq,jrel,erel]
-    convert small_l_ge_windows ((2:ℤ)^r) ((2:ℤ)^(l-r)) ((2:ℤ)^t) hp hh hs i using 1 <;>
-      congr 2 <;> ring
+    have hxarg : 4*(2:ℤ)^r*((2:ℤ)^r*(2:ℤ)^(l-r)) =
+        4*((2:ℤ)^r)^2*(2:ℤ)^(l-r) := by ring
+    have hm4 : (4:ℤ)*(2*(2:ℤ)^r*((2:ℤ)^r*(2:ℤ)^(l-r)+
+        (2:ℤ)^(l-r)+1)-2) =
+        8*(2:ℤ)^r*((2:ℤ)^r*(2:ℤ)^(l-r)+(2:ℤ)^(l-r)+1)-8 := by ring
+    have hv4 : (4:ℤ)*((2:ℤ)^r*(2:ℤ)^(l-r)*((2:ℤ)^r+1)) =
+        4*((2:ℤ)^r)^2*(2:ℤ)^(l-r)+4*(2:ℤ)^r*(2:ℤ)^(l-r) := by ring
+    have hpowl := xeq
+    rw [erel] at hpowl
+    have hj4 : 2*(2:ℤ)^(r+l+2)+8*((2:ℤ)^r*(2:ℤ)^(l-r)) =
+        8*((2:ℤ)^r)^2*(2:ℤ)^(l-r)+8*(2:ℤ)^r*(2:ℤ)^(l-r) := by
+      rw [hpowl]
+      ring
+    rw [hxarg,hm4,hv4,hj4]
+    exact small_l_ge_windows ((2:ℤ)^r) ((2:ℤ)^(l-r)) ((2:ℤ)^t) hp hh hs i
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail
