@@ -345,7 +345,7 @@ private lemma population_support {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ)
 private def block {m : ℕ} (e : Fin m → ℝ)
     (U : Matrix (Fin 4 × Fin m) (Fin 4 × Fin m) ℂ) (k : Fin 4) :
     Matrix {a // a ∈ groundSet e} {a // a ∈ groundSet e} ℂ :=
-  fun b a => U (k, b.1) (k, a.1)
+  U.submatrix (fun a => (k, a.1)) (fun a => (k, a.1))
 
 private lemma block_unitary {m : ℕ} (e : Fin m → ℝ)
     (U : Matrix.unitaryGroup (Fin 4 × Fin m) ℂ)
