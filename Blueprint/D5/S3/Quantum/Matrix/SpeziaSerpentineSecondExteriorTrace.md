@@ -120,6 +120,10 @@ $$\forall (n: \mathbb{N}), (1 < n) \Rightarrow ((\operatorname{Int.cast}\left(\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/SpeziaSerpentineSecondExteriorTrace.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sp322844-serpentine` (proved) by `D5/S3/Quantum/Matrix/SpeziaSerpentineSecondExteriorTrace.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sp322844-serpentine","declaration_gid":"D5/S3/Quantum/Matrix/SpeziaSerpentineSecondExteriorTrace.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Stefano Spezia (2018). *OEIS A322844 and the serpentine matrix A317614*. URL: <https://oeis.org/A322844>.

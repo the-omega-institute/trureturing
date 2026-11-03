@@ -25,7 +25,9 @@ internal sealed class SunAbsoluteDifferenceCongruencesDocument : IScribeDocument
                     Paragraph(Text("For every nonnegative m and integer shift s, the alternating affine sum through 2m is m+s. This telescoping identity supplies the two parity cases in the permanent evaluation.")))),
             Node("result", "result", ClaimBody(), DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source), Blocks(
-                    Paragraph(Text("Alternating row and column signs give circulants without changing their permanents. A prime-order fixed-point count on the permutation-weight fibers leaves only translations in characteristic p. Fermat's identity and a telescoping alternating sum then evaluate both permanents. The prime circulant ingredient is the Brualdi–Newman congruence; the two absolute-difference reductions yield the stated divisibilities."))))), []));
+                    Paragraph(Text("Alternating row and column signs give circulants without changing their permanents. A prime-order fixed-point count on the permutation-weight fibers leaves only translations in characteristic p. Fermat's identity and a telescoping alternating sum then evaluate both permanents. The prime circulant ingredient is the Brualdi–Newman congruence; the two absolute-difference reductions yield the stated divisibilities."))),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sun210842"), ResolutionKind.Proved))), []));
 
     private static Formula MatrixBody()
     {
