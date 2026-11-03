@@ -61,6 +61,15 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
             Node("rCount", CountFormula("rCount", Eq), "Section 4, page 7: “For each 0 ≤ 𝑘 ≤ 𝑛, let 𝑅𝑘 be the number of coefficient-squares from 𝑆𝑘 in the RHS of a Real equation”. Observation 1 places a word on this side exactly when its two selected bits agree. The inner cardinality counts the true bits.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("lCount", CountFormula("lCount", Neq), "Section 4, page 7: “𝐿𝑘 be the number of coefficient-squares from 𝑆𝑙 in the LHS of Real equation.” Observation 1 places a word on this side exactly when its two selected bits differ. The source’s Sl in this sentence denotes the selected weight partition.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("T", ThresholdFormula(), "Theorem 2, pages 6–7, defines T = ½ arccos(−(⌈n/2⌉ − 1)/⌈n/2⌉). Nat.div is integer division, so Nat.div (n + 1) 2 is the ceiling of n/2. The outer division is in ℝ.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
+            Node("d", DiagonalFormula(),
+                "The real diagonal value of the square root of the constant-overlap Gram matrix.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("cstar", BalancedOverlapFormula(),
+                "The overlap determined by the maximal product of occupied and unoccupied sensor counts. The quotient n²/4 is taken in the natural numbers before coercion to the reals.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("global_success_upper_bound", GlobalSuccessUpperBoundFormula(),
+                "Every normalized probe and every global POVM satisfy this success bound for at least three sensors in either admissible angle interval.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("claim", Eqn(V("claim"), ClaimBody), "Section 5, Conjecture 1, page 10: “Consider the ISO problem, with the unitary operator 𝑈, initial state |𝜓⟩, and final states {|𝜙ᵢ⟩} as defined therein. Recall that the eigenvalues of 𝑈 are {𝑒^{+𝑖𝜃}, 𝑒^{−𝑖𝜃}}. Let 𝑛 ≥ 3 be the number of sensors. For a given 𝜃 ∈ (0,𝑇] ∪ [180 − 𝑇, 180), degrees, where 𝑇 is from Theorem 2, the optimal initial state |𝜓⟩ for the ISO problem is as follows. Let 𝑆ₗ be the partition that minimizes (𝑅ₗ + cos(2𝜃)𝐿ₗ)/(𝑅ₗ + 𝐿ₗ), where 𝑅ₗ and 𝐿ₗ are as defined in the previous section. The coefficients of the optimal solution are such that their coefficient-squares are given by: |𝜓ⱼ|² = 1/|𝑆ₗ| ∀ |𝜓ⱼ|² ∈ 𝑆ₗ  |𝜓ⱼ|² = 0 ∀ |𝜓ⱼ|² ∉ 𝑆ₗ” The formula uses radians, φ for the proposed state and ψ for a competitor. Each minimizing l and every assignment of coefficient phases are allowed. The words of weight l number Nat.choose n l. The two Fin n indices have values 0 and 1; their proof fields are omitted.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("weight_class_card", All("n", Nat, All("k", Nat,
                 Eqn(Call(Q("Finset", "card"), Call(Q("Finset", "filter"),
@@ -69,14 +78,6 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
                     Call(Q("Nat", "choose"), N, V("k"))))),
                 "The Boolean words with exactly k true coordinates form a class of cardinality Nat.choose n k.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Paper)),
-            Node("G_diag", All("n", Nat, All("theta", Real, All("psi", State,
-                Impl(Eqn(SumOf("x", Word, NormSq(Call("psi", V("x")))), D(1)),
-                    All("i", FinN, Eqn(Call(Call(Q("ProductPrefixRigidity", "gram"),
-                        Call(Q("Matrix", "transpose"), LambdaOf("j", FinN,
-                            Call("fire", V("theta"), V("j"), V("psi"))))), V("i"), V("i")),
-                        D(1))))))),
-                "Every fired state has unit squared norm, so its Gram matrix has diagonal entries one.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("counts_partition", All("n", Nat, All("i", FinN, All("j", FinN, All("k", Nat,
                 Eqn(Add(Call("rCount", N, V("i"), V("j"), V("k")),
                     Call("lCount", N, V("i"), V("j"), V("k"))),
@@ -135,4 +136,22 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
     private static Formula ThresholdFormula() => All("n", Nat, Eqn(Call("T", N),
         Seq(V("let"), Sp, V("q"), Sp, Colon, Sp, Nat, Sp, Eq, Sp, Call(Q("Nat", "div"), Parenthesized(Add(N, D(1))), D(2)), Sp, V("in"), Sp,
             Div(Call(Q("Real", "arccos"), Seq(Minus, Parenthesized(Div(Sub(Cast(V("q"), Real), D(1)), Cast(V("q"), Real))))), D(2)))));
+
+    private static Formula DiagonalFormula() => All("n", Nat, All("c", Real,
+        Eqn(Call("d", N, V("c")), Div(
+            Add(Call(Q("Real", "sqrt"), Add(D(1), Mul(Parenthesized(Sub(Cast(N, Real), D(1))), V("c")))),
+                Mul(Parenthesized(Sub(Cast(N, Real), D(1))), Call(Q("Real", "sqrt"), Sub(D(1), V("c"))))),
+            Cast(N, Real)))));
+
+    private static Formula BalancedOverlapFormula() => All("n", Nat, All("theta", Real,
+        Eqn(Call("cstar", N, V("theta")), Sub(D(1), Div(
+            Mul(Mul(D(4), Cast(Call(Q("Nat", "div"), new Formula.Power(N, D(2)), D(4)), Real)),
+                new Formula.Power(Call(Q("Real", "sin"), V("theta")), D(2))),
+            Mul(Cast(N, Real), Parenthesized(Sub(Cast(N, Real), D(1)))))))));
+
+    private static Formula GlobalSuccessUpperBoundFormula() => All("n", Nat,
+        Impl(Leqn(D(3), N), All("theta", Real, Impl(Range, All("psi", State,
+            Impl(Eqn(SumOf("x", Word, NormSq(Call("psi", V("x")))), D(1)), All("M", Povm,
+                Leqn(Call("isoSuccess", V("theta"), V("psi"), V("M")),
+                    new Formula.Power(Call("d", N, Call("cstar", N, V("theta"))), D(2))))))))));
 }

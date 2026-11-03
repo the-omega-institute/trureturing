@@ -114,28 +114,10 @@ private theorem povm_nonempty : Nonempty (LocalPOVM (Fin 3 → Bool) (Fin 3)) :=
 private theorem bounded_success (ψ : (Fin 3 → Bool) → ℂ)
     (hψ : ∑ x, Complex.normSq (ψ x) = 1) :
     BddAbove (Set.range (isoSuccess (Real.pi / 4) ψ)) := by
-  refine ⟨1, ?_⟩
+  refine ⟨d 3 (cstar 3 (Real.pi / 4))^2, ?_⟩
   rintro y ⟨M, rfl⟩
-  have hp (i : Fin 3) :
-      (star (fire (Real.pi / 4) i ψ) ⬝ᵥ
-        (M.effect i *ᵥ fire (Real.pi / 4) i ψ)).re ≤ 1 := by
-    have he := Finset.single_le_sum
-      (s := Finset.univ) (a := i)
-      (f := fun j => (star (fire (Real.pi / 4) i ψ) ⬝ᵥ
-        (M.effect j *ᵥ fire (Real.pi / 4) i ψ)).re)
-      (fun j _ => (Complex.nonneg_iff.mp ((M.positive j).dotProduct_mulVec_nonneg _)).1)
-      (Finset.mem_univ i)
-    rw [← Complex.re_sum, ← dotProduct_sum, ← Matrix.sum_mulVec, M.complete,
-      Matrix.one_mulVec] at he
-    convert he using 1
-    have hn := congrArg Complex.re (G_diag (Real.pi / 4) ψ hψ i)
-    exact hn.symm
-  unfold isoSuccess
-  have hs := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) => hp i)
-  norm_num only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
-    mul_one] at hs
-  norm_num only [Nat.cast_ofNat]
-  linarith
+  exact global_success_upper_bound 3 (by norm_num) (Real.pi / 4)
+    (Or.inl angle_admissible) ψ hψ M
 
 private theorem layer_optimal (l : ℕ) (hl : l = 1 ∨ l = 2)
     (ψ : (Fin 3 → Bool) → ℂ) (hψ : ∑ x, Complex.normSq (ψ x) = 1)

@@ -175,95 +175,6 @@ set_option pp.proofs false in
 end
 end Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.CauchySchwarz
 
-namespace Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.GramDiagonal
-
-open _root_.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
-open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Quantum.Recovery.ProductPrefixRigidity
-open Matrix
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
-noncomputable section
-
-/-- Read the selected diagonal entry of the source Gram matrix. -/
-abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (Σ n : ℕ, Fin n)
-    (fun p => Matrix (Fin p.1) (Fin p.1) ℂ) (fun _ => ℂ)
-
-def actual : Realization signature :=
-  realize signature (fun _ p M => M p.2 p.2) (fun e => nomatch e)
-
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
-  Law R := ∀ {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)
-    (_hψ : ∑ x, Complex.normSq (ψ x) = 1) (i : Fin n),
-    R.readout () ⟨n, i⟩ (gram ((fun i => fire θ i ψ)ᵀ)) = 1
-
-private theorem rejected_law : ¬ arena.Law rejected := by
-  classical
-  intro h
-  have hb := h (n := 1) 0
-    (fun x => if x = (fun _ => false) then 1 else 0) (by simp) 0
-  change (0 : ℂ) = 1 at hb
-  exact zero_ne_one hb
-
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨⟨1, 0⟩, 0, 1, ?_⟩
-  change (0 : Matrix (Fin 1) (Fin 1) ℂ) 0 0 ≠ 1
-  simp
-
-def source_registration : Registration arena (type_of% @G_diag) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@G_diag, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
-  dependence := dependence
-
-def registration :
-    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@G_diag) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.GramDiagonal.unit
-  realizationName := `Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.GramDiagonal.source_registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨source_registration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ p M => M p.2 p.2) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
-    definition := none
-    coordinates := #[0, 4]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "fn"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-set_option pp.proofs false in
-#print G_diag
-#print axioms source_registration
-#print axioms registration
-
-end
-end Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.GramDiagonal
 
 namespace Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.CountsPartition
 
@@ -520,3 +431,109 @@ set_option pp.proofs false in
 
 end
 end Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.DickeNormalized
+
+namespace Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.GlobalSuccessUpperBound
+
+open _root_.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
+open _root_.D5.S3.Quantum.Entanglement.TriangleIndependentSourceNoise
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open scoped ComplexOrder
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+/-- Read the success at the selected sensor count, angle, probe and POVM. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature
+    (Σ n : ℕ, Σ _ : ℝ, LocalPOVM (Fin n → Bool) (Fin n))
+    (fun p => (Fin p.1 → Bool) → ℂ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ p ψ => isoSuccess p.2.1 ψ p.2.2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ p _ => d p.1 (cstar p.1 p.2.1)^2 + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (_hn : 3 ≤ n) (θ : ℝ)
+    (_hθ : (0 < θ ∧ θ ≤ T n) ∨ (Real.pi - T n ≤ θ ∧ θ < Real.pi))
+    (ψ : (Fin n → Bool) → ℂ) (_hψ : ∑ x, Complex.normSq (ψ x) = 1)
+    (M : LocalPOVM (Fin n → Bool) (Fin n)),
+    R.readout () ⟨n, θ, M⟩ ψ ≤ d n (cstar n θ)^2
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  classical
+  intro h
+  let M : LocalPOVM (Fin 3 → Bool) (Fin 3) :=
+    ⟨fun i => if i = 0 then 1 else 0, by
+      intro i
+      split_ifs
+      · exact Matrix.PosSemidef.one
+      · exact Matrix.PosSemidef.zero,
+      by simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]⟩
+  have hb := h 3 (by norm_num) (T 3)
+    (Or.inl ⟨by
+      dsimp [T]
+      exact div_pos (Real.arccos_pos.mpr (by norm_num)) (by norm_num), le_rfl⟩)
+    (fun x => if x = (fun _ => false) then 1 else 0) (by simp) M
+  change d 3 (cstar 3 (T 3))^2 + 1 ≤ d 3 (cstar 3 (T 3))^2 at hb
+  linarith
+
+private theorem dependence : ObservationalDependence signature actual := by
+  classical
+  intro i
+  let M : LocalPOVM (Fin 1 → Bool) (Fin 1) :=
+    ⟨fun _ => 1, fun _ => Matrix.PosSemidef.one, by simp⟩
+  refine ⟨⟨1, 0, M⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+  norm_num [actual, realize, isoSuccess, fire, M, dotProduct]
+
+def source_registration : Registration arena (type_of% @global_success_upper_bound) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨global_success_upper_bound, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@global_success_upper_bound) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.GlobalSuccessUpperBound.unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.GlobalSuccessUpperBound.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p ψ => isoSuccess p.2.1 ψ p.2.2)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
+    definition := none
+    coordinates := #[0, 2, 6]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+set_option pp.proofs false in
+#print global_success_upper_bound
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.GlobalSuccessUpperBound

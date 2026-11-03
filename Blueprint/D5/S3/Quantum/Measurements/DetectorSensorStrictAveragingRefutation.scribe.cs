@@ -79,12 +79,12 @@ internal sealed class DetectorSensorStrictAveragingRefutationDocument : IScribeD
                         + "amplitudes of φ₁ and φ₂ are 1/3 and zero, so they differ.")),
                     Paragraph(Text(
                         "There is a three-outcome POVM with identity effect at outcome 0 and "
-                        + "zero effects at the other outcomes. For any normalized probe, "
-                        + "positivity makes every Born probability nonnegative. Completeness "
-                        + "makes their sum, for each fixed fired state, equal to its squared "
-                        + "norm, which is one. The probability of its correct outcome is "
-                        + "therefore at most one. Averaging these three probabilities bounds "
-                        + "isoSuccess by one and hence bounds its range above.")),
+                        + "zero effects at the other outcomes.")),
+                    Paragraph(Text("For any normalized probe, "),
+                        Ref(Optimality + ".global_success_upper_bound"),
+                        Text(" at n = 3 and θ = π/4 bounds every POVM success by "
+                            + "d 3 (cstar 3 (π/4))². This bounds the range above without "
+                            + "evaluating the bound.")),
                     Paragraph(Text("The "), Ref(Optimality + ".result"),
                         Text(" applies to each minimizing weight. For every normalized competitor "
                             + "ψ and every POVM M it supplies a POVM M′ on φ₁, and likewise on φ₂, "
