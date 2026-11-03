@@ -26,6 +26,10 @@ $$\exists g:\mathbb{Z} \to \mathbb{N}, (\forall n:\mathbb{Z}, (1 \le n) \implies
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Polynomial/HermiteTieRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a381737-hermite-tie-recurrence` (proved) by `D5/S3/Analytic/Polynomial/HermiteTieRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a381737-hermite-tie-recurrence","declaration_gid":"D5/S3/Analytic/Polynomial/HermiteTieRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mike Sheppard (2025). *Orders k of Hermite polynomials whose maximal coefficient in absolute value appears twice*. URL: <https://oeis.org/A381737/internal?rev=28>.
