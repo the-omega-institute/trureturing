@@ -13,6 +13,12 @@ internal sealed class TwoDeletionChannelEntropyDocument : IScribeDocumentDefinit
         "Exact binary run counts and input entropy for two deletions and insertions.",
         H("TwoDeletionChannelEntropy"),
         Blocks(
+            Node("deletion_total", DeletionTotalFormula(),
+                "For every pair of natural lengths m and n and every binary word x of length m, "
+                + "the sum of its index-embedding counts over all binary words of length n is "
+                + "C(n,m) times 2^(n-m), independently of x. This is the exact general total mass; "
+                + "deletion_total_two and normalized_deletion_entropy consume the same declaration.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("empty_embeddings", Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("y"), Colon, Sp, Seq(Parenthesized(Seq(Named("Fin"), Sp, F.Id("n"))), Sp, To, Sp, Parenthesized(Named("Bool"))))), Comma, Sp, Parenthesized(Seq(Named("embeddings"), Sp, Parenthesized(Seq(Named("fun"), Sp, Seq(F.Id("i"), Sp, Colon, Sp, Named("Fin"), Sp, new Formula.Number(0)), Mapsto, Sp, Parenthesized(Seq(Seq(Named("Fin"), Dot, Named("elim0")), Sp, F.Id("i"))))), Sp, F.Id("y"), Sp, Eq, Sp, new Formula.Number(1))))))), "The displayed identity or comparison relates binary embedding counts and their run profiles.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("phi", Disp(Seq(Forall, Sp, Parenthesized(Seq(Iota, Colon, Sp, Named("Type"))), Comma, Sp, Parenthesized(Seq(OpenBracket, Seq(Named("Fintype"), Sp, Iota), CloseBracket, Sp, To, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("c"), Colon, Sp, Seq(Parenthesized(Iota), Sp, To, Sp, Parenthesized(Seq(Mathbb, Grp(F.Id("N"))))))), Comma, Sp, Parenthesized(Seq(Named("phi"), Sp, Parenthesized(Seq(Iota, Sp, Seq(Colon, Eq), Sp, Iota)), Sp, F.Id("c"), Sp, Eq, Sp, Parenthesized(Seq(new Formula.Subscript(Sum, F.Id("i")), Sp, Parenthesized(Seq(Parenthesized(Seq(Seq(F.Id("c"), Sp, F.Id("i")), Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Sp, Cdot, Sp, Seq(Named("Real"), Dot, Named("logb")), Sp, new Formula.Number(2), Sp, Parenthesized(Seq(F.Id("c"), Sp, F.Id("i"))))))))))))))), "The displayed expression defines phi.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("ofFn_complement_alternating", Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Seq(Named("List"), Dot, Named("ofFn")), Sp, Parenthesized(Seq(Named("fun"), Sp, F.Id("i"), Mapsto, Sp, Parenthesized(Seq(Bang, Sp, Parenthesized(Seq(Named("fun"), Sp, Seq(F.Id("i"), Sp, Colon, Sp, Named("Fin"), Sp, F.Id("n")), Mapsto, Sp, Parenthesized(Seq(Named("decide"), Sp, Parenthesized(Seq(new Formula.Modulo(Call("val", F.Id("i")), new Formula.Number(2)), Sp, Eq, Sp, new Formula.Number(1))))))), Sp, F.Id("i"))))), Sp, Eq, Sp, Named("altList"), Sp, Named("true"), Sp, F.Id("n"))))), "The displayed identity or comparison relates binary embedding counts and their run profiles.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -32,6 +38,20 @@ internal sealed class TwoDeletionChannelEntropyDocument : IScribeDocumentDefinit
             DescribeId.Create("twodeletionchannelentropy-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(name), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula DeletionTotalFormula()
+    {
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula wordM = Seq(Named("Fin"), Sp, F.Id("m"), Sp, To, Sp, Named("Bool"));
+        Formula wordN = Seq(Named("Fin"), Sp, F.Id("n"), Sp, To, Sp, Named("Bool"));
+        Formula sum = Seq(new Formula.Subscript(Sum, Seq(F.Id("y"), Colon, Sp, wordN)),
+            Sp, Named("embeddings"), Sp, F.Id("x"), Sp, F.Id("y"));
+        Formula count = Seq(Named("Nat"), Dot, Named("choose"), Sp, F.Id("n"), Sp, F.Id("m"),
+            Sp, Cdot, Sp, new Formula.Power(new Formula.Number(2),
+                Seq(F.Id("n"), Sp, Minus, Sp, F.Id("m"))));
+        return Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("m"), Sp, F.Id("n"), Colon, Sp, naturals)),
+            Sp, Parenthesized(Seq(F.Id("x"), Colon, Sp, wordM)), Comma, Sp, sum, Sp, Eq, Sp, count));
+    }
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

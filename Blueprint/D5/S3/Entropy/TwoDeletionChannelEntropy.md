@@ -4,7 +4,21 @@
 
 Exact binary run counts and input entropy for two deletions and insertions.
 
-**Theorem 1.1 (empty_embeddings).**
+**Theorem 1.1 (deletion_total).**
+
+$$\forall (m n: \mathbb{N}) (x: \operatorname{Fin} m \to \operatorname{Bool}), \sum_{y: \operatorname{Fin} n \to \operatorname{Bool}} \operatorname{embeddings} x y = \operatorname{Nat}.\operatorname{choose} n m \cdot 2^{n - m}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/TwoDeletionChannelEntropy.deletion_total` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. Singhvi; O. Sabary; D. Bar-Lev; E. Yaakobi (2025). *Conditional Entropies of k-Deletion/Insertion Channels*. DOI: [10.1109/TIT.2025.3581849](https://doi.org/10.1109/TIT.2025.3581849). URL: <https://arxiv.org/abs/2407.10026v2>.
+
+*Commentary.*
+
+For every pair of natural lengths m and n and every binary word x of length m, the sum of its index-embedding counts over all binary words of length n is C(n,m) times 2^(n-m), independently of x. This is the exact general total mass; deletion_total_two and normalized_deletion_entropy consume the same declaration.
+
+**Theorem 1.2 (empty_embeddings).**
 
 $$\forall (n: \mathbb{N}), (\forall (y: (\operatorname{Fin} n) \to (\operatorname{Bool})), (\operatorname{embeddings} (\operatorname{fun} i : \operatorname{Fin} 0\mapsto (\operatorname{Fin}.\operatorname{elim0} i)) y = 1))$$
 
@@ -18,7 +32,7 @@ $$\forall (n: \mathbb{N}), (\forall (y: (\operatorname{Fin} n) \to (\operatornam
 
 The displayed identity or comparison relates binary embedding counts and their run profiles.
 
-**Definition 1.2 (phi).**
+**Definition 1.3 (phi).**
 
 $$\forall (\iota: \operatorname{Type}), ([\operatorname{Fintype} \iota] \to (\forall (c: (\iota) \to (\mathbb{N})), (\operatorname{phi} (\iota := \iota) c = (\sum_{i} ((c i: \mathbb{R}) \cdot \operatorname{Real}.\operatorname{logb} 2 (c i))))))$$
 
@@ -32,7 +46,7 @@ $$\forall (\iota: \operatorname{Type}), ([\operatorname{Fintype} \iota] \to (\fo
 
 The displayed expression defines phi.
 
-**Theorem 1.3 (ofFn_complement_alternating).**
+**Theorem 1.4 (ofFn_complement_alternating).**
 
 $$\forall (n: \mathbb{N}), (\operatorname{List}.\operatorname{ofFn} (\operatorname{fun} i\mapsto (! (\operatorname{fun} i : \operatorname{Fin} n\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1))) i)) = \operatorname{altList} \operatorname{true} n)$$
 
@@ -46,7 +60,7 @@ $$\forall (n: \mathbb{N}), (\operatorname{List}.\operatorname{ofFn} (\operatorna
 
 The displayed identity or comparison relates binary embedding counts and their run profiles.
 
-**Definition 1.4 (RunDeletionCountingLowerBound).**
+**Definition 1.5 (RunDeletionCountingLowerBound).**
 
 $$\operatorname{RunDeletionCountingLowerBound} = (\forall (m: \mathbb{N}) (y: (\operatorname{Fin} m) \to (\operatorname{Bool})) (b: \operatorname{Bool}) (rs: \operatorname{List} \mathbb{N}), (((\forall r \in rs, (0 < r))) \to ((\operatorname{List}.\operatorname{ofFn} y = \operatorname{runWord} b rs) \to (\operatorname{deletionRunScore} rs \leq \operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} (m + 2) \to \operatorname{Bool}\mapsto (\operatorname{embeddings} y x))))))$$
 
@@ -60,7 +74,7 @@ $$\operatorname{RunDeletionCountingLowerBound} = (\forall (m: \mathbb{N}) (y: (\
 
 The displayed expression defines RunDeletionCountingLowerBound.
 
-**Theorem 1.5 (alternating_insertion_phi).**
+**Theorem 1.6 (alternating_insertion_phi).**
 
 $$\forall (m: \mathbb{N}), (\operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} m \to \operatorname{Bool}\mapsto (\operatorname{embeddings} x ((\operatorname{fun} i : \operatorname{Fin} (m + 2)\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1)))))) = f (m + 1))$$
 
@@ -74,7 +88,7 @@ $$\forall (m: \mathbb{N}), (\operatorname{phi} (\operatorname{fun} x : \operator
 
 The displayed identity or comparison relates binary embedding counts and their run profiles.
 
-**Theorem 1.6 (alternating_deletion_phi).**
+**Theorem 1.7 (alternating_deletion_phi).**
 
 $$\forall (m: \mathbb{N}), ((1 \leq m) \to (\operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} (m + 2) \to \operatorname{Bool}\mapsto (\operatorname{embeddings} ((\operatorname{fun} i : \operatorname{Fin} m\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1)))) x)) = 4 \cdot (m: \mathbb{R})^{2} + 3 \cdot m \cdot \operatorname{Real}.\operatorname{logb} 2 3 + ((m: \mathbb{R}) + 1) \cdot \operatorname{Real}.\operatorname{logb} 2 ((m: \mathbb{R}) + 1)))$$
 
@@ -88,7 +102,7 @@ $$\forall (m: \mathbb{N}), ((1 \leq m) \to (\operatorname{phi} (\operatorname{fu
 
 The displayed identity or comparison relates binary embedding counts and their run profiles.
 
-**Theorem 1.7 (insertion_entropy_formula).**
+**Theorem 1.8 (insertion_entropy_formula).**
 
 $$\forall (m: \mathbb{N}), (\forall (y: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool})), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Entropy}.\operatorname{MaxEntropy}.\operatorname{shannonEntropy} ((\operatorname{fun} \{m: \mathbb{N}\} (y: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool})) (x: (\operatorname{Fin} m) \to (\operatorname{Bool}))\mapsto ((\operatorname{embeddings} x y: \mathbb{R}) / \sum_{x' : \operatorname{Fin} m \to \operatorname{Bool}} ((\operatorname{embeddings} x' y: \mathbb{R})))) y) / \operatorname{Real}.\operatorname{log} 2) = \operatorname{Real}.\operatorname{logb} 2 ((m + 2) . \operatorname{choose} m) - \operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} m \to \operatorname{Bool}\mapsto (\operatorname{embeddings} x y)) / (m + 2) . \operatorname{choose} m))$$
 
@@ -102,7 +116,7 @@ $$\forall (m: \mathbb{N}), (\forall (y: (\operatorname{Fin} (m + 2)) \to (\opera
 
 For m ≥ 2, this is Lemma 3 with n = m and k = 2. The cases m = 0 and m = 1 extend the identity to the two shorter input lengths.
 
-**Theorem 1.8 (alternating_insertion_closed_form).**
+**Theorem 1.9 (alternating_insertion_closed_form).**
 
 $$\forall (m: \mathbb{N}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Entropy}.\operatorname{MaxEntropy}.\operatorname{shannonEntropy} ((\operatorname{fun} \{m: \mathbb{N}\} (y: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool})) (x: (\operatorname{Fin} m) \to (\operatorname{Bool}))\mapsto ((\operatorname{embeddings} x y: \mathbb{R}) / \sum_{x' : \operatorname{Fin} m \to \operatorname{Bool}} ((\operatorname{embeddings} x' y: \mathbb{R})))) ((\operatorname{fun} i : \operatorname{Fin} (m + 2)\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1))))) / \operatorname{Real}.\operatorname{log} 2) = \operatorname{Real}.\operatorname{logb} 2 ((m + 2) . \operatorname{choose} 2) - ((m: \mathbb{R}) + 1) \cdot \operatorname{Real}.\operatorname{logb} 2 ((m: \mathbb{R}) + 1) / (m + 2) . \operatorname{choose} 2)$$
 
@@ -116,7 +130,7 @@ $$\forall (m: \mathbb{N}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{E
 
 The displayed identity or comparison relates binary embedding counts and their run profiles.
 
-**Theorem 1.9 (actual_run_insertion_lower).**
+**Theorem 1.10 (actual_run_insertion_lower).**
 
 $$\forall (m: \mathbb{N}), (\forall (y: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool})), (\forall (b: \operatorname{Bool}), (\forall (rs: \operatorname{List} \mathbb{N}), ((\forall r \in rs, (0 < r)) \to ((\operatorname{List}.\operatorname{ofFn} y = \operatorname{runWord} b rs) \to (\operatorname{runPhiInsertion} rs \leq \operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} m \to \operatorname{Bool}\mapsto (\operatorname{embeddings} x y))))))))$$
 
@@ -130,7 +144,7 @@ $$\forall (m: \mathbb{N}), (\forall (y: (\operatorname{Fin} (m + 2)) \to (\opera
 
 The displayed identity or comparison relates binary embedding counts and their run profiles.
 
-**Theorem 1.10 (deletion_entropy_formula).**
+**Theorem 1.11 (deletion_entropy_formula).**
 
 $$\forall (m: \mathbb{N}), (\forall (y: (\operatorname{Fin} m) \to (\operatorname{Bool})), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Entropy}.\operatorname{MaxEntropy}.\operatorname{shannonEntropy} ((\operatorname{fun} \{m: \mathbb{N}\} (y: (\operatorname{Fin} m) \to (\operatorname{Bool})) (x: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool}))\mapsto ((\operatorname{embeddings} y x: \mathbb{R}) / \sum_{x' : \operatorname{Fin} (m + 2) \to \operatorname{Bool}} ((\operatorname{embeddings} y x': \mathbb{R})))) y) / \operatorname{Real}.\operatorname{log} 2) = \operatorname{Real}.\operatorname{logb} 2 (4 \cdot (m + 2) . \operatorname{choose} 2) - \operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} (m + 2) \to \operatorname{Bool}\mapsto (\operatorname{embeddings} y x)) / (4 \cdot (m + 2) . \operatorname{choose} 2)))$$
 
@@ -142,7 +156,7 @@ $$\forall (m: \mathbb{N}), (\forall (y: (\operatorname{Fin} m) \to (\operatornam
 
 The displayed identity or comparison relates binary embedding counts and their run profiles.
 
-**Theorem 1.11 (insertion_entropy_product_formula).**
+**Theorem 1.12 (insertion_entropy_product_formula).**
 
 $$\forall (m: \mathbb{N}), (\forall (y: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool})), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Entropy}.\operatorname{MaxEntropy}.\operatorname{shannonEntropy} ((\operatorname{fun} \{m: \mathbb{N}\} (y: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool})) (x: (\operatorname{Fin} m) \to (\operatorname{Bool}))\mapsto ((\operatorname{embeddings} x y: \mathbb{R}) / \sum_{x' : \operatorname{Fin} m \to \operatorname{Bool}} ((\operatorname{embeddings} x' y: \mathbb{R})))) y) / \operatorname{Real}.\operatorname{log} 2) = \operatorname{Real}.\operatorname{logb} 2 ((m + 2) . \operatorname{choose} m) - \operatorname{Real}.\operatorname{logb} 2 ((\prod_{i} ((((\operatorname{fun} x : \operatorname{Fin} m \to \operatorname{Bool}\mapsto (\operatorname{embeddings} x y))) i)^{(((\operatorname{fun} x : \operatorname{Fin} m \to \operatorname{Bool}\mapsto (\operatorname{embeddings} x y))) i)} : \mathbb{N}))) / (m + 2) . \operatorname{choose} m))$$
 
@@ -156,7 +170,7 @@ $$\forall (m: \mathbb{N}), (\forall (y: (\operatorname{Fin} (m + 2)) \to (\opera
 
 The displayed identity or comparison relates binary embedding counts and their run profiles.
 
-**Theorem 1.12 (alternating_deletion_closed_form).**
+**Theorem 1.13 (alternating_deletion_closed_form).**
 
 $$\forall (m: \mathbb{N}), ((1 \leq m) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Entropy}.\operatorname{MaxEntropy}.\operatorname{shannonEntropy} ((\operatorname{fun} \{m: \mathbb{N}\} (y: (\operatorname{Fin} m) \to (\operatorname{Bool})) (x: (\operatorname{Fin} (m + 2)) \to (\operatorname{Bool}))\mapsto ((\operatorname{embeddings} y x: \mathbb{R}) / \sum_{x' : \operatorname{Fin} (m + 2) \to \operatorname{Bool}} ((\operatorname{embeddings} y x': \mathbb{R})))) ((\operatorname{fun} i : \operatorname{Fin} m\mapsto (\operatorname{decide} (\operatorname{val}\left(i\right) \bmod 2 = 1))))) / \operatorname{Real}.\operatorname{log} 2) = \operatorname{Real}.\operatorname{logb} 2 (4 \cdot (m + 2) . \operatorname{choose} 2) - (4 \cdot (m: \mathbb{R})^{2} + 3 \cdot m \cdot \operatorname{Real}.\operatorname{logb} 2 3 + ((m: \mathbb{R}) + 1) \cdot \operatorname{Real}.\operatorname{logb} 2 ((m: \mathbb{R}) + 1)) / (4 \cdot (m + 2) . \operatorname{choose} 2)))$$
 
@@ -170,7 +184,7 @@ $$\forall (m: \mathbb{N}), ((1 \leq m) \to ((\operatorname{D5}.\operatorname{S3}
 
 The displayed identity or comparison relates binary embedding counts and their run profiles.
 
-**Theorem 1.13 (actual_run_deletion_lower).**
+**Theorem 1.14 (actual_run_deletion_lower).**
 
 $$\forall (m: \mathbb{N}) (y: (\operatorname{Fin} m) \to (\operatorname{Bool})) (b: \operatorname{Bool}) (rs: \operatorname{List} \mathbb{N}), (((\forall r \in rs, (0 < r))) \to ((\operatorname{List}.\operatorname{ofFn} y = \operatorname{runWord} b rs) \to (\operatorname{deletionRunScore} rs \leq \operatorname{phi} (\operatorname{fun} x : \operatorname{Fin} (m + 2) \to \operatorname{Bool}\mapsto (\operatorname{embeddings} y x)))))$$
 
@@ -194,6 +208,7 @@ Every positive run profile of a received word gives a lower bound on its actual 
 - Truth anchor: `D5/S3/Entropy/TwoDeletionChannelEntropy.alternating_insertion_closed_form`
 - Truth anchor: `D5/S3/Entropy/TwoDeletionChannelEntropy.alternating_insertion_phi`
 - Truth anchor: `D5/S3/Entropy/TwoDeletionChannelEntropy.deletion_entropy_formula`
+- Truth anchor: `D5/S3/Entropy/TwoDeletionChannelEntropy.deletion_total`
 - Truth anchor: `D5/S3/Entropy/TwoDeletionChannelEntropy.empty_embeddings`
 - Truth anchor: `D5/S3/Entropy/TwoDeletionChannelEntropy.insertion_entropy_formula`
 - Truth anchor: `D5/S3/Entropy/TwoDeletionChannelEntropy.insertion_entropy_product_formula`
