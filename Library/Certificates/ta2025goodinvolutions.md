@@ -64,3 +64,30 @@ bounds for any other class of subquandles.
 - Text: https://arxiv.org/pdf/2505.08090v5, printed pages 5–7, 14 and 27:
   Example 2.6, Lemma 2.10, Definitions 2.17, 2.20 and 3.8, section 6.3.1,
   Corollary 6.12 and Problem 11.7. Source retrieved 2026-09-30.
+
+## Whole-group central labels and Problem 11.6
+
+Theorem 6.7 characterizes good involutions by a central function zeta with
+`rho(x)=(zeta(x)x)^-1` and `zeta(yxy^-1)=zeta(x)=zeta(rho(x))`.
+For the whole group, set `z(x)=zeta(x)^-1=rho(x)x`. Then the equivalent
+formula is `rho(x)=z(x)x^-1`, with z constant on conjugacy classes and
+`z(z(x)x^-1)=z(x)`. This attribution concerns the characterization, not
+the proposed three-invariant counterexample.
+
+Problem 11.6, Section 11, asks:
+
+> Let G be a finite nonabelian group of order n. Is the number of good
+> involutions of Conj G completely determined by n, the order of the
+> center Z(G), and the class number k(G) of G? If so, is there an exact
+> formula to compute this number?
+
+The counts concern actual maps, not symmetric-quandle isomorphism classes.
+The whole-group condition is essential: this is separate from Problem 11.7
+on conjugation subquandles.
+
+The versioned primary texts inspected on 2026-11-03 were 2505.08090v5,
+2608.19951v1 and 2508.16772v1. The first still poses 11.6;
+Nakajima–Yamaguchi, 2608.19951v1, Example 6.8 and its following paragraph
+refute Ta's 11.8/11.9. No settlement of 11.6 was identified in those
+inspected texts. This bounded audit is not exhaustive citation coverage
+or evidence of worldwide priority or uniqueness.

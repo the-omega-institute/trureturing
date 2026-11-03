@@ -11,7 +11,7 @@ import Mathlib.GroupTheory.Subgroup.Center
 import Mathlib.Algebra.Group.ConjFinite
 import Mathlib.Tactic.Group
 
-/- The central-label classification is the whole-group specialization of
+/-! The central-label classification is the whole-group specialization of
 Ta, arXiv:2505.08090v5, Theorem 6.7. All auxiliary declarations below
 are consumed by the complete three-invariant refutation. -/
 
@@ -66,7 +66,9 @@ def goodLabelEquiv : Good G ≃ Label G where
       calc
         _ = g * (ρ.val x * x) * g⁻¹ := by group
         _ = ρ.val x * x := by
-          rw [Subgroup.mem_center_iff.mp (z x).property g]
+          have hc : g * (ρ.val x * x) = (ρ.val x * x) * g :=
+            Subgroup.mem_center_iff.mp (z x).property g
+          rw [hc]
           group
     · intro x
       apply Subtype.ext
@@ -75,7 +77,7 @@ def goodLabelEquiv : Good G ≃ Label G where
       have h := ρ.property.2.2 x x
       have hc : ρ.val x * x = x * ρ.val x := by
         apply (mul_inv_eq_iff_eq_mul).mp
-        simpa only [inv_mul_cancel_left] using h
+        simpa [mul_assoc] using h
       exact hc.symm
   invFun z := by
     let ρ : G → G := fun x => (z.val x : G) * x⁻¹
@@ -93,11 +95,13 @@ def goodLabelEquiv : Good G ≃ Label G where
       rw [z.property.1]
       have hc := Subgroup.mem_center_iff.mp (z.val x).property g
       simp only [mul_inv_rev, inv_inv]
-      rw [← mul_assoc, ← mul_assoc, hc]
-      group
+      calc
+        _ = ((z.val x : G) * g) * x⁻¹ * g⁻¹ := by group
+        _ = (g * (z.val x : G)) * x⁻¹ * g⁻¹ := by rw [hc]
+        _ = _ := by group
     · intro x
       apply (central_twist_iff _ _).mp
-      simpa only [ρ, mul_inv_cancel_right] using (z.val x).property
+      simpa only [ρ, inv_mul_cancel_right] using (z.val x).property
   left_inv ρ := by
     apply Subtype.ext
     funext x
@@ -144,7 +148,7 @@ def wholeGoodEquiv [Fintype G] [DecidableEq G] :
       have h := congrArg Subtype.val ((ρ.property.2 ⟨x, Finset.mem_univ _⟩).2.1
         ⟨x⁻¹ * y * x, Finset.mem_univ _⟩)
       change f x * (x * (x⁻¹ * y * x) * x⁻¹) * (f x)⁻¹ = x⁻¹ * y * x at h
-      simpa only [mul_inv_cancel_left, mul_inv_cancel_right] using h
+      simpa [mul_assoc] using h
   left_inv ρ := by apply Subtype.ext; rfl
   right_inv ρ := by apply Subtype.ext; rfl
 

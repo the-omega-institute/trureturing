@@ -6,13 +6,21 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/Groups/TaThreeInvariantRefutation.claim; result=D5/S0/Certificates/Groups/TaThreeInvariantRefutation.result; claim=D5/S0/Certificates/Groups/TaThreeInvariantRefutation.claim
    digest: Whole-group counterexample to Ta Problem 11.6, with equal order, center order and class number. -/
 
+/- admission_basis: open-problem-resolution (#25997).
+   proof_shape: content; escape_witness: labelBlockEquiv, used through
+   whole_good_card and both complete numerical counts on the live path.
+   Escape audit of good_counts is unfinished under the linked issue; no
+   declared_validated Reg mirror is claimed. The designated result is exempt.
+   The central-label characterization is attributed to Ta Theorem 6.7, with
+   our z equal to the inverse of the source's zeta. -/
+
 import D5.S3.FiniteGroups.Quandles.BlockCounting
 import Mathlib.GroupTheory.SemidirectProduct
 import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Matrix.Notation
+import Mathlib.Data.Fin.VecNotation
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
 
 namespace D5.S0.Certificates.Groups.TaThreeInvariantRefutation
 
@@ -40,9 +48,9 @@ private def generator (t : Bool) : MulAut N where
     exact h t
   map_mul' := by
     intro x y
-    change Multiplicative.ofAdd (_ * (x.toAdd + y.toAdd)) =
-      Multiplicative.ofAdd (_ * x.toAdd + _ * y.toAdd)
-    rw [mul_add]
+    cases t <;> exact congrArg Multiplicative.ofAdd (mul_add _ _ _)
+
+#check generator
 
 private def action (t : Bool) : H →* MulAut N where
   toFun j := generator t ^ j.toAdd.val
@@ -52,8 +60,12 @@ private def action (t : Bool) : H →* MulAut N where
     ext x
     have h : ∀ (t : Bool) (j k : H) (x : N),
         (generator t ^ (j * k).toAdd.val) x =
-          ((generator t ^ j.toAdd.val) * (generator t ^ k.toAdd.val)) x := by decide
+          ((generator t ^ j.toAdd.val) * (generator t ^ k.toAdd.val)) x := by
+      intro t j k
+      fin_cases t <;> fin_cases j <;> fin_cases k <;> decide
     exact h t j k x
+
+#check action
 
 /-- The native Mathlib semidirect products, with r=5 for false and r=7 for true. -/
 def Gr (t : Bool) := N ⋊[action t] H
@@ -70,7 +82,9 @@ private def size5 (b : Fin 10) : ℕ := if b.val = 0 then 4 else 2
 private def size7 (b : Fin 7) : ℕ := if b.val < 4 then 4 else 2
 
 private def codeTable5 : Fin 64 → Sigma (fun b : Fin 10 => Fin (size5 b)) :=
-  ![⟨0, 0⟩, ⟨1, 0⟩, ⟨7, 0⟩, ⟨1, 1⟩, ⟨2, 0⟩, ⟨3, 0⟩, ⟨4, 0⟩, ⟨5, 0⟩, ⟨8, 0⟩, ⟨6, 0⟩, ⟨9, 0⟩, ⟨6, 1⟩, ⟨2, 1⟩, ⟨5, 1⟩, ⟨4, 1⟩, ⟨3, 1⟩, ⟨0, 1⟩, ⟨1, 0⟩, ⟨7, 1⟩, ⟨1, 1⟩, ⟨2, 0⟩, ⟨3, 0⟩, ⟨4, 0⟩, ⟨5, 0⟩, ⟨8, 1⟩, ⟨6, 0⟩, ⟨9, 1⟩, ⟨6, 1⟩, ⟨2, 1⟩, ⟨5, 1⟩, ⟨4, 1⟩, ⟨3, 1⟩, ⟨0, 2⟩, ⟨1, 0⟩, ⟨7, 0⟩, ⟨1, 1⟩, ⟨2, 0⟩, ⟨3, 0⟩, ⟨4, 0⟩, ⟨5, 0⟩, ⟨8, 0⟩, ⟨6, 0⟩, ⟨9, 0⟩, ⟨6, 1⟩, ⟨2, 1⟩, ⟨5, 1⟩, ⟨4, 1⟩, ⟨3, 1⟩, ⟨0, 3⟩, ⟨1, 0⟩, ⟨7, 1⟩, ⟨1, 1⟩, ⟨2, 0⟩, ⟨3, 0⟩, ⟨4, 0⟩, ⟨5, 0⟩, ⟨8, 1⟩, ⟨6, 0⟩, ⟨9, 1⟩, ⟨6, 1⟩, ⟨2, 1⟩, ⟨5, 1⟩, ⟨4, 1⟩, ⟨3, 1⟩]
+  ![⟨0, ⟨0, by decide⟩⟩, ⟨1, ⟨0, by decide⟩⟩, ⟨7, ⟨0, by decide⟩⟩, ⟨1, ⟨1, by decide⟩⟩, ⟨2, ⟨0, by decide⟩⟩, ⟨3, ⟨0, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨8, ⟨0, by decide⟩⟩, ⟨6, ⟨0, by decide⟩⟩, ⟨9, ⟨0, by decide⟩⟩, ⟨6, ⟨1, by decide⟩⟩, ⟨2, ⟨1, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨3, ⟨1, by decide⟩⟩, ⟨0, ⟨1, by decide⟩⟩, ⟨1, ⟨0, by decide⟩⟩, ⟨7, ⟨1, by decide⟩⟩, ⟨1, ⟨1, by decide⟩⟩, ⟨2, ⟨0, by decide⟩⟩, ⟨3, ⟨0, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨8, ⟨1, by decide⟩⟩, ⟨6, ⟨0, by decide⟩⟩, ⟨9, ⟨1, by decide⟩⟩, ⟨6, ⟨1, by decide⟩⟩, ⟨2, ⟨1, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨3, ⟨1, by decide⟩⟩, ⟨0, ⟨2, by decide⟩⟩, ⟨1, ⟨0, by decide⟩⟩, ⟨7, ⟨0, by decide⟩⟩, ⟨1, ⟨1, by decide⟩⟩, ⟨2, ⟨0, by decide⟩⟩, ⟨3, ⟨0, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨8, ⟨0, by decide⟩⟩, ⟨6, ⟨0, by decide⟩⟩, ⟨9, ⟨0, by decide⟩⟩, ⟨6, ⟨1, by decide⟩⟩, ⟨2, ⟨1, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨3, ⟨1, by decide⟩⟩, ⟨0, ⟨3, by decide⟩⟩, ⟨1, ⟨0, by decide⟩⟩, ⟨7, ⟨1, by decide⟩⟩, ⟨1, ⟨1, by decide⟩⟩, ⟨2, ⟨0, by decide⟩⟩, ⟨3, ⟨0, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨8, ⟨1, by decide⟩⟩, ⟨6, ⟨0, by decide⟩⟩, ⟨9, ⟨1, by decide⟩⟩, ⟨6, ⟨1, by decide⟩⟩, ⟨2, ⟨1, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨3, ⟨1, by decide⟩⟩]
+
+#check codeTable5
 
 private def code5 (x : Gr false) : Sigma (fun b : Fin 10 => Fin (size5 b)) :=
   codeTable5 ⟨x.left.toAdd.val * 4 + x.right.toAdd.val, by
@@ -94,29 +108,53 @@ private def dest5 (b : Fin 10) (i : Fin (size5 b)) (z : Fin 4) : Fin (size5 b) :
         destTable5 b ⟨i.val % 4, Nat.mod_lt _ (by decide)⟩ z < size5 b := by decide
     exact h b i z⟩
 
+#check dest5
+
 private noncomputable def center5 : Fin 4 ≃ Subgroup.center (Gr false) := by
-  have hmem : ∀ z, cen5 z ∈ Subgroup.center (Gr false) := by decide
+  have hmem : ∀ z, cen5 z ∈ Subgroup.center (Gr false) := by
+    intro z
+    fin_cases z <;> decide
   refine Equiv.ofBijective (fun z => ⟨cen5 z, hmem z⟩) ⟨?_, ?_⟩
   · intro z w h
     have hinj : Function.Injective cen5 := by decide
     exact hinj (congrArg Subtype.val h)
   · intro x
-    have hsur : ∀ x : Gr false, x ∈ Subgroup.center (Gr false) → ∃ z, cen5 z = x := by decide
+    have hsur : ∀ x : Gr false, x ∈ Subgroup.center (Gr false) → ∃ z, cen5 z = x := by
+      rintro ⟨i, j⟩
+      change Fin 16 at i
+      change Fin 4 at j
+      fin_cases i <;> fin_cases j <;> decide
     obtain ⟨z, hz⟩ := hsur x.val x.property
     exact ⟨z, Subtype.ext hz⟩
+
+#check center5
 
 private noncomputable def data5 : Data (Gr false) (Fin 10) (Fin 4) (fun b => Fin (size5 b)) where
   code := code5
   repr := repr5
   code_repr := by decide
-  code_conj := by decide
-  repr_conj := by decide
+  code_conj := by
+    rintro ⟨i, j⟩
+    change Fin 16 at i
+    change Fin 4 at j
+    fin_cases i <;> fin_cases j <;> decide
+  repr_conj := by
+    rintro ⟨i, j⟩
+    change Fin 16 at i
+    change Fin 4 at j
+    fin_cases i <;> fin_cases j <;> decide
   center := center5
   dest := dest5
-  code_twist := by decide
+  code_twist := by
+    rintro ⟨i, j⟩
+    change Fin 16 at i
+    change Fin 4 at j
+    fin_cases i <;> fin_cases j <;> decide
+
+#check data5
 
 private def codeTable7 : Fin 64 → Sigma (fun b : Fin 7 => Fin (size7 b)) :=
-  ![⟨0, 0⟩, ⟨4, 0⟩, ⟨0, 1⟩, ⟨4, 1⟩, ⟨1, 0⟩, ⟨5, 0⟩, ⟨1, 1⟩, ⟨5, 1⟩, ⟨2, 0⟩, ⟨4, 0⟩, ⟨2, 1⟩, ⟨4, 1⟩, ⟨3, 0⟩, ⟨5, 0⟩, ⟨3, 1⟩, ⟨5, 1⟩, ⟨6, 0⟩, ⟨4, 0⟩, ⟨6, 1⟩, ⟨4, 1⟩, ⟨3, 0⟩, ⟨5, 0⟩, ⟨3, 1⟩, ⟨5, 1⟩, ⟨2, 2⟩, ⟨4, 0⟩, ⟨2, 3⟩, ⟨4, 1⟩, ⟨1, 0⟩, ⟨5, 0⟩, ⟨1, 1⟩, ⟨5, 1⟩, ⟨0, 2⟩, ⟨4, 0⟩, ⟨0, 3⟩, ⟨4, 1⟩, ⟨1, 2⟩, ⟨5, 0⟩, ⟨1, 3⟩, ⟨5, 1⟩, ⟨2, 2⟩, ⟨4, 0⟩, ⟨2, 3⟩, ⟨4, 1⟩, ⟨3, 2⟩, ⟨5, 0⟩, ⟨3, 3⟩, ⟨5, 1⟩, ⟨6, 0⟩, ⟨4, 0⟩, ⟨6, 1⟩, ⟨4, 1⟩, ⟨3, 2⟩, ⟨5, 0⟩, ⟨3, 3⟩, ⟨5, 1⟩, ⟨2, 0⟩, ⟨4, 0⟩, ⟨2, 1⟩, ⟨4, 1⟩, ⟨1, 2⟩, ⟨5, 0⟩, ⟨1, 3⟩, ⟨5, 1⟩]
+  ![⟨0, ⟨0, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨0, ⟨1, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨1, ⟨0, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨1, ⟨1, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨2, ⟨0, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨2, ⟨1, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨3, ⟨0, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨3, ⟨1, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨6, ⟨0, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨6, ⟨1, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨3, ⟨0, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨3, ⟨1, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨2, ⟨2, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨2, ⟨3, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨1, ⟨0, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨1, ⟨1, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨0, ⟨2, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨0, ⟨3, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨1, ⟨2, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨1, ⟨3, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨2, ⟨2, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨2, ⟨3, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨3, ⟨2, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨3, ⟨3, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨6, ⟨0, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨6, ⟨1, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨3, ⟨2, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨3, ⟨3, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩, ⟨2, ⟨0, by decide⟩⟩, ⟨4, ⟨0, by decide⟩⟩, ⟨2, ⟨1, by decide⟩⟩, ⟨4, ⟨1, by decide⟩⟩, ⟨1, ⟨2, by decide⟩⟩, ⟨5, ⟨0, by decide⟩⟩, ⟨1, ⟨3, by decide⟩⟩, ⟨5, ⟨1, by decide⟩⟩]
 
 private def code7 (x : Gr true) : Sigma (fun b : Fin 7 => Fin (size7 b)) :=
   codeTable7 ⟨x.left.toAdd.val * 4 + x.right.toAdd.val, by
@@ -141,34 +179,64 @@ private def dest7 (b : Fin 7) (i : Fin (size7 b)) (z : Fin 4) : Fin (size7 b) :=
     exact h b i z⟩
 
 private noncomputable def center7 : Fin 4 ≃ Subgroup.center (Gr true) := by
-  have hmem : ∀ z, cen7 z ∈ Subgroup.center (Gr true) := by decide
+  have hmem : ∀ z, cen7 z ∈ Subgroup.center (Gr true) := by
+    intro z
+    fin_cases z <;> decide
   refine Equiv.ofBijective (fun z => ⟨cen7 z, hmem z⟩) ⟨?_, ?_⟩
   · intro z w h
     have hinj : Function.Injective cen7 := by decide
     exact hinj (congrArg Subtype.val h)
   · intro x
-    have hsur : ∀ x : Gr true, x ∈ Subgroup.center (Gr true) → ∃ z, cen7 z = x := by decide
+    have hsur : ∀ x : Gr true, x ∈ Subgroup.center (Gr true) → ∃ z, cen7 z = x := by
+      rintro ⟨i, j⟩
+      change Fin 16 at i
+      change Fin 4 at j
+      fin_cases i <;> fin_cases j <;> decide
     obtain ⟨z, hz⟩ := hsur x.val x.property
     exact ⟨z, Subtype.ext hz⟩
+
+#check center7
 
 private noncomputable def data7 : Data (Gr true) (Fin 7) (Fin 4) (fun b => Fin (size7 b)) where
   code := code7
   repr := repr7
   code_repr := by decide
-  code_conj := by decide
-  repr_conj := by decide
+  code_conj := by
+    rintro ⟨i, j⟩
+    change Fin 16 at i
+    change Fin 4 at j
+    fin_cases i <;> fin_cases j <;> decide
+  repr_conj := by
+    rintro ⟨i, j⟩
+    change Fin 16 at i
+    change Fin 4 at j
+    fin_cases i <;> fin_cases j <;> decide
   center := center7
   dest := dest7
-  code_twist := by decide
+  code_twist := by
+    rintro ⟨i, j⟩
+    change Fin 16 at i
+    change Fin 4 at j
+    fin_cases i <;> fin_cases j <;> decide
+
+#check data7
 
 private def count5 (b : Fin 10) : ℕ := if b.val = 0 then 10 else if b.val < 7 then 4 else 6
 private def count7 (b : Fin 7) : ℕ := if b.val < 4 then 10 else 6
 
 private theorem local_counts5 : ∀ b : Fin 10,
-    Fintype.card (Local dest5 b) = count5 b := by decide
+    Fintype.card (Local dest5 b) = count5 b := by
+  intro b
+  fin_cases b <;> decide
+
+#check local_counts5
 
 private theorem local_counts7 : ∀ b : Fin 7,
-    Fintype.card (Local dest7 b) = count7 b := by decide
+    Fintype.card (Local dest7 b) = count7 b := by
+  intro b
+  fin_cases b <;> decide
+
+#check local_counts7
 
 /-- Cardinality of all good maps of the whole conjugation quandle, using
 exactly the existing repository definition. -/

@@ -6,6 +6,14 @@
    utility: none
    digest: Complete counting of good involutions by independent finite central-label blocks. -/
 
+/- Escape audit unfinished for good_card and whole_good_card:
+https://github.com/the-omega-institute/trureturing/issues/25997.
+No declared_validated Reg mirror is claimed. The full dependent group,
+partition and center telescope still needs a faithful source reconstruction
+with variation, sensitivity and actual observational-dependence proofs.
+The product formula is consumed by both counts in TaThreeInvariantRefutation.
+This module has no finite computational certificate of its own. -/
+
 import D5.S3.FiniteGroups.Quandles.CentralLabels
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.SetTheory.Cardinal.Finite
@@ -37,7 +45,9 @@ def Local (d : ∀ b, C b → Z → C b) (b : B) :=
 private theorem label_repr (D : Data G B Z C) (z : Label G) (x : G) :
     z.val x = z.val (D.repr (D.code x)) := by
   obtain ⟨g, hg⟩ := D.repr_conj x
-  rw [← hg, z.property.1]
+  calc
+    z.val x = z.val (g * D.repr (D.code x) * g⁻¹) := congrArg z.val hg.symm
+    _ = z.val (D.repr (D.code x)) := z.property.1 _ _
 
 /-- The complete global-to-local bijection. Completeness uses both directions
 of the conjugacy partition and surjectivity of the enumeration of the center. -/
@@ -51,19 +61,21 @@ def labelBlockEquiv (D : Data G B Z C) : Label G ≃ (∀ b, Local D.dest b) whe
     have hz := z.property.2 (D.repr ⟨b, i⟩)
     have ht := label_repr D z ((z.val (D.repr ⟨b, i⟩) : G) * (D.repr ⟨b, i⟩)⁻¹)
     have hcode := D.code_twist (D.repr ⟨b, i⟩) (f i)
-    simp only [D.code_repr, f, Equiv.apply_symm_apply] at hcode
+    rw [D.code_repr ⟨b, i⟩] at hcode
+    simp only [f, Equiv.apply_symm_apply] at hcode
     rw [hcode] at ht
     exact ht.symm.trans hz
   invFun f := by
-    let z : G → Subgroup.center G := fun x => D.center ((f (D.code x).1).val (D.code x).2)
+    let v : Sigma C → Z := fun c => (f c.1).val c.2
+    let z : G → Subgroup.center G := fun x => D.center (v (D.code x))
     refine ⟨z, ?_, ?_⟩
     · intro g x
-      simp only [z, D.code_conj]
+      change D.center (v (D.code (g * x * g⁻¹))) = D.center (v (D.code x))
+      rw [D.code_conj g x]
     · intro x
-      change D.center ((f (D.code ((D.center ((f (D.code x).1).val (D.code x).2) : G)
-        * x⁻¹))).1).val (D.code ((D.center ((f (D.code x).1).val (D.code x).2) : G)
-        * x⁻¹)).2) = _
-      simp only [D.code_twist]
+      change D.center (v (D.code ((D.center (v (D.code x)) : G) * x⁻¹))) =
+        D.center (v (D.code x))
+      rw [D.code_twist x (v (D.code x))]
       exact congrArg D.center ((f (D.code x).1).property (D.code x).2)
   left_inv z := by
     apply Subtype.ext
@@ -77,7 +89,7 @@ def labelBlockEquiv (D : Data G B Z C) : Label G ≃ (∀ b, Local D.dest b) whe
     funext i
     change D.center.symm (D.center ((f (D.code (D.repr ⟨b,i⟩)).1).val
       (D.code (D.repr ⟨b,i⟩)).2)) = (f b).val i
-    simp only [D.code_repr, Equiv.symm_apply_apply]
+    rw [D.code_repr ⟨b, i⟩, Equiv.symm_apply_apply]
 
 /-- Finite block factorization, including zero-count and empty-block cases. -/
 theorem good_card [Fintype B] (D : Data G B Z C) :
