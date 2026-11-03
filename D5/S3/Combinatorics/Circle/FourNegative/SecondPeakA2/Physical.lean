@@ -50,17 +50,19 @@ private theorem physical_windows (b c d p q h v m M : ℕ) (before : Bool)
   obtain ⟨hbase,hnew⟩ := source_bases b c d p q h hc hd hb
   have seam (side : Bool) (r : Fin 4) :
       rowSeams 2 b c d v m M before side r=
-        if side then SecondPeakHighD.newEnds 4 p q h v m M before r
-        else SecondPeakHighD.oldEnds 4 p q h v m M r := by
+        if side then SecondPeakHighD.newEnds (4:ℤ) p q h v m M before r
+        else SecondPeakHighD.oldEnds (4:ℤ) p q h v m M r := by
     cases side <;> fin_cases r <;>
       simp [rowSeams,rowBase,hbase,hnew,SecondPeakHighD.newEnds,SecondPeakHighD.oldEnds]
-    all_goals split_ifs <;> ring
+    all_goals try split_ifs
+    all_goals dsimp [A,B,L,K,SU,SV,SW]
+    all_goals ring
   have heads (side : Bool) (r : Fin 4) :
       rowHeads 2 b c d side r=
-        if side then SecondPeakHighD.newHeads 4 p q h r
-        else SecondPeakHighD.oldHeads 4 p q h r := by
+        if side then SecondPeakHighD.newHeads (4:ℤ) p q h r
+        else SecondPeakHighD.oldHeads (4:ℤ) p q h r := by
     cases side <;> fin_cases r <;>
-      simp [rowHeads,rowBase,hbase,hnew,SecondPeakHighD.newHeads,SecondPeakHighD.oldHeads]
+      simp [rowHeads,rowBase,hbase,hnew,SecondPeakHighD.newHeads,SecondPeakHighD.oldHeads,A,B,L,K,SU,SV,SW]
   intro side r
   rw [seam,heads]
   cases side

@@ -24,7 +24,7 @@ private theorem small_odd_first (p q : ℤ)
   all_goals norm_num [R,A,L,K,y,Q,SecondPeakHighD.A,SecondPeakHighD.L,
     SecondPeakHighD.K,SecondPeakHighD.Z,SecondPeakHighD.T,SecondPeakHighD.Y]
   all_goals ring_nf
-  all_goals positivity
+  all_goals nlinarith [sq_nonneg u]
 
 private theorem small_six_first (p q : ℤ)
     (hp : p=4 ∨ p=8 ∨ p=16 ∨ p=32) (hq : 64≤q) :
@@ -38,7 +38,7 @@ private theorem small_six_first (p q : ℤ)
   all_goals norm_num [R,A,L,K,y,Q,SecondPeakHighD.A,SecondPeakHighD.L,
     SecondPeakHighD.K,SecondPeakHighD.Z,SecondPeakHighD.T,SecondPeakHighD.Y]
   all_goals ring_nf
-  all_goals positivity
+  all_goals nlinarith [sq_nonneg u]
 
 private theorem exceptional_first (u : ℤ) (hu : 16≤u) :
     First 4 (4*u) 1 (11*u-1) (8*u+1) true := by
@@ -50,7 +50,7 @@ private theorem exceptional_first (u : ℤ) (hu : 16≤u) :
   all_goals norm_num [R,A,L,K,y,Q,SecondPeakHighD.A,SecondPeakHighD.L,
     SecondPeakHighD.K,SecondPeakHighD.Z,SecondPeakHighD.T,SecondPeakHighD.Y]
   all_goals ring_nf
-  all_goals positivity
+  all_goals nlinarith [sq_nonneg w]
 
 /-- h=2, m=1 and an odd M, throughout the infinite small-p sector. -/
 private theorem small_odd_exists (p q : ℕ)

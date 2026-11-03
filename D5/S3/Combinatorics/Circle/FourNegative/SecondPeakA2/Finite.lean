@@ -70,7 +70,7 @@ def boundaryRows : List BoundaryRow := [
 private theorem boundary_checked : ∀ r∈boundaryRows, r.Check := by
   simp only [boundaryRows,List.mem_cons,List.mem_nil_iff,or_false]
   intro r hr
-  rcases hr with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;> decide
+  rcases hr with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;> (unfold BoundaryRow.Check Windows; decide)
 
 private theorem boundary_good (r : BoundaryRow) (hr : r∈boundaryRows) :
     Good r.p r.q r.h r.v r.m r.M r.before := by
