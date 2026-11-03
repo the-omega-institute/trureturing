@@ -58,6 +58,10 @@ $$\forall (n: \mathbb{N}), \operatorname{a344611}\left(n\right) \le \operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/WisemanA344611OddLengthInjection.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wiseman-a344611` (proved) by `D5/S1/Words/Compositions/WisemanA344611OddLengthInjection.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wiseman-a344611","declaration_gid":"D5/S1/Words/Compositions/WisemanA344611OddLengthInjection.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gus Wiseman (2021). *OEIS A344611 — reverse-alternating sums of integer partitions*. URL: <https://oeis.org/A344611>.
