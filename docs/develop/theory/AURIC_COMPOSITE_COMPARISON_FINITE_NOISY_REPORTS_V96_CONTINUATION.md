@@ -341,3 +341,457 @@ $$
 [有限内部约束 V97，定理 9.2](AURIC_FINITE_INTERNAL_CONSTRAINTS_UNIQUE_WHOLE_SOURCE_AND_STABLE_QUANTUM_READOUT_V97.md#thm-c97-low-defect)、[V97 定理 10.1](AURIC_FINITE_INTERNAL_CONSTRAINTS_UNIQUE_WHOLE_SOURCE_AND_STABLE_QUANTUM_READOUT_V97.md#thm-c97-inner-certificate)及[V97 §16](AURIC_FINITE_INTERNAL_CONSTRAINTS_UNIQUE_WHOLE_SOURCE_AND_STABLE_QUANTUM_READOUT_V97.md#sec-c97-reconstruction)的稳定性对象是既有共同复 $C^*$ 代数中的态与正约束，其固定内层证书使用有限缺额隙及零约束态的局域直径。该约束缺额与本节的实际运算残差不是同一数量；在尚无保持正性、误差包络和实际运算对应的桥梁时，(2.14) 不给出该态的迹距离控制，也不给出参考稳定的近似恢复或近似复 $C^*$ 重构。共同源的唯一性同样不供应实际耦合、控制菜单或时钟标定。
 
 ## 追加锚（本行以下为增补区）
+
+## 5. 无通道闭包的实际全三线性残差合同
+
+**定义 5.1（从原 C99 二元边重新指定前件）。** 本节起另取[原卷定义 20.1](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#20-保留条件取值的实际关系延伸)的二元实际边。第 1–4 节的四通道闭包、$\kappa,\beta$、有序活动参照和 $\Theta$ 均不是本节前件或报告。局部 $J_A,J_B$ 是非零有限维实空间，分别有正定内积 $g_J$、交换含幺 Frobenius 双线性乘法 $S_J$，以及非零实线性指派 $D^J:J_J\to\operatorname{Der}(J_J,S_J)$。记 $L^J_ac=S_J(a,c)$、$B_J(a,c)=D^J_ac$。不预设交替、Jacobi 或 $D^J_{1_J}=0$。
+
+同一实际联合空间和内积为 $V=J_A\otimes_{\mathbb R}J_B$、$g_V=g_A\otimes g_B$。$M:V\times V\to V$ 是任意交换含幺 Frobenius 双线性乘法，单位恰为 $1_A\otimes1_B$；$\Gamma:V\to\operatorname{End}_{\mathbb R}(V)$ 任意实线性。原卷 (20.1)、(20.2) 原样对全部输入成立，即
+
+$$
+\begin{aligned}
+M(a\otimes1_B,c\otimes d)&=S_A(a,c)\otimes d,\\
+M(1_A\otimes b,c\otimes d)&=c\otimes S_B(b,d),\\
+\Gamma_{a\otimes b}(c\otimes1_B)&=D^A_ac\otimes b,\\
+\Gamma_{a\otimes b}(1_A\otimes d)&=a\otimes D^B_bd.
+\end{aligned}
+\tag{5.1}
+$$
+
+仅将原卷 (20.3) 的零恒等式替换为同一实际运算的三线性残差
+
+$$
+E(H,X,Y)=\Gamma_HM(X,Y)
+       -M(\Gamma_HX,Y)-M(X,\Gamma_HY).
+\tag{5.2}
+$$
+
+不另要求 $\Gamma_H$ 是导子、斜伴随或满足 Jacobi，也不将 $M$ 投影到任何四通道空间。这里研究的是 C99 所用二元边的局部交替桥；原卷定义 20.2 对原整体再作活动延伸的存在量词，不由小残差自动供应。
+
+**定义 5.2（完整报告、单位和有限条件参数）。** 固定两方的完整正交单位基 $(e_i)_{i=1}^{n_A}$、$(f_j)_{j=1}^{n_B}$，维数包括单位方向，但不要求单位本身是基向量。记其乘积正交单位基为 $(v_\mu)_{\mu=1}^N$，$N=n_An_B$。报告是每个有序三元标签的实际输出，误差量为未作平均的平方和：
+
+$$
+\epsilon^2=
+\sum_{\mu,\nu,\lambda=1}^N
+ \|E(v_\mu,v_\nu,v_\lambda)\|^2.
+\tag{5.3}
+$$
+
+$\epsilon$ 是此三线性张量的 Hilbert–Schmidt 范数，与所选完整正交单位基无关，且
+
+$$
+\|E(H,X,Y)\|\le\epsilon\|H\|\|X\|\|Y\|.
+\tag{5.4}
+$$
+
+若报告的是每个三元标签的均方根输出 $\eta$，则 $\epsilon=N^{3/2}\eta$，不是 $\eta$ 本身。若输出再拆成标量坐标，(5.3) 已含输出坐标的平方和，不再除以输出维数。
+
+对 $J=A,B$，取同一实现上的有限非负上界 $\ell_J,d_J$，并定义有限曲率读数 $k_J$：
+
+$$
+\begin{aligned}
+u_J&=\|1_J\|>0,\\
+\|S_J(a,c)\|&\le\ell_J\|a\|\|c\|,\qquad
+\|D^J_ac\|\le d_J\|a\|\|c\|,\\
+k_A&=\max_{i,j,r}
+       \|[L^A_{e_i},L^A_{e_j}]e_r\|,\qquad
+k_B=\max_{i,j,r}
+       \|[L^B_{f_i},L^B_{f_j}]f_r\|.
+\end{aligned}
+\tag{5.5}
+$$
+
+这些是附加可给定的充分参数，不是由 $\epsilon$ 单独反演出的数。它们可完全从局部有限表取得：例如 $\ell_J,d_J$ 可分别取 $\bigl(\sum_{i,j}\|S_J(e_i,e_j)\|^2\bigr)^{1/2}$、$\bigl(\sum_{i,j}\|D^J_{e_i}e_j\|^2\bigr)^{1/2}$，对 $B$ 方以 $f$ 代 $e$。允许使用更紧的实际双线性运算范数上界。$k_J$ 是指定基上的最大值，不冒充整个单位球上的最大曲率；改变基时可重算它。单位长度不被默认为 $1$，且 $\ell_Ju_J\ge1$。
+
+本合同中的活动性保证每个 $k_J>0$，但不给任何统一正下界。事实上若完整曲率表为零，双线性使全部左乘对易；交换性再给 $L_{S(a,c)}=L_aL_c$，所以乘法结合。有限正含幺交换结合 Frobenius 代数由共同自伴谱分解同构于有限实直积，其导子全为零，和活动性矛盾。这正是原卷定理 21.1 所用的定性论证。下文仍逐项保留 $k_J=0$ 的公式分支，明确零分母时能得什么；活动合同排除该分支，并不授权在一个变化族上把 $k_J$ 换成未给出的统一常数。
+
+## 6. 完整实际残差的曲率条件二次根证书
+
+**定理 6.1（自缺陷、完整对称缺陷及单位生成元）。** 在定义 5.1–5.2 的同一实现上，置
+
+$$
+c_A=u_B(1+2u_A\ell_A),\qquad
+c_B=u_A(1+2u_B\ell_B).
+\tag{6.1}
+$$
+
+若 $k_B>0$，定义
+
+$$
+r_A=
+\frac{\epsilon c_B+
+ \sqrt{\epsilon^2c_B^2+4k_B\epsilon c_A d_B}}{2k_B},
+\qquad
+\delta_A=\min\{d_A,r_A\};
+\tag{6.2}
+$$
+
+若 $k_B=0$，定义 $\delta_A=d_A$，不对 (6.2) 作 $0/0$ 解释。交换 $A,B$ 定义 $r_B,\delta_B$；其中 $r_B$ 只在 $k_A>0$ 时使用。则两方均有
+
+$$
+\begin{aligned}
+\sup_{\|a\|=1}\|D^J_aa\|&\le\delta_J,\\
+\|D^J_ac+D^J_ca\|&\le2\delta_J\|a\|\|c\|,\\
+\|D^J_{1_J}\|_{\rm op}
+ &\le u_J\min\{d_J,2\delta_J\}.
+\end{aligned}
+\tag{6.3}
+$$
+
+$\delta_J\le d_J$ 是与残差证书独立的平凡截顶。未除以曲率的结论也对零曲率分支成立：对每个单位 $a\in J_A$，
+
+$$
+k_B\|D^A_aa\|^2
+ \le\epsilon\bigl(c_A d_B+c_B\|D^A_aa\|\bigr),
+\tag{6.4}
+$$
+
+另有交换双方的式子。因此不借任何正活动下界就有逐实现的条件证书；只有在给出相应条件控制后，它才是一个族上的消失模量。
+
+证明。局部每个导子都消去单位，并由[比较曲率 V95 定理 2.1 第一项及其证明](AURIC_COMPARISON_DYNAMICAL_CURVATURE_FINITE_FRAME_QUANTUM_V95.md#2-有限正比较下自守与复乘法成为结论)对局部内积斜伴随。该项只用有限维、交换含幺正 Frobenius 乘法与导子律，不用 C95、局部交替或双曲率抵消。下列斜伴随步骤仅施于局部 $D^J_a$，不施于实际 $\Gamma_H$。
+
+先定义线性算子族 $Q$ 和实际差 $R$：
+
+$$
+Q_{a\otimes b}=D^A_a\otimes L^B_b+L^A_a\otimes D^B_b,
+\qquad R_H=\Gamma_H-Q_H.
+\tag{6.5}
+$$
+
+$Q$ 由张量泛性质线性延拓，尚不被断言为实际 $\Gamma$。由 (5.1)，$M(c\otimes1_B,1_A\otimes d)=c\otimes d$。将这两个输入代入 (5.2)，两个输出项各用一次模作用，得到对全部 $H,c,d$ 的精确等式
+
+$$
+R_H(c\otimes d)
+ =E(H,c\otimes1_B,1_A\otimes d).
+\tag{6.6}
+$$
+
+完整报告在此提供了比逐个简单张量估计更直接的界。将 $R$ 视为线性映射 $V\otimes V\to V$，其系数平方和为
+
+$$
+\sum_{\mu,i,j}
+ \|E(v_\mu,e_i\otimes1_B,1_A\otimes f_j)\|^2
+ \le u_A^2u_B^2\epsilon^2.
+\tag{6.7}
+$$
+
+因为 $(e_i\otimes1_B/u_B)_i$ 和 $(1_A/u_A\otimes f_j)_j$ 分别是 $V$ 内的正交单位族，可以各自补成正交单位基；(6.7) 左端除去单位因子后只是 $E$ 在三个输入槽上的 Hilbert–Schmidt 平方和的一部分。因此包括任意纠缠输入 $Y$，均有
+
+$$
+\|R_HY\|\le\rho\|H\|\|Y\|,
+\qquad \rho=\epsilon u_Au_B.
+\tag{6.8}
+$$
+
+这里没有把简单张量的范数界不经证明地延拓到任意张量，也没有隐去维数因子；完整平方和本身承担了延拓。
+
+记实际左乘为 $\mathbb L_XY=M(X,Y)$，并置
+
+$$
+F(X,Y)=M(X,Y)-(S_A\otimes S_B)(X,Y),\qquad
+K^J_{ac}=[L^J_a,L^J_c].
+\tag{6.9}
+$$
+
+$F$ 交换，但不要求其属于任何通道空间。残差定义的算子形式是
+
+$$
+[\Gamma_H,\mathbb L_X]-\mathbb L_{\Gamma_HX}
+       =E(H,X,\,\cdot\,).
+\tag{6.10}
+$$
+
+在此依次取 $H=a\otimes b$、$X=c\otimes1_B$ 与 $X=1_A\otimes d$。用 (5.1)、(6.5)，以及局部导子恒等式 $[D_a,L_c]=L_{D_ac}$，得到
+
+$$
+\begin{aligned}
+\mathbb L_{D^A_ac\otimes b}
+ &=L^A_{D^A_ac}\otimes L^B_b
+        +K^A_{ac}\otimes D^B_b+\mathcal A_{a,b,c},\\
+\mathcal A_{a,b,c}
+ &=[R_{a\otimes b},L^A_c\otimes I]
+                 -E(a\otimes b,c\otimes1_B,\,\cdot\,),\\
+\mathbb L_{a\otimes D^B_bd}
+ &=L^A_a\otimes L^B_{D^B_bd}
+        +D^A_a\otimes K^B_{bd}+\mathcal B_{a,b,d},\\
+\mathcal B_{a,b,d}
+ &=[R_{a\otimes b},I\otimes L^B_d]
+                 -E(a\otimes b,1_A\otimes d,\,\cdot\,).
+\end{aligned}
+\tag{6.11}
+$$
+
+特别地，没有在展开中使用 $D_1=0$。由 (5.4)、(6.8) 和 $\|[T,U]\|\le2\|T\|\|U\|$，
+
+$$
+\begin{aligned}
+\|\mathcal A_{a,b,c}\|_{\rm op}
+ &\le\epsilon c_A\|a\|\|b\|\|c\|,\\
+\|\mathcal B_{a,b,d}\|_{\rm op}
+ &\le\epsilon c_B\|a\|\|b\|\|d\|.
+\end{aligned}
+\tag{6.12}
+$$
+
+现在固定任意 $a\in J_A$，令 $z=D^A_aa$。第一条 (6.11) 取 $c=a$，因 $K^A_{aa}=0$，
+
+$$
+F(z\otimes b,Y)=\mathcal A_{a,b,a}Y.
+\tag{6.13}
+$$
+
+另取 $f,g,b\in J_B$、$c\in J_A$，记 $w=D^B_fg$。第二条 (6.11) 作用于 $z\otimes b$，再用 $F$ 的交换性和 (6.13)，得
+
+$$
+\begin{aligned}
+D^A_cz\otimes K^B_{fg}b
+ &=F(c\otimes w,z\otimes b)
+                    -\mathcal B_{c,f,g}(z\otimes b)\\
+ &=\mathcal A_{a,b,a}(c\otimes w)
+                    -\mathcal B_{c,f,g}(z\otimes b).
+\end{aligned}
+\tag{6.14}
+$$
+
+所以
+
+$$
+\|D^A_cz\|\|K^B_{fg}b\|
+ \le\epsilon\|b\|\|c\|\|f\|\|g\|
+          \bigl(c_A d_B\|a\|^2+c_B\|z\|\bigr).
+\tag{6.15}
+$$
+
+若 $k_B>0$，从定义 5.2 的有限表选单位基向量 $f,g,b$ 达到该最大值。再取 $\|a\|=1$、$c=a$。局部斜伴随性给
+
+$$
+\|z\|^2
+ =g_A(D^A_aa,z)=-g_A(a,D^A_az)
+ \le\|D^A_az\|.
+\tag{6.16}
+$$
+
+(6.15) 因而推出 (6.4)。$k_B=0$ 时 (6.4) 两侧仍满足所示非负不等式，但不提供除法。对 $k_B>0$，不等式
+$k_Bs^2-\epsilon c_Bs-\epsilon c_A d_B\le0$
+在 $s\ge0$ 中的解区域正是 $0\le s\le r_A$，包括 $\epsilon=0$、$d_B=0$ 或常数项为零的情形。另由 (5.5) 有 $\|z\|\le d_A$，得到第一条 (6.3)。交换双方得另一方。
+
+为证明完整双线性结论，置 $q_J(a)=D^J_aa$。实线性给 $q_J(ta)=t^2q_J(a)$，故 $\|q_J(a)\|\le\delta_J\|a\|^2$ 对全部 $a$ 成立。极化恒等式为
+
+$$
+D^J_ac+D^J_ca
+ =\tfrac12\bigl(q_J(a+c)-q_J(a-c)\bigr).
+\tag{6.17}
+$$
+
+当 $a,c$ 均为单位时，平行四边形恒等式给右端范数不超过 $2\delta_J$。双线性缩放覆盖任意非零 $a,c$，零输入时两侧均为零。最后 $D^J_a1_J=0$，故取 $c=1_J$ 得 $\|D^J_{1_J}a\|\le2u_J\delta_J\|a\|$；(5.5) 又独立给 $u_Jd_J$ 的上界。这证明全部 (6.3)。∎
+
+**推论 6.2（精确端点、固定条件消失及维数依赖）。** 定义 5.1 的活动合同下，$\epsilon=0$ 恢复两方局部交替和 $D^J_{1_J}=0$，并由 (6.8) 恢复同一实际 $\Gamma=Q$。对一族满足该合同的实际实现，若给出
+
+$$
+k_A,k_B\ge k_0>0,\qquad
+c_A,c_B\le C,\qquad d_A,d_B\le D_0<\infty,
+\tag{6.18}
+$$
+
+则
+
+$$
+\delta_J\le
+ \frac{\epsilon C}{k_0}
+       +\sqrt{\frac{\epsilon C D_0}{k_0}}
+ \longrightarrow0\qquad(\epsilon\longrightarrow0).
+\tag{6.19}
+$$
+
+若还要求单位生成元范数在该族上一致趋零，$u_A,u_B$ 的统一上界是一个充分输入。对报告均方根 $\eta$，(6.19) 的右端应写为
+
+$$
+\frac{N^{3/2}\eta C}{k_0}
+ +\sqrt{\frac{N^{3/2}\eta C D_0}{k_0}}.
+\tag{6.20}
+$$
+
+因此维数变化时，仅 $\eta\to0$ 不是这里的充分消失条件。更一般地，控制 (6.2) 中两个实际比值 $\epsilon c_B/k_B$、$\epsilon c_A d_B/k_B$ 趋零便足以控制 $A$ 方，另一方交换指标；这不要求每个原始参数分别有界。
+
+证明。活动性使两个曲率分母为正，故 $\epsilon=0$ 时 (6.2)、(6.3)、(6.8) 给精确结论。非负数满足 $\sqrt{x^2+4y}\le x+2\sqrt y$，用于 (6.2) 即给 $r_A\le\epsilon c_B/k_B+\sqrt{\epsilon c_A d_B/k_B}$；代入 (6.18) 得 (6.19)。单位生成元的结论由 (6.3) 给出，(6.20) 则由 (5.3) 的归一化换算给出。所有界均为充分界，不断言最优常数或必要条件。
+
+若改变共同时间单位，将两方 $D$ 和实际 $\Gamma$ 同乘 $\tau\ne0$，则 (5.1) 保持，$E$ 同乘 $\tau$，$\epsilon,d_J,\delta_J$ 可相应同乘 $|\tau|$，而 $u_J,\ell_J,k_J,c_J$ 不变；(6.2) 正好按此齐次缩放。$\tau=0$ 是静态极限，不是活动合同中的另一个实现。∎
+
+## 7. 完整残差趋零而自缺陷不消失的实际尺度障碍
+
+**命题 7.1（固定九维联合载体上的全报告反例族）。** 存在每个 $t>0$ 都满足 (5.1) 以及全部局部活动、正性、含幺、Frobenius 和导子前件的实际实现，其联合维数恒为 $9$，且
+
+$$
+\epsilon_t^2=48t^6\longrightarrow0,\qquad
+\sup_{\|a\|=1}\|D^J_aa\|=\tfrac12
+\quad(J=A,B).
+\tag{7.1}
+$$
+
+这里 $E_t$ 是完整实际 (5.2)，不是四通道报告的子族。每个 $t>0$ 的 $E_t$ 非零。这一族排除不带任何额外尺度或条件控制、只由完整 $\epsilon$ 给出且趋于零的局部交替界。
+
+证明。两方均取同一个欧氏空间 $J=\mathbb R\oplus\mathbb R^2$，正交单位基为 $e_0,x,y$。先定义
+
+$$
+\begin{aligned}
+S_0((\alpha,u),(\beta,v))
+   &=(\alpha\beta+\langle u,v\rangle,\alpha v+\beta u),\\
+Ke_0&=0,\qquad Kx=y,\qquad Ky=-x,\\
+D_{(\alpha,u)}&=\alpha K.
+\end{aligned}
+\tag{7.2}
+$$
+
+$S_0$ 交换、单位为 $e_0$；其欧氏三次型
+$\alpha\beta\gamma+\gamma\langle u,v\rangle+
+\alpha\langle v,w\rangle+\beta\langle u,w\rangle$
+全对称，故为正 Frobenius 比较。$K$ 在空间部分斜伴，$\langle Ku,v\rangle+\langle u,Kv\rangle=0$，直接代入 (7.2) 给
+$KS_0(a,c)=S_0(Ka,c)+S_0(a,Kc)$。
+因此每个 $D_a$ 是导子，指派实线性且 $D_{e_0}=K\ne0$。
+
+对 $t>0$ 定义实际局部产品和单位
+
+$$
+S_t=tS_0,\qquad 1_t=t^{-1}e_0,
+\tag{7.3}
+$$
+
+保持原欧氏内积和 $D$ 不变。导子律、交换性及 Frobenius 性随产品同次缩放保持，单位由 (7.3) 直接给出。局部自缺陷为
+
+$$
+D_aa=(0,\alpha Ku),\qquad
+\|D_aa\|=|\alpha|\|u\|
+ \le\tfrac12(\alpha^2+\|u\|^2).
+\tag{7.4}
+$$
+
+$a=(e_0+x)/\sqrt2$ 取等号，所以 (7.1) 的第二项成立。$D_{1_t}=t^{-1}K$ 并不为零；这里没有暗加单位标签生成元为零。
+
+在同一个实际 $V=J\otimes J$ 上取欧氏乘积内积，令 $L^0_a=S_0(a,\,\cdot\,)$，并给出完整联合运算
+
+$$
+\begin{aligned}
+M_0(a\otimes b,c\otimes d)&=S_0(a,c)\otimes S_0(b,d),\\
+Q^0_{a\otimes b}&=D_a\otimes L^0_b+L^0_a\otimes D_b,\\
+M_t&=t^2M_0,\qquad \Gamma^t_H=tQ^0_H .
+\end{aligned}
+\tag{7.5}
+$$
+
+线性延拓定义全部 $H$ 上的 $\Gamma^t$。$M_t$ 交换、对乘积正内积 Frobenius，单位恰为 $1_t\otimes1_t$。对简单张量逐项有
+
+$$
+\begin{aligned}
+M_t(a\otimes1_t,c\otimes d)&=S_t(a,c)\otimes d,\\
+M_t(1_t\otimes b,c\otimes d)&=c\otimes S_t(b,d),\\
+\Gamma^t_{a\otimes b}(c\otimes1_t)
+ &=t\bigl(D_ac\otimes L^0_b(t^{-1}e_0)
+          +L^0_ac\otimes D_b(t^{-1}e_0)\bigr)
+   =D_ac\otimes b,\\
+\Gamma^t_{a\otimes b}(1_t\otimes d)&=a\otimes D_bd.
+\end{aligned}
+\tag{7.6}
+$$
+
+其中 $D_be_0=0$；所有身份由多线性覆盖全部要求的输入。这检查了保留的两类模作用和两类保值条件作用。实际联合残差由 (7.5) 在三项中同次给出
+
+$$
+E_t=t^3E_0,
+\tag{7.7}
+$$
+
+其中 $E_0$ 使用 $M_0,Q^0$。一个具体完整基标签已给出非零见证：
+
+$$
+E_t(e_0\otimes x,\ e_0\otimes y,\ x\otimes y)
+      =t^3y\otimes x.
+\tag{7.8}
+$$
+
+事实上 $M_0(e_0\otimes y,x\otimes y)=x\otimes e_0$，$Q^0_{e_0\otimes x}=K\otimes L^0_x$ 将它送到 $y\otimes x$，而此 $Q^0$ 对两个原输入的像均为零。
+
+为取得完整而非抽样的平方和，固定第一输入 $H$，对另外两个完整基槽求和。$H$ 的两个因子都在 $\{x,y\}$ 时 $Q^0_H=0$；$H=e_0\otimes e_0$ 时 $Q^0_H=K\otimes I+I\otimes K$ 是 $M_0$ 的导子。这五个标签的残差全为零。对其余四个标签，可按下列有限张量计数计算。设
+
+$$
+\begin{aligned}
+P(c,e)&=S_0(Kc,e),& Q(c,e)&=S_0(c,Ke),\\
+U_b(d,f)&=L^0_bS_0(d,f)-S_0(L^0_bd,f),&
+V_b(d,f)&=L^0_bS_0(d,f)-S_0(d,L^0_bf).
+\end{aligned}
+\tag{7.9}
+$$
+
+当 $b=x$ 或 $y$ 时，局部导子律给
+
+$$
+E_0(e_0\otimes b,c\otimes d,e\otimes f)
+ =P(c,e)\otimes U_b(d,f)+Q(c,e)\otimes V_b(d,f).
+\tag{7.10}
+$$
+
+这些双线性张量均使用固定三维正交单位基。由 (7.2) 的乘法表
+$e_0a=a$、$x^2=y^2=e_0$、$xy=0$ 取得
+
+$$
+\begin{aligned}
+\|P\|_{\rm HS}^2=\|Q\|_{\rm HS}^2&=4,
+ &\langle P,Q\rangle_{\rm HS}&=-2,\\
+\|U_b\|_{\rm HS}^2=\|V_b\|_{\rm HS}^2&=2,
+ &\langle U_b,V_b\rangle_{\rm HS}&=1.
+\end{aligned}
+\tag{7.11}
+$$
+
+例如 $P$ 的四个非零输入是 $(x,e_0),(x,y),(y,e_0),(y,x)$，输出分别为 $y,e_0,-x,-e_0$；$Q(c,e)=P(e,c)$。$V_x$ 仅在 $(y,x),(y,y)$ 非零，输出为 $-y,x$，$U_x(d,f)=V_x(f,d)$。将 $x,y$ 同时旋转给 $b=y$ 的相同内积读数。(7.10) 的平方和因而为 $4\cdot2+4\cdot2+2(-2)\cdot1=12$。翻转双方给另外两个标签的同样数值。因此
+
+$$
+\begin{array}{c|c|c}
+H\text{ 的类型}&\text{标签数}&
+ \displaystyle\sum_{\nu,\lambda}
+ \|E_0(H,v_\nu,v_\lambda)\|^2\\ \hline
+e_0\otimes x,\ e_0\otimes y,\ x\otimes e_0,\ y\otimes e_0
+ &4&12\text{（每个标签）}\\
+e_0\otimes e_0,\ \{x,y\}\otimes\{x,y\}
+ &5&0
+\end{array}
+\tag{7.12}
+$$
+
+九个第一输入和全部 $9^2$ 个其余输入已被计入，得到 $\epsilon_0^2=48$，由 (7.7) 得 (7.1)。
+
+同一模型的实际参数也可明确对应到证书：
+
+$$
+n_A=n_B=3,\quad N=9,\quad
+u_A=u_B=t^{-1},\quad
+d_A=d_B=1,\quad
+\ell_A=\ell_B=\sqrt2\,t,\quad
+k_A=k_B=t^2.
+\tag{7.13}
+$$
+
+$d=1$ 由 $D_ac=\alpha Kv$ 达到。对单位 $a=(\alpha,u),c=(\beta,v)$，令 $r=\|u\|,s=\|v\|$，则
+$\|S_0(a,c)\|^2\le(|\alpha\beta|+rs)^2+(|\alpha|s+|\beta|r)^2
+=1+4|\alpha\beta|rs\le2$，
+同向取 $a=c=(e_0+x)/\sqrt2$ 达到上界。完整曲率表中仅空间基向量对可能非零，$[L^0_x,L^0_y]y=x$、$[L^0_x,L^0_y]x=-y$，故 $k=t^2$。因此
+
+$$
+c_A=c_B=\frac{1+2\sqrt2}{t},\qquad
+\frac{\epsilon_t c_A}{k_A}
+ =4\sqrt3(1+2\sqrt2),
+\tag{7.14}
+$$
+
+另一侧同样。残差虽趋零，证书的条件比值并不趋零；(6.2) 的平凡截顶也仍可使用。这里的活动始终非零，但单位长度发散、曲率读数趋零。$t=0$ 时产品不再含幺，故不是合同内的精确零残差端点；这与推论 6.2 没有矛盾。反例断言的是必须排除某种实际退化或添加额外观察，不断言 (6.18) 的每一项分别必要，也不排除其他充分证书。∎
+
+## 8. 实际参数桥的数学来源与未延伸边界
+
+**定义 8.1（承重推导、成熟输入与范围）。** 定理 6.1 及命题 7.1 的承重内容属于本仓推导（repo-derived）：从原卷 (20.1)、(20.2) 和同一实际完整三线性残差，取得 (6.6) 的模板差、(6.14) 的曲率耦合误差，再由局部斜伴随性得到二次根模量；并以满足同一残差合同的完整实际尺度族检查其条件边界。V95 定理 2.1 第一项的局部导子斜伴随性、原卷定理 21.1 的精确条件作用与曲率论证是复用的中间结果；Hilbert–Schmidt 收缩、Cauchy–Schwarz、交换子范数界、极化和二次方程解法是成熟工具，不另认领为新理论。
+
+[Kapustin，arXiv:1303.6917v4，Axioms 4–7、Theorem 3.1](https://arxiv.org/html/1303.6917v4)从 Lie 观测量及精确组合前件出发；[Moldoveanu，arXiv:1303.3935，式 (6)–(9)](https://arxiv.org/html/1303.3935)使用精确运算复合和额外单位条件；[Barnum–Wilce，arXiv:1202.4513v2，引言 Hanche-Olsen 定理及 Proposition 1](https://arxiv.org/html/1202.4513v2)使用既有 Jordan／量子比特结构；[Niestegge，arXiv:1402.0158v2，§5 Definition 1](https://arxiv.org/html/1402.0158v2)的动力对应已包含 $D_aa=0$。这些文献供应精确复合性和表示路线的背景，不在本节中供应一个交替前、任意实际 $M,\Gamma$ 的完整残差估计。本节的本仓推导归属不主张文献原创优先权。
+
+第 1–4 节的 C98 证书作用于另一带标签报告域；$\Theta$ 与这里的 $\epsilon$ 没有被等同。原卷 C99–C102 的精确重构、活动伙伴和过程结论，以及 C103 的接续标尺、C104 的谱滤波标定，分别使用其自身全输入恒等式、对象存在或实际过程前件；它们不给出未证明的带噪推论。[四路径全记录恢复界续卷 I 第 34、36 节](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_I.md#34-the-exact-small-distance-envelope-and-all-original-minimizing-pairs)的初始包络及固定反馈比较则作用于已经给定的归一化效果与同一个实际 $U$，不是 (5.2) 的代数残差；未给出从这些效果和概率读数到 (5.1)–(5.3) 的实际对应时，不能将其界代入 (6.2)。
+
+本节对 $\epsilon>0$ 只控制局部自缺陷、对称双线性缺陷、单位标签生成元及 (6.8) 的实际模板差。它不推出 Jacobi 稳定性、共同标尺稳定性、近邻复 $C^*$ 重构，也不把小残差的整体自动当成一个精确导子对象继续套用第三方重构。有限维、精确局部导子、乘积正内积及全部模作用与保值条件作用仍是明列前件；任意非因子化联合内积需要另一个估计。测量不确定度、完整操作供应、具体动力学、无限维极限和物理实现均没有由本证书补齐。本文陈述与解析证明不作 Lean／kernel 验证或最优性主张。
+
+## 追加锚（本行以下为增补区）

@@ -18,7 +18,7 @@ subset count supplies the binomial coefficients.
 
 The endpoint fiber equivalence is the content used by the short-return-band
 consumer.  No novelty claim is made for this classical square-lattice count.
-All other declarations are private, consumed implementation helpers.
+Other declarations are consumed implementation helpers; the rotated endpoint identity is also reused by the first-reversal proof.
 -/
 
 set_option autoImplicit false
@@ -104,7 +104,7 @@ private lemma decoded_rotated_endpoint {L : ℕ} (s t : Finset (Fin L)) :
           simp [decodeWord, step, hs, ht]
       _ = (L : ℤ) - 2 * (t.card : ℤ) := sum_signs t
 
-private lemma rotated_endpoint {L : ℕ} (w : Fin L → Fin 4) :
+lemma rotated_endpoint {L : ℕ} (w : Fin L → Fin 4) :
     endpoint w 0 + endpoint w 1 =
       (L : ℤ) - 2 * ((negativeU w).card : ℤ) ∧
     endpoint w 0 - endpoint w 1 =
