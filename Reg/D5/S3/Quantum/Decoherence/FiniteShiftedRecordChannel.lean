@@ -181,18 +181,26 @@ theorem actual_law : arena.{u_3, u_4}.Law actual := by
 
 theorem rejected_law : ¬ arena.{u_3, u_4}.Law rejected := by
   intro h
-  have hbad := @h (Fin 1) Unit inferInstance inferInstance inferInstance
-    (fun _ _ => (1 : ℂ)) (1 : Matrix (Fin 1) (Fin 1) ℂ) 0 0
-  norm_num [rejected, realize, Matrix.diagonal, Matrix.mul_apply,
-    Matrix.one_apply, Matrix.conjTranspose_apply, Pi.star_apply] at hbad
+  let ι := ULift.{u_3} (Fin 1)
+  let ε := ULift.{u_4} Unit
+  have hbad := @h ι ε inferInstance inferInstance inferInstance
+    (fun _ _ => (1 : ℂ)) (fun _ _ => (1 : ℂ)) (ULift.up 0) (ULift.up 0)
+  change _ = (0 : ℂ) at hbad
+  have hcalc := diagonal_kraus_entry
+    (record := fun _ : ι => fun _ : ε => (1 : ℂ))
+      (rho := fun _ _ : ι => (1 : ℂ))
+      (ULift.up (0 : Fin 1) : ι) (ULift.up (0 : Fin 1) : ι)
+  rw [hcalc] at hbad
+  norm_num at hbad
 
 theorem dependence : ObservationalDependence signature.{u_3, u_4} actual := by
   intro _
   let p : signature.{u_3, u_4}.Params :=
-    ⟨Fin 2, ⟨inferInstance, ⟨inferInstance, ⟨Unit, ⟨inferInstance,
-      ⟨(fun _ _ => (1 : ℂ)),
-        Matrix.diagonal (fun i : Fin 2 => if i = 0 then 1 else 0)⟩⟩⟩⟩⟩⟩
-  refine ⟨p, (0, 0), (1, 1), ?_⟩
+    ⟨ULift.{u_3} (Fin 2), ⟨inferInstance, ⟨inferInstance,
+      ⟨ULift.{u_4} Unit, ⟨inferInstance, ⟨(fun _ _ => (1 : ℂ)),
+        Matrix.diagonal (fun i : ULift.{u_3} (Fin 2) =>
+          if i = ULift.up 0 then 1 else 0)⟩⟩⟩⟩⟩⟩
+  refine ⟨p, (ULift.up 0, ULift.up 0), (ULift.up 1, ULift.up 1), ?_⟩
   norm_num [actual, realize, p]
 
 def source_registration : Registration arena.{u_3, u_4}
