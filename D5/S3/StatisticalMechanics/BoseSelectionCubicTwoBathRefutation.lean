@@ -8,7 +8,6 @@
 
 import D5.S3.Analytic.SeriesInequalities.StampachWaclawekExpansionRefutation
 import D5.S3.Geometry.FiniteCoordinateTruncation
-import Mathlib.Basic.Real.Sign
 
 /-! The cubic two-bath family has a strictly positive signed-Pfaffian kernel on a nonempty
 open set. This refutes the generic non-Ohmic bound preregistered in issue #25984; the Ohmic
