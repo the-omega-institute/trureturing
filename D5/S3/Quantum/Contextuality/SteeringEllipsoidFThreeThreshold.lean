@@ -156,8 +156,8 @@ private lemma summed_flip (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ 
       vlen (corr ρ *ᵥ Pi.single k 1) ^ 2 +
       (blochB ρ ⬝ᵥ Pi.single k 1) ^ 2 ≤ 1 + 2 * delta ρ := by
     have hn : vlen (Pi.single k (1 : ℝ)) = 1 := by
-      rw [vlen_eq_norm]
-      simpa only [PiLp.single, norm_one] using
+      rw [vlen_eq_norm, PiLp.toLp_single]
+      simpa only [norm_one] using
         (PiLp.norm_single (p := (2 : ENNReal)) (β := fun _ : Fin 3 => ℝ) k (1 : ℝ))
     have hf : (flipped ρ (Pi.single k 1)).PosSemidef :=
       hρ.transpose.mul_mul_conjTranspose_same _
