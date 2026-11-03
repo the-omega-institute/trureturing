@@ -13,6 +13,8 @@ internal sealed class MetallicHankelTransferDocument : IScribeDocumentDefinition
         Blocks(
             Node("metallic-hankel-transfer-top-word", "The ordered transfer coefficients", "topWord",
                 "At n = 2 the word of pairs (d,b) is (2,-1),(0,1),(0,-1),(1,-1),(0,-1),(0,-1),(2,1),(-1,-1). For every other nonnegative n it starts with (2,-1),(0,1), contains n-2 copies of the triple (1,-1),(1,-1),(-1,-1), then (0,-1),(1,-1),(0,-1),(-1,-1), then n-3 copies of the same triple, and ends with (1,-1),(1,-1),(0,-1),(2,1),(-1,-1). Repetition counts use natural subtraction truncated at zero.", DescribeRole.Definition),
+            Node("metallic-hankel-transfer-identity", "The entire constant monodromy is the identity", "top_word_identity",
+                "For every n>=2 and every integer pair z, folding the full topWord n with the transition (x,y),(d,b) -> (d x-b y,x) returns z. Thus the result holds for both basis vectors and yields a matrix identity. It supplies the arbitrary-state part of block_transfer and the constant term of the reversed continuant transfer.", DescribeRole.Theorem),
             Node("metallic-hankel-transfer-block", "Periodicity and bounds of the transfer coordinates", "block_transfer",
                 "Let n be at least two, let W be its transfer word of length L, and let z_p be a sequence of integer pairs with z_0 = (1,0). If W at position p modulo L is (d,b), require z_{p+1} = (d x - b y,x), where z_p = (x,y). Then for every nonnegative p, z_{p+L} = z_p and both coordinates of z_p belong to {-1,0,1,2}. Repeated triples and the two end segments give the return and the bounds at every intermediate position.", DescribeRole.Theorem)
         ), []));
