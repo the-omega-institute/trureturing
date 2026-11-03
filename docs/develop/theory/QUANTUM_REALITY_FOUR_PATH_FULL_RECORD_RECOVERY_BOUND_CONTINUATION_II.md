@@ -647,3 +647,526 @@ selected first-loss boundary. The full original first-loss goal is
 unchanged.
 
 ## 追加锚（本行以下为增补区）
+
+## 41. Increasing selected defect and global mixed-contact consequences
+
+**Definition 41.1 (selected raw value and original sign distances).**
+Retain the original domain $\mathcal K=\operatorname{Dens}_2\times U(4)$,
+ordinary transpose, certificate basis $T$, constants $h,c,s,d,e,\kappa$,
+and actual shared feedback of Definition 40.1. All references to
+Sections 23 and 24--39 have the source-volume conventions stated there.
+For $0<\xi\le4$ put
+
+$$
+ V(\xi)=N_{\mathrm{geo}}(\xi)+\kappa\xi.
+\tag{41.1}
+$$
+
+Here $N_{\mathrm{geo}}$, its argument $\delta_\circ(\xi/2)$ and
+$\mathcal G_\xi$ are exactly (38.2), Theorem 37.5 and (39.2).
+Thus $V(\xi)$ is the actual $g$-value attained by every pair in
+$\mathcal G_\xi$. Its definition makes no assertion of unrestricted
+geometric optimality. Keep $\mathcal A_\xi$, $\mathcal B$, $\mathcal S$,
+$\alpha$ and $\beta$ exactly as in Definition 39.1; in particular
+$0<\alpha\le\beta<18/5$ is Theorem 39.4.
+
+For an arbitrary original pair write
+
+$$
+\begin{aligned}
+ w&=\operatorname{diag}(UU_+^\dagger),&
+ F&=T^\dagger E^{\mathsf T}T
+       =\begin{pmatrix}p&z\\\bar z&1-p\end{pmatrix},\\
+ \epsilon&=\epsilon(E)=1-\operatorname{Tr}(E^2)
+       =2\bigl(p(1-p)-|z|^2\bigr),\\
+ \rho_\sigma(E,U)
+   &=\|E-E_\sigma\|_{\mathrm F}^2
+           +\min_{|\lambda|=1}\|U-\lambda U_\sigma\|_{\mathrm F}^2.
+\end{aligned}
+\tag{41.2}
+$$
+
+The scalar $\lambda$ multiplies the entire feedback matrix.
+The original distance is $\rho=\min\{\rho_+,\rho_-\}$.
+The identities (23.9)--(23.12) give, on these same actual data,
+
+$$
+\begin{aligned}
+ \rho_+(E,U)&=10-2p-2A(w)-\epsilon,\\
+ \rho_-(E,U)&=8+2p-2B(w)-\epsilon,\\
+ g(E,U)&=d^2p+e^2(1-p)-pu^2-(1-p)v^2
+                          -2\operatorname{Re}(Pz\bar Q).
+\end{aligned}
+\tag{41.3}
+$$
+
+All of $A,B,P,Q,u,v$ in this section are evaluated on that one $w$.
+An effect is mixed precisely when $\epsilon>0$; for a normalized
+positive two-by-two effect this is equivalent to positive definiteness.
+
+**Theorem 41.2 (strict increase of the attained selected raw defect).**
+The function $V$ is continuously differentiable on $(0,4)$,
+continuous on $(0,4]$, and has a finite positive left derivative at four.
+At its existing selected coordinates
+
+$$
+\begin{aligned}
+ t&=\xi/2,& \delta&=\delta_\circ(t),&q&=t-\delta,&p&=1-q,\\
+ x&=1-\delta/2,&y&=\sqrt{1-x^2},&
+ u&=2(hx+c),&v&=2hy,\\
+ S&=u\sqrt p+v\sqrt q,
+\end{aligned}
+$$
+
+one has
+
+$$
+ q<y^2,\qquad
+ V'(\xi)=hS\left(\sqrt p-\frac{x\sqrt q}{y}\right)>0.
+\tag{41.4}
+$$
+
+At $\xi=4$ the derivative in (41.4) means the left derivative.
+Consequently $V$ is strictly increasing throughout $0<\xi\le4$.
+
+*Proof.* For independent variables $0<\delta<2$, $0<q<1$ define
+$x=1-\delta/2$, $y=\sqrt{1-x^2}$, $u=2(hx+c)$, $v=2hy$ and
+
+$$
+ L(\delta,q)
+   =d^2(1-q)+e^2q-
+       \bigl(u\sqrt{1-q}+v\sqrt q\bigr)^2,
+ \qquad \mathcal H(t,\delta)=L(\delta,t-\delta).
+\tag{41.5}
+$$
+
+These functions are smooth on the indicated open domain and its
+corresponding open domain in $(t,\delta)$.
+Theorem 37.5 supplies the unique interior minimum on
+$J(t)=[\max\{0,t-1\},t]$, for $0<t\le2$.
+Subtracting $2\kappa t$ from $\mathcal H$ gives exactly the scalar
+objective of that theorem, so its argument remains $\delta_\circ(t)$.
+The actual selected value is therefore
+
+$$
+ W(t):=V(2t)=\mathcal H(t,\delta_\circ(t)).
+\tag{41.6}
+$$
+
+In particular the selected $\delta,q,x,y,u,v,p$ are all strictly
+positive, and $\delta<2$, $q<1$. No zero population or zero amplitude
+is differentiated in this proof.
+
+We justify differentiation of this attained value without assuming
+differentiability of the selector. Its continuity, and continuity of
+$V$ through four, are supplied by Theorem 39.2.
+Fix $t_0\in(0,2]$, put $\delta_0=\delta_\circ(t_0)$, and restrict
+to $t$ sufficiently near $t_0$ in $(0,2]$.
+Interiority and continuity ensure that $\delta_0\in J(t)$ and
+$\delta_\circ(t)\in J(t_0)$, and that both points lie in one open
+neighborhood on which (41.5) is smooth. Minimality at the two levels gives
+
+$$
+\begin{aligned}
+ \mathcal H(t,\delta_\circ(t))
+       -\mathcal H(t_0,\delta_\circ(t))
+ &\le W(t)-W(t_0)\\
+ &\le\mathcal H(t,\delta_0)-\mathcal H(t_0,\delta_0).
+\end{aligned}
+\tag{41.7}
+$$
+
+After division by $t-t_0$, both outer difference quotients tend to
+$\partial_t\mathcal H(t_0,\delta_0)$, by continuity of the selector
+and of that partial derivative. For $t<t_0$ both inequality directions
+reverse, giving the same limit. It follows that
+$W'(t)=L_q(\delta_\circ(t),t-\delta_\circ(t))$ in the interior,
+with the analogous left derivative at $t=2$.
+This expression is continuous in $t$. The interior scalar stationarity
+also gives $L_\delta=L_q$ at every selected point.
+
+Writing $D_0=d^2-e^2$ and $S=u\sqrt{1-q}+v\sqrt q$, direct
+differentiation of (41.5), with the other variable held fixed, yields
+
+$$
+\begin{aligned}
+ L_\delta
+   &=2hS\left(\sqrt{1-q}-\frac{x\sqrt q}{y}\right),\\
+ L_q&=u^2-v^2-D_0
+             +uv\frac{2q-1}{\sqrt{q(1-q)}},\\
+ L_{qq}&=\frac{uv}{2[q(1-q)]^{3/2}}>0.
+\end{aligned}
+\tag{41.8}
+$$
+
+For each fixed selected $\delta$, evaluate the second line at $q=y^2$.
+Since $\sqrt{1-y^2}=x>0$, substitution gives
+
+$$
+ L_q(\delta,y^2)
+    =4c^2+\frac{4hc}{x}-D_0
+    \ge4c^2+4hc-D_0
+    =4s(h+s-1)>0.
+\tag{41.9}
+$$
+
+Here the last identity uses $D_0=4h+8s$, $c^2=(1+h)/2$ and
+$c=(1+2h)s$. The latter follows from $2hc=c+s$ and $h^2=1/2$.
+For the strict sign, $1/2<h<1$ and $s^2=(1-h)/2$ give
+
+$$
+ s^2-(1-h)^2=(1-h)(h-1/2)>0.
+$$
+
+Both $s$ and $1-h$ are positive; hence $s>1-h$, proving (41.9).
+
+If a selected point had $q\ge y^2$, the last line of (41.8) and
+(41.9) would give $L_q>0$. On the other hand
+$q\ge y^2$ is equivalent to
+$\sqrt{1-q}\le x\sqrt q/y$, so $L_\delta\le0$.
+This contradicts the selected stationarity $L_\delta=L_q$.
+Thus $q<y^2$, and the first line of (41.8) is strictly positive.
+Combining $V'(\xi)=W'(\xi/2)/2=L_q/2=L_\delta/2$ proves
+(41.4), including its continuous left limit at four.
+The mean value theorem on any $[a,b]\subset(0,4]$ now proves
+$V(b)>V(a)$ whenever $a<b$. This calculation uses the attained
+selected scalar minimum only. $\square$
+
+**Theorem 41.3 (exact constant-defect motion at unchanged actual feedback).**
+For every original $(E,U)\in\mathcal K$ there is a continuous family
+$E_\theta\in\operatorname{Dens}_2$, $0\le\theta\le\epsilon(E)$,
+starting at $E_0=E$, such that the actual matrix $U$ and the
+certificate-basis population $p$ remain unchanged and
+
+$$
+\begin{aligned}
+ g(E_\theta,U)&=g(E,U),&
+ \epsilon(E_\theta)&=\epsilon(E)-\theta,\\
+ \rho_\sigma(E_\theta,U)&=\rho_\sigma(E,U)+\theta
+                                      &&(\sigma=+,-),\\
+ \rho(E_\theta,U)&=\rho(E,U)+\theta.
+\end{aligned}
+\tag{41.10}
+$$
+
+Every original minimizing sign, including a tie, is preserved.
+If $\epsilon(E)>0$, then $E_\theta$ is positive definite for
+$0\le\theta<\epsilon(E)$ and has rank one at $\theta=\epsilon(E)$.
+For $\epsilon(E)=0$ the family consists of its original single point.
+
+*Proof.* Use the actual coordinates (41.2) and set $C=P\bar Q$.
+Choose a unit complex number $\zeta$ such that
+
+$$
+ \operatorname{Re}(C\zeta)=0,\qquad
+ a_0:=\operatorname{Re}(z\bar\zeta)\ge0.
+\tag{41.11}
+$$
+
+If $C\ne0$, the two choices $\pm i\bar C/|C|$ satisfy the first
+condition; one of them satisfies the second. If $C=0$, start with
+any unit direction and choose its sign to satisfy the second condition.
+When $a_0=0$ either sign is allowed. For $0\le\theta\le\epsilon$
+put
+
+$$
+\begin{aligned}
+ \nu_\theta&=\sqrt{a_0^2+\theta/2}-a_0,&
+ z_\theta&=z+\nu_\theta\zeta,\\
+ F_\theta&=\begin{pmatrix}p&z_\theta\\\bar z_\theta&1-p\end{pmatrix},&
+ E_\theta&=(TF_\theta T^\dagger)^{\mathsf T}.
+\end{aligned}
+\tag{41.12}
+$$
+
+The square root is nonnegative and $a_0\ge0$, so $\nu_0=0$.
+Thus this family is continuous and begins at exactly the input effect,
+with no preliminary phase alignment. Its two relevant identities are
+
+$$
+\begin{aligned}
+ |z_\theta|^2
+   &=|z|^2+2a_0\nu_\theta+\nu_\theta^2
+     =|z|^2+\theta/2,\\
+ \operatorname{Re}(Cz_\theta)&=\operatorname{Re}(Cz),\\
+ \det F_\theta
+   &=p(1-p)-|z_\theta|^2=(\epsilon-\theta)/2\ge0.
+\end{aligned}
+\tag{41.13}
+$$
+
+The diagonal entries of $F_\theta$ are nonnegative and its trace is one.
+Together with the determinant inequality this proves positivity.
+Unitary conjugation and ordinary transpose preserve positivity, trace,
+eigenvalues and $\operatorname{Tr}(E^2)$; hence
+$E_\theta$ is an original normalized effect with impurity
+$\epsilon-\theta$. Formula (41.3), including its actual coherence
+term, gives exactly constant $g$. The same formula for each sign
+distance gives the identical increment $\theta$ for both signs.
+Taking their minimum proves the last line of (41.10) and preserves
+the entire minimizing-sign set. Because $U$ itself never changes,
+the scalar phases minimizing its distance to each $U_\sigma$ also
+remain unchanged, including the full phase circle when the trace is zero.
+
+For $\epsilon>0$, positivity of the initial determinant forces
+$0<p<1$. The determinant in (41.13) is strictly positive before the
+terminal parameter and zero there. Trace one then gives exactly the
+rank assertions. If $p=0$ or $p=1$, positivity initially forces
+$z=0$ and $\epsilon=0$, so only the original point is used.
+Every other already pure input likewise has the singleton family.
+At $z=0$ one has $a_0=0$ and the formula is still continuous;
+no derivative at the initial parameter is needed.
+If either $P=0$ or $Q=0$, then $C=0$ and the stated arbitrary-direction
+choice avoids division by that amplitude. This also covers both
+amplitudes zero. No condition on $A$ or $B$ is used, so zero feedback
+traces, sign ties and all population and rank boundaries are included.
+
+All amplitudes, feedback traces and every off-diagonal entry of $U$
+remain those of the original actual matrix throughout. In particular
+the construction covers every nondiagonal unitary lift without a new
+realization assumption. Under the single common scalar action on $U$,
+$C=P\bar Q$ is invariant. The choices in (41.11) are pointwise choices
+for each input pair; the theorem asserts continuity in $\theta$ for
+that pair, and asserts no globally continuous selection of directions
+over $\mathcal K$. It is a family in the original mathematical domain,
+with no assertion of a physical control implementation. $\square$
+
+**Theorem 41.4 (quantitative comparison on the value-preserving prefix).**
+For every original pair with $0<\rho(E,U)=\xi\le\beta$, put
+
+$$
+ \theta_* =\min\{\epsilon(E),\beta-\xi\},\qquad
+ \eta_* =\xi+\theta_* =\min\{\beta,\xi+\epsilon(E)\}.
+\tag{41.14}
+$$
+
+Then
+
+$$
+\begin{aligned}
+ g(E,U)&\ge V(\eta_*),\\
+ f(E,U)&\ge N_{\mathrm{geo}}(\xi)+V(\eta_*)-V(\xi).
+\end{aligned}
+\tag{41.15}
+$$
+
+For every mixed effect and $0<\xi<\beta$ this is strictly stronger
+than $f(E,U)\ge N_{\mathrm{geo}}(\xi)$. In particular
+
+$$
+ \mathcal A_\xi\subseteq
+    \{(E,U)\in\mathcal K:\operatorname{rank}E=1\},
+                      \qquad 0<\xi<\beta.
+\tag{41.16}
+$$
+
+For any family in Theorem 41.3, equality in (41.15) holds exactly
+when $(E_{\theta_*},U)\in\mathcal A_{\eta_*}$.
+
+*Proof.* Theorem 39.5 supplies the existing identity
+$m(\eta)=N_{\mathrm{geo}}(\eta)$ for every $0<\eta\le\beta$,
+including $\eta=\beta$. Apply Theorem 41.3 at $\theta_*$.
+The resulting actual pair is at the exact original level $\eta_*$
+and has unchanged $g$. Therefore
+
+$$
+\begin{aligned}
+ g(E,U)&=g(E_{\theta_*},U)\\
+       &=f(E_{\theta_*},U)+\kappa\eta_*\\
+       &\ge m(\eta_*)+\kappa\eta_*=V(\eta_*).
+\end{aligned}
+\tag{41.17}
+$$
+
+Subtracting $\kappa\xi$ proves the second line of (41.15).
+The only inequality in (41.17) is equality precisely for a global
+minimizer at $\eta_*$, proving the asserted equality criterion.
+When $\xi<\beta$ and $\epsilon(E)>0$, one has $\theta_*>0$;
+Theorem 41.2 gives $V(\eta_*)-V(\xi)>0$. This excludes every mixed
+equality pair there, regardless of its actual feedback or minimizing sign.
+Since the global value at $\xi$ is the stated geometric value,
+all global minimizers there are pure, proving (41.16).
+
+If $\epsilon=0$, the increment is zero and equality means exactly
+original global minimality at $\xi$. If $\xi=\beta$, the increment
+is again zero and gives no mixed exclusion at that endpoint.
+For a mixed input with $\xi+\epsilon\le\beta$, the comparison point
+is the pure endpoint; equality in (41.15) requires that actual pure
+pair to minimize at $\xi+\epsilon$. If $\xi+\epsilon>\beta$, the
+comparison point is still mixed and lies at $\beta$; equality requires
+that actual mixed endpoint minimizer. These cases include
+$\xi+\epsilon=\beta$ and exhaust the saturation possibilities.
+None of the equality conditions identifies the remaining feedback
+preimages of those global minimizing sets. $\square$
+
+**Corollary 41.5 (actual mixed contact and the two first boundaries).**
+Suppose $0<b<4$ and an actual mixed pair satisfies
+$\rho(E,U)=b$ and $g(E,U)\le V(b)$.
+The continuous family of Theorem 41.3 satisfies, for every
+$0<\theta\le\min\{\epsilon(E),4-b\}$,
+
+$$
+\begin{aligned}
+ \rho(E_\theta,U)&=b+\theta,\\
+ f(E_\theta,U)-N_{\mathrm{geo}}(b+\theta)
+    &=g(E,U)-V(b+\theta)\\
+    &\le V(b)-V(b+\theta)<0.
+\end{aligned}
+\tag{41.18}
+$$
+
+At an equality contact $g(E,U)=V(b)$, the inequality before the last
+strict sign is an equality. Every displayed competitor is an attained
+original pair, and $E_\theta\to E$ as $\theta\downarrow0$.
+The comparison includes level four when reached, and includes the pure
+endpoint when $b+\epsilon(E)\le4$. It implies $\beta\le b$.
+
+In particular a mixed pair in $\mathcal A_\alpha$ forces
+$\alpha=\beta$. It is an additional endpoint minimizer and the
+exhaustive-geometric-equality prefix excludes its endpoint.
+If $\alpha<\beta$, every extra minimizer at $\alpha$, and every
+minimizer at any level in $[\alpha,\beta)$, is pure.
+A mixed pair in $\mathcal A_\beta$ also supplies (41.18), but does
+not rule out an earlier pure equality tie at $\alpha<\beta$.
+The produced strict right competitors need not be globally minimizing.
+
+*Proof.* Constant $g$ and the exact original distance in (41.10)
+give the equality in (41.18). Theorem 41.2 makes its final comparison
+strict for every indicated positive parameter. For arbitrarily small
+such parameters with $b+\theta<4$, the attained competitor implies
+$m(b+\theta)<N_{\mathrm{geo}}(b+\theta)$, so
+$b+\theta\in\mathcal S$. Taking their infimum gives $\beta\le b$.
+This conclusion uses actual pairs, with no core-infimum attainment
+assumption and no continuation of a globally minimizing branch.
+
+At either $b=\alpha$ or $b=\beta$, Theorem 39.5 gives
+$g(E,U)=V(b)$ for every pair in $\mathcal A_b$.
+If a mixed one occurs at $\alpha$, the preceding result and
+$\alpha\le\beta$ imply equality of the boundaries.
+The sets $\mathcal G_b$ consist of pure effects, so this mixed pair
+belongs to $\mathcal A_\alpha\setminus\mathcal G_\alpha$.
+The endpoint alternative in Theorem 39.5 then excludes $\alpha$
+from the initial exhaustive-equality prefix.
+If $\alpha<\beta$, Theorem 41.4 instead forces purity throughout
+$[\alpha,\beta)$. No assertion that such extra pure pairs exist at
+$\alpha$ is needed; the endpoint may also have only geometric minimizers.
+
+For a mixed minimizer at $\beta$, (41.18) establishes strict loss
+immediately to its right. It supplies no restriction on an earlier
+pure extra minimizer, so it supplies no general coincidence conclusion.
+Theorem 40.4 does retain its separation consequence: with
+$\mathscr U_\beta=\{U:(E,U)\in\mathcal G_\beta\}$ there is
+$r_\beta>0$ such that every mixed pair in $\mathcal A_\beta$ satisfies
+
+$$
+ \operatorname{dist}_{\mathrm F}(U,\mathscr U_\beta)\ge r_\beta.
+\tag{41.19}
+$$
+
+Indeed (40.24) with $K=\{\beta\}$ would otherwise put its feedback
+in the neighborhood where (40.23) gives a strictly better same-level
+effect. This uses the full actual common-scalar feedback orbits.
+It neither identifies nor excludes those separated mixed endpoints.
+The bounds above compare the constructed pairs with the selected value;
+they do not compare them with all other original competitors at their
+new levels. Thus global minimality of the right competitors is not
+implied. $\square$
+
+**Mathematical source correspondence 41.6.** The identities (41.2)--(41.3)
+are the original normalized-effect, joint-distance and linear-defect
+identities (23.9)--(23.12). Theorem 41.3 uses the affine sections of
+their complex coherence disk while retaining its original starting
+point and its actual coherence contribution to $g$.
+The scalar value in Theorem 41.2 is precisely the selected attained
+value of Theorem 37.5 and (38.2); selector continuity is Theorem 39.2.
+The difference-quotient argument (41.7) is the elementary sensitivity
+argument for an interior unique minimum. It adds no replacement scalar
+selection. The local impurity comparison (34.20)--(34.22), the cap and
+fixed-feedback profiles of Sections 36--37, the phase-instability
+comparisons of Sections 36 and 38--39, and the geometric ordering and
+selected-feedback margins of Section 40 retain their stated domains.
+Theorem 41.4 consumes Theorem 39.5's already defined value-preserving
+prefix; (41.19) consumes the existing local exclusion in Theorem 40.4.
+The fixed-feedback, fixed-level diagnostic of Proposition 40.5 is
+consistent with (41.10), whose level increases by its impurity reduction.
+
+For the primary-literature correspondence,
+Gregoratti--Werner, [*Quantum Lost and Found*, quant-ph/0209025v1,
+Proposition 8 and (16)--(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8),
+fix a Kraus decomposition while optimizing correction fidelity.
+Their operators here are $t_j=\operatorname{diag}(R_0b_j)$ in input
+dimension four. The correction bound and its polar equality form do
+not impose the present joint distance or give its prescribed-level
+ordering. In particular the columns of one original effect retain
+one shared $U$ in (41.3).
+Buscemi--Chiribella--D'Ariano,
+[*Inverting Quantum Decoherence by Classical Feedback from the Environment*,
+quant-ph/0504195v5, (6) and (9)](https://arxiv.org/html/quant-ph/0504195v5),
+supply the four-dimensional rank-two correlation example. Their
+Heisenberg matrix is $\overline{R_0R_0^\dagger}$; the Schrödinger
+transpose in their (6) gives the source's Schur record. The ordinary
+transpose on the effects remains exactly the one in source (1.4)--(1.5).
+
+Thompson's prescribed complex-diagonal and singular-value theorem,
+as stated by Jasper--Loreaux--Weiss,
+[*Thompson's theorem for compact operators and diagonals of unitary operators*,
+arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3),
+with four singular values equal to one, gives exactly $\mathcal W$
+in source Theorem 23.2. It supplies the existing feedback-realization
+input. The motion (41.12) keeps an already actual $U$ and requires
+no new lifting theorem. These cited theorem statements provide record,
+correction and realization correspondences; they do not assert
+(41.4), (41.10), the prefix increment (41.15), or the first-boundary
+consequences (41.18). No exhaustive literature-absence or priority
+claim is attached to these fixed-record deductions.
+
+**Unresolved mathematical obligations 41.7.** The complete preceding-level
+comparison still requires
+
+$$
+ M_\sigma(w,\xi)\ge V(\xi)
+\tag{41.20}
+$$
+
+for every realizable $w\in\mathcal W$ and every admissible original
+sign on the required preceding levels, with the full attained equality
+preimage in actual $\operatorname{Dens}_2\times U(4)$.
+Equivalently, using the exact fixed-feedback profile, every
+$r\in[t_\sigma,\min\{\sqrt{t_\sigma},J_\sigma\}]$ must satisfy
+
+$$
+ \Delta_\sigma+b_\sigma r-2uv\sqrt{t_\sigma-r^2}
+                       \ge V(\xi),
+\tag{41.21}
+$$
+
+with the original zero-amplitude, zero-coherence, singular-endpoint,
+sign-tie and actual-lift cases retained. Theorem 41.4 uses
+$m=N_{\mathrm{geo}}$ on the existing prefix $(0,\beta]$; it does not
+certify that a proposed value is $\beta$. Using its purity conclusion
+to discard mixed strict competitors in a proof locating that prefix
+would be circular. The full all-effect comparison remains required.
+
+The exact evaluations of $\alpha$ and $\beta$, their general
+coincidence or separation, every actual boundary equality preimage,
+and inclusion or exclusion of the exhaustive-equality endpoint remain
+undetermined. If $\alpha<\beta$, the equality-only alternatives
+involve pure effects. Their actual separated ties, their coalescence
+with the selected graph, and the identities and exhaustion of the
+first competing global minimizing branches still require analysis.
+Mixed equality at $\beta$ remains possible on a separated feedback
+branch; its existence or exclusion and full endpoint preimage remain
+unresolved. Neither existence of such a mixed endpoint nor the absence
+of an earlier pure tie follows from the explicit right competitors.
+Those competitors need not minimize globally, so they do not exhaust
+the first competing minimizing branches.
+
+The determinant-zero phase-variation case still requires higher-order
+and global comparison. The geometric ordering beyond level four,
+any missing core-infimum attainment, and all previously conditional
+right-side branch-identification obligations retain their existing
+boundaries. No local curvature condition, unattained tie, or prefix
+purity theorem evaluates the first loss. The full original first-loss
+and equality problem remains unresolved.
+
+## 追加锚（本行以下为增补区）
