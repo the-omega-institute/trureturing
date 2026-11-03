@@ -6,7 +6,7 @@
    utility: none
    digest: Strict small-parameter improvement for the same actual fixed-product Pauli family. -/
 
-import D5.S3.Quantum.Algebra.PauliLocalBounds
+import D5.S3.Quantum.Algebra.PauliFixedProductFamily
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Tactic.Positivity
 
