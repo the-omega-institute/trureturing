@@ -38,7 +38,7 @@ abbrev arena : Arena where
     R.readout () V G = edgeRegion G ↔ G.IsBipartite
 
 private theorem bottom_bipartite (V : Type u) : (⊥ : SimpleGraph V).IsBipartite := by
-  exact ⟨⟨fun _ => 0, by simp⟩⟩
+  exact SimpleGraph.IsBipartite.bot V
 
 private theorem rejected_law : ¬ (arena.{u}).Law rejected.{u} := by
   intro h
@@ -85,7 +85,8 @@ def source_registration :
 def registration : Contract.Registration
     (@stableSetPolytope_eq_edgeRegion_iff.{u}) (Realization signature.{u}) Unit Unit := {
   unitName := `Reg.D5.S3.Combinatorics.Geometry.BipartiteStableSetPolytope.unit
-  realizationName := `Reg.D5.S3.Combinatorics.Geometry.BipartiteStableSetPolytope.source_registration
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Geometry.BipartiteStableSetPolytope.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
