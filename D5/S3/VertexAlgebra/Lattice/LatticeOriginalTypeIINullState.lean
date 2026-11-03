@@ -87,7 +87,10 @@ private theorem coeff_derivation_two (D : LatticeData) (i : Fin D.rank)
       P.coeff (Finsupp.single (i, 0) 1) := by
   classical
   induction P using MvPolynomial.induction_on with
-  | C c => simp [C_eq_smul_one]
+  | C c =>
+    have he : (0 : Index D →₀ ℕ) ≠ Finsupp.single (i,0) 1 :=
+      Ne.symm (Finsupp.single_ne_zero.mpr one_ne_zero)
+    simp [C_eq_smul_one, MvPolynomial.coeff_one, he]
   | add P Q hP hQ => simp [hP, hQ]
   | mul_X P x hP =>
     rcases x with ⟨j,k⟩
@@ -95,12 +98,14 @@ private theorem coeff_derivation_two (D : LatticeData) (i : Fin D.rank)
     have hx : oscillatorDerivation D (X (j,k)) =
         (k+1 : ℂ) • (X (j,k+1) : Oscillator D) := by
       simp [oscillatorDerivation]
-    rw [hx, mul_comm (X (j,k))]
-    simp only [coeff_add, mul_smul_comm, coeff_smul, coeff_linear_mul_X,
+    rw [hx]
+    simp only [smul_eq_mul]
+    rw [mul_comm (X (j,k))]
+    simp only [MvPolynomial.coeff_add, mul_smul_comm, coeff_smul, coeff_linear_mul_X,
       coeff_zero_derivation]
     by_cases h : k = 0
     · subst k; simp
-    · simp [h, show k + 1 ≠ 1 by omega]
+    · simp [h, Ne.symm h, show k + 1 ≠ 1 by omega]
 
 private def ell (D : LatticeData) (p : Charge D) (x : Carrier D) : ℂ :=
   ∑ i : Fin D.rank, (∑ j : Fin D.rank, (D.G i j : ℂ) * (p j : ℂ)) *
@@ -116,15 +121,23 @@ private theorem ell_translation_single (D : LatticeData) (p q : Charge D)
       if q = p then ∑ i : Fin D.rank, chargeScalar D p i *
         P.coeff (Finsupp.single (i,0) 1) else 0 := by
   classical
+  rw [translation_single]
   by_cases h : q = p
   · subst q
-    simp only [translation_single, ell, Finsupp.single_eq_same, coeff_add]
+    simp only [ell, Finsupp.single_eq_same, if_true]
     have hc (i : Fin D.rank) : (chargePolynomial D p * P).coeff
         (Finsupp.single (i,1) 1) = 0 := by
-      simp [chargePolynomial, Finset.sum_mul, mul_comm _ P, coeff_linear_mul_X]
-    simp_rw [hc, add_zero, coeff_derivation_two, ← charge_scalar]
-    simp
-  · simp [translation_single, ell, Finsupp.single_eq_of_ne h]
+      rw [chargePolynomial, Finset.sum_mul]
+      simp only [smul_mul_assoc, MvPolynomial.coeff_sum, coeff_smul]
+      apply Finset.sum_eq_zero
+      intro j hj
+      rw [mul_comm (X (j,0)) P, coeff_linear_mul_X]
+      simp
+    simp_rw [MvPolynomial.coeff_add, hc, add_zero, coeff_derivation_two]
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [charge_scalar D p i]
+  · simp [ell, h]
 
 private theorem mode_mul_X (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -163,21 +176,27 @@ private theorem coeff_mode_one (D : LatticeData)
     have hz := congrArg (fun x : Carrier D => x p) (show
         sugawaraMode D H 1 (Finsupp.single p (C c)) = 0 by rw [hc, map_smul, hg, smul_zero])
     have hx := congrArg (fun P : Oscillator D => P.coeff 0) hz
-    simpa [sugawaraMode_single_sector] using hx
+    have he (i : Fin D.rank) : (0 : Index D →₀ ℕ) ≠ Finsupp.single (i,0) 1 :=
+      Ne.symm (Finsupp.single_ne_zero.mpr one_ne_zero)
+    simpa [sugawaraMode_single_sector, he] using hx
   | add P Q hP hQ =>
     simp [hP, hQ, Finset.sum_add_distrib, mul_add]
   | mul_X P x hP =>
     rcases x with ⟨j,k⟩
     rw [mode_mul_X D H hHG hGH]
-    simp only [coeff_add, ← constantCoeff_eq, map_mul, constantCoeff_X, zero_mul,
-      zero_add, constantCoeff_smul]
+    simp only [MvPolynomial.coeff_add, coeff_smul]
+    have hc : (X (j,k) * sectorSugawaraMode D H p 1 P).coeff 0 = 0 := by
+      rw [← constantCoeff_eq]
+      simp
+    rw [hc, zero_add]
     cases k with
     | zero =>
       simp [neutralPolynomialMode, chargeScalar, coeff_linear_mul_X,
         constantCoeff_eq, eq_comm]
     | succ k =>
-      have hn : (1 : ℤ) - ((k+1+1 : ℕ) : ℤ) < 0 := by omega
-      simp [neutralPolynomialMode, hn, coeff_linear_mul_X, constantCoeff_eq]
+      have hn : (1 : ℤ) - ((k+1+1 : ℕ) : ℤ) = -(k : ℤ)-1 := by omega
+      rw [hn, neutralPolynomialMode_negative]
+      simp [LinearMap.mulLeft_apply, coeff_linear_mul_X, ← constantCoeff_eq]
 
 
 private theorem ell_translation (D : LatticeData)
@@ -242,10 +261,10 @@ private theorem ell_minus_two (D : LatticeData)
       simp [neutralPolynomialMode]
     simp only [LinearMap.sub_apply, Module.End.mul_apply, hz, map_zero,
       sugawaraMode_single_sector, neutralMode_single, Finsupp.sub_apply,
-      Finsupp.zero_apply, Finsupp.single_eq_same, coeff_sub, coeff_zero,
+      Finsupp.zero_apply, Finsupp.single_eq_same, coeff_sub, MvPolynomial.coeff_zero,
       LinearMap.smul_apply, Finsupp.smul_apply, coeff_smul] at h
     norm_num [neutralPolynomialMode, chargeScalar] at h ⊢
-    linear_combination -h
+    exact h
   rw [sugawaraMode_single_sector]
   have he := current_two_extracts_ell D p (sectorSugawaraMode D H p (-2) 1)
   simp_rw [hc] at he
@@ -267,7 +286,9 @@ private theorem ell_translation_squared (D : LatticeData) (p : Charge D) :
   rw [tv, ell_translation_single]
   simp only [ite_true]
   have hc (i : Fin D.rank) : (chargePolynomial D p).coeff (Finsupp.single (i,0) 1) =
-      (p i : ℂ) := by simp [chargePolynomial, coeff_X', eq_comm]
+      (p i : ℂ) := by
+    simp [chargePolynomial, MvPolynomial.coeff_sum, coeff_X,
+      Finsupp.single_left_inj (by norm_num : (1 : ℕ) ≠ 0), eq_comm]
   simp_rw [hc, mul_comm (chargeScalar D p _) (p _ : ℂ)]
   exact charge_norm D p
 
@@ -324,20 +345,20 @@ private theorem typeII_primary (D : LatticeData)
     rw [comm, zero_one]
     norm_num
   have one_one : L 1 (L (-1) v) = (-2 : ℂ) • v := by
-    rw [comm, ground 1 (by omega), weight]
-    norm_num
+    rw [comm, ground 1 (by omega)]
+    norm_num [weight]
   have one_two : L 1 (L (-2) v) = (3 : ℂ) • L (-1) v := by
     rw [comm, ground 1 (by omega)]
     norm_num
   have one_one_one : L 1 (L (-1) (L (-1) v)) = (-2 : ℂ) • L (-1) v := by
-    rw [comm, one_one, zero_one]
-    norm_num
+    rw [comm, one_one]
+    norm_num [zero_one]
   have higher_one (n : ℤ) (hn : 1 < n) : L n (L (-1) v) = 0 := by
     rw [comm, ground n (by omega), ground (n + -1) (by omega)]
     simp [show n + -1 ≠ 0 by omega]
   have two_two : L 2 (L (-2) v) = (9 : ℂ) • v := by
-    rw [comm, ground 2 (by omega), weight]
-    norm_num [hr] <;> module
+    rw [comm, ground 2 (by omega)]
+    norm_num [hr, weight] <;> module
   have two_one_one : L 2 (L (-1) (L (-1) v)) = (-6 : ℂ) • v := by
     rw [comm, higher_one 2 (by omega)]
     norm_num [one_one, smul_smul]
@@ -349,7 +370,9 @@ private theorem typeII_primary (D : LatticeData)
     simp [show n + -1 ≠ 0 by omega]
   have hT := sugawaraMode_minus_one_eq_translation D H hHG hGH
   rw [typeII, ← hT]
-  change L 0 (L (-2) v + (3/2 : ℂ) • L (-1) (L (-1) v)) = _ ∧ _
+  change L 0 (L (-2) v + (3/2 : ℂ) • L (-1) (L (-1) v)) =
+      L (-2) v + (3/2 : ℂ) • L (-1) (L (-1) v) ∧
+    ∀ n : ℤ, 0 < n → L n (L (-2) v + (3/2 : ℂ) • L (-1) (L (-1) v)) = 0
   constructor
   · simp [zero_two, zero_one_one]
   · intro n hn
@@ -391,7 +414,8 @@ theorem original_typeII_null_obstruction (D : LatticeData)
       translation D u ≠ typeII D H p := by
     intro h
     have hzero := ell_translation D H hHG hGH p u
-    rw [hu, Finsupp.zero_apply, coeff_zero, h, hcoeff] at hzero
+    rw [hu, Finsupp.zero_apply, h, hcoeff] at hzero
+    simp only [MvPolynomial.coeff_zero, Pi.zero_apply] at hzero
     norm_num at hzero
   refine ⟨hprimary.1, hprimary.2, ?_, hnonzero, hnot, ?_⟩
   · intro w hw
