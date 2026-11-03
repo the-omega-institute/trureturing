@@ -4,7 +4,7 @@
 
 TableCertificates
 
-The 24 residue families and 16 fixed tuples supply exact paired windows, stock limits and actual natural submasks. These rows are consumed by the unrestricted HighD selector.
+The 24 residue families supply exact paired windows, stock limits and actual natural submasks. These rows are consumed by the unrestricted HighD selector.
 
 **Theorem 1.1 (residue_bounds).**
 
@@ -30,34 +30,8 @@ Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableCe
 
 Consumed by the full HighD construction with the exact Lean telescope.
 
-**Theorem 1.3 (fixed_bounds).**
-
-Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableCertificates.fixed_bounds`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableCertificates.fixed_bounds` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Consumed by the full HighD construction with the exact Lean telescope.
-
-**Theorem 1.4 (fixed_submask).**
-
-Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableCertificates.fixed_submask`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableCertificates.fixed_submask` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Consumed by the full HighD construction with the exact Lean telescope.
-
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableCertificates.fixed_bounds`
-- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableCertificates.fixed_submask`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableCertificates.residue_bounds`
 - Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableCertificates.residue_submask`
 - Dependency: [D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/ResidueCertificates1](ResidueCertificates1.md)

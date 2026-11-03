@@ -4,7 +4,7 @@
 
 TableData
 
-The literal 24 mod-72 residue rows cover h=1,2 and p=4,8. The 16 fixed rows close the small q boundaries. The late fresh ear occurs exactly for p=4,h=1,r=56; all other rows insert at cut zero. FixedRow and the paired rowBounds retain the common physical interpretation used by the unbounded selectors.
+The literal 24 mod-72 residue rows cover h=1,2 and p=4,8. The late fresh ear occurs exactly for p=4,h=1,r=56; all other rows insert at cut zero. The paired rowBounds retain the common physical interpretation used by the unbounded selectors.
 
 **Theorem 1.1 (residue_fresh_exact).**
 
