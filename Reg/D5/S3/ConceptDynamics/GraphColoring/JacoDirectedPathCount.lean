@@ -144,5 +144,65 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 #print axioms evidence
 end Distance
+
+namespace Original
+
+abbrev sig : Signature := Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+def actual : Realization sig := realize sig (fun _ _ n => psi n) (fun e => nomatch e)
+def rejected : Realization sig := realize sig (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := sig
+  Law R := ∀ k : ℕ, 7 ≤ k → ∀ i : ℕ, Nat.fib i < k → k ≤ Nat.fib (i + 1) →
+    ((outdegree (k - 1) ≠ outdegree k ∧ outdegree k ≠ outdegree (k + 1)) ↔
+      (R.readout () () (k - 1) ≠ R.readout () () k ∧
+        R.readout () () k ≠ R.readout () () (k + 1)))
+
+private theorem at_eight : outdegree 7 ≠ outdegree 8 ∧ outdegree 8 ≠ outdegree 9 := by
+  decide +kernel
+
+private theorem depends : ObservationalDependence sig actual := by
+  intro i
+  refine ⟨(), 7, 8, ?_⟩
+  have h := (result 8 (by decide) 5 (by decide) (by decide)).mp at_eight
+  exact h.1
+
+private theorem bad : ¬ arena.Law rejected := by
+  intro h
+  have hx := (h 8 (by decide) 5 (by decide) (by decide)).mp at_eight
+  change (0 : ℕ) ≠ 0 ∧ (0 : ℕ) ≠ 0 at hx
+  exact hx.1 rfl
+
+def evidence : Registration arena (type_of% @result) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨result, rejected, bad⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ bad
+  dependence := depends
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@result) (Realization sig) Unit Unit where
+  unitName := `D5.S3.ConceptDynamics.GraphColoring.JacoDirectedPathCount.result.__information_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.GraphColoring.JacoDirectedPathCount.Original.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize sig (fun _ _ n => psi n) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+end Original
 end
 end Reg.D5.S3.ConceptDynamics.GraphColoring.JacoDirectedPathCount
