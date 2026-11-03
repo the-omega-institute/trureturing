@@ -25,41 +25,84 @@ A323884 is the pointwise sum `a+b`. The formal carrier sets both functions to
 zero at index zero and proves the identity for all natural indices, which
 contains the published positive-index statement.
 
-The preregistration is [issue #26072](https://github.com/the-omega-institute/trureturing/issues/26072). The source snapshot is the immutable `oeis/oeisdata` pin
-`f151d82acb28766e6034a902ed9fd0632b16f986`, A322026 revision 41.
+### Statement echo
 
-## Result
+The target is `∀ n, a n = a (25*n) + b (25*n)` under the explicit A071521/A065331
+rank and Dirichlet-inverse conventions above.
 
-`D5.S3.Arith.DirichletInverse.OeisA322026DirichletInverseIdentity.result` proves
-`∀ n, a n = a (25*n) + b (25*n)`.
+## Motivation
 
-The proof first verifies the source rank formula is unchanged by multiplication
-by 5. For a unit-headed arithmetic function `f` satisfying `f(5n)=f(n)`, it
-forms the difference between `f` and the 5-shift. Its Dirichlet inverse equation
-is `h * f⁻¹ = 1 - δ₅`; the difference is supported away from multiples of 5.
-Strong induction on a multiple of `25` then forces `f⁻¹(25n)=0`. Applying this
-to the A322026 function gives `a(25n)=a(n)` and the stated identity.
+The conjecture relates the A322026 rank sequence to its Dirichlet inverse at a
+uniform square factor. A proof supplies the complete published identity and
+isolates the arithmetic mechanism behind the factor 25.
 
-The theorem is kernel-checked with the pinned Mathlib arithmetic-function
-Dirichlet inverse and natural factorization/divisor APIs. No additional axiom,
-`sorry`, finite-prefix replacement or prime-support restriction is used.
+## Gap
 
-## Judgement form
+The source gives the formula as a conjecture. The formal gap is to prove the
+rank formula's invariance under multiplication by 5 and then control the
+Dirichlet inverse at multiples of 25 without restricting to a finite prefix or
+to a special family of indices.
 
-| declaration | proof_shape | escape_witness | direct consumers | admission_basis |
-| --- | --- | --- | --- | --- |
-| `a` | bind-only | none | `result` | open-problem-resolution |
-| `b` | bind-only | none | `result` | open-problem-resolution |
-| `result` | content | `inverse_prime_square_support` on its live proof path | none | open-problem-resolution (#26072; Proved) |
+## Route
 
-The helper declarations are private and consumed on the live path of `result`.
-The four-slot source audit for the public result remains unfinished and is
-tracked in [#26181](https://github.com/the-omega-institute/trureturing/issues/26181); no `declared_validated` status is claimed.
+1. Define the rank function from the finite lattice count of exponent pairs for
+   the 2- and 3-adic factorization powers.
+2. Prove `a (5*n) = a n` using the natural-number factorization product API.
+3. For a unit-headed arithmetic function `f` with `f (5*n)=f n`, subtract the
+   prime shift, convolve with the Dirichlet inverse, and use strong induction on
+   multiples of 25 to prove the inverse vanishes there.
+4. Apply the general support lemma to A322026 and rewrite the resulting equality
+   into the published A323884 form.
 
-## Boundary
+## Falsifier
 
-The identity settles the preregistered whole formula under the source's rank and
-Dirichlet-inverse conventions. The source's restricted-growth-label construction
-is used as the external definition of the published rank formula; the Lean
-statement formalizes the explicit A071521/A065331 formula quoted by the source.
-No assertion about other OEIS transforms or analytic Dirichlet series is made.
+A formal counterexample would need an index `n` for which the explicit rank and
+Dirichlet-inverse definitions satisfy all hypotheses but
+`a n ≠ a (25*n) + b (25*n)`. A finite numerical mismatch is sufficient to refute
+this universal statement, while a numerical agreement on a finite prefix is not
+a proof.
+
+## Evidence
+
+The source snapshot is the immutable `oeis/oeisdata` pin
+`f151d82acb28766e6034a902ed9fd0632b16f986`, A322026 revision 41. The
+preregistration is [issue #26072](https://github.com/the-omega-institute/trureturing/issues/26072).
+
+The canonical source is
+`D5/S3/Arith/DirichletInverse/OeisA322026DirichletInverseIdentity.lean`.
+The frozen declaration state is
+`Golden/Frozen/state/D5/S3/Arith/DirichletInverse/OeisA322026DirichletInverseIdentity.lean.json`.
+The public declaration is
+`D5.S3.Arith.DirichletInverse.OeisA322026DirichletInverseIdentity.result`.
+Its axiom closure contains only `propext`, `Classical.choice`, and `Quot.sound`.
+
+## Triage
+
+Tier 1 OEIS conjecture, preregistered before formalization; resolution `proved`.
+The public result is kernel-checked and has no `sorry`, `native_decide`, finite-prefix
+replacement, or additional axiom.
+
+### What the settlement shows
+
+**Proved by `result`:** For every natural index, the explicit A322026 rank equals
+the sum of the rank and its integer-valued Dirichlet inverse evaluated at 25 times
+the index.
+
+**Computed, not formalized:** None.
+
+**Argued, not formalized:** The source's restricted-growth-label construction is
+used as the external interpretation of the published rank formula; the Lean
+statement formalizes the explicit A071521/A065331 expression. No analytic
+Dirichlet-series claim or assertion about other OEIS transforms is made.
+
+The four-slot §3.9 registration audit for the public result remains unfinished
+and is tracked in [#26181](https://github.com/the-omega-institute/trureturing/issues/26181);
+no `declared_validated` status is claimed.
+
+## ASSUMED-UNVERIFIED
+
+The literature and OEIS reading is bounded to the cited snapshot and the source
+pin above; it does not establish an exhaustive novelty or priority result. The
+external restricted-growth-label interpretation, analytic Dirichlet-series
+properties, and identities for other OEIS transforms remain outside the formal
+statement.
