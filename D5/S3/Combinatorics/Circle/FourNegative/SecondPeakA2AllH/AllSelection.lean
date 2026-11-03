@@ -15,7 +15,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH
 
-open private good_of_row_bounds
+open private good_of_row_bounds large_p_allh_good
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.LargeP
 
 /-- Exhaustive independent dyadic selection, with no cutoff on any exponent.

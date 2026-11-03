@@ -308,7 +308,7 @@ private theorem first_small_slacks (p q h v m M : ℤ) (before : Bool)
     dsimp [First] at hf <;> omega
 
 /-- Complete p>=64 sector, including the three continuous small-z covers. -/
-theorem large_p_allh_good (p q k : ℕ) (hp : 64≤p) (hq : 2≤q) (hk : 2≤k)
+private theorem large_p_allh_good (p q k : ℕ) (hp : 64≤p) (hq : 2≤q) (hk : 2≤k)
     (hqs : q=2 ∨ q=4 ∨ q=8 ∨ 16≤q) :
     ∃ v m M : ℕ, ∃ before : Bool, Good p q (2^k) v m M before := by
   let h : ℕ := 2^k
