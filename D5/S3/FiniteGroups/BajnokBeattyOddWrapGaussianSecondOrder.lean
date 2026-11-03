@@ -41,7 +41,7 @@ private theorem log_cubic_remainder_scaled {z P K : ℝ}
   constructor <;> linarith only [hlo, hhi, htail]
 
 /-- The finite quadratic remainder for a positive displacement. -/
-private theorem exp_positive_quadratic_remainder {u : ℝ}
+theorem exp_positive_quadratic_remainder {u : ℝ}
     (hu0 : 0 ≤ u) (hu1 : u ≤ 1) :
     |Real.exp u-1-u| ≤ (3/4)*u^2 := by
   have hlo := Real.add_one_le_exp u
@@ -52,7 +52,7 @@ private theorem exp_positive_quadratic_remainder {u : ℝ}
 
 /-- This negative-displacement bound holds for every nonnegative u.
 The reciprocal is cleared against a strictly positive exponential. -/
-private theorem exp_negative_quadratic_remainder {u : ℝ} (hu0 : 0 ≤ u) :
+theorem exp_negative_quadratic_remainder {u : ℝ} (hu0 : 0 ≤ u) :
     |Real.exp (-u)-1+u| ≤ u^2/2 := by
   have hlo : 1-u ≤ Real.exp (-u) := by
     have hh := Real.add_one_le_exp (-u)
