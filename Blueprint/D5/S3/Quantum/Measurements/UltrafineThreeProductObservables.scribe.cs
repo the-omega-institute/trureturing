@@ -56,7 +56,7 @@ internal sealed class UltrafineThreeProductObservablesDocument : IScribeDocument
                 DeclarationHandle.Create(Module + ".claim"),
                 H("Three product observables with no useful pair"),
                 StatementSource.FromAuthor(Disp(Equivalence(Local("claim"), ClaimProposition()))),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "There exist two families a and b of three Hermitian three-by-three complex matrices. "
                     + "Every pair of distinct indices gives a useless pair of their Kronecker products, whereas "

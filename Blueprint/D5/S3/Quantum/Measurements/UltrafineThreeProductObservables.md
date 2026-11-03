@@ -38,7 +38,9 @@ $$(\operatorname{D5.S3.Quantum.Measurements.UltrafineThreeProductObservables.cla
 
 *Formalization.* `D5/S3/Quantum/Measurements/UltrafineThreeProductObservables.claim` (`✓ std3`).
 
-*Citation.* Gachechiladze, Mariami; Wyderka, Nikolai; Gühne, Otfried (2018). *The structure of ultrafine entanglement witnesses*. DOI: [10.1088/1751-8121/aad3dc](https://doi.org/10.1088/1751-8121/aad3dc). URL: <https://arxiv.org/abs/1805.06404v2>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Gachechiladze, Mariami; Wyderka, Nikolai; Gühne, Otfried (2018). *The structure of ultrafine entanglement witnesses*. DOI: [10.1088/1751-8121/aad3dc](https://doi.org/10.1088/1751-8121/aad3dc). URL: <https://arxiv.org/abs/1805.06404v2>.
 
 *Commentary.*
 
