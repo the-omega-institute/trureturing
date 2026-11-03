@@ -1,5 +1,7 @@
 import Reg.Support.DependentFamily
 
+/-! A single dependent observation and its sensitivity evidence. -/
+
 namespace Reg.Support.SingleDependentReadout
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 

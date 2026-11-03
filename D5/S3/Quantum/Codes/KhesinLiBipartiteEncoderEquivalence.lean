@@ -11,6 +11,7 @@ import Mathlib.Combinatorics.SimpleGraph.Bipartite
 import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
 import D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses
 import D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
+import D5.S3.Quantum.MultifactorCorrelationSectorDecomposition
 
 /-! Khesin–Li, arXiv:2406.12083v1, Conjecture 8.3, under the decoration-free
 operation-generated reading of preregistration #26139. Both sides have only input–output edges.
@@ -387,25 +388,19 @@ private theorem kernel_recovery {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 
       Nat.card {u : Fin n → ZMod 2 // C *ᵥ u = 0 ∧ Function.support u ⊆ (S : Set (Fin n))}) :
     LinearMap.ker B.mulVecLin = LinearMap.ker C.mulVecLin := by
   classical
+  let e : Finset (Fin n) ≃ (Fin n → ZMod 2) :=
+    (D5.S3.Quantum.MultifactorCorrelationSectorDecomposition.supportEquiv (ι := Fin n)).symm.trans
+      (Equiv.piCongrRight (fun _ => finTwoEquiv.symm.trans (ZMod.finEquiv 2).toEquiv))
   let b : Finset (Fin n) → Fin n → ZMod 2 :=
-    fun T => (T : Set (Fin n)).indicator (fun _ => 1)
+    e
   have hs (T : Finset (Fin n)) : Function.support (b T) = (T : Set (Fin n)) := by
-    dsimp only [b]
-    rw [Set.support_indicator, Function.support_const one_ne_zero, Set.inter_univ]
-  have hb : Function.Bijective b := by
-    constructor
-    · intro T U hTU
-      apply Finset.coe_injective
-      rw [← hs T, ← hs U, hTU]
-    · intro u
-      refine ⟨Finset.univ.filter (fun a => u a ≠ 0), ?_⟩
+    have he : b T = (T : Set (Fin n)).indicator (fun _ => 1) := by
       funext a
-      rcases binary (u a) with ha | ha
-      · simp only [b, Set.indicator_apply, Finset.mem_coe, Finset.mem_filter, Finset.mem_univ, true_and, ha, ne_eq,
-          not_true_eq_false, ite_false]
-      · simp only [b, Set.indicator_apply, Finset.mem_coe, Finset.mem_filter, Finset.mem_univ, true_and, ha, ne_eq,
-          one_ne_zero, not_false_eq_true, ite_true]
-  let e := Equiv.ofBijective b hb
+      by_cases ha : a ∈ T <;>
+        simp [b, e, D5.S3.Quantum.MultifactorCorrelationSectorDecomposition.supportEquiv,
+          finTwoEquiv, ZMod.finEquiv, ha] <;> rfl
+    rw [he]
+    rw [Set.support_indicator, Function.support_const one_ne_zero, Set.inter_univ]
   have hc (D : Matrix (Fin k) (Fin n) (ZMod 2)) (S : Finset (Fin n)) :
       Nat.card {u : Fin n → ZMod 2 // D *ᵥ u = 0 ∧ Function.support u ⊆ (S : Set (Fin n))} =
         ∑ T ∈ S.powerset, if D *ᵥ b T = 0 then (1 : ℕ) else 0 := by
@@ -437,7 +432,7 @@ private theorem kernel_recovery {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 
     dsimp only [f] at he
     split_ifs at he <;> simp_all
   ext u
-  obtain ⟨T, rfl⟩ := hb.surjective u
+  obtain ⟨T, rfl⟩ := e.surjective u
   exact hmem T
 
 private theorem row_kernel_pairing {k n : ℕ} (D : Matrix (Fin k) (Fin n) (ZMod 2))

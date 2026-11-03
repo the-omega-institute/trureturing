@@ -74,7 +74,8 @@ def source_registration : Registration arena (type_of% (@result)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@result, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
   dependence := dependence
 
 def registration :

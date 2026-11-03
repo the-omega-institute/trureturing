@@ -59,7 +59,8 @@ def source_registration : Registration arena (type_of% (@compl_eq)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@compl_eq, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
   dependence := dependence
 
 def registration :
@@ -121,7 +122,8 @@ def source_registration : Registration arena (type_of% (@relabel)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@relabel, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
   dependence := dependence
 
 def registration :
@@ -183,7 +185,8 @@ def source_registration : Registration arena (type_of% (@lc_eq)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@lc_eq, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
   dependence := dependence
 
 def registration :

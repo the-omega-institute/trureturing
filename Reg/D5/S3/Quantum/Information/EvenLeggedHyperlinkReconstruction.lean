@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registrations of the selected public mathematical statements. -/
+
 namespace Reg.D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
 open _root_.D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -122,7 +124,8 @@ abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 
 def actual : Realization signature := realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -144,13 +147,15 @@ def family : Registration arena.{u} (type_of% (@zeta_hyperlink.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@zeta_hyperlink, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
   dependence := dependence
 
 def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@zeta_hyperlink.{u})
     (type_of% (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))) Unit Unit := {
-  unitName := `D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.zeta_hyperlink.__information_unit
+  unitName := Lean.Name.str
+    `D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.zeta_hyperlink "__information_unit"
   realizationName := `Reg.D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.Zeta.family
   realizationSource := none
   generated := false
@@ -221,7 +226,8 @@ def source_registration : Registration arena.{u_1} (type_of% (@hyperlink_zeta.{u
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@hyperlink_zeta.{u_1}, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
   dependence := dependence
 
 def registration :
