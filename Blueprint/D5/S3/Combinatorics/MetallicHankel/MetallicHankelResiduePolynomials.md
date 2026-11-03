@@ -10,9 +10,13 @@ Lean statement: `D5/S3/Combinatorics/MetallicHankel/MetallicHankelResiduePolynom
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/MetallicHankel/MetallicHankelResiduePolynomials.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/han-pedon-metallic-hankel-quasipolynomial` (proved) by `D5/S3/Combinatorics/MetallicHankel/MetallicHankelResiduePolynomials.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"han-pedon-metallic-hankel-quasipolynomial","declaration_gid":"D5/S3/Combinatorics/MetallicHankel/MetallicHankelResiduePolynomials.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
-*Acknowledgement.* Guo-Niu Han, Emmanuel Pedon (2025). *Hankel continued fractions and Hankel determinants for q-deformed metallic numbers*. DOI: [10.48550/arXiv.2502.05993](https://doi.org/10.48550/arXiv.2502.05993). URL: <https://arxiv.org/abs/2502.05993v2>.
+*Acknowledgement.* Guo-Niu Han, Emmanuel Pedon (2026). *Hankel determinants for the (n+2)-shifted q-metallic numbers*. DOI: [10.48550/arXiv.2610.36132](https://doi.org/10.48550/arXiv.2610.36132). URL: <https://arxiv.org/abs/2610.36132v1>.
 
 *Commentary.*
 

@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.MetallicHankel;
 internal sealed class MetallicHankelQuasipolynomialDefsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/MetallicHankel/MetallicHankelQuasipolynomialDefs.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/han2025hankel");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/han2026shiftedmetallic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Conjecture C asserts integer-valued rational quasipolynomials for every higher metallic Hankel shift.",

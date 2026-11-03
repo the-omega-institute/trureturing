@@ -12,7 +12,7 @@ Lean statement: `D5/S3/Combinatorics/MetallicHankel/MetallicHankelQuasipolynomia
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Guo-Niu Han, Emmanuel Pedon (2025). *Hankel continued fractions and Hankel determinants for q-deformed metallic numbers*. DOI: [10.48550/arXiv.2502.05993](https://doi.org/10.48550/arXiv.2502.05993). URL: <https://arxiv.org/abs/2502.05993v2>.
+*Acknowledgement.* Guo-Niu Han, Emmanuel Pedon (2026). *Hankel determinants for the (n+2)-shifted q-metallic numbers*. DOI: [10.48550/arXiv.2610.36132](https://doi.org/10.48550/arXiv.2610.36132). URL: <https://arxiv.org/abs/2610.36132v1>.
 
 *Commentary.*
 

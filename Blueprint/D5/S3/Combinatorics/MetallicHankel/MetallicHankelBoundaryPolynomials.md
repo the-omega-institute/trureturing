@@ -20,7 +20,7 @@ Let mu be an integer moment sequence and N=n+1 be any positive size. Let c and d
 
 Multiplication by x modulo the monic polynomial c gives a companion matrix T. The normal moment relations give HT=T-transpose H and fix the last inverse column as -d. Symmetry fixes the last row. The resulting entry recurrence, descending in the row and ascending in the column, determines every inverse entry. Zero support at the last row supplies the boundary case of the finite sum. Thus the argument obtains the complete inverse even for a gapped normal family.
 
-For higher shifted metallic Hankel determinants, this identity supplies the inverse entries used in a fixed complementary minor of a larger normal matrix. Establishing the same normal data at every prescribed period boundary, polynomial dependence of both endpoint jets, the exact complementary index maps and signs, and integer-valued residue polynomials remain separate mathematical requirements.
+For higher shifted metallic Hankel determinants, this identity supplies the inverse entries used in a fixed complementary minor of a larger normal matrix. MetallicHankelUnbounded.normal_family supplies these normal data at every prescribed period boundary. MetallicHankelComplementaryMinor consumes the inverse with exact ordered indices and signs, and MetallicHankelResiduePolynomials combines it with endpoint jets and backward integer-value propagation.
 
 ## References
 

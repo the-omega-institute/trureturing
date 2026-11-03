@@ -20,7 +20,7 @@ Let U be a two-by-two matrix over rational formal power series. Suppose its trac
 
 Hensel lifting gives the characteristic root a with constant coefficient one. Its inverse defines b=q^D/a, and the characteristic equation gives trace(U)=a+b. The difference a-b is a unit. Define E=(U-bI)/(a-b) and F=I-E. The existing two-by-two Cayley-Hamilton power recurrence gives U^K=a^K E+b^K F by induction, including powers zero and one. Since b^K=q^(D*K)/a^K, the second summand has zero coefficients at every degree below D*K.
 
-For the ordinary denominator block in the metallic construction, D=2*rho gives exactly h<2*K*rho. Proving that the actual continuant block has this trace and determinant remains necessary. Polynomial dependence of the retained unit-branch coefficients, its connection to the same normal boundary polynomials, and the complementary minor construction are separate requirements. The theorem does not replace them by eventual equality.
+For the ordinary denominator block in the metallic construction, D=2*rho gives exactly h<2*K*rho. MetallicHankelBlocks.ordinary_blocks supplies this trace constant coefficient and determinant for the actual continuants. MetallicHankelEndpointJets combines the branch with polynomial unit-power coefficients, and MetallicHankelResiduePolynomials consumes those jets in the exact complementary boundary. The theorem does not replace them by eventual equality.
 
 ## References
 
