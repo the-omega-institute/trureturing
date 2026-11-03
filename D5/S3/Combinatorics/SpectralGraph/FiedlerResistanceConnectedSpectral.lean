@@ -571,4 +571,3 @@ lemma rankone_of_spectrum {n : ℕ} (hn : 0<n) (G : SimpleGraph (Fin n))
   exact unit_outer_rank v hnorm
 
 end D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceConnectedSpectral
-
