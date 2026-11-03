@@ -107,7 +107,9 @@ internal sealed class UniformVarianceCenteringDocument : IScribeDocumentDefiniti
     {
         var i=F.Id("i"); var ii=F.Id("I"); var ee=F.Id("E"); var jj=F.Id("J");
         Formula Cls(string name,params Formula[] tail) {
-            var args=new System.Collections.Generic.List<Formula>(tail); args.Add(At(ee,i));
+            var args=new System.Collections.Generic.List<Formula>();
+            foreach(var item in tail) args.Add(item);
+            args.Add(At(ee,i));
             return Seq(OpenBracket,Forall,Sp,i,Colon,Sp,ii,Comma,Sp,
                 Call(name,args.ToArray()),CloseBracket,Sp);
         }

@@ -291,7 +291,7 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
   have hH (j : J) : (H j).IsHermitian := by
     apply (LinearMap.isHermitian_toMatrix_iff v).mpr
     intro x y
-    simp only [PiLp.inner_apply]
+    change (∑ r, inner ℂ (h j (x r)) (y r)) = ∑ r, inner ℂ (x r) (h j (y r))
     exact Finset.sum_congr rfl (fun r _ => hh j (x r) (y r))
   have hsum : ∑ j, H j * H j = 1 := by
     have hl : ∑ j, (referenceLift n (h j)).comp (referenceLift n (h j)) =
@@ -351,6 +351,15 @@ variable {a I J : Type*} [Fintype a] [DecidableEq a]
 /-- Actual center pinching, represented on the whole ambient Hilbert space. -/
 def centerPinching (P : I → Matrix a a ℂ) (X : Matrix a a ℂ) : Matrix a a ℂ :=
   ∑ i, P i * X * P i
+
+private lemma kraus_trace_pairing (H : J → Matrix a a ℂ) (X Y : Matrix a a ℂ) :
+    ((∑ j, H j*X*(H j)ᴴ)*Y).trace = (X*(∑ j, (H j)ᴴ*Y*H j)).trace := by
+  simp only [Matrix.sum_mul, Matrix.mul_sum, Matrix.trace_sum]
+  apply Finset.sum_congr rfl
+  intro j _
+  simp only [Matrix.mul_assoc]
+  rw [Matrix.trace_mul_comm (H j)]
+  simp only [Matrix.mul_assoc]
 
 private lemma pinch_id (P : I → Matrix a a ℂ)
     (hPP : ∀ i, P i * P i = P i) (hP : ∑ i, P i = 1)
@@ -451,6 +460,7 @@ private lemma pinched_centered_identity (P : I → Matrix a a ℂ)
       rw [hX, Matrix.mul_assoc, hpp, ← hX]
     simp only [Matrix.mul_assoc] at h1 h2 h3 ⊢
     rw [← h1, h2, h3]
+    simp only [hX i]
     module
   have ht := congrArg (fun f : J → I → Matrix a a ℂ => ∑ j, ∑ i, f j i)
     (funext (fun j => funext (hm j)))
@@ -488,7 +498,7 @@ variable {I : Type*} [Fintype I] [DecidableEq I]
   {E : I → Type*} [∀ i, NormedAddCommGroup (E i)]
   [∀ i, InnerProductSpace ℂ (E i)] [∀ i, FiniteDimensional ℂ (E i)]
 
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 4000000 in
 /-- The actual center-pinched channel and centered Kraus family have the global
 complete-reference defect bound, from variance only inside each input block. -/
 theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
@@ -521,6 +531,7 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
         (Phi = ∑ t, A t * X * (A t)ᴴ) ∧
         (X - Phi = (1/2 : ℂ) • (Q*X+X*Q) - K) ∧
         (traceNorm (X-Phi) ≤ min 2 (10*δ) * traceNorm X) ∧
+        (Phi.trace = X.trace) ∧ (0 ≤ X → 0 ≤ Phi) ∧ (0 ≤ X → 0 ≤ K) ∧
         (∀ Y, (K*Y).trace = (X*(∑ t, (B t)ᴴ * Y * B t)).trace)) := by
   classical
   have hp := hermitian_direct_sum_centering h hh δ hδ hv e he
@@ -560,43 +571,55 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
   have hcomp (i k : I) : (rP i).comp (rP k) = if i=k then rP i else 0 := by
     by_cases hik : i=k
     · subst k
-      simp only [if_pos rfl]
-      ext x r
+      rw [if_pos rfl]
+      apply LinearMap.ext
+      intro x
+      apply PiLp.ext
+      intro r
       change PiLp.single 2 i ((PiLp.single 2 i (x r i)) i) = PiLp.single 2 i (x r i)
       simp
-    · simp only [if_neg hik]
-      ext x r
+    · rw [if_neg hik]
+      apply LinearMap.ext
+      intro x
+      apply PiLp.ext
+      intro r
       change PiLp.single 2 i ((PiLp.single 2 k (x r k)) i) = 0
       simp [hik]
   have hPP (i k : I) : P i * P k = if i=k then P i else 0 := by
     have hz := congrArg (LinearMap.toMatrix v.toBasis v.toBasis) (hcomp i k)
-    simpa only [LinearMap.toMatrix_comp v.toBasis v.toBasis v.toBasis,
-      map_ite, map_zero] using hz
+    split_ifs at hz ⊢ with hik
+    · simpa only [LinearMap.toMatrix_comp v.toBasis v.toBasis v.toBasis] using hz
+    · simpa only [LinearMap.toMatrix_comp v.toBasis v.toBasis v.toBasis, map_zero] using hz
   have hpp (i : I) : P i * P i = P i := by simpa using hPP i i
   have hsumP : ∑ i, rP i = LinearMap.id := by
-    ext x r i
-    simp only [LinearMap.sum_apply, LinearMap.id_apply]
-    change (∑ k, PiLp.single 2 k (x r k)) i = x r i
-    have heval := congrArg (fun z : PiLp 2 E => z i)
-      (show (∑ k, PiLp.single 2 k (x r k)) = x r from by
-        apply WithLp.ofLp_injective
-        change (∑ k, Pi.single k (x r k)) = (x r).ofLp
-        exact Finset.univ_sum_single (x r).ofLp)
-    exact heval
+    apply LinearMap.ext
+    intro x
+    apply PiLp.ext
+    intro r
+    simp only [LinearMap.sum_apply, LinearMap.id_apply, WithLp.ofLp_sum, Finset.sum_apply]
+    change (∑ k, PiLp.single 2 k (x r k)) = x r
+    apply WithLp.ofLp_injective
+    simp only [WithLp.ofLp_sum]
+    exact Finset.univ_sum_single (x r).ofLp
   have hsP : ∑ i, P i = 1 := by
     have hz := congrArg (LinearMap.toMatrix v.toBasis v.toBasis) hsumP
     simpa only [map_sum, LinearMap.toMatrix_id] using hz
   have hH (j : J) : (H j)ᴴ = H j := by
     apply ((LinearMap.isHermitian_toMatrix_iff v).mpr ?_).eq
     intro x y
-    simp only [PiLp.inner_apply]
+    change (∑ r, inner ℂ (h j (x r)) (y r)) = ∑ r, inner ℂ (x r) (h j (y r))
     exact Finset.sum_congr rfl (fun r _ => hh j (x r) (y r))
   have hsH : ∑ j, H j * H j = 1 := by
     have hl : ∑ j, (directSumReference n (h j)).comp (directSumReference n (h j)) =
         LinearMap.id := by
-      ext x r
+      apply LinearMap.ext
+      intro x
+      apply PiLp.ext
+      intro r
+      simp only [LinearMap.sum_apply, LinearMap.id_apply, WithLp.ofLp_sum, Finset.sum_apply]
+      change (∑ j, h j (h j (x r))) = x r
       have hz := congrArg (fun T : PiLp 2 E →ₗ[ℂ] PiLp 2 E => T (x r)) hs
-      simpa [directSumReference, referenceLift, LinearMap.sum_apply] using hz
+      simpa only [LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.id_apply] using hz
     have hz := congrArg (LinearMap.toMatrix v.toBasis v.toBasis) hl
     simpa only [map_sum, LinearMap.toMatrix_id,
       LinearMap.toMatrix_comp v.toBasis v.toBasis v.toBasis] using hz
@@ -605,8 +628,14 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
   have hC (j : J) : C j = ∑ i, (c j i : ℂ) • P i := by
     have hz : directSumReference n (centralMean h e j) =
         ∑ i, (c j i : ℂ) • rP i := by
-      ext x r
-      simp [directSumReference, referenceLift, centralMean, c, rP, LinearMap.sum_apply]
+      apply LinearMap.ext
+      intro x
+      apply PiLp.ext
+      intro r
+      change (centralMean h e j) (x r) = (∑ i, (c j i : ℂ) • rP i) x r
+      simp only [centralMean, LinearMap.sum_apply, LinearMap.smul_apply,
+        WithLp.ofLp_sum, Finset.sum_apply, WithLp.ofLp_smul]
+      rfl
     change LinearMap.toMatrix v.toBasis v.toBasis _ = _
     rw [hz, map_sum]
     simp only [map_smul, P]
@@ -674,13 +703,10 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
       simpa only [map_sum, LinearMap.toMatrix_comp v.toBasis v.toBasis v.toBasis,
         LinearMap.toMatrix_adjoint, LinearMap.toMatrix_toLin, LinearMap.toMatrix_id, L] using hgA
     have hen (x : U) : ∑ t, ‖L t x‖^2 = ‖x‖^2 := by
-      have heq : (inner ℂ x ((∑ t, (L t).adjoint.comp (L t)) x)).re =
-          ∑ t, ‖L t x‖^2 := by
-        simp only [LinearMap.sum_apply, LinearMap.comp_apply, inner_sum, Complex.re_sum,
-          LinearMap.adjoint_inner_right]
-        exact Finset.sum_congr rfl (fun t _ => (norm_sq_eq_re_inner (𝕜 := ℂ) (L t x)).symm)
-      rw [hgram] at heq
-      simpa using heq.symm
+      have heq := congrArg (fun T : U →ₗ[ℂ] U => (inner ℂ x (T x)).re) hgram
+      simp only [LinearMap.sum_apply, LinearMap.comp_apply, inner_sum,
+        Complex.re_sum, LinearMap.adjoint_inner_right, LinearMap.id_apply] at heq
+      simpa only [← norm_sq_eq_re_inner (𝕜 := ℂ)] using heq
     have hadj (T : U →L[ℂ] U) :
         ‖(∑ t, (L t).adjoint.comp (T.toLinearMap.comp (L t))).toContinuousLinearMap‖
           ≤ (1:ℝ)*‖T‖ := by
@@ -709,26 +735,32 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
         (1/2:ℂ) • (Q*X+X*Q)-centerPinching P (∑ j, M j*X*M j) := by
       have hz := pinched_centered_identity P hpp hsP H hsH c X hX C hCl hCr
       simpa only [← hMdef] using hz
-    refine ⟨hk,hf,hid,?_,?_⟩
+    refine ⟨hk,hf,hid,?_,?_,?_,?_,?_⟩
     · have hb := trace_centered_defect Q X (centerPinching P (∑ j, M j*X*M j))
         (X-centerPinching P (∑ j, H j*X*H j)) (5*δ) hqnorm (by rw [hk]; exact hK X) hid
       have hc : traceNorm (X-centerPinching P (∑ j, H j*X*H j)) ≤ 2*traceNorm X := by
         calc
           _ ≤ traceNorm X + traceNorm (-centerPinching P (∑ j, H j*X*H j)) :=
-            by simpa only [sub_eq_add_neg] using traceNorm_add_le X
-              (-centerPinching P (∑ j, H j*X*H j))
+            by
+              simpa only [sub_eq_add_neg] using
+                (traceNorm_add_le X (-centerPinching P (∑ j, H j*X*H j)))
           _ ≤ 2*traceNorm X := by
             rw [traceNorm_neg, hf]
             linarith [hchannel X]
-      rw [min_mul_of_nonneg _ _ (traceNorm_nonneg X)]
+      rw [min_mul_of_nonneg (2:ℝ) (10*δ) (traceNorm_nonneg X)]
       exact le_min hc (by nlinarith)
+    · rw [hf]
+      have hz := kraus_trace_pairing A X 1
+      simpa only [Matrix.mul_one, hgA] using hz
+    · intro hpos
+      rw [hf]
+      exact Finset.sum_nonneg (fun t _ => star_right_conjugate_nonneg hpos (A t))
+    · intro hpos
+      rw [hk]
+      exact Finset.sum_nonneg (fun t _ => star_right_conjugate_nonneg hpos (B t))
     · intro Y
-      rw [hk, Matrix.sum_mul, Matrix.trace_sum, Matrix.mul_sum, Matrix.trace_sum]
-      apply Finset.sum_congr rfl
-      intro t _
-      simp only [Matrix.mul_assoc]
-      rw [Matrix.trace_mul_comm (B t)]
-      simp only [Matrix.mul_assoc]
+      rw [hk]
+      exact kraus_trace_pairing B X Y
 
 end ActualDirectSum
 

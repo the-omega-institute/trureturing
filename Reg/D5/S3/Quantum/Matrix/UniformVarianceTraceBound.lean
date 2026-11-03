@@ -277,6 +277,7 @@ abbrev globalArena : Arena where
         (X - Phi = (1/2 : ℂ) • (Q*X+X*Q) - K) ∧
         (R.readout () (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => PiLp 2 E)))
           (X-Phi) ≤ min 2 (10*δ) * traceNorm X) ∧
+        (Phi.trace = X.trace) ∧ (0 ≤ X → 0 ≤ Phi) ∧ (0 ≤ X → 0 ≤ K) ∧
         (∀ Y, (K*Y).trace = (X*(∑ t, (B t)ᴴ * Y * B t)).trace))
 
 private theorem global_rejected_law : ¬ globalArena.{u,v,w}.Law rejected := by
