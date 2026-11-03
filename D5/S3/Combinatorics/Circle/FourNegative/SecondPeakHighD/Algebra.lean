@@ -1,13 +1,18 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/Algebra
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/Algebra
-   mirror-E: none(waiver:exact-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   mirror-E: none(waiver:physical-source-family-registration)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Exact high-d parameters and charged endpoints. -/
-import Mathlib.Tactic
-
-/-! Exact high-d parameters and charged endpoints. -/
+   digest: Original a2 near-b construction: Algebra and its physical source consumer. -/
+import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
+import D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.Masks
+import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -25,6 +30,7 @@ def K (x p q h : R) : R := 1+Y x p q h+Y x p q h*Z x q+Y x p q h*Z x q*T x p q
 def SU (x p q h : R) : R := 2*B x p q h-1
 def SV (x p q : R) : R := 2*L x p q-1-Z x q
 def SW (x p q h : R) : R := 2*K x p q h-1-Y x p q h-Y x p q h*Z x q
+def C (x p q h : R) : R := 2*h*L x p q-A x p q h
 
 def oldEnds (x p q h v m M : R) : Fin 4 → R :=
   ![2*v*A x p q h-2*K x p q h+2*m*L x p q,
