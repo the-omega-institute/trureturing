@@ -89,9 +89,9 @@ private theorem large_first_integer_all (p q h : ℤ) (hp : 64≤p) (hq : 16≤q
   rw [hid] at hc
   obtain ⟨before,hbefore⟩ := core_to_first_all p q h v (h*j) (1+60*h*Q q)
     hp (by omega) hh hm hm' (by
-      have hq0 : 0≤Q q := by dsimp [Q]; omega
+      have hq0 : 1≤Q q := by dsimp [Q]; omega
       have hh0 : 0≤h-1 := by omega
-      nlinarith [mul_nonneg hq0 hh0]) hem hc
+      nlinarith [mul_nonneg (show 0≤Q q by omega) hh0]) hem hc
   exact ⟨v,h*j,before,hm,hm',hbefore⟩
 
 private theorem large_first_rational_all (p q h : ℤ) (hp : 64≤p)
@@ -104,7 +104,7 @@ private theorem large_first_rational_all (p q h : ℤ) (hp : 64≤p)
   let n := (-8*K p q h) / (8*A p q h)
   have hr : 0≤r := Int.emod_nonneg _ (by omega)
   have hr' : r<8*A p q h := Int.emod_lt_of_pos _ h8A
-  have hdiv : r+8*A p q h*n = -8*K p q h := Int.emod_add_ediv _ _
+  have hdiv : r+8*A p q h*n = -8*K p q h := Int.emod_add_mul_ediv _ _
   let eps : ℚ := (D p q h:ℚ)/(8*(A p q h:ℚ))
   let e : ℤ := 1+124*h*Q q
   let eta : ℚ := (e:ℚ)/(8*(A p q h:ℚ))
@@ -139,10 +139,11 @@ private theorem large_first_rational_all (p q h : ℤ) (hp : 64≤p)
   have hc : (e≤8*R p q h v m ∧ 8*R p q h v m≤A p q h-e) ∨
       (3*A p q h+e≤8*R p q h v m ∧ 8*R p q h v m≤4*A p q h-e) := by
     rw [←hid] at hlo hhi
+    push_cast at hlo hhi
     cases hs : second
     · left
-      simp only [hs,ite_false] at hlo hhi
-      have hl : (e:ℚ)≤(8*R p q h v m:ℤ) := by
+      simp only [hs,Bool.false_eq_true,ite_false,ite_true] at hlo hhi
+      have hl : (e:ℚ)≤8*(R p q h v m:ℚ) := by
         change (e:ℚ)/(8*(A p q h:ℚ))≤_ at hlo
         exact (div_le_div_iff_of_pos_right hden).mp hlo
       have hu : (8*R p q h v m:ℚ)≤(1/8-eta)*(8*(A p q h:ℚ)) :=
@@ -150,7 +151,7 @@ private theorem large_first_rational_all (p q h : ℤ) (hp : 64≤p)
       have hu' : (8*R p q h v m:ℚ)≤(A p q h:ℚ)-(e:ℚ) := by nlinarith [heta]
       exact ⟨by exact_mod_cast hl,by exact_mod_cast hu'⟩
     · right
-      simp only [hs,ite_true] at hlo hhi
+      simp only [hs,Bool.false_eq_true,ite_false,ite_true] at hlo hhi
       have hl : (3/8+eta)*(8*(A p q h:ℚ))≤(8*R p q h v m:ℚ) :=
         (le_div_iff₀ hden).mp hlo
       have hu : (8*R p q h v m:ℚ)≤(1/2-eta)*(8*(A p q h:ℚ)) :=
@@ -165,9 +166,9 @@ private theorem large_first_rational_all (p q h : ℤ) (hp : 64≤p)
     dsimp [e]
     nlinarith
   obtain ⟨before,hf⟩ := core_to_first_all p q h v m e hp hq2 hh hm hm'
-    (by have hq0 : 0≤Q q := by dsimp [Q]; omega
+    (by have hq0 : 1≤Q q := by dsimp [Q]; omega
         have hh0 : 0≤h-1 := by omega
-        nlinarith [mul_nonneg hq0 hh0]) hem hc
+        nlinarith [mul_nonneg (show 0≤Q q by omega) hh0]) hem hc
   exact ⟨v,m,before,hm,hm',hf⟩
 
 private theorem v_stock_all (p q h v m : ℤ) (before : Bool)
@@ -211,9 +212,9 @@ private theorem round_block_dyadic (k w : ℕ) (hw : 512*(2^k)≤w) :
   have hceillo : X≤B0*n := by omega
   have hceilhi : B0*n<X+B0 := by omega
   have hn : 1≤n := by
-    by_contra hn
-    have hn0 : n=0 := by omega
-    simp only [hn0,mul_zero] at hceillo
+    apply Nat.pos_of_ne_zero
+    intro hn0
+    have hbad : X≤0 := by simpa only [hn0,mul_zero] using hceillo
     omega
   have hn0 : 0<n := by omega
   have hprod : 0<32*h*n := by positivity
@@ -304,8 +305,19 @@ private theorem first_small_slacks (p q h v m M : ℤ) (before : Bool)
       SecondPeakHighD.SW,SecondPeakHighD.SV,SecondPeakHighD.Z,
       SecondPeakHighD.T,SecondPeakHighD.Y] <;> ring
   intro r
-  fin_cases r <;> dsimp [smallFirstSlacks] <;> simp only [eo,en] <;>
-    dsimp [First] at hf <;> omega
+  fin_cases r
+  · change 0≤SecondPeakHighD.oldEnds 4 p q h v m M 0
+    rw [eo]
+    exact hf.1
+  · change 0≤A p q h-1-SecondPeakHighD.oldEnds 4 p q h v m M 0
+    rw [eo]
+    exact sub_nonneg.mpr hf.2.1
+  · change 0≤SecondPeakHighD.newEnds 4 p q h v m M before 0
+    rw [en]
+    exact hf.2.2.1
+  · change 0≤A p q h-1-SecondPeakHighD.newEnds 4 p q h v m M before 0
+    rw [en]
+    exact sub_nonneg.mpr hf.2.2.2
 
 /-- Complete p>=64 sector, including the three continuous small-z covers. -/
 private theorem large_p_allh_good (p q k : ℕ) (hp : 64≤p) (hq : 2≤q) (hk : 2≤k)
@@ -340,9 +352,11 @@ private theorem large_p_allh_good (p q k : ℕ) (hp : 64≤p) (hq : 2≤q) (hk :
       _≤8*h*(p*(q-1)) := Nat.mul_le_mul_left _ hmul
       _=w := by dsimp [w]; ring
   obtain ⟨M,hM,hlo,hhi',hsub⟩ := round_block_dyadic k w hw
+  have hhcast : (h:ℤ)=2^k := by simp [h]
+  rw [←hhcast] at hlo hhi' 
   have heq : (w:ℤ)=y p q h-8*(h:ℤ)*p := by
     dsimp [w,y]
-    rw [Nat.cast_mul,Nat.cast_mul,Nat.cast_mul,Nat.cast_sub (by omega)]
+    rw [Nat.cast_sub (by omega : 1≤q)]
     push_cast
     ring
   rw [heq] at hlo hhi'
