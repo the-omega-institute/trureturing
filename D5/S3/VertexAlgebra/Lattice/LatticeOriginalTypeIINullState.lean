@@ -65,14 +65,14 @@ noncomputable section
 
 private theorem coeff_linear_mul_X (D : LatticeData) (x y : Index D)
     (P : Oscillator D) :
-    coeff (Finsupp.single x 1) (P * X y) = if x = y then coeff 0 P else 0 := by
+    (P * X y).coeff (Finsupp.single x 1) = if x = y then P.coeff 0 else 0 := by
   classical
   by_cases h : x = y
   · subst y; simp [coeff_mul_X']
   · simp [coeff_mul_X', h, Ne.symm h]
 
 private theorem coeff_zero_derivation (D : LatticeData) (P : Oscillator D) :
-    coeff 0 (oscillatorDerivation D P) = 0 := by
+    (oscillatorDerivation D P).coeff 0 = 0 := by
   classical
   induction P using MvPolynomial.induction_on with
   | C c => simp [C_eq_smul_one]
@@ -83,8 +83,8 @@ private theorem coeff_zero_derivation (D : LatticeData) (P : Oscillator D) :
 
 private theorem coeff_derivation_two (D : LatticeData) (i : Fin D.rank)
     (P : Oscillator D) :
-    coeff (Finsupp.single (i, 1) 1) (oscillatorDerivation D P) =
-      coeff (Finsupp.single (i, 0) 1) P := by
+    (oscillatorDerivation D P).coeff (Finsupp.single (i, 1) 1) =
+      P.coeff (Finsupp.single (i, 0) 1) := by
   classical
   induction P using MvPolynomial.induction_on with
   | C c => simp [C_eq_smul_one]
@@ -104,7 +104,7 @@ private theorem coeff_derivation_two (D : LatticeData) (i : Fin D.rank)
 
 private def ell (D : LatticeData) (p : Charge D) (x : Carrier D) : ℂ :=
   ∑ i : Fin D.rank, (∑ j : Fin D.rank, (D.G i j : ℂ) * (p j : ℂ)) *
-    coeff (Finsupp.single (i, 1) 1) (x p)
+    (x p).coeff (Finsupp.single (i, 1) 1)
 
 private theorem charge_scalar (D : LatticeData) (p : Charge D) (i : Fin D.rank) :
     chargeScalar D p i = ∑ j : Fin D.rank, (D.G i j : ℂ) * (p j : ℂ) := by
@@ -114,13 +114,13 @@ private theorem ell_translation_single (D : LatticeData) (p q : Charge D)
     (P : Oscillator D) :
     ell D p (translation D (Finsupp.single q P)) =
       if q = p then ∑ i : Fin D.rank, chargeScalar D p i *
-        coeff (Finsupp.single (i,0) 1) P else 0 := by
+        P.coeff (Finsupp.single (i,0) 1) else 0 := by
   classical
   by_cases h : q = p
   · subst q
     simp only [translation_single, ell, Finsupp.single_eq_same, coeff_add]
-    have hc (i : Fin D.rank) : coeff (Finsupp.single (i,1) 1)
-        (chargePolynomial D p * P) = 0 := by
+    have hc (i : Fin D.rank) : (chargePolynomial D p * P).coeff
+        (Finsupp.single (i,1) 1) = 0 := by
       simp [chargePolynomial, Finset.sum_mul, mul_comm _ P, coeff_linear_mul_X]
     simp_rw [hc, add_zero, coeff_derivation_two, ← charge_scalar]
     simp
@@ -152,8 +152,8 @@ private theorem coeff_mode_one (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
     (p : Charge D) (P : Oscillator D) :
-    coeff 0 (sectorSugawaraMode D H p 1 P) =
-      ∑ i : Fin D.rank, chargeScalar D p i * coeff (Finsupp.single (i,0) 1) P := by
+    (sectorSugawaraMode D H p 1 P).coeff 0 =
+      ∑ i : Fin D.rank, chargeScalar D p i * P.coeff (Finsupp.single (i,0) 1) := by
   classical
   induction P using MvPolynomial.induction_on with
   | C c =>
@@ -162,7 +162,7 @@ private theorem coeff_mode_one (D : LatticeData)
         c • Finsupp.single p (1 : Oscillator D) := by simp [← C_mul']
     have hz := congrArg (fun x : Carrier D => x p) (show
         sugawaraMode D H 1 (Finsupp.single p (C c)) = 0 by rw [hc, map_smul, hg, smul_zero])
-    have hx := congrArg (fun P : Oscillator D => coeff 0 P) hz
+    have hx := congrArg (fun P : Oscillator D => P.coeff 0) hz
     simpa [sugawaraMode_single_sector] using hx
   | add P Q hP hQ =>
     simp [hP, hQ, Finset.sum_add_distrib, mul_add]
@@ -184,7 +184,7 @@ private theorem ell_translation (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
     (p : Charge D) (u : Carrier D) :
-    ell D p (translation D u) = coeff 0 ((sugawaraMode D H 1 u) p) := by
+    ell D p (translation D u) = ((sugawaraMode D H 1 u) p).coeff 0 := by
   classical
   induction u using Finsupp.induction_linear with
   | zero => simp [ell]
@@ -198,13 +198,13 @@ private theorem ell_translation (D : LatticeData)
 
 private theorem current_two_constant (D : LatticeData) (p : Charge D)
     (i : Fin D.rank) (P : Oscillator D) :
-    coeff 0 (neutralPolynomialMode D i p 2 P) =
-      2 * ∑ j : Fin D.rank, (D.G i j : ℂ) * coeff (Finsupp.single (j,1) 1) P := by
+    (neutralPolynomialMode D i p 2 P).coeff 0 =
+      2 * ∑ j : Fin D.rank, (D.G i j : ℂ) * P.coeff (Finsupp.single (j,1) 1) := by
   simp [neutralPolynomialMode, coeff_pderiv]
 
 private theorem current_two_extracts_ell (D : LatticeData) (p : Charge D)
     (P : Oscillator D) :
-    ∑ i : Fin D.rank, (p i : ℂ) * coeff 0 (neutralPolynomialMode D i p 2 P) =
+    ∑ i : Fin D.rank, (p i : ℂ) * (neutralPolynomialMode D i p 2 P).coeff 0 =
       2 * ell D p (Finsupp.single p P) := by
   classical
   simp only [current_two_constant, ell, Finsupp.single_eq_same, Finset.sum_mul,
@@ -233,10 +233,10 @@ private theorem ell_minus_two (D : LatticeData)
     ell D p (sugawaraMode D H (-2) (Finsupp.single p 1)) = (bilinear D p p : ℂ) := by
   classical
   have hc (i : Fin D.rank) :
-      coeff 0 (neutralPolynomialMode D i p 2 (sectorSugawaraMode D H p (-2) 1)) =
+      (neutralPolynomialMode D i p 2 (sectorSugawaraMode D H p (-2) 1)).coeff 0 =
         2 * chargeScalar D p i := by
     have h := congrArg (fun A : Module.End ℂ (Carrier D) =>
-      coeff 0 ((A (Finsupp.single p 1)) p))
+      ((A (Finsupp.single p 1)) p).coeff 0)
       (sugawaraMode_current_commutator D H hHG hGH i (-2) 2)
     have hz : neutralMode D i 2 (Finsupp.single p (1 : Oscillator D)) = 0 := by
       simp [neutralPolynomialMode]
@@ -260,7 +260,7 @@ private theorem ell_translation_squared (D : LatticeData) (p : Charge D) :
       Finsupp.single p (chargePolynomial D p) := by simp
   rw [tv, ell_translation_single]
   simp only [ite_true]
-  have hc (i : Fin D.rank) : coeff (Finsupp.single (i,0) 1) (chargePolynomial D p) =
+  have hc (i : Fin D.rank) : (chargePolynomial D p).coeff (Finsupp.single (i,0) 1) =
       (p i : ℂ) := by simp [chargePolynomial, coeff_X', eq_comm]
   simp_rw [hc, mul_comm (chargeScalar D p _) (p _ : ℂ)]
   exact charge_norm D p
