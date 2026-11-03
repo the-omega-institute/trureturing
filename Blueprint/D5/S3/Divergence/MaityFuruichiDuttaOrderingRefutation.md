@@ -64,7 +64,189 @@ $$claim \Leftrightarrow (\forall (n: \mathbb{N}), \forall (rho: \operatorname{Ma
 
 Equations (8)–(9), printed p. 2: “For 0 ≤ α < 1 and q > (1 − α), we compare two upper bounds B₁(ρ||σ) = D^{(r)}_{α,z}(ρ||σ) and B₂(ρ||σ) = −Tr[ρ ln_{1−α}((ρ^{−q/2} σ^q ρ^{−q/2})^{1/q})] of the Tsallis relative entropy, numerically. We observe that for non-commutative density operators ρ and σ, D_α(ρ||σ) ≤ B₁(ρ||σ) ≤ B₂(ρ||σ).” Section 4, Case 5, printed p. 12: “Let Tr(ρ) = 1 and Tr(σ) = 1, that is both ρ and σ are density operators. Here, we numerically observe that for any two operators ρ and σ, B₁(ρ||σ) is a tighter bound of Tsallis relative entropy than B₂(ρ||σ).” The formula ranges over every finite dimension. Positive definite matrices with unit trace satisfy the support condition and admit negative powers. The parameters r≠0 and z>0 come from Definitions 1–2. The function renyiRZ is precisely the source's B₁.
 
-**Theorem 1.6 (A noncommuting qubit counterexample).**
+**Definition 1.6 (Existing supporting declaration rho).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.rho`
+
+*Formalization.* `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.rho` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original rho is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: def rho : Matrix (Fin 2) (Fin 2) ℂ := !![4/5, 0; 0, 1/5]
+
+**Definition 1.7 (Existing supporting declaration sigma).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.sigma`
+
+*Formalization.* `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.sigma` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original sigma is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: def sigma : Matrix (Fin 2) (Fin 2) ℂ := !![28/125, (6 * Real.sqrt 6 : ℝ) / 125;   (6 * Real.sqrt 6 : ℝ) / 125, 97/125]
+
+**Definition 1.8 (Existing supporting declaration H).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.H`
+
+*Formalization.* `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.H` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original H is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: def H : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, -1]
+
+**Definition 1.9 (Existing supporting declaration K).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.K`
+
+*Formalization.* `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.K` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original K is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: def K : Matrix (Fin 2) (Fin 2) ℂ := !![-23/25, (4 * Real.sqrt 6 : ℝ) / 25;   (4 * Real.sqrt 6 : ℝ) / 25, 23/25]
+
+**Theorem 1.10 (Existing supporting declaration pair_states).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.pair_states`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.pair_states` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original pair_states is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: lemma pair_states : rho.PosDef ∧ rho.trace = 1 ∧     sigma.PosDef ∧ sigma.trace = 1 ∧ rho * sigma ≠ sigma * rho
+
+**Theorem 1.11 (Existing supporting declaration pair_cfc).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.pair_cfc`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.pair_cfc` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original pair_cfc is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: lemma pair_cfc (f : ℝ → ℝ) :     cfc f rho = ((f (4/5) + f (1/5))/2) • (1:Matrix (Fin 2) (Fin 2) ℂ) +       ((f (4/5) - f (1/5))/2) • H ∧     cfc f sigma = ((f (4/5) + f (1/5))/2) • (1:Matrix (Fin 2) (Fin 2) ℂ) +       ((f (4/5) - f (1/5))/2) • K
+
+**Theorem 1.12 (Existing supporting declaration sandwich_trace).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.sandwich_trace`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.sandwich_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original sandwich_trace is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: lemma sandwich_trace :     (trace (cfc (fun x:ℝ => x^(2:ℝ))       (cfc (fun x:ℝ => x^(1/8:ℝ)) sigma * cfc (fun x:ℝ => x^(1/4:ℝ)) rho *         cfc (fun x:ℝ => x^(1/8:ℝ)) sigma))).re =       (2117 + 288 * Real.sqrt 2) / 3125
+
+**Theorem 1.13 (Existing supporting declaration B1_gt).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.B1_gt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.B1_gt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original B1_gt is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: lemma B1_gt : (2/5:ℝ) < renyiRZ (1/2) (1/2) 2 rho sigma
+
+**Theorem 1.14 (Existing supporting declaration B2_lt).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.B2_lt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.B2_lt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original B2_lt is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: lemma B2_lt : B2 (1/2) 1 rho sigma < (2/5:ℝ)
+
+**Definition 1.15 (Existing supporting declaration A).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.A`
+
+*Formalization.* `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.A` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original A is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: def A : Matrix (Fin 2) (Fin 2) ℂ := !![7/25, (3 * Real.sqrt 6:ℝ)/25;   (3 * Real.sqrt 6:ℝ)/25, 97/25]
+
+**Theorem 1.16 (Existing supporting declaration sandwich_A).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.sandwich_A`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.sandwich_A` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original sandwich_A is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: lemma sandwich_A :     cfc (fun x:ℝ => x^(-(1/2:ℝ))) rho * sigma *       cfc (fun x:ℝ => x^(-(1/2:ℝ))) rho = A
+
+**Theorem 1.17 (Existing supporting declaration A_nonneg).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.A_nonneg`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.A_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original A_nonneg is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: lemma A_nonneg : (0:Matrix (Fin 2) (Fin 2) ℂ) ≤ A
+
+**Theorem 1.18 (Existing supporting declaration A_sqrt).**
+
+Lean statement: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.A_sqrt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.A_sqrt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original A_sqrt is reused by the simultaneous nondiagonal-state supplement without changing its mathematical statement or proof.
+
+Complete Lean statement: lemma A_sqrt : cfc (fun x:ℝ => x^(1/2:ℝ)) A =     (5 / Real.sqrt 154:ℝ) • (A + 1)
+
+**Theorem 1.19 (A noncommuting qubit counterexample).**
 
 $$\neg (\forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), \forall (sigma: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), ((rho).\operatorname{PosDef}) \Rightarrow (((rho).\operatorname{trace} = (1)) \Rightarrow (((sigma).\operatorname{PosDef}) \Rightarrow (((sigma).\operatorname{trace} = (1)) \Rightarrow (((rho) \cdot (sigma) \ne (sigma) \cdot (rho)) \Rightarrow (\forall (alpha: \mathbb{R}), \forall (r: \mathbb{R}), \forall (z: \mathbb{R}), \forall (q: \mathbb{R}), (0 \le alpha) \Rightarrow ((alpha < 1) \Rightarrow ((r \ne 0) \Rightarrow ((0 < z) \Rightarrow (((1) - (alpha) < q) \Rightarrow ((\operatorname{tsallis}\left(alpha, rho, sigma\right) \le \operatorname{renyiRZ}\left(alpha, r, z, rho, sigma\right)) \land (\operatorname{renyiRZ}\left(alpha, r, z, rho, sigma\right) \le \operatorname{B2}\left(alpha, q, rho, sigma\right)))))))))))))$$
 
@@ -84,10 +266,23 @@ Take rho = diag(4/5,1/5) and sigma = (1/125)[[28,6√6],[6√6,97]]. Both matric
 
 ## References
 
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.A`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.A_nonneg`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.A_sqrt`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.B1_gt`
 - Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.B2`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.B2_lt`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.H`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.K`
 - Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.claim`
 - Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.lnr`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.pair_cfc`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.pair_states`
 - Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.renyiRZ`
 - Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.result`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.rho`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.sandwich_A`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.sandwich_trace`
+- Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.sigma`
 - Truth anchor: `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.tsallis`
 - Dependency: [D5/S3/Quantum/Matrix/TwoPointFunctionalCalculus](../Quantum/Matrix/TwoPointFunctionalCalculus.md)

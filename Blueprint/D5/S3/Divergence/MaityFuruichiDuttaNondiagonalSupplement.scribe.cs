@@ -67,6 +67,23 @@ internal sealed class MaityFuruichiDuttaNondiagonalSupplementDocument : IScribeD
     private static DocumentBlock Entry(string id, string name, string title, string prose,
         DescribeRole role = DescribeRole.Theorem) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose)), Paragraph(Text("Complete Lean statement: " + Exact(name).Replace('\n', ' ').Replace('\r', ' ')))), role);
+    private static string Exact(string name) => name switch
+    {
+        "U" => "def U : Matrix (Fin 2) (Fin 2) ℂ :=\n  (1 / Real.sqrt 2 : ℝ) • !![1, 1; 1, -1]",
+        "rhohat" => "def rhohat : Matrix (Fin 2) (Fin 2) ℂ := !![1/2, 3/10; 3/10, 1/2]",
+        "sigmahat" => "def sigmahat : Matrix (Fin 2) (Fin 2) ℂ :=\n  !![((125 + 12 * Real.sqrt 6) / 250 : ℝ), -69/250;\n      -69/250, ((125 - 12 * Real.sqrt 6) / 250 : ℝ)]",
+        "functions_unitary" => "theorem functions_unitary {n : ℕ} (u : unitary (Matrix (Fin n) (Fin n) ℂ))\n    (ρ σ : Matrix (Fin n) (Fin n) ℂ) (α r z q : ℝ) :\n    let e := Unitary.conjStarAlgAut ℂ _ u\n    renyiRZ α r z (e ρ) (e σ) = renyiRZ α r z ρ σ ∧\n    B2 α q (e ρ) (e σ) = B2 α q ρ σ ∧\n    tsallis α (e ρ) (e σ) = tsallis α ρ σ",
+        "matrix_facts" => "theorem matrix_facts :\n    rhohat.PosDef ∧ rhohat.trace = 1 ∧ sigmahat.PosDef ∧ sigmahat.trace = 1 ∧\n    rhohat.det = 4/25 ∧ sigmahat.det = 4/25 ∧\n    rhohat 0 1 = 3/10 ∧ rhohat 1 0 = 3/10 ∧\n    sigmahat 0 1 = -69/250 ∧ sigmahat 1 0 = -69/250 ∧\n    (rhohat * sigmahat - sigmahat * rhohat) 0 1 = (-18 * Real.sqrt 6 / 625 : ℝ) ∧\n    rhohat * sigmahat ≠ sigmahat * rhohat",
+        "characteristic_polynomials" => "theorem characteristic_polynomials :\n    rhohat.charpoly = (Polynomial.X - Polynomial.C (4/5:ℂ)) * (Polynomial.X - Polynomial.C (1/5:ℂ)) ∧\n    sigmahat.charpoly = (Polynomial.X - Polynomial.C (4/5:ℂ)) * (Polynomial.X - Polynomial.C (1/5:ℂ))",
+        "common_orthogonal_conjugation" => "theorem common_orthogonal_conjugation :\n    star U = U ∧ U * U = 1 ∧\n    rhohat = U * rho * star U ∧ sigmahat = U * sigma * star U ∧\n    (∀ (f : ℝ → ℝ) (X : Matrix (Fin 2) (Fin 2) ℂ),\n      cfc f (U * X * star U) = U * cfc f X * star U) ∧\n    rhohat * sigmahat - sigmahat * rhohat = U * (rho * sigma - sigma * rho) * star U",
+        "parameter_conditions" => "theorem parameter_conditions :\n    (0:ℝ) ≤ 1/2 ∧ (1/2:ℝ) < 1 ∧ (1/2:ℝ) ≠ 0 ∧ (0:ℝ) < 2 ∧ (1-(1/2:ℝ)) < 1",
+        "spectral_quantities" => "theorem spectral_quantities :\n    (trace (cfc (fun x:ℝ => x^(2:ℝ))\n      (cfc (fun x:ℝ => x^(1/8:ℝ)) sigmahat *\n        cfc (fun x:ℝ => x^(1/4:ℝ)) rhohat *\n        cfc (fun x:ℝ => x^(1/8:ℝ)) sigmahat))).re =\n      (2117 + 288 * Real.sqrt 2) / 3125 ∧\n    cfc (fun x:ℝ => x^(-(1/2:ℝ))) rhohat * sigmahat *\n      cfc (fun x:ℝ => x^(-(1/2:ℝ))) rhohat = U * A * star U",
+        "exact_values_and_bounds" => "theorem exact_values_and_bounds :\n    renyiRZ (1/2) (1/2) 2 rhohat sigmahat =\n      4 * (1 - Real.sqrt ((2117 + 288 * Real.sqrt 2) / 3125)) ∧\n    B2 (1/2) 1 rhohat sigmahat = 2 - 20 / Real.sqrt 154 ∧\n    tsallis (1/2) rhohat sigmahat = 48/125 ∧\n    B2 (1/2) 1 rhohat sigmahat < 2/5 ∧\n    (2/5:ℝ) < renyiRZ (1/2) (1/2) 2 rhohat sigmahat ∧\n    tsallis (1/2) rhohat sigmahat < B2 (1/2) 1 rhohat sigmahat ∧\n    B2 (1/2) 1 rhohat sigmahat < renyiRZ (1/2) (1/2) 2 rhohat sigmahat",
+        "claim" => "def claim : Prop := ∀ ρ σ : Matrix (Fin 2) (Fin 2) ℂ,\n  ρ.PosDef → ρ.trace = 1 → σ.PosDef → σ.trace = 1 → ρ * σ ≠ σ * ρ →\n  ρ 0 1 ≠ 0 → σ 0 1 ≠ 0 →\n  renyiRZ (1/2) (1/2) 2 ρ σ ≤ B2 (1/2) 1 ρ σ",
+        "result" => "theorem result : ¬ claim",
+        _ => throw new ArgumentException("Unknown source declaration", nameof(name))
+    };
+
 }

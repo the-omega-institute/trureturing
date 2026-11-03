@@ -83,8 +83,8 @@ internal sealed class MaityFuruichiDuttaOrderingRefutationDocument : IScribeDocu
                 ResolutionKind.Refuted) : null);
 
     private static DocumentBlock Export(string name, string title, string prose) => Describe.Lean(
-        DescribeId.Create("support-" + name), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))));
+        DescribeId.Create("support-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name), H(title),
+        StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose)), Paragraph(Text("Complete Lean statement: " + Exact(name).Replace('\n', ' ').Replace('\r', ' ')))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
@@ -171,4 +171,22 @@ internal sealed class MaityFuruichiDuttaOrderingRefutationDocument : IScribeDocu
     }
     private static Formula Claim() => Disp(new Formula.Logic(V("claim"), FormulaLogicOperator.Iff,
         Parenthesized(ClaimBody())));
+    private static string Exact(string name) => name switch
+    {
+        "rho" => "def rho : Matrix (Fin 2) (Fin 2) ℂ := !![4/5, 0; 0, 1/5]",
+        "sigma" => "def sigma : Matrix (Fin 2) (Fin 2) ℂ := !![28/125, (6 * Real.sqrt 6 : ℝ) / 125;\n  (6 * Real.sqrt 6 : ℝ) / 125, 97/125]",
+        "H" => "def H : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, -1]",
+        "K" => "def K : Matrix (Fin 2) (Fin 2) ℂ := !![-23/25, (4 * Real.sqrt 6 : ℝ) / 25;\n  (4 * Real.sqrt 6 : ℝ) / 25, 23/25]",
+        "pair_states" => "lemma pair_states : rho.PosDef ∧ rho.trace = 1 ∧\n    sigma.PosDef ∧ sigma.trace = 1 ∧ rho * sigma ≠ sigma * rho",
+        "pair_cfc" => "lemma pair_cfc (f : ℝ → ℝ) :\n    cfc f rho = ((f (4/5) + f (1/5))/2) • (1:Matrix (Fin 2) (Fin 2) ℂ) +\n      ((f (4/5) - f (1/5))/2) • H ∧\n    cfc f sigma = ((f (4/5) + f (1/5))/2) • (1:Matrix (Fin 2) (Fin 2) ℂ) +\n      ((f (4/5) - f (1/5))/2) • K",
+        "sandwich_trace" => "lemma sandwich_trace :\n    (trace (cfc (fun x:ℝ => x^(2:ℝ))\n      (cfc (fun x:ℝ => x^(1/8:ℝ)) sigma * cfc (fun x:ℝ => x^(1/4:ℝ)) rho *\n        cfc (fun x:ℝ => x^(1/8:ℝ)) sigma))).re =\n      (2117 + 288 * Real.sqrt 2) / 3125",
+        "B1_gt" => "lemma B1_gt : (2/5:ℝ) < renyiRZ (1/2) (1/2) 2 rho sigma",
+        "B2_lt" => "lemma B2_lt : B2 (1/2) 1 rho sigma < (2/5:ℝ)",
+        "A" => "def A : Matrix (Fin 2) (Fin 2) ℂ := !![7/25, (3 * Real.sqrt 6:ℝ)/25;\n  (3 * Real.sqrt 6:ℝ)/25, 97/25]",
+        "sandwich_A" => "lemma sandwich_A :\n    cfc (fun x:ℝ => x^(-(1/2:ℝ))) rho * sigma *\n      cfc (fun x:ℝ => x^(-(1/2:ℝ))) rho = A",
+        "A_nonneg" => "lemma A_nonneg : (0:Matrix (Fin 2) (Fin 2) ℂ) ≤ A",
+        "A_sqrt" => "lemma A_sqrt : cfc (fun x:ℝ => x^(1/2:ℝ)) A =\n    (5 / Real.sqrt 154:ℝ) • (A + 1)",
+        _ => throw new ArgumentException("Unknown source declaration", nameof(name))
+    };
+
 }
