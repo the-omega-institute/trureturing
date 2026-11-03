@@ -19,7 +19,7 @@ import Mathlib.LinearAlgebra.Matrix.Notation
 The presentation, Laurent quantum integers and indexing follow issue #25910.
 The ambient subalgebra has the ambient unit, as fixed in that formal reading. -/
 
-open scoped BigOperators
+open scoped BigOperators Matrix
 
 namespace D5.S3.Quantum.Algebra.JonesWenzlGenerationRefutation
 
@@ -224,11 +224,211 @@ private theorem exactRelations :
   unfold exactGen
   decide +kernel
 
+private def exactP : Matrix (Fin 9) (Fin 9) coeff :=
+  !![0, ⟨0, (1/3)⟩, 0, 0, 0, 0, 0, 0, ⟨(1/3), (1/3)⟩;
+    0, 1, 0, 0, 0, 0, 0, 0, ⟨1, (1/3)⟩;
+    0, ⟨0, (1/3)⟩, 0, 0, 0, 0, 0, 0, ⟨(1/3), (1/3)⟩;
+    0, ⟨0, (1/3)⟩, 0, 0, 0, 0, (-1/3), 0, ⟨(2/3), (1/3)⟩;
+    0, (2/3), 0, 0, 0, 0, ⟨0, (-2/9)⟩, 0, ⟨(2/3), (4/9)⟩;
+    0, 0, 0, 0, 0, 0, ⟨0, (1/3)⟩, 0, ⟨0, (-1/3)⟩;
+    0, 0, 0, 0, 0, 0, 1, 0, -1;
+    0, 0, 0, 0, 0, 0, ⟨0, (1/3)⟩, 0, ⟨0, (-1/3)⟩;
+    0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+private theorem exactP_eq : exactP =
+    (1 + (⟨0, 1/3⟩ : coeff) • exactGen 0) *
+      (1 + (⟨0, 1/3⟩ : coeff) • exactGen 2) *
+      (1 + (⟨0, 1/3⟩ : coeff) • exactGen 4) := by
+  decide +kernel
+
+private def exactSteps : Fin 8 → Fin 9 → coeff :=
+  ![![0, ⟨3, -1⟩, 0, 0, 0, 0, 0, 0, 2],
+    ![⟨3, -1⟩, ⟨3, -3⟩, 0, ⟨3, -1⟩, 0, 0, ⟨1, -1⟩, 2, ⟨0, -2⟩],
+    ![0, ⟨3, -1⟩, 0, ⟨3, -3⟩, 0, 0, ⟨1, -1⟩, 0, 2],
+    ![⟨3, -1⟩, ⟨3, -3⟩, ⟨3, -1⟩, ⟨9, -3⟩, ⟨3, -3⟩, ⟨1, -1⟩, ⟨3, -1⟩, ⟨1, -1⟩, ⟨1, -1⟩],
+    ![⟨3, -3⟩, ⟨3, -1⟩, ⟨3, -3⟩, ⟨3, -3⟩, ⟨9, -3⟩, ⟨3, -1⟩, ⟨1, -1⟩, ⟨3, -1⟩, ⟨1, -1⟩],
+    ![⟨3, -1⟩, ⟨3, -3⟩, ⟨9, -3⟩, ⟨3, -1⟩, ⟨3, -3⟩, ⟨3, -1⟩, ⟨1, -1⟩, ⟨1, -1⟩, ⟨3, -1⟩],
+    ![⟨3, -3⟩, ⟨9, -3⟩, ⟨9, -9⟩, ⟨3, -3⟩, ⟨9, -3⟩, ⟨3, -3⟩, ⟨3, -1⟩, ⟨3, -1⟩, ⟨3, -3⟩],
+    ![⟨9, -3⟩, ⟨9, -9⟩, ⟨9, -3⟩, ⟨9, -3⟩, ⟨3, -3⟩, ⟨3, -1⟩, ⟨3, -3⟩, ⟨3, -1⟩, ⟨3, -3⟩]]
+
+private def exactRow : Fin 9 → coeff := exactSteps 0
+
+private def letters : Fin 7 → Fin 5 := ![1, 0, 3, 2, 1, 4, 3]
+
+private theorem exactCertificate :
+    (exactRow ᵥ* exactP = exactRow) ∧
+    ((exactRow ᵥ* exactGen 1) ᵥ* exactP = (⟨0, -1/3⟩ : coeff) • exactRow) ∧
+    ((exactRow ᵥ* exactGen 3) ᵥ* exactP = (⟨0, -1/3⟩ : coeff) • exactRow) ∧
+    (∀ i : Fin 7, exactSteps ⟨i.val + 1, by omega⟩ =
+      exactSteps ⟨i.val, by omega⟩ ᵥ* exactGen (letters i)) ∧
+    ((exactSteps 7 ᵥ* exactP) 6 = (⟨0, -2/3⟩ : coeff)) := by
+  decide +kernel
+
+private def scalarEmbedding : coeff →ₐ[ℚ] ℂ :=
+  QuadraticAlgebra.lift ⟨(Real.sqrt 3 : ℂ), by
+    norm_num [smul_eq_mul, ← pow_two]
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)⟩
+
+private def matrixEmbedding : Matrix (Fin 9) (Fin 9) coeff →ₐ[ℚ]
+    Matrix (Fin 9) (Fin 9) ℂ := scalarEmbedding.mapMatrix
+
+private theorem embedding_smul (c : coeff) (m : Matrix (Fin 9) (Fin 9) coeff) :
+    matrixEmbedding (c • m) = scalarEmbedding c • matrixEmbedding m :=
+  Matrix.map_smul' scalarEmbedding c m (map_mul scalarEmbedding)
+
+private def modelGen (i : Fin 5) : Matrix (Fin 9) (Fin 9) ℂ :=
+  matrixEmbedding (exactGen i)
+
+private def rho : TL 6 (-qzero - qzero⁻¹) →ₐ[ℂ] Matrix (Fin 9) (Fin 9) ℂ :=
+  RingQuot.liftAlgHom ℂ ⟨FreeAlgebra.lift ℂ modelGen, by
+    intro a b h
+    rcases h with ⟨i, rfl, rfl⟩ | ⟨i, j, hij, rfl, rfl⟩ | ⟨i, j, hij, rfl, rfl⟩
+    · simp only [map_mul, map_smul, FreeAlgebra.lift_ι_apply]
+      have h := congrArg matrixEmbedding (exactRelations.1 i)
+      rw [map_mul, embedding_smul] at h
+      rw [parameter.2.2]
+      convert h using 1 <;> simp [modelGen, scalarEmbedding, QuadraticAlgebra.lift_apply_apply]
+    · simp only [map_mul, FreeAlgebra.lift_ι_apply]
+      have h := congrArg matrixEmbedding (exactRelations.2.1 i j hij)
+      simpa only [map_mul, modelGen] using h
+    · simp only [map_mul, FreeAlgebra.lift_ι_apply]
+      have h := congrArg matrixEmbedding (exactRelations.2.2 i j hij)
+      simpa only [map_mul, modelGen] using h⟩
+
+private theorem rho_gen (i : Fin 5) :
+    rho (gen 6 (-qzero - qzero⁻¹) (i.val + 1)) = modelGen i := by
+  have hi : 1 ≤ i.val + 1 ∧ i.val + 1 < 6 := by have := i.isLt; omega
+  simp only [gen, dif_pos hi, rho, RingQuot.liftAlgHom_mkAlgHom_apply,
+    FreeAlgebra.lift_ι_apply, Nat.add_sub_cancel]
+
+private theorem rho_gens :
+    rho (gen 6 (-qzero - qzero⁻¹) 1) = modelGen 0 ∧
+    rho (gen 6 (-qzero - qzero⁻¹) 2) = modelGen 1 ∧
+    rho (gen 6 (-qzero - qzero⁻¹) 3) = modelGen 2 ∧
+    rho (gen 6 (-qzero - qzero⁻¹) 4) = modelGen 3 ∧
+    rho (gen 6 (-qzero - qzero⁻¹) 5) = modelGen 4 :=
+  ⟨rho_gen 0, rho_gen 1, rho_gen 2, rho_gen 3, rho_gen 4⟩
+
+private theorem rho_box : rho box = matrixEmbedding exactP := by
+  have hs : scalarEmbedding (⟨0, 1/3⟩ : coeff) = (Real.sqrt 3 : ℂ)⁻¹ := by
+    have hr : (Real.sqrt 3 : ℂ) ^ 2 = 3 := by
+      exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
+    change (0 : ℚ) • (1 : ℂ) + (1/3 : ℚ) • (Real.sqrt 3 : ℂ) = _
+    simp only [zero_smul, zero_add]
+    apply eq_inv_of_mul_eq_one_left
+    norm_num [Algebra.smul_def]
+    linear_combination hr / 3
+  rw [exactP_eq]
+  simp only [map_mul, map_add, map_one, embedding_smul, hs]
+  unfold box
+  rw [map_mul, map_mul]
+  have h1 : rho (gen 6 (-qzero - qzero⁻¹) 1) = modelGen 0 := rho_gen 0
+  have h3 : rho (gen 6 (-qzero - qzero⁻¹) 3) = modelGen 2 := rho_gen 2
+  have h5 : rho (gen 6 (-qzero - qzero⁻¹) 5) = modelGen 4 := rho_gen 4
+  simpa only [map_add, map_one, map_smul, h1, h3, h5, modelGen]
+private theorem exactWitness :
+    (exactRow ᵥ* (exactGen 1 * exactGen 0 * exactGen 3 * exactGen 2 *
+      exactGen 1 * exactGen 4 * exactGen 3 * exactP)) 6 = (⟨0, -2/3⟩ : coeff) := by
+  simp only [← Matrix.vecMul_vecMul]
+  change ((((((((exactSteps 0 ᵥ* exactGen 1) ᵥ* exactGen 0) ᵥ* exactGen 3) ᵥ*
+    exactGen 2) ᵥ* exactGen 1) ᵥ* exactGen 4) ᵥ* exactGen 3) ᵥ* exactP) 6 = _
+  have h0 : exactSteps 1 = exactSteps 0 ᵥ* exactGen 1 := exactCertificate.2.2.2.1 0
+  have h1 : exactSteps 2 = exactSteps 1 ᵥ* exactGen 0 := exactCertificate.2.2.2.1 1
+  have h2 : exactSteps 3 = exactSteps 2 ᵥ* exactGen 3 := exactCertificate.2.2.2.1 2
+  have h3 : exactSteps 4 = exactSteps 3 ᵥ* exactGen 2 := exactCertificate.2.2.2.1 3
+  have h4 : exactSteps 5 = exactSteps 4 ᵥ* exactGen 1 := exactCertificate.2.2.2.1 4
+  have h5 : exactSteps 6 = exactSteps 5 ᵥ* exactGen 4 := exactCertificate.2.2.2.1 5
+  have h6 : exactSteps 7 = exactSteps 6 ᵥ* exactGen 3 := exactCertificate.2.2.2.1 6
+  rw [← h0, ← h1, ← h2, ← h3, ← h4, ← h5, ← h6]
+  exact exactCertificate.2.2.2.2
+
+private def row : Fin 9 → ℂ := scalarEmbedding ∘ exactRow
+
+private theorem embedding_row (v : Fin 9 → coeff) (m : Matrix (Fin 9) (Fin 9) coeff) :
+    scalarEmbedding ∘ (v ᵥ* m) = (scalarEmbedding ∘ v) ᵥ* matrixEmbedding m := by
+  funext j
+  exact RingHom.map_vecMul scalarEmbedding.toRingHom m v j
+
+private theorem embedding_row_smul (c : coeff) (v : Fin 9 → coeff) :
+    scalarEmbedding ∘ (c • v) = scalarEmbedding c • (scalarEmbedding ∘ v) := by
+  funext j
+  exact map_mul scalarEmbedding c (v j)
+
+private theorem row_projector : row ᵥ* matrixEmbedding exactP = row := by
+  have h := congrArg (fun v => scalarEmbedding ∘ v) exactCertificate.1
+  simpa only [embedding_row, row] using h
+
+private theorem row_generators :
+    (row ᵥ* (matrixEmbedding exactP * modelGen 1 * matrixEmbedding exactP) =
+      scalarEmbedding (⟨0, -1/3⟩ : coeff) • row) ∧
+    (row ᵥ* (matrixEmbedding exactP * modelGen 3 * matrixEmbedding exactP) =
+      scalarEmbedding (⟨0, -1/3⟩ : coeff) • row) := by
+  constructor
+  · rw [← Matrix.vecMul_vecMul, ← Matrix.vecMul_vecMul, row_projector]
+    have h := congrArg (fun v => scalarEmbedding ∘ v) exactCertificate.2.1
+    simpa only [embedding_row, embedding_row_smul, row, modelGen] using h
+  · rw [← Matrix.vecMul_vecMul, ← Matrix.vecMul_vecMul, row_projector]
+    have h := congrArg (fun v => scalarEmbedding ∘ v) exactCertificate.2.2.1
+    simpa only [embedding_row, embedding_row_smul, row, modelGen] using h
+
+private theorem row_witness : (row ᵥ* rho (box * middle * box)) 6 ≠ 0 := by
+  have hmid : rho middle = matrixEmbedding
+      (exactGen 1 * exactGen 0 * exactGen 3 * exactGen 2 *
+        exactGen 1 * exactGen 4 * exactGen 3) := by
+    unfold middle
+    simp only [map_mul]
+    rw [rho_gens.1, rho_gens.2.1, rho_gens.2.2.1, rho_gens.2.2.2.1, rho_gens.2.2.2.2]
+    rfl
+  rw [map_mul, map_mul, rho_box, hmid]
+  rw [← Matrix.vecMul_vecMul, ← Matrix.vecMul_vecMul, row_projector,
+    Matrix.vecMul_vecMul, ← map_mul]
+  change ((scalarEmbedding ∘ exactRow) ᵥ* matrixEmbedding
+    (exactGen 1 * exactGen 0 * exactGen 3 * exactGen 2 * exactGen 1 * exactGen 4 *
+      exactGen 3 * exactP)) 6 ≠ 0
+  rw [← embedding_row]
+  change scalarEmbedding ((exactRow ᵥ* (exactGen 1 * exactGen 0 * exactGen 3 *
+    exactGen 2 * exactGen 1 * exactGen 4 * exactGen 3 * exactP)) 6) ≠ 0
+  rw [exactWitness]
+  change (0 : ℚ) • (1 : ℂ) + (-2/3 : ℚ) • (Real.sqrt 3 : ℂ) ≠ 0
+  norm_num [Algebra.smul_def, Real.sqrt_ne_zero'.mpr (by norm_num : (0 : ℝ) < 3)]
+
+private def rowStabilizer : Subalgebra ℂ (Matrix (Fin 9) (Fin 9) ℂ) where
+  carrier := {m | ∃ c : ℂ, row ᵥ* m = c • row}
+  algebraMap_mem' c := ⟨c, by
+    rw [Algebra.algebraMap_eq_smul_one, Matrix.vecMul_smul, Matrix.vecMul_one]⟩
+  add_mem' := by
+    rintro a b ⟨c, hc⟩ ⟨d, hd⟩
+    exact ⟨c + d, by rw [Matrix.vecMul_add, hc, hd, add_smul]⟩
+  mul_mem' := by
+    rintro a b ⟨c, hc⟩ ⟨d, hd⟩
+    exact ⟨c * d, by rw [← Matrix.vecMul_vecMul, hc, Matrix.smul_vecMul, hd, smul_smul]⟩
+
 private theorem separation : box * middle * box ∉
     Algebra.adjoin ℂ ({box, box * gen 6 (-qzero - qzero⁻¹) 2 * box,
       box * gen 6 (-qzero - qzero⁻¹) 4 * box} : Set (TL 6 (-qzero - qzero⁻¹))) := by
-  have hcert := exactRelations
-  sorry
+  intro hz
+  have hg : ({box, box * gen 6 (-qzero - qzero⁻¹) 2 * box,
+      box * gen 6 (-qzero - qzero⁻¹) 4 * box} : Set (TL 6 (-qzero - qzero⁻¹))) ⊆
+      rowStabilizer.comap rho := by
+    intro a ha
+    rcases ha with rfl | rfl | rfl
+    · change ∃ c : ℂ, row ᵥ* rho box = c • row
+      exact ⟨1, by rw [rho_box, row_projector, one_smul]⟩
+    · change ∃ c : ℂ, row ᵥ* rho (box * gen 6 (-qzero - qzero⁻¹) 2 * box) = c • row
+      refine ⟨scalarEmbedding (⟨0, -1/3⟩ : coeff), ?_⟩
+      rw [map_mul, map_mul, rho_box, rho_gens.2.1]
+      exact row_generators.1
+    · change ∃ c : ℂ, row ᵥ* rho (box * gen 6 (-qzero - qzero⁻¹) 4 * box) = c • row
+      refine ⟨scalarEmbedding (⟨0, -1/3⟩ : coeff), ?_⟩
+      rw [map_mul, map_mul, rho_box, rho_gens.2.2.2.1]
+      exact row_generators.2
+  obtain ⟨c, hc⟩ := Algebra.adjoin_le hg hz
+  have h0 : row 6 = 0 := by
+    change scalarEmbedding (0 : coeff) = 0
+    exact map_zero scalarEmbedding
+  have hw := congrFun hc 6
+  rw [Pi.smul_apply, h0, smul_zero] at hw
+  exact row_witness hw
 
 theorem result : ¬ claim := by
   intro h
