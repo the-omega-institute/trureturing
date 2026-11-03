@@ -64,7 +64,7 @@ $$\forall n \in \mathrm{Nat},\; \operatorname{sourceEquiv}\left(n\right): \opera
 
 *Commentary.*
 
-The forward map wraps the original list as a Composition and retains its Follows proof. The inverse projects that same list. Both inverse laws are proved by the constructors, so no source object is lost or identified. The transported Finite instance is the one used by the independent count.
+The forward map wraps the original list as a Composition and retains its Follows proof. The inverse projects that same list. Both inverse laws are proved by the constructors, so no source object is lost or identified. The transported Finite instance certifies finiteness of the independent source carrier.
 
 **Definition 1.6 (The exact source count).**
 
