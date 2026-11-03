@@ -261,7 +261,9 @@ primary language is closed under reversal [P, §3]. The right images of a fixed
 letter are nested prefixes: adding the next right morphism either leaves that
 image unchanged or appends another image. Their lengths tend to infinity.
 Their limit therefore lies in the primary minimal subshift, and its language
-is the whole primary language. Balancedness is a language property.
+is the whole primary language. This is also the right S-adic language: all its
+generating images are primary factors, while every factor of the limit occurs
+in one of its nested generating prefixes. Balancedness is a language property.
 The bounded constant runs of $y$ are exactly bounded weak partial quotients in
 [B]. Its Theorem 1 supplies a uniform factor-balance constant $F$; its Theorem 2
 also supplies letter balance. No rigidity conclusion is imported from balance.
