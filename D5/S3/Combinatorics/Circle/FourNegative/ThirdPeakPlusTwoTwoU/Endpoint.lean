@@ -89,7 +89,8 @@ theorem actualSource_third_peak_plus_two_two_U_joint_lift (a b d : ℕ)
     exact hm.trans (by simpa only [List.range_succ] using hp.append_right [k])
   have oldOrder : OriginalOrder k seed sigma := by
     apply lift_order k seed hk l hp
-    · simpa only [hmod,hseed,oldValue,l] using hold
+    · rw [hmod,hseed]
+      exact hold
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero k seed (by dsimp [k]; omega)
   have markedEq : earWord k sigma j=
       (marked a b (d+2) d u v).map (label (k+1) (by omega)) := by
@@ -98,7 +99,8 @@ theorem actualSource_third_peak_plus_two_two_U_joint_lift (a b d : ℕ)
   have newOrder : OriginalOrder (k+1) (2*seed) (earWord k sigma j) := by
     rw [markedEq]
     apply lift_order (k+1) (2*seed) (by omega) (marked a b (d+2) d u v) hpnew
-    · simpa only [hmod',hseed',hhalf,newValue] using hnew
+    · rw [hmod',hseed',hhalf]
+      exact hnew
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*seed) (by dsimp [k]; omega)
   have eo (m : ℕ) := zero_period_transport _ _ sigma oldOrder.2.1 oldOrder.2.2 m
   have en (m : ℕ) := zero_period_transport _ _ (earWord k sigma j) newOrder.2.1 newOrder.2.2 m
