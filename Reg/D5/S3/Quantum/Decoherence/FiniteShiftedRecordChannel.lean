@@ -137,28 +137,27 @@ namespace DiagonalKrausEntry
 
 universe u_3 u_4
 
-abbrev signature : Signature.{max (u_3 + 1) (u_4 + 1), u_4, 0, 0, 0} where
+abbrev signature : Signature.{max (u_3 + 1) (u_4 + 1), u_3, 0, u_4, 0} where
   Params := Σ ι : Type u_3, Σ ε : Type u_4,
-    Σ _record : ι → ε → ℂ, Σ _rho : Matrix ι ι ℂ, Σ _i : ι, ι
-  State p := p.2.1
+    Σ _record : ι → ε → ℂ, Σ _rho : Matrix ι ι ℂ, ι
+  State p := Sigma.fst p
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℂ
+  Output _ p := Sigma.fst (Sigma.snd p) → ℂ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u_3, u_4} :=
-  realize signature
-    (fun _ p a =>
-      star (Sigma.fst (Sigma.snd (Sigma.snd p))
-        (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p))))) a) *
+  realize signature.{u_3, u_4}
+    (fun _ p j a =>
+      star (Sigma.fst (Sigma.snd (Sigma.snd p)) j a) *
       Sigma.fst (Sigma.snd (Sigma.snd p))
-        (Sigma.fst (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p))))) a)
+        (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p)))) a)
     (fun e _ => Empty.elim e)
 
 def rejected : Realization signature.{u_3, u_4} :=
-  realize signature (fun _ _ _ => 0) (fun e _ => Empty.elim e)
+  realize signature (fun _ _ _ _ => 0) (fun e _ => Empty.elim e)
 
 abbrev arena : Arena where
   signature := signature.{u_3, u_4}
@@ -167,8 +166,7 @@ abbrev arena : Arena where
     (record : ι → ε → ℂ) (rho : Matrix ι ι ℂ) (i j : ι),
     (∑ a, Matrix.diagonal (fun i => record i a) * rho *
       (Matrix.diagonal (fun i => record i a)).conjTranspose) i j =
-      (∑ a, R.readout ()
-        ⟨ι, ⟨ε, ⟨record, ⟨rho, ⟨i, j⟩⟩⟩⟩⟩ a) * rho i j
+      (∑ a, R.readout () ⟨ι, ⟨ε, ⟨record, ⟨rho, i⟩⟩⟩⟩ j a) * rho i j
 
 theorem actual_law : arena.{u_3, u_4}.Law actual := by
   intro ι ε _ _ _ record rho i j
@@ -189,15 +187,22 @@ theorem rejected_law : ¬ arena.{u_3, u_4}.Law rejected := by
 theorem dependence : ObservationalDependence signature.{u_3, u_4} actual := by
   intro _
   let p : signature.{u_3, u_4}.Params :=
-    ⟨ULift.{u_3} (Fin 1), ⟨ULift.{u_4} Bool,
-      ⟨(fun _ b => if b.down then 1 else 0),
-        ⟨(fun _ _ => (1 : ℂ)), ⟨ULift.up 0, ULift.up 0⟩⟩⟩⟩⟩
+    ⟨ULift.{u_3} Bool, ⟨ULift.{u_4} Unit,
+      ⟨(fun b _ => if b.down then 1 else 0),
+        ⟨(fun _ _ => (1 : ℂ)), ULift.up true⟩⟩⟩⟩
   refine ⟨p, ULift.up false, ULift.up true, ?_⟩
-  norm_num [actual, realize, p]
+  intro he
+  have hvalue := congrFun he (ULift.up ())
+  norm_num [actual, realize, p] at hvalue
 
 def source_registration : Registration arena.{u_3, u_4}
     (type_of% @diagonal_kraus_entry.{u_3, u_4}) where
-  actual := actual
+  actual := realize signature.{u_3, u_4}
+    (fun _ p j a =>
+      star (Sigma.fst (Sigma.snd (Sigma.snd p)) j a) *
+      Sigma.fst (Sigma.snd (Sigma.snd p))
+        (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p)))) a)
+    (fun e _ => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := by
@@ -227,11 +232,10 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature.{u_3, u_4}
-    (fun _ p a =>
-      star (Sigma.fst (Sigma.snd (Sigma.snd p))
-        (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p))))) a) *
+    (fun _ p j a =>
+      star (Sigma.fst (Sigma.snd (Sigma.snd p)) j a) *
       Sigma.fst (Sigma.snd (Sigma.snd p))
-        (Sigma.fst (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p))))) a)
+        (Sigma.snd (Sigma.snd (Sigma.snd (Sigma.snd p)))) a)
       (fun e _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
@@ -240,12 +244,12 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel
     definition := none
-    coordinates := #[0, 1, 5, 6, 7, 8]
+    coordinates := #[0, 1, 5, 6, 7]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "arg", "fn", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := true
+      stateBinder := 8
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
