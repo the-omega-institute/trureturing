@@ -309,6 +309,49 @@ private lemma product_ceiling {a b c : ℕ} (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 
       · exact Or.inr (hother ⟨i,hi⟩ (by intro h; exact hij (congrArg Subtype.val h)))
 
 
+private lemma trace_equal_kernels {a b c : ℕ} (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c)
+    (w : Sym2 (Fin (a+b+c)) → ℝ) (t : ℝ)
+    (hP : (wLap (K3 a b c) w-t • (1-constProj (a+b+c))).PosSemidef)
+    (htr : (wLap (K3 a b c) w).trace=(a+b+c:ℕ)*t) :
+    (∀ i j,(wLap (K3 a b c) w-t • (1-constProj (a+b+c))) *ᵥ delta (va a b c i) (va a b c j)=0) ∧
+    (∀ i j,(wLap (K3 a b c) w-t • (1-constProj (a+b+c))) *ᵥ delta (vb a b c i) (vb a b c j)=0) ∧
+    (∀ i j,(wLap (K3 a b c) w-t • (1-constProj (a+b+c))) *ᵥ delta (vc a b c i) (vc a b c j)=0) := by
+  have hAI : Function.Injective (va a b c) := by intro i j h; exact Fin.ext (by simpa [va,Fin.ext_iff] using h)
+  have hBI : Function.Injective (vb a b c) := by intro i j h; exact Fin.ext (by simpa [vb,Fin.ext_iff] using h)
+  have hCI : Function.Injective (vc a b c) := by intro i j h; exact Fin.ext (by simpa [vc,Fin.ext_iff] using h)
+  have hAN : ∀ i j,¬ (K3 a b c).Adj (va a b c i) (va a b c j) := by intro i j; simp [K3,part_va]
+  have hBN : ∀ i j,¬ (K3 a b c).Adj (vb a b c i) (vb a b c j) := by intro i j; simp [K3,part_vb]
+  have hCN : ∀ i j,¬ (K3 a b c).Adj (vc a b c i) (vc a b c j) := by intro i j; simp [K3,part_vc]
+  have hAt := independent_trace ha (K3 a b c) w (va a b c) hAI hAN t hP
+  have hBt := independent_trace hb (K3 a b c) w (vb a b c) hBI hBN t hP
+  have hCt := independent_trace hc (K3 a b c) w (vc a b c) hCI hCN t hP
+  change (∑ i,wLap (K3 a b c) w i i)=(a+b+c:ℕ)*t at htr
+  rw [sum_parts] at htr
+  push_cast at htr
+  exact ⟨independent_annihilation _ w _ hAI hAN t hP (by linarith),
+    independent_annihilation _ w _ hBI hBN t hP (by linarith),
+    independent_annihilation _ w _ hCI hCN t hP (by linarith)⟩
+
+private lemma kernel_of_pairs {n m : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ)
+    (f : Fin m → Fin n) (j : Fin m) (hkill : ∀ i j,Q *ᵥ delta (f i) (f j)=0)
+    (x : Fin n → ℝ) (hsupport : ∀ k,k ∉ Set.range f → x k=0) (hsum : ∑ k,x k=0) :
+    Q *ᵥ x=0 := by
+  ext k
+  change (∑ l,Q k l*x l)=0
+  calc
+    _=∑ l,Q k (f j)*x l := by
+      apply Finset.sum_congr rfl
+      intro l hl
+      by_cases hr : l ∈ Set.range f
+      · obtain ⟨i,rfl⟩ := hr
+        have hh := congrFun (hkill i j) k
+        simp only [delta,Matrix.mulVec_sub,Matrix.mulVec_single_one,Matrix.col_apply,
+          Pi.sub_apply,Pi.zero_apply] at hh
+        rw [sub_eq_zero.mp hh]
+      · rw [hsupport l hr,mul_zero,mul_zero]
+    _=Q k (f j)*(∑ l,x l) := (Finset.mul_sum _ _ _).symm
+    _=0 := by rw [hsum,mul_zero]
+
 private lemma rankone_constant {n m : ℕ} (G : SimpleGraph (Fin n))
     [DecidableRel G.Adj] (w : Sym2 (Fin n) → ℝ) (t : ℝ) (ht : 0<t)
     (v : Fin n → ℝ) (hv : dotProduct v v=1)
@@ -364,7 +407,7 @@ private lemma equality_coordinates {a b c : ℕ} (ha : 2 ≤ a) (hab : a ≤ b) 
   have ht : 0<t := hs.1
   have hP : (wLap G w-t • (1-constProj n)).PosSemidef := hs.2.1
   obtain ⟨htr,j,hj,hother⟩ := (product_ceiling ha hb hc w hL hB).2 heq
-  obtain ⟨v,hvsum,hvnorm,hQ⟩ := rankone_of_spectrum (by omega) G w hB t ht j hj hother
+  obtain ⟨v,hvsum,hvnorm,hQ,hrank⟩ := rankone_of_spectrum (by omega) G w hB t ht j hj hother
   have hAI : Function.Injective (va a b c) := by
     intro i j h; exact Fin.ext (by simpa [va,Fin.ext_iff] using h)
   have hBI : Function.Injective (vb a b c) := by
@@ -377,23 +420,10 @@ private lemma equality_coordinates {a b c : ℕ} (ha : 2 ≤ a) (hab : a ≤ b) 
     intro i j; simp [G,K3,part_vb]
   have hCN : ∀ i j,¬ G.Adj (vc a b c i) (vc a b c j) := by
     intro i j; simp [G,K3,part_vc]
-  have hAt := independent_trace ha G w (va a b c) hAI hAN t hP
-  have hBt := independent_trace hb G w (vb a b c) hBI hBN t hP
-  have hCt := independent_trace hc G w (vc a b c) hCI hCN t hP
-  have htrs : (∑ i,wLap G w (va a b c i) (va a b c i))+
-      (∑ i,wLap G w (vb a b c i) (vb a b c i))+
-      (∑ i,wLap G w (vc a b c i) (vc a b c i))=(a:ℝ)*t+b*t+c*t := by
-    have hh := htr
-    change (∑ i,wLap G w i i)=(a+b+c:ℕ)*t at hh
-    rw [sum_parts] at hh
-    push_cast at hh
-    linarith
-  have hAc := rankone_constant G w t ht v hvnorm hQ (va a b c)
-    (independent_annihilation G w (va a b c) hAI hAN t hP (by linarith))
-  have hBc := rankone_constant G w t ht v hvnorm hQ (vb a b c)
-    (independent_annihilation G w (vb a b c) hBI hBN t hP (by linarith))
-  have hCc := rankone_constant G w t ht v hvnorm hQ (vc a b c)
-    (independent_annihilation G w (vc a b c) hCI hCN t hP (by linarith))
+  have hkill := trace_equal_kernels ha hb hc w t hP htr
+  have hAc := rankone_constant G w t ht v hvnorm hQ (va a b c) hkill.1
+  have hBc := rankone_constant G w t ht v hvnorm hQ (vb a b c) hkill.2.1
+  have hCc := rankone_constant G w t ht v hvnorm hQ (vc a b c) hkill.2.2
   let α := v (va a b c ⟨0,by omega⟩)
   let β := v (vb a b c ⟨0,by omega⟩)
   let γ := v (vc a b c ⟨0,by omega⟩)
@@ -709,6 +739,62 @@ private lemma boundary_edges {a b c : ℕ} (i j : Fin (a+b+c)) (hij : (K3 a b c)
   · simp [boundary,Sym2.lift_mk,hi,hj,one_div]
   · simp [boundary,Sym2.lift_mk,hi,hj]
 
+/-- The trace excess and the three full independent-part kernel spaces. -/
+def Compression {a b c : ℕ} (w : Sym2 (Fin (a+b+c)) → ℝ) : Prop :=
+  let H := wLap (K3 a b c) w-(1-constProj (a+b+c))
+  H.PosSemidef ∧ H *ᵥ (1 : Fin (a+b+c) → ℝ)=0 ∧ 1 ≤ H.trace ∧
+    (H.trace=1 → ∀ r ∈ ({0,1,2} : Finset ℕ),∀ x : Fin (a+b+c) → ℝ,
+      (∑ i,x i)=0 → (∀ i,part a b c i ≠ r → x i=0) → H *ᵥ x=0)
+
+private lemma compression_normalized {a b c : ℕ} (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c)
+    (w : Sym2 (Fin (a+b+c)) → ℝ) (hw : ∀ i j,(K3 a b c).Adj i j → 0 ≤ w s(i,j))
+    (ht : lambda2 (K3 a b c) w=1) : Compression w := by
+  classical
+  let n := a+b+c
+  let H := wLap (K3 a b c) w-(1-constProj n)
+  have hn : (n:ℝ) ≠ 0 := by dsimp [n]; positivity
+  have hL := lap_psd _ w hw
+  have hB := normalized_shift (by omega) _ w hL ht
+  have hP : H.PosSemidef := by simpa [ht,H] using (lambda_spectral (by omega) _ w hL hB).2.1
+  have htr : H.trace=(wLap (K3 a b c) w).trace-(n:ℝ)+1 := by
+    simp only [H,Matrix.trace_sub,Matrix.trace_one,Fintype.card_fin]
+    have hp : (constProj n).trace=1 := by simp [Matrix.trace,constProj,hn]
+    rw [hp]; ring
+  have hbound := trace_bound ha hb hc w 1 (by simpa [H] using hP)
+  refine ⟨hP,?_,by dsimp [n] at htr; simpa only [mul_one] using (by linarith only [htr,hbound] : 1 ≤ H.trace),?_⟩
+  · have hp : constProj n *ᵥ (1 : Fin n → ℝ)=1 := by
+      ext i
+      simp only [proj_mul,Pi.one_apply,Finset.sum_const,Finset.card_univ,
+        Fintype.card_fin,nsmul_eq_mul,mul_one,div_self hn]
+    simp only [H,Matrix.sub_mulVec,Matrix.one_mulVec,lap_one]
+    rw [show constProj (a+b+c) *ᵥ (1 : Fin (a+b+c) → ℝ)=1 from hp]
+    simp
+  · intro he r hr x hsum hsupp
+    have hlt : (wLap (K3 a b c) w).trace=(n:ℝ) := by linarith only [htr,he]
+    have hkill := trace_equal_kernels ha hb hc w 1 (by simpa [H] using hP) (by simpa only [mul_one] using hlt)
+    simp only [Finset.mem_insert,Finset.mem_singleton] at hr
+    rcases hr with rfl | rfl | rfl
+    · apply kernel_of_pairs H (va a b c) ⟨0,by omega⟩ (by simpa [H] using hkill.1) x ?_ hsum
+      intro k hk
+      apply hsupp k
+      intro hp
+      have hi : k.val<a := by unfold part at hp; split_ifs at hp <;> omega
+      exact hk ⟨⟨k.val,hi⟩,Fin.ext rfl⟩
+    · apply kernel_of_pairs H (vb a b c) ⟨0,by omega⟩ (by simpa [H] using hkill.2.1) x ?_ hsum
+      intro k hk
+      apply hsupp k
+      intro hp
+      have hi : a ≤ k.val ∧ k.val<a+b := by unfold part at hp; split_ifs at hp <;> omega
+      refine hk ⟨⟨k.val-a,by omega⟩,?_⟩
+      apply Fin.ext; dsimp [vb]; omega
+    · apply kernel_of_pairs H (vc a b c) ⟨0,by omega⟩ (by simpa [H] using hkill.2.2) x ?_ hsum
+      intro k hk
+      apply hsupp k
+      intro hp
+      have hi : a+b ≤ k.val := by unfold part at hp; split_ifs at hp <;> omega
+      refine hk ⟨⟨k.val-(a+b),by have := k.isLt; omega⟩,?_⟩
+      apply Fin.ext; dsimp [vc]; omega
+
 /-- The complete original tripartite endpoint, with uniqueness only on actual edges. -/
 def Theorem32 (a b c : ℕ) : Prop :=
   let G := K3 a b c
@@ -723,7 +809,10 @@ def Theorem32 (a b c : ℕ) : Prop :=
   (c=a+b → (∀ i j,G.Adj i j → 0 ≤ boundary a b c s(i,j)) ∧
     (support G (boundary a b c)).Connected ∧ lambda2 G (boundary a b c)=1 ∧
     totalRes G (boundary a b c)=U ∧ FullSpectrum (boundary a b c) ∧
-    ¬ (∀ i j,G.Adj i j → 0<boundary a b c s(i,j)))
+    ¬ (∀ i j,G.Adj i j → 0<boundary a b c s(i,j))) ∧
+  (∀ w : Sym2 (Fin (a+b+c)) → ℝ, (∀ i j,G.Adj i j → 0 ≤ w s(i,j)) →
+    lambda2 G w=1 → Compression w ∧
+      (totalRes G w=U → (wLap G w-(1-constProj (a+b+c))).rank=1))
 
 /-- Universal strict product bound and the unique balanced normalized boundary. -/
 theorem result {a b c : ℕ} (ha : 2 ≤ a) (hab : a ≤ b) (hbc : b ≤ c) :
@@ -765,7 +854,7 @@ theorem result {a b c : ℕ} (ha : 2 ≤ a) (hab : a ≤ b) (hbc : b ≤ c) :
         exact (boundary_spectrum ha hc0 hbal).2
   change (∀ w,(∀ p q,G.Adj p q → 0<w s(p,q)) →
       0<lambda2 G w ∧ lambda2 G w*totalRes G w<U) ∧ _
-  refine ⟨?_,hnorm,?_,?_⟩
+  refine ⟨?_,hnorm,?_,?_,?_⟩
   · intro w hw
     have hL := lap_psd G w (fun p q hpq => (hw p q hpq).le)
     have hB := positive_shift (by omega) G (K3_connected ha0 hc0) w hw
@@ -792,5 +881,17 @@ theorem result {a b c : ℕ} (ha : 2 ≤ a) (hab : a ≤ b) (hbc : b ≤ c) :
     have hh := hw i j hij
     rw [hbd0] at hh
     exact (lt_irrefl 0) hh
+
+  · intro w hw ht
+    refine ⟨compression_normalized ha hb hc w hw ht,?_⟩
+    intro he
+    have hL := lap_psd G w hw
+    have hB := normalized_shift (by omega) G w hL ht
+    have heq : lambda2 G w*totalRes G w=U := by rw [ht,one_mul]; exact he
+    obtain ⟨htr,j,hj,hother⟩ := (product_ceiling ha hb hc w hL hB).2 heq
+    obtain ⟨v,hsum,hnorm,hQ,hrank⟩ := rankone_of_spectrum (by omega) G w hB
+      (lambda2 G w) (by rw [ht]; norm_num) j hj hother
+    rw [ht,one_smul] at hrank
+    exact hrank
 
 end D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceTripartiteOptimizer

@@ -490,6 +490,26 @@ lemma connected_of_shift {n : ℕ} (hn : 0 < n) (G : SimpleGraph (Fin n))
   linarith
 
 
+private lemma unit_outer_rank {n : ℕ} (v : Fin n → ℝ) (hv : dotProduct v v=1) :
+    (Matrix.vecMulVec v v).rank=1 := by
+  have hle := Matrix.rank_vecMulVec_le v v
+  by_contra hne
+  have hz : (Matrix.vecMulVec v v).rank=0 := by omega
+  rw [Matrix.rank_eq_finrank_span_cols] at hz
+  have hspan : Submodule.span ℝ (Set.range (Matrix.vecMulVec v v).col)=⊥ :=
+    Submodule.finrank_eq_zero.mp hz
+  have hcol (j : Fin n) : (Matrix.vecMulVec v v).col j=0 := by
+    have hm := Submodule.subset_span (R := ℝ) (show (Matrix.vecMulVec v v).col j ∈
+      Set.range (Matrix.vecMulVec v v).col from ⟨j,rfl⟩)
+    rw [hspan] at hm
+    exact hm
+  have hM : Matrix.vecMulVec v v=0 := by
+    ext i j
+    exact congrFun (hcol j) i
+  have hh := congrArg Matrix.trace hM
+  rw [Matrix.trace_vecMulVec,hv,Matrix.trace_zero] at hh
+  norm_num at hh
+
 lemma rankone_of_spectrum {n : ℕ} (hn : 0<n) (G : SimpleGraph (Fin n))
     [DecidableRel G.Adj] (w : Sym2 (Fin n) → ℝ)
     (hB : (wLap G w+constProj n).PosDef) (t : ℝ) (ht : 0<t) (j : Fin n)
@@ -497,7 +517,8 @@ lemma rankone_of_spectrum {n : ℕ} (hn : 0<n) (G : SimpleGraph (Fin n))
     (he : ∀ i,i ≠ j → (lap_hermitian G w).eigenvalues i=0 ∨
       (lap_hermitian G w).eigenvalues i=t) :
     ∃ v : Fin n → ℝ, (∑ i,v i)=0 ∧ dotProduct v v=1 ∧
-      wLap G w-t • (1-constProj n)=t • Matrix.vecMulVec v v := by
+      wLap G w-t • (1-constProj n)=t • Matrix.vecMulVec v v ∧
+      (wLap G w-t • (1-constProj n)).rank=1 := by
   classical
   let hM := lap_hermitian G w
   let v : Fin n → ℝ := ⇑(hM.eigenvectorBasis j)
@@ -534,18 +555,20 @@ lemma rankone_of_spectrum {n : ℕ} (hn : 0<n) (G : SimpleGraph (Fin n))
       Q=(U*star U)*Q*(U*star U) := by rw [hUU]; simp
       _=U*(star U*Q*U)*star U := by noncomm_ring
       _=_ := by rw [hQ']
-  refine ⟨v,hsum,hnorm,?_⟩
-  change Q=_
-  rw [hfactor]
-  ext i k
-  rw [Matrix.mul_apply]
-  simp_rw [Matrix.mul_diagonal]
-  simp only [Matrix.smul_apply,smul_eq_mul,Matrix.vecMulVec_apply,Matrix.star_apply,star_trivial]
-  rw [Finset.sum_eq_single j]
-  · simp [U,v,Matrix.IsHermitian.eigenvectorUnitary_apply]
-    <;> ring
-  · intro b hb hbj
-    simp [hbj]
-  · simp
+  have hfinal : Q=t • Matrix.vecMulVec v v := by
+    rw [hfactor]
+    ext i k
+    rw [Matrix.mul_apply]
+    simp_rw [Matrix.mul_diagonal]
+    simp only [Matrix.smul_apply,smul_eq_mul,Matrix.vecMulVec_apply,Matrix.star_apply,star_trivial]
+    rw [Finset.sum_eq_single j]
+    · simp [U,v,Matrix.IsHermitian.eigenvectorUnitary_apply] <;> ring
+    · intro b hb hbj; simp [hbj]
+    · simp
+  refine ⟨v,hsum,hnorm,hfinal,?_⟩
+  change Q.rank=1
+  rw [hfinal,Matrix.rank_smul_of_mem_nonZeroDivisors _ (mem_nonZeroDivisors_of_ne_zero ht.ne')]
+  exact unit_outer_rank v hnorm
 
 end D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceConnectedSpectral
+
