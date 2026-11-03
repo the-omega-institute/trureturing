@@ -18,7 +18,7 @@ open scoped Kronecker ComplexOrder
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
   (pauli blochA blochB corr vlen centre vlen_eq_norm vlen_nonneg)
 open D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
-  (vlen_sq normalized_unit trace_pauli_kronecker_eq_corr delta flipped
+  (vlen_sq normalized_unit delta flipped
     flip_purity_identity bob_radius_le delta_le_centre tightState tight_psd tight_readouts
     tight_centre bell bell_trace_real_expansion unit_dot_le)
 open D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
