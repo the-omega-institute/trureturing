@@ -639,7 +639,7 @@ theorem result : claim := by
   have hi := index_bounds μ a b hμ ha hb hcross
   have hlo := low_end μ a b (by omega) ha hcross ⟨hi.1, hi.2.2⟩
   have hak : 2 ≤ a ⟨μ - 1, by omega⟩ := by
-    have := ha (show (⟨0, by omega⟩ : Fin μ) < ⟨1, by omega⟩ by decide)
+    have := ha (show (⟨0, by omega⟩ : Fin μ) < ⟨1, by omega⟩ by change 0 < 1; omega)
     have := ha (show (⟨1, by omega⟩ : Fin μ) < ⟨μ - 1, by omega⟩ by
       change 1 < μ - 1; omega)
     omega
@@ -721,6 +721,10 @@ private theorem width_two_cancellation (a b : Fin 2 → ℕ)
   have hb01 := hb (show (0 : Fin 2) < 1 by decide)
   have hab := hcross 1 0
   have hf := factorial_product_identity 2 a b hcross
+  have hq (n : ℕ) : qFactorial n ≠ 0 := by
+    intro hz
+    have hz0 := congrArg (fun f : ℤ[X] => f.coeff 0) hz
+    simpa [qFactorial_coeff_zero] using hz0
   simp only [Fin.prod_univ_two] at hf ⊢
   norm_num [Fin.rev] at hf ⊢
   rcases hgap with hx | hy
@@ -730,11 +734,7 @@ private theorem width_two_cancellation (a b : Fin 2 → ℕ)
         b 1 - a 1 + 1 := by omega
     rw [h0, h1, qFactorial_succ, qFactorial_succ] at hf
     rw [hL]
-    apply mul_right_cancel₀ (show qFactorial (b 0 - a 1) * qFactorial (b 1 - a 1) ≠ 0 from
-      mul_ne_zero (fun hz => by have := congrArg (fun f : ℤ[X] => f.coeff 0) hz;
-        simpa [qFactorial_coeff_zero] using this)
-        (fun hz => by have := congrArg (fun f : ℤ[X] => f.coeff 0) hz;
-          simpa [qFactorial_coeff_zero] using this))
+    apply mul_right_cancel₀ (mul_ne_zero (hq (b 0 - a 1)) (hq (b 1 - a 1)))
     convert hf using 1 <;> ring
   · have h0 : b 1 - a 1 = b 0 - a 1 + 1 := by omega
     have h1 : b 1 - a 0 = b 0 - a 0 + 1 := by omega
@@ -742,11 +742,7 @@ private theorem width_two_cancellation (a b : Fin 2 → ℕ)
         b 0 - a 0 + 1 := by omega
     rw [h0, h1, qFactorial_succ, qFactorial_succ] at hf
     rw [hL]
-    apply mul_right_cancel₀ (show qFactorial (b 0 - a 0) * qFactorial (b 0 - a 1) ≠ 0 from
-      mul_ne_zero (fun hz => by have := congrArg (fun f : ℤ[X] => f.coeff 0) hz;
-        simpa [qFactorial_coeff_zero] using this)
-        (fun hz => by have := congrArg (fun f : ℤ[X] => f.coeff 0) hz;
-          simpa [qFactorial_coeff_zero] using this))
+    apply mul_right_cancel₀ (mul_ne_zero (hq (b 0 - a 0)) (hq (b 0 - a 1)))
     convert hf using 1 <;> ring
 
 private theorem width_two_one_gap (a b : Fin 2 → ℕ)
@@ -794,7 +790,10 @@ private theorem width_two_one_gap (a b : Fin 2 → ℕ)
   have hright : (X ^ r * A * (1 - X ^ h)).reflect (d + r + (r + h)) =
       -(X ^ r * A * (1 - X ^ h)) := by
     have hDA : A.natDegree = d := hA.2.1
-    have hRA : A.reflect d = A := by simpa only [← hDA, ← reverse] using hA.2.2
+    have hRA : A.reflect d = A := by
+      rw [← hDA]
+      change A.reverse = A
+      exact hA.2.2
     have hidx : d + r + (r + h) = (r + r + d) + h := by omega
     rw [hidx, reflect_mul _ _ (by
       rw [natDegree_mul (pow_ne_zero _ X_ne_zero) hA.1.ne_zero, natDegree_X_pow, hDA]
@@ -802,12 +801,13 @@ private theorem width_two_one_gap (a b : Fin 2 → ℕ)
       reflect_mul _ _ (by simp : (X ^ r : ℤ[X]).natDegree ≤ r + r) hDA.le,
       reflect_monomial, revAt_le (by omega : r ≤ r + r), hRA, hanti]
     simp [show r + r - r = r by omega]
+    ring
   rw [hleft, hright, ← hi] at hreflect
   have hcancel : (1 - X ^ (r + h) : ℤ[X]) ≠ 0 := by
     intro hz
     have hz0 := congrArg (fun f : ℤ[X] => f.coeff 0) hz
     have hrh : 0 < r + h := by dsimp [r]; omega
-    simpa [coeff_X_pow, hrh.ne, hrh.ne'] using hz0
+    simp [coeff_X_pow, hrh.ne, hrh.ne'] at hz0
   have heq : p.reflect (d + r) = p := by
     apply mul_right_cancel₀ hcancel
     linear_combination -hreflect
