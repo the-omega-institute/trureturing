@@ -12,7 +12,7 @@ open _root_.D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD
 noncomputable section
 
 abbrev signature : Signature where
-  Params := ℕ × ℕ × ℕ
+  Params := Σ _ : ℕ, Σ _ : ℕ, ℕ
   State _ := ℤ
   Role := Unit
   finiteRole := inferInstance
