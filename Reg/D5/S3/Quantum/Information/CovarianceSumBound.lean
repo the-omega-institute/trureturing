@@ -49,11 +49,9 @@ abbrev arena : Arena where
     ∀ t : ℝ, ∀ A : Matrix p.1 p.1 ℂ,
       R.readout () p (ρ, (t, A)) = t * expectation ρ A
 
-def bridge : (type_of% @expect_smul.{u}) ↔ arena.{u}.Law actual.{u} := by
+theorem bridge : (type_of% @expect_smul.{u}) ↔ arena.{u}.Law actual.{u} := by
   constructor
   · intro h p
-    letI : Fintype p.1 := p.2.1
-    letI : DecidableEq p.1 := p.2.2
     intro ρ t A
     exact @h p.1 p.2.1 p.2.2 ρ t A
   · intro h n hn hd ρ t A
@@ -103,7 +101,8 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
     (@_root_.D5.S3.Quantum.Information.CovarianceSumBound.expect_smul.{u})
     (Realization signature.{u}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Information.CovarianceSumBound.ExpectSmul.unit
-  realizationName := `Reg.D5.S3.Quantum.Information.CovarianceSumBound.ExpectSmul.source_registration
+  realizationName :=
+    `Reg.D5.S3.Quantum.Information.CovarianceSumBound.ExpectSmul.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -124,9 +123,9 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   sourceSelection := some {
     owner := `D5.S3.Quantum.Information.CovarianceSumBound
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none
@@ -168,11 +167,9 @@ abbrev arena : Arena where
     ∀ ρ : DensityState p.1,
       R.readout () p (ρ, (1 : Matrix p.1 p.1 ℂ)) = 1
 
-def bridge : (type_of% @expect_one.{u}) ↔ arena.{u}.Law actual.{u} := by
+theorem bridge : (type_of% @expect_one.{u}) ↔ arena.{u}.Law actual.{u} := by
   constructor
   · intro h p
-    letI : Fintype p.1 := p.2.1
-    letI : DecidableEq p.1 := p.2.2
     intro ρ
     exact @h p.1 p.2.1 p.2.2 ρ
   · intro h n hn hd ρ
@@ -238,7 +235,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   sourceSelection := some {
     owner := `D5.S3.Quantum.Information.CovarianceSumBound
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg"]
       stateBinder := 3
