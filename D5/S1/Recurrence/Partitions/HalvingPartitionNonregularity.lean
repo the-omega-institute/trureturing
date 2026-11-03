@@ -254,7 +254,7 @@ private theorem oddWord_sum (m j l : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) :
 
 /-- Every source list at a dyadic successor has one rounded-up prefix, and its
 length and prefix count satisfy the exact short/long total equations. -/
-theorem dyadic_source_classification (m : ℕ) (p : SourceLists (2 ^ m + 1)) :
+private theorem dyadic_source_classification (m : ℕ) (p : SourceLists (2 ^ m + 1)) :
     ∃ j, j ≤ m ∧ j ≤ p.1.length ∧ p.1 = oddWord m j p.1.length ∧
       (p.1.length ≤ m → j = 2 ^ (m - p.1.length) + 1) ∧
       (m ≤ p.1.length → j + (p.1.length - m) = 2) := by
@@ -446,5 +446,157 @@ theorem dyadic_source_count (m : ℕ) (hm : 2 ≤ m) :
   unfold count
   rw [Nat.card_congr e.symm, Nat.card_eq_fintype_card]
   simp only [Fintype.card_sum, Fintype.card_fin]
+
+private theorem threshold_mono {r s : ℕ} (h : r ≤ s) :
+    2 ^ r + r + 1 ≤ 2 ^ s + s + 1 := by
+  have hp : (2 : ℕ) ^ r ≤ 2 ^ s := pow_le_pow_right₀ (by decide) h
+  omega
+
+private theorem dyadic_plateau (m r : ℕ) (hm : 2 ≤ m) (hr : 1 ≤ r)
+    (hlo : 2 ^ r + r + 1 ≤ m) (hhi : m < 2 ^ (r + 1) + (r + 1) + 1) :
+    count (2 ^ m + 1) = 3 + r := by
+  rw [dyadic_source_count m hm]
+  have hpred (q : Fin (m + 1)) :
+      (1 ≤ q.val ∧ 2 ^ q.val + q.val + 1 ≤ m) ↔ (1 ≤ q.val ∧ q.val ≤ r) := by
+    constructor
+    · rintro ⟨hq, ht⟩
+      refine ⟨hq, ?_⟩
+      by_contra hn
+      have h := threshold_mono (r := r + 1) (s := q.val) (by omega)
+      omega
+    · rintro ⟨hq, hqr⟩
+      have h := threshold_mono hqr
+      exact ⟨hq, by omega⟩
+  let f : Fin r → Threshold m := fun i =>
+    ⟨⟨i.val + 1, by omega⟩, (hpred _).mpr ⟨by omega, by omega⟩⟩
+  have hb : Function.Bijective f := by
+    constructor
+    · intro i j h
+      have hv := congrArg (fun q : Threshold m => q.1.val) h
+      apply Fin.ext
+      change i.val + 1 = j.val + 1 at hv
+      omega
+    · intro q
+      have hq := (hpred q.1).mp q.2
+      refine ⟨⟨q.1.val - 1, by omega⟩, ?_⟩
+      apply Subtype.ext
+      apply Fin.ext
+      change q.1.val - 1 + 1 = q.1.val
+      omega
+  have hc := Fintype.card_congr (Equiv.ofBijective f hb)
+  simp only [Fintype.card_fin] at hc
+  exact congrArg (fun t => 3 + t) hc.symm
+
+private theorem dyadic_matrix_recurrence (a : ℕ → ℤ) (ha : MatrixFamily a) :
+    ∃ E : LinearRecurrence ℤ, 0 < E.order ∧
+      E.IsSolution (fun n => a (2 ^ (n + 2) + 1)) := by
+  classical
+  obtain ⟨d, hd, F, M0, M1, hf, he, ho⟩ := ha
+  let v (n : ℕ) := F (2 ^ (n + 1))
+  have hstep (n : ℕ) : v (n + 1) = M0.mulVec (v n) := by
+    dsimp [v]
+    rw [show 2 ^ (n + 1 + 1) = 2 * 2 ^ (n + 1) by rw [pow_succ]; omega]
+    exact he _
+  have hpower (i n : ℕ) : (M0 ^ i).mulVec (v n) = v (n + i) := by
+    induction i with
+    | zero => simp
+    | succ i ih =>
+      rw [pow_succ', ← Matrix.mulVec_mulVec, ih]
+      simpa only [Nat.add_assoc] using (hstep (n + i)).symm
+  have hread (n : ℕ) : (M1.mulVec (v n)) ⟨0, hd⟩ = a (2 ^ (n + 2) + 1) := by
+    rw [← ho]
+    change F (2 * 2 ^ (n + 1) + 1) ⟨0, hd⟩ = _
+    rw [hf]
+    congr 2
+    rw [show n + 2 = n + 1 + 1 by omega, pow_succ]
+    omega
+  let E : LinearRecurrence ℤ := ⟨d, fun i => -M0.charpoly.coeff i.val⟩
+  refine ⟨E, hd, ?_⟩
+  intro n
+  have hlead : M0.charpoly.coeff d = 1 := by
+    simpa [Matrix.charpoly_natDegree_eq_dim] using M0.charpoly_monic.coeff_natDegree
+  have hCH : (∑ i ∈ Finset.range d, M0.charpoly.coeff i • M0 ^ i) + M0 ^ d = 0 := by
+    have h := Matrix.aeval_self_charpoly M0
+    rw [Polynomial.aeval_eq_sum_range, Matrix.charpoly_natDegree_eq_dim,
+      Fintype.card_fin, Finset.sum_range_succ, hlead] at h
+    simpa only [one_smul] using h
+  have h := congrArg (fun M => (M1.mulVec (M.mulVec (v n))) ⟨0, hd⟩) hCH
+  simp only [Matrix.add_mulVec, Matrix.sum_mulVec, Matrix.smul_mulVec,
+    Matrix.zero_mulVec, Matrix.mulVec_add, Matrix.mulVec_sum, Matrix.mulVec_smul,
+    Matrix.mulVec_zero, Pi.add_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+    hpower, hread, Pi.zero_apply] at h
+  change a (2 ^ (n + d + 2) + 1) =
+    ∑ i : Fin d, -(M0.charpoly.coeff i.val) * a (2 ^ (n + i.val + 2) + 1)
+  rw [Fin.sum_univ_eq_sum_range]
+  simp only [neg_mul, Finset.sum_neg_distrib]
+  linarith
+
+private theorem source_nonregularity : claim := by
+  intro ha
+  obtain ⟨E, hd, hE⟩ := dyadic_matrix_recurrence (fun n => (count n : ℤ)) ha
+  let u (n : ℕ) : ℤ := (count (2 ^ (n + 2) + 1) : ℤ)
+  let c (n : ℕ) : ℤ := u (n + 1) - u n
+  have hc : E.IsSolution c := by
+    intro n
+    have h1 := hE (n + 1)
+    have h0 := hE n
+    dsimp [c, u]
+    change _ = ∑ i : Fin E.order, E.coeffs i *
+      ((count (2 ^ (n + i.val + 1 + 2) + 1) : ℤ) - (count (2 ^ (n + i.val + 2) + 1) : ℤ))
+    simp_rw [mul_sub]
+    rw [Finset.sum_sub_distrib]
+    change _ - _ = _
+    rw [show n + E.order + 1 + 2 = (n + 1) + E.order + 2 by omega]
+    exact congrArg₂ (· - ·) h1 h0
+  let r := E.order + 2
+  have hr : 1 ≤ r := by dsimp [r]; omega
+  have hpow : E.order ≤ 2 ^ r := by
+    have h := Nat.lt_two_pow_self r
+    dsimp [r] at *
+    omega
+  let start := 2 ^ r + r - 1
+  have hzero (i : ℕ) (hi : i < E.order) : c (start + i) = 0 := by
+    have hpow' : 2 ^ (r + 1) = 2 * 2 ^ r := by rw [pow_succ]; omega
+    have hp : 0 < 2 ^ r := by positivity
+    have h0 := dyadic_plateau (start + i + 2) r (by omega) hr (by dsimp [start]; omega)
+      (by dsimp [start]; omega)
+    have h1 := dyadic_plateau (start + i + 1 + 2) r (by omega) hr (by dsimp [start]; omega)
+      (by dsimp [start]; omega)
+    dsimp [c, u]
+    rw [h0, h1]
+    simp
+  have hshift : E.IsSolution (fun n => c (start + n)) := by
+    intro n
+    simpa only [Nat.add_assoc] using hc (start + n)
+  have hident : (fun n => c (start + n)) = (fun _ => (0 : ℤ)) := by
+    apply (E.eq_iff_eqOn_range_order _ _ hshift ?_).mpr
+    · intro i hi
+      exact hzero i (Finset.mem_range.mp hi)
+    · intro n
+      simp
+  let jump := 2 ^ (r + 1) + (r + 1) - 2
+  have hp : 0 < 2 ^ r := by positivity
+  have hp' : 0 < 2 ^ (r + 1) := by positivity
+  have hj : start ≤ jump := by
+    have h := threshold_mono (r := r) (s := r + 1) (by omega)
+    dsimp [start, jump]
+    omega
+  have h0 := dyadic_plateau (jump + 2) r (by omega) hr (by dsimp [jump]; omega)
+    (by dsimp [jump]; omega)
+  have h1 := dyadic_plateau (jump + 1 + 2) (r + 1) (by omega) (by omega)
+    (by dsimp [jump]; omega) (by
+      have h := threshold_mono (r := r + 1) (s := r + 2) (by omega)
+      have hp2 : 2 ^ (r + 1) ≤ 2 ^ (r + 2) := pow_le_pow_right₀ (by decide) (by omega)
+      dsimp [jump]
+      omega)
+  have hnonzero : c jump = 1 := by
+    dsimp [c, u]
+    rw [h0, h1]
+    push_cast
+    ring
+  have hz := congrFun hident (jump - start)
+  have hidx : start + (jump - start) = jump := by omega
+  rw [hidx, hnonzero] at hz
+  norm_num at hz
 
 end D5.S1.Recurrence.Partitions.HalvingPartitionNonregularity
