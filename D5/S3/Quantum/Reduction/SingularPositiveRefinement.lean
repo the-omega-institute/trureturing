@@ -6,7 +6,7 @@
    utility: none
    digest: Positive domination by singular canonical filters reduces to their actual support corners. -/
 
-import D5.S3.Quantum.Reduction.PositiveRefinementRigidity
+import D5.S3.Quantum.Reduction.PositiveRefinementCorner
 import D5.S3.Quantum.Lieb.SupportPerspectiveTransformer
 import Mathlib.Analysis.CStarAlgebra.Projection
 
@@ -102,6 +102,43 @@ theorem filter_support_reduction
       R * (W * Φ X * W) * R = (R * W) * Φ X * (W * R) := by noncomm_ring
       _ = P * Φ X * P := by rw [hRW, hWR]
       _ = Φ X := by rw [(hout X).1, (hout X).2]
+
+
+/-- A positive map dominated by one canonical filter is a nonnegative scalar
+multiple of that filter, with singular and zero effects included. -/
+theorem filter_dominated_scalar
+    (E : Matrix n n ℂ) (hE : E.PosSemidef)
+    (Φ : Matrix n n ℂ →ₗ[ℂ] Matrix n n ℂ)
+    (hpos : ∀ X, X.PosSemidef → (Φ X).PosSemidef)
+    (hdom : ∀ X, X.PosSemidef → Φ X ≤ CFC.sqrt E * X * CFC.sqrt E) :
+    ∃ c : ℝ, 0 ≤ c ∧ c ≤ 1 ∧
+      ∀ X, Φ X = (c : ℂ) • (CFC.sqrt E * X * CFC.sqrt E) := by
+  classical
+  let R := CFC.sqrt E
+  let W := spectralInverseSqrt E
+  let P := spectralSupport E
+  obtain ⟨hR, hW, hP, hPP, hPR, hRP, -, -⟩ := spectral_sqrt_normalization E hE
+  obtain ⟨hin, hout, hnorm, hrec⟩ := filter_support_reduction E hE Φ hpos hdom
+  let T : Matrix n n ℂ →ₗ[ℂ] Matrix n n ℂ := {
+    toFun X := W * Φ X * W
+    map_add' X Y := by simp [mul_add, add_mul]
+    map_smul' c X := by simp [mul_smul_comm, smul_mul_assoc] }
+  obtain ⟨c, hc, hc', hT⟩ :=
+    D5.S3.Quantum.Reduction.PositiveRefinementCorner.corner_dominated_scalar P hP hPP T
+      (fun X hX => (hnorm X hX).1) (fun X hX => (hnorm X hX).2)
+  refine ⟨c, hc, hc', ?_⟩
+  intro X
+  calc
+    Φ X = R * T X * R := (hrec X).symm
+    _ = R * ((c : ℂ) • (P * X * P)) * R := by rw [hT X]
+    _ = (c : ℂ) • (R * X * R) := by
+      simp only [mul_smul_comm, smul_mul_assoc]
+      congr 1
+      calc
+        R * (P * X * P) * R = (R * P) * X * (P * R) := by noncomm_ring
+        _ = R * X * R := by rw [hRP, hPR]
+
+#print axioms filter_dominated_scalar
 
 #print axioms filter_support_reduction
 end D5.S3.Quantum.Reduction.SingularPositiveRefinement
