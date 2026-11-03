@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalyticLaurentBridge
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalyticLaurentBridge
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Complete Laurent products identify double-contour coefficients with the independently defined formal coefficients. -/
+
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicAnalyticCoefficientBridge
 import Mathlib.RingTheory.PowerSeries.WellKnown
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
@@ -101,13 +109,13 @@ private lemma normal_mul {P Q : BPS} {a v F G : ℂ}
     HasSum (fun d : ℕ => scalarSum (PowerSeries.coeff d (P * Q)) a * v ^ d) (F * G) := by
   have hc (d : ℕ) :
       scalarSum (PowerSeries.coeff d (P * Q)) a =
-        ∑ ij ∈ Finset.antidiagonal d,
+        ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal d,
           scalarSum (PowerSeries.coeff ij.1 P) a *
             scalarSum (PowerSeries.coeff ij.2 Q) a ∧
       Summable (fun j : ℕ =>
         ‖PowerSeries.coeff j (PowerSeries.coeff d (P * Q)) * a ^ j‖) := by
     rw [PowerSeries.coeff_mul]
-    have h := scalarSum_finset (Finset.antidiagonal d)
+    have h := scalarSum_finset (Finset.HasAntidiagonal.antidiagonal d)
       (fun ij => PowerSeries.coeff ij.1 P * PowerSeries.coeff ij.2 Q) a
       (fun ij _ => (scalarSum_mul (hP ij.1) (hQ ij.2)).2)
     have he (i j : ℕ) :
@@ -720,7 +728,7 @@ private lemma regular_formal_coefficient {P : BPS} {K : AnnulusSeries}
   by_cases hsd : s ≤ d
   · rw [if_pos hsd, show (d : ℤ) - s = ((d - s : ℕ) : ℤ) by omega]
     exact LaurentSeries.coeff_coe_powerSeries _ _
-  · rw [if_neg hsd, LaurentSeries.coeff_coe, if_pos (by omega)]
+  · rw [if_neg hsd, PowerSeries.coeff_coe, if_pos (by omega)]
 
 private lemma original_fixed_a_coefficients {b a : ℂ} (hb : b ≠ 0) (root : ℂ)
     (ha0 : a ≠ 0) (ha : ‖a‖ < beta b) {eta : ℝ}

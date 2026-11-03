@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicUnsewnCurrent
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicUnsewnCurrent
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The modulus-zero TT coefficient equals the literal finite original current row. -/
+
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel
 import Mathlib.RingTheory.PowerSeries.Binomial
 import Mathlib.Algebra.BigOperators.NatAntidiagonal
@@ -50,6 +58,7 @@ theorem cubic_tt_degree_zero (b hb : ℂ) (hb0 : b ≠ 0) :
     rw [← map_mul]
     congr 1
     exact div_mul_cancel₀ hb hb0
+  rw [PowerSeries.coeff_zero_eq_constantCoeff_apply]
   change PowerSeries.constantCoeff
     (formalOmega * formalExternalOmega b hb *
       ((PowerSeries.C a * PowerSeries.C B * (PowerSeries.C a + PowerSeries.C B) +
@@ -109,7 +118,7 @@ private lemma pole_inverse_coeff (b : ℂ) (hb0 : b ≠ 0) (n : ℕ) :
     apply (PowerSeries.eq_inv_iff_mul_eq_one hc).mpr
     exact PowerSeries.invUnitsSub_mul_sub (Units.mk0 b hb0)
   simpa only [PowerSeries.coeff_invUnitsSub, one_divp,
-    Units.val_inv_eq_inv_val, Units.val_pow_eq_pow_val] using
+    Units.val_inv_eq_inv_val, Units.val_pow_eq_pow_val, Units.val_mk0] using
     congrArg (PowerSeries.coeff n) heq.symm
 
 /- This is the finite convolution payment, for arbitrary n. The exponent
@@ -140,7 +149,8 @@ private lemma root_over_pole_coeff (b : ℂ) (hb0 : b ≠ 0) (n : ℕ) :
 private lemma current_denominator_constant (b : ℂ) (hb0 : b ≠ 0) :
     PowerSeries.constantCoeff
       (2 * (PowerSeries.X - PowerSeries.C b : PowerSeries ℂ) ^ 2) ≠ 0 := by
-  simpa using mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0)
+  simpa [show (2 : PowerSeries ℂ) = PowerSeries.C (2 : ℂ) from rfl] using
+    mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0)
     (pow_ne_zero 2 (neg_ne_zero.mpr hb0))
 
 private lemma current_generating_derivative (b hb : ℂ) (hb0 : b ≠ 0) :
@@ -159,7 +169,7 @@ private lemma current_generating_derivative (b hb : ℂ) (hb0 : b ≠ 0) :
       _ = ((PowerSeries.C b - PowerSeries.X) * J) * J := by ring
       _ = J := by rw [hJ, one_mul]
   have hhalf : (2 : PowerSeries ℂ) * PowerSeries.C (1 / 2 : ℂ) = 1 := by
-    rw [show (2 : PowerSeries ℂ) = PowerSeries.C (2 : ℂ) by simp, ← map_mul]
+    rw [show (2 : PowerSeries ℂ) = PowerSeries.C (2 : ℂ) from rfl, ← map_mul]
     norm_num
   have hdJ : PowerSeries.derivative J = J ^ 2 := by
     dsimp only [J]
@@ -229,7 +239,7 @@ theorem cubic_tt_degree_zero_currentRow (b hb : ℂ) (hb0 : b ≠ 0)
   | zero => omega
   | succ n =>
       have he : ((n + 1 : ℕ) : ℤ) - 1 = (n : ℤ) := by omega
-      rw [Nat.succ_eq_add_one, he, cubic_tt_zero_as_derivative b hb hb0,
+      rw [he, cubic_tt_zero_as_derivative b hb hb0,
         LaurentSeries.coeff_coe_powerSeries, PowerSeries.coeff_C_mul,
         PowerSeries.coeff_derivative, root_over_pole_coeff b hb0, currentRow]
       simp only [Nat.cast_add, Nat.cast_one]

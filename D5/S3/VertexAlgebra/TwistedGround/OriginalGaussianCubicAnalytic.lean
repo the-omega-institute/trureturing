@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalytic
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalytic
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The literal cubic has contour bounds and absolutely convergent modulus expansions on the original annulus. -/
+
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicCoefficientIdentity
 import Mathlib.Analysis.Complex.CauchyIntegral
 import Mathlib.Analysis.Complex.LocallyUniformLimit

@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicHilbertHolomorphy
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicHilbertHolomorphy
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Regular vector series extend the original normalized TT and UT coefficients through zero on the full disk norm z less than beta b. -/
+
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicAnalyticLaurentBridge
 import Mathlib.Analysis.Normed.Group.FunctionSeries
 import Mathlib.Topology.Algebra.InfiniteSum.Module

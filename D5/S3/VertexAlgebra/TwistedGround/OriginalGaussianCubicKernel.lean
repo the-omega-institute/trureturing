@@ -81,7 +81,7 @@ private lemma first_moment_residue (n : ℕ) :
 private lemma first_moment_residue_zero :
     (omegaCoefficient 0).coeff (-2) = 0 := by
   simp [omegaCoefficient, HahnSeries.coeff_single_mul,
-    LaurentSeries.coeff_coe, halfSeries]
+    PowerSeries.coeff_coe, halfSeries]
 
 /-- A Laurent primitive contributes no residue, coefficient by coefficient.
 This is the exact algebraic reason the polar's total derivative disappears. -/
@@ -144,9 +144,10 @@ private lemma period_derivative_hasSum {x : ℂ} (hx : ‖x‖ < 1) :
   simp only [Finset.sum_range_one, deriv_const_mul_field, deriv_pow_field,
     Nat.cast_zero, zero_mul, mul_zero, sub_zero, Nat.add_sub_cancel] at hshift
   convert hshift using 1
-  ext n
-  simp only [Nat.cast_add, Nat.cast_one]
-  ring
+  · ext n
+    simp only [Nat.cast_add, Nat.cast_one]
+    ring
+  · rfl
 
 def annularMoment (x : ℂ) : ℂ :=
   ∑' n : ℕ, (omegaCoefficient (n + 1)).coeff (-2) * x ^ (n + 1)
@@ -266,7 +267,7 @@ private lemma sewing_unique {z : ℂ} (hz : ‖z‖ < 1) (e f p q p' q' : H)
     p = p' ∧ q = q' := by
   have elim (u v : H) (hu : u + operator z v = -f)
       (hv : v + operator z u = -e) :
-      (1 - operator z ^ 2) u = operator z e - f := by
+      ((1 : H →L[ℂ] H) - operator z ^ 2) u = operator z e - f := by
     calc
       _ = (u + operator z v) - operator z (v + operator z u) := by
         simp only [ContinuousLinearMap.sub_apply, ContinuousLinearMap.one_apply,
@@ -277,8 +278,8 @@ private lemma sewing_unique {z : ℂ} (hz : ‖z‖ < 1) (e f p q p' q' : H)
     ((elim p q hp hq).trans (elim p' q' hp' hq').symm)
   have hmul := square_resolvent_left hz
   have hpp : p = p' := by
-    change (squareResolvent z * (1 - operator z ^ 2)) p =
-      (squareResolvent z * (1 - operator z ^ 2)) p' at hu
+    change (squareResolvent z * ((1 : H →L[ℂ] H) - operator z ^ 2)) p =
+      (squareResolvent z * ((1 : H →L[ℂ] H) - operator z ^ 2)) p' at hu
     simpa only [hmul, ContinuousLinearMap.one_apply] using hu
   refine ⟨hpp, ?_⟩
   have hh := hq.trans hq'.symm
@@ -380,11 +381,12 @@ private def binomialRow (r z : ℂ) (n : ℕ) : ℂ :=
 private lemma binomial_row_mem (r : ℂ) {z : ℂ} (hz : ‖z‖ < 1) :
     Memℓp (binomialRow r z) 2 := by
   have hzball : z ∈ Metric.eball (0 : ℂ) 1 := by
-    simpa [edist_dist, dist_eq_norm, ENNReal.ofReal_lt_one] using hz
+    rw [Metric.mem_eball, edist_dist, dist_zero_right, ENNReal.ofReal_lt_one]
+    exact hz
   have hzrad : z ∈ Metric.eball (0 : ℂ) (binomialSeries ℂ r).radius :=
     Metric.eball_subset_eball (binomialSeries_radius_ge_one (a := r)) hzball
   have hs : Summable (fun n : ℕ => ‖Ring.choose r n * z ^ n‖) := by
-    simpa [binomialSeries, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul] using
+    simpa [binomialSeries, FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul, mul_comm] using
       (binomialSeries ℂ r).summable_norm_apply hzrad
   have hsrow : Summable (fun n : ℕ => ‖binomialRow r z n‖) := by
     apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _)
@@ -392,7 +394,7 @@ private lemma binomial_row_mem (r : ℂ) {z : ℂ} (hz : ‖z‖ < 1) :
     have hden : 1 ≤ ‖(Real.sqrt (n + 1 : ℝ) : ℂ)‖ := by
       simpa only [Complex.norm_real, Real.norm_eq_abs,
         abs_of_nonneg (Real.sqrt_nonneg _)] using
-        (Real.one_le_sqrt.mpr (by positivity : (1 : ℝ) ≤ n + 1))
+        (Real.one_le_sqrt.mpr (by have := Nat.cast_nonneg (α := ℝ) n; linarith : (1 : ℝ) ≤ n + 1))
     rw [binomialRow, norm_div]
     calc
       _ ≤ ‖z ^ (n + 1) * Ring.choose r n‖ := div_le_self (norm_nonneg _) hden
@@ -479,8 +481,10 @@ private lemma formal_moment_identity :
     ext n
     cases n with
     | zero =>
-        norm_num [periodSeries, first_moment_residue, PowerSeries.coeff_derivative,
-          halfBinomial]
+        simp only [PowerSeries.coeff_mk, first_moment_residue, map_sub, map_add,
+          map_neg, PowerSeries.coeff_ofNat_mul, PowerSeries.coeff_zero_X_mul,
+          zero_mul, PowerSeries.coeff_derivative, periodSeries, PowerSeries.coeff_mk]
+        norm_num [halfBinomial]
     | succ n =>
         simp only [PowerSeries.coeff_mk, first_moment_residue, map_sub, map_add,
           map_neg, PowerSeries.coeff_ofNat_mul, PowerSeries.coeff_succ_X_mul,
@@ -513,7 +517,7 @@ theorem formal_scalar_normalization :
     _ = PowerSeries.X * (1 - PowerSeries.X) * PowerSeries.derivative periodSeries *
         (1 - periodSeries⁻¹ * periodSeries) := by
           have hh : (2 : PowerSeries ℂ) * PowerSeries.C (1 / 2 : ℂ) = 1 := by
-            rw [show (2 : PowerSeries ℂ) = PowerSeries.C (2 : ℂ) by simp,
+            rw [show (2 : PowerSeries ℂ) = PowerSeries.C (2 : ℂ) by rfl,
               ← map_mul]
             norm_num
           linear_combination
@@ -553,7 +557,7 @@ The polynomial numerator is obtained by substituting into the SAME polar. -/
 def cubicUTSeries (b hb : ℂ) : AnnulusSeries :=
   let u := aSeries
   let B := bSeries b
-  let x : AnnulusSeries := PowerSeries.X
+  let x : AnnulusSeries := PowerSeries.X;
   -(formalOmega * formalExternalOmega b hb) *
     (x * (u * B * (u + B + 2) + x * (u + B + 2 * u * B)) *
       (2 * (u * B - x) ^ 2)⁻¹ + formalScalarC)
@@ -626,3 +630,15 @@ The full Monster/VOA/CFT/BRST goal remains unfinished.
 -/
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel
+
+#print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.annular_moment_identity
+
+#print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.scalar_normalization_iff
+
+#print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.annular_normalization_with_primitive
+
+#print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.original_coefficient_equations_iff
+
+#print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.original_row_mem
+
+#print axioms D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel.formal_scalar_normalization

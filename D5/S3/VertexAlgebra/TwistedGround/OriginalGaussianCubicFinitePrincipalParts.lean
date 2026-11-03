@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicFinitePrincipalParts
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicFinitePrincipalParts
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Finite binomial numerators determine the principal parts of the original current. -/
+
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel
 import D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 import Mathlib.RingTheory.PowerSeries.Binomial
@@ -84,11 +92,11 @@ No positivity assumption on s is necessary for this totalized formula. -/
 theorem finite_current_negative_coeff (s : ℕ) (k : ℤ) (hk : k < 0) :
     (finiteCurrentLaurent s).coeff k =
       if k = -(s : ℤ) - 1 then (s : ℂ) else 0 := by
-  rw [finiteCurrentLaurent, HahnSeries.coeff_single_mul]
+  rw [finiteCurrentLaurent, HahnSeries.coeff_single_mul, ← PowerSeries.coe_mul]
   have he : k - (-(s : ℤ) - 1) = k + s + 1 := by omega
   rw [he]
   by_cases hneg : k + (s : ℤ) + 1 < 0
-  · rw [LaurentSeries.coeff_coe, if_pos hneg, mul_zero,
+  · rw [PowerSeries.coeff_coe, if_pos hneg, mul_zero,
       if_neg (by omega : k ≠ -(s : ℤ) - 1)]
   · let n : ℕ := (k + (s : ℤ) + 1).toNat
     have hncast : (n : ℤ) = k + (s : ℤ) + 1 :=
@@ -155,7 +163,7 @@ private lemma current_product_high (s t : ℕ) (ht : 0 < t) :
 This is an all-index finite convolution proof, not finite testing. -/
 theorem finite_current_regular_coeff (s t : ℕ) (ht : 0 < t) :
     (finiteCurrentLaurent s).coeff ((t : ℤ) - 1) = pairScalar s t := by
-  rw [finiteCurrentLaurent, HahnSeries.coeff_single_mul]
+  rw [finiteCurrentLaurent, HahnSeries.coeff_single_mul, ← PowerSeries.coe_mul]
   have he : (t : ℤ) - 1 - (-(s : ℤ) - 1) = ((s + t : ℕ) : ℤ) := by omega
   rw [he, LaurentSeries.coeff_coe_powerSeries, current_product_high s t ht]
   unfold pairScalar
@@ -174,7 +182,7 @@ The identity even holds at totalized b=0; no external restriction is added. -/
 theorem currentRow_eq_finite_numerator (b hb : ℂ) (s : ℕ) :
     currentRow b hb s =
       (s : ℂ) * hb * (finiteCurrentNumerator s).eval b / b ^ (s + 1) := by
-  rw [currentRow, current_numerator_eval, Finset.sum_div]
+  rw [currentRow, current_numerator_eval, ← Finset.sum_div]
   ring
 
 /- Native finite uniqueness. These adapters are private and are actually
@@ -249,7 +257,7 @@ theorem literal_diagonal_polynomials (x b v : ℂ) :
       2 * cubic x b + cubicDerivative x b * v + b * v ^ 2 ∧
     cubic x (b + v) = cubic x b + cubicDerivative x b * v +
       (3 * b + 1 + x) * v ^ 2 + v ^ 3 := by
-  constructor <;> unfold polar cubic cubicDerivative <;> ring
+  constructor <;> simp only [polar, cubic, cubicDerivative] <;> ring
 
 /-- Cleared finite rational pullback of the literal polar. This is NOT
 substitution of x/u into unrestricted iterated formal power series. -/
@@ -304,7 +312,7 @@ private lemma annular_floor_mul {K L : AnnulusSeries} {p q : ℤ}
   rw [PowerSeries.coeff_mul, HahnSeries.coeff_sum]
   apply Finset.sum_eq_zero
   intro ij hij
-  have hij' : ij.1 + ij.2 = d := Finset.mem_antidiagonal.mp hij
+  have hij' : ij.1 + ij.2 = d := Finset.HasAntidiagonal.mem_antidiagonal.mp hij
   apply laurent_product_vanish _ _ (p - ij.1) (q - ij.2)
   · intro j hj
     exact hK ij.1 j (by omega)
@@ -317,7 +325,7 @@ private lemma annular_floor_coe (f : PowerSeries ℂ) :
   intro d k hk
   by_cases hd : d = 0
   · subst d
-    rw [PowerSeries.coeff_zero_C, LaurentSeries.coeff_coe,
+    rw [PowerSeries.coeff_zero_C, PowerSeries.coeff_coe,
       if_pos (by omega : k < 0)]
   · rw [PowerSeries.coeff_C_of_ne_zero hd]
     simp
@@ -355,15 +363,15 @@ private lemma annular_floor_x : annularFloor (PowerSeries.X : AnnulusSeries) 1 :
 
 private lemma annular_floor_omega : annularFloor formalOmega (-1) := by
   intro d k hk
-  change (omegaCoefficient d).coeff k = 0
+  simp only [formalOmega, PowerSeries.coeff_mk]
   rw [omegaCoefficient, HahnSeries.coeff_single_mul]
   have hneg : k - (-(d : ℤ) - 1) < 0 := by omega
-  rw [LaurentSeries.coeff_coe, if_pos hneg, mul_zero]
+  rw [PowerSeries.coeff_coe, if_pos hneg, mul_zero]
 
 private lemma annular_floor_external (b hb : ℂ) :
     annularFloor (formalExternalOmega b hb) 0 := by
   intro d k hk
-  change (HahnSeries.C (hb * halfBinomial d / b ^ (d + 1))).coeff k = 0
+  simp only [formalExternalOmega, PowerSeries.coeff_mk]
   rw [HahnSeries.C_apply, HahnSeries.coeff_single, if_neg (by omega)]
 
 private lemma annular_floor_c : annularFloor localC 1 := by
@@ -392,11 +400,16 @@ private lemma annular_floor_tt_inverse (b : ℂ) (hb : b ≠ 0) :
     annularFloor ((2 * (localA - localB b) ^ 2)⁻¹) 0 := by
   let D : PowerSeries ℂ := 2 * (PowerSeries.X - PowerSeries.C b) ^ 2
   have hD : PowerSeries.constantCoeff D ≠ 0 := by
-    simpa [D] using mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0) (pow_ne_zero 2 (neg_ne_zero.mpr hb))
+    change PowerSeries.constantCoeff
+      (PowerSeries.C (2 : ℂ) * (PowerSeries.X - PowerSeries.C b) ^ 2) ≠ 0
+    simpa using mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0) (pow_ne_zero 2 (neg_ne_zero.mpr hb))
   have he : 2 * (localA - localB b) ^ 2 =
       PowerSeries.C (D : LaurentSeries ℂ) := by
-    simp [D, localA, localB, map_mul, map_sub, map_pow, HahnSeries.ofPowerSeries_X,
-      HahnSeries.ofPowerSeries_C]
+    have htwo : (2 : PowerSeries ℂ) = PowerSeries.C (2 : ℂ) := rfl
+    have htwoA : (2 : AnnulusSeries) = PowerSeries.C (2 : LaurentSeries ℂ) := rfl
+    simp only [D, localA, localB, htwo, htwoA, map_mul, map_sub, map_pow,
+      HahnSeries.ofPowerSeries_X, HahnSeries.ofPowerSeries_C]
+    rfl
   rw [he, PowerSeries.C_inv, ← coe_inverse_of_unit D hD]
   exact annular_floor_coe D⁻¹
 
@@ -405,7 +418,7 @@ factor a at degree zero and factor x in its remaining terms. -/
 theorem cubic_tt_pole_bound (b hb : ℂ) (hb0 : b ≠ 0) (s d : ℕ) (hds : d ≤ s) :
     negativeCoefficient (cubicTTSeries b hb) s d = 0 := by
   have ha0 := annular_floor_mono annular_floor_a (by norm_num : (0 : ℤ) ≤ 1)
-  have hB := annular_floor_scalar b
+  have hB : annularFloor (localB b) 0 := annular_floor_scalar b
   have h2 : annularFloor (2 : AnnulusSeries) 0 := by
     simpa only [map_ofNat] using annular_floor_scalar (2 : ℂ)
   let E := formalOmega * formalExternalOmega b hb
@@ -465,15 +478,24 @@ private lemma annular_floor_ut_inverse (b : ℂ) (hb : b ≠ 0) :
     rw [HahnSeries.single_pow, HahnSeries.inv_single]
     simp only [nsmul_eq_mul, mul_one]
     rw [HahnSeries.coeff_single, if_neg (by omega)]
+  have htwo : (2 : LaurentSeries ℂ) ≠ 0 := by
+    intro h
+    have hc := congrArg (fun f : LaurentSeries ℂ => f.coeff 0) h
+    change (HahnSeries.single 0 (2 : ℂ)).coeff 0 = (0 : LaurentSeries ℂ).coeff 0 at hc
+    norm_num at hc
   have hconst : PowerSeries.constantCoeff
       (2 * (localA * localB b - PowerSeries.X) ^ 2) ≠ 0 := by
     rw [hAB]
-    simpa using mul_ne_zero (by norm_num : (2 : LaurentSeries ℂ) ≠ 0)
-      (pow_ne_zero 2 (HahnSeries.single_ne_zero hb))
+    change PowerSeries.constantCoeff
+      (PowerSeries.C (2 : LaurentSeries ℂ) *
+        (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2) ≠ 0
+    simpa only [map_mul, PowerSeries.constantCoeff_C, map_pow, map_sub,
+      PowerSeries.constantCoeff_X, sub_zero] using
+      mul_ne_zero htwo (pow_ne_zero 2 (HahnSeries.single_ne_zero hb))
   have hhalf : (PowerSeries.C (1 / 2 : LaurentSeries ℂ) : AnnulusSeries) * 2 = 1 := by
-    have h := congrArg (PowerSeries.C (R := LaurentSeries ℂ))
-      (by norm_num : (1 / 2 : LaurentSeries ℂ) * 2 = 1)
-    simpa only [map_mul, map_ofNat, map_one] using h
+    calc
+      _ = PowerSeries.C ((1 / 2 : LaurentSeries ℂ) * 2) := by rw [map_mul]; rfl
+      _ = 1 := by rw [one_div, inv_mul_cancel₀ htwo, map_one]
   have hmul : (PowerSeries.C (1 / 2 : LaurentSeries ℂ) * J ^ 2) *
       (2 * (localA * localB b - PowerSeries.X) ^ 2) = 1 := by
     calc
@@ -485,7 +507,10 @@ private lemma annular_floor_ut_inverse (b : ℂ) (hb : b ≠ 0) :
     ((PowerSeries.eq_inv_iff_mul_eq_one hconst).mpr hmul).symm
   rw [heq, pow_two]
   have hh : annularFloor (PowerSeries.C (1 / 2 : LaurentSeries ℂ)) 0 := by
-    simpa using annular_floor_scalar (1 / 2 : ℂ)
+    have he : (1 / 2 : LaurentSeries ℂ) = HahnSeries.C (1 / 2 : ℂ) := by
+      rw [map_div₀, map_one, map_ofNat]
+    rw [he]
+    exact annular_floor_scalar (1 / 2 : ℂ)
   simpa using annular_floor_mul hh (annular_floor_mul hJfloor hJfloor)
 
 /-- All-degree UT pole order, proved with the native invUnitsSub expansion.
@@ -493,7 +518,7 @@ The moving denominator contributes exactly its admissible degree support. -/
 theorem cubic_ut_pole_bound (b hb : ℂ) (hb0 : b ≠ 0) (s d : ℕ) (hds : d < s) :
     negativeCoefficient (cubicUTSeries b hb) s d = 0 := by
   have ha0 := annular_floor_mono annular_floor_a (by norm_num : (0 : ℤ) ≤ 1)
-  have hB := annular_floor_scalar b
+  have hB : annularFloor (localB b) 0 := annular_floor_scalar b
   have h2 : annularFloor (2 : AnnulusSeries) 0 := by
     simpa only [map_ofNat] using annular_floor_scalar (2 : ℂ)
   let E := formalOmega * formalExternalOmega b hb
@@ -536,6 +561,7 @@ theorem cubic_ut_degree_zero (b hb : ℂ) :
       (PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries) = 0 := by
     change HahnSeries.C (PowerSeries.constantCoeff scalarCSeries) = 0
     rw [scalarCSeries_constant_zero, map_zero]
+  rw [PowerSeries.coeff_zero_eq_constantCoeff_apply]
   change PowerSeries.constantCoeff
     (-(formalOmega * formalExternalOmega b hb) *
       (PowerSeries.X * (a * B * (a + B + 2) +

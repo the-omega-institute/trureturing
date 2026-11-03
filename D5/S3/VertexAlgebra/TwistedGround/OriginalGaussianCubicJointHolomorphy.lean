@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicJointHolomorphy
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicJointHolomorphy
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: A bounded lp 1 by lp 1 convolution is constructed directly into the original lp 2 space and evaluated by its finite antidiagonal coefficients. -/
+
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicHilbertHolomorphy
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianDifferentiation
 import Mathlib.Analysis.Analytic.Constructions
@@ -161,11 +169,11 @@ theorem C_coordinate (u v : L) (n : ℕ) :
   change E (∑' ij : ℕ × ℕ, convolutionTerm u v ij) = _
   rw [E.map_tsum (convolution_summable u v)]
   calc
-    _ = ∑ ij ∈ Finset.antidiagonal (n + 1), E (convolutionTerm u v ij) := by
+    _ = ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal (n + 1), E (convolutionTerm u v ij) := by
       apply tsum_eq_sum
       intro ij hij
       have hsum : ij.1 + ij.2 ≠ n + 1 := by
-        simpa only [Finset.mem_antidiagonal] using hij
+        simpa only [Finset.HasAntidiagonal.mem_antidiagonal] using hij
       by_cases hzero : ij.1 + ij.2 = 0
       · simp [convolutionTerm, K, hzero]
       · have hidx : ij.1 + ij.2 - 1 ≠ n := by omega
@@ -391,7 +399,7 @@ private lemma operator_analytic {z : ℂ} (hz : ‖z‖ < 1) :
 private lemma square_norm_lt_one {z : ℂ} (hz : ‖z‖ < 1) :
     ‖operator z ^ 2‖ < 1 :=
   (norm_pow_le _ _).trans_lt
-    (pow_lt_one₀ (norm_nonneg _) (operator_norm_lt_one hz)
+    (pow_lt_one₀ (norm_nonneg _) (OriginalGaussianWeightedResolvent.operator_norm_lt_one hz)
       (by norm_num : (2 : ℕ) ≠ 0))
 
 private lemma squareResolvent_eq_inverse {z : ℂ} (hz : ‖z‖ < 1) :

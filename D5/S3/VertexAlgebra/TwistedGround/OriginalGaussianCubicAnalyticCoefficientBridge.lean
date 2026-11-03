@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalyticCoefficientBridge
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicAnalyticCoefficientBridge
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The actual half-binomial, inverse-period and literal kernel power series are integrated on fixed contours with proved continuity and termwise convergence. -/
+
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicAnalytic
 import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.MeasureTheory.Integral.Bochner.Set

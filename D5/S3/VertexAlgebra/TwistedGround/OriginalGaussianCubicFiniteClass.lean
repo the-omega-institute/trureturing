@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicFiniteClass
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicFiniteClass
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Explicit finite polynomials in the original neck coordinate represent every positive modulus coefficient of the literal TT and UT kernels. -/
+
 /-
   SOURCE ONLY, UNCOMPILED.
 
@@ -31,7 +39,7 @@ namespace D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel
 open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 
 local notation "H" => halfSeries
-local notation "h" i => halfBinomial i
+private abbrev h := halfBinomial
 
 /- The finite coefficient polynomial for H(x/a)H(x/b). -/
 private def APoly (d : ℕ) (b : ℂ) : Polynomial ℂ :=
@@ -60,7 +68,8 @@ private lemma half_convolution (d : ℕ) :
   simpa only [PowerSeries.coeff_mul,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk,
     PowerSeries.binomialSeries_coeff, halfSeries,
-    PowerSeries.coeff_mk, smul_eq_mul, mul_one, Ring.choose_neg'] using hc
+    PowerSeries.coeff_mk, smul_eq_mul, mul_one, Ring.choose_neg', Ring.multichoose_one,
+    Units.smul_def, zsmul_eq_mul, Int.cast_negOnePow_natCast, mul_one, Nat.succ_eq_add_one, h] using hc
 
 /- The weighted convolution is the finite index-reversal identity.  The
    derivative form is used only as an algebraic abbreviation for the same
@@ -203,7 +212,7 @@ private lemma MPoly_derivative_at_b (d : ℕ) {b : ℂ} (hb : b ≠ 0) (hd : 1 �
   field_simp [hb] <;> ring
 
 private lemma MPoly_degree_le (d : ℕ) (b : ℂ) :
-    (MPoly d b).degree ≤ (d + 1 : ℕ) := by
+    (MPoly d b).degree ≤ ((d + 1 : ℕ) : WithBot ℕ) := by
   have hA : (APoly d b).degree ≤ d := by
     refine (Polynomial.degree_sum_le _ _).trans (Finset.sup_le ?_)
     intro i hi
@@ -214,27 +223,27 @@ private lemma MPoly_degree_le (d : ℕ) (b : ℂ) :
     intro i hi
     exact (Polynomial.degree_monomial_le _ _).trans
       (WithBot.coe_le_coe.mpr (Nat.sub_le (d - 1) i))
-  have hlin : (Polynomial.X + Polynomial.C b + Polynomial.C 2).degree ≤ (1 : ℕ) := by
+  have hlin : (Polynomial.X + Polynomial.C b + Polynomial.C 2).degree ≤ (1 : WithBot ℕ) := by
     apply Polynomial.degree_add_le_of_degree_le
     · exact Polynomial.degree_add_le_of_degree_le Polynomial.degree_X_le
         (Polynomial.degree_C_le.trans (by norm_num))
     · exact Polynomial.degree_C_le.trans (by norm_num)
   have hlin' :
       (Polynomial.C 2 * Polynomial.X * Polynomial.C b + Polynomial.X +
-        Polynomial.C b).degree ≤ (1 : ℕ) := by
+        Polynomial.C b).degree ≤ (1 : WithBot ℕ) := by
     apply Polynomial.degree_add_le_of_degree_le
     · apply Polynomial.degree_add_le_of_degree_le
-      · simpa only [zero_add, add_zero] using
+      · convert
           (Polynomial.degree_mul_le_of_le
             (Polynomial.degree_mul_le_of_le
               (Polynomial.degree_C_le (a := (2 : ℂ)))
               (Polynomial.degree_X_le (R := ℂ)))
-            (Polynomial.degree_C_le (a := b)))
+            (Polynomial.degree_C_le (a := b))) using 1 <;> norm_num
       · exact Polynomial.degree_X_le
     · exact Polynomial.degree_C_le.trans (by norm_num)
   have hleft :
       (Polynomial.C b * (Polynomial.X + Polynomial.C b + Polynomial.C 2) *
-        APoly d b).degree ≤ (d + 1 : ℕ) := by
+        APoly d b).degree ≤ ((d + 1 : ℕ) : WithBot ℕ) := by
     calc
       _ ≤ (0 : WithBot ℕ) + 1 + d :=
         Polynomial.degree_mul_le_of_le
@@ -242,7 +251,7 @@ private lemma MPoly_degree_le (d : ℕ) (b : ℂ) :
       _ = (d + 1 : ℕ) := by simp [add_assoc, add_comm, add_left_comm]
   have hright :
       ((Polynomial.C 2 * Polynomial.X * Polynomial.C b + Polynomial.X + Polynomial.C b) *
-        APoly (d - 1) b).degree ≤ (d + 1 : ℕ) := by
+        APoly (d - 1) b).degree ≤ ((d + 1 : ℕ) : WithBot ℕ) := by
     calc
       _ ≤ (1 : WithBot ℕ) + ((d - 1 : ℕ) : WithBot ℕ) :=
         Polynomial.degree_mul_le_of_le hlin' hA'
@@ -284,7 +293,7 @@ private lemma MPoly_square_factor (d : ℕ) {b : ℂ} (hb : b ≠ 0) (hd : 1 ≤
       rw [hdegfac] at hdegM
       have hnat : q.natDegree + 2 ≤ d + 1 := WithBot.coe_le_coe.mp hdegM
       rw [Polynomial.degree_eq_natDegree hq]
-      exact WithBot.coe_lt_coe.mpr (by omega)
+      exact WithBot.coe_lt_coe.mpr (show q.natDegree < d by omega)
 
 private def QPoly (d : ℕ) (b : ℂ) : Polynomial ℂ :=
   MPoly d b /ₘ (Polynomial.X - Polynomial.C b) ^ 2
@@ -319,7 +328,7 @@ private lemma QPoly_degree (d : ℕ) {b : ℂ} (hb : b ≠ 0) (hd : 1 ≤ d) :
    the antidiagonal makes every exponent d-i-1 nonnegative and at most d-1. -/
 private def CPoly (d : ℕ) (b hb : ℂ) : Polynomial ℂ :=
   ∑ l ∈ Finset.range d,
-    ∑ ij ∈ Finset.antidiagonal (d - (l + 1)),
+    ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal (d - (l + 1)),
       Polynomial.monomial (d - ij.1 - 1)
         ((hb / b) * PowerSeries.coeff (l + 1) scalarCSeries *
           h ij.1 * h ij.2 * (b ^ ij.2)⁻¹)
@@ -332,9 +341,11 @@ private lemma CPoly_degree (d : ℕ) (b hb : ℂ) :
   refine (Polynomial.degree_sum_le _ _).trans_lt
     ((Finset.sup_lt_iff (WithBot.bot_lt_coe d)).2 ?_)
   intro ij hij
-  have hij' : ij.1 + ij.2 = d - (l + 1) := by omega
+  have hij' : ij.1 + ij.2 = d - (l + 1) :=
+    Finset.HasAntidiagonal.mem_antidiagonal.mp hij
+  have hl' : l < d := Finset.mem_range.mp hl
   have he : d - ij.1 - 1 < d := by omega
-  exact (Polynomial.degree_monomial_le _ _).trans_lt he
+  exact (Polynomial.degree_monomial_le _ _).trans_lt (WithBot.coe_lt_coe.mpr he)
 
 private def PTPoly (d : ℕ) (b hb : ℂ) : Polynomial ℂ :=
   Polynomial.C (hb / (2 * b)) * QPoly d b + CPoly d b hb
@@ -370,7 +381,7 @@ private lemma literal_tt_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd 
           PowerSeries.C (HahnSeries.C b))) *
         (2 * (PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) -
           PowerSeries.C (HahnSeries.C b)) ^ 2)⁻¹ +
-      PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries))
+      PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries)) = _
   rw [PowerSeries.coeff_mul]
   simp only [PowerSeries.coeff_mk, PowerSeries.coeff_mul,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk,
@@ -385,14 +396,14 @@ private lemma literal_tt_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd 
     HahnSeries.coeff_single, if_true, if_false]
   field_simp [hb0]
   ring_nf
-  simpa [PTPoly, CPoly, QPoly, hq]
+  simpa only [PTPoly, CPoly, QPoly]
 
 /- UT finite numerator.  The first antidiagonal splits i+j+n=d-1 and the
    second splits i+j+n=d-2.  The displayed monomials are the three terms of
    N₁ and the three terms of N₂ respectively. -/
 private def UMain1 (d : ℕ) (b hb : ℂ) : Polynomial ℂ :=
-  ∑ ij ∈ Finset.antidiagonal (d - 1),
-    ∑ jn ∈ Finset.antidiagonal ij.2,
+  ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal (d - 1),
+    ∑ jn ∈ Finset.HasAntidiagonal.antidiagonal ij.2,
       let i := ij.1
       let j := jn.1
       let n := jn.2
@@ -404,8 +415,8 @@ private def UMain1 (d : ℕ) (b hb : ℂ) : Polynomial ℂ :=
 
 private def UMain2 (d : ℕ) (b hb : ℂ) : Polynomial ℂ :=
   if 2 ≤ d then
-    ∑ ij ∈ Finset.antidiagonal (d - 2),
-      ∑ jn ∈ Finset.antidiagonal ij.2,
+    ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal (d - 2),
+      ∑ jn ∈ Finset.HasAntidiagonal.antidiagonal ij.2,
         let i := ij.1
         let j := jn.1
         let n := jn.2
@@ -421,7 +432,7 @@ private def UMain (d : ℕ) (b hb : ℂ) : Polynomial ℂ :=
 
 private def UCPoly (d : ℕ) (b hb : ℂ) : Polynomial ℂ :=
   ∑ l ∈ Finset.range d,
-    ∑ ij ∈ Finset.antidiagonal (d - (l + 1)),
+    ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal (d - (l + 1)),
       Polynomial.monomial (d - ij.1)
         (-((hb / b) * PowerSeries.coeff (l + 1) scalarCSeries *
           h ij.1 * h ij.2 * (b ^ ij.2)⁻¹))
@@ -437,7 +448,7 @@ private lemma UMain_degree (d : ℕ) (b hb : ℂ) :
     intro ij hij
     refine (Polynomial.degree_sum_le _ _).trans (Finset.sup_le ?_)
     intro jn hjn
-    simp only [Finset.mem_antidiagonal] at hij hjn
+    simp only [Finset.HasAntidiagonal.mem_antidiagonal] at hij hjn
     have hsum1 : ij.1 + jn.1 + jn.2 = d - 1 := by omega
     have he1 : d - ij.1 - jn.2 ≤ d := by
       exact (Nat.sub_le (d - ij.1) jn.2).trans (Nat.sub_le d ij.1)
@@ -460,7 +471,7 @@ private lemma UMain_degree (d : ℕ) (b hb : ℂ) :
       intro ij hij
       refine (Polynomial.degree_sum_le _ _).trans (Finset.sup_le ?_)
       intro jn hjn
-      simp only [Finset.mem_antidiagonal] at hij hjn
+      simp only [Finset.HasAntidiagonal.mem_antidiagonal] at hij hjn
       have hsum2 : ij.1 + jn.1 + jn.2 = d - 2 := by omega
       have he1 : d - ij.1 - jn.2 - 1 ≤ d := by
         exact (Nat.sub_le (d - ij.1 - jn.2) 1).trans
@@ -488,9 +499,9 @@ private lemma UCPoly_degree (d : ℕ) (b hb : ℂ) :
   intro l hl
   refine (Polynomial.degree_sum_le _ _).trans (Finset.sup_le ?_)
   intro ij hij
-  simp only [Finset.mem_range, Finset.mem_antidiagonal] at hl hij
+  simp only [Finset.mem_range, Finset.HasAntidiagonal.mem_antidiagonal] at hl hij
   have he : d - ij.1 ≤ d := by omega
-  exact (Polynomial.degree_monomial_le _ _).trans he
+  exact (Polynomial.degree_monomial_le _ _).trans (WithBot.coe_le_coe.mpr he)
 
 private lemma PUPoly_degree (d : ℕ) (b hb : ℂ) :
     (PUPoly d b hb).degree < d + 1 := by
@@ -510,29 +521,71 @@ private lemma literal_ut_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd 
     HahnSeries.single_ne_zero hb0
   have hunit (n : ℕ) :
       (PowerSeries.coeff n
-        ((2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2)⁻¹)) =
-        (n + 1 : ℂ) / (2 : ℂ) *
-          (HahnSeries.single (-(n : ℤ) - 2) (b ^ (n + 2))⁻¹) := by
+        ((2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2 : AnnulusSeries)⁻¹)) =
+        HahnSeries.C ((n + 1 : ℂ) / (2 : ℂ)) *
+          (HahnSeries.single (-(n : ℤ) - 2) ((b ^ (n + 2))⁻¹)) := by
     let u : (LaurentSeries ℂ)ˣ :=
       Units.mk0 (HahnSeries.single 1 b) hu
-    have hmul :
-        (PowerSeries.C (1 / 2 : LaurentSeries ℂ) *
-            PowerSeries.invUnitsSub u ^ 2) *
-          (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2) = 1 := by
-      rw [pow_two]
-      simp [PowerSeries.invUnitsSub_mul_sub, u]
+    have hJ : PowerSeries.invUnitsSub u *
+        (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) = 1 :=
+      PowerSeries.invUnitsSub_mul_sub u
+    have htwo : (2 : LaurentSeries ℂ) ≠ 0 := by
+      intro h
+      have hc := congrArg (fun f : LaurentSeries ℂ => f.coeff 0) h
+      change (HahnSeries.single 0 (2 : ℂ)).coeff 0 = (0 : LaurentSeries ℂ).coeff 0 at hc
+      norm_num at hc
+    have hhalf : (PowerSeries.C (1 / 2 : LaurentSeries ℂ) : AnnulusSeries) * 2 = 1 := by
+      calc
+        _ = PowerSeries.C ((1 / 2 : LaurentSeries ℂ) * 2) := by rw [map_mul]; rfl
+        _ = 1 := by rw [one_div, inv_mul_cancel₀ htwo, map_one]
+    have hconst : PowerSeries.constantCoeff
+        (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2 : AnnulusSeries) ≠ 0 := by
+      change PowerSeries.constantCoeff (PowerSeries.C (2 : LaurentSeries ℂ) *
+        (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2) ≠ 0
+      simpa only [map_mul, map_pow, map_sub, PowerSeries.constantCoeff_C,
+        PowerSeries.constantCoeff_X, sub_zero] using mul_ne_zero htwo (pow_ne_zero 2 hu)
+    have hmul : (PowerSeries.C (1 / 2 : LaurentSeries ℂ) * PowerSeries.invUnitsSub u ^ 2) *
+        (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2) = 1 := by
+      calc
+        _ = (PowerSeries.C (1 / 2 : LaurentSeries ℂ) * 2) *
+            (PowerSeries.invUnitsSub u * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X)) ^ 2 := by ring
+        _ = 1 := by rw [hhalf, hJ]; simp
+    have hinv := ((PowerSeries.eq_inv_iff_mul_eq_one hconst).mpr hmul).symm
+    have hcoeff (m : ℕ) : PowerSeries.coeff m (PowerSeries.invUnitsSub u) =
+        HahnSeries.single (-((m + 1 : ℕ) : ℤ)) ((b ^ (m + 1))⁻¹) := by
+      rw [PowerSeries.coeff_invUnitsSub, one_divp, Units.val_inv_eq_inv_val, Units.val_pow_eq_pow_val]
+      change (((HahnSeries.single 1 b : LaurentSeries ℂ) ^ (m + 1))⁻¹) = _
+      rw [HahnSeries.single_pow, HahnSeries.inv_single]
+      simp only [nsmul_eq_mul, mul_one]
+    rw [hinv, PowerSeries.coeff_C_mul, pow_two, PowerSeries.coeff_mul,
+      Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
+    have hs : (∑ k ∈ Finset.range (n + 1),
+        PowerSeries.coeff k (PowerSeries.invUnitsSub u) *
+          PowerSeries.coeff (n - k) (PowerSeries.invUnitsSub u)) =
+        (n + 1) • (HahnSeries.single (-((n + 2 : ℕ) : ℤ)) ((b ^ (n + 2))⁻¹) : LaurentSeries ℂ) := by
+      trans ∑ k ∈ Finset.range (n + 1),
+        (HahnSeries.single (-((n + 2 : ℕ) : ℤ)) ((b ^ (n + 2))⁻¹) : LaurentSeries ℂ)
+      · apply Finset.sum_congr rfl
+        intro k hk
+        have hk' : k ≤ n := by simpa only [Finset.mem_range, Nat.lt_succ_iff] using hk
+        rw [hcoeff, hcoeff, HahnSeries.single_mul_single, ← mul_inv, ← pow_add]
+        have hsum : k + 1 + (n - k + 1) = n + 2 := by omega
+        rw [hsum, ← neg_add, ← Nat.cast_add, hsum]
+      · simp only [Finset.sum_const, Finset.card_range]
+    rw [hs, nsmul_eq_mul]
+    have hhalfC : (1 / 2 : LaurentSeries ℂ) = HahnSeries.C (1 / 2 : ℂ) := by
+      rw [map_div₀, map_one, map_ofNat]
+    rw [hhalfC]
+    have hnC : (↑(n + 1) : LaurentSeries ℂ) = HahnSeries.C (↑(n + 1) : ℂ) := by rw [map_natCast]
+    rw [hnC, ← mul_assoc, ← map_mul]
+    congr 1
+    · congr 1
+      push_cast
       ring
-    have hinv :
-        (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2)⁻¹ =
-          PowerSeries.C (1 / 2 : LaurentSeries ℂ) * PowerSeries.invUnitsSub u ^ 2 := by
-      apply (PowerSeries.eq_inv_iff_mul_eq_one (by simp [hu])).mpr
-      exact hmul
-    rw [hinv, PowerSeries.coeff_mul, PowerSeries.coeff_mul]
-    simp only [PowerSeries.coeff_C_mul, PowerSeries.coeff_invUnitsSub,
-      one_divp, Units.val_pow_eq_pow_val, HahnSeries.coeff_single,
-      if_true, smul_eq_mul]
-    field_simp [hb0]
-    ring
+    · congr 1
+      push_cast
+      simp only [neg_add, sub_eq_add_neg]
+
   change PowerSeries.coeff d
     (-(formalOmega * formalExternalOmega b hb) *
       (PowerSeries.X *
@@ -546,7 +599,7 @@ private lemma literal_ut_coefficient (d : ℕ) {b hb : ℂ} (hb0 : b ≠ 0) (hd 
                 2 * PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) *
                   PowerSeries.C (HahnSeries.C b))) *
         (2 * (PowerSeries.C (HahnSeries.single 1 b) - PowerSeries.X) ^ 2)⁻¹ +
-      PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries))
+      PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries)) = _
   rw [PowerSeries.coeff_mul]
   simp only [map_neg, PowerSeries.coeff_mul,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk,

@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicResidues
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicResidues
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The all-degree TT and UT residues vanish for the literal formal cubic kernels, by the actual half-binomial convolution and original scalar normalization.. -/
+
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel
 import Mathlib.RingTheory.PowerSeries.Binomial
 
@@ -40,17 +48,19 @@ private lemma dl_coe (f : PowerSeries ℂ) :
   rw [dl_coeff]
   cases k with
   | ofNat n =>
-      rw [show (Int.ofNat n + 1 : ℤ) = ((n + 1 : ℕ) : ℤ) by omega,
+      change (((n : ℤ) + 1 : ℤ) : ℂ) * (f : L).coeff ((n : ℤ) + 1) =
+        (PowerSeries.derivative f : L).coeff (n : ℤ)
+      rw [show ((n : ℤ) + 1 : ℤ) = ((n + 1 : ℕ) : ℤ) by omega,
         LaurentSeries.coeff_coe_powerSeries,
         LaurentSeries.coeff_coe_powerSeries, PowerSeries.coeff_derivative]
       push_cast
       ring
   | negSucc n =>
       cases n with
-      | zero => simp [LaurentSeries.coeff_coe]
+      | zero => simp [PowerSeries.coeff_coe]
       | succ n =>
           have hn : (Int.negSucc (n + 1) + 1 : ℤ) < 0 := by omega
-          simp [LaurentSeries.coeff_coe, hn]
+          simp [PowerSeries.coeff_coe, hn]
 
 private lemma dl_shift (m : ℤ) (f : L) :
     dl (HahnSeries.single m 1 * f) =
@@ -80,7 +90,7 @@ private lemma dl_mul (f g : L) : dl (f * g) = dl f * g + f * dl g := by
   have hprod : (HahnSeries.single m 1 * (p : L)) *
       (HahnSeries.single n 1 * (q : L)) =
         HahnSeries.single (m + n) 1 * ((p * q : PowerSeries ℂ) : L) := by
-    rw [LaurentSeries.coe_mul]
+    rw [PowerSeries.coe_mul]
     calc
       _ = (HahnSeries.single m 1 * HahnSeries.single n 1) *
           ((p : L) * (q : L)) := by ring
@@ -94,7 +104,7 @@ private lemma dl_mul (f g : L) : dl (f * g) = dl f * g + f * dl g := by
     simp only [hmn, hnm, mul_one, one_mul, Int.cast_add, HahnSeries.single_add]
   rw [hprod, dl_shift_coe, dl_shift_coe, dl_shift_coe,
     PowerSeries.derivative.leibniz]
-  simp only [smul_eq_mul, LaurentSeries.coe_add, LaurentSeries.coe_mul]
+  simp only [smul_eq_mul, PowerSeries.coe_add, PowerSeries.coe_mul]
   rw [hm]
   have hmn : (HahnSeries.single (m + n) 1 : L) =
       HahnSeries.single m 1 * HahnSeries.single n 1 := by
@@ -137,8 +147,13 @@ private lemma da_one : da (1 : A) = 0 := by
   rw [da_C, dl_const, map_zero]
 
 private lemma da_X : da (PowerSeries.X : A) = 0 := by
-  ext n
-  by_cases hn : n = 1 <;> simp [da, PowerSeries.coeff_X, hn]
+  apply PowerSeries.ext
+  intro n
+  by_cases hn : n = 1
+  · subst n
+    simp only [da, PowerSeries.coeff_mk, PowerSeries.coeff_X, ite_true, map_zero]
+    exact dl_const 1
+  · simp [da, PowerSeries.coeff_X, hn]
 
 private def lift (f : PowerSeries ℂ) : A :=
   PowerSeries.map (HahnSeries.C : ℂ →+* L) f
@@ -154,6 +169,7 @@ private lemma da_lift (f : PowerSeries ℂ) : da (lift f) = 0 := by
 
 private lemma da_a : da aSeries = 1 := by
   rw [aSeries, da_C]
+  change PowerSeries.C (dl neckVariable) = PowerSeries.C 1
   congr 1
   simp [neckVariable, dl, LaurentSeries.derivative,
     LaurentSeries.hasseDeriv_single, HahnSeries.single_zero_one]
@@ -199,8 +215,9 @@ private lemma da_ai : da aiSeries = -aiSeries ^ 2 := by
 private def half : A := lift (PowerSeries.C (1 / 2 : ℂ))
 
 private lemma two_half : (2 : A) * half = 1 := by
+  simp only [half, lift, PowerSeries.map_C]
   change (2 : A) * PowerSeries.C (HahnSeries.C (1 / 2 : ℂ)) = 1
-  have h2 : (2 : A) = PowerSeries.C (HahnSeries.C (2 : ℂ)) := by simp
+  have h2 : (2 : A) = PowerSeries.C (HahnSeries.C (2 : ℂ)) := by rw [map_ofNat]; rfl
   rw [h2, ← map_mul, ← map_mul]
   norm_num
 
@@ -216,6 +233,7 @@ private lemma bin_half_inverse : bin (1 / 2) * bin (-1 / 2) = 1 := by
 private lemma bin_half_square : bin (1 / 2) ^ 2 = 1 + PowerSeries.X := by
   rw [pow_two, bin, ← PowerSeries.binomialSeries_add]
   norm_num
+  simpa using (PowerSeries.binomialSeries_nat (R := ℂ) (A := ℂ) 1)
 
 private lemma halfSeries_bin : halfSeries = bin (-1 / 2) := by
   ext n
@@ -224,12 +242,13 @@ private lemma halfSeries_bin : halfSeries = bin (-1 / 2) := by
 private def R : L := (bin (1 / 2) : L)
 
 private lemma R_H : R * (halfSeries : L) = 1 := by
-  rw [R, halfSeries_bin, ← LaurentSeries.coe_mul, bin_half_inverse,
-    LaurentSeries.coe_one]
+  rw [R, halfSeries_bin, ← PowerSeries.coe_mul, bin_half_inverse,
+    PowerSeries.coe_one]
 
 private lemma R_square : R ^ 2 = 1 + neckVariable := by
-  rw [R, ← LaurentSeries.coe_pow, bin_half_square, LaurentSeries.coe_add,
-    LaurentSeries.coe_one, LaurentSeries.coe_X]
+  rw [R, ← PowerSeries.coe_pow, bin_half_square, PowerSeries.coe_add,
+    PowerSeries.coe_one, PowerSeries.coe_X]
+  rfl
 
 private def outerBin (r : ℂ) : A := PowerSeries.rescale ai (lift (bin r))
 
@@ -238,15 +257,16 @@ private lemma outer_inverse : outerBin (1 / 2) * outerBin (-1 / 2) = 1 := by
 
 private lemma outer_square : outerBin (1 / 2) ^ 2 =
     1 + aiSeries * PowerSeries.X := by
-  rw [outerBin, ← map_pow, ← map_pow (PowerSeries.map (HahnSeries.C : ℂ →+* L)),
-    bin_half_square]
+  simp only [outerBin, ← map_pow, lift]
+  rw [bin_half_square]
   simp [lift, aiSeries, PowerSeries.rescale_X, PowerSeries.map_X]
 
 private def w : A := PowerSeries.C (neckVariable * R) * outerBin (1 / 2)
 
 private lemma omega_factor : formalOmega =
     PowerSeries.C (ai * (halfSeries : L)) * outerBin (-1 / 2) := by
-  ext n
+  apply PowerSeries.ext
+  intro n
   simp only [formalOmega, PowerSeries.coeff_mk, PowerSeries.coeff_C_mul,
     outerBin, PowerSeries.coeff_rescale, lift, PowerSeries.coeff_map, bin_coeff,
     ← halfBinomial_choose]
@@ -332,8 +352,13 @@ private lemma D_constant (b : ℂ) (hb : b ≠ 0) :
 private lemma twice_square_constant (f : A)
     (hf : PowerSeries.constantCoeff f ≠ 0) :
     PowerSeries.constantCoeff (2 * f ^ 2) ≠ 0 := by
-  simpa using
-    mul_ne_zero (show (2 : L) ≠ 0 by norm_num) (pow_ne_zero 2 hf)
+  have htwo : (2 : L) ≠ 0 := by
+    intro h
+    have hc := congrArg (fun f : L => f.coeff 0) h
+    change (HahnSeries.single 0 (2 : ℂ)).coeff 0 = (0 : L).coeff 0 at hc
+    norm_num at hc
+  simpa only [map_mul, map_pow, show (2 : A) = PowerSeries.C (2 : L) from rfl,
+    PowerSeries.constantCoeff_C] using mul_ne_zero htwo (pow_ne_zero 2 hf)
 
 private lemma da_T (b : ℂ) : da (T b) = 1 := by
   simp only [T, da_sub, da_a, da_b, sub_zero]

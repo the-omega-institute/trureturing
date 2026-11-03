@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicSewingBridge
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicSewingBridge
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The literal formal TT and UT coefficients satisfy signed sewing relations at every positive mode and modulus degree. -/
+
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel
 import Mathlib.Algebra.BigOperators.NatAntidiagonal
 
@@ -26,6 +34,8 @@ open scoped BigOperators
 
 namespace D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel
 
+open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+
 private def cone (K : AnnulusSeries) : Prop :=
   ∀ d : ℕ, ∀ k : ℤ, k + d < 0 → (PowerSeries.coeff d K).coeff k = 0
 
@@ -51,7 +61,7 @@ private def sigma (K : AnnulusSeries) : AnnulusSeries :=
 private lemma cone_sigma (K : AnnulusSeries) : cone (sigma K) := by
   intro d k hk
   rw [sigma, PowerSeries.coeff_mk, HahnSeries.coeff_single_mul, one_mul,
-    LaurentSeries.coeff_coe, if_pos (by omega : k - -(d : ℤ) < 0)]
+    PowerSeries.coeff_coe, if_pos (by omega : k - -(d : ℤ) < 0)]
 
 private lemma chart_sigma (K : AnnulusSeries) (d t : ℕ) :
     chart (sigma K) d t = chart K t d := by
@@ -67,9 +77,9 @@ private lemma row_reconstruct {K : AnnulusSeries} (hK : cone K) (d : ℕ) :
   ext k
   rw [HahnSeries.coeff_single_mul, one_mul]
   by_cases hk : k - -(d : ℤ) < 0
-  · rw [LaurentSeries.coeff_coe, if_pos hk]
+  · rw [PowerSeries.coeff_coe, if_pos hk]
     exact hK d k (by omega)
-  · rw [LaurentSeries.coeff_coe, if_neg hk, rowSeries, PowerSeries.coeff_mk]
+  · rw [PowerSeries.coeff_coe, if_neg hk, rowSeries, PowerSeries.coeff_mk]
     change (PowerSeries.coeff d K).coeff k =
       (PowerSeries.coeff d K).coeff (((k - -(d : ℤ)).natAbs : ℤ) - d)
     rw [← Int.eq_natAbs_of_nonneg (by omega : 0 ≤ k - -(d : ℤ))]
@@ -118,7 +128,7 @@ private lemma cone_mul {K L : AnnulusSeries} (hK : cone K) (hL : cone L) :
   rw [PowerSeries.coeff_mul, HahnSeries.coeff_sum]
   apply Finset.sum_eq_zero
   intro rs hrs
-  have hrs' : rs.1 + rs.2 = d := Finset.mem_antidiagonal.mp hrs
+  have hrs' : rs.1 + rs.2 = d := Finset.HasAntidiagonal.mem_antidiagonal.mp hrs
   apply laurent_product_floor _ _ (-(rs.1 : ℤ)) (-(rs.2 : ℤ))
   · intro j hj
     exact hK rs.1 j (by omega)
@@ -132,11 +142,11 @@ private lemma chart_row_product {K L : AnnulusSeries} (hK : cone K) (hL : cone L
     (r s t : ℕ) :
     (PowerSeries.coeff r K * PowerSeries.coeff s L).coeff
         ((t : ℤ) - (r + s : ℕ)) =
-      ∑ ij ∈ Finset.antidiagonal t, chart K r ij.1 * chart L s ij.2 := by
+      ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal t, chart K r ij.1 * chart L s ij.2 := by
   have hm : PowerSeries.coeff r K * PowerSeries.coeff s L =
       HahnSeries.single (-((r + s : ℕ) : ℤ)) (1 : ℂ) *
         ((rowSeries K r * rowSeries L s : PowerSeries ℂ) : LaurentSeries ℂ) := by
-    rw [row_reconstruct hK r, row_reconstruct hL s, LaurentSeries.coe_mul]
+    rw [row_reconstruct hK r, row_reconstruct hL s, PowerSeries.coe_mul]
     calc
       _ = (HahnSeries.single (-(r : ℤ)) (1 : ℂ) *
           HahnSeries.single (-(s : ℤ)) (1 : ℂ)) *
@@ -153,12 +163,12 @@ private lemma chart_row_product {K L : AnnulusSeries} (hK : cone K) (hL : cone L
 private lemma chart_mul {K L : AnnulusSeries} (hK : cone K) (hL : cone L)
     (d t : ℕ) :
     chart (K * L) d t =
-      ∑ rs ∈ Finset.antidiagonal d, ∑ ij ∈ Finset.antidiagonal t,
+      ∑ rs ∈ Finset.HasAntidiagonal.antidiagonal d, ∑ ij ∈ Finset.HasAntidiagonal.antidiagonal t,
         chart K rs.1 ij.1 * chart L rs.2 ij.2 := by
   rw [chart, PowerSeries.coeff_mul, HahnSeries.coeff_sum]
   apply Finset.sum_congr rfl
   intro rs hrs
-  have hrs' : rs.1 + rs.2 = d := Finset.mem_antidiagonal.mp hrs
+  have hrs' : rs.1 + rs.2 = d := Finset.HasAntidiagonal.mem_antidiagonal.mp hrs
   simpa only [hrs'] using chart_row_product hK hL rs.1 rs.2 t
 
 /- At output [x^d a^(t-d)], the original outer degree is t. If its
@@ -292,10 +302,10 @@ private lemma sigma_one : sigma (1 : AnnulusSeries) = 1 := by
   simpa [liftScalar] using sigma_liftScalar (1 : PowerSeries ℂ)
 
 private lemma cone_two : cone (2 : AnnulusSeries) := by
-  simpa [B] using cone_B (2 : ℂ)
+  simpa only [B, map_ofNat] using cone_B (2 : ℂ)
 
 private lemma sigma_two : sigma (2 : AnnulusSeries) = 2 := by
-  simpa [B] using sigma_B (2 : ℂ)
+  simpa only [B, map_ofNat] using sigma_B (2 : ℂ)
 
 private lemma cone_X : cone X := by
   simpa [liftScalar, X] using cone_liftScalar (PowerSeries.X : PowerSeries ℂ)
@@ -315,14 +325,14 @@ private lemma cone_coe (f : PowerSeries ℂ) : cone (PowerSeries.C (f : LaurentS
   intro d k hk
   by_cases hd : d = 0
   · subst d
-    rw [PowerSeries.coeff_zero_C, LaurentSeries.coeff_coe, if_pos (by omega : k < 0)]
+    rw [PowerSeries.coeff_zero_C, PowerSeries.coeff_coe, if_pos (by omega : k < 0)]
   · rw [PowerSeries.coeff_C_of_ne_zero hd]
     simp
 
 private lemma coe_inverse (f : PowerSeries ℂ) (hf : PowerSeries.constantCoeff f ≠ 0) :
     ((f⁻¹ : PowerSeries ℂ) : LaurentSeries ℂ) = (f : LaurentSeries ℂ)⁻¹ := by
   have hm : (f : LaurentSeries ℂ) * ((f⁻¹ : PowerSeries ℂ) : LaurentSeries ℂ) = 1 := by
-    rw [← LaurentSeries.coe_mul, PowerSeries.mul_inv_cancel f hf]
+    rw [← PowerSeries.coe_mul, PowerSeries.mul_inv_cancel f hf]
     simp
   have hn : (f : LaurentSeries ℂ) ≠ 0 := by
     intro hz
@@ -342,26 +352,27 @@ private abbrev PU (b : ℂ) : AnnulusSeries := NU b * (DU b)⁻¹
 private lemma DT_unit (b : ℂ) (hb : b ≠ 0) : PowerSeries.constantCoeff (DT b) ≠ 0 := by
   let f : PowerSeries ℂ := 2 * (PowerSeries.X - PowerSeries.C b) ^ 2
   have hf : PowerSeries.constantCoeff f ≠ 0 := by
-    simpa [f] using mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0)
+    simpa [f, show (2 : PowerSeries ℂ) = PowerSeries.C (2 : ℂ) from rfl] using mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0)
       (pow_ne_zero 2 (neg_ne_zero.mpr hb))
   have he : DT b = PowerSeries.C (f : LaurentSeries ℂ) := by
-    simp [DT, f, A, B, map_mul, map_sub, map_pow,
+    simp only [DT, f, A, B, map_mul, map_sub, map_pow, map_ofNat,
       HahnSeries.ofPowerSeries_X, HahnSeries.ofPowerSeries_C]
   rw [he, PowerSeries.constantCoeff_C]
   intro hz
   have hc := congrArg (fun z : LaurentSeries ℂ => z.coeff 0) hz
   have hzero : PowerSeries.constantCoeff f = 0 := by
-    simpa only [LaurentSeries.coeff_coe_powerSeries,
-      PowerSeries.coeff_zero_eq_constantCoeff_apply, HahnSeries.coeff_zero] using hc
+    have hc0 : (f : LaurentSeries ℂ).coeff (0 : ℕ) = 0 := by simpa only [Nat.cast_zero, HahnSeries.coeff_zero] using hc
+    rw [LaurentSeries.coeff_coe_powerSeries, PowerSeries.coeff_zero_eq_constantCoeff_apply] at hc0
+    exact hc0
   exact hf hzero
 
 private lemma cone_DT_inverse (b : ℂ) (hb : b ≠ 0) : cone ((DT b)⁻¹) := by
   let f : PowerSeries ℂ := 2 * (PowerSeries.X - PowerSeries.C b) ^ 2
   have hf : PowerSeries.constantCoeff f ≠ 0 := by
-    simpa [f] using mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0)
+    simpa [f, show (2 : PowerSeries ℂ) = PowerSeries.C (2 : ℂ) from rfl] using mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0)
       (pow_ne_zero 2 (neg_ne_zero.mpr hb))
   have he : DT b = PowerSeries.C (f : LaurentSeries ℂ) := by
-    simp [DT, f, A, B, map_mul, map_sub, map_pow,
+    simp only [DT, f, A, B, map_mul, map_sub, map_pow, map_ofNat,
       HahnSeries.ofPowerSeries_X, HahnSeries.ofPowerSeries_C]
   rw [he, PowerSeries.C_inv, ← coe_inverse f hf]
   exact cone_coe f⁻¹
@@ -371,9 +382,16 @@ private lemma DU_unit (b : ℂ) (hb : b ≠ 0) : PowerSeries.constantCoeff (DU b
       HahnSeries.single 1 b := by
     rw [HahnSeries.C_apply, HahnSeries.single_mul_single]
     simp
-  simpa [DU, A, B, X, hab] using
-    mul_ne_zero (by norm_num : (2 : LaurentSeries ℂ) ≠ 0)
-      (pow_ne_zero 2 (HahnSeries.single_ne_zero hb))
+  have htwo : (2 : LaurentSeries ℂ) ≠ 0 := by
+    intro h
+    have hc := congrArg (fun f : LaurentSeries ℂ => f.coeff 0) h
+    change (HahnSeries.single 0 (2 : ℂ)).coeff 0 = (0 : LaurentSeries ℂ).coeff 0 at hc
+    norm_num at hc
+  have hne : (HahnSeries.single 1 b : LaurentSeries ℂ) ≠ 0 := HahnSeries.single_ne_zero hb
+  simp only [DU, show (2 : AnnulusSeries) = PowerSeries.C (2 : LaurentSeries ℂ) from rfl,
+    A, B, X, map_mul, map_sub, map_pow, PowerSeries.constantCoeff_C,
+    PowerSeries.constantCoeff_X, sub_zero, hab]
+  exact mul_ne_zero htwo (pow_ne_zero 2 hne)
 
 private lemma cone_NT (b : ℂ) : cone (NT b) := by
   exact cone_add
@@ -442,6 +460,7 @@ private lemma W_coeff (d : ℕ) : PowerSeries.coeff d W =
     HahnSeries.single (-(d : ℤ)) (halfBinomial d) * (halfSeries : LaurentSeries ℂ) := by
   change PowerSeries.coeff d (PowerSeries.C (HahnSeries.single 1 (1 : ℂ)) * formalOmega) = _
   rw [PowerSeries.coeff_C_mul]
+  simp only [formalOmega, PowerSeries.coeff_mk, omegaCoefficient]
   change HahnSeries.single 1 (1 : ℂ) *
     (HahnSeries.single (-(d : ℤ) - 1) (halfBinomial d) * (halfSeries : LaurentSeries ℂ)) = _
   rw [← mul_assoc, HahnSeries.single_mul_single, one_mul]
@@ -449,14 +468,14 @@ private lemma W_coeff (d : ℕ) : PowerSeries.coeff d W =
 
 private lemma cone_W : cone W := by
   intro d k hk
-  rw [W_coeff, HahnSeries.coeff_single_mul, LaurentSeries.coeff_coe,
+  rw [W_coeff, HahnSeries.coeff_single_mul, PowerSeries.coeff_coe,
     if_pos (by omega : k - -(d : ℤ) < 0), mul_zero]
 
 private lemma chart_W (d t : ℕ) : chart W d t = halfBinomial d * halfBinomial t := by
   rw [chart, W_coeff, HahnSeries.coeff_single_mul]
   have ht : ((t : ℤ) - d) - -(d : ℤ) = (t : ℤ) := by ring
   rw [ht, LaurentSeries.coeff_coe_powerSeries]
-  rfl
+  simp only [halfSeries, PowerSeries.coeff_mk]
 
 private lemma sigma_W : sigma W = W := by
   apply chart_ext (cone_sigma _) cone_W

@@ -1,3 +1,11 @@
+/- GID: D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicCoefficientIdentity
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/OriginalGaussianCubicCoefficientIdentity
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Finite polynomial class membership, residue cancellation and signed sewing combine to prove the original all-index coefficient recurrences, with no correspondence certificate as an input.. -/
+
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicKernel
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicFinitePrincipalParts
 import D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicUnsewnCurrent
