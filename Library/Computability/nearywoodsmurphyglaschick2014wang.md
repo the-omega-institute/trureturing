@@ -14,8 +14,10 @@ triage: anchor
 # Non-erasing tape simulation supply
 
 The primary version is arXiv:1304.0053v2. Pages 4–5, Definitions 3–4
-and Lemma 5, describe copying successive encoded Turing configurations
-to fresh tape. Pages 5–9, Definition 6 and Theorem 7, give the bilateral
+and Lemma 5, give an overview of copying successive encoded Turing
+configurations to fresh tape, using a head bit followed by the 10/01
+value pair. They do not list a copier transition table, a delimiter
+protocol or an executable output decoder. Pages 5–9, Definition 6 and Theorem 7, give the bilateral
 Wang B tape, instructions L, R, M, J, the 10/11 encoding, blank-pair
 extension, thirteen-instruction state blocks and at most eight B
 instructions per non-erasing Turing step. Section 3.1.3 treats halting.
@@ -24,7 +26,7 @@ intermediate supply, rather than a new universality result.
 
 M leaves an already marked cell unchanged. J jumps on one and falls
 through on zero. The tape is bi-infinite and initially blank away from
-the finite supplied encoding. The construction is effective on machine
+the finite supplied encoding. The simulation construction is effective on machine
 descriptions and input configurations; it does not supply input
 acquisition, physical pointers, a source port, a material allocator or a
 finite output connection. The time estimate counts abstract tape
@@ -35,6 +37,10 @@ an arbitrary long input fits in t cells when t is small.
 The cubic-time quotation uses the self-contained construction in this
 paper, without relying on the proof in Wang's original paper.
 No claim concerning the three-tape electromechanical device is used.
+The explicit eight-bit monotone metadata, finite block expansion,
+record handoff and decoder in ML-N are a refinement for the owned LAB
+consumer, not additional details attributed to the primary paper.
+Their cursor flags and old copies must be retained and charged.
 The LAB realization and its indexed-law application have their separate
 installation and simultaneous-resource premises in
 [Monotone LAB Indexed Execution](../../docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MONOTONE_LAB_INDEXED_EXECUTION.md).

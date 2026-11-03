@@ -275,6 +275,8 @@ $\alpha,\beta,\mathsf b,\bot$. Masks use exactly $15N$ indicator
 bits in original sample/coordinate order, followed by the acquired
 values of the selected coordinates in that same order. A cylinder
 uses the same form; an explicit conflict flag denotes an empty event.
+A cylinder starts with one conflict bit: one is the empty event with
+no following mask, while zero is followed by the entire mask/value word.
 This permits every within-slot mask, an empty mask, and null proposed
 conjunctions. Lists have their stated lengths; no omitted trailing
 zeros are inferred.
@@ -438,45 +440,134 @@ Every operation described in ML-T is a finite bit scan or a loop on
 a decreasing finite positive integer. In particular Euclid cannot
 diverge and no denominator in (ML.7) vanishes, since the partition
 caps were tested. This proves termination of the tape computation.
-NWMG's successive-configuration copying and its 10/11 compiler
-effectively give a finite B program, a finite computable input encoding
-and a decoder of each simulated configuration. The last complete copy
-is selected by the copying simulation's active configuration and head
-convention. In the copier choose finite boundary/length delimiters as
-part of its encoded configuration records; these are written on the
-fresh copy, not supplied by an extra readout primitive. The copy loop
-already scans the entire finite old configuration; it copies this
-metadata, writes the new length and places its head at the selected
-new block. This finite bookkeeping preserves the usual copying
-simulation and makes that block's bounds readable. Decode the B
-10/11 pairs to that non-erasing configuration and scan its selected
-block's triples and ML-T's output delimiters. This recovers precisely
-the framed output. These are finite scans of the
-actual halted tape, using owned buffers, not a return-value oracle.
-The input conversion and these scans are themselves charged bit
-algorithms. Theorems 2.3 and 3.3–3.4 realize the resulting B run and
+Use NWMG's supplied simulation with the explicit monotone metadata
+convention of Definition 4.6. At a simulated instruction boundary the
+selected record has one head triple and precisely the old finite window.
+The rule is selected by that triple and the finite simulated state.
+Marking its neighbor, or the corresponding new guard, selects exactly
+the next head. A consumed flag changes only the copying cursor, never
+the old head/value triple. Hence, when a triple is copied, its value
+is the old value except at the unique old head, where the rule's write
+value is used. The new-head flag supplies exactly the selected new head.
+The two blank guards extend the window by one on each side. Induction
+over its consumed prefix proves that every copied triple has the
+required successor value and head flag. After the right guard and end
+are complete, the active/retired handoff establishes the same invariant
+for the next simulated instruction. During the handoff the finite phase
+identifies which record is old and which is intended; there is no
+assertion of a unique active record at an unfinished cut.
+
+Each shuttle is a scan over the two finite adjacent records. Each
+iteration consumes one old triple, so it terminates; every written bit
+is zero-to-one or an unchanged one. The block operations expand to
+ordinary binary non-erasing transitions as specified below. NWMG's
+thirteen-instruction state blocks then give the B program without
+changing their transition correspondence. These facts prove forward
+simulation and the completed-copy converse, rather than merely an
+existence of unspecified output delimiters. At halt the selected record
+is the actual returned header. Decode the B 10/11 symbol pairs, then
+its data head/value triples, and finally ML-T's output delimiters.
+The only value of each output bit is the value in this actual copied
+tape; a table of arithmetic answers supplies none of it. Both input
+conversion and these decoding scans have finite readable backing and
+are charged independently of the arithmetic tape steps.
+Theorems 2.3 and 3.3–3.4 realize the resulting B run and
 its actual finite tape. ML-F then gives Print, acknowledgement and
 Return. At zero evidence the only conditional answer is the explicit
 NullEvidence tag. $\square$
 
-**Definition 4.6 (selected lowering ML-N).** Let $W_U$ denote the
-finite B program obtained from ML-T with the NWMG copying construction
-of §2 and the thirteen-instruction state blocks of §3.1, using its
-10/11 non-erasing-symbol encoding and terminal M. The finite copier
-metadata convention is the one in the preceding proof. Use the
-enumeration order of ML-A, low-bit-first integers and finite record
-scans of ML-T; within the copying/transition construction use the
-state order of that finite machine description. This fixes an
-effective finite-code construction, whose choices of state names
-have no mathematical effect. Its initial B word is the compiler's
-finite encoding of the actually received ML-A word, with its head
-at the compiler's first encoded symbol. The instruction realization
-ML-B starts at cell 0 of that encoded input. $W_U$ is installed
-from public algorithms alone and works for all represented $N$ and
-data; it is not reselected after observing a hidden source. Its
-finite construction, input conversion and encoded-output decoding
-are distinct paid phases. No arbitrary adaptive/oracle-controller
-compiler is included in ML-N or needed by the session handlers.
+**Definition 4.6 (selected lowering ML-N).** First fix the finite
+binary erasing machine of ML-T, with states $0,\ldots,k$, start zero
+and sole halt $k$. Its transition row for each nonhalted state has
+the two ordinary read-zero/read-one rules. A finite window initially
+contains the supplied word, or one zero square for the empty word;
+its first square represents coordinate zero. The block copier below
+retains NWMG's head/value triple and supplies explicit monotone
+navigation metadata. This metadata is part of the chosen owned
+construction, not an additional theorem or transition table quoted
+from the paper.
+
+Partition the binary non-erasing tape into eight-bit blocks. Number
+bits zero through seven. Bits 0, 1 and 2 are respectively the header,
+data and end type bits; a completed block has exactly one type bit.
+An unused block has all bits zero. The remaining used fields are:
+
+| Block | Used fields |
+| --- | --- |
+| Header | bit 3 active, bit 4 retired, bit 5 the next left-guard head |
+| Data | bit 3 old head, bits 4–5 value zero/one as 10/01, bit 6 consumed, bit 7 next head |
+| End | bit 3 the next right-guard head |
+
+The initial word is one active, unretired header, one data block per
+initial square, and one end block. Exactly the first data head flag
+is one. All consumed, next-head and guard flags are zero. The
+non-erasing head starts at the header. Its finite state contains the
+simulated state. At a completed simulated step, the head again rests
+at the selected active header, with that step's next simulated state.
+
+For a nonhalted state use the following fixed finite block protocol.
+Scan right to the unique data head and inspect its value pair to
+select the transition rule. The rule's write bit, direction and next
+state are retained in finite control. Move one block in its direction.
+At a data neighbor set next-head bit 7; at the header or end neighbor
+set its designated new-guard head bit. Return left to the old header,
+read its guard flag, find its end, and begin the fresh record immediately
+after that end. Write the new header with active and retired both zero,
+then a zero-valued left guard with the head flag just obtained.
+
+From the fresh frontier shuttle left to the old active, unretired
+header, passing the new inactive header. Scan right past the consumed
+prefix. If the next block is data, read its next-head flag and its
+value, substituting the rule's write value exactly when its old-head
+flag is one. Set its consumed bit and carry these two bits in finite
+control. Scan right to the first unused block, passing both old and
+new blocks. Append the corresponding data block there and repeat.
+If the scan reaches the old end, copy its guard flag to a fresh
+zero-valued right guard, append a new end, and finish copying.
+
+For handoff, scan left to the new header and set its active bit;
+scan left to the old header and set its retired bit; return right
+to the new header and enter the next simulated state. No next simulated
+step is enabled until this handoff completes. Old head/value triples,
+records and metadata are retained. A halt state performs no copying.
+The protocol uses no reference arithmetic, record-length oracle,
+mutable unbounded finite-control label or tape erasure.
+
+Each block operation has an explicit binary expansion. To inspect bit
+$j$, move $j$ squares right, branch on the bit while preserving it,
+move one square right, and return $j+1$ squares left with the branch
+in finite control. To set bit $j$, use the same route and write one.
+To move one block, take eight ordinary moves. Tests of the three type
+bits and the active/retired flags form the finite scans above. Thus
+this is a finite transition-graph construction from the erasing table,
+with only the six permitted non-erasing rule forms. All state names
+are finite tuples of the simulated state/rule, block phase and bounded
+bit offset. Their enumeration fixes an ordinary finite binary table.
+
+After $s$ completed copies, an initial window of $m\ge1$ squares
+has active coordinates $[-s,m+s-1]$. There are $s+1$ records, with
+$(s+1)(m+s)$ data blocks and $2(s+1)$ header/end blocks in total,
+hence $8(s+1)(m+s+2)$ retained binary squares in these records.
+Counting retired headers before the returned active header determines
+$s$ and hence the coordinate offset. Reading its data through its
+own end determines the represented tape and unique head, without
+choosing a record by an external answer or unrepresented length.
+These are mathematical decoding scans; their actual buffers, counters,
+cursors and intermediate storage remain charged by ML-Cost. Each copy
+uses $O((m+s+1)^2)$ binary moves, so $s$ simulated instructions use
+$O(s(m+s+1)^2)$ moves, retaining the initial input length. This is
+consistent with, and does not strengthen, the supplied cubic quotation.
+
+Apply NWMG's unchanged thirteen-instruction construction and 10/11
+symbol encoding to this non-erasing table, with its terminal M. The
+result is $W_U$. The B head initially stands at the first encoded
+header bit, at coordinate zero. The source halt returns at a header
+whose first bit is already one; the terminal M therefore changes no
+encoded value. ML-L loads the actual finite encoded input and ML-B
+executes the result. The finite code depends only on ML-T, including
+its input/output grammar; it is not reselected for $N$, masks, the
+original source or acquired replies. No arbitrary adaptive/oracle
+controller compiler is included or needed by the session handlers.
 
 ## 5. Authentic continuation at the unchanged original port
 
@@ -800,7 +891,11 @@ c_W(1+m+s+C+b_1+D_{\rm route}).
 $$
 
 For multiple jobs sum these exact persistent coordinates over their
-retained distinct roots, retaining all their routing storage. Add the
+retained distinct roots, retaining all their routing storage. Each
+root census includes only its own source vertices and routing objects;
+each job's instruction/maintenance counts refer to that job, even when
+other jobs are subsequently installed in the same arena. An arena-wide
+cumulative counter is not a root-specific census. Add the
 actual buffer/record/counter scans, code installation and conversion,
 I/O, grants, acknowledgements and cleanup of those same runs.
 Neither $s$ nor the rational-arithmetic count $\mathcal W(N)$ is
@@ -1221,7 +1316,8 @@ dependencies used above have the following domains.
 | `NativeSerialEffective.original_code_service_simulation` | Its supplied effective selector and terminating OriginalRun preserve external Reads/observations after erasing local evaluator steps. It neither lowers P/S nor pays all local work; no such implication is borrowed here. |
 | `NativeControlConjugacy.native_control_conjugacy` | Reindexing an already supplied controller preserves its specified action/trace coordinates. It does not charge arithmetic erased as localStep; ML-Cost separately counts it. |
 | PG43.1 and AA21.2 | Source-respecting annotated recovery with legality and actual successor factorization gives task sufficiency. No converse kernel equality without no-redundancy is inferred. |
-| NWMG, primary pp. 4–9 | Effective finite TM-to-non-erasing-to-B simulation, repeat M, bilateral motion, fixed instruction jumps and decodable configurations. Its abstract tape-time bound is not a LAB resource vector or an original-source port implementation. |
+| NWMG, primary pp. 4–9 | Effective finite TM-to-non-erasing-to-B simulation, repeat M, bilateral motion and fixed instruction jumps. Definition 4.6 supplies the explicit monotone metadata/handoff and finite decoder; these details are not a transition table supplied by the paper. Its abstract tape-time bound is not a LAB resource vector or an original-source port implementation. |
+| C118 §§140–149 at `86172888e706177b6c1d135cb12aec3b6d2cdce8` | Its fixed finite octahedral menu and calibration/positive-floor hypotheses do not supply ML-I or the C117 native frontend. Its control-factor count is not a total material or runtime tariff. |
 | C117 at the fixed published object, §§4, 9, 14 | Conditional complete-record and directed-window reconstruction remains within its quantum/algebraic assumptions. No C117 quantum frontend follows from the classical execution construction. |
 
 **Definition 9.2 (proof and physical domains).** The mathematical
