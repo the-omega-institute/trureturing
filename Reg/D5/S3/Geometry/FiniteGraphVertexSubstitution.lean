@@ -228,7 +228,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Geometry.FiniteGraphVertexSubstitution
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5, 6, 8]
+    coordinates := #[0, 1, 6]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 7
@@ -333,7 +333,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Geometry.FiniteGraphVertexSubstitution
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5, 6, 8]
+    coordinates := #[0, 1, 6]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 7
@@ -438,7 +438,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Geometry.FiniteGraphVertexSubstitution
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5, 6]
+    coordinates := #[0, 1, 6]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 7
@@ -456,19 +456,13 @@ end Reg.D5.S3.Geometry.FiniteGraphVertexSubstitution.SumPush
 namespace Reg.D5.S3.Geometry.FiniteGraphVertexSubstitution.Unrestricted
 universe u
 
-structure Parameters where
-  U : Type u
-  decidableSource : DecidableEq U
-
-attribute [instance] Parameters.decidableSource
-
 abbrev signature : Signature where
-  Params := Parameters.{u}
-  State p := SimpleGraph p.U
+  Params := Type u
+  State p := SimpleGraph p
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := PreAbstractSimplicialComplex p.U
+  Output _ p := PreAbstractSimplicialComplex p
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -481,13 +475,12 @@ def rejected : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {U : Type u} [du : DecidableEq U] (G : SimpleGraph U),
-    R.readout () ⟨U, du⟩ G = (independenceComplex G).toPreAbstractSimplicialComplex
+    R.readout () U G = (independenceComplex G).toPreAbstractSimplicialComplex
 
 private theorem bridge : (type_of% (@unrestricted.{u})) ↔ arena.{u}.Law actual := by
   constructor <;> intro h U du G <;> exact @h U du G
 
-private abbrev testParameters : Parameters.{u} :=
-  ⟨ULift.{u} Bool, inferInstance⟩
+private abbrev testParameters := ULift.{u} Bool
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -502,19 +495,19 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   refine ⟨testParameters.{u}, ⊥, ⊤, ?_⟩
   intro h
-  change restricted (⊥ : SimpleGraph testParameters.{u}.U) (fun _ => True) =
-    restricted (⊤ : SimpleGraph testParameters.{u}.U) (fun _ => True) at h
-  have hs : ({⟨false⟩, ⟨true⟩} : Finset testParameters.{u}.U) ∈
-      restricted (⊥ : SimpleGraph testParameters.{u}.U) (fun _ => True) := by
+  change restricted (⊥ : SimpleGraph testParameters.{u}) (fun _ => True) =
+    restricted (⊤ : SimpleGraph testParameters.{u}) (fun _ => True) at h
+  have hs : ({⟨false⟩, ⟨true⟩} : Finset testParameters.{u}) ∈
+      restricted (⊥ : SimpleGraph testParameters.{u}) (fun _ => True) := by
     refine ⟨Finset.insert_nonempty _ _, ?_, fun _ _ => trivial⟩
     intro a ha b hb hab
     simp
   rw [h] at hs
-  have hbad := hs.2.1 (show (⟨false⟩ : testParameters.{u}.U) ∈
-    ({⟨false⟩, ⟨true⟩} : Finset testParameters.{u}.U) by simp)
-    (show (⟨true⟩ : testParameters.{u}.U) ∈
-    ({⟨false⟩, ⟨true⟩} : Finset testParameters.{u}.U) by simp)
-    (show (⟨false⟩ : testParameters.{u}.U) ≠ ⟨true⟩ by decide)
+  have hbad := hs.2.1 (show (⟨false⟩ : testParameters.{u}) ∈
+    ({⟨false⟩, ⟨true⟩} : Finset testParameters.{u}) by simp)
+    (show (⟨true⟩ : testParameters.{u}) ∈
+    ({⟨false⟩, ⟨true⟩} : Finset testParameters.{u}) by simp)
+    (show (⟨false⟩ : testParameters.{u}) ≠ ⟨true⟩ by decide)
   exact hbad (by simp)
 
 def family : Registration arena.{u} (type_of% (@unrestricted.{u})) where
@@ -548,7 +541,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Geometry.FiniteGraphVertexSubstitution
     definition := none
-    coordinates := #[0, 1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg"],
       stateBinder := 2
@@ -675,7 +668,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Geometry.FiniteGraphVertexSubstitution
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5, 6]
+    coordinates := #[0, 1, 4, 5, 6]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
       "body", "body", "fn", "arg"],

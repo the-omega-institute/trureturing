@@ -104,7 +104,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Geometry.FiniteGraphIndependenceReduction
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5]
+    coordinates := #[0, 3, 4, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "fn"]
@@ -226,7 +226,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Geometry.FiniteGraphIndependenceReduction
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5, 6, 7]
+    coordinates := #[0, 3, 4, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 8
