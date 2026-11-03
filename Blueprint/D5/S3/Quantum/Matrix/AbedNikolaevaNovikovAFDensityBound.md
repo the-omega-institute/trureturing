@@ -66,6 +66,10 @@ $$(\forall n: \mathbb{N}, (1 \le n \Rightarrow (\exists C: \mathbb{R}, (0 \le C 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/abed-nikolaeva-novikov-2026-af-density-bound` (proved) by `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"abed-nikolaeva-novikov-2026-af-density-bound","declaration_gid":"D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sami Abdullah Abed; Irina Nikolaeva; Andrej Novikov (2026). *How characterisations of traces and central elements fail: sharp violation constants via Michelson contrast and noncentrality*. DOI: [10.48550/arXiv.2610.34388](https://doi.org/10.48550/arXiv.2610.34388). URL: <https://arxiv.org/abs/2610.34388v1>.
