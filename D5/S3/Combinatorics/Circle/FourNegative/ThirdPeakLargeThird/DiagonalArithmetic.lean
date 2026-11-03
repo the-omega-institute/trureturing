@@ -59,7 +59,10 @@ private theorem payment_remainder (x p : ℤ) (hx : 4≤x) (hp : 1≤p) :
     rw [he]; positivity
   have hcoef : 0<bb-2*x-1 := by omega
   have hmul := mul_nonneg (show 0≤p-1 by omega) hcoef.le
-  have hn : -bb<num := by dsimp [num]; have hh : 0<2*p*(2*x+1) := by positivity; omega
+  have hn : -bb<num := by
+    have hh : 0<2*p*(2*x+1) := by positivity
+    dsimp [num]
+    omega
   have hupper : num≤(p-1)*(2*bb) := by dsimp [num]; nlinarith only [hc,hmul]
   have qb := ceil_bounds num (2*bb) (by omega)
   have qcap := ceil_le num (2*bb) (p-1) (by omega) hupper
@@ -67,6 +70,7 @@ private theorem payment_remainder (x p : ℤ) (hx : 4≤x) (hp : 1≤p) :
     by_contra hnq
     have hm := mul_le_mul_of_nonneg_right (show ceilDiv num (2*bb)≤-1 by omega) (show 0≤2*bb by omega)
     nlinarith only [hm,qb.2,hn,hb]
+  change 0≤ceilDiv num (2*bb) ∧ ceilDiv num (2*bb)<p
   exact ⟨qnon,by omega⟩
 
 private theorem payment_decomposition (x z p : ℤ)
@@ -122,7 +126,9 @@ private theorem diagonal_windows (x z p : ℤ)
     dsimp [SU,SV,SW,B,L,K,H,A,EP]; ring
   have hcube : 0<x^3 := by positivity
   have hc0 : 2*x^3+2*x≤4*x^3 := by
-    have hh : 0≤x*(x-1)*(x+1) := by have hx1 : 0≤x-1 := by omega; positivity
+    have hh : 0≤x*(x-1)*(x+1) := by
+      have hx1 : 0≤x-1 := by omega
+      positivity
     nlinarith only [hh]
   have hk : 2*z≤K x z (2*x)-1 := by
     have he : K x z (2*x)-1-2*z=x+(x-2)*z+2*x^2*z := by dsimp [K]; ring
@@ -131,7 +137,8 @@ private theorem diagonal_windows (x z p : ℤ)
     omega
   have oldwin : 0≤E ∧ E≤K x z (2*x)-1 := by
     rcases hbranch with ⟨hp0,hsmall⟩|⟨hp1,hlarge⟩
-    · dsimp [E]; rw [hp0]; simp only [zero_mul,add_zero]
+    · dsimp only [E]
+      simp only [hp0,zero_mul,add_zero]
       have hzbound : 4*x^3≤2*x^2*z := by
         have hmul := mul_nonneg (show 0≤z-16*x by omega) (show 0≤x^2 by positivity)
         nlinarith only [hmul,hcube]
@@ -150,7 +157,7 @@ private theorem diagonal_windows (x z p : ℤ)
       constructor <;> nlinarith only [hlo,hhi,hlarge,hbase,hc0,hk,hz0,hx,hcube]
   have hpay : 4*p*x^3≤z := by
     rcases hbranch with ⟨rfl,hs⟩|⟨hp1,he⟩
-    · positivity
+    · simpa only [zero_mul] using hz0.le
     · omega
   have hpSU := mul_le_mul_of_nonneg_left est.2.2.1 (show 0≤2*p by omega)
   have hpaid : 2*p*SU x x (2*x)≤3*z := by nlinarith only [hpSU,hpay]

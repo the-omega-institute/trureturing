@@ -67,7 +67,7 @@ private theorem inventory (a b c d v p : ℕ) (strict : Bool)
   simp only [←Multiset.coe_add,Multiset.coe_singleton]
   rw [←outer,←inner]
   cases strict <;> dsimp [word,packets,blocksWord,banks,order,terminals]
-  all_goals simp only [←Multiset.coe_add,Multiset.coe_singleton]
+  all_goals simp only [←Multiset.coe_add,Multiset.coe_singleton,Multiset.coe_cons,Multiset.coe_nil]
   all_goals ac_rfl
 
 private theorem banks_good (a b c d v p : ℕ) (strict : Bool)

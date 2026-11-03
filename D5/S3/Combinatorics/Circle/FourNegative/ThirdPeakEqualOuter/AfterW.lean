@@ -15,7 +15,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private A B L K SU SV SW Window AfterWWindows
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.Arithmetic
-open private F G nextF nextG bases positive_rows terminal_rows stock_nonnegative
+open private F G nextF nextG bases positive_rows terminal_rows native_rows stock_nonnegative
   four_windows_strip Joint realize_split
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.Source
 open private size sourceMod base chainLength chainStart oldValue newValue chain_values
@@ -79,8 +79,8 @@ private theorem afterW_masses (a b c r v : ℕ)
   have vc := complement_mass a b c a 1 (v-1) hvu f H hf
   have wf := stock_mass a b c a 2 _ (hfull 2) f H hf
   have xf := stock_mass a b c a 3 _ (hfull 3) f H hf
-  dsimp only [afterWBanks]
-  simp only [List.map_append,List.sum_append,ur,uc,vr,vc,wf,xf,
+  dsimp only
+  simp only [afterWBanks,List.map_append,List.sum_append,ur,uc,vr,vc,wf,xf,
     Nat.cast_sub hr,Nat.cast_sub hv,Nat.cast_one]
   exact ⟨rfl,rfl,rfl,rfl⟩
 
@@ -112,18 +112,11 @@ private theorem afterW_realize (a b c r v : ℕ)
     ((P 1).map g).sum=C 2*SV x z+((r:ℤ)-1)*(2*A x y z) ∧
     ((P 2).map g).sum=C 3*SW x y z ∧
     ((P 3).map g).sum=(C 0-((r:ℤ)-1))*(2*A x y z)+((v:ℤ)-1)*SU x y at mn
-  have nu := terminal_rows a b c ha hb hc 0
-  have nv := terminal_rows a b c ha hb hc 1
-  have nw := terminal_rows a b c ha hb hc 2
-  have nx := terminal_rows a b c ha hb hc 3
-  have massfull (j : Fin 4) := stock_mass a b c a j (full a b c a j)
-    (by dsimp [full]; have := Nat.two_pow_pos (chainLength a b c a j-1); omega)
-  have hfo := (positive_rows a b c ha hb hc).1
-  have hgn := (positive_rows a b c ha hb hc).2
-  simp only [massfull 0 f (F x y z) hfo,massfull 1 f (F x y z) hfo,
-    massfull 2 f (F x y z) hfo,massfull 3 f (F x y z) hfo,
-    massfull 0 g (G x y z) hgn,massfull 1 g (G x y z) hgn,
-    massfull 2 g (G x y z) hgn,massfull 3 g (G x y z) hgn] at nu nv nw nx
+  have nu := native_rows a b c ha hb hc 0
+  have nv := native_rows a b c ha hb hc 1
+  have nw := native_rows a b c ha hb hc 2
+  have nx := native_rows a b c ha hb hc 3
+  dsimp only [F,G,nextF,nextG,terminals] at nu nv nw nx
   change C 0*A x y z+f (a-1)=B x y-A x y z ∧
     C 0*(2*A x y z)+g (a-1)=SU x y-2*A x y z ∧
     2*f (a-1)=B x y-N ∧ 2*g (a-1)=SU x y-(2*N+1) at nu

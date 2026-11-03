@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/Endpoint
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/Endpoint
+   mirror-B: none(waiver:physical-source-family-registration)
    mirror-E: none(waiver:physical-source-family-registration)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
