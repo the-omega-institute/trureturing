@@ -2826,7 +2826,9 @@ $$
 \tag{30.1}
 $$
 
-它秩二，$\rho_M=I_M/4$，所以 $M_0=M$。取四个单位向量
+它秩二，$\rho_M=I_M/4$，所以 $M_0=M$。每个所用 $p$ 的原准备仪器完整取为 $\{\operatorname{Ad}_p\otimes\operatorname{id}_M,\operatorname{Ad}_{I_H-p}\otimes\operatorname{id}_M\}$，两个原记录及输出均保留；两支 CP，且总效果为单位。准备成功后接同一份下述被调用仪器，准备失败保留原失败输出。
+
+取四个单位向量
 
 $$
 z_1=|0\rangle,\qquad
@@ -2893,7 +2895,7 @@ $$
 \tag{30.7}
 $$
 
-对 $z=(z_0,z_1)$，原准备满足
+本模型的原准备仪器同样完整取为 $\{\operatorname{Ad}_p\otimes\operatorname{id}_M,\operatorname{Ad}_{I_H-p}\otimes\operatorname{id}_M\}$，保留两个原记录及其完整输出。对 $z=(z_0,z_1)$，原准备满足
 
 $$
 \sigma_p=\tfrac12\operatorname{diag}(|z_0|^2,|z_1|^2),
