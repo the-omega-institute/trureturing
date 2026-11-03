@@ -9,6 +9,8 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Tactic
 
+/-! Integer-exponent difference equations and normalized equal sums for a plastic root. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -49,7 +51,8 @@ theorem difference_eq_one_iff (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
     have huv : v < u := hm.lt_iff_lt.1 (by linarith)
     by_cases hv : v < 0
     · have hvone : r ^ v < 1 := zpow_lt_one_of_neg₀ hr hv
-      have hu3 : u < 3 := hm.lt_iff_lt.1 (by linarith)
+      have hu3 : u < 3 := hm.lt_iff_lt.1
+        (lt_trans (show r ^ u < 2 by linarith) hs3)
       have hu : u = 1 ∨ u = 2 := by omega
       rcases hu with rfl | rfl
       · left
@@ -64,9 +67,9 @@ theorem difference_eq_one_iff (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
         rw [zpow_sub₀ hr0, zpow_neg]
         field_simp
         nlinarith
-      have hgap3 : u - v < 3 := hm.lt_iff_lt.1 (by
+      have hgap3 : u - v < 3 := hm.lt_iff_lt.1 (show r ^ (u - v) < r ^ (3 : ℤ) from by
         have hinv : r ^ (-v) ≤ 1 := zpow_le_one_of_nonpos₀ (le_of_lt hr) (by omega)
-        linarith)
+        exact lt_of_le_of_lt (show r ^ (u - v) ≤ 2 by linarith) hs3)
       have hgap12 : u - v = 1 ∨ u - v = 2 := by omega
       rcases hgap12 with hg | hg
       · rw [hg, hs1] at hgap
@@ -84,5 +87,63 @@ theorem difference_eq_one_iff (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
       linarith
     · norm_num only [zpow_ofNat]
       linear_combination (r ^ 2 - r + 1) * hroot
+
+/-- All nontrivial normalized equal sums, with the diagonal inner pair retained. -/
+theorem normalized_collision_iff (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
+    (d a b : ℤ) (ha : 1 ≤ a) (hab : a ≤ b) (hbd : b < d) :
+    1 + r ^ d = r ^ a + r ^ b ↔
+      (d = 4 ∧ a = 2 ∧ b = 3) ∨ (d = 6 ∧ a = 3 ∧ b = 5) ∨
+      (d = 7 ∧ a = 5 ∧ b = 5) ∨ (d = 9 ∧ a = 5 ∧ b = 8) := by
+  have hrpos : 0 < r := by linarith
+  have hr0 : r ≠ 0 := ne_of_gt hrpos
+  have hm := zpow_right_strictMono₀ hr
+  obtain ⟨hs1, hs2, hs3⟩ := step_identities r hr hroot
+  constructor
+  · intro h
+    have hgap : r ^ (d - b) = 1 + r ^ (a - b) - r ^ (-b) := by
+      rw [zpow_sub₀ hr0, zpow_sub₀ hr0, zpow_neg]
+      field_simp
+      nlinarith
+    have hslt : d - b < 3 := hm.lt_iff_lt.1
+      (show r ^ (d - b) < r ^ (3 : ℤ) from by
+        have hab1 : r ^ (a - b) ≤ 1 :=
+          zpow_le_one_of_nonpos₀ (le_of_lt hr) (by omega)
+        have hbinv : 0 < r ^ (-b) := zpow_pos hrpos _
+        exact lt_trans (show r ^ (d - b) < 2 by linarith) hs3)
+    have hs : d - b = 1 ∨ d - b = 2 := by omega
+    rcases hs with hs | hs
+    · have hd : d = b + 1 := by omega
+      have hshift : r ^ (b - 4) = r ^ b * (r ^ (1 : ℤ) - 1) := by
+        rw [show b - 4 = b + (-4) by omega, zpow_add₀ hr0, ← hs1]
+      have hdiff : r ^ a - r ^ (b - 4) = 1 := by
+        rw [hd, zpow_add₀ hr0] at h
+        rw [hshift]
+        nlinarith
+      have hc := (difference_eq_one_iff r hr hroot a (b - 4)).1 hdiff
+      rcases hc with ⟨ha', hb'⟩ | ⟨ha', hb'⟩ | ⟨ha', hb'⟩ | ⟨ha', hb'⟩
+      · omega
+      · left; exact ⟨by omega, ha', by omega⟩
+      · right; left; exact ⟨by omega, ha', by omega⟩
+      · right; right; right; exact ⟨by omega, ha', by omega⟩
+    · have hd : d = b + 2 := by omega
+      have hshift : r ^ (b - 1) = r ^ b * (r ^ (2 : ℤ) - 1) := by
+        rw [show b - 1 = b + (-1) by omega, zpow_add₀ hr0, ← hs2]
+      have hdiff : r ^ a - r ^ (b - 1) = 1 := by
+        rw [hd, zpow_add₀ hr0] at h
+        rw [hshift]
+        nlinarith
+      have hc := (difference_eq_one_iff r hr hroot a (b - 1)).1 hdiff
+      rcases hc with ⟨ha', hb'⟩ | ⟨ha', hb'⟩ | ⟨ha', hb'⟩ | ⟨ha', hb'⟩
+      · omega
+      · omega
+      · omega
+      · right; right; left; exact ⟨by omega, ha', by omega⟩
+  · rintro (⟨rfl, rfl, rfl⟩ | ⟨rfl, rfl, rfl⟩ |
+      ⟨rfl, rfl, rfl⟩ | ⟨rfl, rfl, rfl⟩) <;> norm_num only [zpow_ofNat]
+    · linear_combination (r - 1) * hroot
+    · linear_combination (r ^ 3 - r ^ 2 + r - 1) * hroot
+    · linear_combination (r ^ 4 - r ^ 2 + r - 1) * hroot
+    · linear_combination
+        (r ^ 6 - r ^ 5 + r ^ 4 - r ^ 3 - r ^ 2 + r - 1) * hroot
 
 end D5.S3.Arith.Additive.PlasticPowerCollisions
