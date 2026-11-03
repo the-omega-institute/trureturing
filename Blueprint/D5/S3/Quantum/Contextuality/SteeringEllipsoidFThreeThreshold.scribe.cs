@@ -59,7 +59,7 @@ internal sealed class SteeringEllipsoidFThreeThresholdDocument : IScribeDocument
         "β" => Beta,
         _ => F.Id(name),
     };
-    private static Formula Parenthesized(Formula value) => new Formula.LatexSequence([Open, value, Close]);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Qualified(params string[] parts)
     {

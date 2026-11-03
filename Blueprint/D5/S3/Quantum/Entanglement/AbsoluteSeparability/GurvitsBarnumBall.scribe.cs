@@ -72,7 +72,7 @@ internal sealed class GurvitsBarnumBallDocument : IScribeDocumentDefinition
                 H("Projection ray"), StatementSource.FromAuthor(Disp(Projection())),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For a Hermitian idempotent Q of real trace ell at least one, the matrix is PSD: it is the sum of ell minus one times the identity and twice the complement of Q. Its squared distance from ell plus one times the identity is 4 ell, which is at most the square of ell plus one. The real trace parameter includes integer ranks by coercion. This supplies the complementary high-rank rays in a spectral decomposition."))), DescribeRole.Theorem))));
 
-    private static Formula Parenthesized(Formula value) => new Formula.LatexSequence([Open, value, Close]);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula QualifiedCall(string owner, string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(owner)), Dot,

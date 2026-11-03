@@ -107,7 +107,7 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(Text(prose))), role);
 
-    private static Formula Parenthesized(Formula value) => new Formula.LatexSequence([Open, value, Close]);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula Qualified(params string[] parts)
     {
