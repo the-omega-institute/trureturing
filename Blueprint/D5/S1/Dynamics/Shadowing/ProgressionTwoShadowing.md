@@ -4,7 +4,7 @@
 
 The same two genuine infinite configurations trace every natural-time pseudo-orbit, with small initial diameter.
 
-Put ell(p)=p^2+3. The hereditary carrier forbids every all-one progression of that length and positive difference p. Given epsilon>0 choose R>=1 with 2^(-(R+1))<epsilon, then M=32(R+1), alpha=sqrt(2)/M, P=256 M(M+3), D=max(R,P^3+2P) and delta=2^(-D). These parameters are fixed before the arbitrary infinite natural-time pseudo-orbit z. The source construction is the completed Pro arithmetic-progression proposal for Meddaugh--Stephens Question 5.6, independently approved as ordinary mathematics. The Lean implementation and its native evidence are distinct from that ordinary review; no novelty or priority assertion is inherited.
+Put ell(p)=p^2+3. The hereditary carrier forbids every all-one progression of that length and positive difference p. Given epsilon>0 choose R>=1 with 2^(-(R+1))<epsilon, then M=32(R+1), alpha=sqrt(2)/M, P=256 M(M+3), D=max(R,P^3+2P) and delta=2^(-D). These parameters are fixed before the arbitrary infinite natural-time pseudo-orbit z. The arithmetic-progression construction and explicit constants for Meddaugh--Stephens Question 5.6 are attributed to Pro.
 
 Read c(n)=z(n)(0). Strict first-disagreement errors force edge equality through D. The existing MetricTracing.diagonal_splice_overlap gives c(i+j)=z(i)(j) for all i and j<=D+1. For 1<=p<=P, the span p(p^2+2)<=P^3+2P fits in that overlap, so c satisfies every such progression constraint at every starting coordinate. The proof does not assume c itself is in the carrier.
 

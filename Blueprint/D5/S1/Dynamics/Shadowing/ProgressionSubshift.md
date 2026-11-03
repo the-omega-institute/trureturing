@@ -4,7 +4,7 @@
 
 Compact hereditary one-sided progression subshifts, zero-gap mixing and a nonempty periodic-set obstruction.
 
-The alphabet is the existing binary ReturnBit={0,1}. A configuration x is ProgressionLegal(ell,x) when, for every natural start s and every positive natural difference p, some j<ell(p) has x(s+jp)=0. Mathlib PiNat.metricSpaceOfDiscreteUniformity supplies exactly the first-disagreement metric d(x,y)=2^(-firstDiff(x,y)), with zero distance on equal points, and the actual product topology and uniformity. The construction and its use for Meddaugh--Stephens Question 5.6 are attributed to the supplied complete Pro arithmetic-progression proposal; the proofs here are native Lean implementations. These are repository-derived mathematical proofs; no literature priority claim is attached.
+The alphabet is the existing binary ReturnBit={0,1}. A configuration x is ProgressionLegal(ell,x) when, for every natural start s and every positive natural difference p, some j<ell(p) has x(s+jp)=0. Mathlib PiNat.metricSpaceOfDiscreteUniformity supplies exactly the first-disagreement metric d(x,y)=2^(-firstDiff(x,y)), with zero distance on equal points, and the actual product topology and uniformity. The arithmetic-progression construction and its use for Meddaugh--Stephens Question 5.6 are attributed to Pro.
 
 **Theorem 1.1 (Closedness of all progression constraints).**
 

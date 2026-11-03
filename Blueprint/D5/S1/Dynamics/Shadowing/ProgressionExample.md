@@ -6,7 +6,7 @@ A weakly mixing compact metric system with neighborhood two-shadowing and withou
 
 Jonathan Meddaugh and Elyssa Stephens, Shadowing with small diameter sets of bounded cardinality, arXiv:2509.04312v1, Question 5.6 asks: Is there a weakly mixing system which has the neighborhood N-shadowing property (N>1) that does not have dense small periodic sets? Use the intended nonempty meaning of a small periodic set. The printed definition omits nonemptiness; allowing the empty set would trivialize it. The phase space is X={x in {0,1}^N : for every s>=0,p>=1 some j<=p^2+2 has x(s+jp)=0}, with the genuine first-disagreement metric, and the one-sided left shift sigma. No homeomorphism hypothesis is imposed by the source's compact metric system definition.
 
-The construction, constants and rotation deletion method are attributed to the supplied completed Pro proposal, with isolated ordinary mathematical review. The actual Lean proofs establish the formal conclusion independently of that ordinary approval. Bounded source and library searches do not establish worldwide novelty or priority.
+The arithmetic-progression construction, constants and rotation deletion method are attributed to Pro.
 
 **Theorem 1.1 (Weak mixing on all nonempty product open sets).**
 

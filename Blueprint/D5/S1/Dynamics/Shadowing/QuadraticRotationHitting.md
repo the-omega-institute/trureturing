@@ -4,7 +4,7 @@
 
 Explicit badly-approximable estimates and uniform finite hitting for scaled square-root rotations.
 
-All phases are real numbers with their integer lifts retained. Int.fract is the representative in [0,1). Mathlib supplies irrational_sqrt_two, nearest-integer rounding and the Dirichlet return theorem Real.exists_nat_abs_mul_sub_round_le. The quantitative construction is the supplied Pro arithmetic-progression proof; no qualitative ergodicity or unquantified density is substituted for its uniform bound.
+All phases are real numbers with their integer lifts retained. Int.fract is the representative in [0,1). Mathlib supplies irrational_sqrt_two, nearest-integer rounding and the Dirichlet return theorem Real.exists_nat_abs_mul_sub_round_le. The quantitative construction is attributed to Pro. The argument gives a uniform finite bound, including all integer lifts.
 
 **Theorem 1.1 (An explicit lower approximation bound).**
 
