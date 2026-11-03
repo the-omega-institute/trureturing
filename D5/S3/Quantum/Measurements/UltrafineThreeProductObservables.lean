@@ -13,6 +13,8 @@ import D5.S3.Observer.Conditioning.UnreadStateOrthogonalProjection
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix.Positivity
+import D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation
+import D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
 
 /-! A three-observable separation between pairwise and joint entanglement detection. -/
 
@@ -21,6 +23,8 @@ open scoped ComplexOrder Kronecker MatrixOrder
 open D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation (IsDensity)
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open D5.S3.Observer.Conditioning.UnreadStateOrthogonalProjection
+open D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
+  (kraus_psd)
 
 namespace D5.S3.Quantum.Measurements.UltrafineThreeProductObservables
 noncomputable section
@@ -141,11 +145,9 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
     change φ (e k) * φ (e k) = φ (e k)
     rw [← map_mul, he]
   have hqsum : ∑ k, q k = 1 := by
-    have hesum : ∑ k, e k = 1 := by
-      simp only [e, diagonal_single]
-      exact sum_single_one
-    change (∑ k, φ (e k)) = 1
-    rw [← map_sum, hesum, map_one]
+    simpa only [hq,
+      D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation.measurementProjector] using
+      D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.sum_projectors u
   have hqcomm (i : ι) (hi : i ∈ s) (k : Fin d) : q k * a i = a i * q k := by
     let c := diag (star (u : Matrix (Fin d) (Fin d) ℂ) * a i *
       (u : Matrix (Fin d) (Fin d) ℂ))
@@ -228,9 +230,11 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
     exact (D5.S3.Observer.Conditioning.unreadState_trace hrecord ρ).trans hρ.2
   have hσpos : σ.PosSemidef := by
     rw [hσsum]
-    apply posSemidef_sum
-    intro k _
-    simpa only [(hph k).eq] using hρ.1.mul_mul_conjTranspose_same (p k)
+    convert kraus_psd p ρ hρ.1 using 1
+    rw [D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation.krausApply.eq_1,
+      D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus]
+    simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
+    exact Finset.sum_congr rfl fun k _ => by rw [(hph k).eq]
   refine ⟨σ, ⟨hσpos, ht⟩, ?_, ?_⟩
   · have ht0 : trace (∑ k, rankOneDensity (fun i => u.val i k) ⊗ₖ c k) = 1 := by
       simpa only [← hq] using ht
@@ -263,18 +267,17 @@ private lemma diagonal_family_useless {d : ℕ} {ι : Type*}
         f (x * y) = f x * f y :=
       (Matrix.reindexAlgEquiv ℝ ℂ (Equiv.prodComm (Fin d) (Fin d))).map_mul x y
     have hfk (x y : Matrix (Fin d) (Fin d) ℂ) : f (x ⊗ₖ y) = y ⊗ₖ x := by
-      ext i j
-      exact mul_comm _ _
+      change (x ⊗ₖ y).submatrix Prod.swap Prod.swap = y ⊗ₖ x
+      simpa only [conjTranspose_conjTranspose] using
+        (conjTranspose_kronecker' yᴴ xᴴ).symm.trans (conjTranspose_kronecker yᴴ xᴴ)
     have hfs (x : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ)
         (hx : IsSeparable x) : IsSeparable (f x) := by
       apply convexHull_min (t := {y | IsSeparable (f y)}) ?_ ?_ hx
       · rintro τ ⟨v, w, hv, hw, rfl⟩
         apply subset_convexHull ℝ _
         refine ⟨w, v, hw, hv, ?_⟩
-        ext i j
-        change v i.2 * w i.1 * star (v j.2 * w j.1) =
-          w i.1 * v i.2 * star (w j.1 * v j.2)
-        rw [mul_comm (v i.2) (w i.1), mul_comm (v j.2) (w j.1)]
+        simp only [rankOneDensity, ← D5.S3.Resource.CompositeConeDuality.kronecker_rank_one,
+          hfk]
       · exact (convex_convexHull ℝ _).is_linear_preimage f.isLinear
     intro ρ hρ
     have hρf : IsDensity (f ρ) := ⟨hρ.1.submatrix Prod.swap, (hft ρ).trans hρ.2⟩
