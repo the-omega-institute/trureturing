@@ -6,6 +6,8 @@ The smallest exponent of a largest absolute physicists Hermite coefficient chang
 
 All orders and exponents are natural numbers, including zero. The polynomial physicistsHermite and its exact signedCoeff supplier are the original HermiteSignedMode declarations. Coefficients are rational, and absolute value is taken before comparing them. No rescaling or restriction to positive coefficients is made. Both exponents are cast to the integers before the subtraction in the transition statement.
 
+The comparison functions are second(j)=(j+1)(j+2), rises(n,r) meaning 2r at most n and 4r at most second(n-2r), and mode(n), the largest rising index. mode_rises asserts the threshold at mode(n), le_mode bounds every rising index by mode(n), and second_mono states monotonicity of second. The weight is the absolute original signedCoeff at n-2r. weight_pos asserts positivity on 2r at most n, and adjacent gives its successive cross-product identity. weight_le_mode bounds every supported weight by the mode weight; weight_lt_mode makes this bound strict beyond the mode. coefficient_cases says that each original absolute signed coefficient is zero or is a supported weight.
+
 **Definition 1.1 (The smallest absolute-coefficient mode).**
 
 $$\forall n:\mathbb{N}, \operatorname{b}\left(n\right) = n-2 \cdot \operatorname{mode}\left(n\right)$$
