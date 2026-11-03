@@ -532,3 +532,624 @@ For representative invariance, the essential norm defining $M$ and $c$ is unchan
 Finally $\operatorname{rank}A^D$ is an integer between zero and four. Thus the negation of rank at least three is rank at most two, and Proposition 135.2 identifies these alternatives with the respective nullity conditions. Negating the existential universal statement interchanges its two quantifiers and gives exactly the displayed universal existential alternative. The marginal-feasibility argument proves nonemptiness of each partition class; it yields no bound on this nullity. Representative invariance removes only the null-set choice of $b$, retaining the quantifiers over the original $a,\eta,d$. The compact-fiber and approximation statements of §123, the factorization statements of §124, the conditional constructions of §125, the scalar marginal result of §133 and the joint-pencil result of §134 retain their stated scopes. The full common-readout attainment problem and any native or physical realization remain unresolved here. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 136. Invariant coarse partitions of the original marginal class
+
+**Definition 136.1 (the actual invariant coarse interface).** Fix any original tuple $\theta=(a,\eta,d,b)\in\Theta$ of Definition 135.1, with every endpoint, source and regularity hypothesis inherited there. All subsequent statements retain this entire telescope. In particular, the group product, raw measure $\mu$, unit-source field $\Gamma$, actual selector, coefficient-positive normalized $h$, probability $m=h^2\mu$, full conservative operator $K$ and its source summand remain unchanged. The diffusion starts at the original source $e$, and the observation epochs are $2d,3d,4d$. Retain $P=T_d$, $g=g_{2d}$ and the original $b,M,c,f,t_r$ of §135.
+
+Use symmetric coordinates $\xi=\zeta-xy/2$ and cylindrical coordinates $(r,\alpha,z,\xi)$ where $r>0$. Let $R_\gamma$ rotate $(x,y)$ through $\gamma$ while fixing $(z,\xi)$, and set
+
+$$
+\Omega=\{r>0\},\qquad N=G\setminus\Omega=\{x=y=0\},\qquad
+X=(0,\infty)\times\mathbb R^2,\qquad
+\pi(r,\alpha,z,\xi)=(r,z,\xi).
+$$
+
+The full-form rotation symmetry, including the source trace and original source law, is the one proved in Appendix II §120. In particular $m$, every $g_s$, and $T_s$ are invariant under this circle action, $m(N)=0$, and $T_s$ commutes with its pullbacks. The analytic heat-image and local differential suppliers are Appendix II (120.6)–(120.11), (122.6)–(122.11), (122.20)–(122.23), and the corresponding actual-operator uses in §§126 and 129. They concern the full extension off the source; no differential identity through the source is required. The finite global bound used here is exactly Theorem 133.2 for the fixed tuple. Markov propagation gives $\|g\|_\infty\le\|g_d\|_\infty<M$.
+
+Write
+
+$$
+\nu_j(A)=\int_Ag_{jd}\,dm\quad(j=2,3,4).
+$$
+
+Let $\mathscr E_\theta$ be the class of pointwise Borel partitions $E=(S,C,B)$ of the whole $G$ whose three cells are invariant under every $R_\gamma$ and satisfy
+
+$$
+\nu_j(S)=\frac34-t_j,\qquad
+\nu_j(C)=t_j,\qquad
+\nu_j(B)=\frac14
+\quad(j=2,3,4).
+\tag{136.1}
+$$
+
+For each $E\in\mathscr E_\theta$, define its single actual terminal factor, ordered bilinear form, quadratic form and coarse matrix by
+
+$$
+\begin{aligned}
+q_E&=P\mathbf1_C,\\
+Q_E(u,v)&=\int_Gg\,u\,P(q_Ev)\,dm,\qquad Q_E(v)=Q_E(v,v),\\
+(A_E)_{ij}&=Q_E(\mathbf1_{E_i},\mathbf1_{E_j}),
+\qquad (E_1,E_2,E_3)=(S,C,B).
+\end{aligned}
+\tag{136.2}
+$$
+
+These forms and matrices are real and need not be symmetric. For an invariant Borel simplex tuple $u=(u_S,u_C,u_B)$, define analogously
+
+$$
+q_u=Pu_C,\qquad (A(u))_{ij}=\mathcal C(u_i,u_j,u_C).
+\tag{136.3}
+$$
+
+Call $u$ admissible when its components lie in $[0,1]$, sum to one everywhere and have the nine integrals in (136.1). Its third argument is its own $u_C$.
+
+**Proposition 136.2 (nonempty invariant coarse class and the original targets).** For every original $\theta$, the class $\mathscr E_\theta$ is nonempty. There is a bounded pointwise invariant Borel function $\beta$ with $0<\beta\le M$ everywhere and $[\beta]=[b]=g_d$. Replacing $b$ by this representative for a computation changes none of the original marginal targets, prescribed coordinates, or partition classes. For every $E\in\mathscr E_\theta$,
+
+$$
+0<q_E<1\quad m\text{-a.e.},\qquad
+q_E/g\text{ is not constant }m\text{-a.e.}
+\tag{136.4}
+$$
+
+*Proof.* The quotient probability and the three quotient source measures are
+
+$$
+d\bar m=2\pi r h(r,z,\xi)^2\,dr\,dz\,d\xi,
+\qquad d\bar\nu_j=g_{jd}\,d\bar m.
+\tag{136.5}
+$$
+
+Here the invariant smooth representative of $h$ is used. The change from $\zeta$ to $\xi$ has Jacobian one, and angular integration gives (136.5). The omitted axis is null for all four measures. Every invariant Borel cell on $\Omega$ is the inverse image of a Borel subset of $X$: evaluate membership on the Borel section $\alpha=0$ and use invariance on its circular orbit. Each quotient measure is finite and atomless, being absolutely continuous with respect to three-dimensional Lebesgue measure. For example, slicing any Borel set by the $r$ coordinate gives a continuous distribution, hence a proper subdivision of every set of positive measure.
+
+Angular averaging of the original bounded Borel $b$ gives a Borel quotient function
+
+$$
+\bar\beta(r,z,\xi)=\frac1{2\pi}\int_0^{2\pi}b(r,\alpha,z,\xi)\,d\alpha.
+$$
+
+It lies in $(0,M]$ everywhere on $X$. Invariance of the $L^2$ class $g_d$ and Fubini's theorem show that its lift equals $b$ almost everywhere. Give its lift the value $1$ on $N$. This is the asserted $\beta$. On any open patch where the analytic representative of $g_d$ is strictly positive it can, without changing its class, be taken equal to that analytic representative: the latter is invariant, nonnegative and at most $\|g_d\|_\infty<M$ by continuity and full local support of $m$. Repair the remaining exceptional invariant null set within $(0,M]$. All these choices have the same integrals.
+
+Apply the finite atomless vector-measure theorem of Dvoretzky–Wald–Wolfowitz, [*Relations among certain ranges of vector measures*, Pacific J. Math. 1 (1951), §3 Theorem 4 and Lemma 2, pp. 66–67](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), on $X$, to the three measures $\bar\nu_j$ and the simplex tuple
+
+$$
+u^0=(3/4-c\bar\beta,c\bar\beta,1/4).
+\tag{136.6}
+$$
+
+Their equality of probability-vector and decomposition-vector ranges gives one Borel three-cell partition of $X$ with all nine prescribed integrals. Pull all cells back by $\pi$ and put the whole axis in $S$. This is an invariant whole-$G$ partition satisfying (136.1). This application fixes linear integrals only.
+
+Since $0<t_j\le1/4$, the cells $C$ and $G\setminus C$ both have positive $m$-measure. Positivity improvement and conservation give $0<P\mathbf1_C<1$ almost everywhere, as in Proposition 135.2. If $q_E=\lambda g$, then $g=P\beta$ and injectivity of $P$, proved by spectral calculus in §135, imply $\mathbf1_C=\lambda\beta$ almost everywhere. Positivity forces $\lambda>0$, contradicting the positive measure of $G\setminus C$ and $\beta>0$ almost everywhere. This proves (136.4) without replacing $q_E$ by $cg$.
+
+Finally all allowed representatives of $b$ give the same $M,c$ and bounded classes $f_y$. Proposition 135.3 or direct integration shows that every original target is unchanged. No value of an observation at time zero is inferred from this representative invariance. $\square$
+
+## 137. Two-sided odd index with the coarse terminal cell fixed
+
+**Theorem 137.1 (actual odd two-weight index).** For every original $\theta$ and every fixed $E=(S,C,B)\in\mathscr E_\theta$, the form $Q_E$ has infinite positive and negative indices on the real vector space
+
+$$
+\mathcal V_{S,-}=\{v\in L^\infty(G,m;\mathbb R):
+v=0\text{ a.e. on }G\setminus S,\quad v\circ R_\pi=-v\text{ a.e.}\}.
+\tag{137.1}
+$$
+
+Each index remains infinite on the common kernel of any finite family of homogeneous bounded real linear functionals on this space. The cells $S,C,B$ and the terminal factor $q=q_E$ remain fixed in all these assertions.
+
+*Proof.* Use the analytic representatives of $g$ and $q=T_d\mathbf1_C$ on $\Omega$. They are nonnegative and invariant there by continuity, the Markov property and full local support of $m$, and both are strictly positive almost everywhere. Set $\sigma=d/2$, $R=R_\pi$ and let $L^2_-$ be the complex odd subspace. Equip
+
+$$
+\mathcal H_-=T_\sigma L^2_-,\qquad
+\|T_\sigma u\|_{\mathcal H_-}=\|u\|_2
+\tag{137.2}
+$$
+
+with its inverse-heat norm. Injectivity makes this well defined. Use the half-circle section $F=\{r>0,\ 0\le\alpha<\pi\}$. Every odd function is determined by its restriction to $F$. The evaluation and kernel identities of Appendix II §120 show that this restriction is a Hilbert function space with kernel
+
+$$
+k(x,y)=\frac{p_d(x,y)-p_d(x,Ry)}2.
+\tag{137.3}
+$$
+
+Indeed the projection onto $L^2_-$ is $(I-R)/2$, which commutes with heat propagation. For distinct representatives $x_1,\ldots,x_n\in F$, the $2n$ points $x_i,Rx_i$ are distinct. The full heat-kernel Gram quadratic form on coefficients $(a_1,\ldots,a_n,-a_1,\ldots,-a_n)$ is
+
+$$
+4\sum_{i,j}\overline{a_i}a_jk(x_i,x_j)>0
+\quad(a\ne0).
+\tag{137.4}
+$$
+
+Thus $k$ is nonsingular on $F$.
+
+Every member of $\mathcal H_-$ is analytic on the connected open set $\Omega$, by the actual heat-image identity (122.11). This identity uses the analytic coefficients from (122.6)–(122.9), the local weak equation (120.6), and the spectral differential-iterate bounds (122.10). The analytic regularity intermediary is Kotake–Narasimhan, [*Regularity theorems for fractional powers of a linear elliptic operator*, Theorem 1, p. 451](https://www.numdam.org/item/BSMF_1962__90__449_0.pdf). Products and sums of these analytic functions remain analytic. Consequently every positive-measure subset of the interior of $F$ is a uniqueness set both for $\mathcal H_-$ and for $\mathcal H_-\mathcal H_-+\mathcal H_-\mathcal H_-$. Here one applies Mityagin, [*The zero set of a real analytic function*, Proposition 0](https://arxiv.org/html/1512.07276v1), to the real and imaginary parts of the differences on $\Omega$. Local equivalence of $m$ and Lebesgue measure supplies its positive-measure hypothesis. These are attributed analytic intermediates for the actual heat space.
+
+Write $Q^{\rm sym}(u,v)=(Q_E(u,v)+Q_E(v,u))/2$. Suppose that its negative index on $\mathcal V_{S,-}$ were finite, equal to $\kappa$. Choose a positive-measure relatively compact Borel subset $E_0\subset S\cap\operatorname{int}F$ on which $g+q>0$, and let $E_0^*$ consist of those points of $E_0$ which are its density points. Such a subset exists because $\nu_2(S)>0$, $g,q>0$ almost everywhere and $S$ is invariant. At distinct points $x_i\in E_0^*$ choose small disjoint neighborhoods, also disjoint from their reflected neighborhoods, and set
+
+$$
+\phi_{i,\epsilon}=
+\frac{\mathbf1_{E_0\cap B(x_i,\epsilon)}}{m(E_0\cap B(x_i,\epsilon))},
+\qquad v_{i,\epsilon}=\phi_{i,\epsilon}-\phi_{i,\epsilon}\circ R.
+$$
+
+These are bounded odd tests supported in $S$. Local continuity of the two weights and the actual heat kernel, and rotation invariance of the weights, give
+
+$$
+\bigl(Q^{\rm sym}(v_{i,\epsilon},v_{j,\epsilon})\bigr)_{i,j}
+\longrightarrow 4\bigl(s(x_i,x_j)\bigr)_{i,j},
+\qquad
+s(x,y)=\frac{g(x)q(y)+q(x)g(y)}2\,k(x,y).
+\tag{137.5}
+$$
+
+For completeness, the four reflected double integrals have kernel sum $2(p_d(x,y)-p_d(x,Ry))=4k(x,y)$; symmetrizing their weights gives precisely (137.5). Strict negativity of a fixed finite matrix subspace persists under entrywise convergence. Hence every finite Gram matrix of $s$ on $E_0^*$ has at most $\kappa$ negative eigenvalues. Repetitions of points follow by pullback from a distinct-point matrix.
+
+Define the real invariant bounded class
+
+$$
+\gamma=\frac{g-q}{g+q}\quad\text{where }g+q>0,
+\qquad \gamma=0\text{ on its null complement}.
+$$
+
+It satisfies $|\gamma|\le1$. On $E_0^*$ the exact identity is
+
+$$
+s(x,y)=\frac{(g(x)+q(x))(g(y)+q(y))}4
+\bigl(1-\gamma(x)\gamma(y)\bigr)k(x,y).
+\tag{137.6}
+$$
+
+The diagonal congruence is positive and invertible on every such finite point set. Real symmetric and complex Hermitian inertia agree for these real matrices. Therefore $(1-\gamma(x)\overline{\gamma(y)})k(x,y)$ has at most $\kappa$ negative squares on $E_0^*$.
+
+Apply Agler–Young, [*Functions which are almost multipliers of Hilbert function spaces*, Theorem 2.1](https://arxiv.org/html/math/9605224v1#S2.Thmtheorem1), to $\mathcal H_-|_F$, with uniqueness domain $E_0^*$, multiplier $\gamma$ and their scalar parameter $t=1$. Nonsingularity is (137.4), and both required uniqueness hypotheses were checked above. The theorem gives a closed finite-codimensional $W\subset\mathcal H_-$ and a bounded $L:W\to\mathcal H_-$ with $Lu=\gamma u$ on $E_0^*$. Extend this relation by using the analytic identity
+
+$$
+(g+q)Lu=(g-q)u.
+\tag{137.7}
+$$
+
+Both sides are analytic on all $\Omega$ because $g$ and $q=T_d\mathbf1_C$ are actual heat images. Positive-measure uniqueness makes (137.7) valid throughout $\Omega$. Since $g+q>0$ almost everywhere, $Lu=\gamma u$ in $L^2(m)$ globally. This argument requires no globally positive lower bound on $q$ or $g+q$.
+
+Consider the actual multiplication domain
+
+$$
+D=\{u\in\mathcal H_-:\gamma u\in\mathcal H_-\}.
+\tag{137.8}
+$$
+
+It contains $W$. Its quotient by $W$ is a subspace of the finite-dimensional space $\mathcal H_-/W$, hence $D$ is closed and finite codimensional. The inclusion $\mathcal H_-\hookrightarrow L^2(m)$ is continuous. If $u_n\to u$ in $\mathcal H_-$ and $\gamma u_n\to v$ there, bounded multiplication in $L^2$ gives $v=\gamma u$. Thus the multiplication map on $D$ has closed graph and is bounded.
+
+The full rotation circle acts unitarily and strongly continuously on $\mathcal H_-$. Since $\gamma$ is invariant, $D$ and $D^\perp$ are invariant. The finite-dimensional circle representation on $D^\perp$ has only finitely many angular characters. Choose a positive odd integer $\ell$ absent from that list. The whole $\ell$ heat sector is contained in $D$. This sector is nonzero: take the heat image of a nonzero punctured smooth compact function of character $\ell$. If $K_\ell$ is the self-adjoint restriction of the full $K$ to this sector, boundedness on $D$ gives
+
+$$
+B_\ell=e^{\sigma K_\ell}M_\gamma e^{-\sigma K_\ell}
+\quad\text{bounded on }L^2_\ell.
+\tag{137.9}
+$$
+
+We give the commutator consequence explicitly. For $\Pi_R=\mathbf1_{[0,R]}(K_\ell)$, interpret
+
+$$
+F_R(z)=\Pi_Re^{zK_\ell}M_\gamma e^{-zK_\ell}\Pi_R
+\tag{137.10}
+$$
+
+with spectral cutoffs on both sides. It is an entire bounded-operator-valued function, bounded on each closed vertical strip. On $\Re z=\sigma$, its norm is at most $\|B_\ell\|$, by unitary imaginary-time conjugation. On $\Re z=-\sigma$, use the adjoint of (137.9), since $\gamma$ is real, to obtain the same bound. Three-lines interpolation and Cauchy's estimate on the circle $|z|=\sigma/2$ give
+
+$$
+\|F_R'(0)\|\le 2\|B_\ell\|/\sigma.
+\tag{137.11}
+$$
+
+For $u,v\in D(K_\ell)$, spectral convergence in the graph norm identifies the limit of the derivative pairing with
+
+$$
+\langle K_\ell u,\gamma v\rangle_m-
+\langle\gamma u,K_\ell v\rangle_m.
+$$
+
+It is bounded by the right-hand constant of (137.11) times $\|u\|_2\|v\|_2$. Thus the commutator is a bounded form; no prior global domain invariance of multiplication is assumed. Whenever $v$ and $\gamma v$ are smooth compact punctured vectors, density of $D(K_\ell)$ identifies this form with the actual vector $[K,M_\gamma]v$ and bounds its norm by the same constant times $\|v\|_2$.
+
+Choose a rotation-saturated compact patch inside $\{r>0,g+q>0\}$. On this patch $\gamma$ is smooth analytic. For an arbitrary compactly supported smooth amplitude $\chi(r,z,\xi)$ there and an arbitrary $\omega\in\mathbb R^3$, use the genuine punctured-core vectors
+
+$$
+u_N=e^{i\ell\alpha}\chi(r,z,\xi)e^{iN\omega\cdot(r,z,\xi)}.
+$$
+
+Both $u_N$ and $\gamma u_N$ belong to the original smooth punctured core. The original local principal symbol is
+
+$$
+a\left[p_r^2+\left(\frac{p_\alpha}{r}+\frac r2p_\xi\right)^2+p_z^2\right]+\eta p_\xi^2.
+\tag{137.12}
+$$
+
+The divergence-form Leibniz identity (122.22), evaluated on these vectors, gives
+
+$$
+\begin{aligned}
+[K,M_\gamma]u_N={}&-2iN e^{i\ell\alpha+iN\omega\cdot(r,z,\xi)}\chi\,
+\left[a\gamma_r\omega_r+a\gamma_z\omega_z+
+\left(\eta+\frac{ar^2}{4}\right)\gamma_\xi\omega_\xi\right]+O_{L^2}(1).
+\end{aligned}
+\tag{137.13}
+$$
+
+For fixed $\ell,\chi,\omega$, the remainder is bounded independently of $N$ and $\|u_N\|_2$ is independent of $N$. The commutator bound therefore makes the bracket vanish on the support of every such $\chi$. Taking the three coordinate directions for $\omega$, and using $a,\eta>0$, proves $\gamma_r=\gamma_z=\gamma_\xi=0$. Invariance gives $\gamma_\alpha=0$. On a connected open patch meeting $\{gq>0\}$ it follows that $\gamma=\gamma_0\in(-1,1)$. The analytic function
+
+$$
+g-q-\gamma_0(g+q)
+$$
+
+vanishes on that open patch, hence on connected $\Omega$. It follows that $q/g=(1-\gamma_0)/(1+\gamma_0)$ almost everywhere, contradicting (136.4). Thus the negative index is infinite. This uses infinitely many nonzero angular characters of the original operator, in addition to analytic uniqueness.
+
+For the positive index, choose a density point $x\in S\cap\Omega$ where $g(x)q(x)>0$. Every rotated point on its orbit is also a density point of $S$: rotations preserve $S$ and have smooth invertible local coordinate maps. For any $n$, choose $n$ distinct representatives of this orbit in $\operatorname{int}F$. Both weights have their same positive values at all these points. The limiting matrix (137.5) is then
+
+$$
+4g(x)q(x)\bigl(k(x_i,x_j)\bigr)_{i,j},
+$$
+
+which is positive definite by (137.4). Small localized odd tests consequently give an $n$-dimensional positive-definite subspace. This proves infinite positive index.
+
+Finally, in either sign choose a definite subspace of dimension $n+r$, where $r$ is the number of prescribed homogeneous scalar linear constraints. Its intersection with their common kernel has dimension at least $n$. Restriction preserves definiteness, proving both finite-constraint index assertions. No assertion about exact signs satisfying those extra constraints is used. $\square$
+
+## 138. Exact odd sign cancellation and the original four-cell consumer
+
+**Theorem 138.1 (a fixed-terminal exact sign).** For every original $\theta$ and every fixed $E=(S,C,B)\in\mathscr E_\theta$, there is a whole-$G$ Borel function $v$ such that
+
+$$
+v^2=\mathbf1_S\quad\text{everywhere},\qquad
+v\circ R_\pi=-v\quad m\text{-a.e.},\qquad Q_E(v)=0.
+\tag{138.1}
+$$
+
+The cells $C,B$ and $q_E$ are unchanged. If $S\cap N=\varnothing$, oddness may hold everywhere. If $S$ meets $N$, everywhere oddness and the everywhere identity $v^2=\mathbf1_S$ are incompatible.
+
+*Proof.* Theorem 137.1 supplies bounded odd real tests $u_+,u_-$ supported in $S$ with $Q_E(u_+)>0>Q_E(u_-)$. Scale them into the unit ball without changing these strict signs. Their classes have Borel representatives which are exactly odd on $S\setminus N$: take representatives on the half-circle section $S\cap F$ and extend by reflection. Set them to zero elsewhere for the moment.
+
+On the finite atomless standard Borel space $S\cap F$, signs are weak-star dense in the unit ball. To see the precise instance needed here, take refining finite Borel partitions generating its sigma-algebra. For a unit-ball function $u$ and each atom $A$, split $A$ into a Borel set of $m$-measure $\int_A(1+u)/2\,dm$ and its complement. Give the two pieces signs $+1,-1$. This matches $\int_Au\,dm$ exactly. Approximation of any $L^1$ test by simple functions from the refining partitions proves weak-star convergence. Reflect these signs oddly to $S\setminus N$ and give value zero outside $S$. The same convergence holds on $G$, since every $L^1$ pairing there reduces to a pairing on the section and its reflection.
+
+The actual ordered kernel for $Q_E$ is
+
+$$
+a_E(x,y)=g(x)p_d(x,y)q_E(y)\ge0,\qquad
+\|a_E\|_{L^1(m^2)}=\int_GgPq_E\,dm\le1.
+\tag{138.2}
+$$
+
+For bounded weak-star convergent tests, approximation of $a_E$ in $L^1$ by finite sums $\sum_l a_l(x)b_l(y)$, with $a_l,b_l\in L^1(m)$, proves convergence of their quadratic values. Indeed each tensor pairing is the product of the two convergent scalar integrals, and the error is bounded by the kernel's $L^1$ approximation error uniformly on the unit ball. Thus the approximating Borel signs contain $\sigma_+,\sigma_-$ with
+
+$$
+Q_E(\sigma_+)>0>Q_E(\sigma_-).
+$$
+
+They are signs on $S\setminus N$, are exactly odd there and vanish outside $S$.
+
+Let $A\subset S\cap F$ be their disagreement set. Choose nested Borel subsets $A_t\subset A$, $0\le t\le1$, with $A_0=\varnothing$, $A_1=A$ and $m(A_t)=t\,m(A)$. Such a family follows, for example, by the continuous distribution of the $r$ coordinate restricted to $A$, using endpoint assignments at $t=0,1$; its coordinate level sets are null. Starting from $\sigma_+$, switch to $\sigma_-$ on $A_t$ and $RA_t$. The resulting signs $\sigma_t$ satisfy
+
+$$
+\|\sigma_t-\sigma_s\|_1=4m(A)|t-s|.
+\tag{138.3}
+$$
+
+If $m(A)=0$ the endpoint quadratic values would agree, so this case cannot occur. The actual bilinear formula, self-adjointness and the Markov contraction give, on the unit ball,
+
+$$
+|Q_E(u)-Q_E(v)|
+\le2\|g\|_\infty\|q_E\|_\infty\|u-v\|_1.
+\tag{138.4}
+$$
+
+For the first difference term use $\|P(q_Eu)\|_\infty\le\|q_E\|_\infty$; for the second move $P$ to $gv$ and use $\|P(gv)\|_\infty\le\|g\|_\infty$. Hence $t\mapsto Q_E(\sigma_t)$ is continuous. The intermediate value theorem gives an exact zero.
+
+Give that zero sign the value $+1$ on $S\cap N$ and zero on $N\setminus S$. Since $N$ is invariant, Borel and null, this repairs the pointwise square identity without changing the quadratic value or almost-everywhere oddness. At a fixed point $x\in S\cap N$, everywhere oddness would require $v(x)=-v(x)$, hence $v(x)=0$, whereas the square identity requires $|v(x)|=1$. This proves the obstruction and the stated boundary. No additional finite constraints on the exact sign are asserted. $\square$
+
+**Theorem 138.2 (one original common partition and an ordered congruence).** With $v$ from Theorem 138.1, put
+
+$$
+D_0=\{v=1\},\qquad D_1=\{v=-1\},\qquad D_3=C,\qquad D_B=B.
+\tag{138.5}
+$$
+
+This is a single pointwise Borel partition of the whole $G$, belongs to the original $\mathscr D_{12}(\theta)$, and has $q_D=q_E$. In the original order $(0,1,3,B)$, the invertible matrix
+
+$$
+J=\begin{pmatrix}
+1&0&0&1\\
+1&0&0&-1\\
+0&1&0&0\\
+0&0&1&0
+\end{pmatrix}
+\tag{138.6}
+$$
+
+satisfies
+
+$$
+J^{\mathsf T}A^D J=\begin{pmatrix}A_E&0\\0&0\end{pmatrix}.
+\tag{138.7}
+$$
+
+Consequently
+
+$$
+\operatorname{rank}A^D=\operatorname{rank}A_E\le3,\qquad
+\operatorname{rank}A^D\le2\ \Longleftrightarrow\ \det A_E=0
+\tag{138.8}
+$$
+
+for this constructed partition.
+
+*Proof.* The square identity makes $D_0,D_1$ a disjoint exhaustive split of $S$, so (138.5) is a whole-$G$ partition. Each $\nu_j$ is $R_\pi$-invariant and vanishes on $N$. Almost-everywhere oddness gives $\int g_{jd}v\,dm=0$ and therefore
+
+$$
+\nu_j(D_0)=\nu_j(D_1)=\frac{3/4-t_j}{2},\qquad
+\nu_j(D_3)=t_j,\qquad \nu_j(D_B)=1/4.
+$$
+
+These are exactly the twelve original targets, for the original $b$, at the three original epochs.
+
+The columns of $J$ express the function basis $(\mathbf1_S,\mathbf1_C,\mathbf1_B,v)$ in the original indicator basis. They are independent, since $\mathbf1_{D_0}=(\mathbf1_S+v)/2$ and $\mathbf1_{D_1}=(\mathbf1_S-v)/2$. For any invariant bounded $u$, both ordered cross pairings vanish:
+
+$$
+Q_E(u,v)=\int guP(q_Ev)\,dm=0,\qquad
+Q_E(v,u)=\int gvP(q_Eu)\,dm=0.
+\tag{138.9}
+$$
+
+In the first integral $gu$ is even and $P(q_Ev)$ is odd under $R_\pi$. In the second $P(q_Eu)$ and $g$ are even while $v$ is odd. Invariance of $m$ gives zero in both cases. This proves (138.7), using $Q_E(v)=0$ and without any symmetry assumption on $A^D$ or $A_E$. Invertible left and right multiplication preserve rank, and a real three-by-three matrix has rank at most two exactly when its determinant is zero. $\square$
+
+## 139. The interval of actual invariant coarse determinants
+
+**Theorem 139.1 (exact-marginal approximation with an endogenous terminal factor).** For every admissible invariant stochastic tuple $u$ of Definition 136.1, there are $E_n\in\mathscr E_\theta$ whose indicators converge componentwise weak-star to $u$ and satisfy
+
+$$
+A_{E_n}\longrightarrow A(u),\qquad
+\det A_{E_n}\longrightarrow\det A(u).
+\tag{139.1}
+$$
+
+In this limit each actual matrix uses its own terminal factor $P\mathbf1_{C_n}$.
+
+*Proof.* Work on the actual quotient $(X,\bar m)$ of (136.5). Let $\mathcal P_n$ be refining finite Borel partitions generating its Borel sigma-algebra modulo null sets. In the Dvoretzky–Wald–Wolfowitz theorem cited in Proposition 136.2, use the finite list consisting of $\bar\nu_2,\bar\nu_3,\bar\nu_4$ and all measures $\bar m|_A$ for $A\in\mathcal P_n$. They are finite atomless measures on the same Borel space. The resulting single three-cell partition $E_n$ satisfies, simultaneously,
+
+$$
+\bar\nu_j(E_{n,i})=\int_Xu_i\,d\bar\nu_j,
+\qquad
+\bar m(E_{n,i}\cap A)=\int_Au_i\,d\bar m.
+\tag{139.2}
+$$
+
+The first equations are precisely the nine required marginals. The second equations imply weak-star convergence: for any $L^1(\bar m)$ test $\phi$, approximate it by $\mathcal P_n$-simple $\psi_n$ in $L^1$. The pairing with $\psi_n$ of $\mathbf1_{E_{n,i}}-u_i$ is zero, and the remaining pairing has absolute value at most $\|\phi-\psi_n\|_1$. Lift the cells to $G$ and assign the null axis to $S$. Pairing with an arbitrary $L^1(m)$ test reduces by angular integration to a quotient $L^1$ test, so the lifted indicators converge weak-star on $G$ as well.
+
+The actual three-time density from Appendix II §123 is
+
+$$
+W(x,y,z)=g(x)p_d(x,y)p_d(y,z)\ge0,\qquad
+\int_{G^3}W\,dm^{\otimes3}=1.
+\tag{139.3}
+$$
+
+The equality follows by integrating first in $z$, then in $y$, using conservation, and finally the mass-one source density. Thus $W\in L^1(m^3)$. Approximate it in $L^1$ by finite sums of rectangular tensors $a(x)b(y)c(z)$ with factors in $L^1(m)$. On each tensor, the integral against three bounded weak-star convergent components factors into three convergent scalar pairings. The approximation error is uniform for components in $[0,1]$. It follows that
+
+$$
+\mathcal C(\mathbf1_{E_{n,i}},\mathbf1_{E_{n,j}},\mathbf1_{C_n})
+\longrightarrow\mathcal C(u_i,u_j,u_C).
+$$
+
+This is exactly (139.1), including the changing terminal factor. Continuity of the determinant polynomial completes the proof. The use of $W$ is the actual common-readout continuity mechanism of §123, specialized with the exact linear-marginal constraints (139.2); it is not an exact nonlinear purification theorem. $\square$
+
+**Theorem 139.2 (positive value, zero closure and deterministic paths).** For every original $\theta$, the actual determinant image
+
+$$
+I_\theta=\{\det A_E:E\in\mathscr E_\theta\}\subset\mathbb R
+\tag{139.4}
+$$
+
+is an interval containing a strictly positive value, and $0\in\overline{I_\theta}$. Moreover any two members of $\mathscr E_\theta$ can be joined by a path of invariant deterministic partitions retaining all nine marginals, along which the actual determinant is continuous. In particular there is an original $D\in\mathscr D_{12}(\theta)$ with $\operatorname{rank}A^D=3$ exactly.
+
+*Proof.* First produce a positive stochastic value. Choose six disjoint positive-$\bar m$ Borel subsets of $X$. Their six indicators span a six-dimensional space of bounded invariant functions. The common kernel of the three source moment functionals has dimension at least three and therefore contains a $v$ outside $\operatorname{span}\{1,\beta\}$. Normalize $\|v\|_\infty\le1$. For $0<\epsilon\le1/8$ set
+
+$$
+u^+=(3/4-c\beta-\epsilon v,\ c\beta,\ 1/4+\epsilon v).
+\tag{139.5}
+$$
+
+All components are nonnegative: $c\beta\le1/4$, the first is at least $3/8$ and the last at least $1/8$. Their sum is one. The three zero source moments of $v$ give exactly the prescribed marginals. The functions $1,\beta,v$ are independent, since $\beta$ is nonconstant by §135 and $v$ was chosen outside their span. The three components of $u^+$ are consequently independent as well: their sum gives $1$, the middle gives $\beta$, and the last then gives $v$.
+
+For this stochastic tuple, and only using its own terminal component, $Pu_C^+=cP\beta=cg$. Hence
+
+$$
+A(u^+)_{ij}=c\langle gu_i^+,P(gu_j^+)\rangle_m.
+\tag{139.6}
+$$
+
+For every nonzero coefficient vector $a\in\mathbb R^3$, independence of the components, positivity of $g$ and injectivity of $T_{d/2}$ give
+
+$$
+a^{\mathsf T}A(u^+)a
+=c\left\|T_{d/2}\left(g\sum_i a_i u_i^+\right)\right\|_2^2>0.
+$$
+
+Thus this stochastic matrix is symmetric positive definite and has positive determinant. Theorem 139.1 supplies an actual invariant partition with strictly positive determinant. It does not identify its actual terminal factor with $cg$.
+
+For the unperturbed tuple $u^0=(3/4-c\beta,c\beta,1/4)$, the same weighted Gram formula holds and its components span exactly $\operatorname{span}\{1,\beta\}$. Its matrix has rank two by strict heat positivity on that span, hence determinant zero. Applying Theorem 139.1 to $u^0$ gives actual invariant determinants tending to zero. This establishes closure, without asserting attainment.
+
+It remains to prove the interval property on the deterministic class itself. Given feasible quotient partitions $E,F$, write their mismatch blocks as $H_{ij}=E_i\cap F_j$, $i\ne j$. On each block use the four finite atomless measures
+
+$$
+\lambda=(\bar m,\bar\nu_2,\bar\nu_3,\bar\nu_4).
+$$
+
+Their simultaneous proportional subdivision follows from Dvoretzky–Wald–Wolfowitz Lemma 2, applied recursively. More explicitly, halve every block into two Borel pieces of equal $\lambda$-vector measure, then halve each piece, and continue. Order the level-$n$ pieces by their binary words. Each has vector measure $2^{-n}\lambda(H_{ij})$. The unions of the first $k$ pieces are nested at dyadic parameters $k2^{-n}$ and compatible across levels. For arbitrary $t\in(0,1)$ take the union of these initial unions at dyadic parameters below $t$; by continuity from below this defines nested Borel $T_{ij,t}$ with
+
+$$
+\lambda(T_{ij,t})=t\lambda(H_{ij}).
+\tag{139.7}
+$$
+
+Set $T_{ij,0}=\varnothing$, $T_{ij,1}=H_{ij}$. Any endpoint discrepancy in the union construction is null for all four measures and these assignments retain (139.7).
+
+At parameter $t$, switch the label from $i$ to $j$ on $T_{ij,t}$ in each mismatch block, leaving all other points at their $E$ labels. Call the resulting partition $E(t)$. It is Borel, disjoint and exhaustive. For every label $l$ and source measure,
+
+$$
+\bar\nu_r(E_l(t))
+=\bar\nu_r(E_l)+t\bigl(\bar\nu_r(F_l)-\bar\nu_r(E_l)\bigr)
+=\bar\nu_r(E_l).
+\tag{139.8}
+$$
+
+Its lift, with the fixed axis assigned to $S$, is feasible and invariant. If an original endpoint assigned the axis differently, it has the same integrals and actual matrix; either null assignment can be made at the endpoint without affecting continuity below.
+
+For $s<t$, the changed set $H$ has $\nu_r(H)\le t-s$ for $r=2,3,4$, by (139.7) and disjointness of the mismatch blocks. Each actual entry is the probability of the event that the common partition gives labels $(i,j,C)$ at the three original epochs. This event changes only if at least one of the three states belongs to $H$. The union bound with the three original source laws gives
+
+$$
+|(A_{E(t)})_{ij}-(A_{E(s)})_{ij}|\le3|t-s|.
+\tag{139.9}
+$$
+
+In particular this bound includes the terminal-cell change. Every entry is between zero and one. Expanding the determinant into six signed products and telescoping each product in its three factors gives
+
+$$
+|\det A_{E(t)}-\det A_{E(s)}|\le54|t-s|.
+\tag{139.10}
+$$
+
+The intermediate value theorem along this path proves that $I_\theta$ is an interval. Apply Theorem 138.2 to the positive actual endpoint already obtained: $A_E$ is invertible, so its corresponding original four-cell matrix has rank exactly three. $\square$
+
+## 140. A conditional negative-direction bridge and the exact rank boundary
+
+**Theorem 140.1 (negative stochastic determinant implies an exact original rank-two bound).** If an admissible invariant stochastic tuple $u$ has $\det A(u)<0$, then there is $E\in\mathscr E_\theta$ with $\det A_E=0$, and hence an original $D\in\mathscr D_{12}(\theta)$ with $\operatorname{rank}A^D\le2$.
+
+*Proof.* By Theorem 139.1 some actual feasible invariant partition has negative determinant. Theorem 139.2 supplies an actual positive determinant partition and an exact-marginal deterministic path between them. Continuity gives an actual zero determinant on the path. The fixed-$C$ sign and congruence of Theorems 138.1–138.2 then give the original partition with the claimed rank bound. All parts use a single partition at all three original epochs. $\square$
+
+**Theorem 140.2 (an interior terminal perturbation and a sufficient constrained negative vector).** For every original $\theta$, one can choose a nonzero bounded invariant real $w$, supported in a compact subset of a positive analytic-$\beta$ quotient patch, with
+
+$$
+\int_Gg_{jd}w\,dm=0\quad(j=2,3,4).
+\tag{140.1}
+$$
+
+For sufficiently small nonzero real $\tau$, the function
+
+$$
+k=c\beta+\tau w
+\tag{140.2}
+$$
+
+is everywhere strictly positive, at most $3/8$, has the three prescribed $C$ marginals, and satisfies $q_k/g$ nonconstant almost everywhere, where $q_k=Pk$. Define the ordered compression
+
+$$
+Q_k(u,v)=\int_Gg\,u\,P((Pk)v)\,dm,\qquad
+\Delta_k=\det\begin{pmatrix}
+Q_k(1,1)&Q_k(1,k)\\
+Q_k(k,1)&Q_k(k,k)
+\end{pmatrix}.
+\tag{140.3}
+$$
+
+The same sufficiently small choices of $\tau$ can ensure $\Delta_k>0$.
+
+For any such $k$, suppose there exists a bounded invariant real $v$ with the three zero source moments and four ordered equations
+
+$$
+\begin{gathered}
+\int_Gg_{jd}v\,dm=0\quad(j=2,3,4),\\
+Q_k(1,v)=Q_k(k,v)=Q_k(v,1)=Q_k(v,k)=0,
+\qquad Q_k(v,v)<0.
+\end{gathered}
+\tag{140.4}
+$$
+
+Then a sufficiently small $\epsilon>0$ gives an admissible invariant stochastic tuple
+
+$$
+u^\epsilon=(3/4-k-\epsilon v,\ k,\ 1/4+\epsilon v)
+\tag{140.5}
+$$
+
+with
+
+$$
+\det A(u^\epsilon)=\epsilon^2\Delta_k Q_k(v,v)<0.
+\tag{140.6}
+$$
+
+Consequently this antecedent implies an exact invariant coarse zero and an original rank-at-most-two partition.
+
+*Proof.* The analytic representative of $\beta=g_d$ is positive almost everywhere on $\Omega$, so there is a quotient open patch with compact closure inside $X$ on which it is continuous and bounded below by some $b_*>0$. Use the representative of Proposition 136.2 equal to this analytic function there. Choose four disjoint positive-measure Borel subsets of a compact subpatch. Their invariant lifted indicators span a four-dimensional space. Three homogeneous source moment equations have a nonzero solution in this space, giving $w$ with (140.1). Its support in the quotient is compact; the angular lift is compact and stays away from $N$. Give it value zero on $N$.
+
+Choose $\tau\ne0$ so small that
+
+$$
+|\tau|\|w\|_\infty<\min(cb_*/2,1/8).
+\tag{140.7}
+$$
+
+On the support of $w$, $k\ge cb_*/2>0$ and $k\le1/4+1/8=3/8$; elsewhere $k=c\beta\in(0,1/4]$. The moments are unchanged by (140.1).
+
+At $\tau=0$, $Pk=cg$, and the compression in (140.3) is the symmetric weighted heat Gram matrix of the independent functions $1,c\beta$:
+
+$$
+Q_{c\beta}(u,v)=c\langle gu,P(gv)\rangle_m.
+$$
+
+Its determinant is strictly positive by $g>0$ and injectivity of $T_{d/2}$, exactly as in §135. Each entry of (140.3) is continuous in $\tau$: expanding the bounded factors $k=c\beta+\tau w$ and $Pk=cg+\tau Pw$ gives a finite polynomial of integrable terms. Therefore $\Delta_k>0$ for all sufficiently small $|\tau|$.
+
+For the nonconstant ratio, write $\delta=\tau Pw=P(k-c\beta)$. It is nonzero by injectivity and $w\ne0$. Moreover, self-adjointness, $P\beta=g$ and (140.1) give
+
+$$
+\langle\beta,\delta\rangle_m
+=\tau\langle g,w\rangle_m=0.
+$$
+
+If $Pk=\lambda g$, this identity would imply $(\lambda-c)\langle\beta,g\rangle_m=0$. The last inner product is finite and strictly positive, hence $\lambda=c$, contradicting $\delta\ne0$. Thus $q_k/g$ is nonconstant. This fact alone asserts no invariant negative index.
+
+Now assume precisely (140.4). Representatives of $v$ may be made invariant Borel with the same bound by angular averaging and null-set repair. Choose $\epsilon>0$ with $\epsilon\|v\|_\infty\le1/8$. In (140.5) the first component is at least $1/4$, the last at least $1/8$, the middle is strictly positive and their sum is one. The moments follow from those of $k$ and $v$, so the tuple is admissible, with its actual terminal factor $Pk$.
+
+Let $H$ be the ordered matrix of $Q_k$ in the function list $(1,k,v)$. All four ordered equations are needed to give
+
+$$
+H=\begin{pmatrix}
+Q_k(1,1)&Q_k(1,k)&0\\
+Q_k(k,1)&Q_k(k,k)&0\\
+0&0&Q_k(v,v)
+\end{pmatrix}.
+\tag{140.8}
+$$
+
+The rows of
+
+$$
+R_\epsilon=\begin{pmatrix}
+3/4&-1&-\epsilon\\
+0&1&0\\
+1/4&0&\epsilon
+\end{pmatrix}
+\tag{140.9}
+$$
+
+express the three components of $u^\epsilon$ in that list. Direct bilinearity gives $A(u^\epsilon)=R_\epsilon H R_\epsilon^{\mathsf T}$, valid for this nonsymmetric ordered form. Since $\det R_\epsilon=\epsilon$, taking determinants yields (140.6). Theorem 140.1 proves the final implication. $\square$
+
+**Proposition 140.3 (the remaining quantified alternatives).** The preceding conclusions preserve the original unresolved event and its exact negation:
+
+$$
+\begin{aligned}
+\mathcal R&:\quad
+\exists\theta\in\Theta\ \forall D\in\mathscr D_{12}(\theta),
+\quad\operatorname{rank}A^D\ge3,\\
+\neg\mathcal R&:\quad
+\forall\theta\in\Theta\ \exists D\in\mathscr D_{12}(\theta),
+\quad\operatorname{rank}A^D\le2.
+\end{aligned}
+\tag{140.10}
+$$
+
+For every $\theta$ there is an original rank-exactly-three partition. An invariant coarse singularity for that $\theta$ is sufficient for an original rank-at-most-two partition, but the converse for arbitrary original partitions is not asserted. The existence of the invariant constrained negative vector (140.4) remains an antecedent, rather than a conclusion. Neither alternative in (140.10), nor full $64$-coordinate attainment, follows from the established determinant interval and its zero closure.
+
+*Proof.* The rank-three assertion is Theorem 139.2. The sufficient route is (138.8) and Theorem 140.1. It only concerns partitions obtained by splitting an invariant coarse $S$ while fixing $C$. It imposes no such structure on every member of $\mathscr D_{12}(\theta)$.
+
+If $0\notin I_\theta$, its interval property and positive value force $I_\theta\subset(0,\infty)$; otherwise a negative member and the positive member would enclose zero. Since $0\in\overline{I_\theta}$, in this case $\inf I_\theta=0$. No assertion above excludes this possibility. Thus closure is insufficient for an exact coarse zero. Conversely a strictly negative admissible stochastic value supplies an exact zero by Theorem 140.1; this is a sufficient condition, not an assumption silently imposed on every tuple.
+
+Theorem 137.1 uses nonzero odd angular characters. An invariant $v$ in (140.4) has character zero, so that theorem supplies no negative index on its required space. On the invariant bounded space the seven displayed equations are bounded linear functionals: the source densities are integrable, and in each $Q_k$ pairing the bounded fixed factors and the Markov contraction make the remaining coefficient integrable. Eight negative dimensions on that space would suffice by the finite-codimension argument, but no such eight-dimensional subspace, or even the single vector in (140.4), is established here. Nonconstancy of $q_k/g$ is not substituted for this missing assertion.
+
+Finally negating the original existential-universal statement gives the universal-existential statement in (140.10), since rank is an integer and the negation of rank at least three is rank at most two. A constructed rank three is compatible with both quantified alternatives. Proposition 135.3 proves only the forward implication from full $64$-coordinate attainment to $A^D=A^f$ and rank two. Neither rank two nor the coarse-zero route proves those additional equalities. The endpoint and source hypotheses throughout are precisely the inherited ones of Definition 135.1; these ordinary conditional mathematical deductions assert no further realization of the source or readout. $\square$
+
+## 追加锚（本行以下为增补区）
