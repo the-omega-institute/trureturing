@@ -267,18 +267,21 @@ private lemma reflection_pair (m : ℕ) (hm : 3 ≤ m) (j k : Fin (2 * m)) (hkj 
   have hsc : Real.sin c = Real.sin a * Real.cos (a-b) +
       Real.cos a * Real.sin (a-b) := by
     rw [hc, Real.sin_add_int_mul_two_pi, Real.sin_add]
-  have hu := Real.sin_sq_add_cos_sq a
-  have hv := Real.sin_sq_add_cos_sq (a-b)
-  have hd : (Real.cos a-Real.cos b)^2 + (Real.sin a-Real.sin b)^2 =
-      2-2*Real.cos (a-b) := by
-    rw [hcb, hsb]
-    linear_combination
-      ((1-Real.cos (a-b))^2 + Real.sin (a-b)^2) * hu + hv
+  have hchord (u v : ℝ) : (Real.cos u-Real.cos v)^2 + (Real.sin u-Real.sin v)^2 =
+      2-2*Real.cos (u-v) := by
+    have hp := D5.S3.ConceptDynamics.ObservationTopology.HarmonicSensors.PairedDelayGeometry.planar_chord_dot u v 0
+    simp only [sub_zero, Real.cos_zero, mul_one, ← pow_two] at hp
+    rw [hp]
+    have hcos := Real.cos_two_mul_eq_one_sub ((u-v)/2)
+    rw [show 2*((u-v)/2) = u-v by ring] at hcos
+    linear_combination 2*hcos
+  have hd := hchord a b
   have hd' : (Real.cos a-Real.cos c)^2 + (Real.sin a-Real.sin c)^2 =
       2-2*Real.cos (a-b) := by
-    rw [hcc, hsc]
-    linear_combination
-      ((1-Real.cos (a-b))^2 + Real.sin (a-b)^2) * hu + hv
+    rw [hchord, hc]
+    have he : a-(a+(a-b)+(t:ℝ)*(2*Real.pi)) =
+        -(a-b)+((-t : ℤ):ℝ)*(2*Real.pi) := by push_cast; ring
+    rw [he, Real.cos_add_int_mul_two_pi, Real.cos_neg]
   have hne : 2-2*Real.cos (a-b) ≠ 0 := by
     rw [← hd]
     exact chord_sq_ne_zero (2 * m) j k hkj.symm
@@ -613,10 +616,10 @@ private lemma nonzero_root_iff (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0)
   let B := blockB m
   let C := blockC m
   let I : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ := 1
-  let : Invertible (x • I) :=
-    { invOf := x⁻¹ • I
-      invOf_mul_self := by simp [I, smul_smul, hx]
-      mul_invOf_self := by simp [I, smul_smul, hx] }
+  let := invertibleOfNonzero hx
+  let : Invertible (x • I) := (Invertible.map (Matrix.scalar (Fin (2*m))) x).copy _ (by
+    dsimp only [I]
+    rw [Matrix.smul_one_eq_diagonal]; rfl)
   have hchar : (jacobian (2 * m)).charpoly =
       (Matrix.fromBlocks 0 B C 0).charpoly := by
     change _ = (Matrix.fromBlocks 0 (blockB m) (blockC m) 0).charpoly
@@ -624,10 +627,19 @@ private lemma nonzero_root_iff (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0)
       rotation_mul_transpose, Matrix.one_mul]
   have hmat : Matrix.scalar (Fin (2*m) ⊕ Fin (2 * m)) x - Matrix.fromBlocks 0 B C 0 =
       Matrix.fromBlocks (x • I) (-B) (-C) (x • I) := by
-    ext p q
-    cases p <;> cases q <;>
-      simp [Matrix.fromBlocks, Matrix.scalar, Matrix.diagonal, I, Matrix.one_apply]
+    rw [show Matrix.scalar (Fin (2*m) ⊕ Fin (2*m)) x =
+        x • (1 : Matrix (Fin (2*m) ⊕ Fin (2*m)) (Fin (2*m) ⊕ Fin (2*m)) ℝ) by
+      rw [Matrix.smul_one_eq_diagonal]; rfl]
+    rw [← Matrix.fromBlocks_one, Matrix.fromBlocks_smul, sub_eq_add_neg,
+      Matrix.fromBlocks_neg, Matrix.fromBlocks_add]
+    simp only [neg_zero, smul_zero, add_zero, zero_add, I]
   have hschur := Matrix.det_fromBlocks₁₁ (x • I) (-B) (-C) (x • I)
+  have hinv : ⅟(x • I) = x⁻¹ • I := by
+    change Matrix.scalar (Fin (2*m)) (⅟x) = _
+    dsimp only [I]
+    rw [invOf_eq_inv, Matrix.smul_one_eq_diagonal]
+    rfl
+  rw [hinv] at hschur
   change _ = (x • I).det * (x • I - (-C) * (x⁻¹ • I) * (-B)).det at hschur
   have hscale : x • (x • I - (-C) * (x⁻¹ • I) * (-B)) =
       x^2 • I - C * B := by
