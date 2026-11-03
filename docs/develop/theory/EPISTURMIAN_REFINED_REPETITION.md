@@ -1292,3 +1292,1030 @@ Additional sources used in §§6–9 are:
   the full assertion of Theorem 8.1.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Actual complete-return clocks and finite paired-period profiles
+
+**Definition 11.1 (Absolute heights and the specified paired column).** Fix the
+actual directive $y=\chi(a)$ of Application 9.1, on $B=\{0,\ldots,d-1\}$,
+$d\ge4$, and retain
+
+$$
+H=H_0=32(d-2),\qquad C=4H2^H,\qquad
+M=(2C+1)^{d-1},\qquad E=M!.
+$$
+
+All tail systems below belong to this same directive. Write
+$\sigma_{[r,s)}=L_{y_r}\cdots L_{y_{s-1}}$ and
+$A_{[r,s)}=M_{L_{y_r}}\cdots M_{L_{y_{s-1}}}$, with the rightmost morphism
+acting first. Put $A_k=A_{[0,k)}$, $\mu_k=\sigma_{[0,k)}$,
+$h_{k,c}=|\mu_k(c)|$, $h_k^-=\min_c h_{k,c}$ and
+$h_k^+=\max_c h_{k,c}$. Let $X^{(k)}$ be the two-sided primary subshift
+directed by $y_ky_{k+1}\cdots$, and let $\nu^{(k)}$ be its invariant
+probability, with frequency vector $f^{(k)}$. Thus
+$\nu^{(0)}=\mu_y$ and $f^{(0)}=f$ in §6. Define
+
+$$
+\begin{aligned}
+Z_k&=\sum_c h_{k,c}f^{(k)}_c,&
+f&=\frac{A_kf^{(k)}}{Z_k},\\
+v_{k,c}&=A_ke_c-h_{k,c}f,&
+\tau_k&=\max_c\|v_{k,c}\|_\infty.
+\end{aligned}                                                     \tag{11.1}
+$$
+
+For $a_n=y_n$ and $b_n=y_{n+1}$ put
+
+$$
+\begin{aligned}
+q_n&=h_{n,a_n}+h_{n,b_n}=h_{n+1,b_n}=h_{n+2,b_n},\\
+\zeta_n&=v_{n,a_n}+v_{n,b_n}=v_{n+1,b_n}=v_{n+2,b_n}.
+\end{aligned}                                                     \tag{11.2}
+$$
+
+The equalities use $a_n\ne b_n$ and the actual left morphisms.
+In the actual geometry of §§6–7, $p(\zeta_n)=q_n\alpha$ and
+
+$$
+B_n=\frac1m\sum_{r=1}^{E-1}J_y(q_n,r\zeta_n).                 \tag{11.3}
+$$
+
+The symbols $R,L,m$ keep their meanings in the preceding sections. In
+particular $m$ is the actual tiling degree, $1\le m\le M$, and the physical
+probability is $\lambda/m$.
+
+**Definition 11.2 (Natural towers and their actual probability).** Let
+$\mathscr B^{(k)}_c$ be the base of the natural level-$k$ tower labelled $c$;
+its height is $h_{k,c}$. The natural level zero is the partition into letter
+cylinders, with all heights one. For $N\ge1$ define the tail event
+
+$$
+\mathscr R_{k,N}=\left\{z\in X^{(k)}:
+ \exists r\ge1,\quad \sum_{i=0}^{r-1}h_{k,z_i}=N,
+ \quad z_r=z_0\right\}.                                    \tag{11.4}
+$$
+
+The terminal label is included in the endpoint test and excluded from the
+height sum. For a legal complete word $u=u_0\cdots u_r$, $r\ge1$,
+$u_r=u_0$, take its first-label subtower over the base cylinder $[u]$.
+Let $\mathscr C_k(N)$ be the disjoint union of these subtowers for all such
+words with $\sum_{i<r}h_{k,u_i}=N$, and put
+
+$$
+\mathcal A_k(N)=\nu^{(0)}(\mathscr C_k(N)),\qquad
+\Gamma_y(N)=\sup_{k\ge0}\mathcal A_k(N).                     \tag{11.5}
+$$
+
+An empty class has mass zero. There is just one elapsed-height equivalence
+class at this fixed $k,N$; its complete words contribute disjointly.
+No one-atom partition is inserted at level zero.
+
+**Proposition 11.3 (Eventual exact actual profiles).** Fix an integer $T\ge3$.
+For all sufficiently large $n$, simultaneously for $1\le t\le T$, write
+$a=a_n$, $b=b_n$, $g=f^{(n+2)}$, $\gamma=g_b$ and $Z=Z_{n+2}$.
+Then $0<\gamma\le1/2$, and
+
+$$
+\begin{array}{c|ccc}
+ &t=1&t=2&3\le t\le T\\ \hline
+\mathcal A_n(tq_n)
+ &(h_{n,a}+h_{n,b}\gamma)/Z&h_{n,a}\gamma/Z&0\\
+\mathcal A_{n+1}(tq_n)&q_n\gamma/Z&0&0\\
+\mathcal A_{n+2}(tq_n)&0&0&0
+\end{array}                                                       \tag{11.6}
+$$
+
+In particular
+
+$$
+\mathcal A_n(q_n)\le\frac23,\qquad
+\mathcal A_{n+1}(q_n)\le\frac12,\qquad
+\mathcal A_n(q_n)-\mathcal A_{n+1}(q_n)
+ =\frac{h_{n,a}(1-\gamma)}Z.                                 \tag{11.7}
+$$
+
+A sufficient threshold for (11.6) is
+
+$$
+T(2^{H+1}+2)\max(\tau_n,\tau_{n+1},\tau_{n+2})<1.             \tag{11.8}
+$$
+
+Thus (11.6) includes the unchanged finite range $1\le t\le E$; eventually
+all three displayed levels have zero mass at $Eq_n$.
+
+**Proof.** We first identify the clocks and measures being consumed. The
+morphisms in [MPV: K. Medková, E. Pelantová and É. Vandomme,
+*On non-repetitive complexity of Arnoux–Rauzy words*,
+[arXiv:2002.12593v1](https://arxiv.org/pdf/2002.12593v1), equation (2)] are
+exactly $L_c(c)=c$, $L_c(e)=ce$ for $e\ne c$. Their Claim 10 and Corollary 11
+identify the return words to the $k$th bispecial prefix with $\mu_k(c)$ and
+the derived language with $X^{(k)}$, up to a common permutation. Label
+$\mu_k(c)$ by its final letter $c$; this fixes that permutation and the
+actual tail labeling. Their Claim 12 gives the level-$k$ two-letter language
+
+$$
+\{y_kc,cy_k:c\in B\}.                                      \tag{11.9}
+$$
+
+The hierarchy is recognizable directly: in $L_a(X^{(k+1)})$, each non-$a$
+letter is paired with its preceding $a$, and remaining $a$ letters are
+singleton images. By (11.9) these pairs are disjoint. This determines the
+cuts uniquely. The parsed language is the actual next tail language, since
+any sufficiently extended factor can be realized in the characteristic word
+and parsed by these same cuts. Iteration gives the actual level-$k$ parsing.
+The positive $H$-blocks of §6 give primitivity. Consequently [DMR, §5.1]
+applies to this primitive recognizable directive: the induced probability
+on the union of its level-$k$ bases is this very $\nu^{(k)}$.
+
+If $\beta_k^{\rm base}$ is the original probability of that union, the
+disjoint floors give $1=\beta_k^{\rm base}Z_k$. Therefore
+
+$$
+\begin{aligned}
+\nu^{(0)}(\text{first-label subtower over }[u])
+ &=\frac{h_{k,u_0}\nu^{(k)}[u]}{Z_k},\\
+\mathcal A_k(N)
+ &=\frac{\sum_c h_{k,c}\nu^{(k)}(\mathscr R_{k,N}\cap[c])}{Z_k}.
+\end{aligned}                                                     \tag{11.10}
+$$
+
+This is the original physical clock and its length bias, rather than an
+unweighted tail probability. It is exactly the complete-word convention of
+[DMR, Definitions 3.2–3.3], including the disjointness and terminal label.
+Counting letters in the same actual tower decomposition gives the frequency
+normalization in (11.1).
+
+We record the consumed prescribed-sequence consequence of that dictionary.
+A point belongs to $\mathscr C_k(N)$ exactly when it and $T^Nx$ have the same
+level-$k$ label and floor. For the reverse direction, move both points back
+by that common floor. The two resulting bases are separated by precisely
+$N$ physical steps, whose unique positive-height parsing is a complete word.
+The natural partitions refine: each floor of
+$\mu_{k+1}(c)=\mu_k(L_{y_k}(c))$ has a fixed level-$k$ label and floor.
+Thus, at the same time $N$,
+
+$$
+\mathscr C_{k+1}(N)\subseteq\mathscr C_k(N),\qquad
+\Gamma_y(N)=\mathcal A_0(N)=\nu^{(0)}\{x:x_N=x_0\}.            \tag{11.11}
+$$
+
+For every prescribed sequence $N_j\to\infty$, these natural towers satisfy
+
+$$
+T^{N_j}\longrightarrow\mathrm{id}\text{ strongly in }L^2(\nu^{(0)})
+\quad\Longleftrightarrow\quad
+\exists k_j\to\infty:\mathcal A_{k_j}(N_j)\to1
+\quad\Longleftrightarrow\quad \Gamma_y(N_j)\to1.              \tag{11.12}
+$$
+
+Here is the specialization, with the time sequence held fixed, of the
+mechanism in [DMR, proof of Theorem A, Corollary 3.5 and Remark 3.6].
+Rigidity gives agreement of every finite partition with its $N_j$-translate
+in probability. Apply this to the finitely many level-$k$ atoms and use
+the same-atom identity above: $\mathcal A_k(N_j)\to1$ for each fixed $k$.
+Choose increasing thresholds for errors $1/r$ at levels $r$ and diagonalize
+to obtain $k_j\to\infty$ along the prescribed $j$, with mass tending to one.
+Conversely the natural partitions generate in measure, as in [DMR, §5.1].
+One can see the needed property here without properness: every base starts
+with the $k$th bispecial prefix $u_k$. A tower atom determines its image word
+and then this next prefix. For a fixed coordinate radius $F$, when
+$|u_k|\ge F$ and the floor is at least $F$, this determines $x[-F,F+1)$.
+The exceptional first $F$ floors have probability at most $F/Z_k$, tending
+to zero, since $h_k^-\to\infty$. Also $|u_k|\to\infty$.
+Thus each fixed cylinder is approximable in measure by unions of these
+atoms. On $\mathscr C_{k_j}(N_j)$ its approximating union is preserved.
+Invariance bounds the cylinder disagreement by twice the approximation
+error plus $1-\mathcal A_{k_j}(N_j)$, proving rigidity by density and the
+isometry of the Koopman operators. Finally (11.11), shift invariance and a
+union bound show that $\Gamma_y(N_j)\to1$ gives agreement on every fixed
+finite symbolic window, hence rigidity. The converse follows by testing the
+letter indicators. The generating condition in (11.12) is a choice supplied
+by this diagonal argument, not a condition on every possible mass-one witness.
+
+For later interpretation, (11.2) gives $q_n\to\infty$ and $\zeta_n\to0$.
+The first follows from positive $H$-blocks; the second is (8.6) applied to
+these exact columns. In the actual §6 representation, rigidity along
+$q_{n_j}$ makes $F_{q_{n_j},y}\to\mathrm{id}$ in measure. Indeed it makes
+each of the finitely many physical sheet indicators return in $L^2$; their
+average moved fraction tends to zero, and a nonidentity permutation moves
+at least one sheet. Hence, for $1\le r<E$,
+
+$$
+\Delta_{q_{n_j}}(r\zeta_{n_j})
+ \le2\operatorname{Haar}\{F_{q_{n_j},y}\ne\mathrm{id}\}\to0.
+$$
+
+Theorem 7.1 and translation continuity of $G_y$ give $B_{n_j}\to0$.
+Conversely $B_{n_j}\to0$ makes all the finitely many actual charges vanish;
+(7.4) gives $\Omega_y(q_{n_j})\to0$, and (6.7) gives
+$d_{\mu_y}(Eq_{n_j})\to0$. Together with (11.11) this proves exactly
+
+$$
+\Gamma_y(q_{n_j})\to1\quad\Longrightarrow\quad
+B_{n_j}\to0\quad\Longrightarrow\quad
+\Gamma_y(Eq_{n_j})\to1.                                    \tag{11.13}
+$$
+
+These uses retain the actual degree, actual common trajectories, and the
+factorial and charge comparisons of §§6–7. The symbolic calculation below
+does not require a degree-one model or geometric coincidence.
+
+For that calculation we need a bounded-alias observation. If
+$z\in\mathbb Z^d\setminus\{0\}$ and $\sum_c h_{k,c}z_c=0$, then
+
+$$
+1\le\|A_kz\|_\infty
+ =\left\|\sum_c z_cv_{k,c}\right\|_\infty
+ \le\tau_k\|z\|_1.                                        \tag{11.14}
+$$
+
+The first inequality is integrality and unimodularity. Thus two bounded
+Parikh vectors of the same physical height must coincide whenever the last
+bound is less than one.
+
+For height estimates, the project theorem
+[`mu_length_uniform_ratio`](https://github.com/the-omega-institute/trureturing/blob/b715a9e2e5f439f86a18f5ed9511efbe75c6061d/D5/S1/Words/Episturmian/BoundedPowers.lean)
+assumes $\forall i\,\exists j<B_0:y_{i+j}\ne y_i$ and concludes the ratio
+$B_0+2$. Here adjacent distinctness permits $B_0=2$, on every tail, so write
+$R_h=4$. We may also use the conservative ratio $2^H$. The actual height
+update, supplied by
+[`mu_length_step`](https://github.com/the-omega-institute/trureturing/blob/b715a9e2e5f439f86a18f5ed9511efbe75c6061d/D5/S1/Words/Episturmian/MorphicDecomposition.lean),
+is
+
+$$
+h_{k+1,c}=\begin{cases}h_{k,c},&c=y_k,\\
+h_{k,c}+h_{k,y_k},&c\ne y_k.
+\end{cases}                                                     \tag{11.15}
+$$
+
+It at most doubles the maximum. After the step $a$, the $a$ height is the
+unique minimum. After the next step $b$, the $b$ height $q_n$ is the unique
+minimum at level $n+2$. These updates also prove (11.2).
+
+An elapsed-time-$tq_n$ path at level $n$ has at most $t2^{H+1}$ traversed
+labels. Compare its Parikh vector with $t(e_a+e_b)$ using (11.14) and
+(11.8). They coincide. At levels $n+1$ and $n+2$ compare instead with $te_b$;
+the respective traversed lengths are at most $t2^H$ and $t$, so the same
+threshold excludes all aliases. The contraction (8.6) proves that (11.8)
+eventually holds for the fixed range of $t$.
+
+The dominant letter at level $n+2$ is $y_{n+2}\ne b$, so $bb$ is forbidden
+there by (11.9). At level $n+1$, applying $L_b$ shows that $b$-runs have
+length at most two: three consecutive $b$'s would require adjacent parent
+$b$'s. Therefore a complete word with traversed vector $te_b$ is impossible
+at level $n+2$, and at level $n+1$ it is possible only for $t=1$, as $bb$.
+At level $n$, the only possible traversed letters are $a,b$. Regard the
+traversed segment as cyclic using its identical first and terminal labels.
+There are $t$ occurrences of each letter; no $bb$ is legal. Every $b$ must
+therefore be followed by exactly one $a$, and the complete word is
+$(ab)^ta$ or $(ba)^tb$. The first requires a parent $b$-run of length $t$,
+the second one of length $t+1$. Consequently the actual classes are
+$\{aba,bab\}$ for $t=1$, $\{ababa\}$ for $t=2$, and empty for $t\ge3$.
+
+Put $p=\nu^{(n+1)}$, $\ell_a^{\rm av}=2-f^{(n+1)}_a$.
+Under $L_a$, one parent $b$ produces one $aba$, and one parent $bb$
+produces one $bab$ and one $ababa$ at their respective starts. Every such
+occurrence has this origin, by the unique cuts. Hence
+
+$$
+\nu^{(n)}[aba]=\frac{f^{(n+1)}_b}{\ell_a^{\rm av}},\qquad
+\nu^{(n)}[bab]=\nu^{(n)}[ababa]
+ =\frac{p[bb]}{\ell_a^{\rm av}}.                             \tag{11.16}
+$$
+
+Under $L_b$ every parent letter contributes one $b$, and every parent $b$
+contributes one $bb$ across its following cut. Thus
+
+$$
+f^{(n+1)}_b=\frac1{2-\gamma},\qquad
+p[bb]=\frac\gamma{2-\gamma},\qquad
+Z_n=\frac{Z_{n+1}}{\ell_a^{\rm av}},\qquad
+Z_{n+1}=\frac Z{2-\gamma}.                                  \tag{11.17}
+$$
+
+There are no adjacent $b$'s at level $n+2$, so $\gamma\le1/2$ by invariance;
+strictness gives positivity. Substitution of (11.16)–(11.17) into (11.10)
+proves every entry of (11.6) and its displayed difference.
+Finally $h_{n+1,a}=h_{n,a}$ is the minimum there, and (11.15) gives
+
+$$
+Z=q_n+\sum_{c\ne b}h_{n+1,c}g_c
+ \ge q_n+h_{n,a}(1-\gamma).
+$$
+
+For $x=h_{n,a}/q_n\in(0,1)$ the first mass is at most
+
+$$
+\frac{x+(1-x)\gamma}{1+x(1-\gamma)}
+ \le\frac{1+x}{2+x}\le\frac23.
+$$
+
+The other bound is $q_n\gamma/Z\le\gamma\le1/2$. This proves (11.7).
+All normalizations concern the same induced law and original clock.
+$\square$
+
+## 12. All-level crossing loss and the required scale gap
+
+**Proposition 12.1 (A uniform actual crossing deficit).** Retain the actual
+$H=H_0$ and set
+
+$$
+K_H=2^{3H+2},\qquad c_H=2^{-4H-2}=\frac1{2^HK_H}.
+$$
+
+For every $k\ge0$ and $N\ge1$,
+
+$$
+1-\mathcal A_k(N)\ge
+ \frac{c_H}{\lfloor N/h_k^-\rfloor+1}.                       \tag{12.1}
+$$
+
+Consequently for every fixed integer $t\ge1$ and every $k,n\ge0$,
+
+$$
+1-\mathcal A_k(tq_n)\ge
+ \frac1{2^{4H+2}\bigl(t2^{H+1+\max(n-k,0)}+1\bigr)}.          \tag{12.2}
+$$
+
+For any fixed integer $L_0\ge0$, all $k\ge n-L_0$ have the positive deficit
+
+$$
+\delta(H,t,L_0)=
+ \frac1{2^{4H+2}(t2^{H+1+L_0}+1)}.                           \tag{12.3}
+$$
+
+In particular, if $\mathcal A_{k_j}(tq_{n_j})\to1$, then
+$n_j-k_j\to\infty$. If $\Gamma_y(tq_{n_j})\to1$, the separately selected
+generating witnesses of (11.12) satisfy both $k_j\to\infty$ and
+$n_j-k_j\to\infty$. The latter is a necessity for every mass-one tower
+sequence; the former is the generating choice in that criterion.
+
+**Proof.** The quantitative cylinder ingredient must hold on the actual tails.
+We first specify the fixed-window input of Application 9.1 including its
+endpoints. Every aligned pair of the Thue–Morse word is $01$ or $10$;
+every length-three binary interval contains such a pair. Hence neither
+$000$ nor $111$ occurs, and its one-gaps are in $\{0,1,2\}$.
+The word $\vartheta^3(0)=01101001$ contains $11$, $101$, $1001$, and each
+aligned length-$16$ block $\vartheta^4(e)$ contains this word. For each
+$b\in\{0,1,2\}$ select one whole $10^b1$ occurrence in each aligned block.
+If its starting binary position is $s_r$ and its starting one's index is
+$j_r$, then
+
+$$
+s_0\le15,\qquad 1\le j_{r+1}-j_r\le s_{r+1}-s_r\le31,
+\qquad j_0\le15.
+$$
+
+The first selected $j_r\ge j$ lies at distance at most $15$ if $r=0$,
+and otherwise at most $30$, since $j_{r-1}<j$.
+Thus every half-open length-$32$ interval of gap indices contains $b$,
+including the initial interval. The literal marker list $3,4,\ldots,d-1$
+has $d-3$ letters, and $|\chi(b)|=d-2=L$ as in (9.1). Write an arbitrary
+start in $y$ as $qL+s$, $0\le s<L$. The variable positions in
+$[qL+s,qL+s+32L)$ have exactly block indices $q,\ldots,q+31$, and carry
+$a_q,\ldots,a_{q+31}$. At a marker residue $u\in\{0,\ldots,L-2\}$ the
+block indices are
+$q+\mathbf1_{u<s},\ldots,q+31+\mathbf1_{u<s}$.
+Each marker therefore occurs $32$ times too. This proves the required
+all-letter property for every length-$H_0$ window without changing $H_0$.
+For $d=4$, $L=2$ and $\chi(b)=3b$, so the same computation gives exactly
+$32$ variables and $32$ markers in every length-$64$ interval.
+The property is closed and shift invariant, hence holds throughout the
+actual hull and on every directive tail. Adjacent distinctness and uniform
+recurrence are those of the same squarefree directive in Application 9.1.
+
+We now consume the bounded-bigram-gap mechanism of [DZ, Theorem 3.1] with
+an explicit constant. For a fixed tail index $k$, put
+
+$$
+\Phi_{k,p}=\sigma_{[k,k+p)},\qquad
+g_{k,p,c}=|\Phi_{k,p}(c)|,\qquad
+g_{k,p}^-=\min_c g_{k,p,c},\quad g_{k,p}^+=\max_c g_{k,p,c}.
+$$
+
+These are relative lengths; they are not the absolute $h_{k,c}$.
+Each $H$-block incidence entry is between $1$ and $2^H$, by the
+right-to-left positivity argument in §6. For $p\ge H$, apply its final
+$H$-block after $\Phi_{k,p-H}$ and put
+$S=\sum_c g_{k,p-H,c}$. Then
+$S\le g_{k,p,c}\le2^HS$ for each $c$. For $p<H$ the lengths lie between
+$1$ and $2^p$. Therefore
+
+$$
+g_{k,p}^+/g_{k,p}^-\le2^H,\qquad
+g_{k,p+H}^-\ge d\,g_{k,p}^-\longrightarrow\infty.
+$$
+
+Let $W$ be a nonempty legal tail word of length $w$, and choose $p$ minimal
+with $g_{k,p}^-\ge w$. The elementary at-most-doubling update and minimality
+give $g_{k,p}^+\le2^{H+1}w$; for $p=0$ this follows from $w=1$.
+Realize $W$ in the actual concatenation
+$c_{T^ky}=\Phi_{k,p}(c_{T^{k+p}y})$.
+It meets at most two consecutive level-$p$ images. If only one is met,
+include its successor. Thus $W$ is contained in $\Phi_{k,p}(uv)$ for an
+actual legal bigram $uv$ at level $q=k+p$.
+By [MPV, Claim 12], $uv$ has the form $ax$ or $xa$, where $a=y_q$,
+including $aa$.
+
+For any letter $c$ put
+$S_c=\sigma_{[q+1,q+2H+1)}(c)$ and
+$B_c=L_a(S_c)=\sigma_{[q,q+2H+1)}(c)$.
+The incidence matrix for $S_c$ is the product, in that order, of the two
+positive $H$-block matrices on $[q+1,q+H+1)$ and $[q+H+1,q+2H+1)$.
+Every entry is at least $d\ge4$. Choose the second occurrence of any letter
+$x$ in $S_c$, at position $j$. There is an earlier occurrence and at least
+two later occurrences, so $j\ge1$ and $j\le|S_c|-3$.
+For $x\ne a$, its image gives $ax$, and its final $x$ followed by the
+initial $a$ of the next image gives $xa$. For $x=a$, the singleton image
+followed by the next image gives $aa$. Each selected pair has nonempty
+context on both sides in $B_c$; after the next image there is still a whole
+image. Thus $B_c=PuvQ$ for nonempty $P,Q$, for the specified bigram $uv$.
+Applying $\Phi_{k,p}$ produces the specified $W$ in every actual
+$\sigma_{[k,q+2H+1)}(c)$, with at least $w$ original tail symbols of margin
+on each side. Every such supertile has length at most
+
+$$
+2^{2H+1}g_{k,p}^+\le2^{3H+2}w=K_Hw.                         \tag{12.4}
+$$
+
+This supplies occurrences of the whole word, including when its original
+occurrence crossed a level-$p$ cut.
+
+Choose one wholly interior $W$ occurrence in each supertile of the actual
+characteristic word. In any legal length-$F$ word, discard the at most two
+partial supertiles at its ends. The remaining complete supertiles cover at
+least $F-2K_Hw$ symbols; their lengths are at most $K_Hw$.
+They give at least $F/(K_Hw)-2$ distinct, wholly contained occurrences.
+Every legal word has an occurrence in this characteristic word, so this
+bound applies to all of them. Integrating it against the actual invariant
+probability gives, for $F\ge w$,
+
+$$
+(F-w+1)\nu^{(k)}[W]\ge \frac F{K_Hw}-2.
+$$
+
+Letting $F\to\infty$ proves the explicit consumed cylinder estimate
+
+$$
+\nu^{(k)}[W]\ge\frac1{K_H|W|}.                              \tag{12.5}
+$$
+
+The argument applies to every invariant probability on the actual tail
+language, in particular its normalized induced law from (11.10).
+Qualitative linear recurrence in [DZ] alone is not being assigned this
+numerical constant; (12.4) and the invariant-measure argument supply it.
+
+For the loss estimate put $D=\lfloor N/h_k^-\rfloor+1$.
+The event $\mathscr R_{k,N}$ is determined by its first $D$ labels: a
+positive elapsed-time-$N$ path crosses at most $D-1$ towers, and its terminal
+label is among these $D$ labels. If $N<h_k^-$ the event is empty.
+This event cannot have tail probability one. Otherwise a two-sided tail
+$z$ belongs to it at every integer shift. Let $(s_j)_{j\in\mathbb Z}$ be its
+strictly increasing cumulative heights, $s_{j+1}-s_j=h_{k,z_j}$.
+At every $j$ there is a unique positive $r_j$ such that
+
+$$
+s_{j+r_j}=s_j+N,\qquad z_{j+r_j}=z_j.
+$$
+
+Then
+$s_{j+1}+N=s_{j+r_j}+h_{k,z_j}=s_{j+r_j+1}$.
+Comparing with $s_{j+1+r_{j+1}}$ gives $r_{j+1}=r_j$.
+Thus all $r_j$ equal one positive $r$, and $z_{j+r}=z_j$ everywhere.
+This contradicts the absence of periodic points in the minimal aperiodic
+strict AR language. Hence the complement contains a legal length-$D$
+cylinder $[W]$. Its entire first-label subtower lies outside
+$\mathscr C_k(N)$. By (11.10), (12.5), $Z_k\le h_k^+$, and the conservative
+height ratio,
+
+$$
+1-\mathcal A_k(N)\ge
+ \frac{h_{k,W_0}\nu^{(k)}[W]}{Z_k}
+ \ge\frac1{2^HK_HD},
+$$
+
+which is (12.1), also for $k=0$.
+
+For $n\ge k$, monotonicity and at-most-doubling give
+$q_n\le2h_n^+\le2^{n-k+1}h_k^+\le2^{H+1+n-k}h_k^-$.
+For $n<k$, monotonicity gives $h_k^-\ge h_n^-$ and
+$q_n/h_k^-\le2^{H+1}$. Substitution into (12.1) proves (12.2)–(12.3).
+If $n_j-k_j$ failed to tend to infinity, a subsequence would have
+$k_j\ge n_j-L_0$ for some fixed $L_0$, contradicting (12.3) and mass one.
+The generating witnesses when $\Gamma_y(tq_{n_j})\to1$ are then precisely
+the separate choice furnished by (11.12). At unrestricted levels (12.1)
+only gives
+
+$$
+\Gamma_y(N)\le1-\frac{c_H}{N+1}.                             \tag{12.6}
+$$
+
+This vanishing deficit does not provide a fixed positive loss at growing
+times. $\square$
+
+## 13. Original-clock isolation through unbounded crossings
+
+**Definition 13.1 (Two actual scales and separate quantitative constants).**
+For $0\le k\le n$, keep the specified $b=b_n$ and put
+
+$$
+\begin{aligned}
+A_{k,n}^{\rm rel}&=A_{[k,n+2)},&s_{k,n}&=n+2-k,\\
+Q_{k,n}&=A_{k,n}^{\rm rel}e_b,&
+\ell_{k,n,c}&=\mathbf1^{\mathsf T}A_{k,n}^{\rm rel}e_c,\\
+\ell_{k,n}&=\ell_{k,n,b}=\mathbf1^{\mathsf T}Q_{k,n},&
+\widehat Z_{k,n}&=\sum_c\ell_{k,n,c}f^{(n+2)}_c,\\
+v_{k,n,c}^{\rm rel}&=A_{k,n}^{\rm rel}e_c-\ell_{k,n,c}f^{(k)},&
+\sigma_{k,n}&=\max_c\|v_{k,n,c}^{\rm rel}\|_\infty.
+\end{aligned}                                                     \tag{13.1}
+$$
+
+The indexed $\ell_{k,n}$ counts actual level-$k$ labels; the original
+physical time is still $q_n=h_k\cdot Q_{k,n}$. In particular it is not
+replaced by $\ell_{k,n}$. The frequency relation is
+
+$$
+f^{(k)}=\frac{A_{k,n}^{\rm rel}f^{(n+2)}}{\widehat Z_{k,n}}.    \tag{13.2}
+$$
+
+Use fresh constants, separate from the geometric $C$ and the old comparison
+$R$,
+
+$$
+\begin{gathered}
+R_h=4,\qquad \eta_H=\frac1{d2^H},\qquad
+\theta=\frac{2^H-d}{2^H-1}\in(0,1),\qquad
+b_s=\max\{0,\lfloor(s-H+1)/H\rfloor\},\\
+\mathfrak D_H=1+dR_h,\qquad
+\mathfrak b_H=4H\left(1+\frac1{1-\theta}\right),\\
+\mathfrak K_t=(t+1)\mathfrak b_Hd(R_h+1),\qquad
+\mathfrak c_t=\frac{t\eta_H}{d!\mathfrak b_HR_h^2(t+1)},\qquad
+\mathfrak d_t=\frac{\mathfrak c_t}{5R_h}\quad(t\ge1).
+\end{gathered}                                                     \tag{13.3}
+$$
+
+Define the finite threshold
+
+$$
+k_0(t)=\min\{K\ge1:
+ \mathfrak D_H\mathfrak K_t\theta^{b_K}<1\}.                  \tag{13.4}
+$$
+
+Its finiteness and the needed projection bounds are proved in the consuming
+estimate below.
+
+**Theorem 13.2 (Specified-column loss in the actual tower).** For every fixed
+integer $t\ge1$, every $k\ge k_0(t)$ and every $n\ge k$, a legal level-$k$
+word $U$ of physical height $h_k\cdot\ell(U)=tq_n$ satisfies
+
+$$
+\ell(U)=tQ_{k,n},\qquad |U|=t\ell_{k,n}.                      \tag{13.5}
+$$
+
+There is no bound on this number of crossings. In particular
+
+$$
+\mathscr R_{k,tq_n}=
+ \{z:\ell(z[0,t\ell_{k,n}))=tQ_{k,n},\quad
+                  z_{t\ell_{k,n}}=z_0\}.                   \tag{13.6}
+$$
+
+Moreover $\sigma_{k,n}>0$, and the actual length-biased loss obeys
+
+$$
+\bigl(1-\mathcal A_k(tq_n)\bigr)
+ \ell_{k,n}\sigma_{k,n}^{d-2}\ge\mathfrak c_t,                \tag{13.7}
+$$
+
+with the uniform explicit consequence
+
+$$
+1-\mathcal A_k(tq_n)\ge
+ \frac{\mathfrak c_t}
+ {\ell_{k,n}\mathfrak D_H^{d-2}
+                 \theta^{(d-2)b_{s_{k,n}}}}.                \tag{13.8}
+$$
+
+Thus, along any $k_j\to\infty$ and $n_j-k_j\to\infty$,
+
+$$
+\bigl(1-\mathcal A_{k_j}(tq_{n_j})\bigr)\ell_{k_j,n_j}
+ \longrightarrow\infty.                                   \tag{13.9}
+$$
+
+**Proof.** We instantiate the uniform mature suppliers on the same tails.
+The height ratio $R_h=4$ follows from the exact adjacent-distinct substitution
+into the project theorem in the proof of Proposition 11.3. Every actual tail
+frequency coordinate is at least $\eta_H$: apply its next positive
+$H$-block to the following normalized frequency vector. Each resulting
+coordinate is at least one and the coordinate sum is at most $d2^H$.
+This proves the stated conservative bound with no change of frequency law.
+
+For balance and contraction use [DHS, equation (4), Lemma 3, Proposition 1,
+Lemmas 5–6 and Theorem 1], with their left incidence convention. Their
+modified matrices have induced sup norm at most one. Their Lemma 6 gives
+a factor at most $\theta$ on an $H$-block beginning at depth at least $H-1$:
+the block contains the full alphabet, and every backward $H$-window needed
+there contains the alphabet. Therefore a product of depth $s$ has modified
+norm at most $\theta^{b_s}$. In particular
+
+$$
+\sum_{s\ge0}\theta^{b_s}
+ =(H-1)+\frac H{1-\theta}.
+$$
+
+[DHS, Proposition 1] bounds the characteristic-word discrepancy by this
+sum, and its Lemma 3 bounds letter balance by four times discrepancy.
+The constant $\mathfrak b_H$ in (13.3) is larger. Every actual tail has the
+same $H$-window condition and the same characteristic and subshift language.
+Thus any two equal-length legal words in any tail have letter-count
+coordinate differences at most $\mathfrak b_H$. Invariance makes the mean
+length-$r$ letter-count vector exactly $rf^{(k)}$. Each count is between
+its coordinate minimum and maximum at that length, so
+
+$$
+\|\ell(U)-|U|f^{(k)}\|_\infty\le\mathfrak b_H
+ \quad\text{for every legal }U\text{ in }X^{(k)}.             \tag{13.10}
+$$
+
+This consumes the uniform balance conclusion, without replacing its
+full-alphabet hypothesis by a run bound.
+
+The projection must be transported with the actual frequencies. For
+$A=A_{k,n}^{\rm rel}$, $w=f^{(n+2)}$, $g=f^{(k)}$ and
+$h=A^{\mathsf T}\mathbf1=(\ell_{k,n,c})_c$, set
+
+$$
+P=I-\frac{wh^{\mathsf T}}{h^{\mathsf T}w}.
+$$
+
+Then $Aw=(h^{\mathsf T}w)g$ by (13.2), and
+
+$$
+AP=(I-g\mathbf1^{\mathsf T})A,\qquad
+P\mathbb R^d\subset h^\perp=A^{-1}V,
+\qquad \|P\|_\infty\le1+dR_h=\mathfrak D_H.                  \tag{13.11}
+$$
+
+For the norm bound use $\|w\|_\infty\le1$,
+$\sum_c h_c\le d h^+$, $h^{\mathsf T}w\ge h^-$ and $h^+/h^-\le R_h$.
+[DHS, equation (4)] equates the incidence and modified products on this
+exact inverse-image hyperplane $A^{-1}V$, so (13.11) gives
+
+$$
+\sigma_{k,n}\le\mathfrak D_H\theta^{b_{s_{k,n}}},\qquad
+\tau_k\le\mathfrak D_H\theta^{b_k}.                         \tag{13.12}
+$$
+
+The second bound is the same argument from original level zero to $k$.
+In both cases the target projection is along the actual target frequency;
+the source hyperplane is $A^{-1}V$, not the untransported $V$.
+These bounds prove (13.4) is finite and
+$\tau_k\mathfrak K_t<1$ for every $k\ge k_0(t)$.
+
+The actual word $V_{k,n}=\sigma_{[k,n+2)}(b)$ is legal at level $k$, since
+$b$ occurs in the actual level-$(n+2)$ tail. Its vector is $Q_{k,n}$ and
+its length is $\ell_{k,n}$. In particular
+$\|Q_{k,n}-\ell_{k,n}g\|_\infty\le\mathfrak b_H$ by (13.10).
+We do not assume that $V_{k,n}^t$ is legal. Its formal count multiple only
+satisfies the multiplied estimate with $t\mathfrak b_H$.
+For the specified legal $U$ write
+
+$$
+z=\ell(U)-tQ_{k,n},\qquad a_0=|U|-t\ell_{k,n},\qquad
+z=a_0g+e,\quad \|e\|_\infty\le(t+1)\mathfrak b_H.
+$$
+
+The equal original clocks give
+$0=h_k\cdot z=a_0Z_k+h_k\cdot e$.
+Since $Z_k\ge h_k^-$ and $\sum_c h_{k,c}\le dR_hh_k^-$, it follows that
+
+$$
+|a_0|\le(t+1)\mathfrak b_HdR_h,\qquad
+\|z\|_1\le|a_0|+d\|e\|_\infty\le\mathfrak K_t.              \tag{13.13}
+$$
+
+This bound is independent of the number of crossings. The actual integral
+unimodular $A_k$ and $h_k\cdot z=0$ give
+
+$$
+\|A_kz\|_\infty
+ =\left\|\sum_c z_cv_{k,c}\right\|_\infty
+ \le\tau_k\mathfrak K_t<1.
+$$
+
+A nonzero integral image has norm at least one, and $A_k$ is invertible.
+Thus $z=0$, proving (13.5). Positive heights make the crossing count unique;
+retaining its terminal label proves the exact event identity (13.6).
+
+For a quantitative loss use the same relative matrix $A$ and frequencies
+$g,w$. Write $v_c=Ae_c-\ell_{k,n,c}g$, $\sigma=\sigma_{k,n}$.
+Choose any $c\ne b$. In the $d$-by-$d$ matrix $A$, replace column $c$ by
+$g$. Cramer's formula and $\det A=1$ give the strictly positive determinant
+
+$$
+\det(A\text{ with column }c\text{ replaced by }g)
+ =(A^{-1}g)_c=\frac{w_c}{\widehat Z_{k,n}}>0.                 \tag{13.14}
+$$
+
+Subtract $\ell_{k,n,j}$ times its $g$ column from each other column $j$.
+The resulting determinant is unchanged; its columns are $g$, the specified
+$v_b$, and $d-2$ other vectors $v_j$. All $v_j$ lie in the $(d-1)$-dimensional
+hyperplane $V$, while $\mathbf1^{\mathsf T}g=1$.
+The Leibniz bound therefore gives, with this specified column still present,
+
+$$
+\frac{\eta_H}{\widehat Z_{k,n}}
+ \le d!\|v_b\|_\infty\sigma^{d-2}.
+$$
+
+The positive minor (13.14) excludes $v_b=0$ and $\sigma=0$.
+Since $\widehat Z_{k,n}\le\max_j\ell_{k,n,j}\le R_h\ell_{k,n}$,
+
+$$
+\|v_b\|_\infty\ge
+ \frac{\eta_H}{d!R_h\ell_{k,n}\sigma^{d-2}}.                 \tag{13.15}
+$$
+
+This is an individual-column estimate, rather than a maximum-column
+existence assertion.
+
+On the actual probability space $(X^{(k)},\nu^{(k)})$ put
+
+$$
+\begin{aligned}
+F&=\{z:\ell(z[0,t\ell_{k,n}))=tQ_{k,n}\},\qquad
+p_F=\nu^{(k)}(F^c),\\
+Y(z)&=\ell(z[0,t\ell_{k,n}))-tQ_{k,n}.
+\end{aligned}
+$$
+
+Invariance gives the exact mean
+$\mathbb E Y=t\ell_{k,n}g-tQ_{k,n}=-tv_b$.
+By (13.10) and the legality of $V_{k,n}$,
+$\|Y(z)\|_\infty\le\mathfrak b_H+t\|v_b\|_\infty
+\le(t+1)\mathfrak b_H$ everywhere. Since $Y=0$ on $F$,
+
+$$
+t\|v_b\|_\infty\le\mathbb E\|Y\|_\infty
+ \le(t+1)\mathfrak b_Hp_F.                                 \tag{13.16}
+$$
+
+The exact event (13.6) is contained in $F$, including its additional endpoint
+requirement. The original length bias (11.10) gives
+
+$$
+1-\mathcal A_k(tq_n)
+ =\frac{\sum_c h_{k,c}\nu^{(k)}(\mathscr R_{k,tq_n}^c\cap[c])}{Z_k}
+ \ge\frac{p_F}{R_h}.
+$$
+
+Combining this with (13.15)–(13.16) proves (13.7) with precisely
+$\mathfrak c_t$. Substitution of (13.12) proves (13.8).
+When the two indices diverge as in (13.9), the threshold eventually holds
+and $\sigma_{k_j,n_j}\to0$. Since $d-2>0$, (13.7) implies (13.9).
+All expectations and endpoints were taken on this same actual tail; no
+separately optimal paths or independent marginal laws were combined.
+
+For comparison, (13.5) and the height ratio give
+$t\ell_{k,n}\le tq_n/h_k^-\le tR_h\ell_{k,n}$.
+Thus the inverse-crossing bound (12.1) has order $1/\ell_{k,n}$ here,
+whereas (13.7) multiplies that lower scale by
+$\sigma_{k,n}^{-(d-2)}$, tending to infinity across a diverging gap.
+The loss itself is not asserted to have a fixed positive lower bound.
+$\square$
+
+## 14. Finite recognition, global loss rates and their exact boundary
+
+**Theorem 14.1 (Recognition transfer in the original clock).** For every
+$k\ge1$ let $p_k=|u_k|$, where $u_k$ is the actual $k$th bispecial prefix.
+The level-$k$ tower atom of $x$ is determined by its coordinates in the
+finite inclusive window
+
+$$
+I_k=\{-h_k^+,-h_k^++1,\ldots,h_k^++p_k\},\qquad
+|I_k|=2h_k^++p_k+1\le5h_k^+.                                \tag{14.1}
+$$
+
+Consequently, for every $N\ge1$,
+
+$$
+1-\mathcal A_k(N)\le5h_k^+\bigl(1-\Gamma_y(N)\bigr).          \tag{14.2}
+$$
+
+For fixed $t\ge1$, $k\ge k_0(t)$ and $n\ge k$, this gives the actual global
+inequality
+
+$$
+q_n\bigl(1-\Gamma_y(tq_n)\bigr)\sigma_{k,n}^{d-2}
+ \ge\mathfrak d_t.                                         \tag{14.3}
+$$
+
+In particular, over the whole sequence of prescribed paired periods,
+
+$$
+\lim_{n\to\infty}q_n\bigl(1-\Gamma_y(tq_n)\bigr)=\infty
+ \quad\text{for each fixed integer }t\ge1.                  \tag{14.4}
+$$
+
+This includes $t=1$ and the original fixed $t=E$, and any fixed finite range
+can be treated with $k\ge\max_{1\le t\le T}k_0(t)$.
+
+**Proof.** The return words to $u_k$ are exactly $\mu_k(c)$, by [MPV,
+Claim 10 and Corollary 11] in the labeling fixed in Proposition 11.3.
+Every occurrence of $u_k$ is a natural level-$k$ base boundary, and the
+consecutive gaps are these return-word lengths, at most $h_k^+$.
+The window $I_k$ sees all occurrences starting between $-h_k^+$ and
+$h_k^+$, since it contains their full length-$p_k$ words. It therefore
+identifies the last boundary at or before zero and the following boundary.
+The first is at least $-h_k^+$ and the second at most $h_k^+$.
+The word between them is one $\mu_k(c)$, whose label is determined: the
+images have distinct incidence columns by unimodularity (also their final
+letters are distinct). The distance of zero from the first boundary is its
+floor. This proves the recognition assertion with the displayed finite
+indices, for all actual points of the subshift.
+
+For its length bound use the project identities
+[`central_succ_morphic` and `image_sum_step`](https://github.com/the-omega-institute/trureturing/blob/b715a9e2e5f439f86a18f5ed9511efbe75c6061d/D5/S1/Words/Episturmian/BoundedPowers.lean).
+In the primary conventions their statements are
+
+$$
+p_{k+1}-p_k=h_{k,y_k},\qquad
+\sum_c h_{k+1,c}-\sum_c h_{k,c}=(d-1)h_{k,y_k}.
+$$
+
+Since $p_0=0$ and $\sum_c h_{0,c}=d$, summing gives
+
+$$
+(d-1)p_k=\sum_c h_{k,c}-d,\qquad p_k\le2h_k^+.
+$$
+
+Thus $|I_k|\le4h_k^++1\le5h_k^+$.
+If $x$ and $T^Nx$ agree at every coordinate of this single window, recognition
+places them in the same tower atom, hence in $\mathscr C_k(N)$.
+Shift invariance and the letter identity (11.11) give
+
+$$
+\begin{aligned}
+1-\mathcal A_k(N)
+ &\le\nu^{(0)}\{x:\exists r\in I_k, x_r\ne x_{N+r}\}\\
+ &\le|I_k|\nu^{(0)}\{x:x_0\ne x_N\}
+ \le5h_k^+(1-\Gamma_y(N)).
+\end{aligned}
+$$
+
+This is a union bound on common trajectories, with no independent trials.
+Combining (14.2) with (13.7) gives
+
+$$
+1-\Gamma_y(tq_n)\ge
+ \frac{\mathfrak c_t}
+ {5h_k^+\ell_{k,n}\sigma_{k,n}^{d-2}}.
+$$
+
+Because $q_n=h_k\cdot Q_{k,n}\ge h_k^-\ell_{k,n}$,
+$h_k^+\ell_{k,n}\le R_hq_n$; (14.3) follows.
+Fix any one $k\ge k_0(t)$. The bound holds for every $n\ge k$, and
+$\sigma_{k,n}\le\mathfrak D_H\theta^{b_{n+2-k}}\to0$.
+Therefore
+
+$$
+q_n(1-\Gamma_y(tq_n))
+ \ge\frac{\mathfrak d_t}{\mathfrak D_H^{d-2}}
+       \theta^{-(d-2)b_{n+2-k}}\longrightarrow\infty.
+$$
+
+This proves the limit over all $n$, not just a subsequence or selected tower
+levels. $\square$
+
+**Corollary 14.2 (Specified-column displacement and the actual boundary
+budget).** The specified vector in (11.2) satisfies
+
+$$
+q_n\|\zeta_n\|_\infty\,\tau_{n+2}^{d-2}
+ \ge\frac{\eta_H}{d!R_h}>0,\qquad
+\zeta_n\to0,\qquad q_n\|\zeta_n\|_\infty\to\infty.            \tag{14.5}
+$$
+
+Under the actual BST realization of §6, with its fixed space and raw measure,
+
+$$
+q_nW_y(\zeta_n)\longrightarrow\infty.                        \tag{14.6}
+$$
+
+The latter assertion uses exactly $\lambda(\mathcal R_y)=m>0$,
+$\mathcal R_y\subset[-C,C]^d\cap V$, and the subtile partition in measure.
+It is an assertion about the sufficient boundary budget, not a lower bound
+on $J_y$ or $B_n$.
+
+**Proof.** Apply the positive determinant argument (13.14) to the full
+$A_{n+2}$, with target frequency $f$, source frequency $f^{(n+2)}$, and the
+specified column $b_n$. Its height is exactly $q_n$ and its projected column
+is exactly $\zeta_n$. For any $c\ne b_n$, the replacement determinant is
+$f^{(n+2)}_c/Z_{n+2}\ge\eta_H/Z_{n+2}$.
+There is one specified projected column and $d-2$ others, each of norm at
+most $\tau_{n+2}$. Also $Z_{n+2}\le R_hq_n$. The Leibniz bound gives the
+first inequality in (14.5) and excludes $\zeta_n=0$.
+The actual projected contraction (13.12) gives
+$\tau_{n+2}\to0$ and $\|\zeta_n\|_\infty\le\tau_{n+2}\to0$.
+Since $d-2>0$, the first inequality then gives the divergent scaled
+displacement.
+
+For the geometric consequence reuse the actual sets, normalization and
+hypotheses in §6. Their suppliers are [BST, Theorem 3.1(ii)–(iv), Lemma 8.3
+and Proposition 8.4]: the primitive, algebraically irreducible directive has
+recurrent balanced returns; Property PRICE and strong coincidence give the
+domain exchange and the subtile partition. The separate degree-one toral
+clauses of that source require geometric coincidence and are not used.
+The fixed $m,C,\lambda$ here are exactly those of (6.1)–(6.4), with no
+replacement of the actual finite extension.
+
+For a nonzero $v\in V$, put $a=\|v\|_\infty$ and
+$j=\lfloor2C/a\rfloor+1$. A coordinate of the displacement $jv$ has
+absolute value greater than $2C$, so $\mathcal R_y$ and
+$\mathcal R_y-jv$ are disjoint. Translation invariance and the
+symmetric-difference triangle inequality give
+
+$$
+2m=G_y(jv)\le jG_y(v),\qquad
+G_y(v)\ge\frac{2ma}{2C+a}.
+$$
+
+Because the actual subtiles partition $\mathcal R_y$ in measure,
+$W_y(v)\ge G_y(v)$. Substitute $v=\zeta_n\ne0$ to obtain
+
+$$
+q_nW_y(\zeta_n)\ge
+ \frac{2m q_n\|\zeta_n\|_\infty}{2C+\|\zeta_n\|_\infty}
+ \longrightarrow\infty.
+$$
+
+The budget in (7.3) counts possible different branch assignments. The charge
+in (7.2) is their accumulated vector difference along the same two actual
+trajectories and permits cancellation. The only corresponding bound in
+(7.4) is $J_y(q,v)\le qW_y(v)/2$. A divergent right side supplies no lower
+bound on its left side, so (14.6) rules out that stronger sufficient
+vanishing-budget condition at these periods without deciding the charge.
+$\square$
+
+**Proposition 14.3 (Quantitative conclusions and mass-one limits).** The
+scaled conclusion (14.4) alone does not imply an eventual fixed positive
+loss $1-\Gamma_y(tq_n)\ge\delta>0$. The zero masses at the levels in (11.6)
+do not supply an upper bound for the supremum over all levels.
+If there were an eventual fixed deficit
+$\Gamma_y(Eq_n)\le1-\delta$ with $\delta>0$, it would refute
+$\liminf_n B_n=0$ by (11.13). Such a deficit on only infinitely many $n$
+would not by itself refute that lower-limit assertion.
+
+**Proof.** For any sequence of positive real numbers $r_j\to\infty$,
+$e_j=r_j^{-1/2}$ tends to zero while $r_je_j\to\infty$.
+This establishes the stated logical limit of a scaled-loss assertion; it
+makes no assertion that these particular $e_j$ are realized by the actual
+subshift. The supremum in (11.5) is at least each displayed mass, so a small
+mass at a selected fine level cannot be used as an upper bound on it.
+If $\liminf_nB_n=0$, nonnegativity gives a subsequence $B_{n_j}\to0$;
+(11.13) forces $\Gamma_y(Eq_{n_j})\to1$. An eventual fixed deficit
+contradicts this. Infinitely many deficient indices need not intersect that
+subsequence, which proves the quantifier distinction. $\square$
+
+**Definition 14.4 (Unresolved assertions in the fixed model).** The
+paired-period charge assertion remains
+
+$$
+\liminf_{n\to\infty}
+ \frac1m\sum_{r=1}^{E-1}J_y(q_n,r\zeta_n)=0,                  \tag{14.7}
+$$
+
+for the actual $y=\chi(a)$, actual $m$, unchanged $E$, actual endpoint
+carries and common trajectories. No subsequence with
+$\Gamma_y(q_{n_j})\to1$, no eventual fixed positive deficit for
+$\Gamma_y(Eq_n)$, and no direct eventual positive lower bound on $B_n$ is
+asserted in §§11–14. The available necessary loss-rate bounds leave the
+coverage distribution and growing-time finite-fiber phase unresolved.
+In particular the translation modulus of the actual $q_n$-step permutation
+$F_{q_n,y}$ in (6.6) is not controlled by its one-step static continuity or
+by the factorial-time statements above. Theorem 7.1 still relates vanishing
+of that modulus to the actual charge, with its existing endpoint exceptions.
+
+The unrestricted charge assertion (10.1), its universal version over all
+remaining auxiliary directives and dimensions, and Nguyen's original
+[N, Question 9.2] retain their scope and remain unresolved. The last question
+requires every original directive and every intercept, and the witnesses of
+Definition 1.2: for each $\rho\ge1$ and $\epsilon>0$, one integer
+$\delta\ge0$ independent of the sequence index, growing periods
+$s_j-r_j\to\infty$, $-1\le r_j<s_j<t_j$, $t_j\ge\rho s_j$, and a cover of
+all mismatches by at most $\delta$ actual intervals with total length at most
+$\epsilon(t_j-s_j)$. The transfer of §§2 and 10 is consumed at precisely
+those quantifiers; the new mass and rate estimates supply none of its
+unresolved rigidity premise. Balance, the moment calculation and the
+positive minor do not provide the missing concentration at $q_n$ or a fixed
+loss floor at $Eq_n$.
+
+The source-relative deductions here are (11.6), (12.1)–(12.3),
+(13.5)–(13.9), (14.3)–(14.6), and their stated scope consequences.
+AR return words, natural induced towers, linear recurrence, the project
+height and central-word identities, DHS balance and transported contraction,
+and the original BST/charge interfaces are the credited ingredients inside
+their consuming proofs. The deductions carry no assertion of worldwide
+priority or resolution of the original universal question.
+
+## 追加锚（本行以下为增补区）
