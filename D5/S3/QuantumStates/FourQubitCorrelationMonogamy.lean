@@ -7,6 +7,7 @@
    digest: Three anticommuting Pauli families bound four-qubit pair correlations by three. -/
 
 import D5.S3.Quantum.Information.CovarianceSumBound
+import D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Measurements.CliffordJointMeasurability.CliffordPathRealizations
 
@@ -75,10 +76,8 @@ private lemma anticommuting_family_bound {n α : Type*}
   let H : Matrix n n ℂ := ∑ i, (a i : ℂ) • P i
   let s : ℝ := ∑ i, a i ^ 2
   have hH : H.IsHermitian := by
-    change Hᴴ = H
-    simp only [H, conjTranspose_sum, conjTranspose_smul, Complex.star_def,
-      Complex.conj_ofReal]
-    exact Finset.sum_congr rfl fun i _ => congrArg ((a i : ℂ) • ·) (hP i).eq
+    exact (isSelfAdjoint_sum Finset.univ fun i _ =>
+      ((hP i).smul (by simp [IsSelfAdjoint])).isSelfAdjoint).isHermitian
   have hHsq : H * H = (s : ℂ) • (1 : Matrix n n ℂ) := by
     simp only [H, Finset.sum_mul_sum, smul_mul_smul]
     rw [majorana_quadratic_symmetrization P hsq hanti]
@@ -143,14 +142,8 @@ private lemma density_bound (ρ : DensityState (Fin 4 → Fin 2)) :
 private lemma pure_specialization (ψ : (Fin 4 → Fin 2) → ℂ)
     (hψ : star ψ ⬝ᵥ ψ = 1) :
     ∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3, correlation ψ X i j ^ 2 ≤ 3 := by
-  let ρ : DensityState (Fin 4 → Fin 2) :=
-    ⟨CStarMatrix.ofMatrix (rankOneDensity ψ),
-      map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
-        (posSemidef_vecMulVec_self_star ψ).nonneg, by
-      change trace (rankOneDensity ψ) = 1
-      rw [rankOneDensity, trace_vecMulVec, dotProduct_comm]
-      exact hψ⟩
-  exact density_bound ρ
+  exact density_bound
+    (D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity.pureDensityState ψ hψ)
 
 theorem result : claim := by
   intro ψ hψ
