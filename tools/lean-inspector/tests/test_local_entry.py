@@ -92,7 +92,10 @@ class LocalEntryFixture:
                           hashlib.sha256(path.read_bytes()).digest()) for path in files)
         initial_git = getattr(type(self), '_initial_git_material', None)
         if initial_git is None or initial_git[0] != identity:
-            subprocess.run(['git', 'init', '-q', str(self.root)], check=True, capture_output=True)
+            # Only repository state is consumed here. Ambient hook templates
+            # add unrelated files to every private fixture and its cleanup.
+            subprocess.run(['git', 'init', '-q', '--template=', str(self.root)],
+                           check=True, capture_output=True)
             subprocess.run(['git', '-C', str(self.root), 'add', *tracked], check=True, capture_output=True)
             subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
                             '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
