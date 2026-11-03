@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Resource.CompositeConeDuality
-import D5.S3.Observer.Conditioning
+import D5.S3.Observer.Conditioning.UnreadStateOrthogonalProjection
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix.Positivity
@@ -20,6 +20,7 @@ open Matrix Finset
 open scoped ComplexOrder Kronecker MatrixOrder
 open D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation (IsDensity)
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Observer.Conditioning.UnreadStateOrthogonalProjection
 
 namespace D5.S3.Quantum.Measurements.UltrafineThreeProductObservables
 noncomputable section
@@ -209,7 +210,7 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
     rw [← hv k (c k), ← hvp k]
     dsimp only [c]
     simp only [Matrix.mul_assoc]
-  have hσsum : σ = ∑ k, p k * ρ * p k := by
+  have hσsum : σ = D5.S3.Observer.Conditioning.unreadState p ρ := by
     exact Finset.sum_congr rfl fun k _ => hσ k
   have hrecord : D5.S3.Observer.Conditioning.IsRecordMeasurement p := by
     refine ⟨fun k => (hph k).eq, hpid, ?_, hpsum⟩
@@ -225,31 +226,22 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
   have ht : trace σ = 1 := by
     rw [hσsum]
     exact (D5.S3.Observer.Conditioning.unreadState_trace hrecord ρ).trans hρ.2
-  refine ⟨σ, ⟨?_, ht⟩, ?_, ?_⟩
-  · rw [hσsum]
+  have hσpos : σ.PosSemidef := by
+    rw [hσsum]
     apply posSemidef_sum
     intro k _
     simpa only [(hph k).eq] using hρ.1.mul_mul_conjTranspose_same (p k)
+  refine ⟨σ, ⟨hσpos, ht⟩, ?_, ?_⟩
   · have ht0 : trace (∑ k, rankOneDensity (fun i => u.val i k) ⊗ₖ c k) = 1 := by
       simpa only [← hq] using ht
     simpa only [← hq] using separable_blocks u c hc ht0
   · intro i hi
-    rw [hσsum, Finset.sum_mul, trace_sum]
-    calc
-      ∑ k, trace (p k * ρ * p k * (a i ⊗ₖ b i)) =
-          ∑ k, trace (ρ * ((a i ⊗ₖ b i) * p k)) := by
-        apply Finset.sum_congr rfl
-        intro k _
-        calc
-          trace (p k * ρ * p k * (a i ⊗ₖ b i)) =
-              trace (p k * (ρ * p k * (a i ⊗ₖ b i))) := by simp only [mul_assoc]
-          _ = trace ((ρ * p k * (a i ⊗ₖ b i)) * p k) := trace_mul_comm _ _
-          _ = trace (ρ * (p k * (a i ⊗ₖ b i) * p k)) := by simp only [mul_assoc]
-          _ = trace (ρ * ((a i ⊗ₖ b i) * p k)) := by
-            rw [hpcomm i hi k, mul_assoc (a i ⊗ₖ b i), hpid]
-      _ = trace (ρ * ((a i ⊗ₖ b i) * ∑ k, p k)) := by
-        rw [Finset.mul_sum, Finset.mul_sum, trace_sum]
-      _ = trace (ρ * (a i ⊗ₖ b i)) := by rw [hpsum, mul_one]
+    have hfixed : D5.S3.Observer.Conditioning.unreadState p (a i ⊗ₖ b i) =
+        a i ⊗ₖ b i := by
+      change (∑ k, p k * (a i ⊗ₖ b i) * p k) = _
+      simp only [hpcomm i hi, mul_assoc, hpid, ← Finset.mul_sum, hpsum, mul_one]
+    simpa only [← hσsum, hσpos.isHermitian.eq, hρ.1.isHermitian.eq, hfixed] using
+      (unread_state_orthogonal_projection hrecord).2.1 ρ (a i ⊗ₖ b i)
 
 private lemma diagonal_family_useless {d : ℕ} {ι : Type*}
     (a b : ι → Matrix (Fin d) (Fin d) ℂ) (s : Finset ι)
