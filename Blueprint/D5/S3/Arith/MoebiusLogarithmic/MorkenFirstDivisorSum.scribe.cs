@@ -38,7 +38,10 @@ internal sealed class MorkenFirstDivisorSumDocument : IScribeDocumentDefinition
                         + "the sum of mu(d) over divisors of gcd(k,n). The standard Moebius "
                         + "divisor cancellation is one when gcd(k,n)=1 and zero otherwise. "
                         + "Thus the remaining sum is precisely the original coprime sum."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a112399-morken-first-divisor-sum"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Identity()
     {
