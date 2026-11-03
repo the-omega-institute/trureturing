@@ -182,8 +182,17 @@ class LocalEntryFixture:
         command = (['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
                     '--repository', str(self.root), '--output', str(self.output), *options]
                    if direct else ['make', '--no-print-directory', 'lean-report', *options])
-        result = subprocess.run(command, cwd=self.root, env=self.environment,
-                                text=True, capture_output=True, timeout=30)
+        try:
+            result = subprocess.run(command, cwd=self.root, env=self.environment,
+                                    text=True, capture_output=True, timeout=30)
+        except subprocess.TimeoutExpired as error:
+            # Preserve the actual last production phase before fixture cleanup
+            # or the enclosing suite guard can hide the command's evidence.
+            for output in (error.stdout, error.stderr):
+                if output:
+                    print(output.decode('utf-8', 'replace') if isinstance(output, bytes) else output,
+                          file=sys.stderr, flush=True)
+            raise
         self.calls = ((self.root / 'calls').read_text().splitlines()
                       if (self.root / 'calls').exists() else [])
         return result
