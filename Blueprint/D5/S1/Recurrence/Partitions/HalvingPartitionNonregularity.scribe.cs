@@ -101,48 +101,52 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, bool literature = false) => Describe.Lean(
             DescribeId.Create("halving-partitions-" + name.ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            name is "Follows" or "sourceEquiv" or "result"
+                ? StatementSource.FromAuthor(formula) : StatementSource.FromLean(),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            name is "Follows" or "sourceEquiv" or "result"
+                ? Blocks(Paragraph(Text(prose)))
+                : Blocks(Paragraph(Text(prose)), new DocumentBlock.DisplayFormula(formula)), role);
 
     private static Formula HalfFormula() => Disp(All("p", N(), All("q", N(),
-        IffF(Call("IsHalf", Id("p"), Id("q")), OrF(
-            Eq(Id("q"), Call("natDiv", Id("p"), D(2))),
-            Eq(Id("q"), Call("natDiv", Add(Id("p"), D(1)), D(2))))))));
+        IffF(Call("IsHalf", F.Id("p"), F.Id("q")), OrF(
+            Eq(F.Id("q"), Call("natDiv", F.Id("p"), D(2))),
+            Eq(F.Id("q"), Call("natDiv", Add(F.Id("p"), D(1)), D(2))))))));
 
     private static Formula FollowsFormula() => Disp(AndF(
-        All("p", N(), Call("Follows", Id("p"), Call("nil"))),
+        All("p", N(), Call("Follows", F.Id("p"), Call("nil"))),
         All("p", N(), All("q", N(), All("t", ListN(),
-            IffF(Call("Follows", Id("p"), Call("cons", Id("q"), Id("t"))),
-                AndF(Call("IsHalf", Id("p"), Id("q")), Call("Follows", Id("q"), Id("t")))))))));
+            IffF(Call("Follows", F.Id("p"), Call("cons", F.Id("q"), F.Id("t"))),
+                AndF(Call("IsHalf", F.Id("p"), F.Id("q")), Call("Follows", F.Id("q"), F.Id("t")))))))));
 
     private static Formula SourceFormula() => Disp(All("n", N(),
-        Eq(Call("SourceLists", Id("n")), Seq(OpenBrace, Id("p"), Colon, Sp, ListN(), Sp, Mid, Sp,
-            AndF(All("x", N(), ImpliesF(Member(Id("x"), Id("p")), Lt(D(0), Id("x")))),
-                AndF(Eq(Call("sum", Id("p")), Id("n")), Call("Follows", Id("n"), Id("p")))), CloseBrace))));
+        Eq(Call("SourceLists", F.Id("n")), Seq(OpenBrace, F.Id("p"), Colon, Sp, ListN(), Sp, Mid, Sp,
+            AndF(All("x", N(), ImpliesF(Member(F.Id("x"), F.Id("p")), Lt(D(0), F.Id("x")))),
+                AndF(Eq(Call("sum", F.Id("p")), F.Id("n")), Call("Follows", F.Id("n"), F.Id("p")))), CloseBrace))));
 
     private static Formula CompositionFormula() => Disp(All("n", N(),
-        Eq(Call("HalvingCompositions", Id("n")), Seq(OpenBrace, Id("c"), Colon, Sp,
-            Call("Composition", Id("n")), Sp, Mid, Sp,
-            Call("Follows", Id("n"), Call("blocks", Id("c"))), CloseBrace))));
+        Eq(Call("HalvingCompositions", F.Id("n")), Seq(OpenBrace, F.Id("c"), Colon, Sp,
+            Call("Composition", F.Id("n")), Sp, Mid, Sp,
+            Call("Follows", F.Id("n"), Call("blocks", F.Id("c"))), CloseBrace))));
 
     private static Formula EquivFormula() => Disp(All("n", N(),
-        Seq(Call("sourceEquiv", Id("n")), Colon, Sp, Call("SourceLists", Id("n")), Sp,
-            F.Equiv, Sp, Call("HalvingCompositions", Id("n")))));
+        Seq(Call("sourceEquiv", F.Id("n")), Colon, Sp, Call("SourceLists", F.Id("n")), Sp,
+            F.Equiv, Sp, Call("HalvingCompositions", F.Id("n")))));
 
     private static Formula CountFormula() => Disp(All("n", N(),
-        Eq(Call("count", Id("n")), Call("card", Call("SourceLists", Id("n"))))));
+        Eq(Call("count", F.Id("n")), Call("card", Call("SourceLists", F.Id("n"))))));
 
     private static Formula MatrixFormula()
     {
-        var d = Id("d"); var n = Id("n"); var a = Id("a");
+        var d = F.Id("d"); var n = F.Id("n"); var a = F.Id("a");
         var vectors = Arrow(Call("Fin", d), Z());
         var matrices = Arrow(Call("Fin", d), Arrow(Call("Fin", d), Z()));
         var first = All("n", N(), Eq(Call("F", n, D(0)), Call("a", n)));
         var even = All("n", N(), Eq(Call("F", Mul(D(2), n)),
-            Call("mulVec", Id("M0"), Call("F", n))));
+            Call("mulVec", F.Id("M0"), Call("F", n))));
         var odd = All("n", N(), Eq(Call("F", Add(Mul(D(2), n), D(1))),
-            Call("mulVec", Id("M1"), Call("F", n))));
+            Call("mulVec", F.Id("M1"), Call("F", n))));
         return Disp(All("a", SequenceType(), IffF(Call("MatrixFamily", a),
             Some("d", N(), AndF(Lt(D(0), d), Some("F", Arrow(N(), vectors),
                 Some("M0", matrices, Some("M1", matrices, AndF(first, AndF(even, odd))))))))));
@@ -150,9 +154,9 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
 
     private static Formula FamilyFormula(bool arbitrary)
     {
-        var index = arbitrary ? Id("I") : Call("Fin", Id("d"));
-        var i0 = arbitrary ? Id("i0") : D(0);
-        var i = Id("i"); var j = Id("j"); var n = Id("n");
+        var index = arbitrary ? F.Id("I") : Call("Fin", F.Id("d"));
+        var i0 = arbitrary ? F.Id("i0") : D(0);
+        var i = F.Id("i"); var j = F.Id("j"); var n = F.Id("n");
         Formula Row(string c, Formula input) => All("i", index, All("n", N(),
             Eq(Call("b", i, input), Seq(Sum, Underscore, Grp(Member(j, index)),
                 Mul(Call(c, i, j), Call("b", j, n))))));
@@ -163,19 +167,19 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 Some("c1", Arrow(index, Arrow(index, Z())), law)));
         var exists = arbitrary
             ? Some("I", Call("FiniteTypes"), Some("i0", index, body))
-            : Some("d", N(), AndF(Lt(D(0), Id("d")), body));
-        return Disp(All("a", SequenceType(), IffF(Call(arbitrary ? "ArbitraryFamily" : "ClosedFamily", Id("a")), exists)));
+            : Some("d", N(), AndF(Lt(D(0), F.Id("d")), body));
+        return Disp(All("a", SequenceType(), IffF(Call(arbitrary ? "ArbitraryFamily" : "ClosedFamily", F.Id("a")), exists)));
     }
 
-    private static Formula CastCount() => Seq(Open, Id("n"), Colon, Sp, N(), Sp, Mapsto, Sp,
-        Call("Int", Call("count", Id("n"))), Close);
-    private static Formula ClaimFormula() => Disp(IffF(Id("claim"),
+    private static Formula CastCount() => Seq(Open, F.Id("n"), Colon, Sp, N(), Sp, Mapsto, Sp,
+        Call("Int", Call("count", F.Id("n"))), Close);
+    private static Formula ClaimFormula() => Disp(IffF(F.Id("claim"),
         new Formula.Not(Call("MatrixFamily", CastCount()))));
-    private static Formula ResultFormula() => Disp(AndF(Id("claim"), AndF(
-        All("a", SequenceType(), IffF(Call("ClosedFamily", Id("a")), Call("MatrixFamily", Id("a")))),
-        AndF(All("a", SequenceType(), IffF(Call("ArbitraryFamily", Id("a")), Call("MatrixFamily", Id("a")))),
+    private static Formula ResultFormula() => Disp(AndF(F.Id("claim"), AndF(
+        All("a", SequenceType(), IffF(Call("ClosedFamily", F.Id("a")), Call("MatrixFamily", F.Id("a")))),
+        AndF(All("a", SequenceType(), IffF(Call("ArbitraryFamily", F.Id("a")), Call("MatrixFamily", F.Id("a")))),
             AndF(new Formula.Not(Call("ArbitraryFamily", CastCount())),
-                AndF(All("n", N(), Eq(Call("count", Id("n")), Call("card", Call("HalvingCompositions", Id("n"))))), Eq(Call("count", D(0)), D(1))))))));
+                AndF(All("n", N(), Eq(Call("count", F.Id("n")), Call("card", Call("HalvingCompositions", F.Id("n"))))), Eq(Call("count", D(0)), D(1))))))));
 
     private static Formula N() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Z() => new Formula.Integers();
