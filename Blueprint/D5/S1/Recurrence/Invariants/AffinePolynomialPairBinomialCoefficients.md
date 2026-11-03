@@ -24,6 +24,10 @@ $$\forall n \in Nat, 1 \le n \Rightarrow \forall k \in Nat, \operatorname{coeff}
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients.werner_a208509` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a208509-affine-polynomial-pair-binomial-coefficients` (proved) by `D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients.werner_a208509`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a208509-affine-polynomial-pair-binomial-coefficients","declaration_gid":"D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients.werner_a208509","resolution_kind":"proved"} -->
+
 *Citation.* Knud Werner (2022). *Conjectured coefficient formula in OEIS A208509*. URL: <https://oeis.org/A208509>.
 
 *Commentary.*
