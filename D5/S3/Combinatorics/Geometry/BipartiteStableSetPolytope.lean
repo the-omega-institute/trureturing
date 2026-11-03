@@ -93,7 +93,8 @@ private lemma edge_colors (G : SimpleGraph V) (c : G.Coloring (Fin 2))
   simp only [ne_eq, Fin.ext_iff, Fin.val_zero] at *
   omega
 
-/-- The positive support determines an independent threshold vertex after one color is complemented. -/
+/-- The positive support determines an independent threshold vertex
+after one color is complemented. -/
 private lemma positive_vertex [Finite V] (G : SimpleGraph V) (c : G.Coloring (Fin 2))
     (y : V → ℝ)
     (horder : ∀ v w, G.Adj v w → c v = 0 → y v ≤ y w) :

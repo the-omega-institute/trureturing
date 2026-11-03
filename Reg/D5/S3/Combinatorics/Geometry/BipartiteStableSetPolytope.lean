@@ -2,11 +2,16 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Geometry.BipartiteStableSetPolytope
 import Reg.Support.DependentFamily
 
+/-! Source-bound graph families observe the actual all-label independent-set hull. -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
 namespace Reg.D5.S3.Combinatorics.Geometry.BipartiteStableSetPolytope
 
 open _root_.D5.S3.Combinatorics.Geometry.BipartiteStableSetPolytope
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open CupCapBridgeProposal LeanInformationAudit
+open LeanInformationAudit
 
 universe u
 noncomputable section
@@ -21,21 +26,21 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
-  realize signature (fun _ _ G => stableSetPolytope G) (fun e => nomatch e)
+def actual : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ G => stableSetPolytope G) (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => ∅) (fun e => nomatch e)
+def rejected : Realization signature.{u} :=
+  realize signature.{u} (fun _ _ _ => ∅) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
-  Law R := ∀ {V : Type u} [hV : Finite V] (G : SimpleGraph V),
+  signature := signature.{u}
+  Law R := ∀ {V : Type u} [Finite V] (G : SimpleGraph V),
     R.readout () V G = edgeRegion G ↔ G.IsBipartite
 
 private theorem bottom_bipartite (V : Type u) : (⊥ : SimpleGraph V).IsBipartite := by
   exact ⟨⟨fun _ => 0, by simp⟩⟩
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ (arena.{u}).Law rejected.{u} := by
   intro h
   let V := ULift.{u} Unit
   have he := (h (⊥ : SimpleGraph V)).mpr (bottom_bipartite V)
@@ -47,7 +52,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   rw [← he] at hz
   exact hz
 
-private theorem dependence : ObservationalDependence signature actual := by
+private theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
   intro role
   let V := ULift.{u} (Fin 2)
   let G : SimpleGraph V := SimpleGraph.comap (fun x => x.down) (⊤ : SimpleGraph (Fin 2))
@@ -67,29 +72,30 @@ private theorem dependence : ObservationalDependence signature actual := by
   have hh := hx.2 (ULift.up 0) (ULift.up 1) (by decide)
   norm_num at hh
 
-def source_registration : Registration arena (type_of% @stableSetPolytope_eq_edgeRegion_iff.{u}) where
-  actual := actual
+def source_registration :
+    Registration arena.{u} (type_of% @stableSetPolytope_eq_edgeRegion_iff.{u}) where
+  actual := actual.{u}
   bridge := Iff.rfl
-  variation := ⟨stableSetPolytope_eq_edgeRegion_iff, rejected, rejected_law⟩
-  sensitivity := ⟨fun i => ⟨rejected,
+  variation := ⟨stableSetPolytope_eq_edgeRegion_iff, rejected.{u}, rejected_law.{u}⟩
+  sensitivity := ⟨fun i => ⟨rejected.{u},
     fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
     fun e => nomatch e⟩
-  dependence := dependence
+  dependence := dependence.{u}
 
 def registration : Contract.Registration
-    (@stableSetPolytope_eq_edgeRegion_iff.{u}) (Realization signature) Unit Unit := {
+    (@stableSetPolytope_eq_edgeRegion_iff.{u}) (Realization signature.{u}) Unit Unit := {
   unitName := `Reg.D5.S3.Combinatorics.Geometry.BipartiteStableSetPolytope.unit
   realizationName := `Reg.D5.S3.Combinatorics.Geometry.BipartiteStableSetPolytope.source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨source_registration⟩
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize signature.{u} (actual.{u}).readout (actual.{u}).anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
