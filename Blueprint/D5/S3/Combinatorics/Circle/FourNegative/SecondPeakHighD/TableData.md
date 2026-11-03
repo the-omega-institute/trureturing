@@ -1,13 +1,24 @@
-# Exact paired row bounds and finite row type
+# TableData
 
 ## Abstract
 
-Exact paired row bounds and finite row type
+TableData
 
-FixedRow stores natural x,p,q,h,v,m,M and the actual Bool before. rowBounds is an integer proposition. For each of the first three endpoints it requires the old endpoint in [0,old head-1] and the enlarged endpoint in [0,new head-1]. It also requires 1<=v, 2v<=t, 0<=M and 2M<=y-2.
+The literal 24 mod-72 residue rows cover h=1,2 and p=4,8. The 16 fixed rows close the small q boundaries. The late fresh ear occurs exactly for p=4,h=1,r=56; all other rows insert at cut zero. FixedRow and the paired rowBounds retain the common physical interpretation used by the unbounded selectors.
 
-This module contains only the shared row type and predicate. The small-p tables are defined in SmallTables. The selector therefore returns original simultaneous old and new constraints with their stocks.
+**Theorem 1.1 (residue_fresh_exact).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableData.residue_fresh_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableData.residue_fresh_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Consumed by the full HighD construction with the exact Lean telescope.
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableData.residue_fresh_exact`
 - Dependency: [D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/LowBits](LowBits.md)
