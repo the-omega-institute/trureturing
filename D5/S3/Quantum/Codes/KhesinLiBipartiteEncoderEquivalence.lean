@@ -20,7 +20,7 @@ The quantum equivalence of Definition 6.2 and Conjecture 6.3 are outside this st
 
 namespace D5.S3.Quantum.Codes.KhesinLiBipartiteEncoderEquivalence
 
-open D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses (Step addInputRow lc_source)
+open D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses (Step addInputRow lc_source lc_adj)
 open D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph (lc entropy cut)
 open Matrix
 open scoped BigOperators
@@ -100,15 +100,10 @@ private theorem entropy_lc {V : Type} [Fintype V] [DecidableEq V]
         Finset.sum_eq_single ⟨v, hv⟩]
       · have hab : a.1 ≠ b.1 := fun h => b.2 (h ▸ a.2)
         simp only [cut, Matrix.submatrix_apply, SimpleGraph.adjMatrix_apply]
-        rw [show (lc G v).Adj a.1 b.1 ↔
-          a.1 ≠ b.1 ∧ (G.Adj a.1 b.1 ↔ ¬ (G.Adj v a.1 ∧ G.Adj v b.1)) from Iff.rfl]
+        rw [lc_adj, and_iff_right hab]
         by_cases h1 : G.Adj a.1 b.1 <;> by_cases h2 : G.Adj v a.1 <;>
           by_cases h3 : G.Adj v b.1 <;>
-          simp only [N, h1, h2, h3, and_true,
-            and_false, iff_true, iff_false, not_true_eq_false, not_false_eq_true,
-            ite_true, ite_false, mul_one, one_mul, zero_mul, add_zero,
-            zero_add, CharTwo.add_self_eq_zero]
-        all_goals exact ite_eq_left hab
+          simp [N, h1, h2, h3, Xor, CharTwo.add_self_eq_zero]
       · intro c _ hc
         have hcv : c.1 ≠ v := fun h => hc (Subtype.ext h)
         simp only [N, hcv, and_false, ite_false, zero_mul]
