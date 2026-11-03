@@ -107,7 +107,6 @@ internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinit
         OpenBracket,Call("InnerProductSpace",ComplexType(),F.Id(x)),CloseBracket,Sp,
         OpenBracket,Call("FiniteDimensional",ComplexType(),F.Id(x)),CloseBracket);
     private static Formula ExistsUnit() => Seq(Open,Exists,Sp,F.Id("x"),Colon,Sp,F.Id("E"),Comma,Sp,Unit(F.Id("x")),Close);
-    private static Formula Energy(Formula x) => Sum("j",F.Id("J"),Sq(Norm(App(At(F.Id("L"),F.Id("j")),x))));
     private static Formula Frac(Formula a,Formula b) => new Formula.Fraction(a,b);
     private static Formula Unit(Formula x) => Eqn(Norm(x),D(1));
     private static Formula ComplexType() => Seq(Mathbb,Grp(F.Id("C")));
