@@ -4,21 +4,9 @@
 
 Three orthogonal pure states exclude every labelling of the product ansatz.
 
-**Definition 1.1 (Centres of the four faces).**
+**Definition 1.1 (The three-distinguishability region).**
 
-$$\forall \left(k: \operatorname{Fin}\left(4\right)\right), \left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.faceCentre}\left(k\right) = \left(\lambda \left(j: \operatorname{Fin}\left(4\right)\right) \mapsto \operatorname{ite}\left(\left(j = k\right), \left(0: \mathbb{R}\right), \frac{\left(1: \mathbb{R}\right)}{\left(3: \mathbb{R}\right)}\right)\right)\right)$$
-
-*Formalization.* `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.faceCentre` (`✓ std3`).
-
-*Citation.* Korzekwa, Kamil; Czachórski, Stanisław; Puchała, Zbigniew; Życzkowski, Karol (2019). *Distinguishing classically indistinguishable states and channels*. DOI: [10.1088/1751-8121/ab30f7](https://doi.org/10.1088/1751-8121/ab30f7). URL: <https://arxiv.org/abs/1812.09083v3>.
-
-*Commentary.*
-
-For a coordinate k in Fin 4, faceCentre k is the real-valued function on Fin 4 that is zero at k and one third at every other coordinate. These are the four face centres used in the d = 4, M = 3 discussion of the source, Distinguishability.tex lines 462–467.
-
-**Definition 1.2 (The three-distinguishability region).**
-
-$$\forall \left(p: \left(\operatorname{Fin}\left(4\right)\right) \to \left(\mathbb{R}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.InRegion}\left(p\right)\right) \Leftrightarrow \left(\left(p \in \operatorname{stdSimplex}\left(\mathbb{R}, \operatorname{Fin}\left(4\right)\right)\right) \land \left(\exists \left(\rho: \left(\operatorname{Fin}\left(3\right)\right) \to \left(\operatorname{Matrix}\left(\operatorname{Fin}\left(4\right), \operatorname{Fin}\left(4\right), \mathbb{C}\right)\right)\right), \left(\left(\forall \left(i: \operatorname{Fin}\left(3\right)\right), \left(\left(\operatorname{Matrix.PosSemidef}\left(\rho\left(i\right)\right)\right) \land \left(\operatorname{Matrix.trace}\left(\rho\left(i\right)\right) = \left(1: \mathbb{C}\right)\right)\right)\right) \land \left(\left(\forall \left(i: \operatorname{Fin}\left(3\right)\right), \left(\forall \left(j: \operatorname{Fin}\left(3\right)\right), \left(\left(i \ne j\right) \Rightarrow \left(\left(\rho\left(i\right)\right) \cdot \left(\rho\left(j\right)\right) = \left(0: \operatorname{Matrix}\left(\operatorname{Fin}\left(4\right), \operatorname{Fin}\left(4\right), \mathbb{C}\right)\right)\right)\right)\right)\right) \land \left(\forall \left(i: \operatorname{Fin}\left(3\right)\right), \left(\forall \left(k: \operatorname{Fin}\left(4\right)\right), \left(\operatorname{Complex.re}\left(\operatorname{Matrix.diag}\left(\rho\left(i\right), k\right)\right) = p\left(k\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+$$\forall \left(p: \left(\operatorname{Fin}\left(4\right)\right) \to \left(\mathbb{R}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.InRegion}\left(p\right)\right) \Leftrightarrow \left(\left(\left(\forall \left(k: \operatorname{Fin}\left(4\right)\right), \left(\left(0: \mathbb{R}\right) \le p\left(k\right)\right)\right) \land \left(\sum_{\left(k: \operatorname{Fin}\left(4\right)\right)} \left(p\left(k\right)\right) = \left(1: \mathbb{R}\right)\right)\right) \land \left(\exists \left(\rho: \left(\operatorname{Fin}\left(3\right)\right) \to \left(\operatorname{Matrix}\left(\operatorname{Fin}\left(4\right), \operatorname{Fin}\left(4\right), \mathbb{C}\right)\right)\right), \left(\left(\forall \left(i: \operatorname{Fin}\left(3\right)\right), \left(\left(\operatorname{Matrix.PosSemidef}\left(\rho\left(i\right)\right)\right) \land \left(\operatorname{Matrix.trace}\left(\rho\left(i\right)\right) = \left(1: \mathbb{C}\right)\right)\right)\right) \land \left(\left(\forall \left(i: \operatorname{Fin}\left(3\right)\right), \left(\forall \left(j: \operatorname{Fin}\left(3\right)\right), \left(\left(i \ne j\right) \Rightarrow \left(\left(\rho\left(i\right)\right) \cdot \left(\rho\left(j\right)\right) = \left(0: \operatorname{Matrix}\left(\operatorname{Fin}\left(4\right), \operatorname{Fin}\left(4\right), \mathbb{C}\right)\right)\right)\right)\right)\right) \land \left(\forall \left(i: \operatorname{Fin}\left(3\right)\right), \left(\forall \left(k: \operatorname{Fin}\left(4\right)\right), \left(\operatorname{Complex.re}\left(\operatorname{Matrix.diag}\left(\rho\left(i\right), k\right)\right) = p\left(k\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.InRegion` (`✓ std3`).
 
@@ -28,7 +16,7 @@ $$\forall \left(p: \left(\operatorname{Fin}\left(4\right)\right) \to \left(\math
 
 A real function p on Fin 4 lies in the region when it belongs to the standard simplex and there are three complex 4 by 4 positive semidefinite matrices of trace one whose pairwise products vanish and whose diagonal real parts all equal p. This is the source's M-distinguishability definition, Distinguishability.tex lines 147–149 and 236–241, specialized to d = 4 and M = 3.
 
-**Definition 1.3 (The two-parameter product form).**
+**Definition 1.2 (The two-parameter product form).**
 
 $$\forall \left(f: \left(\operatorname{Fin}\left(4\right)\right) \to \left(\left(\operatorname{Fin}\left(4\right)\right) \to \left(\mathbb{R}\right)\right)\right), \left(\forall \left(p: \left(\operatorname{Fin}\left(4\right)\right) \to \left(\mathbb{R}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.ProductForm}\left(f, p\right)\right) \Leftrightarrow \left(\exists \left(a: \mathbb{R}\right), \left(\exists \left(b: \mathbb{R}\right), \left(\left(\left(\left(0: \mathbb{R}\right) \le a\right) \land \left(\left(a \le \left(1: \mathbb{R}\right)\right) \land \left(\left(\left(0: \mathbb{R}\right) \le b\right) \land \left(b \le \left(1: \mathbb{R}\right)\right)\right)\right)\right) \land \left(p = \left(\left(\left(\left(\left(a\right) \cdot \left(b\right)\right) \cdot \left(f\left(\left(0: \operatorname{Fin}\left(4\right)\right)\right)\right)\right) + \left(\left(\left(a\right) \cdot \left(\left(\left(1: \mathbb{R}\right)\right) - \left(b\right)\right)\right) \cdot \left(f\left(\left(1: \operatorname{Fin}\left(4\right)\right)\right)\right)\right)\right) + \left(\left(\left(\left(\left(1: \mathbb{R}\right)\right) - \left(a\right)\right) \cdot \left(b\right)\right) \cdot \left(f\left(\left(2: \operatorname{Fin}\left(4\right)\right)\right)\right)\right)\right) + \left(\left(\left(\left(\left(1: \mathbb{R}\right)\right) - \left(a\right)\right) \cdot \left(\left(\left(1: \mathbb{R}\right)\right) - \left(b\right)\right)\right) \cdot \left(f\left(\left(3: \operatorname{Fin}\left(4\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -40,9 +28,9 @@ $$\forall \left(f: \left(\operatorname{Fin}\left(4\right)\right) \to \left(\left
 
 ProductForm f p means that p is the convex combination of f 0, f 1, f 2 and f 3 with weights ab, a(1−b), (1−a)b and (1−a)(1−b), for real a and b in the unit interval. The four functions f are supplied separately so that the definition can express any labelling of the face centres. This is equation (30) of the source, Distinguishability.tex lines 462–467.
 
-**Definition 1.4 (The labelled product conjecture).**
+**Definition 1.3 (The labelled product conjecture).**
 
-$$\left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.claim}\right) \Leftrightarrow \left(\exists \left(\Sigma: \operatorname{Equiv.Perm}\left(\operatorname{Fin}\left(4\right)\right)\right), \left(\forall \left(p: \left(\operatorname{Fin}\left(4\right)\right) \to \left(\mathbb{R}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.InRegion}\left(p\right)\right) \Rightarrow \left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.ProductForm}\left(\left(\lambda \left(i: \operatorname{Fin}\left(4\right)\right) \mapsto \operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.faceCentre}\left(\Sigma\left(i\right)\right)\right), p\right)\right)\right)\right)\right)$$
+$$\left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.claim}\right) \Leftrightarrow \left(\exists \left(\sigma: \operatorname{Equiv.Perm}\left(\operatorname{Fin}\left(4\right)\right)\right), \left(\forall \left(p: \left(\operatorname{Fin}\left(4\right)\right) \to \left(\mathbb{R}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.InRegion}\left(p\right)\right) \Rightarrow \left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.ProductForm}\left(\left(\lambda \left(i: \operatorname{Fin}\left(4\right)\right) \mapsto \operatorname{D5.S3.QuantumBounds.RebitExclusionDistance.target}\left(\sigma\left(i\right)\right)\right), p\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.claim` (`✓ std3`).
 
@@ -50,11 +38,11 @@ $$\left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductR
 
 *Commentary.*
 
-The conjecture asks for one permutation σ of Fin 4 such that every p in the three-distinguishability region has the product form built from the relabelled face centres i ↦ faceCentre (σ i). The permutation is existential because the source presents the four face centres with a labelling convention, while the mathematical assertion concerns some labelling.
+The conjecture asks for one permutation σ of Fin 4 such that every p in the three-distinguishability region has the product form built from the relabelled face centres i ↦ target (σ i). The permutation is existential because the source presents the four face centres with a labelling convention, while the mathematical assertion concerns some labelling.
 
-**Theorem 1.5 (A counterexample to every labelling).**
+**Theorem 1.4 (A counterexample to every labelling).**
 
-$$\neg \left(\exists \left(\Sigma: \operatorname{Equiv.Perm}\left(\operatorname{Fin}\left(4\right)\right)\right), \left(\forall \left(p: \left(\operatorname{Fin}\left(4\right)\right) \to \left(\mathbb{R}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.InRegion}\left(p\right)\right) \Rightarrow \left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.ProductForm}\left(\left(\lambda \left(i: \operatorname{Fin}\left(4\right)\right) \mapsto \operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.faceCentre}\left(\Sigma\left(i\right)\right)\right), p\right)\right)\right)\right)\right)$$
+$$\neg \left(\exists \left(\sigma: \operatorname{Equiv.Perm}\left(\operatorname{Fin}\left(4\right)\right)\right), \left(\forall \left(p: \left(\operatorname{Fin}\left(4\right)\right) \to \left(\mathbb{R}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.InRegion}\left(p\right)\right) \Rightarrow \left(\operatorname{D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation.ProductForm}\left(\left(\lambda \left(i: \operatorname{Fin}\left(4\right)\right) \mapsto \operatorname{D5.S3.QuantumBounds.RebitExclusionDistance.target}\left(\sigma\left(i\right)\right)\right), p\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.result` (`✓ std3`). ∎
 
@@ -79,9 +67,9 @@ Substituting the four coordinates of p and using (√5)² = 5 shows that all thr
 - Truth anchor: `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.InRegion`
 - Truth anchor: `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.ProductForm`
 - Truth anchor: `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.claim`
-- Truth anchor: `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.faceCentre`
 - Truth anchor: `D5/S3/Quantum/Measurements/ThreeDistinguishabilityProductRefutation.result`
 - Dependency: [D5/S0/Carrier/GoldenRatio](../../../S0/Carrier/GoldenRatio.md)
 - Dependency: [D5/S3/Analytic/Adelic/FiniteToroidalFrameReconstruction](../../Analytic/Adelic/FiniteToroidalFrameReconstruction.md)
 - Dependency: [D5/S3/Combinatorics/PerfectMatchings/FiniteBandSwitch](../../Combinatorics/PerfectMatchings/FiniteBandSwitch.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
+- Dependency: [D5/S3/QuantumBounds/RebitExclusionDistance](../../QuantumBounds/RebitExclusionDistance.md)
