@@ -24,6 +24,10 @@ $$\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (\operatorname{intToReal}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Mobius/GranvikMobiusRealPart.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/granvik-2024-a292273-real-part` (proved) by `D5/S3/Arith/Mobius/GranvikMobiusRealPart.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"granvik-2024-a292273-real-part","declaration_gid":"D5/S3/Arith/Mobius/GranvikMobiusRealPart.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mats Granvik (2024). *OEIS A292273, real-part formula for the even-supported signed Mobius function*. URL: <https://oeis.org/A292273>.

@@ -1,0 +1,1 @@
+{"statement_id":"sha256:242fdda0848c4f06161ec4d4f5aa6d5d058b50a62364d1dd657bc831dacbfede","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Mobius),21:GranvikMobiusRealPart),1:a)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Mobius),21:GranvikMobiusRealPart),6:result)","kind":"theorem"}]}

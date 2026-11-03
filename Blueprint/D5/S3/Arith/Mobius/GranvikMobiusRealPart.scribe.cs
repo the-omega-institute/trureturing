@@ -38,13 +38,17 @@ internal sealed class GranvikMobiusRealPartDocument : IScribeDocumentDefinition
                 + "classes partition an arbitrary input; they impose no finite cutoff. "
                 + "The Collatz-trajectory interpretation elsewhere in the entry and "
                 + "termination of Collatz trajectories are outside this statement.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("granvik-2024-a292273-real-part"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Entry(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("granvik-real-" + name), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(Formula f, params Formula[] args) =>
