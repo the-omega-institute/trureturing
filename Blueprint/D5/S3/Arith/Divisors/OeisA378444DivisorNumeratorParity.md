@@ -82,6 +82,10 @@ $$\forall n \in Nat,\; (1 \le n) \Rightarrow (\operatorname{A378444}\left(n\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA378444DivisorNumeratorParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/karttunen-a378444` (proved) by `D5/S3/Arith/Divisors/OeisA378444DivisorNumeratorParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"karttunen-a378444","declaration_gid":"D5/S3/Arith/Divisors/OeisA378444DivisorNumeratorParity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Antti Karttunen (2025). *OEIS A378444: divisors with even reduced prime-exponent-sum numerator*. URL: <https://oeis.org/A378444>.
