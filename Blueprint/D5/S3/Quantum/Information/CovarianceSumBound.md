@@ -42,7 +42,7 @@ Variance uses the same state and the same expectation as covariance.
 
 **Theorem 1.4 (Expectation of a real scalar multiple).**
 
-$$\forall (n: Type) [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)], \forall (rho: \operatorname{DensityState}\left(n\right)), \forall (t: \mathbb{R}), \forall (A: \operatorname{Matrix}\left(n, n, \mathbb{C}\right)), \operatorname{expectation}\left(rho, {t} \cdot A\right) = t \times \operatorname{expectation}\left(rho, A\right)$$
+$$\forall (n: Type*) [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)], \forall (rho: \operatorname{DensityState}\left(n\right)), \forall (t: \mathbb{R}), \forall (A: \operatorname{Matrix}\left(n, n, \mathbb{C}\right)), \operatorname{expectation}\left(rho, {t} \cdot A\right) = t \times \operatorname{expectation}\left(rho, A\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CovarianceSumBound.expect_smul` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ For every finite index type, moving a real scalar through the density-state expe
 
 **Theorem 1.5 (Expectation of the identity).**
 
-$$\forall (n: Type) [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)], \forall (rho: \operatorname{DensityState}\left(n\right)), \operatorname{expectation}\left(rho, 1\right) = 1$$
+$$\forall (n: Type*) [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)], \forall (rho: \operatorname{DensityState}\left(n\right)), \operatorname{expectation}\left(rho, 1\right) = 1$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CovarianceSumBound.expect_one` (`✓ std3`). ∎
 

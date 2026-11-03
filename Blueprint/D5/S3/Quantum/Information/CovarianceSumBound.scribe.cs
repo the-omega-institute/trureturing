@@ -107,7 +107,7 @@ internal sealed class CovarianceSumBoundDocument : IScribeDocumentDefinition
         var body = Eqn(Call("expectation", rho, Seq(Grp(t), Sp, Cdot, Sp, A)),
             Seq(t, Sp, Times, Sp, Call("expectation", rho, A)));
         return Disp(Seq(
-            Forall, Sp, Parenthesized(Seq(n, Colon, Sp, F.Id("Type"))), Sp,
+            Forall, Sp, Parenthesized(Seq(n, Colon, Sp, F.Id("Type"), Star)), Sp,
             OpenBracket, Call("Fintype", n), CloseBracket, Sp,
             OpenBracket, Call("DecidableEq", n), CloseBracket, Comma, Sp,
             Forall, Sp, Parenthesized(Seq(rho, Colon, Sp, Call("DensityState", n))), Comma, Sp,
@@ -120,7 +120,7 @@ internal sealed class CovarianceSumBoundDocument : IScribeDocumentDefinition
         var n = F.Id("n");
         var rho = F.Id("rho");
         return Disp(Seq(
-            Forall, Sp, Parenthesized(Seq(n, Colon, Sp, F.Id("Type"))), Sp,
+            Forall, Sp, Parenthesized(Seq(n, Colon, Sp, F.Id("Type"), Star)), Sp,
             OpenBracket, Call("Fintype", n), CloseBracket, Sp,
             OpenBracket, Call("DecidableEq", n), CloseBracket, Comma, Sp,
             Forall, Sp, Parenthesized(Seq(rho, Colon, Sp, Call("DensityState", n))), Comma, Sp,
