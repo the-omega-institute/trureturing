@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Pairing;
 
 internal sealed class FiniteDegreePairingDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/FiniteDegreePairing.";
+    private const string Prefix = "D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite degree support makes a raising-power geometric inclusion an isometry for a sesquilinear basis pairing.",

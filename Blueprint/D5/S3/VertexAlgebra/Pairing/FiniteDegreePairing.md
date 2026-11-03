@@ -10,9 +10,9 @@ Let b be a genuine basis of a complex module V. Supported b P x means that every
 
 **Theorem 1.1 (Finite double expansion).**
 
-Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.form_expansion`
+Lean statement: `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.form_expansion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FiniteDegreePairing.form_expansion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.form_expansion` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ The form of two arbitrary vectors is the finite double sum of basis coefficients
 
 **Theorem 1.2 (Sector-preserving degree growth).**
 
-Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.raising_power_support`
+Lean statement: `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.raising_power_support`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FiniteDegreePairing.raising_power_support` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.raising_power_support` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,9 +34,9 @@ An operator whose basis transitions preserve the sector and raise d by at least 
 
 **Theorem 1.3 (All positive cross terms vanish).**
 
-Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.powers_orthogonal`
+Lean statement: `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.powers_orthogonal`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FiniteDegreePairing.powers_orthogonal` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.powers_orthogonal` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,9 +46,9 @@ The signed degree selection rule and the two lower degree bounds force every pai
 
 **Theorem 1.4 (Finite geometric inclusion isometry).**
 
-Lean statement: `D5/S3/VertexAlgebra/FiniteDegreePairing.finite_inclusion_isometry`
+Lean statement: `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.finite_inclusion_isometry`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FiniteDegreePairing.finite_inclusion_isometry` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.finite_inclusion_isometry` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,7 +58,7 @@ For n at least one, the finite geometric sum from r=0 through n-1 has the same p
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.finite_inclusion_isometry`
-- Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.form_expansion`
-- Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.powers_orthogonal`
-- Truth anchor: `D5/S3/VertexAlgebra/FiniteDegreePairing.raising_power_support`
+- Truth anchor: `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.finite_inclusion_isometry`
+- Truth anchor: `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.form_expansion`
+- Truth anchor: `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.powers_orthogonal`
+- Truth anchor: `D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing.raising_power_support`

@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/FiniteDegreePairing
+/- GID: D5/S3/VertexAlgebra/Pairing/FiniteDegreePairing
    generality: G
-   mirror-B: D5/B/S3/VertexAlgebra/FiniteDegreePairing
+   mirror-B: D5/B/S3/VertexAlgebra/Pairing/FiniteDegreePairing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
