@@ -20,7 +20,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "Every partial trace below is unnormalized.")),
             Node("edgeSplit", "Splitting the actual tensor factors",
                 Seq(Call("edgeSplit", X("a"), X("b")), Colon, Sp, Open, X("I"), To, X("L"), Close,
-                    Sp, Simeq, Sp, Open, X("L"), Times, X("L"), Close, Times,
+                    Sp, Equiv, Sp, Open, X("L"), Times, X("L"), Close, Times,
                     Open, Call("Rest", X("a"), X("b")), To, X("L"), Close),
                 "Rest(a,b) is the subtype of registers different from both a and b. "
                 + "The equivalence sends x to ((x(a),x(b)), x restricted to Rest(a,b)). "
@@ -58,7 +58,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "and its complex conjugate. No coefficient sum or trace is fixed; all coefficients may vanish.",
                 DescribeRole.Definition, true),
             Node("FullyPPT", "Every proper nonempty PPT cut",
-                Seq(Call("FullyPPT", X("E")), Iff, Forall, Sp, X("S"), Comma, Sp,
+                Seq(Call("FullyPPT", X("E")), Iff, Forall, Sp, X("S"), Subseteq, X("I"), Comma, Sp,
                     Seq(Emptyset, Neq, X("S"), Neq, X("I")), Implies,
                     Call("PSD", new Formula.Superscript(X("E"), Sub(X("T"), X("S"))))),
                 "S ranges over all subsets of the register set. The condition applies to each nonempty "
@@ -66,7 +66,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "labels exactly at the sites of S, in the standard tensor basis.",
                 DescribeRole.Definition, true),
             Node("leafProjector", "The symmetric leaf projector",
-                Seq(Sub(X("P"), X("L")), Eq,
+                Seq(Call("leafProjector", X("root")), Eq, Sub(X("P"), X("L")), Eq,
                     Tensor(X("I"), Sub(Pi, Seq(X("r"), Minus, D(1))))),
                 "The distinguished root is fixed. The projector is the uniform permutation average "
                 + "over the setwise stabilizer of its singleton. Such permutations fix the root and permute "
@@ -86,12 +86,15 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "All proper nonempty PPT cuts use this same E in the original standard basis.",
                 DescribeRole.Definition, true),
             Node("result", "Equality of the extension cones",
-                Seq(Forall, Sp, X("n"), Geq, D(1), Comma, Sp, X("r"), Geq, D(2), Comma, Sp,
-                    Sub(X("Y"), X("i"), X("j")), Geq, D(0), Comma, Sp,
+                Seq(Forall, Sp, X("n"), Geq, D(1), Comma, Sp, Forall, Sp, X("r"), Geq, D(2), Comma, Sp,
+                    Forall, Sp, X("Y"), Comma, Sp,
+                    Open, Forall, Sp, X("i"), Leq, X("j"), Comma, Sp,
+                    Sub(X("Y"), X("i"), X("j")), Geq, D(0), Close, Implies, Sp,
                     Open, Exists, Sp, X("E"), Comma, Sp, Call("StarExtension", D(0), Rho, X("E")), Close,
                     Iff,
                     Open, Exists, Sp, X("E"), Comma, Sp, Call("CompleteExtension", Rho, X("E")), Close),
-                "The operator rho is the Dicke sum above. This is an equivalence of existence predicates "
+                "Here n and r are natural numbers, Y is an arbitrary real n by n array, and i and j range "
+                + "over Fin(n). The operator rho is the Dicke sum above. This is an equivalence of existence predicates "
                 + "for every register count at least two and every local dimension at least one. "
                 + "In the forward direction the complete graph witness is literally the star witness. "
                 + "The antisymmetric two-particle projector annihilates each Dicke vector. "
@@ -115,14 +118,18 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
     private static Formula X(string name) => F.Id(name);
     private static Formula Sub(Formula value, params Formula[] indices) =>
         new Formula.Subscript(value, Seq(indices));
-    private static Formula Tensor(Formula a, Formula b) => Seq(a, Otimes, b);
+    private static Formula Tensor(Formula a, Formula b) => Call("tensor", a, b);
     private static Formula WitnessFormula(bool complete)
     {
         var p = complete ? Sub(Pi, X("r")) : Sub(X("P"), X("L"));
         var marginals = complete
             ? Seq(Forall, Sp, X("a"), Neq, X("b"), Comma, Sp, Call("M", X("a"), X("b"), X("E")), Eq, Rho)
-            : Seq(Forall, Sp, X("i"), Neq, D(0), Comma, Sp, Call("M", D(0), X("i"), X("E")), Eq, Rho);
-        return Seq(Call(complete ? "CompleteExtension" : "StarExtension", Rho, X("E")), Iff,
+            : Seq(Forall, Sp, X("i"), Neq, X("root"), Comma, Sp,
+                Call("M", X("root"), X("i"), X("E")), Eq, Rho);
+        var predicate = complete
+            ? Call("CompleteExtension", Rho, X("E"))
+            : Call("StarExtension", X("root"), Rho, X("E"));
+        return Seq(predicate, Iff,
             Call("PSD", X("E")), Land, p, X("E"), p, Eq, X("E"), Land,
             Open, marginals, Close, Land, Call("FullyPPT", X("E")));
     }
