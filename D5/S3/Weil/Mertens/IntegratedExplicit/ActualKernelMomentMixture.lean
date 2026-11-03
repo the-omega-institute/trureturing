@@ -7,6 +7,8 @@
    digest: Complete positive mixture logarithmic bound for the actual exponential rates. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic
+import Mathlib.Analysis.SumIntegralComparisons
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -273,5 +275,92 @@ theorem complete_positive_mixture_logarithmic
   have hE : 0 ≤ energy x a := integral_nonneg (fun _ => sq_nonneg _)
   exact (mul_le_mul_of_nonneg_right (positive_mixture_coefficient D hD q hq hr) hE).trans
     (complete_positive_mixture_head D hD q hq ⌊(q : ℝ) / D⌋₊ x a hx hm)
+
+/-- The complete multiplier of the literal positive kernel, with every actual rate. -/
+def pMultiplier (ξ : ℝ) : ℝ :=
+  ∑' n : ℕ, (2 * rate n * trivialCoeff n) * ξ ^ 2 / (rate n ^ 2 + ξ ^ 2)
+
+private def pTerm (n : ℕ) (ξ : ℝ) : ℝ :=
+  (2 * rate n * trivialCoeff n) * ξ ^ 2 / (rate n ^ 2 + ξ ^ 2)
+
+private lemma pTerm_nonneg (n : ℕ) (ξ : ℝ) : 0 ≤ pTerm n ξ := by
+  dsimp [pTerm, rate]
+  positivity
+
+private lemma pTerm_summable (ξ : ℝ) : Summable (fun n => pTerm n ξ) := by
+  apply Summable.of_nonneg_of_le (fun n => pTerm_nonneg n ξ) _
+    (trivialCoeff_hasSum.summable.mul_right (ξ ^ 2))
+  intro n
+  have hr : 2 ≤ rate n := by dsimp [rate]; positivity
+  have hd : 0 < rate n ^ 2 + ξ ^ 2 := by positivity
+  apply (div_le_iff₀ hd).mpr
+  have hrr : 2 * rate n ≤ rate n ^ 2 + ξ ^ 2 := by nlinarith [sq_nonneg ξ]
+  have h := mul_le_mul_of_nonneg_right hrr
+    (mul_nonneg (trivialCoeff_nonneg n) (sq_nonneg ξ))
+  dsimp only [pTerm]
+  nlinarith only [h]
+
+/- The comparison function is shifted before the integral test, so its entire
+   half-line domain stays a positive distance from its pole. -/
+private def logComparison (X u : ℝ) : ℝ := X ^ 2 / (u * (4 * u ^ 2 + X ^ 2))
+
+private lemma logComparison_nonneg (X : ℝ) {u : ℝ} (hu : 0 < u) :
+    0 ≤ logComparison X u := by dsimp [logComparison]; positivity
+
+private lemma logComparison_antitone (X c : ℝ) (hc : 0 < c) :
+    AntitoneOn (fun u => logComparison X (u + c)) (Ici 0) := by
+  intro u hu v hv huv
+  have hu' : 0 < u + c := by linarith [hu.out]
+  have hv' : 0 < v + c := by linarith [hv.out]
+  apply div_le_div_of_nonneg_left (sq_nonneg X) (by positivity :
+    0 < (u + c) * (4 * (u + c) ^ 2 + X ^ 2))
+  gcongr
+
+private lemma logComparison_integral (X c : ℝ) (hc : 0 < c) :
+    IntegrableOn (fun u => logComparison X (u + c)) (Ioi 0) ∧
+      (∫ u : ℝ in Ioi 0, logComparison X (u + c)) =
+        Real.log (1 + X ^ 2 / (4 * c ^ 2)) / 2 := by
+  let F : ℝ → ℝ := fun u => -Real.log (1 + X ^ 2 / (4 * (u + c) ^ 2)) / 2
+  have hd (u : ℝ) (hu : u ∈ Ici (0 : ℝ)) :
+      HasDerivAt F (logComparison X (u + c)) u := by
+    have huc : 0 < u + c := by linarith [hu.out]
+    have hden : 4 * (u + c) ^ 2 ≠ 0 := by positivity
+    have hlog : 1 + X ^ 2 / (4 * (u + c) ^ 2) ≠ 0 := by positivity
+    have h := (((((hasDerivAt_id u).add_const c).pow 2).const_mul 4).const_div
+      (X ^ 2) hden).const_add 1 |>.log hlog
+    convert h.neg.div_const 2 using 1
+    dsimp [F, logComparison]
+    field_simp
+    <;> ring
+  have hn (u : ℝ) (hu : u ∈ Ioi (0 : ℝ)) : 0 ≤ logComparison X (u + c) :=
+    logComparison_nonneg X (by linarith [hu.out])
+  have hlim : Tendsto F atTop (𝓝 0) := by
+    have ht : Tendsto (fun u : ℝ => 4 * (u + c) ^ 2) atTop atTop :=
+      ((tendsto_pow_atTop (by norm_num : (2 : ℕ) ≠ 0)).comp
+        (tendsto_atTop_add_const_right atTop c tendsto_id)).const_mul_atTop (by norm_num)
+    have hq : Tendsto (fun u : ℝ => 1 + X ^ 2 / (4 * (u + c) ^ 2)) atTop (𝓝 1) := by
+      simpa using (tendsto_const_nhds.div_atTop ht).const_add 1
+    have hl := (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.comp hq
+    simpa [F] using hl.neg.div_const 2
+  refine ⟨integrableOn_Ioi_deriv_of_nonneg' hd hn hlim, ?_⟩
+  have h := integral_Ioi_of_hasDerivAt_of_nonneg' hd hn hlim
+  simpa [F] using h
+
+private lemma pTerm_comparison (n : ℕ) (ξ : ℝ) :
+    logComparison |ξ| ((n : ℝ) + 3 / 2) ≤ pTerm n ξ ∧
+      pTerm n ξ ≤ logComparison |ξ| ((n : ℝ) + 1) := by
+  have hk : 0 < (n : ℝ) + 1 := by positivity
+  have hks : 0 < (n : ℝ) + 3 / 2 := by positivity
+  have hs := sq_nonneg ξ
+  have hr : 0 < rate n := by dsimp [rate]; positivity
+  dsimp [pTerm]
+  rw [head_mass_step]
+  dsimp [logComparison, rate]
+  rw [sq_abs]
+  constructor
+  all_goals
+    apply (div_le_div_iff₀ (by positivity) (by positivity)).mpr
+    field_simp
+    nlinarith [sq_nonneg (n : ℝ), pow_nonneg (Nat.cast_nonneg n : (0 : ℝ) ≤ n) 3]
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
