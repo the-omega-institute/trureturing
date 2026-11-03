@@ -22,4 +22,4 @@ For every original LatticeData D, all original tensor states a,b,c and all integ
 
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostStateFieldIterate.stateField_iterate`
 - Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostBRSTDerivation](LatticeMatterGhostBRSTDerivation.md)
-- Dependency: [D5/S3/VertexAlgebra/SignedFieldResidueLocality](../SignedFieldResidueLocality.md)
+- Dependency: [D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality](../SignedFields/SignedFieldResidueLocality.md)

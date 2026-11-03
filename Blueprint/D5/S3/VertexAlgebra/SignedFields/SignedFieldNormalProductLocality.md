@@ -8,9 +8,9 @@ The finite-support constructions and residue telescope retain the Scott Carnahan
 
 **Theorem 1.1 (Independent signs and uniform residue cancellation).**
 
-Lean statement: `D5/S3/VertexAlgebra/SignedFieldNormalProductLocality.signedNormal_locality`
+Lean statement: `D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality.signedNormal_locality`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SignedFieldNormalProductLocality.signedNormal_locality` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality.signedNormal_locality` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For arbitrary complex modules and three fields A,B,C, locality with independent 
 
 **Theorem 1.2 (Every divided derivative preserves the sign).**
 
-Lean statement: `D5/S3/VertexAlgebra/SignedFieldNormalProductLocality.signedDerivative_locality`
+Lean statement: `D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality.signedDerivative_locality`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SignedFieldNormalProductLocality.signedDerivative_locality` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality.signedDerivative_locality` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,6 +32,6 @@ The degree d divided derivative of A has locality order N+d against B, with the 
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/SignedFieldNormalProductLocality.signedDerivative_locality`
-- Truth anchor: `D5/S3/VertexAlgebra/SignedFieldNormalProductLocality.signedNormal_locality`
+- Truth anchor: `D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality.signedDerivative_locality`
+- Truth anchor: `D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality.signedNormal_locality`
 - Dependency: [D5/S3/VertexAlgebra/FieldNormalProductLocality](FieldNormalProductLocality.md)

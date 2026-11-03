@@ -8,9 +8,9 @@ The finite-support constructions and residue telescope retain the Scott Carnahan
 
 **Theorem 1.1 (Dong locality for every integer residue).**
 
-Lean statement: `D5/S3/VertexAlgebra/SignedFieldResidueLocality.residue_locality`
+Lean statement: `D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality.residue_locality`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SignedFieldResidueLocality.residue_locality` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality.residue_locality` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For arbitrary fields and independent AB,AC,BC signs x,y,z, every integer signed 
 
 **Theorem 1.2 (Original translation passes through the residue).**
 
-Lean statement: `D5/S3/VertexAlgebra/SignedFieldResidueLocality.residue_translation`
+Lean statement: `D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality.residue_translation`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SignedFieldResidueLocality.residue_translation` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality.residue_translation` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,8 +32,8 @@ If both input fields are covariant under the same endomorphism T, every signed i
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/SignedFieldResidueLocality.residue_locality`
-- Truth anchor: `D5/S3/VertexAlgebra/SignedFieldResidueLocality.residue_translation`
+- Truth anchor: `D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality.residue_locality`
+- Truth anchor: `D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality.residue_translation`
 - Dependency: [D5/S3/VertexAlgebra/BinomialKernelDelta](BinomialKernelDelta.md)
-- Dependency: [D5/S3/VertexAlgebra/SignedFieldNormalProductLocality](SignedFieldNormalProductLocality.md)
+- Dependency: [D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality](SignedFields/SignedFieldNormalProductLocality.md)
 - Dependency: [D5/S3/VertexAlgebra/StateFieldResidueReconstruction](StateFieldResidueReconstruction.md)

@@ -1,5 +1,5 @@
 import Reg.D5.S3.VertexAlgebra.SignedFieldNormalProductLocality
-import D5.S3.VertexAlgebra.SignedFieldResidueLocality
+import D5.S3.VertexAlgebra.SignedFields.SignedFieldResidueLocality
 
 /-! Faithful residue-law families; source occurrence enrollment remains unresolved. -/
 open scoped VertexOperator

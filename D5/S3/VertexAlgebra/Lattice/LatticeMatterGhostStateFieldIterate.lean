@@ -22,7 +22,7 @@ braiding, with finite action support before every sum exchange.
 -/
 
 import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostBRSTDerivation
-import D5.S3.VertexAlgebra.SignedFieldResidueLocality
+import D5.S3.VertexAlgebra.SignedFields.SignedFieldResidueLocality
 
 /-! Integer residue closure and unrestricted braiding of the original tensor fields. -/
 

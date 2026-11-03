@@ -1,4 +1,4 @@
-/- GID: D5/S3/VertexAlgebra/SignedFieldResidueLocality
+/- GID: D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality
    generality: I
    mirror-B: D5/B/S3/VertexAlgebra/SignedFieldResidueLocality
    mirror-E: none(waiver:algebraic-signed-field-calculus)
@@ -20,7 +20,7 @@ pairs; negative residues are signed normal products of divided derivatives.
 Vectorwise support bounds and a binomial telescope establish covariance.
 -/
 
-import D5.S3.VertexAlgebra.SignedFieldNormalProductLocality
+import D5.S3.VertexAlgebra.SignedFields.SignedFieldNormalProductLocality
 import D5.S3.VertexAlgebra.StateFieldResidueReconstruction
 import D5.S3.VertexAlgebra.BinomialKernelDelta
 

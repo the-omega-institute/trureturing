@@ -1,7 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Module.ULift
-import D5.S3.VertexAlgebra.SignedFieldNormalProductLocality
+import D5.S3.VertexAlgebra.SignedFields.SignedFieldNormalProductLocality
 
 /-! Dependent-family source attempts; the original source selectors remain unresolved. -/
 open scoped VertexOperator
