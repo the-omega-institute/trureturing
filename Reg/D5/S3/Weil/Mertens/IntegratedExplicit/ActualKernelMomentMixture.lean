@@ -87,7 +87,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := (h 0).2.2.2.1
   have hl : Real.log 13 ≤ 12 := by
     linarith [Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 13)]
-  norm_num [rejected, realize, pMultiplier] at hb
+  change (100 : ℝ) - Real.log 13 / 2 ≤ pMultiplier 0 at hb
+  rw [(pMultiplier_logarithmic_bounds 0).2.2.1] at hb
   linarith
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -164,8 +165,8 @@ def family : Registration arena.{u}
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law Mixture.actual rejected rejected_law
   dependence := by
-    intro i
-    exact ⟨(), 0, 1, by change (0 : ℂ).re ≠ (1 : ℂ).re; norm_num⟩
+    change ObservationalDependence signature Mixture.actual
+    exact Mixture.dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@complete_positive_mixture_spectral_identity.{u}) (Realization signature) Unit Unit where
   unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.complete_positive_mixture_spectral_identity.audit
