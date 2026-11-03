@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses
-import Reg.Support.DependentFamily
+import Reg.Support.UniverseSingleReadout
 
 /-! Source-bound registrations of the selected public mathematical statements. -/
 
@@ -12,41 +12,12 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-universe t s o
-
-/-- A single observation whose parameters, states and outputs may live in different universes. -/
-abbrev singletonSignature (P : Type t) (S : P → Type s) (O : P → Type o) :
-    Signature.{t,s,0,o,0} where
-  Params := P
-  State := S
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ := O
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-/-- A rejected readout family supplies every sensitivity obligation for the single role. -/
-theorem singletonSensitivity {P : Type t} {S : P → Type s} {O : P → Type o}
-    (law : Realization (singletonSignature P S O) → Prop)
-    (actual bad : Realization (singletonSignature P S O)) (hbad : ¬ law bad) :
-    Sensitivity ⟨singletonSignature P S O, law⟩ actual := by
-  constructor
-  · intro i
-    refine ⟨bad, ?_, ?_, hbad⟩
-    · intro j h
-      exact (h (Subsingleton.elim _ _)).elim
-    · funext e
-      exact nomatch e
-  · intro e
-    exact nomatch e
-
 open _root_.D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph (lc)
 namespace LocalComplement
 
 /-- Observe local complementation at the selected vertex as the graph varies. -/
 abbrev signature : Signature :=
-  singletonSignature (Σ V : Type, V)
+  Reg.Support.UniverseSingleReadout.signature (Σ V : Type, V)
     (fun p => SimpleGraph p.1) (fun p => SimpleGraph p.1)
 
 def actual : Realization signature :=
@@ -82,7 +53,7 @@ def source_registration : Registration arena (type_of% (@lc_source)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@lc_source, rejected, rejected_law⟩
-  sensitivity := singletonSensitivity arena.Law actual rejected
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected
     rejected_law
   dependence := dependence
 

@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
-import Reg.Support.DependentFamily
+import Reg.Support.UniverseSingleReadout
 
 /-! Source-bound registrations of the selected public mathematical statements. -/
 
@@ -13,38 +13,9 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-universe t s o
-
-/-- A single observation whose parameters, states and outputs may live in different universes. -/
-abbrev singletonSignature (P : Type t) (S : P → Type s) (O : P → Type o) :
-    Signature.{t,s,0,o,0} where
-  Params := P
-  State := S
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ := O
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-/-- A rejected readout family supplies every sensitivity obligation for the single role. -/
-theorem singletonSensitivity {P : Type t} {S : P → Type s} {O : P → Type o}
-    (law : Realization (singletonSignature P S O) → Prop)
-    (actual bad : Realization (singletonSignature P S O)) (hbad : ¬ law bad) :
-    Sensitivity ⟨singletonSignature P S O, law⟩ actual := by
-  constructor
-  · intro i
-    refine ⟨bad, ?_, ?_, hbad⟩
-    · intro j h
-      exact (h (Subsingleton.elim _ _)).elim
-    · funext e
-      exact nomatch e
-  · intro e
-    exact nomatch e
-
 /-- Observe the rational coefficient family in the reconstruction formula. -/
 abbrev signature : Signature :=
-  singletonSignature Unit
+  Reg.Support.UniverseSingleReadout.signature Unit
     (fun _ => ℕ → ℕ → ℚ) (fun _ => ℕ → ℕ → ℚ)
 
 def actual : Realization signature :=
@@ -98,7 +69,7 @@ def source_registration : Registration arena claim where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨result, rejected, rejected_law⟩
-  sensitivity := singletonSensitivity arena.Law actual rejected
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected
     rejected_law
   dependence := dependence
 
@@ -155,7 +126,7 @@ end
 namespace Zeta
 universe u
 abbrev signature : Signature :=
-  singletonSignature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
+  Reg.Support.UniverseSingleReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 
 def actual : Realization signature := realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
 def rejected : Realization signature :=
@@ -181,7 +152,7 @@ def family : Registration arena.{u} (type_of% (@zeta_hyperlink.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@zeta_hyperlink, rejected, rejected_law⟩
-  sensitivity := singletonSensitivity arena.Law actual rejected
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected
     rejected_law
   dependence := dependence
 
@@ -229,7 +200,7 @@ universe u_1
 
 /-- Observe the hyperlink of the subset zeta transform at a varying subset. -/
 abbrev signature : Signature :=
-  singletonSignature (Σ α : Type u_1, Finset α → ℝ)
+  Reg.Support.UniverseSingleReadout.signature (Σ α : Type u_1, Finset α → ℝ)
     (fun p => Finset p.1) (fun _ => ℝ)
 
 def actual : Realization signature.{u_1} :=
@@ -263,7 +234,7 @@ def source_registration : Registration arena.{u_1} (type_of% (@hyperlink_zeta.{u
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@hyperlink_zeta.{u_1}, rejected, rejected_law⟩
-  sensitivity := singletonSensitivity arena.Law actual rejected
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected
     rejected_law
   dependence := dependence
 
