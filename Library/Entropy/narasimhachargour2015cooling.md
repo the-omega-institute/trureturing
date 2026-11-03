@@ -14,6 +14,14 @@ triage: anchor
 
 # Narasimhachar–Gour, low-temperature thermodynamics with quantum coherence
 
+## Verified locator
+
+DOI: 10.1038/ncomms8689
+
+Source: https://arxiv.org/abs/1409.7740v3
+
+Nature Communications 6, 7689 (2015).
+
 V. Narasimhachar and G. Gour, arXiv:1409.7740v3 [quant-ph] (9 August 2015, the latest version); Nature Communications 6, 7689 (2015).
 
 Low-temperature thermal operations (main text): the ancilla state is replaced by the normalized projector onto the ground space of its Hamiltonian, $\gamma_A\approx P_{\mathrm{ground}}/g$, and
