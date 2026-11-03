@@ -1,6 +1,6 @@
 # AURIC：复合比较的同尺度乘积序稳定性续篇（V96）
 
-本卷承接 [AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md)。下文是已接受的定量证明的完整续篇；其中外部的定义、假设和编号（特别是定义 8.1–8.4）均按该 V96 原卷阅读。为避免与原卷或其他续篇的编号混淆，内部标签把来源附录的 `44.*` 双射运输为本卷的 `Q97.*`；除该标签运输和本段读者约定外，不增加数学内容。
+本卷承接 [AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md)。外部定义、假设与编号（特别是定义 8.1–8.4）按 V96 原卷解释；本续篇使用 `Q97.*` 作为内部定义、命题与公式编号。
 
 
 ## Q97. 有限原始报告在同一内积和内生标尺上的定量修复
