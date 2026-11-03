@@ -63,22 +63,25 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
   intro h
-  let G := ULift.{v} ℂ
-  let H := ULift.{u} ℂ
-  let V : G →ₗᵢ[ℂ] H := LinearIsometryEquiv.ulift.symm.toLinearIsometry.comp
-    LinearIsometryEquiv.ulift.toLinearIsometry
-  have he : ‖(⟨1⟩ : G)‖ = 1 := by simp
+  let G := EuclideanSpace ℂ (ULift.{v} Empty)
+  let H := EuclideanSpace ℂ (ULift.{u} Empty)
+  let V : G →ₗᵢ[ℂ] H :=
+    { toLinearMap := 0
+      norm_map' := fun x => by simp [Subsingleton.elim x 0] }
+  have he : (∃ x : G, ‖x‖ = 1) → ‖(0 : G)‖ = 1 := by
+    rintro ⟨x,hx⟩
+    simp [Subsingleton.elim x 0] at hx
   have hh := @h H G inferInstance inferInstance inferInstance
     inferInstance inferInstance inferInstance (ULift.{w} Empty) inferInstance
     V (fun j => nomatch j.down) (fun j => nomatch j.down) 0 (by norm_num)
-    (by intro x hx; simp) ⟨1⟩ (fun _ => he)
+    (by intro x hx; simp) 0 he
   have hbad := hh.2.2.1
   change (1 : ℝ) ≤ 5*0 at hbad
   norm_num at hbad
 
 private theorem dependence : ObservationalDependence signature.{v} actual := by
   intro i
-  let G := ULift.{v} ℂ
+  let G := EuclideanSpace ℂ (ULift.{v} (Fin 1))
   let p : Carrier.{v} := ⟨G,inferInstance,inferInstance,inferInstance⟩
   refine ⟨p, 0, LinearMap.id, ?_⟩
   change ‖(0 : G →L[ℂ] G)‖ ≠ ‖(ContinuousLinearMap.id ℂ G)‖
