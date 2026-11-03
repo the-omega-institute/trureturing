@@ -94,12 +94,12 @@ private theorem bad_new : ¬OriginalOrder 18 1 (earWord 17 identityWord 0) := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side
   cases side
-  · refine ⟨⟨3,2,7,5⟩,0,2,?_⟩
+  · refine ⟨⟨2,3,8,4⟩,0,2,?_⟩
     intro he
     have hp := congrFun he identityWord
     change OriginalOrder 17 0 identityWord=OriginalOrder 17 2 identityWord at hp
     exact bad_old (hp.mp zero_old)
-  · refine ⟨⟨3,2,7,5⟩,0,1,?_⟩
+  · refine ⟨⟨2,3,8,4⟩,0,1,?_⟩
     intro he
     have hp := congrFun he (earWord 17 identityWord 0)
     change OriginalOrder 18 0 (earWord 17 identityWord 0)=
@@ -145,12 +145,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none
     coordinates := #[0,1,2,3]
     readouts := #[{
-      path := #["body","body","body","body","body","body","body","body","arg","body","arg","body","arg","fn","arg","fn"]
+      path := #["body","body","body","body","body","body","body","body","arg","body","arg","body","arg","arg","fn","arg","fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }, {
-      path := #["body","body","body","body","body","body","body","body","arg","body","arg","body","arg","arg","fn","arg","fn"]
+      path := #["body","body","body","body","body","body","body","body","arg","body","arg","body","arg","fn","arg","fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -299,12 +299,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body","body","arg","body","arg","body","arg","fn","arg","fn"]
+      path := #["body","body","arg","body","arg","body","arg","arg","fn","arg","fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }, {
-      path := #["body","body","arg","body","arg","body","arg","arg","fn","arg","fn"]
+      path := #["body","body","arg","body","arg","body","arg","fn","arg","fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
