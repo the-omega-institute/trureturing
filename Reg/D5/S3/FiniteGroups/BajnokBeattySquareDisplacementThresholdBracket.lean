@@ -67,8 +67,19 @@ abbrev thresholdArena : Arena where
 
 private theorem actual_bridge : (type_of% actual_square_displacement_threshold_bracket) ↔
     thresholdArena.Law thresholdActual := by
-  simp [thresholdArena,thresholdActual,realize,correctedCenter,radius,
-    and_assoc,and_left_comm,and_comm]
+  constructor
+  · intro h p q hp5 hpo hq3 hqo
+    obtain ⟨T,⟨hT,hbefore,hat,hafter,hlate,hlo,hhi⟩,huniq⟩ := h p q hp5 hpo hq3 hqo
+    refine ⟨T,⟨hT,hbefore,hat,hafter,hlate,hlo,hhi⟩,?_⟩
+    intro U hU
+    obtain ⟨hU,hbefore,hat,hafter,hlate,hlo,hhi⟩ := hU
+    exact huniq U ⟨hU,hbefore,hat,hafter,hlate,hlo,hhi⟩
+  · intro h p q hp5 hpo hq3 hqo
+    obtain ⟨T,⟨hT,hbefore,hat,hafter,hlate,hlo,hhi⟩,huniq⟩ := h p q hp5 hpo hq3 hqo
+    refine ⟨T,⟨hT,hbefore,hat,hafter,hlate,hlo,hhi⟩,?_⟩
+    intro U hU
+    obtain ⟨hU,hbefore,hat,hafter,hlate,hlo,hhi⟩ := hU
+    exact huniq U ⟨hU,hbefore,hat,hafter,hlate,hlo,hhi⟩
 
 private theorem actual_law : thresholdArena.Law thresholdActual :=
   actual_bridge.mp actual_square_displacement_threshold_bracket
