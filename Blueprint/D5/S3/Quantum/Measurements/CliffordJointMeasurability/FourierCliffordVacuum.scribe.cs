@@ -87,7 +87,7 @@ internal sealed class FourierCliffordVacuumDocument : IScribeDocumentDefinition
     private static Formula LinearAnticommutatorFormula() => Disp(new Formula.Aligned([
         Seq(Forall, Sp, OpenBrace, F.Id("R"), Sp, Colon, Sp, Call("Type"), Star, CloseBrace,
             Sp, OpenBrace, F.Id("iota"), Sp, Colon, Sp, Call("Type"), Star, CloseBrace, Comma),
-        Seq(OpenBracket, Call("Ring"), Sp, F.Id("R"), CloseBracket, Sp,
+        Seq(Grp(), OpenBracket, Call("Ring"), Sp, F.Id("R"), CloseBracket, Sp,
             OpenBracket, Call("Algebra"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, F.Id("R"),
             CloseBracket, Sp, OpenBracket, Call("Fintype"), Sp, F.Id("iota"), CloseBracket, Sp,
             OpenBracket, Call("DecidableEq"), Sp, F.Id("iota"), CloseBracket, Comma),
