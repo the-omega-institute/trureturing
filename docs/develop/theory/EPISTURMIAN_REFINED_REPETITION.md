@@ -526,3 +526,769 @@ unbounded-run theorem retain their own statements and hypotheses.
   and [BoundedPowers](https://github.com/the-omega-institute/trureturing/blob/bd817014953ec22f9433fdf40fb9f653beb8d1cd/D5/S1/Words/Episturmian/BoundedPowers.lean).
 
 ## 追加锚（本行以下为增补区）
+
+## 6. The actual finite-sheet model and its return foundation
+
+**Definition 6.1 (Fixed geometry and physical labels).** Identify the model alphabet
+with $B=\{0,\ldots,d-1\}$, $d\ge2$. For $H\ge d$ let $Y_H$ be the closed set
+of directives for which every length-$H$ window contains every letter of $B$.
+Unless a compact minimal hull is specified, fix a uniformly recurrent $y\in Y_H$.
+Write $A_N=M_{L_{y_0}}\cdots M_{L_{y_{N-1}}}$, with incidence columns
+$M_\sigma e_b=\ell(\sigma(b))$. Let $f=f_y$ be the normalized frequency vector,
+and put
+
+$$
+\begin{gathered}
+V=\{x\in\mathbb R^d:\mathbf1^{\mathsf T}x=0\},\qquad
+\Lambda=V\cap\mathbb Z^d,\qquad K=V/\Lambda,\qquad p:V\longrightarrow K,\\
+\pi_f(x)=x-(\mathbf1^{\mathsf T}x)f,\qquad
+\alpha=p(\pi_f(e_{d-1})),\qquad C=4H2^H,\qquad M=(2C+1)^{d-1}.
+\end{gathered}                                                     \tag{6.1}
+$$
+
+Use the same Lebesgue measure $\lambda$ on $V$ for all directives: $\Lambda$
+has covolume one. Haar measure $du$ on $K$ is a probability. The actual BST
+subtiles, with its positive-prefix convention, are
+
+$$
+\mathcal R_y(a)=\overline{\{\pi_f\ell(P):Pa\text{ is a prefix of a limit
+word of }(L_{y_n})_{n\ge0}\}},\qquad
+\mathcal R_y=\bigcup_a\mathcal R_y(a).                         \tag{6.2}
+$$
+
+The following instantiation supplies the objects used throughout §§7–10.
+Every length-$H$ incidence product is positive: applying the morphisms from
+right to left preserves every letter already present, and adds each directing
+letter if it is absent. Each morphism at most doubles length, so its positive
+product has entries between $1$ and $2^H$. Each $M_{L_a}$ is unimodular.
+Its transpose is the fully subtractive generator of [AD, Theorem 1]. Transposing
+a product reverses its order; every product of length at least $H$ still contains
+every generator. That theorem therefore gives a primitive Pisot product.
+Its characteristic polynomial is irreducible: if a monic integral proper factor
+did not contain the simple dominant root, all its roots would have modulus
+less than one, whereas its nonzero constant term is an integer. Thus the
+sequence is primitive and algebraically irreducible in the sense of [BST].
+
+This is the primary language of Definition 1.1. Each $L_{y[0,N)}(b)$ occurs in
+$c_y=L_{y[0,N)}(c_{T^Ny})$, since the strict tail contains $b$; conversely the
+growing prefixes $L_{y[0,N)}(y_N)$ of $c_y$ exhaust it. Consequently the generic
+S-adic language of these actual left substitutions is exactly $\mathcal L(c_y)$,
+as also identified by [P, §3.1] and [DZ, Theorem 2.2]. The generic [BST,
+Theorem 3.1] is applied to this sequence itself. Its separate ternary
+Theorem 3.8 uses right substitutions; the reversal argument in Proposition 3.1
+is the language bridge for that earlier application, not a change of the
+sequence in (6.2).
+
+For the uniform balance input [DHS, equation (4), Lemmas 5–6] applies to exactly
+these left substitutions. Its modified matrices have norm at most one and,
+after the initial $H-1$ places, contract each length-$H$ block by at most
+
+$$
+\theta=\frac{2^H-d}{2^H-1}<1.
+$$
+
+Its Proposition 1 and Lemma 3 give, on every tail, discrepancy at most
+$(H-1)+H/(1-\theta)\le H2^H-1$ and letter balance less than $C$.
+In particular all the sets in (6.2), including every tail's subtiles in its
+own fixed space $V$, lie in $[-C,C]^d\cap V$.
+For every prefix length $\ell$, recurrence of $y$ gives a return position
+$n\ge1$ with $y[n,n+\ell)=y[0,\ell)$; the language after $n+\ell$ has this
+same balance bound. These are exactly the balanced-return hypotheses of
+[BST, Theorem 3.1]. Its Lemma 5.9 supplies Property PRICE, including the
+recurrent left vector; no assertion about a typical directive is needed.
+
+Strong coincidence holds at the first substitution: all $L_{y_0}(b)$ begin
+with $y_0$, and the prefixes before that common letter are empty. Hence
+[BST, Theorem 3.1(ii)–(iv), Proposition 7.7 and Proposition 8.4] supplies compact
+subtiles with null boundaries, disjointness in measure, the multiple tiling
+$\{z+\mathcal R_y(a):z\in\Lambda,a\in B\}$, and the almost everywhere
+bijective, measure-preserving exchange
+
+$$
+D_y(x)=x+\pi_f(e_a)=x+e_a-f\quad(x\in\mathcal R_y(a)).       \tag{6.3}
+$$
+
+This is BST's equation (8.1), with its sign unchanged. Reflecting all tiles by
+$x\mapsto-x$ would replace the increment by $f-e_a$ and the base translation
+by $-\alpha$; such a reflected representation is not used here.
+Strong coincidence does not assert geometric coincidence or degree one.
+
+Let $m=m_y$ be the multiple-tiling degree. Disjointness of the subtiles and
+lattice disintegration give, for almost every $u\in K$,
+
+$$
+\begin{gathered}
+S_y(u)=\mathcal R_y\cap p^{-1}(u),\qquad |S_y(u)|=m,\qquad
+\lambda(\mathcal R_y)=m,\\
+\int_{\mathcal R_y}\Phi(x)\,d\lambda(x)
+ =\int_K\sum_{x\in S_y(u)}\Phi(x)\,du.                     \tag{6.4}
+\end{gathered}
+$$
+
+Indeed one may integrate the lattice periodization over
+$\{u\in V:0\le u_a<1\ (a<d-1)\}$, a fundamental domain of $\Lambda$.
+In each fiber the first $d-1$ lattice coordinates range over intervals of
+length $2C$, each containing at most $2C+1$ integers; the final coordinate is
+determined by their sum. Thus $1\le m\le M$.
+Order the physical points of $S_y(u)$ lexicographically as
+$r_{1,y}(u),\ldots,r_{m,y}(u)$. These measurable sections do not depend on a
+choice of base lift. Ordering their lattice offsets from any one lift gives
+the same order, and translating a whole physical fiber preserves it.
+Since $\pi_f(e_a)-\pi_f(e_{d-1})=e_a-e_{d-1}\in\Lambda$, (6.3) maps
+$S_y(u)$ bijectively onto $S_y(u+\alpha)$. Define the actual permutation
+$c_y:K\to\operatorname{Sym}(m)$ by
+
+$$
+D_y(r_{i,y}(u))=r_{c_y(u)i,y}(u+\alpha).                    \tag{6.5}
+$$
+
+The probability on the exchange is $\lambda|_{\mathcal R_y}/m$.
+Equation (6.4) identifies it with Haar measure times uniform measure on the
+$m$ labels; this is the measured skew product
+$\widehat D_y(u,i)=(u+\alpha,c_y(u)i)$.
+To relate it to the two-sided system, discard the invariant null set where
+some forward or backward iterate of $D_y$ is undefined or ambiguous, and code
+$x$ by its subtile labels at all $D_y^kx$, $k\in\mathbb Z$. Its finite factors
+are those of the primary language. [BST, Lemma 8.3 and Proposition 8.4] makes
+the future coding an almost everywhere bijective representation; invertibility
+of $D_y$ then realizes its natural extension by these two-sided itineraries.
+Their stationary law is the unique law $\mu_y$ on $X_y^{\mathbb Z}$.
+Thus this is the actual two-sided primary shift, with actual physical sheet
+labels, rather than an arbitrary extension of a rotation.
+
+**Lemma 6.2 (Factorial amplification of actual returns).** In Definition 6.1 put
+$E=M!$, and define
+
+$$
+\begin{aligned}
+F_{q,y}(u)&=c_y(u+(q-1)\alpha)\cdots c_y(u),\qquad h=q\alpha,\\
+\Omega_y(q)&=\sum_{r=1}^{E-1}\operatorname{Haar}
+ \{u:F_{q,y}(u+rh)\ne F_{q,y}(u)\},\\
+\omega_y(v)&=\frac1m\sum_{i=1}^m\operatorname{Haar}
+ \{u:a_y(u+p(v),i)\ne a_y(u,i)\},
+\end{aligned}                                                    \tag{6.6}
+$$
+
+where $a_y(u,i)$ is the subtile letter of $r_{i,y}(u)$.
+Then $\omega_y(v)\to0$ as $v\to0$, and, for every $q\ge1$ and any lift
+$\varepsilon_q\in V$ of $q\alpha$,
+
+$$
+d_{\mu_y}(Eq)\le\Omega_y(q)+\omega_y(E\varepsilon_q).       \tag{6.7}
+$$
+
+Moreover the primary shift is rigid if and only if there are $q_j\to\infty$
+with $q_j\alpha\to0$ such that $F_{q_j,y}$ has a subsequence converging in
+measure. Equivalently there are such returns with $\Omega_y(q_j)\to0$.
+
+**Proof.** Translation continuity in $L^1(K)$ of the finitely many measurable
+letter indicators proves the assertion about $\omega_y$.
+Outside the union defining $\Omega_y(q)$, all $E$ factors in
+
+$$
+F_{Eq,y}(u)=F_{q,y}(u+(E-1)h)\cdots F_{q,y}(u)
+$$
+
+are the same permutation. Its order divides $m!$, hence $E$, so this product
+is the identity. Consequently
+$\operatorname{Haar}\{F_{Eq,y}\ne\mathrm{id}\}\le\Omega_y(q)$.
+On the complement the label is unchanged, and only the base translates by
+$Eq\alpha$. Comparing the actual letters and integrating the uniform sheets
+gives (6.7). If its right side tends to zero at growing times, the cylinder
+argument in Proposition 3.1 proves rigidity.
+
+For completeness, suppose $h_j=q_j\alpha\to0$ and, after restriction to a
+subsequence, $F_{q_j,y}\to P$ in measure. The limit takes values in
+$\operatorname{Sym}(m)$. For each fixed $r$,
+
+$$
+\operatorname{Haar}\{F_{q_j,y}(\,\cdot+rh_j)\ne P\}
+\le\operatorname{Haar}\{F_{q_j,y}\ne P\}
+ +\operatorname{Haar}\{P(\,\cdot+rh_j)\ne P\}\longrightarrow0.
+$$
+
+The cocycle identity therefore gives $F_{Eq_j,y}\to P^E=\mathrm{id}$ in
+measure. Together with $Eh_j\to0$, this proves strong convergence to the
+identity first on continuous base functions times sheet indicators, then on
+all $L^2$ by density and isometry. Conversely, rigidity makes every base
+character return, hence $q_j\alpha\to0$. Applied to the sheet indicators it
+makes the average moved fraction of labels tend to zero. A nonidentity
+permutation moves at least one of the $m$ labels, so
+$\operatorname{Haar}\{F_{q_j,y}\ne\mathrm{id}\}\to0$.
+Each summand in $\Omega_y(q_j)$ is at most twice this measure, proving the
+last equivalence. These arguments use the actual $F_{q,y}$ from (6.5).
+A finite range alone gives no compactness in measure: the functions on
+$[0,1)$ taking a fixed transposition or the identity according to the $j$-th
+binary digit disagree on measure $1/2$ for distinct $j$. They are a boundary
+on that compactness inference, not AR cocycles. $\square$
+
+## 7. Joint geometric oscillation and actual Parikh charge
+
+**Theorem 7.1 (Crossings and cancellation in the same exchange).** Use the actual
+model of §6, and suppress $y$ on its objects. For $v\in V$ and $q\ge1$ put
+
+$$
+\begin{aligned}
+G(v)&=\lambda(\mathcal R\mathbin\triangle(\mathcal R-v)),\\
+W(v)&=\sum_a\lambda(\mathcal R(a)\mathbin\triangle(\mathcal R(a)-v)),\\
+\Delta_q(v)&=\operatorname{Haar}\{u:F_q(u+p(v))\ne F_q(u)\},\\
+H_{q,v}(x)&=D^q(x+v)-D^q(x)-v\quad(x\in\mathcal R\cap(\mathcal R-v)),\\
+J(q,v)&=\lambda\{x\in\mathcal R\cap(\mathcal R-v):H_{q,v}(x)\ne0\}.
+\end{aligned}                                                     \tag{7.1}
+$$
+
+Thus $J$ is a raw $\lambda$-mass, not a probability already divided by $m$.
+Let $\iota(x)_k$ be the actual subtile letter of $D^kx$. Then
+
+$$
+\begin{gathered}
+H_{q,v}(x)=\ell(\iota(x+v)[0,q))-\ell(\iota(x)[0,q))\in\Lambda,
+\qquad \|H_{q,v}(x)\|_\infty\le2C+\|v\|_\infty.
+\end{gathered}                                                     \tag{7.2}
+$$
+
+$$
+\Delta_q(v)\le\frac{G(v)+qW(v)}2.                            \tag{7.3}
+$$
+
+$$
+\frac{J(q,v)}m-G(v)\le\Delta_q(v)\le J(q,v)+G(v),\qquad
+J(q,v)\le\frac{qW(v)}2.                                    \tag{7.4}
+$$
+
+For any lift $\varepsilon_q$ of $q\alpha$ this gives
+
+$$
+\Omega_y(q)\le\frac{E(E-1)}4
+       \bigl(G(\varepsilon_q)+qW(\varepsilon_q)\bigr).        \tag{7.5}
+$$
+
+Along growing base returns with $\varepsilon_q\to0$, vanishing of $\Omega_y(q)$
+is equivalent to vanishing of every $J(q,r\varepsilon_q)$, $1\le r<E$.
+In particular $qW(\varepsilon_q)\to0$ is sufficient for rigidity. It is not
+asserted necessary.
+
+**Proof.** All statements are unaffected by the null boundary sets and their
+iterates. For the initial fibers compare $S(u+p(v))-v$ with $S(u)$.
+Lattice disintegration (6.4), used with their physical representatives, gives
+
+$$
+\int_K\#\bigl(S(u)\mathbin\triangle(S(u+p(v))-v)\bigr)\,du=G(v).
+                                                               \tag{7.6}
+$$
+
+The two sets each have $m$ points almost everywhere. If unequal, their
+symmetric difference has at least two points. Hence the initial exceptional
+base set $A_v$, where they are unequal, has measure at most $G(v)/2$.
+Off $A_v$ the lexicographic labels pair $r_i(u)$ with $r_i(u)+v$ exactly.
+Translation preserves the physical order even when a chosen base lift crosses
+a fundamental-domain boundary.
+
+Set
+
+$$
+B_v=\bigcup_a\bigl(\mathcal R(a)\setminus(\mathcal R(a)-v)\bigr),
+\qquad \lambda(B_v)=W(v)/2.                                  \tag{7.7}
+$$
+
+The equality follows from equal measures of a set and its translate and from
+subtile disjointness in measure. Start with $u\notin A_v$. If none of its
+$m$ trajectories visits $B_v$ in the first $q$ steps, the paired points stay
+in the same subtile at each step. The translations (6.3) then keep their
+difference equal to $v$. At time $q$ the images of all $m$ starting points
+exhaust the two terminal fibers, so these terminal fibers themselves translate
+exactly and their lexicographic labels match. Thus $F_q(u+p(v))=F_q(u)$.
+For each $k$, (6.4) and preservation of $\lambda$ give
+
+$$
+\int_K\sum_{i=1}^m\mathbf1_{B_v}(D^kr_i(u))\,du
+ =\lambda(B_v).
+$$
+
+A union bound over visits and sheets, together with the initial exception,
+proves (7.3). In particular this sharper estimate needs no separate terminal
+exception.
+
+For the charge, telescope the two actual trajectories in (6.3). Their $-f$
+terms cancel, leaving
+$\sum_{k<q}(e_{\iota(x+v)_k}-e_{\iota(x)_k})$, exactly the difference of the
+jointly realized Parikh vectors in (7.2). Its coordinate sum is zero. Both
+terminal points belong to $[-C,C]^d$, giving the stated norm bound.
+There is no independently optimized branch or independently chosen word in
+this identity.
+
+For comparison with $J$, exclude both $A_v$ and the bases with
+$u+q\alpha\in A_v$. Their union has measure at most $G(v)$. On the remaining
+bases, initial and terminal physical fibers both match by translation.
+Consequently the number $N(u)$ of nonzero charges among the $m$ initial pairs
+is exactly the number of labels on which $F_q(u+p(v))$ and $F_q(u)$ differ.
+It is zero when these permutations agree and between $1$ and $m$ otherwise.
+Let $J_{\rm good}$ be the integral of $N$ on these good bases, and let
+$\Delta_{\rm good}$ be their permutation-disagreement measure. Then
+
+$$
+\Delta_{\rm good}\le J_{\rm good}\le m\Delta_{\rm good},\qquad
+0\le J-J_{\rm good}\le mG(v),\qquad
+0\le\Delta_q-\Delta_{\rm good}\le G(v).
+$$
+
+These inequalities prove the first two bounds in (7.4). This separate argument
+has a terminal exception; using only its upper bound would lose the $G(v)/2$
+constant in (7.3).
+If a paired trajectory has nonzero charge, it has a first different subtile
+assignment before time $q$. Before that time its two points differ by $v$;
+at that time the first point belongs to $B_v$. The measure-preserving map
+$D^k$ and a union bound on the initial points of $\mathcal R\cap(\mathcal R-v)$
+therefore give $J(q,v)\le q\lambda(B_v)$, the last bound in (7.4).
+
+Finally, translation invariance and the triangle inequality give
+$G(rv)\le rG(v)$ and $W(rv)\le rW(v)$ for positive integers $r$.
+Apply (7.3) at $r\varepsilon_q$ and sum $r=1,\ldots,E-1$ to obtain (7.5).
+Both $G(v)$ and $W(v)$ tend to zero with $v$, by $L^1(V)$ translation
+continuity. Since $E$ and $m$ are fixed, (7.4) proves the asserted equivalence
+between vanishing oscillation and vanishing charge masses at returns.
+Equations (7.5) and (6.7) prove the sufficient crossing criterion. $\square$
+
+The finitely many possible charges for small $v$ do not determine their masses.
+Many crossings can cancel to zero total charge. Null boundaries give
+$W(v)\to0$, but give no rate coupled to $q$ and hence do not imply
+$qW(\varepsilon_q)\to0$ along a growing return sequence.
+
+## 8. Static continuity on an actual minimal directive hull
+
+**Theorem 8.1 (Fixed-space hull continuity).** Fix a nonempty compact minimal
+directive subshift $Y\subseteq Y_H$, with its product topology and shift $T$.
+Use (6.1)–(6.5) for each $y\in Y$, always in the same $V,\Lambda,K,\lambda$.
+Then $y\mapsto f_y$ is continuous, and every
+$y\mapsto\mathcal R_y(a)$ is Hausdorff continuous. The integer $m_y$ is
+constant on this $Y$, say $m$. Moreover
+
+$$
+\begin{gathered}
+\lambda(\mathcal R_y(a))=mf_{y,a},\qquad
+ y\longmapsto\mathbf1_{\mathcal R_y(a)}\text{ is continuous in }L^1(V,\lambda).
+\end{gathered}                                                     \tag{8.1}
+$$
+
+$$
+ y\longmapsto c_y\text{ is continuous in measure as a map into }
+ L^0(K,\operatorname{Sym}(m)).                               \tag{8.2}
+$$
+
+$$
+\lim_{s\downarrow0}\ \sup_{\substack{y\in Y\\v\in V,\ \|v\|_\infty\le s}}
+ W_y(v)=0.                                                  \tag{8.3}
+$$
+
+The assertion concerns one fixed minimal hull. It makes no assertion that
+different minimal subsets of $Y_H$ have the same degree.
+
+**Proof.** Every point of a compact minimal directive subshift is uniformly
+recurrent: finitely many inverse translates of any nonempty cylinder cover
+$Y$, bounding its hitting gaps. Thus the hypotheses of §6 hold for all $y\in Y$.
+The frequencies exist by §6. Their morphic relation is
+$f_y=A_Nf_{T^Ny}/(\mathbf1^{\mathsf T}A_Nf_{T^Ny})$: count letters in
+$c_y=L_{y[0,N)}(c_{T^Ny})$ and pass to frequencies. In particular writing
+any tail frequency as the normalization of a positive length-$H$ product,
+whose entries lie in $[1,2^H]$, applied to its next tail gives
+
+$$
+f_{T^Ny,a}\ge\frac1{d2^H}\quad(a\in B,\ N\ge0).           \tag{8.4}
+$$
+
+Here the lower bound follows from entries at least one and an upper bound
+$d2^H$ for the sum after application to a normalized positive vector.
+
+The contraction required for the subtiles must include the changing
+projections. Put $g=f_{T^Ny}$ and $h_N=A_N^{\mathsf T}\mathbf1$, and define
+
+$$
+P_Nx=x-g\frac{h_N^{\mathsf T}x}{h_N^{\mathsf T}g}.
+$$
+
+Since $A_Ng=(h_N^{\mathsf T}g)f_y$, we have
+
+$$
+\pi_{f_y}A_N=A_NP_N,\qquad
+ P_N\mathbb R^d\subset h_N^\perp=A_N^{-1}V,\qquad
+ \|P_N\|_\infty\le1+d2^H.                                  \tag{8.5}
+$$
+
+The last bound uses (8.4) and positivity of $h_N$; the matrix norm is induced
+by the coordinate sup norm. [DHS, equation (4), Lemmas 5–6] gives modified
+products $\widetilde A_N$ agreeing with $A_N$ on this exact hyperplane
+$A_N^{-1}V$, not on an unrelated fixed tail hyperplane. Their norms satisfy
+
+$$
+\|\widetilde A_N\|_\infty\le
+ \theta^{\lfloor\max\{0,N-H+1\}/H\rfloor}=:\rho_N
+ \longrightarrow0.
+$$
+
+Therefore (8.5) gives the uniform projected contraction
+
+$$
+\|\pi_{f_y}A_N\|_\infty\le(1+d2^H)\rho_N\longrightarrow0.  \tag{8.6}
+$$
+
+This also proves frequency continuity without a separate projective estimate.
+If $z$ shares the first $N$ directive letters with $y$, write $g_z=f_{T^Nz}$.
+Then $f_z=A_Ng_z/(h_N^{\mathsf T}g_z)$, where
+$h_N^{\mathsf T}g_z\ge1$ because the morphisms are nonerasing. Consequently
+
+$$
+\|f_z-f_y\|_\infty
+ =\frac{\|\pi_{f_y}A_Ng_z\|_\infty}{h_N^{\mathsf T}g_z}
+ \le(1+d2^H)\rho_N\longrightarrow0.
+$$
+
+In [BST, Proposition 5.6] with initial hyperplane $V$, the level-$N$
+hyperplane is $h_N^\perp$ and its projection is along $g$.
+Its subtile is exactly $P_N\mathcal R_{T^Ny}(b)$: apply $P_N$ to the
+prefix definition in the tail's fixed space $V$. Thus that proposition gives,
+with the correctly transported projection,
+
+$$
+\mathcal R_y(a)=
+ \bigcup_{\substack{b\in B,\ P,S\in B^*\\L_{y[0,N)}(b)=PaS}}
+ \left(\pi_{f_y}\ell(P)+\pi_{f_y}A_N\mathcal R_{T^Ny}(b)\right).
+                                                               \tag{8.7}
+$$
+
+Every tail subtile is nonempty and lies in the common box. Hence (8.6) puts
+$\mathcal R_y(a)$ within Hausdorff distance
+$\delta_N=C(1+d2^H)\rho_N\to0$ of the finite skeleton
+$\{\pi_{f_y}\ell(P):L_{y[0,N)}(b)=PaS\}$.
+First choose $N$ to make this error small. For directives sharing this
+length-$N$ prefix the finite index set and its vectors $\ell(P)$ are fixed.
+Only then choose a longer common prefix to make $f_z-f_y$ so small that
+all these finitely many skeleton points are close; their displacement is
+$-|P|(f_z-f_y)$. This proves Hausdorff continuity. In particular it does not
+multiply a frequency-continuity estimate by an uncontrolled growing prefix
+length. [BST, Proposition 5.12] supplies related convergence along PRICE
+return subsequences on its transported hyperplanes; (8.4)–(8.7) supply the
+additional uniform fixed-space argument needed here.
+
+Let $z\to y$ in $Y$. Hausdorff convergence and common compact support put
+$\mathcal R_z$ in every fixed outer neighborhood of $\mathcal R_y$ eventually.
+The measures of those neighborhoods decrease to $\lambda(\mathcal R_y)$.
+Since $m_z=\lambda(\mathcal R_z)$, this proves upper semicontinuity of the
+bounded integer-valued degree. To establish its shift invariance one must
+also identify the hyperplanes. Take a recurrent left vector $v$ for $y$.
+[BST, Lemma 7.2] makes the multiple-tiling degree on every transported
+$(v^{(N)})^\perp$ equal to the degree on $v^\perp$.
+[BST, Proposition 7.5], applied both to the initial sequence and to each tail,
+identifies these degrees with their respective degrees on $\mathbf1^\perp=V$.
+Consequently $m_{T^Ny}=m_y$. Each nonempty closed superlevel set
+$\{y:m_y\ge k\}$ is therefore forward invariant. Minimality makes it all of
+$Y$, so $m_y$ is constant.
+
+For volumes, [BST, Lemma 7.4] gives the vector of subtile measures as $m$
+times the measures of the projected coordinate faces on the recurrent-left
+hyperplane. Project along $f_y$ from that hyperplane to $V$; the same linear
+Jacobian multiplies every component on both sides. Proposition 7.5 identifies
+the $m$ on $V$. In the covolume-one normalization,
+$\lambda(\pi_{f_y}[0,a])=f_{y,a}$. For example for $a=d-1$, in the first
+$d-1$ coordinates the projected face has matrix
+$I-f_{y,<d-1}\mathbf1^{\mathsf T}$ and determinant
+$1-\sum_{a<d-1}f_{y,a}=f_{y,d-1}$; permuting coordinates gives every other
+face, with the same lattice normalization. This proves the volume formula
+in (8.1).
+Hausdorff convergence implies
+$\lambda(\mathcal R_z(a)\setminus\mathcal R_y(a))\to0$ by outer
+neighborhoods. The now continuous volumes give the reverse difference as
+well. This proves the asserted $L^1$ continuity and, by the finite union,
+$L^1$ continuity of $\mathbf1_{\mathcal R_y}$.
+
+It remains to compare the actual one-step labels. Disintegration excludes
+source bases where $S_z(u)\ne S_y(u)$ with measure tending to zero, since
+$\lambda(\mathcal R_z\mathbin\triangle\mathcal R_y)\to0$.
+Exclude also bases having a common source point assigned to different letters;
+their measure is at most
+$\sum_a\lambda(\mathcal R_z(a)\mathbin\triangle\mathcal R_y(a))$, which
+also tends to zero. For a remaining common point $x$ of letter $a$, put
+$v=f_y-f_z$. Its images satisfy $D_zx=D_yx+v$, independently of $a$.
+Their base points differ by $p(v)$, since $\alpha_z=\alpha_y+p(v)$.
+The target-fiber comparison is therefore between
+$S_z(u+\alpha_y+p(v))-v$ and $S_y(u+\alpha_y)$.
+The integral of its cardinal symmetric difference is
+$\lambda((\mathcal R_z-v)\mathbin\triangle\mathcal R_y)$, which tends to
+zero by $L^1$ continuity and translation continuity. Outside this further
+exception the source order is identical and the target order is identical
+after translation by $v$. Hence $c_z(u)=c_y(u)$, proving (8.2) into the one
+fixed $\operatorname{Sym}(m)$.
+
+Finally the image of compact $Y$ under each indicator map in (8.1) is compact
+in $L^1(V)$. A finite net and
+$\|\tau_v f-f\|_1\le2\|f-g\|_1+\|\tau_v g-g\|_1$ make translation
+continuity uniform on a compact $L^1$ family. Apply this to the finitely many
+letters to obtain (8.3). $\square$
+
+Uniform one-step continuity does not give precompactness of
+$\{F_{q,y}:q\to\infty\}$, a common-time induction identity, or a rate for
+$qW_y(\varepsilon_q)$. No such conclusion is used above.
+
+## 9. Two applications with different mathematical roles
+
+**Application 9.1 (An actual squarefree directive hull).** Let
+$\vartheta(0)=01$, $\vartheta(1)=10$, and
+$t=\lim_n\vartheta^n(0)$ be the Thue–Morse word. If
+$i_0<i_1<\cdots$ are its positions carrying $1$, put
+$a_j=i_{j+1}-i_j-1$. For every $d\ge4$, set $L=d-2$ and
+
+$$
+\chi(b)=3\,4\,\cdots\,(d-1)\,b\quad(b\in\{0,1,2\}),\qquad
+ y=\chi(a_0a_1\cdots),\qquad H_0=32(d-2).                   \tag{9.1}
+$$
+
+Then $y$ is a uniformly recurrent, strict, squarefree, nonperiodic directive
+in $Y_{H_0}$. Its compact orbit closure $Y$ is minimal and contained in
+$Y_{H_0}$. Thus Theorem 8.1 applies to its actual subtiles and physical
+one-step cocycles. The charge-return assertion (10.1) below remains unproved
+for this hull.
+
+Here are the combinatorial details needed for the application. The relations
+$t_{2n}=t_n$ and $t_{2n+1}=1-t_n$ imply that an equal adjacent pair starts
+only at an odd position. To prove overlap-freeness, suppose an overlap of
+length $2p+1$ and period $p$ occurs, with $p$ minimal. If $p$ is odd, its
+cyclic binary period has an equal adjacent pair, since an odd binary cycle
+cannot alternate everywhere. The overlap repeats that pair at distance $p$,
+contradicting the parity restriction. If $p$ is even and its starting position
+$s$ is odd, shift the overlap one place left. The new equality needed is
+
+$$
+t_{s-1}=1-t_s=1-t_{s+p}=t_{s+p-1};
+$$
+
+all other period equalities come from the original overlap. Its start is now
+even. The final even-position bit forces its following complementary bit,
+so the overlap extends to complete $\vartheta$-pairs. Desubstitution yields
+an overlap of length $p+1$ and period $p/2$, contradicting minimality.
+Hence $t$ is overlap-free, in particular it has neither $000$ nor $111$.
+Its one-gaps therefore belong to $\{0,1,2\}$.
+If $a$ had a square of $k$ gap letters, the binary segment through the
+corresponding $2k+1$ ones would be $VV1$, with $V$ beginning in $1$.
+Writing $V=1U$ gives the overlap $1U1U1$. Thus $a$ is squarefree.
+
+Each factor $W$ of $t$ lies in some $\vartheta^k(0)$; both
+$\vartheta^{k+1}(0)$ and $\vartheta^{k+1}(1)$ contain that block. The aligned
+block decomposition of $t$ bounds the gaps of $W$, proving uniform recurrence.
+A finite factor of $a$ is specified by a binary factor beginning and ending
+in $1$ with exactly those intervening zero runs. Recurrence of that binary
+factor gives bounded gaps in the indices of ones and hence in $a$.
+Furthermore $\vartheta^3(0)=01101001$ contains $11$, $101$, and $1001$.
+Each aligned length-$16$ block $\vartheta^4(b)$ contains
+$\vartheta^3(0)$, so each of these three patterns has an occurrence in every
+such block. Their starting ones have gaps at most $32$ in binary positions,
+and therefore at most $32$ in one-indices; a first such occurrence is within
+the first $16$ one-indices. It follows that every length-$32$ window of $a$
+contains all three gap letters.
+
+The constant-length morphism $\chi$ preserves uniform recurrence: any
+$y$-factor lies at a fixed offset in $\chi(A)$ for a finite $a$-factor $A$,
+whose returns have bounded gaps. Every length-$32L$ window of $y$ contains
+exactly $32$ consecutive variable letters and all marker letters, proving
+membership in $Y_{H_0}$ and strictness. Each particular $y$-letter has one
+fixed residue modulo $L$. A square of period $p$ would therefore force
+$L\mid p$ by comparing its first letters. Taking its variable-letter
+subsequence would give a square of period $p/L$ in $a$, a contradiction.
+This also proves nonperiodicity. Since $L\ge2$, marker letters separate
+variable letters; in particular $01$ never occurs, and no literal directive
+square $vv$ occurs for any nonempty $v$.
+
+These are exact exclusions of literal blocks. They do not exclude every
+substitution-product forcing mechanism. Specifically [BST23, Lemma 5.6]
+assumes a unimodular Pisot substitution $\tau$ with geometric coincidence,
+Property PRICE for the directive, an equality
+$\sigma_{[n,n+\ell)}=\tau^{m_\tau(C)}$, and a $C$-balanced tail after
+$n+\ell$. Its equality is an equality of morphism products; squarefreeness
+alone does not decide all such equalities. No value or sign of
+$\beta_{X_y}$, and no AR nonrigidity conclusion, follows from the exclusions
+in this application.
+
+**Application 9.2 (A credited non-AR boundary).** The classical two-sheet system
+of [FH, Definition 9] is
+
+$$
+\alpha=\frac{\sqrt5-1}2,\qquad\beta=\frac\alpha2,\qquad
+ T_\mathrm V(x,s)=(x+\alpha\pmod1,\sigma(x)s),\qquad
+ \sigma(x)=
+ \begin{cases}(12),&0\le x<\beta,\\ \mathrm{id},&\beta\le x<1.
+ \end{cases}                                                \tag{9.2}
+$$
+
+With Lebesgue measure times uniform measure on $\{1,2\}$ it is minimal,
+linearly recurrent in its natural coding, uniquely ergodic, and nonrigid.
+This gives a concrete boundary on a generic finite-extension argument;
+it is not an episturmian example.
+
+To instantiate the source, $\alpha$ is irrational with continued fraction
+$[0;1,1,\ldots]$. Also $\beta\notin\mathbb Z+\mathbb Z\alpha$:
+$\alpha/2=j+k\alpha$ would make $(1/2-k)\alpha$ an integer, contradicting
+irrationality. Equality $\beta=1-\alpha$ would give $\alpha=2/3$, also
+impossible. There is only one marked point, so there are no nontrivial
+pair-difference exclusions left to check. The identity and the transposition
+have no common nonempty proper invariant subset. Thus [FH, Proposition 4]
+gives minimality. Their product inequality is satisfied as well:
+$\sigma_1\ne\sigma_0$.
+
+The marked rotation coding by $0,\beta,1-\alpha$ satisfies the precise linear
+recurrence hypothesis. For nonzero integers $k$, choose a nearest integer
+$l$ to $k\alpha$. With $\alpha'=-1-\alpha$,
+
+$$
+(k\alpha-l)(k\alpha'-l)=l^2+kl-k^2\in\mathbb Z\setminus\{0\},
+\qquad |k\alpha'-l|\le4|k|,
+$$
+
+so $\|k\alpha\|_{\mathbb R/\mathbb Z}\ge1/(4|k|)$.
+The second inequality follows from $0<\alpha<1$,
+$|\alpha'|=1+\alpha<2$, and $|l|\le |k|\alpha+1/2\le3|k|/2$.
+For a length-$n$ marked coding, all partition endpoints lie among
+$-j\alpha$ and $\beta-j\alpha$ modulo one, $0\le j\le n$; this includes
+the preimages of $1-\alpha$. Distinct endpoints within one family are
+separated by at least $1/(4n)$. Between families the difference is
+$(k+1/2)\alpha$, $|k|\le n$, and
+
+$$
+\|(k+1/2)\alpha\|\ge\tfrac12\|(2k+1)\alpha\|
+ \ge\frac1{8(2n+1)}\ge\frac1{24n}\quad(n\ge1).             \tag{9.3}
+$$
+
+Every nonempty cylinder contains one of the resulting half-open partition
+intervals, so its measure is at least $1/(24n)$. [FH, Proposition 3] therefore
+gives linear recurrence of the marked base coding, and Proposition 10 gives
+linear recurrence and unique ergodicity of the extension coding.
+[FH, Theorem 15 and its immediately following linearly recurrent case]
+now gives nonrigidity: the minimality conditions hold, $\alpha$ has bounded
+partial quotients, and the marked coding is linearly recurrent with a marked
+point different from $1-\alpha$.
+Thus finite sheets, finitely many interval boundaries, a bounded-type rotation
+and linear recurrence together do not force rigidity. The conclusion concerns
+this non-AR comparison system only; it gives no AR endpoint lower bound and
+no answer to Question 9.2.
+
+## 10. The exact unpaid return assertion and the original witnesses
+
+**Proposition 10.1 (Charge-return dictionary).** For each individual uniformly
+recurrent $y\in Y_H$, with its actual objects from §§6–7, rigidity is equivalent
+to the following assertion:
+
+$$
+\begin{aligned}
+&\forall\eta>0\ \forall Q\ge1\ \exists q\in\mathbb N,\ q\ge Q,\quad
+ \exists\varepsilon\in V:\\
+&\hspace{12mm}p(\varepsilon)=q\alpha_y,\qquad
+ \|\varepsilon\|_\infty<\eta,\qquad
+ \sum_{r=1}^{E-1}J_y(q,r\varepsilon)<\eta.
+\end{aligned}                                                     \tag{10.1}
+$$
+
+Here $Q$ is an integer and $E=M!$ depends on $d,H$, not on $q,Q,\eta$.
+In particular, proving (10.1) for every nonperiodic uniformly recurrent
+strict directive on every alphabet of size at least four would settle
+Question 9.2 positively. Neither that universal assertion nor (10.1) for
+the squarefree models of Application 9.1 is established here.
+
+**Proof.** Diagonal choices in (10.1) give $q_j\to\infty$ and
+$\varepsilon_j\to0$ with all its finitely many charge masses tending to zero.
+By (7.4), $\Omega_y(q_j)\to0$; Lemma 6.2 gives rigidity.
+Conversely rigidity gives growing returns with
+$F_{q_j,y}\to\mathrm{id}$ in measure and $q_j\alpha_y\to0$.
+Choose lifts $\varepsilon_j\to0$. Each
+$\Delta_{q_j}(r\varepsilon_j)$ is at most
+$2\operatorname{Haar}\{F_{q_j,y}\ne\mathrm{id}\}$, even though its
+translation depends on $j$. Equation (7.4) gives
+
+$$
+J_y(q_j,r\varepsilon_j)\le
+ m\bigl(\Delta_{q_j}(r\varepsilon_j)+G_y(r\varepsilon_j)\bigr)
+ \longrightarrow0.
+$$
+
+A sufficiently late index meets any prescribed $\eta,Q$, proving (10.1).
+
+To connect the universal version to the original directive, keep the exact
+language definition $\mathcal L(w)=\mathcal L(c_\Delta)$ of Definition 1.1.
+If the original directive has unbounded constant runs, the pinned ordinary
+result and its period-growth dictionary in Corollary 4.1 already give the
+required witnesses with zero errors. If its runs are bounded, the compact
+minimal subset of $\omega(\Delta)$ used in Corollaries 4.1–4.2 supplies a
+uniformly recurrent model $y$ strict on its actual alphabet $B$. Its letter
+gaps have some finite bound $H$; these are hypotheses on the auxiliary model,
+not on the original $\Delta$. Binary, ternary and periodic models retain the
+suppliers and conclusions in those corollaries. For any remaining model,
+(10.1) would give rigidity. The continuous letter coboundaries and uniform
+time averages in Proposition 3.1 then supply a single joint Parikh vector
+and LA, with exactly its uniformity over starts and intercepts.
+
+In the notation of Proposition 2.1, write $C_0=D+2$ for the original bounded-run
+length distortion, distinct from the geometric $C$ of (6.1). Its actual decoding
+and finite-template argument supplies fixed $q,S,z$ and, at increasing
+occurrence positions $n$, image periods $P_n$ and comparison lengths $L_n$
+with
+
+$$
+\begin{gathered}
+P_n\ge q\bigl(\lfloor n/D\rfloor+1\bigr)\longrightarrow\infty,
+\qquad \frac{P_n}{L_n}\le2C_0\eta,\\
+\text{all mismatches lie in at most }\delta=S\text{ intervals, of total
+length at most }32C_0\eta L_n.                              \tag{10.2}
+\end{gathered}
+$$
+
+For a given $\rho>1$ and $\epsilon>0$ choose the fixed alignment tolerance
+
+$$
+0<\eta\le\min\left\{\frac1{4C_0},\frac{\epsilon}{64C_0},
+                         \frac1{4C_0(\rho+1)}\right\}.
+$$
+
+Then $r_n=-1$, $s_n=P_n-1$, $t_n=P_n+L_n-1$ give
+$-1\le r_n<s_n<t_n$, $t_n\ge\rho s_n$, growing period
+$s_n-r_n=P_n$, and the prescribed interval cover with total length
+at most $\epsilon L_n$. All parameters including $\delta$ are fixed before
+$n$ varies. The case $\rho=1$ follows from any $\rho>1$.
+This invokes the actual intercept decoding and common-vector image argument
+of Proposition 2.1; language equality alone is not used to transfer prefix
+witnesses. It preserves every original directive and every original intercept.
+Thus the claimed implication has the exact Nguyen quantifiers. $\square$
+
+The universal conclusion remains the full Question 9.2. Conditions (4.1) and
+(10.1) give equivalent remaining routes through the auxiliary models, with
+no restriction added to that question. Theorem 8.1 supplies uniform static
+translation continuity on each fixed minimal hull; Theorem 7.1 supplies a
+sufficient small-crossing route and an exact actual-charge comparison.
+Neither controls the growing-time charge masses in (10.1).
+Finite sheets, bounded charges, balance, static compactness and a positive
+partial-rigidity rate below one do not supply that missing conclusion.
+The squarefree example gives no sign of its endpoint lower limit. An actual
+negative answer would still require an actual episturmian model with the
+uniform positive endpoint bound of Boundary 5.1, or equivalently positive
+$\kappa$ in Proposition 3.1. Failure of a sufficient crossing estimate or
+nonrigidity of the non-AR system (9.2) does not provide one.
+
+The geometric representation, PRICE, contraction, face-volume identities and
+the non-AR comparison retain their credited suppliers. The sheet bound,
+factorial calculation, joint estimates and fixed-space continuity proof here
+combine those inputs; no assertion of worldwide priority is made.
+Additional sources used in §§6–9 are:
+
+- [DHS] V. Delecroix, T. Hejda and W. Steiner, *Balancedness of Arnoux–Rauzy
+  and Brun words*, [arXiv:1308.6694v1](https://arxiv.org/pdf/1308.6694v1),
+  equation (4), Lemma 3, Proposition 1, Lemmas 5–6 and Theorem 1.
+- [BST23] V. Berthé, W. Steiner and J. M. Thuswaldner, *Multidimensional
+  continued fractions and symbolic codings of toral translations*,
+  [arXiv:2005.13038v3](https://arxiv.org/pdf/2005.13038v3), Lemmas 5.4 and 5.6,
+  with their exact substitution-product equality and balanced-tail hypotheses.
+- [FH] S. Ferenczi and P. Hubert, *Rigidity of generalized Veech 1969/Sataev
+  1975 extensions of rotations*, [arXiv:2010.01860v1](https://arxiv.org/pdf/2010.01860v1),
+  Definition 9, Propositions 3, 4 and 10, and Theorem 15 with its following
+  linearly recurrent specialization.
+- [BST] in §5 is used here in its generic left-substitution scope:
+  Theorem 3.1, Lemmas 4.1, 5.9, 7.2, 7.4 and 8.3, and Propositions 5.6,
+  5.12, 7.5, 7.7 and 8.4. Its degree-one clauses retain their geometric
+  coincidence hypothesis; its PRICE-return convergence is distinct from
+  the full assertion of Theorem 8.1.
+
+## 追加锚（本行以下为增补区）
