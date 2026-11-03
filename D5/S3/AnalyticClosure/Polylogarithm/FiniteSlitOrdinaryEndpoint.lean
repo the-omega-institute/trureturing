@@ -35,14 +35,14 @@ private theorem signed_endpoint (a : ℕ → ℝ) (A : ℝ → ℝ) (L : ℝ)
   have hqpos (n : ℕ) : 0 ≤ q n := (neg_pos.mpr (hN (n + N) (Nat.le_add_left N n))).le
   have hP : Tendsto P (𝓝[<] 1) (𝓝 (P 1)) := by
     have hcont : Continuous P := by dsimp [P]; fun_prop
-    exact hcont.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+    exact (hcont.tendsto (1 : ℝ)).mono_left nhdsWithin_le_nhds
   have hbound (m : ℕ) : ∑ i ∈ Finset.range m, q i ≤ P 1 - L := by
     have hleft : Tendsto (fun r : ℝ ↦ ∑ i ∈ Finset.range m, q i * r ^ (i + N))
         (𝓝[<] 1) (𝓝 (∑ i ∈ Finset.range m, q i)) := by
       have hcont : Continuous (fun r : ℝ ↦ ∑ i ∈ Finset.range m, q i * r ^ (i + N)) := by
         fun_prop
       simpa only [one_pow, mul_one] using
-        hcont.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+        (hcont.tendsto (1 : ℝ)).mono_left nhdsWithin_le_nhds
     apply le_of_tendsto_of_tendsto hleft (hP.sub hlim)
     filter_upwards [Ioo_mem_nhdsLT (show (0 : ℝ) < 1 by norm_num)] with r hr
     have htail : HasSum (fun n : ℕ ↦ a (n + N) * r ^ (n + N)) (A r - P r) :=
@@ -76,7 +76,7 @@ private theorem radial_endpoint (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
       change 1 - (r : ℂ) ∈ Complex.slitPlane
       rw [Complex.mem_slitPlane_iff]
       left
-      simpa using sub_pos.mpr hr
+      simpa using sub_pos.mpr (show r < 1 from hr)
   have heq : (fun r : ℝ ↦ FiniteSlitCompositionMoments.reciprocal head tail ell (r : ℂ)) =ᶠ[𝓝[<] 1]
       (fun r : ℝ ↦ ((r : ℂ) ^ CompositionDisk.depth tail /
         CompositionContinuation.continued (head :: tail) (r : ℂ)) ^ (ell : ℕ)) := by
