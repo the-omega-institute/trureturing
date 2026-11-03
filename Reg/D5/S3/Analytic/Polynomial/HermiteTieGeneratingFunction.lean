@@ -9,6 +9,8 @@ open _root_.D5.S3.Analytic.Polynomial.HermiteTieGeneratingFunction
 open _root_.D5.S3.Analytic.Polynomial.HermiteAbsoluteTieOrders (HasExactlyTwo)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
+open PowerSeries
+
 set_option autoImplicit false
 noncomputable section
 
