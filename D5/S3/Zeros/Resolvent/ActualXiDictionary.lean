@@ -76,6 +76,9 @@ structure Dictionary : Prop where
   folded_normal : ∀ r : ℝ, 0 ≤ r → r < 1 / 4 →
     HasSumUniformlyOn (fun n : PositiveZero => fun w : ℂ =>
       w * weight n / (1 - node n * w ^ 2)) xiOdd (Metric.closedBall 0 r)
+  taylor_normal : ∀ r : ℝ, 0 ≤ r → r < 1 / 4 →
+    HasSumUniformlyOn (fun j : ℕ => fun w : ℂ => moment j * w ^ (2 * j + 1))
+      xiOdd (Metric.closedBall 0 r)
   hankel : ∀ (N m : ℕ) (u : Fin (N + 1) → ℝ),
     (∑ a : Fin (N + 1), ∑ b : Fin (N + 1),
       u a * u b * xiCoefficient (2 * m + (a : ℕ) + (b : ℕ))) =
@@ -116,6 +119,7 @@ theorem actual_xi_dictionary : Dictionary := by
     disk_bound := actual_xi_disk_bound
     remainder_bound := actual_xi_taylor_remainder
     folded_normal := fun r hr hr1 => (actual_xi_folded_normal r hr hr1).2
+    taylor_normal := fun r hr hr1 => (actual_xi_taylor_normal r hr hr1).2
     hankel := actual_xi_hankel_identity
     rh_nonnegative := actual_xi_hankel_nonnegative_of_rh }
   · intro n
