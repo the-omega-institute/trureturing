@@ -38,12 +38,16 @@ internal sealed class DovgosheyRovenskaCentralEdgesDocument : IScribeDocumentDef
             Node("central-edges-result", "Conjecture 4.2 is false", "result",
                 Disp(new Formula.Not(Parenthesized(ClaimBody()))),
                 "On Fin 4, pull back the 2-adic metric along the values 0,1,2,3. Distinct vertices of the same parity have distance 1/2; opposite parities have distance 1. The center is {0,1/2,1}, the central graph is complete, and its six edges are the union of the diametrical bipartite graph with parts {0,2}, {1,3} and the two single-edge stars. For the comparator, pull back the real metric along 0,4,5,9. Its center is exactly {0,4,5}; its four central edges are {0,1}, {0,2}, {1,3}, {2,3}. The asserted inequality would be 6 ≤ 4. This refutes the implication from (i) to (ii). The comparison restricted to ultrametrics is a separate question.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("central-edges"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula All(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);

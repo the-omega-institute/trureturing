@@ -70,6 +70,10 @@ $$\neg (\forall X \in Type,\; [\operatorname{Fintype}\left(X\right)] [\operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/central-edges` (refuted) by `D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"central-edges","declaration_gid":"D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Oleksiy Dovgoshey and Olga Rovenska (2026). *On the Graph Corresponding to Center of Distances of Metric Space*. DOI: [10.48550/arXiv.2610.11596](https://doi.org/10.48550/arXiv.2610.11596). URL: <https://arxiv.org/abs/2610.11596v1>.
