@@ -230,7 +230,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
     Finset.card_singleton, Nat.cast_zero, Nat.cast_one] using
       (zero_ne_one : (0 : ℝ) ≠ 1)
 
-def source_registration : Registration arena (type_of% (@hyperlink_zeta.{u})) where
+def source_registration : Registration arena.{u} (type_of% (@hyperlink_zeta.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@hyperlink_zeta.{u}, rejected, rejected_law⟩
@@ -246,21 +246,22 @@ def source_registration : Registration arena (type_of% (@hyperlink_zeta.{u})) wh
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@hyperlink_zeta.{u}) (Realization signature) Unit Unit := {
+      (@hyperlink_zeta.{u}) (Realization signature.{u}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.HyperlinkZeta.unit
   realizationName := Lean.Name.str
     `Reg.D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction.HyperlinkZeta
     "source_registration"
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨source_registration⟩
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some
+    (realize signature.{u} (actual.{u}).readout (actual.{u}).anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

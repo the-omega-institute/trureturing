@@ -58,7 +58,6 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-
   have he := h (⊥ : SimpleGraph Unit) ∅
   simp [rejected, realize, entropy_bot] at he
 
@@ -128,7 +127,6 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-
   have he := h (⊥ : SimpleGraph Unit) (Equiv.refl Unit) ∅
   simp [rejected, realize, entropy_bot] at he
 
@@ -198,7 +196,6 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-
   have he := h (⊥ : SimpleGraph Unit) () ∅
   simp [rejected, realize, entropy_bot] at he
 
