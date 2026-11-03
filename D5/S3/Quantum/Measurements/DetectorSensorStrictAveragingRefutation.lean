@@ -61,7 +61,8 @@ private theorem threshold_value : T 3 = Real.pi / 3 := by
   have hc : Real.arccos (1 / 2 : ℝ) = Real.pi / 3 := by
     rw [← Real.cos_pi_div_three]
     exact Real.arccos_cos (by positivity) (by linarith [Real.pi_pos])
-  norm_num only [T, Nat.reduceAdd, Nat.reduceDiv, Nat.cast_ofNat]
+  change Real.arccos (-(((2 : ℝ) - 1) / 2)) / 2 = Real.pi / 3
+  norm_num only
   rw [Real.arccos_neg, hc]
   ring
 
@@ -82,8 +83,10 @@ private theorem layer_minimizes (l : ℕ) (hl : l = 1 ∨ l = 2) :
     have hk' : k ≤ 3 := hk <;> interval_cases k <;>
     norm_num [show 2 * (Real.pi / 4) = Real.pi / 2 by ring,
       Real.cos_pi_div_two,
-      (counts 0 (by decide)).1, (counts 0 (by decide)).2, (counts 1 (by decide)).1, (counts 1 (by decide)).2,
-      (counts 2 (by decide)).1, (counts 2 (by decide)).2, (counts 3 (by decide)).1, (counts 3 (by decide)).2]
+      (counts 0 (by decide)).1, (counts 0 (by decide)).2,
+      (counts 1 (by decide)).1, (counts 1 (by decide)).2,
+      (counts 2 (by decide)).1, (counts 2 (by decide)).2,
+      (counts 3 (by decide)).1, (counts 3 (by decide)).2]
 
 private theorem different_layers :
     ∃ x, Complex.normSq (layer 1 x) ≠ Complex.normSq (layer 2 x) := by
