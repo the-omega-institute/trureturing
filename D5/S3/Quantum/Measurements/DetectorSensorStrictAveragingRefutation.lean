@@ -7,6 +7,7 @@
    digest: Two optimal three-sensor layers refute strict improvement by averaging. -/
 
 import D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
+import D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance
 
 /-!
 # Strict averaging fails for optimal detector-sensor probes
@@ -18,9 +19,10 @@ coefficient-square average from having strictly smaller error.
 
 noncomputable section
 
-open scoped BigOperators ComplexOrder
+open scoped BigOperators ComplexOrder Matrix
 open D5.S3.Quantum.Entanglement.TriangleIndependentSourceNoise
 open D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
+open D5.S3.Quantum.Measurement.AnticoherenceSpinCovariance (dickeCoefficient)
 
 namespace D5.S3.Quantum.Measurements.DetectorSensorStrictAveragingRefutation
 
@@ -44,17 +46,17 @@ def claim : Prop :=
     errorProb θ (average ψ ψ') < errorProb θ ψ'
 
 private def layer (l : ℕ) : (Fin 3 → Bool) → ℂ :=
-  fun x => if (Finset.univ.filter (fun j => x j = true)).card = l then
-    (Real.sqrt (1 / ((3 : ℕ).choose l : ℝ)) : ℂ) else 0
+  fun x => dickeCoefficient 3 (Finset.univ.filter (fun j => x j = true)).card l
 
 private theorem layer_squares (l : ℕ) (x : Fin 3 → Bool) :
     Complex.normSq (layer l x) =
       if (Finset.univ.filter (fun j => x j = true)).card = l then
         1 / ((3 : ℕ).choose l : ℝ) else 0 := by
   classical
-  dsimp only [layer]
+  dsimp only [layer, dickeCoefficient]
   split_ifs
-  · rw [Complex.normSq_ofReal, Real.mul_self_sqrt (by positivity)]
+  · rw [Complex.normSq_inv, Complex.normSq_ofReal,
+      Real.mul_self_sqrt (Nat.cast_nonneg _), one_div]
   · exact Complex.normSq_zero
 
 private theorem threshold_value : T 3 = Real.pi / 3 := by
@@ -73,7 +75,9 @@ private theorem angle_admissible : 0 < Real.pi / 4 ∧ Real.pi / 4 ≤ T 3 := by
 private theorem counts (k : ℕ) (hk : k ≤ 3) :
     rCount 3 0 1 k = 1 ∧
     lCount 3 0 1 k = if k = 1 ∨ k = 2 then 2 else 0 := by
-  interval_cases k <;> decide
+  have hp := pair_count_product 3 (0 : Fin 3) 1 (by decide) k
+  have ht := counts_partition 3 (0 : Fin 3) 1 k
+  interval_cases k <;> norm_num at hp ht ⊢ <;> omega
 
 private theorem layer_minimizes (l : ℕ) (hl : l = 1 ∨ l = 2) :
     IsMinOn (fun k : ℕ =>
@@ -109,10 +113,40 @@ private theorem povm_nonempty : Nonempty (LocalPOVM (Fin 3 → Bool) (Fin 3)) :=
 private theorem bounded_success (ψ : (Fin 3 → Bool) → ℂ)
     (hψ : ∑ x, Complex.normSq (ψ x) = 1) :
     BddAbove (Set.range (isoSuccess (Real.pi / 4) ψ)) := by
-  refine ⟨d 3 (cstar 3 (Real.pi / 4)) ^ 2, ?_⟩
+  refine ⟨1, ?_⟩
   rintro y ⟨M, rfl⟩
-  exact global_success_upper_bound 3 (by decide) (Real.pi / 4)
-    (Or.inl angle_admissible) ψ hψ M
+  have hp (i : Fin 3) :
+      (star (fire (Real.pi / 4) i ψ) ⬝ᵥ
+        (M.effect i *ᵥ fire (Real.pi / 4) i ψ)).re ≤ 1 := by
+    have he := Finset.single_le_sum
+      (s := Finset.univ) (a := i)
+      (f := fun j => (star (fire (Real.pi / 4) i ψ) ⬝ᵥ
+        (M.effect j *ᵥ fire (Real.pi / 4) i ψ)).re)
+      (fun j _ => (Complex.nonneg_iff.mp ((M.positive j).dotProduct_mulVec_nonneg _)).1)
+      (Finset.mem_univ i)
+    rw [← Complex.re_sum, ← dotProduct_sum, ← Matrix.sum_mulVec, M.complete,
+      Matrix.one_mulVec] at he
+    convert he using 1
+    rw [dotProduct, Complex.re_sum]
+    simp only [Pi.star_apply, Complex.star_def, ← Complex.normSq_eq_conj_mul_self,
+      Complex.ofReal_re]
+    rw [← hψ]
+    apply Finset.sum_congr rfl
+    intro x _
+    symm
+    rw [fire, Complex.normSq_mul, Complex.normSq_eq_norm_sq]
+    have hn := Complex.norm_exp_ofReal_mul_I
+      ((if x i then 1 else -1) * (Real.pi / 4))
+    push_cast at hn
+    simp only [apply_ite Complex.ofReal, Complex.ofReal_one, Complex.ofReal_neg] at hn
+    push_cast
+    rw [hn, one_pow, one_mul]
+  unfold isoSuccess
+  have hs := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) => hp i)
+  norm_num only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+    mul_one] at hs
+  norm_num only [Nat.cast_ofNat]
+  linarith
 
 private theorem layer_optimal (l : ℕ) (hl : l = 1 ∨ l = 2)
     (ψ : (Fin 3 → Bool) → ℂ) (hψ : ∑ x, Complex.normSq (ψ x) = 1)
