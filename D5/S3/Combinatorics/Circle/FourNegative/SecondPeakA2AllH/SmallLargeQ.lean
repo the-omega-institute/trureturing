@@ -1,6 +1,13 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2AllH/SmallLargeQ
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakA2AllH/SmallLargeQ
+   mirror-E: none(waiver:exact-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   utility: none
+   digest: An unbounded large-q small-p selector. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.SmallWindows
 
-/-! Source draft only. The q>=64 branch has unrestricted h and q. -/
+/-! An unbounded large-q small-p selector. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 3000000
@@ -164,7 +171,9 @@ theorem small_large_q_selection (p q H : ℕ)
     calc
       2*b=(2:ℕ)^((H-1)+1) := by dsimp [b]; rw [pow_succ]; ring
       _=2^H := by congr 1; omega
-  have hbZ : 2*(b:ℤ)=h := by exact_mod_cast hbNat
+  have hbZ : 2*(b:ℤ)=h := by
+    dsimp only [h]
+    exact_mod_cast hbNat
   have haZ : 4*(a:ℤ)=p := by exact_mod_cast ha.symm
   have hc := small_ceiling_interval p q h hpZ hqZ hh
   have hc2 : 2≤c := hc.1

@@ -1,11 +1,26 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableData
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/TableData
+   mirror-E: none(waiver:exact-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   utility: none
+   digest: Exact paired row bounds and finite row type. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.LowBits
+
+/-! Exact paired row bounds and finite row type. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD
 
 structure FixedRow where
-  x p q h v m M : ℕ
+  x : ℕ
+  p : ℕ
+  q : ℕ
+  h : ℕ
+  v : ℕ
+  m : ℕ
+  M : ℕ
   before : Bool
 
 def rowBounds (x p q h v m M : ℤ) (before : Bool) : Prop :=

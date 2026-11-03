@@ -1,7 +1,13 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2AllH/SmallTables
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakA2AllH/SmallTables
+   mirror-E: none(waiver:exact-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   utility: none
+   digest: Twenty affine families and twenty finite boundary rows. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.SmallWindows
 
-/-! Source draft: twenty polynomial identities for all u, and twenty finite h=4 rows.
-Literal coefficients are proved by ring normalization, not assumed certificates. -/
+/-! Twenty affine families and twenty finite boundary rows. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 3000000
@@ -9,9 +15,14 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH
 open SecondPeakHighD
 
 structure AffineSmallRow where
-  p q block v j : ℕ
+  p : ℕ
+  q : ℕ
+  block : ℕ
+  v : ℕ
+  j : ℕ
   before : Bool
-  atOne slope : Fin 4 → ℤ
+  atOne : Fin 4 → ℤ
+  slope : Fin 4 → ℤ
 
 def affineSmallRows : Fin 20 → AffineSmallRow :=
   ![⟨4,2,8,7,6,true,![2224,16212,13558,4878],![2156,16276,13420,5012]⟩,
@@ -70,7 +81,7 @@ theorem affine_small_bounds (i : Fin 20) (u : ℤ) (hu : 1≤u) :
   have hpZ : (4:ℤ)≤w.p := by exact_mod_cast hp
   have hqZ : (2:ℤ)≤w.q := by exact_mod_cast hq
   have hv0Z : (1:ℤ)≤w.v := by exact_mod_cast hv0
-  have hvZ : 2*(w.v:ℤ)≤T 4 w.p w.q := by
+  have hvZ : 2*(w.v:ℤ)≤T (4:ℤ) w.p w.q := by
     dsimp [T]
     exact_mod_cast hv
   have hdid : smallDelta w.p w.q (8*u) (8*u*w.block-1)=

@@ -1,8 +1,15 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2AllH/SmallWindows
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakA2AllH/SmallWindows
+   mirror-E: none(waiver:exact-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   utility: none
+   digest: Corrected simultaneous window closure. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.TableData
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.IntegerSelector
 import Mathlib.Tactic
 
-/-! Source draft only: this file has not been compiled or kernel checked. -/
+/-! Corrected simultaneous window closure. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 3000000

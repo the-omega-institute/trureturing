@@ -1,8 +1,14 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2AllH/SmallSelection
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakA2AllH/SmallSelection
+   mirror-E: none(waiver:exact-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   utility: none
+   digest: All unbounded dyadic h and q for the four small p. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.SmallTables
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.SmallLargeQ
 
-/-! Source draft: consumed small-p component of the unchanged original all-h lift.
-This selector does not assert the downstream physical permutation/ear endpoint. -/
+/-! All unbounded dyadic h and q for the four small p. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH
@@ -54,21 +60,12 @@ theorem small_p_allh_selection (p Q H : ℕ)
     let w := h4SmallRows i
     have bits := h4_small_bits i
     have bounds := h4_small_bounds i
+    change rowBounds 4 w.p w.q 4 w.v w.m w.M w.before at bounds
     have pair := h4_pairs i
     have hwp : w.p=p := pair.1.trans hpi
     have hwq : w.q=(2^Q:ℕ) := pair.2.trans hqi
     refine ⟨w.v,w.m,w.M,w.before,bits.1,bits.2,?_⟩
     simpa only [hwp,hwq,Nat.cast_pow,Nat.cast_ofNat,show (2:ℤ)^2=4 by norm_num]
       using bounds
-
-/-- Value-level interface for callers already holding the original exponent dictionary. -/
-theorem small_p_dyadic_selection (p q h : ℕ)
-    (hp : p=4 ∨ p=8 ∨ p=16 ∨ p=32)
-    (hq : ∃ Q : ℕ, 1≤Q ∧ q=2^Q) (hh : ∃ H : ℕ, 2≤H ∧ h=2^H) :
-    ∃ v m M : ℕ, ∃ before : Bool,
-      Submask m M ∧ m<M ∧ rowBounds 4 p q h v m M before := by
-  obtain ⟨Q,hQ,rfl⟩ := hq
-  obtain ⟨H,hH,rfl⟩ := hh
-  simpa only [Nat.cast_pow,Nat.cast_ofNat] using small_p_allh_selection p Q H hp hQ hH
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH

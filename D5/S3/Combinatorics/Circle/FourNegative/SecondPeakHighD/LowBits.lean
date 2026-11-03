@@ -1,5 +1,14 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/LowBits
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakHighD/LowBits
+   mirror-E: none(waiver:exact-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   utility: none
+   digest: Low bits of a dyadic predecessor. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.Algebra
 import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.Rounding
+
+/-! Low bits of a dyadic predecessor. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
