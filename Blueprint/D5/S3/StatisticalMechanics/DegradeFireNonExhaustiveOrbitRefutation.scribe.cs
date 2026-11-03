@@ -17,7 +17,7 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
             Paragraph(Text(
                 "Cell labels are 0-indexed in Lean: 0, 1 and 2 correspond respectively to the source's labels 1, 2 and 3. "
                     + "Vectors written with ![a,b,c] are functions on Fin 3 in that order. "
-                    + "The displayed eta denotes the Lean parameter η. "
+                    + "The threshold θ is the source's η. "
                     + "The source locators below refer to DynamicsDFNetworksRevised.tex in arXiv:1809.03228v1.")),
             Node("coupling", "coupling", "The unidirectional coupling matrix", CouplingFormula(),
                 "The circulant with first column (1 − ε, ε, 0) has rows (1 − ε, 0, ε), "
@@ -42,8 +42,8 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
             Node("is-run", "IsRun", "Successive unique firings", RunFormula(),
                 "The functions s, lab and τ give the post-firing configurations, the next firing cell "
                     + "and the elapsed time until that firing. At every natural k the elapsed time is positive. "
-                    + "Every repressor is strictly above η before that time; at the endpoint the selected "
-                    + "cell is at or below η and every other cell is strictly above it. Coordinates are "
+                    + "Every repressor is strictly above θ before that time; at the endpoint the selected "
+                    + "cell is at or below θ and every other cell is strictly above it. Coordinates are "
                     + "pairwise distinct throughout the closed degrading segment and immediately after resetting. "
                     + "The final equality relates the next configuration to that reset. These conditions express "
                     + "the dynamics of lines 52–64 and the post-firing description and distinctness restriction "
@@ -61,8 +61,8 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
                 AssessedProvenance.FromLiterature(Source)),
             Node("claim", "claim", "The proposed exclusion of non-exhaustive periodic trajectories",
                 Equal(Typed(Local("claim"), Qualified("Prop")), Parenthesized(ClaimProposition())),
-                "For 0 < η < 1 and 1/2 < ε < 1 − η, the assertion says that every run whose initial "
-                    + "repressors are strictly above η and whose configurations are periodic has an exhaustive "
+                "For 0 < θ < 1 and 1/2 < ε < 1 − θ, the assertion says that every run whose initial "
+                    + "repressors are strictly above θ and whose configurations are periodic has an exhaustive "
                     + "firing sequence. This is the statement in the Concluding Remarks, line 373, that the "
                     + "impossibility should extend to every other periodic trajectory with non-exhaustive "
                     + "firing in the right transition graph. The parameter range and graph are specified "
@@ -76,7 +76,7 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "Take η = 3/20 and ε = 4/5. Define s by repeating the following nine configurations, "
+                        "Take θ = 3/20 and ε = 4/5. Define s by repeating the following nine configurations, "
                             + "indexed from zero: (11/32,0,1), (3/16,1,27/32), (0,1,19/32), "
                             + "(0,1,11/32), (1,27/32,3/16), (1,19/32,0), (1,11/32,0), "
                             + "(27/32,3/16,1), (19/32,0,1). Define lab by repeating "
@@ -141,18 +141,18 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
         Formula next = At(X("s"), Add(X("k"), NatNumber(1)));
         Formula label = At(X("lab"), X("k"));
         Formula before = All("t", Reals(), Imp(LE(RealNumber(0), X("t")), Imp(Less(X("t"), time),
-            All("j", Cells(), Less(X("η"), Repressor(X("t"), X("j")))))));
-        Formula endpoint = LE(Repressor(time, label), X("η"));
+            All("j", Cells(), Less(X("θ"), Repressor(X("t"), X("j")))))));
+        Formula endpoint = LE(Repressor(time, label), X("θ"));
         Formula others = All("j", Cells(), Imp(NotEqual(X("j"), label),
-            Less(X("η"), Repressor(time, X("j")))));
+            Less(X("θ"), Repressor(time, X("j")))));
         Formula distinct = All("t", Reals(), Imp(LE(RealNumber(0), X("t")), Imp(LE(X("t"), time),
             At(Qualified("Function", "Injective"), Segment(X("t"))))));
         Formula body = All("k", Naturals(), And(Less(RealNumber(0), time), And(before, And(endpoint,
             And(others, And(distinct, And(At(Qualified("Function", "Injective"), next),
                 Equal(next, Call("reset", Segment(time), label)))))))));
-        return All("ε", Reals(), All("η", Reals(), All("s", Configurations(),
+        return All("ε", Reals(), All("θ", Reals(), All("s", Configurations(),
             All("lab", Labels(), All("τ", Durations(),
-                Equal(Typed(Call("IsRun", X("ε"), X("η"), X("s"), X("lab"), X("τ")), Qualified("Prop")),
+                Equal(Typed(Call("IsRun", X("ε"), X("θ"), X("s"), X("lab"), X("τ")), Qualified("Prop")),
                     Parenthesized(body)))))));
     }
 
@@ -169,14 +169,14 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
 
     private static Formula ClaimProposition()
     {
-        Formula initial = All("j", Cells(), Less(X("η"), At(
+        Formula initial = All("j", Cells(), Less(X("θ"), At(
             At(Qualified("Matrix", "mulVec"), Call("coupling", X("ε")), At(X("s"), NatNumber(0))), X("j"))));
         Formula conclusion = All("s", Configurations(), All("lab", Labels(), All("τ", Durations(),
-            Imp(initial, Imp(Call("IsRun", X("ε"), X("η"), X("s"), X("lab"), X("τ")),
+            Imp(initial, Imp(Call("IsRun", X("ε"), X("θ"), X("s"), X("lab"), X("τ")),
                 Imp(Call("IsPeriodic", X("s")), Call("IsExhaustive", X("lab"))))))));
-        return All("η", Reals(), All("ε", Reals(), Imp(Less(RealNumber(0), X("η")),
-            Imp(Less(X("η"), RealNumber(1)), Imp(Less(new Formula.Fraction(RealNumber(1), RealNumber(2)), X("ε")),
-                Imp(Less(X("ε"), Subtract(RealNumber(1), X("η"))), conclusion))))));
+        return All("θ", Reals(), All("ε", Reals(), Imp(Less(RealNumber(0), X("θ")),
+            Imp(Less(X("θ"), RealNumber(1)), Imp(Less(new Formula.Fraction(RealNumber(1), RealNumber(2)), X("ε")),
+                Imp(Less(X("ε"), Subtract(RealNumber(1), X("θ"))), conclusion))))));
     }
 
     private static Formula Segment(Formula t) => Call("flow", At(X("s"), X("k")), t);
@@ -209,7 +209,7 @@ internal sealed class DegradeFireNonExhaustiveOrbitRefutationDocument : IScribeD
     private static Formula X(string name) => name switch
     {
         "ε" => Varepsilon,
-        "η" => Qualified("eta"),
+        "θ" => Theta,
         "τ" => Tau,
         _ => F.Id(name),
     };
