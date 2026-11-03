@@ -135,7 +135,10 @@ internal sealed class UnicyclicSkewnessTimesKurtosisLowerBoundDocument : IScribe
                         + "at the minimizing u. Passing to its limit F(u) = lowerBound gives "
                         + "b ≤ lowerBound. This proves the greatest-lower-bound assertion "
                         + "together with the strict finite-cycle inequality."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ptaszynski-2022-unidirectional-skewness-times-kurtosis-lower-bound"),
+                    ResolutionKind.Proved)))));
 
     private static Formula LowerBoundFormula() => Equal(Typed(Local("lowerBound"), Reals()),
         At(Qualified("InfSet", "sInf"), At(Qualified("Set", "image"),
