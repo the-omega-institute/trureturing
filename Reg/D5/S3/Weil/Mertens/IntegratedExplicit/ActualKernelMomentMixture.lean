@@ -65,4 +65,74 @@ end Mixture
 
 
 
+/- The complete original multiplier telescope is retained. Only the logarithm
+   in the lower bound is varied; the upper bound and full series stay fixed. -/
+namespace Multiplier
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ t => Real.log t) (fun e => nomatch e)
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 100) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ ξ : ℝ,
+    Summable (fun n : ℕ =>
+      (2 * rate n * trivialCoeff n) * ξ ^ 2 / (rate n ^ 2 + ξ ^ 2)) ∧
+    0 ≤ pMultiplier ξ ∧ pMultiplier 0 = 0 ∧
+    R.readout () () (2 + |ξ|) - Real.log 13 / 2 ≤ pMultiplier ξ ∧
+    pMultiplier ξ ≤ Real.log (2 + |ξ|) + 1 - Real.log 2
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := (h 0).2.2.2.1
+  have hl : Real.log 13 ≤ 12 := by
+    linarith [Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 13)]
+  norm_num [rejected, realize, pMultiplier] at hb
+  linarith
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 1, 2, ?_⟩
+  change Real.log 1 ≠ Real.log 2
+  rw [Real.log_one]
+  exact ne_of_lt (Real.log_pos (by norm_num))
+def family : Registration arena (type_of% @pMultiplier_logarithmic_bounds) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@pMultiplier_logarithmic_bounds, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@pMultiplier_logarithmic_bounds) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.pMultiplier_logarithmic_bounds.audit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentMixture.Multiplier.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ t => Real.log t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentMixture
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg", "arg", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Multiplier
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentMixture

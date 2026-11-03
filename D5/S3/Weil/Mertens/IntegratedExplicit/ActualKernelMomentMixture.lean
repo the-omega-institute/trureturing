@@ -7,6 +7,8 @@
    digest: Complete positive mixture logarithmic bound for the actual exponential rates. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentArithmetic
+import D5.S3.Weil.Mertens.IntegratedExplicit.OriginalActualFourier
+import D5.S3.Weil.Mertens.IntegratedExplicit.OriginalAngularResolvent
 import Mathlib.Analysis.SumIntegralComparisons
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 
@@ -284,6 +286,7 @@ private def pTerm (n : ℕ) (ξ : ℝ) : ℝ :=
   (2 * rate n * trivialCoeff n) * ξ ^ 2 / (rate n ^ 2 + ξ ^ 2)
 
 private lemma pTerm_nonneg (n : ℕ) (ξ : ℝ) : 0 ≤ pTerm n ξ := by
+  have hc := trivialCoeff_nonneg n
   dsimp [pTerm, rate]
   positivity
 
@@ -291,13 +294,12 @@ private lemma pTerm_summable (ξ : ℝ) : Summable (fun n => pTerm n ξ) := by
   apply Summable.of_nonneg_of_le (fun n => pTerm_nonneg n ξ) _
     (trivialCoeff_hasSum.summable.mul_right (ξ ^ 2))
   intro n
-  have hr : 2 ≤ rate n := by dsimp [rate]; positivity
+  have hr : 2 ≤ rate n := by dsimp [rate]; linarith [Nat.cast_nonneg (α := ℝ) n]
   have hd : 0 < rate n ^ 2 + ξ ^ 2 := by positivity
   apply (div_le_iff₀ hd).mpr
   have hrr : 2 * rate n ≤ rate n ^ 2 + ξ ^ 2 := by nlinarith [sq_nonneg ξ]
   have h := mul_le_mul_of_nonneg_right hrr
     (mul_nonneg (trivialCoeff_nonneg n) (sq_nonneg ξ))
-  dsimp only [pTerm]
   nlinarith only [h]
 
 /- The comparison function is shifted before the integral test, so its entire
@@ -326,12 +328,11 @@ private lemma logComparison_integral (X c : ℝ) (hc : 0 < c) :
     have huc : 0 < u + c := by linarith [hu.out]
     have hden : 4 * (u + c) ^ 2 ≠ 0 := by positivity
     have hlog : 1 + X ^ 2 / (4 * (u + c) ^ 2) ≠ 0 := by positivity
-    have h := (((((hasDerivAt_id u).add_const c).pow 2).const_mul 4).const_div
-      (X ^ 2) hden).const_add 1 |>.log hlog
-    convert h.neg.div_const 2 using 1
-    dsimp [F, logComparison]
-    field_simp
-    <;> ring
+    have h := (((hasDerivAt_const u (X ^ 2)).div
+      ((((hasDerivAt_id u).add_const c).pow 2).const_mul 4) hden).const_add 1).log hlog
+    convert h.neg.div_const 2 using 1 <;>
+      dsimp [F, logComparison] <;>
+      field_simp [ne_of_gt huc] <;> ring
   have hn (u : ℝ) (hu : u ∈ Ioi (0 : ℝ)) : 0 ≤ logComparison X (u + c) :=
     logComparison_nonneg X (by linarith [hu.out])
   have hlim : Tendsto F atTop (𝓝 0) := by
@@ -344,7 +345,7 @@ private lemma logComparison_integral (X c : ℝ) (hc : 0 < c) :
     simpa [F] using hl.neg.div_const 2
   refine ⟨integrableOn_Ioi_deriv_of_nonneg' hd hn hlim, ?_⟩
   have h := integral_Ioi_of_hasDerivAt_of_nonneg' hd hn hlim
-  simpa [F] using h
+  simpa [F, neg_div] using h
 
 private lemma pTerm_comparison (n : ℕ) (ξ : ℝ) :
     logComparison |ξ| ((n : ℝ) + 3 / 2) ≤ pTerm n ξ ∧
@@ -361,6 +362,133 @@ private lemma pTerm_comparison (n : ℕ) (ξ : ℝ) :
   all_goals
     apply (div_le_div_iff₀ (by positivity) (by positivity)).mpr
     field_simp
-    nlinarith [sq_nonneg (n : ℝ), pow_nonneg (Nat.cast_nonneg n : (0 : ℝ) ≤ n) 3]
+    apply sub_nonneg.mp
+    ring_nf
+    positivity
+
+private lemma pMultiplier_integral_bounds (ξ : ℝ) :
+    Real.log (1 + ξ ^ 2 / 9) / 2 ≤ pMultiplier ξ ∧
+      pMultiplier ξ ≤ ξ ^ 2 / (4 + ξ ^ 2) + Real.log (1 + ξ ^ 2 / 4) / 2 := by
+  have hi (c : ℝ) (hc : 0 < c) := logComparison_integral |ξ| c hc
+  have ha (c : ℝ) (hc : 0 < c) := logComparison_antitone |ξ| c hc
+  have hn (c : ℝ) (hc : 0 < c) (u : ℝ) (hu : u ∈ Ioi (0 : ℝ)) :
+      0 ≤ logComparison |ξ| (u + c) := logComparison_nonneg |ξ| (by linarith [hu.out])
+  have hs (c : ℝ) (hc : 0 < c) :
+      Summable (fun n : ℕ => logComparison |ξ| ((n : ℝ) + c)) :=
+    (ha c hc).summable_of_integrableOn_Ioi_zero (hi c hc).1 (hn c hc)
+  constructor
+  · have h := (ha (3 / 2) (by norm_num)).integral_le_tsum
+      (hs (3 / 2) (by norm_num)) (hn (3 / 2) (by norm_num))
+    rw [(hi (3 / 2) (by norm_num)).2] at h
+    norm_num [sq_abs] at h
+    exact h.trans ((hs (3 / 2) (by norm_num)).tsum_le_tsum
+      (fun n => (pTerm_comparison n ξ).1) (pTerm_summable ξ))
+  · have h := (ha 1 (by norm_num)).tsum_le_integral
+      (hi 1 (by norm_num)).1 (hn 1 (by norm_num))
+    rw [(hi 1 (by norm_num)).2] at h
+    norm_num [sq_abs, logComparison] at h
+    exact ((pTerm_summable ξ).tsum_le_tsum
+      (fun n => (pTerm_comparison n ξ).2) (hs 1 (by norm_num))).trans (by simpa only [logComparison, sq_abs] using h)
+
+/-- Exact logarithmic bounds for the complete literal-P multiplier. The lower
+expression is allowed to be negative, and frequency zero is retained. -/
+theorem pMultiplier_logarithmic_bounds (ξ : ℝ) :
+    Summable (fun n : ℕ =>
+      (2 * rate n * trivialCoeff n) * ξ ^ 2 / (rate n ^ 2 + ξ ^ 2)) ∧
+    0 ≤ pMultiplier ξ ∧ pMultiplier 0 = 0 ∧
+    Real.log (2 + |ξ|) - Real.log 13 / 2 ≤ pMultiplier ξ ∧
+    pMultiplier ξ ≤ Real.log (2 + |ξ|) + 1 - Real.log 2 := by
+  refine ⟨pTerm_summable ξ, tsum_nonneg (fun n => pTerm_nonneg n ξ),
+    by simp [pMultiplier], ?_, ?_⟩
+  · have hp : 0 < 1 + ξ ^ 2 / 9 := by positivity
+    have hc : (2 + |ξ|) ^ 2 ≤ 13 * (1 + ξ ^ 2 / 9) := by
+      nlinarith [sq_abs ξ, sq_nonneg (2 * |ξ| / 3 - 3)]
+    have hl := Real.log_le_log (by positivity : 0 < (2 + |ξ|) ^ 2) hc
+    rw [Real.log_mul (by norm_num) hp.ne', Real.log_pow] at hl
+    linarith [(pMultiplier_integral_bounds ξ).1]
+  · have hp : 0 < 1 + ξ ^ 2 / 4 := by positivity
+    have hc : 1 + ξ ^ 2 / 4 ≤ ((2 + |ξ|) / 2) ^ 2 := by
+      nlinarith [sq_abs ξ, abs_nonneg ξ]
+    have hl := Real.log_le_log hp hc
+    rw [Real.log_pow, Real.log_div (by positivity) (by norm_num)] at hl
+    have hf : ξ ^ 2 / (4 + ξ ^ 2) ≤ 1 :=
+      (div_le_one (by positivity)).mpr (by linarith)
+    linarith [(pMultiplier_integral_bounds ξ).2]
+
+private lemma scaled_cauchy (λ : ℝ) (hλ : 0 < λ) (t : ℝ) :
+    Integrable (fun ξ : ℝ => OriginalActualFourier.phase ξ t /
+      ((λ ^ 2 + ξ ^ 2 : ℝ) : ℂ)) ∧
+    (∫ ξ : ℝ, OriginalActualFourier.phase ξ t / ((λ ^ 2 + ξ ^ 2 : ℝ) : ℂ)) =
+      ((Real.pi / λ * Real.exp (-λ * |t|) : ℝ) : ℂ) := by
+  let H : ℝ → ℂ := fun w => Complex.exp (Complex.I * (w : ℂ) * ((2 * λ * t : ℝ) : ℂ)) /
+    ((1 + 4 * w ^ 2 : ℝ) : ℂ)
+  have h := OriginalAngularResolvent.angular_resolvent (2 * λ * t)
+  have hs : (2 * λ)⁻¹ ≠ 0 := inv_ne_zero (by positivity)
+  have he (ξ : ℝ) : OriginalActualFourier.phase ξ t / ((λ ^ 2 + ξ ^ 2 : ℝ) : ℂ) =
+      ((λ ^ 2 : ℝ) : ℂ)⁻¹ * H ((2 * λ)⁻¹ * ξ) := by
+    dsimp [H, OriginalActualFourier.phase]
+    have hphase : Complex.I * (ξ : ℂ) * (t : ℂ) =
+        Complex.I * (((2 * λ)⁻¹ * ξ : ℝ) : ℂ) * ((2 * λ * t : ℝ) : ℂ) := by
+      push_cast
+      field_simp
+    rw [← hphase]
+    push_cast
+    field_simp
+    <;> ring
+  have hi : Integrable (fun ξ : ℝ => OriginalActualFourier.phase ξ t /
+      ((λ ^ 2 + ξ ^ 2 : ℝ) : ℂ)) := by
+    simp_rw [he]
+    exact (h.1.comp_mul_left' hs).const_mul _
+  refine ⟨hi, ?_⟩
+  simp_rw [he]
+  rw [integral_const_mul, Measure.integral_comp_mul_left]
+  have habs : |((2 * λ)⁻¹)⁻¹| = 2 * λ := by rw [inv_inv, abs_of_pos (by positivity)]
+  rw [habs, Complex.real_smul]
+  have ht : -|2 * λ * t| / 2 = -λ * |t| := by
+    rw [abs_mul, abs_of_pos (by positivity : 0 < 2 * λ)]
+    ring
+  rw [ht] at h
+  have hp : (2 * Real.pi : ℝ) ≠ 0 := by positivity
+  have hl : (λ : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hλ.ne'
+  have hpi : (Real.pi : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr Real.pi_ne_zero
+  change (↑(1 / (2 * Real.pi)) : ℂ) * (∫ w, H w) = _ at h
+  push_cast at h ⊢
+  field_simp at h ⊢
+  linear_combination (2 : ℂ) * λ * h
+
+private lemma atom_fourier_square (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0)
+    (D : ℝ) (hx : ∀ i, x i ≤ D) (ξ : ℝ) :
+    ((ξ ^ 2 * ‖OriginalActualFourier.Ahat («prefix» x a) ξ‖ ^ 2 : ℝ) : ℂ) =
+      ∑ i, ∑ j, star (a i) * a j * OriginalActualFourier.phase ξ (x i - x j) := by
+  classical
+  have h := OriginalActualFourier.frequency_mul_Ahat x a ha D hx ξ
+  have hs := congrArg (fun z : ℂ => star z * z) h
+  have hphase (i j : I) :
+      star (OriginalActualFourier.phase (-ξ) (x i)) *
+        OriginalActualFourier.phase (-ξ) (x j) =
+          OriginalActualFourier.phase ξ (x i - x j) := by
+    rw [show star (OriginalActualFourier.phase (-ξ) (x i)) =
+      OriginalActualFourier.phase ξ (x i) by
+        simpa using OriginalActualFourier.phase_conj (-ξ) (x i)]
+    rw [OriginalActualFourier.phase_neg_left, ← OriginalActualFourier.phase_add]
+    congr 1
+    ring
+  calc
+    _ = star ((Complex.I * (ξ : ℂ)) * OriginalActualFourier.Ahat («prefix» x a) ξ) *
+        ((Complex.I * (ξ : ℂ)) * OriginalActualFourier.Ahat («prefix» x a) ξ) := by
+      simp [star_mul, Complex.normSq_eq_norm_sq, Complex.normSq_apply,
+        Complex.mul_re, Complex.mul_im, sq_abs, mul_pow, ← Complex.normSq_eq_conj_mul_self]
+    _ = star (∑ i, a i * OriginalActualFourier.phase (-ξ) (x i)) *
+        (∑ i, a i * OriginalActualFourier.phase (-ξ) (x i)) := hs
+    _ = _ := by
+      simp only [star_sum, star_mul, Finset.sum_mul, Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro i hi
+      apply Finset.sum_congr rfl
+      intro j hj
+      calc
+        _ = star (a i) * a j * (star (OriginalActualFourier.phase (-ξ) (x i)) *
+            OriginalActualFourier.phase (-ξ) (x j)) := by ring
+        _ = _ := by rw [hphase]
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
