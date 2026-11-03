@@ -10,6 +10,10 @@ $$\forall n\in\mathbb{N}, 0<n\Rightarrow \sum_{1 \le k \le n, \operatorname{gcd}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/MoebiusLogarithmic/MorkenFirstDivisorSum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a112399-morken-first-divisor-sum` (proved) by `D5/S3/Arith/MoebiusLogarithmic/MorkenFirstDivisorSum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a112399-morken-first-divisor-sum","declaration_gid":"D5/S3/Arith/MoebiusLogarithmic/MorkenFirstDivisorSum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jamie Morken (2026). *First divisor-sum conjecture in OEIS A112399*. URL: <https://oeis.org/A112399/internal>.
