@@ -10,9 +10,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(K: \operatorname{Matri
 
 *Formalization.* `D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.IsCoolingKraus` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
+*Citation.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
 
 *Commentary.*
 
@@ -24,9 +22,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(\rho: \operatorname{Ma
 
 *Formalization.* `D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.IsCoolingMap` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
+*Citation.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
 
 *Commentary.*
 
@@ -38,9 +34,7 @@ $$\forall \left(m: \mathbb{N}\right), \left(\forall \left(e: \left(\operatorname
 
 *Formalization.* `D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.groundSet` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
+*Citation.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
 
 *Commentary.*
 
@@ -52,9 +46,7 @@ $$\forall \left(m: \mathbb{N}\right), \left(\forall \left(e: \left(\operatorname
 
 *Formalization.* `D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.groundState` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
+*Citation.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
 
 *Commentary.*
 
@@ -66,9 +58,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(m: \mathbb{N}\right), 
 
 *Formalization.* `D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.IsEnergyConserving` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
+*Citation.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
 
 *Commentary.*
 
@@ -80,9 +70,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(m: \mathbb{N}\right), 
 
 *Formalization.* `D5/S3/QuantumChannels/CoolingMapThermalOperationRefutation.thermalOutput` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
+*Citation.* Varun Narasimhachar, Gilad Gour (2015). *Low-temperature thermodynamics with quantum coherence*. DOI: [10.1038/ncomms8689](https://doi.org/10.1038/ncomms8689). URL: <https://arxiv.org/abs/1409.7740v3>.
 
 *Commentary.*
 
