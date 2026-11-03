@@ -217,7 +217,9 @@ private lemma thermal_populations {m : ℕ} (e : Fin m → ℝ)
     ring
   rw [hc] at he
   have hr := congrArg Complex.re he
-  simpa only [← Complex.ofReal_sum, ← Complex.ofReal_mul, Complex.ofReal_re] using hr
+  simpa only [← Complex.ofReal_sum, ← Complex.ofReal_one, ← Complex.ofReal_div,
+    Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, mul_zero, sub_zero]
+    using hr
 
 private lemma triangular_transport (T : Matrix (Fin 4) (Fin 4) ℝ) (g : ℝ)
     (hn : ∀ j k, 0 ≤ T j k) (hr : ∀ j, ∑ k, T j k = g)
@@ -290,8 +292,8 @@ private lemma population_support {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ)
         Complex.normSq (U (j, b) (k, a))) = ∑ a ∈ groundSet e, (1 : ℝ) := by
           apply Finset.sum_congr rfl
           intro a _
-          rw [← Fintype.sum_prod_type]
-          exact hcol a
+          exact (Fintype.sum_prod_type
+            (fun p : Fin 4 × Fin m => Complex.normSq (U p (k, a)))).symm.trans (hcol a)
       _ = _ := by simp
   have ht : ∀ j k, k < j → T j k = 0 := by
     intro j k hjk
@@ -368,7 +370,58 @@ private lemma block_coherences {m : ℕ} (e : Fin m → ℝ)
     trace (block e U i * (block e U j)ᴴ) =
       ((groundSet e).card : ℂ) * (factor * factorᴴ) i j := by
   have he := thermal_entries e U i j
-  sorry
+  have hsum (b : Fin m) :
+      (∑ l : Fin 4, ∑ a ∈ groundSet e, ∑ k : Fin 4,
+        U (i, b) (k, a) * star (U (j, b) (l, a))) =
+      ∑ a ∈ groundSet e, U (i, b) (i, a) * star (U (j, b) (j, a)) := by
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro a ha
+    rw [Finset.sum_eq_single j]
+    · rw [Finset.sum_eq_single i]
+      · intro k _ hki
+        rw [hs i k a b ha (Or.inl hki.symm), zero_mul]
+      · simp
+    · intro l _ hlj
+      rw [hs j l a b ha (Or.inl hlj.symm), star_zero]
+      simp
+    · simp
+  simp_rw [hsum] at he
+  have htrace :
+      (∑ b : Fin m, ∑ a ∈ groundSet e,
+        U (i, b) (i, a) * star (U (j, b) (j, a))) =
+      trace (block e U i * (block e U j)ᴴ) := by
+    change _ = ∑ b : {a // a ∈ groundSet e}, ∑ a : {a // a ∈ groundSet e},
+      U (i, b.1) (i, a.1) * star (U (j, b.1) (j, a.1))
+    calc
+      _ = ∑ b ∈ groundSet e, ∑ a ∈ groundSet e,
+          U (i, b) (i, a) * star (U (j, b) (j, a)) := by
+        symm
+        apply Finset.sum_subset (Finset.subset_univ _)
+        intro b _ hb
+        apply Finset.sum_eq_zero
+        intro a ha
+        rw [hs i i a b ha (Or.inr hb), zero_mul]
+      _ = _ := by
+        symm
+        rw [Finset.sum_coe_sort (groundSet e) (fun b : Fin m =>
+          ∑ a : {a // a ∈ groundSet e}, U (i, b) (i, a.1) * star (U (j, b) (j, a.1)))]
+        apply Finset.sum_congr rfl
+        intro b _
+        exact Finset.sum_coe_sort (groundSet e)
+          (fun a : Fin m => U (i, b) (i, a) * star (U (j, b) (j, a)))
+  rw [htrace, hout] at he
+  by_cases hg : (groundSet e).Nonempty
+  · have hcne : ((groundSet e).card : ℂ) ≠ 0 := by
+      exact_mod_cast Finset.card_ne_zero.mpr hg
+    change (((1 / 4 : ℝ) : ℂ) * (factor * factorᴴ) i j) = _ at he
+    norm_num only [Complex.ofReal_div, Complex.ofReal_one, Complex.ofReal_ofNat] at he
+    field_simp [hcne] at he
+    linear_combination -he
+  · have hz : groundSet e = ∅ := Finset.not_nonempty_iff_eq_empty.mp hg
+    rw [← htrace]
+    simp only [hz, Finset.sum_empty, Finset.sum_const_zero, Finset.card_empty,
+      Nat.cast_zero, zero_mul]
 
 private lemma gram_null {n : Type*} [Fintype n] [DecidableEq n]
     (A : Fin 4 → Matrix n n ℂ)
