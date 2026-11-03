@@ -10,6 +10,8 @@ import Mathlib.Basic.Rel
 import Mathlib.Data.Fintype.Card
 import Mathlib.Logic.Equiv.Basic
 
+/-! Positive evidence forces support exposure under unrestricted full relabeling. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -105,8 +107,8 @@ theorem positive_certificate_support_lower_bound
     (constant : ∀ (other_left : A ↪ L) (other_right : B ↪ R),
       (D : SetRel L R) ⊆ transport E other_left other_right →
       transport E other_left other_right = transport E left right) :
-    (D : SetRel L R).dom = Set.range left ∧
-    (D : SetRel L R).cod = Set.range right ∧
+    SetRel.dom (D : SetRel L R) = Set.range left ∧
+    SetRel.cod (D : SetRel L R) = Set.range right ∧
     max (Fintype.card A) (Fintype.card B) ≤ D.card ∧
     ∀ samples : List (L × R), samples.toFinset = D →
       max (Fintype.card A) (Fintype.card B) ≤ samples.length := by
@@ -114,35 +116,39 @@ theorem positive_certificate_support_lower_bound
   have left_fresh : ∃ fresh, fresh ∉ Set.range left := by
     by_contra h
     have surj : Function.Surjective left := by
-      simpa only [not_exists, not_not, Set.mem_range] using h
+      intro x
+      by_contra hx
+      exact h ⟨x, hx⟩
     exact (Nat.not_le_of_lt left_slack) (Fintype.card_le_of_surjective left surj)
   have right_fresh : ∃ fresh, fresh ∉ Set.range right := by
     by_contra h
     have surj : Function.Surjective right := by
-      simpa only [not_exists, not_not, Set.mem_range] using h
+      intro x
+      by_contra hx
+      exact h ⟨x, hx⟩
     exact (Nat.not_le_of_lt right_slack) (Fintype.card_le_of_surjective right surj)
-  have exposed_left (a : A) : left a ∈ (D : SetRel L R).dom := by
+  have exposed_left (a : A) : left a ∈ SetRel.dom (D : SetRel L R) := by
     by_contra missing
     obtain ⟨fresh, unused⟩ := left_fresh
     obtain ⟨alternative, _, _, preserves, differs⟩ :=
       unexposed_left_label_competitor E left right D attained a
         (left_incident a) missing fresh unused
     exact differs (constant alternative right preserves)
-  have exposed_right (b : B) : right b ∈ (D : SetRel L R).cod := by
+  have exposed_right (b : B) : right b ∈ SetRel.cod (D : SetRel L R) := by
     by_contra missing
     obtain ⟨fresh, unused⟩ := right_fresh
     obtain ⟨alternative, _, _, preserves, differs⟩ :=
       unexposed_right_label_competitor E left right D attained b
         (right_incident b) missing fresh unused
     exact differs (constant left alternative preserves)
-  have left_support : (D : SetRel L R).dom = Set.range left := by
+  have left_support : SetRel.dom (D : SetRel L R) = Set.range left := by
     apply Set.Subset.antisymm
     · rintro l ⟨r, hp⟩
       obtain ⟨⟨a, b⟩, _, h⟩ := attained hp
       exact ⟨a, congrArg Prod.fst h⟩
     · rintro _ ⟨a, rfl⟩
       exact exposed_left a
-  have right_support : (D : SetRel L R).cod = Set.range right := by
+  have right_support : SetRel.cod (D : SetRel L R) = Set.range right := by
     apply Set.Subset.antisymm
     · rintro r ⟨l, hp⟩
       obtain ⟨⟨a, b⟩, _, h⟩ := attained hp
