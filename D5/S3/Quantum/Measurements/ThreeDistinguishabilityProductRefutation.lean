@@ -18,6 +18,7 @@ perfect distinguishability is pairwise orthogonality of density-matrix supports.
 
 set_option autoImplicit false
 set_option linter.style.longLine false
+set_option linter.deprecated false
 
 noncomputable section
 
