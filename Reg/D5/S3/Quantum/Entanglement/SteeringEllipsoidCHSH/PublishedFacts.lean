@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
 import Reg.Support.SingleDependentReadout
 
+/-! Registrations for steering-ellipsoid identities and bounds. -/
+
 namespace Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.UnitDot
 open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH (unit_dot_le)
 open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction (vlen vlen_e3)
