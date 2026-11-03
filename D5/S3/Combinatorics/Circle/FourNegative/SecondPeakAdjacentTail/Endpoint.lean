@@ -122,44 +122,44 @@ private theorem selector_to_physical
     ring
   have hA : ((base a b c d 0:ℤ):ℚ)=A x z q := by
     norm_num [base,newBase,charge]
-    push_cast
-    rw [hdpow,hy]
+    try push_cast
+    simp only [hdpow,hy]
     dsimp [x,z,q,A,B,L,K,SU,SV,SW]
     ring
   have hB : ((base a b c d 1:ℤ):ℚ)=B x z q := by
     norm_num [base,newBase,charge]
-    push_cast
-    rw [hdpow,hy]
+    try push_cast
+    simp only [hdpow,hy]
     dsimp [x,z,q,A,B,L,K,SU,SV,SW]
     ring
   have hL : ((base a b c d 2:ℤ):ℚ)=L x z := by
     norm_num [base,newBase,charge]
-    push_cast
-    rw [hdpow,hy]
+    try push_cast
+    simp only [hdpow,hy]
     dsimp [x,z,q,A,B,L,K,SU,SV,SW]
     ring
   have hK : ((base a b c d 3:ℤ):ℚ)=K z q := by
     norm_num [base,newBase,charge]
-    push_cast
-    rw [hdpow,hy]
+    try push_cast
+    simp only [hdpow,hy]
     dsimp [x,z,q,A,B,L,K,SU,SV,SW]
     ring
   have hU : ((newBase a b c d 1:ℤ):ℚ)=SU x z q := by
     norm_num [base,newBase,charge]
-    push_cast
-    rw [hdpow,hy]
+    try push_cast
+    simp only [hdpow,hy]
     dsimp [x,z,q,A,B,L,K,SU,SV,SW]
     ring
   have hV : ((newBase a b c d 2:ℤ):ℚ)=SV x z := by
     norm_num [base,newBase,charge]
-    push_cast
-    rw [hdpow,hy]
+    try push_cast
+    simp only [hdpow,hy]
     dsimp [x,z,q,A,B,L,K,SU,SV,SW]
     ring
   have hW : ((newBase a b c d 3:ℤ):ℚ)=SW z q := by
     norm_num [base,newBase,charge]
-    push_cast
-    rw [hdpow,hy]
+    try push_cast
+    simp only [hdpow,hy]
     dsimp [x,z,q,A,B,L,K,SU,SV,SW]
     ring
   have ho : let AA := base a b c d 0; let BB := base a b c d 1

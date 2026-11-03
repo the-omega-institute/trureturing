@@ -43,7 +43,7 @@ private theorem high_continuous_windows (x z q m : ℚ)
   have hfcap : 2*F x z q 0 m≤A x z q-1 := by nlinarith
   have hecap' : 2*E x z q 0 m≤A x z q-1 := by linarith
   have hr : Residual x z q 0 m := by
-    obtain ⟨h1,h2,h3,h4,h5,h6,h7⟩ := hc
+    have ⟨h1,h2,h3,h4,h5,h6,h7⟩ := hc
     refine ⟨hm,by linarith,he,by linarith,by linarith,hf,by linarith,?_,?_⟩
     · simpa using h4
     · simpa using h5
@@ -99,13 +99,13 @@ private theorem periodic_integer_windows (x z : ℚ) (m : ℤ)
   have hc := common_bounds x z 16 (by linarith [show (0:ℚ)≤z by positivity])
       (by linarith) (by norm_num)
   obtain ⟨hm0,hmstock,he,hec,heo,hf,hfo⟩ := hm
-  obtain ⟨h1,h2,h3,h4,h5,h6,h7⟩ := hc
+  have ⟨h1,h2,h3,h4,h5,h6,h7⟩ := hc
   have hr : Residual x z 16 0 (m:ℚ) := by
     subst x
     refine ⟨hm0,by linarith,he,hec,heo,hf,hfo,?_,?_⟩
     · simpa [SU,SV,SW] using h4
     · simpa [SU,SV,SW] using h5
-  exact windows_of_residual x z 16 0 (m:ℚ) (by norm_num)
+  exact windows_of_residual x z 16 0 (m:ℚ) (by linarith)
     (by linarith [show (0:ℚ)≤z by positivity]) (by norm_num) hc
     (by norm_num) hr
 
@@ -185,6 +185,6 @@ private theorem high_integer_selection (a b c : ℕ)
     have hz8 : (8:ℚ)≤(2:ℚ)^c := by
       convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 3≤c by omega) using 1 <;> norm_num
     refine ⟨m,by exact_mod_cast hm.1,hmb,?_⟩
-    simpa using periodic_integer_windows 4 ((2:ℚ)^c) m rfl hz8 hm
+    convert periodic_integer_windows 4 ((2:ℚ)^c) m rfl hz8 hm using 1 <;> norm_num
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail
