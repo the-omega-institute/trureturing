@@ -3546,3 +3546,420 @@ Born 成功概率在所有亏损下仍精确为 $\operatorname{Tr}(\rho E)$。�
 白话说：先固定每条方向的透光量，要求同一对透光率搬到别的系统仍守同一个规则，一起调暗也不换规则。现在只看已有的同一对方向：几乎不遮光时，与单位效果下的实际返回记录相比，返回原来叠加状态的概率能不能突然少掉一截？新约束说，两条标定越来越准、遮光也越来越小时，这一截必须越来越小；不要求相位转得慢，也不预先规定速度。先有任意有限组都相容的共同谱关系网，再在其中取三个方向得到三角不等式；比例二和三把这条局部约束传到整张网，极暗方向的影响再由振幅衰减压低。这样一个实际局部读数的边界关系，就恰好等价于全部指定滤波统一接近平方根更新。相位可以任意快，只要它能造成的异常随标定误差一起变浅；若小缝里始终藏着固定高度的异常，就必有几乎不遮光的实际滤波明显偏离量子理想更新。
 
 ## 追加锚（本行以下为增补区）
+
+## 70. 从逐射线精确校准转向二元切口预算
+
+**定义 70.1（允许串扰的同一滤波关系体）。** 保留 C103、定义 50.1 的全部所选实际成功分支及其成功效果 $T_{E,F}^{*}(1)=E$，但不要求所选射线校准。保留共同调暗，并将二元环境合同明确限制为一个可压缩系数：在同一简单块内，若 $i\ne j$、$x_i,x_j>0$，则
+
+$$
+\langle i|T_{E,F}(E_{ij})|j\rangle=m(x_i,x_j),
+\qquad T_{aE,F}=aT_{E,F}\quad(0<a\le1).
+\tag{70.1}
+$$
+
+同一个 $m$ 适用于全部已有对象、框架、旁观谱及块阶；其他输出项暂不为零。零效果的成功分支因完全正性及成功效果为零而为零。矩阵单位的相位变换同时作用于输入和读出，故这个压缩系数不依赖表示矩阵单位时的向量相位。
+
+对同一对象的全部所选秩一框架投影，包括不同中心块的标签，记
+
+$$
+\mathcal P_F=\left\{\sum_{i\in S}P_i:S\text{ 是框架位置的子集}\right\}.
+$$
+
+每个 $P\in\mathcal P_F$ 给二元分割 $(P,1-P)$。定义同一分支的切口泄漏及整个关系体的相对预算
+
+$$
+\begin{aligned}
+\ell(T_{E,F})&=\max_{P\in\mathcal P_F}
+ \|P\,T_{E,F}^{*}(1-P)\,P\|,\\
+\lambda_M&=\sup_{E\ne0,F}
+ \frac{\ell(T_{E,F})}{\|E\|}\in[0,1].
+\end{aligned}
+\tag{70.2}
+$$
+
+范数是该有限复矩阵直和内的算子范数，$P$ 可以跨越中心块。正性及 $T^*(1)=E$ 给 $0\le PT^*(1-P)P\le PEP\le\|E\|P$。等价地，$\lambda_M$ 是使所有同一实现上的 $PT_{E,F}^*(1-P)P\le\lambda_M\|E\|P$ 同时成立的最小共同常数。式 (70.2) 因而是已有正锥内的关系，不先要求供应实现该上确界的准备。若切口内相应纯准备确已供应，则其每个值是“先在这一边、成功后却到另一边”的联合概率；一般不将数学上确界冒充实际取得或有限认证。它包含任意大小的二元切口，不能只检查单个框架位置。
+
+**定义 70.2（实际标定预算及候选 C107）。** 保留定义 50.2 中同一校准对象、同一 $E_*$ 成功分支及已有 $Q_{12},Q_{13}$ 准备—读出路径。令
+
+$$
+\begin{aligned}
+q_j^*&=\frac{(1+1/\sqrt j)^2}{4},\\
+\delta_M&=\max_{j=2,3}
+ 2\sqrt j\left|\operatorname{Tr}[Q_{1j}T_{E_*,F_*}(Q_{1j})]-q_j^*\right|,\\
+\eta_M&=\max\{\lambda_M,\delta_M\}.
+\end{aligned}
+\tag{70.3}
+$$
+
+此时尚无射线合同，实际读数可以超过 $q_j^*$，所以这里取绝对差，不能预先把它叫作非负饱和亏损。沿定义 64.1 已有的同一 $Q=Q_{12}$ 和 $H_h=1-(1-e^{-h})P_2$，仍取
+
+$$
+p_M(h)=\operatorname{Tr}[Q T_{H_h,F_*}(Q)],\qquad
+\kappa_M(h)=p_M(0)-p_M(h),\qquad h\ge0.
+\tag{70.4}
+$$
+
+一般 $\kappa_M$ 可以为负。对指定的比较类 $\mathscr C$，定义
+
+$$
+\chi_{\mathscr C}(r,\varepsilon)=
+\sup\left(\{[\kappa_M(h)]_+:M\in\mathscr C,
+ \eta_M\le\varepsilon,\ 0\le h\le r\}\cup\{0\}\right),
+\quad [t]_+=\max(t,0).
+\tag{70.5}
+$$
+
+候选 C107 是定义 70.1 的合同连同以下联合边界关系：
+
+$$
+\boxed{\quad
+\forall\tau>0\ \exists r_0,\varepsilon_0>0\quad
+\forall M\in\mathscr C\ \forall h\in[0,r_0]:\quad
+\eta_M\le\varepsilon_0\ \Longrightarrow\
+ [p_M(0)-p_M(h)]_+\le\tau .\quad}
+\tag{70.6}
+$$
+
+$\lambda$、$\delta$ 与 $\kappa$ 都属于同一关系体；不能把不同实现中分别可达的最小预算拼在一起。候选不预设任何成员逐点连续，也不预给连续包络。切口预算本身仍是全族关系，两个局部标定读数不自动给出它。比较类应另给非空及趋近零预算的实现，命题 74.1 将给完整满足族。
+
+## 71. 二元切口的共同提升与保留谱关系的精确参照
+
+**定理 71.1（保持同一二元系数的切口修复）。** 对定义 70.1 的每个关系体，存在唯一由其压缩系数决定的数学参照族 $R_{E,F}$，满足精确所选射线校准、成功效果 $E$、同一 $m$ 及共同调暗。它逐中心块为 Schur 乘法，且
+
+$$
+\|T_{E,F}-R_{E,F}\|_\diamond
+ \le\|E\|\,b(\lambda_M),\qquad
+b(t)=\min\{2,4\sqrt t+t\}\quad(t\ge0).
+\tag{71.1}
+$$
+
+这里及下文 diamond 范数均用定义 66.1 的未除二、任意矩阵输入及任意数学参考约定。$R$ 是证明中构造的完全正映射，不据此断言它是菜单内另一个实际分支。
+
+证明。先在一个有限对象内，将原完全正映射按输入、输出中心块取 Kraus 分量。把各分量嵌入全部块的 Hilbert 直和 $\mathcal H$，并给其独立环境标签，得到 $B(\mathcal H)$ 上的完全正延伸 $\widetilde T$；它先删除输入的跨中心项，输出仍在原直和内，$\widetilde T^*(1)=E$。因此原代数上及其任意参考上的差范数不超过该延伸上的相应范数。以下有限 Stinespring 算子 $V:\mathcal H\to\mathcal H\otimes\mathcal K$ 满足
+
+$$
+\widetilde T(X)=\operatorname{Tr}_{\mathcal K}(VXV^*),
+\qquad V^*V=E,
+\qquad \|V\|=\sqrt{\|E\|}.
+\tag{71.2}
+$$
+
+令 $q=\|E\|>0$、$\ell=\ell(T)$。对每个框架切口 $P$，
+
+$$
+\|((1-P)\otimes1)V P\|^2
+ =\|P T^*(1-P)P\|\le\ell.
+\tag{71.3}
+$$
+
+其互补切口也在同一集合。取 $U_P=2P-1$，两个交叉角有正交的输入域和输出域，故
+
+$$
+\|(U_P\otimes1)V-VU_P\|
+ =2\max\{\|(P\otimes1)V(1-P)\|,
+          \|((1-P)\otimes1)VP\|\}
+ \le2\sqrt\ell.
+\tag{71.4}
+$$
+
+对全部框架符号有限平均，得到
+
+$$
+W=2^{-D}\sum_{U=\sum_i\epsilon_iP_i}(U\otimes1)VU
+ =\sum_i(P_i\otimes1)V P_i,
+\qquad \|V-W\|\le2\sqrt\ell,
+\tag{71.5}
+$$
+
+其中 $D$ 为该对象全部框架位置数，$\epsilon_i\in\{-1,1\}$。全部切口属于同一个有限 Boolean 投影代数，其符号组成群 $(\mathbb Z/2\mathbb Z)^D$。式 (71.5) 取这个作用的共同交织部分：对每个切口都有 $(P\otimes1)W=WP$。这个有限平均是矩阵恒等式，不要求实际供应符号操作或其随机混合。每个 $W|i\rangle$ 只在输出射线 $i$ 上，故 $W^*W=\sum_i y_iP_i$，且
+
+$$
+0\le y_i=\langle i|T(P_i)|i\rangle\le x_i,
+\qquad
+0\le x_i-y_i=\operatorname{Tr}[(1-P_i)T(P_i)]\le\ell.
+\tag{71.6}
+$$
+
+于是 $W^*W\le E$、$\|W\|\le\sqrt q$。令 $S(X)=\operatorname{Tr}_{\mathcal K}(WXW^*)$，并加回丢失的对角成功质量：
+
+$$
+R(X)=S(X)+\sum_i(x_i-y_i)P_iXP_i.
+\tag{71.7}
+$$
+
+两项均完全正，$R^*(1)=E$、$R(P_i)=x_iP_i$，且没有跨中心转移。对原块内不同位置，$S(E_{ij})$ 的 $(i,j)$ 系数恰为 $\langle i|T(E_{ij})|j\rangle$，补项不改变它。涉及零权重的位置原 Kraus 列已为零。因而 $R$ 正是对角系数取 $x_i$、其余系数取原压缩系数的唯一 Schur 映射；它不依赖 Stinespring 表示选择。此显式描述也给共同调暗。
+
+有限 Stinespring 差的成熟范数估计给
+
+$$
+\|\widetilde T-S\|_\diamond
+ \le(\|V\|+\|W\|)\|V-W\|
+ \le4\sqrt{q\ell}.
+\tag{71.8}
+$$
+
+补项是完全正映射，其 diamond 范数等于其伴随在单位上的算子范数，故不超过 $\ell$。限制回原代数并用 $\ell\le q\lambda_M$ 得 $q(4\sqrt{\lambda_M}+\lambda_M)$。两条成功效果同为 $E$ 的完全正映射各有范数 $q$，另给上界 $2q$，即得 (71.1)。$E=0$ 时两者均零。
+
+范数桥复用 [Kretschmann–Schlingemann–Werner，命题 3](https://arxiv.org/pdf/0710.2495) 的共同 Stinespring 估计及有限迹对偶；有限符号平均复用 [Han–Liu，§2.2 的矩形 twirling 映射](https://arxiv.org/pdf/2311.16349)，这里的输出表示为 $U\otimes1$、输入表示为 $U$，共同交织部分正是其平均的像。这里将它们用于保留原二元谱系数和成功效果的同一修复，不把单独的范数估计或有限平均认领为新机制。∎
+
+**定理 71.2（参照核及实际读数的误差桥）。** 数学族 $R$ 满足定义 57.1 的全部代数合同，所以有式 (57.1) 的共同有限正定核 $\phi$、$c\in[0,1]$ 及 $\gamma=1-c$，无需连续性。令 $\Delta_R$ 为式 (64.1)，$\kappa_R$ 为用 $R$ 代替 $T$ 的式 (70.4)。则
+
+$$
+\Delta_R\le\delta_M+\sqrt3\,b(\lambda_M),
+\qquad
+0\le\kappa_R(h)\le[\kappa_M(h)]_++b(\lambda_M).
+\tag{71.9}
+$$
+
+证明。定理 51.1 中不使用连续性的部分只需要这些数学映射的完全正性、全部有限谱列表和精确射线合同；它不需要把 $R$ 另放入实际菜单。故它给同一 $\phi$。三点 Gram 距离及定理 65.1 同样成立。
+
+$T$ 与 $R$ 成功效果相同，归一正输入的两输出差迹为零；任何效果的概率差至多其迹范数的一半。因此在范数至多一的每个效果处，两实际／参照概率之差至多 $b(\lambda_M)/2$。在 $E_*$ 上，参照的两个差满足
+
+$$
+q_j^*-\operatorname{Tr}[Q_{1j}R_{E_*,F_*}(Q_{1j})]
+ =\frac{1-\Re\phi(\log j)}{2\sqrt j}\ge0.
+\tag{71.10}
+$$
+
+三角不等式和 $j\le3$ 给第一界。在 $H_0=1$ 与同一 $H_h$ 上各比较一次，得 $|\kappa_R(h)-\kappa_M(h)|\le b(\lambda_M)$；定理 65.1 给 $\kappa_R\ge0$，从而得第二界。比较的是原路径的两个数学预测，不需要供应 $R$ 的准备、分支或读出。∎
+
+## 72. 允许串扰的实际局部关系与全族更新等价
+
+**定义 72.1（新预算分层的全族误差）。** 沿用定义 66.1 对实际族 $T$ 的 $\mathfrak D(M)$，但比较类用新的共同预算：
+
+$$
+\mathfrak Q_{\mathscr C}(\varepsilon)=
+\sup\left(\{\mathfrak D(M):M\in\mathscr C,
+ \eta_M\le\varepsilon\}\cup\{0\}\right).
+\tag{72.1}
+$$
+
+以下 $\chi$ 专指式 (70.5)，不是将旧预算曲面直接换名。
+
+**定理 72.2（C107 的全族必要充分性）。** 对任何定义 70.1–70.2 的比较类，C107 当且仅当
+
+$$
+\lim_{\varepsilon\downarrow0}\mathfrak Q_{\mathscr C}(\varepsilon)=0.
+\tag{72.2}
+$$
+
+定量地，令 $b_\varepsilon=b(\varepsilon)$、$f_\varepsilon=\varepsilon+\sqrt3b_\varepsilon$，则
+
+$$
+\chi(r,\varepsilon)\le\frac r2+
+ \frac12\mathfrak Q_{\mathscr C}(\varepsilon).
+\tag{72.3}
+$$
+
+反向，取式 (59.2) 的同一整数标定表、覆盖半径 $u=r_N(R)$，对任意 $R>0$、整数 $N\ge0$，有
+
+$$
+\boxed{
+\mathfrak Q_{\mathscr C}(\varepsilon)\le
+\min\left\{2,\ b_\varepsilon+2f_\varepsilon+
+\max\left[
+4e^{u/4}\sqrt{\chi(u,\varepsilon)+b_\varepsilon}
+ +2N\sqrt{2f_\varepsilon},\quad4e^{-R/2}
+\right]\right\}.
+}
+\tag{72.4}
+$$
+
+所有参数共同作用于实际对象、效果和框架，没有块阶、秩或最小正谱值因子。
+
+证明。必要方向不依赖修复。$T_{1,F_*}$ 保迹，故 $p_M(0)\le1$；$\mathcal L_{H_h}$ 的同一返回概率为 $p^*(h)=(1+e^{-h/2})^2/4$。它与实际分支有相同成功效果，所以
+
+$$
+\kappa_M(h)\le1-p^*(h)+p^*(h)-p_M(h)
+ \le\frac h2+\frac12\mathfrak D(M).
+\tag{72.5}
+$$
+
+右侧非负，故正部也受此界。取相同预算下的上确界即得 (72.3)，从而 (72.2) 蕴含 C107。
+
+充分方向中，同一个 $\eta_M\le\varepsilon$ 给 $\lambda_M,\delta_M\le\varepsilon$。定理 71.1–71.2 因而给
+
+$$
+\Delta_R\le f_\varepsilon,\qquad
+\kappa_R(h)\le\chi(u,\varepsilon)+b_\varepsilon
+ \quad(0\le h\le u).
+\tag{72.6}
+$$
+
+在修复族的同一有限 Gram 表示中，定理 65.1 把后一界变为局部距离界；定理 58.1 的三点三角不等式及两条标定边再给
+
+$$
+d_\phi(s)\le
+2e^{u/4}\sqrt{\chi(u,\varepsilon)+b_\varepsilon}
+ +N\sqrt{2f_\varepsilon}
+ \quad(-R\le s\le0).
+\tag{72.7}
+$$
+
+完全复用定理 60.1 的有限共同 Stinespring 比较、小权重尾界及中心直和论证，得到 $R$ 与平方根参照的误差界，即式 (72.4) 中去掉首项 $b_\varepsilon$ 的部分。这里不将 $\eta\le\varepsilon$ 子类偷换成全部 $\Delta_R\le f_\varepsilon$ 的模型：局部上界只对同一个原模型所得的修复族使用。再以定理 71.1 加上实际族到其修复族的误差，得 (72.4)。
+
+若 C107 成立，先取有限 $R$ 控制尾项，再由联合边界关系取足够小的局部高度预算及 $r_0\le1$，再取有限 $N$ 使 $u\le r_0$。最后缩小 $\varepsilon$，同时控制 $b_\varepsilon$、$f_\varepsilon$ 及 $N\sqrt{2f_\varepsilon}$，并保持在所选联合边界预算内。因为 $b_\varepsilon,f_\varepsilon\to0$，全部项都可共同趋零。这给 (72.2)，没有预定收敛速度。∎
+
+**定理 72.3（可检验的失效方向及预算的必要性）。** 对每个上述实际模型，
+
+$$
+\lambda_M\le\frac12\mathfrak D(M),\qquad
+\delta_M\le\sqrt3\mathfrak D(M).
+\tag{72.8}
+$$
+
+若 C107 的联合边界条件失败，则存在 $\tau_0>0$、$\eta_{M_n}\to0$、$h_n\downarrow0$，使同一实际准备—读出对满足
+
+$$
+p_{M_n}(0)-p_{M_n}(h_n)>\tau_0,
+\qquad \mathfrak D(M_n)\ge2\tau_0-h_n.
+\tag{72.9}
+$$
+
+证明。切口内归一正输入的平方根输出在切口外为零。实际与平方根分支成功效果相同，故切口外概率至多误差范数的一半。共同调暗使非零 $E$ 的误差除以 $\|E\|$ 等于归一效果 $E/\|E\|$ 的误差，因而对全部切口及效果取上确界得第一式。第二式在固定 $E_*$ 两条路径应用相同的半迹范数界，并乘以 $2\sqrt j$ 即得。
+
+联合边界失败时，对逐次缩小的半径及预算取正部大于固定 $\tau_0$ 的实际实现；其返回差本身即为正且超过 $\tau_0$。如定理 66.3 取严格递减子序列，再重排 (72.5)，得到 (72.9)。这是已有实际校准对象上的失败见证，不承诺一个有限程序取得全部切口预算。∎
+
+## 73. 每条射线都准仍会漏掉集体相干异常
+
+**命题 73.1（保留共同二元合同的全菜单反例）。** 若在新预算中以逐射线误差代替所有二元切口预算，则即使逐射线完整输出误差统一趋零、两个实际标定趋准、同一局部返回关系成立，整族平方根误差仍可恒为二。
+
+证明。在完整有限复量子菜单中固定校准简单块阶 $d_0\ge3$，取偶数 $d_n>d_0$、$d_n\to\infty$，令 $c_n=(1-2/d_n)^2$。在每个阶恰为 $d_n$ 的简单块及所选框架上，选单位向量
+
+$$
+s_F=d_n^{-1/2}\sum_i|i\rangle,\qquad U_F=1-2|s_F\rangle\langle s_F|.
+\tag{73.1}
+$$
+
+这里的单方向相位翻转是成熟构造，可视为 [Sanders–Wallman–Sanders，定义 6、命题 1](https://arxiv.org/pdf/1501.04932) 的一般受控相位门在 $\theta=\pi$ 时的酉共轭。为每个投影框架一次选定相容向量代表以定义 $s_F$；不另要求射线相位选择或框架改变下的协变性。对所有效果指定
+
+$$
+T^n_{E,F}(\rho)=
+\begin{cases}
+ U_F\sqrt E\,\rho\,\sqrt E U_F^*,&\text{块阶为 }d_n,\\
+ c_n\mathcal L_E(\rho)+(1-c_n)\sum_i x_iP_i\rho P_i,
+   &\text{其他块阶}.
+\end{cases}
+\tag{73.2}
+$$
+
+直和逐块处理。两种分支均完全正、成功效果为 $E$，共同调暗成立；以互补效果分支补成归一标签总过程，全部 C103 空间边和过程供应仍在完整菜单中。第一种分支的每个对角酉元均为 $1-2/d_n$，所以全部块、效果及框架的同一个压缩系数恰为
+
+$$
+m_n(x,y)=c_n\sqrt{xy}.
+\tag{73.3}
+$$
+
+对异常块的每条框架射线，
+
+$$
+\begin{aligned}
+\frac{\operatorname{Tr}[(1-P_i)T^n_{E,F}(P_i)]}{\|E\|}
+ &\le1-c_n,\\
+\frac{\|T^n_{E,F}(P_i)-x_iP_i\|_1}{\|E\|}
+ &\le2\sqrt{1-c_n}\longrightarrow0.
+\end{aligned}
+\tag{73.4}
+$$
+
+其他块上的这些误差为零。校准块不是异常块，故 $\delta_n=1-c_n\to0$；该块的局部返回差为
+
+$$
+\kappa_n(h)=\frac{1-e^{-h}}4+
+ \frac{c_n}{2}(1-e^{-h/2})\le h/2.
+\tag{73.5}
+$$
+
+具体地，若以 $\rho_M=\sup_{E\ne0,F,i}\|T_{E,F}(P_i)-x_iP_i\|_1/\|E\|$ 及 $\delta$ 定义 $\eta_{\rm ray}=\max(\rho_M,\delta_M)$，本例有 $\eta_{\rm ray}\to0$，且按此预算分层的联合局部条件依然满足。
+
+但是在异常块的 $E=1$ 上，取任意单位 $v\perp s_F$，$(s_F+v)/\sqrt2$ 经 $U_F$ 后与原态正交，故 $\mathfrak D(M_n)=2$。取含恰好一半位置的切口 $P$，
+
+$$
+\|(1-P)U_FP\|
+ =2\|(1-P)s_F\|\|Ps_F\|=1.
+\tag{73.6}
+$$
+
+所以真正的 $\lambda_{M_n}=1$。异常在每条细射线上都很浅，却在一个半边与另一个半边之间完全相干叠加。新预算正是在这一处排除该模型，而非靠改变共同 $m$ 或另加连续性排除它。∎
+
+## 74. 具有真实射线串扰的完整稳定满足族
+
+**命题 74.1（小幅重新准备的全族模型）。** 存在满足 C107 的完整通常有限量子比较类，包含零预算模型及趋近零预算的正预算模型；每个正预算模型都不满足原来的精确射线合同。
+
+证明。对每个有限对象 $\mathcal A=\bigoplus_\alpha M_{d_\alpha}$，取 $D=\sum_\alpha d_\alpha$ 及 $\sigma_{\mathcal A}=1_{\mathcal A}/D$。令 $0\le p\le1$，定义
+
+$$
+T^p_{E,F}(\rho)=(1-p)\sqrt E\,\rho\,\sqrt E
+ +p\operatorname{Tr}(E\rho)\sigma_{\mathcal A}.
+\tag{74.1}
+$$
+
+这是两个相同成功效果的完全正分支的凸组合，故成功效果为 $E$，共同调暗及同一个 $m_p(x,y)=(1-p)\sqrt{xy}$ 成立。完整菜单供应每个分支及其标签补全；C103 的条件仍全部成立。这个重新准备项在多个中心块之间也会转移质量。对框架切口 $P$，其全部框架位置数为 $r$ 时，
+
+$$
+P(T^p_E)^*(1-P)P=p(1-r/D)PEP.
+\tag{74.2}
+$$
+
+故 $\lambda_{M_p}\le p$。取已有任意大块、秩一 $P$ 及 $E=P$，该比值为 $p(1-1/d)$，于是 $\lambda_{M_p}=p$。同一输入上实际输出与平方根输出的迹距离为 $2p(1-1/d)$；另一方面两条成功分支之差的范数至多 $2p\|E\|$，故
+
+$$
+\mathfrak D(M_p)=2p,\qquad
+\eta_{M_p}\ge p,\qquad
+\delta_{M_p}\le2\sqrt3p.
+\tag{74.3}
+$$
+
+这些上确界由有限块阶趋大来逼近，不主张某个有限阶取得极限。由 (72.3)，也可直接由相同效果的概率比较得到
+
+$$
+\mathfrak Q_{\mathscr C}(\varepsilon)\le2\varepsilon,
+\qquad \chi_{\mathscr C}(r,\varepsilon)\le r/2+\varepsilon.
+\tag{74.4}
+$$
+
+所以整个 $p\in[0,1]$ 类满足 C107，并有非平凡的正预算趋零族。$p>0$、总维数至少二时，$T_P(P)=(1-p)P+p\sigma_{\mathcal A}\ne P$，精确射线校准确实不成立。这说明新条件允许真实串扰，不是把精确前提改一个名字。∎
+
+**命题 74.2（相同二元合同内的平方根尺度）。** 存在满足 C107 的完整比较类，使 $\eta_M=t$ 时恰有 $\mathfrak D(M)=2\sqrt t$，$0\le t\le1$。所以即使局部返回曲面有共同线性半径界，也不能只由这种预算期待 $o(\sqrt\eta)$ 的普遍更新界。
+
+证明。固定校准块阶 $d_0\ge3$，令 $0\le\theta\le\pi/2$、$t=\sin^2\theta$。在所有二阶简单块的所选框架中取成熟的实旋转酉
+
+$$
+U_\theta=\begin{pmatrix}\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta\end{pmatrix},
+\qquad T_{E,F}=\operatorname{Ad}_{U_\theta}\mathcal L_E.
+\tag{74.5}
+$$
+
+其他块取 $(1-t)\mathcal L_E+t\operatorname{Pinch}_{E,F}$，直和逐块处理，向量代表按命题 73.1 一次选定。全部实际菜单供应、成功效果、共同调暗及同一个 $m(x,y)=(1-t)\sqrt{xy}$ 均成立。二阶块的非平凡切口泄漏是 $t x_i$，其他块为零，所以 $\lambda=t$；固定校准块给 $\delta=t$ 及 $\kappa(h)\le h/2$，从而 $\eta=t$，整个类满足 C107。
+
+二态酉的成熟距离公式给 $\|\operatorname{Ad}_{U_\theta}-\operatorname{id}\|_\diamond=2\sin\theta$，其半距离及特征相位对应见 Sanders–Wallman–Sanders 的式 (17)、例 2。复合 $\mathcal L_E$ 后的范数至多 $2\sin\theta\|E\|$；其他块误差至多 $2t\|E\|$，不超过前者。二阶块 $E=1$ 取得 $2\sin\theta$，故 $\mathfrak D=2\sqrt t$，并有 $\mathfrak Q(\varepsilon)=2\sqrt\varepsilon$ 对 $0\le\varepsilon\le1$ 成立。这个标度结论只约束由同一粗预算和共同局部界出发的普遍估计，不声称式 (72.4) 的全部常数最优。∎
+
+## 75. 零预算量子层、有限顺序理论及独立条件
+
+**定理 75.1（新候选接回现有量子公理的范围）。** 若比较类满足 C107，则其中每个 $\eta_M=0$ 的模型全部指定成功分支均为
+
+$$
+T_{E,F}(\rho)=\sqrt E\,\rho\,\sqrt E.
+\tag{75.1}
+$$
+
+对一般模型，令 $B=\mathfrak Q_{\mathscr C}(\eta_M)$，则实际分支与平方根参照之差至多 $\|E\|B$。同一已有对象上的有限顺序复合、已供应准备与后续效果的联合概率、单分支成功后状态，分别满足定理 68.1 的式 (68.2)、$B/2$ 及 $\min(1,B/(2p_{\rm succ}))$ 界。一般总仪器结论仍要求其结果分支确实是这些指定分支，完整历史归一仍须使用该历史实际成功概率。
+
+证明。零预算模型属于每个正预算子类，定理 72.2 给其误差为零。一般范数界由共同调暗和定义给出。定理 68.1 后续的有限复合证明只使用同一对象、相同效果及完全正映射范数，不再需要原来的精确射线前提，故可直接复用。Born 成功概率始终精确为 $\operatorname{Tr}(\rho E)$，因为成功效果从未放松。
+
+因此对象的有限复矩阵直和、已供应空间边的张量乘法、允许确定过程的完全正性和共同相对标尺仍由 C101–C103 承担；本候选把指定测量更新接入一个允许射线串扰的极限理论。全部态、全部空间复合、任意一般仪器及具体 Hamiltonian 不由修复或范数估计供应；连续实际可逆群另行供应后才接入既有 Hamilton 表示。
+
+两个独立边界仍须保留：命题 73.1 排除以逐射线合同代替全部切口预算；原命题 67.2 的高频字符族具有 $\lambda=0$、$\delta\to0$，却不满足 (70.6)，因此即使切口完全无泄漏，也不能删除局部联合边界约束。全部量被关系定义，不使这些关系约束自动成为其他前提的定理。∎
+
+## 76. 关系的集体缺陷、成熟来源及白话定义
+
+**定义 76.1（数学归属与内生边界）。** 逐射线的完整误差与全部二元切口的共同误差是两个不同量词，命题 73.1 在保留同一谱对系数、共同调暗及固定校准对象的完整菜单中给出区分。定理 71.1 将后者接到保持原二元关系的精确数学参照，定理 72.2 再将原实际局部返回边界接到全部指定更新的统一稳定性。这是当前新增的综合桥，不主张全球原创优先权或最优常数。
+
+有限 Kraus、Stinespring 及 CP 范数工具沿用 §§51、60，差范数不等式明确复用 [Kretschmann–Schlingemann–Werner，命题 3](https://arxiv.org/pdf/0710.2495)。有限符号平均直接对应 [Han–Liu，*Zero-Error Correctibility and Phase Retrievability for Twirling Channels*，§2.2](https://arxiv.org/pdf/2311.16349) 的矩形群平均，表示对应已在定理 71.1 中给出；不将这个成熟投影方法认领为新内容。仓内[算术全息续卷 §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels) 已用正确输出 Stinespring 记录及相位平均处理特定目标的精确校准归约；其资源保持最优化结论不提供 (71.1) 的切口预算。平均性能与最坏误差不能混同的成熟量子先例见 [Sanders–Wallman–Sanders，*Bounding quantum gate error rate based on reported average fidelity*](https://arxiv.org/pdf/1501.04932)；本处直接复用其单方向相位翻转机制，将异常块与其余块的 Schur 分支配成同一个 $m_n$，再给逐框架射线及集体切口的相反读数；不把相位门本身或平均性能的警示认领为新内容。
+
+最新[有限带噪报告续卷定理 6.1](AURIC_COMPOSITE_COMPARISON_FINITE_NOISY_REPORTS_V96_CONTINUATION.md) 以完整实际残差而非逐坐标平均量承担另一种局部到整体控制；本处与其共享“共同实现中的完整缺陷才可组合”的方法对应，但不借用其曲率下界、Hilbert–Schmidt 报告或平方根证书。这里的有限符号平均控制算子范数，后续三点几何则复用 §§58–60；没有把任意有限正定性缩减成三阶正性，也没有从数学环境或修复映射产生新的实际供应。有限标定认证、取得全部切口预算、统计置信率和操作费用仍不在这些定理的结论中。
+
+白话说：不要只问每根细光线有没有跑偏，还要把任意一组光线当成一边，问它们合起来会不会漏到另一边。每根看着都只漏一点，许多小漏也能同相叠成一次完整翻转。新候选把“任意两边的集体泄漏”“已有两条标定的偏差”和“几乎透明时实际返回概率突然下降的幅度”放在同一个关系体里一起约束。先用所有二元切口把串扰压进一个共同预算，数学上整理成保留原谱对关系的精确参照；再用三个方向的距离关系和比例二、三的标定网传到全部权重。三种偏差共同消失时，所有指定滤波就统一接近平方根更新；预算为零时得到精确量子更新。参照只帮助证明，不能凭它宣布现实多了一种准备、复合或运动。
+
+## 追加锚（本行以下为增补区）
