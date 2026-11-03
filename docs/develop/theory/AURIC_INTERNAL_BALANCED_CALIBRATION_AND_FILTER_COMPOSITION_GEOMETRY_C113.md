@@ -2118,3 +2118,408 @@ $\operatorname{Tr}[Zp_sZ\,T(p_s)]=1$，所以得分为一。可是 $T$ 将 $p_{x
 共同准备、效果与读回的取得量词是 (23.3)–(23.5) 的同一实际实现，不是分别存在的准备、效果和读回之积。比较二阶设计的存在、不等式的成立及实际对象的供应是不同前件。上述合同不含 FIB 原三时全 $64$ 坐标取得性，也不把行列式零闭包变为实际零点；它不补充 [C122 定理 5.8](AURIC_INTERNAL_BINARY_RECIPROCITY_AND_EXPLICIT_RECONNECTION_C122.md#thm-c122-implemented-certificate) 对实际确定性 CPTP 恢复及完整逆门误差的独立要求。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 25. 同一完整原仪器从忠实校准到活动记忆的定量提升
+
+### 定义 25.1（原记录、联合装置与同时校准合同）
+
+取非零有限维复 Hilbert 空间 $H,K,M$，$d=\dim H$；$M$ 是装置内部全部会影响以后调用的保留记忆，包括持续经典模式。矩阵代数记为 $\mathcal B(H)$，迹为通常未归一化迹。对复线性映射采用不除二的范数
+
+$$
+\|\Phi\|_\diamond
+=\sup_{R,X\ne0}
+\frac{\|(\Phi\otimes\operatorname{id}_R)(X)\|_1}{\|X\|_1},
+\tag{25.1}
+$$
+
+其中 $R$ 遍历有限维复参考，$X$ 是整个输入与 $R$ 上的任意矩阵。$\|\cdot\|_1,\|\cdot\|_{\mathrm{op}},\|\cdot\|_{\mathrm{HS}}$ 分别为迹范数、算子范数和 Hilbert–Schmidt 范数。以下映射误差均在 (25.1) 的拓扑中；本节的有限矩阵空间上各范数拓扑等价，不据此更换数值预算。
+
+固定一个实际完整仪器
+
+$$
+V_j:\mathcal B(H\otimes M)\longrightarrow\mathcal B(K\otimes M),
+\qquad j\in\mathsf J,
+\qquad \sum_jV_j\text{ 保迹},
+\tag{25.2}
+$$
+
+$\mathsf J$ 是有限的**原可访问记录**集合，包含全部成功和失败记录；每个 $V_j$ 完全正。校准和每次所覆盖调用使用同一个 (25.2)，不只要求装置名称相同或系统边缘相同。内部不再返回的新环境可在每次调用中丢弃；以后会返回的环境须计入同一 $M$。装置切换、遗漏的持续环境和未计入的时变控制不属于这个固定联合映射前件。
+
+校准实际采用与探针、外部参考及输出标签无关的乘积记忆准备 $\tau$，满足
+
+$$
+\operatorname{Tr}\tau=1,\qquad \tau\ge\lambda I_M,\qquad\lambda>0.
+\tag{25.3}
+$$
+
+因此同一校准分支为 $T_j(X)=\operatorname{Tr}_M V_j(X\otimes\tau)$。给定非零矩形算子 $K_j:H\to K$，置
+
+$$
+\mathcal A_j=\operatorname{Ad}_{K_j},\qquad
+\operatorname{Ad}_{K_j}(X)=K_jXK_j^*,\qquad
+E_j=K_j^*K_j,\qquad
+\sum_jE_j=I_H.
+\tag{25.4}
+$$
+
+要求这些效果在自伴实向量空间中线性独立，并对**同一仪器的全部原记录同时**给定
+
+$$
+\|T_j-\mathcal A_j\|_\diamond\le\delta_j,
+\qquad \delta_j\ge0.
+\tag{25.5}
+$$
+
+(25.2)–(25.5) 均为显式前件。尤其是原联合仪器的 CP、忠实乘积准备、全部单 Kraus 目标以及效果独立性，不从近饱和或其他表示／供应结论推得。效果独立性蕴含 $|\mathsf J|\le d^2$；结构性零效果不满足这个前件。
+
+选择任意自伴实对偶 $F_j$，并定义
+
+$$
+\begin{aligned}
+\operatorname{Tr}(F_jE_\ell)&=\delta_{j\ell},&
+\kappa_j&=\|F_j\|_1,\\
+h_j&=\sqrt{d\delta_j/\lambda},&
+e_j&=(2+h_j)h_j,\\
+e&=\sum_je_j,&t_j&=\kappa_je.
+\end{aligned}
+\tag{25.6}
+$$
+
+对偶存在：实 Gram 矩阵 $G_{a b}=\operatorname{Tr}(E_aE_b)$ 正定，故可取 $F_j=\sum_a(G^{-1})_{ja}E_a$。对偶的选择影响条件数及预算，不改变原目标和标签。
+
+### 定理 25.2（忠实校准与效果独立性共同控制原联合仪器）
+
+在定义 25.1 下，若每个 $t_j<1$，则存在仅用于比较的记忆 CPTP 映射
+$\widehat B_j:\mathcal B(M)\to\mathcal B(M)$，使两个完整旗标通道
+
+$$
+\begin{aligned}
+\mathfrak V(X)&=\sum_j|j\rangle\langle j|\otimes V_j(X),\\
+\mathfrak W(X)&=\sum_j|j\rangle\langle j|
+ \otimes(\mathcal A_j\otimes\widehat B_j)(X)
+\end{aligned}
+\tag{25.7}
+$$
+
+具有共同类型 $\mathcal B(H\otimes M)\to\mathcal B(\mathbb C^{\mathsf J}\otimes K\otimes M)$，且
+
+$$
+\boxed{
+\|\mathfrak V-\mathfrak W\|_\diamond\le\Delta
+:=\min\left\{2,\sum_j\left[e_j+\|E_j\|_{\mathrm{op}}f(t_j)\right]\right\},
+\qquad
+f(t)=\frac{(\sqrt{1+t}+1)t}{1+\sqrt{1-t}}\quad(0\le t<1).
+}
+\tag{25.8}
+$$
+
+特别地，(25.8) 对任意与 $M$ 相关的输入及任意惰性参考统一成立；后续调用的记忆不必等于 $\tau$、不必乘积，也不复位。$\widehat B_j$ 的存在不授予任何记忆端口、装置替换或新合法接续。标签始终是 $j$，下证的环境／矩阵指标不是新增原记录。
+
+**证明。** 先在每个固定原记录内部取有限 Stinespring 算子
+
+$$
+A_j:H\otimes M\longrightarrow K\otimes M\otimes Z_j,
+\qquad V_j(X)=\operatorname{Tr}_{Z_j}A_jXA_j^*.
+\tag{25.9}
+$$
+
+这是有限 CP 映射的成熟表示定理；[Watrous，定理 2.22](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf) 对非零映射给出 CP、正 Choi、Kraus 与 Stinespring 表示的等价性，零映射直接取零算子。由完整性，$A_j^*A_j=V_j^\dagger(I)\le I$，所以 $\|A_j\|_{\mathrm{op}}\le1$。这些算子不必等距。
+
+将 $\tau$ 对角化为 $\sum_\mu p_\mu|\mu\rangle\langle\mu|$，$p_\mu\ge\lambda$。以 $a$ 标记输出 $M\otimes Z_j$ 的正交基，写
+
+$$
+A_{j,a\mu}=(I_K\otimes\langle a|)A_j(I_H\otimes|\mu\rangle):H\to K.
+\tag{25.10}
+$$
+
+于是 $T_j$ 的一个数学 Kraus 表示为 $\{\sqrt{p_\mu}A_{j,a\mu}\}_{a,\mu}$。在 $\mathcal B(H,K)$ 的 Hilbert–Schmidt 空间内投影到 $K_j$ 所张成的一维复空间：
+
+$$
+\begin{aligned}
+b_{j,a\mu}&=\frac{\operatorname{Tr}(K_j^*A_{j,a\mu})}{\operatorname{Tr}E_j},\\
+C_{j,a\mu}&=A_{j,a\mu}-b_{j,a\mu}K_j,\\
+B_j|\mu\rangle&=\sum_ab_{j,a\mu}|a\rangle,
+\qquad B_j:M\to M\otimes Z_j,\\
+L_j&=K_j\otimes B_j,
+\qquad C_j=A_j-L_j.
+\end{aligned}
+\tag{25.11}
+$$
+
+$L_j$ 的输入、输出张量因子按 (25.9) 自然排列。$\operatorname{Tr}E_j>0$，所以这里没有对零目标作除法。
+
+使用未归一化向量化 $|D\rangle\!\rangle=\sum_{r=1}^dD|r\rangle\otimes|r\rangle$，令 $J(\Phi)=(\Phi\otimes\operatorname{id}_H)(|I_H\rangle\!\rangle\langle\!\langle I_H|)$，以及
+
+$$
+Q_j=I_{K\otimes H}
+-\frac{|K_j\rangle\!\rangle\langle\!\langle K_j|}{\operatorname{Tr}E_j}.
+$$
+
+$Q_j$ 是正交投影，且 $Q_jJ(\mathcal A_j)=0$。由 (25.5)，
+
+$$
+\|J(T_j)-J(\mathcal A_j)\|_1\le d\delta_j.
+\tag{25.12}
+$$
+
+由于 $J(T_j)\ge0$，投影后的总质量为非负，并有
+
+$$
+\begin{aligned}
+\lambda\|C_j\|_{\mathrm{HS}}^2
+&\le\sum_{a,\mu}p_\mu\|C_{j,a\mu}\|_{\mathrm{HS}}^2\\
+&=\operatorname{Tr}[Q_jJ(T_j)]\\
+&=\operatorname{Tr}[Q_j(J(T_j)-J(\mathcal A_j))]
+\le d\delta_j.
+\end{aligned}
+\tag{25.13}
+$$
+
+第一步使用全部输入记忆方向的 $p_\mu\ge\lambda$；等式使用向量化的 Hilbert–Schmidt 等距及 (25.11) 的正交投影。因此
+
+$$
+\|A_j-L_j\|_{\mathrm{op}}\le h_j,
+\qquad \|L_j\|_{\mathrm{op}}\le1+h_j.
+\tag{25.14}
+$$
+
+置 $\mathcal B_j(Y)=\operatorname{Tr}_{Z_j}B_jYB_j^*$，它此时仅为 CP 映射。对任意参考和任意矩阵，展开
+
+$$
+A_jXA_j^*-L_jXL_j^*
+=(A_j-L_j)XA_j^*+L_jX(A_j-L_j)^*.
+$$
+
+Schatten 乘子不等式和环境偏迹的 diamond 范数一给
+
+$$
+\|V_j-\mathcal A_j\otimes\mathcal B_j\|_\diamond
+\le(\|A_j\|_{\mathrm{op}}+\|L_j\|_{\mathrm{op}})
+       \|A_j-L_j\|_{\mathrm{op}}
+\le e_j.
+\tag{25.15}
+$$
+
+这一步正是共同 Stinespring 算子的成熟上界方向，参见 [Kretschmann–Schlingemann–Werner，命题 3 及式 (14)](https://arxiv.org/pdf/0710.2495)：该文对 CP 映射及其共同表示使用 cb 算子范数；有限维取迹对偶即为这里的 diamond 范数。仓内 [V96 定理 60.1 的 (60.3)–(60.5)](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#60-两条有限误差读数控制全部效果与全部有限维数) 已复用同一估计。不在此假定任意选取的两个扩充已接近；(25.13) 是为原 $A_j$ 构造 $L_j$ 的具体依据。
+
+下一步同时使用全部原分支的完整性，而非对每支另作保迹假定。令
+
+$$
+S_j=B_j^*B_j=\mathcal B_j^\dagger(I_M),
+\qquad
+D=\sum_jE_j\otimes(S_j-I_M).
+$$
+
+若 $\Phi$ 是自伴保持映射，则对任意单位向量 $v$，
+$|\langle v,\Phi^\dagger(I)v\rangle|
+=|\operatorname{Tr}\Phi(|v\rangle\langle v|)|\le\|\Phi\|_\diamond$。
+将此应用于 (25.15) 的映射差并求和，由 $\sum_jV_j^\dagger(I)=I$ 和 $\sum_jE_j=I$ 得
+
+$$
+\|D\|_{\mathrm{op}}\le\sum_je_j=e.
+\tag{25.16}
+$$
+
+在系统因子上用真实效果对偶提取，得到
+
+$$
+S_j-I_M=\operatorname{Tr}_H[(F_j\otimes I_M)D],
+\qquad
+\|S_j-I_M\|_{\mathrm{op}}\le\|F_j\|_1\|D\|_{\mathrm{op}}
+\le t_j.
+\tag{25.17}
+$$
+
+范数不等式可直接由 $F_j$ 的自伴谱分解验证：每个压缩
+$(\langle u|\otimes I)D(|u\rangle\otimes I)$ 的算子范数至多 $\|D\|_{\mathrm{op}}$，谱系数绝对值之和为 $\|F_j\|_1$。这里不要求 $F_j$ 为正，也不忽略效果间的条件数。
+
+由 $t_j<1$，$S_j\ge(1-t_j)I_M>0$。在数学比较中定义
+
+$$
+\widehat B_j^{\mathrm{St}}=B_jS_j^{-1/2},
+\qquad
+\widehat B_j(Y)=\operatorname{Tr}_{Z_j}
+ \widehat B_j^{\mathrm{St}}Y(\widehat B_j^{\mathrm{St}})^*.
+\tag{25.18}
+$$
+
+因为 $(\widehat B_j^{\mathrm{St}})^*\widehat B_j^{\mathrm{St}}=I_M$，$\widehat B_j$ CPTP。极分解 $B_j=\widehat B_j^{\mathrm{St}}S_j^{1/2}$ 给
+
+$$
+\begin{aligned}
+\|B_j\|_{\mathrm{op}}&\le\sqrt{1+t_j},\\
+\|B_j-\widehat B_j^{\mathrm{St}}\|_{\mathrm{op}}
+&=\|S_j^{1/2}-I_M\|_{\mathrm{op}}\\
+&\le\frac{t_j}{1+\sqrt{1-t_j}}.
+\end{aligned}
+\tag{25.19}
+$$
+
+最后一步由 $s\in[1-t_j,1+t_j]$ 上的
+$|\sqrt s-1|=|s-1|/(1+\sqrt s)$ 逐谱值得出。再次使用 (25.15) 的共同扩充估计，
+
+$$
+\|\mathcal B_j-\widehat B_j\|_\diamond\le f(t_j),
+\qquad
+\|\mathcal A_j\otimes(\mathcal B_j-\widehat B_j)\|_\diamond
+\le\|E_j\|_{\mathrm{op}}f(t_j).
+\tag{25.20}
+$$
+
+后一式使用 $\|\operatorname{Ad}_{K_j}\|_\diamond=\|K_j\|_{\mathrm{op}}^2=\|E_j\|_{\mathrm{op}}$；上界由乘子估计，下界在最大本征向量的正输入上取到。
+
+对 (25.15)、(25.20) 取三角不等式，再将同一 $j$ 的差放入正交旗标块。任意输入上的块对角迹范数是各块迹范数之和，故完整差的 diamond 范数至多 (25.8) 中的和。$\mathfrak V$ 是通道；$\widehat B_j$ 保迹且 $\sum_jE_j=I_H$，所以 $\mathfrak W$ 也为通道，其差的 diamond 范数至多二。这给出截断及全部参考量词。$\delta_j=0$ 对全部 $j$ 成立时，$h_j=e=t_j=0$，上述构造直接给逐原记录的精确 $V_j=\mathcal A_j\otimes\widehat B_j$。$\square$
+
+### 推论 25.3（原合法有限协议的完整输出与共同成功事件）
+
+保留定理 25.2 的全部前件。取一个已经供应的有限合法协议，每条历史至多调用 (25.2) 共 $N$ 次；外部控制器、准备、读回、失败处理与停止规则均已供应，且两份比较使用同一套控制器。每个控制器的完整动作 CPTP，按原经典历史作适应性选择，作用于可访问系统与外部活动记忆，并在私有 $M$ 上为恒等；其后续输入端与 $H$、输出端与 $K$ 按原合法接续匹配。所有以后还会操作的外部量子寄存器计入活动空间，只有始终不操作的寄存器作为参考。
+
+每轮的域、陪域包含已记录历史、活动系统、控制器状态和同一私有 $M$；新增记录使它们可以逐轮改变。提前停止的历史进入共同吸收块，用恒等步骤补齐至 $N$ 个槽，而不产生新的原调用或原记录。完整历史空间可用长度至多 $N$ 的有限词所标记的直和。只给成功控制支而遗漏其失败补全，不满足此协议前件。
+
+以 $\mathcal P_V,\mathcal P_W$ 表示将槽中 $\mathfrak V$ 分别取为 $\mathfrak V,\mathfrak W$ 的全协议通道，保留全部原记录、外部输出及私有 $M$。它们有同一输入、输出类型，且
+
+$$
+\|\mathcal P_V-\mathcal P_W\|_\diamond
+\le\varepsilon_N:=\min\{2,N\Delta\}.
+\tag{25.21}
+$$
+
+对任意共同初始联合态，允许 $M$ 与可访问输入及参考相关，丢弃比较过程的私有 $M$ 后，$\mathcal P_W$ 的原记录／外部输出恰等于以同一初始可访问边缘、同一控制器和名义**原记录仪器** $\{\mathcal A_j\}$ 运行所得。因此实际完整可访问输出距该名义输出的未减半迹范数至多 $\varepsilon_N$；接任意共同合法末端测量，其完整记录／读数分布的总变差至多 $\varepsilon_N/2$。
+
+成功事件须为同一原历史空间上的同一个已指定事件，或者同一完整末端仪器中的同一个事件；输出类型、标签对应和事件选择不能在两份过程之间改变。设该事件的两份未归一化正输出为 $A,B$，各自实际概率为 $p=\operatorname{Tr}A$、$q=\operatorname{Tr}B$。则
+
+$$
+\|A-B\|_1\le\varepsilon_N,
+\qquad |p-q|\le\varepsilon_N/2,
+\tag{25.22}
+$$
+
+且仅在 $p,q>0$ 时同时定义的条件输出满足
+
+$$
+\boxed{
+\left\|\frac A p-\frac B q\right\|_1
+\le\min\left\{2,
+\frac{\|A-B\|_1+|p-q|}{\max\{p,q\}}\right\}
+\le\min\left\{2,\frac{\varepsilon_N}{\max\{p,q\}}\right\}.
+}
+\tag{25.23}
+$$
+
+若只知 $q>\varepsilon_N/2$，则 $p\ge q-\varepsilon_N/2>0$。若一边成功概率为零，不能给它定义归一化成功态；两边皆零时也不定义。没有正概率或相对误差合同，$\varepsilon_N\to0$ 不保证一族稀有事件的条件输出趋同。
+
+**证明。** 这里复用 [Context Geometry 定理 12.2 的变类型式 (12.3a)、定义 12.4 与命题 12.5](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#12-可组合恢复连续缺陷与相对时钟)，以及其所引[量子历史卷 §72.1、§72.3](ContextualSpacetimeQuantum/072_098_HISTORY_AND_CAPACITY.md#72-仪器级历史误差参考系统与自适应读出)。在两份共同的逐轮类型间取编码为恒等、末端目标及解码为恒等，恢复预算为零；每个有调用的完整槽半 diamond 缺陷至多 $\Delta/2$。共同控制器的前后复合范数为一，停止块缺陷为零，故既有有限组合结论给 (25.21)。逐经典历史的控制是块对角的，其统一界由块权重求和；若实际允许历史相干操作，则须保留完整量子控制通道再应用 (25.8)，不能仅用经典分支最大值。这里并未将新的望远镜恒等式当作成果。
+
+比较记忆可带任意相关性。对任意带外部寄存器的 $X$，保迹性逐块给出
+
+$$
+\operatorname{Tr}_M[(\mathcal A_j\otimes\widehat B_j
+ \otimes\operatorname{id})(X)]
+=(\mathcal A_j\otimes\operatorname{id})(\operatorname{Tr}_M X).
+\tag{25.24}
+$$
+
+同一外部控制器也与 $\operatorname{Tr}_M$ 交织。由 (25.24) 对完整历史归纳，每个原词的未归一化外部输出等于名义原仪器的对应输出；所有中途成功和失败概率已包含在这些输出的迹中。此归纳没有把记忆归一化后重新代回，也没有删去失败记录。
+
+对同一输入的两份完整输出，差自伴且迹为零；共同二结果事件读口给 $|p-q|\le\varepsilon_N/2$。保留事件与补事件，记补事件输出为 $A_c,B_c$。共同完整仪器的收缩性给
+
+$$
+\|A-B\|_1+\|A_c-B_c\|_1\le\varepsilon_N,
+\qquad |p-q|=|\operatorname{Tr}(A_c-B_c)|\le\|A_c-B_c\|_1.
+\tag{25.25}
+$$
+
+这证明 (25.22) 及 $\|A-B\|_1+|p-q|\le\varepsilon_N$。对 $p,q>0$，分别在分母 $p$ 和 $q$ 下展开条件态之差，得到分母为 $p$ 及 $q$ 的两条上界；取较小者并截断于二即得 (25.23)。这个较紧的最后一步使用共同完整事件的补事件预算，不把一般两个未归一化算子的迹差无条件除以二。$\square$
+
+## 26. 原记录相关性与忠实准备的不可省略边界
+
+### 命题 26.1（效果依赖允许精确单次校准与持续历史相关）
+
+保留固定完整 CP 联合仪器、忠实乘积校准以及单 Kraus 目标，但删除效果独立性时，即使所有 $\delta_j=0$，原两次记录仍可不同于名义仪器的记录；成功因子和全部失败记录均可保持。这个反例否定在该删减类中由精确单次校准无条件推出 (25.8) 的零误差结论，不声称每个效果依赖的仪器都有此问题。
+
+**证明。** 取 $H=K=\mathbb C^2$、$M=\mathbb C^2$，$P_b=|b\rangle\langle b|$，$\tau=I_M/2$，$0<a<1$。原标签为 $\mathsf J=\{s_0,s_1,f\}$；两个 $s_b$ 都为成功，$f$ 为完整失败。对每次调用使用同一个仪器
+
+$$
+\begin{aligned}
+V_{s_b}(X)&=a(I_H\otimes P_b)X(I_H\otimes P_b),\\
+V_f(X)&=(1-a)\sum_{b=0}^1(I_H\otimes P_b)X(I_H\otimes P_b).
+\end{aligned}
+\tag{26.1}
+$$
+
+各支 CP，其和是记忆去相干通道，故保迹。它始终保留隐藏比特，没有按调用次序换装置。忠实校准满足
+
+$$
+\begin{aligned}
+T_{s_b}&=(a/2)\operatorname{id}_H=\operatorname{Ad}_{\sqrt{a/2}I_H},\\
+T_f&=(1-a)\operatorname{id}_H=\operatorname{Ad}_{\sqrt{1-a}I_H},\\
+E_{s_0}=E_{s_1}&=(a/2)I_H,\qquad E_f=(1-a)I_H.
+\end{aligned}
+\tag{26.2}
+$$
+
+因此所有校准误差为零，效果之和为单位，但效果线性依赖。令初态为任意系统态与 $\tau$ 的乘积，无外部中间操作。对原词 $w\in\{s_0,s_1,f\}^n$，记成功数为 $k$、失败数为 $r=n-k$。实际和名义完整词概率分别为
+
+$$
+\begin{aligned}
+P_V(w)&=a^k(1-a)^r
+\begin{cases}
+1,&k=0,\\
+1/2,&k\ge1\text{ 且全部成功标签相同},\\
+0,&\text{其他情形},
+\end{cases}\\
+P_{\mathcal A}(w)&=(a/2)^k(1-a)^r.
+\end{aligned}
+\tag{26.3}
+$$
+
+系统未归一化输出就是各自概率乘同一系统输入态。这由隐藏比特的两值各占 $1/2$、各轮成功率均为 $a$、失败率均为 $1-a$ 直接相乘得到；失败支内的两个数学 Kraus 指标始终未变成原记录。
+
+特别地，两次调用的四个全成功词中，实际 $s_0s_0,s_1s_1$ 各为 $a^2/2$，混合两个词各为零；名义四词各为 $a^2/4$。所有含一个成功的词 $s_bf,fs_b$ 在两边都为 $a(1-a)/2$，$ff$ 在两边都为 $(1-a)^2$。所以完整记录的未减半 $\ell^1$ 差为 $a^2$，总变差为 $a^2/2$。共同事件“两个调用均成功”在两边的概率都是 $a^2>0$；在这个实际分母上条件化，记录的未减半 $\ell^1$ 差为一。所有步的成功因子及完整失败概率均已支付。
+
+若存在精确的 $V_{s_b}=\mathcal A_{s_b}\otimes\widehat B_{s_b}$ 且 $\widehat B_{s_b}$ 保迹，则两边的联合效果应分别为 $aI_H\otimes P_b$ 与 $(a/2)I_H\otimes I_M$，相互不等。因此不能以比较记忆的保迹性抹去这个原记录区别。保留 $a\downarrow0$ 时的 $a^2$ 可见稀有成功因子；$a=0$ 时共同全成功事件概率为零，条件记录不再有定义。$\square$
+
+### 命题 26.2（非忠实准备可漏掉下一次会到达的记忆方向）
+
+删除 (25.3) 的忠实下界后，即使单一原记录的效果独立、校准误差为零、联合仪器固定且完全正，从校准初态连续两次调用也不必保持名义系统历史。
+
+**证明。** 取同样的二维 $H,K,M$，令 $Z=\operatorname{diag}(1,-1)$、$\tau=P_0$，只有一个原记录 $j$，目标 $K_j=I_H$、$E_j=I_H$。固定酉算子与完整单支仪器为
+
+$$
+U=I_H\otimes|1\rangle\langle0|+Z\otimes|0\rangle\langle1|,
+\qquad V_j=\operatorname{Ad}_U.
+\tag{26.4}
+$$
+
+两项的输入、输出记忆方向正交，故 $U^*U=UU^*=I$。对每个系统矩阵，$V_j(X\otimes P_0)=X\otimes P_1$，所以校准恰为恒等。可是下一次 $V_j(X\otimes P_1)=ZXZ\otimes P_0$；从 $|+\rangle\langle+|\otimes P_0$ 出发，两次实际系统输出为正交的 $|-\rangle\langle-|$，名义两次输出仍为 $|+\rangle\langle+|$，未减半距离为二。这里无装置切换或记忆复位；缺失的正是 (25.13) 对全部记忆列的控制。$\square$
+
+## 27. 与既有供应、精确因子化和有限组合的逐项对应
+
+### 定义 27.1（定量联系与成熟工具的归属）
+
+本节的 repo-derived 综合是 (25.12)–(25.20) 的共同链：秩一目标的 Choi 正交剩余经忠实准备提升到**原联合装置全部输入方向**，完整仪器的效果对偶再分别控制记忆保迹缺陷，最后构造同标签比较 CPTP 记忆并保留显式 $d,\lambda,\kappa_j$ 和 $\|E_j\|_{\mathrm{op}}$。这条链给 (25.8)，而不是仅对已知的两份系统通道取三角不等式。所用投影、Stinespring 乘子上界和极分解本身均为成熟工具，不提出文献首发、穷尽检索或常数最优性主张。
+
+精确因子化已有仓内供应：[FIB 相界卷引理 141.2](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md#1413-满秩附加态强制相干子系统运输) 从同一固定 Stinespring 实现、忠实附加态及精确逻辑恒等合同，用秩一 Choi 正性得到附加因子化和等距记忆运输。令本节只含一个标签、$K_j=I_H$、$\delta_j=0$，便回到这个机制的无编码特例；一般 $K_j$ 的秩一投影及零剩余也沿用同一机制。不能将这项精确机制重新计为本节成果。当前正误差链另需 (25.13) 的 $d\delta_j/\lambda$ 控制，以及由全部真实效果共同提取的 (25.17)；精确恒等供应不直接给这两项的预算。
+
+有限组合也已有供应：C119 所在[无参考滤片关系卷推论 104.1](AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md#104-从关系约束回到量子力学接口) 给有限成功词的范数传播，并显式保留效果乘积；Context Geometry §11 的活动记忆历史及 §12.2、§12.4–12.5、量子历史卷 §72 已给完整通道和自适应协议的传播。推论 25.3 仅在 (25.8) 已经供应包含私有 $M$ 的完整槽误差后消费它们，半 diamond 预算为 $\Delta/2$。它没有从校准平均误差直接跳到逐历史保证。
+
+[C122 定理 5.6–5.8](AURIC_INTERNAL_BINARY_RECIPROCITY_AND_EXPLICIT_RECONNECTION_C122.md#section-5) 的有限层析及 $e_0+\delta_{\rm tom}+\eta$ 控制已分开名义恢复、同一实际通道估计和实际确定性实现。其系统通道的层析预算本身不控制原扩充在其他记忆方向的作用；本节另外要求 (25.2)–(25.5)，并用 (25.13) 支付这种提升。上述三角界不作为这里的新定理。
+
+### 定义 27.2（旧原菜单与本节目标的精确匹配条件）
+
+C119 §§150–157 的原标签、A/B/C1/C2/C3 及完整原片段条件，尤其其定理 152.1，区分所选规范支、旧命名支、带成功因子的准备及完整失败记录。它们不自动给同一保留记忆上的 (25.2)、忠实乘积准备 (25.3) 或一组效果独立的原仪器 (25.4)。本节直接以这些对象为前件，不能用一个作用相同的新规范滤片替换旧仪器后声称完成校准。数学上将同一映射作分解也不开放原装置端口；这个边界与 [C120 命题 12.3](AURIC_COMPARISON_DYNAMICAL_CURVATURE_FINITE_FRAME_QUANTUM_V95.md#12-全有限直和满足族与身份保持的-f-删除模型) 的同映射分解边界相同。
+
+[C123 及其 C124 续篇 §§10–17](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#10-c124整个原指针上的原子确定配对) 在 P/G/D、整个原指针的 AC、精确 $N_u$、X/Xs、全事件 R、原 F／遗忘／返回及指定合法接续下给精确端点供应；定义 17.3 明确保留误差鲁棒性、旧输出校准和任意仪器组装的独立缺口。即使其条件成立，也须另外建立本节的共同原联合仪器及校准前件，不能从精确端点存在反推 (25.5)，也不要求该供应一定包含 $M_2$ 对象。
+
+本卷 (23.8) 或 (24.3) 的 $\beta_j$ 只有在其实际分支正是 $T_j=\operatorname{Tr}_M V_j(\cdot\otimes\tau)$、指定目标**恰为** $K_j=J_j\sqrt{E_{0,j}}$、共同标签／坐标／设计及误差合同对全部原 $j$ 同时成立时，才可用作这里的 $\delta_j$。同效果但不同 $J_j$、不同目标、不同记忆准备或不同校准装置不能代入；单一成功支的 $\beta$ 也不认证其余失败支。这里的原联合 CP 来自 (25.2)，不来自近饱和；命题 21.1 的近饱和不推出精确 CP 边界继续保留。
+
+### 定义 27.3（条件强度、历史范围与经验边界）
+
+效果独立性和忠实下界是定理 25.2 的充分条件；命题 26.1–26.2 证明在相应删减类中无条件推广会失败，不证明所有更大原签名都必须采用这组充分条件。效果依赖的记忆无关仪器也可以精确等于 (25.7) 的比较形式。$t_j<1$ 保证本构造的 $S_j$ 可逆；不满足它只表示这个数值证书未给出所述修正，不推出装置不可能接近名义目标。小 $\lambda$、病态效果对偶、较大 $d$ 和增长的 $N$ 均可使预算失去效用。
+
+固定同一实际装置是实质前件；本卷命题 24.2 的校准恒等、后续 $\operatorname{Ad}_Z$ 切换不满足它。这里允许的变化发生在同一 $V_j$ 内部的活动记忆态，而不是在调用间无证更换 $V_j$。比较用 $\widehat B_j$ 无须成为原菜单成员；推论 25.3 比较的是已经合法的原协议与一份数学名义历史，不供应复位、未知逆门、任意新控制器、额外参考或替换硬件。
+
+[GST，§6.1](https://arxiv.org/pdf/2009.07301v2) 将遗漏的内外语境变量、漂移和持续环境列为门集模型失配的来源；它讨论拟合和模型检验，不给由有限拟合推出无限未来平稳性的定理。本节也没有经验核验 (25.2)–(25.5)：给定这些关于同一原装置的数学前件后，对每个已合法的有限 $N$ 得到 (25.21)，不从有限数据认证无界未来仍用同一个联合映射。[C117 §16](AURIC_COMMON_SOURCE_SELF_REFERENCE_AND_OBSERVER_SEQUENCES_C117.md#16-受控终端字行到局部-lorentz-预测锥的桥) 的全部未来预测锥结论仍保留其无限假设；[FIB 边界几何附录 III 推论 141.3](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md#141-a-source-preserving-reflection-and-the-invariant-constrained-negative-vector) 的原保留端点条件性秩至多二结论既不被改回未解，也不被提升为原矩阵相等或三时全部 $64$ 坐标的取得。条件化只按 (25.22)–(25.23) 的实际正分母进行，本卷第 6 节的稀有成功边界不因完整通道误差较小而消失。
+
+## 追加锚（本行以下为增补区）
