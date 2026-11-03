@@ -138,8 +138,8 @@ namespace DiagonalKrausEntry
 universe u_3 u_4
 
 abbrev signature : Signature.{max (u_3 + 1) (u_4 + 1), u_3, 0, 0, 0} where
-  Params := Σ ι : Type u_3, Σ ε : Type u_4, Σ record : ι → ε → ℂ,
-    Matrix ι ι ℂ
+  Params := Σ ι : Type u_3, Σ _ : Fintype ι, Σ _ : DecidableEq ι,
+    Σ ε : Type u_4, Σ _ : Fintype ε, Σ record : ι → ε → ℂ, Matrix ι ι ℂ
   State p := p.1 × p.1
   Role := Unit
   finiteRole := inferInstance
@@ -151,8 +151,11 @@ abbrev signature : Signature.{max (u_3 + 1) (u_4 + 1), u_3, 0, 0, 0} where
 def actual : Realization signature.{u_3, u_4} :=
   realize signature
     (fun _ p ij =>
-      (∑ a, star (p.2.2.1 ij.2 a) * p.2.2.1 ij.1 a) *
-        p.2.2.2 ij.1 ij.2)
+      letI := p.2.1
+      letI := p.2.2.1
+      letI := p.2.2.2.2.1
+      (∑ a, star (p.2.2.2.2.2.1 ij.2 a) * p.2.2.2.2.2.1 ij.1 a) *
+        p.2.2.2.2.2.2 ij.1 ij.2)
     (fun e _ => Empty.elim e)
 
 def rejected : Realization signature.{u_3, u_4} :=
@@ -165,7 +168,9 @@ abbrev arena : Arena where
     (record : ι → ε → ℂ) (rho : Matrix ι ι ℂ) (i j : ι),
     (∑ a, Matrix.diagonal (fun i => record i a) * rho *
       (Matrix.diagonal (fun i => record i a)).conjTranspose) i j =
-      R.readout () ⟨ι, ⟨ε, ⟨record, rho⟩⟩⟩ (i, j)
+      R.readout ()
+        ⟨ι, ⟨inferInstance, ⟨inferInstance, ⟨ε, ⟨inferInstance, ⟨record, rho⟩⟩⟩⟩⟩⟩
+        (i, j)
 
 theorem actual_law : arena.{u_3, u_4}.Law actual := by
   intro ι ε _ _ _ record rho i j
@@ -184,8 +189,9 @@ theorem rejected_law : ¬ arena.{u_3, u_4}.Law rejected := by
 theorem dependence : ObservationalDependence signature.{u_3, u_4} actual := by
   intro _
   let p : signature.{u_3, u_4}.Params :=
-    ⟨Fin 2, ⟨Unit, ⟨(fun _ _ => (1 : ℂ)),
-      Matrix.diagonal (fun i : Fin 2 => if i = 0 then 1 else 0)⟩⟩⟩
+    ⟨Fin 2, ⟨inferInstance, ⟨inferInstance, ⟨Unit, ⟨inferInstance,
+      ⟨(fun _ _ => (1 : ℂ)),
+        Matrix.diagonal (fun i : Fin 2 => if i = 0 then 1 else 0)⟩⟩⟩⟩⟩⟩
   refine ⟨p, (0, 0), (1, 1), ?_⟩
   norm_num [actual, realize, p]
 
@@ -193,7 +199,7 @@ def source_registration : Registration arena.{u_3, u_4}
     (type_of% @diagonal_kraus_entry.{u_3, u_4}) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@diagonal_kraus_entry, rejected, rejected_law⟩
+  variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -221,8 +227,11 @@ def registration :
   bundleNonempty := .absent
   readout := some (realize signature.{u_3, u_4}
     (fun _ p ij =>
-      (∑ a, star (p.2.2.1 ij.2 a) * p.2.2.1 ij.1 a) *
-        p.2.2.2 ij.1 ij.2) (fun e _ => Empty.elim e))
+      letI := p.2.1
+      letI := p.2.2.1
+      letI := p.2.2.2.2.1
+      (∑ a, star (p.2.2.2.2.2.1 ij.2 a) * p.2.2.2.2.2.1 ij.1 a) *
+        p.2.2.2.2.2.2 ij.1 ij.2) (fun e _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
