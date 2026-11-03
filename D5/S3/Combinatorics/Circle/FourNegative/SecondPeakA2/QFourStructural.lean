@@ -103,7 +103,9 @@ private theorem q_four_large_good (P H : ℕ) (hP : 4 ≤ P) :
   have hv0 : 0 ≤ v := by omega
   have hjlt : j.toNat < p := by
     by_cases he : p=16
-    · subst p; norm_num [j]
+    · have hp16 : (p:ℤ)=16 := by exact_mod_cast he
+      have hj6 : j=6 := by dsimp [j]; rw [hp16]; norm_num
+      omega
     · have := Int.toNat_of_nonneg hj0; omega
   have hs := SecondPeakHighD.submask_predecessor P 5 j.toNat (by omega) hjlt
   have hmask : 2^P*5-1=5*p-1 := by dsimp [p]; omega
@@ -152,7 +154,7 @@ theorem q_four_dyadic_good (P H : ℕ) (hP : 2≤P) :
     have ht := submask_shift _ _ H hs
     refine ⟨6,16*2^H,20*2^H,true,by norm_num,by norm_num,by omega,by omega,?_,?_⟩
     · simpa only [Nat.mul_comm] using ht
-    · simpa only [Nat.cast_ofNat,Nat.cast_mul] using hw.1
+    · simpa only [show (2:ℕ)^2=4 by decide,Nat.cast_ofNat,Nat.cast_mul] using hw.1
   by_cases h3 : P=3
   · subst P
     have hs := SecondPeakHighD.submask_predecessor 3 5 3 (by decide) (by decide)
@@ -160,7 +162,7 @@ theorem q_four_dyadic_good (P H : ℕ) (hP : 2≤P) :
     have ht := submask_shift _ _ H hs
     refine ⟨29,3*2^H,39*2^H,false,by norm_num,by norm_num,by omega,by omega,?_,?_⟩
     · simpa only [Nat.mul_comm] using ht
-    · simpa only [Nat.cast_ofNat,Nat.cast_mul] using hw.2
+    · simpa only [show (2:ℕ)^3=8 by decide,Nat.cast_ofNat,Nat.cast_mul] using hw.2
   obtain ⟨v,m,M,hg⟩ := q_four_large_good P H (by omega)
   exact ⟨v,m,M,true,hg⟩
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2
