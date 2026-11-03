@@ -14,8 +14,8 @@ import Mathlib.Analysis.Normed.Operator.Bilinear
 import Mathlib.Algebra.BigOperators.NatAntidiagonal
 
 /-!
-SOURCE ONLY; UNCOMPILED. Neither this file nor its imported candidate chain
-has native acceptance asserted by this delivery.
+This is the joint endpoint of the original cubic analytic chain. Native
+verification receipts and independent admission are recorded separately.
 
 The outputs in this file are the existing eSeries, pSeries and qSeries.
 Their definitions are not changed. The carrier is OriginalGaussianResolvent.H
@@ -29,7 +29,7 @@ The auxiliary lp 1 carrier is used only to construct a bounded bilinear map
 into that unchanged Hilbert space. Its coordinate equality is proved before
 it is used to establish joint analyticity. No root existence, joint
 holomorphy, normal convergence or coefficient correspondence is a new premise.
-The final p/q transfer uses the pinned, fallible, uncompiled supplier
+The final p/q transfer uses the original proved supplier
 original_extensions_correspondence, on a proved neighborhood of the original
 domain and root equation. mixedOperator is the original negative Neumann sum,
 including its degree-zero -I term.
@@ -60,6 +60,9 @@ private lemma L_norm (u : L) : ‖u‖ = ∑' i : ℕ, ‖u i‖ := by
   simpa using lp.norm_eq_tsum_rpow
     (by norm_num : (0 : ℝ) < (1 : ℝ≥0∞).toReal) u
 
+private lemma norm_nat_succ (n : ℕ) : ‖(n : ℂ) + 1‖ = (n : ℝ) + 1 := by
+  simpa only [Nat.cast_add, Nat.cast_one] using Complex.norm_natCast (n + 1)
+
 /-- The (0,0) term has no positive original output mode. -/
 def K (i j : ℕ) : V :=
   if i + j = 0 then 0 else
@@ -85,7 +88,7 @@ private lemma K_norm (i j : ℕ) : ‖K i j‖ ≤ 1 := by
       norm_div, norm_mul]
     simpa only [Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (Real.sqrt_nonneg _), Complex.norm_natCast,
-      Nat.cast_add, Nat.cast_one] using (div_le_one hd).2 hs
+      Nat.cast_add, Nat.cast_one, norm_nat_succ] using (div_le_one hd).2 hs
 
 private def convolutionTerm (u v : L) (ij : ℕ × ℕ) : V :=
   (u ij.1 * v ij.2) • K ij.1 ij.2
@@ -155,6 +158,7 @@ private def convolutionLinear : L →ₗ[ℂ] L →ₗ[ℂ] V :=
 def C : L →L[ℂ] L →L[ℂ] V :=
   convolutionLinear.mkContinuous₂ 1 (by
     intro u v
+    change ‖convolutionSum u v‖ ≤ 1 * ‖u‖ * ‖v‖
     simpa only [one_mul] using convolutionSum_bound u v)
 
 /-- Evaluation of the absolutely convergent convolution is a finite
@@ -191,7 +195,8 @@ theorem C_coordinate (u v : L) (n : ℕ) :
       have hsumR : (i : ℝ) + ((n + 1 - i : ℕ) : ℝ) = (n + 1 : ℝ) := by
         exact_mod_cast hsum
       have hidx : i + (n + 1 - i) - 1 = n := by omega
-      simp [E, convolutionTerm, K, hsum, hsumR, hidx, smul_eq_mul]
+      simp [E, convolutionTerm, K, hsum, hsumR, hidx, smul_eq_mul,
+        lp.evalCLM, lp.single_apply_self]
       ring
 
 private lemma half_norm (n : ℕ) : ‖halfBinomial n‖ ≤ 1 := by
@@ -232,7 +237,8 @@ private lemma familyTerm_bound (binomial : Bool) {t : ℂ} {R : ℝ}
     cases binomial with
     | false =>
         change ‖((n + 1 : ℕ) : ℂ) * 1‖ ≤ 2 * (n + 1 : ℝ)
-        simp only [mul_one, Complex.norm_natCast, Nat.cast_add, Nat.cast_one]
+        simp only [mul_one, Complex.norm_natCast, Nat.cast_add, Nat.cast_one,
+          norm_nat_succ]
         have hn : (0 : ℝ) ≤ n := Nat.cast_nonneg n
         linarith
     | true =>
@@ -285,7 +291,7 @@ private lemma family_analytic (binomial : Bool) {t : ℂ} (ht : ‖t‖ < 1) :
         (fun z : ℂ => familyTerm binomial z n) (ball 0 R) := by
       intro z _
       have hs : DifferentiableAt ℂ (fun z : ℂ => familyCoefficient binomial n * z ^ n) z :=
-        differentiableAt_const.mul (differentiableAt_id.pow n)
+        (differentiableAt_const _).mul (differentiableAt_id.pow n)
       exact ((lp.singleContinuousLinearMap ℂ (fun _ : ℕ => ℂ) 1 n).differentiableAt.comp
         z hs).differentiableWithinAt
     have hsum := Complex.differentiableOn_tsum_of_summable_norm
@@ -321,7 +327,7 @@ private lemma factor_term {b z : ℂ} (hb : b ≠ 0) (root : ℂ)
   change _ = (root / b) * (Real.sqrt (s : ℝ) : ℂ) *
     (family true z i * family false (z / b) (s - i) / _)
   rw [family_coordinate true hz, family_coordinate false hzb]
-  dsimp only [familyCoefficient]
+  simp only [familyCoefficient, Bool.true_eq_false, Bool.false_eq_true, ↓reduceIte]
   rw [hpz, hpb, div_pow, ← sqrt_index_sq s]
   field_simp [hb, hi0, hj0, sqrt_index_ne_zero s hs]
   <;> ring
@@ -363,7 +369,7 @@ private lemma original_domain_eventually {b z : ℂ} (hb : b ≠ 0)
     ∀ᶠ w : ℂ × ℂ in 𝓝 (b, z), w.1 ≠ 0 ∧ ‖w.2‖ < beta w.1 := by
   have hopen : IsOpen {w : ℂ × ℂ | w.1 ≠ 0 ∧ ‖w.2‖ < beta w.1} := by
     apply IsOpen.inter
-    · exact isOpen_ne continuous_fst continuous_const
+    · exact isOpen_ne.preimage continuous_fst
     · exact isOpen_lt continuous_snd.norm (continuous_const.min continuous_fst.norm)
   exact hopen.mem_nhds ⟨hb, hz⟩
 
@@ -373,15 +379,19 @@ private lemma eSeries_joint_graph {b z : ℂ} {r : ℂ → ℂ} (hb : b ≠ 0)
   have hbA : AnalyticAt ℂ (fun w : ℂ × ℂ => w.1) (b, z) := analyticAt_fst
   have hzA : AnalyticAt ℂ (fun w : ℂ × ℂ => w.2) (b, z) := analyticAt_snd
   have hrA := hr.comp hbA
-  have hquot := hzA.div hbA hb
+  have hquot : AnalyticAt ℂ (fun w : ℂ × ℂ => w.2 / w.1) (b, z) := hzA.div hbA hb
   have hz1 : ‖z‖ < 1 := hz.trans_le (min_le_left _ _)
   have hzb : ‖z / b‖ < 1 := by
     rw [norm_div]
     exact (div_lt_one (norm_pos_iff.mpr hb)).2 (hz.trans_le (min_le_right _ _))
   have ha : AnalyticAt ℂ a z := family_analytic true hz1
   have hg : AnalyticAt ℂ g (z / b) := family_analytic false hzb
-  have hC := (C.analyticAt_bilinear (a z, g (z / b))).comp₂
-    (ha.comp hzA) (hg.comp hquot)
+  have ha' : AnalyticAt ℂ (fun w : ℂ × ℂ => a w.2) (b, z) :=
+    ha.comp (f := fun w : ℂ × ℂ => w.2) hzA
+  have hg' : AnalyticAt ℂ (fun w : ℂ × ℂ => g (w.2 / w.1)) (b, z) :=
+    hg.comp (f := fun w : ℂ × ℂ => w.2 / w.1) hquot
+  have hC : AnalyticAt ℂ (fun w : ℂ × ℂ => C (a w.2) (g (w.2 / w.1))) (b, z) :=
+    (C.analyticAt_bilinear (a z, g (z / b))).comp₂ ha' hg'
   apply ((hrA.div hbA hb).smul hC).congr
   filter_upwards [original_domain_eventually hb hz] with w hw
   exact (eSeries_factorization hw.1 (r w.1) hw.2).symm
@@ -414,7 +424,9 @@ private lemma blocks_analytic {z : ℂ} (hz : ‖z‖ < 1) :
     rw [← hu]
     exact analyticAt_inverse (𝕜 := ℂ) u
   have hR : AnalyticAt ℂ squareResolvent z := by
-    apply (hI.comp (analyticAt_const.sub ((operator_analytic hz).pow 2))).congr
+    have harg : AnalyticAt ℂ (fun w : ℂ => 1 - operator w ^ 2) z :=
+      analyticAt_const.sub ((operator_analytic hz).pow 2)
+    apply (hI.comp (f := fun w : ℂ => 1 - operator w ^ 2) harg).congr
     have hU : ∀ᶠ w : ℂ in 𝓝 z, ‖w‖ < 1 :=
       (isOpen_lt continuous_norm continuous_const).mem_nhds hz
     filter_upwards [hU] with w hw
@@ -440,7 +452,7 @@ private lemma originalH_powerSeries :
 private lemma originalH_eq_cpow {v : ℂ} (hv : ‖v‖ < 1) :
     OriginalGaussianCubicAnalytic.H v = (1 + v) ^ (-1 / 2 : ℂ) := by
   have hmem : v ∈ Metric.eball (0 : ℂ) 1 := by
-    simpa [edist_dist, dist_eq_norm, ENNReal.ofReal_lt_one] using hv
+    simpa [edist_dist, dist_eq_norm, ← ofReal_norm, ENNReal.ofReal_lt_one] using hv
   have hs := (Complex.one_add_cpow_hasFPowerSeriesOnBall_zero
     (a := (-1 / 2 : ℂ))).hasSum hmem
   have he : HasSum (fun n : ℕ => halfBinomial n * v ^ n)
@@ -529,16 +541,30 @@ theorem original_joint_hilbert_analytic {b0 root0 z0 : ℂ} (hb : b0 ≠ 0)
   have hspec := rootGraph_spec hroot
   have hE := eSeries_joint_graph hb hspec.2.1 hz
   have hz1 : ‖z0‖ < 1 := hz.trans_le (min_le_left _ _)
-  obtain ⟨hself, hmixed⟩ := blocks_analytic hz1
-  have hself' := hself.comp (analyticAt_snd (p := (b0, z0)))
-  have hmixed' := hmixed.comp (analyticAt_snd (p := (b0, z0)))
-  have hP := ((ContinuousLinearMap.apply ℂ V).analyticAt_bilinear
-    (eSeries b0 (rootGraph b0 root0 b0) z0, selfOperator z0)).comp₂ hE hself'
-  have hQ := ((ContinuousLinearMap.apply ℂ V).analyticAt_bilinear
-    (eSeries b0 (rootGraph b0 root0 b0) z0, mixedOperator z0)).comp₂ hE hmixed'
+  obtain ⟨hself, hmixed⟩ := blocks_analytic (z := z0) hz1
+  have hself' : AnalyticAt ℂ (fun w : ℂ × ℂ => selfOperator w.2) (b0, z0) := by
+    exact AnalyticAt.comp (𝕜 := ℂ) (g := selfOperator)
+      (f := fun w : ℂ × ℂ => w.2) (x := (b0, z0)) hself analyticAt_snd
+  have hmixed' : AnalyticAt ℂ (fun w : ℂ × ℂ => mixedOperator w.2) (b0, z0) := by
+    exact AnalyticAt.comp (𝕜 := ℂ) (g := mixedOperator)
+      (f := fun w : ℂ × ℂ => w.2) (x := (b0, z0)) hmixed analyticAt_snd
+  have hP : AnalyticAt ℂ (fun w : ℂ × ℂ =>
+      selfOperator w.2 (eSeries w.1 (rootGraph b0 root0 w.1) w.2)) (b0, z0) :=
+    ((ContinuousLinearMap.apply ℂ V).analyticAt_bilinear
+    (eSeries b0 (rootGraph b0 root0 b0) z0, selfOperator z0)).comp₂
+      (f := fun w : ℂ × ℂ => eSeries w.1 (rootGraph b0 root0 w.1) w.2)
+      (g := fun w : ℂ × ℂ => selfOperator w.2) (x := (b0, z0)) hE hself'
+  have hQ : AnalyticAt ℂ (fun w : ℂ × ℂ =>
+      mixedOperator w.2 (eSeries w.1 (rootGraph b0 root0 w.1) w.2)) (b0, z0) :=
+    ((ContinuousLinearMap.apply ℂ V).analyticAt_bilinear
+    (eSeries b0 (rootGraph b0 root0 b0) z0, mixedOperator z0)).comp₂
+      (f := fun w : ℂ × ℂ => eSeries w.1 (rootGraph b0 root0 w.1) w.2)
+      (g := fun w : ℂ × ℂ => mixedOperator w.2) (x := (b0, z0)) hE hmixed'
   have hroots : ∀ᶠ w : ℂ × ℂ in 𝓝 (b0, z0),
-      (1 + w.1) * rootGraph b0 root0 w.1 ^ 2 = 1 :=
-    (continuous_fst.continuousAt.tendsto).eventually hspec.2.2
+      (1 + w.1) * rootGraph b0 root0 w.1 ^ 2 = 1 := by
+    have hf : Tendsto (Prod.fst : ℂ × ℂ → ℂ) (𝓝 (b0, z0)) (𝓝 b0) :=
+      continuous_fst.continuousAt
+    exact hf.eventually hspec.2.2
   have hPQ : ∀ᶠ w : ℂ × ℂ in 𝓝 (b0, z0),
       pSeries w.1 (rootGraph b0 root0 w.1) w.2 =
         selfOperator w.2 (eSeries w.1 (rootGraph b0 root0 w.1) w.2) ∧
@@ -567,6 +593,8 @@ theorem original_joint_hilbert_analytic_amplitude {b0 root0 z0 : ℂ}
       (fun w : ℂ × ℂ => amplitude • qSeries w.1 (rootGraph b0 root0 w.1) w.2)
         (b0, z0) := by
   obtain ⟨hE, hP, hQ⟩ := original_joint_hilbert_analytic hb hroot hz
-  exact ⟨analyticAt_const.smul hE, analyticAt_const.smul hP, analyticAt_const.smul hQ⟩
+  exact ⟨(analyticAt_const (v := amplitude)).smul hE,
+    (analyticAt_const (v := amplitude)).smul hP,
+    (analyticAt_const (v := amplitude)).smul hQ⟩
 
 end D5.S3.VertexAlgebra.TwistedGround.OriginalGaussianCubicJointHolomorphy

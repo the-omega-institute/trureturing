@@ -13,7 +13,7 @@ import Mathlib.Topology.Algebra.InfiniteSum.NatInt
 import Mathlib.Analysis.Asymptotics.Defs
 
 /-!
-UNCOMPILED proof candidate. No native/kernel acceptance is asserted.
+Native verification receipts and independent admission are recorded separately.
 
 The coefficients below are the literal coefficients of cubicTTSeries and
 cubicUTSeries. The imported double-contour theorem identifies them with
@@ -64,7 +64,7 @@ private lemma sqrt_norm_ge_one (n : ℕ) :
     1 ≤ ‖(Real.sqrt (n + 1 : ℝ) : ℂ)‖ := by
   simpa only [Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg (Real.sqrt_nonneg _)] using
-    (Real.one_le_sqrt.mpr (by positivity : (1 : ℝ) ≤ n + 1))
+    (Real.one_le_sqrt.mpr (by have hn : (0 : ℝ) ≤ n := Nat.cast_nonneg n; linarith : (1 : ℝ) ≤ n + 1))
 
 private lemma sqrt_ne_zero (n : ℕ) :
     (Real.sqrt (n + 1 : ℝ) : ℂ) ≠ 0 := by
@@ -226,10 +226,11 @@ private lemma regular_coordinate {b z : ℂ} (hb : b ≠ 0) (root : ℂ)
     _ = ∑' k : ℕ, E (regularTerm same b root (n, k) z) := by
       apply tsum_eq_single n
       intro m hm
-      apply tsum_eq_zero
-      intro k
-      change (regularTerm same b root (m, k) z) n = 0
-      exact lp.single_apply_ne 2 m _ (Ne.symm hm)
+      calc
+        _ = ∑' k : ℕ, (0 : ℂ) := tsum_congr (fun k => by
+          change (regularTerm same b root (m, k) z) n = 0
+          exact lp.single_apply_ne 2 m _ (Ne.symm hm))
+        _ = 0 := tsum_zero
     _ = _ := by
       apply tsum_congr
       intro k
@@ -240,7 +241,7 @@ private lemma normalized_monomial (z c : ℂ) (hz : z ≠ 0) (n k delta : ℕ) :
         (c / (Real.sqrt (n + 1 : ℝ) : ℂ) * z ^ (n + 2 * k)) =
       c * (z ^ 2) ^ (k + (n + 1 + delta)) /
         ((Real.sqrt (n + 1 : ℝ) : ℂ) * z ^ (n + 1)) := by
-  have hden := mul_ne_zero (sqrt_ne_zero n) (pow_ne_zero _ hz)
+  have hden := mul_ne_zero (sqrt_ne_zero n) (pow_ne_zero (n + 1) hz)
   apply (eq_div_iff hden).mpr
   have hpow : z ^ (1 + 2 * delta) * z ^ (n + 2 * k) * z ^ (n + 1) =
       (z ^ 2) ^ (k + (n + 1 + delta)) := by

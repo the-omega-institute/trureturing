@@ -247,7 +247,8 @@ private lemma pole_coeff {b : ℂ} (hb : b ≠ 0) (n : ℕ) :
   have hterm (j : ℕ) (hj : j ∈ Finset.range (n + 1)) :
       PowerSeries.coeff j p * PowerSeries.coeff (n - j) p = (b ^ (n + 2))⁻¹ := by
     have hjn : j ≤ n := Nat.le_of_lt_succ (Finset.mem_range.mp hj)
-    simp only [p, PowerSeries.coeff_invUnitsSub, one_divp]
+    simp only [p, PowerSeries.coeff_invUnitsSub, one_divp,
+      Units.val_inv_eq_inv_val, Units.val_pow_eq_pow_val, Units.val_mk0]
     change (b ^ (j + 1))⁻¹ * (b ^ (n - j + 1))⁻¹ = (b ^ (n + 2))⁻¹
     rw [← mul_inv, ← pow_add]
     congr 2
@@ -365,13 +366,14 @@ private lemma regular_evaluation {b a v : ℂ} (hb : b ≠ 0) (root : ℂ)
   have hV := normal_vertical (a := a)
     (show HasSum (fun j : ℕ => PowerSeries.coeff j (PowerSeries.X : PS) * v ^ j) v by
       simpa only [PowerSeries.X_eq, pow_one, one_mul] using monomial_hasSum 1 1 v)
+  simp only [PowerSeries.map_X] at hV
   have hB := hconst b
   have hTwo : (∀ d, Summable (fun j : ℕ =>
       ‖PowerSeries.coeff j (PowerSeries.coeff d (2 : BPS)) * a ^ j‖)) ∧
       HasSum (fun d : ℕ => scalarSum (PowerSeries.coeff d (2 : BPS)) a * v ^ d) 2 := by
     simpa only [map_ofNat] using hconst 2
-  have hAB := normal_mul (a := a) (v := v) hA.1 hB.1 hA.2 hB.2
-  have hTwoAB := normal_mul (a := a) (v := v) hTwo.1 hAB.1 hTwo.2 hAB.2
+  have hTwoA := normal_mul (a := a) (v := v) hTwo.1 hA.1 hTwo.2 hA.2
+  have hTwoAB := normal_mul (a := a) (v := v) hTwoA.1 hB.1 hTwoA.2 hB.2
   have hABplus := normal_add (a := a) (v := v) hA.1 hB.1 hA.2 hB.2
   have hN0 := normal_mul (a := a) (v := v) hB.1
     (normal_add (a := a) (v := v) hABplus.1 hTwo.1 hABplus.2 hTwo.2).1 hB.2
@@ -393,10 +395,9 @@ private lemma regular_evaluation {b a v : ℂ} (hb : b ≠ 0) (root : ℂ)
   have hT := normal_mul (a := a) (v := v) hBase.1 hTbracket.1 hBase.2 hTbracket.2
   have hMinus := normal_neg (a := a) (v := v) hBase.1 hBase.2
   have hU := normal_mul (a := a) (v := v) hMinus.1 hUbracket.1 hMinus.2 hUbracket.2
-  exact ⟨by simpa only [regularTT, regularNumerator, PowerSeries.map_X,
-      div_eq_mul_inv] using hT,
-    by simpa only [regularUT, regularNumerator, PowerSeries.map_X,
-      div_eq_mul_inv] using hU⟩
+  constructor
+  · convert hT using 1 <;> rfl
+  · convert hU using 1 <;> rfl
 
 private lemma regular_kernels {b a v : ℂ} (root : ℂ) (ha : a ≠ 0) :
     H a * H v * externalOmega b root (a * v) *
@@ -469,13 +470,15 @@ private lemma omega_regularization :
     PowerSeries.coeff_mk, omegaCoefficient, PowerSeries.coeff_map,
     PowerSeries.coeff_C_mul, inclusion, map_mul, PowerSeries.coeff_map,
     HahnSeries.ofPowerSeries_C, halfSeries, PowerSeries.coeff_mk]
-  rw [← mul_assoc, ← pow_succ', HahnSeries.single_pow]
+  rw [← mul_assoc, ← pow_succ', HahnSeries.single_pow, ← mul_assoc]
   simp only [nsmul_eq_mul, Int.cast_natCast, mul_one, one_pow,
     HahnSeries.single_mul_single]
   have he : ((d + 1 : ℕ) : ℤ) + (-(d : ℤ) - 1) = 0 := by omega
   rw [he]
-  simp only [one_mul, ← HahnSeries.C_apply]
-  ring
+  simp only [one_mul, ← HahnSeries.C_apply, ← map_mul, PowerSeries.coeff_C_mul,
+    PowerSeries.coeff_map, PowerSeries.coeff_mk, HahnSeries.ofPowerSeries_C]
+  rw [map_mul, HahnSeries.ofPowerSeries_C]
+  exact mul_comm _ _
 
 private lemma external_regularization (b root : ℂ) :
     PowerSeries.map inclusion
@@ -548,11 +551,16 @@ private lemma regular_formal {b : ℂ} (hb : b ≠ 0) (root : ℂ) :
     simp only [map_mul, map_ofNat, map_pow, map_sub, PowerSeries.map_X,
       PowerSeries.map_C, BB, V]
     ring
+  have htwo : (2 : LaurentSeries ℂ) ≠ 0 := by
+    intro h
+    have hc := congrArg (fun f : LaurentSeries ℂ => f.coeff 0) h
+    change (HahnSeries.single 0 (2 : ℂ)).coeff 0 = (0 : LaurentSeries ℂ).coeff 0 at hc
+    norm_num at hc
   have hden0 : PowerSeries.constantCoeff
       (2 * (PowerSeries.C (a * B) - (PowerSeries.X : AnnulusSeries)) ^ 2) ≠ 0 := by
     simp only [map_mul, map_pow, map_sub, map_ofNat,
       PowerSeries.constantCoeff_X, PowerSeries.constantCoeff_C]
-    exact mul_ne_zero (by norm_num) (pow_ne_zero _ (by simpa using mul_ne_zero ha hB))
+    exact mul_ne_zero htwo (pow_ne_zero _ (by simpa using mul_ne_zero ha hB))
   have hden : PowerSeries.rescale a
       ((2 * (PowerSeries.C (a * B) - (PowerSeries.X : AnnulusSeries)) ^ 2)⁻¹) =
       PowerSeries.C (a⁻¹ ^ 2) * (2 * (BB - V) ^ 2)⁻¹ := by
@@ -565,6 +573,13 @@ private lemma regular_formal {b : ℂ} (hb : b ≠ 0) (root : ℂ) :
       ring
     rw [he, PowerSeries.mul_inv_rev, PowerSeries.C_inv, ← inv_pow]
     ring
+  have hden' : PowerSeries.rescale a
+      ((2 * (A * BB - V) ^ 2)⁻¹) =
+      PowerSeries.C (a⁻¹ ^ 2) * (2 * (BB - V) ^ 2)⁻¹ := by
+    have he : A * BB = PowerSeries.C (a * B) := by
+      exact (map_mul (PowerSeries.C : LaurentSeries ℂ →+* AnnulusSeries) a B).symm
+    rw [he]
+    exact hden
   have hTTden : PowerSeries.rescale a ((2 * (A - BB) ^ 2)⁻¹) =
       (2 * (A - BB) ^ 2)⁻¹ := by
     have he : (2 * (A - BB) ^ 2) =
@@ -616,15 +631,16 @@ private lemma regular_formal {b : ℂ} (hb : b ≠ 0) (root : ℂ) :
     change _ = A * PowerSeries.rescale a
       (-(formalOmega * formalExternalOmega b root) *
         (V * (A * BB * (A + BB + 2) + V * (A + BB + 2 * A * BB)) *
-          (2 * (PowerSeries.C (a * B) - V) ^ 2)⁻¹ +
+          (2 * (A * BB - V) ^ 2)⁻¹ +
           PowerSeries.map (HahnSeries.C : ℂ →+* LaurentSeries ℂ) scalarCSeries))
-    rw [map_mul, map_neg, map_mul, map_add, map_mul, hUTnum, hden]
-    have hc := hcancel
-    linear_combination (norm := ring_nf)
+    rw [map_mul, map_neg, map_mul, map_add, map_mul, hUTnum, hden']
+    have hc := congrArg (fun t : AnnulusSeries =>
       ((A * PowerSeries.rescale a formalOmega *
         PowerSeries.rescale a (formalExternalOmega b root)) *
         V * (BB * (A + BB + 2) + V * (2 * A * BB + A + BB)) *
-        (2 * (BB - V) ^ 2)⁻¹) * hc
+        (2 * (BB - V) ^ 2)⁻¹) * t) hcancel
+    dsimp only [a, A, V] at hc ⊢
+    linear_combination (norm := ring_nf) hc
 /- The majorant is independent of the circle parameter. This proves the
 termwise Laurent integral, including the case in which there is no residue. -/
 private lemma shifted_series_contour (p : PS) (s d : ℕ) {r : ℝ} (hr : 0 < r)
@@ -805,12 +821,14 @@ private lemma original_fixed_a_coefficients {b a : ℂ} (hb : b ≠ 0) (root : �
   obtain ⟨hcT, hcU⟩ := literal_modulus_series hb root ha
     (eta := ⟨eta, heta.le⟩) heta hetab
   constructor
-  · simpa only [FormalMultilinearSeries.coeff_ofScalars] using
-      congrArg (fun p : FormalMultilinearSeries ℂ ℂ ℂ => p.coeff d)
-        (hcT.hasFPowerSeriesAt.eq_formalMultilinearSeries hT)
-  · simpa only [FormalMultilinearSeries.coeff_ofScalars] using
-      congrArg (fun p : FormalMultilinearSeries ℂ ℂ ℂ => p.coeff d)
-        (hcU.hasFPowerSeriesAt.eq_formalMultilinearSeries hU)
+  · have h := congrArg (fun p : FormalMultilinearSeries ℂ ℂ ℂ => p.coeff d)
+      (hcT.hasFPowerSeriesAt.eq_formalMultilinearSeries hT)
+    simp only [FormalMultilinearSeries.coeff_ofScalars] at h
+    convert h using 1 <;> rfl
+  · have h := congrArg (fun p : FormalMultilinearSeries ℂ ℂ ℂ => p.coeff d)
+      (hcU.hasFPowerSeriesAt.eq_formalMultilinearSeries hU)
+    simp only [FormalMultilinearSeries.coeff_ofScalars] at h
+    convert h using 1 <;> rfl
 
 /-- The actual two circle integrals equal the existing formal cubic
 coefficients. The amplitude is arbitrary, so in particular both geometric
@@ -828,7 +846,7 @@ theorem doubleContour_eq_negativeCoefficient {b : ℂ} (hb : b ≠ 0) (root : �
       (by simpa only [hna] using hrb) heta (by simpa only [hna] using hetab) d
   have hnormal := regular_evaluation (a := (r : ℂ)) (v := 0) hb root
     (by simpa only [Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr] using hrb)
-    (by simpa only [norm_zero] using (lt_min (by norm_num : (0 : ℝ) < 1) (norm_pos_iff.mpr hb) : 0 < min 1 ‖b‖))
+    (by simpa only [norm_zero, beta] using (lt_min (by norm_num : (0 : ℝ) < 1) (norm_pos_iff.mpr hb) : 0 < min 1 ‖b‖))
   have hTp : Summable (fun j : ℕ =>
       ‖PowerSeries.coeff j (PowerSeries.coeff d (regularTT b root))‖ * r ^ j) := by
     simpa only [norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs,
@@ -983,12 +1001,12 @@ theorem evaluated_original_sewing {b x : ℂ} (hb : b ≠ 0) (root : ℂ)
   have hTswap : (∑' n : ℕ, ∑' t : ℕ, WT (t, n)) =
       ∑' t : ℕ, k t * Tcoeff b root (t + 1) x := by
     calc
-      _ = ∑' t : ℕ, ∑' n : ℕ, WT (t, n) := hTW.tsum_comm.symm
+      _ = ∑' t : ℕ, ∑' n : ℕ, WT (t, n) := Summable.tsum_comm (f := fun t n : ℕ => WT (t, n)) hTW
       _ = _ := tsum_congr hTinner
   have hUswap : (∑' n : ℕ, ∑' t : ℕ, WU (t, n)) =
       ∑' t : ℕ, k t * Ucoeff b root (t + 1) x := by
     calc
-      _ = ∑' t : ℕ, ∑' n : ℕ, WU (t, n) := hUW.tsum_comm.symm
+      _ = ∑' t : ℕ, ∑' n : ℕ, WU (t, n) := Summable.tsum_comm (f := fun t n : ℕ => WU (t, n)) hUW
       _ = _ := tsum_congr hUinner
   have hTouter : HasSum (fun n : ℕ => ∑' t : ℕ, WT (t, n))
       (∑' t : ℕ, k t * Tcoeff b root (t + 1) x) := by
@@ -1000,14 +1018,16 @@ theorem evaluated_original_sewing {b x : ℂ} (hb : b ≠ 0) (root : ℂ)
     exact hUW.prod_symm.prod.hasSum
   have hfiniteT (n : ℕ) : (∑' t : ℕ, k t * T (t + 1) n) =
       ∑ t ∈ Finset.Icc 1 n, pairScalar s t / (t : ℂ) * T t n := by
-    apply positive_supported_tsum (fun t => pairScalar s t / (t : ℂ) * T t n) n
-    intro t hnt
-    rw [show T t n = 0 from cubic_tt_pole_bound b root hb t n hnt.le, mul_zero]
+    have h := positive_supported_tsum (fun t => pairScalar s t / (t : ℂ) * T t n) n (by
+      intro t hnt
+      rw [show T t n = 0 from cubic_tt_pole_bound b root hb t n hnt.le, mul_zero])
+    simpa only [k, Nat.cast_add, Nat.cast_one] using h
   have hfiniteU (n : ℕ) : (∑' t : ℕ, k t * U (t + 1) n) =
       ∑ t ∈ Finset.Icc 1 n, pairScalar s t / (t : ℂ) * U t n := by
-    apply positive_supported_tsum (fun t => pairScalar s t / (t : ℂ) * U t n) n
-    intro t hnt
-    rw [show U t n = 0 from cubic_ut_pole_bound b root hb t n hnt, mul_zero]
+    have h := positive_supported_tsum (fun t => pairScalar s t / (t : ℂ) * U t n) n (by
+      intro t hnt
+      rw [show U t n = 0 from cubic_ut_pole_bound b root hb t n hnt, mul_zero])
+    simpa only [k, Nat.cast_add, Nat.cast_one] using h
   have hrec (n : ℕ) :
       T s (n + s) = -(∑' t : ℕ, k t * U (t + 1) n) ∧
       U s (n + s) = -(if n = 0 then currentRow b root s else 0) -
@@ -1079,10 +1099,11 @@ private lemma normalized_matrix_row {z : ℂ} (hz : z ≠ 0) (n m : ℕ) (c : �
   have hpow : (z ^ 2) ^ (n + 1) = (z ^ (n + 1)) ^ 2 := by
     rw [← pow_mul, ← pow_mul, Nat.mul_comm 2 (n + 1)]
   rw [OriginalGaussianMatrix.matrixEntry, pow_add, hpow]
+  simp only [Nat.cast_add, Nat.cast_one]
   field_simp [sqrt_index_ne_zero n, sqrt_index_ne_zero m, hz, hm]
-  <;> ring_nf
-  <;> try simp only [sqrt_index_sq m]
-  <;> ring
+  <;> linear_combination (norm := ring_nf)
+    -(pairScalar (n + 1) (m + 1) * c) *
+      (sqrt_index_sq m)
 
 /-- The Hilbert vectors are formed from the actual contour coefficients
 using the proved lp membership. The existing signed block theorem is

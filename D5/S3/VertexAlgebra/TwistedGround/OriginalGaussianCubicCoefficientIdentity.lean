@@ -16,12 +16,9 @@ import Mathlib.RingTheory.PowerSeries.Trunc
 import Mathlib.Algebra.BigOperators.Intervals
 
 /-!
-UNCOMPILED LEAN SOURCE PROPOSAL. No elaboration, kernel, native or official
-acceptance is claimed. All six imported cubic suppliers are themselves
-uncompiled proposals; their immutable source hashes are in result.json.
-The finite-class supplier's degree proof at lines 316-317 passes a maximum
-bound where degree_mul_le requires a sum bound, detailed in result.json.
-Its unchanged source is an upstream integration blocker.
+The original source proposal is continued by native repairs to its finite
+polynomial suppliers. Native receipts and independent admission are recorded
+separately; no official acceptance is asserted by this source commentary.
 
 The private argument below is finite binomial inversion, followed by actual
 zero-residue reconstruction. It is applied separately to the literal TT and
@@ -257,8 +254,7 @@ private lemma reconstructed_regular_coefficient (N : ℕ) (hN : 1 ≤ N)
   ring
 
 /-- Both exact signed original TT/UT recurrences, at every natural degree
-and positive mode, on the original literal cubic kernels and current row.
-SOURCE ONLY: the proof and all six suppliers remain UNCOMPILED. -/
+and positive mode, on the original literal cubic kernels and current row. -/
 theorem cubic_original_coefficient_identity : CubicOriginalCoefficientIdentity := by
   intro b hb hb0 _hroot s d hs
   by_cases hsd : s ≤ d
