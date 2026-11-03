@@ -263,6 +263,7 @@ private theorem physical_joint_construction (asc : Bool) (a b c : ℕ)
     funext i; dsimp [g,newValue]; rw [hbases]; rfl
   have hpnew : (k::l).Perm (List.range (k+1)) := by
     simpa only [List.nil_append] using inserted_perm k [] l physicalInventory
+  change InStrip g N 0 (k::l) at newstrip
   refine ⟨l.map (label k (by dsimp [k]; omega)),?_,?_⟩
   · apply lift_order k s (by dsimp [k]; omega) l physicalInventory
     · simpa only [fform,hmod,hseed] using oldstrip
