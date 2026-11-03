@@ -99,7 +99,7 @@ def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := none
+  escapeFrom := some ℕ
   sourceSelection := some {
     owner := `D5.S3.Analytic.Polynomial.HermiteTieRecurrence
     definition := some {
