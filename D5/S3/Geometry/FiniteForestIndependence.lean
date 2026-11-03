@@ -4,7 +4,7 @@
    mirror-E: none(waiver:native-forest-classification)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Acyclic]
    utility: none
-   digest: Native finite-forest independence realizations are contractible or spheres, with empty labels separate. -/
+   digest: Native finite-forest independence realizations are contractible or spheres. -/
 import D5.S3.Geometry.FiniteGraphIndependenceReduction
 import D5.S3.Geometry.FiniteComponentClosure.Transport
 import D5.S3.Combinatorics.SpectralGraph.ScalarCycleRowError
@@ -23,7 +23,7 @@ independence complex, Corollary 6.1, DOI 10.1016/j.ejc.2005.04.010.
 
 noncomputable section
 open Set Topology ContinuousMap
-open scoped BigOperators unitInterval Classical
+open scoped BigOperators unitInterval
 
 namespace D5.S3.Geometry.FiniteForestIndependence
 
@@ -93,7 +93,7 @@ def leafLabelsEquiv (G : SimpleGraph V) (u v : V) (huv : G.Adj u v) :
     · have hu : r.val ≠ u := fun h => hru (h ▸ r.property)
       have hv : r.val ≠ v := r.property.2
       simp [hu, hv]
-    · cases b <;> simp [huv.ne, huv.ne.symm]
+    · cases b <;> simp [huv.ne.symm]
 
 /-- The retained graph is the actual induced residual disjoint from K2. -/
 def leafGraphIso (G : SimpleGraph V) (u v : V) (huv : G.Adj u v)
@@ -120,7 +120,8 @@ def leafGraphIso (G : SimpleGraph V) (u v : V) (huv : G.Adj u v)
     · cases a <;> cases b <;>
         simp [leafLabelsEquiv, disjointGraph, huv, huv.symm]
 
-private theorem disjoint_complex {W : Type*} [Fintype W] [DecidableEq W]
+omit [Fintype V] in
+private theorem disjoint_complex {W : Type*} [DecidableEq W]
     (G : SimpleGraph V) (H : SimpleGraph W) :
     (independenceComplex (disjointGraph G H)).toPreAbstractSimplicialComplex =
       simplicialJoin (independenceComplex G).toPreAbstractSimplicialComplex
@@ -148,6 +149,7 @@ private theorem edge_complex :
     obtain ⟨a, rfl⟩ := Finset.card_eq_one.mp h
     exact (independenceComplex (⊤ : SimpleGraph Bool)).singleton_mem a
 
+open Classical in
 /-- Native leaf reduction, including an empty residual, into the augmented join. -/
 def leafEquiv (G : SimpleGraph V) (u v : V) (huv : G.Adj u v)
     (hleaf : ∀ w, G.Adj u w → w = v) :
@@ -185,6 +187,7 @@ theorem isolated_contractible (G : SimpleGraph V) (u : V) (hu : ∀ w, ¬ G.Adj 
   intro t x
   exact cone_segment P x x.property t t.property.1 t.property.2
 
+omit [Fintype V] [DecidableEq V] in
 private theorem empty_faces (G : SimpleGraph V) [IsEmpty V] :
     ∀ s, s ∉ (independenceComplex G).toPreAbstractSimplicialComplex := by
   rintro s ⟨hn, _⟩
@@ -196,7 +199,7 @@ private theorem join_contractible {W : Type*} [TopologicalSpace W]
     ContractibleSpace (OrdinaryJoin W (Space twoPoints)) := by
   obtain ⟨e⟩ := ContractibleSpace.hequiv_unit W
   let d := joinCongr e (HomotopyEquiv.refl (Space twoPoints))
-  letI : ContractibleSpace (OrdinaryJoin Unit (Space twoPoints)) :=
+  let : ContractibleSpace (OrdinaryJoin Unit (Space twoPoints)) :=
     (contractible_iff_id_nullhomotopic _).mpr
       ⟨Quotient.mk _ ((), y, (0 : I)), ⟨pointJoinContraction () y⟩⟩
   exact d.contractibleSpace
@@ -218,8 +221,9 @@ theorem classification (G : SimpleGraph V) (hG : G.IsAcyclic) :
     intro W _ _ hn F hF
     rcases isEmpty_or_nonempty W with he | hne
     · exact Or.inl he
-    letI := hne
-    have hleaf := D5.S3.Combinatorics.SpectralGraph.ScalarCycleRowError.forest_not_two_neighbors F hF
+    let := hne
+    have hleaf :=
+      D5.S3.Combinatorics.SpectralGraph.ScalarCycleRowError.forest_not_two_neighbors F hF
     push Not at hleaf
     obtain ⟨u, hu⟩ := hleaf
     by_cases hi : ∀ w, ¬ F.Adj u w
@@ -235,19 +239,19 @@ theorem classification (G : SimpleGraph V) (hG : G.IsAcyclic) :
     have hr := ih (Fintype.card R) (by omega) R rfl (F.induce R) (hF.induce R)
     right
     rcases hr with he | hc | ⟨d, ⟨hd⟩⟩
-    · letI := he
+    · let := he
       right
       exact ⟨0, ⟨e.trans ((emptyLeftJoinHomeomorph K twoPoints
         (empty_faces (F.induce R))).symm.trans twoPointSphereHomeomorph).toHomotopyEquiv⟩⟩
-    · letI := hc
+    · let := hc
       obtain ⟨c⟩ := ContractibleSpace.hequiv_unit (Ispace (F.induce R))
-      letI : Nonempty (Ispace (F.induce R)) := ⟨c.invFun ()⟩
+      let : Nonempty (Ispace (F.induce R)) := ⟨c.invFun ()⟩
       let j := FiniteSimplicialJoin.joinHomeomorph K twoPoints
         inferInstance ⟨twoPoint true⟩
       letI := join_contractible (W := Ispace (F.induce R)) (twoPoint true)
       left
       exact (e.trans j.symm.toHomotopyEquiv).contractibleSpace
-    · letI : Nonempty (Ispace (F.induce R)) := ⟨hd.invFun (EuclideanSphereJoin.coordinatePoint d)⟩
+    · let : Nonempty (Ispace (F.induce R)) := ⟨hd.invFun (EuclideanSphereJoin.coordinatePoint d)⟩
       let j := FiniteSimplicialJoin.joinHomeomorph K twoPoints
         inferInstance ⟨twoPoint true⟩
       right
