@@ -4,6 +4,8 @@ import D5.S3.Quantum.Fermionic.BcGhostStateFieldLocality
 
 /-! Faithful field-family registration attempt. The source occurrence selector
 is still absent; no declared-validation status is claimed. -/
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 open scoped VertexOperator
 namespace Reg.D5.S3.Quantum.Fermionic.BcGhostStateFieldLocality
@@ -42,6 +44,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   let D : ℤ → ℤ → Module.End ℂ Fock := fun m n =>
     ((identityField : VertexOperator ℂ Fock) [[m]]) * (identityField [[n]]) +
       (identityField [[n]]) * (identityField [[m]])
+  simp only [one_mul, pow_one, neg_one_smul, sub_neg_eq_add] at hN
   change delta^[N] D = 0 at hN
   have modes (n : ℤ) : (identityField : VertexOperator ℂ Fock) [[n]] =
       if n = -1 then LinearMap.id else 0 := by
@@ -58,19 +61,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
       if m + k = -1 then (2 : ℂ) • (LinearMap.id : Module.End ℂ Fock) else 0 := by
     induction k generalizing m with
     | zero =>
-      simp only [Function.iterate_zero_apply, D, modes]
+      simp only [Function.iterate_zero_apply, D, modes, Nat.cast_zero, add_zero]
       split_ifs <;> simp [Module.End.mul_eq_comp, two_smul]
     | succ k ih =>
       rw [Function.iterate_succ_apply']
       change delta^[k] D (m + 1) (-1) - delta^[k] D m 0 = _
       rw [tail k m 0 (by omega), sub_zero, ih]
-      congr 1
-      omega
+      rw [show m + 1 + (k : ℤ) = m + (k + 1 : ℕ) by push_cast; omega]
   have bad := congrFun (congrFun hN (-1 - N)) (-1)
   rw [head, if_pos (by omega)] at bad
-  have vector := LinearMap.congr_fun bad vacuum
-  norm_num at vector
-  simpa [vacuum, ket] using vector
+  have vector := congrArg (fun A : Module.End ℂ Fock => (A vacuum) ∅) bad
+  norm_num [vacuum, ket] at vector
 private theorem actual_dependence : actual.readout () () vacuum ≠ actual.readout () () 0 := by
   intro h
   have hz := congrArg (fun A : VertexOperator ℂ Fock => (A [[-1]]) vacuum) h

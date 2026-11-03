@@ -6,6 +6,8 @@ import D5.S3.Quantum.Fermionic.BcGhostStateField
 conjunctions have no supplied source selector; this is missing binding evidence,
 not a claim of declared validation. Parity has a direct two-binder selector. -/
 
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 open scoped VertexOperator
 namespace Reg.D5.S3.Quantum.Fermionic.BcGhostStateField
@@ -41,7 +43,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hz := h.2.1 vacuum
   change (0 : Fock) = vacuum at hz
-  simpa [vacuum, ket] using hz
+  have bad := congrArg (fun v : Fock => v ∅) hz
+  norm_num [vacuum, ket] at bad
 private theorem actual_dependence : actual.readout () () vacuum ≠ actual.readout () () 0 := by
   intro h
   have hz := congrArg (fun A : VertexOperator ℂ Fock => (A [[-1]]) vacuum) h
@@ -112,6 +115,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   rw [stateField_creation.2.2.2.1] at hz
   have he := LinearMap.congr_fun hz vacuum
   norm_num [b, create_vacuum, ket] at he
+  have bad := congrArg (fun v : Fock => v {2}) he
+  norm_num at bad
 private theorem actual_dependence : actual.readout () () 0 ≠ actual.readout () () (ket {0}) := by
   intro h
   have hz := congrArg (fun f : ℤ → Module.End ℂ Fock => f (-1)) h
@@ -123,6 +128,8 @@ private theorem actual_dependence : actual.readout () () 0 ≠ actual.readout ()
     stateField_creation.2.2.2.1] at hz
   have he := LinearMap.congr_fun hz vacuum
   norm_num [b, create_vacuum, ket] at he
+  have bad := congrArg (fun v : Fock => v {2}) he
+  norm_num at bad
 
 def family : Registration arena (type_of% @stateField_translation) where
   actual := actual
@@ -137,7 +144,7 @@ def family : Registration arena (type_of% @stateField_translation) where
     · intro e; exact nomatch e
   dependence := by intro role; exact ⟨(), 0, ket {0}, actual_dependence⟩
 
-def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0,0}
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@stateField_translation) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Fermionic.BcGhostStateField.Translation.unit
   realizationName := `Reg.D5.S3.Quantum.Fermionic.BcGhostStateField.Translation.family
@@ -180,15 +187,19 @@ def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (a : Fock) (n : ℤ), R.readout () n a = ((Y (parity a)) [[n]]) * parity
+open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
 private theorem parity_vacuum : parity vacuum = vacuum := by
-  simp [parity, vacuum, ket]
+  change parity (ket ∅) = ket ∅
+  rw [parity_ket]
+  simp
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hz := h vacuum (-1)
   change (0 : Module.End ℂ Fock) = ((Y (parity vacuum)) [[-1]]) * parity at hz
   have he := LinearMap.congr_fun hz vacuum
   simp only [Module.End.mul_apply, parity_vacuum, stateField_creation.2.1] at he
-  simpa [vacuum, ket] using he
+  have bad := congrArg (fun v : Fock => v ∅) he
+  norm_num [vacuum, ket] at bad
 private theorem actual_dependence : actual.readout () (-1) vacuum ≠ actual.readout () (-1) 0 := by
   intro h
   have hz := LinearMap.congr_fun h vacuum
@@ -209,7 +220,7 @@ def family : Registration arena (type_of% @stateField_parity) where
     · intro e; exact nomatch e
   dependence := by intro role; exact ⟨-1, vacuum, 0, actual_dependence⟩
 
-def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0,0}
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@stateField_parity) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Fermionic.BcGhostStateField.Parity.unit
   realizationName := `Reg.D5.S3.Quantum.Fermionic.BcGhostStateField.Parity.family

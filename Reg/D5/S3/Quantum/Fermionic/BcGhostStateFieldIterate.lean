@@ -4,6 +4,8 @@ import D5.S3.Quantum.Fermionic.BcGhostStateFieldIterate
 
 /-! Faithful field-family registration attempt. The source occurrence selector
 is still absent; no declared-validation status is claimed. -/
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 open scoped VertexOperator
 namespace Reg.D5.S3.Quantum.Fermionic.BcGhostStateFieldIterate

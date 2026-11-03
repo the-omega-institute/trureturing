@@ -15,6 +15,14 @@ ScottCarnahan/vertexAlg revision 4453e34ec390e82a0c789c731ada8f9a6e86bdea.
 The reverse residue has its actual homogeneous super sign throughout.
 -/
 
+/-
+proof_shape: stateField_iterate: content
+escape_witness: Signed positive-residue locality and signed negative normal products
+combine with original translation and creative occupation-basis uniqueness. This
+identifies the actual residue with the field of the actual all-integer mode product.
+admission_basis: escape-witness
+-/
+
 import D5.S3.Quantum.Fermionic.BcGhostStateFieldLocality
 import D5.S3.VertexAlgebra.StateFieldResidueReconstruction
 
@@ -362,10 +370,10 @@ private theorem signed_uniqueness (operator : VertexOperator ℂ Fock)
       order + (order : ℤ) - offset) (-1 + offset) vacuum) = (operator [[index]]) (ket state) := by
       rw [Finset.sum_eq_single 0]
       · simp only [pow_zero, Nat.choose_zero_right, Nat.cast_one, mul_one, one_smul, Nat.cast_zero, sub_zero, add_zero, show index - (order : ℤ) + order = index by omega,
-        signedComm, LinearMap.sub_apply, Module.End.mul_apply, vacuumZero, map_zero, smul_zero, sub_zero, stateField_creation.2.1 (ket state)]
+        signedComm, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, vacuumZero, map_zero, smul_zero, sub_zero, stateField_creation.2.1 (ket state)]
       · intro offset member distinct
         have vanish : ((Y (ket state)) [[-1 + (offset : ℤ)]]) vacuum = 0 := stateField_creation.2.2.1 (ket state) _ (by omega)
-        simp only [signedComm, LinearMap.sub_apply, Module.End.mul_apply, vanish, vacuumZero, map_zero, smul_zero, sub_self]
+        simp only [signedComm, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, vanish, vacuumZero, map_zero, smul_zero, sub_self]
       · simp
     rw [simplify] at coefficient; exact coefficient
   have endZero (index : ℤ) : (operator [[index]]) = 0 := by
@@ -426,7 +434,7 @@ private theorem negativeResidue (s : ℂ) (a b : Fock) (degree : ℕ) : (residue
   change residueCoefficient s (-(degree : ℤ) - 1) index a b vector = _
   rw [residueCoefficient, firstEquality]
   change _ - (epsilon (-(degree : ℤ) - 1) * s) • residueRight (-(degree : ℤ) - 1) index a b vector = _ + s • (∑ᶠ offset : ℕ, term offset)
-  rw [secondEquality, sub_eq_add_neg, ← neg_smul, neg_mul, sign, mul_smul,
+  rw [secondEquality, sub_eq_add_neg, ← neg_smul, ← neg_mul, sign, mul_smul,
       smul_comm ((-1 : ℂ) ^ degree) s]
 
 private theorem positiveLocality (x y z : ℂ) (a b c : Fock) (r Na Nb Nc : ℕ)
@@ -453,7 +461,8 @@ private theorem positiveLocality (x y z : ℂ) (a b c : Fock) (r Na Nb Nc : ℕ)
   have high : discrepancy ((deltaXY ^ Nc) shifted) = 0 := by
     dsimp only [shifted, pair]
     rw [← Module.End.mul_apply, (Commute.refl deltaXY).pow_pow Nc (r + 1) |>.eq,
-      Module.End.mul_apply, intertwiningPowers deltaXY plainXY discrepancy discrepancyXY,
+      Module.End.mul_apply, intertwiningPowers (deltaXY (V := Fock)) (plainXY (V := Fock))
+        (discrepancy (V := Fock)) discrepancyXY (r + 1),
       signedPair_high x y z (Y a) (Y b) (Y c) v Nc hAB, map_zero]
   have cancelled := cancellationBound shifted Na Nb Nc low high
   let lifting := liftAB (Y c) v true - (y * z) • liftAB (Y c) v false
@@ -483,13 +492,17 @@ private theorem positiveLocality (x y z : ℂ) (a b c : Fock) (r Na Nb Nc : ℕ)
       (shiftXY ((deltaXY ^ r) pair).val.2) j k = _
     rw [residueXY _ _ ((deltaXY ^ r) pair).property.1 ((deltaXY ^ r) pair).property.2]
     change discrepancy ((deltaXY ^ r) pair) 0 j k = _
-    rw [intertwiningPowers deltaXY plainXY discrepancy discrepancyXY, difference,
-      ← intertwiningPowers deltaEnd plainXY lifting liftingLaw]
+    rw [intertwiningPowers (deltaXY (V := Fock)) (plainXY (V := Fock))
+        (discrepancy (V := Fock)) discrepancyXY r pair, difference,
+      ← intertwiningPowers (deltaEnd (V := Fock)) (plainXY (V := Fock))
+        lifting liftingLaw r (signedComm x (Y a) (Y b))]
     dsimp only [lifting, liftAB, evaluate, signedComm]
     simp only [LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.coe_mk,
       AddHom.coe_mk, if_true, Bool.false_eq_true, if_false, Pi.sub_apply,
       Pi.smul_apply, Module.End.mul_apply]
-    rw [← positiveModes x a b r j ((Y c) [[k]] v), ← positiveModes x a b r j v]
+    rw [← positiveModes x a b r j (((Y c) [[k]]) v), ← positiveModes x a b r j v]
+    simp only [signedComm, LinearMap.sub_apply, LinearMap.smul_apply,
+      Module.End.mul_apply]
   change delta^[Na + Nb + Nc] (res shifted) = 0 at cancelled
   rw [connection] at cancelled
   have evaluationLaw (D : ℤ → ℤ → Module.End ℂ Fock) :
@@ -544,7 +557,7 @@ private theorem residueClosure (a b : Fock) (p q : ℕ)
     simp only [Module.End.mul_apply] at law
     rw [ha, hb, map_smul, map_smul] at law
     simp only [Pi.smul_apply, LinearMap.smul_apply, map_smul, smul_smul] at law
-    simpa only [product, pow_add] using law
+    simpa only [product, pow_add, mul_comm] using law
   have creativeDifference : ∀ index : ℤ, 0 ≤ index → (difference [[index]]) vacuum = 0 := by
     intro index nonnegative
     simp only [difference, field, map_sub, Pi.sub_apply, LinearMap.sub_apply,

@@ -17,6 +17,14 @@ carrier, not a transported vertex algebra. The intended all-state locality and
 signed iterate theorem remain separate obligations until proved below.
 -/
 
+/-
+proof_shape: stateField_creation, stateField_translation, stateField_parity: content
+escape_witness: Sorted actual occupation creators and signed normal products construct
+all coefficients. Finite-support telescopes give creation and original translation;
+actual CAR parity extends to arbitrary finite state sums.
+admission_basis: escape-witness
+-/
+
 import D5.S3.Quantum.Fermionic.BcGhostVirasoro
 import D5.S3.VertexAlgebra.FieldNormalProduct
 import Mathlib.Data.Finset.Sort

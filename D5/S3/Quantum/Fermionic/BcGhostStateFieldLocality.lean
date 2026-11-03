@@ -6,6 +6,14 @@
    utility: none
    digest: Signed finite-residue cancellation for the actual ghost word fields. -/
 
+/-
+proof_shape: stateField_locality: content
+escape_witness: The signed three-field discrepancy obeys the existing finite-residue
+cancellation kernel. Derivative closure, sorted occupation words and homogeneous
+support-sign extraction prove operator-uniform locality on all actual states.
+admission_basis: escape-witness
+-/
+
 import D5.S3.Quantum.Fermionic.BcGhostStateField
 import D5.S3.VertexAlgebra.FieldNormalProductLocality
 
@@ -325,8 +333,9 @@ private theorem signedDerivative_locality (s : ℂ) (first second : VertexOperat
     have differentiated : signedComm s (dividedDerivative 1 first) second = weighted (signedComm s
       first second) := by
       funext left right
-      rw [signedComm, modes, Algebra.smul_mul_assoc, Algebra.mul_smul_comm, ← smul_sub]
-      rfl
+      rw [signedComm, modes, Algebra.smul_mul_assoc, Algebra.mul_smul_comm]
+      dsimp only [weighted, signedComm]
+      module
     rw [differentiated]
     have linearDelta (first second : ℤ → ℤ → Module.End ℂ Fock) :
         delta (first - second) = delta first - delta second := by
