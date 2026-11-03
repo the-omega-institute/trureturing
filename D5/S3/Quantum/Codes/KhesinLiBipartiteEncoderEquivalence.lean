@@ -8,7 +8,7 @@
 
 import D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses
 import D5.S3.Quantum.Information.EvenLeggedHyperlinkReconstruction
-import Mathlib.LinearAlgebra.Matrix.ElementaryRowOperations
+import Mathlib.LinearAlgebra.Matrix.Transvection
 import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.Data.Nat.Choose.Sum
@@ -318,8 +318,8 @@ private theorem equivalence_profile {k n : ℕ} (G H : SimpleGraph (Fin k ⊕ Fi
       refine ⟨σ.symm, ?_⟩
       intro S
       have he := hσ (S.image σ.symm)
-      simpa only [Finset.image_image, Function.comp_def, Equiv.apply_symm_apply,
-        ← Function.id_def, Finset.image_id] using he.symm
+      rw [Finset.image_image, σ.self_comp_symm, Finset.image_id] at he
+      exact he.symm
     | trans J K L _ _ hJK hKL =>
       obtain ⟨σ, hσ⟩ := hJK
       obtain ⟨τ, hτ⟩ := hKL
@@ -522,9 +522,16 @@ private theorem row_kernel_pairing {k n : ℕ} (D : Matrix (Fin k) (Fin n) (ZMod
   change (Set.range D.row ⊆
     (LinearMap.ker (Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u) : Set _)) ↔ _
   rw [Set.range_subset_iff]
-  simp only [SetLike.mem_coe, LinearMap.mem_ker, Module.piEquiv_apply_apply,
-    smul_eq_mul, Matrix.mulVecLin_apply, funext_iff, Matrix.mulVec,
-    dotProduct, Pi.zero_apply, Matrix.row]
+  change (∀ i, Module.piEquiv (Fin n) (ZMod 2) (ZMod 2) u (D.row i) = 0) ↔ D *ᵥ u = 0
+  constructor
+  · intro h
+    funext i
+    have hi := h i
+    rw [Module.piEquiv_apply_apply] at hi
+    exact hi
+  · intro h i
+    rw [Module.piEquiv_apply_apply]
+    exact congrFun h i
 
 private theorem kernels_row_spaces {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 2))
     (h : LinearMap.ker B.mulVecLin = LinearMap.ker C.mulVecLin) :
@@ -557,8 +564,10 @@ private theorem row_spaces_unit {k n : ℕ} (B C : Matrix (Fin k) (Fin n) (ZMod 
   funext u
   rw [← Matrix.mulVec_mulVec, LinearMap.toMatrix'_mulVec]
   have he := ht (B.mulVecLin.quotKerEquivRange (Submodule.Quotient.mk u))
-  simp only [e, LinearEquiv.trans_apply, LinearEquiv.symm_apply_apply,
-    Submodule.quotEquivOfEq_mk, LinearMap.quotKerEquivRange_apply_mk] at he
+  dsimp only [e] at he
+  rw [LinearEquiv.trans_apply, LinearEquiv.trans_apply, LinearEquiv.symm_apply_apply,
+    Submodule.quotEquivOfEq_mk, LinearMap.quotKerEquivRange_apply_mk,
+    LinearMap.quotKerEquivRange_apply_mk] at he
   exact he
 
 private theorem realize_row_equivalence {k n : ℕ} (G H : SimpleGraph (Fin k ⊕ Fin n))
@@ -573,7 +582,7 @@ private theorem realize_row_equivalence {k n : ℕ} (G H : SimpleGraph (Fin k �
         biadjacency K = M * biadjacency J ∧ Relation.ReflTransGen BipartiteStep J K
   have hP : P R.val := by
     apply Matrix.diagonal_transvection_induction_of_det_ne_zero P R.val
-      (Matrix.GeneralLinearGroup.det_ne_zero R)
+      (Matrix.isUnits_det_units R).ne_zero
     · intro D hD J hJ
       have hones : D = fun _ => 1 := by
         funext i
