@@ -1,0 +1,21 @@
+**命题 28.2（权重由同一比较内部读出）。** 记
+
+$$
+a_i=g_A(e_i,e_i)>0,
+\quad b_j=g_B(f_j,f_j)>0,
+\quad u_{ij}=e_i\otimes f_j,
+\quad \mu_{ij}=h_{ij}a_ib_j.
+$$
+
+则
+
+$$
+\boxed{\mu_{ij}=G(u_{ij},u_{ij})
+=G(e_i\otimes1,1\otimes f_j).}
+\tag{28.2}
+$$
+
+证明。不同联合中心块对 $G$ 正交，且 $e_i\otimes1=\sum_ju_{ij}$、$1\otimes f_j=\sum_iu_{ij}$。展开即得。∎
+
+所以 $h$ 不是为证明另设的一组联合系数，而是实际 $G$ 相对于已给局部比较的内部读数。矩阵块内部的度量被锁定，剩下的是不同共同固定扇区的比较权。
+
