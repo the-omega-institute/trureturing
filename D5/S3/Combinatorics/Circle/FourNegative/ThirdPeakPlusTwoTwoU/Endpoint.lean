@@ -1,8 +1,8 @@
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU.Physical
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
-/- Unelaborated source draft for the two approved original-source domains.
-The unrestricted Circle goal remains open. -/
+/-! Physical joint lift on the full original-source domains stated below.
+The unrestricted Circle problem remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU
@@ -68,7 +68,7 @@ theorem actualSource_third_peak_plus_two_two_U_joint_lift (a b d : ℕ)
   have hlen : l.length=k := by simpa only [List.length_range] using hp.length_eq
   have hj : j<k := by
     have he : l.length=j+1+(banks a b (d+2) d u v 3).length+1 := by
-      simp [l,word,post,j,List.length_append,Nat.add_assoc]
+      simp [l,word,post,j,List.length_append,Nat.add_assoc] <;> omega
     omega
   have getAt (P R : List ℕ) (n : ℕ) : (P++n::R)[P.length]?=some n := by
     induction P with
@@ -89,7 +89,7 @@ theorem actualSource_third_peak_plus_two_two_U_joint_lift (a b d : ℕ)
     exact hm.trans (by simpa only [List.range_succ] using hp.append_right [k])
   have oldOrder : OriginalOrder k seed sigma := by
     apply lift_order k seed hk l hp
-    · simpa only [hmod,hseed] using hold
+    · simpa only [hmod,hseed,oldValue,l] using hold
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero k seed (by dsimp [k]; omega)
   have markedEq : earWord k sigma j=
       (marked a b (d+2) d u v).map (label (k+1) (by omega)) := by
@@ -98,7 +98,7 @@ theorem actualSource_third_peak_plus_two_two_U_joint_lift (a b d : ℕ)
   have newOrder : OriginalOrder (k+1) (2*seed) (earWord k sigma j) := by
     rw [markedEq]
     apply lift_order (k+1) (2*seed) (by omega) (marked a b (d+2) d u v) hpnew
-    · simpa only [hmod',hseed',hhalf] using hnew
+    · simpa only [hmod',hseed',hhalf,newValue] using hnew
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero (k+1) (2*seed) (by dsimp [k]; omega)
   have eo (m : ℕ) := zero_period_transport _ _ sigma oldOrder.2.1 oldOrder.2.2 m
   have en (m : ℕ) := zero_period_transport _ _ (earWord k sigma j) newOrder.2.1 newOrder.2.2 m

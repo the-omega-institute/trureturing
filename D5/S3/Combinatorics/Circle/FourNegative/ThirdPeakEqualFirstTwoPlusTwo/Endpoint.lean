@@ -1,8 +1,8 @@
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualFirstTwoPlusTwo.Small
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
-/-! Candidate source only: UNELABORATED, kernel=false, official=false.
-This endpoint concerns exactly original(a,a,d+2,d). -/
+/-! Physical joint lift for every original(a,a,d+2,d) with 2 ≤ a and a+2 ≤ d.
+The unrestricted Circle problem remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualFirstTwoPlusTwo
@@ -67,7 +67,7 @@ theorem actualSource_third_peak_equal_first_two_plus_two_joint_lift
   have he : a+a+(d+2)+d=k := by dsimp [k]; omega
   have hsize : size a a (d+2) d=k := he
   have hs : seed a a (d+2)=s := by
-    simp [seed,s,show a+a=2*a by omega,show a+a+(d+2)=2*a+d+2 by omega]
+    simp [seed,s,Nat.add_assoc,show a+a=2*a by omega,show a+a+(d+2)=2*a+d+2 by omega]
   have hseed : (s:ℤ)=AA := by
     rw [←hs]
     dsimp [seed,AA,base]
@@ -79,7 +79,6 @@ theorem actualSource_third_peak_equal_first_two_plus_two_joint_lift
     rw [←he]
     dsimp [modulus,N,sourceMod]
     simp only [pow_add]
-    ring
   have hmod' : modulus (k+1)=2*N+1 := by
     dsimp [modulus] at hmod ⊢
     rw [pow_succ]
@@ -132,7 +131,7 @@ theorem actualSource_third_peak_equal_first_two_plus_two_joint_lift
       intro i hi
       have hib : i<k := List.mem_range.mp (hp.mem_iff.mp hi)
       simp [label,Nat.mod_eq_of_lt hib]
-    simpa only [List.map_id] using hm
+    simpa only [List.map_id,Function.comp_def] using hm
   have newvals : (earWord k sigma j).map Fin.val=plus := by
     rw [show earWord k sigma j=plus.map (label (k+1) (by omega)) from marked]
     rw [List.map_map]
@@ -141,14 +140,14 @@ theorem actualSource_third_peak_equal_first_two_plus_two_joint_lift
       intro i hi
       have hib : i<k+1 := List.mem_range.mp (hpplus.mem_iff.mp hi)
       simp [label,Nat.mod_eq_of_lt hib]
-    simpa only [List.map_id] using hm
+    simpa only [List.map_id,Function.comp_def] using hm
   have oldNewMap : sigma.map (fun p => actualSource (k+1) (2*s) p.castSucc)=l.map g := by
     dsimp [sigma]
     rw [List.map_map]
     apply List.map_congr_left
     intro i hi
     have hib : i<k := List.mem_range.mp (hp.mem_iff.mp hi)
-    simp only [actualSource,Fin.val_castSucc,label,Nat.mod_eq_of_lt hib,hmod',hseed',g,newValue,N,AA]
+    simp only [Function.comp_def,actualSource,Fin.val_castSucc,label,Nat.mod_eq_of_lt hib,hmod',hseed',g,newValue,N,AA]
   have oldNewTotal : (sigma.map (fun p => actualSource (k+1) (2*s) p.castSucc)).sum=-(s:ℤ) := by
     rw [oldNewMap,(hp.map g).sum_eq,hznewold,hseed]
   have actualFresh : actualSource (k+1) (2*s) (Fin.last k)=(s:ℤ) := by
@@ -162,11 +161,11 @@ theorem actualSource_third_peak_equal_first_two_plus_two_joint_lift
   refine ⟨sigma,j,hcut,?_,?_,?_,oldFinal,newFinal,oldNewTotal,actualFresh,
     fun m => (eo m).2,fun m n => ?_,fun m => ⟨(eo m).1,(en m).1⟩⟩
   · rw [oldvals]
-    simp [l,j]
+    simp [l,j,k]
   · rw [newvals]
-    simp [plus,j]
+    simp [plus,j,k]
   · rw [newvals]
-    simp [plus,j]
+    simp [plus,j,k]
   · simpa only [half] using (en m).2 n
 
 end D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualFirstTwoPlusTwo
