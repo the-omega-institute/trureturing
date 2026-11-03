@@ -1,1 +1,1 @@
-WIP: include finite positive mixture heads in exact q6/q22 endpoint assembly
+WIP: remove temporary checkpoint metadata; source checkpoint remains recoverable
