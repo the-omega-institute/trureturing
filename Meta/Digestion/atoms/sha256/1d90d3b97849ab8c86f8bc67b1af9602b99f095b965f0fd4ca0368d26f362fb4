@@ -1,0 +1,38 @@
+**定理 40.1（按两端块阶停止的实际过程认证）。** 对给定箭头 $\Phi:\mathcal B\to\mathcal A$，记
+
+$$
+\mathcal A=\bigoplus_i M_{a_i},\quad
+\mathcal B=\bigoplus_\ell M_{b_\ell},\quad
+q=\min\{\max_i a_i,\max_\ell b_\ell\}.
+\tag{40.1}
+$$
+
+设已经供应一段长度 $N$ 的 C102 实际过程延伸，每步伙伴为 $R_j$，最大矩阵块阶数为 $s_j$。若
+
+$$
+c_N=\prod_{j=0}^{N-1}s_j\ge q,
+\tag{40.2}
+$$
+
+则原箭头 $\Phi$ 完全正。活动伙伴给 $s_j\ge2$，所以 $2^N\ge q$ 总是足够；$q=1$ 时长度零已经足够。这仅指完全正性证明所需的深度，不替箭头履行 C102 的实际伙伴供应。不需要把所有尾参考拼成一个独立供应的对象，也不需要认证一个无限维极限。
+
+证明。从 $X_0=X,Y_0=Y,\Phi_0=\Phi$ 出发，两端必须逐次按同一个伙伴延伸：
+
+$$
+X_{j+1}=X_jR_j,\qquad Y_{j+1}=Y_jR_j,
+\qquad\Phi_{j+1}:\mathcal A_{Y_{j+1}}\to\mathcal A_{X_{j+1}}.
+\tag{40.3}
+$$
+
+定理 39.1 逐步给 $\Phi_{j+1}=\Phi_j\otimes\operatorname{id}_{R_j}$。在各条实际对象边的标准识别下，有限归纳得到一个实际存在的正映射
+
+$$
+\Phi_N=\Phi\otimes\operatorname{id}_{R_0}\otimes\cdots
+             \otimes\operatorname{id}_{R_{N-1}}.
+\tag{40.4}
+$$
+
+选择每个参考的最大矩阵块，再在实际输入、输出代数中压到同一组参考块，得 $\Phi\otimes\operatorname{id}_{c_N}$ 正；压到其较小角，得全部 $k\le c_N$ 的正性。实际存在的是式 (40.3) 的两个嵌套端点。尾部 $R_0\otimes\cdots\otimes R_{N-1}$ 是它们表示中的有限代数因子，不被冒认为一个已经可独立取得的 $\Omega$ 对象。
+
+最后直接复用有限 Choi 判据。若 $\max b_\ell\le\max a_i$，$q$ 正性对每个输入块已给 Choi 正性。若 $\max a_i<\max b_\ell$，通常矩阵迹对偶 $\Phi^\dagger:\mathcal A\to\mathcal B$ 同样 $q$ 正：每个矩阵放大的正锥自对偶，使映射正与其迹对偶正等价。对偶的每个输入块阶数至多 $q$，Choi 判据给其完全正，迹对偶再给 $\Phi$ 完全正。零块分量自然为完全正，不需为它们引用非零形式的表示定理。这个最后的成熟判据不要求 $\Phi$ 幺；幺性已由实际参考合同取得。∎
+

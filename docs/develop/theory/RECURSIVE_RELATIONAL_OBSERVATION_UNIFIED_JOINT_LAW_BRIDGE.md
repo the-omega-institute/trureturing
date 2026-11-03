@@ -3893,3 +3893,610 @@ additional source ports, evolving source operations or physical
 spacetime is assumed.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. The two literal sources as geometric types with finite capacities
+
+**Definition 15.1 (typed capacities of the actual sources).** Retain
+(UJB.7502), including every $w_3,z$, and the full-injection prior
+(UJB.9001). A type is an equal-neighborhood class within one endpoint
+sort. Its capacity is its number of literal endpoints. The type relation
+has an incidence exactly when its two classes are adjacent; each pair of
+literal endpoints above an incidence still has edge multiplicity one.
+Write its left and right type sets as $L_i,R_i$, its incidence indicator
+as $I_i$, and its capacities as $c_i,d_i$.
+
+**Theorem 15.2 (geometric reduction of both literal sources).** For $G_0$,
+$R_0$ is the affine point set $F^3$, and $L_0$ is the set of its affine
+lines in the four directions
+
+$$
+K_{[v]}=F(v_2^2,-v_1v_2,v_1^2),\qquad [v]\in\mathbb P^1(F),\quad F=\mathbb F_3.
+\tag{UJB.15001}
+$$
+
+Incidence is point-on-line. Every line type has capacity $2$ and every
+point type capacity $9$. There are $36$ line types, $27$ point types,
+$108$ incidences, and one connected component. For $G_1$, identify
+$F^2$ with the field $F[\iota]$, $\iota^2=-1$. Both type sets are
+$F[\iota]$; incidence is equality of the type values. A left type has
+capacity $8$, a right type capacity $27$. Thus $G_1$ is exactly nine
+disjoint $K_{8,27}$ components, retaining all $72$ and $243$ endpoints.
+
+Proof. The two rows of $B_0(v,-)$ have rank two for $v\ne0$ and kernel
+(UJB.15001). Its solution set for $s$ is one affine line with that
+kernel. The four projective choices of $v$ give four different kernels:
+representatives $(1,0),(0,1),(1,1),(1,2)$ give vectors
+$(0,0,1),(1,0,0),(1,2,1),(1,1,1)$. Equal affine solution lines must
+have the same kernel, so their $v$ values are scalar multiples; the
+corresponding $s$ values have that same multiplier. Consequently the
+left twins are exactly $(v,s)$ and $(-v,-s)$. For a right endpoint
+$(w,z)$, adjacency ignores $z$. Conversely the choices $v=(1,0),(0,1)$
+recover $(w_1,w_2)$ and $(w_2,w_3)$ from their adjacent left endpoints,
+so different $w$ values have different neighborhoods. Right twins are
+therefore exactly the nine $z$ values at fixed $w$. A line has three
+points, and every point has one incident line of each direction. This
+proves the class and incidence counts. The displayed directions span
+$F^3$; moving along their affine lines connects any two points, proving
+connectedness of the quotient and hence of its blow-up.
+
+For $G_1$, the polynomial $X^2+1$ has no root in $F$. Multiplication
+of $v_1+\iota v_2$ and $w_1+\iota w_2$ gives exactly the two entries of
+$B_1$. Its edge equation is therefore
+
+$$
+w_1+\iota w_2=(s_1+\iota s_2)/(v_1+\iota v_2).
+\tag{UJB.15002}
+$$
+
+Each value on the right has eight left representatives, one for each
+nonzero $v$. Each value on the left has three $w_3$ and nine $z$
+representatives. Their neighborhoods coincide precisely at equal values,
+and distinct values have disjoint neighborhoods. This proves the entire
+literal decomposition, including the free coordinates rather than
+removing them. $\square$
+
+**Theorem 15.3 (actual-source injective capacity expansion).** Let $H$ be
+any finite typed bipartite graph with distinguished left vertices $X$
+and right vertices $Y$. Required parallel incidences may be merged for
+this count; no absent cross-edge is forbidden. Its number $J_i(H)$ of
+type-preserving injective embeddings into the literal $G_i$ is
+
+$$
+J_i(H)=\sum_{\alpha:X\to L_i,\ \beta:Y\to R_i}
+ \left(\prod_{xy\in E(H)} I_i(\alpha x,\beta y)\right)
+ \prod_{\ell\in L_i}(c_i)_{|\alpha^{-1}\ell|}
+ \prod_{r\in R_i}(d_i)_{|\beta^{-1}r|}.
+\tag{UJB.15003}
+$$
+
+Here $(a)_0=1$ and $(a)_b=0$ for $b>a$; the capacities are the constants
+in Theorem 15.2, not independently fitted weights. The formula includes
+isolated vertices and is zero if $|X|>72$ or $|Y|>243$.
+
+Proof. Project an injective embedding to its geometric types. Within
+each type its distinguished vertices must choose different literal
+endpoints, in exactly the indicated falling-factorial number of ways.
+Choices in different types are disjoint and independent. Every required
+incidence then holds for every lift precisely when its type incidence
+holds, by Theorem 15.2. This partitions all embeddings without omission
+or automorphism division. It also proves the asserted zero cases.
+The established twin-reduction method of Grohe–Thurley,
+[*Counting Homomorphisms and Partition Functions*, §6.1, Lemma 6.1,
+(6.1)–(6.3)](https://arxiv.org/abs/1104.0185v3), sums positive vertex
+weights over identical rows of a nonnegative symmetric matrix. Here
+one may place the typed incidence matrix in the off-diagonal blocks
+of a symmetric matrix. Its ordinary homomorphism reduction would use
+$c_i^b,d_i^b$. Injectivity instead requires the displayed capacities;
+the counting distinction is the classical one in Lovász–Szegedy,
+[*Limits of dense graph sequences*, §§2.1, 2.4](https://arxiv.org/abs/math/0408173v2).
+The source-specific geometric types and their simultaneous capacity
+constraints are what will be consumed below. $\square$
+
+## 16. Exact indexed evidence without complete hidden injections
+
+**Definition 16.1 (sample partitions and allowed labels).** For the same
+public $N\ge4$, let $p,q$ range over partitions of the original $[N]$.
+They assert the exact equality classes of its left and right endpoints,
+respectively. Construct $H_{p,q}$ with one distinguished vertex per
+block and an incidence from $p(j)$ to $q(j)$ for every original index
+$j$. Repeated incidences impose a single adjacency constraint, but the
+sample denominator below retains all $N$ occurrences. Put $r=|p|$,
+$s=|q|$. Discard pairs with $r>72$ or $s>243$.
+
+For a left block $B\in p$, let $A_B(D)\subseteq\mathcal L$ consist of
+all full left words satisfying every acquired left-coordinate restriction
+at indices in $B$. Define right-block sets in $\mathcal R$ in the same
+way. Conflicting restrictions give an empty set. With no restrictions
+the set is the whole appropriate alphabet. These are intersections of
+restrictions at the same proposed endpoint, not products of separate
+coordinate-page probabilities.
+
+For an alphabet enumerated as $\ell_1,\ldots,\ell_Q$, and $t$
+distinguished blocks with allowed sets $A_b$, define integer arrays
+$f_v(S)$, $S\subseteq[t]$, by
+
+$$
+\begin{aligned}
+f_0(S)&=\mathbf1_{\{S=\varnothing\}},\\
+f_v(S)&=f_{v-1}(S)+
+ \sum_{b\in S:\ell_v\in A_b}f_{v-1}(S\setminus\{b\}),\quad 1\le v\le Q.
+\end{aligned}
+\tag{UJB.16001}
+$$
+
+Write $L_p(D)=f_{128}([r])$ for the left restrictions, and
+$R_q(D)=f_{256}([s])$ for the right restrictions.
+
+**Theorem 16.2 (source-capacity evaluator for every indexed cache).**
+For every assignment of masks and values in (UJB.9003), including null
+ones, define
+
+$$
+\begin{aligned}
+Z_i^*(D)&=\frac1{1944^N}
+ \sum_{p,q}\frac{J_i(H_{p,q})L_p(D)R_q(D)}{(128)_{|p|}(256)_{|q|}},\\
+Z^*(D)&=(1-\theta)Z_0^*(D)+\theta Z_1^*(D).
+\end{aligned}
+\tag{UJB.16002}
+$$
+
+Then $Z^*(D)=Z(D)$, the existing evidence normalizer in (UJB.9004),
+for both literal source branches and every $\theta\in[0,1]$. Equations
+(UJB.15003), (UJB.16001), (UJB.16002), with finite loops over partitions,
+type assignments and subsets, are a terminating exact evaluator. No
+individual complete hidden injection is enumerated. This supplies a
+constructive source reduction for the existing normalizer, rather than
+asserting finite evaluability or abstract sufficiency for the first time.
+
+Proof. Fix a source and a particular tuple of sampled literal edges.
+Its exact endpoint equality partitions are unique. Conversely an
+injective embedding of $H_{p,q}$ supplies exactly one such ordered tuple.
+There are $J_i(H_{p,q})$ tuples, each of mass $1944^{-N}$; unused
+cross-edges do not have to be absent.
+
+For fixed literal endpoints belonging to the $r$ attained left blocks,
+a compatible injective assignment of their labels is counted by
+$L_p(D)$. Indeed $f_v(S)$ counts injective assignments of the blocks
+in $S$ into the first $v$ alphabet elements. The last label is either
+unused, or assigned to exactly one block $b$ that permits it. These
+are the disjoint alternatives in (UJB.16001). Thus the recurrence
+accounts also for unused labels, including their possible later use.
+Every such partial assignment has exactly
+
+$$
+(128-r)_{72-r}\,(256-s)_{243-s}
+\tag{UJB.16003}
+$$
+
+extensions to the two entire once-shared maps, after the analogous
+right-label choice. Dividing by their original prior denominator gives
+
+$$
+\frac{(128-r)_{72-r}(256-s)_{243-s}}
+ {(128)_{72}(256)_{243}}=
+ \frac1{(128)_r(256)_s}.
+\tag{UJB.16004}
+$$
+
+All unobserved literal vertices remain in these extension factors.
+Within each source their different geometric capacities are already
+included in $J_i$, so no source-dependent multiplicative factor can
+be dropped or replaced by a new prior. For example, when all attained
+vertices occupy one left and one right type, the lift factors are
+$(2)_r(9)_s$ in $G_0$ and $(8)_r(27)_s$ in $G_1$. If an entire
+label allocation to geometric types is specified, its internal full-map
+multiplicities would instead be $(2!)^{36}(9!)^{27}$ and
+$(8!)^9(27!)^9$; (UJB.15003) and (UJB.16003) partition those same
+literal assignments, rather than treating these constants as equal.
+Summing the tuple probabilities and averaging the two original source
+weights proves (UJB.16002). $\square$
+
+**Theorem 16.3 (finite arithmetic account and exact input).** Let
+$\mathcal P_N(a)$ be the partitions of $[N]$ into at most $a$ blocks.
+For $p\in\mathcal P_N(72)$, $q\in\mathcal P_N(243)$, put
+$r=|p|$, $s=|q|$. One direct implementation of Theorem 16.2 requires
+at most
+
+$$
+\begin{aligned}
+\mathcal W(N)=1000+N+
+\sum_{p,q}\big[&128r2^{r-1}+256s2^{s-1}+30(N+1)\\
+ &+10(N+r+s+1)(36^r27^s+9^{r+s})\big]
+\end{aligned}
+\tag{UJB.16005}
+$$
+
+exact rational additions, subtractions, multiplications and divisions
+on the counting and probability values. This is a finite upper bound for all masks, not a polynomial bound or a
+bit-operation bound. For rational $\theta$ all outputs are exact
+rationals. For arbitrary real $\theta$, (UJB.16002) can be returned as
+the symbolic affine expression with rational coefficients; every
+positive conditional probability below is a ratio of such expressions.
+Exact numerical evaluation and null-event decisions require an input
+representation supporting the relevant arithmetic and zero/order tests,
+for example a rational or a specified real algebraic number. An
+unrepresented arbitrary real is not an effective exact-real input.
+
+Proof. Enumerate partitions by restricted-growth words and type maps
+in lexicographic order. There are $36^r27^s$ type-map pairs for $G_0$
+and $9^{r+s}$ for $G_1$. For each pair initialize the type occupancies,
+scan the $r+s$ distinguished vertices, and multiply their remaining
+capacities before incrementing the occupancy. If it is exhausted the
+contribution is zero. Check the at most $N$ required incidences and add
+the surviving product. Initialization, counters, this product and its
+addition fit the factor $10(N+r+s+1)$, including occupancy-count
+updates. No literal-vertex permutation is needed; combinatorial cursors and bit-set operations are separate from
+this arithmetic count.
+
+For (UJB.16001), at each of $Q$ labels copy the preceding subset array
+and add one term for each allowed pair $(S,b)$ with $b\in S$.
+There are at most $Qt2^{t-1}$ such additions. Membership in $A_b$
+can be prepared by scanning its original cache restrictions and testing
+the alphabet words. This uses finite Boolean work, at most
+$128\cdot7N+256\cdot8N$ bit comparisons per partition pair; it
+requires no rational arithmetic. The rational products and denominators
+in (UJB.16002) fit the remaining $30(N+1)$ per pair. Falling-factorial
+tables, source constants, mixture and $1944^N$ fit $1000+N$. These choices give the stated conservative
+bound even when zero terms are not pruned. Subset storage, partition
+and type-map enumeration, growing integer bit lengths, input/output
+and controller storage are separate resources. $\square$
+
+## 17. Continued native use and the fixed-partial-cache inverse
+
+**Theorem 17.1 (exact indexed continuation and update).** Keep the full
+indexed cache $D$, public $N,\theta$, and the controller and permissions
+of Assumption 5.2. On $Z^*(D)>0$, Theorem 16.2 evaluates every next
+original-root Read response and every finite conditional array cylinder.
+It covers arbitrary coordinate masks, restrictions added to old samples,
+partial-to-complete transitions, completed-slot replay, constants,
+repeats and null proposed responses. With the declared controller it
+therefore supplies the entire stationary Read continuation interface,
+including bounded adaptive continuation, without a new source port.
+
+More explicitly, let $D\wedge E$ mean conjoining new indexed coordinate
+restrictions, retaining each coordinate once. A contradiction has
+normalizer zero. Then
+
+$$
+\Pr(E\mid D)=\frac{Z^*(D\wedge E)}{Z^*(D)}.
+\tag{UJB.17001}
+$$
+
+For a complete candidate array $y\in\mathcal Y^N$, let $D_y$ fix all
+its coordinates. Its conditional mass is
+
+$$
+\mathsf I_D(y)=
+ \mathbf1_{\{y\text{ satisfies }D\}}\frac{Z^*(D_y)}{Z^*(D)}.
+\tag{UJB.17002}
+$$
+
+This is the same $\mathsf I_D$ as (UJB.9005), not a posterior on types
+or on the source alone.
+
+Proof. Theorem 16.2 is the probability of the actual cache event.
+Intersections of those events are exactly indexed conjunction, giving
+(UJB.17001); fixing the whole array gives (UJB.17002). Thus both ways
+of evaluating cylinders agree by finite additivity.
+
+For every finite operand, use Proposition 5.3's exhaustive classification:
+a spine/marker/constant slot suffix has its fixed reply, while an
+informative entry of (UJB.7705) returns a one-to-one function of one
+specified array bit. A new bit uses the two ratios in (UJB.17001), whose
+sum is one, and appends its actual value at that index. A known bit,
+including any bit of a completed sample, returns its recorded value
+with probability one; it is never resampled from an updated generator.
+A fixed reply leaves the cache unchanged. A contrary repeat, wrong
+constant, or zero-normalizer new reply is a null event and has no
+conditional posterior. Informative absences use their bit restriction;
+constant absences do not. Null initial evidence likewise receives only
+its zero normalizer, not an arbitrary conditional law.
+
+When a partly acquired index becomes complete, its block restrictions
+in Definition 16.1 are simply their full conjunction. In the generator
+notation, this replaces its old $r_j(g;D)$ by
+$M^{-1}\mathbf1_{\{y_j\in\mathcal E_g\}}$; it does not multiply
+that factor by the old partial likelihood a second time. A former
+unread index acquires its own restriction in exactly the same manner.
+The original indices in $p,q$ and their allowed-label intersections
+are retained throughout, including when two different samples have
+identical masks or the same observed labels. Every term still refers
+to the same two full maps via (UJB.16003), with no independent map
+redraw at a bit, endpoint or completion boundary.
+
+For a fixed bounded deterministic adaptive controller, each attained
+reply fixes the next operand and update. Induction down its reply tree
+multiplies (UJB.17001); the ratios telescope to the final cache
+normalizer divided by the starting one. Constants and repeats remain
+invocations even though their ratios are one. A bound of $b$ invocations
+gives at most $2^{b+1}-1$ nodes, so this construction uses at most that
+many evaluations bounded by $\mathcal W(N)$, plus finite controller and
+address work. Arbitrarily long individual operands are classified by
+their actual finite words, not by restricting the menu to the standard
+decoder addresses.
+
+For the general measurable independent controller of Assumption 5.2,
+let $K_y$ be its continuation transcript measure when replies are the
+deterministic replies of the fixed array $y$, with its available
+controller/seed measure as in Proposition 9.2. The exact continuation
+measure is the finite combination
+
+$$
+\sum_{y\in\mathcal Y^N}\mathsf I_D(y)K_y.
+\tag{UJB.17003}
+$$
+
+Thus at most $2^{15N}$ evaluations provide all source coefficients for
+every such controller, even with bounded adaptive stopping and general
+output spaces. This statement retains the supplied controller measure;
+it does not assume that integration over an arbitrary measurable seed
+has an effective numerical presentation. A finite explicit controller
+tree with rational transition weights, and rational $\theta$, gives a
+terminating rational evaluation of its whole finite transcript law.
+More general effective numerical claims require a corresponding exact
+representation of the controller measure. Formula (UJB.17003) itself
+holds for all the controllers in §9. $\square$
+
+**Theorem 17.2 (capacity-evaluated closure with its exact inverse domain).**
+Partition $[N]=C\sqcup P\sqcup U$ as in Theorem 12.3. Fix $N,\theta$,
+the sets of indices and the entire indexed partial cache $D_P$. Retain
+the completed values at their original indices. If $U\ne\varnothing$,
+choose an actual $u\in U$. For $y\in\mathcal Y$, let $D[u=y]$ add
+its full label at that index. Then
+
+$$
+C_P(D_C)=
+ \{y:1944\,Z^*(D[u=y])=Z^*(D)\}.
+\tag{UJB.17004}
+$$
+
+Consequently the effective closure, the next full-label law and the
+joint unread law have exactly the mutual recovery domain of Theorem
+12.3. The closure together with $D_P$ and the indexed completed labels
+supplies the full native interface. No such inverse from the unread
+law is asserted when $U$ is empty, nor when the partial cache varies
+without being retained.
+
+Proof. By (UJB.17001), the left probability in (UJB.17004), divided
+by $Z^*(D)$, is the actual next full-label law on the designated unread
+sample. The saturation identity and the fixed-prior, fixed-partial-cache
+inverse are exactly (UJB.12004)–(UJB.12006). We reuse that theorem:
+its positive support reconstructs the version set, its fixed $W_P$
+reconstructs the weights, and its indexed $Q_{g,j,D_P}$ reconstruct
+old partial samples. Indexed completed values give deterministic replay.
+Theorem 17.1 now evaluates this same interface constructively. At most
+$128\cdot256$ additional normalizers compute (UJB.17004); this is
+computation on descriptions and acquired data, not acquisition of those
+unread values. If $U=\varnothing$, the unread law is the one-point empty
+product even when partial samples remain. Theorem 12.2's nonconstant
+closures on completed histories show why it has no general inverse;
+Theorem 17.1 still evaluates the actual remaining old-slot Reads.
+
+For each of these full indexed laws, Theorem 9.3 already transports
+the conditional law to the ordered endpoint, oriented material support,
+terminal boundary and endpoint-labelled generation order, and back via
+the entire family of Read protocols. The endpoint-labelled causal order
+and all successful histories are the correspondences supplied by
+`NativeEndpointCausalOrder.result`, `NativeEndpointEventIdeals.all_histories`
+and `NativePromiseCausalBoundary.result`; an actual serial extension is
+not recovered. No new causal/serial correspondence is needed here.
+The generic factorization and policy-sufficiency suppliers of §14.1
+likewise do not remove the old-slot factors. In particular Theorems
+10.1, 11.2 and 13.2 remain obstructions to discarding index association,
+joint coordinate restrictions or retained past evidence. $\square$
+
+## 18. Actual capacity thresholds, forced relations and mixed predictions
+
+**Theorem 18.1 (sharp common-neighbor capacities and feasible witnesses).**
+For unordered distinct literal left endpoints, the common-right-neighbor
+histograms are
+
+$$
+\begin{array}{c|rrr}
+ &0&9&27\\\hline
+G_0&1872&648&36\\
+G_1&2304&0&252
+\end{array}
+\tag{UJB.18001}
+$$
+
+Three distinct left endpoints have at most $9$ common right neighbors
+in $G_0$ and at most $27$ in $G_1$, both bounds attained. For the
+complete typed bipartite graph on three distinguished left and $m$
+distinguished right vertices, the exact counts at the relevant thresholds
+are
+
+$$
+\begin{aligned}
+J_0(K_{3,9})&=27(8)_3(9)_9>0,&J_0(K_{3,10})&=0,\\
+J_1(K_{3,m})&=9(8)_3(27)_m\quad(1\le m\le27),&
+J_1(K_{3,28})&=0,\\
+J_1(K_{3,10})&=92575499208192000.
+\end{aligned}
+\tag{UJB.18002}
+$$
+
+Thus ordinary type coarsening with unrestricted multiplicative weights
+loses feasibility on the actual $G_0$: it allows a map of $K_{3,10}$
+to a single incident line and point, whereas no injective literal
+realization exists. The attainable $K_{3,9}$ makes the threshold sharp.
+
+Proof. In $G_0$, two different line types either are disjoint or meet
+at one point, while two literal vertices in the same line type have
+all $27$ right neighbors in common. There are $36\binom22=36$
+same-type pairs. At each of the $27$ points the four incident line
+types give $\binom42$ pairs with four literal lifts each, giving $648$.
+The remaining $\binom{72}2-36-648=1872$ pairs are disjoint. In $G_1$
+there are $9\binom82=252$ pairs with $27$ common neighbors and
+$\binom{72}2-252=2304$ disjoint pairs.
+
+Three distinct left vertices cannot all occupy a $G_0$ line type of
+capacity two. If they have common neighbors, at least two distinct lines
+meet at their unique common affine point. All common right endpoints
+are the nine $z$ values there. At each point the eight incident literal
+left vertices allow $(8)_3$ ordered triples, and no triple can be
+counted at another point. This proves the first line of (UJB.18002).
+For $G_1$ a triple with common neighbors must lie in one of its nine
+components; its right choices are exactly the component's $27$ literal
+endpoints. This proves the remaining counts.
+
+At $w=0$, all eight endpoints $(v,0)$ are adjacent to every $(0,z)$
+in both sources. Any three distinct such left endpoints and all nine
+$z$ values give the first positive witness. In $G_1$, allowing all
+$w_3$ as well gives its $27$-neighbor witness. A single type incidence
+with positive ordinary weights gives a positive homomorphism term
+$2^3 9^{10}$ in $G_0$, but the correct lift term $(2)_3(9)_{10}$ is
+zero. All other capacity assignments are zero by the proved geometric
+bound. This is a failure of the uncapacitated replacement, not of
+Theorem 15.3. $\square$
+
+**Theorem 18.2 (an acquired relation forces a new relation in both sources).**
+Fix $N\ge7$, four different left label words $a,b,c,d$ and two different
+right label words $u,v$. Completely acquire seven distinct sample indices
+with the ordered edge labels
+
+$$
+au,\ av,\ bu,\ bv,\ cu,\ cv,\ du.
+\tag{UJB.18003}
+$$
+
+For every $\theta\in[0,1]$ this history is positive. Its support closure
+contains the previously unacquired pair $dv$. With $N\ge8$ and all
+other samples unread, its full-label probability at any designated
+unread sample is exactly $1/1944$. The same forced-support conclusion
+holds after any additional positive indexed partial evidence on other
+indices. The use of three distinct common left labels is sharp for
+this family: the five-edge evidence $au,av,bu,bv,du$ need not force
+$dv$ when $1-\theta>0$.
+
+Proof. Two different affine points of $G_0$ lie on at most one line
+of the allowed directions: an affine line through two points is unique.
+Their right neighborhoods therefore have at most two common literal
+left endpoints. Three distinct common left endpoints force the two
+right endpoints to have the same $w$, hence to be twins. In $G_1$,
+even one common left endpoint forces two right endpoints into the same
+component and hence the same right type. Thus (UJB.18003) forces $u,v$
+to be right twins in every compatible generator of either source.
+The observed $du$ then forces $dv$. For positivity take $w=0$, two
+different $z$ values, and four different $v\ne0$ with $s=0$.
+All eight required pairs exist in both sources. Assign their prescribed
+distinct labels and extend both injections using (UJB.16003). The
+seven specified independent samples then have positive probability.
+Theorems 12.2 and 17.2 give the saturated unread prediction. Restricting
+to any smaller nonempty version set by further partial evidence cannot
+remove a forced edge.
+
+For sharpness in $G_0$, take $u=((0,0,0),0)$,
+$v=((0,0,1),0)$ and left endpoints
+$a=((1,0),0)$, $b=((2,0),0)$, $d=((0,1),0)$.
+Both $a,b$ meet $u,v$, and $d$ meets $u$, but
+$B_0((0,1),(0,0,1))=(0,1)\ne0$, so $dv$ is absent. These literal
+vertices admit the prescribed distinct labels and full extensions.
+This generator retains positive posterior mass whenever $1-\theta>0$,
+so $dv$ is not then forced by the five edges. For that comparison's
+unread prediction one needs $N\ge6$; it grants no extra sample when
+all indices have already been used. $\square$
+
+**Theorem 18.3 (exact mixed predictions consumed by the evaluator).**
+Let $a\ne b$ and $u\ne v$ be prescribed full labels of the appropriate
+sorts. At $N\ge4$, complete three designated samples as
+$au,av,bu$, leave a designated fourth wholly unread, and leave every
+other sample unread. This history is positive for both sources, and
+for every $\theta\in[0,1]$ the fourth sample has
+
+$$
+\Pr(Y_4=bv\mid au,av,bu)
+ =\frac{37+54\theta}{91\cdot1944}.
+\tag{UJB.18004}
+$$
+
+With three distinct left words $a,b,c$, two distinct right words $u,v$,
+$N\ge6$ and five complete designated samples $au,av,bu,bv,cu$,
+the analogous designated unread sample has
+
+$$
+\Pr(Y_6=cv\mid au,av,bu,bv,cu)
+ =\frac{28+63\theta}{1944(37+54\theta)}.
+\tag{UJB.18005}
+$$
+
+Both are exact joint-mask predictions of Theorems 16.2 and 17.1;
+the newly completed sample is conditioned at its own index.
+
+Proof. For a typed three-edge path $P_4$, choose its middle edge,
+then a different right neighbor in $26$ ways and a different left
+neighbor in seven ways. Thus
+
+$$
+J_0(P_4)=J_1(P_4)=1944\cdot26\cdot7=353808.
+\tag{UJB.18006}
+$$
+
+For $K_{2,2}$, sum $(h)_2$ over ordered distinct left pairs having
+$h$ common right neighbors. Equation (UJB.18001) gives
+$J_0(K_{2,2})=143856$ and $J_1(K_{2,2})=353808$.
+At three completed samples their likelihoods are
+$353808/[1944^3(128)_2(256)_2]$ under either source, independent of
+which prescribed distinct labels were used. At four prescribed labels
+forming the square, the numerator becomes the respective $K_{2,2}$
+count and the sample denominator becomes $1944^4$. The unchanged
+label denominator cancels in (UJB.17001), proving (UJB.18004).
+
+For the five-edge graph in the second assertion, choose the ordered
+right pair and ordered common left pair $a,b$, then choose $c$ from
+the six remaining left neighbors of $u$. Its count is
+$6J_i(K_{2,2})$. Completing $cv$ instead counts $K_{3,2}$.
+In $G_0$ a right pair can have three common left endpoints only if
+it lies in the same point type, giving $27(9)_2(8)_3=653184$;
+in $G_1$ its count is $9(27)_2(8)_3=2122848$. Hence the two
+five-edge counts are $(863136,2122848)$ and the six-edge counts are
+$(653184,2122848)$. Their positive mixed likelihood ratio, with its
+additional factor $1944^{-1}$, is (UJB.18005). Here the common label
+denominator is $(128)_3(256)_2$. The explicit $w=0$ configurations
+used above give positive realizations of every required pattern in
+both sources. No unspecified maximum-likelihood embedding or separate
+source optimum has been substituted for the shared mixture. $\square$
+
+**Theorem 18.4 (contingent source exclusion and the remaining resource axes).**
+Fix three different left label words and ten different right label
+words. At $N\ge31$, completely acquire the thirty prescribed incidences
+of their $K_{3,10}$ at distinct sample indices, with the other indices
+unread. This history is positive exactly when $\theta>0$, with
+probability
+
+$$
+\frac{\theta\,92575499208192000}
+ {1944^{30}(128)_3(256)_{10}}.
+\tag{UJB.18007}
+$$
+
+It forces source $1$ on its positive domain. Nevertheless neither this
+capacity witness nor the evaluator gives a bounded always-correct
+source classifier. The arithmetic account (UJB.16005) changes neither
+the native invocation tariff nor the address tariff of (UJB.9008).
+
+Proof. The counts and positive realizations are (UJB.18002), and the
+full-map extension division is (UJB.16004). Each distinct original
+sample contributes $1944^{-1}$, proving (UJB.18007) and its exact
+null domain at $\theta=0$. A wholly unread continuation requires the
+additional original index stated in the theorem. At $N=30$ the same
+completed evidence and source exclusion remain meaningful, but its
+unread-array law is the empty product and carries no closure inverse.
+The common positive all-zero events of §5 still obstruct every bounded
+always-correct classifier, so positive exclusion events do not supply
+a sure acquisition protocol.
+
+Each actual coordinate acquisition still uses its original native
+operand, and every repeat, constant and absence still counts as an
+invocation. In particular a newly acquired local bit $h$ at sample $j$
+has standard operand length $15(j-1)+h+1$, while general operands
+retain their literal lengths. Computing normalizers supplies
+probabilities, not the realized unread bits. The retained indexed
+cache, controllers, cursors, operands, output laws and subset/type
+workspace are separate resources from the finite arithmetic count.
+The external source preparation and its once-shared random maps remain
+the premises of §§5 and 9. None of the displayed law calculations
+constructs native randomness, a hidden-realization inverse, a selected
+serial history, or a physical-spacetime correspondence. $\square$
+
+## 追加锚（本行以下为增补区）
