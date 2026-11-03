@@ -183,7 +183,7 @@ class NativeBatchPartitionTests:
             self.assertFalse(any(root.glob('*.zip')))
 
 
-class NativeBatchCapacityConsumerTests:
+class NativeBatchCompatibilityConsumerTests:
     def _capacity_report(self, size, *, success=True):
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = json.loads((ROOT / 'lean-report-inputs.json').read_text())['report_execution']
@@ -243,6 +243,7 @@ class NativeBatchCapacityConsumerTests:
                     report_sha256=hashlib.sha256(report[1]).hexdigest(),
                     materials_sha256=hashlib.sha256(report[2]).hexdigest()))
 
+class NativeBatchCapacityConsumerTests:
     def test_runtime_capacity_through_report_entry(self):
         # Real pinned compiler/extractor, using the existing statement-only fixture.
         # No mathematical registration-assessment or Linux memory claim is made.

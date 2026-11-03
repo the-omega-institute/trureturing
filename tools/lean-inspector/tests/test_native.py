@@ -33,6 +33,10 @@ class NativeBatchCapacityTests(NativeDependencyTestSupport, NativeBatchCapacityC
                                NativeBatchPartitionTests, unittest.TestCase):
     pass
 
+class NativeBatchCompatibilityTests(NativeDependencyTestSupport, NativeBatchCompatibilityConsumerTests,
+                                    unittest.TestCase):
+    pass
+
 class NativeSemanticTests(NativeDependencyTestSupport, NativeSemanticConsumerTests, unittest.TestCase):
     pass
 
