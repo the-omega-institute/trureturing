@@ -79,8 +79,11 @@ internal sealed class LatticeMatterGhostBRSTDerivationDocument : IScribeDocument
                 DescribeRole.Theorem),
             Paragraph(Text("The mirrored Reg source retains the full original telescope, "
                 + "a typed source-equivalence bridge, whole-family variation, role sensitivity "
-                + "and actual observational dependence. Its semantic binding verdict must be "
-                + "read separately from kernel compilation. Independent review, required CI, "
+                + "and actual observational dependence. Its actual scoped binding verdict is "
+                + "declared_unresolved: IE-C050, source.residual_requires_open, tracked at "
+                + "https://github.com/the-omega-institute/trureturing/issues/26094. "
+                + "The compiled family proofs do not establish semantic audit validation. "
+                + "Independent review, required CI, "
                 + "freeze and official delivery remain later integration obligations; no judge "
                 + "or configuration change is part of this mathematics.")),
             Paragraph(Text("This one algebraic derivation advances the same Monster, VOA/CFT, "
