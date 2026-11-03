@@ -111,7 +111,9 @@ class NativeReportConsumerTests:
             'name = "LeanInformationAudit"\n',
             'name = "LeanInformationAudit"\nneeds = ["leanInspector/compilerRegistrationGate"]\n'))
         producer_config = self.root / 'tools/lean-inspector/lakefile.lean'
-        source = producer_config.read_text().replace('Std.Mutex', 'RegistrationMutex')
+        source = producer_config.read_text().replace(
+            'graphFetch : CompilerMutex Unit', 'graphFetch : RegistrationMutex Unit').replace(
+            '← CompilerMutex.new ()', '← RegistrationMutex.new ()')
         schedule = '''
 structure RegistrationSchedule where
   state : Std.Mutex (Nat × Nat)
@@ -121,10 +123,10 @@ package_facet compilerRegistrationState (_pkg : Package) : RegistrationSchedule 
   Job.async do return ⟨← Std.Mutex.new (0, 0), ← IO.Promise.new⟩
 
 structure RegistrationMutex (α : Type) where
-  inner : Std.Mutex α
+  inner : CompilerMutex α
 
 def RegistrationMutex.new (value : α) : BaseIO (RegistrationMutex α) :=
-  return ⟨← Std.Mutex.new value⟩
+  return ⟨← CompilerMutex.new value⟩
 
 def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT FetchM m] [MonadFinally m]
     (mutex : RegistrationMutex α) (action : IO.Ref α → m β) : m β := do
