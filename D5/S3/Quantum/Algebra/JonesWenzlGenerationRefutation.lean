@@ -104,7 +104,7 @@ private theorem parameter : qzero ≠ 0 ∧ pbar qzero = 6 ∧
     rw [he]
     exact (Complex.isPrimitiveRoot_exp 6 (by norm_num)).eq_orderOf.symm
   refine ⟨Complex.exp_ne_zero _, ?_, ?_⟩
-  · simp only [pbar, ite_eq_right hne, hord, OfNat.ofNat_ne_zero, ↓reduceIte]
+  · simp only [pbar.eq_1, ite_eq_right hne, hord, OfNat.ofNat_ne_zero, ↓reduceIte]
     rfl
   · rw [hinv, hq]
     ring
@@ -112,10 +112,10 @@ private theorem parameter : qzero ≠ 0 ∧ pbar qzero = 6 ∧
 private theorem projector : compProj qzero [2, 2, 2] = box := by
   have hq : qint qzero 2 = (Real.sqrt 3 : ℂ) := by
     have hp := parameter.2.2
-    norm_num [qint, Finset.sum_range_succ] at ⊢
+    norm_num [qint.eq_1, Finset.sum_range_succ] at ⊢
     linear_combination -hp
-  have h0 : qint qzero 0 = 0 := by simp only [qint, Finset.range_zero, Finset.sum_empty]
-  have h1 : qint qzero 1 = 1 := by norm_num [qint, Finset.sum_range_succ]
+  have h0 : qint qzero 0 = 0 := by simp only [qint.eq_1, Finset.range_zero, Finset.sum_empty]
+  have h1 : qint qzero 1 = 1 := by norm_num [qint.eq_1, Finset.sum_range_succ]
   have hstep (a k : ℕ) : jw qzero 6 a (k + 1) = jw qzero 6 a k +
       (qint qzero k / qint qzero (k + 1)) •
         (jw qzero 6 a k * gen 6 (-qzero - qzero⁻¹) (a + k) * jw qzero 6 a k) := rfl
@@ -126,7 +126,7 @@ private theorem projector : compProj qzero [2, 2, 2] = box := by
     simp only [h0, h1, hq, zero_div, zero_smul, add_zero, one_mul, mul_one, one_div]
   change jw qzero 6 0 2 * (jw qzero 6 2 2 * (jw qzero 6 4 2 * 1)) = box
   rw [hb, hb, hb]
-  simp only [box, mul_one, mul_assoc]
+  simp only [box.eq_1, mul_one, mul_assoc]
 
 private theorem generators :
     (insert (compProj qzero [2, 2, 2])
@@ -295,18 +295,18 @@ private def rho : TL 6 (-qzero - qzero⁻¹) →ₐ[ℂ] Matrix (Fin 9) (Fin 9) 
       have h := congrArg matrixEmbedding (exactRelations.1 i)
       rw [map_mul, embedding_smul] at h
       rw [parameter.2.2]
-      convert h using 1 <;> simp [modelGen, scalarEmbedding, QuadraticAlgebra.lift_apply_apply]
+      convert h using 1 <;> simp [modelGen.eq_1, scalarEmbedding.eq_1, QuadraticAlgebra.lift_apply_apply]
     · simp only [map_mul, FreeAlgebra.lift_ι_apply]
       have h := congrArg matrixEmbedding (exactRelations.2.1 i j hij)
-      simpa only [map_mul, modelGen] using h
+      simpa only [map_mul, modelGen.eq_1] using h
     · simp only [map_mul, FreeAlgebra.lift_ι_apply]
       have h := congrArg matrixEmbedding (exactRelations.2.2 i j hij)
-      simpa only [map_mul, modelGen] using h⟩
+      simpa only [map_mul, modelGen.eq_1] using h⟩
 
 private theorem rho_gen (i : Fin 5) :
     rho (gen 6 (-qzero - qzero⁻¹) (i.val + 1)) = modelGen i := by
   have hi : 1 ≤ i.val + 1 ∧ i.val + 1 < 6 := by have := i.isLt; omega
-  simp only [gen, dite_eq_left hi, rho, RingQuot.liftAlgHom_mkAlgHom_apply,
+  simp only [gen.eq_1, dite_eq_left hi, rho.eq_1, RingQuot.liftAlgHom_mkAlgHom_apply,
     FreeAlgebra.lift_ι_apply, Nat.add_sub_cancel]
 
 private theorem rho_gens :
@@ -328,12 +328,13 @@ private theorem rho_box : rho box = matrixEmbedding exactP := by
     linear_combination hr / 3
   rw [exactP_eq]
   simp only [map_mul, map_add, map_one, embedding_smul, hs]
-  unfold box
+  rw [box.eq_1]
   rw [map_mul, map_mul]
   have h1 : rho (gen 6 (-qzero - qzero⁻¹) 1) = modelGen 0 := rho_gen 0
   have h3 : rho (gen 6 (-qzero - qzero⁻¹) 3) = modelGen 2 := rho_gen 2
   have h5 : rho (gen 6 (-qzero - qzero⁻¹) 5) = modelGen 4 := rho_gen 4
-  simp only [map_add, map_one, map_smul, h1, h3, h5, modelGen]
+  simp only [map_add, map_one, map_smul, h1, h3, h5, modelGen.eq_1]
+
 private theorem exactWitness :
     (exactRow ᵥ* (exactGen 1 * exactGen 0 * exactGen 3 * exactGen 2 *
       exactGen 1 * exactGen 4 * exactGen 3 * exactP)) 6 = (⟨0, -2/3⟩ : coeff) := by
@@ -364,7 +365,7 @@ private theorem embedding_row_smul (c : coeff) (v : Fin 9 → coeff) :
 
 private theorem row_projector : row ᵥ* matrixEmbedding exactP = row := by
   have h := congrArg (fun v => scalarEmbedding ∘ v) exactCertificate.1
-  simpa only [embedding_row, row] using h
+  simpa only [embedding_row, row.eq_1] using h
 
 private theorem row_generators :
     (row ᵥ* (matrixEmbedding exactP * modelGen 1 * matrixEmbedding exactP) =
@@ -374,10 +375,10 @@ private theorem row_generators :
   constructor
   · rw [← Matrix.vecMul_vecMul, ← Matrix.vecMul_vecMul, row_projector]
     have h := congrArg (fun v => scalarEmbedding ∘ v) exactCertificate.2.1
-    simpa only [embedding_row, embedding_row_smul, row, modelGen] using h
+    simpa only [embedding_row, embedding_row_smul, row.eq_1, modelGen.eq_1] using h
   · rw [← Matrix.vecMul_vecMul, ← Matrix.vecMul_vecMul, row_projector]
     have h := congrArg (fun v => scalarEmbedding ∘ v) exactCertificate.2.2.1
-    simpa only [embedding_row, embedding_row_smul, row, modelGen] using h
+    simpa only [embedding_row, embedding_row_smul, row.eq_1, modelGen.eq_1] using h
 
 private theorem row_witness : (row ᵥ* rho (box * middle * box)) 6 ≠ 0 := by
   have hmid : rho middle = matrixEmbedding
