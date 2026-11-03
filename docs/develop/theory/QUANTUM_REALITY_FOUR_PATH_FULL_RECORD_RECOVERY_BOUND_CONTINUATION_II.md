@@ -2942,12 +2942,7 @@ separation, endpoint inclusion, or exhaustive phase equality. It does not
 evaluate the variance-zero lift conditions (42.25), identity or
 exhaustion of first globally minimizing branches, determinant-zero
 higher-order signs, beyond-four geometric ordering, core-attainment
-questions, or the persistent through-2027 objective. Those obligations
+questions. Those obligations
 remain in force together with (43.26).
 
-The derivation is pure paper mathematics. No Lean/kernel verification,
-mathematical program, symbolic or numerical experiment, gate, build,
-checkpoint, publication, PR, or external lifecycle action was performed
-in this assignment. The caller owns those later actions and all source
-admission decisions.
 ## 追加锚（本行以下为增补区）
