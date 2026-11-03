@@ -176,15 +176,24 @@ private lemma centered_defect_identity {a J : Type*}
         X*((H j - (c j : ℂ) • 1)ᴴ * (H j - (c j : ℂ) • 1)) -
         (2 : ℂ) • ((H j - (c j : ℂ) • 1)*X*(H j - (c j : ℂ) • 1)ᴴ) =
       (H j * H j)*X+X*(H j * H j) - (2 : ℂ) • (H j * X * (H j)ᴴ) := by
-    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
-      Matrix.conjTranspose_one, starRingEnd_apply, Complex.star_def,
-      Complex.conj_ofReal, hH j, sub_mul, mul_sub, smul_mul_assoc,
-      mul_smul_comm, one_mul, mul_one, smul_smul]
+    have hm : (H j - (c j : ℂ) • 1)ᴴ = H j - (c j : ℂ) • 1 := by
+      simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
+        Matrix.conjTranspose_one, hH j]
+      simp
+    rw [hm]
+    simp only [sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, one_mul, mul_one]
     module
   have ht := congrArg (fun f : J → Matrix a a ℂ => ∑ j, f j) (funext hj)
   simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib,
     ← Finset.sum_mul, ← Finset.mul_sum, ← Finset.smul_sum, hs, one_mul, mul_one] at ht
-  linear_combination (1/2 : ℂ) • ht
+  calc
+    _ = (1/2 : ℂ) • (X+X-(2 : ℂ) • (∑ j, H j * X * (H j)ᴴ)) := by module
+    _ = (1/2 : ℂ) •
+        (((∑ j, (H j - (c j : ℂ) • 1)ᴴ * (H j - (c j : ℂ) • 1))*X +
+          X*(∑ j, (H j - (c j : ℂ) • 1)ᴴ * (H j - (c j : ℂ) • 1))) -
+          (2 : ℂ) • (∑ j, (H j - (c j : ℂ) • 1)*X*(H j - (c j : ℂ) • 1)ᴴ)) :=
+      congrArg (fun Y : Matrix a a ℂ => (1/2 : ℂ) • Y) ht.symm
+    _ = _ := by module
 
 /-- A unital Hermitian Kraus family on a factor has its actual centered defect
 bounded in ordinary trace norm on every finite reference. -/
@@ -225,7 +234,10 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
         referenceLift n (h j) - (c j : ℂ) • LinearMap.id := by
       ext x r
       rfl
-    simp [hl, M, H, map_sub, map_smul, LinearMap.toMatrix_id]
+    change LinearMap.toMatrix v.toBasis v.toBasis (referenceLift n (L j)) =
+      H j - (c j : ℂ) • 1
+    rw [hl, map_sub, map_smul, LinearMap.toMatrix_id]
+    rfl
   have hH (j : J) : (H j).IsHermitian := by
     apply (LinearMap.isHermitian_toMatrix_iff v).mpr
     intro x y
@@ -238,7 +250,8 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
       have hz := congrArg (fun T : E →ₗ[ℂ] E => T (x r)) hs
       simpa [referenceLift, LinearMap.sum_apply] using hz
     have hz := congrArg (LinearMap.toMatrix v.toBasis v.toBasis) hl
-    simpa [map_sum, LinearMap.toMatrix_comp, LinearMap.toMatrix_id, H] using hz
+    rw [map_sum, LinearMap.toMatrix_id] at hz
+    simpa only [LinearMap.toMatrix_comp v.toBasis v.toBasis v.toBasis, H] using hz
   have hqmap : operator v Q =
       (∑ j, (referenceLift n (L j)).adjoint.comp (referenceLift n (L j))).toContinuousLinearMap := by
     change (Matrix.toLin v.toBasis v.toBasis Q).toContinuousLinearMap = _
@@ -248,12 +261,12 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
   have hqnorm : ‖Q‖ ≤ 5*δ := by
     have hz := hp.2.2.2.2 n (ContinuousLinearMap.id ℂ _)
     change ‖(∑ j, (referenceLift n (L j)).adjoint.comp
-      ((ContinuousLinearMap.id ℂ _).toLinearMap.comp (referenceLift n (L j)))).toContinuousLinearMap‖
+      (referenceLift n (L j))).toContinuousLinearMap‖
       ≤ (5*δ)*‖ContinuousLinearMap.id ℂ (PiLp 2 (fun _ : Fin n => E))‖ at hz
-    simp only [ContinuousLinearMap.toLinearMap_id, LinearMap.id_comp] at hz
     rw [← hqmap, StarAlgEquiv.norm_map (operator v) Q] at hz
-    exact hz.trans (by nlinarith [ContinuousLinearMap.norm_id_le (𝕜 := ℂ)
-      (E := PiLp 2 (fun _ : Fin n => E))])
+    have hi : ‖ContinuousLinearMap.id ℂ (PiLp 2 (fun _ : Fin n => E))‖ ≤ 1 :=
+      ContinuousLinearMap.norm_id_le
+    exact hz.trans (by nlinarith)
   have hk (X : Matrix (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E))))
       (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E)))) ℂ) :
       traceNorm (∑ j, M j * X * (M j)ᴴ) ≤ (5*δ)*traceNorm X := by
