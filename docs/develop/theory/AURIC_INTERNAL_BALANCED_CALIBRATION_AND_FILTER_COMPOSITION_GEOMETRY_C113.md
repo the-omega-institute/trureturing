@@ -2579,7 +2579,7 @@ $$
 \tag{28.5}
 $$
 
-所有项都是未条件化的非负质量；没有除以 $\eta_{p_s}$ 或分支成功率。该合同量化完整返回记忆，而不只给系统边缘的某个规范分解。
+所有项都是未条件化的非负质量；没有除以 $\eta_{p_s}$ 或分支成功率。泄漏式使用同一原联合映射的完整输出及系统补投影，不预设系统边缘的某个规范分解。
 
 **定理 28.3（三阶合同迫使逐原细支在来源记忆支撑上因子化）。** 在定义 28.1 与设计条件 (28.4) 下，(28.5) 当且仅当对每个原 $j\in\mathsf C$ 存在 CP 映射 $\Psi_j:\mathcal B(M_0)\to\mathcal B(M)$，使
 
@@ -2797,7 +2797,7 @@ $$
 \tag{29.9}
 $$
 
-在这些基中 $\mathcal S_{|v\rangle\langle v|}(A)=D A_r^{\mathsf T}D$，$D=\operatorname{diag}(\sqrt{\lambda_k})$，$A_r$ 为 Schmidt 子空间的压缩。任意 Hermitian $r\times r$ 矩阵均可取作 $A_r$，且 $D$ 可逆，所以像为全部 $\operatorname{Herm}(M_0)$。纯满 Schmidt 来源的可识别性与 [D'Ariano–Lo Presti，arXiv:quant-ph/0211133v1，式 (6) 附近的纯态及混态 faithful 条件](https://arxiv.org/pdf/quant-ph/0211133v1) 相接；此处只消费线性像的判据，不把其单边通道层析结论等同于定理 28.3 的原联合支结论。
+在这些基中 $\mathcal S_{|v\rangle\langle v|}(A)=D A_r^{\mathsf T}D$，$D=\operatorname{diag}(\sqrt{\lambda_k})$，$A_r$ 为 Schmidt 子空间的压缩。任意 Hermitian $r\times r$ 矩阵均可取作 $A_r$，且 $D$ 可逆，所以像为全部 $\operatorname{Herm}(M_0)$。纯满 Schmidt 来源的可识别性与 [D'Ariano–Lo Presti，arXiv:quant-ph/0211133v1，文中的纯态及混态 faithful 条件](https://arxiv.org/pdf/quant-ph/0211133v1) 相接；此处只消费线性像的判据，不把其单边通道层析结论等同于定理 28.3 的原联合支结论。
 
 纯性并非必要。取 $H=M=\mathbb C^d$，$d\ge2$，以及固定真正混合来源
 
@@ -2843,7 +2843,7 @@ $\frac14\sum_sp_s^{\otimes2}=\Pi_{\rm sym}^{(2)}/3$，故确为正权二阶设�
 在 $H\otimes Q$ 中置
 
 $$
-u=|00\rangle-\tfrac12|11\rangle,\qquad
+\nu=|00\rangle-\tfrac12|11\rangle,\qquad
 K=\tfrac12|00\rangle\langle\nu|,\qquad
 K^{\dagger}K=\tfrac14|\nu\rangle\langle\nu|,
 \quad \|K\|_{\rm op}^2=5/16,
