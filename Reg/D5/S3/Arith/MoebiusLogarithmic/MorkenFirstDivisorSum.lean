@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.MoebiusLogarithmic.MorkenFirstDivisorSum
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit of the full positive-input divisor-sum identity. -/
+
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Finset ArithmeticFunction
 open scoped BigOperators
@@ -36,7 +38,9 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 1 (by decide)
-  norm_num [rejected, realize] at hb
+  have ht := _root_.D5.S3.Arith.MoebiusLogarithmic.MorkenFirstDivisorSum.result 1 (by decide)
+  rw [← ht] at hb
+  norm_num [rejected, realize, Finset.sum_filter] at hb
 
 def registration : Registration arena
     (∀ (n : ℕ), 0 < n →
@@ -63,8 +67,9 @@ def registration : Registration arena
     refine ⟨(), (1 : ℕ), (3 : ℕ), ?_⟩
     change (∑ k ∈ (Icc 1 1).filter (fun k => k.Coprime 1), moebius k) ≠
       ∑ k ∈ (Icc 1 3).filter (fun k => k.Coprime 3), moebius k
-    norm_num [show Icc 1 3 = {1, 2, 3} by decide,
-      moebius_apply_prime (by decide : Nat.Prime 2)]
+    rw [show (Icc 1 1).filter (fun k => k.Coprime 1) = {1} by decide,
+      show (Icc 1 3).filter (fun k => k.Coprime 3) = {1, 2} by decide]
+    norm_num [moebius_apply_prime (by decide : Nat.Prime 2)]
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.MoebiusLogarithmic.MorkenFirstDivisorSum.result)
@@ -86,8 +91,7 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Arith.MoebiusLogarithmic.MorkenFirstDivisorSum,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "fn", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+    readouts := #[{ path := #["body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 
 #print axioms registration
