@@ -127,20 +127,8 @@ private theorem bounded_success (ψ : (Fin 3 → Bool) → ℂ)
     rw [← Complex.re_sum, ← dotProduct_sum, ← Matrix.sum_mulVec, M.complete,
       Matrix.one_mulVec] at he
     convert he using 1
-    rw [dotProduct, Complex.re_sum]
-    simp only [Pi.star_apply, Complex.star_def, ← Complex.normSq_eq_conj_mul_self,
-      Complex.ofReal_re]
-    rw [← hψ]
-    apply Finset.sum_congr rfl
-    intro x _
-    symm
-    rw [fire, Complex.normSq_mul, Complex.normSq_eq_norm_sq]
-    have hn := Complex.norm_exp_ofReal_mul_I
-      ((if x i then 1 else -1) * (Real.pi / 4))
-    push_cast at hn
-    simp only [apply_ite Complex.ofReal, Complex.ofReal_one, Complex.ofReal_neg] at hn
-    push_cast
-    rw [hn, one_pow, one_mul]
+    have hn := congrArg Complex.re (G_diag (Real.pi / 4) ψ hψ i)
+    exact hn.symm
   unfold isoSuccess
   have hs := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) => hp i)
   norm_num only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,

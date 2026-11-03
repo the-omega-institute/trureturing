@@ -112,7 +112,7 @@ private theorem phase_normSq (θ : ℝ) (b : Bool) : Complex.normSq ((Complex.ex
 private theorem fire_normSq {n : ℕ} (θ : ℝ) (i : Fin n) (ψ : (Fin n → Bool) → ℂ)     (x : Fin n → Bool) : Complex.normSq (fire θ i ψ x) = Complex.normSq (ψ x) := by
   change Complex.normSq ((Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I)) * ψ x) = _
   rw [Complex.normSq_mul, phase_normSq, one_mul]
-private theorem G_diag {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (hψ : ∑ x, Complex.normSq (ψ x) = 1) (i : Fin n) : (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ)) i i = 1 := by
+theorem G_diag {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (hψ : ∑ x, Complex.normSq (ψ x) = 1) (i : Fin n) : (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ)) i i = 1 := by
   simp only [D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose, Matrix.of_apply]
   have h : ∀ x, star (fire θ i ψ x) * fire θ i ψ x = (Complex.normSq (ψ x) : ℂ) := by
     intro x
