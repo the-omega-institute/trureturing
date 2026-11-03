@@ -1,0 +1,35 @@
+**定义 1.1（圆周上的独立均匀随机定向）。** Let $r\ge 3$ and $n>r$ be integers. On $\mathbb Z_n$ let
+
+$$
+e_i=\{i,i+1,\ldots,i+r-1\},\qquad i\in\mathbb Z_n,
+$$
+
+with all vertex and edge indices interpreted modulo $n$. Independently for each $i$, choose a vertex $Y_i$ uniformly from $e_i$, and put
+
+$$
+X=\left|\{Y_i:i\in\mathbb Z_n\}\right|.
+$$
+
+For a finite integer-valued random variable, write
+
+$$
+H(X)=-\sum_k\Pr(X=k)\log_2\Pr(X=k),
+$$
+
+with $0\log_2 0=0$. Define constants depending only on $r$ by
+
+$$
+a_r=\left(1-\frac1r\right)^{r-1},\qquad
+q_r=a_r(1-a_r),\qquad
+b_r=\frac{r-1}{r^2},\qquad
+c_r=q_r(1-e^{-2b_r}),
+$$
+
+and
+
+$$
+K_r=\max\left\{\frac12,\frac12\log_2\frac{\pi}{c_r}\right\}.
+$$
+
+Here $0<a_r<1$, so $c_r>0$ and $K_r$ is finite and nonnegative.
+
