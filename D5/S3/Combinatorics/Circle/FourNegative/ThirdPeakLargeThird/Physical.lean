@@ -107,12 +107,12 @@ private theorem physical_source (a b c d v p : ℕ) (strict early : Bool)
     have doubled (r : Fin 4) : 2*endpoints r=rowDoubles a b c d v p strict early side r := by
       cases strict <;> cases early <;> fin_cases r
       all_goals dsimp [endpoints,e0,e1,e2,e3,rowDoubles,T,order]
-      all_goals dsimp only [Bool.false_eq_true,ite_false,ite_true] at m0 m1 m2 m3
       all_goals simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
         Matrix.cons_val_three,Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,
         Matrix.cons_val_zero',Matrix.cons_val_succ',Function.comp_apply] at m0 m1 m2 m3 n0 n1 n2 n3
       all_goals change rowBase a b c d side 0=AA+ee at start
-      all_goals dsimp only [F] at m0 m1 m2 m3 n0 n1 n2 n3
+      all_goals simp only [Bool.false_eq_true,ite_false,ite_true] at m0 m1 m2 m3
+      all_goals dsimp only [F,ee,AA] at m0 m1 m2 m3 n0 n1 n2 n3 start ⊢
       all_goals nlinarith only [m0,m1,m2,m3,n0.1,n0.2,n1.1,n1.2,n2.1,n2.2,n3.1,n3.2,start]
     have terminal_double (r : Fin 4) :
         2*f (T r)=rowHeads a b c d strict side r-(if side then 2*N+1 else N) := by
@@ -137,11 +137,11 @@ private theorem physical_source (a b c d v p : ℕ) (strict early : Bool)
     cases side <;> cases early
     all_goals simp only [Bool.false_eq_true,ite_false,ite_true] at w0 w1 w2 w3 ⊢
     all_goals dsimp [bs,packets,withEar,earSlot,packetChecks]
-    all_goals simp only [zero_add]
+    all_goals try simp only [zero_add]
     all_goals change 0≤M 0+f (T 0) ∧ M 0≤C ∧ _
     all_goals refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,True.intro⟩
     all_goals dsimp [M,P,f,C,ee,AA] at w0 w1 w2 w3 ⊢
-    all_goals simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,tab.2.2.2]
+    all_goals try simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,tab.2.2.2]
     all_goals nlinarith only [w0.1,w0.2,w1.1,w1.2,w2.1,w2.2,w3.1,w3.2]
   have positive (side : Bool) : ∀ pkt∈bs,∀ i∈pkt.1,
       0≤(if side then newValue a b c d else oldValue a b c d) i := by
