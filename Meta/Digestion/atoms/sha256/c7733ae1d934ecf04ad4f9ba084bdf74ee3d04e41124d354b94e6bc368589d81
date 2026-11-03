@@ -1,0 +1,18 @@
+### 推论 3.3（有序复三重比较保留带向曲率）
+
+将方向表示为 qubit 纯投影 $P_j=(I+n_j\cdot\sigma)/2$，记
+
+$$
+B_k=\operatorname{tr}(P_kP_{k+1}P_{k+2}),\quad d_k=n_k\cdot n_{k+2},\quad
+\tau_k=(n_k\times n_{k+1})\cdot n_{k+2}.
+$$
+
+相邻内积为零时，Pauli 乘法给出
+
+$$
+B_k=\frac{1+d_k+i\tau_k}{4},\qquad
+\kappa_k=-\frac{4\operatorname{Im}B_k}{4\operatorname{Re}B_k-1}.
+$$
+
+分母为 $d_k<0$，包括 $B_k=0$ 也无奇点。这里使用 v87 已保留的有序复相干读数，不把三重投影恒等式宣称为新的量子假设。仅保留无向实内积一般只能恢复 $|\kappa_k|$；有序复比较还保留带向信息。整体钟速 $v_0$ 仍须由所选参数提供。
+

@@ -1,0 +1,29 @@
+**Definition 4.1 (the four-sample experiment).** Retain Definition 3.1
+without changing its operations: one hidden $i$ is fixed, each paid draw
+is iid uniform with replacement on the actual $1944$ edges of
+(UJB.7502), and an explicitly supplied nondestructive same-source fork
+returns the two typed handles from that draw. Stable equality is only
+within type; the two charts share sample indices, and comparisons to
+retained old handles remain legal. Control, permissions, initialization
+and auxiliary randomness are source-blind. Old source-dependent handles
+and records must come from this same experiment and their draws remain
+charged. Coordinates, multiplication, an inverse operation, reset and
+any additional sampler are unavailable to the observer. Proposition 3.2
+supplies the mathematical correspondence with the published groups;
+in particular the third $w$ coordinate remains present also for $S_1$.
+
+Let $p_i(\pi,\sigma)=\Pr_i(H_4=(\pi,\sigma))$. Partitions here are
+exact equality patterns on the same ordered set $[4]$; e.g. $12|3|4$
+means precisely $a_1=a_2$, with $a_3,a_4$ distinct from that value and
+each other. Write $\pi\preceq\rho$ for refinement, $|\pi|$ for the
+number of blocks, and
+
+$$
+\mathcal P=\{12|34,13|24,14|23\},\qquad
+\mathcal M(\pi)=\{\rho\in\mathcal P:\pi\preceq\rho\}.
+$$
+
+The scalar $H_i=\sum_{t,t'}c_i(t,t')^2$ is the four-cycle homomorphism
+count from (UJB.7506), including diagonal and other noninjective maps;
+it is distinct from the indexed history $H_n$.
+

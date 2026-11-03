@@ -2137,3 +2137,271 @@ $$
 [GT]: https://arxiv.org/html/math/0312294v2
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 同一 ready 的一次原生读取与指定秩一成功准备
+
+**定义 12.1（固定来源、指定仪器与保留切口）。** 沿用定义 1.1、假设 1.2 及 [II][II] §§100、121 的同一个来源和字面编码。记
+
+$$
+\begin{gathered}
+J_i\psi=J(\psi\otimes|i\rangle),\qquad R_0=J_0,\qquad
+P_{\mathcal C}=J_0J_0^*+J_1J_1^*,\qquad
+P_\perp=I_{89}-P_{\mathcal C},\\
+M_iJ_j=\delta_{ij}J_j,\qquad
+K_fJ_i=J_iK_f^{(H)}\quad(f\in\mathsf W_7).
+\end{gathered}
+\tag{12.1}
+$$
+
+这里 $\dim H=13$、$\dim\mathcal K=89$、$\dim\mathcal C=26$，全部 $63$ 维合法补空间保留。唯一共同态 $\omega$ 在这个指定初始接口上的状态取为 $P_{R_0v}$，$v=e_{00100}$；这是原 ready 供应前提，不由“唯一”二字推出。不同目标与精度使用同一个初始接口及同一套门、读取规则，不重选源态。
+
+固定单位向量 $\eta,\phi\in H$ 和 $0<\lambda\le1$，定义两结果目标仪器
+
+$$
+\begin{gathered}
+A_0=\sqrt\lambda\,|\phi\rangle\langle\eta|,\qquad
+A_1=(I_H-\lambda P_\eta)^{1/2}
+    =I_H+(\sqrt{1-\lambda}-1)P_\eta,\\
+\mathcal A_i(X)=A_iXA_i^*,\qquad
+A_0^*A_0=\lambda P_\eta,\qquad A_1^*A_1=I_H-\lambda P_\eta.
+\end{gathered}
+\tag{12.2}
+$$
+
+“秩一成功准备”指 $\mathcal A_0(X)=\lambda\langle\eta,X\eta\rangle P_\phi$，不是要求两个分支都秩一。标签 $1$ 是保留的互补结果，不作为应删掉的失败；物理拒绝、停止等仍是另外的完整结果坐标。$\eta$ 与 $\phi$ 独立指定，故效果 $\lambda P_\eta$ 尚未指定成功后态。
+
+实际程序只取原来的 $\mathsf R(pa,f)$：从 $R_0v$ 执行 $p\in\mathsf W_7$、$a\in\mathsf W_{11}$，读取并保留一次 $b_9=i$，再执行外生且与 $i$ 无关的 $f\in\mathsf W_7$，最后调用原十位终端。仪器输出的比较切口位于这次记录读取之后、终端之前；取 $f=\varnothing$ 就是读取后切口。这个切口没有新增读口或操作。以下全称矩阵输入用于一致误差，不增加任意输入准备权限；实际输入始终为 $P_{K_p^{(H)}v}$。
+
+**假设 12.2（理想输出语义及参考范围）。** 使用假设 1.2 的精确相干控制、平方等变和原投影更新；在所比较的读取及终端上采用其 Born/CP 输出语义。具体地，记录分支为 $X\mapsto M_iXM_i$，不是仅给 $M_i$ 的效果而任取后继。理想物理失败质量为零，全部失败坐标仍保留为零质量坐标。用 $D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$；diamond 范数采用不含 $1/2$ 的约定。
+
+带参考的断言首先是对上述 CP 映射的数学延伸。若要将参考 $R$ 解释为同一 $\omega$ 中实际保留的对象，须另供其共同张量接口、实际联合输入 $\rho_{HR}$，以及控制和读取在它上面确实作用为恒等的合同；记号 $\operatorname{id}_R$ 不供应这些条件。原 ready 与原七地址准备不因此变成可制备任意纠缠输入的源。完整微历史的档案扩张另外在定理 12.4 中限定。
+
+**定理 12.3（同一有限前缀逼近完整准备仪器）。** 在定义 12.1 和假设 12.2 下，对每个 $0<\delta<1$，存在一个有限正向字 $a_\delta\in\mathsf W_{11}$ 和一个共同整体相位 $\theta_\delta$。它们只依赖 $(\eta,\phi,\lambda,\delta)$，不依赖 $p,f$、输入态或参考。置
+
+$$
+\begin{gathered}
+V=J_0A_0+J_1A_1,\qquad
+S_\delta=e^{-i\theta_\delta}K_{a_\delta}R_0,\qquad
+B_{\delta i}=M_iS_\delta,\qquad L_i=J_iA_i,\\
+\|S_\delta-V\|_{\rm op}<\delta,\qquad
+\|B_{\delta i}-L_i\|_{\rm op}<\delta,\qquad
+\sum_iB_{\delta i}^*B_{\delta i}=I_H.
+\end{gathered}
+\tag{12.3}
+$$
+
+令 $C$ 仅标记已经实际报告的二元经典记录，不是新增相干载体。对每个原后续 $f$，定义完整保留输出
+
+$$
+\begin{aligned}
+\Xi_{\delta f}(X)
+ &=\sum_{i=0}^1|i\rangle\langle i|_C\otimes
+       K_fB_{\delta i}XB_{\delta i}^*K_f^*,\\
+\Xi_f(X)
+ &=\sum_{i=0}^1|i\rangle\langle i|_C\otimes
+       J_iK_f^{(H)}A_iXA_i^*(K_f^{(H)})^*J_i^*.
+\end{aligned}
+\tag{12.4}
+$$
+
+两者都是从 $H$ 到 $C\mathcal K$ 的通道，且同一个字满足
+
+$$
+\frac12\|\Xi_{\delta f}-\Xi_f\|_\diamond\le\delta
+\qquad(\forall f\in\mathsf W_7).
+\tag{12.5}
+$$
+
+特别地，给定任意有限维数学参考 $R$ 及任意密度态 $\rho_{HR}$，令 $X_{\delta i}$、$Y_i$ 为式 (12.4) 带恒等参考后的第 $i$ 个未归一块，$q_i=\operatorname{Tr}X_{\delta i}$、$p_i=\operatorname{Tr}Y_i$，则
+
+$$
+\begin{gathered}
+\sum_i\|X_{\delta i}-Y_i\|_1\le2\delta,
+\qquad |q_i-p_i|\le\delta,
+\qquad |\sqrt{q_i}-\sqrt{p_i}|\le\delta,\\
+(\sqrt{p_i}-\delta)_+^2\le q_i
+ \le\min\{1,(\sqrt{p_i}+\delta)^2\},\\
+p_0=\lambda\langle\eta,\rho_H\eta\rangle,\qquad
+p_1=1-p_0,\qquad q_0+q_1=1.
+\end{gathered}
+\tag{12.6}
+$$
+
+两条记录分支均保留，没有成功归一化后才比较的步骤。所有代码泄漏的无条件质量，以及成功但偏离指定输出射线的质量，分别满足
+
+$$
+\begin{gathered}
+\sum_i\operatorname{Tr}[(P_\perp\otimes I_R)X_{\delta i}]
+ \le\delta^2,\\
+\operatorname{Tr}[((I_{89}-P_{\Phi_f})\otimes I_R)X_{\delta0}]
+ \le\delta^2,\qquad
+\Phi_f=J_0K_f^{(H)}\phi.
+\end{gathered}
+\tag{12.7}
+$$
+
+在实际输入 $\rho_H=P_{K_p^{(H)}v}$ 上，$p_0=\lambda|\langle\eta,K_p^{(H)}v\rangle|^2$。若再作原 Born 终端读取，保留 $(i,w)$ 的全部 $2048$ 个形式标签及失败坐标，其相对于目标输出的 TV 距离至多 $\delta$。代码外旧标签的质量仍计入比较，不能视为零而删除。可附上该实际程序的同一确定调用表 $pa_\delta,f$；这不是与另一调用表或随机微历史的距离界。
+
+**证明。** 式 (12.2) 给 $V^*V=I_H$，且 $M_iV=J_iA_i$。将 [II][II] 定理 100.2 证明中的等距酉完成用于这里的两个明确列算子：$R_0H$ 与 $VH$ 都在同一个 $26$ 维代码内，补齐正交基得到代码酉 $U_{\mathcal C}$；在 $63$ 维补空间取恒等，得到全载体酉 $U$，满足 $UR_0=V$。这个标准完成只指定待逼近目标，不授予执行 $U$、$A_i$ 或平方根的权限。
+
+直接消费 II (121.7) 已供应的整个 $V_{12}^{\mathbf1}$ 射影密度，对 $U$ 选择一个有限字和同一个整体相位，使 $\|e^{-i\theta_\delta}K_{a_\delta}-U\|<\delta$。这里仍是 II §§77、100 的同一规范、十二载体的完整 $89$ 维扇区；没有从一个二维块的密度推全载体密度。逆字母用原恒等式 $K_j^{-1}=K_j^9$ 换成正向字，误差不变。限制到 $R_0H$、再投影即得 (12.3)。
+
+先比较等距通道 $X\mapsto S_\delta XS_\delta^*$ 与 $X\mapsto VXV^*$，然后共同执行原二元投影仪器、保留记录及原 $K_f$。直接复用 [V15][V15] 推论 6.3 和 II100.2 已用的等距误差到半 diamond 距离界及通道收缩，得到 (12.5)。这是该成熟估计在本目标列上的应用，不是另一项连续性定理。经典正交块的迹范数可加，给 (12.6) 第一项；读取二元记录的 TV 收缩给 $|q_i-p_i|\le\delta$。
+
+为核对余下常数，纯化同一个 $\rho_{HR}$ 为单位向量 $z$，只在证明中附加未动的纯化空间。两支向量
+
+$$
+u_i=(K_fB_{\delta i}\otimes I)z,\qquad
+v_i=(J_iK_f^{(H)}A_i\otimes I)z
+\tag{12.8}
+$$
+
+之差范数小于 $\delta$，范数分别为 $\sqrt{q_i},\sqrt{p_i}$。反三角不等式给平方根质量界及 (12.6) 的区间；$p_i=0$ 时尤其有 $q_i\le\delta^2$，没有定义零目标分支的条件态。
+
+$P_\perp V=0$，所以 $\|P_\perp S_\delta\|\le\delta$。原 $M_i$ 与 $P_{\mathcal C}$ 交换，原 $K_f$ 保留代码及其正交补；分支求和后，泄漏质量就是 $\operatorname{Tr}(P_\perp S_\delta\rho_HS_\delta^*)\le\delta^2$。对成功分支，$K_fL_0=\sqrt\lambda\,|\Phi_f\rangle\langle\eta|$；投到 $\Phi_f^\perp$ 后目标列为零，(12.3) 因而给第二个 $\delta^2$ 界。全部补空间质量仍在这两个实际输出通道中。最后，原终端是在同一 $\mathcal K$ 上的共同测量，故 TV 距离由 (12.5) 收缩得到。∎
+
+**定理 12.4（条件输出、实际档案与误差供应条件）。** 沿用定理 12.3。若 $p_i>\delta^2$，则 $q_i>0$；两条保留分支各有带参考的条件输出界
+
+$$
+D\left(\frac{X_{\delta i}}{q_i},\frac{Y_i}{p_i}\right)
+ \le\min\left\{1,\frac{2\delta}{\sqrt{p_i}}\right\}.
+\tag{12.9}
+$$
+
+成功分支的目标不仅给效果，还精确给出
+
+$$
+\frac{Y_0}{p_0}=P_{\Phi_f}\otimes\sigma_R,\qquad
+\sigma_R=\frac{\langle\eta|\rho_{HR}|\eta\rangle}
+                   {\langle\eta,\rho_H\eta\rangle}
+\quad(p_0>0).
+\tag{12.10}
+$$
+
+这不是宣称原参考边缘不变；$\sigma_R$ 是在同一个联合输入上由成功条件化得到的参考态。只看系统边缘 $\tau_{\delta0}=\operatorname{Tr}_R X_{\delta0}/q_0$ 时，只须 $q_0>0$ 就有
+
+$$
+1-\langle\Phi_f,\tau_{\delta0}\Phi_f\rangle
+ \le\min\left\{1,\frac{\delta^2}{q_0}\right\},\qquad
+D(\tau_{\delta0},P_{\Phi_f})
+ \le\min\left\{1,\frac{\delta}{\sqrt{q_0}}\right\}.
+\tag{12.11}
+$$
+
+进一步，设该实际程序的完整档案 $A$ 取值于标准 Borel 空间，成功后有一个正的经典—量子扩张 $\Gamma_{\delta0}$：其档案边缘恰为实际条件律 $\mu_{\delta0}$，条件系统态 $\tau_a$ 满足
+
+$$
+\int\tau_a\,\mu_{\delta0}(da)=\tau_{\delta0}.
+\tag{12.12}
+$$
+
+允许 $A$ 包含全部真实调用、配置路径、跳时、读取及细档案，但 (12.12) 是这些实际坐标与输出态之间另供的关系。则这个扩张与 $\mu_{\delta0}\otimes P_{\Phi_f}$ 的距离、以及坏条件分支的实际质量满足
+
+$$
+\begin{aligned}
+D(\Gamma_{\delta0},\mu_{\delta0}\otimes P_{\Phi_f})
+ &=\int D(\tau_a,P_{\Phi_f})\,\mu_{\delta0}(da)
+ \le\min\left\{1,\frac{\delta}{\sqrt{q_0}}\right\},\\
+\mu_{\delta0}\{a:D(\tau_a,P_{\Phi_f})>r\}
+ &\le\min\left\{1,\frac{\delta^2}{q_0r^2}\right\}
+ \quad(r>0).
+\end{aligned}
+\tag{12.13}
+$$
+
+右侧使用的是实际档案边缘，而不是选定的理想档案律。若另给一个目标档案律 $\nu_0$ 和 $\operatorname{TV}(\mu_{\delta0},\nu_0)\le\alpha$，才可再得与 $\nu_0\otimes P_{\Phi_f}$ 的距离至多 $\alpha+\delta/\sqrt{q_0}$，并可截在 $1$。端点门误差不供应 $\alpha$ 或 (12.12)。
+
+若实际有控制、读取及物理失败误差，可另供应完整保留输出 $\widehat\Xi_f$ 与 $\Xi_{\delta f}$ 的半 diamond 距离至多 $\nu$，在共同结果空间中显式加入拒绝、停止、告警等坐标，理想通道在这些坐标补零。则无条件输出界变为 $\delta+\nu$，$|\widehat q_i-p_i|\le\delta+\nu$，物理失败总质量至多 $\nu$；代码泄漏和成功偏离 $\Phi_f$ 的无条件质量各至多 $\delta^2+\nu$。对 $\widehat q_0>0$，成功态保真缺陷至多 $(\delta^2+\nu)/\widehat q_0$，系统迹距离及相应实际正扩张的档案乘积距离至多 $\sqrt{(\delta^2+\nu)/\widehat q_0}$，档案坏分支质量至多 $(\delta^2+\nu)/(\widehat q_0r^2)$；这些界均可截在 $1$。这项完整误差供应不是单次报告或效果拟合误差的另一名称。
+
+**证明。** 对 (12.8) 的两个正范数向量，反三角不等式及归一化给
+
+$$
+\left\|\frac{u_i}{\sqrt{q_i}}-\frac{v_i}{\sqrt{p_i}}\right\|
+ \le\frac{\|u_i-v_i\|+|\sqrt{q_i}-\sqrt{p_i}|}{\sqrt{p_i}}
+ \le\frac{2\delta}{\sqrt{p_i}}.
+\tag{12.14}
+$$
+
+纯态迹距离不超过这个向量距离；取偏迹得到 (12.9)。将 $A_0$ 的两边秩一形式代入同一个 $\rho_{HR}$，直接得 (12.10)，没有在不同来源间拼接边缘态。(12.7) 除以实际成功概率 $q_0$ 给 (12.11) 的保真缺陷。
+
+距离到纯态的标准上界，以及由纯边缘缺陷控制实际记录联合态的工具，直接复用[切口图册 III §20 命题 20.1](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md#20-pure-reference-marginal-fidelity-controls-decoupled-return)。在这里其纯参考取 $\Phi_f$，完整经典记录取实际 $A$，平均缺陷恰为 (12.11)。有限和的证明对 (12.12) 的概率积分同样使用迹范数逐经典块可加与 Jensen 不等式，给 (12.13) 第一式；逐条件态还有 $D(\tau_a,P_{\Phi_f})^2\le1-\langle\Phi_f,\tau_a\Phi_f\rangle$，积分后用 Markov 不等式得第二式。零质量档案不指定条件态。若有另一个 $\nu_0$，共同纯态张量保持经典 TV 距离，再用三角不等式即得所述相加界。
+
+最后，带失败坐标的完整输出距离控制每个输出效果的无条件概率误差至多 $\nu$。对成功标志、泄漏投影及成功中的 $I-P_{\Phi_f}$ 各应用一次，就得 $\delta^2+\nu$ 的质量界；条件化须除以真正的 $\widehat q_0$。同一个纯边缘工具遂给带误差的档案界。没有把失败删除后重新标定成功概率。∎
+
+**命题 12.5（非空同 ready 实例与完全同效果的原生后态边界）。** 取
+
+$$
+\lambda=1,\qquad\eta=v=e_{00100},\qquad
+u=e_{10100},\qquad
+\phi_+=(u+v)/\sqrt2,\qquad\phi_-=(u-v)/\sqrt2.
+\tag{12.15}
+$$
+
+对 $0<\delta<1/4$，定理 12.3 的 $\phi=\phi_+$ 给一个真正有限的 $a_\delta$。从原唯一 ready 取 $p=f=\varnothing$，其实际成功概率及输出满足
+
+$$
+q_0\ge1-\delta^2>0,\qquad q_1\le\delta^2,\qquad
+D(\tau_{\delta0},P_{J_0\phi_+})
+ \le\frac{\delta}{\sqrt{1-\delta^2}},\qquad
+q_{\rm leak}\le\delta^2.
+\tag{12.16}
+$$
+
+这给每个精度一个非空同来源、同 ready、一次读取的实例；全部互补结果保留。若采用只存真实调用及 $i$ 的档案，其与分支态的正扩张由 (12.4) 直接给出，故档案条件也有非空满足实例。
+
+再取固定五调用正向字 $g=00000$，比较两个合法前读字 $a_\delta$ 与 $a_\delta g$，仍各只读取一次原 $b_9$。它们的读取效果在全部 $H$ 上完全相同：
+
+$$
+R_0^*K_{a_\delta g}^*M_iK_{a_\delta g}R_0
+ =R_0^*K_{a_\delta}^*M_iK_{a_\delta}R_0
+\quad(i=0,1).
+\tag{12.17}
+$$
+
+在同一个 ready 输入上，成功概率也完全相同，但两者成功保留系统态 $\tau_+$、$\tau_-$ 及完整二分支输出满足
+
+$$
+\begin{gathered}
+D(\tau_+,\tau_-)
+ \ge1-\frac{2\delta}{\sqrt{1-\delta^2}}>0,\\
+D\bigl(\Xi_{a_\delta,\varnothing}(P_v),
+        \Xi_{a_\delta g,\varnothing}(P_v)\bigr)
+ \ge1-2\delta>0.
+\end{gathered}
+\tag{12.18}
+$$
+
+这里 $\Xi_{a,\varnothing}$ 表示用具体字 $a$ 的原投影仪器；全局相位不改变它。两个程序各自保留自己的真实调用表，式 (12.17) 只比较读取效果，不声称调用档案相同。
+
+**证明。** $u,v$ 是原十三路径中的两个正交基向量。目标输入为 $v$ 时，$A_0v=\phi_+$、$A_1v=0$。式 (12.3) 因而使原生互补分支向量范数不超过 $\delta$，给 $q_1\le\delta^2$，而两个原结果总质量为一；其余界由 (12.7)、(12.11) 得到。取实际报告档案的正交经典块及对应分支态，立即满足 (12.12)，不需推断未给出的隐藏档案关系。
+
+原 $K_0$ 不改变 $b_9$，故在整个 $89$ 维载体上与每个 $M_i$ 交换，直接得 (12.17)，不是极限意义的效果相同。在代码上，II77.2 的左端投影为 $n_{b_1}$，因此
+
+$$
+(K_0^{(H)})^5=2n_{b_1}-I_H,\qquad
+(K_0^{(H)})^5u=u,\qquad (K_0^{(H)})^5v=-v,\qquad
+K_gJ_0\phi_+=J_0\phi_-.
+\tag{12.19}
+$$
+
+这里 $\zeta^5=-1$，两种本征值的五次方分别为 $1,-1$。$K_g$ 保留整个代码及补空间。第二程序在两条未归一输出上恰为第一程序再共轭 $K_g$，所以同概率的成功态分别距正交的 $P_{J_0\phi_+},P_{J_0\phi_-}$ 至多 $\delta/\sqrt{1-\delta^2}$。三角不等式给 (12.18) 第一式。完整目标输出在 $v$ 上恰为这两个正交纯态、都带标签 $0$；两原生输出各距自己的目标至多 $\delta$，再一次三角不等式给第二式。五次 $0$ 均在读取之前，没有把十一地址控制移过读取，也没有反馈。∎
+
+**定义 12.6（来源对应、增量与未闭合桥梁）。** 本节的 `repo-derived` 内容是指定 $(\eta,\phi,\lambda)$ 到同一 $H\to\mathcal K$ 原生一次读取的对应：同一个有限字控制两条带后态的仪器分支，覆盖全部原 $p,f$，并将全部代码泄漏、条件成功及实际正档案扩张接到同一预算；命题 12.5 还在该源中给出完全相同的读取效果与不同保留后态。它不是一般 dilation、通道连续性、纯边缘结论或量子态层析的新定理，也不提出全球原创优先权。
+
+| 供应 | 本节所用的精确对应及范围 |
+| --- | --- |
+| [II][II] §§77、100、121；[V15][V15] §§6.1–6.3 | $J_i$、$R_0v$、$13/89/26/63$ 维及原七／十一地址逐项不变。II100.2 的指定仪器不含任意 $(\eta,\phi,\lambda)$；II121.2 的三组终端效果不供应其 Lüders 或准备后态。本节用其等距完成、全扇区密度和已有误差界，不重证一般构造。 |
+| [Freedman–Larsen–Wang][FLW]，*The two-eigenvalue problem and density of Jones representation of braid groups*，math/0103200v1，Theorem 0.1、§2 | 取 $(k,r,n)=(2,5,12)$、Young 图 $[6,6]$ 及全部 $89$ 个可容许表，闭像的相应 $SU(89)$ 因子给射影密度。同规范的原生生成元对应由 II §§77、100 供应，使用整个表示而非其印刷二维融合矩阵。$K_j^{10}=I$ 只负责把逆字母换为正向调用。 |
+| [Watrous，*The Theory of Quantum Information*，第 2 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，Theorem 2.22、Corollary 2.27、§2.3.2 (2.255)–(2.262) | Kraus 完整性、等距实现及保留经典结果的仪器是 `literature-attested` 工具；这里的两个列是 (12.2)，输出已嵌在原 $\mathcal K$，不是另供任意环境或读取。距离估计直接消费 V15 6.3 与 II100.2。 |
+| [V10 定理 17.2](AURIC_COHERENT_RELATIONS_AND_RECURSIVE_OBSERVATION_THEORY_V10.md#root-instrument-compile) | 一般仪器网络还需其选择性读出、丢弃及反馈权限。本节只用现有二元选择性投影，输出仍在原载体，不以该网络定理扩张操作菜单。 |
+| [切口图册 III §20](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md#20-pure-reference-marginal-fidelity-controls-decoupled-return) | 纯参考取成功目标 $J_0K_f^{(H)}\phi$，经典边缘取真正的 $\mu_{\delta0}$。该既有估计只在 (12.12) 的实际正扩张上给 (12.13)，不选择理想档案律。 |
+| [复合比较 V96 §§70–76](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md) | 其全切口稳定性和 Schur 数学参照不供应这里的原生字或实际控制。本节不由参照映射推取得性，也不重报其集体二元切口估计。 |
+| [V63 定理 8.1 及 §8.1](AURIC_NATIVE_COMPLEX_STRUCTURE_STABLE_ASSEMBLY_AND_FINITE_BORN_READOUT_CERTIFICATES_V63.md#thm:combined)；[V27 定义 10.1、命题 11.2](AURIC_RIGID_MIRRORS_COMPLEX_PHASE_AND_NATIVE_GOLDEN_GATES_V27.md) | V63 的实际报告须接到同一初切口效果及取得的正细化证书；这里直接声明理想 Born/CP 模型，没有据单次报告声称取得经验标定。V27 的记录后政策与相干受控门是另供输入，不能从本节的成功标志导出。 |
+
+在这些前提下，有限终端区分与实际准备之间补上的仅是上述指定一次读取仪器的有限精度存在性。字的存在次序是 $\forall(\eta,\phi,\lambda)\ \forall\delta>0\ \exists a_\delta\ \forall p,f$，不含统一字长、有效找字算法、有限精确目标或实际噪声证书。若一个含逆供应字有 $L$ 个字母，正向实现至多 $9L$ 次调用；该数只在这个具体供应字已给定时有意义。初始化与每次调用的实际误差须累计，不能凭理想算符界对有噪、无界字长实现作统一断言。
+
+式 (12.9) 的参考保证要求同一实际参考被保持；式 (12.13) 的档案保证要求实际正扩张且只比较其真正边缘。完整隐藏历史不能仅由端点误差重建，其真实跳时与调用表也不由目标等距定义。若另有共同 CPTP 后处理，(12.5) 可经收缩传递；声称真实档案生成正是该共同后处理仍须独立证明。命题 12.5 已在本原生菜单内排除“读取效果相同就已准备同一后态”的推断。
+
+唯一 $\omega$、二元关系归一化和有限三维结构尚未供应这里使用的复 Hilbert／Fibonacci 载体、原门、共同相干相位、Born/CP 读取与投影更新的物理来源。读取前准备不供应读取后的结果依赖控制；现有后续仍只有外生七地址，没有第二次读取、重复直至成功、复位或新 ready 的供应。真正完整档案律的稳定、物理可靠性、重复抽样及有限认证仍需各自来源关系。这个条件准备桥不终结完整量子起源目标。
+
+## 追加锚（本行以下为增补区）
