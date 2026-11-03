@@ -1,0 +1,16 @@
+### 命题 7.2（已经闭合的随机二元读出）
+
+取
+
+$$
+P_+=\frac{I+\sigma_z}{2},\qquad P_-=I-P_+,qquad E_z(x)=P_+xP_++P_-xP_-.
+$$
+
+并以 $\rho=\eta=I/2$ 校准。二元读出 $(P_+,P_-)$ 满足 $C_{89}$，但
+
+$$
+p(+)=\frac12,\qquad \operatorname{Var}_\rho(P_+)=\frac14.
+$$
+
+**证明。**$E_z(P_\pm)=P_\pm$ 且 $P_\pm^2=P_\pm$，故平方缺额为零；另一方面 $\operatorname{tr}(\rho P_+)=1/2$，方差为 $1/2-(1/2)^2=1/4$。
+

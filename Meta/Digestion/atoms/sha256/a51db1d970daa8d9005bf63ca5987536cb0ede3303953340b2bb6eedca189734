@@ -1,0 +1,31 @@
+### 命题 8.3（近似生成元闭合不自动控制整个通道）
+
+存在始终生成 $M_2$ 的两收缩，其平方缺额趋于零，但对应通道始终远离酉共轭。
+
+**证明。**固定 $\Phi=E_z$，取
+
+$$
+A=\sigma_z,\qquad B_\varepsilon=\frac{\sigma_z+\varepsilon\sigma_x}{\sqrt{1+\varepsilon^2}},\qquad \varepsilon>0.
+$$
+
+二者为 Hermitian 收缩，且
+
+$$
+\Delta_\Phi(A)=0,\qquad
+\Delta_\Phi(B_\varepsilon)=\frac{\varepsilon^2}{1+\varepsilon^2}I\longrightarrow0.
+$$
+
+每个 $\varepsilon>0$ 时这对生成 $M_2$，因为
+
+$$
+\sigma_x=\frac{\sqrt{1+\varepsilon^2}B_\varepsilon-A}{\varepsilon}.
+$$
+
+然而 $\Phi(\sigma_x)=0$，任意酉共轭都将 $\sigma_x$ 送到范数为一的算符，所以两映射的算符诱导范数距离至少为一。恢复遗漏方向的系数随 $1/\varepsilon$ 发散，正是缺少统一控制的原因。
+
+因此有限词长与有界系数下的近似结论可靠；若要扩展成整个代数的统一近似，必须另外控制生成关系的条件数或分离尺度。二项式界是明确的通用上界，不宣称对每个通道和每个词都最优。
+
+**白话图景。**平方缺额很小，可以保证有限层关系的误差受到控制；层数增加时，成对误差会累积。但如果两个基本读出几乎指向同一个方向，要恢复另一方向就得把很小差别放大。所以“两个检查都很接近”不能无条件升级成“整个量子世界都接近无损”。
+
+<a id="section-9"></a>
+

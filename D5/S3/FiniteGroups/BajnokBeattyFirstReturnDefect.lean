@@ -58,7 +58,7 @@ private lemma scaled_lee_norm (p X Y : ℤ) (hp : 0 < p) :
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one, abs_mul, abs_of_pos hp]
   ring
 
-private lemma endpoint_lee_bound {l : ℕ} (w : Fin l → Fin 4) :
+lemma endpoint_lee_bound {l : ℕ} (w : Fin l → Fin 4) :
     |endpoint w 0| + |endpoint w 1| ≤ (l : ℤ) := by
   have hx := Finset.abs_sum_le_sum_abs (s := (Finset.univ : Finset (Fin l)))
     (f := fun i => step (w i) 0)

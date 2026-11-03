@@ -1,0 +1,11 @@
+**定义 72.1（新预算分层的全族误差）。** 沿用定义 66.1 对实际族 $T$ 的 $\mathfrak D(M)$，但比较类用新的共同预算：
+
+$$
+\mathfrak Q_{\mathscr C}(\varepsilon)=
+\sup\left(\{\mathfrak D(M):M\in\mathscr C,
+ \eta_M\le\varepsilon\}\cup\{0\}\right).
+\tag{72.1}
+$$
+
+以下 $\chi$ 专指式 (70.5)，不是将旧预算曲面直接换名。
+

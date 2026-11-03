@@ -1,0 +1,24 @@
+**命题 40.3（任意固定截止的锋利反模型）。** 对每个整数 $N\ge0$，存在长度 $N$、每步都用活动量子比特且满足全部二方过程合同的正幺延伸段，原箭头却非完全正。它不能在终点继续履行 C102。
+
+证明。置 $k=2^N$，取 $d>k$，使用成熟 Tomiyama／广义 reduction 映射
+
+$$
+\mathcal T_{k,d}(b)=\frac{k\operatorname{Tr}(b)I_d-b}{kd-1}.
+\tag{40.5}
+$$
+
+它幺且保迹，并且恰 $k$ 正而非 $(k+1)$ 正；该层级可直接复用 [Bera–Bhattacharya–Chruściński，arXiv:2604.18600v1，Theorem 1.1，式 (1)–(2)](https://arxiv.org/html/2604.18600v1)，参数为 $\alpha=kd/(kd-1)$。仓内 Tomiyama 对角扰动族中同一参数为 $\beta=0$ 的顶点，不把其已知正性另认领为新分类。
+
+其失效方向也显式保留：对 $s=k+1\le d$ 和 $\Omega_s=\sum_{i=1}^s e_i\otimes f_i$，有
+
+$$
+(\mathcal T_{k,d}\otimes\operatorname{id}_s)
+ (|\Omega_s\rangle\langle\Omega_s|)
+=\frac{kI_d\otimes P_s-|\Omega_s\rangle\langle\Omega_s|}{kd-1},
+\tag{40.6}
+$$
+
+在 $\Omega_s$ 方向的本征值为 $(k-s)/(kd-1)<0$。所以 $\Phi_j=\mathcal T_{k,d}\otimes\operatorname{id}_{2^j}$、$0\le j\le N$ 全部正幺，每一步确实是原箭头的同一张量延伸，保留系统及全部参考。再接任意活动伙伴，其某块阶数至少二，便要求至少 $2k$ 正，而 $k+1\le2k$，被 (40.6) 的角排除。
+
+全部对象和对象边可仍取满足 C101 的标准量子关系体。缺失的是终层实际箭头的继续继用。取 $d=2^N+1$，原过程的界正好要求 $N+1$ 个量子比特层，所以不能把一个与原过程维数无关的固定层数代替推论 40.2。这里的新应用是成熟映射恰实现当前内部过程合同的截止边界。∎
+

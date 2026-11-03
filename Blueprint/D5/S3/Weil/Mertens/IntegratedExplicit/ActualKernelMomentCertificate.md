@@ -4,7 +4,19 @@
 
 The complete actual-K moment certificate.
 
-**Theorem 1.1 (actual kernel explicit leading one).**
+**Theorem 1.1 (Original moment order scalar bounds).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.q_scalar_bounds`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.q_scalar_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the original ceiling N(C, alpha, D), with C at least one and D positive, the order is at least one and N/D is at least eight. The exact curvature payment is at most one eighth, and the logarithmic ceiling pays beta plus the Euler and endpoint constants with the retained one fifth margin. The definition keeps the original max, ceiling, inclusive moment degree, and all degenerate finite families.
+
+**Theorem 1.2 (actual kernel explicit leading one).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_kernel_explicit_leading_one`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertifi
 
 This is the original full actual-K source endpoint: arbitrary finite universe-polymorphic I, D>0, nodes in [0,D], arbitrary complex coefficients and atomic moments of EVERY degree 0,...,N(D), inclusive, imply E<=Re Q_ActualKernelLocalPositivity.K. Here B=C(1+10!(2/alpha)^10), d0=gamma-1+log(2pi), beta_D=exp(D/2)(1+C(exp(-alpha(D/4)^(1/10))+exp(-D/4)))+D+B, C_D=((9+4C+2B)exp(D/2)+D+3)/4, and N(D)=ceil(max(1,D sqrt(C_D)/2,(5D/4)exp(beta_D+d0+2))). Global C,alpha are selected from actual unconditional MediumPNT before every family. The complete mixture, actual weighted prime inequality and concrete H/V corrections are all consumed. Nonnegative d0 W is dropped only after proving d0>=0. The unchanged ceiling gives q/D>=8, delta_q C_D<=1/8 and log(q/D)>=beta_D+d0+2+1/5, leaving the original endpoint slack. There is no energy division or nonempty, distinctness or real-coefficient restriction.
 
-**Theorem 1.2 (actual signed expression compensation).**
+**Theorem 1.3 (actual signed expression compensation).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_signed_expression_compensation`
 
@@ -40,5 +52,5 @@ Since alpha>0, exp(-alpha(D/4)^(1/10)) and exp(-D/4) tend to zero. The standard 
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_kernel_explicit_leading_one`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_signed_expression_compensation`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.q_scalar_bounds`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentPayments](ActualKernelMomentPayments.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualMomentOrderArithmetic](ActualMomentOrderArithmetic.md)

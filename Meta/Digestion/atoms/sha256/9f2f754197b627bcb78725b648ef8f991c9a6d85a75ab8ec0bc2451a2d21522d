@@ -1,0 +1,17 @@
+**Proposition 4.3 (every optimal binary decision discards later uses).**
+For the actual four-sample laws define the exact atoms
+
+$$
+C=(12|34,13|24),\qquad
+U=(1|2|3|4,12|34),\qquad
+V=(12|3|4,13|24).
+$$
+
+Writing $L(h)=p_1(h)/p_0(h)$ on these positive atoms, their counts and
+likelihood ratios are
+
+| Atom $h$ | $N_0(h)/M$ | $N_1(h)/M$ | $L(h)$ |
+| --- | ---: | ---: | ---: |
+| $C$ | $74$ | $182$ | $91/37$ |
+| $U$ | $89916$ | $90132$ | $7511/7493$ |
+| $V$ | $1200$ | $1092$ | $91/100$ |
