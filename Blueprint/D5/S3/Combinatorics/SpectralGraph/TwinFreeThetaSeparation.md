@@ -22,6 +22,10 @@ $$\exists orders: \operatorname{Nat} \to \operatorname{Nat}, \exists graphs: (i:
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TwinFreeThetaSeparation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/aks2610` (proved) by `D5/S3/Combinatorics/SpectralGraph/TwinFreeThetaSeparation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"aks2610","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/TwinFreeThetaSeparation.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Monther Rashed Alfuraidan, Suliman Khan, Lorenzo Sauras-Altuzarra (2026). *Metric dimension and maximum eigenvalue multiplicity of graph Laplacians*. DOI: [10.48550/arXiv.2610.26875](https://doi.org/10.48550/arXiv.2610.26875). URL: <https://arxiv.org/abs/2610.26875v1>.
