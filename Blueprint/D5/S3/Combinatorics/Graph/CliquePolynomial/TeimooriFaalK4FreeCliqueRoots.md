@@ -22,6 +22,10 @@ $$\neg (\forall (V : Type), [\operatorname{Fintype}\left(V\right)] [\operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CliquePolynomial/TeimooriFaalK4FreeCliqueRoots.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/tf2112` (refuted) by `D5/S3/Combinatorics/Graph/CliquePolynomial/TeimooriFaalK4FreeCliqueRoots.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"tf2112","declaration_gid":"D5/S3/Combinatorics/Graph/CliquePolynomial/TeimooriFaalK4FreeCliqueRoots.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Hossein Teimoori Faal (2021). *Sums of Polynomials and Clique Roots*. DOI: [10.48550/arXiv.2112.09744](https://doi.org/10.48550/arXiv.2112.09744). URL: <https://arxiv.org/abs/2112.09744v1>.

@@ -26,7 +26,10 @@ internal sealed class TeimooriFaalK4FreeCliqueRootsDocument : IScribeDocumentDef
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("On the vertices 0 through 6, take the undirected edges {0,3}, {0,4}, {0,5}, {0,6}, {1,3}, {1,4}, {1,5}, {1,6}, {2,3}, {2,5}, {3,4}, {3,5}, {4,6}, and {5,6}. The path [0,3,1,4,6,5,2] visits every vertex, proving connectedness. There is no four-vertex clique. The clique counts are 1, 7, 14, and 9 in sizes zero through three, followed by zeros. The clique polynomial is therefore 1+7X+14X²+9X³. Its cubic discriminant is −31. If it split over ℝ, the discriminant would be a square of a real product of root differences and hence nonnegative. Algebraic closure of ℂ then gives a complex zero outside the image of ℝ. This contradicts the assertion that all complex zeros have imaginary part zero. The theorem concerns this finite graph; it makes no assertion about a uniform family or vertex connectivity beyond connectedness."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tf2112"),
+                    ResolutionKind.Refuted))), []));
 
     private static Formula Qualified(string name)
     {
