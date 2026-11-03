@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:f62c7bd514a3d37bc48347464333ccfc1a8c9be6ae406284483882d3eea692af
+  normalized_sha256: sha256:f62c7bd514a3d37bc48347464333ccfc1a8c9be6ae406284483882d3eea692af
+cas_ref: sha256:f62c7bd514a3d37bc48347464333ccfc1a8c9be6ae406284483882d3eea692af
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.weight_orthogonal_sup
+    target_statement_id: sha256:d86c29de0de24fd0f333faad0d81a3009b8bab0cc972f902d677075d7c3e0bf2
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.distance_properties
+    target_statement_id: sha256:d759568d967c7b0a91bbc67d8dfbdee8689430e600e6cea72117de6ce2a6ebaa
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.faithful_separation
+    target_statement_id: sha256:6a930f0402b49b54434c964ccd60871fd3cad180c5702def4003bb5e927d397a
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.modular_nonnegative_triangle
+    target_statement_id: sha256:6aba94a1820676bf2464fa38597d3c428f9267bb12a9a592ec67540d06f6719d
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.native_matrix_faithfulness
+    target_statement_id: sha256:dc65f4db4b9d06b451c891e4d646b2a0798964ba43ae680e46afe7b97f3f8990
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.weight_pos
+    target_statement_id: sha256:2392ec79651895e55876a0c5af3fb1c996a9661401a2355d49de53b5c74e71b8
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.weight_strictMono
+    target_statement_id: sha256:2a375368011b9a267414693f5f70627f7d758f548113fcfd0d8d498ec7292f2e
+receipts:
+  unresolved_subitems: []

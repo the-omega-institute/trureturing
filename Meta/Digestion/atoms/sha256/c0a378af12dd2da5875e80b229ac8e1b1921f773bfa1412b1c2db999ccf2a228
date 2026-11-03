@@ -1,0 +1,2 @@
+For a finite original optimizer, every nonzero effect consequently has the form $D_y=t_yE_{\sigma(y)}$, its actual feedback is $e^{i\varphi_y}U_{\sigma(y)}$, and the total $t_y$ for each sign is one. Zero effects remain harmless. Outcomes may be split or relabelled, and scalar phases may vary, giving different measures and instruments with the same channel. The uniqueness assertion concerns the implemented channel, not these presentations or measurement realizations. $\square$
+

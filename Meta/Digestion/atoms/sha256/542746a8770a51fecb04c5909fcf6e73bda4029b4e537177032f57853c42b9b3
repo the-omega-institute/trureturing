@@ -1,0 +1,11 @@
+### 推论 8.2（忠实标量证书给出有限词误差）
+
+若输出校准满足 $\eta\ge\mu I$、$\mu>0$，且二元总缺额为 $s=a+b$，则对两个 Hermitian 收缩生成的长度 $\ell$ 词有
+
+$$
+\left\|\Phi(w)-w(\Phi(A),\Phi(B))\right\|_{\rm op}
+\le\binom\ell2\frac{s}{\mu}.
+$$
+
+**证明。**对正算子 $T$，$\operatorname{tr}(\eta T)\ge\mu\operatorname{tr}T\ge\mu\|T\|_{\rm op}$。因此两个算符缺额的范数分别不超过 $a/\mu,b/\mu$，均不超过 $s/\mu$，应用定理 8.1。
+

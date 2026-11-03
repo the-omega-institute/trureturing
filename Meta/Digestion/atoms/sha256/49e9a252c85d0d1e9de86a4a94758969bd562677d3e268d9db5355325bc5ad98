@@ -1,0 +1,16 @@
+**Lemma 1.** For every integer $n\ge 1$,
+$$
+196s(n)=15^{\,n+1}-14n-15.
+$$
+
+**Proof.** At $n=1$ the two sides are $196$ and $15^2-14-15=196$. If the identity holds at $n$, then
+$$
+\begin{aligned}
+196s(n+1)
+ &=196\bigl(15s(n)+n+1\bigr)\\
+ &=15\bigl(15^{\,n+1}-14n-15\bigr)+196(n+1)\\
+ &=15^{\,n+2}-14(n+1)-15.
+\end{aligned}
+$$
+Induction proves the formula. ∎
+

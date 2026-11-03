@@ -52,6 +52,57 @@ internal sealed class ActualLinearPeakDocument : IScribeDocumentDefinition
                     + "right-half-strip reduction proves RH under denial. Finally the "
                     + "actual integrated explicit formula, used only at y>=T>0, restores "
                     + "the literal arithmetic conclusion."))),
+            DescribeRole.Theorem),
+            Describe.Lean(
+            DescribeId.Create("actual-kernel-subexponential-implies-rh"),
+            DeclarationHandle.Create(
+                "D5/S3/Weil/Mertens/IntegratedExplicit/ActualLinearPeak.actual_kernel_subexponential_implies_rh"),
+            H("The signed-kernel Laplace transform gives an analytic linear ODE"),
+            StatementSource.FromAuthor(SubexponentialClaim()),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text(
+                    "Let K be precisely ActualKernelLocalPositivity.K: "
+                    + "K(t)=exp(-|t|/2)*(CompleteMertensPeak.U(exp(|t|)) "
+                    + "- log(2*pi) + trivialT(|t|)). Every Mangoldt ramp and every "
+                    + "trivial-zero correction is retained. Suppose that for every real "
+                    + "beta>0 there exists a real C>0 such that for every real t, "
+                    + "|K(t)|<=C*exp(beta*|t|). Then Mathlib RiemannHypothesis holds. "
+                    + "C may depend on beta. The statement adds no positivity, RH, "
+                    + "zero-free or logarithmic-derivative hypothesis.")),
+                Paragraph(Text(
+                    "For Re(z)>0 set L(z)=integral_(t>0) exp(-z*t)*K(t) dt, using "
+                    + "the signed K itself. Continuity is reused from K_continuous. "
+                    + "At a point z0 with a=Re(z0)>0, choose beta=a/4. Throughout "
+                    + "the open neighborhood Re(z)>a/2, the derivative integrand is "
+                    + "bounded in norm by C*t*exp(-a*t/4). The pinned Mathlib "
+                    + "exponential-moment owner proves this majorant integrable; "
+                    + "hasDerivAt_integral_of_dominated_loc_of_deriv_le then proves "
+                    + "complex differentiability and hence analyticity on Re(z)>0. "
+                    + "No derivative of K is taken.")),
+                Paragraph(Text(
+                    "On t>0 the actual integrated explicit formula identifies K(t) "
+                    + "with linearKernel(t), whose complex form and Laplace formula "
+                    + "follow from the complete integrated explicit formula. "
+                    + "With X(z)=xiReading(z+1/2), M=firstLiMass and "
+                    + "D(z)=z^2-1/4, the initial formula on Re(z)>1/2 is "
+                    + "L=(M*z-X'/X)/D. Xi nonvanishing is used only on this initial "
+                    + "half-plane, where the existing owner already supplies it.")),
+                Paragraph(Text(
+                    "Clear both denominators there to get D*X*L=M*z*X-X'. "
+                    + "Both sides are analytic throughout the connected half-plane "
+                    + "Re(z)>0, so analytic_continuation_unique extends this "
+                    + "cross-multiplied identity. It yields X'=G*X with "
+                    + "G=M*z-D*L analytic, including at z=1/2 and at any putative "
+                    + "zero of X. There is no division by X in this continuation.")),
+                Paragraph(Text(
+                    "Use the existing shiftedXi_half fact X(1/2)=1/2 as the "
+                    + "nonzero anchor. AnalyticLogarithmicContinuation's "
+                    + "analytic_linear_ode_zero_free excludes every zero of X in "
+                    + "Re(z)>0 without any simplicity premise. The existing "
+                    + "RightHalfStripRiemannReduction converts this to Mathlib RH. "
+                    + "This conditional criterion does not prove that the arithmetic "
+                    + "K satisfies its subexponential hypothesis."))),
             DescribeRole.Theorem))));
 
     private static Formula Claim()
@@ -70,6 +121,27 @@ internal sealed class ActualLinearPeakDocument : IScribeDocumentDefinition
         return Disp(new Formula.Logic(Seq(Neg, Sp, rh), FormulaLogicOperator.Implies,
             new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("y"), real,
                 new Formula.Logic(cutoff, FormulaLogicOperator.And, excursion))));
+    }
+
+    private static Formula SubexponentialClaim()
+    {
+        var real = Seq(Mathbb, Grp(F.Id("R")));
+        var beta = F.Id("beta");
+        var c = F.Id("C");
+        var t = F.Id("t");
+        var zero = D(0);
+        var positiveBeta = new Formula.Relation(zero, FormulaRelationOperator.LessThan, beta);
+        var positiveC = new Formula.Relation(zero, FormulaRelationOperator.LessThan, c);
+        var bound = new Formula.Relation(new Formula.Absolute(Call("K", t)),
+            FormulaRelationOperator.LessThanOrEqual,
+            Multiply(c, Call("exp", Multiply(beta, new Formula.Absolute(t)))));
+        var growth = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("beta"), real,
+            new Formula.Logic(positiveBeta, FormulaLogicOperator.Implies,
+                new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("C"), real,
+                    new Formula.Logic(positiveC, FormulaLogicOperator.And,
+                        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("t"), real, bound)))));
+        return Disp(new Formula.Logic(growth, FormulaLogicOperator.Implies,
+            Seq(Operatorname, Grp(F.Id("RiemannHypothesis")))));
     }
 
     private static Formula Call(string name, params Formula[] arguments) =>

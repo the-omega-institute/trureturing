@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:faa7fb12271aed3b48d95ecf7e1bc4df4cab0d60c7fa6e067452acac6ca4f26b
+  normalized_sha256: sha256:faa7fb12271aed3b48d95ecf7e1bc4df4cab0d60c7fa6e067452acac6ca4f26b
+cas_ref: sha256:faa7fb12271aed3b48d95ecf7e1bc4df4cab0d60c7fa6e067452acac6ca4f26b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definitions of the repetition indicators, W_t, the source-collision indicators, C_t and the natural unordered-pair multiplicities. The finite counting identity is a direct application of pinned Mathlib Finset.card_eq_sum_card_fiberwise to s={i in Finset.Icc 1 t | a_i != b_i}, f(i)={a_i,b_i}, and the finite target f(s). Its maps-to premise is Finset.mem_image_of_mem. The fiber cardinalities are exactly m_e; all pairs outside f(s) have zero multiplicity by definition. Finset.card_filter and card(Icc 1 t)=t identify card(s)=t-C_t. Empty sums give the stated t=0 convention. This closes only the definitions and finite fiber-count identity, not any compound variance assertion.
+    previous_atom_id: 91b596c69ddebb3c0ec3280a9d00b5b8546c89cd74cd0b1e0595039a926c7fb2
+    next_atom_id: 69d613b33f0cfdddb36f4ea6fa6f6e1ead66b8d3c450dcddd8bf796535bfdc59

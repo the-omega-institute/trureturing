@@ -1,0 +1,17 @@
+### 例 16.3（不同分辨率次序的完整二元三维例子）
+
+在 $\rho=I/2$ 的 qubit 上，任意轴 $n\in S^2$ 的代数 $\mathcal A_n=\operatorname{Span}_\mathbb C\{I,n\cdot\sigma\}$ 都满足 $C_{88}$，其粗化为
+
+$$
+E_n(v\cdot\sigma)=(n\cdot v)n\cdot\sigma.
+$$
+
+于是
+
+$$
+(E_nE_m-E_mE_n)(v\cdot\sigma)
+=(n\cdot m)[(m\cdot v)n-(n\cdot v)m]\cdot\sigma.
+$$
+
+取 $n=e_z$、$m=(e_x+e_z)/\sqrt2$、$v=e_z$，得到 $-\tfrac12\sigma_x\ne0$。所以即使每次粗化都合法、都保持同一个锚，两种非嵌套分辨率的使用次序仍可能有差别。两映射各自完全正，但它们的差不是正通道，也不应直接称为酉闭环输运；沿嵌套塔则由塔律可知次序差为零。
+

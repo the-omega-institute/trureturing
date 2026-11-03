@@ -1,0 +1,16 @@
+## 5. 平方饱和为何产生同一个完全正恢复
+
+<a id="sec-c90-recovery"></a>
+
+定义恢复映射
+
+<a id="eq-c90-petz"></a>
+
+$$
+\mathcal R_\sigma(Y)
+ =\sigma^{1/2}\mathcal N^*(\tau^{-1/2}Y\tau^{-1/2})\sigma^{1/2}.
+\tag{5.1}
+$$
+
+它只依赖当前接口 $\mathcal N$ 与参考态 $\sigma$，不依赖待检查的 $\rho$。
+

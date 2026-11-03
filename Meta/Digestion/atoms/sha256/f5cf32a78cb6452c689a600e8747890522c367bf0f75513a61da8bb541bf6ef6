@@ -1,0 +1,21 @@
+**命题 21.3（Relation to the stated neighborhood classes）。**
+Within the common connected even-order domain, class $\mathcal C$
+contains both the class with a bipartite component in every
+neighborhood in the owning volume's Definition 14.1 and the
+whole-neighborhood bipartite-or-odd-cycle class of Definition 17.1.
+It does not contain every sufficient confinement domain in the
+owning volume.
+
+Proof. A bipartite component is itself a permitted component.
+If an entire nonempty neighborhood is bipartite, each of its
+components is bipartite; if it is one odd cycle, that whole cycle
+is a permitted component. Neighborhoods are nonempty by
+connectedness and $m\geq2$. Thus both inclusions follow with all
+even scales retained by Theorem 21.2. For the last assertion,
+$K_6$ has every neighborhood $K_5$, which is connected,
+nonbipartite and not a simple cycle, so $K_6\notin\mathcal C$.
+It is a balanced complete multipartite graph with six singleton
+parts and is therefore in the owning volume's Theorem 10.2 at
+every even scale. No inclusion of that entire domain in
+$\mathcal C$ is asserted. $\square$
+

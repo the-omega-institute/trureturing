@@ -1,0 +1,17 @@
+### 定理 10.1（固定代数、允许映射随锚改变）
+
+固定共享单位元的 $A\subset M_d$。若对每个忠实校准 $\rho$ 都要求存在满足 $C_{88}$ 的 $E_{\rho,A}$，则恰有
+
+$$
+\boxed{A=\mathbb CI\quad\text{或}\quad A=M_d.}
+$$
+
+**证明。**若 $A$ 有至少两个中心块，从 $I/d$ 出发加上足够小的跨块 Hermitian 扰动，得到的忠实 $\rho$ 不按中心块对角，违反块乘积形式。因此 $A$ 只能是单块 $M_n\otimes I_m$。若 $n,m\ge2$，取非零无迹 Hermitian $B\in M_n,C\in M_m$，令
+
+$$
+\rho=\frac{I+\varepsilon B\otimes C}{nm},qquad
+0<|\varepsilon|<\frac1{\|B\|_{\rm op}\|C\|_{\rm op}}.
+$$
+
+它忠实，两个边缘都是最大混合，但本身不是乘积，仍违反块形式。因此 $n=1$ 或 $m=1$。反过来标量代数用 $E(x)=\phi_\rho(x)I$，全代数用恒等映射。
+

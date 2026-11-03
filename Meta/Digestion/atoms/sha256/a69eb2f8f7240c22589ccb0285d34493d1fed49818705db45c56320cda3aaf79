@@ -1,0 +1,75 @@
+**Theorem 26.3 (completion-conditional acquired application).** Under
+Assumption 26.1, Handoff with $A\supseteq R_\chi(t)$ constructs callable
+selected records of the same actual history on the same source, completes
+its real output and returns to SelectedReady in finitely many operations.
+Thereafter every finite sequence of actually supplied complete selected
+requests has the specified full replies and selected semantic successors.
+In particular an in-range NextSelected performs one lawful current-source
+growth, preserves all earlier selected recalls, and appends its new event
+to those recalls exactly when $\chi$ selects it. This includes the two
+different source successors in (AA.90). No assertion of successful
+handoff is made when the source-only access test fails.
+
+Proof. For a received access list, the latch/copy induction of §20
+retains exactly each supplied bit. The acquired finite count and framed
+addresses bound its parsing and guarded binding traversals; a complete
+valid list therefore finishes its preparation on the locked same source.
+The source traversal is a finite depth-first traversal of an actually
+finite rooted tree. Its stack contains acquired references and
+pending child roles, not unknown subtree arguments. This uses the ordinary
+acquired-stack method also present in `NativeFullSourceProducer` and its
+private `traverse`; its Native read primitive is not assumed to implement
+our link reads. In this installation the link reads and grants are supplied
+explicitly. The traversal and total installed $\chi$ program terminate,
+so the finite counts and access test terminate. Authorized tape scans
+terminate on their actual finite null-ended backing. Theorem 24.2 proves
+that the representative's filtered word equals $\nu_\chi(w)$ of this very
+source history. Finite ancestor appends therefore construct exactly
+$\mathcal V_\chi(w)$ with actual source-reference bindings. They do not
+infer or acquire an unauthorized old coordinate.
+
+Induction over copy and append subphases shows that every written prefix
+has real backing before its cursor advances. The seal/Print/End/ACK/Return
+order withholds availability while any cell, output or cleanup remains
+pending. All loops have a finite list, subtree, word or supplied index as
+their bound; no external eventual acknowledgement is needed. The result
+is retained and callable because its actual head, live rights, source
+binding and installed entry persist, not because an inverse function exists.
+
+The selected shuffle interpretation in Theorem 24.2 proves the indexed
+handler. Its counters and accumulated address are backed, as in §20.
+For a successful new event $e$, selection by the fixed identity predicate
+gives
+
+$$
+\nu_\chi(we)=
+\begin{cases}\nu_\chi(w)e,&\chi(e)=1,\\
+\nu_\chi(w),&\chi(e)=0.
+\end{cases}
+\tag{AA.91}
+$$
+
+Projection to each strict ancestor is exactly the selected maintenance
+rule. A newly split branch has no earlier strict-descendant event, so
+its empty tape is correct even if earlier selected events occurred at
+that address itself. This proves the selected invariant by induction.
+A query or refused growth leaves it unchanged.
+
+A fetched historical address persists in LAB. Current finite left descent
+there reaches a leaf with an enabled $P$ or $S$. The installed source
+binding and current source-write grant execute it on the live object;
+no simulation is substituted for that action. The maintained invariant,
+real printing and finite return proof then apply. Induction on the finite
+request sequence proves the full continuation statement. A proper frame
+prefix has only its written prefix and pending state; it cannot complete
+without its remaining input. All material and rights premises are used
+on this same finite execution. $\square$
+
+A selected service may instead acquire its selected tapes online from
+the known $\alpha$ by these same updates, or retain the selected successful
+addresses in the literal framing of Proposition 22.2 and pay finite scans
+for recall. These are credited retention alternatives inside this
+application. Neither alternative retrospectively constructs a selected
+archive from an inaccessible full archive; Theorem 24.2 specifies exactly
+when the stated old-coordinate handoff can do that.
+

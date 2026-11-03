@@ -1,0 +1,32 @@
+**Proposition 23.2 (exact admissibility and the alpha exception).** The
+fibre $\mathcal O(U)$ is nonempty exactly when no branch of $U$ has two
+$\alpha$ leaves as children. On this domain $K(U)$ is either empty, for
+$U=\alpha$, or a nonempty rooted unary/binary tree. Pruning is a bijection
+between these admissible unordered coloured trees and the empty or
+rooted unary/binary trees. Its inverse replaces a leaf by $\beta$, a
+unary vertex by an unordered branch with its converted child and an
+$\alpha$ leaf, and a binary vertex by the branch of its converted
+children. If $U$ has $a$ alpha leaves and $c$ beta leaves, then
+
+$$
+n(U)=a+2c-1,
+\tag{IV.62}
+$$
+
+and every history in $\mathcal J(U)$ has exactly this length. In
+particular $E(\alpha)=J(\alpha)=1$, with the empty history, while an
+inadmissible $U$ has $E(U)=J(U)=0$.
+
+**Proof.** An alpha child must be on the right in AA17's domain. Two alpha
+children therefore preclude any native orientation. If every branch has
+at most one alpha child, put that child on the right wherever it occurs,
+and orient the other branches arbitrarily. The resulting term has no
+alpha leaf at an $L$-ending address, hence is reachable by AA17.2. Every
+retained branch has one or two retained children, and every retained leaf
+is beta. The stated inverse follows recursively; in particular a
+zero-child retained branch, which would be confused with beta, is
+excluded by admissibility. A full binary tree has $a+c-1$ branches, so
+pruning leaves $a+c-1+c$ vertices. Splits number $a+c-1$ and promotions
+number $c$, as in AA19.1, proving (IV.62) and the history length. The
+single alpha is the only admissible tree with empty pruning. $\square$
+

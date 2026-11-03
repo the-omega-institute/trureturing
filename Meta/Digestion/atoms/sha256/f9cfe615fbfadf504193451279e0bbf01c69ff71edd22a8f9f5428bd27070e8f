@@ -1,0 +1,25 @@
+给定 $(H,\mathcal S,\tau)$，称这个读出截口具有*内生规范回缩资格*，
+若存在同一个复线性保迹映射 $R:B(H)\to B(H)$，同时满足：
+
+1. **二值参考保正：**
+    $\operatorname{id}_2\otimes R$ 为正；
+
+2. **全部可见读数保持：**
+
+
+   $$
+   \operatorname{Tr}(R(\rho)s)=\operatorname{Tr}(\rho s)
+     \quad(\rho\text{ 为密度态},\ s\in\mathcal S);
+   $$
+
+3. **同资料同输出：**
+
+
+   $$
+   \rho\sim_{\mathcal S}\sigma
+     \ \Longrightarrow\ R(\rho)=R(\sigma)
+     \quad(\rho,\sigma\text{ 为密度态});
+   $$
+
+4. **内部参照固定：**$R(\tau)=\tau$。
+

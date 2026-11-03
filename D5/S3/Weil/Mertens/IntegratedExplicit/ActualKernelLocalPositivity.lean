@@ -77,7 +77,7 @@ private lemma mangoldtPart_exp_eq_zero {t : ℝ} (ht : t < Real.log 2) :
       have := (div_lt_one hn).mpr he
       linarith), mul_zero]
 
-private lemma K_eq_local {t : ℝ} (ht : 0 ≤ t) (ht2 : t < Real.log 2) :
+lemma K_eq_local {t : ℝ} (ht : 0 ≤ t) (ht2 : t < Real.log 2) :
     K t = Real.exp (-t / 2) *
       (Real.exp t * (1 + Real.eulerMascheroniConstant - t) -
         Real.log (2 * Real.pi) + trivialT t) := by
@@ -85,7 +85,7 @@ private lemma K_eq_local {t : ℝ} (ht : 0 ≤ t) (ht2 : t < Real.log 2) :
     mangoldtPart_exp_eq_zero ht2, Real.log_exp]
   ring
 
-private lemma K_zero : K 0 = firstLiMass := by
+lemma K_zero : K 0 = firstLiMass := by
   rw [K_eq_local le_rfl (Real.log_pos (by norm_num)), firstLiMass_split]
   simp only [neg_zero, zero_div, Real.exp_zero, mul_one, sub_zero, one_mul]
   have hT : trivialT 0 = 1 - Real.log 2 := by
@@ -145,13 +145,13 @@ private lemma trivialT_derivative {t : ℝ} (ht : 0 < t) :
   simp only [id_eq, Nat.zero_add, mul_one]
   linarith
 
-private def D1 (t : ℝ) : ℝ := K t / 2 - Real.exp (t / 2) +
+def D1 (t : ℝ) : ℝ := K t / 2 - Real.exp (t / 2) +
   Real.exp (-t / 2) * (Real.log (2 * Real.pi) + Real.log (1 - Real.exp (-(2 * t))) / 2)
 
-private def D2 (t : ℝ) : ℝ := K t / 4 - Real.exp (t / 2) +
+def D2 (t : ℝ) : ℝ := K t / 4 - Real.exp (t / 2) +
   Real.exp (-t / 2) / (Real.exp (2 * t) - 1)
 
-private lemma hasDerivAt_K {t : ℝ} (ht : 0 < t) (ht2 : t < Real.log 2) :
+lemma hasDerivAt_K {t : ℝ} (ht : 0 < t) (ht2 : t < Real.log 2) :
     HasDerivAt K (D1 t) t := by
   have hd := (((hasDerivAt_id t).neg.div_const 2).exp).mul
     ((((Real.hasDerivAt_exp t).mul
@@ -184,7 +184,7 @@ private lemma log_hasDerivAt {t : ℝ} (ht : 0 < t) :
   · rfl
   · ring
 
-private lemma hasDerivAt_D1 {t : ℝ} (ht : 0 < t) (ht2 : t < Real.log 2) :
+lemma hasDerivAt_D1 {t : ℝ} (ht : 0 < t) (ht2 : t < Real.log 2) :
     HasDerivAt D1 (D2 t) t := by
   have hd := (((hasDerivAt_K ht ht2).div_const 2).sub
     (((hasDerivAt_id t).div_const 2).exp)).add
@@ -197,7 +197,7 @@ private lemma hasDerivAt_D1 {t : ℝ} (ht : 0 < t) (ht2 : t < Real.log 2) :
     dsimp
     ring
 
-private lemma K_continuous : Continuous K := by
+lemma K_continuous : Continuous K := by
   have hT : Continuous (fun t : ℝ => trivialT |t|) :=
     trivialT_continuousOn.comp_continuous continuous_abs (fun t => abs_nonneg t)
   exact (show Continuous (fun t : ℝ => Real.exp (-|t| / 2)) by fun_prop).mul
@@ -210,7 +210,7 @@ private lemma exp_ratio_limit :
     simpa [smul_eq_mul, div_eq_mul_inv, mul_comm] using hd
   convert hh.inv₀ (by norm_num : (2 : ℝ) ≠ 0) using 1 <;> simp [one_div]
 
-private lemma log_argument_ratio_limit :
+lemma log_argument_ratio_limit :
     Tendsto (fun t : ℝ => t / (1 - Real.exp (-(2 * t)))) (𝓝[>] 0) (𝓝 (1 / 2)) := by
   have hd := ((hasDerivAt_const (0 : ℝ) (1 : ℝ)).sub
     (((hasDerivAt_id (0 : ℝ)).const_mul (-2)).exp)).tendsto_slope_zero_right
@@ -234,7 +234,7 @@ private lemma weighted_log_limit :
   dsimp only [Function.comp_def]
   rw [← mul_assoc, div_mul_cancel₀ _ hne]
 
-private lemma D1_atBot : Tendsto D1 (𝓝[>] 0) atBot := by
+lemma D1_atBot : Tendsto D1 (𝓝[>] 0) atBot := by
   have hc : Tendsto (fun t : ℝ => 1 - Real.exp (-(2 * t))) (𝓝[>] 0) (𝓝[>] 0) := by
     refine tendsto_nhdsWithin_iff.mpr ⟨?_, ?_⟩
     · simpa using (show ContinuousAt (fun t : ℝ => 1 - Real.exp (-(2 * t))) 0 by

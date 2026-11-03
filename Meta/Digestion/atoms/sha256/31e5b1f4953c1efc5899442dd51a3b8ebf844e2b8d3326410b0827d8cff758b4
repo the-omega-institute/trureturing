@@ -1,0 +1,48 @@
+**Definition 5.1 (finite preparation and public promise).** Fix public
+$N\ge4$ and put $k=15N$. Use the actual $S_i,A,T,E_i$ of Proposition
+3.2, with $|A|=72$, $|T|=243$ and $M=1944$, retaining $W=\mathbb F_3^3$
+also for $i=1$. Conditional on one fixed hidden $i$, an external
+preparer draws $N$ independent uniform elements $x_j\in O_6(S_i)$.
+Their paired endpoints $(a_j,t_j)=(x_j^2,x_j^3)$ are exactly independent
+uniform edges of $E_i$, by (UJB.7502), with no witness multiplicity.
+Independently of these draws and of $i$, choose uniform full injections
+
+$$
+\lambda:A\hookrightarrow\{0,1\}^7,\qquad
+\varrho:T\hookrightarrow\{0,1\}^8,
+\tag{UJB.7701}
+$$
+
+independently of one another. Each map is sampled once on its entire
+domain and shared across all $N$ samples, all bits and all later Reads.
+Concatenate the fields in sample order:
+
+$$
+z_{15(j-1)+h}=\lambda(a_j)_h\ (1\le h\le7),\qquad
+z_{15(j-1)+7+h}=\varrho(t_j)_h\ (1\le h\le8).
+\tag{UJB.7702}
+$$
+
+Use [IV37.1](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_IV.md#37-the-exact-native-alphabeta-connection)'s
+ordered gadgets
+
+$$
+C=\langle\beta,\alpha\rangle,\quad
+D_0=\langle\beta,C\rangle,\quad D_1=\langle C,\beta\rangle,\quad
+M_* =\langle\langle C,\alpha\rangle,\alpha\rangle.
+$$
+
+Define $F_{k+1}(z)=M_*$ and
+$F_b(z)=\langle D_{z_b},F_{b+1}(z)\rangle$ for $1\le b\le k$.
+The public promised family and the two laws are
+
+$$
+\mathcal C_N=\{F_1(z):z\in\{0,1\}^{15N}\},\qquad
+\mu_i^N=\mathcal L(F_1(z)\mid i).
+\tag{UJB.7703}
+$$
+
+The promise is all assignments, not just the support of either law.
+An assignment outside those supports still denotes the same kind of
+legal native endpoint. It need not encode any group edge sequence.
+

@@ -1,0 +1,38 @@
+### 引理 6.1（二值参考给出 Schwarz 不等式）
+
+<a id="lem-c94-schwarz"></a>
+
+若 $E$ 保持单位且二正，则对任意 $a\in B(H)$，
+
+<a id="eq-c94-schwarz"></a>
+
+$$
+E(a^\dagger a)-E(a)^\dagger E(a)\ge0.
+\tag{6.1}
+$$
+
+**证明。**
+矩阵
+
+$$
+\begin{pmatrix}a^\dagger a&a^\dagger\\a&I\end{pmatrix}
+ =
+ \begin{pmatrix}a^\dagger\\I\end{pmatrix}
+ \begin{pmatrix}a&I\end{pmatrix}
+$$
+
+为正。对其施加 $\operatorname{id}_2\otimes E$，得到正块矩阵
+
+$$
+\begin{pmatrix}
+ E(a^\dagger a)&E(a)^\dagger\\E(a)&I
+ \end{pmatrix}.
+$$
+
+在向量 $(v,-E(a)v)$ 上取二次型，正性恰给
+$\langle v,[E(a^\dagger a)-E(a)^\dagger E(a)]v\rangle\ge0$，
+所以式 [(6.1)](#eq-c94-schwarz) 成立。
+
+这个证明只用了一个二维参考的块正性，
+没有调用以完全正性为前件的 Stinespring 表示。
+

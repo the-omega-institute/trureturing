@@ -111,7 +111,7 @@ theorem native_source (x : (i : Coord V) → Ω → Value G i) :
     · rfl
     · exact ih _ _
 
-private theorem source_birth_le (x : (i : Coord V) → Ω → Value G i) :
+theorem source_birth_le (x : (i : Coord V) → Ω → Value G i) :
     ∀ n v ω, birth (source x n v ω) ≤ n := by
   intro n
   induction n with
@@ -129,7 +129,7 @@ def survives (x : (i : Coord V) → Ω → Value G i) (i : ℕ) : ℕ → V → 
   | k+1, v, ω => if x (.refresh (i+k+1) v) ω then false
       else survives x i k (x (.choice (i+k+1) v) ω).val ω
 
-private theorem survives_iff_old_source (x : (i : Coord V) → Ω → Value G i) (i : ℕ) :
+theorem survives_iff_old_source (x : (i : Coord V) → Ω → Value G i) (i : ℕ) :
     ∀ k v ω, survives x i k v ω = true ↔ birth (source x (i+k) v ω) ≤ i := by
   intro k
   induction k with
@@ -156,7 +156,7 @@ instance labelMeasurable : MeasurableSpace (Label V) := ⊤
 
 instance labelMeasurableSingleton : MeasurableSingletonClass (Label V) := ⟨fun _ => trivial⟩
 
-private theorem source_measurable [G.LocallyFinite] [MeasurableSpace Ω]
+theorem source_measurable [G.LocallyFinite] [MeasurableSpace Ω]
     (x : (i : Coord V) → Ω → Value G i) (hx : ∀ i, Measurable (x i)) :
     ∀ n v, Measurable (source x n v) := by
   intro n
@@ -311,7 +311,7 @@ private theorem fresh_pair_independent_survival [G.LocallyFinite] [MeasurableSpa
   · funext ω
     exact (survives_fillPast M.hasNeighbor M.coordinate i k v ω).symm
 
-private theorem survival_probability [G.LocallyFinite] [MeasurableSpace Ω]
+theorem survival_probability [G.LocallyFinite] [MeasurableSpace Ω]
     (P : Measure Ω) (M : Model G P) (i : ℕ) :
     ∀ k u, P {ω | survives M.coordinate i k u ω = true} =
       (unitInterval.toNNReal (unitInterval.symm M.ε) : ℝ≥0∞) ^ k := by
@@ -379,7 +379,7 @@ private theorem survival_probability [G.LocallyFinite] [MeasurableSpace Ω]
     rw [← Finset.sum_mul, ← Finset.mul_sum, hsum, mul_one]
     simpa only [mul_comm] using (pow_succ q k).symm
 
-private theorem collision_probability_le [G.LocallyFinite] [MeasurableSpace Ω]
+theorem collision_probability_le [G.LocallyFinite] [MeasurableSpace Ω]
     (P : Measure Ω) (M : Model G P) (i d : ℕ) (u : V) :
     P {ω | source M.coordinate i u ω = source M.coordinate (i+d) u ω} ≤
       (unitInterval.toNNReal (unitInterval.symm M.ε) : ℝ≥0∞) ^ d := by
@@ -514,7 +514,7 @@ private theorem finite_selector_integral {α β : Type} [MeasurableSpace α]
         · exact (hb a ha _).trans (le_max_left _ _)
         · simpa only [norm_zero] using le_max_right C 0))).integrable one_le_two
 
-private theorem fixed_pair_sign_mean [DecidableEq V]
+theorem fixed_pair_sign_mean [DecidableEq V]
     (P : Measure Ω) (M : Model G P) (a b : Label V) :
     (∫ ω, sgn (coin M.coordinate a ω) * sgn (coin M.coordinate b ω) ∂P) =
       if a = b then 1 else 0 := by
@@ -538,7 +538,7 @@ private theorem fixed_pair_sign_mean [DecidableEq V]
     simp only [hmean, mul_zero] at he
     simpa only [if_neg hab] using he
 
-private theorem native_pair_sign_mean (P : Measure Ω) (M : Model G P) (n m : ℕ) (u v : V) :
+theorem native_pair_sign_mean (P : Measure Ω) (M : Model G P) (n m : ℕ) (u v : V) :
     (∫ ω, sgn (nvm M.coordinate n u ω) * sgn (nvm M.coordinate m v ω) ∂P) =
       P.real {ω | source M.coordinate n u ω = source M.coordinate m v ω} := by
   classical
@@ -579,7 +579,7 @@ private theorem native_pair_sign_mean (P : Measure Ω) (M : Model G P) (n m : �
   simpa only [f, A, X, native_source] using hmain
 
 
-private theorem fixed_four_sign_mean [DecidableEq V]
+theorem fixed_four_sign_mean [DecidableEq V]
     (P : Measure Ω) (M : Model G P) (a b c d : Label V) :
     (∫ ω, (sgn (coin M.coordinate a ω) * sgn (coin M.coordinate b ω)) *
       (sgn (coin M.coordinate c ω) * sgn (coin M.coordinate d ω)) ∂P) =
@@ -668,7 +668,7 @@ def evenPairing {α : Type} (a : (α × α) × (α × α)) : Prop :=
   (a.1.1 = a.2.1 ∧ a.1.2 = a.2.2) ∨
   (a.1.1 = a.2.2 ∧ a.1.2 = a.2.1)
 
-private theorem native_four_sign_mean (P : Measure Ω) (M : Model G P)
+theorem native_four_sign_mean (P : Measure Ω) (M : Model G P)
     (n₁ n₂ n₃ n₄ : ℕ) (u₁ u₂ u₃ u₄ : V) :
     (∫ ω, (sgn (nvm M.coordinate n₁ u₁ ω) * sgn (nvm M.coordinate n₂ u₂ ω)) *
       (sgn (nvm M.coordinate n₃ u₃ ω) * sgn (nvm M.coordinate n₄ u₄ ω)) ∂P) =
@@ -854,7 +854,7 @@ private theorem diagonal_difference (P : Measure Ω) (M : Model G P)
   ring
 
 /-- A finite-time lower bound with the actual collision probabilities retained. -/
-private theorem native_variance_lower (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ) :
+theorem native_variance_lower (P : Measure Ω) (M : Model G P) (u : V) (d t : ℕ) :
     (1 / 4 : ℝ) * ∑ i ∈ Finset.Icc 1 t,
       (1 - P.real {ω | source M.coordinate i u ω = source M.coordinate (i+d) u ω}) ≤
       variance (W M.coordinate u d t) P := by

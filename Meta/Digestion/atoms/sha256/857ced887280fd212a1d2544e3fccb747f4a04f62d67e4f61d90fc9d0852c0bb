@@ -1,0 +1,50 @@
+### 对应的 AURIC 三轴
+
+> **Editorial note — block convention and physical boundary.** In AURIC v37 §6 the block convention is $\rho=\begin{pmatrix}A&C^*\\ C&B\end{pmatrix}$, so $C$ is the **lower-left** block. For the displayed $\mathbb G_j$, the matching choice is $A=Y_j^*Y_j$, $B=X_{j+1}^*X_{j+1}$, and $C=X_{j+1}^*Y_j$; with that choice the stated $X=C+C^*$ and $Y=i(C^*-C)$ signs agree with v37. The block matrix $\mathcal U$ is an abstract unitary on a completed Hilbert-space direct sum. Its existence does not grant native AURIC control, a free physical gate, state preparation, measurement access, or an implementation/resource certificate.
+
+把两个输出的完整关系保留为
+
+$$
+\mathbb G_j=
+\begin{pmatrix}
+Y_j^*Y_j&Y_j^*X_{j+1}\\
+X_{j+1}^*Y_j&X_{j+1}^*X_{j+1}
+\end{pmatrix}\succeq0.
+$$
+
+它的总量算子恰为
+
+$$
+Y_j^*Y_j+X_{j+1}^*X_{j+1}=X_j^*X_j.
+$$
+
+这正好可以使用项目 v37 的算子值三轴：
+
+$$
+S=A+B,\quad
+Z=A-B,\quad
+X=C+C^*,\quad
+Y=i(C^*-C),
+$$
+
+并由
+
+$$
+\mathbb G_j
+=
+\frac12
+\left(
+I\otimes S+
+\sigma_x\otimes X+
+\sigma_y\otimes Y+
+\sigma_z\otimes Z
+\right)
+$$
+
+完整重建。总迹非零时可以归一化，同时保存原总迹。
+
+**这个酉递归严格控制的是被消去的正细节能量。实际剩余核心仍是式 (19) 的差，其最终符号需要继续证明。**
+
+---
+
+<a id="section-6-relative-tolerance"></a>

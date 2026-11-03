@@ -1,0 +1,39 @@
+### 引理 5.1（恢复映射的归一性与加权伴随）
+
+<a id="lem-c90-petz"></a>
+
+$\mathcal R_\sigma$ 为 CPTP，且 $\mathcal R_\sigma(\tau)=\sigma$。
+定理 [4.2](#thm-c90-contraction) 中 $T$ 的 HS 伴随满足
+
+$$
+T^\dagger(Y)=\sigma^{1/4}
+       \mathcal N^*(\tau^{-1/4}Y\tau^{-1/4})\sigma^{1/4},
+$$
+
+并有
+
+<a id="eq-c90-weighted-adjoint"></a>
+
+$$
+W_\sigma^{-1}T^\dagger T W_\sigma
+ =\mathcal R_\sigma\mathcal N.
+\tag{5.2}
+$$
+
+**证明。**
+式 [(5.1)](#eq-c90-petz) 是三个完全正映射的组合。普通迹配对给出
+
+$$
+\begin{aligned}
+ \operatorname{Tr}\mathcal R_\sigma(Y)
+ &=\operatorname{Tr}\!\left(\sigma\mathcal N^*(\tau^{-1/2}Y\tau^{-1/2})\right)\\
+ &=\operatorname{Tr}\!\left(\tau\tau^{-1/2}Y\tau^{-1/2}\right)=\operatorname{Tr} Y.
+ \end{aligned}
+$$
+
+又因 $\mathcal N^*(I)=I$，
+$\mathcal R_\sigma(\tau)=\sigma^{1/2}\mathcal N^*(I)\sigma^{1/2}=\sigma$。
+将 $T$ 的三个因子按 HS 内积取伴随，便得所示 $T^\dagger$。
+再代入 $W_\sigma^{-1}(X)=\sigma^{1/4}X\sigma^{1/4}$，直接合并相邻幂次，
+得到式 [(5.2)](#eq-c90-weighted-adjoint)。
+

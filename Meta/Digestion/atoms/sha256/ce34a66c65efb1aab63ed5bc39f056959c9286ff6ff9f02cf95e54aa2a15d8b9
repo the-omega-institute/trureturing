@@ -1,0 +1,20 @@
+### 命题 8.2（模流稳定的有限证明）
+
+块乘积形式与
+
+$$
+\rho^{it}A\rho^{-it}=A\qquad(t\in\mathbb R)
+$$
+
+等价。
+
+**证明。**块乘积形式给出
+
+$$
+\rho^{it}=\bigoplus_\alpha p_\alpha^{it}\sigma_\alpha^{it}\otimes\tau_\alpha^{it},
+$$
+
+从而 $a_\alpha\otimes I$ 被送到 $(\sigma_\alpha^{it}a_\alpha\sigma_\alpha^{-it})\otimes I$。反过来，模流在 $A$ 上是连续自同构群，只能置换有限个极小中心投影；连续性迫使逐个固定。固定一块，令 $L=\log\rho_\alpha$，在 $t=0$ 求导得 $[L,a\otimes I]\in M_n\otimes I$。以隐藏空间 Hermitian 基 $B_0=I,B_1,\ldots,B_{m^2-1}$ 展开 $L=\sum A_\mu\otimes B_\mu$。线性独立性要求 $[A_\mu,a]=0$ 对 $\mu>0$ 及全部 $a\in M_n$ 成立，这些 $A_\mu$ 因而为标量；于是 $L=L_{\rm vis}\otimes I+I\otimes L_{\rm hid}$，指数化并归一化即得块乘积。
+
+模流参数在这里无量纲，$-\log\rho$ 是由校准定义的比较生成元；本定理没有证明它等于物理能量，也没有证明模流就是已经标定的物理时钟。
+

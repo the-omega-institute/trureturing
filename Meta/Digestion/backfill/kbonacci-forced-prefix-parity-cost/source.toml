@@ -1,0 +1,5 @@
+source_id = "kbonacci-forced-prefix-parity-cost"
+path = "docs/develop/theory/KBONACCI_FORCED_PREFIX_PARITY_COST.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

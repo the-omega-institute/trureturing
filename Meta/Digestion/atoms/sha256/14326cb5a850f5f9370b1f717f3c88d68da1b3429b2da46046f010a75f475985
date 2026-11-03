@@ -1,0 +1,231 @@
+**定理 24.2（Every original ground vector at every even scale）。**
+For every $H\in\mathcal C_{\diamond}$ and every integer $S\geq1$,
+
+$$
+\ker(K_s-E_sI)\subseteq\operatorname{ran}P_s.
+\tag{24.2}
+$$
+
+This includes every original local-spin sector, multiplicity copy,
+feasible weight, complex superposition and entangled vector.
+
+Proof. The representation and minimizing-realization input is the
+complete Theorem 19.2, including its component conclusion (19.4).
+The companion source versions for this proof are Git
+`e45f5aa2928bfa0d3239246268831d37a4146425`: the
+[owning volume](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md), the
+[collective-oscillator volume](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md),
+the three Lean sources and three Scribes cited below, and §§1–22
+of this volume. Their roles and parameters are as follows.
+
+The orthogonal Boolean-chain decomposition in the owning volume,
+(6.6)–(6.12), and here (19.5), is on the whole space (24.1):
+
+$$
+\mathcal H_{mS}\cong
+\bigoplus_{\substack{0\leq t_i\leq S\\
+               1\leq a_i\leq r_{2S}(t_i)}}
+ \left(\bigotimes_i V_{S-t_i}\right)_{\sum_i x_i=0},
+\qquad
+r_{2S}(t)=\binom{2S}{t}-\binom{2S}{t-1}.
+\tag{24.3}
+$$
+
+The convention is $\binom{2S}{-1}=0$. The weights are all
+$-J_i\leq x_i\leq J_i$, with $J_i=S-t_i$, and original occupancy
+$S+x_i$. No other filling is fixed. Each $a_i$ is a separate
+orthogonal multiplicity copy; collective spin acts identically on
+all these copies. The original $P_s$ selects exactly $t_i=0$
+for every $i$.
+
+The primary representation parameters are Srinivasan,
+[Theorem 1.2](https://arxiv.org/html/1001.0280v2), Boolean rank
+$n=2S$, starting rank $t_i$, layer $u=S+x_i$ and up operator
+$L_i^\ast$. Its normalized raising coefficient is
+$\sqrt{(u+1-t_i)(2S-t_i-u)}$, precisely (19.5).
+Feinsilver,
+[§§3–4, (8)–(10), (16), Proposition 4.3 and §4.2.2](https://arxiv.org/html/1102.0368v2),
+has $T=L_i^\ast$, $T^\ast=L_i$, principal number
+$2S-2t_i=2J_i$, chain index $J_i+x_i$ and grading $-2Z_i$.
+The vacuum count and orthogonality there give exactly the
+multiplicities and orthogonal copies in (24.3), including the
+spin-zero endpoint. These are consumed representation results.
+
+The full counting recurrences and theorems
+`sector_words_card_multinomial` and `sector_gram` in
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and its
+[Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs)
+normalize the symmetric fibre vectors by two-letter counts
+$(2S-n_i,n_i)$, including $n_i=0,2S$; for (23.9), the combined
+pair uses length $4S$ and counts $(2S,2S)$. These word-count
+statements alone do not assert a whole-carrier ground theorem.
+The collective-oscillator volume has the exact algebraic map
+$d=m$, $N=2S$, $g=0$, $e=1$, $B=A(H)$,
+$a_i=L_i/\sqrt{2S}$ and $H_{2S}=\hbar K_s/(2S)$ on the chosen
+two-state code. Its symmetric-code calculation is not substituted
+for the complete decomposition (24.3), and no low-excitation
+approximation is used.
+
+The singleton-difference definition in the complete
+[TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its
+[Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs)
+is the move defining $K_s$ in (24.1). The primary convention is
+Apte–Parekh–Sud,
+[v3, Definition 1 and Fact 2](https://arxiv.org/html/2506.03441v3),
+with $2mS$ original vertices, $mS$ tokens and edge weights one.
+Their shifted block $WI/2-K_s$ is a different operator. Their
+Definition 1 has $1\leq k<N$; the present $k=mS$, $N=2mS$
+always lies in that range.
+
+For the phase trials used in the odd-cycle inputs, the complete
+private and proof-local bodies `Test.move`, `Test.toNbr_bij`,
+`Test.token_energy`, `counting_identity`, `W_move`, `phi40_norm`,
+`phi40_energy` and `choose_ratio40` in
+[CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and the full
+[Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs)
+supply the coefficient and ordered-move counting mechanism. Their
+fixed refutation has $N=200$, $k=100$, $s=40$; the general
+phase-count identity is consumed through the owning volume's
+(3.5)–(3.7) and the local consequences (21.5)–(21.6), with
+$N=2nS$, $k=nS$, $s=2S$ on a cycle. Neither supplied refutation
+is a premise for spectral confinement.
+
+Theorem 19.2 uses only the nonstrict fixed-weight spin comparison
+from Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+The map is maximal local spin $s_i=S$, variable spin $t_i=J_i$,
+magnetization $M=0$ and bilinear coupling
+$D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$ for $a=A(H)$.
+This supplies existence of a maximal-spin minimizing choice, not
+strictness or an assertion about every original ground vector.
+The selected-pair replacement and actual-component separation in
+Theorem 19.2 supply the stronger necessary condition used here.
+In particular, no strictness is imported from that primary
+nonstrict result.
+
+Now suppose that a reducing summand of (24.3), deficient at a
+vertex $p$ with $J_p<S$, attains the actual $E_s$. Theorem 19.2
+provides a minimizing realization with all other spins $S$ and,
+for every actual component $C$ of $H[N_H(p)]$, requires
+
+$$
+\operatorname{ran}\rho_C\subseteq\mathcal G_C(0),\qquad
+\mathcal G_C(0)\subseteq\mathcal S_C.
+\tag{24.4}
+$$
+
+Here the local spaces and energies are exactly (19.3), and
+$\mathcal G_C(0)$ is nonzero because the zero-weight space is
+finite and nonempty. The zero weights and separate singlets in
+(24.4) are conclusions of that theorem on actual components.
+They are not independent restrictions on the original carrier.
+No marginal of every initially chosen deficient vector is assumed
+to be unchanged.
+
+Choose an actual component qualifying in Definition 24.1. If it
+is a diamond, Theorem 23.2 contradicts (24.4) at this exact spin
+$S$, including $S=1$.
+
+If it is bipartite, use the full local obstruction in the owning
+volume's (7.6)–(7.10), as consumed in Theorem 21.2: a nonempty
+bipartite graph with equal integer spins $S\geq1$ has a
+zero-weight ground vector which is not a total singlet. The
+operator there is precisely positive
+$\sum_{ij}(J_i^+J_j^-+J_i^-J_j^+)$ on the entire zero-weight
+space. For a singleton the vector is $|S,0\rangle$, and
+$\|J^+|S,0\rangle\|^2=S(S+1)>0$. For a connected component
+with an edge the supplied bipartition conjugation and
+Perron–Frobenius argument uses all allowed zero-total-weight
+configurations. Its incompatible diagonal values at the zero
+configuration and the configuration with weights $1,-1$ on an
+edge are $0$ and $-1$. Those weights exist also at $S=1$.
+Thus the cited obstruction retains the endpoint and contradicts
+the universal inclusion in (24.4).
+
+If the selected component is $C_n$ with odd $n\geq3$, consume
+the componentwise odd-cycle argument of Theorem 21.2. Its four
+cases depend only on the one actual component, (24.4), and,
+when $S=1$, the necessary cone equality of Theorem 20.1. They
+do not require that other vertices of $H$ satisfy Definition
+21.1. The exact estimates are the following.
+
+For $S\geq2$, cycle adjacency has the flat least eigenvalue
+$\lambda=-2\cos(\pi/n)<0$. Equations (21.4) and (21.6) give,
+for every unit total singlet $v$ on the cycle,
+
+$$
+\langle v,K_Cv\rangle\geq\frac23\lambda nS(S+1),\qquad
+ e_C(0)\leq\lambda nS^2\frac{2nS}{2nS-1}.
+\tag{24.5}
+$$
+
+The competing vector is the normalized phase product on the
+actual $nS$-subsets of $C\times[2S]$, constant within each
+fibre-occupancy orbit. It is in the symmetric spin-$S$ tensor
+space with only total weight zero. The exact strict comparison
+(21.7) is
+
+$$
+S^2\frac{2nS}{2nS-1}-\frac23S(S+1)
+=\frac{2S\{nS(S-2)+S+1\}}{3(2nS-1)}>0.
+\tag{24.6}
+$$
+
+Since $\lambda n<0$, the upper bound in (24.5) is strictly
+below the singlet lower bound, also at $S=2$ and $n=3$.
+This contradicts (24.4).
+
+For $S=1,n=5$, (21.8) gives $-12<e_C(0)<-8$ if a singlet is
+a local ground vector. Rotating its eigenvector equation as in
+(23.7) gives $T_zv=(e_C(0)/4)v$. The operator $T_z$ is integer
+diagonal in the spin-one weight basis, so any nonzero coordinate
+forces $e_C(0)\in4\mathbb Z$. No such integer multiple lies
+strictly between $-12$ and $-8$. This is exactly the supplied
+five-cycle obstruction.
+
+For $S=1,n=3$, the singlet Casimir identity (21.9) gives
+$\langle K_C\rangle=-4$ for every unit singlet. Thus (24.4)
+would imply $e_C(0)=-4$. Theorem 20.1 at this deficient vertex
+requires $\varepsilon_{\{p\}\cup C}(0)=e_C(0)$ on the entire
+original Boolean carrier of the actual cone. This cone is $K_4$.
+The product of the two pair singlets (21.10), each on two actual
+spin-one fibres, has energy $-16/3$ there. Consequently
+$\varepsilon_{\{p\}\cup C}(0)\leq-16/3<-4$, a contradiction.
+
+For $S=1$ and odd $n\geq7$, (21.11) gives the isotropic cycle
+bound $H_{\rm iso}\succeq-3nI/2$. Rotational invariance on a
+singlet gives $\langle K_C\rangle\geq-2n$, hence (24.4)
+requires $e_C(0)\geq-2n$. The actual cone is the wheel
+$K_1\vee C_n$. The complete normalized original-carrier trial
+and strict estimate from the owning volume's Theorem 16.2,
+consumed as (21.12), give
+
+$$
+\varepsilon_{\{p\}\cup C}(0)
+\leq-\frac{4n(n+1)}{2n+1}
+ \left(\frac{49}{50}\cos\frac\pi n+\frac7{100}\right)
+<-2n\leq e_C(0).
+\tag{24.7}
+$$
+
+Its parameters are $N_D=2(n+1)$, $k_D=n+1$, central phase $-1$
+and rim phases $(u_j+1/10)/(1+u_j/10)$, with
+$u_j=e^{2\pi\mathrm i (n-1)j/(2n)}$. The supplied strict bound
+includes $n=7$. It is a trial on the entire original zero-weight
+cone carrier, not an independently prescribed local-spin minimum.
+It contradicts Theorem 20.1. This cone equality is used only at
+$S=1$; no whole-fibre removal for larger $S$ is inferred.
+
+Every possible qualifying component has contradicted attainment
+of $E_s$ by the deficient summand. Each summand of (24.3) reduces
+$K_s$. Projecting an arbitrary complex $E_s$-ground vector onto
+one of these summands therefore gives either zero or an
+$E_s$-ground vector in that summand. All deficient projections
+must vanish. The remaining summands have all $t_i=0$ and are
+exactly $\operatorname{ran}P_s$. This proves (24.2) with every
+copy, feasible weight and superposition retained. $\square$
+

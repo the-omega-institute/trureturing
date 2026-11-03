@@ -1,0 +1,62 @@
+#### 定理 13.1（固定共同签名的最优强度）
+
+沿用含单位输出方向 $s_0$ 的非零输出空间。
+记 $b=\overline\lambda$，共轭按分量取。
+存在所要求的收缩当且仅当
+
+$$
+\boxed{tbb^*\preceq G.}
+$$
+
+最优值为
+
+$$
+\boxed{
+t_*^{\lambda}=
+\begin{cases}
+(b^*G^+b)^{-1},&b\in\operatorname{ran}  G,\\
+0,&b\notin\operatorname{ran}  G.
+\end{cases}}
+$$
+
+**证明。**
+
+对任意系数 $c$，收缩条件正是
+
+$$
+t\left|\sum_j\lambda_jc_j\right|^2
+=t|b^*c|^2\le c^*Gc.
+$$
+
+反向用此不等式定义
+$`M(Xc)=\xi\,b^*c`$，零关系保证定义无歧义，再在 $L^\perp$ 置零。
+若 $b\notin\operatorname{ran}  G=(\operatorname{ker}  G)^\perp$，存在 $k\in\operatorname{ker}  G$ 而
+$`b^*k\ne0`$，所以只能 $t=0$。
+若 $b\in\operatorname{ran}  G$，Cauchy--Schwarz 给
+
+$$
+|b^*c|^2
+\le (b^*G^+b)(c^*Gc),
+$$
+
+取 $c=G^+b$ 达到界。
+更显式地令 $w=XG^+b$，则
+
+$$
+\langle w,x_j\rangle =\lambda_j,
+\qquad \left\lVert w\right\rVert ^2=b^*G^+b.
+$$
+
+对任意单位输出 $s_0$，
+$M=|s_0\rangle \langle w/\left\lVert w\right\rVert|$ 达到该最优值。
+
+□
+
+相位协变现在清楚可见：若输入重写为
+$x'_j=e^{i\theta_j}x_j$，相同物理分支的签名应同时改为
+$\lambda'_j=e^{i\theta_j}\lambda_j$。
+此时 $`G'=U^*GU`$、$`b'=U^*b`$，其中
+$U=\operatorname{diag}(e^{i\theta_j})$，最优 $t$ 不变。
+若只改输入相位，却仍把所有签名强设为 $1$，已经改换了共同分支任务。
+零签名未纳入优化，因为全部 $Mx_j=0$ 时 $\xi$ 的任意尺度没有分支强度意义。
+
