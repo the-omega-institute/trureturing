@@ -14,6 +14,14 @@ triage: anchor
 
 # Barato–Seifert, skewness and kurtosis in statistical kinetics
 
+## Verified locator
+
+DOI: 10.1103/PhysRevLett.115.188103
+
+Source: https://arxiv.org/abs/1510.03279v1
+
+Phys. Rev. Lett. 115, 188103 (2015).
+
 A. C. Barato and U. Seifert, arXiv:1510.03279v1 [cond-mat.stat-mech] (12 October 2015, the only version); Phys. Rev. Lett. 115, 188103 (2015). Quotations are from the v1 TeX source `skewkurtstatkinarxiv.tex`, with macros for $\mathcal R,\mathcal S,\mathcal K$ written out.
 
 The cycle completion time and its moments (l. 132–153):
