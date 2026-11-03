@@ -531,11 +531,10 @@ private lemma separable_ground_exclusion
 
 private lemma triple_useful : ¬ IsUseless obs univ := by
   obtain ⟨μ, g, hμ, hg, heig, hpos⟩ := ground_state
-  have hρ : IsDensity (rankOneDensity g) := by
-    refine ⟨posSemidef_vecMulVec_self_star g, ?_⟩
-    simpa only [rankOneDensity, trace_vecMulVec, dotProduct_comm] using hg
   intro huseless
-  obtain ⟨σ, _, hσ, hmatch⟩ := huseless (rankOneDensity g) hρ
+  obtain ⟨σ, _, hσ, hmatch⟩ := huseless (rankOneDensity g)
+    ⟨posSemidef_vecMulVec_self_star g, by
+      simpa only [rankOneDensity, trace_vecMulVec, dotProduct_comm] using hg⟩
   have henergy : trace (σ * hamiltonian) = (μ : ℂ) := by
     have h0 := hmatch 0 (mem_univ 0)
     have h1 := hmatch 1 (mem_univ 1)
