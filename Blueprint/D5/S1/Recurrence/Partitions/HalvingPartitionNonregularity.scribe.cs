@@ -90,7 +90,10 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 + "for the source count, and the exact source/composition cardinality identity "
                 + "for every n. These are literal finite-family representations; no finite-kernel, "
                 + "finite-alphabet, eventual-input or basis substitute enters the statement.",
-                DescribeRole.Theorem, acknowledgeSource: true),
+                DescribeRole.Theorem, acknowledgeSource: true,
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alekseyev-halving-partitions-nonregularity"),
+                    ResolutionKind.Refuted)),
             Paragraph(Text("For m at least two, every source list at total 2^m+1 has one "
                 + "prefix of rounded-up values followed by deterministic powers of two and, "
                 + "when the length exceeds m, a tail of ones. If its length l is at most m, "
@@ -111,13 +114,14 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 + "Only forward propagation is used; the matrices may be singular.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, bool literature = false, bool acknowledgeSource = false) => Describe.Lean(
+        DescribeRole role, bool literature = false, bool acknowledgeSource = false,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("halving-partitions-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source)
                 : acknowledgeSource ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula HalfFormula() => Disp(All("p", N(), All("q", N(),
         IffF(Call("IsHalf", F.Id("p"), F.Id("q")), OrF(
