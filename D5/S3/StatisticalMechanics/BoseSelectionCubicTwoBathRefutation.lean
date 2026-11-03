@@ -7,7 +7,6 @@
    digest: Two cubic product-coupled baths admit an open set with five Bose-selected modes. -/
 
 import D5.S3.Geometry.FiniteCoordinateTruncation
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Basic.Real.Sign
 
 /-! The cubic two-bath family has a strictly positive signed-Pfaffian kernel on a nonempty
