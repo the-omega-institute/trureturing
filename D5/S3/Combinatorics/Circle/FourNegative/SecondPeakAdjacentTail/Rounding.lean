@@ -79,20 +79,17 @@ private theorem continuous_integer_windows
     (hDpos : 0<D) (hLLpos : 0<LL) :
     ∃ m : ℤ, 0≤m ∧ m≤stock ∧ Windows x z q 0 (m:ℚ) := by
   obtain ⟨m,hm1,hmstock,hme,hmec,hmceil⟩ :=
-    bounded_ceiling D LL stock hLLpos hDpos hstock
+    bounded_ceiling D LL stock hLLpos hDpos (by exact_mod_cast hstock)
   have hm0 : 0≤(m:ℚ) := by exact_mod_cast (show 0≤m by omega)
   have hms : (m:ℚ)≤q*z/2-1 := by
     have hs : m≤stock := hmstock
     have hsQ : (m:ℚ)≤(stock:ℚ) := by exact_mod_cast hs
     linarith
-  have he : 0≤E x z q 0 (m:ℚ) := by
-    rw [hD] at *
-    dsimp [E]
-    linarith
-  have hecap : E x z q 0 (m:ℚ)≤L x z-1 := by
-    rw [hD,hLL] at *
-    dsimp [E]
-    linarith
+  have hmeQ : 0≤(m:ℚ)*(LL:ℚ)-(D:ℚ) := by exact_mod_cast hme
+  have hmecQ : (m:ℚ)*(LL:ℚ)-(D:ℚ)≤(LL:ℚ)-1 := by exact_mod_cast hmec
+  rw [hD,hLL] at hmeQ hmecQ
+  have he : 0≤E x z q 0 (m:ℚ) := by dsimp [E]; linarith
+  have hecap : E x z q 0 (m:ℚ)≤L x z-1 := by dsimp [E]; linarith
   refine ⟨m,by omega,hmstock,?_⟩
   exact high_continuous_windows x z q (m:ℚ) hx hz hq hlarge hm0 hms he hecap
 
@@ -120,57 +117,74 @@ private theorem high_integer_selection (a b c : ℕ)
   let zI : ℤ := 2^c
   let qI : ℤ := 2^(b-c)
   let DI : ℤ := (1+qI*zI+(qI*zI)*zI+2*(qI*zI)*zI^2) -
-    (1+xI+xI*(qI*zI)+xI*(qI*zI)*zI)
+    (1+2*zI+2*xI*zI+2*xI*(qI*zI)*zI)
   let LI : ℤ := 1+zI+2*zI^2*(1+xI)
   let SI : ℤ := 2^(b-1)-1
-  have hx : (4:ℚ)≤(2:ℚ)^a := by exact_mod_cast (show (4:ℤ)≤xI by dsimp [xI]; exact pow_le_pow_right₀ (by norm_num) ha)
-  have hz : 2*(2:ℚ)^a≤(2:ℚ)^c := by exact_mod_cast (show 2*xI≤zI by dsimp [xI,zI]; exact pow_le_pow_right₀ (by norm_num) (by omega))
-  have hq : (16:ℚ)≤(2:ℚ)^(b-c) := by exact_mod_cast (show (16:ℤ)≤qI by dsimp [qI]; exact pow_le_pow_right₀ (by norm_num) (by omega))
-  have hD : (DI:ℚ)=K ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^(b-c))-
+  have hx : (4:ℚ)≤(2:ℚ)^a := by
+    convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) ha using 1 <;> norm_num
+  have hz : 2*(2:ℚ)^a≤(2:ℚ)^c := by
+    have h := pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show a+1≤c by omega)
+    simpa only [pow_succ,mul_comm] using h
+  have hq : (16:ℚ)≤(2:ℚ)^(b-c) := by
+    convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 4≤b-c by omega) using 1 <;> norm_num
+  have hD : (DI:ℚ)=K ((2:ℚ)^c) ((2:ℚ)^(b-c))-
       B ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^(b-c)) := by
     dsimp [DI,K,B,xI,zI,qI]
     push_cast
-    rw [← pow_add,← pow_add]
     ring
   have hL : (LI:ℚ)=L ((2:ℚ)^a) ((2:ℚ)^c) := by
     dsimp [LI,L,xI,zI]
     push_cast
     ring
+  have hbpow : (2:ℚ)^(b-c)*(2:ℚ)^c=(2:ℚ)^b := by
+    rw [←pow_add,Nat.sub_add_cancel (by omega : c≤b)]
+  have hbpred : (2:ℚ)^b=2*(2:ℚ)^(b-1) := by
+    conv_lhs => rw [show b=(b-1)+1 by omega,pow_succ]
+    ring
   have hstockcap : (SI:ℚ)=(2:ℚ)^(b-c)*(2:ℚ)^c/2-1 := by
     dsimp [SI]
-    rw [show b=(b-1)+1 by omega,show (2:ℚ)^((b-c)+c)=(2:ℚ)^b by rw [← pow_add]; congr 1 <;> omega]
-    norm_num
+    push_cast
+    rw [hbpow,hbpred]
+    ring
   have hcommon := common_bounds ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^(b-c)) hx hz (by linarith)
   have hDpos : 0<DI := by
     have hh := hcommon.2.2.2.2.2.1
-    rw [hD] at hh
-    exact_mod_cast (show (0:ℚ)<K ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^(b-c))-
-      B ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^(b-c)) by linarith)
+    have hhQ : (0:ℚ)<(DI:ℚ) := by rw [hD]; linarith
+    exact_mod_cast hhQ
   have hLpos : 0<LI := by
     dsimp [LI]
     positivity
   by_cases hcont : 32≤(2:ℚ)^(b-c) ∨ ((8:ℚ)≤(2:ℚ)^a ∧ 16≤(2:ℚ)^(b-c))
   · have hstock : (DI:ℚ)≤(SI:ℚ)*(LI:ℚ) := by
       have hh := hcommon.2.2.2.2.2.2
-      rw [hD,hL,hstockcap] at hh
+      rw [hD,hL,hstockcap]
       linarith
     obtain ⟨m,hm1,hmstock,hw⟩ := continuous_integer_windows ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^(b-c))
-      DI LI SI hx hz hq hcont hD hL hstock hstockcap hDpos hLpos
+      DI LI SI hx hz hq hcont hD hL hstock (le_of_eq hstockcap) hDpos hLpos
     exact ⟨m,by omega,hmstock,hw⟩
   · have ha2 : a=2 := by
       by_contra hne
-      have ha8 : (8:ℚ)≤(2:ℚ)^a := by exact_mod_cast (show (8:ℤ)≤xI by dsimp [xI]; exact pow_le_pow_right₀ (by norm_num) (by omega))
-      omega
+      have ha8 : (8:ℚ)≤(2:ℚ)^a := by
+        convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 3≤a by omega) using 1 <;> norm_num
+      exact hcont (Or.inr ⟨ha8,hq⟩)
     have hq16 : b=c+4 := by
-      have : (b-c)=4 := by omega
-      omega
+      by_contra hne
+      have hp : (32:ℚ)≤(2:ℚ)^(b-c) := by
+        convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 5≤b-c by omega) using 1 <;> norm_num
+      exact hcont (Or.inl hp)
     subst a
     subst b
     obtain ⟨m,hm⟩ := high_periodic_selection c (by omega)
-    have hmb : m≤(2:ℤ)^(b-1)-1 := by
-      have hh := hm.2
-      omega
-    exact ⟨m,hm.1,hmb,periodic_integer_windows (2:ℚ) ((2:ℚ)^c) m rfl
-      (by exact_mod_cast (show (8:ℤ)≤(2:ℤ)^c by exact pow_le_pow_right₀ (by norm_num) (by omega))) hm⟩
+    have hmb : m≤(2:ℤ)^(c+4-1)-1 := by
+      have hstockQ : (m:ℚ)≤(2:ℚ)^(c+4-1)-1 := by
+        have hh := hm.2.1
+        rw [show c+4-1=c+3 by omega,pow_add]
+        norm_num
+        linarith
+      exact_mod_cast hstockQ
+    have hz8 : (8:ℚ)≤(2:ℚ)^c := by
+      convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 3≤c by omega) using 1 <;> norm_num
+    refine ⟨m,by exact_mod_cast hm.1,hmb,?_⟩
+    simpa using periodic_integer_windows 4 ((2:ℚ)^c) m rfl hz8 hm
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail

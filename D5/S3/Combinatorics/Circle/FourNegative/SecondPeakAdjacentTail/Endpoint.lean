@@ -26,7 +26,7 @@ open private zero_period_transport
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 open private physical_strips
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.PhysicalWord
-open private base newBase sourceMod oldValue newValue size
+open private base newBase charge sourceMod oldValue newValue size
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private insertAt
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
@@ -48,60 +48,57 @@ private def AdjacentSelector (a b c d : ℕ) : Prop :=
   ∃ v m : ℕ, v≤2^(c-1)-1 ∧ m≤2^(b-1)-1 ∧
     Windows ((2:ℚ)^a) ((2:ℚ)^c) ((2:ℚ)^(b-c)) (v:ℚ) (m:ℚ)
 
+private theorem dyadic_half (n : ℕ) (hn : 1≤n) :
+    (2:ℚ)^n/2=(2:ℚ)^(n-1) := by
+  conv_lhs => rw [show n=(n-1)+1 by omega,pow_succ]
+  ring
+
+private theorem nat_stock_of_rational (v : ℤ) (n : ℕ) (hn : 1≤n)
+    (hv : (v:ℚ)≤(2:ℚ)^n/2-1) : v.toNat≤2^(n-1)-1 := by
+  apply Int.toNat_le.mpr
+  have hp : (1:ℕ)≤2^(n-1) := one_le_pow₀ (by norm_num)
+  have hc : ((2^(n-1)-1:ℕ):ℚ)=(2:ℚ)^(n-1)-1 := by
+    rw [Nat.cast_sub hp]
+    norm_num
+  rw [dyadic_half n hn] at hv
+  have hQ : (v:ℚ)≤((2^(n-1)-1:ℕ):ℚ) := by rw [hc]; exact hv
+  exact_mod_cast hQ
+
 private theorem adjacent_selector_domain (a b c : ℕ)
-    (ha : 2≤a) (hac : a<c) (hcb : c<b)
+    (ha : 2≤a) (hac : a<c) (hcb : c+1<b)
     (hex2 : b=c+2 → ¬(a=2 ∧ c=3) ∧ ¬(a=2 ∧ c=5))
     (hex3 : b=c+3 → ¬(a=2 ∧ c=3)) :
     AdjacentSelector a b c (c+1) := by
-  have hc : 2≤c := by omega
-  by_cases hs2 : b=c+2
-  · obtain ⟨v,m,hv0,hm0,hr⟩ := low_integer_selection a c 2 (Or.inl rfl) ha hac
-      (by simpa [hs2] using hex2) (by intro; omega)
-    have hv : 0≤(v:ℚ) := by exact_mod_cast hv0
-    have hm : 0≤(m:ℚ) := by exact_mod_cast hm0
-    obtain ⟨hvv,hvstock,hr'⟩ := hr
-    have hcommon := common_bounds ((2:ℚ)^a) ((2:ℚ)^c) 4
-      (by exact_mod_cast (show (4:ℤ)≤2^a by exact pow_le_pow_right₀ (by norm_num) ha))
-      (by exact_mod_cast (show 2*(2:ℤ)^a≤(2:ℤ)^c by exact pow_le_pow_right₀ (by norm_num) (by omega)))
-      (by norm_num)
-    have hw := windows_of_residual ((2:ℚ)^a) ((2:ℚ)^c) 4 (v:ℚ) (m:ℚ)
-      (by exact_mod_cast (show (4:ℤ)≤2^a by exact pow_le_pow_right₀ (by norm_num) ha))
-      (by exact_mod_cast (show 2*(2:ℤ)^a≤(2:ℤ)^c by exact pow_le_pow_right₀ (by norm_num) (by omega)))
-      (by norm_num) hcommon hv hr'
-    refine ⟨Int.toNat v,Int.toNat m,?_,?_,?_⟩
-    · have : (0:ℤ)≤v := hv0; simpa [Int.toNat_of_nonneg this]
-      using hvv
-    · have : (0:ℤ)≤m := hm0
-      have hbnd : m≤(2:ℤ)^(b-1)-1 := by
-        have hh := hm0
-        have hs := hr'.2.1
-        rw [show (2:ℚ)^c/2*4=(2:ℚ)^c*2 by ring] at hs
-        exact_mod_cast (by nlinarith : m≤(2:ℤ)^(b-1)-1)
-      simpa [Int.toNat_of_nonneg this] using hbnd
-    · simpa [Int.toNat_of_nonneg hv0,Int.toNat_of_nonneg hm0,
-        show (2:ℚ)^(b-c)=4 by simp [hs2]] using hw
-  · by_cases hs3 : b=c+3
-    · obtain ⟨v,m,hh⟩ := low_integer_selection a c 3 (Or.inr rfl) ha hac
-        (by simpa [hs3] using hex2) (by simpa using hex3)
-      obtain ⟨hv0,hvstock,hr⟩ := hh
-      have hcommon := common_bounds ((2:ℚ)^a) ((2:ℚ)^c) 8
-        (by exact_mod_cast (show (4:ℤ)≤2^a by exact pow_le_pow_right₀ (by norm_num) ha))
-        (by exact_mod_cast (show 2*(2:ℤ)^a≤(2:ℤ)^c by exact pow_le_pow_right₀ (by norm_num) (by omega)))
-        (by norm_num)
-      have hw := windows_of_residual ((2:ℚ)^a) ((2:ℚ)^c) 8 (v:ℚ) (m:ℚ)
-        (by exact_mod_cast (show (4:ℤ)≤2^a by exact pow_le_pow_right₀ (by norm_num) ha))
-        (by exact_mod_cast (show 2*(2:ℤ)^a≤(2:ℤ)^c by exact pow_le_pow_right₀ (by norm_num) (by omega)))
-        (by norm_num) hcommon (by exact_mod_cast hv0) hr
-      refine ⟨Int.toNat v,Int.toNat m,?_,?_,?_⟩
-      · exact_mod_cast hv0
-      · have hs := hr.2.1; have : m≤(2:ℤ)^(b-1)-1 := by exact_mod_cast (by nlinarith : (m:ℚ)≤(2:ℚ)^(b-1)-1); exact_mod_cast this
-      · simpa [Int.toNat_of_nonneg hv0,Int.toNat_of_nonneg (by exact_mod_cast hr.1),
-          show (2:ℚ)^(b-c)=8 by simp [hs3]] using hw
-    · have hhigh : c+4≤b := by omega
-      obtain ⟨m,hm0,hmb,hw⟩ := high_integer_selection a b c ha hac hhigh
-      refine ⟨0,Int.toNat m,by norm_num,?_,?_⟩
-      · exact_mod_cast hmb
-      · simpa [Int.toNat_of_nonneg hm0] using hw
+  have hx : (4:ℚ)≤(2:ℚ)^a := by
+    convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) ha using 1 <;> norm_num
+  have hz : 2*(2:ℚ)^a≤(2:ℚ)^c := by
+    have h := pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show a+1≤c by omega)
+    simpa only [pow_succ,mul_comm] using h
+  by_cases hlow : b=c+2 ∨ b=c+3
+  · obtain ⟨v,m,hs⟩ := low_integer_selection a c (b-c) (by omega) ha hac
+      (by intro h; apply hex2; omega) (by intro h; apply hex3; omega)
+    obtain ⟨hv0Q,hvs,hr⟩ := hs
+    have hv0 : (0:ℤ)≤v := by exact_mod_cast hv0Q
+    have hm0 : (0:ℤ)≤m := by exact_mod_cast hr.1
+    have hq : (4:ℚ)≤(2:ℚ)^(b-c) := by
+      convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 2≤b-c by omega) using 1 <;> norm_num
+    have hw := windows_of_residual _ _ _ _ _ hx hz hq (common_bounds _ _ _ hx hz hq) hv0Q hr
+    have hvn : ((v.toNat:ℕ):ℚ)=(v:ℚ) := by exact_mod_cast Int.toNat_of_nonneg hv0
+    have hmn : ((m.toNat:ℕ):ℚ)=(m:ℚ) := by exact_mod_cast Int.toNat_of_nonneg hm0
+    refine ⟨v.toNat,m.toNat,?_,?_,?_⟩
+    · apply nat_stock_of_rational v c (by omega)
+      linarith
+    · apply nat_stock_of_rational m b (by omega)
+      have hp : (2:ℚ)^(b-c)*(2:ℚ)^c=(2:ℚ)^b := by
+        rw [←pow_add,Nat.sub_add_cancel (by omega : c≤b)]
+      have hh := hr.2.1
+      rw [hp] at hh
+      linarith
+    · simpa only [hvn,hmn] using hw
+  · obtain ⟨m,hm0,hmb,hw⟩ := high_integer_selection a b c ha hac (by omega)
+    refine ⟨0,m.toNat,by omega,Int.toNat_le.mpr hmb,?_⟩
+    have hmn : ((m.toNat:ℕ):ℚ)=(m:ℚ) := by exact_mod_cast Int.toNat_of_nonneg hm0
+    simpa only [Nat.cast_zero,hmn] using hw
 
 private theorem selector_to_physical
     (a b c d : ℕ) (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
@@ -111,12 +108,60 @@ private theorem selector_to_physical
       InStrip (oldValue a b c d) (sourceMod a b c d/2) 0 w ∧
       InStrip (newValue a b c d) (sourceMod a b c d) 0
         (insertAt (a+b+c+d) w d) := by
-  subst d
   rcases hs with ⟨v,m,hv,hm,hw⟩
   let x : ℚ := (2:ℚ)^a
   let z : ℚ := (2:ℚ)^c
   let q : ℚ := (2:ℚ)^(b-c)
-  have hwin := hw
+  have hwin : Windows x z q (v:ℚ) (m:ℚ) := hw
+  have hy : (2:ℚ)^b=q*z := by
+    dsimp [q,z]
+    rw [←pow_add,Nat.sub_add_cancel (by omega : c≤b)]
+  have hdpow : (2:ℚ)^d=2*z := by
+    rw [hdc,pow_succ]
+    dsimp [z]
+    ring
+  have hA : ((base a b c d 0:ℤ):ℚ)=A x z q := by
+    norm_num [base,newBase,charge]
+    push_cast
+    rw [hdpow,hy]
+    dsimp [x,z,q,A,B,L,K,SU,SV,SW]
+    ring
+  have hB : ((base a b c d 1:ℤ):ℚ)=B x z q := by
+    norm_num [base,newBase,charge]
+    push_cast
+    rw [hdpow,hy]
+    dsimp [x,z,q,A,B,L,K,SU,SV,SW]
+    ring
+  have hL : ((base a b c d 2:ℤ):ℚ)=L x z := by
+    norm_num [base,newBase,charge]
+    push_cast
+    rw [hdpow,hy]
+    dsimp [x,z,q,A,B,L,K,SU,SV,SW]
+    ring
+  have hK : ((base a b c d 3:ℤ):ℚ)=K z q := by
+    norm_num [base,newBase,charge]
+    push_cast
+    rw [hdpow,hy]
+    dsimp [x,z,q,A,B,L,K,SU,SV,SW]
+    ring
+  have hU : ((newBase a b c d 1:ℤ):ℚ)=SU x z q := by
+    norm_num [base,newBase,charge]
+    push_cast
+    rw [hdpow,hy]
+    dsimp [x,z,q,A,B,L,K,SU,SV,SW]
+    ring
+  have hV : ((newBase a b c d 2:ℤ):ℚ)=SV x z := by
+    norm_num [base,newBase,charge]
+    push_cast
+    rw [hdpow,hy]
+    dsimp [x,z,q,A,B,L,K,SU,SV,SW]
+    ring
+  have hW : ((newBase a b c d 3:ℤ):ℚ)=SW z q := by
+    norm_num [base,newBase,charge]
+    push_cast
+    rw [hdpow,hy]
+    dsimp [x,z,q,A,B,L,K,SU,SV,SW]
+    ring
   have ho : let AA := base a b c d 0; let BB := base a b c d 1
       let LL := base a b c d 2; let KK := base a b c d 3
       ∀ r : Fin 3,
@@ -126,9 +171,16 @@ private theorem selector_to_physical
     dsimp
     intro r
     fin_cases r
-    · simpa [x,z,q,A,B,L,K,SU,SV,SW] using hwin.1
-    · simpa [x,z,q,A,B,L,K,SU,SV,SW] using hwin.2.2.1
-    · simpa [x,z,q,A,B,L,K,SU,SV,SW] using hwin.2.2.2.2.1
+    · have hh := hwin.1
+      rw [←hB,←hA] at hh
+      exact_mod_cast hh
+    · have hh := hwin.2.2.1
+      dsimp only [E] at hh
+      rw [←hB,←hA,←hL,←hK] at hh
+      exact_mod_cast hh
+    · have hh := hwin.2.2.2.2.1
+      rw [←hB,←hL,←hK] at hh
+      exact_mod_cast hh
   have hn : let AA := base a b c d 0; let UU := newBase a b c d 1
       let VV := newBase a b c d 2; let WW := newBase a b c d 3
       ∀ r : Fin 3,
@@ -138,9 +190,16 @@ private theorem selector_to_physical
     dsimp
     intro r
     fin_cases r
-    · simpa [x,z,q,A,B,L,K,SU,SV,SW] using hwin.2.1
-    · simpa [x,z,q,A,B,L,K,SU,SV,SW] using hwin.2.2.2.1
-    · simpa [x,z,q,A,B,L,K,SU,SV,SW] using hwin.2.2.2.2.2
+    · have hh := hwin.2.1
+      rw [←hU,←hA] at hh
+      exact_mod_cast hh
+    · have hh := hwin.2.2.2.1
+      dsimp only [F] at hh
+      rw [←hU,←hW,←hV,←hA] at hh
+      exact_mod_cast hh
+    · have hh := hwin.2.2.2.2.2
+      rw [←hU,←hV,←hW] at hh
+      exact_mod_cast hh
   obtain ⟨w,hwperm,hdk,hold,hnew⟩ := physical_strips a b c d v m ha hb hc hd hv hm ho hn
   exact ⟨w,hwperm,hdk,hold,hnew⟩
 
@@ -280,6 +339,6 @@ theorem actualSource_second_peak_adjacent_tail_joint_lift
     simpa [hdc] using (boundary_all_natural (2 : Fin 3))
   have hs := adjacent_selector_domain a b c ha hac (by omega)
     (by intro hb2; omega) (by intro hb3; omega)
-  exact adjacent_tail_all_natural a b c d ha hb hc hd hdc (by omega) hs
+  exact adjacent_tail_all_natural a b c d ha hb hc hd hdc (by omega) (by simpa only [hdc] using hs)
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail

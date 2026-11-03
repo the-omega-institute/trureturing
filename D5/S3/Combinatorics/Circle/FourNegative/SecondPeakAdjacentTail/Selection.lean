@@ -563,7 +563,7 @@ private theorem plus_two_integer_residue (a c : ℕ) (ha : 4≤a) (hac : a<c) :
   obtain ⟨he,hj,hu,hux,hrem⟩ := dyadic_residue a c 2 (by omega)
   obtain ⟨horth0,horth1⟩ := plus_two_orthant_bounds a c ha hac
   have hxQ : (16:ℚ)≤(2:ℚ)^a := by
-    simpa using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) ha
+    convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) ha using 1 <;> norm_num
   have hzQ : 2*(2:ℚ)^a≤(2:ℚ)^c := by
     have h := pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show a+1≤c by omega)
     simpa only [pow_succ,mul_comm] using h
@@ -575,7 +575,8 @@ private theorem plus_two_integer_residue (a c : ℕ) (ha : 4≤a) (hac : a<c) :
     · exact Or.inr (Or.inl (by exact_mod_cast h2))
     · exact Or.inr (Or.inr (Or.inl (by exact_mod_cast h4)))
     · exact Or.inr (Or.inr (Or.inr (by exact_mod_cast (le_of_eq h8.symm))))
-    · exact Or.inr (Or.inr (Or.inr (by have h : (16:ℚ)≤(2:ℚ)^j := by exact_mod_cast hl; linarith)))
+    · have h : (16:ℚ)≤(2:ℚ)^j := by exact_mod_cast hl
+      exact Or.inr (Or.inr (Or.inr (by linarith)))
   have hq : ∃ T : ℤ,
       (2:ℤ)^(c+2)=(if ell%2=0 then uI else xI+1-uI)+(xI+1)*T := by
     simpa [ell,j,xI,uI] using dyadic_residue_integer_quotient a c 2 (by omega)
@@ -640,7 +641,9 @@ private theorem plus_two_integer_residue (a c : ℕ) (ha : 4≤a) (hac : a<c) :
       linarith)
     (by
       intro hn h4
-      have hp : ell%2=1 := by have hh : ell%2≠0 := by simpa [neg] using hn; omega
+      have hp : ell%2=1 := by
+        have hh : ell%2≠0 := by simpa [neg] using hn
+        omega
       exact_mod_cast horth1 hp (by exact_mod_cast h4))
   refine ⟨vI,mI,?_,?_,?_⟩
   · simpa only [neg,ell,j] using hVc
@@ -662,7 +665,7 @@ private theorem plus_three_integer_residue (a c : ℕ) (ha : 5≤a) (hac : a<c) 
   obtain ⟨he,hj,hu,hux,hrem⟩ := dyadic_residue a c 3 (by omega)
   have hsmall := dyadic_small_or_large j
   have hxQ : (32:ℚ)≤(2:ℚ)^a := by
-    simpa using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) ha
+    convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) ha using 1 <;> norm_num
   have hzQ : 2*(2:ℚ)^a≤(2:ℚ)^c := by
     have h := pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show a+1≤c by omega)
     simpa only [pow_succ,mul_comm] using h
@@ -718,7 +721,15 @@ private theorem low_integer_selection (a c s : ℕ)
       exact plus_two_periodic_selection a c ha hamax hac (hex2 rfl)
   · by_cases ha5 : 5≤a
     · obtain ⟨m,hm,hh⟩ := plus_three_integer_residue a c ha5 hac
-      exact ⟨0,m,by norm_num,by have hz : (1:ℚ)≤(2:ℚ)^c/2 := by have hp := pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 1≤c by omega); norm_num at hp; linarith; linarith,by simpa using hh⟩
+      have hz : (1:ℚ)≤(2:ℚ)^c/2 := by
+        have hp := pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 1≤c by omega)
+        norm_num at hp
+        linarith
+      refine ⟨0,m,by norm_num,?_,?_⟩
+      · norm_num
+        linarith
+      · convert hh using 1 <;> norm_num
+
     · have hamax : a≤4 := by omega
       obtain ⟨v,m,hh⟩ := plus_three_periodic_selection a c ha hamax hac (hex3 rfl)
       exact ⟨v,m,hh⟩
