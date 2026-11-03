@@ -185,8 +185,11 @@ class NativePublicationConsumerTests:
         self.ensure()
         self.write('.gitignore', '.lake/\nutility-calls\nactivity.jsonl\nhash-paths\n')
         helper = self.root / 'tools/scripts/worktree/lean-cache-input.sh'
-        helper.write_text(helper.read_text().replace('  hash_files_batch "$live_paths"',
-            '  cat "$live_paths" >> "$FIXTURE_HASH_PATHS"\n  hash_files_batch "$live_paths"'))
+        marker = '            with open(path, "rb") as source:'
+        self.assertIn(marker, helper.read_text())
+        helper.write_text(helper.read_text().replace(marker,
+            '            with open(os.environ["FIXTURE_HASH_PATHS"], "ab") as log:\n'
+            '                log.write(path + b"\\0")\n' + marker))
         for args in [('add', '.'), ('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
                 '-c', 'commit.gpgsign=false', 'commit', '--quiet', '-m', 'private memo fixture')]:
             subprocess.run(['git', *args], cwd=self.root, env=self.env,

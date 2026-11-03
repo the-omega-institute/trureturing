@@ -160,26 +160,9 @@ PY
   MEMO_ENABLED=1
 }
 
-hash_files_batch() {
-  local paths="$1"
-  local hashes="$2"
-  : > "$hashes"
-  [[ -s "$paths" ]] || return 0
-  if command -v sha256sum >/dev/null 2>&1; then
-    xargs -0 sha256sum < "$paths" | awk '{print $1}' > "$hashes"
-  elif command -v openssl >/dev/null 2>&1; then
-    xargs -0 openssl dgst -sha256 < "$paths" | awk '{print $NF}' > "$hashes"
-  else
-    xargs -0 shasum -a 256 < "$paths" | awk '{print $1}' > "$hashes"
-  fi
-}
-
 materialize_manifest() {
   local manifest="$1"
   local requests="${manifest}.requests"
-  local plan="${manifest}.plan"
-  local live_paths="${manifest}.live-paths"
-  local live_hashes="${manifest}.live-hashes"
   local eligible="$MEMO_ELIGIBLE"
   local snapshot="$MEMO_SNAPSHOT"
   if [[ "$MEMO_ENABLED" != "1" ]]; then
@@ -189,15 +172,19 @@ materialize_manifest() {
     : > "$snapshot"
   fi
 
+  # Plan, stream the uncached inputs and write their ordered manifest in one
+  # process. Memo eligibility and values still come from prepare_memo; paths
+  # outside that exact current index population are always read from disk.
   python3 - "$REPOSITORY" "$requests" "$eligible" "$snapshot" \
-    "$plan" "$live_paths" <<'PY' || return 2
+    "$manifest" "$MEMO_UPDATES" <<'PY_MANIFEST'
+import hashlib
 import pathlib
 import re
 import sys
 import os
 
 repository = pathlib.Path(sys.argv[1])
-requests_path, eligible_path, memo_path, plan_path, live_path = map(pathlib.Path, sys.argv[2:])
+requests_path, eligible_path, memo_path, manifest_path, updates_path = map(pathlib.Path, sys.argv[2:])
 
 def pairs(path):
     fields = path.read_bytes().split(b"\0")
@@ -217,52 +204,20 @@ for line in memo_path.read_bytes().splitlines():
     memo[oid] = sha
 
 repository_prefix = os.fsencode(repository) + b"/"
-with plan_path.open("wb") as plan, live_path.open("wb") as live:
+updates = []
+with manifest_path.open("wb") as manifest:
     for relative, path in pairs(requests_path):
         oid = eligible.get(relative, b"") if path == repository_prefix + relative else b""
         sha = memo.get(oid, b"") if oid else b""
-        plan.write(relative + b"\0" + oid + b"\0" + sha + b"\0")
         if not sha:
-            live.write(path + b"\0")
-PY
-
-  hash_files_batch "$live_paths" "$live_hashes" || return 2
-  python3 - "$plan" "$live_hashes" "$manifest" "$MEMO_UPDATES" <<'PY'
-import pathlib
-import re
-import sys
-
-plan_path, hashes_path, manifest_path, updates_path = map(pathlib.Path, sys.argv[1:])
-fields = plan_path.read_bytes().split(b"\0")
-if fields and fields[-1] == b"":
-    fields.pop()
-if len(fields) % 3:
-    raise ValueError("malformed hash plan")
-records = list(zip(fields[::3], fields[1::3], fields[2::3]))
-hashes = hashes_path.read_bytes().splitlines()
-sha_pattern = re.compile(rb"[0-9a-f]{64}")
-if any(not sha_pattern.fullmatch(value) for value in hashes):
-    raise ValueError("hasher returned a malformed SHA-256")
-
-hash_position = 0
-updates = []
-with manifest_path.open("wb") as manifest:
-    for relative, oid, cached_sha in records:
-        if cached_sha:
-            sha = cached_sha
-        else:
-            if hash_position >= len(hashes):
-                raise ValueError("hasher returned too few SHA-256 values")
-            sha = hashes[hash_position]
-            hash_position += 1
+            with open(path, "rb") as source:
+                sha = hashlib.file_digest(source, "sha256").hexdigest().encode("ascii")
             if oid:
                 updates.append(oid + b" " + sha + b"\n")
         manifest.write(sha + b"  " + relative + b"\n")
-if hash_position != len(hashes):
-    raise ValueError("hasher returned too many SHA-256 values")
 with updates_path.open("ab") as updates_file:
     updates_file.writelines(updates)
-PY
+PY_MANIFEST
 }
 
 store_memo_updates() {
