@@ -154,10 +154,13 @@ private lemma product_kurtosis_negative (p q r : ℝ) (hp : 0 < p)
     simpa only [one_mul] using hpq
   have hpt : p = t * z := by
     dsimp [t, z]
-    field_simp
+    symm
+    rw [div_mul_div_cancel₀' hqpos.ne', pow_two, mul_div_cancel_right₀ _ hp.ne']
   have hqt : q = t ^ 2 * z := by
     dsimp [t, z]
-    field_simp
+    symm
+    rw [div_pow, div_mul_div_cancel₀ (pow_ne_zero 2 hp.ne'), pow_two,
+      mul_div_cancel_right₀ _ hqpos.ne']
   have ht2r : t ^ 2 ≤ r / p := by
     dsimp [t]
     rw [div_pow]
