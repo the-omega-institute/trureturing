@@ -180,11 +180,23 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
   have hv (k : Fin d) (c : Matrix (Fin d) (Fin d) ℂ) :
       v k * c * (v k).conjTranspose = q k ⊗ₖ c := by
     rw [hq]
-    ext i j
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
-    simp [v, kroneckerMap_apply, rankOneDensity, vecMulVec_apply, mul_assoc]
-    simp only [apply_ite, map_zero, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
-    ring
+    let e' : Fin d ≃ Unit × Fin d := (Equiv.punitProd (Fin d)).symm
+    let V := (replicateCol Unit (fun i => u.val i k)) ⊗ₖ
+      (1 : Matrix (Fin d) (Fin d) ℂ)
+    let C := (1 : Matrix Unit Unit ℂ) ⊗ₖ c
+    have hc : C.submatrix e' e' = c := by
+      ext i j
+      simp [C, e', kroneckerMap_apply]
+    have h : V * C * V.conjTranspose =
+        vecMulVec (fun i => u.val i k) (star (fun i => u.val i k)) ⊗ₖ c := by
+      simp only [V, C, conjTranspose_kronecker, conjTranspose_one,
+        ← mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul,
+        conjTranspose_replicateCol, ← vecMulVec_eq Unit]
+    have hs := congrArg (fun M => M.submatrix id id) h
+    rw [Matrix.submatrix_mul _ _ id e' id e'.bijective,
+      Matrix.submatrix_mul _ _ id e' e' e'.bijective, hc,
+      ← conjTranspose_submatrix] at hs
+    exact hs
   have hvp (k : Fin d) : v k * (v k).conjTranspose = p k := by
     simpa only [Matrix.mul_one] using hv k 1
   intro ρ hρ
