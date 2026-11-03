@@ -439,7 +439,7 @@ private theorem codeSource_bijective (m : ℕ) (hm : 2 ≤ m) :
     exact he.symm
 
 /-- The independent source count at every dyadic successor, including all tails of ones. -/
-theorem dyadic_source_count (m : ℕ) (hm : 2 ≤ m) :
+private theorem dyadic_source_count (m : ℕ) (hm : 2 ≤ m) :
     count (2 ^ m + 1) = 3 +
       Fintype.card {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m} := by
   have e := Equiv.ofBijective (codeSource m hm) (codeSource_bijective m hm)
@@ -598,5 +598,84 @@ private theorem source_nonregularity : claim := by
   have hidx : start + (jump - start) = jump := by omega
   rw [hidx, hnonzero] at hz
   norm_num at hz
+
+/-- A literal arbitrary finite indexed family, with a distinguished member a.
+The indexing type is arbitrary; different indices may carry equal sequences. -/
+def ArbitraryFamily (a : ℕ → ℤ) : Prop :=
+  ∃ (ι : Type) (hι : Fintype ι), letI : Fintype ι := hι;
+    ∃ (b : ι → ℕ → ℤ) (i0 : ι) (c0 c1 : ι → ι → ℤ),
+      (∀ n, b i0 n = a n) ∧
+      (∀ i n, b i (2 * n) = ∑ j, c0 i j * b j n) ∧
+      (∀ i n, b i (2 * n + 1) = ∑ j, c1 i j * b j n)
+
+private theorem closed_matrix_iff (a : ℕ → ℤ) : ClosedFamily a ↔ MatrixFamily a := by
+  constructor
+  · rintro ⟨d, hd, b, c0, c1, ha, h0, h1⟩
+    refine ⟨d, hd, fun n i => b i n, c0, c1, ha, ?_, ?_⟩
+    · intro n
+      funext i
+      exact h0 i n
+    · intro n
+      funext i
+      exact h1 i n
+  · rintro ⟨d, hd, F, M0, M1, ha, h0, h1⟩
+    refine ⟨d, hd, fun i n => F n i, M0, M1, ha, ?_, ?_⟩
+    · intro i n
+      exact congrFun (h0 n) i
+    · intro i n
+      exact congrFun (h1 n) i
+
+private theorem arbitrary_matrix_iff (a : ℕ → ℤ) :
+    ArbitraryFamily a ↔ MatrixFamily a := by
+  classical
+  constructor
+  · rintro ⟨ι, hι, b, i0, c0, c1, ha, h0, h1⟩
+    letI : Fintype ι := hι
+    letI : Nonempty ι := ⟨i0⟩
+    have hd : 0 < Fintype.card ι := Fintype.card_pos
+    let z : Fin (Fintype.card ι) := ⟨0, hd⟩
+    let e : ι ≃ Fin (Fintype.card ι) :=
+      (Fintype.equivFin ι).trans (Equiv.swap ((Fintype.equivFin ι) i0) z)
+    have hei : e i0 = z := by simp [e]
+    have hez : e.symm z = i0 := by
+      apply e.injective
+      simp [hei]
+    refine ⟨Fintype.card ι, hd, fun n i => b (e.symm i) n,
+      (fun i j => c0 (e.symm i) (e.symm j)),
+      (fun i j => c1 (e.symm i) (e.symm j)), ?_, ?_, ?_⟩
+    · intro n
+      change b (e.symm z) n = a n
+      rw [hez]
+      exact ha n
+    · intro n
+      funext i
+      change b (e.symm i) (2 * n) = ∑ j, c0 (e.symm i) (e.symm j) * b (e.symm j) n
+      rw [h0]
+      exact (e.symm.sum_comp (fun j => c0 (e.symm i) j * b j n)).symm
+    · intro n
+      funext i
+      change b (e.symm i) (2 * n + 1) = ∑ j, c1 (e.symm i) (e.symm j) * b (e.symm j) n
+      rw [h1]
+      exact (e.symm.sum_comp (fun j => c1 (e.symm i) j * b j n)).symm
+  · rintro ⟨d, hd, F, M0, M1, ha, h0, h1⟩
+    refine ⟨Fin d, inferInstance, (fun i n => F n i), ⟨0, hd⟩, M0, M1, ha, ?_, ?_⟩
+    · intro i n
+      exact congrFun (h0 n) i
+    · intro i n
+      exact congrFun (h1 n) i
+
+/-- The exact negative answer and both finite-family interfaces, with independent count transport. -/
+theorem result :
+    claim ∧
+    (∀ a : ℕ → ℤ, ClosedFamily a ↔ MatrixFamily a) ∧
+    (∀ a : ℕ → ℤ, ArbitraryFamily a ↔ MatrixFamily a) ∧
+    (¬ ArbitraryFamily (fun n => (count n : ℤ))) ∧
+    (∀ n, count n = Fintype.card (HalvingCompositions n)) := by
+  refine ⟨source_nonregularity, closed_matrix_iff, arbitrary_matrix_iff, ?_, ?_⟩
+  · intro h
+    exact source_nonregularity ((arbitrary_matrix_iff _).mp h)
+  · intro n
+    unfold count
+    rw [Nat.card_congr (sourceEquiv n), Nat.card_eq_fintype_card]
 
 end D5.S1.Recurrence.Partitions.HalvingPartitionNonregularity
