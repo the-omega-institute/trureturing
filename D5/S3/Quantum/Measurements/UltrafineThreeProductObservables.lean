@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Resource.CompositeConeDuality
 
 /-! A three-observable separation between pairwise and joint entanglement detection. -/
 
@@ -61,16 +62,289 @@ private lemma factors_hermitian (i : Fin 3) :
   fin_cases i <;> constructor <;> apply IsHermitian.ext <;>
     intro j k <;> fin_cases j <;> fin_cases k <;> norm_num [alice, bob]
 
+private lemma spectral_rankOne {d : ℕ} (c : Matrix (Fin d) (Fin d) ℂ)
+    (hc : c.IsHermitian) :
+    c = ∑ j, (hc.eigenvalues j : ℂ) • rankOneDensity (⇑(hc.eigenvectorBasis j)) := by
+  conv_lhs => rw [hc.spectral_theorem]
+  ext i j
+  simp only [Unitary.conjStarAlgAut_apply, mul_apply, diagonal_apply, Function.comp_apply,
+    mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true, star_apply,
+    IsHermitian.eigenvectorUnitary_apply, Matrix.sum_apply, Matrix.smul_apply,
+    rankOneDensity, vecMulVec_apply, Pi.star_apply, smul_eq_mul,
+    RCLike.ofReal_eq_complex_ofReal]
+  exact Finset.sum_congr rfl fun k _ => by ring
+
+private lemma separable_blocks {d : ℕ} (u : Matrix.unitaryGroup (Fin d) ℂ)
+    (c : Fin d → Matrix (Fin d) (Fin d) ℂ) (hc : ∀ k, (c k).PosSemidef)
+    (ht : trace (∑ k, rankOneDensity (fun i => u.val i k) ⊗ₖ c k) = 1) :
+    IsSeparable (∑ k, rankOneDensity (fun i => u.val i k) ⊗ₖ c k) := by
+  have hu (k : Fin d) : star (fun i => u.val i k) ⬝ᵥ (fun i => u.val i k) = 1 := by
+    have h := congrArg (fun m : Matrix (Fin d) (Fin d) ℂ => m k k)
+      (Unitary.coe_star_mul_self u)
+    simpa only [Unitary.coe_star, star_eq_conjTranspose, mul_apply, conjTranspose_apply,
+      one_apply_eq, dotProduct, Pi.star_apply] using h
+  have hq (k : Fin d) : trace (rankOneDensity (fun i => u.val i k)) = 1 := by
+    simpa only [rankOneDensity, trace_vecMulVec, dotProduct_comm] using hu k
+  let w : Fin d × Fin d → ℝ := fun p => (hc p.1).1.eigenvalues p.2
+  let z : Fin d × Fin d → Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ := fun p =>
+    rankOneDensity (fun r => u.val r.1 p.1 * ((hc p.1).1.eigenvectorBasis p.2) r.2)
+  apply mem_convexHull_of_exists_fintype w z
+  · intro p
+    exact (hc p.1).eigenvalues_nonneg p.2
+  · calc
+      ∑ p, w p = ∑ k, (trace (c k)).re := by
+        rw [Fintype.sum_prod_type]
+        apply Finset.sum_congr rfl
+        intro k _
+        rw [(hc k).1.trace_eq_sum_eigenvalues]
+        simp only [w, Complex.re_sum, RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_re]
+      _ = (trace (∑ k, rankOneDensity (fun i => u.val i k) ⊗ₖ c k)).re := by
+        simp only [trace_sum, trace_kronecker, hq, one_mul, Complex.re_sum]
+      _ = 1 := by rw [ht]; rfl
+  · intro p
+    refine ⟨fun i => u.val i p.1, ⇑((hc p.1).1.eigenvectorBasis p.2), hu p.1, ?_, rfl⟩
+    simpa only [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm] using
+      (hc p.1).1.eigenvectorBasis.inner_eq_one p.2
+  · rw [Fintype.sum_prod_type]
+    apply Finset.sum_congr rfl
+    intro k _
+    change (∑ j, (w (k, j)) • z (k, j)) = _
+    have hz (j : Fin d) : z (k, j) =
+        rankOneDensity (fun i => u.val i k) ⊗ₖ
+          rankOneDensity (⇑((hc k).1.eigenvectorBasis j)) := by
+      simpa only [z, rankOneDensity] using
+        (D5.S3.Resource.CompositeConeDuality.kronecker_rank_one
+          (fun i => u.val i k) (⇑((hc k).1.eigenvectorBasis j))).symm
+    simp only [hz]
+    conv_rhs => rw [spectral_rankOne (c k) (hc k).1]
+    ext i j
+    simp only [Matrix.sum_apply, Matrix.smul_apply, kroneckerMap_apply,
+      Finset.mul_sum, w, Complex.real_smul, smul_eq_mul]
+    exact Finset.sum_congr rfl fun l _ => by ring
+
+private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
+    (a b : ι → Matrix (Fin d) (Fin d) ℂ) (s : Finset ι)
+    (u : Matrix.unitaryGroup (Fin d) ℂ)
+    (hd : ∀ i ∈ s, (star (u : Matrix (Fin d) (Fin d) ℂ) * a i * (u : Matrix (Fin d) (Fin d) ℂ)).IsDiag) :
+    IsUseless (fun i => a i ⊗ₖ b i) s := by
+  classical
+  let φ := Unitary.conjStarAlgAut ℂ (Matrix (Fin d) (Fin d) ℂ) u
+  let e (k : Fin d) : Matrix (Fin d) (Fin d) ℂ := diagonal (Pi.single k 1)
+  let q (k : Fin d) := φ (e k)
+  have hq (k : Fin d) : q k = rankOneDensity (fun i => u.val i k) := by
+    ext i j
+    simp [q, φ, e, Unitary.conjStarAlgAut_apply, mul_apply, diagonal_apply,
+      Pi.single_apply, rankOneDensity, vecMulVec_apply, conjTranspose_apply,
+      star_eq_conjTranspose, mul_assoc]
+  have he (k : Fin d) : e k * e k = e k := by
+    simp only [e, diagonal_mul_diagonal]
+    congr 1
+    funext i
+    by_cases hi : i = k <;> simp [hi]
+  have hqid (k : Fin d) : q k * q k = q k := by
+    change φ (e k) * φ (e k) = φ (e k)
+    rw [← map_mul, he]
+  have hqsum : ∑ k, q k = 1 := by
+    have hesum : ∑ k, e k = 1 := by
+      ext i j
+      simp only [Matrix.sum_apply, e, diagonal_apply]
+      by_cases hij : i = j
+      · subst j; simp
+      · simp [hij]
+    change (∑ k, φ (e k)) = 1
+    rw [← map_sum, hesum, map_one]
+  have hqcomm (i : ι) (hi : i ∈ s) (k : Fin d) : q k * a i = a i * q k := by
+    let c := diag (star (u : Matrix (Fin d) (Fin d) ℂ) * a i * (u : Matrix (Fin d) (Fin d) ℂ))
+    have ha : a i = φ (diagonal c) := by
+      change a i = φ (diagonal (diag (star (u : Matrix (Fin d) (Fin d) ℂ) * a i * (u : Matrix (Fin d) (Fin d) ℂ))))
+      rw [(hd i hi).diagonal_diag]
+      exact (φ.apply_symm_apply (a i)).symm
+    calc
+      q k * a i = φ (e k) * φ (diagonal c) := congrArg (fun x => q k * x) ha
+      _ = φ (e k * diagonal c) := (map_mul φ _ _).symm
+      _ = φ (diagonal c * e k) := congrArg φ (commute_diagonal _ _).eq
+      _ = a i * q k := by rw [map_mul]; exact congrArg (fun x => x * q k) ha.symm
+  let p (k : Fin d) := q k ⊗ₖ (1 : Matrix (Fin d) (Fin d) ℂ)
+  have hpid (k : Fin d) : p k * p k = p k := by
+    dsimp only [p]
+    rw [← mul_kronecker_mul, hqid, one_mul]
+  have hph (k : Fin d) : (p k).IsHermitian := by
+    change (q k ⊗ₖ (1 : Matrix (Fin d) (Fin d) ℂ)).conjTranspose = _
+    rw [conjTranspose_kronecker, conjTranspose_one]
+    congr 1
+    rw [hq]
+    exact (posSemidef_vecMulVec_self_star _).isHermitian.eq
+  have hpsum : ∑ k, p k = 1 := by
+    calc
+      ∑ k, p k = (∑ k, q k) ⊗ₖ (1 : Matrix (Fin d) (Fin d) ℂ) := by
+        ext i j
+        simp only [p, Matrix.sum_apply, kroneckerMap_apply, Finset.sum_mul]
+      _ = 1 := by rw [hqsum, one_kronecker_one]
+  have hpcomm (i : ι) (hi : i ∈ s) (k : Fin d) :
+      p k * (a i ⊗ₖ b i) = (a i ⊗ₖ b i) * p k := by
+    dsimp only [p]
+    rw [← mul_kronecker_mul, ← mul_kronecker_mul, one_mul, mul_one, hqcomm i hi k]
+  let v (k : Fin d) : Matrix (Fin d × Fin d) (Fin d) ℂ :=
+    fun r j => u.val r.1 k * if r.2 = j then 1 else 0
+  have hv (k : Fin d) (c : Matrix (Fin d) (Fin d) ℂ) :
+      v k * c * (v k).conjTranspose = q k ⊗ₖ c := by
+    rw [hq]
+    ext i j
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
+    simp [v, kroneckerMap_apply, rankOneDensity, vecMulVec_apply, mul_assoc]
+    simp only [apply_ite, map_zero, mul_ite, mul_zero, Finset.sum_ite_eq,
+      Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    ring
+  have hvp (k : Fin d) : v k * (v k).conjTranspose = p k := by
+    simpa only [Matrix.mul_one] using hv k 1
+  intro ρ hρ
+  let c (k : Fin d) := (v k).conjTranspose * ρ * v k
+  have hc (k : Fin d) : (c k).PosSemidef := hρ.1.conjTranspose_mul_mul_same _
+  let σ := ∑ k, q k ⊗ₖ c k
+  have hσ (k : Fin d) : q k ⊗ₖ c k = p k * ρ * p k := by
+    rw [← hv k (c k), ← hvp k]
+    dsimp only [c]
+    simp only [Matrix.mul_assoc]
+  have hσsum : σ = ∑ k, p k * ρ * p k := by
+    exact Finset.sum_congr rfl fun k _ => hσ k
+  have ht : trace σ = 1 := by
+    rw [hσsum, trace_sum]
+    calc
+      ∑ k, trace (p k * ρ * p k) = ∑ k, trace (ρ * p k) := by
+        apply Finset.sum_congr rfl
+        intro k _
+        rw [trace_mul_cycle, hpid, trace_mul_comm]
+      _ = trace (ρ * ∑ k, p k) := by rw [Finset.mul_sum, trace_sum]
+      _ = 1 := by rw [hpsum, mul_one, hρ.2]
+  refine ⟨σ, ⟨?_, ht⟩, ?_, ?_⟩
+  · rw [hσsum]
+    apply posSemidef_sum
+    intro k _
+    simpa only [(hph k).eq] using hρ.1.mul_mul_conjTranspose_same (p k)
+  · have ht0 : trace (∑ k, rankOneDensity (fun i => u.val i k) ⊗ₖ c k) = 1 := by
+      simpa only [← hq] using ht
+    simpa only [← hq] using separable_blocks u c hc ht0
+  · intro i hi
+    rw [hσsum, Finset.sum_mul, trace_sum]
+    calc
+      ∑ k, trace (p k * ρ * p k * (a i ⊗ₖ b i)) =
+          ∑ k, trace (ρ * ((a i ⊗ₖ b i) * p k)) := by
+        apply Finset.sum_congr rfl
+        intro k _
+        calc
+          trace (p k * ρ * p k * (a i ⊗ₖ b i)) =
+              trace (p k * (ρ * p k * (a i ⊗ₖ b i))) := by simp only [mul_assoc]
+          _ = trace ((ρ * p k * (a i ⊗ₖ b i)) * p k) := trace_mul_comm _ _
+          _ = trace (ρ * (p k * (a i ⊗ₖ b i) * p k)) := by simp only [mul_assoc]
+          _ = trace (ρ * ((a i ⊗ₖ b i) * p k)) := by
+            rw [hpcomm i hi k, mul_assoc (a i ⊗ₖ b i), hpid]
+      _ = trace (ρ * ((a i ⊗ₖ b i) * ∑ k, p k)) := by
+        rw [Finset.mul_sum, Finset.mul_sum, trace_sum]
+      _ = trace (ρ * (a i ⊗ₖ b i)) := by rw [hpsum, mul_one]
+
 private lemma diagonal_family_useless {d : ℕ} {ι : Type*}
     (a b : ι → Matrix (Fin d) (Fin d) ℂ) (s : Finset ι)
     (u : Matrix.unitaryGroup (Fin d) ℂ)
-    (hdiag : (∀ i ∈ s, (star (u : Matrix (Fin d) (Fin d) ℂ) * a i * u).IsDiag) ∨
+    (hdiag : (∀ i ∈ s, (star (u : Matrix (Fin d) (Fin d) ℂ) * a i * (u : Matrix (Fin d) (Fin d) ℂ)).IsDiag) ∨
       (∀ i ∈ s, (star (u : Matrix (Fin d) (Fin d) ℂ) * b i * u).IsDiag)) :
     IsUseless (fun i => a i ⊗ₖ b i) s := by
-  sorry
+  classical
+  rcases hdiag with hd | hd
+  · exact left_diagonal_useless a b s u hd
+  · have hleft := left_diagonal_useless b a s u hd
+    let f : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ →ₗ[ℝ]
+        Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
+      { toFun := fun x => x.submatrix Prod.swap Prod.swap
+        map_add' := by intros; rfl
+        map_smul' := by intros; rfl }
+    have hft (x : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) : trace (f x) = trace x := by
+      simp only [f, trace, diag_apply, Fintype.sum_prod_type]
+      exact Finset.sum_comm
+    have hfm (x y : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
+        f (x * y) = f x * f y := by
+      exact (submatrix_mul_equiv x y Prod.swap (Equiv.prodComm _ _) Prod.swap).symm
+    have hfk (x y : Matrix (Fin d) (Fin d) ℂ) : f (x ⊗ₖ y) = y ⊗ₖ x := by
+      ext i j
+      exact mul_comm _ _
+    have hfs (x : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ)
+        (hx : IsSeparable x) : IsSeparable (f x) := by
+      apply convexHull_min (t := {y | IsSeparable (f y)}) ?_ ?_ hx
+      · rintro τ ⟨v, w, hv, hw, rfl⟩
+        apply subset_convexHull ℝ _
+        refine ⟨w, v, hw, hv, ?_⟩
+        ext i j
+        change v i.2 * w i.1 * star (v j.2 * w j.1) =
+          w i.1 * v i.2 * star (w j.1 * v j.2)
+        rw [mul_comm (v i.2) (w i.1), mul_comm (v j.2) (w j.1)]
+      · exact (convex_convexHull ℝ _).is_linear_preimage f.isLinear
+    intro ρ hρ
+    have hρf : IsDensity (f ρ) := ⟨hρ.1.submatrix Prod.swap, (hft ρ).trans hρ.2⟩
+    obtain ⟨σ, hσ, hsep, hmatch⟩ := hleft (f ρ) hρf
+    refine ⟨f σ, ⟨hσ.1.submatrix Prod.swap, (hft σ).trans hσ.2⟩, hfs σ hsep, ?_⟩
+    intro i hi
+    calc
+      trace (f σ * (a i ⊗ₖ b i)) = trace (f (σ * (b i ⊗ₖ a i))) := by rw [hfm, hfk]
+      _ = trace (σ * (b i ⊗ₖ a i)) := hft _
+      _ = trace (f ρ * (b i ⊗ₖ a i)) := hmatch i hi
+      _ = trace (f (ρ * (a i ⊗ₖ b i))) := by rw [hfm, hfk]
+      _ = trace (ρ * (a i ⊗ₖ b i)) := hft _
+
 
 private lemma pairs_useless (i j : Fin 3) (hij : i ≠ j) : IsUseless obs {i, j} := by
-  sorry
+  let r : ℂ := ((Real.sqrt 2 : ℝ) : ℂ)⁻¹
+  have hsqrt : (((Real.sqrt 2 : ℝ) : ℂ)) ^ 2 = 2 := by
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+  have hr : r * r = (1 / 2 : ℂ) := by
+    dsimp [r]
+    rw [← _root_.mul_inv_rev, ← pow_two, hsqrt]
+    norm_num
+  have hstar : (starRingEnd ℂ) r = r := by simp [r]
+  let u0 : Matrix (Fin 3) (Fin 3) ℂ := !![r,r,0; r,-r,0; 0,0,1]
+  have hu0 : u0 ∈ Matrix.unitaryGroup (Fin 3) ℂ := by
+    rw [Matrix.mem_unitaryGroup_iff]
+    ext k l
+    fin_cases k <;> fin_cases l <;>
+      norm_num [u0, Matrix.mul_apply, Fin.sum_univ_succ, star_eq_conjTranspose,
+        Matrix.conjTranspose_apply, hstar, hr]
+  let u : Matrix.unitaryGroup (Fin 3) ℂ := ⟨u0, hu0⟩
+  have h01 : IsUseless obs {0, 1} := by
+    apply diagonal_family_useless alice bob {0, 1} u
+    left
+    intro k hk
+    have hk2 : k = 0 ∨ k = 1 := by simpa only [mem_insert, mem_singleton] using hk
+    rcases hk2 with rfl | rfl <;>
+      intro l m hlm <;> fin_cases l <;> fin_cases m <;>
+      (try exact (hlm rfl).elim) <;>
+      norm_num [u, u0, alice, Matrix.mul_apply, Fin.sum_univ_succ,
+        star_eq_conjTranspose, Matrix.conjTranspose_apply, hstar, hr]
+  have h02 : IsUseless obs {0, 2} := by
+    apply diagonal_family_useless alice bob {0, 2} 1
+    left
+    intro k hk
+    have hk2 : k = 0 ∨ k = 2 := by simpa only [mem_insert, mem_singleton] using hk
+    rcases hk2 with rfl | rfl <;>
+      simp only [OneMemClass.coe_one, star_one, one_mul, mul_one] <;>
+      intro l m hlm <;> fin_cases l <;> fin_cases m <;>
+      (try exact (hlm rfl).elim) <;> norm_num [alice]
+  have h12 : IsUseless obs {1, 2} := by
+    apply diagonal_family_useless alice bob {1, 2} 1
+    right
+    intro k hk
+    have hk2 : k = 1 ∨ k = 2 := by simpa only [mem_insert, mem_singleton] using hk
+    rcases hk2 with rfl | rfl <;>
+      simp only [OneMemClass.coe_one, star_one, one_mul, mul_one] <;>
+      intro l m hlm <;> fin_cases l <;> fin_cases m <;>
+      (try exact (hlm rfl).elim) <;> norm_num [bob]
+  fin_cases i <;> fin_cases j
+  · exact (hij rfl).elim
+  · exact h01
+  · exact h02
+  · rw [Finset.pair_comm]; exact h01
+  · exact (hij rfl).elim
+  · exact h12
+  · rw [Finset.pair_comm]; exact h02
+  · rw [Finset.pair_comm]; exact h12
+  · exact (hij rfl).elim
 
 private lemma hamiltonian_hermitian : hamiltonian.IsHermitian := by
   have ho (i : Fin 3) : (obs i).IsHermitian := by
@@ -220,7 +494,7 @@ private lemma no_product_ground (μ : ℝ) (hμ : μ < 0)
       exact ⟨(mul_eq_zero.mp h01).resolve_right hk, (mul_eq_zero.mp h11).resolve_right hk⟩
     · have hb0 := hz 0 (by decide)
       have hb2 := hz 2 (by decide)
-      simp only [hb0, mul_zero, neg_zero, add_zero, zero_add] at h00 h10
+      simp only [hb0, mul_zero, add_zero, zero_add] at h00 h10
       exact ⟨(mul_eq_zero.mp h00).resolve_right hk, (mul_eq_zero.mp h10).resolve_right hk⟩
     · have hb0 := hz 0 (by decide)
       have hb1 := hz 1 (by decide)
