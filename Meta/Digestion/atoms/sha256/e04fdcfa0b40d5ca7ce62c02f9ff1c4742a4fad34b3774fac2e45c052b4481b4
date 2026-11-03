@@ -1,0 +1,46 @@
+**Definition 17.1 (the local source LAB).** Use FARG §2's ordered syntax
+$t::=\alpha\mid\beta\mid\langle t,t\rangle$, with logical addresses in
+$\{L,R\}^*$ and root $\varepsilon$. LAB starts with one actually allocated
+known $\alpha$ root. Its only source changes are
+
+$$
+P_p:\alpha\longmapsto\beta,\qquad
+S_p:\beta\longmapsto\langle\beta,\alpha\rangle
+\tag{AA.65}
+$$
+
+at the indicated current logical leaf. All finite legal addressed event
+words are admitted. There is no deletion, reset, graft, sharing, rerooting,
+unknown seed, exposed allocation ordinal or independent serial clock.
+These are local operations, not FARG §3's simultaneous global substitution
+$\rho$. Sections 17–23 concern this separate model; the sources and INITIAL
+interfaces of §§1–16 retain their stated hypotheses.
+
+For a present logical address define its birth type by
+
+$$
+b(p)=\begin{cases}
+\beta,&p\text{ ends in }L,\\
+\alpha,&p=\varepsilon\text{ or }p\text{ ends in }R.
+\end{cases}
+\tag{AA.66}
+$$
+
+Let $\mathcal D$ be the finite ordered terms having no $\alpha$ leaf at an
+$L$-ending address. For $t\in\mathcal D$, let $I(t)$ be its branch addresses
+and $A(t)$ the present addresses born $\alpha$ whose current subtree is not
+$\alpha$. Its generation events are
+
+$$
+E(t)=\{S_p:p\in I(t)\}\ \cup\ \{P_p:p\in A(t)\}.
+\tag{AA.67}
+$$
+
+At each address the possible local event list is empty, $P_p$, $S_p$, or
+$P_pS_p$, according to its birth type and final constructor. Put an edge
+$P_p\prec S_p$ when both exist, and an edge from the creating split
+$S_{\operatorname{parent}(p)}$ to the first local event at $p$, when that
+event exists. Their transitive closure is the generation causal order.
+Let $\mathcal H(t)$ be the actual successful $P/S$ words ending at $t$;
+requests, reads, maintenance, outputs and waiting are not events of this word.
+

@@ -1,0 +1,40 @@
+**Definition 36.1 (legal residual of a selector).** Write
+$C(q,e)=(\delta(q,e),\lambda(q,e))$. For a finite current source $t$,
+let $\operatorname{Cont}(t)$ be all finite successful event words executable
+from that very $t$, including the empty word. This domain is independent
+of selection state: LAB guards inspect the current source, and the selector
+only records a bit after a successful event. For any $q\in Q$, let
+$\operatorname{bits}_C(q,z)$ be the successive selection bits obtained
+by feeding $z$ to $C$ from $q$. Define
+
+$$
+q\equiv_t r
+\quad\Longleftrightarrow\quad
+\forall z\in\operatorname{Cont}(t),\quad
+\operatorname{bits}_C(q,z)=\operatorname{bits}_C(r,z).
+\tag{AA.110}
+$$
+
+This definition permits hypothetical starting controls solely to compute
+a relation on the finite set $Q$. The task comparison itself is restricted
+to actual images $K_C(w)=(t,\nu_C(w),q_C(w))$ from the same initialized
+$C,q_0$. No proposed arbitrary mark/tape/control tuple is thereby admitted.
+Binding and authority roles are fixed as in Definition 33.1, with fresh
+names compared by their rooted contents and binding relations.
+
+For an enabled event $e$ at $t$, equality in (AA.110) has the derivative
+consequence
+
+$$
+\lambda(q,e)=\lambda(r,e),\qquad
+\delta(q,e)\equiv_{t\cdot e}\delta(r,e).
+\tag{AA.111}
+$$
+
+Indeed the first equation uses the one-event word, and the second uses
+all words $ez$ with $z\in\operatorname{Cont}(t\cdot e)$. This is the
+usual continuation argument of PG §32 and the controlled-behavior
+suppliers; the restriction to actual LAB continuations is essential.
+In particular $\equiv_t$ is an equivalence relation, but is not in general
+one fixed equivalence relation on $Q$ independent of $t$.
+

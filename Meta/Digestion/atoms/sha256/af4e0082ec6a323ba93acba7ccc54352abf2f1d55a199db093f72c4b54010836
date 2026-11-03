@@ -1,0 +1,12 @@
+**定义 16.4（供应对应与适用边界）。** 第13–16章的特定掩码、实际档案纤维、三接口局部价格及取得到封存的合取为 `repo-derived` 数学推导。承重供应及不随之取得的前提如下；仓内声明与其同路径 owning Scribe 引用快照为修订 `cd12ceda288327c4f0d9cc5564fc3300c9c4fc09`，KBonacci 原费用卷仍取定义1.1已指定的 `e271e8c9d490b299979f17661411302360adb4c6`。
+
+| 数学供应 | 本推导的实际对应与边界 |
+| --- | --- |
+| `LiteralModel.literal_block_execution`、`joint_history_realization`；对应 `Blueprint/D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/LiteralModel.scribe.cs` | 位值 $\mathbb F_2$ 对应 `ZMod 2`，相位对应 `ZMod (k+1)`，拒绝对应 `none`；统一实际词实现整个记录，CRT 前史用于（AA.53），不供应免费读口或前史长度。 |
+| `WindowChargeInverse.increment_derivative`、`short_safe_execution`，及其私有 `scalar_decide`、`sum_pick`、`increment_injective`；对应 owning Scribe | 零延拓相邻位公式计算同一 $W$ 的（AA.52）；零入口或首零给字面安全执行。任意电荷逆、一般单射性与安全拼接仍属既有证明，不算新的导数或辨识原理。 |
+| 本卷（AA.16）、命题9.2–9.3、12.5–12.6；固定 KBonacci INITIAL 费用卷定理68.2 | 复用真实 $B_0$、原端点障碍、完整服务及树合同。新模型只替换原点监视取得前提，不修改这些结论在原接口的范围，也不重证被动容量。 |
+| `ActualTreeReadoutAcquisition.readout`、`leaves`、`nodes` 及其 owning Scribe；`Observer/NativeFullSourceProducer.native_source_producer` 及私有 `traverse`、`production_reads`、`stationary` | 全部有限地址的四种回复和实际树遍历是既有供应。该生产者已在自己的 Native 接口取得未知完整树；其子树／位置证明参数不是 KBonacci 接收器的输入。 |
+| `Observer/NativePassiveServiceRealization.bounded_passive_realization`、`materialize` 及其 owning Scribe | 来源无关的有限程序材料化保留自身实际付费读序；不把 Native 树读口、epoch 或工作区授权转成假设13.2的端口。 |
+| [FARG §§2、9、10](FIBONACCI_ATOMIC_RELATION_GENERATION.md)、[联合矩卷36.3–36.4、42.4](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md)；钉版 mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679` 的 [FreeMagma](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Free.lean) 的 `of`、`mul`、`lift`、`hom_ext` | 自由有序树、解释、解析和签名相对种子比较是既有语法；$\rho\alpha=\beta$ 不给未知来源的实际编辑、端口或通用生成元最小性。 |
+| [NCR §§1–2、5–7](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md)、[PVC §§1–2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md)、[Atlas 13.7](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md)、[PG §37](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 及其所引 PR57 | 原 Native 来源入口、时钟、原子提交、取得、所有权和付费视图转换各守自己的合同。定理16.2针对本卷原样 $T_q$ 的投影，不否定这些不同域上的正面四视图结果；也不借它们跳过本源接收关联。 |
+| Markus Frohme, [Active Automata Learning with Adaptive Distinguishing Sequences, §7](https://arxiv.org/abs/1902.01139) | 初始状态辨识、预设／适应区分序列及永久不可区分是 `literature-attested` 的一般背景。其成员查询／reset 接口不供应本掩码输入、无 reset 的原块费或实际封存授权；没有引入其复杂度或最优长度结论。 |

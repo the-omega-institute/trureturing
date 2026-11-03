@@ -1,0 +1,11 @@
+### 定义 6.2（左比较代表）
+
+记 $E_{\rho,A}:M\to A$ 为上述内积下到 $A$ 的正交投影。它由
+
+$$
+\phi_\rho\!\left(a^\dagger E_{\rho,A}(x)\right)
+=\phi_\rho(a^\dagger x)\qquad(a\in A,x\in M)
+$$
+
+唯一确定。固定 $(\rho,A)$ 时简写为 $E$。有限维正交投影保证该代表总存在。若两个代表之差 $z\in A$ 与所有 $a\in A$ 的左比较都为零，取 $a=z$ 即有 $\operatorname{tr}(\rho z^\dagger z)=0$，从而 $z=0$；唯一性也迫使逐个代表的选择线性。
+
