@@ -119,11 +119,11 @@ private lemma phase_powers :
     linear_combination ζ * h3 + t * h2 + ζ * ht
   have h7 : ζ ^ 7 = 1 - t * ζ := by
     calc
-      ζ ^ 7 = ζ ^ 5 * ζ ^ 2 := by ring
+      ζ ^ 7 = ζ ^ 5 * ζ ^ 2 := pow_add ζ 5 2
       _ = 1 - t * ζ := by rw [phase_fifth, h2]; ring
   have h9 : ζ ^ 9 = t - ζ := by
     calc
-      ζ ^ 9 = ζ ^ 5 * ζ ^ 4 := by ring
+      ζ ^ 9 = ζ ^ 5 * ζ ^ 4 := pow_add ζ 5 4
       _ = t - ζ := by rw [phase_fifth, h4]; ring
   have hc : conj ζ = t - ζ := by
     have hz : ζ ≠ 0 := Complex.exp_ne_zero _
