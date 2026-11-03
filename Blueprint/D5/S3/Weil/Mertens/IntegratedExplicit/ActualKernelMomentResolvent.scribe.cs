@@ -33,7 +33,7 @@ internal sealed class ActualKernelMomentResolventDocument : IScribeDocumentDefin
             Describe.Lean(DescribeId.Create("actual-kernel-moment-balance"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.actual_kernel_moment_balance"),
                 H("actual kernel moment balance"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("This consumed intermediate combines the actual prime row, complete positive mixture and literal resolvent identity. Its lower expression retains the unpaid continuum, d0 W and V, and its second conjunct pays W<=delta_q E/4 from the retained moment theorem. The full endpoint below consumes the further continuum/cutoff payments; this intermediate is not a separate delivery."))),
+                Blocks(Paragraph(Text("This separately proved intermediate combines the actual prime row, complete positive mixture and literal resolvent identity. Its lower expression retains the unpaid continuum, d0 W and V, and its second conjunct pays W<=delta_q E/4 from the retained moment theorem. The full endpoint below proves the further continuum/cutoff payments independently; this intermediate remains a separately recorded theorem."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("w-nonneg"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.W_nonneg"),
