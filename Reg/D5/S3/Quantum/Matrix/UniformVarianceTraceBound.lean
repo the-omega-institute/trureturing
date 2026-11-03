@@ -7,7 +7,8 @@ namespace Reg.D5.S3.Quantum.Matrix.UniformVarianceTraceBound
 open _root_.D5.S3.Quantum.Matrix.UniformVarianceTraceBound
 open _root_.D5.S3.Quantum.Foundation.FiniteTraceDistance
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open scoped BigOperators MatrixOrder
+open Matrix
+open scoped BigOperators ComplexOrder MatrixOrder
 noncomputable section
 universe u v w
 
