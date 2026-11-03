@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Invariants;
 internal sealed class AffinePolynomialPairBinomialCoefficientsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Invariants/AffinePolynomialPairBinomialCoefficients.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/werner2022a208509");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceComposition/werner2022a208509");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The affine polynomial pair has Werner's all-column binomial formula.",

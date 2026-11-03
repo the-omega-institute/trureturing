@@ -34,7 +34,7 @@ closed binomial expression without restricting rows, columns or degree.
 ## Gap
 
 The bounded source and literature screen recorded in
-`Library/ArithSums/werner2022a208509.md` found no complete proof or refutation
+`Library/RecurrenceComposition/werner2022a208509.md` found no complete proof or refutation
 of this exact conjecture. The private-inclusive repository, pinned Mathlib
 and third-party Lean screen found no full supplier. The frozen A208342 pair
 has v_next=X*u+X*v and a different endpoint; no identification with this affine
