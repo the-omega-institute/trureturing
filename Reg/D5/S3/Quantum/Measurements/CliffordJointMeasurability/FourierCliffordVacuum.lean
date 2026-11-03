@@ -136,10 +136,10 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u, v} :=
-  realize signature (fun _ p op => op (Sigma.snd (Sigma.snd p))) (fun e => nomatch e)
+  realize signature (fun _ p op => op (Sigma.snd (Sigma.snd p))) (fun e => Empty.elim e)
 
 def rejected : Realization signature.{u, v} :=
-  realize signature (fun _ _ op => op (fun _ => 0)) (fun e => nomatch e)
+  realize signature (fun _ _ op => op (fun _ => 0)) (fun e => Empty.elim e)
 
 abbrev arena : Arena where
   signature := signature.{u, v}
@@ -172,7 +172,8 @@ theorem dependence : ObservationalDependence signature.{u, v} actual := by
 
 def source_registration :
     Registration arena.{u, v} (type_of% @cliffordLinear_anticommutator.{u, v}) where
-  actual := actual
+  actual := realize signature
+    (fun _ p op => op (Sigma.snd (Sigma.snd p))) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨cliffordLinear_anticommutator, rejected, rejected_law⟩
   sensitivity := by
@@ -207,7 +208,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p op => op (Sigma.snd (Sigma.snd p))) (fun e => nomatch e))
+    (fun _ p op => op (Sigma.snd (Sigma.snd p))) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
