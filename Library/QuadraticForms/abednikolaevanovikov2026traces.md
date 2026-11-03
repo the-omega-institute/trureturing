@@ -3,6 +3,7 @@ bibkey: abednikolaevanovikov2026traces
 authors: Sami Abdullah Abed; Irina Nikolaeva; Andrej Novikov
 year: 2026
 title: "How characterisations of traces and central elements fail: sharp violation constants via Michelson contrast and noncentrality"
+doi: 10.48550/arXiv.2610.34388
 url: https://arxiv.org/abs/2610.34388v1
 claim: "Section 11.2(5) asks whether the Alhasan–Fawwaz constant is bounded on M_n(C) independently of the positive definite density."
 strata_touched:

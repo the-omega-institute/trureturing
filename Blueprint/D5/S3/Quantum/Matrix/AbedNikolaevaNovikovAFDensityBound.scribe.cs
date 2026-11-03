@@ -86,7 +86,6 @@ internal sealed class AbedNikolaevaNovikovAFDensityBoundDocument : IScribeDocume
     private static Formula Eqn(Formula a,Formula b) => Seq(a,Sp,Eq,Sp,b);
     private static Formula Neqn(Formula a,Formula b) => Seq(a,Sp,Neq,Sp,b);
     private static Formula Leq(Formula a,Formula b) => Seq(a,Sp,Le,Sp,b);
-    private static Formula Ltq(Formula a,Formula b) => Seq(a,Sp,Lt,Sp,b);
     private static Formula Member(Formula a,Formula b) => Seq(a,Sp,InMacro,Sp,b);
     private static Formula All(string x,Formula t,Formula b) => Seq(Open,Forall,Sp,Id(x),Colon,Sp,t,Comma,Sp,b,Close);
     private static Formula Ex(string x,Formula t,Formula b) => Seq(Open,Exists,Sp,Id(x),Colon,Sp,t,Comma,Sp,b,Close);

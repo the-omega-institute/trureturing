@@ -10,6 +10,8 @@ motivation_gids:
 
 # Density-independent Alhasan–Fawwaz boundedness
 
+## Problem
+
 Abed, Nikolaeva and Novikov, *How characterisations of traces and central elements fail*,
 arXiv:2610.34388v1, Section 11.2(5), ask:
 
@@ -20,19 +22,18 @@ density. Section 5.12 defines the quotient set using positive semidefinite A,
 Hermitian B and nonzero X=A+iB. Section 3.1 uses the ordinary trace and
 modulus |X|=(X*X)^(1/2), without a trace-one requirement.
 
-## Result and scope
+## Motivation
 
-The Lean definition `claim` is exactly
+A dimension-dependent bound controls every positive definite density on the
+same matrix algebra, independently of its spectrum and scale.
 
-$$
-\forall n\ge1\;\exists C\in\mathbb R,\quad C\ge0\quad\text{and}\quad
-\forall\rho>0,\quad S_\rho\ne\varnothing,\quad
-\operatorname{IsLUB}(S_\rho,\sup S_\rho),\quad \sup S_\rho\le C.
-$$
+## Gap
 
-where S is the source's actual quotient set. The theorem `result : claim`
-uses C=n. The genuine nonempty least-upper-bound conclusion prevents the
-totalized real supremum from certifying an empty or unbounded set.
+The source's Proposition 5.44(c) supplies the dimension-two bound. Its general
+condition-dependent estimates do not give a bound depending only on dimension.
+The selected question is the complete fixed-dimension boundedness sentence.
+
+## Route
 
 The matrix estimate `accretive_le_card_abs` proves A <= card(iota)|A+iB|
 for every finite index type. It diagonalizes P=|X|, whose eigenvalues s_j
@@ -48,19 +49,49 @@ Tr(rho P)=Tr((YQ)*(YQ))>0. Nonnegativity of trace pairing with the matrix
 order estimate bounds every defining quotient by n. A=I and B=0 gives
 the value one. Real completeness supplies the stated IsLUB.
 
-## Admission and boundaries
+## Falsifier
 
-The preregistration is [owner #22774](https://github.com/the-omega-institute/trureturing/issues/22774).
+The Lean definition `claim` is exactly
+
+$$
+\forall n\ge1\;\exists C\in\mathbb R,\quad C\ge0\quad\text{and}\quad
+\forall\rho>0,\quad S_\rho\ne\varnothing,\quad
+\operatorname{IsLUB}(S_\rho,\sup S_\rho),\quad \sup S_\rho\le C.
+$$
+
+Here S is the source's actual quotient set. The theorem `result : claim`
+uses C=n. Nonempty IsLUB prevents the totalized real supremum from certifying
+an empty or unbounded set. A failed proof search or a counterexample to a
+smaller constant would not refute this claim.
+
+## Evidence
+
+The source is `D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound.lean`,
+with its corresponding Blueprint Scribe and Reg mirror. The proof directly
+reuses Mathlib's spectral theorem, matrix order and continuous functional
+calculus, `bornProbability` from `D5.S3.Quantum.FiniteDimensional`, and
+`RHLinalg.trace_mul_nonneg_of_posSemidef`.
+
+The source-bound audits retain the complete index-type telescope and the full
+boundedness claim. They observe respectively the dimension coefficient and
+the selected exact quotient-set occurrence. Their residual continuation is
+unknown; it asserts no undecidability or inexhaustibility result.
+
+## Triage
+
+Tier 1. The preregistration is [owner #22774](https://github.com/the-omega-institute/trureturing/issues/22774).
 The independently approved ordinary argument is its
 [complete-proof comment](https://github.com/the-omega-institute/trureturing/issues/22774#issuecomment-6606601813).
 Admission basis: `open-problem-resolution`. Reused spectral, functional-calculus,
-trace and Cauchy–Schwarz results are not claimed as new mathematics. Every
-auxiliary declaration has a live consumer in the complete boundedness proof.
+trace and Cauchy–Schwarz results are not claimed as new mathematics. All
+auxiliary declarations have live consumers in the complete boundedness proof.
 
-This implementation does not establish sharpness, a rank improvement, the
-entire function a(rho), or the II_1-factor question. The source's dimension-two
-and condition-dependent results remain applicable. The implementation is
-prepared for independent formal review; no frozen membership is asserted here.
+The proof establishes fixed-dimensional boundedness. Sharpness, a rank
+improvement, the entire function a(rho), and the II_1-factor question remain
+outside this result. The source's dimension-two and condition-dependent
+results remain applicable.
+
+## ASSUMED-UNVERIFIED
 
 Worldwide priority and exhaustive third-party coverage remain unverified.
 The original Alhasan–Fawwaz article, Bikchentaev's cited full text, the relevant
