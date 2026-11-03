@@ -15,10 +15,18 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.SmallAAllH
 
 structure ResidueFamily where
-  p r m0 C : ℕ
+  p : ℕ
+  r : ℕ
+  m0 : ℕ
+  C : ℕ
 
 structure FixedFamily where
-  x p q v m0 M0 : ℕ
+  x : ℕ
+  p : ℕ
+  q : ℕ
+  v : ℕ
+  m0 : ℕ
+  M0 : ℕ
 
 def residueFamilies : Fin 12 → ResidueFamily :=
   ![⟨4,8,5,205⟩, ⟨4,16,5,429⟩, ⟨4,32,5,885⟩,
