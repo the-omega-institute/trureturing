@@ -415,47 +415,50 @@ theorem pMultiplier_logarithmic_bounds (ξ : ℝ) :
       (div_le_one (by positivity)).mpr (by linarith)
     linarith [(pMultiplier_integral_bounds ξ).2]
 
-private lemma scaled_cauchy (λ : ℝ) (hλ : 0 < λ) (t : ℝ) :
+private lemma scaled_cauchy (l : ℝ) (hl : 0 < l) (t : ℝ) :
     Integrable (fun ξ : ℝ => OriginalActualFourier.phase ξ t /
-      ((λ ^ 2 + ξ ^ 2 : ℝ) : ℂ)) ∧
-    (∫ ξ : ℝ, OriginalActualFourier.phase ξ t / ((λ ^ 2 + ξ ^ 2 : ℝ) : ℂ)) =
-      ((Real.pi / λ * Real.exp (-λ * |t|) : ℝ) : ℂ) := by
-  let H : ℝ → ℂ := fun w => Complex.exp (Complex.I * (w : ℂ) * ((2 * λ * t : ℝ) : ℂ)) /
+      ((l ^ 2 + ξ ^ 2 : ℝ) : ℂ)) ∧
+    (∫ ξ : ℝ, OriginalActualFourier.phase ξ t / ((l ^ 2 + ξ ^ 2 : ℝ) : ℂ)) =
+      ((Real.pi / l * Real.exp (-l * |t|) : ℝ) : ℂ) := by
+  let H : ℝ → ℂ := fun w => Complex.exp (Complex.I * (w : ℂ) * ((2 * l * t : ℝ) : ℂ)) /
     ((1 + 4 * w ^ 2 : ℝ) : ℂ)
-  have h := OriginalAngularResolvent.angular_resolvent (2 * λ * t)
-  have hs : (2 * λ)⁻¹ ≠ 0 := inv_ne_zero (by positivity)
-  have he (ξ : ℝ) : OriginalActualFourier.phase ξ t / ((λ ^ 2 + ξ ^ 2 : ℝ) : ℂ) =
-      ((λ ^ 2 : ℝ) : ℂ)⁻¹ * H ((2 * λ)⁻¹ * ξ) := by
+  have h := OriginalAngularResolvent.angular_resolvent (2 * l * t)
+  have hs : (2 * l)⁻¹ ≠ 0 := inv_ne_zero (by positivity)
+  have he (ξ : ℝ) : OriginalActualFourier.phase ξ t / ((l ^ 2 + ξ ^ 2 : ℝ) : ℂ) =
+      ((l ^ 2 : ℝ) : ℂ)⁻¹ * H ((2 * l)⁻¹ * ξ) := by
     dsimp [H, OriginalActualFourier.phase]
     have hphase : Complex.I * (ξ : ℂ) * (t : ℂ) =
-        Complex.I * (((2 * λ)⁻¹ * ξ : ℝ) : ℂ) * ((2 * λ * t : ℝ) : ℂ) := by
+        Complex.I * (((2 * l)⁻¹ * ξ : ℝ) : ℂ) * ((2 * l * t : ℝ) : ℂ) := by
       push_cast
-      field_simp
-    rw [← hphase]
+      field_simp [Complex.ofReal_ne_zero.mpr hl.ne']
+    have hden : l ^ 2 * (1 + 4 * ((2 * l)⁻¹ * ξ) ^ 2) = l ^ 2 + ξ ^ 2 := by
+      field_simp [hl.ne']
+      <;> ring
+    rw [← hphase, ← hden]
     push_cast
-    field_simp
-    <;> ring
+    simp only [div_eq_mul_inv, mul_inv_rev]
+    ring
   have hi : Integrable (fun ξ : ℝ => OriginalActualFourier.phase ξ t /
-      ((λ ^ 2 + ξ ^ 2 : ℝ) : ℂ)) := by
+      ((l ^ 2 + ξ ^ 2 : ℝ) : ℂ)) := by
     simp_rw [he]
     exact (h.1.comp_mul_left' hs).const_mul _
   refine ⟨hi, ?_⟩
   simp_rw [he]
   rw [integral_const_mul, Measure.integral_comp_mul_left]
-  have habs : |((2 * λ)⁻¹)⁻¹| = 2 * λ := by rw [inv_inv, abs_of_pos (by positivity)]
+  have habs : |((2 * l)⁻¹)⁻¹| = 2 * l := by rw [inv_inv, abs_of_pos (by positivity)]
   rw [habs, Complex.real_smul]
-  have ht : -|2 * λ * t| / 2 = -λ * |t| := by
-    rw [abs_mul, abs_of_pos (by positivity : 0 < 2 * λ)]
+  have ht : -|2 * l * t| / 2 = -l * |t| := by
+    rw [abs_mul, abs_of_pos (by positivity : 0 < 2 * l)]
     ring
   have hh := h.2
   rw [ht] at hh
   have hp : (2 * Real.pi : ℝ) ≠ 0 := by positivity
-  have hl : (λ : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hλ.ne'
+  have hl : (l : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hl.ne'
   have hpi : (Real.pi : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr Real.pi_ne_zero
   change (↑(1 / (2 * Real.pi)) : ℂ) * (∫ w, H w) = _ at hh
   push_cast at hh ⊢
   field_simp at hh ⊢
-  linear_combination (2 : ℂ) * λ * hh
+  linear_combination hh / 2
 
 private lemma atom_fourier_square (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0)
     (D : ℝ) (hx : ∀ i, x i ≤ D) (ξ : ℝ) :
@@ -472,24 +475,145 @@ private lemma atom_fourier_square (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a
       OriginalActualFourier.phase ξ (x i) by
         simpa using OriginalActualFourier.phase_conj (-ξ) (x i)]
     rw [OriginalActualFourier.phase_neg_left, ← OriginalActualFourier.phase_add]
-    congr 1
-    ring
+    congr 1 <;> ring
   calc
     _ = star ((Complex.I * (ξ : ℂ)) * OriginalActualFourier.Ahat («prefix» x a) ξ) *
         ((Complex.I * (ξ : ℂ)) * OriginalActualFourier.Ahat («prefix» x a) ξ) := by
-      rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq]
+      rw [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq]
       simp [norm_mul, mul_pow, sq_abs]
     _ = star (∑ i, a i * OriginalActualFourier.phase (-ξ) (x i)) *
         (∑ i, a i * OriginalActualFourier.phase (-ξ) (x i)) := hs
     _ = _ := by
-      simp only [star_sum, star_mul, Finset.sum_mul, Finset.mul_sum]
+      simp only [star_sum, star_mul]
+      rw [Finset.sum_mul]
       apply Finset.sum_congr rfl
       intro i hi
+      rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro j hj
       calc
         _ = star (a i) * a j * (star (OriginalActualFourier.phase (-ξ) (x i)) *
             OriginalActualFourier.phase (-ξ) (x j)) := by ring
         _ = _ := by rw [hphase]
+
+private def rateWeight (l ξ : ℝ) : ℝ := 2 * l * ξ ^ 2 / (l ^ 2 + ξ ^ 2)
+
+private lemma one_rate_spectral (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0)
+    (D : ℝ) (hx : ∀ i, x i ≤ D) (l : ℝ) (hl : 0 < l) :
+    Integrable (rateWeight l) (OriginalActualFourier.rho («prefix» x a)) ∧
+      (quadratic x a (fun t => Real.exp (-l * |t|))).re =
+        ∫ ξ, rateWeight l ξ ∂OriginalActualFourier.rho («prefix» x a) := by
+  classical
+  let A := «prefix» x a
+  letI : IsFiniteMeasure (OriginalActualFourier.rho A) :=
+    OriginalActualFourier.actual_rho_finite x a ha D hx
+  have hden (ξ : ℝ) : 0 < l ^ 2 + ξ ^ 2 := by positivity
+  have hc : Continuous (rateWeight l) := by
+    unfold rateWeight
+    exact (continuous_const.mul (continuous_id.pow 2)).div
+      (continuous_const.add (continuous_id.pow 2)) (fun ξ => (hden ξ).ne')
+  have hi : Integrable (rateWeight l) (OriginalActualFourier.rho A) := by
+    apply (integrable_const (2 * l)).mono' hc.aestronglyMeasurable
+    exact ae_of_all _ fun ξ => by
+      rw [Real.norm_eq_abs, abs_of_nonneg (by dsimp [rateWeight]; positivity)]
+      dsimp [rateWeight]
+      apply (div_le_iff₀ (hden ξ)).mpr
+      nlinarith [sq_nonneg l]
+  have hdm : Measurable (fun ξ => ENNReal.ofReal (OriginalActualFourier.density A ξ)) :=
+    (OriginalActualFourier.density_continuous
+      (OriginalActualFourier.prefix_integrable x a ha D hx)).measurable.ennreal_ofReal
+  have hpoint (ξ : ℝ) :
+      ((OriginalActualFourier.density A ξ * rateWeight l ξ : ℝ) : ℂ) =
+        ∑ i, ∑ j, (star (a i) * a j * ((l / Real.pi : ℝ) : ℂ)) *
+          (OriginalActualFourier.phase ξ (x i - x j) / ((l ^ 2 + ξ ^ 2 : ℝ) : ℂ)) := by
+    calc
+      _ = ((l / Real.pi : ℝ) : ℂ) *
+          ((ξ ^ 2 * ‖OriginalActualFourier.Ahat A ξ‖ ^ 2 : ℝ) : ℂ) /
+            ((l ^ 2 + ξ ^ 2 : ℝ) : ℂ) := by
+        dsimp [OriginalActualFourier.density, rateWeight]
+        push_cast
+        field_simp
+        <;> ring
+      _ = _ := by
+        rw [atom_fourier_square x a ha D hx ξ]
+        simp only [Finset.mul_sum, Finset.sum_div]
+        apply Finset.sum_congr rfl
+        intro i hi
+        apply Finset.sum_congr rfl
+        intro j hj
+        ring
+  have hfi (i j : I) :=
+    (scaled_cauchy l hl (x i - x j)).1.const_mul
+      (star (a i) * a j * ((l / Real.pi : ℝ) : ℂ))
+  have hres (i j : I) := (scaled_cauchy l hl (x i - x j)).2
+  have he : ((∫ ξ, rateWeight l ξ ∂OriginalActualFourier.rho A : ℝ) : ℂ) =
+      quadratic x a (fun t => Real.exp (-l * |t|)) := by
+    rw [OriginalActualFourier.rho,
+      integral_withDensity_eq_integral_toReal_smul hdm (by simp)]
+    simp only [ENNReal.toReal_ofReal (OriginalActualFourier.density_nonneg A _), smul_eq_mul]
+    rw [← integral_ofReal]
+    simp_rw [hpoint]
+    rw [integral_finsetSum _ (fun i _ => integrable_finsetSum _ (fun j _ => hfi i j))]
+    simp_rw [integral_finsetSum _ (fun j _ => hfi _ j), integral_const_mul, hres]
+    unfold quadratic
+    apply Finset.sum_congr rfl
+    intro i hi
+    apply Finset.sum_congr rfl
+    intro j hj
+    push_cast
+    field_simp
+    <;> ring
+  refine ⟨hi, ?_⟩
+  simpa using (congrArg Complex.re he).symm
+
+private lemma pTerm_spectral (D : ℝ) (x : I → ℝ) (a : I → ℂ)
+    (hx : ∀ i, x i ≤ D) (ha : ∑ i, a i = 0) (n : ℕ) :
+    Integrable (pTerm n) (OriginalActualFourier.rho («prefix» x a)) ∧
+      (∫ ξ, pTerm n ξ ∂OriginalActualFourier.rho («prefix» x a)) =
+        (quadratic x a (mixtureTerm n)).re := by
+  have h := one_rate_spectral x a ha D hx (rate n) (by dsimp [rate]; positivity)
+  have he : pTerm n = fun ξ => trivialCoeff n * rateWeight (rate n) ξ := by
+    funext ξ
+    dsimp [pTerm, rateWeight]
+    ring
+  rw [he]
+  refine ⟨h.1.const_mul _, ?_⟩
+  rw [integral_const_mul, ← h.2, quadratic_mixture_scale]
+
+/-- The complete literal-P quadratic form is the integrable full multiplier
+against the original actual Fourier density. No atom, endpoint or frequency
+is removed, and no Plancherel-mass or parity premise is imposed. -/
+theorem complete_positive_mixture_spectral_identity
+    (D : ℝ) (hD : 0 ≤ D) (x : I → ℝ) (a : I → ℂ)
+    (hx : ∀ i, x i ∈ Icc (0 : ℝ) D) (ha : ∑ i, a i = 0) :
+    Integrable pMultiplier (OriginalActualFourier.rho («prefix» x a)) ∧
+      (quadratic x a P).re =
+        ∫ ξ, pMultiplier ξ ∂OriginalActualFourier.rho («prefix» x a) := by
+  have ht (n : ℕ) := pTerm_spectral D x a (fun i => (hx i).2) ha n
+  have hs : Summable (fun n => ∫ ξ, ‖pTerm n ξ‖
+      ∂OriginalActualFourier.rho («prefix» x a)) := by
+    simp_rw [Real.norm_eq_abs, abs_of_nonneg (pTerm_nonneg _ _), (ht _).2]
+    exact (Complex.hasSum_re (quadratic_mixture_abs x a).of_norm.hasSum).summable
+  have hm : AEStronglyMeasurable pMultiplier
+      (OriginalActualFourier.rho («prefix» x a)) := by
+    apply aestronglyMeasurable_of_tendsto_ae atTop
+      (fun N => (integrable_finsetSum (Finset.range N) (fun n _ => (ht n).1)).1)
+    exact ae_of_all _ fun ξ => (pTerm_summable ξ).tendsto_sum_tsum_nat
+  have hnorm (ξ : ℝ) : ENNReal.ofReal ‖pMultiplier ξ‖ =
+      ∑' n, ENNReal.ofReal ‖pTerm n ξ‖ := by
+    simp_rw [Real.norm_eq_abs, abs_of_nonneg (pTerm_nonneg _ _)]
+    rw [abs_of_nonneg (show 0 ≤ pMultiplier ξ from tsum_nonneg (fun n => pTerm_nonneg n ξ))]
+    exact ENNReal.ofReal_tsum_of_nonneg (fun n => pTerm_nonneg n ξ) (pTerm_summable ξ)
+  refine ⟨⟨hm, ?_⟩, ?_⟩
+  · rw [hasFiniteIntegral_iff_norm]
+    simp_rw [hnorm]
+    rw [lintegral_tsum (fun n => (ht n).1.norm.aestronglyMeasurable.aemeasurable.ennreal_ofReal)]
+    simp_rw [← ofReal_integral_eq_lintegral_ofReal (ht _).1.norm
+      (ae_of_all _ fun ξ => norm_nonneg (pTerm _ ξ))]
+    exact hs.tsum_ofReal_lt_top
+  · have h := integral_tsum_of_summable_integral_norm (fun n => (ht n).1) hs
+    have hq := (Complex.hasSum_re (quadratic_mixture_hasSum x a)).tsum_eq
+    rw [← hq]
+    simpa only [(ht _).2] using h
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
