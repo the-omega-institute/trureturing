@@ -69,8 +69,9 @@ private lemma block_determinant (m : ℕ) (hm : 3 ≤ m) :
   exact ⟨0, 0, rfl⟩
 
 private lemma inverse_chord_fourier (m : ℕ) (hm : 3 ≤ m) :
-    ∀ k : ℕ, k ≤ 2 * m →
-      ∃ w : ℝ, w = w - k * (2 * m - k) / 2 := by sorry
+    ∃ w : Fin (2 * m) → ℝ,
+      ∀ k : Fin (2 * m),
+        w k - w 0 = -(k.val : ℝ) * (2 * m - k.val) / 2 := by sorry
 
 private lemma circulant_spectrum (m : ℕ) (hm : 3 ≤ m) :
     ∀ k : ℕ, k ≤ 2 * m →
@@ -97,8 +98,9 @@ private lemma real_root_count (m : ℕ) (hm : 3 ≤ m)
     (hdet : ∃ (B C : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ),
       (jacobian (2 * m)).charpoly =
         (fun X : ℝ[X] => X) (jacobian (2 * m)).charpoly)
-    (hfourier : ∀ k : ℕ, k ≤ 2 * m →
-      ∃ w : ℝ, w = w - k * (2 * m - k) / 2)
+    (hfourier : ∃ w : Fin (2 * m) → ℝ,
+      ∀ k : Fin (2 * m),
+        w k - w 0 = -(k.val : ℝ) * (2 * m - k.val) / 2)
     (hspectrum : ∀ k : ℕ, k ≤ 2 * m →
       ∃ γ : ℝ, γ = ((m : ℝ) - k) ^ 2 * ((k : ℝ) ^ 2 - 2) / 4)
     (hchar : ∃ P : ℝ[X], (jacobian (2 * m)).charpoly = P)
