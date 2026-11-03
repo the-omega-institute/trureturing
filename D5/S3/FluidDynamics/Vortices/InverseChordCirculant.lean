@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Matrix.CirculantCharpoly
 import D5.S3.Fourier.SparseGeneratorFamily
 import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
+import D5.S3.ArithUnits.MercaCosetFiberLift
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic
 import Mathlib.NumberTheory.Bernoulli
@@ -146,14 +147,14 @@ private lemma modeValue_sum (N : ℕ) [NeZero N] : ∑ k : ZMod N, modeValue N k
   simp only [modeValue, RingEquiv.toEquiv_eq_coe, EquivLike.coe_coe, spectrum_fin_val]
   rw [Fin.sum_univ_eq_sum_range (fun k : ℕ =>
     ((N : ℂ) ^ 2 - 1) / 12 - (k : ℂ) * ((N : ℂ) - k) / 2)]
-  have h1q := sum_range_pow N 1
   have h2q := sum_range_pow N 2
-  norm_num [Finset.sum_range_succ, bernoulli_zero, bernoulli_one, bernoulli_two] at h1q h2q
+  norm_num [Finset.sum_range_succ, bernoulli_zero, bernoulli_one, bernoulli_two] at h2q
   have h1 : (∑ k ∈ range N, (k : ℂ)) = (N : ℂ) ^ 2 / 2 - N / 2 := by
-    have hq : (∑ k ∈ range N, (k : ℚ)) = (N : ℚ) ^ 2 / 2 - N / 2 := by
-      linear_combination h1q
+    have hq := D5.S3.ArithUnits.MercaCosetFiberLift.sum_fin_rat N (NeZero.pos N)
+    rw [Fin.sum_univ_eq_sum_range] at hq
     have hc := congrArg (algebraMap ℚ ℂ) hq
-    simpa only [map_sum, map_pow, map_sub, map_add, map_div₀, map_natCast, map_ofNat] using hc
+    simp only [map_sum, map_sub, map_mul, map_div₀, map_natCast, map_ofNat, map_one] at hc
+    linear_combination hc
   have h2 : (∑ k ∈ range N, (k : ℂ) ^ 2) =
       (N : ℂ) ^ 3 / 3 - (N : ℂ) ^ 2 / 2 + N / 6 := by
     have hq : (∑ k ∈ range N, (k : ℚ) ^ 2) =

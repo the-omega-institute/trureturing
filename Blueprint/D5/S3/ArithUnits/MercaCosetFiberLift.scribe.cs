@@ -88,6 +88,13 @@ internal sealed class MercaCosetFiberLiftDocument : IScribeDocumentDefinition
                                 Frac, Grp(n, Count(K)), Grp(D(2))))))),
                     "The center uses the cardinality of the subgroup, while the finite set is an explicit argument.",
                     DescribeRole.Definition),
+                Node("finite-sum", "The rational triangular sum", "sum_fin_rat", Provenance,
+                    Disp(All(Ell, Nat, Seq(D(0), Sp, Lt, Sp, Ell, Sp, Rightarrow, Sp,
+                        Sum, Underscore, Grp(F.Id("t"), Colon, Call("Fin", Ell)), Sp,
+                        Open, Call("val", F.Id("t")), Colon, Q, Close, Sp, Eq, Sp,
+                        Frac, Grp(Ell, Open, Ell, Minus, D(1), Close), Grp(D(2))))),
+                    "The rational sum of the representatives of Fin ell is ell times ell minus one divided by two.",
+                    DescribeRole.Theorem),
                 Node("result", "The complete uniform lift theorem", "result", Provenance,
                     ResultFormula(), ProofText, DescribeRole.Theorem))));
 
