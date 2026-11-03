@@ -117,10 +117,18 @@ private lemma instance_cooling : IsCoolingMap Pm sigma := by
   · intro i
     left
     fin_cases i <;> exact Matrix.isDiag_diagonal _
-  · ext i j
+  · change (∑ a, kraus a * Pm * (kraus a)ᴴ) = sigma
+    rw [Fin.sum_univ_two]
+    change diagonal ![1, 0, 3 / 5, 3 / 5] * Pm *
+        (diagonal ![1, 0, 3 / 5, 3 / 5])ᴴ +
+      diagonal ![0, 1, 4 / 5, 4 * Complex.I / 5] * Pm *
+        (diagonal ![0, 1, 4 / 5, 4 * Complex.I / 5])ᴴ = sigma
+    simp only [Matrix.diagonal_conjTranspose]
+    ext i j
+    simp only [Matrix.add_apply, Matrix.mul_diagonal, Matrix.diagonal_mul, Pi.star_apply]
     fin_cases i <;> fin_cases j <;>
-      norm_num [MatrixMap.of_kraus, Fin.sum_univ_two, Fin.sum_univ_four,
-        Matrix.mul_apply, Matrix.conjTranspose_apply, kraus, Pm, sigma, factor,
+      norm_num [Pm, sigma, factor, Matrix.mul_apply,
+        Fin.sum_univ_two, Matrix.conjTranspose_apply, Pi.star_apply,
         Complex.star_def, Matrix.vecMul, dotProduct, map_ofNat, map_div₀, map_mul]
       <;> ring
 
@@ -483,15 +491,10 @@ private lemma unitary_obstruction {n : Type*} [Fintype n] [DecidableEq n]
       (25 / 24 : ℂ) * r + (25 * Complex.I / 24 : ℂ) * s
     simp only [Complex.I_sq, Complex.I_pow_three]
     ring
-  have h1l : (A 1)ᴴ * A 1 = 1 := Matrix.mem_unitaryGroup_iff'.mp (hU 1)
-  have hz : (1 : Matrix n n ℂ) = 0 := by
-    calc
-      1 = A 0 * (A 1)ᴴ * (A 1 * (A 0)ᴴ) := by
-        rw [Matrix.mul_assoc, ← Matrix.mul_assoc (A 1)ᴴ, h1l, one_mul, h0]
-      _ = 0 := by rw [hx, zero_mul]
-  obtain ⟨i⟩ := hn
-  have hi := congrArg (fun M : Matrix n n ℂ => M i i) hz
-  simp at hi
+  let : Nonempty n := hn
+  exact (Unitary.isUnit_coe (U :=
+    (⟨A 0, hU 0⟩ : Matrix.unitaryGroup n ℂ) *
+      star (⟨A 1, hU 1⟩ : Matrix.unitaryGroup n ℂ))).ne_zero hx
 
 private lemma thermal_impossible {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ)
     (U : Matrix.unitaryGroup (Fin 4 × Fin m) ℂ)
