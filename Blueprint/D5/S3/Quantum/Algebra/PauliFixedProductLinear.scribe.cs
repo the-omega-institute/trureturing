@@ -7,6 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra;
 internal sealed class PauliFixedProductLinearDocument : IScribeDocumentDefinition
 {
 
+    private static DocumentBlock Display(Formula x) => new DocumentBlock.DisplayFormula(x);
     private static Formula V(string name) => F.Id(name);
     private static Formula R => Seq(Mathbb, Grp(V("R")));
     private static Formula J => V("J");
@@ -150,41 +151,40 @@ internal sealed class PauliFixedProductLinearDocument : IScribeDocumentDefinitio
     {
         var t=V("t"); var a=V("a"); var b=V("b"); var c=V("c"); var d=V("d");
         var x=V("X"); var y=V("Y"); var h=V("H"); var i=V("i"); var j=V("j"); var k=V("k");
-        var adjoint=V("adj");
         Formula SumI(Formula body) => Seq(new Formula.Subscript(Sum,Seq(i,Colon,Sp,Index)),body);
         Formula SpatialAction(Formula u, Formula v) => Tuple(D(0),Call("cross",Spatial(u),Spatial(v)));
         return [
             Paragraph(Text("Notation is shared by every display below. J is EuclideanSpace over the reals on Fin 4, identified with a scalar and a spatial vector in real three-space; V is its real Hilbert tensor product. T(a,b) denotes a tensor b. Coordinates a_i have i in Fin 4. All inner products and norms are the fixed Euclidean and positive tensor-product ones. Scalar juxtaposition denotes real scalar multiplication. The cross and dot operations are the usual real three-dimensional cross and dot products. An ordered pair (scalar, spatial triple) denotes its four-vector in J. The vectors e(i) are EuclideanSpace.single i 1; e(0) is the unit, e(1), e(2), e(3) are x, y, z. b is localBasis and B is jointBasis, the complete orthonormal bases. Every displayed parameter and vector is explicitly quantified.")),
-            Disp(And(Eql(J,Call("EuclideanSpace",R,Index)),Eql(Joint,Call("TensorProduct",R,J,J)),
+            Display(And(Eql(J,Call("EuclideanSpace",R,Index)),Eql(Joint,Call("TensorProduct",R,J,J)),
                 All("i",Index,Eql(Call("e",i),Call("single",i,D(1)))))),
-            Disp(All("a b",J,And(
+            Display(All("a b",J,And(
                 Eql(Spin(a,b),Tuple(Add(Mul(At(a,0),At(b,0)),Call("dot",Spatial(a),Spatial(b))),
                     Add(Mul(At(a,0),Spatial(b)),Mul(At(b,0),Spatial(a))))),
                 Eql(Call("C",a,b),SpatialAction(a,b))))),
-            Disp(All("t",R,All("a b",J,Eql(Action(t,a,b),Tuple(D(0),Call("cross",
+            Display(All("t",R,All("a b",J,Eql(Action(t,a,b),Tuple(D(0),Call("cross",
                 Tuple(At(a,1),At(a,2),Add(At(a,3),Mul(t,At(a,0)))),Spatial(b))))))),
-            Disp(All("a b c d",J,Eql(Product(Tensor(a,b),Tensor(c,d)),
+            Display(All("a b c d",J,Eql(Product(Tensor(a,b),Tensor(c,d)),
                 Sub(Tensor(Spin(a,c),Spin(b,d)),Tensor(Call("C",a,c),Call("C",b,d)))))),
-            Disp(All("t",R,All("a b c d",J,Eql(GammaAt(t,Tensor(a,b),Tensor(c,d)),
+            Display(All("t",R,All("a b c d",J,Eql(GammaAt(t,Tensor(a,b),Tensor(c,d)),
                 Add(Tensor(Action(t,a,c),Spin(b,d)),Tensor(Spin(a,c),Action(t,b,d))))))),
             Paragraph(Text("S, C and D(t) denote the existing bilinear maps S, C, D t; M and Gamma(t) are the existing fixed joint product and actual joint action, extended linearly from pure tensors. E(t,H,X,Y) is E t H X Y. R(t) is reportSquared t, with all six basis indices summed independently. Each output norm includes every coordinate; there is no averaging.")),
-            Disp(All("t",R,All("H X Y",Joint,Eql(Call("E",t,h,x,y),
+            Display(All("t",R,All("H X Y",Joint,Eql(Call("E",t,h,x,y),
                 Sub(Sub(GammaAt(t,h,Product(x,y)),Product(GammaAt(t,h,x),y)),Product(x,GammaAt(t,h,y))))))),
-            Disp(All("t",R,Eql(Report(t),Seq(new Formula.Subscript(Sum,
+            Display(All("t",R,Eql(Report(t),Seq(new Formula.Subscript(Sum,
                 Seq(V("i"),Comma,V("j"),Comma,V("k"),Comma,V("l"),Comma,V("m"),Comma,V("n"),Colon,Sp,Index)),
                 Pow(Norm(Call("E",t,Tensor(Call("e",V("i")),Call("e",V("j"))),
                     Tensor(Call("e",V("k")),Call("e",V("l"))),Tensor(Call("e",V("m")),Call("e",V("n")))))))))),
             Paragraph(Text("U(t) means unitOperator t, the continuous linear map b mapped to D(t,e(0),b); its norm with subscript op is the operator norm. G(t) means actionGram t, H(t) means labelGram t. Adjoint is taken for the same Euclidean inner product. W(t) means actionSupport t, the real span of all actual D(t,e(i),e(j)); Z(t) means commonFixed t, the intersection of the four action kernels. ker D(t) is the kernel of the label-linear map a mapped to D(t,a), whereas D(t,a)=0 is equality of linear operators. Orthogonal complement always uses the fixed Euclidean inner product.")),
-            Disp(All("t",R,And(All("b",J,Eql(Call("U",t,b),Action(t,Basis(0),b))),
+            Display(All("t",R,And(All("b",J,Eql(Call("U",t,b),Action(t,Basis(0),b))),
                 Eql(Call("G",t),SumI(Call("compose",Call("adj",Dmap(t,Call("e",i))),Dmap(t,Call("e",i))))),
                 Eql(Call("H",t),SumI(Call("compose",Call("adj",Call("flipD",t,Call("e",i))),Call("flipD",t,Call("e",i))))),
                 All("a b",J,Eql(Call("flipD",t,b,a),Action(t,a,b))),
                 Eql(Support(t),Call("span",R,SetOf("v",J,Some("i j",Index,Eql(V("v"),Action(t,Call("e",i),Call("e",j))))))),
                 Eql(Fixed(t),SetOf("a",J,All("i",Index,Eql(Action(t,Call("e",i),a),D(0)))))))),
             Paragraph(Text("Lambda(t) is positiveActionSpectrum t; sigma(t) is actionGap t, the square root of the infimum of that set. Membership and universal inequalities are both displayed for every greatest or least value below, so attainment and the full domain are retained. kappa(i,j,k) is curvature i j k on precisely the original finite basis, not a redefined unit-ball maximum.")),
-            Disp(All("t",R,And(Eql(Spectrum(t),SetOf("lambda",R,And(Less(D(0),V("lambda")),Eigen(t,V("lambda"),false)))),
+            Display(All("t",R,And(Eql(Spectrum(t),SetOf("lambda",R,And(Less(D(0),V("lambda")),Eigen(t,V("lambda"),false)))),
                 Eql(Call("sigma",t),Root(Call("inf",Spectrum(t))))))),
-            Disp(All("i j k",Index,Eql(Call("kappa",i,j,k),
+            Display(All("i j k",Index,Eql(Call("kappa",i,j,k),
                 Sub(Spin(Call("e",i),Spin(Call("e",j),Call("e",k))),Spin(Call("e",j),Spin(Call("e",i),Call("e",k)))))))
         ];
     }
@@ -206,7 +206,7 @@ internal sealed class PauliFixedProductLinearDocument : IScribeDocumentDefinitio
         var t=V("t"); var a=V("a");
         var blocks=Notation().Concat(new DocumentBlock[] {
             Paragraph(Text("All definitions above are the actual fixed-product family, reproduced here so that the existential realization statement is closed and complete. Cstar is PauliLinearCertificate.constant = 1+2sqrt(2). epsilon(t) is epsilon t, d(t) is localBound t, eta is smallEndpoint. L(t) means PauliLinearCertificate.linear (epsilon t) (localBound t); O(t) means PauliLinearCertificate.old at those same arguments. q(t) below is its original quadratic root; O retains the independent local cap. The computed report yields epsilon(t)=12sqrt(2)|t|, rather than a selected-block readout.")),
-            Disp(And(Eql(Call("Cstar"),Constant),Eql(Call("eta"),Endpoint),
+            Display(And(Eql(Call("Cstar"),Constant),Eql(Call("eta"),Endpoint),
                 All("t",R,And(Eql(Eps(t),Root(Report(t))),Eql(Call("d",t),LocalBound(t)),
                     Eql(Linear(t),Fr(Mul(D(2),P(Constant),LocalBound(t),Eps(t)),Denominator(t))),
                     Eql(Call("q",t),Fr(Add(Mul(P(Constant),Eps(t)),Root(Add(Mul(Pow(Constant),Pow(Eps(t))),
