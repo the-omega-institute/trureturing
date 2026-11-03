@@ -2,9 +2,9 @@
 
 ## Abstract
 
-The complete integer Jacobi sum equals its actual positive weighted product limit.
+The complete integer Jacobi sum equals its actual weighted product limit.
 
-This is the classical Jacobi triple product at t=q^(a+1+r), z=q^r, obtained from the existing InversionSeq207 and CubicThetaJacobi suppliers. The inequality triangularExponent(k)+k >= 0 holds for every integer, including both directions of the quadratic tail. The Laurent support construction therefore transfers the complete sum and all finite factors. No numerical cutoff is a hypothesis. EulerPentagonalTrisection uses the sum; EulerNineDissection uses the same actual finite-product limit.
+This is the classical Jacobi triple product at t=q^(a+1+r), z=q^r, obtained from the existing InversionSeq207 and CubicThetaJacobi suppliers. The inequality triangularExponent(k)+k >= 0 holds for every integer, including both directions of the quadratic tail. The Laurent support construction therefore transfers the complete sum and all finite factors. The factor weights are positive when r>0; for r=0 the factor 1-X^0 is zero and the product degenerates to zero. No numerical cutoff is a hypothesis. EulerPentagonalTrisection uses the sum; EulerNineDissection uses the same actual finite-product limit.
 
 **Theorem 1.1 (triangular_add_index_nonnegative).**
 
@@ -88,7 +88,7 @@ Lean statement: `D5/S3/Arith/ModularForms/WeightedJacobiSpecialization.finitePro
 
 *Commentary.*
 
-The actual three positive-weight Euler factor families.
+The actual three Euler factor families, with positive weights when r>0 and a zero factor when r=0.
 
 **Theorem 1.7 (tendsto_finiteProduct).**
 
