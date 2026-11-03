@@ -70,8 +70,11 @@ private noncomputable def duration (k : ℕ) : ℝ :=
 private theorem injective_three (x : Fin 3 → ℝ)
     (hab : x 0 ≠ x 1) (hac : x 0 ≠ x 2) (hbc : x 1 ≠ x 2) :
     Function.Injective x := by
-  intro a b h
-  fin_cases a <;> fin_cases b <;> simp_all
+  rw [Function.injective_iff_pairwise_ne]
+  simpa only [pairwise_fin_succ_iff, Fin.forall_fin_succ,
+    Fin.forall_fin_zero, Function.onFun, Fin.succ_zero_eq_one, Fin.succ_one_eq_two,
+    Subsingleton.pairwise, and_true] using And.intro (And.intro hab.symm hac.symm)
+      (And.intro (And.intro hab hac) (And.intro hbc.symm hbc))
 
 private theorem duration_positive (i : Fin 9) : 0 < times i := by
   delta times
@@ -131,10 +134,8 @@ private theorem run_verified : IsRun (4 / 5) (3 / 20) orbit firing duration := b
   intro k
   have h := block_verified ⟨k % 9, Nat.mod_lt k (by decide)⟩
   have hi : (⟨(k + 1) % 9, Nat.mod_lt (k + 1) (by decide)⟩ : Fin 9) =
-      (⟨k % 9, Nat.mod_lt k (by decide)⟩ : Fin 9) + 1 := by
-    apply Fin.ext
-    change (k + 1) % 9 = (k % 9 + 1) % 9
-    exact Nat.add_mod k 1 9
+      (⟨k % 9, Nat.mod_lt k (by decide)⟩ : Fin 9) + 1 :=
+    Fin.ext (Nat.add_mod k 1 9)
   delta orbit firing duration
   rw [hi]
   exact h
@@ -148,20 +149,11 @@ private theorem initial_verified : ∀ j,
 private theorem periodic_verified : IsPeriodic orbit := by
   refine ⟨9, by norm_num, ?_⟩
   intro k
-  delta orbit
-  congr 1
-  apply Fin.ext
-  simp
+  exact congrArg states (Fin.ext (Nat.add_mod_right k 9))
 
 private theorem non_exhaustive_verified : ¬ IsExhaustive firing := by
   intro h
-  have hi := (h 0).1
-  have he : (![firing 0, firing (0 + 1), firing (0 + 2)] : Fin 3 → Fin 3) 0 =
-      (![firing 0, firing (0 + 1), firing (0 + 2)] : Fin 3 → Fin 3) 1 := by
-    delta firing labels
-    norm_num
-  have hf : (0 : Fin 3) = 1 := hi he
-  norm_num at hf
+  exact Fin.zero_ne_one ((h 0).1 (by rfl))
 
 theorem result : ¬ claim := by
   intro h
