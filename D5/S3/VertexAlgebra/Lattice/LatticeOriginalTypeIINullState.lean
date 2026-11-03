@@ -248,8 +248,14 @@ private theorem ell_minus_two (D : LatticeData)
     linear_combination -h
   rw [sugawaraMode_single_sector]
   have he := current_two_extracts_ell D p (sectorSugawaraMode D H p (-2) 1)
-  simp_rw [hc, ← mul_assoc, mul_comm (p _ : ℂ) 2] at he
-  rw [← Finset.mul_sum, charge_norm] at he
+  simp_rw [hc] at he
+  have hs : (∑ i : Fin D.rank, (p i : ℂ) * (2 * chargeScalar D p i)) =
+      2 * (bilinear D p p : ℂ) := by
+    rw [← charge_norm D p, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i hi
+    ring
+  rw [hs] at he
   linear_combination -he / 2
 
 private theorem ell_translation_squared (D : LatticeData) (p : Charge D) :
