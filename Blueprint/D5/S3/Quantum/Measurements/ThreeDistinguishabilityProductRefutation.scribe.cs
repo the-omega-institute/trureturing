@@ -15,18 +15,6 @@ internal sealed class ThreeDistinguishabilityProductRefutationDocument : IScribe
         H("The three-distinguishability product conjecture fails"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("face-centre"),
-                DeclarationHandle.Create(Module + ".faceCentre"),
-                H("Centres of the four faces"),
-                StatementSource.FromAuthor(Disp(FaceCentreDefinition())),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text(
-                    "For a coordinate k in Fin 4, faceCentre k is the real-valued function on Fin 4 "
-                    + "that is zero at k and one third at every other coordinate. These are the four "
-                    + "face centres used in the d = 4, M = 3 discussion of the source, Distinguishability.tex "
-                    + "lines 462–467."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("in-region"),
                 DeclarationHandle.Create(Module + ".InRegion"),
                 H("The three-distinguishability region"),
@@ -61,7 +49,7 @@ internal sealed class ThreeDistinguishabilityProductRefutationDocument : IScribe
                 Blocks(Paragraph(Text(
                     "The conjecture asks for one permutation σ of Fin 4 such that every p in the "
                     + "three-distinguishability region has the product form built from the relabelled "
-                    + "face centres i ↦ faceCentre (σ i). The permutation is existential because the "
+                    + "face centres i ↦ target (σ i). The permutation is existential because the "
                     + "source presents the four face centres with a labelling convention, while the "
                     + "mathematical assertion concerns some labelling."))),
                 DescribeRole.Definition),
@@ -103,14 +91,6 @@ internal sealed class ThreeDistinguishabilityProductRefutationDocument : IScribe
                         + "permutation σ. Applying the asserted claim to p and its InRegion witness gives "
                         + "this impossible product representation, so the claim is false."))),
                 DescribeRole.Theorem))));
-
-    private static Formula FaceCentreDefinition() =>
-        All("k", FinOf(D(4)), Equal(
-            LocalCall("faceCentre", X("k")),
-            LambdaOf("j", FinOf(D(4)), If(
-                Equal(X("j"), X("k")),
-                Typed(D(0), Reals()),
-                Div(Typed(D(1), Reals()), Typed(D(3), Reals()))))));
 
     private static Formula InRegionDefinition()
     {
@@ -166,10 +146,11 @@ internal sealed class ThreeDistinguishabilityProductRefutationDocument : IScribe
 
     private static Formula ClaimProposition()
     {
-        Formula sigma = X("σ");
+        Formula sigma = SigmaLower;
         Formula fin4 = FinOf(D(4));
         Formula relabelled = LambdaOf("i", fin4,
-            LocalCall("faceCentre", At(sigma, X("i"))));
+            At(Qualified("D5", "S3", "QuantumBounds", "RebitExclusionDistance", "target"),
+                At(sigma, X("i"))));
         return Some("σ", At(Qualified("Equiv", "Perm"), fin4),
             All("p", Arrow(fin4, Reals()),
                 Imp(LocalCall("InRegion", X("p")),
@@ -179,7 +160,7 @@ internal sealed class ThreeDistinguishabilityProductRefutationDocument : IScribe
     private static Formula X(string name) => name switch
     {
         "ρ" => Rho,
-        "σ" => Sigma,
+        "σ" => SigmaLower,
         _ => F.Id(name),
     };
 
@@ -215,8 +196,6 @@ internal sealed class ThreeDistinguishabilityProductRefutationDocument : IScribe
         Seq(Exists, Sp, Typed(X(name), type), Comma, Sp, Parenthesized(body));
     private static Formula LambdaOf(string name, Formula type, Formula body) =>
         Parenthesized(Seq(LambdaLower, Sp, Typed(X(name), type), Sp, Mapsto, Sp, body));
-    private static Formula If(Formula condition, Formula yes, Formula no) =>
-        At(Qualified("ite"), Parenthesized(condition), yes, no);
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula NotEqual(Formula left, Formula right) =>
@@ -229,8 +208,6 @@ internal sealed class ThreeDistinguishabilityProductRefutationDocument : IScribe
         new Formula.Binary(Parenthesized(left), FormulaBinaryOperator.Add, Parenthesized(right));
     private static Formula Subtract(Formula left, Formula right) =>
         new Formula.Binary(Parenthesized(left), FormulaBinaryOperator.Subtract, Parenthesized(right));
-    private static Formula Div(Formula numerator, Formula denominator) =>
-        new Formula.Fraction(numerator, denominator);
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
     private static Formula Imp(Formula left, Formula right) =>

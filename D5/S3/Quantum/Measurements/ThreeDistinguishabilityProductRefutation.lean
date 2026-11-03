@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch
 import D5.S0.Carrier.GoldenRatio
 import D5.S3.Analytic.Adelic.FiniteToroidalFrameReconstruction
 import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.QuantumBounds.RebitExclusionDistance
 
 /-! Korzekwa, Czachórski, Puchała and Życzkowski, arXiv:1812.09083v3,
 Equation (30). Classical versions are the real diagonals in the preferred basis;
@@ -30,9 +31,6 @@ open D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch.FourEndpoint
 
 namespace D5.S3.Quantum.Measurements.ThreeDistinguishabilityProductRefutation
 
-/-- The centre of the face missing the coordinate `k`. -/
-def faceCentre (k : Fin 4) : Fin 4 → ℝ := fun j => if j = k then 0 else 1 / 3
-
 /-- The source's three-distinguishability region, with classical version `diag ρ`. -/
 def InRegion (p : Fin 4 → ℝ) : Prop :=
   p ∈ stdSimplex ℝ (Fin 4) ∧
@@ -50,7 +48,7 @@ def ProductForm (f : Fin 4 → Fin 4 → ℝ) (p : Fin 4 → ℝ) : Prop :=
 /-- Equation (30), allowing any labelling of the four face centres. -/
 def claim : Prop :=
   ∃ σ : Equiv.Perm (Fin 4), ∀ p, InRegion p →
-    ProductForm (fun i => faceCentre (σ i)) p
+    ProductForm (fun i => D5.S3.QuantumBounds.RebitExclusionDistance.target (σ i)) p
 
 private def point : Fin 4 → ℝ :=
   ![(5 - Real.sqrt 5) / 10, (5 - Real.sqrt 5) / 20,
@@ -65,16 +63,15 @@ private def state (i : Fin 3) (k : Fin 4) : ℂ :=
   weightedFrame (Finset.univ : Finset (Fin 4)) point
     (fun k _ => phases i k) 0 ⟨k, Finset.mem_univ k⟩
 
-private lemma radical_bounds : 2 < Real.sqrt 5 ∧ Real.sqrt 5 < 9 / 4 := by
-  exact ⟨(Real.lt_sqrt (by norm_num)).2 (by norm_num),
-    (Real.sqrt_lt' (by norm_num)).2 (by norm_num)⟩
-
 private lemma point_simplex : point ∈ stdSimplex ℝ (Fin 4) := by
   change (∀ k, 0 ≤ point k) ∧ ∑ k, point k = 1
   constructor
   · intro k
-    have hb := radical_bounds
-    fin_cases k <;> norm_num [point] <;> linarith
+    fin_cases k <;> norm_num [point] <;>
+      nlinarith [show (1 : ℝ) < (1 + Real.sqrt 5) / 2 by
+        simpa only [Real.goldenRatio] using Real.one_lt_goldenRatio,
+        show (1 + Real.sqrt 5) / 2 < (2 : ℝ) by
+          simpa only [Real.goldenRatio] using Real.goldenRatio_lt_two]
   · norm_num [point, Fin.sum_univ_succ]
     ring
 
@@ -204,7 +201,8 @@ private lemma density_region : InRegion point := by
     rw [state_diagonal, Complex.ofReal_re]
 
 private lemma product_pairing (σ : Equiv.Perm (Fin 4)) (p : Fin 4 → ℝ)
-    (h : ProductForm (fun i => faceCentre (σ i)) p) :
+    (h : ProductForm
+      (fun i => D5.S3.QuantumBounds.RebitExclusionDistance.target (σ i)) p) :
     (1 - 3 * p (σ 0)) * (1 - 3 * p (σ 3)) =
       (1 - 3 * p (σ 1)) * (1 - 3 * p (σ 2)) := by
   rcases h with ⟨a, b, _, _, _, _, hp⟩
@@ -213,11 +211,12 @@ private lemma product_pairing (σ : Equiv.Perm (Fin 4)) (p : Fin 4 → ℝ)
   have hv1 := hv 1
   have hv2 := hv 2
   have hv3 := hv 3
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, faceCentre.eq_1,
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul,
+    D5.S3.QuantumBounds.RebitExclusionDistance.target.eq_1,
     Equiv.apply_eq_iff_eq, Fin.isValue, ite_true, Fin.zero_eq_one_iff,
     Fin.reduceEq, ite_false, mul_zero, zero_add, add_zero] at hv0 hv1 hv2 hv3
   norm_num only at hv0 hv1 hv2 hv3
-  simp only [ite_false] at hv0
+  simp only [ite_false] at hv1
   rw [hv0, hv1, hv2, hv3]
   ring
 
@@ -269,30 +268,35 @@ private lemma point_pairings :
     let q := fun k => 1 - 3 * point k
     q 0 * q 1 ≠ q 2 * q 3 ∧ q 0 * q 2 ≠ q 1 * q 3 ∧
       q 0 * q 3 ≠ q 1 * q 2 := by
-  have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
-  have hb := radical_bounds
   refine ⟨?_, ?_, ?_⟩
   · intro h
     change (1 - 3 * ((5 - Real.sqrt 5) / 10)) *
         (1 - 3 * ((5 - Real.sqrt 5) / 20)) =
       (1 - 3 * ((5 - Real.sqrt 5) / 10)) *
         (1 - 3 * ((Real.sqrt 5 - 1) / 4)) at h
-    nlinarith
+    apply (Nat.Prime.irrational_sqrt (by decide : Nat.Prime 5)).ne_rat (7 / 3 : ℚ)
+    norm_num
+    nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)]
   · intro h
     change (1 - 3 * ((5 - Real.sqrt 5) / 10)) *
         (1 - 3 * ((5 - Real.sqrt 5) / 10)) =
       (1 - 3 * ((5 - Real.sqrt 5) / 20)) *
         (1 - 3 * ((Real.sqrt 5 - 1) / 4)) at h
-    nlinarith
+    apply (Nat.Prime.irrational_sqrt (by decide : Nat.Prime 5)).ne_rat (11 / 5 : ℚ)
+    norm_num
+    nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)]
   · intro h
     change (1 - 3 * ((5 - Real.sqrt 5) / 10)) *
         (1 - 3 * ((Real.sqrt 5 - 1) / 4)) =
       (1 - 3 * ((5 - Real.sqrt 5) / 20)) *
         (1 - 3 * ((5 - Real.sqrt 5) / 10)) at h
-    nlinarith
+    apply (Nat.Prime.irrational_sqrt (by decide : Nat.Prime 5)).ne_rat (7 / 3 : ℚ)
+    norm_num
+    nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)]
 
 private lemma point_not_product (σ : Equiv.Perm (Fin 4)) :
-    ¬ ProductForm (fun i => faceCentre (σ i)) point := by
+    ¬ ProductForm
+      (fun i => D5.S3.QuantumBounds.RebitExclusionDistance.target (σ i)) point := by
   intro h
   rcases permutation_pairing σ (fun k => 1 - 3 * point k) (product_pairing σ point h)
     with h | h | h
