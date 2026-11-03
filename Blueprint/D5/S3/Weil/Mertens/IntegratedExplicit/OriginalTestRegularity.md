@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/OriginalTestRegularity.sp
 
 *Commentary.*
 
-The bounded derivative under a finite measure gives a globally Lipschitz spectralS and hence absolute continuity on every finite interval. OriginalActualFourier proves finiteness for the literal Fourier density; OriginalActualSpectralEndpoint combines this with c_ac to obtain the actual test f=c-S and its a.e. derivative.
+The cosine-difference estimate gives a globally Lipschitz spectralS under a finite measure and hence absolute continuity on every finite interval. OriginalActualFourier proves finiteness for the literal Fourier density; OriginalActualSpectralEndpoint combines this with c_ac to obtain the actual test f=c-S and its a.e. derivative.
 
 ## References
 

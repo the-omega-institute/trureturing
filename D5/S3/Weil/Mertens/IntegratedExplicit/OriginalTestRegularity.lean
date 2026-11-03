@@ -95,8 +95,6 @@ theorem c_at_D {ι : Type*} [Fintype ι] (x : ι → ℝ) (a : ι → ℂ)
 
 def spectralKernel (t w : ℝ) : ℝ := Real.cos (w * t) / (1 + 4 * w ^ 2)
 
-def spectralKernelPrime (t w : ℝ) : ℝ := -w * Real.sin (w * t) / (1 + 4 * w ^ 2)
-
 def spectralS (ρ : Measure ℝ) (t : ℝ) : ℝ := ∫ w, spectralKernel t w ∂ρ
 
 lemma denom_pos (w : ℝ) : 0 < 1 + 4 * w ^ 2 := by positivity
