@@ -87,6 +87,8 @@ internal sealed class FiniteShiftedRecordChannelDocument : IScribeDocumentDefini
             ? new[] { F.Id(part) }
             : new[] { Dot, F.Id(part) }).ToArray());
     private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula MatrixType(Formula index) => Call("Matrix", index, index, complexType());
+    private static Formula complexType() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula.BoundVariable Bound(string name, Formula type) =>
         new(FormulaIdentifier.Create(name), type);
     private static Formula All(Formula.BoundVariable[] vars, Formula body) =>
