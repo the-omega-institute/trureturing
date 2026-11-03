@@ -148,7 +148,7 @@ private theorem coeff (M : Model) :
   have hkr : k M = M.sigma*(M.d/alpha M) := by dsimp [k]; ring
   have hksharp : k M < 343/(1200*(M.q^2-1)) := by
     rw [hkr]
-    have hh := mul_lt_mul M.sigmaHi hdr hdr0 (by norm_num : (0:ℝ)≤7/10)
+    have hh := mul_lt_mul M.sigmaHi hdr.le hdr0 (by norm_num : (0:ℝ)≤7/10)
     convert hh using 1 <;> ring
   have hk : k M ≤ 1/25 := by
     have hh := (lt_div_iff₀ (show 0 < 1200*(M.q^2-1) by positivity)).mp hksharp
@@ -511,11 +511,11 @@ theorem binomial_signs (p q n a r : ℕ) (hp5 : 5 ≤ p) (hq3 : 3 ≤ q)
   have hL : s ≤ Real.log (A/B) := by
     have hh := sum_le_sum (fun i hi => Real.sum_range_le_log_div (hx i hi).1 (hx i hi).2 1)
     norm_num [sum_range_succ] at hh
-    rw [← hlogA] at hh; linarith only [hh,hxsum]
+    rw [← mul_sum,← hlogA] at hh; linarith only [hh,hxsum]
   have hJ : Q^2*s ≤ Real.log (B/D) := by
     have hh := sum_le_sum (fun i hi => Real.sum_range_le_log_div (hy i hi).1 (hy i hi).2 1)
     norm_num [sum_range_succ] at hh
-    rw [← hlogD] at hh; linarith only [hh,hysum]
+    rw [← mul_sum,← hlogD] at hh; linarith only [hh,hysum]
   refine ⟨hB,?_,?_⟩
   · intro hs
     have hlog2 : Real.log (2 : ℝ) < 7/10 := by
@@ -570,7 +570,9 @@ theorem binomial_signs (p q n a r : ℕ) (hp5 : 5 ≤ p) (hq3 : 3 ≤ q)
           nlinarith only [mul_nonneg (pow_nonneg hz.1 3)
             (show 0 ≤ 1/100-(x i)^2 by linarith only [hz2])]
         have hh := Real.log_div_le_sum_range_add hz.1 hz.2 2
-        norm_num [sum_range_succ] at hh; linarith only [hh,htail]
+        norm_num [sum_range_succ] at hh
+        rw [mul_div_assoc] at htail
+        linarith only [hh,htail]
       have hh := sum_le_sum hpoint
       rw [← hlogA,sum_add_distrib,← mul_sum,← mul_sum,← mul_sum,hxsum] at hh
       change Real.log (A/B) ≤ s+(34/33)*U at hh
@@ -882,7 +884,7 @@ theorem scalar_coefficients (q : ℕ) (hq : 3 ≤ q) :
   obtain ⟨hκ,hα,hid,hκq,hαlo,hαhi,hdq,hk0,hk,hnk,hda,hg0,hg⟩ := coeff M
   refine ⟨M.sigmaLo,M.sigmaHi,M.d0,M.dHi,hκ,hα,hid,hκq,hαlo,hαhi,
     hdq,hk0,hk,hnk,hda,hg0,hg,M.root,?_⟩
-  simpa only [M,model,H,show ((q:ℝ)^2)^2 = (q:ℝ)^4 by ring] using M.cancellation
+  exact (square_displacement_correction q hq).2.2.2.2.2
 
 theorem scalar_band (q : ℕ) (hq : 3 ≤ q) (P : ℝ) (hP : 5 ≤ P) :
     let Q : ℝ := q
