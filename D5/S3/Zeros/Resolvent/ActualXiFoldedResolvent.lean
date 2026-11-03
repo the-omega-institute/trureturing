@@ -162,11 +162,16 @@ theorem actual_xi_folded_hasSum (w : ℂ) (hw : ‖w‖ < 1 / 4) :
         (w ^ 2 - (actualData.gamma n) ^ 2) =
         -((actualData.multiplicity n : ℂ) * node n) / (1 - node n * w ^ 2) := by
       apply (div_eq_div_iff hden hr).mpr
-      linear_combination (actualData.multiplicity n : ℂ) * hgl
+      linear_combination -(actualData.multiplicity n : ℂ) * hgl
     rw [weight_node, pair_weight_node, hres]
     conv_rhs => rw [← mul_div_assoc]
     apply (div_eq_div_iff hr hd).mpr
-    field_simp only [hn, hr]
+    have hn4 : (4 : ℂ) + node n ≠ 0 := by
+      intro he
+      apply hn
+      linear_combination (1 / 4 : ℂ) * he
+    have hr' : 1 - w ^ 2 * node n ≠ 0 := by simpa [mul_comm] using hr
+    field_simp [hn, hr, hn4, hr']
     ring
 
 end D5.S3.Zeros.Resolvent.ActualXiFoldedResolvent

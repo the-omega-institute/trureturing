@@ -76,7 +76,9 @@ theorem moment_real (j : ℕ) : (moment j).im = 0 := by
         apply tsum_congr
         intro n
         simp [weight_conjugation, node_conjugation]
-      _ = moment j := conjugation.tsum_eq _
+      _ = moment j := by
+        simpa only [moment] using
+          conjugation.tsum_eq (fun n : PositiveZero => weight n * node n ^ j)
   have hi := congrArg Complex.im hc
   simp only [Complex.conj_im] at hi
   linarith
@@ -121,7 +123,8 @@ theorem actual_xi_moment_hasSum (w : ℂ) (hw : ‖w‖ < 1 / 4) :
     · simp [div_eq_mul_inv]
   have he : (∑' j : ℕ, moment j * w ^ (2 * j + 1)) = xiOdd w := by
     simp_rw [moment, ← tsum_mul_right]
-    rw [← hp.tsum_comm]
+    rw [Summable.tsum_comm (f := fun (n : PositiveZero) (j : ℕ) =>
+      weight n * node n ^ j * w ^ (2 * j + 1)) hp]
     simp_rw [(hrow _).tsum_eq]
     exact (actual_xi_folded_hasSum w hw).tsum_eq
   rw [← he]
@@ -134,7 +137,7 @@ theorem actual_xi_moment_hasSum (w : ℂ) (hw : ‖w‖ < 1 / 4) :
 def coefficient (k : ℕ) : ℂ := if k % 2 = 1 then moment (k / 2) else 0
 
 private theorem coefficient_odd (j : ℕ) : coefficient (2 * j + 1) = moment j := by
-  simp [coefficient, Nat.add_mod, Nat.mul_mod]
+  simp [coefficient, show (2 * j + 1) / 2 = j by omega]
 
 private theorem coefficient_even (j : ℕ) : coefficient (2 * j) = 0 := by
   simp [coefficient]
@@ -143,7 +146,8 @@ private theorem coefficient_bound (k : ℕ) : ‖coefficient k‖ ≤ totalWeigh
   unfold coefficient
   split_ifs
   · exact moment_bound_mass _
-  · simpa only [norm_zero] using (tsum_nonneg (fun n : PositiveZero => norm_nonneg (weight n)))
+  · simpa only [norm_zero, totalWeight] using
+      (tsum_nonneg (fun n : PositiveZero => norm_nonneg (weight n)))
 
 /-- The genuine xi expression has this full scalar power series on the specified disk. -/
 theorem actual_xi_powerSeries : HasFPowerSeriesOnBall xiOdd
@@ -157,13 +161,21 @@ theorem actual_xi_powerSeries : HasFPowerSeriesOnBall xiOdd
   · norm_num
   · intro w hw
     have hnorm : ‖w‖ < 1 / 4 := by
-      simpa only [Metric.mem_eball, edist_zero_right, enorm_eq_nnnorm,
-        ← ENNReal.ofReal_norm, ENNReal.ofReal_lt_ofReal_iff (by norm_num : (0 : ℝ) < 1 / 4)] using hw
-    have hi : Function.Injective (fun j : ℕ => 2 * j + 1) := by intro a b h; omega
+      simpa only [Metric.mem_eball, edist_dist, dist_zero_right,
+        ENNReal.ofReal_lt_ofReal_iff (by norm_num : (0 : ℝ) < 1 / 4)] using hw
+    have hi : Function.Injective (fun j : ℕ => 2 * j + 1) := by
+      intro a b h
+      dsimp at h
+      omega
     have hout : ∀ k : ℕ, k ∉ Set.range (fun j : ℕ => 2 * j + 1) →
         coefficient k * w ^ k = 0 := by
       intro k hk
-      have hmod : k % 2 ≠ 1 := by intro h; apply hk; exact ⟨k / 2, by omega⟩
+      have hmod : k % 2 ≠ 1 := by
+        intro h
+        apply hk
+        refine ⟨k / 2, ?_⟩
+        dsimp
+        omega
       simp [coefficient, hmod]
     have h := (hi.hasSum_iff hout).mp
       ((actual_xi_moment_hasSum w hnorm).congr_fun (fun j => by
@@ -190,7 +202,7 @@ theorem actual_xi_even_derivative (j : ℕ) : iteratedDeriv (2 * j) xiOdd 0 = 0 
 
 theorem actual_xi_analytic (w : ℂ) (hw : ‖w‖ < 1 / 4) : AnalyticAt ℂ xiOdd w := by
   apply actual_xi_powerSeries.analyticAt_of_mem
-  simpa only [Metric.mem_eball, edist_zero_right, enorm_eq_nnnorm,
-    ← ENNReal.ofReal_norm, ENNReal.ofReal_lt_ofReal_iff (by norm_num : (0 : ℝ) < 1 / 4)] using hw
+  simpa only [Metric.mem_eball, edist_dist, dist_zero_right,
+    ENNReal.ofReal_lt_ofReal_iff (by norm_num : (0 : ℝ) < 1 / 4)] using hw
 
 end D5.S3.Zeros.Resolvent.ActualXiTaylorDictionary
