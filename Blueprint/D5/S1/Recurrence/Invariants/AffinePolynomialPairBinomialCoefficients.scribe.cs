@@ -39,13 +39,16 @@ internal sealed class AffinePolynomialPairBinomialCoefficientsDocument : IScribe
                 + "supplier and literature screen establishes neither worldwide openness "
                 + "nor publication priority. The distinct frozen JointPolynomialPairBinomialCoefficients "
                 + "uses v_next=X*u+X*v and does not identify this affine second family.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create(
+                    "oeis-a208509-affine-polynomial-pair-binomial-coefficients"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("a208509-" + name.Replace('_', '-')),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role);
+        AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula PairFormula()
     {
