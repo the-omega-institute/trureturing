@@ -14,6 +14,17 @@ triage: anchor
 
 # Plastic power collisions
 
+## Verified locator
+
+DOI: 10.5486/PMD.2010.4683
+
+Source: https://doi.org/10.5486/PMD.2010.4683
+
+Publisher PDF: https://publi.math.unideb.hu/paper/1503/download/
+
+Theorem 1.1 is on pp. 262–263; Theorems 2.2 and 2.3 are on p. 264.
+The plastic-root cases are Theorem 2.3(1)–(3) with r = 1.
+
 The publication is in *Publicationes Mathematicae Debrecen* 77/3–4,
 pp. 261–276. On p. 264, Theorem 2.3(1)–(3) gives the non-diagonal
 quadrinomials with exponent triples (4,3,2), (9,8,5), and (6,5,3),
