@@ -287,14 +287,8 @@ private theorem bipartite_profile {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n)
       ((biadjacency G).submatrix id (fun a : S => (a : Fin n))).rank := by
   classical
   let A := S.map (Function.Embedding.inr : Fin n ↪ Fin k ⊕ Fin n)
-  let r : S ≃ {x // x ∈ A} := Equiv.ofBijective
-    (fun a => ⟨Sum.inr a.1, Finset.mem_map.mpr ⟨a.1, a.2, rfl⟩⟩)
-    ⟨by
-      intro a b hab
-      exact Subtype.ext (Sum.inr.inj (congrArg Subtype.val hab)), by
-      intro x
-      obtain ⟨a, ha, hx⟩ := Finset.mem_map.mp x.2
-      exact ⟨⟨a, ha⟩, Subtype.ext hx⟩⟩
+  let r : S ≃ {x // x ∈ A} :=
+    Finset.equivMap (Function.Embedding.inr : Fin n ↪ Fin k ⊕ Fin n) S
   let M := (cut G A).submatrix r (Equiv.refl _)
   let D := (biadjacency G).submatrix id (fun a : S => (a : Fin n))
   have hi (i : Fin k) : Sum.inl i ∉ A := by

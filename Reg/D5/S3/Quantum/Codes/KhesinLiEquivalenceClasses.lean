@@ -16,15 +16,9 @@ open _root_.D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph (lc)
 namespace LocalComplement
 
 /-- Observe local complementation at the selected vertex as the graph varies. -/
-abbrev signature : Signature where
-  Params := Σ V : Type, V
-  State p := SimpleGraph (Sigma.fst p)
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ p := SimpleGraph (Sigma.fst p)
-  Anchor := Empty
-  finiteAnchor := inferInstance
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature (Σ V : Type, V)
+    (fun p => SimpleGraph p.1) (fun p => SimpleGraph p.1)
 
 def actual : Realization signature :=
   realize signature (fun _ p G => lc G (Sigma.snd p)) (fun e => nomatch e)
@@ -59,14 +53,7 @@ def source_registration : Registration arena (type_of% (@lc_source)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@lc_source, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
-    · intro e
-      exact nomatch e
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def registration :

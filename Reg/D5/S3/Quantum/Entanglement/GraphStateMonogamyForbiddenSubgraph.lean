@@ -15,15 +15,9 @@ noncomputable section
 namespace EntropyProfile
 
 /-- Evaluate the entropy profile at the selected vertex set. -/
-abbrev signature : Signature where
-  Params := Σ V : Type, Finset V
-  State p := Finset (Sigma.fst p) → ℕ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℕ
-  Anchor := Empty
-  finiteAnchor := inferInstance
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature (Σ V : Type, Finset V)
+    (fun p => Finset p.1 → ℕ) (fun _ => ℕ)
 
 def actual : Realization signature :=
   realize signature (fun _ p f => f (Sigma.snd p)) (fun e => nomatch e)
@@ -65,14 +59,7 @@ def source_registration : Registration arena (type_of% (@compl_eq)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@compl_eq, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
-    · intro e
-      exact nomatch e
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def registration :
@@ -134,14 +121,7 @@ def source_registration : Registration arena (type_of% (@relabel)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@relabel, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
-    · intro e
-      exact nomatch e
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def registration :
@@ -203,14 +183,7 @@ def source_registration : Registration arena (type_of% (@lc_eq)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@lc_eq, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
-    · intro e
-      exact nomatch e
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def registration :

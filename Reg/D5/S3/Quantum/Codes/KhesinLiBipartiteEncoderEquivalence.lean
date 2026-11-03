@@ -15,15 +15,10 @@ noncomputable section
 open _root_.D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses (Step)
 
 /-- Observe the full reachability relation at each encoder size. -/
-abbrev signature : Signature where
-  Params := Σ _ : ℕ, ℕ
-  State p := SimpleGraph (Fin (Sigma.fst p) ⊕ Fin (Sigma.snd p))
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ p := SimpleGraph (Fin (Sigma.fst p) ⊕ Fin (Sigma.snd p)) → Prop
-  Anchor := Empty
-  finiteAnchor := inferInstance
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature (Σ _ : ℕ, ℕ)
+    (fun p => SimpleGraph (Fin p.1 ⊕ Fin p.2))
+    (fun p => SimpleGraph (Fin p.1 ⊕ Fin p.2) → Prop)
 
 def actual : Realization signature :=
   realize signature (fun _ _ G H => Relation.ReflTransGen BipartiteStep G H)
@@ -79,14 +74,7 @@ def source_registration : Registration arena (type_of% (@result)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@result, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
-    · intro e
-      exact nomatch e
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def registration :
