@@ -4465,3 +4465,227 @@ C101–C103 仍承担有限经典／复矩阵直和表示、已供空间边的�
 白话说：把滤片接上倒着补偿的滤片，成功次数对得上还不够，回来时的细节也要对得上。若一块滤片暗中磨掉了一点细节，而整块总能拆成两个相同半块，那么沿同一套拆合关系反复加深，这点损失就会累积，终会在某个有限层级显露到统一门槛之外。因此，只要所有层级归一后的返回误差始终留有同一个小于一的余量，再加上两端互易，就连那一点暗损失也不能存在，平方根更新随之确定；等价地，每条平方链各自反复留有严格余量就已足够，不必让全族共用一个数。第三个很暗的方向说明为什么必须归一：它能把返回成功率压得极低，让原始误差很小，却不能让已经丢掉的细节回来。
 
 ## 追加锚（本行以下为增补区）
+
+## 92. 三条实际关系同时允许误差
+
+**定义 92.1（C110：联合容差的互易可拆返回体）。** 保留定义 77.1 的全部有限对象、效果、所选框架、正确成功效果和实际有限接续，不假设 R、S 或 H。仍用通常迹之和、定义 79.1 的任意数学参考 diamond 范数，以及定义 84.1 的归一化实际返回公式；此处不继承定理 85.1 的正常形。对非零效果定义
+
+$$
+\begin{aligned}
+s(E,F)&=\frac{\|T_{E,F}-T_{E,F}^*\|_\diamond}{\|E\|},&
+h(E,F)&=\frac{\|T_{E,F}-T_{\sqrt E,F}^{\,2}\|_\diamond}{\|E\|},\\
+b(E,F)&=\sup_{\rho\in\mathcal C_E,\ \rho\ge0,\ \tau(\rho)=1}
+\|q_E^{-1}T_{E^\vee,F}T_{E,F}(\rho)-\rho\|_1.
+\end{aligned}
+\tag{92.1}
+$$
+
+写 $S_* =\sup s$、$H_* =\sup h$、$B_* =\sup b$，上确界保留全部原对象、非零效果和框架。$b$ 的输出在原完整代数中比较，不先压回支撑。一般情形不假设它或 $s$ 不超过二。它们分别比较原分支与迹对偶、整程与两个相同半程、滤波与原实际补偿的接续。数学伴随、支撑压缩及除以 $q_E$ 都不另供实际过程。
+
+给 $0\le\varepsilon\le2^{-15}$，C110$(\varepsilon)$ 是满足 $\max(S_*,H_*,B_*)\le\varepsilon$ 的指定族。容差是这些关系缺陷的上界，不在定义中使用平方根更新公式。$\varepsilon=0$ 的精确边界复用 C108；本批研究内容是三条关系同时有误差的统一控制，而非重新认领该精确刻画。数学全态量词仍不等于全部准备已实际供应。
+
+## 93. 原分支与伴随共享一个纯滤波近邻
+
+**定理 93.1（实际返回、中心转移与双向近邻）。** 固定一个非零效果及框架，置 $M=\|E\|$、$\sigma=s(E,F)$、$\delta=b(E,F)\le2^{-15}$，并定义
+
+$$
+\begin{aligned}
+u&=8\delta,&w&=\frac{8\sqrt{u}}{1-u},&
+a&=w\sqrt{1+\delta}+\delta+\sqrt\sigma,\\
+e&=2a+(1+\delta)w^2+\sigma,&
+e'&=4a+\sigma.
+\end{aligned}
+\tag{93.1}
+$$
+
+存在支撑角 $\mathcal C_E$ 的保星自同构 $\alpha$，允许等阶中心块置换，使数学参照 $A=\mathcal L_E\alpha$ 在原代数上由输入压缩延拓后满足
+
+$$
+\|T_E-A\|_\diamond\le Me,\qquad
+\|T_E^*-A^*\|_\diamond\le Me',\qquad
+AA^*=\mathcal L_{E^2}.
+\tag{93.2}
+$$
+
+不预设 $\alpha(E)=E$，也不声明 $\alpha$ 为实际过程。所有常数不含维数、秩或 $q_E^{-1}$。
+
+证明。省略框架，写 $P=P_E$、$q=q_E$、$\mathcal C=P\mathcal AP$。正确成功效果使各 Kraus 算子右端含 $P$，故 $T_E$ 不读支撑外输入。令 $D=T_E-T_E^*$；因 $D^*=-D$，迹／算子范数对偶给 $\|D\|_{\rm cb,\infty}=\|D\|_\diamond=\sigma M$。因此
+
+$$
+\|T_E(1)-E\|\le\sigma M,\qquad
+0\le T_E^*(1-P)=(T_E^*-T_E)(1-P)\le\sigma M I.
+\tag{93.3}
+$$
+
+后一式把全部输出泄漏的 Kraus 平方和控制在 $\sigma M I$ 内，不只比较一次输出的某个分量。
+
+在支撑上取逆，定义两个数学完全正映射
+
+$$
+\Phi(X)=E^{-1/2}PT_E(X)PE^{-1/2},\qquad
+\Psi(Y)=q^{-1}T_{E^\vee}(\sqrt E\,Y\sqrt E).
+\tag{93.4}
+$$
+
+$\Phi:\mathcal C\to\mathcal C$，而 $\Psi:\mathcal C\to\mathcal A$ 保迹，因为 $`T_{E^\vee}^*(1)=qE^{-1}`$。实际补偿也只读 $P$，所以 $\Psi\Phi=q^{-1}T_{E^\vee}T_E|_{\mathcal C}$。若 $G=\Phi^*(P)$，返回误差的迹读数给 $\|G-P\|\le\delta$；这一步没有除以另一个小成功率。令 $J=\Phi\mathcal L_{G^{-1}}$，这里 $\mathcal L_{G^{-1}}(X)=G^{-1/2}XG^{-1/2}$。则 $J$ 完全正且保迹，$\Phi=J\mathcal L_G$，并有
+
+$$
+\|\Phi-J\|_\diamond
+\le(\sqrt{1+\delta}+1)\|\sqrt G-P\|\le3\delta.
+\tag{93.5}
+$$
+
+把 $\Psi$ 输出压到 $P$，再将丢失的迹准备成任一固定角内态，得到数学保迹完全正映射 $\widehat\Psi:\mathcal C\to\mathcal C$。对任一角内归一正输入，$\Psi J$ 距原输入至多 $4\delta$，其角外质量也至多 $4\delta$。压缩及上述补全遂给
+
+$$
+\sup_{\rho\ge0,\ \tau\rho=1}
+\|\widehat\Psi J(\rho)-\rho\|_1\le8\delta=u.
+\tag{93.6}
+$$
+
+以下在这个已取得的同角近左逆内部使用成熟的 Schwarz、Stinespring 与紧群平均工具，给出所需量化。令 $U=J^*$、$V=\widehat\Psi^*$，二者均为同一有限代数 $\mathcal C$ 的幺完全正映射。(93.6) 经迹对偶给 $\|UV-\operatorname{id}\|_{\infty,\mathrm{sa}}\le u<1$。在自伴实 Banach 空间上取 Neumann 逆；有限维且定义域、值域相同，推出 $U,V$ 都可逆，逆的自伴算子范数至多 $(1-u)^{-1}$，并有
+
+$$
+\|VU-\operatorname{id}\|_{\infty,\mathrm{sa}}\le\frac{u}{1-u}.
+\tag{93.7}
+$$
+
+对任意酉元 $v$，分成实、虚自伴部分，得 $\|VU(v)-v\|\le2u/(1-u)$。Schwarz 不等式给 $Z_v=I-U(v)^*U(v)\ge0$，且
+
+$$
+0\le V(Z_v)\le I-VU(v)^*VU(v)
+\le\frac{4u}{1-u}I,\qquad
+\|Z_v\|\le\frac{4u}{(1-u)^2}=t^2.
+\tag{93.8}
+$$
+
+对 $U$ 的每个输出简单块取 Stinespring 表示 $U_\gamma(x)=V_\gamma^*\pi_\gamma(x)V_\gamma$，其中 $V_\gamma$ 为等距，$Q_\gamma=V_\gamma V_\gamma^*$。将 (93.8) 分别用于 $v,v^*$，得到 $\|[Q_\gamma,\pi_\gamma(v)]\|\le t$。在紧群 $\mathcal U(\mathcal C)$ 上用归一 Haar 平均，置
+
+$$
+B_\gamma=\int\pi_\gamma(v)Q_\gamma\pi_\gamma(v)^*\,dv,
+\qquad R_\gamma=1_{[1/2,\infty)}(B_\gamma).
+\tag{93.9}
+$$
+
+$B_\gamma$ 及 $R_\gamma$ 与全部 $\pi_\gamma(x)$ 对易，$\|B_\gamma-Q_\gamma\|\le t$，且 $\|R_\gamma-Q_\gamma\|\le2t<1$。最后一界来自谱包含 $[0,t]\cup[1-t,1]$ 及三角不等式。置
+$Z=R_\gamma Q_\gamma+(I-R_\gamma)(I-Q_\gamma)$，其酉极分解因子 $W_\gamma$ 将 $Q_\gamma$ 送到 $R_\gamma$。若 $d=\|R_\gamma-Q_\gamma\|$，则 $Z^*Z=I-(R_\gamma-Q_\gamma)^2$、$\|Z-I\|\le d$，从而
+
+$$
+\|W_\gamma-I\|\le d+1-\sqrt{1-d^2}\le2d\le4t=w.
+\tag{93.10}
+$$
+
+以 $W_\gamma V_\gamma$ 替代 $V_\gamma$，所得映射 $\theta_\gamma$ 是幺保星同态；各块合成 $\theta:\mathcal C\to\mathcal C$，$\|\theta-U\|_{\rm cb,\infty}\le2w=8t$。这里 $u\le1/4096$，故 $8t<1-u$；与 $U$ 的逆界组合说明 $\theta$ 在自伴实空间可逆，因而是原有限代数的保星自同构。其迹伴随 $\alpha=\theta^*$ 也是保星自同构，因为这种自同构只置换等阶简单块并作块内酉共轭，保留通常迹之和。
+
+还需控制同一个原分支及其伴随，不能把 diamond 小误差直接取伴随。具体地，在每个输入中心块，修正后的 Stinespring 等距只落在 $\theta$ 对应的一个等阶输出块及一个环境单位向量上。在该向量上取原 $V_\gamma$ 的 Kraus 分量，记作 $L_\gamma$，其距相应块酉算子至多 $w$；其余分量的输入平方和至多 $w^2I$。这是由 $\|V_\gamma-W_\gamma V_\gamma\|\le w$ 投影到该环境直线及其正交补直接得到的，不对中心间转移作删项。
+
+取 (93.4) 由原 Kraus 家族给出的 Stinespring 表示，必要时补零并在每对输入／输出块的 Kraus 指标上作酉变换。将所选分量经 $\sqrt E$、$\sqrt G$ 还原为原分支的主 Kraus 算子 $K$，包括它原有的角外输出。设 $W_0$ 是实现 $\alpha$ 的支撑内块置换酉算子，$K_0=\sqrt E W_0$。由 (93.3)、$\|\sqrt G-P\|\le\delta$ 和上述 Stinespring 界，有完全正分解
+
+$$
+T_E=\operatorname{Ad}_K+N,\quad
+\|K-K_0\|\le\sqrt M a,\quad
+\|N^*(1)\|\le M\bigl((1+\delta)w^2+\sigma\bigr).
+\tag{93.11}
+$$
+
+这里主 Kraus 在不同输入块上按 $\alpha$ 的置换合成；其余全部矩形 Kraus 留在 $N$ 中。还原的角内余项由 $E\le MI$ 得输入平方和至多 $M(1+\delta)w^2I$；全部角外余项由 (93.3) 至多 $\sigma MI$。主项的角外部分范数至多 $\sqrt{\sigma M}$，正是 $a$ 中最后一项。
+
+正确成功效果给 $\|K\|\le\sqrt M$，而 $K_0K_0^*=E$。因此
+
+$$
+\|N(1)\|=\|T_E(1)-KK^*\|
+\le M(\sigma+2a).
+\tag{93.12}
+$$
+
+主纯映射及其伴随距 $\operatorname{Ad}_{K_0}$、$\operatorname{Ad}_{K_0}^*$ 的 diamond 范数都至多 $2Ma$。完全正范数公式分别把余项及其伴随控制为 $\|N^*(1)\|$、$\|N(1)\|$，给出 (93.2) 前两式。最后 $A=\mathcal L_E\alpha$、$A^*=\alpha^{-1}\mathcal L_E$，故 $AA^*=\mathcal L_E^2=\mathcal L_{E^2}$。不需要先证明 $\alpha(E)=E$。∎
+
+## 94. 三边都有误差时的量子更新与有限接续
+
+**定理 94.1（联合稳定及条件量子接口）。** 在定义 92.1 的原完整范围内，对 $A=\sqrt E$，若 $\delta=b(A,F)\le2^{-15}$，将 $\sigma=s(A,F)$ 代入 (93.1)，则
+
+$$
+d(E,F)\le\min\{2,\ h(E,F)+\sigma+(1+\sigma)e+e'\}.
+\tag{94.1}
+$$
+
+特别地，当 $S_*\le1/4$、$B_*\le2^{-15}$ 时，
+
+$$
+D\le\min\{2,\ H_*+10\sqrt{S_*}+200\sqrt{B_*}\}.
+\tag{94.2}
+$$
+
+所以 C110$(\varepsilon)$ 给 $D\le\min\{2,\varepsilon+210\sqrt\varepsilon\}$；三种原关系缺陷同时一致趋零时，全部原指定更新一致趋于平方根族。结论包括全部数学参考，不要求返回前提带参考。
+
+证明。写 $S=T_{A,F}$。定理 93.1 给 $S$ 的参照 $C$，且 $CC^*=\mathcal L_E$。由 $\|S\|_\diamond=\|A\|$、$\|S^*\|_\diamond\le(1+\sigma)\|A\|$ 和 (93.2)，
+
+$$
+\|SS^*-\mathcal L_E\|_\diamond
+\le\|E\|\bigl((1+\sigma)e+e'\bigr).
+\tag{94.3}
+$$
+
+同一映射空间中的三个实际关系组成恒等式
+
+$$
+T_E-\mathcal L_E
+=(T_E-S^2)+S(S-S^*)+(SS^*-\mathcal L_E).
+\tag{94.4}
+$$
+
+次乘性给 (94.1)；两个完全正映射 $T_E,\mathcal L_E$ 的范数均为 $\|E\|$，另给上界二。若 $\delta\le2^{-15}$，则 $w\le24\sqrt\delta$、$a\le26\sqrt\delta+\sqrt\sigma$、$(1+\delta)w^2\le577\delta$。再用 $1+\sigma\le5/4$、$\sigma\le\sqrt\sigma/2$、$\delta\le\sqrt\delta/128$，有
+
+$$
+\begin{aligned}
+\sigma+(1+\sigma)e+e'
+&\le\tfrac{13}{2}a+\tfrac{2885}{4}\delta+\tfrac{13}{4}\sigma\\
+&\le10\sqrt\sigma+200\sqrt\delta.
+\end{aligned}
+$$
+
+取上确界得 (94.2)，零效果的分支由正确成功效果已为零。
+
+令 $b_i$ 为 (94.1) 或 (94.2) 给第 $i$ 个非零效果的更新界。对任一已经供应的态和有限原指定路径，望远镜恒等式及每段范数 $\|E_i\|$ 给
+
+$$
+\|T_{E_n}\cdots T_{E_1}-\mathcal L_{E_n}\cdots\mathcal L_{E_1}\|_\diamond
+\le\Bigl(\prod_i\|E_i\|\Bigr)\sum_i b_i.
+\tag{94.5}
+$$
+
+单次成功率仍精确为 $p=\tau(\rho E)$。实际与标准单次输出同迹，所以任何已有末端效果 $B$ 的联合概率差至多 $\|E\|b_E/2$；若 $p>0$，条件后态迹距离至多 $\|E\|b_E/p$。一般整路径输出不再同迹，概率差使用 (94.5) 的整项；两条路径成功率都正时，按原实际成功率归一的后态误差至多该整项的两倍除以实际成功率。
+
+三维谱角 $Q$ 的压缩更新距 $\operatorname{Ad}_{\sqrt{QEQ}}$ 至多 $\|E\|b_E$；任意一般三维 $Q$ 则比较 $\operatorname{Ad}_{Q\sqrt E Q}$，不把它替换为 $\operatorname{Ad}_{\sqrt{QEQ}}$。这些界来自原完整代数及任意参考的界，经输入、输出压缩的完全收缩性得到，不增加实际角对象或中途压缩操作。全态、空间复合、一般仪器及连续可逆动力学的供应条件仍逐项按定理 90.1 保留；Hamilton 表示仅在连续实际可逆群及时间供应到位时接入。∎
+
+## 95. 全菜单上三种缺陷同时非零的满足族
+
+**定理 95.1（完整扰动族、三维二元见证与删除检验）。** C110$(\varepsilon)$ 有完整通常有限复量子满足模型。对每个 $0<\varepsilon\le2^{-15}$，另有完整非标准族满足 C110$(\varepsilon)$，其中三种关系缺陷均非零，且在同一个三维对象中 $D\ge\varepsilon/12$。不能删除其中任一关系并仍以其余两种缺陷一致趋零保证 $D\to0$。
+
+证明。标准全有限菜单选择全部 $T_E=\mathcal L_E$，给零缺陷模型。对非零扰动，取同一全对象、全态、全 CP 分支及标签仪器菜单。在每个所选细谱框架上选一个对角 $G_F$，$\|G_F\|\le1$，且在 $M_3$ 的指定框架中前三个对角元为 $1,-1,0$；其余框架和对象可统一取交替的 $1,-1$。令 $\Delta_F$ 为逐个原简单块、逐条框架射线的 pinching，$t=\varepsilon/12$，并在每个效果的支撑角上取
+
+$$
+\Phi_{E,F}=(1-t)\operatorname{Ad}_{\exp(itG_F)|_{P_E}}+t\Delta_F|_{\mathcal C_E},
+\qquad T_{E,F}=\mathcal L_E\Phi_{E,F},\qquad T_{0,F}=0.
+\tag{95.1}
+$$
+
+所有 $\Phi$ 均双随机且与 $E$ 的左右乘法对易，正确成功效果成立；每个互补标签对的总映射保迹，原全菜单包含它及全部有限接续。这里不要求投影分支或 $T_1$ 在正容差时精确标准。
+
+$\|\Phi_{E,F}-\operatorname{id}\|_\diamond\le2t+2t=4t$，其伴随有同一界。三角不等式及平方差展开分别给 $s\le8t$、$h\le12t$。倒数效果保留同一支撑、框架和 $\Phi$，故归一化实际返回为 $\Phi^2$，$b\le8t$。这给全部原对象上的 C110$(\varepsilon)$，并非仅对一个孤立通道的估计。
+
+在 $M_3$ 中取 $E=\operatorname{diag}(1,1,q)$、$0<q<1$。前两条明亮射线的非对角矩阵元被乘以 $z=(1-t)e^{2it}$；标准更新的系数为一。等权相干纯输入给更新迹距离 $|1-z|\ge t$，相应迹零残差的正谱投影给概率差 $|1-z|/2$，因而 $D\ge t$。同一二元关系的互易、半程、返回系数差分别为 $z-\bar z$、$z-z^2$、$1-z^2$，在所取 $t$ 范围均非零。第三方向保持整个三维实际对象，$q$ 可任意暗；界中没有用其倒数。这是有限三维见证，不替代 (93.2)、(94.2) 的全代数量词，也不宣称平方根误差率最优。
+
+删除返回关系，复用定理 80.1 的精确 S、H 非标准族；删除互易或半程关系，复用其中精确 R、H 或 R、S 非标准族，后两者的 $b$ 恒为零。这些完整反模型使保留的两个缺陷已恰为零，更新仍非标准，故否定删除后任何趋零模量。∎
+
+## 96. 近似兼容体的文献对应及未决强版本
+
+**定义 96.1（成熟桥梁、量词边界与白话表述）。** [Choi–Johnston–Kribs，*The multiplicative domain in quantum error correction*，定理 8](https://arxiv.org/pdf/0811.0947) 给幺完全正映射的两个 Schwarz 等号及其乘法域；[McKenney–Vignati，*Ulam stability for some classes of C*-algebras*，定理 1.7](https://arxiv.org/pdf/1601.05445v2) 给有限维 C*-代数上的近保星同态距真同态的统一平方根控制。紧酉群平均、Stinespring 表示、近投影的极分解修正和完全正范数公式均为成熟工具；定理 93.1 在原实际成功效果与返回缺陷中逐步构造其所需前提，并保留对应常数，不把一般 Ulam 稳定性另计为新定理。仓内《ContextualSpacetimeQuantum/330_350_SMALL_BUDGET_AND_CORRECTIONS》第 350 节已使用紧群平均修正的机制；这里不将那里的群表示合同当作当前 CP 分支的已证接口。
+
+本批承重综合是 (93.3)–(93.6) 的原成功效果归一与补全、同角近逆经 (93.8)–(93.11) 回到原矩形 Kraus 家族，以及以正余项两个方向的质量控制同时取得 (93.2)。后一步避免将 diamond 小误差直接取迹伴随的错误，并把最暗方向的逆从联合更新界中消去。(94.4) 的三角组织复用 C108，新增项由三种缺陷都非零的证明承担。不作穷尽文献或原创优先权结论。
+
+C110 给三种缺陷同时趋零的统一理论；它没有证明更强的命题“固定任意 $c<1$ 及 $B_*\le c$，只让 $S_*,H_*\to0$ 就有 $D\to0$”。该固定余量问题仍未决。C109 在 $S_*=H_*=0$ 时的任意严格返回余量结论继续成立；这里的较小返回范围及非最优平方根模量不改写它，也不据此否定强版本。有限数学见证仍不供应实际准备、误差证书或统一取得费用。
+
+白话说：滤片接上倒着补偿的滤片，回来时的细节允许差一点；把整程拆成两个相同半程也允许差一点，交换两端读数同样允许差一点。关键是三种差来自同一套实际分支，不能各挑一个有利实现。本批证明，三边一起变准时，滤片本身也必定一起接近平方根更新，维数再大、第三个方向再暗都不能藏住一块固定的偏差。补偿先找出共同的纯滤波近邻，互易管住泄漏和倒向，半程再把近邻锁到标准更新；这些近邻只是证明中的坐标，不是额外假设出来的实际过程。
+
+## 追加锚（本行以下为增补区）
