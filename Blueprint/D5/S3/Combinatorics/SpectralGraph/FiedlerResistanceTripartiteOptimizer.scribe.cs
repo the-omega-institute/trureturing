@@ -72,7 +72,7 @@ internal sealed class FiedlerResistanceTripartiteOptimizerDocument : IScribeDocu
         strict ? Lt(D(0),App(w,Pair(V("i"),V("j")))) : Leq(D(0),App(w,Pair(V("i"),V("j")))))));
     private static Formula Connected(Formula w) => Call("Connected",Call("support",G(),w));
     private static Formula EdgeEqual(Formula w) => All("i",Vert(),All("j",Vert(),Imp(Adj(V("i"),V("j")),Eqn(App(w,Pair(V("i"),V("j"))),App(Bound(),Pair(V("i"),V("j")))))));
-    private static Formula Hmat() => Sub(Lap(V("w")),Sub(D(1),Call("constProj",N())));
+    private static Formula Hmat() => Sub(Lap(V("w")),Par(Sub(D(1),Call("constProj",N()))));
     private static Formula Eigen(Formula i) => App(Call("eigenvalues",Lap(V("w"))),i);
     private static Formula Count(Formula value) => Call("card",Call("filter",Par(Seq(LambdaLower,Sp,V("i"),Sp,Mapsto,Sp,Eqn(Eigen(V("i")),value))),Call("univ",Vert())));
     private static Formula SpectrumBody() => And(Eqn(Count(D(0)),D(1)),And(Eqn(Count(D(1)),Sub(N(),D(2))),And(Eqn(Count(D(2)),D(1)),
