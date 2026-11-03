@@ -795,3 +795,425 @@ $$
 本节对 $\epsilon>0$ 只控制局部自缺陷、对称双线性缺陷、单位标签生成元及 (6.8) 的实际模板差。它不推出 Jacobi 稳定性、共同标尺稳定性、近邻复 $C^*$ 重构，也不把小残差的整体自动当成一个精确导子对象继续套用第三方重构。有限维、精确局部导子、乘积正内积及全部模作用与保值条件作用仍是明列前件；任意非因子化联合内积需要另一个估计。测量不确定度、完整操作供应、具体动力学、无限维极限和物理实现均没有由本证书补齐。本文陈述与解析证明不作 Lean／kernel 验证或最优性主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 9. 局部作用的正谱支撑与线性残差证书
+
+**定义 9.1（同一局部有限表的作用谱）。** 保留定义 5.1–5.2 的全部对象、实际 $M,\Gamma$、完整报告 $E$ 和未平均的 $\epsilon$。对任一方 $J$，在其完整正交单位基 $(e_i)_{i=1}^n$ 上定义
+
+$$
+\begin{aligned}
+\mathcal T_Jx&=(D^J_{e_i}x)_{i=1}^n\in J^{\oplus n},\\
+G_J&=\mathcal T_J^\dagger\mathcal T_J
+       =\sum_i(D^J_{e_i})^\dagger D^J_{e_i}
+       =-\sum_i(D^J_{e_i})^2,\\
+Z_J&=\bigcap_i\ker D^J_{e_i},\qquad
+W_J=\operatorname{span}\{D^J_{e_i}e_r:1\le i,r\le n\}.
+\end{aligned}
+\tag{9.1}
+$$
+
+最后一个 $G_J$ 等式使用 V95 定理 2.1 第一项的局部斜伴随性。伴随与直和内积始终取原实际 $g_J$。若 $G_J$ 有正特征值，定义
+
+$$
+\sigma_J=\sqrt{\min(\operatorname{spec}(G_J)\setminus\{0\})}>0.
+\tag{9.2}
+$$
+
+空正谱时不定义 (9.2) 的最小值。所需有限数据就是原局部输出表 $D^J_{e_i}e_r$ 及内积；具体矩阵为
+
+$$
+(G_J)_{rs}=\sum_i g_J(D^J_{e_i}e_r,D^J_{e_i}e_s).
+\tag{9.3}
+$$
+
+允许用已认证的正下界 $s_J\le\sigma_J$ 代替精确 $\sigma_J$；其支撑与零空间须一并确定。仅把近似矩阵的小特征值删去，不提供这样的认证。这里不从 $\epsilon$ 推断正谱下界，也不对所有实现预设统一活动下界。
+
+**定理 9.2（作用支撑上的完整残差线性界）。** 在定义 9.1 下，精确地有
+
+$$
+\ker G_J=\ker\mathcal T_J=Z_J,
+\qquad \operatorname{ran}G_J=W_J=Z_J^\perp,
+\qquad D^J_aa\in W_J\quad(a\in J).
+\tag{9.4}
+$$
+
+因而 $W_J\ne\{0\}$ 时
+
+$$
+\|\mathcal T_Jz\|\ge\sigma_J\|z\|
+       \quad(z\in W_J).
+\tag{9.5}
+$$
+
+对 $A$ 方，若已给出 $0<s_A\le\sigma_A$，$k_B>0$，且
+
+$$
+h_A=k_Bs_A-\epsilon\sqrt{n_A}\,c_B>0,
+\qquad
+L_A=\frac{\epsilon\sqrt{n_A}\,c_A d_B}{h_A},
+\tag{9.6}
+$$
+
+则对每个单位 $a\in J_A$ 有 $\|D^A_aa\|\le L_A$。$c_A,c_B$ 仍恰为 (6.1)，$d_J,k_J$ 仍为 (5.5)；没有增加关于 $M$ 或 $\Gamma$ 的前件。交换双方定义 $h_B,L_B$ 及其可用条件。
+
+令 $\delta_J$ 保持定理 6.1 的原定义，再逐方定义
+
+$$
+\widehat\delta_J=
+\begin{cases}
+0,&W_J=\{0\},\\
+\min\{\delta_J,L_J\},&\text{该方的式 (9.6) 可用},\\
+\delta_J,&\text{其余情形}.
+\end{cases}
+\tag{9.7}
+$$
+
+则双方的完整结论为
+
+其中 $\delta_J^{\rm all}$ 是定理 9.4 在下文定义的两种合法界的逐方最小值；只使用本定理时可先取 $\delta_J^{\rm all}=\widehat\delta_J$。
+
+$$
+\begin{aligned}
+\sup_{\|a\|=1}\|D^J_aa\|&\le\delta_J^{\rm all},\\
+\|D^J_ac+D^J_ca\|&\le2\delta_J^{\rm all}\|a\|\|c\|,\\
+\|D^J_{1_J}\|_{\rm op}
+ &\le u_J\min\{d_J,2\delta_J^{\rm all}\}.
+\end{aligned}
+\tag{9.8}
+$$
+
+特别地，对任意指定 $0\le\vartheta<1$，若
+
+$$
+\epsilon\sqrt{n_A}\,c_B\le\vartheta k_Bs_A,
+\tag{9.9}
+$$
+
+则可以使用显式线性界
+
+$$
+\widehat\delta_A\le
+\min\left\{\delta_A,
+ \frac{\sqrt{n_A}\,c_A d_B}{(1-\vartheta)k_Bs_A}\,\epsilon\right\}.
+\tag{9.10}
+$$
+
+这里 (9.9) 是已有残差大小与独立局部有限数据之间的充分阈值，不是把待证自缺陷作为强制性前提。
+
+证明。先暂以 $\widehat\delta_J$ 记本定理正分母选项。由 (9.1)，$g_J(x,G_Jx)=\sum_i\|D^J_{e_i}x\|^2$，所以 $G_J$ 非负自伴且其零空间恰为 $Z_J$。另一方面，局部斜伴随性给
+
+$$
+\begin{aligned}
+x\in W_J^\perp
+&\ \Longleftrightarrow\quad
+ g_J(x,D^J_{e_i}y)=0\quad\text{对全部 }i,y\\
+&\ \Longleftrightarrow\ D^J_{e_i}x=0\quad\text{对全部 }i.
+\end{aligned}
+\tag{9.11}
+$$
+
+有限维正内积下，$W_J=Z_J^\perp=\operatorname{ran}G_J$。标签的实线性还给 $D^J_a=\sum_i a_iD^J_{e_i}$，故 $D^J_aa$ 属于 $W_J$。这证明 (9.4)，并非另加一个自缺陷的支撑假设。
+
+在 $W_J$ 的正交特征基中，$g_J(z,G_Jz)\ge\sigma_J^2\|z\|^2$，得到 (9.5)。此处使用有限维谱定理／最小正奇异值估计这一成熟中间工具，参见 [LAPACK Users' Guide，Singular Value Decomposition](https://www.netlib.org/lapack/lug/node32.html)。更换标签正交单位基时，$\sum_i(D^J_{e_i})^\dagger D^J_{e_i}$ 不变，所以正谱与 $Z_J,W_J$ 不依赖该正交坐标的选择。
+
+现在固定单位 $a\in J_A$，置 $z=D^A_aa$。复用同一完整残差已经给出的精确耦合 (6.14) 及其界 (6.15)。从伙伴有限曲率表选单位基向量 $f,g,b$ 达到 $k_B$；将 (6.15) 分别用于 $c=e_i$，再对这些 $n_A$ 个不等式平方求和，得到
+
+$$
+k_B\|\mathcal T_Az\|
+\le\epsilon\sqrt{n_A}
+       \bigl(c_A d_B+c_B\|z\|\bigr).
+\tag{9.12}
+$$
+
+(9.4) 已证明 $z\in W_A$，故 (9.5) 与 $s_A\le\sigma_A$ 给
+
+$$
+\bigl(k_Bs_A-\epsilon\sqrt{n_A}\,c_B\bigr)\|z\|
+\le\epsilon\sqrt{n_A}\,c_A d_B.
+\tag{9.13}
+$$
+
+正的 $h_A$ 允许除法，得到 (9.6)。这一步用整个作用族控制 $z$，不再把 (6.16) 的单个斜伴收缩变为 $\|z\|^2$。旧二次不等式 (6.4) 与其根／截顶仍独立成立，故可取 (9.7) 的最小值。$W_J=\{0\}$ 时全部 $D^J_{e_i}$ 为零，标签线性使 $D^J=0$，所以这一分支确实给零缺陷。定理 9.4 将在不要求 $h_J>0$ 时再给一个截顶线性选项；取两者的最小值后，最后逐字使用 (6.17) 的极化及 $D^J_a1_J=0$，得到 (9.8)。由 $h_A\ge(1-\vartheta)k_Bs_A$ 得 (9.10)。∎
+
+**推论 9.3（核的区别、退化与尺度）。** 作用谱的零空间不是标签映射 $a\mapsto D^J_a$ 的零空间；后者的 Gram 矩阵是
+
+$$
+(H_J)_{ij}=\langle D^J_{e_i},D^J_{e_j}\rangle_{\rm HS}.
+\tag{9.14}
+$$
+
+它控制标签，而 (9.3) 控制被作用的向量。总有 $1_J\in Z_J$，所以全空间 $G_J$ 的最小特征值为零；以它替换 (9.2) 不给正系数，以 $\ker H_J$ 的正交补替换 $W_J$ 则没有 (9.4) 的依据。
+
+正谱为空当且仅当 $D^J=0$，此时 (9.7) 的第一分支适用，不写 $0/0$。若 $W_A\ne0$ 但 $k_B=0$ 或尚无认证的 $s_A>0$，截顶线性证书不可用，仍保留原 $\delta_A$；若 $k_B>0,s_A>0$ 而 $h_A\le0$，只禁用 (9.6) 的较尖正分母选项，定理 9.4 的全量 $\epsilon$ 截顶仍可用，不判定局部交替失败。$d_B=0$ 的扩大退化范围中，若 (9.6) 的正分母仍成立，其分子为零，确实给零自缺陷；即使分母不正，定理 9.4 仍保留由 $d_A$ 截顶的合法分支。活动合同本身排除 $D^J=0$ 及 $k_J=0$，却不供应变化族上的统一正下界。$\epsilon=0$ 时，在活动合同下 (9.6) 和定理 9.4 都给零缺陷；未提供谱证书时原推论 6.2 已给同一精确端点及 $\Gamma=Q$，不需删去任何退化实现来取得端点。
+
+若只报告每个三元标签的均方根 $\eta$，必须在 (9.6)、(9.9) 及定理 9.4 的系数中代入 $\epsilon=(n_An_B)^{3/2}\eta$。(9.12) 的 $\sqrt{n_J}$ 也保留；这里没有维数无关或常数最优的断言。
+
+证明。式 (9.14) 的零空间由 $\|D^J_a\|_{\rm HS}^2=a^{\mathsf T}H_Ja$ 确定；(9.4) 的核则由所有 $D^J_{e_i}x$ 确定。每个导子消去单位，故 $1_J\in Z_J$。其余退化直接按 (9.6)–(9.7) 的正分母及 (9.4) 判定；均方根换算来自 (5.3)。
+
+尺度也可在同一实现上核对。共同改变时间单位，即 $D^J\mapsto\tau D^J$、$\Gamma\mapsto\tau\Gamma$，保持乘法和内积时，$\epsilon,d_J,s_J$ 同乘 $|\tau|$，$k_J,c_J$ 不变。对 $\tau\ne0$，(9.9) 的比值不变，(9.6) 与定理 9.4 的截顶线性界同乘 $|\tau|$；(9.17) 的系数本身不变，$\tau=0$ 使用零作用分支。
+
+另对共同产品尺度 $s>0$，取
+
+$$
+S_J' =sS_J,\quad 1_J'=s^{-1}1_J,\quad
+M'=s^2M,\quad \Gamma'=s\Gamma,
+\tag{9.15}
+$$
+
+保持局部 $D^J$ 与全部内积。四个 (5.1) 仍逐项成立，$E'=s^3E$，而
+
+$$
+u_J'=s^{-1}u_J,\quad \ell_J'=s\ell_J,\quad
+k_J'=s^2k_J,\quad c_J'=s^{-1}c_J,
+\quad d_J'=d_J,\quad s_J'=s_J.
+\tag{9.16}
+$$
+
+所以 (9.6) 的分子、分母同乘 $s^2$，定理 9.4 的系数同乘 $s^{-3}$ 而 $\epsilon$ 同乘 $s^3$，新旧缺陷界均不变。完整残差的绝对小量不能绕过这个尺度对应；命题 7.1 的尺度障碍仍在。$s=0$ 不含幺，不被纳入 (9.15)。∎
+
+**定理 9.4（无小残差门槛的截顶线性证书）。** 在同一实际实现上，若 $k_B>0$ 且已有独立有限数据认证 $s_A>0$，定义
+
+$$
+\kappa_A=\frac{2\sqrt{n_A}\,\max\{c_A d_B,c_Bd_A\}}{k_Bs_A},
+\qquad
+\delta_A^{\rm cap}=\min\{\delta_A,\kappa_A\epsilon\};
+\tag{9.17}
+$$
+
+若条件不具备，则只定义 $\delta_A^{\rm cap}=\delta_A$。交换 $A,B$ 得 $\kappa_B,\delta_B^{\rm cap}$。无论 $\epsilon\ge0$ 大小，均有
+
+$$
+\sup_{\|a\|=1}\|D^A_aa\|\le\delta_A^{\rm cap},
+\quad
+\|D^A_ac+D^A_ca\|\le2\delta_A^{\rm cap}\|a\|\|c\|,
+\quad
+\|D^A_{1_A}\|_{\rm op}\le u_A\min\{d_A,2\delta_A^{\rm cap}\}.
+\tag{9.18}
+$$
+
+最终应把较尖的正分母选项和这个全量选项逐方取最小：
+
+$$
+\delta_A^{\rm all}=\min\{\widehat\delta_A,\delta_A^{\rm cap}\},
+\qquad
+\delta_B^{\rm all}=\min\{\widehat\delta_B,\delta_B^{\rm cap}\}.
+\tag{9.19}
+$$
+
+其中 $\widehat\delta_J$ 仍按 (9.7) 定义；因此在 $W_J\ne\{0\}$ 时，$h_J\le0$ 只使 $\widehat\delta_J$ 回到 $\delta_J$，不关闭 (9.17)。当 $W_J=\{0\}$ 时，$\widehat\delta_J=\delta_J^{\rm all}=0$；此时没有正谱下界可供 (9.17) 使用，故 $\delta_J^{\rm cap}=\delta_J$，在允许的非紧 $d_J$ 上界下未必为零。当 $k_{\rm partner}=0$ 或没有独立正的 $s_J$ 时，(9.17) 不取 $0/0$，回到原证书。式 (9.18) 的三类消费者可同时对两方使用，(9.8) 即按 (9.19) 读取。
+
+证明。对 $A$ 方的单位 $a$ 置 $z=D^A_aa$，并令
+
+$$
+\mu=k_Bs_A,
+\qquad p=\sqrt{n_A}c_A d_B,
+\qquad q=\sqrt{n_A}c_B.
+$$
+
+由 (9.12) 和 $z\in W_A$ 得
+
+$$
+(\mu-q\epsilon)\|z\|\le p\epsilon
+\quad\text{只在左端正时使用}.
+$$
+
+若 $q=0$，该式给 $\|z\|\le p\epsilon/\mu\le\kappa_A\epsilon$。若 $q>0$ 且 $\epsilon\le\mu/(2q)$，则左端系数至少 $\mu/2$，故 $\|z\|\le2p\epsilon/\mu\le\kappa_A\epsilon$；若 $\epsilon\ge\mu/(2q)$，不除以可能为负的左端，而直接用既有 $\|z\|\le d_A$，得到
+
+$$
+\|z\|\le d_A\le\frac{2qd_A}{\mu}\epsilon\le\kappa_A\epsilon.
+$$
+
+这覆盖每个 $\epsilon\ge0$，阈值只出现在证明的二分，未成为证书适用范围的前件。对任意单位向量的界再按齐次性推广，并逐字应用 (6.17) 的极化和 $D^A_a1_A=0$；两方交换。最后与 (9.7) 取最小得到 (9.19)。∎
+
+## 10. 固定产品、非零单位生成元与严格改进的实际族
+
+**命题 10.1（正谱非退化的 Pauli 扰动族）。** 存在固定局部及联合产品、固定乘积正内积的同一实现族，使两方均有非零自缺陷和非零 $D_1$，满足全部 (5.1)，且 (9.6) 在一个非空小残差区间上严格改进定理 6.1 的根／截顶。
+
+具体地，两方均取 $J=\mathbb R1\oplus\mathbb R^3$ 的欧氏内积，完整正交单位基为 $(1,x,y,z)$，取 $h=z$，并置
+
+$$
+\begin{aligned}
+S((\alpha,v),(\beta,w))
+  &=(\alpha\beta+v\cdot w,\alpha w+\beta v),\\
+C((\alpha,v),(\beta,w))&=(0,v\times w),\\
+D^t_{(\alpha,v)}(\beta,w)
+  &=(0,(v+t\alpha h)\times w),\qquad t\in\mathbb R.
+\end{aligned}
+\tag{10.1}
+$$
+
+在 $V=J\otimes J$ 上，使用下列固定实际产品及随 $t$ 变化的实线性指派
+
+$$
+\begin{aligned}
+M(a\otimes b,c\otimes d)
+ &=S(a,c)\otimes S(b,d)-C(a,c)\otimes C(b,d),\\
+\Gamma^t_{a\otimes b}
+ &=D^t_a\otimes L_b+L_a\otimes D^t_b.
+\end{aligned}
+\tag{10.2}
+$$
+
+它们线性延拓到全部输入。这里 $M$ 的 $C$ 是 (10.1) 的固定交叉积，不把它换成随 $t$ 变动的 $D^t$。同一完整残差和局部量精确满足
+
+$$
+\begin{gathered}
+n_A=n_B=4,\quad N=16,\quad
+u_A=u_B=1,\quad \ell_A=\ell_B=\sqrt2,\quad
+k_A=k_B=1,\quad d_A=d_B=\sqrt{1+t^2},\\
+\epsilon_t^2=288t^2,\qquad
+\sup_{\|a\|=1}\|D^t_aa\|=|t|/2,\qquad
+\|D^t_1\|_{\rm op}=|t|,\\
+G_t=\operatorname{diag}(0,2+t^2,2+t^2,2),\qquad
+Z_t=\mathbb R1,\quad W_t=\mathbb R^3,\quad\sigma_t=\sqrt2.
+\end{gathered}
+\tag{10.3}
+$$
+
+特别地，$\sigma_t$ 没有在 $t\to0$ 时丢失，而在每个 $t\ne0$，对角映射 $a\mapsto D^t_aa$ 不恒为零，且 $D^t_1\ne0$。标签核另为 $\mathbb R(1-th)$；它在 $t\ne0$ 时不同于 $Z_t$。
+
+证明。$S$ 的 Frobenius 三次型全对称，单位为 $1$。任意 $r\in\mathbb R^3$ 的旋转生成元 $w\mapsto r\times w$ 对 $S$ 是导子：其标量部分由斜伴随性消去，向量部分直接满足 Leibniz 律。因此每个 $D^t_a$ 都是精确局部导子，标签实线性且始终非零，例如 $D^t_xy=z$。这不预设该标签指派交替。事实上
+
+$$
+D^t_aa=(0,t\alpha h\times v),\qquad
+D^t_1(\beta,w)=(0,th\times w).
+\tag{10.4}
+$$
+
+对单位 $a$，$|\alpha|\|v\|\le1/2$，取 $a=(1+x)/\sqrt2$ 达到自缺陷上界。标签向量 $v+t\alpha h$ 的算子范数为 $\sqrt{1+t^2}$，再选单位 $w$ 与之垂直，得到 (10.3) 的精确 $d$。$\ell=\sqrt2$ 与第 7 节相同的二元范数估计成立，且在 $(1+x)/\sqrt2$ 上达到。完整曲率表只有不同空间基方向的交换子可能非零，其作用范数最大值为 $1$，故 $k=1$。
+
+为确定联合产品，使用原卷定理 6.2 的标准 Pauli 表示背景，明确取 $\Phi(\alpha,v)=\alpha I+v\cdot\sigma$。Pauli 恒等式给
+
+$$
+\begin{aligned}
+\Phi(S(a,c))&=\tfrac12\{\Phi(a),\Phi(c)\},\\
+\Phi(C(a,c))&=\tfrac1{2i}[\Phi(a),\Phi(c)].
+\end{aligned}
+\tag{10.5}
+$$
+
+因此 $\Phi\otimes\Phi$ 将固定 $M$ 送到 $\operatorname{Herm}_4(\mathbb C)$ 上的 Jordan 产品，欧氏乘积内积恰为 $\operatorname{Tr}(XY)/4$。这证明 $M$ 交换含幺、正 Frobenius，单位为 $1\otimes1$；并非输入一个关于物理对象供应的结论。由于 $C(a,1)=0$、$D^t_a1=0$、$L_b1=b$，两类模作用和两类保值条件作用直接从 (10.2) 得到，对全部输入都是原样的 (5.1)。
+
+记 $\delta_h(\beta,w)=(0,h\times w)$。在 $t=0$，(10.5) 将 $\Gamma^0_H$ 送到 $[\Phi^{\otimes2}(H),\,\cdot\,]/(2i)$，所以它是同一 $M$ 的导子。一般 $t$ 时
+
+$$
+\Gamma^t=\Gamma^0+tP,\qquad
+P_{a\otimes b}=\alpha\delta_h\otimes L_b
+                    +\beta L_a\otimes\delta_h,
+\qquad E_t=t\,\mathfrak d_M P,
+\tag{10.6}
+$$
+
+其中 $a=(\alpha,v),b=(\beta,w)$，$\mathfrak d_MP$ 指按 (5.2) 的三项对 $P$ 求导子残差。这是实际完整残差的等式，未抽取报告子族。例如
+
+$$
+E_t(1\otimes x,1\otimes y,x\otimes x)
+       =-t\,y\otimes y\ne0\quad(t\ne0).
+\tag{10.7}
+$$
+
+现在计算其完整平方和。对第一槽的完整乘积基，$P_{1\otimes1}=\delta_h\otimes I+I\otimes\delta_h$ 是 $M$ 的导子，九个空间—空间标签的 $P$ 为零。其余六个第一槽标签是 $1\otimes b$ 或 $b\otimes1$，$b=x,y,z$；相应算子为 $\delta_h\otimes L_b$ 或 $L_b\otimes\delta_h$。
+
+只须算 $\delta_z\otimes L_z$ 的一个完整块。局部乘法表为 $1e_i=e_i$、$S(e_i,e_j)=\delta_{ij}1$、$C(e_i,e_j)=\sum_k\varepsilon_{ijk}e_k$，空间指标为 $x,y,z$。对任意 $c,d,e,f$，该块的残差为
+
+$$
+\begin{aligned}
+&S(\delta_zc,e)\otimes\{L_zS(d,f)-S(L_zd,f)\}\\
+&+S(c,\delta_ze)\otimes\{L_zS(d,f)-S(d,L_zf)\}\\
+&-C(\delta_zc,e)\otimes\{L_zC(d,f)-C(L_zd,f)\}\\
+&-C(c,\delta_ze)\otimes\{L_zC(d,f)-C(d,L_zf)\}.
+\end{aligned}
+\tag{10.8}
+$$
+
+这是把 (10.2) 展开后使用旋转对 $S,C$ 的两个导子律；没有对 $L_z$ 使用导子律。逐项代入上面的四元乘法表，第二槽 $X=c\otimes d$ 与全部 $16$ 个第三槽 $Y=e\otimes f$ 的平方和如下：
+
+$$
+\begin{array}{c|c|c}
+(c,d)\text{ 的范围}&X\text{ 的个数}&
+\displaystyle\sum_Y\|\mathfrak d_M(\delta_z\otimes L_z)(X,Y)\|^2\\ \hline
+c,d\in\{1,z\}&4&0\\
+c\in\{1,z\},\ d\in\{x,y\}&4&4\text{（每个 }X\text{）}\\
+c\in\{x,y\},\ d\in\{1,z\}&4&4\text{（每个 }X\text{）}\\
+c,d\in\{x,y\}&4&4\text{（每个 }X\text{）}
+\end{array}
+\tag{10.9}
+$$
+
+每个非零块输出都是一个带符号的乘积基向量，表中后三行各 $X$ 恰有四个非零 $Y$，故这一完整块为 $48$。第二方独立的正交旋转把任一单位空间 $b$ 送到 $z$，保持 $M$ 及完整 Hilbert–Schmidt 平方和；第一方固定 $h=z$。因而三个 $\delta_h\otimes L_b$ 块同为 $48$。翻转两方给另外三个块；剩下十个第一槽的残差均为零。全部 $16\cdot16^2$ 个三元标签已被计入，得到 $\epsilon_t^2=6\cdot48t^2=288t^2$。
+
+最后，三个空间标签的叉乘算子满足 $\sum_{i=x,y,z}(D^0_{e_i})^\dagger D^0_{e_i}=2I$ 于空间部分，单位标签另外贡献 $t^2\delta_h^\dagger\delta_h=t^2(I-hh^{\mathsf T})$。所有算子消去单位，因此得到 (10.3) 的 $G_t$ 及其精确支撑。标签 Gram 则为
+
+$$
+H_t=2\begin{pmatrix}
+t^2&0&0&t\\
+0&1&0&0\\
+0&0&1&0\\
+t&0&0&1
+\end{pmatrix},
+\tag{10.10}
+$$
+
+其核为 $\mathbb R(1-th)$，正谱为 $2,2,2(1+t^2)$；(10.3) 的作用正谱却为 $2,2+t^2,2+t^2$。这也给出错误替换两个核的实际区分。∎
+
+**推论 10.2（非空线性改进区间与精确端点）。** 对命题 10.1，记 $C_*=1+2\sqrt2$、$d=\sqrt{1+t^2}$、$\epsilon=12\sqrt2|t|$。两方均可取 $s_J=\sqrt2$，新旧证书分别为
+
+$$
+L(t)=\frac{2C_*d\,\epsilon}{\sqrt2-2C_*\epsilon},
+\qquad
+\delta_{\rm old}(t)=
+\min\left\{d,
+\frac{C_*\epsilon+\sqrt{C_*^2\epsilon^2+4C_*d\epsilon}}2\right\}.
+\tag{10.11}
+$$
+
+在非空区间
+
+$$
+0<|t|<\frac1{192\sqrt2 C_*}
+\tag{10.12}
+$$
+
+有 $|t|/2\le L(t)<\delta_{\rm old}(t)$。旧定理本已在固定条件下给 $O(\sqrt\epsilon)$ 的消失界及平凡截顶；这一族具有固定产品和非退化作用谱，使 (9.6) 给出严格更强的 $O(\epsilon)$ 上界。$t=0$ 仍是活动合同中的实现，$\epsilon=0$、局部交替及 $D_1=0$ 恰好同时成立。
+
+证明。(10.12) 等价于 $0<\epsilon<1/(16C_*)$，并保证 $|t|<1$，所以 $1\le d\le\sqrt2$ 且 (10.11) 的分母大于 $\sqrt2/2$。于是
+
+$$
+L(t)\le4C_*\epsilon
+ <\sqrt{C_*\epsilon}
+ \le\frac{C_*\epsilon+\sqrt{C_*^2\epsilon^2+4C_*d\epsilon}}2,
+\qquad L(t)<1\le d.
+\tag{10.13}
+$$
+
+这证明严格改进；自缺陷的下界 $|t|/2$ 由 (10.3) 与定理 9.2 得到。$t=0$ 的全部断言由 (10.1)–(10.6) 直接成立。∎
+
+**推论 10.3（正残差而正分母选项关闭）。** 同一固定产品族取 $t=1$ 时，完整残差仍为正且
+
+$$
+\epsilon=12\sqrt2,
+\qquad
+h_A=h_B=\sqrt2-24\sqrt2 C_*<0,
+\qquad
+\kappa_A=\kappa_B=4C_*.
+\tag{10.14}
+$$
+
+故 (9.6) 的两方分母选项均不可用，但 (9.17) 仍给出全量证书；此时
+
+$$
+\delta_A^{\rm cap}=\delta_B^{\rm cap}=\min\{\sqrt2,48\sqrt2 C_*\}=\sqrt2.
+\tag{10.15}
+$$
+
+于是 (9.18) 给出两方的对角缺陷、对称缺陷和单位生成元界，且没有缩小到小残差区间。该点的截顶线性界恰好退化为既有 $d_J$ 截顶，说明全量分支在正残差且 $h_J\le0$ 时仍有定义和正确范围，而严格 $O(\epsilon)$ 改进仍由推论 10.2 的小 $t$ 区间承担。∎
+
+## 11. 作用谱应用的数学归属与有效数据边界
+
+**定义 11.1（承重桥与尚未供应的结论）。** 定理 9.2 与定理 9.4 的承重内容是本仓推导（repo-derived）：同一局部斜伴作用的公共固定核与像支撑精确对应，使实际 $D_aa$ 落在 $G_J$ 的正谱支撑；再把已经建立的完整残差耦合 (6.14)–(6.15) 传到这个支撑，得到 (9.13) 的条件线性不等式，并用既有 $d_J$ 截顶在吸收分母不正时拼成 (9.17) 的全量线性证书。它复用原卷 (20.1)、(20.2)、V95 局部斜伴随性及本卷二次证书的实际桥，而非从另一个报告域借用误差。有限维谱定理、Gram／奇异值和核—像正交是成熟中间工具，不作为新增数学内容；命题 10.1 的 Pauli 表示复用原卷定理 6.2 的背景，其固定产品扰动、精确完整残差及线性改进区间由本节对应的实际族承担。不主张文献原创优先权或最优常数。
+
+式 (9.3) 给定精确局部有限表时，是有限矩阵运算；它没有提供这些表的统计取得、误差置信率、实验菜单或操作成本。如果只给带误差表，须另外认证实际零空间／支撑、正谱下界及其余参数的相应方向界，才可代入 (9.6) 或 (9.17)。小残差本身不给这些下界；未认证时保留 (9.7) 的原证书分支。跨实现的统一线性模量还须统一控制 (9.17) 的显式系数，不能以逐实现的正谱非空取代该族条件。
+
+这里仍只研究同一 C99 二元边的局部交替桥。C105、C106 的滤波边界与 C107 的完全正分支修复使用不同的实际输入和误差；源容量及有限记录的可取得性也不是 (9.3) 的认证。没有从这些对象到完整 (5.2) 的已证映射，就不能把相应预算换名代入本证书。第 8 节的全部模型、供应及物理边界继续保留：正残差时不推出 Jacobi 稳定性、公共标尺稳定性、精确第三方活动延伸、近邻复 $C^*$ 重构、无限维推广或物理实现；任意允许 $M,\Gamma$ 的结论来自定理 9.2 与定理 9.4 的显式前件，Pauli 族只是其中一个满足模型。本文的解析证明不作 Lean／kernel 验证声明。
+
+## 追加锚（本行以下为增补区）
