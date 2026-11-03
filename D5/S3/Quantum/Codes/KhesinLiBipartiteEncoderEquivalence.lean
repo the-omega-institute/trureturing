@@ -17,7 +17,7 @@ The quantum equivalence of Definition 6.2 and Conjecture 6.3 are outside this st
 namespace D5.S3.Quantum.Codes.KhesinLiBipartiteEncoderEquivalence
 
 open D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses (Step addInputRow lc_source lc_adj)
-open D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph (lc entropy cut)
+open D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph (lc entropy cut compl_eq relabel lc_eq)
 open D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity (binary)
 open Matrix
 open scoped BigOperators
@@ -46,76 +46,6 @@ private noncomputable def biadjacency {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fi
   classical
   exact (G.adjMatrix (ZMod 2)).submatrix Sum.inl Sum.inr
 
-private theorem entropy_compl {V : Type} [Fintype V] [DecidableEq V]
-    (G : SimpleGraph V) (A : Finset V) : entropy G Aᶜ = entropy G A := by
-  classical
-  have hm : cut G Aᶜ = (cut G A).transpose.submatrix
-      (Equiv.subtypeEquivRight (fun x => Finset.mem_compl))
-      (Equiv.subtypeEquivRight (fun x => by simp)) := by
-    ext a b
-    change (if G.Adj a.1 b.1 then (1 : ZMod 2) else 0) =
-      if G.Adj b.1 a.1 then 1 else 0
-    rw [G.adj_comm]
-  change (cut G Aᶜ).rank = (cut G A).rank
-  rw [hm, Matrix.rank_submatrix, Matrix.rank_transpose]
-
-private theorem entropy_relabel {V W : Type} [Fintype V] [DecidableEq V]
-    [Fintype W] [DecidableEq W] (G : SimpleGraph V) (e : W ≃ V) (A : Finset W) :
-    entropy (G.comap e) A = entropy G (A.map e.toEmbedding) := by
-  classical
-  have hm : cut (G.comap e) A = (cut G (A.map e.toEmbedding)).submatrix
-      (Equiv.subtypeEquiv e (fun x => by simp))
-      (Equiv.subtypeEquiv e (fun x => by simp)) := by
-    ext a b
-    rfl
-  change (cut (G.comap e) A).rank = _
-  rw [hm, Matrix.rank_submatrix]
-  rfl
-
-private theorem entropy_lc {V : Type} [Fintype V] [DecidableEq V]
-    (G : SimpleGraph V) (v : V) (A : Finset V) : entropy (lc G v) A = entropy G A := by
-  classical
-  have inside (B : Finset V) (hv : v ∈ B) : entropy (lc G v) B = entropy G B := by
-    let N : Matrix {x // x ∈ B} {x // x ∈ B} (ZMod 2) :=
-      fun a b => if G.Adj v a.1 ∧ b.1 = v then 1 else 0
-    have hnil : N * N = 0 := by
-      ext a b
-      apply Finset.sum_eq_zero
-      intro c _
-      by_cases hc : c.1 = v
-      · simp only [N, hc, G.loopless.irrefl, false_and, ite_false, mul_zero]
-      · simp only [N, hc, and_false, ite_false, zero_mul]
-    have hinv : (1 + N) * (1 + N) = 1 := by
-      have hz : N + N = 0 := by
-        ext a b
-        exact CharTwo.add_self_eq_zero _
-      rw [add_mul, mul_add, mul_add, one_mul, mul_one, one_mul, hnil,
-        add_zero, add_assoc, hz, add_zero]
-    have hm : cut (lc G v) B = (1 + N) * cut G B := by
-      ext a b
-      rw [Matrix.add_mul, Matrix.one_mul, Matrix.add_apply, Matrix.mul_apply,
-        Finset.sum_eq_single ⟨v, hv⟩]
-      · have hab : a.1 ≠ b.1 := fun h => b.2 (h ▸ a.2)
-        simp only [cut, Matrix.submatrix_apply, SimpleGraph.adjMatrix_apply]
-        rw [lc_adj, and_iff_right hab]
-        by_cases h1 : G.Adj a.1 b.1 <;> by_cases h2 : G.Adj v a.1 <;>
-          by_cases h3 : G.Adj v b.1 <;>
-          simp [N, h1, h2, h3, Xor, CharTwo.add_self_eq_zero]
-      · intro c _ hc
-        have hcv : c.1 ≠ v := fun h => hc (Subtype.ext h)
-        simp only [N, hcv, and_false, ite_false, zero_mul]
-      · simp
-    have hu : IsUnit (1 + N).det := by
-      apply isUnit_iff_exists_inv.mpr
-      refine ⟨(1 + N).det, ?_⟩
-      rw [← Matrix.det_mul, hinv, Matrix.det_one]
-    change (cut (lc G v) B).rank = (cut G B).rank
-    rw [hm, Matrix.rank_mul_eq_right_of_isUnit_det _ _ hu]
-  by_cases hv : v ∈ A
-  · exact inside A hv
-  · rw [← entropy_compl (lc G v) A, ← entropy_compl G A]
-    exact inside Aᶜ (Finset.mem_compl.mpr hv)
-
 private theorem entropy_output_map {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n))
     (σ : Equiv.Perm (Fin n)) (S : Finset (Fin n)) :
     entropy (G.map (Equiv.sumCongr (Equiv.refl (Fin k)) σ).toEmbedding)
@@ -124,7 +54,7 @@ private theorem entropy_output_map {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n
   rw [← SimpleGraph.comap_symm]
   change entropy (G.comap (Equiv.sumCongr (Equiv.refl (Fin k)) σ).symm)
     (S.map Function.Embedding.inr) = _
-  rw [entropy_relabel]
+  rw [relabel]
   congr 1
   ext x
   cases x with
@@ -264,7 +194,7 @@ private theorem step_profile {k n : ℕ} {G H : SimpleGraph (Fin k ⊕ Fin n)}
   | complement v =>
     refine ⟨Equiv.refl _, ?_⟩
     intro S
-    rw [← lc_source, entropy_lc]
+    rw [← lc_source, lc_eq]
     simp only [Equiv.coe_refl, Finset.image_id]
   | permuteOutputs σ => exact ⟨σ.symm, entropy_output_map G σ⟩
   | permuteInputs τ =>
@@ -273,7 +203,7 @@ private theorem step_profile {k n : ℕ} {G H : SimpleGraph (Fin k ⊕ Fin n)}
     rw [← SimpleGraph.comap_symm]
     change entropy (G.comap (Equiv.sumCongr τ (Equiv.refl (Fin n))).symm)
       (S.map Function.Embedding.inr) = _
-    rw [entropy_relabel]
+    rw [relabel]
     congr 1
     ext x
     cases x <;> simp

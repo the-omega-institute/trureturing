@@ -26,6 +26,15 @@ internal sealed class GraphStateMonogamyForbiddenSubgraphDocument : IScribeDocum
             Node("entropy", "Entanglement entropy of a graph state", EntropyFormula(),
                 "The entropy of a set A of qubits in the graph state of G is the rank of the adjacency block of A: every matrix M over Z_2 with rows indexed by A and columns by the complement of A whose entry at x, y is 1 when x and y are adjacent and 0 otherwise has rank S(G, A).",
                 "entropy", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("entropy-complement", "Entropy of the complement", EntropyComplementFormula(),
+                "The cut matrix of the complement is a reindexing of the transposed cut matrix, so both vertex sets have the same entropy.",
+                "compl_eq", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("entropy-relabel", "Entropy under relabelling", EntropyRelabelFormula(),
+                "Pulling a graph back along a vertex equivalence reindexes its adjacency block and preserves its rank.",
+                "relabel", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("entropy-lc", "Entropy under local complementation", EntropyLcFormula(),
+                "Local complementation acts on a cut matrix by an invertible row operation when its vertex is in the set; complementation gives the remaining case.",
+                "lc_eq", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("mmi", "Violation of MMI", ViolatesFormula(),
                 "The graph state violates an instance of monogamy of mutual information: pairwise disjoint sets I, J, K with S(I ∪ J) + S(I ∪ K) + S(J ∪ K) less than S(I) + S(J) + S(K) + S(I ∪ J ∪ K).",
                 "ViolatesMMI", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -112,6 +121,36 @@ internal sealed class GraphStateMonogamyForbiddenSubgraphDocument : IScribeDocum
         Formula blocks = Call("Matrix", a, outside, Call("ZMod", D(2)));
         return Disp(All("M", blocks, Implies(Parenthesized(All("x", a, All("y", outside, entry))),
             Equal(S(g, a), Call("rank", m)))));
+    }
+
+    private static Formula FiniteGraphBinders(Formula body) =>
+        All("V", Named("Type"),
+            All("fV", Call("Fintype", F.Id("V")),
+                All("dV", Call("DecidableEq", F.Id("V")),
+                    All("G", Call("SimpleGraph", F.Id("V")), body))));
+
+    private static Formula EntropyComplementFormula() => Disp(FiniteGraphBinders(
+        All("A", Call("Finset", F.Id("V")),
+            Equal(S(F.Id("G"), Call("compl", F.Id("A"))), S(F.Id("G"), F.Id("A"))))));
+
+    private static Formula EntropyLcFormula() => Disp(FiniteGraphBinders(
+        All("v", F.Id("V"), All("A", Call("Finset", F.Id("V")),
+            Equal(S(Call("lc", F.Id("G"), F.Id("v")), F.Id("A")),
+                S(F.Id("G"), F.Id("A")))))));
+
+    private static Formula EntropyRelabelFormula()
+    {
+        Formula v = F.Id("V"), w = F.Id("W"), g = F.Id("G"), e = F.Id("e"), a = F.Id("A");
+        Formula body = Equal(S(Call("comap", g, e), a),
+            S(g, Call("map", a, Call("toEmbedding", e))));
+        body = All("A", Call("Finset", w), body);
+        body = All("e", Call("Equiv", w, v), body);
+        body = All("G", Call("SimpleGraph", v), body);
+        body = All("dW", Call("DecidableEq", w), body);
+        body = All("fW", Call("Fintype", w), body);
+        body = All("dV", Call("DecidableEq", v), body);
+        body = All("fV", Call("Fintype", v), body);
+        return Disp(All("V", Named("Type"), All("W", Named("Type"), body)));
     }
 
     private static Formula ViolatesFormula()
