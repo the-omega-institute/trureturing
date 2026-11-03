@@ -40,7 +40,7 @@ internal sealed class UniformVarianceCenteringDocument : IScribeDocumentDefiniti
             H("The operator bound from the actual Kraus energy"),
             StatementSource.FromAuthor(Disp(AdjointStatement())),
             AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For arbitrary finite-dimensional complex Hilbert input and output spaces, a finite rectangular family L and nonnegative b, a bound sum(j) norm(L(j)x) squared at most b on every unit input gives norm(sum(j) L(j) adjoint A L(j)) at most b norm(A) for every bounded ambient A. This existing Cauchy-Schwarz helper is public for live use in the direct-sum trace proof. It supplies no independent escape witness."))),
+            Blocks(Paragraph(Text("For arbitrary finite-dimensional complex Hilbert input and output spaces, a finite rectangular family L and nonnegative b, a bound sum(j) norm(L(j)x) squared at most b on every unit input gives norm(sum(j) L(j) adjoint A L(j)) at most b norm(A) for every bounded ambient A. The direct-sum trace proof applies this Cauchy-Schwarz estimate to the actual transfer family and to the channel-contraction step."))),
             DescribeRole.Lemma))));
 
     private static Formula Statement()
