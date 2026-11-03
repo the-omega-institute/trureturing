@@ -118,7 +118,7 @@ private theorem sum_linear (q : ℝ) (r : ℕ) :
     ring
 
 /-- Exact adjacent-index ratios multiplied over a finite block. -/
-private theorem choose_ratio_prod (n k r : ℕ) (hkr : k+r ≤ n) :
+theorem choose_ratio_prod (n k r : ℕ) (hkr : k+r ≤ n) :
     (Nat.choose n k : ℝ)/(Nat.choose n (k+r) : ℝ) =
       ∏ i ∈ Finset.range r, ((k : ℝ)+i+1)/((n : ℝ)-k-i) := by
   revert hkr
