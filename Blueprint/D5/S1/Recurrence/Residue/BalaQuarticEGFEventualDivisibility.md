@@ -36,6 +36,10 @@ $$(\exists C: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/BalaQuarticEGFEventualDivisibility.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala281428` (proved) by `D5/S1/Recurrence/Residue/BalaQuarticEGFEventualDivisibility.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala281428","declaration_gid":"D5/S1/Recurrence/Residue/BalaQuarticEGFEventualDivisibility.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna; Peter Bala (2026). *OEIS A281428: quartic hyperbolic exponential generating function, conjecture 1*. URL: <https://oeis.org/A281428>.

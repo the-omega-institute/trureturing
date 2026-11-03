@@ -39,13 +39,14 @@ internal sealed class BalaQuarticEGFEventualDivisibilityDocument : IScribeDocume
                 + "1/2 and 1/3. Their reduced denominators are therefore coprime to N. For "
                 + "n at least (N+1)/2, with natural division, N divides (2n)!, and integer Euclid "
                 + "cancellation proves the assertion. This sufficient onset is not asserted minimal.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bala281428"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bala281428-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
