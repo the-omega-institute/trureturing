@@ -10,6 +10,7 @@ import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Resource.CompositeConeDuality
 import D5.S3.Observer.Conditioning
+import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix.Positivity
 
@@ -305,14 +306,10 @@ private lemma pairs_useless (i j : Fin 3) (hij : i ≠ j) : IsUseless obs {i, j}
     rw [← _root_.mul_inv_rev, ← pow_two, hsqrt]
     norm_num
   have hstar : (starRingEnd ℂ) r = r := by simp [r]
-  let u0 : Matrix (Fin 3) (Fin 3) ℂ := !![r,r,0; r,-r,0; 0,0,1]
-  have hu0 : u0 ∈ Matrix.unitaryGroup (Fin 3) ℂ := by
-    rw [Matrix.mem_unitaryGroup_iff]
-    ext k l
-    fin_cases k <;> fin_cases l <;>
-      norm_num [u0, Matrix.mul_apply, Fin.sum_univ_succ, star_eq_conjTranspose,
-        Matrix.conjTranspose_apply, hstar, hr]
-  let u : Matrix.unitaryGroup (Fin 3) ℂ := ⟨u0, hu0⟩
+  let u : Matrix.unitaryGroup (Fin 3) ℂ :=
+    ⟨D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Hadamard.hadamard 0 1 r,
+      D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Hadamard.hadamard_unitary
+        0 1 (by decide) r hstar (by rw [pow_two, hr]; norm_num)⟩
   have h01 : IsUseless obs {0, 1} := by
     apply diagonal_family_useless alice bob {0, 1} u
     left
@@ -321,7 +318,8 @@ private lemma pairs_useless (i j : Fin 3) (hij : i ≠ j) : IsUseless obs {i, j}
     rcases hk2 with rfl | rfl <;>
       intro l m hlm <;> fin_cases l <;> fin_cases m <;>
       (try exact (hlm rfl).elim) <;>
-      norm_num [u, u0, alice, Matrix.mul_apply, Fin.sum_univ_succ,
+      norm_num [u, D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Hadamard.hadamard,
+        Matrix.single_apply, Matrix.one_apply, alice, Matrix.mul_apply, Fin.sum_univ_succ,
         star_eq_conjTranspose, Matrix.conjTranspose_apply, hstar, hr]
   have h02 : IsUseless obs {0, 2} := by
     apply diagonal_family_useless alice bob {0, 2} 1
