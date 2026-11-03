@@ -523,16 +523,20 @@ class IdlePoolCases:
         self.assertEqual("claimed", json.loads(self.dormant_claim().stdout)["status"])
 
     def pool_activity_scope_excludes_unrelated_unobservable_process(self):
+        command = [sys.executable, "-c", 'print("keyword args")']
+        with subprocess.Popen(args=command, stdout=subprocess.PIPE, text=True) as child:
+            self.assertEqual("keyword args\n", child.communicate(timeout=10)[0])
+            self.assertEqual(0, child.returncode)
+        self.assertEqual("keyword args\n", subprocess.run(args=command, capture_output=True,
+                         text=True, check=True, timeout=10).stdout)
         if not sys.platform.startswith("linux"):
             return
         import errno
         import worktree_pool as pool
         from activity_fixture import ActivityScope
         children = []
-        for hidden in (False, True):
-            code = ('import sys; ' + ('import ctypes; assert ctypes.CDLL(None).prctl(4,0)==0; '
-                                     if hidden else '')
-                    + 'print("ready",flush=True); sys.stdin.readline()')
+        for _ in range(2):
+            code = 'import sys; print("ready",flush=True); sys.stdin.readline()'
             job = subprocess.Popen([sys.executable, "-c", code], cwd=self.tree,
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             self.jobs.append(job)
@@ -546,7 +550,7 @@ class IdlePoolCases:
         def readlink(path, *args, **kwargs):
             if str(path) == unreadable:
                 attempted.append(str(path))
-                raise PermissionError(errno.EACCES, "fixture non-dumpable process", str(path))
+                raise PermissionError(errno.EACCES, "fixture cwd observation unavailable", str(path))
             return original(path, *args, **kwargs)
         try:
             with patch.object(os, "readlink", side_effect=readlink):

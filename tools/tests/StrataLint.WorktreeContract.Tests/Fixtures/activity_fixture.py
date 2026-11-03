@@ -15,6 +15,8 @@ class ActivityScope(AbstractContextManager):
         self.root_pid = root_pid
         self.previous_iterdir = Path.iterdir
         self.previous_run = subprocess.run
+        self.previous_popen = subprocess.Popen
+        self.native_popen = getattr(subprocess.Popen, "activity_original", subprocess.Popen)
         self.native_iterdir = getattr(Path.iterdir, "activity_original", Path.iterdir)
         self.native_run = getattr(subprocess.run, "activity_original", subprocess.run)
 
@@ -54,14 +56,14 @@ class ActivityScope(AbstractContextManager):
                 return iter(Path("/proc") / str(pid) for pid in sorted(scope.owned_pids()))
             return scope.native_iterdir(path)
 
-        def run(arguments, *args, **kwargs):
-            command = list(map(str, arguments)) if not isinstance(arguments, str) else []
+        def run(args, *run_args, **kwargs):
+            command = list(map(str, args)) if not isinstance(args, str) else []
             if (len(command) == 3 and command[:2] == ["ps", "-axo"]
                     and "uid=" in command[2] and "args=" in command[2]):
                 columns = command[2].split(",")
                 if "pid=" not in columns:
                     command[2] = "uid=,pid=,args="
-                result = scope.native_run(command, *args, **kwargs)
+                result = scope.native_run(command, *run_args, **kwargs)
                 if result.returncode:
                     return result
                 owned = scope.owned_pids()
@@ -75,17 +77,38 @@ class ActivityScope(AbstractContextManager):
                 return subprocess.CompletedProcess(result.args, result.returncode,
                                                    "\n".join(lines) + "\n", result.stderr)
             if command and Path(command[0]).name == "lsof" and "-Fftn" in command:
-                command += ["-p", ",".join(map(str, sorted(scope.owned_pids())))]
-                return scope.native_run(command, *args, **kwargs)
-            return scope.native_run(arguments, *args, **kwargs)
+                owned = scope.owned_pids()
+                result = scope.native_run(command, *run_args, **kwargs)
+                if result.returncode or result.stdout is None:
+                    return result
+                prefix = b"p" if isinstance(result.stdout, bytes) else "p"
+                rows, selected = [], False
+                for row in result.stdout.splitlines(keepends=True):
+                    if row.startswith(prefix):
+                        selected = row[1:].strip().isdigit() and int(row[1:]) in owned
+                    if selected:
+                        rows.append(row)
+                return subprocess.CompletedProcess(result.args, result.returncode,
+                                                   result.stdout[:0].join(rows), result.stderr)
+            return scope.native_run(args, *run_args, **kwargs)
+
+        class Popen(scope.native_popen):
+            def __init__(self, args, *popen_args, **kwargs):
+                if (not isinstance(args, str) and args and str(args[0]) == sys.executable
+                        and str(Path(__file__).resolve()) not in list(map(str, args))):
+                    args = [sys.executable, "-I", "-B", str(Path(__file__).resolve()),
+                            "--root", str(scope.root_pid), "--", *args[1:]]
+                super().__init__(args, *popen_args, **kwargs)
 
         iterdir.activity_original = self.native_iterdir
         run.activity_original = self.native_run
-        Path.iterdir, subprocess.run = iterdir, run
+        Popen.activity_original = self.native_popen
+        Path.iterdir, subprocess.run, subprocess.Popen = iterdir, run, Popen
         return self
 
     def __exit__(self, *exc):
-        Path.iterdir, subprocess.run = self.previous_iterdir, self.previous_run
+        Path.iterdir, subprocess.run, subprocess.Popen = (
+            self.previous_iterdir, self.previous_run, self.previous_popen)
 
 
 class FixtureActivity(ActivityScope):
@@ -95,26 +118,23 @@ class FixtureActivity(ActivityScope):
 
     def __enter__(self):
         self.previous_path = os.environ["PATH"]
-        self.previous_python = sys.executable
         self.directory.mkdir()
         shim = self.directory / "python3"
         command = [sys.executable, "-I", "-B", str(Path(__file__).resolve()),
-                   "--root", str(self.root_pid), "--shim", str(shim), "--"]
+                   "--root", str(self.root_pid), "--"]
         shim.write_text("#!/bin/sh\nexec " + shlex.join(command) + ' "$@"\n')
         shim.chmod(0o755)
         os.environ["PATH"] = str(self.directory) + os.pathsep + self.previous_path
-        sys.executable = str(shim)
         return super().__enter__()
 
     def __exit__(self, *exc):
         super().__exit__(*exc)
-        os.environ["PATH"], sys.executable = self.previous_path, self.previous_python
+        os.environ["PATH"] = self.previous_path
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=int, default=os.getpid())
-    parser.add_argument("--shim")
     parser.add_argument("command", nargs=argparse.REMAINDER)
     options = parser.parse_args()
     command = options.command
@@ -124,8 +144,6 @@ def main():
         command.pop(0)
     if not command:
         raise ValueError("fixture Python program required")
-    if options.shim:
-        sys.executable = options.shim
     with ActivityScope(options.root):
         entry, *arguments = command
         if entry == "-c":
