@@ -8,12 +8,14 @@
 
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Data.Matrix.Notation
+import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Logic.Relation
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Linarith
+
+/-! An eight-state enzyme network violates the proposed waiting-time moment ordering. -/
 
 set_option autoImplicit false
 
@@ -82,47 +84,95 @@ private noncomputable def v3 : Fin 8 → ℝ :=
     8496/15625, 3516/15625, 936/15625, 6/15625]
 
 private theorem network : IsNetwork rates 7 0 := by
-  sorry
+  refine ⟨?_, by norm_num [rates], ?_⟩
+  · intro i j _
+    fin_cases i <;> fin_cases j <;> norm_num [rates]
+  · have h6 : Relation.ReflTransGen (fun i j => 0 < rates i j) 6 7 :=
+      .single (by norm_num [rates])
+    have h5 : Relation.ReflTransGen (fun i j => 0 < rates i j) 5 7 :=
+      .head (by norm_num [rates]) h6
+    have h4 : Relation.ReflTransGen (fun i j => 0 < rates i j) 4 7 :=
+      .head (by norm_num [rates]) h5
+    have h3 : Relation.ReflTransGen (fun i j => 0 < rates i j) 3 7 :=
+      .head (by norm_num [rates]) h4
+    have h2 : Relation.ReflTransGen (fun i j => 0 < rates i j) 2 7 :=
+      .head (by norm_num [rates]) h3
+    have h1 : Relation.ReflTransGen (fun i j => 0 < rates i j) 1 7 :=
+      .single (by norm_num [rates])
+    intro i
+    fin_cases i
+    · exact .head (by norm_num [rates]) h1
+    · exact h1
+    · exact h2
+    · exact h3
+    · exact h4
+    · exact h5
+    · exact h6
+    · exact .refl
 
 private theorem cemetery_eq : -(cemetery rates 7 0) = a := by
-  sorry
+  ext i j
+  fin_cases i <;> fin_cases j <;> norm_num [cemetery, rates, a, Fin.sum_univ_succ]
 
 private theorem determinant_unit : IsUnit a.det := by
-  sorry
+  have h : a.IsUpperTriangular := by
+    intro i j h
+    fin_cases i <;> fin_cases j <;> norm_num [a] at *
+  rw [Matrix.det_of_isUpperTriangular h]
+  norm_num [a, Fin.prod_univ_succ, isUnit_iff_ne_zero]
 
 private theorem moment_step (n : ℕ) (v : Fin 8 → ℝ)
     (h : a *ᵥ v = ((n + 1 : ℕ) : ℝ) • moment rates 7 0 n) :
     moment rates 7 0 (n + 1) = v := by
-  sorry
+  cases (Matrix.isUnit_iff_isUnit_det a).2 determinant_unit |>.nonempty_invertible
+  change ((n + 1 : ℕ) : ℝ) • ((-(cemetery rates 7 0))⁻¹ *ᵥ moment rates 7 0 n) = v
+  rw [cemetery_eq, ← Matrix.mulVec_smul]
+  exact Matrix.inv_mulVec_eq_vec h.symm
 
 private theorem first_moment : moment rates 7 0 1 = v1 := by
   apply moment_step 0
-  sorry
+  ext i
+  fin_cases i <;> norm_num [a, v1, moment, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
 
 private theorem second_moment : moment rates 7 0 2 = v2 := by
   apply moment_step 1
   rw [first_moment]
-  sorry
+  ext i
+  fin_cases i <;> norm_num [a, v1, v2, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
 
 private theorem third_moment : moment rates 7 0 3 = v3 := by
   apply moment_step 2
   rw [second_moment]
-  sorry
+  ext i
+  fin_cases i <;> norm_num [a, v2, v3, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
 
 private theorem moment_values :
     moment rates 7 0 1 0 = 33/100 ∧ moment rates 7 0 2 0 = 1673/5000 ∧
       moment rates 7 0 3 0 = 234843/500000 := by
   rw [first_moment, second_moment, third_moment]
-  sorry
+  norm_num [v1, v2, v3]
 
 private theorem variance_value : variance rates 7 0 = 2257/10000 := by
-  sorry
+  obtain ⟨h1, h2, _⟩ := moment_values
+  unfold variance
+  rw [h1, h2]
+  norm_num
 
 private theorem randomness_gt : 1 < randomness rates 7 0 := by
-  sorry
+  unfold randomness
+  rw [variance_value, moment_values.1]
+  norm_num
 
 private theorem skewness_le : skewness rates 7 0 ≤ 2 := by
-  sorry
+  unfold skewness
+  rw [variance_value, moment_values.1, moment_values.2.2]
+  have hs : 0 < Real.sqrt (2257/10000 : ℝ) := Real.sqrt_pos.2 (by norm_num)
+  apply (div_le_iff₀ (pow_pos hs 3)).2
+  have hl : (19/40 : ℝ) ≤ Real.sqrt (2257/10000 : ℝ) :=
+    Real.le_sqrt_of_sq_le (by norm_num)
+  have hp := pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 19/40) hl 3
+  norm_num at hp ⊢
+  linarith
 
 theorem result : ¬ claim := by
   intro h
