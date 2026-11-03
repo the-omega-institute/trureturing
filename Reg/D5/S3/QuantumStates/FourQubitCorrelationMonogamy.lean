@@ -18,11 +18,9 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-abbrev NormalizedVector := {ψ : (Fin 4 → Fin 2) → ℂ // star ψ ⬝ᵥ ψ = 1}
-
 abbrev signature : Signature where
   Params := Unit
-  State _ := NormalizedVector
+  State _ := (Fin 4 → Fin 2) → ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -32,7 +30,7 @@ abbrev signature : Signature where
 
 def actual : Realization signature :=
   realize signature
-    (fun _ _ ψ => ∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3, correlation ψ.val X i j ^ 2)
+    (fun _ _ ψ => ∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3, correlation ψ X i j ^ 2)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -40,8 +38,7 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law r := ∀ ψ : (Fin 4 → Fin 2) → ℂ, ∀ hψ : star ψ ⬝ᵥ ψ = 1,
-    r.readout () () ⟨ψ, hψ⟩ ≤ 3
+  Law r := ∀ ψ : (Fin 4 → Fin 2) → ℂ, star ψ ⬝ᵥ ψ = 1 → r.readout () () ψ ≤ 3
 
 private def productVector : (Fin 4 → Fin 2) → ℂ := Pi.single ![0, 0, 0, 0] 1
 
@@ -82,7 +79,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), ⟨productVector, product_normalized⟩, ⟨parityVector, parity_normalized⟩, ?_⟩
+  refine ⟨(), productVector, parityVector, ?_⟩
   change (∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3, correlation productVector X i j ^ 2) ≠
     ∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3, correlation parityVector X i j ^ 2
   rw [product_value, parity_value]
@@ -118,7 +115,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ ψ => ∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3, correlation ψ.val X i j ^ 2)
+    (fun _ _ ψ => ∑ X : Fin 3, ∑ i : Fin 3, ∑ j : Fin 3, correlation ψ X i j ^ 2)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
