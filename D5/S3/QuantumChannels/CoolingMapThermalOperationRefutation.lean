@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.SLDSpectralEnergy
+import D5.S3.Quantum.Information.NiceErrorBasisNonNormalStabilizer
 
 /-! A cooling-map transition obstructed by finite ground-space unitary Gram relations. -/
 
@@ -19,6 +20,7 @@ open scoped BigOperators ComplexOrder Kronecker
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Information.SLDSpectralEnergy
+open D5.S3.Quantum.Information.NiceErrorBasisNonNormalStabilizer (Pm)
 
 namespace D5.S3.QuantumChannels.CoolingMapThermalOperationRefutation
 
@@ -65,8 +67,6 @@ def claim : Prop :=
 
 private def levels : Fin 4 → ℝ := ![0, 1, 3, 7]
 
-private def rho : Matrix (Fin 4) (Fin 4) ℂ := fun _ _ => 1 / 4
-
 private def factor : Matrix (Fin 4) (Fin 2) ℂ :=
   !![1, 0; 0, 1; 3 / 5, 4 / 5; 3 / 5, 4 * Complex.I / 5]
 
@@ -100,19 +100,19 @@ private lemma sigma_diagonal (j : Fin 4) : sigma j j = 1 / 4 := by
   all_goals ring_nf
   all_goals norm_num
 
-private lemma instance_density : IsDensity rho ∧ IsDensity sigma := by
-  change (rho.PosSemidef ∧ trace rho = 1) ∧ (sigma.PosSemidef ∧ trace sigma = 1)
+private lemma instance_density : IsDensity Pm ∧ IsDensity sigma := by
+  change (Pm.PosSemidef ∧ trace Pm = 1) ∧ (sigma.PosSemidef ∧ trace sigma = 1)
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
   · convert posSemidef_vecMulVec_self_star (fun _ : Fin 4 => (1 / 2 : ℂ)) using 1
     ext i j
-    norm_num [rho.eq_1, vecMulVec]
-  · norm_num [trace, rho, Fin.sum_univ_four]
+    norm_num [Pm, vecMulVec]
+  · norm_num [trace, Pm, Fin.sum_univ_four]
   · exact (posSemidef_self_mul_conjTranspose factor).smul (by norm_num : (0 : ℝ) ≤ 1 / 4)
   · change (∑ j, sigma j j) = 1
     simp only [sigma_diagonal]
     norm_num
 
-private lemma instance_cooling : IsCoolingMap rho sigma := by
+private lemma instance_cooling : IsCoolingMap Pm sigma := by
   refine ⟨2, kraus, ?_, kraus_complete, ?_⟩
   · intro i
     left
@@ -120,7 +120,7 @@ private lemma instance_cooling : IsCoolingMap rho sigma := by
   · ext i j
     fin_cases i <;> fin_cases j <;>
       norm_num [MatrixMap.of_kraus, Fin.sum_univ_two, Fin.sum_univ_four,
-        Matrix.mul_apply, Matrix.conjTranspose_apply, kraus, rho, sigma, factor,
+        Matrix.mul_apply, Matrix.conjTranspose_apply, kraus, Pm, sigma, factor,
         Complex.star_def, Matrix.vecMul, dotProduct, map_ofNat, map_div₀, map_mul]
       <;> ring
 
@@ -156,7 +156,7 @@ private lemma energy_downward {d m : ℕ} (E : Fin d → ℝ) (hE : StrictMono E
 
 private lemma thermal_entries {m : ℕ} (e : Fin m → ℝ)
     (U : Matrix (Fin 4 × Fin m) (Fin 4 × Fin m) ℂ) (i j : Fin 4) :
-    thermalOutput e U rho i j =
+    thermalOutput e U Pm i j =
       ((1 / 4 : ℂ) * ((groundSet e).card : ℂ)⁻¹) *
         ∑ b : Fin m, ∑ l : Fin 4, ∑ a ∈ groundSet e, ∑ k : Fin 4,
           U (i, b) (k, a) * star (U (j, b) (l, a)) := by
@@ -185,7 +185,7 @@ private lemma thermal_entries {m : ℕ} (e : Fin m → ℝ)
 private lemma thermal_populations {m : ℕ} (e : Fin m → ℝ)
     (U : Matrix (Fin 4 × Fin m) (Fin 4 × Fin m) ℂ)
     (h : IsEnergyConserving levels e U) (j : Fin 4) :
-    (thermalOutput e U rho j j).re =
+    (thermalOutput e U Pm j j).re =
       (1 / (4 * (groundSet e).card : ℝ)) *
         ∑ k : Fin 4, ∑ a ∈ groundSet e, ∑ b : Fin m, Complex.normSq (U (j, b) (k, a)) := by
   have he := thermal_entries e U j j
@@ -266,7 +266,7 @@ private lemma triangular_transport (T : Matrix (Fin 4) (Fin 4) ℝ) (g : ℝ)
 
 private lemma population_support {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ)
     (U : Matrix.unitaryGroup (Fin 4 × Fin m) ℂ)
-    (h : IsEnergyConserving levels e U) (hout : thermalOutput e U rho = sigma) :
+    (h : IsEnergyConserving levels e U) (hout : thermalOutput e U Pm = sigma) :
     ∀ (j k : Fin 4) (a b : Fin m), a ∈ groundSet e →
       (j ≠ k ∨ b ∉ groundSet e) → (U : Matrix _ _ ℂ) (j, b) (k, a) = 0 := by
   have hp := thermal_populations e U h
@@ -377,7 +377,7 @@ private lemma block_coherences {m : ℕ} (e : Fin m → ℝ)
     (U : Matrix (Fin 4 × Fin m) (Fin 4 × Fin m) ℂ)
     (hs : ∀ (j k : Fin 4) (a b : Fin m), a ∈ groundSet e →
       (j ≠ k ∨ b ∉ groundSet e) → U (j, b) (k, a) = 0)
-    (hout : thermalOutput e U rho = sigma) (i j : Fin 4) :
+    (hout : thermalOutput e U Pm = sigma) (i j : Fin 4) :
     trace (block e U i * (block e U j)ᴴ) =
       ((groundSet e).card : ℂ) * (factor * factorᴴ) i j := by
   have he := thermal_entries e U i j
@@ -495,7 +495,7 @@ private lemma unitary_obstruction {n : Type*} [Fintype n] [DecidableEq n]
 
 private lemma thermal_impossible {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ)
     (U : Matrix.unitaryGroup (Fin 4 × Fin m) ℂ)
-    (h : IsEnergyConserving levels e U) (hout : thermalOutput e U rho = sigma) : False := by
+    (h : IsEnergyConserving levels e U) (hout : thermalOutput e U Pm = sigma) : False := by
   have hs := population_support hm e U h hout
   have hU := block_unitary e U hs
   have hG := block_coherences e U hs hout
@@ -506,7 +506,7 @@ private lemma thermal_impossible {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ)
 theorem result : ¬ claim := by
   intro h
   obtain ⟨m, e, U, hm, hE, hout⟩ :=
-    h 4 levels levels_valid.1 levels_valid.2 rho sigma
+    h 4 levels levels_valid.1 levels_valid.2 Pm sigma
       instance_density.1 instance_density.2 instance_cooling
   exact thermal_impossible hm e U hE hout
 
