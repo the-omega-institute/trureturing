@@ -8,6 +8,8 @@
 
 import D5.S3.Zeros.Resolvent.ActualXiHankelDictionary
 import Mathlib.Tactic
+
+/-! The complete dictionary for actual zeros and the independently defined xi expression. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section

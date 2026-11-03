@@ -8,6 +8,8 @@
 
 import D5.S3.Zeros.Resolvent.ActualXiTaylorDictionary
 import Mathlib.Tactic
+
+/-! Uniform absolute majorants and geometric remainders for the actual xi dictionary. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -42,6 +44,7 @@ private theorem folded_term_bound (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1 / 4)
     (w : ℂ) (hw : ‖w‖ ≤ r) (n : PositiveZero) :
     ‖w * weight n / (1 - node n * w ^ 2)‖ ≤
       ‖weight n‖ * r / (1 - radius * r ^ 2) := by
+  have hΛ := radius_bounds.1
   have hq := ratio_bounds r hr hr1
   have hd : 1 - radius * r ^ 2 ≤ ‖1 - node n * w ^ 2‖ := by
     have ht := norm_sub_norm_le (1 : ℂ) (node n * w ^ 2)
@@ -64,7 +67,8 @@ theorem actual_xi_folded_normal (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1 / 4) :
       w * weight n / (1 - node n * w ^ 2)) xiOdd (Metric.closedBall 0 r) := by
   have hs := (weight_norm_summable.mul_right r).div_const (1 - radius * r ^ 2)
   refine ⟨hs, ?_⟩
-  have hu := HasSumUniformlyOn.of_norm_le_summable hs (fun n w hw =>
+  have hu := HasSumUniformlyOn.of_norm_le_summable (s := Metric.closedBall (0 : ℂ) r)
+    hs (fun n w hw =>
     folded_term_bound r hr hr1 w (by simpa using hw) n)
   apply hu.congr_right (fun w hw => ?_)
   exact (actual_xi_folded_hasSum w ((show ‖w‖ ≤ r by simpa using hw).trans_lt hr1)).tsum_eq
@@ -85,7 +89,7 @@ theorem actual_xi_taylor_normal (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1 / 4) :
   have hq := ratio_bounds r hr hr1
   have hs := (hasSum_geometric_of_lt_one hq.1 hq.2).summable.mul_left (totalWeight * r)
   refine ⟨hs, ?_⟩
-  have hu := HasSumUniformlyOn.of_norm_le_summable hs
+  have hu := HasSumUniformlyOn.of_norm_le_summable (s := Metric.closedBall (0 : ℂ) r) hs
     (fun j w hw => power_term_bound r hr w (by simpa using hw) j)
   apply hu.congr_right (fun w hw => ?_)
   exact (actual_xi_moment_hasSum w ((show ‖w‖ ≤ r by simpa using hw).trans_lt hr1)).tsum_eq

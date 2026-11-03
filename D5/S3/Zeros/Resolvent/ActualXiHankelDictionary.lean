@@ -82,10 +82,9 @@ theorem actual_xi_hankel_nonnegative_of_rh (hRH : RiemannHypothesis)
   have hx : (actualData.zero n).re = 1 / 2 := by
     apply hRH _ hz.1
     · rintro ⟨k, hk⟩
-      have hr := congrArg Complex.re hk
-      norm_num at hr
-      have hp := hz.2.1
-      linarith
+      have hi := congrArg Complex.im hk
+      norm_num at hi
+      linarith [n.property]
     · intro h
       have h1 := congrArg Complex.re h
       norm_num at h1
