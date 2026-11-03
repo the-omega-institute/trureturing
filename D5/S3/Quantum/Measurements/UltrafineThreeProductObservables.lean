@@ -12,7 +12,7 @@ import D5.S3.Resource.CompositeConeDuality
 import D5.S3.Observer.Conditioning.UnreadStateOrthogonalProjection
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Matrix.CartesianVariance
-import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix.Positivity
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix
 import D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation
 import D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
 
@@ -82,7 +82,9 @@ private lemma separable_blocks {d : ℕ} (u : Matrix.unitaryGroup (Fin d) ℂ)
     rw [inner_matrix_col_col, ← star_eq_conjTranspose, Unitary.coe_star_mul_self]
     exact one_apply_eq k
   have hq (k : Fin d) : trace (rankOneDensity (fun i => u.val i k)) = 1 := by
-    simpa only [rankOneDensity, trace_vecMulVec, dotProduct_comm] using hu k
+    simpa only [Matrix.one_mul, Matrix.one_mulVec, hu] using
+      (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake
+        (fun i => u.val i k) (hu k) 1).2.2.symm
   let w : Fin d × Fin d → ℝ := fun p => (hc p.1).1.eigenvalues p.2
   let z : Fin d × Fin d → Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ := fun p =>
     rankOneDensity (fun r => u.val r.1 p.1 * ((hc p.1).1.eigenvectorBasis p.2) r.2)
@@ -139,11 +141,13 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
       mulVec_single_one, single_one_vecMul, rankOneDensity,
       star_eq_conjTranspose]
     rfl
-  have he (k : Fin d) : e k * e k = e k := by
-    simp only [e, diagonal_single, single_mul_single_same, one_mul]
   have hqid (k : Fin d) : q k * q k = q k := by
-    change φ (e k) * φ (e k) = φ (e k)
-    rw [← map_mul, he]
+    rw [hq]
+    apply (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake _ ?_ 1).1
+    rw [dotProduct_comm]
+    change inner ℂ (WithLp.toLp 2 (u.val.transpose k)) (WithLp.toLp 2 (u.val.transpose k)) = 1
+    rw [inner_matrix_col_col, ← star_eq_conjTranspose, Unitary.coe_star_mul_self]
+    exact one_apply_eq k
   have hqsum : ∑ k, q k = 1 := by
     simpa only [hq,
       D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation.measurementProjector] using
@@ -194,9 +198,10 @@ private lemma left_diagonal_useless {d : ℕ} {ι : Type*}
       simp [C, e', kroneckerMap_apply]
     have h : V * C * V.conjTranspose =
         vecMulVec (fun i => u.val i k) (star (fun i => u.val i k)) ⊗ₖ c := by
-      simp only [V, C, conjTranspose_kronecker, conjTranspose_one,
-        ← mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul,
-        conjTranspose_replicateCol, ← vecMulVec_eq Unit]
+      simpa only [Matrix.mul_one, Matrix.one_mul, conjTranspose_one,
+        conjTranspose_replicateCol, ← vecMulVec_eq Unit] using
+        (Matrix.kronecker_conj_eq (1 : Matrix Unit Unit ℂ) c
+          (replicateCol Unit (fun i => u.val i k)) (1 : Matrix (Fin d) (Fin d) ℂ))
     have hs := congrArg (fun M => M.submatrix id id) h
     rw [Matrix.submatrix_mul _ _ id e' id e'.bijective,
       Matrix.submatrix_mul _ _ id e' e' e'.bijective, hc,
@@ -529,7 +534,8 @@ private lemma triple_useful : ¬ IsUseless obs univ := by
   intro huseless
   obtain ⟨σ, _, hσ, hmatch⟩ := huseless (rankOneDensity g)
     ⟨posSemidef_vecMulVec_self_star g, by
-      simpa only [rankOneDensity, trace_vecMulVec, dotProduct_comm] using hg⟩
+      simpa only [Matrix.one_mul, Matrix.one_mulVec, hg] using
+        (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake g hg 1).2.2.symm⟩
   have henergy : trace (σ * hamiltonian) = (μ : ℂ) := by
     have h0 := hmatch 0 (mem_univ 0)
     have h1 := hmatch 1 (mem_univ 1)
