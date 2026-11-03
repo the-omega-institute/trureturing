@@ -3689,10 +3689,11 @@ $$
 
 两项均完全正，$R^*(1)=E$、$R(P_i)=x_iP_i$，且没有跨中心转移。对原块内不同位置，$S(E_{ij})$ 的 $(i,j)$ 系数恰为 $\langle i|T(E_{ij})|j\rangle$，补项不改变它。涉及零权重的位置原 Kraus 列已为零。因而 $R$ 正是对角系数取 $x_i$、其余系数取原压缩系数的唯一 Schur 映射；它不依赖 Stinespring 表示选择。此显式描述也给共同调暗。
 
-有限 Stinespring 差的成熟范数估计给
+有限维迹对偶将任意输入 diamond 范数等同于伴随的完全有界算子范数；共同 Stinespring 差的成熟估计因而给
 
 $$
 \|\widetilde T-S\|_\diamond
+ =\|\widetilde T^*-S^*\|_{\mathrm{cb}}
  \le(\|V\|+\|W\|)\|V-W\|
  \le4\sqrt{q\ell}.
 \tag{71.8}
@@ -3700,7 +3701,7 @@ $$
 
 补项是完全正映射，其 diamond 范数等于其伴随在单位上的算子范数，故不超过 $\ell$。限制回原代数并用 $\ell\le q\lambda_M$ 得 $q(4\sqrt{\lambda_M}+\lambda_M)$。两条成功效果同为 $E$ 的完全正映射各有范数 $q$，另给上界 $2q$，即得 (71.1)。$E=0$ 时两者均零。
 
-范数桥复用 [Kretschmann–Schlingemann–Werner，命题 3](https://arxiv.org/pdf/0710.2495) 的共同 Stinespring 估计及有限迹对偶；有限符号平均复用 [Han–Liu，§2.2 的矩形 twirling 映射](https://arxiv.org/pdf/2311.16349)，这里的输出表示为 $U\otimes1$、输入表示为 $U$，共同交织部分正是其平均的像。这里将它们用于保留原二元谱系数和成功效果的同一修复，不把单独的范数估计或有限平均认领为新机制。∎
+范数桥复用 [Kretschmann–Schlingemann–Werner，命题 3](https://arxiv.org/pdf/0710.2495v1) 的共同 Stinespring 估计及有限迹对偶；有限符号平均复用 [Han–Liu，§2.2 的矩形 twirling 映射](https://arxiv.org/pdf/2311.16349v1)，这里的输出表示为 $U\otimes1$、输入表示为 $U$，共同交织部分正是其平均的像。这里将它们用于保留原二元谱系数和成功效果的同一修复，不把单独的范数估计或有限平均认领为新机制。∎
 
 **定理 71.2（参照核及实际读数的误差桥）。** 数学族 $R$ 满足定义 57.1 的全部代数合同，所以有式 (57.1) 的共同有限正定核 $\phi$、$c\in[0,1]$ 及 $\gamma=1-c$，无需连续性。令 $\Delta_R$ 为式 (64.1)，$\kappa_R$ 为用 $R$ 代替 $T$ 的式 (70.4)。则
 
@@ -3831,7 +3832,7 @@ s_F=d_n^{-1/2}\sum_i|i\rangle,\qquad U_F=1-2|s_F\rangle\langle s_F|.
 \tag{73.1}
 $$
 
-这里的单方向相位翻转是成熟构造，可视为 [Sanders–Wallman–Sanders，定义 6、命题 1](https://arxiv.org/pdf/1501.04932) 的一般受控相位门在 $\theta=\pi$ 时的酉共轭。为每个投影框架一次选定相容向量代表以定义 $s_F$；不另要求射线相位选择或框架改变下的协变性。对所有效果指定
+这里的单方向相位翻转是成熟构造，可视为 [Sanders–Wallman–Sanders，定义 6、命题 1](https://arxiv.org/pdf/1501.04932v3) 的一般受控相位门在 $\theta=\pi$ 时的酉共轭。为每个投影框架一次选定相容向量代表以定义 $s_F$；不另要求射线相位选择或框架改变下的协变性。对所有效果指定
 
 $$
 T^n_{E,F}(\rho)=
@@ -3956,7 +3957,7 @@ $$
 
 **定义 76.1（数学归属与内生边界）。** 逐射线的完整误差与全部二元切口的共同误差是两个不同量词，命题 73.1 在保留同一谱对系数、共同调暗及固定校准对象的完整菜单中给出区分。定理 71.1 将后者接到保持原二元关系的精确数学参照，定理 72.2 再将原实际局部返回边界接到全部指定更新的统一稳定性。这是当前新增的综合桥，不主张全球原创优先权或最优常数。
 
-有限 Kraus、Stinespring 及 CP 范数工具沿用 §§51、60，差范数不等式明确复用 [Kretschmann–Schlingemann–Werner，命题 3](https://arxiv.org/pdf/0710.2495)。有限符号平均直接对应 [Han–Liu，*Zero-Error Correctibility and Phase Retrievability for Twirling Channels*，§2.2](https://arxiv.org/pdf/2311.16349) 的矩形群平均，表示对应已在定理 71.1 中给出；不将这个成熟投影方法认领为新内容。仓内[算术全息续卷 §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels) 已用正确输出 Stinespring 记录及相位平均处理特定目标的精确校准归约；其资源保持最优化结论不提供 (71.1) 的切口预算。平均性能与最坏误差不能混同的成熟量子先例见 [Sanders–Wallman–Sanders，*Bounding quantum gate error rate based on reported average fidelity*](https://arxiv.org/pdf/1501.04932)；本处直接复用其单方向相位翻转机制，将异常块与其余块的 Schur 分支配成同一个 $m_n$，再给逐框架射线及集体切口的相反读数；不把相位门本身或平均性能的警示认领为新内容。
+有限 Kraus、Stinespring 及 CP 范数工具沿用 §§51、60，差范数不等式明确复用 [Kretschmann–Schlingemann–Werner，命题 3](https://arxiv.org/pdf/0710.2495v1)。有限符号平均直接对应 [Han–Liu，*Zero-Error Correctibility and Phase Retrievability for Twirling Channels*，§2.2](https://arxiv.org/pdf/2311.16349v1) 的矩形群平均，表示对应已在定理 71.1 中给出；不将这个成熟投影方法认领为新内容。仓内[算术全息续卷 §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels) 已用正确输出 Stinespring 记录及相位平均处理特定目标的精确校准归约；其资源保持最优化结论不提供 (71.1) 的切口预算。平均性能与最坏误差不能混同的成熟量子先例见 [Sanders–Wallman–Sanders，*Bounding quantum gate error rate based on reported average fidelity*](https://arxiv.org/pdf/1501.04932v3)；本处直接复用其单方向相位翻转机制，将异常块与其余块的 Schur 分支配成同一个 $m_n$，再给逐框架射线及集体切口的相反读数；不把相位门本身或平均性能的警示认领为新内容。
 
 最新[有限带噪报告续卷定理 6.1](AURIC_COMPOSITE_COMPARISON_FINITE_NOISY_REPORTS_V96_CONTINUATION.md) 以完整实际残差而非逐坐标平均量承担另一种局部到整体控制；本处与其共享“共同实现中的完整缺陷才可组合”的方法对应，但不借用其曲率下界、Hilbert–Schmidt 报告或平方根证书。这里的有限符号平均控制算子范数，后续三点几何则复用 §§58–60；没有把任意有限正定性缩减成三阶正性，也没有从数学环境或修复映射产生新的实际供应。有限标定认证、取得全部切口预算、统计置信率和操作费用仍不在这些定理的结论中。
 
