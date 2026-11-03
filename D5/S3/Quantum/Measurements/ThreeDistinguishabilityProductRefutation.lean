@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch
 import D5.S0.Carrier.GoldenRatio
 import D5.S3.Analytic.Adelic.FiniteToroidalFrameReconstruction
 import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
 import D5.S3.QuantumBounds.RebitExclusionDistance
 
 /-! Korzekwa, Czachórski, Puchała and Życzkowski, arXiv:1812.09083v3,
@@ -74,8 +75,9 @@ private lemma point_simplex : (∀ k, 0 ≤ point k) ∧ ∑ k, point k = 1 := b
     ring
 
 private lemma phase_unit : conj ζ * ζ = 1 := by
-  rw [Complex.conj_mul']
-  simp only [ζ, Complex.norm_exp_ofReal_mul_I, one_pow, Complex.ofReal_one]
+  simpa only [ζ, Complex.star_def, Complex.ofReal_neg, mul_neg, neg_mul, neg_neg,
+    mul_comm] using
+    D5.S3.Quantum.Dynamics.PositivePauliClockOrder.phase_unit (-(Real.pi / 5))
 
 private lemma phase_fifth : ζ ^ 5 = -1 := by
   rw [ζ.eq_1, ← Complex.exp_nat_mul]
