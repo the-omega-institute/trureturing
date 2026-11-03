@@ -172,7 +172,7 @@ private theorem support_enlarged_fails : ¬ supportArena.{u,v,w,z}.Law enlarged 
 
 def leftFamily : Registration leftArena.{u,v,w,z}
     (type_of% (@unexposed_left_label_competitor.{u,v,w,z})) where
-  actual := actual
+  actual := realize signature.{u,v,w,z} actual.readout actual.anchor
   bridge := Iff.rfl
   variation := ⟨@unexposed_left_label_competitor.{u,v,w,z}, enlarged, left_enlarged_fails⟩
   sensitivity := by
@@ -199,8 +199,7 @@ noncomputable def leftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,
   realization := .source leftArena ⟨leftFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
-  readout := some (realize signature.{u,v,w,z}
-    (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2) (fun e => nomatch e))
+  readout := some (realize signature.{u,v,w,z} actual.readout actual.anchor)
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
@@ -224,7 +223,7 @@ noncomputable def leftRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,
 
 def rightFamily : Registration rightArena.{u,v,w,z}
     (type_of% (@unexposed_right_label_competitor.{u,v,w,z})) where
-  actual := actual
+  actual := realize signature.{u,v,w,z} actual.readout actual.anchor
   bridge := Iff.rfl
   variation := ⟨@unexposed_right_label_competitor.{u,v,w,z}, enlarged, right_enlarged_fails⟩
   sensitivity := by
@@ -251,8 +250,7 @@ noncomputable def rightRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_
   realization := .source rightArena ⟨rightFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
-  readout := some (realize signature.{u,v,w,z}
-    (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2) (fun e => nomatch e))
+  readout := some (realize signature.{u,v,w,z} actual.readout actual.anchor)
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
@@ -276,7 +274,7 @@ noncomputable def rightRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_
 
 def supportFamily : Registration supportArena.{u,v,w,z}
     (type_of% (@positive_certificate_support_lower_bound.{u,v,w,z})) where
-  actual := actual
+  actual := realize signature.{u,v,w,z} actual.readout actual.anchor
   bridge := Iff.rfl
   variation := ⟨@positive_certificate_support_lower_bound.{u,v,w,z}, enlarged, support_enlarged_fails⟩
   sensitivity := by
@@ -303,8 +301,7 @@ noncomputable def supportRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source supportArena ⟨supportFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
-  readout := some (realize signature.{u,v,w,z}
-    (fun _ p E => transport E p.2.2.2.2.1 p.2.2.2.2.2) (fun e => nomatch e))
+  readout := some (realize signature.{u,v,w,z} actual.readout actual.anchor)
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
