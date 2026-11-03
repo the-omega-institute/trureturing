@@ -103,13 +103,13 @@ private theorem gamma_tmul (t : ℝ) (a b c d : J) :
 private theorem s_comm (a b : J) : S a b = S b a := by
   ext i; fin_cases i <;> simp [S, spin] <;> ring
 private theorem s_unit (a : J) : S (e 0) a = a := by
-  ext i; fin_cases i <;> simp [S, spin, e, EuclideanSpace.single_apply]
+  ext i; fin_cases i <;> simp [S, spin, e, PiLp.single_apply]
 private theorem s_unit_right (a : J) : S a (e 0) = a := by
   rw [s_comm, s_unit]
 private theorem c_anti (a b : J) : C a b = -(C b a) := by
   ext i; fin_cases i <;> simp [C, cross, cross_apply] <;> ring
 private theorem c_unit (a : J) : C (e 0) a = 0 := by
-  ext i; fin_cases i <;> simp [C, cross, cross_apply, e, EuclideanSpace.single_apply]
+  ext i; fin_cases i <;> simp [C, cross, cross_apply, e, PiLp.single_apply]
 private theorem c_unit_right (a : J) : C a (e 0) = 0 := by
   rw [c_anti, c_unit, neg_zero]
 private theorem d_unit (t : ℝ) (a : J) : D t a (e 0) = 0 := c_unit_right _
@@ -126,40 +126,34 @@ private theorem c_frob (a b c : J) : inner ℝ (C a b) c = inner ℝ a (C b c) :
   <;> ring
 
 private theorem m_comm (X Y : V) : M X Y = M Y X := by
-  induction X using TensorProduct.induction_on with
-  | zero => simp
+  induction X using TensorProduct.inductionOn with
   | tmul a b =>
-    induction Y using TensorProduct.induction_on with
-    | zero => simp
+    induction Y using TensorProduct.inductionOn with
     | tmul c d =>
       simp only [m_tmul]
       rw [s_comm c a, s_comm d b, c_anti c a, c_anti d b]
-      simp
+      simp [TensorProduct.neg_tmul, TensorProduct.tmul_neg]
     | add X Y hx hy => simp [map_add, hx, hy]
   | add X Y hx hy => simp [map_add, hx, hy]
 
 private theorem m_unit (X : V) : M (e 0 ⊗ₜ e 0) X = X := by
-  induction X using TensorProduct.induction_on with
-  | zero => simp
+  induction X using TensorProduct.inductionOn with
   | tmul a b => simp [m_tmul, s_unit, c_unit]
   | add X Y hx hy => simp [hx, hy]
 
 private theorem m_frob (X Y Z : V) : inner ℝ (M X Y) Z = inner ℝ X (M Y Z) := by
-  induction X using TensorProduct.induction_on with
-  | zero => simp
+  induction X using TensorProduct.inductionOn with
   | tmul a b =>
-    induction Y using TensorProduct.induction_on with
-    | zero => simp
+    induction Y using TensorProduct.inductionOn with
     | tmul c d =>
-      induction Z using TensorProduct.induction_on with
-      | zero => simp
+      induction Z using TensorProduct.inductionOn with
       | tmul f g => simp [m_tmul, inner_sub_left, inner_sub_right, s_frob, c_frob]
       | add X Y hx hy => simp [map_add, inner_add_left, inner_add_right, hx, hy]
     | add X Y hx hy => simp [map_add, inner_add_left, inner_add_right, hx, hy]
   | add X Y hx hy => simp [map_add, inner_add_left, inner_add_right, hx, hy]
 
 /-- The two exact module actions and two preserving actions hold on all local inputs. -/
-theorem all_input_contract (t : ℝ) (a b c d : J) :
+private theorem all_input_contract (t : ℝ) (a b c d : J) :
     M (a ⊗ₜ e 0) (c ⊗ₜ d) = S a c ⊗ₜ d ∧
     M (e 0 ⊗ₜ b) (c ⊗ₜ d) = c ⊗ₜ S b d ∧
     Gamma t (a ⊗ₜ b) (c ⊗ₜ e 0) = D t a c ⊗ₜ b ∧
@@ -167,10 +161,74 @@ theorem all_input_contract (t : ℝ) (a b c d : J) :
   simp [m_tmul, gamma_tmul, s_unit, s_unit_right, c_unit, c_unit_right, d_unit]
 
 /-- The fixed joint product is commutative, unital and Frobenius for its product inner product. -/
-theorem fixed_product_laws :
+private theorem fixed_product_laws :
     (∀ X Y : V, M X Y = M Y X) ∧
     (∀ X : V, M (e 0 ⊗ₜ e 0) X = X) ∧
     (∀ X Y Z : V, inner ℝ (M X Y) Z = inner ℝ X (M Y Z)) :=
   ⟨m_comm, m_unit, m_frob⟩
+
+
+private theorem d_split (t : ℝ) (a b : J) :
+    D t a b = C a b + (t*a 0) • C (e 3) b := by
+  ext i; fin_cases i <;> simp [D, C, cross, cross_apply, shift, e, PiLp.single_apply] <;> ring
+
+private theorem s_basis (i j : Fin 4) :
+    S (e i) (e j) = if i = 0 then e j else if j = 0 then e i
+      else if i = j then e 0 else 0 := by
+  fin_cases i <;> fin_cases j <;> ext k <;> fin_cases k <;>
+    norm_num [S, spin, e, PiLp.single_apply]
+
+private theorem c_basis (i j : Fin 4) :
+    C (e i) (e j) =
+    if i = 1 ∧ j = 2 then e 3 else
+    if i = 2 ∧ j = 3 then e 1 else
+    if i = 3 ∧ j = 1 then e 2 else
+    if i = 2 ∧ j = 1 then -(e 3) else
+    if i = 3 ∧ j = 2 then -(e 1) else
+    if i = 1 ∧ j = 3 then -(e 2) else 0 := by
+  fin_cases i <;> fin_cases j <;> ext k <;> fin_cases k <;>
+    norm_num [C, cross, cross_apply, e, PiLp.single_apply]
+
+private theorem e_apply (i j : Fin 4) : e i j = if i=j then 1 else 0 := by
+  simp [e, PiLp.single_apply, eq_comm]
+
+private theorem e_inner (i j : Fin 4) : inner ℝ (e i) (e j) = if i=j then 1 else 0 := by
+  simp [e, EuclideanSpace.inner_single_left, PiLp.single_apply]
+
+/-- The full unaveraged report, over all ordered complete product-basis labels. -/
+def reportSquared (t : ℝ) : ℝ :=
+  ∑ i : Fin 4, ∑ j : Fin 4, ∑ k : Fin 4, ∑ l : Fin 4,
+    ∑ m : Fin 4, ∑ n : Fin 4,
+      ‖E t (e i ⊗ₜ e j) (e k ⊗ₜ e l) (e m ⊗ₜ e n)‖ ^ 2
+
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 8000000 in
+private theorem report_row_z (t : ℝ) (k l : Fin 4) :
+    (∑ m : Fin 4, ∑ n : Fin 4,
+      ‖E t (e 0 ⊗ₜ e 3) (e k ⊗ₜ e l) (e m ⊗ₜ e n)‖ ^ 2) =
+      (if (k=0 ∨ k=3) ∧ (l=0 ∨ l=3) then 0 else 4*t^2) := by
+  fin_cases k <;> fin_cases l <;>
+    norm_num (config := { maxSteps := 1000000 }) only
+      [← real_inner_self_eq_norm_sq, Fin.sum_univ_succ, E,
+    m_tmul, gamma_tmul, d_split, s_basis, c_basis,
+    map_add, map_sub, map_smul, TensorProduct.add_tmul, TensorProduct.sub_tmul,
+    TensorProduct.tmul_add, TensorProduct.tmul_sub, TensorProduct.neg_tmul,
+    TensorProduct.tmul_neg, TensorProduct.smul_tmul', TensorProduct.tmul_smul,
+    inner_sub_left, inner_sub_right, inner_add_left, inner_add_right,
+    inner_smul_left, inner_smul_right, TensorProduct.inner_tmul, e_inner,
+    e_apply, map_zero, map_neg, LinearMap.zero_apply, TensorProduct.zero_tmul,
+    TensorProduct.tmul_zero, inner_zero_left, inner_zero_right,
+    zero_add, add_zero, sub_zero, zero_sub, zero_smul, smul_zero, one_smul,
+    zero_mul, mul_zero, one_mul, mul_one, neg_zero, neg_neg, add_neg_cancel,
+    sub_self, sub_neg_eq_add, neg_add_cancel, Fin.reduceFinMk, ite_true, ite_false]
+  <;> ring
+
+private theorem report_block_z (t : ℝ) :
+    (∑ k : Fin 4, ∑ l : Fin 4, ∑ m : Fin 4, ∑ n : Fin 4,
+      ‖E t (e 0 ⊗ₜ e 3) (e k ⊗ₜ e l) (e m ⊗ₜ e n)‖ ^ 2) = 48*t^2 := by
+  simp only [report_row_z]
+  norm_num [Fin.sum_univ_succ]
+  <;> ring
 
 end D5.S3.Quantum.Algebra.PauliFixedProductFamily
