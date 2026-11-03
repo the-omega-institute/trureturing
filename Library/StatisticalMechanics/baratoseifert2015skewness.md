@@ -24,7 +24,7 @@ The cycle completion time and its moments (l. 132–153):
 
 A cycle is completed by the irreversible product-release transition (eq. `fullreaction`: "The last transition is taken to be irreversible").
 
-The ordering and the open question (l. 345–357):
+The ordering and the open question (l. 341–358):
 
 > The maxima of randomness parameter $\mathcal R$, skewness $\mathcal S$ and kurtosis $\mathcal K$ for a unicyclic network are $\mathcal R=1$, $\mathcal S=2$, and $\mathcal K=9$ […] This numerical investigation consists of, for example, maximizing the skewness with the constraint that $\mathcal R\le 1$, which leads to a skewness exceeding $2$. The opposite however is not possible, if the constraint $\mathcal S\le 2$ is satisfied, the randomness parameter never goes above $1$. […] It remains as an open question whether this property is true for arbitrary networks that do not consist of a single cycle.
 
