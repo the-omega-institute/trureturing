@@ -366,18 +366,6 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeZeroMomentumBRST.totalGhostN
 
 For all coordinates (A,v,C), the existing actual tensorNumber sends Psi(A,v,C) to Psi(0,v,2*C), under both inverse-Gram equations.
 
-**Theorem 1.30 (zero_shell_actions).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeZeroMomentumBRST.zero_shell_actions`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeZeroMomentumBRST.zero_shell_actions` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every state of the literal original zero-momentum relative shell, its actual totalCharge is zero and its actual tensorNumber is Psi(0,v,2*C), where (A,v,C) are its unique shellEquiv coordinates. Both actions concern the same arbitrary original state.
-
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeZeroMomentumBRST.Coordinates`
@@ -409,7 +397,6 @@ For every state of the literal original zero-momentum relative shell, its actual
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeZeroMomentumBRST.zeroIndexEquiv`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeZeroMomentumBRST.zeroLabel`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeZeroMomentumBRST.zeroVector`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeZeroMomentumBRST.zero_shell_actions`
 - Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTWard](LatticeBRSTWard.md)
 - Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostDegree](LatticeMatterGhostDegree.md)
 - Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeRelativeMassShell](LatticeRelativeMassShell.md)
