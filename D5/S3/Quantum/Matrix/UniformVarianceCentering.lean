@@ -258,7 +258,7 @@ private lemma reference_energy_le {J : Type*} [Fintype J]
     _ ≤ ∑ r : Fin n, b*‖x r‖^2 := Finset.sum_le_sum (fun r _ => hv (x r))
     _ = _ := (Finset.mul_sum _ _ _).symm
 
-private lemma kraus_adjoint_norm_le {J : Type*} [Fintype J]
+lemma kraus_adjoint_norm_le {J : Type*} [Fintype J]
     (L : J → G →ₗ[ℂ] H) (b : ℝ) (hb : 0 ≤ b)
     (hv : ∀ x : G, ‖x‖ = 1 → ∑ j, ‖L j x‖^2 ≤ b)
     (A : H →L[ℂ] H) :
@@ -386,27 +386,24 @@ def blockInclusion (i : I) : E i →ₗᵢ[ℂ] PiLp 2 E where
     { toFun := PiLp.single 2 i
       map_add' := fun x y => by simp [PiLp.single_add]
       map_smul' := fun c x => by
-        apply WithLp.ext
-        simp [PiLp.single, Pi.single_smul] }
+        apply PiLp.ext
+        intro k
+        by_cases hk : k = i
+        · subst k; simp
+        · simp [PiLp.single_eq_of_ne hk] }
   norm_map' := PiLp.norm_single _ _
 
 /-- Orthogonal projection onto an actual center summand, without compressing h. -/
 def blockProjection (i : I) : PiLp 2 E →ₗ[ℂ] PiLp 2 E :=
-  (blockInclusion i).toLinearMap.comp (PiLp.projₗ 2 ℂ E i)
+  (blockInclusion i).toLinearMap.comp (PiLp.projₗ (𝕜 := ℂ) 2 E i)
 
 private lemma projection_apply (i : I) (x : PiLp 2 E) :
     blockProjection i x = PiLp.single 2 i (x i) := rfl
 
-private lemma projection_symmetric (i : I) :
-    (blockProjection (E := E) i).IsSymmetric := by
-  intro x y
-  simp only [projection_apply, PiLp.inner_apply]
-  simp [PiLp.single, Pi.single_apply, apply_dite, dite_apply]
-
 private lemma projection_partition (x : PiLp 2 E) :
     ∑ i, ‖blockProjection i x‖^2 = ‖x‖^2 := by
   simp only [projection_apply, PiLp.norm_single]
-  exact (PiLp.norm_sq_eq_of_L2 x _).symm
+  exact (PiLp.norm_sq_eq_of_L2 E x).symm
 
 /-- Coordinatewise extension by an arbitrary finite reference. -/
 def directSumReference (n : ℕ) (T : PiLp 2 E →ₗ[ℂ] PiLp 2 E) :=
@@ -426,10 +423,12 @@ private lemma centralMean_single {J : Type*}
   classical
   simp only [centralMean, LinearMap.sum_apply, LinearMap.smul_apply]
   rw [Finset.sum_eq_single i]
-  · rfl
+  · simp only [projection_apply, blockInclusion, LinearIsometry.coe_mk,
+      LinearMap.coe_mk, AddHom.coe_mk, PiLp.single_eq_same]
   · intro k _ hki
     have hz : blockProjection k (blockInclusion i x) = 0 := by
-      change PiLp.single 2 k (PiLp.single 2 i x k) = 0
+      simp only [projection_apply, blockInclusion, LinearIsometry.coe_mk,
+        LinearMap.coe_mk, AddHom.coe_mk]
       simp [hki]
     rw [hz, smul_zero]
   · simp
@@ -465,13 +464,14 @@ theorem hermitian_direct_sum_centering {J : Type*} [Fintype J]
       ∑ j, ‖ell j (blockInclusion i z)‖^2 ≤ (5*δ)*‖z‖^2 := by
     have hp := hermitian_block_centering_and_gram_bound
       (blockInclusion (E := E) i) h hh δ hδ (hv i) (e i) (he i)
-    have hz := (hp.2.1 z)
-    rw [hz.1] at hz
+    have hz := (hp.2.1 z).2
+    rw [(hp.2.1 z).1] at hz
     simpa only [hr, LinearMap.sub_apply, LinearMap.comp_apply, LinearMap.smul_apply,
-      LinearIsometry.coe_toLinearMap] using hz.2
+      LinearIsometry.coe_toLinearMap] using hz
   have hbase (x : PiLp 2 E) :
       ∑ t : J × I, ‖ell t.1 (blockProjection t.2 x)‖^2 ≤ (5*δ)*‖x‖^2 := by
     rw [Fintype.sum_prod_type, Finset.sum_comm, PiLp.norm_sq_eq_of_L2]
+    change (∑ i, ∑ j, ‖ell j (blockInclusion i (x i))‖^2) ≤ _
     calc
       _ ≤ ∑ i, (5*δ)*‖x i‖^2 :=
         Finset.sum_le_sum (fun i _ => hb i (x i))
@@ -483,11 +483,11 @@ theorem hermitian_direct_sum_centering {J : Type*} [Fintype J]
   let B := fun t : J × I × I => (P t.2.2).comp ((L t.1).comp (P t.2.1))
   have hpart (x : PiLp 2 (fun _ : Fin n => PiLp 2 E)) :
       ∑ i, ‖P i x‖^2 = ‖x‖^2 := by
-    simp only [P, directSumReference, referenceLift, PiLp.norm_sq_eq_of_L2]
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro r _
-    exact projection_partition (x r)
+    have hn (i : I) : ‖P i x‖^2 = ∑ r, ‖blockProjection i (x r)‖^2 :=
+      PiLp.norm_sq_eq_of_L2 _ _
+    simp_rw [hn]
+    rw [Finset.sum_comm, PiLp.norm_sq_eq_of_L2]
+    exact Finset.sum_congr rfl (fun r _ => projection_partition (x r))
   have ha (x : PiLp 2 (fun _ : Fin n => PiLp 2 E)) :
       ∑ t : J × I, ‖L t.1 (P t.2 x)‖^2 ≤ (5*δ)*‖x‖^2 := by
     exact reference_energy_le (fun t : J × I => (ell t.1).comp (blockProjection t.2))
@@ -497,7 +497,7 @@ theorem hermitian_direct_sum_centering {J : Type*} [Fintype J]
     change (∑ t : J × I × I, ‖P t.2.2 (L t.1 (P t.2.1 x))‖^2) ≤ _
     simp only [Fintype.sum_prod_type]
     simp_rw [hpart]
-    exact ha x
+    simpa only [Fintype.sum_prod_type] using ha x
   refine ⟨henergy, ?_⟩
   intro A
   apply kraus_adjoint_norm_le B (5*δ) (by positivity)

@@ -196,6 +196,55 @@ private lemma centered_defect_identity {a J : Type*}
       congrArg (fun Y : Matrix a a ℂ => (1/2 : ℂ) • Y) ht.symm
     _ = _ := by module
 
+private lemma trace_centered_defect {a : Type*} [Fintype a] [DecidableEq a]
+    (Q X K D : Matrix a a ℂ) (b : ℝ)
+    (hqnorm : ‖Q‖ ≤ b) (hk : traceNorm K ≤ b*traceNorm X)
+    (hid : D = (1/2 : ℂ) • (Q*X+X*Q) - K) :
+    traceNorm D ≤ (2*b)*traceNorm X := by
+  obtain ⟨U,hU⟩ := (traceNorm_eq_max_re_tr_U D).1
+  have hUn : ‖U.val‖ ≤ 1 := by
+    rcases isEmpty_or_nonempty a with hi | hi
+    · have hz : U.val = 0 := Subsingleton.elim _ _
+      simp [hz]
+    · exact (CStarRing.norm_coe_unitary U).le
+  have hUQ : ‖U.val*Q‖ ≤ b :=
+    (norm_mul_le _ _).trans ((mul_le_mul_of_nonneg_right hUn (norm_nonneg Q)).trans
+      (by simpa using hqnorm))
+  have hQU : ‖Q*U.val‖ ≤ b :=
+    (norm_mul_le _ _).trans ((mul_le_mul_of_nonneg_left hUn (norm_nonneg Q)).trans
+      (by simpa using hqnorm))
+  have h1 := (re_trace_mul_le (U.val*Q) X).trans
+    (mul_le_mul_of_nonneg_right hUQ (traceNorm_nonneg X))
+  have h2 := (re_trace_mul_le (Q*U.val) X).trans
+    (mul_le_mul_of_nonneg_right hQU (traceNorm_nonneg X))
+  have h3 := (traceNorm_eq_max_re_tr_U K).2
+    (show ((-U).val * K).trace.re ∈
+      {x : ℝ | ∃ U : unitaryGroup _ ℂ,
+        (U.val * K).trace.re = x} from ⟨-U,rfl⟩)
+  have heq : traceNorm D =
+      (1/2 : ℝ)*((U.val*Q*X).trace.re+(Q*U.val*X).trace.re) -
+        (U.val*K).trace.re := by
+    have hc : (U.val*(X*Q)).trace = (Q*U.val*X).trace := by
+      rw [← Matrix.mul_assoc, Matrix.trace_mul_comm _ Q]
+      simp only [Matrix.mul_assoc]
+    have ht' : (U.val*D).trace =
+        (1/2 : ℂ) • ((U.val*Q*X).trace+(Q*U.val*X).trace) -
+          (U.val*K).trace := by
+      rw [hid, Matrix.mul_sub, Matrix.mul_smul, Matrix.mul_add,
+        Matrix.trace_sub, Matrix.trace_smul, Matrix.trace_add, hc]
+      simp only [Matrix.mul_assoc]
+    rw [← hU, ht']
+    norm_num [smul_eq_mul, Complex.mul_re]
+  have h3' : -(U.val*K).trace.re ≤
+      (b)*traceNorm X := by
+    have hz : -(U.val*K).trace.re ≤
+        traceNorm K := by
+      simpa only [Unitary.coe_neg, Matrix.neg_mul, Matrix.trace_neg, Complex.neg_re] using h3
+    exact hz.trans hk
+  rw [heq]
+  linarith
+
+
 set_option maxHeartbeats 800000 in
 /-- A unital Hermitian Kraus family on a factor has its actual centered defect
 bounded in ordinary trace norm on every finite reference. -/
@@ -289,48 +338,148 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
       (1/2 : ℂ) • (Q*X+X*Q) - ∑ j, M j * X * (M j)ᴴ :=
     centered_defect_identity H hH hsum c X
   refine ⟨hid, ?_⟩
-  obtain ⟨U,hU⟩ := (traceNorm_eq_max_re_tr_U (X - ∑ j, H j * X * (H j)ᴴ)).1
-  have hUn : ‖U.val‖ ≤ 1 := by
-    rcases isEmpty_or_nonempty (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E)))) with hi | hi
-    · have hz : U.val = 0 := Subsingleton.elim _ _
-      simp [hz]
-    · exact (CStarRing.norm_coe_unitary U).le
-  have hUQ : ‖U.val*Q‖ ≤ 5*δ :=
-    (norm_mul_le _ _).trans ((mul_le_mul_of_nonneg_right hUn (norm_nonneg Q)).trans
-      (by simpa using hqnorm))
-  have hQU : ‖Q*U.val‖ ≤ 5*δ :=
-    (norm_mul_le _ _).trans ((mul_le_mul_of_nonneg_left hUn (norm_nonneg Q)).trans
-      (by simpa using hqnorm))
-  have h1 := (re_trace_mul_le (U.val*Q) X).trans
-    (mul_le_mul_of_nonneg_right hUQ (traceNorm_nonneg X))
-  have h2 := (re_trace_mul_le (Q*U.val) X).trans
-    (mul_le_mul_of_nonneg_right hQU (traceNorm_nonneg X))
-  have h3 := (traceNorm_eq_max_re_tr_U (∑ j, M j * X * (M j)ᴴ)).2
-    (show ((-U).val * (∑ j, M j * X * (M j)ᴴ)).trace.re ∈
-      {x : ℝ | ∃ U : unitaryGroup _ ℂ,
-        (U.val * (∑ j, M j * X * (M j)ᴴ)).trace.re = x} from ⟨-U,rfl⟩)
-  have heq : traceNorm (X - ∑ j, H j * X * (H j)ᴴ) =
-      (1/2 : ℝ)*((U.val*Q*X).trace.re+(Q*U.val*X).trace.re) -
-        (U.val*(∑ j, M j * X * (M j)ᴴ)).trace.re := by
-    have hc : (U.val*(X*Q)).trace = (Q*U.val*X).trace := by
-      rw [← Matrix.mul_assoc, Matrix.trace_mul_comm _ Q]
-      simp only [Matrix.mul_assoc]
-    have ht' : (U.val*(X - ∑ j, H j * X * (H j)ᴴ)).trace =
-        (1/2 : ℂ) • ((U.val*Q*X).trace+(Q*U.val*X).trace) -
-          (U.val*(∑ j, M j * X * (M j)ᴴ)).trace := by
-      rw [hid, Matrix.mul_sub, Matrix.mul_smul, Matrix.mul_add,
-        Matrix.trace_sub, Matrix.trace_smul, Matrix.trace_add, hc]
-      simp only [Matrix.mul_assoc]
-    rw [← hU, ht']
-    norm_num [smul_eq_mul, Complex.mul_re]
-  have h3' : -(U.val*(∑ j, M j * X * (M j)ᴴ)).trace.re ≤
-      (5*δ)*traceNorm X := by
-    have hz : -(U.val*(∑ j, M j * X * (M j)ᴴ)).trace.re ≤
-        traceNorm (∑ j, M j * X * (M j)ᴴ) := by
-      simpa only [Unitary.coe_neg, Matrix.neg_mul, Matrix.trace_neg, Complex.neg_re] using h3
-    exact hz.trans (hk X)
-  rw [heq]
-  linarith
+  simpa only [show (2:ℝ)*(5*δ)=10*δ by ring] using
+    trace_centered_defect Q X (∑ j, M j * X * (M j)ᴴ)
+      (X - ∑ j, H j * X * (H j)ᴴ) (5*δ) hqnorm (hk X) hid
 
 end Hilbert
+
+section Pinching
+variable {a I J : Type*} [Fintype a] [DecidableEq a]
+  [Fintype I] [Fintype J]
+
+/-- Actual center pinching, represented on the whole ambient Hilbert space. -/
+def centerPinching (P : I → Matrix a a ℂ) (X : Matrix a a ℂ) : Matrix a a ℂ :=
+  ∑ i, P i * X * P i
+
+private lemma pinch_mul (P : I → Matrix a a ℂ) (X Y : Matrix a a ℂ)
+    (hX : ∀ i, P i * X = X * P i) :
+    centerPinching P (Y*X) = centerPinching P Y * X ∧
+      centerPinching P (X*Y) = X * centerPinching P Y := by
+  constructor
+  · simp only [centerPinching, Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro i _
+    simp only [Matrix.mul_assoc, ← hX i]
+  · simp only [centerPinching, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [← Matrix.mul_assoc (P i) X, hX]
+    simp only [Matrix.mul_assoc]
+
+private lemma pinch_id (P : I → Matrix a a ℂ)
+    (hPP : ∀ i, P i * P i = P i) (hP : ∑ i, P i = 1)
+    (X : Matrix a a ℂ) (hX : ∀ i, P i * X = X * P i) :
+    centerPinching P X = X := by
+  calc
+    _ = ∑ i, X * P i := by
+      apply Finset.sum_congr rfl
+      intro i _
+      rw [hX, Matrix.mul_assoc, hPP]
+    _ = X := by rw [← Finset.mul_sum, hP, Matrix.mul_one]
+
+private lemma pinch_kraus (P : I → Matrix a a ℂ)
+    (hp : ∀ i, (P i)ᴴ = P i) (H : J → Matrix a a ℂ)
+    (X : Matrix a a ℂ) (hX : centerPinching P X = X) :
+    (∑ t : J × I × I,
+      (P t.2.2 * H t.1 * P t.2.1) * X *
+        (P t.2.2 * H t.1 * P t.2.1)ᴴ) =
+      centerPinching P (∑ j, H j * X * (H j)ᴴ) := by
+  classical
+  simp only [Fintype.sum_prod_type, Matrix.conjTranspose_mul, hp]
+  rw [Finset.sum_comm]
+  calc
+    _ = ∑ k, ∑ j, P k * (H j * centerPinching P X * (H j)ᴴ) * P k := by
+      apply Finset.sum_congr rfl
+      intro i _
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro j _
+      simp only [centerPinching, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
+    _ = _ := by
+      rw [hX]
+      simp only [centerPinching, Matrix.mul_sum, Matrix.sum_mul]
+
+private lemma pinch_gram (P : I → Matrix a a ℂ)
+    (hp : ∀ i, (P i)ᴴ = P i) (hpp : ∀ i, P i * P i = P i)
+    (hs : ∑ i, P i = 1) (H : J → Matrix a a ℂ) :
+    (∑ t : J × I × I,
+      (P t.2.2 * H t.1 * P t.2.1)ᴴ * (P t.2.2 * H t.1 * P t.2.1)) =
+      centerPinching P (∑ j, (H j)ᴴ * H j) := by
+  classical
+  simp only [Fintype.sum_prod_type, Matrix.conjTranspose_mul, hp]
+  have hk (j : J) (i : I) :
+      (∑ k, P i * ((H j)ᴴ * P k) * (P k * H j * P i)) =
+        P i * ((H j)ᴴ * H j) * P i := by
+    calc
+      _ = ∑ k, P i * (H j)ᴴ * (P k * P k) * H j * P i := by
+        simp only [Matrix.mul_assoc]
+      _ = P i * (H j)ᴴ * (∑ k, P k) * H j * P i := by
+        simp only [hpp, Matrix.mul_sum, Matrix.sum_mul]
+      _ = _ := by rw [hs, Matrix.mul_one]; simp only [Matrix.mul_assoc]
+  simp_rw [hk]
+  rw [Finset.sum_comm]
+  simp only [centerPinching, Matrix.mul_sum, Matrix.sum_mul]
+
+private lemma pinched_centered_identity (P : I → Matrix a a ℂ)
+    (hpp : ∀ i, P i * P i = P i) (hsP : ∑ i, P i = 1)
+    (H : J → Matrix a a ℂ) (hh : ∀ j, (H j)ᴴ = H j)
+    (hsH : ∑ j, H j * H j = 1) (c : J → I → ℝ)
+    (X : Matrix a a ℂ) (hX : ∀ i, P i * X = X * P i)
+    (C : J → Matrix a a ℂ)
+    (hCl : ∀ j i, P i * C j = (c j i : ℂ) • P i)
+    (hCr : ∀ j i, C j * P i = (c j i : ℂ) • P i)
+    (hCh : ∀ j, (C j)ᴴ = C j) :
+    let M := fun j => H j - C j
+    let Q := centerPinching P (∑ j, M j * M j)
+    X - centerPinching P (∑ j, H j * X * H j) =
+      (1/2 : ℂ) • (Q*X+X*Q) - centerPinching P (∑ j, M j * X * M j) := by
+  classical
+  dsimp only
+  have hm (j : J) (i : I) :
+      (P i * (H j-C j) * (H j-C j) * P i)*X +
+        X*(P i * (H j-C j) * (H j-C j) * P i) -
+        (2 : ℂ) • (P i * (H j-C j)*X*(H j-C j)*P i) =
+      (P i * H j * H j * P i)*X+X*(P i * H j * H j * P i) -
+        (2 : ℂ) • (P i * H j * X * H j * P i) := by
+    have hl : P i * (H j-C j) = P i * H j - (c j i : ℂ) • P i := by
+      rw [Matrix.mul_sub, hCl]
+    have hr : (H j-C j) * P i = H j * P i - (c j i : ℂ) • P i := by
+      rw [Matrix.sub_mul, hCr]
+    have hq : P i * (H j-C j) * (H j-C j) * P i =
+        (P i * H j - (c j i : ℂ) • P i) *
+          (H j * P i - (c j i : ℂ) • P i) := by
+      rw [Matrix.mul_assoc (P i * (H j-C j)), hl, hr]
+    have hk : P i * (H j-C j)*X*(H j-C j)*P i =
+        (P i * H j - (c j i : ℂ) • P i)*X*
+          (H j * P i - (c j i : ℂ) • P i) := by
+      rw [Matrix.mul_assoc (P i * (H j-C j)*X), hl, hr]
+    rw [hq, hk]
+    simp only [Matrix.sub_mul, Matrix.mul_sub, Algebra.smul_mul_assoc (R := ℂ),
+      Algebra.mul_smul_comm (R := ℂ), hpp]
+    have h1 : P i * H j * (P i * X) = P i * H j * (X * P i) := by rw [hX]
+    have h2 : P i * X * (H j * P i) = X * (P i * (H j * P i)) := by
+      rw [hX]; simp only [Matrix.mul_assoc]
+    have h3 : P i * X * P i = P i * X := by
+      rw [hX, Matrix.mul_assoc, hpp, ← hX]
+    simp only [Matrix.mul_assoc] at h1 h2 h3 ⊢
+    rw [← h1, h2, h3]
+    module
+  have ht := congrArg (fun f : J → I → Matrix a a ℂ => ∑ j, ∑ i, f j i)
+    (funext (fun j => funext (hm j)))
+  simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib,
+    ← Finset.sum_smul, ← Finset.sum_mul, ← Finset.mul_sum] at ht
+  have hsum (Y : J → Matrix a a ℂ) :
+      (∑ j, ∑ i, P i * Y j * P i) = centerPinching P (∑ j, Y j) := by
+    rw [Finset.sum_comm]
+    simp only [centerPinching, Matrix.mul_sum, Matrix.sum_mul]
+  simp only [Matrix.mul_assoc] at ht
+  rw [hsum, hsum, hsum, hsum, hsum, hsum] at ht
+  have hI : centerPinching P (1 : Matrix a a ℂ) = 1 := by
+    simp only [centerPinching, Matrix.mul_one, hpp, hsP]
+  rw [hsH, hI, Matrix.one_mul, Matrix.mul_one] at ht
+  linear_combination (1/2 : ℂ) • ht
+
+end Pinching
+
 end D5.S3.Quantum.Matrix.UniformVarianceTraceBound
