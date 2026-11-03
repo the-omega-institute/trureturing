@@ -110,7 +110,9 @@ private theorem left_binomial_dominates (p t : ℕ) (hp3 : 3 ≤ p) (ht2 : 2 ≤
       (div_pos (by linarith [(hx i hi).1]) (by linarith [(hx i hi).2])).ne')]
     have hh := Finset.sum_le_sum hfactor
     rw [← Finset.mul_sum, hxsum] at hh
-    nlinarith only [hh]
+    calc
+      4*P^2/R = 2*(2*P^2/R) := by ring
+      _ ≤ _ := hh
   have hbound : (25/36 : ℝ) ≤ 4*P^2/R := by
     apply (le_div_iff₀ hR).2
     dsimp [R]
