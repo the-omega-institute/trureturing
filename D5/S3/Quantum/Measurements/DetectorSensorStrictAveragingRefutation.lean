@@ -97,7 +97,8 @@ private theorem different_layers :
   refine ⟨fun j => decide (j = 0), ?_⟩
   rw [layer_squares, layer_squares]
   have hx : (Finset.univ.filter
-      (fun j : Fin 3 => decide (j = 0) = true)).card = 1 := by decide
+      (fun j : Fin 3 => decide (j = 0) = true)).card = 1 := by
+    simp [Finset.filter_eq']
   rw [hx]
   norm_num
 
