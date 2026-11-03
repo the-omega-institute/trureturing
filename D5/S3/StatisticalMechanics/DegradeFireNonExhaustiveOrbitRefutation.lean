@@ -74,41 +74,43 @@ private theorem injective_three (x : Fin 3 → ℝ)
   fin_cases a <;> fin_cases b <;> simp_all
 
 private theorem duration_positive (i : Fin 9) : 0 < times i := by
-  fin_cases i <;> norm_num [times]
+  delta times
+  fin_cases i <;> norm_num
 
-private theorem before_threshold (i : Fin 9) (t : ℝ) (ht : 0 ≤ t)
-    (hτ : t < times i) (j : Fin 3) :
+private theorem before_threshold (i : Fin 9) (t : ℝ) (hτ : t < times i) (j : Fin 3) :
     (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) t) j := by
+  delta times states coupling flow at *
   fin_cases i <;> fin_cases j <;>
-    norm_num [times, states, coupling, flow, mulVec, dotProduct, Fin.sum_univ_succ] at ht hτ ⊢ <;>
+    norm_num [mulVec, dotProduct, Fin.sum_univ_succ] at hτ ⊢ <;>
     simp only [max_def] <;> split_ifs <;> linarith
 
 private theorem at_threshold (i : Fin 9) :
     (coupling (4 / 5) *ᵥ flow (states i) (times i)) (labels i) ≤ (3 / 20 : ℝ) := by
-  fin_cases i <;>
-    norm_num [times, states, labels, coupling, flow, mulVec, dotProduct, Fin.sum_univ_succ]
+  delta times states labels coupling flow
+  fin_cases i <;> norm_num [mulVec, dotProduct, Fin.sum_univ_succ]
 
 private theorem other_above (i : Fin 9) (j : Fin 3) (hj : j ≠ labels i) :
     (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ flow (states i) (times i)) j := by
+  delta times states labels coupling flow at *
   fin_cases i <;> fin_cases j <;>
-    norm_num [times, states, labels, coupling, flow, mulVec, dotProduct,
-      Fin.sum_univ_succ] at *
+    norm_num [mulVec, dotProduct, Fin.sum_univ_succ] at *
 
-private theorem flow_distinct (i : Fin 9) (t : ℝ) (ht : 0 ≤ t)
-    (hτ : t ≤ times i) : Function.Injective (flow (states i) t) := by
+private theorem flow_distinct (i : Fin 9) (t : ℝ) (hτ : t ≤ times i) : Function.Injective (flow (states i) t) := by
   apply injective_three
   all_goals
-    fin_cases i <;> norm_num [times, states, flow] at ht hτ ⊢ <;>
+    delta times states flow at *
+    fin_cases i <;> norm_num at hτ ⊢ <;>
       simp only [max_def] <;> split_ifs <;> linarith
 
 private theorem state_distinct (i : Fin 9) : Function.Injective (states i) := by
-  apply injective_three <;> fin_cases i <;> norm_num [states]
+  delta states
+  apply injective_three <;> fin_cases i <;> norm_num
 
 private theorem reset_verified (i : Fin 9) :
     states (i + 1) = reset (flow (states i) (times i)) (labels i) := by
+  delta states times labels reset flow
   ext j
-  fin_cases i <;> fin_cases j <;>
-    norm_num [states, times, labels, reset, flow, Function.update]
+  fin_cases i <;> fin_cases j <;> norm_num [Function.update]
 
 private theorem block_verified (i : Fin 9) :
     0 < times i ∧
@@ -120,8 +122,9 @@ private theorem block_verified (i : Fin 9) :
     (∀ t, 0 ≤ t → t ≤ times i → Function.Injective (flow (states i) t)) ∧
     Function.Injective (states (i + 1)) ∧
     states (i + 1) = reset (flow (states i) (times i)) (labels i) := by
-  exact ⟨duration_positive i, before_threshold i, at_threshold i, other_above i,
-    flow_distinct i, state_distinct (i + 1), reset_verified i⟩
+  exact ⟨duration_positive i, fun t _ hτ j => before_threshold i t hτ j,
+    at_threshold i, other_above i, fun t _ hτ => flow_distinct i t hτ,
+    state_distinct (i + 1), reset_verified i⟩
 
 private theorem run_verified : IsRun (4 / 5) (3 / 20) orbit firing duration := by
   intro k
@@ -131,17 +134,20 @@ private theorem run_verified : IsRun (4 / 5) (3 / 20) orbit firing duration := b
     apply Fin.ext
     change (k + 1) % 9 = (k % 9 + 1) % 9
     exact Nat.add_mod k 1 9
-  simpa only [orbit, firing, duration, hi] using h
+  delta orbit firing duration
+  rw [hi]
+  exact h
 
 private theorem initial_verified : ∀ j,
     (3 / 20 : ℝ) < (coupling (4 / 5) *ᵥ orbit 0) j := by
+  delta coupling orbit states
   intro j
-  fin_cases j <;> norm_num [coupling, orbit, states, mulVec, dotProduct, Fin.sum_univ_succ]
+  fin_cases j <;> norm_num [mulVec, dotProduct, Fin.sum_univ_succ]
 
 private theorem periodic_verified : IsPeriodic orbit := by
   refine ⟨9, by norm_num, ?_⟩
   intro k
-  unfold orbit
+  delta orbit
   congr 1
   apply Fin.ext
   simp
@@ -151,7 +157,8 @@ private theorem non_exhaustive_verified : ¬ IsExhaustive firing := by
   have hi := (h 0).1
   have he : (![firing 0, firing (0 + 1), firing (0 + 2)] : Fin 3 → Fin 3) 0 =
       (![firing 0, firing (0 + 1), firing (0 + 2)] : Fin 3 → Fin 3) 1 := by
-    norm_num [firing, labels]
+    delta firing labels
+    norm_num
   have hf : (0 : Fin 3) = 1 := hi he
   norm_num at hf
 
