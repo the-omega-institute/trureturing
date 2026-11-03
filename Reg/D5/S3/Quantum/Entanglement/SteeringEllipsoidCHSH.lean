@@ -634,3 +634,94 @@ def registration :
 
 end
 end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.BobRadius
+
+namespace Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.DeltaCentre
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+open _root_.D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction
+  (vlen vlen_e3 blochA blochB corr centre pauli)
+open _root_.D5.S3.QuantumBounds.CHSHWitness renaming TwoQubitMatrix → TwoQubit
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Matrix
+open scoped ComplexOrder Kronecker
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => TwoQubit) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ ρ => delta ρ) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (ρ : TwoQubit) (_hρ : ρ.PosSemidef) (_htr : trace ρ = 1),
+    R.readout () () ρ ≤ (1 - vlen (blochB ρ) ^ 2) * (1 / 2 - vlen (centre ρ))
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h (tightState 0 0) (tight_psd 0 0 (by norm_num) (by norm_num))
+    (tight_readouts 0 0 (by norm_num) (by norm_num) (by norm_num)).1
+  change (1 : ℝ) ≤
+    (1 - vlen (blochB (tightState 0 0)) ^ 2) * (1 / 2 - vlen (centre (tightState 0 0))) at he
+  rw [tight_centre 0 0 (by norm_num) (by norm_num) (by norm_num) (by norm_num),
+    (tight_readouts 0 0 (by norm_num) (by norm_num) (by norm_num)).2.2.1, vlen_e3] at he
+  norm_num at he
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change delta (0 : TwoQubit) ≠ delta 1
+  norm_num [delta, _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight,
+    trace, diag, Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two]
+
+def source_registration : Registration arena (type_of% @delta_le_centre) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨delta_le_centre, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@delta_le_centre) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.DeltaCentre.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.DeltaCentre.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ ρ => delta ρ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.DeltaCentre
