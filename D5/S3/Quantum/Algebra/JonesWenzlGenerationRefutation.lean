@@ -50,19 +50,19 @@ def jw (q : ℂ) (n a s : ℕ) : TL n (-q - q⁻¹) :=
   Nat.rec 1 (fun k p => p + (qint q k / qint q (k + 1)) •
     (p * gen n (-q - q⁻¹) (a + k) * p)) s
 
-def compProj (q : ℂ) (ς : List ℕ) : TL ς.sum (-q - q⁻¹) :=
-  ((List.range ς.length).map fun i =>
-    jw q ς.sum (ς.take i).sum (ς[i]?.getD 0)).prod
+def compProj (q : ℂ) (σ : List ℕ) : TL σ.sum (-q - q⁻¹) :=
+  ((List.range σ.length).map fun i =>
+    jw q σ.sum (σ.take i).sum (σ[i]?.getD 0)).prod
 
-def jwGen (q : ℂ) (ς : List ℕ) (i : ℕ) : TL ς.sum (-q - q⁻¹) :=
-  compProj q ς * gen ς.sum (-q - q⁻¹) (ς.take i).sum * compProj q ς
+def jwGen (q : ℂ) (σ : List ℕ) (i : ℕ) : TL σ.sum (-q - q⁻¹) :=
+  compProj q σ * gen σ.sum (-q - q⁻¹) (σ.take i).sum * compProj q σ
 
 def claim : Prop :=
-  ∀ q : ℂ, q ≠ 0 → ∀ ς : List ℕ, (∀ s ∈ ς, 0 < s) →
-    (∀ s ∈ ς, (s : ℕ∞) < pbar q) →
-    ∀ t : TL ς.sum (-q - q⁻¹), compProj q ς * t * compProj q ς ∈
-      Algebra.adjoin ℂ (insert (compProj q ς)
-        {u | ∃ i, 1 ≤ i ∧ i < ς.length ∧ u = jwGen q ς i})
+  ∀ q : ℂ, q ≠ 0 → ∀ σ : List ℕ, (∀ s ∈ σ, 0 < s) →
+    (∀ s ∈ σ, (s : ℕ∞) < pbar q) →
+    ∀ t : TL σ.sum (-q - q⁻¹), compProj q σ * t * compProj q σ ∈
+      Algebra.adjoin ℂ (insert (compProj q σ)
+        {u | ∃ i, 1 ≤ i ∧ i < σ.length ∧ u = jwGen q σ i})
 
 private def qzero : ℂ := Complex.exp (Real.pi * Complex.I / 6)
 
