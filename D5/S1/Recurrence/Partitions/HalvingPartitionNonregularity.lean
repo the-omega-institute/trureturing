@@ -6,10 +6,8 @@
    utility: none
    digest: The exact halving-partition count admits no finite integral decimation family. -/
 
-import Mathlib.Combinatorics.Enumerative.Composition
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.Algebra.LinearRecurrence
-import Mathlib.SetTheory.Cardinal.Finite
 
 /-! Exact source carriers and the unrestricted regularity question. -/
 
