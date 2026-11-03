@@ -3216,3 +3216,325 @@ For the first-loss question, (36.6)--(36.7) remove the effect optimization for e
 For any actual continuation of that geometric family write $N(\xi)$ for its candidate value of $f$; on the supplied local interval it is $n(\xi/2)$. The remaining all-domain obligation is $M_\sigma(w,\xi)\ge N(\xi)+\kappa\xi$ for every realizable $w$ and every admissible sign, with equality exactly at the continued geometric pairs until the selected first transition. In particular, the feedback parameters outside (36.30), the opposite distance branch, extra tied original minimizers and possible mixed minimizers beyond the range of (36.18) are not eliminated by these theorems. A directly selected first distance boundary, the exact maximal connected positive-distance prefix, its endpoint inclusion or exclusion, and the full actual first transition remain undetermined. Neither $1$ in (36.18), the boundary of (36.30), nor (36.44)--(36.46)'s phase-instability curve is asserted to be that first boundary.
 
 ## 追加锚（本行以下为增补区）
+
+## 37. Exact cap envelopes, unique scalar selection and core screening
+
+**Definition 37.1 (cap levels and the remaining core).** Retain the original $\mathcal K=\operatorname{Dens}_2\times U(4)$, ordinary transpose, one actual shared feedback, joint optimizer-sign minimum and one common scalar quotient. Put
+
+$$
+ A_0=2+\sqrt{8/3},\qquad D_+=4-A_0,\qquad D_-=1/6,
+ \qquad \gamma=1/25.
+$$
+
+The four disjoint sectors of the realizable diagonal domain are
+
+$$
+\begin{aligned}
+ \mathcal C_+&=\{w\in\mathcal W:A(w)\ge A_0\},\\
+ \mathcal C_-&=\{w\in\mathcal W:B(w)\ge23/6\},\\
+ \mathcal T&=\{w\in\mathcal W:A(w)<A_0,\ B(w)<23/6,\ A(w)+B(w)\le4\},\\
+ \mathcal O&=\{w\in\mathcal W:A(w)<A_0,\ B(w)<23/6,\ A(w)+B(w)>4\}.
+\end{aligned}
+\tag{37.1}
+$$
+
+Disjointness of the two caps follows from source (24.13) and (25.11). For $t=\xi/2\ge0$ define
+
+$$
+ I_\sigma(t)=[\max\{0,t-1\},\min\{D_\sigma,t\}],\qquad \sigma\in\{+,-\},
+\tag{37.2}
+$$
+
+with the interval empty when its lower endpoint exceeds its upper endpoint. For $\delta\in I_+(t)$ put $q=t-\delta$ and use the exact expression of (33.12):
+
+$$
+ H^+_\delta(q)=
+ \left(2a\delta-\frac{\delta^2}{2}\right)(1-q)
+ +\left(B-2(1+\kappa)\delta+\frac{\delta^2}{2}\right)q
+ -2(d-h\delta)\sqrt{\left(2\delta-\frac{\delta^2}{2}\right)q(1-q)}.
+\tag{37.3}
+$$
+
+Here $a,B$ are the constants of (33.2), whereas $B(w)$ is the trace modulus. For $\delta\in I_-(t)$ put $p=t-\delta$ and set
+
+$$
+\begin{aligned}
+ u^-_\delta&=c\sqrt{4\delta-\delta^2},\qquad v^-_\delta=e-s\delta,\\
+ H^-_\delta(p)&=d^2p+e^2(1-p)
+  -\bigl(u^-_\delta\sqrt p+v^-_\delta\sqrt{1-p}\bigr)^2
+  -2\kappa(p+\delta).
+\end{aligned}
+\tag{37.4}
+$$
+
+Write
+
+$$
+ N_+(\xi)=\min_{\delta\in I_+(t)}H^+_\delta(t-\delta),\qquad
+ N_-(\xi)=\min_{\delta\in I_-(t)}H^-_\delta(t-\delta),
+\tag{37.5}
+$$
+
+with value $+\infty$ for an empty interval. Using Definition 36.1, also write
+
+$$
+ N_{\mathcal O}(\xi)=
+ \inf_{w\in\mathcal O}\left(\min_{\sigma\in\{+,-\}}M_\sigma(w,\xi)-\kappa\xi\right),
+\tag{37.6}
+$$
+
+where inadmissible signs contribute $+\infty$.
+
+**Theorem 37.2 (all-effect cap envelopes and cap purification).** For each $\sigma\in\{+,-\}$ and every $\xi\ge0$,
+
+$$
+ \boxed{\quad
+ \inf_{\substack{(E,U)\in\mathcal K,\ \rho(E,U)=\xi\\
+       \operatorname{diag}(UU_+^\dagger)\in\mathcal C_\sigma}} f(E,U)
+       =N_\sigma(\xi).
+ \quad}
+\tag{37.7}
+$$
+
+The cap attains exactly the distance interval $[0,2(1+D_\sigma)]$, and every nonempty cap level has an attained minimum. Every cap minimizer has rank-one effect. More strongly, every original pair in either cap has a rank-one competitor with the same actual $U$ and the same original distance, satisfying
+
+$$
+ f(E,U)\ge f(\widehat E,U)
+                 +\frac14\bigl(1-\operatorname{Tr}(E^2)\bigr).
+\tag{37.8}
+$$
+
+This assertion concerns both caps at all their levels; it makes no purity claim about minimizers in $\mathcal O$ or $\mathcal T$.
+
+**Proof.** Source Lemmas 24.2 and 25.1 select the positive sign uniquely throughout $\mathcal C_+$ and the negative sign uniquely throughout $\mathcal C_-$, for every population. Subtracting the common impurity from both branches preserves these strict sign comparisons for every normalized effect.
+
+The hypothesis $b_\sigma\ge0$ of Theorem 36.3 holds uniformly here, independently of the distance level. To verify this, put $D_0=d^2-e^2$. On $\mathcal C_+$ normalize $\sum_jw_j=A=4-\delta>0$ by one common scalar. Since $\delta\le D_+<1/2$, the disk estimates in (36.22)--(36.24) give
+
+$$
+ u\ge d-c\delta\ge d-c/2>0,\qquad
+ v^2\le4(h^2+s^2)\delta\le2(h^2+s^2).
+$$
+
+Indeed $\operatorname{Re}(w_3+w_4)\ge A-2$ proves the first bound, and the zero-sum coefficient row of $Q$ proves the second by Cauchy--Schwarz. Thus the fixed-constant comparison (36.25) gives
+
+$$
+ b_+=u^2-v^2-D_0
+ \ge(d-c/2)^2-2(h^2+s^2)-D_0>15/28>1/2.
+\tag{37.9}
+$$
+
+On $\mathcal C_-$ use the fixed coordinates $\widetilde w=(w_1,-w_2,iw_3,-iw_4)$, followed by one common scalar making their sum $B=4-\delta>0$. Here $\delta\le1/6<1/2$. The zero-sum row of $P$ in (36.26) gives $u^2\le4(h^2+c^2)\delta<3$. Since $D_0>4$ as in (36.28), $b_-=D_0-u^2+v^2>1$. These arguments use the cap trace bounds rather than a bound on $\rho$. Theorem 36.3 and (36.20) now prove (37.8), also when an amplitude vanishes. Every mixed normalized effect has positive impurity, so the comparison is strict for it.
+
+For clarity, this also proves the lower bound for the infimum over all effects, without first assuming a global minimizer. Fix any original cap pair at level $\xi$. Let $r$ be its population away from that cap's optimizer, so $r=1-p$ in the positive cap and $r=p$ in the negative cap. In the coordinates of (36.9), put
+
+$$
+ T=r^2+|z|^2=r-\epsilon/2,\qquad
+ \epsilon=1-\operatorname{Tr}(E^2),\qquad
+ \delta=4-S_\sigma.
+$$
+
+Its actual distance is $\xi=2(\delta+T)$. Positivity gives $0\le T\le1$, hence $\delta\in I_\sigma(t)$. The construction in Theorem 36.3 has population away from the optimizer equal to $T=t-\delta$, impurity zero, and the unchanged actual feedback. Applying the simultaneous amplitude envelopes (24.9) or (25.2) to this pure competitor gives respectively
+$f(\widehat E,U)\ge H^+_\delta(t-\delta)$ or
+$f(\widehat E,U)\ge H^-_\delta(t-\delta)$.
+Together with (37.8), this proves the lower bound (37.7) for every original effect at the prescribed level.
+
+Conversely, for every $\delta\in I_\sigma(t)$ the simultaneous attaining diagonal (24.15) or (25.13), its actual lift $\operatorname{diag}(w)U_+$, and the phase-aligned rank-one effect (23.13) attain the displayed scalar expression at exactly $\rho=2(\delta+t-\delta)=\xi$. The source cap sign comparisons apply to these witnesses, including both population endpoints and $\delta=0$. Thus every scalar value is realized by an original pair, proving the reverse inequality in (37.7). The intervals in (37.2) are nonempty exactly for $0\le t\le1+D_\sigma$, which proves the asserted distance ranges. Each cap level is closed in compact $\mathcal K$ and has continuous objective. Its minimum is attained; (37.8) then proves purity of every cap minimizer. All lower comparisons used the actual $U$ and include every nondiagonal lift. $\square$
+
+**Theorem 37.3 (unique cap scalar selection and the full cap equality preimage).** For either sign and every $0\le t\le1+D_\sigma$, the scalar minimum in (37.5) is unique; write its argument as $\delta_\sigma(t)$ and put $r=t-\delta_\sigma(t)$. For $0<t<1+D_\sigma$ one has
+
+$$
+ \delta_\sigma(t)>\max\{0,t-1\},\qquad 0<r<1.
+\tag{37.10}
+$$
+
+At $t=0$ one has $\delta=r=0$, and at $t=1+D_\sigma$ one has $\delta=D_\sigma$, $r=1$. The following unsquared increasing-derivative rule selects the unique argument on the entire cap interval. Set
+
+$$
+\begin{array}{c|ccccc}
+ \sigma&K_\sigma&K_{-\sigma}&k_\sigma&L_\sigma(\delta)&Z_\sigma(\delta)\\ \hline
+ +&d&e&h&d-h\delta&2\delta-\delta^2/2\\
+ -&e&d&s&e-s\delta&c^2(4\delta-\delta^2)
+\end{array}
+\tag{37.11}
+$$
+
+For fixed $t$ let
+
+$$
+\begin{aligned}
+ r&=t-\delta,\qquad F=L_\sigma(\delta)^2(1-r),\qquad G=Z_\sigma(\delta)r,\\
+ \mathcal H_{\sigma,t}(\delta)
+ &=K_\sigma^2(1-r)+K_{-\sigma}^2r-F-G-2\sqrt{FG}-2\kappa t.
+\end{aligned}
+\tag{37.12}
+$$
+
+This is $H^+_\delta(t-\delta)$ or $H^-_\delta(t-\delta)$ respectively. Where $\delta>0$ and $0<r<1$, its derivative is
+
+$$
+\begin{aligned}
+ \mathcal H'&=K_\sigma^2-K_{-\sigma}^2-F'-G'
+                 -\frac{F'G+FG'}{\sqrt{FG}},\\
+ F'&=L_\sigma^2-2k_\sigma L_\sigma(1-r),\qquad
+ G'=Z_\sigma' r-Z_\sigma.
+\end{aligned}
+\tag{37.13}
+$$
+
+For $0<t\le D_\sigma$, $\delta_\sigma(t)$ is the unique zero of (37.13) in the interior of $I_\sigma(t)$. For $D_\sigma<t<1+D_\sigma$, it is $D_\sigma$ if $\mathcal H'_{\sigma,t}(D_\sigma)\le0$, and otherwise the unique interior zero of (37.13). The two singleton cases were specified above.
+
+All original minimizing pairs on each nonempty cap level are the following. Evaluate $\delta=\delta_\sigma(t)$, $r=t-\delta$ and
+$x=1-\delta/2$, $y=\sqrt{\delta-\delta^2/4}$. For an orientation $\tau\in\{+1,-1\}$ define
+
+$$
+\begin{aligned}
+ w^+_\tau&=(x+\tau iy,x-\tau iy,1,1),&
+ \psi^+_\tau&=\sqrt{1-r}\,b_+-\tau i\sqrt r\,b_-,\\
+ w^-_\tau&=(1,-1,-i(x+\tau iy),i(x-\tau iy)),&
+ \psi^-_\tau&=\tau\sqrt r\,b_++\sqrt{1-r}\,b_-.
+
+\end{aligned}
+\tag{37.14}
+$$
+
+The necessary-and-sufficient equality preimage in (37.7) is
+
+$$
+ E=\overline{\psi^\sigma_\tau}\,
+             \overline{\psi^\sigma_\tau}^{\dagger},\qquad
+ U=\lambda\operatorname{diag}(w^\sigma_\tau)U_+,
+ \qquad |\lambda|=1.
+\tag{37.15}
+$$
+
+There are exactly two such original pairs modulo the one common feedback scalar at every positive cap level, including its maximal level. At the maximal level their effects coincide but their feedbacks remain distinct. At zero the two orientations coincide, giving the corresponding single optimizer class. In particular there are no scalar ties within either cap envelope. This does not identify a first boundary of the full original envelope.
+
+**Proof.** Fix $t$ with nonempty $I_\sigma(t)$. Throughout that interval $0\le r\le1$, $L_\sigma>0$, $Z_\sigma\ge0$, and $F,G\ge0$. On any nondegenerate interval their second derivatives satisfy
+
+$$
+\begin{aligned}
+ F''&=2k_\sigma^2(1-r)-4k_\sigma L_\sigma<0,\\
+ G''&=-4+2\delta-r<0&& (\sigma=+),\\
+ G''&=c^2(-8+4\delta-2r)<0&& (\sigma=-).
+\end{aligned}
+\tag{37.16}
+$$
+
+For the first strict sign use $K_\sigma>2k_\sigma$ and $\delta\le D_\sigma<1/2$, so $L_\sigma>3k_\sigma/2$. The other signs follow immediately from $\delta<1/2$ and $r\ge0$. Hence $F$ and $G$ are strictly concave on the feasible interval. The geometric mean $\sqrt{FG}$ is concave there: for two arguments and $0\le\theta\le1$, Cauchy--Schwarz bounds the convex combination of their geometric means by the geometric mean of the corresponding convex combinations of $F$ and $G$; concavity of $F,G$ and monotonicity of the geometric mean give the desired inequality. This argument includes zeros of $F$ or $G$. Consequently $F+G+2\sqrt{FG}$ is strictly concave. The remaining terms in (37.12) are affine in $\delta$. Thus $\mathcal H_{\sigma,t}$ is strictly convex on every nondegenerate feasible interval, and its continuous minimum is unique. A singleton also has a unique minimum. Its derivative in (37.13) is strictly increasing wherever $F,G>0$.
+
+We verify the endpoints rather than assuming their exclusion. For $0<t<1+D_\sigma$ the lower endpoint is $\ell=\max\{0,t-1\}$. If $0<t<1$, then $F(0)>0$, $G(0)=0$ and $G'(0)>0$; the term $-2\sqrt{FG}$ makes the right derivative at $\ell$ equal to $-\infty$. If $t>1$, then $\ell>0$, $F(\ell)=0$, $F'(\ell)=L_\sigma(\ell)^2>0$ and $G(\ell)>0$, giving the same conclusion. At $t=1$, write $Z_\sigma(\delta)=z_\sigma\delta+O(\delta^2)$, where $z_+=2$ and $z_-=4c^2$. Both $F,G$ then vanish linearly and direct substitution into (37.12) gives
+
+$$
+ \mathcal H'_{\sigma,1}(0+)
+ =K_\sigma^2-K_{-\sigma}^2-(K_\sigma+\sqrt{z_\sigma})^2
+ =-K_{-\sigma}^2-z_\sigma-2K_\sigma\sqrt{z_\sigma}<0.
+\tag{37.17}
+$$
+
+The lower endpoint is therefore never a minimum at these positive levels. If the upper endpoint is $t\le D_\sigma$, then $r=0$, $F>0$, $G=0$ and $G'=-Z_\sigma(t)<0$; the left derivative is $+\infty$. This endpoint is also excluded. If the upper endpoint is $D_\sigma<t<1+D_\sigma$, both $F,G$ are positive there. The derivative sign there, its strict increase, and the negative derivative at the lower endpoint give exactly the selection rule (37.13). These arguments prove (37.10), including $\delta>0$ and $r>0$, and deal with $t=D_\sigma$ as well. At zero and at the maximal level the interval is the asserted singleton.
+
+The attaining pairs (37.14)--(37.15) follow by direct substitution into the original same-feedback identities. On the positive cap, $P=d-h\delta$ and $Q=\tau i\sqrt{Z_+(\delta)}$ before the common scalar is applied. On the negative cap, $P=\tau\sqrt{Z_-(\delta)}$ and $Q=e-s\delta$. Thus the displayed effects align the amplitudes, have the required population and ordinary-transpose convention, and attain the two scalar envelopes at the original distance $2t$.
+
+For necessity, Theorem 37.2 first forces purity and then (by the uniqueness just proved) the displayed $\delta,r$. At $0<t<1+D_\sigma$, both population square roots are positive, and both attaining amplitudes are nonzero because $\delta>0$. Equality in the simultaneous envelope comparison therefore forces equality in each amplitude bound.
+
+In the positive cap normalize $\sum_jw_j=A>0$. Equality in
+$|P|=|hA+(c-h)(w_3+w_4)|\le hA+2(c-h)$ forces $w_3=w_4=1$. Write $w_1=x+\zeta$, $w_2=x-\zeta$. Equality in the other bound gives $|\zeta|^2=1-x^2=y^2$. The two disk constraints then both have squared modulus one, and their difference is $4x\operatorname{Re}\zeta=0$. Here $x\ge\sqrt{2/3}>0$ and $y>0$, the latter following from $\delta>0$, not from the population alone. Hence $\zeta=\tau iy$.
+
+In the negative cap normalize $\sum_j\widetilde w_j=B>0$ in the fixed coordinates used above. Equality in
+$|Q|=|sB+(h-s)(\widetilde w_1+\widetilde w_2)|\le sB+2(h-s)$ forces $\widetilde w_1=\widetilde w_2=1$. Write $\widetilde w_3=x+\zeta$, $\widetilde w_4=x-\zeta$. Equality in the $P$ bound forces $|\zeta|=y$, and the same disk calculation, with $x\ge11/12>0$, gives $\zeta=\tau iy$. Undoing the fixed coordinates yields $w^-_\tau$. Equality in (23.12) fixes the relative effect phase and gives exactly the effects in (37.14); the single common feedback scalar cancels from that phase condition.
+
+At the maximal positive-cap level, $r=1$ and only the $v$ envelope is required by equality. Use its support proof (24.3)--(24.12) with $\lambda=hx/y\ge1$. The strict phase comparison (24.6) forces the two support phases $\phi=\pm\pi/2$ modulo $2\pi$. All four shifted coefficients are nonzero: the first two are $\lambda\pm ih$ and the last two are $\lambda\pm s>0$. Equality in each coordinate-disk support term forces $w=(x+\tau iy,x-\tau iy,1,1)$ after the common normalization. Thus the same feedback classification holds without requiring the unused $u$ envelope. The effect is necessarily $E_-$, since its population is zero on $b_+$.
+
+At the maximal negative-cap level, only the $u$ envelope is required. Its support proof (25.6)--(25.10), with $\lambda=cx/y>2$, and the strict phase comparison (25.7), force $\phi=0$ or $\pi$. The first two shifted coefficients are $\lambda\pm h>0$ and the last two are $\lambda\pm ic$. Disk-support equality gives $\widetilde w=(1,1,x+\tau iy,x-\tau iy)$, hence $w^-_\tau$. Its effect is $E_+$. These endpoint arguments do not infer equality from continuity.
+
+At zero the normalized cap diagonal is respectively $(1,1,1,1)$ or $(1,-1,-i,i)$, and the effect is $E_+$ or $E_-$. The vanishing crossed amplitude imposes no relative-phase condition; its zero population makes that phase represent the same effect. There is just the corresponding optimizer class.
+
+In every equality diagonal all four entries have modulus one. For the actual unitary $V=UU_+^\dagger$, each diagonal entry already supplies the full squared row norm, forcing every off-diagonal entry of $V$ to vanish. This proves the assertion about every actual lift in (37.15), without excluding nondiagonal competitors beforehand. For positive levels $y>0$. In the positive cap the last two entries fix the common scalar, and in the negative cap the first two do so. The two orientations therefore cannot be identified by that scalar. At maximal levels the effects coincide because a representing vector's scalar phase does not change its projection, but the feedbacks are still distinct. This proves all the claimed equality and coalescence statements. $\square$
+
+**Theorem 37.4 (screening with the original core effect profile retained).** Every original pair in $\mathcal T$ with $\rho=\xi>0$ satisfies
+
+$$
+ f(E,U)>(\gamma-\kappa)\xi.
+\tag{37.18}
+$$
+
+For each $0<\xi\le9$ such that $N_+(\xi)<(\gamma-\kappa)\xi$, one has
+
+$$
+ \boxed{\quad m(\xi)=\min\{N_+(\xi),N_{\mathcal O}(\xi)\}.\quad}
+\tag{37.19}
+$$
+
+Every original minimizing pair on such a level belongs to $\mathcal C_+$ or $\mathcal O$. Those in $\mathcal C_+$ are exactly (37.15) with $\sigma=+$, and occur if and only if $N_+(\xi)\le N_{\mathcal O}(\xi)$. Those in $\mathcal O$ retain exactly the full effect profile (36.7), including its admissible sign ties, mixed effects and zero-amplitude cases, for actual feedbacks attaining the core value equal to $m(\xi)$. Equality of $N_{\mathcal O}(\xi)$ and $N_+(\xi)$ alone does not assert the existence of a core minimizing pair, since $\mathcal O$ need not be closed.
+
+**Proof.** Source Theorem 26.4 gives $g>\gamma\rho$ on the trace triangle with both caps removed, which is exactly $\mathcal T$; this proves (37.18) for every original effect. Source Theorem 25.3 gives $f\ge(\gamma-\kappa)\xi$ throughout $\mathcal C_-$, also for mixed effects. These two sectors consequently cannot contain a global minimizer under the stated strict screening condition; their infima are at least the screen value. On $\mathcal C_+$ Theorems 37.2--37.3 give the attained value and full equality preimage. On $\mathcal O$, Theorem 36.2 gives exactly (37.6), with no restriction to pure effects. Taking the infimum over the four-set partition proves (37.19). The full original minimum is attained by Theorem 35.2. The equality assertions follow from the same sector comparisons and the necessary-and-sufficient fixed-feedback equality of Theorem 36.2. In particular a minimizing original effect at a core feedback must minimize its fixed-feedback level problem; otherwise its same-feedback competitor would lower the original value. Conversely a core feedback and an effect from (36.7) attaining the full value give an original minimizer. No extra sign or scalar quotient has been introduced. $\square$
+
+**Theorem 37.5 (scalar ordering throughout the rank-one geometric family up to distance four).** Let $\mathcal C_{34}$ be the full enlarged feedback shape of Definition 35.4, and restrict only the effects in this comparison to rank one. For every $0<\xi\le4$, put $t=\xi/2$ and
+
+$$
+ J(t)=[\max\{0,t-1\},t].
+\tag{37.20}
+$$
+
+There is exactly one root $\delta_\circ(t)$ of (37.13) with $\sigma=+$ in the interior of $J(t)$. The exact restricted envelope is
+
+$$
+ \boxed{\quad
+ \min_{\substack{(E,U)\in\mathcal C_{34},\ \operatorname{rank}E=1\\
+                         \rho(E,U)=\xi}}f(E,U)
+ =H^+_{\delta_\circ(t)}(t-\delta_\circ(t)).
+ \quad}
+\tag{37.21}
+$$
+
+Here (37.3) and (37.11)--(37.13) are evaluated by their displayed algebraic expressions for $0\le\delta\le2$, without extending a cap comparison to that range. All restricted minimizers are precisely (37.14)--(37.15) with $\sigma=+$, $\delta=\delta_\circ(t)$ and $r=t-\delta$, giving exactly two distinct original pairs modulo the common scalar. This unique scalar choice agrees with the Section 34 germ on its supplied local interval. Equation (37.21) orders every rank-one competitor in the enlarged geometric shape on these levels; it does not order general original feedbacks or mixed effects in that shape.
+
+**Proof.** On $J(t)$ one has $0\le\delta\le t\le2$ and $0\le r=t-\delta\le1$. The positive-sign quantities in (37.12) still satisfy $F,G\ge0$. Now $L=d-h\delta\ge2c$, so
+
+$$
+ F''\le1-8hc<0,\qquad G''=-4+2\delta-r\le0.
+\tag{37.22}
+$$
+
+The first strict sign follows from $c>h$ and $h^2=1/2$. Concavity of the geometric mean, as proved above, therefore makes $\mathcal H_{+,t}$ strictly convex on $J(t)$. The lower-endpoint argument (37.17) applies unchanged; it has negative right derivative, with value $-\infty$ except when $t=1$. The upper endpoint is $\delta=t$, $r=0$. There $F>0$, $G=0$, $G'=-Z_+(t)<0$ for every $0<t\le2$, so the left derivative is $+\infty$. Thus there is a unique interior root and minimum, with
+$0<\delta_\circ(t)<2$ and $0<t-\delta_\circ(t)<1$.
+
+For every scalar argument $\delta\in J(t)$ the actual geometric feedback has $x=1-\delta/2\ge0$, $y=\sqrt{1-x^2}$, $A=2(1+x)$ and $B=2y$. At population $p=1-r$ its pure-effect distance branches satisfy
+
+$$
+ r_--r_+=2(5-2t+\delta-2y)
+       \ge2(7-2t-2\sqrt2)>0,
+\tag{37.23}
+$$
+
+because $\delta-2y=2-2(x+y)\ge2-2\sqrt2$ and $t\le2$. Hence the phase-aligned rank-one effect really has original joint distance $2t$ and value $H^+_\delta(t-\delta)$. This proves attainment of the scalar minimum by original pairs, rather than just by a distance branch expression.
+
+Conversely, take any rank-one original pair in $\mathcal C_{34}$ with $\rho\le4$. If its geometric feedback has $x<0$, then both feedback-distance summands alone exceed four: $8-2A=4-4x>4$ and $8-2B=8-4|y|>4$. Both effect-distance summands are nonnegative, a contradiction. Thus $x\ge0$ and $\delta=2(1-x)\in[0,2]$. The negative-branch feedback distance is $8-4|y|\ge4$. Consequently a negative minimizing sign at $\rho\le4$ is possible only at $\rho=4$, $x=0$, $|y|=1$ and $E=E_-$. Apart from this case, the positive branch gives $r+\delta=t$, so $\delta\in J(t)$. The actual amplitudes are $u=d-h\delta$ and $v=\sqrt{2\delta-\delta^2/2}$. Equation (23.12) gives $f\ge H^+_\delta(t-\delta)$ for every effect phase, and therefore the bound (37.21).
+
+It remains to eliminate the negative-branch exception at its actual level four. Its defect is $e^2-2$. At that same level choose $\delta=3/2$, $r=1/2$ and the phase-aligned original geometric pair already constructed. Its amplitudes and defect are
+
+$$
+ u=2c+h/2,\qquad v=h\sqrt{15}/2,\qquad
+ g=\frac{d^2+e^2}{2}-\frac{(u+v)^2}{2}.
+\tag{37.24}
+$$
+
+The rational bounds $c>9/10$, $h>7/10$, $\sqrt{15}>3$, $h<3/4$ and $s<2/5$ give
+
+$$
+ (u+v)^2>(16/5)^2=256/25
+   >51/5>D_0+4,\qquad D_0=4h+8s.
+\tag{37.25}
+$$
+
+Thus (37.24) is strictly below $e^2-2$. Its distance is exactly four by (37.23), and subtracting $4\kappa$ preserves the strict comparison. The exceptional negative-sign pair cannot minimize the restricted problem.
+
+Every restricted minimizing pair now has the unique interior scalar argument. Its two amplitudes and both population square roots are positive, so equality in (23.12) forces exactly the relative effect phase in (37.14). The feedback already has the geometric form by definition, with its two orientations. Here $x>0$, $y>0$ and $0<r<1$, so the orientations give distinct effects and distinct feedbacks after the common scalar quotient. This proves both directions of the equality assertion. On the local interval, Lemma 34.2's scalar argument is in this domain and minimizes the same expression; uniqueness therefore identifies it with $\delta_\circ(t)$. No cap purity or general-feedback comparison was used beyond its proved domain. $\square$
+
+The all-effect cap infima (37.7)--(37.9), strict scalar convexity and selection (37.10)--(37.17), and endpoint equality propagation are fixed-record deductions. They use the supplied simultaneous envelopes (24.9), (25.2), normalized-effect identities (23.9)--(23.12), and the conditional same-level purification of Theorem 36.3 with its cap hypotheses proved above. The scalar uniqueness extends the local selection of Lemma 34.2 to both entire cap distance ranges. Theorem 37.5 further orders the entire rank-one enlarged geometric family at every original level up to four, including its exceptional negative-sign endpoint; it does not replace a full-domain comparison by that restricted envelope. The screen in (37.18) and the opposite-cap inequality are supplied results, while (37.19) records their prescribed-level consequence with the exact core effect profile retained. Concavity of the geometric mean and disk-support equality are standard intermediate tools, used here for the explicit functions (37.11)--(37.12).
+
+For the bounded primary-source correspondence, [Jasper--Loreaux--Weiss, arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3) states Thompson's prescribed complex-diagonal and singular-value theorem. Four singular values equal to one give exactly the domain $\mathcal W$ of source (23.1); the realized square matrix is unitary. This is the realization input behind the full-domain profile, whereas the cap equality witnesses here have direct diagonal unitary realizations. [Gregoratti--Werner, quant-ph/0209025v1, Proposition 8 and (16)--(17)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8) concerns fidelity and equality for a fixed Kraus decomposition. Its operators correspond to $t_j=\operatorname{diag}(R_0b_j)$ in dimension four, as in the source volume. That result is a correction-bound input, not a prescribed producer-distance cap envelope or its scalar selection. The new deductions here concern that additional metric and its exact level constraint; no exhaustive literature-absence or priority claim is made.
+
+For the original first-loss question, this removes the all-effect optimization and the possibility of scalar ties inside either screened cap, with a full original-pair equality preimage at every cap level. It also removes the opposite-cap and trace-triangle competitors on levels satisfying the explicit strict screen in Theorem 37.4. The remaining all-original feedback ordering compares the intrinsically continued Section 34 germ against every admissible $M_\sigma(w,\xi)$ in the core, including mixed effects. Theorem 37.5 removes rank-one geometric scalar competition through distance four, but does not compare mixed effects beyond the caps or any general feedback there; geometric scalar competition beyond that range is also unresolved. On the supplied local interval the unique positive-cap selection agrees with Lemma 34.2. A cap-selection endpoint or the failure of the linear screen is not identified with loss of the geometric germ. A core infimum tie requires attainment and an additional original pair before it can signify added minimizers. The exact maximal connected positive-distance range, a directly selected first boundary, its inclusion or exclusion, all first competing original minimizers or the precise structural event, immediate right-side failure when required, and the determinant-zero variation case remain unresolved. No finite cap interval or residual optimizer formula settles those claims.
+
+## 追加锚（本行以下为增补区）
