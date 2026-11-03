@@ -131,7 +131,7 @@ private theorem power_follows (m : ℕ) (p : List ℕ)
       · intro h
         have he := List.cons.inj h
         refine ⟨he.1, ?_⟩
-        subst x
+        rw [he.1]
         exact (ih 0 hxs).mpr he.2
     | succ m =>
       have hhalf : IsHalf (2 ^ (m + 1)) x ↔ x = 2 ^ m := by
@@ -143,7 +143,7 @@ private theorem power_follows (m : ℕ) (p : List ℕ)
       · intro h
         have he := List.cons.inj h
         refine ⟨he.1, ?_⟩
-        subst x
+        rw [he.1]
         exact (ih m hxs).mpr he.2
 
 private theorem odd_follows (m : ℕ) (p : List ℕ)
@@ -170,7 +170,7 @@ private theorem odd_follows (m : ℕ) (p : List ℕ)
         simp only [List.length_cons, oddWord] at he
         have he' := List.cons.inj he
         refine ⟨he'.1, ?_⟩
-        subst x
+        rw [he'.1]
         exact (power_follows 0 xs hxs).mpr he'.2
     | succ m =>
       simp only [Follows, half_odd_power]
@@ -190,13 +190,13 @@ private theorem odd_follows (m : ℕ) (p : List ℕ)
           simp only [List.length_cons, oddWord] at he
           have he' := List.cons.inj he
           refine ⟨Or.inl he'.1, ?_⟩
-          subst x
+          rw [he'.1]
           exact (power_follows m xs hxs).mpr he'.2
         | succ j =>
           simp only [List.length_cons, oddWord] at he
           have he' := List.cons.inj he
           refine ⟨Or.inr he'.1, ?_⟩
-          subst x
+          rw [he'.1]
           exact (ih m hxs).mpr ⟨j, by omega, by simpa using hjl, he'.2⟩
 
 private theorem powerWord_sum_short (m l : ℕ) (hl : l ≤ m) :
@@ -215,7 +215,10 @@ private theorem powerWord_sum_short (m l : ℕ) (hl : l ≤ m) :
 private theorem powerWord_sum_long (m l : ℕ) (hl : m ≤ l) :
     (powerWord m l).sum + 1 = 2 ^ m + (l - m) := by
   induction l generalizing m with
-  | zero => have : m = 0 := by omega; subst m; simp [powerWord]
+  | zero =>
+    have hm : m = 0 := by omega
+    subst m
+    simp [powerWord]
   | succ l ih =>
     cases m with
     | zero =>
@@ -231,10 +234,16 @@ private theorem powerWord_sum_long (m l : ℕ) (hl : m ≤ l) :
 private theorem oddWord_sum (m j l : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) :
     (oddWord m j l).sum = (powerWord m l).sum + j := by
   induction l generalizing m j with
-  | zero => have : j = 0 := by omega; subst j; simp [oddWord, powerWord]
+  | zero =>
+    have hj : j = 0 := by omega
+    subst j
+    simp [oddWord, powerWord]
   | succ l ih =>
     cases m with
-    | zero => have : j = 0 := by omega; subst j; simp [oddWord, powerWord]
+    | zero =>
+    have hj : j = 0 := by omega
+    subst j
+    simp [oddWord, powerWord]
     | succ m =>
       cases j with
       | zero => simp [oddWord, powerWord]
@@ -263,5 +272,161 @@ theorem dyadic_source_classification (m : ℕ) (p : SourceLists (2 ^ m + 1)) :
     have ht := p.2.2.1
     rw [he] at ht
     omega
+
+private theorem powerWord_positive (m l : ℕ) :
+    ∀ x ∈ powerWord m l, 0 < x := by
+  induction l generalizing m with
+  | zero => simp [powerWord]
+  | succ l ih => cases m <;> simp [powerWord, ih, pow_pos]
+
+private theorem oddWord_positive (m j l : ℕ) :
+    ∀ x ∈ oddWord m j l, 0 < x := by
+  induction l generalizing m j with
+  | zero => simp [oddWord]
+  | succ l ih =>
+    cases m <;> cases j <;> simp [oddWord, powerWord_positive, ih, pow_pos]
+
+private theorem oddWord_prefix_injective (m l j k : ℕ)
+    (hjm : j ≤ m) (hjl : j ≤ l) (hkm : k ≤ m) (hkl : k ≤ l)
+    (he : oddWord m j l = oddWord m k l) : j = k := by
+  induction l generalizing m j k with
+  | zero => omega
+  | succ l ih =>
+    cases m with
+    | zero => omega
+    | succ m =>
+      cases j with
+      | zero =>
+        cases k with
+        | zero => rfl
+        | succ k => simp only [oddWord, List.cons.injEq] at he; omega
+      | succ j =>
+        cases k with
+        | zero => simp only [oddWord, List.cons.injEq] at he; omega
+        | succ k =>
+          simp only [oddWord, List.cons.injEq] at he
+          have := ih m j k (by omega) (by omega) (by omega) (by omega) he.2
+          omega
+
+private abbrev Threshold (m : ℕ) :=
+  {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m}
+
+private abbrev DyadicCode (m : ℕ) := Fin 3 ⊕ Threshold m
+
+private def codeParams (m : ℕ) : DyadicCode m → ℕ × ℕ
+  | .inl i => if i = 0 then (m, 2) else if i = 1 then (m + 1, 1) else (m + 2, 0)
+  | .inr r => (m - r.1.val, 2 ^ r.1.val + 1)
+
+private theorem code_bounds (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) :
+    (codeParams m c).2 ≤ m ∧ (codeParams m c).2 ≤ (codeParams m c).1 := by
+  rcases c with i | r
+  · fin_cases i <;> simp [codeParams] <;> omega
+  · have hr := r.2
+    simp only [codeParams]
+    omega
+
+private theorem code_total (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) :
+    (oddWord m (codeParams m c).2 (codeParams m c).1).sum = 2 ^ m + 1 := by
+  have hb := code_bounds m hm c
+  rw [oddWord_sum m _ _ hb.1 hb.2]
+  rcases c with i | r
+  · fin_cases i
+    · simp only [codeParams, ↓reduceIte, Prod.fst, Prod.snd]
+      have := powerWord_sum_short m m (by omega)
+      simp only [Nat.sub_self, pow_zero] at this
+      omega
+    · simp only [codeParams, ↓reduceIte, Prod.fst, Prod.snd]
+      have := powerWord_sum_long m (m + 1) (by omega)
+      omega
+    · simp only [codeParams, ↓reduceIte, Prod.fst, Prod.snd]
+      have := powerWord_sum_long m (m + 2) (by omega)
+      omega
+  · simp only [codeParams, Prod.fst, Prod.snd]
+    have hr : r.1.val ≤ m := by omega
+    have hs := powerWord_sum_short m (m - r.1.val) (by omega)
+    have he : m - (m - r.1.val) = r.1.val := by omega
+    rw [he] at hs
+    omega
+
+private def codeSource (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) :
+    SourceLists (2 ^ m + 1) := by
+  let l := (codeParams m c).1
+  let j := (codeParams m c).2
+  have hb := code_bounds m hm c
+  refine ⟨oddWord m j l, oddWord_positive m j l, code_total m hm c, ?_⟩
+  apply (odd_follows m _ (oddWord_positive m j l)).mpr
+  refine ⟨j, hb.1, ?_, ?_⟩
+  · simpa only [oddWord_length] using hb.2
+  · rw [oddWord_length]
+
+private theorem codeParams_injective (m : ℕ) : Function.Injective (codeParams m) := by
+  intro c d he
+  rcases c with i | r <;> rcases d with k | s
+  · have h := congrArg Prod.fst he
+    fin_cases i <;> fin_cases k <;> simp [codeParams] at h ⊢ <;> omega
+  · have h := congrArg Prod.fst he
+    have hs := s.2
+    fin_cases i <;> simp [codeParams] at h <;> omega
+  · have h := congrArg Prod.fst he
+    have hr := r.2
+    fin_cases k <;> simp [codeParams] at h <;> omega
+  · have h := congrArg Prod.fst he
+    have hr := r.1.2
+    have hs := s.1.2
+    simp only [codeParams] at h
+    have hv : r.1.val = s.1.val := by omega
+    have : r = s := Subtype.ext (Fin.ext hv)
+    subst s
+    rfl
+
+private theorem codeSource_bijective (m : ℕ) (hm : 2 ≤ m) :
+    Function.Bijective (codeSource m hm) := by
+  constructor
+  · intro c d he
+    have he' := congrArg Subtype.val he
+    change oddWord m (codeParams m c).2 (codeParams m c).1 =
+      oddWord m (codeParams m d).2 (codeParams m d).1 at he'
+    have hl := congrArg List.length he'
+    simp only [oddWord_length] at hl
+    apply codeParams_injective m
+    apply Prod.ext hl
+    have hc := code_bounds m hm c
+    have hd := code_bounds m hm d
+    rw [← hl] at he'
+    exact oddWord_prefix_injective m _ _ _ hc.1 hc.2 hd.1 (by omega) he'
+  · intro p
+    obtain ⟨j, hjm, hjl, he, hs, ht⟩ := dyadic_source_classification m p
+    have hex : ∃ c : DyadicCode m,
+        codeParams m c = (p.1.length, j) := by
+      by_cases hl : p.1.length < m
+      · have hshort := hs (by omega)
+        have hr : m - p.1.length < m + 1 := by omega
+        have ht' : 2 ^ (m - p.1.length) + (m - p.1.length) + 1 ≤ m := by omega
+        refine ⟨.inr ⟨⟨m - p.1.length, hr⟩, by omega, ht'⟩, ?_⟩
+        simp only [codeParams]
+        exact Prod.ext (by omega) hshort.symm
+      · have hlong := ht (by omega)
+        have hl' : p.1.length = m ∨ p.1.length = m + 1 ∨ p.1.length = m + 2 := by omega
+        rcases hl' with h | h | h
+        · have hj : j = 2 := by omega
+          exact ⟨.inl 0, by simp [codeParams, h, hj]⟩
+        · have hj : j = 1 := by omega
+          exact ⟨.inl 1, by simp [codeParams, h, hj]⟩
+        · have hj : j = 0 := by omega
+          exact ⟨.inl 2, by simp [codeParams, h, hj]⟩
+    obtain ⟨c, hc⟩ := hex
+    refine ⟨c, Subtype.ext ?_⟩
+    change oddWord m (codeParams m c).2 (codeParams m c).1 = p.1
+    rw [hc]
+    exact he.symm
+
+/-- The independent source count at every dyadic successor, including all tails of ones. -/
+theorem dyadic_source_count (m : ℕ) (hm : 2 ≤ m) :
+    count (2 ^ m + 1) = 3 +
+      Fintype.card {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m} := by
+  have e := Equiv.ofBijective (codeSource m hm) (codeSource_bijective m hm)
+  unfold count
+  rw [Nat.card_congr e.symm, Nat.card_eq_fintype_card]
+  simp only [Fintype.card_sum, Fintype.card_fin]
 
 end D5.S1.Recurrence.Partitions.HalvingPartitionNonregularity
