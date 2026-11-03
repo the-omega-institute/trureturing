@@ -2,17 +2,26 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Geometry/BipartiteStableSetPolytope
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Convex.Combination, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Bipartite]
+   anchors: []
    utility: none
    digest: Bipartiteness characterizes the bounded edge description of the independent-set hull. -/
 
-import Mathlib.Analysis.Convex.Combination
-import Mathlib.Combinatorics.SimpleGraph.Bipartite
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.Finset.Max
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Omega
+module
+
+public import Mathlib.Analysis.Convex.Combination
+public import Mathlib.Combinatorics.SimpleGraph.Bipartite
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
+/-! Independent-set hulls and bounded edge inequalities on finite vertex types. -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+public section
 
 namespace D5.S3.Combinatorics.Geometry.BipartiteStableSetPolytope
 
@@ -85,37 +94,40 @@ private lemma edge_colors (G : SimpleGraph V) (c : G.Coloring (Fin 2))
   omega
 
 /-- The positive support determines an independent threshold vertex after one color is complemented. -/
-private lemma positive_vertex [Fintype V] (G : SimpleGraph V) (c : G.Coloring (Fin 2))
+private lemma positive_vertex [Finite V] (G : SimpleGraph V) (c : G.Coloring (Fin 2))
     (y : V → ℝ)
     (horder : ∀ v w, G.Adj v w → c v = 0 → y v ≤ y w) :
     flip G c (fun v => if 0 < y v then 1 else 0) ∈ stableSetPolytope G := by
   classical
+  let _ := Fintype.ofFinite V
   let A : Finset V := Finset.univ.filter (fun v =>
     if c v = 0 then 0 < y v else ¬ 0 < y v)
   have hA : G.IsIndepSet (A : Set V) := by
-    intro v hv w hw hne hvw
+    intro v hv w hw _ hvw
     have hv' : (if c v = 0 then 0 < y v else ¬ 0 < y v) :=
       (Finset.mem_filter.mp hv).2
     have hw' : (if c w = 0 then 0 < y w else ¬ 0 < y w) :=
       (Finset.mem_filter.mp hw).2
     rcases edge_colors G c hvw with ⟨hc, hd⟩ | ⟨hc, hd⟩
-    · simp only [hc, hd, if_true, if_false] at hv' hw'
+    · simp only [hc, hd, ite_true, ite_false] at hv' hw'
       exact hw' (lt_of_lt_of_le hv' (horder v w hvw hc))
-    · simp only [hc, hd, if_true, if_false] at hv' hw'
+    · simp only [hc, hd, ite_true, ite_false] at hv' hw'
       exact hv' (lt_of_lt_of_le hw' (horder w v hvw.symm hd))
   have heq : flip G c (fun v => if 0 < y v then 1 else 0) = vertexIndicator A := by
     funext v
+    simp only [flip, vertexIndicator, Set.indicator_apply, Finset.mem_coe]
     by_cases hc : c v = 0 <;> by_cases hy : 0 < y v <;>
-      simp [flip, vertexIndicator, A, hc, hy]
+      simp [A, hc, hy]
   rw [heq]
   exact subset_convexHull ℝ _ ⟨⟨A, hA⟩, rfl⟩
 
 /-- Successively remove a minimum positive level; tied minima disappear together. -/
-private lemma peel_mem_hull [Fintype V] (G : SimpleGraph V) (c : G.Coloring (Fin 2))
+private lemma peel_mem_hull [Finite V] (G : SimpleGraph V) (c : G.Coloring (Fin 2))
     (y : V → ℝ) (hbounds : ∀ v, 0 ≤ y v ∧ y v ≤ 1)
     (horder : ∀ v w, G.Adj v w → c v = 0 → y v ≤ y w) :
     flip G c y ∈ stableSetPolytope G := by
   classical
+  let _ := Fintype.ofFinite V
   suffices ∀ n : ℕ, ∀ z : V → ℝ,
       (Finset.univ.filter (fun v => 0 < z v)).card = n →
       (∀ v, 0 ≤ z v ∧ z v ≤ 1) →
@@ -141,17 +153,17 @@ private lemma peel_mem_hull [Fintype V] (G : SimpleGraph V) (c : G.Coloring (Fin
       · have hzb : z = b := by
           funext v
           by_cases hv : 0 < z v
-          · simp only [b, if_pos hv]
+          · simp only [b, ite_eq_left hv]
             linarith [hmin' v hv, (hz v).2]
-          · simp only [b, if_neg hv]
+          · simp only [b, ite_eq_right hv]
             exact le_antisymm (le_of_not_gt hv) (hz v).1
         simpa only [hzb] using hvertex
-      · have hd : 0 < 1 - δ := by linarith
+      · have hd : 0 < 1 - δ := sub_pos.mpr (lt_of_le_of_ne hδone heq)
         let z' : V → ℝ := fun v => if 0 < z v then (z v - δ) / (1 - δ) else 0
         have hz' : ∀ v, 0 ≤ z' v ∧ z' v ≤ 1 := by
           intro v
           by_cases hv : 0 < z v
-          · simp only [z', if_pos hv]
+          · simp only [z', ite_eq_left hv]
             exact ⟨div_nonneg (sub_nonneg.mpr (hmin' v hv)) hd.le,
               (div_le_one hd).mpr (by linarith [(hz v).2])⟩
           · simp [z', hv]
@@ -159,9 +171,9 @@ private lemma peel_mem_hull [Fintype V] (G : SimpleGraph V) (c : G.Coloring (Fin
           intro v w hvw hc
           by_cases hv : 0 < z v
           · have hw : 0 < z w := lt_of_lt_of_le hv (ho v w hvw hc)
-            simp only [z', if_pos hv, if_pos hw]
+            simp only [z', ite_eq_left hv, ite_eq_left hw]
             exact (div_le_div_iff_of_pos_right hd).mpr (by linarith [ho v w hvw hc])
-          · simpa only [z', if_neg hv] using (hz' w).1
+          · simpa only [z', ite_eq_right hv] using (hz' w).1
         have hsmall : (Finset.univ.filter (fun v => 0 < z' v)).card < n := by
           rw [← hn]
           apply Finset.card_lt_card
@@ -182,15 +194,15 @@ private lemma peel_mem_hull [Fintype V] (G : SimpleGraph V) (c : G.Coloring (Fin
         have hrec : ∀ v, z v = δ * b v + (1 - δ) * z' v := by
           intro v
           by_cases hv : 0 < z v
-          · simp only [b, z', if_pos hv, mul_one]
+          · simp only [b, z', ite_eq_left hv, mul_one]
             rw [mul_div_cancel₀ _ (ne_of_gt hd)]
             ring
           · have hvzero : z v = 0 := le_antisymm (le_of_not_gt hv) (hz v).1
-            simp [b, z', hv, hvzero]
+            simp [b, z', hvzero]
         have hrecflip : δ • flip G c b + (1 - δ) • flip G c z' = flip G c z := by
           funext v
           change δ * flip G c b v + (1 - δ) * flip G c z' v = flip G c z v
-          by_cases hc : c v = 0 <;> simp only [flip, hc, if_true, if_false]
+          by_cases hc : c v = 0 <;> simp only [flip, hc, ite_true, ite_false]
           · linarith [hrec v]
           · linarith [hrec v]
         rw [← hrecflip]
@@ -201,18 +213,17 @@ private lemma peel_mem_hull [Fintype V] (G : SimpleGraph V) (c : G.Coloring (Fin
           intro hv
           exact hU ⟨v, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hv⟩⟩
         have hvzero : z v = 0 := le_antisymm (le_of_not_gt hv) (hz v).1
-        simp [b, hv, hvzero]
+        simp [b, hvzero]
       simpa only [hzb] using hvertex
 
 private lemma region_subset_hull [Finite V] (G : SimpleGraph V) (hG : G.IsBipartite) :
     edgeRegion G ⊆ stableSetPolytope G := by
   classical
-  letI := Fintype.ofFinite V
   obtain ⟨c⟩ := hG
   intro x hx
   have hb : ∀ v, 0 ≤ flip G c x v ∧ flip G c x v ≤ 1 := by
     intro v
-    by_cases hc : c v = 0 <;> simp only [flip, hc, if_true, if_false]
+    by_cases hc : c v = 0 <;> simp only [flip, hc, ite_true, ite_false]
     · exact hx.1 v
     · constructor <;> linarith [(hx.1 v).1, (hx.1 v).2]
   have ho : ∀ v w, G.Adj v w → c v = 0 → flip G c x v ≤ flip G c x w := by
@@ -220,7 +231,7 @@ private lemma region_subset_hull [Finite V] (G : SimpleGraph V) (hG : G.IsBipart
     have hd : c w ≠ 0 := by
       intro he
       exact c.valid hvw (hc.trans he.symm)
-    simp only [flip, hc, hd, if_true, if_false]
+    simp only [flip, hc, hd, ite_true, ite_false]
     linarith [hx.2 v w hvw]
   simpa only [flip_involution] using peel_mem_hull G c (flip G c x) hb ho
 
@@ -232,11 +243,13 @@ private lemma bipartite_of_half_mem (G : SimpleGraph V)
   obtain ⟨j, _, hj⟩ := (Finset.sum_pos_iff_of_nonneg (fun i (_ : i ∈ Finset.univ) => ha i)).mp
     (show 0 < ∑ i, a i by rw [hsum]; norm_num)
   obtain ⟨⟨A, hA⟩, hAj⟩ := hz j
+  change vertexIndicator A = z j at hAj
   have hsaturate : ∀ v w, G.Adj v w → z j v + z j w = 1 := by
     intro v w hvw
     have hle : ∀ i ∈ Finset.univ, a i * (z i v + z i w) ≤ a i := by
       intro i _
       obtain ⟨⟨B, hB⟩, hBi⟩ := hz i
+      change vertexIndicator B = z i at hBi
       have he := (indicator_mem_region G B hB).2 v w hvw
       rw [hBi] at he
       nlinarith [mul_le_mul_of_nonneg_left he (ha i)]
