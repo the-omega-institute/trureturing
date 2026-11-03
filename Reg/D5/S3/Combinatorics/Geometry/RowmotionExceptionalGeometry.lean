@@ -75,12 +75,11 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro role
   refine ⟨(), 2, 100, ?_⟩
   intro he
-  change (missingRowStates 2).card = (missingRowStates 100).card at he
+  dsimp only [actual, realize] at he
   have hu := missing_row_bound (n := 2) (by decide)
   have hl := missing_lower 100
   rw [← he] at hl
-  norm_num at hu hl
-  omega
+  exact (by norm_num : ¬ (3 * 100 : ℕ) ≤ 3 * 2 ^ 4) (hl.trans hu)
 
 def source_registration : Registration arena (type_of% @missing_row_bound) where
   actual := actual
@@ -147,12 +146,11 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro role
   refine ⟨(), 11, 100000000, ?_⟩
   intro he
-  change (exceptionalGeometry 11).card = (exceptionalGeometry 100000000).card at he
+  dsimp only [actual, realize] at he
   have hu := exceptional_geometry_bound (n := 11) (by decide)
   have hl := exceptional_lower 100000000
   rw [← he] at hl
-  norm_num at hu hl
-  omega
+  exact (by norm_num : ¬ (3 * 100000000 : ℕ) ≤ 233 * 11 ^ 5) (hl.trans hu)
 
 def source_registration : Registration arena (type_of% @exceptional_geometry_bound) where
   actual := actual
