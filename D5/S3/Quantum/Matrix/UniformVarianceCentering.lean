@@ -20,7 +20,7 @@ variable {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [FiniteDimensional ℝ E] [NormedAddCommGroup F] [InnerProductSpace ℝ F]
 
 /-- Scalar expectation in a real Hilbert space. -/
-def mean (T : E →ₗ[ℝ] E) (x : E) : ℝ := ⟪x, T x⟫
+private def mean (T : E →ₗ[ℝ] E) (x : E) : ℝ := ⟪x, T x⟫
 
 private lemma extrema (T : E →ₗ[ℝ] E) (hT : T.IsSymmetric)
     (e : E) (he : ‖e‖ = 1) :
@@ -36,24 +36,26 @@ private lemma extrema (T : E →ₗ[ℝ] E) (hT : T.IsSymmetric)
   have ha1 : ‖a‖ = 1 := by simpa using ha
   have hb1 : ‖b‖ = 1 := by simpa using hb
   have hsa : IsSelfAdjoint A := hT.toSelfAdjoint.prop
+  have hf : A.reApplyInnerSelf = mean T := by
+    funext z
+    change ⟪T z,z⟫ = ⟪z,T z⟫
+    exact real_inner_comm _ _
   have ha' : IsLocalExtrOn A.reApplyInnerSelf (Metric.sphere (0 : E) ‖a‖) a := by
-    rw [ha1]
-    simpa only [ContinuousLinearMap.reApplyInnerSelf_apply, A, mean, real_inner_comm] using
-      (Or.inl hmin.isLocalMinOn : IsLocalExtrOn (mean T) (Metric.sphere 0 1) a)
+    rw [hf,ha1]
+    exact Or.inl hmin.isLocalMinOn
   have hb' : IsLocalExtrOn A.reApplyInnerSelf (Metric.sphere (0 : E) ‖b‖) b := by
-    rw [hb1]
-    simpa only [ContinuousLinearMap.reApplyInnerSelf_apply, A, mean, real_inner_comm] using
-      (Or.inr hmax.isLocalMaxOn : IsLocalExtrOn (mean T) (Metric.sphere 0 1) b)
+    rw [hf,hb1]
+    exact Or.inr hmax.isLocalMaxOn
   refine ⟨a, b, ha1, hb1, ?_, ?_, ?_, ?_⟩
-  · simpa [ContinuousLinearMap.rayleighQuotient, ContinuousLinearMap.reApplyInnerSelf_apply, A, mean, ha1, real_inner_comm] using
+  · simpa only [ContinuousLinearMap.rayleighQuotient, hf, ha1, one_pow, div_one] using
       hsa.eq_smul_self_of_isLocalExtrOn_real ha'
-  · simpa [ContinuousLinearMap.rayleighQuotient, ContinuousLinearMap.reApplyInnerSelf_apply, A, mean, hb1, real_inner_comm] using
+  · simpa only [ContinuousLinearMap.rayleighQuotient, hf, hb1, one_pow, div_one] using
       hsa.eq_smul_self_of_isLocalExtrOn_real hb'
   · intro x hx; exact hmin (by simpa using hx)
   · intro x hx; exact hmax (by simpa using hx)
 
 /-- A uniform variance bound bounds every difference of unit-vector expectations. -/
-theorem expectation_gap_sq_le_four_variance (T : E →ₗ[ℝ] E) (hT : T.IsSymmetric)
+private theorem expectation_gap_sq_le_four_variance (T : E →ₗ[ℝ] E) (hT : T.IsSymmetric)
     (δ : ℝ) (hδ : 0 ≤ δ)
     (hv : ∀ x : E, ‖x‖ = 1 → ‖T x - mean T x • x‖ ^ 2 ≤ δ)
     (x y : E) (hx : ‖x‖ = 1) (hy : ‖y‖ = 1) :
@@ -62,6 +64,8 @@ theorem expectation_gap_sq_le_four_variance (T : E →ₗ[ℝ] E) (hT : T.IsSymm
   let l := mean T a
   let u := mean T b
   have hlu : l ≤ u := hmin b hb
+  have hTa' : T a = l • a := hTa
+  have hTb' : T b = u • b := hTb
   have hwidth : (u-l)^2 ≤ 4*δ := by
     by_cases heq : l = u
     · simp [heq, hδ]
@@ -79,15 +83,15 @@ theorem expectation_gap_sq_le_four_variance (T : E →ₗ[ℝ] E) (hT : T.IsSymm
       nlinarith [ht]
     have hz : ‖z‖ = 1 := by nlinarith [norm_nonneg z]
     have hm : mean T z = (l+u)/2 := by
-      simp only [mean,z,map_smul,map_add,hTa,hTb,real_inner_smul_left,
+      simp only [mean,z,map_smul,map_add,hTa',hTb',real_inner_smul_left,
         real_inner_smul_right,inner_add_left,inner_add_right,
         inner_self_eq_norm_sq_to_K,ha,hb,hab,real_inner_comm b a]
-      change t * (t * (l * 1^2 + u * 0 + (l * 0 + u * 1^2))) = _
       nlinarith [ht]
     have he : ‖T z - mean T z • z‖^2 = (u-l)^2/4 := by
       have hevec : T z - mean T z • z =
           (t*(l-(l+u)/2)) • a + (t*(u-(l+u)/2)) • b := by
-        simp only [z,map_smul,map_add,hTa,hTb,hm,smul_add,smul_smul]
+        rw [hm]
+        simp only [z,map_smul,map_add,hTa',hTb',smul_add,smul_smul]
         module
       rw [hevec,norm_add_sq_real,norm_smul,norm_smul,
         real_inner_smul_left,real_inner_smul_right,hab,ha,hb]
@@ -122,16 +126,18 @@ variable [FiniteDimensional ℝ F]
 private lemma adjoint_isometry_norm_le (V : E →ₗᵢ[ℝ] F) (z : F) :
     ‖V.adjoint z‖ ≤ ‖z‖ := by
   have hp : ‖V.adjoint z‖^2 = ⟪V (V.adjoint z), z⟫ := by
-    rw [← LinearMap.adjoint_inner_right]
-    exact (real_inner_self_eq_norm_sq _).symm
+    calc
+      _ = ⟪V.adjoint z,V.adjoint z⟫ := (real_inner_self_eq_norm_sq _).symm
+      _ = _ := LinearMap.adjoint_inner_right V.toLinearMap (V.adjoint z) z
   have hb := real_inner_le_norm (V (V.adjoint z)) z
   rw [V.norm_map] at hb
   by_cases hz : ‖V.adjoint z‖ = 0
   · rw [hz]; exact norm_nonneg _
-  · nlinarith [norm_nonneg (V.adjoint z)]
+  · have hpz : 0 < ‖V.adjoint z‖ := lt_of_le_of_ne (norm_nonneg _) (Ne.symm hz)
+    nlinarith
 
 /-- All unit vectors in the block are tested, and residuals remain in the ambient space. -/
-theorem uniform_block_centering {J : Type*} [Fintype J]
+private theorem uniform_block_centering {J : Type*} [Fintype J]
     (V : E →ₗᵢ[ℝ] F) (H : J → E →ₗ[ℝ] F)
     (hs : ∀ j, (V.adjoint.comp (H j)).IsSymmetric)
     (δ : ℝ) (hδ : 0 ≤ δ)
@@ -191,5 +197,97 @@ theorem uniform_block_centering {J : Type*} [Fintype J]
   simp_rw [hsplit]
   rw [Finset.sum_add_distrib]
   linarith [hv x hx]
+
+
+section Complex
+variable {H G : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+  [FiniteDimensional ℂ H] [NormedAddCommGroup G] [InnerProductSpace ℂ G]
+  [FiniteDimensional ℂ G]
+
+private lemma complex_centering {J : Type*} [Fintype J]
+    (V : G →ₗᵢ[ℂ] H) (h : J → H →ₗ[ℂ] H)
+    (hh : ∀ j, (h j).IsSymmetric) (δ : ℝ) (hδ : 0 ≤ δ)
+    (hv : ∀ x : G, ‖x‖ = 1 →
+      ∑ j, ‖h j (V x) - (inner ℂ (V x) (h j (V x))).re • V x‖^2 ≤ δ)
+    (e x : G) (he : ‖e‖ = 1) (hx : ‖x‖ = 1) :
+    (∑ j, ((inner ℂ (V x) (h j (V x))).re -
+      (inner ℂ (V e) (h j (V e))).re)^2 ≤ 4*δ) ∧
+    (∑ j, ‖h j (V x) - (inner ℂ (V e) (h j (V e))).re • V x‖^2 ≤ 5*δ) := by
+  letI := InnerProductSpace.rclikeToReal ℂ H
+  letI := InnerProductSpace.rclikeToReal ℂ G
+  let W : G →ₗᵢ[ℝ] H := V.restrictScalars ℝ
+  let A : J → G →ₗ[ℝ] H := fun j => (h j |>.restrictScalars ℝ).comp W.toLinearMap
+  have hs (j : J) : (W.adjoint.comp (A j)).IsSymmetric := by
+    intro x y
+    rw [LinearMap.comp_apply, LinearMap.comp_apply,
+      LinearMap.adjoint_inner_left, LinearMap.adjoint_inner_right]
+    exact (hh j).restrictScalars (W x) (W y)
+  simpa only [W,A,LinearMap.comp_apply,LinearMap.restrictScalars_apply,
+    LinearIsometry.restrictScalars_apply,real_inner_eq_re_inner] using
+    uniform_block_centering W A hs δ hδ (by
+      intro z hz
+      simpa only [W,A,LinearMap.comp_apply,LinearMap.restrictScalars_apply,
+        LinearIsometry.restrictScalars_apply,real_inner_eq_re_inner] using hv z hz) e he x hx
+
+/-- Blockwise centering bounds the complete ambient Gram operator, including leakage. -/
+theorem hermitian_block_centering_and_gram_bound {J : Type*} [Fintype J]
+    (V : G →ₗᵢ[ℂ] H) (h : J → H →ₗ[ℂ] H)
+    (hh : ∀ j, (h j).IsSymmetric) (δ : ℝ) (hδ : 0 ≤ δ)
+    (hv : ∀ x : G, ‖x‖ = 1 →
+      ∑ j, ‖h j (V x) - (inner ℂ (V x) (h j (V x))).re • V x‖^2 ≤ δ)
+    (e : G) (he : (∃ x : G, ‖x‖ = 1) → ‖e‖ = 1) :
+    let c : J → ℝ := fun j => (inner ℂ (V e) (h j (V e))).re
+    let L : J → G →ₗ[ℂ] H := fun j => (h j).comp V.toLinearMap - (c j : ℂ) • V.toLinearMap
+    let Q : G →ₗ[ℂ] G := ∑ j, (L j).adjoint.comp (L j)
+    (∀ x : G, ‖x‖ = 1 →
+      (∑ j, ((inner ℂ (V x) (h j (V x))).re - c j)^2 ≤ 4*δ) ∧
+      (∑ j, ‖L j x‖^2 ≤ 5*δ)) ∧
+    (∀ x : G, (inner ℂ x (Q x)).re = ∑ j, ‖L j x‖^2 ∧
+      (inner ℂ x (Q x)).re ≤ (5*δ)*‖x‖^2) ∧
+    ‖Q.toContinuousLinearMap‖ ≤ 5*δ := by
+  classical
+  dsimp only
+  let c : J → ℝ := fun j => (inner ℂ (V e) (h j (V e))).re
+  let L : J → G →ₗ[ℂ] H := fun j => (h j).comp V.toLinearMap - (c j : ℂ) • V.toLinearMap
+  let Q : G →ₗ[ℂ] G := ∑ j, (L j).adjoint.comp (L j)
+  have hL (j : J) (x : G) : L j x = h j (V x) - c j • V x := by
+    simp only [L,LinearMap.sub_apply,LinearMap.comp_apply,LinearMap.smul_apply,
+      LinearIsometry.coe_toLinearMap,Complex.coe_smul]
+  have hc (x : G) (hx : ‖x‖ = 1) :
+      (∑ j, ((inner ℂ (V x) (h j (V x))).re - c j)^2 ≤ 4*δ) ∧
+      (∑ j, ‖L j x‖^2 ≤ 5*δ) := by
+    simpa only [hL,c] using complex_centering V h hh δ hδ hv e x (he ⟨x,hx⟩) hx
+  have hgram (x : G) : (inner ℂ x (Q x)).re = ∑ j, ‖L j x‖^2 := by
+    simp only [Q,LinearMap.sum_apply,LinearMap.comp_apply,inner_sum,Complex.re_sum,
+      LinearMap.adjoint_inner_right,inner_self_eq_norm_sq_to_K,Complex.ofReal_re]
+  have hb (x : G) : (inner ℂ x (Q x)).re ≤ (5*δ)*‖x‖^2 := by
+    rw [hgram]
+    by_cases hx : x = 0
+    · simp [hx]; positivity
+    have hn : ‖x‖ ≠ 0 := norm_ne_zero_iff.mpr hx
+    let z : G := ‖x‖⁻¹ • x
+    have hz : ‖z‖ = 1 := by simp [z,norm_smul,Real.norm_eq_abs,abs_of_nonneg (norm_nonneg x),hn]
+    have heq (j : J) : ‖L j x‖^2 = ‖x‖^2 * ‖L j z‖^2 := by
+      simp only [z,map_smul, norm_smul,Real.norm_eq_abs,abs_inv,abs_norm,mul_pow,inv_pow]
+      field_simp
+    simp_rw [heq]
+    rw [← Finset.mul_sum]
+    calc
+      _ ≤ ‖x‖^2 * (5*δ) := mul_le_mul_of_nonneg_left (hc z hz).2 (sq_nonneg _)
+      _ = _ := mul_comm _ _
+  refine ⟨hc,fun x => ⟨hgram x,hb x⟩,?_⟩
+  have hsym : Q.IsSymmetric := LinearMap.isSymmetric_sum _ (fun j _ =>
+    LinearMap.isSymmetric_adjoint_comp_self (L j))
+  nontriviality G
+  rw [ContinuousLinearMap.norm_eq_iSup_rayleighQuotient Q.toContinuousLinearMap hsym]
+  apply ciSup_le
+  intro x
+  have hp : 0 ≤ (inner ℂ (x : G) (Q x)).re := by rw [hgram]; positivity
+  simp only [ContinuousLinearMap.rayleighQuotient,ContinuousLinearMap.reApplyInnerSelf_apply,
+    LinearMap.coe_toContinuousLinearMap', inner_re_symm]
+  rw [abs_of_nonneg (div_nonneg hp (sq_nonneg _))]
+  exact (div_le_iff₀ (sq_pos_of_pos (norm_pos_iff.mpr x.property))).mpr (hb x)
+
+end Complex
 
 end D5.S3.Quantum.Matrix.UniformVarianceCentering
