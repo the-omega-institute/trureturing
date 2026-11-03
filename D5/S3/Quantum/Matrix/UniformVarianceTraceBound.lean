@@ -149,6 +149,7 @@ private lemma unital_kraus_trace_bound {a J : Type*}
         apply Finset.sum_congr rfl
         intro j _
         rw [LinearMap.adjoint_inner_left, norm_sq_eq_re_inner (𝕜 := ℂ)]
+        rfl
       _ = ‖x‖^2 := by
         rw [hgram, LinearMap.id_apply]
         exact (norm_sq_eq_re_inner (𝕜 := ℂ) x).symm
