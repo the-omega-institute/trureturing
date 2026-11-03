@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/MetallicHankel/MetallicHankelComplementaryMinor
    mirror-E: none(waiver:shifted-hankel-complementary-boundary)
-   anchors: [D5/S3/Arith/AbsoluteValues/Heights/Duality]
+   anchors: [mathlib/module/Mathlib.GroupTheory.Perm.Fin]
    utility: none
    digest: Exact ordered complementary indices and signs reduce shifted Hankel minors to boundary determinants. -/
 

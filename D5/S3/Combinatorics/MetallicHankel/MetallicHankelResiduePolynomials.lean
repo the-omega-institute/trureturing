@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/MetallicHankel/MetallicHankelResiduePolynomials
    mirror-E: none(waiver:metallic-hankel-all-residue-polynomials)
-   anchors: [D5/S3/Combinatorics/MetallicHankel/MetallicHankelEndpointJets]
+   anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Basic]
    utility: none
    digest: Fixed boundaries give metallic Hankel residue polynomials from their first term. -/
 
