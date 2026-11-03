@@ -143,9 +143,11 @@ private lemma angular_form {τ : ℝ} (hτ : τ = 1 ∨ τ = -1) (θ a b m : ℝ
   fin_cases i
   · change Complex.exp (((m + a + τ * θ : ℝ) : ℂ) * I) = _
     rw [phase_add, phase_add, hplus, mul_assoc]
+    rfl
   · change Complex.exp (((m + a - τ * θ : ℝ) : ℂ) * I) = _
     rw [show m + a - τ * θ = m + a + (-τ * θ) by ring,
       phase_add, phase_add, hminus, mul_assoc]
+    rfl
   · change Complex.exp (((m + τ * b : ℝ) : ℂ) * I) = _
     exact phase_add _ _
   · change Complex.exp (((m - τ * b : ℝ) : ℂ) * I) = _
@@ -428,24 +430,44 @@ private lemma chart_neighborhood {δ τ : ℝ} (hδ : 0 < δ ∧ δ < 2)
       p 0 < 4 ∧
       (∀ i, -Real.pi < chartAngles τ p i ∧ chartAngles τ p i < Real.pi) ∧
       0 < cos (p 2) := by
-  have hx : Continuous (fun p : Coordinates => radialX (p 0) (p 1) (p 2)) := by
-    unfold radialX
-    fun_prop
+  have he (i : Fin 4) : Continuous (fun p : Coordinates => p i) := continuous_apply i
   have hr : Continuous (fun p : Coordinates =>
-      (2 - p 0 / 2) ^ 2 - cos (p 2) ^ 2 * sin (p 1) ^ 2) := by fun_prop
+      (2 - p 0 / 2) ^ 2 - cos (p 2) ^ 2 * sin (p 1) ^ 2) :=
+    ((continuous_const.sub ((he 0).div_const 2)).pow 2).sub
+      (((Real.continuous_cos.comp (he 2)).pow 2).mul
+        ((Real.continuous_sin.comp (he 1)).pow 2))
+  have hx : Continuous (fun p : Coordinates => radialX (p 0) (p 1) (p 2)) :=
+    (((Real.continuous_cos.comp (he 2)).neg).mul (Real.continuous_cos.comp (he 1))).add
+      (Real.continuous_sqrt.comp hr)
+  have hθ : Continuous (fun p : Coordinates =>
+      arccos (radialX (p 0) (p 1) (p 2))) := Real.continuous_arccos.comp hx
   have ha (i : Fin 4) : Continuous (fun p : Coordinates => chartAngles τ p i) := by
-    fin_cases i <;> dsimp [chartAngles] <;> simp only [radialX] <;> fun_prop
+    fin_cases i
+    · exact ((continuous_apply 3).add (continuous_apply 1)).add (continuous_const.mul hθ)
+    · exact ((continuous_apply 3).add (continuous_apply 1)).sub (continuous_const.mul hθ)
+    · exact (continuous_apply 3).add (continuous_const.mul (continuous_apply 2))
+    · exact (continuous_apply 3).sub (continuous_const.mul (continuous_apply 2))
   obtain ⟨hbX, hbR, hbA⟩ := base_good hδ hτ
-  have ex := hx.continuousAt.eventually (isOpen_Ioo.mem_nhds hbX)
-  have er := hr.continuousAt.eventually (isOpen_Ioi.mem_nhds (by
+  have ex : ∀ᶠ p in 𝓝 (baseCoordinates δ),
+      0 < radialX (p 0) (p 1) (p 2) ∧ radialX (p 0) (p 1) (p 2) < 1 :=
+    (hx.continuousAt (x := baseCoordinates δ)).eventually
+      (isOpen_Ioo.mem_nhds (show
+        radialX (baseCoordinates δ 0) (baseCoordinates δ 1) (baseCoordinates δ 2) ∈ Ioo 0 1 by
+          change 0 < radialX δ 0 0 ∧ radialX δ 0 0 < 1
+          exact hbX))
+  have er : ∀ᶠ p in 𝓝 (baseCoordinates δ),
+      0 < (2 - p 0 / 2) ^ 2 - cos (p 2) ^ 2 * sin (p 1) ^ 2 :=
+    (hr.continuousAt (x := baseCoordinates δ)).eventually (isOpen_Ioi.mem_nhds (by
     simpa [baseCoordinates] using hbR))
-  have ed := (continuous_apply (0 : Fin 4)).continuousAt.eventually
+  have ed : ∀ᶠ p in 𝓝 (baseCoordinates δ), p 0 < 4 :=
+    ((he 0).continuousAt (x := baseCoordinates δ)).eventually
     (isOpen_Iio.mem_nhds (show baseCoordinates δ 0 < 4 by simp [baseCoordinates]; linarith [hδ.2]))
   have ea : ∀ᶠ p in 𝓝 (baseCoordinates δ),
       ∀ i, -Real.pi < chartAngles τ p i ∧ chartAngles τ p i < Real.pi := by
-    exact (eventually_all.mpr fun i => (ha i).continuousAt.eventually
+    exact (eventually_all.mpr fun i => ((ha i).continuousAt (x := baseCoordinates δ)).eventually
       (isOpen_Ioo.mem_nhds (hbA i)))
-  have ec := (Real.continuous_cos.comp (continuous_apply (2 : Fin 4))).continuousAt.eventually
+  have ec : ∀ᶠ p in 𝓝 (baseCoordinates δ), 0 < cos (p 2) :=
+    ((Real.continuous_cos.comp (he 2)).continuousAt (x := baseCoordinates δ)).eventually
     (isOpen_Ioi.mem_nhds (show 0 < cos (baseCoordinates δ 2) by simp [baseCoordinates]))
   filter_upwards [ex, er, ed, ea, ec] with p hp hr hd ha hc
   exact ⟨hp, hr, hd, ha, hc⟩
@@ -508,5 +530,234 @@ private lemma inverse_neighborhood {δ τ : ℝ} (hδ : 0 < δ ∧ δ < 2)
     rw [hleft]; norm_num [baseCoordinates]))
   filter_upwards [hi.eventually_analyticAt, hh, ehc] with w ha hh hc
   exact ⟨ha, hh, hc.le⟩
+
+private lemma chart_amplitudes {τ : ℝ} (hτ : τ = 1 ∨ τ = -1)
+    (p : Coordinates) (h c s : ℝ) (hm : p 3 = 0) :
+    amplitudeP h c (phaseChart τ p) =
+      2 * ((h : ℂ) * radialX (p 0) (p 1) (p 2) * Complex.exp ((p 1 : ℂ) * I) +
+        (c : ℂ) * cos (p 2)) ∧
+    amplitudeQ h s (phaseChart τ p) =
+      2 * τ * (I * h * sqrt (1 - radialX (p 0) (p 1) (p 2) ^ 2) *
+        Complex.exp ((p 1 : ℂ) * I) - s * sin (p 2)) ∧
+    oppositeModulus (phaseChart τ p) =
+      2 * ‖I * sqrt (1 - radialX (p 0) (p 1) (p 2) ^ 2) *
+        Complex.exp ((p 1 : ℂ) * I) - sin (p 2)‖ := by
+  have heplus : Complex.exp (((τ * p 2 : ℝ) : ℂ) * I) =
+      (cos (p 2) : ℂ) + τ * I * (sin (p 2) : ℂ) := by
+    rw [euler]
+    rcases hτ with rfl | rfl <;> simp <;> ring
+  have heminus : Complex.exp (((-τ * p 2 : ℝ) : ℂ) * I) =
+      (cos (p 2) : ℂ) - τ * I * (sin (p 2) : ℂ) := by
+    rw [euler]
+    rcases hτ with rfl | rfl <;> simp <;> ring
+  have hi : I ^ 2 = -1 := Complex.I_sq
+  have hb : phaseChart τ p 0 - phaseChart τ p 1 +
+      I * (phaseChart τ p 2 - phaseChart τ p 3) =
+      2 * τ * (I * sqrt (1 - radialX (p 0) (p 1) (p 2) ^ 2) *
+        Complex.exp ((p 1 : ℂ) * I) - sin (p 2)) := by
+    simp only [phaseChart, hm, Complex.ofReal_zero, zero_mul, Complex.exp_zero, one_mul,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail, Function.comp_apply, Matrix.cons_val_succ, Matrix.cons_val_zero,
+      heplus, heminus]
+    linear_combination 2 * (τ : ℂ) * (sin (p 2) : ℂ) * hi
+  refine ⟨?_, ?_, ?_⟩
+  · simp only [amplitudeP, phaseChart, hm, Complex.ofReal_zero, zero_mul,
+      Complex.exp_zero, one_mul, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val_two, Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail,
+      Function.comp_apply, Matrix.cons_val_succ, Matrix.cons_val_zero, heplus, heminus]
+    ring
+  · simp only [amplitudeQ, phaseChart, hm, Complex.ofReal_zero, zero_mul,
+      Complex.exp_zero, one_mul, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val_two, Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail,
+      Function.comp_apply, Matrix.cons_val_succ, Matrix.cons_val_zero, heplus, heminus]
+    linear_combination 2 * (τ : ℂ) * (s : ℂ) * (sin (p 2) : ℂ) * hi
+  · unfold oppositeModulus
+    rw [hb, norm_mul, norm_mul]
+    rcases hτ with rfl | rfl <;> norm_num
+
+private lemma normalized_scalar_unique {τ : ℝ} (hτ : τ = 1 ∨ τ = -1)
+    (p q : Coordinates) (hp : p 3 = 0) (hq : q 3 = 0)
+    (hcp : 0 < cos (p 2)) (hcq : 0 < cos (q 2))
+    (hlp : phaseCoordinates τ (phaseChart τ p) = p)
+    (hlq : phaseCoordinates τ (phaseChart τ q) = q)
+    (scalar : ℂ) (heq : ∀ i, phaseChart τ p i = scalar * phaseChart τ q i) :
+    p = q ∧ scalar = 1 := by
+  have hprod (r : Coordinates) (hr : r 3 = 0) :
+      phaseChart τ r 2 * phaseChart τ r 3 = 1 := by
+    simp only [phaseChart, hr, Complex.ofReal_zero, zero_mul, Complex.exp_zero,
+      one_mul, Matrix.cons_val_two, Matrix.cons_val_three, Matrix.vecHead, Matrix.vecTail,
+      Function.comp_apply, Matrix.cons_val_succ, Matrix.cons_val_zero]
+    rw [← Complex.exp_add]
+    convert Complex.exp_zero using 1 <;> push_cast <;> ring
+  have hsq : scalar ^ 2 = 1 := by
+    calc
+      scalar ^ 2 = scalar ^ 2 * (phaseChart τ q 2 * phaseChart τ q 3) := by rw [hprod q hq, mul_one]
+      _ = phaseChart τ p 2 * phaseChart τ p 3 := by rw [heq 2, heq 3]; ring
+      _ = 1 := hprod p hp
+  have hre (r : Coordinates) (hr : r 3 = 0) :
+      (phaseChart τ r 2).re = cos (r 2) := by
+    simp only [phaseChart, hr, Complex.ofReal_zero, zero_mul, Complex.exp_zero,
+      one_mul, Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail, Function.comp_apply, Matrix.cons_val_succ, Matrix.cons_val_zero, euler]
+    rcases hτ with rfl | rfl <;>
+      simp only [one_mul, neg_one_mul, cos_neg, sin_neg, Complex.ofReal_neg,
+        Complex.add_re, Complex.ofReal_re, Complex.mul_re, Complex.I_re,
+        Complex.ofReal_im, Complex.neg_im, neg_zero, zero_mul, mul_zero, sub_zero, add_zero]
+  have hs : scalar = 1 := by
+    rcases sq_eq_one_iff.mp hsq with hs | hs
+    · exact hs
+    · have hh := congrArg Complex.re (heq 2)
+      rw [hs, neg_one_mul, Complex.neg_re, hre p hp, hre q hq] at hh
+      linarith
+  refine ⟨?_, hs⟩
+  have he : phaseChart τ p = phaseChart τ q := by
+    funext i
+    simpa only [hs, one_mul] using heq i
+  calc
+    p = phaseCoordinates τ (phaseChart τ p) := hlp.symm
+    _ = phaseCoordinates τ (phaseChart τ q) := congrArg (phaseCoordinates τ) he
+    _ = q := hlq
+
+/-- The original positive optimizer feedback, with its phase angle explicit. -/
+def referenceFeedback (θ : ℝ) : Matrix (Fin 4) (Fin 4) ℂ :=
+  Matrix.diagonal ![1, Complex.exp (((Real.pi / 4 : ℝ) : ℂ) * I),
+    Complex.exp ((θ : ℂ) * I), Complex.exp (((-θ : ℝ) : ℂ) * I)]
+
+/-- Actual feedback whose relative diagonal is the chart phase vector. -/
+def actualFeedback (τ : ℝ) (p : Coordinates) (θ : ℝ) : Matrix (Fin 4) (Fin 4) ℂ :=
+  Matrix.diagonal (phaseChart τ p) * referenceFeedback θ
+
+/-- Same-feedback realization and the action of one common scalar. -/
+def FeedbackLaws (τ : ℝ) (p : Coordinates) : Prop :=
+  (∀ θ, actualFeedback τ p θ ∈ Matrix.unitaryGroup (Fin 4) ℂ ∧
+    actualFeedback τ p θ * star (referenceFeedback θ) = Matrix.diagonal (phaseChart τ p)) ∧
+  ∀ scalar : ℂ, ‖scalar‖ = 1 →
+    (∀ θ, Matrix.diagonal (fun i => scalar * phaseChart τ p i) * referenceFeedback θ ∈
+      Matrix.unitaryGroup (Fin 4) ℂ) ∧
+    traceModulus (fun i => scalar * phaseChart τ p i) = traceModulus (phaseChart τ p) ∧
+    oppositeModulus (fun i => scalar * phaseChart τ p i) = oppositeModulus (phaseChart τ p) ∧
+    ∀ h c s : ℝ,
+      amplitudeP h c (fun i => scalar * phaseChart τ p i) = scalar * amplitudeP h c (phaseChart τ p) ∧
+      amplitudeQ h s (fun i => scalar * phaseChart τ p i) = scalar * amplitudeQ h s (phaseChart τ p)
+
+private lemma diagonal_unitary (w : PhaseVector) (hw : ∀ i, ‖w i‖ = 1) :
+    Matrix.diagonal w ∈ Matrix.unitaryGroup (Fin 4) ℂ := by
+  apply Matrix.diagonal_mem_unitary.mpr
+  apply Pi.mem_unitary_iff.mpr
+  intro i
+  rw [Unitary.mem_iff, Complex.star_def]
+  have hn : w i * starRingEnd ℂ (w i) = 1 := by
+    rw [Complex.mul_conj', hw i]
+    norm_num
+  exact ⟨by rw [mul_comm]; exact hn, hn⟩
+
+private lemma feedback_laws (τ : ℝ) (p : Coordinates) (hw : ∀ i, ‖phaseChart τ p i‖ = 1) :
+    FeedbackLaws τ p := by
+  have hu (θ : ℝ) : referenceFeedback θ ∈ Matrix.unitaryGroup (Fin 4) ℂ := by
+    apply diagonal_unitary
+    intro i
+    fin_cases i
+    · norm_num
+    · exact phase_norm (Real.pi / 4)
+    · exact phase_norm θ
+    · exact phase_norm (-θ)
+  constructor
+  · intro θ
+    refine ⟨(Matrix.unitaryGroup (Fin 4) ℂ).mul_mem (diagonal_unitary _ hw) (hu θ), ?_⟩
+    change (Matrix.diagonal (phaseChart τ p) * referenceFeedback θ) * star (referenceFeedback θ) = _
+    rw [mul_assoc, (Matrix.mem_unitaryGroup_iff.mp (hu θ)), mul_one]
+  · intro scalar hs
+    have ht : traceModulus (fun i => scalar * phaseChart τ p i) =
+        ‖scalar * (phaseChart τ p 0 + phaseChart τ p 1 + phaseChart τ p 2 + phaseChart τ p 3)‖ := by
+      unfold traceModulus
+      congr 1
+      ring
+    have hb : oppositeModulus (fun i => scalar * phaseChart τ p i) =
+        ‖scalar * (phaseChart τ p 0 - phaseChart τ p 1 + I * (phaseChart τ p 2 - phaseChart τ p 3))‖ := by
+      unfold oppositeModulus
+      congr 1
+      ring
+    have hscaled (i : Fin 4) : ‖scalar * phaseChart τ p i‖ = 1 := by
+      rw [norm_mul, hs, hw i, one_mul]
+    refine ⟨fun θ => (Matrix.unitaryGroup (Fin 4) ℂ).mul_mem
+      (diagonal_unitary _ hscaled) (hu θ), by rw [ht, norm_mul, hs, one_mul]; rfl,
+      by rw [hb, norm_mul, hs, one_mul]; rfl, ?_⟩
+    intro h c s
+    constructor <;> simp only [amplitudeP, amplitudeQ] <;> ring
+
+/-- Local analytic inverse laws on the actual four-dimensional phase torus,
+with unique normalized representatives under one common scalar. -/
+theorem local_phase_chart {δ τ : ℝ} (hδ : 0 < δ ∧ δ < 2)
+    (hτ : τ = 1 ∨ τ = -1) :
+    ∃ S : Set Coordinates, ∃ V : Set PhaseVector,
+      IsOpen S ∧ IsOpen V ∧ baseCoordinates δ ∈ S ∧
+      phaseChart τ (baseCoordinates δ) ∈ V ∧
+      (∀ p ∈ S, (∀ i, ‖phaseChart τ p i‖ = 1) ∧
+        traceModulus (phaseChart τ p) = 4 - p 0 ∧
+        phaseCoordinates τ (phaseChart τ p) = p ∧
+        AnalyticAt ℝ (phaseChart τ) p ∧ 0 < cos (p 2) ∧
+        (∀ h c s : ℝ, p 3 = 0 →
+          amplitudeP h c (phaseChart τ p) =
+            2 * ((h : ℂ) * radialX (p 0) (p 1) (p 2) * Complex.exp ((p 1 : ℂ) * I) +
+              (c : ℂ) * cos (p 2)) ∧
+          amplitudeQ h s (phaseChart τ p) =
+            2 * τ * (I * h * sqrt (1 - radialX (p 0) (p 1) (p 2) ^ 2) *
+              Complex.exp ((p 1 : ℂ) * I) - s * sin (p 2)) ∧
+          oppositeModulus (phaseChart τ p) =
+            2 * ‖I * sqrt (1 - radialX (p 0) (p 1) (p 2) ^ 2) *
+              Complex.exp ((p 1 : ℂ) * I) - sin (p 2)‖) ∧
+        (0 < radialX (p 0) (p 1) (p 2) ∧ radialX (p 0) (p 1) (p 2) < 1) ∧
+        0 < (2 - p 0 / 2) ^ 2 - cos (p 2) ^ 2 * sin (p 1) ^ 2 ∧ FeedbackLaws τ p) ∧
+      (∀ w ∈ V, AnalyticAt ℝ (phaseCoordinates τ) w ∧
+        ((∀ i, ‖w i‖ = 1) → phaseCoordinates τ w ∈ S ∧
+          phaseChart τ (phaseCoordinates τ w) = w)) ∧
+      (∀ p ∈ S, ∀ q ∈ S, p 3 = 0 → q 3 = 0 → ∀ scalar : ℂ,
+        (∀ i, phaseChart τ p i = scalar * phaseChart τ q i) → p = q ∧ scalar = 1) ∧
+      Set.BijOn (phaseChart τ) S (V ∩ {w | ∀ i, ‖w i‖ = 1}) := by
+  obtain ⟨S, hSsub, hSopen, hSbase⟩ := eventually_nhds_iff.mp (chart_neighborhood hδ hτ)
+  have hSp (p : Coordinates) (hp : p ∈ S) := hSsub p hp
+  have hleft (p : Coordinates) (hp : p ∈ S) : phaseCoordinates τ (phaseChart τ p) = p :=
+    chart_left_inverse hτ p (hSp p hp).1 (hSp p hp).2.1.le
+      (hSp p hp).2.2.1 (hSp p hp).2.2.2.1
+  have hInv := inverse_neighborhood hδ hτ
+  have hi : AnalyticAt ℝ (phaseCoordinates τ) (phaseChart τ (baseCoordinates δ)) :=
+    (Filter.Eventually.self_of_nhds hInv).1
+  have hInto : ∀ᶠ w in 𝓝 (phaseChart τ (baseCoordinates δ)), phaseCoordinates τ w ∈ S :=
+    hi.continuousAt.eventually (hSopen.mem_nhds (by rw [hleft _ hSbase]; exact hSbase))
+  have ev : ∀ᶠ w in 𝓝 (phaseChart τ (baseCoordinates δ)),
+      AnalyticAt ℝ (phaseCoordinates τ) w ∧
+      ((∀ i, ‖w i‖ = 1) → phaseCoordinates τ w ∈ S ∧
+        phaseChart τ (phaseCoordinates τ w) = w) := by
+    filter_upwards [hInv, hInto] with w hw hin
+    exact ⟨hw.1, fun hu => ⟨hin, actual_reconstruction hτ w hu hw.2.1 hw.2.2⟩⟩
+  obtain ⟨V, hVsub, hVopen, hVbase⟩ := eventually_nhds_iff.mp ev
+  let S' := S ∩ phaseChart τ ⁻¹' V
+  have hc : ContinuousOn (phaseChart τ) S := fun p hp =>
+    (chart_analytic τ p (hSp p hp).2.1 (hSp p hp).1).continuousAt.continuousWithinAt
+  have hopen : IsOpen S' := hc.isOpen_inter_preimage hSopen hVopen
+  refine ⟨S', V, hopen, hVopen, ⟨hSbase, hVbase⟩, hVbase, ?_, ?_, ?_, ?_⟩
+  · intro p hp
+    have hh := hSp p hp.1
+    exact ⟨chart_unit hτ p hh.1, chart_trace hτ p hh.1 hh.2.1.le hh.2.2.1,
+      hleft p hp.1, chart_analytic τ p hh.2.1 hh.1, hh.2.2.2.2,
+      (fun h c s hm => chart_amplitudes hτ p h c s hm),
+      hh.1, hh.2.1, feedback_laws τ p (chart_unit hτ p hh.1)⟩
+  · intro w hw
+    refine ⟨(hVsub w hw).1, fun hu => ?_⟩
+    obtain ⟨hin, hr⟩ := (hVsub w hw).2 hu
+    exact ⟨⟨hin, by change phaseChart τ (phaseCoordinates τ w) ∈ V; rw [hr]; exact hw⟩, hr⟩
+  · intro p hp q hq hpm hqm scalar hs
+    exact normalized_scalar_unique hτ p q hpm hqm (hSp p hp.1).2.2.2.2
+      (hSp q hq.1).2.2.2.2 (hleft p hp.1) (hleft q hq.1) scalar hs
+  · refine ⟨?_, ?_, ?_⟩
+    · intro p hp
+      exact ⟨hp.2, chart_unit hτ p (hSp p hp.1).1⟩
+    · intro p hp q hq heq
+      calc
+        p = phaseCoordinates τ (phaseChart τ p) := (hleft p hp.1).symm
+        _ = phaseCoordinates τ (phaseChart τ q) := congrArg (phaseCoordinates τ) heq
+        _ = q := hleft q hq.1
+    · intro w hw
+      obtain ⟨hin, hr⟩ := (hVsub w hw.1).2 hw.2
+      exact ⟨phaseCoordinates τ w,
+        ⟨hin, by change phaseChart τ (phaseCoordinates τ w) ∈ V; rw [hr]; exact hw.1⟩, hr⟩
 
 end D5.S3.Quantum.Recovery.FourPathPhaseChart
