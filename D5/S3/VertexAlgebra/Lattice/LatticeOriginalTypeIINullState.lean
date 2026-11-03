@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Original Type II physical null state and finite Fock coefficient obstruction. -/
+   digest: Original Type II null obstruction and explicit relative BRST primitive. -/
 
 
 import D5.S3.VertexAlgebra.LatticeSugawaraConformal
@@ -28,7 +28,7 @@ Polynomial induction proves these coefficient identities on all oscillator
 polynomials, followed by finite-charge linear induction. No desired-result
 premise or substituted Fock form is used.
 
-Individual after-inlining proof shapes and live consumers:
+Coefficient proof shapes after inlining and their consumers:
 coeff_linear_mul_X: bind-only; coeff_derivation_two, ell_translation_single,
   coeff_mode_one.
 coeff_zero_derivation: content; coeff_derivation_two.
@@ -48,6 +48,18 @@ typeII_primary: bind-only; original_typeII_null_obstruction.
 original_typeII_null_obstruction: content; public coefficient-obstruction
   endpoint, not an auxiliary binding wrapper.
 ell and typeII are consumed private functional and literal-state definitions.
+The relative extension computes the original charge on a literal primitive,
+using exact finite support and Ward identities. ghost_R_one_vacuum is consumed
+by ghost_Q_down, which is consumed by charge_on_primary_down. The latter is
+consumed by primitive_charge and the public boundary endpoint.
+ghost_L_minus_two_down and charge_on_vacuum are consumed by primitive_charge;
+ground_translation_modes is consumed by primitive_charge and primitive_relative;
+single_tensor_fixed is consumed by primitive_relative; both primitive_charge
+and primitive_relative are consumed by original_typeII_relative_boundary.
+The finite-support and coefficient computations provide the content; Ward,
+Virasoro, grading and relative-subspace applications are consumed bindings.
+The boundary endpoint constructs and verifies the original explicit primitive;
+it assumes no exactness or cohomology comparison.
 Utility is none: these are algebraic laws for arbitrary original lattice data,
 charges, inverse matrices and finite oscillator polynomials, not a certified
 finite instance or bounded enumeration.
@@ -454,7 +466,8 @@ private theorem ghost_R_one_vacuum : BcGhostBRST.R 1 vacuum = ket {1,3} := by
     by_contra hn
     exact hj (ht j hn))]
   norm_num [BcGhostBRST.rTerm, Module.End.mul_apply, c, vacuum, create_ket,
-    phase, lowerCount, Finset.filter_insert, Finset.filter_singleton, Finset.insert_comm, Finset.pair_comm, smul_smul]
+    phase, lowerCount, Finset.filter_insert, Finset.filter_singleton,
+    Finset.insert_comm, Finset.pair_comm, smul_smul]
   module
 
 private theorem ghost_Q_down : BcGhostBRST.Qg (ket {1}) = ket {1,3} := by
@@ -477,7 +490,8 @@ private theorem ghost_L_minus_two_down :
   simp only [LinearMap.sub_apply, Module.End.mul_apply, ghost_vacuum.2.2.1,
     LinearMap.smul_apply] at h
   rw [hv] at h
-  norm_num [b, c, vacuum, create_ket, phase, lowerCount, Finset.filter_insert, Finset.filter_singleton, Finset.insert_comm, Finset.pair_comm, map_sub, map_smul,
+  norm_num [b, c, vacuum, create_ket, phase, lowerCount, Finset.filter_insert,
+    Finset.filter_singleton, Finset.insert_comm, Finset.pair_comm, map_sub, map_smul,
     smul_smul] at h
   rw [show ({1,3,0} : Finset ℕ) = {0,1,3} by decide] at h
   have h' : BcGhostVirasoro.L (-2) (ket {1}) -
@@ -562,8 +576,7 @@ private theorem ground_translation_modes (D : LatticeData)
         (if m-1 = 0 then (D.rank : ℂ)/12*((m : ℂ)^3-m) else 0) • v := by
     have h := LinearMap.congr_fun (sugawaraMode_virasoro D H hHG hGH m (-1)) v
     simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.add_apply,
-      LinearMap.smul_apply, Module.End.one_apply, sub_neg_eq_add,
-      ] at h
+      LinearMap.smul_apply, Module.End.one_apply, sub_neg_eq_add] at h
     rw [show m + -1 = m - 1 by omega] at h
     exact (sub_eq_iff_eq_add.mp h).trans (by module)
   have ht := sugawaraMode_minus_one_eq_translation D H hHG hGH
@@ -690,7 +703,8 @@ theorem original_typeII_relative_boundary (D : LatticeData)
   have hg : BcGhostVirasoro.L 0 (ket {1}) = -(ket {1}) := by
     simpa only [ghost_vacuum.2.2.1] using BcGhostRelativeEnergy.L_zero_down
   have hl : totalL0 D H (typeII D H p ⊗ₜ[ℂ] ket {1}) = 0 := by
-    simp [totalL0, matterMode, ghostVirasoro, TensorProduct.map_tmul, h0, hg, TensorProduct.tmul_neg]
+    simp [totalL0, matterMode, ghostVirasoro, TensorProduct.map_tmul, h0, hg,
+      TensorProduct.tmul_neg]
   have hnumout : TensorProduct.map (LinearMap.id : Module.End ℂ (Carrier D))
       BcGhostCharge.ghostNumber (typeII D H p ⊗ₜ[ℂ] ket {1}) =
       typeII D H p ⊗ₜ[ℂ] ket {1} := by
