@@ -184,19 +184,24 @@ class NativePublicationConsumerTests:
     def test_coordinates_reuse_warm_tree_memo(self):
         self.ensure()
         self.write('.gitignore', '.lake/\nutility-calls\nactivity.jsonl\nhash-paths\n')
-        helper = self.root / 'tools/scripts/worktree/lean-cache-input.sh'
-        marker = '                with open(path, "rb") as source:'
-        self.assertIn(marker, helper.read_text())
-        helper.write_text(helper.read_text().replace(marker,
-            '                with open(os.environ["FIXTURE_HASH_PATHS"], "ab") as log:\n'
-            '                    log.write(path + b"\\0")\n' + marker))
+        # Observe the actual common hasher used in this process. The fixture
+        # programs remain byte-identical; no test-only read hook enters them.
+        hashes = self.root / 'hash-paths'
+        read = open
+        def observed_read(path, *args, **kwargs):
+            if args == ('rb',):
+                with hashes.open('ab') as log:
+                    log.write(os.fsencode(path) + b'\0')
+            return read(path, *args, **kwargs)
+        self.assertIn('open', publication.selection.input_coordinates.__code__.co_names)
         for args in [('add', '.'), ('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
                 '-c', 'commit.gpgsign=false', 'commit', '--quiet', '-m', 'private memo fixture')]:
             subprocess.run(['git', *args], cwd=self.root, env=self.env,
                 check=True, capture_output=True, timeout=120)
         hashes = self.root / 'hash-paths'
         environment = dict(self.env, FIXTURE_HASH_PATHS=str(hashes))
-        with patch.dict(os.environ, environment):
+        with patch.dict(os.environ, environment), \
+                patch.object(publication.selection, 'open', side_effect=observed_read, create=True):
             expected = publication.coordinates(self.root)
             self.assertTrue(hashes.read_bytes())
             memo = self.root / '.lake/lean-input-memo/memo.v1'
