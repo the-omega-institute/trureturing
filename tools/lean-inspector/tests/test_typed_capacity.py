@@ -97,6 +97,10 @@ class TypedCapacityTests(NativeTestSupport, unittest.TestCase):
                 row = json.loads(report)['modules'][0]
                 evidence = row['information_templates']
                 self.assertTrue(evidence['records'], 'production assessment must produce bindings')
+                self.assertEqual({record['state'] for record in evidence['records']},
+                                 {'declared_validated'})
+                self.assertEqual({record['bridge_kind'] for record in evidence['records']},
+                                 {'source-equivalence'})
                 material_bytes = archive.read(publication.RAW + '.materials.zip')
             import io
             with zipfile.ZipFile(io.BytesIO(material_bytes)) as archive:
