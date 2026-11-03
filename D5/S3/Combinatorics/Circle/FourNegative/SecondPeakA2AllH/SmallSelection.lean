@@ -5,7 +5,11 @@
    anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: All unbounded dyadic h and q for the four small p. -/
-import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.SmallTables
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QTwoStructural
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QFourStructural
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QEightStructural
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QSixteenStructural
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QThirtyTwoStructural
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH.SmallLargeQ
 
 /-! All unbounded dyadic h and q for the four small p. -/
@@ -13,6 +17,25 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH
 open SecondPeakHighD
+open private q_two_boundary_good from
+  D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QTwoStructural
+
+private theorem good_row_bounds (p q h v m M : ℕ) (before : Bool)
+    (hg : SecondPeakA2.Good p q h v m M before) :
+    Submask m M ∧ m<M ∧ rowBounds 4 p q h v m M before := by
+  rcases hg with ⟨hv,hvT,hm,hM,hs,hw⟩
+  have hv' : (1:ℤ)≤v := by exact_mod_cast hv
+  have hvT' : 2*(v:ℤ)≤4*(p:ℤ)*q := by exact_mod_cast hvT
+  have hM' : 2*(M:ℤ)<8*(h:ℤ)*p*q := by exact_mod_cast hM
+  have he : (8:ℤ)*h*p*q=2*(4*(h:ℤ)*p*q) := by ring
+  rw [he] at hM'
+  refine ⟨hs,hm,?_,hv',hvT',by positivity,?_⟩
+  · intro r
+    exact ⟨(hw r.castSucc).1.1,(hw r.castSucc).1.2,
+      (hw r.castSucc).2.1,(hw r.castSucc).2.2⟩
+  · have hy : Y 4 (p:ℤ) q h=2*(4*(h:ℤ)*p*q) := by dsimp [Y,T]; ring
+    rw [hy]
+    omega
 
 /-- Exhaustion only of the genuinely finite q<64 sector; Q itself is unrestricted. -/
 theorem small_q_partition (Q : ℕ) (hQ : 1≤Q) :
@@ -50,22 +73,36 @@ theorem small_p_allh_selection (p Q H : ℕ)
     · exact Or.inr (Or.inr (Or.inr (Or.inl h)))
     · exact Or.inr (Or.inr (Or.inr (Or.inr h)))
     · contradiction
-  obtain ⟨i,hpi,hqi⟩ := small_row_pairs p (2^Q) hp hqsmall
-  by_cases hH3 : 3≤H
-  · obtain ⟨v,m,M,before,hs,hm,hb⟩ := affine_small_selection i H hH3
-    refine ⟨v,m,M,before,hs,hm,?_⟩
-    simpa only [hpi,hqi,Nat.cast_pow,Nat.cast_ofNat] using hb
-  · have he : H=2 := by omega
-    subst H
-    let w := h4SmallRows i
-    have bits := h4_small_bits i
-    have bounds := h4_small_bounds i
-    change rowBounds 4 w.p w.q 4 w.v w.m w.M w.before at bounds
-    have pair := h4_pairs i
-    have hwp : w.p=p := pair.1.trans hpi
-    have hwq : w.q=(2^Q:ℕ) := pair.2.trans hqi
-    refine ⟨w.v,w.m,w.M,w.before,bits.1,bits.2,?_⟩
-    simpa only [hwp,hwq,Nat.cast_pow,Nat.cast_ofNat,show (2:ℤ)^2=4 by norm_num]
-      using bounds
+  obtain ⟨P,hP,hpP⟩ : ∃ P : ℕ, 2≤P ∧ p=2^P := by
+    rcases hp with rfl|rfl|rfl|rfl
+    · exact ⟨2,by decide,by decide⟩
+    · exact ⟨3,by decide,by decide⟩
+    · exact ⟨4,by decide,by decide⟩
+    · exact ⟨5,by decide,by decide⟩
+  have hgood : ∃ v m M : ℕ, ∃ before : Bool,
+      SecondPeakA2.Good p (2^Q) (2^H) v m M before := by
+    rcases hqsmall with hq|hq|hq|hq|hq
+    · rw [hq]
+      by_cases hp4 : p=4
+      · subst p
+        exact ⟨5,5*2^H,8*2^H-1,false,q_two_boundary_good H⟩
+      · have hP3 : 3≤P := by
+          by_contra hn
+          have : P=2 := by omega
+          subst P
+          norm_num at hpP
+          exact hp4 hpP
+        obtain ⟨v,m,M,hg⟩ := SecondPeakA2.q_two_dyadic_good P H hP3
+        exact ⟨v,m,M,true,by simpa only [hpP] using hg⟩
+    · rw [hq,hpP]
+      exact SecondPeakA2.q_four_dyadic_good P H hP
+    · rw [hq,hpP]
+      exact SecondPeakA2.q_eight_dyadic_good P H hP
+    · rw [hq,hpP]
+      exact SecondPeakA2.q_sixteen_dyadic_good P H hP
+    · rw [hq,hpP]
+      exact SecondPeakA2.q_thirtytwo_dyadic_good P H hP
+  obtain ⟨v,m,M,before,hg⟩ := hgood
+  exact ⟨v,m,M,before,good_row_bounds p (2^Q) (2^H) v m M before hg⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2AllH
