@@ -27,7 +27,7 @@ internal sealed class EulerNineComparisonDocument : IScribeDocumentDefinition
             Node("15", "coeff_lowerProduct_nonnegative", "Every coefficient of (1-X)AC is nonnegative after exact cancellation of its sole part-one factor.", DescribeRole.Theorem),
             Node("16", "coeff_lowerProduct_ge_one", "The coefficient of (1-X)AC is at least one at degree zero and every degree at least two.", DescribeRole.Theorem),
             Node("17", "lowerProduct_initial", "The exact lower product has constant coefficient one and degree-one coefficient zero.", DescribeRole.Theorem),
-            Paragraph(Text("The exact Euler three-section identification with these restricted products, its cubic consequence and the full BHHK k10 endpoint are not supplied by these modules. No full-original result, independent-review approval, literature priority, unique status, CI or publication is asserted. The source's ordinary independent review remains separate from this implementation."))
+            Paragraph(Text("These cancellation and comparison results have present mathematical consumers: EulerNineDissection identifies the actual quotient, EulerNineSquareDissection derives the cubic relation and squared coefficient bounds, and EtaSignK10 proves the complete source-defined denominator-ten endpoint. The separate ordinary manuscript is fallible input; independent formal review, original-problem acceptance, literature priority, unique status, CI and publication are not certified here."))
         ), []));
     private static DocumentBlock Node(string id, string declaration, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("eulerninecomparison-" + id), DeclarationHandle.Create(Prefix + declaration),

@@ -5,7 +5,7 @@ year: 2024
 title: "Periodic sign changes for weakly holomorphic eta-quotients"
 doi: 10.48550/arXiv.2409.07164
 url: https://arxiv.org/abs/2409.07164v1
-claim: "Appendix A Table 1 asks for the period-nine signs of the normalized Euler quotient with exponents 9 at 1 and -6 at 3."
+claim: "Appendix A Table 1 asks for period-nine signs of normalized Euler quotients, including exponents 9 at 1 and -6 or -10 at 3."
 strata_touched:
   - D5/S3/Arith/ModularForms/CubicThetaLattice
   - D5/S3/Arith/ModularForms/CubicThetaCoreProduct
@@ -13,6 +13,12 @@ strata_touched:
   - D5/S3/Arith/ModularForms/EtaSignK6
   - D5/S3/Combinatorics/Partitions/RestrictedEulerCancellation
   - D5/S3/Combinatorics/Partitions/EulerNineComparison
+  - D5/S3/Combinatorics/PowerSeries/LaurentSpecialization
+  - D5/S3/Arith/ModularForms/WeightedJacobiSpecialization
+  - D5/S3/Arith/ModularForms/EulerPentagonalTrisection
+  - D5/S3/Arith/ModularForms/EulerNineDissection
+  - D5/S3/Arith/ModularForms/EulerNineSquareDissection
+  - D5/S3/Arith/ModularForms/EtaSignK10
 license: citation-only
 triage: anchor
 ---
@@ -74,8 +80,8 @@ needed for these source-defined normalized Euler coefficients.
 The supplied bounded literature review found no inspected theorem stating
 the complete k6 entry. This note asserts no worldwide absence, priority,
 unique status, independent formal acceptance, CI success, or publication
-of the original-problem resolution. The separate k10 entry is outside
-this formalization scope.
+of the original-problem resolution. The separate k10 entry is treated
+by the additional algebraic chain described below.
 
 Citation and question boundary only; no source text or PDF is vendored.
 
@@ -111,8 +117,46 @@ comparisons and decompositions are repository-derived implementations of
 the supplied source; no literature novelty is asserted for their ordinary
 mathematics.
 
-These are auxiliaries, not the denominator-ten original. The exact Euler
-trisection identifying the actual quotient with these three products, its
-cubic consequence `B^2=AC+qCD`, and the complete k10 endpoint remain outside
-these modules. No independent review approval, full-original acceptance,
-priority or unique certification is claimed.
+## Exact denominator-ten algebraic chain
+
+`LaurentSpecialization` shifts Laurent row `n` by `T^n`, so the support
+condition `k >= -n` permits evaluation through ordinary polynomial
+coefficients. Its continuous additive map preserves complete sums and
+is multiplicative on supported inputs. `WeightedJacobiSpecialization`
+uses the existing Jacobi suppliers to identify every integer monomial
+with the limit of its actual weighted Euler products. The substitution
+has weights `q^9` and `q^r`; no unrestricted Laurent substitution is used.
+
+`EulerPentagonalTrisection.euler_three_sections` proves the full integer
+reindexing `k=3m`, `k=1-3m`, `k=3m-1`. The exponent and sign identities
+are exact and the fibres exhaust all integers. `EulerNineDissection`
+then cancels actual partition geometric factors to identify
+`J_r=E Q_r`, and proves
+`R=E(q)/E(q^3)=A(q^3)-qB(q^3)-q^2C(q^3)` in all degrees.
+
+`EulerNineSquareDissection.restricted_cubic_relation` derives
+`B^2=AC+qCD` by extracting residue two from the actual cubic theta
+supplier and cancelling the constant-one unit `A`. Its positive
+decomposition `W=(1-q)AC+q(AC-CD)` proves the difficult third squared
+section nonnegative, with constant one, coefficient one equal to zero,
+and strict higher coefficients. The other sections
+`U=A^2+2qBC` and `V=2AB-qC^2` have every coefficient at least one.
+
+`EtaSignK10.F10` is the actual quotient `E(q)^9/E(q^3)^10`, defined
+with the unit inverse of `E(q^3)`; `C10(n)` is its unshifted coefficient.
+The exact first cubic lift retains factors `-9` and `27`. Its zero
+component is `G10=E(q)^2/E(q^3)^3`, whose sections are `UP,-VP,-WP`.
+Every ordinary partition coefficient is at least one, so smoothing
+removes the sole auxiliary hole, including the original residue six.
+`EtaSignK10.all_index_signs` states both complete sign biconditionals
+and nonvanishing for every natural `n`, with positive residues `0,2,5,8`
+and negative residues `1,3,4,6,7` modulo nine.
+`EtaSignK10.C10_zero` gives the constant one.
+
+These are source-level mathematical anchors, not independent formal
+acceptance, official original-problem delivery, literature priority,
+unique status, required CI, or merge certification. The classical
+Euler/Jacobi and cubic theta mathematics is attributed through the
+existing suppliers; the new implementation follows the supplied
+algebraic manuscript and does not assert that its identities are new
+in the literature.
