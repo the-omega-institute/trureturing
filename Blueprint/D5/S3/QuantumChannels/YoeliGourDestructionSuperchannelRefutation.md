@@ -34,6 +34,10 @@ $$\neg (\forall a \in \mathbb{N},\; (0 < a) \Rightarrow (\forall b \in \mathbb{N
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/YoeliGourDestructionSuperchannelRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/yoeli-gour-destruction-superchannel` (refuted) by `D5/S3/QuantumChannels/YoeliGourDestructionSuperchannelRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"yoeli-gour-destruction-superchannel","declaration_gid":"D5/S3/QuantumChannels/YoeliGourDestructionSuperchannelRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Goni Yoeli and Gilad Gour (2026). *Instability as a Quantum Resource*. DOI: [10.48550/arXiv.2602.18323](https://doi.org/10.48550/arXiv.2602.18323). URL: <https://arxiv.org/abs/2602.18323v1>.

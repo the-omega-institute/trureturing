@@ -23,7 +23,10 @@ internal sealed class YoeliGourDestructionSuperchannelRefutationDocument : IScri
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("A negative answer from qutrit dephasing"), StatementSource.FromAuthor(Disp(Not(ClaimBody()))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
-                    "Choose both dimensions equal to three and both destruction channels equal to complete dephasing. The depolarizing channel forces the induced completely positive Choi map to be unital. Sixteen normalized Choi vectors of monomial unitaries span the nine-dimensional Choi space and have connected nonzero-overlap graph. Connected-probe rigidity forces the superchannel to be identity. Conjugation by the rational rotation with block ((3/5, −4/5), (4/5, 3/5)) then contradicts exactness: it is CPTP but does not commute with dephasing. The rigidity argument uses no superchannel idempotence and assumes no trace preservation on arbitrary Choi matrices. The equal-dimension qubit case and arbitrary destruction maps are separate questions."))), DescribeRole.Theorem))));
+                    "Choose both dimensions equal to three and both destruction channels equal to complete dephasing. The depolarizing channel forces the induced completely positive Choi map to be unital. Sixteen normalized Choi vectors of monomial unitaries span the nine-dimensional Choi space and have connected nonzero-overlap graph. Connected-probe rigidity forces the superchannel to be identity. Conjugation by the rational rotation with block ((3/5, −4/5), (4/5, 3/5)) then contradicts exactness: it is CPTP but does not commute with dephasing. The rigidity argument uses no superchannel idempotence and assumes no trace preservation on arbitrary Choi matrices. The equal-dimension qubit case and arbitrary destruction maps are separate questions."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("yoeli-gour-destruction-superchannel"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula DestructionFormula()
     {
