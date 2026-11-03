@@ -62,6 +62,117 @@ noncomputable def sourceRHS (n m : ℕ) : ℚ :=
     (∏ i : Fin m, ((n + (i.val + 1) : ℕ) : ℚ) ^ (i.val + 1)) *
     ∑ j : Chain n m, sourceTerm j
 
+/- Shared private suppliers.
+proof_shape: chainNodes: bind-only; consumers: chainEquiv, result,
+  KurkovStirlingMinorVandermondeSum.chain_normalization.
+proof_shape: chainEquiv: content; consumers: result,
+  KurkovStirlingMinorVandermondeSum.source_to_moment.
+proof_shape: sign_rev: bind-only; consumers: result,
+  KurkovStirlingMinorVandermondeSum.sign_revQ.
+escape_witness: none; these are private suppliers of the existing frozen result.
+admission_basis: existing open-problem-resolution (#9456; Proved).
+Direct frozen dependency: D5/S1/Recurrence/Algebraic/KurkovNestedStirlingIdentity.Chain
+  statement_id: sha256:d1554ebf9e75f36f3ced9563fb0ab2ff7d888727ca9f0e7e3aeb537668db77a5
+-/
+
+/- The source's map l_t = n-j_t+t, using zero-based nodes l_t-1. -/
+private def chainNodes {n m : ℕ} (j : Chain n m) : Fin m ↪o Fin (n + m) :=
+  OrderEmbedding.ofStrictMono
+    (fun i => ⟨n - (j.val i).val + i.val, by have := i.isLt; omega⟩)
+    (by
+      intro a b hab
+      have hj := j.property (le_of_lt hab)
+      have ha := (j.val a).isLt
+      have hb := (j.val b).isLt
+      change n - (j.val a).val + a.val < n - (j.val b).val + b.val
+      change (j.val b).val ≤ (j.val a).val at hj
+      change a.val < b.val at hab
+      omega)
+
+/- Exact finite reindexing, with the inverse n+i-(l_i-1). -/
+private noncomputable def chainEquiv (n m : ℕ) : Chain n m ≃ {s : Finset (Fin (n + m)) // s.card = m} := by
+  classical
+  have gap (l : Fin m ↪o Fin (n + m)) :
+      ∀ (a b : ℕ) (ha : a < m) (hb : b < m), a ≤ b →
+        (l ⟨a, ha⟩).val + b ≤ (l ⟨b, hb⟩).val + a := by
+    intro a b ha hb hab
+    induction b, hab using Nat.le_induction with
+    | base => omega
+    | succ b hab ih =>
+      have hbm : b < m := by omega
+      have hs := l.strictMono (show (⟨b, hbm⟩ : Fin m) < ⟨b+1, hb⟩ from by
+        change b < b + 1; omega)
+      have hi := ih hbm
+      change (l ⟨b, hbm⟩).val < (l ⟨b+1, hb⟩).val at hs
+      omega
+  have lower (l : Fin m ↪o Fin (n + m)) (i : Fin m) : i.val ≤ (l i).val := by
+    have h := gap l 0 i.val (by have := i.isLt; omega) i.isLt (Nat.zero_le _)
+    simp only [Fin.eta] at h
+    omega
+  have upper (l : Fin m ↪o Fin (n + m)) (i : Fin m) :
+      (l i).val ≤ n + i.val := by
+    have hm : 0 < m := by have := i.isLt; omega
+    have h := gap l i.val (m-1) i.isLt (by omega) (by have := i.isLt; omega)
+    simp only [Fin.eta] at h
+    have hlast := (l ⟨m-1, by omega⟩).isLt
+    omega
+  let toSet : Chain n m → {s : Finset (Fin (n + m)) // s.card = m} := fun j =>
+    ⟨univ.image (chainNodes j), by
+      rw [card_image_of_injective _ (chainNodes j).injective]; simp⟩
+  let toChain : {s : Finset (Fin (n + m)) // s.card = m} → Chain n m := fun s =>
+    let l := s.val.orderEmbOfFin s.property
+    ⟨fun i => ⟨n + i.val - (l i).val, by have := lower l i; omega⟩, by
+      intro a b hab
+      have h := gap l a.val b.val a.isLt b.isLt hab
+      simp only [Fin.eta] at h
+      have ha := upper l a
+      have hb := upper l b
+      change n + b.val - (l b).val ≤ n + a.val - (l a).val
+      omega⟩
+  refine ⟨toSet, toChain, ?_, ?_⟩
+  · intro j
+    have hsort : (toSet j).val.orderEmbOfFin (toSet j).property = chainNodes j :=
+      (orderEmbOfFin_unique' _ (fun i => mem_image_of_mem _ (mem_univ i))).symm
+    apply Subtype.ext
+    funext i
+    apply Fin.ext
+    change n + i.val -
+      ((toSet j).val.orderEmbOfFin (toSet j).property i).val = (j.val i).val
+    rw [hsort]
+    change n + i.val - (n - (j.val i).val + i.val) = (j.val i).val
+    have := (j.val i).isLt
+    omega
+  · intro s
+    have hnodes : chainNodes (toChain s) = s.val.orderEmbOfFin s.property := by
+      ext i
+      change n - (n + i.val - (s.val.orderEmbOfFin s.property i).val) + i.val =
+        (s.val.orderEmbOfFin s.property i).val
+      have := lower (s.val.orderEmbOfFin s.property) i
+      have := upper (s.val.orderEmbOfFin s.property) i
+      omega
+    apply Subtype.ext
+    change univ.image (chainNodes (toChain s)) = s.val
+    rw [hnodes, image_orderEmbOfFin_univ]
+
+
+private theorem sign_rev (m : ℕ) : Equiv.Perm.sign (@Fin.revPerm m) = (-1 : ℤˣ) ^ (m * (m-1) / 2) := by
+  rw [Equiv.Perm.sign_eq_prod_prod_Iio]
+  calc
+    _ = ∏ j : Fin m, (-1 : ℤˣ) ^ j.val := by
+      apply prod_congr rfl
+      intro j _
+      calc
+        _ = ∏ i ∈ Iio j, (-1 : ℤˣ) := by
+          apply prod_congr rfl
+          intro i hi
+          have hij : i < j := mem_Iio.mp hi
+          simp only [Fin.revPerm_apply, Fin.rev_lt_rev, not_lt_of_ge hij.le, ↓reduceIte]
+        _ = _ := by rw [prod_const, Fin.card_Iio]
+    _ = _ := by
+      rw [prod_pow_eq_pow_sum]
+      congr 1
+      exact (Fin.sum_univ_eq_sum_range (fun i => i) m).trans (sum_range_id m)
+
 /-- The literal full Kurkov identity, preregistered in issue 9456. -/
 theorem result (n m : ℕ) (_hm : 1 ≤ m) :
     sourceRHS n m = (Nat.stirlingFirst (n + m + 1) (m + 1) : ℚ) := by
@@ -150,85 +261,6 @@ theorem result (n m : ℕ) (_hm : 1 ≤ m) :
         · exact fun b => ⟨σ⁻¹ * b, by simp⟩
         · cases' Int.units_eq_one_or (Equiv.Perm.sign σ) with h h <;> simp [h]
     rw [h_cauchy_binet, h_split, h_group, Finset.sum_congr rfl fun S hS => h_inner S]
-  /- The source's map l_t = n-j_t+t, using zero-based nodes l_t-1. -/
-  let chainNodes {n m : ℕ} (j : Chain n m) : Fin m ↪o Fin (n + m) :=
-    OrderEmbedding.ofStrictMono
-      (fun i => ⟨n - (j.val i).val + i.val, by have := i.isLt; omega⟩)
-      (by
-        intro a b hab
-        have hj := j.property (le_of_lt hab)
-        have ha := (j.val a).isLt
-        have hb := (j.val b).isLt
-        change n - (j.val a).val + a.val < n - (j.val b).val + b.val
-        change (j.val b).val ≤ (j.val a).val at hj
-        change a.val < b.val at hab
-        omega)
-  
-  /- Exact finite reindexing, with the inverse n+i-(l_i-1). -/
-  let chainEquiv (n m : ℕ) : Chain n m ≃ NodeSet n m := by
-    classical
-    have gap (l : Fin m ↪o Fin (n + m)) :
-        ∀ (a b : ℕ) (ha : a < m) (hb : b < m), a ≤ b →
-          (l ⟨a, ha⟩).val + b ≤ (l ⟨b, hb⟩).val + a := by
-      intro a b ha hb hab
-      induction b, hab using Nat.le_induction with
-      | base => omega
-      | succ b hab ih =>
-        have hbm : b < m := by omega
-        have hs := l.strictMono (show (⟨b, hbm⟩ : Fin m) < ⟨b+1, hb⟩ from by
-          change b < b + 1; omega)
-        have hi := ih hbm
-        change (l ⟨b, hbm⟩).val < (l ⟨b+1, hb⟩).val at hs
-        omega
-    have lower (l : Fin m ↪o Fin (n + m)) (i : Fin m) : i.val ≤ (l i).val := by
-      have h := gap l 0 i.val (by have := i.isLt; omega) i.isLt (Nat.zero_le _)
-      simp only [Fin.eta] at h
-      omega
-    have upper (l : Fin m ↪o Fin (n + m)) (i : Fin m) :
-        (l i).val ≤ n + i.val := by
-      have hm : 0 < m := by have := i.isLt; omega
-      have h := gap l i.val (m-1) i.isLt (by omega) (by have := i.isLt; omega)
-      simp only [Fin.eta] at h
-      have hlast := (l ⟨m-1, by omega⟩).isLt
-      omega
-    let toSet : Chain n m → NodeSet n m := fun j =>
-      ⟨univ.image (chainNodes j), by
-        rw [card_image_of_injective _ (chainNodes j).injective]; simp⟩
-    let toChain : NodeSet n m → Chain n m := fun s =>
-      let l := s.val.orderEmbOfFin s.property
-      ⟨fun i => ⟨n + i.val - (l i).val, by have := lower l i; omega⟩, by
-        intro a b hab
-        have h := gap l a.val b.val a.isLt b.isLt hab
-        simp only [Fin.eta] at h
-        have ha := upper l a
-        have hb := upper l b
-        change n + b.val - (l b).val ≤ n + a.val - (l a).val
-        omega⟩
-    refine ⟨toSet, toChain, ?_, ?_⟩
-    · intro j
-      have hsort : (toSet j).val.orderEmbOfFin (toSet j).property = chainNodes j :=
-        (orderEmbOfFin_unique' _ (fun i => mem_image_of_mem _ (mem_univ i))).symm
-      apply Subtype.ext
-      funext i
-      apply Fin.ext
-      change n + i.val -
-        ((toSet j).val.orderEmbOfFin (toSet j).property i).val = (j.val i).val
-      rw [hsort]
-      change n + i.val - (n - (j.val i).val + i.val) = (j.val i).val
-      have := (j.val i).isLt
-      omega
-    · intro s
-      have hnodes : chainNodes (toChain s) = s.val.orderEmbOfFin s.property := by
-        ext i
-        change n - (n + i.val - (s.val.orderEmbOfFin s.property i).val) + i.val =
-          (s.val.orderEmbOfFin s.property i).val
-        have := lower (s.val.orderEmbOfFin s.property) i
-        have := upper (s.val.orderEmbOfFin s.property) i
-        omega
-      apply Subtype.ext
-      change univ.image (chainNodes (toChain s)) = s.val
-      rw [hnodes, image_orderEmbOfFin_univ]
-  
   let weight (N m k : ℕ) : ℚ :=
     (-1 : ℚ) ^ k * (N.choose (k + 1) : ℚ) / ((k + 1 : ℕ) : ℚ) ^ m
   
@@ -499,23 +531,6 @@ theorem result (n m : ℕ) (_hm : 1 ≤ m) :
   
   have source_to_hessenberg (n m : ℕ) :
       sourceRHS n m = ((n + m).factorial : ℚ) * (hessenberg (n + m) m).det := by
-    have hsign : Equiv.Perm.sign (@Fin.revPerm m) = (-1 : ℤˣ) ^ (m * (m-1) / 2) := by
-      rw [Equiv.Perm.sign_eq_prod_prod_Iio]
-      calc
-        _ = ∏ j : Fin m, (-1 : ℤˣ) ^ j.val := by
-          apply prod_congr rfl
-          intro j _
-          calc
-            _ = ∏ i ∈ Iio j, (-1 : ℤˣ) := by
-              apply prod_congr rfl
-              intro i hi
-              have hij : i < j := mem_Iio.mp hi
-              simp only [Fin.revPerm_apply, Fin.rev_lt_rev, not_lt_of_ge hij.le, ↓reduceIte]
-            _ = _ := by rw [prod_const, Fin.card_Iio]
-        _ = _ := by
-          rw [prod_pow_eq_pow_sum]
-          congr 1
-          exact (Fin.sum_univ_eq_sum_range (fun i => i) m).trans (sum_range_id m)
     have hrev : hessenberg (n + m) m = (momentMatrix n m).submatrix Fin.revPerm id := by
       ext i j
       simp only [hessenberg, momentMatrix]
@@ -523,7 +538,7 @@ theorem result (n m : ℕ) (_hm : 1 ≤ m) :
       have hi := i.isLt
       simp only [Fin.revPerm_apply, Fin.val_rev, id_eq]
       omega
-    rw [source_to_moment, hrev, Matrix.det_permute, hsign]
+    rw [source_to_moment, hrev, Matrix.det_permute, sign_rev]
     simp only [Units.val_pow_eq_pow_val, Int.cast_pow, Units.val_neg, Units.val_one,
       Int.cast_neg, Int.cast_one]
     ring
