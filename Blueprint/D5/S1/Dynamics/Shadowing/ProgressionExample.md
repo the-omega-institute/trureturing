@@ -10,7 +10,7 @@ The arithmetic-progression construction, constants and rotation deletion method 
 
 **Theorem 1.1 (Weak mixing on all nonempty product open sets).**
 
-$$\begin{aligned}\forall U, V \subseteq X\times X,\\\operatorname{IsOpen}(U) \land \operatorname{IsOpen}(V) \land \operatorname{Nonempty}(U) \land \operatorname{Nonempty}(V) \Rightarrow\\\exists n, z, z \in U \land (\operatorname{iterate}(sigma, n, \operatorname{fst}(z)), \operatorname{iterate}(sigma, n, \operatorname{snd}(z))) \in V\end{aligned}$$
+$$\begin{aligned}\forall ell: \mathbb{N} \to \mathbb{N},\\(\forall p \in \mathbb{N}, 0<p \Rightarrow 3\le\operatorname{ell}(p)) \Rightarrow\\\forall U,V: \operatorname{Set}(\operatorname{ProgressionPoint}(ell)\times \operatorname{ProgressionPoint}(ell)),\\\operatorname{IsOpen}(U) \Rightarrow \operatorname{IsOpen}(V) \Rightarrow \operatorname{Nonempty}(U) \Rightarrow \operatorname{Nonempty}(V) \Rightarrow\\\exists n \in \mathbb{N}, \exists z \in U,\\(\operatorname{iterate}(\operatorname{progressionShift}(ell), n, \operatorname{fst}(z)), \operatorname{iterate}(\operatorname{progressionShift}(ell), n, \operatorname{snd}(z))) \in V\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/ProgressionExample.progression_shift_product_transitive` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ $$\begin{aligned}\forall U, V \subseteq X\times X,\\\operatorname{IsOpen}(U) \la
 
 *Commentary.*
 
-For arbitrary nonempty open U,V in X times X, choose contained nonempty open rectangles. Apply open-set mixing to each coordinate pair. The maximum of their two thresholds supplies one common hitting time and two points, proving transitivity of the square map.
+For this generic statement ell is any natural-valued length function satisfying ell(p)>=3 for every positive p. Set(T) denotes subsets of T and iterate(f,n,x) denotes f^[n](x). For arbitrary nonempty open U,V in ProgressionPoint(ell) times ProgressionPoint(ell), choose contained nonempty open rectangles. Apply open-set mixing to each coordinate pair. The maximum of their two thresholds supplies one common hitting time and two points, proving transitivity of the square map.
 
 In the endpoint formula, X is ProgressionPoint(quadraticProgressionLength) and sigma is progressionShift(quadraticProgressionLength). Set(X) denotes all subsets of X; iterate(f,n,x) denotes f^[n](x), sigma^p denotes p-fold iteration, and image(f,B) denotes the direct image. MapsTo(f,B,B) means image(f,B) is a subset of B. NeighborhoodTwoShadowing(sigma) is the existing predicate: for every epsilon>0 there is delta>0 such that every infinite natural-time delta-pseudo-orbit admits one same nonempty finite A in X with card(A)<=2 and initial diameter<epsilon, and at every natural time its distance to the shifted set is <epsilon. The minimizing branch may vary with time.
 

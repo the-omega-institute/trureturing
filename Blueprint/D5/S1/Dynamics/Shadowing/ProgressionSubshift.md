@@ -34,7 +34,7 @@ Assume ell(p)>=3 for all positive p. Keep x on [0,a), y shifted to [n,n+b), and 
 
 **Theorem 1.3 (No nonempty forward invariant subset in the one cylinder).**
 
-$$\begin{aligned}\forall ell,p,B, p>0,\\B \subseteq \operatorname{progressionOneCylinder}(ell),\\\operatorname{MapsTo}(sigma^{p}, B, B) \Rightarrow \neg \operatorname{Nonempty}(B)\end{aligned}$$
+$$\begin{aligned}\forall ell: \mathbb{N} \to \mathbb{N}, \forall p \in \mathbb{N}, 0<p \Rightarrow\\\forall B: \operatorname{Set}(\operatorname{ProgressionPoint}(ell)), B \subseteq \operatorname{progressionOneCylinder}(ell) \Rightarrow\\\operatorname{MapsTo}((\operatorname{progressionShift}(ell))^{p}, B, B) \Rightarrow \neg \operatorname{Nonempty}(B)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/ProgressionSubshift.progression_no_invariant_subset` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ $$\begin{aligned}\forall ell,p,B, p>0,\\B \subseteq \operatorname{progressionOne
 
 *Commentary.*
 
-Choose x in B. Forward invariance gives sigma^(jp)(x) in B for every natural j, so x(jp)=1 at every such coordinate, contradicting its p-progression condition. The cylinder [1] is clopen, and nonempty when ell(p)>=2. Compactness and image equality are unnecessary for this obstruction.
+Here Set(T) denotes subsets of T, f^p denotes p-fold iteration, and MapsTo(f,B,B) means that f maps B into B. Choose x in B. Forward invariance gives (progressionShift(ell))^(jp)(x) in B for every natural j, so x(jp)=1 at every such coordinate, contradicting its p-progression condition. The cylinder [1] is clopen, and nonempty when ell(p)>=2. Compactness and image equality are unnecessary for this obstruction.
 
 ## References
 

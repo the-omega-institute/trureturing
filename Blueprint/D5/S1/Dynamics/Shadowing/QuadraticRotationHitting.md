@@ -4,11 +4,11 @@
 
 Explicit badly-approximable estimates and uniform finite hitting for scaled square-root rotations.
 
-All phases are real numbers with their integer lifts retained. Int.fract is the representative in [0,1). Mathlib supplies irrational_sqrt_two, nearest-integer rounding and the Dirichlet return theorem Real.exists_nat_abs_mul_sub_round_le. The quantitative construction is attributed to Pro. The argument gives a uniform finite bound, including all integer lifts.
+All phases are real numbers with their integer lifts retained. Natural numbers and rounded integers in real expressions denote their canonical real coercions. Int.fract is the representative in [0,1). Mathlib supplies irrational_sqrt_two, nearest-integer rounding and the Dirichlet return theorem Real.exists_nat_abs_mul_sub_round_le. The quantitative construction is attributed to Pro. The argument gives a uniform finite bound, including all integer lifts.
 
 **Theorem 1.1 (An explicit lower approximation bound).**
 
-$$\begin{aligned}\forall M, k>0,\\\frac{1}{M(M+3)k} \le |\frac{k\sqrt{2}}{M}-\operatorname{round}(\frac{k\sqrt{2}}{M})|\end{aligned}$$
+$$\begin{aligned}\forall M,k \in \mathbb{N}, 0<M \Rightarrow 0<k \Rightarrow\\\frac{1}{M(M+3)k} \le |\frac{k\sqrt{2}}{M}-\operatorname{round}(\frac{k\sqrt{2}}{M})|\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/QuadraticRotationHitting.sqrt_two_scaled_round_lower` (`✓ std3`). ∎
 

@@ -10,7 +10,7 @@ Read c(n)=z(n)(0). Strict first-disagreement errors force edge equality through 
 
 **Theorem 1.1 (Quarter masks stay separated across wrap-around).**
 
-$$\begin{aligned}\operatorname{fract}(u) \in [\frac{1}{8},\frac{3}{8}],\\\operatorname{fract}(v) \in [\frac{5}{8},\frac{7}{8}] \Rightarrow \frac{1}{8} \le |v-u|\end{aligned}$$
+$$\begin{aligned}\forall u,v \in \mathbb{R},\\\operatorname{fract}(u) \in [\frac{1}{8},\frac{3}{8}] \Rightarrow\\\operatorname{fract}(v) \in [\frac{5}{8},\frac{7}{8}] \Rightarrow \frac{1}{8} \le |v-u|\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/ProgressionTwoShadowing.quarter_masks_separated` (`✓ std3`). ∎
 
