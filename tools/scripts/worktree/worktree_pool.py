@@ -480,8 +480,8 @@ def claim(options):
         if not candidates:
             return no_idle(options)
         base = value(options.source, "rev-parse", "--verify", "--end-of-options", options.base + "^{commit}")
-        # Idle state is relative to dev, independently of the requested base.
-        dev = value(options.source, "rev-parse", "--verify", "refs/remotes/origin/dev^{commit}")
+        # Only idle state depends on dev; qualify a target before reading it.
+        dev = None
         expected = {pin: git(options.source, "show", base + ":" + pin).stdout for pin in PINS}
         reference = "refs/heads/" + options.branch
         git(options.source, "check-ref-format", reference)
@@ -500,6 +500,8 @@ def claim(options):
                         raise Refused("linked_cache")
                     idle = False
                     if idle_reference(item.get("branch", "")):
+                        if dev is None:
+                            dev = value(options.source, "rev-parse", "--verify", "refs/remotes/origin/dev^{commit}")
                         try:
                             state = idle_state(options.source, path, dev)
                             idle = True

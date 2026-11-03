@@ -377,6 +377,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_claim_checkpoints_dormant_dirty_and_detached_work")]
     [InlineData("pool_claim_retains_active_process_cwd_file_and_argv")]
     [InlineData("pool_claim_retains_active_idle_tree")]
+    [InlineData("pool_activity_scope_excludes_unrelated_unobservable_process")]
     [InlineData("pool_claim_retains_recent_checkout_allocation_and_source")]
     [InlineData("pool_claim_keeps_task_identity_lock_and_operation_guards")]
     [InlineData("pool_claim_dormant_task_updates_pins_and_rechecks_activity")]

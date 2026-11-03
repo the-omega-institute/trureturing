@@ -672,18 +672,25 @@ def active_paths(codex, scopes=(), *, include_sampler_argv=False):
             open_path(str(path))
     else:
         raise OSError("host cleanup supports macOS and Linux")
-    result = subprocess.run(["ps", "-axo", "uid=,pid=,args=" if scopes else "uid=,args="],
+    result = subprocess.run(["ps", "-axo", "uid=,pid=,ppid=,args=" if scopes else "uid=,args="],
                             capture_output=True, text=True, timeout=30)
     if result.returncode != 0:
         raise OSError("cannot inspect process arguments: " + result.stderr.strip())
-    for line in result.stdout.splitlines():
-        fields = line.strip().split(None, 2 if scopes else 1)
+    process_rows = [line.strip().split(None, 3 if scopes else 1) for line in result.stdout.splitlines()]
+    samplers = {str(os.getpid()), str(os.getppid())}
+    if scopes and not include_sampler_argv:
+        parents = {row[1]: row[2] for row in process_rows if len(row) == 4}
+        ancestor = str(os.getppid())
+        while ancestor in parents and parents[ancestor] not in samplers:
+            ancestor = parents[ancestor]
+            samplers.add(ancestor)
+    for fields in process_rows:
         if scopes:
-            # The sampler and its inspecting caller name their target in argv.
-            # Their real cwd/open handles remain inspected; argv is not a user.
-            if len(fields) != 3 or (not include_sampler_argv and fields[1] in (str(os.getpid()), str(os.getppid()))):
+            # The sampler's launch chain names its own target in argv. Its real
+            # cwd/open handles remain inspected independently of these arguments.
+            if len(fields) != 4 or (not include_sampler_argv and fields[1] in samplers):
                 continue
-            fields = [fields[0], fields[2]]
+            fields = [fields[0], fields[3]]
         if len(fields) != 2 or fields[0] != str(os.getuid()):
             continue
         try:

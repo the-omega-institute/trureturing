@@ -494,7 +494,7 @@ class HostCleanupTests(unittest.TestCase):
         artifact = self.old_file(self.root / "flight" / "output")
         alias = self.root / "argument-alias"
         alias.symlink_to(artifact)
-        row = str(os.getuid()) + " " + str(os.getppid()) + " runner --output=" + json.dumps(str(alias)) + "\n"
+        row = str(os.getuid()) + " " + str(os.getppid()) + " 0 runner --output=" + json.dumps(str(alias)) + "\n"
         with patch.object(cleanup.sys, "platform", "darwin"), \
              patch.object(cleanup, "macos_active_paths", return_value=set()), \
              patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, row, "")):
@@ -504,6 +504,29 @@ class HostCleanupTests(unittest.TestCase):
         self.assertNotIn(artifact, ordinary)
         self.assertIn(artifact, cleanup_activity)
         self.assertNotIn(alias, cleanup_activity)
+
+    def test_scoped_activity_ignores_launcher_arguments_but_keeps_open_paths_and_other_processes(self):
+        target = self.old_file(self.root / "target" / "source")
+        opened = self.old_file(self.root / "opened" / "source")
+        unrelated = self.old_file(self.root / "unrelated" / "source")
+        uid = str(os.getuid())
+        rows = "\n".join(uid + " " + row for row in (
+            "1000 1001 sampler " + json.dumps(str(target)),
+            "1001 1002 cli " + json.dumps(str(target)),
+            "1002 1 dotnet run --path " + json.dumps(str(target)),
+            "1003 1002 worker " + json.dumps(str(unrelated)),
+        ))
+        with patch.object(cleanup.sys, "platform", "darwin"), \
+             patch.object(cleanup.os, "getpid", return_value=1000), \
+             patch.object(cleanup.os, "getppid", return_value=1001), \
+             patch.object(cleanup, "macos_active_paths", return_value={opened}), \
+             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, rows, "")):
+            activity = cleanup.active_paths(self.root / "codex", (self.root,))
+            cleanup_activity = cleanup.active_paths(self.root / "codex", (self.root,), include_sampler_argv=True)
+        self.assertNotIn(target, activity)
+        self.assertIn(opened, activity)
+        self.assertIn(unrelated, activity)
+        self.assertIn(target, cleanup_activity)
 
     def test_scoped_activity_keeps_live_lock_identity_without_scanning_other_sessions(self):
         codex = self.root / "codex"

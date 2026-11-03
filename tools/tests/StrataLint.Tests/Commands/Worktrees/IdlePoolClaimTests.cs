@@ -94,7 +94,7 @@ public sealed partial class WorktreeCommandTests
             "--path", exact ? target : fallback, "--skip-restore" };
         if (!exact) arguments.Add("--prefer-idle");
 
-        var result = WorktreeCommand.Run(repository.Path, arguments);
+        var result = WorktreeCommand.Run(repository.Path, arguments, new ActivityIsolatedRunner());
 
         Assert.True(result.Success, result.Error);
         using var receipt = JsonDocument.Parse(result.Output);
@@ -329,7 +329,7 @@ public sealed partial class WorktreeCommandTests
             "--path", exact ? idle : fallback, "--skip-restore" };
         if (!exact) arguments.Add("--prefer-idle");
 
-        var result = WorktreeCommand.Run(repository.Path, arguments);
+        var result = WorktreeCommand.Run(repository.Path, arguments, new ActivityIsolatedRunner());
 
         Assert.True(result.Success, result.Error);
         using var receipt = JsonDocument.Parse(result.Output);
@@ -342,10 +342,25 @@ public sealed partial class WorktreeCommandTests
         Assert.Equal("cached bytes\n", File.ReadAllText(Path.Combine(idle, ".lake", "sentinel")));
         Assert.Equal("lane/math/claimed", WorktreeHookFixture.RunGit(idle, "branch", "--show-current").Trim());
         Assert.Contains("worktree-allocation:", WorktreeHookFixture.RunGit(idle, "reflog", "-1", "--format=%gs"));
-        var repeated = WorktreeCommand.Run(repository.Path, arguments);
+        var repeated = WorktreeCommand.Run(repository.Path, arguments, new ActivityIsolatedRunner());
         Assert.True(repeated.Success, repeated.Error);
         using var reuse = JsonDocument.Parse(repeated.Output);
         Assert.Equal("reused", reuse.RootElement.GetProperty("status").GetString());
         Assert.Equal(registeredPath, reuse.RootElement.GetProperty("path").GetString());
     }
+
+    private sealed class ActivityIsolatedRunner : IWorktreeProcessRunner
+    {
+        private readonly ProductionWorktreeProcessRunner inner = new();
+
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments,
+            string workingDirectory, TimeSpan budget)
+        {
+            if (fileName != "python3") return inner.Run(fileName, arguments, workingDirectory, budget);
+            var fixture = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "tests",
+                "StrataLint.WorktreeContract.Tests", "Fixtures", "activity_fixture.py");
+            return inner.Run(fileName, ["-I", "-B", fixture, "--", .. arguments], workingDirectory, budget);
+        }
+    }
+
 }

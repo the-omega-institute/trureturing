@@ -522,6 +522,44 @@ class IdlePoolCases:
             job.communicate("joined\n", timeout=10)
         self.assertEqual("claimed", json.loads(self.dormant_claim().stdout)["status"])
 
+    def pool_activity_scope_excludes_unrelated_unobservable_process(self):
+        if not sys.platform.startswith("linux"):
+            return
+        import errno
+        import worktree_pool as pool
+        from activity_fixture import ActivityScope
+        children = []
+        for hidden in (False, True):
+            code = ('import sys; ' + ('import ctypes; assert ctypes.CDLL(None).prctl(4,0)==0; '
+                                     if hidden else '')
+                    + 'print("ready",flush=True); sys.stdin.readline()')
+            job = subprocess.Popen([sys.executable, "-c", code], cwd=self.tree,
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            self.jobs.append(job)
+            self.jobs_settled = False
+            self.assertTrue(select.select([job.stdout], [], [], 10)[0])
+            self.assertEqual("ready\n", job.stdout.readline())
+            children.append(job)
+        original = os.readlink
+        unreadable = "/proc/" + str(children[1].pid) + "/cwd"
+        attempted = []
+        def readlink(path, *args, **kwargs):
+            if str(path) == unreadable:
+                attempted.append(str(path))
+                raise PermissionError(errno.EACCES, "fixture non-dumpable process", str(path))
+            return original(path, *args, **kwargs)
+        try:
+            with patch.object(os, "readlink", side_effect=readlink):
+                with ActivityScope(children[0].pid):
+                    self.assertIn(self.tree, pool.task_users((self.tree,)))
+                self.assertEqual([], attempted)
+                with self.assertRaisesRegex(OSError, "linux_activity_unavailable"):
+                    pool.task_users((self.tree,))
+                self.assertEqual([unreadable], attempted)
+        finally:
+            for child in children:
+                child.communicate("joined\n", timeout=10)
+
     def pool_claim_retains_recent_checkout_allocation_and_source(self):
         import worktree_pool as pool
         task = self.dormant_task()
