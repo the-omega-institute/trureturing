@@ -119,6 +119,9 @@ def registration :
   familyRecord := none
   options := #[] }
 
+#check claim
+#check @result
+
 #print axioms source_registration
 #print axioms registration
 

@@ -29,7 +29,6 @@ internal sealed class HermiteTieGeneratingFunctionDocument : IScribeDocumentDefi
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
-    private static Formula Ints() => Seq(Mathbb, Grp(F.Id("Z")));
     private static Formula Rationals() => Seq(Mathbb, Grp(F.Id("Q")));
     private static Formula Series() => Call("PowerSeries", Rationals());
     private static Formula Named(string s) => Seq(Operatorname, Grp(F.Id(s)));
@@ -50,7 +49,6 @@ internal sealed class HermiteTieGeneratingFunctionDocument : IScribeDocumentDefi
     private static Formula Constant(Formula s) => Call("constantCoeff", s);
     private static Formula Numerator() => Sub(Sub(Add(Add(Mul(D(8), F.Id("X")), Mul(D(5), Pow(F.Id("X"), D(2)))), Mul(D(5), Pow(F.Id("X"), D(3)))), Pow(F.Id("X"), D(4))), Pow(F.Id("X"), D(5)));
     private static Formula Denominator() => Mul(Pow(Sub(D(1), F.Id("X")), D(3)), Pow(Add(D(1), F.Id("X")), D(2)));
-    private static Formula Index(Formula k, Formula n) => And(Seq(D(1), Sp, Le, Sp, n), Eq(Cast(k, Ints()), Call("a", n)));
     private static Formula ClaimBody()
     {
         var n = F.Id("n"); var m = F.Id("m"); var k = F.Id("k"); var a = F.Id("a"); var s = F.Id("S");
