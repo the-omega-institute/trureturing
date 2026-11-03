@@ -17,13 +17,13 @@ internal sealed class FiedlerResistanceTripartiteOptimizerDocument : IScribeDocu
                 "Two original vertices are adjacent exactly when their part labels differ.", DescribeRole.Definition),
             Plain("K3_dec", "Decidable original adjacency", "For all natural a,b,c, the original labelled graph has decidable adjacency.", DescribeRole.Definition),
             Node("boundary", "A zero-extended boundary representative", "boundary", Triple(All("i", Vert(), All("j", Vert(),
-                Eqn(App(Bound(), Pair(V("i"), V("j"))), Call("ite", Not(Iff(Eqn(Part(V("i")), D(2)), Eqn(Part(V("j")), D(2)))), Div(D(1), V("c")), D(0))))))),
+                Eqn(App(Bound(), Pair(V("i"), V("j"))), Call("ite", Not(Iff(Eqn(Part(V("i")), D(2)), Eqn(Part(V("j")), D(2)))), Div(D(1), V("c")), D(0)))))),
                 "The total Sym2 function is 1/c exactly across the cut from A union B to C and zero elsewhere, including every nonedge and diagonal pair. Consequently its actual original AB edges are zero and its AC and BC edges are 1/c. It is an extremizer only under c=a+b.", DescribeRole.Definition),
             Node("spectrum", "The full spectrum of the actual native Laplacian", "FullSpectrum", Triple(All("w", Weight(),
-                Iff(Call("FullSpectrum", V("a"), V("b"), V("c"), V("w")), SpectrumBody())))),
+                Iff(Call("FullSpectrum", V("a"), V("b"), V("c"), V("w")), SpectrumBody()))),
                 "The finite index enumeration comes directly from Matrix.IsHermitian.eigenvalues of the actual wLap. Exactly one entry is zero, exactly n-2 entries are one, exactly one is two, and every entry is among these values. This specifies multiplicity without imposing an ascending index order.", DescribeRole.Definition),
             Node("compression", "Trace excess and complete independent-part annihilation", "Compression", Triple(All("w", Weight(),
-                Iff(Call("Compression", V("a"), V("b"), V("c"), V("w")), CompressionBody())))),
+                Iff(Call("Compression", V("a"), V("b"), V("c"), V("w")), CompressionBody()))),
                 "Here H=L-(I-constProj n). The property asserts positive semidefiniteness, annihilation of constants, trace at least one, and, when trace is one, annihilation of every vector of total sum zero supported in any one of the three original parts. The proof sums all original within-part pair-difference Rayleigh inequalities. Their nonnegative gaps vanish simultaneously at trace equality. Positive semidefinite zero energy gives the kernel equations, and the original pair differences span each full supported mean-zero space. This includes part size two and uses no invariant-subspace assumption.", DescribeRole.Definition),
             Node("claim", "Every clause of the original theorem", "Theorem32", Triple(Iff(Call("Theorem32", V("a"), V("b"), V("c")), Conclusion())),
                 "The positive product bound is strict and lambda2 is positive. Every nonnegative assignment with actual lambda2=1 has connected positive support and the resistance ceiling. Equality is equivalent to balance and agreement with the displayed boundary on actual original edges. Existence of an equality assignment is equivalent to balance. The balanced boundary is connected, normalized, has the asserted full spectrum and resistance, and has a zero AB edge, so it is outside the positive domain. The final clause supplies Compression for every normalized nonnegative assignment and rank one for its actual excess matrix at resistance equality.", DescribeRole.Definition),
@@ -33,7 +33,7 @@ internal sealed class FiedlerResistanceTripartiteOptimizerDocument : IScribeDocu
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("frto-" + id), DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     private static DocumentBlock Plain(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("frto-" + name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+        Describe.Lean(DescribeId.Create("frto-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     private static Formula V(string x) => StrataLint.Scribe.FormulaDsl.Id(x);
     private static Formula C(string x) => new Formula.NamedConstant(FormulaIdentifier.Create(x));
     private static Formula Call(string x, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(x))), [..args]);
