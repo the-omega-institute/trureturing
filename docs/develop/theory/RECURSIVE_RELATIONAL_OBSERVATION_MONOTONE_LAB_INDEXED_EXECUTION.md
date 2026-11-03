@@ -2041,3 +2041,388 @@ The exact-fiber condition of PG19.2 still applies to the entire
 claimed state and operation domain. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 15. Direct field control with an arbitrary finite reserve
+
+**Definition 15.1 (reserved field configuration).** Fix a finite reserve
+of $K$ distinct, actually granted objects. Each object has four reference
+fields and eight binary fields. Reference zero is a parent in a work
+vertex; references one and two are its left and right links; reference
+three is its routing-header link. In a list header, references one and
+two are head and tail. In a bit cell, reference one is next and bit zero
+is payload. Bit seven records extraction from the reserve. The initial
+reserve chain uses reference zero; extraction takes its actual head,
+advances to that head's actual successor, clears the returned object's
+reference zero, and sets its bit seven. No numerical value is converted
+into a reference. The reserve may be exhausted. Exhaustion has no
+successful allocation successor and cannot complete an unfinished macro.
+
+A direct field graph is a finite pointed graph with operations: set or
+test a binary register; copy, test null or compare reference registers;
+read or write one specified reference or bit field; bind an actual graph
+continuation; follow a saved continuation; and transfer a bit, End or
+acknowledgement at its supplied connection. Its registers contain only
+bits or actual references. An operation's field selector is a fixed
+literal of its graph vertex. The current graph vertex and saved return
+references are control locations. Dynamic tape positions, input lengths,
+and reserve size are not graph labels.
+
+In an explicit interpreted representation a graph vertex instead has a
+five-bit operation, sixteen-bit selector, two operand references and two
+successor references. Operand references bind actual register locations;
+a continuation-binding vertex may bind an actual code vertex. The
+interpreter first reads the operation's five fields, then the selector's
+sixteen fields, then the four references, preserving every read prefix.
+It dispatches on its represented operation, captures source operands,
+performs the selected access, stores its result and finally installs the
+selected continuation. It has separate bit and reference latches. Its
+bounded scan index, operation, selector, finite phase, occupied output
+bit and wait/End/acknowledgement flags are part of its state. This defines
+a transition system with finite control and actual field accesses;
+a compound finite-control transition is not thereby a single ML-I bit
+primitive.
+
+**Definition 15.2 (program cells and literal bilateral driver).** For an
+arbitrary finite B program, reserve one object per instruction. Three
+binary fields encode L, R, M or J. Reference one is the next instruction,
+or null at the end; reference two is a jump's actual destination object.
+The initial instruction reference is null for the empty program. The
+instruction number used to describe this finite list is a decoding
+coordinate, not a runtime counter.
+
+The driver retains root, old and intended head, old and intended
+instruction reference, an arm bit and its intended value. Fetch reads the
+instruction object's three bits and next reference. M inspects the
+current right leaf's actual left link and calls promotion only when that
+link is null. J inspects the same link and selects the saved next or
+actual jump destination. The two movements use precisely (ML.3), with
+actual parent/root equality at a crossing. A destination with null right
+link is split before use; an existing branch is used unchanged.
+
+Promotion and splitting are subgraphs, with an actual saved continuation.
+Promotion reserves its marker before attachment. Splitting retains the
+old marker and reserves its new marker, right vertex and routing header
+before its three attachments. Proper-ancestor maintenance retains child,
+parent, side, header, new cell and old tail until linking and tail update
+are complete. Return follows the saved continuation. Commit copies the
+intended head, arm and instruction reference. No subsequent instruction
+fetch is on any path between the initial fetch and this commit. Loading
+reads an actual input-cell chain and executes Definition 2.2; a null
+initial input chain still creates one zero cell.
+
+**Theorem 15.3 (reserve-parametric driver correspondence).** For every
+finite B program, every finite input and every finite prefix of its B
+run, the direct field driver has exactly that sequence of committed
+configurations whenever its finite reserve suffices. Every internal
+prefix has an old configuration, intended successor, and a uniquely
+specified unfinished field/growth/maintenance operation. At complete
+boundaries the comb, head, arm and instruction-reference interpretation
+is that of Definitions 1.3 and 2.1. Conversely each completed driver
+macro is the next B instruction. This applies to finite prefixes of
+nonhalting runs, without a termination assumption.
+
+More precisely, let $q$ be the program length and $m$ the supplied input
+length. At a complete boundary let $V,H,D$ be the actual work-vertex,
+routing-header and routing-cell counts. With no intervening job, the
+number of extracted reserve objects is
+
+$$
+q+m+V+H+D.
+\tag{ML.21}
+$$
+
+Any $K$ at least the largest such count along the required completed
+prefix supplies every intervening extraction as well. There is no bound
+on $q,m$ or the prefix length independent of $K$ in this assertion.
+
+Proof. The installed instruction list is injectively addressed by its
+actual objects. Thus null is the sole halt, a next link is the ordinary
+successor, and a jump link is precisely its installed destination. Fetch
+and bit inspection select the same cases as Definition 3.1. For the
+loader, following its actual input cursor either consumes the next
+received bit or reaches null; induction gives Definition 2.2, including
+the empty-input case.
+
+The geometric part is Theorem 3.3's case argument, now with each of its
+saved references realized explicitly. An outward move takes the current
+left link. An inward move takes its parent unless that parent is the
+root, in which case it crosses to the other root arm and changes the arm
+bit. These are all cases of (ML.3). Mark and jump inspect the actual bit
+leaf, so a repeated mark makes no edit and a jump chooses the correct
+installed reference.
+
+The promotion guard reads both child links before any edit. The split
+guard reads the existing left link and null right link. Its old marker
+and fresh objects survive all partial attachments. During maintenance,
+parent-left equality selects side zero; otherwise parent-right equality
+must select side one. The append initializes its bit and next link before
+altering a header or old tail, and advances the tail only after linking.
+The child reference then becomes the parent. This ascends a finite
+ancestor chain and returns to its saved continuation. Every intermediate
+attachment or append retains exactly its remaining obligation. The
+saved old configuration remains interpretable during partial commit;
+only the completed commit is another B boundary. Induction on completed
+macros proves forward simulation and the same case analysis proves the
+converse.
+
+The program and original input occupy exactly $q+m$ extracted objects.
+Every subsequent extraction is either a work vertex, a routing header or
+a routing cell. Promotion extracts one new vertex; splitting extracts two
+new vertices and one header; each ancestor append extracts one routing
+cell. No other subgraph in this driver extracts an object. This proves
+(ML.21). Extracted counts increase, and a partially initialized event's
+objects are a subset of those retained at its next complete boundary.
+The stated bound therefore covers every intermediate extraction. Taking
+larger finite $K$ covers any requested finite run prefix; it does not
+identify the pool bound with a program, input or mathematical-domain
+bound. $\square$
+
+**Definition 15.4 (bit lowering of the image register graph).** Give each
+sixty-four-bit scalar a bank of sixty-four binary locations, and give
+source snapshots disjoint scratch banks. Constant assignment writes all
+sixty-four fields. Copy branches on each source bit and writes the
+corresponding target field. Shift copies its source snapshot at the
+fixed displaced index, or writes zero outside the source range. For
+addition and subtraction, a finite Boolean decision tree on the two
+source bits and carry or borrow writes the result bit and next carry or
+borrow. Comparison scans the high positions first and retains whether
+the first unequal pair has been found. Equality scans every position.
+Both comparisons write their predicate to the low target bit and clear
+the remaining sixty-three fields.
+
+For a word read, preserve a separate address snapshot. For each result
+bit, follow actual directory links selected by the page-number bits.
+Form the fifteen-bit within-page selector from the twelve low byte
+address bits and the fixed three-bit position within that byte. A full
+binary decision tree on these fifteen bits ends at the corresponding
+literal physical page-field access. Its continuation is an actual saved
+reference. After each eight result bits, increase the copied byte
+address by the same carry subgraph. Clear unused high result fields.
+The page-selection tree is shared by calls through saved continuations;
+it is not a host-indexed table of fetched instructions.
+
+**Theorem 15.5 (field lowering and its exact domain).** For every valid
+image of Definition 14.2, the bit lowering has the same register-graph
+boundaries and fetched instructions as Theorem 14.3. Every intervening
+field-graph prefix preserves a source snapshot, an unfinished bit scan,
+a directory path, or a page-field selection and its continuation.
+Connecting its output registers directly to Definition 15.2's instruction
+case analysis supplies the same finite B prefixes for the encoded image.
+The sixty-four-bit code-address premise does not bound the input word,
+tape extent, reserve parameter or an unrelated finite B program.
+
+Proof. Snapshot copying precedes any target overwrite, so source/target
+aliasing preserves the source word. Inductively, after $i$ low bits of
+addition or subtraction, the written prefix and retained carry or borrow
+are those of binary arithmetic on the two preserved source prefixes.
+The finite truth tables are exactly exclusive-or and majority, or the
+borrow table, respectively. The valid-image premise excludes an
+arithmetic result outside the specified nonnegative word range. The
+first unequal high pair determines strict comparison; if none occurs,
+comparison is false and equality true. Clearing all other predicate
+fields preserves the register-graph representation.
+
+Directory traversal selects the actual high-bit path of the copied
+address. The fifteen-level decision tree then chooses its unique
+physical field. Its leaves contain literal selectors, while the choices
+on its path read the represented offset. Bit-position induction proves
+the requested little-endian word, including the eight-bit boundaries.
+These are exactly the component operations of Definition 14.2.
+Induction over register-graph steps and Theorem 14.3 give the fetched
+instruction. A saved field-graph return carries the computation directly
+to its consuming driver; no external transcript or reference-reader
+answer is a runtime operand.
+
+The code address concerns the fixed immutable image. Input and comb
+navigation instead follow actual list/tree references, with a separately
+chosen finite reserve. The arbitrary instruction-list realization of
+Theorem 15.3 uses actual next and jump references. Neither construction
+uses the image-address range as a bound on those other domains.
+$\square$
+
+## 16. Streaming the actual input and locating the returned output
+
+**Definition 16.1 (fused input converter).** Let $x$ be an actual finite
+bit-cell chain and let $r\ge1$ be the fixed stack-register count. A finite
+converter writes the following stream to a new bit-cell chain. It first
+writes the copier header, with every copier bit passed through NWMG's
+$0\mapsto10$, $1\mapsto11$. It then supplies source-binary bits in the
+order: $11$ for the initial separator; $01$ for each actual zero input
+bit and $10$ for each actual one; and $r$ further $11$ pairs. The input
+cursor advances only after its bit is read.
+
+For each supplied source-binary bit $b$, append the copier data block
+whose eight fields are
+
+$$
+(0,1,0,f,1-b,b,0,0),
+\tag{ML.22}
+$$
+
+again through the NWMG bit encoding. The first-block flag $f$ is initially
+one and is cleared after this block. Finally append the encoded copier
+end block. The fixed count $r$ is finite converter control; no dynamic
+input length or value is hidden in its control labels. Every append
+uses an actual output header, old tail and fresh bit cell. The original
+input and unfinished output remain retained while conversion proceeds.
+
+**Theorem 16.2 (all-word acquired-data conversion).** For every finite
+$x$, the completed stream of Definition 16.1 is exactly the B input of
+Theorems 12.4 and 13.2 for stack zero $x$ and $r-1$ empty stacks. Its
+length is $32(|x|+r+2)$. Its extracted objects, apart from previously
+installed material, are one output header and exactly that many output
+bit cells. Together with the retained original input the count is
+$|x|+1+32(|x|+r+2)$. This conversion imposes no new bound on $N$, prior
+components, masks or cylinder lists in an accepted arithmetic frame.
+
+Proof. The four-symbol serialization is one separator, $|x|$ actual bit
+symbols and $r$ closing separators. Definition 12.3 encodes these symbols
+by exactly the pairs streamed above. Their number is $|x|+r+1$, so the
+source-binary stream has length $2(|x|+r+1)$ and is nonempty even for
+empty $x$. Formula (ML.22) is exactly Definition 4.6's data block: one
+head flag in the first data block, one of the two value fields, and zero
+unconsumed/handoff fields. The header and end block complete that same
+copier input. NWMG encodes each of its bits by two bits, hence the final
+length is $16(2(|x|+r+1)+2)=32(|x|+r+2)$.
+
+The append invariant says that its head-to-tail chain is exactly the
+already emitted prefix. Its fresh cell is initialized before linking;
+its old tail is retained until the header advances. Thus every internal
+prefix is an unfinished actual stream append, and the output count is
+one header plus one cell per bit. No input bit is guessed from an absent
+suffix. Arithmetic acceptedness and the arbitrary finite bit lengths
+remain precisely A's premises in Theorems 10.5 and 11.6. $\square$
+
+**Definition 16.3 (returned-header decoder without coordinate recovery).**
+Suppose the actual B head is at the first NWMG bit of the returned active
+copier header. Retain this reference and scan its actual eight-bit
+block. Reading one copier bit checks the first NWMG bit is marked,
+advances one actual comb link, reads the second bit by its leaf arity,
+and advances to the next pair. Thus a block read uses sixteen actual
+comb links and eight retained binary results.
+
+Check the active-header fields, then scan its data blocks. Each has type
+$(0,1,0)$, exactly one value field, and zero consumed/handoff fields.
+Stop this search at its actual source-binary head flag. Read the value
+there and at the next data block as a pair. Pair $01$ appends output zero,
+$10$ appends output one, and $11$ terminates at the actual separator.
+Pair $00$ is not output. After appending a bit, continue with the next
+pair of data blocks. The decoded output has a retained linked header;
+printing follows its actual next links, transfers each read bit through
+an occupied latch, then transfers End, acknowledgement and Return.
+The output sink is not read to choose any later bit or continuation.
+
+This decoder retains no integer coordinate and does not count retired
+records. Its task is the evaluator's returned output, not reconstruction
+of the source tape at every original integer position.
+
+**Theorem 16.4 (actual-head output correspondence).** On any well-formed
+returned active copier record whose unique binary head is at an aligned
+four-symbol output word followed by a separator, Definition 16.3
+terminates with exactly that word. It preserves the actual returned-head
+binding and reaches the actual separator. Every prefix retains its
+unfinished record scan, first pair bit, output append or printing phase.
+Together with Theorems 12.2, 12.4 and 13.2 this supplies an output
+conversion on every accepted evaluator input, conditional on its actual
+completed LAB execution and the stated field-operation completions.
+
+Proof. The first part of the scan begins at the supplied active header,
+not at a header selected by an answer or coordinate oracle. The active
+record consists of finitely many well-formed data blocks with exactly one
+source-binary head. Its flag search therefore terminates at that very
+head. The NWMG first-bit check and actual second-bit arity read return
+each stored copier bit; the data fields then return each source-binary
+value. Aligned two-bit decoding is exactly Theorem 12.4's inverse:
+$01$ and $10$ are the two bit symbols and $11$ is the separator. The
+finite output word has such a separator by Theorem 12.2. Therefore the
+pair loop terminates there, including immediate termination for an empty
+word. It never infers an output zero from unrepresented space.
+
+All cursors are actual references and all alternatives use already read
+binary fields. Appending preserves the emitted-prefix invariant of
+Theorem 16.2. Printing reads that chain in order and cannot reach End
+until its cursor is null; the supplied acknowledgement precedes Return.
+Its latch and current cursor retain an unfinished transfer. Theorem 13.2
+binds the completed B head to the returned active copier header, so this
+same decoder composes with the unchanged evaluator suppliers under the
+stated completion hypotheses. It gives no claim about a whole machine
+history or recovery of an unobserved physical source. $\square$
+
+## 17. Finite-control cuts, storage and the primitive boundary
+
+**Definition 17.1 (reserved field-machine storage).** Let $a$ be the
+number of installed interpreted field-graph vertices, $r$ the number of
+reference-register locations and $b$ the number of binary-register
+locations. A vertex has twenty-one bits and four references, including
+its two operands. A register location is a separate granted object. The
+interpreter has eight reference fields and thirty-eight bits: a
+sixteen-bit selector, five-bit operation, five-bit index, seven binary
+latches/flags and five-bit phase. Choose one reference width $w$ sufficient
+for all these objects, their null references and the $K$ granted reserve
+objects. Its retained storage is
+
+$$
+\begin{aligned}
+O&=K+a+r+b+1,\\
+R&=4K+4a+r+8,\\
+B&=8K+21a+b+38,\\
+S&=B+wR+O.
+\end{aligned}
+\tag{ML.23}
+$$
+
+These terms count represented interpreter state and interpreted graph. A
+native realization of its finite dispatcher, selectors and phase transitions
+adds its own installed graph and grants; that expansion is not included in
+(ML.23). The final $O$ bits are retained grants. If a paged immutable image is
+also retained, add its actual objects, fields and grants from Definition
+14.1 before choosing $w$. Unextracted reserve objects count in $K$;
+extracted objects do not add a second copy of themselves. References and
+grants do not acquire a free third binary value.
+
+**Theorem 17.2 (same-reserve cuts and the limits of their tariff).**
+Throughout any execution using this same fixed reserve and installed
+field graph, (ML.23) is the retained field-machine storage at every cut,
+including an unfinished edit, unlinked append, copied address, partial
+code read or occupied output latch. Extraction changes occupancy and
+links but not that storage total. There is no reference-width overlap
+in this fixed-width construction. Its whole actual reserve is paid from
+the first retained cut.
+
+Each completed interpreted graph action has exactly twenty-one actual
+code-bit reads and four code-reference reads before dispatch, and a
+finite sequence of captured operand accesses, result writes and
+continuation assignments. These counts alone do not prove a complete
+single-bit ML-I tariff, a chronological installation, an online
+unbounded allocator or a simultaneous original-source/service account.
+
+Proof. No execution transition allocates an object outside the already
+supplied reserve. Its four reference and eight binary fields persist
+when it moves from reserve chain to pending material or completed work.
+All code, register and interpreter locations also persist. Changes to
+references, bit values and occupancy therefore leave each term of
+(ML.23) invariant. The choice of $w$ remains sufficient and there is no
+second width whose fields could overlap. A different construction that
+widens this arena must count both its old and new fields at its real
+copying cuts; (ML.23) is not such a construction.
+
+The code-reader phases have lengths five and sixteen and then read the
+two operands and two successors. Each captured source survives until its
+consuming access. The result survives until its writeback and the saved
+successors survive until continuation assignment. Thus the stated counts
+and finite-control prefix interpretations hold.
+
+A finite-control update can still write more than one index or phase bit;
+a selector can still require its own primitive field-selection subgraph.
+Their intermediate single-bit cuts are not identified by the preceding
+counts. Similarly the retained configuration does not specify how its
+initial code, reserve, grants and headers were installed. Finally its
+original source connection, service cache, receipt chain, retained-job
+directory and joint source/observer cuts are not arguments of (ML.23).
+Holding this configuration fixed while varying such data can change the
+next legal Read, output or allocation. The fiber criterion of PG19.2
+therefore forbids treating this partial storage account as the complete
+service account of §6. $\square$
+
+## 追加锚（本行以下为增补区）
