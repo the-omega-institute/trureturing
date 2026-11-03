@@ -699,15 +699,42 @@ private theorem spin_attained : ‖S balanced balanced‖=Real.sqrt 2 := by
 /-- The finite curvature entry uses the original complete basis and spin multiplication. -/
 def curvature (i j k : Fin 4) : J := S (e i) (S (e j) (e k))-S (e j) (S (e i) (e k))
 
+private theorem spin_commutator (a b c : J) :
+    S a (S b c)-S b (S a c) = -(C (C a b) c) := by
+  have hv : ![(C a b) 1,(C a b) 2,(C a b) 3] =
+      crossProduct ![a 1,a 2,a 3] ![b 1,b 2,b 3] := by
+    ext i; fin_cases i <;> rfl
+  change spin a (spin b c)-spin b (spin a c) =
+    -(toLp 2 (Matrix.vecCons 0
+      (crossProduct ![(C a b) 1,(C a b) 2,(C a b) 3] ![c 1,c 2,c 3])))
+  rw [hv,cross_cross_eq_smul_sub_smul]
+  ext i; fin_cases i <;> simp [spin,Matrix.vec3_dotProduct] <;> ring
+
 private theorem curvature_bound (i j k : Fin 4) : ‖curvature i j k‖≤1 := by
-  apply (sq_le_sq₀ (norm_nonneg _) (by norm_num : (0:ℝ)≤1)).mp
-  fin_cases i <;> fin_cases j <;> fin_cases k <;>
-    norm_num [curvature,EuclideanSpace.real_norm_sq_eq,S,spin,e,PiLp.single_apply,
-      Fin.sum_univ_succ]
+  have hc (a b : J) : ‖C a b‖≤‖a‖*‖b‖ := by
+    have hs : shift 0 a=a := by
+      ext l; fin_cases l <;> simp [shift]
+    simpa [D,hs] using d_bound 0 a b
+  have hbound (a b c : J) :
+      ‖S a (S b c)-S b (S a c)‖≤‖a‖*‖b‖*‖c‖ := by
+    rw [spin_commutator,norm_neg]
+    exact (hc (C a b) c).trans
+      (mul_le_mul_of_nonneg_right (hc a b) (norm_nonneg c))
+  simpa [curvature,e] using hbound (e i) (e j) (e k)
 
 private theorem curvature_attained : ‖curvature 1 2 2‖=1 := by
-  have h : curvature 1 2 2=e 1 := by
-    ext i; fin_cases i <;> norm_num [curvature,S,spin,e,PiLp.single_apply]
+  rw [curvature,spin_commutator]
+  have h : -(C (C (e 1) (e 2)) (e 2))=e 1 := by
+    change -(toLp 2 (Matrix.vecCons 0
+      (crossProduct ![(C (e 1) (e 2)) 1,(C (e 1) (e 2)) 2,
+        (C (e 1) (e 2)) 3] ![(e 2) 1,(e 2) 2,(e 2) 3])))=e 1
+    have hv : ![(C (e 1) (e 2)) 1,(C (e 1) (e 2)) 2,
+        (C (e 1) (e 2)) 3] =
+        crossProduct ![(e 1) 1,(e 1) 2,(e 1) 3]
+          ![(e 2) 1,(e 2) 2,(e 2) 3] := by
+      ext i; fin_cases i <;> rfl
+    rw [hv,cross_cross_eq_smul_sub_smul]
+    ext i; fin_cases i <;> norm_num [e,PiLp.single_apply,Matrix.vec3_dotProduct]
   simp [h,e]
 
 /-- Exact local constants, with attaining inputs rather than only upper bounds. -/
