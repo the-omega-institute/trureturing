@@ -43,8 +43,7 @@ private theorem first_zero_form (bits : List Bool) : bits = List.replicate bits.
       · exact Or.inr ⟨a + 1, rest, by simp [List.replicate_succ, cut]⟩
 
 private theorem root_merge (k m : ℕ) (hk : 2 ≤ k) (hm : 4 ≤ m) (short : m < k) (B : Fin m → Bool)
-    (noCut : ¬ ∃ rest, List.ofFn B = List.replicate 3 true ++ false :: rest)
-    (v : ZMod 2) (phase : ZMod (k + 1)) :
+    (noCut : ¬ ∃ rest, List.ofFn B = List.replicate 3 true ++ false :: rest) (v : ZMod 2) (phase : ZMod (k + 1)) :
     runBits k B (some ⟨v, phase, k - 4⟩) = runBits k B (some ⟨v, phase, k - 3⟩) := by
   rcases first_zero_form (List.ofFn B) with all | ⟨a, rest, cut⟩
   · have eq : B = allOneBlock m := by
@@ -110,8 +109,7 @@ private theorem response_at (Q m t i : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hi : 
   rw [phase, derivative_at Q m i hQ hm (by nlinarith)]
 
 private theorem response_off (Q m t j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
-    (ht : t < Q) (hj : j ≤ Q * m) (off : j < t * m ∨ (t + 1) * m < j)
-    (B : Fin m → Bool) :
+    (ht : t < Q) (hj : j ≤ Q * m) (off : j < t * m ∨ (t + 1) * m < j) (B : Fin m → Bool) :
     wordIncrement (Q * m) (-((j : ℕ) : ZMod (Q * m + 1)) + ((t * m : ℕ) : ZMod (Q * m + 1))) B = 0 := by
   have short : m < Q * m := by nlinarith
   rcases off with left | right
@@ -179,7 +177,8 @@ private theorem alternating_segment (b : ℕ → ZMod 2) (a n : ℕ) (edges : �
     have prev := ih (fun i lo hi => edges i lo (by omega))
     have last := edges (a + (n + 1)) (by omega) (by omega)
     rw [show a + (n + 1) - 1 = a + n by omega, prev] at last; push_cast
-    calc b (a + (n + 1)) = (b (a + (n + 1)) + (b a + (n : ℕ))) + (b a + (n : ℕ)) := by
+    calc
+      b (a + (n + 1)) = (b (a + (n + 1)) + (b a + (n : ℕ))) + (b a + (n : ℕ)) := by
         rw [add_assoc, CharTwo.add_self_eq_zero, add_zero]
       _ = 1 + (b a + (n : ℕ)) := by rw [last]
       _ = b a + ((n : ℕ) + 1) := by ring
@@ -190,7 +189,8 @@ private theorem even_tour_survivor (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (ev
     (root : ∃ rest, List.ofFn (words 0) = List.replicate 3 true ++ false :: rest) :
     ∃ j, j ≤ Q * m ∧ j ≠ 1 ∧ j ≠ 2 ∧ ∀ t, t < Q → wordIncrement (Q * m)
         (-((j : ℕ) : ZMod (Q * m + 1)) + ((t * m : ℕ) : ZMod (Q * m + 1))) (words t) = 0 := by
-  classical; let q (t j : ℕ) : ZMod 2 := wordIncrement (Q * m)
+  classical
+  let q (t j : ℕ) : ZMod 2 := wordIncrement (Q * m)
     (-((j : ℕ) : ZMod (Q * m + 1)) + ((t * m : ℕ) : ZMod (Q * m + 1))) (words t)
   change ∃ j, j ≤ Q * m ∧ j ≠ 1 ∧ j ≠ 2 ∧ ∀ t, t < Q → q t j = 0
   by_contra noSurvivor
@@ -405,11 +405,11 @@ private theorem three_need_two {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
 The outside source is selected from the same actual band archive and may
 depend on the controller, including its unrestricted root suffix. -/
 theorem even_adaptive_lower {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
-    (even : Even m) (labels : Fin 4 → Y) (distinct : Function.Injective labels)
-    (bottom : Y) (alphabet : Bool) (d : ℕ)
+    (even : Even m) (labels : Fin 4 → Y) (distinct : Function.Injective labels) (bottom : Y) (alphabet : Bool) (d : ℕ)
     (feasible : OriginalAdaptiveFeasible (Q * m) m (by nlinarith) alphabet
       (initialLabel Q m labels bottom) d) : Q + 2 ≤ d := by
-  classical; by_contra small
+  classical
+  by_contra small
   have hd : d ≤ Q + 1 := by omega
   obtain ⟨pi, legal, bot, correct⟩ := feasible
   have gcd : Nat.gcd m (Q * m + 1) = 1 := by
@@ -523,8 +523,7 @@ private theorem root_named_execution (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
 private theorem root_named_tail (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) : tailAfter 0 (rootWord m) ≤ m - 4 := by
   have zero : rootWord m ⟨3, by omega⟩ = false := by simp [rootWord]
   have ex := InternalZeroSafety.internal_zero_execution (Q * m) (by nlinarith) m
-    (by nlinarith) (rootWord m) ⟨3, by omega⟩ zero 0 0 0 (by nlinarith)
-    (Or.inl (by nlinarith))
+    (by nlinarith) (rootWord m) ⟨3, by omega⟩ zero 0 0 0 (by nlinarith) (Or.inl (by nlinarith))
   simpa only [Fin.val_mk, show m - 1 - 3 = m - 4 by omega] using ex.2
 
 private theorem suffix_zeros (Q m : ℕ) (hm : 4 ≤ m) :
@@ -782,8 +781,7 @@ private theorem profile_band_identifies (Q m i j : ℕ) (hQ : 2 ≤ Q) (hm : 4 �
       simp [show (2 : ℕ) ≠ m by omega] at last
 
 private theorem archive_separates {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
-    (labels : Fin 4 → Y) (bottom : Y) (v : ZMod 2)
-    (p q : ZMod (Q * m + 1)) (s r : ℕ) (hs : s < Q * m) (hr : r < Q * m)
+    (labels : Fin 4 → Y) (bottom : Y) (v : ZMod 2) (p q : ZMod (Q * m + 1)) (s r : ℕ) (hs : s < Q * m) (hr : r < Q * m)
     (same : scriptArchive (attainingWords Q m) (some ⟨v, p, s⟩) = scriptArchive (attainingWords Q m) (some ⟨v, q, r⟩)) :
     initialLabel Q m labels bottom (some ⟨v, p, s⟩) = initialLabel Q m labels bottom (some ⟨v, q, r⟩) := by
   let i := (-p).val
@@ -833,8 +831,7 @@ def archiveDecoder {Y : Type u} (Q m : ℕ) (labels : Fin 4 → Y) (bottom : Y)
   else bottom
 
 private theorem archive_decode {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
-    (labels : Fin 4 → Y) (bottom : Y) (v : ZMod 2)
-    (phase : ZMod (Q * m + 1)) (s : ℕ) (hs : s < Q * m) :
+    (labels : Fin 4 → Y) (bottom : Y) (v : ZMod 2) (phase : ZMod (Q * m + 1)) (s : ℕ) (hs : s < Q * m) :
     archiveDecoder Q m labels bottom v (scriptArchive (attainingWords Q m) (some ⟨v, phase, s⟩)) =
       initialLabel Q m labels bottom (some ⟨v, phase, s⟩) := by
   have h : ∃ (p : ZMod (Q * m + 1)) (r : ℕ), r < Q * m ∧ scriptArchive (attainingWords Q m) (some ⟨v, p, r⟩) =
@@ -843,8 +840,7 @@ private theorem archive_decode {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 �
   exact archive_separates Q m hQ hm labels bottom v _ _ _ _ fact.1 hs fact.2
 
 private theorem baseline_lower {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
-    (labels : Fin 4 → Y) (distinct : Function.Injective labels) (bottom : Y)
-    (alphabet : Bool) (d : ℕ)
+    (labels : Fin 4 → Y) (distinct : Function.Injective labels) (bottom : Y) (alphabet : Bool) (d : ℕ)
     (feasible : OriginalAdaptiveFeasible (Q * m) m (by nlinarith) alphabet
       (initialLabel Q m labels bottom) d) : Q + 1 ≤ d := by
   classical
@@ -914,8 +910,7 @@ private theorem literal_end_tails (m : ℕ) (hm : 4 ≤ m) (s : ℕ) :
 The initial bottom branch returns freely; every other branch retains the full
 literal stream and returns its original immutable target. -/
 theorem original_threshold_three {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
-    (labels : Fin 4 → Y) (distinct : Function.Injective labels) (bottom : Y)
-    (alphabet : Bool) :
+    (labels : Fin 4 → Y) (distinct : Function.Injective labels) (bottom : Y) (alphabet : Bool) :
     let fee := Q + 1 + (if m % 2 = 0 then 1 else 0)
     GlobalAdaptivePrice (Q * m) m (by nlinarith) alphabet (initialLabel Q m labels bottom) = (fee : ℕ∞) ∧
     GlobalPresetPrice (Q * m) m (by nlinarith) alphabet (initialLabel Q m labels bottom) = (fee : ℕ∞) ∧
@@ -940,7 +935,8 @@ theorem original_threshold_three {Y : Type u} (Q m : ℕ) (hQ : 2 ≤ Q) (hm : 4
       issued.length = (if q = none then 0 else fee) ∧
       NarrowWindowCost.execute (Q * m) (by nlinarith) pi fee w (NarrowWindowCost.output (Q * m) (by nlinarith) w) [] =
           some (f q, issued.length) := by
-  classical; dsimp only
+  classical
+  dsimp only
   let fee := Q + 1 + (if m % 2 = 0 then 1 else 0)
   have len : (attainingWords Q m).length = fee := by
     dsimp [attainingWords, fee]
