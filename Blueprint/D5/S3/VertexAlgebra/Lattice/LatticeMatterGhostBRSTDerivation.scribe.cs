@@ -86,10 +86,31 @@ internal sealed class LatticeMatterGhostBRSTDerivationDocument : IScribeDocument
                 + "Independent review, required CI, "
                 + "freeze and official delivery remain later integration obligations; no judge "
                 + "or configuration change is part of this mathematics.")),
-            Paragraph(Text("This one algebraic derivation advances the same Monster, VOA/CFT, "
+            Paragraph(Text("Critical-rank quotient application. Let H be a two-sided inverse "
+                + "of the original complex Gram matrix and let D.rank=26. The existing "
+                + "total_square_anomaly formula then gives Q squared equal to zero; square "
+                + "zero is derived rather than assumed. Set Z=ker Q and take B to be the "
+                + "image of Q on the entire original State D, viewed inside Z. This is the "
+                + "full algebraic BRST quotient Z/B, with no relative or zero-energy "
+                + "restriction. The original parity involution P and odd current give "
+                + "QP=-PQ. Decomposing an arbitrary field state as (s+Ps)/2+(s-Ps)/2 "
+                + "extends the displayed homogeneous theorem to "
+                + "Q(Y(s)[n]x)=Y(Qs)[n]x+Y(Ps)[n](Qx), for every integer n.")),
+            Paragraph(Text("For s,x in Z, this identity proves Y(s)[n]x is in Z. "
+                + "Replacing s by s+Qa changes the result by Q(Y(a)[n]x). Replacing "
+                + "x by x+Qb changes it by Q(Y(Ps)[n]b), since Q(Ps)=0 and P squared "
+                + "is the identity. Thus both slots descend, including mixed-parity "
+                + "representatives and every boundary in the full image of Q. The bilinear "
+                + "quotient lift and the original pointwise lower truncation construct a "
+                + "complex-linear map from Z/B to VertexOperator over Z/B, whose modes "
+                + "satisfy Ybar([s])[n][x]=[Y(s)[n]x]. This is an application of the "
+                + "existing original-field derivation and square formula, not an additional "
+                + "independent mathematical declaration or literature novelty. It neither "
+                + "supplies a Jacobi identity nor computes the quotient or a nonzero class.")),
+            Paragraph(Text("This algebraic derivation and its quotient application advance the same Monster, VOA/CFT, "
                 + "anomaly, fusion, string and AdS/CFT programme without completing it. "
                 + "It establishes no full coupled three-index Borcherds identity, BRST "
-                + "cohomology, no-ghost theorem, positivity or analytic/unitary CFT, "
+                + "cohomology computation, nonzero class, no-ghost theorem, positivity or analytic/unitary CFT, "
                 + "physical string realization, fusion construction, Monster identification "
                 + "or AdS/CFT correspondence. Those remain substantive scientific tasks.")))));
 }
