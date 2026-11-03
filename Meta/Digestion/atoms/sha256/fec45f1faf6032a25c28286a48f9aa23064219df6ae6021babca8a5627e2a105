@@ -1,0 +1,46 @@
+**命题 18.2（额外内部通道可保全部联合导子律而失去量子端点）。** 删去四通道闭包后，局部正比较、非零活动、实际单位嵌入、正的联合比较、全部联合导子律、全部联合范数守恒和严格三因子重分组可以同时成立，而局部仍不自守，也不属于有限复 $C^*$ 自伴类别。
+
+证明。对任意定义 8.1 的局部场定义内部泛函和二元通道
+
+$$
+\tau_i(a)=\frac{g_i(1,a)}{g_i(1,1)},\qquad U_i(a,c)=\tau_i(a)c.
+$$
+
+在联合空间取
+
+$$
+\begin{aligned}
+M'&=S_A\otimes S_B,\\
+T'&=B_A\otimes U_B+U_A\otimes B_B,\\
+D'_{a\otimes b}
+&=\tau_B(b)D_a\otimes I+\tau_A(a)I\otimes D_b.
+\end{aligned}\tag{18.2}
+$$
+
+$M'$ 是正内积下的含幺交换 Frobenius 比较；每个 $D'_H$ 是 $M'$ 的导子，因为 $D_a\otimes I$ 与 $I\otimes D_b$ 分别导出纯张量比较。它们斜伴，所以所有联合向量在其固定生成元流下保范数。双方单位嵌入由 $\tau_i(1)=1,D_a1=0$ 直接给出，也保留非零活动。故所有联合残差均为零。
+
+联合单位与乘积内积给 $\tau_{AB}=\tau_A\otimes\tau_B$。两种三因子重分组均为 $M''=S_A\otimes S_B\otimes S_C$，且
+
+$$
+\begin{aligned}
+D''_{a\otimes b\otimes c}
+&=\tau_B(b)\tau_C(c)D_a\otimes I\otimes I\\
+&\quad+\tau_A(a)\tau_C(c)I\otimes D_b\otimes I\\
+&\quad+\tau_A(a)\tau_B(b)I\otimes I\otimes D_c.
+\end{aligned}\tag{18.3}
+$$
+
+因此重分组严格一致，并可归纳到任意有限个输入；每个中间对象仍保持上述正比较与导子合同。
+
+具体局部取 $J=\mathbb R1\oplus\mathbb R^2$ 的球比较及标准正内积，令 $J_0e_1=e_2,J_0e_2=-e_1$，取
+
+$$
+D_{(\alpha,u)}(\beta,w)=(0,u_1J_0w).
+$$
+
+旋转是球比较的导子，但 $D_{e_1}e_1=e_2\ne0$。该三维实场的比较也不结合：$(e_1\circ e_1)\circ e_2=e_2$，$e_1\circ(e_1\circ e_2)=0$。实自伴维数为三的有限复 $C^*$ 代数只能是三个一维块，其比较结合，因此不能与此场同构。
+
+额外通道确实越出闭包。若 $U=xS+yB$，在第二槽放单位得 $\tau(a)1=xa$；令 $a=1$ 给 $x=1$，从而迫使全部 $a$ 为单位的倍数，与活动场维数大于一矛盾。将第一因子双线性映射空间对 $\operatorname{span}(S_A,B_A)$ 取商，$T'$ 的像为 $[U_A]\otimes B_B\ne0$，而所有四通道映射的像都为零。因此实际联合变化自身不在四通道张成中。
+
+$\tau,U$ 都从已有单位、比较内积和线性运算内部定义；所以“没有额外外部原始数据”不能取代四通道闭包。此反例既通过全部有限残差，也通过全部输入残差，具体定位了闭包前件的作用。∎
+
