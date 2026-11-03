@@ -2523,3 +2523,487 @@ C119 §§150–157 的原标签、A/B/C1/C2/C3 及完整原片段条件，尤其
 [GST，§6.1](https://arxiv.org/pdf/2009.07301v2) 将遗漏的内外语境变量、漂移和持续环境列为门集模型失配的来源；它讨论拟合和模型检验，不给由有限拟合推出无限未来平稳性的定理。本节也没有经验核验 (25.2)–(25.5)：给定这些关于同一原装置的数学前件后，对每个已合法的有限 $N$ 得到 (25.21)，不从有限数据认证无界未来仍用同一个联合映射。[C117 §16](AURIC_COMMON_SOURCE_SELF_REFERENCE_AND_OBSERVER_SEQUENCES_C117.md#16-受控终端字行到局部-lorentz-预测锥的桥) 的全部未来预测锥结论仍保留其无限假设；[FIB 边界几何附录 III 推论 141.3](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md#141-a-source-preserving-reflection-and-the-invariant-constrained-negative-vector) 的原保留端点条件性秩至多二结论既不被改回未解，也不被提升为原矩阵相等或三时全部 $64$ 坐标的取得。条件化只按 (25.22)–(25.23) 的实际正分母进行，本卷第 6 节的稀有成功边界不因完整通道误差较小而消失。
 
 ## 追加锚（本行以下为增补区）
+
+## 28. 固定相关来源的三阶零泄漏与原联合细支
+
+**定义 28.1（同源局部准备与完整原仪器）。** 设 $H=\mathbb C^d$、$d\ge1$，$M$ 为非零有限维复记忆空间。标签选择以前固定同一归一联合态 $\rho\in\mathcal B(H\otimes M)$，允许任意混合性和相关性。记
+
+$$
+\rho_M=\operatorname{Tr}_H\rho,\qquad
+M_0=\operatorname{supp}\rho_M,\qquad I_0=I_{M_0}.
+\tag{28.1}
+$$
+
+$\rho$ 的输入支撑包含于 $H\otimes M_0$：若 $m\in\ker\rho_M$，则 $\sum_i\langle e_i,m|\rho|e_i,m\rangle=0$，正性使 $\rho$ 消灭整个 $H\otimes\ker\rho_M$。以后把 $\rho$ 视为该输入子空间上的算子，但不将原输出记忆压回 $M_0$。
+
+对每个秩一投影 $p=|z\rangle\langle z|$、$\|z\|=1$，已合法的原局部准备成功支恰为 $\operatorname{Ad}_{p}\otimes\operatorname{id}_M$；同一准备装置的全部原失败记录及其动作保留。其未归一化成功输出为
+
+$$
+\begin{aligned}
+X_p&=(p\otimes I_M)\rho(p\otimes I_M)=p\otimes\sigma_p,\\
+\sigma_p&=(\langle z|\otimes I_M)\rho(|z\rangle\otimes I_M)
+=\operatorname{Tr}_H[(p\otimes I_M)\rho]\ge0,\\
+\eta_p&=\operatorname{Tr}\sigma_p=\operatorname{Tr}(p\rho_H)\in[0,1].
+\end{aligned}
+\tag{28.2}
+$$
+
+$\sigma_p$ 与相位选择无关。$\eta_p=0$ 时 $X_p=0$，仍保留该标签，不定义其归一准备态。准备改变记忆条件态的关系由同一个 $\rho$ 决定，不用一族独立供应的乘积态代替；相关准备的这一对象区别参见 [Modi，arXiv:1011.6138v4](https://arxiv.org/pdf/1011.6138v4)。
+
+原被调用装置固定为一份完整有限 CP 仪器
+
+$$
+\{V_j:\mathcal B(H\otimes M)\to\mathcal B(H\otimes M)\}_{j\in\mathsf J},
+\qquad \sum_{j\in\mathsf J}V_j^{\dagger}(I_{H\otimes M})=I_{H\otimes M}.
+\tag{28.3}
+$$
+
+$\mathsf J$ 是原实际细记录集合，含全部成功和失败；同一标签有多个数学 Kraus 算子时，不将这些指标提升为新原记录。选定非空 $\mathsf C\subseteq\mathsf J$，只对这些原支要求零泄漏。令 $\iota:H\otimes M_0\hookrightarrow H\otimes M$ 为原包含，并记 $V_{j,0}(Y)=V_j(\iota Y\iota^{\dagger})$。输出仍在完整 $H\otimes M$ 中。完全正的 Kraus 表示及完整性采用 [Watrous，TQI 第 2 章，定理 2.22、2.26](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf) 的有限维约定。
+
+**假设 28.2（正权三阶设计上的精确未条件化零泄漏）。** 同一来源及同一仪器不随 $s$ 改变。已合法的有限准备节点 $\{(w_s,p_s)\}_{s\in S}$ 满足 $w_s>0$、$\sum_sw_s=1$，且
+
+$$
+\sum_sw_sp_s^{\otimes3}
+=\int p^{\otimes3}\,d\mu(p)
+=\frac{\Pi_{\rm sym}^{(3)}}{\binom{d+2}{3}}.
+\tag{28.4}
+$$
+
+这里 $\mu$ 为归一复射影 Haar 测度，$\Pi_{\rm sym}^{(3)}$ 为三重对称投影。取偏迹同时给一阶、二阶矩。矩公式复用 [Scott，arXiv:quant-ph/0604049v6，引理 1](https://arxiv.org/pdf/quant-ph/0604049v6) 及 [Roy–Scott，arXiv:quant-ph/0703025v2，定义 2.1、式 (2.2)–(2.3)](https://arxiv.org/pdf/quant-ph/0703025v2)。$w_s$ 是数学求积权，不预设它等于原物理标签概率。
+
+精确合同是
+
+$$
+\mathcal L:=\sum_sw_s\sum_{j\in\mathsf C}
+\operatorname{Tr}\!\left[((I_H-p_s)\otimes I_M)V_j(X_{p_s})\right]=0.
+\tag{28.5}
+$$
+
+所有项都是未条件化的非负质量；没有除以 $\eta_{p_s}$ 或分支成功率。该合同量化完整返回记忆，而不只给系统边缘的某个规范分解。
+
+**定理 28.3（三阶合同迫使逐原细支在来源记忆支撑上因子化）。** 在定义 28.1 与设计条件 (28.4) 下，(28.5) 当且仅当对每个原 $j\in\mathsf C$ 存在 CP 映射 $\Psi_j:\mathcal B(M_0)\to\mathcal B(M)$，使
+
+$$
+\boxed{\quad V_{j,0}=\operatorname{id}_H\otimes\Psi_j.\quad}
+\tag{28.6}
+$$
+
+等式对 $\mathcal B(H\otimes M_0)$ 的全部算子成立，保留完整返回记忆；对每个有限维惰性参考 $R$ 及每个 $Y\in\mathcal B(H\otimes M_0\otimes R)$，还成立
+
+$$
+(V_{j,0}\otimes\operatorname{id}_R)(Y)
+=(\operatorname{id}_H\otimes\Psi_j\otimes\operatorname{id}_R)(Y).
+\tag{28.7}
+$$
+
+其记忆效果满足
+
+$$
+G_j:=\Psi_j^{\dagger}(I_M)\ge0,\qquad
+\sum_{j\in\mathsf C}G_j\le I_0.
+\tag{28.8}
+$$
+
+若 $\mathsf C=\mathsf J$，最后一个不等式为等式。$\Psi_j$ 的输出可离开 $M_0$。结论不要求纯来源、联合满秩、已知最小本征值、满 steering 张成、乘积准备或效果独立；它也不约束未选失败支的动作，不把 (25.3)–(25.5) 的定量前件删除。
+
+**证明。** 在输入支撑上取任意有限正分解
+
+$$
+\rho=\sum_a|v_a\rangle\langle v_a|,\qquad
+v_a=\sum_{b=1}^de_b\otimes m_{ab},\qquad
+\rho_M=\sum_{a,b}|m_{ab}\rangle\langle m_{ab}|.
+\tag{28.9}
+$$
+
+谱权已经吸入 $v_a$；因此 $\operatorname{span}_{\mathbb C}\{m_{ab}\}=M_0$，但不要求任意一个 $v_a$ 有满 Schmidt 秩。
+
+固定原 $j$ 的一个 Kraus 表示 $V_j(Z)=\sum_\alpha K_{j\alpha}ZK_{j\alpha}^{\dagger}$。对每个 $a,\alpha$ 及秩一 $p$ 置
+
+$$
+f_{j\alpha a}(p)
+=\|((I_H-p)\otimes I_M)K_{j\alpha}(p\otimes I_M)v_a\|^2\ge0.
+\tag{28.10}
+$$
+
+各项之和是 (28.5) 中对应 $j$ 的泄漏。由于 $p^2=p$，(28.10) 等于
+
+$$
+\begin{aligned}
+&\langle v_a|(p\otimes I_M)K_{j\alpha}^{\dagger}K_{j\alpha}
+       (p\otimes I_M)|v_a\rangle\\
+&\quad-\langle v_a|(p\otimes I_M)K_{j\alpha}^{\dagger}
+       (p\otimes I_M)K_{j\alpha}(p\otimes I_M)|v_a\rangle.
+\end{aligned}
+\tag{28.11}
+$$
+
+第一项是 $p$ 矩阵元的二次多项式，第二项为三次；所以三阶及其低阶矩已准确积分它，不需要四阶。由 (28.5) 的逐项非负性，$\sum_sw_sf_{j\alpha a}(p_s)=0$。用 (28.4) 得 $\int f_{j\alpha a}\,d\mu=0$。连续性及 Haar 测度的满支撑使 $f_{j\alpha a}(p)=0$ 对每个秩一 $p$ 成立：若某点严格正，则其一个开邻域有正积分，矛盾。
+
+现在固定 $K=K_{j\alpha}$ 和 $a$，并写系统矩阵块
+
+$$
+K_{ri}=(\langle e_r|\otimes I_M)K(|e_i\rangle\otimes I_M).
+$$
+
+对任意非零 $z\in\mathbb C^d$，上述零式表示
+
+$$
+K\left(z\otimes\sum_b\overline z_bm_{ab}\right)\in z\otimes M.
+\tag{28.12}
+$$
+
+单位向量的结论由齐次性推广到全部非零 $z$。令其第 $r$ 个输出记忆分量为
+$F_r(z,\overline z)=\sum_{i,b}z_i\overline z_bK_{ri}m_{ab}$。
+平行于 $z$ 给出全部向量值多项式恒等式
+
+$$
+z_tF_r(z,\overline z)-z_rF_t(z,\overline z)=0
+\qquad(r,t=1,\ldots,d).
+\tag{28.13}
+$$
+
+这些式在 $z=0$ 也为零。$z_i=x_i+iy_i$、$\overline z_i=x_i-iy_i$ 是 $2d$ 个多项式变量间的可逆复线性变换；在全部实 $(x,y)$ 上为零的复多项式系数全为零。因此可以把 $z,\overline z$ 当作独立变量，逐个提取 $\overline z_b$ 的系数，得到
+
+$$
+z_t\sum_iz_iK_{ri}m_{ab}
+-z_r\sum_iz_iK_{ti}m_{ab}=0
+\qquad\text{对全部 }z,r,t,b.
+\tag{28.14}
+$$
+
+特别地，对每个 $a,b$，复线性映射
+$L_{ab}:H\to H\otimes M$、$L_{ab}z=K(z\otimes m_{ab})$
+满足 $L_{ab}z\in z\otimes M$。取 $z=e_i$ 得
+$L_{ab}e_i=e_i\otimes n_i$；再取 $e_i+e_k$ 得 $n_i=n_k$。
+故存在 $n_{ab}$ 使 $L_{ab}=I_H\otimes n_{ab}$。$d=1$ 时同一结论直接成立。
+
+由此对每个 $m_{ab}$，全部非对角块 $K_{ri}m_{ab}$ 为零，全部对角块 $K_{ii}m_{ab}$ 相同。令 $B=K_{11}|_{M_0}:M_0\to M$；(28.9) 的张成性给
+
+$$
+K\iota=I_H\otimes B\quad\text{于整个 }H\otimes M_0.
+\tag{28.15}
+$$
+
+这一步将同一来源中 $z$ 与 $\overline z$ 的关系提升为全部记忆列的约束，没有预设 $\{\sigma_p\}$ 张成所有记忆算子。对每个原 $j,\alpha$ 作此构造，定义
+
+$$
+\Psi_j(Z)=\sum_\alpha B_{j\alpha}ZB_{j\alpha}^{\dagger}.
+\tag{28.16}
+$$
+
+它 CP；(28.15) 给 (28.6)，作为线性映射等式再张量恒等即给 (28.7)，不对参考与输入相关性加限制。原完整性给
+
+$$
+I_H\otimes\sum_{j\in\mathsf C,\alpha}B_{j\alpha}^{\dagger}B_{j\alpha}
+=\iota^{\dagger}\left(\sum_{j\in\mathsf C,\alpha}
+ K_{j\alpha}^{\dagger}K_{j\alpha}\right)\iota
+\le I_H\otimes I_0,
+\tag{28.17}
+$$
+
+从而得 (28.8)；选择全部原标签时用原完整性得等号。未选标签只在这个正补效果中出现，未被替换成另一份完成映射。反向由
+$V_j(X_p)=p\otimes\Psi_j(\sigma_p)$ 直接使全部泄漏为零，包括 $\eta_p=0$ 的节点。$\square$
+
+## 29. 同一来源的成功率识别与记忆效果方向
+
+**定义 29.1（来源可见的实 Hermitian steering 空间）。** 沿用定义 28.1，在实 Hermitian 空间上定义
+
+$$
+\begin{aligned}
+\mathcal S_\rho(A)&=\operatorname{Tr}_H[(A\otimes I_M)\rho],
+\qquad A\in\operatorname{Herm}(H),\\
+\mathcal W_\rho&=\mathcal S_\rho(\operatorname{Herm}(H))
+\subseteq\operatorname{Herm}(M_0),\\
+\mathcal W_\rho^\perp&=\{D\in\operatorname{Herm}(M_0):
+ \operatorname{Tr}(DZ)=0\ (Z\in\mathcal W_\rho)\}.
+\end{aligned}
+\tag{29.1}
+$$
+
+内积为实 Hilbert–Schmidt 配对。$\mathcal S_\rho(p)=\sigma_p$；这里的 steering 指这一固定来源的算子关系，不附加任何新准备权限。
+
+**定理 29.2（原细率的精确识别商与端点）。** 在定理 28.3 的前件下，对每个原 $j\in\mathsf C$，准备与该支的未条件化联合概率为
+
+$$
+q_{js}=\operatorname{Tr}V_j(X_{p_s})
+=\operatorname{Tr}(G_j\sigma_{p_s}).
+\tag{29.2}
+$$
+
+这些率精确决定 $G_j$ 在 $\mathcal W_\rho$ 上的实正交投影：两个候选效果 $G,G'$ 给同一全部设计率，当且仅当 $G-G'\in\mathcal W_\rho^\perp$。特别地，对任意指定实数 $t_j$，
+
+$$
+\boxed{\quad q_{js}=t_j\eta_{p_s}\ (s\in S)
+\quad\Longleftrightarrow\quad
+G_j-t_jI_0\in\mathcal W_\rho^\perp.\quad}
+\tag{29.3}
+$$
+
+节点已经满足
+
+$$
+\operatorname{span}_{\mathbb R}\{\sigma_{p_s}:s\in S\}
+=\mathcal W_\rho.
+\tag{29.4}
+$$
+
+所以在同一来源上增加任意其他秩一标签，包括采用更高阶设计，不能扩大这个可见空间。若 $\mathcal W_\rho=\operatorname{Herm}(M_0)$，(29.3) 迫使 $G_j=t_jI_0$；否则内部值的标量率一般不迫使标量效果。对任意来源，若 (29.3) 成立，则 $t_j\in[0,1]$，且端点仍有
+
+$$
+t_j=0\Longrightarrow G_j=0,\ \Psi_j=0;\qquad
+t_j=1\Longrightarrow G_j=I_0,\ \Psi_j\text{ 在输入域上保迹}.
+\tag{29.5}
+$$
+
+对于原粗事件 $C\subseteq\mathsf C$，粗率 (29.3) 只约束 $G_C=\sum_{j\in C}G_j$，不能逐支推出它。即使率已唯一识别全部效果，也不唯一识别 $\Psi_j$ 的返回记忆动力学。
+
+**证明。** (28.6) 及迹对偶给 (29.2)。设计的二阶矩给任意 $A=A^{\dagger}$ 的成熟恒等式
+
+$$
+\sum_sw_s[\operatorname{Tr}(Ap_s)]^2
+=\frac{\operatorname{Tr}(A^2)+(\operatorname{Tr}A)^2}{d(d+1)}.
+\tag{29.6}
+$$
+
+这是 (28.4) 的二阶偏迹与 $\Pi_{\rm sym}^{(2)}=(I+\mathsf F)/2$ 的直接收缩，所用设计矩仍为假设 28.2 所引 Scott、Roy–Scott 的结果。若 $A$ 与全部 $p_s$ 正交，则右端为零，故 $A=0$；因此这些节点张成 $\operatorname{Herm}(H)$。应用同一个实线性映射 $\mathcal S_\rho$ 即得 (29.4)。迹配对的零空间给效果差的充要条件，取 $G'=t_jI_0$ 得 (29.3)。其他秩一 $p$ 仍在同一个 $\operatorname{Herm}(H)$ 中，其 $\sigma_p$ 必在 $\mathcal W_\rho$ 中。
+
+一阶设计矩还给
+
+$$
+\sum_sw_s\sigma_{p_s}=\rho_M/d,
+\qquad \sum_sw_s\eta_{p_s}=1/d.
+\tag{29.7}
+$$
+
+于是 (29.3) 给 $t_j=\operatorname{Tr}(G_j\rho_M)$。由 $0\le G_j\le I_0$ 及 $\rho_M$ 在自身支撑上的忠实性，$0\le t_j\le1$。$t_j=0$ 时
+$\rho_M^{1/2}G_j\rho_M^{1/2}\ge0$ 且迹为零，故 $G_j=0$；(28.16) 中每个 $B_{j\alpha}^{\dagger}B_{j\alpha}$ 为零，从而 $\Psi_j=0$。$t_j=1$ 时同样对 $I_0-G_j$ 使用此论证，得 $G_j=I_0$。这里只使用有限维支撑上的严格正性，不要求一个已知数值本征值下界。
+
+若 $\mathcal W_\rho$ 为真子空间，取非零 $D\in\mathcal W_\rho^\perp$。对任意 $0<t<1$，选 $0<|\epsilon|<\min\{t,1-t\}/\|D\|_{\rm op}$，则
+
+$$
+0<G=tI_0+\epsilon D<I_0.
+\tag{29.8}
+$$
+
+因 $\rho_M\in\mathcal W_\rho$ 且忠实，非零标量矩阵不在 $\mathcal W_\rho^\perp$，所以 $D$ 和 $G$ 均非标量。将
+$B=\iota_0\sqrt G$、$B_f=\iota_0\sqrt{I_0-G}$
+作为 $M_0\to M$ 的两个数学算子，给出域上的完整 CP 记忆仪器；若 $M_0\ne M$，在 $M_0^\perp$ 上另取恒等失败 Kraus 算子、成功算子取零，就得到完整 $M$ 上的一份仪器。张量 $\operatorname{id}_H$ 后，它满足零泄漏及同一全部标量率，却有非标量成功效果。这是一个反模型的完整仪器定义，不是更改已给原装置的失败动作。命题 30.2 给带相关来源及原历史差别的具体实例。
+
+满 steering 的一个充分来源是
+
+$$
+|v\rangle=\sum_{k=1}^r\sqrt{\lambda_k}|e_k\rangle\otimes|m_k\rangle,
+\qquad \lambda_k>0,\quad M_0=\operatorname{span}\{m_k\}.
+\tag{29.9}
+$$
+
+在这些基中 $\mathcal S_{|v\rangle\langle v|}(A)=D A_r^{\mathsf T}D$，$D=\operatorname{diag}(\sqrt{\lambda_k})$，$A_r$ 为 Schmidt 子空间的压缩。任意 Hermitian $r\times r$ 矩阵均可取作 $A_r$，且 $D$ 可逆，所以像为全部 $\operatorname{Herm}(M_0)$。纯满 Schmidt 来源的可识别性与 [D'Ariano–Lo Presti，arXiv:quant-ph/0211133v1，式 (6) 附近的纯态及混态 faithful 条件](https://arxiv.org/pdf/quant-ph/0211133v1) 相接；此处只消费线性像的判据，不把其单边通道层析结论等同于定理 28.3 的原联合支结论。
+
+纯性并非必要。取 $H=M=\mathbb C^d$，$d\ge2$，以及固定真正混合来源
+
+$$
+\rho_c=c|\Phi_d\rangle\langle\Phi_d|+(1-c)I_{H\otimes M}/d^2,
+\quad |\Phi_d\rangle=d^{-1/2}\sum_i|i,i\rangle,
+\quad 0<c<1.
+\tag{29.10}
+$$
+
+此时 $\mathcal S_{\rho_c}(A)=cA^{\mathsf T}/d+(1-c)(\operatorname{Tr}A)I_M/d^2$；在标量与无迹 Hermitian 子空间上分别可逆，故仍满 steering。相比之下，乘积来源 $\omega_H\otimes\tau_M$ 的可见像仅为 $\mathbb R\tau_M$，而定理 28.3 对它仍成立。
+
+粗率的结论由将 (29.2) 在原标签上求和得到；这种粗／细区别沿用本卷命题 26.1 及 [C119 定理 152.2](AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md#152-原记录准备与有限校准的对应) 的原记录边界，不将粗 CP 支的某个 Kraus 表示当作原细菜单。
+
+最后，即使给定 $G=tI_0$，记忆映射也可为 $\Psi=t\Theta$，其中 $\Theta$ 是任意从 $M_0$ 到 $M$ 的 CPTP 映射；补以另一个效果 $(1-t)I_0$ 的失败支就得域上的完整仪器。不同的 $\Theta$ 给相同全部成功率而可给不同返回记忆。故率识别的是效果，而非整个 CP 映射。$\square$
+
+## 30. 设计阶数和不可见效果的完整原仪器反模型
+
+**命题 30.1（正权二阶设计不能普遍代替三阶合同）。** 存在固定真正混合来源、忠实记忆边缘及完整双记录 CP 原仪器，使正权二阶设计上的全部所选未条件化泄漏为零，但所选原联合支在整个来源记忆支撑上不等于 $\operatorname{id}_H\otimes\Psi$。所有准备概率严格正，原失败支完整保留。
+
+**证明。** 取 $H=Q=F=\mathbb C^2$、$M=Q\otimes F$，标签选择前的同一来源为
+
+$$
+\rho=|\Phi_2\rangle\langle\Phi_2|_{HQ}\otimes\tau_F,
+\qquad \tau_F=I_F/2.
+\tag{30.1}
+$$
+
+它秩二，$\rho_M=I_M/4$，所以 $M_0=M$。取四个单位向量
+
+$$
+z_1=|0\rangle,\qquad
+z_{k+2}=3^{-1/2}|0\rangle+\sqrt{2/3}\,e^{2\pi i k/3}|1\rangle
+\quad(k=0,1,2),
+\qquad p_s=|z_s\rangle\langle z_s|,
+\quad w_s=1/4.
+\tag{30.2}
+$$
+
+这些 Bloch 向量 $r_s$ 满足 $\sum_sr_s=0$、$\sum_sr_sr_s^{\mathsf T}=(4/3)I_3$；代入 $p_s=(I+r_s\cdot\sigma)/2$ 得
+$\frac14\sum_sp_s^{\otimes2}=\Pi_{\rm sym}^{(2)}/3$，故确为正权二阶设计。这个四面体设计本身是 Scott 所引成熟设计例子，不作为新构造。
+
+在 $H\otimes Q$ 中置
+
+$$
+u=|00\rangle-\tfrac12|11\rangle,\qquad
+K=\tfrac12|00\rangle\langle\nu|,\qquad
+K^{\dagger}K=\tfrac14|\nu\rangle\langle\nu|,
+\quad \|K\|_{\rm op}^2=5/16,
+\qquad L=\sqrt{I_{H\otimes Q}-K^{\dagger}K}.
+\tag{30.3}
+$$
+
+原标签恰为成功 $s$、失败 $f$，一次性固定
+
+$$
+V_s=\operatorname{Ad}_{K}\otimes\operatorname{id}_F,
+\qquad V_f=\operatorname{Ad}_{L}\otimes\operatorname{id}_F.
+\tag{30.4}
+$$
+
+$K^{\dagger}K+L^{\dagger}L=I$，故这是一份完整原仪器，$V_f$ 就是该反模型的实际失败动作，不是仅指定一个失败效果。
+
+对任意纯 $p=|z\rangle\langle z|$，同一原局部准备给
+
+$$
+X_p=\tfrac12|z,\overline z\rangle\langle z,\overline z|_{HQ}\otimes\tau_F,
+\qquad \eta_p=1/2.
+\tag{30.5}
+$$
+
+由 $\langle\nu|z_s,\overline z_s\rangle=|z_{s,0}|^2-\tfrac12|z_{s,1}|^2$，四个值依次为 $1,0,0,0$。因此 $V_s(X_{p_1})=\frac18|00\rangle\langle00|\otimes\tau_F$，其系统在 $p_1$；其余三个节点的原成功支为零。四个未条件化泄漏均为零，但没有将零成功节点删去。各节点准备失败率为 $1/2$，准备后原仪器失败率为 $\eta_{p_s}-\operatorname{Tr}V_s(X_{p_s})$，故 $s=1$ 时为 $3/8$，其余为 $1/2$。
+
+在另一个输入方向 $p=|1\rangle\langle1|$，$K|11\rangle=-|00\rangle/4$，所以
+
+$$
+V_s(X_p)=\tfrac1{32}|00\rangle\langle00|\otimes\tau_F,
+\qquad
+\operatorname{Tr}[((I_H-p)\otimes I_M)V_s(X_p)]=1/32>0.
+\tag{30.6}
+$$
+
+若 $V_s=\operatorname{id}_H\otimes\Psi$，它对这个 $p\otimes\sigma_p$ 的输出仍应在系统方向 $p$，与 (30.6) 矛盾。故二阶合同在该一般类中不足。这个单一完整反模型不主张每个特定来源都需要三阶、不判任意非设计节点集的最小基数，也不给四阶必要性；定理 28.3 已给三阶充分。$\square$
+
+**命题 30.2（真 steering 子空间隐藏非标量细效果及原历史差别）。** 存在同一固定相关来源及同一完整原仪器，使任意阶设计乃至全部秩一标签上的零泄漏与标量细成功率同时成立，但细效果非标量、下一次原记录率仍有记忆，并且联合因子化不推出所有相关输入上的标量系统边缘作用。
+
+**证明。** 取 $H=M=\mathbb C^2$，在标签选择前固定
+
+$$
+\rho=\tfrac12(|00\rangle\langle00|+|11\rangle\langle11|),
+\qquad M_0=M,\quad \rho_M=I_M/2,
+\quad X=|0\rangle\langle1|+|1\rangle\langle0|.
+\tag{30.7}
+$$
+
+对 $z=(z_0,z_1)$，原准备满足
+
+$$
+\sigma_p=\tfrac12\operatorname{diag}(|z_0|^2,|z_1|^2),
+\quad \eta_p=1/2,
+\quad \mathcal W_\rho=\operatorname{span}_{\mathbb R}\{I_M,Z\},
+\quad X\in\mathcal W_\rho^\perp.
+\tag{30.8}
+$$
+
+固定 $0<a<1$、$0<b<1$，原细记录为 $+, -, f$，前两个成功，$f$ 为失败。一次性固定记忆算子及原联合支
+
+$$
+\begin{aligned}
+B_\pm&=\sqrt{a/2}\sqrt{I_M\pm bX},
+& G_\pm&=\tfrac a2(I_M\pm bX),\\
+B_f&=\sqrt{1-a}\,I_M,
+& G_f&=(1-a)I_M,\\
+V_j(Y)&=(I_H\otimes B_j)Y(I_H\otimes B_j^{\dagger})
+&& (j\in\{+,-,f\}).
+\end{aligned}
+\tag{30.9}
+$$
+
+$G_++G_-+G_f=I_M$，所以所有成功与失败动作已给出且总和保迹；重复调用始终使用这一份仪器。每支精确因子化，故每个 $p$ 的所选泄漏均为零，而
+
+$$
+q_{\pm,p}=\tfrac a2\eta_p=a/4,\qquad
+q_{f,p}=(1-a)\eta_p=(1-a)/2.
+\tag{30.10}
+$$
+
+非标量 $G_\pm$ 的偏差 $\pm abX/2$ 完全不可见。用相同来源和准备，把 $b$ 取零所得的另一份完整仪器具有相同全部单次率；它只是用于比较的另一模型，每份模型内部的原装置均不切换。
+
+现取该反模型中已合法的两次直接原调用，中间不复位、不再准备。以同一个原 $X_p=p\otimes\sigma_p$ 为未归一化起点；全部算子都是 $X$ 的函数，相互对易，且 $\operatorname{Tr}(X\sigma_p)=0$。故九个原两次词的联合质量精确为
+
+$$
+\begin{aligned}
+Q_{++,p}=Q_{--,p}&=\eta_p\frac{a^2}{4}(1+b^2),\\
+Q_{+-,p}=Q_{-+,p}&=\eta_p\frac{a^2}{4}(1-b^2),\\
+Q_{\pm f,p}=Q_{f\pm,p}&=\eta_p\frac{a(1-a)}2,\\
+Q_{ff,p}&=\eta_p(1-a)^2.
+\end{aligned}
+\tag{30.11}
+$$
+
+例如 $Q_{++,p}=\operatorname{Tr}(G_+^2\sigma_p)$，由
+$G_+^2=\frac{a^2}{4}((1+b^2)I_M+2bX)$ 得第一式，其余同理。九项之和为 $\eta_p$，再加原准备失败质量 $1-\eta_p$ 得一。所有双成功词总质量为 $a^2\eta_p>0$，相同标签与不同标签的分配却随 $b$ 改变。特别地，已发生原准备及一次 $+$ 后，第二次 $+$ 的实际条件概率为 $a(1+b^2)/2$，而单次率为 $a/2$。没有将准备因子、任何失败或实际正条件分母消掉。本卷命题 26.1 已给粗／细历史区别；这里另以固定相关来源的 $\mathcal W_\rho^\perp$ 明确给出对全部标签都不可见的方向，并把它接到同一原历史的不同率。
+
+联合因子化的另一边界直接在其已认证输入域上可见。取数学输入 $\Omega=|\Phi_2\rangle\langle\Phi_2|$，则
+
+$$
+\operatorname{Tr}_M V_+(\Omega)=\tfrac12G_+^{\mathsf T}
+=\tfrac a4(I_H+bX),\quad
+\operatorname{Tr}V_+(\Omega)=a/2>0,
+\quad
+\frac{\operatorname{Tr}_M V_+(\Omega)}{a/2}=\tfrac12(I_H+bX).
+\tag{30.12}
+$$
+
+这不同于输入系统边缘 $I_H/2$。它不宣称原菜单实际能从 (30.7) 准备 $\Omega$；它反驳的是对 (28.6) 的全部相关输入量词所作的无条件标量边缘解释。原校准输入 $p\otimes\sigma_p$ 仍按定理 28.3 保持方向 $p$。$\square$
+
+## 31. 原来源、原权限和继续调用的适用域
+
+**定义 31.1（原历史权重与支持内接续合同）。** 一段实际原历史 $h$ 的发生概率为 $p_h>0$。在这段历史上应用定义 28.1 的校准关系，要求其标签选择以前的实际条件联合态就是同一 $\rho$，原被调用仪器就是同一 $\{V_j\}$；不以一个新初始化、复位或替换端口实现这一身份。设实际标签概率为 $\pi_s>0$、$\sum_s\pi_s=1$，原局部准备、读回及接续均已经合法。由 (28.2)、(29.2)，原联合质量为
+
+$$
+\begin{aligned}
+P(h,s,\mathrm{prep\ success},j)
+ &=p_h\pi_s\operatorname{Tr}(G_j\sigma_{p_s})
+ &&(j\in\mathsf C),\\
+P(h,s,\mathrm{prep\ failure})
+ &=p_h\pi_s(1-\eta_{p_s}),\\
+P(h,s,\mathrm{prep\ success},k)
+ &=p_h\pi_s\operatorname{Tr}V_k(X_{p_s})
+ &&(k\in\mathsf J\setminus\mathsf C).
+\end{aligned}
+\tag{31.1}
+$$
+
+原准备的多个失败细记录仍按各自原映射分配第二行的总质量。第三行也保留各个原失败动作；只对它们求和时才可写为
+$p_h\pi_s(\eta_{p_s}-\sum_{j\in\mathsf C}q_{js})$。
+$w_s$ 与 $\pi_s$ 的角色不同；(28.5) 的数学求积不供应按 $w_s$ 实际抽样的权限，也不将 $\eta_s=0$ 的节点变成可条件化准备。这保持 [C119 定理 152.1](AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md#152-原记录准备与有限校准的对应) 的原准备／原标签边界；其 $\pi_s\propto w_s/\eta_s$ 配方只有在每个分母严格正且该抽样原本合法时才适用。
+
+任意后续原调用消费 (28.6) 时，要求其当时实际输入（含活动控制寄存器及惰性参考）支撑于系统输入端与 $M_0$ 的张量积，或另有已经证明的扩展域。一个充分的支持合同是：每个实际继续的已选记忆支满足
+
+$$
+\Psi_j(\mathcal B(M_0))\subseteq\mathcal B(M_0),
+\tag{31.2}
+$$
+
+且全部实际中间动作保持这个输入域；$M_0=M$ 时无需额外记忆支撑闭合。输出允许离开 $M_0$ 的 (28.6) 本身不保证 (31.2)，本卷命题 26.2 的原支持逃逸反例直接适用，不重新计作这里的新反例。
+
+若还要将每个细支解释为对任意相关输入都具有固定细记录率 $t_j$、且保留全部外部边缘的作用，则须有 $G_j=t_jI_0$。具体地，对任意附加活动系统和参考 $A$ 及任意域内算子 $Y$，这个条件恰给
+
+$$
+\operatorname{Tr}_M[(\operatorname{id}_H\otimes\Psi_j\otimes\operatorname{id}_A)(Y)]
+=t_j\operatorname{Tr}_{M_0}Y.
+\tag{31.3}
+$$
+
+迹对偶用任意外部效果 $F$ 配对，两边分别为
+$\operatorname{Tr}[(F\otimes G_j)Y]$ 与
+$\operatorname{Tr}[(F\otimes t_jI_0)Y]$，故 (31.3) 成立；反之取外部态与任意记忆态的乘积即迫使 $G_j=t_jI_0$。在实际分支概率严格正时才将输出归一化；$t_j=0$ 的支没有归一条件输出。定理 29.2 的满 steering 率条件足以给标量效果，命题 30.2 说明真子空间上的同样率条件不足。只知道某个粗效果标量，也只能消费对应粗事件的式 (31.3)。
+
+有限历史的组合直接使用 [Context Geometry §§11–12](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#11-带记忆量子过程的表示历史概率与可访问关系)、[量子历史 §72.1、§72.3](ContextualSpacetimeQuantum/072_098_HISTORY_AND_CAPACITY.md#72-仪器级历史误差参考系统与自适应读出) 及本卷推论 25.3 的共同类型、同控制器和完整记录原则：先逐个核对实际调用域与细支合同，再在已经合法的有限协议内复合。需要继续的原失败支必须另有自己的动作与域合同；所选成功支的零泄漏不认证失败之后的系统作用。只有全部被消费的原支都有相应合同，才能给完整原历史输出作对应比较。既有有限组合结论不因 (28.6) 自动成为无限未来固定装置的保证。
+
+**定义 31.2（两条校准桥的不同前件）。** 定理 25.2 的乘积准备、已知忠实下界和效果独立性消费非零误差，给逐原记录的定量近似及保迹比较记忆。定理 28.3 消费固定相关来源的精确三阶零式，只给来源记忆支撑上的精确 $\operatorname{id}_H\otimes\mathrm{CP}$；保迹性或固定细记录率另按定理 29.2、式 (31.3) 判定。它不是定理 25.2 的噪声版本，也不由精确零式给近零稳定常数。
+
+[相界卷引理 141.2](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md#1413-满秩附加态强制相干子系统运输) 的忠实附加态／秩一 Choi 机制作为已有精确因子化供应保留；这里的不同关系是 (28.11) 的同源三阶积分和 (28.13)–(28.15) 的共轭变量系数分离，它在不要求 steering 满像时控制原输入支撑的全部记忆列。设计矩、Kraus 表示、纯满 Schmidt 层析条件均按各自所引先例使用，不将这些中间工具单列为新增结果。
+
+[C122 定理 5.6–5.8](AURIC_INTERNAL_BINARY_RECIPROCITY_AND_EXPLICIT_RECONNECTION_C122.md#thm-c122-finite-tomography) 的系统通道层析及实际恢复证书仍需其自己的同通道、确定性实现与误差前件，不从 (29.2) 的率读数得到全 $\Psi_j$。FIB [定理 143.2 与命题 144.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md#143-joint-density-on-the-same-exact-rank-two-common-partitions) 的同见证全 $64$ 坐标逼近不供应这里的精确零式；[C123 §§18–20](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#18-保留原返回尺度的指定-lorentz-比较群) 的原返回尺度及指定 $H^0$ 分类也不供应新的准备、仪器或合法操作。各结果的来源、量词和操作域分别保留。
+
+## 追加锚（本行以下为增补区）
