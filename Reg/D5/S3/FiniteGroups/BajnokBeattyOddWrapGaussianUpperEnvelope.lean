@@ -95,14 +95,18 @@ private theorem gaussianUpper_rejected_law (i : Fin 2) :
       (Real.exp_one_lt_d9.trans (by norm_num))
   have he2 : Real.exp (-9*s) < 1 := Real.exp_lt_one_iff.mpr (by linarith)
   have hrhs : Real.exp s+Real.exp (-9*s)+1/(10*(5 : ℝ)^2) < 4 := by
-    norm_num at ⊢
-    linarith only [he1,he2]
+    calc
+      Real.exp s+Real.exp (-9*s)+1/(10*(5 : ℝ)^2) <
+          (11/4 : ℝ)+1+1/(10*(5 : ℝ)^2) :=
+        by simpa only [add_comm] using
+          (add_lt_add_right (add_lt_add he1 he2) (1/(10*(5 : ℝ)^2)))
+      _ < 4 := by norm_num
   have hc := actual_odd_wrap_counts 5 5 (by norm_num) (by decide) (by norm_num)
   have h19 : 2 ≤ (original_return_pair 5 5).1 := by
     have hcount : (original_return_pair 5 5).1 =
         2*(Nat.choose 145 75+Nat.choose 145 95) := by
       calc
-        _ = 2*(Nat.choose (5*(6*5-1)).toNat (5*((6*5-1)+1)/2).toNat+Nat.choose (5*(6*5-1)).toNat (5*((6*5-1)+9)/2).toNat) := hc.1
+        _ = 2*(Nat.choose (5*(6*5-1) : ℤ).toNat (5*((6*5-1)+1)/2 : ℤ).toNat+Nat.choose (5*(6*5-1) : ℤ).toNat (5*((6*5-1)+9)/2 : ℤ).toNat) := hc.1
         _ = _ := by rw [show (5*(6*5-1) : ℤ).toNat = 145 by norm_num,
           show (5*((6*5-1)+1)/2 : ℤ).toNat = 75 by norm_num,
           show (5*((6*5-1)+9)/2 : ℤ).toNat = 95 by norm_num]
@@ -111,7 +115,7 @@ private theorem gaussianUpper_rejected_law (i : Fin 2) :
   have h33 : 0 < (original_return_pair 5 5).2 := by
     have hcount : (original_return_pair 5 5).2 = 4*Nat.choose 145 80 := by
       calc
-        _ = 4*Nat.choose (5*(6*5-1)).toNat (5*((6*5-1)+3)/2).toNat := hc.2
+        _ = 4*Nat.choose (5*(6*5-1) : ℤ).toNat (5*((6*5-1)+3)/2 : ℤ).toNat := hc.2
         _ = _ := by rw [show (5*(6*5-1) : ℤ).toNat = 145 by norm_num,
           show (5*((6*5-1)+3)/2 : ℤ).toNat = 80 by norm_num]
     have hp : 0 < Nat.choose 145 80 := Nat.choose_pos (by decide)
@@ -151,14 +155,14 @@ private theorem gaussianUpper_actual_dependence :
     have hc24 : returns19 25 24 3575 =
         2*(Nat.choose 3575 1800+Nat.choose 3575 1900) := by
       calc
-        _ = 2*(Nat.choose (25*(6*24-1)).toNat (25*((6*24-1)+1)/2).toNat+Nat.choose (25*(6*24-1)).toNat (25*((6*24-1)+9)/2).toNat) := h24.1
+        _ = 2*(Nat.choose (25*(6*24-1) : ℤ).toNat (25*((6*24-1)+1)/2 : ℤ).toNat+Nat.choose (25*(6*24-1) : ℤ).toNat (25*((6*24-1)+9)/2 : ℤ).toNat) := h24.1
         _ = _ := by rw [show (25*(6*24-1) : ℤ).toNat = 3575 by norm_num,
           show (25*((6*24-1)+1)/2 : ℤ).toNat = 1800 by norm_num,
           show (25*((6*24-1)+9)/2 : ℤ).toNat = 1900 by norm_num]
     have hc25 : returns19 25 25 3725 =
         2*(Nat.choose 3725 1875+Nat.choose 3725 1975) := by
       calc
-        _ = 2*(Nat.choose (25*(6*25-1)).toNat (25*((6*25-1)+1)/2).toNat+Nat.choose (25*(6*25-1)).toNat (25*((6*25-1)+9)/2).toNat) := h25.1
+        _ = 2*(Nat.choose (25*(6*25-1) : ℤ).toNat (25*((6*25-1)+1)/2 : ℤ).toNat+Nat.choose (25*(6*25-1) : ℤ).toNat (25*((6*25-1)+9)/2 : ℤ).toNat) := h25.1
         _ = _ := by rw [show (25*(6*25-1) : ℤ).toNat = 3725 by norm_num,
           show (25*((6*25-1)+1)/2 : ℤ).toNat = 1875 by norm_num,
           show (25*((6*25-1)+9)/2 : ℤ).toNat = 1975 by norm_num]
@@ -167,12 +171,12 @@ private theorem gaussianUpper_actual_dependence :
   · change returns33 25 24 3575 ≠ returns33 25 25 3725
     have hc24 : returns33 25 24 3575 = 4*Nat.choose 3575 1825 := by
       calc
-        _ = 4*Nat.choose (25*(6*24-1)).toNat (25*((6*24-1)+3)/2).toNat := h24.2
+        _ = 4*Nat.choose (25*(6*24-1) : ℤ).toNat (25*((6*24-1)+3)/2 : ℤ).toNat := h24.2
         _ = _ := by rw [show (25*(6*24-1) : ℤ).toNat = 3575 by norm_num,
           show (25*((6*24-1)+3)/2 : ℤ).toNat = 1825 by norm_num]
     have hc25 : returns33 25 25 3725 = 4*Nat.choose 3725 1900 := by
       calc
-        _ = 4*Nat.choose (25*(6*25-1)).toNat (25*((6*25-1)+3)/2).toNat := h25.2
+        _ = 4*Nat.choose (25*(6*25-1) : ℤ).toNat (25*((6*25-1)+3)/2 : ℤ).toNat := h25.2
         _ = _ := by rw [show (25*(6*25-1) : ℤ).toNat = 3725 by norm_num,
           show (25*((6*25-1)+3)/2 : ℤ).toNat = 1900 by norm_num]
     rw [hc24,hc25]
