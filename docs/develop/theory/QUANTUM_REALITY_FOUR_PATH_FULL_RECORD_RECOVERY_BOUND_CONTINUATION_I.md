@@ -3538,3 +3538,348 @@ For the bounded primary-source correspondence, [Jasper--Loreaux--Weiss, arXiv:16
 For the original first-loss question, this removes the all-effect optimization and the possibility of scalar ties inside either screened cap, with a full original-pair equality preimage at every cap level. It also removes the opposite-cap and trace-triangle competitors on levels satisfying the explicit strict screen in Theorem 37.4. The remaining all-original feedback ordering compares the intrinsically continued Section 34 germ against every admissible $M_\sigma(w,\xi)$ in the core, including mixed effects. Theorem 37.5 removes rank-one geometric scalar competition through distance four, but does not compare mixed effects beyond the caps or any general feedback there; geometric scalar competition beyond that range is also unresolved. On the supplied local interval the unique positive-cap selection agrees with Lemma 34.2. A cap-selection endpoint or the failure of the linear screen is not identified with loss of the geometric germ. A core infimum tie requires attainment and an additional original pair before it can signify added minimizers. The exact maximal connected positive-distance range, a directly selected first boundary, its inclusion or exclusion, all first competing original minimizers or the precise structural event, immediate right-side failure when required, and the determinant-zero variation case remain unresolved. No finite cap interval or residual optimizer formula settles those claims.
 
 ## 追加锚（本行以下为增补区）
+
+## 38. Uniform distance-four phase instability and strict original competitors
+
+**Definition 38.1 (the geometric comparator in the original problem).** Keep the original $\mathcal K=\operatorname{Dens}_2\times U(4)$, $g,\rho$, $f=g-\kappa\rho$ and $m$, the ordinary transpose, and the single common feedback scalar. All effects, including mixed and singular ones, and both original optimizer signs remain in this domain. The data $w,A,B,P,Q,u,v$ are those of source Definition 23.1, evaluated on the same actual $w=\operatorname{diag}(UU_+^\dagger)$. For $0<\xi\le9$ the prescribed-level comparison is the full profile of Theorem 36.2: for either admissible sign,
+
+$$
+\begin{aligned}
+ I_\sigma(w,\xi)&=[t_\sigma,\min\{\sqrt{t_\sigma},J_\sigma\}],\\
+ M_\sigma(w,\xi)
+ &=\min_{r\in I_\sigma(w,\xi)}
+   \left[\Delta_\sigma+b_\sigma r
+                  -2uv\sqrt{t_\sigma-r^2}\right],\\
+ m(\xi)&=\min_{\substack{w\in\mathcal W,\ \sigma\in\{+,-\}\\
+                         \sigma\ \mathrm{admissible}}}
+                   M_\sigma(w,\xi)-\kappa\xi.
+\end{aligned}
+\tag{38.1}
+$$
+
+Here every symbol and every admissibility condition is as in (36.1)--(36.5). The effect preimage is exactly (36.7); at population $r$ its impurity is $2(r-t_\sigma)$. Thus (38.1) retains the entire mixed part $r>t_\sigma$, sign ties and zero-amplitude cases. The core value $N_{\mathcal O}$ is the infimum in (37.6), without an assumption that it is attained.
+
+For $0<\xi\le4$ and $t=\xi/2$ define the rank-one geometric comparator by the attained restricted minimum of Theorem 37.5:
+
+$$
+ N_{\mathrm{geo}}(\xi)
+ :=H^+_{\delta_\circ(t)}(t-\delta_\circ(t))
+ =\min_{\delta\in[\max\{0,t-1\},t]}H^+_\delta(t-\delta).
+\tag{38.2}
+$$
+
+The scalar argument $\delta_\circ(t)$ is the existing unique interior root selected in (37.13), not a new selection rule. This comparator orders rank-one pairs in $\mathcal C_{34}$; its definition makes no full-domain minimizing assertion.
+
+**Theorem 38.2 (uniform transverse instability of the interior distance-four slice).** For every $0<x<1/2$ put
+
+$$
+ p=1-2x,\qquad q=2x,\qquad y=\sqrt{1-x^2},\qquad \alpha=c-h,
+\tag{38.3}
+$$
+
+and evaluate $L_a,L_b,\mathscr D$ by (36.43). Then
+
+$$
+ \boxed{\qquad
+ \frac{\mathscr D}{q}< -\frac{53}{5376}<0.
+ \qquad}
+\tag{38.4}
+$$
+
+For every $\tau\in\{+1,-1\}$ and $|\lambda|=1$, the original geometric pair
+
+$$
+\begin{aligned}
+ w_\tau(x)&=(x+\tau iy,x-\tau iy,1,1),\\
+ U_{\lambda,\tau}(x)&=\lambda\operatorname{diag}(w_\tau(x))U_+,\\
+ \psi_\tau(x)&=\sqrt p\,b_+-\tau i\sqrt q\,b_-,\qquad
+ E_\tau(x)=\overline{\psi_\tau(x)}\,
+                          \overline{\psi_\tau(x)}^\dagger
+\end{aligned}
+\tag{38.5}
+$$
+
+has original joint distance four and feedback in $\mathcal O$. It is not a local minimum on that original distance level: there are arbitrarily close rank-one original pairs, also with feedback in $\mathcal O$, at exactly distance four with strictly smaller $g$ and $f$. The bound (38.4) is uniform over the slice; no common perturbation radius as $x$ approaches its endpoints is asserted.
+
+**Proof.** The rational half-angle bounds (22.13) imply
+
+$$
+ \frac7{10}<h<\frac34,\qquad c>\frac9{10},\qquad
+ 0<\alpha<\frac14,\qquad s^2>\frac17.
+\tag{38.6}
+$$
+
+Also $y>4/5$ and $x/(1+x)<1/3$. Since $0<p,q<1$ and $q=2x$, the first expression in (36.43) gives
+
+$$
+\begin{aligned}
+ 0<\frac{L_a}{q}
+ &<\frac{hx}{2(1+x)}
+          \left(\frac{\alpha}{c}+\frac1y\right)\\
+ &<\frac18\left(\frac5{18}+\frac54\right)
+   =\frac{55}{288}.
+\end{aligned}
+\tag{38.7}
+$$
+
+For the second expression, if $h^2x-s^2\le0$ then $L_b\le\alpha\sqrt p<1/4$. If it is positive, $h^2=1/2$, $x<1/2$, $\sqrt q<1$ and $hy>(7/10)(4/5)$ show that
+
+$$
+ L_b<\frac14+\frac{1/4}{(7/10)(4/5)}
+       =\frac{39}{56}.
+\tag{38.8}
+$$
+
+The same upper bound holds in the first case. No positivity of $L_b$ is required: $L_a/q>0$ and $39/56>0$ give
+
+$$
+ \frac{\mathscr D}{q}
+ =\frac{L_a}{q}L_b-s^2
+ <\frac{55}{288}\frac{39}{56}-\frac17
+ =-\frac{53}{5376}.
+\tag{38.9}
+$$
+
+This proves the uniform estimate.
+
+At (38.5), $A=2(1+x)$, $B=2y$ and $P=2(hx+c)$, $Q=2\tau ihy$ before the common scalar. Source (23.3), with the pure effect in (38.5), gives
+
+$$
+ \rho_+=4,\qquad
+ \rho_--\rho_+=2(3-2x-2y)
+          \ge2(3-2\sqrt2)>0.
+\tag{38.10}
+$$
+
+Thus the positive sign is uniquely selected. Moreover $A<3<A_0$, $B<2<23/6$, and $A+B>4$ because $x+y>1$ for $0<x<1$. This proves core membership. Condition (36.42) is precisely $3-2x-2y>0$ here. Theorem 36.5 now applies with (38.9): it supplies the exact same-distance phase variation and a strictly decreasing direction for every pair (38.5), including both orientations and the common scalar. All core inequalities are strict, so its sufficiently close competitors remain in $\mathcal O$. This application uses that theorem's actual feasible variation, not an unconstrained quadratic perturbation. $\square$
+
+**Theorem 38.3 (an actual core family below the attained scalar minimum).** Put
+
+$$
+\begin{aligned}
+ x_*&=1-\frac{\delta_\circ(2)}2,\qquad
+ p_*=1-2x_*,\qquad q_*=2x_*,\qquad y_*=\sqrt{1-x_*^2},\\
+ V_4(x)&=d^2(1-2x)+2e^2x\\
+ &\hspace{6mm}
+ -\left[2(hx+c)\sqrt{1-2x}
+           +2h\sqrt{1-x^2}\sqrt{2x}\right]^2,
+ \qquad 0\le x\le\frac12.
+\end{aligned}
+\tag{38.11}
+$$
+
+Then $0<x_*<1/2$ and
+
+$$
+ V_4(x_*)=\min_{0\le x\le1/2}V_4(x)
+             =N_{\mathrm{geo}}(4)+4\kappa.
+\tag{38.12}
+$$
+
+There is a real analytic original rank-one family $(E_\beta,U_\beta)$ near $\beta=0$, equal there to the positive-orientation comparator (38.5) at $x_*$, and a number $\eta>0$ such that every $0<|\beta|<\eta$ satisfies
+
+$$
+\begin{aligned}
+ w_\beta&\in\mathcal O,\qquad \rho(E_\beta,U_\beta)=4,\\
+ M_+(w_\beta,4)&\le g(E_\beta,U_\beta)
+                  <N_{\mathrm{geo}}(4)+4\kappa,\\
+ f(E_\beta,U_\beta)&<N_{\mathrm{geo}}(4).
+\end{aligned}
+\tag{38.13}
+$$
+
+All data in these comparisons arise from the single actual $U_\beta$. The value $M_+(w_\beta,4)$ itself is attained by an original effect at that same feedback, with its full mixed arc allowed. These effects are strict competitors; no global core minimizing property is asserted.
+
+**Proof.** Theorem 37.5 puts $\delta_\circ(2)$ in $(1,2)$. Its change of variable $\delta=2(1-x)$ gives $r=2-\delta=2x$, and the geometric amplitudes in its proof are $2(hx+c)$ and $2h\sqrt{1-x^2}$. Applying (37.21) gives (38.12), with no further scalar-selection argument.
+
+Evaluate $L_a,L_b,\mathscr D$ at $(x_*,p_*,q_*)$ and put
+
+$$
+ k=\frac{s\sqrt{q_*}}{L_a}>0,\qquad a=k\beta,\qquad b=\beta.
+\tag{38.14}
+$$
+
+Use exactly the positive-orientation curve (36.47). Explicitly its specialization is
+
+$$
+\begin{aligned}
+ X_\beta&=-\cos\beta\cos(k\beta)
+    +\sqrt{(1+x_*)^2-\cos^2\beta\sin^2(k\beta)},\\
+ Y_\beta&=\sqrt{1-X_\beta^2},\\
+ w_\beta&=\bigl(e^{ik\beta}(X_\beta+iY_\beta),
+               e^{ik\beta}(X_\beta-iY_\beta),
+               e^{i\beta},e^{-i\beta}\bigr),\\
+ U_\beta&=\operatorname{diag}(w_\beta)U_+.
+\end{aligned}
+\tag{38.15}
+$$
+
+The square roots are the positive branches through $X_0=x_*$ and $Y_0=y_*$. They are real analytic near zero and $0<X_\beta<1$ there. Each entry of $w_\beta$ has modulus one, so this is a direct actual unitary realization, with no appeal to a relaxed diagonal domain. The identities (36.48)--(36.49), applied to this same $w_\beta$, give
+
+$$
+\begin{aligned}
+ A_\beta&=2(1+x_*),\\
+ B_\beta&=2\left|iY_\beta e^{ik\beta}-\sin\beta\right|,\\
+ P_\beta&=2(hX_\beta e^{ik\beta}+c\cos\beta),\\
+ Q_\beta&=2(ihY_\beta e^{ik\beta}-s\sin\beta),\qquad
+ u_\beta=|P_\beta|,\quad v_\beta=|Q_\beta|.
+\end{aligned}
+\tag{38.16}
+$$
+
+At zero, $P_0>0$, $Q_0=2ihy_*\ne0$, $B_0=2y_*<2$ and $A_\beta+B_0=2(1+x_*+y_*)>4$. Thus after shrinking the parameter interval, $P_\beta Q_\beta\ne0$, $B_\beta<2$ and $A_\beta+B_\beta>4$. Together with $A_\beta<3$, these strict inequalities put $w_\beta$ in $\mathcal O$.
+
+Define the original effect using ordinary transpose by
+
+$$
+\begin{aligned}
+ z_\beta&=\sqrt{p_*q_*}\,
+                 \frac{\overline{P_\beta}Q_\beta}{u_\beta v_\beta},\\
+ F_\beta&=\begin{pmatrix}p_*&z_\beta\\
+                              \overline{z_\beta}&q_*\end{pmatrix},
+ \qquad E_\beta=(TF_\beta T^\dagger)^{\mathsf T}.
+\end{aligned}
+\tag{38.17}
+$$
+
+The matrix $F_\beta$ has trace one, positive diagonal and determinant zero. Hence $E_\beta$ is positive, normalized and rank one; transpose preserves positivity. At zero, $z_0=i\sqrt{p_*q_*}$, so (38.17) is exactly the effect (38.5) with $\tau=+1$. Its phase satisfies
+$\operatorname{Re}(P_\beta z_\beta\overline{Q_\beta})=u_\beta v_\beta\sqrt{p_*q_*}$, using the two amplitudes of this one feedback.
+
+By (36.10) and the exact fixed trace in (38.16), its positive distance is
+
+$$
+ \rho_+(E_\beta,U_\beta)
+   =8-2A_\beta+2(q_*^2+|z_\beta|^2)
+   =8-4(1+x_*)+2q_*=4.
+\tag{38.18}
+$$
+
+The opposite feedback-distance term alone is $8-2B_\beta>4$; its effect-distance term is nonnegative. Thus the negative original branch is strictly larger than four. This verifies the actual joint minimum at exactly the original distance, independently of a branch-continuity inference.
+
+For strictness, apply the already established variation (36.54)--(36.55) along (38.14):
+
+$$
+\begin{aligned}
+ S_\beta&:=\sqrt{p_*}\,u_\beta+\sqrt{q_*}\,v_\beta\\
+ &=S_0+\frac{-\mathscr D}{L_a}\,\beta^2+o(\beta^2),\\
+ S_0&=2(hx_*+c)\sqrt{p_*}+2hy_*\sqrt{q_*}>0.
+\end{aligned}
+\tag{38.19}
+$$
+
+The new estimate (38.4) makes $C=-\mathscr D/L_a>0$. By the definition of $o(\beta^2)$, there is a nonempty parameter interval on which the remainder has absolute value less than $C\beta^2/2$. For every nonzero $\beta$ in it, $S_\beta>S_0$. Source (23.12), with the phase in (38.17), consequently gives
+
+$$
+ g(E_\beta,U_\beta)
+ =d^2p_*+e^2q_*-S_\beta^2
+ <d^2p_*+e^2q_*-S_0^2
+ =V_4(x_*).
+\tag{38.20}
+$$
+
+Intersect this interval with the analytic and strict-feasibility neighborhoods above to obtain $\eta>0$. Equations (38.12), (38.18) and (38.20) prove the strict comparisons in (38.13) for every $0<|\beta|<\eta$. This proves a punctured interval of exact witnesses, without specifying a numerical scalar argument or perturbation radius.
+
+To apply the entire original effect profile, fix any such $\beta$. At level four,
+
+$$
+ t_+=q_*,\qquad t_-=B_\beta-2<0,\qquad
+ J_+=\frac{1+A_\beta-B_\beta}{2}
+            >\frac12+x_*>q_*.
+\tag{38.21}
+$$
+
+Thus the negative sign is inadmissible here, and the full positive arc is the nondegenerate interval
+$[q_*,\min\{\sqrt{q_*},J_+\}]$. For every $r$ in this interval put
+
+$$
+ z_\beta(r)=\sqrt{q_*-r^2}\,
+                \frac{\overline{P_\beta}Q_\beta}{u_\beta v_\beta},
+ \qquad
+ E_\beta(r)=\left[T
+   \begin{pmatrix}1-r&z_\beta(r)\\
+                   \overline{z_\beta(r)}&r\end{pmatrix}
+                         T^\dagger\right]^{\mathsf T}.
+\tag{38.22}
+$$
+
+The certificate-basis matrix has determinant $r-q_*\ge0$ and trace one; its impurity is $2(r-q_*)$. Its positive distance is exactly four by (36.10), and its negative distance exceeds four as above. It is therefore an original mixed effect whenever $r>q_*$, using the unchanged shared $U_\beta$. Theorem 36.2 applies with all these values of $r$ and gives
+
+$$
+\begin{aligned}
+ M_+(w_\beta,4)
+ &=\min_{r\in[q_*,\min\{\sqrt{q_*},J_+\}]}
+   \left[\Delta_++b_+r
+              -2u_\beta v_\beta\sqrt{q_*-r^2}\right]\\
+ &\le g(E_\beta(q_*),U_\beta)
+   =g(E_\beta,U_\beta)
+   <N_{\mathrm{geo}}(4)+4\kappa.
+\end{aligned}
+\tag{38.23}
+$$
+
+The effect $E_\beta(q_+^\sharp)$, with $q_+^\sharp$ from (36.5), attains this fixed-feedback minimum. It may be mixed; no purification condition on $b_+$ was imposed. In particular
+$N_{\mathcal O}(4)\le M_+(w_\beta,4)-4\kappa<N_{\mathrm{geo}}(4)$, without a claim that a core feedback attains $N_{\mathcal O}(4)$. The realization, phase alignment and both sign checks all concern the same object. $\square$
+
+**Theorem 38.4 (strict failure on a left neighborhood and the remaining first-loss problem).** There are an actual fixed feedback $U_\beta$ with $w_\beta\in\mathcal O$ and a number $\varepsilon>0$ such that for every $4-\varepsilon<\xi\le4$ there is an original rank-one effect $E_\xi$ with
+
+$$
+\begin{aligned}
+ \rho(E_\xi,U_\beta)&=\xi,\\
+ m(\xi)\le N_{\mathcal O}(\xi)
+ &\le M_+(w_\beta,\xi)-\kappa\xi
+ \le f(E_\xi,U_\beta)<N_{\mathrm{geo}}(\xi).
+\end{aligned}
+\tag{38.24}
+$$
+
+Thus an initial positive-distance interval on which the Section 34 geometric pairs exhaust the full original minimizers has supremum strictly below four. This does not determine that supremum or any first competing minimizing pair.
+
+**Proof.** Fix one $0<|\beta|<\eta$ from Theorem 38.3, together with its actual $U_\beta$ and all the amplitudes in (38.16). For $\xi$ close to four from below put
+
+$$
+\begin{aligned}
+ t(\xi)&=\frac{\xi-8+2A_\beta}{2}
+           =\frac\xi2-2+2x_*,\\
+ z(\xi)&=\sqrt{t(\xi)(1-t(\xi))}\,
+                \frac{\overline{P_\beta}Q_\beta}{u_\beta v_\beta},\\
+ E_\xi&=\left[T
+     \begin{pmatrix}1-t(\xi)&z(\xi)\\
+                     \overline{z(\xi)}&t(\xi)\end{pmatrix}
+                                T^\dagger\right]^{\mathsf T}.
+\end{aligned}
+\tag{38.25}
+$$
+
+At four, $t(4)=q_*\in(0,1)$ and $J_+>q_*$. Hence $0<t(\xi)<1$ and $t(\xi)<J_+$ on some left neighborhood. Formula (38.25) is then a positive trace-one rank-one effect at the pure endpoint of the full positive arc. Equation (36.10) gives $\rho_+=\xi$, whereas the negative branch is still greater than four because $B_\beta<2$. Thus its original joint distance is exactly $\xi$. Its value
+
+$$
+ g(E_\xi,U_\beta)
+ =d^2(1-t(\xi))+e^2t(\xi)
+       -\left[u_\beta\sqrt{1-t(\xi)}
+                       +v_\beta\sqrt{t(\xi)}\right]^2
+\tag{38.26}
+$$
+
+is continuous up to $\xi=4$.
+
+The comparator in (38.2) is continuous from the left there as well. Indeed, for $\zeta=\xi/2\in[3/2,2]$ its scalar interval is $[\zeta-1,\zeta]$. Write $\delta=\zeta-1+a$, $a\in[0,1]$, so that
+
+$$
+ N_{\mathrm{geo}}(2\zeta)
+    =\min_{a\in[0,1]}H^+_{\zeta-1+a}(1-a).
+\tag{38.27}
+$$
+
+The displayed algebraic expression (37.3) is continuous on this fixed compact rectangle, including its square-root endpoints. Uniform continuity bounds the difference between the two minima at $\zeta$ and $2$ by
+$\sup_{a\in[0,1]}|H^+_{\zeta-1+a}(1-a)-H^+_{1+a}(1-a)|$, which tends to zero as $\zeta\uparrow2$. This proves the stated one-sided continuity without differentiating the selected scalar argument.
+
+At four the continuous difference
+$N_{\mathrm{geo}}(\xi)-f(E_\xi,U_\beta)$ is strictly positive by (38.20). It remains positive on some $(4-\varepsilon,4]$, with $0<\varepsilon<1$ chosen inside the feasibility neighborhood. For these levels $t_-=(\xi-8+2B_\beta)/2<0$. Theorem 36.2 therefore gives the full fixed-feedback minimum $M_+(w_\beta,\xi)$, allowing all $r\in[t(\xi),\min\{\sqrt{t(\xi)},J_+\}]$, and its attaining effects (36.7). Since (38.25) is one feasible effect, the inequalities involving $M_+$ and $N_{\mathcal O}$ in (38.24) follow. The full-domain minimum $m$ is no larger than an infimum over its core subset, proving the remaining inequality. Neither this step nor the strict inequality requires attainment of the core infimum.
+
+On the supplied local interval, Theorem 37.5 identifies $N_{\mathrm{geo}}$ with the Section 34 germ. Any initial interval on which that geometric family exhausts all original minimizers must avoid $(4-\varepsilon,4]$ by (38.24), so its supremum is at most $4-\varepsilon<4$. This is an upper obstruction to extending such an interval, not its selected first endpoint.
+
+For the bounded source correspondence, the full realizable domain in (38.1) uses source Theorem 23.2 and the prescribed-diagonal theorem stated by [Jasper--Loreaux--Weiss, arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3): four singular values equal to one give $|w_j|\le1$ and $\sum_j|w_j|-2\min_j|w_j|\le2$. The witnesses (38.15) instead have direct unitary realizations. That literature result supplies realizability, not an ordering at the producer distance. The uniform estimate (38.7)--(38.9) is a repo-derived metric-dependent deduction; the conditional phase variation is Theorem 36.5 and the attained scalar selector is Theorem 37.5, both applied here without repeating their proofs. The fixed-effect coherence identity is source (23.12), and the complete mixed-effect comparison is Theorem 36.2.
+
+The first-loss obligation still compares $N_{\mathrm{geo}}(\xi)+\kappa\xi$ with every admissible $M_\sigma(w,\xi)$ for all realizable feedbacks on the preceding levels, and must determine the actual equality preimage there. Both signs, mixed effects $r>t_\sigma$, singular effects and all actual unitary lifts remain part of that obligation; the cap and trace-triangle comparisons of Sections 24--37 apply only within their stated hypotheses. The new strict core competitors do not exclude an earlier mixed or nonlocal loss. The exact first boundary, endpoint inclusion or exclusion, all first competing minimizers, the behavior immediately after that boundary, and the determinant-zero variation case remain unresolved. A zero of $\mathscr D$, a cap boundary, or the end of a sufficient screen is not identified with the first loss. At distance four the scalar comparator is attained, and so are the displayed strict competitors and their fixed-feedback effect minima; no global core minimizer is selected by these statements. $\square$
+
+## 追加锚（本行以下为增补区）
