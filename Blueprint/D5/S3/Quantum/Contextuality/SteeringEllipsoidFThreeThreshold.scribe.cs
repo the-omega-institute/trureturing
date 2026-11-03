@@ -43,7 +43,10 @@ internal sealed class SteeringEllipsoidFThreeThresholdDocument : IScribeDocument
                         "To obtain a violation for a diagonal correlation matrix diag(p,-p,q) with 2 p² + q² > 1, put c = sqrt(3)/3 and choose the three Bob directions ((1+c)/2,(c-1)/2,c), ((c-1)/2,(1+c)/2,c), and (-c,-c,c). Since c squared = 1/3 these directions are orthonormal, and their images under T all have length L = sqrt((2 p² + q²)/3) > 0. Choose each Alice direction to be T beta_i divided by its length. Each expectation is L, so the value is 3L/sqrt(3) > 1 and is bounded above by F3(rho).")),
                     Paragraph(Text(
                         "For 0 <= t < 2/3 put D = 2 - 2t - t squared and s = t(1-t)/D. These inequalities imply D > 0 and 0 <= s < 1. The state tightState(t,s) is positive semidefinite and has trace one; tight_readouts gives its Bloch vectors (0,0,t+(1-t)s), (0,0,s), and correlation matrix diag(p,-p,q), where p = sqrt(1+s) sqrt((1-t)(1-s)) and q = 1-t+ts. The identity (2 p² + q² - 1)D = (2 - 3t)² shows that its correlation energy exceeds one. Swap its two tensor factors. The matrix remains positive semidefinite with trace one, its Bob centre length is t by tight_centre, and its diagonal correlation matrix is unchanged by transposition. The balanced directions just constructed therefore give F3 > 1, proving the second clause."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ducuara-susa-skrzypczyk-2024-f3-steering-ellipsoid-threshold"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,

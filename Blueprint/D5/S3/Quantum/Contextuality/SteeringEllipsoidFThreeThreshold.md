@@ -60,6 +60,10 @@ $$(\forall (\rho: \operatorname{D5}.\operatorname{S3}.\operatorname{QuantumBound
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/SteeringEllipsoidFThreeThreshold.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ducuara-susa-skrzypczyk-2024-f3-steering-ellipsoid-threshold` (proved) by `D5/S3/Quantum/Contextuality/SteeringEllipsoidFThreeThreshold.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ducuara-susa-skrzypczyk-2024-f3-steering-ellipsoid-threshold","declaration_gid":"D5/S3/Quantum/Contextuality/SteeringEllipsoidFThreeThreshold.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Andrés F. Ducuara, Cristian E. Susa, Paul Skrzypczyk (2024). *Locally inaccessible hidden quantum correlations*. DOI: [10.1103/PhysRevA.110.022435](https://doi.org/10.1103/PhysRevA.110.022435). URL: <https://arxiv.org/abs/2406.03945v1>.
