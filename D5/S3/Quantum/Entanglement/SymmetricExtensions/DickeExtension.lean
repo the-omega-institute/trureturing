@@ -141,7 +141,6 @@ private lemma antiPair_projection :
       Equiv.prodComm L L = 1 := by ext x <;> rfl
   have hi : (Equiv.prodComm L L : Equiv.Perm (L × L))⁻¹ =
       Equiv.prodComm L L := by ext x <;> rfl
-  have hU : Uᴴ = U := by simp [U, hi]
   have hUU : U * U = 1 := by
     change (Equiv.Perm.permMatrix ℂ (Equiv.prodComm L L)) * _ = _
     rw [← Matrix.permMatrix_mul, hs, Matrix.permMatrix_one]
