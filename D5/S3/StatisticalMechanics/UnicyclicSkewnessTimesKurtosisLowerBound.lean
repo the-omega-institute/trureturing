@@ -35,11 +35,48 @@ def claim : Prop :=
 
 private def f (u : ℝ) : ℝ := u ^ 5 * (3 * u - 2) * (15 * u ^ 2 - 20 * u + 6)
 
-private lemma lowerBound_eq_f_inf :
-    lowerBound = sInf (f '' Set.Icc (0 : ℝ) 1) := by sorry
+private def sourceExpression (A : ℝ) : ℝ :=
+  (1 - 10 * A + 22 * A ^ 2 - 12 * A ^ 3) / (1 + A) ^ 8
 
-private lemma f_lower_bound (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1) :
-    lowerBound ≤ f u := by sorry
+private lemma source_bddBelow :
+    BddBelow (sourceExpression '' Set.Ioi (0 : ℝ)) := by
+  refine ⟨-100, ?_⟩
+  rintro y ⟨A, hA, rfl⟩
+  have hA0 : 0 < A := hA
+  have h1 : 0 < 1 + A := by linarith
+  have hden : 0 < (1 + A) ^ 8 := by positivity
+  apply (le_div_iff₀ hden).2
+  have hpoly : 0 ≤ 100 * (1 + A) ^ 8 +
+      (1 - 10 * A + 22 * A ^ 2 - 12 * A ^ 3) := by
+    have hA0 : 0 ≤ A := le_of_lt hA0
+    ring_nf
+    positivity
+  nlinarith
+
+private lemma source_le_lower_bound (A : ℝ) (hA : 0 < A) :
+    lowerBound ≤ sourceExpression A := by
+  dsimp [lowerBound]
+  exact csInf_le source_bddBelow ⟨A, hA, rfl⟩
+
+private lemma source_expression_eq_f (u : ℝ) (hu : 0 < u) (hu1 : u < 1) :
+    sourceExpression ((1 - u) / u) = f u := by
+  dsimp [sourceExpression, f]
+  field_simp
+  ring
+
+private lemma f_lower_bound (u : ℝ) (hu : 0 < u) (hu1 : u < 1) :
+    lowerBound ≤ f u := by
+  rw [← source_expression_eq_f u hu hu1]
+  apply source_le_lower_bound
+  apply div_pos
+  · linarith
+  · exact hu
+
+private lemma lowerBound_negative : lowerBound < 0 := by
+  have h := source_le_lower_bound (1 / 3) (by norm_num)
+  dsimp [sourceExpression] at h
+  norm_num at h ⊢
+  linarith
 
 private lemma f_strict_scale (t z : ℝ) (ht : 0 < t) (htz : t < z)
     (hz : 0 < z) (hneg : z * (3 * z - 2) * (15 * z ^ 2 - 20 * z + 6) < 0) :
