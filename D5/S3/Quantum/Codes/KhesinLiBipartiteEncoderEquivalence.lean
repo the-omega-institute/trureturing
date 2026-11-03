@@ -20,6 +20,7 @@ namespace D5.S3.Quantum.Codes.KhesinLiBipartiteEncoderEquivalence
 
 open D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses (Step addInputRow)
 open D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph (entropy)
+open Matrix
 
 /-- A bipartite form has no edges within either the inputs or the outputs. -/
 def IsBipartiteForm {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n)) : Prop :=
@@ -56,7 +57,12 @@ private theorem equivalence_profile {k n : ℕ} (G H : SimpleGraph (Fin k ⊕ Fi
 private theorem permute_bipartite {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n))
     (hG : IsBipartiteForm G) (σ : Equiv.Perm (Fin n)) :
     IsBipartiteForm (G.map (Equiv.sumCongr (Equiv.refl (Fin k)) σ).toEmbedding) := by
-  sorry
+  rw [← SimpleGraph.comap_symm]
+  constructor
+  · intro i j
+    exact hG.1 i j
+  · intro a b
+    exact hG.2 (σ.symm a) (σ.symm b)
 
 private theorem bipartite_profile {k n : ℕ} (G : SimpleGraph (Fin k ⊕ Fin n))
     (hG : IsBipartiteForm G) (S : Finset (Fin n)) :
@@ -111,7 +117,7 @@ theorem result : claim := by
     rw [supported_kernel_card, supported_kernel_card, hp S])
   obtain ⟨R, hR⟩ := row_spaces_unit (biadjacency J) (biadjacency H)
     (kernels_row_spaces _ _ hk)
-  exact (Relation.ReflTransGen.single (Or.inl ⟨σ, rfl⟩)).trans
+  exact (Relation.ReflTransGen.single (show BipartiteStep G J from Or.inl ⟨σ, rfl⟩)).trans
     (realize_row_equivalence J H hJ hH R hR)
 
 end D5.S3.Quantum.Codes.KhesinLiBipartiteEncoderEquivalence
