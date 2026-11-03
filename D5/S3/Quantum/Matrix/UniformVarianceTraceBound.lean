@@ -352,21 +352,6 @@ variable {a I J : Type*} [Fintype a] [DecidableEq a]
 def centerPinching (P : I → Matrix a a ℂ) (X : Matrix a a ℂ) : Matrix a a ℂ :=
   ∑ i, P i * X * P i
 
-private lemma pinch_mul (P : I → Matrix a a ℂ) (X Y : Matrix a a ℂ)
-    (hX : ∀ i, P i * X = X * P i) :
-    centerPinching P (Y*X) = centerPinching P Y * X ∧
-      centerPinching P (X*Y) = X * centerPinching P Y := by
-  constructor
-  · simp only [centerPinching, Finset.sum_mul]
-    apply Finset.sum_congr rfl
-    intro i _
-    simp only [Matrix.mul_assoc, ← hX i]
-  · simp only [centerPinching, Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro i _
-    rw [← Matrix.mul_assoc (P i) X, hX]
-    simp only [Matrix.mul_assoc]
-
 private lemma pinch_id (P : I → Matrix a a ℂ)
     (hPP : ∀ i, P i * P i = P i) (hP : ∑ i, P i = 1)
     (X : Matrix a a ℂ) (hX : ∀ i, P i * X = X * P i) :
@@ -387,12 +372,15 @@ private lemma pinch_kraus (P : I → Matrix a a ℂ)
       centerPinching P (∑ j, H j * X * (H j)ᴴ) := by
   classical
   simp only [Fintype.sum_prod_type, Matrix.conjTranspose_mul, hp]
-  rw [Finset.sum_comm]
   calc
+    _ = ∑ j, ∑ k, ∑ i,
+        (P k * H j * P i) * X * (P i * ((H j)ᴴ * P k)) := by
+      exact Finset.sum_congr rfl (fun j _ => Finset.sum_comm)
+    _ = ∑ k, ∑ j, ∑ i,
+        (P k * H j * P i) * X * (P i * ((H j)ᴴ * P k)) := Finset.sum_comm
     _ = ∑ k, ∑ j, P k * (H j * centerPinching P X * (H j)ᴴ) * P k := by
       apply Finset.sum_congr rfl
-      intro i _
-      rw [Finset.sum_comm]
+      intro k _
       apply Finset.sum_congr rfl
       intro j _
       simp only [centerPinching, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
@@ -423,13 +411,12 @@ private lemma pinch_gram (P : I → Matrix a a ℂ)
 
 private lemma pinched_centered_identity (P : I → Matrix a a ℂ)
     (hpp : ∀ i, P i * P i = P i) (hsP : ∑ i, P i = 1)
-    (H : J → Matrix a a ℂ) (hh : ∀ j, (H j)ᴴ = H j)
+    (H : J → Matrix a a ℂ)
     (hsH : ∑ j, H j * H j = 1) (c : J → I → ℝ)
     (X : Matrix a a ℂ) (hX : ∀ i, P i * X = X * P i)
     (C : J → Matrix a a ℂ)
     (hCl : ∀ j i, P i * C j = (c j i : ℂ) • P i)
-    (hCr : ∀ j i, C j * P i = (c j i : ℂ) • P i)
-    (hCh : ∀ j, (C j)ᴴ = C j) :
+    (hCr : ∀ j i, C j * P i = (c j i : ℂ) • P i) :
     let M := fun j => H j - C j
     let Q := centerPinching P (∑ j, M j * M j)
     X - centerPinching P (∑ j, H j * X * H j) =
@@ -468,17 +455,29 @@ private lemma pinched_centered_identity (P : I → Matrix a a ℂ)
   have ht := congrArg (fun f : J → I → Matrix a a ℂ => ∑ j, ∑ i, f j i)
     (funext (fun j => funext (hm j)))
   simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib,
-    ← Finset.sum_smul, ← Finset.sum_mul, ← Finset.mul_sum] at ht
-  have hsum (Y : J → Matrix a a ℂ) :
-      (∑ j, ∑ i, P i * Y j * P i) = centerPinching P (∑ j, Y j) := by
+    ← Finset.smul_sum, ← Finset.sum_mul, ← Finset.mul_sum] at ht
+  have hsum2 (Y Z : J → Matrix a a ℂ) :
+      (∑ j, ∑ i, P i * Y j * Z j * P i) =
+        centerPinching P (∑ j, Y j * Z j) := by
     rw [Finset.sum_comm]
-    simp only [centerPinching, Matrix.mul_sum, Matrix.sum_mul]
-  simp only [Matrix.mul_assoc] at ht
-  rw [hsum, hsum, hsum, hsum, hsum, hsum] at ht
+    simp only [centerPinching, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
+  have hsum3 (Y Z : J → Matrix a a ℂ) :
+      (∑ j, ∑ i, P i * Y j * X * Z j * P i) =
+        centerPinching P (∑ j, Y j * X * Z j) := by
+    rw [Finset.sum_comm]
+    simp only [centerPinching, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
+  simp only [hsum2, hsum3] at ht
   have hI : centerPinching P (1 : Matrix a a ℂ) = 1 := by
     simp only [centerPinching, Matrix.mul_one, hpp, hsP]
   rw [hsH, hI, Matrix.one_mul, Matrix.mul_one] at ht
-  linear_combination (1/2 : ℂ) • ht
+  calc
+    _ = (1/2 : ℂ) • (X+X-(2 : ℂ) • centerPinching P (∑ j, H j*X*H j)) := by module
+    _ = (1/2 : ℂ) •
+        ((centerPinching P (∑ j, (H j-C j)*(H j-C j)))*X+
+          X*(centerPinching P (∑ j, (H j-C j)*(H j-C j))) -
+            (2 : ℂ) • centerPinching P (∑ j, (H j-C j)*X*(H j-C j))) :=
+      congrArg (fun Z : Matrix a a ℂ => (1/2 : ℂ) • Z) ht.symm
+    _ = _ := by module
 
 end Pinching
 
@@ -695,7 +694,9 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
     calc
       _ = ∑ i, (Y*(P i*P i)).trace := by
         simp only [centerPinching, Matrix.trace_sum, Matrix.mul_assoc]
-        exact Finset.sum_congr rfl (fun i _ => Matrix.trace_mul_comm _ _)
+        apply Finset.sum_congr rfl
+        intro i _
+        simpa only [Matrix.mul_assoc] using Matrix.trace_mul_comm (P i) (Y*P i)
       _ = Y.trace := by
         simp only [hpp, ← Matrix.trace_sum, ← Matrix.mul_sum, hsP, Matrix.mul_one]
   · intro X hX
@@ -706,7 +707,7 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
       simpa only [hH] using (pinch_kraus P hP H X hpin).symm
     have hid : X-centerPinching P (∑ j, H j*X*H j) =
         (1/2:ℂ) • (Q*X+X*Q)-centerPinching P (∑ j, M j*X*M j) := by
-      have hz := pinched_centered_identity P hpp hsP H hH hsH c X hX C hCl hCr hCh
+      have hz := pinched_centered_identity P hpp hsP H hsH c X hX C hCl hCr
       simpa only [← hMdef] using hz
     refine ⟨hk,hf,hid,?_,?_⟩
     · have hb := trace_centered_defect Q X (centerPinching P (∑ j, M j*X*M j))
@@ -714,7 +715,8 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
       have hc : traceNorm (X-centerPinching P (∑ j, H j*X*H j)) ≤ 2*traceNorm X := by
         calc
           _ ≤ traceNorm X + traceNorm (-centerPinching P (∑ j, H j*X*H j)) :=
-            traceNorm_add_le _ _
+            by simpa only [sub_eq_add_neg] using traceNorm_add_le X
+              (-centerPinching P (∑ j, H j*X*H j))
           _ ≤ 2*traceNorm X := by
             rw [traceNorm_neg, hf]
             linarith [hchannel X]
@@ -724,7 +726,8 @@ theorem hermitian_unital_direct_sum_defect_trace_bound {J : Type*} [Fintype J]
       rw [hk, Matrix.sum_mul, Matrix.trace_sum, Matrix.mul_sum, Matrix.trace_sum]
       apply Finset.sum_congr rfl
       intro t _
-      rw [Matrix.mul_assoc (B t), Matrix.trace_mul_comm (B t)]
+      simp only [Matrix.mul_assoc]
+      rw [Matrix.trace_mul_comm (B t)]
       simp only [Matrix.mul_assoc]
 
 end ActualDirectSum

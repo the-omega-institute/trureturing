@@ -36,7 +36,7 @@ internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinit
             DescribeId.Create("uniform-variance-actual-global-direct-sum-defect"),
             DeclarationHandle.Create("D5/S3/Quantum/Matrix/UniformVarianceTraceBound.hermitian_unital_direct_sum_defect_trace_bound"),
             H("The same globally pinched family on every finite reference"),
-            StatementSource.FromLean(),
+            StatementSource.FromAuthor(Disp(GlobalStatement())),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("Let H be the actual Hilbert direct sum of an arbitrary finite family of finite-dimensional complex spaces E(i). The same arbitrary Hermitian ambient family h(j) satisfies sum(j) h(j) squared equals I. Assume a nonnegative delta and the ambient variance bound for every unit vector within each input block; no variance premise on vectors mixing centers is imposed. The block anchors are unit whenever their block is nonzero. The theorem quantifies over every natural reference size n, including zero, and every complex input X commuting with all actual amplified center projections P(i). This is exactly the amplified original direct-sum algebra, with arbitrary off-diagonal reference entries.")),
@@ -55,7 +55,7 @@ internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinit
         var variance=All("x",F.Id("E"),Implies(Unit(x),Leq(
             Sum("j",F.Id("J"),Sq(Norm(Sub(App(hj,x),Mul(Mean(x),x))))),d)));
         var assumptions=And(All("j",F.Id("J"),Call("IsSymmetric",hj)),
-            And(Eqn(Sum("j",F.Id("J"),Mul(hj,hj)),F.Id("I")),
+            And(Eqn(Sum("j",F.Id("J"),Mul(hj,hj)),Call("Id",Call("Ltwo",F.Id("I"),F.Id("E")))),
                 And(Leq(D(0),d),And(variance,Implies(ExistsUnit(),Unit(e))))));
         var re=Call("Ltwo",Call("Fin",n),F.Id("E"));
         var a=Call("Fin",Call("FiniteRank",re));
@@ -115,6 +115,93 @@ internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinit
             Seq(Instances("E"),Comma,Sp,Instances("F"),Comma,Sp,
                 OpenBracket,Call("Fintype",F.Id("J")),CloseBracket,Comma,Sp,body))));
     }
+
+    private static Formula Conj(params Formula[] p)
+    {
+        var r=p[p.Length-1];
+        for(var k=p.Length-2;k>=0;k--) r=And(p[k],r);
+        return r;
+    }
+    private static Formula Quantify(Formula body,params (string,Formula)[] vars)
+    {
+        for(var k=vars.Length-1;k>=0;k--) body=All(vars[k].Item1,vars[k].Item2,body);
+        return body;
+    }
+    private static Formula DirectSumBinders(Formula body)
+    {
+        var i=F.Id("i"); var ii=F.Id("I"); var ee=F.Id("E"); var jj=F.Id("J");
+        Formula Cls(string name,params Formula[] tail) {
+            var args=new System.Collections.Generic.List<Formula>(tail); args.Add(At(ee,i));
+            return Seq(OpenBracket,Forall,Sp,i,Colon,Sp,ii,Comma,Sp,
+                Call(name,args.ToArray()),CloseBracket,Sp);
+        }
+        return Quantify(Seq(OpenBracket,Call("Fintype",ii),CloseBracket,Sp,
+            OpenBracket,Call("DecidableEq",ii),CloseBracket,Sp,
+            Cls("NormedAddCommGroup"),Cls("InnerProductSpace",ComplexType()),
+            Cls("FiniteDimensional",ComplexType()),OpenBracket,Call("Fintype",jj),CloseBracket,Sp,body),
+            ("I",F.Id("Type")),("E",Call("Family",ii,F.Id("Type"))),("J",F.Id("Type")));
+    }
+    private static Formula DirectSumAssumptions(bool unital)
+    {
+        var i=F.Id("i"); var j=F.Id("j"); var x=F.Id("x"); var h=F.Id("h");
+        var vi=Call("blockInclusion",F.Id("E"),i); var vx=App(vi,x); var hj=At(h,j);
+        var ei=At(F.Id("E"),i); var anchor=At(F.Id("e"),i);
+        var unitExists=Seq(Open,Exists,Sp,x,Colon,Sp,ei,Comma,Sp,Unit(x),Close);
+        var variance=All("i",F.Id("I"),All("x",ei,Implies(Unit(x),
+            Leq(Sum("j",F.Id("J"),Sq(Norm(Sub(App(hj,vx),
+                Mul(RealPart(Inner(vx,App(hj,vx))),vx))))),Delta))));
+        var sym=All("j",F.Id("J"),Call("IsSymmetric",hj));
+        var anchors=All("i",F.Id("I"),Implies(unitExists,Unit(anchor)));
+        if(unital) return Conj(sym,Eqn(Sum("j",F.Id("J"),Mul(hj,hj)),Call("Id",Call("Ltwo",F.Id("I"),F.Id("E")))),
+            Leq(D(0),Delta),variance,anchors);
+        return Conj(sym,Leq(D(0),Delta),variance,anchors);
+    }
+
+    private static Formula GlobalStatement()
+    {
+        var i=F.Id("i"); var j=F.Id("j"); var t=F.Id("t"); var n=F.Id("n");
+        var hspace=Call("Ltwo",F.Id("I"),F.Id("E"));
+        var u=Call("Ltwo",Call("Fin",n),hspace); var rank=Call("Fin",Call("FiniteRank",u));
+        var mat=Call("Matrix",rank,rank,ComplexType()); var vb=Call("stdBasis",u);
+        var tt=Call("Product",F.Id("J"),F.Id("I"),F.Id("I"));
+        var p=F.Id("P"); var hj=At(F.Id("H"),j); var mj=At(F.Id("M"),j); var q=F.Id("Q");
+        var at=At(F.Id("A"),t); var bt=At(F.Id("B"),t); var x=F.Id("X"); var y=F.Id("Y");
+        var tj=Call("first",t); var ti=Call("secondfirst",t); var tk=Call("secondsecond",t);
+        Formula Pinch(Formula z)=>Call("centerPinching",p,z);
+        Formula MatrixOf(Formula z)=>Call("MatrixOf",vb,vb,Call("Ref",n,z));
+        Formula Pi(Formula z)=>At(p,z);
+        var definitions=Conj(
+            All("i",F.Id("I"),Eqn(Pi(i),MatrixOf(Call("blockProjection",F.Id("E"),i)))),
+            All("j",F.Id("J"),Eqn(hj,MatrixOf(At(F.Id("h"),j)))),
+            All("j",F.Id("J"),Eqn(mj,MatrixOf(Sub(At(F.Id("h"),j),Call("centralMean",F.Id("h"),F.Id("e"),j))))),
+            Eqn(q,Pinch(Sum("j",F.Id("J"),Mul(mj,mj)))),
+            All("t",tt,Eqn(at,Mul(Pi(tk),Mul(At(F.Id("H"),tj),Pi(ti))))),
+            All("t",tt,Eqn(bt,Mul(Pi(tk),Mul(At(F.Id("M"),tj),Pi(ti))))));
+        var k=Pinch(Sum("j",F.Id("J"),Mul(mj,Mul(x,mj))));
+        var phi=Pinch(Sum("j",F.Id("J"),Mul(hj,Mul(x,hj))));
+        var legal=All("i",F.Id("I"),Eqn(Mul(Pi(i),x),Mul(x,Pi(i))));
+        var identity=Eqn(Sub(x,phi),Sub(Mul(Frac(D(1),D(2)),
+            Seq(Open,Mul(q,x),Sp,Plus,Sp,Mul(x,q),Close)),k));
+        var bounds=Leq(Call("traceNorm",Sub(x,phi)),
+            Mul(Call("min",D(2),Mul(D(1,0),Delta)),Call("traceNorm",x)));
+        var pairing=All("Y",mat,Eqn(Call("Tr",Mul(k,y)),
+            Call("Tr",Mul(x,Sum("t",tt,Mul(Adj(bt),Mul(y,bt)))))));
+        var input=All("X",mat,Implies(legal,Conj(
+            Eqn(k,Sum("t",tt,Mul(bt,Mul(x,Adj(bt))))),
+            Eqn(phi,Sum("t",tt,Mul(at,Mul(x,Adj(at))))),identity,bounds,pairing)));
+        var conclusions=Conj(Leq(q,Mul(Mul(D(5),Delta),Call("Id",rank))),
+            Eqn(Sum("t",tt,Mul(Adj(at),at)),Call("Id",rank)),
+            Eqn(Sum("t",tt,Mul(Adj(bt),bt)),q),
+            All("Y",mat,Eqn(Call("Tr",Pinch(y)),Call("Tr",y))),input);
+        var refResult=All("n",Seq(Mathbb,Grp(F.Id("N"))),Quantify(Implies(definitions,conclusions),
+            ("P",Call("Family",F.Id("I"),mat)),("H",Call("Family",F.Id("J"),mat)),
+            ("M",Call("Family",F.Id("J"),mat)),("Q",mat),
+            ("A",Call("Family",tt,mat)),("B",Call("Family",tt,mat))));
+        return DirectSumBinders(Seq(Forall,Sp,Delta,Colon,Sp,RealType(),Comma,Sp,Quantify(Implies(DirectSumAssumptions(true),refResult),
+            ("h",Call("Family",F.Id("J"),Call("LinearMap",ComplexType(),hspace,hspace))),
+            ("e",Call("Sections",F.Id("E"))))));
+    }
+
     private static Formula Instances(string x) => Seq(
         OpenBracket,Call("NormedAddCommGroup",F.Id(x)),CloseBracket,Sp,
         OpenBracket,Call("InnerProductSpace",ComplexType(),F.Id(x)),CloseBracket,Sp,

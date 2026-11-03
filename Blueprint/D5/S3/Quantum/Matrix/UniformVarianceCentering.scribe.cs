@@ -27,7 +27,7 @@ internal sealed class UniformVarianceCenteringDocument : IScribeDocumentDefiniti
             DescribeId.Create("uniform-variance-actual-direct-sum-centering"),
             DeclarationHandle.Create("D5/S3/Quantum/Matrix/UniformVarianceCentering.hermitian_direct_sum_centering"),
             H("The actual global direct sum and all its center transfers"),
-            StatementSource.FromLean(),
+            StatementSource.FromAuthor(Disp(DirectSumStatement())),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("Let I and J be arbitrary finite types and E(i) arbitrary finite-dimensional complex Hilbert spaces. The ambient H is the actual Hilbert L2 direct sum of the E(i). V(i) inserts a vector into coordinate i and P(i) projects onto that coordinate. The same arbitrary Hermitian h(j) acts on all of H. The variance assumption is required only for unit vectors in each individual input block, with every output component of h(j)V(i)x retained. Each anchor e(i) has norm one whenever its block admits a unit vector; zero blocks and empty index types are included.")),
@@ -38,7 +38,7 @@ internal sealed class UniformVarianceCenteringDocument : IScribeDocumentDefiniti
             DescribeId.Create("uniform-variance-kraus-energy-adjoint-norm"),
             DeclarationHandle.Create("D5/S3/Quantum/Matrix/UniformVarianceCentering.kraus_adjoint_norm_le"),
             H("The operator bound from the actual Kraus energy"),
-            StatementSource.FromLean(),
+            StatementSource.FromAuthor(Disp(AdjointStatement())),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("For arbitrary finite-dimensional complex Hilbert input and output spaces, a finite rectangular family L and nonnegative b, a bound sum(j) norm(L(j)x) squared at most b on every unit input gives norm(sum(j) L(j) adjoint A L(j)) at most b norm(A) for every bounded ambient A. This existing Cauchy-Schwarz helper is public for live use in the direct-sum trace proof. It supplies no independent escape witness."))),
             DescribeRole.Lemma))));
@@ -91,6 +91,82 @@ internal sealed class UniformVarianceCenteringDocument : IScribeDocumentDefiniti
             Seq(Instances("H"),Comma,Sp,Instances("G"),Comma,Sp,
                 OpenBracket,Call("Fintype",F.Id("J")),CloseBracket,Comma,Sp,body))));
     }
+
+    private static Formula Conj(params Formula[] p)
+    {
+        var r=p[p.Length-1];
+        for(var k=p.Length-2;k>=0;k--) r=And(p[k],r);
+        return r;
+    }
+    private static Formula Quantify(Formula body,params (string,Formula)[] vars)
+    {
+        for(var k=vars.Length-1;k>=0;k--) body=All(vars[k].Item1,vars[k].Item2,body);
+        return body;
+    }
+    private static Formula DirectSumBinders(Formula body)
+    {
+        var i=F.Id("i"); var ii=F.Id("I"); var ee=F.Id("E"); var jj=F.Id("J");
+        Formula Cls(string name,params Formula[] tail) {
+            var args=new System.Collections.Generic.List<Formula>(tail); args.Add(At(ee,i));
+            return Seq(OpenBracket,Forall,Sp,i,Colon,Sp,ii,Comma,Sp,
+                Call(name,args.ToArray()),CloseBracket,Sp);
+        }
+        return Quantify(Seq(OpenBracket,Call("Fintype",ii),CloseBracket,Sp,
+            OpenBracket,Call("DecidableEq",ii),CloseBracket,Sp,
+            Cls("NormedAddCommGroup"),Cls("InnerProductSpace",ComplexType()),
+            Cls("FiniteDimensional",ComplexType()),OpenBracket,Call("Fintype",jj),CloseBracket,Sp,body),
+            ("I",F.Id("Type")),("E",Call("Family",ii,F.Id("Type"))),("J",F.Id("Type")));
+    }
+    private static Formula DirectSumAssumptions(bool unital)
+    {
+        var i=F.Id("i"); var j=F.Id("j"); var x=F.Id("x"); var h=F.Id("h");
+        var vi=Call("blockInclusion",F.Id("E"),i); var vx=App(vi,x); var hj=At(h,j);
+        var ei=At(F.Id("E"),i); var anchor=At(F.Id("e"),i);
+        var unitExists=Seq(Open,Exists,Sp,x,Colon,Sp,ei,Comma,Sp,Unit(x),Close);
+        var variance=All("i",F.Id("I"),All("x",ei,Implies(Unit(x),
+            Leq(Sum("j",F.Id("J"),Sq(Norm(Sub(App(hj,vx),
+                Mul(RealPart(Inner(vx,App(hj,vx))),vx))))),Delta))));
+        var sym=All("j",F.Id("J"),Call("IsSymmetric",hj));
+        var anchors=All("i",F.Id("I"),Implies(unitExists,Unit(anchor)));
+        if(unital) return Conj(sym,Eqn(Sum("j",F.Id("J"),Mul(hj,hj)),Call("Id",Call("Ltwo",F.Id("I"),F.Id("E")))),
+            Leq(D(0),Delta),variance,anchors);
+        return Conj(sym,Leq(D(0),Delta),variance,anchors);
+    }
+
+    private static Formula DirectSumStatement()
+    {
+        var i=F.Id("i"); var j=F.Id("j"); var t=F.Id("t"); var n=F.Id("n");
+        var hspace=Call("Ltwo",F.Id("I"),F.Id("E"));
+        var u=Call("Ltwo",Call("Fin",n),hspace);
+        var end=Call("LinearMap",ComplexType(),u,u);
+        var tt=Call("Product",F.Id("J"),F.Id("I"),F.Id("I"));
+        var bt=At(F.Id("B"),t); var x=F.Id("x"); var a=F.Id("A");
+        var tj=Call("first",t); var ti=Call("secondfirst",t); var tk=Call("secondsecond",t);
+        Formula Proj(Formula z)=>Call("Ref",n,Call("blockProjection",F.Id("E"),z));
+        var ell=Sub(At(F.Id("h"),tj),Call("centralMean",F.Id("h"),F.Id("e"),tj));
+        var bdef=All("t",tt,Eqn(bt,Mul(Proj(tk),Mul(Call("Ref",n,ell),Proj(ti)))));
+        var result=Conj(All("x",u,Leq(Sum("t",tt,Sq(Norm(App(bt,x)))),Mul(Mul(D(5),Delta),Sq(Norm(x))))),
+            All("A",Call("ContinuousLinearMap",ComplexType(),u,u),
+                Leq(Norm(Sum("t",tt,Mul(Adj(bt),Mul(a,bt)))),Mul(Mul(D(5),Delta),Norm(a)))));
+        var body=All("n",Seq(Mathbb,Grp(F.Id("N"))),
+            All("B",Call("Family",tt,end),Implies(bdef,result)));
+        return DirectSumBinders(Seq(Forall,Sp,Delta,Colon,Sp,RealType(),Comma,Sp,Quantify(Implies(DirectSumAssumptions(false),body),
+            ("h",Call("Family",F.Id("J"),Call("LinearMap",ComplexType(),hspace,hspace))),
+            ("e",Call("Sections",F.Id("E"))))));
+    }
+    private static Formula AdjointStatement()
+    {
+        var l=At(F.Id("L"),F.Id("j")); var x=F.Id("x"); var b=F.Id("b"); var a=F.Id("A");
+        var condition=Conj(Leq(D(0),b),All("x",F.Id("G"),Implies(Unit(x),
+            Leq(Sum("j",F.Id("J"),Sq(Norm(App(l,x)))),b))));
+        var body=Implies(condition,All("A",Call("ContinuousLinearMap",ComplexType(),F.Id("H"),F.Id("H")),
+            Leq(Norm(Sum("j",F.Id("J"),Mul(Adj(l),Mul(a,l)))),Mul(b,Norm(a)))));
+        return Quantify(Seq(Instances("H"),Sp,Instances("G"),Sp,
+            OpenBracket,Call("Fintype",F.Id("J")),CloseBracket,Sp,
+            Quantify(body,("L",Call("Family",F.Id("J"),Call("LinearMap",ComplexType(),F.Id("G"),F.Id("H")))),
+                ("b",RealType()))),("H",F.Id("Type")),("G",F.Id("Type")),("J",F.Id("Type")));
+    }
+
     private static Formula Instances(string x) => Seq(
         OpenBracket,Call("NormedAddCommGroup",F.Id(x)),CloseBracket,Sp,
         OpenBracket,Call("InnerProductSpace",ComplexType(),F.Id(x)),CloseBracket,Sp,

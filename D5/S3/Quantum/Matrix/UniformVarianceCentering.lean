@@ -390,7 +390,7 @@ def blockInclusion (i : I) : E i →ₗᵢ[ℂ] PiLp 2 E where
         intro k
         change Pi.single i (c • x) k = c • Pi.single i x k
         simp only [Pi.single_smul, Pi.smul_apply] }
-  norm_map' := PiLp.norm_single _ _
+  norm_map' := fun x => PiLp.norm_single 2 E i x
 
 /-- Orthogonal projection onto an actual center summand, without compressing h. -/
 def blockProjection (i : I) : PiLp 2 E →ₗ[ℂ] PiLp 2 E :=
