@@ -224,8 +224,8 @@ private theorem bank_strips (a b c d u v : ℕ)
     all_goals simp only [rowSeams,rowHeads] at win0 win1 win2 win3
     all_goals
       dsimp only [F,AA,E,C,f,rowBase] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 nt0 nt1 nt2 nt3 hstart win0 win1 win2 win3 ⊢
-    all_goals simp only [ite_true,ite_false,Bool.false_eq_true,P,T,terminals,fresh,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ',
-      Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 nt0 nt1 nt2 nt3 win0 win1 win2 win3 ⊢
+    all_goals simp only [ite_true,ite_false,Bool.false_eq_true,P,T,terminals,fresh,Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ',
+      Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 nt0 nt1 nt2 nt3 hstart win0 win1 win2 win3 ⊢
     all_goals refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,True.intro⟩
     all_goals nlinarith only [mass0,mass1,mass2,mass3,nn0,nn1,nn2,nn3,
       nt0,nt1,nt2,nt3,hstart,win0.1,win0.2,win1.1,win1.2,win2.1,win2.2,win3.1,win3.2]

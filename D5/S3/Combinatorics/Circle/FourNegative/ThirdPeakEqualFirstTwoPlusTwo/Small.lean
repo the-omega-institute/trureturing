@@ -8,31 +8,6 @@ open private banks from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualFi
 open private oldValue newValue sourceMod base
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 
--- The transferred occurrence is the original V bit 0, physical label 4.
-private theorem d4_banks :
-    banks 2 2 6 4 1 11 0=[1,2] ∧ banks 2 2 6 4 1 11 1=[10] ∧
-    banks 2 2 6 4 1 11 2=[12,4,5,7] ∧ banks 2 2 6 4 1 11 3=[0,6,8] := by
-  decide
-
-private theorem transfer_algebra (f : ℕ→ℤ) :
-    (([1,2,9,10,4,11].map f).sum)=(([1,2,9,10,11].map f).sum)+f 4 ∧
-    (([1,2,9,10,4,11,12,5,7,13].map f).sum)=
-      (([1,2,9,10,11,12,4,5,7,13].map f).sum) := by
-  simp only [List.map_cons,List.map_nil,List.sum_cons,List.sum_nil]
-  constructor <;> ring
-
-private theorem d4_transfer_values :
-    oldValue 2 2 6 4 4=337 ∧ newValue 2 2 6 4 4=673 ∧
-    2*(([1,2,9,10,4,11].map (oldValue 2 2 6 4)).sum)-
-      2*(([1,2,9,10,11].map (oldValue 2 2 6 4)).sum)=2*337 ∧
-    2*(([1,2,9,10,4,11].map (newValue 2 2 6 4)).sum)-
-      2*(([1,2,9,10,11].map (newValue 2 2 6 4)).sum)=2*673 := by
-  have ho:=transfer_algebra (oldValue 2 2 6 4)
-  have hn:=transfer_algebra (newValue 2 2 6 4)
-  have hvo : oldValue 2 2 6 4 4=337 := by norm_num [oldValue,sourceMod,base,centered]
-  have hvn : newValue 2 2 6 4 4=673 := by norm_num [newValue,sourceMod,base,centered]
-  exact ⟨hvo,hvn,by linarith only [ho.1,hvo],by linarith only [hn.1,hvn]⟩
-
 -- Three ground proofs evaluate the defining centered modular source and literal words.
 -- The d=4 word retains total V mask 11 and its actual cut is 9.
 private theorem small_cases (d : ℕ) (hd : d=4 ∨ d=5 ∨ d=6) :

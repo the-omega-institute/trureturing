@@ -185,7 +185,7 @@ private theorem physical_strips (a b c d u v : ℕ)
       rw [←withEar_negatives (size a b c d) 2 bs]
       exact List.mem_map.mpr ⟨pkt,hmem,rfl⟩
     obtain ⟨pkt',hpkt',he⟩:=List.mem_map.mp hn
-    simpa only [he] using negative true pkt' hpkt'
+    simpa [he] using negative true pkt' hpkt'
   have ho:=(strip_iff_packetChecks (oldValue a b c d) (sourceMod a b c d/2) 0 bs
     ⟨by omega,by omega⟩ (positive false) (negative false)).mpr
       (row_checks a b c d u v ha hb hc hd hu hv hw false)
