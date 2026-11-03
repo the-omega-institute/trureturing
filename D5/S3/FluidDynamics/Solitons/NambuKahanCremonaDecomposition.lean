@@ -8,12 +8,7 @@
 
 import D5.S3.Observer.Hankel.PositiveGramianBalancing
 import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.LinearAlgebra.CrossProduct
-import Mathlib.LinearAlgebra.Matrix.Adjugate
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Tactic
 
 /-! Graffeo--Gubbiotti's generic quadratic Nambu KHK map factors through the
 standard four-dimensional Cremona lift. -/
@@ -97,22 +92,24 @@ private theorem euler_top_identity (a₁ a₂ a₃ h α β γ : ℂ)
         (-1 / 8 : ℂ) • (g₀ *ᵥ cremona (T h α β γ *ᵥ X)) := by
   intro X
   rw [← hα, ← hβ, ← hγ]
+  rw [eulerPhi, eulerMatrix, eulerJacobian, cremona]
   funext i
   fin_cases i <;>
-    simp [T, eulerPhi, eulerMatrix, eulerJacobian, g₀,
-      cremona, Matrix.adjugate_fin_three, Matrix.det_fin_three,
+    simp [T, g₀, Matrix.adjugate_fin_three, Matrix.det_fin_three,
       Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
     ring
 
 private theorem det_T (h α β γ : ℂ) :
     (T h α β γ).det = 32 * α ^ 2 * β ^ 2 * γ ^ 2 * h ^ 3 := by
-  simp [T, Matrix.det_succ_row_zero,
+  rw [T]
+  simp [Matrix.det_succ_row_zero,
     Fin.sum_univ_succ, Matrix.submatrix, Fin.succAbove]
   ring
 
 private theorem g₀_unit : IsUnit g₀.det := by
   have hdet : g₀.det = -16 := by
-    simp [g₀, Matrix.det_succ_row_zero, Fin.sum_univ_succ,
+    rw [g₀]
+    simp [Matrix.det_succ_row_zero, Fin.sum_univ_succ,
       Matrix.submatrix, Fin.succAbove]
     ring
   rw [hdet]
@@ -218,10 +215,14 @@ private theorem liftP_action (P : Matrix (Fin 3) (Fin 3) ℝ) (X : Fin 4 → ℂ
   funext i
   refine Fin.lastCases ?_ (fun j => ?_) i
   · rw [Fin.snoc_last]
-    simp [liftP, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+    simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+    rw [liftP]
+    simp [liftP]
   · rw [Fin.snoc_castSucc]
     fin_cases j <;>
-      simp [liftP, complexMatrix, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+      simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
+      rw [liftP, complexMatrix] <;>
+      simp [liftP, complexMatrix]
 
 private def eulerCoefficients (P : Matrix (Fin 3) (Fin 3) ℝ) (mu : Fin 3 → ℝ) :
     Fin 3 → ℂ :=
@@ -268,9 +269,13 @@ private theorem nambu_action (A B : Matrix (Fin 3) (Fin 3) ℝ)
     nambuLinearPart A B x *ᵥ v =
       crossProduct (complexMatrix A *ᵥ x) (complexMatrix B *ᵥ v) +
         crossProduct (complexMatrix A *ᵥ v) (complexMatrix B *ᵥ x) := by
+  conv_lhs =>
+    arg 1
+    ext i j
+    rw [nambuLinearPart]
   funext i
   fin_cases i <;>
-    simp [nambuLinearPart, cross_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;> ring
+    simp [cross_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;> ring
 
 private theorem covariance
     (A B : Matrix (Fin 3) (Fin 3) ℝ) (h : ℝ)
