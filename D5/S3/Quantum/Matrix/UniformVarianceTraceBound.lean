@@ -4,14 +4,16 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual centered Kraus maps obey the undivided trace norm bound on all finite references. -/
+   digest: Centered Kraus outputs obey the trace norm bound on all finite references. -/
 
 import D5.S3.Quantum.Matrix.UniformVarianceCentering
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 
+/-! Ordinary trace norms of the same amplified centered Kraus maps. -/
+
 noncomputable section
 open Matrix
-open scoped BigOperators Matrix.Norms.L2Operator
+open scoped BigOperators Matrix.Norms.L2Operator CStarAlgebra
 namespace D5.S3.Quantum.Matrix.UniformVarianceTraceBound
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 
@@ -19,13 +21,13 @@ private lemma re_diag_le_norm {a : Type*} [Fintype a] [DecidableEq a]
     (B : Matrix a a ℂ) (i : a) : (B i i).re ≤ ‖B‖ := by
   let e := EuclideanSpace.basisFun a ℂ i
   have he : ‖e‖ = 1 := (EuclideanSpace.basisFun a ℂ).orthonormal.1 i
-  have hi : inner ℂ e (Matrix.toEuclideanCLM B e) = B i i := by
+  have hi : inner ℂ e (Matrix.toEuclideanCLM (n := a) (𝕜 := ℂ) B e) = B i i := by
     simp [e, EuclideanSpace.basisFun_apply, Matrix.toEuclideanCLM_toLp,
       EuclideanSpace.inner_eq_star_dotProduct, Matrix.mulVec, dotProduct]
   rw [← hi]
   exact (Complex.re_le_norm _).trans ((norm_inner_le_norm _ _).trans
     (by simpa [he, Matrix.l2_opNorm_toEuclideanCLM] using
-      (Matrix.toEuclideanCLM B).le_opNorm e))
+      (Matrix.toEuclideanCLM (n := a) (𝕜 := ℂ) B).le_opNorm e))
 
 private lemma re_trace_mul_le {a : Type*} [Fintype a] [DecidableEq a]
     (B X : Matrix a a ℂ) : (B*X).trace.re ≤ ‖B‖ * traceNorm X := by
@@ -46,13 +48,15 @@ private lemma re_trace_mul_le {a : Type*} [Fintype a] [DecidableEq a]
       rw [hX']
       change (W.val * V.valᴴ * (V.val * D * W.valᴴ)).trace = D.trace
       simp [Matrix.mul_assoc,hV,Matrix.trace_mul_comm,hW]
-    simpa [heq,D,Matrix.trace] using hm
+    rw [heq] at hm
+    simpa [D,Matrix.trace] using hm
   have hnorm : ‖W.valᴴ * B * V.val‖ = ‖B‖ := by
     change ‖(star W).val * B * V.val‖ = ‖B‖
     rw [CStarRing.norm_mul_coe_unitary, CStarRing.norm_coe_unitary_mul]
   calc
     _ = ((W.valᴴ * B * V.val) * D).trace.re := by
       rw [hX']; congr 1
+      simp only [← Matrix.mul_assoc]
       rw [Matrix.trace_mul_comm _ W.valᴴ]
       simp only [Matrix.mul_assoc]
     _ = ∑ i, Real.sqrt (hH.eigenvalues i) * ((W.valᴴ * B * V.val) i i).re := by
@@ -62,7 +66,7 @@ private lemma re_trace_mul_le {a : Type*} [Fintype a] [DecidableEq a]
       intro i _
       exact mul_le_mul_of_nonneg_left ((re_diag_le_norm _ i).trans_eq hnorm)
         (Real.sqrt_nonneg _)
-    _ = ‖B‖ * ∑ i, Real.sqrt (hH.eigenvalues i) := by rw [Finset.sum_mul,mul_comm]
+    _ = ‖B‖ * ∑ i, Real.sqrt (hH.eigenvalues i) := by rw [← Finset.sum_mul,mul_comm]
     _ ≤ ‖B‖ * traceNorm X := mul_le_mul_of_nonneg_left hmass (norm_nonneg _)
 
 
@@ -105,7 +109,8 @@ private lemma kraus_trace_bound {a b J : Type*}
     rfl
   have hBnorm : ‖B‖ ≤ c := by
     have hh := hK A
-    rw [← hBmap,StarAlgEquiv.norm_map,show ‖A‖ = ‖U.val‖ from StarAlgEquiv.norm_map _ _] at hh
+    rw [← hBmap,StarAlgEquiv.norm_map (operator v) B,
+      show ‖A‖ = ‖U.val‖ from StarAlgEquiv.norm_map (operator w) U.val] at hh
     have hUnorm : ‖U.val‖ ≤ 1 := by
       rcases isEmpty_or_nonempty b with hb | hb
       · have hz : U.val = 0 := Subsingleton.elim _ _
@@ -116,6 +121,7 @@ private lemma kraus_trace_bound {a b J : Type*}
     simp only [B,Matrix.mul_sum,Matrix.sum_mul,Matrix.trace_sum]
     apply Finset.sum_congr rfl
     intro j _
+    simp only [← Matrix.mul_assoc]
     rw [Matrix.trace_mul_comm _ (M j)ᴴ]
     simp only [Matrix.mul_assoc]
   calc
@@ -143,7 +149,8 @@ theorem hermitian_centered_kraus_trace_bound {J : Type*} [Fintype J]
       let v := stdOrthonormalBasis ℂ (PiLp 2 (fun _ : Fin n => E))
       let w := stdOrthonormalBasis ℂ (PiLp 2 (fun _ : Fin n => F))
       let M := fun j => LinearMap.toMatrix v.toBasis w.toBasis (referenceLift n (L j))
-      ∀ X, traceNorm (∑ j, M j * X * (M j)ᴴ) ≤ (5*δ)*traceNorm X := by
+      ∀ X : Matrix (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E))))
+        (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E)))) ℂ, traceNorm (∑ j, M j * X * (M j)ᴴ) ≤ (5*δ)*traceNorm X := by
   classical
   have hp := D5.S3.Quantum.Matrix.UniformVarianceCentering.hermitian_block_centering_and_gram_bound
     V h hh δ hδ hv e he

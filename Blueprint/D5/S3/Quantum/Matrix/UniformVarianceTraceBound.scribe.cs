@@ -1,0 +1,87 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix;
+
+internal sealed class UniformVarianceTraceBoundDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A variance budget controls the actual centered Kraus output in ordinary trace norm at every finite reference size.",
+        H("Centered Kraus trace norm on finite references"),
+        Blocks(Describe.Lean(
+            DescribeId.Create("uniform-variance-centered-kraus-trace-bound"),
+            DeclarationHandle.Create("D5/S3/Quantum/Matrix/UniformVarianceTraceBound.hermitian_centered_kraus_trace_bound"),
+            H("The actual rectangular centered family"),
+            StatementSource.FromAuthor(Disp(Statement())),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("Let E and F be arbitrary finite-dimensional complex Hilbert spaces, J any finite type, V a complex linear isometric inclusion of E into F, and h(j) Hermitian endomorphisms of the whole ambient F. Suppose delta is nonnegative and the sum of squared ambient variances is at most delta for every unit vector of E. Choose e in E with norm one whenever E admits a unit vector. Set c(j)=Re(inner(Ve,h(j)Ve)) and L(j)=h(j)V-c(j)V. No component of L(j) in the ambient space is discarded.")),
+                Paragraph(Text("For each natural reference size n, amplify each same L(j) coordinatewise on the Hilbert L2 sum of n copies. Let v and w be the standard orthonormal bases chosen by stdOrthonormalBasis for these amplified input and output spaces, and M(j) the rectangular matrix of that amplified map. Every complex input matrix X satisfies traceNorm(sum(j) M(j) X M(j) adjoint) at most 5 delta traceNorm(X). The norm is Re Tr sqrt(X adjoint X), with ordinary trace and no factor of one half. Inputs may be non-Hermitian and reference coordinates may be coupled. The empty Kraus family, zero-dimensional spaces, and n=0 are included.")),
+                Paragraph(Text("The simultaneous block-centering theorem supplies the 4 delta expectation displacement and 5 delta ambient energy estimates through the coefficient direction and an equal superposition of extremal eigenvectors. Its actual amplified Kraus adjoint has operator norm at most 5 delta times the test operator norm. Unitary trace-norm duality and a singular-value expansion transfer that inequality to the actual matrix Kraus output. Orthonormal coordinates preserve the operator norm; no dimension comparison of matrix norms is used.")),
+                Paragraph(Text("Ltwo(Fin(n),E) denotes the Hilbert L2 sum, stdBasis denotes stdOrthonormalBasis, and Ref(n,L) is the complex linear map satisfying Ref(n,L)(x)(r)=L(x(r)). MatrixOf(v,w,R) is LinearMap.toMatrix in the indicated orthonormal bases. FiniteRank is the complex dimension. The anchor condition is vacuous in the zero input space. This result proves the complete-reference trace-norm bridge for one actual centered rectangular family. Constructing the global center-pinched map and its defect identity, obtaining the variance premise from the same S/H selected branches and unreferenced normalized return error, and proving the full local and whole-family bounds of original Theorem 86.1 remain separate obligations."))),
+            DescribeRole.Theorem))));
+
+    private static Formula Statement()
+    {
+        var e=F.Id("e"); var x=F.Id("x"); var j=F.Id("j"); var h=F.Id("h");
+        var v=F.Id("V"); var n=F.Id("n"); var d=Delta;
+        Formula Mean(Formula z) => RealPart(Inner(App(v,z),App(At(h,j),App(v,z))));
+        var variance=All("x",F.Id("E"),Implies(Unit(x),Leq(
+            Sum("j",F.Id("J"),Sq(Norm(Sub(App(At(h,j),App(v,x)),Mul(Mean(x),App(v,x)))))),d)));
+        var assumptions=And(All("j",F.Id("J"),Call("IsSymmetric",At(h,j))),
+            And(Leq(D(0),d),And(variance,Implies(ExistsUnit(),Unit(e)))));
+        var cj=At(F.Id("c"),j); var lj=At(F.Id("L"),j); var mj=At(F.Id("M"),j);
+        var re=Call("Ltwo",Call("Fin",n),F.Id("E"));
+        var rf=Call("Ltwo",Call("Fin",n),F.Id("F"));
+        var a=Call("Fin",Call("FiniteRank",re)); var b=Call("Fin",Call("FiniteRank",rf));
+        var vb=Call("stdBasis",re); var wb=Call("stdBasis",rf);
+        var definition=And(All("j",F.Id("J"),Eqn(cj,Mean(e))),
+            All("j",F.Id("J"),Eqn(lj,Sub(Mul(At(h,j),v),Mul(cj,v)))));
+        var matrixDefinition=All("j",F.Id("J"),Eqn(mj,Call("MatrixOf",vb,wb,Call("Ref",n,lj))));
+        var result=All("n",Seq(Mathbb,Grp(F.Id("N"))),
+            All("M",Call("Family",F.Id("J"),Call("Matrix",b,a,ComplexType())),Implies(matrixDefinition,
+                All("X",Call("Matrix",a,a,ComplexType()),Leq(
+                    Call("traceNorm",Sum("j",F.Id("J"),Mul(mj,Mul(F.Id("X"),Adj(mj))))),
+                    Mul(Mul(D(5),d),Call("traceNorm",F.Id("X"))))))));
+        var conclusion=All("c",Call("Family",F.Id("J"),RealType()),
+            All("L",Call("Family",F.Id("J"),Call("LinearMap",ComplexType(),F.Id("E"),F.Id("F"))),
+                Implies(definition,result)));
+        var body=All("V",Call("LinearIsometry",ComplexType(),F.Id("E"),F.Id("F")),
+            All("h",Call("Family",F.Id("J"),Call("LinearMap",ComplexType(),F.Id("F"),F.Id("F"))),
+                Seq(Forall,Sp,d,Colon,Sp,RealType(),Comma,Sp,All("e",F.Id("E"),Implies(assumptions,conclusion)))));
+        return All("E",F.Id("Type"),All("F",F.Id("Type"),All("J",F.Id("Type"),
+            Seq(Instances("E"),Comma,Sp,Instances("F"),Comma,Sp,
+                OpenBracket,Call("Fintype",F.Id("J")),CloseBracket,Comma,Sp,body))));
+    }
+    private static Formula Instances(string x) => Seq(
+        OpenBracket,Call("NormedAddCommGroup",F.Id(x)),CloseBracket,Sp,
+        OpenBracket,Call("InnerProductSpace",ComplexType(),F.Id(x)),CloseBracket,Sp,
+        OpenBracket,Call("FiniteDimensional",ComplexType(),F.Id(x)),CloseBracket);
+    private static Formula ExistsUnit() => Seq(Open,Exists,Sp,F.Id("x"),Colon,Sp,F.Id("E"),Comma,Sp,Unit(F.Id("x")),Close);
+    private static Formula Energy(Formula x) => Sum("j",F.Id("J"),Sq(Norm(App(At(F.Id("L"),F.Id("j")),x))));
+    private static Formula Unit(Formula x) => Eqn(Norm(x),D(1));
+    private static Formula ComplexType() => Seq(Mathbb,Grp(F.Id("C")));
+    private static Formula RealType() => Seq(Mathbb,Grp(F.Id("R")));
+    private static Formula All(string x,Formula t,Formula b) => Seq(Open,Forall,Sp,F.Id(x),Colon,Sp,t,Comma,Sp,b,Close);
+    private static Formula Sum(string x,Formula t,Formula b) => Seq(F.Sum,Underscore,Grp(F.Id(x),InMacro,Sp,t),Sp,b);
+    private static Formula At(Formula a,Formula i) => Seq(a,Underscore,Grp(i));
+    private static Formula App(Formula a,Formula x) => Seq(a,Open,x,Close);
+    private static Formula Adj(Formula a) => Seq(a,Caret,Grp(Star));
+    private static Formula Inner(Formula a,Formula b) => Call("inner",a,b);
+    private static Formula RealPart(Formula a) => Seq(Re,Open,a,Close);
+    private static Formula Norm(Formula a) => Seq(Vert,Sp,a,Sp,Vert);
+    private static Formula Sq(Formula a) => Seq(Open,a,Close,Caret,Grp(D(2)));
+    private static Formula Mul(Formula a,Formula b) => Seq(a,Sp,b);
+    private static Formula Sub(Formula a,Formula b) => Seq(a,Sp,Minus,Sp,b);
+    private static Formula Leq(Formula a,Formula b) => Seq(a,Sp,Le,Sp,b);
+    private static Formula Eqn(Formula a,Formula b) => Seq(a,Sp,Eq,Sp,b);
+    private static Formula And(Formula a,Formula b) => Seq(Open,a,Sp,Land,Sp,b,Close);
+    private static Formula Implies(Formula a,Formula b) => Seq(Open,Open,a,Close,Sp,Rightarrow,Sp,Open,b,Close,Close);
+    private static Formula Call(string n,params Formula[] a)
+    {
+        var parts = new System.Collections.Generic.List<Formula> { Operatorname,Grp(F.Id(n)),Open };
+        for (int i=0;i<a.Length;i++) { if (i>0) parts.Add(Comma); parts.Add(a[i]); }
+        parts.Add(Close); return Seq(parts.ToArray());
+    }
+}
