@@ -135,8 +135,8 @@ def registration :
     readouts := #[{
       path := #[("body"), ("body"), ("body"), ("body"), ("body"), ("body"),
         ("body"), ("body"), ("body"), ("body"), ("body"), ("body"),
-        ("body"), ("body"), ("arg")]
-      stateBinder := 13
+        ("body"), ("fn"), ("arg")]
+      stateBinder := 10
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
