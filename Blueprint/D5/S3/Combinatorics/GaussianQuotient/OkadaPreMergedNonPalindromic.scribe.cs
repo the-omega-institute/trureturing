@@ -11,8 +11,11 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/StatisticalMechanics/okada2020merged");
 
+    private static readonly LibraryNoteRef WidthTwoSource =
+        LibraryNoteRef.Create("D5/L/Combinatorics/mazhang2026okada");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Almost strictly pre-fitting tuples of width at least three give pre-merged Gaussian determinants that are not almost palindromic.",
+        "Pre-merged Gaussian determinants fail almost palindromicity at width at least three; at width two they are almost palindromic exactly when the smaller tuple gap is one.",
         H("Almost palindromicity of pre-merged Gaussian determinants"),
         Blocks(
             Describe.Lean(
@@ -146,7 +149,59 @@ internal sealed class OkadaPreMergedNonPalindromicDocument : IScribeDocumentDefi
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("okada-2020-premerged-determinant-nonpalindromic"),
-                    ResolutionKind.Proved)))));
+                    ResolutionKind.Proved)),
+            Describe.Lean(
+                DescribeId.Create("width-two-iff"),
+                DeclarationHandle.Create(Prefix + "width_two_iff"),
+                H("The complete width-two classification"),
+                StatementSource.FromAuthor(Disp(WidthTwoBody())),
+                AssessedProvenance.FromLiterature(WidthTwoSource),
+                Blocks(
+                    Paragraph(Text(
+                        "For strictly increasing natural tuples a and b of length two, assume every "
+                        + "entry of a is at most every entry of b. Then preMerged(a,b) is almost "
+                        + "palindromic exactly when min(a(1) − a(0), b(1) − b(0)) = 1. "
+                        + "Indices are zero based, and subtraction is natural subtraction. "
+                        + "The cases a(0) = 0 and a(1) = b(0) are included. "
+                        + "This is Theorem 2 of Ma–Zhang v2, DOI 10.5281/zenodo.23927424. "
+                        + "The base and weight are one and the degree shift is zero.")),
+                    Paragraph(Text(
+                        "If both gaps are at least two, the same factorial-quotient calculation "
+                        + "used above applies: the direct differences are t + x and t + y, "
+                        + "the reversed differences are t and t + x + y. The exact degree gap "
+                        + "is xy. The low coefficients are 1 and c + 1, while the high coefficients "
+                        + "are c and 1, at four distinct endpoint degrees. The original palindrome "
+                        + "contradiction therefore applies to the actual nonzero coefficient list.")),
+                    Paragraph(Text(
+                        "If one gap is one, put r = b(0) − a(1) + 1 and h = max(x,y). "
+                        + "Cancellation of adjacent Gaussian factorials proves "
+                        + "A(1 − X^r) = B(1 − X^(r+h)), hence "
+                        + "P(1 − X^(r+h)) = X^r A(1 − X^h). "
+                        + "Reflect this polynomial identity about degree d + 2r + h, using "
+                        + "reciprocity of A and the antisymmetry of 1 − X^n. Cancelling the "
+                        + "nonzero factor 1 − X^(r+h) gives reflect(d+r,P) = P. "
+                        + "The reflection reverses the sorted support and preserves its coefficients, "
+                        + "so the nonzero coefficient list is a palindrome.")),
+                    Paragraph(Text(
+                        "The original width-at-least-three claim and result retain their statements. "
+                        + "The counting, constant-base, constant-weight, Example 9.65 and shifted "
+                        + "extensions of the v2 note are separate obligations in issue #26173."))),
+                DescribeRole.Theorem)))));
+
+    private static Formula WidthTwoBody()
+    {
+        var tuple = new Formula.TypeArrow(FinOf(D(2)), Naturals());
+        var cross = All("i", FinOf(D(2)), All("j", FinOf(D(2)),
+            LE(At(F.Id("a"), F.Id("i")), At(F.Id("b"), F.Id("j")))));
+        var x = Sub(At(F.Id("a"), D(1)), At(F.Id("a"), D(0)));
+        var y = Sub(At(F.Id("b"), D(1)), At(F.Id("b"), D(0)));
+        var conclusion = Iff(LocalCall("IsAlmostPalindromic",
+            LocalCall("preMerged", F.Id("a"), F.Id("b"))),
+            Eq(At(Qualified("min"), x, y), D(1)));
+        return All("a", tuple, All("b", tuple,
+            Imp(At(Qualified("StrictMono"), F.Id("a")),
+                Imp(At(Qualified("StrictMono"), F.Id("b")), Imp(cross, conclusion)))));
+    }
 
     private static Formula AlmostPalindromicDefinition()
     {

@@ -4,13 +4,14 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Width-three pre-merged Gaussian determinants are not almost palindromic. -/
+   digest: Pre-merged nonpalindromicity and the complete width-two classification. -/
 
 import D5.S3.Combinatorics.CylindricPartition.LiUncuGaussian
 import Mathlib.Algebra.Order.Monovary
 import Mathlib.Data.List.Palindrome
 
-/-! Okada's width-three pre-merged determinant conjecture. -/
+/-! Okada's pre-merged determinants; width-two classification from Ma–Zhang v2,
+DOI 10.5281/zenodo.23927424, Theorems 1–2. Unit base/weight and zero degree shift. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -268,8 +269,11 @@ private theorem gaussian_product_low
     simp [Nat.cast_sub hμ]
 
 private theorem low_end
-    (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 3 ≤ μ) (ha : StrictMono a)
-    (hb : StrictMono b) (hcross : ∀ i j, a i ≤ b j) :
+    (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 0 < μ) (ha : StrictMono a)
+    (hcross : ∀ i j, a i ≤ b j)
+    (hi : let t := b ⟨0, hμ⟩ - a ⟨μ - 1, by omega⟩
+      (∀ i, t + 2 ≤ b i - a i) ∧
+      (∀ i : Fin μ, 0 < i.val → t + 2 ≤ b i - a (Fin.rev i))) :
     let p := preMerged a b
     let t := b ⟨0, by omega⟩ - a ⟨μ - 1, by omega⟩
     let c := if 0 < a ⟨0, by omega⟩ then μ else μ - 1
@@ -289,7 +293,6 @@ private theorem low_end
   have hstable (n : ℕ) (hn : t + 2 ≤ n) :
       φ (qFactorial n) = φ (qFactorial (t + 2)) :=
     qFactorial_image_stable φ n (t + 2) hx hn
-  have hi := index_bounds μ a b hμ ha hb hcross
   have hd : φ (∏ i, qFactorial (b i - a i)) = φ (qFactorial (t + 2)) ^ μ := by
     rw [map_prod]
     simp_rw [hstable _ (hi.1 _)]
@@ -310,7 +313,7 @@ private theorem low_end
         have hipos : 0 < i.val := by
           have : i.val ≠ 0 := fun h => hiz (Fin.ext h)
           omega
-        exact hstable _ (hi.2.2 i hipos)
+        exact hstable _ (hi.2 i hipos)
       _ = _ := by simp
   have hf := congrArg φ (factorial_product_identity μ a b hcross)
   simp only [map_mul] at hf
@@ -510,39 +513,37 @@ private theorem reversed_degree_gap
   exact_mod_cast hde
 
 private theorem high_end
-    (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 3 ≤ μ) (ha : StrictMono a)
-    (hb : StrictMono b) (hcross : ∀ i j, a i ≤ b j) :
+    (μ : ℕ) (a b : Fin μ → ℕ) (hμ : 0 < μ) (ha : StrictMono a)
+    (hcross : ∀ i j, a i ≤ b j)
+    (hi : ∀ i, b ⟨0, hμ⟩ - a ⟨μ - 1, by omega⟩ + 2 ≤ b i - a i)
+    (hdegap : (∑ i, a (Fin.rev i) * (b i - a (Fin.rev i))) + 2 ≤
+      ∑ i, a i * (b i - a i))
+    (hak : 2 ≤ a ⟨μ - 1, by omega⟩) :
     let p := preMerged a b
     let d := ∑ i, a i * (b i - a i)
     let c := if 0 < a ⟨0, by omega⟩ then μ else μ - 1
     p.natDegree = d ∧ p.coeff d = 1 ∧ p.coeff (d - 1) = c ∧
       d ≥ b ⟨0, by omega⟩ - a ⟨μ - 1, by omega⟩ + 4 := by
   let z : Fin μ := ⟨0, by omega⟩
-  let j : Fin μ := ⟨1, by omega⟩
   let k : Fin μ := ⟨μ - 1, by omega⟩
   let t := b z - a k
   let d := ∑ i, a i * (b i - a i)
   let a0 := ∏ i, gauss (b i) (a i)
   let b0 := ∏ i, gauss (b i) (a (Fin.rev i))
-  have hi := index_bounds μ a b hμ ha hb hcross
   have has := gaussian_product_shape μ a b (fun i => hcross i i)
   change a0.Monic ∧ a0.natDegree = d ∧ a0.reverse = a0 at has
   have hbs := gaussian_product_shape μ (fun i => a (Fin.rev i)) b
     (fun i => hcross (Fin.rev i) i)
-  have hdegap := reversed_degree_gap μ a b hμ ha hb hcross
   have hblt : b0.natDegree + 2 ≤ d := by
     rw [hbs.2.1]
     exact hdegap
-  have hazj := ha (show z < j from Nat.zero_lt_one)
-  have hajk := ha (show j < k by change 1 < μ - 1; omega)
-  have hak : 2 ≤ a k := by omega
-  have hdk : t + 2 ≤ b k - a k := hi.1 k
+  have hdk : t + 2 ≤ b k - a k := hi k
   have hkd : a k * (b k - a k) ≤ d :=
     Finset.single_le_sum (f := fun i : Fin μ => a i * (b i - a i))
       (fun _ _ => Nat.zero_le _) (Finset.mem_univ k)
   have hbound : t + 4 ≤ d := by nlinarith
   have halow := gaussian_product_low μ a b (by omega) ha (fun i => by
-    have := hi.1 i
+    have := hi i
     have := hcross i i
     omega)
   have htop : a0.coeff d = 1 := by
@@ -635,8 +636,15 @@ theorem result : claim := by
   let t := b ⟨0, by omega⟩ - a ⟨μ - 1, by omega⟩
   let r := t + 1
   let c := if 0 < a ⟨0, by omega⟩ then μ else μ - 1
-  have hlo := low_end μ a b hμ ha hb hcross
-  have hhi := high_end μ a b hμ ha hb hcross
+  have hi := index_bounds μ a b hμ ha hb hcross
+  have hlo := low_end μ a b (by omega) ha hcross ⟨hi.1, hi.2.2⟩
+  have hak : 2 ≤ a ⟨μ - 1, by omega⟩ := by
+    have := ha (show (⟨0, by omega⟩ : Fin μ) < ⟨1, by omega⟩ by decide)
+    have := ha (show (⟨1, by omega⟩ : Fin μ) < ⟨μ - 1, by omega⟩ by
+      change 1 < μ - 1; omega)
+    omega
+  have hhi := high_end μ a b (by omega) ha hcross hi.1
+    (reversed_degree_gap μ a b hμ ha hb hcross) hak
   intro hpal
   apply palindrome_contradiction (preMerged a b) r (∑ i, a i * (b i - a i)) c
   · simpa [r, t, c] using And.intro hlo.1 hlo.2.1
@@ -649,5 +657,192 @@ theorem result : claim := by
   · dsimp [c]
     omega
   · exact hpal
+
+
+private theorem width_two_degree_gap (a b : Fin 2 → ℕ)
+    (ha : StrictMono a) (hb : StrictMono b) (hcross : ∀ i j, a i ≤ b j) :
+    (∑ i, a (Fin.rev i) * (b i - a (Fin.rev i))) +
+      (a 1 - a 0) * (b 1 - b 0) = ∑ i, a i * (b i - a i) := by
+  have ha01 := ha (show (0 : Fin 2) < 1 by decide)
+  have hb01 := hb (show (0 : Fin 2) < 1 by decide)
+  have h00 := Nat.sub_add_cancel (hcross 0 0)
+  have h10 := Nat.sub_add_cancel (hcross 1 0)
+  have h01 := Nat.sub_add_cancel (hcross 0 1)
+  have h11 := Nat.sub_add_cancel (hcross 1 1)
+  have hax := Nat.sub_add_cancel ha01.le
+  have hby := Nat.sub_add_cancel hb01.le
+  simp only [Fin.sum_univ_two]
+  norm_num [Fin.rev]
+  nlinarith
+
+private theorem width_two_bounds (a b : Fin 2 → ℕ)
+    (hcross : ∀ i j, a i ≤ b j) (hx : 2 ≤ a 1 - a 0) (hy : 2 ≤ b 1 - b 0) :
+    (∀ i, b 0 - a 1 + 2 ≤ b i - a i) ∧
+    (∀ i : Fin 2, 0 < i.val → b 0 - a 1 + 2 ≤ b i - a (Fin.rev i)) := by
+  have hab := hcross 1 0
+  constructor
+  · intro i
+    fin_cases i <;> simp_all
+    all_goals omega
+  · intro i hi
+    fin_cases i <;> norm_num [Fin.rev] at *
+    omega
+
+private theorem almost_palindromic_of_reflect (p : ℤ[X]) (N : ℕ)
+    (hd : p.natDegree ≤ N) (hr : p.reflect N = p) : IsAlmostPalindromic p := by
+  classical
+  let l := p.support.sort (· ≤ ·)
+  have hc (i : ℕ) : p.coeff (revAt N i) = p.coeff i := by
+    simpa only [coeff_reflect] using congrArg (fun f : ℤ[X] => f.coeff i) hr
+  have hm : p.support.map (revAt N) = p.support := by
+    rw [Finset.map_eq_image, ← reflect_support, hr]
+  have hs : l.map (revAt N) = p.support.sort (· ≥ ·) := by
+    rw [← hm]
+    apply Finset.map_sort
+    intro i hi j hj
+    have hiN := (le_natDegree_of_ne_zero (mem_support_iff.1 hi)).trans hd
+    have hjN := (le_natDegree_of_ne_zero (mem_support_iff.1 hj)).trans hd
+    rw [revAt_le hiN, revAt_le hjN]
+    omega
+  have hp : (p.support.sort (· ≥ ·)).Perm l.reverse := by
+    rw [← Multiset.coe_eq_coe]
+    simp [l]
+  have he : p.support.sort (· ≥ ·) = l.reverse :=
+    hp.eq_of_pairwise' (Finset.pairwise_sort _ _) (Finset.pairwise_sort _ _).reverse
+  apply List.Palindrome.of_reverse_eq
+  change (l.map p.coeff).reverse = l.map p.coeff
+  rw [← List.map_reverse, ← he, ← hs, List.map_map]
+  exact List.map_congr_left fun i _ => hc i
+
+private theorem width_two_cancellation (a b : Fin 2 → ℕ)
+    (ha : StrictMono a) (hb : StrictMono b) (hcross : ∀ i j, a i ≤ b j)
+    (hgap : a 1 - a 0 = 1 ∨ b 1 - b 0 = 1) :
+    let A := ∏ i, gauss (b i) (a i)
+    let B := ∏ i, gauss (b i) (a (Fin.rev i))
+    let r := b 0 - a 1 + 1
+    let h := max (a 1 - a 0) (b 1 - b 0)
+    A * (1 - X ^ r) = B * (1 - X ^ (r + h)) := by
+  dsimp only
+  have ha01 := ha (show (0 : Fin 2) < 1 by decide)
+  have hb01 := hb (show (0 : Fin 2) < 1 by decide)
+  have hab := hcross 1 0
+  have hf := factorial_product_identity 2 a b hcross
+  simp only [Fin.prod_univ_two] at hf ⊢
+  norm_num [Fin.rev] at hf ⊢
+  rcases hgap with hx | hy
+  · have h0 : b 0 - a 0 = b 0 - a 1 + 1 := by omega
+    have h1 : b 1 - a 0 = b 1 - a 1 + 1 := by omega
+    have hL : b 0 - a 1 + 1 + max (a 1 - a 0) (b 1 - b 0) =
+        b 1 - a 1 + 1 := by omega
+    rw [h0, h1, qFactorial_succ, qFactorial_succ] at hf
+    rw [hL]
+    apply mul_right_cancel₀ (show qFactorial (b 0 - a 1) * qFactorial (b 1 - a 1) ≠ 0 from
+      mul_ne_zero (fun hz => by have := congrArg (fun f : ℤ[X] => f.coeff 0) hz;
+        simpa [qFactorial_coeff_zero] using this)
+        (fun hz => by have := congrArg (fun f : ℤ[X] => f.coeff 0) hz;
+          simpa [qFactorial_coeff_zero] using this))
+    convert hf using 1 <;> ring
+  · have h0 : b 1 - a 1 = b 0 - a 1 + 1 := by omega
+    have h1 : b 1 - a 0 = b 0 - a 0 + 1 := by omega
+    have hL : b 0 - a 1 + 1 + max (a 1 - a 0) (b 1 - b 0) =
+        b 0 - a 0 + 1 := by omega
+    rw [h0, h1, qFactorial_succ, qFactorial_succ] at hf
+    rw [hL]
+    apply mul_right_cancel₀ (show qFactorial (b 0 - a 0) * qFactorial (b 0 - a 1) ≠ 0 from
+      mul_ne_zero (fun hz => by have := congrArg (fun f : ℤ[X] => f.coeff 0) hz;
+        simpa [qFactorial_coeff_zero] using this)
+        (fun hz => by have := congrArg (fun f : ℤ[X] => f.coeff 0) hz;
+          simpa [qFactorial_coeff_zero] using this))
+    convert hf using 1 <;> ring
+
+private theorem width_two_one_gap (a b : Fin 2 → ℕ)
+    (ha : StrictMono a) (hb : StrictMono b) (hcross : ∀ i j, a i ≤ b j)
+    (hgap : a 1 - a 0 = 1 ∨ b 1 - b 0 = 1) :
+    IsAlmostPalindromic (preMerged a b) := by
+  let A := ∏ i, gauss (b i) (a i)
+  let B := ∏ i, gauss (b i) (a (Fin.rev i))
+  let r := b 0 - a 1 + 1
+  let h := max (a 1 - a 0) (b 1 - b 0)
+  let d := ∑ i, a i * (b i - a i)
+  let p := preMerged a b
+  have hA := gaussian_product_shape 2 a b (fun i => hcross i i)
+  have hB := gaussian_product_shape 2 (fun i => a (Fin.rev i)) b
+    (fun i => hcross (Fin.rev i) i)
+  have hdeg := width_two_degree_gap a b ha hb hcross
+  have hpdeg : p.natDegree ≤ d := by
+    exact (natDegree_sub_le _ _).trans (max_le (by exact hA.2.1.le) (by
+      rw [hB.2.1]; omega))
+  have hc := width_two_cancellation a b ha hb hcross hgap
+  change A * (1 - X ^ r) = B * (1 - X ^ (r + h)) at hc
+  have hi : p * (1 - X ^ (r + h)) = X ^ r * A * (1 - X ^ h) := by
+    change (A - B) * _ = _
+    calc
+      _ = A * (1 - X ^ (r + h)) - B * (1 - X ^ (r + h)) := by ring
+      _ = A * (1 - X ^ (r + h)) - A * (1 - X ^ r) := by rw [hc]
+      _ = _ := by rw [pow_add]; ring
+  have hanti (n : ℕ) : ((1 - X ^ n : ℤ[X])).reflect n = -(1 - X ^ n) := by
+    rw [reflect_sub, reflect_one, reflect_monomial, revAt_le le_rfl]
+    simp
+    ring
+  have hreflect := congrArg (fun f : ℤ[X] => f.reflect (d + r + (r + h))) hi
+  have hleft : (p * (1 - X ^ (r + h))).reflect (d + r + (r + h)) =
+      p.reflect (d + r) * (-(1 - X ^ (r + h))) := by
+    rw [reflect_mul _ _ (by omega : p.natDegree ≤ d + r)
+      (natDegree_sub_le _ _ |>.trans (by simp)), hanti]
+  have hright : (X ^ r * A * (1 - X ^ h)).reflect (d + r + (r + h)) =
+      -(X ^ r * A * (1 - X ^ h)) := by
+    have hDA : A.natDegree = d := hA.2.1
+    have hRA : A.reflect d = A := by simpa only [← hDA, ← reverse] using hA.2.2
+    have hidx : d + r + (r + h) = (r + r + d) + h := by omega
+    rw [hidx, reflect_mul _ _ (by
+      rw [natDegree_mul (pow_ne_zero _ X_ne_zero) hA.1.ne_zero, natDegree_X_pow, hDA]
+      omega) (natDegree_sub_le _ _ |>.trans (by simp)),
+      reflect_mul _ _ (by simp : (X ^ r : ℤ[X]).natDegree ≤ r + r) hDA.le,
+      reflect_monomial, revAt_le (by omega : r ≤ r + r), hRA, hanti]
+    simp [show r + r - r = r by omega]
+  rw [hleft, hright, ← hi] at hreflect
+  have hcancel : (1 - X ^ (r + h) : ℤ[X]) ≠ 0 := by
+    intro hz
+    have hz0 := congrArg (fun f : ℤ[X] => f.coeff 0) hz
+    have hrh : 0 < r + h := by dsimp [r]; omega
+    simpa [coeff_X_pow, hrh.ne'] using hz0
+  have heq : p.reflect (d + r) = p := by
+    apply mul_right_cancel₀ hcancel
+    linear_combination -hreflect
+  exact almost_palindromic_of_reflect p (d + r) (by omega) heq
+
+/-- The complete width-two classification, including zero first entry and touching tuples.
+The gaps are natural subtraction; the hypotheses are precisely almost strict pre-fitting.
+Ma–Zhang v2, Theorem 2 (DOI 10.5281/zenodo.23927424). -/
+theorem width_two_iff (a b : Fin 2 → ℕ)
+    (ha : StrictMono a) (hb : StrictMono b) (hcross : ∀ i j, a i ≤ b j) :
+    IsAlmostPalindromic (preMerged a b) ↔ min (a 1 - a 0) (b 1 - b 0) = 1 := by
+  have ha01 := ha (show (0 : Fin 2) < 1 by decide)
+  have hb01 := hb (show (0 : Fin 2) < 1 by decide)
+  constructor
+  · intro hpal
+    by_contra hmin
+    have hx : 2 ≤ a 1 - a 0 := by omega
+    have hy : 2 ≤ b 1 - b 0 := by omega
+    have hi := width_two_bounds a b hcross hx hy
+    have hlo := low_end 2 a b (by decide) ha hcross hi
+    have hdeg := width_two_degree_gap a b ha hb hcross
+    have hgap : (∑ i, a (Fin.rev i) * (b i - a (Fin.rev i))) + 2 ≤
+        ∑ i, a i * (b i - a i) := by nlinarith
+    have hhi := high_end 2 a b (by decide) ha hcross hi.1 hgap (by
+      norm_num; omega)
+    let c := if 0 < a 0 then 2 else 1
+    apply palindrome_contradiction (preMerged a b) (b 0 - a 1 + 1)
+      (∑ i, a i * (b i - a i)) c
+    · simpa [c] using And.intro hlo.1 hlo.2.1
+    · simpa [c] using And.intro hhi.1 (And.intro hhi.2.1 hhi.2.2.1)
+    · exact hlo.2.2
+    · dsimp [c]; split <;> omega
+    · dsimp at hhi; omega
+    · dsimp [c]; split <;> omega
+    · exact hpal
+  · intro hmin
+    apply width_two_one_gap a b ha hb hcross
+    omega
 
 end D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic
