@@ -79,10 +79,11 @@ private def eulerPhi (a₁ a₂ a₃ h : ℂ) (X : Fin 4 → ℂ) : Fin 4 → �
   Fin.snoc ((eulerMatrix a₁ a₂ a₃ h X).adjugate *ᵥ (fun i : Fin 3 => X i.castSucc))
     (eulerMatrix a₁ a₂ a₃ h X).det
 
-private def allOnes (n : ℕ) : Matrix (Fin n) (Fin n) ℂ := fun _ _ => 1
-
 private def g₀ : Matrix (Fin 4) (Fin 4) ℂ :=
-  (2 : ℂ) • (1 : Matrix (Fin 4) (Fin 4) ℂ) - allOnes 4
+  !![1, -1, -1, -1;
+     -1, 1, -1, -1;
+     -1, -1, 1, -1;
+     -1, -1, -1, 1]
 
 private def T (a₁ a₂ a₃ h : ℂ) (α β γ : ℂ) : Matrix (Fin 4) (Fin 4) ℂ :=
   !![-β * γ * h, -α * γ * h, α * β * h, -2;
@@ -95,14 +96,28 @@ private theorem euler_top_identity (a₁ a₂ a₃ h α β γ : ℂ)
     ∀ X : Fin 4 → ℂ,
       T a₁ a₂ a₃ h α β γ *ᵥ eulerPhi a₁ a₂ a₃ h X =
         (-1 / 8 : ℂ) • (g₀ *ᵥ cremona (T a₁ a₂ a₃ h α β γ *ᵥ X)) := by
-  sorry
+  intro X
+  rw [← hα, ← hβ, ← hγ]
+  funext i
+  fin_cases i <;>
+    simp [T, eulerPhi, eulerMatrix, eulerJacobian, g₀,
+      cremona, Matrix.adjugate_fin_three, Matrix.det_fin_three,
+      Matrix.one_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
+    ring
 
 private theorem det_T (a₁ a₂ a₃ h α β γ : ℂ) :
     (T a₁ a₂ a₃ h α β γ).det = 32 * α ^ 2 * β ^ 2 * γ ^ 2 * h ^ 3 := by
-  sorry
+  simp [T, Matrix.det_succ_row_zero, Matrix.det_fin_three,
+    Fin.sum_univ_succ, Matrix.submatrix, Matrix.one_apply, Fin.succAbove]
+  ring
 
 private theorem g₀_unit : IsUnit g₀.det := by
-  sorry
+  have hdet : g₀.det = -16 := by
+    simp [g₀, Matrix.det_succ_row_zero, Fin.sum_univ_succ,
+      Matrix.submatrix, Fin.succAbove]
+    ring
+  rw [hdet]
+  exact isUnit_iff_ne_zero.mpr (by norm_num)
 
 private theorem whitening
     (A B : Matrix (Fin 3) (Fin 3) ℝ) (hA : A.PosDef) (hB : B.PosDef)
