@@ -196,9 +196,9 @@ private lemma centered_defect_identity {a J : Type*}
       congrArg (fun Y : Matrix a a ℂ => (1/2 : ℂ) • Y) ht.symm
     _ = _ := by module
 
+set_option maxHeartbeats 800000 in
 /-- A unital Hermitian Kraus family on a factor has its actual centered defect
 bounded in ordinary trace norm on every finite reference. -/
-set_option maxHeartbeats 800000 in
 theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
     (h : J → E →ₗ[ℂ] E) (hh : ∀ j, (h j).IsSymmetric)
     (hs : ∑ j, (h j).comp (h j) = LinearMap.id)
@@ -326,7 +326,8 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
   have h3' : -(U.val*(∑ j, M j * X * (M j)ᴴ)).trace.re ≤
       (5*δ)*traceNorm X := by
     have hz : -(U.val*(∑ j, M j * X * (M j)ᴴ)).trace.re ≤
-        traceNorm (∑ j, M j * X * (M j)ᴴ) := by simpa using h3
+        traceNorm (∑ j, M j * X * (M j)ᴴ) := by
+      simpa only [unitary.coe_neg, Matrix.neg_mul, Matrix.trace_neg, Complex.neg_re] using h3
     exact hz.trans (hk X)
   rw [heq]
   linarith
