@@ -102,7 +102,55 @@ $$\forall (n : \mathbb{N}) , \forall (k : \mathbb{N}) , \operatorname{Finset}.\o
 
 The Boolean words with exactly k true coordinates form a class of cardinality Nat.choose n k.
 
-**Theorem 1.9 (result).**
+**Theorem 1.9 (G_diag).**
+
+$$\forall (n : \mathbb{N}) , \forall (theta : \mathbb{R}) , \forall (psi : \left(Fin\left(n\right) \to Bool\right) \to \mathbb{C}) , (\sum x : Fin\left(n\right) \to Bool , \operatorname{Complex}.\operatorname{normSq}\left(psi\left(x\right)\right) = 1) \to (\forall (i : Fin\left(n\right)) , \operatorname{ProductPrefixRigidity}.\operatorname{gram}\left(\operatorname{Matrix}.\operatorname{transpose}\left((fun j : Fin\left(n\right) \mapsto fire\left(theta, j, psi\right))\right)\right)\left(i, i\right) = 1)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.G_diag` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every fired state has unit squared norm, so its Gram matrix has diagonal entries one.
+
+**Theorem 1.10 (counts_partition).**
+
+$$\forall (n : \mathbb{N}) , \forall (i : Fin\left(n\right)) , \forall (j : Fin\left(n\right)) , \forall (k : \mathbb{N}) , rCount\left(n, i, j, k\right) + lCount\left(n, i, j, k\right) = \operatorname{Nat}.\operatorname{choose}\left(n, k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.counts_partition` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Agreement and disagreement of two selected bits partition each weight class.
+
+**Theorem 1.11 (pair_count_product).**
+
+$$\forall (n : \mathbb{N}) , \forall (a : Fin\left(n\right)) , \forall (b : Fin\left(n\right)) , (a \neq b) \to (\forall (k : \mathbb{N}) , lCount\left(n, a, b, k\right) \cdot (n \cdot (n - 1)) = 2 \cdot k \cdot (n - k) \cdot \operatorname{Nat}.\operatorname{choose}\left(n, k\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.pair_count_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For distinct sensor positions, counting disagreements over all ordered pairs gives twice the product of the occupied and unoccupied counts in each word.
+
+**Theorem 1.12 (dicke_normalized).**
+
+$$\forall (n : \mathbb{N}) , \forall (l : \mathbb{N}) , (l \leq n) \to (\forall (phi : \left(Fin\left(n\right) \to Bool\right) \to \mathbb{C}) , (\forall (x : Fin\left(n\right) \to Bool) , \operatorname{Complex}.\operatorname{normSq}\left(phi\left(x\right)\right) = if \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((fun j : Fin\left(n\right) \mapsto x\left(j\right) = true), (\operatorname{Finset}.\operatorname{univ} : Finset\left(Fin\left(n\right)\right))\right)\right) = l then (1) / ((\operatorname{Nat}.\operatorname{choose}\left(n, l\right) : \mathbb{R})) else 0) \to (\sum x : Fin\left(n\right) \to Bool , \operatorname{Complex}.\operatorname{normSq}\left(phi\left(x\right)\right) = 1))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.dicke_normalized` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A state with uniform squared amplitudes on a weight class has total squared norm one, independently of its coefficient phases.
+
+**Theorem 1.13 (result).**
 
 $$claim$$
 
@@ -122,11 +170,15 @@ Averaging a feasible Gram decomposition over sensor permutations preserves its o
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.G_diag`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.T`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.claim`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.counts_partition`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.dicke_normalized`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.fire`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.isoSuccess`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.lCount`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.pair_count_product`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.psd_cauchy_schwarz`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.rCount`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.result`
