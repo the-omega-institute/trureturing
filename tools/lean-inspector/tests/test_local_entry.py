@@ -80,16 +80,36 @@ class LocalEntryFixture:
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.seed), STRATALINT_LEAN_BUILD_TARGETS='[]',
             STRATALINT_LEAN_REPORT_LOG_DIR=str(self.root / 'logs'))
-        subprocess.run(['git', 'init', '-q', str(self.root)], check=True, capture_output=True)
         self.fixture.write('.gitignore', '.lake/\nbin/\nseed/\ndev-seed/\nlogs/\ncalls\n'
                            'producer.dll\nrelease-manifest.json\nreleases/\nlake-manifest.json\ncustom-output/\n'
                            '__pycache__/\nbuild/\n')
-        subprocess.run(['git', '-C', str(self.root), 'add', 'Makefile', 'tools', 'D5',
-                        'Audit.lean', 'Inspector.lean', 'producer.py', 'lean-toolchain',
-                        'lakefile.toml', 'lean-report-inputs.json', '.gitignore'], check=True, capture_output=True)
-        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
-                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
-                        'commit', '-qm', 'local report fixture'], check=True, capture_output=True)
+        tracked = ['Makefile', 'tools', 'D5', 'Audit.lean', 'Inspector.lean', 'producer.py',
+                   'lean-toolchain', 'lakefile.toml', 'lean-report-inputs.json', '.gitignore']
+        files = sorted(path for name in tracked for path in (
+            (self.root / name).rglob('*') if (self.root / name).is_dir() else [self.root / name])
+            if path.is_file())
+        identity = tuple((str(path.relative_to(self.root)), path.stat().st_mode & 0o111,
+                          hashlib.sha256(path.read_bytes()).digest()) for path in files)
+        initial_git = getattr(type(self), '_initial_git_material', None)
+        if initial_git is None or initial_git[0] != identity:
+            subprocess.run(['git', 'init', '-q', str(self.root)], check=True, capture_output=True)
+            subprocess.run(['git', '-C', str(self.root), 'add', *tracked], check=True, capture_output=True)
+            subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                            '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                            'commit', '-qm', 'local report fixture'], check=True, capture_output=True)
+            initial_git = identity, tuple((path.relative_to(self.root), path.read_bytes(),
+                                          path.stat().st_mode & 0o777)
+                for path in (self.root / '.git').rglob('*') if path.is_file())
+            type(self)._initial_git_material = initial_git
+        else:
+            # Immutable bytes only: every case owns its Git files and subsequent
+            # history. Git refreshes the copied index against these current
+            # private files. No report, .lake or compiler output is staged here.
+            for relative, data, mode in initial_git[1]:
+                target = self.root / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(data)
+                target.chmod(mode)
 
     def linked_checkout(self):
         self.main_checkout = self.root.resolve()
