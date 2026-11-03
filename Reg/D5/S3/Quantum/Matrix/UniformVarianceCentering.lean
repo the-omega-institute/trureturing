@@ -122,7 +122,7 @@ def source_registration : Registration arena.{u,v,w}
   dependence := dependence
 
 def registration :
-    LeanInformationAudit.Contract.Registration
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@hermitian_block_centering_and_gram_bound.{u,v,w}) (Realization signature.{v}) Unit Unit := {
   unitName := `D5.S3.Quantum.Matrix.UniformVarianceCentering.hermitian_block_centering_and_gram_bound.__information_unit
   realizationName := ``source_registration

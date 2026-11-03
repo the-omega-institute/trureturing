@@ -243,6 +243,7 @@ private def referenceLift (n : ℕ) (L : G →ₗ[ℂ] H) :
   map_add' x y := by ext r; exact L.map_add (x r) (y r)
   map_smul' c x := by ext r; exact L.map_smul c (x r)
 
+omit [FiniteDimensional ℂ H] [FiniteDimensional ℂ G] in
 private lemma reference_energy_le {J : Type*} [Fintype J]
     (L : J → G →ₗ[ℂ] H) (b : ℝ)
     (hv : ∀ x : G, ∑ j, ‖L j x‖^2 ≤ b*‖x‖^2)
