@@ -198,6 +198,7 @@ private lemma centered_defect_identity {a J : Type*}
 
 /-- A unital Hermitian Kraus family on a factor has its actual centered defect
 bounded in ordinary trace norm on every finite reference. -/
+set_option maxHeartbeats 800000 in
 theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
     (h : J → E →ₗ[ℂ] E) (hh : ∀ j, (h j).IsSymmetric)
     (hs : ∑ j, (h j).comp (h j) = LinearMap.id)
@@ -270,11 +271,19 @@ theorem hermitian_unital_kraus_defect_trace_bound {J : Type*} [Fintype J]
   have hk (X : Matrix (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E))))
       (Fin (Module.finrank ℂ (PiLp 2 (fun _ : Fin n => E)))) ℂ) :
       traceNorm (∑ j, M j * X * (M j)ᴴ) ≤ (5*δ)*traceNorm X := by
-    have hL (j : J) : (h j).comp V.toLinearMap -
-        ((inner ℂ (V e) (h j (V e))).re : ℂ) • V.toLinearMap = L j := by
-      simp only [V, LinearIsometry.id_apply, LinearIsometry.id_toLinearMap,
-        LinearMap.comp_id, L, c]
-    simpa only [hL, hM] using ht n X
+    have hz := ht n X
+    change traceNorm (∑ j,
+      LinearMap.toMatrix v.toBasis v.toBasis (referenceLift n (L j)) * X *
+        (LinearMap.toMatrix v.toBasis v.toBasis (referenceLift n (L j)))ᴴ)
+        ≤ (5*δ)*traceNorm X at hz
+    have hm : (∑ j,
+        LinearMap.toMatrix v.toBasis v.toBasis (referenceLift n (L j)) * X *
+          (LinearMap.toMatrix v.toBasis v.toBasis (referenceLift n (L j)))ᴴ) =
+        ∑ j, M j * X * (M j)ᴴ := by
+      apply Finset.sum_congr rfl
+      intro j _
+      rw [hM]
+    rwa [hm] at hz
   intro X
   have hid : X - ∑ j, H j * X * (H j)ᴴ =
       (1/2 : ℂ) • (Q*X+X*Q) - ∑ j, M j * X * (M j)ᴴ :=
