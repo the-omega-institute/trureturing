@@ -4,14 +4,15 @@
    mirror-E: none(waiver:general-theorem-no-numerical-experiment)
    anchors: []
    utility: none
-   digest: Uniform prime reciprocal-square asymptotics with two unrestricted real cutoffs. -/
+   digest: Uniform prime reciprocal-square asymptotics and finite logarithmic refinements. -/
 
 import D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
 import D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity
 
-/-! The lower endpoint is strict, including at prime integers. The upper
-cutoff is arbitrary once it exceeds a sufficiently large fixed multiple of
-the lower cutoff. All theta control is derived from the prime number theorem. -/
+/-! The lower endpoint is strict, including at prime integers. The leading
+asymptotic allows any upper cutoff beyond a fixed multiple of the lower one.
+The logarithmic refinements retain both finite endpoints for every z ≥ y.
+All theta control is derived from the prime number theorem. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -254,7 +255,7 @@ private theorem logEndpoint_deriv {t : ℝ} (ht : 1 < t) (k : ℕ) :
   · rfl
   · dsimp [logKernel]
     cases k with
-    | zero => simp
+    | zero => simp <;> ring
     | succ k => simp only [Nat.succ_sub_one, Nat.cast_add, Nat.cast_one, pow_succ]; field_simp <;> ring
 
 private theorem logKernel_integral_bounds {y z : ℝ} (hy : 1 < y) (hyz : y ≤ z)
@@ -374,14 +375,14 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
     by_cases hpp : p.Prime
     · have hLp : Real.log (p : ℝ) ≠ 0 :=
         (Real.log_pos (by exact_mod_cast hpp.one_lt)).ne'
-      simp only [c, hpp, if_true, f, logKernel, pow_one]
+      simp only [c, hpp, ite_true, f, logKernel, pow_one]
       field_simp
     · simp [c, hpp]
   rw [hsum] at habel
   have hdtint : IntervalIntegrable (fun t => d t * t) MeasureTheory.volume y z := by
-    simpa only [Pi.mul_apply, id_eq] using
-      (hdcont.mul continuousOn_id).intervalIntegrable_of_Icc
-        (μ := MeasureTheory.volume) hyz
+    exact ((hdcont.mul continuousOn_id).intervalIntegrable_of_Icc
+      (μ := MeasureTheory.volume) hyz).congr
+        (fun t _ => by simp only [Pi.mul_apply, id_eq])
   have hprod : IntervalIntegrable (fun t => deriv f t * θ t)
       MeasureTheory.volume y z :=
     (intervalIntegrable_iff_integrableOn_Icc_of_le hyz).mpr (by
@@ -410,7 +411,7 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
       (fun t ht => by
         rw [Set.uIcc_of_le hyz] at ht
         convert (hd t ht).mul (hasDerivAt_id t) using 1
-        · funext u; simp only [Pi.mul_apply, id_eq]; rfl
+        · funext u; simp only [Pi.mul_apply, id_eq]
         · dsimp [f]; ring)
       (((logKernel_continuous hy1 1).intervalIntegrable_of_Icc
         (μ := MeasureTheory.volume) hyz).add hdtint)
@@ -478,7 +479,10 @@ private theorem finite_theta_abel_log_error {y z : ℝ} (hy : Real.exp 1 < y)
     simpa only [neg_div, neg_sub_neg] using h
   rw [hFTC, Real.norm_eq_abs] at herr
   have herr' : |∫ t in y..z, d t * (θ t - t)| ≤ 3 * logEndpoint 9 y := by
-    have hn : 0 ≤ (3 / Real.log y ^ 9) / z := by positivity
+    have hn : 0 ≤ (3 / Real.log y ^ 9) / z := by
+      have hz0 := hy0.trans_le hyz
+      have hLy0 := Real.log_pos hy1
+      positivity
     have heq : (3 / Real.log y ^ 9) / y = 3 * logEndpoint 9 y := by
       dsimp [logEndpoint]; ring
     linarith
@@ -540,7 +544,7 @@ theorem prime_square_tail_logarithmic_refinements :
       (logEndpoint 1 z - logEndpoint 2 z + 2 * logEndpoint 3 z) =
       (S - I 1) - 6 * I 4 := by linarith
   have he2b : |(S - I 1) + 2 * I 3| ≤ 5 * logEndpoint 9 y + 2 * logEndpoint 3 y := by
-    have h := abs_add (S - I 1) (2 * I 3)
+    have h := abs_add_le (S - I 1) (2 * I 3)
     rw [abs_of_nonneg (mul_nonneg (by norm_num) hb3.1)] at h
     exact h.trans (add_le_add herr (mul_le_mul_of_nonneg_left hb3.2 (by norm_num)))
   have he3b : |(S - I 1) - 6 * I 4| ≤ 5 * logEndpoint 9 y + 6 * logEndpoint 4 y := by
@@ -553,13 +557,13 @@ theorem prime_square_tail_logarithmic_refinements :
     rw [← he2] at h
     dsimp [logEndpoint] at h
     simp only [pow_one] at h
-    convert h using 1 <;> ring
+    simpa only [mul_one_div, add_comm] using h
   · change |S - _ + _| ≤ _
     have h := he3b
     rw [← he3] at h
     dsimp [logEndpoint] at h
     simp only [pow_one] at h
-    convert h using 1 <;> ring
+    simpa only [mul_one_div, add_comm] using h
 
 #print axioms prime_square_tail_logarithmic_refinements
 

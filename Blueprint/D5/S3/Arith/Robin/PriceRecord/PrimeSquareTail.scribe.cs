@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
 internal sealed class PrimeSquareTailDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The prime reciprocal-square tail has leading constant one uniformly in two real cutoffs.",
+        "The prime reciprocal-square tail has uniform leading and finite-endpoint logarithmic estimates.",
         H("Uniform Prime Reciprocal-Square Tail"),
         Blocks(Describe.Lean(
             DescribeId.Create("prime-square-tail-uniform-real-cutoffs"),
