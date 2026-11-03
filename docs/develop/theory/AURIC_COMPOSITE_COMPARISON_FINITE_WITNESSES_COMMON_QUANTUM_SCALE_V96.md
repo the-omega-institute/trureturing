@@ -3932,7 +3932,7 @@ U_\theta=\begin{pmatrix}\cos\theta&-\sin\theta\\
 \tag{74.5}
 $$
 
-其他块取 $(1-t)\mathcal L_E+t\operatorname{Pinch}_{E,F}$，直和逐块处理，向量代表按命题 73.1 一次选定。全部实际菜单供应、成功效果、共同调暗及同一个 $m(x,y)=(1-t)\sqrt{xy}$ 均成立。二阶块的非平凡切口泄漏是 $t x_i$，其他块为零，所以 $\lambda=t$；固定校准块给 $\delta=t$ 及 $\kappa(h)\le h/2$，从而 $\eta=t$，整个类满足 C107。
+其他块取 $(1-t)\mathcal L_E+t\mathcal P_{E,F}$，直和逐块处理，向量代表按命题 73.1 一次选定。全部实际菜单供应、成功效果、共同调暗及同一个 $m(x,y)=(1-t)\sqrt{xy}$ 均成立。二阶块的非平凡切口泄漏是 $t x_i$，其他块为零，所以 $\lambda=t$；固定校准块给 $\delta=t$ 及 $\kappa(h)\le h/2$，从而 $\eta=t$，整个类满足 C107。
 
 二态酉的成熟距离公式给 $\|\operatorname{Ad}_{U_\theta}-\operatorname{id}\|_\diamond=2\sin\theta$，其半距离及特征相位对应见 Sanders–Wallman–Sanders 的式 (17)、例 2。复合 $\mathcal L_E$ 后的范数至多 $2\sin\theta\|E\|$；其他块误差至多 $2t\|E\|$，不超过前者。二阶块 $E=1$ 取得 $2\sin\theta$，故 $\mathfrak D=2\sqrt t$，并有 $\mathfrak Q(\varepsilon)=2\sqrt\varepsilon$ 对 $0\le\varepsilon\le1$ 成立。这个标度结论只约束由同一粗预算和共同局部界出发的普遍估计，不声称式 (72.4) 的全部常数最优。∎
 
