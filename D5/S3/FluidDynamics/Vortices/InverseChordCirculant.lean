@@ -155,16 +155,14 @@ private lemma modeValue_sum (N : ℕ) [NeZero N] : ∑ k : ZMod N, modeValue N k
     have hq : (∑ k ∈ range N, (k : ℚ)) = (N : ℚ) ^ 2 / 2 - N / 2 := by
       linear_combination h1q
     have hc := congrArg (algebraMap ℚ ℂ) hq
-    push_cast at hc
-    exact hc
+    simpa only [map_sum, map_pow, map_sub, map_add, map_div₀, map_natCast, map_ofNat] using hc
   have h2 : (∑ k ∈ range N, (k : ℂ) ^ 2) =
       (N : ℂ) ^ 3 / 3 - (N : ℂ) ^ 2 / 2 + N / 6 := by
     have hq : (∑ k ∈ range N, (k : ℚ) ^ 2) =
         (N : ℚ) ^ 3 / 3 - (N : ℚ) ^ 2 / 2 + N / 6 := by
       linear_combination h2q
     have hc := congrArg (algebraMap ℚ ℂ) hq
-    push_cast at hc
-    exact hc
+    simpa only [map_sum, map_pow, map_sub, map_add, map_div₀, map_natCast, map_ofNat] using hc
   have ht (k : ℕ) : ((N : ℂ) ^ 2 - 1) / 12 - (k : ℂ) * ((N : ℂ) - k) / 2 =
       ((N : ℂ) ^ 2 - 1) / 12 - (N : ℂ) / 2 * k + (k : ℂ) ^ 2 / 2 := by ring
   simp_rw [ht]
