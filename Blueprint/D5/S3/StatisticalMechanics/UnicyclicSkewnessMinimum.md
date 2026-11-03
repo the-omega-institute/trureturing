@@ -58,7 +58,7 @@ For every natural n and every real vector x indexed by Fin n, this functional is
 
 **Theorem 1.5 (Normalized inverse rates belong to the standard simplex).**
 
-$$\forall (n: \mathbb{N}), (((0: \mathbb{N}) < n) \to (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \to (\lambda (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, 1, \lambda (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)}) \in \operatorname{stdSimplex}\left(\mathbb{R}, \operatorname{Fin}\left(n\right)\right)))))$$
+$$\forall (n: \mathbb{N}), (((0: \mathbb{N}) < n) \to (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \to ((\lambda (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, 1, \lambda (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)})) \in \operatorname{stdSimplex}\left(\mathbb{R}, \operatorname{Fin}\left(n\right)\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum.normalized_simplex` (`✓ std3`). ∎
 

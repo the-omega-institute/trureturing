@@ -22,7 +22,9 @@ $$((\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessTimesKurtosisLower
 
 *Formalization.* `D5/S3/StatisticalMechanics/UnicyclicSkewnessTimesKurtosisLowerBound.claim` (`✓ std3`).
 
-*Citation.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
 
 *Commentary.*
 

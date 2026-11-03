@@ -200,7 +200,7 @@ internal sealed class UnicyclicSkewnessMinimumDocument : IScribeDocumentDefiniti
         return All("n", Naturals(), Implication(Less(Typed(D(0), Naturals()), X("n")),
             All("k", RateType(), Implication(
                 All("i", FinOf(X("n")), Less(Typed(D(0), Reals()), At(X("k"), X("i")))),
-                new Formula.Relation(normalized, FormulaRelationOperator.MemberOf,
+                new Formula.Relation(Parenthesized(normalized), FormulaRelationOperator.MemberOf,
                     At(Qualified("stdSimplex"), Reals(), FinOf(X("n"))))))));
     }
 

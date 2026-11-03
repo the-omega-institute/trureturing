@@ -31,7 +31,7 @@ internal sealed class UnicyclicSkewnessTimesKurtosisLowerBoundDocument : IScribe
                 DescribeId.Create("claim"), DeclarationHandle.Create(Prefix + "claim"),
                 H("Strict finite-cycle inequality and greatest lower bound"),
                 StatementSource.FromAuthor(Disp(Equivalence(Typed(Local("claim"), Qualified("Prop")), ClaimBody()))),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For every natural n ≥ 2 and every strictly positive real k : Fin n → ℝ, "
                     + "the product skewness k times kurtosis k strictly exceeds lowerBound. "
