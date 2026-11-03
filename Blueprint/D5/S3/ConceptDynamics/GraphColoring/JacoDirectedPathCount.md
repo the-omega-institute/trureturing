@@ -70,7 +70,7 @@ $$\forall k \in \mathrm{Nat},\; (7 \le k) \Rightarrow (\forall i \in \mathrm{Nat
 
 *Formalization.* `D5/S3/ConceptDynamics/GraphColoring/JacoDirectedPathCount.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Johan Kok, Paul Fisher, Bettina Wilkens, Mokhwetha Mabula, Vivian Mukungunugwa (2014). *Characteristics of Jaco Graphs, J_infinity(a), a in N*. URL: <https://arxiv.org/abs/1404.1714v1>.
 
 *Commentary.*
 
@@ -107,6 +107,8 @@ $$\forall k \in \mathrm{Nat},\; (7 \le k) \Rightarrow (\forall i \in \mathrm{Nat
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/JacoDirectedPathCount.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Johan Kok, Paul Fisher, Bettina Wilkens, Mokhwetha Mabula, Vivian Mukungunugwa (2014). *Characteristics of Jaco Graphs, J_infinity(a), a in N*. URL: <https://arxiv.org/abs/1404.1714v1>.
 
 *Commentary.*
 
