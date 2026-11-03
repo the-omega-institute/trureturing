@@ -1,7 +1,13 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakEqualOuter/SmallArithmetic
+   generality: I
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: ThirdPeakEqualOuter SmallArithmetic for the complete original physical family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.LargeThird
 
-/-! UNELABORATED. Three unbounded residue selectors. A finite split of residues
-does not bound the exponent or the ratio s. -/
+/-! ThirdPeakEqualOuter: SmallArithmetic. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

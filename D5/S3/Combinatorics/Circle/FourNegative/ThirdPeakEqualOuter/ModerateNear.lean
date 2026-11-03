@@ -1,7 +1,13 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakEqualOuter/ModerateNear
+   generality: I
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: ThirdPeakEqualOuter ModerateNear for the complete original physical family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.ModerateHigh
 
-/-! UNELABORATED. V[0] is a literal singleton in bank three. All other V
-occurrences are decoded above that bit, so it cannot be spent in bank one. -/
+/-! ThirdPeakEqualOuter: ModerateNear. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

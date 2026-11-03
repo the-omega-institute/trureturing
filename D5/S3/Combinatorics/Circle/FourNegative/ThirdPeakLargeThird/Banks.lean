@@ -1,15 +1,13 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/Banks
    generality: I
-   mirror-B: none(source-only-unelaborated-draft)
-   mirror-E: none(source-only-unelaborated-draft)
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
    anchors: [mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
    digest: Three approved physical orders, sparse paid-bit partition, and actual bank masses. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird.Arithmetic
 
-/-! Unelaborated source. Reuses the canonical full-stock decoder and inventory;
-no geometric source table or periodic induction is duplicated. In Regions II/III
-p=0. On the diagonal p is the literal bit paid from V(v). -/
+/-! ThirdPeakLargeThird: Banks. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird

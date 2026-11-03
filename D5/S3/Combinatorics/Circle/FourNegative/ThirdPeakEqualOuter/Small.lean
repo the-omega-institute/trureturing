@@ -1,7 +1,13 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakEqualOuter/Small
+   generality: I
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: ThirdPeakEqualOuter Small for the complete original physical family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.SmallArithmetic
 
-/-! UNELABORATED. Exact dyadic exhaustion of the three adjacent families,
-including the single 15-label exception. -/
+/-! ThirdPeakEqualOuter: Small. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

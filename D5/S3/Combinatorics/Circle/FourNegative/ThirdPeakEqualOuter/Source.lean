@@ -1,10 +1,16 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakEqualOuter/Source
+   generality: I
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: ThirdPeakEqualOuter Source for the complete original physical family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.Arithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
 import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast.Source
 
-/-! UNELABORATED. Only the d=a specialization missing from the library is
-introduced; the canonical centered dictionary and native masses are reused. -/
+/-! ThirdPeakEqualOuter: Source. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

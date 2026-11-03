@@ -1,7 +1,13 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakEqualOuter/ModerateHigh
+   generality: I
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: ThirdPeakEqualOuter ModerateHigh for the complete original physical family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.ModeratePhysical
 
-/-! UNELABORATED. The high-V quotient is decoded at physical offset a+(c-a).
-Its selected mask is contained in the complete high stock, with an XOR complement. -/
+/-! ThirdPeakEqualOuter: ModerateHigh. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

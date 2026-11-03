@@ -1,15 +1,13 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/DiagonalArithmetic
    generality: I
-   mirror-B: none(source-only-unelaborated-draft)
-   mirror-E: none(source-only-unelaborated-draft)
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
    anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: Actual paid-bit ceiling decomposition and all diagonal scalar windows. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird.Arithmetic
 
-/-! Unelaborated source. Frozen caller proof 0b049e3ec5a88be2c4d852cb9dbe00a16e4de1d3e6f895a1f34b0747a5f7cfb5
-and independent review 680a404f0e7a3c7e40a36a0cde2754747f2a5f518493206354a25141c52bcaaa.
-The corrected constant below is 305. No finite exponent cap is present. -/
+/-! ThirdPeakLargeThird: DiagonalArithmetic. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird

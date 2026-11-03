@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/Parameters
    generality: I
-   mirror-B: none(source-only-unelaborated-draft)
-   mirror-E: none(source-only-unelaborated-draft)
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
    anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: Exact original dyadic parameters and the ceiling in the full physical V stock. -/
@@ -9,8 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird.Physical
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird.DiagonalArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Arithmetic
 
-/-! Unelaborated source. The V bound is derived from actual native chain masses,
-not supplied as a certificate or feasibility assumption. -/
+/-! ThirdPeakLargeThird: Parameters. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird

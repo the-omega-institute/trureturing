@@ -1,17 +1,14 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/Arithmetic
    generality: I
-   mirror-B: none(source-only-unelaborated-draft)
-   mirror-E: none(source-only-unelaborated-draft)
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
    anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
    utility: none
    digest: Unbounded integer ceiling and doubled terminal windows for Regions II and III. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 
-/-! Source draft against 86172888e706177b6c1d135cb12aec3b6d2cdce8.
-No elaboration, kernel, or official acceptance is asserted. The arithmetic is
-from Sections 1 and 4 of frozen review 90c0a9498aa7fa0e71baddb93168703eebcf057a143e25b0a60d567c9d82417c.
-Windows below concern twice the endpoint, avoiding any tacit division by two. -/
+/-! ThirdPeakLargeThird: Arithmetic. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird
@@ -33,7 +30,7 @@ private theorem ceil_bounds (n den : ℤ) (hd : 0<den) :
     (ceilDiv n den-1)*den<n ∧ n≤ceilDiv n den*den := by
   have hr := Int.emod_nonneg (n+den-1) (by omega : den≠0)
   have hs := Int.emod_lt_of_pos (n+den-1) hd
-  have he := Int.ediv_add_emod (n+den-1) den
+  have he := Int.ediv_mul_add_emod (n+den-1) den
   dsimp [ceilDiv]
   nlinarith only [hr,hs,he]
 
@@ -58,28 +55,11 @@ private theorem base_positive (x y z t : ℤ)
     (hx : 4≤x) (hy : 4≤y) (hz : 1≤z) (ht : 1≤t) :
     1≤A x y z ∧ 1≤B x y t ∧ 1≤L x z t ∧ 1≤K y z t ∧
     1≤SU x y t ∧ 1≤SV x z t ∧ 1≤SW y z t ∧ 1≤H y z := by
-  have ha : 0<x*y*z := by positivity
-  have hb : 0<x*y*t := by positivity
-  have hl : 0<x*z*t := by positivity
-  have hk : 0<y*z*t := by positivity
   dsimp [A,B,L,K,SU,SV,SW,H]
-  constructor
-  · positivity
-  constructor
-  · positivity
-  constructor
-  · positivity
-  constructor
-  · positivity
-  constructor
-  · nlinarith only [hb,ht,hx,hy,mul_nonneg (show 0≤x by omega) (show 0≤t by omega)]
-  constructor
-  · have he : 2*(1+z+z*t+x*z*t)-1-z=1+z+2*z*t+2*x*z*t := by ring
-    rw [he]; positivity
-  constructor
-  · have he : 2*(1+y+y*z+y*z*t)-(1+y+y*z)=1+y+y*z+2*y*z*t := by ring
-    rw [he]; positivity
-  · positivity
+  repeat' constructor
+  all_goals apply sub_nonneg.mp
+  all_goals ring_nf
+  all_goals positivity
 
 private theorem large_head (x y z t : ℤ)
     (hy : 4≤y) (hyx : y≤x) (hxt : x≤t) (htz : 8*t≤z) :
@@ -195,6 +175,8 @@ private theorem regionIII_windows (x z t : ℤ)
     window (SU x x t+SV x z t-4*A x x z) (SV x z t) ∧
     window (B x x t-L x z t+2*K x z t-2*A x x z) (K x z t) ∧
     window (SU x x t-SV x z t+2*SW x z t-4*A x x z) (SW x z t) := by
+  have hxpos : 0<x := by omega
+  have hzpos : 0<z := by omega
   have ht' : 0≤t-4*x := by omega
   have hz' : 0≤z-2 := by omega
   have hx' : 0≤x-4 := by omega

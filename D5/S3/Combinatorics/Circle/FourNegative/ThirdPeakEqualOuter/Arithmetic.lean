@@ -1,7 +1,13 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakEqualOuter/Arithmetic
+   generality: I
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: ThirdPeakEqualOuter Arithmetic for the complete original physical family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 
-/-! UNELABORATED candidate source. The variables in this file are integers;
-the natural exponent and physical stock bridges are in the consumers. -/
+/-! ThirdPeakEqualOuter: Arithmetic. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -77,6 +83,7 @@ private theorem afterW_windows (s y z r v : ℤ) (hs : 2 ≤ s) (hy : 4 ≤ y)
   have hra : r*A x y z ≤ s*A x y z := mul_le_mul_of_nonneg_right hr ha.le
   have hεbound : 2*ε ≤ A x y z-1 := he
   have hfirst' : 2*v*SU x y > 2*L x z+2 := hfirst
+  have hsecond' : 0 ≤ SW x y z-2*A x y z+ε := hsecond
   have hsu : SU x y=2*B x y-1 := rfl
   have hsv : SV x z=2*L x z-1-z := rfl
   have hvrel : 2*v*B x y=v*SU x y+v := by dsimp [SU]; ring
@@ -88,10 +95,18 @@ private theorem afterW_windows (s y z r v : ℤ) (hs : 2 ≤ s) (hy : 4 ≤ y)
     Window (SW x y z-2*A x y z+ε) (SW x y z) ∧
     Window ε (A x y z) ∧ Window 0 (SU x y)
   refine ⟨?_,?_,?_,window_zero _ hb,?_,?_,?_,window_zero _ (by omega)⟩
-  · dsimp [Window,δ] at *; nlinarith
+  · dsimp [Window]
+    constructor
+    · dsimp [δ] at hδ
+      nlinarith only [hl,hra,hδ]
+    · nlinarith only [hfirst',hvrel,hv]
   · dsimp [Window]; constructor <;> omega
   · dsimp [Window]; constructor <;> omega
-  · dsimp [Window,ε] at *; nlinarith
+  · dsimp [Window]
+    constructor
+    · dsimp [ε] at hε
+      nlinarith only [hn,hra,hε]
+    · nlinarith only [hfirst',hsv,hz0]
   · dsimp [Window]; constructor <;> omega
   · dsimp [Window]; constructor <;> omega
 

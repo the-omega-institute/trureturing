@@ -1,17 +1,14 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/Endpoint
    generality: I
-   mirror-B: none(source-only-unelaborated-draft)
-   mirror-E: none(source-only-unelaborated-draft)
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/Endpoint
+   mirror-E: none(waiver:physical-source-family-registration)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Full specified large-third original-domain physical joint lift and every natural repeat/take. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird.Selection
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
-/-! UNELABORATED SOURCE ONLY, kernel=false, official=false.
-Scope is exactly 2≤b≤a<d and d+3≤c. This source unit asserts no closure of
-the unchanged full Circle objective, adjacent c=d+1/2 faces, or d=a face.
-The final theorem has no certificate, submask, or feasibility hypothesis. -/
+/-! ThirdPeakLargeThird: Endpoint. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird
@@ -22,7 +19,7 @@ open private zero_period_transport from D5.S3.Combinatorics.Circle.FourNegative.
 
 /-- Every original tuple in the specified large-third domain has an old physical
 order and a literal fresh-k ear. Each scalar coordinate has its own centered
-strip for every natural repetition/take, and its own zero total. Source draft. -/
+strip for every natural repetition/take, and its own zero total. -/
 theorem actualSource_third_peak_large_third_joint_lift (a b c d : ℕ)
     (hb : 2≤b) (hba : b≤a) (had : a<d) (hdc : d+3≤c) :
     ∃ sigma : List (Fin (a+b+c+d)), ∃ j : ℕ,j≤a+b+c+d ∧

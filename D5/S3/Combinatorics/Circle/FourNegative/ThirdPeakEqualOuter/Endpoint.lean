@@ -1,9 +1,15 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakEqualOuter/Endpoint
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/ThirdPeakEqualOuter/Endpoint
+   mirror-E: none(waiver:physical-source-family-registration)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: ThirdPeakEqualOuter Endpoint for the complete original physical family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.Small
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.ModerateNear
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
-/-! UNELABORATED candidate source for exactly b<a=d<c. No kernel or official
-acceptance is asserted. The unrestricted Circle and third-peak cone remain open. -/
+/-! ThirdPeakEqualOuter: Endpoint. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -47,7 +53,7 @@ private theorem original_joint (a b c : ℕ) (hb : 2 ≤ b) (hba : b < a)
 
 /-- Every original gaps(a,b,c,a), 2≤b<a<c: one physical permutation, one literal
 fresh label k, both unchanged actual orders, all natural repeated/overlong takes,
-and two independently zero repeated totals. SOURCE ONLY; UNELABORATED. -/
+and two independently zero repeated totals. -/
 theorem actualSource_third_peak_equal_outer_joint_lift (a b c : ℕ)
     (hb : 2 ≤ b) (hba : b < a) (hac : a < c) :
     ∃ sigma : List (Fin (a+b+c+a)), ∃ j : ℕ, j ≤ a+b+c+a ∧

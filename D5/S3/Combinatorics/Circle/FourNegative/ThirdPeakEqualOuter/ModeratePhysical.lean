@@ -1,8 +1,14 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakEqualOuter/ModeratePhysical
+   generality: I
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: ThirdPeakEqualOuter ModeratePhysical for the complete original physical family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.ModerateArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.Source
 
-/-! UNELABORATED. Consumer for the two moderate physical partitions. The
-certificate here is private and is constructed, rather than assumed, below. -/
+/-! ThirdPeakEqualOuter: ModeratePhysical. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

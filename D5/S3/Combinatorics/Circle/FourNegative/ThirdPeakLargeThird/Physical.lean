@@ -1,15 +1,13 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/Physical
    generality: I
-   mirror-B: none(source-only-unelaborated-draft)
-   mirror-E: none(source-only-unelaborated-draft)
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Actual scalar consumption of the three bank orders through canonical packet strips. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird.Banks
 
-/-! Unelaborated source. All masses are sums of the original physical labels.
-The canonical native_masses, source_signs and strip_iff_packetChecks provide
-source accounting and internal prefixes; no replacement accounting framework. -/
+/-! ThirdPeakLargeThird: Physical. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird

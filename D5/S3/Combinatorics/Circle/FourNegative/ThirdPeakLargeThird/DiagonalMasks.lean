@@ -1,14 +1,13 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/DiagonalMasks
    generality: I
-   mirror-B: none(source-only-unelaborated-draft)
-   mirror-E: none(source-only-unelaborated-draft)
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
    anchors: [mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
    digest: Exhaustive dyadic thresholds and literal payment-bit containment in the selected V mask. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird.Parameters
 
-/-! Unelaborated source. Numeric p≤v is never used to infer sparse containment.
-The proof explicitly exhibits v=2^r*(2*x^2-1)+q, q<2^r, and reads bit r. -/
+/-! ThirdPeakLargeThird: DiagonalMasks. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird

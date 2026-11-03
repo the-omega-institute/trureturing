@@ -1,7 +1,14 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakEqualOuter/LargeThird
+   generality: I
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: ThirdPeakEqualOuter LargeThird for the complete original physical family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter.AfterW
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoFloors
 
-/-! UNELABORATED. Unbounded large-third ceiling selector. -/
+/-! ThirdPeakEqualOuter: LargeThird. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

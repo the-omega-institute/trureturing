@@ -1,14 +1,13 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakLargeThird/Selection
    generality: I
-   mirror-B: none(source-only-unelaborated-draft)
-   mirror-E: none(source-only-unelaborated-draft)
+   mirror-B: none(waiver:private-consumed-physical-helper)
+   mirror-E: none(waiver:private-consumed-physical-helper)
    anchors: [mathlib/module/Mathlib.Data.Nat.Bitwise]
    utility: none
    digest: Exhaustive original-domain selection and consumption of all eight proved windows. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird.DiagonalMasks
 
-/-! Unelaborated source. Exhaustion is b<a, or b=a with d≥a+2,
-or b=a,d=a+1. It includes a=b=2,d=3 and unbounded c. -/
+/-! ThirdPeakLargeThird: Selection. The unrestricted Circle objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLargeThird
