@@ -31,13 +31,16 @@ internal sealed class TensorNullSummandDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The null-summand conjecture holds", ClaimBody(),
                 "Write K for the intersection of the operator kernels and I for the sum of their images. A complement of K∩I in K is disjoint from I and extends to an invariant direct-sum decomposition. Its dimension is at least the ambient dimension minus twice the sum of the operator ranks. Tensor ranks are at most the corresponding powers of the original ranks. Every original rank is smaller than dim V, so geometric decay gives a positive exponent with a null line. Strong induction on dimension supplies finite indecomposable decompositions. In every such decomposition, the number of factors lies between the tensor dimension minus twice the sum of the tensor ranks and the tensor dimension. The squeeze theorem gives the stated universal limit. These dimension and convergence arguments work over any field and do not require absence of a semigroup identity.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ht2508"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula DefinitionBase(Formula body) =>
         All("k", V("Type"), All("S", V("Type"), All("W", V("Type"),

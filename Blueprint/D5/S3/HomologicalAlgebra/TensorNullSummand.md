@@ -70,6 +70,10 @@ $$\forall (k: Type), \forall (S: Type), \forall (V: Type), [\operatorname{Field}
 
 *Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/TensorNullSummand.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ht2508` (proved) by `D5/S3/HomologicalAlgebra/TensorNullSummand.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ht2508","declaration_gid":"D5/S3/HomologicalAlgebra/TensorNullSummand.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David He and Daniel Tubbenhauer (2025). *Tensor powers of representations of (diagram) monoids*. DOI: [10.48550/arXiv.2508.04054](https://doi.org/10.48550/arXiv.2508.04054). URL: <https://arxiv.org/abs/2508.04054v1>.
