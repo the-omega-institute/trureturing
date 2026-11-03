@@ -7,7 +7,6 @@
    digest: Two enzyme routes refute the waiting-time randomness and skewness ordering. -/
 
 import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Logic.Relation
