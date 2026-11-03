@@ -232,7 +232,7 @@ private lemma second_sq_le_third {n : ℕ} (x : Fin n → ℝ)
 private lemma strict_lower_bound (n : ℕ) (hn : 2 ≤ n) (k : Fin n → ℝ)
     (hk : ∀ i, 0 < k i) : lowerBound < skewness k * kurtosis k := by
   obtain ⟨hp, _, hqr, hr⟩ := normalized_moments hn k hk
-  haveI : Nonempty (Fin n) := Fin.pos_iff_nonempty.mp (by omega)
+  have : Nonempty (Fin n) := Fin.pos_iff_nonempty.mp (by omega)
   have hs := Matrix.CollatzWielandt.sum_pos_of_nonneg_ne_zero
     (fun i => (inv_pos.mpr (hk i)).le)
     (Pi.ne_zero_of_pos (fun i => inv_pos.mpr (hk i)))
@@ -300,7 +300,7 @@ private lemma source_rates_positive (u : ℝ) (m : ℕ) (hu : 0 < u) (hu1 : u < 
     (hm : 1 ≤ m) : ∀ i, 0 < sourceRates u m i := by
   have hm0 : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
   intro i
-  dsimp [sourceRates]
+  rw [sourceRates.eq_1]
   split_ifs
   · positivity
   · norm_num
@@ -308,7 +308,7 @@ private lemma source_rates_positive (u : ℝ) (m : ℕ) (hu : 0 < u) (hu1 : u < 
 private lemma source_power_sum (u : ℝ) (m j : ℕ) :
     powerSum (m + 1) j (fun i => (sourceRates u m i)⁻¹) =
       ((m : ℝ) * u / (1 - u)) ^ j + m := by
-  simp only [powerSum, sourceRates, inv_pow, ite_pow, one_pow,
+  simp only [powerSum, sourceRates.eq_1, inv_pow, ite_pow, one_pow,
     Fin.sum_univ_succ, ↓reduceIte, Fin.succ_ne_zero, inv_one, Finset.sum_const,
     Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one]
   rw [← inv_pow, inv_div]
@@ -356,6 +356,45 @@ private lemma source_limit (u : ℝ) (hu : 0 < u) (hu1 : u < 1) :
   rw [heq]
   simpa only [Function.comp_def, hzero] using ha
 
+private lemma constant_minimum :
+    ∃ u : ℝ, 0 < u ∧ u < 1 ∧ f u = lowerBound := by
+  have hc : Continuous f := by unfold f; fun_prop
+  obtain ⟨u, hu, hmin⟩ := isCompact_Icc.exists_isMinOn
+    (show (Set.Icc (0 : ℝ) 1).Nonempty from ⟨0, by norm_num⟩) hc.continuousOn
+  have hneg : f u < 0 := by
+    have h := hmin (show (4 / 5 : ℝ) ∈ Set.Icc (0 : ℝ) 1 by norm_num)
+    norm_num [f] at h ⊢
+    linarith
+  have hu0 : 0 < u := by
+    by_contra h
+    have heq : u = 0 := le_antisymm (le_of_not_gt h) hu.1
+    rw [heq] at hneg
+    norm_num [f] at hneg
+  have hu1 : u < 1 := by
+    by_contra h
+    have heq : u = 1 := le_antisymm hu.2 (le_of_not_gt h)
+    rw [heq] at hneg
+    norm_num [f] at hneg
+  refine ⟨u, hu0, hu1, le_antisymm ?_ (f_lower_bound u hu0 hu1)⟩
+  change f u ≤ sInf (sourceExpression '' Set.Ioi (0 : ℝ))
+  apply le_csInf (show (sourceExpression '' Set.Ioi (0 : ℝ)).Nonempty from
+    ⟨sourceExpression 1, ⟨1, by norm_num, rfl⟩⟩)
+  rintro y ⟨A, hA, rfl⟩
+  have hA0 : 0 < A := hA
+  let v : ℝ := 1 / (1 + A)
+  have hA1 : 0 < 1 + A := by linarith
+  have hv : 0 < v := by dsimp [v]; positivity
+  have hv1 : v < 1 := by
+    dsimp [v]
+    apply (div_lt_iff₀ hA1).2
+    linarith
+  have hAv : (1 - v) / v = A := by
+    dsimp [v]
+    field_simp
+    ring
+  rw [← hAv, source_expression_eq_f v hv hv1]
+  exact hmin ⟨hv.le, hv1.le⟩
+
 private lemma greatest_lower_bound :
     IsGLB {s : ℝ | ∃ n : ℕ, 2 ≤ n ∧ ∃ k : Fin n → ℝ,
       (∀ i, 0 < k i) ∧ s = skewness k * kurtosis k} lowerBound := by
@@ -363,32 +402,13 @@ private lemma greatest_lower_bound :
   · rintro s ⟨n, hn, k, hk, rfl⟩
     exact (strict_lower_bound n hn k hk).le
   · intro b hb
-    change b ≤ sInf (sourceExpression '' Set.Ioi (0 : ℝ))
-    apply le_csInf (show (sourceExpression '' Set.Ioi (0 : ℝ)).Nonempty from
-      ⟨sourceExpression 1, ⟨1, by norm_num, rfl⟩⟩)
-    rintro y ⟨A, hA, rfl⟩
-    have hA0 : 0 < A := hA
-    let u : ℝ := 1 / (1 + A)
-    have hA1 : 0 < 1 + A := by linarith
-    have hu : 0 < u := by dsimp [u]; positivity
-    have hu1 : u < 1 := by
-      dsimp [u]
-      apply (div_lt_iff₀ hA1).2
-      linarith
+    obtain ⟨u, hu, hu1, hmin⟩ := constant_minimum
     have hlim := source_limit u hu hu1
-    have hbound : ∀ m : ℕ, b ≤
-        skewness (sourceRates u (m + 1)) * kurtosis (sourceRates u (m + 1)) := by
-      intro m
-      apply hb
-      exact ⟨m + 2, by omega, sourceRates u (m + 1),
-        source_rates_positive u (m + 1) hu hu1 (by omega), rfl⟩
-    have hbfu : b ≤ f u := ge_of_tendsto' hlim hbound
-    have hAu : (1 - u) / u = A := by
-      dsimp [u]
-      field_simp
-      ring
-    rw [← hAu, source_expression_eq_f u hu hu1]
-    exact hbfu
+    rw [hmin] at hlim
+    apply ge_of_tendsto' hlim
+    intro m
+    exact hb ⟨m + 2, by omega, sourceRates u (m + 1),
+      source_rates_positive u (m + 1) hu hu1 (by omega), rfl⟩
 
 theorem result : claim := by
   exact ⟨strict_lower_bound, greatest_lower_bound⟩
