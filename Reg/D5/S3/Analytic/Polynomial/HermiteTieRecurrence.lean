@@ -83,7 +83,7 @@ def source_registration : Registration arena claim where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-      (@result) (Realization signature) Unit Unit := {
+      (@result) (Realization signature) Type Unit := {
   unitName := `Reg.D5.S3.Analytic.Polynomial.HermiteTieRecurrence.unit
   realizationName := `Reg.D5.S3.Analytic.Polynomial.HermiteTieRecurrence.source_registration
   realizationSource := none
