@@ -23,7 +23,8 @@ namespace ExpectSmul
 
 abbrev signature : Signature where
   Params := Σ n : Type u, Σ _ : Fintype n, DecidableEq n
-  State p := @DensityState p.1 p.2.1 p.2.2 × (ℝ × Matrix p.1 p.1 ℂ)
+  State p := @DensityState (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+    (Sigma.snd (Sigma.snd p)) × (ℝ × Matrix (Sigma.fst p) (Sigma.fst p) ℂ)
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -34,7 +35,8 @@ abbrev signature : Signature where
 def actual : Realization signature.{u} :=
   realize signature.{u}
     (fun _ p s =>
-      @expectation p.1 p.2.1 p.2.2 s.1 (s.2.1 • s.2.2))
+      @expectation (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+        (Sigma.snd (Sigma.snd p)) s.1 (s.2.1 • s.2.2))
     (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
@@ -43,17 +45,18 @@ def rejected : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ p : (signature.{u}).Params,
-    letI : Fintype p.1 := p.2.1
-    letI : DecidableEq p.1 := p.2.2
-    ∀ ρ : DensityState p.1,
-    ∀ t : ℝ, ∀ A : Matrix p.1 p.1 ℂ,
-      R.readout () p (ρ, (t, A)) = t * expectation ρ A
+    ∀ ρ : @DensityState (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+      (Sigma.snd (Sigma.snd p)),
+    ∀ t : ℝ, ∀ A : Matrix (Sigma.fst p) (Sigma.fst p) ℂ,
+      R.readout () p (ρ, (t, A)) =
+        t * @expectation (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+          (Sigma.snd (Sigma.snd p)) ρ A
 
 theorem bridge : (type_of% @expect_smul.{u}) ↔ arena.{u}.Law actual.{u} := by
   constructor
   · intro h p
     intro ρ t A
-    exact @h p.1 p.2.1 p.2.2 ρ t A
+    exact @h (Sigma.fst p) (Sigma.fst (Sigma.snd p)) (Sigma.snd (Sigma.snd p)) ρ t A
   · intro h n hn hd ρ t A
     exact h ⟨n, hn, hd⟩ ρ t A
 
@@ -114,7 +117,8 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   bundleNonempty := .absent
   readout := some (realize signature.{u}
     (fun _ p s =>
-      @expectation p.1 p.2.1 p.2.2 s.1 (s.2.1 • s.2.2))
+      @expectation (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+        (Sigma.snd (Sigma.snd p)) s.1 (s.2.1 • s.2.2))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -134,16 +138,14 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   familyRecord := none
   options := #[] }
 
-#print axioms source_registration
-#print axioms registration
-
 end ExpectSmul
 
 namespace ExpectOne
 
 abbrev signature : Signature where
   Params := Σ n : Type u, Σ _ : Fintype n, DecidableEq n
-  State p := @DensityState p.1 p.2.1 p.2.2 × Matrix p.1 p.1 ℂ
+  State p := @DensityState (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+    (Sigma.snd (Sigma.snd p)) × Matrix (Sigma.fst p) (Sigma.fst p) ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -153,7 +155,9 @@ abbrev signature : Signature where
 
 def actual : Realization signature.{u} :=
   realize signature.{u}
-    (fun _ p s => @expectation p.1 p.2.1 p.2.2 s.1 s.2)
+    (fun _ p s =>
+      @expectation (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+        (Sigma.snd (Sigma.snd p)) s.1 s.2)
     (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
@@ -162,16 +166,16 @@ def rejected : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ p : (signature.{u}).Params,
-    letI : Fintype p.1 := p.2.1
-    letI : DecidableEq p.1 := p.2.2
-    ∀ ρ : DensityState p.1,
-      R.readout () p (ρ, (1 : Matrix p.1 p.1 ℂ)) = 1
+    ∀ ρ : @DensityState (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+      (Sigma.snd (Sigma.snd p)),
+      R.readout () p (ρ, @One.one (Matrix (Sigma.fst p) (Sigma.fst p) ℂ)
+        (@Matrix.one (Sigma.fst p) ℂ (Sigma.snd (Sigma.snd p)) inferInstance inferInstance)) = 1
 
 theorem bridge : (type_of% @expect_one.{u}) ↔ arena.{u}.Law actual.{u} := by
   constructor
   · intro h p
     intro ρ
-    exact @h p.1 p.2.1 p.2.2 ρ
+    exact @h (Sigma.fst p) (Sigma.fst (Sigma.snd p)) (Sigma.snd (Sigma.snd p)) ρ
   · intro h n hn hd ρ
     exact h ⟨n, hn, hd⟩ ρ
 
@@ -226,7 +230,9 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature.{u}
-    (fun _ p s => @expectation p.1 p.2.1 p.2.2 s.1 s.2)
+    (fun _ p s =>
+      @expectation (Sigma.fst p) (Sigma.fst (Sigma.snd p))
+        (Sigma.snd (Sigma.snd p)) s.1 s.2)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -245,9 +251,6 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   continuation := .unknown
   familyRecord := none
   options := #[] }
-
-#print axioms source_registration
-#print axioms registration
 
 end ExpectOne
 
