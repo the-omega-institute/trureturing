@@ -260,4 +260,220 @@ theorem fibonacci_distance (l : ℕ) (n : ℕ+) :
 
 #print axioms fibonacci_distance
 
+private theorem beatty_mono : Monotone beattyOut := by
+  intro i j hij
+  apply Nat.floor_mono
+  apply div_le_div_of_nonneg_right _ Real.goldenRatio_pos.le
+  exact_mod_cast Nat.add_le_add_right hij 1
+
+private theorem shortest_length_layer {j : ℕ} (hj : 3 ≤ j) (n : ℕ+)
+    (hlo : Nat.fib j < n.val) (hhi : n.val ≤ Nat.fib (j + 1))
+    (p : Shortest n) : p.val.val.length = j - 1 := by
+  have hupper : p.val.val.length ≤ j - 1 := by
+    have hpath : ∃ q : TruncatedPath n.val 1 n, q.val.length ≤ j - 1 := by
+      have h := (fibonacci_distance (j - 1) n).1.mpr (by
+        simpa only [show j - 1 + 2 = j + 1 by omega] using hhi)
+      exact h
+    obtain ⟨q, hq⟩ := hpath
+    exact le_trans (p.property q) hq
+  have hlower : j - 1 ≤ p.val.val.length := by
+    by_contra h
+    have hp : p.val.val.length ≤ j - 2 := by omega
+    have hreach := (fibonacci_distance (j - 2) n).1.mp ⟨p.val, hp⟩
+    have hidx : j - 2 + 2 = j := by omega
+    rw [hidx] at hreach
+    omega
+  omega
+
+private def Pred (n : ℕ+) (j : ℕ) :=
+  {h : ℕ+ // beattyOut n.val ≤ h.val ∧ h.val ≤ Nat.fib j}
+
+private instance predFinite (n : ℕ+) (j : ℕ) : Finite (Pred n j) :=
+  Finite.of_injective
+    (fun h => (⟨h.val.val, by have := h.property.2; omega⟩ : Fin (Nat.fib j + 1))) (by
+      intro a b hab
+      apply Subtype.ext
+      apply Subtype.ext
+      exact congrArg Fin.val hab)
+
+private noncomputable instance predFintype (n : ℕ+) (j : ℕ) : Fintype (Pred n j) :=
+  Fintype.ofFinite _
+
+private instance shortestFinite (n : ℕ+) : Finite (Shortest n) := by
+  letI := path_finite (1 : ℕ+) n
+  unfold Shortest TruncatedPath
+  infer_instance
+
+private theorem pred_lt {j : ℕ} (hj : 3 ≤ j) {n : ℕ+}
+    (hlo : Nat.fib j < n.val) {h : Pred n j} : h.val.val < n.val := by
+  exact lt_of_le_of_lt h.property.2 hlo
+
+private def pred_edge {j : ℕ} (hj : 3 ≤ j) {n : ℕ+}
+    (hlo : Nat.fib j < n.val) (h : Pred n j) : (h.val : ℕ+) ⟶ n := by
+  apply PLift.up
+  constructor
+  · exact pred_lt hj hlo
+  · rw [endpoint_eq_beatty]
+    exact (beatty_threshold n.val h.val.val).mpr h.property.1
+
+private theorem fib_prev_endpoint {j : ℕ} (hj : 3 ≤ j) :
+    jacoRight (Nat.fib (j - 1)) = Nat.fib j := by
+  have h := endpoint_fib (j - 3)
+  simpa only [show j - 3 + 2 = j - 1 by omega,
+    show j - 3 + 3 = j by omega] using h
+
+private theorem pred_lower {j : ℕ} (hj : 3 ≤ j) {n : ℕ+}
+    (hlo : Nat.fib j < n.val) : Nat.fib (j - 1) < beattyOut n.val := by
+  by_contra h
+  have hreach := (beatty_threshold n.val (Nat.fib (j - 1))).mpr (by omega)
+  rw [← endpoint_eq_beatty, fib_prev_endpoint hj] at hreach
+  omega
+
+private def shortest_prefix_is_shortest {j : ℕ} (hj : 3 ≤ j) {n : ℕ+}
+    (hlo : Nat.fib j < n.val) (hhi : n.val ≤ Nat.fib (j + 1))
+    (p : Shortest n) {c : ℕ+} (q : Quiver.Path (1 : ℕ+) c)
+    (e : c ⟶ n) (hp : p.val.val = q.cons e) :
+    Shortest c := by
+  have hplen := shortest_length_layer hj n hlo hhi p
+  have hq_len : q.length = j - 2 := by
+    rw [hp, Quiver.Path.length_cons] at hplen
+    omega
+  refine ⟨truncate c.val le_rfl q, ?_⟩
+  intro r
+  let r' : TruncatedPath n.val 1 n :=
+    ⟨r.val.cons e, by
+      intro v hv
+      rcases (Quiver.Path.mem_vertices_cons r.val e).mp hv with hv | rfl
+      · exact le_trans (vertices_bounds r.val v hv).2 (Nat.le_of_lt e.down.1)
+      · rfl⟩
+  have hp' := p.property r'
+  rw [hp] at hp'
+  change q.length + 1 ≤ r.val.length + 1 at hp'
+  change q.length ≤ r.val.length
+  omega
+
+private def suffixForward {j : ℕ} (hj : 3 ≤ j) {n : ℕ+}
+    (hlo : Nat.fib j < n.val) (hhi : n.val ≤ Nat.fib (j + 1)) :
+    Shortest n → Σ h : Pred n j, Shortest h.val := by
+  intro p
+  have hplen := shortest_length_layer hj n hlo hhi p
+  have hpos : p.val.val.length ≠ 0 := by omega
+  cases hpath : p.val.val with
+  | nil =>
+      exact (hpos (by simp [hpath])).elim
+  | cons q e =>
+      have hc_low : beattyOut n.val ≤ q.end.val := by
+        have he := e.down.2
+        rw [endpoint_eq_beatty] at he
+        exact (beatty_threshold n.val q.end.val).mp he
+      have hq_len : q.length = j - 2 := by
+        rw [hpath, Quiver.Path.length_cons] at hplen
+        omega
+      have hc_high : q.end.val ≤ Nat.fib j := by
+        have hqpath : ∃ r : TruncatedPath q.end.val 1 q.end,
+            r.val.length ≤ j - 2 := by
+          refine ⟨truncate q.end.val le_rfl q, ?_⟩
+          change q.length ≤ j - 2
+          omega
+        have hc := (fibonacci_distance (j - 2) q.end).1.mp hqpath
+        simpa only [show j - 2 + 2 = j by omega] using hc
+      refine ⟨⟨q.end, hc_low, hc_high⟩, ?_⟩
+      exact shortest_prefix_is_shortest hj hlo hhi p q e hpath
+
+private noncomputable def suffixBackward {j : ℕ} (hj : 3 ≤ j) {n : ℕ+}
+    (hlo : Nat.fib j < n.val) (hhi : n.val ≤ Nat.fib (j + 1)) :
+    (Σ h : Pred n j, Shortest h.val) → Shortest n := by
+  rintro ⟨h, q⟩
+  let e : (h.val : ℕ+) ⟶ n := pred_edge hj hlo h
+  have hlow : Nat.fib (j - 1) < h.val.val := by
+    exact lt_of_lt_of_le (pred_lower hj hlo) h.property.1
+  have hq_upper : q.val.val.length ≤ j - 2 := by
+    have hpath : ∃ r : TruncatedPath h.val.val 1 h.val,
+        r.val.length ≤ j - 2 := by
+      have hh := (fibonacci_distance (j - 2) h.val).1.mpr (by
+        simpa only [show j - 2 + 2 = j by omega] using h.property.2)
+      exact hh
+    obtain ⟨r, hr⟩ := hpath
+    exact le_trans (q.property r) hr
+  have hq_lower : j - 2 ≤ q.val.val.length := by
+    by_contra hq
+    have hq' : q.val.val.length ≤ j - 3 := by omega
+    have hreach := (fibonacci_distance (j - 3) h.val).1.mp ⟨q.val, hq'⟩
+    have hidx : j - 3 + 2 = j - 1 := by omega
+    rw [hidx] at hreach
+    omega
+  have hq_len : q.val.val.length = j - 2 := by omega
+  let p : TruncatedPath n.val 1 n :=
+    ⟨q.val.val.cons e, by
+      intro v hv
+      rcases (Quiver.Path.mem_vertices_cons q.val.val e).mp hv with hv | rfl
+      · exact le_trans (vertices_bounds q.val.val v hv).2
+          (Nat.le_of_lt e.down.1)
+      · rfl⟩
+  refine ⟨p, ?_⟩
+  have hp_len : p.val.length = j - 1 := by
+    dsimp [p]
+    change q.val.val.length + 1 = j - 1
+    rw [hq_len]
+    omega
+  intro r
+  by_contra hnot
+  have hrlow : r.val.length ≤ j - 2 := by
+    have : r.val.length < p.val.length := Nat.lt_of_not_ge hnot
+    rw [hp_len] at this
+    omega
+  have hreach := (fibonacci_distance (j - 2) n).1.mp ⟨r, hrlow⟩
+  have hidx : j - 2 + 2 = j := by omega
+  rw [hidx] at hreach
+  omega
+
+private noncomputable def suffix_equiv {j : ℕ} (hj : 3 ≤ j) {n : ℕ+}
+    (hlo : Nat.fib j < n.val) (hhi : n.val ≤ Nat.fib (j + 1)) :
+    Shortest n ≃ Σ h : Pred n j, Shortest h.val := by
+  let f := suffixForward hj hlo hhi
+  let g := suffixBackward hj hlo hhi
+  refine { toFun := f, invFun := g, left_inv := ?_, right_inv := ?_ }
+  · intro p
+    have hplen := shortest_length_layer hj n hlo hhi p
+    rcases p with ⟨⟨path, htrunc⟩, hp⟩
+    cases path with
+    | nil =>
+        change 0 = j - 1 at hplen
+        omega
+    | cons q e =>
+        apply Subtype.ext
+        dsimp [f, g, suffixForward, suffixBackward]
+        congr 1
+  · rintro ⟨h, q⟩
+    apply Sigma.ext
+    · apply Subtype.ext
+      rfl
+    · apply heq_of_eq
+      apply Subtype.ext
+      dsimp [f, g, suffixForward, suffixBackward]
+      rfl
+
+private theorem path_count_suffix {j : ℕ} (hj : 3 ≤ j) {n : ℕ+}
+    (hlo : Nat.fib j < n.val) (hhi : n.val ≤ Nat.fib (j + 1)) :
+    psi n.val = ∑ h : Pred n j, psi h.val.val := by
+  have hncard : psi n.val = Nat.card (Shortest n) := by
+    unfold psi
+    split_ifs with hn
+    · have heq : (⟨n.val, hn⟩ : ℕ+) = n := Subtype.ext rfl
+      rw [heq]
+    · exact (hn n.property).elim
+  rw [hncard]
+  rw [Nat.card_congr (suffix_equiv hj hlo hhi), Nat.card_sigma]
+  congr 1
+  funext h
+  have hhcard : psi h.val.val = Nat.card (Shortest h.val) := by
+    unfold psi
+    split_ifs with hh
+    · have heq : (⟨h.val.val, hh⟩ : ℕ+) = h.val := Subtype.ext rfl
+      rw [heq]
+    · exact (hh h.val.property).elim
+  rw [hhcard]
+
+#print axioms path_count_suffix
+
 end D5.S3.ConceptDynamics.GraphColoring.JacoDirectedPathCount
