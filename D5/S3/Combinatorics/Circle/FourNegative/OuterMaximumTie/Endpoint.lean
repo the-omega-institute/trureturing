@@ -35,12 +35,12 @@ private theorem joint (a b c : ℕ) (ha : 2≤a) (hb : 2≤b) (hc : 2≤c)
         (earWord (a+b+c+a) sigma cut) := by
   by_cases hce : c=a
   · subst c
-    simpa only [show a+b+a+a=3*a+b by omega,show a+b+a=2*a+b by omega] using
-      EqualOuterThree.actualSource_equal_outer_three_joint_lift a b ha hb
+    rw [show a+b+a+a=3*a+b by omega,show a+b+a=2*a+b by omega]
+    exact EqualOuterThree.actualSource_equal_outer_three_joint_lift a b ha hb
   by_cases hbe : b=a
   · subst b
-    simpa only [show a+a+c+a=3*a+c by omega] using
-      EqualFirstTwoLast.actualSource_equal_first_two_last_joint_lift a c ha hc
+    rw [show a+a+c+a=3*a+c by omega]
+    exact EqualFirstTwoLast.actualSource_equal_first_two_last_joint_lift a c ha hc
   by_cases hbal : a≤b+1 ∧ a≤c+1
   · exact BalancedGaps.actualSource_balanced_gaps_joint_lift a b c a ha hb hc ha (by omega)
   by_cases hbc : b≤c
