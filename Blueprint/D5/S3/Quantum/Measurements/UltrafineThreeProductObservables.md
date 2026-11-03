@@ -85,8 +85,6 @@ Finally ρ = |g⟩⟨g| is a density matrix and Tr(ρH) = (μ : ℂ). If a separ
 - Truth anchor: `D5/S3/Quantum/Measurements/UltrafineThreeProductObservables.result`
 - Truth anchor: `D5/S3/Quantum/PureState/PureStateHandshake.pure_state_handshake`
 - Truth anchor: `D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity`
-- Dependency: [D5/S3/Observer/Conditioning](../../Observer/Conditioning.md)
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../Entanglement/StructuredNegativityCoincidenceRefutation.md)
-- Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](../Matrix/CartesianVariance.md)
-- Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
-- Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](../RandomCircuits/HaarTwoCopyTwirl.md)
+- Dependency: [D5/S3/Quantum/Measurement/ErrorDisturbanceEndpointRefutation](../Measurement/ErrorDisturbanceEndpointRefutation.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/OutputMaximalCoherenceTensorizationRefutation](../QuantumChannels/OutputMaximalCoherenceTensorizationRefutation.md)
