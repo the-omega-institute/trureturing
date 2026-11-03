@@ -6,19 +6,7 @@ Cancellation in the actual harmonic tail.
 
 The arithmetic suppliers preserve the Terence Tao / Apache-2.0 attribution at LogConvolutionMassExpansion. Harmonic, Stirling, Abel and integral APIs are reused from pinned Mathlib. These are repository deductions, with no literature novelty claim. The literal factorial G is distinct from prime-weighted primitives in other RH routes.
 
-**Theorem 1.1 (Integrability of the actual epsilon density).**
-
-Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Cancellation.epsilonDensity_integrable`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Cancellation.epsilonDensity_integrable` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The actual epsilonDensity(t)=epsilon(t)/t is integrable on the complete set t>1. The proof splits it into the compensated primitive density and the signed floor-phase density.
-
-**Theorem 1.2 (A quadratic tail bound from genuine cancellation).**
+**Theorem 1.1 (A quadratic tail bound from genuine cancellation).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Cancellation.T_epsilon_quadratic_bound`
 
@@ -33,5 +21,4 @@ For every real x>=1, abs(T_epsilon(x))<=8/x^2. Abel summation identifies the int
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Cancellation.T_epsilon_quadratic_bound`
-- Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Cancellation.epsilonDensity_integrable`
 - Dependency: [D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Arithmetic](Arithmetic.md)

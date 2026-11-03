@@ -30,19 +30,7 @@ Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTa
 
 For every real x>=1, G(x)=alpha+(1+gamma)*fract(x)-eta(x)+x*(1+gamma+log(x))*epsilon(x)+2*x*T_epsilon(x). The proof consumes finite_smoothing and the public slope identity; it adds no arithmetic premise.
 
-**Theorem 1.3 (The literal harmonic prefix).**
-
-Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Arithmetic.H_eq_harmonic`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Arithmetic.H_eq_harmonic` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every real x, H(x) is harmonic(floor(x)), cast to the reals. This normalization is consumed by the real-floor harmonic bound and by the cancellation proof.
-
-**Theorem 1.4 (A bounded compensated harmonic primitive).**
+**Theorem 1.3 (A bounded compensated harmonic primitive).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Arithmetic.harmonicPrimitive_bound`
 
@@ -57,7 +45,6 @@ For every real x>=1, abs(x*epsilon(x)+fract(x)-1/2)<=4/x. The entire real floor 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Arithmetic.G_tail_decomposition`
-- Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Arithmetic.H_eq_harmonic`
 - Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Arithmetic.J_tail_from_slope`
 - Truth anchor: `D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/SharpTail/Arithmetic.harmonicPrimitive_bound`
 - Dependency: [D5/S3/Arith/GoldenResource/RobinRationalBasis](../../../GoldenResource/RobinRationalBasis.md)
