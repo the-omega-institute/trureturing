@@ -89,6 +89,7 @@ theorem H_secant {v a b : ℝ} (hv : 9 ≤ v)
       (Real.exp_le_exp.mpr (show s ≤ 3/4 by linarith [hs.2])).trans exp_three_quarters_lt.le
     have hs2 := pow_le_pow_left₀ hs0 hs.2 2
     have hs3 := pow_le_pow_left₀ hs0 hs.2 3
+    norm_num at hs2 hs3
     have hvs0 := mul_le_mul hv hs.1 (by norm_num : (0:ℝ)≤2/3) hv0.le
     have hvs : 0 ≤ v*s-3 := by nlinarith only [hvs0]
     have hfirst : s^2*(s+3)*Real.exp s ≤ (25/49 : ℝ)*(26/7)*(9/4) := by
@@ -147,7 +148,7 @@ private theorem coeff (M : Model) :
   have hkr : k M = M.sigma*(M.d/alpha M) := by dsimp [k]; ring
   have hksharp : k M < 343/(1200*(M.q^2-1)) := by
     rw [hkr]
-    have hh := mul_lt_mul M.sigmaHi hdr hdr0.le (by norm_num : (0:ℝ)<7/10)
+    have hh := mul_lt_mul M.sigmaHi hdr hdr0 (by norm_num : (0:ℝ)≤7/10)
     convert hh using 1 <;> ring
   have hk : k M ≤ 1/25 := by
     have hh := (lt_div_iff₀ (show 0 < 1200*(M.q^2-1) by positivity)).mp hksharp
@@ -341,7 +342,8 @@ private theorem parameter_gap (M : Model) {P a b : ℝ} (hp : 0 < P)
     _ ≤ (64/(405*P^4))*(3*M.q*P/8)^2 :=
       mul_le_mul_of_nonneg_left hab (by positivity)
     _ = ((2/9)*M.q)*P*eps M P := by dsimp [eps]; field_simp [hp.ne'] <;> ring
-    _ ≤ kap M*P*eps M P := mul_le_mul_of_nonneg_right hκq (by dsimp [eps]; positivity)
+    _ ≤ kap M*P*eps M P := mul_le_mul_of_nonneg_right
+      (mul_le_mul_of_nonneg_right hκq hp.le) (by dsimp [eps]; positivity)
     _ ≤ kap M*P*(b-a) := mul_le_mul_of_nonneg_left hgap (by positivity)
 
 private theorem test_values (M : Model) {P : ℝ} (hP : 5 ≤ P) :
@@ -369,8 +371,8 @@ private theorem test_values (M : Model) {P : ℝ} (hP : 5 ≤ P) :
   have hpc := antitone_parameter M hp hc0 (show vc M P ≤ vc M P+eps M P by linarith)
   have hmg := parameter_gap M hp hm0 hc0 hmU hcU (by linarith : eps M P ≤ vc M P-(vc M P-eps M P))
   have hpg := parameter_gap M hp hc0 hp0 hcU hpU (by linarith : eps M P ≤ vc M P+eps M P-vc M P)
-  have hms := F_secant M hcI hmI hmc
-  have hps := F_secant M hpI hcI hpc
+  have hms := F_secant M (P := P) hcI hmI hmc
+  have hps := F_secant M (P := P) hpI hcI hpc
   have he := abs_le.mp (center_error M hP)
   have hmargin : 1/(20*P^4)+1/(5*P^4) < (161/90)*(64/(405*P^4)) := by
     have hid : (161/90)*(64/(405*P^4))-1/(20*P^4)-1/(5*P^4) =
@@ -397,7 +399,8 @@ private theorem sigma_nine_sharp : (200/291 : ℝ) < Real.log (dbonacciPerronRoo
   have hs := BajnokBeattyOddWrapGaussianRoot.gaussian_secant
     BajnokBeattyOddWrapGaussianRoot.two_thirds_lt_s_star.le (le_of_not_gt h)
   rw [BajnokBeattyOddWrapGaussianRoot.gaussian_s_star] at hs
-  dsimp [BajnokBeattyOddWrapGaussianRoot.gaussian] at hs
+  dsimp [BajnokBeattyOddWrapGaussianRoot.gaussian,
+    BajnokBeattyOddWrapGaussianRoot.s_star] at hs
   linarith only [he,hn,hs,le_of_not_gt h]
 
 private def model (q : ℕ) (hq : 3 ≤ q) : Model := by
@@ -406,7 +409,7 @@ private def model (q : ℕ) (hq : 3 ≤ q) : Model := by
   let σ := Real.log β
   let d := ((Q^2+1)*σ/(6*Q*(Q^2-1)))*
     (((Q^4+1)*β-2*Q^4)/((Q^2+1)*β-2*Q^2))
-  have hqR : 3 ≤ Q := by exact_mod_cast hq
+  have hqR : 3 ≤ Q := by dsimp [Q]; exact_mod_cast hq
   have hq0 : 0 < Q := by linarith
   have hn : 9 ≤ q^2 := by simpa only [pow_two] using Nat.mul_le_mul hq hq
   have hb : 0 < β := lt_trans zero_lt_one (one_lt_dbonacciPerronRoot _ (by omega))
@@ -414,7 +417,8 @@ private def model (q : ℕ) (hq : 3 ≤ q) : Model := by
   have hσ : 200/291 < σ := sigma_nine_sharp.trans_le
     (Real.strictMonoOn_log.monotoneOn
       (lt_trans zero_lt_one (one_lt_dbonacciPerronRoot 9 (by norm_num))) hb
-      (dbonacciPerronRoot_strictMonoOn.monotoneOn (by norm_num) (by omega) hn))
+      (dbonacciPerronRoot_strictMonoOn.monotoneOn (by norm_num)
+        (by change 2 ≤ q^2; omega) hn))
   have hl2 : Real.log (2 : ℝ) < 7/10 := by
     have he := Real.sum_le_exp_of_nonneg (x := (7/10 : ℝ)) (by norm_num) 5
     norm_num [sum_range_succ,Nat.factorial] at he
@@ -427,9 +431,12 @@ private def model (q : ℕ) (hq : 3 ≤ q) : Model := by
   · exact hc.2.2.1.trans ((div_lt_div_of_pos_right
       (mul_lt_mul_of_pos_left hl2 (by norm_num)) (by positivity : 0 < 24*Q)).trans_eq (by ring))
   · have hm : Real.exp (Q^2*σ) = β^(q^2) := by
-      simpa only [Q,σ,Nat.cast_pow,Real.exp_log hb] using Real.exp_nat_mul σ (q^2)
+      have hh := Real.exp_nat_mul σ (q^2)
+      have hcast : ((q^2 : ℕ) : ℝ) = Q^2 := by dsimp [Q]; norm_cast
+      rw [hcast] at hh
+      simpa only [σ,Real.exp_log hb] using hh
     have ht : Real.exp (-Q^2*σ) = 2-β := by
-      rw [neg_mul,Real.exp_neg,hm,inv_pow]
+      rw [neg_mul,Real.exp_neg,hm,← inv_pow]
       exact (two_sub_dbonacciPerronRoot_eq_inv_pow _ (by omega)).symm
     dsimp [G]; rw [show Real.exp σ = β from Real.exp_log hb,ht]; ring
   · intro a b ha hab
@@ -438,6 +445,7 @@ private def model (q : ℕ) (hq : 3 ≤ q) : Model := by
 
 -- A new finite positive-cone estimate. The correct x-block bound is 1/(2p),
 -- not the candidate's 1/(3p). The slightly larger tail still closes strictly.
+set_option maxHeartbeats 800000 in
 theorem binomial_signs (p q n a r : ℕ) (hp5 : 5 ≤ p) (hq3 : 3 ≤ q)
     (hr : 2*r = (q-1)*p) (hna : n+p = 2*a) (hfit : a+(q+1)*r ≤ n) :
     let s : ℝ := (((q : ℝ)^2-1)*(p : ℝ)^2)/(2*((n : ℝ)+1))
@@ -454,22 +462,23 @@ theorem binomial_signs (p q n a r : ℕ) (hp5 : 5 ≤ p) (hq3 : 3 ≤ q)
   let A : ℝ := Nat.choose n a
   let B : ℝ := Nat.choose n (a+r)
   let D : ℝ := Nat.choose n (a+(q+1)*r)
-  have hP : 5 ≤ P := by exact_mod_cast hp5
-  have hQ : 3 ≤ Q := by exact_mod_cast hq3
+  have hP : 5 ≤ P := by dsimp [P]; exact_mod_cast hp5
+  have hQ : 3 ≤ Q := by dsimp [Q]; exact_mod_cast hq3
   have hp : 0 < P := by linarith
   have hq : 0 < Q := by linarith
   have hR : 0 < R := by dsimp [R]; positivity
-  have hn : (n : ℝ)+P = 2*(a : ℝ) := by exact_mod_cast hna
+  have hn : (n : ℝ)+P = 2*(a : ℝ) := by dsimp [P]; exact_mod_cast hna
   have hrR : (r : ℝ) = (Q-1)*P/2 := by
     have hh := congrArg (fun z : ℕ => (z : ℝ)) hr
-    push_cast [Nat.cast_sub (by omega : 1 ≤ q)] at hh; linarith only [hh]
+    push_cast [Nat.cast_sub (by omega : 1 ≤ q)] at hh
+    dsimp [P,Q]; linarith only [hh]
   have hqr : ((q*r : ℕ) : ℝ) = Q*(r : ℝ) := by push_cast; rfl
   have hrl : r ≤ (q+1)*r := by
     simpa only [one_mul] using Nat.mul_le_mul_right r (show 1 ≤ q+1 by omega)
   have hBr : a+r ≤ n := by omega
-  have hA : 0 < A := by exact_mod_cast Nat.choose_pos (show a ≤ n by omega)
-  have hB : 0 < B := by exact_mod_cast Nat.choose_pos hBr
-  have hD : 0 < D := by exact_mod_cast Nat.choose_pos hfit
+  have hA : 0 < A := by dsimp [A]; exact_mod_cast Nat.choose_pos (show a ≤ n by omega)
+  have hB : 0 < B := by dsimp [B]; exact_mod_cast Nat.choose_pos hBr
+  have hD : 0 < D := by dsimp [D]; exact_mod_cast Nat.choose_pos hfit
   let x (i : ℕ) : ℝ := (P+2*(i : ℝ)+1)/R
   let y (i : ℕ) : ℝ := (Q*P+2*(i : ℝ)+1)/R
   have hx (i : ℕ) (hi : i ∈ range r) : 0 ≤ x i ∧ x i < 1 := by
@@ -502,18 +511,18 @@ theorem binomial_signs (p q n a r : ℕ) (hp5 : 5 ≤ p) (hq3 : 3 ≤ q)
   have hL : s ≤ Real.log (A/B) := by
     have hh := sum_le_sum (fun i hi => Real.sum_range_le_log_div (hx i hi).1 (hx i hi).2 1)
     norm_num [sum_range_succ] at hh
-    rw [← mul_sum,hxsum,← hlogA] at hh; exact hh
+    rw [← hlogA] at hh; linarith only [hh,hxsum]
   have hJ : Q^2*s ≤ Real.log (B/D) := by
     have hh := sum_le_sum (fun i hi => Real.sum_range_le_log_div (hy i hi).1 (hy i hi).2 1)
     norm_num [sum_range_succ] at hh
-    rw [← mul_sum,hysum,← hlogD] at hh; exact hh
+    rw [← hlogD] at hh; linarith only [hh,hysum]
   refine ⟨hB,?_,?_⟩
   · intro hs
     have hlog2 : Real.log (2 : ℝ) < 7/10 := by
       have he := Real.sum_le_exp_of_nonneg (x := (7/10:ℝ)) (by norm_num) 5
       norm_num [sum_range_succ,Nat.factorial] at he
       exact (Real.log_lt_iff_lt_exp (by norm_num)).2 (by linarith only [he])
-    have hratio : 2 < A/B := (Real.strictMonoOn_log.lt_iff (by norm_num) (div_pos hA hB)).mp
+    have hratio : 2 < A/B := (Real.log_lt_log_iff (by norm_num) (div_pos hA hB)).mp
       (show Real.log 2 < Real.log (A/B) by linarith only [hL,hs,hlog2])
     have hh := (lt_div_iff₀ hB).mp hratio; linarith only [hh,hD]
   · intro hslo hshi
@@ -542,7 +551,8 @@ theorem binomial_signs (p q n a r : ℕ) (hp5 : 5 ≤ p) (hq3 : 3 ≤ q)
         dsimp [U,x]; simp_rw [div_pow]; rw [← sum_div,sum_cubic,hrR]
         dsimp [s]; field_simp [hR.ne',hp.ne',show Q^2-1 ≠ 0 by linarith] <;> ring
       have hs3 := pow_le_pow_left₀ hs0 hshi 3
-      have hp2 : 25 ≤ P^2 := by nlinarith [sq_nonneg (P-5)]
+      norm_num at hs3
+      have hp2 : 25 ≤ P^2 := by nlinarith only [hP,sq_nonneg (P-5)]
       have hprod := mul_le_mul hC hs3 (by positivity) (by norm_num : (0:ℝ)≤5/48)
       have hmain : (2*(Q^2+1)/(3*(Q^2-1)^2))*s^3/P^2 ≤ 1/810 :=
         (div_le_iff₀ (by positivity)).2 (by nlinarith only [hprod,hp2])
@@ -551,11 +561,14 @@ theorem binomial_signs (p q n a r : ℕ) (hp5 : 5 ≤ p) (hq3 : 3 ≤ q)
       have hpoint (i : ℕ) (hi : i ∈ range r) :
           Real.log ((1+x i)/(1-x i)) ≤ 2*x i+(34/33)*((2/3)*(x i)^3) := by
         have hz := hx i hi
-        have hz2 : (x i)^2 ≤ 1/100 := by nlinarith [hxsmall i hi]
+        have hz2 : (x i)^2 ≤ 1/100 := by
+          have hh := pow_le_pow_left₀ hz.1 (hxsmall i hi) 2
+          norm_num at hh; exact hh
         have hd : 0 < 1-(x i)^2 := by linarith
         have htail : 2*(x i)^5/(1-(x i)^2) ≤ (1/33)*((2/3)*(x i)^3) := by
           apply (div_le_iff₀ hd).2
-          nlinarith [mul_nonneg (pow_nonneg hz.1 3) (show 0 ≤ 1/100-(x i)^2 by linarith)]
+          nlinarith only [mul_nonneg (pow_nonneg hz.1 3)
+            (show 0 ≤ 1/100-(x i)^2 by linarith only [hz2])]
         have hh := Real.log_div_le_sum_range_add hz.1 hz.2 2
         norm_num [sum_range_succ] at hh; linarith only [hh,htail]
       have hh := sum_le_sum hpoint
@@ -613,11 +626,12 @@ theorem state_data (p q : ℤ) (t : ℕ) (hp5 : 5 ≤ p) (hpo : Odd p)
   have hn : n+P = 2*a := by
     have hh : 2*(Q*t)-1+1 = 2*(Q*t) := by omega
     dsimp [n,a]; nlinarith only [congrArg (fun z : ℕ => P*z) hh]
-  have hr : 2*r = (Q-1)*P := by dsimp [r,Q]; simp only [Nat.add_sub_cancel]; ring
+  have hr : 2*r = (Q-1)*P := by dsimp [r,Q]; ring
   have hfit : a+(Q+1)*r ≤ n := by
     have htime := Nat.mul_le_mul_left Q ht'
     have hrr : (Q+1)*r = 2*v*(v+1)*P := by dsimp [Q,r]; ring
-    have hrows : Q*t ≥ 2*v*(v+1)+1 := by dsimp [Q] at htime; nlinarith only [htime]
+    have hrows : Q*t ≥ 2*v*(v+1)+1 := by
+      dsimp [Q] at htime ⊢; nlinarith only [htime,Nat.zero_le v]
     have hbound : (Q+1)*r+P ≤ a := by
       rw [hrr]; dsimp [a]; nlinarith only [Nat.mul_le_mul_left P hrows]
     omega
@@ -684,8 +698,10 @@ private theorem actual_estimates (M : Model) (p q : ℤ) (t : ℕ)
     change 2/3 ≤ (((q : ℝ)^2-1)*(p : ℝ)^2)/(2*((((p*(2*q*(t : ℤ)-1)).toNat : ℕ) : ℝ)+1)) → _ at he
     simp only [hnN] at he
     have hh := he (by rwa [← hs]) (by rwa [← hs])
+    rw [← hnN] at hh
     change |2*((square_return_pair p q t).1 : ℝ)/((square_return_pair p q t).2 : ℝ)-
       G ((q : ℝ)^2) _-H ((q : ℝ)^2) _/(p : ℝ)^2| ≤ _ at hh
+    simp only [hnN] at hh
     rw [← hs,← hMq] at hh
     simpa only [F,sub_add_eq_sub_sub] using hh
   · intro hlate
@@ -740,7 +756,7 @@ private theorem threshold_bounds (M : Model) (p q : ℤ) (hp5 : 5 ≤ p) (hpo : 
     have hsge := antitone_parameter M hp hv hvle
     by_cases hs : parameter M p (centered M.q p T) ≤ 5/7
     · have hslo : 2/3 ≤ parameter M p (centered M.q p T) := hmI.1.trans hsge
-      have hsec := F_secant M hmI ⟨hslo,hs⟩ hsge
+      have hsec := F_secant M (P := (p : ℝ)) hmI ⟨hslo,hs⟩ hsge
       have hdiff : 0 ≤ (161/90)*(parameter M p (centered M.q p T)-parameter M p (vc M p-eps M p)) :=
         mul_nonneg (by norm_num) (sub_nonneg.mpr hsge)
       have he := (abs_le.mp (henv hslo hs)).1
@@ -768,7 +784,9 @@ private theorem threshold_bounds (M : Model) (p q : ℤ) (hp5 : 5 ≤ p) (hpo : 
       rw [hc]; nlinarith only [hb.1,hε,hqP,hκP,hmin2,M.q3,hoffset]
     have hceil : center M p+eps M p ≤ (U : ℝ) := Int.le_ceil _
     have hU0 : 0 ≤ U := by
-      exact_mod_cast (show (0 : ℝ) ≤ U by linarith [Nat.cast_nonneg (((q+1)/2).toNat)])
+      have hh : (0 : ℝ) ≤ (U : ℝ) :=
+        (Nat.cast_nonneg (((q+1)/2).toNat)).trans (hcbase.le.trans hceil)
+      exact_mod_cast hh
     let u := U.toNat
     have huZ : (u : ℤ) = U := Int.toNat_of_nonneg hU0
     have huR : (u : ℝ) = (U : ℝ) := by exact_mod_cast huZ
@@ -784,7 +802,7 @@ private theorem threshold_bounds (M : Model) (p q : ℤ) (hp5 : 5 ≤ p) (hpo : 
     have hsU : parameter M p (centered M.q p u) ≤ 5/7 := hsle.trans hpI.2
     have hsign : (square_return_pair p q u).1 < (square_return_pair p q u).2 := by
       by_cases hs : 2/3 ≤ parameter M p (centered M.q p u)
-      · have hsec := F_secant M ⟨hs,hsU⟩ hpI hsle
+      · have hsec := F_secant M (P := (p : ℝ)) ⟨hs,hsU⟩ hpI hsle
         have hdiff : 0 ≤ (161/90)*(parameter M p (vc M p+eps M p)-parameter M p (centered M.q p u)) :=
           mul_nonneg (by norm_num) (sub_nonneg.mpr hsle)
         have he := (abs_le.mp (henv hs hsU)).2
@@ -864,7 +882,7 @@ theorem scalar_coefficients (q : ℕ) (hq : 3 ≤ q) :
   obtain ⟨hκ,hα,hid,hκq,hαlo,hαhi,hdq,hk0,hk,hnk,hda,hg0,hg⟩ := coeff M
   refine ⟨M.sigmaLo,M.sigmaHi,M.d0,M.dHi,hκ,hα,hid,hκq,hαlo,hαhi,
     hdq,hk0,hk,hnk,hda,hg0,hg,M.root,?_⟩
-  simpa only [H,show ((q:ℝ)^2)^2 = (q:ℝ)^4 by ring] using M.cancellation
+  simpa only [M,model,H,show ((q:ℝ)^2)^2 = (q:ℝ)^4 by ring] using M.cancellation
 
 theorem scalar_band (q : ℕ) (hq : 3 ≤ q) (P : ℝ) (hP : 5 ≤ P) :
     let Q : ℝ := q
