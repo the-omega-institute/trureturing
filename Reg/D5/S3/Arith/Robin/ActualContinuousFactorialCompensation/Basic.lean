@@ -35,6 +35,9 @@ The unfinished registrations are tracked at
 https://github.com/the-omega-institute/trureturing/issues/25738.
 No declared_validated status is claimed. -/
 
+/- The public Basic.G_formula is the exact source supplier consumed by the
+SignedLaplace D5 proof; this mirror retains the existing laws and bridges. -/
+
 abbrev signature : Signature where
   Params := Unit
   State _ := ℝ
