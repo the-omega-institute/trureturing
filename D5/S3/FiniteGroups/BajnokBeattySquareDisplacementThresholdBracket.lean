@@ -149,7 +149,9 @@ private theorem coeff (M : Model) :
   have hksharp : k M < 343/(1200*(M.q^2-1)) := by
     rw [hkr]
     have hh := mul_lt_mul M.sigmaHi hdr.le hdr0 (by norm_num : (0:ℝ)≤7/10)
-    convert hh using 1 <;> ring
+    have hrat : (7/10 : ℝ)*(49/(120*(M.q^2-1))) = 343/(1200*(M.q^2-1)) := by
+      field_simp [hnm.ne'] <;> ring
+    exact hh.trans_eq hrat
   have hk : k M ≤ 1/25 := by
     have hh := (lt_div_iff₀ (show 0 < 1200*(M.q^2-1) by positivity)).mp hksharp
     nlinarith [mul_nonneg hk0.le (show 0 ≤ M.q^2-9 by linarith)]
