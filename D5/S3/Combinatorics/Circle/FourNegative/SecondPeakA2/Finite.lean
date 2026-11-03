@@ -6,6 +6,7 @@
    utility: none
    digest: Original a2 near-b construction: Finite and its physical source consumer. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.Small
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QTwoStructural
 
 set_option autoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2
@@ -36,8 +37,6 @@ def boundaryRows : List BoundaryRow := [
   ⟨4,16,2,24,129,193,false⟩,
   ⟨4,32,1,7,194,199,true⟩,
   ⟨4,32,2,7,388,398,true⟩,
-  ⟨8,2,1,9,10,14,true⟩,
-  ⟨8,2,2,12,9,27,true⟩,
   ⟨8,4,1,8,38,39,true⟩,
   ⟨8,4,2,8,76,78,true⟩,
   ⟨8,8,1,9,88,90,true⟩,
@@ -46,8 +45,6 @@ def boundaryRows : List BoundaryRow := [
   ⟨8,16,2,87,129,385,false⟩,
   ⟨8,32,1,10,394,398,true⟩,
   ⟨8,32,2,13,778,795,true⟩,
-  ⟨16,2,1,28,2,26,false⟩,
-  ⟨16,2,2,28,4,52,false⟩,
   ⟨16,4,1,17,74,78,true⟩,
   ⟨16,4,2,18,146,155,false⟩,
   ⟨16,8,1,25,164,180,true⟩,
@@ -56,8 +53,6 @@ def boundaryRows : List BoundaryRow := [
   ⟨16,16,2,16,768,769,true⟩,
   ⟨16,32,1,27,776,794,true⟩,
   ⟨16,32,2,27,1552,1588,true⟩,
-  ⟨32,2,1,55,4,52,true⟩,
-  ⟨32,2,2,55,8,104,true⟩,
   ⟨32,4,1,36,144,154,true⟩,
   ⟨32,4,2,36,288,308,true⟩,
   ⟨32,8,1,34,354,359,true⟩,
@@ -70,7 +65,7 @@ def boundaryRows : List BoundaryRow := [
 private theorem boundary_checked : ∀ r∈boundaryRows, r.Check := by
   simp only [boundaryRows,List.mem_cons,List.mem_nil_iff,or_false]
   intro r hr
-  rcases hr with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;> (unfold BoundaryRow.Check Windows; decide)
+  rcases hr with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;> (unfold BoundaryRow.Check Windows; decide)
 
 private theorem boundary_good (r : BoundaryRow) (hr : r∈boundaryRows) :
     Good r.p r.q r.h r.v r.m r.M r.before := by
@@ -94,8 +89,10 @@ theorem finite_exists (p q h : ℕ)
   · exact ⟨24,129,193,false,boundary_good ⟨4,16,2,24,129,193,false⟩ (by decide)⟩
   · exact ⟨7,194,199,true,boundary_good ⟨4,32,1,7,194,199,true⟩ (by decide)⟩
   · exact ⟨7,388,398,true,boundary_good ⟨4,32,2,7,388,398,true⟩ (by decide)⟩
-  · exact ⟨9,10,14,true,boundary_good ⟨8,2,1,9,10,14,true⟩ (by decide)⟩
-  · exact ⟨12,9,27,true,boundary_good ⟨8,2,2,12,9,27,true⟩ (by decide)⟩
+  · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 3 0 (by omega)
+    exact ⟨v,m,M,true,hg⟩
+  · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 3 1 (by omega)
+    exact ⟨v,m,M,true,hg⟩
   · exact ⟨8,38,39,true,boundary_good ⟨8,4,1,8,38,39,true⟩ (by decide)⟩
   · exact ⟨8,76,78,true,boundary_good ⟨8,4,2,8,76,78,true⟩ (by decide)⟩
   · exact ⟨9,88,90,true,boundary_good ⟨8,8,1,9,88,90,true⟩ (by decide)⟩
@@ -104,8 +101,10 @@ theorem finite_exists (p q h : ℕ)
   · exact ⟨87,129,385,false,boundary_good ⟨8,16,2,87,129,385,false⟩ (by decide)⟩
   · exact ⟨10,394,398,true,boundary_good ⟨8,32,1,10,394,398,true⟩ (by decide)⟩
   · exact ⟨13,778,795,true,boundary_good ⟨8,32,2,13,778,795,true⟩ (by decide)⟩
-  · exact ⟨28,2,26,false,boundary_good ⟨16,2,1,28,2,26,false⟩ (by decide)⟩
-  · exact ⟨28,4,52,false,boundary_good ⟨16,2,2,28,4,52,false⟩ (by decide)⟩
+  · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 4 0 (by omega)
+    exact ⟨v,m,M,true,hg⟩
+  · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 4 1 (by omega)
+    exact ⟨v,m,M,true,hg⟩
   · exact ⟨17,74,78,true,boundary_good ⟨16,4,1,17,74,78,true⟩ (by decide)⟩
   · exact ⟨18,146,155,false,boundary_good ⟨16,4,2,18,146,155,false⟩ (by decide)⟩
   · exact ⟨25,164,180,true,boundary_good ⟨16,8,1,25,164,180,true⟩ (by decide)⟩
@@ -114,8 +113,10 @@ theorem finite_exists (p q h : ℕ)
   · exact ⟨16,768,769,true,boundary_good ⟨16,16,2,16,768,769,true⟩ (by decide)⟩
   · exact ⟨27,776,794,true,boundary_good ⟨16,32,1,27,776,794,true⟩ (by decide)⟩
   · exact ⟨27,1552,1588,true,boundary_good ⟨16,32,2,27,1552,1588,true⟩ (by decide)⟩
-  · exact ⟨55,4,52,true,boundary_good ⟨32,2,1,55,4,52,true⟩ (by decide)⟩
-  · exact ⟨55,8,104,true,boundary_good ⟨32,2,2,55,8,104,true⟩ (by decide)⟩
+  · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 5 0 (by omega)
+    exact ⟨v,m,M,true,hg⟩
+  · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 5 1 (by omega)
+    exact ⟨v,m,M,true,hg⟩
   · exact ⟨36,144,154,true,boundary_good ⟨32,4,1,36,144,154,true⟩ (by decide)⟩
   · exact ⟨36,288,308,true,boundary_good ⟨32,4,2,36,288,308,true⟩ (by decide)⟩
   · exact ⟨34,354,359,true,boundary_good ⟨32,8,1,34,354,359,true⟩ (by decide)⟩

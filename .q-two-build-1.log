@@ -1,0 +1,31 @@
+LEAN_CACHE {"status":"present","worktree":"/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103","donor":null,"method":"none","reason":null,"stamp_miss":null,"pin_sha256":"sha256:6e263543ee0c576b796667fc05a69ec232d3f1236a2ab6a8be8e3e1976459fb8","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":0,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"linked worktree: release archive disabled","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
+✖ [3606/3610] Building D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QTwoStructural (22s)
+trace: .> LEAN_PATH=/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/packages/Cli/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/packages/batteries/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/packages/Qq/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/packages/aesop/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/packages/importGraph/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/packages/plausible/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/packages/mathlib/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/build/lib/lean /Users/macstudio/.elan/toolchains/leanprover--lean4---v4.35.0/bin/lean -j1 /Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural.lean -o /Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/build/lib/lean/D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural.olean -i /Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/build/lib/lean/D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural.ilean -c /Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/build/ir/D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural.c --setup /Users/macstudio/omega/trureturing-01a1577a-circle-a2-allh-tmp-20261103/.lake/build/ir/D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural.setup.json --json
+warning: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural.lean:10:0: The module doc-string for a file should be the first command after the imports
+and any necessary `set_option` commands.
+Please, add a module doc-string (`/-! ... -/`) before `set_option autoImplicit false`.
+
+Hint: Type `m(odule docstring) + [tab]` to insert a template via snippet.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+error: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural.lean:64:2: failed to synthesize
+  Fintype ℤ
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+error: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural.lean:73:4: 'change' tactic failed, pattern
+  (0 ≤ SecondPeakHighD.oldEnds 4 p 2 h v (h * j) (h * (2 * p - 1)) 0 ∧
+      SecondPeakHighD.oldEnds 4 p 2 h v (h * j) (h * (2 * p - 1)) 0 ≤ A p 2 h - 1) ∧
+    0 ≤ SecondPeakHighD.newEnds 4 p 2 h v (h * j) (h * (2 * p - 1)) true 0 ∧
+      SecondPeakHighD.newEnds 4 p 2 h v (h * j) (h * (2 * p - 1)) true 0 ≤ A p 2 h - 1
+is not definitionally equal to target
+  let v := (16 * p + 3 - 5 * r) / 9;
+  Windows p 2 h v (h * r) (h * (2 * p - 1)) true
+error: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural.lean:125:46: Expected type must not contain metavariables
+  ?m.46 > 0
+warning: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural.lean:7:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+Some required targets logged failures:
+- D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QTwoStructural
+error: build failed
+make: *** [lean] Error 1
