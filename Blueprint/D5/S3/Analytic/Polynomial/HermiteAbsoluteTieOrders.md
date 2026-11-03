@@ -66,6 +66,10 @@ $$(\forall n:\mathbb{N}, (1 \le n) \implies (0 < \operatorname{a}\left(n\right))
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Polynomial/HermiteAbsoluteTieOrders.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a381737-hermite-absolute-ties` (proved) by `D5/S3/Analytic/Polynomial/HermiteAbsoluteTieOrders.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a381737-hermite-absolute-ties","declaration_gid":"D5/S3/Analytic/Polynomial/HermiteAbsoluteTieOrders.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mike Sheppard (2025). *Orders k of Hermite polynomials whose maximal coefficient in absolute value appears twice*. URL: <https://oeis.org/A381737/internal?rev=28>.
