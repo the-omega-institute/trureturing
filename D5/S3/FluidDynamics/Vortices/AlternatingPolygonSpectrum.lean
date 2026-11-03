@@ -605,14 +605,14 @@ private lemma rotated_jacobian (m : ℕ) (hm : 3 ≤ m) :
       rw [hsum] at hra har
       first
       | simpa only [Matrix.fromBlocks_apply₁₁, Matrix.zero_apply] using hrr
-      | simpa [charge, chargeMatrix, Matrix.mul_diagonal, weights, mul_comm] using hra
-      | rw [har]; simp [charge, chargeMatrix, Matrix.mul_diagonal, weights]; ring
+      | simpa [charge, chargeMatrix_diagonal, Matrix.mul_diagonal, weights, mul_comm] using hra
+      | rw [har]; simp [charge, chargeMatrix_diagonal, Matrix.mul_diagonal, weights]; ring
       | simpa only [Matrix.fromBlocks_apply₂₂, Matrix.zero_apply] using haa
     · rcases rotated_jacobian_off_diagonal m j k h with ⟨hrr, hra, har, haa⟩
       first
       | simpa only [Matrix.fromBlocks_apply₁₁, Matrix.zero_apply] using hrr
-      | simpa [charge, chargeMatrix, Matrix.mul_diagonal, h, mul_comm] using hra
-      | simpa [charge, chargeMatrix, Matrix.mul_diagonal, h, mul_comm] using har
+      | simpa [charge, chargeMatrix_diagonal, Matrix.mul_diagonal, h, mul_comm] using hra
+      | simpa [charge, chargeMatrix_diagonal, Matrix.mul_diagonal, h, mul_comm] using har
       | simpa only [Matrix.fromBlocks_apply₂₂, Matrix.zero_apply] using haa
 
 private lemma nonzero_root_iff (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :

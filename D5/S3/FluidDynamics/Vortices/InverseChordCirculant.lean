@@ -10,6 +10,7 @@ import D5.S3.Quantum.Matrix.CirculantCharpoly
 import D5.S3.Fourier.SparseGeneratorFamily
 import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
 import D5.S3.ArithUnits.MercaCosetFiberLift
+import D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse
 
 /-! Fourier analysis of the inverse squared chord kernel on a finite cyclic group. -/
 
@@ -248,7 +249,19 @@ def weights (m : ℕ) : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ :=
     1 / (4 * Real.sin (Real.pi * ((j.val : ℝ) - k.val) / (2 * m))^2)
 
 def chargeMatrix (m : ℕ) : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ :=
-  Matrix.diagonal (fun j => (-1 : ℝ) ^ (j.val + 2))
+  match m with
+  | 0 => 0
+  | m + 1 => D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse.indexParity (2*m+1) 2
+
+lemma chargeMatrix_diagonal (m : ℕ) :
+    chargeMatrix m = Matrix.diagonal (fun j => (-1 : ℝ) ^ (j.val + 2)) := by
+  cases m with
+  | zero => ext i; exact Fin.elim0 i
+  | succ m =>
+    simp only [chargeMatrix, D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse.indexParity]
+    congr 1
+    funext i
+    rw [Nat.add_comm 2]
 
 def diagonalWeight (m : ℕ) : ℝ := (((2*m : ℕ) : ℝ)^2 - 1) / 12 - (m : ℝ)^2 / 2
 
@@ -396,7 +409,7 @@ theorem product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : ℝ) :
     ext i j
     change (((chargeMatrix m * weights m * chargeMatrix m)
       (e.symm i) (e.symm j) : ℝ) : ℂ) = u (i-j)
-    simp only [chargeMatrix, Matrix.mul_diagonal, Matrix.diagonal_mul]
+    simp only [chargeMatrix_diagonal, Matrix.mul_diagonal, Matrix.diagonal_mul]
     rw [show (-1 : ℝ) ^ ((e.symm i).val + 2) * weights m (e.symm i) (e.symm j) *
         (-1 : ℝ) ^ ((e.symm j).val + 2) =
         ((-1 : ℝ) ^ ((e.symm i).val + 2) * (-1 : ℝ) ^ ((e.symm j).val + 2)) *
@@ -410,7 +423,7 @@ theorem product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : ℝ) :
     simp only [RingEquiv.apply_symm_apply]
     rfl
   have hD : chargeMatrix m * chargeMatrix m = 1 := by
-    rw [chargeMatrix, Matrix.diagonal_mul_diagonal]
+    rw [chargeMatrix_diagonal, Matrix.diagonal_mul_diagonal]
     apply congrArg Matrix.diagonal
     funext j
     simp only [← pow_add]
