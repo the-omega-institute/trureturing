@@ -52,7 +52,7 @@ theorem result : ¬ claim := by
       (hh : a < (k + 1 : ℝ) * Real.goldenRatio) :
       ⌊a / Real.goldenRatio⌋₊ = k := by
     have ha : 0 ≤ a := (mul_nonneg (Nat.cast_nonneg k) hp.le).trans hl
-    apply (Nat.floor_eq_iff ha).mpr
+    apply (Nat.floor_eq_iff (div_nonneg ha hp.le)).mpr
     exact ⟨(le_div_iff₀ hp).mpr hl, (div_lt_iff₀ hp).mpr hh⟩
   have hb1 : beattyOut 1 = 1 := by
     norm_num only [beattyOut, Nat.cast_ofNat]
