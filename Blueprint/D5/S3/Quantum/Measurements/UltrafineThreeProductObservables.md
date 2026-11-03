@@ -52,6 +52,10 @@ $$\exists (a: (\operatorname{Fin}\left(3\right)) \to (\operatorname{Matrix}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/UltrafineThreeProductObservables.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gachechiladze-wyderka-guhne-2018-three-product-observables` (proved) by `D5/S3/Quantum/Measurements/UltrafineThreeProductObservables.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gachechiladze-wyderka-guhne-2018-three-product-observables","declaration_gid":"D5/S3/Quantum/Measurements/UltrafineThreeProductObservables.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gachechiladze, Mariami; Wyderka, Nikolai; Gühne, Otfried (2018). *The structure of ultrafine entanglement witnesses*. DOI: [10.1088/1751-8121/aad3dc](https://doi.org/10.1088/1751-8121/aad3dc). URL: <https://arxiv.org/abs/1805.06404v2>.

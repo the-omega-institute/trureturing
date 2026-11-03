@@ -147,7 +147,10 @@ internal sealed class UltrafineThreeProductObservablesDocument : IScribeDocument
                         + "If a separable density matrix σ matched all three expectations of ρ, adding those "
                         + "three equalities would give Tr(σH) = (μ : ℂ), contradicting the strict separable "
                         + "energy bound. The displayed families therefore have useless pairs and a useful triple."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gachechiladze-wyderka-guhne-2018-three-product-observables"),
+                    ResolutionKind.Proved)))));
 
     private static Formula SeparableDefinition()
     {
