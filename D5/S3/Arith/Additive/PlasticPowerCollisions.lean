@@ -8,6 +8,9 @@
 
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Tactic
+import Mathlib.Data.Finset.Card
+import Mathlib.Algebra.Group.Pointwise.Finset.Basic
+import Mathlib.Data.Finset.Prod
 
 /-! Integer-exponent difference equations and normalized equal sums for a plastic root. -/
 
@@ -15,6 +18,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.Additive.PlasticPowerCollisions
+
+open scoped Pointwise
 
 private theorem step_identities (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1) :
     r ^ (1 : ℤ) - 1 = r ^ (-4 : ℤ) ∧
@@ -145,5 +150,188 @@ theorem normalized_collision_iff (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
     · linear_combination (r ^ 4 - r ^ 2 + r - 1) * hroot
     · linear_combination
         (r ^ 6 - r ^ 5 + r ^ 4 - r ^ 2 + r - 1) * hroot
+
+/-- Translation of the four templates to two distinct sorted integer-exponent pairs. -/
+theorem sorted_collision_iff (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
+    (i j k l : ℤ) (hij : i ≤ j) (hkl : k ≤ l) (hik : i < k) :
+    r ^ i + r ^ j = r ^ k + r ^ l ↔
+      (j = i + 4 ∧ k = i + 2 ∧ l = i + 3) ∨
+      (j = i + 6 ∧ k = i + 3 ∧ l = i + 5) ∨
+      (j = i + 7 ∧ k = i + 5 ∧ l = i + 5) ∨
+      (j = i + 9 ∧ k = i + 5 ∧ l = i + 8) := by
+  have hrpos : 0 < r := by linarith
+  have hr0 : r ≠ 0 := ne_of_gt hrpos
+  have hm := zpow_right_strictMono₀ hr
+  constructor
+  · intro h
+    have hlj : l < j := hm.lt_iff_lt.1 (by have := hm hik; linarith)
+    have hc : 1 + r ^ (j - i) = r ^ (k - i) + r ^ (l - i) := by
+      simp only [zpow_sub₀ hr0]
+      field_simp
+      nlinarith
+    have ht := (normalized_collision_iff r hr hroot (j-i) (k-i) (l-i)
+      (by omega) (by omega) (by omega)).1 hc
+    rcases ht with h | h | h | h
+    · left; omega
+    · right; left; omega
+    · right; right; left; omega
+    · right; right; right; omega
+  · intro ht
+    have hc : 1 + r ^ (j - i) = r ^ (k - i) + r ^ (l - i) := by
+      apply (normalized_collision_iff r hr hroot (j-i) (k-i) (l-i)
+        (by rcases ht with h | h | h | h <;> omega)
+        (by rcases ht with h | h | h | h <;> omega)
+        (by rcases ht with h | h | h | h <;> omega)).2
+      rcases ht with h | h | h | h
+      · left; omega
+      · right; left; omega
+      · right; right; left; omega
+      · right; right; right; omega
+    simp only [zpow_sub₀ hr0] at hc
+    field_simp at hc
+    nlinarith
+
+private theorem sorted_pair_first_ne (r : ℝ) (hr : 1 < r)
+    (p q : ℤ × ℤ) (hpq : p ≠ q)
+    (h : r ^ p.1 + r ^ p.2 = r ^ q.1 + r ^ q.2) : p.1 ≠ q.1 := by
+  intro he
+  have he' : p.2 = q.2 := (zpow_right_strictMono₀ hr).injective (by rw [he] at h; linarith)
+  exact hpq (Prod.ext he he')
+
+private theorem no_three_sorted_pairs (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
+    (p q s : ℤ × ℤ) (hp : p.1 ≤ p.2) (hq : q.1 ≤ q.2) (hs : s.1 ≤ s.2)
+    (hpq : p ≠ q) (hps : p ≠ s) (hqs : q ≠ s)
+    (heq : r ^ p.1 + r ^ p.2 = r ^ q.1 + r ^ q.2)
+    (hes : r ^ p.1 + r ^ p.2 = r ^ s.1 + r ^ s.2) : False := by
+  have hnq := sorted_pair_first_ne r hr p q hpq heq
+  have hns := sorted_pair_first_ne r hr p s hps hes
+  have hqs' : r ^ q.1 + r ^ q.2 = r ^ s.1 + r ^ s.2 := heq.symm.trans hes
+  have hnqs := sorted_pair_first_ne r hr q s hqs hqs'
+  have hc := sorted_collision_iff r hr hroot
+  rcases lt_or_gt_of_ne hnq with hlt | hgt
+  · have h1 := (hc p.1 p.2 q.1 q.2 hp hq hlt).1 heq
+    rcases lt_or_gt_of_ne hnqs with hlt' | hgt'
+    · have h2 := (hc q.1 q.2 s.1 s.2 hq hs hlt').1 hqs'
+      rcases h1 with h1 | h1 | h1 | h1 <;>
+        rcases h2 with h2 | h2 | h2 | h2 <;> omega
+    · by_cases hlt'' : p.1 < s.1
+      · have h2 := (hc p.1 p.2 s.1 s.2 hp hs hlt'').1 hes
+        rcases h1 with h1 | h1 | h1 | h1 <;>
+          rcases h2 with h2 | h2 | h2 | h2 <;> omega
+      · have h2 := (hc s.1 s.2 p.1 p.2 hs hp (by omega)).1 hes.symm
+        rcases h1 with h1 | h1 | h1 | h1 <;>
+          rcases h2 with h2 | h2 | h2 | h2 <;> omega
+  · have h1 := (hc q.1 q.2 p.1 p.2 hq hp hgt).1 heq.symm
+    rcases lt_or_gt_of_ne hns with hlt' | hgt'
+    · have h2 := (hc p.1 p.2 s.1 s.2 hp hs hlt').1 hes
+      rcases h1 with h1 | h1 | h1 | h1 <;>
+        rcases h2 with h2 | h2 | h2 | h2 <;> omega
+    · have h2 := (hc s.1 s.2 p.1 p.2 hs hp hgt').1 hes.symm
+      rcases h1 with h1 | h1 | h1 | h1 <;>
+        rcases h2 with h2 | h2 | h2 | h2 <;> omega
+
+/-- Each actual real sum has at most two unordered representations in any finite integer power set. -/
+theorem sum_fiber_card_le_two (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
+    (E : Finset ℤ) (x : ℝ) :
+    ((E ×ˢ E).filter (fun p => p.1 ≤ p.2 ∧ r ^ p.1 + r ^ p.2 = x)).card ≤ 2 := by
+  classical
+  by_contra h
+  obtain ⟨p, hp, q, hq, s, hs, hpq, hps, hqs⟩ := Finset.two_lt_card.1 (by omega :
+    2 < ((E ×ˢ E).filter (fun p => p.1 ≤ p.2 ∧ r ^ p.1 + r ^ p.2 = x)).card)
+  simp only [Finset.mem_filter] at hp hq hs
+  exact no_three_sorted_pairs r hr hroot p q s hp.2.1 hq.2.1 hs.2.1 hpq hps hqs
+    (hp.2.2.trans hq.2.2.symm) (hp.2.2.trans hs.2.2.symm)
+
+private def outerCollision (E : Finset ℤ) (p : ℤ × ℤ) : Prop :=
+  (p.2 = p.1 + 4 ∧ p.1 + 2 ∈ E ∧ p.1 + 3 ∈ E) ∨
+  (p.2 = p.1 + 6 ∧ p.1 + 3 ∈ E ∧ p.1 + 5 ∈ E) ∨
+  (p.2 = p.1 + 7 ∧ p.1 + 5 ∈ E) ∨
+  (p.2 = p.1 + 9 ∧ p.1 + 5 ∈ E ∧ p.1 + 8 ∈ E)
+
+private theorem outer_iff_partner (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
+    (E : Finset ℤ) (p : ℤ × ℤ) (hp : p.1 ≤ p.2) :
+    outerCollision E p ↔ ∃ q ∈ E ×ˢ E, q.1 ≤ q.2 ∧ p.1 < q.1 ∧
+      r ^ p.1 + r ^ p.2 = r ^ q.1 + r ^ q.2 := by
+  constructor
+  · intro h
+    rcases h with ⟨h, ha, hb⟩ | ⟨h, ha, hb⟩ | ⟨h, ha⟩ | ⟨h, ha, hb⟩
+    · refine ⟨(p.1+2,p.1+3), Finset.mem_product.2 ⟨ha,hb⟩, by dsimp; omega,
+        by dsimp; omega, ?_⟩
+      exact (sorted_collision_iff r hr hroot _ _ _ _ hp (by omega) (by omega)).2
+        (Or.inl ⟨h,rfl,rfl⟩)
+    · refine ⟨(p.1+3,p.1+5), Finset.mem_product.2 ⟨ha,hb⟩, by dsimp; omega,
+        by dsimp; omega, ?_⟩
+      exact (sorted_collision_iff r hr hroot _ _ _ _ hp (by omega) (by omega)).2
+        (Or.inr (Or.inl ⟨h,rfl,rfl⟩))
+    · refine ⟨(p.1+5,p.1+5), Finset.mem_product.2 ⟨ha,ha⟩, le_refl _,
+        by dsimp; omega, ?_⟩
+      exact (sorted_collision_iff r hr hroot _ _ _ _ hp (le_refl _) (by omega)).2
+        (Or.inr (Or.inr (Or.inl ⟨h,rfl,rfl⟩)))
+    · refine ⟨(p.1+5,p.1+8), Finset.mem_product.2 ⟨ha,hb⟩, by dsimp; omega,
+        by dsimp; omega, ?_⟩
+      exact (sorted_collision_iff r hr hroot _ _ _ _ hp (by omega) (by omega)).2
+        (Or.inr (Or.inr (Or.inr ⟨h,rfl,rfl⟩)))
+  · rintro ⟨q, hq, hqs, hpq, he⟩
+    obtain ⟨hq1,hq2⟩ := Finset.mem_product.1 hq
+    have hc := (sorted_collision_iff r hr hroot _ _ _ _ hp hqs hpq).1 he
+    rcases hc with ⟨hd,ha,hb⟩ | ⟨hd,ha,hb⟩ | ⟨hd,ha,hb⟩ | ⟨hd,ha,hb⟩
+    · exact Or.inl ⟨hd, ha ▸ hq1, hb ▸ hq2⟩
+    · exact Or.inr (Or.inl ⟨hd, ha ▸ hq1, hb ▸ hq2⟩)
+    · exact Or.inr (Or.inr (Or.inl ⟨hd, ha ▸ hq1⟩))
+    · exact Or.inr (Or.inr (Or.inr ⟨hd, ha ▸ hq1, hb ▸ hq2⟩))
+
+/-- Removing the outer representation of each translated template gives precisely one
+representative of every actual real sum. The right-hand side counts actual exponent pairs. -/
+theorem sumset_card_eq_reduced_pairs (r : ℝ) (hr : 1 < r) (hroot : r ^ 3 = r + 1)
+    (E : Finset ℤ) :
+    ((E.image (fun e => r ^ e)) + (E.image (fun e => r ^ e))).card =
+      ((E ×ˢ E).filter (fun p => p.1 ≤ p.2 ∧ ¬ (
+        (p.2 = p.1 + 4 ∧ p.1 + 2 ∈ E ∧ p.1 + 3 ∈ E) ∨
+        (p.2 = p.1 + 6 ∧ p.1 + 3 ∈ E ∧ p.1 + 5 ∈ E) ∨
+        (p.2 = p.1 + 7 ∧ p.1 + 5 ∈ E) ∨
+        (p.2 = p.1 + 9 ∧ p.1 + 5 ∈ E ∧ p.1 + 8 ∈ E)))).card := by
+  classical
+  let P := (E ×ˢ E).filter (fun p => p.1 ≤ p.2 ∧ ¬ outerCollision E p)
+  let f : ℤ × ℤ → ℝ := fun p => r ^ p.1 + r ^ p.2
+  have hi : Set.InjOn f P := by
+    intro p hp q hq he
+    obtain ⟨hpE,hp,hpn⟩ := Finset.mem_filter.1 hp
+    obtain ⟨hqE,hq,hqn⟩ := Finset.mem_filter.1 hq
+    by_contra hn
+    have hne := sorted_pair_first_ne r hr p q hn he
+    rcases lt_or_gt_of_ne hne with hlt | hgt
+    · exact hpn ((outer_iff_partner r hr hroot E p hp).2 ⟨q,hqE,hq,hlt,he⟩)
+    · exact hqn ((outer_iff_partner r hr hroot E q hq).2 ⟨p,hpE,hp,hgt,he.symm⟩)
+  have himage : P.image f = E.image (fun e => r ^ e) + E.image (fun e => r ^ e) := by
+    ext x
+    constructor
+    · rintro hx
+      obtain ⟨p,hp,rfl⟩ := Finset.mem_image.1 hx
+      obtain ⟨hpE,_,_⟩ := Finset.mem_filter.1 hp
+      obtain ⟨hp1,hp2⟩ := Finset.mem_product.1 hpE
+      exact Finset.mem_add.2 ⟨r^p.1,Finset.mem_image.2 ⟨_,hp1,rfl⟩,
+        r^p.2,Finset.mem_image.2 ⟨_,hp2,rfl⟩,rfl⟩
+    · rintro hx
+      obtain ⟨u,hu,v,hv,hx⟩ := Finset.mem_add.1 hx
+      obtain ⟨i,hi,rfl⟩ := Finset.mem_image.1 hu
+      obtain ⟨j,hj,rfl⟩ := Finset.mem_image.1 hv
+      have hpair : ∃ p ∈ E ×ˢ E, p.1 ≤ p.2 ∧ f p = x := by
+        by_cases hij : i ≤ j
+        · exact ⟨(i,j),Finset.mem_product.2 ⟨hi,hj⟩,hij,hx⟩
+        · exact ⟨(j,i),Finset.mem_product.2 ⟨hj,hi⟩,by omega,by dsimp [f]; linarith⟩
+      obtain ⟨p,hpE,hp,hpx⟩ := hpair
+      by_cases hb : outerCollision E p
+      · obtain ⟨q,hqE,hq,hpq,he⟩ := (outer_iff_partner r hr hroot E p hp).1 hb
+        have hqn : ¬ outerCollision E q := by
+          intro hbad
+          obtain ⟨s,_,hs,hqs,he'⟩ := (outer_iff_partner r hr hroot E q hq).1 hbad
+          exact no_three_sorted_pairs r hr hroot p q s hp hq hs
+            (by intro h; subst q; omega) (by intro h; subst s; omega)
+            (by intro h; subst s; omega) he (he.trans he')
+        exact Finset.mem_image.2 ⟨q,Finset.mem_filter.2 ⟨hqE,hq,hqn⟩,he.symm.trans hpx⟩
+      · exact Finset.mem_image.2 ⟨p,Finset.mem_filter.2 ⟨hpE,hp,hb⟩,hpx⟩
+  change _ = P.card
+  rw [← himage]
+  exact Finset.card_image_of_injOn hi
 
 end D5.S3.Arith.Additive.PlasticPowerCollisions
