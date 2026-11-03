@@ -123,7 +123,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   sourceSelection := some {
     owner := `D5.S3.Quantum.Information.CovarianceSumBound
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 3
@@ -235,7 +235,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   sourceSelection := some {
     owner := `D5.S3.Quantum.Information.CovarianceSumBound
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg"]
       stateBinder := 3
