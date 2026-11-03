@@ -58,7 +58,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     refine ⟨1, by norm_num, ?_⟩
     filter_upwards [Ioo_mem_nhdsLT (show (0 : ℝ) < 1 by norm_num)] with r hr
     rw [← one_div]
-    exact (le_div_iff₀ (sub_pos.mpr hr.2)).mpr (by linarith)
+    exact (le_div_iff₀ (sub_pos.mpr hr.2)).mpr (by linarith [hr.1])
   obtain ⟨n, hn⟩ := (h 1 0 (fun r ↦ (1-r)⁻¹) hp hs hm 1 (by norm_num)).exists
   simpa [rejected, realize] using hn
 
