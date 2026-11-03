@@ -1,0 +1,43 @@
+### 定理 7.12（算符系统上的有限延拓判据）
+
+<a id="thm-c117-positive-extension"></a>
+
+设 $\mathcal B_1,\mathcal B_2$ 是指定的 $M_D(\mathbb C)$ 保单位子代数，状态 $f_1,f_2$ 在交集上一致。它们在算符系统
+$S=\mathcal B_1+\mathcal B_2$ 上定义
+
+$$
+f(a+b)=f_1(a)+f_2(b).
+$$
+
+存在共同密度矩阵 $\rho\geq0$、$\operatorname{Tr}\rho=1$，使
+$f_k(a)=\operatorname{Tr}(\rho a)$，当且仅当
+
+<a id="eq-c117-system-positivity"></a>
+
+$$
+f(H)\geq0\qquad
+ \text{对所有 }H\in S\cap M_D(\mathbb C)^+.
+\tag{13}
+$$
+
+**证明。**
+交集一致使 $f$ 与分解方式无关，并给出 $f(1)=1$。共同态存在显然推出式 [(13)](#eq-c117-system-positivity)。
+
+反向，在 $S$ 的自伴实子空间取基 $I,F_1,\ldots,F_m$。所有密度矩阵的期望向量构成紧凸集
+
+$$
+C=\{(\operatorname{Tr}\rho F_1,\ldots,\operatorname{Tr}\rho F_m):
+       \rho\geq0,\ \operatorname{Tr}\rho=1\}\subset\mathbb R^m.
+$$
+
+若 $p=(f(F_1),\ldots,f(F_m))\notin C$，有限维严格凸分离给出实数 $t_k$，使得对于 $H=\sum_k t_kF_k$，
+
+$$
+f(H)<\min_{\rho\geq0,\ \operatorname{Tr}\rho=1}\operatorname{Tr}(\rho H)
+       =\lambda_{\min}(H).
+$$
+
+但 $H-\lambda_{\min}(H)I$ 属于 $S$ 且为正，其 $f$ 值为负，矛盾。故 $p\in C$，相应密度矩阵在整个 $S$ 上实现 $f$。
+
+这个判据把共同细化变成有限半正定可行性问题，而不只是交集上的等式检查。若有三个以上窗口，甚至还须先确认赋值尊重它们之间的全部线性关系；两两交集一致不必自动定义其线性和上的泛函。
+

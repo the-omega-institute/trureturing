@@ -1,0 +1,21 @@
+### 命题 7.8（共尾观察的唯一性与弱$^*$收敛）
+
+<a id="prop-c117-weak-convergence"></a>
+
+两条共尾观察链若取自同一个一致观察图，它们重构的状态均为定理 [7.4](#thm-c117-global) 中的 $\omega$。进一步，若 $\sigma_n$ 是 $\mathcal A$ 上任意状态，且
+
+$$
+\sigma_n|_{\mathcal A_{i_n}}=\omega_{i_n},
+$$
+
+则 $\sigma_n(a)\to\omega(a)$ 对每个固定 $a\in\mathcal A$ 成立，即 $\sigma_n\to\omega$ 弱$^*$收敛。
+
+**证明。**
+共尾链生成相同稠密局部代数，故第一项由唯一性成立。给定 $a$ 和 $\varepsilon>0$，在某个有限窗口选 $b$ 使 $\|a-b\|<\varepsilon$。充分大的 $n$ 包含这个窗口，故 $\sigma_n(b)=\omega(b)$。状态的范数为 $1$，所以
+
+$$
+|\sigma_n(a)-\omega(a)|
+ \leq|\sigma_n(a-b)|+|\omega(a-b)|
+ <2\varepsilon.
+$$
+

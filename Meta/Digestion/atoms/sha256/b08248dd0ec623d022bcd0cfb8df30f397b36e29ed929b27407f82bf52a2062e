@@ -1,0 +1,85 @@
+**定理 2.1（自守冗余与精确三元障碍）。** 在定义 1.1 的有限正比较场中：
+
+1. 每个 $\circ$ 的实导子自动对 $g$ 斜伴随。
+2. 若 C95 成立，则 $D_ab=-D_ba$，特别地 $D_aa=0$、$D_1=0$。
+3. 对任何另已满足 $D_ab=-D_ba$ 的此类场，不要求 C95，定义 1.3 的结合子恰为
+
+$$
+\boxed{(a\cdot b)\cdot c-a\cdot(b\cdot c)=-\mathcal E(a,c)b.}\tag{2.1}
+$$
+
+因而 C95 等价于该复乘法的结合性；C95 下的乘法具有忠实的有限维正 $*$ 表示，其自伴随部恰为 $A$。该有限正比较合同由此不需要再把自守 $D_aa=0$ 独立输入。
+
+证明。先令 $\delta$ 是任意导子。含幺性给 $\delta1=0$，Leibniz 律给
+
+$$
+[\delta,L_b]=L_{\delta b}.
+$$
+
+右端自伴随，对左端取伴随，得到 $E=\delta+\delta^\dagger$ 与全部 $L_b$ 交换。置 $e=E1=\delta^\dagger1$，由
+
+$$
+Eb=EL_b1=L_bE1=L_be=L_eb
+$$
+
+得到 $E=L_e$，且 $e$ 属于
+
+$$
+C=\{c\in A:[L_c,L_b]=0\text{ 对所有 }b\in A\}.
+$$
+
+对 $c,d\in C$，交换关系给 $L_{c\circ d}=L_cL_d$，故 $C$ 是含幺交换结合子代数。其乘法算子实自伴随且可同时对角化，$c\mapsto L_c$ 又由 $L_c1=c$ 忠实，故 $C$ 同构于有限个 $\mathbb R$ 的直积。亦可直接用共同谱投影得到其正交幂等元分解。导子恒等式及 Jacobi 恒等式给
+
+$$
+[L_{\delta c},L_b]=[\delta,[L_c,L_b]]-[L_c,[\delta,L_b]]=0,
+$$
+
+所以 $\delta C\subset C$。实有限直积上的导子为零：对每个幂等元 $p$，$\delta p=2p\circ\delta p$ 逐坐标迫使 $\delta p=0$。于是 $\delta e=0$，从而
+
+$$
+g(e,e)=g(\delta^\dagger1,e)=g(1,\delta e)=0.
+$$
+
+正定性给 $e=0$、$E=0$，第一项成立。
+
+为从 C95 推出反对称性，使用另一正定双线性型
+
+$$
+q(a,b)=\operatorname{Tr}_{\mathbb R}(L_aL_b).
+$$
+
+因为 $L_a$ 自伴随且 $L_a1=a$，非零 $a$ 满足 $q(a,a)=\|L_a\|_{\mathrm{HS}}^2>0$。矩阵迹恒等式使
+
+$$
+\begin{aligned}
+T(a,b,c)&=\operatorname{Tr}_{\mathbb R}(D_a[D_b,D_c])\\
+&=-\operatorname{Tr}_{\mathbb R}(D_a[L_b,L_c])\\
+&=-\operatorname{Tr}_{\mathbb R}([D_a,L_b]L_c)\\
+&=-q(D_ab,c)
+\end{aligned}
+$$
+
+在三个变量中全交替。$q$ 非退化遂给 $D_ab=-D_ba$。又 $D_a1=0$，所以 $D_1a=0$。
+
+现在只使用反对称性及 Leibniz 律展开定义 1.3。结合子的虚部为零，其实部为
+
+$$
+\begin{aligned}
+&(a\circ b)\circ c-a\circ(b\circ c)\\
+&\hspace{1em}-D_{D_ab}c+D_a(D_bc)\\
+&=-[L_a,L_c]b-[D_a,D_c]b,
+\end{aligned}
+$$
+
+即 (2.1)。这里尚未预设有向运算的 Jacobi 律。
+
+在 C95 下，$(xy)^*=y^*x^*$ 由实乘法的对称、反对称分解成立。把 $g$ Hermitian 延拓到 $A_{\mathbb C}$，左乘实元 $a$ 的算子为
+
+$$
+\lambda_a=L_a-iD_a.
+$$
+
+第一项自伴随、第二项亦自伴随，所以 $\lambda_a^\dagger=\lambda_a$。结合性给 $\lambda_{xy}=\lambda_x\lambda_y$，含幺性给 $\lambda_x1=x$；因而 $\lambda$ 是忠实 $*$ 表示。其有限维像是闭的含幺 $*$ 子代数，以算子范数成为 $C^*$ 代数。其 Hermitian 元恰为 $A$。复结合代数的交换子还推出 $D$ 的 Jacobi 律，故不必把它预设给精确候选。
+
+本证明中“动力对应产生复结合乘法”的步骤复用 Alfsen–Shultz 的动力对应路线及 [Niestegge，§5 Definition 1、Theorem 1、Corollary 1](https://arxiv.org/html/1402.0158v2)，DOI [10.1007/s10701-015-9881-x](https://doi.org/10.1007/s10701-015-9881-x)。这里额外给出的有限迹论证依赖正 Frobenius 比较合同，从双曲率条件推出自守；它不把该合同从 Niestegge 的更一般有序空间中免费取得，也不向无限维外推。∎
+

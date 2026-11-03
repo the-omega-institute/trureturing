@@ -1,0 +1,52 @@
+### 4.2 比较损失是一个 Gram 余量
+
+令
+
+$$
+D=I-T^\dagger T,\qquad
+ K_\sigma(X,Y)=g_\sigma(X,Y)-g_\tau(NX,NY).
+$$
+
+对任意有限组 $X_1,\ldots,X_m$，取 $x_i=\Gamma_\sigma^{-1/2}X_i$，有
+
+<a id="eq-c122-defect-gram"></a>
+
+$$
+K_\sigma(X_i,X_j)=\langle D^{1/2}x_i,D^{1/2}x_j\rangle_{\rm HS}.
+\tag{27}
+$$
+
+故 $[K_\sigma(X_i,X_j)]\ge0$，特别地
+
+$$
+|K_\sigma(X,Y)|^2\le K_\sigma(X,X)K_\sigma(Y,Y).
+$$
+
+这把“某一关系损失多少”与“两个损失之间如何相容”连在了一起。
+
+更大的线性结构是一个显式等距提升：
+
+<a id="eq-c122-orthogonal-lift"></a>
+
+$$
+Vx=Tx\oplus D^{1/2}x,\qquad V^\dagger V=I.
+\tag{28}
+$$
+
+若 $v_j$ 是 $T^\dagger T$ 的单位特征向量，写 $\lambda_j=\cos^2\theta_j$，$0\le\theta_j\le\pi/2$，则该方向分成长度 $\cos\theta_j$ 的输出部分与长度 $\sin\theta_j$ 的正交余量；回接后保留的系数为 $\lambda_j$。$\lambda_j=1$ 的方向没有损失，$\lambda_j=0$ 的方向没有保留。$\sqrt\sigma$ 是白化后的参考方向，满足
+
+$$
+T\sqrt\sigma=\sqrt\tau,\qquad
+ T^\dagger\sqrt\tau=\sqrt\sigma.
+$$
+
+迹为零的扰动与 $\sqrt\sigma$ 正交，故参考归一化方向与真正的态变化可以分别讨论。
+
+式~[(28)](#eq-c122-orthogonal-lift) 是*矩阵比较空间*的正交提升。$D$ 的 Hilbert 空间正性不等于它把正矩阵映为正矩阵。例如 $\sigma=I/2$、$N$ 为完全退相干时，$P=N$、$S=N$，而
+
+$$
+(\operatorname{id}-S)(\lvert +\rangle\langle +\rvert)=\tfrac12 X
+$$
+
+有正、负两个特征值。因此不能自动把余量 $D^{1/2}x$ 认作一份物理环境态，也不能把该等距提升直接认作可执行的量子门。
+

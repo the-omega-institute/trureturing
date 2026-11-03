@@ -1,0 +1,36 @@
+### 命题 7.2（核一致等价于态一致）
+
+<a id="prop-c117-kernel-consistency"></a>
+
+在窗口 $i$ 中定义历史比较核
+
+$$
+K_i(h,k)=\omega_i(h^*k),\qquad h,k\in\mathcal A_i.
+$$
+
+则式 [(11)](#eq-c117-state-consistency) 等价于
+
+<a id="eq-c117-kernel-consistency"></a>
+
+$$
+K_j(\iota_{ji}h,\iota_{ji}k)=K_i(h,k)
+ \qquad\text{对所有 }h,k\in\mathcal A_i.
+\tag{12}
+$$
+
+每个 $K_i$ 都是正核。
+
+**证明。**
+保乘法、伴随性给出
+$\iota(h)^*\iota(k)=\iota(h^*k)$，故态一致推出核一致。反向取 $h=1,k=a$，并使用 $\iota(1)=1$。任取有限组 $h_\alpha,z_\alpha$，
+
+$$
+\sum_{\alpha,\beta}\overline{z_\alpha}z_\beta
+ K_i(h_\alpha,h_\beta)
+ =
+ \omega_i\!\left[
+ \left(\sum_\alpha z_\alpha h_\alpha\right)^*
+ \left(\sum_\beta z_\beta h_\beta\right)
+ \right]\geq0.
+$$
+

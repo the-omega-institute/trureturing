@@ -76,7 +76,43 @@ $$\forall (n : \mathbb{N}) , T\left(n\right) = let q : \mathbb{N} = \operatornam
 
 Theorem 2, pages 6–7, defines T = ½ arccos(−(⌈n/2⌉ − 1)/⌈n/2⌉). Nat.div is integer division, so Nat.div (n + 1) 2 is the ceiling of n/2. The outer division is in ℝ.
 
-**Definition 1.7 (claim).**
+**Definition 1.7 (d).**
+
+$$\forall (n : \mathbb{N}) , \forall (c : \mathbb{R}) , d\left(n, c\right) = (\operatorname{Real}.\operatorname{sqrt}\left(1 + ((n : \mathbb{R}) - 1) \cdot c\right) + ((n : \mathbb{R}) - 1) \cdot \operatorname{Real}.\operatorname{sqrt}\left(1 - c\right)) / ((n : \mathbb{R}))$$
+
+*Formalization.* `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.d` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The real diagonal value of the square root of the constant-overlap Gram matrix.
+
+**Definition 1.8 (cstar).**
+
+$$\forall (n : \mathbb{N}) , \forall (theta : \mathbb{R}) , cstar\left(n, theta\right) = 1 - (4 \cdot (\operatorname{Nat}.\operatorname{div}\left(n^{2}, 4\right) : \mathbb{R}) \cdot \operatorname{Real}.\operatorname{sin}\left(theta\right)^{2}) / ((n : \mathbb{R}) \cdot ((n : \mathbb{R}) - 1))$$
+
+*Formalization.* `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.cstar` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The overlap determined by the maximal product of occupied and unoccupied sensor counts. The quotient n²/4 is taken in the natural numbers before coercion to the reals.
+
+**Theorem 1.9 (global_success_upper_bound).**
+
+$$\forall (n : \mathbb{N}) , (3 \leq n) \to (\forall (theta : \mathbb{R}) , (((0 < theta) \land (theta \leq T\left(n\right))) \lor ((\operatorname{Real}.\operatorname{pi} - T\left(n\right) \leq theta) \land (theta < \operatorname{Real}.\operatorname{pi}))) \to (\forall (psi : \left(Fin\left(n\right) \to Bool\right) \to \mathbb{C}) , (\sum x : Fin\left(n\right) \to Bool , \operatorname{Complex}.\operatorname{normSq}\left(psi\left(x\right)\right) = 1) \to (\forall (M : LocalPOVM\left(Fin\left(n\right) \to Bool, Fin\left(n\right)\right)) , isoSuccess\left(theta, psi, M\right) \leq d\left(n, cstar\left(n, theta\right)\right)^{2})))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.global_success_upper_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every normalized probe and every global POVM satisfy this success bound for at least three sensors in either admissible angle interval.
+
+**Definition 1.10 (claim).**
 
 $$claim = \forall (n : \mathbb{N}) , (3 \leq n) \to (\forall (theta : \mathbb{R}) , (((0 < theta) \land (theta \leq T\left(n\right))) \lor ((\operatorname{Real}.\operatorname{pi} - T\left(n\right) \leq theta) \land (theta < \operatorname{Real}.\operatorname{pi}))) \to (\forall (l : \mathbb{N}) , (l \leq n) \to ((IsMinOn\left((fun k : \mathbb{N} \mapsto ((rCount\left(n, \langle0\rangle, \langle1\rangle, k\right) : \mathbb{R}) + \operatorname{Real}.\operatorname{cos}\left(2 \cdot theta\right) \cdot (lCount\left(n, \langle0\rangle, \langle1\rangle, k\right) : \mathbb{R})) / ((rCount\left(n, \langle0\rangle, \langle1\rangle, k\right) : \mathbb{R}) + (lCount\left(n, \langle0\rangle, \langle1\rangle, k\right) : \mathbb{R}))), \operatorname{Set}.\operatorname{Iic}\left(n\right), l\right)) \to (\forall (phi : \left(Fin\left(n\right) \to Bool\right) \to \mathbb{C}) , (\forall (x : Fin\left(n\right) \to Bool) , \operatorname{Complex}.\operatorname{normSq}\left(phi\left(x\right)\right) = if \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((fun j : Fin\left(n\right) \mapsto x\left(j\right) = true), (\operatorname{Finset}.\operatorname{univ} : Finset\left(Fin\left(n\right)\right))\right)\right) = l then (1) / ((\operatorname{Nat}.\operatorname{choose}\left(n, l\right) : \mathbb{R})) else 0) \to (\forall (psi : \left(Fin\left(n\right) \to Bool\right) \to \mathbb{C}) , (\sum x : Fin\left(n\right) \to Bool , \operatorname{Complex}.\operatorname{normSq}\left(psi\left(x\right)\right) = 1) \to (\forall (M : LocalPOVM\left(Fin\left(n\right) \to Bool, Fin\left(n\right)\right)) , \exists (Mp : LocalPOVM\left(Fin\left(n\right) \to Bool, Fin\left(n\right)\right)) , isoSuccess\left(theta, psi, M\right) \leq isoSuccess\left(theta, phi, Mp\right)))))))$$
 
@@ -88,7 +124,7 @@ $$claim = \forall (n : \mathbb{N}) , (3 \leq n) \to (\forall (theta : \mathbb{R}
 
 Section 5, Conjecture 1, page 10: “Consider the ISO problem, with the unitary operator 𝑈, initial state |𝜓⟩, and final states {|𝜙ᵢ⟩} as defined therein. Recall that the eigenvalues of 𝑈 are {𝑒^{+𝑖𝜃}, 𝑒^{−𝑖𝜃}}. Let 𝑛 ≥ 3 be the number of sensors. For a given 𝜃 ∈ (0,𝑇] ∪ [180 − 𝑇, 180), degrees, where 𝑇 is from Theorem 2, the optimal initial state |𝜓⟩ for the ISO problem is as follows. Let 𝑆ₗ be the partition that minimizes (𝑅ₗ + cos(2𝜃)𝐿ₗ)/(𝑅ₗ + 𝐿ₗ), where 𝑅ₗ and 𝐿ₗ are as defined in the previous section. The coefficients of the optimal solution are such that their coefficient-squares are given by: |𝜓ⱼ|² = 1/|𝑆ₗ| ∀ |𝜓ⱼ|² ∈ 𝑆ₗ  |𝜓ⱼ|² = 0 ∀ |𝜓ⱼ|² ∉ 𝑆ₗ” The formula uses radians, φ for the proposed state and ψ for a competitor. Each minimizing l and every assignment of coefficient phases are allowed. The words of weight l number Nat.choose n l. The two Fin n indices have values 0 and 1; their proof fields are omitted.
 
-**Theorem 1.8 (weight_class_card).**
+**Theorem 1.11 (weight_class_card).**
 
 $$\forall (n : \mathbb{N}) , \forall (k : \mathbb{N}) , \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((fun x : Fin\left(n\right) \to Bool \mapsto \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((fun j : Fin\left(n\right) \mapsto x\left(j\right) = true), (\operatorname{Finset}.\operatorname{univ} : Finset\left(Fin\left(n\right)\right))\right)\right) = k), (\operatorname{Finset}.\operatorname{univ} : Finset\left(Fin\left(n\right) \to Bool\right))\right)\right) = \operatorname{Nat}.\operatorname{choose}\left(n, k\right)$$
 
@@ -102,7 +138,43 @@ $$\forall (n : \mathbb{N}) , \forall (k : \mathbb{N}) , \operatorname{Finset}.\o
 
 The Boolean words with exactly k true coordinates form a class of cardinality Nat.choose n k.
 
-**Theorem 1.9 (result).**
+**Theorem 1.12 (counts_partition).**
+
+$$\forall (n : \mathbb{N}) , \forall (i : Fin\left(n\right)) , \forall (j : Fin\left(n\right)) , \forall (k : \mathbb{N}) , rCount\left(n, i, j, k\right) + lCount\left(n, i, j, k\right) = \operatorname{Nat}.\operatorname{choose}\left(n, k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.counts_partition` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Agreement and disagreement of two selected bits partition each weight class.
+
+**Theorem 1.13 (pair_count_product).**
+
+$$\forall (n : \mathbb{N}) , \forall (a : Fin\left(n\right)) , \forall (b : Fin\left(n\right)) , (a \neq b) \to (\forall (k : \mathbb{N}) , lCount\left(n, a, b, k\right) \cdot (n \cdot (n - 1)) = 2 \cdot k \cdot (n - k) \cdot \operatorname{Nat}.\operatorname{choose}\left(n, k\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.pair_count_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For distinct sensor positions, counting disagreements over all ordered pairs gives twice the product of the occupied and unoccupied counts in each word.
+
+**Theorem 1.14 (dicke_normalized).**
+
+$$\forall (n : \mathbb{N}) , \forall (l : \mathbb{N}) , (l \leq n) \to (\forall (phi : \left(Fin\left(n\right) \to Bool\right) \to \mathbb{C}) , (\forall (x : Fin\left(n\right) \to Bool) , \operatorname{Complex}.\operatorname{normSq}\left(phi\left(x\right)\right) = if \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((fun j : Fin\left(n\right) \mapsto x\left(j\right) = true), (\operatorname{Finset}.\operatorname{univ} : Finset\left(Fin\left(n\right)\right))\right)\right) = l then (1) / ((\operatorname{Nat}.\operatorname{choose}\left(n, l\right) : \mathbb{R})) else 0) \to (\sum x : Fin\left(n\right) \to Bool , \operatorname{Complex}.\operatorname{normSq}\left(phi\left(x\right)\right) = 1))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.dicke_normalized` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A state with uniform squared amplitudes on a weight class has total squared norm one, independently of its coefficient phases.
+
+**Theorem 1.15 (result).**
 
 $$claim$$
 
@@ -124,9 +196,15 @@ Averaging a feasible Gram decomposition over sensor permutations preserves its o
 
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.T`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.claim`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.counts_partition`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.cstar`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.d`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.dicke_normalized`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.fire`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.global_success_upper_bound`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.isoSuccess`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.lCount`
+- Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.pair_count_product`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.psd_cauchy_schwarz`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.rCount`
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.result`

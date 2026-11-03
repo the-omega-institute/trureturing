@@ -1,0 +1,79 @@
+**定理 71.1（保持同一二元系数的切口修复）。** 对定义 70.1 的每个关系体，存在唯一由其压缩系数决定的数学参照族 $R_{E,F}$，满足精确所选射线校准、成功效果 $E$、同一 $m$ 及共同调暗。它逐中心块为 Schur 乘法，且
+
+$$
+\|T_{E,F}-R_{E,F}\|_\diamond
+ \le\|E\|\,b(\lambda_M),\qquad
+b(t)=\min\{2,4\sqrt t+t\}\quad(t\ge0).
+\tag{71.1}
+$$
+
+这里及下文 diamond 范数均用定义 66.1 的未除二、任意矩阵输入及任意数学参考约定。$R$ 是证明中构造的完全正映射，不据此断言它是菜单内另一个实际分支。
+
+证明。先在一个有限对象内，将原完全正映射按输入、输出中心块取 Kraus 分量。把各分量嵌入全部块的 Hilbert 直和 $\mathcal H$，并给其独立环境标签，得到 $B(\mathcal H)$ 上的完全正延伸 $\widetilde T$；它先删除输入的跨中心项，输出仍在原直和内，$\widetilde T^*(1)=E$。因此原代数上及其任意参考上的差范数不超过该延伸上的相应范数。以下有限 Stinespring 算子 $V:\mathcal H\to\mathcal H\otimes\mathcal K$ 满足
+
+$$
+\widetilde T(X)=\operatorname{Tr}_{\mathcal K}(VXV^*),
+\qquad V^*V=E,
+\qquad \|V\|=\sqrt{\|E\|}.
+\tag{71.2}
+$$
+
+令 $q=\|E\|>0$、$\ell=\ell(T)$。对每个框架切口 $P$，
+
+$$
+\|((1-P)\otimes1)V P\|^2
+ =\|P T^*(1-P)P\|\le\ell.
+\tag{71.3}
+$$
+
+其互补切口也在同一集合。取 $U_P=2P-1$，两个交叉角有正交的输入域和输出域，故
+
+$$
+\|(U_P\otimes1)V-VU_P\|
+ =2\max\{\|(P\otimes1)V(1-P)\|,
+          \|((1-P)\otimes1)VP\|\}
+ \le2\sqrt\ell.
+\tag{71.4}
+$$
+
+对全部框架符号有限平均，得到
+
+$$
+W=2^{-D}\sum_{U=\sum_i\epsilon_iP_i}(U\otimes1)VU
+ =\sum_i(P_i\otimes1)V P_i,
+\qquad \|V-W\|\le2\sqrt\ell,
+\tag{71.5}
+$$
+
+其中 $D$ 为该对象全部框架位置数，$\epsilon_i\in\{-1,1\}$。全部切口属于同一个有限 Boolean 投影代数，其符号组成群 $(\mathbb Z/2\mathbb Z)^D$。式 (71.5) 取这个作用的共同交织部分：对每个切口都有 $(P\otimes1)W=WP$。这个有限平均是矩阵恒等式，不要求实际供应符号操作或其随机混合。每个 $W|i\rangle$ 只在输出射线 $i$ 上，故 $W^*W=\sum_i y_iP_i$，且
+
+$$
+0\le y_i=\langle i|T(P_i)|i\rangle\le x_i,
+\qquad
+0\le x_i-y_i=\operatorname{Tr}[(1-P_i)T(P_i)]\le\ell.
+\tag{71.6}
+$$
+
+于是 $W^*W\le E$、$\|W\|\le\sqrt q$。令 $S(X)=\operatorname{Tr}_{\mathcal K}(WXW^*)$，并加回丢失的对角成功质量：
+
+$$
+R(X)=S(X)+\sum_i(x_i-y_i)P_iXP_i.
+\tag{71.7}
+$$
+
+两项均完全正，$R^*(1)=E$、$R(P_i)=x_iP_i$，且没有跨中心转移。对原块内不同位置，$S(E_{ij})$ 的 $(i,j)$ 系数恰为 $\langle i|T(E_{ij})|j\rangle$，补项不改变它。涉及零权重的位置原 Kraus 列已为零。因而 $R$ 正是对角系数取 $x_i$、其余系数取原压缩系数的唯一 Schur 映射；它不依赖 Stinespring 表示选择。此显式描述也给共同调暗。
+
+有限维迹对偶将任意输入 diamond 范数等同于伴随的完全有界算子范数；共同 Stinespring 差的成熟估计因而给
+
+$$
+\|\widetilde T-S\|_\diamond
+ =\|\widetilde T^*-S^*\|_{\mathrm{cb}}
+ \le(\|V\|+\|W\|)\|V-W\|
+ \le4\sqrt{q\ell}.
+\tag{71.8}
+$$
+
+补项是完全正映射，其 diamond 范数等于其伴随在单位上的算子范数，故不超过 $\ell$。限制回原代数并用 $\ell\le q\lambda_M$ 得 $q(4\sqrt{\lambda_M}+\lambda_M)$。两条成功效果同为 $E$ 的完全正映射各有范数 $q$，另给上界 $2q$，即得 (71.1)。$E=0$ 时两者均零。
+
+范数桥复用 [Kretschmann–Schlingemann–Werner，命题 3](https://arxiv.org/pdf/0710.2495v1) 的共同 Stinespring 估计及有限迹对偶；有限符号平均复用 [Han–Liu，§2.2 的矩形 twirling 映射](https://arxiv.org/pdf/2311.16349v1)，这里的输出表示为 $U\otimes1$、输入表示为 $U$，共同交织部分正是其平均的像。这里将它们用于保留原二元谱系数和成功效果的同一修复，不把单独的范数估计或有限平均认领为新机制。∎
+

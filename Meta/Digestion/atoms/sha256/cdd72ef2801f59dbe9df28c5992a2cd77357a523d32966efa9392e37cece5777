@@ -1,0 +1,15 @@
+**定义 8.3（规范原子运输与单位归一）。** 令 $J:V^*\to V$ 为 [BBKM15, Theorem 6.1] 的原子映射，并令
+
+$$
+(e,f)_{\rm BBKM}:=\langle e,Jf\rangle .
+$$
+
+STP 与 Appendix B 给出 $J$ 的线性、正性、对称性和正定性。把原单位送成 $1_V:=J(u)$，并把 $\tau(s):=u(s)$ 固定为唯一的归一化迹配对。于是
+
+$$
+J(u)=1_V,\qquad \tau(1_V)=\dim_{\rm rank}(\Omega),\qquad
+\langle e,s\rangle=\tau(E_eS_s),
+$$
+
+其中 $E_e$、$S_s$ 是下述 C95 乘法中的对应元素。这个单位和迹不是任意选择的自对偶内积的缩放；它由原效果单位和原子转移概率共同钉住。
+
