@@ -9,7 +9,6 @@
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.SLDSpectralEnergy
-import Mathlib.LinearAlgebra.UnitaryGroup
 
 /-! A cooling-map transition obstructed by finite ground-space unitary Gram relations. -/
 
@@ -80,28 +79,30 @@ private def kraus : Fin 2 → Matrix (Fin 4) (Fin 4) ℂ :=
 private lemma levels_valid : StrictMono levels ∧
     (∀ i j k l : Fin 4, i < j → k < l → levels j - levels i = levels l - levels k →
       i = k ∧ j = l) := by
-  norm_num [StrictMono, Fin.forall_fin_succ, levels]
+  norm_num [StrictMono, Fin.forall_fin_succ, levels.eq_1]
 
 private lemma kraus_complete : (∑ i, (kraus i)ᴴ * kraus i) = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [kraus, Fin.sum_univ_two, Fin.sum_univ_four, Matrix.mul_apply,
+    norm_num [kraus.eq_1, Fin.sum_univ_two, Fin.sum_univ_four, Matrix.mul_apply,
       Matrix.conjTranspose_apply, Complex.star_def, map_ofNat, map_div₀, map_mul]
-    <;> ring_nf <;> norm_num
+  all_goals ring_nf
+  all_goals norm_num
 
 private lemma sigma_diagonal (j : Fin 4) : sigma j j = 1 / 4 := by
   fin_cases j <;>
-    norm_num [sigma, factor, Matrix.mul_apply, Fin.sum_univ_two,
+    norm_num [sigma.eq_1, factor.eq_1, Matrix.mul_apply, Fin.sum_univ_two,
       Matrix.conjTranspose_apply, Complex.star_def, Matrix.vecMul, dotProduct, map_ofNat,
       map_div₀, map_mul]
-    <;> ring_nf <;> norm_num
+  all_goals ring_nf
+  all_goals norm_num
 
 private lemma instance_density : IsDensity rho ∧ IsDensity sigma := by
   change (rho.PosSemidef ∧ trace rho = 1) ∧ (sigma.PosSemidef ∧ trace sigma = 1)
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
   · convert posSemidef_vecMulVec_self_star (fun _ : Fin 4 => (1 / 2 : ℂ)) using 1
     ext i j
-    norm_num [rho, vecMulVec]
+    norm_num [rho.eq_1, vecMulVec]
   · norm_num [trace, rho, Fin.sum_univ_four]
   · exact (posSemidef_self_mul_conjTranspose factor).smul (by norm_num : (0 : ℝ) ≤ 1 / 4)
   · change (∑ j, sigma j j) = 1
@@ -200,7 +201,19 @@ private lemma thermal_populations {m : ℕ} (e : Fin m → ℝ)
         rw [energy_entry levels e U h j l a b hl, star_zero, mul_zero]
       · rw [energy_entry levels e U h j k a b hk, zero_mul]
     · simp
-  simp_rw [hdiag] at he
+  have hsum :
+      (∑ b : Fin m, ∑ l : Fin 4, ∑ a ∈ groundSet e, ∑ k : Fin 4,
+        U (j, b) (k, a) * star (U (j, b) (l, a))) =
+      ∑ b : Fin m, ∑ l : Fin 4, ∑ a ∈ groundSet e,
+        (Complex.normSq (U (j, b) (l, a)) : ℂ) := by
+    apply Finset.sum_congr rfl
+    intro b _
+    apply Finset.sum_congr rfl
+    intro l _
+    apply Finset.sum_congr rfl
+    intro a _
+    exact hdiag b a l
+  rw [hsum] at he
   have hswap :
       (∑ b : Fin m, ∑ l : Fin 4, ∑ a ∈ groundSet e,
         (Complex.normSq (U (j, b) (l, a)) : ℂ)) =
@@ -217,9 +230,9 @@ private lemma thermal_populations {m : ℕ} (e : Fin m → ℝ)
     ring
   rw [hc] at he
   have hr := congrArg Complex.re he
-  simpa only [← Complex.ofReal_sum, ← Complex.ofReal_one, ← Complex.ofReal_div,
-    Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, mul_zero, sub_zero]
-    using hr
+  simpa only [← Complex.ofReal_sum, Complex.mul_re, Complex.div_ofReal_re,
+    Complex.div_ofReal_im, Complex.one_re, Complex.one_im, Complex.ofReal_re,
+    Complex.ofReal_im, zero_div, zero_mul, mul_zero, sub_zero] using hr
 
 private lemma triangular_transport (T : Matrix (Fin 4) (Fin 4) ℝ) (g : ℝ)
     (hn : ∀ j k, 0 ≤ T j k) (hr : ∀ j, ∑ k, T j k = g)
@@ -341,7 +354,7 @@ private lemma block_unitary {m : ℕ} (e : Fin m → ℝ)
     (Matrix.mem_unitaryGroup_iff'.mp U.2)
   simp only [Matrix.star_eq_conjTranspose, Matrix.mul_apply,
     Matrix.conjTranspose_apply, Fintype.sum_prod_type] at hu
-  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, block]
+  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, block.eq_1]
   calc
     (∑ b : {a // a ∈ groundSet e}, star (U (k, b.1) (k, a.1)) * U (k, b.1) (k, c.1)) =
         ∑ b ∈ groundSet e, star (U (k, b) (k, a.1)) * U (k, b) (k, c.1) :=
@@ -423,7 +436,7 @@ private lemma block_coherences {m : ℕ} (e : Fin m → ℝ)
     simp only [hz, Finset.sum_empty, Finset.sum_const_zero, Finset.card_empty,
       Nat.cast_zero, zero_mul]
 
-private lemma gram_null {n : Type*} [Fintype n] [DecidableEq n]
+private lemma gram_null {n : Type*} [Fintype n]
     (A : Fin 4 → Matrix n n ℂ)
     (h : ∀ i j, trace (A i * (A j)ᴴ) = (Fintype.card n : ℂ) * (factor * factorᴴ) i j) :
     A 2 = (3 / 5 : ℂ) • A 0 + (4 / 5 : ℂ) • A 1 ∧
@@ -437,7 +450,7 @@ private lemma gram_null {n : Type*} [Fintype n] [DecidableEq n]
       Matrix.trace_smul, smul_eq_mul, h]
     norm_num [factor, Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply,
       Complex.star_def, Matrix.vecMul, dotProduct, map_ofNat, map_div₀, map_mul]
-    <;> ring
+    ring
   · apply sub_eq_zero.mp
     apply Matrix.trace_mul_conjTranspose_self_eq_zero_iff.mp
     simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_add,
@@ -446,7 +459,7 @@ private lemma gram_null {n : Type*} [Fintype n] [DecidableEq n]
       Matrix.trace_smul, smul_eq_mul, h]
     norm_num [factor, Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply,
       Complex.star_def, Matrix.vecMul, dotProduct, map_ofNat, map_div₀, map_mul]
-    <;> ring
+    ring
 
 private lemma unitary_obstruction {n : Type*} [Fintype n] [DecidableEq n]
     (hn : Nonempty n) (A : Fin 4 → Matrix n n ℂ)
@@ -480,7 +493,7 @@ private lemma unitary_obstruction {n : Type*} [Fintype n] [DecidableEq n]
       _ = 0 := by rw [hx, zero_mul]
   obtain ⟨i⟩ := hn
   have hi := congrArg (fun M : Matrix n n ℂ => M i i) hz
-  simpa using hi
+  simp at hi
 
 private lemma thermal_impossible {m : ℕ} (hm : 0 < m) (e : Fin m → ℝ)
     (U : Matrix.unitaryGroup (Fin 4 × Fin m) ℂ)
