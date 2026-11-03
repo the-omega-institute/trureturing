@@ -7,6 +7,9 @@
    digest: Original a2 near-b construction: Finite and its physical source consumer. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.Small
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QFourStructural
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QEightStructural
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QSixteenStructural
+import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QThirtyTwoStructural
 
 set_option autoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2
@@ -14,57 +17,7 @@ open D5.S3.Combinatorics.Circle.FourNegative
 open private q_two_boundary_good
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2.QTwoStructural
 
-structure BoundaryRow where
-  p : ℕ
-  q : ℕ
-  h : ℕ
-  v : ℕ
-  m : ℕ
-  M : ℕ
-  before : Bool
-  deriving DecidableEq
-
-def BoundaryRow.Check (r : BoundaryRow) : Prop :=
-  1≤r.v ∧ 2*r.v≤4*r.p*r.q ∧ r.m<r.M ∧ 2*r.M<8*r.h*r.p*r.q ∧
-    r.m &&& r.M=r.m ∧ Windows r.p r.q r.h r.v r.m r.M r.before
-
-def boundaryRows : List BoundaryRow := [
-  ⟨4,8,1,5,44,46,false⟩,
-  ⟨4,8,2,4,90,91,true⟩,
-  ⟨4,16,1,43,33,97,true⟩,
-  ⟨4,16,2,24,129,193,false⟩,
-  ⟨4,32,1,7,194,199,true⟩,
-  ⟨4,32,2,7,388,398,true⟩,
-  ⟨8,8,1,9,88,90,true⟩,
-  ⟨8,8,2,9,176,180,true⟩,
-  ⟨8,16,1,47,129,193,true⟩,
-  ⟨8,16,2,87,129,385,false⟩,
-  ⟨8,32,1,10,394,398,true⟩,
-  ⟨8,32,2,13,778,795,true⟩,
-  ⟨16,8,1,25,164,180,true⟩,
-  ⟨16,8,2,25,328,360,true⟩,
-  ⟨16,16,1,16,384,385,true⟩,
-  ⟨16,16,2,16,768,769,true⟩,
-  ⟨16,32,1,27,776,794,true⟩,
-  ⟨16,32,2,27,1552,1588,true⟩,
-  ⟨32,8,1,34,354,359,true⟩,
-  ⟨32,8,2,34,708,718,true⟩,
-  ⟨32,16,1,346,258,770,false⟩,
-  ⟨32,16,2,189,1025,1537,true⟩,
-  ⟨32,32,1,34,1584,1588,true⟩,
-  ⟨32,32,2,34,3168,3176,true⟩]
-
-private theorem boundary_checked : ∀ r∈boundaryRows, r.Check := by
-  simp only [boundaryRows,List.mem_cons,List.mem_nil_iff,or_false]
-  intro r hr
-  rcases hr with rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl|rfl <;> (unfold BoundaryRow.Check Windows; decide)
-
-private theorem boundary_good (r : BoundaryRow) (hr : r∈boundaryRows) :
-    Good r.p r.q r.h r.v r.m r.M r.before := by
-  obtain ⟨hv,hv',hm,hM,hsub,hw⟩ := boundary_checked r hr
-  exact ⟨hv,hv',hm,hM,SecondPeakHighD.submask_of_land r.m r.M hsub,hw⟩
-
-/-- The genuine finite remainder is exhausted, with both fresh cuts retained. -/
+/-- The parameter split consumes scale-unbounded selectors for every q branch. -/
 theorem finite_exists (p q h : ℕ)
     (hp : p=4 ∨ p=8 ∨ p=16 ∨ p=32)
     (hq : q=2 ∨ q=4 ∨ q=8 ∨ q=16 ∨ q=32) (hh : h=1 ∨ h=2) :
@@ -75,47 +28,47 @@ theorem finite_exists (p q h : ℕ)
   · exact ⟨5,10,15,false,by simpa using q_two_boundary_good 1⟩
   · simpa using q_four_dyadic_good 2 0 (by omega)
   · simpa using q_four_dyadic_good 2 1 (by omega)
-  · exact ⟨5,44,46,false,boundary_good ⟨4,8,1,5,44,46,false⟩ (by decide)⟩
-  · exact ⟨4,90,91,true,boundary_good ⟨4,8,2,4,90,91,true⟩ (by decide)⟩
-  · exact ⟨43,33,97,true,boundary_good ⟨4,16,1,43,33,97,true⟩ (by decide)⟩
-  · exact ⟨24,129,193,false,boundary_good ⟨4,16,2,24,129,193,false⟩ (by decide)⟩
-  · exact ⟨7,194,199,true,boundary_good ⟨4,32,1,7,194,199,true⟩ (by decide)⟩
-  · exact ⟨7,388,398,true,boundary_good ⟨4,32,2,7,388,398,true⟩ (by decide)⟩
+  · simpa using q_eight_dyadic_good 2 0 (by omega)
+  · simpa using q_eight_dyadic_good 2 1 (by omega)
+  · simpa using q_sixteen_dyadic_good 2 0 (by omega)
+  · simpa using q_sixteen_dyadic_good 2 1 (by omega)
+  · simpa using q_thirtytwo_dyadic_good 2 0 (by omega)
+  · simpa using q_thirtytwo_dyadic_good 2 1 (by omega)
   · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 3 0 (by omega)
     exact ⟨v,m,M,true,hg⟩
   · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 3 1 (by omega)
     exact ⟨v,m,M,true,hg⟩
   · simpa using q_four_dyadic_good 3 0 (by omega)
   · simpa using q_four_dyadic_good 3 1 (by omega)
-  · exact ⟨9,88,90,true,boundary_good ⟨8,8,1,9,88,90,true⟩ (by decide)⟩
-  · exact ⟨9,176,180,true,boundary_good ⟨8,8,2,9,176,180,true⟩ (by decide)⟩
-  · exact ⟨47,129,193,true,boundary_good ⟨8,16,1,47,129,193,true⟩ (by decide)⟩
-  · exact ⟨87,129,385,false,boundary_good ⟨8,16,2,87,129,385,false⟩ (by decide)⟩
-  · exact ⟨10,394,398,true,boundary_good ⟨8,32,1,10,394,398,true⟩ (by decide)⟩
-  · exact ⟨13,778,795,true,boundary_good ⟨8,32,2,13,778,795,true⟩ (by decide)⟩
+  · simpa using q_eight_dyadic_good 3 0 (by omega)
+  · simpa using q_eight_dyadic_good 3 1 (by omega)
+  · simpa using q_sixteen_dyadic_good 3 0 (by omega)
+  · simpa using q_sixteen_dyadic_good 3 1 (by omega)
+  · simpa using q_thirtytwo_dyadic_good 3 0 (by omega)
+  · simpa using q_thirtytwo_dyadic_good 3 1 (by omega)
   · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 4 0 (by omega)
     exact ⟨v,m,M,true,hg⟩
   · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 4 1 (by omega)
     exact ⟨v,m,M,true,hg⟩
   · simpa using q_four_dyadic_good 4 0 (by omega)
   · simpa using q_four_dyadic_good 4 1 (by omega)
-  · exact ⟨25,164,180,true,boundary_good ⟨16,8,1,25,164,180,true⟩ (by decide)⟩
-  · exact ⟨25,328,360,true,boundary_good ⟨16,8,2,25,328,360,true⟩ (by decide)⟩
-  · exact ⟨16,384,385,true,boundary_good ⟨16,16,1,16,384,385,true⟩ (by decide)⟩
-  · exact ⟨16,768,769,true,boundary_good ⟨16,16,2,16,768,769,true⟩ (by decide)⟩
-  · exact ⟨27,776,794,true,boundary_good ⟨16,32,1,27,776,794,true⟩ (by decide)⟩
-  · exact ⟨27,1552,1588,true,boundary_good ⟨16,32,2,27,1552,1588,true⟩ (by decide)⟩
+  · simpa using q_eight_dyadic_good 4 0 (by omega)
+  · simpa using q_eight_dyadic_good 4 1 (by omega)
+  · simpa using q_sixteen_dyadic_good 4 0 (by omega)
+  · simpa using q_sixteen_dyadic_good 4 1 (by omega)
+  · simpa using q_thirtytwo_dyadic_good 4 0 (by omega)
+  · simpa using q_thirtytwo_dyadic_good 4 1 (by omega)
   · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 5 0 (by omega)
     exact ⟨v,m,M,true,hg⟩
   · obtain ⟨v,m,M,hg⟩ := q_two_dyadic_good 5 1 (by omega)
     exact ⟨v,m,M,true,hg⟩
   · simpa using q_four_dyadic_good 5 0 (by omega)
   · simpa using q_four_dyadic_good 5 1 (by omega)
-  · exact ⟨34,354,359,true,boundary_good ⟨32,8,1,34,354,359,true⟩ (by decide)⟩
-  · exact ⟨34,708,718,true,boundary_good ⟨32,8,2,34,708,718,true⟩ (by decide)⟩
-  · exact ⟨346,258,770,false,boundary_good ⟨32,16,1,346,258,770,false⟩ (by decide)⟩
-  · exact ⟨189,1025,1537,true,boundary_good ⟨32,16,2,189,1025,1537,true⟩ (by decide)⟩
-  · exact ⟨34,1584,1588,true,boundary_good ⟨32,32,1,34,1584,1588,true⟩ (by decide)⟩
-  · exact ⟨34,3168,3176,true,boundary_good ⟨32,32,2,34,3168,3176,true⟩ (by decide)⟩
+  · simpa using q_eight_dyadic_good 5 0 (by omega)
+  · simpa using q_eight_dyadic_good 5 1 (by omega)
+  · simpa using q_sixteen_dyadic_good 5 0 (by omega)
+  · simpa using q_sixteen_dyadic_good 5 1 (by omega)
+  · simpa using q_thirtytwo_dyadic_good 5 0 (by omega)
+  · simpa using q_thirtytwo_dyadic_good 5 1 (by omega)
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2
