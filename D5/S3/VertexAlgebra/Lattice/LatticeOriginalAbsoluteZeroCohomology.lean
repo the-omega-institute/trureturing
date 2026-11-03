@@ -19,8 +19,10 @@ import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.Tactic
 
+/-! Actual original absolute zero-energy cohomology, with native integer ghost grading. -/
+
 set_option autoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 
 noncomputable section
 open scoped BigOperators TensorProduct
@@ -61,7 +63,6 @@ theorem ghost_preserves_fixedMomentum (a : Charge D) (T : Module.End ℂ Fock)
   have hs (l : Label D) (y : State D) :
       ghostSlice D l (TensorProduct.map LinearMap.id T y) = T (ghostSlice D l y) := by
     induction y using TensorProduct.inductionOn with
-    | zero => simp
     | tmul v w => simp only [TensorProduct.map_tmul, LinearMap.id_apply,
         ghostSlice_tmul, map_smul]
     | add y z hy hz => simp only [map_add, hy, hz]
@@ -72,15 +73,19 @@ theorem ghost_preserves_fixedMomentum (a : Charge D) (T : Module.End ℂ Fock)
     rw [ghostSlice_coeff]
     exact (mem_fixedMomentum_iff D a x).mp hx (i.1,S) hi
   rw [← ghostSlice_coeff, hs, hz, map_zero]
+  rfl
 
 variable (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
 variable (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
 
-/-- Actual original charge zero and actual unshifted total L0=0. -/
+/-- Kernel of the actual original unshifted total L0. -/
 abbrev Absolute : Submodule ℂ (State D) := LinearMap.ker (totalL0 D H)
 
 /-- The absolute sector has no b0 constraint. -/
-abbrev E0 : Submodule ℂ (State D) := fixedMomentum D 0 ⊓ Absolute D H
+def E0 : Submodule ℂ (State D) := fixedMomentum D 0 ⊓ Absolute D H
+
+instance e0_addCommGroup : AddCommGroup (E0 D H) :=
+  Submodule.addCommGroup (R := ℂ) (M := State D) (E0 D H)
 
 private theorem b_mem_absolute (x : State D) (hx : x ∈ Absolute D H) :
     ghostB D 0 x ∈ Absolute D H := by
@@ -101,7 +106,7 @@ private theorem c_mem_absolute (x : State D) (hx : x ∈ Absolute D H) :
     have hw := LinearMap.congr_fun hg w
     simp only [Module.End.mul_apply] at hw
     simp only [totalL0, LinearMap.add_apply, Module.End.mul_apply, map_add,
-      matterMode, LatticeBRST.ghostVirasoro, ghostC,
+      matterMode, ghostVirasoro, ghostC,
       TensorProduct.map_tmul, LinearMap.id_apply]
     rw [hw]
   change totalL0 D H (ghostC D 0 x) = 0
@@ -133,12 +138,14 @@ def split0 : E0 D H ≃ₗ[ℂ]
       rw [map_add, z.1.2.1.2, zero_add, bc_fix D _ z.2.2.1.2]
   map_add' x y := by
     apply Prod.ext <;> apply Subtype.ext
-    · change ghostB D 0 (ghostC D 0 ((x : State D) + (y : State D))) = _
+    · change ghostB D 0 (ghostC D 0 ((x : State D) + (y : State D))) =
+        ghostB D 0 (ghostC D 0 x) + ghostB D 0 (ghostC D 0 y)
       simp only [map_add]
     · exact map_add (ghostB D 0) (x : State D) (y : State D)
   map_smul' a x := by
     apply Prod.ext <;> apply Subtype.ext
-    · change ghostB D 0 (ghostC D 0 (a • (x : State D))) = _
+    · change ghostB D 0 (ghostC D 0 (a • (x : State D))) =
+        a • ghostB D 0 (ghostC D 0 x)
       simp only [map_smul]
     · exact map_smul (ghostB D 0) a (x : State D)
 
@@ -183,24 +190,24 @@ private theorem R0_odd (S : Finset ℕ) (hS : ∀ j ∈ S, j % 2 = 1) :
 private theorem R0_empty : BcGhostBRST.R 0 (ket ∅) = (2 : ℂ) • ket {1,5} := by
   have hm : BcGhostBRST.rTerm 0 (-1) (ket ∅) = ket {1,5} := by
     norm_num [BcGhostBRST.rTerm, Module.End.mul_apply, BcGhostFock.c,
-      create_ket, phase, lowerCount, Finset.insert_comm]
+      create_ket, phase, lowerCount, Finset.filter_insert, Finset.filter_singleton, Finset.pair_comm]
   have hz : BcGhostBRST.rTerm 0 0 (ket ∅) = 0 := by
     simp [BcGhostBRST.rTerm]
   have hp : BcGhostBRST.rTerm 0 1 (ket ∅) = ket {1,5} := by
     norm_num [BcGhostBRST.rTerm, Module.End.mul_apply, BcGhostFock.c,
-      create_ket, phase, lowerCount, Finset.insert_comm]
+      create_ket, phase, lowerCount, Finset.filter_insert, Finset.filter_singleton, Finset.pair_comm]
   rw [R0_odd ∅ (by simp), hm, hz, hp, add_zero]
   module
 
 private theorem R0_down : BcGhostBRST.R 0 (ket {1}) = 0 := by
   rw [R0_odd {1} (by simp)]
   norm_num [BcGhostBRST.rTerm, Module.End.mul_apply, BcGhostFock.c,
-    create_ket, annihilate_ket, phase, lowerCount, Finset.insert_comm]
+    create_ket, annihilate_ket, phase, lowerCount, Finset.filter_insert, Finset.filter_singleton, Finset.pair_comm]
 
 private theorem R0_top : BcGhostBRST.R 0 (ket {1,5}) = 0 := by
   rw [R0_odd {1,5} (by simp)]
   norm_num [BcGhostBRST.rTerm, Module.End.mul_apply, BcGhostFock.c,
-    create_ket, annihilate_ket, phase, lowerCount, Finset.insert_comm]
+    create_ket, annihilate_ket, phase, lowerCount, Finset.filter_insert, Finset.filter_singleton, Finset.pair_comm]
 
 
 /-- Exact original zero-momentum M coefficient: +2 from the native unshifted
@@ -231,6 +238,7 @@ theorem Q_representative (z w : Coordinates D) :
     map_zero, add_zero, M_Psi D H hHG hGH] at hc
   rw [map_add, Q_Psi D H hHG hGH, zero_add, hc]
 
+include hHG hGH in
 /-- Q preserves the exact original fixed-charge absolute space. -/
 theorem Q_mem_E0 (x : E0 D H) :
     LatticeBRST.totalCharge D H (x : State D) ∈ E0 D H := by
@@ -265,16 +273,21 @@ theorem Q0_square : Q0 D H hHG hGH * Q0 D H hHG hGH = 0 := by
   change LatticeBRST.totalCharge D H (LatticeBRST.totalCharge D H (x : State D)) = 0
   rw [hx,Q_representative D H hHG hGH,Q_Psi D H hHG hGH]
 
-abbrev Cycles := LinearMap.ker (Q0 D H hHG hGH)
+abbrev Cycles : Submodule ℂ (E0 D H) := LinearMap.ker (Q0 D H hHG hGH)
+
+instance cycles_addCommGroup : AddCommGroup (Cycles D H hHG hGH) :=
+  Submodule.addCommGroup (R := ℂ) (M := E0 D H) (Cycles D H hHG hGH)
 
 theorem cycle_coordinates (z w : Coordinates D) :
     (stateEquiv D H hHG hGH).symm (z,w) ∈ Cycles D H hHG hGH ↔ w.1 = 0 := by
   change Q0 D H hHG hGH _ = 0 ↔ _
-  rw [Q0_coordinates]
+  rw [Q0_coordinates D H hHG hGH]
   constructor
   · intro h
     have hc := congrArg (fun x : E0 D H => (stateEquiv D H hHG hGH x).1.2.2) h
-    have h2 : (2 : ℂ)*w.1 = 0 := by simpa using hc
+    have he := (stateEquiv D H hHG hGH).map_zero
+    have h2 : (2 : ℂ)*w.1 = 0 := by
+      simpa only [LinearEquiv.apply_symm_apply, he, Prod.fst_zero, Prod.snd_zero] using hc
     exact (mul_eq_zero.mp h2).resolve_left (by norm_num)
   · intro h
     simp [h]
@@ -288,14 +301,14 @@ theorem range_coordinates (z w : Coordinates D) :
     let p := stateEquiv D H hHG hGH y
     have hy' : y = (stateEquiv D H hHG hGH).symm (p.1,p.2) :=
       ((stateEquiv D H hHG hGH).symm_apply_apply y).symm
-    rw [hy',Q0_coordinates] at hy
+    rw [hy', Q0_coordinates D H hHG hGH] at hy
     have hp := (stateEquiv D H hHG hGH).symm.injective hy
     exact ⟨(congrArg (fun t : Coordinates D × Coordinates D => t.1.1) hp).symm,
       (congrArg (fun t : Coordinates D × Coordinates D => t.1.2.1) hp).symm,
       (congrArg Prod.snd hp).symm⟩
   · rintro ⟨ha,hv,hw⟩
     refine ⟨(stateEquiv D H hHG hGH).symm (0,(z.2.2/2,(0,0))),?_⟩
-    rw [Q0_coordinates]
+    rw [Q0_coordinates D H hHG hGH]
     apply (stateEquiv D H hHG hGH).injective
     simp only [LinearEquiv.apply_symm_apply]
     apply Prod.ext
@@ -315,7 +328,7 @@ def Boundaries : Submodule ℂ (Cycles D H hHG hGH) :=
   LinearMap.range (boundaryMap D H hHG hGH)
 
 /-- The ORIGINAL state kernel/range quotient. -/
-abbrev Cohomology := Cycles D H hHG hGH ⧸ Boundaries D H hHG hGH
+abbrev Cohomology : Type := Cycles D H hHG hGH ⧸ Boundaries D H hHG hGH
 
 /-- Four retained ORIGINAL class coordinates, in the requested order. -/
 abbrev ClassCoordinates := ℂ × ((Fin D.rank → ℂ) × ((Fin D.rank → ℂ) × ℂ))
@@ -333,10 +346,17 @@ def representative : ClassCoordinates D →ₗ[ℂ] Cycles D H hHG hGH where
     (cycle_coordinates D H hHG hGH _ _).mpr rfl⟩
   map_add' x y := by
     apply Subtype.ext
+    change (stateEquiv D H hHG hGH).symm
+        (((x + y).1,((x + y).2.1,0)),(0,(x + y).2.2)) =
+      (stateEquiv D H hHG hGH).symm ((x.1,(x.2.1,0)),(0,x.2.2)) +
+        (stateEquiv D H hHG hGH).symm ((y.1,(y.2.1,0)),(0,y.2.2))
     rw [← map_add (stateEquiv D H hHG hGH).symm]
     congr 1 <;> ext <;> simp
   map_smul' a x := by
     apply Subtype.ext
+    change (stateEquiv D H hHG hGH).symm
+        (((a • x).1,((a • x).2.1,0)),(0,(a • x).2.2)) =
+      a • (stateEquiv D H hHG hGH).symm ((x.1,(x.2.1,0)),(0,x.2.2))
     rw [← map_smul (stateEquiv D H hHG hGH).symm]
     congr 1 <;> ext <;> simp
 
@@ -365,7 +385,11 @@ theorem boundaries_eq_ker : Boundaries D H hHG hGH =
     have hy : y = (stateEquiv D H hHG hGH).symm (r.1,r.2) :=
       ((stateEquiv D H hHG hGH).symm_apply_apply y).symm
     change classCoordinates D H hHG hGH ⟨Q0 D H hHG hGH y,_⟩ = 0
-    simp only [classCoordinates,hy,Q0_coordinates,LinearEquiv.apply_symm_apply]
+    change (((stateEquiv D H hHG hGH) (Q0 D H hHG hGH y)).1.1,
+      (((stateEquiv D H hHG hGH) (Q0 D H hHG hGH y)).1.2.1,
+        (((stateEquiv D H hHG hGH) (Q0 D H hHG hGH y)).2.2.1,
+          ((stateEquiv D H hHG hGH) (Q0 D H hHG hGH y)).2.2.2))) = 0
+    rw [hy, Q0_coordinates D H hHG hGH, LinearEquiv.apply_symm_apply]
     rfl
   · intro hx
     have ha : p.1.1 = 0 := congrArg Prod.fst hx
@@ -415,7 +439,8 @@ theorem number_Q (x : State D) :
       LatticeBRST.totalCharge D H * tensorNumber D =
         LatticeBRST.totalCharge D H := by
     exact LatticeMatterGhostDegree.tensorNumber_Q D H
-  simpa only [add_comm] using sub_eq_iff_eq_add.mp (LinearMap.congr_fun hm x)
+  simpa only [Module.End.mul_apply, LinearMap.sub_apply, add_comm] using
+    sub_eq_iff_eq_add.mp (LinearMap.congr_fun hm x)
 
 /-- All-state c0 degree +1, obtained from the committed all-integer relation. -/
 theorem number_c0 (x : State D) :
@@ -427,10 +452,11 @@ theorem number_c0 (x : State D) :
     intro v w
     have h := LinearMap.congr_fun (BcGhostCharge.ghost_number_relations.2.2 0) w
     simp only [LinearMap.sub_apply,Module.End.mul_apply] at h
-    simpa only [totalGhostNumber,ghostC,LinearMap.sub_apply,Module.End.mul_apply,
+    simpa only [tensorNumber, BcGhostChargeTensor.number, BcGhostChargeTensor.liftGhost, ghostC,LinearMap.sub_apply,Module.End.mul_apply,
       TensorProduct.map_tmul,LinearMap.id_apply,← TensorProduct.tmul_sub] using
         congrArg (fun y => v ⊗ₜ[ℂ] y) h
-  simpa only [add_comm] using sub_eq_iff_eq_add.mp (LinearMap.congr_fun hm x)
+  simpa only [Module.End.mul_apply, LinearMap.sub_apply, add_comm] using
+    sub_eq_iff_eq_add.mp (LinearMap.congr_fun hm x)
 
 theorem number_representative (z w : Coordinates D) :
     tensorNumber D
@@ -442,12 +468,14 @@ theorem number_representative (z w : Coordinates D) :
     · simp
     · apply Prod.ext
       · funext i
-        simp [two_smul]
+        simp only [Prod.snd_add, Prod.fst_add, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+        ring
       · dsimp
         ring
   rw [map_add,number_c0,totalGhostNumber_Psi,totalGhostNumber_Psi,
     ← map_add (ghostC D 0),← map_add (Psi D H hHG hGH),hw]
 
+include hHG hGH in
 theorem number_mem_E0 (x : E0 D H) : tensorNumber D (x : State D) ∈ E0 D H := by
   obtain ⟨z,w,hx⟩ := (mem_E0_iff D H hHG hGH x).mp x.property
   rw [hx,number_representative D H hHG hGH]
@@ -478,7 +506,7 @@ theorem grade_coordinates (q : ℤ) (z w : Coordinates D) :
       (∀ i, ((q : ℂ)-1)*z.2.1 i = 0) ∧ ((q : ℂ)-2)*z.2.2 = 0 ∧
       ((q : ℂ)-1)*w.1 = 0 ∧
       (∀ i, ((q : ℂ)-2)*w.2.1 i = 0) ∧ ((q : ℂ)-3)*w.2.2 = 0 := by
-  rw [Module.End.mem_eigenspace_iff,N0_coordinates]
+  rw [Module.End.mem_eigenspace_iff, N0_coordinates D H hHG hGH]
   constructor
   · intro h
     have hp := congrArg (stateEquiv D H hHG hGH) h
@@ -516,10 +544,10 @@ theorem grade_coordinates (q : ℤ) (z w : Coordinates D) :
 
 /-- Incoming Q raises the ACTUAL native number eigenvalue by one. This proof
 uses the committed all-state number/Q relation, with no mode restriction. -/
-theorem Q0_grade (q : ℤ) (x : E0 D H) (hx : x ∈ Grade D H hHG hGH (q-1)) :
+theorem Q0_grade (q : ℤ) (x : E0 D H) (hx : x ∈ Grade D H hHG hGH (q - 1)) :
     Q0 D H hHG hGH x ∈ Grade D H hHG hGH q := by
   have hx' := congrArg Subtype.val (Module.End.mem_eigenspace_iff.mp hx)
-  change tensorNumber D (x : State D) = ((q-1 : ℤ) : ℂ) • (x : State D) at hx'
+  change tensorNumber D (x : State D) = ((q - 1 : ℤ) : ℂ) • (x : State D) at hx'
   rw [Module.End.mem_eigenspace_iff]
   apply Subtype.ext
   change tensorNumber D (LatticeBRST.totalCharge D H (x : State D)) =
@@ -532,11 +560,15 @@ theorem Q0_grade (q : ℤ) (x : E0 D H) (hx : x ∈ Grade D H hHG hGH (q-1)) :
 abbrev GradedCycles (q : ℤ) : Submodule ℂ (E0 D H) :=
   Cycles D H hHG hGH ⊓ Grade D H hHG hGH q
 
+instance gradedCycles_addCommGroup (q : ℤ) :
+    AddCommGroup (GradedCycles D H hHG hGH q) :=
+  Submodule.addCommGroup (R := ℂ) (M := E0 D H) (GradedCycles D H hHG hGH q)
+
 
 /-- Q on the actual incoming eigenspace, with codomain the actual homogeneous
 cycle space. All-rank restricted square-zero supplies the cycle condition. -/
 def gradedBoundaryMap (q : ℤ) :
-    Grade D H hHG hGH (q-1) →ₗ[ℂ] GradedCycles D H hHG hGH q where
+    Grade D H hHG hGH (q - 1) →ₗ[ℂ] GradedCycles D H hHG hGH q where
   toFun x := ⟨Q0 D H hHG hGH x,
     LinearMap.congr_fun (Q0_square D H hHG hGH) x,
     Q0_grade D H hHG hGH q x x.property⟩
@@ -547,7 +579,7 @@ def GradedBoundaries (q : ℤ) : Submodule ℂ (GradedCycles D H hHG hGH q) :=
   LinearMap.range (gradedBoundaryMap D H hHG hGH q)
 
 /-- No assigned dimensions: genuine native homogeneous kernel/image quotient. -/
-abbrev GradedCohomology (q : ℤ) :=
+abbrev GradedCohomology (q : ℤ) : Type :=
   GradedCycles D H hHG hGH q ⧸ GradedBoundaries D H hHG hGH q
 
 def canonicalState : ClassCoordinates D →ₗ[ℂ] E0 D H :=
@@ -569,18 +601,18 @@ theorem classGrade_coordinates (q : ℤ) (t : ClassCoordinates D) :
   simp only [mul_zero,and_true,true_and]
 
 def gradedCoordinates (q : ℤ) :
-    GradedCycles D H hHG hGH q →ₗ[ℂ] ClassGrade D H hHG hGH q where
-  toFun x :=
-    let y : Cycles D H hHG hGH := ⟨x.1,x.2.1⟩
-    ⟨classCoordinates D H hHG hGH y,by
-      let p := stateEquiv D H hHG hGH x.1
-      have hp : x.1 = (stateEquiv D H hHG hGH).symm (p.1,p.2) :=
-        ((stateEquiv D H hHG hGH).symm_apply_apply x.1).symm
-      have hg := (grade_coordinates D H hHG hGH q p.1 p.2).mp (hp ▸ x.2.2)
-      apply (classGrade_coordinates D H hHG hGH q _).mpr
-      exact ⟨hg.1,hg.2.1,hg.2.2.2.2.1,hg.2.2.2.2.2⟩⟩
-  map_add' x y := by apply Subtype.ext; exact map_add _ _ _
-  map_smul' a x := by apply Subtype.ext; exact map_smul _ _ _
+    GradedCycles D H hHG hGH q →ₗ[ℂ] ClassGrade D H hHG hGH q :=
+  let inclusion : GradedCycles D H hHG hGH q →ₗ[ℂ] Cycles D H hHG hGH :=
+    { toFun := fun x => ⟨x.1,x.2.1⟩
+      map_add' := by intro x y; rfl
+      map_smul' := by intro a x; rfl }
+  ((classCoordinates D H hHG hGH).comp inclusion).codRestrict _ (fun x => by
+    let p := stateEquiv D H hHG hGH x.1
+    have hp : x.1 = (stateEquiv D H hHG hGH).symm (p.1,p.2) :=
+      ((stateEquiv D H hHG hGH).symm_apply_apply x.1).symm
+    have hg := (grade_coordinates D H hHG hGH q p.1 p.2).mp (hp ▸ x.2.2)
+    apply (classGrade_coordinates D H hHG hGH q _).mpr
+    exact ⟨hg.1,hg.2.1,hg.2.2.2.2.1,hg.2.2.2.2.2⟩)
 
 def gradedRepresentative (q : ℤ) :
     ClassGrade D H hHG hGH q →ₗ[ℂ] GradedCycles D H hHG hGH q where
@@ -601,7 +633,7 @@ theorem gradedCoordinates_surjective (q : ℤ) :
 
 /-- The original graded Q-image, not merely intersection with an ungraded
 image, equals the coordinate kernel. Reverse inclusion constructs a genuine
-incoming state of native degree q-1 with w.a=z.c/2. -/
+incoming state of native degree q - 1 with w.a=z.c/2. -/
 theorem gradedBoundaries_eq_ker (q : ℤ) :
     GradedBoundaries D H hHG hGH q =
       LinearMap.ker (gradedCoordinates D H hHG hGH q) := by
@@ -629,19 +661,18 @@ theorem gradedBoundaries_eq_ker (q : ℤ) :
     have hd : p.2.2.2 = 0 := congrArg (fun t : ClassCoordinates D => t.2.2.2) ht
     have hw : p.2 = 0 := Prod.ext hcycle (Prod.ext hu hd)
     let y := (stateEquiv D H hHG hGH).symm (0,(p.1.2.2/2,(0,0)))
-    have hygrade : y ∈ Grade D H hHG hGH (q-1) := by
-      apply (grade_coordinates D H hHG hGH (q-1) _ _).mpr
+    have hygrade : y ∈ Grade D H hHG hGH (q - 1) := by
+      apply (grade_coordinates D H hHG hGH (q - 1) _ _).mpr
       refine ⟨by simp,by simp,by simp,?_,by simp,by simp⟩
       have hc := hg.2.2.1
       push_cast
-      dsimp
       linear_combination (1 / 2 : ℂ) * hc
     refine ⟨⟨y,hygrade⟩,?_⟩
     apply Subtype.ext
     change Q0 D H hHG hGH y = x.1
     rw [hp]
     change Q0 D H hHG hGH ((stateEquiv D H hHG hGH).symm _) = _
-    rw [Q0_coordinates]
+    rw [Q0_coordinates D H hHG hGH]
     apply (stateEquiv D H hHG hGH).injective
     simp only [LinearEquiv.apply_symm_apply]
     apply Prod.ext
@@ -659,45 +690,8 @@ def gradedCohomologyEquiv (q : ℤ) :
     ((gradedCoordinates D H hHG hGH q).quotKerEquivOfSurjective
       (gradedCoordinates_surjective D H hHG hGH q))
 
-@[simp] theorem gradedCohomologyEquiv_mk (q : ℤ) (x : GradedCycles D H hHG hGH q) :
-    gradedCohomologyEquiv D H hHG hGH q
-      ((GradedBoundaries D H hHG hGH q).mkQ x) =
-        gradedCoordinates D H hHG hGH q x := rfl
-
-/-- Forgetting grading is a map of genuine original quotients. -/
-def forgetGrade (q : ℤ) : GradedCohomology D H hHG hGH q →ₗ[ℂ]
-    Cohomology D H hHG hGH :=
-  (GradedBoundaries D H hHG hGH q).liftQ
-    ((Boundaries D H hHG hGH).mkQ.comp
-      { toFun := fun x => ⟨x.1,x.2.1⟩
-        map_add' := by intro x y; rfl
-        map_smul' := by intro a x; rfl }) (by
-      rintro x ⟨y,rfl⟩
-      change (Boundaries D H hHG hGH).mkQ
-        (boundaryMap D H hHG hGH (y : E0 D H)) = 0
-      change boundaryMap D H hHG hGH (y : E0 D H) ∈
-        LinearMap.ker ((Boundaries D H hHG hGH).mkQ)
-      rw [Submodule.ker_mkQ]
-      exact ⟨y,rfl⟩)
-
-theorem forgetGrade_coordinates (q : ℤ)
-    (x : GradedCohomology D H hHG hGH q) :
-    cohomologyEquiv D H hHG hGH (forgetGrade D H hHG hGH q x) =
-      (gradedCohomologyEquiv D H hHG hGH q x : ClassCoordinates D) := by
-  refine Submodule.Quotient.induction_on _ x ?_
-  intro y
-  rfl
-
-theorem forgetGrade_injective (q : ℤ) :
-    Function.Injective (forgetGrade D H hHG hGH q) := by
-  intro x y h
-  apply (gradedCohomologyEquiv D H hHG hGH q).injective
-  apply Subtype.ext
-  simpa only [forgetGrade_coordinates] using
-    congrArg (cohomologyEquiv D H hHG hGH) h
-
 private theorem scalar_zero {q k : ℤ} (hqk : q ≠ k) {a : ℂ}
-    (ha : ((q : ℂ)-(k : ℂ))*a = 0) : a = 0 := by
+    (ha : ((q : ℂ) - (k : ℂ)) * a = 0) : a = 0 := by
   apply (mul_eq_zero.mp ha).resolve_left
   exact sub_ne_zero.mpr (by exact_mod_cast hqk)
 
@@ -709,7 +703,7 @@ def classGradeZeroEquiv : ClassGrade D H hHG hGH 0 ≃ₗ[ℂ] ℂ where
   left_inv x := by
     apply Subtype.ext
     have hx := (classGrade_coordinates D H hHG hGH 0 x.1).mp x.2
-    have hv : x.1.2.1 = 0 := funext fun i => scalar_zero (q:=0) (k:=1) (by decide) (hx.2.1 i)
+    have hv : x.1.2.1 = 0 := funext fun i => scalar_zero (q:=0) (k:=1) (by decide) (by simpa using hx.2.1 i)
     have hu : x.1.2.2.1 = 0 := funext fun i => scalar_zero (q:=0) (k:=2) (by decide) (hx.2.2.1 i)
     have hd : x.1.2.2.2 = 0 := scalar_zero (q:=0) (k:=3) (by decide) hx.2.2.2
     exact Prod.ext rfl (Prod.ext hv.symm (Prod.ext hu.symm hd.symm))
@@ -743,7 +737,7 @@ def classGradeTwoEquiv : ClassGrade D H hHG hGH 2 ≃ₗ[ℂ] (Fin D.rank → �
     apply Subtype.ext
     have hx := (classGrade_coordinates D H hHG hGH 2 x.1).mp x.2
     have ha : x.1.1 = 0 := scalar_zero (q:=2) (k:=0) (by decide) (by simpa using hx.1)
-    have hv : x.1.2.1 = 0 := funext fun i => scalar_zero (q:=2) (k:=1) (by decide) (hx.2.1 i)
+    have hv : x.1.2.1 = 0 := funext fun i => scalar_zero (q:=2) (k:=1) (by decide) (by simpa using hx.2.1 i)
     have hd : x.1.2.2.2 = 0 := scalar_zero (q:=2) (k:=3) (by decide) hx.2.2.2
     exact Prod.ext ha.symm (Prod.ext hv.symm (Prod.ext rfl hd.symm))
   right_inv v := rfl
@@ -759,7 +753,7 @@ def classGradeThreeEquiv : ClassGrade D H hHG hGH 3 ≃ₗ[ℂ] ℂ where
     apply Subtype.ext
     have hx := (classGrade_coordinates D H hHG hGH 3 x.1).mp x.2
     have ha : x.1.1 = 0 := scalar_zero (q:=3) (k:=0) (by decide) (by simpa using hx.1)
-    have hv : x.1.2.1 = 0 := funext fun i => scalar_zero (q:=3) (k:=1) (by decide) (hx.2.1 i)
+    have hv : x.1.2.1 = 0 := funext fun i => scalar_zero (q:=3) (k:=1) (by decide) (by simpa using hx.2.1 i)
     have hu : x.1.2.2.1 = 0 := funext fun i => scalar_zero (q:=3) (k:=2) (by decide) (hx.2.2.1 i)
     exact Prod.ext ha.symm (Prod.ext hv.symm (Prod.ext hu.symm rfl))
   right_inv a := rfl
@@ -782,18 +776,18 @@ def H3Equiv : GradedCohomology D H hHG hGH 3 ≃ₗ[ℂ] ℂ :=
 theorem other_grade_zero (q : ℤ) (h0 : q ≠ 0) (h1 : q ≠ 1) (h2 : q ≠ 2) (h3 : q ≠ 3)
     (x : GradedCohomology D H hHG hGH q) : x = 0 := by
   apply (gradedCohomologyEquiv D H hHG hGH q).injective
-  rw [map_zero]
+  rw [(gradedCohomologyEquiv D H hHG hGH q).map_zero]
   apply Subtype.ext
   let y := gradedCohomologyEquiv D H hHG hGH q x
   have hy := (classGrade_coordinates D H hHG hGH q y.1).mp y.2
   have ha : y.1.1 = 0 := scalar_zero h0 (by simpa using hy.1)
-  have hv : y.1.2.1 = 0 := funext fun i => scalar_zero h1 (hy.2.1 i)
+  have hv : y.1.2.1 = 0 := funext fun i => scalar_zero h1 (by simpa using hy.2.1 i)
   have hu : y.1.2.2.1 = 0 := funext fun i => scalar_zero h2 (hy.2.2.1 i)
   have hd : y.1.2.2.2 = 0 := scalar_zero h3 hy.2.2.2
   exact Prod.ext ha (Prod.ext hv (Prod.ext hu hd))
 
 /-- Native dimensions are consequences of the explicit ORIGINAL
-quotient equivalences; they are not assumptions or certificates.  -/
+quotient equivalences; they are not assumptions or certificates. -/
 theorem native_dimensions :
     Module.finrank ℂ (GradedCohomology D H hHG hGH 0) = 1 ∧
     Module.finrank ℂ (GradedCohomology D H hHG hGH 1) = D.rank ∧

@@ -6,7 +6,9 @@ internal sealed class LatticeOriginalAbsoluteZeroCohomologyDocument : IScribeDoc
 {
     private static DocumentBlock Node(string name, string prose, DescribeRole role) =>
         Describe.Lean(
-            DescribeId.Create("originalabsolutezero-" + name.Replace("_", "-").ToLowerInvariant()),
+            DescribeId.Create("originalabsolutezero-" +
+                (name == "ClassCoordinates" ? "class-coordinate-carrier" :
+                    name.Replace("_", "-").ToLowerInvariant())),
             DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology." + name),
             H(name), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
@@ -22,10 +24,10 @@ internal sealed class LatticeOriginalAbsoluteZeroCohomologyDocument : IScribeDoc
             Paragraph(Text("Cycles are the actual kernel of Q0. In the unique split coordinates the cycle condition is w.A=0. The actual original image consists exactly of z.A=z.v=0 and w=0. A state with only z.C nonzero has the genuine boundary primitive c0 Psi(z.C/2,0,0). Boundaries are the actual range of the incoming Q0 map into its actual kernel. The first isomorphism theorem applies to the proved boundary/kernel equality for the class map, yielding Complex x ((Complex^rank) x ((Complex^rank) x Complex)). Canonical original representatives set z.C=w.A=0.")),
             Paragraph(Text("Native ghost number is exactly LatticeMatterGhostDegree.tensorNumber, relative to the original SL2 vacuum of grade zero. The actual c0 raises it by one. On a split state the six coordinate blocks have degrees 0,1,2,1,2,3. Homogeneous cycles are the actual Q0 kernel intersected with the actual number eigenspace at each integer q. Incoming boundaries are images of actual Q0 from the eigenspace of degree q-1, rather than an assigned coordinate differential or an intersection with an ungraded image.")),
             Paragraph(Text("The reverse graded boundary/kernel inclusion constructs the same primitive with w.A=z.C/2 and proves that it is homogeneous of degree q-1 from the original number equations. The quotient therefore has original canonical homogeneous representatives. In grades 0,1,2,3 it is linearly equivalent to Complex, Complex^rank, Complex^rank, Complex respectively. Every other integer grade is zero. The finrank formula is derived from these quotient equivalences and includes rank zero without a separate assumption.")),
-            Paragraph(Text("The construction integrates the supplied absolute/cohomology, ghost-grade and necessary cone proposals; repository supplier definitions and proofs retain their authorship. The current shell, CAR, Ward, number and finite-tail proofs are reused. Mathlib supplies quotient, eigenspace and dimension machinery under Apache 2.0. This algebraic computation establishes neither an ambient signed pairing nor positivity or signature; the wider no-ghost, moonshine, VOA/CFT, string and AdS/CFT programme remains separate.")),
+            Paragraph(Text("The shell and finite-tail identities come from LatticeZeroMomentumBRST; the zero-mode CAR and projectors come from LatticeBRSTRelativeZeroMode. LatticeBRSTWard and LatticeMatterGhostDegree supply the original Ward and number identities. Their definitions and proofs retain their authorship. Mathlib supplies quotient, eigenspace and dimension machinery under Apache 2.0. This algebraic computation establishes neither an ambient signed pairing nor positivity or signature.")),
             Node("bc_split", "The genuine all-state CAR splitting, before imposing either charge or energy.", DescribeRole.Theorem),
             Node("ghost_preserves_fixedMomentum", "Every ghost endomorphism preserves every original charge, with no mode cutoff. The proof uses the original tensor coefficient slices.", DescribeRole.Theorem),
-            Node("Absolute", "Actual original charge zero and actual unshifted total L0=0.", DescribeRole.Definition),
+            Node("Absolute", "Kernel of the actual original unshifted total L0.", DescribeRole.Definition),
             Node("E0", "The absolute sector has no b0 constraint.", DescribeRole.Definition),
             Node("split0", "Charge-preserving CAR splitting of the whole literal absolute shell.", DescribeRole.Definition),
             Node("stateEquiv", "Coordinates are extracted AFTER exhaustive splitting in the actual shell.", DescribeRole.Definition),
@@ -77,10 +79,6 @@ internal sealed class LatticeOriginalAbsoluteZeroCohomologyDocument : IScribeDoc
             Node("gradedCoordinates_surjective", "The source declaration gradedCoordinates_surjective is part of the actual original kernel/image construction with the displayed source type.", DescribeRole.Theorem),
             Node("gradedBoundaries_eq_ker", "The original graded Q-image, not merely intersection with an ungraded image, equals the coordinate kernel. Reverse inclusion constructs a genuine incoming state of native degree q-1 with w.a=z.c/2.", DescribeRole.Theorem),
             Node("gradedCohomologyEquiv", "Degreewise quotient transport uses Mathlib directly on the actual homogeneous original kernel and incoming Q-image.", DescribeRole.Definition),
-            Node("gradedCohomologyEquiv_mk", "The source declaration gradedCohomologyEquiv_mk is part of the actual original kernel/image construction with the displayed source type.", DescribeRole.Theorem),
-            Node("forgetGrade", "Forgetting grading is a map of genuine original quotients.", DescribeRole.Definition),
-            Node("forgetGrade_coordinates", "The source declaration forgetGrade_coordinates is part of the actual original kernel/image construction with the displayed source type.", DescribeRole.Theorem),
-            Node("forgetGrade_injective", "The source declaration forgetGrade_injective is part of the actual original kernel/image construction with the displayed source type.", DescribeRole.Theorem),
             Node("classGradeZeroEquiv", "Native degree zero has the ground scalar class.", DescribeRole.Definition),
             Node("classGradeOneEquiv", "Native degree one has z.v; the scalar w.a is removed by the actual cycle condition, rather than being silently counted as a second copy.", DescribeRole.Definition),
             Node("classGradeTwoEquiv", "Native degree two has w.v; z.c is exactly the actual Q-image.", DescribeRole.Definition),
@@ -91,5 +89,8 @@ internal sealed class LatticeOriginalAbsoluteZeroCohomologyDocument : IScribeDoc
             Node("H3Equiv", "The source declaration H3Equiv is part of the actual original kernel/image construction with the displayed source type.", DescribeRole.Definition),
             Node("other_grade_zero", "Every other integer degree, including negative degrees, is zero.", DescribeRole.Theorem),
             Node("native_dimensions", "Native dimensions are consequences of the explicit ORIGINAL quotient equivalences; they are not assumptions or certificates.", DescribeRole.Theorem),
+            Node("e0_addCommGroup", "The genuine original absolute sector inherits the canonical additive group of its ambient tensor carrier, with explicit scalar and ambient types for native instance resolution.", DescribeRole.Definition),
+            Node("cycles_addCommGroup", "The actual original Q0 kernel inherits the canonical submodule additive group; this is consumed by its original-image quotient.", DescribeRole.Definition),
+            Node("gradedCycles_addCommGroup", "Each actual homogeneous original cycle subspace inherits its canonical additive group, consumed by the incoming-image quotient.", DescribeRole.Definition),
             Node("native_finrank", "The entire integer grading, including arbitrary rank zero, is derived from the original homogeneous kernel and incoming-image quotients.", DescribeRole.Theorem))));
 }
