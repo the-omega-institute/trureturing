@@ -36,6 +36,7 @@ private def packets (a b c d u v : ℕ) : List (List ℕ×ℕ) :=
   [(P 0,Z 0),(P 1,Z 1),(P 2,Z 2),(P 3,Z 3)]
 
 -- The packet masses are sums of actual centered source values at set-bit labels.
+set_option maxHeartbeats 1600000 in
 private theorem row_checks (a b c d u v : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
     (hu : u<2^(d-1)) (hv : v<2^(c-1))
@@ -114,12 +115,15 @@ private theorem row_checks (a b c d u v : ℕ)
   all_goals dsimp only at mass0 mass1 mass2 mass3
   all_goals dsimp only [Z,terminals,raw] at nn0 nn1 nn2 nn3 win0 win1 win2 win3
   all_goals dsimp only [f,F,P,AA,ear,C,rowBase] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 hstart win0 win1 win2 win3 ⊢
-  all_goals simp only [ite_true,ite_false,Bool.false_eq_true] at *
+  all_goals simp only [ite_true,ite_false,Bool.false_eq_true,terminals,
+    Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
+    Matrix.cons_val_succ] at mass0 mass1 mass2 mass3 nn0 nn1 nn2 nn3 hstart win0 win1 win2 win3 ⊢
   all_goals refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,True.intro⟩
   all_goals nlinarith only [mass0,mass1,mass2,mass3,nn0.1,nn0.2,nn1.1,nn1.2,
     nn2.1,nn2.2,nn3.1,nn3.2,hstart,win0.1,win0.2,win1.1,win1.2,win2.1,win2.2,win3.1,win3.2]
 
 -- Both strips use positive physical banks and their actual negative terminals.
+set_option maxHeartbeats 1600000 in
 private theorem physical_strips (a b c d u v : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c) (hd : 2≤d)
     (hu : u<2^(d-1)) (hv : v<2^(c-1))
@@ -136,7 +140,7 @@ private theorem physical_strips (a b c d u v : ℕ)
   have hN : 0≤sourceMod a b c d := by
     have h := (chain_values a b c d ha hb hc hd).1 0
     omega
-  have positive (side : Bool) : ∀ b∈bs, ∀ i∈b.1,
+  have positive (side : Bool) : ∀ pkt∈bs, ∀ i∈pkt.1,
       0≤(if side then newValue a b c d else oldValue a b c d) i := by
     intro pkt hmem i hi
     have good (r : Fin 4) (hi : i∈P r) :
@@ -148,9 +152,13 @@ private theorem physical_strips (a b c d u v : ℕ)
     simp only [bs,packets,List.mem_cons,List.mem_nil_iff,or_false] at hmem
     rcases hmem with rfl|rfl|rfl|rfl
     all_goals cases side
-    all_goals first | exact (good _ hi).1 | exact (good _ hi).2
-  have negative (side : Bool) : ∀ b∈bs,
-      (if side then newValue a b c d else oldValue a b c d) b.2≤0 := by
+    all_goals first
+      | exact (good 0 hi).1 | exact (good 0 hi).2
+      | exact (good 1 hi).1 | exact (good 1 hi).2
+      | exact (good 2 hi).1 | exact (good 2 hi).2
+      | exact (good 3 hi).1 | exact (good 3 hi).2
+  have negative (side : Bool) : ∀ pkt∈bs,
+      (if side then newValue a b c d else oldValue a b c d) pkt.2≤0 := by
     have good (r : Fin 4) : oldValue a b c d (Z r)≤0 ∧ newValue a b c d (Z r)≤0 := by
       have hz : Z r<size a b c d ∧ Z r∈negatives a b c d := by
         fin_cases r <;> simp [Z,terminals,size,negatives] <;> omega
@@ -161,7 +169,11 @@ private theorem physical_strips (a b c d u v : ℕ)
     simp only [bs,packets,List.mem_cons,List.mem_nil_iff,or_false] at hmem
     rcases hmem with rfl|rfl|rfl|rfl
     all_goals cases side
-    all_goals first | exact (good _).1 | exact (good _).2
+    all_goals first
+      | exact (good 0).1 | exact (good 0).2
+      | exact (good 1).1 | exact (good 1).2
+      | exact (good 2).1 | exact (good 2).2
+      | exact (good 3).1 | exact (good 3).2
   have earpos : 0≤newValue a b c d (size a b c d) := by
     rw [(source_totals a b c d ha hb hc hd).2.2]
     have hh:=(chain_values a b c d ha hb hc hd).1 0
@@ -201,11 +213,11 @@ private theorem physical_order (a d u v : ℕ) (ha : 2≤a) (had : a+2≤d)
   have hc : (2:ℤ)^(d+2)=4*t := by dsimp [t]; rw [pow_add]; norm_num; ring
   have hbase : base a a (d+2) d=![A x t,B x t,L x t,K x t] := by
     funext r
-    fin_cases r <;> dsimp [base] <;> simp only [hc] <;> dsimp [A,B,L,K,x,t] <;> ring
+    fin_cases r <;> dsimp [base] <;> (try simp only [hc]) <;> dsimp [A,B,L,K,x,t] <;> ring
   have hnew : newBase a a (d+2) d=![2*A x t,SU x t,SV x t,SW x t] := by
     funext r
     fin_cases r <;> dsimp [newBase,charge] <;> rw [hbase]
-    all_goals dsimp [SU,SV,SW,x] <;> simp only [hc] <;> ring
+    all_goals dsimp [SU,SV,SW,x] <;> (try simp only [hc]) <;> ring
   have so : rowSeams a a (d+2) d u v false=![H1 x t u,H2 x t u,D x t u v,0] := by
     funext r
     fin_cases r <;> simp [rowSeams,rowBase,hbase,H1,H2,D]
@@ -218,10 +230,10 @@ private theorem physical_order (a d u v : ℕ) (ha : 2≤a) (had : a+2≤d)
     simp [rowHeads,rowBase,hbase,hnew]
   have hB : 1≤B x t := by
     have hh:=(chain_values a a (d+2) d ha ha (by omega) (by omega)).1 1
-    simpa only [hbase,Matrix.cons_val_one] using hh.1
+    simpa only [hbase,Matrix.cons_val_one,Matrix.cons_val_zero] using hh.1
   have hSU : 1≤SU x t := by
     have hh:=new_base_bounds a a (d+2) d ha ha (by omega) (by omega) 1
-    simpa only [hnew,Matrix.cons_val_one] using hh.1
+    simpa only [hnew,Matrix.cons_val_one,Matrix.cons_val_zero] using hh.1
   have hwin : ∀ side r, window (rowSeams a a (d+2) d u v side r) (rowHeads a a (d+2) d side r) := by
     intro side r
     cases side
@@ -230,13 +242,15 @@ private theorem physical_order (a d u v : ℕ) (ha : 2≤a) (had : a+2≤d)
       · exact hw.1.1
       · exact hw.1.2.1
       · exact hw.2.1
-      · exact ⟨by omega,by omega⟩
+      · change window 0 (B x t)
+        exact ⟨by omega,by omega⟩
     · rw [sn,hn]
       fin_cases r
       · exact hw.1.2.2.1
       · exact hw.1.2.2.2
       · exact hw.2.2
-      · exact ⟨by omega,by omega⟩
+      · change window 0 (SU x t)
+        exact ⟨by omega,by omega⟩
   have he : a+a+(d+2)+d=2*a+2*d+2 := by omega
   have hv' : v<2^((d+2)-1) := by simpa only [show d+2-1=d+1 by omega] using hv
   simpa only [he] using physical_strips a a (d+2) d u v ha ha (by omega) (by omega) hu hv' hwin
