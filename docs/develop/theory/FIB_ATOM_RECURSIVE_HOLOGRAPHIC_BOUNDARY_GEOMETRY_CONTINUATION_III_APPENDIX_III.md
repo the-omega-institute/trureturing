@@ -1153,3 +1153,172 @@ Theorem 137.1 uses nonzero odd angular characters. An invariant $v$ in (140.4) h
 Finally negating the original existential-universal statement gives the universal-existential statement in (140.10), since rank is an integer and the negation of rank at least three is rank at most two. A constructed rank three is compatible with both quantified alternatives. Proposition 135.3 proves only the forward implication from full $64$-coordinate attainment to $A^D=A^f$ and rank two. Neither rank two nor the coarse-zero route proves those additional equalities. The endpoint and source hypotheses throughout are precisely the inherited ones of Definition 135.1; these ordinary conditional mathematical deductions assert no further realization of the source or readout. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 141. A source-preserving reflection and the invariant constrained negative vector
+
+**Proposition 141.1 (reflection of the entire original endpoint and an even terminal perturbation).** Retain the complete original telescope of Definitions 135.1 and 136.1. In symmetric coordinates define
+
+$$
+J(x,y,z,\xi)=(x,y,-z,\xi).
+\tag{141.1}
+$$
+
+Its pullback preserves $m$, the entire form domain $\mathscr V=\mathscr V_0\dotplus\mathbb C1$, its energy and its source trace, and commutes with the actual $K$ and every $T_s$. Every actual source density $g_s$ is $J$-even. The representative $\beta$ of Proposition 136.2 can be chosen both pointwise rotation invariant and $J$-even, without changing the original $b,M,c,f$ classes or any target. For every original $\theta$ there is a nonzero bounded invariant $J$-even real $w$, supported away from $N$ in a compact set, such that the construction (140.1)–(140.3) gives, for sufficiently small nonzero $\tau$,
+
+$$
+\begin{gathered}
+k=c\beta+\tau w,\qquad 0<k\le3/8\quad\hbox{everywhere},\qquad k\circ J=k,\\
+\int_Gg_{jd}k\,dm=t_j\quad(j=2,3,4),\qquad
+q=Pk,\qquad q/g\ \hbox{nonconstant almost everywhere},\qquad
+\Delta_k>0.
+\end{gathered}
+\tag{141.2}
+$$
+
+*Proof.* The map $J$ is a measure-preserving automorphism of the original $H^1\times\mathbb R$, fixes $e$ and commutes with the rotations. It changes the sign of $X_3=\partial_z$ and leaves $X_1,X_2,\partial_w$ unchanged. Thus the free realization of $L$ commutes with $J$. Its source heat law at $e$ is invariant, and the original identity $\Gamma=\int_0^\infty h_s\,ds$ makes $\Gamma$ invariant as well. Equivalently, the independent Gaussian $z$ factor in the original heat representation is even; (122.6) exhibits this symmetry through $z^2$ on $\Omega$. The Heisenberg heat factor is the attributed [Krötz–Thangavelu–Xu formula, §4.1, (4.1.2)](https://arxiv.org/html/math/0401243v2), with $n=1$ and the original Fourier and raw Haar conventions as in Appendix II §122. This argument concerns the original unit-source field, without changing its normalization.
+
+Consequently $J$ preserves $S$, $S^*$, the Friedrichs form $(\overline q_c,\mathcal Q_c)$ and its domain. The supplied identity $\ker S^*=\mathbb Ch$ makes $Jh$ a multiple of $h$. Positivity, reality and unit norm give $Jh=h$. Hence $J$ preserves the full domain $\mathcal Q_c\dotplus\mathbb Ch$ and the form $q_H[y+ch]=\overline q_c[y]$. Closed-form representation proves commutation with the actual $H_{\rm end}$, including its source summand and selector. Conjugation by this same $h$ gives invariance of $m$, $\mathscr V$ and $\mathscr E$, and commutation with $K,T_s$. Moreover $J$ preserves $\mathscr V_0$, fixes $1$ and therefore preserves $\operatorname{tr}(v_0+c)=c$. Applying the actual source identity (117.2) to $Jv$ and using Riesz uniqueness gives $Jg_s=g_s$ for each $s>0$. Thus neither the full domain nor the source-start law is inferred merely from a differential symmetry.
+
+Replace the pointwise invariant representative of Proposition 136.2 by $(\beta+\beta\circ J)/2$. This preserves its class $g_d$ and the everywhere bounds $0<\beta\le M$. Choose a positive analytic-$\beta$ quotient patch with compact closure in $\{r>0,z>0\}$, and a compact subpatch on which $\beta\ge b_*>0$. Such a patch exists by positivity almost everywhere and analytic continuity. Repair the representative to the analytic one there and on its reflected patch. Select four disjoint positive-measure Borel subsets of the subpatch, and pair each with its reflection. Their four invariant lifted indicators are even and linearly independent. The three source moment equations on their span have a nonzero solution $w$. Its support is compact and disjoint from $N$, and it may be assigned zero on $N$. Both reflected patches have the same lower bound $b_*$, so the smallness bound (140.7) applies to their union. The proof of Theorem 140.2 now applies to this particular $w$: that bound, polynomial continuity of $\Delta_k$, and the injectivity argument for $P(k-c\beta)$ give every assertion of (141.2). No new assumption about the desired negative vector enters this construction. $\square$
+
+**Theorem 141.2 (a bounded character-zero vector satisfying all seven equations).** For every original $\theta$, choose any reflection-even $k$ supplied by Proposition 141.1. There exists a bounded real Borel $v$ on the whole original $G$, pointwise invariant under every rotation and pointwise odd under $J$, such that
+
+$$
+\begin{gathered}
+\int_Gg_{jd}v\,dm=0\quad(j=2,3,4),\\
+Q_k(1,v)=0,\qquad Q_k(k,v)=0,\qquad
+Q_k(v,1)=0,\qquad Q_k(v,k)=0,\\
+Q_k(v,v)<0.
+\end{gathered}
+\tag{141.3}
+$$
+
+Here $Q_k(u,v)=\int guP(qv)\,dm$ uses exactly $q=Pk$. In particular this is the antecedent (140.4) on the rotation-invariant space.
+
+*Proof.* Let $\mathcal H_0^-$ be the closed complex subspace of $L^2(G,m)$ consisting of rotation-invariant, $J$-odd classes. The commuting rotation and reflection projections reduce the actual $K$; denote its nonnegative self-adjoint restriction by $K_0^-$. This is a restriction of the supplied full operator, with no replacement of its endpoint. The space contains every smooth invariant test compactly supported in $\{r>0,z>0\}$ together with its negative reflection. It is therefore nonzero and contains the local tests used below.
+
+Put
+
+$$
+s=g+q,\qquad t=g-q,\qquad
+\gamma=t/s\ \hbox{where }s>0,
+\qquad \gamma=0\ \hbox{on its null complement},\qquad
+\sigma=d/2,\qquad A=e^{-\sigma K_0^-}.
+\tag{141.4}
+$$
+
+Both weights are bounded, real, rotation invariant, $J$-even and strictly positive almost everywhere. The assertions for $g$ use Theorem 133.2 and the actual source density; those for $q$ use $q=T_dk$, positivity improvement and the Markov contraction. Thus $s>0$ almost everywhere and $|\gamma|\le1$. Multiplication by $s,t,\gamma$ preserves $\mathcal H_0^-$. On $\Omega$ the actual heat-image suppliers (122.9)–(122.11) make $g=T_dg_d$ and $q=T_dk$ analytic. Consequently $\gamma$ is smooth analytic on the open set where $s>0$.
+
+Suppose for contradiction that $Q_k(v,v)\ge0$ for every bounded real $v\in\mathcal H_0^-$. Self-adjointness of $P=A^2$ gives the exact identity
+
+$$
+4Q_k(v,v)=\|A(sv)\|_2^2-\|A(tv)\|_2^2.
+\tag{141.5}
+$$
+
+There is no global positive lower bound on $s$ in this identity or in the next step. For any real $u\in\mathcal H_0^-$ set
+
+$$
+u_n=u\,\mathbf1_{\{s\ge1/n,\ |u|\le n\}},\qquad v_n=u_n/s.
+\tag{141.6}
+$$
+
+Take $v_n=0$ where the indicator vanishes. These are allowed odd invariant tests with $\|v_n\|_\infty\le n^2$, and $u_n\to u$ in $L^2$. Applying (141.5) and passing to the limit proves $\|AM_\gamma u\|_2\le\|Au\|_2$. Real and imaginary parts extend this inequality to the whole complex $\mathcal H_0^-$. Since $A$ is injective with dense range, the rule $B(Au)=AM_\gamma u$ extends to a contraction $B$ on this entire space. Taking adjoints gives
+
+$$
+BA=AM_\gamma,\qquad AB^*=M_\gamma A,\qquad
+e^{\sigma K_0^-}M_\gamma e^{-\sigma K_0^-}=B^*.
+\tag{141.7}
+$$
+
+The last equality includes its range assertion, supplied by the middle equality. This is the elementary adjoint-factorization argument also used in Appendix II (128.5)–(128.6), now on the whole invariant reflection-odd space. Its domain is not obtained by discarding a finite-dimensional complement.
+
+Here is the required commutator consequence with its actual domains. For $\Pi_R=\mathbf1_{[0,R]}(K_0^-)$ define the entire bounded-operator-valued function
+
+$$
+F_R(z)=\Pi_Re^{zK_0^-}M_\gamma e^{-zK_0^-}\Pi_R.
+\tag{141.8}
+$$
+
+The spectral cutoffs define both exponential factors on bounded spectral intervals. On $\operatorname{Re}z=\sigma$, (141.7) and imaginary-time unitary conjugation give $\|F_R(z)\|\le1$. On $\operatorname{Re}z=-\sigma$, the adjoint identity gives the same bound. The functions are bounded on each closed vertical strip. Hadamard's three-lines theorem applied to scalar matrix coefficients therefore gives the bound one throughout this strip. Cauchy's estimate on the circle $|z|=\sigma/2$ yields
+
+$$
+\|F_R'(0)\|\le2/\sigma.
+\tag{141.9}
+$$
+
+For $u,v\in D(K_0^-)$, graph-norm convergence of the spectral cutoffs identifies the limit of the derivative pairing with
+
+$$
+\langle K_0^-u,\gamma v\rangle_m-
+\langle\gamma u,K_0^-v\rangle_m.
+\tag{141.10}
+$$
+
+Its absolute value is at most $(2/\sigma)\|u\|_2\|v\|_2$. Whenever $v$ and $\gamma v$ are smooth compact punctured tests in this subspace, self-adjointness and density of $D(K_0^-)$ identify (141.10) with the actual vector commutator and give
+
+$$
+\|[K,M_\gamma]v\|_2\le(2/\sigma)\|v\|_2.
+\tag{141.11}
+$$
+
+This does not assume global invariance of $D(K)$ under multiplication by $\gamma$.
+
+Choose any small quotient open patch $U$ compactly contained in $\{r>0,z>0,gq>0\}$, and a real $\chi\in C_c^\infty(U)$. For $\omega\in\mathbb R^3$, on $z>0$ take
+
+$$
+u_N=\chi(r,z,\xi)e^{iN\omega\cdot(r,z,\xi)},
+\tag{141.12}
+$$
+
+extend it negatively by $J$ to $z<0$, and set it zero elsewhere. These tests have angular character zero. Both $u_N$ and $\gamma u_N$ are genuine smooth compact punctured vectors in the original operator domain: multiplication by the positive smooth $h$ takes such vectors to the core $\mathcal D_0$ in (112.4). Their $L^2$ norms are independent of $N$. On the upper patch the original symbol (137.12), or the original Leibniz identity (122.22), gives
+
+$$
+[K,M_\gamma]u_N
+=-2iN\chi e^{iN\omega\cdot(r,z,\xi)}
+\left[a\gamma_r\omega_r+a\gamma_z\omega_z+
+\left(\eta+ar^2/4\right)\gamma_\xi\omega_\xi\right]
++O_{L^2(U)}(1).
+\tag{141.13}
+$$
+
+For fixed $\chi,\omega$ the remainder is bounded independently of $N$, because all coefficients and derivatives involved are bounded on its compact support. The reflected support is disjoint and cannot cancel the norm on $U$. Divide (141.11) by $N$ and let $N\to\infty$. Taking the three coordinate directions for $\omega$ shows $\chi\gamma_r=\chi\gamma_z=\chi\gamma_\xi=0$. The amplitude is arbitrary, and $a,\eta>0$, so $\gamma$ is constant on each connected such patch. Some nonempty patch exists by positivity almost everywhere; on one of them its constant $\gamma_0$ lies in $(-1,1)$.
+
+The analytic function $g-q-\gamma_0(g+q)$ consequently vanishes on a nonempty open subset of the connected $\Omega$. Analytic uniqueness, in the same actual heat-image class as §137, makes it vanish on all $\Omega$. Since $m(N)=0$, this gives
+
+$$
+q/g=(1-\gamma_0)/(1+\gamma_0)\quad m\text{-a.e.},
+\tag{141.14}
+$$
+
+contrary to (141.2). The assumed nonnegativity on all bounded real $\mathcal H_0^-$ is therefore false. There is a bounded real vector in this space with $Q_k(v,v)<0$.
+
+Choose a bounded Borel representative, average it over the circle, apply $(I-J)/2$, and assign zero on $N$. These operations preserve its class and bound and make it pointwise invariant and pointwise $J$-odd on all $G$. In particular it vanishes on the fixed hyperplane $z=0$, so there is no pointwise oddness obstruction. Each source density $g_{jd}$ is even, giving each of the three moment equations separately. For the four ordered equations, self-adjointness gives the explicit coefficients
+
+$$
+\begin{aligned}
+Q_k(1,v)&=\int_G v\,q\,Pg\,dm,&
+Q_k(k,v)&=\int_G v\,q\,P(gk)\,dm,\\
+Q_k(v,1)&=\int_G v\,g\,Pq\,dm,&
+Q_k(v,k)&=\int_G v\,g\,P(qk)\,dm.
+\end{aligned}
+\tag{141.15}
+$$
+
+All four coefficients multiplying $v$ are integrable and $J$-even, since $g,q,k$ are even and the actual $P$ commutes with $J$. Invariance of $m$ makes each displayed integral zero. This proves all of (141.3), without identifying either order of the bilinear form with the other.
+
+The factorization, three-lines interpolation, Cauchy estimate and analytic uniqueness are established intermediate methods; the factorization is proved explicitly above, and the interpolation and local-symbol computation use exactly the bounded strip and genuine punctured-core hypotheses displayed here. The source-specific composition with the full reflection symmetry and the endogenous terminal factor is `repo-derived`. It uses neither a finite-negative-square extension nor a new general index theorem. $\square$
+
+**Corollary 141.3 (the original quantified rank alternative).** Under precisely the inherited original endpoint and source telescope, the original marginal classes satisfy
+
+$$
+\forall\theta\in\Theta\ \exists D\in\mathscr D_{12}(\theta),
+\qquad \operatorname{rank}A^D\le2.
+\tag{141.16}
+$$
+
+Thus this source-conditional statement is $\neg\mathcal R$ in (140.10). It supplies neither $A^D=A^f$ nor full $64$-coordinate attainment.
+
+*Proof.* Fix an arbitrary original $\theta$, including its arbitrary original representative $b$. Proposition 141.1 gives a reflection-even admissible terminal perturbation $k$ with $\Delta_k>0$, and Theorem 141.2 gives precisely (140.4). Theorem 140.2 therefore gives an admissible invariant stochastic tuple (140.5) with strictly negative actual determinant (140.6). Theorem 140.1 supplies an actual invariant coarse partition with zero determinant, using Theorem 139.1 for a negative actual determinant and the deterministic path of Theorem 139.2 for exact attainment. Theorem 138.2 then supplies an original whole-$G$ four-cell Borel partition with all twelve original source marginals and rank at most two. In particular each deterministic matrix in these bridges uses its own actual $P\mathbf1_C$ or $P\mathbf1_{D_3}$; $Pk$ belongs only to the stochastic precursor. The representative changes in Proposition 141.1 preserve the original targets by Proposition 135.3. Since the original $\theta$ was arbitrary, (141.16) follows. The only extra symmetry required of the construction is imposed on its freely chosen $k$, not on the original representative $b$ or on arbitrary members of $\mathscr D_{12}(\theta)$. The forward implication concerning full $64$-coordinate attainment in Proposition 135.3 still has no converse here. $\square$
+
+## 追加锚（本行以下为增补区）

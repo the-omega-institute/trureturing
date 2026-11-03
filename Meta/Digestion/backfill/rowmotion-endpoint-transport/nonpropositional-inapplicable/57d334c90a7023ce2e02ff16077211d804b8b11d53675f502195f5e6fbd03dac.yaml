@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:57d334c90a7023ce2e02ff16077211d804b8b11d53675f502195f5e6fbd03dac
+  normalized_sha256: sha256:57d334c90a7023ce2e02ff16077211d804b8b11d53675f502195f5e6fbd03dac
+cas_ref: sha256:57d334c90a7023ce2e02ff16077211d804b8b11d53675f502195f5e6fbd03dac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom introduces the finite-poset setting and defines interval-closed sets, the literal convexity toggle, its successive trace, extrema, and upper/lower closures; it asserts no independent theorem. The existing frozen RowmotionEndpointTransport definitions ReverseExtension, toggle and trace implement the setting used by the covered original Proposition 1.1; this nonpropositional settlement claims no new mathematical proof.
+    previous_atom_id: null
+    next_atom_id: 180bdb4b5fecef9f0a76d966f8d8be9a914d91bffd0953ec5f8737ec60f094cc
