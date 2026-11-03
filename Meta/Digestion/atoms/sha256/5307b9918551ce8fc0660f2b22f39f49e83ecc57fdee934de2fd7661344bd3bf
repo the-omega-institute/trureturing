@@ -1,0 +1,21 @@
+**定义 79.1（精确返回层内的两个关系缺陷）。** 暂只保留定义 77.1 和精确 R。记 $\mathcal L_E(X)=\sqrt E X\sqrt E$，在原有限代数和任意数学矩阵参考上使用未除以二的任意输入 diamond 范数：
+
+$$
+\|\Phi\|_\diamond=\sup_{k\ge1}\sup_{Z\ne0}
+\frac{\|(\Phi\otimes\operatorname{id}_{M_k})(Z)\|_1}{\|Z\|_1}.
+\tag{79.1}
+$$
+
+这里 $\|\cdot\|_1$ 使用通常迹之和与参考矩阵迹；数学参考的全称量词不增加实际空间边。对 $E\ne0$ 定义
+
+$$
+\begin{aligned}
+r(E,F)&=\frac{\|T_{E,F}-T_{E,F}^*\|_\diamond}{\|E\|},\\
+h(E,F)&=\frac{\|T_{E,F}-T_{\sqrt E,F}^{\,2}\|_\diamond}{\|E\|},\\
+d(E,F)&=\frac{\|T_{E,F}-\mathcal L_E\|_\diamond}{\|E\|}.
+\end{aligned}
+\tag{79.2}
+$$
+
+取全部已有对象、非零效果和所选框架的上确界 $R_0=\sup r$、$H_0=\sup h$、$D=\sup d$，并令 $\eta=\max(R_0,H_0)$。共同调暗已由定理 78.1 导出，所以按 $\|E\|$ 归一与取范数为一的效果等价。
+
