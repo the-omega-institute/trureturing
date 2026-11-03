@@ -10,6 +10,10 @@ $$\forall (V : Type), [\operatorname{AddCommGroup}\left(V\right)] [\operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/JenzerPermutedRotorLoop.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jen2610` (proved) by `D5/S3/QuadraticForms/JenzerPermutedRotorLoop.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jen2610","declaration_gid":"D5/S3/QuadraticForms/JenzerPermutedRotorLoop.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nik Jenzer (2026). *Star-Ordered Rotor Loops in Clifford Algebras*. DOI: [10.48550/arXiv.2610.21593](https://doi.org/10.48550/arXiv.2610.21593). URL: <https://arxiv.org/abs/2610.21593v1>.
