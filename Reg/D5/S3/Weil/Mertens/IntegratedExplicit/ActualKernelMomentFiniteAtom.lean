@@ -16,19 +16,17 @@ namespace literal_step_bounds
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature := realize signature (fun _ _ z => z) (fun e => nomatch e)
-private def rejected : Realization signature := realize signature (fun _ _ z => z + 1) (fun e => nomatch e)
+private def rejected : Realization signature := realize signature (fun _ _ _ => -1) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
   Law R := ∀ (q : ℕ) (hq : 1 ≤ q),
-    R.readout () () (0 < literalStep q ∧ literalStep q ≤ 1 / 16 ∧
-      (q : ℝ) * literalStep q) = 1 / 16
+    0 < R.readout () () (literalStep q) ∧ literalStep q ≤ 1 / 16 ∧
+      (q : ℝ) * literalStep q = 1 / 16
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 1 (by norm_num)
-  have ho := literal_step_bounds 1 (by norm_num)
-  change _ + 1 = _ at hh
-  rw [ho] at hh
-  simpa using hh
+  change 0 < (-1 : ℝ) ∧ _ at hh
+  norm_num at hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   exact ⟨(), 0, 1, by change (0 : ℝ) ≠ 1; norm_num⟩
@@ -179,7 +177,8 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 0 0 le_rfl le_rfl le_rfl
-  norm_num [rejected, realize, mem_union, mem_Icc] at hh
+  change Real.exp (-(0 : ℝ) / 4) ^ 2 * (0 : ℝ) ^ 3 / 48 ≤ (-1 : ℝ) at hh
+  norm_num at hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   exact ⟨(), 0, 1, by change (0 : ℝ) ≠ 1; norm_num⟩
