@@ -1,6 +1,6 @@
-/- GID: D5 / S3 / StatisticalMechanics / NoisyVoter / LagTwoOptimalBracket
+/- GID: D5/S3/StatisticalMechanics/NoisyVoter/LagTwoOptimalBracket
    generality: G
-   mirror-B: D5 / B / S3 / StatisticalMechanics / NoisyVoter / LagTwoOptimalBracket
+   mirror-B: D5/B/S3/StatisticalMechanics/NoisyVoter/LagTwoOptimalBracket
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
