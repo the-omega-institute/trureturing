@@ -8,7 +8,6 @@
 
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Logic.Relation
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Linarith
