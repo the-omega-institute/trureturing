@@ -42,7 +42,7 @@ internal sealed class DecimalMultiplesDocument : IScribeDocumentDefinition
                 + "10, so seq(2)=10. For 1<=m<10, the exclusion of 20 through 90 forces any occurring "
                 + "10m to have m=1. Conversely index 2 supplies the positive index for m=1. "
                 + "These statements concern the original decimal sequence; no conclusion about hundreds "
-                + "or other bases follows.")))));
+                + "or other bases follows."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("a359482-tens-" + name.Replace('_', '-')),
