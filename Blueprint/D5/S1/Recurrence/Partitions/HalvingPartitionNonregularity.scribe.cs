@@ -25,11 +25,17 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 + "equalities with the lower and upper integer halves. When previous is even "
                 + "the two values coincide; no choice label is stored and no object is doubled.",
                 DescribeRole.Definition, true),
+            Node("instDecidableIsHalf", "Decidability of the half-value test", HalfDecidableFormula(),
+                "For every previous and next natural value, this instance decides IsHalf "
+                + "by deciding its disjunction of equalities.", DescribeRole.Definition),
             Node("Follows", "Successive halving along a finite list", FollowsFormula(),
                 "The empty list follows any predecessor. A nonempty list follows precisely "
                 + "when its first value is a half of the predecessor and its tail follows that "
                 + "first value. Positivity and the total are imposed separately. The recursive "
                 + "decider tests values and introduces no bound on the list length.", DescribeRole.Definition, true),
+            Node("instDecidableFollows", "Decidability of finite-list halving", FollowsDecidableFormula(),
+                "For every predecessor and finite natural list, this instance decides Follows "
+                + "by recursion on that list, with no length restriction.", DescribeRole.Definition),
             Node("SourceLists", "The independently specified source carrier", SourceFormula(),
                 "SourceLists(n) contains exactly the positive lists with sum n satisfying "
                 + "Follows(n,p). There is no maximal-chain, sorting, distinctness or final-value "
@@ -46,6 +52,12 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 + "proved by the constructors, so no source object is lost or identified. "
                 + "The transported Finite instance certifies finiteness of the independent source carrier.",
                 DescribeRole.Definition),
+            Node("instFintypeHalvingCompositions", "Enumeration of halving compositions", FintypeFormula(),
+                "For every natural total n, the instance enumerates the subtype of Composition n "
+                + "satisfying Follows, using the decidable predicate.", DescribeRole.Definition),
+            Node("instFiniteSourceLists", "Finiteness of the source-list carrier", FiniteFormula(),
+                "For every natural total n, the source carrier is finite by transport along "
+                + "sourceEquiv(n) from HalvingCompositions(n).", DescribeRole.Definition),
             Node("count", "The exact source count", CountFormula(),
                 "The function count(n) is Nat.card of SourceLists(n), defined independently "
                 + "of every recurrence and of the dyadic formula used in the proof. The final "
@@ -64,7 +76,7 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 + "sequences and linear dependence are allowed.", DescribeRole.Definition),
             Node("ArbitraryFamily", "An arbitrary finite indexed family", FamilyFormula(true),
                 "The index type I is any finite type, with a distinguished i0 carrying a. "
-                + "The Fintype witness merely enumerates I; it supplies no basis or algebraic "
+                + "Here I is the Lean indexing type and hI is its Fintype witness, installed as the local instance. The expression elems(hI) is Fintype.elems, the complete finite enumeration used in both sums. It supplies no basis or algebraic "
                 + "independence. Different indices may carry equal sequences. The proof enumerates "
                 + "I by Fin(card I) and swaps i0 to zero, transporting both coefficient sums in "
                 + "full. Conversely every matrix family supplies such a finite family.",
@@ -78,7 +90,7 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 + "for the source count, and the exact source/composition cardinality identity "
                 + "for every n. These are literal finite-family representations; no finite-kernel, "
                 + "finite-alphabet, eventual-input or basis substitute enters the statement.",
-                DescribeRole.Theorem),
+                DescribeRole.Theorem, acknowledgeSource: true),
             Paragraph(Text("For m at least two, every source list at total 2^m+1 has one "
                 + "prefix of rounded-up values followed by deterministic powers of two and, "
                 + "when the length exceeds m, a tail of ones. If its length l is at most m, "
@@ -99,11 +111,12 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
                 + "Only forward propagation is used; the matrices may be singular.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, bool literature = false) => Describe.Lean(
+        DescribeRole role, bool literature = false, bool acknowledgeSource = false) => Describe.Lean(
             DescribeId.Create("halving-partitions-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
-            literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
+            literature ? AssessedProvenance.FromLiterature(Source)
+                : acknowledgeSource ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 
     private static Formula HalfFormula() => Disp(All("p", N(), All("q", N(),
@@ -116,6 +129,20 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
         All("p", N(), All("q", N(), All("t", ListN(),
             IffF(Call("Follows", F.Id("p"), Call("cons", F.Id("q"), F.Id("t"))),
                 AndF(Call("IsHalf", F.Id("p"), F.Id("q")), Call("Follows", F.Id("q"), F.Id("t")))))))));
+
+    private static Formula HalfDecidableFormula() => Disp(Seq(F.Id("instDecidableIsHalf"), Colon, Sp,
+        All("previous", N(), All("next", N(),
+            Call("Decidable", Call("IsHalf", F.Id("previous"), F.Id("next")))))));
+
+    private static Formula FollowsDecidableFormula() => Disp(Seq(F.Id("instDecidableFollows"), Colon, Sp,
+        All("previous", N(), All("parts", ListN(),
+            Call("Decidable", Call("Follows", F.Id("previous"), F.Id("parts")))))));
+
+    private static Formula FintypeFormula() => Disp(Seq(F.Id("instFintypeHalvingCompositions"), Colon, Sp,
+        All("n", N(), Call("Fintype", Call("HalvingCompositions", F.Id("n"))))));
+
+    private static Formula FiniteFormula() => Disp(Seq(F.Id("instFiniteSourceLists"), Colon, Sp,
+        All("n", N(), Call("Finite", Call("SourceLists", F.Id("n"))))));
 
     private static Formula SourceFormula() => Disp(All("n", N(),
         Eq(Call("SourceLists", F.Id("n")), Seq(OpenBrace, F.Id("p"), Colon, Sp, ListN(), Sp, Mid, Sp,
@@ -155,21 +182,24 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
         var i0 = arbitrary ? F.Id("i0") : D(0);
         var i = F.Id("i"); var j = F.Id("j"); var n = F.Id("n");
         Formula Row(string c, Formula input) => All("i", index, All("n", N(),
-            Eq(Call("b", i, input), Seq(Sum, Underscore, Grp(Member(j, index)),
+            Eq(Call("b", i, input), Seq(new Formula.Subscript(Sum, arbitrary
+                ? Member(j, Call("elems", F.Id("hI"))) : Seq(j, Colon, Sp, index)),
                 Mul(Call(c, i, j), Call("b", j, n))))));
         var law = AndF(All("n", N(), Eq(Call("b", i0, n), Call("a", n))),
             AndF(Row("c0", Mul(D(2), n)), Row("c1", Add(Mul(D(2), n), D(1)))));
+        var coefficients = Some("c0", Arrow(index, Arrow(index, Z())),
+            Some("c1", Arrow(index, Arrow(index, Z())), law));
         var body = Some("b", Arrow(index, SequenceType()),
-            Some("c0", Arrow(index, Arrow(index, Z())),
-                Some("c1", Arrow(index, Arrow(index, Z())), law)));
+            arbitrary ? Some("i0", index, coefficients) : coefficients);
         var exists = arbitrary
-            ? Some("I", Call("FiniteTypes"), Some("i0", index, body))
+            ? Some("I", new Formula.NamedConstant(FormulaIdentifier.Create("Type")),
+                Some("hI", Call("Fintype", index), body))
             : Some("d", N(), AndF(Lt(D(0), F.Id("d")), body));
         return Disp(All("a", SequenceType(), IffF(Call(arbitrary ? "ArbitraryFamily" : "ClosedFamily", F.Id("a")), exists)));
     }
 
-    private static Formula CastCount() => Seq(Open, F.Id("n"), Colon, Sp, N(), Sp, Mapsto, Sp,
-        Call("Int", Call("count", F.Id("n"))), Close);
+    private static Formula CastCount() => Parenthesized(Seq(F.Id("n"), Colon, Sp, N(), Sp, Mapsto, Sp,
+        Call("Int", Call("count", F.Id("n")))));
     private static Formula ClaimFormula() => Disp(IffF(F.Id("claim"),
         new Formula.Not(Call("MatrixFamily", CastCount()))));
     private static Formula ResultFormula() => Disp(AndF(F.Id("claim"), AndF(
@@ -182,7 +212,8 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
     private static Formula Z() => new Formula.Integers();
     private static Formula ListN() => Call("List", N());
     private static Formula SequenceType() => Arrow(N(), Z());
-    private static Formula Arrow(Formula a, Formula b) => Seq(Open, a, Sp, To, Sp, b, Close);
+    private static Formula Arrow(Formula a, Formula b) => Parenthesized(Seq(a, Sp, To, Sp, b));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
