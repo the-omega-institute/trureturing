@@ -34,6 +34,10 @@ $$(\exists a: \mathbb{N} \to \mathbb{N}, \operatorname{CallanA002067Dyck.IsSourc
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/CallanA002067Hafnian.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/callan-a002067` (proved) by `D5/S3/Combinatorics/PerfectMatchings/CallanA002067Hafnian.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"callan-a002067","declaration_gid":"D5/S3/Combinatorics/PerfectMatchings/CallanA002067Hafnian.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David Callan (2017). *Two conjectures in OEIS A002067: hafnians and weighted Dyck paths*. URL: <https://oeis.org/A002067>.

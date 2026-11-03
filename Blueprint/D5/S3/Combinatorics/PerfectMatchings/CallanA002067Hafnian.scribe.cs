@@ -19,14 +19,18 @@ internal sealed class CallanA002067HafnianDocument : IScribeDocumentDefinition
                 "OEIS A002067, Callan COMMENTS (unnumbered entry, no page number): \"a(n) is the Hafnian of the triangular array (u(i,j))_{1 <= i < j <= 2n} with u(i,j)=i. The Hafnian is the same as the Pfaffian except without the alternating signs just as the permanent of a matrix is the determinant without the signs.\" \"a(n) is the total weight of Dyck n-paths with weight defined as follows. Given a Dyck path, for each upstep, record its position in the path and the height of its upper endpoint; then multiply together all of these positions and heights. For example, the Dyck 4-path P = UUDUUDDD has upsteps in positions 1,2,4,5 ending at heights 1,2,2,3 respectively, and hence weight(P) = 480. (In fact the positions determine the heights because, for the k-th upstep, position + height = 2k.)\" The proposition includes existence of the sequence and quantifies over every solution of the NAME recurrence and every n : Nat. Empty matching and path weights are one.", AssessedProvenance.FromLiterature(Source)),
             Node("result", "Both identities for every index", "result", ClaimBody(),
                 "Adjoining the largest label to an involution either creates a fixed point or joins it to an existing fixed point. The resulting weighted generating polynomial obeys derivative plus (r+1)X multiplication. Evaluation at zero retains precisely the fixed-point-free involutions, which correspond to perfect matchings. The same polynomial counts weighted Dyck paths and its even constant terms satisfy the source convolution.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem)),
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("callan-a002067"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("callan-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));
