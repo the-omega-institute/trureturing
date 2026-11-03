@@ -578,7 +578,7 @@ defaultFacets = ["static"]
             output = Path(output) / self._testMethodName / phase
             output.mkdir(parents=True, exist_ok=True)
             for path in paths:
-                destination = output / path.relative_to(self.root)
+                destination = output / path.resolve().relative_to(self.root.resolve())
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(path, destination)
             (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')

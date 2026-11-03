@@ -116,6 +116,38 @@ class NativeBatchPartitionTests:
                 native.produce_batch(requests)
             extract.assert_not_called()
 
+    def test_split_assessment_failure_preserves_legacy_publication_boundary(self):
+        for fail in (False, True):
+            with self.subTest(fail=fail), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                native.state(root).mkdir(parents=True)
+                requests = [[str(root), name, '', '', '/inspector', str(root / (name + '.zip'))]
+                            for name in ('Left', 'Right')]
+                for request in requests:
+                    Path(request[5]).write_bytes(b'previous')
+                indexes = []
+
+                def extract(rows, *, generated_index):
+                    indexes.append(generated_index)
+                    self.assertTrue(generated_index.is_file())
+                    self.assertEqual([Path(row[5]).read_bytes() for row in requests],
+                                     [b'previous', b'previous'])
+                    Path(rows[0][5]).write_bytes(rows[0][1].encode())
+                    if fail and rows[0][1] == 'Right':
+                        raise ValueError('incomplete_closure:dtr.generated_target:collision')
+
+                with patch.object(native, 'produce_batch_chunk', side_effect=extract):
+                    if fail:
+                        with self.assertRaisesRegex(ValueError, 'dtr.generated_target:collision'):
+                            native.produce_split_batch(requests, 1)
+                    else:
+                        native.produce_split_batch(requests, 1)
+                self.assertEqual(indexes[0], indexes[1])
+                self.assertFalse(indexes[0].exists())
+                self.assertEqual([Path(row[5]).read_bytes() for row in requests],
+                                 [b'previous', b'previous'] if fail else [b'Left', b'Right'])
+                self.assertEqual(list(native.state(root).iterdir()), [])
+
     def test_compatibility_call_uses_raw_reader_without_publishing_rows(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
