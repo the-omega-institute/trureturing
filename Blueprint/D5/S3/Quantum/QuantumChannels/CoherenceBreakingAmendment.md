@@ -78,7 +78,31 @@ $$
 \forall d \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{IsKrausChannel}\left(K\right) \Leftrightarrow (\sum_{(s:\operatorname{Fin}\left(r\right))} (((K\left(s\right))^{H}) \cdot (K\left(s\right))) = 1)
 $$
 
-**Theorem 1.6 (A permutation with fourth-root phases amends the channel).**
+**Theorem 1.6 (Unitary monomial matrices).**
+
+$$\forall d \in \mathbb{N},\; \forall sigma \in \operatorname{Equiv.Perm}\left(\operatorname{Fin}\left(d\right)\right),\; \forall omega \in \operatorname{Fin}\left(d\right) \to \mathbb{C},\; (\forall c \in \operatorname{Fin}\left(d\right),\; (omega\left(c\right)) \cdot (\operatorname{star}\left(omega\left(c\right)\right)) = 1) \Rightarrow (\operatorname{D5.S3.Quantum.Matrix.MonomialDiagonalPreserving.monomial}\left(\operatorname{Equiv.symm}\left(sigma\right), \operatorname{Function.comp}\left(omega, \operatorname{Equiv.symm}\left(sigma\right)\right)\right) \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.monomial_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A permutation matrix with one unit-modulus coefficient in each column is unitary.
+
+**Theorem 1.7 (Monomial conjugation commutes with diagonal erasure).**
+
+$$\forall d \in \mathbb{N},\; \forall sigma \in \operatorname{Equiv.Perm}\left(\operatorname{Fin}\left(d\right)\right),\; \forall omega \in \operatorname{Fin}\left(d\right) \to \mathbb{C},\; \forall X \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{offDiag}\left(\operatorname{LinearMap.mulLeftRight}\left(\mathbb{C}, (\operatorname{D5.S3.Quantum.Matrix.MonomialDiagonalPreserving.monomial}\left(\operatorname{Equiv.symm}\left(sigma\right), \operatorname{Function.comp}\left(omega, \operatorname{Equiv.symm}\left(sigma\right)\right)\right), (\operatorname{D5.S3.Quantum.Matrix.MonomialDiagonalPreserving.monomial}\left(\operatorname{Equiv.symm}\left(sigma\right), \operatorname{Function.comp}\left(omega, \operatorname{Equiv.symm}\left(sigma\right)\right)\right))^{H})\right)\left(X\right)\right) = \operatorname{LinearMap.mulLeftRight}\left(\mathbb{C}, (\operatorname{D5.S3.Quantum.Matrix.MonomialDiagonalPreserving.monomial}\left(\operatorname{Equiv.symm}\left(sigma\right), \operatorname{Function.comp}\left(omega, \operatorname{Equiv.symm}\left(sigma\right)\right)\right), (\operatorname{D5.S3.Quantum.Matrix.MonomialDiagonalPreserving.monomial}\left(\operatorname{Equiv.symm}\left(sigma\right), \operatorname{Function.comp}\left(omega, \operatorname{Equiv.symm}\left(sigma\right)\right)\right))^{H})\right)\left(\operatorname{offDiag}\left(X\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.monomial_projection` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Conjugation by a monomial matrix commutes with offDiag for arbitrary complex coefficients; no unit-modulus hypothesis is needed.
+
+**Theorem 1.8 (A permutation with fourth-root phases amends the channel).**
 
 $$\operatorname{claim}$$
 
@@ -106,9 +130,14 @@ Minimality of n >= 2 implies that Phi itself is not coherence-breaking, hence T 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.IsIncoherentKraus`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.amended`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.claim`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.monomial_projection`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.monomial_unitary`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.offDiag`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.result`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments](../Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Matrix/MonomialDiagonalPreserving](../Matrix/MonomialDiagonalPreserving.md)
+- Dependency: [D5/S3/Quantum/Measurement/BasisMeasurementProjection](../Measurement/BasisMeasurementProjection.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation](ConcealmentKernelNecessityRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/OutputMaximalCoherenceTensorizationRefutation](OutputMaximalCoherenceTensorizationRefutation.md)
+- Dependency: [D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation](../../QuantumChannels/CoPRelativeQuantumnessRefutation.md)
