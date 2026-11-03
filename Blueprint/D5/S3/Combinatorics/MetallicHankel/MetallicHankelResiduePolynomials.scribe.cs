@@ -12,7 +12,7 @@ internal sealed class MetallicHankelResiduePolynomialsDocument : IScribeDocument
             DeclarationHandle.Create("D5/S3/Combinatorics/MetallicHankel/MetallicHankelResiduePolynomials.result"),
             H("All shifts, all residues, and integer values on all integers"),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Combinatorics/han2026shiftedmetallic")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/RecurrenceComposition/han2026shiftedmetallic")),
             Blocks(
                 Paragraph(Text("For every n>=1, a metallic series Phi in Z[[q]] exists: its constant coefficient is 1 and q Phi^2+((1+q^n)(1-q)-q[n]_q)Phi=1. For every series satisfying this equation and every shift ell>=n+3, let rho=2n(n+1) when n is even and rho=4n(n+1) when n is odd. There is a family Q_r in Q[X], indexed by 0<=r<rho, such that Delta_(r+m rho)^(ell)=Q_r(m) for every natural m, including m=0. Each Q_r takes integer values at every integer, including negative integers. The determinant of size zero is 1.")),
                 Paragraph(Text("Use the unchanged witnesses L,k,b,D,Q,s and Phi of normal_family. Write nu=1 for even n and 2 for odd n, p(K)=(K nu)L, c_K=reverseAt(s(p(K)),Q(p(K))) and d_K=reverseAt(s(p(K)-1),Q(p(K)-1)). At every K>=1, the enclosing size is N=K rho, s(p(K))=N, and the enclosing Hankel determinant at base n+1 is 1. The exact predecessor support increment is n+1. The common-degree reversals of c_K,d_K are therefore Q(p(K)) and X^(n+1)Q(p(K)-1), including all zero coefficients outside the supports.")),
