@@ -40,8 +40,9 @@ def source_registration : Registration arena (type_of% @result) where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
     rejected_law
   dependence := by
+    change ObservationalDependence signature actual
     intro i
-    refine ⟨1, (0 : ℂ), (1 : ℂ), ?_⟩
+    refine ⟨(1 : ℕ), (0 : ℂ), (1 : ℂ), ?_⟩
     norm_num [actual, realize]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
