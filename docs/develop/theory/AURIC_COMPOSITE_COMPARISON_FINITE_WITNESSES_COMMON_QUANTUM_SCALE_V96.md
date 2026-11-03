@@ -4186,7 +4186,7 @@ $$
 
 两个通道的 diamond 距离不超过 $2$；输入 $|+\rangle\langle+|$ 的两输出正交，故距离恰为 $2$。从而异常块上的归一误差是 $2\sqrt{y/x}\le2t$。直和映射的 diamond 范数取各块最大值：上界由输入直和迹范数逐块相加，下界由单块输入取得；再按整个 $\|E\|$ 归一，仍不超过 $2t$。当 $t>0$ 时，效果 $\operatorname{diag}(1,t^2)$ 取得等号。$t=0$ 时无异常块，全族为平方根更新，得 (81.1)。
 
-对 $t>0$，在 $M_2$ 的权重对 $(1,t^2)$ 上，压缩非对角系数为 $-t$；在已有 $M_3$ 的效果 $\operatorname{diag}(1,t^2,0)$ 上，相同两权重的系数为 $+t$。全菜单确实供应两对象和两效果，故不存在一个跨对象与旁观谱的 $m(1,t^2)$ 同时给这两个值。虽然族在阈值处可不连续，它的统一整体误差仍随 $t\downarrow0$ 线性趋零。∎
+对 $t>0$，在 $M_2$ 的权重对 $(1,t^2)$ 上，压缩非对角系数为 $-t$；在已有 $M_3$ 的效果 $\operatorname{diag}(1,t^2,0)$ 上，因异常规则仅作用于二维简单块，这个三维块采用平方根分支，相同两权重的系数为 $+t$。全菜单确实供应两对象和两效果，故不存在一个跨对象与旁观谱的 $m(1,t^2)$ 同时给这两个值。虽然族在阈值处可不连续，它的统一整体误差仍随 $t\downarrow0$ 线性趋零。∎
 
 ## 82. 从新关系接回 Born、投影、顺序概率及运动
 
@@ -4219,7 +4219,7 @@ $$
 
 ## 83. 关系闭合的成熟先例与白话定义
 
-**定义 83.1（与既有序贯乘积的对应及新增边界）。** [Gudder–Latrémolière，*Characterization of the sequential product on quantum effects*，定义 3.1、定理 3.3](https://arxiv.org/pdf/0803.3867v1) 已以迹自对偶、双侧单位、平方拼接、强连续性及纯态保持刻画平方根序贯乘积；[van de Wetering，*Three characterisations of the sequential product*，定理 5.14](https://arxiv.org/pdf/1803.08453v1) 在 Hilbert sequential effect space 的完整公理下给无连续性版本。其乘积 $a\circ b$ 对应这里 $T_a(b)$；本节 S 对应对称性，H 对应平方拼接。本节中“对称加平方排除自同构扭转”的精确选择机制属于这些成熟先例，不作为独立新结果。完全序同构的幺化、Schwarz 等号及完全正范数公式也只作为证明中的成熟工具。
+**定义 83.1（与既有序贯乘积的对应及新增边界）。** [Gudder–Latrémolière，*Characterization of the sequential product on quantum effects*，定义 3.1、定理 3.3](https://arxiv.org/pdf/0803.3867v1) 已以迹自对偶、双侧单位、平方拼接、强连续性及纯态保持刻画平方根序贯乘积；[van de Wetering，*Three characterisations of the sequential product*，定理 5.14](https://arxiv.org/pdf/1803.08453v1) 在 Hilbert sequential effect space 的完整公理下给无连续性版本。其效果方向的乘积 $a\circ b$ 对应这里 $`T_a^*(b)`$；在本节 S 成立后才可同写为 $T_a(b)$。本节 S 对应对称性，H 对应平方拼接。本节中“对称加平方排除自同构扭转”的精确选择机制属于这些成熟先例，不作为独立新结果。完全序同构的幺化、Schwarz 等号及完全正范数公式也只作为证明中的成熟工具。
 
 本批承重综合是：以成功效果和同一实际倒数分支的一侧返回，先在原代数内部证明支撑双向无泄漏、通常迹平衡和共同调暗，再在这个精确返回层上把 S、H 的两个任意输入 diamond 缺陷与全部指定更新的整体误差建立 (79.3)–(79.4) 的无维数双向线性关系。没有预设完整 sequential effect space 的相容交换公理、全部纯映射或通用角—压缩性质。定理 81.1 给一个没有共同谱对系数但仍线性稳定的全菜单满足族，因而不是对 C104–C107 改记号。文献对应不等于原创优先权结论。
 
