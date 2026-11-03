@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph
-import Reg.Support.SingleDependentReadout
+import Reg.Support.DependentFamily
 
 /-! Source-bound registrations of the selected public mathematical statements. -/
 
@@ -12,11 +12,40 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
+universe t s o
+
+/-- A single observation whose parameters, states and outputs may live in different universes. -/
+abbrev singletonSignature (P : Type t) (S : P → Type s) (O : P → Type o) :
+    Signature.{t,s,0,o,0} where
+  Params := P
+  State := S
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := O
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+/-- A rejected readout family supplies every sensitivity obligation for the single role. -/
+theorem singletonSensitivity {P : Type t} {S : P → Type s} {O : P → Type o}
+    (law : Realization (singletonSignature P S O) → Prop)
+    (actual bad : Realization (singletonSignature P S O)) (hbad : ¬ law bad) :
+    Sensitivity ⟨singletonSignature P S O, law⟩ actual := by
+  constructor
+  · intro i
+    refine ⟨bad, ?_, ?_, hbad⟩
+    · intro j h
+      exact (h (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
 namespace EntropyProfile
 
 /-- Evaluate the entropy profile at the selected vertex set. -/
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (Σ V : Type, Finset V)
+  singletonSignature (Σ V : Type, Finset V)
     (fun p => Finset p.1 → ℕ) (fun _ => ℕ)
 
 def actual : Realization signature :=
@@ -59,7 +88,7 @@ def source_registration : Registration arena (type_of% (@compl_eq)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@compl_eq, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+  sensitivity := singletonSensitivity arena.Law actual rejected
     rejected_law
   dependence := dependence
 
@@ -122,7 +151,7 @@ def source_registration : Registration arena (type_of% (@relabel)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@relabel, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+  sensitivity := singletonSensitivity arena.Law actual rejected
     rejected_law
   dependence := dependence
 
@@ -185,7 +214,7 @@ def source_registration : Registration arena (type_of% (@lc_eq)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@lc_eq, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+  sensitivity := singletonSensitivity arena.Law actual rejected
     rejected_law
   dependence := dependence
 
