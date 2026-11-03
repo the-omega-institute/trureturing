@@ -130,7 +130,7 @@ private theorem leading_one_margin (tail : List ℕ+) (ell : ℕ+) :
         left
         simpa using sub_pos.mpr (show r < 1 from hr)
     have hwnorm : Tendsto (fun r : ℝ ↦ ‖(1 : ℂ) - (r : ℂ)‖)
-        (𝓝[<] 1) (𝓝 (0 : ℝ)) := by simpa using hw.norm
+        (𝓝[<] 1) (𝓝 (0 : ℝ)) := by simpa using (hw.mono_right nhdsWithin_le_nhds).norm
     have hdecay := (CompositionBanksLeadingClosure.slit_remainder_majorant_tendsto_zero
       (D ^ (ell : ℕ)) (N * (ell : ℕ)) (pow_nonneg hD _)).comp hw
     have hnum : Tendsto (fun r : ℝ ↦ r ^ (CompositionDisk.depth tail * (ell : ℕ)))
@@ -212,8 +212,9 @@ private theorem leading_one_margin (tail : List ℕ+) (ell : ℕ+) :
     norm_num only [PNat.val_ofNat, lt_self_iff_false, ↓reduceIte, sub_zero]
     apply (le_div_iff₀ (sub_pos.mpr hr.2)).mpr
     simp only [one_mul, inv_pow]
-    change 1-r ≤ 1 / x ^ (ell : ℕ)
-    exact (le_div_iff₀ (pow_pos hx _)).mpr (by nlinarith [hcancel])
+    simpa only [one_div] using
+      ((le_div_iff₀ (pow_pos hx (ell : ℕ))).mpr (by nlinarith [hcancel]) :
+        1-r ≤ 1 / x ^ (ell : ℕ))
 
 /-- The unchanged Xu--Zhao event for every positive composition and reciprocal power,
 including all fixed positive smoothing orders and the strict admissible baseline. -/
