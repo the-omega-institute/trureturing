@@ -21,7 +21,8 @@ internal sealed class JacoAdditionLawRefutationDocument : IScribeDocumentDefinit
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("jaco-addition-refuted", "Refutation of the complete addition assertion", "result", Disp(new Formula.Not(F.Id("claim"))),
                 "Use the original graph and the existing JacoMaximumDegree.degree_formula and JacoMaximumDegree.result. Put phi=(1+sqrt(5))/2. Exact rational bounds 8/5<phi<13/8 give the needed floors. The three degrees of J_3 are 1,2,1, so its unique maximizing vertex is v_2 and its maximum is 2. The same maximum-degree formula gives maximum 7 for J_11 and maximum 8 for J_14. At the admissible pair (3,11), the first branch therefore requires 8=2+7, a contradiction. A failure at this pair negates the whole universal two-branch claim; it asserts neither failure at every pair nor a counterexample to the otherwise branch. These numerical values also occur in Kok's prior published arXiv:2507.16500v1 Table 1; they are not new numerical data. Bounded source searches leave literature gaps and establish no worldwide priority.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("kok-jaco-addition-law-refutation"), ResolutionKind.Refuted)))));
 
     private static Formula UniqueFormula()
     {

@@ -115,9 +115,10 @@ The full formula above includes both original branches and all admissible
 orders. Source statement and attribution use CC BY 3.0; no executable code is copied from the article.
 
 Current scoped compilation and declaration reports supply exact statement,
-input identities and accepted axiom evidence. Frozen resolution binding
-requires later canonical frozen membership; this unfrozen source unit does
-not assert that final binding, publication or complete-delivery credit.
+input identities and accepted axiom evidence. The typed resolution is
+validated against current frozen membership and exact compiled declaration
+identity. Local validation does not establish remote publication or
+complete-delivery credit.
 
 ## Triage
 
@@ -134,5 +135,4 @@ remain bounded by the gaps above. Existing supplier audit limitations remain
 those disclosed at
 [issue #25698](https://github.com/the-omega-institute/trureturing/issues/25698#issuecomment-6582601274);
 this refutation neither repairs nor asserts completion of those registrations.
-Final frozen resolution binding, independent review and publication remain
-outside this source unit.
+Remote publication and required remote checks remain outside this dossier.
