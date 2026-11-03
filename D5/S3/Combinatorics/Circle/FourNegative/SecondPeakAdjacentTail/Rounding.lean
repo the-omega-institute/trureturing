@@ -14,7 +14,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail
 open private A B L K SU SV SW E F Common Residual StocksAndResidual HighResidual Windows ceilDiv residueRepresentative chooseM3 chooseV2 chooseM2
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
-open private ceilDiv ceilDiv_spec ceilDiv_unique ceilDiv_stock residual_identity windows_of_residual
+open private ceilDiv ceilDiv_spec ceilDiv_stock residual_identity windows_of_residual
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Algebra
 open private common_bounds continuous_second_bound
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakAdjacentTail.Selection
@@ -48,13 +48,6 @@ private theorem high_continuous_windows (x z q m : ℚ)
     · simpa using h4
     · simpa using h5
   exact windows_of_residual x z q 0 m hx hz (by linarith) hc le_rfl hr
-
-/-- The discrete arithmetic used by every proposed low-b mask, with no guessed ceil. -/
-private theorem exact_ceiling_of_residual (BB KK LL vv mm : ℤ)
-    (hL : 0<LL) (he : 0≤(vv+1)*BB-KK+mm*LL)
-    (hc : (vv+1)*BB-KK+mm*LL≤LL-1) :
-    mm=ceilDiv (KK-(vv+1)*BB) LL := by
-  apply ceilDiv_unique _ _ _ hL <;> linarith
 
 /-- A bounded ceiling exists on the common domain, using integer heads and stock. -/
 private theorem bounded_ceiling (D LL stock : ℤ) (hL : 0<LL)

@@ -109,16 +109,6 @@ private theorem ceilDiv_spec (D LL : ℤ) (hL : 0 < LL) :
   dsimp [ceilDiv]
   constructor <;> nlinarith
 
-private theorem ceilDiv_unique (D LL m : ℤ) (hL : 0 < LL)
-    (hm : 0 ≤ m*LL-D) (hc : m*LL-D ≤ LL-1) : m=ceilDiv D LL := by
-  obtain ⟨he,hec⟩ := ceilDiv_spec D LL hL
-  by_contra hne
-  rcases lt_or_gt_of_ne hne with hlt|hgt
-  · have hd : m+1 ≤ ceilDiv D LL := by omega
-    nlinarith
-  · have hd : ceilDiv D LL+1 ≤ m := by omega
-    nlinarith
-
 private theorem ceilDiv_stock (D LL stock : ℤ) (hL : 0 < LL)
     (hD : 0 < D) (hs : D ≤ stock*LL) :
     1 ≤ ceilDiv D LL ∧ ceilDiv D LL ≤ stock := by
