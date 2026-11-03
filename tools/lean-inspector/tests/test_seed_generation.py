@@ -10,6 +10,7 @@ import signal
 import subprocess
 import sys
 import tarfile
+import traceback
 import zipfile
 
 import test_reuse
@@ -110,6 +111,11 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
             self.assertEqual(downloads, archive_downloads(),
                              '[FAIL] next_entry_never_restores_older_release')
             self.assertEqual(head, self.api.read_seed_base(self.root))
+        except Exception:
+            # This group has an enclosing hang guard. Emit the original
+            # failure before later cases or process cleanup can exhaust it.
+            traceback.print_exc()
+            raise
         finally:
             os.close(read_notice)
             if first.poll() is None:
