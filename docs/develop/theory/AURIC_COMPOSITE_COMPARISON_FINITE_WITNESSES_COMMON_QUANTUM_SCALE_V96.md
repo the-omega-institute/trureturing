@@ -4527,7 +4527,13 @@ $$
 \tag{93.4}
 $$
 
-$\Phi:\mathcal C\to\mathcal C$，而 $\Psi:\mathcal C\to\mathcal A$ 保迹，因为 $`T_{E^\vee}^*(1)=qE^{-1}`$。实际补偿也只读 $P$，所以 $\Psi\Phi=q^{-1}T_{E^\vee}T_E|_{\mathcal C}$。若 $G=\Phi^*(P)$，返回误差的迹读数给 $\|G-P\|\le\delta$；这一步没有除以另一个小成功率。令 $J=\Phi\mathcal L_{G^{-1}}$，这里 $\mathcal L_{G^{-1}}(X)=G^{-1/2}XG^{-1/2}$。则 $J$ 完全正且保迹，$\Phi=J\mathcal L_G$，并有
+$\Phi:\mathcal C\to\mathcal C$，而 $\Psi:\mathcal C\to\mathcal A$ 保迹：对 $Y\in\mathcal C$，正确成功效果给
+
+$$
+\tau\Psi(Y)=q^{-1}\tau\!\left(Y\sqrt E\,E^\vee\sqrt E\right)=\tau Y.
+$$
+
+实际补偿也只读 $P$，所以 $\Psi\Phi=q^{-1}T_{E^\vee}T_E|_{\mathcal C}$。令 $G=\Phi^*(P)$。对每个角内归一正 $\rho$，有 $|\tau(\rho G)-1|=|\tau(\Psi\Phi(\rho)-\rho)|\le\delta$；在 $G-P$ 的极值本征态上取值，得到 $\|G-P\|\le\delta$。令 $J=\Phi\mathcal L_{G^{-1}}$，这里 $\mathcal L_{G^{-1}}(X)=G^{-1/2}XG^{-1/2}$。则 $J$ 完全正且保迹，$\Phi=J\mathcal L_G$，并有
 
 $$
 \|\Phi-J\|_\diamond
@@ -4535,7 +4541,26 @@ $$
 \tag{93.5}
 $$
 
-把 $\Psi$ 输出压到 $P$，再将丢失的迹准备成任一固定角内态，得到数学保迹完全正映射 $\widehat\Psi:\mathcal C\to\mathcal C$。对任一角内归一正输入，$\Psi J$ 距原输入至多 $4\delta$，其角外质量也至多 $4\delta$。压缩及上述补全遂给
+固定任一角内态 $\omega$，定义数学映射
+
+$$
+\mathscr R(Y)=PYP+\tau((1-P)Y)\omega,\qquad
+\widehat\Psi=\mathscr R\Psi.
+$$
+
+$\mathscr R:\mathcal A\to\mathcal C$ 完全正且保迹，并在 $\mathcal C$ 上恒等；因此它对自伴输入的迹范数为收缩。$\Psi$ 也完全正且保迹，故 $\|\Psi\|_\diamond=1$。对任一角内归一正输入，(93.5) 给
+
+$$
+\begin{aligned}
+\|\Psi J(\rho)-\rho\|_1
+&\le\|\Psi(J-\Phi)(\rho)\|_1+\|\Psi\Phi(\rho)-\rho\|_1
+\le4\delta,\\
+\|\widehat\Psi J(\rho)-\rho\|_1
+&=\|\mathscr R(\Psi J(\rho)-\rho)\|_1\le4\delta.
+\end{aligned}
+$$
+
+这里补全丢失迹的系数恰为原输出的角外质量；没有再次归一输入或除以成功率。保留稍宽的 $u=8\delta$，于是
 
 $$
 \sup_{\rho\ge0,\ \tau\rho=1}
@@ -4577,9 +4602,63 @@ $$
 
 以 $W_\gamma V_\gamma$ 替代 $V_\gamma$，所得映射 $\theta_\gamma$ 是幺保星同态；各块合成 $\theta:\mathcal C\to\mathcal C$，$\|\theta-U\|_{\rm cb,\infty}\le2w=8t$。这里 $u\le1/4096$，故 $8t<1-u$；与 $U$ 的逆界组合说明 $\theta$ 在自伴实空间可逆，因而是原有限代数的保星自同构。其迹伴随 $\alpha=\theta^*$ 也是保星自同构，因为这种自同构只置换等阶简单块并作块内酉共轭，保留通常迹之和。
 
-还需控制同一个原分支及其伴随，不能把 diamond 小误差直接取伴随。具体地，在每个输入中心块，修正后的 Stinespring 等距只落在 $\theta$ 对应的一个等阶输出块及一个环境单位向量上。在该向量上取原 $V_\gamma$ 的 Kraus 分量，记作 $L_\gamma$，其距相应块酉算子至多 $w$；其余分量的输入平方和至多 $w^2I$。这是由 $\|V_\gamma-W_\gamma V_\gamma\|\le w$ 投影到该环境直线及其正交补直接得到的，不对中心间转移作删项。
+还需控制同一个原分支及其伴随。以下证明原 Kraus 家族中的分块提升结论，所用见证是 (93.10) 已构造的等距扰动。写
+$\mathcal C=\bigoplus_{\gamma\in I}\mathcal B(H_\gamma)$，其中 $H_\gamma=P_\gamma\mathbb C^{d_\gamma}$，$I$ 只保留非零角。必要时补零，取原 $T_E$ 从中心块 $\gamma$ 到 $\beta$ 的矩形 Kraus 家族 $R_{\beta\gamma j}$；它们右端均含 $P_\gamma$。对于 $\beta,\gamma\in I$，令
 
-取 (93.4) 由原 Kraus 家族给出的 Stinespring 表示，必要时补零并在每对输入／输出块的 Kraus 指标上作酉变换。将所选分量经 $\sqrt E$、$\sqrt G$ 还原为原分支的主 Kraus 算子 $K$，包括它原有的角外输出。设 $W_0$ 是实现 $\alpha$ 的支撑内块置换酉算子，$K_0=\sqrt E W_0$。由 (93.3)、$\|\sqrt G-P\|\le\delta$ 和上述 Stinespring 界，有完全正分解
+$$
+B_{\beta\gamma j}
+=E_\beta^{-1/2}P_\beta R_{\beta\gamma j}|_{H_\gamma}G_\gamma^{-1/2},\qquad
+V_\gamma\xi=\bigoplus_{\beta}\sum_j B_{\beta\gamma j}\xi\otimes e_{\beta\gamma j}.
+\tag{93.10a}
+$$
+
+$J$ 保迹给 $V_\gamma^*V_\gamma=I_\gamma$；这正是上文 $U_\gamma=J^*|_\gamma$ 的一个 Stinespring 表示，表示空间为
+$\bigoplus_{\beta\in I}(H_\beta\otimes\mathcal E_{\beta\gamma})$，$\pi_\gamma(x)=\bigoplus_\beta(x_\beta\otimes I)$。整个 Haar 和极分解构造均可从这个原家族表示开始。
+
+置 $\widetilde V_\gamma=W_\gamma V_\gamma$，则 $\|V_\gamma-\widetilde V_\gamma\|\le w$，且其值域投影 $R_\gamma$ 与 $\pi_\gamma$ 对易，故
+$\pi_\gamma(x)\widetilde V_\gamma=\widetilde V_\gamma\theta_\gamma(x)$。自同构置换中心极小投影，并在对应矩阵块的矩阵单位之间作酉对应，因此存在双射 $p:I\to I$ 及酉算子 $u_\gamma:H_\gamma\to H_{p(\gamma)}$，使
+$\theta_\gamma(x)=u_\gamma^*x_{p(\gamma)}u_\gamma$。
+
+这也直接确定环境重数。将上述交织等式用于各中心投影，$\widetilde V_\gamma$ 在 $\beta\ne p(\gamma)$ 的分量为零；在 $\beta=p(\gamma)$ 的每个环境分量 $F$ 上，全部矩阵 $Y$ 满足 $YFu_\gamma^*=Fu_\gamma^*Y$，所以 $F$ 是 $u_\gamma$ 的标量倍。等距条件使这些标量的平方和为一。于是存在单位向量 $\eta_\gamma\in\mathcal E_{p(\gamma)\gamma}$，使
+
+$$
+\widetilde V_\gamma\xi=u_\gamma\xi\otimes\eta_\gamma.
+\tag{93.10b}
+$$
+
+在该环境空间中把 $\eta_\gamma$ 选为首基向量，并将同一酉基变换用于原 $R_{p(\gamma)\gamma j}$。记所选的 $B$ 分量为 $B_\gamma$，其余所有分量均记为余项；其他中心对的分量也全部属于余项。若 $\mathsf P_\gamma$ 投影到 $H_{p(\gamma)}\otimes\mathbb C\eta_\gamma$，则 $\mathsf P_\gamma\widetilde V_\gamma=\widetilde V_\gamma$，从等距扰动得到
+
+$$
+\|B_\gamma-u_\gamma\|\le w,\qquad
+\sum_{\mathrm{余项}\ (\beta,j)}B_{\beta\gamma j}^*B_{\beta\gamma j}
+=V_\gamma^*(I-\mathsf P_\gamma)V_\gamma\le w^2I_\gamma.
+\tag{93.10c}
+$$
+
+原家族对应的所选分量记为 $K_\gamma$，保留其在原输出中心 $p(\gamma)$ 内的全部角外行。由 (93.10a) 有
+$P_{p(\gamma)}K_\gamma=\sqrt{E_{p(\gamma)}}B_\gamma\sqrt{G_\gamma}$。将 $K_\gamma$ 按双射 $p$ 组装成 $K$，并令 $K_0$ 的相应块为 $\sqrt{E_{p(\gamma)}}u_\gamma$。不同输入中心对应不同输出中心，故 $\operatorname{Ad}_K$ 和 $\operatorname{Ad}_{K_0}$ 都映原代数到自身；后者恰为 $\mathcal L_E\alpha$。由 (93.10c) 及 $\|\sqrt G-P\|\le\delta$，
+
+$$
+\begin{aligned}
+\|PK-K_0\|&\le\sqrt M\bigl(w\sqrt{1+\delta}+\delta\bigr),\\
+\|(1-P)K\|^2&=\|K^*(1-P)K\|
+\le\|T_E^*(1-P)\|\le\sigma M.
+\end{aligned}
+\tag{93.10d}
+$$
+
+因此 $\|K-K_0\|\le\sqrt M a$。原矩形 Kraus 家族经过上述环境酉变换后，除所选分量外的全部项定义完全正 $N$，于是 $T_E=\operatorname{Ad}_K+N$。其输入质量可逐块计算：角内余项满足
+
+$$
+\begin{aligned}
+\sum_{\mathrm{余项}\ (\beta,j)}R_{\beta\gamma j}^*P_\beta R_{\beta\gamma j}
+&\le M\sqrt{G_\gamma}
+\left(\sum_{\mathrm{余项}\ (\beta,j)}B_{\beta\gamma j}^*B_{\beta\gamma j}\right)\sqrt{G_\gamma}\\
+&\le M(1+\delta)w^2 I_\gamma.
+\end{aligned}
+$$
+
+角外余项的平方和不超过 $T_E^*(1-P)\le\sigma MI$；这也包括 $P_\beta=0$ 的输出中心。因为 $P$ 与 $1-P$ 正交，两个输出部分的输入平方和相加没有交叉项。故取得
 
 $$
 T_E=\operatorname{Ad}_K+N,\quad
@@ -4588,7 +4667,7 @@ T_E=\operatorname{Ad}_K+N,\quad
 \tag{93.11}
 $$
 
-这里主 Kraus 在不同输入块上按 $\alpha$ 的置换合成；其余全部矩形 Kraus 留在 $N$ 中。还原的角内余项由 $E\le MI$ 得输入平方和至多 $M(1+\delta)w^2I$；全部角外余项由 (93.3) 至多 $\sigma MI$。主项的角外部分范数至多 $\sqrt{\sigma M}$，正是 $a$ 中最后一项。
+这里没有删除任何中心转移或角外分量；分解及环境基变换只是在原实际分支内部使用的数学见证。
 
 正确成功效果给 $\|K\|\le\sqrt M$，而 $K_0K_0^*=E$。因此
 
