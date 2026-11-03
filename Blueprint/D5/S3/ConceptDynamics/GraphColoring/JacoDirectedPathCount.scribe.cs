@@ -54,7 +54,10 @@ internal sealed class JacoDirectedPathCountDocument : IScribeDocumentDefinition
                     Paragraph(Text("The endpoint identities also give beattyOut(Fibonacci(t+1))=Fibonacci(t) for every t at least two. The shortest path to label two is unique. The singleton suffix at successive Fibonacci endpoints then gives psi(Fibonacci(t))=1 for every t at least three. At every boundary Fibonacci(t), t at least five, the next lower predecessor is Fibonacci(t-1)+1. Its suffix contains at least two labels, and each has positive actual shortest-path cardinality. Consequently psi(Fibonacci(t)+1) is at least two, while both the infinite outdegree and the path count differ across the boundary.")),
                     Paragraph(Text("Every label n at least five lies in a Fibonacci bracket. Combining the within-layer and boundary cases gives outdegree n = outdegree(n+1) exactly when psi n = psi(n+1). Applying this at k-1 and k, negating the two equality equivalences and conjoining proves the stated iff for every k at least seven. The original universal Fibonacci-bracket index is retained; no bracket, upper cutoff, converse from Proposition 4.3 or unproved reachability premise is added.")),
                     Paragraph(Text("The source is arXiv:1404.1714v1, Section 4, with its original forward directed arc convention and each target counted in its own induced truncation. This result is the mathematical event stated there. It does not certify worldwide literature coverage, priority or a physical interpretation."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kok-jaco-directed-path-count"),
+                    ResolutionKind.Proved)))));
 
     private static Formula OriginalFormula() => Disp(Bound("k", Nat(), Implies(Le(D(7), K),
                     Bound("i", Nat(), Implies(And(Lt(Call("fib", I), K), Le(K, Call("fib", Add(I, D(1))))),
