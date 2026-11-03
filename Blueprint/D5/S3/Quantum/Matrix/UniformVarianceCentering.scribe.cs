@@ -76,18 +76,18 @@ internal sealed class UniformVarianceCenteringDocument : IScribeDocumentDefiniti
         OpenBracket,Call("NormedAddCommGroup",F.Id(x)),CloseBracket,Sp,
         OpenBracket,Call("InnerProductSpace",ComplexType(),F.Id(x)),CloseBracket,Sp,
         OpenBracket,Call("FiniteDimensional",ComplexType(),F.Id(x)),CloseBracket);
-    private static Formula ExistsUnit() => Seq(Exists,Sp,F.Id("x"),Colon,Sp,F.Id("G"),Comma,Sp,Unit(F.Id("x")));
+    private static Formula ExistsUnit() => Seq(Open,Exists,Sp,F.Id("x"),Colon,Sp,F.Id("G"),Comma,Sp,Unit(F.Id("x")),Close);
     private static Formula Energy(Formula x) => Sum("j",F.Id("J"),Sq(Norm(App(At(F.Id("L"),F.Id("j")),x))));
     private static Formula Unit(Formula x) => Eqn(Norm(x),D(1));
     private static Formula ComplexType() => Seq(Mathbb,Grp(F.Id("C")));
     private static Formula RealType() => Seq(Mathbb,Grp(F.Id("R")));
-    private static Formula All(string x,Formula t,Formula b) => Seq(Forall,Sp,F.Id(x),Colon,Sp,t,Comma,Sp,b);
+    private static Formula All(string x,Formula t,Formula b) => Seq(Open,Forall,Sp,F.Id(x),Colon,Sp,t,Comma,Sp,b,Close);
     private static Formula Sum(string x,Formula t,Formula b) => Seq(F.Sum,Underscore,Grp(F.Id(x),InMacro,Sp,t),Sp,b);
     private static Formula At(Formula a,Formula i) => Seq(a,Underscore,Grp(i));
     private static Formula App(Formula a,Formula x) => Seq(a,Open,x,Close);
     private static Formula Adj(Formula a) => Seq(a,Caret,Grp(Star));
     private static Formula Inner(Formula a,Formula b) => Call("inner",a,b);
-    private static Formula RealPart(Formula a) => Seq(Re,Sp,a);
+    private static Formula RealPart(Formula a) => Seq(Re,Open,a,Close);
     private static Formula Norm(Formula a) => Seq(Vert,Sp,a,Sp,Vert);
     private static Formula Sq(Formula a) => Seq(Open,a,Close,Caret,Grp(D(2)));
     private static Formula Mul(Formula a,Formula b) => Seq(a,Sp,b);
