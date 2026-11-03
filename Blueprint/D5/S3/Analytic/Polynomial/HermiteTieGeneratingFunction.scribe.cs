@@ -42,7 +42,7 @@ internal sealed class HermiteTieGeneratingFunctionDocument : IScribeDocumentDefi
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(Par(a), b);
     private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
     private static Formula Arrow(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
-    private static Formula Iff(Formula a, Formula b) => Seq(Par(a), Sp, Iff, Sp, Par(b));
+    private static Formula Iff(Formula a, Formula b) => Seq(Par(a), Sp, FormulaDsl.Iff, Sp, Par(b));
     private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, F.Id(n), Colon, Sp, t, Comma, Sp, b);
     private static Formula Some(string n, Formula t, Formula b) => Seq(Exists, Sp, F.Id(n), Colon, Sp, t, Comma, Sp, b);
     private static Formula Cast(Formula a, Formula t) => Par(Seq(a, Colon, Sp, t));
@@ -56,7 +56,7 @@ internal sealed class HermiteTieGeneratingFunctionDocument : IScribeDocumentDefi
         var n = F.Id("n"); var m = F.Id("m"); var k = F.Id("k"); var a = F.Id("a"); var s = F.Id("S");
         var positive = All("n", Nat(), Arrow(Seq(D(1), Sp, Le, Sp, n), Seq(D(0), Sp, Lt, Sp, Call("a", n))));
         var increasing = All("n", Nat(), All("m", Nat(), Arrow(Seq(D(1), Sp, Le, Sp, n), Arrow(Seq(n, Sp, Lt, Sp, m), Seq(Call("a", n), Sp, Lt, Sp, Call("a", m))))));
-        var unique = Some("n", Nat(), And(And(Seq(D(1), Sp, Le, Sp, n), Eq(Call("a", n), k)), All("m", Nat(), Arrow(And(Seq(D(1), Sp, Le, Sp, m), Eq(Call("a", m), k)), Eq(m, n))));
+        var unique = Some("n", Nat(), And(And(Seq(D(1), Sp, Le, Sp, n), Eq(Call("a", n), k)), All("m", Nat(), Arrow(And(Seq(D(1), Sp, Le, Sp, m), Eq(Call("a", m), k)), Eq(m, n)))));
         var enumeration = All("k", Nat(), Iff(Call("HasExactlyTwo", k), unique));
         var series = And(Eq(Coeff(D(0), s), D(0)), And(All("n", Nat(), Arrow(Seq(D(1), Sp, Le, Sp, n), Eq(Coeff(n, s), Cast(Call("a", n), Rationals())))), And(Eq(Constant(F.Id("D")), D(1)), Eq(s, Mul(F.Id("P"), Pow(F.Id("D"), Seq(Minus, D(1))))))));
         return Some("a", Seq(Nat(), Sp, To, Sp, Nat()), And(positive, And(increasing, And(enumeration, Some("S", Series(), series)))));
