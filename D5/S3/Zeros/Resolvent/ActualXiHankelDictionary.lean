@@ -75,7 +75,7 @@ theorem actual_xi_hankel_nonnegative_of_rh (hRH : RiemannHypothesis)
     0 ≤ ∑ a : Fin (N + 1), ∑ b : Fin (N + 1),
       u a * u b * xiCoefficient (2 * m + (a : ℕ) + (b : ℕ)) := by
   rw [actual_xi_hankel_identity]
-  rw [Complex.re_tsum]
+  rw [Complex.re_tsum (hankel_hasSum N m u).summable]
   apply tsum_nonneg
   intro n
   have hz := actualData.zero_isNontrivial n

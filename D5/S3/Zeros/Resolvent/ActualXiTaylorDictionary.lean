@@ -69,7 +69,7 @@ theorem moment_bound (j : ℕ) : ‖moment j‖ ≤ totalWeight * radius ^ j := 
 
 theorem moment_real (j : ℕ) : (moment j).im = 0 := by
   have hc : conj (moment j) = moment j := by
-    rw [moment, ← map_tsum (starRingEnd ℂ)]
+    rw [moment, Complex.conj_tsum]
     calc
       (∑' n : PositiveZero, conj (weight n * node n ^ j)) =
           ∑' n : PositiveZero, weight (conjugation n) * node (conjugation n) ^ j := by
@@ -141,7 +141,7 @@ private theorem coefficient_bound (k : ℕ) : ‖coefficient k‖ ≤ totalWeigh
   unfold coefficient
   split_ifs
   · exact moment_bound_mass _
-  · exact tsum_nonneg (fun _ => norm_nonneg _)
+  · simpa only [norm_zero] using (tsum_nonneg (fun n : PositiveZero => norm_nonneg (weight n)))
 
 /-- The genuine xi expression has this full scalar power series on the specified disk. -/
 theorem actual_xi_powerSeries : HasFPowerSeriesOnBall xiOdd

@@ -102,8 +102,11 @@ theorem weight_conjugation (n : PositiveZero) :
     change actualData.zero (actualData.reflection (actualData.conjugation n)) = _
     rw [actualData.zero_reflection, actualData.zero_conjugation]
   simp only [weight, node_conjugation, multiplicity_conjugation, hz]
+  have htwo : conj (2 : ℂ) = 2 := by
+    change conj ((2 : ℝ) : ℂ) = ((2 : ℝ) : ℂ)
+    exact Complex.conj_ofReal 2
   norm_num
-  <;> ring
+  exact Or.inl (by rw [htwo]; ring)
 
 theorem node_injective : Function.Injective node := by
   intro n k h

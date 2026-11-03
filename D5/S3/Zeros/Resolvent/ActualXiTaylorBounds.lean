@@ -63,7 +63,7 @@ theorem actual_xi_folded_normal (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1 / 4) :
   refine ⟨hs, ?_⟩
   have hu := HasSumUniformlyOn.of_norm_le_summable hs (fun n w hw =>
     folded_term_bound r hr hr1 w (by simpa using hw) n)
-  apply hu.congr (fun w hw => ?_)
+  apply hu.congr_right (fun w hw => ?_)
   exact (actual_xi_folded_hasSum w ((show ‖w‖ ≤ r by simpa using hw).trans_lt hr1)).tsum_eq
 
 /-- Compact-disk bound using the actual supremum of the folded node norms. -/
@@ -84,7 +84,7 @@ theorem actual_xi_taylor_normal (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1 / 4) :
   refine ⟨hs, ?_⟩
   have hu := HasSumUniformlyOn.of_norm_le_summable hs
     (fun j w hw => power_term_bound r hr w (by simpa using hw) j)
-  apply hu.congr (fun w hw => ?_)
+  apply hu.congr_right (fun w hw => ?_)
   exact (actual_xi_moment_hasSum w ((show ‖w‖ ≤ r by simpa using hw).trans_lt hr1)).tsum_eq
 
 /-- Uniform geometric remainder after the odd terms through index J. -/
@@ -98,7 +98,7 @@ theorem actual_xi_taylor_remainder (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1 / 4)
   rw [(actual_xi_moment_hasSum w (hw.trans_lt hr1)).tsum_eq] at he
   have he' : xiOdd w - ∑ j ∈ range (J + 1), moment j * w ^ (2 * j + 1) =
       ∑' j : ℕ, moment (j + (J + 1)) * w ^ (2 * (j + (J + 1)) + 1) := by
-    linear_combination he
+    linear_combination -he
   rw [he']
   have hgeom := (hasSum_geometric_of_lt_one hq.1 hq.2).mul_left
     (totalWeight * r * (radius * r ^ 2) ^ (J + 1))

@@ -100,7 +100,7 @@ theorem xiOdd_square (w : ℂ) :
   unfold xiOdd
   rw [hr]
   congr 1
-  linear_combination -hc
+  linear_combination hc
 
 theorem disk_denominator_ne_zero (w : ℂ) (hw : ‖w‖ < 1 / 4) :
     w ^ 2 + 1 / 4 ≠ 0 := by

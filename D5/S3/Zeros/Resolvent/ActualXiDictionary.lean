@@ -55,6 +55,9 @@ structure Dictionary : Prop where
       k = n ∨ k = conjugation n
   xi_identity : ∀ w : ℂ, ‖w‖ < 1 / 4 →
     HasSum (fun n : PositiveZero => w * weight n / (1 - node n * w ^ 2)) (xiOdd w)
+  folded_resolvent : ∀ w : ℂ, ‖w‖ < 1 / 4 →
+    Summable (fun n : PositiveZero => weight n / (1 - node n * w ^ 2)) ∧
+    xiOdd w = w * ∑' n : PositiveZero, weight n / (1 - node n * w ^ 2)
   xi_analytic : ∀ w : ℂ, ‖w‖ < 1 / 4 → AnalyticAt ℂ xiOdd w
   moment_series : ∀ w : ℂ, ‖w‖ < 1 / 4 →
     HasSum (fun j : ℕ => moment j * w ^ (2 * j + 1)) (xiOdd w)
@@ -101,7 +104,11 @@ theorem actual_xi_dictionary : Dictionary := by
     real_node_positive := node_real_positive
     off_line_pair := ?_
     xi_identity := actual_xi_folded_hasSum
-    xi_analytic := actual_xi_analytic
+    folded_resolvent := ?_
+    folded_resolvent : ∀ w : ℂ, ‖w‖ < 1 / 4 →
+    Summable (fun n : PositiveZero => weight n / (1 - node n * w ^ 2)) ∧
+    xiOdd w = w * ∑' n : PositiveZero, weight n / (1 - node n * w ^ 2)
+  xi_analytic := actual_xi_analytic
     moment_series := actual_xi_moment_hasSum
     taylor_moments := actual_xi_taylor_moment
     real_moments := moment_real
@@ -168,6 +175,23 @@ theorem actual_xi_dictionary : Dictionary := by
       simp only [Finset.mem_insert, Finset.mem_singleton, hr, hc', false_or, or_false]
       rw [← hm]
       exact or_congr Subtype.ext_iff.symm Subtype.ext_iff.symm
+
+  · intro w hw
+    by_cases hz : w = 0
+    · subst w
+      simp only [zero_pow (by norm_num : (2 : ℕ) ≠ 0), mul_zero, sub_zero, div_one]
+      refine ⟨weight_norm_summable.of_norm, ?_⟩
+      rw [xiOdd_square]
+      simp
+    · have hs : HasSum (fun n : PositiveZero => weight n / (1 - node n * w ^ 2))
+          (xiOdd w / w) := by
+        convert (actual_xi_folded_hasSum w hw).div_const w using 1
+        funext n
+        have hd := resolvent_denominator_ne_zero n w (by linarith)
+        field_simp [hz, hd]
+      refine ⟨hs.summable, ?_⟩
+      rw [hs.tsum_eq]
+      field_simp [hz]
 
 #print axioms actual_xi_dictionary
 end D5.S3.Zeros.Resolvent.ActualXiDictionary
