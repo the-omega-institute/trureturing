@@ -159,7 +159,7 @@ theorem lc_source {V : Type} (G : SimpleGraph V) (v : V) :
   unfold Xor
   tauto
 
-theorem lc_adj {V : Type} (G : SimpleGraph V) (v x y : V) :
+private theorem lc_adj {V : Type} (G : SimpleGraph V) (v x y : V) :
     (lc G v).Adj x y ↔
       x ≠ y ∧ Xor (G.Adj x y) (G.Adj v x ∧ G.Adj v y) := by
   change (x ≠ y ∧ (G.Adj x y ↔ ¬ (G.Adj v x ∧ G.Adj v y))) ↔ _

@@ -18,7 +18,7 @@ The quantum equivalence of Definition 6.2 and Conjecture 6.3 are outside this st
 
 namespace D5.S3.Quantum.Codes.KhesinLiBipartiteEncoderEquivalence
 
-open D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses (Step addInputRow lc_source lc_adj)
+open D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses (Step addInputRow lc_source)
 open D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph (lc entropy cut compl_eq relabel lc_eq)
 open D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity (binary)
 open Matrix
