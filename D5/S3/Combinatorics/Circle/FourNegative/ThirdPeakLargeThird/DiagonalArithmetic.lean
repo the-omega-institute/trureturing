@@ -157,7 +157,7 @@ private theorem diagonal_windows (x z p : ℤ)
       constructor <;> nlinarith only [hlo,hhi,hlarge,hbase,hc0,hk,hz0,hx,hcube]
   have hpay : 4*p*x^3≤z := by
     rcases hbranch with ⟨rfl,hs⟩|⟨hp1,he⟩
-    · simpa only [zero_mul] using hz0.le
+    · simpa only [zero_mul,mul_zero] using hz0.le
     · omega
   have hpSU := mul_le_mul_of_nonneg_left est.2.2.1 (show 0≤2*p by omega)
   have hpaid : 2*p*SU x x (2*x)≤3*z := by nlinarith only [hpSU,hpay]

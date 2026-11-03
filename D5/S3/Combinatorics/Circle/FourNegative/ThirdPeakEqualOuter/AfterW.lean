@@ -80,7 +80,7 @@ private theorem afterW_masses (a b c r v : ℕ)
   have wf := stock_mass a b c a 2 _ (hfull 2) f H hf
   have xf := stock_mass a b c a 3 _ (hfull 3) f H hf
   dsimp only
-  simp only [afterWBanks,List.map_append,List.sum_append,ur,uc,vr,vc,wf,xf,
+  simp only [afterWBanks,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,List.map_append,List.sum_append,ur,uc,vr,vc,wf,xf,
     Nat.cast_sub hr,Nat.cast_sub hv,Nat.cast_one]
   exact ⟨rfl,rfl,rfl,rfl⟩
 
@@ -131,7 +131,7 @@ private theorem afterW_realize (a b c r v : ℕ)
     2*f (T 2)=A x y z-N ∧ 2*g (T 2)=A x y z-(2*N+1) at nx
   have fresh : g (a+b+c+a)=A x y z := by
     have hh := (chain_values a b c a ha hb hc ha).2.2.2
-    simpa only [size,(bases a b c).1,F] using hh
+    simpa only [size,(bases a b c).1,F,Matrix.cons_val_zero] using hh
   have hA : 0 ≤ A x y z := by dsimp [A,x,y,z]; positivity
   have hN : 0 ≤ N := by
     have hh := (chain_values a b c a ha hb hc ha).1 0
@@ -176,6 +176,6 @@ private theorem afterW_realize (a b c r v : ℕ)
   apply realize_split a b c ha hb hc pre post
   · simpa only [pre,post,List.append_assoc] using afterW_inventory a b c r v ha hb hc
   · simpa only [pre,post,List.append_assoc] using ho
-  · simpa only [pre,post,List.append_assoc,List.singleton_append,List.cons_append] using hn
+  · simpa only [pre,post,List.append_assoc,List.singleton_append,List.cons_append,List.nil_append] using hn
 
 end D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualOuter
