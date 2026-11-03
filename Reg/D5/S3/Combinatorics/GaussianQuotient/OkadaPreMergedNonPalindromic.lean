@@ -106,6 +106,107 @@ def registration :
   familyRecord := none
   options := #[] }
 
+
+namespace WidthTwo
+
+abbrev signature : Signature where
+  Params := Fin 2 → ℕ
+  State _ := Fin 2 → ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Polynomial ℤ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ a b => preMerged a b) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (a b : Fin 2 → ℕ),
+    StrictMono a → StrictMono b → (∀ i j, a i ≤ b j) →
+      (IsAlmostPalindromic (r.readout () a b) ↔ min (a 1 - a 0) (b 1 - b 0) = 1)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have ha : StrictMono (fun i : Fin 2 => 2 * i.val) := by
+    intro i j hij
+    change i.val < j.val at hij
+    omega
+  have hb : StrictMono (fun i : Fin 2 => 2 * i.val + 2) := by
+    intro i j hij
+    change i.val < j.val at hij
+    omega
+  have hp : IsAlmostPalindromic (0 : Polynomial ℤ) := by
+    simpa [IsAlmostPalindromic] using (List.Palindrome.nil : ([] : List ℤ).Palindrome)
+  have hbad := (h _ _ ha hb (fun i j => by omega)).mp hp
+  norm_num at hbad
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨(fun i => i.val), (fun _ => 0), (fun i => i.val + 1), ?_⟩
+  change preMerged (fun i : Fin 2 => i.val) (fun _ => 0) ≠
+    preMerged (fun i : Fin 2 => i.val) (fun i => i.val + 1)
+  norm_num [preMerged, Fin.prod_univ_two, gauss, Fin.rev]
+  exact Polynomial.X_ne_zero.symm
+
+def source_registration : Registration arena (type_of% (@width_two_iff)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨width_two_iff, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic.width_two_iff)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic.WidthTwo.unit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic.WidthTwo.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ a b => preMerged a b) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms width_two_iff
+#print axioms source_registration
+#print axioms registration
+
+end WidthTwo
+
 #print _root_.D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic.result
 #print _root_.D5.S3.Combinatorics.GaussianQuotient.OkadaPreMergedNonPalindromic.claim
 #print axioms source_registration
