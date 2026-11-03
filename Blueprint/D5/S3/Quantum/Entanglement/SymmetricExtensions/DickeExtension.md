@@ -80,7 +80,7 @@ The distinguished root is fixed. The projector is the uniform permutation averag
 
 **Definition 1.7 (The star extension predicate).**
 
-$$\operatorname{StarExtension}\left(root, \rho, E\right) \iff \operatorname{PSD}\left(E\right) \land P_{L} E P_{L} = E \land ( \forall   i \neq root ,   \operatorname{M}\left(root, i, E\right) = \rho ) \land \operatorname{FullyPPT}\left(E\right)$$
+$$\operatorname{StarExtension}\left(root, \rho, E\right) \iff \operatorname{PSD}\left(E\right) \land P_{L} E P_{L} = E \land ( \forall   i ,   i \neq root \implies   \operatorname{M}\left(root, i, E\right) = \rho ) \land \operatorname{FullyPPT}\left(E\right)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.StarExtension` (`✓ std3`).
 
@@ -92,7 +92,7 @@ E is positive semidefinite on all r registers, is fixed by the genuine leaf-proj
 
 **Definition 1.8 (The complete graph extension predicate).**
 
-$$\operatorname{CompleteExtension}\left(\rho, E\right) \iff \operatorname{PSD}\left(E\right) \land \pi_{r} E \pi_{r} = E \land ( \forall   a \neq b ,   \operatorname{M}\left(a, b, E\right) = \rho ) \land \operatorname{FullyPPT}\left(E\right)$$
+$$\operatorname{CompleteExtension}\left(\rho, E\right) \iff \operatorname{PSD}\left(E\right) \land \pi_{r} E \pi_{r} = E \land ( \forall   a , b ,   a \neq b \implies \operatorname{M}\left(a, b, E\right) = \rho ) \land \operatorname{FullyPPT}\left(E\right)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.CompleteExtension` (`✓ std3`).
 
@@ -104,7 +104,7 @@ E is positive semidefinite on the same r registers and is fixed by the full Bose
 
 **Theorem 1.9 (Equality of the extension cones).**
 
-$$\forall   n \geq 1 ,   \forall   r \geq 2 ,   \forall   Y ,   ( \forall   i \leq j ,   Y_{i j} \geq 0 ) \implies   ( \exists   E ,   \operatorname{StarExtension}\left(0, \rho, E\right) ) \iff ( \exists   E ,   \operatorname{CompleteExtension}\left(\rho, E\right) )$$
+$$\forall   n \geq 1 ,   \forall   r \geq 2 ,   \forall   Y ,   ( \forall   i , j ,   i \leq j \implies Y_{i j} \geq 0 ) \implies   ( ( \exists   E ,   \operatorname{StarExtension}\left(0, \rho, E\right) ) \iff ( \exists   E ,   \operatorname{CompleteExtension}\left(\rho, E\right) ) )$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.result` (`✓ std3`). ∎
 

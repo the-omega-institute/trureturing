@@ -88,8 +88,8 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
             Node("result", "Equality of the extension cones",
                 Seq(Forall, Sp, X("n"), Geq, D(1), Comma, Sp, Forall, Sp, X("r"), Geq, D(2), Comma, Sp,
                     Forall, Sp, X("Y"), Comma, Sp,
-                    Open, Forall, Sp, X("i"), Leq, X("j"), Comma, Sp,
-                    Sub(X("Y"), X("i"), X("j")), Geq, D(0), Close, Implies, Sp, Open,
+                    Open, Forall, Sp, X("i"), Comma, X("j"), Comma, Sp,
+                    X("i"), Leq, X("j"), Implies, Sub(X("Y"), X("i"), X("j")), Geq, D(0), Close, Implies, Sp, Open,
                     Open, Exists, Sp, X("E"), Comma, Sp, Call("StarExtension", D(0), Rho, X("E")), Close,
                     Iff,
                     Open, Exists, Sp, X("E"), Comma, Sp, Call("CompleteExtension", Rho, X("E")), Close, Close),
@@ -133,8 +133,9 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
     {
         var p = complete ? Sub(Pi, X("r")) : Sub(X("P"), X("L"));
         var marginals = complete
-            ? Seq(Forall, Sp, X("a"), Neq, X("b"), Comma, Sp, Call("M", X("a"), X("b"), X("E")), Eq, Rho)
-            : Seq(Forall, Sp, X("i"), Neq, X("root"), Comma, Sp,
+            ? Seq(Forall, Sp, X("a"), Comma, X("b"), Comma, Sp,
+                X("a"), Neq, X("b"), Implies, Call("M", X("a"), X("b"), X("E")), Eq, Rho)
+            : Seq(Forall, Sp, X("i"), Comma, Sp, X("i"), Neq, X("root"), Implies, Sp,
                 Call("M", X("root"), X("i"), X("E")), Eq, Rho);
         var predicate = complete
             ? Call("CompleteExtension", Rho, X("E"))
