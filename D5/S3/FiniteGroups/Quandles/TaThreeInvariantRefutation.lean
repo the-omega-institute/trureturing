@@ -15,6 +15,7 @@
    our z equal to the inverse of the source's zeta. -/
 
 import D5.S3.FiniteGroups.Quandles.BlockCounting
+import Mathlib.Algebra.Group.TypeTags.Finite
 import Mathlib.GroupTheory.SemidirectProduct
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Fin.VecNotation
