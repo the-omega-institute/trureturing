@@ -94,19 +94,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Coordinates are extracted AFTER exhaustive splitting in the actual shell.
 
-**Theorem 1.7 (stateEquiv_symm_coe).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.stateEquiv_symm_coe`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.stateEquiv_symm_coe` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The source declaration stateEquiv_symm_coe is part of the actual original kernel/image construction with the displayed source type.
-
-**Theorem 1.8 (mem_E0_iff).**
+**Theorem 1.7 (mem_E0_iff).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.mem_E0_iff`
 
@@ -118,7 +106,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Exhaustion of ALL original charge-zero absolute zero-energy states.
 
-**Theorem 1.9 (M_Psi).**
+**Theorem 1.8 (M_Psi).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.M_Psi`
 
@@ -130,7 +118,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Exact original zero-momentum M coefficient: +2 from the native unshifted rTerm convention. This proves a nontrivial map from coordinate 0 to coordinate 2, and cannot be replaced by M=0 or an automatic doubling argument.
 
-**Theorem 1.10 (Q_representative).**
+**Theorem 1.9 (Q_representative).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q_representative`
 
@@ -142,7 +130,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The only nonzero matrix entry is the actual M coefficient +2.
 
-**Theorem 1.11 (Q_mem_E0).**
+**Theorem 1.10 (Q_mem_E0).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q_mem_E0`
 
@@ -154,7 +142,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Q preserves the exact original fixed-charge absolute space.
 
-**Definition 1.12 (Q0).**
+**Definition 1.11 (Q0).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0`
 
@@ -166,19 +154,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Literal restriction of original Q; its definition does not prescribe a coordinate differential.
 
-**Theorem 1.13 (Q0_coe).**
-
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0_coe`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0_coe` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The source declaration Q0_coe is part of the actual original kernel/image construction with the displayed source type.
-
-**Theorem 1.14 (Q0_coordinates).**
+**Theorem 1.12 (Q0_coordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0_coordinates`
 
@@ -190,7 +166,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration Q0_coordinates is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.15 (Q0_square).**
+**Theorem 1.13 (Q0_square).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0_square`
 
@@ -202,7 +178,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Restricted square-zero at every rank, from the computed original image and the actual zero action on the original relative shell.
 
-**Definition 1.16 (Cycles).**
+**Definition 1.14 (Cycles).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Cycles`
 
@@ -214,7 +190,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration Cycles is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.17 (cycle_coordinates).**
+**Theorem 1.15 (cycle_coordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.cycle_coordinates`
 
@@ -226,7 +202,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration cycle_coordinates is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.18 (range_coordinates).**
+**Theorem 1.16 (range_coordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.range_coordinates`
 
@@ -238,7 +214,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Actual range on actual E0; the unique surviving exact coordinate is z.c.
 
-**Definition 1.19 (boundaryMap).**
+**Definition 1.17 (boundaryMap).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.boundaryMap`
 
@@ -250,7 +226,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Actual incoming Q with codomain its actual kernel.
 
-**Definition 1.20 (Boundaries).**
+**Definition 1.18 (Boundaries).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Boundaries`
 
@@ -262,7 +238,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The actual range of Q0 with codomain its kernel.
 
-**Definition 1.21 (Cohomology).**
+**Definition 1.19 (Cohomology).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Cohomology`
 
@@ -274,7 +250,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The ORIGINAL state kernel/range quotient.
 
-**Definition 1.22 (ClassCoordinates).**
+**Definition 1.20 (ClassCoordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.ClassCoordinates`
 
@@ -286,7 +262,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Four retained ORIGINAL class coordinates, in the requested order.
 
-**Definition 1.23 (classCoordinates).**
+**Definition 1.21 (classCoordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.classCoordinates`
 
@@ -298,7 +274,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The linear map on actual cycles retains z.A, z.v, w.v and w.C.
 
-**Definition 1.24 (representative).**
+**Definition 1.22 (representative).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.representative`
 
@@ -310,7 +286,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Canonical cycles are ORIGINAL states with z.c=w.a=0.
 
-**Theorem 1.25 (coordinates_representative).**
+**Theorem 1.23 (coordinates_representative).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.coordinates_representative`
 
@@ -322,7 +298,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration coordinates_representative is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.26 (classCoordinates_surjective).**
+**Theorem 1.24 (classCoordinates_surjective).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.classCoordinates_surjective`
 
@@ -334,7 +310,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration classCoordinates_surjective is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.27 (boundaries_eq_ker).**
+**Theorem 1.25 (boundaries_eq_ker).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.boundaries_eq_ker`
 
@@ -346,7 +322,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 This is the load-bearing quotient calculation: actual Q-images are exactly the kernel of the FOUR-COORDINATE class map on actual Q-cycles.
 
-**Definition 1.28 (cohomologyEquiv).**
+**Definition 1.26 (cohomologyEquiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.cohomologyEquiv`
 
@@ -358,7 +334,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Mathlib's first isomorphism theorem, applied to the proved actual kernel/image equality. No new generic cohomology/quotient framework.
 
-**Theorem 1.29 (cohomologyEquiv_mk).**
+**Theorem 1.27 (cohomologyEquiv_mk).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.cohomologyEquiv_mk`
 
@@ -370,7 +346,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration cohomologyEquiv_mk is part of the actual original kernel/image construction with the displayed source type.
 
-**Definition 1.30 (classOf).**
+**Definition 1.28 (classOf).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.classOf`
 
@@ -382,7 +358,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration classOf is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.31 (cohomologyEquiv_classOf).**
+**Theorem 1.29 (cohomologyEquiv_classOf).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.cohomologyEquiv_classOf`
 
@@ -394,7 +370,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration cohomologyEquiv_classOf is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.32 (classOf_coordinates).**
+**Theorem 1.30 (classOf_coordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.classOf_coordinates`
 
@@ -406,7 +382,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Every class has the stated canonical representative, with an actual Q preimage for the removed z.c already given in range_coordinates.
 
-**Theorem 1.33 (number_Q).**
+**Theorem 1.31 (number_Q).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.number_Q`
 
@@ -418,7 +394,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Actual Q raises native ghost number on ALL original states. This consumes the committed all-integer finite-capture proof, rather than a grade premise.
 
-**Theorem 1.34 (number_c0).**
+**Theorem 1.32 (number_c0).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.number_c0`
 
@@ -430,7 +406,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 All-state c0 degree +1, obtained from the committed all-integer relation.
 
-**Theorem 1.35 (number_representative).**
+**Theorem 1.33 (number_representative).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.number_representative`
 
@@ -442,7 +418,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration number_representative is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.36 (number_mem_E0).**
+**Theorem 1.34 (number_mem_E0).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.number_mem_E0`
 
@@ -454,7 +430,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration number_mem_E0 is part of the actual original kernel/image construction with the displayed source type.
 
-**Definition 1.37 (N0).**
+**Definition 1.35 (N0).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.N0`
 
@@ -466,7 +442,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Restriction of the native number operator to the actual E0.
 
-**Theorem 1.38 (N0_coordinates).**
+**Theorem 1.36 (N0_coordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.N0_coordinates`
 
@@ -478,7 +454,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration N0_coordinates is part of the actual original kernel/image construction with the displayed source type.
 
-**Definition 1.39 (Grade).**
+**Definition 1.37 (Grade).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Grade`
 
@@ -490,7 +466,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Actual homogeneous ORIGINAL states, over every integer ghost degree.
 
-**Theorem 1.40 (grade_coordinates).**
+**Theorem 1.38 (grade_coordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.grade_coordinates`
 
@@ -502,7 +478,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Native grading on ALL E0 states. The two scalars with degree two are z.c (exact) and w.v; w.a has degree one and is excluded by cycles.
 
-**Theorem 1.41 (Q0_grade).**
+**Theorem 1.39 (Q0_grade).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0_grade`
 
@@ -514,7 +490,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Incoming Q raises the ACTUAL native number eigenvalue by one. This proof uses the committed all-state number/Q relation, with no mode restriction.
 
-**Definition 1.42 (GradedCycles).**
+**Definition 1.40 (GradedCycles).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.GradedCycles`
 
@@ -526,7 +502,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Literal original cycles intersected with a native homogeneous subspace.
 
-**Definition 1.43 (gradedBoundaryMap).**
+**Definition 1.41 (gradedBoundaryMap).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.gradedBoundaryMap`
 
@@ -538,7 +514,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Q on the actual incoming eigenspace, with codomain the actual homogeneous cycle space. All-rank restricted square-zero supplies the cycle condition.
 
-**Definition 1.44 (GradedBoundaries).**
+**Definition 1.42 (GradedBoundaries).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.GradedBoundaries`
 
@@ -550,7 +526,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The range of actual Q0 from incoming native number eigenspace of degree q-1.
 
-**Definition 1.45 (GradedCohomology).**
+**Definition 1.43 (GradedCohomology).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.GradedCohomology`
 
@@ -562,7 +538,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 No assigned dimensions: genuine native homogeneous kernel/image quotient.
 
-**Definition 1.46 (canonicalState).**
+**Definition 1.44 (canonicalState).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.canonicalState`
 
@@ -574,7 +550,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration canonicalState is part of the actual original kernel/image construction with the displayed source type.
 
-**Definition 1.47 (ClassGrade).**
+**Definition 1.45 (ClassGrade).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.ClassGrade`
 
@@ -586,7 +562,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Coordinate target grading is PULLED BACK from the native operator on the original canonical representatives. It is not an assumed grading certificate.
 
-**Theorem 1.48 (classGrade_coordinates).**
+**Theorem 1.46 (classGrade_coordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.classGrade_coordinates`
 
@@ -598,7 +574,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration classGrade_coordinates is part of the actual original kernel/image construction with the displayed source type.
 
-**Definition 1.49 (gradedCoordinates).**
+**Definition 1.47 (gradedCoordinates).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.gradedCoordinates`
 
@@ -610,7 +586,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration gradedCoordinates is part of the actual original kernel/image construction with the displayed source type.
 
-**Definition 1.50 (gradedRepresentative).**
+**Definition 1.48 (gradedRepresentative).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.gradedRepresentative`
 
@@ -622,7 +598,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration gradedRepresentative is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.51 (gradedCoordinates_representative).**
+**Theorem 1.49 (gradedCoordinates_representative).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.gradedCoordinates_representative`
 
@@ -634,7 +610,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration gradedCoordinates_representative is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.52 (gradedCoordinates_surjective).**
+**Theorem 1.50 (gradedCoordinates_surjective).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.gradedCoordinates_surjective`
 
@@ -646,7 +622,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration gradedCoordinates_surjective is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.53 (gradedBoundaries_eq_ker).**
+**Theorem 1.51 (gradedBoundaries_eq_ker).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.gradedBoundaries_eq_ker`
 
@@ -658,7 +634,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The original graded Q-image, not merely intersection with an ungraded image, equals the coordinate kernel. Reverse inclusion constructs a genuine incoming state of native degree q-1 with w.a=z.c/2.
 
-**Definition 1.54 (gradedCohomologyEquiv).**
+**Definition 1.52 (gradedCohomologyEquiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.gradedCohomologyEquiv`
 
@@ -670,7 +646,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Degreewise quotient transport uses Mathlib directly on the actual homogeneous original kernel and incoming Q-image.
 
-**Definition 1.55 (classGradeZeroEquiv).**
+**Definition 1.53 (classGradeZeroEquiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.classGradeZeroEquiv`
 
@@ -682,7 +658,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Native degree zero has the ground scalar class.
 
-**Definition 1.56 (classGradeOneEquiv).**
+**Definition 1.54 (classGradeOneEquiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.classGradeOneEquiv`
 
@@ -694,7 +670,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Native degree one has z.v; the scalar w.a is removed by the actual cycle condition, rather than being silently counted as a second copy.
 
-**Definition 1.57 (classGradeTwoEquiv).**
+**Definition 1.55 (classGradeTwoEquiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.classGradeTwoEquiv`
 
@@ -706,7 +682,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Native degree two has w.v; z.c is exactly the actual Q-image.
 
-**Definition 1.58 (classGradeThreeEquiv).**
+**Definition 1.56 (classGradeThreeEquiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.classGradeThreeEquiv`
 
@@ -718,7 +694,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Native degree three has w.c.
 
-**Definition 1.59 (H0Equiv).**
+**Definition 1.57 (H0Equiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.H0Equiv`
 
@@ -730,7 +706,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration H0Equiv is part of the actual original kernel/image construction with the displayed source type.
 
-**Definition 1.60 (H1Equiv).**
+**Definition 1.58 (H1Equiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.H1Equiv`
 
@@ -742,7 +718,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration H1Equiv is part of the actual original kernel/image construction with the displayed source type.
 
-**Definition 1.61 (H2Equiv).**
+**Definition 1.59 (H2Equiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.H2Equiv`
 
@@ -754,7 +730,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration H2Equiv is part of the actual original kernel/image construction with the displayed source type.
 
-**Definition 1.62 (H3Equiv).**
+**Definition 1.60 (H3Equiv).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.H3Equiv`
 
@@ -766,7 +742,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The source declaration H3Equiv is part of the actual original kernel/image construction with the displayed source type.
 
-**Theorem 1.63 (other_grade_zero).**
+**Theorem 1.61 (other_grade_zero).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.other_grade_zero`
 
@@ -778,7 +754,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Every other integer degree, including negative degrees, is zero.
 
-**Theorem 1.64 (native_dimensions).**
+**Theorem 1.62 (native_dimensions).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.native_dimensions`
 
@@ -790,7 +766,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Native dimensions are consequences of the explicit ORIGINAL quotient equivalences; they are not assumptions or certificates.
 
-**Definition 1.65 (e0_addCommGroup).**
+**Definition 1.63 (e0_addCommGroup).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.e0_addCommGroup`
 
@@ -802,7 +778,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The genuine original absolute sector inherits the canonical additive group of its ambient tensor carrier, with explicit scalar and ambient types for native instance resolution.
 
-**Definition 1.66 (cycles_addCommGroup).**
+**Definition 1.64 (cycles_addCommGroup).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.cycles_addCommGroup`
 
@@ -814,7 +790,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 The actual original Q0 kernel inherits the canonical submodule additive group; this is consumed by its original-image quotient.
 
-**Definition 1.67 (gradedCycles_addCommGroup).**
+**Definition 1.65 (gradedCycles_addCommGroup).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.gradedCycles_addCommGroup`
 
@@ -826,7 +802,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomolo
 
 Each actual homogeneous original cycle subspace inherits its canonical additive group, consumed by the incoming-image quotient.
 
-**Theorem 1.68 (native_finrank).**
+**Theorem 1.66 (native_finrank).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.native_finrank`
 
@@ -859,7 +835,6 @@ The entire integer grading, including arbitrary rank zero, is derived from the o
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.N0`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.N0_coordinates`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0_coe`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0_coordinates`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0_grade`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.Q0_square`
@@ -907,6 +882,5 @@ The entire integer grading, including arbitrary rank zero, is derived from the o
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.representative`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.split0`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.stateEquiv`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeOriginalAbsoluteZeroCohomology.stateEquiv_symm_coe`
 - Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTRelativeZeroMode](LatticeBRSTRelativeZeroMode.md)
 - Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeZeroMomentumBRST](LatticeZeroMomentumBRST.md)
