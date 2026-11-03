@@ -4,7 +4,7 @@
 
 Second peak SecondPeakA2: Finite
 
-Thirty-four exact rows and the unbounded q-two dyadic selector cover p in {4,8,16,32}, q in {2,4,8,16,32}, h in {1,2}. For q=2 and p in {8,16,32}, QTwoStructural supplies strict physical stocks, proper bit inclusion and every old/new window for both h values. The remaining rows check the same conditions directly. The infinite sectors are proved in Large and Small.
+Thirty-two exact rows and the unbounded q-two dyadic selector cover p in {4,8,16,32}, q in {2,4,8,16,32}, h in {1,2}. For q=2 and p in {4,8,16,32}, QTwoStructural supplies strict physical stocks, proper bit inclusion and every old/new window for both h values. The remaining rows check the same conditions directly. The infinite sectors are proved in Large and Small.
 
 **Definition 1.1 (BoundaryRow).**
 
@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/Finite.Bou
 
 *Commentary.*
 
-Definition BoundaryRow in the source module; Thirty-four exact rows and the unbounded q-two dyadic selector cover p in {4,8,16,32}, q in {2,4,8,16,32}, h in {1,2}. For q=2 and p in {8,16,32}, QTwoStructural supplies strict physical stocks, proper bit inclusion and every old/new window for both h values. The remaining rows check the same conditions directly. The infinite sectors are proved in Large and Small.
+Definition BoundaryRow in the source module; Thirty-two exact rows and the unbounded q-two dyadic selector cover p in {4,8,16,32}, q in {2,4,8,16,32}, h in {1,2}. For q=2 and p in {4,8,16,32}, QTwoStructural supplies strict physical stocks, proper bit inclusion and every old/new window for both h values. The remaining rows check the same conditions directly. The infinite sectors are proved in Large and Small.
 
 **Definition 1.2 (BoundaryRow.Check).**
 
@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/Finite.Che
 
 *Commentary.*
 
-Definition BoundaryRow.Check in the source module; Thirty-four exact rows and the unbounded q-two dyadic selector cover p in {4,8,16,32}, q in {2,4,8,16,32}, h in {1,2}. For q=2 and p in {8,16,32}, QTwoStructural supplies strict physical stocks, proper bit inclusion and every old/new window for both h values. The remaining rows check the same conditions directly. The infinite sectors are proved in Large and Small.
+Definition BoundaryRow.Check in the source module; Thirty-two exact rows and the unbounded q-two dyadic selector cover p in {4,8,16,32}, q in {2,4,8,16,32}, h in {1,2}. For q=2 and p in {4,8,16,32}, QTwoStructural supplies strict physical stocks, proper bit inclusion and every old/new window for both h values. The remaining rows check the same conditions directly. The infinite sectors are proved in Large and Small.
 
 **Definition 1.3 (boundaryRows).**
 
@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/Finite.bou
 
 *Commentary.*
 
-Definition boundaryRows in the source module; Thirty-four exact rows and the unbounded q-two dyadic selector cover p in {4,8,16,32}, q in {2,4,8,16,32}, h in {1,2}. For q=2 and p in {8,16,32}, QTwoStructural supplies strict physical stocks, proper bit inclusion and every old/new window for both h values. The remaining rows check the same conditions directly. The infinite sectors are proved in Large and Small.
+Definition boundaryRows in the source module; Thirty-two exact rows and the unbounded q-two dyadic selector cover p in {4,8,16,32}, q in {2,4,8,16,32}, h in {1,2}. For q=2 and p in {4,8,16,32}, QTwoStructural supplies strict physical stocks, proper bit inclusion and every old/new window for both h values. The remaining rows check the same conditions directly. The infinite sectors are proved in Large and Small.
 
 **Theorem 1.4 (finite_exists).**
 
