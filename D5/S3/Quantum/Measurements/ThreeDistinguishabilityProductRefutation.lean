@@ -11,6 +11,7 @@ import D5.S0.Carrier.GoldenRatio
 import D5.S3.Analytic.Adelic.FiniteToroidalFrameReconstruction
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
+import D5.S3.Observer.WindowRegister
 import D5.S3.QuantumBounds.RebitExclusionDistance
 
 /-! Korzekwa, Czachórski, Puchała and Życzkowski, arXiv:1812.09083v3,
@@ -25,6 +26,7 @@ open scoped BigOperators ComplexConjugate ComplexOrder
 
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open D5.S3.Analytic.Adelic.FiniteToroidalFrameReconstruction (weightedFrame)
+open D5.S3.Observer.WindowRegister (windowRoot windowRoot_isPrimitiveRoot)
 
 open D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch.FourEndpoint
   (J0 J1 thirdPairing pairing_three_forms)
@@ -54,7 +56,7 @@ private def point : Fin 4 → ℝ :=
   ![(5 - Real.sqrt 5) / 10, (5 - Real.sqrt 5) / 20,
     (5 - Real.sqrt 5) / 10, (Real.sqrt 5 - 1) / 4]
 
-private def ζ : ℂ := Complex.exp ((Real.pi / 5 : ℝ) * Complex.I)
+private def ζ : ℂ := windowRoot 10
 
 private def phases : Fin 3 → Fin 4 → ℂ :=
   ![![1, 1, 1, 1], ![1, ζ ^ 2, ζ ^ 4, ζ ^ 7], ![-1, ζ ^ 9, ζ ^ 3, ζ ^ 9]]
@@ -75,20 +77,21 @@ private lemma point_simplex : (∀ k, 0 ≤ point k) ∧ ∑ k, point k = 1 := b
     ring
 
 private lemma phase_unit : conj ζ * ζ = 1 := by
-  simpa only [ζ, Complex.star_def, Complex.ofReal_neg, mul_neg, neg_mul, neg_neg,
+  rw [show ζ = Complex.exp ((Real.pi / 5 : ℝ) * Complex.I) by
+    dsimp only [ζ, windowRoot]; congr 1; push_cast; ring]
+  simpa only [Complex.star_def, Complex.ofReal_neg, mul_neg, neg_mul, neg_neg,
     mul_comm] using
     D5.S3.Quantum.Dynamics.PositivePauliClockOrder.phase_unit (-(Real.pi / 5))
 
 private lemma phase_fifth : ζ ^ 5 = -1 := by
-  rw [ζ.eq_1, ← Complex.exp_nat_mul]
-  convert Complex.exp_pi_mul_I using 1
-  congr 1
-  push_cast
-  ring
+  exact IsPrimitiveRoot.eq_neg_one_of_two_right
+    ((windowRoot_isPrimitiveRoot 10).pow_of_dvd (p := 5) (by decide) (by decide))
 
 private lemma phase_quadratic : ζ ^ 2 = ((1 + Real.sqrt 5 : ℝ) / 2 : ℂ) * ζ - 1 := by
   have hr : ζ.re = (1 + Real.sqrt 5) / 4 := by
-    simpa only [ζ, Complex.exp_ofReal_mul_I_re] using Real.cos_pi_div_five
+    rw [show ζ = Complex.exp ((Real.pi / 5 : ℝ) * Complex.I) by
+      dsimp only [ζ, windowRoot]; congr 1; push_cast; ring, Complex.exp_ofReal_mul_I_re]
+    exact Real.cos_pi_div_five
   have hs : conj ζ + ζ = ((1 + Real.sqrt 5 : ℝ) / 2 : ℂ) := by
     rw [add_comm, Complex.add_conj, hr]
     push_cast
