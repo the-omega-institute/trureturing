@@ -30,13 +30,16 @@ internal sealed class KurkovStirlingMinorVandermondeSumDocument : IScribeDocumen
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The full identity", ClaimBody(),
                 "The coefficient identity for rising factorials converts the first-kind minor into an elementary-coefficient corner. Determinant-one inverse Toeplitz matrices identify that corner with the complete-coefficient corner of a different size. The map sending j at position t to n-j+t identifies the nested tuples with increasing subsets. Factorial normalization and Cauchy–Binet give a signed moment determinant. Stirling inclusion–exclusion evaluates its entries; column reversal cancels its sign. This proves the displayed identity also when n=0 or k=0.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("kurk396563"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("a396563-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Owner + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>

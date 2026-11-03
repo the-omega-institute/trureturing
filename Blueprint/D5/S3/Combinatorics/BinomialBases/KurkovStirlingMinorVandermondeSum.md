@@ -60,6 +60,10 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \forall m \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/KurkovStirlingMinorVandermondeSum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kurk396563` (proved) by `D5/S3/Combinatorics/BinomialBases/KurkovStirlingMinorVandermondeSum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kurk396563","declaration_gid":"D5/S3/Combinatorics/BinomialBases/KurkovStirlingMinorVandermondeSum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mikhail Kurkov (2026). *OEIS A396563: three-parameter Stirling-minor Vandermonde sum*. URL: <https://oeis.org/A396563/internal>.
