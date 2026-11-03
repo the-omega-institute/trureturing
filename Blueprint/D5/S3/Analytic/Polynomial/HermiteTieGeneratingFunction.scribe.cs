@@ -21,12 +21,14 @@ internal sealed class HermiteTieGeneratingFunctionDocument : IScribeDocumentDefi
             Node("claim", "The complete generating-function assertion", Equal(F.Id("claim"), ClaimBody()),
                 "There is a positive, strictly increasing natural enumeration of every order with exactly two absolute maxima. Its zero-padded rational formal series has constant coefficient zero, coefficient a(n) at every positive index, and equals the literal numerator times the inverse of the literal denominator. The equality is in formal power series, not an analytic identity." , DescribeRole.Definition),
             Node("result", "The full A381737 Conjecture 3 generating function", ClaimBody(),
-                "Reuse HermiteAbsoluteTieOrders.result for the exhaustive positive enumeration. Construct the series from the three standard binomial series T0=1/(1-X), T1=1/(1-X) squared, and T2=1/(1-X) cubed, together with the rescaled series T1(-X). The combination 4T2-2T1-2T0-T1(-X)+1 has zero constant coefficient and has coefficient 2n(n+2)+(n+1)(-1)^(n+1) at every positive n. The standard binomial identities give the product with (1-X) cubed(1+X) squared equal to the numerator; constant coefficient one then permits the formal inverse. Natural-number casts are discharged from the positivity of the existing integer formula. The statement is over all k and all positive n and contains no finite prefix, selected subfamily, recurrence proxy, a0 extension, or convergence condition.", DescribeRole.Theorem))));
+                "Reuse HermiteAbsoluteTieOrders.result for the exhaustive positive enumeration. Construct the series from the three standard binomial series T0=1/(1-X), T1=1/(1-X) squared, and T2=1/(1-X) cubed, together with the rescaled series T1(-X). The combination 4T2-2T1-2T0-T1(-X)+1 has zero constant coefficient and has coefficient 2n(n+2)+(n+1)(-1)^(n+1) at every positive n. The standard binomial identities give the product with (1-X) cubed(1+X) squared equal to the numerator; constant coefficient one then permits the formal inverse. Natural-number casts are discharged from the positivity of the existing integer formula. The statement is over all k and all positive n and contains no finite prefix, selected subfamily, recurrence proxy, a0 extension, or convergence condition.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a381737-hermite-tie-generating-function"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hermite-tie-generating-function-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Rationals() => Seq(Mathbb, Grp(F.Id("Q")));
