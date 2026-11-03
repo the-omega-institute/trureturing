@@ -30,7 +30,7 @@ For finite index types ι and ε, any complex record whose rows have squared nor
 
 **Theorem 1.3 (The diagonal Kraus action entry).**
 
-$$\forall I \in Type,\; \forall E \in Type,\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] [\operatorname{Fintype}\left(E\right)] \forall record \in I \to \left(E \to \mathbb{C}\right), rho \in \operatorname{Matrix}\left(I, I, \mathbb{C}\right), i \in I, j \in I,\; \sum_{a:E} Matrix.diagonal\left((fun (i:I) \mapsto record\left(i\right)\left(a\right))\right) \cdot rho \cdot Matrix.diagonal\left((fun (i:I) \mapsto record\left(i\right)\left(a\right))\right)^{*}\left(i\right)\left(j\right) = \sum_{a:E} \operatorname{star}\left(record\left(j\right)\left(a\right)\right) \cdot record\left(i\right)\left(a\right) \cdot rho\left(i\right)\left(j\right)$$
+$$\forall I \in Type,\; \forall E \in Type,\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] [\operatorname{Fintype}\left(E\right)] \forall record \in I \to \left(E \to \mathbb{C}\right), rho \in \operatorname{Matrix}\left(I, I, \mathbb{C}\right), i \in I, j \in I,\; (\sum_{a:E} (Matrix.diagonal\left((fun (i:I) \mapsto record\left(i\right)\left(a\right))\right) \cdot rho \cdot Matrix.diagonal\left((fun (i:I) \mapsto record\left(i\right)\left(a\right))\right)^{*}))\left(i\right)\left(j\right) = (\sum_{a:E} \operatorname{star}\left(record\left(j\right)\left(a\right)\right) \cdot record\left(i\right)\left(a\right)) \cdot rho\left(i\right)\left(j\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Decoherence/FiniteShiftedRecordChannel.diagonal_kraus_entry` (`✓ std3`). ∎
 
