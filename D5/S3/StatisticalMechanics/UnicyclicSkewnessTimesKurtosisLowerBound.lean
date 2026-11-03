@@ -312,24 +312,97 @@ private def sourceRates (u : ℝ) (m : ℕ) : Fin (m + 1) → ℝ :=
   fun i => if i = 0 then (1 - u) / (m * u) else 1
 
 private lemma source_rates_positive (u : ℝ) (m : ℕ) (hu : 0 < u) (hu1 : u < 1)
-    (hm : 1 ≤ m) : ∀ i, 0 < sourceRates u m i := by sorry
+    (hm : 1 ≤ m) : ∀ i, 0 < sourceRates u m i := by
+  have hm0 : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
+  intro i
+  dsimp [sourceRates]
+  split_ifs
+  · positivity
+  · norm_num
 
-private def sourceApproximation (u : ℝ) : ℝ := f u
+private lemma source_power_sum (u : ℝ) (m j : ℕ) (hu : 0 < u) (hu1 : u < 1)
+    (hm : 1 ≤ m) :
+    powerSum (m + 1) j (fun i => (sourceRates u m i)⁻¹) =
+      ((m : ℝ) * u / (1 - u)) ^ j + m := by
+  simp [powerSum, sourceRates, Fin.sum_univ_succ]
+  rw [← inv_pow, inv_div]
+
+private def sourceApproximation (u v : ℝ) : ℝ :=
+  (3 * (u ^ 2 + (1 - u) ^ 2 * v) ^ 2 -
+      2 * (u ^ 3 + (1 - u) ^ 3 * v ^ 2)) *
+    (15 * (u ^ 2 + (1 - u) ^ 2 * v) ^ 2 -
+      20 * (u ^ 3 + (1 - u) ^ 3 * v ^ 2) +
+      6 * (u ^ 4 + (1 - u) ^ 4 * v ^ 3) /
+        (u ^ 2 + (1 - u) ^ 2 * v))
 
 private lemma source_value (u : ℝ) (m : ℕ) (hu : 0 < u) (hu1 : u < 1)
     (hm : 1 ≤ m) :
     skewness (sourceRates u m) * kurtosis (sourceRates u m) =
-      sourceApproximation u + (1 / (m : ℝ)) *
-        (1 / (m : ℝ) * (2 * u ^ 5 - 3 * u ^ 4 + u ^ 3)) := by sorry
+      sourceApproximation u (1 / (m : ℝ)) := by
+  have hs (j : ℕ) := source_power_sum u m j hu hu1 hm
+  delta D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness
+    D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis
+    sourceApproximation
+  rw [hs 1, hs 2, hs 3, hs 4]
+  simp only [pow_one]
+  field_simp
+  ring
 
-private lemma source_limit (u : ℝ) (hu : 0 < u) (hu1 : u < 1)
-    (hmin : f u = lowerBound) :
+private lemma source_limit (u : ℝ) (hu : 0 < u) (hu1 : u < 1) :
     Tendsto (fun m : ℕ => skewness (sourceRates u (m + 1)) *
-      kurtosis (sourceRates u (m + 1))) atTop (nhds lowerBound) := by sorry
+      kurtosis (sourceRates u (m + 1))) atTop (nhds (f u)) := by
+  have hc : ContinuousAt (sourceApproximation u) 0 := by
+    unfold sourceApproximation
+    fun_prop (disch := positivity)
+  have hz : Tendsto (fun m : ℕ => 1 / ((m + 1 : ℕ) : ℝ)) atTop
+      (nhds (0 : ℝ)) :=
+    (tendsto_add_atTop_iff_nat 1).mpr tendsto_one_div_atTop_nhds_zero_nat
+  have ha := hc.tendsto.comp hz
+  have hzero : sourceApproximation u 0 = f u := by
+    dsimp [sourceApproximation, f]
+    field_simp [ne_of_gt hu]
+    ring_nf
+  have heq : (fun m : ℕ => skewness (sourceRates u (m + 1)) *
+      kurtosis (sourceRates u (m + 1))) =
+      (fun m : ℕ => sourceApproximation u (1 / ((m + 1 : ℕ) : ℝ))) := by
+    funext m
+    exact source_value u (m + 1) hu hu1 (by omega)
+  rw [heq]
+  simpa only [Function.comp_def, hzero] using ha
 
 private lemma greatest_lower_bound :
     IsGLB {s : ℝ | ∃ n : ℕ, 2 ≤ n ∧ ∃ k : Fin n → ℝ,
-      (∀ i, 0 < k i) ∧ s = skewness k * kurtosis k} lowerBound := by sorry
+      (∀ i, 0 < k i) ∧ s = skewness k * kurtosis k} lowerBound := by
+  refine ⟨?_, ?_⟩
+  · rintro s ⟨n, hn, k, hk, rfl⟩
+    exact (strict_lower_bound n hn k hk).le
+  · intro b hb
+    change b ≤ sInf (sourceExpression '' Set.Ioi (0 : ℝ))
+    apply le_csInf (show (sourceExpression '' Set.Ioi (0 : ℝ)).Nonempty from
+      ⟨sourceExpression 1, ⟨1, by norm_num, rfl⟩⟩)
+    rintro y ⟨A, hA, rfl⟩
+    have hA0 : 0 < A := hA
+    let u : ℝ := 1 / (1 + A)
+    have hA1 : 0 < 1 + A := by linarith
+    have hu : 0 < u := by dsimp [u]; positivity
+    have hu1 : u < 1 := by
+      dsimp [u]
+      apply (div_lt_iff₀ hA1).2
+      linarith
+    have hlim := source_limit u hu hu1
+    have hbound : ∀ m : ℕ, b ≤
+        skewness (sourceRates u (m + 1)) * kurtosis (sourceRates u (m + 1)) := by
+      intro m
+      apply hb
+      exact ⟨m + 2, by omega, sourceRates u (m + 1),
+        source_rates_positive u (m + 1) hu hu1 (by omega), rfl⟩
+    have hbfu : b ≤ f u := ge_of_tendsto' hlim hbound
+    have hAu : (1 - u) / u = A := by
+      dsimp [u]
+      field_simp
+      ring
+    rw [← hAu, source_expression_eq_f u hu hu1]
+    exact hbfu
 
 theorem result : claim := by
   exact ⟨strict_lower_bound, greatest_lower_bound⟩
