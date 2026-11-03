@@ -241,6 +241,9 @@ theorem Q0_coordinates (z w : Coordinates D) :
     Q0 D H hHG hGH ((stateEquiv D H hHG hGH).symm (z,w)) =
       (stateEquiv D H hHG hGH).symm ((0,(0,2*w.1)),0) := by
   apply Subtype.ext
+  change LatticeBRST.totalCharge D H
+      (Psi D H hHG hGH z + ghostC D 0 (Psi D H hHG hGH w)) =
+    Psi D H hHG hGH (0,(0,2*w.1)) + ghostC D 0 (Psi D H hHG hGH 0)
   simpa only [map_zero,add_zero] using
     Q_representative D H hHG hGH z w
 
