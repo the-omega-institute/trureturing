@@ -27,10 +27,10 @@ noncomputable def gaussian (s : ℝ) : ℝ := Real.exp s + Real.exp (-9 * s)
 
 private theorem hasDerivAt_gaussian (s : ℝ) :
     HasDerivAt gaussian (Real.exp s - 9 * Real.exp (-9 * s)) s := by
-  have hlinear : HasDerivAt (fun x : ℝ => -9 * x) (-9) s := by
-    simpa only [mul_one] using (hasDerivAt_id s).const_mul (-9 : ℝ)
+  have hlinear : HasDerivAt (fun x : ℝ => -9 * x) (-9) s :=
+    hasDerivAt_const_mul (x := s) (-9)
   convert (Real.hasDerivAt_exp s).add hlinear.exp using 1 <;>
-    simp only [gaussian] <;> ring
+    (try simp only [gaussian]) <;> ring
 
 private theorem differentiable_gaussian : Differentiable ℝ gaussian :=
   fun s => (hasDerivAt_gaussian s).differentiableAt
@@ -131,7 +131,7 @@ theorem gaussian_s_star : gaussian s_star = 2 := by
     lt_trans zero_lt_one (one_lt_dbonacciPerronRoot 9 (by norm_num))
   have hmul : Real.exp (9 * Real.log (dbonacciPerronRoot 9)) =
       (dbonacciPerronRoot 9) ^ 9 := by
-    simpa only [Real.exp_log hβ] using
+    simpa only [Nat.cast_ofNat, Real.exp_log hβ] using
       Real.exp_nat_mul (Real.log (dbonacciPerronRoot 9)) 9
   have hroot := two_sub_dbonacciPerronRoot_eq_inv_pow 9 (by norm_num)
   unfold gaussian s_star
