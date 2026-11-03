@@ -100,7 +100,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/Masks.exce
 
 *Commentary.*
 
-theorem exceptional_mask (s : ℕ) (hq : 64≤2^s) (hr : 2^s%5=1) :     let q : ℕ
+For every natural s with 64<=2^s and 2^s mod 5=1, let q:Nat=2^s, m:Nat=2*q+1 and M:Nat=(32*q-27)/5. Then m<M, SecondPeakHighD.Submask m M, and 5*(M:Int)-(y 4 q 1-32)=5. The divisions and subtractions defining M are natural operations; the final charged equality is in the integers.
 
 ## References
 
