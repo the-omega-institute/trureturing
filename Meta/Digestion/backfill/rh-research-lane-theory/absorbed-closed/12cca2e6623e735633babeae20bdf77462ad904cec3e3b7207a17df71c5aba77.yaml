@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:12cca2e6623e735633babeae20bdf77462ad904cec3e3b7207a17df71c5aba77
-  normalized_sha256: sha256:12cca2e6623e735633babeae20bdf77462ad904cec3e3b7207a17df71c5aba77
-cas_ref: sha256:12cca2e6623e735633babeae20bdf77462ad904cec3e3b7207a17df71c5aba77
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.finite_second_magnus_energy_golden_shell_invariant
-    target_statement_id: sha256:adcac36118d9edd747ffece3d5f5ad8f0f2d74748178805720e67d2bef8bc0ef
-receipts:
-  unresolved_subitems: []

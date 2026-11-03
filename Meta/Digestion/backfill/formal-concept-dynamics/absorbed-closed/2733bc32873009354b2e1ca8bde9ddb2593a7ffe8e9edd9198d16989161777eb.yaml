@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2733bc32873009354b2e1ca8bde9ddb2593a7ffe8e9edd9198d16989161777eb
-  normalized_sha256: sha256:2733bc32873009354b2e1ca8bde9ddb2593a7ffe8e9edd9198d16989161777eb
-cas_ref: sha256:2733bc32873009354b2e1ca8bde9ddb2593a7ffe8e9edd9198d16989161777eb
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.winningRegion
-    target_statement_id: sha256:1af2e3d72139a3ffbc18a8d155474df081bf1341c89ffd80cb88231adeb73f1c
-receipts:
-  unresolved_subitems: []

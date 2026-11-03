@@ -1,8 +1,0 @@
-第一项等价于
-\[
-\operatorname{Tr}\bigl((U^\dagger EU)\rho\bigr)
-=
-\operatorname{Tr}\bigl((U^\dagger EU)\Delta_Z(\rho)\bigr)
-\]
-对所有密度矩阵成立。由于 \(\Delta_Z\) 对迹配对自伴，这等价于 \(U^\dagger EU=\Delta_Z^*(U^\dagger EU)\) 对每个生成元成立，进而等价于其实线性张成空间中的每个 \(F\) 都固定。固定点空间正是模式对角代数。证毕。
-

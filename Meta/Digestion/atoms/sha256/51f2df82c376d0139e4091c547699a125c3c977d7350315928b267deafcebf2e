@@ -1,4 +1,0 @@
-**(C1b) Lemma 2.3 (usual augmentation at a deterministic cut).** At a fixed deterministic $T$, completion and right-continuous augmentation of the raw marked-prefix field add no state information relevant to conditional laws: every variable measurable in all completed fields at $T+1/n$ has a version measurable at $T$.
-
-**Proof.** Represent the variable at $T+1/n$ as a measurable function of the finite prefix at that horizon and evaluate the same function on the $T$ prefix extended by no arrival. The two values differ only if an arrival occurs in $(T,T+1/n]$, whose probability tends to zero by local finiteness. Closure under convergence in probability yields a $T$-measurable version. Exact horizon and nonarrival remain in the prefix. ∎
-

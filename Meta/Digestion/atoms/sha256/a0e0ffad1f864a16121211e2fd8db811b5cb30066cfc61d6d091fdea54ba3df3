@@ -1,5 +1,0 @@
-**Theorem 4.4 (block product).** For every $j\geq1$,
-$$
-L_{3^j}=4\prod_{i=1}^{j-1}B_i.
-$$
-

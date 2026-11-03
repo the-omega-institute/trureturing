@@ -1,7 +1,0 @@
-若 $N>5040$，写 $E=\log N>1$，则
-
-$$
-\Delta_{\mathrm{Robin}}(N)=\gamma+\log\log E-\log Z(N)
-\ge\gamma+\log\log E-\frac E{25}-J_{1/25}(L).
-$$
-

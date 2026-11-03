@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:25a28e3ba0a6ef695225277bdfa4b26efb4d13fcf67a480d225b46577e72c71e
-  normalized_sha256: sha256:25a28e3ba0a6ef695225277bdfa4b26efb4d13fcf67a480d225b46577e72c71e
-cas_ref: sha256:25a28e3ba0a6ef695225277bdfa4b26efb4d13fcf67a480d225b46577e72c71e
-coverage_gids:
-  - gid: D5/S3/Geometry/Hyperideal/CriticalTransitionStar.critical_transition_star
-    target_statement_id: sha256:862eb6fc4cbb96e99566fd2e3a42510fc05a7921c444e520c9cf3ec3ee369f09
-receipts:
-  unresolved_subitems: []

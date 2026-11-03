@@ -1,5 +1,0 @@
-设势 $w\in\mathbb R^L$ 在 $Q$ 以外与 $\tilde u$ 相同,在 $Q$ 上取任意实数。则:
-
-1. 对每个实数 $t_0$ 与 $\sigma_u(\cdot,t_0)-c$ 的每个复根 $\lambda_0$,$\lambda_0$ 是实数,$H^w_{t_0}$ 有本征值 $\lambda_0$ 的实本征向量 $z$,它在 $Q$ 的每个站点处为零,并且对一切 $k\ge1$ 满足 $z_{q+kr}=S_{k-1}(c)\,z_{q+r}$;
-2. $\sigma_u-c$ 在 $\mathbb R(t)[\lambda]$ 中的每个首一不可约因子,对每个 $q'\in Q$ 都整除 $w$ 在 $q'$ 处的节点因子 $g_{q'}$。
-

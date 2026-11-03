@@ -1,8 +1,0 @@
-**Convention 2.4 (Characters, fibres and the matrices $M_t$).** Let $n\ge3$ be odd. Fix a primitive $n$-th root of unity $\zeta$ in an algebraic closure of $\mathbb F_2$, and put $F=\mathbb F_2(\zeta)$; it is the field with $2^m$ elements, $m$ the multiplicative order of $2$ modulo $n$. For $t\in G$ let $f_t:[\mathtt q]\to\mathbb Z/n$, $f_t(c)=t\cdot\delta_c$, so $f_t(c)=t_c$ for $c<\mathtt q$ and $f_t(\mathtt q)=0$. Let $\pi_t$ be the partition of $[\mathtt q]$ into the nonempty fibres of $f_t$. Given a colouring, put
-
-$$
-\Lambda_t=\operatorname{diag}\big(\zeta^{f_t(\mathrm{col}(u))}\big)_{u\in[N]},\qquad M_t=\Lambda_t\Gamma+\Gamma\Lambda_t,\qquad \rho_t=\operatorname{rank}_FM_t .
-$$
-
-Thus $(M_t)_{uv}=\Gamma_{uv}\big(\zeta^{f_t(\mathrm{col}(u))}+\zeta^{f_t(\mathrm{col}(v))}\big)$. The matrix $M_t$ is symmetric with zero diagonal, so it is alternating in characteristic $2$ and $\rho_t$ is even. Since $\Lambda_0=I$, $M_0=0$.
-

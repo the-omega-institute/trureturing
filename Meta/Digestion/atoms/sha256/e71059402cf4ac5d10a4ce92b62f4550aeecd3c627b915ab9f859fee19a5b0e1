@@ -1,6 +1,0 @@
-- The conditional alphabet in Theorem 6.2 counts complete refined field
-  values conditional on $R$; it excludes the cost of $R$, installation,
-  handoff, physical storage, producer computation, encoding time and
-  lifetime retention. It is a task-relative message count, not a
-  physical-memory theorem. Internal $Q$ evaluation, state enumeration and
-  parsing are finite local computations and are separately charged.

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6a5aa4a9a06f36cbadced062c4bd61654dfa4217e772799108b6e6b45e36e4af
-  normalized_sha256: sha256:6a5aa4a9a06f36cbadced062c4bd61654dfa4217e772799108b6e6b45e36e4af
-cas_ref: sha256:6a5aa4a9a06f36cbadced062c4bd61654dfa4217e772799108b6e6b45e36e4af
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenCoding/GoldenBranchObserverDecomposition.golden_branch_observer_decomposition
-    target_statement_id: sha256:e80ca07b5a2995e34861e00eec04e09b8ee4807a876040dc4f8d536b3cd8c505
-receipts:
-  unresolved_subitems: []

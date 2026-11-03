@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5b84501cf0c4d42b3d651255919aec5167ed60f1c89fed8526d540bff47cc3a0
-  normalized_sha256: sha256:5b84501cf0c4d42b3d651255919aec5167ed60f1c89fed8526d540bff47cc3a0
-cas_ref: sha256:5b84501cf0c4d42b3d651255919aec5167ed60f1c89fed8526d540bff47cc3a0
-coverage_gids:
-  - gid: D5/S3/Analytic/ZetaObservation/LiouvilleParityHolomorphyCriterion.liouville_parity_holomorphy_criterion
-    target_statement_id: sha256:f3de0554bc42c72a3fca3ff63d798287ce9fee7f857b8d4e1b682e045c21ae1d
-receipts:
-  unresolved_subitems: []

@@ -1,5 +1,0 @@
-source_id = "fib-atom-categorical-decision-blindness"
-path = "docs/develop/theory/FIB_ATOM_CATEGORICAL_DECISION_BLINDNESS.md"
-atomizer = "generic-v1"
-genre_registry_check = "no-registry"
-unregistered_genres = []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ca091e37142a65a9dd2382ac82d0322407ae7532f5b53a0b809e9b00fcb8d62d
-  normalized_sha256: sha256:ca091e37142a65a9dd2382ac82d0322407ae7532f5b53a0b809e9b00fcb8d62d
-cas_ref: sha256:ca091e37142a65a9dd2382ac82d0322407ae7532f5b53a0b809e9b00fcb8d62d
-coverage_gids:
-  - gid: D5/S3/Observer/AgencySelf/AgencyEnrichment.strategy_factorization_iff_no_residual
-    target_statement_id: sha256:667389f8d40f06b5e9eee0ebc2a72131f4e7ab05ddd31ca14aa6e9d28a007aa9
-receipts:
-  unresolved_subitems: []

@@ -1,8 +1,0 @@
-\[
-\boxed{
-\mathbb P(N=n)
-=
-\frac{n^{-s}}{\zeta(s)}.
-}
-\]
-

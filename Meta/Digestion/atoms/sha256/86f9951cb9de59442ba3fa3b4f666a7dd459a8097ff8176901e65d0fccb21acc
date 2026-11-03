@@ -1,4 +1,0 @@
-**定义 10.1（固定数据线性增益射线读出）。** For a chronological word $w$ of $N-1$ actions, $1\le N\le8$, let $Z_w(W)=(z_0,\ldots,z_{N-1})^{\mathsf T}$ and write $g(t)=\sum_{k=0}^3\beta_kt^k$, $\beta\ne0$. A fixed map $C:\mathbb R^N\to\mathbb R^4$ reads the gain ray on a set of inputs when $CZ_w(W)$ is a nonzero scalar multiple of $\beta$ on that set. The scalar may have either sign and may depend on the world.
-
-A finite palette assigns finitely many such fixed real matrices to each possible terminal word. A deterministic protocol may choose its actions, stopping time and selected matrix from the actual history in any manner, without continuity or measurability assumptions. Only the final gain-ray readout is required to be linear in the data. Subsequent reconstruction may be arbitrary. A matrix whose coefficients depend on the observed data is outside this fixed-linear-map requirement.
-

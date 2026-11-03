@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6f7bbeaeadc6fbc8bba432672f5db0cbb0919cc24d9eec3d11974d14993e40a4
-  normalized_sha256: sha256:6f7bbeaeadc6fbc8bba432672f5db0cbb0919cc24d9eec3d11974d14993e40a4
-cas_ref: sha256:6f7bbeaeadc6fbc8bba432672f5db0cbb0919cc24d9eec3d11974d14993e40a4
-coverage_gids:
-  - gid: D5/S3/Observer/CubicGain/OriginalWorld.original_coordinates
-    target_statement_id: sha256:28dfe8cc2c16a2ca267b235767a70114f568c86e345382db154b188d05de0c83
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5cb8b363d72a7f4b61db636fa7bdf2fe2dcbe41b156c71a9960b32c9b7fa25a0
-  normalized_sha256: sha256:5cb8b363d72a7f4b61db636fa7bdf2fe2dcbe41b156c71a9960b32c9b7fa25a0
-cas_ref: sha256:5cb8b363d72a7f4b61db636fa7bdf2fe2dcbe41b156c71a9960b32c9b7fa25a0
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Representation/IdentityJordanGeneratorContrast.trivial_action_degenerate_audit
-    target_statement_id: sha256:c37324e1a764e4de6f13785ac0220bc019cafd570f8039aa4de88fa8fcfd2f07
-receipts:
-  unresolved_subitems: []

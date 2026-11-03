@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4a0b7740e91d0d930149bb14c5e2d9cd2bf7e7b3a0798e292c5d51e15ea9f15f
-  normalized_sha256: sha256:4a0b7740e91d0d930149bb14c5e2d9cd2bf7e7b3a0798e292c5d51e15ea9f15f
-cas_ref: sha256:4a0b7740e91d0d930149bb14c5e2d9cd2bf7e7b3a0798e292c5d51e15ea9f15f
-coverage_gids:
-  - gid: D5/S3/Arith/Robin/EulerLayerRootCorrection.strict_inventory_root_correction
-    target_statement_id: sha256:8c44079c5243bd96242f20147b2e026c15c259317c826673c6a0fed0d0c74ea7
-receipts:
-  unresolved_subitems: []

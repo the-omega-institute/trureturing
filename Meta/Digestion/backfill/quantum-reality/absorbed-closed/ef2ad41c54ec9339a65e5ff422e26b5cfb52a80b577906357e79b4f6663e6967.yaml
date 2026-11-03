@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ef2ad41c54ec9339a65e5ff422e26b5cfb52a80b577906357e79b4f6663e6967
-  normalized_sha256: sha256:ef2ad41c54ec9339a65e5ff422e26b5cfb52a80b577906357e79b4f6663e6967
-cas_ref: sha256:ef2ad41c54ec9339a65e5ff422e26b5cfb52a80b577906357e79b4f6663e6967
-coverage_gids:
-  - gid: D5/S1/Digit/GoldenZeckendorfLanguage.canonical_indices_not_adjacent
-    target_statement_id: sha256:24fceb31b366a9e7ebb69abfa15bd96e5a3f3d0ad64b9f2632cdf13e6324d9c6
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f4813d77597909ce019e4a264583850f0a8b57338debfad216a837fa1c6e84fc
-  normalized_sha256: sha256:f4813d77597909ce019e4a264583850f0a8b57338debfad216a837fa1c6e84fc
-cas_ref: sha256:f4813d77597909ce019e4a264583850f0a8b57338debfad216a837fa1c6e84fc
-coverage_gids:
-  - gid: D5/S3/Observer/Chronology/PrimeGoldenBigradedChronologicalSignature.factor_degree_eq_card_factors
-    target_statement_id: sha256:1fe9def691b68694f7a725ce3b56c9e0d6a0bd51d91d93b13e7a755ddaaff53f
-receipts:
-  unresolved_subitems: []

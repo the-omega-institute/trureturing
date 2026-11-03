@@ -1,4 +1,0 @@
-### 证明
-
-把完整 transcript 到提前停止 transcript 的截断视为 $H$，再应用定理 319.3 的反向关系。若提前停止保留的信息是完整 transcript 的函数，则任何提前停止恢复器也可由完整 transcript 模拟。证毕。
-

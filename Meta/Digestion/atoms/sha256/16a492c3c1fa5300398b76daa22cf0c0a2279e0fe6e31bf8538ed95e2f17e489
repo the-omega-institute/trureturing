@@ -1,4 +1,0 @@
-## 已在仓内的材料(逐条复核过)
-
-`colossalClosure` 及 `colossal_closure_factorization`、`dvd_colossal_closure`、`colossal_closure_dvd_of_dvd_colossally_abundant`、`colossal_closure_is_colossally_abundant`(`GoldenColossalClosure`,已冻结);`goldenUpperPrice`、`goldenLowerPrice`、`golden_upper_price_spec`、`IsColossallyAbundant`(`GoldenResourcePriceInterval`,已冻结);`goldenPositiveLayerCount`、`optimal_layer_count_spec`、`positive_part_sum_finite_support`(`GoldenResourceOptimalLayerCount`,已冻结);`golden_missing_prime_threshold_iff_of_isLeast`(`GoldenSmallestMissingPrime`,已冻结)。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:aaed0dc15d29fbfe18b0e515a048ef0a13e529ccd135537269e59c28237c79cb
-  normalized_sha256: sha256:aaed0dc15d29fbfe18b0e515a048ef0a13e529ccd135537269e59c28237c79cb
-cas_ref: sha256:aaed0dc15d29fbfe18b0e515a048ef0a13e529ccd135537269e59c28237c79cb
-coverage_gids:
-  - gid: D5/S0/Observation/MatrixTracePowerSum.pow_add_two
-    target_statement_id: sha256:477f52a1cada3768c6c6695f7bf1e92216cc53ac6f22ad3f67270f1f31f452be
-receipts:
-  unresolved_subitems: []

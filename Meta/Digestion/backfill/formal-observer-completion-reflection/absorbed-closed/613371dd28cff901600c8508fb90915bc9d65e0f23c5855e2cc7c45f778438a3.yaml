@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:613371dd28cff901600c8508fb90915bc9d65e0f23c5855e2cc7c45f778438a3
-  normalized_sha256: sha256:613371dd28cff901600c8508fb90915bc9d65e0f23c5855e2cc7c45f778438a3
-cas_ref: sha256:613371dd28cff901600c8508fb90915bc9d65e0f23c5855e2cc7c45f778438a3
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Agency/PlanCylinderCommitmentTelescoping.plan_cylinder_commitment_depth_telescopes
-    target_statement_id: sha256:9fa7ac232f0272209ccb50cf72335ee4197bb4f6eda14e164ecba46ce86ef2dc
-receipts:
-  unresolved_subitems: []

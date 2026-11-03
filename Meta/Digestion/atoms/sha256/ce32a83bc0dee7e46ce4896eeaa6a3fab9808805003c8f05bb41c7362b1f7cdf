@@ -1,6 +1,0 @@
-## 14. 供应、有限有理证书与未决范围
-
-Boundary Dynamics §§97–98 供应原停止码、逐停止层新鲜性、计数辨识及段内残余；§100 供应真实付费提种、共同 $K$ 和只在汇总后成立的种子独立性；§105.1、§114.1 供应原后缀和 Stop 的交付权限。Full E1 Scope Extension §§2–4 供应全标记树的写前锁存、保持及六行历史解码。D5 的 [CausalStateFactorization](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean)、[ConditionalProbabilityProfileMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.lean)、[PositiveConditioningPredictionStability](../../../D5/S3/ObserverMemory/PredictionFactors/PositiveConditioningPredictionStability.lean) 和 [PredictiveStateUnifilarUpdate](../../../D5/S3/ObserverMemory/ContextUpdates/PredictiveStateUnifilarUpdate.lean) 已给出一般因子化与相容更新；这里不重述它们为新成果。定理11.1使用 [FiniteOrbitPeriodBound](../../../D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean) 的 `finite_orbit_and_readout_eventually_periodic` 所供应的有限轨道结果。读取这些源码不等于编译或验证当前应用。
-
-新增关系是：原始取得计数、原阶段与许可共同恢复同源续接；在实际第四段，二值律还可反演阶段和后验；在实际第三书签，双向拒绝证据使任何完整有限确定性状态承受统一误差底，而有限保持可以另获真实概率加权保证。文献表态为 `repo-derived`：这是仓内来源合同的普通数学综合推导，没有文献原创性、Lean 核验或冻结声明。
-

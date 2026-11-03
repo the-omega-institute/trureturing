@@ -1,2 +1,0 @@
-**Proof.** The mass totals are $13u/4$ and $9(2u/7)+5(u/7)=23u/7$. Counting each bit and each directed pair gives the displayed vectors; the high-high and low-directed counts are immediate from the lists. Thus (214.14) holds, while the two cut inequalities force the stated lower values. $\square$
-

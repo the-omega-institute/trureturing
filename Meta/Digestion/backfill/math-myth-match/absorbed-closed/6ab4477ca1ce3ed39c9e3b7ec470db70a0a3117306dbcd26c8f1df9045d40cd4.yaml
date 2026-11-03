@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6ab4477ca1ce3ed39c9e3b7ec470db70a0a3117306dbcd26c8f1df9045d40cd4
-  normalized_sha256: sha256:6ab4477ca1ce3ed39c9e3b7ec470db70a0a3117306dbcd26c8f1df9045d40cd4
-cas_ref: sha256:6ab4477ca1ce3ed39c9e3b7ec470db70a0a3117306dbcd26c8f1df9045d40cd4
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/EpistemicOperators/FiberModalOperatorLaws.fiber_knowledge_and_possibility_operator_laws
-    target_statement_id: sha256:c7179c09eee25f593229f05e70000a162f22a59d82ad2b4fd59b9735f2c84f97
-receipts:
-  unresolved_subitems: []

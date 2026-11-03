@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:09689db71d2bd4eb7c4ee868956ad7cc2838749a11448d22a770b04ac1ce900c
-  normalized_sha256: sha256:09689db71d2bd4eb7c4ee868956ad7cc2838749a11448d22a770b04ac1ce900c
-cas_ref: sha256:09689db71d2bd4eb7c4ee868956ad7cc2838749a11448d22a770b04ac1ce900c
-coverage_gids:
-  - gid: D5/S3/Analytic/Zeta/ZetaPrimeIndependence.iIndepFun_factorization
-    target_statement_id: sha256:64cac464896712c5abf9e7b6552ba63db65c096946ede9b8a15dcd49ad0304d3
-receipts:
-  unresolved_subitems: []

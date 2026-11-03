@@ -1,6 +1,0 @@
-**Theorem 25.1 (one exact-acquisition dichotomy).** For Definition 24.1's
-closed classes the following statements hold.
-
-1. For every rational $\rho>0$, no deterministic controller terminates
-   successfully and correctly on every specimen in $\mathcal C_\rho$
-   for any of the exact acquisition targets in Definition 24.1.

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:26b038bca46cd8146fa9c410f2c3f6c5aa5882dfcba135be9500838cdb7c62bf
-  normalized_sha256: sha256:26b038bca46cd8146fa9c410f2c3f6c5aa5882dfcba135be9500838cdb7c62bf
-cas_ref: sha256:26b038bca46cd8146fa9c410f2c3f6c5aa5882dfcba135be9500838cdb7c62bf
-coverage_gids:
-  - gid: D5/S0/Observation/NewtonPowerSumCharacteristicPolynomial.matrix_charpoly_eq_of_spectral_power_sums_eq
-    target_statement_id: sha256:643fa65f421e5735d7a9f8d900d15d5764a584ba062abe62736fcaa96c96f280
-receipts:
-  unresolved_subitems: []

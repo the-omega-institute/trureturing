@@ -1,6 +1,0 @@
-- three consecutive long gaps never occur.
-
-The same forbidden-word laws are transported to the Euler phase alphabet.
-
-This is the rigorous deterministic content behind the phrase "not an independent Bernoulli step law." The repository has not yet chosen a probability measure on the orbit and proved a formal non-iid theorem. What is already proved is stronger at the symbolic-language level: the generated word belongs to a constrained Fibonacci/Sturmian language rather than the unrestricted binary full shift.
-

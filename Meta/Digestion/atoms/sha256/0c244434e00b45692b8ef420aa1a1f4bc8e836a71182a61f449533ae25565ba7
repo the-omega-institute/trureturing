@@ -1,2 +1,0 @@
-**来源 1400.2（项目中的操作与记忆）。** 使用 `D5/S3/Observer/MetricGeometry/ForwardInvariantPredictorCover.lean` 与 `D5/S3/Observer/MetricGeometry/ContractingDigitMemory.lean` 的实际源码范围。所引用的覆盖、误差、动作词和状态数条件均按其定义保留；源码阅读不等于当前 kernel 或 axiom 闭包验证。它们作为已存在的项目关系进入比较，没有被重新命名为本批新增数学成果。
-

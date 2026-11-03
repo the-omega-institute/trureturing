@@ -1,7 +1,0 @@
-**Example 7.2 (insufficient actual taps).** With $B=J_3$, $C=e_0^{\mathsf T}$
-and entrance difference $h=(0,1,-2)$, the output difference is $t-t^2$.
-Taps at $0,1$ agree, while the read at $2$ differs by $-2$. Thus a
-receiver given only those two replies cannot compute the complete
-degree-below-three moment record or the full timing behavior. This is
-not a failure of the sufficient $\nu$-tap protocol.
-

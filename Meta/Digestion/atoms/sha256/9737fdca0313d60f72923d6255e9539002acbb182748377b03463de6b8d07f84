@@ -1,8 +1,0 @@
-如果水平可行，再检查：
-
-- 每个局部纤维的 $\kappa_i$；
-- $\Delta_i$；
-- transfer product；
-- loop-coupling polytope；
-- phase 与 future-domain 的兼容性。
-

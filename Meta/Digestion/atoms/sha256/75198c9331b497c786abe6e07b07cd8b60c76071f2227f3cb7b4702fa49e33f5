@@ -1,8 +1,0 @@
-局部每一块闭合，不推出全局一次拼接即闭合。剩余障碍可能位于：
-
-- closure 次序；
-- transition compatibility；
-- limit-stage join；
-- realizability；
-- 非平凡 holonomy。
-

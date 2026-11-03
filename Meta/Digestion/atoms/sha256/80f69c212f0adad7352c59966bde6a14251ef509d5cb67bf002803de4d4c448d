@@ -1,4 +1,0 @@
-**Lemma 7.3 (Inherited two-capacity packing).** Let $E\subset\mathbb Z$ consist of $m$ distinct spin-edge left endpoints. Adjoin a distinguished target vertex $q'$ to the integer-line graph with edges $\{e,e+1\}$ for $e\in E$. Its occupied vertices admit an injective map fixing $q'$, translating every component without reversal, whose mapped queried edge left endpoints all lie in $[q'-m,q'+m]\cap\mathbb Z$.
-
-Proof. Every component is a consecutive interval of vertices with all its internal edges present; a missing integer-line edge would separate the component. Keep the target component $[q'-l,q'+r]\cap\mathbb Z$ fixed. It has $a=l+r$ edges, allowing $l=r=0$. The detached components have positive edge lengths $\ell_1,\ldots,\ell_C$, total edge count $d=m-a$, and vertex sizes $s_i=\ell_i+1$.
-

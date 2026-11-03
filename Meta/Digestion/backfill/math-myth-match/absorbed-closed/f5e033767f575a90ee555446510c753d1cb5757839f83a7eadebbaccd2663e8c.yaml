@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f5e033767f575a90ee555446510c753d1cb5757839f83a7eadebbaccd2663e8c
-  normalized_sha256: sha256:f5e033767f575a90ee555446510c753d1cb5757839f83a7eadebbaccd2663e8c
-cas_ref: sha256:f5e033767f575a90ee555446510c753d1cb5757839f83a7eadebbaccd2663e8c
-coverage_gids:
-  - gid: D5/S3/ResourceOrder/PriceCoordinates/ThresholdAccess.threshold_sets_constant_iff
-    target_statement_id: sha256:173a7e996d25dc2a0cadb81da543841b8629411a3d21bd369653d54773224565
-receipts:
-  unresolved_subitems: []

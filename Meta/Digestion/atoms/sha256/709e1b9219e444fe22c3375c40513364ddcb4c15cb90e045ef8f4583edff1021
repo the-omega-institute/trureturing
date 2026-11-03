@@ -1,3 +1,0 @@
-**定理 4.3（单点缺陷原理）。** 设 $r\ge1$,$m\ge3$,$L=rm\ge3$,$u\in\mathbb R^r$ 是块,$\tilde u$ 是它生成的 $C_L$ 上的周期势(约定 2.3)。设 $q$ 是站点,势 $w\in\mathbb R^L$ 在 $q$ 以外的站点上与 $\tilde u$ 相同,$w_q$ 是任意实数。则:
-
-1. $\Psi_m(\sigma_u)$ 作为 $\lambda$ 的多项式次数为 $r\lfloor(m-1)/2\rfloor\ge1$,首项系数为 $\pm1$;

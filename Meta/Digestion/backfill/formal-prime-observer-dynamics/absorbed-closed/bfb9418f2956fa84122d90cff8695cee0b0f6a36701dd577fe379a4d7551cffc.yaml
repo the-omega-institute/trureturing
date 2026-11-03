@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bfb9418f2956fa84122d90cff8695cee0b0f6a36701dd577fe379a4d7551cffc
-  normalized_sha256: sha256:bfb9418f2956fa84122d90cff8695cee0b0f6a36701dd577fe379a4d7551cffc
-cas_ref: sha256:bfb9418f2956fa84122d90cff8695cee0b0f6a36701dd577fe379a4d7551cffc
-coverage_gids:
-  - gid: D5/S3/Analytic/ZetaObservation/PrimeFactorCountGeneratingFunction.prime_factor_count_pgf_euler_product
-    target_statement_id: sha256:8cef71c017f802b734f56409832ead4026e33fa7ff5972e6cffb9f7eed0529ca
-receipts:
-  unresolved_subitems: []

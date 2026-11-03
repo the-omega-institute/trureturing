@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:650c149a9a1c2b76532dddd9cbe78b414d271afe68453687a834ada6616cfcd6
-  normalized_sha256: sha256:650c149a9a1c2b76532dddd9cbe78b414d271afe68453687a834ada6616cfcd6
-cas_ref: sha256:650c149a9a1c2b76532dddd9cbe78b414d271afe68453687a834ada6616cfcd6
-coverage_gids:
-  - gid: D5/S3/Analytic/Dilation/MonsterPrimitiveMobiusRecovery.monster_primitive_mobius_recovery
-    target_statement_id: sha256:352462e284e50085f313cb2f36c26cbb657c591c16aba391676a0c744fa21621
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:143bea71cf05775980168de959c26b44435643151a094951c53a597784176ddb
-  normalized_sha256: sha256:143bea71cf05775980168de959c26b44435643151a094951c53a597784176ddb
-cas_ref: sha256:143bea71cf05775980168de959c26b44435643151a094951c53a597784176ddb
-coverage_gids:
-  - gid: D5/S0/Tower/GoldenNames.goldenNameEquiv
-    target_statement_id: sha256:07ee92b7fc27621671ec40a659eb2513c80199dafda17a5a8c0bc368c5764c39
-receipts:
-  unresolved_subitems: []

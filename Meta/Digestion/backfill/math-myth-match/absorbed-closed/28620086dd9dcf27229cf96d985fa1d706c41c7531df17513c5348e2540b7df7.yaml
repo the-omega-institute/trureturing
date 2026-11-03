@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:28620086dd9dcf27229cf96d985fa1d706c41c7531df17513c5348e2540b7df7
-  normalized_sha256: sha256:28620086dd9dcf27229cf96d985fa1d706c41c7531df17513c5348e2540b7df7
-cas_ref: sha256:28620086dd9dcf27229cf96d985fa1d706c41c7531df17513c5348e2540b7df7
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.gain_difference_self_zero_and_cocycle
-    target_statement_id: sha256:8b708816711811a199192ea7077ff26d9c26167339a066abf2e570fe47732104
-receipts:
-  unresolved_subitems: []

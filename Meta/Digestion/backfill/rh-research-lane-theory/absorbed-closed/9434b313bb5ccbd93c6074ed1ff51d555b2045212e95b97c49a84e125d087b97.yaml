@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9434b313bb5ccbd93c6074ed1ff51d555b2045212e95b97c49a84e125d087b97
-  normalized_sha256: sha256:9434b313bb5ccbd93c6074ed1ff51d555b2045212e95b97c49a84e125d087b97
-cas_ref: sha256:9434b313bb5ccbd93c6074ed1ff51d555b2045212e95b97c49a84e125d087b97
-coverage_gids:
-  - gid: D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.reflectedGrowthSum
-    target_statement_id: sha256:0fcfeb38505d473c27de579a88f9db7808655823d0429d3604c303d5321c4fd8
-receipts:
-  unresolved_subitems: []

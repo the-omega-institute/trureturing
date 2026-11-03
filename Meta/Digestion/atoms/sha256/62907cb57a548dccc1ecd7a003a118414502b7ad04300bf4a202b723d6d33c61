@@ -1,9 +1,0 @@
-**假设 4.1（共同来源概率）。** 在一个固定概率空间上，随机有序树的组成为 $c=(a,b)^T$，且 $\mathbb E a^2,\mathbb E b^2<\infty$。定义原点二阶矩
-
-$$
-S=\mathbb E[cc^T]=\begin{pmatrix}U&V\\V&W\end{pmatrix},
-\quad U=\mathbb E a^2,\quad V=\mathbb E ab,\quad W=\mathbb E b^2.
-$$
-
-Cauchy–Schwarz 保证交叉矩有限。概率是来源模型的假设，不意味着原始对象在本体上随机，也不意味着已有精确物理测量。
-

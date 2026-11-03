@@ -1,5 +1,0 @@
-以下两项等价：
-
-1. 每条闭路都满足 $T_\gamma=\mathrm{id}$；
-2. 存在一族仿射坐标 $g_x:\mathbb R^d\to\mathbb R^d$，满足对每条边 $e:x\to y$：
-

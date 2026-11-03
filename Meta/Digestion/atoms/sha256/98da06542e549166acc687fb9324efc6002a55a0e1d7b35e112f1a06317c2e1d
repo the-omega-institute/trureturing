@@ -1,9 +1,0 @@
-**定义 106.1（固定原语的来源酉表示）。** 沿用第101章的 $a,b,c$，对完整有序树定义
-
-$$
-U_\alpha=a,\qquad U_\beta=b,\qquad
-U_{\langle s,t\rangle}=U_sU_t.
-$$
-
-右因子先作用于态。写第102章的 $\widehat q(t)=(s(t),x(t))$，则 $U_t=(-1)^{s(t)}L(x(t))$。原生来源及整数组成采用 [《FIB关系延拓几何》，版本561ff33bf81f19306f06eab35ef61e24f2af8a71，定义1.1、1.3](https://github.com/the-omega-institute/trureturing/blob/561ff33bf81f19306f06eab35ef61e24f2af8a71/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。有限酉表示不是原生替换的实际执行机制。
-

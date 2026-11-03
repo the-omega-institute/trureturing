@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8ba14b0f53d93fb268e402c734c1f7502344c4a55884656b5a7903006561f382
-  normalized_sha256: sha256:8ba14b0f53d93fb268e402c734c1f7502344c4a55884656b5a7903006561f382
-cas_ref: sha256:8ba14b0f53d93fb268e402c734c1f7502344c4a55884656b5a7903006561f382
-coverage_gids:
-  - gid: D5/S3/Observer/ArithmeticTomography/IrrationalSlopeFaithfulness.irrational_slope_observer_injective
-    target_statement_id: sha256:ba2826c82adac770ecb2c828982243f821bc1e9aeeb8791c0a285087f4fd7df7
-receipts:
-  unresolved_subitems: []

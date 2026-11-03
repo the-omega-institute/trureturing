@@ -1,1 +1,0 @@
-../archive/theory/OBSERVER-QUANTUM.md

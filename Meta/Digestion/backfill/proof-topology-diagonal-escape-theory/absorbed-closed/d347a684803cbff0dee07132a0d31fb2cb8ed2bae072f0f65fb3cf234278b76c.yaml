@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d347a684803cbff0dee07132a0d31fb2cb8ed2bae072f0f65fb3cf234278b76c
-  normalized_sha256: sha256:d347a684803cbff0dee07132a0d31fb2cb8ed2bae072f0f65fb3cf234278b76c
-cas_ref: sha256:d347a684803cbff0dee07132a0d31fb2cb8ed2bae072f0f65fb3cf234278b76c
-coverage_gids:
-  - gid: D5/S3/Factorization/Automata/PrimeHistoryNormalForm.IntervalMap
-    target_statement_id: sha256:b5687648a9b31de39506f0bcfde04433f00584923d40874506da8df594c82dc5
-receipts:
-  unresolved_subitems: []

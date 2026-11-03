@@ -1,6 +1,0 @@
-要把某一有限层升级为严格证明，还需要：
-
-* 稠密余项控制；
-* local kernel error envelope；
-* 或一个完整的 positive-definite extension certificate。
-

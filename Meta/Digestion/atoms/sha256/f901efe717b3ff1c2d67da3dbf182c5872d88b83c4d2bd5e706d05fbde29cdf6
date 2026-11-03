@@ -1,4 +1,0 @@
-Guarded iteration computes the necessary finite
-image prefix and hence that original prefix. This is offline construction
-on an actual image description, not a runtime inverse port. $\square$
-

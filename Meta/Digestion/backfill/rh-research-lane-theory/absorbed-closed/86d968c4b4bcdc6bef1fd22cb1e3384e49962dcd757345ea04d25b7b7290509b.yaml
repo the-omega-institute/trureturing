@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:86d968c4b4bcdc6bef1fd22cb1e3384e49962dcd757345ea04d25b7b7290509b
-  normalized_sha256: sha256:86d968c4b4bcdc6bef1fd22cb1e3384e49962dcd757345ea04d25b7b7290509b
-cas_ref: sha256:86d968c4b4bcdc6bef1fd22cb1e3384e49962dcd757345ea04d25b7b7290509b
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/PhaseTwistedStableSwapCurvature.phase_twisted_curvature_zero_time
-    target_statement_id: sha256:b65c4ec0ee6be9fab2d9520e665c97f07ccdc9399a2b14765e1279d8f064a445
-receipts:
-  unresolved_subitems: []

@@ -1,6 +1,0 @@
-存在有限 $n$，使：
-
-- level $F_n$ 在 $[0,t_*]$ 中对 single-prime phase 无 alias；
-- pair shell $F_n$ 对 $\delta_*$ 达到非微扰横向尺度；
-- 一个围绕 $\rho_*$ 的有理矩形可由有限 phase/charge coordinates 区分。
-

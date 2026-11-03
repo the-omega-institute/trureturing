@@ -1,4 +1,0 @@
-**定理 66.4（指定括号中的 FIB 三循环及外泄）。** 此表示中 $q_\gamma=B(Y,X)=-Z$，$B(-Z,Y)=X$、$B(X,-Z)=Y$，FIB 轨道为 $X,Y,-Z,X,\ldots$。全树扩展可有 $q_{\rho T}=Rq_T$ 的三周期等变，但完整五态 $K$ 不保持 $V$。
-
-证明（66.4）。直接 Pauli 乘法给 $[X,Y]=2iZ$ 及循环交换式，反序给负号，故三条递推成立。在无迹 Hermitian 空间中 $B(u\cdot\sigma,v\cdot\sigma)=(u\times v)\cdot\sigma$。令 $R$ 将 $X\mapsto Y,Y\mapsto-Z,Z\mapsto-X$，其三维实矩阵正交且行列式一，故保持叉积，$B(RU,RV)=RB(U,V)$，并有 $R^3=I$。两个叶的 $q\rho=Rq$ 已验；树节点用此括号等变和结构归纳即得全树式。它不是忠实来源编码，例如 $B(X,X)=0$ 已将非空树送到零，括号还不结合，也不是密度算子上的保迹正 map。完整 $K|2\rangle=|N\rangle+|25\rangle$、$K|5\rangle$ 同式，故行走外泄，不是自治三实参数系统。对第 58 章 $c=A\overline B$，仍有标准 $y=-2\operatorname{Im}c=-Y_{\mathrm{int}}$，不改其干涉符号。$\square$
-

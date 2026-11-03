@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:73cb4dcdd2a98fc2e672e0a919c5da011528bae6ae6c1b55d8aaa6dfe3557ba9
-  normalized_sha256: sha256:73cb4dcdd2a98fc2e672e0a919c5da011528bae6ae6c1b55d8aaa6dfe3557ba9
-cas_ref: sha256:73cb4dcdd2a98fc2e672e0a919c5da011528bae6ae6c1b55d8aaa6dfe3557ba9
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaLinear/OfflineZeroGeometricMonodromy.offline_zero_geometric_definition
-    target_statement_id: sha256:3328623938b2d75aa7c581d8906e532a37183680f45dc60cb3eaacd3fdf7d7c3
-receipts:
-  unresolved_subitems: []

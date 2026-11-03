@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d67b90a245671c2e727c3bb973d09e821113d5a5fc3cb2c61063a5ce9969b701
-  normalized_sha256: sha256:d67b90a245671c2e727c3bb973d09e821113d5a5fc3cb2c61063a5ce9969b701
-cas_ref: sha256:d67b90a245671c2e727c3bb973d09e821113d5a5fc3cb2c61063a5ce9969b701
-coverage_gids:
-  - gid: D5/S3/Factorization/IdealClassGroups/PrincipalIdealCriterion.principal_ideal_criterion
-    target_statement_id: sha256:ff3ba352322ace1ea1fbffdac167de3fd52697c5889a85428245fe6061f622b2
-receipts:
-  unresolved_subitems: []

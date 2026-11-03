@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bdd1a9a9d818d3071714df3dd6d1191c7eb6704b60d4529b184650dbecc329c8
-  normalized_sha256: sha256:bdd1a9a9d818d3071714df3dd6d1191c7eb6704b60d4529b184650dbecc329c8
-cas_ref: sha256:bdd1a9a9d818d3071714df3dd6d1191c7eb6704b60d4529b184650dbecc329c8
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Faithfulness/FiniteQuotientJointKernel.finite_quotient_joint_kernel
-    target_statement_id: sha256:487137682a33cfee167c041b3d1e07ef024f5a4055103f074d2c159542ae31ce
-receipts:
-  unresolved_subitems: []

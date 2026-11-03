@@ -1,4 +1,0 @@
-# Recursive Relational Observation: Recovery Geometry II
-
-This is a same-topic continuation of [Recovery Geometry](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md). Its numbering continues after §35 of that volume. The original volume's definitions, hypotheses, results and open problems retain their original scopes. This volume is a mathematical reference input in the `generic-v1` format; Lean declarations remain the repository's mathematical truth source. The proofs below are ordinary mathematical proofs, without a claim of new Lean verification. Subsequent additions belong after the terminal append anchor.
-

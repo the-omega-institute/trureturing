@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:32dbdb34ff50a524fd175e7b62fd1d64748c0576e7c17e05863a0f480f6e42ee
-  normalized_sha256: sha256:32dbdb34ff50a524fd175e7b62fd1d64748c0576e7c17e05863a0f480f6e42ee
-cas_ref: sha256:32dbdb34ff50a524fd175e7b62fd1d64748c0576e7c17e05863a0f480f6e42ee
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenPrimeCircle/GoldenScaleCircle.golden_scale_period_pos
-    target_statement_id: sha256:bd902601b10697d09422d2006628ef391a376778349d5c8ffbbf131d6f55ce51
-receipts:
-  unresolved_subitems: []

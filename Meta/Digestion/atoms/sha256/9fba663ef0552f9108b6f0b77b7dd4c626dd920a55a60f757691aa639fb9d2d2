@@ -1,6 +1,0 @@
-**约定 34.10（供应归属与成本边界）。** 本节是原精确探针合同上的 `repo-derived` 普通数学推论。证书障碍、确定性困难来源、连续强族及其费用与可测性由 `ExactRealProbeCosts.result` 和其[公开报告](../../../Blueprint/D5/S3/ConceptDynamics/Decision/ExactRealProbeCosts.md)供应；`strongFamily` 沿用报告记号。执行、燃料单调与同历史重放分别由 `PassivePolicyNormalization.execute`、`execute_mono`、`execute_transfer` 供应；这几个接口不要求参数域有限。本节没有调用该模块中带有限参数域条件的一般正规化结论来截断 $[0,1]$。有限可测原子上的常值性、非负有限离散积分与质量平均不等式是证明中使用的成熟中间事实。新增桥梁是定理 34.3 在一个实际共同来源上的固定有限律下界与不交例外集合的达到关系；FIB 容量只消费这一源特定关系。
-
-固定来源先取查询期望、再取最坏来源的惯例沿用 [Magniez、Nayak、Santha、Sherman、Tardos、Xiao，*Improved bounds for the randomized decision tree complexity of recursive majority*，arXiv:1309.7565v1，第 2 页](https://arxiv.org/pdf/1309.7565v1#page=2)，其范围见[既有文献条目](../../../Library/ConceptDynamics/magniez2013randomized.md)。该文的有限布尔输入域不供应本节的连续来源合同、有限律精确式或物理最优性；不可数单点切割的静态背景沿用 [`UncountableSingletonCutCountermodel`](../../../D5/S3/ConceptDynamics/EscapeSpectrum/UncountableSingletonCutCountermodel.lean)，它本身不授予探针动作。这里不提出文献原创性或新增形式核验主张。
-
-$M$ 与 $F_{\ell+2}$ 只约束初始正质量名字与静态独立编码容量。一个参数化强族可以共用控制表达式；名字数不等于分别安装的程序数，也没有给出完整持久控制记忆或 Moore 状态数。合法 FIB 词不提供抽样器、概率生成、精确实数表示、相等判断的实现、调用次数或物理延迟与能耗。原合同中纯计算与种子取得不进入不同参数费用，不由此推出它们的物理成本为零。第 33 节的有限二进来源、Advance/Read/Stop 动作及完整状态费用属于另一合同；它们没有被转成这里的精确实参数权限或费用。
-

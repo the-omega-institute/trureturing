@@ -1,7 +1,0 @@
-因此它适合检验：
-
-* 什么定义是真正 primitive；
-* 什么历史只是复合导数；
-* counterterm 怎样由连接 \(P\) 自动产生；
-* finite-state closure 如何替代阶乘历史枚举。
-

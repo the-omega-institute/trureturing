@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f66c0b697ebbe925c4a51a7e456f3813a096779301357ae492576e78d23bedbc
-  normalized_sha256: sha256:f66c0b697ebbe925c4a51a7e456f3813a096779301357ae492576e78d23bedbc
-cas_ref: sha256:f66c0b697ebbe925c4a51a7e456f3813a096779301357ae492576e78d23bedbc
-coverage_gids:
-  - gid: D5/S1/Words/Mechanical/Atomic/MechanicalReadoutPhaseAverage.geometric_atomic_phase_average
-    target_statement_id: sha256:c5da0649ff1675503963a41a48ceac32ae9c8be19ab3a7d9baf2a52cbbafecea
-receipts:
-  unresolved_subitems: []

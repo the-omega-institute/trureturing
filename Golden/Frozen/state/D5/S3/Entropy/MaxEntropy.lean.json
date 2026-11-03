@@ -1,1 +1,0 @@
-{"statement_id":"sha256:bb7656cc403aa1afcb3a8d1187c3c2e09f60c923721b2fdc47e373755b413610","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),10:MaxEntropy),14:shannonEntropy)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),10:MaxEntropy),19:entropy_le_log_card)","kind":"theorem"}]}

@@ -1,4 +1,0 @@
-## 44. 原生有序树的实际控制、单历史取得与外部校准桥
-
-本章固定原来两片自由树原子及其实际联合读数，证明有限原生控制能做什么，并把已读取后的反馈、初态取得和额外仪器权限分开。基础是 [Atomic](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §2–5、[Continuation](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) §1、[Boundary Geometry](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md) §7。七值方向像、替换三周期、两次数量解码和五维线性联合实现均直接复用，不作为本章的新结论。新增内容是组成特定的实际联合像、固定控制的完整有限分类、实际取得的尖锐界，以及两项明确增加权限的桥。
-

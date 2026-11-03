@@ -1,8 +1,0 @@
-**假设 65.1（三种固定操作菜单）。** 对角菜单包含五个模式的 Lüders 仪器 $\mathcal J_s(\varrho)=\Pi_s\varrho\Pi_s$，其余动作仅为明确保持对角统计闭合的动作，例如计算基置换和实际对角 Kraus。行走菜单包含全部 $U(\tau)$、$\tau\ge0$，以及这些模式 Lüders 仪器，允许由已记录数据选择有限后续序列；不增加任意同效果 Kraus、任意酉或额外相位。相位扩充菜单再允许独立模式相位酉
-
-$$
-Z_{\boldsymbol\theta}=\sum_s e^{i\theta_s}\Pi_s
-$$
-
-前置到任一实际后续实验。它是控制，不是效果；该前置的作用是把原效果 $E$ 拉回到 $Z_{\boldsymbol\theta}^\dagger EZ_{\boldsymbol\theta}$。
-

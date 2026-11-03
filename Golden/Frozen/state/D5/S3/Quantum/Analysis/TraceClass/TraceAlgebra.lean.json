@@ -1,1 +1,0 @@
-{"statement_id":"sha256:29be1559069cdca0354002fed0cc303e37a752cd284603bb755f99abe33d1c7b","declarations":[{"declaration_name_key":"ns(n0,10:trace_smul)","kind":"theorem"},{"declaration_name_key":"ns(n0,15:trace_mul_cycle)","kind":"theorem"},{"declaration_name_key":"ns(n0,9:trace_add)","kind":"theorem"}]}

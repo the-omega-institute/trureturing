@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:00e0ec9bacbd1905e166feb3993712313006ce2bda91383e72dd6df7eab62a1b
-  normalized_sha256: sha256:00e0ec9bacbd1905e166feb3993712313006ce2bda91383e72dd6df7eab62a1b
-cas_ref: sha256:00e0ec9bacbd1905e166feb3993712313006ce2bda91383e72dd6df7eab62a1b
-coverage_gids:
-  - gid: D5/S3/PrimeForms/PellFamilies/LocalPellPeriodicity.pell_unit_and_unimodular_recurrences_are_locally_periodic
-    target_statement_id: sha256:b2c7e4625337f40bd57a74aaca10d546f9139642d7083248af9e663bf75ae5e0
-receipts:
-  unresolved_subitems: []

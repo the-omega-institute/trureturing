@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ed539c4e0d3f71a21c358e2fa3a1b65b44cbcb279e88a984f668e97fb157d87c
-  normalized_sha256: sha256:ed539c4e0d3f71a21c358e2fa3a1b65b44cbcb279e88a984f668e97fb157d87c
-cas_ref: sha256:ed539c4e0d3f71a21c358e2fa3a1b65b44cbcb279e88a984f668e97fb157d87c
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/SemanticClosureStrictNoveltyCriterion.semantic_closure_strict_novelty_criterion
-    target_statement_id: sha256:56a558c5518809c5e423b3f3c5757cb817a31e290c3504d5ba8c06697770ed1e
-receipts:
-  unresolved_subitems: []

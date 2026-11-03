@@ -1,1 +1,0 @@
-{"statement_id":"sha256:141dd6391d36006e159e9f378b27e29ab1168b22501cc23648f6f4820c6170d9","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),15:FibonacciAtomic),8:Observer),15:FutureResponses),33:NativeJointFutureMemoryLowerBound),38:native_joint_future_memory_lower_bound)","kind":"theorem"}]}

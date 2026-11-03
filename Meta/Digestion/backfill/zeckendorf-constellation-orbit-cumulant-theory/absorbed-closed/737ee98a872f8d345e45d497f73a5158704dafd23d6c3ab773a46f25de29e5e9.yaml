@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:737ee98a872f8d345e45d497f73a5158704dafd23d6c3ab773a46f25de29e5e9
-  normalized_sha256: sha256:737ee98a872f8d345e45d497f73a5158704dafd23d6c3ab773a46f25de29e5e9
-cas_ref: sha256:737ee98a872f8d345e45d497f73a5158704dafd23d6c3ab773a46f25de29e5e9
-coverage_gids:
-  - gid: D5/S3/Observer/Tomography/FiniteRankConcentrationModeBound.finite_rank_concentration_mode_bound
-    target_statement_id: sha256:0b6826d1bc3c9a0b0f74f941d32858530d2ad9bf457d9ea05598931280024cd2
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5b2d34be1bc56e6c2816c43741ab808671f3f962eecefda97af274f09e427163
-  normalized_sha256: sha256:5b2d34be1bc56e6c2816c43741ab808671f3f962eecefda97af274f09e427163
-cas_ref: sha256:5b2d34be1bc56e6c2816c43741ab808671f3f962eecefda97af274f09e427163
-coverage_gids:
-  - gid: D5/S1/Eigenstructure/NilpotentNormalityObstruction.nonzero_nilpotent_shift_not_normal
-    target_statement_id: sha256:2259a42e1349e4a4a8c0040f24fed5196a2d28730eed85cd0d995aaaae3a2731
-receipts:
-  unresolved_subitems: []

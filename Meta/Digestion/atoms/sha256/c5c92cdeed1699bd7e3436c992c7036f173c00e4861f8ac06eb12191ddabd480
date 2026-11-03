@@ -1,9 +1,0 @@
-**完整标架无歧义**要求
-
-$$
-\boxed{T_\gamma=\mathrm{id}\quad\text{for every closed }\gamma.}
-\tag{228.5}
-$$
-
-前者可以让一个特殊点路径无关，后者才让所有局部向量和仿射原点都能无歧义地运输。
-

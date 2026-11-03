@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0af5e1b07db7250d22a76e2cdfc5e5273e3945bad43d689a5863c098f377d316
-  normalized_sha256: sha256:0af5e1b07db7250d22a76e2cdfc5e5273e3945bad43d689a5863c098f377d316
-cas_ref: sha256:0af5e1b07db7250d22a76e2cdfc5e5273e3945bad43d689a5863c098f377d316
-coverage_gids:
-  - gid: D5/S3/Observer/Residuals/GoldenResidualPeriodicity.unforced_golden_completion_has_no_off_line_fixed_point
-    target_statement_id: sha256:34c646efcbf485c3b969d861ad0d85bca82efc734803c5b4e28ca8e52f4f467c
-receipts:
-  unresolved_subitems: []

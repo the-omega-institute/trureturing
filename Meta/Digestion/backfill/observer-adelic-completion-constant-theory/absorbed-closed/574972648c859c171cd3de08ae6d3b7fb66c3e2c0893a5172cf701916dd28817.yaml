@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:574972648c859c171cd3de08ae6d3b7fb66c3e2c0893a5172cf701916dd28817
-  normalized_sha256: sha256:574972648c859c171cd3de08ae6d3b7fb66c3e2c0893a5172cf701916dd28817
-cas_ref: sha256:574972648c859c171cd3de08ae6d3b7fb66c3e2c0893a5172cf701916dd28817
-coverage_gids:
-  - gid: D5/S3/Observer/HyperbolicTransport/GoldenDualTimeRenormalization.golden_dual_time_renormalization
-    target_statement_id: sha256:71359343e5e488cc78be8e60e457f05d02e63c41b380267558537aee5a2b23ac
-receipts:
-  unresolved_subitems: []

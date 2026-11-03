@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4e80d3d542bd5b7a0f6dca4e7716890f64515b6ccc826843665e6ea5ed54060c
-  normalized_sha256: sha256:4e80d3d542bd5b7a0f6dca4e7716890f64515b6ccc826843665e6ea5ed54060c
-cas_ref: sha256:4e80d3d542bd5b7a0f6dca4e7716890f64515b6ccc826843665e6ea5ed54060c
-coverage_gids:
-  - gid: D5/S3/Zeros/Symmetry/BarycenterDefectDecomposition.barycenter_defect_decomposition
-    target_statement_id: sha256:67616ec4a75bb65f65a7e78e58c39aa10c73df1d9c5e44be8265f16ccdbde1a1
-receipts:
-  unresolved_subitems: []

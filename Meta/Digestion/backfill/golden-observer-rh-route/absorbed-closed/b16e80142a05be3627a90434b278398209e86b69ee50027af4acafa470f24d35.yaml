@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b16e80142a05be3627a90434b278398209e86b69ee50027af4acafa470f24d35
-  normalized_sha256: sha256:b16e80142a05be3627a90434b278398209e86b69ee50027af4acafa470f24d35
-cas_ref: sha256:b16e80142a05be3627a90434b278398209e86b69ee50027af4acafa470f24d35
-coverage_gids:
-  - gid: D5/S3/Analytic/EulerGerm/GoldenGermWindowZeroCriterion.golden_window_zero_on_line_of_rh
-    target_statement_id: sha256:af0bfd97fa215ffec61561f1b4b1632a460bd5d72afbb84ece01c4eaa40e557d
-receipts:
-  unresolved_subitems: []

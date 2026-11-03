@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:03a70ab5aa34c5e52646cd34f8ce203b1f9cba31de23f6e50c8a82715dab8b53
-  normalized_sha256: sha256:03a70ab5aa34c5e52646cd34f8ce203b1f9cba31de23f6e50c8a82715dab8b53
-cas_ref: sha256:03a70ab5aa34c5e52646cd34f8ce203b1f9cba31de23f6e50c8a82715dab8b53
-coverage_gids:
-  - gid: D5/S3/Observer/MetricGeometry/QuadraticThreeIndexSeparation.quadratic_three_index_separation
-    target_statement_id: sha256:b79df927c10fe9a9671d0cf7d5cfd35e608d84cb28355aa933c6cb78a45ce402
-receipts:
-  unresolved_subitems: []

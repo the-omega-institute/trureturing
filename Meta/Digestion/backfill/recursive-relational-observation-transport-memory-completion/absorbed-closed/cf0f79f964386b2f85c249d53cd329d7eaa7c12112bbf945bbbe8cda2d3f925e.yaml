@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:cf0f79f964386b2f85c249d53cd329d7eaa7c12112bbf945bbbe8cda2d3f925e
-  normalized_sha256: sha256:cf0f79f964386b2f85c249d53cd329d7eaa7c12112bbf945bbbe8cda2d3f925e
-cas_ref: sha256:cf0f79f964386b2f85c249d53cd329d7eaa7c12112bbf945bbbe8cda2d3f925e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Coding/ActualDyadicCausalPrefixRepairCapacity.actual_causal_closed_error_recovery
-    target_statement_id: sha256:c2339c4ac05fffb614e19ac57a6458b7e3ec543f81e43062fb155812dcd99477
-receipts:
-  unresolved_subitems: []

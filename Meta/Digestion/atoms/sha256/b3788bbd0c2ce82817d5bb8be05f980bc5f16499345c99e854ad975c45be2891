@@ -1,3 +1,0 @@
-Let $\mathcal H(t)$ be the actual successful $P/S$ words ending at $t$;
-requests, reads, maintenance, outputs and waiting are not events of this word.
-

@@ -1,1 +1,0 @@
-{"statement_id":"sha256:baa3eaf6db882fc645e659dcdb981f353c1ff34c83e8fa800f680589711b25c9","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),27:TwoDenseDivisorBlockMaximum),14:oddBlockCounts)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),27:TwoDenseDivisorBlockMaximum),6:result)","kind":"theorem"}]}

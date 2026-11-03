@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d4c0afcde0e0c5d1086f4377a71cb9535f0d673da7608a206db7b6e0c12168ee
-  normalized_sha256: sha256:d4c0afcde0e0c5d1086f4377a71cb9535f0d673da7608a206db7b6e0c12168ee
-cas_ref: sha256:d4c0afcde0e0c5d1086f4377a71cb9535f0d673da7608a206db7b6e0c12168ee
-coverage_gids:
-  - gid: D5/S3/Observer/Conditioning.conditionalState_isState
-    target_statement_id: sha256:e1759f9d54b56d254a45623c1a09d897a48b1f767c39a7809eff555a18e0cd6d
-receipts:
-  unresolved_subitems: []

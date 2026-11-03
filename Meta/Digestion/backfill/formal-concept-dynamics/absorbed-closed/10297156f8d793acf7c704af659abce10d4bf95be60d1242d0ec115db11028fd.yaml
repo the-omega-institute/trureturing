@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:10297156f8d793acf7c704af659abce10d4bf95be60d1242d0ec115db11028fd
-  normalized_sha256: sha256:10297156f8d793acf7c704af659abce10d4bf95be60d1242d0ec115db11028fd
-cas_ref: sha256:10297156f8d793acf7c704af659abce10d4bf95be60d1242d0ec115db11028fd
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DecisionValue/InformationValueMonotonicity.free_information_refinement_value_monotone
-    target_statement_id: sha256:8626dafd8328501ebebc641ea05e0d1f879cd8b43fae8d9945740810ee6ddfb1
-receipts:
-  unresolved_subitems: []

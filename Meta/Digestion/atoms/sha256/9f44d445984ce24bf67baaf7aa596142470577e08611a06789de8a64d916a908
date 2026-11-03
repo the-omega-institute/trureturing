@@ -1,9 +1,0 @@
-# Native variable-coefficient Green stability on the fixed two-wall cylinder
-
-This companion completes the fixed-model question left open at the end of
-the original Green volume. It keeps the source, the killed cylinder, the
-actual phase torus, the two native horizontal controls, and the full
-unit-source Green field of Definition 1.3. Only the smooth positive density
-and the positive definite horizontal covariance are allowed to vary. The
-claims are ordinary mathematical statements; they are not Lean declarations.
-

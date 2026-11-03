@@ -1,8 +1,0 @@
-**证明。** 设 $E_{k-1,k-1},E_{kk}\in\mathcal A_v$。则 $A_LE_{kk}A_L=(e_{k-1}+e_{k+1})(e_{k-1}+e_{k+1})^{\top}$。令 $Q=I-E_{k-1,k-1}\in\mathcal A_v$;因 $L\ge3$,$k+1\ne k-1$,故 $Qe_{k-1}=0$,$Qe_{k+1}=e_{k+1}$,从而
-
-$$
-QA_LE_{kk}A_LQ=E_{k+1,k+1}\in\mathcal A_v .
-$$
-
-从 $k=j+1$ 出发沿圈归纳,所有 $E_{kk}$ 都在 $\mathcal A_v$ 中。于是 $E_{kk}A_LE_{k+1,k+1}=E_{k,k+1}$ 与 $E_{k+1,k+1}A_LE_{kk}=E_{k+1,k}$ 都在 $\mathcal A_v$ 中,而任一矩阵单位 $E_{ik}$ 是沿圈从 $i$ 走到 $k$ 的这些相邻矩阵单位之积($i=k$ 时就是 $E_{kk}$)。所以 $\mathcal A_v=M_L(\mathbb R)$。与每个 $E_{ik}$ 可交换的复矩阵 $X$ 满足 $X_{ik}=X_{ii}\delta_{ik}$ 与 $X_{ii}=X_{kk}$,即为数量矩阵(母卷定理 4.6 证明的第一段);实正交的数量矩阵只有 $\pm I$。∎
-

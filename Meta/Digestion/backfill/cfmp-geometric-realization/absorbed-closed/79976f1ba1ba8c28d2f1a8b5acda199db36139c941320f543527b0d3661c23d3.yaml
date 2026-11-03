@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:79976f1ba1ba8c28d2f1a8b5acda199db36139c941320f543527b0d3661c23d3
-  normalized_sha256: sha256:79976f1ba1ba8c28d2f1a8b5acda199db36139c941320f543527b0d3661c23d3
-cas_ref: sha256:79976f1ba1ba8c28d2f1a8b5acda199db36139c941320f543527b0d3661c23d3
-coverage_gids:
-  - gid: D5/S3/Quantum/Entanglement/AbsolutePPT/HalfspaceConeTransfer.gap_telescope
-    target_statement_id: sha256:d87a91c6895142feca2cb53ccaa92c8f4ab1e756a6bb97f3c634ff04a21d243c
-receipts:
-  unresolved_subitems: []

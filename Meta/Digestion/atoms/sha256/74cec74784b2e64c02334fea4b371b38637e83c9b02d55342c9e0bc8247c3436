@@ -1,8 +1,0 @@
-**命题 43.3（整个来源族的完整实际路径与准确支持）。** 定义43.2两表在每个 $u\in D$ 上的完整路径及入口后资源为下表，且每个非空前缀的来源支持恰为符合该表前缀的扇区之并。
-
-| 原扇区 | $A$ 的完整实际事件 | $B$ 的完整实际事件 | $v_A(u)$ | $v_B(u)$ |
-| --- | --- | --- | --- | --- |
-| $D_\alpha$ | $\mathsf R_0(\varepsilon,\alpha),\mathsf S_0(r_\alpha)$ | $\mathsf U_{0,1},\mathsf R_1(R,\mathsf{absent}),\mathsf S_1(r_\alpha)$ | $(1,0)$ | $(1,1)$ |
-| $D_\beta$ | $\mathsf R_0(\varepsilon,\beta),\mathsf S_0(r_\beta)$ | $\mathsf U_{0,1},\mathsf R_1(R,\alpha),\mathsf S_1(r_\beta)$ | $(1,0)$ | $(1,1)$ |
-| $D_{L\alpha}$ | $\mathsf R_0(\varepsilon,\mathsf{branch}),\mathsf R_0(R,\alpha),\mathsf S_0(r_{L\alpha})$ | $\mathsf U_{0,1},\mathsf R_1(R,\beta),\mathsf S_1(r_{L\alpha})$ | $(2,0)$ | $(1,1)$ |
-| $D_{L\beta}$ | $\mathsf R_0(\varepsilon,\mathsf{branch}),\mathsf R_0(R,\beta),\mathsf S_0(r_{L\beta})$ | $\mathsf U_{0,1},\mathsf R_1(R,\mathsf{branch}),\mathsf S_1(r_{L\beta})$ | $(2,0)$ | $(1,1)$ |

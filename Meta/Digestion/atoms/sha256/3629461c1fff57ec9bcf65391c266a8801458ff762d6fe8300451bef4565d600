@@ -1,7 +1,0 @@
-The space $V_t\cap\mathscr G_0$ has dimension $k_t-1$ and obeys the
-same estimate. For $\lambda>b^{-1}$, take $t=(b\lambda)^{-1}<1$.
-The form version of the min-max principle now gives at least $k_t-1$
-positive eigenvalues strictly below $\lambda$. Explicitly, otherwise
-the spectral projection onto $(0,\lambda)$ would have a nonzero kernel
-on this trial space; a vector in that kernel has spectral support in
-$[\lambda,\infty)$ 

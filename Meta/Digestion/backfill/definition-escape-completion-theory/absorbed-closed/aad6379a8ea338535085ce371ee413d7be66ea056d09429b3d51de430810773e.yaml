@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:aad6379a8ea338535085ce371ee413d7be66ea056d09429b3d51de430810773e
-  normalized_sha256: sha256:aad6379a8ea338535085ce371ee413d7be66ea056d09429b3d51de430810773e
-cas_ref: sha256:aad6379a8ea338535085ce371ee413d7be66ea056d09429b3d51de430810773e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/DirectlyProvableLaws.directly_provable_laws
-    target_statement_id: sha256:d7aa624bddb34050aed861cd803b79feebaabd131f1af5df9054a6c271ba9481
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-- **[P] Two-qubit PPT sufficiency.** M. Horodecki, P. Horodecki and
-  R. Horodecki, *Separability of Mixed States: Necessary and Sufficient
-  Conditions*, Theorem 3, PDF p. 8,
-  [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
-  Physics Letters A **223**, 1--8 (1996), DOI
-  [10.1016/S0375-9601(96)00706-2](https://doi.org/10.1016/S0375-9601(96)00706-2).
-  It is used only for the actual $2\times2$ factor in (162.6), after
-  the local spectator factorization.
-

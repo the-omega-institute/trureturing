@@ -1,5 +1,0 @@
-**Theorem 15.5 (the uniform arbitrary-color clique-chain obstruction).**
-For every $q\ge2$ and $2\le t\le q$, the graph $F_{q-1,t}$ contains a
-$q+(q-1)(t-1)$-vertex subgraph that cannot be colored by $q$ arbitrary
-colors. Consequently $\chi(F_{q-1,t})\ge q+1$.
-

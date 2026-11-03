@@ -1,1 +1,0 @@
-| `HankelJacobiDeterminant.lean`      | 从真实边界矩出发，把行列式候选识别为实际递推耦合，并核对索引          

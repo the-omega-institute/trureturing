@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f4572b2947822493b11d782e7195eca644a6c7e47d0b9a38d6f91298c0fdb13d
-  normalized_sha256: sha256:f4572b2947822493b11d782e7195eca644a6c7e47d0b9a38d6f91298c0fdb13d
-cas_ref: sha256:f4572b2947822493b11d782e7195eca644a6c7e47d0b9a38d6f91298c0fdb13d
-coverage_gids:
-  - gid: D5/S3/Estimation/DataProcessing/ApproximateSimulationWithoutExactAttainment.approximate_simulation_without_exact_attainment
-    target_statement_id: sha256:7365bcae732247c2302c23b3c2fd357a9f30cef0f07435c67de75938605682c9
-receipts:
-  unresolved_subitems: []

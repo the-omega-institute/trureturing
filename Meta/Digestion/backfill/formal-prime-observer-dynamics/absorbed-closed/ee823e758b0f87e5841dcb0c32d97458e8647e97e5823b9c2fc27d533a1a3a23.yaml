@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ee823e758b0f87e5841dcb0c32d97458e8647e97e5823b9c2fc27d533a1a3a23
-  normalized_sha256: sha256:ee823e758b0f87e5841dcb0c32d97458e8647e97e5823b9c2fc27d533a1a3a23
-cas_ref: sha256:ee823e758b0f87e5841dcb0c32d97458e8647e97e5823b9c2fc27d533a1a3a23
-coverage_gids:
-  - gid: D5/S3/PrimeForms/CrossingPeriodicity/PhaseObserverTranslation.phase_observer_descends_to_translation
-    target_statement_id: sha256:abf61b61f3b46bd267b482ca26ae09f9b81747ed9c80982108ac24158da0c0e6
-receipts:
-  unresolved_subitems: []

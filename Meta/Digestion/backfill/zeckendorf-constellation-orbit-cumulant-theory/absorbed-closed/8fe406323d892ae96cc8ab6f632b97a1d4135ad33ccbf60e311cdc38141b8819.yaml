@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8fe406323d892ae96cc8ab6f632b97a1d4135ad33ccbf60e311cdc38141b8819
-  normalized_sha256: sha256:8fe406323d892ae96cc8ab6f632b97a1d4135ad33ccbf60e311cdc38141b8819
-cas_ref: sha256:8fe406323d892ae96cc8ab6f632b97a1d4135ad33ccbf60e311cdc38141b8819
-coverage_gids:
-  - gid: D5/S3/Quantum/Completion/LimitResidualDecomposition.limit_residual_orthogonal_decomposition
-    target_statement_id: sha256:1afc2073c7b3226f60a25113c34345421bec46ecde8fbf1f088ed6e2d8f89bda
-receipts:
-  unresolved_subitems: []

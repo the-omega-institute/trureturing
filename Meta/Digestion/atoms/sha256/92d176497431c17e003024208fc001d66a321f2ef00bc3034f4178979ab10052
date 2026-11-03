@@ -1,6 +1,0 @@
-**定理 3.3（有限 anchored spectrum procedure）。** The levels of the
-finite-state evaluation of $C$ are exactly $\Sigma_R$. Thus enumerating
-the finitely many legal class-state assignments (different classes may
-not both receive the same $A_j$) is a complete effective procedure for
-computing the anchored spectrum and an attaining class assignment.
-

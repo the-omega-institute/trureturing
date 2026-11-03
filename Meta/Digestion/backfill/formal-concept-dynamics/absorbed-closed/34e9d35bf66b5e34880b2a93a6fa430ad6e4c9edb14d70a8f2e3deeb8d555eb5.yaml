@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5
-  normalized_sha256: sha256:34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5
-cas_ref: sha256:34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources
-    target_statement_id: sha256:5d51406cd3da78aaa1710830801f5763b5f49b17fc101d95f2faaed7c8b8c77b
-receipts:
-  unresolved_subitems: []

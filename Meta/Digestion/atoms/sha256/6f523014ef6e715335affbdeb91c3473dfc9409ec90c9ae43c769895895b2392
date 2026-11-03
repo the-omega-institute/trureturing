@@ -1,6 +1,0 @@
-以下等价：
-
-1. $K_q\subsetneq K_{h\circ q}$；
-2. 存在 $x,y\in X$，满足 $q(x)\ne q(y)$ 且 $h(q(x))=h(q(y))$；
-3. $h$ 在 $\operatorname{Im}(q)$ 上不单射。
-

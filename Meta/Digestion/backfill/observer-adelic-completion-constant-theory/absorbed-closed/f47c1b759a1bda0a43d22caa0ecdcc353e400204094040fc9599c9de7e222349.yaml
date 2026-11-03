@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f47c1b759a1bda0a43d22caa0ecdcc353e400204094040fc9599c9de7e222349
-  normalized_sha256: sha256:f47c1b759a1bda0a43d22caa0ecdcc353e400204094040fc9599c9de7e222349
-cas_ref: sha256:f47c1b759a1bda0a43d22caa0ecdcc353e400204094040fc9599c9de7e222349
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaLinear/HorizonFreeEnergyDivergence.horizon_determinant_eq_div
-    target_statement_id: sha256:c5fc9e84dfe19234f8705c09227fb44b4c86581c9330046682b84d8b86ce7b34
-receipts:
-  unresolved_subitems: []

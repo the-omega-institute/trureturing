@@ -1,5 +1,0 @@
-\min\{k:p^k\ge N\}
-=
-\lceil\log_pN\rceil.
-\]
-

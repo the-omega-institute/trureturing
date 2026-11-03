@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2634af8c2f9bab1fb2303e17aa44061086ba1f0fd734bee6fdb3319b056261b4
-  normalized_sha256: sha256:2634af8c2f9bab1fb2303e17aa44061086ba1f0fd734bee6fdb3319b056261b4
-cas_ref: sha256:2634af8c2f9bab1fb2303e17aa44061086ba1f0fd734bee6fdb3319b056261b4
-coverage_gids:
-  - gid: D5/S3/Factorization/Mordell/GoldenCubicBlockIsogenyNonimage.CubicIsogenyAffineImage
-    target_statement_id: sha256:38bc60de193794a6457fc4f053f0d9e3cda3aacf640f6952d82cc91b3731a4be
-receipts:
-  unresolved_subitems: []

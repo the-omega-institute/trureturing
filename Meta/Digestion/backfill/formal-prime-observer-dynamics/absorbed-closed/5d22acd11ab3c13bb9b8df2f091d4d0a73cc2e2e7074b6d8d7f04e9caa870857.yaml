@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5d22acd11ab3c13bb9b8df2f091d4d0a73cc2e2e7074b6d8d7f04e9caa870857
-  normalized_sha256: sha256:5d22acd11ab3c13bb9b8df2f091d4d0a73cc2e2e7074b6d8d7f04e9caa870857
-cas_ref: sha256:5d22acd11ab3c13bb9b8df2f091d4d0a73cc2e2e7074b6d8d7f04e9caa870857
-coverage_gids:
-  - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterProfileRankCardinality.binary_character_profile_rank_cardinality
-    target_statement_id: sha256:65e2de54fe0d37d0995032521bdd2ab7ff808f045ec95ebd97512ea82b91dad8
-receipts:
-  unresolved_subitems: []

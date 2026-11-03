@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6dbffd1dac1ef96c999345d1128528ad434f1251bfe9cb2d01ee623d8820e826
-  normalized_sha256: sha256:6dbffd1dac1ef96c999345d1128528ad434f1251bfe9cb2d01ee623d8820e826
-cas_ref: sha256:6dbffd1dac1ef96c999345d1128528ad434f1251bfe9cb2d01ee623d8820e826
-coverage_gids:
-  - gid: D5/S3/Quantum/Measurements/DeterministicReadoutPvm.deterministic_readout_pvm
-    target_statement_id: sha256:b9b39ff0667361546b6dac6b09e2caafba7caaec745f63f6bdca5dca586081c3
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3f130bfc6e252e9b44dfab0336de99c1fb4bc4b602aab57477b7da01ec4e29aa
-  normalized_sha256: sha256:3f130bfc6e252e9b44dfab0336de99c1fb4bc4b602aab57477b7da01ec4e29aa
-cas_ref: sha256:3f130bfc6e252e9b44dfab0336de99c1fb4bc4b602aab57477b7da01ec4e29aa
-coverage_gids:
-  - gid: D5/S3/Observer/Linear/DiscountedObservabilityGramianEquation.discounted_observability_gramian_equation
-    target_statement_id: sha256:d0ecae8b225979ad2f8529cbb9cc6691eed609a39ff7905789bb8a18a00f3cfb
-receipts:
-  unresolved_subitems: []

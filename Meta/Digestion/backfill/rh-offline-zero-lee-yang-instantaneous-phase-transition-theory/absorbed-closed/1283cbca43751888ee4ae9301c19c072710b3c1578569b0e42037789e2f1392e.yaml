@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1283cbca43751888ee4ae9301c19c072710b3c1578569b0e42037789e2f1392e
-  normalized_sha256: sha256:1283cbca43751888ee4ae9301c19c072710b3c1578569b0e42037789e2f1392e
-cas_ref: sha256:1283cbca43751888ee4ae9301c19c072710b3c1578569b0e42037789e2f1392e
-coverage_gids:
-  - gid: D5/S3/Zeros/FirstOffLineHeight.first_off_line_height_exists
-    target_statement_id: sha256:7f8059f655519c88b99b5d3226b3d9c64d2f028a274a9769731193cbf143b408
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:33b8c52c332483ab7b804471ea5d0e1e6b69dac648b2e957b5469194e3ddf6b6
-  normalized_sha256: sha256:33b8c52c332483ab7b804471ea5d0e1e6b69dac648b2e957b5469194e3ddf6b6
-cas_ref: sha256:33b8c52c332483ab7b804471ea5d0e1e6b69dac648b2e957b5469194e3ddf6b6
-coverage_gids:
-  - gid: D5/S3/Arith/Coding/PrimorialWitnessBound.primorial_witness_bound
-    target_statement_id: sha256:c10168b6cc385ec9fd5f21fae560f2e7490ffeb965f7f241ebb509e816f2eb5c
-receipts:
-  unresolved_subitems: []

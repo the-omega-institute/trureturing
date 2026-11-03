@@ -1,8 +1,0 @@
-\[
-\mathsf Z_N(x)
-=
-\operatorname{wdigits}(q_N(x))
-\]
-
-为整数 \(q_N(x)\) 的规范 Zeckendorf 数位。
-

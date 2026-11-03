@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:471c9bec4d9de1ac87a8747c4fc6b2f806cbe48aedef58cec39f0e036d160232
-  normalized_sha256: sha256:471c9bec4d9de1ac87a8747c4fc6b2f806cbe48aedef58cec39f0e036d160232
-cas_ref: sha256:471c9bec4d9de1ac87a8747c4fc6b2f806cbe48aedef58cec39f0e036d160232
-coverage_gids:
-  - gid: D5/S3/Analytic/Hardy/ClarkWeightedComposition.clark_branch_map_invariant
-    target_statement_id: sha256:377f2d5f1c7474d7d2839cc32ab25cdf56f028dadf1a4ee128099b479a0b2a36
-receipts:
-  unresolved_subitems: []

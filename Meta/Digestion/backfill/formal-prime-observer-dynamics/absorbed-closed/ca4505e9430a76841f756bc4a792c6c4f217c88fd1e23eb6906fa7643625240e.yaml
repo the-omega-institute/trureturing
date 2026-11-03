@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ca4505e9430a76841f756bc4a792c6c4f217c88fd1e23eb6906fa7643625240e
-  normalized_sha256: sha256:ca4505e9430a76841f756bc4a792c6c4f217c88fd1e23eb6906fa7643625240e
-cas_ref: sha256:ca4505e9430a76841f756bc4a792c6c4f217c88fd1e23eb6906fa7643625240e
-coverage_gids:
-  - gid: D5/S3/Arith/Congruence/PadicBallFiberCorrespondence.congruenceFiber_eq_closedBall_inter_range
-    target_statement_id: sha256:608938e551ef45b23879fefb3812c09d69bf1cb88a56ccc749b073f9e5cc17e7
-receipts:
-  unresolved_subitems: []

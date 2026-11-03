@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:668c2eb289e60685595e2bae149a79e5d4cbb8602203e8304e1dcff9bd10e85f
-  normalized_sha256: sha256:668c2eb289e60685595e2bae149a79e5d4cbb8602203e8304e1dcff9bd10e85f
-cas_ref: sha256:668c2eb289e60685595e2bae149a79e5d4cbb8602203e8304e1dcff9bd10e85f
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/ProObjects/GeneralHomFormula.pro_hom_has_stage_representatives
-    target_statement_id: sha256:5f343609dfca36969bfdf9d2bbaef3f4da1e8d5afcb4d529a3cc06db57c9fbb0
-receipts:
-  unresolved_subitems: []

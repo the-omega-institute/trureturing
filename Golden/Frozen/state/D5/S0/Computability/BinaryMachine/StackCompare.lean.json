@@ -1,1 +1,0 @@
-{"statement_id":"sha256:15bf23a02e30ab21c6173f62185c1729ba3e039880a5a94a7353242a9f16b35e","declarations":[{"declaration_name_key":"ns(ns(ns(n0,10:Complexity),12:StackCompare),10:exec_check)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,10:Complexity),12:StackCompare),5:check)","kind":"def"}]}

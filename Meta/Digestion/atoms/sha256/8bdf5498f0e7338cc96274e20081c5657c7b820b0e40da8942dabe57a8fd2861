@@ -1,8 +1,0 @@
-# 续篇：把 AURIC FIB ATOM 金字塔提升为“边界—纤维—闭合”理论
-
-**Reference input: open.** 本卷完整保存用户供文，包括全部声明、证明、例子、表格、项目对应说明和拟议接口。原文的“定理”“已经证明”“正式冻结”等语言均属开放参考输入；本卷未新增 Lean、Blueprint、Reg 或 Frozen 声明。Lean 声明、证明项及其内核核验的公理闭包承载本库形式系统内的数学真值。
-
-**来源。** Author kind: mixed user-supplied material; original author and model unknown. Receipt date: 2026-10-10. 来源标识为本会话供文 auric-fib-atom-boundary-transport-fibers-and-loop-closure。接收原文 SHA-256 为 `8e72ef09c22cb4c26b590669b8f27fc5c5373c8eff8e735f1f3374a5a85ae9f0`，原始字节数为 29024。全部原句及公式内容保留，只规范 Markdown 数学入口与标题层级，声明地址仅用于本文定位。按用户指定，本卷是纯理论添加，不运行消化，不新增 atom 或覆盖主张。
-
-**既有结果与历史归属。** 原文关于 dev、#15044 和 README 的最新状态判断归属其供文引用的历史提交与阅读，不认证交付时移动分支的状态。图关联矩阵核、运输表 square move、最大熵独立补全和树状概率缝合属于既有数学方法；本卷不将这些方法或重述计作原创。对应参考包括 [Foundational Formulas](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)、[Correlation and Native Continuation](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)、[Output-Resolved Instrument Closure](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md) 与 [Local Fillings, Soft to Rigid and Odd-Cycle Obstructions](AURIC_FIB_ATOM_PYRAMID_LOCAL_FILLINGS_SOFT_TO_RIGID_AND_ODD_CYCLE_OBSTRUCTIONS.md)。本文没有证明这些对象与共同生成器工程或物理系统之间的 native 实现桥。
-

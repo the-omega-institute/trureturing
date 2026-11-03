@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:35b97390391ed6992aa6d92252b6110d86cdfc1cfa54121ecf8ad87fb258cff0
-  normalized_sha256: sha256:35b97390391ed6992aa6d92252b6110d86cdfc1cfa54121ecf8ad87fb258cff0
-cas_ref: sha256:35b97390391ed6992aa6d92252b6110d86cdfc1cfa54121ecf8ad87fb258cff0
-coverage_gids:
-  - gid: D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.integral_damped_negative_square_kernel
-    target_statement_id: sha256:4fa081a07102810ade59b417a75d2f0271b61e11e8f39a44bb08d35f4d1f1825
-receipts:
-  unresolved_subitems: []

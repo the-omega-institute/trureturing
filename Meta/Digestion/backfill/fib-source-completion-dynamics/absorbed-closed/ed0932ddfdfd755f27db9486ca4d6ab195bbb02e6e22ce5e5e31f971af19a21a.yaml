@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ed0932ddfdfd755f27db9486ca4d6ab195bbb02e6e22ce5e5e31f971af19a21a
-  normalized_sha256: sha256:ed0932ddfdfd755f27db9486ca4d6ab195bbb02e6e22ce5e5e31f971af19a21a
-cas_ref: sha256:ed0932ddfdfd755f27db9486ca4d6ab195bbb02e6e22ce5e5e31f971af19a21a
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ActualCountRateBridge.original_actual_count_rate_bridge
-    target_statement_id: sha256:9b043cfd243794d0c94d0ba2c8544ea5c8e3fe57d76221849f3806df5da96913
-receipts:
-  unresolved_subitems: []

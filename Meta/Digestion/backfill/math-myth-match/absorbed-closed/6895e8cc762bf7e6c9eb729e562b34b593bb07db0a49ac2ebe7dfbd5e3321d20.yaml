@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6895e8cc762bf7e6c9eb729e562b34b593bb07db0a49ac2ebe7dfbd5e3321d20
-  normalized_sha256: sha256:6895e8cc762bf7e6c9eb729e562b34b593bb07db0a49ac2ebe7dfbd5e3321d20
-cas_ref: sha256:6895e8cc762bf7e6c9eb729e562b34b593bb07db0a49ac2ebe7dfbd5e3321d20
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Epistemic/EpistemicChangeTrichotomy.changed_conclusion_exposes_epistemic_component
-    target_statement_id: sha256:9ee262485477a4a313def31e8daaac14ca4715862a3cf0e154c540c3a3c4c938
-receipts:
-  unresolved_subitems: []

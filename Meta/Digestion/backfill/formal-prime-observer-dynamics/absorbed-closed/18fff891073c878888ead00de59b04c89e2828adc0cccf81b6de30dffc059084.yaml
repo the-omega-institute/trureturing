@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:18fff891073c878888ead00de59b04c89e2828adc0cccf81b6de30dffc059084
-  normalized_sha256: sha256:18fff891073c878888ead00de59b04c89e2828adc0cccf81b6de30dffc059084
-cas_ref: sha256:18fff891073c878888ead00de59b04c89e2828adc0cccf81b6de30dffc059084
-coverage_gids:
-  - gid: D5/S3/PrimeForms/CrossingPeriodicity/PhaseObserverMinimalPeriod.phase_period_eq
-    target_statement_id: sha256:70e4269df18f655a15fe1317ed482a3cb0d8c989d4bcd89edacdfdaa1d0eef89
-receipts:
-  unresolved_subitems: []

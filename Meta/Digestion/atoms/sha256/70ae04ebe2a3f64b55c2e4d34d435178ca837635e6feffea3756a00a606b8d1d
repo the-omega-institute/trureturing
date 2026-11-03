@@ -1,9 +1,0 @@
-**定义 96.1（正向轴循环）。** 令
-
-$$
-R_+=\begin{pmatrix}0&0&1\\1&0&0\\0&1&0\end{pmatrix},
-\qquad R_+e_a=e_b,\quad R_+e_b=e_c,\quad R_+e_c=e_a.
-$$
-
-$R_+^TR_+=I$、$\det R_+=1$、$R_+^3=I$。原生整数 $M=\begin{pmatrix}0&1\\1&1\end{pmatrix}$ 引用 [《FIB关系延拓几何》，版本cda923132d98ab62379ad5bd2434c747e44c6a74，定义1.3](https://github.com/the-omega-institute/trureturing/blob/cda923132d98ab62379ad5bd2434c747e44c6a74/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)，模二约化记作 $\bar M$。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9b99bb99158732fe3f464fb33a65603e43f2df205ea45abc6eec9695ebf3fec1
-  normalized_sha256: sha256:9b99bb99158732fe3f464fb33a65603e43f2df205ea45abc6eec9695ebf3fec1
-cas_ref: sha256:9b99bb99158732fe3f464fb33a65603e43f2df205ea45abc6eec9695ebf3fec1
-coverage_gids:
-  - gid: D5/S3/Analytic/NoisyMomentAtomExtremum.finite_noisy_exterior_atom_sharp
-    target_statement_id: sha256:524888669480ee5937d76ac3f5d480ebdd1192e1a13edcbf500a181a852da3be
-receipts:
-  unresolved_subitems: []

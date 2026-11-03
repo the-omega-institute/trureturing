@@ -1,8 +1,0 @@
-# FIB atoms: task information and Bayes escape risk
-
-This volume continues the finite feature-lattice line behind the FIB atom and white-box certificate models. It is an independent theory volume. It does not change `FIBONACCI_ATOMIC_RELATION_GENERATION.md` and does not claim a continuous-network, training-dynamics, OOD, or physical FIB-R2 theorem.
-
-The previous escape-risk coordinate is a signed mass on each observed fibre. The new question is whether mutual information can replace that task-relative coordinate. It cannot. The useful result is more precise: the two quantities are different Jensen gaps of the same posterior, they obey a sharp interval relation in the binary balanced case, and conditional information supplies a one-sided budget for a risk improvement.
-
-All logarithms in this volume are base two unless `ln` is written explicitly. The state space and every feature alphabet are finite, the probability mass is normalized, and the loss is Bayes zero-one loss.
-

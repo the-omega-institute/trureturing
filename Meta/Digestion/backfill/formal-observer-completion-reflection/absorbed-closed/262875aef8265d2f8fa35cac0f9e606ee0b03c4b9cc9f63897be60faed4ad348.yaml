@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:262875aef8265d2f8fa35cac0f9e606ee0b03c4b9cc9f63897be60faed4ad348
-  normalized_sha256: sha256:262875aef8265d2f8fa35cac0f9e606ee0b03c4b9cc9f63897be60faed4ad348
-cas_ref: sha256:262875aef8265d2f8fa35cac0f9e606ee0b03c4b9cc9f63897be60faed4ad348
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Topology/CircleDoubleCoverHistoryLift.circle_double_cover_history_lift
-    target_statement_id: sha256:53746ff41f2942d781271b7d0222183509c3f43305aaebce03ad9f3d237ca633
-receipts:
-  unresolved_subitems: []

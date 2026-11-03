@@ -1,5 +1,0 @@
-**Definition 6.1a (actual closed fences).** All meter-fence sites in this
-installed graph, including inherited source start/response sites, use the
-following CloseFence graph. All other CTLs, including record and payload
-seals, append ordinary receipts unless this graph explicitly says fence.
-LoadCounter($f$), Increment into a distinct complete word, then execute one

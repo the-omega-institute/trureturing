@@ -1,1 +1,0 @@
-{"statement_id":"sha256:49ee50e9b478bdb0ac95fa5d450849c78d6e61f21d655162b26ae1722fb5cf23","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),10:Prediction),22:FusionStateCardinality),31:fusion_state_cardinality_bounds)","kind":"theorem"}]}

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c075746ab485fbf04f8bfe85aab74a3e07daba732343d4088c20f1c7a5dd3ee1
-  normalized_sha256: sha256:c075746ab485fbf04f8bfe85aab74a3e07daba732343d4088c20f1c7a5dd3ee1
-cas_ref: sha256:c075746ab485fbf04f8bfe85aab74a3e07daba732343d4088c20f1c7a5dd3ee1
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/AncestorAreaInterval.ancestor_area_interval
-    target_statement_id: sha256:929476b4c5edc4c57286b9650be4c40889345b5cf08932ca4bf367bf6b33a78f
-receipts:
-  unresolved_subitems: []

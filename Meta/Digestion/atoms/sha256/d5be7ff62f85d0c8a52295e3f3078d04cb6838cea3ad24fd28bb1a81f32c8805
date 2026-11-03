@@ -1,4 +1,0 @@
-**Proposition 67.3 (the narrower seed schedule fails on $P_5$).** On the five-vertex graph, replacing the two samples in (67.5) by seed Reads at offsets one and two is not a ternary decoder, although the ternary whole-field map is injective.
-
-**Proof.** The words $100$ and $002$ have polynomials $z^3+z^2$ and $z^3+2$. Their field difference is $A^2e-2e=-e+e_{\varepsilon}\ne0$. The seed's odd return moment is zero, while $r_1=1,r_2=2$, so both seed functionals $e^{\mathsf T}A$ and $e^{\mathsf T}A^2$ annihilate this difference. This proves failure of exactly that site/time pair. It is consistent with, and does not obstruct, the opposite-terminal acquisition of (67.3). $\square$
-

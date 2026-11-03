@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:50047f0923940392c559899626d07249618394680715706ad72ff94807bc7a22
-  normalized_sha256: sha256:50047f0923940392c559899626d07249618394680715706ad72ff94807bc7a22
-cas_ref: sha256:50047f0923940392c559899626d07249618394680715706ad72ff94807bc7a22
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.composition
-    target_statement_id: sha256:2e503d8e36b3a2109f1408cc7925befb94bf28cfb4da7d00e8ec9dde4c93eb30
-receipts:
-  unresolved_subitems: []

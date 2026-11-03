@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a3faa453a65e06cbbc7b7929a55aa43b7e990d87617f64c81bbb08f09b3f0805
-  normalized_sha256: sha256:a3faa453a65e06cbbc7b7929a55aa43b7e990d87617f64c81bbb08f09b3f0805
-cas_ref: sha256:a3faa453a65e06cbbc7b7929a55aa43b7e990d87617f64c81bbb08f09b3f0805
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.jointReadout
-    target_statement_id: sha256:93e00017c50010496b1e86dcb951f54881d1947268b0ac34356b0b74e4f0e6d4
-receipts:
-  unresolved_subitems: []

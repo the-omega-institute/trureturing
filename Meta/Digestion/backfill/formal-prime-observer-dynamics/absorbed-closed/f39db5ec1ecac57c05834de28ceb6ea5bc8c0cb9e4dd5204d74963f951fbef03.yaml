@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f39db5ec1ecac57c05834de28ceb6ea5bc8c0cb9e4dd5204d74963f951fbef03
-  normalized_sha256: sha256:f39db5ec1ecac57c05834de28ceb6ea5bc8c0cb9e4dd5204d74963f951fbef03
-cas_ref: sha256:f39db5ec1ecac57c05834de28ceb6ea5bc8c0cb9e4dd5204d74963f951fbef03
-coverage_gids:
-  - gid: D5/S3/Factorization/ProfinitePrimeDecomposition.primeProjection
-    target_statement_id: sha256:834eeb0871181524997464e08dd21ccfb5787932cd14bec1afaa2d11ce605384
-receipts:
-  unresolved_subitems: []

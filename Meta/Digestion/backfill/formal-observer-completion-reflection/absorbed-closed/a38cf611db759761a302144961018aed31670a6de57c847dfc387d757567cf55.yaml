@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a38cf611db759761a302144961018aed31670a6de57c847dfc387d757567cf55
-  normalized_sha256: sha256:a38cf611db759761a302144961018aed31670a6de57c847dfc387d757567cf55
-cas_ref: sha256:a38cf611db759761a302144961018aed31670a6de57c847dfc387d757567cf55
-coverage_gids:
-  - gid: D5/S3/Quantum/Decoherence/RepeatedRecordExponentialDecay.repeated_record_exponential_decay
-    target_statement_id: sha256:e09b558b088c79fe9615f3ada9e60dc1845a0019b423b76a1b588254862f2994
-receipts:
-  unresolved_subitems: []

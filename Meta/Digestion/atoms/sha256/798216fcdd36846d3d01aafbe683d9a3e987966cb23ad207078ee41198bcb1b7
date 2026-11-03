@@ -1,8 +1,0 @@
-## 定义 14.1（查询 kernel）
-
-\[
-K_\mathcal Q
-:=
-\{(M,N):E_\mathcal Q(M)=E_\mathcal Q(N)\}.
-\]
-

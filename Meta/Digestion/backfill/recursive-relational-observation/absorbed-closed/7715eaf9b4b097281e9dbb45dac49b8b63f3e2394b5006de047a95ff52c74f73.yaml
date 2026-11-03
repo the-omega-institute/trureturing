@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7715eaf9b4b097281e9dbb45dac49b8b63f3e2394b5006de047a95ff52c74f73
-  normalized_sha256: sha256:7715eaf9b4b097281e9dbb45dac49b8b63f3e2394b5006de047a95ff52c74f73
-cas_ref: sha256:7715eaf9b4b097281e9dbb45dac49b8b63f3e2394b5006de047a95ff52c74f73
-coverage_gids:
-  - gid: D5/S3/TotalVariation/ParrySharedRuleBound.parry_shared_rule_bound
-    target_statement_id: sha256:76e1c07af6019072b5c958ba9c4ae579d0c38dea1d500c4b339426d670abe1df
-receipts:
-  unresolved_subitems: []

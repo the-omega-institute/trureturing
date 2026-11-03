@@ -1,8 +1,0 @@
-这和项目里的 Zeckendorf hard-core language 非常相似：
-
-* 每个位置是否占据；
-* 某些重复占据被禁止；
-* 普通 partition function 把全部配置相加；
-* parity-twisted partition function 按占据数奇偶取反；
-* 对数提取 connected primitive modes。
-

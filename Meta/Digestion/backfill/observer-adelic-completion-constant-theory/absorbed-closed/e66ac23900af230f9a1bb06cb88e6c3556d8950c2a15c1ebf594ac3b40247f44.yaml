@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e66ac23900af230f9a1bb06cb88e6c3556d8950c2a15c1ebf594ac3b40247f44
-  normalized_sha256: sha256:e66ac23900af230f9a1bb06cb88e6c3556d8950c2a15c1ebf594ac3b40247f44
-cas_ref: sha256:e66ac23900af230f9a1bb06cb88e6c3556d8950c2a15c1ebf594ac3b40247f44
-coverage_gids:
-  - gid: D5/S3/CompletionDynamics/PacketRenormalization/FibonacciDegreeCompensator.fibonacci_degree_compensator
-    target_statement_id: sha256:ae0d742cf0ada131d4f143ce9fbb160955153231cfc46ba2bbdc7499b4216413
-receipts:
-  unresolved_subitems: []

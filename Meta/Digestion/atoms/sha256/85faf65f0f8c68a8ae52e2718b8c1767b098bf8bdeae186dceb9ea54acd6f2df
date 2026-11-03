@@ -1,9 +1,0 @@
-**Definition 54.1 (the length-first search).** The numerical inputs are the earned $N,T$, the actual acquired origin $x_*=T^{2N}b$, the task menu bound $H<a$, and a rational vector $x$ promised to lie in $X(\mathcal U_H)$. No old length, old word, source response oracle or archive is an input. Retain a scratch length $l$, initially zero. At this length enumerate the finite set $\{0,\ldots,H\}^l$ in lexicographic order, including its sole empty candidate at $l=0$. For each candidate $c$, copy $x_*$ to a scratch vector and execute locally, in chronological order,
-
-$$
-v\longmapsto Tv+c_i b.
-\tag{54.1}
-$$
-
-Compare the resulting vector with $x$ by exact rational equality. On a match output $(l,c)$ and stop; after an unsuccessful finite stratum increment $l$. The scratch length is a search variable built by this computation, not a supplied count of source events. None of these candidate calculations calls Tick or Add on the specimen.
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9f5d26ff3734fe1d4585518dfbe0c204d8a63024f55b169e267df3e11c0648ff
-  normalized_sha256: sha256:9f5d26ff3734fe1d4585518dfbe0c204d8a63024f55b169e267df3e11c0648ff
-cas_ref: sha256:9f5d26ff3734fe1d4585518dfbe0c204d8a63024f55b169e267df3e11c0648ff
-coverage_gids:
-  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeConditionalControl.ratio_interior
-    target_statement_id: sha256:76720eaefa91a8b36105ba28390a51a5cee221c2f956b8ccfc8e7306f6618285
-receipts:
-  unresolved_subitems: []

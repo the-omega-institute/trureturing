@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2bd8a175560569213cfffdb30d3a78842911444237d4c9781b56386f2c3b9569
-  normalized_sha256: sha256:2bd8a175560569213cfffdb30d3a78842911444237d4c9781b56386f2c3b9569
-cas_ref: sha256:2bd8a175560569213cfffdb30d3a78842911444237d4c9781b56386f2c3b9569
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaGamma/HyperbolicBudgetTube.hyperbolic_budget_tube
-    target_statement_id: sha256:f2f367b32e3afe1b8a229b5c028acc262b1ed3f042e5d7d2424a6dc38d1cea15
-receipts:
-  unresolved_subitems: []

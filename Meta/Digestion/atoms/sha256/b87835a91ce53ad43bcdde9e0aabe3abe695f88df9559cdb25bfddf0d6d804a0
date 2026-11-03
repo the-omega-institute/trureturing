@@ -1,4 +1,0 @@
-**推论 2.2（JMM 历史上的条件强制）。** At the history obtained from (2.1) by deleting its last action and read, a correct protocol on all of $\mathcal W_3$ using at most eight total reads must continue with fourth action $J$.
-
-Proof. The three worlds already agree on that preceding history, so stopping cannot recover all of them. Fourth $M$ reaches (2.1), after which only clocks $5,6,7$ remain and Theorem 2.1 defeats every continuation. This conclusion is conditional on reaching that literal preceding history. It does not close its fourth-$J$ subtree or the entire initial-$J$ alternative. ∎
-

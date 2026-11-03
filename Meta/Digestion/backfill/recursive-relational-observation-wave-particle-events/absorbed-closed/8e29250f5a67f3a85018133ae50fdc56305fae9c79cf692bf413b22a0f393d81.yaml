@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8e29250f5a67f3a85018133ae50fdc56305fae9c79cf692bf413b22a0f393d81
-  normalized_sha256: sha256:8e29250f5a67f3a85018133ae50fdc56305fae9c79cf692bf413b22a0f393d81
-cas_ref: sha256:8e29250f5a67f3a85018133ae50fdc56305fae9c79cf692bf413b22a0f393d81
-coverage_gids:
-  - gid: D5/S3/Quantum/Measurement/BranchConditionedTraceDistance.branch_conditioned_trace_distance
-    target_statement_id: sha256:3f83af9a8490450fa48d26e0b5796f54216b62f8cab317f4615f356096a7b9b3
-receipts:
-  unresolved_subitems: []

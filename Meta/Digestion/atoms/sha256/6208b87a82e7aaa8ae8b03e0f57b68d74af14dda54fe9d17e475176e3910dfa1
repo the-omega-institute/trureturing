@@ -1,9 +1,0 @@
-**Theorem 3.3 (sharp actual $k+1$ family).** For each integer $k\ge1$ there
-is a fixed finite prefix-free cut and $k+1$ actual native origins at the
-same public current epoch one, with the same current row having $k$
-classes and with $k+1$ different predecessor rows. Thus the upper bound
-in (NBP.3.2) is sharp. If the complete accessible base retains exactly
-the current row and common cut, origin-continuity and epoch conditions,
-exact no-new-query predecessor recovery requires $k+1$ supplementary
-configurations, or $\lceil\log_2(k+1)\rceil$ fixed-width bits.
-

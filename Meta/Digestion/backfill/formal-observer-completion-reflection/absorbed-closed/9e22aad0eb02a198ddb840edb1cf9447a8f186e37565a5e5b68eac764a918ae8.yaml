@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9e22aad0eb02a198ddb840edb1cf9447a8f186e37565a5e5b68eac764a918ae8
-  normalized_sha256: sha256:9e22aad0eb02a198ddb840edb1cf9447a8f186e37565a5e5b68eac764a918ae8
-cas_ref: sha256:9e22aad0eb02a198ddb840edb1cf9447a8f186e37565a5e5b68eac764a918ae8
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/ExperimentDesign/EvidenceRelativeExperimentCoverCriterion.evidence_relative_experiment_cover_criterion
-    target_statement_id: sha256:752669e04e67ecbbf5e02bada7edbbfedbb8e99a5f0f580cb13e5fa1dbb52cd3
-receipts:
-  unresolved_subitems: []

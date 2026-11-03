@@ -1,1 +1,0 @@
-../archive/theory/CONE_PROGRAM_FORMAL.md

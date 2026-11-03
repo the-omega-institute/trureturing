@@ -1,5 +1,0 @@
-对任意有限协议，定义：
-
-- $D_{\mathrm{root}}=\chi(G_\circ)$：自由初始标签的最少数量；
-- $D_{\mathrm{fixed}}=\chi_\circ(\mathcal P)$：固定初值下的最少实际可达持久状态数，若不可行则为 $+\infty$。
-

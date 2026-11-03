@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5708f866e85eb2cccedd5e4982006b624554a331d94f2c9133dde4ae9ca8053c
-  normalized_sha256: sha256:5708f866e85eb2cccedd5e4982006b624554a331d94f2c9133dde4ae9ca8053c
-cas_ref: sha256:5708f866e85eb2cccedd5e4982006b624554a331d94f2c9133dde4ae9ca8053c
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenCoding/FiniteZeckendorfEulerIdentity.finite_zeckendorf_interval_and_euler
-    target_statement_id: sha256:54164db5d402f7eadf47d54eece74989ea8ef37e9cbbac2080191134a450921d
-receipts:
-  unresolved_subitems: []

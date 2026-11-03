@@ -1,9 +1,0 @@
-**假设 9.1（复相位关系合同）。** 增加复 Hermitian 关系矩阵、正性和归一化合同，写
-
-$$
-H=\frac12\begin{pmatrix}s+z&x-iy\\x+iy&s-z\end{pmatrix},
-\qquad s,x,y,z\in\mathbb R.
-$$
-
-相位坐标 $y$ 是新增关系变量，不由原生非负整数树组成免费取得。正性、归一化、混合来源及可执行操作各是独立条件。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e9786fabdc641ca9c336df7c827a06a56386ee331e217691d4d021b15353b8e6
-  normalized_sha256: sha256:e9786fabdc641ca9c336df7c827a06a56386ee331e217691d4d021b15353b8e6
-cas_ref: sha256:e9786fabdc641ca9c336df7c827a06a56386ee331e217691d4d021b15353b8e6
-coverage_gids:
-  - gid: D5/S3/Resource/SubmodularGreedyApproximation.cardinality_greedy_one_sub_inv_exp_guarantee
-    target_statement_id: sha256:29a148d8ec234b3ee58583594e4ded62d15a18d98135dcc404c2d9afb4698392
-receipts:
-  unresolved_subitems: []

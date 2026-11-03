@@ -1,9 +1,0 @@
-Relative to actual-tree consistency, every such level is defined by at
-most two prefix-reply tests. More precisely it has exactly one of these
-forms:
-
-1. $\zeta=(0,0)$, with the test $r_u(q)=\mathsf{branch}$.
-2. A single descriptor $(i,\ell)$, with the test $r_u(a_i)=\ell$.
-3. Two descriptors $(i,\beta),(i+1,\alpha)$, where the intervening
-   letter is $L$ and $i+1<l$, with the tests
-

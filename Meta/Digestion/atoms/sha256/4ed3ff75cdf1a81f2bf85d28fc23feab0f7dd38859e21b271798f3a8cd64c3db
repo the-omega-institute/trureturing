@@ -1,2 +1,0 @@
-**引理 5.1（对角单位的传播）。** 设 $v\in\mathbb R^L$,$L\ge3$。若存在站点 $j$ 使 $E_{jj}\in\mathcal A_v$ 且 $E_{j+1,j+1}\in\mathcal A_v$,则 $\mathcal A_v=M_L(\mathbb R)$。此时与 $\Delta_L$、$V$ 都可交换的复矩阵只有数量矩阵,$(\Delta_L,V)$ 没有非平凡共享对称。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8aef3d42e20c794af88467cd899030c6c1031b0c23595c06904d79bc5d650aae
-  normalized_sha256: sha256:8aef3d42e20c794af88467cd899030c6c1031b0c23595c06904d79bc5d650aae
-cas_ref: sha256:8aef3d42e20c794af88467cd899030c6c1031b0c23595c06904d79bc5d650aae
-coverage_gids:
-  - gid: D5/S3/Observer/Linear/GramianBehaviorQuotientMetric.gramian_behavior_quotient_metric
-    target_statement_id: sha256:f771801134ffe331d071a8dff80e27684220cc663348a253d3f59138993cc61c
-receipts:
-  unresolved_subitems: []

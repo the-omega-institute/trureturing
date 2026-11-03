@@ -1,8 +1,0 @@
-**定理 61.2（配置数、态参数与区域支撑）。** 一般归一化混态有二十四个实仿射参数，纯射线有八个实参数。无相邻占位的长 $L_0$ 区域字空间维数为 $F_{L_0+2}$；该计数不建立物理三维。
-
-证明（61.2）。五阶 Hermitian 矩阵有五个实对角和十个复非对角，实维 $5+20=25$。迹一减一个实仿射维；$I_5/5$ 周围的小无迹 Hermitian 扰动仍正定，故正性没有再降低其内部维数。纯向量有十个实参数，单位范数减一、整体相位减一，得到八维复射影空间的实维数。
-
-长 $L_0$ 合法字数 $n_{L_0}$ 有 $n_0=1,n_1=2$。按首位零或首两位十分解，$n_{L_0}=n_{L_0-1}+n_{L_0-2}$，故 $n_{L_0}=F_{L_0+2}$；正交基假设使 Hilbert 维数等于此数。项目来源为 [FIB 关系延拓几何，定义 12.1](https://github.com/the-omega-institute/trureturing/blob/93586271400cc6ffafb1e8312eedd8bc6108cf83/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)及 [相干运输边界，第 9 章](https://github.com/the-omega-institute/trureturing/blob/93586271400cc6ffafb1e8312eedd8bc6108cf83/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md)。有限维不能给无界全部树各一个正交标签，因非零正交向量数不超过维数。
-
-经典比较是 Turner–Michailidis–Abanin–Serbyn–Papić，[*Quantum many-body scars*, arXiv:1711.03528v2，Fibonacci chain 模型及式 (1)](https://arxiv.org/abs/1711.03528v2)：该论文在一维 Rydberg 阻塞链的约束支撑上另给受邻位投影约束的单位置翻转 Hamiltonian。相邻激发禁止及 Fibonacci 计数提供模型比较，不能从编码推导量子公设、本文所有控制菜单或三维实际空间。$\square$
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c67b61be3ac1f008f981d75a0db591305b3841dca229dc0b13446732d6cb66e5
-  normalized_sha256: sha256:c67b61be3ac1f008f981d75a0db591305b3841dca229dc0b13446732d6cb66e5
-cas_ref: sha256:c67b61be3ac1f008f981d75a0db591305b3841dca229dc0b13446732d6cb66e5
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Fibers/CanonicalDependentFiberEquivalence.whole_dependent_fiber_form
-    target_statement_id: sha256:39116608d902616141140bf04012010fb86913b59b85e6e4e3a304712958eabb
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:09d3db1618f74f22454eaa126afe5b08b2b55bf0a5296cf5ab338068e3cc2af8
-  normalized_sha256: sha256:09d3db1618f74f22454eaa126afe5b08b2b55bf0a5296cf5ab338068e3cc2af8
-cas_ref: sha256:09d3db1618f74f22454eaa126afe5b08b2b55bf0a5296cf5ab338068e3cc2af8
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Causal/RecursiveInterventionComposition.recursive_intervention_composition
-    target_statement_id: sha256:b0f8aeb95f479fd84dee2199a6b9fddacc2f9a504e491c41dc15d77caada8eae
-receipts:
-  unresolved_subitems: []

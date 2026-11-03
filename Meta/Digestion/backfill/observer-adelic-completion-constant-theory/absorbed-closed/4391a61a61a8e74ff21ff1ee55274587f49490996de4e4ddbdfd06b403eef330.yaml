@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4391a61a61a8e74ff21ff1ee55274587f49490996de4e4ddbdfd06b403eef330
-  normalized_sha256: sha256:4391a61a61a8e74ff21ff1ee55274587f49490996de4e4ddbdfd06b403eef330
-cas_ref: sha256:4391a61a61a8e74ff21ff1ee55274587f49490996de4e4ddbdfd06b403eef330
-coverage_gids:
-  - gid: D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition.off_line_orbit_parity_decomposition
-    target_statement_id: sha256:e9c3bd1747b450a0dae5ea505a9e8496a7d3b27181a1a728ca80b9677c8d03bd
-receipts:
-  unresolved_subitems: []

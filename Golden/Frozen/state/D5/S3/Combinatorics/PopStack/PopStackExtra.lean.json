@@ -1,1 +1,0 @@
-{"statement_id":"sha256:c3c89b6bc66c0c4da8e8750a3b02c7ad27469d27cc774fb47ae4e9998dfd6fd1","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:PopStack),13:PopStackExtra),1:E)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:PopStack),13:PopStackExtra),9:odd_extra)","kind":"theorem"}]}

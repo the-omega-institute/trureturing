@@ -1,9 +1,0 @@
-**Corollary 214.6 (one-budget exact certificate).** If a full unit-$O$ input has quotient in this fiber, Theorem 214.5 gives one exact-$Q$ score with $\theta=0$ and $\Delta_N=\Phi\le\Delta_O\le1$. For a signed target outside the fiber it gives only the sufficient residual test
-
-$$
-\Phi(g,h,B)+\max\{0,\sigma_{H_L}(q-q_2(g,h,B))\}\le1,
-\tag{214.6}
-$$
-
-where $q_2(g,h,B)=(0,0,g,h,0,\ldots,0;g+h+B)$ and $g,h,B\ge0$ are the same parameters as in Definition 214.4. The second term is one residual charged to the same budget. It does not license adding separately affordable fibers.
-

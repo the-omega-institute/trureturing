@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5c8704e71e02e0c0d2e32e169e1182c2c078e15f5ea28ee0ccbe62f260421e1f
-  normalized_sha256: sha256:5c8704e71e02e0c0d2e32e169e1182c2c078e15f5ea28ee0ccbe62f260421e1f
-cas_ref: sha256:5c8704e71e02e0c0d2e32e169e1182c2c078e15f5ea28ee0ccbe62f260421e1f
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenCoding/GoldenGaloisScalarCompletion.golden_galois_scalar_completion
-    target_statement_id: sha256:2e54f536d521bd83868ed9916a08fa9f16dca1c9af03d2d939bbdd6378c4e90b
-receipts:
-  unresolved_subitems: []

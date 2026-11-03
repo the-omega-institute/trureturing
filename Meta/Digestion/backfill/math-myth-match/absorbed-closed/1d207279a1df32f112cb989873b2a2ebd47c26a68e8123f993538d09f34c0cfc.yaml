@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1d207279a1df32f112cb989873b2a2ebd47c26a68e8123f993538d09f34c0cfc
-  normalized_sha256: sha256:1d207279a1df32f112cb989873b2a2ebd47c26a68e8123f993538d09f34c0cfc
-cas_ref: sha256:1d207279a1df32f112cb989873b2a2ebd47c26a68e8123f993538d09f34c0cfc
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscape/LatentAdequacyCriterion.target_adequate_iff_fiber_constant
-    target_statement_id: sha256:2b34ddf3f24b998973af51f3df063f7e5d74cc4625d58e42e4740086d50da9ec
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e6d6964b57ae7f036a09849b64898ff5ee8f498f208e7ac0c77e6da5740f4f9f
-  normalized_sha256: sha256:e6d6964b57ae7f036a09849b64898ff5ee8f498f208e7ac0c77e6da5740f4f9f
-cas_ref: sha256:e6d6964b57ae7f036a09849b64898ff5ee8f498f208e7ac0c77e6da5740f4f9f
-coverage_gids:
-  - gid: D5/S3/Quantum/Measurements/DeterministicReadoutCommutativity.deterministic_readout_commutes_and_quantum_counterexample
-    target_statement_id: sha256:37ea301e907f28a6f57d28d3b9e5fe419f0deabf2e22540e952d424815882cd9
-receipts:
-  unresolved_subitems: []

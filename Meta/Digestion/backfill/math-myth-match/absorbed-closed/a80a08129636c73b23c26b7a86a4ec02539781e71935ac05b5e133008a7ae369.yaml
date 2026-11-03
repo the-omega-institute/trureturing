@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a80a08129636c73b23c26b7a86a4ec02539781e71935ac05b5e133008a7ae369
-  normalized_sha256: sha256:a80a08129636c73b23c26b7a86a4ec02539781e71935ac05b5e133008a7ae369
-cas_ref: sha256:a80a08129636c73b23c26b7a86a4ec02539781e71935ac05b5e133008a7ae369
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Revision/EvolutionEvidencePullbackIdentity.evolution_evidence_pullback_identity
-    target_statement_id: sha256:19e6dd06a526093274618c0bed1d7c71b064e312d9ad302489944fffd4ed06fe
-receipts:
-  unresolved_subitems: []

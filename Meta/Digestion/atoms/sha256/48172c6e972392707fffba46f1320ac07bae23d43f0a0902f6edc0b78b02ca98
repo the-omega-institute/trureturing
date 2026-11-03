@@ -1,7 +1,0 @@
-若负候选向量分散于许多互相弱相关的块，则目标是利用：
-
-* quadratic-character large sieve；
-* relative trace formula 正交；
-* 高度窗口分离；
-* finite-frame lower bound；
-

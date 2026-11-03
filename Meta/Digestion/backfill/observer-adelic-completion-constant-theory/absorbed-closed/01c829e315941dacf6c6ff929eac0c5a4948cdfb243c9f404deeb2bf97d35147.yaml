@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:01c829e315941dacf6c6ff929eac0c5a4948cdfb243c9f404deeb2bf97d35147
-  normalized_sha256: sha256:01c829e315941dacf6c6ff929eac0c5a4948cdfb243c9f404deeb2bf97d35147
-cas_ref: sha256:01c829e315941dacf6c6ff929eac0c5a4948cdfb243c9f404deeb2bf97d35147
-coverage_gids:
-  - gid: D5/S3/Observer/AgencySelf/AgencySelfUniversalMinimality.agency_self_universal_minimality
-    target_statement_id: sha256:8dbbfa9ea1397679f9c6f165fedf83129225b5aa376bbd1a3bc1bb72e22b7804
-receipts:
-  unresolved_subitems: []

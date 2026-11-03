@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1af2053fa91f0569a918b48169fa2397ef341ba208d3509884ef9dc4cca3c256
-  normalized_sha256: sha256:1af2053fa91f0569a918b48169fa2397ef341ba208d3509884ef9dc4cca3c256
-cas_ref: sha256:1af2053fa91f0569a918b48169fa2397ef341ba208d3509884ef9dc4cca3c256
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/CayleyMomentTransport.cayleyCircle
-    target_statement_id: sha256:8ba8e7e7753d26b75e1674d0fa7394bf2d1b4551fd473c7cd812f5c4482d536f
-receipts:
-  unresolved_subitems: []

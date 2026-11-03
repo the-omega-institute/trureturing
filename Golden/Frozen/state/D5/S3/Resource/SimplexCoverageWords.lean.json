@@ -1,1 +1,0 @@
-{"statement_id":"sha256:8335230c03e7390aa6cb65fbb89f6e50d629770a5688ac296b1401af106a2cd6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Resource),20:SimplexCoverageWords),14:wordPolynomial)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Resource),20:SimplexCoverageWords),32:wordPolynomial_eq_factorial_smul)","kind":"theorem"}]}

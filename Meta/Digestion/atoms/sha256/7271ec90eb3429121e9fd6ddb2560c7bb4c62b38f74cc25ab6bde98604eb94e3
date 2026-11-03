@@ -1,4 +1,0 @@
-**Theorem 3.1 (Automorphism equivariance of edge types).** Every graph automorphism $h$ permutes $\Omega_G$ in a probability-preserving way and sends each edge to an edge of the same type in the relabelled outcome.
-
-Proof. Transport every cyclic order by the neighbour bijection induced by $h$, and set $t'_{h(e)}=t_e$. This is a bijection of outcomes, so it preserves the uniform law. The flag bijection $(v,w,s)\mapsto(hv,hw,s)$ conjugates both $P$ and $L$ to the involutions of the transported outcome. It therefore transports boundary components and their edge traversals. Equality or opposition of two directed traversals is preserved under vertex relabelling. Thus regularity, good singularity, and bad singularity are each preserved. ∎
-

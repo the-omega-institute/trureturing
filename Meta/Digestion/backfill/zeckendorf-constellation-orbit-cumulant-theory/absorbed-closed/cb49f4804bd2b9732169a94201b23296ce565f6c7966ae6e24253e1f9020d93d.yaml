@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:cb49f4804bd2b9732169a94201b23296ce565f6c7966ae6e24253e1f9020d93d
-  normalized_sha256: sha256:cb49f4804bd2b9732169a94201b23296ce565f6c7966ae6e24253e1f9020d93d
-cas_ref: sha256:cb49f4804bd2b9732169a94201b23296ce565f6c7966ae6e24253e1f9020d93d
-coverage_gids:
-  - gid: D5/S3/Midline/Cayley/CayleyMirrorCoordinates.cayley_mirror_coordinates
-    target_statement_id: sha256:36a2e32e7c8ada604ec9a0c0ba1da5e9655b2e32674cc7b32b2d90130225366f
-receipts:
-  unresolved_subitems: []

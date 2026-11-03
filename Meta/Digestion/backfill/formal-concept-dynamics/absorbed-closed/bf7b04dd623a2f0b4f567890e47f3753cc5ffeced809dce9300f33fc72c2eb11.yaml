@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bf7b04dd623a2f0b4f567890e47f3753cc5ffeced809dce9300f33fc72c2eb11
-  normalized_sha256: sha256:bf7b04dd623a2f0b4f567890e47f3753cc5ffeced809dce9300f33fc72c2eb11
-cas_ref: sha256:bf7b04dd623a2f0b4f567890e47f3753cc5ffeced809dce9300f33fc72c2eb11
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Audits/PartialTestsLeaveDefect.passing_partial_tests_can_leave_a_defect
-    target_statement_id: sha256:45c6e26ee7aaf07f585696fbeb5c1f1c89f8aa852d313f10b7335dcf2e1455c9
-receipts:
-  unresolved_subitems: []

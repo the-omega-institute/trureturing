@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:de7546ae47cc6d520ead01c4019cc57378ba9f8d6de12707e6360bd41d527558
-  normalized_sha256: sha256:de7546ae47cc6d520ead01c4019cc57378ba9f8d6de12707e6360bd41d527558
-cas_ref: sha256:de7546ae47cc6d520ead01c4019cc57378ba9f8d6de12707e6360bd41d527558
-coverage_gids:
-  - gid: D5/S3/Observer/Conditioning.unreadState_idempotent
-    target_statement_id: sha256:40a59c00ad5c06e8478f18ec37e960d3cb0be1d483718f2bc553ac24464c1797
-receipts:
-  unresolved_subitems: []

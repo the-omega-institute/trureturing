@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6e62b84ca59d6f152c26f2df6168818db95208882bf4c7d3ecfcbca7f4cc4002
-  normalized_sha256: sha256:6e62b84ca59d6f152c26f2df6168818db95208882bf4c7d3ecfcbca7f4cc4002
-cas_ref: sha256:6e62b84ca59d6f152c26f2df6168818db95208882bf4c7d3ecfcbca7f4cc4002
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/EpistemicOperators/BudgetKnowledgeFiberStability.budget_knowledge_fiber_stability
-    target_statement_id: sha256:3f5bd15f95cd5505234cfb6cca162a0bc3638487ea860affbe10e105f9bfee2a
-receipts:
-  unresolved_subitems: []

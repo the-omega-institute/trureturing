@@ -1,6 +1,0 @@
-DECT 的工作将是逐步测量：
-
-* 哪些索引真正切开负 Weil residual；
-* 哪些只是冗余；
-* 哪些可以通过 primitive decomposition 压缩。
-

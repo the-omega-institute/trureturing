@@ -1,1 +1,0 @@
-{"statement_id":"sha256:be3ee4050a42f97653ece80b4b7dc35917a7fba013f30e298d5314c8652ef867","declarations":[{"declaration_name_key":"ns(ns(ns(n0,2:lp),6:mapCLM),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:FluidDynamics),7:Fourier),18:MildPathRegularity),33:all_grade_regularity_of_mild_path)","kind":"theorem"}]}

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:96fee2dfeb5bf6375c68461831de4c917ec51da339c75187aed00374520ec838
-  normalized_sha256: sha256:96fee2dfeb5bf6375c68461831de4c917ec51da339c75187aed00374520ec838
-cas_ref: sha256:96fee2dfeb5bf6375c68461831de4c917ec51da339c75187aed00374520ec838
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Rights/ConflictRepairHittingSet.MinimalConflictCore
-    target_statement_id: sha256:f5837e4da03ca92152ceaaa6c143d423e04681604cede09c8f0a2f83ea37052c
-receipts:
-  unresolved_subitems: []

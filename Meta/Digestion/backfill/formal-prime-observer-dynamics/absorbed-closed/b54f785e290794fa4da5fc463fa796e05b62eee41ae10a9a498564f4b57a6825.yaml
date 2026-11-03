@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b54f785e290794fa4da5fc463fa796e05b62eee41ae10a9a498564f4b57a6825
-  normalized_sha256: sha256:b54f785e290794fa4da5fc463fa796e05b62eee41ae10a9a498564f4b57a6825
-cas_ref: sha256:b54f785e290794fa4da5fc463fa796e05b62eee41ae10a9a498564f4b57a6825
-coverage_gids:
-  - gid: D5/S3/Arith/Coding/ErrorErasureUniqueDecoding.error_erasure_unique_decoding
-    target_statement_id: sha256:8cf6da01b5955e9bd4f01b8b9b159142c64d366fdde9f6176d614d7dc53f2fbf
-receipts:
-  unresolved_subitems: []

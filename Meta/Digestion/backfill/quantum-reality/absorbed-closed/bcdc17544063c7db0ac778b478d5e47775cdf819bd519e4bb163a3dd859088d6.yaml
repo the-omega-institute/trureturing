@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bcdc17544063c7db0ac778b478d5e47775cdf819bd519e4bb163a3dd859088d6
-  normalized_sha256: sha256:bcdc17544063c7db0ac778b478d5e47775cdf819bd519e4bb163a3dd859088d6
-cas_ref: sha256:bcdc17544063c7db0ac778b478d5e47775cdf819bd519e4bb163a3dd859088d6
-coverage_gids:
-  - gid: D5/S3/Quantum/Decoherence/FiniteShiftedRecordChannel.finite_shifted_record_channel
-    target_statement_id: sha256:2ac689fc226236b2e590f0036c0d4f114d4605f322a2cd609e8f1a9c60d10848
-receipts:
-  unresolved_subitems: []

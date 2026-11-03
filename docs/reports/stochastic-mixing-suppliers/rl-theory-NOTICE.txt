@@ -1,7 +1,0 @@
-FiniteStochasticMixing.lean contains a source-preserving port of the geometric mixing slice of RLTheory/Data/Matrix/Stochastic.lean from ShangtongZhang/rl-theory-in-lean, revision fec0b5d1a03e90479945286532f89e4f22cfcd1e.
-
-Upstream: https://github.com/ShangtongZhang/rl-theory-in-lean/tree/fec0b5d1a03e90479945286532f89e4f22cfcd1e
-Copyright (c) 2025 Shangtong Zhang. SPDX-License-Identifier: MIT.
-The complete upstream license is in rl-theory-LICENSE.txt.
-
-The retained strategy is simplex completeness, stochastic l1 nonexpansion, positive-power minorization, contraction, fixed-point uniqueness and geometric mixing. The namespace and current-pin elaboration syntax are adapted. Unused lemmas, the upstream stationary/Cesaro construction, and the extended-gcd/Frobenius support are omitted. The original repository generic Cesaro cluster and fixedness declarations supply stationary existence; pinned Mathlib supplies the numerical-semigroup theorem and matrix linearity, stochastic-vector multiplication and stochastic-power closure APIs. The primitive return-predicate bridge and conversion of geometric bounds to matrix convergence connect the supplier to the current repository interfaces.
