@@ -78,15 +78,13 @@ case "$COMMAND" in
 esac
 python3 "$SELECTION" snapshot --repository "$REPOSITORY" --output "$TMP_ROOT" || exit 2
 
-registered_input_hash() {
+prepare_registered_manifest() {
   local kind="$1" relative
   local manifest="$TMP_ROOT/$kind.manifest"
   : > "${manifest}.requests"
   while IFS= read -r relative; do
     append_manifest_entry "$manifest" "$relative" || return 2
   done < "$TMP_ROOT/$kind-paths"
-  materialize_manifest "$manifest" || return 2
-  hash_file "$manifest"
 }
 
 # The legacy producer/resident coordinate fields carry the manual semantic
@@ -96,9 +94,12 @@ repository_address() {
   local resident_sha256 sources_sha256 config_sha256
 
   prepare_memo
-  resident_sha256="$(cat "$TMP_ROOT/compatibility")" || return 2
-  sources_sha256="$(registered_input_hash sources)" || return 2
-  config_sha256="$(registered_input_hash config)" || return 2
+  IFS= read -r resident_sha256 < "$TMP_ROOT/compatibility" || return 2
+  prepare_registered_manifest sources || return 2
+  prepare_registered_manifest config || return 2
+  local hashes
+  hashes="$(materialize_manifests "$TMP_ROOT/sources.manifest" "$TMP_ROOT/config.manifest")" || return 2
+  IFS=' ' read -r sources_sha256 config_sha256 <<< "$hashes"
 
   local coordinates address_sha256
   coordinates="$(input_coordinates "$resident_sha256" "$resident_sha256" "$sources_sha256" "$config_sha256")" || return 2

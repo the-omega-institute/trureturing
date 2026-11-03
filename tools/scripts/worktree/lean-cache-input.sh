@@ -160,9 +160,7 @@ PY
   MEMO_ENABLED=1
 }
 
-materialize_manifest() {
-  local manifest="$1"
-  local requests="${manifest}.requests"
+materialize_manifests() {
   local eligible="$MEMO_ELIGIBLE"
   local snapshot="$MEMO_SNAPSHOT"
   if [[ "$MEMO_ENABLED" != "1" ]]; then
@@ -172,11 +170,10 @@ materialize_manifest() {
     : > "$snapshot"
   fi
 
-  # Plan, stream the uncached inputs and write their ordered manifest in one
+  # Stream the uncached inputs and write all ordered manifests in one
   # process. Memo eligibility and values still come from prepare_memo; paths
   # outside that exact current index population are always read from disk.
-  python3 - "$REPOSITORY" "$requests" "$eligible" "$snapshot" \
-    "$manifest" "$MEMO_UPDATES" <<'PY_MANIFEST'
+  python3 - "$REPOSITORY" "$eligible" "$snapshot" "$MEMO_UPDATES" "$@" <<'PY_MANIFEST'
 import hashlib
 import pathlib
 import re
@@ -184,7 +181,8 @@ import sys
 import os
 
 repository = pathlib.Path(sys.argv[1])
-requests_path, eligible_path, memo_path, manifest_path, updates_path = map(pathlib.Path, sys.argv[2:])
+eligible_path, memo_path, updates_path = map(pathlib.Path, sys.argv[2:5])
+manifest_paths = list(map(pathlib.Path, sys.argv[5:]))
 
 def pairs(path):
     fields = path.read_bytes().split(b"\0")
@@ -205,18 +203,25 @@ for line in memo_path.read_bytes().splitlines():
 
 repository_prefix = os.fsencode(repository) + b"/"
 updates = []
-with manifest_path.open("wb") as manifest:
-    for relative, path in pairs(requests_path):
-        oid = eligible.get(relative, b"") if path == repository_prefix + relative else b""
-        sha = memo.get(oid, b"") if oid else b""
-        if not sha:
-            with open(path, "rb") as source:
-                sha = hashlib.file_digest(source, "sha256").hexdigest().encode("ascii")
-            if oid:
-                updates.append(oid + b" " + sha + b"\n")
-        manifest.write(sha + b"  " + relative + b"\n")
+digests = []
+for manifest_path in manifest_paths:
+    with manifest_path.open("wb") as manifest:
+        digest = hashlib.sha256()
+        for relative, path in pairs(pathlib.Path(str(manifest_path) + ".requests")):
+            oid = eligible.get(relative, b"") if path == repository_prefix + relative else b""
+            sha = memo.get(oid, b"") if oid else b""
+            if not sha:
+                with open(path, "rb") as source:
+                    sha = hashlib.file_digest(source, "sha256").hexdigest().encode("ascii")
+                if oid:
+                    updates.append(oid + b" " + sha + b"\n")
+            line = sha + b"  " + relative + b"\n"
+            manifest.write(line)
+            digest.update(line)
+    digests.append(digest.hexdigest())
 with updates_path.open("ab") as updates_file:
     updates_file.writelines(updates)
+print(" ".join(digests))
 PY_MANIFEST
 }
 
