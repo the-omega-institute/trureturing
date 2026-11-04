@@ -1,0 +1,73 @@
+**定理 60.1（C105 的全族有限证书）。** 记 $\mathcal L_E(\rho)=\sqrt E\,\rho\,\sqrt E$，$\eta_a,\eta_b,\eta,\delta_*$ 取 (58.2)、(59.2)。对任一 C105 关系体、任一已有有限对象、任一效果及所选框架，并对每个 $R>0$、整数 $N\ge0$，都有
+
+$$
+\boxed{
+\|T_{E,F}-\mathcal L_E\|_\diamond
+\le
+\|E\|\min\left\{
+2,\quad
+2\delta_*+
+\max\left[
+2\omega(r_N(R))+2N\eta,\ 4e^{-R/2}
+\right]
+\right\}.
+}
+\tag{60.1}
+$$
+
+这里 diamond 范数采用未除二的通常约定。界与对象维数、中心块数、谱的秩和最小正谱值无关。它也没有把抽象参考的范数检验变成缺少的实际空间边。
+
+证明。$E=0$ 时，成功效果为零的完全正分支为零，结论成立。$q=\|E\|>0$ 时，$A=E/q$ 仍是已供应的效果，共同调暗给 $T_{E,F}=qT_{A,F}$，而 $\mathcal L_E=q\mathcal L_A$。因此只需对范数为一的效果证明大括号内的界，再乘以 $q$。下文仍将这个归一效果写作 $E$。
+
+先在一个简单块内处理。令 $\mathcal P_{E,F}(\rho)=\sum_i x_iP_i\rho P_i$，由定理 51.1 的系数分解有
+
+$$
+T_{E,F}=\mathcal K_E^\phi+\gamma\mathcal P_{E,F},
+\qquad
+\mathcal K_E^\phi(|i\rangle\langle j|)
+ =\sqrt{x_ix_j}\phi(\log x_i-\log x_j)|i\rangle\langle j|.
+\tag{60.2}
+$$
+
+式中 $\mathcal K_E^\phi$ 的主对角系数为 $cx_i$；零权重行列为零。对有限正谱点及另一个数学点 $0$ 同时取 Gram 向量，$\langle v_t,v_s\rangle=\phi(s-t)$、$\|v_s\|=\sqrt c$。定义两条有限 Stinespring 算子
+
+$$
+\begin{aligned}
+V|i\rangle&=\sqrt{x_i}\,|i\rangle\otimes v_{\log x_i},\\
+W|i\rangle&=\sqrt{x_i}\,|i\rangle\otimes v_0 .
+\end{aligned}
+\tag{60.3}
+$$
+
+零权重处均定义为零。它们分别实现 $\mathcal K_E^\phi$ 和 $c\mathcal L_E$，范数不超过 $\sqrt c$，且
+
+$$
+\|V-W\|=\max_{i:x_i>0}\sqrt{x_i}\,d_\phi(\log x_i).
+\tag{60.4}
+$$
+
+使用成熟的 Stinespring 上界方向：对任意有限矩阵参考，将 $VXV^*-WXW^*$ 写成 $(V-W)XV^*+WX(V-W)^*$，再取环境偏迹，得到
+
+$$
+\|\mathcal K_E^\phi-c\mathcal L_E\|_\diamond
+\le2\sqrt c\,
+\max_{i:x_i>0}\sqrt{x_i}\,d_\phi(\log x_i).
+\tag{60.5}
+$$
+
+这一上界适用于收缩算子，不把它们误当成保迹等距。因为 $\mathcal P_{E,F}$ 和 $\mathcal L_E$ 均完全正、迹不增，各自 diamond 范数不超过一，所以
+
+$$
+\|T_{E,F}-\mathcal L_E\|_\diamond
+\le2\gamma+
+2\sqrt c\,
+\max_{i:x_i>0}\sqrt{x_i}\,d_\phi(\log x_i).
+\tag{60.6}
+$$
+
+这也涵盖 $c=0$，没有除以 $c$。
+
+对数权重 $s=\log x$ 位于 $[-R,0]$ 时，(59.3) 给 $d_\phi(s)\le\omega(r_N(R))+N\eta$，而 $e^{s/2}\le1$。$s<-R$ 时，用 $d_\phi(s)\le2\sqrt c$ 得 $2\sqrt c\,e^{s/2}d_\phi(s)\le4c e^{-R/2}\le4e^{-R/2}$。因此 (60.6) 的第二项由 (60.1) 中的最大值控制，第一项由 $\gamma\le\delta_*$ 控制；两条分支各自范数不超过一，再截断于二即可。
+
+直和情形下，射线校准已排除跨中心转移，故两映射之差逐块作用。带任意参考的输入迹范数是各中心块迹范数之和，从而这个直和映射的 diamond 范数等于各块范数的最大值：上界逐块相加，下界把输入限于一块。所有块共享同一 $\phi,\omega,\delta_a,\delta_b$，所以同一个界仍成立。Stinespring 向量和参考仅用于证明范数，未供应新的实际对象或操作。∎
+

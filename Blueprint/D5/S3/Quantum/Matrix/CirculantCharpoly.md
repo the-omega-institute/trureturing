@@ -4,7 +4,19 @@
 
 Fourier modes factor circulant characteristic polynomials.
 
-**Theorem 1.1 (Complex circulant factorization).**
+**Theorem 1.1 (Fourier transform determinant).**
+
+$$\forall (n: \mathbb{N}), ([\operatorname{NeZero}\left(n\right)] \operatorname{Matrix.det}\left(\operatorname{D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform}\left(n\right)\right) \ne (0: \mathbb{C}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CirculantCharpoly.transform_det_ne_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The normalized Fourier matrix has nonzero determinant because its conjugate transpose is an inverse.
+
+**Theorem 1.2 (Complex circulant factorization).**
 
 Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.circulant_charpoly`
 
@@ -18,7 +30,7 @@ Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.circulant_charpoly`
 
 The characteristic polynomial of a complex circulant is the product of X minus its discrete Fourier values. This theorem is existing repository content reused from the Roldan circulant energy development.
 
-**Theorem 1.2 (Reality of even Fourier values).**
+**Theorem 1.3 (Reality of even Fourier values).**
 
 Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.dft_real_of_even`
 
@@ -32,7 +44,7 @@ Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.dft_real_of_even`
 
 The discrete Fourier value of an even real function is real. This theorem is existing repository content reused from the Roldan circulant energy development.
 
-**Theorem 1.3 (Real circulant factorization).**
+**Theorem 1.4 (Real circulant factorization).**
 
 Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.real_circulant_charpoly`
 
@@ -46,7 +58,7 @@ Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.real_circulant_charpoly`
 
 An even real circulant has the product of X minus the real parts of its Fourier values. This theorem is existing repository content reused from the Roldan circulant energy development.
 
-**Definition 1.4 (Real residue entries).**
+**Definition 1.5 (Real residue entries).**
 
 Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.realCirculant`
 
@@ -60,7 +72,7 @@ Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.realCirculant`
 
 For order 2m+1, the circulant entry is f at the least nonnegative residue.
 
-**Definition 1.5 (Cosine mode values).**
+**Definition 1.6 (Cosine mode values).**
 
 Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.cosineValue`
 
@@ -74,7 +86,19 @@ Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.cosineValue`
 
 The real mode is f(0) plus twice the cosine sum from one through m.
 
-**Theorem 1.6 (Odd paired factorization).**
+**Theorem 1.7 (Opposite character values).**
+
+$$\forall (n: \mathbb{N}), ([\operatorname{NeZero}\left(n\right)] \forall (j: \mathbb{N}), (\forall (l: \mathbb{N}), ((l \le n) \Rightarrow (\operatorname{ZMod.stdAddChar}\left(((j: \operatorname{ZMod}\left(n\right))) \cdot ((l: \operatorname{ZMod}\left(n\right)))\right) + \operatorname{ZMod.stdAddChar}\left(((j: \operatorname{ZMod}\left(n\right))) \cdot (((n - l: \mathbb{N}): \operatorname{ZMod}\left(n\right)))\right) = ((((2: \mathbb{R})) \cdot (\operatorname{Real.cos}\left(\frac{((((2: \mathbb{R})) \cdot (\operatorname{Real.pi})) \cdot ((j: \mathbb{R}))) \cdot ((l: \mathbb{R}))}{(n: \mathbb{R})}\right)): \mathbb{R}): \mathbb{C})))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CirculantCharpoly.character_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the standard complex additive character on ZMod n, opposite residues pair to twice the cosine of their angle; natural arguments are cast into ZMod n and the real right side is cast into the complex numbers.
+
+**Theorem 1.8 (Odd paired factorization).**
 
 Lean statement: `D5/S3/Quantum/Matrix/CirculantCharpoly.realCirculant_charpoly`
 
@@ -90,10 +114,12 @@ For an even generating function, the odd real characteristic polynomial has one 
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Matrix/CirculantCharpoly.character_pair`
 - Truth anchor: `D5/S3/Quantum/Matrix/CirculantCharpoly.circulant_charpoly`
 - Truth anchor: `D5/S3/Quantum/Matrix/CirculantCharpoly.cosineValue`
 - Truth anchor: `D5/S3/Quantum/Matrix/CirculantCharpoly.dft_real_of_even`
 - Truth anchor: `D5/S3/Quantum/Matrix/CirculantCharpoly.realCirculant`
 - Truth anchor: `D5/S3/Quantum/Matrix/CirculantCharpoly.realCirculant_charpoly`
 - Truth anchor: `D5/S3/Quantum/Matrix/CirculantCharpoly.real_circulant_charpoly`
+- Truth anchor: `D5/S3/Quantum/Matrix/CirculantCharpoly.transform_det_ne_zero`
 - Dependency: [D5/S3/Quantum/Dynamics/PolygonalFourierCouplings](../Dynamics/PolygonalFourierCouplings.md)

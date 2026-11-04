@@ -1,0 +1,18 @@
+### G. 配置增长、固定来源的作用与未解边界
+
+只取 $1$ 和互异素数时，邻接矩阵就是权重 $\log p/\sqrt p$ 的星图，非零特征值为这组权重的 Euclidean 范数及其相反数。其发散可仅用本篇的初等界核对：$x\ge2^{10}$ 时
+
+$$
+\vartheta(8x)-\vartheta(x)\ge2cx,\qquad
+\sum_{x<p\le8x}\frac{(\log p)^2}{p}
+\ge\frac{\log x}{8x}\bigl(\vartheta(8x)-\vartheta(x)\bigr)
+\ge\frac c4\log x\longrightarrow\infty.
+$$
+
+故“固定有限配置存在小尺度”不能交换成“同一尺度控制所有配置”。任意固定窗口的有限余维结论、每个样本的 Schur 等价及任意窗口全局正性是三个不同层次；前两个不证明第三个。Robin 路线的完整 $\mathcal D,\mathcal B$ 和带符号尾项也均保留。
+
+固定来源的核对范围如下：原稿链接的 FiniteZeroGramHierarchy 区分给定正权 Gram 构造与实际算术正性；ZeckendorfGreedyPermutation 的结论是实际最小未用规则遍历全部正整数，本文只借其遍历次序；V35 第三节的读口是对易占据量；EulerLayerRootCorrection 的定理保留严格阈值、全部指数层与根尺度极限，不提供本篇未解的符号不等式。这些是原稿所钉版本的非空源码阅读，不是重新编译，也不是对其余历史核查的认证。
+
+Kedlaya 的 [Notes on analytic number theory，第七章](https://kskedlaya.org/ant/part-2-4.html)定义 7.1 及[第九章](https://kskedlaya.org/ant/chap-von-mangoldt.html)定理 9.9 对显式公式使用整数点半权的 $\psi$。本文仍用完整的 $p^j\le T$ 端点；不能把那种半权约定的整数点等式直接移入这里的 $I_\psi$。上面的有限包络恒等式不依赖这种移用，也没有以无符号估计替换实际带符号尾项。
+
+相关原始论文为 Masatoshi Suzuki, *Aspects of the screw function corresponding to the Riemann zeta-function*, [arXiv:2206.03682](https://arxiv.org/abs/2206.03682)。论文第 4.2–4.3 节、定理 4.3 关于 $g=-\Psi$、$G_g$、相应厄米形式的正性及 Yoshida 子空间的讨论提供比较背景；这里只主张结构相近，不主张本篇原子矩条件与论文的条件相同。Robin 全局判据与 RH 的等价不用于推导本篇的有限范围恒等式和充分条件。实际低矩核心的所有配置非负性、全部整数的带符号尾项覆盖以及物理取得接口仍是未完成任务。

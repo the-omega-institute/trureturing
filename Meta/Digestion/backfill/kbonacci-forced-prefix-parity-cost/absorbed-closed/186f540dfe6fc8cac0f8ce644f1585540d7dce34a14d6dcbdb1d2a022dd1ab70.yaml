@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:186f540dfe6fc8cac0f8ce644f1585540d7dce34a14d6dcbdb1d2a022dd1ab70
+  normalized_sha256: sha256:186f540dfe6fc8cac0f8ce644f1585540d7dce34a14d6dcbdb1d2a022dd1ab70
+cas_ref: sha256:186f540dfe6fc8cac0f8ce644f1585540d7dce34a14d6dcbdb1d2a022dd1ab70
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FiveLabelReturningFrontier.original_five_label_returning_frontier
+    target_statement_id: sha256:2d84a97d5d40116553410d6d0a8ee7a4243d69581beb100cad304d04393660bd
+receipts:
+  unresolved_subitems: []

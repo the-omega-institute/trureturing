@@ -1,0 +1,27 @@
+### 推论 3.8（补端误差直接给出显式全参考恢复）
+
+<a id="cor-c122-decoupling-petz"></a>
+
+在引理~[3.7](#lem-c122-decoupling-fe) 条件下，
+
+<a id="eq-c122-decoupling-petz"></a>
+
+$$
+\boxed{\quad
+ \|\mathcal P_{\pi,\mathcal N}\mathcal N-\operatorname{id}_H\|_\diamond
+ \le\min\{2,\,2(d-1)[1-(1-\delta/2)^4]\}
+ \le\min\{2,\,4(d-1)\delta\}.
+ \quad}
+\tag{20}
+$$
+
+**证明。**
+引理给出一个 $\mathcal R$ 的平方纠缠保真度下界；Barnum–Knill 再平方一次，所以
+
+$$
+F_e(\pi,\mathcal P_{\pi,\mathcal N}\mathcal N)\ge(1-\delta/2)^4.
+$$
+
+应用定理~[3.5](#thm-c122-diamond-defect)。最后使用
+$1-(1-x)^4\le4x$，$x=\delta/2\in[0,1]$。
+

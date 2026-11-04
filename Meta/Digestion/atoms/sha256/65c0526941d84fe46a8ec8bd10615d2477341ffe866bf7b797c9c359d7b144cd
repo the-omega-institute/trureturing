@@ -1,0 +1,39 @@
+**Theorem 19.1 (full-domain inherited-prefix recorder).** There is one deterministic computable, horizon-independent map $J$ on every finite legal native history such that, for every reachable $t$,
+
+$$
+\begin{aligned}
+J(\varepsilon)&=\varepsilon,\\
+J(h)&\preceq J(he) &&(e\text{ enabled after }h),\\
+G(t)&\le M_J(t)\le G(t)+N(t)-1 &&(N(t)>0),\\
+M_J(t)&=0 &&(F(t)=1),
+\end{aligned}
+\tag{IV.43}
+$$
+
+where $G(t)=\lceil\log_2F(t)\rceil$ and $M_J(t)=\max_{h\in\mathcal H(t)}|J(h)|$. At each source, the displayed $M_J(t)$ is the exact minimum possible maximum length subject to the already fixed inherited words from its labelled predecessors. The current source computes the finite table and its width, so a fixed-head decoder reads exactly $M_J(t)$ forward data bits and recovers the complete addressed history without reading a journal end.
+
+**Proof.** Set $J(\varepsilon)=\varepsilon$. Induct on the native grade $N(t)$. For $t\ne\alpha$, recursively compute all predecessor tables, form the labelled tokens (IV.42), and apply Lemma 18.2. Define every $J(he)$ to be the assigned word and put
+
+$$
+L(t)=L^*\bigl((J(h))_{(e,h)}\bigr)=M_J(t).
+\tag{IV.44}
+$$
+
+The predecessor grade is $N(t)-1$, so the recursion terminates at the known alpha root. The finite event set, complete labelled addresses, integer ceilings, sorting, and leaf selection are all effective. No future endpoint, horizon, compatible-family limit, compactness choice, or source-supplied codebook is consulted. Lemma 18.2 gives literal extension of every old word and injective prefix freedom at the complete current fibre. It also proves the claimed local optimum.
+
+It remains to bound the width. Write $W(u)=2^{L(u)}$ and, with edge multiplicity, $S(t)=\sum_{e:u\to t}W(u)$. For a prefix $q$ of depth $d$, a predecessor table of width $L(u)$ contributes at most $2^{L(u)-d}$ lower words extending $q$ when $d\le L(u)$, and contributes none otherwise. Thus
+
+$$
+2^dD_b(q)\le S(t).
+\tag{IV.45}
+$$
+Taking the maximum in (IV.40) gives $L(t)\le\lceil\log_2S(t)\rceil$, hence $W(t)<2S(t)$ unless $S(t)=1$, in which case $W(t)=1$. Since $W(\alpha)=F(\alpha)=1$, (IV.3) and induction on $N$ give
+
+$$
+W(t)<2^{N(t)}F(t)\qquad(N(t)>0).
+\tag{IV.46}
+$$
+The empty-prefix term in (IV.40) gives $L(t)\ge\lceil\log_2F(t)\rceil=G(t)$. From (IV.46), $L(t)<N(t)+\log_2F(t)\le N(t)+G(t)$; integrality yields the upper inequality in (IV.43). If $F(t)=1$, positivity of (IV.3) forces one incoming edge from a singleton predecessor. Induction gives its lower word $\varepsilon$, so (IV.40) gives $L(t)=0$.
+
+For recovery, acquire the actual current source $t$ and its common bindings and rights. Compute the same finite predecessor tree and table in paid scratch, then read exactly $L(t)$ bits from the fixed installed head. The table is injective, so the bits select exactly one $h$. A singleton table reads no bit. For an enabled actual edge $e:t\to v$, compute the prospective finite table in scratch and append the suffix of $J(he)$ after the already present literal prefix $J(h)$. This syntax calculation is not an observation of a future live source, and all temporary tables may be cleared after their charged finite use. No end, absence, length, tail, timing, allocator, or persistent codebook observation is used. $\square$
+

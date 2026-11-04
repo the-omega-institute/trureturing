@@ -1,0 +1,47 @@
+**引理 63.2（活动简单块的曲率，不再展开类型表）。** 设 $I$ 是非经典简单 EJA，原 $F$ 为非零交替双导子并对全部内导子协变。存在唯一 $\kappa_I>0$ 使
+
+$$
+[D_a,D_b]=-\kappa_I[L_a,L_b],\qquad
+-D_a^2=\kappa_I(L_{a^2}-L_a^2).
+\tag{63.2}
+$$
+
+证明。令 $u$ 为该块单位，$V=u^\perp$、$\mathfrak g=\operatorname{Der}(I)$。有限 EJA 的导子皆内导子，且简单非经典块的无迹表示不可约；这些经典事实沿 §§31、57 复用。$D_u=0$，II 使 $D:V\to\mathfrak g$ 等变。因原 $F\ne0$，不可约性使此映射单射。其像 $\mathfrak h$ 是 $\mathfrak g$ 的理想。在 $\mathfrak g$ 上取正定不变配对 $\langle K,H\rangle=-\operatorname{Tr}_I(KH)$，则 $\mathfrak h^\perp$ 为与 $\mathfrak h$ 交换的理想。若 $K\in\mathfrak h^\perp$，II 给 $0=[K,D_a]=D_{Ka}$；单射性给 $Ka=0$ 对所有 $a\in V$ 成立，又 $Ku=0$，故 $K=0$。因此
+
+$$
+D:V\xrightarrow{\cong}\mathfrak g.
+\tag{63.3}
+$$
+
+这份双射是原关系的结论，不是输入。不可约性还使两个不变正定对称配对具有形式
+
+$$
+\operatorname{Tr}_I(L_aL_b)=\rho q(a,b),\qquad
+-\operatorname{Tr}_I(D_aD_b)=\tau q(a,b),\quad \rho,\tau>0
+\quad(a,b\in V).
+\tag{63.4}
+$$
+
+第一配对的正性由 $L_au=a$，第二配对的正性由 $D$ 单射及斜伴随给出。$T(a,b,c)=q(F(a,b),c)$ 完全交替；迹循环性和导子律给
+
+$$
+\begin{aligned}
+-\operatorname{Tr}([L_a,L_b]D_c)
+ &=-\operatorname{Tr}(L_a[L_b,D_c])
+ =-\rho q(F(a,b),c),\\
+-\operatorname{Tr}(D_{F(a,b)}D_c)
+ &=\tau q(F(a,b),c).
+\end{aligned}
+\tag{63.5}
+$$
+
+由 (63.3)，这些配对分离整个 $\mathfrak g$，所以 $[L_a,L_b]=-(\rho/\tau)D_{F(a,b)}$。II 又给 $D_{F(a,b)}=[D_a,D_b]$，取 $\kappa_I=\tau/\rho>0$ 得第一式。单位输入不贡献，故覆盖整个 $I$。将第一式作用于 $a$，用交替性得第二式。简单非经典块有非零内导子，所以尺度唯一；原 $q$ 的权重同时改变 $\rho,\tau$，不改变其比值。证明中的迹配对不是原 S 标定。特别地，对任意幂等元 $p$，不要求其原始，均有
+
+$$
+D_p^2=\kappa_I(L_p^2-L_p),\qquad
+-4D_p^2|_{E_{1/2}(p)}=\kappa_I I.
+\tag{63.6}
+$$
+
+∎
+

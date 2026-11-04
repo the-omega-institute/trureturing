@@ -125,6 +125,57 @@ public sealed class ReportSupervisorScriptTests
         Assert.Matches(@"rss_peak_kb=[0-9]+", observation);
     }
 
+    [Fact]
+    public void MacResourceSamplingQueriesTheWholeCohortOnce()
+    {
+        if (!OperatingSystem.IsMacOS()) return;
+        using var fixture = new ReportSupervisorFixture();
+        var supervisor = File.ReadAllText(fixture.Supervisor);
+        var start = supervisor.IndexOf("remember_process_candidate() {", StringComparison.Ordinal);
+        var end = supervisor.IndexOf("signal_recorded_processes() {", start, StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start);
+        var harness = """
+            set -euo pipefail
+            CHILD_PID=2147481000
+            STDOUT_RELAY_PID=2147483643
+            STDERR_RELAY_PID=2147483644
+            PROCESS_CANDIDATES_FILE=/dev/null
+            RSS_PEAK_KB=0
+            FD_PEAK=0
+            collect_process_tree() {
+              printf '%s\n' "$CHILD_PID" "$((CHILD_PID + 1))" "$STDOUT_RELAY_PID" "$STDERR_RELAY_PID"
+            }
+            marker_processes() { printf '%s\n' "$CHILD_PID"; }
+            process_start_identity() { printf 'start-%s\n' "$1"; }
+            ps() {
+              local argument pid IFS=,
+              for argument; do :; done
+              printf 'rss %s\n' "$argument" >> "$PWD/resource-queries"
+              for pid in $argument; do printf '4096\n'; done
+            }
+            lsof() {
+              local previous="" argument pids="" pid IFS=,
+              for argument; do
+                [[ "$previous" != -p ]] || pids="$argument"
+                previous="$argument"
+              done
+              printf 'fd %s\n' "$pids" >> "$PWD/resource-queries"
+              printf 'header\n'
+              for pid in $pids; do printf 'fd-a\nfd-b\n'; done
+            }
+            """ + "\n" + supervisor[start..end] + "\n" + """
+            sample_supervised_resources
+            printf 'rss=%s fd=%s\n' "$RSS_PEAK_KB" "$FD_PEAK"
+            """;
+
+        var result = fixture.RunExternalProcess("/bin/bash", ["-c", harness]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("rss=8192 fd=4\n", Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Equal(new[] { "rss 2147481000,2147481001", "fd 2147481000,2147481001" },
+            File.ReadAllLines(Path.Combine(fixture.Root, "resource-queries")));
+    }
+
     [Theory]
     [InlineData(2)]
     [InlineData(2000)]
@@ -159,8 +210,20 @@ public sealed class ReportSupervisorScriptTests
               printf 'identity=%s\n' "$1" >&2
               printf 'start-%s\n' "$1"
             }
-            ps() { printf '4096\n'; }
-            lsof() { printf 'header\nfd-a\nfd-b\n'; }
+            ps() {
+              local argument pid IFS=,
+              for argument; do :; done
+              for pid in $argument; do printf '4096\n'; done
+            }
+            lsof() {
+              local previous="" argument pids="" pid IFS=,
+              for argument; do
+                [[ "$previous" != -p ]] || pids="$argument"
+                previous="$argument"
+              done
+              printf 'header\n'
+              for pid in $pids; do printf 'fd-a\nfd-b\n'; done
+            }
             """ + "\n" + supervisor[start..end] + "\n" + """
             ulimit -f 0
             sample_supervised_resources

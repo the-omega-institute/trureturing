@@ -89,3 +89,41 @@ theorem actual_positive.{v, u} : arena.{v, u}.Law actual :=
   source_bridge.mp source_actual
 
 end Reg.D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex
+
+
+/-! # Source scopes of the exposed homology-transfer interfaces
+
+These exact source types and their positive evidence retain all category,
+shape, degree and short-exactness parameters. They supply no variation,
+sensitivity, observational dependence or completed registration. The existing
+row-to-total source family and its issue reference remain unchanged. The
+exposed source obligations are specified in
+https://github.com/the-omega-institute/trureturing/issues/24858#issuecomment-6553560856.
+-/
+
+namespace Reg.D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex.Exposed
+
+abbrev epi_transfer_scope.{a, b, c} :=
+  type_of% (@HomologicalComplex.HomologySequence.epi_homologyMap_τ₂.{a, b, c})
+theorem epi_transfer_actual.{a, b, c} : epi_transfer_scope.{a, b, c} :=
+  @HomologicalComplex.HomologySequence.epi_homologyMap_τ₂.{a, b, c}
+
+abbrev iso_transfer_scope.{a, b, c} :=
+  type_of% (@HomologicalComplex.HomologySequence.isIso_homologyMap_τ₂.{a, b, c})
+theorem iso_transfer_actual.{a, b, c} : iso_transfer_scope.{a, b, c} :=
+  @HomologicalComplex.HomologySequence.isIso_homologyMap_τ₂.{a, b, c}
+
+abbrev epi_extension_scope.{a, b, c, d} := type_of% (@HomologicalComplex.epi_homologyMap_extendMap_iff.{a, b, c, d})
+theorem epi_extension_actual.{a, b, c, d} : epi_extension_scope.{a, b, c, d} :=
+  @HomologicalComplex.epi_homologyMap_extendMap_iff.{a, b, c, d}
+
+abbrev iso_extension_zero_scope.{a, b, c, d} :=
+  type_of% (@HomologicalComplex.isIso_homologyMap_extendMap_of_forall_ne.{a, b, c, d})
+theorem iso_extension_zero_actual.{a, b, c, d} : iso_extension_zero_scope.{a, b, c, d} :=
+  @HomologicalComplex.isIso_homologyMap_extendMap_of_forall_ne.{a, b, c, d}
+
+abbrev short_exact_scope.{a, b} := type_of% (@HomologicalComplex₂.rowZeroShortComplex_shortExact.{a, b})
+theorem short_exact_actual.{a, b} : short_exact_scope.{a, b} :=
+  @HomologicalComplex₂.rowZeroShortComplex_shortExact.{a, b}
+
+end Reg.D5.S3.Topology.TauCeti.Algebra.Homology.TotalComplex.Exposed

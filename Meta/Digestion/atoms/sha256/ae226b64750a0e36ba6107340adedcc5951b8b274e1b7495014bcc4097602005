@@ -1,0 +1,14 @@
+**定义 35.1（来源与准确使用范围）。** 下列文献及仓内结果仅为定理 32.2–33.1 的中间构件；本节的 repo-derived 综合是将同一固定原仪器的忠实校准、独立完整目标效果、实际 (25.8) 趋零证书及一个未来新输出的秩五有限见证放在同一模型中。一般秩不连续、四面体测量和有限线性因子化均不另作新内容或优先权声明。
+
+| 来源 | 本节复用的准确内容与限制 |
+| --- | --- |
+| Renes–Blume-Kohout–Scott–Caves, *Symmetric Informationally Complete Quantum Measurements*, [quant-ph/0310075v1](https://arxiv.org/pdf/quant-ph/0310075v1), §IV.A，pp. 5–6 | $d=2$ 四面体 SIC 是成熟构件。(32.1) 选定等价坐标，(32.2)、(33.4) 给这里实际使用的归一化、效果对偶和非选择性收缩；不从 SIC 的数学存在取得任何实际准备或读口。 |
+| Monràs–Winter, *Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*, [arXiv:1412.3634v1](https://arxiv.org/pdf/1412.3634v1), §4，尤其 Theorem 9 | 有限实线性实现的可达／不可观测商及等价商的同构是成熟背景。本例从指定初态运行，不移入该文平稳过程的额外前提，也不靠其一般定理替代 (33.3)–(33.8) 的有限原协议计算。 |
+| Fanizza–Lumbreras–Winter, *Quantum theory in finite dimension cannot explain every general process with finite memory*, [arXiv:2209.11225v2](https://arxiv.org/pdf/2209.11225v2), §2.1 | 其 $p(u)=\pi D(u)\tau$ 的有限实线性过程表示及平稳性条件说明实现假设必须明列。本例只用有限响应表经共同载体分解的必要秩界，不声称是该文无有限量子实现的分离，也不证明这里不存在有限量子实现。 |
+| Nielsen et al., *Gate Set Tomography*, [arXiv:2009.07301v2](https://arxiv.org/pdf/2009.07301v2), §6.1，p. 25 | 遗漏语境变量、漂移和持续环境可使指定维数的门集模型失配。本例固定联合仪器并明确计入私有记忆；该文不被引用为由有限拟合认证全未来充分性的定理。 |
+| 本卷定义 25.1、定理 25.2、推论 25.3、定义 27.1–27.3；相界卷引理 141.2 | 忠实固定实现的精确因子化、完整原仪器误差证书及有限合法组合均直接复用。(32.7) 保留原常数，(33.7) 只补出正缺陷不供应精确容量的同类反例。 |
+| [Context Geometry](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) §15，尤其命题 15.2；命题 40.11–40.12 | 全词预测、有限不变张成，以及有限窗口或小谱权不认证精确平台均已有。这里不重提一般障碍为发现；新增限制是反例同时满足本卷的固定完整联合 CP 仪器、忠实乘积校准、效果独立和原定量证书，并仅用一个共同未来事件得到秩至少五。 |
+| [本卷固定来源](https://github.com/the-omega-institute/trureturing/blob/a7f2e0ace4222da66269c16b42ce09cabcd03178/docs/develop/theory/AURIC_INTERNAL_BALANCED_CALIBRATION_AND_FILTER_COMPOSITION_GEOMETRY_C113.md) §§28–31 | 固定相关来源的精确零泄漏因子化、steering 空间的率识别商、设计阶数和不可见效果边界按定义 34.2 引用，不重证这些结果；忠实乘积校准不被解释为满 steering 率识别。 |
+| [C117 固定来源](https://github.com/the-omega-institute/trureturing/blob/a7f2e0ace4222da66269c16b42ce09cabcd03178/docs/develop/theory/AURIC_COMMON_SOURCE_SELF_REFERENCE_AND_OBSERVER_SEQUENCES_C117.md) §16；[C123/C124/C125/C126 固定来源](https://github.com/the-omega-institute/trureturing/blob/a7f2e0ace4222da66269c16b42ce09cabcd03178/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md) §§18–20、21–34 | 准确全未来容量、局部比较群及固定原合同的等价运输按定义 34.2 的边界消费，不以近似校准替换它们的准确几何或实际供应前件。 |
+| [同源 C127](https://github.com/the-omega-institute/trureturing/blob/a7f2e0ace4222da66269c16b42ce09cabcd03178/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md) §§35–40，尤其定理 36.1、37.2、推论 36.2、38.1、39.1 | 完整背景中的 Z/I 对应及原 D 保持直接复用；全菜单混合曲率反例只区分具名 D 的锁定，不否定既有量子过程实现。它不供应本例所缺的准确四维共同未来载体。 |
+

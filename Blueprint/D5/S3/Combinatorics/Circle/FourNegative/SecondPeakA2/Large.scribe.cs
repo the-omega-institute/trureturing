@@ -1,0 +1,11 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2;
+internal sealed class LargeDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Second peak SecondPeakA2: Large", H("Large"),
+        Blocks(Paragraph(Text("For all p>=64, q>=2 with q=2,4,8 or q>=16, and h=1 or 2, the integer or rational cover selects the first charged window. Exact stock estimates force 1<=v and 2v<=4pq. Rounding to a predecessor of a 32h block supplies M with all required low bits, strict m<M and strict physical stock.")),
+            Describe.Lean(DescribeId.Create("large-geometry"), DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/Large.large_geometry"), H("large_geometry"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("theorem large_geometry (p q h : \u2124) (hp : 64\u2264p) (hq : 2\u2264q)     (hh : h=1 \u2228 h=2) :     31*h*L p q<K p q h \u2227 2*K p q h+A p q h<t p q*A p q h \u2227     62*h<y p q h"))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("integer-consumer-bounds"), DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/Large.integer_consumer_bounds"), H("integer_consumer_bounds"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("theorem integer_consumer_bounds (p q h : \u2124) (hp : 64\u2264p) (hq : 16\u2264q)     (hh : h=1 \u2228 h=2) :     0<D p q h \u2227 0\u22641+60*h*Q q \u2227     16*(1+60*h*Q q)\u2264D p q h \u2227 13*D p q h\u2264A p q h"))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("large-exists"), DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/Large.large_exists"), H("large_exists"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("theorem large_exists (p q h : \u2115) (hp : 64\u2264p) (hq : 2\u2264q)     (hqs : q=2 \u2228 q=4 \u2228 q=8 \u2228 16\u2264q) (hh : h=1 \u2228 h=2) :     \u2203 v m M : \u2115, \u2203 before : Bool, Good p q h v m M before"))), DescribeRole.Theorem)), []));
+}

@@ -1,0 +1,14 @@
+### 定义 1.1（带内部参照的过程）
+
+一个参考过程是 $(\sigma,\mathcal N,\tau)$，其中 $\sigma>0$、
+$\operatorname{Tr}\sigma=1$、$\mathcal N$ 是实际指定的通道，且 $\tau=\mathcal N(\sigma)$。
+输出对象限制到 $P\mathcal BP$，$P=\operatorname{supp}\tau$，因此 $\tau$ 在该对象上严格正。
+参考状态是过程记录中已经供应的准备；不把它当作掌握整个 $\Omega$ 的外部全知分布。
+
+限制支持不会漏掉由这个完整源产生的输出。
+若 $\mathcal N(X)=\sum_iK_iXK_i^*$，$\sigma\ge mI>0$，
+则 $\tau\ge m\sum_iK_iK_i^*$。
+对 $\ker\tau$ 中的向量取期望，得到 $PK_i=K_i$；
+所以 $\mathcal N(X)=P\mathcal N(X)P$，$\mathcal N^*(P)=I$。
+若原来的 $\sigma$ 本身奇异，就先限制输入到其支持；对先验零权重的方向没有由下述规则唯一决定的回推。
+

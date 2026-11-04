@@ -1,0 +1,17 @@
+## 14. 每个二元关系怎样再进入有限三维球面
+
+对任意两份比较内容 $x,y\in M_d$，记
+
+$$
+ a=\|x\|_\rho^2,\qquad b=\|y\|_\rho^2,qquad c=\langle x,y\rangle_\rho.
+$$
+
+对应 Gram 块
+
+$$
+G(x,y)=\begin{pmatrix}a&c\\\bar c&b\end{pmatrix}\ge0,
+\qquad \Delta=ab-|c|^2\ge0.
+$$
+
+这些内容可以是可观测关系、切向、粗化代表或细节残差，$x,y$ 无须都是正算符。因此这首先是比较向量的球面表示。
+

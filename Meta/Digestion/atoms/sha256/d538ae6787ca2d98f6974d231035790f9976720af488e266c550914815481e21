@@ -1,0 +1,16 @@
+**定义 29.2（内归属、全内协变和单效果大小）。** 以三项关系替换假设 1.5：
+
+$$
+\begin{aligned}
+\mathrm I:\quad &D^A_a\in\mathfrak k_A
+&&\text{对每个所需原对象或实际联合对象 }A,\ a\in E_A;\\
+\mathrm {II}:\quad &[K,D^A_a]=D^A_{Ka}
+&&\text{对这些 }A,\ K\in\mathfrak k_A,\ a\in E_A;\\
+\mathrm S:\quad &-\operatorname{Tr}_{\mathbb R,E_P}\bigl((D^P_{d_0})^2\bigr)
+=\operatorname{Tr}_{\mathbb R,E_P}(L_{d_0}^2).
+\end{aligned}
+\tag{29.2}
+$$
+
+I 是原算子的归属条件，II 对完整 $\mathfrak k_A$ 成立；S 只有这一只原效果上的一个实算子迹等式。没有对其他对象或效果附加大小式，没有加入辅助 $J$，也没有把原 $D$ 乘上待选常数。反对称、自守恒、中心零、像的大小以及逐对象非零均不属于定义。
+

@@ -1981,3 +1981,1337 @@ $$
 The first two events are consecutive at times $0,1$, so every actual state is annihilated by time $2$, and every later transfer preserves zero. This is also the orthogonal singular-projection mechanism of Theorem 6.2, used here as an original-history consumer. The first gap is $d_0=1$ and every later gap is $2$. Since $\theta=\pi/2$, their squared sines are respectively $1$ and $0$, giving $W=1$. This supplies singular nonnecessity with infinitely many events and infinitely many singular factors. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 12. An evaluated boundary determinant for every original chain
+
+**Definition 12.1 (Fixed transfer, normalized observation and source correspondence).** Let $m\geq1$, $v_1,\ldots,v_{m+1}>0$ and $0<\alpha<1$. Throughout Sections 12–15 set
+
+$$
+T=A^{-1}B_\alpha=N_\alpha,\qquad U=A^{-1}B=M,
+\qquad z_0=z_{m+1}=0,
+$$
+
+with exactly the real matrices of Definition 1.1, acting also on $\mathbb C^m$. Thus $T$ is one fixed map at every iteration. Define
+
+$$
+\begin{gathered}
+s_i=v_i+v_{i+1},\qquad g_i=\frac{s_i}{v_iv_{i+1}},\qquad
+G_{ii}=g_i,\quad G_{i,i+1}=G_{i+1,i}=-\frac1{v_{i+1}},\quad
+G_{ij}=0\quad(|i-j|>1),\\
+\langle x,y\rangle_Q=x^*Gy,\qquad
+Q(z)=z^*Gz=\sum_{j=1}^{m+1}\frac{|z_j-z_{j-1}|^2}{v_j},\qquad
+f_i=\frac{e_i}{\sqrt{g_i}},\qquad
+\ell(z)=\langle f_1,z\rangle_Q
+=\sqrt{g_1}\left(z_1-\frac{v_1}{s_1}z_2\right),\\
+\theta_\alpha=\frac{\alpha s_1}{v_2+\alpha v_1},\qquad
+q=2\theta_\alpha-1
+=\frac{\alpha(v_1+2v_2)-v_2}{v_2+\alpha v_1},\qquad
+\sigma=1-q^2
+=\frac{4\alpha(1-\alpha)v_2s_1}{(v_2+\alpha v_1)^2}>0.
+\end{gathered}
+\tag{12.1}
+$$
+
+Here $e_i$ is the original coordinate vector; $z_2=0$ for $m=1$. A star on a vector or an ordinary matrix means conjugate transpose. For an endomorphism of the state space, $R^{\dagger}=G^{-1}R^*G$ denotes its $Q$-adjoint. Observation output spaces have the standard Hermitian inner product, so $\ell^{\dagger}a=af_1$ and $\mathcal O_T^{\dagger}=G^{-1}\mathcal O_T^*$. The form is positive definite, since its defining sum can vanish only when all consecutive differences, and hence all coordinates, vanish. Put
+
+$$
+\mathcal O_Tz=(\ell(z),\ell(Tz),\ldots,\ell(T^{m-1}z))^T,
+\qquad H_T=\mathcal O_T^{\dagger}\mathcal O_T
+=\sum_{k=0}^{m-1}(T^{\dagger})^k f_1\ell T^k.
+\tag{12.2}
+$$
+
+The determinant of $H_T$ is the normalized boundary-observation Gram determinant: in any $Q$-orthonormal basis it is the usual determinant of $\mathcal O_T^*\mathcal O_T$. Equivalently it is $\det(\mathcal O_T^*\mathcal O_T)/\det G$ when the observation matrix is written in the original coordinates.
+
+The original hypotheses and rows are those of [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Section III and Section IV.A, page 3, and Section IV.B.1, page 4](https://arxiv.org/html/2608.27085v1#S4). Their $u=x-x^*$ is $z$ here, their $M_\alpha$ is $T$, their $M$ is $U$, and their endpoint values after centering are zero. The collision interpretation presupposes the alternating, catch-up-free rotational regime. No entry time into that regime is a hypothesis or conclusion of the estimates below.
+
+For the complete [finite-path source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean), [damped-sweep source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), and their [finite-path](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs) and [damped-sweep](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) expositions, pair $i$ and velocity $v_j$ have indices $i-1$ and $j-1$. The definitions `A`, `B`, `Balpha`, `Malpha` are the literal $A,B,B_\alpha,T$; the private weight `theta` is $\theta_\alpha$. The form, local reflection identity, first-event loss and factorization used below are the intermediates `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_phase`, `sweep_stacked` and `source_factorization`. The rigidity and boundary-zero implications are `harmonic_dirichlet_zero` and `boundary_zero_observability`. The fixed-map qualitative conclusion is `TokenDampedSweepContraction.result`, with its power implication `real_mulVec_powers_tendsto_zero`; the [source note](../../../Library/Dynamics/wallner2026passbucket.md) and [fixed-map statement](../../../Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction.md) specify the same correspondence. These results are supporting conclusions, rather than additional claims about variable histories.
+
+The homogeneous qualitative antecedent is R. A. Mensing, *Ansätze für Bewegungsplanungs-Probleme mit dem Ziel der verketteten Arbeitsteilung*, bachelor's thesis (2021), credited in [v1, Section II and reference [11]](https://arxiv.org/html/2608.27085v1#bib.bib11). Its full-text quantitative coverage is unknown and no quantitative result from it is used. No non-overlap or publication-priority assertion concerning that thesis is part of these statements.
+
+**Theorem 12.2 (Explicit velocity product and damping independence).** For every chain and parameter in Definition 12.1, put
+
+$$
+\boxed{\displaystyle
+\mathcal D(v)=
+\frac{\left(\sum_{j=1}^{m+1}v_j\right)\prod_{j=2}^{m}v_j}
+     {\prod_{i=1}^{m}(v_i+v_{i+1})}
+\prod_{i=1}^{m-1}
+\left(\frac{4v_iv_{i+2}}
+{(v_i+v_{i+1})(v_{i+1}+v_{i+2})}\right)^{m-i}.}
+\tag{12.3}
+$$
+
+Every empty product is one. Then
+
+$$
+\det H_T=\det H_U=\mathcal D(v),\qquad 0<\mathcal D(v)\leq1.
+\tag{12.4}
+$$
+
+In particular this determinant is independent of $\alpha$, including the singular interior parameter
+
+$$
+\alpha_* =\frac{v_2}{v_1+2v_2},\qquad q=0.
+\tag{12.5}
+$$
+
+For $m=1$ it is exactly one. The determinant identity also holds for the endpoint extensions $\alpha=0,1$ of the original rows.
+
+*Proof.* We first use the local reflection identities cited in Definition 12.1 in their present coordinates. Set $P_i z=f_i\langle f_i,z\rangle_Q$ and $E_i=I-2P_i$. Since $\langle f_i,f_i\rangle_Q=1$, $P_i$ is an orthogonal projection for $Q$. Directly,
+
+$$
+(E_i z)_i=-z_i+\frac{2v_{i+1}}{s_i}z_{i-1}
+                         +\frac{2v_i}{s_i}z_{i+1},
+\qquad (E_i z)_j=z_j\quad(j\ne i).
+\tag{12.6}
+$$
+
+The local energy decomposition cited in Definition 12.1 has center $c=(v_{i+1}z_{i-1}+v_i z_{i+1})/s_i$ and coefficient $g_i$ on $|z_i-c|^2$. Consequently it is exactly this $Q$-reflection: $E_i^2=I$ and $Q(E_i z)=Q(z)$, also for complex inputs. Distinct same-parity normals are orthogonal, so same-parity reflections commute. Write
+
+$$
+F=\prod_{i\ {m odd}}E_i,\qquad J_0=\prod_{i\ {m even}}E_i.
+$$
+
+The product over an empty parity class is $I$. The original odd rows give the first phase $Fz$; the original even rows then give the second phase $J_0Fz$. Invertibility of $A$ therefore identifies $U=J_0F$. For the first damped event the original row is precisely $D_1=(1-\theta_\alpha)I+\theta_\alpha E_1$. Indeed its first diagonal coefficient is $1-2\theta_\alpha=-q$ and its right coefficient is $2\theta_\alpha v_1/s_1=2\alpha v_1/(v_2+\alpha v_1)$. Every other odd row and every even relation is unchanged. Since the remaining odd reflections commute with $E_1$ and with $D_1$,
+
+$$
+\begin{gathered}
+U^{\dagger}U=I,\qquad
+T=UK_q,\qquad K_q=E_1D_1=I-(1-q)P_1,\\
+Q(Tz)=Q(z)-(1-q^2)|\ell(z)|^2.
+\end{gathered}
+\tag{12.7}
+$$
+
+This is the source factorization and loss, expressed with a unit normal. It uses no inverse of $T$ or of $K_q$. Positivity of the original parameters gives $0<\theta_\alpha<1$ because the denominator exceeds the numerator by $v_2(1-\alpha)>0$. Thus $-1<q<1$ and every $T$ is nonexpansive for $Q$. At $\alpha=0,1$, $q=-1,1$ respectively; the same factorization is valid and both endpoint transfers are $Q$-isometries.
+
+We next evaluate the undamped observation determinant. The Gram matrix $C$ of $f_1,\ldots,f_m$ has diagonal one and adjacent entries $-c_i$, where
+
+$$
+c_i=\frac{1/v_{i+1}}{\sqrt{g_i g_{i+1}}}
+=\sqrt{\frac{v_iv_{i+2}}{s_i s_{i+1}}}>0
+\qquad(1\leq i<m).
+\tag{12.8}
+$$
+
+For adjacent indices the reflection rule gives $E_i f_j=f_j+2c_{\min(i,j)}f_i$; it gives $E_i f_i=-f_i$ and fixes every other $f_j$. In the ordered list
+
+$$
+w_1=f_1,\quad w_{2r}=U^r f_1\ (r\geq1),\quad
+w_{2r+1}=U^{-r}f_1\ (r\geq1),\qquad 1\leq j\leq m,
+\tag{12.9}
+$$
+
+$w_j$ lies in $\operatorname{span}(f_1,\ldots,f_j)$, and the absolute value of its $f_j$ coefficient is
+
+$$
+a_j=2^{j-1}\prod_{i=1}^{j-1}c_i.
+\tag{12.10}
+$$
+
+Here is an explicit induction that accounts for both parities. First $Uf_1=-J_0f_1=-f_1-2c_1f_2$ when $m\geq2$. On a normal with even index $i$, applying $U=J_0F$ can reach index $i+2$ only through $f_i\mapsto2c_i f_{i+1}\mapsto4c_i c_{i+1}f_{i+2}$. On a normal with odd index $i$, $U$ reaches at most $i+1$. Therefore, for an input supported through an even index $i$, only its last coefficient contributes at index $i+2$, by the multiplier $4c_i c_{i+1}$. This proves (12.10) on all even indices from the displayed base. For $U^{-1}=FJ_0$, an odd index $i$ reaches $i+2$ by the same multiplier $4c_i c_{i+1}$, whereas an even index reaches at most $i+1$. Starting with $f_1$, this proves the odd-index assertion. Every such induction step is used only when its terminal index is at most $m$; no nonexistent endpoint normal is introduced.
+
+The Laurent order (12.9) is the cyclic unitary order $1,z,z^{-1},z^2,z^{-2},\ldots$ used in [Simon, *CMV matrices: Five years after*, arXiv:math/0603093v1, Section 2, (2.15) and (2.33)–(2.34)](https://arxiv.org/pdf/math/0603093v1). Here unitarity is (12.7), and cyclicity follows from the nonzero coefficients (12.10). The coefficients in this calculation are the explicit overlaps (12.8) of the original chain; no identification of original coordinates with an unspecified CMV matrix is required.
+
+Triangularity in (12.9)–(12.10) now gives
+
+$$
+\det\big(\langle w_i,w_j\rangle_Q\big)_{i,j=1}^m
+=\det C\prod_{j=1}^m a_j^2
+=\det C\prod_{i=1}^{m-1}(4c_i^2)^{m-i}.
+\tag{12.11}
+$$
+
+The exponents of $U$ in (12.9) form the consecutive integer interval
+$-\lfloor(m-1)/2\rfloor,\ldots,\lfloor m/2\rfloor$, in a different order. Applying the common isometry $U^{\lfloor m/2\rfloor}$ to $f_1,U^{-1}f_1,\ldots,U^{-(m-1)}f_1$ gives exactly that interval. A common isometry and a simultaneous permutation preserve a Gram determinant. The vectors $U^{-k}f_1$ represent the rows $\ell U^k$, so (12.11) is $\det H_U$.
+
+It remains to evaluate $\det C$. Let $\Delta_k$ be the leading $k\times k$ determinant of $G$ and let $S_k=\sum_{j=1}^k v_j$. Expanding the last row of this tridiagonal determinant gives
+
+$$
+\Delta_0=1,\qquad \Delta_1=\frac{v_1+v_2}{v_1v_2},\qquad
+\Delta_k=g_k\Delta_{k-1}-\frac1{v_k^2}\Delta_{k-2}
+=\frac{S_{k+1}}{\prod_{j=1}^{k+1}v_j}.
+\tag{12.12}
+$$
+
+For the final equality induction substitutes the formulas for $k-1,k-2$; the numerator reduces by
+$(v_k+v_{k+1})S_k-v_{k+1}S_{k-1}=v_kS_{k+1}$.
+Consequently
+
+$$
+\det C=\frac{\det G}{\prod_{i=1}^m g_i}
+=\frac{S_{m+1}\prod_{j=2}^{m}v_j}{\prod_{i=1}^m s_i}.
+\tag{12.13}
+$$
+
+Combining (12.8), (12.11) and (12.13) proves exactly the finite velocity product (12.3), with no remaining determinant or recurrence in that expression.
+
+Finally, the rank-one difference $T-U=-(1-q)Uf_1\ell$ gives, for $k\geq1$, the finite identity
+
+$$
+T^k=U^k-(1-q)\sum_{j=0}^{k-1}U^{k-j}f_1\ell T^j.
+\tag{12.14}
+$$
+
+It follows either by telescoping $T^k-U^k$ or by induction using $T=U-(1-q)Uf_1\ell$. Applying $\ell$ shows that the $k$th damped observation row is the $k$th undamped row minus a linear combination of earlier damped rows. Successive substitution makes the change from $\mathcal O_U$ to $\mathcal O_T$ lower triangular with diagonal entries one. Its determinant is one. Taking the squared absolute determinant in orthonormal coordinates proves $\det H_T=\det H_U$. This argument works for every real $q$, so in particular at zero and at both endpoints. Every factor in (12.3) is positive. The undamped observation rows have norm one, because $U$ is an isometry and $f_1$ is a unit vector. Hadamard's inequality therefore gives $\det H_U\leq1$. When $m=1$, both the prefactor and the empty product in (12.3) equal one. This proves all claims. $\square$
+
+## 13. Evaluated contraction, spectrum and finite annihilation
+
+**Definition 13.1 (Constants evaluated from the velocities).** In the domain of Definition 12.1, define
+
+$$
+\begin{gathered}
+b_1=1,\qquad b_m=\left(\frac{m-1}{m}\right)^{m-1}\quad(m\geq2),\\
+d(v)=\begin{cases}1,&\mathcal D(v)=1,\\b_m\mathcal D(v),&\mathcal D(v)<1,\end{cases}
+\qquad \eta=\sigma d(v),\qquad r=1-\eta.
+\end{gathered}
+\tag{13.1}
+$$
+
+These are finite expressions in the dimension, original velocities and original damping. In particular $0<d(v)\leq1$, $0<\eta\leq1$ and $0\leq r<1$. Powers $0^0$ in integer-time bounds mean one.
+
+**Theorem 13.2 (Finite-step, all-time and complex-spectral certificates).** For every $m\geq1$, every positive velocity vector of length $m+1$, every fixed $0<\alpha<1$, every $z\in\mathbb C^m$ and every integer $t\geq0$,
+
+$$
+\boxed{\quad Q(T^m z)\leq rQ(z),\qquad
+Q(T^t z)\leq r^{\lfloor t/m\rfloor}Q(z).\quad}
+\tag{13.2}
+$$
+
+Every complex spectral value $\mu$ of the original $T$ satisfies
+
+$$
+\boxed{\quad |\mu|\leq r^{1/(2m)}<1.\quad}
+\tag{13.3}
+$$
+
+For every integer $0\leq p<m$ there is a nonzero complex, and also a nonzero real, input with $Q(T^p z)=Q(z)$; thus no such window gives a strict contraction for all inputs. At $q=0$ all statements remain valid. All initial states are annihilated after finitely many sweeps if and only if
+
+$$
+q=0\quad\hbox{and}\quad \mathcal D(v)=1.
+\tag{13.4}
+$$
+
+In that case $T^m=0$, and $m$ is the least all-state annihilation time. More generally, for any fixed initial state, finite annihilation is equivalent to $T^m z=0$. For $m=1$, the exact identities are $Tz=-qz$, $d(v)=1$, $r=q^2$, including $T=0$ at $\alpha_*$.
+
+*Proof.* Since $T$ is nonexpansive, each functional $\ell T^k$ has dual $Q$-norm at most one. Thus $H_T$ is positive definite by Theorem 12.2, has determinant $\mathcal D(v)$, and has trace at most $m$. Let its positive eigenvalues be $h_1\leq\cdots\leq h_m$. For $m\geq2$, the arithmetic-geometric mean inequality gives
+
+$$
+\prod_{j=2}^m h_j
+\leq\left(\frac{\sum_{j=2}^m h_j}{m-1}\right)^{m-1}
+\leq\left(\frac m{m-1}\right)^{m-1},
+\qquad h_1\geq b_m\mathcal D(v).
+\tag{13.5}
+$$
+
+If $\mathcal D(v)=1$, the product of all $h_j$ is one while their sum is at most $m$. The same inequality applied to all $m$ numbers forces equality and $h_j=1$ for every $j$, so $H_T=I$. For $m=1$ this follows directly from the unit observation. These arguments prove, in all cases,
+
+$$
+\sum_{k=0}^{m-1}|\ell(T^k z)|^2
+=\langle z,H_Tz\rangle_Q\geq d(v)Q(z).
+\tag{13.6}
+$$
+
+Summing the exact loss (12.7) along these $m$ actual iterates gives
+
+$$
+Q(T^m z)=Q(z)-\sigma\sum_{k=0}^{m-1}|\ell(T^k z)|^2.
+\tag{13.7}
+$$
+
+Combining (13.6)–(13.7) proves the first estimate in (13.2). Apply it repeatedly at block boundaries and use nonexpansiveness for the remaining $0,\ldots,m-1$ steps to obtain the second, including $t=0$ and the convention when $r=0$. A complex spectral value in finite dimension has a nonzero complex eigenvector. Substitution in the first estimate yields $|\mu|^{2m}Q(z)\leq rQ(z)$, and $Q(z)>0$ proves (13.3). The constants came from the evaluated velocity product, rather than an unknown spectral radius or a norm of a growing power.
+
+For a shorter window $p<m$, its $p$ observation functionals have a common kernel of dimension at least $m-p>0$. Their real coefficients also give a nonzero vector in the real kernel. The loss summed over those $p$ steps vanishes on that kernel, proving the assertion about every shorter window. This is the usual finite-observability rank argument, here consumed by the literal source map and the determinant (12.3).
+
+Every reflection has determinant $-1$, so (12.7) gives
+
+$$
+\det U=(-1)^m,\qquad \det T=(-1)^m q.
+\tag{13.8}
+$$
+
+If $\mathcal D(v)=1$, the stronger identity $H_T=I$ already proved gives $Q(T^m z)=q^2Q(z)$. Hence $q=0$ implies $T^m=0$. Conversely, if every input is annihilated in finite time, apply this assertion to a basis and take the largest of its finitely many annihilation times. This makes $T$ nilpotent. Its determinant is zero, so $q=0$ by (13.8). A nilpotent map in dimension $m$ satisfies $T^m=0$: its increasing sequence of kernels must stabilize by index $m$, and once two consecutive kernels coincide all later ones coincide. At $q=0$, (13.7) then gives $H_T=I$, so $\mathcal D(v)=1$. A nilpotence time $p<m$ is impossible by the shorter-window assertion. This proves (13.4) and its exact time.
+
+The same kernel-stabilization argument proves the individual-state assertion without assuming that the whole map is nilpotent. Explicitly, if $\ker T^j=\ker T^{j+1}$, then $T^{j+2}z=0$ implies $Tz\in\ker T^{j+1}=\ker T^j$, hence $z\in\ker T^{j+1}$; induction gives equality of every later kernel. If no equality occurs before index $m$, all $m$ inclusions from $\ker I=0$ are strict, so $\ker T^m$ is the entire space and again stable. Thus $\bigcup_{j\geq0}\ker T^j=\ker T^m$. Finally, in dimension one the original first row is $-q$ and $A=1$, proving the exact scalar formulas.
+
+An actual two-coordinate consumer also describes the finite-annihilation branch. For every $a>b>0$, take
+
+$$
+m=2,\qquad (v_1,v_2,v_3)=\left(a,b,\frac{b(a+b)}{a-b}\right),
+\qquad \alpha=\frac b{a+2b}.
+\tag{13.9}
+$$
+
+Then the original transfer is
+
+$$
+T=\begin{pmatrix}0&a/(a+b)\\0&0\end{pmatrix},\qquad
+T\ne0,\quad T^2=0,\quad \mathcal D(v)=1.
+\tag{13.10}
+$$
+
+These velocities and this parameter are strictly in their required domains. The singular first row has zero diagonal and right coefficient $a/(a+b)$. The original even relation has left coefficient $2v_3/(b+v_3)=(a+b)/a$ when solved for its new coordinate. It therefore gives $z'_2=-z_2+[(a+b)/a]z'_1=0$. This proves exactly the displayed matrix and its nilpotence. Alternatively (12.8) gives $c_1^2=1/2$, and (12.11) gives $\mathcal D=(1-c_1^2)4c_1^2=1$. The orthogonal singular mechanism is the one in Theorem 6.2; here its original velocity family consumes the evaluated condition $\mathcal D=1$ in (13.4), with no inverse of the damped map. $\square$
+
+## 14. Original-coordinate error tolerances and sweep counts
+
+**Definition 14.1 (Initial error and a finite zero test).** For the same original parameters let
+
+$$
+S=\sum_{j=1}^{m+1}v_j,\qquad S_i=\sum_{j=1}^i v_j,\qquad
+x_i^*=\frac{S_i}{S},\qquad z_i=x_i(0)-x_i^*,
+\qquad E_0=\max_{1\leq i\leq m}|z_i|.
+\tag{14.1}
+$$
+
+The initial data $x(0)$ may be real or complex. The centered iterates are $x_i(t)-x_i^*=(T^t z)_i$. Set
+
+$$
+h_i=\frac{S_i(S-S_i)}{S},\qquad h=\max_{1\leq i\leq m}h_i>0,
+\qquad Q_0=\sum_{j=1}^{m+1}\frac{|z_j-z_{j-1}|^2}{v_j},
+\qquad A_0=\sqrt{hQ_0}.
+\tag{14.2}
+$$
+
+A zero tolerance has the following finite algebraic criterion in the original parameters and data. To specify it without an unevaluated power norm, write $L_i=2v_{i+1}/s_i$, $R_i=2v_i/s_i$ and let $\delta_{ij}$ be the Kronecker symbol, zero whenever an index is outside $1,\ldots,m$. For odd $i$ define rows
+
+$$
+\begin{aligned}
+D_{1j}&=-q\delta_{1j}+\frac{2\alpha v_1}{v_2+\alpha v_1}\delta_{2j},\\
+D_{ij}&=-\delta_{ij}+L_i\delta_{i-1,j}+R_i\delta_{i+1,j}
+\quad(i\geq3\text{ odd}),
+\end{aligned}
+$$
+
+and set $D_{0j}=D_{m+1,j}=0$ whenever these exterior rows are needed. The following coefficients are completely explicit:
+
+$$
+C_{ij}=\begin{cases}
+D_{ij},&i\text{ odd},\\
+-\delta_{ij}+L_iD_{i-1,j}+R_iD_{i+1,j},&i\text{ even}.
+\end{cases}
+\tag{14.3}
+$$
+
+Define the finite vector
+
+$$
+Z_i=\sum_{j_0,\ldots,j_{m-1}=1}^{m}
+C_{i,j_{m-1}}\left(\prod_{a=1}^{m-1}C_{j_a,j_{a-1}}\right)z_{j_0}
+\qquad(1\leq i\leq m).
+\tag{14.4}
+$$
+
+For $m=1$ the product is empty. All sums and products in (14.1)–(14.4) are finite, with ranges fixed by $m$.
+
+**Theorem 14.2 (An evaluated tolerance certificate with every tolerance branch).** Define the original-coordinate error $E(t)=\max_i|x_i(t)-x_i^*|$. For every initial state and every integer $t\geq0$,
+
+$$
+E(t)\leq A_0 r^{\lfloor t/m\rfloor/2}.
+\tag{14.5}
+$$
+
+For a prescribed real tolerance $\epsilon$, a certificate means an integer $K\geq0$ such that $E(t)\leq\epsilon$ for every integer $t\geq K$. The following complete alternatives apply.
+
+1. If $\epsilon<0$, no such integer exists.
+2. If $\epsilon\geq0$ and $Q_0=0$, take $K=0$.
+3. If $\epsilon=0$ and $Q_0>0$, a certificate exists exactly when the explicit vector $Z$ of (14.4) is zero. In that case $K=m$ is a certificate; otherwise no finite $K$ is a certificate.
+4. If $\epsilon>0$ and $A_0\leq\epsilon$, take $K=0$.
+5. If $\epsilon>0$, $A_0>\epsilon$ and $r=0$, take $K=m$.
+6. If $\epsilon>0$, $A_0>\epsilon$ and $0<r<1$, take
+
+$$
+\boxed{\quad K=m\left\lceil
+\frac{\log(A_0^2/\epsilon^2)}{-\log r}
+\right\rceil.\quad}
+\tag{14.6}
+$$
+
+These are sufficient sweep counts, with no assertion of minimality. Every positive tolerance has a finite certificate. The singular interior parameter (12.5), every finite-annihilation input and the scalar case are included.
+
+*Proof.* Fix an index $i$. Cauchy–Schwarz on the first $i$ edge differences and on the last $m+1-i$ edge differences separately gives, for any complex zero-endpoint vector $w$,
+
+$$
+\sum_{j=1}^i\frac{|w_j-w_{j-1}|^2}{v_j}
+\geq\frac{|w_i|^2}{S_i},\qquad
+\sum_{j=i+1}^{m+1}\frac{|w_j-w_{j-1}|^2}{v_j}
+\geq\frac{|w_i|^2}{S-S_i}.
+$$
+
+Both denominators are positive, including at $i=1,m$. Addition yields
+
+$$
+|w_i|^2\leq h_iQ(w),\qquad
+\max_i|w_i|\leq\sqrt{hQ(w)}.
+\tag{14.7}
+$$
+
+This coefficient is the exact Dirichlet point-evaluation coefficient: equality for a prescribed value $w_i$ is obtained by taking $w_j=(S_j/S_i)w_i$ on the left and $w_j=[(S-S_j)/(S-S_i)]w_i$ on the right. Thus (14.7) uses the original coordinates and both zero endpoints, rather than an unspecified equivalence constant between norms. Applying (13.2) proves (14.5).
+
+The original odd row gives exactly $D_{ij}$, and the original even equation solved for its new coordinate is $w'_i=-w_i+L_iw'_{i-1}+R_iw'_{i+1}$. Consequently $C$ in (14.3) is exactly $T$ in original coordinates. Repeated finite matrix multiplication shows that (14.4) is $T^m z$, with no limit involved. By the individual-state assertion of Theorem 13.2, a nonzero state reaches zero at a finite time precisely when $Z=0$. Zero is invariant under all subsequent powers. This proves branch 3; if $Z\ne0$, the state is nonzero at every finite time, so its maximum coordinate modulus cannot meet zero tolerance.
+
+Branch 1 follows from $E(t)\geq0$. Positive definiteness of $Q$ proves branch 2. In branch 4, (14.5) and $r\leq1$ prove the assertion for all times. In branch 5, (13.2) makes every state zero after $m$ steps. For branch 6 the logarithm in the numerator is positive and $-\log r>0$. The integer in (14.6) ensures $r^{K/m}A_0^2\leq\epsilon^2$. Every $t\geq K$ has $\lfloor t/m\rfloor\geq K/m$, so (14.5) proves the desired all-later-time bound. These alternatives exhaust all real tolerances and initial states. No step divides by $q$; the zero test is finite even at $q=0$, where a general spectral-radius formula would not decide individual finite annihilation. $\square$
+
+**Theorem 14.3 (A usable certificate in dimension, velocity ratio and damping).** Let
+
+$$
+v_- =\min_j v_j,\qquad v_+=\max_j v_j,\qquad R=\frac{v_+}{v_-}\geq1,
+$$
+
+and define the fully evaluated positive constants
+
+$$
+\boxed{\quad
+d_R=\frac{b_m(m+1)}{2^mR^{m^2}},\qquad
+\eta_R=\frac{4\alpha(1-\alpha)}{1+\alpha R}\,d_R,
+\qquad A_R=\sqrt{m(m+1)R}\,E_0.\quad}
+\tag{14.8}
+$$
+
+Then $0<\eta_R<1$ and, for all integer times and all real or complex initial states,
+
+$$
+\begin{gathered}
+Q(T^m z)\leq(1-\eta_R)Q(z),\qquad
+E(t)\leq A_R\exp\left(-\frac{\eta_R}2\lfloor t/m\rfloor\right),\\
+|\mu|\leq(1-\eta_R)^{1/(2m)}\quad(\mu\in\operatorname{spec}_{\mathbb C}T).
+\end{gathered}
+\tag{14.9}
+$$
+
+For $\epsilon>0$, if $E_0=0$ or $A_R\leq\epsilon$, take $K_R=0$; otherwise the following depends only on $m,R,\alpha,E_0,\epsilon$:
+
+$$
+\boxed{\quad K_R=m\left\lceil
+\frac{\log\big(m(m+1)R E_0^2/\epsilon^2\big)}{\eta_R}
+\right\rceil.\quad}
+\tag{14.10}
+$$
+
+It guarantees $E(t)\leq\epsilon$ for every $t\geq K_R$. Zero and negative tolerances retain the exact alternatives of Theorem 14.2.
+
+*Proof.* Scale every velocity by $v_-^{-1}$ in (12.3), which leaves each factor unchanged. The scaled velocities lie in $[1,R]$. The prefactor in that formula is at least $(m+1)/(2R)^m$, and each factor inside the product is at least $R^{-2}$. As $\sum_{i=1}^{m-1}(m-i)=m(m-1)/2$,
+
+$$
+\mathcal D(v)\geq\frac{m+1}{2^mR^{m^2}}.
+\tag{14.11}
+$$
+
+This also holds for $m=1$, where its right side is $R^{-1}\leq1=\mathcal D$. Hence $d(v)\geq d_R$, including the branch $\mathcal D=1$. If $a=v_1/v_2\leq R$, then (12.1) gives
+
+$$
+\sigma=4\alpha(1-\alpha)\frac{1+a}{(1+\alpha a)^2}
+\geq\frac{4\alpha(1-\alpha)}{1+\alpha a}
+\geq\frac{4\alpha(1-\alpha)}{1+\alpha R}.
+\tag{14.12}
+$$
+
+The first inequality uses $1+a\geq1+\alpha a$. Therefore $\eta\geq\eta_R>0$. Also $d_R\leq1$ and $4\alpha(1-\alpha)\leq1<1+\alpha R$, proving $\eta_R<1$. The $Q$ and spectral bounds follow directly from Theorem 13.2 with this smaller evaluated constant.
+
+For the coordinate prefactor, $h_i\leq S/4\leq(m+1)v_+/4$. The elementary estimate $|a-b|^2\leq2|a|^2+2|b|^2$, summed along the zero-endpoint path, gives
+
+$$
+Q_0\leq\frac4{v_-}\sum_{i=1}^m|z_i|^2
+\leq\frac{4m}{v_-}E_0^2,\qquad
+hQ_0\leq m(m+1)R E_0^2=A_R^2.
+\tag{14.13}
+$$
+
+Use (14.7), the $m$-step bound, and $1-x\leq e^{-x}$ for $x\geq0$ to prove the coordinate estimate in (14.9). The stated integer (14.10) makes its square at the block boundary at most $\epsilon^2$. The same floor argument as in Theorem 14.2 proves it for every later integer time. All constants are explicit finite expressions; the use of $R$ removes absolute velocity scale from this conservative certificate. $\square$
+
+## 15. Fixed-chain endpoint orders and two failures of uniform gaps
+
+**Theorem 15.1 (Matching linear endpoint orders for every fixed chain).** Fix any $m\geq1$ and any positive velocity vector. Let $\rho_\alpha$ be the complex spectral radius of the literal $T=A^{-1}B_\alpha$. With $d=d(v)>0$ from (13.1), for all $0<\alpha<1$,
+
+$$
+\frac{d}{2m}\,
+\frac{4\alpha(1-\alpha)v_2s_1}{(v_2+\alpha v_1)^2}
+\leq1-\rho_\alpha\leq1-|q|^{1/m}\leq1-|q|.
+\tag{15.1}
+$$
+
+In particular set
+
+$$
+c_v=\frac{dv_2}{ms_1}>0,\qquad
+\alpha_* =\frac{v_2}{v_1+2v_2}.
+$$
+
+The following explicit two-sided estimates establish linear order at each endpoint:
+
+$$
+\begin{array}{ll}
+c_v\alpha\leq1-\rho_\alpha\leq\dfrac{2s_1}{v_2}\alpha,
+&0<\alpha\leq\min(1/2,\alpha_*),\\[5pt]
+c_v(1-\alpha)\leq1-\rho_\alpha\leq2(1-\alpha),
+&\max(1/2,\alpha_*)\leq\alpha<1.
+\end{array}
+\tag{15.2}
+$$
+
+At the exact endpoint extensions of the original matrices, $\rho_0=\rho_1=1$ and $Q$ is preserved. The constants in (15.2) are fixed-chain bounds, with no assertion of optimal coefficients or an optimal damping parameter.
+
+*Proof.* Put $a=1/(2m)\in(0,1]$. The function $(1-x)^a$ is concave on $[0,1)$ and continuous at one, so its tangent at zero gives $(1-x)^a\leq1-ax$ for $0\leq x\leq1$. Theorem 13.2 therefore implies
+
+$$
+1-\rho_\alpha\geq1-(1-\sigma d)^{1/(2m)}\geq\frac{\sigma d}{2m}.
+$$
+
+By (13.8), the product of the $m$ eigenvalue moduli, counted with algebraic multiplicity, is $|q|$. Each is at most $\rho_\alpha$, hence $\rho_\alpha\geq|q|^{1/m}$. Finally $|q|^{1/m}\geq|q|$ for $|q|\in[0,1]$. This proves (15.1), including $q=0$ and $m=1$.
+
+For $\alpha\leq1/2$, the numerator in $\sigma$ has $\alpha(1-\alpha)\geq\alpha/2$, and its denominator is at most $s_1^2$. Thus $\sigma\geq2\alpha v_2/s_1$, giving the first lower bound of (15.2). For $\alpha\geq1/2$ the same calculation with $\alpha(1-\alpha)\geq(1-\alpha)/2$ gives its second lower bound. If $\alpha\leq\alpha_*$ then $q\leq0$ and
+
+$$
+1-|q|=1+q=2\theta_\alpha
+=\frac{2\alpha s_1}{v_2+\alpha v_1}
+\leq\frac{2s_1}{v_2}\alpha.
+$$
+
+If $\alpha\geq\alpha_*$ then $q\geq0$ and
+
+$$
+1-|q|=1-q=2(1-\theta_\alpha)
+=\frac{2v_2(1-\alpha)}{v_2+\alpha v_1}\leq2(1-\alpha).
+$$
+
+These inequalities prove both upper bounds in (15.2) on the displayed nonempty endpoint neighborhoods. At $\alpha=0,1$, (12.7) makes the endpoint matrices isometries for the positive definite $Q$. Each complex eigenvalue therefore has modulus one, and the nonempty finite-dimensional spectrum gives radius one. This also identifies the exact endpoint obstruction to an interior contraction certificate. $\square$
+
+**Proposition 15.2 (Increasing dimensions with a bounded velocity ratio).** For every fixed $\alpha\in(0,1)$ there is a family of actual original chains, with dimensions $m\to\infty$ and velocity ratios at most two, whose fixed-map spectral gaps tend to zero. More explicitly choose
+
+$$
+a=\begin{cases}1,&\alpha\ne1/3,\\2,&\alpha=1/3,\end{cases}
+\qquad v^{(m)}=(a,1,\ldots,1),\qquad
+q_a=\frac{\alpha(a+2)-1}{1+\alpha a}.
+\tag{15.3}
+$$
+
+Then $0<|q_a|<1$ and
+
+$$
+0<1-\rho(T_m)\leq1-|q_a|^{1/m}\longrightarrow0.
+\tag{15.4}
+$$
+
+*Proof.* All $m+1$ velocities are positive and their ratio is $a\leq2$. For $a=1$, $q_a$ vanishes exactly at $\alpha=1/3$. At that excluded value the choice $a=2$ gives $q_a=1/5\ne0$. In either case $-1<q_a<1$ follows from (12.1), independently of $m$. These are the literal first velocities and unchanged tails of the original matrices; (13.8) gives $|\det T_m|=|q_a|$. The spectral-radius lower bound used in (15.1) proves (15.4), and $|q_a|^{1/m}=\exp(\log|q_a|/m)\to1$. Thus even with fixed interior damping and a fixed upper bound on the velocity ratio, a dimension-independent positive gap cannot hold across this family. This is a spectral obstruction for actual source transfers, rather than an inference from a small finite-time loss alone. $\square$
+
+**Proposition 15.3 (Increasing velocity ratios in the original two-coordinate system).** Fix any $\alpha\in(0,1)$ and take
+
+$$
+m=2,\qquad (v_1,v_2,v_3)=(1,1,c),\qquad 0<c\leq1,
+\qquad \theta=\frac{2\alpha}{1+\alpha},\qquad q=2\theta-1.
+\tag{15.5}
+$$
+
+Then $R=1/c$ and the literal original transfer is
+
+$$
+T_c=\begin{pmatrix}
+-q&\theta\\
+-\dfrac{2cq}{1+c}&\dfrac{2c\theta}{1+c}-1
+\end{pmatrix}.
+\tag{15.6}
+$$
+
+Its complex spectral gap obeys
+
+$$
+0<1-\rho(T_c)\leq\sqrt{\frac{2c\theta}{1+c}}
+\longrightarrow0\qquad(c\downarrow0).
+\tag{15.7}
+$$
+
+Consequently fixed dimension and fixed interior damping alone give no positive gap uniform over all positive velocity vectors. This includes $\alpha=1/3$, when all maps in this family are singular.
+
+*Proof.* Solving the original first row gives $z'_1=-qz_1+\theta z_2$. The original second row gives $z'_2=-z_2+[2c/(1+c)]z'_1$. These are exactly (15.6), with both original centered endpoints zero. Direct evaluation gives
+
+$$
+\det T_c=q,\qquad
+\operatorname{tr}T_c=-q-1+\frac{2c\theta}{1+c},\qquad
+\det(-I-T_c)=1+\operatorname{tr}T_c+\det T_c
+=\frac{2c\theta}{1+c}>0.
+$$
+
+If $\mu_1,\mu_2$ are its two complex eigenvalues with multiplicity, then
+
+$$
+|1+\mu_1|\,|1+\mu_2|=\frac{2c\theta}{1+c}.
+$$
+
+At least one factor is at most the square root of this positive number. The corresponding eigenvalue satisfies $|\mu_j|\geq1-|1+\mu_j|$, proving the upper bound in (15.7). Strict positivity of the gap follows from Theorem 13.2 for every $c>0$; the right side tends to zero with $c$. The argument neither divides by $q$ nor assumes distinct or real eigenvalues. At $\alpha=1/3$, $q=0$ and $\theta=1/2$, so it includes that entire singular family explicitly. $\square$
+
+## 追加锚（本行以下为增补区）
+## 16. Undamped spectral information and the first dimension of optimizer failure
+
+**Definition 16.1 (The full complex spectral objective in the original family).** For every integer $m\geq1$ and every $v\in(0,\infty)^{m+1}$, use exactly $A,B,B_\alpha$ of Definition 1.1, with $z_0=z_{m+1}=0$, and put $U_v=A^{-1}B$. Extend the displayed original first row continuously to $\alpha\in[0,1]$. Its denominator $v_2+\alpha v_1$ is positive on this closed interval. Use the increasing normalized parameter from (12.1), with its inverse,
+
+$$
+q_v(\alpha)=\frac{\alpha(v_1+2v_2)-v_2}{v_2+\alpha v_1},
+\qquad
+\alpha_v(q)=\frac{v_2(1+q)}{v_1+2v_2-v_1q},
+\qquad -1\leq q\leq1,
+\tag{16.1}
+$$
+
+and write $T_{v,q}=A^{-1}B_{\alpha_v(q)}$. In particular $T_{v,1}=U_v$; $T_{v,-1}$ is the other original endpoint extension. The first row of $B_{\alpha_v(q)}$ is
+
+$$
+(B_{\alpha_v(q)}z)_1=-qz_1+(1+q)\frac{v_1}{v_1+v_2}z_2,
+\tag{16.2}
+$$
+
+where $z_2=0$ if $m=1$, and every other row is unchanged from $B$. Thus no original coordinate or zero endpoint is changed by this notation.
+
+For $q\in[-1,1]$ let
+
+$$
+p_v(\zeta,q)=\det(\zeta I_m-T_{v,q}),\qquad
+\mathsf S_v(q)=\{\mu_1(q),\ldots,\mu_m(q)\}
+\tag{16.3}
+$$
+
+be its monic complex characteristic polynomial and its entire multiset of complex roots, counted with algebraic multiplicities. Define
+
+$$
+\rho_v(q)=\max_{1\leq j\leq m}|\mu_j(q)|,\qquad
+\gamma_v=\min_{q\in[-1,1]}\rho_v(q),\qquad
+Q_v=\{q\in[-1,1]:\rho_v(q)=\gamma_v\}.
+\tag{16.4}
+$$
+
+The observation is
+
+$$
+\mathsf O(v)=(m,\mathsf S_v(1)).
+\tag{16.5}
+$$
+
+Equality of observations means equality of dimensions and equality of the entire undamped complex multisets, including multiplicities. The set $Q_v$ is an optimizer set; the energy form $Q(z)$ retains exactly its meaning in (12.1).
+
+The literal odd/even equations, centering, and Token-1 first row are those of [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Section IV.A, page 3, and Section IV.B.1, page 4](https://arxiv.org/pdf/2608.27085v1). Their pair count is $m=n-1$, their centered $u$ is $z$, their $M$ is $U_v$, and their fixed $M_\alpha$ is $T_{v,q_v(\alpha)}$. Lemma 2 there supplies the undamped positive quadratic invariant, and Lemma 3 supplies determinant contraction in the open damping interval. The explicit energy, rank-one factorization, strict fixed-map contraction, low-dimensional transfers, finite-annihilation criteria and rate bounds in Sections 3 and 12–15 are supporting results here. In the complete [damped-sweep source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean) and [finite-path source](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean), source pair $i$ and velocity $v_j$ have indices $i-1$ and $j-1$; `A`, `B`, `Balpha`, `Malpha` denote $A,B,B_\alpha,T_{v,q_v(\alpha)}$. The first-event weight `theta` there is $(1+q)/2$, not an undamped rotation angle. The local energy, loss and literal sweep identities used below are `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_phase`, `sweep_stacked` and `source_factorization`; the strict fixed-map conclusion is `result`, with the finite-path rigidity, boundary observability and power-decay intermediates. Their complete [damped-sweep](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) and [finite-path](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs) expositions have the same correspondence.
+
+Polynomial factorization with multiplicities, the elementary symmetric functions of the roots and the quadratic formula are used in their classical sense; see [NIST DLMF, version 1.2.8, §1.11(ii)–(iv), especially (1.11.10), (1.11.11) and (1.11.21)–(1.11.23)](https://dlmf.nist.gov/1.11). These facts and the cited Token identities are intermediates to the information assertion below. Mensing's homogeneous qualitative antecedent is credited in [the same Token v1, Section II and reference [11]](https://arxiv.org/html/2608.27085v1#bib.bib11); its quantitative full-text overlap is unknown and no result from that full text is assumed. The attribution is confined to the stated sources and versions, with no exhaustive-literature or priority assertion.
+
+**Theorem 16.2 (Retention through dimension two and exact failure in dimension three).** In Definition 16.1, equality of observations in dimension $m=1$ or $m=2$ determines $p_v(\zeta,q)$ for every $q\in[-1,1]$, and consequently determines the entire function $\rho_v$, the set $Q_v$ and the number $\gamma_v$.
+
+In dimension $m=3$, the actual strictly positive chains
+
+$$
+v^{(0)}=(3,1,2,6),\qquad v^{(1)}=(3,1,14,42)
+\tag{16.6}
+$$
+
+instead satisfy
+
+$$
+\mathsf O(v^{(0)})=\mathsf O(v^{(1)})
+=\left(3,\left\{-1,\frac{1+i\sqrt3}{2},\frac{1-i\sqrt3}{2}\right\}\right),
+\tag{16.7}
+$$
+
+with each undamped eigenvalue simple, and have identical original parameter maps
+
+$$
+q(\alpha)=\frac{5\alpha-1}{1+3\alpha},\qquad
+\alpha(q)=\frac{1+q}{5-3q}.
+\tag{16.8}
+$$
+
+Nevertheless their exact global full-spectrum optima are
+
+$$
+\boxed{\quad
+Q_{v^{(0)}}=\{0\},\quad \gamma_{v^{(0)}}=0;
+\qquad
+Q_{v^{(1)}}=\{-1/4\},\quad \gamma_{v^{(1)}}=\frac1{\sqrt2}>0.
+\quad}
+\tag{16.9}
+$$
+
+Both minima are attained uniquely on the entire closed interval. In the original damping variable their unique minimizing sets are respectively $\{1/5\}$ and $\{3/23\}$. Thus dimension three is the first possible failure of these normalized-$q$ information targets in the original positive-velocity family.
+
+*Proof.* First verify the domain and the existence of the minima used in (16.4). In (16.1), the inverse denominator is at least $2v_2>0$ for $-1\leq q\leq1$. Direct differentiation gives
+
+$$
+q_v'(\alpha)=\frac{2v_2(v_1+v_2)}{(v_2+\alpha v_1)^2}>0,
+\qquad q_v(0)=-1,\quad q_v(1)=1.
+\tag{16.10}
+$$
+
+Solving the first equation of (16.1) for $\alpha$ gives exactly its displayed inverse, so the correspondence is a bijection between the two closed intervals and between their interiors. Substituting it into the original first row gives (16.2). This also shows that the entries of $T_{v,q}$ and the coefficients of $p_v$ are continuous in $q$, indeed affine entries before taking the determinant. The only singular value is $q=0$, corresponding to $\alpha_*=v_2/(v_1+2v_2)$: by (13.8), $\det T_{v,q}=(-1)^m q$.
+
+For the full complex root domain, retain the original positive definite Hermitian form
+
+$$
+Q(z)=\sum_{j=1}^{m+1}\frac{|z_j-z_{j-1}|^2}{v_j},
+\qquad z_0=z_{m+1}=0.
+$$
+
+The source local reflection and sweep identities give precisely (12.7): if $P_1z=f_1\langle f_1,z\rangle_Q$, with the unit normal $f_1$ of Definition 12.1, then
+
+$$
+T_{v,q}=U_v\bigl(I-(1-q)P_1\bigr),\qquad
+Q(T_{v,q}z)=Q(z)-(1-q^2)|\langle f_1,z\rangle_Q|^2.
+\tag{16.11}
+$$
+
+These are polynomial identities in $q$, so the endpoint extensions and the singular interior value are included. The factor $U_v$ preserves $Q$. For every nonzero complex eigenvector, (16.11) implies $|\mu|\leq1$. At $q=-1$ the second factor is $I-2P_1$, a $Q$-reflection, and at $q=1$ it is $I$. Thus both endpoint maps preserve $Q$, and every eigenvalue at either endpoint has modulus one. Consequently $\rho_v(-1)=\rho_v(1)=1$. On $-1<q<1$, the strict fixed-map conclusion in Theorem 13.2 gives $\rho_v(q)<1$.
+
+Here is a root argument that includes every multiplicity and proves continuity of the actual maximum in (16.4). Given any sequence $q_n\to q$, list all $m$ complex roots of $p_v(\zeta,q_n)$ in any order, with multiplicities. The resulting tuples belong to the compact product of $m$ closed unit disks, by (16.11). Along any convergent subsequence of such tuples, with limit $(\nu_1,\ldots,\nu_m)$, continuity of the coefficients and of finite multiplication gives
+
+$$
+p_v(\zeta,q)=\prod_{j=1}^m(\zeta-\nu_j).
+$$
+
+Thus the limiting tuple is exactly the full root multiset at $q$. Its maximum modulus is $\rho_v(q)$, so along that subsequence $\rho_v(q_n)\to\rho_v(q)$. If convergence failed for the original sequence, an infinite subsequence staying a fixed positive distance from $\rho_v(q)$ would have a further convergent root-tuple subsequence, contradicting this conclusion. This proves continuity without a choice of continuously labeled roots. The extreme-value theorem now makes $\gamma_v$ attained and $Q_v$ nonempty and compact. The strict interior bound and the endpoint values also give $Q_v\subset(-1,1)$. These facts justify the optimization definitions on their full stated domain, independently of any simple-root assumption.
+
+In dimension one the existing scalar identity of Theorem 13.2 is $T_{v,q}=-q$ and $U_v=-1$. Therefore
+
+$$
+p_v(\zeta,q)=\zeta+q,\qquad
+\rho_v(q)=|q|,\qquad Q_v=\{0\},\qquad\gamma_v=0.
+\tag{16.12}
+$$
+
+All chains of that dimension have this same normalized polynomial, including its zero root and its two endpoint values.
+
+For dimension two use the original transfer formula (3.1), with positive velocities $(a,b,c)$, $\xi=a/(a+b)$, $\eta=c/(b+c)$ and the original event weight $\tau=(1+q)/2$. It gives, still in the original coordinates,
+
+$$
+T_{v,q}=\begin{pmatrix}
+-q&(1+q)\xi\\
+-2\eta q&2\eta\xi(1+q)-1
+\end{pmatrix}.
+\tag{16.13}
+$$
+
+Set $\kappa=2\xi\eta-1\in(-1,1)$. The determinant and trace of (16.13) are $q$ and $\kappa(1+q)$, respectively; at $q=1$ the undamped trace is $2\kappa$. If $\{\nu_1,\nu_2\}$ is the observed undamped multiset, its sum is that trace. Hence the observation fixes $\kappa=(\nu_1+\nu_2)/2$ and the entire polynomial
+
+$$
+p_v(\zeta,q)=\zeta^2-\kappa(1+q)\zeta+q.
+\tag{16.14}
+$$
+
+For completeness its full root and radius alternatives follow directly from the classical quadratic formula. Put $\Delta=\kappa^2(1+q)^2-4q$. If $\Delta\geq0$, the two real roots, with a double root when $\Delta=0$, are $[\kappa(1+q)\pm\sqrt\Delta]/2$, and
+
+$$
+\rho_v(q)=\frac{|\kappa|(1+q)+\sqrt\Delta}{2}.
+$$
+
+Indeed for real $t$ and $s\geq0$, $\max(|t+s|,|t-s|)=|t|+s$. If $\Delta<0$, then $q>0$ and the roots are a nonreal conjugate pair of product $q$; each has modulus $\sqrt q$, so $\rho_v(q)=\sqrt q$. At $q=-1$, (16.14) is $\zeta^2-1$; at $q=1$ it is $\zeta^2-2\kappa\zeta+1$; and at $q=0$ it is $\zeta(\zeta-\kappa)$, including the double zero when $\kappa=0$. Thus every branch, endpoint and multiplicity is determined by the observation. Equations (16.12)–(16.14), consumed here from the published scalar and two-coordinate transfers, prove the asserted retention, since equal radius functions have equal global minimum and argmin set on the same compact interval. This retention concerns normalized $q$; the conversion from $q$ back to $\alpha$ retains the actual first two velocities in (16.1).
+
+For the dimension-three comparison take the positive one-parameter velocity family
+
+$$
+v(c)=(3,1,c,3c),\qquad c>0.
+\tag{16.15}
+$$
+
+Substituting into the literal original rows, with $z_0=z_4=0$, gives
+
+$$
+A_c=\begin{pmatrix}1&0&0\\-2c&1+c&-2\\0&0&1\end{pmatrix},\qquad
+B_c=\begin{pmatrix}-1&3/2&0\\0&-(1+c)&0\\0&3/2&-1\end{pmatrix},
+\tag{16.16}
+$$
+
+$$
+B_{c,\alpha}=\begin{pmatrix}
+\dfrac{1-5\alpha}{1+3\alpha}&\dfrac{6\alpha}{1+3\alpha}&0\\
+0&-(1+c)&0\\
+0&3/2&-1
+\end{pmatrix}
+=\begin{pmatrix}
+-q&\tfrac34(1+q)&0\\
+0&-(1+c)&0\\
+0&3/2&-1
+\end{pmatrix}.
+\tag{16.17}
+$$
+
+In particular the entire family has exactly the original parameter correspondence (16.8). The original even row is $-2cw_1+(1+c)w_2-2w_3=b_2$. Solving it after the two odd rows gives
+
+$$
+A_c^{-1}=\begin{pmatrix}
+1&0&0\\
+\dfrac{2c}{1+c}&\dfrac1{1+c}&\dfrac2{1+c}\\
+0&0&1
+\end{pmatrix},
+\qquad
+T_{v(c),q}=\begin{pmatrix}
+-q&\tfrac34(1+q)&0\\
+-\dfrac{2cq}{1+c}&-1+\dfrac{3c(1+q)}{2(1+c)}+\dfrac3{1+c}&-\dfrac2{1+c}\\
+0&3/2&-1
+\end{pmatrix}.
+\tag{16.18}
+$$
+
+This is $A_c^{-1}B_{c,\alpha}$ itself. To compute its full characteristic polynomial, use $\det A_c=1+c>0$ and expand
+
+$$
+\zeta A_c-B_{c,\alpha}=
+\begin{pmatrix}
+\zeta+q&-\tfrac34(1+q)&0\\
+-2c\zeta&(1+c)(\zeta+1)&-2\zeta\\
+0&-3/2&\zeta+1
+\end{pmatrix}.
+$$
+
+The first-row expansion, divided by $1+c$, is
+
+$$
+\begin{aligned}
+p_{v(c)}(\zeta,q)
+&=(\zeta+q)\left((\zeta+1)^2-\frac{3\zeta}{1+c}\right)
+ -\frac{3c}{2(1+c)}(1+q)\zeta(\zeta+1)\\
+&=\zeta^3+\frac{c-2}{2(c+1)}(1-q)\zeta^2
+ -\frac{c-2}{2(c+1)}(1-q)\zeta+q.
+\end{aligned}
+\tag{16.19}
+$$
+
+For example, the coefficients of $\zeta^2$ and $\zeta$ before simplification are
+$2-3/(1+c)-3c/[2(1+c)]+q(1-3c/[2(1+c)])$
+and
+$1-3c/[2(1+c)]+q(2-3/(1+c)-3c/[2(1+c)])$;
+these are respectively $[(c-2)/(2(c+1))](1-q)$ and its negative. Thus (16.19) evaluates the determinant with no spectral value omitted.
+
+At $q=1$ this polynomial is $\zeta^3+1=(\zeta+1)(\zeta^2-\zeta+1)$ for every $c>0$. Its three distinct roots are exactly those in (16.7). The choices $c=2$ and $c=14$ in (16.15) give (16.6). Both chains therefore have the same entire undamped complex spectrum, not just the same trace, determinant or spectral radius, and (16.17) proves equality of their full original $\alpha$-to-$q$ maps.
+
+For $c=2$, (16.19) reduces to
+
+$$
+p_{v^{(0)}}(\zeta,q)=\zeta^3+q.
+\tag{16.20}
+$$
+
+At $q=0$ all three roots are zero, with algebraic multiplicity three. At any $q\ne0$ the three roots are distinct and all have modulus $|q|^{1/3}$: if $\mu^3=-q$, they are $\mu,\mu\omega,\mu\omega^2$, where $\omega=(-1+i\sqrt3)/2$ has modulus one. Hence $\rho_{v^{(0)}}(q)=|q|^{1/3}$ for the entire closed interval, proving its unique optimum in (16.9). In particular the singular value is included; its characteristic polynomial is exactly $\zeta^3$, in agreement with the finite-annihilation criterion of Theorem 13.2.
+
+For $c=14$, (16.19) instead gives
+
+$$
+p_{v^{(1)}}(\zeta,q)=\zeta^3+\frac25(1-q)\zeta^2
+                                  -\frac25(1-q)\zeta+q.
+\tag{16.21}
+$$
+
+Let $r=1/\sqrt2$ and $q_*=-1/4$. At this value the entire polynomial factors as
+
+$$
+p_{v^{(1)}}(\zeta,q_*)
+=(\zeta^2-1/2)(\zeta+1/2).
+\tag{16.22}
+$$
+
+Its full multiset is $\{r,-r,-1/2\}$, with all roots simple, and $1/2<r$ since $1/4<1/2$. Thus the actual maximum over all three complex roots is exactly $r$ at $q_*$. For every real $q$, evaluation at both boundary points of this candidate optimal disk gives the exact identities
+
+$$
+p_{v^{(1)}}(r,q)=\frac{4+\sqrt2}{5}(q+1/4),\qquad
+p_{v^{(1)}}(-r,q)=\frac{4-\sqrt2}{5}(q+1/4).
+\tag{16.23}
+$$
+
+To verify them, note that both values vanish at $q_*$ by (16.22) and that their coefficients of $q$ are $1-(2/5)(r^2-r)$ and $1-(2/5)(r^2+r)$, respectively. Substitution of $r^2=1/2$ gives precisely (16.23), whose two coefficients are strictly positive.
+
+If $-1\leq q<q_*$, the first value in (16.23) is negative. The monic real cubic (16.21) tends to $+\infty$ as its real argument tends to $+\infty$. The intermediate value theorem therefore gives a real root strictly larger than $r$. That root is an eigenvalue of the actual $T_{v^{(1)},q}$, so the maximum over its entire complex spectrum is strictly larger than $r$. If $q_*<q\leq1$, the second value in (16.23) is positive. The same monic cubic tends to $-\infty$ at $-\infty$, giving a real root strictly smaller than $-r$ and the same strict lower bound for the full spectral radius. Together with the exact three-root factorization at $q_*$, these two comparisons prove both global minimality and uniqueness on all of $[-1,1]$.
+
+The comparison uses a real root only as a lower bound for the maximum of all three root moduli; equality at the minimizer uses the complete complex factorization (16.22). In particular the other two roots at an arbitrary $q$ may be real, nonreal or multiple without altering either strict comparison. The determinant identity (16.21) remains the specification of all three algebraic roots at every such parameter, so no simple-root or real-spectrum restriction enters the argument.
+
+The endpoint and singular multisets can also be stated explicitly. For the first chain, $q=-1$ gives $\{1,(-1+i\sqrt3)/2,(-1-i\sqrt3)/2\}$, and $q=1$ gives (16.7); both radii are one. For the second chain the corresponding polynomials are
+
+$$
+\begin{aligned}
+p_{v^{(1)}}(\zeta,-1)&=(\zeta-1)(\zeta^2+\tfrac95\zeta+1),\\
+p_{v^{(1)}}(\zeta,1)&=(\zeta+1)(\zeta^2-\zeta+1),\\
+p_{v^{(1)}}(\zeta,0)&=\zeta(\zeta^2+\tfrac25\zeta-\tfrac25).
+\end{aligned}
+\tag{16.24}
+$$
+
+Their full multisets are respectively
+
+$$
+\left\{1,\frac{-9+i\sqrt{19}}{10},\frac{-9-i\sqrt{19}}{10}\right\},
+\qquad
+\left\{-1,\frac{1+i\sqrt3}{2},\frac{1-i\sqrt3}{2}\right\},
+\qquad
+\left\{0,\frac{-1+\sqrt{11}}5,\frac{-1-\sqrt{11}}5\right\}.
+\tag{16.25}
+$$
+
+All entries in each multiset are simple. The first two have radius one; the last is the singular interior map and has radius $(1+\sqrt{11})/5>r$. For the strict inequality, both sides are positive and $(1+\sqrt{11})^2/25>1/2$ is equivalent to $\sqrt{11}>1/4$, which holds. Thus both endpoint extensions, the two different zero-root multiplicities at $q=0$, and nonreal endpoint roots agree with the global comparison.
+
+Finally, applying the same strictly increasing inverse (16.8) to $0$ and $-1/4$ yields respectively $1/5$ and $3/23$. No other original $\alpha\in[0,1]$ can minimize, by bijectivity. The dimension-one and dimension-two retention already proved excludes a failure of either information target in those dimensions; (16.6)–(16.9) establishes both failures in dimension three. $\square$
+
+**Corollary 16.3 (No global optimizer selector or minimum-radius function of the observation).** There is no function of $\mathsf O(v)$ that selects an element of $Q_v$ for every original positive-velocity chain, and no function of $\mathsf O(v)$ equal to $\gamma_v$ for every such chain. The same two impossibilities hold even if the observation is augmented by the entire original map $\alpha\mapsto q_v(\alpha)$. In particular $Q_v$ itself is not a function of that augmented observation.
+
+*Proof.* For the two chains (16.6), both the ordinary and augmented observations coincide, by (16.7)–(16.8). A selector would have to return the same $q$ on these equal observations, but the two required singleton sets in (16.9) are disjoint. A minimum-radius function would have to return both $0$ and $1/\sqrt2$ on that same input, which is impossible. Likewise an exact set-valued rule would have to return both different singletons. This proves each assertion within the literal original family.
+
+The missing information is a distinction between actual chains in one undamped-spectral fiber: in (16.19) the coefficient $(c-2)/(2(c+1))$ disappears at $q=1$, while it changes the full damped polynomial for $q\ne1$. The equality of observations therefore does not identify the relation between the boundary damping and the undamped dynamics. The scalar and two-coordinate identities (16.12) and (16.14) retain enough of that relation to determine their normalized polynomials.
+
+These are fixed-map spectral-information statements. Each $T_{v,q}$ is held fixed when its spectrum or its powers are considered. The arbitrary-dimensional problem of determining $Q_v$ and $\gamma_v$ from the full original velocity chain, rather than from $\mathsf O(v)$ alone, remains unresolved here. The prescribed and mixed histories in Sections 1–11 keep their own distinct domains. The collision process, entry into the rotational regime, switching realizations, and uniform quantitative rates are not consequences of this information obstruction; the original energy and the fixed-chain bounds of Sections 12–15 retain their stated hypotheses. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 17. A finite critical-parameter theorem for affine root radii
+
+**Definition 17.1 (Real field, affine polynomial and root-product polynomial).** Let $F\subseteq\mathbb R$ be a field with its given real embedding, let $d\geq1$, and let
+
+$$
+p(Z,t)=a(Z)+t b(Z)\in F[t,Z],\qquad
+\deg a=d,\quad a\text{ monic},\quad \deg b<d.
+\tag{17.1}
+$$
+
+For real $t$, list the $d$ complex roots of $p(Z,t)$ as $\lambda_1(t),\ldots,\lambda_d(t)$, with algebraic multiplicity, and put
+
+$$
+r(t)=\max_j|\lambda_j(t)|,\qquad s(t)=r(t)^2.
+\tag{17.2}
+$$
+
+The list is a multiset; it imposes no continuous labeling. Define the polynomial
+
+$$
+\begin{aligned}
+p^{\flat}(Z,X,t)&=Z^d p(X/Z,t),\\
+\mathcal R(X,t)&=\operatorname{Res}_Z
+             \bigl(p(Z,t),p^{\flat}(Z,X,t)\bigr).
+\end{aligned}
+\tag{17.3}
+$$
+
+The first line means polynomial expansion, so it is defined also at $Z=0$. The resultant uses the Sylvester determinant, with both degree bounds in $Z$ equal to $d$; vanishing leading coefficients are retained as zero coefficients in that determinant. If the first polynomial is monic, the convention is
+
+$$
+\operatorname{Res}_Z(f,g)=\prod_{f(\lambda)=0}g(\lambda),
+\tag{17.4}
+$$
+
+with multiplicities. This identity remains valid when the degree of $g$ falls. The Sylvester determinant, its root-product formula and its common-root property are classical; see [Sturmfels, *Solving Systems of Polynomial Equations*, §4.1, Theorem 4.1, (4.3) and the product formulas following it](https://math.berkeley.edu/~bernd/cbms.pdf). The root-radius objective is the one in [Eaton, Grundel, Gürbüzbalaban and Overton, *Polynomial root radius optimization with affine constraints*, §2 and §3](https://cs.nyu.edu/overton/papers/pdffiles/PolyRootRadOptAffConPublished.pdf), [DOI 10.1007/s10107-016-1092-5](https://doi.org/10.1007/s10107-016-1092-5).
+
+**Assumption 17.2 (Unit-circle endpoints and strict interior roots).** For the polynomial in Definition 17.1, assume that all roots at $t=-1$ and at $t=1$ have modulus one, and that
+
+$$
+|\lambda_j(t)|<1\qquad(-1<t<1,\ 1\leq j\leq d).
+\tag{17.5}
+$$
+
+The parameter is fixed when a root multiset is taken. No simplicity, diagonalizability, nonvanishing constant term or rationality assumption is imposed.
+
+**Theorem 17.3 (Every minimizer from a nonzero polynomial of cubic degree bound).** Under Definition 17.1 and Assumption 17.2, factor $\mathcal R$ in $F[t,X]$ into distinct monic-in-$X$ irreducible factors and their positive multiplicities:
+
+$$
+\mathcal R(X,t)=\prod_{\nu=1}^h h_\nu(X,t)^{e_\nu},
+\qquad
+V(X,t)=\prod_{\nu=1}^h h_\nu(X,t).
+\tag{17.6}
+$$
+
+These normalizations exist. Every $h_\nu$ has positive degree in both $X$ and $t$. Write $D=\deg_X V$ and $E=\deg_t V$, and define
+
+$$
+\begin{aligned}
+\Delta_1(t)&=\operatorname{Res}_X(V,V_X),\\
+\Delta_2(t)&=\operatorname{Res}_X(V,V_t),\\
+\Delta(t)&=\Delta_1(t)\Delta_2(t),\\
+C&=\{c\in\mathbb R:-1<c<1,\ \Delta(c)=0\}.
+\end{aligned}
+\tag{17.7}
+$$
+
+Subscripts on $V$ are partial derivatives. Resultants of a monic polynomial and a nonzero constant have their usual value, the constant raised to the degree of the monic polynomial. Then
+
+$$
+\begin{gathered}
+1\leq D\leq d^2,\qquad 1\leq E\leq2d,\qquad
+\Delta\in F[t]\setminus\{0\},\\
+1\leq\deg\Delta\leq(4D-2)E\leq8d^3-4d<8d^3.
+\end{gathered}
+\tag{17.8}
+$$
+
+The finite set $C$ is nonempty and contains every global minimizing parameter of $r$ on $[-1,1]$. For each real $c\in[-1,1]$, define the ordered real root
+
+$$
+\mathfrak s(c)=\max\{x\in\mathbb R:x\geq0,\ \mathcal R(x,c)=0\}.
+\tag{17.9}
+$$
+
+This root always exists and equals $s(c)$. Consequently the exact minimum and the entire optimizer set are
+
+$$
+\begin{aligned}
+s_*&=\min_{c\in C}\mathfrak s(c),\\
+\min_{-1\leq t\leq1}r(t)&=\text{the nonnegative real root of }Y^2-s_*=0,\\
+\operatorname*{argmin}_{[-1,1]}r
+ &=\{c\in C:\mathfrak s(c)=s_*\}.
+\end{aligned}
+\tag{17.10}
+$$
+
+In particular the optimizer set is finite, nonempty and contained in $(-1,1)$; each of its elements and the minimum value are algebraic over $F$. The factorization in (17.6) is taken for the given polynomial over the given field, including all its actual coefficient equalities.
+
+*Proof.* Expand $p^{\flat}$ before taking the resultant. Its coefficients in $Z$ are polynomials in $X$ and are affine in $t$, as are the coefficients of $p$. The Sylvester determinant has $d$ rows from each polynomial. Each determinant term therefore has degree at most $2d$ in $t$, whence
+
+$$
+\deg_t\mathcal R\leq2d.
+\tag{17.11}
+$$
+
+For any fixed real $t$ at which $p(0,t)\ne0$, the product formula (17.4) gives
+
+$$
+\begin{aligned}
+\mathcal R(X,t)
+ &=\prod_{i=1}^d\bigl(\lambda_i(t)^d
+                         p(X/\lambda_i(t),t)\bigr)\\
+ &=\prod_{i=1}^d\prod_{j=1}^d
+                         (X-\lambda_i(t)\lambda_j(t)).
+\end{aligned}
+\tag{17.12}
+$$
+
+The identity includes every ordered pair, also $i=j$, and all repeated roots. It holds without the restriction $p(0,t)\ne0$. One way to see this directly at a zero root is to note that $p^{\flat}(0,X,t)=X^d$: the factor in (17.4) for $\lambda_i=0$ is $X^d$, exactly the product of its $d$ factors on the right. For a nonzero $\lambda_i$ the preceding calculation still applies. Thus (17.12) is valid at every real $t$, including a vanishing constant term. Equivalently it is the polynomial identity obtained from the classical resultant formula before any specialization.
+
+In particular $\mathcal R$ is monic of degree $d^2$ in $X$, and is nonzero. For a real parameter, complex conjugation permutes the complete root multiset. If $|\lambda_i|=r(t)$, its conjugate is some $\lambda_j$ with the appropriate multiplicity, so $s(t)=\lambda_i\lambda_j$ is a nonnegative real root of $\mathcal R(X,t)$. Every other nonnegative real root is some product $\lambda_k\lambda_l$ and hence satisfies
+
+$$
+0\leq\lambda_k\lambda_l
+   =|\lambda_k\lambda_l|\leq r(t)^2.
+\tag{17.13}
+$$
+
+This proves (17.9) on the whole interval, including $s(t)=0$. It uses the full complex root multiset, not just its real roots or any selected conjugate pairs.
+
+The polynomial ring $F[t,X]$ is a unique factorization domain. The relevant Gauss-lemma passage between $F[t,X]$ and $F(t)[X]$ is the classical one for a polynomial ring over a field; see [The Stacks Project, Example 10.27.3, tag 00F0](https://stacks.math.columbia.edu/tag/00F0). Monicity of $\mathcal R$ in $X$ has two consequences. It has no nonconstant factor in $F[t]$, and every factor of positive $X$ degree can be normalized to be monic in $X$ with coefficients still in $F[t]$. Indeed the product of the $X$-leading coefficients of all factors, with multiplicity, is the constant one, so each such coefficient is a unit of $F[t]$. This proves existence and uniqueness, up to ordering, of (17.6).
+
+There is also no nonconstant factor of $\mathcal R$ in $F[X]$. For if $g(X)$ were such a factor and $\xi\in\mathbb C$ one of its roots, then $\mathcal R(\xi,1)=0$. Formula (17.12) and the endpoint hypothesis would give $|\xi|=1$. But $\mathcal R(\xi,0)=0$, and every product on the right of (17.12) at $t=0$ has modulus strictly less than one by (17.5). This would give $|\xi|<1$, a contradiction. Thus every $h_\nu$ depends on $t$ as well as $X$.
+
+Degrees in either variable add under nonzero products over an integral domain. Taking distinct factors once instead of $e_\nu$ times therefore gives
+
+$$
+1\leq\deg_X V\leq\deg_X\mathcal R=d^2,
+\qquad
+1\leq\deg_t V\leq\deg_t\mathcal R\leq2d.
+\tag{17.14}
+$$
+
+Moreover, for every real $c$, monicity of all the $h_\nu$ ensures that none specializes to the zero polynomial. Equation (17.6) then implies equality of zero sets
+
+$$
+\{x\in\mathbb C:\mathcal R(x,c)=0\}
+  =\{x\in\mathbb C:V(x,c)=0\}.
+\tag{17.15}
+$$
+
+Factors may acquire repeated roots or collide after specialization; this equality still holds. In particular $V(s(t),t)=0$ at every parameter in the interval.
+
+We prove that both resultants in (17.7) are nonzero polynomials. Work temporarily in the univariate polynomial ring $F(t)[X]$. Each monic $h_\nu$ remains irreducible there by Gauss's lemma, and distinct factors remain relatively prime. In characteristic zero, $(h_\nu)_X$ is nonzero and has $X$ degree less than $\deg_X h_\nu$. Also $(h_\nu)_t\ne0$, since $h_\nu$ depends on $t$, and its $X$ degree is strictly smaller than $\deg_X h_\nu$, since the leading coefficient in $X$ is the constant one. Hence $h_\nu$ divides neither of these two partial derivatives. Reducing the product rule modulo $h_\nu$ gives
+
+$$
+\begin{aligned}
+V_X&\equiv(h_\nu)_X\prod_{\mu\ne\nu}h_\mu
+                                      \pmod{h_\nu},\\
+V_t&\equiv(h_\nu)_t\prod_{\mu\ne\nu}h_\mu
+                                      \pmod{h_\nu}.
+\end{aligned}
+\tag{17.16}
+$$
+
+Both right sides are nonzero in the field $F(t)[X]/(h_\nu)$. It follows that
+
+$$
+\gcd(V,V_X)=\gcd(V,V_t)=1\quad\text{in }F(t)[X].
+\tag{17.17}
+$$
+
+The common-root criterion for a Sylvester resultant, or its equivalent Bézout criterion, now shows that $\Delta_1$ and $\Delta_2$ are nonzero in $F(t)$. They were defined as polynomial determinants over $F[t]$, so they are nonzero polynomials in $F[t]$. This step proves nonvanishing for the actual coefficients; it uses no unspecified generic parameter.
+
+For polynomials of $X$ degrees $A,B$ whose coefficient degrees in $t$ are at most $P,Q$, respectively, the Sylvester determinant gives
+
+$$
+\deg_t\operatorname{Res}_X(f,g)\leq BP+AQ.
+\tag{17.18}
+$$
+
+Indeed its determinant terms take $B$ coefficients from $f$ and $A$ from $g$. For $B=0$ the same inequality follows from $\operatorname{Res}_X(f,g)=g^A$ when $f$ is monic. Here each derivative of $V$ has $X$ degree at most $D-1$, while its coefficient degrees in $t$ are at most $E$. Applying (17.18) twice yields
+
+$$
+\deg\Delta_1\leq(2D-1)E,
+\qquad
+\deg\Delta_2\leq(2D-1)E,
+\qquad
+\deg\Delta\leq(4D-2)E\leq8d^3-4d.
+\tag{17.19}
+$$
+
+It remains to prove that every optimizer is captured, rather than only a selected smooth branch. First $r$ and $s$ are continuous. The full-multiset compactness proof used in Theorem 16.2 applies verbatim: for a sequence of real parameters tending to $t_0\in[-1,1]$, all root tuples lie in the product of $d$ closed unit disks by (17.5) and the endpoint hypothesis. Every convergent subsequence of those tuples factors the limiting monic polynomial into exactly its $d$ roots with multiplicity. Its maximum modulus is therefore $r(t_0)$. A subsequence contradicting continuity would have a further convergent root tuple and so is impossible. The polynomial factorization with multiplicities used here is the classical fundamental theorem of algebra; see [NIST DLMF, §1.11(ii)](https://dlmf.nist.gov/1.11#ii).
+
+The extreme-value theorem supplies a minimum on $[-1,1]$. Both endpoint radii are one, whereas $r(0)<1$, so every minimizer $t_0$ lies in the interior. Put $s_0=s(t_0)$. If $V_X(s_0,t_0)=0$, then $V$ and $V_X$ have the common root $s_0$ after specialization, and $\Delta_1(t_0)=0$.
+
+Suppose instead that $V_X(s_0,t_0)\ne0$. We can differentiate $s$ at this one point without choosing or differentiating individual eigenvalues. For $t\ne t_0$ sufficiently near $t_0$, use $V(s(t),t)=V(s_0,t_0)=0$ and apply the ordinary real mean value theorem separately in $X$ and in $t$. There are $\xi_t$ between $s(t)$ and $s_0$, and $\eta_t$ between $t$ and $t_0$, such that
+
+$$
+0=(s(t)-s_0)V_X(\xi_t,t)
+           +(t-t_0)V_t(s_0,\eta_t).
+\tag{17.20}
+$$
+
+When $s(t)=s_0$, the same formula holds with $\xi_t=s_0$. Continuity gives $\xi_t\to s_0$ and $\eta_t\to t_0$. Thus $V_X(\xi_t,t)$ is nonzero for all sufficiently close $t$, and division in (17.20) proves
+
+$$
+s'(t_0)=-\frac{V_t(s_0,t_0)}{V_X(s_0,t_0)}.
+\tag{17.21}
+$$
+
+Since $s$ has an interior minimum at $t_0$, its derivative there is zero. Therefore $V_t(s_0,t_0)=0$, so $\Delta_2(t_0)=0$. Monicity of $V$ makes the common-root resultant implication valid even if a specialized derivative has smaller degree or is the zero polynomial. These two alternatives also cover a zero minimum and every collision. Hence every minimizer belongs to $C$.
+
+The nonzero polynomial $\Delta$ has at least this one real interior root, so it has positive degree and $C$ is finite and nonempty. This completes (17.8). Because $s(t)=r(t)^2$ and $r(t)\geq0$, these two functions have the same minimizers. Every candidate is in the original interval, and every global minimizer is a candidate. Taking the least of the finitely many exact values (17.9) therefore proves both equalities and the entire-set assertion in (17.10).
+
+Finally, each $c\in C$ is algebraic over $F$, being a root of the nonzero polynomial $\Delta$. The polynomial $\mathcal R(X,c)$ is monic, so $\mathfrak s(c)$ is algebraic over $F(c)$ and hence over $F$. The minimum of a nonempty finite set of these numbers is one of them. Its nonnegative square root is algebraic as well. This is transitivity of algebraicity, as in [Milne, *Fields and Galois Theory*, version 5.10, Proposition 1.30 and Corollary 1.31](https://www.jmilne.org/math/CourseNotes/FT.pdf). It proves the asserted field boundary without requiring $F$ to be a number field.
+
+The affine-space result of Eaton, Grundel, Gürbüzbalaban and Overton cited in Definition 17.1, Proposition 1 and Theorem 1, establishes existence of an optimizer with a specified number of active roots. The finite description of every minimizing parameter here follows instead from (17.12), the exclusion of $t$-independent factors by the two spectral scales, and the exhaustive alternatives (17.20)–(17.21) or $V_X=0$. The classical resultant, factorization and field-extension facts are supporting steps in this implication. $\square$
+
+## 18. The entire original damping optimizer set from the actual chain
+
+**Definition 18.1 (Actual field and original-row polynomial).** Fix any integer $m\geq1$ and any strictly positive real chain $v=(v_1,\ldots,v_{m+1})$. Set
+
+$$
+F_v=\mathbb Q(v_1,\ldots,v_{m+1})\subseteq\mathbb R,
+\qquad s_i=v_i+v_{i+1}.
+\tag{18.1}
+$$
+
+Use the literal $A,B,B_\alpha$ of Definition 1.1, the zero endpoints $z_0=z_{m+1}=0$, and their endpoint extensions from Definition 16.1. Define $\mathcal B_v(q)$ to have the same rows as $B$ except for its first row
+
+$$
+(\mathcal B_v(q)z)_1=-qz_1+(1+q)\frac{v_1}{s_1}z_2,
+\qquad z_2=0\quad(m=1).
+\tag{18.2}
+$$
+
+Keep exactly the original parameter correspondence
+
+$$
+q=q_v(\alpha)=\frac{\alpha(v_1+2v_2)-v_2}{v_2+\alpha v_1},
+\qquad
+\alpha=\alpha_v(q)=\frac{v_2(1+q)}{v_1+2v_2-v_1q}.
+\tag{18.3}
+$$
+
+The full characteristic polynomial in this notation is
+
+$$
+\boxed{\quad
+p_v(Z,q)=\frac{\det(Z A-\mathcal B_v(q))}
+                  {\displaystyle\prod_{\substack{1\leq i\leq m\\i\ {\rm even}}}s_i}.
+\quad}
+\tag{18.4}
+$$
+
+All determinants in (18.4) are finite determinants in the original coordinates. For each fixed actual $v$, apply (17.3), (17.6) and (17.7) to this $p_v$ over $F_v$; denote the resulting polynomials by $\mathcal R_v,V_v,\Delta_v$. The factorization and the derivatives are taken after fixing the actual chain, not by specializing a squarefree factorization chosen for algebraically independent velocities.
+
+The source rows are [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, §IV.A and §IV.B.1](https://arxiv.org/html/2608.27085v1#S4). Their centered $u$ is $z$, their $M$ is $U=A^{-1}B$, their $M_\alpha$ is $T=A^{-1}B_\alpha$, and their pair count is $m=n-1$. In the repository definitions `A`, `B`, `Balpha`, `Malpha` of [TokenDampedSweepContraction](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), pair $i$ and velocity $v_j$ have indices $i-1,j-1$; `Malpha` is this literal $T$. Its local weight `theta` is $(1+q)/2$. The complete [damped-sweep Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) has the same correspondence. The weighted form is the $Q$ in Definition 12.1 and [FinitePathDynamics](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean), with its [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs). These are the original-row and contraction premises used below.
+
+**Theorem 18.2 (Finite exact value and every original optimizer).** For every actual chain in Definition 18.1, the polynomial $\Delta_v\in F_v[q]$ is nonzero. Put $L_v=\deg\Delta_v$ and define the polynomial in the unchanged original damping parameter
+
+$$
+\begin{aligned}
+d_v(\alpha)&=v_2+\alpha v_1,\\
+n_v(\alpha)&=\alpha(v_1+2v_2)-v_2,\\
+\Xi_v(\alpha)&=d_v(\alpha)^{L_v}
+                     \Delta_v\bigl(n_v(\alpha)/d_v(\alpha)\bigr),\\
+\mathcal Y_v(X,\alpha)&=d_v(\alpha)^{2m}
+                     \mathcal R_v\bigl(X,n_v(\alpha)/d_v(\alpha)\bigr).
+\end{aligned}
+\tag{18.5}
+$$
+
+The powers clear all denominators, so $\Xi_v\in F_v[\alpha]$ and $\mathcal Y_v\in F_v[X,\alpha]$. They satisfy
+
+$$
+\Xi_v\ne0,\qquad
+1\leq\deg\Xi_v\leq L_v\leq8m^3-4m<8m^3.
+\tag{18.6}
+$$
+
+The original interior candidate set
+
+$$
+C_v^\alpha=\{a\in\mathbb R:0<a<1,\ \Xi_v(a)=0\}
+\tag{18.7}
+$$
+
+is finite and nonempty. For each $a\in C_v^\alpha\cup\{0,1\}$, define solely by ordered real roots
+
+$$
+\begin{aligned}
+S_v(a)&=\max\{x\in\mathbb R:x\geq0,\ \mathcal Y_v(x,a)=0\},\\
+S_v^*&=\min_{a\in C_v^\alpha}S_v(a),\\
+\gamma_v^\alpha&=\text{the nonnegative real root of }Y^2-S_v^*=0,\\
+\mathcal A_v&=\{a\in C_v^\alpha:S_v(a)=S_v^*\}.
+\end{aligned}
+\tag{18.8}
+$$
+
+Each maximum exists. These expressions determine the actual value and the entire fixed-map optimizer set on the full original domain:
+
+$$
+\boxed{\quad
+\gamma_v^\alpha=\min_{0\leq\alpha\leq1}\rho(A^{-1}B_\alpha)=\gamma_v,
+\qquad
+\mathcal A_v=\operatorname*{argmin}_{[0,1]}
+                          \rho(A^{-1}B_\alpha).
+\quad}
+\tag{18.9}
+$$
+
+In particular $\mathcal A_v$ contains every optimizer, has between one and $8m^3-4m$ elements, and is contained in $(0,1)$. Every element of $\mathcal A_v$, and the minimum value, is algebraic over the actual field $F_v$. In normalized coordinates the corresponding complete answer is
+
+$$
+\begin{aligned}
+C_v^q&=\{c\in(-1,1):\Delta_v(c)=0\},\\
+Q_v&=\{c\in C_v^q:
+       \max\{x\geq0:\mathcal R_v(x,c)=0\}=S_v^*\},\\
+\mathcal A_v&=\{\alpha_v(c):c\in Q_v\}.
+\end{aligned}
+\tag{18.10}
+$$
+
+At every parameter, the entire complex spectrum with algebraic multiplicity remains the multiset of roots of (18.4), with $q=q_v(\alpha)$. No roots are removed from that spectral specification by the reduced polynomial $V_v$.
+
+*Proof.* First verify the polynomial and the literal operator. An odd row of $A$ is its coordinate row, and an even row has diagonal $s_i$ and off-diagonal entries only in odd columns. Ordering the odd coordinates before the even coordinates therefore makes $A$ block lower triangular, with identity in the odd block and diagonal entries $s_i$ in the even block. Simultaneously permuting rows and columns leaves its determinant unchanged. Hence
+
+$$
+\det A=\prod_{i\ {\rm even}}s_i>0.
+\tag{18.11}
+$$
+
+This verifies the denominator in (18.4), including an empty even block and the scalar case. All entries are in $F_v$. Equations (16.1)–(16.2), already established for these exact rows, identify $\mathcal B_v(q)=B_{\alpha_v(q)}$. In particular
+
+$$
+p_v(Z,q)=\det\bigl(ZI-A^{-1}B_{\alpha_v(q)}\bigr).
+\tag{18.12}
+$$
+
+Only the first row of $Z A-\mathcal B_v(q)$ depends on $q$, and that row depends affinely on $q$. Multilinearity of the determinant shows that $p_v(Z,q)$ is affine in $q$. Its coefficient of $Z^m$ is $\det A/\det A=1$, independently of $q$, so it has precisely the form (17.1) with $d=m$. The determinant identity (13.8) also gives, with all parity signs retained,
+
+$$
+\det U=(-1)^m,\qquad
+\det T_{v,q}=(-1)^m q,\qquad p_v(0,q)=q.
+\tag{18.13}
+$$
+
+These identities in particular show that the affine dependence is not constant. They do not require a nonzero $q$.
+
+The hypotheses of Assumption 17.2 follow from the supporting fixed-map results, not from a change of spectral objective. More explicitly, retain the same positive definite Hermitian form and first normal as in Definition 12.1:
+
+$$
+Q(z)=\sum_{j=1}^{m+1}\frac{|z_j-z_{j-1}|^2}{v_j},
+\qquad P_1z=f_1\langle f_1,z\rangle_Q.
+$$
+
+The source reflection and sweep identities, in the normalization already proved in (12.7) and (16.11), are
+
+$$
+T_{v,q}=U\bigl(I-(1-q)P_1\bigr),\qquad
+U^\dagger U=I,\qquad
+Q(T_{v,q}z)=Q(z)-(1-q^2)|\langle f_1,z\rangle_Q|^2.
+\tag{18.14}
+$$
+
+At $q=1$ the second factor is the identity; at $q=-1$ it is a $Q$-orthogonal reflection. Thus both endpoint transfers preserve this very same $Q$, and every complex eigenvalue there has modulus one. For $-1<q<1$, the exact bijection (18.3) gives $0<\alpha_v(q)<1$, and Theorem 13.2 gives $\rho(T_{v,q})<1$. Equivalently this is the qualitative `result` of the damped-sweep source in Definition 18.1, whose proof uses the complete private local loss, reflection, source factorization and boundary-rigidity intermediates. These statements have every positive velocity, both zero endpoints, every dimension $m\geq1$, and one fixed interior parameter as their hypotheses. They are exactly the hypotheses needed here.
+
+Consequently Theorem 17.3 applies over $F_v$ to (18.4). It proves that $\Delta_v$ is nonzero, that
+
+$$
+1\leq L_v\leq8m^3-4m,
+\tag{18.15}
+$$
+
+and that $C_v^q$ contains all normalized optimizers. Its construction concerns the actual entries of the entire original transfer, including their coupling to the damped first row. It does not replace them by undamped spectral data.
+
+The denominators in (18.3) are positive on their closed intervals: $d_v(\alpha)\geq v_2>0$ for $\alpha\in[0,1]$, and $v_1+2v_2-v_1q\geq2v_2>0$ for $q\in[-1,1]$. As proved in (16.10), $q_v$ and $\alpha_v$ are mutually inverse increasing bijections, taking endpoints to endpoints. A polynomial of $q$ degree at most $L_v$ becomes a polynomial in $\alpha$ after multiplication by $d_v^{L_v}$, of degree at most $L_v$. This proves the polynomial assertion for $\Xi_v$. It is nonzero: substitution by a fractional linear transformation with the rational inverse (18.3) is an injective map of rational function fields. If $\Xi_v$ vanished identically, substituting the inverse would make the nonzero polynomial $\Delta_v$ vanish identically. Positivity of $d_v$ then gives the exact set equality
+
+$$
+C_v^\alpha=\{\alpha_v(c):c\in C_v^q\}.
+\tag{18.16}
+$$
+
+Thus this candidate set is finite and nonempty. In particular $\Xi_v$ has a real root and has positive degree, completing (18.6).
+
+By (17.11), $\deg_q\mathcal R_v\leq2m$, so the second denominator clearance in (18.5) also yields a polynomial. Its $X$-leading coefficient at a real $a\in[0,1]$ is $d_v(a)^{2m}>0$. Multiplication by this positive scalar changes none of its $X$ roots. The exact identity (17.12) now says that these roots, with multiplicities, are
+
+$$
+\mu_i(q_v(a))\mu_j(q_v(a)),\qquad 1\leq i,j\leq m,
+\tag{18.17}
+$$
+
+where $\mu_1,\ldots,\mu_m$ are all roots of the actual characteristic polynomial (18.12). By (17.9), the largest nonnegative real root is therefore exactly
+
+$$
+S_v(a)=\rho(A^{-1}B_a)^2.
+\tag{18.18}
+$$
+
+This is an equality with the original spectral radius, not a norm bound. Every global minimizing original parameter belongs to $C_v^\alpha$ by (18.16), and every candidate remains in the original admissible interval. Comparing their finitely many exact ordered roots proves (18.8)–(18.9), including the entire set rather than a selector. The endpoint comparisons are $S_v(0)=S_v(1)=1$, while an interior value is strictly less than one. Hence adding both endpoints to the finite comparison would give precisely the same minimum and optimizer set.
+
+Each root $a$ of $\Xi_v$ is algebraic over $F_v$. At such an $a$, (18.5) is a nonzero polynomial of fixed positive $X$ degree with coefficients in $F_v(a)$, so $S_v(a)$ is algebraic over that field. Transitivity of algebraicity, as cited in Theorem 17.3, proves algebraicity over $F_v$ of every compared value, of $S_v^*$, and of its nonnegative square root. Rational substitution by (18.3) gives the corresponding assertion for all elements of $Q_v$. The ordered-root definitions use the fixed real embedding of $F_v$ and its algebraic extensions; they require no assumption that arbitrary real input data have an effective presentation.
+
+Finally, (18.12) supplies all $m$ eigenvalues at every fixed parameter, with algebraic multiplicity as in (16.3). The auxiliary polynomial $\mathcal R_v$ records their products to express the maximum modulus, and $V_v$ is used only in the critical-parameter proof. Neither is a substituted transfer operator. No eigenvalue has been discarded from $p_v$, and no power with a varying parameter has entered the argument. This proves the full original-operator assertion. $\square$
+
+## 19. Singular, repeated and exceptional specializations
+
+**Theorem 19.1 (Specialization and the zero-radius branch of the complete answer).** The description in Theorem 18.2 holds separately for each positive chain, including every coefficient specialization, and has the following precise boundary properties.
+
+At either original endpoint the complete multiset is still given by (18.4) and every root has modulus one. No endpoint is an optimizer. The only singular original parameter is
+
+$$
+\alpha_* =\frac{v_2}{v_1+2v_2},\qquad q_v(\alpha_*)=0.
+\tag{19.1}
+$$
+
+It belongs to the permitted interior domain, and none of the finite constructions excludes it. The actual minimum is zero exactly on the already evaluated finite-annihilation branch:
+
+$$
+\boxed{\quad
+\gamma_v=0\quad\Longleftrightarrow\quad\mathcal D(v)=1.
+\quad}
+\tag{19.2}
+$$
+
+In that branch
+
+$$
+Q_v=\{0\},\qquad \mathcal A_v=\{\alpha_*\},\qquad
+p_v(Z,0)=Z^m,
+\tag{19.3}
+$$
+
+and the original map at $\alpha_*$ has least all-state annihilation time $m$. For $m=1$ this gives $\gamma_v=0$ and the unique original optimizer $\alpha_*$ for every positive pair. Outside the zero-radius branch the comparison in (18.8) retains every minimizer, without an assertion that there is only one.
+
+Repeated eigenvalues, collisions of distinct product roots, nonreal conjugate pairs, and either parity of $m$ require no additional hypotheses in these assertions. The full-data answer does not make $Q_v$ or $\gamma_v$ a function of the observation $\mathsf O(v)$ in (16.5), even when that observation includes the entire original map $\alpha\mapsto q_v(\alpha)$.
+
+*Proof.* Endpoint preservation and the endpoint radii follow from the exact factorization (18.14), as used in Theorems 15.1, 16.2 and 18.2. A finite nonempty complex spectrum of a positive definite $Q$-isometry has all eigenvalue moduli one, including repeated eigenvalues; an eigenvector gives the equality directly. A fixed interior parameter has radius strictly below one. This proves exclusion of both endpoints without deleting their characteristic polynomials from the spectral specification.
+
+Equation (18.13) proves that singularity is equivalent to $q=0$. The inverse correspondence (18.3) then gives (19.1), with $0<\alpha_*<1$ by positivity. The determinant formula (18.4), the product formula (17.12), factorization into actual monic factors, differentiation and the real-root comparisons involve no inverse of $T_{v,q}$, no reciprocal of $q$, and no reciprocal of an eigenvalue. Formula (17.12) explicitly treats a zero eigenvalue. Hence the singular map is present with all its zero-root multiplicities.
+
+If $\gamma_v=0$, take any minimizing parameter, whose existence is already proved. Every root of its monic characteristic polynomial must have modulus zero, so that polynomial is $Z^m$. Its constant term is $q$ by (18.13), forcing $q=0$. The Cayley–Hamilton theorem then gives $T_{v,0}^m=0$. The exact nilpotence criterion of Theorem 13.2 says that this occurs if and only if $q=0$ and $\mathcal D(v)=1$, with least all-state annihilation time $m$. Conversely $\mathcal D(v)=1$ gives $T_{v,0}^m=0$ by that same supporting theorem, so the spectral radius at zero is zero and is necessarily the minimum. If $q\ne0$, the determinant is nonzero, so its spectral radius cannot be zero. Thus zero is the only normalized optimizer in this branch, and bijectivity of (18.3) proves (19.3). This uses the already published criterion and evaluated product (12.3), not a new restriction on the velocity chain.
+
+In the scalar case, reuse the exact identity $p_v(Z,q)=Z+q$ in (16.12). Definitions (17.3), (17.6) and (17.7) give directly
+
+$$
+\mathcal R_v(X,q)=V_v(X,q)=X-q^2,\qquad
+\Delta_v(q)=-2q,\qquad
+\Xi_v(\alpha)=-2\bigl(\alpha(v_1+2v_2)-v_2\bigr).
+\tag{19.4}
+$$
+
+Thus the finite comparison indeed has the sole original candidate $\alpha_*$ and gives the actual minimum zero, agreeing with the existing scalar and nilpotent conclusions. These identities also include both scalar endpoints. In every dimension the parity sign in $\det T=(-1)^m q$ is canceled by the sign in the constant coefficient $\det(-T)$, so $p_v(0,q)=q$ for both parities. No odd or even factor of the original characteristic polynomial has been removed in forming (18.4).
+
+For the remaining specializations, fix the actual velocities first. The real field $F_v$ still has characteristic zero, and the polynomial (18.4) is still monic, affine in $q$, with unit-circle endpoints and strict interior roots. The nonvanishing argument (17.16)–(17.17) is therefore valid for that actual polynomial, regardless of any extra coefficient equalities. If an irreducible factor occurs to higher multiplicity for this chain, its multiplicity is retained in $\mathcal R_v$ and it occurs once in $V_v$. If distinct factors or roots collide at a particular parameter, their product may have $V_{v,X}=0$ there; that is the first resultant alternative in (17.7). If $V_{v,X}\ne0$ at a minimizing squared radius, (17.20)–(17.21) give the second alternative using only the actual continuous squared radius. The argument does not assume that the original eigenvalues are differentiable, simple, or diagonalizable. It applies as well at a zero squared radius. The product formula uses conjugation of the entire real-coefficient root multiset to supply an actual $|\mu|^2$, and bounds every other real nonnegative product by the same actual maximum. Nonreal eigenvalues therefore enter with their full multiplicities rather than being omitted from the objective.
+
+It follows that no exceptional positive chain invalidates the candidate polynomial by forcing it identically to zero: the squarefree factorization and the proof of its two nonzero resultants are performed anew for the specified actual coefficients. There is no assertion that taking squarefree parts or resultants for an indeterminate velocity family and subsequently specializing would preserve their nonvanishing. It is precisely the definition in the actual field that gives the stated all-chain result.
+
+Finally, the two actual chains (16.6) have identical observations, even augmented as in Corollary 16.3, but their entire optimizer sets and minimum values are different. The polynomial (18.4) uses their distinct full first-row-to-tail couplings and so is not required to coincide on that observational fiber. Equations (18.8)–(18.10) consequently preserve both answers in (16.9) and the insufficiency conclusion of Corollary 16.3. All statements here concern a fixed original map at each spectrum or power. The mixed histories and physical collision conditions retain their separate domains. $\square$
+
+## 追加锚（本行以下为增补区）

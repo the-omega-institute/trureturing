@@ -1,0 +1,34 @@
+**引理 122.3（循环三角扇的径向圆盘坐标）。** 令整数 $n\ge3$，令
+
+$$
+S=\{(a,b)\in\mathbb R^2: a\ge0,\ b\ge0,\ a+b\le1\},\qquad
+X_n=\operatorname{Fin}(n)\times S.
+$$
+
+$\operatorname{Fin}(n)$ 取离散拓扑，$S$ 取平面的子空间拓扑。记 $\operatorname{next}(i)=i+1\pmod n$，仅用以下接缝生成等价关系 $R_n$：
+
+$$
+(i,t,0)\sim(\operatorname{next}(i),0,t),\qquad 0\le t\le1.
+$$
+
+令 $Q_n=X_n/R_n$，取投影 $X_n\to Q_n$ 所诱导的商拓扑；不预先假设 $Q_n$ 为 Hausdorff 空间。令 $D=\{z\in\mathbb C:\lVert z\rVert\le1\}$。存在同胚 $H_n:Q_n\to D$，在每个代表上满足
+
+$$
+H_n([i,a,b])=
+\begin{cases}
+0,&a+b=0,\\
+(a+b)\exp\!\left(\mathrm i\,\dfrac{2\pi}{n}
+\left(i+\dfrac{a}{a+b}\right)\right),&a+b>0.
+\end{cases}
+$$
+
+所有三角形的原点属于同一个等价类，此类映到 $0$；其像的逆像 $H_n^{-1}(\{z:\lVert z\rVert<1\})$ 是该类的开邻域，同胚于开单位圆盘。这里扇形的关系始终由接缝生成，不能改用径向映射的核关系作为定义。
+
+**证明。** 记代表上的径向映射为 $F_n$，记 $s=a+b$。其模长恰为 $s\le1$。在 $s>0$ 处连续性由公式给出；在 $s=0$ 处，$\lVert F_n\rVert=s\to0$ 给出连续性，故无需在原点选择连续辐角。正半径接缝两端的角坐标分别为 $i+1$ 和 $\operatorname{next}(i)$，仅在最后一条接缝相差 $n$；指数因子周期恰为 $n$。零半径接缝两端均映到零。因此 $F_n$ 在每条接缝上相等，经对称、传递和自反闭包，在 $R_n$ 上相等，连续下降到 $Q_n$。
+
+下面证明其纤维恰好是 $R_n$ 的类。在 $s>0$ 时，若 $b>0$，则 $\lambda=a/s\in[0,1)$；若 $b=0$，通过一条实际接缝把 $(i,s,0)$ 换成 $(\operatorname{next}(i),0,s)$，其分数坐标为零。每个正半径代表因而都实际等价于一个角坐标 $i+\lambda\in[0,n)$ 的标准代表。两代表的 $F_n$ 值相等，首先由模长得到相同的正半径。消去该半径后，指数因子相等，使标准角坐标模 $n$ 相等；因为两者都在 $[0,n)$ 内，角坐标相等。各个半开区间 $[i,i+1)$ 不交，故两者具有相同的 $i$ 和 $\lambda$，再由 $a=s\lambda$、$b=s(1-\lambda)$ 得到相同三角坐标。接回各自使用的接缝步骤，得到原代表 $R_n$ 等价。
+
+零半径时，非负性给出 $a=b=0$。取接缝参数 $t=0$，即可把第 $i$ 个原点连接到第 $\operatorname{next}(i)$ 个原点；有限循环上的逐步迭代连接所有原点。这是生成关系的推论，没有增添额外的原点识别。因此下降映射为单射。
+
+任意 $z\in D$ 在 $z=0$ 时由一个原点取得。在 $z\ne0$ 时，取 $s=\lVert z\rVert\in(0,1]$，并将 $z/s$ 的角坐标选为 $\theta\in[0,n)$。取 $i=\lfloor\theta\rfloor$、$\lambda=\theta-i$，再置 $a=s\lambda$、$b=s(1-\lambda)$，即得到 $S$ 中的代表且 $F_n(i,a,b)=z$，所以下降映射满射。$S$ 为 $[0,1]^2$ 的闭子集，$X_n$ 是有限个紧致三角形的不交并，因而紧致，$Q_n$ 作为其连续商也紧致；$D$ 为 Hausdorff 空间。因此这个连续双射为同胚。限制到 $\lVert z\rVert<1$ 即得所述原点邻域。
+

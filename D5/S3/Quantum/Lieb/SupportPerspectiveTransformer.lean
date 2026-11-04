@@ -46,7 +46,7 @@ variable {n : Type u} {m : Type v}
 /-- Mixed products of the actual square root and zero-on-kernel spectral
 inverse root give the actual support. The support also fixes the inverse root.
 Only finite spectral multiplication is added to the existing normalization. -/
-private theorem spectral_sqrt_inverse_products (Q : Matrix n n ℂ) (hQ : Q.PosSemidef) :
+theorem spectral_sqrt_inverse_products (Q : Matrix n n ℂ) (hQ : Q.PosSemidef) :
     let R := CFC.sqrt Q
     let W := spectralInverseSqrt Q
     let P := spectralSupport Q

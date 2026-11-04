@@ -1,0 +1,23 @@
+### 命题 3.1（局部状态资格由 C92 自动给出）
+
+<a id="prop-c92-local-states"></a>
+
+若 C92 成立，则每个输入都满足
+
+$$
+R_C\ge0,\qquad \operatorname{Tr} R_C=1.
+$$
+
+**证明。**
+仅令一个分量为 $h_C=I_C$，其余为零，则 $W=I$，C92 给出
+$\operatorname{Tr} R_C\le1$。改取 $h_C=-I_C$，又得 $\operatorname{Tr} R_C\ge1$。
+对任意单位向量 $v\in\mathcal H_C$，仅取
+$h_C=-\lvert v\rangle\langle v\rvert$，则 $W\le0$，所以
+
+$$
+-\langle v\rvert R_C\lvert v\rangle\le\lambda_{\max}(W)\le0.
+$$
+
+故所有方向的二次型均非负，即 $R_C\ge0$。
+这一论证也覆盖一维局部载体。
+

@@ -1,0 +1,26 @@
+### 49.1. Statement and normalization
+
+For $0<\xi<4$ use the existing unique interior scalar selector:
+
+$$
+t=\xi/2,\quad \delta=\delta_\circ(t),\quad
+x=1-\delta/2,\quad y=\sqrt{1-x^2},\quad q=t-\delta,\quad p=1-q.
+\tag{49.3}
+$$
+
+All four of $x,y,p,q$ lie in $(0,1)$. Define, exactly as in (36.43),
+
+$$
+\begin{aligned}
+L_a&=\frac{hx^2}{1+x}
+ \left(\frac{\gamma\sqrt p}{hx+c}+\frac{\sqrt q}{y}\right),\\
+L_b&=\gamma\sqrt p+\frac{(h^2x-s^2)\sqrt q}{hy},\\
+D_{\mathrm{sel}}(\xi)&=L_aL_b-s^2q.
+\end{aligned}
+\tag{49.4}
+$$
+
+Thus $D_{\mathrm{sel}}(\xi)=\mathscr D(x,p)$ in (36.43), or
+$\mathfrak D_+(x,q)$ in (46.13); the population arguments in those
+two notations differ.
+

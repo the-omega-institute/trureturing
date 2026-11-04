@@ -1,0 +1,99 @@
+**Proposition 40.5 (a fixed-feedback mixed counterexample at distance $25/8$).**
+Set
+
+$$
+\begin{aligned}
+ w_0&=\left(\frac{1+i\sqrt{15}}4,
+             \frac{1-i\sqrt{15}}4,1,1\right),&
+ U_0&=\operatorname{diag}(w_0)U_+,\\
+ F_{\mathrm p}&=\begin{pmatrix}
+ 15/16&i\sqrt{15}/16\\-i\sqrt{15}/16&1/16
+ \end{pmatrix},&
+ F_{\mathrm m}&=\begin{pmatrix}
+ 7/8&i\sqrt3/8\\-i\sqrt3/8&1/8
+ \end{pmatrix},\\
+ E_j&=(TF_jT^\dagger)^{\mathsf T},& j&\in\{\mathrm p,\mathrm m\}.
+\end{aligned}
+\tag{40.26}
+$$
+
+These are actual original pairs with
+$\rho(E_{\mathrm p},U_0)=\rho(E_{\mathrm m},U_0)=25/8$.
+The effect $E_{\mathrm p}$ has rank one and $E_{\mathrm m}$ is
+positive definite. Every rank-one original effect $E$ at this same
+$U_0$ and original level satisfies
+
+$$
+ f(E_{\mathrm m},U_0)
+    < f(E_{\mathrm p},U_0)-\frac7{640}
+    \le f(E,U_0)-\frac7{640}.
+\tag{40.27}
+$$
+
+Thus universal prescribed-level purification at unchanged actual
+feedback fails, even inside $\mathcal C_{34}$.
+This statement concerns one fixed feedback and one level; it asserts
+no mixed optimality for the all-feedback geometric or full-domain problem.
+
+*Proof.* Every entry of $w_0$ has modulus one, so $U_0$ is an
+actual unitary, of geometric shape $x=1/4$, $y=\sqrt{15}/4$.
+The matrices in (40.26) are Hermitian with trace one and positive
+diagonal entries. Their determinants are respectively zero and
+$1/16$, proving the stated positivity and ranks after the prescribed
+unitary conjugation and ordinary transpose.
+The actual common data are
+
+$$
+ A=5/2,\quad B=\sqrt{15}/2,\quad
+ P=u=2c+h/2,\quad Q=iv,\quad v=h\sqrt{15}/2.
+\tag{40.28}
+$$
+
+For both effects the positive-branch coordinates satisfy
+$r^2+|z|^2=1/16$:
+these are $1/256+15/256$ for $F_{\mathrm p}$ and
+$1/64+3/64$ for $F_{\mathrm m}$.
+Equation (36.10) gives the positive distance $3+2/16=25/8$.
+For every effect the negative feedback-distance term alone is
+$8-\sqrt{15}>4$, so the positive sign is unique for both displayed
+pairs and for every other effect on this fixed-feedback level.
+No negative-sign pure competitor has been omitted.
+
+At this level a pure effect must have
+$r=r^2+|z|^2=1/16$ by positivity with determinant zero.
+Its best possible coherence phase is $z=i\sqrt{15}/16$,
+since the actual $P$ is positive and $Q$ is positive imaginary.
+Thus $E_{\mathrm p}$ minimizes over every pure effect at this same
+feedback and original level, not just over one chosen orientation.
+For the two aligned effects the exact identity (23.12) gives
+
+$$
+\begin{aligned}
+ b&=u^2-v^2-D_0=\frac14+c-7s-2h,\\
+ 16\bigl[g(E_{\mathrm m},U_0)-g(E_{\mathrm p},U_0)\bigr]
+   &=b+(c+s+1/4)(15-6\sqrt5).
+\end{aligned}
+\tag{40.29}
+$$
+
+For completeness, $s>3/8$ follows from
+$\sqrt2<10/7$ and $s^2=(2-\sqrt2)/4>1/7>9/64$.
+Also $c<1$, $2h>7/5$ and $0<15-6\sqrt5<8/5$;
+the last bounds follow by squaring the positive rational comparisons
+$\sqrt5<5/2$ and $\sqrt5>67/30$.
+Since $c+s+1/4>0$, the last line of (40.29) is strictly smaller than
+
+$$
+ \frac{13}{5}c-\frac{27}{5}s+\frac{13}{20}-2h
+ <\frac{13}{5}-\frac{81}{40}+\frac{13}{20}-\frac75
+ =-\frac7{40}.
+\tag{40.30}
+$$
+
+This proves (40.27) for $g$ and hence for $f$, since all compared
+objects have the identical original distance.
+All amplitudes, both sign tests and both effects have used the one
+actual $U_0$. Theorem 40.2 can nevertheless improve this mixed pair
+by a pure pair with a changed geometric feedback; (40.27) does not
+compare such different feedbacks. $\square$
+

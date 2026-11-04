@@ -13,6 +13,9 @@ inputs:
   regenerate-report-artifacts:
     description: 'Explicitly re-extract all reports while retaining compiled Lean and dependencies'
     default: 'false'
+  native-report-batch-modules:
+    description: 'Maximum modules per native extraction process (integer 1..100); preserves full report coverage and cache reuse'
+    default: '100'
 outputs:
   project-key:
     description: 'Newly published or accepted restored project seed'
@@ -125,11 +128,14 @@ runs:
         GH_TOKEN: ${{ github.token }}
         STRATALINT_ACCEPT_COLD_BUILD: '1'
         REGENERATE_REPORTS: ${{ inputs.regenerate-report-artifacts }}
+        STRATALINT_NATIVE_BATCH_MODULES: ${{ inputs.native-report-batch-modules }}
         STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         # Include ordinary audit programs in the same measured Lake invocation.
         STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/LeanInformationAuditRegTests","regInspector/auricFibAnalysis","regInspector/compiledJudgeTests"]'
       shell: bash
       run: |
+        # Reject untrusted input before Make can expand environment values.
+        python3 tools/lean-inspector/native.py batch-size
         producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
         if [[ -n "$producer" ]]; then
           export STRATALINT_LEAN_PRODUCER_DLL="$producer"

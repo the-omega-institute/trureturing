@@ -1,0 +1,14 @@
+## 5. 从数学回推到内部识别与实际供应
+
+<a id="sec-c122-operational"></a>
+
+本节把三个问题分别落实：回推公式是否由已有读数确定；哪些实际门能执行它；校准和编译误差怎样进入最终保证。记前文由加权互易确定的 Petz 回推为
+
+$$
+\mathcal P_{\sigma,\mathcal N}(X)
+ =\sigma^{1/2}\mathcal N^*(\tau^{-1/2}X\tau^{-1/2})\sigma^{1/2},
+ \qquad \tau=\mathcal N(\sigma),\quad P=\operatorname{supp}\tau.
+$$
+
+这里 $\sigma$ 是源 $H$ 上归一化的忠实态；$\tau^{-1/2}$ 在 $P$ 上取逆，在 $P^\perp$ 上为零。回推在 $P\mathcal B(K)P$ 上保迹。只讨论一个较小源支持时，先将 $H$ 限制到该支持。
+

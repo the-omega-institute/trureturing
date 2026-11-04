@@ -98,13 +98,104 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.g
 
 Complex differentiability of gaussianDet on the full open unit disk, by composition of the actual infinite signed-cycle logarithm with the complex exponential. No period identity or physical realization premise is used.
 
+**Definition 1.8 (unit1Geo).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Geo`
+
+*Formalization.* `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Geo` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two-coordinate geometric majorant used by compact-uniform operator cutoffs.
+
+**Theorem 1.9 (unit1Geo_summable).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Geo_summable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Geo_summable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The geometric coordinate majorant is summable at every nonnegative radius below one.
+
+**Theorem 1.10 (unit1Power_coordinate_bound).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Power_coordinate_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Power_coordinate_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each coordinate of an operator power applied to a unit basis vector is bounded by the corresponding power of the operator norm.
+
+**Theorem 1.11 (unit1Section_power_coordinate).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Section_power_coordinate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Section_power_coordinate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each finite matrix-power coordinate agrees with the corresponding embedded section-operator power coordinate, including power zero.
+
+**Theorem 1.12 (unit1Majorant_summable).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Majorant_summable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Majorant_summable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The cycle-length majorant is summable on each smaller disk.
+
+**Theorem 1.13 (finiteLogTerm_bound).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLogTerm_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLogTerm_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each literal finite logarithm term is bounded by the same cycle-length majorant independently of the section dimension.
+
+**Theorem 1.14 (finiteLog_tendsto).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog_tendsto`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog_tendsto` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual finite logarithms converge pointwise to the infinite signed-cycle logarithm on the full unit disk.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLogTerm_bound`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finiteLog_tendsto`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finite_determinant_identity`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.finite_determinants_tendsto`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.gaussianDet`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.gaussianDet_differentiableOn`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.gaussianLogDet`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.gaussianLogDet_differentiableOn`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Geo`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Geo_summable`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Majorant_summable`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Power_coordinate_bound`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianDeterminant.unit1Section_power_coordinate`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/OriginalGaussianResolvent](OriginalGaussianResolvent.md)

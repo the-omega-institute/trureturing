@@ -1,0 +1,22 @@
+The decoder uses $O(B)$ rational divisions/comparisons and a constant number of gcd computations, with bit costs specified in Proposition 39.10. Its loop runs over original denominators $1,\ldots,B$, not every current denominator up to $Q$. Existing earned evidence is used before either paid read.
+
+Proof. Every original target cut $j/m$ strictly inside $I$ has $m\le B$, $0<j<mU$ and transported reduced denominator
+
+$$
+s=cj+dm\le B(cU+d)=Q.
+\tag{39.13}
+$$
+
+Their distinct images are separated by at least $1/Q^2$. Obtain $r=q_D(z)$ at the actual current cut, unless retained evidence already determines that exact value. Intersect $I$ with the preimage of its actual half-open cell to obtain $J$, which contains the actual $x$. This computation uses (39.11) and image clipping. The interior of $f_u(J)$ lies in one raw interval of width $1/Q^2$, so $J$ contains at most one distinct original target cut strictly in its interior.
+
+To find it, for each $m\le B$ compute the least integer $j$ with $j/m>\inf J$, and test $j/m<\sup J$. If it passes, it is positive and there cannot be a second numerator at that denominator: that would give two distinct target images inside the raw cell. Repeated fractions across denominators identify the same cut. If no cut is found, the first reply already decides the full target. If a cut $t=j/m$ is found, compute
+
+$$
+f_u(t)=p/s,\qquad p=aj+bm,\quad s=cj+dm\le Q.
+\tag{39.14}
+$$
+
+One actual current reply $h=q_s(z)$ decides $x\ge t$ exactly by $h\ge p$. Reduction can only lower the second scale; alternatively use the displayed unreduced $s$, which also works. Restrict $J$ to that side and compute the original full-profile cell by the $B$-division procedure in Theorem 39.3. This proves the promised finite acquisition and endpoint ownership.
+
+Before either read, intersect with all retained actual constraints. If this already makes the target constant, answer without reading. If it makes the proposed current reply constant, derive that reply; its value is not relabelled as a new observation. There is no separate $q_1(z)$ request. Previously earned original $k$ is retained or derived from the original interval; no assertion that an unperformed current unit read took place is needed. All comparisons use current $z$, while all retained constraints refer to the same original $x$ through authentic matrices. Repeated, skipped and noncoprime requested scales cause no divisibility restriction, because the target range is every $m\le B$. $\square$
+

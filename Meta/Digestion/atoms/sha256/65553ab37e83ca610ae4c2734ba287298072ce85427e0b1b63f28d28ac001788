@@ -1,0 +1,63 @@
+### 应用 34.2（固定字的条件等价与完整行字典）
+
+<a id="c117-fixed-word-selection-equivalence"></a>
+
+在 $\mathscr S$ 上有
+
+$$
+ \mathrm{STI}\quad\Longleftrightarrow\quad\dim V=4
+ \quad\Longleftrightarrow\quad
+ \text{每个原 }F_{q,w}\text{ 都是球面仿射函数}.
+ \tag{34.4}
+$$
+
+若另已供应上述实际黄金字 $t$，这三项又各等价于 $G_4(t)$。令 $\mathcal T_g=\{t\in\mathcal L:A_t\text{ 的旋转角为 }\pm3\pi/5\}$；若把字存在性也写进四时判据，则准确表述是
+
+$$
+ (\exists t\in\mathcal T_g:\ G_4(t))
+ \quad\Longleftrightarrow\quad
+ \mathrm{STI}\ \text{且}\ \mathcal T_g\ne\varnothing.
+ \tag{34.5}
+$$
+
+推导。先复用定理 17.4：已供应的 $t$ 与 $G_4(t)$ 推出全部仿射性，非退化时推出容量四。对已经仿射且有非常数响应的情形，(17.10)–(17.14) 的单射、张成与接续论证同样适用，不需要先假设四时关系。写
+
+$$
+ \begin{aligned}
+ F_{q,w}(n)&=\alpha_{q,w}+\beta_{q,w}\cdot n,\\
+ J(s,r)_{q,w}&=\alpha_{q,w}s+\beta_{q,w}\cdot r,\\
+ c&=J(1,0),\qquad e=J(0,n_0),\qquad E(r)=J(0,r),\\
+ W_p&=E(D),\qquad B(Er,Es)=r\cdot s,\\
+ T_bJ(s,r)&=J(s,A_br),\qquad T_cT_b=T_{bc}.
+ \end{aligned}
+ \tag{34.6}
+$$
+
+于是 $J:\mathbb R\oplus D\to V$ 是同构；对一个完整请求求和给 $u(J(s,r))=s$。Haar 中心由旋转球面的平均方向为零得到，故确是 (34.2) 的同一个 $c$。有限维同构使实际接续的闭包与 $SO(D)$ 的作用对应，$G=E\,SO(D)E^{-1}$。取非零轴向 $K\in\mathfrak{so}(D)$、$Kn_0=0$，则 $A=EKE^{-1}\in\mathfrak g$，固定 $e$，且在 $W_p/\mathbb Re$ 上是一个非零实平面旋转生成元，因而满足 STI。这个 Lie 元来自原预测作用的闭包；没有增加精确连续门调用。共同域的闭包是 $SO(3)$，并未自动增加 ΩQ-004 一般前端所容许的额外 $O(3)$ 反射控制。
+
+反向，STI 到 $\dim V=4$ 直接消费 ΩQ-004 **定理 5.2**。仅有这个数值尚不能跳到给定 $D$ 上的仿射性；所需的行—函数桥如下。置
+
+$$
+ \mathcal C=\operatorname{span}_{\mathbb R}\{F_{q,w}\}
+ \subset C(S(D),\mathbb R),\qquad
+ \mathcal C\simeq V^*,\quad
+ \sum_i a_iF_{q_i,w_i}\longleftrightarrow
+ \left[v\mapsto\sum_i a_i v(q_i,w_i)\right].
+ \tag{34.7}
+$$
+
+若右边的坐标组合在所有原行上为零，左边在稠密实际前缀球面 $\{n_a\}$ 上为零，连续性使它在整个球面为零。反向由在 $n_a$ 评价立即成立。因此此对应良定义且单射；原坐标分离 $V$ 中各向量，在有限维 $V$ 上其限制张成整个 $V^*$，故亦满射。这证明 $\dim\mathcal C=\dim V$，不是预设某个三维参数化便有四维行秩。
+
+归一化给 $1\in\mathcal C$。合法接续与方向充分性给 $F_{bq,w}=F_{q,w}\circ A_b$，所以 $\mathcal C$ 对实际字旋转不变。有限维子空间在一致范数下闭；若实际 $A_{b_j}\to R\in SO(D)$，每个连续函数在紧球面上一致连续，故 $F\circ A_{b_j}\to F\circ R$ 一致，得到整个 $SO(D)$ 不变性。这一步只延拓函数空间中的数学作用。
+
+现在消费 §20 定义 20.1 已对应的 Caves–Fuchs–Manne–Renes，[quant-ph/0306179v1](https://arxiv.org/html/quant-ph/0306179v1)，§IV.1 式 (11)–(18) 的球面调和工具：$\mathcal H_\ell$ 是维数 $2\ell+1$ 的互不等价不可约旋转模，调和投影保留闭旋转不变子空间，且分解完备。$\dim\mathcal C=4$、常数模在内、另有非常数函数，而每个 $\ell\ge2$ 的模至少五维，故
+
+$$
+ \mathcal C=\mathcal H_0\oplus\mathcal H_1.
+ \tag{34.8}
+$$
+
+于是每个原 $F$ 确是 $\alpha+\beta\cdot n$。这里复用已给调和工具，并未重证一般调和分类。最后，对任何已供应的黄金 $t$，(17.7)/(17.12) 的旋转多项式 $A_t^3+x^2A_t=I+x^2A_t^2$ 处理一次部分，两边常数系数同为 $1+x^2$；经任意实际前后文仍给 (34.3)。这完成各方向及 (34.5) 的来源对应。
+
+同一原前端下，[ΩQ-009](OMEGAQ_009_SINGLE_AXIS_SANDWICH_RIGIDITY.md) 定理 4.1 又把其 $Q9$ 与三维原内容、完整 $\mathfrak{so}(3)$ 作用等价；由 (34.6) 可接入 (34.4)。这是同一来源和全部未来上的后果，不另复制夹持刚性证明。局部 Born 表示随即消费推论 17.5 或 ΩQ-004 定理 7.1，完整原效果与全部标签都保持原数值；这些表示不供应读后更新、全效果菜单或相干相位参考。
+

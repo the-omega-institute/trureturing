@@ -1,0 +1,49 @@
+**Theorem 2.1 (exact criterion on one old fiber).** Under Definitions 1.1–1.4 fix $E\subseteq E_{s_o}$ nonempty. For each $p^h\parallel H$ write
+
+$$
+e_o=v_p(d_o),\qquad e=v_p(d_n),\qquad
+r_p=\nu_{p,h}(C)\quad(C\in E_{s_o}).
+$$
+
+The old code determines $r_p$, so it is constant on this entire old fiber. Partition the prime axes into
+
+$$
+B=\{p:r_p<e\},\qquad G=\{p:r_p\ge e\},\qquad
+J=\prod_{p\in G}p^{h_p},\qquad
+\pi(C)=(C\bmod p^{h_p})_{p\in G}.
+\tag{AQBR.7}
+$$
+
+The empty projection has one value and $J=1$. By CRT, $\pi$ can equally be represented by $C\bmod J$.
+
+There exists a deterministic acquisition-and-behavior-return controller on all entries of $E$ if and only if
+
+$$
+\boxed{\quad
+\forall C,D\in E,\quad
+\pi(C)=\pi(D)\ \Longrightarrow\ \eta_n(C)=\eta_n(D).
+\quad}
+\tag{AQBR.8}
+$$
+
+Here existence allows a fixed finite presentation appropriate to $E$, shared by all its alternatives. With the effective presentation of Definition 1.4, sufficiency is constructive and returns the stronger endpoint $C_*\equiv C_0\pmod H$ using only original positive additions and actual current reads. No effective claim is made from an unpresented semantic archive.
+
+**Proof (the irreversible local constraint).** Fix $p\in B$ and an entry with depth $r=r_p<e$. Every allowed addend is divisible by $p^e$. At any current depth $t<e$, an addition leaves depth $t$ unchanged. A positive multiplication changes that depth to $\min(h,t+v_p(m))$. Once depth is at least $e$, every subsequent allowed operation leaves it at least $e$. Consequently depth can never fall back to $r$ after any multiplier divisible by $p$ has occurred. Since $\eta_n$ exposes this depth, a run satisfying (AQBR.5) cannot use a multiplier divisible by $p$ at any prefix. On every successful run, every multiplier is therefore a unit on every axis in $B$, and every current depth on these axes stays $r_p$.
+
+This statement holds for the actual positive integers, including a multiplication that saturates the truncated depth. It does not assume that the rest of the state is invertible. Positivity and divisibility of the available addends are what prevent undoing the lost depth.
+
+**Proof (necessity).** Let $C,D\in E$ have the same projection (AQBR.7). Run a claimed controller on these two fixed entries, with their identical accessible initialization. Induct through its local computations, operations and reads. Identical records and public inputs give identical choices. On $G$ the two current residues remain equal after every common operation. On $B$ a successful run can use only the prime-unit multipliers just proved necessary, so both current depths remain the same fixed $r_p$. Hence their complete current gcds, and therefore their entire ReadF answers, are equal at every call. Local records, choices and stopping decisions remain identical. Termination on one entry gives termination with the same output on the other. Correct entry identification forces $\eta_n(C)=\eta_n(D)$, which is (AQBR.8).
+
+This induction also covers a strategy with an unbounded a priori number of calls, arbitrary local computation, and adaptive stopping: the successful finite history for either fixed entry is the same for the other. It never selects a new source between calls.
+
+**Proof (sufficiency and the decoder).** Condition (AQBR.8) defines one value
+
+$$
+\Delta_E(z)=\eta_n(C)\quad\text{for any }C\in E\text{ with }\pi(C)=z
+\tag{AQBR.9}
+$$
+
+on $\pi(E)$. To install it from (AQBR.6), enumerate that finite support, compute each public $\pi(x)$ and $\eta_n(x)$, and group equal projection keys. Condition (AQBR.8) is exactly agreement of the labels in each group. Store one representative residue per group and compute its label when called. This table has at most $H$ rows and is shared across all entries of $E$; it is not a table indexed by an inaccessible unknown-source label.
+
+The actual procedure of Theorem 3.1 acquires $\pi(C_0)$ and returns the actual source modulo $H$. Applying (AQBR.9) gives the entry label and the same current label. The update installation of Theorem 5.1 gives continued use. These steps prove sufficiency. If only semantic $E$ is given, its residue support is still a finite set, so the argument proves finite nonuniform existence; producing that set from an arbitrary description is the separate presentation obligation of Definition 1.4. $\square$
+

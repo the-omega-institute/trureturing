@@ -1,0 +1,6 @@
+all three conclusions hold:
+
+* $n$ is odd;
+* if $n>7$, then $n$ is composite;
+* if $n>1$, then $3\mid n$ or $5\mid n$ or $7\mid n$.
+
