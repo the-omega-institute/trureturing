@@ -2,9 +2,9 @@
 bibkey: traversogianini2026brooks
 authors: Juan Pablo Traverso Gianini
 year: 2026
-title: "BrooksSubcubic, finite chordal elimination and finite Menger certificates: Lean sources"
+title: "Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure"
 doi: null
-url: https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic
+url: https://github.com/jtraverso
 claim: "Subcubic four-clique-free graphs are three-colorable; finite chordal graphs admit perfect elimination rankings; finite Menger certificates and Hamiltonian closure and Ore degree-sum criteria hold."
 strata_touched:
   - D5/S3/Combinatorics/Graph/Brooks/Coloring
@@ -30,6 +30,9 @@ Connectedness is not a hypothesis. The theorem is the subcubic specialization
 of Brooks' theorem, not a new graph-coloring theorem.
 
 ## Verified locator
+
+Author source collection: https://github.com/jtraverso. The immutable theorem
+source locators are given with each result below.
 
 https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic
 
