@@ -367,7 +367,9 @@ private lemma square_lower {m : ℕ} (hm : 1 ≤ m) (hs : IsSquare (4 * m + 1)) 
   rw [Complex.sq_norm, Complex.normSq_add, Complex.normSq_ofReal,
     Complex.normSq_eq_norm_sq, Complex.norm_exp_ofReal_mul_I,
     Complex.exp_ofReal_mul_I]
-  simp [-Complex.ofReal_cos, -Complex.ofReal_sin]
+  suffices 1 ≤ 1 + (4 * (m : ℝ) * Real.cos x) * (4 * (m : ℝ) * Real.cos x) +
+      2 * (Real.cos ((q : ℝ) * x) * (4 * (m : ℝ) * Real.cos x)) by
+    simpa [-Complex.ofReal_cos, -Complex.ofReal_sin] using this
   have hbound := odd_cos_bound q hodd x
   have hprod : |Real.cos x * Real.cos ((q : ℝ) * x)| ≤
       (q : ℝ) * Real.cos x ^ 2 := by
