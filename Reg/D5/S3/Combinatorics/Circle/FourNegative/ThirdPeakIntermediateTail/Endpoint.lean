@@ -140,6 +140,7 @@ def source_registration : Registration arena
 -- operand reaches the new readout. In each selected OriginalOrder k seed
 -- function the argument operand is the actual natural seed. Operand mode
 -- creates a synthetic state, so stateBinder is exactly zero by the contract.
+-- Bool.fintype enumerates true before false: enlarged readout precedes old.
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail.actualSource_third_peak_intermediate_tail_joint_lift)
     (Realization signature) Nat Unit := {
@@ -164,12 +165,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none
     coordinates := #[0,1,2,3]
     readouts := #[{
-      path := #["body","body","body","body","body","body","body","body","arg","body","arg","body","arg","arg","fn","arg","fn"]
+      path := #["body","body","body","body","body","body","body","body","arg","body","arg","body","arg","arg","arg","fn","arg","fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }, {
-      path := #["body","body","body","body","body","body","body","body","arg","body","arg","body","arg","arg","arg","fn","arg","fn"]
+      path := #["body","body","body","body","body","body","body","body","arg","body","arg","body","arg","arg","fn","arg","fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
