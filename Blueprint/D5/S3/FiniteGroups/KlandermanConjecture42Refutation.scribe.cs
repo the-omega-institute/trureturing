@@ -100,9 +100,7 @@ internal sealed class KlandermanConjecture42RefutationDocument : IScribeDocument
                         + "this requires Z = A or Z = bot, contradicting the two strict inclusions. This refutes "
                         + "the full conjunction through its compatibility clause. It does not assert the falsity "
                         + "of the non-LSP clause or resolve it separately."))),
-                DescribeRole.Theorem,
-                openProblemResolutionClaim: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("klanderman-2025-conjecture-4-2"), ResolutionKind.Refuted)))));
+                DescribeRole.Theorem))));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
