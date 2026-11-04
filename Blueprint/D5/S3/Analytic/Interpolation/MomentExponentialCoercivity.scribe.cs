@@ -13,7 +13,7 @@ internal sealed class MomentExponentialCoercivityDocument : IScribeDocumentDefin
             Describe.Lean(DescribeId.Create("exponential-prefix-kernel-nonneg"),
                 DeclarationHandle.Create("D5/S3/Analytic/Interpolation/MomentExponentialCoercivity.exponential_prefix_kernel_nonneg"),
                 H("Nonnegative exponential atomic form"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The existing causal Gram identity directly gives Re Q_lambda>=0 for every finite complex family supported in [0,D], D>=0 and lambda>0, without a moment hypothesis. This consumed helper controls the complete positive mixture tail and permits enlargement of the Gamma denominator."))),
+                Blocks(Paragraph(Text("The existing causal Gram identity directly gives Re Q_lambda>=0 for every finite complex family supported in [0,D], D>=0 and lambda>0, without a moment hypothesis. This consumed helper permits enlargement of the Gamma denominator and handles the zero-energy branch of the finite head."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("exponential-prefix-gamma-gap-coercivity"),
                 DeclarationHandle.Create("D5/S3/Analytic/Interpolation/MomentExponentialCoercivity.exponential_prefix_gamma_gap_coercivity"),
