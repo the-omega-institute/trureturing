@@ -2,7 +2,7 @@
 bibkey: traversogianini2026brooks
 authors: Juan Pablo Traverso Gianini
 year: 2026
-title: "BrooksSubcubic, finite chordal elimination and set-form Menger: Lean sources"
+title: "BrooksSubcubic, finite chordal elimination and finite Menger certificates: Lean sources"
 doi: null
 url: https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic
 claim: "Subcubic four-clique-free graphs are three-colorable; finite chordal graphs are exactly those admitting perfect elimination rankings."
@@ -15,6 +15,7 @@ strata_touched:
   - D5/S3/Combinatorics/Graph/Chordal/EliminationForest
   - D5/S3/Combinatorics/Graph/Chordal/Characterization
   - D5/S3/Combinatorics/Graph/Walks/MengerCertificates
+  - D5/S3/Combinatorics/Graph/Walks/EdgeMengerCertificates
 license: Apache-2.0
 triage: anchor
 ---
@@ -216,3 +217,31 @@ Retire the port when this repository's own pinned Mathlib contains an equivalent
 entire finite set-form certificate and arbitrary-walk duality, after migrating
 consumers lawfully to direct applications. An upstream acceptance event alone is
 not the retirement predicate.
+
+
+## Finite edge-Menger certificates
+
+The same immutable Menger source supplies the finite edge theorem:
+for every finite vertex type V, simple undirected graph G, natural k and vertices
+u,v, G.IsEdgeReachable k u v if and only if there are k paths from u to v whose
+unordered edge lists are pairwise disjoint. The native predicate quantifies over
+every S : Set(Sym2 V) with S.encard < (k : ENat), including nonedges, and requires
+reachability in G.deleteEdges S. The statement includes k=0, u=v, empty V,
+edge-free graphs, adjacency and nil paths. For u=v a constant nil family works
+for every k; internal vertices may be shared by different paths.
+
+The exact received slice at commit 35c5f684f9bfbd244bd0999ce725623ab571adb6 is
+MengerHamilton/MengerCore.lean lines 422–470 (lift_to_lineGraph, walk_in_edge,
+lower_from_lineGraph) and MengerHamilton/Menger.lean lines 179–235
+(isEdgeReachable_iff). The receiver directly consumes the first conjunct of its
+public MengerCertificates.exists_separator_paths_and_weak_duality on the line
+graph and local incident-edge terminal sets. It lowers walks before bypassing
+them to paths, retaining edge containment. The global IsEdgeConnected wrapper
+and the vertex induction are outside this selection.
+
+The source pins, file hashes, complete Apache license, copyright, no-NOTICE
+reading and source-stated Diestel Theorem 3.3.1 (Böhme, Göring, Harant)
+attribution above also apply to this slice. The original Diestel text is not a
+checked source here. No novelty is claimed. Retire this edge port only when the
+receiver's own adopted Mathlib pin supplies the equivalent entire finite edge
+theorem and affected consumers and records have migrated lawfully.

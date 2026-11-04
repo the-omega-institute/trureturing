@@ -1,0 +1,18 @@
+### 定义 3.1（过程的二元噪声关系与内禀可恢复代数）
+
+记 $K_{ij}=E_i^*E_j$，并定义
+
+<a id="eq-c123-intrinsic-algebra"></a>
+
+$$
+\mathfrak A_{\mathcal N}
+ =\{K_{ij}:i,j\}'
+ =\{A\in\mathcal B(H):[A,E_i^*E_j]=0\ \text{对所有 }i,j\}.
+\tag{20}
+$$
+
+撇号表示交换子代数。因 $K_{ij}^*=K_{ji}$，这是含幺 $C^*$-子代数。
+某子代数 $\mathcal A$ 称为可准确恢复，若存在一条通道 $\mathcal Q$，使
+$\mathcal N^*\mathcal Q^*(A)=A$ 对全部 $A\in\mathcal A$ 成立。
+这同时要求代数内所有效果的读数被恢复，且使用同一条 $\mathcal Q$。
+
