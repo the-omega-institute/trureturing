@@ -27,7 +27,7 @@ internal sealed class LogNaturalIrrationalityDocument : IScribeDocumentDefinitio
                 H("Every natural argument at least two has irrational logarithm"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
-                    D(2), Le, F.Id("n"), Sp, Implies, Sp,
+                    D(2), Le, Sp, F.Id("n"), Sp, Implies, Sp,
                     Call("Irrational", Call("log", F.Id("n")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
