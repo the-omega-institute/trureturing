@@ -107,7 +107,8 @@ private lemma principal_block_identity {ι : Type*} [Fintype ι] [DecidableEq ι
         (x : ℂ) • (Complex.I •
           (Ω.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
             Complex.ofReal) := by
-  sorry
+  ext i j
+  rfl
 
 private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
