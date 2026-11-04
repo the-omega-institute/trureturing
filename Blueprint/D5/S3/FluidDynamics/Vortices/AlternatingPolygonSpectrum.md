@@ -72,6 +72,10 @@ $$\forall (m: \mathbb{N}), ((3 \le m) \Rightarrow ((\forall (x: \mathbb{R}), ((\
 
 *Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/barry-kevrekidis-2013-alternating-vortex-polygon-spectrum` (proved) by `D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barry-kevrekidis-2013-alternating-vortex-polygon-spectrum","declaration_gid":"D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.

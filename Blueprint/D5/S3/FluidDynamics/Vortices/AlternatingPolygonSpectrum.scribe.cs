@@ -38,7 +38,10 @@ internal sealed class AlternatingPolygonSpectrumDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("alternating-polygon-spectrum-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Exactly m minus two real pairs"),
                 StatementSource.FromAuthor(Disp(ClaimProposition())), AssessedProvenance.FromRepo(Source),
-                Proof(), DescribeRole.Theorem))));
+                Proof(), DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("barry-kevrekidis-2013-alternating-vortex-polygon-spectrum"),
+                    ResolutionKind.Proved)))));
 
     private static BlockSequence Proof() => Blocks(
         Paragraph(Text(
