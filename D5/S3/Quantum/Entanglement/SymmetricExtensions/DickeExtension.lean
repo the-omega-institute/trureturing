@@ -80,6 +80,18 @@ def CompleteExtension (ρ : Matrix (L × L) (L × L) ℂ)
   E.PosSemidef ∧ P I L * E * P I L = E ∧
     (∀ a b (hab : a ≠ b), edgeMarginal a b hab E = ρ) ∧ FullyPPT E
 
+/-- A star extension with Bose leaf support and no partial-transpose requirement. -/
+def StarExtensionCore (root : I) (ρ : Matrix (L × L) (L × L) ℂ)
+    (E : Matrix (I → L) (I → L) ℂ) : Prop :=
+  E.PosSemidef ∧ leafProjector root * E * leafProjector root = E ∧
+    ∀ i (hi : root ≠ i), edgeMarginal root i hi E = ρ
+
+/-- A complete Bose extension with no partial-transpose requirement. -/
+def CompleteExtensionCore (ρ : Matrix (L × L) (L × L) ℂ)
+    (E : Matrix (I → L) (I → L) ℂ) : Prop :=
+  E.PosSemidef ∧ P I L * E * P I L = E ∧
+    ∀ a b (hab : a ≠ b), edgeMarginal a b hab E = ρ
+
 private lemma dicke_swap {n : ℕ} (i j : Fin n) (x : Fin n × Fin n) :
     dickeVector i j x.swap = dickeVector i j x := by
   rcases x with ⟨a,b⟩
@@ -151,19 +163,65 @@ private lemma antiPair_projection :
     simp only [Matrix.smul_mul, Matrix.mul_smul, sub_mul, mul_sub, one_mul, mul_one, hUU]
     module
 
+/-- The actual orthogonal projector onto the symmetric two-factor subspace.
+It is `(1 + flip)/2` in the ordered product basis. -/
+noncomputable def pairSymmetricProjector : Matrix (L × L) (L × L) ℂ :=
+  1 - antiPair
+
+private lemma antiPair_mul_pairSymmetricProjector :
+    antiPair (L := L) * pairSymmetricProjector = 0 := by
+  simp only [pairSymmetricProjector, mul_sub, mul_one,
+    antiPair_projection.2, sub_self]
+
+private lemma pair_anti_trace_of_supported (ρ : Matrix (L × L) (L × L) ℂ)
+    (hρ : pairSymmetricProjector * ρ * pairSymmetricProjector = ρ) :
+    Matrix.trace (ρ * antiPair) = 0 := by
+  have hz : antiPair * ρ = 0 := by
+    calc
+      antiPair * ρ = antiPair * (pairSymmetricProjector * ρ * pairSymmetricProjector) := by
+        rw [hρ]
+      _ = 0 := by
+        rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, antiPair_mul_pairSymmetricProjector]
+        simp
+  rw [Matrix.trace_mul_comm, hz, Matrix.trace_zero]
+
+private lemma dicke_operator_flip_left {n : ℕ} (Y : Fin n → Fin n → ℝ) :
+    Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin n) (Fin n)) * dickeOperator Y =
+      dickeOperator Y := by
+  apply Matrix.ext
+  intro x y
+  change ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin n) (Fin n))) *ᵥ
+    (fun z => dickeOperator Y z y)) x = _
+  rw [Matrix.permMatrix_mulVec]
+  exact dicke_operator_swap Y x y
+
+private lemma dicke_operator_flip_right {n : ℕ} (Y : Fin n → Fin n → ℝ) :
+    dickeOperator Y * Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin n) (Fin n)) =
+      dickeOperator Y := by
+  ext x y
+  change ((fun z => dickeOperator Y x z) ᵥ*
+    Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin n) (Fin n))) y = _
+  rw [Matrix.vecMul_permMatrix]
+  change dickeOperator Y x y.swap = dickeOperator Y x y
+  simp only [dickeOperator, Matrix.sum_apply, Matrix.ite_apply, Matrix.smul_apply,
+    Matrix.vecMulVec_apply, Matrix.zero_apply, Pi.star_apply, dicke_swap]
+
 private lemma dicke_anti_trace {n : ℕ} (Y : Fin n → Fin n → ℝ) :
     Matrix.trace (dickeOperator Y * antiPair) = 0 := by
-  have h : Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin n) (Fin n)) * dickeOperator Y =
-      dickeOperator Y := by
-    apply Matrix.ext
-    intro x y
-    change ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin n) (Fin n))) *ᵥ
-      (fun z => dickeOperator Y z y)) x = _
-    rw [Matrix.permMatrix_mulVec]
-    exact dicke_operator_swap Y x y
   rw [Matrix.trace_mul_comm]
-  simp only [antiPair, smul_mul, sub_mul, one_mul, h, sub_self,
+  simp only [antiPair, smul_mul, sub_mul, one_mul, dicke_operator_flip_left, sub_self,
     smul_zero, Matrix.trace_zero]
+
+private lemma dicke_pair_supported {n : ℕ} (Y : Fin n → Fin n → ℝ) :
+    pairSymmetricProjector * dickeOperator Y * pairSymmetricProjector = dickeOperator Y := by
+  have hl : antiPair * dickeOperator Y = 0 := by
+    simp only [antiPair, smul_mul, sub_mul, one_mul, dicke_operator_flip_left,
+      sub_self, smul_zero]
+  have hr : dickeOperator Y * antiPair = 0 := by
+    simp only [antiPair, mul_smul, mul_sub, mul_one, dicke_operator_flip_right,
+      sub_self, smul_zero]
+  simp only [pairSymmetricProjector, sub_mul, one_mul, mul_sub, mul_one, hl, hr,
+    sub_zero, zero_mul]
 
 private lemma edgeLift_projection (a b : I) (hab : a ≠ b) :
     (edgeLift a b hab (antiPair (L := L)))ᴴ = edgeLift a b hab antiPair ∧
@@ -213,13 +271,12 @@ private lemma edgeLift_anti_mul (a b : I) (hab : a ≠ b)
     E (e.symm (((x a,x b).swap), fun k => x k)) y) = _
   rw [Equiv.symm_apply_apply, edge_split_swap]
 
-private lemma edge_swap_fixed {n : ℕ} (a b : I) (hab : a ≠ b)
-    (Y : Fin n → Fin n → ℝ)
-    (E : Matrix (I → Fin n) (I → Fin n) ℂ)
-    (hE : E.PosSemidef) (hm : edgeMarginal a b hab E = dickeOperator Y) :
+private lemma edge_swap_fixed_of_zero_anti_weight (a b : I) (hab : a ≠ b)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hm : Matrix.trace (edgeMarginal a b hab E * antiPair) = 0) :
     ∀ x y, E (x ∘ Equiv.swap a b) y = E x y := by
   have ht : Matrix.trace (E * edgeLift a b hab antiPair) = 0 := by
-    rw [edge_trace_duality, hm, dicke_anti_trace]
+    rw [edge_trace_duality, hm]
   have hzero := (zero_weight_support_face E (edgeLift a b hab antiPair)
     hE (edgeLift_projection a b hab).1 (edgeLift_projection a b hab).2 ht).1.1
   intro x y
@@ -228,6 +285,13 @@ private lemma edge_swap_fixed {n : ℕ} (a b : I) (hab : a ≠ b)
   have hd : E x y - E (x ∘ Equiv.swap a b) y = 0 :=
     (mul_eq_zero.mp h).resolve_left (inv_ne_zero (by norm_num))
   exact (sub_eq_zero.mp hd).symm
+
+private lemma edge_swap_fixed {n : ℕ} (a b : I) (hab : a ≠ b)
+    (Y : Fin n → Fin n → ℝ)
+    (E : Matrix (I → Fin n) (I → Fin n) ℂ)
+    (hE : E.PosSemidef) (hm : edgeMarginal a b hab E = dickeOperator Y) :
+    ∀ x y, E (x ∘ Equiv.swap a b) y = E x y :=
+  edge_swap_fixed_of_zero_anti_weight a b hab E hE (by rw [hm, dicke_anti_trace])
 
 private lemma symmetric_of_star_swaps (root : I) (v : (I → L) → ℂ)
     (hv : ∀ i, root ≠ i → ∀ x, v (x ∘ Equiv.swap root i) = v x) :
@@ -335,6 +399,69 @@ private lemma all_edges_equal (E : Matrix (I → L) (I → L) ℂ)
   subst b
   exact edge_covariance E hE hcol σ u v huv
 
+/-- Bose-supported root marginals force global Bose support and all ordered marginals.
+No leaf support, normalization, invertibility or partial-transpose premise is used. -/
+theorem support_of_bose_root_marginals [Nontrivial I] (root : I)
+    (ρ : Matrix (L × L) (L × L) ℂ)
+    (hρ : pairSymmetricProjector * ρ * pairSymmetricProjector = ρ)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hm : ∀ i (hi : root ≠ i), edgeMarginal root i hi E = ρ) :
+    P I L * E * P I L = E ∧
+      ∀ a b (hab : a ≠ b), edgeMarginal a b hab E = ρ := by
+  have hcol : ∀ y, IsSymmetricVector (fun x => E x y) := by
+    intro y
+    apply symmetric_of_star_swaps root
+    intro i hi x
+    apply edge_swap_fixed_of_zero_anti_weight root i hi E hE _ x y
+    rw [hm i hi]
+    exact pair_anti_trace_of_supported ρ hρ
+  refine ⟨support_of_columns E hE.isHermitian hcol, ?_⟩
+  obtain ⟨leaf, hleaf⟩ := exists_ne root
+  intro a b hab
+  rw [all_edges_equal E hE.isHermitian hcol root leaf a b (Ne.symm hleaf) hab]
+  exact hm leaf (Ne.symm hleaf)
+
+/-- Star and complete no-PPT predicates select exactly the same individual matrices.
+This includes zero and singular matrices and arbitrary unnormalized traces. -/
+theorem same_matrix_core [Nontrivial I] (root : I)
+    (ρ : Matrix (L × L) (L × L) ℂ)
+    (hρ : pairSymmetricProjector * ρ * pairSymmetricProjector = ρ)
+    (E : Matrix (I → L) (I → L) ℂ) :
+    StarExtensionCore root ρ E ↔ CompleteExtensionCore ρ E := by
+  constructor
+  · rintro ⟨hE, _, hm⟩
+    exact ⟨hE, support_of_bose_root_marginals root ρ hρ E hE hm⟩
+  · rintro ⟨hE, hsym, hm⟩
+    refine ⟨hE, ?_, fun i hi => hm root i hi⟩
+    let PL := leafProjector (L := L) root
+    have hlp : PL * P I L = P I L := PiS_mul_P ({root} : Finset I)
+    have hplh : PLᴴ = PL := PiS_hermitian (L := L) ({root} : Finset I)
+    have hpr : P I L * PL = P I L := by
+      have h := congrArg Matrix.conjTranspose hlp
+      simpa only [Matrix.conjTranspose_mul, (P_hermitian I L).eq, hplh] using h
+    change PL * E * PL = E
+    calc
+      PL * E * PL = PL * (P I L * E * P I L) * PL := by rw [hsym]
+      _ = P I L * E * P I L := by
+        simp only [← Matrix.mul_assoc, hlp]
+        rw [Matrix.mul_assoc (P I L * E), hpr]
+      _ = E := hsym
+
+/-- The same individual-matrix equality with every fully PPT condition retained. -/
+theorem same_matrix [Nontrivial I] (root : I)
+    (ρ : Matrix (L × L) (L × L) ℂ)
+    (hρ : pairSymmetricProjector * ρ * pairSymmetricProjector = ρ)
+    (E : Matrix (I → L) (I → L) ℂ) :
+    StarExtension root ρ E ↔ CompleteExtension ρ E := by
+  have h := same_matrix_core root ρ hρ E
+  unfold StarExtensionCore CompleteExtensionCore at h
+  unfold StarExtension CompleteExtension
+  tauto
+
+#print axioms support_of_bose_root_marginals
+#print axioms same_matrix_core
+#print axioms same_matrix
+
 /-- The unchanged unnormalized all-register Dicke cone-equivalence event. -/
 theorem result (n r : ℕ) (_hn : 1 ≤ n) (hr : 2 ≤ r)
     (Y : Fin n → Fin n → ℝ) (_hY : ∀ i j, i ≤ j → 0 ≤ Y i j) :
@@ -359,23 +486,8 @@ theorem result (n r : ℕ) (_hn : 1 ≤ n) (hr : 2 ≤ r)
     intro a b hab
     rw [all_edges_equal E hE.isHermitian hcol root leaf a b hrl hab]
     exact hm leaf hrl
-  · rintro ⟨E,hE,hsym,hm,hppt⟩
-    refine ⟨E,hE,?_,fun i hi => hm root i hi,hppt⟩
-    let PL := leafProjector (L := Fin n) root
-    have hlp : PL * P (Fin r) (Fin n) = P (Fin r) (Fin n) :=
-      PiS_mul_P ({root} : Finset (Fin r))
-    have hplh : PLᴴ = PL := PiS_hermitian (L := Fin n) ({root} : Finset (Fin r))
-    have hpr : P (Fin r) (Fin n) * PL = P (Fin r) (Fin n) := by
-      have h := congrArg Matrix.conjTranspose hlp
-      simpa only [Matrix.conjTranspose_mul, (P_hermitian (Fin r) (Fin n)).eq,
-        hplh] using h
-    change PL * E * PL = E
-    calc
-      PL * E * PL = PL * (P (Fin r) (Fin n) * E * P (Fin r) (Fin n)) * PL := by rw [hsym]
-      _ = P (Fin r) (Fin n) * E * P (Fin r) (Fin n) := by
-        simp only [← Matrix.mul_assoc, hlp]
-        rw [Matrix.mul_assoc (P (Fin r) (Fin n) * E), hpr]
-      _ = E := hsym
+  · rintro ⟨E,hE⟩
+    exact ⟨E, (same_matrix root (dickeOperator Y) (dicke_pair_supported Y) E).mpr hE⟩
 
 #print axioms result
 

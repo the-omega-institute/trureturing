@@ -85,6 +85,62 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "sandwich. Its marginal is rho on every ordered pair of distinct registers. "
                 + "All proper nonempty PPT cuts use this same E in the original standard basis.",
                 DescribeRole.Definition, true),
+            Node("pairSymmetricProjector", "The actual symmetric pair projector",
+                Seq(Call("pairSymmetricProjector"), Eq,
+                    new Formula.Fraction(Seq(D(1), Plus, Call("flip")), D(2))),
+                "The flip exchanges the two local tensor factors in the ordered product basis. "
+                + "This is the orthogonal projector onto their symmetric subspace. Bose support means "
+                + "the two-sided sandwich by this projector equals rho; mere conjugation invariance is weaker.",
+                DescribeRole.Definition, true),
+            Node("StarExtensionCore", "Star extensions without a PPT requirement",
+                CoreFormula(false),
+                "This predicate requires positivity, the actual root-times-symmetric-leaves support sandwich, "
+                + "and rho on every ordered root-to-leaf marginal. It places no condition on partial transposes "
+                + "and fixes no trace. The original StarExtension predicate still includes FullyPPT.",
+                DescribeRole.Definition, false),
+            Node("CompleteExtensionCore", "Complete extensions without a PPT requirement",
+                CoreFormula(true),
+                "This predicate requires positivity, the actual full Bose support sandwich, and rho on every "
+                + "ordered pair of distinct registers. It places no condition on partial transposes and fixes no trace. "
+                + "The original CompleteExtension predicate still includes FullyPPT.",
+                DescribeRole.Definition, false),
+            Node("support_of_bose_root_marginals", "Support from arbitrary Bose root marginals",
+                Seq(Call("PSD", X("E")), Land, Call("BosePair", Rho), Land,
+                    Open, Forall, X("i"), Neq, X("root"), Comma,
+                    Call("M", X("root"), X("i"), X("E")), Eq, Rho, Close,
+                    Implies, Call("Bose", X("E")), Land,
+                    Open, Forall, X("a"), Neq, X("b"), Comma,
+                    Call("M", X("a"), X("b"), X("E")), Eq, Rho, Close),
+                "The register type is any nontrivial finite type and the local alphabet is any finite type. "
+                + "For a positive semidefinite E, Bose-supported root marginals force full Bose support "
+                + "and equality of all ordered marginals. No leaf support, PPT, strict positivity, inverse, "
+                + "or trace normalization is assumed. The proof lifts zero antisymmetric marginal weight "
+                + "through the existing tensor trace duality and zero-weight support-face theorem, then uses "
+                + "star transpositions and the existing ordered-marginal covariance proof. The marginal-to-global "
+                + "support mechanism is prior work of Hansenne-Xu-Kraft-Guehne, main page 4 and Appendix D "
+                + "Lemma 8 of arXiv:2108.02732v1. This formal generalization is not a priority claim.",
+                DescribeRole.Theorem, true),
+            Node("same_matrix_core", "The identical matrices without PPT",
+                Seq(Call("BosePair", Rho), Implies,
+                    Open, Call("StarExtensionCore", X("root"), Rho, X("E")), Iff,
+                    Call("CompleteExtensionCore", Rho, X("E")), Close),
+                "For every individual E, on any nontrivial finite register set and finite local alphabet, "
+                + "the two no-PPT predicates are equivalent whenever rho is supported by the actual pair "
+                + "symmetric projector. The forward direction obtains full support and all ordered marginals "
+                + "from the root marginals; the reverse uses inclusion of the full symmetric subspace in "
+                + "the root-times-symmetric-leaves subspace. The theorem does not assert existence of an "
+                + "extension for every rho. It includes zero and singular rho, local dimension one, exactly "
+                + "two registers and arbitrary unnormalized traces.",
+                DescribeRole.Theorem, false),
+            Node("same_matrix", "The identical matrices with fully PPT cuts",
+                Seq(Call("BosePair", Rho), Implies,
+                    Open, Call("StarExtension", X("root"), Rho, X("E")), Iff,
+                    Call("CompleteExtension", Rho, X("E")), Close),
+                "Under the same finite-type and actual Bose support hypotheses as same_matrix_core, "
+                + "the original fully PPT predicates select the same individual E. Every nonempty proper "
+                + "cut is retained on that E. This is a pointwise equality, so it preserves the witness, "
+                + "its trace and all singular boundary cases. It does not assert universal extendibility.",
+                DescribeRole.Theorem, false),
             Node("result", "Equality of the extension cones",
                 Seq(Forall, Sp, X("n"), Geq, D(1), Comma, Sp, Forall, Sp, X("r"), Geq, D(2), Comma, Sp,
                     Forall, Sp, X("Y"), Comma, Sp,
@@ -134,6 +190,19 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
     private static Formula Sub(Formula value, params Formula[] indices) =>
         new Formula.Subscript(value, Seq(indices));
     private static Formula Tensor(Formula a, Formula b) => Call("tensor", a, b);
+    private static Formula CoreFormula(bool complete)
+    {
+        var p = complete ? Sub(Pi, X("r")) : Sub(X("P"), X("L"));
+        var marginals = complete
+            ? Seq(Forall, X("a"), Neq, X("b"), Comma,
+                Call("M", X("a"), X("b"), X("E")), Eq, Rho)
+            : Seq(Forall, X("i"), Neq, X("root"), Comma,
+                Call("M", X("root"), X("i"), X("E")), Eq, Rho);
+        return Seq(complete ? Call("CompleteExtensionCore", Rho, X("E"))
+                : Call("StarExtensionCore", X("root"), Rho, X("E")),
+            Iff, Call("PSD", X("E")), Land, p, X("E"), p, Eq, X("E"), Land,
+            Open, marginals, Close);
+    }
     private static Formula WitnessFormula(bool complete)
     {
         var p = complete ? Sub(Pi, X("r")) : Sub(X("P"), X("L"));
