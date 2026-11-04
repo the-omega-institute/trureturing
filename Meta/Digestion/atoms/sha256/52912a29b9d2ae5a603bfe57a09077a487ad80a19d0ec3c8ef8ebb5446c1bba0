@@ -1,0 +1,35 @@
+**中间坐标计算。** 对每块 $x_s>0$ 令
+
+$$
+r_s=(\det x_s)^{1/n_s}>0,\qquad
+y_s=r_s^{-1}x_s,\quad\det y_s=1.
+\tag{27.2}
+$$
+
+行列式一正 Hermitian 元恰为 $g_sg_s^*$、$g_s\in SL(n_s,\mathbb C)$：其正平方根即可作 $g_s$；两代表给相同 $g_sg_s^*$ 当且仅当右差属于 $SU(n_s)$。因此 $(r_s,[g_s])\mapsto(r_sg_sg_s^*)_s$ 是光滑双射并有光滑逆，给 (27.1)。$n_s=1$ 时只剩 $r_s=x_s$。这些是原 $C^\circ$ 本身的坐标，未将中心响应商掉；若限到归一状态，中心权重还要满足原迹归一条件，不能继续把它们当作独立无约束参数。
+
+相应作用确实位于指定原 $G$ 内，而非只在抽象同构群里：$L_a=\rho(a/2)$ 的指数给正合同，$\mathfrak k$ 的指数给 (3.12) 已取得的逐块特殊酉合同；$L(Z)$ 的指数给每个块的正尺度。极分解把任意 $SL(n,\mathbb C)$ 元写成行列式一正矩阵与特殊酉的乘积，因而这些有限乘积给全部所需合同。中心复相位作用为恒等，对应 (23.6) 已排除的核，不产生新的原响应。
+
+在每个 $\mathfrak{sl}_n(\mathbb C)_{\mathbb R}$ 上，成熟的矩阵 Lie 代数 Killing 型计算为
+
+$$
+B_{\rm Kill}(M,N)=4n\operatorname{Re}\operatorname{Tr}(MN),\qquad
+\theta M=-M^*,\qquad
+-B_{\rm Kill}(M,\theta M)=4n\operatorname{Tr}(MM^*)>0\ (M\ne0).
+\tag{27.3}
+$$
+
+第一式来自复 Killing 型 $2n\operatorname{Tr}(MN)$ 的实化；其非退化性给半单性，后一正定式给 Cartan 对合定义所需的正定性。固定子代数为 $\mathfrak{su}(n)$，负特征空间为无迹 Hermitian 元，$SU(n)$ 是相应最大紧子群。因此此处“半单”“Cartan”和“复型”有已核对的矩阵含义，不从一个随意的伴随对合直接命名。纯经典部分不在半单 $\mathfrak h$ 中，而由 (27.1) 的中心尺度保留。
+
+若需一份与固定 $q$ 对应的几何度量，可在原内部锥定义成熟的仿射不变度量
+
+$$
+\langle v,w\rangle_x
+=\sum_s\lambda_s\operatorname{Tr}(x_s^{-1}v_sx_s^{-1}w_s).
+\tag{27.4}
+$$
+
+它在 $u$ 恰为 (23.4)，在 (27.2) 下分成 $\sum_s\lambda_sn_s(d\log r_s)^2$ 和各行列式一因子的度量，交叉项因 $\operatorname{Tr}(y_s^{-1}dy_s)=0$ 消失。这是数学几何的对应，不把该度量另认作原概率、可测距离或物理控制代价。
+
+Hall–Mitchell quant-ph/0409118v2 §3 所用“complex type”正指复半单群及其紧实形的商；原文明确区分它与复流形。这里 $J$ 把 $\mathfrak p_0$ 送到 $\mathfrak k$，并不保持商空间在单位点的切空间 $\mathfrak p_0$，所以不由 $J$ 给底空间下降一个切丛复结构。
+

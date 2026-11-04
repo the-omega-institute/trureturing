@@ -1,0 +1,22 @@
+## 46. Global coherent cone remainder and the exact two-sign canonical-slice comparison
+
+This section keeps the original record, ordinary transpose, one common feedback
+scalar, and the joint distance
+
+$$
+ \rho(E,U)=\min_{\sigma\in\{+,-\}}
+ \min_{|\lambda|=1}
+ \left(\|E-E_\sigma\|_{\mathrm F}^{2}
+       +\|U-\lambda U_\sigma\|_{\mathrm F}^{2}\right).
+\tag{46.1}
+$$
+
+Write $g$ for the original defect, $f=g-\kappa\rho$, and
+$V(\xi)=N_{\mathrm{geo}}(\xi)+\kappa\xi$ for the existing selected
+geometric value. The fixed constants are $h=1/\sqrt2$,
+$c=\cos(\pi/8)$, $s=\sin(\pi/8)$, $d=2(h+c)$ and $e=2(h+s)$;
+$T=(b_+\ b_-)$ is the source certificate basis. Write
+$R_\star=13/4$ for the established level cutoff, reserving $R$ below
+for a recovery half-modulus. No new quotient or independent feedback
+is introduced.
+

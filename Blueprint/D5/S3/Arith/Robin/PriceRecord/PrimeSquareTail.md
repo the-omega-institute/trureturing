@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The prime reciprocal-square tail has leading constant one uniformly in two real cutoffs.
+The prime reciprocal-square tail has uniform leading and finite-endpoint logarithmic estimates.
 
 **Theorem 1.1 (Uniform finite-tail asymptotic).**
 
@@ -22,7 +22,25 @@ Choose eta=min(epsilon/16,1/16) and C=1/eta. On (y,C*y], log(p)<=log(C*y), so th
 
 This is a repository derivation from the classical PNT and Abel summation. No literature novelty is claimed. It supplies a generic analytic input for the actual-record Euler-deficit leading constant; that further arithmetic application and RH are not conclusions of this theorem.
 
+**Theorem 1.2 (Second and third logarithmic terms at finite endpoints).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/PrimeSquareTail.prime_square_tail_logarithmic_refinements`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/PrimeSquareTail.prime_square_tail_logarithmic_refinements` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let S(y,z) be the sum of 1/p^2 over natural primes with y<p<=z. Put A2(t)=1/(t log(t))-1/(t log(t)^2) and A3(t)=A2(t)+2/(t log(t)^3). There is one real Y>exp(1) such that for all real z>=y>=Y, simultaneously abs(S(y,z)-A2(y)+A2(z))<=2/(y log(y)^3)+5/(y log(y)^9) and abs(S(y,z)-A3(y)+A3(z))<=6/(y log(y)^4)+5/(y log(y)^9). The lower endpoint is strict and the upper endpoint inclusive, including prime endpoints and z=y.
+
+The existing theta_error_eight gives theta(t)-t=o(t/log(t)^8), hence a fixed threshold above which its absolute value is at most t/log(t)^8. Exact finite Abel summation with coefficients log(p) at primes and zero elsewhere and f(t)=1/(t^2 log(t)) compares S(y,z) with I1, where Ik is the integral from y to z of 1/(t^2 log(t)^k). Both boundary errors together are at most 2/(y log(y)^9), and the integral error is at most 3/(y log(y)^9). Finite integration by parts gives I1=A2(y)-A2(z)+2 I3=A3(y)-A3(z)-6 I4. Positivity and Ik<=1/(y log(y)^k) finish both estimates.
+
+These are repository derivations from the classical prime number theorem and Abel summation, without a claim of literature novelty. They retain both endpoints for higher order prime-prefix and Robin correction estimates. Mere divergence of z/y is not asserted to remove the upper endpoint at second order. The complete predecessor-record correction and RH require further estimates.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/PrimeSquareTail.prime_square_tail_logarithmic_refinements`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/PrimeSquareTail.prime_square_tail_uniform`
 - Dependency: [D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure](../ActualPriceRecordPrimeStructure.md)
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity](LogarithmicLayerRigidity.md)

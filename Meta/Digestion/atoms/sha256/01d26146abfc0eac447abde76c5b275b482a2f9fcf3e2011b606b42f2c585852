@@ -1,0 +1,22 @@
+**Theorem 5.2 (Bipartite closed form).** Let $\mathtt q=2$, $x=(p,1-p)$ and $b=(1-\varepsilon)^2p(1-p)$. For $0<\varepsilon<1$,
+
+$$
+\Delta_2(\varepsilon)=\prod_{j=0}^{n-1}\Big(\varepsilon+b\sin^2\frac{\pi j}{n}\Big)=4^{1-n}\,b^n\sinh^2\!\Big(n\,\mathrm{arsinh}\sqrt{\varepsilon/b}\Big),
+$$
+
+and
+
+$$
+D_2(0)=n^2\Big(\frac{p(1-p)}{4}\Big)^{n-1}.
+$$
+
+Stance: repo-derived proof. The formula for $\Delta_2$ is equivalent, under the identification $\nu^2=1+b/\varepsilon$, to the literature-attested Rényi entropy of a pure Gaussian state with a single nontrivial symplectic eigenvalue $\nu$ (§9); it is not claimed as new. The closed form of $D_2(0)$ is a direct consequence.
+
+**Proof.** For $z\in\mathbb C$, $\prod_{j=0}^{n-1}(z-\omega^j)=z^n-1$ and the same with $\omega^{-j}$, so $\prod_{j}(z^2-2z\cos\theta_j+1)=(z^n-1)^2$ with $\theta_j=2\pi j/n$. Put $z=e^\phi$ with $\phi>0$: $z^2-2z\cos\theta+1=2e^\phi(\cosh\phi-\cos\theta)$, hence
+
+$$
+\prod_{j=0}^{n-1}(\cosh\phi-\cos\theta_j)=2^{-n}e^{-n\phi}(e^{n\phi}-1)^2=2^{2-n}\sinh^2\frac{n\phi}{2}.
+$$
+
+Now $\varepsilon+b\sin^2(\theta_j/2)=\tfrac b2(1+2\varepsilon/b-\cos\theta_j)$. Choose $\phi>0$ with $\cosh\phi=1+2\varepsilon/b$, i.e. $\sinh(\phi/2)=\sqrt{\varepsilon/b}$. Then the product equals $(b/2)^n2^{2-n}\sinh^2(n\phi/2)$, which is the stated formula; the first equality is Proposition 5.1 with $\nu_j=p(1-p)\sin^2(\pi j/n)$. As $\varepsilon\to0^+$, $s=\mathrm{arsinh}\sqrt{\varepsilon/b}\sim\sqrt{\varepsilon/b}$, so $\sinh^2(ns)\sim n^2\varepsilon/b$ and $\Delta_2(\varepsilon)/\varepsilon\to4^{1-n}n^2(p(1-p))^{n-1}$. Since $D_2$ is a polynomial, this limit is $D_2(0)$. Alternatively $D_2(0)=\prod_{j=1}^{n-1}p(1-p)\sin^2(\pi j/n)$ and $\prod_{j=1}^{n-1}\sin(\pi j/n)=n/2^{n-1}$, which is the case $\phi\to0$ of the product above. ∎
+

@@ -1,0 +1,19 @@
+**Corollary 46.7 (a sector beyond the earlier shifted-support hypotheses).**
+For $q=1$ on the positive row, the determinant has the sign of
+
+$$
+ n(x)=(h^2+s^2)x^3-s^2(1+x).
+\tag{46.39}
+$$
+
+Its root from (36.44) is below $4/5$, since
+$n(4/5)=(32-161s^2)/125>0$ and $s^2<3/20$. Hence every
+$x\in(4/5,\sqrt{2/3})$ has $\mathfrak D_+(x,1)>0$ and
+$\xi=6-4x\in(0,13/4)$. At the same time the shifted-support hypotheses of
+(36.30) fail: the first required shift is
+$h(\sqrt p-x\sqrt q/y)=-hx/y<0$. These slices also satisfy
+$2(1+x)<2+\sqrt{8/3}$. By continuity, nearby $0<q<1$ slices retain these
+strict inequalities. Theorem 46.4 and Corollary 46.5 nevertheless order every actual feedback
+and every pure-effect coherence phase in these slices. This is a full-triangle result,
+with all feedbacks in the fixed slice included.
+

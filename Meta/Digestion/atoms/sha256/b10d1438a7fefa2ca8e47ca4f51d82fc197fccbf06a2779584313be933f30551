@@ -1,0 +1,10 @@
+2. If $q=1$, the two orientations represent the same singleton effect, but
+their nonzero scalar recoveries are opposite: they are
+$2\tau i\ell y\lambda$ on the positive row and $2\tau\ell y\lambda$ on
+the negative row. The variance term in (42.16) permits only one orientation
+with positive weight. The same row-norm argument gives (46.32), with either
+orientation allowed for this singleton effect.
+
+3. If $q=0$, the equality family is larger. In the fixed pair order of
+(46.2), every equality lift and only an equality lift has
+
