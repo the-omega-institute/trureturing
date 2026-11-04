@@ -92,7 +92,8 @@ private lemma residual_le_iff (i j p q d : ℤ) :
     residual i j p q ≤ d ↔
       0 ≤ d ∧ i ≤ p + d ∧ j ≤ p + d ∧ i + j ≤ p + d ∧
         -q - d ≤ i ∧ -q - d ≤ j ∧ -q - d ≤ i + j := by
-  simp only [residual, max_le_iff]
+  dsimp only [residual]
+  simp only [max_le_iff]
   omega
 
 private lemma slabs_nonneg (k : ℤ) : 0 ≤ plusSlabs k ∧ 0 ≤ minusSlabs k := by
