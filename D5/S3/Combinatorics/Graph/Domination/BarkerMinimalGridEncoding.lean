@@ -44,7 +44,7 @@ theorem minimal_iff_closed_private {V : Type} [Finite V]
     · rintro ⟨hd, hm⟩
       refine ⟨hd, fun T hT hdom => ?_⟩
       have hTf : (Set.toFinite T).toFinset ⊂ S :=
-        (Set.Finite.toFinset_ssubset _).mpr hT
+        Set.Finite.toFinset_ssubset.mpr hT
       exact hm _ hTf (by simpa only [Set.Finite.coe_toFinset] using hdom)
     · rintro ⟨hd, hm⟩
       exact ⟨hd, fun T hT hdom => hm (T : Set V) (Finset.coe_ssubset.mpr hT) hdom⟩
