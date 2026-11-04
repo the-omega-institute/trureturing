@@ -50,7 +50,7 @@ $$\forall (V : Type), (\operatorname{Finite}\left(V\right)) \Rightarrow (\forall
 
 *Commentary.*
 
-The proof uses the existing criticalVertices, privateNeighbors and selfCritical_no_selected_neighbor suppliers. The isolated-or-outside-private-neighbour characterization, under the domination premise, is published as Proposition 1 of Gangloff and Talon, arXiv:1906.10779v2, https://arxiv.org/abs/1906.10779. No novelty is claimed for that characterization. No external prose or proof code is transplanted.
+The proof applies TrapezohedralMinimalDomination.minimalDominating_iff_private and minimalDominating_iff_proper. Finite subsets and their underlying sets have the same domination predicate, and every subset of the finite vertex type has a finite-set representative. The isolated-or-outside-private-neighbour characterization, under the domination premise, is published as Proposition 1 of Gangloff and Talon, arXiv:1906.10779v2, https://arxiv.org/abs/1906.10779. No novelty is claimed for that characterization. No external prose or proof code is transplanted.
 
 **Definition 1.5 (The ordinary open grid).**
 
@@ -229,4 +229,4 @@ The actual subset family is the source of the count throughout the transfer cons
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridEncoding.padded`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridEncoding.subsetWordEquiv`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridEncoding.validWord_iff`
-- Dependency: [D5/S3/Combinatorics/Graph/DominatingSetAverageBoundNonstem](../DominatingSetAverageBoundNonstem.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Domination/TrapezohedralMinimalDomination](TrapezohedralMinimalDomination.md)
