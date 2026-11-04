@@ -46,7 +46,35 @@ $$\forall (\alpha: \mathbb{R}), (\forall (x: \mathbb{R}), ((\operatorname{renyiW
 
 The real density combines a signed sine factor with a power of 1−x² and a power Poisson denominator. Its positivity and integrability are asserted only for the order and interval ranges specified below.
 
-**Theorem 1.4 (Strict positivity of the density).**
+**Theorem 1.4 (Rescaling the Poisson quadratic).**
+
+$$\forall (a: \mathbb{R}), (\forall (b: \mathbb{R}), (\forall (\alpha: \mathbb{R}), ((b \ne 0) \Rightarrow ((((a)^{2}) + ((b)^{2})) - (((2) \cdot ((a) \cdot (b))) \cdot (\operatorname{Real.cos}\left((\operatorname{Real.pi}) \cdot (\alpha)\right))) = ((b)^{2}) \cdot (((1) - (((2) \cdot (\frac{a}{b})) \cdot (\operatorname{Real.cos}\left((\operatorname{Real.pi}) \cdot (\alpha)\right)))) + ((\frac{a}{b})^{2}))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.power_poisson_rescale` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Giancarlo Camilo, Gabriel T. Landi, Sebas Eliëns (2019). *Strong subadditivity of the Rényi entropies for bosonic and fermionic Gaussian states*. DOI: [10.1103/PhysRevB.99.045155](https://doi.org/10.1103/PhysRevB.99.045155). URL: <https://arxiv.org/abs/1810.07070v2>.
+
+*Commentary.*
+
+For nonzero b, the homogeneous power denominator is b squared times the Poisson quadratic at a divided by b.
+
+**Theorem 1.5 (Strict positivity of the power denominator).**
+
+$$\forall (\alpha: \mathbb{R}), (\forall (x: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha < 2) \Rightarrow ((\alpha \ne 1) \Rightarrow ((0 \le x) \Rightarrow ((x < 1) \Rightarrow (0 < ((((1) + (x))^{(2) \cdot (\alpha)}) + (((1) - (x))^{(2) \cdot (\alpha)})) - (((2) \cdot (((1) - ((x)^{2}))^{\alpha})) \cdot (\operatorname{Real.cos}\left((\operatorname{Real.pi}) \cdot (\alpha)\right))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.weight_denominator_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Giancarlo Camilo, Gabriel T. Landi, Sebas Eliëns (2019). *Strong subadditivity of the Rényi entropies for bosonic and fermionic Gaussian states*. DOI: [10.1103/PhysRevB.99.045155](https://doi.org/10.1103/PhysRevB.99.045155). URL: <https://arxiv.org/abs/1810.07070v2>.
+
+*Commentary.*
+
+For nonintegral orders between zero and two and 0≤x<1, the power denominator is a positive multiple of the Poisson quadratic.
+
+**Theorem 1.6 (Strict positivity of the density).**
 
 $$\forall (\alpha: \mathbb{R}), (\forall (x: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha < 2) \Rightarrow ((\alpha \ne 1) \Rightarrow ((0 \le x) \Rightarrow ((x < 1) \Rightarrow (0 < \operatorname{renyiWeight}\left(\alpha, x\right))))))))$$
 
@@ -60,7 +88,7 @@ $$\forall (\alpha: \mathbb{R}), (\forall (x: \mathbb{R}), ((0 < \alpha) \Rightar
 
 For 0<α<2 with α different from one, the signed sine factor is positive. Factoring the denominator into a positive power and a Poisson quadratic proves strict positivity for every 0≤x<1.
 
-**Theorem 1.5 (Integrability at the endpoints).**
+**Theorem 1.7 (Integrability at the endpoints).**
 
 $$\forall (\alpha: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha < 2) \Rightarrow ((\alpha \ne 1) \Rightarrow (\operatorname{MeasureTheory.IntegrableOn}\left(\operatorname{renyiWeight}\left(\alpha\right), \operatorname{Set.Ioo}\left((0: \mathbb{R}), 1\right), \operatorname{MeasureTheory.volume}\right)))))$$
 
@@ -74,7 +102,7 @@ $$\forall (\alpha: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha < 2) \Rightar
 
 The substitutions q=(1−x)/(1+x) and p=q^α give an arctangent primitive. It is continuous at the endpoints, and its derivative on the open interval is the nonnegative density. The fundamental theorem of calculus for a nonnegative derivative proves integrability.
 
-**Theorem 1.6 (Mass one half).**
+**Theorem 1.8 (Mass one half).**
 
 $$\forall (\alpha: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha < 2) \Rightarrow ((\alpha \ne 1) \Rightarrow (\int_{(x: \mathbb{R}) \in \operatorname{Set.Ioo}\left((0: \mathbb{R}), 1\right)} (\operatorname{renyiWeight}\left(\alpha, x\right))\,dx = \frac{1}{2}))))$$
 
@@ -88,7 +116,49 @@ $$\forall (\alpha: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha < 2) \Rightar
 
 The same arctangent primitive evaluates the integral as the difference of its values at one and zero. The sine and cosine identities on each side of α=1 make this difference one half.
 
-**Theorem 1.7 (The positive logarithmic representation).**
+**Theorem 1.9 (Positivity of the entropy power difference).**
+
+$$\forall (\alpha: \mathbb{R}), (\forall (\nu: \mathbb{R}), ((0 < \alpha) \Rightarrow ((1 \le \nu) \Rightarrow (0 < ((\frac{(\nu) + (1)}{2})^{\alpha}) - ((\frac{(\nu) - (1)}{2})^{\alpha})))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.entropy_difference_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Giancarlo Camilo, Gabriel T. Landi, Sebas Eliëns (2019). *Strong subadditivity of the Rényi entropies for bosonic and fermionic Gaussian states*. DOI: [10.1103/PhysRevB.99.045155](https://doi.org/10.1103/PhysRevB.99.045155). URL: <https://arxiv.org/abs/1810.07070v2>.
+
+*Commentary.*
+
+For positive α and ν at least one, the two bases are nonnegative and (ν+1)/2 is strictly larger than (ν−1)/2. Strict monotonicity of positive real powers makes their difference positive, including at ν=1.
+
+**Theorem 1.10 (Integrability of the normalized logarithm).**
+
+$$\forall (\alpha: \mathbb{R}), (\forall (\nu: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha < 2) \Rightarrow ((\alpha \ne 1) \Rightarrow ((1 < \nu) \Rightarrow (\operatorname{MeasureTheory.IntegrableOn}\left(\lambda (x: \mathbb{R}) \mapsto ((\operatorname{renyiWeight}\left(\alpha, x\right)) \cdot (\operatorname{Real.log}\left((1) - ((\frac{x}{\nu})^{2})\right))), \operatorname{Set.Ioo}\left((0: \mathbb{R}), 1\right), \operatorname{MeasureTheory.volume}\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.normalized_log_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Giancarlo Camilo, Gabriel T. Landi, Sebas Eliëns (2019). *Strong subadditivity of the Rényi entropies for bosonic and fermionic Gaussian states*. DOI: [10.1103/PhysRevB.99.045155](https://doi.org/10.1103/PhysRevB.99.045155). URL: <https://arxiv.org/abs/1810.07070v2>.
+
+*Commentary.*
+
+For ν>1, log(1−(x/ν)²) equals log(ν²−x²)−2 log ν. Subtracting the constant multiple of the integrable density from the integrable unnormalized logarithmic kernel proves the asserted integrability.
+
+**Theorem 1.11 (Normalization of the logarithmic integral).**
+
+$$\forall (\alpha: \mathbb{R}), (\forall (\nu: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha < 2) \Rightarrow ((\alpha \ne 1) \Rightarrow ((1 < \nu) \Rightarrow (\int_{(x: \mathbb{R}) \in \operatorname{Set.Ioo}\left((0: \mathbb{R}), 1\right)} ((\operatorname{renyiWeight}\left(\alpha, x\right)) \cdot (\operatorname{Real.log}\left((1) - ((\frac{x}{\nu})^{2})\right)))\,dx = (\int_{(x: \mathbb{R}) \in \operatorname{Set.Ioo}\left((0: \mathbb{R}), 1\right)} ((\operatorname{renyiWeight}\left(\alpha, x\right)) \cdot (\operatorname{Real.log}\left(((\nu)^{2}) - ((x)^{2})\right)))\,dx) - (\operatorname{Real.log}\left(\nu\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.normalized_integral_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Giancarlo Camilo, Gabriel T. Landi, Sebas Eliëns (2019). *Strong subadditivity of the Rényi entropies for bosonic and fermionic Gaussian states*. DOI: [10.1103/PhysRevB.99.045155](https://doi.org/10.1103/PhysRevB.99.045155). URL: <https://arxiv.org/abs/1810.07070v2>.
+
+*Commentary.*
+
+Integrate the identity log(1−(x/ν)²)=log(ν²−x²)−2 log ν. Both terms are integrable. The density has mass one half, so the constant contribution is log ν, giving the displayed difference of integrals.
+
+**Theorem 1.12 (The positive logarithmic representation).**
 
 $$\forall (\alpha: \mathbb{R}), (\forall (\nu: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha < 2) \Rightarrow ((\alpha \ne 1) \Rightarrow ((1 \le \nu) \Rightarrow ((\operatorname{MeasureTheory.IntegrableOn}\left(\lambda (x: \mathbb{R}) \mapsto ((\operatorname{renyiWeight}\left(\alpha, x\right)) \cdot (\operatorname{Real.log}\left(((\nu)^{2}) - ((x)^{2})\right))), \operatorname{Set.Ioo}\left((0: \mathbb{R}), 1\right), \operatorname{MeasureTheory.volume}\right)) \land (\operatorname{renyiFunction}\left(\alpha, \nu\right) = (\operatorname{renyiConstant}\left(\alpha\right)) + (\int_{(x: \mathbb{R}) \in \operatorname{Set.Ioo}\left((0: \mathbb{R}), 1\right)} ((\operatorname{renyiWeight}\left(\alpha, x\right)) \cdot (\operatorname{Real.log}\left(((\nu)^{2}) - ((x)^{2})\right)))\,dx))))))))$$
 
@@ -104,10 +174,15 @@ For ν>1, the positive-axis Stieltjes transform of the power Poisson density ide
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.entropy_difference_pos`
+- Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.normalized_integral_eq`
+- Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.normalized_log_integrable`
+- Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.power_poisson_rescale`
 - Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.renyiConstant`
 - Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.renyiFunction`
 - Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.renyiWeight`
 - Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.stieltjes_representation`
+- Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.weight_denominator_pos`
 - Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.weight_integrable`
 - Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.weight_mass`
 - Truth anchor: `D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.weight_pos`

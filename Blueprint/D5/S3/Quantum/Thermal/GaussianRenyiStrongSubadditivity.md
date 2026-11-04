@@ -76,7 +76,63 @@ $$\forall (\iota: \operatorname{Type}), ([\operatorname{Fintype}\left(\iota\righ
 
 When the symplectic operator is Hermitian, sum renyiFunction over the absolute values of all its eigenvalues and divide by two, accounting for the two signs of each symplectic eigenvalue. This gives Eq. renyi_bosonic_1 (RenyiGaussian_v2.tex, lines 216–220). The definition assigns zero in the non-Hermitian case. Empty mode sets also give zero.
 
-**Definition 1.7 (Strong subadditivity for the stated orders).**
+**Theorem 1.7 (Two indices per selected mode).**
+
+$$\forall (n: \mathbb{N}), (\forall (X: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), (\operatorname{Fintype.card}\left(\operatorname{Subtype}\left(\lambda (p: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))) \mapsto (\operatorname{Prod.fst}\left(p\right) \in X)\right)\right) = (2) \cdot (\operatorname{Finset.card}\left(X\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.reduced_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Giancarlo Camilo, Gabriel T. Landi, Sebas Eliëns (2019). *Strong subadditivity of the Rényi entropies for bosonic and fermionic Gaussian states*. DOI: [10.1103/PhysRevB.99.045155](https://doi.org/10.1103/PhysRevB.99.045155). URL: <https://arxiv.org/abs/1810.07070v2>.
+
+*Commentary.*
+
+The subtype retaining both quadratures of each mode in X has cardinality twice the cardinality of X.
+
+**Theorem 1.8 (Positive definiteness of the interpolation).**
+
+$$\forall (\iota: \operatorname{Type}), ([\operatorname{Fintype}\left(\iota\right)] [\operatorname{DecidableEq}\left(\iota\right)] \forall (V: \operatorname{Matrix}\left(\iota, \iota, \mathbb{R}\right)), (\forall (\omega: \operatorname{Matrix}\left(\iota, \iota, \mathbb{R}\right)), ((\operatorname{physicalOn}\left(V, \omega\right)) \Rightarrow ((\operatorname{Matrix.PosDef}\left(\operatorname{Matrix.map}\left(V, \operatorname{Complex.ofReal}\right)\right)) \Rightarrow (\forall (x: \mathbb{R}), ((0 \le x) \Rightarrow ((x < 1) \Rightarrow (\operatorname{Matrix.PosDef}\left((\operatorname{Matrix.map}\left(V, \operatorname{Complex.ofReal}\right)) + ((\operatorname{Complex.ofReal}\left(x\right)) \cdot ((\operatorname{Complex.I}) \cdot (\operatorname{Matrix.map}\left(\omega, \operatorname{Complex.ofReal}\right))))\right)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.shifted_posDef` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Giancarlo Camilo, Gabriel T. Landi, Sebas Eliëns (2019). *Strong subadditivity of the Rényi entropies for bosonic and fermionic Gaussian states*. DOI: [10.1103/PhysRevB.99.045155](https://doi.org/10.1103/PhysRevB.99.045155). URL: <https://arxiv.org/abs/1810.07070v2>.
+
+*Commentary.*
+
+If V+iω is positive semidefinite and V is positive definite, their convex interpolation V+ixω is positive definite for 0≤x<1.
+
+**Theorem 1.9 (The logarithmic principal-block inequality).**
+
+$$\forall (\iota: \operatorname{Type}), ([\operatorname{DecidableEq}\left(\iota\right)] \forall (H: \operatorname{Matrix}\left(\iota, \iota, \mathbb{C}\right)), ((\operatorname{Matrix.PosDef}\left(H\right)) \Rightarrow (\forall (A: \operatorname{Finset}\left(\iota\right)), (\forall (B: \operatorname{Finset}\left(\iota\right)), (\forall (C: \operatorname{Finset}\left(\iota\right)), ((\operatorname{Disjoint}\left(A, B\right)) \Rightarrow ((\operatorname{Disjoint}\left(A, C\right)) \Rightarrow ((\operatorname{Disjoint}\left(B, C\right)) \Rightarrow ((\operatorname{Real.log}\left(\operatorname{Complex.re}\left(\operatorname{Matrix.det}\left(\operatorname{Matrix.submatrix}\left(H, (\operatorname{Subtype.val}: \operatorname{Subtype}\left(\lambda (p: \iota) \mapsto (p \in ((A) \cup (B)) \cup (C))\right) \to \iota), (\operatorname{Subtype.val}: \operatorname{Subtype}\left(\lambda (p: \iota) \mapsto (p \in ((A) \cup (B)) \cup (C))\right) \to \iota)\right)\right)\right)\right)) + (\operatorname{Real.log}\left(\operatorname{Complex.re}\left(\operatorname{Matrix.det}\left(\operatorname{Matrix.submatrix}\left(H, (\operatorname{Subtype.val}: \operatorname{Subtype}\left(\lambda (p: \iota) \mapsto (p \in B)\right) \to \iota), (\operatorname{Subtype.val}: \operatorname{Subtype}\left(\lambda (p: \iota) \mapsto (p \in B)\right) \to \iota)\right)\right)\right)\right)) \le (\operatorname{Real.log}\left(\operatorname{Complex.re}\left(\operatorname{Matrix.det}\left(\operatorname{Matrix.submatrix}\left(H, (\operatorname{Subtype.val}: \operatorname{Subtype}\left(\lambda (p: \iota) \mapsto (p \in (A) \cup (B))\right) \to \iota), (\operatorname{Subtype.val}: \operatorname{Subtype}\left(\lambda (p: \iota) \mapsto (p \in (A) \cup (B))\right) \to \iota)\right)\right)\right)\right)) + (\operatorname{Real.log}\left(\operatorname{Complex.re}\left(\operatorname{Matrix.det}\left(\operatorname{Matrix.submatrix}\left(H, (\operatorname{Subtype.val}: \operatorname{Subtype}\left(\lambda (p: \iota) \mapsto (p \in (B) \cup (C))\right) \to \iota), (\operatorname{Subtype.val}: \operatorname{Subtype}\left(\lambda (p: \iota) \mapsto (p \in (B) \cup (C))\right) \to \iota)\right)\right)\right)\right)))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.log_koteljanskii` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Giancarlo Camilo, Gabriel T. Landi, Sebas Eliëns (2019). *Strong subadditivity of the Rényi entropies for bosonic and fermionic Gaussian states*. DOI: [10.1103/PhysRevB.99.045155](https://doi.org/10.1103/PhysRevB.99.045155). URL: <https://arxiv.org/abs/1810.07070v2>.
+
+*Commentary.*
+
+For a Hermitian positive definite matrix and three pairwise disjoint finite index sets, the ABC and B principal log determinants sum to at most the AB and BC principal log determinants. Eliminate the common block B by its Schur complement, then apply the Fischer determinant bound to the remaining A and C blocks. The Schur determinant factorizations give the product inequality. Every principal determinant has positive real part and zero imaginary part, so monotonicity of the real logarithm and its product identity give the stated sum inequality. The ambient index type need not be finite; only the selected blocks are finite. Empty blocks have determinant one and logarithm zero.
+
+**Theorem 1.10 (Restriction of the interpolation determinant).**
+
+$$\forall (n: \mathbb{N}), (\forall (V: \operatorname{Matrix}\left((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right)), \mathbb{R}\right)), (\forall (\omega: \operatorname{Matrix}\left((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right)), \mathbb{R}\right)), (\forall (Y: \operatorname{Finset}\left((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))\right)), (\forall (X: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), ((\forall (p: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))), ((p \in Y) \Leftrightarrow (\operatorname{Prod.fst}\left(p\right) \in X))) \Rightarrow (\forall (x: \mathbb{R}), (\operatorname{Matrix.det}\left(\operatorname{Matrix.submatrix}\left((\operatorname{Matrix.map}\left(V, \operatorname{Complex.ofReal}\right)) + ((\operatorname{Complex.ofReal}\left(x\right)) \cdot ((\operatorname{Complex.I}) \cdot (\operatorname{Matrix.map}\left(\omega, \operatorname{Complex.ofReal}\right)))), \lambda (p: \operatorname{Subtype}\left(\lambda (p: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))) \mapsto (p \in Y)\right)) \mapsto (\operatorname{Subtype.val}\left(p\right)), \lambda (p: \operatorname{Subtype}\left(\lambda (p: (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))) \mapsto (p \in Y)\right)) \mapsto (\operatorname{Subtype.val}\left(p\right))\right)\right) = \operatorname{Matrix.det}\left((\operatorname{Matrix.map}\left(\operatorname{reducedCovariance}\left(V, X\right), \operatorname{Complex.ofReal}\right)) + ((\operatorname{Complex.ofReal}\left(x\right)) \cdot ((\operatorname{Complex.I}) \cdot (\operatorname{Matrix.map}\left(\operatorname{reducedCovariance}\left(\omega, X\right), \operatorname{Complex.ofReal}\right))))\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.mode_interpolation_det` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Giancarlo Camilo, Gabriel T. Landi, Sebas Eliëns (2019). *Strong subadditivity of the Rényi entropies for bosonic and fermionic Gaussian states*. DOI: [10.1103/PhysRevB.99.045155](https://doi.org/10.1103/PhysRevB.99.045155). URL: <https://arxiv.org/abs/1810.07070v2>.
+
+*Commentary.*
+
+When Y consists exactly of the two quadratures of the modes in X, its principal interpolation determinant equals the determinant formed from the reduced matrices.
+
+**Definition 1.11 (Strong subadditivity for the stated orders).**
 
 $$\operatorname{claim} = (\forall (n: \mathbb{N}), (\forall (V: \operatorname{Matrix}\left((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right)), \mathbb{R}\right)), ((\operatorname{physicalCovariance}\left(V\right)) \Rightarrow (\forall (A: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), (\forall (B: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), (\forall (C: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), ((\operatorname{Disjoint}\left(A, B\right)) \Rightarrow ((\operatorname{Disjoint}\left(A, C\right)) \Rightarrow ((\operatorname{Disjoint}\left(B, C\right)) \Rightarrow (\forall (\alpha: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha \le 2) \Rightarrow ((\alpha \ne 1) \Rightarrow ((\operatorname{gaussianRenyiEntropy}\left(\alpha, \operatorname{reducedCovariance}\left(V, (A) \cup (B)\right), \operatorname{reducedCovariance}\left(\operatorname{symplecticForm}\left(n\right), (A) \cup (B)\right)\right)) + (\operatorname{gaussianRenyiEntropy}\left(\alpha, \operatorname{reducedCovariance}\left(V, (B) \cup (C)\right), \operatorname{reducedCovariance}\left(\operatorname{symplecticForm}\left(n\right), (B) \cup (C)\right)\right)) \ge (\operatorname{gaussianRenyiEntropy}\left(\alpha, \operatorname{reducedCovariance}\left(V, ((A) \cup (B)) \cup (C)\right), \operatorname{reducedCovariance}\left(\operatorname{symplecticForm}\left(n\right), ((A) \cup (B)) \cup (C)\right)\right)) + (\operatorname{gaussianRenyiEntropy}\left(\alpha, \operatorname{reducedCovariance}\left(V, B\right), \operatorname{reducedCovariance}\left(\operatorname{symplecticForm}\left(n\right), B\right)\right))))))))))))))))$$
 
@@ -90,7 +146,7 @@ $$\operatorname{claim} = (\forall (n: \mathbb{N}), (\forall (V: \operatorname{Ma
 
 For every physical bosonic covariance and all pairwise disjoint mode sets A, B and C, the sum of the AB and BC entropies dominates the sum of the ABC and B entropies whenever 0<α≤2 and α differs from one. This is the positive-order validity part of the conjecture in RenyiGaussian_v2.tex, line 463, whose proof is requested again at line 532. The statement concerns the covariance entropy formula; order zero, order one, orders above two, fermions and non-Gaussian states are outside its scope.
 
-**Theorem 1.8 (Strong subadditivity of the covariance entropy).**
+**Theorem 1.12 (Strong subadditivity of the covariance entropy).**
 
 $$\forall (n: \mathbb{N}), (\forall (V: \operatorname{Matrix}\left((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right)), \mathbb{R}\right)), ((\operatorname{physicalCovariance}\left(V\right)) \Rightarrow (\forall (A: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), (\forall (B: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), (\forall (C: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)), ((\operatorname{Disjoint}\left(A, B\right)) \Rightarrow ((\operatorname{Disjoint}\left(A, C\right)) \Rightarrow ((\operatorname{Disjoint}\left(B, C\right)) \Rightarrow (\forall (\alpha: \mathbb{R}), ((0 < \alpha) \Rightarrow ((\alpha \le 2) \Rightarrow ((\alpha \ne 1) \Rightarrow ((\operatorname{gaussianRenyiEntropy}\left(\alpha, \operatorname{reducedCovariance}\left(V, (A) \cup (B)\right), \operatorname{reducedCovariance}\left(\operatorname{symplecticForm}\left(n\right), (A) \cup (B)\right)\right)) + (\operatorname{gaussianRenyiEntropy}\left(\alpha, \operatorname{reducedCovariance}\left(V, (B) \cup (C)\right), \operatorname{reducedCovariance}\left(\operatorname{symplecticForm}\left(n\right), (B) \cup (C)\right)\right)) \ge (\operatorname{gaussianRenyiEntropy}\left(\alpha, \operatorname{reducedCovariance}\left(V, ((A) \cup (B)) \cup (C)\right), \operatorname{reducedCovariance}\left(\operatorname{symplecticForm}\left(n\right), ((A) \cup (B)) \cup (C)\right)\right)) + (\operatorname{gaussianRenyiEntropy}\left(\alpha, \operatorname{reducedCovariance}\left(V, B\right), \operatorname{reducedCovariance}\left(\operatorname{symplecticForm}\left(n\right), B\right)\right)))))))))))))))$$
 
@@ -122,10 +178,14 @@ Apply this logarithmic inequality to H_x on the four blocks AB, BC, ABC and B, u
 
 - Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.claim`
 - Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.gaussianRenyiEntropy`
+- Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.log_koteljanskii`
+- Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.mode_interpolation_det`
 - Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.physicalCovariance`
 - Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.physicalOn`
 - Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.reducedCovariance`
+- Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.reduced_card`
 - Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.result`
+- Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.shifted_posDef`
 - Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.symplecticForm`
 - Truth anchor: `D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.symplecticOperator`
 - Dependency: [D5/S3/Estimation/GaussianThermometryJointMeasurementRefutation](../../Estimation/GaussianThermometryJointMeasurementRefutation.md)

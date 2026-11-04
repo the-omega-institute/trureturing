@@ -20,7 +20,21 @@ $$\forall (alpha: \mathbb{R}), \forall (p: \mathbb{R}), \operatorname{h}\left(al
 
 At alpha = 1 the definition uses Real.binEntropy in natural-log units; otherwise both variable powers use Real.rpow. On the probability branch [0,1/2], for every alpha > 0, the power sum is positive and h is continuous and strictly increasing, with values zero at zero and log 2 at one half. The displayed total real definition also exists outside the parameter and probability domain of the theorem.
 
-**Definition 1.2 (The specified inverse branch).**
+**Theorem 1.2 (Entropy of the fair binary distribution).**
+
+$$\forall (\alpha: \mathbb{R}), (0 < \alpha) \Rightarrow \operatorname{h}\left(\alpha, \frac{1}{2}\right) = \operatorname{log}\left(2\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h_half` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
+
+*Commentary.*
+
+Every positive real order assigns natural-log entropy log 2 to the fair binary distribution.
+
+**Definition 1.3 (The specified inverse branch).**
 
 $$\forall (alpha: \mathbb{R}), \forall (x: \mathbb{R}), \operatorname{hInv}\left(alpha, x\right) = \operatorname{invFunOn}\left(\operatorname{h}\left(alpha\right), \operatorname{Icc}\left(0, \frac{1}{2}\right), x\right)$$
 
@@ -32,7 +46,7 @@ $$\forall (alpha: \mathbb{R}), \forall (x: \mathbb{R}), \operatorname{hInv}\left
 
 This is Function.invFunOn applied to h alpha on the closed interval [0,1/2]. For alpha > 0, that restriction is a continuous strictly increasing bijection onto [0,log 2]. Consequently, for x in the entropy interval, hInv(alpha,x) belongs to [0,1/2] and h(alpha,hInv(alpha,x))=x. The inverse is continuous on the entropy interval. No inverse identity outside that interval is claimed.
 
-**Definition 1.3 (Binary convolution).**
+**Definition 1.4 (Binary convolution).**
 
 $$\forall (a: \mathbb{R}), \forall (b: \mathbb{R}), \operatorname{star}\left(a, b\right) = a + b - 2 \cdot a \cdot b$$
 
@@ -44,7 +58,7 @@ $$\forall (a: \mathbb{R}), \forall (b: \mathbb{R}), \operatorname{star}\left(a, 
 
 For binary error probabilities a and b, star(a,b)=a+b-2ab is their binary convolution.
 
-**Definition 1.4 (Entropy-coordinate combining map).**
+**Definition 1.5 (Entropy-coordinate combining map).**
 
 $$\forall (alpha: \mathbb{R}), \forall (x: \mathbb{R}), \forall (y: \mathbb{R}), \operatorname{G}\left(alpha, x, y\right) = \operatorname{h}\left(alpha, \operatorname{star}\left(\operatorname{hInv}\left(alpha, x\right), \operatorname{hInv}\left(alpha, y\right)\right)\right)$$
 
@@ -56,7 +70,7 @@ $$\forall (alpha: \mathbb{R}), \forall (x: \mathbb{R}), \forall (y: \mathbb{R}),
 
 G evaluates the binary entropy after convolving the two specified inverse-branch probabilities.
 
-**Definition 1.5 (The complete threshold conjecture).**
+**Definition 1.6 (The complete threshold conjecture).**
 
 $$claim = \exists (alphaHat: \mathbb{R}), 1 < alphaHat \land \left(alphaHat < \frac{13863}{10000} \land \left((\forall (alpha: \mathbb{R}), (0 < alpha) \Rightarrow \left((alpha < alphaHat) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right)\right)) \land (\forall (alpha: \mathbb{R}), (2 \le alpha) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConcaveOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right))\right)\right)$$
 
@@ -68,7 +82,7 @@ $$claim = \exists (alphaHat: \mathbb{R}), 1 < alphaHat \land \left(alphaHat < \f
 
 The existential threshold is strictly between one and 13863/10000. The convex clause quantifies over all positive real orders below it, and the concave clause over all real orders at least two. Both clauses use Mathlib's full two-point inequality on the closed entropy interval, including both endpoints.
 
-**Theorem 1.6 (Hirche Conjecture IV.18 with threshold five quarters).**
+**Theorem 1.7 (Hirche Conjecture IV.18 with threshold five quarters).**
 
 $$\exists (alphaHat: \mathbb{R}), 1 < alphaHat \land \left(alphaHat < \frac{13863}{10000} \land \left((\forall (alpha: \mathbb{R}), (0 < alpha) \Rightarrow \left((alpha < alphaHat) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right)\right)) \land (\forall (alpha: \mathbb{R}), (2 \le alpha) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConcaveOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right))\right)\right)$$
 
@@ -100,6 +114,7 @@ At v=0 the transported function is constant, and at v=1 it is the identity. Thes
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv`
+- Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h_half`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.star`
 - Dependency: [D5/S3/Entropy/RenyiCombining/BinaryRenyiCombining](BinaryRenyiCombining.md)
