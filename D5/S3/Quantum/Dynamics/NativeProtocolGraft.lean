@@ -1572,7 +1572,7 @@ private theorem source_steps :
   module
 
 /-- Exact sparse action of the actual original full matrices on the fixed root. -/
-theorem original_source_vector :
+private theorem original_source_vector :
     (operator sourceTree ()).mulVec omega0 = fiveTermVector ∧
     calls sourceTree () = 3 := by
   constructor
@@ -1747,7 +1747,7 @@ private theorem mixture_chi : sourceMixture = chi := by
   simp only [sourceMixture, hw, b_norm]
   fin_cases i <;> fin_cases j <;>
     norm_num [sourceLocal, p0, chi, Matrix.vecMulVec_apply, Pi.star_apply]
-  all_goals simp only [starRingEnd_apply]
+  all_goals try simp only [starRingEnd_apply]
   · rw [show t*a*star a = t*(a*star a) by ring, a_norm]
     linear_combination t*Coeff.t_sq
   · rw [a_value, b_value, star_mul, star_neg, star_beta]
@@ -1760,15 +1760,13 @@ private theorem mixture_chi : sourceMixture = chi := by
     ring
 
 /-- The full-carrier source calls give exactly the same native marginal chi. -/
-theorem original_source_calibration :
+private theorem original_source_calibration :
     reduced ((operator sourceTree ()).mulVec omega0) = chi ∧ chi.PosSemidef := by
   have hv := original_source_vector.1
   have hc : reduced ((operator sourceTree ()).mulVec omega0) = chi := by
     rw [hv, ← source_steps, source_reduction, mixture_chi]
   exact ⟨hc, hc ▸ reduced_positive _⟩
 
-#print axioms original_source_vector
-#print axioms original_source_calibration
 
 
 private theorem t_nonzero : t ≠ 0 := by
@@ -1821,7 +1819,7 @@ private theorem chi_square : chi*chi = chi-t^4 • (1 : Qubit) := by
   fin_cases i <;> fin_cases j <;>
     norm_num [chi, Matrix.mul_apply, Fin.sum_univ_two,
       Pi.smul_apply, smul_eq_mul, star_t, star_pow]
-  all_goals simp only [starRingEnd_apply]
+  all_goals try simp only [starRingEnd_apply]
   · rw [gamma_norm]
     linear_combination (t^3+t)*Coeff.t_sq
   · linear_combination gamma*Coeff.t_sq
@@ -1857,6 +1855,143 @@ private theorem chi_sqrt : cfc Real.sqrt chi = chiRoot := by
     CFC.sqrt_unique chiRoot_square chiRoot_positive.nonneg
   rwa [CFC.sqrt_eq_real_sqrt _ original_source_calibration.2.nonneg,
     cfcₙ_eq_cfc] at h
+
+
+/-- The same original b1 instrument, after summing its retained read. -/
+def delta (X : Qubit) : Qubit := Matrix.diagonal (fun i => X i i)
+
+private theorem read_cut (i : Fin 2) (e : Rest) :
+    readBit 2 (cut.symm (i,e)) = i := by
+  fin_cases i <;> rfl
+
+private theorem projected_cut (v : Basis → ℂ) (j i : Fin 2) (e : Rest) :
+    ((projector (readBit 2) j).mulVec v) (cut.symm (i,e)) =
+      if i = j then v (cut.symm (i,e)) else 0 := by
+  simp [projector, read_cut]
+
+private theorem reduced_projector (v : Basis → ℂ) (o : Fin 2) :
+    reduced ((projector (readBit 2) o).mulVec v) =
+      fun i j => if i = o ∧ j = o then reduced v i j else 0 := by
+  ext i j
+  simp only [reduced, cross, partialTraceRight, Matrix.vecMulVec_apply,
+    Function.comp_apply, Pi.star_apply, projected_cut]
+  by_cases hi : i = o <;> by_cases hj : j = o <;>
+    simp [hi, hj, apply_ite (starRingEnd ℂ)]
+
+private theorem native_delta (v : Basis → ℂ) :
+    (∑ j : Fin 2, reduced ((projector (readBit 2) j).mulVec v)) =
+      delta (reduced v) := by
+  ext i j
+  simp only [Matrix.sum_apply, reduced_projector, Fin.sum_univ_two]
+  fin_cases i <;> fin_cases j <;> simp [delta]
+
+private theorem read_empty (j : Fin 2) :
+    (projector (readBit 2) j).mulVec omega0 =
+      if j = 0 then omega0 else 0 := by
+  funext z
+  simp only [projector, Matrix.diagonal_mulVec, Pi.smul_apply, smul_eq_mul,
+    Pi.zero_apply]
+  by_cases hz : z = rootWord
+  · subst z
+    fin_cases j <;> norm_num [omega0, readBit, rootWord]
+  · simp [omega0, hz]
+
+def inverseRoot : Qubit := Matrix.diagonal ![beta⁻¹,t⁻¹]
+
+private theorem h_diagonal :
+    delta chi = Matrix.diagonal (fun i => ((![(phi⁻¹),(phi⁻¹)^2] : Fin 2 → ℝ) i : ℂ)) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [delta, chi, t]
+
+private theorem inverse_root :
+    cfc (fun x : ℝ => (Real.sqrt x)⁻¹) (delta chi) = inverseRoot := by
+  rw [h_diagonal,
+    D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_diagonal]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [inverseRoot, beta, t, Real.sqrt_sq (inv_nonneg.mpr Coeff.phi_positive.le)]
+
+/-- The fixed mathematical Petz formula. This definition adds no native gate. -/
+def petz (Y : Qubit) : Qubit :=
+  cfc Real.sqrt chi *
+    delta (cfc (fun x : ℝ => (Real.sqrt x)⁻¹) (delta chi) * Y *
+      cfc (fun x : ℝ => (Real.sqrt x)⁻¹) (delta chi)) *
+    cfc Real.sqrt chi
+
+private theorem petz_empty_entry :
+    petz p0 1 1 = t^4/(1+2*t^2) := by
+  have hb : beta ≠ 0 := by
+    intro h
+    have hs := Coeff.beta_sq
+    rw [h, zero_pow (by decide)] at hs
+    exact t_nonzero hs.symm
+  have hr : (rootScale : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr rootScale_pos.ne'
+  have hd : 1+2*t^2 ≠ 0 := by rw [← rootScale_sq]; exact pow_ne_zero 2 hr
+  rw [petz, chi_sqrt, inverse_root]
+  norm_num [Matrix.mul_apply, Fin.sum_univ_two, chiRoot, inverseRoot,
+    delta, p0, chi, Pi.smul_apply, smul_eq_mul]
+  simp only [starRingEnd_apply]
+  have hg : star gamma * gamma = t^5 := by rw [mul_comm, gamma_norm]
+  calc
+    _ = (star gamma * gamma) / ((rootScale : ℂ)^2 * beta^2) := by field_simp; ring
+    _ = t^4/(1+2*t^2) := by
+      rw [hg, rootScale_sq, Coeff.beta_sq]
+      field_simp
+      ring
+
+private theorem empty_target_value :
+    ((emptyTarget : ℝ) : ℂ) = t^4/(1+2*t^2) := by
+  have hi : phi⁻¹ = phi-1 := by
+    change Real.goldenRatio⁻¹ = Real.goldenRatio-1
+    rw [Real.inv_goldenRatio]
+    dsimp [Real.goldenConj, Real.goldenRatio]
+    ring
+  have he : ((emptyTarget : ℝ) : ℂ) = (4-5*t)/11 := by
+    simp only [t, emptyTarget, Complex.ofReal_div, Complex.ofReal_sub,
+      Complex.ofReal_mul, Complex.ofReal_ofNat]
+    rw [hi]
+    push_cast
+    dsimp [phi]
+    push_cast
+    ring
+  rw [he]
+  have hd : 1+2*t^2 ≠ 0 := by
+    rw [← rootScale_sq]
+    exact pow_ne_zero 2 (Complex.ofReal_ne_zero.mpr rootScale_pos.ne')
+  field_simp
+  linear_combination -(11*t^2-t+4)*Coeff.t_sq
+
+/-- The actual three-call calibration, native read and fixed Petz empty-input
+event are linked to every complete original continuation's raw discrepancy.
+The separate five-call retained-history and full-record targets remain open. -/
+theorem original_empty_petz_consumer :
+    reduced ((operator sourceTree ()).mulVec omega0) = chi ∧
+    calls sourceTree () = 3 ∧ chi.PosDef ∧ chi.trace = 1 ∧ chi.det = t^4 ∧
+    cfc Real.sqrt chi = chiRoot ∧
+    (∀ v : Basis → ℂ,
+      (∑ j : Fin 2, reduced ((projector (readBit 2) j).mulVec v)) =
+        delta (reduced v)) ∧
+    reduced omega0 = p0 ∧
+    (∀ j : Fin 2, (projector (readBit 2) j).mulVec omega0 =
+      if j = 0 then omega0 else 0) ∧
+    petz (reduced omega0) 1 1 = ((emptyTarget : ℝ) : ℂ) ∧
+    (∀ C : Fin 2 → Tree Stop,
+      let T := extensionAt .active C
+      eventMass T (fun _ z => z 2) ≠ (petz (reduced omega0) 1 1).re ∧
+      1/(11*(Coeff.kappa^(2*maxCalls T)+(13+5*Real.sqrt 5)/22)) ≤
+        |eventMass T (fun _ z => z 2) - (petz (reduced omega0) 1 1).re|) := by
+  have hp : petz (reduced omega0) 1 1 = ((emptyTarget : ℝ) : ℂ) := by
+    rw [empty_reduction, petz_empty_entry, empty_target_value]
+  refine ⟨original_source_calibration.1, original_source_vector.2,
+    chi_faithful, chi_trace, chi_det, chi_sqrt, native_delta, empty_reduction,
+    read_empty, hp, ?_⟩
+  intro C
+  dsimp only
+  rw [hp, Complex.ofReal_re]
+  exact ⟨(original_event_arithmetic _ _).2.1,
+    (original_event_resource_bounds _ _).2.1⟩
+
+#print axioms original_empty_petz_consumer
 
 end Actual
 
