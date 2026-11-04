@@ -1,5 +1,4 @@
 import D5.S3.Combinatorics.Circle.FourNegative.OppositeSecondFourthMaximum.Endpoint
-/- Source-bound candidate only; no declared_validated or binding evidence is claimed. -/
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 

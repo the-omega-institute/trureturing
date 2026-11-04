@@ -8,8 +8,7 @@
 import Mathlib.Data.Int.DivMod
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Arithmetic
 
-/-! Candidate source only: no compilation or acceptance is asserted.
-The two orders below are constructed directly in the original chain coordinates.
+/-! The two orders below are constructed directly in the original chain coordinates.
 The Boolean selects their displayed order, not an action on the source. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -232,18 +231,18 @@ private theorem descending_masks (x y z T : ℤ) (hz : 4≤z) (hx : 2*z≤x)
   · constructor <;> constructor <;> nlinarith only [hpos,hAL,hepos,hfresh]
   · rw [hid3]
     constructor <;> constructor
-    all_goals dsimp [SU]
+    all_goals try dsimp [SU]
     all_goals nlinarith only [qm.2.2.1,qm.2.2.2,hbig,hz]
 
 private theorem power_four (a : ℕ) (ha : 2≤a) : (4:ℤ)≤2^a := by
   calc
     (4:ℤ)=2^2 := by norm_num
-    _ ≤ 2^a := by gcongr
+    _ ≤ 2^a := by gcongr <;> omega
 
 private theorem power_gap (a b : ℕ) (hab : a<b) : 2*(2:ℤ)^a≤2^b := by
   calc
     2*(2:ℤ)^a=2^(a+1) := by rw [pow_succ];ring
-    _ ≤ 2^b := by gcongr;omega
+    _ ≤ 2^b := by gcongr <;> omega
 
 private theorem selection (a s c : ℕ) (ha : 2≤a) (hc : 2≤c)
     (hab : a<s) (hcb : c<s) (hne : a≠c) :
@@ -275,7 +274,7 @@ private theorem selection (a s c : ℕ) (ha : 2≤a) (hc : 2≤c)
       · right
         calc
           4*(2:ℤ)^a=2^(a+2) := by rw [pow_add];norm_num;ring
-          _ ≤ 2^s := by gcongr;omega
+          _ ≤ 2^s := by gcongr <;> omega
     simpa only [show decide (c<a)=true by simp [hca]] using
       hmasks true (descending_masks _ _ _ _ (power_four c hc)
         (power_gap c a hca) (power_gap a s hab) hhalf hd)

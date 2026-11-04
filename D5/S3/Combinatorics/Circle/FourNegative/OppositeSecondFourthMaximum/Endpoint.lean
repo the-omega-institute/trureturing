@@ -8,8 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.OppositeSecondFourthMaximum.Physical
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail.Endpoint
 
-/-! Complete intended proof script for the requested original telescope.
-Source preparation only. The unchanged whole Circle/J/C3.1 goal remains open. -/
+/-! Joint prefix bounds in the original physical coordinates and both strict sectors. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
