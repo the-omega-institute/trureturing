@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2610.15889v1
 claim: Theorem 1.2 gives the all-real finite complex PSD Schatten partition inequality. The formal source uses homogeneous Carlen-Lieb trace-root convexity, positive regularization and actual Schatten Gram traces, including arbitrary rectangular free matrices.
 strata_touched:
   - D5/S3/Quantum/Schatten
+license: citation-only
 triage: anchor
 ---
 
