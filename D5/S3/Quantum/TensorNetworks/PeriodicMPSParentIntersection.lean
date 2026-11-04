@@ -375,8 +375,7 @@ private lemma raw_ne_zero (A : Fin 2 → Bond) (r : ℕ)
     change (wordMatrix A ![p.1, p.2] * wordMatrix A b).trace = 0
     rw [hw]
     rw [Matrix.trace_mul_comm] at hb
-    simpa only [wordMatrix, List.ofFn_succ, Fin.cons_zero, Fin.cons_succ,
-      List.prod_cons, List.prod_nil, mul_one, Matrix.mul_assoc] using hb
+    simpa [wordMatrix, List.ofFn_succ, Matrix.mul_assoc] using hb
   rw [hf, Matrix.rank_zero] at hr
   norm_num at hr
 
