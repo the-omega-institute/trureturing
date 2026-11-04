@@ -163,7 +163,7 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                         Eqn(Call("q", A), Call("q", B)),
                         Eqn(Call("r", A), Call("r", B)),
                         AllM(Z, Eqn(Read(A, Z), Read(B, Z))),
-                        AllM(Z, Eqn(Read(Z, A), Read(Z, B))))))))),
+                        AllM(Z, Eqn(Read(Z, A), Read(Z, B)))))))))), 
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Equality of beta and the vanishing cross comparisons give equality of q and r. Substitution in the original ordered kernel then gives both complete rows and columns."))),
                 DescribeRole.Theorem),
