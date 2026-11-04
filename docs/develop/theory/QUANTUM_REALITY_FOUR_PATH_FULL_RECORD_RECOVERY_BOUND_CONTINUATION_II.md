@@ -4687,3 +4687,240 @@ remain in the full problem. The strict excluded region narrows the
 unchanged first-loss/equality problem and does not solve it.
 
 ## 追加锚（本行以下为增补区）
+
+## 50. Uniform positive pure-branch comparison on an interior distance interval
+
+**Definition 50.1 (original pairs and the positive scalar supplier).** Keep the original certificate basis $T=(b_+\ b_-)$, ordinary transpose and one actual shared feedback. Set
+
+$$
+\begin{aligned}
+ I&=[11/5,9/4],&h&=\sqrt{1/2},&c&=\sqrt{(1+h)/2},&s&=\sqrt{(1-h)/2},\\
+ k&=c-h,&d&=2(h+c),&e&=2(h+s),&p&=1-q,\\
+ \beta^\phi&=(\sqrt p,e^{i\phi}\sqrt q)^{\mathsf T},&
+ E&=(T\beta^\phi(\beta^\phi)^\dagger T^\dagger)^{\mathsf T},&q&\in[0,1],&\phi&\in\mathbb R.
+\end{aligned}
+\tag{50.1}
+$$
+
+Thus $E\ge0$, $\operatorname{Tr}E=1$ and $\operatorname{rank}E=1$, and every original normalized pure effect occurs. For one $U\in U(4)$, let $w=\operatorname{diag}(UU_+^\dagger)$ and use the same $A,B,P,Q$ as (23.2). In particular $A=|\sum_jw_j|$ and $B=|w_1-w_2+i(w_3-w_4)|$. The original distances and defect are
+
+$$
+\begin{aligned}
+ \rho_\sigma(E,U)&=\min_{|\lambda|=1}\bigl(\|E-E_\sigma\|_{\mathrm F}^2+\|U-\lambda U_\sigma\|_{\mathrm F}^2\bigr),&
+ \rho&=\min\{\rho_+,\rho_-\},\\
+ \rho_+&=8+2q-2A,&\rho_-&=10-2q-2B,\\
+ g(E,U)&=d^2p+e^2q-|\sqrt p\,P+e^{i\phi}\sqrt q\,Q|^2.
+\end{aligned}
+\tag{50.2}
+$$
+
+Each $\lambda$ is a single scalar on the whole feedback, as in (23.11); there are no column controls. If $\rho_+=\rho=\xi\in I$, put
+
+$$
+\begin{aligned}
+ t&=\xi/2,&x&=1-\xi/4+q/2,&y&=\sqrt{1-x^2},&L&=1+x,\\
+ R_0&=hx+c,&\Gamma_0&=\sqrt p\,R_0+\sqrt q\,hy,&
+ G_\xi(q)&=d^2p+e^2q-4\Gamma_0^2,\\
+ \mu&=\tfrac12(hk\sqrt p/R_0+h\sqrt q/y),&
+ \nu&=\tfrac12\bigl(k\sqrt p+(h^2x-s^2)\sqrt q/(hy)\bigr),&t_c&=s\sqrt{qL}/x,\\
+ \mathfrak D_+(x,q)&=4\mu\nu x^2/L-s^2q,&
+ \omega(\xi,q)&=\nu-t_c^2/(4\mu)=L\mathfrak D_+(x,q)/(4\mu x^2),\\
+ B_{\mathrm{gain}}&=\frac{k^2\sqrt p}{8R_0}+\frac{2s\sqrt q\,L}{3\sqrt3\,x},&
+ J&=\frac{\max\{0,-\omega\}^2}{4B_{\mathrm{gain}}}.
+\end{aligned}
+\tag{50.3}
+$$
+
+These are exactly the positive row $(a,b,\ell,m)=(h,c,h,s)$ of (46.2): $B_{\mathrm{gain}}=C_{\mathrm{gain},+}$, $\max\{0,-\omega\}=\eta_+$ and $J=J_+$ in (47.1). In particular $B_{\mathrm{gain}}$ is distinct from the trace modulus $B$. The full population range is $[0,\min\{1,\xi/2\}]=[0,1]$, and throughout it
+
+$$
+ 7/16\le x\le19/20<1,\qquad y>0,\quad R_0>0,\quad\mu>0,\quad B_{\mathrm{gain}}>0.
+\tag{50.4}
+$$
+
+At $q=0$ the first summands keep $\mu,B_{\mathrm{gain}}$ positive; at $q=1$ the second summands do so. No singular $x=1$ slice occurs in $I$. Let $\delta_\circ(t)$ be the unique positive geometric selector of Theorem 37.5, and set
+
+$$
+ q_\xi=t-\delta_\circ(t),\qquad
+ V(\xi)=G_\xi(q_\xi)=N_{\mathrm{geo}}(\xi)+\kappa\xi,\qquad
+ D_{\mathrm{sel}}(\xi)=\mathfrak D_+(1-\xi/4+q_\xi/2,q_\xi).
+\tag{50.5}
+$$
+
+The determinant agrees with (36.43) and (43.1), with their second argument $p=1-q$. The supplier $V$ here is only the selected positive rank-one geometric value, without a premise of unrestricted optimality.
+
+**Theorem 50.2 (four exact continuous-domain enclosures).** The following rational closed enclosures hold; the derivative in C4 is at fixed $\xi$, evaluated only at $q=9/20$.
+
+| Certificate | Function | Closed variable domain | Required bound | Pieces | Outward enclosure of the entire image |
+| --- | --- | --- | --- | --- | --- |
+| C1 | $\omega(9/4,q)$ | $q\in[0,1/10]$ | $\ge1/10000$ | 10 | $[313809/250000000,23008109/200000000]$ |
+| C2 | $\omega(9/4,q)$ | $q\in[3/8,1]$ | $\ge1/10000$ | 27 | $[129303/1000000000,19833451/31250000]$ |
+| C3 | $\omega(9/4,q)$ | $q\in[1/10,3/8]$ | $\ge-21/1000$ | 132 | $[-20992343/1000000000,4663773/250000000]$ |
+| C4 | $G'_\xi(9/20)$ | $\xi\in I$ | $\le-1/10$ | 1 | $[-453826117/1000000000,-24250863/125000000]$ |
+
+*Proof.* The derivative expression used in C4 is
+
+$$
+ G'_\xi(q)=-(4h+8s)-4\Gamma_0\left(h\sqrt p-\frac{R_0}{\sqrt p}+\frac{hy}{\sqrt q}-\frac{hx\sqrt q}{y}\right).
+\tag{50.6}
+$$
+
+Indeed $dx/dq=1/2$, $dy/dq=-x/(2y)$, and $d^2-e^2=4h+8s$, using $c^2-s^2=h$ and $h(c-s)=s$. Formula (50.6) is used only at the interior population $9/20$; it is not evaluated at $q=0,1$.
+
+Here is the complete compact partition specification. In each row let $[a,b]$ be its stated variable domain and normalize $z=(v-a)/(b-a)$. A run $(u,v,r)$ with denominator $N$ denotes all consecutive closed intervals $[j/N,(j+r)/N]$, $j=u,u+r,\ldots,v-r$, pulled back by $a+(b-a)z$.
+
+| Certificate | $N$ | All runs, in order |
+| --- | --- | --- |
+| C1 | 32 | $(0,8,4),(8,16,8),(16,24,4),(24,30,2),(30,32,1)$ |
+| C2 | 4096 | $(0,2,1),(2,8,2),(8,16,4),(16,48,8),(48,96,16),(96,192,32),(192,384,64),(384,512,128),(512,1024,256),(1024,2048,512),(2048,4096,1024)$ |
+| C3 | 512 | $(0,32,32),(32,96,16),(96,136,8),(136,172,4),(172,204,2),(204,262,1),(262,296,2),(296,336,4),(336,384,8),(384,448,16),(448,512,32)$ |
+| C4 | 1 | $(0,1,1)$ |
+
+Every run ends where the next begins, the first starts at $0$, and the last ends at $N$. Their positive lengths sum exactly to $N$, and their counts $\sum(v-u)/r$ are respectively $10,27,132,1$. Thus these are full closed covers with disjoint interiors, including both original endpoints; no grid-point sign assertion is substituted for an interval image.
+
+The rational interval rules specifying those images are as follows. Use exact rational addition, negation, and multiplication by the minimum and maximum of the four endpoint products. For $0\notin[\ell,u]$, reciprocal is $[1/u,1/\ell]$. Squaring has upper endpoint $\max\{\ell^2,u^2\}$ and lower endpoint $0$ if the interval contains zero, otherwise $\min\{\ell^2,u^2\}$. With $S=2^{96}$, for each rational $r\ge0$ put $n=\operatorname{isqrt}(\lfloor rS^2\rfloor)$. The lower root endpoint is $n/S$; the upper is $(n+1)/S$, except that it is $n/S$ when $n^2=rS^2$. Apply these at the lower and upper radicand endpoints respectively. The inequalities
+
+$$
+ (n/S)^2\le r<((n+1)/S)^2
+\tag{50.7}
+$$
+
+prove root containment, including $r=0$ and exact-square upper endpoints. These rules preserve inclusion by induction through every expression; all reciprocal intervals exclude zero and all root radicands are nonnegative.
+
+Initialize $h,c,s$ in that order from (50.1), using these root rules. In C1--C3 evaluate (50.3) with the identities $h^2=1/2$, $s^2=(1-h)/2$ and $t_c^2=s^2q(1+x)/x^2$; do not separately interval-square an enclosure of $s$. In C4 use (50.6) at $q=9/20$. On each leaf, natural interval evaluation of the whole variable interval satisfies the named threshold. Taking the minimum of all leaf lower endpoints and the maximum of all leaf upper endpoints, then rounding them down and up respectively to multiples of $10^{-9}$, gives exactly the table's rational aggregate enclosures. They imply each displayed bound, since every argument is in a leaf and its function value is in that leaf image.
+
+The complete rational leaf endpoints and images, including the endpoint-square and zero-exclusion rules, are specified by [the enclosure manifest](https://github.com/the-omega-institute/trureturing-experiments/blob/f6566d53e43290d7ff7148da38f48f96238fc9f7/experiments/auric/four-path/positive-pure-interval-11-5-9-4/certificate.json) and [its defining exact evaluator](https://github.com/the-omega-institute/trureturing-experiments/blob/f6566d53e43290d7ff7148da38f48f96238fc9f7/experiments/auric/four-path/positive-pure-interval-11-5-9-4/certify_interval.py). The manifest SHA256 is `661b9582e4425abb56e4fc17e73d7aa68a2b5970233c0a95f1109c33a85f4046`; its mathematical supplier pin is `5fd6a884f9173f778cfa040217d7d51f748ac9c6`. The partition and rational rules above specify the continuous certificate independently of adaptive subdivision choices. The same rules also give
+
+$$
+\begin{aligned}
+ \omega(9/4,1/4)&\in[-9840817/500000000,-19681633/10^9]\subset(-\infty,-19/1000),\\
+ 8hc-1&>4,&s&>19/50,&k&>21/100,\\
+ h(51/80)+c&<7/5,&h+c&<5/3,&\sqrt{30}&<11/2,\\
+ 18-8(c+s)-9/2&>76187407/25000000>3.
+\end{aligned}
+\tag{50.8}
+$$
+
+These last constant inequalities can equally be checked by rational endpoint squaring with positive denominators. $\square$
+
+**Theorem 50.3 (the entire positive-active pure branch on $I$).** For every $\xi\in[11/5,9/4]$, every original normalized positive rank-one $E$ with the ordinary transpose convention, and every single original $U\in U(4)$ such that $\rho_+(E,U)=\rho(E,U)=\xi$,
+
+$$
+ g(E,U)\ge V(\xi),\qquad D_{\mathrm{sel}}(\xi)>0.
+\tag{50.9}
+$$
+
+Both level endpoints and both population endpoints are included. If the actual population slice satisfies $\mathfrak D_+(x,q)<0$, then
+
+$$
+ g(E,U)-V(\xi)>\frac{1196031}{1600000000}>\frac7{10000}.
+\tag{50.10}
+$$
+
+Such negative-determinant slices are nonempty. The existing selected positive geometric pairs attain $V(\xi)$; negative-determinant slices cannot attain it. No additional exhaustive equality or original-lift classification is asserted here.
+
+*Proof.* First compare scalars on the entire feasible population interval. Under $\delta=t-q=2(1-x)$, the positive-row quantities of (37.12) are $F=4(1-q)R_0^2$ and $G=4qh^2y^2$, and
+
+$$
+ \mathcal H_{+,t}(\delta)+\kappa\xi=G_\xi(q),\qquad
+ G_\xi''(q)\ge8hc-1>4\quad(0<q<1).
+\tag{50.11}
+$$
+
+Indeed $d\delta/dq=-1$, (37.22) gives $F''\le1-8hc$, $G''\le0$, and the geometric mean $\sqrt{FG}$ is concave as in the proof of Theorem 37.5. The remaining energy term is affine. The source selector is interior, so integration of (50.11), using $G'_\xi(q_\xi)=0$, gives
+
+$$
+ G_\xi(q)-V(\xi)\ge2(q-q_\xi)^2\qquad(0\le q\le1).
+\tag{50.12}
+$$
+
+Continuity extends this inequality to $q=0,1$. C4 certifies $G'_\xi(9/20)\le-1/10<0$ for every $\xi\in I$. The strictly increasing derivative and its unique zero therefore imply
+
+$$
+                        q_\xi>9/20.
+\tag{50.13}
+$$
+
+Next extend C1--C3 from $\xi=9/4$ to the whole level interval, rather than assuming those one-level signs suffice. At fixed $0<q\le1$, differentiation in $x$ gives
+
+$$
+ \nu_x=\frac{\sqrt q(h^2-s^2x)}{2hy^3}>0,\qquad
+ \frac{\mu_x}{\mu}\ge-\frac h{R_0},\qquad
+ \partial_x\log(t_c^2/\mu)\le\frac1L-\frac2x+\frac h{R_0}<\frac1L-\frac1x<0.
+\tag{50.14}
+$$
+
+For the middle inequality, the logarithmic derivatives of the two nonnegative summands of $2\mu$ are $-h/R_0$ and $x/y^2$; take their positive weighted average, omitting a zero summand. This also handles $q=1$ directly. The strict inequality uses $R_0=hx+c>hx$. Thus $\omega_x>0$. At $q=0$ the formula is instead $\omega=k/2>0$, independent of $x$, without a logarithm of zero. Since decreasing $\xi$ increases $x$ at fixed $q$, C1--C3 yield throughout $I$
+
+$$
+\begin{aligned}
+ \omega(\xi,q)&\ge1/10000&&\text{if }q\in[0,1/10]\cup[3/8,1],\\
+ \omega(\xi,q)&\ge-21/1000&&\text{if }q\in[1/10,3/8].
+\end{aligned}
+\tag{50.15}
+$$
+
+In particular $\mathfrak D_+<0$ forces $1/10<q<3/8$ and $0<-\omega\le21/1000$, because the determinant has the sign of $\omega$. At the selected $q_\xi>9/20>3/8$, (50.15) gives $\omega\ge1/10000>0$, hence $D_{\mathrm{sel}}(\xi)>0$ under the exact determinant identification of (50.5).
+
+On a negative slice, $x\le\bar x=9/20+q/2\le51/80$. The function $\sqrt q(1+\bar x)/\bar x$ increases on $[1/10,3/8]$: its derivative has the sign of $\bar x^2+\bar x-q\ge1/4+1/2-3/8=3/8>0$. Since $(1+x)/x$ decreases with $x$, its left endpoint gives
+
+$$
+ \frac{2s\sqrt q\,L}{3\sqrt3\,x}\ge\frac{2s}{\sqrt{30}}>\frac{38}{275}.
+\tag{50.16}
+$$
+
+Also $\sqrt p>3/4$, $k>21/100$ and $R_0\le h(51/80)+c<7/5$. Consequently
+
+$$
+\begin{aligned}
+ B_{\mathrm{gain}}&>\frac{38}{275}+\frac{6615}{2240000}=\frac{99359}{704000}>\frac7{50},\\
+ J&\le\frac{(21/1000)^2}{4(7/50)}=\frac{63}{80000},\\
+ \Gamma_0^2&\le R_0^2+h^2y^2=h^2+c^2+2hc x<(h+c)^2<(5/3)^2,\\
+ G_\xi(q)-V(\xi)&>2(9/20-3/8)^2=9/800.
+\end{aligned}
+\tag{50.17}
+$$
+
+The third line is Cauchy--Schwarz with $p+q=1$, so $\Gamma_0<5/3$. The last line uses (50.12)--(50.13) and the strict separation $q<3/8$.
+
+For a whole phase feedback, apply the existing quadratic-gain consumer (47.9)--(47.12) directly with the parameter map in (50.3). It gives, for every effect phase,
+
+$$
+ g(E,U)-V(\xi)\ge G_\xi(q)-V(\xi)-8\Gamma_0J-4J^2.
+\tag{50.18}
+$$
+
+This invokes the simultaneous main and crossed recoveries on the same attained triangle; it does not replace them by independently attainable extrema. If $\omega\ge0$, then $J=0$ and (50.12) proves (50.9), including $q=0,1$. If $\omega<0$, (50.17)--(50.18) give
+
+$$
+\begin{aligned}
+ g(E,U)-V(\xi)&>\frac9{800}-\frac{40}{3}\frac{63}{80000}-4\left(\frac{63}{80000}\right)^2
+                    =\frac{1196031}{1600000000},\\
+ \frac{1196031}{1600000000}-\frac7{10000}&=\frac{76031}{1600000000}>0.
+\end{aligned}
+\tag{50.19}
+$$
+
+Finally transfer these inequalities to each arbitrary original $U$, without identifying phase-only feedbacks with all unitaries. Theorem 42.3, applied forward to that very $U$, supplies positive weights $\theta_j$ of sum one and whole phase unitaries $U_j$ with the same effect and the same complex trace $\operatorname{Tr}(U_jU_+^\dagger)=\operatorname{Tr}(UU_+^\dagger)$. Thus $q,x,\xi$ are unchanged. The original two-sign budget (42.17) gives for the original pair and for every replacement
+
+$$
+ \rho_- -\xi\ge18-8(c+s)-2\xi\ge18-8(c+s)-9/2>3.
+\tag{50.20}
+$$
+
+Their positive branches are therefore uniquely active, their true joint distances equal $\xi$, and the original metric still uses one whole-feedback scalar. Put $F=T^\dagger E^{\mathsf T}T$ and $\mathbf a=(P(w),Q(w))$, $\mathbf a_j=(P(w_j),Q(w_j))$. Equations (42.15)--(42.23) give $\mathbf a=\sum_j\theta_j\mathbf a_j$ and the exact nonnegative variance identity
+
+$$
+ g(E,U)=\sum_j\theta_jg(E,U_j)+\sum_j\theta_j\|(\mathbf a_j-\mathbf a)F^{1/2}\|_2^2.
+\tag{50.21}
+$$
+
+Every replacement satisfies the same bound (50.18), because its population slice and determinant are unchanged. A finite positive weighted average preserves the strict uniform bound (50.19), and the nonnegative variance preserves both comparisons. This proves (50.9)--(50.10) for every original $U$, with the ordinary transpose and all relative effect phases retained.
+
+For nonemptiness, (50.8) gives a negative determinant at $(\xi,q)=(9/4,1/4)$, where $x=9/16$. The actual phase diagonal $(x+iy,x-iy,1,1)$ with its single feedback $U=\operatorname{diag}(w)U_+$ and any effect (50.1) at that population has $A=2(1+x)$ and true original level $9/4$ by (50.20). Thus the strict exclusion concerns realized original slices. Attainment at each level by the existing selected positive pairs follows from Theorem 37.5 and its actual-distance check (37.23), without a new equality or lift argument. $\square$
+
+**Mathematical sources and scope 50.4.** The new deduction is the full positive-active pure-branch consumer on the closed interior interval $I$, including the separated negative-determinant slices. The both-sign quadratic gain is reused from Section 47, the original-unitary transport from Section 42, the selected scalar and curvature from Section 37, and the determinant identification and attained triangle from Sections 43 and 46. The interval inclusion method is standard; see Moore, Kearfott and Cloud, *Introduction to Interval Analysis*, SIAM (2009), [DOI 10.1137/1.9780898717716](https://doi.org/10.1137/1.9780898717716). Its rational rules are stated explicitly in Theorem 50.2. The geometric-mean concavity argument is the existing source37 intermediate step. Neither these mature methods nor the already established suppliers are claimed as new mathematical content or as literature priority.
+
+The interval $I$ is not a prefix from zero and does not identify first loss. The negative-active family, mixed-input pointwise comparisons, ordering on the entire original level range, exact $\alpha,\beta$, complete equality/lift classification and behavior outside $I$ remain unresolved by this result. In particular $D_{\mathrm{sel}}>0$ here is not a global criterion for the original optimization problem. The unchanged long-term AURIC question is not exhausted by this bounded interval theorem.
+
+## 追加锚（本行以下为增补区）
