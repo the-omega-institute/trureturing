@@ -31,7 +31,7 @@ variable {m : Type*} [Fintype m] [DecidableEq m]
 
 local instance {n : Type*} [Fintype n] [DecidableEq n] : Pow (Matrix n n ℂ) ℝ := ⟨CFC.rpow⟩
 
-open private sinh_scaled_le scalar_metric_gap hyperbolic_metric_gap root_power_cancel boundary_det Fq_fromCols_zero scalar_gap_with_weights inverse_rank_one hessian_column_coefficients sym2 spectralTrace spectralTrace_hasDerivAt sym2_charpoly sym2_explicit_charpoly sym2_posDef_low_eigenvalue_pos trace_rpow_sym2 gramDiagonal gramOffDiagonal power_root_sq rowGram_sym2 rpow_two_point_interpolation two_point_rpow_offDiagonal_pos exp_pair_sum exp_pair_sub eigenvalue_metric_gap rpow_offDiagonal_pos gramDiagonalVelocity gramOffDiagonalVelocity gramDiagonal_hasDerivAt gramOffDiagonal_hasDerivAt Fq_affine_hasDerivAt spectralVelocity spectralVelocity_hasDerivAt from
+open private sinh_scaled_le scalar_metric_gap hyperbolic_metric_gap root_power_cancel boundary_det Fq_fromCols_zero scalar_gap_with_weights hessian_column_coefficients sym2 spectralTrace spectralTrace_hasDerivAt sym2_charpoly sym2_explicit_charpoly sym2_posDef_low_eigenvalue_pos trace_rpow_sym2 gramDiagonal gramOffDiagonal power_root_sq rowGram_sym2 exp_pair_sum exp_pair_sub eigenvalue_metric_gap gramDiagonalVelocity gramOffDiagonalVelocity gramDiagonal_hasDerivAt gramOffDiagonal_hasDerivAt Fq_affine_hasDerivAt spectralVelocity spectralVelocity_hasDerivAt from
   D5.S3.Quantum.NormCompression.FinitePowerSpectral
 private theorem local_quadratic_duality {y₀ y₁ t : ℝ}
     (hn : 0 < y₀ ^ 2 + y₁ ^ 2) (ht : 0 < t) (p₀ p₁ r₀ r₁ : ℝ) :
@@ -67,25 +67,6 @@ private theorem local_quadratic_duality {y₀ y₁ t : ℝ}
     have : H * V ^ 2 = 0 := by nlinarith [sq_nonneg U]
     exact sq_eq_zero_iff.mp ((mul_eq_zero.mp this).resolve_left hH.ne')
   exact ⟨hu, hv⟩
-
-/- If the perpendicular numerator vanishes, local equality recovers the
-original radial vector; no inverse-only or trace-only kernel is substituted. -/
-private theorem local_quadratic_radial {y₀ y₁ t τ r₀ r₁ : ℝ}
-    (hn : 0 < y₀ ^ 2 + y₁ ^ 2) (ht : 0 < t)
-    (heq : (τ * y₀) ^ 2 + (τ * y₁) ^ 2 -
-      (y₁ * (τ * y₀) - y₀ * (τ * y₁)) ^ 2 / (y₀ ^ 2 + y₁ ^ 2 + 1 / t) -
-      2 * ((τ * y₀) * r₀ + (τ * y₁) * r₁) + r₀ ^ 2 + r₁ ^ 2 +
-      t * (y₁ * r₀ - y₀ * r₁) ^ 2 = 0) :
-    r₀ = τ * y₀ ∧ r₁ = τ * y₁ := by
-  obtain ⟨hu, hv⟩ := (local_quadratic_duality hn ht (τ * y₀) (τ * y₁) r₀ r₁).2 heq
-  have hp : y₁ * (τ * y₀) - y₀ * (τ * y₁) = 0 := by ring
-  rw [hp, zero_div, sub_zero] at hv
-  have h₀ : (y₀ ^ 2 + y₁ ^ 2) * (r₀ - τ * y₀) = 0 := by
-    linear_combination -y₀ * hu + y₁ * hv
-  have h₁ : (y₀ ^ 2 + y₁ ^ 2) * (r₁ - τ * y₁) = 0 := by
-    linear_combination -y₁ * hu - y₀ * hv
-  exact ⟨sub_eq_zero.mp ((mul_eq_zero.mp h₀).resolve_left hn.ne'),
-    sub_eq_zero.mp ((mul_eq_zero.mp h₁).resolve_left hn.ne')⟩
 
 /- This is the strictness step in the ordered eigenbasis. Positive pairwise
 inner products are supplied by the strictly positive off-diagonal power and

@@ -211,7 +211,7 @@ For every finite column type, including the empty type, and every real
 $1<q<2$, let $W$ be entrywise nonnegative, set
 $A_q(W)_{bj}=W_{bj}^{1/(2q)}$, and put
 $F_q(W)=\operatorname{Tr}((A_q(W)A_q(W)^*)^q)$.
-`FinitePowerTrace.Fq_eq_trace_rpow` identifies this operator expression
+`FinitePowerConcavity.Fq_eq_trace_rpow` identifies this operator expression
 with the actual finite singular-value power sum used by the repository.
 `continuous_Fq` proves continuity on the full cone (in fact on the ambient
 real table space for $q>0$), and `Fq_smul` proves
@@ -231,7 +231,7 @@ $\varepsilon^{1/(2q)}(1,4^{1/(2q)})^T$.
 The normalized velocity is $z=\dot W/(q x^{2q-1})$, so $\dot x=z/2$;
 both first- and second-derivative coefficients retain this normalization.
 
-`FinitePowerKernel.radial_hessian_kernel` asserts an exact local statement:
+`FinitePowerConcavity.radial_hessian_kernel` asserts an exact local statement:
 if the row Gram is positive definite, some column overlaps both rows, and
 $V$ vanishes at every zero coordinate of $W$, then
 $D^2F_q(W)[V,V]=0$ if and only if $V=cW$ for a real scalar $c$.

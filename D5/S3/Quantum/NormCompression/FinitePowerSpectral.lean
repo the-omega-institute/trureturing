@@ -226,56 +226,6 @@ private theorem scalar_gap_with_weights {s T D d h : ℝ}
     (hw j).ne'
   exact sq_eq_zero_iff.mp hz
 
-/-- The rank-one inverse used after whitening, obtained from Mathlib's Woodbury identity. -/
-private theorem inverse_rank_one {n : Type*} [Fintype n] [DecidableEq n]
-    (u : n → ℝ) {t : ℝ} (ht : 0 ≤ t) :
-    ((1 : Matrix n n ℝ) + t • Matrix.vecMulVec u u)⁻¹ =
-      1 - (t / (1 + t * (u ⬝ᵥ u))) • Matrix.vecMulVec u u := by
-  let U : Matrix n Unit ℝ := fun i _ => u i
-  let V : Matrix Unit n ℝ := fun _ j => t * u j
-  let δ := 1 + t * (u ⬝ᵥ u)
-  have hδ : 0 < δ := by
-    have hn : 0 ≤ u ⬝ᵥ u := by
-      exact Finset.sum_nonneg (fun i _ => mul_self_nonneg (u i))
-    dsimp only [δ]
-    positivity
-  have hsmall : (1 : Matrix Unit Unit ℝ) + V * U = Matrix.diagonal (fun _ => δ) := by
-    ext i j
-    cases i
-    cases j
-    change 1 + (∑ k, (t * u k) * u k) = δ
-    simp [δ, dotProduct, Finset.mul_sum, mul_assoc]
-  have hunit : IsUnit ((1 : Matrix Unit Unit ℝ)⁻¹ + V * (1 : Matrix n n ℝ)⁻¹ * U) := by
-    simp only [inv_one, Matrix.mul_one]
-    rw [hsmall]
-    apply Matrix.isUnit_diagonal.mpr
-    exact Pi.isUnit_iff.mpr (fun _ => isUnit_iff_ne_zero.mpr hδ.ne')
-  have hwood := Matrix.add_mul_mul_inv_eq_sub (1 : Matrix n n ℝ) U
-    (1 : Matrix Unit Unit ℝ) V isUnit_one isUnit_one hunit
-  simp only [inv_one, Matrix.one_mul, Matrix.mul_one] at hwood
-  have hUV : U * V = t • Matrix.vecMulVec u u := by
-    ext i j
-    change (∑ _ : Unit, u i * (t * u j)) = t * (u i * u j)
-    simp only [Fintype.sum_unique]
-    ring
-  have hdiag : (Matrix.diagonal (fun _ : Unit => δ))⁻¹ =
-      Matrix.diagonal (fun _ : Unit => δ⁻¹) := by
-    apply Matrix.inv_eq_left_inv
-    rw [Matrix.diagonal_mul_diagonal]
-    ext i j
-    cases i
-    cases j
-    simp [hδ.ne']
-  rw [hUV, hsmall, hdiag] at hwood
-  convert hwood using 2
-  ext i j
-  change t / (1 + t * (u ⬝ᵥ u)) * (u i * u j) =
-    (U * Matrix.diagonal (fun _ : Unit => δ⁻¹) * V) i j
-  rw [Matrix.mul_apply]
-  simp only [Fintype.sum_unique, Matrix.mul_diagonal, U, V]
-  dsimp only [δ]
-  ring
-
 /- This identity checks the off-diagonal trace multiplicity and every local coefficient. -/
 private theorem hessian_column_coefficients (s S₀₀ S₁₁ ℓ a b u v : ℝ)
     (ha : a ≠ 0) (hb : b ≠ 0) :
@@ -428,37 +378,6 @@ theorem Fq_eq_two_eigenvalue_formula {q : ℝ} (hq : 0 < q)
   rw [← rowGram_sym2 hq W hW]
   exact Matrix.posSemidef_self_mul_conjTranspose _
 
-private theorem rpow_two_point_interpolation {n : Type*} [Fintype n] [DecidableEq n]
-    (R : Matrix n n ℂ) (hR : R.PosSemidef) (s ξ η : ℝ) (hne : ξ ≠ η)
-    (hsp : ∀ x ∈ spectrum ℝ R, x = ξ ∨ x = η) :
-    CFC.rpow R s = ((ξ ^ s - η ^ s) / (ξ - η)) • R +
-      ((ξ * η ^ s - η * ξ ^ s) / (ξ - η)) • (1 : Matrix n n ℂ) := by
-  rw [CFC.rpow_eq_pow, CFC.rpow_eq_cfc_real hR.nonneg]
-  have hf : (spectrum ℝ R).EqOn (fun x : ℝ => x ^ s)
-      (fun x : ℝ => ((ξ ^ s - η ^ s) / (ξ - η)) * x +
-        (ξ * η ^ s - η * ξ ^ s) / (ξ - η)) := by
-    intro x hx
-    rcases hsp x hx with rfl | rfl <;>
-      field_simp [sub_ne_zero.mpr hne] <;> ring
-  rw [cfc_congr hf,
-    cfc_add_const ((ξ * η ^ s - η * ξ ^ s) / (ξ - η))
-      (fun x : ℝ => ((ξ ^ s - η ^ s) / (ξ - η)) * x) R
-      (by fun_prop) hR.isHermitian.isSelfAdjoint,
-    cfc_const_mul_id ((ξ ^ s - η ^ s) / (ξ - η)) R hR.isHermitian.isSelfAdjoint]
-  simp only [Algebra.algebraMap_eq_smul_one]
-
-private theorem two_point_rpow_offDiagonal_pos {n : Type*} [Fintype n] [DecidableEq n]
-    (R : Matrix n n ℂ) (hR : R.PosSemidef) {s ξ η : ℝ} (hs : 0 < s)
-    (hη : 0 ≤ η) (hξη : η < ξ)
-    (hsp : ∀ x ∈ spectrum ℝ R, x = ξ ∨ x = η)
-    (i j : n) (hij : i ≠ j) (hentry : 0 < (R i j).re) :
-    0 < (CFC.rpow R s i j).re := by
-  have hα : 0 < (ξ ^ s - η ^ s) / (ξ - η) :=
-    div_pos (sub_pos.mpr (Real.rpow_lt_rpow hη hξη hs)) (sub_pos.mpr hξη)
-  rw [rpow_two_point_interpolation R hR s ξ η (ne_of_gt hξη) hsp]
-  simpa only [Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply_ne hij,
-    smul_zero, add_zero, Complex.smul_re, smul_eq_mul] using mul_pos hα hentry
-
 private theorem exp_pair_sum (u w r : ℝ) :
     Real.exp (u * r) + Real.exp (w * r) =
       2 * Real.exp ((u + w) / 2 * r) * Real.cosh (r * ((u - w) / 2)) := by
@@ -525,31 +444,6 @@ private theorem eigenvalue_metric_gap {s ξ η : ℝ} (hs0 : 0 < s) (hs1 : s < 1
   dsimp only
   rw [hp (s + 1), hm (s + 1), hD]
   exact hyperbolic_metric_gap hs0 hs1 ha hv
-
-/-- Off-diagonal positivity for the actual two-dimensional positive power.
-No spectral ordering or distinctness assumption is imposed on the caller. -/
-private theorem rpow_offDiagonal_pos (R : Matrix (Fin 2) (Fin 2) ℂ)
-    (hR : R.PosSemidef) {s : ℝ} (hs : 0 < s) (hentry : 0 < (R 0 1).re) :
-    0 < (CFC.rpow R s 0 1).re := by
-  let ev := hR.isHermitian.eigenvalues
-  have hsp : ∀ x ∈ spectrum ℝ R, x = ev 0 ∨ x = ev 1 := by
-    intro x hx
-    obtain ⟨i, rfl⟩ := hR.isHermitian.spectrum_real_eq_range_eigenvalues ▸ hx
-    fin_cases i <;> simp [ev]
-  have hne : ev 0 ≠ ev 1 := by
-    intro heq
-    have hscalar : R = algebraMap ℝ (Matrix (Fin 2) (Fin 2) ℂ) (ev 0) := by
-      refine CFC.eq_algebraMap_of_spectrum_subset_singleton R (ev 0) ?_
-        hR.isHermitian.isSelfAdjoint
-      intro x hx
-      rcases hsp x hx with h | h <;> simp_all
-    have hzero : R 0 1 = 0 := by rw [hscalar]; simp [Algebra.algebraMap_eq_smul_one]
-    simpa [hzero] using hentry
-  rcases lt_or_gt_of_ne hne with hlt | hgt
-  · exact two_point_rpow_offDiagonal_pos R hR hs (hR.eigenvalues_nonneg 0) hlt
-      (fun x hx => (hsp x hx).symm) 0 1 (by decide) hentry
-  · exact two_point_rpow_offDiagonal_pos R hR hs (hR.eigenvalues_nonneg 1) hgt
-      hsp 0 1 (by decide) hentry
 
 private def gramDiagonalVelocity (q : ℝ) (W V : Matrix (Fin 2) m ℝ) (b : Fin 2) : ℝ :=
   ∑ j, V b j * (1 / q) * W b j ^ (1 / q - 1)
