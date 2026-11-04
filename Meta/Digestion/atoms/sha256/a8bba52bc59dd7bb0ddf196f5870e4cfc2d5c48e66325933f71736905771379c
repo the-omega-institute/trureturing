@@ -1,0 +1,31 @@
+**定理 158.2（同一读器对整个 B 的源关联）。** 对任意单位 $u\in\mathbb C^2$，令
+
+$$
+\eta_i^{u}=D_i u_B,\qquad
+W_u\xi=D\Xi(\xi\otimes u).
+\tag{158.4}
+$$
+
+这些向量使用原 $D_i$ 的相位而不重新选择规范。对全部 $q\in E_i$，有
+
+$$
+D\Xi(|q\rangle\otimes u)=|q\rangle\otimes\eta_i^{u},
+\quad \|\eta_i^{u}\|=1,
+\quad\operatorname{supp}\eta_i^{u}\subseteq\{z:z_{13}=i\}.
+\tag{158.5}
+$$
+
+并且 $\widehat M_iW_u=W_uM_i$、$\widehat N_wW_u=W_uN_w$，原十一地址前缀和原七地址未来的所有部分单位脉冲分别满足
+
+$$
+\widehat U_j(s)\Xi(\xi\otimes u)
+ =\Xi(U_j(s)\xi\otimes u)\quad(0\le j\le10),
+\qquad
+\widehat U_j(s)W_u=W_uU_j(s)\quad(0\le j\le6).
+\tag{158.6}
+$$
+
+证明。复用 (152.9) 的精确半扭转关系和 (152.10) 的分块。对 $z^{(0)},z^{(1)}$，都有 $z_{11}=1,z_{10}=z_{12}=0$，所以 $\widehat{\mathcal P}_{10}$ 在 $|q\rangle\otimes B$ 上恒等于 $iI$。整个载体的右边界给 $\widehat{\mathcal P}_{14}=n_{13}$。由 $D\widehat K_{10}=\widehat K_{14}D$ 及 $\zeta\ne\zeta^2$，$D$ 将这整个输入子空间送入 $n_{13}=i$ 的特征空间，得到 (158.5)。这是对两条输入列的任意相干组合成立的子空间陈述，不把其中一列选为实际准备。$D_i$ 酉保证归一性。
+
+前缀交织正是 (152.8) 已对整个 $\Xi$ 证明的第一式及其部分脉冲版本；未来 $j\le6$ 在每个 $\mathcal K_i\otimes L_i$ 上为原作用张量 $I_{L_i}$，故与 $D_i$ 及尾部向量交换。终端读取保留的旧位，报告读取 (158.5) 的位，给其余各式。所有算子仍在整个 $610$ 配置上定义，未删除 $178$ 维接口以外的 $432$ 维空间，也未限制 $89$ 条源列。∎
+
