@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1a8a91e282ad5f10a65fea6ef3155333c8aee4285a3c9c938b74b5c7f7149752
+  normalized_sha256: sha256:1a8a91e282ad5f10a65fea6ef3155333c8aee4285a3c9c938b74b5c7f7149752
+cas_ref: sha256:1a8a91e282ad5f10a65fea6ef3155333c8aee4285a3c9c938b74b5c7f7149752
+coverage_gids:
+  - gid: D5/S3/Quantum/Divergence/SpectralCeilingRelativeEntropy.actual_matrix_spectral_ceiling_strong_klein
+    target_statement_id: sha256:498beaafe1dc25ab4dc631d97d2f7acd20160a685e988d0e8edbae38a648ce89
+receipts:
+  unresolved_subitems: []

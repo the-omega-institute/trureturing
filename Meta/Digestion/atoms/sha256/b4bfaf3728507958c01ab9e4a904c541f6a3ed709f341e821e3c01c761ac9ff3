@@ -1,0 +1,48 @@
+**定理 12.1（信息性黄金读口的有限精度原生取得）。**
+
+<a id="thm-nativeport"></a>
+
+消费项目 §100 的完整 $89$ 维射影密度、真空嵌入与准备关系，
+以及其记录地址 $8,9$ 的代码保持 $\operatorname{PU}(2)$ 密度。
+对任意 $\varepsilon_A,\varepsilon_R>0$，
+存在固定有限正向同族门字，使原 $V$ 及式 [(12)](#eq-goldport)
+在完整 $89$ 维载体中的记录分支在每个单位输入 $\eta\in H$ 上，
+以 $\delta=\varepsilon_A+\varepsilon_R$ 的分支向量误差统一逼近。
+在明确的 Born 比较仪器中，完整记录与终端律的总变差至多 $\delta$，
+接口泄漏质量至多 $\delta^2$。
+
+**证明。**
+
+选 $Q$ 的正交单位本征向量 $f_+,f_-$，
+令二维酉 $R$ 把它们分别送到计算基 $\lvert 0 \rangle,\lvert 1 \rangle$。
+先施 $R$ 再读计算记录，
+系统 Kraus 分量就是 $\langle f_\pm|V$；
+记录保留为计算态，避免把此仪器误认成保留 $f_\pm$ 的另一仪器。
+项目 §100 的共同取得字在 ready 子空间上逼近 $V$，
+算子误差为 $\varepsilon_A$。
+同节记录二维密度适用于任意 $R$，故可在整个代码上
+用代码保持的记录字以误差 $\varepsilon_R$ 逼近 $I_H\otimes R$。
+取共同整体相位后，复合等距在 ready 输入子空间上的
+算子范数误差至多 $\delta$。
+具体地，令 $M_i$ 为完整 $\mathcal K$ 中记录计算位的投影，
+则比较的两个向量都是完整载体中的向量：
+
+$$
+\chi_i=M_iR_\varepsilon A_\varepsilon J(\eta\otimes\lvert 0 \rangle),\qquad
+y_i=J\bigl(((I_H\otimes\langle f_i \rvert)V\eta)\otimes\lvert i \rangle\bigr).
+$$
+
+记录投影及后续旧酉均不增向量误差，故 $\|\chi_i-y_i\|\le\delta$。
+两个完整纯输出的迹距离至多其共同相位下的向量距离；
+共同测量与后续通道收缩迹距离，所以完整律总变差至多 $\delta$。
+理想输出无代码补分量，实际补分量范数至多 $\delta$，
+其 Born 质量至多 $\delta^2$。
+
+□
+
+这条推论应用 §100 的任意记录旋转能力；
+源的字面定理首先针对原 §91 的指定旋转 $T$，
+并没有直接把 $F_\pm$ 写成结论。
+所有概率误差属于明示的比较仪器；
+不由矩阵近似自动控制一个未知非 Born 读者。
+

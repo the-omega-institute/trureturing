@@ -1,0 +1,10 @@
+## 八、Zeckendorf 贪心序列现在能怎样参与证明？
+
+项目的 [ZeckendorfGreedyPermutation.result](https://github.com/the-omega-institute/trureturing/blob/9ceb721e13c64eb4b1c71a43238a2b2fc4770093/Blueprint/D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.md) 给出了你指出的结果：
+
+> 从 $1$ 出发，每次选择尚未使用、且与当前项的规范 Zeckendorf 展开恰有一个共同项的最小正整数，得到正整数的一个排列。
+
+记该排列为 $a_1,a_2,\ldots$。
+
+现在可以把它和上述局部定理严格组合。
+

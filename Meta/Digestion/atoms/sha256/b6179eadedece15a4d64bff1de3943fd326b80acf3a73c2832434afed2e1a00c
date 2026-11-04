@@ -1,0 +1,18 @@
+**定义 2.1（sliding-window space）。** Let $W_k$ be the real vector space of one-sided sequences $x=(x_d)_{d\ge1}$ satisfying
+
+$$
+\sum_{t=0}^{k}x_{s+t}=0\qquad(s\ge1).
+\tag{2.1}
+$$
+
+For $L\ge k+1$, let $D_L$ be the $(L-k)\times L$ matrix
+
+$$
+(D_L)_{s,d}=\begin{cases}
+1,&s\le d\le s+k,\\
+0,&\text{otherwise},
+\end{cases}
+\qquad 1\le s\le L-k,\quad 1\le d\le L.
+\tag{2.2}
+$$
+

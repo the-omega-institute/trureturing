@@ -1,0 +1,12 @@
+## References
+
+- M. A. Alhejji and E. Knill, *Towards a Resolution of the Spin Alignment
+  Problem*, Commun. Math. Phys. 405 (2024), 119,
+  DOI [10.1007/s00220-024-04980-1](https://doi.org/10.1007/s00220-024-04980-1),
+  arXiv [2307.06894v3](https://arxiv.org/abs/2307.06894v3), Section VI,
+  concluding item 1.
+- The supplied dimension-four all-word witness and its finite-dimensional
+  Schatten convention: `D5/S3/Quantum/Schatten/FractionalSchattenAlignmentRefutation`.
+- The source statement with the spectrum-with-multiplicity and finite Schatten
+  conventions: `Problems/alhejji-knill-2024-fractional-schatten-alignment.md`.
+

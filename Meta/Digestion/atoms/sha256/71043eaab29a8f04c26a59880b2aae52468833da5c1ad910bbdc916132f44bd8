@@ -1,0 +1,29 @@
+#### 定理 2.4：希尔伯特反射在 Bloch 球上是半周旋转
+
+若  $P=(I+\mathbf n\cdot\boldsymbol\sigma)/2$  是量子比特的秩一投影， $|\mathbf n|=1$ ，
+则  $R_ P=2P-I=\mathbf n\cdot\boldsymbol\sigma$  是酉门，其 Bloch 作用为
+
+<a id="eq-eq:bloch-halfturn"></a>
+
+```math
+\mathbf r\longmapsto(2\mathbf n\mathbf n^{\mathsf T}-I)\mathbf r.\tag{2}
+```
+
+这是绕  $\mathbf n$  轴的  $\pi$  旋转，三维行列式为  $+1$ 。
+反之，固定基共轭在 Bloch 球上给
+ $(r_ x,r_ y,r_ z)\mapsto(r_ x,-r_ y,r_ z)$ ，行列式为  $-1$ 。
+
+
+**证明。**
+
+ $R_ P^2=I$ 。Pauli 乘法恒等式给
+ $(\mathbf n\cdot\sigma)(\mathbf r\cdot\sigma)(\mathbf n\cdot\sigma) =[2\mathbf n(\mathbf n\cdot\mathbf r)-\mathbf r]\cdot\sigma$ 。
+沿轴本征值为  $1$ ，垂直平面两个本征值为  $-1$ 。
+共轭保持  $\sigma_ x,\sigma_ z$  而反转  $\sigma_ y$ ，故得后一公式。
+一般酉共轭保持 Pauli 内积，且  $U(2)$  连通，所以其 Bloch 正交作用始终在  $SO(3)$  中。
+
+**证毕。**
+
+
+<a id="stmt-2-5"></a>
+

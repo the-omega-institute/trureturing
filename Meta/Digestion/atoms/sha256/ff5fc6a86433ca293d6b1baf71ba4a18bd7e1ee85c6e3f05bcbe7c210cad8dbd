@@ -1,0 +1,51 @@
+## 6. Mathematical references
+
+[B1] C. Bădică and A. Bădică, *On the Triangle Inequality for the Jaccard
+Distance in Arbitrary Lattices*, [arXiv:2608.18194v1](https://arxiv.org/abs/2608.18194v1),
+Equation (17), Theorems 1 and 4, Section 7.1. The arbitrary-lattice
+necessity and modular sufficiency used in (1.4) and Section 4 are its
+conditional statements.
+
+[R1] *The generalized Jaccard triangle inequality on arbitrary lattices*,
+[the repository's supplied arbitrary-lattice results](https://github.com/the-omega-institute/trureturing/blob/c87db0432e50c5db00c7ca9272188def4f497f25/D5/S3/Combinatorics/Lattices/BadicaJaccardArbitraryLattices.lean),
+`resultSufficiency`, `result`, and their private scalar intermediates
+`scalar_ordered`, `scalar_bound`, `reciprocal_sum_le`,
+`reciprocal_supermodular`. They supply the sufficiency in (1.4), including
+the implication from supermodularity and log-submodularity. Their
+conclusions do not specify compression eigenvalues or optimize triples
+in a projection interval.
+
+[R2] *Finite-dimensional complex matrix algebra and probability*,
+[the repository's forward trace-weight construction](https://github.com/the-omega-institute/trureturing/blob/c87db0432e50c5db00c7ca9272188def4f497f25/D5/S3/Quantum/FiniteDimensional.lean),
+`bornProbability` and `born_probability_skeleton`: normalization,
+linearity of trace weight and nonnegativity on projections.
+
+[K1] S. Kosub, *A note on the triangle inequality for the Jaccard distance*,
+[arXiv:1612.02696v1](https://arxiv.org/abs/1612.02696v1), Lemma 1,
+Corollary 2 and Theorem 3: nonnegative monotone modular set weights,
+including a nonnegative constant at the empty set, yield the triangle
+inequality. The distinct symmetric-difference formulation is its
+Theorem 4. The journal citation is [DOI:10.1016/j.patrec.2018.12.007](https://doi.org/10.1016/j.patrec.2018.12.007);
+the statements used here are those of the specified preprint.
+
+[B2] A. Bădică, C. Bădică, D. Logofătu and I.-D. Neremzoiu,
+*Generalizations and Properties of Normalized Similarity Measures for
+Boolean Models*, Mathematics **13**(3), 384,
+[DOI:10.3390/math13030384](https://doi.org/10.3390/math13030384),
+[official full mathematical text](https://mdpi-res.com/d_attachment/mathematics/mathematics-13-00384/article_deploy/mathematics-13-00384.xml),
+Proposition 8 and Propositions 9–10, including the proof-local Lemma 1.
+Its additive Boolean measure and the parameter $\alpha$ in
+$\mu(A\cap B)/(\mu(A\cap B)+\alpha\mu(A\mathbin\triangle B))$
+are distinct from the offset $c$ in (1.1). Its Section 7 assumes a
+scalar transform $g(0)=0$, which excludes $g(t)=c+t$ at $c>0$.
+Those Boolean and scalar-transform statements supply no
+compression-dependent value (3.1), nonattainment assertion, or
+fixed-overlap optimization (2.2).
+
+[G1] A. M. Gleason, *Measures on the Closed Subspaces of a Hilbert Space*,
+[DOI:10.1512/iumj.1957.6.56050](https://doi.org/10.1512/iumj.1957.6.56050),
+[original full text](https://www.iumj.indiana.edu/IUMJ/FTDLOAD/1957/6/56050/pdf),
+Theorem 4.1 and the orthogonally additive measure definition in Section 1.
+The representation's dimension hypothesis and its orthogonal domain of
+additivity are retained in Proposition 5.2.
+

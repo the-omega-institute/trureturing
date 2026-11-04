@@ -1,0 +1,7 @@
+**Corollary 7.1 (Exact three-label first sensitivity; supplied DEV26.2 overlap).** For $K=\{a,b,c\}$ with $a<b<c=H$, every allowed positive probability vector has
+
+$$
+\boxed{n_{\rm sens}(K,p)=(b+1)\left(\frac{c-a}{\gcd(b-a,c-a)}-1\right).}
+\tag{7.1}
+$$
+

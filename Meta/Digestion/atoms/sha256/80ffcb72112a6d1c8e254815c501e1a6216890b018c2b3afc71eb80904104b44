@@ -1,0 +1,68 @@
+#### 定理 7.2（固定关系角的三轴完整状态域）
+
+固定非平行 qubit 反射 $A=a\cdot\sigma,B=b\cdot\sigma$，
+$|a|=|b|=1$，记 $c=a\cdot b,\ s=\sqrt{1-c^2}>0$，
+$N=(a\times b)\cdot\sigma/s$。
+按语义标签定义
+
+$$
+x_1=\omega(A),\qquad x_3=\omega(B),\qquad x_2=\omega(N).
+$$
+
+可实现三元组恰满足
+
+$$
+\boxed{
+\frac{x_1^2-2cx_1x_3+x_3^2}{1-c^2}+x_2^2\le1.
+}
+$$
+
+每个合法三元组唯一重构 qubit 态
+
+$$
+\boxed{
+\rho=\frac12\left[
+I+\frac{x_1-cx_3}{1-c^2}A
++\frac{x_3-cx_1}{1-c^2}B+x_2N\right].
+}
+$$
+
+关系读数为 $z=c+isx_2$，且
+
+$$
+\det G=s^2(1-|r_{\mathrm B}|^2)=4s^2\det\rho.
+$$
+
+纯态恰在椭球边界；这里 $r_{\mathrm B}$ 是正交 Pauli 框架中的 Bloch 向量。
+
+**证明。**
+
+由定理 [6.3](#thm-sector)，正交框架 $(A,D,N)$ 中的坐标为
+
+$$
+r_{\mathrm B}=\left(x_1,\frac{x_3-cx_1}{s},x_2\right).
+$$
+
+迹一 Hermitian qubit 矩阵的本征值为 $(1\pm|r_{\mathrm B}|)/2$，
+正性恰为 $|r_{\mathrm B}|\le1$。展开平方得到椭球式；
+将 $D=(B-cA)/s$ 代回 Pauli 展开得到重构式。
+将 $z=c+isx_2$ 代入 Gram 行列式得到
+$s^2(1-|r_{\mathrm B}|^2)$；qubit 行列式为 $(1-|r_{\mathrm B}|^2)/4$。
+
+∎
+
+这给用户所问三轴平方和以关系依赖的精确度量。
+当 $c=0$，它就是 $x_1^2+x_3^2+x_2^2\le1$；
+一般情况下，正确二次式含交叉项与夹角分母。
+两个均值和已知角度只决定
+
+$$
+|x_2|\le
+\sqrt{1-\frac{x_1^2-2cx_1x_3+x_3^2}{1-c^2}}.
+$$
+
+即使已知纯态，通常仍有两个法向符号。
+算符关系定义了第三方向；实际关系读数才确定该态沿第三方向的位置。
+
+<a id="thm-conditioning"></a>
+

@@ -82,6 +82,9 @@ public sealed class ScribeContentChecksScriptTests
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_cache_release.py"),
                 Path.Combine(repository, "tools/scripts/worktree/lean_cache_release.py"));
+            ScriptHarnessScratch.CopyScriptInto(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_cache_topology.py"),
+                Path.Combine(repository, "tools/scripts/worktree/lean_cache_topology.py"));
             Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\n");
             foreach (var module in new[] { "delta", "materials", "report_cache", "runtime_identity" })
                 Write($"tools/lean-inspector/{module}.py", "# synthetic dependency\n");

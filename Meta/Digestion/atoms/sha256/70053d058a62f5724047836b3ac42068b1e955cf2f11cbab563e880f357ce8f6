@@ -1,0 +1,16 @@
+**Definition 2.1 (integer differences and prefix variation).** For
+$f:\mathbb N\to\mathbb N$, regard its values as integers when taking
+
+$$
+\delta f(m)=f(m+1)-f(m)\in\mathbb Z.
+$$
+
+For $u\in\mathbb Z$ put $u_-:=\max\{0,-u\}$. For $R\in\mathbb N$ define
+
+$$
+V_R(f)=\sum_{m=0}^{R-1}(\delta f(m))_-.
+$$
+
+An empty sum is $0$. For nonnegative integers $u,v$ use $\binom uv=0$ when
+$v>u$. All subtractions below are in $\mathbb Z$.
+

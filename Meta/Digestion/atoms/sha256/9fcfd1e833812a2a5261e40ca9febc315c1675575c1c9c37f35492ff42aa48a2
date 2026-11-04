@@ -1,0 +1,20 @@
+**Assumption 11.1 (fixed floor, original cut and one source).** Retain the positive rational chronological source of Definition 6.1 and the original pre-probe word of Definition 10.1. Fix a supplied integer $M\ge1$. Replace the rectangular error channel by the separately installed, nondisturbing read
+
+$$
+q_M(x)=\lfloor Mx\rfloor,\qquad x\in\mathbb Q_{>0}.
+\tag{11.1}
+$$
+
+The report is the entire nonnegative integer, finitely encoded without clipping. Its value is deterministic, including at grid endpoints. Each named forward action remains $L(x)=x/(1+x)$ or $R(x)=x+1$, with its name-only label. Reads, actions and the retained transcript concern the same source and epoch. The only source-dependent inputs to a deterministic controller are its actual reports; its known actions and finite computations may also be retained. There is no reset, copy, inverse source action, unknown-history archive or access to the outcomes of unperformed tests. Installation of (11.1) is a premise, not a consequence of the source dynamics. An integer report's finite encoding does not impose a uniform payload, working-memory or time bound.
+
+For a chronological word $u$, use $f_u$ and its matrix convention from Definition 10.1. Define the semantic predictive equivalence
+
+$$
+x\equiv_M y
+\quad\Longleftrightarrow\quad
+q_M(f_u(x))=q_M(f_u(y))\text{ for every finite }u.
+\tag{11.2}
+$$
+
+All actions are total and their labels are source-independent, so (11.2) also equates every finite response profile of §4. It compares possible tests from the original cut; it does not assert that all those tests have been performed on the one source. The targets of acquisition below are always functions of the original $x$, rather than of the post-probe state.
+

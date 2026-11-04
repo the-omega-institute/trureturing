@@ -1,0 +1,38 @@
+**推论 28.3（The same-minimum qualitative spectral and mass bounds）。**
+For every $H\in\mathcal C_{\mathrm{mp}}$, $S\geq1$, the space
+$\mathcal N_s=\ker P_s$ is nonzero and reducing. With the same
+actual $E_s$ as in (28.1),
+
+$$
+\begin{aligned}
+g_s&=\min\operatorname{spec}(K_s|_{\mathcal N_s})-E_s>0,\\
+K_s-E_sI&\succeq g_s(I-P_s),\\
+\|(I-P_s)\phi\|^2
+ &\leq\frac{\langle\phi,K_s\phi\rangle-E_s}{g_s}
+ \quad(\phi\in\mathcal H_{mS},\ \|\phi\|=1).
+\end{aligned}
+\tag{28.6}
+$$
+
+In particular an energy excess at most $\delta\geq0$ bounds this
+mass by $\delta/g_s$. No numerical or scale-uniform gap is asserted.
+
+Proof. This is the finite-spectrum implication of (28.2), with
+exactly the same hypotheses as the supplied Corollary 24.3.
+Original fibre permutations commute with $K_s$; consequently the
+orthogonal projections $P_s,I-P_s$ commute with it and their
+ranges reduce it. In one fibre choose a nonzero one-particle
+vector orthogonal to constants. Tensor it with any nonzero
+occupancy-$(2S-1)$ vector in a second fibre and occupancy-$S$
+vectors in all other fibres. Its occupancy is
+$1+(2S-1)+(m-2)S=mS$, and $P_s$ kills it. This proves
+$\mathcal N_s\ne0$ also at $m=2,S=1$.
+Every eigenvalue on this finite nonzero space is at least $E_s$.
+Equality would give a nonsymmetric $E_s$ eigenvector, excluded
+by (28.2), so $g_s>0$. The quadratic form of $K_s-E_sI$ is
+nonnegative on $\operatorname{ran}P_s$ and at least $g_s$ times
+the squared norm on $\mathcal N_s$. Add these two reducing
+forms to obtain (28.6), then take its expectation in any unit
+complex vector. This uses no symmetric-space substitute for
+$E_s$ and gives no estimate uniform in $S$. $\square$
+

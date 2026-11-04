@@ -1,0 +1,153 @@
+**Definition 46.1 (the two active rows and the attained phase triangle).**
+Fix an optimizer sign $\sigma$. Relative to $U_\sigma$, put
+$v=\operatorname{diag}(UU_\sigma^\dagger)$. The fixed pair order and the
+main and crossed recoveries are
+
+$$
+\begin{array}{c|c|c|c|c|c|c}
+ \sigma&J&K&M&N&(a,b,\ell,m)&(K_\sigma,K_{-\sigma})\\ \hline
+ +&(1,2)&(3,4)&P&Q&(h,c,h,s)&(d,e)\\
+ -&(3,4)&(1,2)&Q&P&(s,h,c,h)&(e,d).
+\end{array}
+\tag{46.2}
+$$
+
+Here the source recoveries are
+
+$$
+\begin{aligned}
+ P(w)&=h(w_1+w_2)+c(w_3+w_4),\\
+ Q(w)&=h(w_1-w_2)+is(w_3-w_4),
+\end{aligned}
+\tag{46.3}
+$$
+
+with $w=\operatorname{diag}(UU_+^\dagger)$. Thus, with indices
+kept in the original coordinate order,
+
+$$
+\begin{aligned}
+M_+(v)&=h(v_1+v_2)+c(v_3+v_4),
+&N_+(v)&=h(v_1-v_2)+is(v_3-v_4),\\
+M_-(v)&=h(v_1+v_2)+s(v_3+v_4),
+&N_-(v)&=h(v_1-v_2)-ic(v_3-v_4).
+\end{aligned}
+\tag{46.4}
+$$
+
+The second row follows from $U_-U_+^\dagger=\operatorname{diag}(1,-1,-i,i)$;
+the labels $J,K$ specify which fixed pair is active while all
+coordinate indices remain unchanged. In both rows $0<a<b$, $\ell>m>0$, and $k=b-a$.
+
+Let $q$ be the population away from the active optimizer and put $p=1-q$.
+The pure effects in the two rows are represented in the $T=(b_+\ b_-)$ basis
+by
+
+$$
+ \beta_+^\phi=\begin{pmatrix}\sqrt p\\ e^{i\phi}\sqrt q\end{pmatrix},
+ \qquad
+ \beta_-^\phi=\begin{pmatrix}e^{i\phi}\sqrt q\\ \sqrt p\end{pmatrix},
+ \qquad
+ E=(T\beta_\sigma^\phi(\beta_\sigma^\phi)^\dagger T^\dagger)^{\mathsf T}.
+\tag{46.5}
+$$
+
+Every $\phi$ is allowed. Define the energy, with a notation separate from the
+determinant below, by
+
+$$
+ \mathsf E_\sigma(q)=K_\sigma^2p+K_{-\sigma}^2q.
+\tag{46.6}
+$$
+
+For $0<x<1$, let $y=\sqrt{1-x^2}$, $L=1+x$, and impose the active complex
+trace modulus
+
+$$
+ \left|\operatorname{Tr}(UU_\sigma^\dagger)\right|=2L.
+\tag{46.7}
+$$
+
+The pure distance to this sign branch is then
+
+$$
+ \xi=8-4L+2q=4(1-x)+2q.
+\tag{46.8}
+$$
+
+All conclusions below concerning the true original distance and original
+equality lifts use $0<\xi\le R_\star$. The two-sign budget
+(42.17)--(42.20) implies that a sign branch equal to $\xi$ in this range
+is the unique minimizing original sign. In particular (46.8) is then
+$\rho(E,U)$, and $x=1-\xi/4+q/2\ge3/16>0$. The phase-triangle
+identities and the fixed-branch comparison themselves hold for every
+$0<x<1$ and $q\in[0,1]$.
+
+For the phase calculation restrict now to actual phase feedbacks
+$U=\operatorname{diag}(v)U_\sigma$, with $|v_j|=1$ for every $j$.
+For arbitrary actual $U$, the passage to these phase calculations is
+the same-effect, same-complex-trace transport used in Corollary 46.5.
+Set
+
+$$
+ X=\frac14\left|\sum_{j\in J}v_j\right|^2,
+ \qquad
+ Y=\frac14\left|\sum_{j\in K}v_j\right|^2.
+\tag{46.9}
+$$
+
+The actually attained two-pair domain is
+
+$$
+ 0\le X,Y\le1,
+ \qquad \sqrt X+\sqrt Y\ge L.
+\tag{46.10}
+$$
+
+For a point in this domain define
+
+$$
+\begin{aligned}
+ Z&=\frac{L^2-X-Y}{2\sqrt{XY}},
+&F&=\sqrt{(1-X)(1-Y)}\sqrt{1-Z^2},\\
+ R_0&=ax+b,&C_0&=\ell y,\\
+ R&=\sqrt{a^2X+b^2Y+ab(L^2-X-Y)},\\
+ C&=\sqrt{\ell^2(1-X)+m^2(1-Y)+2\ell mF},\\
+ \Gamma&=\sqrt p\,R+\sqrt q\,C,&
+ \Gamma_0&=\sqrt p\,R_0+\sqrt q\,C_0.
+\end{aligned}
+\tag{46.11}
+$$
+
+The lower bounds in (46.10) imply $X,Y>0$ when $0<x<1$, so $Z$ is defined.
+The quantities $R,C$ are half-moduli of the main and crossed recoveries. In
+particular, $C$ is the largest crossed half-modulus attainable with these same
+pair lengths and the same trace. It is not obtained by optimizing the two
+recoveries independently.
+
+Use the cone coordinates
+
+$$
+ A_c=X-x^2,\qquad B_c=1-Y,\qquad H_c=A_c-xB_c,\qquad
+ K_c=\frac{\sqrt L\,y}{x}.
+\tag{46.12}
+$$
+
+These are distinct from the source feedback moduli $A(w)$ and $B(w)$. Put
+
+$$
+\begin{aligned}
+ \mu&=\frac12\left(\frac{ak\sqrt p}{R_0}+\frac{\ell\sqrt q}{y}\right)>0,\\
+ \nu&=\frac12\left(k\sqrt p+
+       \frac{(\ell^2x-m^2)\sqrt q}{\ell y}\right),\\
+ t_c&=\frac{m\sqrt q\sqrt L}{x},\\
+ \mathfrak D_\sigma(x,q)&=\frac{4\mu\nu x^2}{L}-m^2q.
+\end{aligned}
+\tag{46.13}
+$$
+
+Equivalently, with $L_a=2\mu x^2/L$ and $L_b=2\nu$,
+$\mathfrak D_\sigma=L_aL_b-m^2q$. On the positive row this is exactly the
+local determinant $\mathscr D$ in (36.43), after $p=1-q$; the new assertion
+below is global on (46.10), rather than a local second-variation test.
+

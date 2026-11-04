@@ -61,6 +61,17 @@ theorem primeBlock_coprime {S : Finset ℕ} {W : ℕ}
   intro p hp
   exact (hW p hp).pow_left _
 
+/-- The prescribed valuation block divides every member of its joint fibre. -/
+theorem jointFiber_block_dvd {S : Finset ℕ} (hS : ∀ p ∈ S, p.Prime)
+    (a : ℕ → ℕ) {W n : ℕ} (hn : jointFiber S a W n) :
+    primePowerProduct S a ∣ n := by
+  apply (Nat.factorization_le_iff_dvd (ne_of_gt (primeBlock_pos hS a)) hn.1).mp
+  intro p
+  rw [primeBlock_factorization hS a p]
+  split_ifs with hp
+  · rw [hn.2.2 p hp]
+  · exact Nat.zero_le _
+
 theorem jointFiber_mul_iff {S : Finset ℕ} (hS : ∀ p ∈ S, p.Prime)
     (a : ℕ → ℕ) {W : ℕ} (hW : ∀ p ∈ S, p.Coprime W) (n : ℕ) :
     jointFiber S a W (primePowerProduct S a * n) ↔
@@ -110,6 +121,15 @@ theorem primePowerProduct_5040 :
     primePowerProduct
       _root_.D5.S3.Arith.GoldenResource.GoldenDivisorLanguage.primes5040 profile5040 = 5040 := by
   decide
+
+/-- The exact 5040 block divides every member of the 5040 joint fibre. -/
+theorem jointFiber5040_block_dvd {W n : ℕ}
+    (hfibre : jointFiber
+      _root_.D5.S3.Arith.GoldenResource.GoldenDivisorLanguage.primes5040
+      profile5040 W n) :
+    5040 ∣ n := by
+  rw [← primePowerProduct_5040]
+  exact jointFiber_block_dvd primeSupport5040_prime profile5040 hfibre
 
 theorem primeModulus_5040 :
     primeModulus

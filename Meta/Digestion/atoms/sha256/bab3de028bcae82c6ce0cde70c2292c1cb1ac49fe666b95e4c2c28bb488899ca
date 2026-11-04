@@ -1,0 +1,6 @@
+假设：
+
+1.  在 $\bigcup_iC_i$ 上，$c_B=c'_B$ 蕴含 $c=c'$；
+
+2.  $\sum_{c\in C_i:c_A=a}p(c)=p_A(a)$ 与逻辑类 $i$ 无关。
+

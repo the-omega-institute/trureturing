@@ -1,0 +1,129 @@
+**Theorem 12.5 (Unrestricted exact minimum and every equality law in the
+strip).** For every fixed $W>0$ there is an integer $A_W\ge14$ such that
+for every integer pair (12.1) with $a\ge A_W$,
+
+$$
+M(a,h)=\min_{0<u\le1/a}\Phi_{a,h}(u)=\Phi_{a,h}(u_{a,h}).
+\tag{12.24}
+$$
+
+The infimum is attained. Up to arbitrary permutations of all $s=a+1+h$
+labels, all equality laws, and only those laws, are
+
+$$
+\begin{gathered}
+|C|=a+1,\qquad D=[s]\setminus C,\qquad |D|=h,\\
+x_{\{j\}}=\frac{u_{a,h}}h\quad(j\in D),\qquad
+x_C=(a-1)u_{a,h},\qquad
+x_{C\setminus\{i\}}=\frac{1-au_{a,h}}{a+1}\quad(i\in C),\\
+x_T=0\quad\text{for every other nonempty }T.
+\end{gathered}
+\tag{12.25}
+$$
+
+These are precisely the actual laws of Incidence Definition 13.2. The
+scalar cap criterion of Proposition 5.2 is thus also the unrestricted
+criterion in this strip. More explicitly, for these integer pairs,
+
+$$
+\begin{cases}
+0<u_{a,h}<1/a,&h^2-2a\le6,\\
+u_{a,h}=1/a,&h^2-2a\ge7.
+\end{cases}
+\tag{12.26}
+$$
+
+In the second case every missing-one mass in (12.25) is zero and the
+exact value is $ar^3/(a-1)+ah^2$. All actual marginals remain positive.
+
+**Proof.** Increase one threshold depending only on $W$ so that Lemmas
+12.2–12.3 hold. Since
+
+$$
+\Gamma_a-2a=6+\frac{12a-5}{(a-1)^2}>0,
+$$
+
+(12.1) gives $0\le P_{a,h}\le Wa^2$. Hence on the entire sublevel
+$H\le S_{a,h}$, Lemma 12.3 gives
+
+$$
+\Lambda\ge a^3>\frac ra Wa^2\ge\frac ra P_{a,h}
+$$
+
+after increasing that threshold again. Lemma 12.4 therefore proves
+$H\ge m_{a,h}$ for every actual law in this sublevel. Every law above it
+has $H>S_{a,h}\ge m_{a,h}$. Thus every original law is bounded below by
+$m_{a,h}$, with no support or symmetry premise. Definition 5.1, equivalently
+Incidence Definition 13.2, supplies a law with energy $m_{a,h}$, proving
+(12.24) and attainment.
+
+Suppose an arbitrary law attains this value. It lies on the cap sublevel,
+so Lemma 12.4 forces $e=0$, only tail singletons, and $u=u_{a,h}\le1/a$.
+In (12.21) the tail Cauchy remainder and the core Jensen remainder are
+nonnegative and have sum zero. Hence
+
+$$
+t_j=\frac{u_{a,h}}h\quad(j\in D),\qquad
+y_i=\frac{a-u_{a,h}}r\quad(i\in C).
+\tag{12.27}
+$$
+
+For completeness, with only tail singletons, $Z=0$ and $\Delta_i=0$ in
+(12.19), and $\rho_i=c_a$ on every tail singleton. The exact remaining
+payment remainder is therefore
+
+$$
+H-\sum_{j\in D}t_j^{-1}-\sum_{i\in C}g_u(y_i)
+=\sum_{i\in C}\frac{\mathbb E[\rho_i;A^c]}{y_i^2}.
+\tag{12.28}
+$$
+
+It vanishes only if every $\rho_i$ vanishes on every positive-mass core-only
+type. Their sum is $Q(L)$. On $A^c$, $T$ is nonempty and $1\le L\le r$;
+the only integer zeros of $Q(L)$ are $a$ and $r$. Thus the only possible
+remaining types are $C$ and the $r$ types $C\setminus\{i\}$.
+Writing their masses as $z$ and $b_i$, normalization and the same mean give
+
+$$
+z+\sum_i b_i=1-u,\qquad rz+a\sum_i b_i=a-u,
+$$
+
+so $z=(a-1)u$ and $\sum_i b_i=1-au$. Equation (12.27) now gives
+$1-u-b_i=(a-u)/r$, hence $b_i=(1-au)/r$ for every $i$. This proves
+necessity of (12.25), including its zero-mass boundary. Conversely those
+nonnegative masses sum to one, have mean $a$ and induce the positive
+marginals in (12.27), by Definition 5.1. Their energy is $\Phi_{a,h}(u)$,
+so every displayed relabeling attains (12.24).
+
+Finally, for $a\ge14$,
+
+$$
+0<\frac{12a-5}{(a-1)^2}<1,
+$$
+
+because $(a-1)^2-(12a-5)=a^2-14a+6>0$. Thus
+$2a+6<\Gamma_a<2a+7$. Since $h^2-2a$ is an integer, Proposition 5.2
+gives exactly (12.26); there is no omitted equality case
+$h^2=\Gamma_a$ in this range. At the cap the core marginal is $(a-1)/a$
+and each tail marginal is $1/(ah)>0$, despite the vanished missing-one
+masses. Every estimate above is uniform over (12.1), so the one threshold
+covers every admissible integer pair, not merely a chosen sequence.
+
+This is a repo-derived unrestricted comparison and equality classification.
+The finite identities, scalar value and construction from Sections 5 and 7
+and Incidence Section 13 are reused; the extra cap payment is (12.22)–(12.23)
+combined with the uniform surplus in (12.8). The threshold $A_W$ is
+existential; its least value, exceptional small parameters, strips of
+unbounded width, other growing-surplus phases, and prescribed connected
+graph realizations remain undetermined by this theorem. N. Smirnov,
+*Bicyclic Graphs with Maximum Complementary Diminished Sombor Index*,
+Discrete Math. Lett. 18 (2026), 100–106, DOI
+[10.47443/dml.2026.164](https://doi.org/10.47443/dml.2026.164), Theorem 2.1,
+concerns maxima on finite simple connected bicyclic graphs; it is not a
+lower-bound premise for this actual-law minimum. The full text of K. Zhao
+and X. Zhao, *Extremal values with respect to vertex-degree-based topological
+indices in unicyclic and bicyclic graphs*, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not
+an input and its possible overlap is unassessed. No literature-priority
+claim is attached to (12.24). ∎
+

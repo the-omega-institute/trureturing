@@ -1,0 +1,54 @@
+**Theorem 50.2 (four exact continuous-domain enclosures).** The following rational closed enclosures hold; the derivative in C4 is at fixed $\xi$, evaluated only at $q=9/20$.
+
+| Certificate | Function | Closed variable domain | Required bound | Pieces | Outward enclosure of the entire image |
+| --- | --- | --- | --- | --- | --- |
+| C1 | $\omega(9/4,q)$ | $q\in[0,1/10]$ | $\ge1/10000$ | 10 | $[313809/250000000,23008109/200000000]$ |
+| C2 | $\omega(9/4,q)$ | $q\in[3/8,1]$ | $\ge1/10000$ | 27 | $[129303/1000000000,19833451/31250000]$ |
+| C3 | $\omega(9/4,q)$ | $q\in[1/10,3/8]$ | $\ge-21/1000$ | 132 | $[-20992343/1000000000,4663773/250000000]$ |
+| C4 | $G'_\xi(9/20)$ | $\xi\in I$ | $\le-1/10$ | 1 | $[-453826117/1000000000,-24250863/125000000]$ |
+
+*Proof.* The derivative expression used in C4 is
+
+$$
+ G'_\xi(q)=-(4h+8s)-4\Gamma_0\left(h\sqrt p-\frac{R_0}{\sqrt p}+\frac{hy}{\sqrt q}-\frac{hx\sqrt q}{y}\right).
+\tag{50.6}
+$$
+
+Indeed $dx/dq=1/2$, $dy/dq=-x/(2y)$, and $d^2-e^2=4h+8s$, using $c^2-s^2=h$ and $h(c-s)=s$. Formula (50.6) is used only at the interior population $9/20$; it is not evaluated at $q=0,1$.
+
+Here is the complete compact partition specification. In each row let $[a,b]$ be its stated variable domain and normalize $z=(v-a)/(b-a)$. A run $(u,v,r)$ with denominator $N$ denotes all consecutive closed intervals $[j/N,(j+r)/N]$, $j=u,u+r,\ldots,v-r$, pulled back by $a+(b-a)z$.
+
+| Certificate | $N$ | All runs, in order |
+| --- | --- | --- |
+| C1 | 32 | $(0,8,4),(8,16,8),(16,24,4),(24,30,2),(30,32,1)$ |
+| C2 | 4096 | $(0,2,1),(2,8,2),(8,16,4),(16,48,8),(48,96,16),(96,192,32),(192,384,64),(384,512,128),(512,1024,256),(1024,2048,512),(2048,4096,1024)$ |
+| C3 | 512 | $(0,32,32),(32,96,16),(96,136,8),(136,172,4),(172,204,2),(204,262,1),(262,296,2),(296,336,4),(336,384,8),(384,448,16),(448,512,32)$ |
+| C4 | 1 | $(0,1,1)$ |
+
+Every run ends where the next begins, the first starts at $0$, and the last ends at $N$. Their positive lengths sum exactly to $N$, and their counts $\sum(v-u)/r$ are respectively $10,27,132,1$. Thus these are full closed covers with disjoint interiors, including both original endpoints; no grid-point sign assertion is substituted for an interval image.
+
+The rational interval rules specifying those images are as follows. Use exact rational addition, negation, and multiplication by the minimum and maximum of the four endpoint products. For $0\notin[\ell,u]$, reciprocal is $[1/u,1/\ell]$. Squaring has upper endpoint $\max\{\ell^2,u^2\}$ and lower endpoint $0$ if the interval contains zero, otherwise $\min\{\ell^2,u^2\}$. With $S=2^{96}$, for each rational $r\ge0$ put $n=\operatorname{isqrt}(\lfloor rS^2\rfloor)$. The lower root endpoint is $n/S$; the upper is $(n+1)/S$, except that it is $n/S$ when $n^2=rS^2$. Apply these at the lower and upper radicand endpoints respectively. The inequalities
+
+$$
+ (n/S)^2\le r<((n+1)/S)^2
+\tag{50.7}
+$$
+
+prove root containment, including $r=0$ and exact-square upper endpoints. These rules preserve inclusion by induction through every expression; all reciprocal intervals exclude zero and all root radicands are nonnegative.
+
+Initialize $h,c,s$ in that order from (50.1), using these root rules. In C1--C3 evaluate (50.3) with the identities $h^2=1/2$, $s^2=(1-h)/2$ and $t_c^2=s^2q(1+x)/x^2$; do not separately interval-square an enclosure of $s$. In C4 use (50.6) at $q=9/20$. On each leaf, natural interval evaluation of the whole variable interval satisfies the named threshold. Taking the minimum of all leaf lower endpoints and the maximum of all leaf upper endpoints, then rounding them down and up respectively to multiples of $10^{-9}$, gives exactly the table's rational aggregate enclosures. They imply each displayed bound, since every argument is in a leaf and its function value is in that leaf image.
+
+The complete rational leaf endpoints and images, including the endpoint-square and zero-exclusion rules, are specified by [the enclosure manifest](https://github.com/the-omega-institute/trureturing-experiments/blob/f6566d53e43290d7ff7148da38f48f96238fc9f7/experiments/auric/four-path/positive-pure-interval-11-5-9-4/certificate.json) and [its defining exact evaluator](https://github.com/the-omega-institute/trureturing-experiments/blob/f6566d53e43290d7ff7148da38f48f96238fc9f7/experiments/auric/four-path/positive-pure-interval-11-5-9-4/certify_interval.py). The manifest SHA256 is `661b9582e4425abb56e4fc17e73d7aa68a2b5970233c0a95f1109c33a85f4046`; its mathematical supplier pin is `5fd6a884f9173f778cfa040217d7d51f748ac9c6`. The partition and rational rules above specify the continuous certificate independently of adaptive subdivision choices. The same rules also give
+
+$$
+\begin{aligned}
+ \omega(9/4,1/4)&\in[-9840817/500000000,-19681633/10^9]\subset(-\infty,-19/1000),\\
+ 8hc-1&>4,&s&>19/50,&k&>21/100,\\
+ h(51/80)+c&<7/5,&h+c&<5/3,&\sqrt{30}&<11/2,\\
+ 18-8(c+s)-9/2&>76187407/25000000>3.
+\end{aligned}
+\tag{50.8}
+$$
+
+These last constant inequalities can equally be checked by rational endpoint squaring with positive denominators. $\square$
+

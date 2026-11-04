@@ -1,0 +1,23 @@
+**引理 2.2（window kernel and band support）。** The initial values $x_1,\ldots,x_k$ determine a unique member of $W_k$ by
+
+$$
+x_{s+k}=-\sum_{t=0}^{k-1}x_{s+t}\qquad(s\ge1).
+$$
+
+Consequently $\dim W_k=k$. Every truncation $(x_1,\ldots,x_L)^{\mathsf T}$ lies in $\ker D_L$, and, for $d\ne e$,
+
+$$
+(D_L^{\mathsf T}D_L)_{d,e}>0
+\quad\Longleftrightarrow\quad
+|d-e|\le k.
+\tag{2.3}
+$$
+
+**证明。** The displayed recursion constructs and uniquely determines all later terms, so evaluation on the first $k$ coordinates is a linear isomorphism $W_k\cong\mathbb R^k$. Equation (2.1) is exactly $D_Lx=0$ after truncation. For $d<e$, the $(d,e)$ entry of $D_L^{\mathsf T}D_L$ counts window starts $s$ for which one window contains both positions. Such a start exists when $e-d\le k$: the interval
+
+$$
+[\max(1,e-k),\ \min(d,L-k)]
+$$
+
+of possible starts is then nonempty because $1\le d<e\le L$. If $e-d>k$, no window contains both positions. Every contributing summand is $1$, so the count is positive, proving (2.3); symmetry handles $d>e$. $\square$
+

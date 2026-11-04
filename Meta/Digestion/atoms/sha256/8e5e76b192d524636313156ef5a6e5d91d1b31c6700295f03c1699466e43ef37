@@ -1,0 +1,2 @@
+**Definition 2.2 (Admissible, indecomposable, $a_n$, $b_n$).** A permutation $\pi$ of $[n]$ is admissible if $\pi$ avoids $312$ and $54321$ and $q=\pi^2$ avoids $132$. It is indecomposable if there is no $k$ with $1\le k<n$ and $\pi(\{1,\dots,k\})=\{1,\dots,k\}$. Let $a_n$ be the number of admissible permutations of $[n]$ and $b_n$ the number of admissible indecomposable ones. Stance: literature-attested for $a_n$ (cited fact (a)); repo-derived for $b_n$ (cited fact (b)).
+

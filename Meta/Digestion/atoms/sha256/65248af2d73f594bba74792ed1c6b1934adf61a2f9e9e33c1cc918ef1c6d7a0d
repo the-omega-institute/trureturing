@@ -1,0 +1,2 @@
+**零方向与直接消费者。** 在本命题的假设下，对固定 $v\in\ker I(\theta)$，代入 $h=\varepsilon v$ 得 $\mathsf H^2(p_\theta,p_{\theta+\varepsilon v})=o(\varepsilon^2)$；由非负性开平方即得 §371.4 的 $\mathsf H(p_\theta,p_{\theta+\varepsilon v})=o(|\varepsilon|)$，$v=0$ 时恒为零。§374.2 第 1 项在同一参数坐标和上述有限、正概率、开邻域 $C^2$ 合同下，使用 §399.5 的完整分布重构及本命题的二阶展开；不再调用旧 §371.3 的缺号公式。这是固定基点的局部渐近式，不是对任意有限扰动的精确二次等式。
+

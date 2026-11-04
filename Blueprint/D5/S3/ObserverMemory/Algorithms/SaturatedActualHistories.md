@@ -12,7 +12,19 @@ Write Entry for the dependent sum of remaining height, reading slot, finite orig
 
 readingPositions lists the pairs of child answer slots at every internal history. Each pair is one subsequent reading occurrence. Its two controls are equal and its digits are distinct. allReadingPositions concatenates these lists over first digits, excluding the initial reads. occurrenceCount counts, with multiplicity, the positions assigned to the specified control. TerminatesIn counts subsequent reads in the global actual-slot relation and retains the fixed terminal label.
 
-**Theorem 1.1 (Complete histories, slot injection and row packing).**
+**Theorem 1.1 (Finite residues preserve natural values).**
+
+$$\forall m:\mathbb {N},{[\operatorname {NeZero}(m)] \forall x:\operatorname {Fin}(m),{{\operatorname {val}(\operatorname {finEquiv}(m,x))}={\operatorname {val}(x)}}}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/SaturatedActualHistories.fin_equiv_val` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every nonzero natural modulus m and x in Fin m, Mathlib's ZMod.finEquiv sends x to a residue with the same natural value.
+
+**Theorem 1.2 (Complete histories, slot injection and row packing).**
 
 $$\forall p:\mathbb {N},{\forall P:\mathbb {N},{\forall Q:Type,{\forall hp:{2}\le {p},{\forall hP:0<P,{\forall C:\operatorname {Controller}(p,P,Q),{\forall I:\operatorname {Correct}(C,hp,hP),{[\operatorname {Finite}(Q)]{\forall D:\mathbb {N},{{{P}={2^{D}}}\implies {{\forall x:\operatorname {ZMod}(p\times P),{{\operatorname {card}(\operatorname {readEvents}(hp,hP,C,I,x))}\le {{D}+{1}}}}\implies {\exists root:\{q:Q\mid \exists b:\operatorname {Fin}(p),{\operatorname {Used}(C,I,q,b)}\},{{{\operatorname {val}(root)}={\operatorname {initial}(C)}}\land{\exists H:\forall b:\operatorname {Fin}(p),{\operatorname {SaturatedHistory}(hp,hP,C,I,D,(root,b),\operatorname {firstFiber}(hp,hP,b),(x\mapsto 0))},{{\forall x:\operatorname {ZMod}(p\times P),{{\operatorname {card}(\operatorname {readEvents}(hp,hP,C,I,x))}={{D}+{1}}}}\land{\forall b:\operatorname {Fin}(p),{\forall k:\mathbb {N},{\forall x:\operatorname {ZMod}(p\times P),{{\operatorname {TerminatesIn}(hp,hP,C,I,k,(root,b),x)}\iff{{{k}={D}}\land{{\operatorname {digit}(hp,hP,x)}={b}}}}}}}\land{\forall i:\operatorname {Fin}(\operatorname {length}(\operatorname {map}(\operatorname {entrySlot},\operatorname {allHistories}(hp,hP,C,I,H)))),{\forall j:\operatorname {Fin}(\operatorname {length}(\operatorname {map}(\operatorname {entrySlot},\operatorname {allHistories}(hp,hP,C,I,H)))),{{{\operatorname {get}(\operatorname {map}(\operatorname {entrySlot},\operatorname {allHistories}(hp,hP,C,I,H)),i)}={\operatorname {get}(\operatorname {map}(\operatorname {entrySlot},\operatorname {allHistories}(hp,hP,C,I,H)),j)}}\implies {{i}={j}}}}}\land{\forall x:\operatorname {ZMod}(p\times P),{\forall t:\mathbb {N},{{t\in \operatorname {readEvents}(hp,hP,C,I,x)}\iff{\exists e:\operatorname {Entry}(hp,hP,C,I),{{e\in \operatorname {allHistories}(hp,hP,C,I,H)}\land{x\in \operatorname {entrySupport}(e)}\land{{\operatorname {entryTime}(e,x)}={t}}}}}}}\land{\forall z:{\{q:Q\mid \exists b:\operatorname {Fin}(p),{\operatorname {Used}(C,I,q,b)}\}\times \operatorname {Fin}(p)}\times {\{q:Q\mid \exists b:\operatorname {Fin}(p),{\operatorname {Used}(C,I,q,b)}\}\times \operatorname {Fin}(p)},{{z\in \operatorname {allReadingPositions}(hp,hP,C,I,H)}\implies {{{\operatorname {fst}(\operatorname {fst}(z))}={\operatorname {fst}(\operatorname {snd}(z))}}\land{{\operatorname {fst}(z)}\neq {\operatorname {snd}(z)}}}}}\land{\forall q:Q,{{\operatorname {occurrenceCount}(hp,hP,C,I,H,q)}\le {\operatorname {div}(p,2)}}}\land{{{P}={1}}\implies {{\operatorname {allReadingPositions}(hp,hP,C,I,H)}={[]}}}}}}}}}}}}}}}}}$$
 
@@ -26,6 +38,7 @@ The finite set of later read times has a least next event whenever the current s
 
 ## References
 
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/SaturatedActualHistories.fin_equiv_val`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/SaturatedActualHistories.result`
 - Dependency: [D5/S3/Observer/Budget/WorstCaseDepthInformationLowerBound](../../Observer/Budget/WorstCaseDepthInformationLowerBound.md)
 - Dependency: [D5/S3/ObserverMemory/Algorithms/ActualControlSlots](ActualControlSlots.md)

@@ -5,8 +5,9 @@ year: 2025
 title: Semigroup rings and algebraically independent sequences with respect to idempotents in commutative semigroups
 doi: null
 url: https://arxiv.org/abs/2509.18724v1
-claim: Conjecture 5.3 asserts a formula for the algebraic Davenport constant using relative Davenport constants of the Green quotient and Schutzenberger translation groups.
+claim: Conjecture 3.26 asserts that finite algebraic Davenport constant forces a uniform finite bound on relative constants in the Green quotient over nongroup cyclic elements; Conjecture 5.3 asserts a separate finite-semigroup formula using relative constants and Schutzenberger translation groups.
 strata_touched:
+  - D5/S0/Certificates/Algebra/WangConjecture326Refutation
   - D5/S0/Certificates/Algebra/WangConjecture53Refutation
 license: citation-only
 triage: anchor
@@ -30,6 +31,18 @@ The source archive has SHA256
 - Definition scope: Section 2, especially lines 203–213 for the ordinary
   semigroup algebra and Definition 2.1; Section 5, lines 842–851 for the
   complete conjecture hypotheses, equality, and epsilon definition.
+
+[Conjecture 3.26](https://arxiv.org/html/2509.18724v1#S3.Thmtheorem26)
+is the complete periodic-semigroup implication addressed by the infinite construction below.
+Section 2 supplies the
+[positive cyclic and periodic conventions](https://arxiv.org/html/2509.18724v1#S2.p2),
+[principal ideals and Green relation](https://arxiv.org/html/2509.18724v1#S2.p4),
+[ordinary semigroup algebra](https://arxiv.org/html/2509.18724v1#S2.p7),
+[Definition 2.1 and its independently nonzero coefficients](https://arxiv.org/html/2509.18724v1#S2.Thmtheorem1),
+and [sequence conventions](https://arxiv.org/html/2509.18724v1#S2.p9)
+with [Definition D's relative Davenport constant](https://arxiv.org/html/2509.18724v1#S2.p10).
+The note binds the separate 3.26 and 5.3 formal modules listed above;
+each construction addresses only its own conjecture.
 
 ## Source statement
 
@@ -94,7 +107,7 @@ right side is at least two. Its exact maximum is unnecessary.
 
 ## Scope and provenance
 
-The D5 claim quantifies over finite commutative semigroups, including those
+The Conjecture 5.3 assertion quantifies over finite commutative semigroups, including those
 without an identity, and over all fields satisfying either source branch.
 Its counterexample is an ordinary rational semigroup algebra; no contracted
 algebra or replacement for the relative constant is involved.
@@ -107,4 +120,54 @@ The source and bounded later-literature screen supplied with issue
 [23871](https://github.com/the-omega-institute/trureturing/issues/23871)
 found no exact settlement in the inspected scope. This is not an exhaustive
 absence or priority claim. The construction's novelty is not established.
-Conjecture 3.26 is a separate question and is not settled here.
+Conjecture 5.3 and Conjecture 3.26 are separate assertions. The six-label argument above concerns only 5.3; the infinite construction below concerns 3.26.
+
+
+## Conjecture 3.26: one infinite periodic semigroup
+
+[Conjecture 3.26](https://arxiv.org/html/2509.18724v1#S3.Thmtheorem26)
+states, verbatim:
+
+> Let S be a commutative periodic semigroup, and let R be a commutative
+> unitary ring. If d(S,R) < infinity then
+> sup {D_bar(a)(S/H): a in S and <a> is not a group} < infinity.
+
+Take the single carrier S=Finset(N) x {0,1,2}, with
+
+$$(A,k)+(B,l)=(A\cup B,\min(2,k+l)),$$
+
+and R=Q. The map i maps to ({i},0) is injective, so S is infinite.
+For every x=(A,k), put E(x)=(A,0) if k=0 and E(x)=(A,2) otherwise.
+The positive cyclic subsemigroup is exactly {x,E(x)}. Thus every cyclic
+subsemigroup is finite and E(x) is its unique idempotent. This is
+pointwise periodicity, without imposing finiteness on S.
+
+Choosing coefficient one at every position makes every product of at
+least two factors zero. Idempotent terms have a zero factor. For two
+level-one terms x,y, all four basis products in
+(X^x-X^E(x))(X^y-X^E(y)) have the same label (A union B,2), so their
+coefficients cancel. Ordinary convolution, including the retained basis
+label at level two, is essential. This proves the sufficient bound
+d(S,Q)<=1; no exact value is needed for Conjecture 3.26.
+
+The principal ideal of (A,k) consists exactly of (B,l) with A subset B
+and k<=l. Mutual ideal membership forces equality of both coordinates,
+so the actual Green quotient map is injective on all of this infinite S.
+
+For every n, let a_n=({0,...,n-1},1). Use the sequence with one term
+(empty,1) and one term ({i},0) for each i<n. It has n+1 terms and sum a_n.
+The weight w(A,k)=|A|+1(k!=0) is subadditive. Every term has weight one,
+while w(a_n)=n+1. Every subsequence with that sum must therefore have at
+least n+1 terms. This proves irreducibility, including against the empty
+subsequence. Injectivity of the actual quotient map transfers this result
+to S/H, giving D_bar(a_n)(S/H)>=n+1 for every n in the same S.
+
+The positive cyclic semigroup of a_n has precisely the level-one and
+level-two labels. Neither acts as an identity on a_n. It is not a group,
+even when its identity could differ from the ambient monoid identity.
+Consequently the source's filtered supremum is infinite. This refutes
+Conjecture 3.26 as one complete implication; no finite truncation or
+varying-semigroup family is used. An exact formula for each relative
+constant, a minimal counterexample, and a novelty or priority claim are
+not asserted. The later-literature screen is bounded by the source and
+preregistration [23896](https://github.com/the-omega-institute/trureturing/issues/23896).

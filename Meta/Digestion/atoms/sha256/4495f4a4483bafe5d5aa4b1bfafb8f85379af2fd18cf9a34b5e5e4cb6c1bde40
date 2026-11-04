@@ -1,0 +1,48 @@
+**定理 7.5（联合读出的稳定逆与精确阈值）。**
+
+<a id="thm-joint"></a>
+
+对连续实扩张，若 $x=P_+(a,b)$、$y=P_-(a,b)$，则
+
+$$
+b=\frac{x-y}{\sqrt5},\qquad
+a=\frac{\varphi y-\sigma x}{\sqrt5}.
+$$
+
+并有
+
+$$
+\left\lVert (a,b)\right\rVert_\infty
+\le\left\lVert S(a,b)\right\rVert_\infty
+\le\varphi^2\left\lVert (a,b)\right\rVert_\infty.
+$$
+
+联合格 $S(\Gamma_d)$ 的最小最大范数间隔恰为 $1$。
+若两个读口各有闭噪声不超过 $\varepsilon$，
+整个无限整数来源域可统一恢复，当且仅当 $\varepsilon<1/2$。
+
+**证明。**
+
+相减得 $b$ 的逆公式，回代得 $a$ 的公式。
+因 $\varphi+|\sigma|=\sqrt5$，
+
+$$
+\left\lVert a\right\rVert_\infty\le\left\lVert (x,y)\right\rVert_\infty,\qquad
+\left\lVert b\right\rVert_\infty\le\frac2{\sqrt5}\left\lVert (x,y)\right\rVert_\infty
+\le\left\lVert (x,y)\right\rVert_\infty.
+$$
+
+正向上界分别来自 $1+\varphi=\varphi^2$ 与 $1+|\sigma|=\varphi$。
+非零整数差的系数范数至少为 $1$，故联合像间隔至少为 $1$；
+差 $(e_1,0)$ 达到 $1$。
+
+对带噪读数代入逆公式，误差满足
+$\left\lVert \Delta a\right\rVert_\infty\le\varepsilon$、
+$\left\lVert \Delta b\right\rVert_\infty\le2\varepsilon/\sqrt5$。
+当 $\varepsilon<1/2$，逐坐标取最近整数精确恢复来源。
+若 $\varepsilon\ge1/2$，来源 $0$ 和 $(e_1,0)$ 的联合输出中点
+$(e_1/2,e_1/2)$ 同时允许，统一解码不可能。证毕。
+ □
+
+<a id="section-8"></a>
+

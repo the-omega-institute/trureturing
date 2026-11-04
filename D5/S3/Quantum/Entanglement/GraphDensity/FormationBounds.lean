@@ -111,6 +111,7 @@ import Mathlib.Analysis.Normed.Module.Normalize
 import D5.S3.Quantum.Fibers.PhysicalFiber
 import D5.S3.Quantum.CloningMachine
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Information.QubitNormalFormState
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
@@ -325,36 +326,13 @@ namespace D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
 open D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Analytic
 theorem qubit_entropy_det (τ : Matrix (Fin 2) (Fin 2) ℂ)
     (hτ : τ.PosSemidef) (ht : τ.trace = 1) :
-    S τ = binaryEntropyBits ((1-Real.sqrt (1-4*τ.det.re))/2)  := by
+    S τ = binaryEntropyBits ((1-Real.sqrt (1-4*τ.det.re))/2) := by
   have entropy_formula (x : ℝ) : binaryEntropyBits x = Real.binEntropy x / Real.log 2 := by
     simp only [binaryEntropyBits, Real.logb, Real.binEntropy, Real.log_inv]
     ring
-  let a : ℝ := hτ.1.eigenvalues 0
-  let b : ℝ := hτ.1.eigenvalues 1
-  have ha : 0 ≤ a := hτ.eigenvalues_nonneg 0
-  have hb : 0 ≤ b := hτ.eigenvalues_nonneg 1
-  have hab : a+b=1 := by
-    have hh := congrArg Complex.re hτ.1.trace_eq_sum_eigenvalues
-    simpa [ht,Fin.sum_univ_two,a,b] using hh.symm
-  have hdet : τ.det.re = a*b := by
-    have hh := congrArg Complex.re hτ.1.det_eq_prod_eigenvalues
-    simpa [Fin.prod_univ_two,a,b] using hh
-  have hroot : Real.sqrt (1-4*τ.det.re) = |a-b| := by
-    rw [hdet, show 1-4*(a*b)=(a-b)^2 by nlinarith [hab], Real.sqrt_sq_eq_abs]
-  rw [entropy_eigenvalues τ hτ.1, Fin.sum_univ_two]
-  change (Real.negMulLog a+Real.negMulLog b)/Real.log 2 = _
-  rw [hroot]
-  rcases le_total a b with hab' | hba'
-  · rw [abs_of_nonpos (by linarith : a-b ≤ 0)]
-    have hr : (1- -(a-b))/2 = a := by linarith
-    rw [hr]
-    rw [entropy_formula]
-    rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub,show 1-a=b by linarith]
-  · rw [abs_of_nonneg (by linarith : 0 ≤ a-b)]
-    have hr : (1-(a-b))/2 = b := by linarith
-    rw [hr]
-    rw [entropy_formula]
-    rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub,show 1-b=a by linarith,add_comm]
+  rw [entropy_eigenvalues τ hτ.1, entropy_formula]
+  exact congrArg (fun value : ℝ => value / Real.log 2)
+    (D5.S3.Quantum.Information.QubitNormalFormState.qubit_spectral_entropy_det τ hτ ht)
 
 theorem qubit_det_bounds (τ : Matrix (Fin 2) (Fin 2) ℂ)
     (hτ : τ.PosSemidef) (ht : τ.trace = 1) : 0 ≤ τ.det.re ∧ τ.det.re ≤ 1/4 := by

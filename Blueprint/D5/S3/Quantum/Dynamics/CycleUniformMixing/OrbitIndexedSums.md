@@ -796,7 +796,19 @@ $$\operatorname{targetSum} \operatorname{rows0} = 0$$
 
 The displayed identity is used in the orbit-sum and spectral calculation.
 
-**Definition 1.67 (amplitude).**
+**Theorem 1.67 (char_star).**
+
+$$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N}] (x : \operatorname{ZMod} \operatorname{N}) , \overline{\operatorname{ZMod.stdAddChar} x} = \operatorname{ZMod.stdAddChar} (-x)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/CycleUniformMixing/OrbitIndexedSums.char_star` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Complex conjugation negates the argument of the standard additive character.
+
+**Definition 1.68 (amplitude).**
 
 $$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N}] (\operatorname{z} : \operatorname{ZMod} \operatorname{N} \to \mathbb{C}) (\operatorname{a} : \operatorname{ZMod} \operatorname{N}) (\operatorname{b} : \operatorname{ZMod} \operatorname{N}) , \operatorname{amplitude} \operatorname{z} \operatorname{a} \operatorname{b} = (\operatorname{N} : \mathbb{C})^{-1} \cdot \operatorname{ZMod.dft} \operatorname{z} (\operatorname{b} - \operatorname{a})$$
 
@@ -808,7 +820,7 @@ $$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N
 
 The displayed identity defines this operation.
 
-**Theorem 1.68 (uniform_amplitude_iff_ratio).**
+**Theorem 1.69 (uniform_amplitude_iff_ratio).**
 
 $$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N}] (\operatorname{z} : \operatorname{ZMod} \operatorname{N} \to \mathbb{C}) , (\forall (\operatorname{j} : \operatorname{ZMod} \operatorname{N}) , \operatorname{Complex.normSq} (\operatorname{z} \operatorname{j}) = 1) \to ((\forall (\operatorname{a} \operatorname{b} : \operatorname{ZMod} \operatorname{N}) , \operatorname{Complex.normSq} (\operatorname{amplitude} \operatorname{z} \operatorname{a} \operatorname{b}) = 1 / (\operatorname{N} : \mathbb{R})) \iff (\forall (\operatorname{l} : \operatorname{ZMod} \operatorname{N}) , \operatorname{l} \neq 0 \to \sum \operatorname{j} : \operatorname{ZMod} \operatorname{N} , \operatorname{z} (\operatorname{j} + \operatorname{l}) / \operatorname{z} \operatorname{j} = 0))$$
 
@@ -820,7 +832,7 @@ $$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N
 
 The displayed identity is used in the orbit-sum and spectral calculation.
 
-**Definition 1.69 (cycleA).**
+**Definition 1.70 (cycleA).**
 
 $$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N}] , \operatorname{cycleA} = (\operatorname{D5.S3.Combinatorics.NarayanaStrip.CiglerCycleWalkFolding.cycleAdj} \operatorname{N}) . \operatorname{map} (\operatorname{Int.castRingHom} \mathbb{C})$$
 
@@ -832,7 +844,7 @@ $$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N
 
 The displayed identity defines this operation.
 
-**Definition 1.70 (eigenvalue).**
+**Definition 1.71 (eigenvalue).**
 
 $$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N}] (\operatorname{j} : \operatorname{ZMod} \operatorname{N}) , \operatorname{eigenvalue} \operatorname{j} = \operatorname{ZMod.stdAddChar} \operatorname{j} + \operatorname{ZMod.stdAddChar} (- \operatorname{j})$$
 
@@ -844,7 +856,7 @@ $$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N
 
 The displayed identity defines this operation.
 
-**Theorem 1.71 (exp_cycle_entry).**
+**Theorem 1.72 (exp_cycle_entry).**
 
 $$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N}] (\operatorname{c} : \mathbb{C}) (\operatorname{a} : \operatorname{ZMod} \operatorname{N}) (\operatorname{b} : \operatorname{ZMod} \operatorname{N}) , \operatorname{NormedSpace.exp} (\operatorname{SMul.smul} (\operatorname{c}) (\operatorname{cycleA})) \operatorname{a} \operatorname{b} = (\operatorname{N} : \mathbb{C})^{-1} \cdot \operatorname{ZMod.dft} (\operatorname{fun} \operatorname{j} \mapsto \operatorname{Complex.exp} (\operatorname{c} \cdot \operatorname{eigenvalue} \operatorname{j})) (\operatorname{b} - \operatorname{a})$$
 
@@ -856,7 +868,7 @@ $$\forall (\operatorname{N} : \mathbb{N}) [\operatorname{NeZero} \operatorname{N
 
 The displayed identity is used in the orbit-sum and spectral calculation.
 
-**Definition 1.72 (instDecidableEqExp).**
+**Definition 1.73 (instDecidableEqExp).**
 
 $$\operatorname{instDecidableEqExp} : \operatorname{DecidableEq} \operatorname{Exp}$$
 
@@ -877,6 +889,7 @@ The displayed identity is used in the orbit-sum and spectral calculation.
 - Truth anchor: `D5/S3/Quantum/Dynamics/CycleUniformMixing/OrbitIndexedSums.act`
 - Truth anchor: `D5/S3/Quantum/Dynamics/CycleUniformMixing/OrbitIndexedSums.act0`
 - Truth anchor: `D5/S3/Quantum/Dynamics/CycleUniformMixing/OrbitIndexedSums.amplitude`
+- Truth anchor: `D5/S3/Quantum/Dynamics/CycleUniformMixing/OrbitIndexedSums.char_star`
 - Truth anchor: `D5/S3/Quantum/Dynamics/CycleUniformMixing/OrbitIndexedSums.checkInc`
 - Truth anchor: `D5/S3/Quantum/Dynamics/CycleUniformMixing/OrbitIndexedSums.coefficientSum`
 - Truth anchor: `D5/S3/Quantum/Dynamics/CycleUniformMixing/OrbitIndexedSums.combine_checked`

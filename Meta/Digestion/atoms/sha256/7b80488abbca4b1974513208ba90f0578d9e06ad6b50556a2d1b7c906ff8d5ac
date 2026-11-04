@@ -1,0 +1,51 @@
+**Theorem 3.1 (Complete three-color classification in the repeated-block family).**
+For every $m\geq0$ and $j\geq1$,
+
+$$
+P_3(G_{m,j})=P_3(H_{m,j})
+\quad\Longleftrightarrow\quad
+m\in\{0,2\}\ \text{or}\ j=3.
+$$
+
+This equivalence holds both in $\mathbb Z[q]$ and for the corresponding
+polynomials in $\mathbb C[q]$.
+
+Proof. Each $w_i$ is a nonzero polynomial with nonnegative integer
+coefficients, even when $j=1$, where $w=(1,q,q^2)$. Hence $e_2$ and $e_3$
+are also nonzero and have nonnegative coefficients. Every summand defining
+$H_n$ has nonnegative coefficients. If $2u+3v=n$ has a nonnegative integer
+solution, its corresponding summand is nonzero: the binomial coefficient
+is positive and $\mathbb Z[q]$ is an integral domain. It cannot cancel
+against the other summands. Thus
+
+$$
+H_n\ne0\quad\Longleftrightarrow\quad
+n=2u+3v\text{ for some integers }u,v\geq0\qquad(n\geq0).
+$$
+
+Here $0=2\cdot0+3\cdot0$ is included. Every nonnegative even $n$ is
+$2(n/2)$; every odd $n\geq3$ is $2((n-3)/2)+3$. The only missing
+nonnegative integer is $1$. Together with the negative-index definition,
+this proves
+
+$$
+H_{m-1}=0\quad\Longleftrightarrow\quad m=0\text{ or }m=2
+\qquad(m\geq0).
+\tag{3.1}
+$$
+
+Each displayed factor of $Q$ is a nonzero polynomial, and
+$(1+q)^{j-1}$ is nonzero. Also
+$q^{j-1}-q^2=0$ exactly when $j-1=2$, since distinct nonnegative powers
+of the indeterminate $q$ have distinct coefficients. Thus $j=3$ is the
+only zero of this last factor in the integer parameter domain; for $j=1$
+it is $1-q^2\ne0$. There are no zero divisors in $\mathbb Z[q]$.
+Theorem 2.1 and (3.1) now give both implications, with no further
+cancellation possibility.
+
+For the coefficient extension, use the bridge [R2, `ordinary_eq_map`,
+`ordinary_eq_iff`]: its map is exactly $\iota$ of Definition 1.2.
+Coefficientwise injectivity means
+$\iota(f)=\iota(g)$ if and only if $f=g$, so it transfers the equivalence
+and its inequality complement. ∎
+

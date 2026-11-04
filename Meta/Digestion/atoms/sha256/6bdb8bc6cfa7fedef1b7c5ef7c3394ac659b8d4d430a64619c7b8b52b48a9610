@@ -1,0 +1,84 @@
+**Theorem 5.1 (The four-hub density phase).** Let $(\ell_n)$ be an integer sequence with
+
+$$
+\frac{\ell_n}{n}\longrightarrow\alpha\in[2,3),
+\qquad
+\ell_n\ge2n-7
+$$
+
+for all sufficiently large $n$. Then eventually $\ell_n\le3n-15$, and
+
+$$
+\lim_{n\to\infty}nE^\ast(n,\ell_n)
+=F_4(\alpha)=\frac{8(37\alpha-47)}{(1+\alpha)^2}.
+$$
+
+For any choice $G_n\in\mathcal G(n,\ell_n)$, the following are equivalent:
+
+1. $E(G_n)-E^\ast(n,\ell_n)=o(n^{-1})$;
+2. $nE(G_n)\to F_4(\alpha)$;
+3. After labelling the hubs whenever they exist, $G_n$ is eventually a two-layer graph with exactly four hubs, and its profile satisfies
+   $$
+   x_{[4],n}\to\alpha-2,
+   \qquad
+   x_{[4]\setminus\{i\},n}\to\frac{3-\alpha}{4}\quad(1\le i\le4),
+   $$
+   while the total mass of all one- and two-neighborhood types tends to zero. Equivalently, $G_n$ is eventually a two-layer graph with exactly four hubs, the total mass of all one- and two-neighborhood types tends to zero, and
+   $$
+   \frac{D_{i,n}}n\to\frac{1+\alpha}{4}\quad(1\le i\le4).
+   $$
+
+The exact finite minimizers supplied by Theorem 4.2 have no one- or two-neighborhood sources. Near-minimizing sequences only force their total number to be $o(n)$; zero-limit types may occur at finitely many or sublinear many vertices to provide a connected bridge.
+
+**Proof.** Since $\alpha<3$, the upper finite capacity inequality holds eventually, so Theorem 4.2 applies and gives the exact minimum for all sufficiently large $n$. Its balanced profile has $a_4\to\alpha$, and the same remainder estimate used in §4 gives
+
+$$
+ nE^\ast(n,\ell_n)\longrightarrow F_4(\alpha).
+$$
+
+Thus (1) and (2) are equivalent.
+
+Assume (2). The sequence has bounded $nE(G_n)$, so the sink-incidence reduction gives an eventual two-layer graph with a bounded number of hubs and hub degrees bounded below linearly. Passing to a subsequence with fixed hub number and a convergent profile is legitimate because there are finitely many types for each fixed number. The exact edge identities give a limit profile in $\mathcal P_s(\alpha)$. Write $x_n$ for the profiles on this fixed-$s$ subsequence and $x$ for their limit. Choose a fixed $C>0$ bounding $nE(G_n)$. The same actual-edge calculation as in §3 applies uniformly: the fixed-$C$ reduction bounds $s$ solely in terms of $C$ and gives $D_{i,n}\ge n/(3C)$, so source degrees are bounded, every edge ratio is $O_C(n^{-1})$, and there are $O_C(n)$ edges. Summing the remainder in §1 therefore gives an $O_C(n^{-3})$ error in $E(G_n)$, and hence
+
+$$
+nE(G_n)-\frac{n}{n-s}J_s(x_n)=O_C(n^{-2})\longrightarrow0.
+$$
+
+The same degree bound gives $y_{i,n}=D_{i,n}/(n-s)\ge1/(3C)>0$. Thus $J_s$ is continuous at the limit profile, including boundary faces where some type masses vanish while all hub masses remain positive, and $J_s(x_n)\to J_s(x)$. Since $n/(n-s)\to1$, it follows that $nE(G_n)\to J_s(x)$. If $s\ge5$ occurs infinitely often, Theorem 2.4 gives a limiting value strictly larger than $F_4(\alpha)$, a contradiction. The capacity inequality excludes $s\le3$ because $\ell_n\ge2n-7$. Hence exactly four hubs occur eventually. Every profile limit must attain equality in Theorem 2.2, so all profile limits are the unique profile displayed in (3). Therefore the whole sequence of profiles converges, including the vanishing total mass of the one- and two-neighborhood types and the hub-degree limits.
+
+To verify the alternative formulation of (3), use the same profile array throughout and put
+
+$$
+p_{k,n}=\sum_{|T|=k}x_{T,n},\qquad
+L_{i,n}=\sum_{\substack{|T|\le2\\i\in T}}x_{T,n},\qquad
+y_{i,n}=\frac{D_{i,n}}{n-4}.
+$$
+
+Its exact mean constraint is $a_n=(\ell_n+3)/(n-4)=p_{2,n}+2p_{3,n}+3p_{4,n}\to\alpha$. Together with $\sum_{k=1}^4p_{k,n}=1$, it gives the exact identities
+
+$$
+p_{4,n}=a_n-2+2p_{1,n}+p_{2,n},
+\qquad
+x_{[4]\setminus\{i\},n}
+=1-p_{1,n}-p_{2,n}+L_{i,n}-y_{i,n}.
+$$
+
+Since $0\le L_{i,n}\le p_{1,n}+p_{2,n}$ and $(n-4)/n\to1$, vanishing one- and two-type mass together with $D_{i,n}/n\to(1+\alpha)/4$ forces $p_{4,n}\to\alpha-2$ and each missing-one mass to tend to $(3-\alpha)/4$. Conversely, the complete candidate profile in (3) gives
+
+$$
+y_{i,n}=p_{4,n}+\sum_{j\ne i}x_{[4]\setminus\{j\},n}+L_{i,n}
+\longrightarrow\alpha-2+\frac{3(3-\alpha)}4=\frac{1+\alpha}4,
+$$
+
+and hence the stated hub-degree limits. Both formulations retain the eventual four-hub two-layer condition and the vanishing one- and two-type mass.
+
+Conversely, (3) gives a profile converging to the equality profile of Theorem 2.2. The actual-edge remainder identity then gives $nE(G_n)\to F_4(\alpha)$, proving (3)$\Rightarrow$(2). ∎
+
+The lower capacity condition has a genuine endpoint obstruction. At $\ell=2n-8$, the graph $K_{3,n-3}$ belongs to $\mathcal G(n,\ell)$ and
+
+$$
+ nE(K_{3,n-3})\longrightarrow\frac{27}{2},
+$$
+
+whereas $F_4(2)=24$. Thus density $\alpha=2$ alone does not replace the exact lower budget $\ell\ge2n-7$. At the other boundary, $\ell=3n-14$ exceeds the four-hub simple two-layer capacity $3n-15$; the four-hub theorem therefore stops at $\alpha<3$ and makes no claim for the next capacity phase.
+

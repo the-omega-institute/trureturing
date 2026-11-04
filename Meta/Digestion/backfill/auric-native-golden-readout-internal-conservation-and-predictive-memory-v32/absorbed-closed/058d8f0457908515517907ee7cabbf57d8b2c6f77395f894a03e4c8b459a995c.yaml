@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:058d8f0457908515517907ee7cabbf57d8b2c6f77395f894a03e4c8b459a995c
+  normalized_sha256: sha256:058d8f0457908515517907ee7cabbf57d8b2c6f77395f894a03e4c8b459a995c
+cas_ref: sha256:058d8f0457908515517907ee7cabbf57d8b2c6f77395f894a03e4c8b459a995c
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/OneSidedGoldenHistory.native_predictor_minimum
+    target_statement_id: sha256:3af3dbbc69e73fbaa63998cf4411ba14fc2d6460b86e5f8d0c3c0e0f9169977a
+receipts:
+  unresolved_subitems: []

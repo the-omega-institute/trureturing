@@ -24,6 +24,15 @@ internal sealed class RoldanCirculantEnergyP2Q3Document : IScribeDocumentDefinit
             Node("claim", "Conjecture 1.3 (Universality)", Disp(Iff(F.Id("claim"), ClaimBody())),
                 "Page 3, Section 1, Conjecture 1.3: “For every pair of distinct odd primes (p, q), the set D* = {1, p^2, pq, q^2, p^2q^2, pq^3} is the unique maximiser of E(p^2q^3, D) over all nonempty D ⊆ div(p^2q^3) ∖ {p^2q^3}.” The first conjunct states that Dstar is allowed; the second gives the strict comparison with every different nonempty allowed divisor set.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("ramanujan_prime_power", "Ramanujan sums at prime powers", RamanujanPrimePowerFormula(),
+                "For a prime p, the Ramanujan sum at p to the power k+1 is the difference of two divisibility indicators, weighted by p to the powers k+1 and k. The values lie in the complex numbers.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("ramanujan_one", "Ramanujan sum at modulus one", RamanujanOneFormula(),
+                "At modulus one the Ramanujan sum equals one for every natural argument.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("gcdRow_dft_ramanujan", "Fourier transform of gcd classes", GcdRowDftFormula(),
+                "For a nonzero natural n and a finite subset D of its divisors, the Fourier transform of the gcd-class indicator is the sum of the Ramanujan sums at moduli n divided by d. Nat.div denotes natural-number division. The indicator is real-valued and is cast to the complex numbers before applying ZMod.dft.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "Unique maximization for all distinct odd primes", Disp(ClaimBody()),
                 "Fourier diagonalization expresses the energy as a sum of absolute Ramanujan sums with totient multiplicities. Prime-power divisor coordinates give twelve spectral classes. With u = p − 3 and v = q − 3, replacing each spectral polynomial's coefficients by their absolute values gives a majorant on the nonnegative quadrant. For Dstar the coefficients have one sign in each spectral class, so this majorant is attained. The integer coefficient comparison for every other mask gives an energy deficit of at least 96. The argument permits v = 0 and therefore includes q = 3.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -31,7 +40,7 @@ internal sealed class RoldanCirculantEnergyP2Q3Document : IScribeDocumentDefinit
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-            DescribeId.Create("roldan-energy-" + declaration.ToLowerInvariant()), DeclarationHandle.Create(Prefix + declaration),
+            DescribeId.Create("roldan-energy-" + (declaration switch { "ramanujan_prime_power" => "ramanujan-prime-power", "ramanujan_one" => "ramanujan-one", "gcdRow_dft_ramanujan" => "gcdrow-dft-ramanujan", _ => declaration.ToLowerInvariant() })), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Field(string name) => Seq(Mathbb, Grp(F.Id(name)));
@@ -56,6 +65,46 @@ internal sealed class RoldanCirculantEnergyP2Q3Document : IScribeDocumentDefinit
     private static Formula Ord(Formula p, Formula q) => Mul(Pow(p, 2), Pow(q, 3));
     private static Formula Val(Formula x) => Call("val", x);
     private static Formula FinType(Formula n) => Call("Fin", n);
+
+    private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula Power(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
+    private static Formula Divides(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Divides, b);
+    private static Formula If(Formula condition, Formula yes, Formula no) => Seq(
+        Named("if"), Sp, condition, Sp, Named("then"), Sp, yes, Sp, Named("else"), Sp, no);
+    private static Formula Fun(string name, Formula type, Formula body) => Seq(
+        Named("fun"), Sp, Typed(F.Id(name), type), Sp, Mapsto, Sp, body);
+
+    private static Formula RamanujanPrimePowerFormula()
+    {
+        Formula p = F.Id("p"), j = F.Id("j"), k = F.Id("k");
+        Formula pk = Power(p, k), next = Power(p, Add(k, D(1)));
+        Formula rhs = Sub(Parenthesized(If(Divides(next, j), Typed(next, Field("C")), D(0))),
+            Parenthesized(If(Divides(pk, j), Typed(pk, Field("C")), D(0))));
+        return Disp(All("p", NatType(), All("j", NatType(), All("k", NatType(),
+            Imp(App(Q("Nat", "Prime"), p), Eqn(Call("ramanujanSum", next, j), rhs))))));
+    }
+
+    private static Formula RamanujanOneFormula()
+    {
+        Formula j = F.Id("j");
+        return Disp(All("j", NatType(), Eqn(Call("ramanujanSum", D(1), j), Typed(D(1), Field("C")))));
+    }
+
+    private static Formula GcdRowDftFormula()
+    {
+        Formula n = F.Id("n"), dset = F.Id("D"), j = F.Id("j"), k = F.Id("k"), d = F.Id("d");
+        Formula zmod = Call("ZMod", n);
+        Formula indicator = Fun("k", zmod, If(Member(App(Q("Nat", "gcd"), n, Val(k)), dset),
+            Typed(D(1), Field("R")), D(0)));
+        Formula row = Fun("k", zmod, Typed(App(Parenthesized(indicator), k), Field("C")));
+        Formula rhs = Seq(Sum, Underscore, Grp(Member(d, dset)), Sp,
+            Call("ramanujanSum", App(Q("Nat", "div"), n, d), Val(j)));
+        Formula statement = All("D", FinsetNat(), Imp(SubsetOf(dset, App(Q("Nat", "divisors"), n)),
+            All("j", zmod, Eqn(App(Q("ZMod", "dft"), Parenthesized(row), j), rhs))));
+        return Disp(All("n", NatType(), Seq(OpenBracket, Call("NeZero", n), CloseBracket, Comma, Sp, statement)));
+    }
 
     private static Formula AdjacencyFormula()
     {

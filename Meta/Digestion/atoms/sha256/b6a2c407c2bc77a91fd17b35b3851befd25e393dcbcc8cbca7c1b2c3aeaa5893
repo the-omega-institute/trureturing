@@ -1,0 +1,15 @@
+### 9.1 从局部积分选择到全局标记选择
+
+此前选了正号胶合。现在恢复两个带标记候选，
+令 $s\in\{+1,-1\}$，并定义
+
+$$
+C_s=\{(\zeta^aI,\zeta^{2sa}I):a\in\mathbb F_5\},\qquad
+H_s=(\operatorname{SU}(5)\times\operatorname{SU}(5))/C_s.
+$$
+
+它们分别由定理 [2.3](#thm-selection) 的 $\Gamma_+,\Gamma_-$ 给出；
+两个 $\operatorname{SU}(5)$ 因子的标记始终固定。
+
+<a id="statement-9-1"></a>
+

@@ -1,0 +1,18 @@
+**定义 1.4（Admissible targets and blocked translations）。** For
+$s\in S$ and nonempty $X\subseteq S$, put
+
+$$
+\begin{aligned}
+C_s&=\{b\in B:s+b\notin A\},\\
+C_X&=\bigcup_{s\in X}C_s,\\
+U_X&=B\setminus C_X=\{b\in B:X+b\subseteq A\},\\
+V_X&=U_X\cup\{0\}.
+\end{aligned}
+$$
+
+Thus $C_X$ is a union, whereas $U_X$ is an intersection of blocking
+conditions. Since $X\subseteq A$ and $0\notin B$,
+$X+V_X\subseteq A$ and $|V_X|=|U_X|+1$.
+For $X=\varnothing$ put $C_X=\varnothing$; the additive arguments below
+are used only for nonempty $X$.
+

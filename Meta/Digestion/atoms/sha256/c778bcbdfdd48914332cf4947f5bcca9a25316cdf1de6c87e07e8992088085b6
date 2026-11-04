@@ -1,0 +1,58 @@
+#### 定理 5.4：二十八次正向原生调用精确实现空间镜像
+
+在式 [(10)](#eq-eq:13space) 的整个  $H$  上，令
+
+<a id="eq-eq:28word"></a>
+
+```math
+\Delta_K=(K_0K_1\cdots K_6)(K_0K_1\cdots K_5)
+ \cdots(K_0K_1)K_0.\tag{15}
+```
+
+存在固定实数  $\chi$ ，使
+
+<a id="eq-eq:28result"></a>
+
+```math
+\boxed{\Delta_K=e^{i\chi}S.}\tag{16}
+```
+
+算子乘积从最右边开始执行，总调用数为  $7+6+\cdots+1=28$ 。
+该实现不用辅助位、中间测量或极限操作。
+
+
+**证明。**
+
+原生编织对应令  $\sigma_ i\mapsto K_ {i-1}$ 。
+上一引理给
+ $\Delta_ KK_ j\Delta_ K^\dagger=K_ {6-j}$ 。
+与式 [(13)](#eq-eq:mirror-covariance) 比较， $S^\dagger\Delta_ K$  交换每个  $K_ j$ 。
+它因而交换所有原生门字；式 [(11)](#eq-eq:project-density) 意味着它交换每个酉矩阵，
+因为忽略整体相位不影响共轭作用。
+有限维全矩阵代数的交换子只有标量：先与所有对角相位交换使其对角，再与基置换交换使各对角相等。
+故  $S^\dagger\Delta_ K=e^{i\chi}I$ ，即得结论。
+
+**证毕。**
+
+
+该证明使用已有密度定理来确定交换子，但所得实现是一个固定有限字。
+这里没有声称 28 是最短调用数； $\chi$  对未受控的态演化和通常测量不影响结果。
+若把整段门字再作为受控分支，整体相位会变成分支间相对相位，需另行标定控制接口。
+
+
+<!-- visible-square-start -->
+
+```math
+\begin{array}{ccc}
+\boxed{\begin{array}{c}\psi\in H\\\text{原生输入}\end{array}}
+& \xrightarrow{\ S\sim\Delta_K\ } &
+\boxed{\begin{array}{c}S\psi\\\text{左右反序}\end{array}}\\[6pt]
+{\scriptstyle K_j}\,\Big\downarrow && \Big\downarrow\,{\scriptstyle K_{6-j}}\\[6pt]
+\boxed{\begin{array}{c}K_j\psi\\\text{地址 }j\text{ 的作用}\end{array}}
+& \xrightarrow[\ S\sim\Delta_K\ ]{} &
+\boxed{\begin{array}{c}K_{6-j}S\psi\\\text{镜像地址的作用}\end{array}}
+\end{array}
+```
+
+<!-- visible-square-end -->
+

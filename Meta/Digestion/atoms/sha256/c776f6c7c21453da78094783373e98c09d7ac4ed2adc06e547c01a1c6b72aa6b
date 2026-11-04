@@ -1,0 +1,32 @@
+**Theorem 17.2 (action ranges and the complete incoming-edge criterion).** Under the classification (16.4), the actions in (17.1) are
+
+$$
+\begin{aligned}
+\widehat L(0^+)&=0^+,&\widehat R(0^+)&=1^+,\\
+\widehat L(t^{\pm})&=(t/(1+t))^{\pm},&
+\widehat R(t^{\pm})&=(t+1)^{\pm}\quad(t\in\mathbb Q_{>0}),\\
+\widehat L(t)&=t/(1+t),&\widehat R(t)&=t+1
+\quad(t>0\text{ irrational}).
+\end{aligned}
+\tag{17.2}
+$$
+
+Both maps are injective. Their disjoint ranges, with the order of Definition 16.3, are
+
+$$
+\widehat L(\widehat X)=[0^+,1^-),\qquad
+\widehat R(\widehat X)=[1^+,\infty).
+\tag{17.3}
+$$
+
+The second notation means all points at least $1^+$, with no infinite endpoint adjoined. Every point except $1^-$ consequently has exactly one incoming named edge; $1^-$ has none. In particular the unique incoming edges at the special points are $0^+\xrightarrow{L}0^+$ and $0^+\xrightarrow{R}1^+$. The unique $\widehat L$ fixed point is $0^+$, and the original root is recovered from these named maps by
+
+$$
+\iota(1)=1^+=\widehat R(\text{the unique fixed point of }\widehat L).
+\tag{17.4}
+$$
+
+Proof. Take a thread $(I_n)$ of limit $t$. For each $m$ choose a positive rational $x_m\in I_m$; for the thread $t^-$ choose it strictly below $t$, and for $t^+$ strictly above $t$. Such choices exist because the cells have nonempty interior. At an irrational limit the side of the choices is immaterial. For each fixed $n$, all $m\ge n$ have $x_m\in I_n$, so the cell of $f_a(x_m)$ at stage $n$ is exactly $U_{a,n}(I_n)$. The bound (16.2) gives $x_m\to t$. Both rational transformations extend continuously and strictly increasingly to finite nonnegative real inputs, taking zero to $0$ and $1$ respectively. At positive rational $t$ they preserve the chosen strict side; at zero both have only the right side. At irrational $t$ both transformed values are irrational, since the rational inverse formulas would otherwise make $t$ rational. The unique-thread and two-side classification now proves (17.2).
+
+For $0<t<1$, the inverse of $L$ is $t/(1-t)$, a finite positive value, preserving irrationality or rational side as appropriate. It also has the inverse $0^+\mapsto0^+$. Every finite input has $L$-value strictly below $1$, so neither $1^-$ nor $1^+$ is in its range. This gives the first equality of (17.3). For a value strictly above $1$, the inverse of $R$ is subtraction of $1$, preserving side; $1^+$ has inverse $0^+$. There is no value with $R$-image $1^-$, since a positive input gives a value strictly above $1$ and the only zero-limit input is $0^+$. This gives the second equality. The inverse descriptions prove individual injectivity, range disjointness and the complete incoming-edge assertion. Finally no positive $t$ satisfies $t/(1+t)=t$, while $0^+$ is fixed. Equation (17.4) follows. Notice that the unattained limit $1^-$ of increasingly large $L$-inputs is not an extra action value: the carrier has no input at infinity. $\square$
+

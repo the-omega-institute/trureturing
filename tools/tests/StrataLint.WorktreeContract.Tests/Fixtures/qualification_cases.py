@@ -1,13 +1,133 @@
 """Batched qualification retains independent refusal and operational outcomes."""
 
-from contextlib import redirect_stdout
+from contextlib import contextmanager, redirect_stdout
 import io
 import json
+import os
+from pathlib import Path
+import re
 import subprocess
+from types import SimpleNamespace
 from unittest.mock import patch
 
 
 class QualificationCases:
+    @contextmanager
+    def removal_metadata(self, boundary, field, enabled=lambda: True):
+        # Inject metadata at the OS boundary: Linux CI needs no mount or chown
+        # privileges, and the actual production traversal makes the decision.
+        original_stat, original_lstat = os.stat, os.lstat
+        def observe(operation):
+            def read(path, *args, **kwargs):
+                info = operation(path, *args, **kwargs)
+                if isinstance(path, (str, bytes, os.PathLike)) and Path(os.fsdecode(path)) == boundary and enabled():
+                    fields = {name: getattr(info, name) for name in dir(info) if name.startswith("st_")}
+                    fields[field] += 1
+                    return SimpleNamespace(**fields)
+                return info
+            return read
+        with patch.object(os, "stat", observe(original_stat)), patch.object(os, "lstat", observe(original_lstat)):
+            yield
+
+    def assert_removal_boundary_precedes_checkpoint(self, boundary, field, reason, targets=None):
+        import worktree_preservation as preservation
+        import worktree_publication as publication
+        targets = targets or [self.tree]
+        before = {target: {str(path.relative_to(target)): path.read_bytes()
+                           for path in target.rglob("*") if path.is_file()} for target in targets}
+        refs = self.g(self.main, "show-ref")
+        indexes = {target: Path(self.g(target, "rev-parse", "--absolute-git-dir").strip()) / "index"
+                   for target in targets}
+        index_bytes = {target: path.read_bytes() for target, path in indexes.items()}
+        options = self.removal_options()
+        options.names = " ".join(target.name for target in targets)
+        with self.removal_metadata(boundary, field), \
+                patch.object(publication, "commit_snapshot") as checkpoint, \
+                patch.object(preservation, "remove_payload") as payload:
+            with self.assertRaisesRegex(preservation.Refused, re.escape(reason + ":" + str(boundary))):
+                preservation.remove(options)
+        checkpoint.assert_not_called()
+        payload.assert_not_called()
+        self.assertEqual(refs, self.g(self.main, "show-ref"))
+        registered = {row["worktree"] for row in preservation.inventory(self.main)}
+        for target in targets:
+            self.assertIn(str(target), registered)
+            self.assertEqual(before[target], {str(path.relative_to(target)): path.read_bytes()
+                                             for path in target.rglob("*") if path.is_file()})
+            self.assertEqual(index_bytes[target], indexes[target].read_bytes())
+            self.assertFalse((indexes[target].parent / preservation.REMOVAL_RECORD).exists())
+
+    def removal_owner_boundary_before_checkpoint(self):
+        (self.tree / "owned").write_text("unique uncheckpointed bytes\n")
+        self.assert_removal_boundary_precedes_checkpoint(self.tree, "st_uid", "owner_boundary")
+
+    def removal_device_boundary_before_checkpoint(self):
+        boundaries = [self.tree / "dir", self.tree / ".lake/build/empty"]
+        boundaries[1].mkdir(parents=True)
+        (self.tree / ".gitignore").write_text(".lake/\n")
+        (self.tree / "owned").write_text("unique uncheckpointed bytes\n")
+        for boundary in boundaries:
+            with self.subTest(boundary=boundary.relative_to(self.tree)):
+                self.assert_removal_boundary_precedes_checkpoint(boundary, "st_dev", "device_boundary")
+
+    def removal_boundary_batch_preflight_preserves_all_targets(self):
+        second = self.root / "second"
+        self.g(self.main, "worktree", "add", "-b", "second", second, "HEAD")
+        (self.tree / "owned").write_text("first target unique bytes\n")
+        for boundary, field, reason in ((second, "st_uid", "owner_boundary"),
+                                        (second / "dir", "st_dev", "device_boundary")):
+            with self.subTest(reason=reason):
+                self.assert_removal_boundary_precedes_checkpoint(boundary, field, reason, [self.tree, second])
+
+    def assert_late_removal_boundary_retained(self, boundary, field, reason):
+        import worktree_preservation as preservation
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        record = metadata / preservation.REMOVAL_RECORD
+        (self.tree / "owned").write_text("checkpointed ordinary bytes\n")
+        with self.removal_metadata(boundary, field, enabled=record.exists), \
+                patch.object(preservation, "remove_payload") as payload:
+            item = preservation.remove(self.removal_options())["items"][0]
+        payload.assert_not_called()
+        self.assertEqual("refused", item["outcome"], item)
+        self.assertEqual(reason + ":" + str(boundary), item["reason"])
+        self.assertIn(str(self.tree), [row["worktree"] for row in preservation.inventory(self.main)])
+        self.assertEqual("checkpointed ordinary bytes\n", (self.tree / "owned").read_text())
+        self.assertTrue((self.tree / "dir/child").is_file())
+        self.assertTrue(record.is_file())
+
+    def removal_rechecks_owner_boundary_after_checkpoint(self):
+        self.assert_late_removal_boundary_retained(self.tree, "st_uid", "owner_boundary")
+
+    def removal_rechecks_device_boundary_after_checkpoint(self):
+        self.assert_late_removal_boundary_retained(self.tree / "dir", "st_dev", "device_boundary")
+
+    def removal_boundary_scan_does_not_follow_directory_links(self):
+        import worktree_preservation as preservation
+        outside = self.root / "outside"
+        outside.mkdir()
+        unique = outside / "unique"
+        unique.write_text("outside unique bytes\n")
+        link = self.tree / "directory-link"
+        link.symlink_to(outside, target_is_directory=True)
+        with self.removal_metadata(link, "st_dev"):
+            result = preservation.remove(self.removal_options())
+        self.assertEqual("succeeded", result["status"], result)
+        self.assertFalse(self.tree.exists())
+        self.assertEqual("outside unique bytes\n", unique.read_text())
+
+    def removal_boundaries_share_the_nested_git_walk(self):
+        import worktree_preservation as preservation
+        original_walk = os.walk
+        walked = []
+        def walk(target, *args, **kwargs):
+            walked.append(Path(target))
+            yield from original_walk(target, *args, **kwargs)
+        with patch.object(os, "walk", walk):
+            result = preservation.remove(self.removal_options())
+        self.assertEqual("succeeded", result["status"], result)
+        self.assertEqual([self.tree, self.tree], walked)
+        self.assertFalse(self.tree.exists())
+
     def qualification_intentional_lock_metadata_races(self):
         import os
         import worktree_protocol as protocol
@@ -409,10 +529,10 @@ class QualificationCases:
         self.assertEqual("locked_recent", row["error"])
         self.assertTrue(self.tree.is_dir())
 
-    def pool_final_qualification_defers_later_candidates(self):
+    def pool_final_qualification_continues_later_candidates(self):
         self.pool_final_qualification_failure_cases("pool")
 
-    def pool_return_final_qualification_defers_later_candidates(self):
+    def pool_return_final_qualification_continues_later_candidates(self):
         self.pool_final_qualification_failure_cases("return")
 
     def pool_final_qualification_failure_cases(self, action):
@@ -434,7 +554,7 @@ class QualificationCases:
                         self.make_idle(later, self.base)
                     candidates = [older, newer, later]
                     failed = newer if prior_eviction else older
-                    deferred = candidates[candidates.index(failed) + 1:]
+                    later_candidates = candidates[candidates.index(failed) + 1:]
                     reference = self.g(failed, "symbolic-ref", "HEAD").strip()
                     qualified, removals = [], []
                     cause = "initialization_in_progress" if refused else "fatal: final pool qualification broke"
@@ -465,12 +585,13 @@ class QualificationCases:
                         if action == "return":
                             self.assertIn(result["status"], ("returned", "already_idle"))
                             result = result["pool"]
-                            deferred.append(self.tree)
+                            later_candidates.append(self.tree)
                         self.assertEqual("failed", result["status"])
-                        self.assertEqual([older] if prior_eviction else [], removals)
-                        expected_qualified = candidates[:candidates.index(failed) + 1]
-                        if prior_eviction:
-                            expected_qualified.insert(1, older)
+                        self.assertEqual([target for target in candidates if target != failed]
+                                         + ([self.tree] if action == "return" else []), removals)
+                        expected_qualified = [target for target in candidates
+                                              + ([self.tree] if action == "return" else [])
+                                              for _ in range(1 if target == failed else 2)]
                         self.assertEqual(expected_qualified, qualified)
                         rows = {row["path"]: row for row in result["items"]}
                         row = rows[str(failed)]
@@ -481,10 +602,9 @@ class QualificationCases:
                         self.assertEqual(reference, row["branch"])
                         self.assertEqual(self.base, row["head"])
                         self.assertTrue(failed.is_dir())
-                        for target in deferred:
-                            self.assertTrue(target.is_dir())
-                            self.assertEqual("retained", rows[str(target)]["outcome"])
-                            self.assertEqual("idle_sweep_deferred", rows[str(target)]["reason"])
+                        for target in later_candidates:
+                            self.assertFalse(target.exists())
+                            self.assertEqual("removed", rows[str(target)]["outcome"])
                         if prior_eviction:
                             self.assertEqual("removed", rows[str(older)]["outcome"])
                             self.assertEqual(self.base, rows[str(older)]["checkpoint"]["commit"])

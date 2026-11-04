@@ -1,0 +1,6 @@
+Subdivide every cell by Lemma 126.2. Equivalently, the complete tetrahedral face pairing on tetrahedra (g,i) is:
+
+- The face A B V_i of (g,i) pairs with that face of (g,i−1), preserving labels.
+- The face A V_i V_{i+1} of (g,i) pairs with the corresponding face of (ga,i) for even i, or (gc,i) for odd i.
+- The face B V_i V_{i+1} of (g,i) pairs with the corresponding face of (gb,i) for even i, or (gd,i) for odd i.
+

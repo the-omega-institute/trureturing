@@ -1,0 +1,92 @@
+**定理 29.2（原细率的精确识别商与端点）。** 在定理 28.3 的前件下，对每个原 $j\in\mathsf C$，准备与该支的未条件化联合概率为
+
+$$
+q_{js}=\operatorname{Tr}V_j(X_{p_s})
+=\operatorname{Tr}(G_j\sigma_{p_s}).
+\tag{29.2}
+$$
+
+这些率精确决定 $G_j$ 在 $\mathcal W_\rho$ 上的实正交投影：两个候选效果 $G,G'$ 给同一全部设计率，当且仅当 $G-G'\in\mathcal W_\rho^\perp$。特别地，对任意指定实数 $t_j$，
+
+$$
+\boxed{\quad q_{js}=t_j\eta_{p_s}\ (s\in S)
+\quad\Longleftrightarrow\quad
+G_j-t_jI_0\in\mathcal W_\rho^\perp.\quad}
+\tag{29.3}
+$$
+
+节点已经满足
+
+$$
+\operatorname{span}_{\mathbb R}\{\sigma_{p_s}:s\in S\}
+=\mathcal W_\rho.
+\tag{29.4}
+$$
+
+所以在同一来源上增加任意其他秩一标签，包括采用更高阶设计，不能扩大这个可见空间。若 $\mathcal W_\rho=\operatorname{Herm}(M_0)$，(29.3) 迫使 $G_j=t_jI_0$；否则内部值的标量率一般不迫使标量效果。对任意来源，若 (29.3) 成立，则 $t_j\in[0,1]$，且端点仍有
+
+$$
+t_j=0\Longrightarrow G_j=0,\ \Psi_j=0;\qquad
+t_j=1\Longrightarrow G_j=I_0,\ \Psi_j\text{ 在输入域上保迹}.
+\tag{29.5}
+$$
+
+对于原粗事件 $C\subseteq\mathsf C$，粗率 (29.3) 只约束 $G_C=\sum_{j\in C}G_j$，不能逐支推出它。即使率已唯一识别全部效果，也不唯一识别 $\Psi_j$ 的返回记忆动力学。
+
+**证明。** (28.6) 及迹对偶给 (29.2)。设计的二阶矩给任意 $A=A^{\dagger}$ 的成熟恒等式
+
+$$
+\sum_sw_s[\operatorname{Tr}(Ap_s)]^2
+=\frac{\operatorname{Tr}(A^2)+(\operatorname{Tr}A)^2}{d(d+1)}.
+\tag{29.6}
+$$
+
+这是 (28.4) 的二阶偏迹与 $\Pi_{\rm sym}^{(2)}=(I+\mathsf F)/2$ 的直接收缩，所用设计矩仍为假设 28.2 所引 Scott、Roy–Scott 的结果。若 $A$ 与全部 $p_s$ 正交，则右端为零，故 $A=0$；因此这些节点张成 $\operatorname{Herm}(H)$。应用同一个实线性映射 $\mathcal S_\rho$ 即得 (29.4)。迹配对的零空间给效果差的充要条件，取 $G'=t_jI_0$ 得 (29.3)。其他秩一 $p$ 仍在同一个 $\operatorname{Herm}(H)$ 中，其 $\sigma_p$ 必在 $\mathcal W_\rho$ 中。
+
+一阶设计矩还给
+
+$$
+\sum_sw_s\sigma_{p_s}=\rho_M/d,
+\qquad \sum_sw_s\eta_{p_s}=1/d.
+\tag{29.7}
+$$
+
+于是 (29.3) 给 $t_j=\operatorname{Tr}(G_j\rho_M)$。由 $0\le G_j\le I_0$ 及 $\rho_M$ 在自身支撑上的忠实性，$0\le t_j\le1$。$t_j=0$ 时
+$\rho_M^{1/2}G_j\rho_M^{1/2}\ge0$ 且迹为零，故 $G_j=0$；(28.16) 中每个 $B_{j\alpha}^{\dagger}B_{j\alpha}$ 为零，从而 $\Psi_j=0$。$t_j=1$ 时同样对 $I_0-G_j$ 使用此论证，得 $G_j=I_0$。这里只使用有限维支撑上的严格正性，不要求一个已知数值本征值下界。
+
+若 $\mathcal W_\rho$ 为真子空间，取非零 $D\in\mathcal W_\rho^\perp$。对任意 $0<t<1$，选 $0<|\epsilon|<\min\{t,1-t\}/\|D\|_{\rm op}$，则
+
+$$
+0<G=tI_0+\epsilon D<I_0.
+\tag{29.8}
+$$
+
+因 $\rho_M\in\mathcal W_\rho$ 且忠实，非零标量矩阵不在 $\mathcal W_\rho^\perp$，所以 $D$ 和 $G$ 均非标量。将
+$B=\iota_0\sqrt G$、$B_f=\iota_0\sqrt{I_0-G}$
+作为 $M_0\to M$ 的两个数学算子，给出域上的完整 CP 记忆仪器；若 $M_0\ne M$，在 $M_0^\perp$ 上另取恒等失败 Kraus 算子、成功算子取零，就得到完整 $M$ 上的一份仪器。张量 $\operatorname{id}_H$ 后，它满足零泄漏及同一全部标量率，却有非标量成功效果。这是一个反模型的完整仪器定义，不是更改已给原装置的失败动作。命题 30.2 给带相关来源及原历史差别的具体实例。
+
+满 steering 的一个充分来源是
+
+$$
+|v\rangle=\sum_{k=1}^r\sqrt{\lambda_k}|e_k\rangle\otimes|m_k\rangle,
+\qquad \lambda_k>0,\quad M_0=\operatorname{span}\{m_k\}.
+\tag{29.9}
+$$
+
+在这些基中 $\mathcal S_{|v\rangle\langle v|}(A)=D A_r^{\mathsf T}D$，$D=\operatorname{diag}(\sqrt{\lambda_k})$，$A_r$ 为 Schmidt 子空间的压缩。任意 Hermitian $r\times r$ 矩阵均可取作 $A_r$，且 $D$ 可逆，所以像为全部 $\operatorname{Herm}(M_0)$。纯满 Schmidt 来源的可识别性与 [D'Ariano–Lo Presti，arXiv:quant-ph/0211133v1，文中的纯态及混态 faithful 条件](https://arxiv.org/pdf/quant-ph/0211133v1) 相接；此处只消费线性像的判据，不把其单边通道层析结论等同于定理 28.3 的原联合支结论。
+
+纯性并非必要。取 $H=M=\mathbb C^d$，$d\ge2$，以及固定真正混合来源
+
+$$
+\rho_c=c|\Phi_d\rangle\langle\Phi_d|+(1-c)I_{H\otimes M}/d^2,
+\quad |\Phi_d\rangle=d^{-1/2}\sum_i|i,i\rangle,
+\quad 0<c<1.
+\tag{29.10}
+$$
+
+此时 $\mathcal S_{\rho_c}(A)=cA^{\mathsf T}/d+(1-c)(\operatorname{Tr}A)I_M/d^2$；在标量与无迹 Hermitian 子空间上分别可逆，故仍满 steering。相比之下，乘积来源 $\omega_H\otimes\tau_M$ 的可见像仅为 $\mathbb R\tau_M$，而定理 28.3 对它仍成立。
+
+粗率的结论由将 (29.2) 在原标签上求和得到；这种粗／细区别沿用本卷命题 26.1 及 [C119 定理 152.2](AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md#152-原记录准备与有限校准的对应) 的原记录边界，不将粗 CP 支的某个 Kraus 表示当作原细菜单。
+
+最后，即使给定 $G=tI_0$，记忆映射也可为 $\Psi=t\Theta$，其中 $\Theta$ 是任意从 $M_0$ 到 $M$ 的 CPTP 映射；补以另一个效果 $(1-t)I_0$ 的失败支就得域上的完整仪器。不同的 $\Theta$ 给相同全部成功率而可给不同返回记忆。故率识别的是效果，而非整个 CP 映射。$\square$
+

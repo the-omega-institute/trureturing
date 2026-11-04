@@ -1,0 +1,10 @@
+## 5. Sources and literature status
+
+| Source | Exact scope and use |
+| --- | --- |
+| S. Cepollaro, G. Cuffaro, M. B. Weiss, S. Cusumano, A. Hamma, S. Lloyd, *Stabilizer Entropy of Subspaces*, arXiv:2512.23013v1, Sec. II Eqs. (II.1)–(II.4), (II.8), (II.25); Sec. III Eqs. (III.4)–(III.11); Sec. IV Theorem 1; App. D Eq. (D.5) (equation numbers of the arXiv HTML rendering) | `literature-attested`: the Weyl operators, the linear stabilizer entropy, the average stabilizer-entropy gap, the Haar fourth moment $\binom{d_S+3}4^{-1}\Pi_{\mathrm{sym}^4}$ with $\Pi_{\mathrm{sym}^4}$ and $T_\sigma$ of Eq. (III.9), the identification (III.10) of $k\,\mathrm{tr}(Q_S\mathcal A_4^S)$ as the intrinsic term and its single-qudit value (III.11), the random-subspace average of the gap (Theorem 1, used in Remark 4.4), and the cycle-trace identity, used as cited facts (a)–(e). The paper contains no statement about parity sectors. |
+| — | `repo-derived`: Conventions 2.1, 2.2, Lemmas 3.1, 3.2, Remarks 4.3, 4.4, 4.5. |
+| — | `suspected-novel`: Proposition 3.3, Theorem 4.1, Corollary 4.2. Searched: the full TeX source of arXiv:2512.23013v1; arXiv:2512.19657v2, M. Erew, M. Goldstein, *Extremizing Measures of Magic on Pure States by Clifford-stabilizer States*, which treats non-degenerate Clifford eigenstates and not Haar averages over Clifford eigenspaces; arXiv:2603.28870, D. Iannotti, A. Russotto, B. Jasser, J. Odavić, A. Hamma, *Non-stabilizerness and U(1) symmetry in chaotic many-body quantum systems*, which treats random pure states constrained to U(1) charge sectors of many-body systems (complex-fermion SYK, XXZ chain), not the parity sectors of a single qudit; web and arXiv searches combining stabilizer entropy, stabilizer Rényi entropy, nonstabilizerness or magic with parity sector, parity eigenspace, Fourier or Clifford eigenspace, qudit cat state, symmetric subspace, $\mathbb Z_2$ symmetry sector and average magic gap. No statement of these results was found in the searched scope; this establishes no worldwide priority. |
+
+<!-- 追加区自下一行的「追加锚」开始。每批增补写在锚之后,并以一行新的、逐字相同的追加锚结尾。 -->
+

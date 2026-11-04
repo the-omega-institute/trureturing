@@ -1,0 +1,31 @@
+**引理 11.2（单原始对的零集）。** 对所有 $(E,U)\in\mathcal K$，
+
+$$
+\boxed{\quad g(E,U)=0\quad\Longleftrightarrow\quad
+       \rho(E,U)=0\quad\Longleftrightarrow\quad
+       (E,U)\in\mathcal S.\quad}
+$$
+
+**证明。** 若 $(E,U)\in\mathcal S_\sigma$，式 (9.12) 中的两个平方根列均位于相同的证书射线上，且 $U$ 只是式 (6.3) 的极坐标修正乘以标量相位；故 $a=\tau=0$，从而 $\rho=0$。
+
+反之，$g=0$ 时，式 (9.12) 的每个非负项都为零。由定理 8.2 的等号刻画，每个非零列
+
+$$
+b_\ell(E)=(E^{\mathsf T})^{1/2}e_\ell
+$$
+
+位于两个证书复射线之一。其像 $R_0b_\ell(E)$ 的四个坐标均非零，因此 $\tau=0$ 迫使不等式
+
+$$
+\left|\operatorname{Tr}\!\left(U\operatorname{diag}(R_0b_\ell(E))\right)\right|
+\le\sum_i\left|(R_0b_\ell(E))_i\right|
+$$
+
+逐项取等号。于是 $U$ 为相应极坐标修正乘以一个共同标量相位。一个 $U$ 不可能同时修正两个不同的证书射线，因为式 (9.24) 不是标量矩阵；而 $\operatorname{Tr}E=1$ 保证至少一个列非零。所以全部非零列在同一射线上。由
+
+$$
+\sum_\ell b_\ell(E)b_\ell(E)^\dagger=E^{\mathsf T}
+$$
+
+及迹一归一化，得到 $E=E_\sigma$，并且 $U=e^{i\varphi}U_\sigma$。这正是 $(E,U)\in\mathcal S_\sigma$。$\square$
+

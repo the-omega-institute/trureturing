@@ -1,0 +1,20 @@
+**Definition 24.1 (one authentic seed and the exact target).** Fix one
+actual seed $c\in C_s$ with its literal word and exact triple
+$(e_c,A_c,B_c)$ from Theorem 18.2. For every integer $t\ge0$ put
+
+$$
+ H_c(t)=\{w\in\{a,b\}^*:e_{cw}-e_c=t\},\qquad
+ \pi_{c,t}(w)=(A_{cw},B_{cw})\bmod p.
+\tag{PCR.61}
+$$
+
+Only this seed is used, not a union over seeds, an invented initial cone,
+or native elapsed time. The positive edge delays are exactly (PCR.37).
+Every $cw$ is an actual core-only cone and $\pi_{c,t}$ takes values in
+$R_s$. Let $J_{c,t}=\pi_{c,t}(H_c(t))$ and
+$M_{c,t}=\max_{q\in J_{c,t}}|\pi_{c,t}^{-1}(q)|$.
+The projection erases the relative address; a complete descriptor that
+retains the literal $v=cw$ has not erased it. The endpoint here omits
+integer lifts, the literal and its ancestry. All lower bounds below
+refer to this precise projection and this declared time.
+

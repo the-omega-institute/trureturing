@@ -1,0 +1,35 @@
+### 定理 30.3（极端正效果的完整未来屏蔽）
+
+在定义 30.1–30.2 的同一实际合法域内，假设每个所用 $Q_q\in\mathcal F$ 的成员资格、共同合法性、全部原有完整标签及原始边际均已供应，并以 §17.4–17.5 得到 (30.4)–(30.5)。在仅有受限域时，(30.4)–(30.5) 必须作为明确的抽象正细化前提逐项给出。若 $E_j\ne0$ 且 $\lambda_-=0$，取其唯一非零本征方向的投影 $P_v=|v\rangle\langle v|$。则存在数
+
+$$
+c_{q,w}=\frac{\operatorname{Tr}(P_vG_{j,q,w})}{\lambda_+}\ge0,\qquad
+\sum_wc_{q,w}=1,
+\tag{30.6}
+$$
+
+使所有原合法输入前缀都满足
+
+$$
+P_j(a;q,w)=m_j(a)c_{q,w}.
+\tag{30.7}
+$$
+
+所以每个实际正质量前缀的完整条件未来律，在同一个 $q$ 上都相同；一个实际正分支即可锚定该律。这个结论不删除任何原记录，也不把不同 $q$ 的行误合为同一行。
+
+**证明。** 由 (30.5) 和正性，$0\le G_{j,q,w}\le E_j=\lambda_+P_v$。若 $x\perp v$，则
+
+$$
+0\le\langle x,G_{j,q,w}x\rangle\le\langle x,E_jx\rangle=0.
+$$
+
+正矩阵的平方根于是给出 $G_{j,q,w}x=0$。故每个联合效果都支撑在 $\mathbb Cv$ 上，形如 $G_{j,q,w}=\gamma_{q,w}P_v$，其中 $\gamma_{q,w}\ge0$。对 (30.5) 求迹得 $\sum_w\gamma_{q,w}=\lambda_+$，这给出 (30.6)。最后
+
+$$
+\operatorname{Tr}(\rho_aG_{j,q,w})=\gamma_{q,w}\operatorname{Tr}(\rho_aP_v)
+=\frac{\gamma_{q,w}}{\lambda_+}\operatorname{Tr}(\rho_aE_j)
+=m_j(a)c_{q,w}.
+$$
+
+若 $\lambda_+=0$，则 $E_j=0$，由 (30.5) 每个 $G_{j,q,w}=0$，所有原始联合质量均为零；(30.6) 没有定义，条件律也没有定义。若 $\lambda_->0$，事件即使只有一个很小的补本征值，也不再强迫支撑为一维，故 (30.7) 不能从谱信息单独推出。证毕。
+

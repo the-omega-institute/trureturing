@@ -1,0 +1,9 @@
+对任意有限非空 patch 族与 Hermitian 输入 $R=(R_C)_C$，以下条件等价：
+
+1. 唯一候选 C92 成立；
+
+2. $\ell_R$ 是式 [(3.1)](#eq-c92-operator-system) 上定义良好的归一正泛函；
+
+3. 存在某个全态 $\sigma\in\mathcal D(\mathcal H)$，使
+    $A(\sigma)=R$，即全部指定局部读出同时来自它。
+

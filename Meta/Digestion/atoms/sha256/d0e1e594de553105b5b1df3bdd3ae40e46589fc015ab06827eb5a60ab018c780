@@ -1,0 +1,130 @@
+**Lemma 12.4 (Finite cap payment on one actual law).** Let $a\ge4$ and
+$h\ge1$ be integers, let $x\in\mathcal X(a,h)$, and choose any partition
+$C\mathbin{\dot\cup}D=[a+1+h]$ with $|C|=a+1$ and $|D|=h$. Define
+$u,\delta,c,B,L,A,e,\alpha,\beta,\Lambda$ by (12.7) and $P_{a,h},m_{a,h}$
+by (12.2). If
+
+$$
+\Lambda>\frac{a+1}{a}P_{a,h},
+\tag{12.16}
+$$
+
+then
+
+$$
+H(x)\ge m_{a,h}
+ +\left(\Lambda-\frac{a+1}{a}P_{a,h}\right)e.
+\tag{12.17}
+$$
+
+In particular equality with $m_{a,h}$ forces all tail-containing types
+to be singletons and $u=u_{a,h}\le1/a$.
+
+**Proof.** The following refinement retains the surplus in the strict
+payment argument of Incidence Lemma 13.7:
+
+$$
+H(x)\ge\Phi_{a,h}(u)+\Lambda e.
+\tag{12.18}
+$$
+
+Here $0<u<a$ follows from positivity of all tail and core marginals and
+their common sum $a$. For completeness put $I_i=\mathbf1_{\{i\in T\}}$,
+$c_a=a(2a+1)$ and
+
+$$
+\begin{gathered}
+\rho_i=(1-I_i)(2a+1)(a-L)+I_i(r-L)(r-L-1),\\
+R_i=\mathbb E\rho_i,\qquad
+\Delta_i=\mathbb E[(K^2-L^2)I_i]\ge0,\\
+Z=\mathbb E\!\left[(K^2-1)\sum_{j\in T\cap D}t_j^{-2}\right],\qquad
+b_a=(a-1)(2a+1).
+\end{gathered}
+$$
+
+Each $\rho_i\ge0$: when $I_i=0$, $L\le a$; when $I_i=1$, its last two
+factors are consecutive integers with nonnegative product. Expanding
+and using $\mathbb E L=a-u$ gives the exact identity from Incidence (13.20),
+written with its nonnegative terms retained:
+
+$$
+H=\sum_{j\in D}\frac1{t_j}+Z
+ +\sum_{i\in C}\left(\frac{a^2}{y_i}
+ -\frac{(2a+1)u}{y_i^2}+\frac{R_i+\Delta_i}{y_i^2}\right).
+\tag{12.19}
+$$
+
+On $A$, all deficits $c_aB-\rho_i$ are nonnegative. For $I_i=0$ they are
+$(2a+1)[a(B-1)+L]$. For $I_i=1$ they are
+$c_a(B-1)+a^2+(2a+1)L-L^2\ge0$, since $L\le a+1\le2a+1$.
+Also $\sum_i\rho_i=Q(L)$, so on this same type
+
+$$
+\sum_{i\in C}(c_aB-\rho_i)
+=\alpha(B-1)+\beta L-L^3
+\le\max\{\alpha,\beta\}(K-1).
+\tag{12.20}
+$$
+
+Only after establishing these signs may one bound each weight by $c^{-2}$.
+Off $A$ the $\rho_i$ are nonnegative, and $\mathbb E B=u$, whence
+
+$$
+\sum_{i\in C}\frac{R_i-c_au}{y_i^2}
+\ge-\frac{\max\{\alpha,\beta\}}{c^2}e.
+$$
+
+On $A$, the integrand of $Z$ is at least
+$B(K^2-1)/\delta^2\ge3(K-1)/\delta^2$; it is zero off $A$.
+Substituting into (12.19) and discarding only the nonnegative $\Delta_i$
+proves
+
+$$
+H\ge\sum_{j\in D}\frac1{t_j}
+ +\sum_{i\in C}\left(\frac{a^2}{y_i}+\frac{b_au}{y_i^2}\right)
+ +\Lambda e.
+\tag{12.21}
+$$
+
+Cauchy on the actual $h$ tail marginals and strict Jensen for
+$g_u(y)=a^2/y+b_au/y^2$, on the actual $r$ core marginals of sum $a-u$,
+give (12.18). No marginal has been independently prescribed.
+
+The mean constraint provides the missing control of the cap. On $A^c$,
+$L\le r$, and therefore
+
+$$
+a=\mathbb E K\le r\mathbb P(A^c)+\mathbb E[L+B;A].
+$$
+
+Rearrangement, with $u=\mathbb E B$, gives
+
+$$
+au-1\le r\mathbb E[B-1;A]+\mathbb E[L;A]\le r e.
+\tag{12.22}
+$$
+
+The last inequality uses $K-1=(B-1)+L$ on $A$. Consequently
+$(u-1/a)_+\le(r/a)e$, where $z_+=\max\{z,0\}$.
+
+Strict convexity of $\Phi_{a,h}$ on $(0,a)$, and the exact cap derivative
+$\Phi_{a,h}'(1/a)=a^2(\Gamma_a-h^2)$ from Proposition 5.2, imply for every
+$0<u<a$ that
+
+$$
+\Phi_{a,h}(u)\ge m_{a,h}-P_{a,h}(u-1/a)_+.
+\tag{12.23}
+$$
+
+Indeed, if that derivative is nonnegative, its unique unconstrained
+minimizer is at or below the cap, so $P_{a,h}=0$ and the assertion is its
+global minimum property. If the derivative is negative, $m_{a,h}$ is the
+cap value. For $u\le1/a$ use the constrained minimum property; for
+$u>1/a$ use the supporting tangent at the cap, whose slope is $-P_{a,h}$.
+This proves (12.23) in all cases, including zero cap derivative.
+Combining (12.18), (12.22) and (12.23) proves (12.17).
+Under (12.16), equality forces $e=0$. Nonnegativity and integrality of
+$K-1$ on $A$ then force $K=1$ on every positive-mass tail-containing type.
+Equation (12.22) gives $u\le1/a$, and (12.18) and uniqueness of the scalar
+minimum give $u=u_{a,h}$. ∎
+

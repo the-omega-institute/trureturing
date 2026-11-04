@@ -1,0 +1,36 @@
+**Lemma 2.3 (A scalar certificate for every integer source size).** For every integer $k\ge1$ and every $0<y\le1$,
+
+$$
+\frac{k^2}{y^2}
+\ge \frac{16}{y}+\frac{64}{3}\left(1-\frac4k\right).
+$$
+
+**Proof.** Put $z=1/y\ge1$ and
+
+$$
+P_k(z)=k^2z^2-16z-\frac{64}{3}\left(1-\frac4k\right).
+$$
+
+For $k=1,2,3$,
+
+$$
+P_1(z)=(z-8)^2,
+$$
+
+$$
+P_2(z)=4(z-2)^2+\frac{16}{3},
+$$
+
+$$
+P_3(z)=9(z-1)^2+2(z-1)+\frac19.
+$$
+
+For $k\ge4$,
+
+$$
+P_k(z)=k^2(z-1)^2+(2k^2-16)(z-1)
+ +\frac{(k-4)(3k^2+12k-64)}{3k},
+$$
+
+whose terms are nonnegative. ∎
+

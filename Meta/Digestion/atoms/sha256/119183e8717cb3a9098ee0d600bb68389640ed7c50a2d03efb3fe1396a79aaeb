@@ -1,0 +1,35 @@
+**引理 2.1 任意单点水平切向都可以由某个自伴算符实现。**
+
+定义
+
+```math
+H_\psi=i\hbar\bigl(|\xi\rangle\langle\psi|-|\psi\rangle\langle\xi|\bigr).
+```
+
+则
+
+```math
+H_\psi^*=H_\psi,\qquad
+-\frac{i}{\hbar}H_\psi\psi=\xi.
+```
+
+\*\*证明。\*\*括号中的算符反自伴；作用于 ψ 时，第二项因正交为零，第一项给 ξ。证毕。
+
+一般单位球切向可写成
+
+```math
+v=\xi+i\beta\psi,\qquad \langle\psi,\xi\rangle=0,\quad \beta\in\mathbb R.
+```
+
+此时所有实现该切向的自伴算符都可写为
+
+```math
+H=i\hbar\bigl(|\xi\rangle\langle\psi|-|\psi\rangle\langle\xi|\bigr)
+-\hbar\beta|\psi\rangle\langle\psi|+B,
+\qquad B=B^*,\quad B\psi=0.
+```
+
+因此单点切向留下了 ψ 的正交补上的任意自伴作用。更重要的是，即使一个实际场是非线性的，也可能在每个点分别配出不同的 Hψ。
+
+\*\*白话图景。\*\*只看一个点朝哪里走，几乎总能给它配出一个转动。要证明它是一扇共同的量子门，必须比较两个内容的箭头能否同时来自同一个作用。新条件因此落在二元关系上。
+

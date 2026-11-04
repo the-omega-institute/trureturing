@@ -1,0 +1,54 @@
+**Lemma 4.2 (Low-genus vanishing and tetrahedron support; `lem:small`).**
+For any finite set of ordinary colors and odd total population, the
+one- and two-loop spaces vanish. The odd three-loop space is generated
+by diagrams whose skeleton is the tetrahedron.
+
+**Proof.**
+The one- and two-loop vanishing statements are [Kuperberg, Corollary `c:odd12`](../../../Library/Topology/kuperberg2026oddvas.md), §4. The skeleton reductions used here retain only the tetrahedron-support conclusion at three loops. The local normal form applies since all these genera are positive.
+The one-loop skeleton is the circle, whose reflection negates its
+one-dimensional homology and has no retained-vertex AS sign. Each
+insertion acquires the sign of its reversed path. Thus every color
+population of odd total size is negated. The two-loop unanchored
+cubic skeletons have two vertices and are the theta or the dumbbell.
+For theta, exchange the two vertices and reverse all three edge flags:
+the product of the two cycle signs is $+1$ and the homology action is
+$-I$. For dumbbell, reverse the two loops; the two vertex AS signs
+multiply to $+1$, the bridge coordinate is zero, and homology is again
+negated. These prove one- and two-loop odd vanishing with arbitrarily
+many commuting colors, without any three-color invariant assertion.
+
+For a bridge of a cubic unanchored skeleton each side has positive
+genus. Indeed after cutting it and adding one socket leaf to each side,
+a genus-zero side would be a tree with exactly one leaf and all other
+vertices trivalent. For a tree, the degree identity gives
+$n_1=n_3+2$, contradicting $n_1=1$. A bridge with inserted ordinary
+legs is already zero; otherwise make this cut as an actual graph
+operation. In genus three it splits the genera as $1+2$. The two
+socket-bearing factors have total leg counts whose sum is the original
+odd count plus two, still odd. Exactly one factor is odd, and its genus
+is one or two, so it is zero by the preceding paragraph. Lemma
+[4.1](#lem-glue) kills its gluing.
+
+The bridgeless cubic three-loop skeleton has four vertices. A loop
+would force a bridge. If a double-edge pair is present, its two other
+branches must meet the other two vertices separately (otherwise there
+is a bridge), and those other two vertices must also form a double-edge
+pair. Otherwise the simple graph is $K_4$. On the double-digon graph
+with ordered edges
+
+$$
+01,01,23,23,02,13,
+$$
+
+the signed edge map $(-1,-2,-3,-4,6,5)$ sends vertices by
+$(1,0,3,2)$, preserves all four selected cycles, and acts as $-I$ on
+the cycles with chord coefficients $2,4,6$. Thus its odd part is zero.
+Only tetrahedron-supported diagrams remain. This is a generation
+statement; it does not say the entire arbitrary-color three-loop space
+vanishes, classify determinant classes, or extend a tetrahedral
+functional to a global one.
+$\square$
+
+<a id="lem-bridgeB"></a>
+<a id="lem:bridgeB"></a>
+

@@ -1,0 +1,56 @@
+### 定理 3.4（残余恒等式与固定代数）
+
+<a id="thm-c122-dirichlet-defect"></a>
+
+存在一组去迹 Hermitian 算子 $L_a$，满足 $D_{\mathrm K}=\sum_aL_a^2$，且
+
+<a id="eq-c122-double-commutator"></a>
+
+$$
+\mathcal T(X)-X
+ =\sum_aL_aXL_a-\tfrac12(D_{\mathrm K}X+XD_{\mathrm K})
+ =-\tfrac12\sum_a[L_a,[L_a,X]].
+\tag{14}
+$$
+
+特别地
+
+<a id="eq-c122-dirichlet-energy"></a>
+
+$$
+\operatorname{Tr} D_{\mathrm K}=d(1-p),\qquad
+ \operatorname{Tr}[X^*(I-\mathcal T)(X)]
+ =\tfrac12\sum_a\|[L_a,X]\|_2^2,
+\tag{15}
+$$
+
+并且
+
+<a id="eq-c122-fixed-algebra"></a>
+
+$$
+\operatorname{Fix}(\mathcal T)
+ =\{X:[L_a,X]=0\ \forall a\},
+\tag{16}
+$$
+
+故其固定空间是一个有限维 $C^*$ 代数。
+
+**证明。**
+对于每对 $i<j$，把 $K_{ij},K_{ji}$ 酉混合为
+$(K_{ij}+K_{ji})/\sqrt2$ 与 $i(K_{ij}-K_{ji})/\sqrt2$；再保留对角 $K_{ii}$，得到全为 Hermitian 的 Kraus 表示 $H_a$。
+令 $\alpha_a=\operatorname{Tr} H_a/d\in\mathbb R$、$L_a=H_a-\alpha_aI$。
+Kraus 酉混合保持 $\sum_aL_a^2=D_{\mathrm K}$ 及 $\sum_a\alpha_a^2=p$。
+迹保持条件 $\sum_aH_a^2=I$ 展开为
+
+$$
+pI+2\sum_a\alpha_aL_a+D_{\mathrm K}=I.
+$$
+
+再展开 $\sum_aH_aXH_a-X$，把上式中的一次项代入，恰得式~[(14)](#eq-c122-double-commutator)。
+取迹得到 $\operatorname{Tr} D_{\mathrm K}=d(1-p)$，因为所有 $L_a$ 去迹。
+每个 $X\mapsto[L_a,X]$ 在 Hilbert–Schmidt 空间上自伴随，所以对双交换子取二次型得到式~[(15)](#eq-c122-dirichlet-energy)。
+若 $\mathcal T(X)=X$，每个非负平方项都为零；反之，全部交换子为零时式~[(14)](#eq-c122-double-commutator) 给出 $\mathcal T(X)=X$。交换子代数封闭于乘法与伴随，得到最后结论。
+
+这给出 ``关系的关系'' 的一个精确有限实例：$[L_a,X]$ 比较记录与残余，双交换子把这些比较重新汇总为往返损失。没有把这条算子恒等式解释为已经推导了物理时间；一般非均匀参考的固定*状态*空间也不能直接当作通常乘法下的代数，前后两种表示须按权重区分。
+

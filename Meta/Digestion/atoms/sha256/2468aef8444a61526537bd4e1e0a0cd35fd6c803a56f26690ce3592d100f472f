@@ -1,0 +1,20 @@
+**定义 1.2（forcing and symmetric minimum rank）。** In ordinary zero forcing a set of initially black vertices is enlarged by the rule
+
+$$
+\text{a black vertex with exactly one white neighbor forces that neighbor black}.
+$$
+
+Write $Z(G)$ for the least size of an initial black set that colors every vertex. Let $\mathcal S(G)$ be the real symmetric $N\times N$ matrices $A$ such that, for distinct $u,v\in V$,
+
+$$
+A_{uv}\ne0\quad\Longleftrightarrow\quad uv\in E(G).
+$$
+
+Set
+
+$$
+M_{\mathbb R}(G)=\max_{A\in\mathcal S(G)}\dim\ker A,
+\qquad
+mr_{\mathbb R}(G)=\min_{A\in\mathcal S(G)}\operatorname{rank}A.
+$$
+

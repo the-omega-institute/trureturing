@@ -1,0 +1,6 @@
+**Theorem 11.2 (general native criterion, unbounded ambiguity and an achieved online bound).** Under Definition 11.1 the following are equivalent:
+
+1. A successful finite static supplement exists at the prescribed $\epsilon$.
+2. A successful complete finite names-only online supplement exists at that $\epsilon$.
+3. Every cyclic SCC is a single directed named cycle, and the complete co-visited family on every root condensation route is real-linearly independent.
+

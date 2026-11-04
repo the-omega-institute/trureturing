@@ -1,0 +1,26 @@
+**Definition 17.1 (integer boundary coordinates and child delays).**
+Fix one source $s\in\mathscr R_d$ with its original alpha initialization,
+physical order and aligned decomposition $s=y+t$ from Definition 1.1.
+Consider its entire original forward orbit. For every finite physical
+address $v$, put
+
+$$
+ A_v=I_v(1),\quad B_v=I_v(2),\quad e_v=\tau_v-1,
+ \qquad c_v=s_{A_v-1}.
+ \tag{PCR.36}
+$$
+
+These are mathematical attributes of the actual source, not entrance
+registers. Every finite address is eventually created: the root branches
+at cut two, and a newly created beta or alpha branches respectively one
+or two cuts after creation. At the normalized origin of $v$, its first
+branch is in local update one and consumes bit $c_v$. For a physical
+child $vx$, let $\delta_x(c_v)$ be one for an initially beta child and
+two for an initially alpha child. Thus
+
+$$
+ (\delta_a(1),\delta_b(1))=(1,2),\qquad
+ (\delta_a(0),\delta_b(0))=(2,1).
+ \tag{PCR.37}
+$$
+

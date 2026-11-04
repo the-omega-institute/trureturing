@@ -1,0 +1,48 @@
+**Theorem 1.1 (exact boundary).**  For every real $p\geq1$,
+
+$$
+U(p)\quad\Longleftrightarrow\quad p\in\mathbb Z_{>0}.
+$$
+
+The failure of the noninteger direction is witnessed, for every integer
+$k\geq1$, by one
+commuting positive definite quadruple in dimension $2^{k+1}$ which has equal
+sum power traces at orders $1,\ldots,k+1$ and reverses the norm inequality at
+every $p\in(k,k+1)$.
+
+*Proof.*  For the positive-integer direction, we reuse the ordered-word
+expansion argument in
+[the Alhejji--Knill problem dossier](../../../Problems/alhejji-knill-2024-fractional-schatten-alignment.md),
+Triage, “A weaker conclusion survives.”  The related argument in
+Alhejji--Knill, Theorem IV.7, proves integer-order spin alignment within
+their tensor-product family using Corollary IV.6; the dossier gives the
+general all-word implication used here.  Let $k\in\mathbb Z_{>0}$ and take
+any quadruple in the assertion $U(k)$.  Put $C=A_0+A_1$ and $D=B_0+B_1$.
+The sums are positive
+semidefinite.  Expanding the noncommutative product gives
+
+$$
+\operatorname{tr}(C^k)=\sum_{s\in\{0,1\}^k}\operatorname{tr}\Pi_s(A),
+\qquad
+\operatorname{tr}(D^k)=\sum_{s\in\{0,1\}^k}\operatorname{tr}\Pi_s(B).
+$$
+
+The second sum is real and nonnegative because $D^k$ is positive
+semidefinite.  Taking real parts term by term and using
+$|z|\geq\operatorname{Re}z$ gives
+
+$$
+\operatorname{tr}(D^k)
+\leq\sum_s|\operatorname{tr}\Pi_s(B)|
+\leq\sum_s\operatorname{tr}\Pi_s(A)
+=\operatorname{tr}(C^k).
+$$
+
+For a positive semidefinite operator, $\lVert C\rVert_k^k=\operatorname{tr}(C^k)$.
+The map $x\mapsto x^{1/k}$ is increasing on $[0,\infty)$, so
+$\lVert D\rVert_k\leq\lVert C\rVert_k$, proving $U(k)$.
+
+The quadruples in Sections 2 and 3 disprove $U(p)$ on every open interval
+$(k,k+1)$, and every noninteger $p\geq1$ lies in exactly one such interval.
+$\square$
+

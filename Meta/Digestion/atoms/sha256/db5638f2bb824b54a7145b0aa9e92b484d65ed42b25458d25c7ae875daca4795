@@ -1,0 +1,36 @@
+#### 定理 7.2（非交换递归的一致极限）
+
+<a id="thm:noncommuting"></a>
+
+存在内部酉场 $U$，使
+
+$$
+\sup_b\left\lVert U(b)-U_n(b)\right\rVert\le Mr^n.
+ \tag{26}
+$$
+
+若 $b,b'$ 的前 $n$ 位相同，则
+$\left\lVert U(b)-U(b')\right\rVert\le2Mr^n$。
+对另一自伴场族 $A'_k$ 及其极限 $U'$，还有
+
+$$
+\sup_b\left\lVert U(b)-U'(b)\right\rVert
+ \le\sum_kc_k\sup_b\left\lVert A_k(b)-A'_k(b)\right\rVert.
+$$
+
+**证明。**
+
+$\left\lVert e^{-itA}-I\right\rVert\le|t|\left\lVert A\right\rVert$。
+用酉乘积的伸缩求和，
+$\left\lVert U_m-U_n\right\rVert\le\sum_{k=n+1}^m\left\lVert V_k-I\right\rVert\le Mr^n$。
+一致极限存在；乘法与伴随的范数连续性给极限酉性。
+共同前缀的有限乘积相同，两个尾界给第二项。
+对有界自伴 $A,B$，
+对 $e^{-i(t-s)A}e^{-isB}$ 积分得到
+$\left\lVert e^{-itA}-e^{-itB}\right\rVert\le|t|\left\lVert A-B\right\rVert$；
+逐层伸缩并取极限给最后一式。
+
+∎
+
+<a id="statement-7-3"></a>
+

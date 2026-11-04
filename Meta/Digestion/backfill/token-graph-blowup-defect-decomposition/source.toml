@@ -1,0 +1,5 @@
+source_id = "token-graph-blowup-defect-decomposition"
+path = "docs/develop/theory/TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

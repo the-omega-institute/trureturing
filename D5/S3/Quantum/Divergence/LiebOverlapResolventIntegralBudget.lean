@@ -34,7 +34,7 @@ open D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 
 namespace D5.S3.Quantum.Divergence.LiebOverlapResolventIntegralBudget
 
-private theorem trace_rank_one_product {n : Type*} [Fintype n]
+theorem trace_rank_one_product {n : Type*} [Fintype n]
     (x y : n → ℂ) :
     ((Matrix.vecMulVec x (star x) * Matrix.vecMulVec y (star y)).trace).re =
       ‖star y ⬝ᵥ x‖ ^ 2 := by

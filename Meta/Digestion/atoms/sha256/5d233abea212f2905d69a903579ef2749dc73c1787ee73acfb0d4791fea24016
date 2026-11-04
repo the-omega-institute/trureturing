@@ -1,0 +1,71 @@
+**编者注 n26（插值的实性与相位）。** 因为 $r=|\lambda_0|/4>0$ 且非零聚点不存在，$E$ 有限并共轭对称；其节点互异，Lagrange 分母均非零。权重非零，故可选单位 $u$ 满足（5.7）。$\ell_{\bar0}$ 的系数是 $\ell_0$ 的共轭，第二项的系数也是第一项的共轭，所以乘以 $z^m$ 后仍为实系数。目标点的交叉 Lagrange 值为零，正好给出 $u,\bar u$，其他 $E$ 节点为零，不要求目标谱点为模最大的点。
+
+<!-- editorial-note: n26 end -->
+
+它具有实系数，且
+
+$$
+p_m(\lambda_0)=u,\qquad
+p_m(\bar\lambda_0)=\bar u,
+$$
+
+在 $E$ 的其余点全部为零。
+
+令 $L_r$ 是两份 Lagrange 多项式在 $|z|\le r$ 上的共同上界。例如可取
+
+$$
+L_r=
+\prod_{\substack{\zeta\in E\\\zeta\ne\lambda_0}}
+\frac{r+|\zeta|}{|\lambda_0-\zeta|}.
+$$
+
+于是
+
+$$
+|p_m(z)|\le2L_r4^{-m}
+\qquad(|z|\le r).
+
+$$
+
+<a id="eq-5-9"></a>
+
+(5.9)
+
+再记
+
+$$
+T_r=\sum_{|\lambda|<r}|\omega_\lambda|<\infty.
+$$
+
+目标共轭对的贡献恰为
+
+$$
+-2|\omega_{\lambda_0}|,
+$$
+
+全部尾项的绝对值至多为
+
+$$
+4L_r^2T_r16^{-m}.
+$$
+
+因此
+
+$$
+\boxed{
+\mathcal L(p_m^2)
+\le
+-2|\omega_{\lambda_0}|
++
+4L_r^2T_r16^{-m}.
+}
+
+$$
+
+<a id="eq-5-10"></a>
+
+(5.10)
+
+<!-- editorial-note: n27 begin -->
+<a id="n27"></a>
+

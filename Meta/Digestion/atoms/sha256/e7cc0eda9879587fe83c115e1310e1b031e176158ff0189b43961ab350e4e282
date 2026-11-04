@@ -1,0 +1,14 @@
+**引理 8.3（两个单投影稠密）。**
+
+$P_+(\Gamma_d)$ 与 $P_-(\Gamma_d)$ 都在 $\mathbb R^d$ 中稠密。
+
+**证明。**
+
+对任意无理数 $\theta$，将 $0,\theta,\ldots,N\theta$ 的小数部分
+放入 $N$ 个等分区间，鸽巢原理给出任意小的非零
+$m+n\theta$。改变符号使其为正，再用整数倍逼近任意实数，
+可知 $\mathbb Z+\theta\mathbb Z$ 稠密。取 $\theta=\varphi,\sigma$，逐坐标作积即可。证毕。
+ □
+
+<a id="statement-8-4"></a>
+

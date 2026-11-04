@@ -1,0 +1,5 @@
+source_id = "noisy-voter-ancestral-collision-variance"
+path = "docs/develop/theory/NOISY_VOTER_ANCESTRAL_COLLISION_VARIANCE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

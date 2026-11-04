@@ -1,0 +1,10 @@
+**Convention 1.3 (one deterministic convention at every grade).** Order
+an event by the tuple $(\mathrm{kind},|p|,p)$, with $P<S$ and $L<R$.
+Order complete histories first by event count, then lexicographically by
+these event tuples. To allocate labelled tokens with lower-bound words,
+process tokens by decreasing lower-bound length; break ties by their
+complete history. At an occupied binary node, choose child $0$ if its
+subtree load is strictly below its quota, and otherwise choose child $1$.
+These rules are fixed for every source, without an endpoint horizon.
+They also govern every named codeword below.
+

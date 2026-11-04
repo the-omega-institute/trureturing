@@ -1,0 +1,17 @@
+**Proposition 3.2 (the coincident-line boundary).** The fixed-overlap
+maximum in Theorem 2.1 cannot be extended to $r=1$ by the same expression.
+For coincident lines $L=N$ the defect with middle $S$ is
+
+$$
+\Delta_c(E_L,S,E_L)=-\frac{2(s-a_L)}{b+s}<0.
+\tag{3.7}
+$$
+
+For the lines (2.7) as $r\uparrow1$, the limiting line is
+$\mathbb C e_M$, and at the coincident pair (3.7) equals $-2m/(b+s)$.
+
+*Proof.* Coincidence makes $d_c(E_L,E_L)=0$, whereas for distinct lines
+it is $s/(b+s)$. Formula (3.7) follows from (2.3); positivity uses
+$s-a_L\ge m>0$. This change of meet accounts exactly for the discontinuity.
+$\square$
+

@@ -1,0 +1,18 @@
+**Definition 39.1 (one two-state evaluator and its actual cut pair).**
+Fix an effective numbering $M_j$ of finite machines on blank input for
+which eventual halting is undecidable. Let $H(j,n)$ be the decidable
+predicate that $M_j$ halts within its first $n$ simulated steps, including
+an initial-halting check when $n=0$. All simulations in this definition
+are bounded; $H$ is not an eventual-halting input port.
+
+The single selector $C^\dagger$ has states $0,1$, initial state $0$.
+The following disjoint cases give its complete transition/output table
+as a finite program. In the last two columns $q$ is its old state.
+
+| Actual event input | Next state | Selection bit |
+| --- | --- | --- |
+| $P_\varepsilon$ | $q$ | $1$ |
+| $P_{L^jRR}$ for $j\ge0$ | $1$ | $0$ |
+| $S_{L^j}$, $S_{L^jR}$ or $S_{L^jRL}$ for $j\ge0$ | $0$ | $0$ |
+| $P_{L^jRL^{n+2}R}$ for $j,n\ge0$ | $q$ | $q\,\mathbf1_{H(j,n)}$ |
+| Every other event | $q$ | $0$ |

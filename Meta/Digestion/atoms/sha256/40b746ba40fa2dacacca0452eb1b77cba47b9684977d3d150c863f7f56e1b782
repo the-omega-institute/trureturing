@@ -1,0 +1,35 @@
+### 命题 5.2（程序运行后输出自己的码）
+
+<a id="prop-c117-self-code"></a>
+
+取程序空间 $H_P=\mathbb C^N$，显示与记录 $H_S,H_R\cong\mathbb C^d$，$N\le d$。用同一有限码表的正交向量 $\lvert j\rangle$ 分别标记程序和显示；内部解释规则为
+
+$$
+\operatorname{code}(\mathcal R_j)=\lvert j\rangle,
+ \qquad \mathcal R_j(\rho)=\lvert j\rangle\langle j\rvert\,\operatorname{Tr}\rho.
+$$
+
+存在一个固定内部酉解释器，在记录准备为 $\lvert 0\rangle_R$ 时，使每个程序对任意局部输入运行后，在显示端输出自己的码，同时保留原输入。
+
+**证明。**
+对每个 $j$ 取已知酉矩阵 $U_j$，使 $U_j\lvert 0\rangle=\lvert j\rangle$。定义
+
+$$
+U=\sum_{j=1}^{N}\lvert j\rangle\langle j\rvert_P\otimes
+ \left[\operatorname{SWAP}_{SR}(I_S\otimes U_j)\right].
+$$
+
+程序投影正交且总和为 $I_P$，各块为酉，故 $U$ 酉。直接作用得到
+
+$$
+\boxed{U(\lvert j\rangle_P\otimes\psi_S\otimes\lvert 0\rangle_R)
+       =\lvert j\rangle_P\otimes\lvert j\rangle_S\otimes\psi_R.}
+$$
+
+对任意局部密度矩阵 $\rho$，输出为
+$\lvert j\rangle\langle j\rvert_P\otimes\lvert j\rangle\langle j\rvert_S\otimes\rho_R$；若有参考纠缠，原有联合关系相应移到记录与参考。程序不变，显示输出该程序的码，因此实现所声明的解释规则。
+
+这给“门输出自身”一个确切的有类型含义：输出的是该门在固定解释器中的编码，不是把过程与状态强行认作同一类型。码表与解释器都是本模型内部的对象，但不是从一个固定点凭空推导出的。如果程序是 $\sum_jc_j\lvert j\rangle$，显示与程序成为 $\sum_jc_j\lvert j,j\rangle$ 的相关态，不是两个独立的未知态副本。构造也不输出整个解释器 $U$ 的编码，不覆盖任意非正交量子程序，更不取消记录的固定准备条件。它证明一族精确自描述原子存在；项目原生的“内容即地址”解释器是否实现同一接口，仍可另行检验。
+
+<a id="section-6"></a>
+

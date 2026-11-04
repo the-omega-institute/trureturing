@@ -1,0 +1,37 @@
+**定义 31.1（One deficient fibre and the original minimum）。**
+Let $H$ be any finite connected simple unit-weight graph of even
+order $m\geq2$, let $S\geq1$ be an integer and put $s=2S$.
+Retain exactly the complex carrier, coefficient-one adjacency,
+fibre projection and entire-carrier minimum
+$\mathcal H_{mS},K_s,P_s,E_s$ of (19.1)–(19.2).
+Write $V_J^{(a)}$ for an actual spin-$J$ copy in an original
+$2S$-coordinate fibre. Its multiplicity is
+
+$$
+r_{2S}(S-J)=\binom{2S}{S-J}-\binom{2S}{S-J-1},
+\qquad J=0,1,\ldots,S.
+\tag{31.1}
+$$
+
+For a vertex $p$, let $K^{p,J}$ be the restriction to the
+zero-total-weight space with spin $J$ at $p$ and spin $S$
+at every other vertex. Its matrix is the same on each actual
+multiplicity copy. Put
+
+$$
+\begin{aligned}
+j&=S-1,&
+\mu_p(J)&=\min\operatorname{spec}K^{p,J},&
+\Delta_p&=\mu_p(j)-E_s,\\
+g_s&=\min\operatorname{spec}(K_s|_{\ker P_s})-E_s.
+\end{aligned}
+\tag{31.2}
+$$
+
+These are minima on nonzero finite spaces. The exact gap
+reduction is $g_s=\min_p\Delta_p$, with $\Delta_p\geq0$;
+the reduction follows from the supplied nonstrict local-spin
+comparison and is justified below. Thus $\Delta_p=0$ means
+attainment of the actual $E_s$ by this original deficient
+sector, including the endpoint $j=0$.
+

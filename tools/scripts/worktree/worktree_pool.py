@@ -1,25 +1,28 @@
 """Native idle branches, bounded retention, task return and atomic claim."""
 
 from contextlib import ExitStack
+import importlib.util
 import json
 import os
 from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import time
 from types import SimpleNamespace
 import uuid
 
 from worktree_protocol import (GitFailure, Refused, acquire, common, git, git_environment, git_scope,
                                identity, inventory, remote_endpoint, scope_fds, tree_scope, value)
-from worktree_publication import commit_snapshot, confirm
-from worktree_preservation import qualify, remove
+from worktree_publication import commit_snapshot, confirm, recovery_root
+from worktree_preservation import REMOVAL_RECORD, finished_operations, interrupted_removal, qualify, remove
 
 IDLE_PREFIX = "refs/heads/lane/governance/idle-"
 IDLE_CAPACITY = 4
 PINS = ("lean-toolchain", "lake-manifest.json")
-OPERATIONS = ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer")
+TASK_REUSE_SECONDS = 4 * 60 * 60
+_HOST_CLEANUP = None
 
 
 def idle_reference(reference):
@@ -27,14 +30,12 @@ def idle_reference(reference):
 
 
 def clean(path, metadata):
-    for marker in OPERATIONS:
-        if (metadata / marker).exists():
-            raise Refused("unfinished_operation:" + marker)
+    finished_operations(metadata)
     if git(path, "status", "--porcelain=v1", "-z", "--untracked-files=all", "--ignore-submodules=none").stdout:
         raise Refused("idle_dirty")
 
 
-def idle_state(source, path, dev):
+def idle_state(source, path, dev, removal_stack=None):
     item = qualify(source, path)
     _, metadata = identity(source, path)
     if "locked" in item:
@@ -46,13 +47,21 @@ def idle_state(source, path, dev):
     if item.get("HEAD") != head or value(path, "rev-parse", "--verify", reference) != head:
         raise Refused("idle_identity_changed")
     created = idle_creation(source, reference, head)
-    clean(path, metadata)
+    pending = False
+    if (metadata / REMOVAL_RECORD).exists():
+        if removal_stack is None:
+            raise Refused("idle_removal_pending")
+        pending = interrupted_removal(path, metadata, removal_stack, source, reference,
+                                      reconverge=False) is not None
+    if not pending:
+        clean(path, metadata)
     ancestry = git(path, "merge-base", "--is-ancestor", head, dev, check=False).returncode
     if ancestry == 1:
         dev = confirm(path, "origin", "dev", head)["observed_tip"]
     elif ancestry:
         raise Refused("idle_dev_ancestry_unknown")
-    return dict(path=str(Path(path).resolve()), branch=reference, head=head, created=created, dev_commit=dev)
+    return dict(path=str(Path(path).resolve()), branch=reference, head=head, created=created,
+                dev_commit=dev, removal_pending=pending)
 
 
 def idle_creation(source, reference, head):
@@ -89,7 +98,14 @@ def sweep_failure(receipt, observed, stage, error):
     receipt["status"] = "failed"
 
 
-def sweep_locked(source, dev, force=False):
+def pool_failure(receipt, stage, error):
+    receipt["failure"] = dict(scope="operation:idle-pool", stage=stage,
+                              outcome="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure) else "failed",
+                              error=str(error), error_type=type(error).__name__)
+    receipt["status"] = "failed"
+
+
+def sweep_locked(source, dev, force=False, exclude_paths=()):
     """The caller holds the clone's pool operation scope; effects survive every failure."""
     receipt = pool_receipt()
     outcomes = receipt["items"]
@@ -99,8 +115,19 @@ def sweep_locked(source, dev, force=False):
     try:
         inventory_rows = inventory(source)
         source = Path(inventory_rows[0]["worktree"])
-        rows = [dict(path=item["worktree"], branch=item.get("branch"), head=item.get("HEAD"))
-                for item in inventory_rows if idle_reference(item.get("branch", ""))]
+        excluded = {str(Path(path).resolve()) for path in exclude_paths}
+        rows = []
+        for item in inventory_rows:
+            if not idle_reference(item.get("branch", "")):
+                continue
+            if excluded:
+                try:
+                    if str(Path(item["worktree"]).resolve()) in excluded:
+                        continue
+                except (OSError, RuntimeError):
+                    # Candidate inspection owns this path's failure and continuation.
+                    pass
+            rows.append(dict(path=item["worktree"], branch=item.get("branch"), head=item.get("HEAD")))
         for observed in rows:
             path = Path(observed["path"])
             stage = "inspect"
@@ -108,76 +135,77 @@ def sweep_locked(source, dev, force=False):
                 with ExitStack() as stack:
                     tree_scope(stack, source, path, True)
                     git_scope(stack, source, path)
-                    candidates.append(idle_state(source, path, dev))
-            except GitFailure:
-                raise
-            except Refused as error:
-                outcomes.append(dict(observed, outcome="not_idle" if str(error) == "not_idle" else "retained",
-                                     reason=str(error)))
+                    candidates.append(idle_state(source, path, dev, stack))
+            except Exception as error:
+                if isinstance(error, Refused) and not isinstance(error, GitFailure):
+                    outcomes.append(dict(observed, outcome="not_idle" if str(error) == "not_idle" else "retained",
+                                         reason=str(error)))
+                else:
+                    sweep_failure(receipt, observed, stage, error)
         candidates.sort(key=lambda row: (row["created"], row["path"]))
-        remaining = len(candidates)
+        remaining = sum(not row["removal_pending"] for row in candidates)
         for observed in candidates:
             stage = "disk_pressure"
             pressure = available_fraction(source) < 0.05
-            reason = "idle_disk_pressure" if pressure else "idle_capacity" if remaining > IDLE_CAPACITY else "idle_pool"
+            reason = ("idle_interrupted_removal" if observed["removal_pending"] else
+                      "idle_disk_pressure" if pressure else "idle_capacity" if remaining > IDLE_CAPACITY else "idle_pool")
             if reason == "idle_pool":
                 outcomes.append(dict(observed, outcome="retained", reason=reason))
                 continue
             path = Path(observed["path"])
-            stage = "revalidate"
-            with ExitStack() as stack:
-                tree_scope(stack, source, path, True)
-                current = idle_state(source, path, dev)
-                if current != observed:
-                    raise Refused("idle_identity_changed")
-                # Common removal owns the index/ref scopes and snapshot rules.
-                stage = "remove"
-                result = remove(SimpleNamespace(source=source, names="", path=[path], force=False,
-                    preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
-                                                               branch=observed["branch"]))]))
-                for removal in result["items"]:
-                    row = dict(observed, **dict(removal,
-                        outcome="retained" if removal["outcome"] == "refused" else removal["outcome"],
-                        reason=removal.get("reason", reason)))
-                    if removal["outcome"] not in ("removed", "would_remove"):
-                        row.setdefault("stage", stage)
-                    if removal["outcome"] == "refused":
-                        row.update(stage=stage, error=removal.get("error") or row["reason"], error_type="Refused")
+            try:
+                stage = "revalidate"
+                with ExitStack() as stack:
+                    tree_scope(stack, source, path, True)
+                    with ExitStack() as inspection:
+                        git_scope(inspection, source, path)
+                        current = idle_state(source, path, dev, inspection)
+                    if current != observed:
+                        raise Refused("idle_identity_changed")
+                    # Common removal owns the index/ref scopes and snapshot rules.
+                    stage = "remove"
+                    result = remove(SimpleNamespace(source=source, names="", path=[path], force=False,
+                        preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
+                                                                   branch=observed["branch"]))]))
+                    for removal in result["items"]:
+                        row = dict(observed, **dict(removal,
+                            outcome="retained" if removal["outcome"] == "refused" else removal["outcome"],
+                            reason=removal.get("reason", reason)))
+                        if removal["outcome"] not in ("removed", "would_remove"):
+                            row.setdefault("stage", stage)
+                        if removal["outcome"] == "refused":
+                            row.update(stage=stage, error=removal.get("error") or row["reason"], error_type="Refused")
+                            receipt["status"] = "failed"
+                        outcomes.append(row)
+                        if removal["outcome"] in ("removed", "would_remove"):
+                            remaining -= not observed["removal_pending"]
+                    if result["status"] in ("failed", "refused"):
                         receipt["status"] = "failed"
-                    outcomes.append(row)
-                    if removal["outcome"] in ("removed", "would_remove"):
-                        remaining -= 1
-                if result["status"] in ("failed", "refused"):
+                    stage = "release"
+            except Exception as error:
+                if isinstance(error, Refused) and not isinstance(error, GitFailure):
+                    outcomes.append(dict(observed, outcome="retained", reason=str(error), stage=stage,
+                                         error=str(error), error_type=type(error).__name__))
                     receipt["status"] = "failed"
-                    break
-                stage = "release"
+                else:
+                    sweep_failure(receipt, observed, stage, error)
     except Exception as error:
-        # This is the batch receipt boundary, including pressure reads and scope
-        # release. The common remover retains its own checkpoint/recovery fields.
-        if stage in ("revalidate", "remove") and isinstance(error, Refused) and not isinstance(error, GitFailure):
-            outcomes.append(dict(observed, outcome="retained", reason=str(error), stage=stage,
-                                 error=str(error), error_type=type(error).__name__))
-            receipt["status"] = "failed"
-        else:
-            sweep_failure(receipt, observed, stage, error)
-    if receipt["status"] == "failed":
+        pool_failure(receipt, stage, error)
+    if "failure" in receipt:
         reported = {row["path"] for row in outcomes}
         outcomes.extend(dict(row, outcome="retained", reason="idle_sweep_deferred")
                         for row in rows if row["path"] not in reported)
     return receipt
 
 
-def sweep(source, dev, force=False):
+def sweep(source, dev, force=False, exclude_paths=()):
     receipt = pool_receipt()
     try:
         with ExitStack() as stack:
             acquire(stack, source, "operation:idle-pool", True)
-            receipt = sweep_locked(source, dev, force)
+            receipt = sweep_locked(source, dev, force, exclude_paths)
     except Exception as error:
-        receipt["failure"] = dict(scope="operation:idle-pool", stage="pool_scope",
-                                  outcome="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure) else "failed",
-                                  error=str(error), error_type=type(error).__name__)
-        receipt["status"] = "failed"
+        pool_failure(receipt, "pool_scope", error)
     return receipt
 
 
@@ -331,6 +359,132 @@ def allocation_record(path, metadata, commit):
     return timestamp
 
 
+def host_cleanup():
+    global _HOST_CLEANUP
+    if _HOST_CLEANUP is None and "worktree_host_cleanup" in sys.modules:
+        _HOST_CLEANUP = sys.modules["worktree_host_cleanup"]
+    if _HOST_CLEANUP is None:
+        location = Path(__file__).resolve().parent.parent / "host-cleanup.py"
+        spec = importlib.util.spec_from_file_location("worktree_host_cleanup", location)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _HOST_CLEANUP = module
+    return _HOST_CLEANUP
+
+
+def no_idle(options, reason=None, candidate_refusals=()):
+    # The implicit creator defers its disk gate until reuse has been exhausted.
+    if os.environ.get("WORKTREE_REQUIRE_DISK_CHECK") == "1":
+        try:
+            source = Path(options.source).resolve()
+            host_cleanup().check_disk((source, source.parent))
+        except (OSError, RuntimeError) as error:
+            raise Refused(str(error)) from error
+    result = dict(event="worktree_init", status="no_idle")
+    if reason is not None:
+        result["reason"] = reason
+    if candidate_refusals:
+        result["candidate_refusals"] = list(candidate_refusals)
+    return result
+
+
+def task_users(paths):
+    codex = Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex")))
+    return host_cleanup().active_paths(codex, scopes=paths)
+
+
+def candidate_activity(paths):
+    # Only eligibility reads before checkpointing or branch allocation may skip a candidate.
+    try:
+        return task_users(paths)
+    except OSError as error:
+        # Linux can expose a matched process identity while a proc inventory
+        # is transitioning.  The diagnostic is never admission evidence:
+        # wait only on the retained pidfd for complete group exit, then repeat
+        # the same full activity inventory.  Persistent or ambiguous failures
+        # remain fail-closed refusals.
+        if host_cleanup().wait_for_linux_activity_transition(error):
+            try:
+                return task_users(paths)
+            except OSError as retry_error:
+                error = retry_error
+        raise Refused("task_activity_unavailable:" + str(error)) from error
+
+
+def no_task_users(path, paths):
+    if any(held == path or path in held.parents for held in paths):
+        raise Refused("task_active_process")
+
+
+def dormant_state(source, path, metadata):
+    """Inspect actual Git use, then ordinary changed paths; never scan ignored caches."""
+    snapshot = (inventory(source), common(source))
+    item = qualify(source, path, snapshot=snapshot)
+    current, current_metadata = identity(source, path, snapshot=snapshot)
+    if current != item or current_metadata != metadata:
+        raise Refused("task_identity_changed")
+    if "locked" in item:
+        raise Refused("intentional_or_initialization_lock")
+    finished_operations(metadata)
+    if (metadata / REMOVAL_RECORD).exists():
+        raise Refused("task_removal_pending")
+    head = value(path, "rev-parse", "--verify", "HEAD^{commit}")
+    branch = item.get("branch", "HEAD")
+    if branch != "HEAD" and any(row.get("branch") == branch and
+            Path(row["worktree"]).resolve() != path for row in snapshot[0]):
+        raise Refused("task_branch_shared")
+    if item.get("HEAD") != head or (branch != "HEAD" and
+            value(path, "rev-parse", "--verify", branch) != head):
+        raise Refused("task_identity_changed")
+    log = metadata / "logs/HEAD"
+    if log.is_symlink():
+        raise Refused("task_last_use_unknown")
+    try:
+        raw = log.read_bytes()
+    except OSError as error:
+        raise Refused("task_last_use_unknown:" + str(error)) from error
+    rows = raw.split(b"\n")
+    if not rows[-1] and len(rows) > 1:
+        rows.pop()
+    stamps = []
+    for row in rows:
+        record = re.fullmatch(rb"([0-9a-f]{40}|[0-9a-f]{64}) ([0-9a-f]{40}|[0-9a-f]{64}) "
+                              rb"[^<>\n]+ <[^<>\n]*> ([0-9]+) [+-][0-9]{4}(?:\t.*)?", row)
+        if record is None:
+            raise Refused("task_last_use_unknown")
+        stamps.append(int(record[3]))
+    if not stamps or record[2].decode("ascii") != head:
+        raise Refused("task_last_use_unknown")
+    stamps.append(int(value(path, "show", "-s", "--format=%ct", head)))
+    last_use = max(stamps)
+    if time.time() - last_use <= TASK_REUSE_SECONDS:
+        raise Refused("task_recently_used")
+    status = git(path, "status", "--porcelain=v1", "-z", "--untracked-files=all",
+                 "--ignore-submodules=none", "--no-renames").stdout
+    changed = []
+    for row in status.split(b"\0"):
+        if not row:
+            continue
+        if len(row) < 4 or row[2:3] != b" ":
+            raise Refused("task_status_unknown")
+        target = path / os.fsdecode(row[3:])
+        while True:
+            try:
+                info = target.lstat()
+                break
+            except FileNotFoundError:
+                if target == path:
+                    raise Refused("task_identity_changed")
+                target = target.parent
+        last_use = max(last_use, info.st_mtime)
+        changed.append((str(target), info.st_dev, info.st_ino, info.st_mode,
+                        info.st_size, info.st_mtime_ns, info.st_ctime_ns))
+    if time.time() - last_use <= TASK_REUSE_SECONDS:
+        raise Refused("task_recently_used")
+    return dict(path=str(path), branch=branch, head=head, last_use=last_use,
+                head_log=raw, status=status, changed=changed)
+
+
 def claim(options):
     with ExitStack() as pool_scope:
         try:
@@ -338,34 +492,83 @@ def claim(options):
         except Refused as error:
             if options.path is not None or str(error) != "busy_scope:operation:idle-pool":
                 raise
-            return dict(event="worktree_init", status="no_idle", reason=str(error))
+            return no_idle(options, str(error))
         rows = inventory(options.source)
         candidates = ([options.path] if options.path else
-                      [Path(row["worktree"]) for row in rows if idle_reference(row.get("branch", ""))])
+                      [Path(row["worktree"]) for idle in (True, False) for row in rows[1:]
+                       if idle_reference(row.get("branch", "")) == idle])
         if not candidates:
-            return dict(event="worktree_init", status="no_idle")
+            return no_idle(options)
         base = value(options.source, "rev-parse", "--verify", "--end-of-options", options.base + "^{commit}")
-        # Idle state is relative to dev, independently of the requested base.
-        dev = value(options.source, "rev-parse", "--verify", "refs/remotes/origin/dev^{commit}")
+        # Only idle state depends on dev; qualify a target before reading it.
+        dev = None
         expected = {pin: git(options.source, "show", base + ":" + pin).stdout for pin in PINS}
         reference = "refs/heads/" + options.branch
         git(options.source, "check-ref-format", reference)
+        activity = None
+        refusals = []
         for candidate in candidates:
-            allocated_branch = False
+            allocated_branch = prepared = False
+            stage = "qualification"
             try:
                 with ExitStack() as stack:
                     if candidate.is_symlink():
                         raise Refused("linked_tree")
                     path = tree_scope(stack, options.source, candidate, True)
-                    state = idle_state(options.source, path, dev)
+                    item = qualify(options.source, path)
                     _, metadata = identity(options.source, path)
-                    git_scope(stack, options.source, path)
-                    acquire(stack, options.source, "ref:" + reference, True)
+                    branch = git_scope(stack, options.source, path)
                     if (path / ".lake").is_symlink():
                         raise Refused("linked_cache")
-                    for pin in PINS:
-                        if (path / pin).read_bytes() != expected[pin]:
-                            raise Refused("incompatible_pin:" + pin)
+                    idle = False
+                    if idle_reference(item.get("branch", "")):
+                        if dev is None:
+                            dev = value(options.source, "rev-parse", "--verify", "refs/remotes/origin/dev^{commit}")
+                        try:
+                            state = idle_state(options.source, path, dev)
+                            idle = True
+                        except Refused as error:
+                            if isinstance(error, GitFailure) or str(error) != "not_idle":
+                                raise
+                    if not idle:
+                        state = dormant_state(options.source, path, metadata)
+                    if state["branch"] != branch:
+                        raise Refused("claim_identity_changed")
+                    acquire(stack, options.source, "ref:" + reference, True)
+                    if idle:
+                        for pin in PINS:
+                            if (path / pin).read_bytes() != expected[pin]:
+                                raise Refused("incompatible_pin:" + pin)
+                    stage = "activity"
+                    if activity is None:
+                        activity = candidate_activity(candidates)
+                    no_task_users(path, activity)
+                    checkpoint = None
+                    retained_branch = branch
+                    if idle:
+                        stage = "activity_recheck"
+                        no_task_users(path, candidate_activity((path,)))
+                        stage = "state_recheck"
+                        if idle_state(options.source, path, dev) != state:
+                            raise Refused("idle_identity_changed")
+                    else:
+                        stage = "state_recheck"
+                        if dormant_state(options.source, path, metadata) != state:
+                            raise Refused("task_identity_changed")
+                        stage = "activity_recheck"
+                        no_task_users(path, candidate_activity((path,)))
+                        prepared = True
+                        checkpoint = commit_snapshot(path, metadata, branch,
+                            b"WIP checkpoint dormant worktree before reuse\n", stack, options.source)
+                        if branch == "HEAD":
+                            retained_branch = recovery_root(stack, options.source, path, checkpoint["commit"])
+                        clean(path, metadata)
+                        no_task_users(path, task_users((path,)))
+                        current, current_metadata = identity(options.source, path)
+                        if (current.get("branch", "HEAD") != branch or current.get("HEAD") != checkpoint["commit"]
+                                or current_metadata != metadata or "locked" in current
+                                or value(path, "rev-parse", retained_branch) != checkpoint["commit"]):
+                            raise Refused("claim_identity_changed")
                     # Native branch creation preserves Git's tracking policy.
                     # Compare with the pinned object before switching the tree.
                     git(path, "-c", "core.logAllRefUpdates=true", "branch", "--", options.branch, options.base)
@@ -377,7 +580,8 @@ def claim(options):
                     if attached.get("branch") != reference or attached.get("HEAD") != base:
                         raise Refused("claim_identity_changed")
                     allocated = allocation_record(path, metadata, base)
-                    git(path, "update-ref", "-d", state["branch"], state["head"])
+                    if idle:
+                        git(path, "update-ref", "-d", state["branch"], state["head"])
                     scaffold = path / ".gitignore"
                     content = scaffold.read_text() if scaffold.exists() else ""
                     missing = [pattern for pattern in (".caller-review-prompt.md", ".echo-review.md", ".sshx-*")
@@ -397,18 +601,20 @@ def claim(options):
                     for pin in PINS:
                         if (path / pin).read_bytes() != expected[pin]:
                             raise Refused("claim_pin_changed:" + pin)
-                    for marker in OPERATIONS:
-                        if (metadata / marker).exists():
-                            raise Refused("unfinished_operation:" + marker)
-                    return dict(event="worktree_init", status="claimed", path=str(path), branch=options.branch,
-                                base_revision=base, allocation_time=allocated,
-                                dotnet_restore="skipped" if options.skip_restore else "restored")
+                    finished_operations(metadata)
+                    result = dict(event="worktree_init", status="claimed", path=str(path), branch=options.branch,
+                                  base_revision=base, allocation_time=allocated,
+                                  dotnet_restore="skipped" if options.skip_restore else "restored")
+                    if checkpoint is not None:
+                        result.update(previous_branch=retained_branch, checkpoint=checkpoint,
+                                      previous_last_use=state["last_use"])
+                    return result
             except (Refused, OSError, ValueError) as error:
-                # A failure after attaching a task branch has allocated material;
-                # never try another candidate or create another tree afterward.
+                # Once checkpointing or allocation starts, never allocate another tree.
                 if isinstance(error, GitFailure) or not isinstance(error, Refused):
                     raise
                 attached = git(candidate, "symbolic-ref", "--quiet", "HEAD", check=False)
-                if options.path or allocated_branch or attached.stdout.strip() == reference.encode():
+                if options.path or allocated_branch or prepared or attached.stdout.strip() == reference.encode():
                     raise
-        return dict(event="worktree_init", status="no_idle")
+                refusals.append(dict(path=str(candidate), stage=stage, reason=str(error)))
+        return no_idle(options, candidate_refusals=refusals)

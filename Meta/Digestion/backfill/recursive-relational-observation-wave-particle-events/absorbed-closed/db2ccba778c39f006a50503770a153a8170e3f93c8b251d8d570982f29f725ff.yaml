@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:db2ccba778c39f006a50503770a153a8170e3f93c8b251d8d570982f29f725ff
+  normalized_sha256: sha256:db2ccba778c39f006a50503770a153a8170e3f93c8b251d8d570982f29f725ff
+cas_ref: sha256:db2ccba778c39f006a50503770a153a8170e3f93c8b251d8d570982f29f725ff
+coverage_gids:
+  - gid: D5/S3/HilbertOperators/DavisKahanProjector.norm_starProjection_sub_eq_max
+    target_statement_id: sha256:faa1b265b30d93ddb719af767500ee25ef6ea6953d6ebbfa1630b8088468f919
+receipts:
+  unresolved_subitems: []

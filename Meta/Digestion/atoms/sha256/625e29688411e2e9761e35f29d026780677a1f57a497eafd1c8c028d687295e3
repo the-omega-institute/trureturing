@@ -1,0 +1,10 @@
+**定义 103.4（来源、操作域和剩余量子起源问题）。** 本节的承重增量是整权重规范在特征五下的全空间表示、实际后缀代码投影、四元集迹分离及其全码奇相位矛盾；这是 `repo-derived` 的源特定数学综合。来源与用途限定如下。
+
+| 供应 | 在本节中的用途及边界 |
+| --- | --- |
+| 本卷 77.1–77.2、85.2、99.1、100.1 及 v15 6.1 | 保留整个十三维旧源、七个原门、秩 $5/8$ 的 $\Pi$、全部 $89$ 条合法扩大路径、$26$ 维真空接口和 $63$ 维补空间。逐个门仍是同一 $F,R$ 规范的实际地址；后缀 (103.13) 是字面路径块，没有额外重结合操作。 |
+| v15 §§9–10 | 消费既有分级、整权重规范及酉性恒等式。旧奇偶限制本身不排除对角 $U_m$；新增推断用的是 (103.7)–(103.24)，不重命名旧算术定理为新障碍。 |
+| Freedman–Larsen–Wang，[*The two-eigenvalue problem and density of Jones representation of braid groups*, math/0103200v1 §2 Definition 1、Lemma 2.1](https://arxiv.org/html/math/0103200v1) | `literature-attested` 的 Jones／Hecke 机制说明局部投影与编织关系的背景。本节用原生矩阵直接证明约化关系，不借其 §6 已由 77.2 区分的印刷融合矩阵，也不从密度推出精确有限合成。 |
+| Cui–Tian–Vasquez–Wang–Wong，[*The Search For Leakage-free Entangling Fibonacci Braiding Gates*, 1904.01731v1 §§2.1、3、5.1，Theorem 3.3](https://arxiv.org/html/1904.01731v1) | 其标准 $F,R$ 数据与本规范相容；Theorem 3.3 限定于文中由 $\sigma_1,\sigma_2,\sigma_4,\sigma_5,\Delta,\Sigma$ 生成的词族及其计算码，广义排除作为猜想讨论。它没有供应此处全部十一地址、全部有限词及完整 $26$ 维接口的定理；本节也不声称证明了其一般无泄漏纠缠门猜想。 |
+| Bigelow–Levaillant，[*Realizing an exact entangling gate using Fibonacci anyons*, 1802.01011v1，Theorem 2](https://arxiv.org/html/1802.01011v1) | 该文精确 $CR(2\pi/5)$ 的定理明确使用集体荷测量与成对融合。这些操作超出 (103.1) 的有限原生酉字域，不能直接移作本接口的精确合成，也不与 (103.3) 矛盾。 |
+| 本卷 91–94、97、99–102 及 v15 6.2–6.3 | 消费既有共同制备、单／两响应桥、原生密度、正向逆字替换及完整比较误差。它们没有给出奇次全码受控接口；本节没有重证它们，也没有以此替代它们各自的概率合同。 |

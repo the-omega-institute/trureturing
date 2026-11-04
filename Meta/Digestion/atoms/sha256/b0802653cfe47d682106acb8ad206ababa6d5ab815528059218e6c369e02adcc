@@ -1,0 +1,80 @@
+### 推论 2：精确 Schur 压缩
+
+取 $Z$ 的列为 $\ker V$ 的一组基，取 $U$ 的列补足为全空间基。定义
+
+
+<a id="display-84"></a>
+
+$$
+A=Z^*HZ,\qquad
+B=Z^*HU,\qquad
+C=U^*HU.
+$$
+
+
+已知
+
+
+<a id="display-85"></a>
+
+$$
+A\succ0.
+$$
+
+
+因此可以形成实际低矩核心
+
+
+<a id="display-86"></a><a id="eq-26"></a>
+
+$$
+\boxed{
+\mathcal S_{\mathrm{low}}
+=
+C-B^*A^{-1}B.
+}
+$$
+
+<p align="center" data-equation-number="26"><a href="#eq-26">(26)</a></p>
+
+
+分块合同变换给出
+
+
+<a id="display-87"></a>
+
+$$
+\begin{pmatrix}
+A&B\\
+B^*&C
+\end{pmatrix}
+\sim
+\begin{pmatrix}
+A&0\\
+0&\mathcal S_{\mathrm{low}}
+\end{pmatrix}.
+$$
+
+
+于是
+
+
+<a id="display-88"></a><a id="eq-27"></a>
+
+$$
+\boxed{
+H\succeq0
+\iff
+\mathcal S_{\mathrm{low}}\succeq0.
+}
+$$
+
+<p align="center" data-equation-number="27"><a href="#eq-27">(27)</a></p>
+
+
+而且两者的负方向数、零方向数完全相同。
+
+**这就是本轮对全局拼接问题最直接的推进：每个固定窗口内，无论加入多少节点，已经证明为正的高矩部分都可以被严格消去，剩余符号全部集中到至多 $N+1$ 维的实际核心。**
+
+核心仍随节点配置变化；这里没有把无限多个样本的核心替换成一个已经知道为正的矩阵。
+
