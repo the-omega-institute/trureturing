@@ -33,7 +33,7 @@ internal sealed class CirculantCharpolyDocument : IScribeDocumentDefinition
     {
         Formula n = F.Id("n");
         Formula transform = OwnerAt(OwnerQualified("D5", "S3", "Quantum", "Dynamics", "PolygonalFourierCouplings", "transform"), n);
-        return Disp(OwnerAll(n, OwnerNaturals(), OwnerImplication(OwnerAt(OwnerQualified("NeZero"), n),
+        return Disp(OwnerAll(n, OwnerNaturals(), Seq(OpenBracket, OwnerAt(OwnerQualified("NeZero"), n), CloseBracket, Sp,
             new Formula.Relation(OwnerAt(OwnerQualified("Matrix", "det"), transform), FormulaRelationOperator.NotEqual,
                 OwnerTyped(D(0), OwnerComplexes())))));
     }
@@ -53,7 +53,7 @@ internal sealed class CirculantCharpolyDocument : IScribeDocumentDefinition
             OwnerAt(OwnerQualified("Real", "cos"), angle)), OwnerReals()), OwnerComplexes());
         Formula equality = new Formula.Relation(left, FormulaRelationOperator.Equal, right);
         Formula bound = new Formula.Relation(l, FormulaRelationOperator.LessThanOrEqual, n);
-        return Disp(OwnerAll(n, OwnerNaturals(), OwnerImplication(OwnerAt(OwnerQualified("NeZero"), n),
+        return Disp(OwnerAll(n, OwnerNaturals(), Seq(OpenBracket, OwnerAt(OwnerQualified("NeZero"), n), CloseBracket, Sp,
             OwnerAll(j, OwnerNaturals(), OwnerAll(l, OwnerNaturals(), OwnerImplication(bound, equality))))));
     }
 

@@ -101,7 +101,8 @@ internal sealed class InverseChordCirculantDocument : IScribeDocumentDefinition
             Multiply(LocalCall("blockC", X("m")), LocalCall("blockB", X("m")))));
         Formula product = Seq(new Formula.Subscript(Prod, Seq(X("k"), Colon, Sp, At(Qualified("ZMod"), Size()))), Sp,
             Parenthesized(Subtract(X("y"), LocalCall("gamma", X("m"), X("k")))));
-        return All("m", Naturals(), Implication(At(Qualified("NeZero"), Size()), Implication(LE(D(3), X("m")), All("y", Reals(), Equal(determinant, product)))));
+        return All("m", Naturals(), Seq(OpenBracket, At(Qualified("NeZero"), Size()), CloseBracket, Sp,
+            Implication(LE(D(3), X("m")), All("y", Reals(), Equal(determinant, product)))));
     }
 
     private static DocumentBlock Node(string id, string name, string title, Formula formula, string prose, DescribeRole role) =>
