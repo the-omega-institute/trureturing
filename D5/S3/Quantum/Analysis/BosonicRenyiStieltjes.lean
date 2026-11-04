@@ -7,6 +7,7 @@
    digest: Positive Stieltjes representation for the bosonic Gaussian Renyi function. -/
 
 import D5.S3.Arith.Robin.LogarithmicMellinReserve
+import D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.PoissonWeight
 
 /-! The scalar positive representation used in the Gaussian covariance entropy inequality.
 The mass follows from an arctangent primitive after the substitutions
@@ -507,13 +508,181 @@ private lemma renyiFunction_derivative {α ν : ℝ} (ha0 : 0 < α)
   dsimp
   field_simp (disch := first | positivity | assumption)
 
+private lemma poisson_power_integral {α : ℝ} (ha0 : 0 < α) (g : ℝ → ℝ) :
+    (∫ p in Ioo (0 : ℝ) 1, poissonDensity α p * g (p ^ α⁻¹)) =
+      ∫ q in Ioo (0 : ℝ) 1, PoissonWeight.density α q * g q := by
+  let G := fun p : ℝ => poissonDensity α p * g (p ^ α⁻¹)
+  have hf : ContinuousOn (fun q : ℝ => q ^ α) (uIcc 0 1) :=
+    (Real.continuous_rpow_const ha0.le).continuousOn
+  have hd : ∀ q ∈ Ioo (0 : ℝ) 1,
+      HasDerivAt (fun q : ℝ => q ^ α) (α * q ^ (α - 1)) q :=
+    fun q hq => Real.hasDerivAt_rpow_const (Or.inl hq.1.ne')
+  have hn : ∀ q ∈ Ioo (0 : ℝ) 1, 0 ≤ α * q ^ (α - 1) :=
+    fun q hq => mul_nonneg ha0.le (Real.rpow_nonneg hq.1.le _)
+  have he := intervalIntegral.integral_comp_mul_deriv_of_deriv_nonneg (g := G) hf
+    (by simpa only [min_eq_left zero_le_one, max_eq_right zero_le_one] using hd)
+    (by simpa only [min_eq_left zero_le_one, max_eq_right zero_le_one] using hn)
+  have hzero : (0 : ℝ) ^ α = 0 := Real.zero_rpow ha0.ne'
+  rw [hzero, Real.one_rpow] at he
+  have hleft : (∫ q in (0 : ℝ)..1, (G ∘ fun q : ℝ => q ^ α) q *
+      (α * q ^ (α - 1))) = ∫ q in (0 : ℝ)..1, PoissonWeight.density α q * g q := by
+    apply intervalIntegral.integral_congr_Ioo_of_le zero_le_one
+    intro q hq
+    dsimp only [G, Function.comp_def, PoissonWeight.density, poissonDensity]
+    rw [Real.rpow_rpow_inv hq.1.le ha0.ne']
+    ring
+  rw [hleft] at he
+  simpa only [intervalIntegral.integral_of_le zero_le_one,
+    integral_Ioc_eq_integral_Ioo] using he.symm
+
+private lemma mellin_mass {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) :
+    ∫ q in Ioo (0 : ℝ) 1, PoissonWeight.density α q = 1 / 2 := by
+  have hsub := power_substitution_integral ha0 (fun _ => (1 : ℝ))
+  have hpow := poisson_power_integral ha0 (fun _ => (1 : ℝ))
+  have he := hsub.trans hpow
+  simpa only [mul_one] using he.symm.trans (by
+    simpa only [mul_one] using weight_mass ha0 ha2 ha1)
+
+private lemma mellin_stieltjes_integral {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hr0 : 0 < r) (hr1 : r < 1) :
+    (∫ q in Ioo (0 : ℝ) 1, PoissonWeight.density α q *
+      (1 / (r + q) + q / (1 + r * q))) =
+      1 / ((α - 1) * (1 - r)) -
+        α * r ^ (α - 1) / ((α - 1) * (1 - r ^ α)) := by
+  obtain ⟨hi, he⟩ := PoissonWeight.stieltjes_integral ha0 ha2 ha1 hr0 hr1
+  let g := fun q => PoissonWeight.density α q / (r + q)
+  have him : (fun q : ℝ => q⁻¹) '' Ioo (0 : ℝ) 1 = Ioi 1 := by
+    ext y
+    constructor
+    · rintro ⟨q, hq, rfl⟩
+      exact (one_lt_inv₀ hq.1).mpr hq.2
+    · intro hy
+      have hy0 : 0 < y := lt_trans zero_lt_one hy
+      exact ⟨y⁻¹, ⟨inv_pos.mpr hy0, (inv_lt_one₀ hy0).mpr hy⟩, inv_inv y⟩
+  have hinj : InjOn (fun q : ℝ => q⁻¹) (Ioo 0 1) :=
+    fun _ _ _ _ h => inv_injective h
+  have hd : ∀ q ∈ Ioo (0 : ℝ) 1,
+      HasDerivWithinAt (fun q : ℝ => q⁻¹) (-(q ^ 2)⁻¹) (Ioo 0 1) q :=
+    fun q hq => (hasDerivAt_inv hq.1.ne').hasDerivWithinAt
+  have hpoint (q : ℝ) (hq : q ∈ Ioo (0 : ℝ) 1) :
+      |-(q ^ 2)⁻¹| • g q⁻¹ = PoissonWeight.density α q * q / (1 + r * q) := by
+    have hq0 := hq.1
+    rw [abs_neg, abs_of_nonneg (inv_nonneg.mpr (sq_nonneg q)), smul_eq_mul]
+    dsimp only [g]
+    calc
+      _ = (PoissonWeight.density α q⁻¹ / q ^ 2) / (r + q⁻¹) := by ring
+      _ = PoissonWeight.density α q / (r + q⁻¹) := by
+        rw [PoissonWeight.density_reflection hq.1 ha1 (cosine_lt_one ha0 ha2 ha1)]
+      _ = _ := by
+        field_simp (disch := positivity)
+        ring
+  have ht := integral_image_eq_integral_abs_deriv_smul measurableSet_Ioo hd hinj g
+  rw [him] at ht
+  have htail : (∫ q in Ioi (1 : ℝ), g q) =
+      ∫ q in Ioo (0 : ℝ) 1, PoissonWeight.density α q * q / (1 + r * q) :=
+    ht.trans (setIntegral_congr_fun measurableSet_Ioo hpoint)
+  have hti := (integrableOn_image_iff_integrableOn_abs_deriv_smul
+    measurableSet_Ioo hd hinj g).mp (by
+      rw [him]
+      exact hi.mono_set (Ioi_subset_Ioi zero_le_one))
+  have hright := hti.congr_fun hpoint measurableSet_Ioo
+  have hsplit := intervalIntegral.integral_Ioi_sub_Ioi hi zero_le_one
+  rw [intervalIntegral.integral_of_le zero_le_one, integral_Ioc_eq_integral_Ioo] at hsplit
+  change (∫ q in Ioi (0 : ℝ), g q) - (∫ q in Ioi (1 : ℝ), g q) =
+    ∫ q in Ioo (0 : ℝ) 1, g q at hsplit
+  rw [htail] at hsplit
+  have hsum : (∫ q in Ioo (0 : ℝ) 1, PoissonWeight.density α q *
+      (1 / (r + q) + q / (1 + r * q))) =
+      (∫ q in Ioo (0 : ℝ) 1, g q) +
+        ∫ q in Ioo (0 : ℝ) 1, PoissonWeight.density α q * q / (1 + r * q) := by
+    calc
+      _ = ∫ q in Ioo (0 : ℝ) 1, g q + PoissonWeight.density α q * q / (1 + r * q) := by
+        apply setIntegral_congr_fun measurableSet_Ioo
+        intro q _
+        dsimp only [g]
+        ring
+      _ = _ := integral_add (hi.mono_set Ioo_subset_Ioi_self) hright
+  rw [hsum]
+  change (∫ q in Ioi (0 : ℝ), g q) = _ at he
+  linarith
+
 private lemma poisson_resolvent_integral {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 < ν) :
     (∫ p in Ioo (0 : ℝ) 1, poissonDensity α p *
       (2 * ν / (ν ^ 2 - ((1 - p ^ α⁻¹) / (1 + p ^ α⁻¹)) ^ 2))) =
       α * (((ν + 1) / 2) ^ (α - 1) - ((ν - 1) / 2) ^ (α - 1)) /
         (2 * (α - 1) * (((ν + 1) / 2) ^ α - ((ν - 1) / 2) ^ α)) := by
-  sorry
+  rw [poisson_power_integral ha0
+    (fun q : ℝ => 2 * ν / (ν ^ 2 - ((1 - q) / (1 + q)) ^ 2))]
+  let r : ℝ := (ν - 1) / (ν + 1)
+  have hvp : 0 < ν + 1 := by linarith
+  have hr0 : 0 < r := div_pos (by linarith) hvp
+  have hr1 : r < 1 := (div_lt_one hvp).mpr (by linarith)
+  have hm := mellin_mass ha0 ha2 ha1
+  have hi : IntegrableOn (PoissonWeight.density α) (Ioo 0 1) :=
+    Integrable.of_integral_ne_zero (by rw [hm]; norm_num)
+  have hk : ContinuousOn (fun q : ℝ => 1 / (r + q) + q / (1 + r * q)) (Icc 0 1) := by
+    intro q hq
+    have hq0 := hq.1
+    exact ((continuousAt_const.div (continuousAt_const.add continuousAt_id)
+      (add_pos_of_pos_of_nonneg hr0 hq0).ne').add (continuousAt_id.div
+        (continuousAt_const.add (continuousAt_const.mul continuousAt_id))
+          (add_pos_of_pos_of_nonneg zero_lt_one (mul_nonneg hr0.le hq0)).ne')).continuousWithinAt
+  have hki := hi.mul_continuousOn_of_subset hk measurableSet_Ioo
+    isCompact_Icc Ioo_subset_Icc_self
+  have hdecomp : (∫ q in Ioo (0 : ℝ) 1, PoissonWeight.density α q *
+      (2 * ν / (ν ^ 2 - ((1 - q) / (1 + q)) ^ 2))) =
+      2 / (ν + 1) * (1 / 2) + 2 / (ν + 1) ^ 2 *
+        (∫ q in Ioo (0 : ℝ) 1, PoissonWeight.density α q *
+          (1 / (r + q) + q / (1 + r * q))) := by
+    calc
+      _ = ∫ q in Ioo (0 : ℝ) 1,
+          2 / (ν + 1) * PoissonWeight.density α q + 2 / (ν + 1) ^ 2 *
+            (PoissonWeight.density α q * (1 / (r + q) + q / (1 + r * q))) := by
+        apply setIntegral_congr_fun measurableSet_Ioo
+        intro q hq
+        dsimp only
+        have hq0 := hq.1
+        have hx := mobius_mem hq
+        have hden : 0 < ν ^ 2 - ((1 - q) / (1 + q)) ^ 2 := by
+          nlinarith [hx.1, hx.2]
+        have hrq : 0 < r + q := by positivity
+        have hrpq : 0 < 1 + r * q := by positivity
+        have hkernel : 2 * ν / (ν ^ 2 - ((1 - q) / (1 + q)) ^ 2) =
+            2 / (ν + 1) + 2 / (ν + 1) ^ 2 *
+              (1 / (r + q) + q / (1 + r * q)) := by
+          have hvm : 0 < ν - 1 := by linarith
+          have hpoly : 0 < ν ^ 2 * (1 + q) ^ 2 - (1 - q) ^ 2 := by
+            nlinarith [mul_pos (by nlinarith : 0 < ν ^ 2 - 1)
+              (sq_pos_of_pos (by positivity : 0 < 1 + q))]
+          dsimp only [r] at hrq hrpq ⊢
+          field_simp (disch := first | positivity | assumption | nlinarith [hpoly])
+          ring
+        rw [hkernel]
+        ring
+      _ = _ := by rw [integral_add (hi.const_mul _) (hki.const_mul _),
+        integral_const_mul, integral_const_mul, hm]
+  rw [hdecomp, mellin_stieltjes_integral ha0 ha2 ha1 hr0 hr1]
+  have ha : 0 < (ν + 1) / 2 := by positivity
+  have hB : (ν - 1) / 2 = ((ν + 1) / 2) * r := by
+    dsimp only [r]
+    field_simp (disch := positivity)
+  have hpow : r ^ α = r * r ^ (α - 1) := by
+    rw [Real.rpow_sub_one hr0.ne']
+    field_simp (disch := positivity)
+  have hpowlt : r ^ α < 1 := Real.rpow_lt_one hr0.le hr1 ha0
+  have hden : 0 < 1 - r ^ α := by linarith
+  have hdiff := entropy_difference_pos ha0 hv.le
+  have hA := Real.rpow_pos_of_pos ha α
+  rw [hB, Real.mul_rpow ha.le hr0.le, Real.mul_rpow ha.le hr0.le,
+    Real.rpow_sub_one ha.ne']
+  have hrel : (ν + 1) * (1 - r) = 2 := by
+    dsimp only [r]
+    field_simp (disch := positivity)
+    ring
+  field_simp (disch := first | positivity | assumption | exact sub_ne_zero.mpr ha1)
+  linear_combination
+    ((α - 1) * (1 - r ^ α) - α * (1 - r ^ (α - 1))) * hrel - 2 * α * hpow
 
 private lemma resolvent_integral {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 < ν) :
