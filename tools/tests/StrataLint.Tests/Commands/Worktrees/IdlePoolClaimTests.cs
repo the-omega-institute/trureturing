@@ -59,6 +59,23 @@ public sealed partial class WorktreeCommandTests
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Fact]
+    public void NativePidfdDistinguishesDeadLeaderFromWholeGroupExit()
+    {
+        if (!OperatingSystem.IsLinux()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/host_cleanup_tests.py"),
+                Path.Combine(root, "tools/scripts/host-cleanup.py"),
+                "HostCleanupTests.test_native_pidfd_dead_leader_live_worker"],
+            root, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture);
+        Console.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
