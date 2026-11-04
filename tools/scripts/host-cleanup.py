@@ -1309,6 +1309,8 @@ def main(arguments=None):
     except BaseException as error:
         if LOG is not None:
             code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 1
+            if isinstance(error, KeyboardInterrupt):
+                code = 130
             LOG.finish(code, error_type=type(error).__name__)
         raise
     if LOG is not None:

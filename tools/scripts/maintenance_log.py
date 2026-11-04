@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Best-effort maintenance outcomes in the Git common directory (or an override).
+"""Best-effort maintenance outcomes outside the worktree.
+
+The default is <git-common-dir>/maintenance-logs; set
+TRURETURING_MAINTENANCE_LOG_DIR to choose another destination.
+TRURETURING_MAINTENANCE_LOG_DIAGNOSTICS=1 enables logging-failure diagnostics.
 
 Commands inherit IO directly. Logs retain run identity, outcomes and timings,
 without intercepting output or saving command arguments or transcripts.
