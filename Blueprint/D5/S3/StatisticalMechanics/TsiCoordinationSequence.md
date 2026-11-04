@@ -48,6 +48,10 @@ $$(\forall (n: \mathbb{N}), ((0 < n) \to ((\operatorname{Even}\left(n\right)) \t
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/TsiCoordinationSequence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/barker-2018-oeis-a299289-tsi-coordination-sequence` (proved) by `D5/S3/StatisticalMechanics/TsiCoordinationSequence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barker-2018-oeis-a299289-tsi-coordination-sequence","declaration_gid":"D5/S3/StatisticalMechanics/TsiCoordinationSequence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. J. A. Sloane, Colin Barker (2018). *OEIS A299289, coordination sequence for the tsi 3D uniform tiling*. URL: <https://oeis.org/A299289>.

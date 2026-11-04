@@ -120,7 +120,10 @@ internal sealed class TsiCoordinationSequenceDocument : IScribeDocumentDefinitio
                             + "If n is odd, write n=t+t+1. Then n is positive, n/2=t and (n+1)/2=t+1; "
                             + "the same identity yields 2 shell n = 13 n² + 3. These two arguments prove "
                             + "the two conjuncts."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("barker-2018-oeis-a299289-tsi-coordination-sequence"),
+                    ResolutionKind.Proved)))));
 
     private static Formula GraphFormula()
     {
