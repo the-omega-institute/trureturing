@@ -411,7 +411,7 @@ def family : Registration arena (type_of% (@original_empty_petz_consumer)) where
 operands. Selected source reconstruction remains unresolved under issue 26627. -/
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@original_empty_petz_consumer) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Dynamics.NativeProtocolGraft.Actual.original_empty_petz_consumer.__information_unit
+  unitName := `D5.S3.Quantum.Dynamics.NativeProtocolGraft.original_empty_petz_consumer.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Dynamics.NativeProtocolGraft.EmptyPetz.family
   realizationSource := none
   generated := false

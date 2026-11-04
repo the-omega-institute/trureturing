@@ -1963,6 +1963,16 @@ private theorem empty_target_value :
   apply (div_eq_iff (by norm_num : (11 : ℂ) ≠ 0)).2
   linear_combination -(11*t^2-t+4)*Coeff.t_sq
 
+end Actual
+
+section
+open Actual
+open scoped ComplexOrder MatrixOrder
+local instance : NormedAddCommGroup Actual.Qubit := Matrix.instL2OpNormedAddCommGroup
+local instance : NormedSpace ℂ Actual.Qubit := Matrix.instL2OpNormedSpace
+local instance : NormedRing Actual.Qubit := Matrix.instL2OpNormedRing
+local instance : NormedAlgebra ℂ Actual.Qubit := Matrix.instL2OpNormedAlgebra
+
 /-- The actual three-call calibration, native read and fixed Petz empty-input
 event are linked to every complete original continuation's raw discrepancy.
 The separate five-call retained-history and full-record targets remain open. -/
@@ -1995,6 +2005,6 @@ theorem original_empty_petz_consumer :
 
 #print axioms original_empty_petz_consumer
 
-end Actual
+end
 
 end D5.S3.Quantum.Dynamics.NativeProtocolGraft

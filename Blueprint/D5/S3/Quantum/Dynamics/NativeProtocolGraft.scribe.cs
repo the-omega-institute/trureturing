@@ -65,7 +65,7 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
 
     private static DocumentBlock EmptyPetzNode() => Describe.Lean(
         DescribeId.Create("original-empty-petz-consumer"),
-        DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeProtocolGraft.Actual.original_empty_petz_consumer"),
+        DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_empty_petz_consumer"),
         H("Actual faithful calibration and the original empty-input Petz event"),
         StatementSource.FromAuthor(EmptyPetzStatement()),
         AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/stewarttall2025algebraic")),
