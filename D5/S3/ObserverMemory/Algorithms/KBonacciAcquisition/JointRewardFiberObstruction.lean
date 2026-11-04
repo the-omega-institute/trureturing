@@ -11,6 +11,7 @@ import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberCatal
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators
+open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
 namespace D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
 
@@ -228,6 +229,20 @@ private theorem witness_support {L : ℕ} (stop : Bool) (n j k l : Fin L)
   exact ⟨⟨⟨.inl (),fun _ => n.succ⟩,attained⟩,
     by rintro r ⟨⟨s,a⟩,rfl⟩; exact upper s a⟩
 
+private theorem native_dominance {L : ℕ} (stop : Bool) (n j k l : Fin L)
+    (hjk : j < k) (hkl : k < l) (t : ℝ) (ht : 0 ≤ t)
+    (f : Catalog stop L) (r : Fin (L + 1)) :
+    (∑ b, if f.val b = r then point (baseWord n j k l) t b else 0) ≤
+      ∑ b, if f.val b = r then threePoints n j k l t b else 0 := by
+  classical
+  obtain ⟨s,a,ha⟩ := (catalog_range stop f.val).mp f.property
+  rw [← ha,catalog_fiber_sum,catalog_fiber_sum]
+  apply Finset.sum_le_sum
+  intro c _
+  split_ifs
+  · exact catalog_dominance stop n j k l hjk hkl t ht s c
+  · exact le_rfl
+
 /-- Exact signed totals, original late anchor, complete N/O costs and
 cellwise dominance for the four-word score on the entire cube. -/
 theorem proposition21310_costs {L : ℕ} (n j k l : Fin L)
@@ -247,8 +262,11 @@ theorem proposition21310_costs {L : ℕ} (n j k l : Fin L)
     rw [completeCost,hB,witness_anchor n j k l hnj hjk hkl hlate]
     ring
   · intro stop s c
-    simpa only [witness_baseline,witness_numerical,ite_true] using
-      catalog_dominance stop n j k l hjk hkl t ht.le s c
+    classical
+    let a : Fin 4 → Fin (L + 1) := fun k => if k = c then 0 else n.succ
+    have h := native_dominance stop n j k l hjk hkl t ht.le
+      ⟨evaluate stop s a, evaluated_in_catalog stop s a⟩ 0
+    simpa [evaluate,a,catalogReading,witness_baseline,witness_numerical] using h
 
 
 /-- Constant, singleton and ordered pair-product coordinates on the original cube. -/
@@ -289,8 +307,22 @@ def jointMaximum {L : ℕ} (y : FullScore L) : ℝ := sSup (commonMassSet y)
 def coefficientFloor {L : ℕ} (y : FullScore L) : ℝ :=
   y.T + ∑ i, max (classBaselineMass y i) (moments (numerical y i) (.inl ()))
 
+open Classical in
 def fiberMassSet {L : ℕ} (y : FullScore L) : Set ℝ :=
-  {r | ∃ z, SameFiber z y ∧ coefficientMass z = r}
+  {r | ∃ z : FullScore L, (beta z = beta y ∧
+    (∀ f : Catalog true L, ∀ a,
+      (∑ b, if f.val b = a then baseline z b else 0) =
+        ∑ b, if f.val b = a then baseline y b else 0) ∧
+    (∀ i, ∀ f : Catalog true L, ∀ a,
+      (∑ b, if f.val b = a then numerical z i b else 0) =
+        ∑ b, if f.val b = a then numerical y i b else 0)) ∧ coefficientMass z = r}
+
+private theorem fiber_mass_set_eq_local {L : ℕ} (y : FullScore L) :
+    fiberMassSet y = {r | ∃ z, SameFiber z y ∧ coefficientMass z = r} := by
+  classical
+  ext r
+  simp only [fiberMassSet,Set.mem_setOf_eq,SameFiber,same_readings_iff_catalog]
+
 
 def coefficientMinimum {L : ℕ} (y : FullScore L) : ℝ := sInf (fiberMassSet y)
 
@@ -509,6 +541,7 @@ theorem proposition21310_cone_minimum {L : ℕ} (n j k l : Fin L)
   have self : SameFiber y y := ⟨rfl,fun _ _ => rfl,fun _ _ _ => rfl⟩
   have sourceK := (proposition21310_rigidity n j k l hnj hjk hkl t ht y self).2.2.2.1
   have least : IsLeast (fiberMassSet y) (4*t) := by
+    rw [fiber_mass_set_eq_local]
     refine ⟨⟨y,self,sourceK⟩,?_⟩
     rintro r ⟨z,hz,rfl⟩
     exact le_of_eq (proposition21310_rigidity n j k l hnj hjk hkl t ht z hz).2.2.2.1.symm

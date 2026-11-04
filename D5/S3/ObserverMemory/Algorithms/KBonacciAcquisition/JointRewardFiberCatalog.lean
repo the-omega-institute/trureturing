@@ -520,7 +520,7 @@ private theorem full_pair_fibers {L : ℕ} (a : Pair L) (b c : Word L)
     cases h₃ : c a.val.1 <;> cases h₄ : c a.val.2 <;>
     simp_all [fullCell]
 
-private theorem evaluated_in_catalog {L : ℕ} (stop : Bool) (s : Schedule L)
+theorem evaluated_in_catalog {L : ℕ} (stop : Bool) (s : Schedule L)
     (a : Fin 4 → Fin (L + 1)) : InCatalog stop L (evaluate stop s a) := by
   cases stop
   · refine ⟨addresses s, ?_, ?_, by simp, ?_⟩
@@ -532,7 +532,10 @@ private theorem evaluated_in_catalog {L : ℕ} (stop : Bool) (s : Schedule L)
       | inl => simp [addresses] at hi
       | inr s =>
         cases s with
-        | inl j => simpa [addresses] using hi ▸ j.isLt
+        | inl j =>
+            simp [addresses] at hi
+            subst i
+            exact j.isLt
         | inr p =>
           simp [addresses] at hi
           rcases hi with rfl | rfl
@@ -611,7 +614,7 @@ private theorem nonstop_represented {L : ℕ} (f : Catalog false L) :
                   intro b c h
                   have he := full_pair_fibers p b c h
                   apply hc
-                  simpa [view, lowReply, hi, hj, ii, jj, and_comm] using he
+                  simpa [view, lowReply, hi, hj, p, ii, jj, and_comm] using he
 
 /-- Equality of whole-function ranges, with no injectivity assertion about representations. -/
 theorem catalog_range {L : ℕ} (stop : Bool) (f : Word L → Fin (L + 1)) :
@@ -623,6 +626,7 @@ theorem catalog_range {L : ℕ} (stop : Bool) (f : Word L → Fin (L + 1)) :
     · obtain ⟨s,t,he⟩ := represented (⟨f,hf⟩ : Catalog true L)
       refine ⟨s,(fun c => if c = 0 then t.1 else if c = 1 then t.2.1 else t.2.2),?_⟩
       have eqval := congrArg Subtype.val he
+      change (table s t).val = f at eqval
       rw [← eqval]
       funext b
       simp only [evaluate, catalogCell, ite_true, table]
@@ -675,9 +679,63 @@ and returns zero if neither available head address is false. -/
 def referenceHead {L : ℕ} (b : Word L) : Fin (L + 1) :=
   if h : ∃ i : Fin L, FirstZero b i ∧ i.val < 2 then h.choose.succ else 0
 
-/-- The original head-pair reward. -/
-def anchor {L : ℕ} (y : FullScore L) : ℝ := fullReward y referenceHead
+private def headSchedule (L : ℕ) (hL : 2 ≤ L) : Schedule L :=
+  .inr (.inr ⟨(⟨0,by omega⟩,⟨1,by omega⟩),by change (0 : ℕ) < 1; omega⟩)
 
+private def headLabels (L : ℕ) (hL : 2 ≤ L) (stop : Bool) (c : Fin 4) : Fin (L + 1) :=
+  if stop then
+    if c = 0 then ⟨1,by omega⟩ else if c = 1 then ⟨2,by omega⟩ else 0
+  else if c = 0 ∨ c = 1 then ⟨1,by omega⟩ else if c = 2 then ⟨2,by omega⟩ else 0
+
+private theorem reference_head_evaluate {L : ℕ} (hL : 2 ≤ L) (stop : Bool) :
+    evaluate stop (headSchedule L hL) (headLabels L hL stop) = referenceHead := by
+  classical
+  let i : Fin L := ⟨0,by omega⟩
+  let j : Fin L := ⟨1,by omega⟩
+  funext b
+  by_cases hb : b i = false
+  · have hz : FirstZero b i := ⟨hb,by intro k hk; change k.val < 0 at hk; omega⟩
+    have he : ∃ k : Fin L, FirstZero b k ∧ k.val < 2 := ⟨i,hz,by change (0 : ℕ) < 2; omega⟩
+    have chosen : he.choose = i := firstZero_unique he.choose_spec.1 hz
+    rw [referenceHead,dite_eq_left he,chosen]
+    cases stop <;> simp [evaluate,catalogCell,headSchedule,headLabels,cell,fullCell,i,hb]
+  · have hbi : b i = true := Bool.eq_true_of_not_eq_false hb
+    by_cases hc : b j = false
+    · have hz : FirstZero b j := ⟨hc,by
+        intro k hk
+        have eq : k = i := by apply Fin.ext; change k.val = 0; change k.val < 1 at hk; omega
+        simpa [eq] using hbi⟩
+      have he : ∃ k : Fin L, FirstZero b k ∧ k.val < 2 := ⟨j,hz,by change (1 : ℕ) < 2; omega⟩
+      have chosen : he.choose = j := firstZero_unique he.choose_spec.1 hz
+      rw [referenceHead,dite_eq_left he,chosen]
+      cases stop <;> simp [evaluate,catalogCell,headSchedule,headLabels,cell,fullCell,i,j,hbi,hc]
+    · have hcj : b j = true := Bool.eq_true_of_not_eq_false hc
+      have no : ¬∃ k : Fin L, FirstZero b k ∧ k.val < 2 := by
+        rintro ⟨k,hk,hle⟩
+        have eq : k = i ∨ k = j := by
+          have : k.val = 0 ∨ k.val = 1 := by omega
+          rcases this with h | h
+          · left; apply Fin.ext; exact h
+          · right; apply Fin.ext; exact h
+        rcases eq with rfl | rfl
+        · have fail := hk.1; simp [hbi] at fail
+        · have fail := hk.1; simp [hcj] at fail
+      rw [referenceHead,dite_eq_right no]
+      cases stop <;> simp [evaluate,catalogCell,headSchedule,headLabels,cell,fullCell,i,j,hbi,hcj]
+
+/-- The original reference head-pair anchor, with the available short-head extension. -/
+def anchor {L : ℕ} (y : FullScore L) : ℝ :=
+  if hL : 2 ≤ L then scheduleReward true y (headSchedule L hL) (headLabels L hL true)
+  else fullReward y referenceHead
+
+private theorem anchor_eq_reference {L : ℕ} (y : FullScore L) :
+    anchor y = fullReward y referenceHead := by
+  unfold anchor
+  split_ifs with hL
+  · rw [schedule_reward_eq,reference_head_evaluate]
+  · rfl
+
+open Classical in
 theorem anchor_eq_formula {L : ℕ} (y : FullScore L) :
     anchor y = (∑ b, ∑ i, if FirstZero b i then
       (if 2 ≤ i.val then y.A b else y.C b) else 0) + (∑ b, y.P b) + y.T := by
@@ -703,17 +761,85 @@ theorem anchor_eq_formula {L : ℕ} (y : FullScore L) :
       by_cases he : i.val < 2
       · have hex : ∃ k : Fin L, FirstZero b k ∧ k.val < 2 := ⟨i,hi,he⟩
         have chosen : hex.choose = i := firstZero_unique hex.choose_spec.1 hi
-        simp [referenceHead,hex,chosen,numerical,hi,show ¬2 ≤ i.val by omega,hb]
+        rw [referenceHead, dite_eq_left hex, chosen, Fin.cases_succ]
+        simp [numerical,hi,show ¬2 ≤ i.val by omega,hb]
       · have no : ¬∃ k : Fin L, FirstZero b k ∧ k.val < 2 := by
           rintro ⟨k,hk,hlt⟩
           have := firstZero_unique hk hi
           subst k
           exact he hlt
-        simp [referenceHead,no,baseline,hb,show 2 ≤ i.val by omega]
-  simp only [anchor, fullReward, each, Finset.sum_add_distrib]
+        rw [referenceHead, dite_eq_right no, Fin.cases_zero]
+        simp [baseline,hb,show 2 ≤ i.val by omega]
+  rw [anchor_eq_reference]
+  simp only [fullReward, each, Finset.sum_add_distrib]
   simp
 
 def completeCost {L : ℕ} (stop : Bool) (y : FullScore L) : ℝ :=
   completeSupport stop y - anchor y
+
+/-- Each native output fiber is the union of precisely its assigned local cells. -/
+theorem catalog_fiber_sum {L : ℕ} (stop : Bool) (μ : Word L → ℝ)
+    (s : Schedule L) (a : Fin 4 → Fin (L + 1)) (r : Fin (L + 1)) :
+    (∑ b, if evaluate stop s a b = r then μ b else 0) =
+      ∑ c, if a c = r then catalogReading stop μ s c else 0 := by
+  classical
+  symm
+  calc
+    _ = ∑ c, ∑ b, if catalogCell stop s b = c then
+        (if a c = r then μ b else 0) else 0 := by
+      apply Finset.sum_congr rfl
+      intro c _
+      by_cases h : a c = r <;> simp [h,catalogReading]
+    _ = _ := by
+      rw [Finset.sum_comm]
+      simp [evaluate]
+      rfl
+
+/-- Individual stopped-cell readings agree exactly when every original Catalog
+output fiber has the same mass. This also includes dimension zero. -/
+theorem same_readings_iff_catalog {L : ℕ} (μ ν : Word L → ℝ) :
+    SameReadings μ ν ↔ ∀ f : Catalog true L, ∀ r,
+      (∑ b, if f.val b = r then μ b else 0) = ∑ b, if f.val b = r then ν b else 0 := by
+  classical
+  constructor
+  · intro h f r
+    obtain ⟨s,a,ha⟩ := (catalog_range true f.val).mp f.property
+    rw [← ha,catalog_fiber_sum,catalog_fiber_sum]
+    apply Finset.sum_congr rfl
+    intro c _
+    by_cases he : a c = r
+    · simp only [ite_eq_left he]
+      by_cases hc : c.val < 3
+      · let d : Fin 3 := ⟨c.val,hc⟩
+        have eq : d.castSucc = c := by apply Fin.ext; rfl
+        rw [← eq]
+        simpa only [catalogReading,catalogCell,ite_true,Fin.castSucc_inj,reading] using h s d
+      · have eq : c = (3 : Fin 4) := by
+          apply Fin.ext
+          have := c.isLt
+          change c.val = 3
+          omega
+        subst c
+        have empty (w : Word L) : (cell s w).castSucc ≠ (3 : Fin 4) := by
+          exact (by decide : ∀ k : Fin 3, k.castSucc ≠ (3 : Fin 4)) (cell s w)
+        simp [catalogReading,catalogCell,empty]
+    · simp [he]
+  · intro h
+    by_cases hL : 0 < L
+    · intro s c
+      let a : Fin 4 → Fin (L + 1) := fun k => if k = c.castSucc then 0 else (⟨0,hL⟩ : Fin L).succ
+      have eq := h ⟨evaluate true s a, evaluated_in_catalog true s a⟩ 0
+      simpa [evaluate,a,catalogCell,reading] using eq
+    · have eq := h (⟨fun _ => 0,[],by simp,by simp,by simp,by simp⟩ : Catalog true L) 0
+      have total : (∑ b, μ b) = ∑ b, ν b := by simpa using eq
+      have zero : L = 0 := by omega
+      subst L
+      intro s c
+      cases s with
+      | inl => fin_cases c <;> simpa [reading,cell] using total
+      | inr s =>
+        cases s with
+        | inl i => exact Fin.elim0 i
+        | inr a => exact Fin.elim0 a.val.1
 
 end D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction

@@ -108,7 +108,7 @@ internal sealed class JointRewardFiberCatalogDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("joint-reward-anchor"),
                 DeclarationHandle.Create(Owner + "anchor"), H("The original head-pair anchor"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every L and full score y, anchor sums A over all first-zero classes whose zero-based address is at least two, C over the two earlier classes, every P once and T once. Original index n is the zero-based address plus one, so the late condition is the original inequality 3<=n."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("For every L and full score y, anchor is the reward of the original reference head pair R=(1,2;1,2,0); its full-cell completion is (1,1,2,0). The proved formula sums A over first-zero classes whose zero-based address is at least two, C over the two earlier classes, every P once and T once. Original index n is the zero-based address plus one, so the late condition is the original inequality 3<=n."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("joint-reward-completecost"),
                 DeclarationHandle.Create(Owner + "completeCost"), H("Complete excess over the anchor"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -140,5 +140,17 @@ internal sealed class JointRewardFiberCatalogDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("joint-native-anchor-eq-formula"),
                 DeclarationHandle.Create(Owner + "anchor_eq_formula"), H("Reference reward equals the anchor formula"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every L and FullScore y, the reward of referenceHead equals the sum of A in first-zero classes at addresses at least two, C in the earlier two classes, all P once and terminal T once. A finite first-zero partition proves this identity, including the all-true word and dimensions with fewer than two addresses."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For every L and FullScore y, the reward of referenceHead equals the sum of A in first-zero classes at addresses at least two, C in the earlier two classes, all P once and terminal T once. A finite first-zero partition proves this identity, including the all-true word and dimensions with fewer than two addresses."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("joint-native-evaluated-in-catalog"),
+                DeclarationHandle.Create(Owner + "evaluated_in_catalog"), H("Local tables are native Catalog functions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L, stop, schedule and unrestricted cell label assignment, the whole evaluated output function belongs to the original InCatalog. In stopped mode it is the existing StoppedCoefficientRealization.table with an unused fourth cell; the nonstopped direction uses the original low-address view and its complete replies."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("joint-native-catalog-fiber-sum"),
+                DeclarationHandle.Create(Owner + "catalog_fiber_sum"), H("Native output fibers are unions of local cells"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L, stop, arbitrary real measure mu on all words, schedule, cell labels and original output r, the mass of the whole output fiber f=r equals the sum of precisely those local cell masses assigned r. This identity is before maximization and requires no sign or support restriction."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("joint-native-same-readings-iff-catalog"),
+                DeclarationHandle.Create(Owner + "same_readings_iff_catalog"), H("Complete stopped observations in native form"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L and arbitrary real measures mu and nu on the whole cube, SameReadings is equivalent to equality of the mass of every output fiber of every function in the original Catalog true L. Each output fiber is a union of local cells. Conversely, each local cell is selected by a native table assigning it zero and assigning a distinct numerical output to the other cells; dimension zero is handled separately. The equivalence retains all short schedules and empty cells."))), DescribeRole.Theorem))));
 }
