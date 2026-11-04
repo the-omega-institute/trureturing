@@ -18,6 +18,7 @@ import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
 import D5.S3.Arith.Lattices.GoldenIntegerRing
 import Mathlib.RingTheory.Norm.Transitivity
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 /-! Native protocol composition on the full sixteen-bit carrier. -/
 
@@ -1519,52 +1520,53 @@ private theorem source_steps :
     rw [gate_ket]
     have hf : flip (center 3) (sourceWord false false true) =
         sourceWord false false false := by decide
-    rw [hf]
-    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
-      rootWord, Coeff.evalO, a, b, c]
-    module
+    rw [hf, show Coeff.diagonal 3 (sourceWord false false true) = Coeff.tau^2 by rfl,
+      show Coeff.active 3 (sourceWord false false true) = true by rfl]
+    simp only [Bool.true_eq, if_true, map_pow, Coeff.evalO_tau]
+    change c • _ + b • _ = _
+    abel
   have h20 : (gate 2).mulVec (ket (sourceWord false false false)) =
       a • ket (sourceWord false false false) +
       b • ket (sourceWord false true false) := by
     rw [gate_ket]
     have hf : flip (center 2) (sourceWord false false false) =
         sourceWord false true false := by decide
-    rw [hf]
-    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
-      rootWord, Coeff.evalO, a, b]
+    rw [hf, show Coeff.diagonal 2 (sourceWord false false false) = Coeff.tau by rfl,
+      show Coeff.active 2 (sourceWord false false false) = true by rfl]
+    simp only [Bool.true_eq, if_true, Coeff.evalO_tau]
+    rfl
   have h21 : (gate 2).mulVec (ket (sourceWord false false true)) =
       zeta • ket (sourceWord false false true) := by
-    rw [gate_ket]
-    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
-      rootWord, Coeff.evalO]
+    rw [gate_ket, show Coeff.diagonal 2 (sourceWord false false true) = 0 by rfl,
+      show Coeff.active 2 (sourceWord false false true) = false by rfl]
+    simp
   have h10 : (gate 1).mulVec (ket (sourceWord false false false)) =
       a • ket (sourceWord false false false) +
       b • ket (sourceWord true false false) := by
     rw [gate_ket]
     have hf : flip (center 1) (sourceWord false false false) =
         sourceWord true false false := by decide
-    rw [hf]
-    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
-      rootWord, Coeff.evalO, a, b]
+    rw [hf, show Coeff.diagonal 1 (sourceWord false false false) = Coeff.tau by rfl,
+      show Coeff.active 1 (sourceWord false false false) = true by rfl]
+    simp only [Bool.true_eq, if_true, Coeff.evalO_tau]
+    rfl
   have h11 : (gate 1).mulVec (ket (sourceWord false false true)) =
       a • ket (sourceWord false false true) +
       b • ket (sourceWord true false true) := by
     rw [gate_ket]
     have hf : flip (center 1) (sourceWord false false true) =
         sourceWord true false true := by decide
-    rw [hf]
-    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
-      rootWord, Coeff.evalO, a, b]
+    rw [hf, show Coeff.diagonal 1 (sourceWord false false true) = Coeff.tau by rfl,
+      show Coeff.active 1 (sourceWord false false true) = true by rfl]
+    simp only [Bool.true_eq, if_true, Coeff.evalO_tau]
+    rfl
   have h12 : (gate 1).mulVec (ket (sourceWord false true false)) =
       zeta • ket (sourceWord false true false) := by
-    rw [gate_ket]
-    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
-      rootWord, Coeff.evalO]
-  rw [sourceVector, source_start, h3, Matrix.mulVec_add,
-    Matrix.mulVec_smul, Matrix.mulVec_smul, h20, h21,
-    Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul,
-    Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul,
-    h10, h12, h11]
+    rw [gate_ket, show Coeff.diagonal 1 (sourceWord false true false) = 0 by rfl,
+      show Coeff.active 1 (sourceWord false true false) = false by rfl]
+    simp
+  rw [sourceVector, source_start, h3]
+  simp only [Matrix.mulVec_add, Matrix.mulVec_smul, h20, h21, h10, h11, h12]
   dsimp only [fiveTermVector]
   module
 
@@ -1573,8 +1575,40 @@ theorem original_source_vector :
     (operator sourceTree ()).mulVec omega0 = fiveTermVector ∧
     calls sourceTree () = 3 := by
   constructor
-  · simpa [sourceTree, operator, callMatrix, Matrix.mulVec_mulVec] using source_steps
+  · simpa [sourceTree, operator, callMatrix, sourceVector, Matrix.mulVec_mulVec] using source_steps
   · rfl
+
+
+/-- The original complement contains all fifteen other native bits. -/
+abbrev Rest := {i : Fin 16 // i ≠ 2} → Bool
+def cut : Basis ≃ Bool × Rest := Equiv.funSplitAt 2 Bool
+abbrev Qubit := Matrix Bool Bool ℂ
+
+/-- Mathematical reduction at original site b1. Original records remain
+outside this operation; it asserts no physical deletion or fresh preparation. -/
+def reduced (v : Basis → ℂ) : Qubit :=
+  D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight
+    (Matrix.vecMulVec (v ∘ cut.symm) (star (v ∘ cut.symm)))
+
+private theorem ket_cut (x : Basis) (i : Bool) (e : Rest) :
+    ket x (cut.symm (i,e)) =
+      if i = x 2 then if e = (cut x).2 then 1 else 0 else 0 := by
+  simp only [ket, Equiv.symm_apply_eq, Prod.mk.injEq]
+  rfl
+
+private theorem source_rest (x y z x' y' z' : Bool) :
+    (cut (sourceWord x y z)).2 = (cut (sourceWord x' y' z')).2 ↔
+      y = y' ∧ z = z' := by
+  cases x <;> cases y <;> cases z <;>
+    cases x' <;> cases y' <;> cases z' <;> decide
+
+private theorem source_bit (x y z : Bool) : sourceWord x y z 2 = x := by
+  simp [sourceWord]
+
+/-- The lawful reduction is positive on every actual full-carrier vector. -/
+private theorem reduced_positive (v : Basis → ℂ) : (reduced v).PosSemidef :=
+  D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight_posSemidef
+    (Matrix.posSemidef_vecMulVec_self_star (v ∘ cut.symm))
 
 end Actual
 
