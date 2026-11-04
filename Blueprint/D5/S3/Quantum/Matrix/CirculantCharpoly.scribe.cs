@@ -32,23 +32,49 @@ internal sealed class CirculantCharpolyDocument : IScribeDocumentDefinition
     private static Formula TransformDetFormula()
     {
         Formula n = F.Id("n");
-        return Disp(Seq(Forall, n, InMacro, Mathbb, Grp(F.Id("N")), Comma,
-            n, Neq, D(0), Implies,
-            Operatorname, Grp(F.Id("det")), Open,
-            Operatorname, Grp(F.Id("transform")), Open, n, Close, Close, Neq, D(0)));
+        Formula transform = OwnerAt(OwnerQualified("D5", "S3", "Quantum", "Dynamics", "PolygonalFourierCouplings", "transform"), n);
+        return Disp(OwnerAll(n, OwnerNaturals(), OwnerImplication(OwnerAt(OwnerQualified("NeZero"), n),
+            new Formula.Relation(OwnerAt(OwnerQualified("Matrix", "det"), transform), FormulaRelationOperator.NotEqual,
+                OwnerTyped(D(0), OwnerComplexes())))));
     }
 
     private static Formula CharacterPairFormula()
     {
         Formula n = F.Id("n"), j = F.Id("j"), l = F.Id("l");
-        Formula character = Seq(Operatorname, Grp(F.Id("stdAddChar")), Underscore, Grp(n));
-        Formula natural = Seq(Mathbb, Grp(F.Id("N")));
-        Formula angle = Seq(Frac, Grp(D(2), Pi, j, l), Grp(n));
-        return Disp(Seq(Forall, n, InMacro, natural, Comma, n, Neq, D(0), Implies,
-            Forall, j, Comma, l, InMacro, natural, Comma, l, Leq, n, Implies,
-            character, Open, j, l, Close, Plus,
-            character, Open, j, Open, n, Minus, l, Close, Close, Eq,
-            D(2), Operatorname, Grp(F.Id("cos")), Open, angle, Close));
+        Formula residueType = OwnerAt(OwnerQualified("ZMod"), n);
+        Formula jResidue = OwnerTyped(j, residueType), lResidue = OwnerTyped(l, residueType);
+        Formula opposite = OwnerTyped(OwnerTyped(new Formula.Binary(n, FormulaBinaryOperator.Subtract, l), OwnerNaturals()), residueType);
+        Formula Character(Formula value) => OwnerAt(OwnerQualified("ZMod", "stdAddChar"), value);
+        Formula left = new Formula.Binary(Character(OwnerMultiply(jResidue, lResidue)), FormulaBinaryOperator.Add,
+            Character(OwnerMultiply(jResidue, opposite)));
+        Formula angle = new Formula.Fraction(OwnerMultiply(OwnerMultiply(OwnerMultiply(OwnerTyped(D(2), OwnerReals()),
+            OwnerQualified("Real", "pi")), OwnerTyped(j, OwnerReals())), OwnerTyped(l, OwnerReals())), OwnerTyped(n, OwnerReals()));
+        Formula right = OwnerTyped(OwnerTyped(OwnerMultiply(OwnerTyped(D(2), OwnerReals()),
+            OwnerAt(OwnerQualified("Real", "cos"), angle)), OwnerReals()), OwnerComplexes());
+        Formula equality = new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+        Formula bound = new Formula.Relation(l, FormulaRelationOperator.LessThanOrEqual, n);
+        return Disp(OwnerAll(n, OwnerNaturals(), OwnerImplication(OwnerAt(OwnerQualified("NeZero"), n),
+            OwnerAll(j, OwnerNaturals(), OwnerAll(l, OwnerNaturals(), OwnerImplication(bound, equality))))));
+    }
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula OwnerTyped(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
+    private static Formula OwnerAll(Formula value, Formula type, Formula body) => Seq(Forall, Sp, OwnerTyped(value, type), Comma, Sp, Parenthesized(body));
+    private static Formula OwnerImplication(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
+    private static Formula OwnerMultiply(Formula left, Formula right) => new Formula.Binary(Parenthesized(left), FormulaBinaryOperator.Multiply, Parenthesized(right));
+    private static Formula OwnerAt(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+    private static Formula OwnerNaturals() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula OwnerReals() => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula OwnerComplexes() => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula OwnerQualified(params string[] parts)
+    {
+        var items = new System.Collections.Generic.List<Formula>();
+        foreach (var part in parts)
+        {
+            if (items.Count > 0) items.Add(Dot);
+            items.Add(F.Id(part));
+        }
+        return Seq(Operatorname, Grp(Seq([.. items])));
     }
 
     private static DocumentBlock Item(string name, string title, string explanation, DescribeRole role) =>
