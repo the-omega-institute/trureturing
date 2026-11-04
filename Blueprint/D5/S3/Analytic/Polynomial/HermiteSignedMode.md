@@ -30,7 +30,21 @@ $$\forall n:\mathbb{N}, \operatorname{physicistsHermite}\left(n\right) = \sum_{k
 
 The sum runs over every k from zero through floor(n/2). monomial(j,c) denotes c times X to the power j. This is exactly DLMF 18.5.13 with n! distributed into the sum and (2X) to the power n-2k expanded. It defines the physicists normalization directly; it does not rescale a probabilists argmax. The coefficient extraction proof shows that every coefficient in the source range equals signedCoeff(n,j).
 
-**Definition 1.3 (A certified smallest maximizing exponent).**
+**Theorem 1.3 (Exact coefficient extraction).**
+
+$$\forall n:\mathbb{N}, \forall j:\mathbb{N}, (j \le n) \implies (\operatorname{coeff}\left(\operatorname{physicistsHermite}\left(n\right), j\right) = \operatorname{signedCoeff}\left(n, j\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Polynomial/HermiteSignedMode.polynomial_coeff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* NIST Digital Library of Mathematical Functions (2010). *DLMF 18.5.13, explicit representation of Hermite polynomials*. URL: <https://dlmf.nist.gov/18.5.E13>.
+
+*Commentary.*
+
+For every natural n and j with j at most n, the coefficient of X to the power j in the original physicists polynomial equals signedCoeff(n,j). This includes zero coefficients outside the parity support. The absolute-mode selector consumes this same extraction theorem; its statement and proof also serve the signed selector.
+
+**Definition 1.4 (A certified smallest maximizing exponent).**
 
 $$\forall n:\mathbb{N}, \operatorname{a}\left(n\right) = n-4 \cdot \operatorname{mode}\left(n\right)$$
 
@@ -44,7 +58,7 @@ $$\forall n:\mathbb{N}, \operatorname{a}\left(n\right) = n-4 \cdot \operatorname
 
 mode(n) is the largest r satisfying 4r at most n and 16(2r)(2r-1) at most (n-4r+1)(n-4r+2)(n-4r+3)(n-4r+4). The finite set contains zero. The theorem certifies that n-4mode(n) is exactly the smallest exponent maximizing the signed coefficient, so this constructive selector agrees with the source's upward scan and first maximum. No uniqueness hypothesis is used.
 
-**Definition 1.4 (Signed maximum with the first-index tie rule).**
+**Definition 1.5 (Signed maximum with the first-index tie rule).**
 
 $$\forall n:\mathbb{N}, \forall j:\mathbb{N}, \operatorname{IsSmallestMax}\left(n, j\right) = ((j \le n) \land ((\forall k:\mathbb{N}, (k \le n) \implies (\operatorname{coeff}\left(\operatorname{physicistsHermite}\left(n\right), k\right) \le \operatorname{coeff}\left(\operatorname{physicistsHermite}\left(n\right), j\right))) \land (\forall k:\mathbb{N}, (k \le n) \implies ((\operatorname{coeff}\left(\operatorname{physicistsHermite}\left(n\right), k\right) = \operatorname{coeff}\left(\operatorname{physicistsHermite}\left(n\right), j\right)) \implies (j \le k)))))$$
 
@@ -58,7 +72,7 @@ $$\forall n:\mathbb{N}, \forall j:\mathbb{N}, \operatorname{IsSmallestMax}\left(
 
 The predicate requires membership in zero through n, maximality against every coefficient in that range, and that every tied maximizer has exponent at least j. The last condition handles all possible ties.
 
-**Definition 1.5 (The independent OEIS difference assertion).**
+**Definition 1.6 (The independent OEIS difference assertion).**
 
 $$claim = ((\forall n:\mathbb{N}, \operatorname{IsSmallestMax}\left(n, \operatorname{a}\left(n\right)\right)) \land (\forall n:\mathbb{N}, ((\operatorname{a}\left(n+1\right):\mathbb{Z})-(\operatorname{a}\left(n\right):\mathbb{Z}) = 1) \lor ((\operatorname{a}\left(n+1\right):\mathbb{Z})-(\operatorname{a}\left(n\right):\mathbb{Z}) = -3)))$$
 
@@ -70,7 +84,7 @@ $$claim = ((\forall n:\mathbb{N}, \operatorname{IsSmallestMax}\left(n, \operator
 
 OEIS A381423 revision 8 states: "Differences are either 1 or -3" as the first independent clause of its conjecture. The selector certificate is included explicitly, followed by the difference assertion for every natural n. Fine difference patterns, linearly or quadratically spaced positions, square-root growth and the separate uniqueness assertion remain outside this claim.
 
-**Theorem 1.6 (The universal signed-mode transition).**
+**Theorem 1.7 (The universal signed-mode transition).**
 
 $$(\forall n:\mathbb{N}, \operatorname{IsSmallestMax}\left(n, \operatorname{a}\left(n\right)\right)) \land (\forall n:\mathbb{N}, ((\operatorname{a}\left(n+1\right):\mathbb{Z})-(\operatorname{a}\left(n\right):\mathbb{Z}) = 1) \lor ((\operatorname{a}\left(n+1\right):\mathbb{Z})-(\operatorname{a}\left(n\right):\mathbb{Z}) = -3))$$
 
@@ -94,5 +108,6 @@ Write the positive coefficient at exponent n-4r as n! times w(n,r), where w(n,r)
 - Truth anchor: `D5/S3/Analytic/Polynomial/HermiteSignedMode.a`
 - Truth anchor: `D5/S3/Analytic/Polynomial/HermiteSignedMode.claim`
 - Truth anchor: `D5/S3/Analytic/Polynomial/HermiteSignedMode.physicistsHermite`
+- Truth anchor: `D5/S3/Analytic/Polynomial/HermiteSignedMode.polynomial_coeff`
 - Truth anchor: `D5/S3/Analytic/Polynomial/HermiteSignedMode.result`
 - Truth anchor: `D5/S3/Analytic/Polynomial/HermiteSignedMode.signedCoeff`

@@ -1,0 +1,34 @@
+**定义 20.1（局部作用与条件作用的同一延伸）。** 局部对象仍取定义 8.1 的有限正 Frobenius 比较场，不预设 Jordan、交替、Jacobi、$D_1=0$ 或复结构。两个对象 $A,B$ 的实际延伸，是实空间
+
+$$
+J_{AB}=J_A\otimes_{\mathbb R}J_B,
+\qquad g_{AB}=g_A\otimes g_B
+$$
+
+上的交换含幺 Frobenius 比较 $M$，以及实线性映射 $\Gamma:J_{AB}\to\operatorname{End}(J_{AB})$。其单位是 $1_A\otimes1_B$，内积正定。要求以下定义间的约束对全部输入成立：
+
+$$
+\begin{aligned}
+M(a\otimes1,c\otimes d)&=S_A(a,c)\otimes d,\\
+M(1\otimes b,c\otimes d)&=c\otimes S_B(b,d),
+\end{aligned}\tag{20.1}
+$$
+
+$$
+\begin{aligned}
+\Gamma_{a\otimes b}(c\otimes1)&=D_ac\otimes b,\\
+\Gamma_{a\otimes b}(1\otimes d)&=a\otimes D_bd,
+\end{aligned}\tag{20.2}
+$$
+
+以及实际联合比较的变化律
+
+$$
+\Gamma_HM(X,Y)=M(\Gamma_HX,Y)+M(X,\Gamma_HY).
+\tag{20.3}
+$$
+
+式 (20.1) 是局部乘法在整体中的模作用。式 (20.2) 要求另一方的实际取值被完整保留：用 $a\otimes b$ 改变局部元 $c\otimes1$ 时，留下 $D_ac\otimes b$，而不是先将 $b$ 压成一个平均数。式 (20.3) 约束同一变化与同一二元比较的相容性。所有量来自这些实际关系，不给联合运算选择一个四通道张成空间，也不另给联合系数。
+
+由 (20.2) 和局部活动性，$\Gamma\ne0$；由 (20.3)，这个实际整体本身又是定义 8.1 的对象。这里的有限维、正内积、实张量载体、单位与局部导子合同仍是明确的模型前件。
+
