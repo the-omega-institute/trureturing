@@ -51,6 +51,20 @@ private theorem empty_reconstruction {k : Nat} (E : Definitions k 0) :
   · rename_i h
     exact (h (of_decide_eq_true rfl)).elim
 
+-- The first checker certificate retains both zero powers.
+example : finiteCompile edgeSystem modeTT (.pair (.var 0 0) (.var 0 1)) =
+    some (.pair (.power 0 (.token 0 0)) (.power 0 (.token 1 0))) := by
+  decide
+
+-- Soundness is applied to arbitrary parameters and every original solution.
+example (p : Fin 2 → Nat) (v : Fin 4 → NativeCompletionPrefixLifting.CompletionTree)
+    (hv : Solution edgeSystem modeTT p v) :
+    value modeTT p v (.pair (.var 0 0) (.var 0 1)) =
+      NativeCompletionPrefixLifting.embed (OriginalFiniteResolution.finiteValue p
+        (.pair (.power 0 (.token 0 0)) (.power 0 (.token 1 0)))) := by
+  exact finite_compile_sound edgeSystem modeTT (.pair (.var 0 0) (.var 0 1))
+    (.pair (.power 0 (.token 0 0)) (.power 0 (.token 1 0))) (by decide) p v hv
+
 -- C01: both true, exact ordered finite symbolic output, retaining zero powers.
 example : canonicalCompile edgeSystem modeTT e01 =
     some (.pair (.power 0 (.token 0 0)) (.power 0 (.token 1 0))) := by
