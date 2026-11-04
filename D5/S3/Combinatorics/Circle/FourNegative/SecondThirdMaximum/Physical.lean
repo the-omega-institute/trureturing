@@ -212,7 +212,7 @@ private theorem masses (a s d H p w : ℕ) (e : ℤ)
     all_goals simp only [List.map_append,List.sum_append,List.map_cons,
       List.sum_cons,List.map_nil,List.sum_nil,zero_add,add_zero]
     all_goals rw [vp,wh,xw]
-    all_goals simp only [f0]
+    all_goals try rw [f0]
     all_goals ring
   · dsimp [bank,heads]
     simp only [List.map_append,List.sum_append]
