@@ -7,9 +7,11 @@
    digest: Full quadratic-character correlation and its restricted row Gram identity. -/
 
 import D5.S3.Arith.FiniteFieldQuadraticCharacterSum
+import Mathlib.NumberTheory.LegendreSymbol.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
+import Lean.Elab.Tactic.Omega
 
 namespace D5.S3.Arith.QuadraticCharacterGram
 
@@ -175,5 +177,168 @@ theorem restricted_gram (hF : ringChar F ≠ 2) (H : Finset F)
   change (∑ x ∈ H, f x) = d - (1 + t * ε) -
     (1 + t) * quadraticChar F i * quadraticChar F j
   linarith
+
+/-- Summing the restricted Gram identity gives the integral energy of the column sums.
+This is the common energy identity for the even and odd prime families. -/
+theorem restricted_column_energy (hF : ringChar F ≠ 2) (H : Finset F)
+    (h0 : (0 : F) ∉ H) (hd : Disjoint H (H.image fun x => -x))
+    (hc : ∀ x : F, x ≠ 0 → x ∈ H ∨ -x ∈ H)
+    (t : ℤ) (ht : t = 1 ∨ t = -1) :
+    (∑ x ∈ H, (∑ i ∈ H, quadraticChar F (i + x) + t * quadraticChar F (i - x)) ^ 2) =
+      (Fintype.card F : ℤ) * H.card -
+        (1 + t * quadraticChar F (-1)) * (H.card : ℤ) ^ 2 -
+          (1 + t) * (∑ i ∈ H, quadraticChar F i) ^ 2 := by
+  classical
+  let M (i x : F) : ℤ := quadraticChar F (i + x) + t * quadraticChar F (i - x)
+  have hdiag : (∑ i ∈ H, ∑ j ∈ H,
+      (Fintype.card F : ℤ) * (if i = j then 1 else 0)) =
+        (Fintype.card F : ℤ) * H.card := by
+    simp [← Finset.mul_sum]
+  have hconst : (∑ i ∈ H, ∑ _j ∈ H, (1 + t * quadraticChar F (-1))) =
+      (1 + t * quadraticChar F (-1)) * (H.card : ℤ) ^ 2 := by
+    simp only [Finset.sum_const, nsmul_eq_mul]
+    ring
+  have hrank : (∑ i ∈ H, ∑ j ∈ H,
+      (1 + t) * quadraticChar F i * quadraticChar F j) =
+        (1 + t) * (∑ i ∈ H, quadraticChar F i) ^ 2 := by
+    simp_rw [pow_two, Finset.mul_sum, Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  calc
+    _ = ∑ x ∈ H, ∑ i ∈ H, ∑ j ∈ H, M i x * M j x := by
+      simp only [M, pow_two, Finset.sum_mul, Finset.mul_sum]
+    _ = ∑ i ∈ H, ∑ x ∈ H, ∑ j ∈ H, M i x * M j x := Finset.sum_comm
+    _ = ∑ i ∈ H, ∑ j ∈ H, ∑ x ∈ H, M i x * M j x := by
+      apply Finset.sum_congr rfl
+      intro i _
+      exact Finset.sum_comm
+    _ = ∑ i ∈ H, ∑ j ∈ H,
+        ((Fintype.card F : ℤ) * (if i = j then 1 else 0) -
+          (1 + t * quadraticChar F (-1)) -
+            (1 + t) * quadraticChar F i * quadraticChar F j) := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      apply Finset.sum_congr rfl
+      intro j hj
+      exact restricted_gram hF H h0 hd hc hi hj t ht
+    _ = _ := by
+      simp only [Finset.sum_sub_distrib]
+      rw [hdiag, hconst, hrank]
+
+/-- The actual lower half of the nonzero residues, selected by least natural representatives. -/
+def primeHalf (p : ℕ) [NeZero p] : Finset (ZMod p) :=
+  Finset.univ.filter fun x => 0 < x.val ∧ x.val ≤ (p - 1) / 2
+
+private theorem mem_primeHalf {p : ℕ} [NeZero p] (x : ZMod p) :
+    x ∈ primeHalf p ↔ 0 < x.val ∧ x.val ≤ (p - 1) / 2 := by
+  simp [primeHalf]
+
+private theorem primeHalf_zero {p : ℕ} [NeZero p] : (0 : ZMod p) ∉ primeHalf p := by
+  simp [mem_primeHalf]
+
+private theorem primeHalf_disjoint {p : ℕ} [Fact p.Prime] (hp : p ≠ 2) :
+    Disjoint (primeHalf p) ((primeHalf p).image fun x => -x) := by
+  apply Finset.disjoint_left.mpr
+  intro x hx hxn
+  obtain ⟨y, hy, hxy⟩ := Finset.mem_image.mp hxn
+  have hxv := (mem_primeHalf x).mp hx
+  have hyv := (mem_primeHalf y).mp hy
+  have hy0 : y ≠ 0 := by intro h; simpa [h] using hyv.1
+  have hpodd : p % 2 = 1 := Nat.odd_iff.mp ((Fact.out : p.Prime).odd_of_ne_two hp)
+  have hxyv : x.val = p - y.val := by rw [← hxy, ZMod.neg_val, if_neg hy0]
+  omega
+
+private theorem primeHalf_cover {p : ℕ} [Fact p.Prime] (hp : p ≠ 2)
+    (x : ZMod p) (hx : x ≠ 0) : x ∈ primeHalf p ∨ -x ∈ primeHalf p := by
+  have hv : 0 < x.val := Nat.pos_of_ne_zero ((ZMod.val_eq_zero x).not.mpr hx)
+  have hlt := x.val_lt
+  have hpodd : p % 2 = 1 := Nat.odd_iff.mp ((Fact.out : p.Prime).odd_of_ne_two hp)
+  by_cases hh : x.val ≤ (p - 1) / 2
+  · exact Or.inl ((mem_primeHalf x).mpr ⟨hv, hh⟩)
+  · right
+    rw [mem_primeHalf, ZMod.neg_val, if_neg hx]
+    omega
+
+/-- Specialization to the genuine lower-half residue set for every odd prime.
+No half-set or correlation condition is assumed in this prime statement. -/
+theorem prime_restricted_gram (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
+    {i j : ZMod p} (hi : 0 < i.val ∧ i.val ≤ (p - 1) / 2)
+    (hj : 0 < j.val ∧ j.val ≤ (p - 1) / 2) (t : ℤ) (ht : t = 1 ∨ t = -1) :
+    (∑ x ∈ primeHalf p,
+      (quadraticChar (ZMod p) (i + x) + t * quadraticChar (ZMod p) (i - x)) *
+      (quadraticChar (ZMod p) (j + x) + t * quadraticChar (ZMod p) (j - x))) =
+        (p : ℤ) * (if i = j then 1 else 0) -
+          (1 + t * quadraticChar (ZMod p) (-1)) -
+            (1 + t) * quadraticChar (ZMod p) i * quadraticChar (ZMod p) j := by
+  simpa only [ZMod.card] using
+    restricted_gram ((ZMod.ringChar_zmod_n p).substr hp) (primeHalf p)
+      primeHalf_zero (primeHalf_disjoint hp) (primeHalf_cover hp)
+      ((mem_primeHalf i).mpr hi) ((mem_primeHalf j).mpr hj) t ht
+
+/-- The residue half-set is precisely the positive interval, with its least representatives. -/
+theorem sum_primeHalf (p : ℕ) [Fact p.Prime] (f : ZMod p → ℤ) :
+    (∑ x ∈ primeHalf p, f x) =
+      ∑ j ∈ Finset.range ((p - 1) / 2), f ((j + 1 : ℕ) : ZMod p) := by
+  classical
+  have hp0 := (Fact.out : p.Prime).pos
+  refine Finset.sum_bij (fun x _ => x.val - 1) ?_ ?_ ?_ ?_
+  · intro x hx
+    have hx' := (mem_primeHalf x).mp hx
+    exact Finset.mem_range.mpr (by omega)
+  · intro x hx y hy h
+    apply ZMod.val_injective p
+    have hx' := (mem_primeHalf x).mp hx
+    have hy' := (mem_primeHalf y).mp hy
+    omega
+  · intro j hj
+    have hj' := Finset.mem_range.mp hj
+    have hjp : j + 1 < p := by omega
+    refine ⟨((j + 1 : ℕ) : ZMod p), ?_, ?_⟩
+    · rw [mem_primeHalf, ZMod.val_cast_of_lt hjp]
+      omega
+    · rw [ZMod.val_cast_of_lt hjp]
+      omega
+  · intro x hx
+    have hx' := (mem_primeHalf x).mp hx
+    have heq : x.val - 1 + 1 = x.val := by omega
+    rw [heq, ZMod.natCast_zmod_val]
+
+theorem primeHalf_card (p : ℕ) [Fact p.Prime] : (primeHalf p).card = (p - 1) / 2 := by
+  have h := sum_primeHalf p (fun _ => 1)
+  simpa using h
+
+/-- Pairing the complete zero-sum quadratic character gives cancellation of its half sum. -/
+theorem prime_half_character_cancellation (p : ℕ) [Fact p.Prime] (hp : p ≠ 2) :
+    (1 + quadraticChar (ZMod p) (-1)) *
+      (∑ x ∈ primeHalf p, quadraticChar (ZMod p) x) = 0 := by
+  classical
+  have hF := (ZMod.ringChar_zmod_n p).substr hp
+  rcases quadraticChar_dichotomy (F := ZMod p) (neg_ne_zero.mpr one_ne_zero) with h | h
+  · have heven (x : ZMod p) : quadraticChar (ZMod p) (-x) = quadraticChar (ZMod p) x := by
+      rw [neg_eq_neg_one_mul, map_mul, h, one_mul]
+    have hs := sum_even (primeHalf p) primeHalf_zero (primeHalf_disjoint hp)
+      (primeHalf_cover hp) (quadraticChar (ZMod p)) heven
+    rw [quadraticChar_sum_zero hF, quadraticChar_zero, zero_add] at hs
+    rw [h]
+    linarith
+  · rw [h]
+    ring
+
+/-- Actual half-residue column energy for every odd prime. Its hypotheses contain
+neither an assumed Gram identity nor an assumed norm formula. -/
+theorem prime_column_energy (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
+    (t : ℤ) (ht : t = 1 ∨ t = -1) :
+    (∑ x ∈ primeHalf p,
+      (∑ i ∈ primeHalf p,
+        quadraticChar (ZMod p) (i + x) + t * quadraticChar (ZMod p) (i - x)) ^ 2) =
+      (p : ℤ) * (((p - 1) / 2 : ℕ) : ℤ) -
+        (1 + t * quadraticChar (ZMod p) (-1)) * (((p - 1) / 2 : ℕ) : ℤ) ^ 2 -
+          (1 + t) * (∑ i ∈ primeHalf p, quadraticChar (ZMod p) i) ^ 2 := by
+  simpa only [ZMod.card, primeHalf_card] using
+    restricted_column_energy ((ZMod.ringChar_zmod_n p).substr hp) (primeHalf p)
+      primeHalf_zero (primeHalf_disjoint hp) (primeHalf_cover hp) t ht
 
 end D5.S3.Arith.QuadraticCharacterGram
