@@ -26,7 +26,8 @@ public sealed class GitRepositoryTreeStreamTests
         };
         Assert.True(runner.TreeBytes > GitRepositoryGateway.DefaultGitOutputBytes);
         Assert.Equal(mode == 2 ? 1 : LargeTreeRunner.PathCount + 1, snapshot.Entries.Length);
-        Assert.Equal(snapshot.Entries.Length, snapshot.PathInventory.Length);
+        if (mode != 2) Assert.Equal(snapshot.Entries.Length, snapshot.PathInventory.Length);
+        else Assert.True(snapshot.PathInventory.IsDefault);
         Assert.Contains(snapshot.Entries, entry => entry.Path == "selected.txt");
         if (mode != 2)
             Assert.Contains(snapshot.Entries, entry => entry.Path.EndsWith("/16999.txt", StringComparison.Ordinal));
