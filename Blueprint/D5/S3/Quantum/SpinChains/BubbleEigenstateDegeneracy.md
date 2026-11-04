@@ -48,6 +48,10 @@ $$\forall (L: \mathbb{N}), ((5 \le L) \to (\forall (E: \mathbb{Z}), ((\operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BubbleEigenstateDegeneracy.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mukherjee-banerjee-sengupta-sen-2021-bubble-eigenstate-degeneracy` (proved) by `D5/S3/Quantum/SpinChains/BubbleEigenstateDegeneracy.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mukherjee-banerjee-sengupta-sen-2021-bubble-eigenstate-degeneracy","declaration_gid":"D5/S3/Quantum/SpinChains/BubbleEigenstateDegeneracy.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bhaskar Mukherjee, Debasish Banerjee, K. Sengupta, Arnab Sen (2021). *Minimal model for Hilbert space fragmentation with local constraints*. DOI: [10.1103/PhysRevB.104.155117](https://doi.org/10.1103/PhysRevB.104.155117). URL: <https://arxiv.org/abs/2106.14897v3>.

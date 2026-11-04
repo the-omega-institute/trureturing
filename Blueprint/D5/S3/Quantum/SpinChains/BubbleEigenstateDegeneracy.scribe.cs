@@ -126,7 +126,10 @@ internal sealed class BubbleEigenstateDegeneracyDocument : IScribeDocumentDefini
                         + "substitute the placement coefficient for every n from one through "
                         + "L / 5. This gives the displayed formula for every L at least five "
                         + "and every integer E."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mukherjee-banerjee-sengupta-sen-2021-bubble-eigenstate-degeneracy"),
+                    ResolutionKind.Proved)))));
 
     private static Formula AdmissibleFormula()
     {
