@@ -697,7 +697,7 @@ private theorem principal_product {ι : Type*} [DecidableEq ι]
   exact hm
 
 /-- The logarithmic principal-block inequality, including empty blocks. -/
-private theorem log_koteljanskii {ι : Type*} [DecidableEq ι]
+theorem log_koteljanskii {ι : Type*} [DecidableEq ι]
     (H : Matrix ι ι ℂ) (hH : H.PosDef) (A B C : Finset ι)
     (hAB : Disjoint A B) (hAC : Disjoint A C) (hBC : Disjoint B C) :
     Real.log (H.submatrix (Subtype.val : ↥(A ∪ B ∪ C) → ι) Subtype.val).det.re +
