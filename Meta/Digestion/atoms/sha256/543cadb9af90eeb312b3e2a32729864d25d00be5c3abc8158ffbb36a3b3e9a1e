@@ -1,0 +1,38 @@
+## 49. First selected determinant zero, population relaxation and the original local phase consequence
+
+Use the original normalized effects, ordinary transpose and shared feedback of
+the [source volume](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND.md),
+Definitions 1.1, 11.1 and 23.1. Section numbers 24--39 refer to
+[Continuation I](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_I.md);
+40--47 refer to
+[Continuation II](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md).
+The global minimizing-set result cited as Theorem 48.5 is in
+[Continuation III](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_III.md).
+The numbered statements and identities 49 in this volume are distinct
+from the source-correspondence Section 49 of Continuation III.
+The domain is still
+$\mathcal K=\operatorname{Dens}_2\times U(4)$, with
+$f=g-\kappa\rho$ and
+
+$$
+\rho=\min\{\rho_+,\rho_-\},\qquad
+\rho_\sigma=\|E-E_\sigma\|_{\mathrm F}^2+
+ \min_{|\lambda|=1}\|U-\lambda U_\sigma\|_{\mathrm F}^2.
+\tag{49.1}
+$$
+
+The scalar acts on the entire feedback. The two orientations below are
+distinct from the two optimizer signs in (49.1). All amplitude and trace
+data always belong to the same actual feedback. Put
+
+$$
+h=1/\sqrt2,\quad c=\cos(\pi/8),\quad s=\sin(\pi/8),\quad
+d=2(h+c),\quad e=2(h+s),\quad \gamma=c-h>0.
+\tag{49.2}
+$$
+
+The comparator $N(\xi)=N_{\mathrm{geo}}(\xi)$ and
+$V(\xi)=N(\xi)+\kappa\xi$ are the **selected positive geometric** values
+of Theorem 37.5 and (41.1). They are not definitions of the unrestricted
+global minimum $m(\xi)$.
+

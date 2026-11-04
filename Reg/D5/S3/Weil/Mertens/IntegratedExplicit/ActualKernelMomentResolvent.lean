@@ -495,4 +495,260 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end Balance
 
 
+
+namespace correlation_neg
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature := realize signature (fun _ _ z => z) (fun e => nomatch e)
+private def rejected : Realization signature := realize signature (fun _ _ z => z + 1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {I : Type u} [Fintype I] (x : I → ℝ) (a : I → ℂ) (s : ℝ),
+    R.readout () () (correlation x a (-s)) = correlation x a s
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h (I := ULift.{u} Empty) (fun _ => 0) (fun _ => 0) 0
+  have ho := correlation_neg (I := ULift.{u} Empty) (fun _ => 0) (fun _ => 0) 0
+  change _ + 1 = _ at hh
+  rw [ho] at hh
+  simpa using hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 0, 1, by change (0 : ℝ) ≠ 1; norm_num⟩
+def family : Registration arena.{u} (type_of% @correlation_neg.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@correlation_neg.{u}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@correlation_neg.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.correlation_neg.audit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentResolvent.correlation_neg.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end correlation_neg
+
+namespace W_eq_exponential_deficit
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature := realize signature (fun _ _ z => z) (fun e => nomatch e)
+private def rejected : Realization signature := realize signature (fun _ _ z => z + 1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {I : Type u} [Fintype I] (D : ℝ) (hD : 0 ≤ D)
+    (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
+    (ha : ∑ i, a i = 0),
+    R.readout () () (W D x a) = energy x a -
+      (quadratic x a (fun t => Real.exp (-|t| / 2))).re
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h (I := ULift.{u} Empty) 0 le_rfl (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp)
+  have ho := W_eq_exponential_deficit (I := ULift.{u} Empty) 0 le_rfl (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp)
+  change _ + 1 = _ at hh
+  rw [ho] at hh
+  simpa using hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 0, 1, by change (0 : ℝ) ≠ 1; norm_num⟩
+def family : Registration arena.{u} (type_of% @W_eq_exponential_deficit.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@W_eq_exponential_deficit.{u}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@W_eq_exponential_deficit.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.W_eq_exponential_deficit.audit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentResolvent.W_eq_exponential_deficit.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end W_eq_exponential_deficit
+
+namespace shifted_correlation
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature := realize signature (fun _ _ z => z) (fun e => nomatch e)
+private def rejected : Realization signature := realize signature (fun _ _ z => z + 1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {I : Type u} [Fintype I] (x : I → ℝ) (a : I → ℂ)
+    (ha : ∑ i, a i = 0) (t r s : ℝ) (hr : r ^ 2 = 1),
+    R.readout () () (correlation (shiftedNodes x t) (shiftedCoeffs a r) s) =
+      2 * correlation x a s + r *
+        (correlation x a (s + t) + correlation x a (s - t))
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h (I := ULift.{u} Empty) (fun _ => 0) (fun _ => 0) (by simp) 0 1 0 (by norm_num)
+  have ho := shifted_correlation (I := ULift.{u} Empty) (fun _ => 0) (fun _ => 0) (by simp) 0 1 0 (by norm_num)
+  change _ + 1 = _ at hh
+  rw [ho] at hh
+  simpa using hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 0, 1, by change (0 : ℝ) ≠ 1; norm_num⟩
+def family : Registration arena.{u} (type_of% @shifted_correlation.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@shifted_correlation.{u}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@shifted_correlation.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.shifted_correlation.audit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentResolvent.shifted_correlation.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end shifted_correlation
+
+namespace S_even
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature := realize signature (fun _ _ z => z) (fun e => nomatch e)
+private def rejected : Realization signature := realize signature (fun _ _ z => z + 1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {I : Type u} [Fintype I] (D : ℝ) (hD : 0 ≤ D)
+    (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0) (t : ℝ),
+    R.readout () () (S D x a (-t)) = S D x a t
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h (I := ULift.{u} Empty) 0 le_rfl (fun _ => 0) (fun _ => 0) (by simp) 0
+  have ho := S_even (I := ULift.{u} Empty) 0 le_rfl (fun _ => 0) (fun _ => 0) (by simp) 0
+  change _ + 1 = _ at hh
+  rw [ho] at hh
+  simpa using hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 0, 1, by change (0 : ℝ) ≠ 1; norm_num⟩
+def family : Registration arena.{u} (type_of% @S_even.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@S_even.{u}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@S_even.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.S_even.audit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentResolvent.S_even.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end S_even
+
+namespace shifted_W
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature := realize signature (fun _ _ z => z) (fun e => nomatch e)
+private def rejected : Realization signature := realize signature (fun _ _ z => z + 1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {I : Type u} [Fintype I] (D : ℝ) (hD : 0 ≤ D)
+    (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
+    (ha : ∑ i, a i = 0) (t r : ℝ) (hr : r ^ 2 = 1),
+    R.readout () () (W (D + |t|) (shiftedNodes x t) (shiftedCoeffs a r)) =
+      2 * W D x a + 2 * r * S D x a t
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h (I := ULift.{u} Empty) 0 le_rfl (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp) 0 1 (by norm_num)
+  have ho := shifted_W (I := ULift.{u} Empty) 0 le_rfl (fun _ => 0) (fun _ => 0) (by intro i; exact Empty.elim i.down) (by simp) 0 1 (by norm_num)
+  change _ + 1 = _ at hh
+  rw [ho] at hh
+  simpa using hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 0, 1, by change (0 : ℝ) ≠ 1; norm_num⟩
+def family : Registration arena.{u} (type_of% @shifted_W.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@shifted_W.{u}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@shifted_W.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate.shifted_W.audit
+  realizationName := `Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentResolvent.shifted_W.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end shifted_W
+
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentResolvent

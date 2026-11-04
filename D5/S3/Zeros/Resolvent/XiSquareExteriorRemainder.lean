@@ -59,7 +59,7 @@ private theorem xi_center_nonzero : xiReading (1 / 2 : ℂ) ≠ 0 := by
   have hr := congrArg Complex.re hz
   simp only [Complex.zero_re] at hr
   linarith
-private theorem xi_square_source_entire_and_composition :
+theorem xi_square_source_entire_and_composition :
     Differentiable ℂ xiSquareSource ∧
       ∀ w : ℂ, xiSquareSource (w ^ 2) =
         xiReading ((1 / 2 : ℂ) + Complex.I * w) / xiReading (1 / 2) := by
@@ -233,7 +233,7 @@ theorem xi_logDeriv_reflection (s : ℂ) :
   have hd : deriv (fun z : ℂ => 1 - z) s = -1 := by simp
   rw [hd, mul_neg_one] at hc
   simpa only [neg_neg] using (congrArg Neg.neg hc).symm
-private theorem xi_square_logDeriv_composition (w : ℂ) :
+theorem xi_square_logDeriv_composition (w : ℂ) :
     logDeriv xiSquareSource (w ^ 2) * (2 * w) =
       Complex.I * logDeriv xiReading ((1 / 2 : ℂ) + Complex.I * w) := by
   have hF := xi_square_source_entire_and_composition
@@ -320,9 +320,7 @@ private theorem actual_square_resolvent_hasSum (Z : ZeroData) (w : ℂ)
   norm_num [Complex.I_sq]
   ring
 
--- These bindings are development helpers for the single complete actual-source
--- product/remainder endpoint. No separate retention or admission is claimed.
-private def positiveSquareResolvent (Z : ZeroData) (z : ℂ) (i : ℕ) : ℂ :=
+def positiveSquareResolvent (Z : ZeroData) (z : ℂ) (i : ℕ) : ℂ :=
   if 0 < (Z.gamma i).re then (Z.multiplicity i : ℂ) / (z - (Z.gamma i) ^ 2) else 0
 private theorem gamma_real_nonzero (Z : ZeroData) (i : ℕ) : (Z.gamma i).re ≠ 0 := by
   have h := D5.S3.Weil.ZetaBridge.AlternatingZetaContinuation.ZeroData.im_ne_zero
@@ -331,7 +329,7 @@ private theorem gamma_real_nonzero (Z : ZeroData) (i : ℕ) : (Z.gamma i).re ≠
     simp [ZeroData.gamma, spectralParameter, D5.S3.Weil.Convention.criticalAbscissa,
       Complex.div_re, Complex.normSq_I]
   rwa [heq]
-private theorem actual_positive_square_resolvent_hasSum (Z : ZeroData) (w : ℂ)
+theorem actual_positive_square_resolvent_hasSum (Z : ZeroData) (w : ℂ)
     (hw : w ≠ 0) (hF : xiSquareSource (w ^ 2) ≠ 0) :
     HasSum (positiveSquareResolvent Z (w ^ 2)) (logDeriv xiSquareSource (w ^ 2)) := by
   classical

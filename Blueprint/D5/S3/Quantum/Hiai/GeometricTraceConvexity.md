@@ -12,7 +12,7 @@ $$\forall u: \operatorname{Level}(), d: \operatorname{Type}(u), [\operatorname{F
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fumio Hiai (2025). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
+*Acknowledgement.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. DOI: [10.1016/j.laa.2026.01.003](https://doi.org/10.1016/j.laa.2026.01.003). URL: <https://arxiv.org/abs/2510.04691v3>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$\forall u: \operatorname{Level}(), d: \operatorname{Type}(u), [\operatorname{F
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Fumio Hiai (2025). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
+*Acknowledgement.* Fumio Hiai (2026). *Log-majorizations between quasi-geometric type means for matrices*. DOI: [10.1016/j.laa.2026.01.003](https://doi.org/10.1016/j.laa.2026.01.003). URL: <https://arxiv.org/abs/2510.04691v3>.
 
 *Commentary.*
 
