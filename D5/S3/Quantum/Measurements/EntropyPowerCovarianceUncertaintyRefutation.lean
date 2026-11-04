@@ -377,19 +377,27 @@ private lemma entropy_upper (d : ℝ) :
   rw [(gaussian_entropy d).2, (gaussian_entropy (-d)).2] at h
   linarith
 
-private lemma correction_violation :
+private lemma correction_violation (d : ℝ) (hd : (16 : ℝ) ≤ d ^ 2) :
     2 * Real.log 2 < 1 / 2 * Real.log
-      (((6 : ℝ) ^ 2 + 1 / 2) * (6 ^ 2 + 1 / 2) /
-        (((6 : ℝ) ^ 2 + 1 / 2) * (6 ^ 2 + 1 / 2) - (6 ^ 2) ^ 2)) := by
-  have h := Real.log_lt_log (by norm_num : (0 : ℝ) < 16)
-    (by norm_num : (16 : ℝ) < 5329 / 145)
+      ((d ^ 2 + 1 / 2) * (d ^ 2 + 1 / 2) /
+        ((d ^ 2 + 1 / 2) * (d ^ 2 + 1 / 2) - (d ^ 2) ^ 2)) := by
+  have hden_eq : (d ^ 2 + 1 / 2) * (d ^ 2 + 1 / 2) - (d ^ 2) ^ 2 =
+      d ^ 2 + 1 / 4 := by ring
+  have hden : 0 < (d ^ 2 + 1 / 2) * (d ^ 2 + 1 / 2) - (d ^ 2) ^ 2 := by
+    rw [hden_eq]
+    nlinarith [sq_nonneg d]
+  have hprod : 0 ≤ (d ^ 2 - 16) * d ^ 2 :=
+    mul_nonneg (by linarith) (sq_nonneg d)
+  have hratio : (16 : ℝ) <
+      (d ^ 2 + 1 / 2) * (d ^ 2 + 1 / 2) /
+        ((d ^ 2 + 1 / 2) * (d ^ 2 + 1 / 2) - (d ^ 2) ^ 2) := by
+    apply (lt_div_iff₀ hden).2
+    nlinarith [hprod]
+  have h := Real.log_lt_log (by norm_num : (0 : ℝ) < 16) hratio
   have he : Real.log (16 : ℝ) = 4 * Real.log 2 := by
     rw [show (16 : ℝ) = 2 ^ 4 by norm_num, Real.log_pow]
     norm_num
   rw [he] at h
-  norm_num only [show (((6 : ℝ) ^ 2 + 1 / 2) * (6 ^ 2 + 1 / 2) /
-    (((6 : ℝ) ^ 2 + 1 / 2) * (6 ^ 2 + 1 / 2) - (6 ^ 2) ^ 2)) =
-      5329 / 145 by norm_num]
   linarith
 
 /-- The equal mixture of coherent states with means `(6,6)` and `(-6,-6)` refutes
@@ -414,7 +422,7 @@ theorem result : ¬ claim := by
     (second_integrable 6)
   rw [(moments 6).2.2.1, (moments 6).2.2.2.1, (moments 6).2.2.2.2] at hc
   have hu := entropy_upper 6
-  have hv := correction_violation
+  have hv := correction_violation 6 (by norm_num : (16 : ℝ) ≤ 6 ^ 2)
   linarith
 
 end D5.S3.Quantum.Measurements.EntropyPowerCovarianceUncertaintyRefutation
