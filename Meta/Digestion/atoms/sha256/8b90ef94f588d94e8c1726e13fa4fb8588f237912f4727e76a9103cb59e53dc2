@@ -1,0 +1,47 @@
+### 定义 2：实际整函数对
+
+令
+
+$$
+\Xi(z)=\xi\!\left(\frac12+z\right).
+$$
+
+实际 resolvent 恒等式为
+
+$$
+F(z)=
+\frac{Sz-\Xi'(z)/\Xi(z)}{z^2-\frac14}.
+$$
+
+定义
+
+$$
+\boxed{
+E(z)=
+\frac{
+S(z^2+z-\frac14)\Xi(z)-\Xi'(z)
+}{
+z^2-\frac14
+}.
+}
+
+$$
+
+<a id="eq-2-2"></a>
+
+(2.2)
+
+在正则点上，
+
+$$
+E(z)=\Xi(z)(S+F(z)).
+
+$$
+
+<a id="eq-2-3"></a>
+
+(2.3)
+
+<!-- editorial-note: n06 begin -->
+<a id="n06"></a>
+
