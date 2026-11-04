@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/FactorialRatio/BalaA295431Divisibility
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/FactorialRatio/BalaA295431Divisibility
    mirror-E: none(waiver:unbounded-prime-valuation-proof)
    anchors: []

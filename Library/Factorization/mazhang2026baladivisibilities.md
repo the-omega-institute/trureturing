@@ -14,6 +14,17 @@ triage: anchor
 
 # Actual T divisibilities
 
+## Verified locator
+
+Question and context: https://oeis.org/A295431
+
+Proof source: the supplied Ma–Zhang revision 3, 4 November 2026,
+section “The divisibility questions in A295431”, Corollary 5
+(`cor:families`) and its complete proof. The exact release, tag and
+source hashes below identify the checked source bytes. The OEIS URL
+locates the posing question; no public URL for the supplied revision
+was verified.
+
 Ma and Zhang, revision 3, 4 November 2026, Corollary 5 (`cor:families`)
 and its complete proof. Supplied release 433788709, tag
 `outreach-task-shortnote-e3f06e33a1179fd1a53bf8a9fd4b3a7e`. The released `note.tex` has SHA256

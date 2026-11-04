@@ -102,7 +102,9 @@ $$\forall n \in \mathbb{N},\; \forall q \in \mathbb{N},\; \operatorname{h854}\le
 
 *Formalization.* `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.h854` (`✓ std3`).
 
-*Citation.* Peter Bala (2021). *OEIS A347854–A347858: fractional factorial ratios*. URL: <https://oeis.org/A347854>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Peter Bala (2021). *OEIS A347854–A347858: fractional factorial ratios*. URL: <https://oeis.org/A347854>.
 
 *Commentary.*
 
@@ -114,7 +116,9 @@ $$\forall n \in \mathbb{N},\; \forall q \in \mathbb{N},\; (0 < q) \implies (0 \l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.h854_nonneg` (`✓ std3`). ∎
 
-*Citation.* Peter Bala (2021). *OEIS A347854–A347858: fractional factorial ratios*. URL: <https://oeis.org/A347854>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Peter Bala (2021). *OEIS A347854–A347858: fractional factorial ratios*. URL: <https://oeis.org/A347854>.
 
 *Commentary.*
 
