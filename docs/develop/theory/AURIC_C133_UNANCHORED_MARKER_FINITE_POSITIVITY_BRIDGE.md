@@ -258,3 +258,458 @@ $$
 **对应 7.3（工具与承重范围）。**有限负型的锚核、Gram 商、Hilbert 完成及二次函数极化是经典工具。本卷的承重关系是 (R) 下五点条件与乘法四点缺陷根性、整体负型及仿射表示的等价。群上极化的文献条件与引用沿用前述续卷对应 7.1：Aczél 的交换群结论见 de Place Friis–Stetkær，*On the quadratic functional equation on groups*，DOI 10.5486/pmd.2006.3270，Theorem 1.2；这里只在第 4 节已经得到交换群后使用。没有将局部正性归为原关系的已知后果，也不作文献优先权主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 8. 单位轨道根性与完整乘法根性的条件等价
+
+**定义 8.1（单位轨道条件与双向读数）。**沿用定义 1.1、引理 2.1 和定义 2.2 的全部对象与量词。特别，$M$ 仍为任意有双侧单位的 magma，$U$ 任意，$c$ 处处有限、非负且零对角，(R) 对全部 $a,b,u,v$ 成立。置
+
+$$
+A_j(a)=D(a,p_j)=e_{a\cdot p_j}-e_a-e_{p_j},\qquad p_j=U^j1.
+$$
+
+单位轨道条件 $\mathrm{UC}$ 指
+
+$$
+A_j(a)\in\mathcal N\qquad(a\in M,\ j=1,2).
+\tag{8.1}
+$$
+
+这里的根空间是原自由差空间中完整的双侧根空间。对任意有向核 $d$ 置
+
+$$
+\begin{aligned}
+H_d(a,u;z)={}&d(a\cdot u,z)-d(a,z)-d(u,z)+d(1,z)\\
+&-d(a\cdot u,1)+d(a,1)+d(u,1),
+\end{aligned}
+\tag{8.2}
+$$
+
+并令 $c^{\mathsf T}(x,y)=c(y,x)$。因此 (8.1) 要求每个 $a$、两个 $j$ 及每个读出标签 $z$ 上的两个配对次序，而非某组有限读数或仅自配对。
+
+**定理 8.2（单位轨道根性归约）。**在定义 1.1 与完整关系 (R) 下，
+
+$$
+\mathrm{UC}\ \Longleftrightarrow\ \mathrm{BR}
+\ \Longleftrightarrow\ \mathrm N_5
+\ \Longleftrightarrow\ \mathrm N_{\rm fin}
+\ \Longleftrightarrow\ \text{存在满足 (1.2) 的仿射复 Hilbert 表示}.
+\tag{8.3}
+$$
+
+其中 $\mathrm{UC}$ 也等价于
+
+$$
+H_c(a,p_j;z)=H_{c^{\mathsf T}}(a,p_j;z)=0
+\qquad(a,z\in M,\ j=1,2).
+\tag{8.4}
+$$
+
+**证明。**$\mathrm{BR}\Rightarrow\mathrm{UC}$ 是定义 2.2 在 $u=p_1,p_2$ 的特化。(8.4) 与 (8.1) 的等价由定理 8.3 的读数恒等式给出。反向 $\mathrm{UC}\Rightarrow\mathrm{BR}$ 的证明依次为定理 8.3 的合法相位下降、第 9 节的仿射字符分解、第 10 节的成对历史与完整核下降，以及第 11 节在既有群上结论处的应用。其余等价直接使用定理 1.3。这里没有从 (R) 单独断言 (8.1)。
+
+**定理 8.3（双向读数与相位下降的确切前件）。**在定义 1.1 与 (R) 下，令 $L=I+S+S^2$，则
+
+$$
+\begin{aligned}
+H_c(a,u;z)&=-2B(D(a,u),e_z),\\
+H_{c^{\mathsf T}}(a,u;z)&=-2B(e_z,D(a,u)),
+\end{aligned}
+\tag{8.5}
+$$
+
+且
+
+$$
+\begin{aligned}
+B(Le_u,e_z)&=-\sum_{k=0}^2B(S^ke_u,A_k(z)),\\
+B(e_z,Le_u)&=-\sum_{k=0}^2B(A_k(z),S^ke_u).
+\end{aligned}
+\tag{8.6}
+$$
+
+这里 $A_0(z)=D(z,1)=0$。特别，$\mathrm{UC}$ 蕴涵 $LE\subseteq\mathcal N$，从而命题 3.2 的全部结论成立。
+
+**证明。**展开 (2.1) 中的 $B(D(a,u),e_z)$，与 $r(z)$ 相乘的系数为 $1-1-1=-1$，所得正是 (8.5) 的第一式。转置核仍满足 (R)：把其四变量依次换为 $b,a,v,u$ 即得原式；其锚定双线性型为 $B^{\mathsf T}$，故第二式同样成立。由于 $e_z$ 张成 $E$，(8.5) 给 (8.4) 与 (8.1) 的双向等价。
+
+在自由空间中直接有
+
+$$
+X_k(1,u)=S^ke_u,\qquad X_k(z,1)=e_z+A_k(z).
+\tag{8.7}
+$$
+
+将这两个输入代入 (2.3)，右侧为零；交换两个输入再代入一次，得到 (8.6)。更一般地，在 (2.3) 的一个输入上取矩形 $(a,u)-(a,1)-(1,u)+(1,1)$ 的交替和，得到
+
+$$
+\begin{aligned}
+\sum_{k=0}^2 B(D_k(a,u),X_k(b,v))&=0,\\
+\sum_{k=0}^2 B(X_k(b,v),D_k(a,u))&=0
+\end{aligned}
+\tag{8.8}
+$$
+
+对全部 $a,u,b,v$ 成立。交替和中的左侧向量恰为 (2.2) 的 $D_k$，右侧两个只依赖单轴的项各自抵消。
+
+若有 $\mathrm{UC}$，(8.6) 的每一项均因双侧根性为零。因此 $LE\subseteq\mathcal N$。现在才应用命题 3.2，得到 $S\mathcal N\subseteq\mathcal N$，并在 $V=E/\mathcal N$ 上取得可逆算子 $R$，满足
+
+$$
+R^2+R+I=0,\qquad R^3=I,\qquad B(Rx,Ry)=B(x,y).
+\tag{8.9}
+$$
+
+此后仍以 $B$ 表示商上的双线性型。它只在两个次序共同意义下非退化：若 $B(x,\beta(z))=B(\beta(z),x)=0$ 对全部 $z$ 成立，则 $x=0$，其中 $\beta(a)=[e_a]$。在此下降之前未在商上使用 $S$，也未对原始 $U$ 要求满射或对象层面的三周期。
+
+## 9. 保留仿射偏移的三字符分解
+
+**定理 9.1（仿射分解与等向缺陷）。**在定理 8.2 的前件和 $\mathrm{UC}$ 下，令 $t_k=\beta(p_k)$、$t=t_1$，并置
+
+$$
+T(a,u)=\beta(a\cdot u)-\beta(a)-\beta(u),\qquad
+W=\operatorname{span}_{\mathbb R}\{T(a,u):a,u\in M\}.
+$$
+
+则 $t_0=0$、$t_2=(I+R)t$，且
+
+$$
+\beta(a\cdot U^ku)
+=\beta(a)+R^k\beta(u)+t_k+R^{-k}T(a,u)
+\qquad(k=0,1,2).
+\tag{9.1}
+$$
+
+此外，
+
+$$
+B(W,W)=0,\qquad T(a,Uu)=R^2T(a,u),\qquad RW=W.
+\tag{9.2}
+$$
+
+**证明。**由 $S$ 的定义和合法下降，
+
+$$
+\beta(Ua)=R\beta(a)+t,\qquad
+\beta(U^ka)=R^k\beta(a)+t_k\quad(k=0,1,2).
+\tag{9.3}
+$$
+
+$\mathrm{UC}$ 给 $\beta(a\cdot p_k)=\beta(a)+t_k$，也包括 $k=0$。记
+
+$$
+\xi_k(a,u)=[X_k(a,u)]=\beta(a\cdot U^ku)-t_k.
+$$
+
+于是 $\xi_k(b,1)=\beta(b)$、$\xi_k(1,v)=R^k\beta(v)$。(2.3) 先与输入 $(b,1)$ 配对，再反向配对，两式共同给
+
+$$
+\sum_{k=0}^2\xi_k(a,u)=3\beta(a).
+\tag{9.4}
+$$
+
+这里使用的是商上共同非退化性，并未使用单侧非退化性。再与 $(1,v)$ 按两个次序配对，并用 (8.9) 把 $R^k$ 转到另一变量，得到
+
+$$
+\sum_{k=0}^2R^{-k}\xi_k(a,u)=3\beta(u).
+\tag{9.5}
+$$
+
+这正是《无结合律的双端三相比较：可见代数与复几何共同生成》[第 2 节](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md#2-在非对称非正定空间中保留全部缺陷)式 (2.8)–(2.10) 所用的三字符系统，但此处未知量为中心化的 $\xi_k$，不是未减去仿射偏移的 $\beta(a\cdot U^ku)$。具体地，令
+
+$$
+d_k=\xi_k(a,u)-\beta(a)-R^k\beta(u).
+$$
+
+则 $d_0=T(a,u)$，且 (9.4)–(9.5) 给
+
+$$
+d_0+d_1+d_2=0,\qquad d_0+R^2d_1+Rd_2=0.
+$$
+
+消去 $d_2$ 后，$(R^2-R)d_1=(R-I)d_0$；由 $(R^2-R)^2=-3I$，该算子可逆，而 $d_1=R^2d_0$ 满足此式。因此 $d_2=Rd_0$，即 (9.1)。
+
+把 $\xi_k(a,u)=\beta(a)+R^k\beta(u)+R^{-k}T(a,u)$ 代回 (2.3)。纯背景项为 $3B(\beta(a),\beta(b))$，纯增量项为 $3B(\beta(u),\beta(v))$；所有不同字符的交叉项为零。例如
+
+$$
+\sum_k B(R^k\beta(u),R^{-k}T(b,v))
+=B\left(\beta(u),\sum_kR^{-2k}T(b,v)\right)=0.
+$$
+
+其他交叉项同样由 $I+R+R^2=0$ 消去。剩余式为
+
+$$
+3B(T(a,u),T(b,v))=0\qquad(a,u,b,v\in M).
+$$
+
+所有有序缺陷对均在量词内，故 $B(W,W)=0$。取 (9.1) 的 $k=1$ 并减去 $\beta(a)+\beta(Uu)$，得 $T(a,Uu)=R^2T(a,u)$，所以 $R^2W\subseteq W$。再作用 $R^2$ 得 $RW\subseteq W$；结合 $R^3=I$ 即得 $RW=W$。这个结论只是 $W$ 的等向性，尚不蕴涵 $W$ 为根空间。
+
+**定理 9.2（纠偏配方生成商像中的负元）。**在定理 9.1 的条件下，令 $\gamma(a)=\beta(a)\bmod W$，$A=\gamma(M)\subseteq V/W$，$\rho$ 为 $R$ 诱导的算子，$\tau=\gamma(p_1)$。则 $A$ 为加法群，$\rho$ 限制为 $A$ 的自同构，且
+
+$$
+\gamma(a\cdot b)=\gamma(a)+\gamma(b),\qquad
+\gamma(Ua)=\rho\gamma(a)+\tau,\qquad I+\rho+\rho^2=0.
+\tag{9.6}
+$$
+
+**证明。**$RW=W$ 使 $\rho$ 合法；$T$ 的定义使乘法像为加法，故 $A$ 初为加法幺半群，零元为 $\gamma(1)$。沿用 (4.2) 的原始括号，置
+
+$$
+V_U(a)=U(a\cdot p_2),\qquad V_U^2(a)=V_U(V_U(a)).
+\tag{9.7}
+$$
+
+因 $\gamma(p_2)=(I+\rho)\tau$，有
+
+$$
+\gamma(V_U(a))
+=\rho\bigl(\gamma(a)+(I+\rho)\tau\bigr)+\tau
+=\rho\gamma(a).
+$$
+
+因此指定的二元项
+
+$$
+d_a=V_U(a)\cdot V_U^2(a)
+\tag{9.8}
+$$
+
+满足 $\gamma(d_a)=(\rho+\rho^2)\gamma(a)=-\gamma(a)$。每个像元素的负元都在 $A$ 中，故 $A$ 为加法群。$V_U$ 及其二次迭代又分别实现 $\rho$ 和 $\rho^2=\rho^{-1}$，所以 $\rho A=A$。这里只在向量商的像中取得群；未改变 $M$ 的任何次序、括号或运算律。
+
+## 10. 成对有限历史与完整有向核的下降
+
+**定理 10.1（同纤维的统一双向界）。**在定理 9.2 的条件下，置
+
+$$
+K=\{(a,b)\in M^2:\gamma(a)=\gamma(b)\},\qquad
+N_0=\{u\in M:\gamma(u)=0\}.
+$$
+
+对每个 $(a,b)\in K$，令 $w=\beta(a)-\beta(b)$。则 $c(a,b)=c(b,a)=0$，且对每个 $z\in M$，
+
+$$
+|B(w,\beta(z))|\le\frac32r(z),\qquad
+|B(\beta(z),w)|\le\frac32q(z).
+\tag{10.1}
+$$
+
+**证明。**$w\in W$，而由 (2.1)
+
+$$
+0=B(w,w)=\frac{c(a,b)+c(b,a)}2.
+$$
+
+两个实际比较非负，故都为零。这里没有从 $B(w,w)=0$ 推出根性。$c(a,b)=0$ 与 (2.1) 给 $q(a)-q(b)=2B(w,\beta(b))$；同理由 $c(b,a)=0$ 得 $r(a)-r(b)=2B(\beta(b),w)$。于是
+
+$$
+\begin{aligned}
+c(a,b\cdot z)-c(b,b\cdot z)
+&=-2B(w,\beta(z)),\\
+c(b\cdot z,a)-c(b\cdot z,b)
+&=-2B(\beta(z),w).
+\end{aligned}
+\tag{10.2}
+$$
+
+计算中使用 $\beta(b\cdot z)=\beta(b)+\beta(z)+T(b,z)$，而 $B(w,T(b,z))=B(T(b,z),w)=0$ 由 (9.2) 给出。
+
+(R) 的 $k=0$ 项与非负性对全部四变量给
+
+$$
+0\le c(x\cdot u,y\cdot v)\le3\bigl(c(x,y)+c(u,v)\bigr).
+\tag{10.3}
+$$
+
+以 $(x,y,u,v)=(a,b,1,z)$ 和 $(b,b,1,z)$ 代入，(10.2) 第一行的两个读数均在 $[0,3r(z)]$。以 $(b,a,z,1)$ 和 $(b,b,z,1)$ 代入，第二行的两个读数均在 $[0,3q(z)]$。这给 (10.1)，并且界不依赖于同纤维对 $(a,b)$。它是前述续卷第 3 节式 (3.2) 的同一实际比较界，适用于此处仍带仿射偏移的纤维。
+
+**定理 10.2（成对历史消去零纤维残余）。**在上述条件下，$u\in N_0$ 蕴涵 $\beta(u)=0$。
+
+**证明。**固定任意 $z\in M$，分别考虑实线性泛函和对应常数
+
+$$
+\begin{aligned}
+\alpha(x)=B(x,\beta(z)),&\qquad C=\tfrac32r(z),\\
+\alpha(x)=B(\beta(z),x),&\qquad C=\tfrac32q(z).
+\end{aligned}
+\tag{10.4}
+$$
+
+以下论证对两种选择各作一次。令
+
+$$
+J=\frac{2R+I}{\sqrt3},\qquad
+\ell=\alpha-i\alpha J,\qquad
+\omega=-\frac12+i\frac{\sqrt3}{2}.
+$$
+
+由 (8.9)，$J^2=-I$ 且 $\ell R=\omega\ell$。这只是代数复结构，不要求 $B$ 为正或对称。若 $(a,b)\in K$，则 $(Ua,Ub)\in K$，且
+
+$$
+R(\beta(a)-\beta(b))=\beta(Ua)-\beta(Ub).
+$$
+
+因此 (10.1) 同时界住 $|\alpha(w)|$ 和 $|\alpha(Rw)|$，均不超过 $C$。从而
+
+$$
+|\ell(w)|^2
+=\alpha(w)^2+\frac{(2\alpha(Rw)+\alpha(w))^2}{3}
+\le4C^2\qquad((a,b)\in K).
+\tag{10.5}
+$$
+
+特别，此界并未要求单条零纤维历史在 $U$ 下保持零纤维；仿射项 $\tau$ 可以非零。
+
+固定 $u\in N_0$。对每个整数 $n\ge0$，以 $\mathcal I_n=\{0,1,2\}^n$ 为有限指标集。每个词 $(k_1,\ldots,k_n)$ 索引两条指定的左括号递推：
+
+$$
+\begin{aligned}
+x_0=y_0&=1,\\
+x_j&=x_{j-1}\cdot U^{k_j}u,\\
+y_j&=y_{j-1}\cdot p_{k_j}\qquad(1\le j\le n).
+\end{aligned}
+\tag{10.6}
+$$
+
+两条递推分别保留；不将 $x_j$ 与 $y_j$ 认作同一原始对象。由 $\gamma(u)=0$ 和 (9.6)，$\gamma(U^ku)=\gamma(p_k)$，故每一步都有 $\gamma(x_j)=\gamma(y_j)$。因此这些成对项全属于 $K$。
+
+设某节点的对为 $(x,y)$，差为 $w=\beta(x)-\beta(y)$。由 (9.1) 与 $\mathrm{UC}$，其 $k$ 子节点的差恰为
+
+$$
+\begin{aligned}
+&\beta(x\cdot U^ku)-\beta(y\cdot p_k)\\
+&\quad=w+R^k\beta(u)+R^{-k}T(x,u).
+\end{aligned}
+\tag{10.7}
+$$
+
+这里两个 $t_k$ 相减消失，未将任何单条历史的仿射偏移设为零。令 $Z=\ell(w)$、$A_u=\ell(\beta(u))$、$D_x=\ell(T(x,u))$；三个子值为
+
+$$
+Z+\omega^kA_u+\omega^{-k}D_x\qquad(k=0,1,2).
+$$
+
+有限三字符正交给出确切恒等式
+
+$$
+\frac13\sum_{k=0}^2|Z+\omega^kA_u+\omega^{-k}D_x|^2
+=|Z|^2+|A_u|^2+|D_x|^2.
+\tag{10.8}
+$$
+
+这是前述续卷第 3 节式 (3.4) 的标量平方恒等式；此处它作用于成对差 (10.7)。以深度 $n$ 的全部词作有限平均，记
+
+$$
+E_n=3^{-n}\sum_{\mathcal I_n}|\ell(\beta(x_n)-\beta(y_n))|^2.
+$$
+
+根节点差为零，且 (10.8) 逐层给 $E_{n+1}\ge E_n+|A_u|^2$。于是
+
+$$
+n|A_u|^2\le E_n\le4C^2\qquad(n\ge0),
+\tag{10.9}
+$$
+
+右侧由每个词上的 (10.5) 得到。任意深度的有限恒等式已经迫使 $A_u=0$。取实部得 $\alpha(\beta(u))=0$；对 (10.4) 的两种配对和任意 $z$ 重复，商上共同非退化性给 $\beta(u)=0$。
+
+$\mathcal I_n$ 只是有限 magma 项的证明索引；论证没有引入概率律、无限随机历史或任何对原事件空间的替换。
+
+**定理 10.3（整个纤维与整个有向核下降）。**在上述条件下，
+
+$$
+\gamma(a)=\gamma(b)\quad\Longrightarrow\quad\beta(a)=\beta(b)
+\quad\Longrightarrow\quad a\approx b.
+\tag{10.10}
+$$
+
+因此有唯一的 $C:A^2\to[0,\infty)$，满足 $c(a,b)=C(\gamma(a),\gamma(b))$；它处处有限、零对角，并在加法群 $A$ 上保留完整 (R)，标记为 $x\mapsto\rho x+\tau$。
+
+**证明。**固定 $z$ 和 (10.4) 的任一实泛函。对 $(a,b)\in K$，令
+
+$$
+h(a,b)=\alpha(\beta(a)-\beta(b)),\qquad
+M_\alpha=\sup_{(a,b)\in K}|h(a,b)|.
+$$
+
+由 (10.1)，$0\le M_\alpha\le C<\infty$。因 $\beta(a\cdot U^kd)=\xi_k(a,d)+t_k$，(9.4) 给
+
+$$
+\sum_{k=0}^2 h(a\cdot U^kd,b\cdot U^kd)=3h(a,b).
+\tag{10.11}
+$$
+
+这只在两个背景相减后使用；两边共有的 $\sum_kt_k$ 恰好抵消。所有子对仍在 $K$，因为其 $\gamma$ 差等于 $\gamma(a)-\gamma(b)$。
+
+对给定 $(a,b)\in K$ 选定 (9.8) 的实际括号项 $d=d_a$。由 $\gamma(d)=-\gamma(a)=-\gamma(b)$，$a\cdot d$ 与 $b\cdot d$ 均在 $N_0$。定理 10.2 使 (10.11) 的 $k=0$ 项为零，故
+
+$$
+|h(a,b)|\le\frac23M_\alpha.
+$$
+
+在整个 $K$ 上取上确界，得到 $M_\alpha\le2M_\alpha/3$，因其有限，必为零。两个配对次序对每个 $z$ 都为零，共同非退化性给 $\beta(a)=\beta(b)$。这等价于 $e_a-e_b\in\mathcal N$，引理 2.3 随即给全部行、全部列的相等，而非只给 $c(a,b)=0$。
+
+定义 $C(\gamma(a),\gamma(b))=c(a,b)$；完整行列相等使其与两个代表元的选择无关。$\gamma$ 满到 $A$，故任意四个群元素都可由原四标签代表。由 (9.6) 及 $\gamma(U^ku)=\rho^k\gamma(u)+\tau_k$，其中
+
+$$
+\tau_0=0,\quad\tau_1=\tau,\quad\tau_2=(I+\rho)\tau,
+$$
+
+原 (R) 正好下降为
+
+$$
+\sum_{k=0}^2 C(x+\rho^ks+\tau_k,y+\rho^kt+\tau_k)
+=3C(x,y)+3C(s,t)\qquad(x,y,s,t\in A).
+\tag{10.12}
+$$
+
+没有把核预先对称化，也没有只下降其零对角或某个标量投影。
+
+## 11. 在既有群上结论处闭合条件归约
+
+**证明定理 8.2 的 $\mathrm{UC}\Rightarrow\mathrm{BR}$。**第 8–10 节已取得加法群 $A$、其自同构 $\rho$、$I+\rho+\rho^2=0$，以及处处有限非负、零对角的完整有向核 $C$，满足 (10.12)。这正是本卷第 4 节共同平移不变性论证的群入口：该论证只使用这些群上条件，不再要求原始标签满足结合律或 $U1=1$。具体对应为第 4 节的群 $A$、算子 $R_0$、偏移 $t_k$ 和核 $C$ 分别取此处的 $A,\rho,\tau_k,C$。因此直接复用该节的下确界论证，得到共同平移不变性，并写成
+
+$$
+\begin{aligned}
+C(x,y)&=f(x-y),& f&:A\to[0,\infty),& f(0)&=0,\\
+f(\rho x)&=f(x),&&&
+\sum_{k=0}^2f(x+\rho^ky)&=3f(x)+3f(y).
+\end{aligned}
+\tag{11.1}
+$$
+
+这里相位不变性的前件也满足：引理 2.1 给原核同时标记等距，下降后即 $C(\rho x+\tau,\rho y+\tau)=C(x,y)$；共同平移不变性消去 $\tau$。
+
+随后直接应用《无结合律的双端三相比较：可见代数与复几何共同生成》[第 4 节](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md#4-三相缺陷恒等式直接给出平方几何)式 (4.1) 之后的群上推导。其输入是交换加法群、满足 $I+\rho+\rho^2=0$ 的自同构、以及满足 (11.1) 的有限非负函数；这些输入已经逐一取得。该推导提供偶性、平行四边形律、对称双可加极化、有限 Gram 正性、实标量扩张、零空间商和 Hilbert 完成，因而有可加映射 $F_0:A\to H$，满足
+
+$$
+f(x)=\|F_0x\|^2,\qquad F_0(\rho x)=\omega F_0x.
+$$
+
+所用交换群极化结论的精确文献前件为：定义域 $G$ 是交换群，值群 $H_0$ 是交换群且每个 $h\in H_0$ 的方程 $2x=h$ 有唯一解，函数满足
+
+$$
+f(xy)+f(xy^{-1})=2f(x)+2f(y).
+\tag{11.2}
+$$
+
+这是 Peter de Place Friis、Henrik Stetkær，*On the quadratic functional equation on groups*，Publ. Math. Debrecen 69/1–2，65–93，[DOI 10.5486/pmd.2006.3270](https://doi.org/10.5486/pmd.2006.3270)，第 65–67 页 Theorem 1.2（归于 Aczél）的条件；亦见前述续卷对应 7.1 和本卷对应 7.3。此处 $G=(A,+)$ 已为交换群，$H_0=(\mathbb R,+)$ 满足唯一二可除性，(11.2) 为上述既有群上推导所得的平行四边形律，$xy^{-1}$ 对应 $x-y$。它没有被用于原始 magma，也不把非负性单独当作极化的前件。极化、Gram 与完成均沿用该既有推导。
+
+令 $F=F_0\gamma$。由 (9.6)、(10.12) 和 (11.1)，
+
+$$
+F1=0,\quad F(a\cdot b)=Fa+Fb,\quad
+F(Ua)=\omega Fa+F(p_1),\quad c(a,b)=\|Fa-Fb\|^2.
+$$
+
+所以取得定理 1.3 的第三项，即原来的仿射表示 (1.2)。定理 1.3 给 $\mathrm N_5$ 与 $\mathrm{BR}$，完成 $\mathrm{UC}\Rightarrow\mathrm{BR}$，从而完成 (8.3) 的证明。这里复用的群上极化为上述文献所载结论（literature-attested），其余群上二次函数、Gram 与完成步骤沿用所引第 4 节。本归约为本仓推导的条件命题（repo-derived）：单位轨道的完整双侧根性已足以推出全部乘法缺陷的根性，尤其包含带仿射偏移的成对历史传递；不主张文献优先权。
+
+**问题 11.1（归约后的普遍迫出问题）。**在定义 1.1 与 (R) 下，是否对每个 $a,z\in M$ 和 $j=1,2$ 都有 (8.4)？由定理 8.2，此问题与问题 7.1 的 $\mathrm{BR}$、$\mathrm N_5$ 和仿射表示迫出问题等价，仍未由上述条件归约回答。
+
+由 (8.6)，更先行的相位合法性条件 $LE\subseteq\mathcal N$ 恰等价于下列两个混合和对全部 $u,z$ 消失：
+
+$$
+\sum_{k=1}^2B(S^ke_u,A_k(z))=0,\qquad
+\sum_{k=1}^2B(A_k(z),S^ke_u)=0.
+\tag{11.3}
+$$
+
+(11.3) 只给命题 3.2 的下降前件；这里未证明它足以推出 $\mathrm{UC}$。上述成对历史证明还使用 $\beta(y\cdot p_k)=\beta(y)+t_k$，即 $\mathrm{UC}$ 所给的逐个单位轨道缺陷根性，不能用混合和的消失替换。也未由 (R) 单独消去 (11.3) 的任何一个普遍读数和。
+
+**假设 11.2（原事件与接口的保留范围）。**原事件空间 $\Omega$、固定事件核 $D$、装置、菜单、程序、带原括号的历史、原始质量、概率、失败、停止、记录和返回系数均沿用其原定义。式 (10.6) 的配对项与有限指标集只在上述数学证明中使用，不增补这些对象的定义或操作。定理 8.2 的条件等价不供应实际非零准备、参考、复制、重置、辅助系统、张量联合、仪器或时间接口；第 6 节的各项来源条件仍为各自前件。完整关系单独迫出 $\mathrm{UC}$ 的问题和量子来源问题均未由此解决。
+
+## 追加锚（本行以下为增补区）
