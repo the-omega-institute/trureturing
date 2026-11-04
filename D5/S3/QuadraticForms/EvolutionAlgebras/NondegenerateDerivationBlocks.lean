@@ -4,13 +4,17 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Nonzero natural squares give independent orthogonal derivation blocks. -/
+   digest: Nonzero natural squares give a stabilizer kernel with abelian diagonal quotient. -/
 
 /-
 Escape audit for the newly public owner lemmas is unfinished: https://github.com/the-omega-institute/trureturing/issues/22095
 admission_basis: escape-witness
 Direct frozen dependencies: none.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19944
+The general diagonal-kernel endpoint has the same dependent Lie-equivalence audit gap:
+the enrolled DependentFamily template does not itself reconstruct this algebra/basis/
+ideal/quotient telescope, and no variation, sensitivity or observational-dependence
+certificate for that source family has been proved. No successful registration is claimed.
 utility none: structural existence and Lie equivalences; no finite certificate or algorithm.
 escape_witness: Decomposition.assemble_mem_derivations, Decomposition.productToDerivations_surjective
   Equations.defect: proof_shape: bind-only; escape_witness: none;
@@ -308,6 +312,41 @@ private theorem semisimple_diagonal_zero [LieAlgebra.IsSemisimple k (derivations
   | smul c F hF ihF => simp [ihF]
 
 include hn hsq hw hsep in
+private theorem properties_of_diagonal_zero
+    (D : derivations μ) (hdiag : ∀ i, b.repr (D.val (b i)) i = 0) :
+      (∀ i j, label i ≠ label j → b.repr (D.val (b i)) j = 0) ∧
+      (∀ i j, b.repr (D.val (b i)) j = - b.repr (D.val (b j)) i) ∧
+      (∀ a ∈ Set.range label, D.val (w a) = 0) := by
+  refine ⟨fun i j hij => derivation_cross_zero μ b label w hn hsq hsep D i j hij,
+    ?_, ?_⟩
+  · intro i j
+    by_cases hij : i = j
+    · subst j
+      rw [hdiag, neg_zero]
+    · exact derivation_off_diagonal_skew μ b label w hn hsq hw hsep D i j hij
+  · rintro a ⟨i,rfl⟩
+    have hh := square_equation μ b hn D i
+    rw [hsq, hdiag, mul_zero, zero_smul] at hh
+    exact hh
+
+include hn hsq in
+private theorem derivation_of_skew_killing (D : Module.End k V)
+    (hcross : ∀ i j, label i ≠ label j → b.repr (D (b i)) j = 0)
+    (hskew : ∀ i j, b.repr (D (b i)) j = - b.repr (D (b j)) i)
+    (hkill : ∀ a ∈ Set.range label, D (w a) = 0) : D ∈ derivations μ := by
+  apply (natural_derivation_iff_equations μ b hn D).mpr
+  constructor
+  · intro i j hij
+    by_cases hc : label i = label j
+    · rw [hsq, hsq, hc, hskew i j, ← add_smul, neg_add_cancel, zero_smul]
+    · rw [hcross i j hc, hcross j i (Ne.symm hc), zero_smul, zero_smul, add_zero]
+  · intro i
+    rw [hsq, hkill _ ⟨i,rfl⟩]
+    have hm : 2 * b.repr (D (b i)) i = 0 := by
+      simpa only [two_mul] using eq_neg_iff_add_eq_zero.mp (hskew i i)
+    rw [hm, zero_smul]
+
+include hn hsq hw hsep in
 private theorem semisimple_normalized_derivation_iff [LieAlgebra.IsSemisimple k (derivations μ)]
     (D : Module.End k V) : D ∈ derivations μ ↔
       (∀ i j, label i ≠ label j → b.repr (D (b i)) j = 0) ∧
@@ -315,30 +354,24 @@ private theorem semisimple_normalized_derivation_iff [LieAlgebra.IsSemisimple k 
       (∀ a ∈ Set.range label, D (w a) = 0) := by
   constructor
   · intro hD
-    refine ⟨fun i j hij => derivation_cross_zero μ b label w hn hsq hsep ⟨D,hD⟩ i j hij,
-      ?_, ?_⟩
-    · intro i j
-      by_cases hij : i = j
-      · subst j
-        rw [semisimple_diagonal_zero μ b label w hn hsq hw hsep ⟨D,hD⟩ i, neg_zero]
-      · exact derivation_off_diagonal_skew μ b label w hn hsq hw hsep ⟨D,hD⟩ i j hij
-    · rintro a ⟨i,rfl⟩
-      have hh := square_equation μ b hn ⟨D,hD⟩ i
-      rw [hsq, semisimple_diagonal_zero μ b label w hn hsq hw hsep ⟨D,hD⟩ i,
-        mul_zero, zero_smul] at hh
-      exact hh
+    exact properties_of_diagonal_zero μ b label w hn hsq hw hsep ⟨D,hD⟩
+      (semisimple_diagonal_zero μ b label w hn hsq hw hsep ⟨D,hD⟩)
   · rintro ⟨hcross,hskew,hkill⟩
-    apply (natural_derivation_iff_equations μ b hn D).mpr
-    constructor
-    · intro i j hij
-      by_cases hc : label i = label j
-      · rw [hsq, hsq, hc, hskew i j, ← add_smul, neg_add_cancel, zero_smul]
-      · rw [hcross i j hc, hcross j i (Ne.symm hc), zero_smul, zero_smul, add_zero]
-    · intro i
-      rw [hsq, hkill _ ⟨i,rfl⟩]
-      have hm : 2 * b.repr (D (b i)) i = 0 := by
-        simpa only [two_mul] using eq_neg_iff_add_eq_zero.mp (hskew i i)
-      rw [hm, zero_smul]
+    exact derivation_of_skew_killing μ b label w hn hsq D hcross hskew hkill
+
+include hn hsq hw hsep in
+/-- The diagonal coefficients of normalized nonzero-square derivations form an
+abelian Lie-algebra quotient. No semisimplicity assumption is used. -/
+private noncomputable def diagonalHom : derivations μ →ₗ⁅k⁆ (ι → k) where
+  toFun D i := b.repr (D.val (b i)) i
+  map_add' := by intro D E; funext i; simp
+  map_smul' := by intro c D; funext i; simp
+  map_lie' := by
+    intro D E
+    funext i
+    change b.repr ((⁅D,E⁆ : derivations μ).val (b i)) i = _
+    rw [derivation_bracket_diagonal_zero μ b label w hn hsq hw hsep D E i]
+    simp [Ring.lie_def, mul_comm]
 
 end D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Normalized
 
@@ -549,13 +582,15 @@ variable (hsq : ∀ i, μ (b i) (b i) = w (label i))
 variable (hw : ∀ a, w a ≠ 0)
 variable (hsep : ∀ a c, a ≠ c → ∀ s t : k, s • w a + t • w c = 0 → s = 0 ∧ t = 0)
 
-include hn hsq hw hsep in
-private theorem assemble_mem_derivations [LieAlgebra.IsSemisimple k (derivations μ)]
+private theorem assemble_properties
     (f : ∀ a, (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k)) (D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Decomposition.blockW b label w a))) :
-    assemble b label (fun a => (f a).val) ∈ derivations μ := by
+    (∀ i j, label i ≠ label j →
+      b.repr (assemble b label (fun a => (f a).val) (b i)) j = 0) ∧
+    (∀ i j, b.repr (assemble b label (fun a => (f a).val) (b i)) j =
+      -b.repr (assemble b label (fun a => (f a).val) (b j)) i) ∧
+    (∀ c ∈ Set.range label, assemble b label (fun a => (f a).val) (w c) = 0) := by
   classical
   let F := fun a => (f a).val
-  apply (semisimple_normalized_derivation_iff μ b label w hn hsq hw hsep _).mpr
   refine ⟨assemble_cross_zero b label F, ?_, ?_⟩
   · intro i j
     by_cases hc : label i = label j
@@ -577,9 +612,16 @@ private theorem assemble_mem_derivations [LieAlgebra.IsSemisimple k (derivations
     exact (f a).property.2 _ (Submodule.subset_span ⟨c,rfl⟩)
 
 include hn hsq hw hsep in
-private noncomputable def productToDerivations [LieAlgebra.IsSemisimple k (derivations μ)] :
+private theorem assemble_mem_derivations_general
+    (f : ∀ a, (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k)) (D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Decomposition.blockW b label w a))) :
+    assemble b label (fun a => (f a).val) ∈ derivations μ := by
+  obtain ⟨hc,hs,hk⟩ := assemble_properties b label w f
+  exact derivation_of_skew_killing μ b label w hn hsq _ hc hs hk
+
+include hn hsq hw hsep in
+private noncomputable def productToDerivationsGeneral :
     (∀ a, (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k)) (D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Decomposition.blockW b label w a))) →ₗ⁅k⁆ derivations μ where
-  toFun f := ⟨assemble b label (fun a => (f a).val), assemble_mem_derivations μ b label w hn hsq hw hsep f⟩
+  toFun f := ⟨assemble b label (fun a => (f a).val), assemble_mem_derivations_general μ b label w hn hsq hw hsep f⟩
   map_add' := by
     intro f g
     apply Subtype.ext
@@ -594,19 +636,40 @@ private noncomputable def productToDerivations [LieAlgebra.IsSemisimple k (deriv
     exact (assemble b label).map_lie _ _
 
 include hn hsq hw hsep in
-private theorem productToDerivations_injective [LieAlgebra.IsSemisimple k (derivations μ)] :
-    Function.Injective (productToDerivations μ b label w hn hsq hw hsep) := by
+private theorem productToDerivationsGeneral_injective :
+    Function.Injective (productToDerivationsGeneral μ b label w hn hsq hw hsep) := by
   intro f g h
   have hh := assemble_injective b label (congrArg Subtype.val h)
   funext a
   exact Subtype.ext (congrFun hh a)
 
 include hn hsq hw hsep in
-private theorem restrictBlock_mem_stabilizer [LieAlgebra.IsSemisimple k (derivations μ)]
-    (hl : Function.Surjective label) (D : derivations μ) (a : α) :
+private theorem assemble_mem_derivations [LieAlgebra.IsSemisimple k (derivations μ)]
+    (f : ∀ a, D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer
+      (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+      (blockW b label w a)) :
+    assemble b label (fun a => (f a).val) ∈ derivations μ :=
+  assemble_mem_derivations_general μ b label w hn hsq hw hsep f
+
+include hn hsq hw hsep in
+private noncomputable def productToDerivations [LieAlgebra.IsSemisimple k (derivations μ)] :
+    (∀ a, D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer
+      (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+      (blockW b label w a)) →ₗ⁅k⁆ derivations μ :=
+  productToDerivationsGeneral μ b label w hn hsq hw hsep
+
+include hn hsq hw hsep in
+private theorem productToDerivations_injective [LieAlgebra.IsSemisimple k (derivations μ)] :
+    Function.Injective (productToDerivations μ b label w hn hsq hw hsep) :=
+  productToDerivationsGeneral_injective μ b label w hn hsq hw hsep
+
+include hn hsq hw hsep in
+private theorem restrictBlock_mem_stabilizer_of_diagonal_zero
+    (hl : Function.Surjective label) (D : derivations μ)
+    (hdiag : ∀ i, b.repr (D.val (b i)) i = 0) (a : α) :
     restrictBlock b label D.val a ∈ (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k)) (D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Decomposition.blockW b label w a)) := by
   classical
-  have hD := (semisimple_normalized_derivation_iff μ b label w hn hsq hw hsep D.val).mp D.property
+  have hD := properties_of_diagonal_zero μ b label w hn hsq hw hsep D hdiag
   have heq := assemble_restrict_of_cross_zero b label D.val hD.1
   refine ⟨(LinearMap.mem_skewAdjointSubmodule _).mpr ?_, ?_⟩
   · apply (D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.BlockForm.skew_iff_coefficients _).mpr
@@ -626,6 +689,78 @@ private theorem restrictBlock_mem_stabilizer [LieAlgebra.IsSemisimple k (derivat
     | zero => exact map_zero _
     | add x y hx hy ihx ihy => simp [ihx,ihy]
     | smul c x hx ih => simp [ih]
+
+include hn hsq hw hsep in
+private theorem restrictBlock_mem_stabilizer [LieAlgebra.IsSemisimple k (derivations μ)]
+    (hl : Function.Surjective label) (D : derivations μ) (a : α) :
+    restrictBlock b label D.val a ∈
+      D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer
+        (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+        (blockW b label w a) :=
+  restrictBlock_mem_stabilizer_of_diagonal_zero μ b label w hn hsq hw hsep hl D
+    (semisimple_diagonal_zero μ b label w hn hsq hw hsep D) a
+
+include hn hsq hw hsep in
+private noncomputable def productToDiagonalKernel [CharZero k] :
+    (∀ a, D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer
+      (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+      (blockW b label w a)) →ₗ⁅k⁆ (diagonalHom μ b label w hn hsq hw hsep).ker where
+  toFun f := ⟨productToDerivationsGeneral μ b label w hn hsq hw hsep f, by
+    rw [LieHom.mem_ker]
+    funext i
+    change b.repr (assemble b label (fun a => (f a).val) (b i)) i = 0
+    have h := (assemble_properties b label w f).2.1 i i
+    have htwo : (2 : k) * b.repr (assemble b label (fun a => (f a).val) (b i)) i = 0 := by
+      simpa only [two_mul] using eq_neg_iff_add_eq_zero.mp h
+    exact (mul_eq_zero.mp htwo).resolve_left (by norm_num)⟩
+  map_add' := by
+    intro f g
+    apply Subtype.ext
+    exact (productToDerivationsGeneral μ b label w hn hsq hw hsep).map_add f g
+  map_smul' := by
+    intro c f
+    apply Subtype.ext
+    exact (productToDerivationsGeneral μ b label w hn hsq hw hsep).map_smul c f
+  map_lie' := by
+    intro f g
+    apply Subtype.ext
+    exact (productToDerivationsGeneral μ b label w hn hsq hw hsep).map_lie f g
+
+include hn hsq hw hsep in
+/-- The actual kernel of the diagonal Lie map is the direct sum of orthogonal
+pointwise stabilizers, without a semisimplicity assumption on derivations. -/
+private theorem diagonalKernel_equiv_stabilizers [CharZero k] (hl : Function.Surjective label) :
+    Nonempty ((diagonalHom μ b label w hn hsq hw hsep).ker ≃ₗ⁅k⁆
+      ⨁ a, D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer
+        (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+        (blockW b label w a)) := by
+  classical
+  refine ⟨(LieEquiv.ofBijective (productToDiagonalKernel μ b label w hn hsq hw hsep)
+    ⟨?_, ?_⟩).symm.trans (piDirectSumEquiv (k := k) _)⟩
+  · intro f g h
+    exact productToDerivationsGeneral_injective μ b label w hn hsq hw hsep (congrArg Subtype.val h)
+  · intro D
+    have hd (i : ι) : b.repr (D.val.val (b i)) i = 0 :=
+      congrFun (LieHom.mem_ker.mp D.property) i
+    let f : ∀ a, D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer
+        (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+        (blockW b label w a) := fun a =>
+      ⟨restrictBlock b label D.val.val a,
+        restrictBlock_mem_stabilizer_of_diagonal_zero μ b label w hn hsq hw hsep hl D.val hd a⟩
+    refine ⟨f, Subtype.ext (Subtype.ext ?_)⟩
+    exact assemble_restrict_of_cross_zero b label D.val.val
+      (properties_of_diagonal_zero μ b label w hn hsq hw hsep D.val hd).1
+
+include hn hsq hw hsep in
+/-- The quotient of actual derivations by their diagonal kernel is abelian. -/
+private theorem diagonalKernel_quotient_abelian :
+    IsLieAbelian (derivations μ ⧸ (diagonalHom μ b label w hn hsq hw hsep).ker) := by
+  let f := diagonalHom μ b label w hn hsq hw hsep
+  have hf : IsLieAbelian (ι → k) :=
+    ⟨fun x y => by ext i; simp [Ring.lie_def, mul_comm]⟩
+  have hr : IsLieAbelian f.range :=
+    Function.Injective.isLieAbelian (f := f.range.incl) Subtype.val_injective hf
+  exact f.quotKerEquivRange.injective.isLieAbelian hr
 
 include hn hsq hw hsep in
 private theorem productToDerivations_surjective [LieAlgebra.IsSemisimple k (derivations μ)]
@@ -709,6 +844,39 @@ open D5.S3.QuadraticForms.EvolutionAlgebras.DerivationAnnihilatorObstruction D5.
 attribute [local instance 100] LieRing.ofAssociativeRing
 variable {k V ι : Type*} [Field k] [IsAlgClosed k] [AddCommGroup V] [Module k V]
 variable [Fintype ι] (μ : V →ₗ[k] V →ₗ[k] V) (b : Module.Basis ι k V)
+
+/-- For arbitrary nonzero natural squares, the kernel of the actual diagonal
+map is a sum of pointwise orthogonal stabilizers and the remaining quotient is
+abelian. This does not assert that this kernel is the solvable radical. -/
+theorem nonzero_square_diagonal_kernel_decomposition [CharZero k]
+    (hn : ∀ i j, i ≠ j → μ (b i) (b j) = 0)
+    (hs : ∀ i, μ (b i) (b i) ≠ 0) :
+    ∃ b' : Module.Basis ι k V,
+      (∀ i j, i ≠ j → μ (b' i) (b' j) = 0) ∧
+      (∀ i, μ (b' i) (b' i) = squareRepresentative μ b
+        ((Set.rangeFactorization (fun i => k ∙ μ (b i) (b i))) i)) ∧
+      ∃ K : LieIdeal k (derivations μ), IsLieAbelian (derivations μ ⧸ K) ∧
+        Nonempty (K ≃ₗ⁅k⁆ ⨁ a : (Set.range (fun i => k ∙ μ (b i) (b i))),
+          D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer
+            (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+            (blockW b' (Set.rangeFactorization (fun i => k ∙ μ (b i) (b i)))
+              (squareRepresentative μ b) a)) := by
+  classical
+  let label := Set.rangeFactorization (fun i => k ∙ μ (b i) (b i))
+  let w := squareRepresentative μ b
+  letI : Fintype (Set.range (fun i => k ∙ μ (b i) (b i))) :=
+    Fintype.ofSurjective label (Set.rangeFactorization_surjective (f := fun i => k ∙ μ (b i) (b i)))
+  obtain ⟨b', hn', hsq'⟩ := exists_class_normalization μ b hn
+  have hw : ∀ a, w a ≠ 0 := representatives_nonzero μ b hs
+  have hsep : ∀ a c, a ≠ c → ∀ s t : k, s • w a + t • w c = 0 → s = 0 ∧ t = 0 := by
+    intro a c hac s t h
+    exact separate_of_distinct_lines (w a) (w c) (hw a) (hw c)
+      (representatives_distinct_lines μ b a c hac) s t h
+  refine ⟨b', hn', hsq', (diagonalHom μ b' label w hn' hsq' hw hsep).ker,
+    diagonalKernel_quotient_abelian μ b' label w hn' hsq' hw hsep, ?_⟩
+  exact diagonalKernel_equiv_stabilizers μ b' label w hn' hsq' hw hsep
+    (Set.rangeFactorization_surjective (f := fun i => k ∙ μ (b i) (b i)))
+
 theorem nonzero_square_block_decomposition
     [LieAlgebra.IsSemisimple k (derivations μ)]
     (hn : ∀ i j, i ≠ j → μ (b i) (b j) = 0)

@@ -10,7 +10,7 @@ internal sealed class NondegenerateDerivationBlocksDocument : IScribeDocumentDef
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuadraticForms/kaygorodov2026evolution");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Derivation blocks of nondegenerate evolution algebras.",
+        "Stabilizer kernels and derivation blocks of nondegenerate evolution algebras.",
         H("Derivation blocks of nondegenerate evolution algebras"),
         Blocks(
             Describe.Lean(
@@ -75,6 +75,28 @@ internal sealed class NondegenerateDerivationBlocksDocument : IScribeDocumentDef
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For each line spanned by a natural square, choose one basis index generating that line and take its square."))),
                 DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("blocks-nonzero-square-diagonal-kernel-decomposition"),
+                DeclarationHandle.Create(Prefix + "nonzero_square_diagonal_kernel_decomposition"),
+                H("The diagonal kernel without semisimplicity"),
+                StatementSource.FromAuthor(Disp(ProductContext(
+                    Instance(Call("IsAlgClosed", X("k")), Instance(Call("CharZero", X("k")),
+                    All(Iota, Type, Instance(Call("Fintype", Iota), All(X("b"), Basis(Iota, X("V")),
+                    Hyp(Natural(X("b"), Iota),
+                    Hyp(All(X("i"), Iota, Ne(Apply(Mu, Apply(X("b"), X("i")), Apply(X("b"), X("i"))), D(0))),
+                    Some(Seq(X("b"), Apos), Basis(Iota, X("V")),
+                        And(Natural(Seq(X("b"), Apos), Iota),
+                        And(All(X("i"), Iota, Eq(
+                            Apply(Mu, Apply(Seq(X("b"), Apos), X("i")), Apply(Seq(X("b"), Apos), X("i"))),
+                            Apply(Representative, Apply(Label, X("i"))))),
+                        Some(X("K"), Call("LieIdeal", X("k"), Der),
+                            And(Call("IsLieAbelian", Call("Quotient", Der, X("K"))),
+                                Nonempty(LieEquivalence(X("K"), Sum(X("a"), Lines,
+                                    Call("stabilizer", MatrixForm(Fiber(Label, X("a"), Iota)),
+                                        BlockSpan(Seq(X("b"), Apos))))))))))))))))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Over an algebraically closed field of characteristic zero, let mu be any bilinear product on a vector space with a finite natural basis whose squares are all nonzero. Normalize those squares within their proportionality classes. The diagonal coefficients define an actual Lie homomorphism from derivations to the abelian algebra of scalar coordinate functions: every commutator has zero diagonal. Its actual kernel K is Lie equivalent to the finite direct sum of skew endomorphisms in each class that kill all projected square representatives. Thus Der(mu)/K is abelian, even when Der(mu) is not semisimple. Empty natural bases and empty sums are allowed. The kernel K here is not identified with the solvable radical, and this theorem does not yet give the radical quotient or the simple-ideal classification. The argument factors the existing general derivation equations, class normalization, assembly and restriction proofs; it does not remove the semisimplicity hypothesis from the existing full block equivalence. The underlying evolution-algebra source is the Ma-then-Zhang credited KMV note, alongside standard orthogonal Lie-algebra constructions."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("blocks-nonzero-square-block-decomposition"),
                 DeclarationHandle.Create(Prefix + "nonzero_square_block_decomposition"),
