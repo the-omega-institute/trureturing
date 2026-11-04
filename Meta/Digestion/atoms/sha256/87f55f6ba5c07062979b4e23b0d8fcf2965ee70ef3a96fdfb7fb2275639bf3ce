@@ -1,0 +1,19 @@
+**命题 41.5（局部反例说明缺口不是符号问题）。** 取自旋因子
+\(E=\mathrm{Spin}_m=\mathbb R\oplus\mathbb R^m\)，其导子为向量部分的 \(\mathfrak{so}(m)\) 作用。给任意三形式 \(\varphi\in\Lambda^3(\mathbb R^m)^*\)，令
+
+$$
+\langle F(v,w),t\rangle=\varphi(v,w,t),\qquad
+D_{(s,v)}(t,w)=(0,F(v,w)).
+\tag{41.7}
+$$
+
+每个 \(D_a\) 是 Jordan 导子，且 \(D_a a=0\)，所以 I 与 SC 成立。令 \(m=4\)、\(\varphi=e_1^*\wedge e_2^*\wedge e_3^*\)，并令 \(K\in\mathfrak{so}(4)\) 固定 \(e_1,e_2\) 而送 \(e_3\) 到 \(e_4\)。则
+
+$$
+F(e_1,e_2)=e_3,\qquad
+\mathcal C(K;e_1,e_2)=e_4\ne0.
+\tag{41.8}
+$$
+
+这不是完整原背景反模型：它只证明单个自旋对象上的 I+SC 不足以推出 II。要把它排除，必须在原 \(\Omega\) 的实际联合中证明 (41.5) 的缺陷为零，或证明原范围根本不含这样的对象；二者都没有由定义 41.1 给出。特别地，局部自旋分类不能写成“SC 的全部解只有不变三形式”，而只能写成 (41.7) 的全部三形式。
+
