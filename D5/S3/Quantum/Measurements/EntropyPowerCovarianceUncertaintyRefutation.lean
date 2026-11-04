@@ -7,15 +7,13 @@
    digest: A binary coherent-state mixture violates the covariance-corrected entropy bound. -/
 
 import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
 
-/-! A finite Gaussian-mixture counterexample to the covariance-corrected uncertainty relation. -/
+/-! A finite Gaussian-mixture counterexample to the covariance-corrected uncertainty relation
+of Hertz, Jabbour and Cerf, arXiv:1702.07286v2, Section III.B.
+
+The claim quantifies over finite mixtures of physical one-mode Gaussian Wigner densities.
+This is a subclass of the source's all-state reading. Its refutation concerns mixed states;
+it does not settle the corresponding pure-state or Wigner-entropy conjectures. -/
 
 open MeasureTheory ProbabilityTheory
 open scoped BigOperators NNReal
@@ -83,9 +81,12 @@ private lemma component_factor (u v x p : ℝ) :
     rw [show (1 / 4 : ℝ) = (1 / 2) ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
   have hp := Real.sq_sqrt Real.pi_pos.le
   have hn := (Real.sqrt_pos.2 Real.pi_pos).ne'
-  simp only [gaussianWigner, gaussianPDFReal, NNReal.coe_div, NNReal.coe_one,
+  change (2 * Real.pi * Real.sqrt ((1 / 2) * (1 / 2) - (0 : ℝ) ^ 2))⁻¹ *
+    Real.exp (-((1 / 2) * (x - u) ^ 2 - 2 * 0 * (x - u) * (p - v) +
+      (1 / 2) * (p - v) ^ 2) / (2 * ((1 / 2) * (1 / 2) - (0 : ℝ) ^ 2))) = _
+  simp only [gaussianPDFReal, NNReal.coe_div, NNReal.coe_one,
     NNReal.coe_ofNat]
-  norm_num only [zero_pow, mul_zero, sub_zero, zero_mul, zero_add] 
+  norm_num only [zero_pow, mul_zero, sub_zero, zero_mul, zero_add]
   rw [hs, show 2 * Real.pi * (1 / 2) = Real.pi by ring]
   simp only [div_one]
   rw [show -((1 / 2 : ℝ) * (x - u) ^ 2 + 1 / 2 * (p - v) ^ 2) /
@@ -158,7 +159,8 @@ private lemma gaussian_entropy (m : ℝ) :
     ring
   refine ⟨((hg.const_mul _).sub hp).congr (Filter.Eventually.of_forall
     fun x => (he x).symm), ?_⟩
-  simp only [densityEntropy, he]
+  change -(∫ x, gaussianPDFReal m (1 / 2) x * Real.log (gaussianPDFReal m (1 / 2) x)) = _
+  simp_rw [he]
   rw [integral_sub (hg.const_mul _) hp, integral_const_mul,
     integral_gaussianPDFReal_eq_one _ (by norm_num), hi.2.2.2.2,
     Real.log_mul Real.pi_ne_zero (Real.exp_ne_zero _), Real.log_exp]
@@ -199,7 +201,8 @@ private lemma binary_entropy_bound (f g : ℝ → ℝ)
   dsimp only [Pi.add_apply, Pi.neg_apply] at hi
   rw [integral_neg, integral_add hbase hmix, integral_div, integral_neg, integral_add hfl hgl,
     integral_mul_const, integral_div, integral_add hfi hgi, hfm, hgm] at hi
-  dsimp only [densityEntropy]
+  change -(∫ x, (f x + g x) / 2 * Real.log ((f x + g x) / 2)) ≤
+    (-(∫ x, f x * Real.log (f x)) + -(∫ x, g x * Real.log (g x))) / 2 + Real.log 2
   linarith
 
 private lemma mixture_entropy_integrable (d : ℝ) :
@@ -222,13 +225,14 @@ private lemma mixture_entropy_integrable (d : ℝ) :
     exact div_nonneg (add_nonneg (gaussianPDFReal_nonneg _ _ _)
       (gaussianPDFReal_nonneg _ _ _)) (by norm_num)
   have hupper (x : ℝ) : q d x ≤ 1 := by
-    dsimp only [q]
+    change (gaussianPDFReal d (1 / 2) x + gaussianPDFReal (-d) (1 / 2) x) / 2 ≤ 1
     linarith [hle d x, hle (-d) x]
-  have hmeas : AEStronglyMeasurable (fun x => q d x * Real.log (q d x)) volume := by
-    apply Continuous.aestronglyMeasurable
-    apply Real.Continuous.mul_log
-    unfold q gaussianPDFReal
+  have hcont (m : ℝ) : Continuous (gaussianPDFReal m (1 / 2)) := by
+    change Continuous (fun x : ℝ => (Real.sqrt (2 * Real.pi * (1 / 2)))⁻¹ *
+      Real.exp (-(x - m) ^ 2 / (2 * (1 / 2))))
     fun_prop
+  have hmeas : AEStronglyMeasurable (fun x => q d x * Real.log (q d x)) volume := by
+    exact (Real.Continuous.mul_log (((hcont d).add (hcont (-d))).div_const 2)).aestronglyMeasurable
   apply hmajor.mono' hmeas
   filter_upwards [] with x
   rw [Real.norm_eq_abs, abs_of_nonpos
@@ -239,23 +243,29 @@ private lemma mixture_entropy_integrable (d : ℝ) :
 private lemma marginals (d : ℝ) :
     marginalX (witnessW d) = q d ∧ marginalP (witnessW d) = q d := by
   have hx (x : ℝ) : marginalX (witnessW d) x = q d x := by
-    simp only [marginalX, witnessW, component_factor]
+    change (∫ p, (gaussianWigner d d (1 / 2) 0 (1 / 2) x p +
+      gaussianWigner (-d) (-d) (1 / 2) 0 (1 / 2) x p) / 2) =
+        (gaussianPDFReal d (1 / 2) x + gaussianPDFReal (-d) (1 / 2) x) / 2
+    simp_rw [component_factor]
     rw [integral_div, integral_add
       ((integrable_gaussianPDFReal d (1 / 2)).const_mul _)
       ((integrable_gaussianPDFReal (-d) (1 / 2)).const_mul _),
       integral_const_mul, integral_const_mul,
       integral_gaussianPDFReal_eq_one _ (by norm_num),
       integral_gaussianPDFReal_eq_one _ (by norm_num)]
-    simp only [q, mul_one]
+    simp only [mul_one]
   have hp (p : ℝ) : marginalP (witnessW d) p = q d p := by
-    simp only [marginalP, witnessW, component_factor]
+    change (∫ x, (gaussianWigner d d (1 / 2) 0 (1 / 2) x p +
+      gaussianWigner (-d) (-d) (1 / 2) 0 (1 / 2) x p) / 2) =
+        (gaussianPDFReal d (1 / 2) p + gaussianPDFReal (-d) (1 / 2) p) / 2
+    simp_rw [component_factor]
     rw [integral_div, integral_add
       ((integrable_gaussianPDFReal d (1 / 2)).mul_const _)
       ((integrable_gaussianPDFReal (-d) (1 / 2)).mul_const _),
       integral_mul_const, integral_mul_const,
       integral_gaussianPDFReal_eq_one _ (by norm_num),
       integral_gaussianPDFReal_eq_one _ (by norm_num)]
-    simp only [q, one_mul]
+    simp only [one_mul]
   exact ⟨funext hx, funext hp⟩
 
 private lemma witness_product (d : ℝ) (f g : ℝ → ℝ)
@@ -274,7 +284,10 @@ private lemma witness_product (d : ℝ) (f g : ℝ → ℝ)
         (g r.2 * gaussianPDFReal d (1 / 2) r.2) +
       (f r.1 * gaussianPDFReal (-d) (1 / 2) r.1) *
         (g r.2 * gaussianPDFReal (-d) (1 / 2) r.2)) / 2 := by
-    simp only [witnessW, component_factor]
+    change f r.1 * g r.2 *
+      ((gaussianWigner d d (1 / 2) 0 (1 / 2) r.1 r.2 +
+        gaussianWigner (-d) (-d) (1 / 2) 0 (1 / 2) r.1 r.2) / 2) = _
+    rw [component_factor, component_factor]
     ring
   constructor
   · exact (((hfp.mul_prod hgp).add (hfn.mul_prod hgn)).div_const 2).congr
@@ -315,11 +328,18 @@ private lemma moments (d : ℝ) :
   change meanX (witnessW d) = 0 at hx
   change meanP (witnessW d) = 0 at hp
   refine ⟨hx, hp, ?_, ?_, ?_⟩
-  · simp only [covarianceXX, hx, sub_zero]
+  · change (∫ r : ℝ × ℝ, (r.1 - meanX (witnessW d)) ^ 2 * witnessW d r.1 r.2) = _
+    rw [hx]
+    simp only [sub_zero]
     linarith [hxx]
-  · simp only [covariancePP, hp, sub_zero]
+  · change (∫ r : ℝ × ℝ, (r.2 - meanP (witnessW d)) ^ 2 * witnessW d r.1 r.2) = _
+    rw [hp]
+    simp only [sub_zero]
     linarith [hpp]
-  · simp only [covarianceXP, hx, hp, sub_zero]
+  · change (∫ r : ℝ × ℝ, (r.1 - meanX (witnessW d)) *
+      (r.2 - meanP (witnessW d)) * witnessW d r.1 r.2) = _
+    rw [hx, hp]
+    simp only [sub_zero]
     nlinarith [hxp]
 
 private lemma second_integrable (d : ℝ) :
@@ -371,8 +391,10 @@ theorem result : ¬ claim := by
   have hw : mixtureWigner 2 (fun _ => 1 / 2) m m
       (fun _ => 1 / 2) (fun _ => 0) (fun _ => 1 / 2) = witnessW 6 := by
     funext x p
-    simp only [mixtureWigner, Fin.sum_univ_two, m, Matrix.cons_val_zero,
-      Matrix.cons_val_one, witnessW]
+    change (∑ i : Fin 2, 1 / 2 * gaussianWigner (m i) (m i) (1 / 2) 0 (1 / 2) x p) =
+      (gaussianWigner 6 6 (1 / 2) 0 (1 / 2) x p +
+        gaussianWigner (-6) (-6) (1 / 2) 0 (1 / 2) x p) / 2
+    simp only [Fin.sum_univ_two, m, Matrix.cons_val_zero, Matrix.cons_val_one]
     ring
   have hc := h 2 (fun _ => 1 / 2) m m (fun _ => 1 / 2) (fun _ => 0)
     (fun _ => 1 / 2) (fun _ => by norm_num) (by norm_num [Fin.sum_univ_two])
@@ -387,3 +409,57 @@ theorem result : ¬ claim := by
   linarith
 
 end D5.S3.Quantum.Measurements.EntropyPowerCovarianceUncertaintyRefutation
+
+#print axioms D5.S3.Quantum.Measurements.EntropyPowerCovarianceUncertaintyRefutation.result
+
+open Lean
+
+run_cmd do
+  let moduleName := `D5.S3.Quantum.Measurements.EntropyPowerCovarianceUncertaintyRefutation
+  let artifacts : Lean.NameMap Lean.ImportArtifacts := ({} : Lean.NameMap _).insert moduleName
+    (.ofArrays #[#[".lake/op-hjc-entropy-power/audit-source.olean"], #[]])
+  let env ← Lean.importModules #[{module := moduleName}] {} (arts := artifacts)
+  let some idx := env.getModuleIdx? moduleName | throwError "Missing compiled module index"
+  let claimName := `D5.S3.Quantum.Measurements.EntropyPowerCovarianceUncertaintyRefutation.claim
+  let resultName := `D5.S3.Quantum.Measurements.EntropyPowerCovarianceUncertaintyRefutation.result
+  let some claimInfo := env.find? claimName | throwError "Missing claim"
+  let some resultInfo := env.find? resultName | throwError "Missing result"
+  unless claimInfo.type == Lean.mkSort .zero do throwError "Claim type is not literally Prop"
+  unless resultInfo.type == Lean.mkApp (Lean.mkConst ``Not) (Lean.mkConst claimName) do
+    throwError "Result type is not literally Not claim"
+  logInfo "HJC_LITERAL_TYPES_OK"
+  let owned := env.constants.toList.filter (fun entry => env.getModuleIdxFor? entry.1 == some idx)
+  let mut seen : Lean.NameSet := {}
+  let mut pending := #[`D5.S3.Quantum.Measurements.EntropyPowerCovarianceUncertaintyRefutation.result,
+    `D5.S3.Quantum.Measurements.EntropyPowerCovarianceUncertaintyRefutation.claim]
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if seen.contains name then continue
+    seen := seen.insert name
+    if let some info := env.find? name then
+      pending := pending ++ info.type.getUsedConstants
+      if let some value := info.value? (allowOpaque := true) then
+        pending := pending ++ value.getUsedConstants
+  let missing := owned.filter (fun entry => !seen.contains entry.1)
+  for (name, info) in owned do
+    if !Lean.isPrivateName name then
+      for ref in info.type.getUsedConstants do
+        if Lean.isPrivateName ref && env.getModuleIdxFor? ref == some idx then
+          throwError "Public declaration {name} has private type dependency {ref}"
+  logInfo "HJC_PUBLIC_TYPES_OK"
+  let names := Lean.Json.arr (owned.toArray.map fun entry => Lean.Json.str entry.1.toString)
+  let difference := Lean.Json.arr (missing.toArray.map fun entry => Lean.Json.str entry.1.toString)
+  logInfo m!"HJC_OWNED_JSON {names.compress}"
+  logInfo m!"HJC_DIFFERENCE_JSON {difference.compress}"
+  logInfo m!"HJC_CLOSURE_VISITED {seen.size}"
+  for (name, _) in owned do
+    let consumers := owned.filter fun entry =>
+      let refs := entry.2.type.getUsedConstants ++
+        ((entry.2.value? (allowOpaque := true)).map Lean.Expr.getUsedConstants).getD #[]
+      refs.contains name
+    let row := Lean.Json.mkObj [("name", Lean.Json.str name.toString),
+      ("consumers", Lean.Json.arr (consumers.toArray.map fun entry => Lean.Json.str entry.1.toString))]
+    logInfo m!"HJC_CONSUMER_JSON {row.compress}"
+  unless missing.isEmpty do throwError "Module contains declarations outside the result/claim closure"
+  (throwError "HJC_AUDIT_EXPECTED_STOP" : Lean.Elab.Command.CommandElabM Unit)
