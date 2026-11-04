@@ -141,6 +141,7 @@ private theorem early_quotient (x y t g eta : ℤ)
           2*(4*t^2*(y+1)+t*(6*y-5)+3*y+2) := by
         rw [hm3,hxe4]; dsimp [SW,K,A,B,C]; ring
       rw [he]
+      have hy6 : 0≤6*y-5 := by omega
       positivity
     · rw [hid]
       have hbr : 0≤x-2*g-4*t-2 := by
@@ -211,6 +212,7 @@ private theorem late_quotient (x y t g eta : ℤ)
     nlinarith only [hh,hKhi]
   have hBK : B x y t+1≤K x y t := by
     have he : K x y t-B x y t=(x+1)*(y-t) := by dsimp [K,B,C]; ring
+    have hytpos : 0<y-t := by omega
     have hp : 0<(x+1)*(y-t) := by positivity
     omega
   have hgK : A x y<g*K x y t := by

@@ -70,7 +70,7 @@ private theorem inventory (a b d m : ℕ) (early : Bool)
   simp only [←Multiset.coe_add,Multiset.coe_singleton]
   rw [←hv,←hx]
   cases early <;> dsimp [word,banks,rawBanks,terminals]
-  all_goals simp only [←Multiset.coe_add,Multiset.coe_singleton]
+  all_goals simp only [←Multiset.coe_add,Multiset.coe_singleton,Multiset.coe_cons]
   all_goals ac_rfl
 
 private theorem banks_good (a b d m : ℕ) (early : Bool)
@@ -105,8 +105,7 @@ private theorem raw_masses (a b d m : ℕ) (ha : 2≤a) (hb : 2≤b)
   have mv:=stock_mass a b a d 1 _ hn' f F hf
   have nv:=complement_mass a b a d 1 _ hn' f F hf
   funext r
-  fin_cases r <;> simp only [rawBanks,List.map_append,List.sum_append,
-    Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three]
+  fin_cases r <;> dsimp [rawBanks] <;> simp only [List.map_append,List.sum_append]
   · exact congrArg₂ (·+·) mu mx
   · exact nx
   · exact congrArg₂ (·+·) mw mv
@@ -126,18 +125,20 @@ private theorem label_charge (a b d : ℕ) (ha : 2≤a) (hb : 2≤b) (hd : 2≤d
   rw [he] at hf hg
   by_cases hp : e+1<chainLength a b a d r
   · rw [if_pos hp] at hf hg
-    have hc : 0≤charge b a r := by fin_cases r <;> simp [charge] <;> positivity
+    have hc (j : Fin 4) : 0≤charge b a j := by
+      fin_cases j <;> simp [charge] <;> positivity
     rw [hf,hg]
     have heq : 2*(2^e*base a b a d r)-2^e*newBase a b a d r=
         2^e*charge b a r := by dsimp [newBase]; ring
-    rw [heq]; positivity
+    rw [heq]
+    exact mul_nonneg (by positivity) (hc r)
   · have hei : chainStart b a d r+(chainLength a b a d r-1)=i := by omega
     have hn:=native_masses a b a d ha hb ha hd r
     dsimp only at hn
     rw [hei] at hn
-    have hc : 0≤2*nextBase a b a d r-nextNewBase a b a d r := by
-      fin_cases r <;> dsimp [nextBase,nextNewBase,newBase,charge,base] <;> ring_nf <;> positivity
-    nlinarith only [hn.2.2.1,hn.2.2.2,hc]
+    have hc (j : Fin 4) : 0≤2*nextBase a b a d j-nextNewBase a b a d j := by
+      fin_cases j <;> dsimp [nextBase,nextNewBase,newBase,charge,base] <;> ring_nf <;> positivity
+    nlinarith only [hn.2.2.1,hn.2.2.2,hc r]
 
 private theorem word_split (a b d m : ℕ) (early : Bool) :
     word a b d m early=beforeEar a b d m early++afterEar a b d m early := by
