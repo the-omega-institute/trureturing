@@ -60,7 +60,8 @@ def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@weight_pos) (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Analysis.FermionicRenyiStieltjes.WeightPos.unit
-  realizationName := `Reg.D5.S3.Quantum.Analysis.FermionicRenyiStieltjes.WeightPos.source_registration
+  realizationName :=
+    `Reg.D5.S3.Quantum.Analysis.FermionicRenyiStieltjes.WeightPos.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -175,6 +176,95 @@ def registration :
 #print axioms registration
 
 end WeightIntegrable
+
+namespace StieltjesRepresentation
+
+open _root_.D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining (hRenyi)
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ α σ => fermionicRenyiFunction α σ) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ α σ => fermionicRenyiFunction α σ + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {α σ : ℝ}, 0 < α → α < 1 → |σ| ≤ 1 →
+    IntegrableOn (fun u => fermionicWeight α u * Real.log (1 - u ^ 2 * σ ^ 2))
+      (Ioo 0 1) ∧
+    R.readout () α σ = Real.log 2 +
+      ∫ u in Ioo (0 : ℝ) 1, fermionicWeight α u * Real.log (1 - u ^ 2 * σ ^ 2)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := (h (α := 1 / 2) (σ := 0) (by norm_num) (by norm_num) (by norm_num)).2
+  have ha := (stieltjes_representation (α := 1 / 2) (σ := 0)
+    (by norm_num) (by norm_num) (by norm_num)).2
+  change fermionicRenyiFunction (1 / 2) 0 + 1 = _ at hb
+  linarith
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨2, 0, 1, ?_⟩
+  change fermionicRenyiFunction 2 0 ≠ fermionicRenyiFunction 2 1
+  have hz : fermionicRenyiFunction 2 0 = Real.log 2 := by
+    norm_num [fermionicRenyiFunction, hRenyi, Real.rpow_two, Real.log_div]
+  have ho : fermionicRenyiFunction 2 1 = 0 := by
+    norm_num [fermionicRenyiFunction, hRenyi, Real.rpow_two]
+  rw [hz, ho]
+  exact (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne'
+
+def source_registration : Registration arena (type_of% @stieltjes_representation) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@stieltjes_representation, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@stieltjes_representation) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Analysis.FermionicRenyiStieltjes.StieltjesRepresentation.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Analysis.FermionicRenyiStieltjes.StieltjesRepresentation
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ α σ => fermionicRenyiFunction α σ)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Analysis.FermionicRenyiStieltjes
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end StieltjesRepresentation
 
 end
 end Reg.D5.S3.Quantum.Analysis.FermionicRenyiStieltjes
