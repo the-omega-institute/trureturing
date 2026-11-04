@@ -4,7 +4,7 @@ authors: Haobo Ma; Wenlin Zhang
 year: 2026
 title: "Bala’s parity conjecture and product extensions of his divisibilities (2026): revision 3"
 doi: null
-url: https://github.com/the-omega-institute/trureturing-experiments/releases/tag/outreach-task-shortnote-e3f06e33a1179fd1a53bf8a9fd4b3a7e
+url: https://oeis.org/A295431
 claim: "Corollary 5: five fixed divisibilities of T(n) and two product families with explicit sufficient constants."
 strata_touched:
   - D5/S3/Arith/FactorialRatio/BalaA295431Divisibility
@@ -15,7 +15,8 @@ triage: anchor
 # Actual T divisibilities
 
 Ma and Zhang, revision 3, 4 November 2026, Corollary 5 (`cor:families`)
-and its complete proof. The released `note.tex` has SHA256
+and its complete proof. Supplied release 433788709, tag
+`outreach-task-shortnote-e3f06e33a1179fd1a53bf8a9fd4b3a7e`. The released `note.tex` has SHA256
 `13161dd555043bd323b307643c249bf47281bd7408567b6b752d2dec19d40e18`.
 The six-member source archive has SHA256
 `77d04b7b832ae88438ad00983cab0662884205257eaa7c31bc3879b308883bcb`.
