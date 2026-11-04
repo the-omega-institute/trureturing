@@ -25,7 +25,7 @@ internal sealed class AlternatingPolygonRealSpacesDocument : IScribeDocumentDefi
             Node("stable_finrank", "stable finrank", "For m at least three the actual negative real spectral space has dimension 2*(m-2).", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-real-spaces-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-real-spaces-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

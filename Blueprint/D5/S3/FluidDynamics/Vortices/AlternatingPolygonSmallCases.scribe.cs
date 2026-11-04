@@ -17,7 +17,7 @@ internal sealed class AlternatingPolygonSmallCasesDocument : IScribeDocumentDefi
             Node("small_neutral_drift", "small neutral drift", "Spectral neutrality coexists with a nonzero actual real unbounded drift orbit.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-small-cases-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-small-cases-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

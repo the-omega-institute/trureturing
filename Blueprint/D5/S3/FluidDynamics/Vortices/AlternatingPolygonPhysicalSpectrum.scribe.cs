@@ -29,7 +29,7 @@ internal sealed class AlternatingPolygonPhysicalSpectrumDocument : IScribeDocume
             Node("physical_real_dimensions", "physical real dimensions", "For m at least three, both full physical real spectral spaces have dimension 2*(m-2).", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-physical-spectrum-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-physical-spectrum-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

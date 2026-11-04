@@ -16,7 +16,7 @@ internal sealed class AlternatingPolygonOrientationDocument : IScribeDocumentDef
             Node("derivative_rotation", "derivative rotation", "Differentiating the Cartesian covariance gives the actual derivative intertwining.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-orientation-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-orientation-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

@@ -20,7 +20,7 @@ internal sealed class AlternatingPolygonMultiplicityDocument : IScribeDocumentDe
             Node("complex_root_iff_mode", "complex root iff mode", "Root classification in the complete complex field, before choosing square roots.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-multiplicity-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-multiplicity-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

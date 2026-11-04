@@ -31,7 +31,7 @@ internal sealed class AlternatingPolygonModesDocument : IScribeDocumentDefinitio
             Node("paired_nonzero_semisimple", "paired nonzero semisimple", "No two-dimensional off-diagonal restriction has a nontrivial nonzero Jordan chain. This controls generalized eigenspaces, not just polynomial roots.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-modes-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-modes-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

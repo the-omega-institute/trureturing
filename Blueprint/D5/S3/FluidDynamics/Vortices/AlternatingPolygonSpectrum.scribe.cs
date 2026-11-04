@@ -62,8 +62,8 @@ internal sealed class AlternatingPolygonSpectrumDocument : IScribeDocumentDefini
                     ResolutionKind.Proved)))));
 
     private static DocumentBlock Supplier(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-spectrum-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-spectrum-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 
     private static BlockSequence Proof() => Blocks(
@@ -168,7 +168,7 @@ internal sealed class AlternatingPolygonSpectrumDocument : IScribeDocumentDefini
     }
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-spectrum-" + name), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create("alternating-polygon-spectrum-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static Formula Local(string name) => Qualified("D5", "S3", "FluidDynamics", "Vortices", "AlternatingPolygonSpectrum", name);
     private static Formula LocalCall(string name, params Formula[] args) => At(Local(name), args);

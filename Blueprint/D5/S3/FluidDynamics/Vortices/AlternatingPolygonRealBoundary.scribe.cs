@@ -18,7 +18,7 @@ internal sealed class AlternatingPolygonRealBoundaryDocument : IScribeDocumentDe
             Node("small_spectral_neutrality", "small spectral neutrality", "Dipole and square have no complex eigenvalue with nonzero real part.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-real-boundary-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-real-boundary-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

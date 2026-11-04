@@ -67,8 +67,8 @@ internal sealed class InverseChordCirculantDocument : IScribeDocumentDefinition
                     + "Finally, translating the product index by m and using injectivity of the real inclusion proves the stated real determinant identity.", DescribeRole.Theorem))));
 
     private static DocumentBlock Supplier(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("inverse-chord-circulant-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("inverse-chord-circulant-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula WeightsFormula()

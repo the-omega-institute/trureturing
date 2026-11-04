@@ -20,7 +20,7 @@ internal sealed class AlternatingPolygonJordanDocument : IScribeDocumentDefiniti
             Node("actual_nonzero_semisimple", "actual nonzero semisimple", "Full generalized eigenspaces transport through the actual Fourier similarity; the nonzero restriction argument applies to all complex \\u03bc.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-jordan-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-jordan-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

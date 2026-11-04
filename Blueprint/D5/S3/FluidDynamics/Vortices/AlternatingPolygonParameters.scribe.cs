@@ -38,7 +38,7 @@ internal sealed class AlternatingPolygonParametersDocument : IScribeDocumentDefi
             Node("regular_equilibrium_iff_radius", "regular equilibrium iff radius", "Positive radii identify the square-root radius without a sign ambiguity.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-parameters-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-parameters-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

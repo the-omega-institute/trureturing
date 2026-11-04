@@ -20,7 +20,7 @@ internal sealed class AlternatingPolygonComplexSpectrumDocument : IScribeDocumen
             Node("signed_root_multiplicities", "signed root multiplicities", "Complete nonzero algebraic and geometric multiplicities of both signed roots.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-complex-spectrum-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-complex-spectrum-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }

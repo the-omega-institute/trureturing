@@ -18,7 +18,7 @@ internal sealed class AlternatingPolygonDerivativeDocument : IScribeDocumentDefi
             Node("hasFDerivAt_normalized", "hasFDerivAt normalized", "The canonical normalized matrix is the matrix of this same genuine derivative.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-derivative-" + name),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        Describe.Lean(DescribeId.Create("alternating-polygon-derivative-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 }
