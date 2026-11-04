@@ -147,5 +147,420 @@ def registration :
 #print axioms source_registration
 #print axioms registration
 
+
+/-! A source-faithful dependent reconstruction of `same_matrix_core`. The four-slot escape
+identity remains unestablished; this is an audit attempt, not declared validation. -/
+namespace BoseCore
+universe u v
+
+structure Parameters where
+  I : Type u
+  L : Type v
+  finiteI : Fintype I
+  eqI : DecidableEq I
+  finiteL : Fintype L
+  eqL : DecidableEq L
+  root : I
+  rho : Matrix (L × L) (L × L) ℂ
+  support : pairSymmetricProjector * rho * pairSymmetricProjector = rho
+
+attribute [instance] Parameters.finiteI Parameters.eqI Parameters.finiteL Parameters.eqL
+
+abbrev signature : Signature where
+  Params := Parameters.{u,v}
+  State p := Matrix (p.I → p.L) (p.I → p.L) ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u,v} :=
+  realize signature (fun _ p E => StarExtensionCore p.root p.rho E) (fun e => nomatch e)
+
+def rejected : Realization signature.{u,v} :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature.{u,v}
+  Law R := ∀ {I : Type u} {L : Type v}
+    [fi : Fintype I] [di : DecidableEq I] [fl : Fintype L] [dl : DecidableEq L]
+    (root : I) (rho : Matrix (L × L) (L × L) ℂ)
+    (support : pairSymmetricProjector * rho * pairSymmetricProjector = rho)
+    (E : Matrix (I → L) (I → L) ℂ),
+    R.readout () ⟨I,L,fi,di,fl,dl,root,rho,support⟩ E ↔ CompleteExtensionCore rho E
+
+private lemma zero_complete {I : Type u} {L : Type v}
+    [Fintype I] [DecidableEq I] [Fintype L] [DecidableEq L] :
+    CompleteExtensionCore (0 : Matrix (L × L) (L × L) ℂ)
+      (0 : Matrix (I → L) (I → L) ℂ) := by
+  refine ⟨Matrix.PosSemidef.zero, by simp, ?_⟩
+  · intro a b hab
+    ext x y
+    simp [edgeMarginal,
+      _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight]
+
+private def base : Parameters.{u,v} := {
+  I := ULift.{u} (Fin 2)
+  L := ULift.{v} (Fin 1)
+  finiteI := inferInstance
+  eqI := inferInstance
+  finiteL := inferInstance
+  eqL := inferInstance
+  root := ⟨0⟩
+  rho := 0
+  support := by simp }
+
+private lemma rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  have hz := (h (I := (base.{u,v}).I) (L := (base.{u,v}).L)
+    (base.{u,v}).root (base.{u,v}).rho (base.{u,v}).support 0).mpr
+      (zero_complete (I := (base.{u,v}).I) (L := (base.{u,v}).L))
+  exact hz
+
+private lemma dependence : ObservationalDependence signature.{u,v} actual := by
+  intro i
+  change Unit at i
+  cases i
+  refine ⟨base.{u,v},0,-1,?_⟩
+  intro h
+  have h0 : actual.readout () base 0 :=
+    ( same_matrix_core base.root base.rho base.support 0).mpr zero_complete
+  have hneg : StarExtensionCore base.root base.rho (-1) := Eq.mp h h0
+  have hd := hneg.1.diag_nonneg (i := fun _ => ⟨0⟩)
+  have hr := (RCLike.nonneg_iff.mp hd).1
+  norm_num [Matrix.neg_apply, Matrix.one_apply] at hr
+
+def source_registration : Registration arena.{u,v}
+    (type_of% @_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.same_matrix_core.{u,v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.same_matrix_core,
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j h
+        exact (h (show j = i from @Subsingleton.elim Unit _ j i)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.same_matrix_core.{u,v})
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BoseCore.unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BoseCore.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p E => StarExtensionCore p.root p.rho E)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension
+    definition := none
+    coordinates := #[0,1,2,3,4,5,6,7,8]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","fn","arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+end BoseCore
+
+
+/-! A source-faithful dependent reconstruction of `same_matrix`. The four-slot escape
+identity remains unestablished; this is an audit attempt, not declared validation. -/
+namespace BosePPT
+universe u v
+
+structure Parameters where
+  I : Type u
+  L : Type v
+  finiteI : Fintype I
+  eqI : DecidableEq I
+  finiteL : Fintype L
+  eqL : DecidableEq L
+  root : I
+  rho : Matrix (L × L) (L × L) ℂ
+  support : pairSymmetricProjector * rho * pairSymmetricProjector = rho
+
+attribute [instance] Parameters.finiteI Parameters.eqI Parameters.finiteL Parameters.eqL
+
+abbrev signature : Signature where
+  Params := Parameters.{u,v}
+  State p := Matrix (p.I → p.L) (p.I → p.L) ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u,v} :=
+  realize signature (fun _ p E => StarExtension p.root p.rho E) (fun e => nomatch e)
+
+def rejected : Realization signature.{u,v} :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature.{u,v}
+  Law R := ∀ {I : Type u} {L : Type v}
+    [fi : Fintype I] [di : DecidableEq I] [fl : Fintype L] [dl : DecidableEq L]
+    (root : I) (rho : Matrix (L × L) (L × L) ℂ)
+    (support : pairSymmetricProjector * rho * pairSymmetricProjector = rho)
+    (E : Matrix (I → L) (I → L) ℂ),
+    R.readout () ⟨I,L,fi,di,fl,dl,root,rho,support⟩ E ↔ CompleteExtension rho E
+
+private lemma zero_complete {I : Type u} {L : Type v}
+    [Fintype I] [DecidableEq I] [Fintype L] [DecidableEq L] :
+    CompleteExtension (0 : Matrix (L × L) (L × L) ℂ)
+      (0 : Matrix (I → L) (I → L) ℂ) := by
+  refine ⟨Matrix.PosSemidef.zero, by simp, ?_, ?_⟩
+  · intro a b hab
+    ext x y
+    simp [edgeMarginal,
+      _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight]
+  · intro S hS hp
+    exact Matrix.PosSemidef.zero
+
+private def base : Parameters.{u,v} := {
+  I := ULift.{u} (Fin 2)
+  L := ULift.{v} (Fin 1)
+  finiteI := inferInstance
+  eqI := inferInstance
+  finiteL := inferInstance
+  eqL := inferInstance
+  root := ⟨0⟩
+  rho := 0
+  support := by simp }
+
+private lemma rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  have hz := (h (I := (base.{u,v}).I) (L := (base.{u,v}).L)
+    (base.{u,v}).root (base.{u,v}).rho (base.{u,v}).support 0).mpr
+      (zero_complete (I := (base.{u,v}).I) (L := (base.{u,v}).L))
+  exact hz
+
+private lemma dependence : ObservationalDependence signature.{u,v} actual := by
+  intro i
+  change Unit at i
+  cases i
+  refine ⟨base.{u,v},0,-1,?_⟩
+  intro h
+  have h0 : actual.readout () base 0 :=
+    ( same_matrix base.root base.rho base.support 0).mpr zero_complete
+  have hneg : StarExtension base.root base.rho (-1) := Eq.mp h h0
+  have hd := hneg.1.diag_nonneg (i := fun _ => ⟨0⟩)
+  have hr := (RCLike.nonneg_iff.mp hd).1
+  norm_num [Matrix.neg_apply, Matrix.one_apply] at hr
+
+def source_registration : Registration arena.{u,v}
+    (type_of% @_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.same_matrix.{u,v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.same_matrix,
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j h
+        exact (h (show j = i from @Subsingleton.elim Unit _ j i)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.same_matrix.{u,v})
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BosePPT.unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BosePPT.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p E => StarExtension p.root p.rho E)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension
+    definition := none
+    coordinates := #[0,1,2,3,4,5,6,7,8]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","fn","arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+end BosePPT
+
+
+namespace BoseSupport
+universe u v
+open _root_.D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor
+
+abbrev signature : Signature where
+  Params := BoseCore.Parameters.{u,v}
+  State p := Matrix (p.I → p.L) (p.I → p.L) ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Matrix (p.I → p.L) (p.I → p.L) ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u,v} :=
+  realize signature (fun _ p E => P p.I p.L * E * P p.I p.L) (fun e => nomatch e)
+
+def rejected : Realization signature.{u,v} :=
+  realize signature (fun _ _ E => E + 1) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature.{u,v}
+  Law R := ∀ {I : Type u} {L : Type v}
+    [fi : Fintype I] [di : DecidableEq I] [fl : Fintype L] [dl : DecidableEq L]
+    (root : I) (rho : Matrix (L × L) (L × L) ℂ)
+    (support : pairSymmetricProjector * rho * pairSymmetricProjector = rho)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hm : ∀ i (hi : root ≠ i), edgeMarginal root i hi E = rho),
+    R.readout () ⟨I,L,fi,di,fl,dl,root,rho,support⟩ E = E ∧
+      ∀ a b (hab : a ≠ b), edgeMarginal a b hab E = rho
+
+private def base : BoseCore.Parameters.{u,v} := {
+  I := ULift.{u} (Fin 2)
+  L := ULift.{v} (Fin 1)
+  finiteI := inferInstance
+  eqI := inferInstance
+  finiteL := inferInstance
+  eqL := inferInstance
+  root := ⟨0⟩
+  rho := 0
+  support := by simp }
+
+private lemma zero_marginals :
+    ∀ i (hi : base.root ≠ i), edgeMarginal base.root i hi 0 = base.rho := by
+  intro i hi
+  ext x y
+  simp [base, edgeMarginal,
+    _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight]
+
+private lemma rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  have hz := (h (I := (base.{u,v}).I) (L := (base.{u,v}).L)
+    (base.{u,v}).root (base.{u,v}).rho (base.{u,v}).support 0
+      Matrix.PosSemidef.zero zero_marginals).1
+  have hd := congrArg (fun M => M (fun _ => ⟨0⟩) (fun _ => ⟨0⟩)) hz
+  norm_num [rejected, realize] at hd
+
+private lemma dependence : ObservationalDependence signature.{u,v} actual := by
+  intro i
+  change Unit at i
+  cases i
+  refine ⟨base.{u,v},0,1,?_⟩
+  intro h
+  have hp : P base.I base.L *ᵥ (fun _ => (1 : ℂ)) = fun _ => 1 :=
+    P_mulVec_of_symmetric _ (by intro sigma x; rfl)
+  have hm : (0 : Matrix (base.I → base.L) (base.I → base.L) ℂ) = P base.I base.L := by
+    simpa only [actual, realize, mul_zero, zero_mul, mul_one, P_idempotent] using h
+  have hd := congrArg (fun M => (M *ᵥ (fun _ => (1 : ℂ))) (fun _ => ⟨0⟩)) hm
+  rw [Matrix.zero_mulVec, hp] at hd
+  norm_num at hd
+
+def source_registration : Registration arena.{u,v}
+    (type_of% @_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.support_of_bose_root_marginals.{u,v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.support_of_bose_root_marginals,
+    rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j h
+        exact (h (show j = i from @Subsingleton.elim Unit _ j i)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.support_of_bose_root_marginals.{u,v})
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BoseSupport.unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BoseSupport.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p E => P p.I p.L * E * P p.I p.L)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension
+    definition := none
+    coordinates := #[0,1,2,3,4,5,6,7,8,10,11]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","body","body","fn","arg","fn","arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+end BoseSupport
+
 end
 end Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension

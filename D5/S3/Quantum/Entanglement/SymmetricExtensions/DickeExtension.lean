@@ -10,6 +10,8 @@ import D5.S3.QuantumStates.ZeroWeightSupportFace
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.GroupTheory.Perm.Sign
+import Mathlib.GroupTheory.Perm.ClosureSwap
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
 /-! Actual tensor-factor extension predicates without trace normalization. -/
 
@@ -218,10 +220,10 @@ private lemma dicke_pair_supported {n : ℕ} (Y : Fin n → Fin n → ℝ) :
     simp only [antiPair, smul_mul, sub_mul, one_mul, dicke_operator_flip_left,
       sub_self, smul_zero]
   have hr : dickeOperator Y * antiPair = 0 := by
-    simp only [antiPair, mul_smul, mul_sub, mul_one, dicke_operator_flip_right,
+    simp only [antiPair, Matrix.mul_smul, mul_sub, mul_one, dicke_operator_flip_right,
       sub_self, smul_zero]
   simp only [pairSymmetricProjector, sub_mul, one_mul, mul_sub, mul_one, hl, hr,
-    sub_zero, zero_mul]
+    sub_zero]
 
 private lemma edgeLift_projection (a b : I) (hab : a ≠ b) :
     (edgeLift a b hab (antiPair (L := L)))ᴴ = edgeLift a b hab antiPair ∧
@@ -399,9 +401,56 @@ private lemma all_edges_equal (E : Matrix (I → L) (I → L) ℂ)
   subst b
   exact edge_covariance E hE hcol σ u v huv
 
+/-- Permutations acting trivially on each actual column of an operator. -/
+private def columnStabilizer (E : Matrix (I → L) (I → L) ℂ) :
+    Submonoid (Equiv.Perm I) where
+  carrier := {sigma | ∀ x y, E (x ∘ sigma) y = E x y}
+  one_mem' := by intro x y; rfl
+  mul_mem' := by
+    intro sigma tau hs ht x y
+    change E ((x ∘ sigma) ∘ tau) y = E x y
+    rw [ht, hs]
+
+private lemma columns_fixed_of_reachable (G : SimpleGraph I)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hsupport : ∀ a b (h : G.Adj a b),
+      pairSymmetricProjector * edgeMarginal a b h.ne E * pairSymmetricProjector =
+        edgeMarginal a b h.ne E)
+    {a b : I} (hpath : G.Reachable a b) :
+    Equiv.swap a b ∈ columnStabilizer E := by
+  obtain ⟨p⟩ := hpath
+  induction p with
+  | nil => intro x y; simp
+  | @cons a b c hab p ih =>
+      apply SubmonoidClass.swap_mem_trans (columnStabilizer E) _ ih
+      exact edge_swap_fixed_of_zero_anti_weight a b hab.ne E hE
+        (pair_anti_trace_of_supported _ (hsupport a b hab))
+
+/-- A connected graph of Bose-supported marginals forces full Bose support.
+The equality concerns every ordered pair, including reversed pairs. -/
+theorem support_of_connected_graph (G : SimpleGraph I) (hG : G.Connected)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hsupport : ∀ a b (h : G.Adj a b),
+      pairSymmetricProjector * edgeMarginal a b h.ne E * pairSymmetricProjector =
+        edgeMarginal a b h.ne E) :
+    P I L * E * P I L = E ∧
+      ∀ u v a b (huv : u ≠ v) (hab : a ≠ b),
+        edgeMarginal a b hab E = edgeMarginal u v huv E := by
+  letI : Nonempty I := hG.nonempty
+  let root : I := Classical.arbitrary I
+  have hcol : ∀ y, IsSymmetricVector (fun x => E x y) := by
+    intro y
+    apply symmetric_of_star_swaps root
+    intro i hi x
+    exact columns_fixed_of_reachable G E hE hsupport (hG.preconnected root i) x y
+  exact ⟨support_of_columns E hE.isHermitian hcol,
+    all_edges_equal E hE.isHermitian hcol⟩
+
+#print axioms support_of_connected_graph
+
 /-- Bose-supported root marginals force global Bose support and all ordered marginals.
 No leaf support, normalization, invertibility or partial-transpose premise is used. -/
-theorem support_of_bose_root_marginals [Nontrivial I] (root : I)
+theorem support_of_bose_root_marginals (root : I)
     (ρ : Matrix (L × L) (L × L) ℂ)
     (hρ : pairSymmetricProjector * ρ * pairSymmetricProjector = ρ)
     (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
@@ -416,14 +465,16 @@ theorem support_of_bose_root_marginals [Nontrivial I] (root : I)
     rw [hm i hi]
     exact pair_anti_trace_of_supported ρ hρ
   refine ⟨support_of_columns E hE.isHermitian hcol, ?_⟩
-  obtain ⟨leaf, hleaf⟩ := exists_ne root
   intro a b hab
-  rw [all_edges_equal E hE.isHermitian hcol root leaf a b (Ne.symm hleaf) hab]
-  exact hm leaf (Ne.symm hleaf)
+  by_cases ha : root = a
+  · subst a
+    exact hm b hab
+  · rw [all_edges_equal E hE.isHermitian hcol root a a b ha hab]
+    exact hm a ha
 
 /-- Star and complete no-PPT predicates select exactly the same individual matrices.
 This includes zero and singular matrices and arbitrary unnormalized traces. -/
-theorem same_matrix_core [Nontrivial I] (root : I)
+theorem same_matrix_core (root : I)
     (ρ : Matrix (L × L) (L × L) ℂ)
     (hρ : pairSymmetricProjector * ρ * pairSymmetricProjector = ρ)
     (E : Matrix (I → L) (I → L) ℂ) :
@@ -448,15 +499,18 @@ theorem same_matrix_core [Nontrivial I] (root : I)
       _ = E := hsym
 
 /-- The same individual-matrix equality with every fully PPT condition retained. -/
-theorem same_matrix [Nontrivial I] (root : I)
+theorem same_matrix (root : I)
     (ρ : Matrix (L × L) (L × L) ℂ)
     (hρ : pairSymmetricProjector * ρ * pairSymmetricProjector = ρ)
     (E : Matrix (I → L) (I → L) ℂ) :
     StarExtension root ρ E ↔ CompleteExtension ρ E := by
-  have h := same_matrix_core root ρ hρ E
-  unfold StarExtensionCore CompleteExtensionCore at h
-  unfold StarExtension CompleteExtension
-  tauto
+  constructor
+  · rintro ⟨hE, hleaf, hm, hppt⟩
+    obtain ⟨hE, hsym, hm⟩ := (same_matrix_core root ρ hρ E).mp ⟨hE, hleaf, hm⟩
+    exact ⟨hE, hsym, hm, hppt⟩
+  · rintro ⟨hE, hsym, hm, hppt⟩
+    obtain ⟨hE, hleaf, hm⟩ := (same_matrix_core root ρ hρ E).mpr ⟨hE, hsym, hm⟩
+    exact ⟨hE, hleaf, hm, hppt⟩
 
 #print axioms support_of_bose_root_marginals
 #print axioms same_matrix_core

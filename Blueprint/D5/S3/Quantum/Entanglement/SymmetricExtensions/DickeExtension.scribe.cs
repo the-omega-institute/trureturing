@@ -104,6 +104,19 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "ordered pair of distinct registers. It places no condition on partial transposes and fixes no trace. "
                 + "The original CompleteExtension predicate still includes FullyPPT.",
                 DescribeRole.Definition, false),
+            Node("support_of_connected_graph", "Connected graphs of supported marginals",
+                Seq(Call("Connected", X("G")), Land, Call("PSD", X("E")), Land,
+                    Call("BoseEdges", X("G"), X("E")), Implies,
+                    Call("Bose", X("E")), Land, Call("AllOrderedMarginalsEqual", X("E"))),
+                "For every finite register type and finite local alphabet, each edge of a connected "
+                + "simple graph has its actual two-register marginal supported by the symmetric pair projector. "
+                + "Positivity then forces full Bose support. All ordered marginals are equal, including "
+                + "reversed pairs; the marginal values need not be supplied in advance. The proof inducts "
+                + "over actual graph walks to propagate transposition invariance of every column. "
+                + "This is the Hansenne-Xu-Kraft-Guehne support mechanism, with no new priority claim. "
+                + "Disconnected components, higher-body hypotheses and conjugation-only leaves require "
+                + "their separate bridges; this theorem does not assert them.",
+                DescribeRole.Theorem, true),
             Node("support_of_bose_root_marginals", "Support from arbitrary Bose root marginals",
                 Seq(Call("PSD", X("E")), Land, Call("BosePair", Rho), Land,
                     Open, Forall, X("i"), Neq, X("root"), Comma,
@@ -111,7 +124,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                     Implies, Call("Bose", X("E")), Land,
                     Open, Forall, X("a"), Neq, X("b"), Comma,
                     Call("M", X("a"), X("b"), X("E")), Eq, Rho, Close),
-                "The register type is any nontrivial finite type and the local alphabet is any finite type. "
+                "The register type is any finite type with a chosen root and the local alphabet is any finite type. "
                 + "For a positive semidefinite E, Bose-supported root marginals force full Bose support "
                 + "and equality of all ordered marginals. No leaf support, PPT, strict positivity, inverse, "
                 + "or trace normalization is assumed. The proof lifts zero antisymmetric marginal weight "
@@ -124,7 +137,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 Seq(Call("BosePair", Rho), Implies,
                     Open, Call("StarExtensionCore", X("root"), Rho, X("E")), Iff,
                     Call("CompleteExtensionCore", Rho, X("E")), Close),
-                "For every individual E, on any nontrivial finite register set and finite local alphabet, "
+                "For every individual E, on any finite register set with a chosen root and finite local alphabet, "
                 + "the two no-PPT predicates are equivalent whenever rho is supported by the actual pair "
                 + "symmetric projector. The forward direction obtains full support and all ordered marginals "
                 + "from the root marginals; the reverse uses inclusion of the full symmetric subspace in "
