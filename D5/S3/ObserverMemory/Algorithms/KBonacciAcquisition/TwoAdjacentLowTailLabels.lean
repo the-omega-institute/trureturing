@@ -108,7 +108,7 @@ private theorem response_at (Q m t i : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hi : 
       -((i : ℕ) : ZMod (Q * m + 1)) := by push_cast; ring
   rw [phase, derivative_at Q m i hQ hm (by nlinarith)]
 
-private theorem response_off (Q m t j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
+theorem response_off (Q m t j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
     (ht : t < Q) (hj : j ≤ Q * m) (off : j < t * m ∨ (t + 1) * m < j) (B : Fin m → Bool) :
     wordIncrement (Q * m) (-((j : ℕ) : ZMod (Q * m + 1)) + ((t * m : ℕ) : ZMod (Q * m + 1))) B = 0 := by
   have short : m < Q * m := by nlinarith
