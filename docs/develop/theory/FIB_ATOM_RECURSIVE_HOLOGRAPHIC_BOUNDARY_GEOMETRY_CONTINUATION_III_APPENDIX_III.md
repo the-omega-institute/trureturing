@@ -1738,7 +1738,7 @@ s_\lambda(x,y)=\frac{(\tau g(x)+q(x))(\tau g(y)+q(y))}{4\tau}
 \tag{145.6}
 $$
 
-and positive diagonal congruence give at most $\kappa$ negative squares for the last kernel. Use $\mathcal H_-=T_{d/2}L^2_-$ with its inverse-heat norm, restricted to $F$, exactly as in (137.2). Its kernel is nonsingular by (137.4). Every member of $\mathcal H_-$ and every sum of two products of its members is analytic on $\Omega$. Thus $A_0^*$ is a uniqueness set for both classes: apply Mityagin, [*The zero set of a real analytic function*, Proposition 0](https://arxiv.org/html/1512.07276v1), to real and imaginary parts, using local equivalence of $m$ and Lebesgue measure. These are both uniqueness hypotheses of Agler--Young, [*Functions which are almost multipliers of Hilbert function spaces*, Theorem 2.1](https://arxiv.org/html/math/9605224v1#S2.Thmtheorem1).
+and positive diagonal congruence give at most $\kappa$ negative squares for the last kernel. Repeated points follow by pullback from a distinct-point matrix; the real symmetric matrices have the same real and complex Hermitian inertia. Use $\mathcal H_-=T_{d/2}L^2_-$ with its inverse-heat norm, restricted to $F$, exactly as in (137.2). Its kernel is nonsingular by (137.4). Every member of $\mathcal H_-$ and every sum of two products of its members is analytic on $\Omega$. Thus $A_0^*$ is a uniqueness set for both classes: apply Mityagin, [*The zero set of a real analytic function*, Proposition 0](https://arxiv.org/html/1512.07276v1), to real and imaginary parts, using local equivalence of $m$ and Lebesgue measure. These are both uniqueness hypotheses of Agler--Young, [*Functions which are almost multipliers of Hilbert function spaces*, Theorem 2.1](https://arxiv.org/html/math/9605224v1#S2.Thmtheorem1).
 
 That theorem, with its kernel parameter equal to $1$, gives a closed finite-codimensional $W_\tau\subset\mathcal H_-$ and a bounded $L_\tau:W_\tau\to\mathcal H_-$ satisfying $L_\tau u=\gamma_\tau u$ on $A_0^*$. Analytic uniqueness extends the product identity to all of $\Omega$:
 
@@ -1756,7 +1756,7 @@ $$
 \gamma=0\quad\text{on its null complement},\qquad |\gamma|\le1.
 $$
 
-All possible zeros of the signed denominators have been handled before this step. Zeros of $g+q$ after the deduction $q\ge0$ lie in $\{g=0\}$, which is null. With $\tau=1$, (145.7) gives $L_1u=\gamma u$ globally as $L^2(m)$ classes. Here no global lower bound on $g+q$ is used.
+A zero of a signed denominator with $g>0$ forces the common orbit vanishing in (145.7). After the deduction $q\ge0$, all zeros of $g+q$ lie in $\{g=0\}$, which is null. With $\tau=1$, (145.7) gives $L_1u=\gamma u$ globally as $L^2(m)$ classes. Here no global lower bound on $g+q$ is used.
 
 For clarity, the operator steps of (137.8)--(137.13) now have the following global premises. The space
 
