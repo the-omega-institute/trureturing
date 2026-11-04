@@ -262,8 +262,8 @@ private lemma positive_norm [FiniteDimensional ℝ E] (β : E →ₗ[ℝ] ℝ)
       · simpa using A.zero_mem
       · exact A.cone.add_mem A.unit_mem A.unit_mem
     have hb := (A.functional β).le_opNorm_of_le hu
-    change |β A.unit| ≤ ‖A.functional β‖ at hb
-    simpa only [abs_of_nonneg hm] using hb
+    change ‖β A.unit‖ ≤ ‖A.functional β‖ * 1 at hb
+    simpa only [mul_one, Real.norm_eq_abs, abs_of_nonneg hm] using hb
 
 private lemma positive_unital_contraction (T : E →ₗ[ℝ] E)
     (hT : ∀ v ∈ A.cone, T v ∈ A.cone) (hunit : T A.unit = A.unit) (v : E) :

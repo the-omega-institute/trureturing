@@ -18,7 +18,7 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(F.Disp(CoreStatement())),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("The displayed norm laws apply to the copy of E with norm n. They are proved rather than supplied as an extra hypothesis. The interior-unit assumption makes B a neighborhood of zero and hence absorbent. Each S(v) is nonempty, closed and bounded below by zero, so its infimum is attained.")),
+                    Paragraph(Text("The symbols R and Types denote the real scalars and the type universe. ConeUnitData denotes precisely the original cone and unit data stated above. The displayed norm laws apply to the copy of E with norm n; this first assertion does not require finite dimension. They are proved rather than supplied as an extra hypothesis. The interior-unit assumption makes B a neighborhood of zero and hence absorbent. Each S(v) is nonempty, closed and bounded below by zero, so its infimum is attained.")),
                     Paragraph(Text("The symmetric interval is convex and balanced. Its gauge equals n exactly: every positive gauge radius is an order radius, and every radius just above the attained order radius is a positive gauge radius. This includes v=0, where S(0) contains its infimum zero although the gauge uses strictly positive radii. Mathlib's gaugeSeminorm supplies the seminorm laws. At n(v)=0 the attained inequalities put v and -v in C, so salience supplies definiteness.")))),
             Describe.Lean(
                 DescribeId.Create("original-order-unit-norm-interface"),
@@ -27,7 +27,7 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(F.Disp(InterfaceStatement())),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Here j is the canonical linear wrapping map to the copy E_u, and H_u is defined solely by H_u(j(v))=j(H(v)). The constructed copy is complete. The wrapping map and its inverse are continuous in the original finite-dimensional topology; no equality with the auxiliary ambient norm is asserted.")),
+                    Paragraph(Text("PositiveDual denotes all original real-linear functionals nonnegative on C, and Effects denotes all x with x and u-x in C. RealEndomorphisms denotes all original real-linear maps E to E. The notation K abbreviates the norm of the square of the transported operator, and IsLeast includes membership in the displayed bound set as well as its minimality. Here j is the canonical linear wrapping map to the copy E_u, and H_u is defined solely by H_u(j(v))=j(H(v)). The constructed copy is complete. The wrapping map and its inverse are continuous in the original finite-dimensional topology; no equality with the auxiliary ambient norm is asserted.")),
                     Paragraph(Text("For every positive original real-linear functional beta, its evaluation is bounded by its mass beta(u) times n(v). Applying beta to the attained endpoint inequalities proves this without dividing by its mass. Thus mass zero forces the original functional to vanish. The operator norm of beta transported to E_u is exactly beta(u), including in dimension zero.")),
                     Paragraph(Text("The square H_u squared acts on j(v) as j(H(H(v))). Its operator norm is exactly the infimum of all nonnegative c satisfying n(H(H(v))) at most c n(v) for every original v. This infimum is attained. Neither an ambient operator bound nor the square of the norm of H is substituted for this number.")),
                     Paragraph(Text("A positive unital linear map contracts n. A linear equivalence whose inverse is also positive is an isometry; positivity and unitality alone do not imply isometry. Applying this conclusion to exp(tH) uses both the assumed positivity at t and at -t. Conjugation by j carries the actual exponential to exp(tH_u).")),
@@ -38,18 +38,22 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
     private static Formula CoreStatement()
     {
         var n = Id("n"); var v = Id("v"); var w = Id("w"); var a = Id("a");
-        return All("v", Id("E"), And(
+        var laws = All("v", Id("E"), And(
             Le(F.D(0), Apply(n, v)),
             Iff(Eq(Apply(n, v), F.D(0)), Eq(v, F.D(0))),
-            All("a", F.R, Eq(Apply(n, Scale(a, v)), Mul(Call("abs", a), Apply(n, v)))),
-            All("w", Id("E"), Le(Apply(n, Add(v, w)), Add(Apply(n, v), Apply(n, w))))));
+            All("a", Id("R"), Eq(Apply(n, Scale(a, v)),
+                Mul(Call("abs", a), Apply(n, v)))),
+            All("w", Id("E"), Le(Apply(n, Add(v, w)),
+                Add(Apply(n, v), Apply(n, w))))));
+        return All("E", Id("Types"), Implies(Call("RealNormedVectorSpace", Id("E")),
+            All("A", Call("ConeUnitData", Id("E")), laws)));
     }
 
     private static Formula InterfaceStatement()
     {
         var v=Id("v"); var x=Id("x"); var t=Id("t"); var beta=Id("beta");
-        var u=Id("u"); var j=Id("j"); var H=Id("H"); var Hu=Id("H_u");
-        var B=Id("B"); var C=Id("C"); var Eu=Id("E_u"); var K=Id("K");
+        var u=Id("u"); var j=Id("j"); var H=Id("H"); var Hu=Id("Hu");
+        var B=Id("B"); var C=Id("C"); var Eu=Id("Eu"); var K=Id("K");
         Formula N(Formula y) => Call("n", y);
         Formula Orbit(Formula y) => Apply(Call("exp", Scale(t, H)), y);
         var first=All("v", Id("E"), And(
@@ -68,16 +72,22 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
             Eq(Apply(Hu,Apply(Hu,Apply(j,v))),Apply(j,Apply(H,Apply(H,v))))));
         var coefficient=And(Eq(K,Call("norm",Call("square",Hu))),
             Eq(K,Call("inf",bounds)),Call("IsLeast",bounds,K));
-        var transport=All("t",F.R,All("v",Id("E"),
+        var transport=All("t",Id("R"),All("v",Id("E"),
             Eq(Apply(Call("exp",Scale(t,Hu)),Apply(j,v)),Apply(j,Orbit(v)))));
         var group=Implies(Call("PositiveUnitalAtEveryRealTime",H,C,u),And(
-            All("t",F.R,All("v",Id("E"),Eq(N(Orbit(v)),N(v)))),
+            All("t",Id("R"),All("v",Id("E"),Eq(N(Orbit(v)),N(v)))),
             Implies(Eq(Apply(H,u),F.D(0)),
                 All("beta",Id("PositiveDual"),All("x",Id("Effects"),
-                    All("t",F.R,Le(Call("abs",Apply(beta,Orbit(Apply(H,Apply(H,x))))),
+                    All("t",Id("R"),Le(Call("abs",Apply(beta,Orbit(Apply(H,Apply(H,x))))),
                         new Formula.Fraction(Mul(Apply(beta,u),K),F.D(2)))))))));
-        return And(first,Call("Complete",Eu),Call("Continuous",j),Call("Continuous",Call("inverse",j)),
-            dual,action,coefficient,Call("PositiveUnitalInverseIsometry",C,u,Id("n")),transport,group);
+        return All("E", Id("Types"),
+            Implies(Call("FiniteDimensionalRealNormedSpace", Id("E")),
+                All("A", Call("ConeUnitData", Id("E")), And(
+                    first, Call("Complete",Eu), Call("Continuous",j),
+                    Call("Continuous",Call("inverse",j)), dual,
+                    All("H", Call("RealEndomorphisms", Id("E")),
+                        And(action, coefficient, transport, group)),
+                    Call("PositiveUnitalInverseIsometry",C,u,Id("n"))))));
     }
 
     private static Formula Id(string s)=>F.Id(s);
@@ -86,9 +96,9 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
     private static Formula All(string s,Formula type,Formula body)=>new Formula.Bind(
         FormulaQuantifier.ForAll,FormulaIdentifier.Create(s),type,body);
     private static Formula Eq(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.Equal,b);
-    private static Formula Le(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessOrEqual,b);
-    private static Formula Add(Formula a,Formula b)=>new Formula.Infix(a,FormulaBinaryOperator.Add,b);
-    private static Formula Mul(Formula a,Formula b)=>new Formula.Infix(a,FormulaBinaryOperator.Multiply,b);
+    private static Formula Le(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
+    private static Formula Add(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Add,b);
+    private static Formula Mul(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Multiply,b);
     private static Formula Scale(Formula a,Formula b)=>Call("smul",a,b);
     private static Formula Implies(Formula a,Formula b)=>new Formula.Logic(a,FormulaLogicOperator.Implies,b);
     private static Formula Iff(Formula a,Formula b)=>new Formula.Logic(a,FormulaLogicOperator.Iff,b);
