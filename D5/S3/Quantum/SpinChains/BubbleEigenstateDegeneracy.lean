@@ -10,7 +10,17 @@ module
 
 public import D5.S3.Combinatorics.Geometry.MiuraRunCompositions
 
-/-! Labelled placements of separated three-site bubbles on a periodic chain. -/
+/-!
+The bubble-state count of Mukherjee, Banerjee, Sengupta and Sen, arXiv:2106.14897v3,
+is the number of labelled placements of three-site units separated by two down spins.
+Here the sites are `Fin L`, and both clockwise distances between distinct centres are at least
+five. Translations are counted separately. The source's identification with Hamiltonian
+eigenstates is outside this counting statement.
+
+Marking a centre converts the cyclic gaps to positive lengths summing to `L - 4 * n`.
+The resulting bijection, the label count, and the empty placement give the closed form for
+`L ≥ 5`. In particular, the natural-number division in its placement coefficient is exact.
+-/
 
 @[expose] public section
 
@@ -81,7 +91,7 @@ private lemma packing_bound (L : ℕ) (hL : 5 ≤ L) (B : Finset (Fin L))
 private def gapPrefix {n : ℕ} (f : Fin n → ℕ) (i : ℕ) : ℕ :=
   ∑ j : Fin n with j.val < i, (f j + 4)
 
-private lemma gapPrefix_step {n : ℕ} (f : Fin n → ℕ) (i : Fin n) :
+private lemma gap_prefix_step {n : ℕ} (f : Fin n → ℕ) (i : Fin n) :
     gapPrefix f (i.val + 1) = gapPrefix f i.val + f i + 4 := by
   classical
   have hs : (Finset.univ.filter (fun j : Fin n => j.val < i.val + 1)) =
@@ -96,7 +106,7 @@ private lemma gapPrefix_step {n : ℕ} (f : Fin n → ℕ) (i : Fin n) :
   change f i + 4 + gapPrefix f i.val = _
   omega
 
-private lemma gapPrefix_top {n : ℕ} (f : Fin n → ℕ) :
+private lemma gap_prefix_top {n : ℕ} (f : Fin n → ℕ) :
     gapPrefix f n = (∑ i, f i) + 4 * n := by
   have hs : (Finset.univ.filter (fun j : Fin n => j.val < n)) = Finset.univ :=
     Finset.filter_true_of_mem (fun j _ => j.isLt)
@@ -123,13 +133,13 @@ private lemma boundary_composition (L n : ℕ) (s : Fin (n + 1) → ℕ)
         Finset.sum_empty, Fin.val_zero] using hz.symm
     | succ i ih =>
       simp only [Fin.val_castSucc] at ih
-      rw [Fin.val_succ, gapPrefix_step, ih]
+      rw [Fin.val_succ, gap_prefix_step, ih]
       have h := hs i
       dsimp only [f]
       omega
   have hsum : ∑ i, f i = L - 4 * n := by
     have h := he (Fin.last n)
-    rw [Fin.val_last, gapPrefix_top, ht] at h
+    rw [Fin.val_last, gap_prefix_top, ht] at h
     omega
   refine ⟨⟨f, hf, hsum⟩, he, ?_⟩
   intro g hg
@@ -138,12 +148,12 @@ private lemma boundary_composition (L n : ℕ) (s : Fin (n + 1) → ℕ)
   have hgi := hg i.castSucc
   have hgj := hg i.succ
   simp only [Fin.val_castSucc] at hgi
-  rw [Fin.val_succ, gapPrefix_step, hgi] at hgj
+  rw [Fin.val_succ, gap_prefix_step, hgi] at hgj
   change g.val i = f i
   dsimp only [f]
   omega
 
-private lemma composition_gapPrefix (L n : ℕ) (hbound : 5 * n ≤ L)
+private lemma composition_gap_prefix (L n : ℕ) (hbound : 5 * n ≤ L)
     (f : PositiveLengths (L - 4 * n) n) :
     gapPrefix f.val 0 = 0 ∧ gapPrefix f.val n = L ∧
       (∀ i : Fin n, gapPrefix f.val i.val + 5 ≤ gapPrefix f.val (i.val + 1)) ∧
@@ -151,10 +161,10 @@ private lemma composition_gapPrefix (L n : ℕ) (hbound : 5 * n ≤ L)
   have hz : gapPrefix f.val 0 = 0 := by
     simp only [gapPrefix, Nat.not_lt_zero, Finset.filter_false, Finset.sum_empty]
   have ht : gapPrefix f.val n = L := by
-    rw [gapPrefix_top, f.property.2]
+    rw [gap_prefix_top, f.property.2]
     omega
   have hs (i : Fin n) : gapPrefix f.val i.val + 5 ≤ gapPrefix f.val (i.val + 1) := by
-    rw [gapPrefix_step]
+    rw [gap_prefix_step]
     have hp := f.property.1 i
     omega
   refine ⟨hz, ht, hs, Fin.strictMono_iff_lt_succ.mpr ?_⟩
@@ -196,7 +206,7 @@ private lemma admissible_translate (L : ℕ) [NeZero L] (B : Finset (Fin L)) (a 
 
 private def rootedEmbedding (L n : ℕ) (hbound : 5 * n ≤ L)
     (f : PositiveLengths (L - 4 * n) n) : Fin n ↪o Fin L := by
-  have hp := composition_gapPrefix L n hbound f
+  have hp := composition_gap_prefix L n hbound f
   refine OrderEmbedding.ofStrictMono
     (fun i => ⟨gapPrefix f.val i.val, ?_⟩) ?_
   · have h := hp.2.2.2 i.castSucc_lt_last
@@ -215,7 +225,7 @@ private lemma rooted_properties (L n : ℕ) [NeZero L] (hn : 1 ≤ n)
     (rootedSet L n hbound f).card = n ∧
       Admissible L (rootedSet L n hbound f) ∧ 0 ∈ rootedSet L n hbound f := by
   classical
-  have hp := composition_gapPrefix L n hbound f
+  have hp := composition_gap_prefix L n hbound f
   refine ⟨?_, ?_, ?_⟩
   · change (Finset.univ.map (rootedEmbedding L n hbound f).toEmbedding).card = n
     rw [Finset.card_map, Finset.card_univ, Fintype.card_fin]
@@ -248,8 +258,8 @@ private lemma rooted_properties (L n : ℕ) [NeZero L] (hn : 1 ≤ n)
 private lemma rooted_injective (L n : ℕ) (hbound : 5 * n ≤ L) :
     Function.Injective (rootedSet L n hbound) := by
   intro f g hfg
-  have hp := composition_gapPrefix L n hbound f
-  have hq := composition_gapPrefix L n hbound g
+  have hp := composition_gap_prefix L n hbound f
+  have hq := composition_gap_prefix L n hbound g
   have hc : (rootedSet L n hbound f).card = n := by
     change (Finset.univ.map (rootedEmbedding L n hbound f).toEmbedding).card = n
     rw [Finset.card_map, Finset.card_univ, Fintype.card_fin]
@@ -270,7 +280,7 @@ private lemma rooted_injective (L n : ℕ) (hbound : 5 * n ≤ L) :
     · exact hval ⟨i.val + 1, hi⟩
     · have hi' : i.val + 1 = n := by omega
       rw [hi', hp.2.1, hq.2.1]
-  rw [gapPrefix_step, gapPrefix_step, hval i] at hs
+  rw [gap_prefix_step, gap_prefix_step, hval i] at hs
   omega
 
 private lemma rooted_surjective (L n : ℕ) [NeZero L] (hL : 5 ≤ L) (hn : 1 ≤ n)
