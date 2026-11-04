@@ -104,7 +104,7 @@ internal sealed class JointRewardFiberCatalogDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("joint-reward-completesupport"),
                 DeclarationHandle.Create(Owner + "completeSupport"), H("Complete support before anchor subtraction"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every L, stop and full score y, completeSupport is the supremum of scheduleReward over every original empty, singleton and distinct ordered pair schedule and every cell-label table. This finite range is exactly the maximization over all cell maxima and schedules in Definition 213.1. The empty cells added for short and stopped tables contribute zero."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("For every L, stop and full score y, completeSupport is the supremum of fullReward over every whole output function in the original Catalog stop L. The exact Catalog range and cell-sum identities equate it to the supremum of scheduleReward over every empty, singleton and distinct ordered pair schedule with unrestricted cell labels. This finite range is exactly the maximization over all cell maxima and schedules in Definition 213.1. The empty cells added for short and stopped tables contribute zero."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("joint-reward-anchor"),
                 DeclarationHandle.Create(Owner + "anchor"), H("The original head-pair anchor"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
