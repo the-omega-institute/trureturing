@@ -11,12 +11,15 @@ import D5.S3.Analytic.Zeta.PrimeQuadraticLValues
 import D5.S3.Analytic.Zeta.NumberField.ZetaProductFactorization
 import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
 import Mathlib.RingTheory.Ideal.Int
+import Mathlib.Data.Sigma.Basic
 
 namespace D5.S3.Analytic.Zeta.QuadraticZetaFactorization
 
 open scoped BigOperators NumberField
 
 noncomputable section
+
+local instance (ℓ : Nat.Primes) : Fact (ℓ : ℕ).Prime := ⟨ℓ.2⟩
 
 /-- Nonzero maximal-order prime ideals, partitioned by their actual contraction to Z.
 This equivalence includes ramified primes. -/
@@ -38,11 +41,7 @@ def primeIdealsOverEquiv (K : Type*) [Field K] [NumberField K] :
       rw [← Ideal.over_def (p := Ideal.span {(q.1 : ℤ)}) (P := q.2.1),
         Ideal.absNorm_span_natCast]
       simp
-    apply Sigma.ext
-    · exact Subtype.ext hℓ
-    · apply heq_of_eq_rec_eq
-      apply Subtype.ext
-      rfl
+    exact Sigma.subtype_ext (Subtype.ext hℓ) rfl
   right_inv P := Subtype.ext rfl
 
 /-- Genuine convergent regrouping of the Dedekind Euler product by rational primes.

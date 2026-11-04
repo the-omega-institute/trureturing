@@ -8,6 +8,7 @@
 
 import D5.S3.Analytic.Zeta.QuadraticZetaFactorization
 import D5.S3.Arith.QuadraticFields.QuadraticImaginaryInvariants
+import Mathlib.Tactic.FinCases
 
 namespace D5.S3.Arith.QuadraticFields.QuadraticOrderMaximal.PrimeImaginary
 
@@ -97,5 +98,72 @@ theorem quadraticExcess_sq_classNumber (hp : 3 < p) :
       (2 - (legendreSym p 2 : ℂ)) ^ 2 * (NumberField.classNumber (Field p) : ℂ) ^ 2 := by
     rw [hc', mul_pow, LFunction_zero_sq_classNumber p hp]
   exact_mod_cast heq
+
+/-- Least representatives identify the excess with its literal finite positive interval;
+the additional index zero contributes zero. -/
+theorem quadraticExcess_eq_range :
+    quadraticExcess p =
+      ∑ j ∈ Finset.range ((p - 1) / 2 + 1), legendreSym p (j : ℤ) := by
+  classical
+  have hp0 := (Fact.out : p.Prime).pos
+  unfold quadraticExcess
+  rw [← Finset.sum_filter]
+  refine Finset.sum_bij (fun x _ => x.val) ?_ ?_ ?_ ?_
+  · intro x hx
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hx
+    exact Finset.mem_range.mpr (by omega)
+  · intro x _ y _ h
+    exact ZMod.val_injective p h
+  · intro j hj
+    have hj' := Finset.mem_range.mp hj
+    have hjp : j < p := by omega
+    refine ⟨(j : ZMod p), ?_, ZMod.val_cast_of_lt hjp⟩
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, ZMod.val_cast_of_lt hjp]
+    omega
+  · intro x _
+    simp [legendreSym]
+
+/-- Every nonzero lower-half character value is odd, so the excess has the parity
+of the interval length. In this prime family that length is odd. -/
+theorem quadraticExcess_mod_two : (quadraticExcess p : ZMod 2) = 1 := by
+  have hp4 : p % 4 = 3 := Fact.out
+  have hn : ((p - 1) / 2) % 2 = 1 := by omega
+  have hterm (i : ℕ) (hi : i ∈ Finset.range ((p - 1) / 2)) :
+      (legendreSym p ((i + 1 : ℕ) : ℤ) : ZMod 2) = 1 := by
+    have hi' := Finset.mem_range.mp hi
+    have hip : i + 1 < p := by omega
+    have hiz : ((i + 1 : ℕ) : ZMod p) ≠ 0 := by
+      intro h
+      have hv := congrArg ZMod.val h
+      rw [ZMod.val_cast_of_lt hip, ZMod.val_zero] at hv
+      omega
+    rcases legendreSym.eq_one_or_neg_one p (a := ((i + 1 : ℕ) : ℤ))
+      (by simpa using hiz) with h | h <;> rw [h] <;> norm_num
+  rw [quadraticExcess_eq_range, Int.cast_sum, Finset.sum_range_succ']
+  simp only [Nat.cast_zero, legendreSym.at_zero, Int.cast_zero, add_zero]
+  calc
+    _ = ∑ _i ∈ Finset.range ((p - 1) / 2), (1 : ZMod 2) :=
+      Finset.sum_congr rfl hterm
+    _ = (((p - 1) / 2 : ℕ) : ZMod 2) := by simp
+    _ = 1 := by rw [← ZMod.natCast_mod ((p - 1) / 2) 2, hn]; norm_num
+
+/-- Oddness of the genuine maximal-order class number follows from the proved
+squared bridge and the parity of the finite interval. -/
+theorem classNumber_odd (hp : 3 < p) : Odd (NumberField.classNumber (Field p)) := by
+  have hp2 : p ≠ 2 := by omega
+  have htwo : (2 : ZMod p) ≠ 0 :=
+    Ring.two_ne_zero ((ZMod.ringChar_zmod_n p).substr hp2)
+  have hcoef : (((2 - legendreSym p 2 : ℤ) : ZMod 2)) = 1 := by
+    rcases legendreSym.eq_one_or_neg_one p (a := 2) (by simpa using htwo) with h | h <;>
+      rw [h] <;> norm_num
+  have h := congrArg (fun z : ℤ => (z : ZMod 2)) (quadraticExcess_sq_classNumber p hp)
+  simp only [Int.cast_pow, Int.cast_mul, Int.cast_natCast] at h
+  rw [quadraticExcess_mod_two, hcoef, one_pow, one_mul] at h
+  have hsq (x : ZMod 2) : x ^ 2 = x := by fin_cases x <;> norm_num
+  rw [hsq] at h
+  apply Nat.odd_iff.mpr
+  have hh := (ZMod.natCast_eq_natCast_iff'
+    (NumberField.classNumber (Field p)) 1 2).mp (by simpa using h.symm)
+  simpa using hh
 
 end D5.S3.Arith.QuadraticFields.QuadraticOrderMaximal.PrimeImaginary
