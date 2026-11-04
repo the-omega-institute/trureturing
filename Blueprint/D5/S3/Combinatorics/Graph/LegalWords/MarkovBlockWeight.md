@@ -52,4 +52,3 @@ This is the explicit-minor arithmetic for an interior block with both exterior o
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/MarkovBlockWeight.persistent_mixture_minor`
 - Dependency: [D5/S1/Words/AdmissibleWords/AdmissibleCount](../../../../S1/Words/AdmissibleWords/AdmissibleCount.md)
 - Dependency: [D5/S3/Quantum/Entanglement/PhaseHistoryBound](../../../Quantum/Entanglement/PhaseHistoryBound.md)
-- Dependency: [D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant](../../../Quantum/FockSpace/ForbiddenNeighbourDeterminant.md)
