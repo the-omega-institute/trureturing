@@ -143,10 +143,13 @@ private theorem record_tail_square_error {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
   let H := ∑ p ∈ m.primeFactors.filter (fun p => 2 ≤ m.factorization p), layerTail m p
   have hQ0 : 0 < Q := by
     have hQ1 : 1 ≤ layerPrime m 2 := le_max_left _ _
+    dsimp [Q]
     exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hQ1)
   have he (p : ℕ) (hp : p ∈ S) : 0 ≤ e p ∧ e p ≤ 1 / Q ^ 4 := by
     obtain ⟨hpI, hprime⟩ := mem_filter.mp hp
-    have hpQ : Q ≤ (p : ℝ) := by exact_mod_cast (mem_Ioc.mp hpI).1.le
+    have hpQ : Q ≤ (p : ℝ) := by
+      dsimp [Q]
+      exact_mod_cast (mem_Ioc.mp hpI).1.le
     exact ⟨(square_log_error hprime).1, (square_log_error hprime).2.trans
       (one_div_le_one_div_of_le (pow_pos hQ0 4)
         (pow_le_pow_left₀ hQ0.le hpQ 4))⟩
@@ -222,7 +225,7 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
       simpa only [mul_one] using hR.const_mul 2
     apply (htwo.pos_mul_atTop (by norm_num) hP).congr'
     filter_upwards [hP.eventually_gt_atTop 0] with x hx
-    dsimp [R]
+    dsimp [R, P]
     field_simp [hx.ne']
     <;> ring
   have hQ : Tendsto Q l atTop :=
@@ -233,7 +236,7 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
     simpa only [Real.log_one] using hR.log (by norm_num : (1 : ℝ) ≠ 0)
   have hsquare : ∀ᶠ x in l, s x ^ 2 = 2 * R x := by
     filter_upwards [hP.eventually_gt_atTop 0] with x hx
-    dsimp [s, R]
+    dsimp [s, R, P]
     rw [div_pow, Real.sq_sqrt hx.le]
     field_simp [hx.ne']
     <;> ring
@@ -291,7 +294,7 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
     have hid : L x - 2 * H x = -(c + Real.log (R x)) := by linarith
     calc
       -(B x * (c + Real.log (R x))) = B x * (L x - 2 * H x) := by rw [hid]; ring
-      _ = L x * (B x - 2) := by dsimp [B]; field_simp [hh.ne']; ring
+      _ = L x * (B x - 2) := by dsimp [B]; field_simp [hh.ne']
   have hmain : Tendsto
       (fun x => L x * (Real.sqrt (P x) * L x / (Q x * H x) - k))
       l (𝓝 (-k * c / 2)) := by
@@ -314,7 +317,7 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
           (L x * (B x - k * s x)) / s x := by
         congr 1
         nlinarith [congrArg (fun t : ℝ => L x * t) hk2]
-      _ = L x * (B x / s x - k) := by field_simp [hsne]; ring
+      _ = L x * (B x / s x - k) := by field_simp [hsne]
   have hsecond : Tendsto (fun x => K x / (Q x * H x ^ 2)) l (𝓝 (2 * k)) := by
     have hh := (hB.pow 2).div hs hk0.ne'
     have hvalue : (2 : ℝ) ^ 2 / k = 2 * k := by
@@ -364,6 +367,7 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
           _ = (Real.sqrt (P x) / P x) * L x ^ 2 := by dsimp [K]; ring
           _ = _ := by rw [Real.sqrt_div_self]; ring
       have hpower : P x ^ (2 / 3 : ℝ) = Real.sqrt (P x) * P x ^ (1 / 6 : ℝ) := by
+        dsimp [P]
         rw [Real.sqrt_eq_rpow, ← Real.rpow_add hp]
         norm_num
       have hrepeatError : K x * (6 / P x ^ (2 / 3 : ℝ)) =
@@ -377,7 +381,7 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
       change K x * (tail (m x) - squareSum (m x)) ≤
         K x * (P x / Q x ^ 4 + 6 / P x ^ (2 / 3 : ℝ)) at hh
       rw [mul_add, hrepeatError] at hh
-      exact hh.trans (add_le_add_right hfirstError _)
+      exact hh.trans (add_le_add hfirstError (le_refl _))
 
   -- Retain the finite upper Abel endpoint before showing its scaled limit.
   have hlogroot : Tendsto (fun x => L x / Real.sqrt (P x)) l (𝓝 0) := by
@@ -409,6 +413,7 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
     simp only [mul_zero, add_zero] at hh
     apply hh.congr'
     filter_upwards [hQ.eventually_gt_atTop 0, hH.eventually_gt_atTop 0] with x hq hh
+    simp only [Function.comp_apply]
     field_simp [hq.ne', hh.ne']
     <;> ring
   have hAbel : Tendsto (fun x => K x *
@@ -418,6 +423,7 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
       (2 / (Q x * H x ^ 3) + 5 / (Q x * H x ^ 9)))
     · filter_upwards [hQ.eventually_ge_atTop Y] with x hx
       have hQP : Q x ≤ P x := by
+        dsimp [Q, P]
         exact_mod_cast (record_partition (hm x) (hlambda x) (hrecord x)).1
       have hh := (hY (Q x) (P x) hx hQP).1
       have hfinite : |squareSum (m x) - secondEndpoint (Q x) + secondEndpoint (P x)| ≤
@@ -443,8 +449,15 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
     <;> ring
   have htotal := (((harithmetic.add hAbel).sub hupperEndpoint).add hlowerEndpoint).add_const
     (k * (2 + c / 2))
-  simp only [zero_add, zero_sub, neg_add_cancel] at htotal
-  apply htotal.congr'
+  have htotal' : Tendsto
+      (fun x =>
+        K x * (tail (m x) - squareSum (m x)) +
+          K x * (squareSum (m x) - secondEndpoint (Q x) + secondEndpoint (P x)) -
+          K x * secondEndpoint (P x) +
+          L x * (Real.sqrt (P x) * L x * secondEndpoint (Q x) - k) +
+          k * (2 + c / 2)) l (𝓝 0) := by
+    simpa only [zero_add, zero_sub, neg_add_cancel] using htotal
+  apply htotal'.congr'
   exact Eventually.of_forall fun x => by dsimp [K, P, L, k, c]; ring
 
 /-- The complete original Euler tail has a uniform logarithmic second-order
