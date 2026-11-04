@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.PrimeRemainders;
 internal sealed class OeisA222759GrowthDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/PrimeRemainders/OeisA222759Growth.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/noe2013a222759");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Factorization/noe2013a222759");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The prime threshold places the cubes of the first k primes below n.",

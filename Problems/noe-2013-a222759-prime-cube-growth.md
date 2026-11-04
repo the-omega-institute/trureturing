@@ -37,7 +37,7 @@ naturals with $3\le k$ and $1\le n$. An injection $q:\mathrm{Fin}(k)\to
 The total extension $P(0)=2$ is unused on the event's indices; the natural
 remainder convention at modulus zero is unused on prime witnesses.
 The source identity and operator correspondence are in
-`Library/Arith/noe2013a222759.md`.
+`Library/Factorization/noe2013a222759.md`.
 
 ## Motivation
 
