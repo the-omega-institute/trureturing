@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:94cfb229ed6afb943ad5aca3d69fd12a286d138c8e5d6ddd2557c07e789d9724
   normalized_sha256: sha256:94cfb229ed6afb943ad5aca3d69fd12a286d138c8e5d6ddd2557c07e789d9724
 cas_ref: sha256:94cfb229ed6afb943ad5aca3d69fd12a286d138c8e5d6ddd2557c07e789d9724
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Constants/Moments/CountableHankelIntegerWitness.exists_integer_negative
+    target_statement_id: sha256:99ae82f3aa9bbdf59fa4810fde37243673e288999f745d7ceeeee4a7cb478b37
+  - gid: D5/S3/Constants/Moments/CountableHankelNegativeWitness.exists_real_negative
+    target_statement_id: sha256:acc4c149ce0fe1e8cf80bb8636e719718deb589aad48d21799df2b16b5e2de79
 receipts:
   unresolved_subitems: []
   chain_atoms:
