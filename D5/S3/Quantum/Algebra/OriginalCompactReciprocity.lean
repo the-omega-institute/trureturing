@@ -8,6 +8,9 @@
 
 import D5.S3.Quantum.Algebra.OriginalCompactActionMetric
 import D5.S3.Quantum.Algebra.RankOneInvariantMetric
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
+import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Analysis.InnerProductSpace.Trace
 import Mathlib.Algebra.Lie.OfAssociative
@@ -42,6 +45,59 @@ def velocitySpace : Submodule ℝ (W →L[ℝ] W) where
     have hk : HasDerivAt (fun t => (c t).val.val) K (r*0) := by simpa using hK
     have hh := hk.scomp (0 : ℝ) hr
     simpa using! hh
+
+/-- Actual curve velocities are exactly the generators whose entire real
+exponential curve has values in the original compact subgroup. -/
+theorem mem_velocitySpace_iff_exp
+    (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ)) (K : W →L[ℝ] W) :
+    K ∈ velocitySpace G ↔ ∀ t : ℝ, ∃ u : (W →L[ℝ] W)ˣ,
+      u ∈ G ∧ (u : W →L[ℝ] W) = NormedSpace.exp (t • K) := by
+  letI : CompleteSpace W := FiniteDimensional.complete ℝ W
+  constructor
+  · rintro ⟨c, hc, hK⟩ t
+    let E := W →L[ℝ] W
+    have hexp : HasStrictFDerivAt (NormedSpace.exp : E → E)
+        (ContinuousLinearEquiv.refl ℝ E : E →L[ℝ] E) 0 := by
+      simpa using (hasStrictFDerivAt_exp_zero (𝕂 := ℝ) (𝔸 := E))
+    let ell : E → E := hexp.localInverse NormedSpace.exp (ContinuousLinearEquiv.refl ℝ E) 0
+    have hell0 : ell 1 = 0 := by
+      simpa [ell] using hexp.localInverse_apply_image
+    have hell : HasFDerivAt ell (1 : E →L[ℝ] E) 1 := by
+      simpa [ell] using hexp.to_localInverse.hasFDerivAt
+    have hc0 : (c 0).val.val = (1 : E) := by simp [hc]
+    have hd : HasDerivAt (fun s => ell ((c s).val.val)) K 0 := by
+      simpa only [Function.comp_apply, ContinuousLinearMap.one_apply] using
+        hell.comp_hasDerivAt_of_eq hK hc0.symm
+    have hscale : Filter.Tendsto (fun n : ℕ => (n : ℝ) • ell ((c (t / n)).val.val))
+        Filter.atTop (𝓝 (t • K)) := by
+      have hn : Filter.Tendsto (fun n : ℕ => ‖(n : ℝ)‖) Filter.atTop Filter.atTop := by
+        simpa using (tendsto_natCast_atTop_atTop (R := ℝ))
+      simpa [hc0, hell0, div_eq_mul_inv, mul_comm] using hd.hasFDerivAt.lim t hn
+    have hinv : ∀ᶠ y in 𝓝 (1 : E), NormedSpace.exp (ell y) = y := by
+      simpa [ell] using hexp.eventually_right_inverse
+    have hsample : Filter.Tendsto (fun n : ℕ => (c (t / n)).val.val)
+        Filter.atTop (𝓝 (1 : E)) := by
+      simpa only [hc0] using hK.continuousAt.tendsto.comp
+        (tendsto_const_div_atTop_nhds_zero_nat t)
+    have hpow : Filter.Tendsto (fun n : ℕ => ((c (t / n)).val.val) ^ n)
+        Filter.atTop (𝓝 (NormedSpace.exp (t • K))) := by
+      apply hscale.exp.congr'
+      filter_upwards [hsample.eventually hinv] with n hn
+      rw [Nat.cast_smul_eq_nsmul ℝ, NormedSpace.exp_nsmul, hn]
+    have hclosed : IsClosed ((Units.val : Eˣ → E) '' (G : Set Eˣ)) :=
+      (hG.image Units.continuous_val).isClosed
+    exact hclosed.mem_of_tendsto hpow (Filter.Eventually.of_forall fun n =>
+      ⟨(c (t / n)).val ^ n, G.pow_mem (c (t / n)).property n, rfl⟩)
+  · intro h
+    choose u hu he using h
+    refine ⟨fun t => ⟨u t, hu t⟩, ?_, ?_⟩
+    · apply Subtype.ext
+      apply Units.ext
+      simpa using he 0
+    · have heq : (fun t => (u t).val) = fun t => NormedSpace.exp (t • K) := funext he
+      change HasDerivAt (fun t => (u t).val) K 0
+      rw [heq]
+      simpa using (hasDerivAt_exp_smul_const K (0 : ℝ))
 
 omit [FiniteDimensional ℝ W] in
 private theorem conjugate_velocity (g : G) (K : W →L[ℝ] W)
