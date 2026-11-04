@@ -88,14 +88,16 @@ theorem actualSource_last_two_maximum_joint_lift (a b s : ℕ)
     apply full_conclusion_of_orders s b s
     have hk : s+b+s+s=3*s+b := by omega
     have he : s+b+s=2*s+b := by omega
-    simpa only [hk,he] using
+    rw [hk,he]
+    exact
       EqualOuterThree.actualSource_equal_outer_three_joint_lift s b ha hb
   · by_cases he : a=b
     · subst b
       apply full_conclusion_of_orders a a s
       have hk : a+a+s+s=2*a+2*s := by omega
       have he : a+a=2*a := by omega
-      simpa only [hk,he] using
+      rw [hk,he]
+      exact
         Adjacent.FourNegativeAdjacentPairsJointLift.actualSource_four_negative_adjacent_pairs_joint_lift
           a s ha (by omega)
     · by_cases hba : b<a

@@ -58,6 +58,7 @@ private def heads (a b s : ℕ) (side : Bool) : Fin 4 → ℤ :=
 /- The inputs below are the exact scalar sums of the four actual banks.
    Both consumers construct P, prove its complete physical permutation, and
    derive these identities by the decoder mass lemmas in Banks. -/
+set_option maxHeartbeats 2000000 in
 private theorem physical_joint_from_windows (a b s t : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hbs : b≤s)
     (P : Fin 4 → List ℕ) (tail : Bool → ℤ) (slot : Fin 4) (hslot : 1≤slot.val)
@@ -157,17 +158,12 @@ private theorem physical_joint_from_windows (a b s t : ℕ)
     change packetChecks f C 0 (if side then withEar (size a b s s) slot.val bs else bs)
     have fresh : newValue a b s s (size a b s s)=AA := tab.2.2.2
     cases side <;> fin_cases slot
-    all_goals try omega
+    all_goals norm_num at hslot
     all_goals simp only [Bool.false_eq_true,ite_false,ite_true,bs,packetList,withEar,packetChecks,List.map_append,List.sum_append,
       List.map_singleton,List.sum_singleton,zero_add,fresh]
-    all_goals dsimp only [seams,heads] at win0 win1 win2 win3 nn0 nn1 nn2 nn3
-    all_goals simp only [Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
-      Matrix.cons_val_three,Matrix.vecHead,Matrix.vecTail,Matrix.cons_val_succ,
-      Matrix.cons_val_zero',Matrix.cons_val_succ',Function.comp_apply,
-      Fin.val_ofNat,ite_true,ite_false] at mass0 mass1 mass2 mass3 win0 win1 win2 win3 nn0 nn1 nn2 nn3
-    all_goals refine ⟨?_,?_,?_,?_,?_,?_,?_,?_,True.intro⟩
-    all_goals nlinarith only [mass0,mass1,mass2,mass3,nn0,nn1,nn2,nn3,hstart,
-      win0.1,win0.2,win1.1,win1.2,win2.1,win2.2,win3.1,win3.2]
+    all_goals simp [seams,heads,F,f,C,rowValue,AA,fresh] at mass0 mass1 mass2 mass3 win0 win1 win2 win3 nn0 nn1 nn2 nn3 hstart ⊢
+    all_goals repeat' apply And.intro
+    all_goals first | trivial | linarith only [mass0,mass1,mass2,mass3,nn0,nn1,nn2,nn3,hstart,win0,win1,win2,win3]
   have oldchecks : packetChecks (oldValue a b s s) (N/2) 0 bs := checks false
   have hold : InStrip (oldValue a b s s) (N/2) 0 (banksWord a b s P) := by
     rw [←hword]
@@ -178,7 +174,7 @@ private theorem physical_joint_from_windows (a b s t : ℕ)
   have hnew : InStrip (newValue a b s s) N 0
       (blocksWord (withEar (size a b s s) slot.val bs)) := by
     apply (strip_iff_packetChecks _ _ _ _ ⟨by omega,hN⟩
-      (withEar_positive _ _ _ bs (by rw [tab.2.2.2];have hh := tab.1 0;omega)
+      (withEar_positive _ _ _ bs (by change 0≤newValue a b s s (size a b s s); rw [tab.2.2.2];have hh := tab.1 0;omega)
         (positive true)) ?_).mpr newchecks
     intro pkt hb'
     have hmem : pkt.2∈bs.map Prod.snd := by
@@ -217,6 +213,8 @@ private theorem singleton_actual_source (a b s : ℕ) (ha : 2≤a) (hab : a<b)
   let slot : Fin 4 := if vNewEndpoint a b s t<0 then 1 else 3
   obtain ⟨ht,hw,hE,hEp,hR,hRp,hG,hGp,hGpa⟩ :=
     singleton_scalar_windows a b s ha hab hbs hnotbalanced
+  change window (if vNewEndpoint a b s t<0 then
+    vNewEndpoint a b s t+A a b s else vNewEndpoint a b s t) (SV a b s) at hRp
   have hb : 2≤b := by omega
   have tab := chain_values a b s s ha hb (by omega) (by omega)
   have rowOld : rowBase a b s false=![A a b s,B a b s,L a b s,K a b s] := by
@@ -226,11 +224,9 @@ private theorem singleton_actual_source (a b s : ℕ) (ha : 2≤a) (hab : a<b)
     funext r
     fin_cases r <;> dsimp [rowBase,newBase,charge,base,A,B,L,K,H,SU,SV,SW,x,y,z] <;> ring
   have hAA : base a b s s 0=A a b s := by dsimp [base,A,x,y,z];ring
-  have mixOld : mixedMass b (rowBase a b s false) t=hybridOld a b s t := by
-    rw [rowOld]
+  have mixOld : mixedMass b ![A a b s,B a b s,L a b s,K a b s] t=hybridOld a b s t := by
     exact (hybrid_decomposition a b s t).symm
-  have mixNew : mixedMass b (rowBase a b s true) t=hybridNew a b s t := by
-    rw [rowNew]
+  have mixNew : mixedMass b ![2*A a b s,SU a b s,SV a b s,SW a b s] t=hybridNew a b s t := by
     change (t%vNat b : ℕ)*(2*A a b s)+(t-t%vNat b : ℕ)*(2*B a b s-1)=
       2*hybridOld a b s t-(t-t%vNat b : ℕ)
     rw [hybrid_decomposition]
@@ -253,7 +249,7 @@ private theorem singleton_actual_source (a b s : ℕ) (ha : 2≤a) (hab : a<b)
       fin_cases r <;> dsimp [seams]
       all_goals simp only [mixOld,rowOld,Bool.false_eq_true,ite_false,ite_self,hAA]
       all_goals dsimp [tail]
-      all_goals simp only [rowOld]
+      all_goals try simp only [rowOld]
       all_goals dsimp [D,vEndpoint]
       all_goals ring
     have newSeams : seams a b s t tail slot true=
@@ -265,7 +261,7 @@ private theorem singleton_actual_source (a b s : ℕ) (ha : 2≤a) (hab : a<b)
       fin_cases r <;> dsimp [seams]
       all_goals simp only [mixNew,rowNew,ite_true,hAA]
       all_goals dsimp [tail]
-      all_goals simp only [rowNew]
+      all_goals try simp only [rowNew]
       all_goals dsimp [hybridNew,D,vNewEndpoint,vEndpoint,SU,SV,SW]
       all_goals ring
     intro side r
@@ -273,29 +269,41 @@ private theorem singleton_actual_source (a b s : ℕ) (ha : 2≤a) (hab : a<b)
     · rw [oldSeams]
       dsimp [heads]
       rw [rowOld,hAA]
-      fin_cases r
+      fin_cases r <;> norm_num only [Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ,
+        Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.head_cons, Matrix.tail_cons, Function.comp_apply, id_eq,
+        Fin.val_ofNat, Fin.val_mk]
       · exact hE
       · exact hR
       · exact hG
-      · exact ⟨by omega,by omega⟩
+      · change window 0 (A a b s)
+        exact ⟨by omega,by omega⟩
     · rw [newSeams]
       dsimp [heads]
       rw [rowNew,hAA]
       by_cases he : vNewEndpoint a b s t<0
       · have hs : slot=(1 : Fin 4) := by simp [slot,he]
         rw [hs]
-        fin_cases r
+        fin_cases r <;> norm_num only [Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ,
+        Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.head_cons, Matrix.tail_cons, Function.comp_apply, id_eq,
+        Fin.val_ofNat, Fin.val_mk]
         · exact hEp
-        · simpa only [if_pos he,Fin.val_one,le_refl,ite_true] using hRp
+        · simpa [he,t,w] using hRp
         · exact hGpa
-        · exact ⟨by omega,by omega⟩
+        · change window 0 (A a b s)
+          exact ⟨by omega,by omega⟩
       · have hs : slot=(3 : Fin 4) := by simp [slot,he]
         rw [hs]
-        fin_cases r
+        fin_cases r <;> norm_num only [Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ,
+        Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.head_cons, Matrix.tail_cons, Function.comp_apply, id_eq,
+        Fin.val_ofNat, Fin.val_mk]
         · exact hEp
-        · simpa only [if_neg he,Fin.val_ofNat,show ¬ (3:ℕ)≤1 by decide,ite_false,add_zero] using hRp
-        · simpa only [Fin.val_ofNat,show ¬ (3:ℕ)≤2 by decide,ite_false,add_zero] using hGp
-        · exact ⟨by omega,by omega⟩
+        · simpa [he,t,w] using hRp
+        · simpa [t,w] using hGp
+        · change window 0 (A a b s)
+          exact ⟨by omega,by omega⟩
 
 private theorem borrow_actual_source (a b s : ℕ) (hb : 2≤b) (hba : b<a)
     (has : a<s) :
@@ -322,11 +330,9 @@ private theorem borrow_actual_source (a b s : ℕ) (hb : 2≤b) (hba : b<a)
     funext r
     fin_cases r <;> dsimp [rowBase,newBase,charge,base,A,B,L,K,H,SU,SV,SW,x,y,z] <;> ring
   have hAA : base a b s s 0=A a b s := by dsimp [base,A,x,y,z];ring
-  have mixOld (q : ℕ) : mixedMass b (rowBase a b s false) q=hybridOld a b s q := by
-    rw [rowOld]
+  have mixOld (q : ℕ) : mixedMass b ![A a b s,B a b s,L a b s,K a b s] q=hybridOld a b s q := by
     exact (hybrid_decomposition a b s q).symm
-  have mixNew (q : ℕ) : mixedMass b (rowBase a b s true) q=hybridNew a b s q := by
-    rw [rowNew]
+  have mixNew (q : ℕ) : mixedMass b ![2*A a b s,SU a b s,SV a b s,SW a b s] q=hybridNew a b s q := by
     change (q%vNat b : ℕ)*(2*A a b s)+(q-q%vNat b : ℕ)*(2*B a b s-1)=
       2*hybridOld a b s q-(q-q%vNat b : ℕ)
     rw [hybrid_decomposition]
@@ -364,7 +370,7 @@ private theorem borrow_actual_source (a b s : ℕ) (hb : 2≤b) (hba : b<a)
       fin_cases r <;> dsimp [seams]
       all_goals simp only [mixOld,rowOld,Bool.false_eq_true,ite_false,ite_self,hAA]
       all_goals dsimp [tail]
-      all_goals simp only [mixOld]
+      all_goals try simp only [rowOld,mixOld]
       all_goals dsimp [D,vEndpoint,wEndpoint]
       all_goals ring
     have newSeams : seams a b s t tail slot true=
@@ -375,7 +381,7 @@ private theorem borrow_actual_source (a b s : ℕ) (hb : 2≤b) (hba : b<a)
       fin_cases r <;> dsimp [seams]
       all_goals simp only [mixNew,rowNew,ite_true,hAA]
       all_goals dsimp [tail]
-      all_goals simp only [mixNew]
+      all_goals try simp only [rowNew,mixNew]
       all_goals dsimp [hybridNew,D,vNewEndpoint,vEndpoint,wNewEndpoint,wEndpoint,SU,SV,SW]
       all_goals ring
     intro side r
@@ -383,19 +389,27 @@ private theorem borrow_actual_source (a b s : ℕ) (hb : 2≤b) (hba : b<a)
     · rw [oldSeams]
       dsimp [heads]
       rw [rowOld,hAA]
-      fin_cases r
+      fin_cases r <;> norm_num only [Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ,
+        Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.head_cons, Matrix.tail_cons, Function.comp_apply, id_eq,
+        Fin.val_ofNat, Fin.val_mk]
       · exact hE
       · exact hR
       · exact hG
-      · exact ⟨by omega,by omega⟩
+      · change window 0 (A a b s)
+        exact ⟨by omega,by omega⟩
     · rw [newSeams]
       dsimp [heads]
       rw [rowNew,hAA]
-      fin_cases r
+      fin_cases r <;> norm_num only [Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ,
+        Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.head_cons, Matrix.tail_cons, Function.comp_apply, id_eq,
+        Fin.val_ofNat, Fin.val_mk]
       · exact hEp
-      · simpa only [earV] using hRp
-      · simpa only [earW] using hGp
-      · exact ⟨by omega,by omega⟩
+      · simpa only [earV,t] using hRp
+      · simpa only [earW,t,u] using hGp
+      · change window 0 (A a b s)
+        exact ⟨by omega,by omega⟩
 
 end StrictDictionary
 end D5.S3.Combinatorics.Circle.FourNegative.LastTwoMaximum
