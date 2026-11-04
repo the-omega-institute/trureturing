@@ -157,12 +157,70 @@ private lemma density_resolvent_integrable {α r : ℝ} (ha0 : 0 < α) (ha2 : α
   have hu := hhead.union ((integrableOn_Ici_iff_integrableOn_Ioi).mpr htail)
   simpa only [hsets] using hu
 
+private def complexTransform (α : ℝ) (z : ℂ) : ℂ :=
+  (1 / (1 - z) - (α : ℂ) * z ^ (α : ℂ) / (z * (1 - z ^ (α : ℂ)))) /
+    ((α - 1 : ℝ) : ℂ)
+
+private lemma transform_boundary {α q : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hq : 0 < q) :
+    -(complexTransform α (-(q : ℂ))).im / Real.pi = density α q := by
+  have hp := Real.rpow_pos_of_pos hq α
+  have hc := cosine_lt_one ha0 ha2 ha1
+  have hD : 0 < 1 - 2 * q ^ α * Real.cos (Real.pi * α) + (q ^ α) ^ 2 := by
+    nlinarith [mul_pos hp (sub_pos.mpr hc), sq_nonneg (q ^ α - 1)]
+  have hpow := Complex.cpow_ofReal (-(q : ℂ)) α
+  have harg := Complex.arg_ofReal_of_neg (neg_neg_of_pos hq)
+  rw [Complex.ofReal_neg] at harg
+  rw [norm_neg, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hq, harg] at hpow
+  dsimp only [complexTransform, density]
+  rw [hpow, Complex.div_ofReal_im]
+  simp only [Complex.div_im, Complex.sub_re, Complex.sub_im,
+    Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.add_im, Complex.neg_re,
+    Complex.neg_im, Complex.one_re, Complex.one_im, Complex.ofReal_re, Complex.ofReal_im,
+    Complex.I_re, Complex.I_im, Complex.normSq_apply, mul_zero, zero_mul, add_zero, zero_add,
+    sub_zero, zero_sub, mul_one, zero_div, neg_zero, ← pow_two,
+    zero_pow (by decide : (2 : ℕ) ≠ 0)]
+  rw [Real.rpow_sub_one hq.ne']
+  have htrig := Real.sin_sq_add_cos_sq (Real.pi * α)
+  have hnorm : (-q * (1 - q ^ α * Real.cos (Real.pi * α))) ^ 2 +
+      (-q * -(q ^ α * Real.sin (Real.pi * α))) ^ 2 =
+      q ^ 2 * (1 - 2 * q ^ α * Real.cos (Real.pi * α) + (q ^ α) ^ 2) := by
+    nlinarith [congrArg (fun t : ℝ => q ^ 2 * (q ^ α) ^ 2 * t) htrig]
+  rw [hnorm]
+  field_simp (disch := first | positivity | assumption | exact sub_ne_zero.mpr ha1)
+  ring
+
+private lemma transform_positive {α r : ℝ} (ha0 : 0 < α) (ha1 : α ≠ 1)
+    (hr0 : 0 < r) (hr1 : r < 1) :
+    (complexTransform α (r : ℂ)).re =
+      1 / ((α - 1) * (1 - r)) - α * r ^ (α - 1) / ((α - 1) * (1 - r ^ α)) := by
+  have he : complexTransform α (r : ℂ) =
+      (((1 / (1 - r) - α * r ^ α / (r * (1 - r ^ α))) / (α - 1) : ℝ) : ℂ) := by
+    dsimp only [complexTransform]
+    rw [← Complex.ofReal_cpow hr0.le α]
+    push_cast
+    rfl
+  rw [he, Complex.ofReal_re, Real.rpow_sub_one hr0.ne']
+  have hden : 0 < 1 - r ^ α := sub_pos.mpr (Real.rpow_lt_one hr0.le hr1 ha0)
+  field_simp (disch := first | positivity | assumption | exact sub_ne_zero.mpr ha1)
+
+private lemma slit_transform_integral {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hr0 : 0 < r) (hr1 : r < 1) :
+    (∫ q in Ioi (0 : ℝ), -(complexTransform α (-(q : ℂ))).im /
+      (Real.pi * (r + q))) = (complexTransform α (r : ℂ)).re := by
+  sorry
+
 private lemma stieltjes_value {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hr0 : 0 < r) (hr1 : r < 1) :
     (∫ q in Ioi (0 : ℝ), density α q / (r + q)) =
       1 / ((α - 1) * (1 - r)) -
         α * r ^ (α - 1) / ((α - 1) * (1 - r ^ α)) := by
-  sorry
+  rw [← transform_positive ha0 ha1 hr0 hr1,
+    ← slit_transform_integral ha0 ha2 ha1 hr0 hr1]
+  apply setIntegral_congr_fun measurableSet_Ioi
+  intro q hq
+  dsimp only
+  rw [← transform_boundary ha0 ha2 ha1 hq, div_div]
 
 /-- Stieltjes transform on the positive axis, with its pole at `r = 1` subtracted. -/
 theorem stieltjes_integral {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
