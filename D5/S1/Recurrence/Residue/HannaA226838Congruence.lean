@@ -8,15 +8,13 @@
 
 import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.QuarticEGFModFour
-import D5.S3.Arith.Congruence.BourasA363347PrimeMultiplicity
+import Mathlib.Data.Nat.Factorial.BigOperators
 
 open PowerSeries Finset
 open D5.S1.Recurrence.Residue.QuarticEGFFixedPoint (identity)
 open D5.S1.Recurrence.Residue.IntegralEGFComposition
 open private composition_identity_right from
   D5.S1.Recurrence.Residue.QuarticEGFModFour
-open private pow_dvd_factorial_mul from
-  D5.S3.Arith.Congruence.BourasA363347PrimeMultiplicity
 
 namespace D5.S1.Recurrence.Residue.HannaA226838Congruence
 
@@ -35,10 +33,6 @@ def innerIntegral (n : ℕ) : ℕ :=
 
 private theorem le_square (m : ℕ) : m ≤ m ^ 2 := by
   simpa [pow_two] using Nat.le_mul_self m
-
-private theorem power_dvd_square_factorial {m : ℕ} (hm : 0 < m) :
-    m ^ m ∣ (m ^ 2).factorial := by
-  simpa [pow_two] using pow_dvd_factorial_mul m m hm
 
 private theorem six_power_dvd_square_factorial {m : ℕ} (hm : 2 ≤ m) :
     6 * m ^ m ∣ (m ^ 2).factorial := by
@@ -60,6 +54,13 @@ private theorem six_power_dvd_square_factorial {m : ℕ} (hm : 2 ≤ m) :
     simpa [pow_two, Nat.mul_comm] using
       Nat.prod_factorial_dvd_factorial_sum (range m) (fun _ : ℕ => m)
   exact hp.trans (hpow.trans hprod)
+
+private theorem power_dvd_square_factorial {m : ℕ} (hm : 0 < m) :
+    m ^ m ∣ (m ^ 2).factorial := by
+  by_cases h1 : m = 1
+  · subst m; norm_num
+  exact (dvd_mul_left (m ^ m) 6).trans
+    (six_power_dvd_square_factorial (by omega))
 
 private theorem factorial_ratio {m n : ℕ} (hm : 0 < m) (hmn : m ^ 2 = n) :
     (n.factorial : ℚ) * (1 / (m : ℚ) ^ m) =

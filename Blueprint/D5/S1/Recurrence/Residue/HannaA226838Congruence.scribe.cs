@@ -65,8 +65,10 @@ internal sealed class HannaA226838CongruenceDocument : IScribeDocumentDefinition
                 + "The result uses eCoeff_H, H_zero, inner_mod_six and composition_unit_mod_six. "
                 + "The existing IntegralEGFComposition.eCoeff_composition, eCoeff_exp and composition_map, "
                 + "together with the original private QuarticEGFModFour.composition_identity_right, "
-                + "transfer that identity through the integral composition law. The private "
-                + "BourasA363347PrimeMultiplicity.pow_dvd_factorial_mul supplies the factorial divisibility. "
+                + "transfer that identity through the integral composition law. For m>=2, "
+                + "power_dvd_square_factorial follows from the stronger local six_power_dvd_square_factorial; "
+                + "the remaining positive case m=1 is immediate. The product-factorial step uses "
+                + "Nat.prod_factorial_dvd_factorial_sum. "
                 + "Only integers are reduced to ZMod(6); there is no rational-to-residue-ring map. "
                 + "The proof is repository-derived and is not attributed to OEIS.",
                 DescribeRole.Theorem, new OpenProblemResolutionClaim(
