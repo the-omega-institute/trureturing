@@ -55,7 +55,7 @@ internal sealed class VertexPositionRatioRefutationDocument : IScribeDocumentDef
             Node("potential-dist", "A graph potential is bounded by distance", "potential_dist", PotentialDistFormula(),
                 "If a natural-valued potential increases by at most one across every edge, then its value at "
                     + "the start of a reachable pair is at most its value at the endpoint plus the graph distance. "
-                    + "The statement is the reusable metric estimate used by the family construction.", false,
+                    + "Summing the edge inequalities along a shortest walk gives the bound.", false,
                 DescribeRole.Theorem),
             Node("result", "A family refutes the proposed boundedness", "result", Seq(Neg, Sp, Call("claim")),
                 "For each integer m ≥ 2, take one hub y and 2m+1 paths meeting only at y: "
@@ -142,8 +142,8 @@ internal sealed class VertexPositionRatioRefutationDocument : IScribeDocumentDef
         var v = F.Id("v");
         var edgeBound = All(u, V, All(v, V,
             ImpliesFormula(
-                Rel(App(f, u), Le, Add(App(f, v), D(1))),
-                App(Field(G, "Adj"), u, v))));
+                App(Field(G, "Adj"), u, v),
+                Rel(App(f, u), Le, Add(App(f, v), D(1))))));
         var reachableBound = All(u, V, All(v, V,
             ImpliesFormula(
                 App(Field(G, "Reachable"), u, v),
