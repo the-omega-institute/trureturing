@@ -1,0 +1,129 @@
+### 49.7. Rational sign certificate for the relaxed coefficient
+
+The root rectangle implies $12/25<p,q<13/25$. Half-angle identities
+and positive square comparisons give the following convenient bounds:
+
+$$
+\begin{gathered}
+7/10<h<71/100,\quad92/100<c<93/100,\quad
+38/100<s<39/100,\quad21/100<\gamma<23/100,\\
+3/4<y<4/5,\quad69/100<\sqrt p,\sqrt q<73/100,\\
+4/3<R<7/5,\quad1/2<C<3/5,\quad5/4<\Gamma<3/2,\\
+256/1025<x^2/(1+x)<169/660.
+\end{gathered}
+$$
+
+Substitution into $L_a$ gives $1/6<L_a<1/5$. To expose the
+margins, the lower bounding expression is
+
+$$
+\frac7{10}\frac{256}{1025}
+ \left[\frac{(21/100)(69/100)}{7/5}
+                  +\frac{69/100}{4/5}\right]
+ =\frac16+\frac{8527}{3843750},
+$$
+
+whereas $1/5$ minus the upper bounding expression
+$(71/100)(169/660)[(23/100)(73/100)/(4/3)+(73/100)/(3/4)]$
+equals $1199911/7920000000>0$.
+It follows that
+
+$$
+13/10<\eta<7/4,\qquad \mu>8/25,\qquad j>2/5.
+$$
+
+For $\mu$, use $\mu=L_a/[2x^2/(1+x)]$; the resulting lower
+bound exceeds $8/25$ by $23/4225$. For $j$, the bound
+$(256/1025)(13/10)^2$ exceeds $2/5$ by $566/25625$.
+Since $(L+j)^2/(4Lj)\ge1$, $x^2y^2\le1/4$, and $x+j>1$,
+one has $\mathcal E>2$. Consequently
+
+$$
+\mathcal M>64/125,\qquad 8\Gamma\mathcal M>128/25.
+\tag{49.37}
+$$
+
+To bound the subtraction, use
+$L_a=a_0\sqrt p+a_1\sqrt q$ and
+$L_b=\gamma\sqrt p+b_1\sqrt q$. Direct bounds on the same rectangle are
+
+$$
+\begin{gathered}
+0<a_0<1/30,\quad1/5<a_1<1/4,\quad
+0<a_{0,x}<1/9,\quad0<a_{1,x}<1,\\
+7/25<b_1<7/20,\qquad0<b_{1,x}<7/5.
+\end{gathered}
+$$
+
+Here
+$a_{0,x}=a_0(2/x-1/(1+x)-h/R)$,
+$a_{1,x}=a_1(2/x-1/(1+x)+x/y^2)$, and
+$b_{1,x}=(h^2-s^2x)/(hy^3)$.
+For the last upper bound it is necessary to retain the numerator
+subtraction: it is bounded by
+$[1/2-(38/100)^2(16/25)]/[(7/10)(3/4)^3]<7/5$.
+
+Fixed-$t$ differentiation gives
+
+$$
+\begin{aligned}
+L_{a,\delta}&=-\tfrac12(a_{0,x}\sqrt p+a_{1,x}\sqrt q)
+       +\frac{a_0}{2\sqrt p}-\frac{a_1}{2\sqrt q},\\
+L_{b,\delta}&=\frac\gamma{2\sqrt p}
+       -\tfrac12b_{1,x}\sqrt q-\frac{b_1}{2\sqrt q}.
+\end{aligned}
+$$
+
+Both are negative: $a_0/\sqrt p<a_1/\sqrt q$, and
+$\gamma/(2\sqrt p)<1/6<b_1/(2\sqrt q)$.
+Their magnitudes obey
+
+$$
+-L_{a,\delta}<73/180+25/138<3/5,\qquad
+-L_{b,\delta}<511/1000+35/138<4/5.
+$$
+
+Moreover $s\eta/\sqrt q=s^2/L_a\in(2/3,1)$.
+Equation (49.35) now gives
+
+$$
+-2<-\frac{49}{16}\frac35-\frac45+\frac23
+ <K_\delta<1,\qquad |K_\delta|<2.
+\tag{49.38}
+$$
+
+For the scalar curvature let $S=2\Gamma$ at $a=b=0$, differentiating
+at fixed $t$ as before. The exact expression is
+
+$$
+S_{\delta\delta}=-\frac h{\sqrt p}
+ -\frac R{2p^{3/2}}-\frac{h\sqrt q}{2y^3}
+ -\frac{hx}{y\sqrt q}-\frac{hy}{2q^{3/2}}.
+$$
+
+The five positive magnitudes exceed respectively
+$9/10,7/4,9/20,3/4,13/20$, whose sum is $9/2$.
+For example direct substitutions give margins
+$43/730$, $71/11388$, $111/5120$, $5/292$ and $197/4745$
+above those five lower bounds. Scalar stationarity gives
+$S_\delta=D_0/(2S)$; since $D_0<6$ and $S>5/2$, this lies in
+$(0,6/5)$. Thus
+
+$$
+H_*=-2(S_\delta^2+SS_{\delta\delta})
+ >2[(5/2)(9/2)-36/25]=981/50>18.
+$$
+
+Combining this with (49.38),
+
+$$
+\frac{8\Gamma^2K_\delta^2}{H_*}
+ <\frac{8(3/2)^2\,2^2}{18}=4,
+\qquad
+\boxed{C_{\mathrm{eff}}>128/25-4=28/25.}
+\tag{49.39}
+$$
+
+This is a rational certificate for the full relaxed difference, not
+just for its fixed-population positive summand.
+

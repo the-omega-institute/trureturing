@@ -1,0 +1,45 @@
+**定理 4.1（尖锐有限证书与 Pauli 端点）。** 对定义 3.1 的关系球，设 $n\ge2$。若
+
+$$
+\boxed{\mathfrak F^2<2,}\tag{4.1}
+$$
+
+则 $n=3$。在选定的正交定向下，存在实数 $c$ 使
+
+$$
+[u,v]=c\,u\times v,\qquad
+\mathfrak F^2=6(c^2-1)^2.\tag{4.2}
+$$
+
+置 $\delta=\mathfrak F/\sqrt6$，则 $0\le\delta<1/\sqrt3$，$c\ne0$，并有精确误差及其尖锐一致上界
+
+$$
+\boxed{
+\min_{\varepsilon\in\{1,-1\}}
+\|B-\varepsilon\times\|_{\mathrm{bil}}
+=\bigl||c|-1\bigr|
+=\frac{\delta}{1+|c|}
+\le1-\sqrt{1-\delta}.}\tag{4.3}
+$$
+
+其中双线性范数在两个闭单位球上取上确界。阈值 $2$ 不能在统一的维数判据中增大。零残差时，所得单球复代数是 $M_2(\mathbb C)$；允许 $n=0,1$ 时，还分别有纯标量与经典二值端点，故 C95 单独不保证非经典性。
+
+证明。$n\ge4$ 时 (3.1) 给 $\mathfrak F^2\ge n(n-3)\ge4$。$n=2$ 时全交替三形式为零，所以 $B=0$、$\mathfrak F^2=2$。因此 (4.1) 迫使 $n=3$。三维交替三形式只有一个自由系数，给 $B=c\times$。叉积恒等式给
+
+$$
+[[u,v],w]=-c^2K_{u,v}w,\quad
+E_{u,v}=(1-c^2)K_{u,v},\quad Q=2c^2I.
+$$
+
+于是 (4.2) 成立。$\delta=|c^2-1|$，配方给 (4.3)；取 $c=\sqrt{1-\delta}$ 达到一致上界。二维零括号达到残差平方 $2$，故任何严格大于 $2$ 的统一阈值均会纳入二维对象。
+
+零残差给 $c=\varepsilon\in\{1,-1\}$。把定向换为使 $B=-\times$ 的一种，使用 Pauli 矩阵 $\sigma_1=X,\sigma_2=Y,\sigma_3=Z$，则
+
+$$
+(\alpha,u)\longmapsto\alpha I+u\cdot\sigma
+$$
+
+把 $\circ$ 变成矩阵反对易积的一半，把 $D_ab$ 变成 $i[\widehat a,\widehat b]/2$；因此定义 1.3 的复乘法就是通常矩阵乘法。另一种手性给相反代数，亦同构于 $M_2(\mathbb C)$。这一步采用标准 Pauli 恒等式，不把它算作新的重构结果；其与项目三轴及手性的对应参见 [V48，§§3、5](AURIC_ISOTROPY_CHIRALITY_AND_CONDITIONAL_QUANTUM_RECONSTRUCTION_V48.md)。这里没有预设 $\operatorname{SO}(3)$ 各向同性来选择维数，维数来自完整标架残差。
+
+$n=0$ 时 $A=\mathbb R$。$n=1$ 时 $B=0$，映射 $(\alpha,u)\mapsto(\alpha+u,\alpha-u)$ 给 $\mathbb R\oplus\mathbb R$，复化后分别为 $\mathbb C$、$\mathbb C\oplus\mathbb C$。∎
+

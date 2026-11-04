@@ -40,7 +40,21 @@ $$\operatorname{IsClaw}\left(G, c, i, j, k\right) \Leftrightarrow (\operatorname
 
 The vertex c is adjacent to three distinct vertices i, j, k that are pairwise non-adjacent, so c, i, j, k induce the four-vertex star that the paper denotes K_4.
 
-**Definition 1.4 (Entanglement entropy of a graph state).**
+**Definition 1.4 (The binary adjacency block of a cut).**
+
+$$\forall (V: \operatorname{Type}), ([\operatorname{DecidableEq}\left(V\right)], (\forall (G: \operatorname{SimpleGraph}\left(V\right)), (\forall (A: \operatorname{Finset}\left(V\right)), ((\operatorname{D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph.cut}\left(G, A\right): \operatorname{Matrix}\left(\{x: V // x \in A\}, \{x: V // \neg (x \in A)\}, \operatorname{ZMod}\left(2\right)\right)) = \operatorname{Matrix.submatrix}\left(\operatorname{SimpleGraph.adjMatrix}\left(\operatorname{ZMod}\left(2\right), G\right), \operatorname{Subtype.val}, \operatorname{Subtype.val}\right)))))$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.cut` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jesus Fuentes, Cynthia Keeler, William Munizzi, Jason Pollack (2025). *Monogamy of Mutual Information in Graph States*. DOI: [10.48550/arXiv.2511.19585](https://doi.org/10.48550/arXiv.2511.19585). URL: <https://arxiv.org/abs/2511.19585v1>.
+
+*Commentary.*
+
+The rows are vertices in A and the columns are vertices outside A. Restricting the binary adjacency matrix along the two subtype-value functions gives this rectangular matrix over ZMod 2. The vertex type need not be finite.
+
+**Definition 1.5 (Entanglement entropy of a graph state).**
 
 $$\forall M \in \operatorname{Matrix}\left(A, \operatorname{compl}\left(A\right), \operatorname{ZMod}\left(2\right)\right),\; (\forall x \in A,\; \forall y \in \operatorname{compl}\left(A\right),\; M\left(x, y\right) = \operatorname{if} \operatorname{Adj}\left(G, x, y\right) \operatorname{then} 1 \operatorname{else} 0) \Rightarrow (\operatorname{entropy}\left(G, A\right) = \operatorname{rank}\left(M\right))$$
 
@@ -52,7 +66,49 @@ $$\forall M \in \operatorname{Matrix}\left(A, \operatorname{compl}\left(A\right)
 
 The entropy of a set A of qubits in the graph state of G is the rank of the adjacency block of A: every matrix M over Z_2 with rows indexed by A and columns by the complement of A whose entry at x, y is 1 when x and y are adjacent and 0 otherwise has rank S(G, A).
 
-**Definition 1.5 (Violation of MMI).**
+**Theorem 1.6 (Entropy of the complement).**
+
+$$\forall (V: \operatorname{Type}), ([\operatorname{Fintype}\left(V\right)], ([\operatorname{DecidableEq}\left(V\right)], (\forall (G: \operatorname{SimpleGraph}\left(V\right)), (\forall (A: \operatorname{Finset}\left(V\right)), (\operatorname{D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph.entropy}\left(G, \operatorname{Compl.compl}\left(A\right)\right) = \operatorname{D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph.entropy}\left(G, A\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.compl_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jesus Fuentes, Cynthia Keeler, William Munizzi, Jason Pollack (2025). *Monogamy of Mutual Information in Graph States*. DOI: [10.48550/arXiv.2511.19585](https://doi.org/10.48550/arXiv.2511.19585). URL: <https://arxiv.org/abs/2511.19585v1>.
+
+*Commentary.*
+
+The cut matrix of the complement is a reindexing of the transposed cut matrix, so both vertex sets have the same entropy.
+
+**Theorem 1.7 (Entropy under relabelling).**
+
+$$\forall (V: \operatorname{Type}), (\forall (W: \operatorname{Type}), ([\operatorname{Fintype}\left(V\right)], ([\operatorname{DecidableEq}\left(V\right)], ([\operatorname{Fintype}\left(W\right)], ([\operatorname{DecidableEq}\left(W\right)], (\forall (G: \operatorname{SimpleGraph}\left(V\right)), (\forall (e: \operatorname{Equiv}\left(W, V\right)), (\forall (A: \operatorname{Finset}\left(W\right)), (\operatorname{D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph.entropy}\left(\operatorname{SimpleGraph.comap}\left(\operatorname{DFunLike.coe}\left(e\right), G\right), A\right) = \operatorname{D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph.entropy}\left(G, \operatorname{Finset.map}\left(\operatorname{Equiv.toEmbedding}\left(e\right), A\right)\right))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.relabel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jesus Fuentes, Cynthia Keeler, William Munizzi, Jason Pollack (2025). *Monogamy of Mutual Information in Graph States*. DOI: [10.48550/arXiv.2511.19585](https://doi.org/10.48550/arXiv.2511.19585). URL: <https://arxiv.org/abs/2511.19585v1>.
+
+*Commentary.*
+
+Pulling a graph back along a vertex equivalence reindexes its adjacency block and preserves its rank.
+
+**Theorem 1.8 (Entropy under local complementation).**
+
+$$\forall (V: \operatorname{Type}), ([\operatorname{Fintype}\left(V\right)], ([\operatorname{DecidableEq}\left(V\right)], (\forall (G: \operatorname{SimpleGraph}\left(V\right)), (\forall (v: V), (\forall (A: \operatorname{Finset}\left(V\right)), (\operatorname{D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph.entropy}\left(\operatorname{D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph.lc}\left(G, v\right), A\right) = \operatorname{D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph.entropy}\left(G, A\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.lc_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jesus Fuentes, Cynthia Keeler, William Munizzi, Jason Pollack (2025). *Monogamy of Mutual Information in Graph States*. DOI: [10.48550/arXiv.2511.19585](https://doi.org/10.48550/arXiv.2511.19585). URL: <https://arxiv.org/abs/2511.19585v1>.
+
+*Commentary.*
+
+Local complementation acts on a cut matrix by an invertible row operation when its vertex is in the set; complementation gives the remaining case.
+
+**Definition 1.9 (Violation of MMI).**
 
 $$\operatorname{ViolatesMMI}\left(G\right) \Leftrightarrow (\exists I \in \operatorname{Finset}\left(V\right),\; \exists J \in \operatorname{Finset}\left(V\right),\; \exists K \in \operatorname{Finset}\left(V\right),\; \left(\operatorname{Disjoint}\left(I, J\right) \land \left(\operatorname{Disjoint}\left(I, K\right) \land \operatorname{Disjoint}\left(J, K\right)\right)\right) \land \operatorname{entropy}\left(G, \operatorname{union}\left(I, J\right)\right) + \operatorname{entropy}\left(G, \operatorname{union}\left(I, K\right)\right) + \operatorname{entropy}\left(G, \operatorname{union}\left(J, K\right)\right) < \operatorname{entropy}\left(G, I\right) + \operatorname{entropy}\left(G, J\right) + \operatorname{entropy}\left(G, K\right) + \operatorname{entropy}\left(G, \operatorname{union}\left(\operatorname{union}\left(I, J\right), K\right)\right))$$
 
@@ -64,7 +120,7 @@ $$\operatorname{ViolatesMMI}\left(G\right) \Leftrightarrow (\exists I \in \opera
 
 The graph state violates an instance of monogamy of mutual information: pairwise disjoint sets I, J, K with S(I ∪ J) + S(I ∪ K) + S(J ∪ K) less than S(I) + S(J) + S(K) + S(I ∪ J ∪ K).
 
-**Definition 1.6 (Generalized star).**
+**Definition 1.10 (Generalized star).**
 
 $$\operatorname{IsGeneralizedStar}\left(H, C, P\right) \Leftrightarrow (\left(\forall p \in \operatorname{Fin}\left(k\right),\; \operatorname{Nonempty}\left(\operatorname{P}\left(p\right)\right)\right) \land \left(\left(\forall p \in \operatorname{Fin}\left(k\right),\; \forall q \in \operatorname{Fin}\left(k\right),\; p \ne q \Rightarrow (\operatorname{Disjoint}\left(\operatorname{P}\left(p\right), \operatorname{P}\left(q\right)\right))\right) \land \left(\left(\forall p \in \operatorname{Fin}\left(k\right),\; \operatorname{Disjoint}\left(C, \operatorname{P}\left(p\right)\right)\right) \land \left(\operatorname{union}\left(C, \operatorname{biUnion}\left(\operatorname{univ}, P\right)\right) = \operatorname{univ} \land \left(\left(\forall p \in \operatorname{Fin}\left(k\right),\; \forall q \in \operatorname{Fin}\left(k\right),\; p \ne q \Rightarrow ((\forall x \in \operatorname{P}\left(p\right),\; \forall y \in \operatorname{P}\left(q\right),\; \neg (\operatorname{Adj}\left(H, x, y\right))))\right) \land \left(\forall p \in \operatorname{Fin}\left(k\right),\; \exists x \in \operatorname{P}\left(p\right),\; \exists z \in C,\; \operatorname{Adj}\left(H, x, z\right)\right)\right)\right)\right)\right))$$
 
@@ -76,7 +132,7 @@ $$\operatorname{IsGeneralizedStar}\left(H, C, P\right) \Leftrightarrow (\left(\f
 
 H is a generalized star with centre C and parts P_1, ..., P_k: the parts are nonempty and pairwise disjoint, the centre is disjoint from every part, the centre and the parts cover all vertices (univ), no edge joins two different parts, and every part has a vertex adjacent to a vertex of the centre.
 
-**Definition 1.7 (The forbidden-subgraph conjecture).**
+**Definition 1.11 (The forbidden-subgraph conjecture).**
 
 $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall G \in \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right),\; \operatorname{ViolatesMMI}\left(G\right) \Rightarrow (\exists s \in \operatorname{List}\left(\operatorname{Fin}\left(n\right)\right),\; \exists c \in \operatorname{Fin}\left(n\right),\; \exists i \in \operatorname{Fin}\left(n\right),\; \exists j \in \operatorname{Fin}\left(n\right),\; \exists k \in \operatorname{Fin}\left(n\right),\; \operatorname{IsClaw}\left(\operatorname{lcSeq}\left(G, s\right), c, i, j, k\right) \land \operatorname{IsGeneralizedStar}\left(\operatorname{lcSeq}\left(G, s\right), \operatorname{sdiff}\left(\operatorname{univ}, \{i,j,k\}\right), (\{i\},\{j\},\{k\})\right)))$$
 
@@ -88,7 +144,7 @@ $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall G \in \operatorname
 
 For every number n of qubits and every graph G on the vertices 0, ..., n - 1 whose graph state violates MMI, some graph H = lcSeq(G, s) has an induced four-star c; i, j, k, and H is a generalized star with centre univ \ {i, j, k}, the vertices other than i, j, k, and parts {i}, {j}, {k}.
 
-**Theorem 1.8 (Proof of the conjecture).**
+**Theorem 1.12 (Proof of the conjecture).**
 
 $$claim$$
 
@@ -112,7 +168,11 @@ Local complementation at a vertex of a vertex set commutes with restriction to t
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.IsGeneralizedStar`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.ViolatesMMI`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.claim`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.compl_eq`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.cut`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.entropy`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.lc`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.lcSeq`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.lc_eq`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.relabel`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphStateMonogamyForbiddenSubgraph.result`

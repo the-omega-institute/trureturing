@@ -1,0 +1,6 @@
+### 1.2.4. Mathematical sources
+
+The circular hypergraph, the independent uniform edge-choice law, the base-two entropy convention, and the target lower bound are those of Christos Pelekis, *On the Shannon entropy of the number of vertices with zero in-degree in randomly oriented hypergraphs*, arXiv:1808.04166v1, Section 4, Conjecture 4.1, and *Le Matematiche* 74(1), 119–130, DOI [10.4418/2019.74.1.8](https://doi.org/10.4418/2019.74.1.8), Conjecture 4.1 on p.129. The title's complementary count is $n-X$, which has the same entropy.
+
+Finite Fourier inversion, the Gaussian integral, the Bernoulli characteristic-function identity, and the largest-atom entropy inequality are elementary classical inputs. The separated-edge exposure and the independent endpoint events above establish the quantitative estimate for this particular joint orientation law. The conclusion concerns every fixed $r$; it asserts neither a constant uniform in $r$ nor circular entropy maximality.
+

@@ -1,0 +1,84 @@
+**Lemma 48.2 (reused spectral rectangle descent).** Suppose an actual pair
+at $0<\rho(E,U)=\xi\le R_\star$ has an active sign $\sigma$ and, for some
+$i\ne j$,
+
+$$
+ (V_\sigma)_{ij}\ne0,\qquad L_i^\sigma\ne L_j^\sigma.
+\tag{48.6}
+$$
+
+Then there is an actual phase pair $(E,U')$ with the same effect $E$, the
+same active sign $\sigma$, the same complex active trace
+$\operatorname{Tr}V_\sigma$, and the same true original level $\xi$; it
+satisfies $g(E,U')<g(E,U)$. In particular, for a positive-definite $F$ every
+nonphase input has such a strict phase improvement.
+
+**Proof.** Spectrally write
+$V_\sigma=Z\operatorname{diag}(\zeta_1,\ldots,\zeta_4)Z^\dagger$ and
+$D_{ik}=|Z_{ik}|^2$. The matrix $D$ is doubly stochastic. Row orthogonality
+shows that (48.6) supplies two common-support columns $k,l$ with
+$\zeta_k\ne\zeta_l$: if all common-support eigenvalues were equal, the
+$(i,j)$ entry of $V_\sigma$ would be that common value times the zero row
+inner product. Put
+
+$$
+ \delta=\min\{D_{ik},D_{il},D_{jk},D_{jl}\}>0
+$$
+
+and let $R_{ij;kl}$ have entries $+1$ at $(i,k),(j,l)$, entries $-1$ at
+$(i,l),(j,k)$, and zero elsewhere. Both
+$D+\delta R_{ij;kl}$ and $D-\delta R_{ij;kl}$ are nonnegative doubly
+stochastic matrices. By the finite Birkhoff--von Neumann decomposition,
+each is a convex combination of permutation matrices. For a permutation
+$\Pi$ let
+
+$$
+ U_\Pi=\operatorname{diag}(\Pi\zeta)U_\sigma,\qquad
+ b_\Pi=\sum_i(\Pi\zeta)_iL_i^\sigma.
+\tag{48.7}
+$$
+
+Every $U_\Pi$ is one actual whole unitary. It has the same complex active
+trace $\operatorname{Tr}(U_\Pi U_\sigma^\dagger)=\sum_k\zeta_k$ as $U$.
+The exact active-distance identity therefore gives
+$\rho_\sigma(E,U_\Pi)=\rho_\sigma(E,U)=\xi$. The effect is unchanged, so
+the same $\epsilon=2\det F$ applies. Since (42.19) gives
+$\xi+\epsilon<9-L$, (42.20) gives
+$$
+\rho_{-\sigma}(E,U_\Pi)
+ \ge 2(9-L-\epsilon)-\xi>\xi.
+$$
+Thus the active distance is the true original distance for every
+permutation pair. This is the exact Continuation II, Section 42 opposite-sign transport
+premise, rather than a consequence of injectivity alone.
+If $b^\pm$ denote the two convex averages of the $b_\Pi$ from the two
+Birkhoff decompositions, linearity gives
+
+$$
+ b^\pm=b_\sigma\pm\delta(\zeta_k-\zeta_l)(L_i^\sigma-L_j^\sigma).
+\tag{48.8}
+$$
+
+The parallelogram identity and convexity give
+
+$$
+\frac12\left(\|b^+\|_2^2+\|b^-\|_2^2\right)
+ \ge \|b_\sigma\|_2^2+
+ \delta^2|\zeta_k-\zeta_l|^2\|L_i^\sigma-L_j^\sigma\|_2^2.
+\tag{48.9}
+$$
+
+The inequality includes the nonnegative within-mixture variance. Hence one
+of the actual permutation pairs in the two mixtures has squared recovery at
+least the right side of (48.9). By (48.3) its $g$ is strictly smaller. The
+argument is the supplied spectral rectangle relation, used here only as an
+actual same-effect, same-trace comparison. It does not assert that either
+perturbed matrix is itself a diagonal law of a prescribed normal orbit.
+If $F$ is positive definite, right multiplication by $F^{1/2}$ is injective,
+so the distinct rows in (48.1) give $L_i^\sigma\ne L_j^\sigma$ for every
+$i\ne j$; a nonphase $V_\sigma$ has a nonzero off-diagonal entry. Together
+with the preceding exact-level and opposite-sign transport calculation,
+this proves the stated positive-definite mixed conclusion. No pointwise
+claim for singular mixed effects is obtained from this injectivity step.
+$\square$
+

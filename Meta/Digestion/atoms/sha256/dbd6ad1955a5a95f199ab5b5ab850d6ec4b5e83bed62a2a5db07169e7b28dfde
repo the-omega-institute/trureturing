@@ -1,0 +1,90 @@
+**Theorem 2.1 (Generic three-site recovery on the actual image).** For every fixed $N\ge4$, the set $U_N$ is nonempty and relatively complex-Zariski-open dense in $P_N$. For every $\psi\in U_N$ and every $\phi\in P_N$,
+
+$$
+\rho_3(\phi)=\rho_3(\psi)
+\quad\Longleftrightarrow\quad
+\phi=c\psi\ \text{for some }c\in\mathbb C\text{ with }|c|=1.
+$$
+
+Equivalently, $\mathcal F_{N,3}(\psi)=S^1\psi$. The competitors are all actual states of the same fixed length, with arbitrary complex shared matrices; no genericity, injectivity, or equality of matrix parameterizations is assumed for them. Moreover, the target condition is observable and fibre-saturated:
+
+$$
+\psi\in U_N
+\quad\Longleftrightarrow\quad
+\det\rho_2(\psi)\ne0
+\quad\Longleftrightarrow\quad
+\det\bigl(\operatorname{Tr}_3\rho_3(\psi)\bigr)\ne0.
+$$
+
+Proof. For a representation $\psi=\Psi_N(A_0,A_1)$, write $A_w=A_{w_1}\cdots A_{w_\ell}$ and
+
+$$
+S_\ell(A)=\operatorname{span}_{\mathbb C}\{A_w:w\in\{0,1\}^\ell\},
+\qquad
+\Gamma_\ell^A(X)=\sum_{w\in\{0,1\}^\ell}\operatorname{tr}(XA_w)|w\rangle.
+$$
+
+The trace pairing on $M_2(\mathbb C)$ is nondegenerate: $\operatorname{tr}(XE_{ab})=X_{ba}$. Hence $\Gamma_\ell^A$ is injective exactly when $S_\ell(A)=M_2(\mathbb C)$. Also,
+
+$$
+[F_{N,2}(\psi)]_{u,b}=\operatorname{tr}(A_uA_b),
+\qquad
+\operatorname{rank}F_{N,2}(\psi)\le\dim S_2(A)\le4.
+$$
+
+Thus $\psi\in U_N$ forces $S_2(A)=M_2(\mathbb C)$ in every representation of $\psi$, and supplies injectivity at length $L_0=2$.
+
+For nonemptiness, take
+
+$$
+A_0=\begin{pmatrix}1&0\\0&t\end{pmatrix},
+\qquad
+A_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\qquad t\in\mathbb C\setminus\{0,1,-1\}.
+$$
+
+The diagonal matrices $A_0^2=\operatorname{diag}(1,t^2)$ and $A_1^2=I$ are independent. The off-diagonal matrices
+
+$$
+A_0A_1=\begin{pmatrix}0&1\\t&0\end{pmatrix},
+\qquad
+A_1A_0=\begin{pmatrix}0&t\\1&0\end{pmatrix}
+$$
+
+are independent because $1-t^2\ne0$. Thus $S_2(A)=M_2(\mathbb C)$. Since $A_0$ is invertible and $S_{\ell+1}(A)\supseteq S_\ell(A)A_0$, induction gives $S_\ell(A)=M_2(\mathbb C)$ for every $\ell\ge2$. Both word maps into the trace pairing, at lengths $2$ and $N-2$, are therefore surjective. Its nondegeneracy gives $\operatorname{rank}F_{N,2}(\Psi_N(A))=4$ for every $N\ge4$, including $N=4$.
+
+The rank-four condition is the nonvanishing of at least one $4\times4$ minor of the flattening. It is therefore relatively Zariski open. The polynomial image $P_N$ of the irreducible space $M_2(\mathbb C)^2$ is irreducible in its induced Zariski topology, so the nonempty open subset $U_N$ is dense. It is also dense in the ordinary topology: the inverse image of the rank-four locus is a nonempty Zariski-open subset of the parameter space, hence ordinarily dense; continuity of $\Psi_N$ then approximates every actual state by states in $U_N$.
+
+Now fix $\psi\in U_N$ and one representation $A$. Let $G_3=\operatorname{im}\Gamma_3^A$ and let $h$ be the orthogonal projector onto $G_3^\perp$. For each complement word $b\in\{0,1\}^{N-3}$, the conditional three-site vector has entries
+
+$$
+(v_b)_u=\operatorname{tr}(A_uA_b)=\operatorname{tr}(A_bA_u),
+\qquad v_b=\Gamma_3^A(A_b)\in G_3.
+$$
+
+Consequently $\rho_3(\psi)=\sum_b v_bv_b^\dagger$ has range contained in $G_3$, and $\operatorname{tr}(h\rho_3(\psi))=0$.
+
+Use the finite-ring parent uniqueness theorem of Pérez-García, Verstraete, Wolf and Cirac, *Matrix Product State Representations*, [quant-ph/0608197v2](https://arxiv.org/abs/quant-ph/0608197v2), Theorem 10, “Uniqueness with TI and PBC”, §4.1.2. Its space $\mathcal G_L$ is precisely $\operatorname{im}\Gamma_L^A$, and its Hamiltonian is the sum of all cyclic translates of the projector onto $\mathcal G_L^\perp$. Its hypotheses are injectivity at length $L_0$, $L_0<L\le N$, and $N\ge2L_0$. Here $L_0=2$, $L=3$, and $N\ge4$, so the theorem yields
+
+$$
+H=\sum_{s=0}^{N-1}\tau^s(h\otimes I_{N-3})\tau^{-s},
+\qquad
+\ker H=\mathbb C\psi.
+$$
+
+This invocation uses the published parent theorem, rather than a parameter-identifiability theorem. The ground-space statement concerns a ray; any unit-norm convention for the vector in that theorem is accommodated by scaling both matrices by an $N$th root of $1/\|\psi\|$, which preserves every $G_L$ and every injectivity length.
+
+If an arbitrary $\phi\in P_N$ has $\rho_3(\phi)=\rho_3(\psi)$, then
+
+$$
+\|(h\otimes I_{N-3})\phi\|^2
+=\operatorname{tr}(h\rho_3(\phi))
+=\operatorname{tr}(h\rho_3(\psi))=0.
+$$
+
+Every cyclic translate also annihilates $\phi$, because $\tau\phi=\phi$. Hence $H\phi=0$, so $\phi=c\psi$. Taking the trace of the equal raw marginals gives $\|\phi\|^2=\|\psi\|^2$, and $\psi\ne0$ gives $|c|=1$. Conversely every $c\psi$ with $|c|=1$ belongs to $P_N$ by its cone property and has the same raw marginal.
+
+Finally $\rho_2(\psi)=F_{N,2}(\psi)F_{N,2}(\psi)^\dagger$. The kernels of $FF^\dagger$ and $F^\dagger$ agree, since $x^\dagger FF^\dagger x=\|F^\dagger x\|^2$; thus $\operatorname{rank}\rho_2(\psi)=\operatorname{rank}F_{N,2}(\psi)$. The identity $\rho_2=\operatorname{Tr}_3\rho_3$ proves the asserted observable criterion. Equality of three-site marginals therefore forces every competitor into $U_N$ as well, although this was not an assumption of the argument.
+
+At $N=4$, the complement of the three-site block has only one qubit, so $\operatorname{rank}\rho_3(\psi)\le2$. The proof uses only $\operatorname{im}\rho_3(\psi)\subseteq G_3$, never equality of these spaces. The parent theorem's inequalities still hold at $N=4$. This completes the proof for the whole stated range. $\square$
+

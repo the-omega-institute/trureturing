@@ -1,0 +1,9 @@
+**定义 20.3（成熟方法、来源与参数对应）。** 本节的文献地位是 `repo-derived` 的应用与综合，不主张 Lorentz/Lie 方法、滤波表示或新的重构框架的文献新意。以下成熟结果只作为定理 18.3、命题 19.2、20.1 的中间工具。
+
+| 来源 | 参数对应及实际消费 | 适用边界 |
+| --- | --- | --- |
+| Hall, *An Elementary Introduction to Groups and Representations*, [math-ph/0005032v1](https://arxiv.org/html/math-ph/0005032v1)，§2.2.6、Theorem 3.23、Corollary 3.26 | `literature-attested`：有限实矩阵群视为复矩阵群的闭实子群；$H\leftrightarrow G_{\rm Hall}$，局部指数及连通群由 Lie 代数指数生成用于 (18.10)–(18.11) | 不要求 $H$ 紧；不从数学指数、整数负幂或闭包取得原调用 |
+| Verstraete–Dehaene–De Moor, *Local filtering operations on two qubits*, [quant-ph/0011111](https://arxiv.org/html/quant-ph/0011111)，Theorem 2、式 (5)–(6) | `literature-attested`：复 $2\times2$ 可逆滤波的实 Pauli 作用除以 $|\det A|$ 后为 proper orthochronous Lorentz 作用；本节单因子 $\lambda=|\det A|$、$L=\lambda^{-1}\operatorname{Ad}_A$ | 原文采用已给量子密度/Born 与局部滤波；只用于矩阵比较实例，不推断未知原生终端律、实际副本或成功率一的逆 |
+| Barnum–Wilce, [arXiv:1202.4513v2](https://arxiv.org/html/1202.4513v2)，Theorem 4 | `literature-attested`：本卷定理 3.1 已消费的指定闭连通自伴随内迁群；(20.1)–(20.3) 仅提供一个局部 G 的条件入口 | 原比较自对偶、群身份和每个所需对象必须另核对；不靠事后扩大群消去该量词 |
+| [C117](https://github.com/the-omega-institute/trureturing/blob/8171c9756da2b5c654cba2eb1d04a4d93a9fadeb/docs/develop/theory/AURIC_COMMON_SOURCE_SELF_REFERENCE_AND_OBSERVER_SEQUENCES_C117.md)、[V95 C120](https://github.com/the-omega-institute/trureturing/blob/8171c9756da2b5c654cba2eb1d04a4d93a9fadeb/docs/develop/theory/AURIC_COMPARISON_DYNAMICAL_CURVATURE_FINITE_FRAME_QUANTUM_V95.md)、[C119](https://github.com/the-omega-institute/trureturing/blob/8171c9756da2b5c654cba2eb1d04a4d93a9fadeb/docs/develop/theory/AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md)、[原生重建续卷 II](https://github.com/the-omega-institute/trureturing/blob/8171c9756da2b5c654cba2eb1d04a4d93a9fadeb/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) | `repo-derived` 既有结果按定义 20.2 的编号直接消费；这些固定版本只界定本节引用，不改变定义 9.2 对定理 3.1 的钉版 | 不以引用的满足族替代同一原生源的共同实现 |
+

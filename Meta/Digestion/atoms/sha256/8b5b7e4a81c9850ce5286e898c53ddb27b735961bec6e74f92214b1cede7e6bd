@@ -1,0 +1,93 @@
+**定理 23.1（固定原数据的唯一扩张）。** 在 P/G 下，对定义 21.1 的固定 $q/L$，原 D 与 C 等价。若成立，$J$ 唯一；忘掉 $J$ 在全部非 $J$ 数据上是恒等映射。D 推出 C 的方向只用 P/G/D，故也适用于没有 AC 的端点删除签名。纯经典对象的 $\mathfrak h=0$ 情形和任意不等大小、含经典块的直和均包括在内。
+
+**证明。** 先证 C 推出 D。定理 22.1 给 $D_a=JL_{a_0}\in\mathfrak k$，故原 $D_a$ 是 (22.3) 的导子线性组合。两条质心等式又给
+
+$$
+[D_a,D_c]=[JL_{a_0},JL_{c_0}]
+=J^2[L_{a_0},L_{c_0}]=-[L_a,L_c].
+\tag{23.1}
+$$
+
+这是全部原 $E$ 上的算子等式，导子律和曲率抵消正是假设 1.5。没有只在 $E_0$ 上检查后忽略中心的步骤。尤其 C 强制 $D_z=0$，但并未删除原响应 $z$。
+
+反过来，设原 D 成立。把 P/G 已给的 $(E,u,q,\circ)$ 与原 $D$ 直接代入 V95 定义 1.1、定理 2.1，完全不调用 AC、$N_u$、X、Xs、R 或 F。复用其结论取得同空间的有限复 $C^*$ 代数
+
+$$
+\mathcal A=\bigoplus_s M_{n_s}(\mathbb C),\qquad
+E=\mathcal A_{\rm sa},\qquad
+ab=a\circ b-iD_ab.
+\tag{23.2}
+$$
+
+交换两个实元并使用 V95 已证明的反对称性，得
+
+$$
+[a,b]=-2iD_ab,\qquad
+\boxed{D_ab=\tfrac i2[a,b]},\qquad
+[L_a,L_b]x=\tfrac14[[a,b],x].
+\tag{23.3}
+$$
+
+这证明原生符号和因子；不是把一个后来任选的交换子反过来命名为原 $d$。所选复乘法若改为相反乘法，交换子与相应几何取向同时反号，不能保持原 $d$ 后任意翻转 $J$。
+
+先明确 $q$ 与去中心坐标。在这些矩阵坐标下，任意正 Frobenius 型有
+
+$$
+q(x,y)=\sum_s\lambda_s\operatorname{Tr}(x_sy_s),\qquad \lambda_s>0.
+\tag{23.4}
+$$
+
+这里是成熟的简单 Jordan 迹型唯一性的中间应用，也可如下直接核对。不同中心理想由自伴随的 $L_{u_s}$ 正交；令 $t(x)=q(u,x)$，则 $q(x,y)=t(x\circ y)$。每个内导子消去 $u$ 且斜伴随，故 $t(\delta x)=0$。由 (23.3) 及 (3.11)–(3.12) 的既有交换子张成论证，这些导子在每块生成全部特殊酉共轭；$t$ 逐块酉不变，因而是普通迹的实倍数。正定性给 $\lambda_s>0$。这不要求原 $g^0$ 等于 $q$。
+
+由 (23.3)，$[L_z,L_a]=0$ 意味着每块 $[z_s,a_s]$ 与所有矩阵交换，是迹零标量，遂为零；对所有 Hermitian $a_s$ 成立就迫使 $z_s$ 标量。因此
+
+$$
+Z=\bigoplus_s\mathbb R I_{n_s},\qquad
+z(a)_s=\frac{\operatorname{Tr}(a_s)}{n_s}I_{n_s},\qquad
+E_0=\bigoplus_{s:n_s\ge2}\operatorname{Herm}_0(n_s).
+\tag{23.5}
+$$
+
+一维经典块在 $E_0$ 中为零，却仍在原 $E$ 和 (23.2) 中。
+
+为避免中心核造成的虚假乘 $i$，定义有指定定义域的实表示
+
+$$
+\begin{aligned}
+\rho:\bigoplus_{s:n_s\ge2}\mathfrak{sl}_{n_s}(\mathbb C)_{\mathbb R}
+&\longrightarrow\operatorname{End}_{\mathbb R}(E),\\
+\rho(M)x&=Mx+xM^*.
+\end{aligned}
+\tag{23.6}
+$$
+
+它在未列出的经典块作用为零，所有列出块仍作用于整个块，包括其单位。直接计算给 $[\rho(M),\rho(N)]=\rho([M,N])$。若 $\rho(M)=0$，置 $x=u$ 得 $M^*=-M$，再对所有 Hermitian $x$ 得 $[M,x]=0$，故 $M_s=i c_sI$；逐块复迹零迫使 $c_s=0$。所以 (23.6) 忠实。
+
+又有
+
+$$
+L_{a_0}=\rho(a_0/2),\qquad
+[L_a,L_b]=\rho([a,b]/4).
+\tag{23.7}
+$$
+
+Hermitian 交换子逐块实张成 $\mathfrak{su}(n_s)$，正是 (3.11)–(3.12) 已证明的张成事实；每个复无迹矩阵唯一分解为无迹 Hermitian 加无迹斜 Hermitian。因此 (23.6) 的像恰为 $\mathfrak p_0\oplus\mathfrak k=\mathfrak h$，并且
+
+$$
+J\rho(M)=\rho(iM)
+\tag{23.8}
+$$
+
+良定。它平方为负恒等且在质心中，(23.3)、(23.5)–(23.7) 给 $JL_{a_0}=\rho(ia_0/2)=D_a$，故 C 成立。由 (23.4) 还可直接核对 $\rho(M)^{\dagger_q}=\rho(M^*)$，与定理 22.1 的对合结论一致。
+
+若把 (23.6) 的定义域错误地放宽成全部 $\bigoplus_s\mathfrak{gl}_{n_s}(\mathbb C)_{\mathbb R}$，核是 $i\bigoplus_s\mathbb R I$；而 $i(i c_sI)=-c_sI$ 不再在核中。因此不能对任意同一合同代表直接乘 $i$ 再下降。逐块复无迹限制既去掉了这个核，也没有在原响应上取商；中心的正缩放由 $L(Z)$ 另行保留。
+
+最后证唯一性。锚定式固定 $J$ 在 $\mathfrak p_0$ 上的值；质心律强制
+
+$$
+J[L_{a_0},L_{b_0}]=[L_{a_0},D_b].
+\tag{23.9}
+$$
+
+这些括号张成 $\mathfrak k$，故 $J$ 在全部 $\mathfrak h$ 上唯一。存在性已经保证 (23.9) 尊重所有线性关系，下一节将把这项要求写成独立的精确障碍。若全部块经典，则 $Z=E$、$\mathfrak h=0$，V95 给原 $D=0$，唯一的零映射满足 $J^2=-\operatorname{Id}_0$。因此无退化例外。整个构造只添 $J$，不改原数据。∎
+

@@ -1,0 +1,107 @@
+### 49.2. Monotonicity of the actual scalar selector
+
+For independent $0<\delta<2$ and $0<q<1$, put
+
+$$
+\begin{aligned}
+\mathscr L(\delta,q)&=d^2(1-q)+e^2q
+ -(u\sqrt{1-q}+v\sqrt q)^2,\\
+u&=2R,\quad R=c+hx,\quad v=2hy,\quad
+x=1-\delta/2,\quad y=\sqrt{1-x^2},\\
+\mathcal H(t,\delta)&=\mathscr L(\delta,t-\delta)-2\kappa t.
+\end{aligned}
+\tag{49.7}
+$$
+
+Theorem 37.5 selects the unique interior minimum of $\mathcal H$ on
+$J(t)=[\max\{0,t-1\},t]$, for $0<t\le2$.
+Theorem 41.2 supplies, at every selected point,
+
+$$
+\mathscr L_\delta=\mathscr L_q>0,\qquad q<y^2.
+\tag{49.8}
+$$
+
+The following derivative signs are needed along that actual selector;
+they are not assumed throughout the independent $(\delta,q)$ rectangle.
+Write
+
+$$
+r=\sqrt{q/p},\quad D_0=d^2-e^2=4h+8s,\quad
+A_0=u^2-v^2-D_0,\quad C_1=(Rx-hy^2)/y.
+$$
+
+Direct differentiation at fixed values of the other independent variable
+gives
+
+$$
+\begin{aligned}
+\mathscr L_q&=A_0+uv(r-r^{-1}),\\
+\mathscr L_{\delta q}
+ &=2h[-2(R+hx)+C_1(r-r^{-1})],\\
+\mathscr L_{\delta\delta}
+ &=p(r^2-1+2rM_1),\qquad
+ M_1=\frac{xy^2+hR}{y^3},\\
+\mathscr L_{qq}&=\frac{uv}{2(pq)^{3/2}}>0.
+\end{aligned}
+\tag{49.9}
+$$
+
+To prove $\mathscr L_{\delta q}<0$, first suppose $C_1\le0$.
+The numerator $cx+2hx^2-h$ of $C_1$ is strictly increasing and is
+$(c-h)/2>0$ at $x=1/2$, so $x<1/2$. Also
+
+$$
+A_0/4=x^2+2hcx-h/2-2s
+$$
+
+is increasing and at $1/2$ equals $1/4-h/2+(h-1)s<0$.
+Hence $A_0<0$. Since $\mathscr L_q>0$, the first line of (49.9)
+forces $r>1$, so $C_1(r-r^{-1})\le0$. If $C_1>0$ and $r\le1$,
+the same conclusion is immediate. In the remaining case $C_1>0,r>1$,
+(49.8) gives $r<y/x$ and $x<y$. Therefore
+
+$$
+C_1(r-r^{-1})
+ <\frac{(Rx-hy^2)(y^2-x^2)}{xy^2}
+ <R\frac{y^2-x^2}{y^2}<R.
+$$
+
+The second line of (49.9) is strictly negative in every case.
+
+For $\mathscr L_{\delta\delta}>0$, put $K_0=D_0/4=h+2s$.
+The exact identity
+
+$$
+2M_1-\frac{A_0}{uv}
+ =\frac{(Rx+hy^2)^2+K_0y^2}{Rh\,y^3}>0
+\tag{49.10}
+$$
+
+uses $x^2+y^2=1$ and $2h^2=1$.
+The inequality $\mathscr L_q>0$ implies
+$r^2-1>-A_0r/(uv)$, so the third line of (49.9) and (49.10)
+give $\mathscr L_{\delta\delta}>0$.
+
+Thus at every selected point
+
+$$
+H_t:=\mathcal H_{\delta\delta}
+ =\mathscr L_{\delta\delta}-2\mathscr L_{\delta q}
+      +\mathscr L_{qq}>0.
+$$
+
+The scalar implicit function theorem, with uniqueness from Theorem 37.5,
+identifies the selector locally as an analytic function. Differentiating
+$\mathscr L_\delta-\mathscr L_q=0$ along $q=t-\delta$ gives
+
+$$
+\delta_\circ'(t)=\frac{\mathscr L_{qq}-\mathscr L_{\delta q}}{H_t}>0,
+\qquad
+q'(t)=\frac{\mathscr L_{\delta\delta}-\mathscr L_{\delta q}}{H_t}>0.
+\tag{49.11}
+$$
+
+In particular $x'(t)<0$ and $r'(t)>0$ on the whole selected curve
+$0<t<2$.
+

@@ -1,0 +1,84 @@
+**定理 36.1（原范围上的 Z/I 等价）。** 在定义 35.1 的保留背景下，Z 与定义 29.2 的全范围 I 等价。该等价本身不消费 II、S 或 F。正向在取得内归属之前不使用 (31.2) 的 I 依赖正常形，也不使用动力对应或复矩阵重构。它适用于每个有限 EJA、全部中心和跨块输入，包括经典代数、所有自旋因子及例外 EJA。
+
+**证明。** 先证明仅由现有原接口已强制的等式
+
+$$
+D^A_a u_A=0
+\qquad(a\in E_A,\ \text{每个 }A).
+\tag{36.1}
+$$
+
+对这个 $A$，使用定理 30.1 证明中不涉及 I/II/S 的身份参考存在性：精确 $N_u$ 给 $A$ 的原身份事件，全事件 R 给某个实际 $B=AP^{\otimes k}$，$k\ge1$。令 $\iota:E_A\to E_B$、$j_R:E_{P^{\otimes k}}\to E_B$ 为原 X 的含幺嵌入。它们给
+
+$$
+\iota(D^A_a u_A)
+=D^B_{\iota(a)}\iota(u_A)
+=D^B_{\iota(a)}u_B
+=D^B_{\iota(a)}j_R(u_{P^{\otimes k}})
+=0.
+\tag{36.2}
+$$
+
+最后一步正是原交叉零，第一步正是保持原 $D$；$\iota$ 单射，故得 (36.1)。这里只用整个实际参考的单位，未将某个角当作参考，未要求这个 $A$ 有直接 $AP$。$A$ 若本身是旧联合对象、失败输出或标签对象，仍有自己的身份事件，故同一论证逐对象成立。此处也没有证明第一槽的 $D^A_{u_A}=0$；那将是完整候选的后果。
+
+固定 $A,a$，令 $H=D^A_a$。由 P，任何 $\varphi\in C_A^*$ 都有有限表示
+
+$$
+\varphi=\sum_{j=1}^m c_j\alpha_j,\qquad
+c_j\ge0,\quad \alpha_j\text{ 为原实际准备}.
+\tag{36.3}
+$$
+
+若 $x\in C_A$ 且 $\varphi(x)=0$，每个 $c_j>0$ 的项都有 $\alpha_j(x)=0$，因为这些项均非负。Z 遂给
+
+$$
+\varphi(Hx)=\sum_jc_j\alpha_j(Hx)=0.
+\tag{36.4}
+$$
+
+因此原实际准备的量词足以得到**所有**正泛函的零接触条件。这里使用的是“有限正锥包恰为完整正对偶锥”，不是仅线性分离或仅一族乘积准备；也没有声称 (36.3) 本身是一份系数一的实际准备装置。
+
+应用成熟的零接触判据：有序单位空间上的有界实线性 $H$ 满足所有状态 $\mu$、所有 $x\ge0$ 的 $\mu(x)=0\Rightarrow\mu(Hx)=0$，当且仅当 $e^{tH}$ 对全部 $t\in\mathbb R$ 保正。准确来源为 Niestegge, *Dynamical Correspondence in a Generalized Quantum Theory*, [arXiv:1402.0158v2, §4 Lemma 3](https://arxiv.org/html/1402.0158v2#S4)；该文将此判据归于 Connes 及 Evans–Hanche-Olsen。此处 $E_A$ 有限维，$C_A$ 闭、尖、生成且 $u_A$ 为内点，故是 Archimedean 有序单位空间，$H$ 自动有界；所有归一正泛函已由 (36.4) 覆盖，恰好满足判据的前件。这个判据是中间工具，不是本定理新证明的文献命题。
+
+于是 $T_t=e^{tH}$ 与 $T_{-t}$ 都保正；(36.1) 又给 $T_tu_A=u_A$。有限 EJA 的保单位序同构恰为 Jordan 自同构，准确用到 Barnum–Graydon–Wilce, [arXiv:1606.09331v3, §3.2 “Order-automorphisms”, pp. 14–15](https://arxiv.org/pdf/1606.09331v3) 所述的有序单位/Jordan 对应，而不套用该文的复合或独立动力学假设。该事实关于一般 EJA，不限于可嵌入复矩阵的 EJC。故
+
+$$
+T_t(b\circ c)=T_tb\circ T_tc,\qquad
+H(b\circ c)=Hb\circ c+b\circ Hc.
+\tag{36.5}
+$$
+
+第二式由第一式在 $t=0$ 微分得到，作用在完整 $E_A$。指数只用于数学证明，未被输入定义，也未在这一步认作原可调用器件。
+
+还须从 Jordan 导子落到**同一指定** $\mathfrak k_A$，不能把这一步与导子律混同。以下给出不依赖简单类型表的有限论证。由定理 22.1，$\mathfrak k_A=\operatorname{span}\{[L_b,L_c]\}$ 已位于指定原 Lie 代数内，且包含于 $\operatorname{Der}(E_A,\circ)$。对任意这样的导子 $\delta$，直接复用 V95 定理 2.1 第一项：有限、含幺、正 Frobenius 型 $q_A$ 使 $\delta^{\dagger_q}=-\delta$。该项不要求原曲率条件。
+
+在实算子空间上用正定 Hilbert–Schmidt 型
+$\langle S,T\rangle_{\rm HS}=\operatorname{Tr}(S^{\dagger_q}T)$。设导子 $\delta$ 与 $\mathfrak k_A$ 正交。由 $\delta$ 斜伴随及导子恒等式 $[\delta,L_b]=L_{\delta b}$，
+
+$$
+0=\operatorname{Tr}\bigl(\delta[L_b,L_c]\bigr)
+=\operatorname{Tr}\bigl([\delta,L_b]L_c\bigr)
+=\operatorname{Tr}(L_{\delta b}L_c)
+\qquad(b,c\in E_A).
+\tag{36.6}
+$$
+
+型 $Q(b,c)=\operatorname{Tr}_{\mathbb R,E_A}(L_bL_c)$ 正定：$L_b$ 对 $q_A$ 自伴随，非零 $b$ 有 $L_bu_A=b\ne0$，所以 $Q(b,b)=\operatorname{Tr}(L_b^2)>0$。(36.6) 遂给 $\delta b=0$ 对所有 $b$，故 $\delta=0$。有限维内积空间中，$\mathfrak k_A$ 在全部导子空间内的正交补为零，得到
+
+$$
+\operatorname{Der}(E_A,\circ)=
+\operatorname{span}_{\mathbb R}\{[L_b,L_c]:b,c\in E_A\}
+=\mathfrak k_A.
+\tag{36.7}
+$$
+
+有限 EJA 的“导子皆内”是成熟事实；这里的迹论证只核定所需的指定群归属，避免从 BGW Appendix E 的 EJC 延拓语境推断例外代数可嵌入复矩阵。由 (36.5)–(36.7)，$D^A_a\in\mathfrak k_A$。$A,a$ 任意，得到全范围 I。
+
+反向设 I。定理 22.1 给 $D^A_a$ 是指定 Lie 代数中的斜伴随导子且消去单位，故 $e^{tD^A_a}$ 为保正的数学群。对 $x\in C_A$ 和原准备 $\alpha$，若 $\alpha(x)=0$，则
+
+$$
+f(t)=\alpha(e^{tD^A_a}x)\ge0,\qquad f(0)=0.
+$$
+
+可微函数在内点 $0$ 取极小，故 $f'(0)=\alpha(D^A_ax)=0$，即 Z。此方向也不要求原指数可操作。全证未先删除中心、纯经典对象或跨块输入，亦未调用自旋/矩阵表示分类；因此 $\mathrm{Spin}_2$、$\mathfrak{so}(4)$ 的分裂及 $H_3(\mathbb O)$ 都不构成遗漏例外。∎
+

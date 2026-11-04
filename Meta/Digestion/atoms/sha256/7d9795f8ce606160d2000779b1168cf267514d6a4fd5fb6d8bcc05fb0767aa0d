@@ -1,0 +1,60 @@
+**定理 86.1（对称耗散的无维数局部界）。** 在定理 85.1 的全部范围内，包括允许中心间转移的有限直和，有
+
+$$
+d(E,F)\le\min\{2,10\beta(E,F)\},\qquad
+D\le\min\{2,10\beta_*\}.
+\tag{86.1}
+$$
+
+这里结论的 diamond 范数包含全部数学矩阵参考，前提的 $\beta$ 仍只比较不带参考的正输入；常数不含维数、秩或 $q_E^{-1}$，不宣称常数十最优。
+
+证明。写 $\Phi=\Phi_E$、$\Psi=\Phi_{E^\vee}$、$\delta=\beta(E,F)$。由正、负部分解，$\|\Psi\Phi(X)-X\|_1\le\delta\|X\|_1$ 对全部自伴 $X\in\mathcal C$ 成立。若 $\Phi(X)=\lambda X$、$X=X^*\ne0$，则 $0\le\lambda\le1$，且 $\Psi$ 的迹范数收缩性给
+
+$$
+\delta\|X\|_1\ge\|X-\lambda\Psi(X)\|_1
+ \ge(1-\lambda)\|X\|_1.
+\tag{86.2}
+$$
+
+$\Phi$ 保星且自伴，每个特征空间都有自伴实基，所以 $\Phi\ge(1-\delta)\operatorname{id}$ 在 Hilbert--Schmidt 算子序中成立。以下把这个特殊谱下界转成 diamond 界，不使用一般维数相关的范数换算。
+
+把 $\mathcal C=\bigoplus_\alpha M_{r_\alpha}$ 嵌入 $B(H)$，令 $C$ 为中心块 pinching。数学延拓 $\widehat\Phi=\Phi C$ 是双随机、自伴完全正映射。它有 Hermitian Kraus 算子 $h_j$，$\sum_jh_j^2=I_H$：把任意 Kraus 表示与其伴随表示平均，再将每对 $`K,K^*`$ 换成 $`(K+K^*)/2`$ 与 $`(K-K^*)/(2i)`$。这里使用的逐项恒等式是
+
+$$
+\operatorname{Re}K\,X\operatorname{Re}K+\operatorname{Im}K\,X\operatorname{Im}K
+=\tfrac12(KXK^*+K^*XK).
+$$
+
+对任何位于一个中心块的单位向量 $\psi$，记 $p_\psi=|\psi\rangle\langle\psi|$，谱下界给
+
+$$
+\sum_j\operatorname{Var}_\psi(h_j)
+ =1-\tau\bigl(p_\psi\Phi(p_\psi)\bigr)\le\delta.
+\tag{86.3}
+$$
+
+在每个中心块任选一个单位向量 $e_\alpha$，置 $c_{j,\alpha}=\langle e_\alpha,h_je_\alpha\rangle$，$c_j=\bigoplus_\alpha c_{j,\alpha}I_\alpha$、$\ell_j=h_j-c_j$。对任意实单位系数向量 $u$，Cauchy--Schwarz 给 $\operatorname{Var}_\psi(\sum_ju_jh_j)\le\delta$，其中心块压缩的方差也不超过此值。测试压缩矩阵最大、最小特征向量的等权叠加，得谱直径至多 $2\sqrt\delta$。于是对同一块中的 $\psi$，对 $u$ 取上确界得到
+
+$$
+\sum_j\bigl(\langle\psi,h_j\psi\rangle-c_{j,\alpha}\bigr)^2\le4\delta,
+\qquad
+\sum_j\|\ell_j\psi\|^2\le5\delta.
+\tag{86.4}
+$$
+
+因此 $Q=C(\sum_j\ell_j^2)\le5\delta I_H$。在原直和代数上置 $K(X)=C(\sum_j\ell_jX\ell_j)$，它完全正，$K^*(I_H)=Q$。直接展开，得到
+
+$$
+\operatorname{id}-\Phi=\tfrac12\{Q,\cdot\}-K.
+\tag{86.5}
+$$
+
+具体地，记 $A_\alpha=\sum_jc_{j,\alpha}(h_j)_{\alpha\alpha}$、$b_\alpha=\sum_jc_{j,\alpha}^2$，则
+
+$$
+Q_\alpha=I_\alpha-2A_\alpha+b_\alpha I_\alpha,\qquad
+K(X)_\alpha=\Phi(X)_\alpha-\{A_\alpha,X_\alpha\}+b_\alpha X_\alpha.
+$$
+
+同一个交叉项在反对易式中抵消；不同中心块的 $h_j$ 分量仍留在 $K$ 和 $Q$ 中，未将它们删去。完全正范数公式与任意参考上的左右乘法界给 $\|\operatorname{id}-\Phi\|_\diamond\le2\|Q\|\le10\delta$；两个通道的距离又至多二。最后 $T_E-\mathcal L_E=\mathcal L_E(\Phi_E-\operatorname{id})$，而 $\|\mathcal L_E\|_\diamond=\|E\|$，即得 (86.1)。这里复用《AURIC_FIB_APPROXIMATE_ONLINE_RECOVERY_MEMORY》定理 40.1 中的居中 Hermitian Kraus 恒等式和完全正范数工具；新增估计是 (86.3)–(86.4) 的全向量方差控制，取代固定维数的迹上界。∎
+

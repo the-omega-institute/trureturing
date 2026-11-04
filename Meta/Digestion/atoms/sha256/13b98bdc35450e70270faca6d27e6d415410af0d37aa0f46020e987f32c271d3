@@ -1,0 +1,116 @@
+### 51.2. Continuous rational inequalities and their cover
+
+The inequalities used below are over complete closed rectangles in the
+coordinates $(\xi,q)$. A singleton argument denotes a degenerate interval.
+The expression $C'$ is the derivative of $C_\xi$ in $q$ at fixed $\xi$,
+and $\Omega_q$ likewise differentiates at fixed $\xi$, not along the
+selected curve.
+
+| Certificate | Expression | Closed $\xi$ interval | Closed $q$ interval | Continuous inequality | $n_{96}$ | $n_{128}$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| P1 | $C'_\xi(q)$ | $\{239/100\}$ | $\{489/1000\}$ | $C'_\xi(q)\le -1/100$ | 1 | 1 |
+| P2 | $C'_\xi(q)$ | $\{239/100\}$ | $\{491/1000\}$ | $C'_\xi(q)\ge 1/50$ | 1 | 1 |
+| P3 | $\Omega(\xi,q)$ | $\{239/100\}$ | $[489/1000,491/1000]$ | $\Omega(\xi,q)\le -1/2000$ | 9 | 9 |
+| P4 | $C'_\xi(q)$ | $\{21/10\}$ | $\{2/5\}$ | $C'_\xi(q)\le -1$ | 1 | 1 |
+| P5 | $C'_\xi(q)$ | $\{9/4\}$ | $\{47/100\}$ | $C'_\xi(q)\ge 2/25$ | 1 | 1 |
+| P6 | $\Omega(\xi,q)$ | $\{21/10\}$ | $[0,13/20]$ | $\Omega(\xi,q)\ge 1/1000$ | 36 | 36 |
+| P7 | $\Omega(\xi,q)$ | $\{239/100\}$ | $[0,1/20]$ | $\Omega(\xi,q)\ge 1/100$ | 5 | 5 |
+| P8 | $\Omega(\xi,q)$ | $\{239/100\}$ | $[1/2,159/200]$ | $\Omega(\xi,q)\ge 1/1000$ | 11 | 11 |
+| P9 | $\Omega(\xi,q)$ | $\{239/100\}$ | $[1/20,1/4]$ | $\Omega(\xi,q)\ge -11/200$ | 31 | 31 |
+| P10 | $K(\xi,q)$ | $[21/10,239/100]$ | $[1/20,1/5]$ | $K(\xi,q)\ge 1/10$ | 11 | 11 |
+| P11 | $K(\xi,q)$ | $[21/10,239/100]$ | $[1/5,1/4]$ | $K(\xi,q)\ge 17/100$ | 2 | 2 |
+| P12 | $K(\xi,q)$ | $[21/10,239/100]$ | $[1/4,1/2]$ | $K(\xi,q)\ge 19/100$ | 12 | 12 |
+| P13 | $\Omega_q(\xi,q)$ | $[21/10,9/4]$ | $[1/4,47/100]$ | $0\le \Omega_q(\xi,q)\le 43/100$ | 197 | 409 |
+| P14 | $\Omega_q(\xi,q)$ | $[9/4,239/100]$ | $[1/4,1/2]$ | $0\le \Omega_q(\xi,q)\le 43/100$ | 312 | 705 |
+
+The columns $n_{96},n_{128}$ describe finite closed covers for two
+interval evaluations of the same inequalities. Their totals are $630$
+and $1235$. Exact rational endpoints, partition leaves and enclosure
+numerators are specified in the private
+[certificate source](https://github.com/the-omega-institute/trureturing-experiments/tree/d44a8f1bffeb02403b8fc596168c755ea1a017e5/experiments/auric/four-path/positive-prefix-population-gain-6aeb0aa2fba56a3ea8c3ca9c).
+The correspondence is, in table order, `root_selector_left`,
+`root_selector_right`, `root_determinant_negative`, `selector_lower`,
+`selector_upper_low_slab`, `early_nonnegative`,
+`small_population_nonnegative`, `upper_population_nonnegative`,
+`negative_part_bound`, `gain_small`, `gain_middle`, `gain_large`,
+`slope_low_slab`, `slope_high_slab`.
+
+Here is the exact arithmetic specification of these finite certificates.
+For the first evaluation let $S=2^{96}$ and enclose every rational
+endpoint between its outward-rounded multiples of $1/S$. Addition and
+negation are exact on this grid. For a product, form the four endpoint
+products and round the least downward and greatest upward. For a
+zero-excluding interval $[a,b]$, enclose its reciprocal using $[1/b,1/a]$
+with outward rounding. For a square, the lower endpoint is zero when
+the argument contains zero, and otherwise the lesser squared endpoint;
+the upper is the greater squared endpoint. For a square root with
+lower radicand $a/S$, the lower root is
+$\lfloor\sqrt{aS}\rfloor/S$; the upper endpoint is the corresponding
+integer root at the upper radicand, increased by one grid step unless
+its square is exact. Radicands are nonnegative and every inverted
+interval excludes zero. Start with
+
+$$
+h=\sqrt{1/2},\qquad c=\sqrt{(1+h)/2},\qquad
+s^2=(1-h)/2,\qquad s=\sqrt{s^2}.
+\tag{51.11}
+$$
+
+Evaluate (51.5)--(51.6), using $h^2=1/2$ as $x/2$ in $\nu$ and the
+literal expression $s^2qL/x^2$ in $Z$. Each elementary interval
+operation preserves inclusion. Consequently the image of each closed
+leaf encloses the expression on that whole leaf, rather than at sample
+points.
+
+For precision about the cover, start with the exact rational rectangle
+of each row. At a bisection choose the coordinate with greatest current
+width divided by its initial width, ignore zero-width coordinates and
+break ties by choosing $\xi$ first. Bisect at its rational midpoint.
+The two closed halves meet at the cut and cover the parent. Each leaf
+can therefore be described by a finite binary word, with 0 and 1
+selecting the lower and upper half, respectively; `e` denotes an unsplit
+rectangle. The listed leaves lie in their original rectangle, have
+disjoint relative interiors, and have total exact relative volume equal
+to the rectangle. These properties also justify cover without trusting
+the generation tree: a nonempty complement of their finite closed union
+would contain a relatively open set of positive relative volume, a
+contradiction. Degenerate point domains have exactly one leaf. Thus all
+boundaries and shared faces belong to the cover.
+
+For the second evaluation, all arithmetic between square roots is exact
+rational arithmetic, with square roots enclosed outward on the
+$2^{-128}$ grid. First-order interval jets applied to the original
+expression in (51.6) give $\Omega_q$. This derivative construction is
+independent of the hand derivative formulas below. Each original leaf
+is either accepted at its threshold or bisected by the same coordinate
+rule until its subleaves satisfy the threshold; bisection preserves the
+closed cover. The second count in the table includes these refinements.
+All decisions are integer or rational inequalities.
+
+For explicit expression correspondence, the hand derivative identities
+used for the first evaluation are
+
+$$
+\begin{gathered}
+x_q=1/2,\quad y_q=-x/(2y),\quad u_q=-1/(2u),\quad
+v_q=1/(2v),\quad R_q=h/2,\\
+\mu_q=\frac12\left\{
+ hk\left[-\frac1{2uR}-\frac{hu}{2R^2}\right]
+ +h\left[\frac1{2vy}+\frac{vx}{2y^3}\right]\right\},\\
+\nu_q=\frac12\left\{-\frac k{2u}
+ +\frac{v/4+(x/2-s^2)/(2v)}{hy}
+ +\frac{(x/2-s^2)vx}{2hy^3}\right\},\\
+Z_q=s^2\left[\frac L{x^2}+\frac q{2x^2}-\frac{qL}{x^3}\right],\qquad
+\Omega_q=\nu_q-\frac{Z_q}{4\mu}+\frac{Z\mu_q}{4\mu^2},\\
+C'_\xi=-(4h+8s)-4\Gamma_0
+ \left[hu-\frac Ru+\frac{hy}{v}-\frac{hxv}{y}\right].
+\end{gathered}
+\tag{51.12}
+$$
+
+Only $0<q<1$ and $y>0$ are used in these derivative rows. The
+nonderivative rows may include $q=0$; no derivative containing $1/v$
+is evaluated there. The table's lower and upper rational bounds,
+together with the inclusion rules and complete covers, give the
+continuous inequalities required in the proof.
+

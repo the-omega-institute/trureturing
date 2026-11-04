@@ -1,0 +1,141 @@
+**定理 129.1（精确半程边界的原输入线性控制）。** 保留定义 127.1 的原完整菜单。若
+
+$$
+\bar H=0,\qquad B_*\le c<1,
+\tag{129.1}
+$$
+
+则每条非零效果的原分支具有
+
+$$
+T_E=\mathcal L_E\alpha_E,
+\qquad \alpha_E:\mathcal C_E\to\mathcal C_E
+\text{ 为保迹保星自同构},\qquad \alpha_E(E)=E,
+\tag{129.2}
+$$
+
+并按输入支撑压缩延拓到原代数。允许角中等阶中心块的置换。此外，逐效果及全族有
+
+$$
+\frac{\|T_{E,F}-\mathcal L_E\|_\diamond}{\|E\|}
+\le\min\{2,\bar s(\sqrt E,F)\},
+\qquad
+D\le\min\{2,\bar S\}.
+\tag{129.3}
+$$
+
+本定理没有假设精确互易或精确返回，也没有把归一化映射宣布为实际可执行通道。
+
+证明。先只使用 $\bar H=0$。由定理 127.2，每个原分支的填零矩形 Kraus 算子 $K_j$ 都与其效果 $E$ 对易。成功效果 $\sum_jK_j^\dagger K_j=E$ 又使 $K_j(1-P_E)=0$；对易性于是也给 $(1-P_E)K_j=0$。因此原分支既不读支撑外输入，也不向支撑外输出。
+
+在 $\mathcal C_E$ 中置
+
+$$
+L_j=E^{-1/2}K_j,\qquad
+\Phi_E(X)=\sum_jL_jXL_j^\dagger.
+$$
+
+逆仅在这一固定正支撑中取。对易性给 $\sum_jL_j^\dagger L_j=P_E$，所以 $\Phi_E$ 完全正且保迹。此时尚未假设它幺、自伴或可逆。各 $L_j$ 与 $E$ 的函数演算对易，故
+
+$$
+T_E=\mathcal L_E\Phi_E=\Phi_E\mathcal L_E,
+\qquad \Phi_E^\dagger(f(E))=f(E)
+\tag{129.4}
+$$
+
+对正支撑上的任意函数 $f$ 成立。中心之间相同数值谱的交织并未被删去。
+
+正输入张成自伴空间及其复化，故 $\bar H=0$ 给精确映射关系 $T_{E^2}=T_E^2$。在同一支撑角内消去可逆的 $\mathcal L_{E^2}$，得到
+
+$$
+\Phi_{E^2}=\Phi_E^2.
+\tag{129.5}
+$$
+
+对实际倒数效果也作上述分解。其 Kraus 算子与 $E^\vee$ 对易，在支撑中因而与 $E$ 对易。于是原实际接续恰为
+
+$$
+q_E^{-1}T_{E^\vee}T_E|_{\mathcal C_E}
+=\Phi_{E^\vee}\Phi_E.
+\tag{129.6}
+$$
+
+没有把实际补偿替换成数学伴随或新恢复通道。
+
+现在固定 $E,F$ 和有限维角 $\mathcal C=\mathcal C_E$。对同框架原效果 $E_n=E^{2^n}$，支撑角相同，且
+
+$$
+\Phi_{E_n}=\Phi_E^{2^n},\qquad
+q_{E_n}=q_E^{2^n},\qquad
+(E_n)^\vee=(E^\vee)^{2^n}.
+$$
+
+记 $\Psi_n=\Phi_{(E_n)^\vee}$，它是同角的 CPTP 映射。由原返回条件、正负谱分解以及 (129.6)，对全部自伴 $X\in\mathcal C$ 有
+
+$$
+\|\Psi_n\Phi_E^{2^n}(X)-X\|_1\le c\|X\|_1.
+$$
+
+$\Psi_n$ 在自伴迹范数上收缩，故
+
+$$
+\|\Phi_E^{2^n}(X)\|_1\ge(1-c)\|X\|_1.
+\tag{129.7}
+$$
+
+对任意整数 $k\ge1$，取 $2^n\ge k$，再用 $\Phi_E^{2^n-k}$ 的收缩性，得到同一个下界
+
+$$
+\|\Phi_E^k(X)\|_1\ge(1-c)\|X\|_1.
+\tag{129.8}
+$$
+
+这里的返回估计只在已识别的选定效果 $E_n$ 及其实际补偿上使用；没有向一般复合过程另加重复返回合同。
+
+令 $\Phi=\Phi_E$。CPTP 性使 $\Phi$ 的全部正整数幂有界。式 (129.8) 排除模小于一的复特征值：若相应复特征元的幂趋零，其非零实部或虚部也趋零，与 (129.8) 矛盾。幂有界性排除模大于一的特征值及单位圆上的非平凡 Jordan 块。因此 $\Phi$ 在复空间上可对角化，其特征值 $\lambda_1,\ldots,\lambda_m$ 全在单位圆上。
+
+为明确所用的有限维递归，取紧环面中收敛的子列 $(\lambda_1^{n_j},\ldots,\lambda_m^{n_j})$，其中 $n_j$ 严格递增。置 $k_j=n_{2j}-n_j\to\infty$，则每个 $\lambda_i^{k_j}\to1$，所以 $\Phi^{k_j}\to\operatorname{id}$。$\Phi$ 可逆，并且
+
+$$
+\Phi^{k_j-1}\longrightarrow\Phi^{-1}.
+\tag{129.9}
+$$
+
+同一个有限维角上的完全正性及保迹性在映射极限下封闭，故 $\Phi^{-1}$ 也 CPTP。此处只对已经固定的有限维角取极限，不取跨对象的紧性极限，不需要统一维数或谱隙。
+
+以下使用成熟的可逆 CPTP 结构，其同角证明可由 Schwarz 等号直接完成。令 $U=\Phi^\dagger$、$V=(\Phi^{-1})^\dagger$，二者互逆且幺完全正。对任意 $Z\in\mathcal C$，两次 Schwarz 不等式给
+
+$$
+Z^\dagger Z
+\ge V\bigl(U(Z)^\dagger U(Z)\bigr)
+\ge VU(Z)^\dagger VU(Z)=Z^\dagger Z.
+$$
+
+两端相等，$V$ 又单射，所以 $U(Z^\dagger Z)=U(Z)^\dagger U(Z)$；对所有 $Z$ 极化，$U$ 是保星自同构。有限复矩阵直和的此类自同构只置换等阶角块并在块内作酉共轭，因此保留通常迹之和。故 $\Phi=U^\dagger=U^{-1}$ 也是保迹保星自同构。再由 (129.4) 的 $\Phi^\dagger(E)=E$，得到 $\Phi(E)=E$，即 (129.2)。没有预先使用双随机性。
+
+在 $P_E\mathscr H$ 上，此自同构由一个酉 $U_E$ 实现，允许置换等阶角块。它固定 $E$，故 $U_E$ 与 $E$ 对易。作为原代数上的映射，$T_E$ 因而是单 Kraus 映射
+
+$$
+T_E=\operatorname{Ad}_{K_E},\qquad
+K_E=\sqrt E\,U_EP_E,\qquad
+K_E^\dagger K_E=K_EK_E^\dagger=E.
+\tag{129.10}
+$$
+
+这里一个角块可以位于与其目标角块不同阶的原中心块中；实现算子在原输入、输出空间上的相应部分是矩形的。只要求被置换的角块等阶，不要求原中心块全部固定或等阶。
+
+最后令 $R=\sqrt E$、$m=\|R\|$，并写 $S=T_R$。由 (129.10)，在完整原代数上有 $SS^\dagger=\operatorname{Ad}_R=\mathcal L_E$；精确半程给 $S^2=T_E$。所以
+
+$$
+T_E-\mathcal L_E=S(S-S^\dagger),
+\qquad
+\nu(T_E-\mathcal L_E)
+\le m\,\nu(S-S^\dagger)
+=\|E\|\bar s(R,F).
+\tag{129.11}
+$$
+
+这里仅使用 $\nu(S)=\|S^\dagger(I)\|=m$ 及自伴迹范数上的次乘性。
+
+$T_E$ 与 $\mathcal L_E$ 都已被证明为单 Kraus CP 映射，故此时才可使用本卷 (100.4) 的成熟纯映射范数等式，将 (129.11) 升级为 diamond 界。其前提在矩形及中心情形仍精确满足：对每个原输入中心块，分别限制 $K_E$ 和 $\sqrt E$，把输出视为同一个总 Hilbert 空间中的矩阵；两者的输出本来就在原输出代数中。Magajna 定理 1.1 经 (100.2) 的参数代入、矩形角嵌入和迹对偶，给该块上的 $\|\operatorname{Ad}_{K_E}-\operatorname{Ad}_{\sqrt E}\|_\diamond=\nu(\operatorname{Ad}_{K_E}-\operatorname{Ad}_{\sqrt E})$。任意参考输入的迹范数是各输入中心块迹范数之和，所以两种映射范数在原直和上均取这些块的最大值。由此得到 (129.3) 的非平凡部分。两条原 CP 映射各有 diamond 范数 $\|E\|$，另给平凡上界二。对全部原对象、效果及框架取上确界即得结论。零效果分支由正确成功效果恒为零。∎
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c788de44dfe8d043205032db4fc66c57aadf441aa90c4d7a80e97b5db97ac5b2
+  normalized_sha256: sha256:c788de44dfe8d043205032db4fc66c57aadf441aa90c4d7a80e97b5db97ac5b2
+cas_ref: sha256:c788de44dfe8d043205032db4fc66c57aadf441aa90c4d7a80e97b5db97ac5b2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream closure of the complete proposition in Theorem 43.2; there is no available frozen repository GID for this chart. Mathlib at lake-manifest.json revision 56a005855ea17e0b0958f73ec801ae140b0a1679 supplies Complex.norm_mul_exp_arg_mul_I, Complex.exp_mul_I, Circle.arg_exp, Real.cos_arccos, Real.sin_arccos, Real.sqrt_sq, Real.sin_sq_add_cos_sq and Complex.sq_norm for the phase reconstruction, branch identities and quadratic normalization; _root_.analyticAt_log, _root_.analyticAt_clog, AnalyticAt.pi, AnalyticAt.comp, AnalyticAt.congr and ContinuousLinearMap.analyticAt supply local analytic arguments, positive radicals and chart/inverse composition; ContinuousAt.eventually, AnalyticAt.eventually_analyticAt, _root_.eventually_nhds_iff and ContinuousOn.isOpen_inter_preimage supply the common open neighborhoods. Complex.exp_add, _root_.sq_eq_one_iff, _root_.norm_mul, Matrix.diagonal_mem_unitary, Pi.mem_unitary_iff, Complex.mul_conj' and Matrix.mem_unitaryGroup_iff supply the common scalar and actual unitary laws. Instantiation, logical composition and normalization give both inverse laws and local bijection for every 0 < delta0 < 2 and both orientations, positive base branches and 0 < X < 1, the exact delta = 4-A coordinate, the original A/P/Q/B formulas and all unit scalar representatives with A/B/u/v invariant. This is the upstream-only proposition disposition allowed by SPEC 11.21, using the existing nonpropositional receipt schema; it does not classify the theorem as nonmathematical, add a Lean theorem or count as frozen coverage. The original statement, quantifiers, source and CAS remain unchanged.
+    previous_atom_id: 6053d42e71a224257fec18d11c75d10cabf8ad50e2fabb5fdd9849e6845be41d
+    next_atom_id: 51e1340e304190ad4932f667b21e2c1df0a94c6db3f52ff8c176ba5d4f418c61

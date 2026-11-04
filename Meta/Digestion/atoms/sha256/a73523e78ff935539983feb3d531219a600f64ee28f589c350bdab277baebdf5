@@ -1,0 +1,139 @@
+## 3. Consequences
+
+**Corollary 1.** 
+For every $N\geq3$, $X_N$ is a rational variety of dimension seven.
+
+**Proof.** 
+In the normalized three-site representation (12), write
+$\ell=(x,1)$. The two identities $\ell M_i=e_i^T$ give
+$$
+ M_0=\begin{pmatrix}p&q\\1-xp&-xq\end{pmatrix},\qquad
+ M_1=\begin{pmatrix}u&v\\-xu&1-xv\end{pmatrix}.
+$$
+The seven free parameters $x,p,q,u,v,r_0,r_1$ define a polynomial
+map $\Phi:\mathbb A^7_{\mathbb C}\to X_3$. Its image contains $U$ by the construction above.
+Conversely, if a tensor from these seven parameters lies in $U$,
+its matrix $P$ in the uniqueness argument is $I$ and $s=\ell_1=1$;
+equation (13) returns the identical parameters. The
+parameter preimage $V=\Phi^{-1}(U)$ is a nonempty open subset of $\mathbb A^7_{\mathbb C}$. Let $\Theta(t)$ extract $x=\ell_0$, the first rows $(p,q),(u,v)$ of $M_0,M_1$, and the two entries of $r$. The three-site reconstruction proves $\Phi\Theta(t)=t$ for every $t\in U$. The gauge calculation with $P=I,s=1$ proves $\Theta\Phi(z)=z$ for every $z\in V$. All coordinates of $\Theta$ are regular on $U$; hence $V\simeq U$.
+
+Since the varieties are irreducible, restriction to these nonempty opens identifies function fields:
+
+$$\mathbb C(X_3)\simeq\mathbb C(x,p,q,u,v,r_0,r_1).$$
+
+For an irreducible affine variety of finite type over $\mathbb C$, its coordinate-ring Krull dimension equals the transcendence degree of its function field. It follows that $\dim X_3=7$ and $X_3$ is rational. Theorem 1 identifies its function field with $\mathbb C(X_N)$ for every $N\ge4$, proving both claims for every $N\ge3$. This obtains actual dimension from an open isomorphism.
+ $\square$
+
+**Corollary 2.** 
+Let $3\leq m\leq N$, and retain any consecutive block of $m$ sites.
+At each omitted site choose a fixed nonzero complex covector, allowing a
+different choice at every site. Contracting the omitted sites with these
+covectors defines a birational map $X_N\to X_m$.
+
+**Proof.** Write $N=a+m+b$, where $a,b\ge0$. For fixed nonzero covectors $\lambda^{(1)},\ldots,\lambda^{(a)}$ and $\eta^{(1)},\ldots,\eta^{(b)}$ in left-to-right site order, the observation is the linear map
+
+$$
+ (\nu\psi)_w=\sum_{u\in\{0,1\}^a,\,v\in\{0,1\}^b}
+ \left(\prod_{h=1}^a\lambda^{(h)}_{u_h}\right)
+ \left(\prod_{h=1}^b\eta^{(h)}_{v_h}\right)\psi_{uwv}.
+$$
+
+No component or covector scale is normalized. Define ordered products
+
+$$
+ L(A)=\prod_{h=1}^a(\lambda^{(h)}_0A_0+\lambda^{(h)}_1A_1),\qquad
+ R(A)=\prod_{h=1}^b(\eta^{(h)}_0A_0+\eta^{(h)}_1A_1).
+$$
+
+Every empty product is $I$. Distributivity gives $(\nu\psi)_w=\alpha L(A)A_wR(A)\beta$ on actual tensors. Thus $\nu$ maps actual models to actual models; pulling back any polynomial vanishing on the target model proves $\nu(X_N)\subseteq X_m$.
+
+For $m=3$, reconstruct $\ell,M_0,M_1,r$ from $t\in U$ as in Definition 2.1. Require $L(M),R(M)$ invertible and put
+
+$$
+ F_{\lambda,\eta}(t)_w
+ =\ell L(M)^{-1}M_{w_1}\cdots M_{w_N}R(M)^{-1}r.\tag{16}
+$$
+
+These are inverses of entire ordered products; no factor is commuted. The formula supplies actual $N$-site parameters. Contracting them cancels $L(M)$ on the left and $R(M)$ on the right, so $\nu F_{\lambda,\eta}(t)=t$ by (12).
+
+For explicit polynomial coordinates let $v=\det W$, $D_\xi=\xi_0N_0+\xi_1N_1$, $L_D=\prod_hD_{\lambda^{(h)}}$, and $R_D=\prod_hD_{\eta^{(h)}}$. A principal target chart and common denominator are
+
+$$
+ U_{\lambda,\eta}=X_3\cap\{h\ne0\},\quad
+ h=g\det L_D\det R_D,\qquad
+ Q=v^3\det L_D\det R_D.
+$$
+
+The coordinate numerator is
+
+$$
+ P_w=\widetilde\ell\,\operatorname{adj}(L_D)
+       N_{w_1}\cdots N_{w_N}\operatorname{adj}(R_D)\widetilde r.
+$$
+
+Indeed $L(M)=(d/v)^aL_D$, $R(M)=(d/v)^bR_D$, $M_j=(d/v)N_j$, $\ell=d^{-1}\widetilde\ell$ and $r=d^{-2}\widetilde r$. In (16) the total power of $d$ is $N-a-b-3=0$, and that of $v$ is $a+b-N=-3$. Hence $F_w=P_w/Q$, with $Q\ne0$ on the chart. Taking every covector equal to $(1,1)$ recovers (15).
+
+For the left identity on actual source tensors put $l=\alpha L(A)$ and $r_0=R(A)\beta$. The gauge calculation (13) gives
+
+$$
+ L(M)=s^aPL(A)P^{-1},\qquad
+ R(M)=s^bPR(A)P^{-1}.
+$$
+
+Their invertibility implies that of $L(A),R(A)$. Substituting these identities and (13) into (16) cancels the gauge matrices and the scalar $s^{-1-a+N-b-2}=1$. The remaining boundaries are $\alpha,\beta$, so $F_{\lambda,\eta}(\nu\psi)=\psi$.
+
+This identity extends to $X_N$ without assuming its points are parametrized. For each word $w$, the polynomial
+
+$$
+ (h\circ\nu)\bigl(P_w\circ\nu-\psi_w(Q\circ\nu)\bigr)
+$$
+
+vanishes on every actual tensor: its first factor vanishes outside the chart and its second vanishes on the chart. By definition it vanishes on $X_N$. Canceling the nonzero factors on $V_N=X_N\cap\{h\circ\nu\ne0\}$ proves the left identity there.
+
+For nonemptiness, fix any nonzero $\xi$. The polynomial $\det(\xi_0A_0+\xi_1A_1)$ is nonzero, since $A_i=c_iI$ makes it $(\xi_0c_0+\xi_1c_1)^2$, nonzero for a suitable choice of $c_0,c_1$. The pullback of $g$ to the affine three-site parameter space is nonzero by the witness (14). This polynomial ring is an integral domain, so its product with the finitely many omitted-site determinant polynomials is nonzero. Over the infinite field $\mathbb C$ a nonzero polynomial has a nonzero value. At such a parameter point, (13) transfers every required determinant to $M$. Therefore $h\ne0$ at an actual target tensor, for every fixed covector list. The right inverse supplies a point of $V_N$. Both charts are nonempty and dense by irreducibility, and both maps are regular on them. This proves the triple case, also when $N=3$ and both lists are empty.
+
+For $m>3$, let $\sigma:X_m\to X_3$ retain the first three sites and contract its last $m-3$ sites with $(1,1)$. Put $\rho=\sigma\nu$. It is a triple contraction with left list $\lambda$ and right list consisting, in order, of $m-3$ copies of $(1,1)$ followed by $\eta$. Use the triple chart $U_\rho=\{h\ne0\}\cap X_3$ just proved. It lies in $U$ because $h$ contains $g$. Define
+
+$$
+ V_m=\sigma^{-1}(U_\rho),\qquad V_N=\rho^{-1}(U_\rho),\qquad
+ G=F_\rho\circ\sigma:V_m\longrightarrow V_N.
+$$
+
+The ordinary inverse of $\sigma$ shows $V_m$ is nonempty, and $F_\rho$ shows $V_N$ is nonempty. For $\psi\in V_N$, $G\nu\psi=F_\rho\rho\psi=\psi$. For $y\in V_m$, put $z=\nu G(y)$. Then $\sigma z=\rho F_\rho\sigma y=\sigma y$, and both $z,y$ lie on the ordinary source chart of $\sigma$. Its left inverse therefore gives $z=y$. Thus $\nu G=\mathrm{id}_{V_m}$ as an equality of full $m$-tensors. These nonempty opens are dense and the formulas are regular there. The formulas allow $a=0$ or $b=0$, $m=3$, and $m=N$. In the last case $\nu$ is the identity; in particular $N=m=3$ is the identity with empty products. $\square$
+
+**Corollary 3.** 
+For $N\geq3$, no coherent contraction retaining at most two binary sites
+is generically finite on $X_N$. Thus three is the least possible retained
+block size for generic amplitude recovery of these models.
+
+**Proof.** 
+Let $f:X_N\to\mathbb A^{2^r}_{\mathbb C}$ be any fixed coherent observation retaining $r\in\{0,1,2\}$ binary indices, consecutive or not. It is linear in the amplitudes. Let $Y=\overline{f(X_N)}$; it is irreducible and $f:X_N\to Y$ is dominant. Both are affine varieties of finite type over $\mathbb C$. Corollary 1 gives $\dim X_N=7$, while $\dim Y\le2^r$. The generic-fiber dimension theorem, equivalently the transcendence-degree formula for $\mathbb C(Y)\subseteq\mathbb C(X_N)$, gives
+
+$$\dim f^{-1}(y)=7-\dim Y\ge7-2^r\ge3$$
+
+for $y$ in a nonempty open subset of $Y$. These fibers have positive dimension, so $f$ is not generically finite onto its image. Corollary 2 supplies generic recovery from every consecutive three-site block, proving the sharp retained amplitude threshold. This dimension argument concerns coherent amplitudes, not reduced density operators.
+ $\square$
+
+**Corollary 4.** 
+For $N\geq4$ the $N-2$ quartics $\det K(\mu_a\psi)$ vanish on $X_N$,
+but their common zero set is strictly larger than $X_N$.
+Fix $a$, set $t=\mu_a\psi$, let $q=(\det W)^3(\det J)^{N-3}$,
+and let $p_w$ be the numerator in (15).
+On the ambient open subset $g(t)\ne0$, membership has the exact criterion
+$$
+\tag{17}
+ \psi\in X_N\quad\Longleftrightarrow\quad
+ \det K(t)=0\ \text{ and }\ q(t)\psi_w=p_w(t)\quad\text{for all }w.
+$$
+Every member of $X_N$ on this chart is an actual tensor of the form
+(1), not just a limit of such tensors.
+
+**Proof.** 
+Equation (3) and the quartic relation prove the vanishing.
+Let $Z_N$ be their common zero set in $\mathbb A^{2^N}_{\mathbb C}$. Each polynomial is homogeneous of degree four, so the origin lies in $Z_N$ and its ideal is proper. Krull's height theorem bounds the height of a minimal prime over these $N-2$ generators by $N-2$. Thus $\dim Z_N\ge2^N-(N-2)$. At $N=4$ this lower bound is $14>7$, and its increment from $N$ to $N+1$ is $2^N-1>0$. Since Corollary 1 gives $\dim X_N=7$ and the vanishing proves $X_N\subseteq Z_N$, the inclusion is strict for every $N\ge4$.
+For (17), the forward implication is the inverse identity.
+Conversely, for any ambient $t$ with $g(t)\ne0$, the scalar derivation of (15) equals the actual-parameter expression (8); that derivation does not require $\det K(t)=0$. Thus $q\psi=p$ already gives $\psi=F_{N,a}(t)$ as an actual $N$-site MPS, and in particular $\psi\in X_N$. This proves the stated criterion with its explicit quartic conjunct, and also shows that conjunct is redundant on this chart. The forward inverse identity applies to every closure point on the chart, so every such point has the displayed actual parameters.
+
+For the global three-site description, Critch–Morton, Theorem 7, separately proves $X_3=\{\det K=0\}$, a quartic hypersurface of dimension seven. The same 22-term quartic appears earlier in Lior Pachter and Bernd Sturmfels, *Tropical geometry of statistical models*, PNAS **101** (2004), 16132–16137, [doi:10.1073/pnas.0406010101](https://doi.org/10.1073/pnas.0406010101), [q-bio/0311009v2](https://arxiv.org/abs/q-bio/0311009v2), §2, p. 4 (26 January 2004). These prior results retain their attribution. The local reconstruction alone gives no equality of global zero sets or recovery at points with $g=0$.
+ $\square$
+

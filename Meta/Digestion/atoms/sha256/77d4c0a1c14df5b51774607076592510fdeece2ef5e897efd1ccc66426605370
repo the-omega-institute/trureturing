@@ -1,0 +1,14 @@
+### 命题 26.2（非忠实准备可漏掉下一次会到达的记忆方向）
+
+删除 (25.3) 的忠实下界后，即使单一原记录的效果独立、校准误差为零、联合仪器固定且完全正，从校准初态连续两次调用也不必保持名义系统历史。
+
+**证明。** 取同样的二维 $H,K,M$，令 $Z=\operatorname{diag}(1,-1)$、$\tau=P_0$，只有一个原记录 $j$，目标 $K_j=I_H$、$E_j=I_H$。固定酉算子与完整单支仪器为
+
+$$
+U=I_H\otimes|1\rangle\langle0|+Z\otimes|0\rangle\langle1|,
+\qquad V_j=\operatorname{Ad}_U.
+\tag{26.4}
+$$
+
+两项的输入、输出记忆方向正交，故 $U^*U=UU^*=I$。对每个系统矩阵，$V_j(X\otimes P_0)=X\otimes P_1$，所以校准恰为恒等。可是下一次 $V_j(X\otimes P_1)=ZXZ\otimes P_0$；从 $|+\rangle\langle+|\otimes P_0$ 出发，两次实际系统输出为正交的 $|-\rangle\langle-|$，名义两次输出仍为 $|+\rangle\langle+|$，未减半距离为二。这里无装置切换或记忆复位；缺失的正是 (25.13) 对全部记忆列的控制。$\square$
+

@@ -1,0 +1,23 @@
+**定义 1.1（活的有限关系球）。** 对每个指标 $s$，取有限维 Euclidean 空间 $V_s$，并令
+
+$$
+J_s=\mathbb R1_s\oplus V_s,\qquad
+S_s((\alpha,u),(\beta,v))=(\alpha\beta+\langle u,v\rangle,\alpha v+\beta u).
+$$
+
+内积为 $g_s((\alpha,u),(\beta,v))=\alpha\beta+\langle u,v\rangle$。另给非零交替双线性映射 $B_s:V_s\times V_s\to V_s$，满足 Jacobi 律与度量不变性
+
+$$
+B_s(B_s(u,v),w)+B_s(B_s(v,w),u)+B_s(B_s(w,u),v)=0,
+\qquad
+\langle B_s(u,v),w\rangle=\langle u,B_s(v,w)\rangle.
+$$
+
+把 $B_s$ 延拓为消去单位及标量部分的运算。记 $L_ax=S_s(a,x)$、$D_ax=B_s(a,x)$。度量不变性使 $D_a$ 斜伴随，并直接给出
+
+$$
+D_aS_s(x,y)=S_s(D_ax,y)+S_s(x,D_ay).
+$$
+
+这里比较的球形、正定性、有限维、局部 Jacobi 及非零变化是明确前件；不从一个空的集合推出这些前件。
+

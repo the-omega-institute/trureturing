@@ -16,7 +16,7 @@ public sealed partial class CleanLanesCommandTests
             "{\"event\":\"clean_lanes_item\",\"kind\":\"stale_worktree\","
             + "\"path\":\"/tmp/healthy\",\"branch\":\"harness/healthy\","
             + "\"head\":\"0123456789abcdef\",\"action\":\"removed\","
-            + "\"reason\":\"stale_behind\"}\n";
+            + "\"reason\":\"head_commit_age\"}\n";
         const string summary =
             "{\"event\":\"clean_lanes_summary\",\"mode\":\"force\","
             + "\"status\":\"failed\",\"extra_sweeps\":\"not_requested\","

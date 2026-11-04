@@ -1,0 +1,15 @@
+**Definition 1.3 (Intrinsic rank locus).** For $\psi\in\mathcal H_N$, let $F_{N,2}(\psi)$ be its $4\times 2^{N-2}$ amplitude flattening, with entries
+
+$$
+[F_{N,2}(\psi)]_{u,b}=\psi_{ub},
+\qquad u\in\{0,1\}^2,\quad b\in\{0,1\}^{N-2}.
+$$
+
+Put
+
+$$
+U_N=\{\psi\in P_N:\operatorname{rank}F_{N,2}(\psi)=4\}.
+$$
+
+A property is called generic here when it holds on a nonempty relatively complex-Zariski-open dense subset of $P_N$. The criterion defining $U_N$ is intrinsic to the state and imposes no choice of its matrix representation.
+

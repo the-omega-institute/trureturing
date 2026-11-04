@@ -1,0 +1,54 @@
+### 定理 6.1（接近饱和控制整个过程）
+
+<a id="thm-stability"></a>
+
+令
+
+$$
+\delta=Q_{\mathscr D}(E)-R_{\mathscr D}(T)\ge0,
+\quad D=d(d+1)\delta,\quad M=\|E\|.
+$$
+
+则
+
+<a id="eq-robust"></a>
+
+$$
+\boxed{
+\|T-\mathcal L_E\|_\diamond
+\le\min\{2M,\ 2\sqrt{2M d(d+1)\delta}\}.
+}
+\tag{13}
+$$
+
+这里 $\|\Phi\|_\diamond=\sup_{n,X\ne0}\|(\Phi\otimes\operatorname{id}_{M_n})(X)\|_1/\|X\|_1$，包括任意数学参考系统。该界不含最小正本征值的倒数，不主张常数最优。
+
+**证明。**
+$E=0$ 时显然。令 $A=\sqrt E$，$P=\operatorname{supp} E$，$s=\operatorname{Tr} A$，$V_\mu=K_\mu A^\dagger$。则 $\sum_\mu V_\mu^*V_\mu=P$。设 $t_\mu=\operatorname{Tr} K_\mu$，$z=\sum_\mu|t_\mu|^2=s^2-D$。选择单位向量 $c$ 与 $t$ 同向；$t=0$ 时任取单位 $c$。加权平方差恒等式为
+
+$$
+\sum_\mu\|(V_\mu-c_\mu P)A^{1/2}\|_\mathrm{HS}^2
+=2(s-\sqrt z).
+$$
+
+因此
+
+$$
+\begin{aligned}
+\sum_\mu\|K_\mu-c_\mu A\|_\mathrm{HS}^2
+&\le 2\|A\|(s-\sqrt z)\\
+&=\frac{2\|A\|D}{s+\sqrt z}\le2D.
+\end{aligned}
+$$
+
+将 $K_\mu$ 与 $c_\mu A$ 分别堆成 Stinespring 算子 $W,W_0$，两者算符范数都是 $\sqrt M$，且 $\|W-W_0\|\le\sqrt{2D}$。在任意参考扩张后，展开
+$W XW^*-W_0XW_0^*$，再对环境取偏迹，可得
+
+$$
+\|T-\mathcal L_E\|_\diamond
+\le(\|W\|+\|W_0\|)\|W-W_0\|
+\le2\sqrt{2MD}.
+$$
+
+另由两个完全正分支的 diamond 范数均为 $M$，得到 $2M$ 上界。
+
