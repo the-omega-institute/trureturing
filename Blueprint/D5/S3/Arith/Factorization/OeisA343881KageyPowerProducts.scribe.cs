@@ -48,7 +48,10 @@ internal sealed class OeisA343881KageyPowerProductsDocument : IScribeDocumentDef
                     + "which disproves the eventual equality. The universal equality T(p,12)=144 "
                     + "for primes p at least 7 and a corrected formula for arbitrary k remain "
                     + "unproved here. The separate assertion that prime rows contain distinct "
-                    + "integers also remains unresolved."))), DescribeRole.Theorem))));
+                    + "integers also remains unresolved."))), DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kagey343881-powerproducts"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(

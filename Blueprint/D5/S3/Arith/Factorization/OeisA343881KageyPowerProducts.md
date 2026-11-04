@@ -46,6 +46,10 @@ $$\neg (\forall k \in \mathrm{Nat},\; (1 < k) \Rightarrow (\exists N \in \mathrm
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Factorization/OeisA343881KageyPowerProducts.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kagey343881-powerproducts` (refuted) by `D5/S3/Arith/Factorization/OeisA343881KageyPowerProducts.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kagey343881-powerproducts","declaration_gid":"D5/S3/Arith/Factorization/OeisA343881KageyPowerProducts.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. Kagey; OEIS Foundation Inc. (2021). *OEIS A343881, power-product minima and A064549*. URL: <https://oeis.org/A343881>.
