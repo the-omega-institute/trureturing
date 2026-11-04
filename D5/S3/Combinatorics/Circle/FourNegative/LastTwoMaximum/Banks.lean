@@ -125,6 +125,7 @@ private theorem hybrid_full_inventory (b s : ℕ) (hb : 2 ≤ b) (hbs : b ≤ s)
   dsimp [firstBank,hybridLabels]
   rw [hlo,hhi]
   change _ = _
+  dsimp [v,q]
   simp only [← Multiset.coe_add]
   ac_rfl
 
@@ -169,9 +170,12 @@ private theorem borrow_inventory (a b s t u : ℕ)
     dsimp [hybridLabels]
     simp only [vNat,Nat.xor_mod_two_pow,Nat.xor_div_two_pow,←Multiset.coe_add] at *
     calc
-      _ = _ := by
-        rw [← hl,← hh]
-        ac_rfl
+      _ = ((chamberLabels (b-2) 0 (mask s % 2^(b-2) ^^^ t % 2^(b-2)) :
+          Multiset ℕ) + chamberLabels (b-2) 0 (t % 2^(b-2))) +
+        ((chamberLabels (s-b+1) (s+(b-2))
+          (mask s / 2^(b-2) ^^^ t / 2^(b-2)) : Multiset ℕ) +
+          chamberLabels (s-b+1) (s+(b-2)) (t / 2^(b-2))) := by ac_rfl
+      _ = _ := by rw [hl, hh]
   have htu := Multiset.coe_eq_coe.mpr (hybrid_split b s t u hsub)
   have hmt := Multiset.coe_eq_coe.mpr hsplit
   have hstock := Multiset.coe_eq_coe.mpr (hybrid_full_inventory b s hb hbs)
@@ -283,13 +287,18 @@ private theorem first_mass (a b s : ℕ) (hb : 2≤b) (hbs : b≤s)
     dsimp [full,chainLength,vNat]
     rw [Nat.cast_sub (by have := Nat.two_pow_pos (s-1);omega)]
     push_cast
-    rw [←pow_add]
-    congr 1
-    omega
+    rw [←pow_add, show b-2+(s-b+1)=s-1 by omega]
+  have castlo : ((2^(b-2)-1 : ℕ) : ℤ) = (2 : ℤ)^(b-2)-1 := by
+    rw [Nat.cast_sub (show 1 ≤ 2^(b-2) by have := Nat.two_pow_pos (b-2); omega)]
+    push_cast
+    rfl
+  have casthi : ((2^(s-b+1)-1 : ℕ) : ℤ) = (2 : ℤ)^(s-b+1)-1 := by
+    rw [Nat.cast_sub (show 1 ≤ 2^(s-b+1) by have := Nat.two_pow_pos (s-b+1); omega)]
+    push_cast
+    rfl
   simp only [firstBank,List.map_append,List.sum_append,vlo,uhi]
-  rw [hc]
-  simp only [vNat,Nat.cast_sub (by have := Nat.two_pow_pos (b-2);omega),
-    Nat.cast_sub (by have := Nat.two_pow_pos (s-b+1);omega)]
+  rw [hc,castlo,casthi]
+  dsimp [vNat]
   push_cast
   ring
 

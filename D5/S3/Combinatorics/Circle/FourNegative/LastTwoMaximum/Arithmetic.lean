@@ -41,13 +41,13 @@ private theorem singleton_W_windows (x y z w : ℤ)
   have hA : 0 < pA x y z := by dsimp [pA];positivity
   have holdId : 2*x*pG x y z w = 16*alpha^4 + 8*alpha^3*beta + 12*alpha^3*gamma + 236*alpha^3 + 6*alpha^2*beta*gamma + 86*alpha^2*beta + 2*alpha^2*gamma^2 + 132*alpha^2*gamma + 1290*alpha^2 + alpha*beta*gamma^2 + 42*alpha*beta*gamma + 302*alpha*beta + 14*alpha*gamma^2 + 478*alpha*gamma + 3086*alpha + 3*beta*gamma^2 + 71*beta*gamma + 343*beta + 24*gamma^2 + 568*gamma + 2712 := by
     dsimp [pG,pGp,pA,pL,pK,pH,alpha,beta,gamma]
-    linear_combination (-(pL x z))*hw
+    linear_combination (-(1+z+z^2+x*z^2))*hw
   have holdPos : 0 < 2*x*pG x y z w := by
     rw [holdId]
     positivity
   have hnewId : 2*x*pGp x y z w = 32*alpha^4 + 16*alpha^3*beta + 24*alpha^3*gamma + 456*alpha^3 + 12*alpha^2*beta*gamma + 164*alpha^2*beta + 4*alpha^2*gamma^2 + 260*alpha^2*gamma + 2392*alpha^2 + 2*alpha*beta*gamma^2 + 82*alpha*beta*gamma + 542*alpha*beta + 28*alpha*gamma^2 + 926*alpha*gamma + 5436*alpha + 6*beta*gamma^2 + 135*beta*gamma + 567*beta + 48*gamma^2 + 1080*gamma + 4464 := by
     dsimp [pG,pGp,pA,pL,pK,pH,alpha,beta,gamma]
-    linear_combination (z+1-2*pL x z)*hw
+    linear_combination (z+1-2*(1+z+z^2+x*z^2))*hw
   have hnewPos : 0 < 2*x*pGp x y z w := by
     rw [hnewId]
     positivity
@@ -206,7 +206,7 @@ private theorem singleton_V_windows (x y z v : ℤ)
   have hnv : n < v := Int.emod_lt_of_pos _ (by omega)
   have hnle : n ≤ t := by
     have he := Int.emod_add_mul_ediv t v
-    have hp := mul_nonneg (show 0 ≤ v by omega) (Int.ediv_nonneg ht (by omega))
+    have hp := mul_nonneg (show 0 ≤ v by omega) (Int.ediv_nonneg ht (show 0 ≤ v by omega))
     dsimp [n]
     omega
   have hR : R=r+n*pD x y z := by dsimp [R];nlinarith only [hdiv]
@@ -337,7 +337,7 @@ private theorem singleton_scalar_windows (a b s : ℕ) (ha : 2 ≤ a)
     simpa [y,z] using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hbs
   have hz4 : 4*x a ≤ z s := by
     have hp := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hsa
-    simpa [x,z,pow_add] using hp
+    simpa [x,z,pow_add,mul_comm] using hp
   have hv : 4*(vNat b : ℤ)=y b := by
     dsimp [vNat,y]
     push_cast
@@ -355,7 +355,7 @@ private theorem singleton_scalar_windows (a b s : ℕ) (ha : 2 ≤ a)
       · right;left;simp [z,y,he',pow_succ,mul_comm]
       · right;right
         have hp := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show b+2 ≤ s by omega)
-        simpa [z,y,pow_add] using hp
+        simpa [z,y,pow_add,mul_comm] using hp
   have hb := singleton_basic (x a) (y b) (z s) hx hy hz
   have hnonneg : 0 ≤ L a b s-A a b s := by
     change 0 ≤ pL (x a) (z s)-pA (x a) (y b) (z s)
@@ -365,7 +365,7 @@ private theorem singleton_scalar_windows (a b s : ℕ) (ha : 2 ≤ a)
   have htcast : (quotientT a b s : ℤ)=
       (pL (x a) (z s)-pA (x a) (y b) (z s))/pB (x a) (y b) (z s) := by
     dsimp [quotientT]
-    rw [Int.natCast_ediv,Int.toNat_of_nonneg hnonneg,Int.toNat_of_nonneg hB.le]
+    rw [Int.toNat_of_nonneg hnonneg,Int.toNat_of_nonneg hB.le]
     rfl
   have vdata := singleton_V_windows (x a) (y b) (z s) (vNat b : ℤ) hx hy hz hv hdyadic
   dsimp only at vdata
@@ -396,9 +396,10 @@ private theorem singleton_scalar_windows (a b s : ℕ) (ha : 2 ≤ a)
         (quotientT a b s : ℤ)-(quotientT a b s%vNat b : ℕ) := by
     dsimp [vNewEndpoint]
     rw [hchi]
+    push_cast
     ring
   refine ⟨ht,hwcap,first.1,first.2,?_,?_,wdata.1,wdata.2.1,wdata.2.2⟩
-  · simpa only [hR] using vdata.2.2.1
+  · simpa only [hR,L,pL] using vdata.2.2.1
   · have hsv : SV a b s=2*pL (x a) (z s)-z s-1 := by
       dsimp [SV,L,pL];ring
     rw [hsv,hRp,hR]
@@ -440,6 +441,8 @@ private theorem borrow_far_W_windows (x y p F chi : ℤ)
   let z := 2*x*p
   let G := pK y z-pA x y z-F
   let Gp := 2*G-pH y z+chi
+  change window G (pK y z) ∧ window (Gp+pA x y z) (2*pK y z-pH y z) ∧
+    (0 ≤ Gp → window Gp (2*pK y z-pH y z))
   have hs := borrow_far_slacks x y p hy hx hp
   have hx0 : 0 < x := by omega
   have hy0 : 0 < y := by omega
@@ -488,10 +491,8 @@ private theorem borrowed_bit (q e : ℕ) (hq : 2*2^e ≤ q) :
     have hr : r < p := Nat.mod_lt _ hp
     have hqr : r+p*d=q := Nat.mod_add_div q p
     have hd : 1 ≤ d := by
-      by_contra hh
-      have hd0 : d=0 := by omega
-      simp only [hd0,Nat.mul_zero,Nat.add_zero] at hqr
-      dsimp [p] at hp hr hqr
+      apply (Nat.le_div_iff_mul_le hp).mpr
+      dsimp [p]
       omega
     have hdmod : d%2=0 := by
       have hh := he0
@@ -501,9 +502,10 @@ private theorem borrowed_bit (q e : ℕ) (hq : 2*2^e ≤ q) :
       simp only [decide_eq_false_iff_not] at hh
       omega
     have hmul : p*d=(d-1)*p+p := by
-      rw [←Nat.succ_mul]
-      rw [show d-1+1=d by omega]
-      exact Nat.mul_comm p d
+      calc
+        p*d = d*p := Nat.mul_comm _ _
+        _ = (d-1+1)*p := by rw [Nat.sub_add_cancel hd]
+        _ = (d-1)*p+p := by rw [Nat.add_mul, Nat.one_mul]
     have hsub : q-p=r+(d-1)*p := by omega
     have hdiv : (q-p)/p=d-1 := by
       rw [hsub,Nat.add_mul_div_right _ _ hp,Nat.div_eq_of_lt hr]
@@ -541,7 +543,7 @@ private theorem borrow_basic (x y z : ℤ) (hy : 4 ≤ y) (hx : 2*y ≤ x) (hz :
   have hxy := mul_le_mul_of_nonneg_left (show 4 ≤ y by omega) hx0.le
   have haId : pA x y z-(z+1)=x+x*y+(x*y-1)*z := by dsimp [pA];ring
   have hAz : z+1 < pA x y z := by
-    have hc : 0 ≤ x*y-1 := by nlinarith only [hxy,hx]
+    have hc : 0 ≤ x*y-1 := by nlinarith only [hxy,hx0]
     have hp : 0 ≤ (x*y-1)*z := mul_nonneg hc hz0.le
     have hxy0 : 0 < x*y := mul_pos hx0 hy0
     nlinarith only [haId,hp,hxy0,hx0]
@@ -551,7 +553,7 @@ private theorem borrow_basic (x y z : ℤ) (hy : 4 ≤ y) (hx : 2*y ≤ x) (hz :
     have hm := mul_le_mul_of_nonneg_left hDn (show 0 ≤ z+1 by omega)
     rw [hgap]
     simpa only [mul_one] using hm
-  have hc : 0 ≤ x*y-x-3 := by nlinarith only [hxy,hx]
+  have hc : 0 ≤ x*y-x-3 := by nlinarith only [hxy,hx0]
   have hp : 0 ≤ (x*y-x-3)*z^2 := mul_nonneg hc (sq_nonneg z)
   have hnId : x*y*z^2-1-pL x z=(x*y-x-3)*z^2+2*z^2-z-2 := by
     dsimp [pL];ring
@@ -577,6 +579,10 @@ private theorem borrow_far_V_windows (x y p v t : ℤ)
   let r := (pL x z-pA x y z)%pB x y z
   let R := pL x z-pA x y z-(t*pB x y z-n*pD x y z)
   let Rp := 2*R-z-1+t-n
+  change 2*p+1 ≤ q ∧ 0 ≤ t ∧ 2*t<z ∧ window R (pL x z) ∧
+    window (if Rp<0 then Rp+pA x y z else Rp) (2*pL x z-z-1)
+  change q-p ≤ t at htlo
+  change t ≤ q at hthi
   have hx0 : 0 < x := by omega
   have hz : 2*x ≤ z := by dsimp [z];nlinarith only [hp,hx0]
   have hb := borrow_basic x y z hy hx hz
@@ -601,7 +607,7 @@ private theorem borrow_far_V_windows (x y p v t : ℤ)
   have hnv : n < v := Int.emod_lt_of_pos _ (by omega)
   have hnle : n ≤ t := by
     have he := Int.emod_add_mul_ediv t v
-    have hm := mul_nonneg (show 0 ≤ v by omega) (Int.ediv_nonneg ht0 (by omega))
+    have hm := mul_nonneg (show 0 ≤ v by omega) (Int.ediv_nonneg ht0 (show 0 ≤ v by omega))
     dsimp [n];omega
   have hrec : z*pB x y z=x*y*z^2-1+pL x z := by dsimp [pB,pL];ring
   have hqcap : 2*q < z := by
@@ -653,6 +659,8 @@ private theorem borrow_adjacent_V_windows (x y v : ℤ)
   let n := t%v
   let R := pL x z-pA x y z-(t*pB x y z-n*pD x y z)
   let Rp := 2*R-z-1+t-n
+  change 1 ≤ q ∧ 0 ≤ t ∧ 2*t<z ∧ window R (pL x z) ∧
+    window Rp (2*pL x z-z-1)
   have hb := borrow_basic x y z hy hx (by dsimp [z];omega)
   have hA : 0 < pA x y z := hb.1
   have hB : 0 < pB x y z := hb.2.1
@@ -744,7 +752,7 @@ private theorem borrow_adjacent_V_windows (x y v : ℤ)
       have hnhi : n < v := Int.emod_lt_of_pos _ (by omega)
       have hnle : n ≤ t := by
         have he := Int.emod_add_mul_ediv t v
-        have hm := mul_nonneg (show 0 ≤ v by omega) (Int.ediv_nonneg ht0 (by omega))
+        have hm := mul_nonneg (show 0 ≤ v by omega) (Int.ediv_nonneg ht0 (show 0 ≤ v by omega))
         dsimp [n];omega
       have hRid : R=r+pB x y z+n*pD x y z := by dsimp [R];rw [htt];nlinarith only [hdiv]
       have hRlo : pB x y z ≤ R := by
@@ -784,6 +792,7 @@ private theorem residual_cast (a b s t : ℕ) :
   · rfl
   · dsimp [vNewEndpoint]
     rw [Nat.cast_sub (Nat.mod_le _ _)]
+    push_cast
     ring
 
 private theorem borrow_first_windows (x y z v : ℤ)
@@ -852,7 +861,7 @@ private theorem borrow_selector_windows (a b s : ℕ) (hb : 2≤b)
   have hqcast : (quotientT a b s : ℤ)=
       (pL (x a) (z s)-pA (x a) (y b) (z s))/pB (x a) (y b) (z s) := by
     dsimp [quotientT]
-    rw [Int.natCast_ediv,Int.toNat_of_nonneg hLA,Int.toNat_of_nonneg hB.le]
+    rw [Int.toNat_of_nonneg hLA,Int.toNat_of_nonneg hB.le]
     rfl
   have hcap : 2*((2^(s-1) : ℕ) : ℤ)=z s := by
     push_cast
@@ -870,7 +879,7 @@ private theorem borrow_selector_windows (a b s : ℕ) (hb : 2≤b)
       · right
         have hh := pow_le_pow_right₀ (by norm_num : (1 : ℤ)≤2)
           (show b+2≤a by omega)
-        simpa [x,y,pow_add] using hh
+        simpa [x,y,pow_add,mul_comm] using hh
     have hxeq : (x a=2*y b) ↔ a=b+1 := by
       constructor
       · intro he
@@ -878,7 +887,7 @@ private theorem borrow_selector_windows (a b s : ℕ) (hb : 2≤b)
         have hlarge : 4*y b≤x a := by
           have hh := pow_le_pow_right₀ (by norm_num : (1 : ℤ)≤2)
             (show b+2≤a by omega)
-          simpa [x,y,pow_add] using hh
+          simpa [x,y,pow_add,mul_comm] using hh
         omega
       · intro he;simp [x,y,he,pow_succ,mul_comm]
     have vd := borrow_adjacent_V_windows (x a) (y b) (vNat b : ℤ) hy hx hv hdyadic
@@ -888,7 +897,8 @@ private theorem borrow_selector_windows (a b s : ℕ) (hb : 2≤b)
     have htcast : (borrowT a b s : ℤ)=
         if x a=2*y b then 2 else (quotientT a b s : ℤ)-1 := by
       by_cases he : a=b+1
-      · simp [borrowT,hadj,he,hxeq.mpr he]
+      · rw [if_pos (hxeq.mpr he)]
+        simp only [borrowT, if_pos hadj, if_pos he, Nat.cast_ofNat]
       · simp only [borrowT,if_pos hadj,if_neg he,if_neg (mt hxeq.mp he)]
         exact Nat.cast_sub hq1
     rw [←htcast,←Int.natCast_emod] at vd
@@ -908,9 +918,10 @@ private theorem borrow_selector_windows (a b s : ℕ) (hb : 2≤b)
         (residual_cast a b s (borrowT a b s)).1]
       exact vd.2.2.2.2
     · simpa only [hu0,wEndpoint,hybridOld,Nat.zero_mod,Nat.cast_zero,
-        zero_mul,sub_zero] using wr.1
+        zero_mul,sub_zero,K,A,pK,pA] using wr.1
     · simpa only [if_pos hadj,hu0,wNewEndpoint,wEndpoint,hybridOld,
-        Nat.zero_mod,Nat.sub_self,Nat.cast_zero,zero_mul,sub_zero,add_zero] using wr.2
+        Nat.zero_mod,Nat.sub_self,Nat.cast_zero,zero_mul,sub_zero,add_zero,
+        K,A,H,SW,pK,pA,pH] using wr.2
   · let p := borrowP a s
     have hp : 2≤(p : ℤ) := by
       have hh := pow_le_pow_right₀ (by norm_num : (1 : ℤ)≤2)
@@ -919,7 +930,7 @@ private theorem borrow_selector_windows (a b s : ℕ) (hb : 2≤b)
     have hzp : z s=2*x a*(p : ℤ) := by
       dsimp [p,borrowP,x,z]
       push_cast
-      rw [show s=a+(s-a-1)+1 by omega,pow_add,pow_add]
+      conv_lhs => rw [show s=a+(s-a-1)+1 by omega,pow_add,pow_add]
       ring
     have pre := borrow_far_V_windows (x a) (y b) (p : ℤ) (vNat b : ℤ)
       (quotientT a b s : ℤ) hy hx hp hv
@@ -994,7 +1005,10 @@ private theorem borrow_selector_windows (a b s : ℕ) (hb : 2≤b)
       (hybridOld a b s (borrowU a b s))
       ((borrowU a b s-borrowU a b s%vNat b : ℕ) : ℤ)
       hy hx hp hFlo hFhi (by positivity)
-      (by rw [hchi];have hh : (0 : ℤ)≤(borrowU a b s%vNat b : ℕ) := by positivity;omega)
+      (by
+        rw [hchi]
+        have hh : (0 : ℤ)≤(borrowU a b s%vNat b : ℕ) := by positivity
+        omega)
     dsimp only at wd
     rw [←hzp] at wd
     change window (wEndpoint a b s (borrowU a b s)) (K a b s) ∧
