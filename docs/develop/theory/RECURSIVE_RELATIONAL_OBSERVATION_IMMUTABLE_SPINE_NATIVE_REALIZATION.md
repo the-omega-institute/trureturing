@@ -1154,3 +1154,591 @@ owner terms; generic quotients, adaptive continuation and spatial
 equivalences are reused.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. A loop-derived cost for the unchanged complete evaluator
+
+**Definition 11.1 (source call multiplicities).** Retain the evaluator,
+sharing translation and composition of §§1 and 7. Let $b=B_x$ and $Y$
+have exactly the meanings in (IS.9)–(IS.10). The complete emitted stack
+graph has 10,983 locations, including its return dispatch; put
+$q_0=10984$. A routine name below denotes its literal assembler body,
+not a host arithmetic operation. Let $m_{fg}$ be the number of syntactic
+calls from body $f$ to body $g$, counting both branch bodies and every
+literal expansion. The nonempty rows are as follows; omitted entries
+are zero and an omitted multiplicity is one.
+
+| $f$ | $g:m_{fg}$ |
+| --- | --- |
+| main | add:2, addword:7, concat:3, conjoin, encu:2, lt, mixture:2, mul:3, normalizer:2, readcache:2, readu:4, readv |
+| addword | concat, encq, encv |
+| blocks | add:2, get, lt:2 |
+| conjoin | add, eq, get:2, lt, mul, put |
+| countlabels | add:18, blocks, div:3, eq:2, get:9, lt:9, mul:4, put:5, sub:4, zeros:4 |
+| div | add:2, lt, sub |
+| encq | concat, encu:2, reduce |
+| encu | encv |
+| eq | sub |
+| falling | add, lt, mul, sub |
+| gcd | div |
+| get | popword:2, sub |
+| inject | add:11, eq, get:12, incident, lt:6, mul:4, odometer, put:5, sub:2, zeros:6 |
+| lt | sub |
+| mixture | mul:4, qadd, sub |
+| mul | add |
+| nextpart | add:5, get:2, lt:4, put:2, sub:2 |
+| normalizer | add, blocks:2, countlabels:2, falling:2, inject:2, lt:3, mul:6, nextpart:2, qadd:2, side:2 |
+| odometer | add, get, lt:2, put:2, sub |
+| put | popword:3, prepend:3, sub |
+| qadd | add, mul:3, reduce |
+| readcache | add:3, get, lt:2, mul, put:2, zeros |
+| readu | readv |
+| reduce | div:2, gcd |
+| side | add:12, eq, get:4, lt:5, mul:3, put, zeros |
+| zeros | sub |
+
+These rows are the expansion of `constructor_ir.Assembler.call`,
+`constructor_ir.primitives`, `evaluator_program.define_evaluator` and
+`evaluator_program.main` in the
+[fixed source](https://github.com/the-omega-institute/trureturing-experiments/tree/0ab58a79e9122c53680491b2f99c1a00dc06f19e/rro-lab-execution).
+In particular, `incident` is the fixed public incidence decision tree.
+No row calls an ancestor in this table's dependency relation; the
+longest invocation chain has eight bodies. Return words still have
+their original eight-bit identifiers. This table changes neither
+the evaluator nor its admissible input language.
+
+Put
+
+$$
+ P=N^N,\qquad M=36^{\min(N,72)}27^{\min(N,243)},\qquad
+ H=2^{\min(N,243)}.                                             \tag{IS.23}
+$$
+
+The twenty word routines are add, sub, lt, eq, mul, div, gcd, reduce,
+qadd, popword, prepend, get, put, zeros, concat, encv, encu, encq,
+readv and readu. Assign each of them $\lambda_f=(2b+3)^2$.
+Assign the remaining local multipliers by the following table.
+
+| Body $f$ | $\lambda_f$ |
+| --- | ---: |
+| main | $t+2$ |
+| readcache, conjoin | $15N+2$ |
+| blocks, falling | $N+2$ |
+| nextpart | $(N+2)^2$ |
+| side | $16(N+2)^2$ |
+| countlabels | $257(H+1)(N+257)^3$ |
+| odometer | $2N+2$ |
+| incident, mixture, addword | $1$ |
+| inject | $(M+1)(2N+2)$ |
+| normalizer | $(P+1)^2(N+2)$ |
+
+Define integers, in dependency order, by
+
+$$
+ C_f=q_0\lambda_f\left(1+\sum_g m_{fg}C_g\right),\qquad
+ T_x=C_{\mathrm{main}}.                                        \tag{IS.24}
+$$
+
+This is a finite arithmetic recurrence on public code, $N,L,t$ and
+the already proved word bound $b$. It contains no completed-run count,
+normalizer value, actual hidden injection or numerical reference answer.
+
+**Theorem 11.2 (complete source cost from the actual loops).** Every
+accepted arithmetic frame in Definition 8.1 executes at most $T_x$
+stack instructions and at most $T_x$ pushes. Its output bound remains
+$Y$. Thus $T_x$ can replace either occurrence of $2^{E_x}$ in the
+reserve and operation upper bounds, with all original domains retained.
+
+Proof. First count a body's own locations, contracting each subroutine
+invocation to an edge. All consuming word scans have at most $b+1$
+iterations by Theorem 8.2. Addition/subtraction consume the two supplied
+words; normalization and moves consume a finite temporary. Multiplication
+consumes multiplier bits, and division consumes dividend bits. Their
+numeric values are not loop lengths. In get/put the index is a valid
+serialized-vector position, hence at most $b$; the restored prefix has
+at most $b$ records. Zeros receives an actual vector size, also at most
+$b$. Readv consumes its represented unary marks and payload. Euclid
+has at most $2b+1$ iterations: after two nonterminal remainders the
+positive divisor is less than half its earlier value. This is the usual
+Euclidean estimate applied to these actual argument words. Calls to
+division are counted separately. The word bodies have no remaining
+local loop with a larger counter, and no local nesting beyond the
+generous square in $(2b+3)^2$.
+
+Readcache and conjoin scan $15N$ positions. Blocks/falling scan $N$.
+Nextpart decreases its outer position and scans a prefix of length at
+most $N$, then resets a suffix; side uses at most two sample positions
+and eight coordinate positions. The corresponding table entries
+dominate the visits of each local location, including failed tests.
+
+Countlabels uses at most 256 labels, at most $N$ blocks and eight
+coordinates, and a subset table of at most $H$ entries. Its loops are
+sample-coordinate, label-block-coordinate, or label-subset-block;
+the stated multiplier dominates each location's visits. Its get/put,
+division and arithmetic work are subroutine calls, not free operations.
+The 72/243 block tests occur before inject. Consequently inject's
+odometer has at most $36^r27^s\le M$ settings for source zero and at
+most $9^{r+s}\le M$ for source one. Each setting scans at most $2N$
+vertices and $N$ sample edges. The degree test and seen-edge array
+are paid before enumeration even when they reject the entire term.
+
+The restricted-growth-word enumeration visits at most the number of
+partitions of $N$ positions. Assigning each position one of $N$ labels
+gives its elementary upper bound $P$; this bound includes partitions
+rejected by block caps. The two normalizer partition loops therefore
+have at most $P^2$ pairs. Its separate power loop has $N$ iterations.
+Main executes its cylinder body $t$ times and retains its initial
+evidence computation. Each remaining body has no local loop.
+
+There are fewer than $q_0$ own locations per body. Each call site is
+visited at most $q_0\lambda_f$ times, which also bounds its own
+instruction total. Induction on the actual acyclic call graph gives
+(IS.24), including argument binding, eight-bit call/return handling,
+branching and the terminal instruction. Each push is an instruction.
+Theorem 8.2 still bounds output. This proof uses loop invariants rather
+than the number of possible Boolean-register configurations. $\square$
+
+## 12. The full frontend, local service completion and joint native demand
+
+**Definition 12.1 (frontend scan recurrence).** For Definition 9.1's
+complete finite chronology, set
+
+$$
+ J=I+S+15N+t+q+L+Y+1024,\qquad f=F_0+1,                        \tag{IS.25}
+$$
+
+where $F_0$ is the unchanged frontend's field-location count. Define
+
+$$
+\begin{aligned}
+ a_{\rm take}&=f,\\
+ a_{\rm readv}&=f(J+1)(1+a_{\rm take}),&
+ a_{\rm readu}&=f(1+a_{\rm readv}),\\
+ a_{\rm unary}&=f(J+1)^2,&
+ a_{\rm shape}&=f(J+1)(1+a_{\rm unary}),\\
+ a_{\rm prior}&=f(J+1)(1+2a_{\rm readu}),&
+ a_{\rm mask}&=f(J+1)(1+a_{\rm take}),\\
+ a_{\rm cylinders}&=f(J+1)(1+a_{\rm readu}+a_{\rm unary}
+                  +a_{\rm readv}+a_{\rm mask}+a_{\rm take}),\\
+ a_{\rm arithmetic}&=f(1+a_{\rm readu}+a_{\rm shape}
+                    +a_{\rm prior}+a_{\rm mask}+a_{\rm cylinders}),\\
+ a_{\rm classify}&=f(J+1),\\
+ A_{\rm cmd}&=f(J+1)^2\left(1+\sum_r a_r\right),&
+ T_F&=(I+q+3)A_{\rm cmd} .
+\end{aligned}                                                   \tag{IS.26}
+$$
+
+The sum is over the ten displayed routine quantities. The quantity
+$A_{\rm cmd}$ denotes the top-level command allowance, including receive,
+copy/cat/wrap, framed output and the pending input/output latches.
+These are field-action counts, not Boolean-stack or host-time counts.
+
+**Theorem 12.2 (whole frontend and local endpoints).** On a complete
+valid public chronology, under finite allocation and current-rights
+premises, the frontend outside the evaluator and provider executes at
+most $T_F$ field actions and extracts at most $T_F$ cells. Every call
+to the original local provider and every local End/Ack/Return completes
+after finitely many of its own operations. No independent remote Ack
+or remote source-completion hypothesis is needed for these endpoints.
+
+Proof. Use the actual routines in `field_service.Service`. Take consumes
+one actual input cell or reaches its specified suspended/refusal cut.
+Readv scans represented unary marks and their payload; readu additionally
+checks the canonical first bit. Unary's outer loop scans a binary word;
+each doubling scans the saved tail snapshot, whose resulting unary
+length is at most $N$ or the represented cylinder count $t$. Both are
+bounded by $J$. Shape's remaining loop appends exactly $15N$ cache
+positions. Prior compares original represented payloads, without
+cancelling the fraction. Mask scans the shape and selected values.
+Cylinders repeats a readv, strict finite mask validation and cursor
+restoration for its actual finite count. Thus induction over the
+displayed calls gives the first nine allowances. Classify consumes a
+finite operand/cache spine and then at most three suffix bits.
+
+Top-level copy/cat/wrap, receipt construction, prediction construction
+when requested, and print each scan finite words of length at most
+$J$. Their branch-local loops and fixed call sites are bounded by
+$f(J+1)^2(1+\sum_r a_r)$. This includes no evaluator instruction.
+There are at most $I+q+3$ bit deliveries, complete-command boundaries
+and initialization/closing phases to which this generous top allowance
+must be assigned. Waiting charges retained material but no elapsed
+time. Each field allocation extracts one cell. This proves (IS.26).
+
+For an operand $w$, `OriginalConnection.invoke` projects exactly the
+transmitted finite native chain. `OriginalPort.call` constructs and
+parses its actual $2|w|+1$-bit wire, then examines at most $|w|+1$
+source vertices and follows at most $|w|$ child links. It returns its
+actual two-bit latch. Buffer.clear visits only its finite wire, retaining
+all cells on the paid free list. Connection.ack clears the occupied
+reply latch. These loops require no additional source decision or
+unbounded external response. The granted root is the same object on
+every invocation; the classifier does not supply a reply.
+
+In `immutable_spine.Direct.tick`, ordinary send appends the computed
+bit to the local output list, End sets its ended flag, Ack tests that
+flag, and Return tests acknowledgement and reads the actual retained
+output-return reference. These are local finite routines. The ordinary
+completion is conditional on their actual storage/rights and execution,
+not a promise that the runtime can allocate arbitrary finite lists or
+will schedule them within a specified time. $\square$
+
+**Theorem 12.3 (loop-derived complete native demand).** For one accepted
+evaluation with all its acquisition, return, subsequent Reads and Close,
+a sufficient extraction allowance in the unlimited-fresh-cell semantics
+is
+
+$$
+ K^{\rm loop}=5+L+T_x+T_F .                                    \tag{IS.27}
+$$
+
+Insert this same integer in (IS.15). The simultaneous native census
+still retains every source block, descriptor, target, grant, unused
+reserve, initializer and old immutable frame. A sufficient composed
+native-transition allowance is
+
+$$
+ V_C^{\rm loop}=128n+16r+4c+64+
+ F\left(T_x+T_F+2L+2Y+R+64\right).                            \tag{IS.28}
+$$
+
+Source preparation, provider work, external input-latch delivery and
+cleanup are separate coordinates, with source and connection censuses
+as in Definition 9.4. In particular the receipt payload has exactly
+$2S+3q$ bits, provider navigation is at most $S$, and provider vertex
+examination is at most $S+q$. There are $I+q+3$ input bit/End signals
+for the specified initialization, $q$ Reads, one evaluation and Close;
+their native delivery writes three actual latches per signal.
+
+Proof. Combine Theorems 11.2 and 12.2 with the seed/loader/push
+extraction proof of Theorem 9.3. Every literal lowering path is bounded
+by $F$, including stack resets, the two output scans and actual indirect
+return. The installation two-pass bound is unchanged. Provider work
+and input delivery do not disappear inside the symbol $F$. Source
+preparation has its original $5k+4$ guarded growth events and
+$(5k^2+13k+6)/2$ ancestor-route appends at $k=15N$, including its
+retained event-address words and the finite route-validation scans.
+Their host copying cost is additional to these native events.
+
+The receipt and cache proofs depend on original occurrence indices
+and actual replies, including replies outside the positive-law support.
+None of their cost estimates assumes positive evidence. The rational
+endpoint/unreduced and zero-evidence cases are already included in
+Theorems 8.2 and 11.2. A zero denominator for a conditional law omits
+only that ratio; it does not replace the source or delete an occurrence.
+For several evaluations sum their $T_x$, seed/loader allowances and
+output bounds, while retaining all earlier allocations. $\square$
+
+## 13. Actual reference carriers and the object-layout obstruction
+
+**Definition 13.1 (a concrete host data layout).** Consider the CPython
+3.12 slotted Block/Source layout of `native_install`, with eight-byte
+host pointers, four-reference work/code blocks, and a one-byte work
+data buffer. Its reported object payload sizes, in bytes, are
+
+| Component | Bytes |
+| --- | ---: |
+| slotted Block | 72 |
+| slotted Source descriptor | 64 |
+| four-element reference list | 88 |
+| one-element reference list | 64 |
+| empty reference list | 56 |
+| one-byte bytearray including its header/buffer | 58 |
+| three-byte bytearray including its header/buffer | 60 |
+| four-element tuple | 72 |
+
+This is a host object-payload coordinate. Native grant/field bits,
+allocator size classes, process mappings and resident pages are different
+coordinates. A physical Python reference is a host pointer to its actual
+object. A modeled owner-local reference width never compresses that
+host pointer. The runtime's signed container-length limit is
+$2^{63}-1$, and its nonnegative integer digits carry 30 bits in four
+bytes. Counter widths therefore depend on total charged work as well
+as data length.
+
+**Proposition 13.2 (reserve payload and physical realization).** Each
+additional installed reserve cell in the unchanged Direct layout
+retains two distinct Blocks, two distinct four-element reference lists,
+two one-byte buffers and a Source descriptor. Its object payload alone
+is exactly
+
+$$
+ 2(72+88+58)+64=500\text{ host bytes}.                         \tag{IS.29}
+$$
+
+It adds $(3,13,16)$ to the native $(O,A,C)$ census. It also adds
+container entries and preparation/observer material outside (IS.29).
+At a common actual-object cut, references to these objects are realized
+by their eight-byte carriers, with aliases sharing their pointed-to
+object. There is no integer-to-object reconstruction operation.
+
+Proof. Source and target have the same four-reference/eight-bit shape.
+The descriptor points to source block, next descriptor and relocated
+target. Each Block also has its directory slot, giving eight work
+reference slots, two directory slots and three descriptor slots. Source
+and target bits contribute sixteen; one grant per modeled object is
+in the $O$ coordinate. Adding their separate host object payloads gives
+(IS.29). The actual allocation retains both sides, rather than overwriting
+the source with a target alias.
+
+Direct's pool source list, translated target list, source-block and
+descriptor lists are additional retained host arrays. The source-to-
+descriptor map, link slices and relocation temporaries overlap during
+preparation. The constructor also retains source/target boundary maps,
+register maps and code. Its installer retains the source list, directory,
+pending/source/target latches and fixed control graph. A later frozen-word
+observer additionally retains its dictionary entries and reference tuples;
+clearing a stack head does not release those tuples. These facts explain
+why (IS.29) is only one exact additive payload term, not a complete host
+upper bound. The layouts use actual object fields and pointers throughout;
+grant tests are still required on the operational path. $\square$
+
+**Proposition 13.3 (one simultaneously installed image).** The fixed
+composed graph with $K=0$ has $n=226380$ source blocks and the census
+
+$$
+ (O_C,A_C,C_C)=(777713,3037783,11648685).                        \tag{IS.30}
+$$
+
+An independently installed mutable-B component for program
+$W=(R,M,J_2)$, input $00$, reserve 128, at its initialized zero-instruction
+prefix has census $(1281587,5224821,18724355)$. Its immutable initializer
+wiring may be shared with the composed graph, while its mutable
+initializer header, code, tape, head and pending/control state remain
+distinct. The same original $k=60$ test-source factory and its uninvoked
+connection add $(10064,11727,9393)$ and $(1,10,0)$ respectively.
+Their common reference-carrier census, deduplicating shared wiring,
+is
+
+$$
+ (O_*,A_*,C_*)=(1970961,8175937,28217545).                      \tag{IS.31}
+$$
+
+The corresponding fixed 64-bit-reference native-field coordinate is
+$553448474$ bits. This coordinate is neither the host object payload
+nor the resident size, and $K=0$ supplies no evaluator extraction reserve.
+
+Proof. The initializer contains
+
+$$
+ W_s=1+3(1+3+8+21+32768)=98404
+$$
+
+immutable wire vertices, including its end vertex and the unused wide
+scan. Its own mutable header and 167 installer locations give seed
+$(98572,98908,2168397)$. The shared portion is exactly
+$(W_s,W_s,22W_s)$; two mutable headers and two installer control graphs
+remain distinct. Substituting $K=0,F=225718,R_c=604,B_c=57$ in
+(IS.15) gives (IS.30). The independently prepared B program/input and
+128-cell reserve use their original native installer; its source census
+has 394338 blocks. The same descriptor/target enumeration gives its
+displayed census. The B loader has initialized its actual mutable tape;
+no B instruction is required for this prefix.
+
+Sum the four owners and subtract only the shared wire portion. This
+gives (IS.31), including each owner's grants. Then compute
+$O_*+64A_*+C_*$. Python object references and C wire successors have
+their actual pointer carriers; the bit-scanning C routine mutates the
+header/target bytes, not the shared successor wiring. Thus two actual
+initializer headers can use the same immutable wires. This image is a
+layout instance, not a computed UJB output or a complete service history.
+$\square$
+
+**Definition 13.4 (host terms still needed for a sufficient comparison).**
+For this layout the exact term $500K$ must be accompanied by all actual
+retained and peak container payloads, temporary slices/maps, hash-table
+capacity and rehash overlap, copied source-address/route words, C/ctypes
+native buffers and keepalive maps, source/provider buffers and free-list
+cells, output/observer copies, interpreter/compiler/library material and
+cleanup. Kernel code, mappings, allocator arenas/fragmentation and execution
+stack are separate host terms. Their maximum must be taken at common cuts;
+the installed-object sum alone is insufficient.
+
+A closed host-work account must also price allocation and release,
+container resizing/hashing/probing, arbitrary-width counters, every
+source-preparation copy and validation scan, every native interpreter
+step and its observer, input/output copying and cleanup in actual host
+work units. The native operation allowance (IS.28) provides cardinalities
+for this substitution but does not price these runtime operations.
+These are construction/runtime derivation obligations, rather than an
+indivisible theorem assigned to a host-resource owner.
+
+An actual protected host-byte offer and a backed host-work offer for
+these same owners/cuts are different premises. A physical-memory count,
+RSS reading, unlimited process limit, finite list allocation or prior
+successful component is not such an offer. Owner-local width migration
+still pays its overlap unless the chosen actual pointer layout already
+carries the references. Only actual retained/shared or offer-coupled
+owners enter this union; unrelated machine users do not enter merely
+because they exist. No wall-clock conversion follows from the native
+or host-work coordinates.
+
+## 14. Three complete-chronology substitutions and the finite B domain
+
+**Proposition 14.1 (the original rows discriminate the new bound).**
+Substitute Definition 10.1's unchanged frames, acquisition schedules and
+appended post-evaluation Read(LL)/Close in (IS.24)–(IS.28). The exact
+source recurrence gives the following bit lengths, where
+$\operatorname{bl}(u)=\lfloor\log_2u\rfloor+1$ for positive integers.
+
+| Original frame | acquisition Reads / operand bits | whole $q/S$ | $\operatorname{bl}(T_x)$ | $\operatorname{bl}(K^{\rm loop})$ | $\operatorname{bl}(V_C^{\rm loop})$ |
+| --- | --- | --- | ---: | ---: | ---: |
+| positive-full | 74 / 2176 | 75 / 2178 | 2094 | 2094 | 2112 |
+| positive-partial | 73 / 2115 | 74 / 2117 | 2094 | 2094 | 2112 |
+| null-nine-distinct-left | 149 / 9676 | 150 / 9678 | 2149 | 2149 | 2167 |
+
+The frontend field-action upper bounds $T_F$, in row order, are
+
+$$
+\begin{aligned}
+&5704718395141094332244518336746932279963494449801624,\\
+&5507302958271138648414070229466644995972382284536600,\\
+&765978059821551433955279764650622238585882639680896000.
+\end{aligned}                                                   \tag{IS.32}
+$$
+
+The three payloads still have lengths 387, 386 and 839, with the SHA256
+identities, in the same order,
+
+```
+37dfee71eda5a8fbee3d373aab446982f15976785ef965ec2e4a1b6ea98c5402
+1a4ae049cf81b1f434398aa05cb8eabcf4d8689f7873f8d75f9ae1e870c34764
+f5518d034eef5bd00c87ff9d43c5ca878ef9d012f47e04bedcbe45163ee3e29d
+```
+
+Each row is a complete prospective native-demand substitution. Its
+parameters contain neither a protected host-byte offer nor a backed
+host-work offer. In all three,
+the particular sufficient $K^{\rm loop}$ exceeds $2^{63}-1$, so that
+reserving exactly that many entries in one runtime list is not a legal
+instantiation of Definition 13.1. This is a failed fit for this upper
+reserve and ABI, not a lower bound on necessary reserve and not proof
+that these service sessions are impossible. Smaller sufficient bounds
+remain a mathematical question for the same representation/evaluator.
+
+The separate B image of Proposition 13.3 can remain installed throughout
+each proposed session. In that case add its census to the row's composed
+graph, original source and complete connection census, subtracting the
+single shared wire contribution. This is one common-cut upper union;
+it does not add the B reserve to the evaluator's extraction pool.
+For a concrete byte/work comparison the remaining information is:
+
+| Frame | $\operatorname{bl}(500K^{\rm loop})$ in host bytes | complete host upper | same-scope protected byte/work offer | comparison |
+| --- | ---: | --- | --- | --- |
+| positive-full | 2103 | not supplied by the native census/payload term | none supplied | unsettled; chosen reserve fails the container-length condition |
+| positive-partial | 2103 | not supplied by the native census/payload term | none supplied | unsettled; chosen reserve fails the container-length condition |
+| null-nine-distinct-left | 2158 | not supplied by the native census/payload term | none supplied | unsettled; chosen reserve fails the container-length condition |
+
+Here $500K^{\rm loop}$ is the exact reserve-payload contribution for
+that chosen reserve, not a necessary lower bound on the service's
+minimum host demand. Also, a 64-bit pointer carrier can name only a
+finite actual object domain; these upper object counts do not establish
+that cardinality condition. Changing a logical reference-width symbol
+does not enlarge the current host's pointer or container domain.
+
+Proof. Definition 10.1 supplies $N,L,t,I,q,S,m,Y,D_0$ without a numerical
+evaluator run. Here $b=16^{35}(D_0+1)$, $q_0=10984$, and (IS.24)'s
+call matrix has depth eight. Evaluate that finite integer recurrence
+and then (IS.26)–(IS.28). The resulting integer bit lengths and (IS.32)
+are as displayed. The source/connection terms remain the exact rows
+of Proposition 10.1; the output and fresh receipt terms are those of
+Theorem 12.3. Appending a real Read is not a reinterpretation of any
+acquisition probe. The comparison with the signed container-length
+limit concerns the chosen allocation expression only. $\square$
+
+**Proposition 14.2 (separate mutable B and unreduced class coverage).**
+The native logical bounds above cover every accepted represented
+evaluator input, not only the three substitutions. In a product with
+an actually installed mutable B supplier, let $a$ be its finite program
+length, $\ell$ its supplied input length and $p$ its requested finite
+instruction prefix. Put
+
+$$
+ C=\ell+p+1,\qquad
+ D_B=1+\frac{C(C+1)}2+C(C+1),\qquad
+ K_B=a+\ell+6+4C+D_B.                                        \tag{IS.33}
+$$
+
+This is a sufficient cell allowance for its program/input plus the
+ML-C work tree/routing upper census. At each common cut add the
+actual installed B source/code/control/descriptor/target/observer terms,
+deduplicating only physically shared immutable material. The evaluator's
+immutable tokens may not represent mutable B positions.
+
+For the fixed `b_graph` and original native installer used in
+Proposition 13.3, those installed native terms have the explicit affine
+form, for any adequate chosen pool $u$,
+
+$$
+\begin{aligned}
+ n_B(u)&=u+394210,\\
+ O_B(u)&=3u+1281203,\\
+ A_B(u)&=13u+5223157,\\
+ C_B(u)&=16u+18722307 .
+\end{aligned}                                                   \tag{IS.34}
+$$
+
+The constants retain that installer's unused selectors and wide
+initializer scan. Let $G_B=394210$. In addition to its two-pass
+installation allowance, a sufficient native execution allowance for
+initialization and the requested prefix is
+
+$$
+ V_B=(G_B+1)^2(\ell+p+2)(C+3)^2.                              \tag{IS.35}
+$$
+
+External resume signals and host preparation/observer work remain
+separate coordinates. These formulas require the actual corresponding
+B installation, rather than identifying immutable evaluator frames
+with a mutable tape or assuming its program/input for free.
+
+Proof. Reuse ML6.2 and the finite-prefix correspondence ML31.2, together
+with Proposition 9.6. The work tree has at most $5+3C$ vertices, $1+C$
+headers and $D_B$ route cells. Program/input occupy $a+\ell$ additional
+cells; their sum gives (IS.33). Retain the original separate B graph,
+head, program counter and busy phase even when either component waits.
+The statement includes $p=0$, an empty/immediately halting program,
+and every finite prefix of a nonhalting program. No B termination
+assumption or fixed reserve for all prefixes is introduced. A concrete
+joint native installation such as Proposition 13.3 supplies a member
+of this product; its fixed 128-cell B reserve does not supply all $p$.
+
+In that fixed B source layout the program and finite input occupy
+already counted pool cells. Changing their finite contents does not
+change any block shape. Each additional pool cell adds a source block,
+descriptor and target with the $(3,13,16)$ increment of Proposition
+13.2. The fixed field graph, generic native control, reference/bit
+registers and initializer give the constants in (IS.34) by the same
+descriptor/target enumeration. The $u=128$ substitution is the census
+in Proposition 13.3. Both its field graph and native finite-control
+graph have fewer than $G_B+1$ locations. A growth-maintenance traversal
+follows at most $C+2$ proper ancestors. Each loader iteration or B
+macro has fixed remaining control and at most that finite traversal.
+There are at most $\ell+p+2$ loader/macro groups, with slack for an
+empty input and terminal/suspended prefix. Bounding each local
+traversal by the square $(C+3)^2$ and each field/native path by
+$(G_B+1)^2$ gives (IS.35), including repeated marking and both head
+directions. It asserts neither eventual halting nor an elapsed-time
+bound.
+
+For the evaluator, $N\ge4$ is arbitrary, represented prior endpoints
+and unreduced numerator/denominator words remain inputs, and $t$ may
+be zero or any finite count. Masks, selected values and finite cylinders
+are charged by their actual represented lengths. Countlabels and inject
+retain the once-shared full injections and original sample indices;
+the call bound does not independently optimize their marginals. Actual
+outside-support replies, repeated/partial slots and every occurrence
+receipt keep their original service semantics. Thus no domain is
+replaced by these three applications or by the zero-prefix layout image.
+$\square$
+
+The loop recurrence, simultaneous descriptor/target layout, concrete
+reference carriers and host-payload decomposition are repo-derived
+applications to this particular IS2 source. The Euclidean estimate,
+partition counting bound and existing ML/IS suppliers are used only
+as intermediate results. No new kernel-verified declaration, universal
+physical memory, host scheduling promise, fixed-time completion or
+unconditional space/time/boundary/memory recovery follows. The
+remaining full host-demand and actual-offer premises in Definition 13.4
+are independent of the established native loop bounds and local
+service-completion implication.
+
+## 追加锚（本行以下为增补区）
