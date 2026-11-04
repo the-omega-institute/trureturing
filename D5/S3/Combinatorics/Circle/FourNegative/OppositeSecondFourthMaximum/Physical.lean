@@ -100,7 +100,7 @@ private theorem physical_joint (a s c m n : ℕ) (rev : Bool)
     simp only [←Multiset.coe_add,Multiset.coe_singleton]
     rw [←hu,←hw']
     cases rev <;> dsimp [l,P,T,R,rawBanks,k]
-    all_goals simp only [←Multiset.coe_add,Multiset.coe_cons,Multiset.coe_singleton]
+    all_goals simp only [←Multiset.coe_add,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton]
     all_goals ac_rfl
   have basevec : base a s c s=![AA,BB,LL,KK] := by
     funext r
@@ -132,7 +132,6 @@ private theorem physical_joint (a s c m n : ℕ) (rev : Bool)
   have mn1 := congrFun mn 1
   have mn2 := congrFun mn 2
   have mn3 := congrFun mn 3
-  dsimp only at mo0 mo1 mo2 mo3 mn0 mn1 mn2 mn3
   have nt0 := native_masses a s c s ha hs hc hs 0
   have nt1 := native_masses a s c s ha hs hc hs 1
   have nt2 := native_masses a s c s ha hs hc hs 2
