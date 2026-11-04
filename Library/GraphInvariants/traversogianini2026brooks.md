@@ -213,6 +213,20 @@ no NOTICE path. The received source bytes have SHA-256:
 - MengerCore.lean: 2222b03a08e2c238d415133b30ea337086d1e4c6c87b4eca29010885ded80700.
 - LICENSE: c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4.
 
+## Vertex-deletion connectivity and terminal-clean fans
+
+The same immutable source supplies `exists_fan` in
+`MengerHamilton/ChvatalErdosAux.lean`, whose received source bytes have SHA-256
+275f7eac4a156883ad28b3d606fa73af18ab532c45a0d3ee7b892494f458c440.
+`D5/S3/Combinatorics/Graph/Walks/ConnectivityFan` adapts its separator argument
+to an arbitrary finite terminal set B. Deleting fewer than k vertices leaves
+a connected graph; for every x outside B there are min(k, |B|) paths from x to
+distinct terminals, meeting B only at their ends and sharing only x.
+The receiver's original `MengerCertificates.Fam` and `fam_of_le` supply the
+terminal-clean disjoint certificates directly. No cyclic-array representation
+or second Menger proof is introduced. The source and receiver pins, author,
+Apache license and retirement condition stated above also apply to this slice.
+
 Retire the port when this repository's own pinned Mathlib contains an equivalent
 entire finite set-form certificate and arbitrary-walk duality, after migrating
 consumers lawfully to direct applications. An upstream acceptance event alone is
