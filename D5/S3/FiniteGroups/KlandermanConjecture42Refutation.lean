@@ -11,6 +11,11 @@ import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
 import Mathlib.Algebra.Group.Subgroup.Map
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
+/-! # Ordinary transfer generation and Conjecture 4.2
+
+The quaternion counterexample uses actual subgroups and actual graph components.
+-/
+
 namespace D5.S3.FiniteGroups.KlandermanConjecture42Refutation
 
 universe u
@@ -52,10 +57,10 @@ def LesserSimplyPaired (T : TransferSystem G) : Prop :=
 /-- The undirected arrow graph; deleting identity loops preserves components. -/
 def arrowGraph (T : TransferSystem G) : SimpleGraph (Subgroup G) where
   Adj K H := K ≠ H ∧ (T.rel K H ∨ T.rel H K)
-  symm := by
+  symm := ⟨by
     intro K H h
-    exact ⟨h.1.symm, h.2.symm⟩
-  loopless := by intro K h; exact h.1 rfl
+    exact ⟨Ne.symm h.1, h.2.symm⟩⟩
+  loopless := ⟨by intro K h; exact h.1 rfl⟩
 
 /-- Exactly the two actual graph components represented by e and G. -/
 def TwoComponents (T : TransferSystem G) : Prop :=
@@ -71,21 +76,23 @@ def TopIsolated (T : TransferSystem G) : Prop :=
 
 private def completeSystem (G : Type u) [Group G] : TransferSystem G where
   rel := (· ≤ ·)
-  refines h := h
+  refines := by intro K H h; exact h
   refl _ := le_rfl
   trans := le_trans
   restrict _ _ := inf_le_right
-  conjugate _ h := Subgroup.map_mono h
+  conjugate := by intro g K H h; exact Subgroup.map_mono h
 
 /-- Intersection of all ordinary transfer systems containing T and e → G.
 There is no saturation or compatibility step in this construction. -/
 def generated (T : TransferSystem G) : TransferSystem G where
   rel K H := ∀ U : TransferSystem G, Extends T U → U.rel ⊥ ⊤ → U.rel K H
-  refines h := h (completeSystem G) (fun _ _ h => T.refines h) bot_le
+  refines := by intro K H h; exact h (completeSystem G) (fun _ _ h => T.refines h) bot_le
   refl H U _ _ := U.refl H
   trans h₁ h₂ U hT he := U.trans (h₁ U hT he) (h₂ U hT he)
   restrict h hL U hT he := U.restrict (h U hT he) hL
-  conjugate g h U hT he := U.conjugate g (h U hT he)
+  conjugate := by
+    intro g K H h U hT he
+    exact U.conjugate g (h U hT he)
 
 /-- The unchanged full universal conjunction of Conjecture 4.2. -/
 def claim : Prop :=
@@ -110,7 +117,7 @@ def properStar (G : Type u) [Group G] : TransferSystem G where
   restrict := by
     rintro K H L (rfl | ⟨rfl, hH⟩) hL
     · exact Or.inl (inf_eq_right.mpr hL)
-    · exact Or.inr ⟨bot_inf_eq, fun he => hH (top_unique (he ▸ hL))⟩
+    · exact Or.inr ⟨bot_inf_eq L, fun he => hH (top_unique (he ▸ hL))⟩
   conjugate := by
     rintro g K H (rfl | ⟨rfl, hH⟩)
     · exact Or.inl rfl
@@ -119,7 +126,8 @@ def properStar (G : Type u) [Group G] : TransferSystem G where
       apply hH
       apply top_unique
       intro x _
-      apply (Subgroup.mem_map_iff_mem (MulAut.conj g).injective).mp
+      apply (Subgroup.mem_map_iff_mem (f := (MulAut.conj g).toMonoidHom)
+        (MulAut.conj g).injective).mp
       rw [hm]
       exact Subgroup.mem_top _
 
@@ -138,7 +146,7 @@ def fullStar (G : Type u) [Group G] : TransferSystem G where
   restrict := by
     rintro K H L (rfl | rfl) hL
     · exact Or.inl (inf_eq_right.mpr hL)
-    · exact Or.inr bot_inf_eq
+    · exact Or.inr (bot_inf_eq L)
   conjugate := by
     rintro g K H (rfl | rfl)
     · exact Or.inl rfl
@@ -150,7 +158,7 @@ private theorem proper_star_top_isolated : TopIsolated (properStar G) := by
   · exact h
   · exact (h rfl).elim
   · exact h.symm
-  · exact (h.symm ▸ (bot_le : (⊥ : Subgroup G) ≤ H)).antisymm le_top
+  · exact top_unique (h.symm ▸ (bot_le : (⊥ : Subgroup G) ≤ H))
 
 private theorem proper_star_components (hbt : (⊥ : Subgroup G) ≠ ⊤) :
     TwoComponents (properStar G) := by
@@ -158,7 +166,7 @@ private theorem proper_star_components (hbt : (⊥ : Subgroup G) ≠ ⊤) :
   · intro hc
     have hr := SimpleGraph.ConnectedComponent.exact hc
     have hn : (arrowGraph (properStar G)).neighborSet ⊤ = ∅ := by
-      apply Set.eq_empty_iff_forall_not_mem.mpr
+      apply Set.eq_empty_iff_forall_notMem.mpr
       intro H h
       exact h.1 (proper_star_top_isolated H h.2.symm).symm
     exact SimpleGraph.not_reachable_of_neighborSet_right_eq_empty hbt hn hr
@@ -173,7 +181,7 @@ private theorem proper_star_components (hbt : (⊥ : Subgroup G) ≠ ⊤) :
         · exact hb ▸ SimpleGraph.Reachable.rfl
         · exact (SimpleGraph.Adj.reachable
             (show (arrowGraph (properStar G)).Adj ⊥ H from
-              ⟨hb.symm, Or.inl (Or.inr ⟨rfl, ht⟩)⟩)).symm
+              ⟨Ne.symm hb, Or.inl (Or.inr ⟨rfl, ht⟩)⟩)).symm
 
 private theorem generated_star (K H : Subgroup G) :
     (generated (properStar G)).rel K H ↔ (fullStar G).rel K H := by
@@ -196,9 +204,11 @@ private theorem q8_chain : (⊥ : Subgroup Q8) < Z ∧ Z < A ∧ A < ⊤ := by
     have h := A.pow_mem ha 2
     simpa only [QuaternionGroup.a_one_pow, Nat.cast_ofNat] using h
   have hane : (QuaternionGroup.a 1 : Q8) ∉ Z := by
-    rw [mem_zpowers_iff_mem_range_orderOf]
-    norm_num [QuaternionGroup.orderOf_a, QuaternionGroup.a_mul_a, pow_two,
-      QuaternionGroup.one_def]
+    have ho : orderOf (QuaternionGroup.a 2 : Q8) = 2 := by
+      rw [QuaternionGroup.orderOf_a]
+      decide
+    rw [mem_zpowers_iff_mem_range_orderOf, ho]
+    decide
   have hx : (QuaternionGroup.xa 0 : Q8) ∉ A := by
     rw [mem_zpowers_iff_mem_range_orderOf]
     simp only [Finset.mem_image, Finset.mem_range]
