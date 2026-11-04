@@ -20,7 +20,7 @@ internal sealed class TsiCoordinationSequenceDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(Module + ".tsiGraph"),
                 H("Square layers with alternating prism slabs"),
                 StatementSource.FromAuthor(Disp(GraphFormula())),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "The vertices are integer triples, with the third coordinate specifying the layer. "
                         + "Within each layer, adjacent vertices differ by one in exactly one horizontal coordinate. "
