@@ -49,7 +49,7 @@ internal sealed class PrimeMinCorrectionSecondOrderLowerDocument : IScribeDocume
                     + "bound. Neither branch inserts an asymptotic threshold depending on m.")),
                 Paragraph(Text(
                     "For the signed Robin application let M(P) be the finite sum of "
-                    + "-log(1-1/p) over p<=P and set Etheta(P)=M(P)-gamma-log(log(theta(P))). "
+                    + "-log(1-1/p) over primes p<=P and set Etheta(P)=M(P)-gamma-log(log(theta(P))). "
                     + "Full support identifies M(P) with eulerMass(m). The existing exact "
                     + "tail_robin_data identity gives margin(m)=A(m)-Etheta(P), where "
                     + "A(m)=tail(m)+log(log(X))-log(log(theta(P))). Thus Robin positivity "
