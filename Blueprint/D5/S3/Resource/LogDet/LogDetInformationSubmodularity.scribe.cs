@@ -34,6 +34,16 @@ internal sealed class LogDetInformationSubmodularityDocument : IScribeDocumentDe
                         + "regularization-only baseline."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("positive-log-det-monotonicity"),
+                DeclarationHandle.Create(Prefix + "log_det_mono"),
+                H("Log-determinant monotonicity for positive matrices"),
+                StatementSource.FromAuthor(LogDetMonotonicityFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On a nonempty finite index type, the real log-determinant preserves "
+                        + "the Loewner order between positive definite complex matrices."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("log-det-information-monotone-submodular"),
                 DeclarationHandle.Create(Prefix + "log_det_information_monotone_submodular"),
                 H("Log-determinant information is monotone and submodular"),
@@ -90,6 +100,34 @@ internal sealed class LogDetInformationSubmodularityDocument : IScribeDocumentDe
         for (var index = formulas.Length - 2; index >= 0; index--)
             result = new Formula.Logic(formulas[index], FormulaLogicOperator.And, result);
         return result;
+    }
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula LogDetMonotonicityFormula()
+    {
+        Formula index = F.Id("Index");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula name(params string[] parts) => Seq(Operatorname, Grp(Seq(
+            parts.SelectMany((part, i) => i == 0
+                ? new Formula[] { F.Id(part) } : [Dot, F.Id(part)]).ToArray())));
+        Formula at(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+        Formula matrix = at(name("Matrix"), index, index, complex);
+        Formula left = F.Id("left");
+        Formula right = F.Id("right");
+        Formula logDet(Formula value) => at(name("Real", "log"),
+            at(name("Complex", "re"), at(name("Matrix", "det"), value)));
+        Formula implication(Formula hypothesis, Formula body) => new Formula.Logic(
+            Parenthesized(hypothesis), FormulaLogicOperator.Implies, Parenthesized(body));
+        Formula body = implication(at(name("Matrix", "PosDef"), left),
+            implication(at(name("Matrix", "PosDef"), right),
+                implication(Seq(left, Sp, Leq, Sp, right),
+                    Seq(logDet(left), Sp, Leq, Sp, logDet(right)))));
+        return Disp(Seq(Forall, Sp, Parenthesized(Seq(index, Colon, Sp, name("Type"))), Comma, Sp,
+            OpenBracket, at(name("Fintype"), index), CloseBracket, Sp,
+            OpenBracket, at(name("DecidableEq"), index), CloseBracket, Sp,
+            OpenBracket, at(name("Nonempty"), index), CloseBracket, Sp,
+            Forall, Sp, Parenthesized(Seq(left, Sp, right, Colon, Sp, matrix)), Comma, Sp, body));
     }
 
     private static Formula TheoremFormula()

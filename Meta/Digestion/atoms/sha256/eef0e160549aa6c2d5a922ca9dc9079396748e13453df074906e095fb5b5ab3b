@@ -1,0 +1,39 @@
+**Theorem 49.1 (unique first zero and relaxed quartic classification).**
+There is exactly one zero $\xi_*$ of $D_{\mathrm{sel}}$ on $(0,4)$.
+It satisfies
+
+$$
+\frac{59}{25}<\xi_*<\frac{61}{25}<\frac{13}{4},\qquad
+D_{\mathrm{sel}}'(\xi_*)<0.
+\tag{49.5}
+$$
+
+The determinant is positive on $(0,\xi_*)$ and negative on
+$(\xi_*,4)$. At this zero, minimize over effects at the same actual
+feedback and original level, and then eliminate the stable population
+and transverse phase coordinates in the complete phase chart (43.2).
+With its coordinate $b$ retained as amplitude, the resulting objective is
+
+$$
+\Phi_{\mathrm{red}}(b)
+ =N(\xi_*)+C_{\mathrm{eff}}b^4+O(b^6),\qquad
+C_{\mathrm{eff}}>\frac{28}{25}>0.
+\tag{49.6}
+$$
+
+The exact coefficient is (49.28) below, at the algebraic root specified
+in (49.18). The normalization is $b$ in (43.2), with tangent
+$(\dot\delta,\dot a,\dot b)=(0,\eta,1)$; it is not a unit length
+eigenvector normalization. For a rescaling $b=\lambda\widetilde b$
+the coefficient becomes $\lambda^4C_{\mathrm{eff}}$.
+
+At $\xi_*$ each selected orbit is a strict isolated local minimum on
+the **phase feedback** part of its original level, including every
+normalized positive effect at those feedbacks. A quadratic stable
+bound and a quartic null-direction bound are given in (49.41).
+For levels sufficiently close to and strictly above $\xi_*$, each
+selected orientation has two nearby strict local phase minimum branches
+whose values are strictly smaller than $N(\xi)$. These are actual
+same-original-level competitors. They are not asserted to be global
+minimizers. The proof and the all-effect domain are given below.
+

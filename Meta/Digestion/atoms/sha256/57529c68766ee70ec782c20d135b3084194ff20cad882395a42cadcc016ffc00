@@ -1,0 +1,23 @@
+### 51.6. Equality on the original positive-active pure branch
+
+If $g=V$, the strictly positive coefficient in (51.8) forces
+$q=q_\xi$. At that population $D_{\mathrm{sel}}\ge0$, including its
+zero at $\xi_*$. The selector has $0<q_\xi<1$ and
+$0<x_\xi,y_\xi<1$. Theorem 46.4 and Corollary 46.5 therefore apply
+and give exactly (51.9). In detail, the same-effect,
+same-complex-trace positive-weight transport must attain equality
+termwise and have zero recovery variance. The nonzero effect
+coordinates select one orientation; the nonzero active complex trace
+fixes the same scalar in every replacement. The averaged diagonal
+then has four entries of modulus one, and the row norms of the
+actual unitary force all off-diagonal entries to vanish. Thus no
+additional nonphase original lifts occur.
+
+The equality assertion of Theorem 46.4 is unchanged when the determinant
+is zero, so no enlarged equality family appears at $\xi_*$.
+The $q=0$ block-lift alternative of Corollary 46.5 cannot occur because
+$q_\xi$ is interior. Conversely, Theorem 37.5 and its actual-distance
+identity (37.23) show that every pair in (51.9) has
+$\rho_+=\rho=\xi$ and $g=V$. This proves both directions and completes
+the proof of Theorem 51.2. $\square$
+

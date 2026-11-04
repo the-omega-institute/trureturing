@@ -1,0 +1,33 @@
+**编者注 n01（实际零点供应与变量对应）。** 此处零点均指全部非平凡零点。所引固定提交的 ActualZeroLaplace 中，actualCoeff_hasSum 与 actual_complete_H_package 供应完整解析重数族的复总质量、绝对收敛和共轭输运；其实际数据来自 UnconditionalCanonicalZeroData，含穷尽、不同位置、重数、反射和局部有限性。ActualReciprocalSquareBounds 的 firstLiMass 是 $2+\gamma_E-2\log(2\sqrt\pi)$，与这里的 $S$ 相等，其正性来自第一 Li 系数。这里只消费这些声明的内容，不把源码读取称为本篇的 Lean 核验。
+
+actual_resolvent_hasSum 的域是 $\Re s>1$；令 $s=z+\tfrac12$ 得到本篇 $\Re z>\tfrac12$ 上的恒等式。绝对权重和及零点局部有限性使零点级数在避开极点的紧集上正规收敛，因而可用亚纯恒等原理延拓该等式。对一个不同位置 $a$，留数是 $m_\rho b_\rho\ne0$，不是 $m_\rho$ 阶的 resolvent 极点。
+
+<!-- editorial-note: n01 end -->
+
+用
+
+$$
+\chi(w)=\frac{1+w}{1-w}
+$$
+
+将单位盘映到右半平面，记
+
+$$
+\Phi(w)=C(\chi(w)).
+$$
+
+其单位圆边界函数记为 $g$。由上一轮已经证明的边界性质，
+
+$$
+|g(e^{i\theta})|=1
+\quad\text{几乎处处}.
+
+$$
+
+<a id="eq-1-2"></a>
+
+(1.2)
+
+<!-- editorial-note: n02 begin -->
+<a id="n02"></a>
+

@@ -1,0 +1,17 @@
+### 引理 5.5（完整参考态已足以计算 diamond 范数）
+
+<a id="lem-c123-diamond-states"></a>
+
+若线性映射 $\Delta$ 保持取伴随，则其 diamond 范数等于
+$\sup_{R,\rho}\|(\Delta\otimes\operatorname{id}_R)(\rho)\|_1$，其中 $R$ 遍历有限参考空间，$\rho$ 遍历联合密度矩阵。
+
+**证明。**
+对定义中的任意算子输入 $A$，在参考端增加一个二元标志，取
+
+$$
+H_A=\frac12\begin{pmatrix}0&A\\mathcal A^*&0\end{pmatrix}.
+$$
+
+有 $\|H_A\|_1=\|A\|_1$；因 $\Delta$ 保持取伴随，映射后的两个迹范数也相等。将 $H_A=H_+-H_-$ 作 Jordan 分解，则 $H_\pm\ge0$ 且
+$\operatorname{Tr} H_++\operatorname{Tr} H_-=\|A\|_1$。分别归一化非零的 $H_\pm$，再用三角不等式，任意参考态上的统一上界就成为全部 $A$ 上的相同范数上界。反向不等式因密度矩阵本来就是允许输入而直接成立。
+

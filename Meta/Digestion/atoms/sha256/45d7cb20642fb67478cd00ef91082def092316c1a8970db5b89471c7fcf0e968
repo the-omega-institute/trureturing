@@ -1,0 +1,41 @@
+### 命题 4.4（中性只固定块内，中心仍有自由度）
+
+<a id="prop-c123-center-weights"></a>
+
+在 $\mathcal A$ 的全部内部幺正共轭下不变的态，恰为
+
+$$
+\omega(A)=\sum_\alpha q_\alpha
+      \frac{\operatorname{Tr} A_\alpha}{n_\alpha},\qquad
+ q_\alpha\ge0,\quad\sum_\alpha q_\alpha=1.
+$$
+
+即使再要求选择同构协变、并在张量复合下相乘，仍不能唯一确定 $q_\alpha$。
+
+**证明。**
+在每个块内，对角相位共轭使态密度的非对角元为零，置换共轭使其对角元相等。
+块的单位是中心投影，其期望值就是 $q_\alpha$；内部共轭不改变这些投影，故不能固定这些权重。
+反过来，上式显然满足不变性。
+对第二句，任取一个实数 $p$，令
+
+$$
+q_\alpha^{(p)}=\frac{n_\alpha^p}{\sum_\gamma n_\gamma^p}.
+$$
+
+这个选择不随同构改变，而对另一个代数的块维数 $m_\beta$ 有
+
+$$
+\frac{(n_\alpha m_\beta)^p}
+ {\sum_{\gamma,\delta}(n_\gamma m_\delta)^p}
+ =q_\alpha^{(p)}q_\beta^{(p)}.
+$$
+
+不同 $p$ 在含不同大小矩阵块时给出不同答案，证明非唯一性。
+
+若代数实际嵌入为
+$\bigoplus_\alpha(M_{n_\alpha}\otimes I_{m_\alpha})\subset M_D$，
+环境 $I_D/D$ 限制给它的权重是
+$q_\alpha=n_\alpha m_\alpha/D$。这份权重来自具体包含关系，不能冒充抽象代数自身已经决定的数据。
+同样，有限换架选出的 $\pi$ 是否与已有参照 $\sigma$ 属于同一个
+$\mathcal C_\sigma$，仍须由模相容核检验；qubit 轴外参照已经给出失败实例。
+

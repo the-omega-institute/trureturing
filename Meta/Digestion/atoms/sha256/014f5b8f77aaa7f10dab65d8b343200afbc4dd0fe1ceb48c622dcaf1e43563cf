@@ -1,0 +1,41 @@
+**理论地位。**这是一个有明确对象前件的关系理论候选。Petz 充分性、算子代数纠错与模不变性是已知数学；本稿将它们组织成可核查的内部参照理论，并自足证明所需有限维结果。候选本身也容纳经典模型，量子对象的选择条件另外写明。
+
+2026 年 11 月 4 日（新加坡时间）
+
+仓库固定快照 `5ccf20964da0a6695170f80f89e8383c92913a6c`
+
+提交时间：2026-11-03 16:57:05 UTC / 2026-11-04 00:57:05 SGT
+
+完整自含 TeX 源码；使用 XeLaTeX 编译
+
+
+> 参考输入：AI-authored source supplied in the current Codex session; date 2026-11-04 (Asia/Singapore). Lean, not this prose, is the repository truth source.
+
+一个内部观察者必须用已经供应的参照来解释一次读出，但这一参照是否带入了不必要的偏向，不能仅凭“所有东西都在 $\Omega$ 中”回答。本文提出本轮唯一的定义相容候选：对于同一过程 $\mathcal N$，两份满秩内部参照 $\rho,\sigma$ 给出同一反向规则，当且仅当 $\mathcal R_\sigma\mathcal N(\rho)=\rho$。
+
+在有限复矩阵部门，二元配对确定
+
+$$
+\mathcal R_\sigma(Y)=\sigma^{1/2}\mathcal N^*\!\left(
+ [\mathcal N(\sigma)]^{-1/2}Y[\mathcal N(\sigma)]^{-1/2}\right)\sigma^{1/2},
+$$
+
+其中逆只在共同输出支持上使用。本文证明参照等价，给出等价类的完整形状
+$\rho=\bigoplus_\alpha R_\alpha\otimes\omega_\alpha$：可恢复部分 $R_\alpha$ 可以改变，条件余量 $\omega_\alpha$ 固定。
+
+若 $E_i$ 为 $\mathcal N$ 的 Kraus 算子，则过程本身的最大准确可恢复代数为
+$\mathfrak A_{\mathcal N}=\{E_i^*E_j\}'$；特定参照的回接固定代数则为
+
+$$
+\mathfrak F_\sigma=
+ \bigcap_{t\in\mathbb R}\sigma^{it}\mathfrak A_{\mathcal N}\sigma^{-it}
+ =\left\{(\operatorname{ad}_{\log\sigma})^k(E_i^*E_j):
+ i,j,\ 0\le k\le d^2-1\right\}'.
+$$
+
+因此“关系的关系”落实为有限噪声配对与参照生成的闭包。二元 qubit 中，这一闭包由噪声轴、参照横向方向及其叉积构成清楚的三维图像。
+
+有限二元判别可以在已声明且饱和的维数内构造接近中性参照的准备；但未被控制触及的自由度和中心权重不会自动消失。精确固定代数的维数还可能随任意小的参照变化跳变，而任意固定次数的回接仍连续。本文给出该现象的精确 diamond 距离，并区分有限实验误差、数学支持和实际操作供应。
+
+最后自足列出从实二元块到复原子、Born 规则、仪器、完全正性、张量积、酉过程及连续动力学的条件推导。本文建立的是有限量子关系理论与内部参照的完整接口；具体标准模型场、物理时钟与唯一宇宙态并不由这一候选决定。
+

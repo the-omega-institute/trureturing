@@ -1,0 +1,55 @@
+### 49.3. Firstness and simple crossing
+
+Use the coefficients of (36.45):
+
+$$
+a_0=\frac{h\gamma x^2}{(1+x)(hx+c)},\quad
+a_1=\frac{hx^2}{(1+x)y},\quad
+b_1=\frac{h^2x-s^2}{hy}.
+$$
+
+Then
+
+$$
+\frac{D}{p}=G(x,r):=(a_0+a_1r)(\gamma+b_1r)-s^2r^2.
+\tag{49.12}
+$$
+
+All three coefficients $a_0,a_1,b_1$ are strictly increasing in $x$.
+For $a_0$ its logarithmic derivative is
+$2/x-1/(1+x)-h/(hx+c)>0$; for $a_1$ it is
+$2/x-1/(1+x)+x/y^2>0$; and
+$b_1'=(h^2-s^2x)/(hy^3)>0$.
+
+Theorem 36.5 supplies the unique $x_\dagger\in(0,1)$ satisfying
+$(h^2+s^2)x_\dagger^3-s^2(1+x_\dagger)=0$.
+For $x\ge x_\dagger$, $D>0$. For $x<x_\dagger$, (49.12)
+has positive constant term and negative quadratic coefficient, hence
+exactly one positive root $r_*(x)$, and is negative precisely above
+that root. At the root,
+
+$$
+\gamma+b_1r_*=
+ \frac{s^2r_*^2}{a_0+a_1r_*}>0.
+$$
+
+Consequently $G_x>0$ there. Also $G_r<0$ at the positive root
+of this downward quadratic. It follows that $r_*'(x)>0$.
+By (49.11), once $x<x_\dagger$ the difference
+$r(t)-r_*(x(t))$ is strictly increasing. Before that region the
+determinant is strictly positive. This proves that the selected
+determinant has at most one zero, without a numerical root search.
+For small $t>0$, $0<\delta<t$ implies $x\to1$, so it starts positive.
+Existence and a rational bracket are proved in the next subsection.
+At any zero, since $D=pG$,
+
+$$
+\frac{dD_{\mathrm{sel}}(2t)}{dt}
+ =p(G_xx'(t)+G_rr'(t))<0.
+\tag{49.13}
+$$
+
+Thus the unique zero is simple, with exactly the sign pattern in
+Theorem 49.1. This differentiates along the selector; it is not the
+fixed-$t$ derivative used for population relaxation below.
+

@@ -167,7 +167,7 @@ private lemma head_loss_exact (M : ℕ) :
 /-- Consumed finite-head application of the retained moment-exponential
 theorem. The full tail is kept by an absolutely convergent positive series.
 This is not asserted as a standalone content/admission endpoint. -/
-private theorem complete_positive_mixture_head
+theorem complete_positive_mixture_head
     (D : ℝ) (hD : 0 < D) (q : ℕ) (hq : 1 ≤ q) (M : ℕ)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
     (hm : ∀ r : ℕ, r ≤ q → ∑ i, a i * (x i : ℂ) ^ r = 0) :
@@ -194,6 +194,100 @@ private theorem complete_positive_mixture_head
     rw [← Finset.sum_mul, Finset.sum_sub_distrib, ← Finset.mul_sum]
     rfl
   rw [hid, head_loss_exact] at hsum
+  exact hsum.trans (head_below_full D hD.le x a hx ha M)
+
+/-! Finite-head form consuming the strengthened Gamma certificate. -/
+theorem complete_positive_mixture_head_gamma
+    (D : ℝ) (hD : 0 < D) (q : ℕ) (hq : 1 ≤ q) (M m : ℕ) (hmpos : 1 ≤ m)
+    (ham : D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1)) ≤ 1 / (m : ℝ))
+    (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
+    (hm : ∀ r : ℕ, r ≤ q → ∑ i, a i * (x i : ℂ) ^ r = 0) :
+    (∑ n ∈ Finset.range M,
+      trivialCoeff n * (2 * rate n / (1 + rate n ^ 2 / (m : ℝ)))) * energy x a ≤
+      (quadratic x a P).re := by
+  classical
+  have ha : ∑ i, a i = 0 := by simpa using hm 0 (Nat.zero_le q)
+  have hfirst : ∑ i, a i * (x i : ℂ) = 0 := by simpa using hm 1 hq
+  have hterm (n : ℕ) :
+      (trivialCoeff n * (2 * rate n / (1 + rate n ^ 2 / (m : ℝ)))) * energy x a ≤
+        (quadratic x a (mixtureTerm n)).re := by
+    let lam : ℝ := rate n
+    have hlam : 0 < lam := by dsimp [lam, rate]; positivity
+    have hm0 : (0 : ℝ) < (m : ℝ) := by
+      exact_mod_cast (show 0 < m by omega)
+    have hden : 0 < 1 + lam ^ 2 / (m : ℝ) := by positivity
+    have hE : 0 ≤ energy x a := integral_nonneg (fun _ => sq_nonneg _)
+    have hγ := D5.S3.Analytic.Interpolation.MomentExponentialCoercivity.exponential_prefix_gamma_gap_coercivity
+      D hD q hq lam hlam x a hx hm
+    have hq0 := D5.S3.Analytic.Interpolation.MomentExponentialCoercivity.exponential_prefix_kernel_nonneg
+      D hD.le lam hlam x a hx
+    have hbase : 2 * lam * energy x a ≤ (1 + lam ^ 2 / (m : ℝ)) *
+        (∑ i, ∑ j, star (a i) * a j *
+          (Real.exp (-lam * |x i - x j|) : ℂ)).re := by
+      have hdenGap : 1 + lam ^ 2 *
+          (D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1))) ≤
+          1 + lam ^ 2 / (m : ℝ) := by
+        have hmulGap := mul_le_mul_of_nonneg_left ham (sq_nonneg lam)
+        calc
+          _ ≤ 1 + lam ^ 2 * (1 / (m : ℝ)) := by linarith
+          _ = _ := by ring
+      have hmul := mul_le_mul_of_nonneg_right hdenGap hq0
+      have hγ' :
+          (1 + lam ^ 2 * (D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1)))) *
+              energy x a *
+                (∑ i, ∑ j, star (a i) * a j *
+                  (Real.exp (-lam * |x i - x j|) : ℂ)).re ≥
+            2 * lam * (energy x a) ^ 2 := by
+        simpa [energy, mul_assoc, mul_comm, mul_left_comm] using hγ
+      by_cases hE0 : energy x a = 0
+      · have hQ : 0 ≤
+            (∑ i, ∑ j, star (a i) * a j *
+              (Real.exp (-lam * |x i - x j|) : ℂ)).re := hq0
+        nlinarith
+      · have hEpos : 0 < energy x a :=
+          lt_of_le_of_ne (integral_nonneg (fun _ => sq_nonneg _)) (Ne.symm hE0)
+        have hmulE := mul_le_mul_of_nonneg_right hmul hE
+        have hmulE' :
+            (1 + lam ^ 2 * (D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1)))) *
+                energy x a *
+                  (∑ i, ∑ j, star (a i) * a j *
+                    (Real.exp (-lam * |x i - x j|) : ℂ)).re ≤
+              (1 + lam ^ 2 / (m : ℝ)) *
+                energy x a *
+                  (∑ i, ∑ j, star (a i) * a j *
+                    (Real.exp (-lam * |x i - x j|) : ℂ)).re := by
+          calc
+            _ = (1 + lam ^ 2 * (D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1)))) *
+                (∑ i, ∑ j, star (a i) * a j *
+                  (Real.exp (-lam * |x i - x j|) : ℂ)).re * energy x a := by ring
+            _ ≤ (1 + lam ^ 2 / (m : ℝ)) *
+                (∑ i, ∑ j, star (a i) * a j *
+                  (Real.exp (-lam * |x i - x j|) : ℂ)).re * energy x a := hmulE
+            _ = _ := by ring
+        have hchain := hγ'.trans hmulE'
+        have hcancel :
+            (2 * lam * energy x a) * energy x a ≤
+              ((1 + lam ^ 2 / (m : ℝ)) *
+                (∑ i, ∑ j, star (a i) * a j *
+                  (Real.exp (-lam * |x i - x j|) : ℂ)).re) * energy x a := by
+          calc
+            _ = 2 * lam * (energy x a) ^ 2 := by ring
+            _ ≤ _ := hchain
+            _ = _ := by ring
+        exact le_of_mul_le_mul_right hcancel hEpos
+    have hquot : (2 * lam / (1 + lam ^ 2 / (m : ℝ))) * energy x a ≤
+        (quadratic x a (fun t => Real.exp (-lam * |t|))).re := by
+      calc
+        _ = (2 * lam * energy x a) / (1 + lam ^ 2 / (m : ℝ)) := by ring
+        _ ≤ _ := by
+          apply (div_le_iff₀ hden).mpr
+          convert hbase using 1 <;> dsimp only [quadratic] <;> ring
+    have hscaled := mul_le_mul_of_nonneg_left hquot (trivialCoeff_nonneg n)
+    have hquad := quadratic_mixture_scale x a n
+    rw [hquad]
+    convert hscaled using 1 <;> (try dsimp only [energy, lam]) <;> ring
+  have hsum := Finset.sum_le_sum (s := Finset.range M) (fun n hn => hterm n)
+  rw [← Finset.sum_mul] at hsum
   exact hsum.trans (head_below_full D hD.le x a hx ha M)
 
 private lemma head_mass_nonneg (M : ℕ) : 0 ≤ headMass M := by

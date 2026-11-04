@@ -89,6 +89,58 @@ internal sealed class FiniteDiamondDistanceDocument : IScribeDocumentDefinition
                     + "types may inhabit independent universes. Each joint density state is "
                     + "dominated in error by a pure state on the same reference, and by a pure "
                     + "state with reference dimension card(a). No nonempty-type assumption is needed.")),
+                Paragraph(Text(
+                    "Finite preparation and effect readings give a quantitative application. Fix "
+                    + "one common coordinate calibration, positive input and output dimensions d "
+                    + "and k, and actual channels N and M. For each coordinate vector e(r), use its "
+                    + "rank-one projector P(r). For r less than s, also use half the outer product "
+                    + "of e(r)+e(s), and half the outer product of e(r)+i e(s), denoted Q(r,s) "
+                    + "and T(r,s). Use the same constructions in the output coordinates as binary "
+                    + "effects. Different effects may belong to different reading experiments.")),
+                Paragraph(Text(
+                    "Let Delta be the complex-linear difference of the actual channel maps in "
+                    + "matrix coordinates. Suppose the absolute value of trace(F Delta(P)) is at "
+                    + "most nu for every prescribed preparation and effect. The coordinate reading "
+                    + "already forces nu to be nonnegative. Put "),
+                    Math(Eqn(F.Id("beta"), Multiply(Multiply(F.Id("k"),
+                        Call("sqrt", Subtract(Multiply(Num(8), F.Id("k")), Num(7)))),
+                        F.Id("nu")))), Text(
+                    ". For each preparation, Y=Delta(P) is Hermitian. Coordinate effects bound "
+                    + "each diagonal entry by nu; the two balanced effects bound each off-diagonal "
+                    + "real and imaginary part by twice nu. Summing squared entry magnitudes gives "
+                    + "k times (8k-7) times nu squared. The Hilbert-Schmidt product estimate "
+                    + "traceNorm_mul_le_hsSq, applied to the identity and Y, therefore bounds "
+                    + "traceNorm(Y) by beta.")),
+                Paragraph(Text(
+                    "For r less than s, the exact reconstruction is E(r,s)=Q(r,s)+i T(r,s) "
+                    + "minus ((1+i)/2) times (P(r)+P(s)); the reversed matrix unit uses minus i "
+                    + "and (1-i)/2. Scalar homogeneity and the triangle inequality bound the "
+                    + "diagonal matrix-unit images by beta and the other images by "
+                    + "(2+sqrt(2)) times beta. These are consequences of the reading discrepancies, "
+                    + "with the same two channel maps throughout.")),
+                Paragraph(Text(
+                    "For any finite reference R and joint density state rho on R times the input, "
+                    + "let B(r,s)(x,y)=rho((x,r),(y,s)) and p(r)=trace(B(r,r)). Factoring the "
+                    + "positive square root of this same joint state and applying traceNorm_gram_le "
+                    + "gives traceNorm(B(r,s)) at most sqrt(p(r)) sqrt(p(s)). The native reference "
+                    + "action has exact difference equal to the sum of B(r,s) tensor Delta(E(r,s)), "
+                    + "with R in the first factor. The general complex-matrix identity "
+                    + "traceNorm_kronecker, the triangle inequality, the unit sum of the p(r), "
+                    + "and Cauchy-Schwarz give error at most (1+(2+sqrt(2))(d-1)) times beta. "
+                    + "No reference dimension is excluded. Each of the two reference outputs is a "
+                    + "density state, which also bounds their unhalved error by two.")),
+                Paragraph(Text("Taking the defining supremum gives "),
+                    Math(Le(Call("diamondDistance", F.Id("N"), F.Id("M")),
+                        Call("min", Num(2), Multiply(Add(Num(1),
+                            Multiply(Add(Num(2), Call("sqrt", Num(2))),
+                                Subtract(F.Id("d"), Num(1)))), F.Id("beta"))))),
+                    Text(
+                    ". With zero reading discrepancy, effect separation and matrix-unit "
+                    + "reconstruction give equality on every complex input matrix, hence equality "
+                    + "of the actual bundled channels. The distance here is the defined supremum "
+                    + "over density inputs with arbitrary finite references; this application "
+                    + "does not establish a separate correspondence with a completely bounded "
+                    + "norm on all operator inputs.")),
                 Item("result", "Pure inputs and a fixed reference dimension", All(
                     [Bound("a", F.Id("FiniteType")), Bound("b", F.Id("FiniteType")),
                         Bound("c", channel), Bound("d", channel)],

@@ -12,7 +12,7 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] [\mathrm{Decid
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Brooks/Cuts.cut_partition_of_unreachable` (`✓ std3`). ∎
 
-*Citation.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic: finite subcubic four-clique-free graph coloring*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic, finite chordal elimination and set-form Menger: Lean sources*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
 
 *Commentary.*
 

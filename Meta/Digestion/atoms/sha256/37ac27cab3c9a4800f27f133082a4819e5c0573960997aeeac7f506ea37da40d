@@ -1,0 +1,10 @@
+### 定义 5.1（事件的原始核）
+
+取 $d,m\ge1$。对仅给复线性的 $\Phi:M_d(\mathbb C)\to M_m(\mathbb C)$，以 $(a,u)\in M_d\times\mathbb C^m$ 为原始历史标签，定义
+
+$$
+K_\Phi((a,u),(b,v))=\langle u,\Phi(a^*b)v\rangle.
+$$
+
+不预设 $\Phi$ 保伴随、正、完全正或归一化。
+

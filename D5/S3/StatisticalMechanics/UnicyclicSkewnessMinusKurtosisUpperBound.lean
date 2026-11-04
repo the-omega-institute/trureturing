@@ -34,7 +34,7 @@ def claim : Prop :=
   IsLUB {s : ℝ | ∃ n : ℕ, 2 ≤ n ∧ ∃ k : Fin n → ℝ,
     (∀ i, 0 < k i) ∧ s = skewness k - kurtosis k} upperBound
 
-private lemma normalized_difference {n : ℕ} (k : Fin n → ℝ) :
+lemma normalized_difference {n : ℕ} (k : Fin n → ℝ) :
     skewness k - kurtosis k = -12 * p k ^ 2 + 18 * q k - 6 * r k / p k := by
   rw [D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness_normalized,
     D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.normalized]
