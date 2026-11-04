@@ -66,7 +66,9 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   exact hab.ne hr
 
 def family : Registration arena.{u} (type_of% (@isEdgeReachable_iff.{u})) where
-  actual := realize signature (fun _ _ p => p.edges) (fun e _ => Empty.elim e)
+  actual := realize signature
+    (fun (_ : Unit) (p : Parameters.{u}) (w : signature.State p) => w.edges)
+    (fun (e : Empty) (_ : Parameters.{u}) => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@isEdgeReachable_iff, rejected, rejected_law⟩
   sensitivity := by
@@ -110,7 +112,9 @@ noncomputable def registration :
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => p.edges) (fun e _ => Empty.elim e))
+  readout := some (realize signature
+    (fun (_ : Unit) (p : Parameters.{u}) (w : signature.State p) => w.edges)
+    (fun (e : Empty) (_ : Parameters.{u}) => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
