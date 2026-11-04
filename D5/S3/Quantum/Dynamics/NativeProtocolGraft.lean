@@ -1880,7 +1880,10 @@ private theorem native_delta (v : Basis → ℂ) :
       delta (reduced v) := by
   rw [Fin.sum_univ_two, reduced_projector, reduced_projector]
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [delta, Pi.add_apply]
+  change (if i = 0 ∧ j = 0 then reduced v i j else 0) +
+    (if i = 1 ∧ j = 1 then reduced v i j else 0) =
+    if i = j then reduced v i i else 0
+  fin_cases i <;> fin_cases j <;> simp
 
 private theorem read_empty (j : Fin 2) :
     (projector (readBit 2) j).mulVec omega0 =
