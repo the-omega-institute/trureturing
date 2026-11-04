@@ -275,7 +275,7 @@ private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [Decidab
   have he : M *ᵥ z = hH.eigenvalues i • z := hH.mulVec_eigenvectorBasis i
   have hne : hH.eigenvalues i ≠ 0 := by
     intro hzero
-    have hmz : M *ᵥ z = 0 := by simpa only
+    have hmz : M *ᵥ z = 0 := by simpa (config := { congrConsts := false }) only
       [hzero, zero_smul] using he
     have hz : z = 0 := (Matrix.mulVec_injective_iff_isUnit.mpr hunitM)
       (hmz.trans (mulVec_zero M).symm)
@@ -284,13 +284,13 @@ private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [Decidab
   have hpv : 0 ≤ (star z ⬝ᵥ (M * M + M) *ᵥ z).re := hp.re_dotProduct_nonneg z
   have hmv : 0 ≤ (star z ⬝ᵥ (M * M - M) *ᵥ z).re := hm.re_dotProduct_nonneg z
   have hpq : (star z ⬝ᵥ (M * M + M) *ᵥ z).re = hH.eigenvalues i ^ 2 + hH.eigenvalues i := by
-    simp only
+    simp (config := { congrConsts := false }) only
       [add_mulVec, ← mulVec_mulVec, he, mulVec_smul, dotProduct_add,
       dotProduct_smul, hz1, mul_one, Complex.real_smul, Complex.add_re,
       Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
     ring
   have hmq : (star z ⬝ᵥ (M * M - M) *ᵥ z).re = hH.eigenvalues i ^ 2 - hH.eigenvalues i := by
-    simp only
+    simp (config := { congrConsts := false }) only
       [sub_mulVec, ← mulVec_mulVec, he, mulVec_smul, dotProduct_sub,
       dotProduct_smul, hz1, mul_one, Complex.real_smul, Complex.sub_re,
       Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
@@ -389,7 +389,8 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
         rw [← Finset.prod_mul_distrib]
         apply Finset.prod_congr rfl
         intro i hi
-        push_cast
+        simp (config := { congrConsts := false }) only
+          [Complex.ofReal_sub, Complex.ofReal_pow, Complex.ofReal_neg]
         ring
       _ = (-J).det ^ 2 * (H x).det ^ 2 := by rw [hd x, hd (-x), neg_neg, hdt]; ring
       _ = (H x).det ^ 2 := by rw [hdetJ, one_mul]
@@ -406,8 +407,10 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
   have hl := congrArg Real.log hreal
   rw [Real.log_prod (fun i _ => (hterms i).ne'), Real.log_pow] at hl
   change Real.log (H x).det.re = _
-  norm_num at hl ⊢
-  convert congrArg (fun t : ℝ => (1 / 2 : ℝ) * t) hl.symm using 1 <;> ring
+  norm_num (config := { congrConsts := false }) at hl ⊢
+  calc
+    Real.log (H x).det.re = (1 / 2 : ℝ) * (2 * Real.log (H x).det.re) := by ring
+    _ = _ := congrArg (fun t : ℝ => (1 / 2 : ℝ) * t) hl.symm
 
 private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
@@ -428,7 +431,7 @@ private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
     (symplectic_spectrum_lower_bound V Ω hV hpos hΩ hH i)
   have hi (i : ι) : IntegrableOn (fun x : ℝ => renyiWeight α x *
       Real.log (hH.eigenvalues i ^ 2 - x ^ 2)) (Set.Ioo 0 1) := by
-    simpa only [sq_abs] using (hs i).1
+    simpa (config := { congrConsts := false }) only [sq_abs] using (hs i).1
   have heq (x : ℝ) (hx : x ∈ Set.Ioo (0 : ℝ) 1) :
       renyiWeight α x * Real.log (((V.map Complex.ofReal) + (x : ℂ) •
           (Complex.I • Ω.map Complex.ofReal)).det.re) =
@@ -455,8 +458,8 @@ private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
               renyiWeight α x * Real.log (hH.eigenvalues i ^ 2 - x ^ 2)) := by
           apply Finset.sum_congr rfl
           intro i hi
-          simpa only [sq_abs] using (hs i).2
-        _ = _ := by rw [Finset.sum_add_distrib]; simp
+          simpa (config := { congrConsts := false }) only [sq_abs] using (hs i).2
+        _ = _ := by rw [Finset.sum_add_distrib]; simp (config := { congrConsts := false })
     rw [gaussianRenyiEntropy, dite_eq_left hH, hsum, hInt]
     ring
 
@@ -472,7 +475,7 @@ private lemma alpha_two_entropy {ι : Type*} [Fintype ι] [DecidableEq ι]
     congr 1
     ring
   have hd := determinant_spectral_identity V Ω hV hpos hΩ hH 0 (by norm_num) (by norm_num)
-  simp only
+  simp (config := { congrConsts := false }) only
       [Complex.ofReal_zero, zero_smul, add_zero, zero_pow (by norm_num : 2 ≠ 0),
     sub_zero] at hd
   have hmap : (V.map Complex.ofReal).det.re = V.det := by
@@ -481,12 +484,15 @@ private lemma alpha_two_entropy {ι : Type*} [Fintype ι] [DecidableEq ι]
   rw [hmap] at hd
   have hlog (i : ι) : Real.log (hH.eigenvalues i ^ 2) = 2 * Real.log |hH.eigenvalues i| := by
     rw [← sq_abs, Real.log_pow]
-    norm_num
-  simp_rw [hlog] at hd
+    norm_num (config := { congrConsts := false })
+  simp_rw (config := { congrConsts := false }) [hlog] at hd
   rw [← Finset.mul_sum] at hd
   rw [gaussianRenyiEntropy, dite_eq_left hH]
-  simp_rw [hs]
-  convert congrArg (fun t : ℝ => (1 / 2 : ℝ) * t) hd.symm using 1 <;> ring
+  simp_rw (config := { congrConsts := false }) [hs]
+  calc
+    (1 / 2 : ℝ) * ∑ i, Real.log |hH.eigenvalues i| =
+        (1 / 2 : ℝ) * ((1 / 2 : ℝ) * (2 * ∑ i, Real.log |hH.eigenvalues i|)) := by ring
+    _ = _ := congrArg (fun t : ℝ => (1 / 2 : ℝ) * t) hd.symm
 
 private theorem det_mono {α : Type*} [Fintype α] [DecidableEq α]
     {P Q : Matrix α α ℂ} (hP : P.PosDef) (hQ : Q.PosDef)
