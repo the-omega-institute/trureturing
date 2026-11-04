@@ -58,6 +58,10 @@ $$(\exists A \in (\mathrm{Nat} \to \mathrm{Nat}),\; \operatorname{IsSourceSequen
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/OudraA248186CubicFloor.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oudra-a248186-cubic-floor` (proved) by `D5/S3/ArithSums/OudraA248186CubicFloor.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oudra-a248186-cubic-floor","declaration_gid":"D5/S3/ArithSums/OudraA248186CubicFloor.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Clark Kimberling; Ridouane Oudra (2023). *OEIS A248186, least reciprocal-product threshold index*. URL: <https://oeis.org/A248186/internal>.

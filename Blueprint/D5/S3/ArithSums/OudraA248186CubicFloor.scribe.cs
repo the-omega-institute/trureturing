@@ -50,13 +50,17 @@ internal sealed class OudraA248186CubicFloorDocument : IScribeDocumentDefinition
                     + "its value at floor(b)+1 exceeds n^3. These bounds identify floor(b)-1 "
                     + "as the least positive admissible index. Translation of the floor by the integer "
                     + "one yields the displayed expression. For n=1 and n=2 the least index is one.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oudra-a248186-cubic-floor"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("oudra-a248186-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ResidualBody(Formula k)
     {
