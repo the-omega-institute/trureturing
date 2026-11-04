@@ -14,6 +14,12 @@ triage: anchor
 
 # Full finite Schatten partition inequality
 
+## Verified locator
+
+Primary source: https://arxiv.org/abs/2610.15889v1, Theorem 1.2 (Partition
+inequality), equation (1.4), and Section 2 (proof by interpolation,
+left inversion and the PSD regularization limit).
+
 Sra, arXiv:2610.15889v1, Theorem 1.2 and Section 2, states that for every real
 1 <= p <= 2, every arbitrary finite PSD family H_j with SPD sum H, and every
 compatible complex matrix X,

@@ -6,7 +6,8 @@
    utility: none
    digest: The full finite complex Schatten partition inequality from Carlen-Lieb convexity. -/
 
-import D5.S3.Quantum.Hiai.GeometricTraceConvexity
+import D5.S3.Quantum.Hiai.CarlenLiebConvexity
+import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Isometric
 
 /-! Sra, arXiv:2610.15889v1, Theorem 1.2. Published mathematics; originalKPI=0.
 Alternative proof: degree-one Carlen-Lieb convexity gives subadditivity of
@@ -28,7 +29,6 @@ namespace D5.S3.Quantum.Schatten.Partition
 
 open D5.S3.Quantum.Hiai
 open InverseMeanVariational
-open GeometricTraceConvexity (tendsto_positive_rpow tendsto_tracePower)
 
 variable {d : Type*} [Fintype d] [DecidableEq d]
 local instance : Pow (Matrix d d ℂ) ℝ := ⟨CFC.rpow⟩
@@ -80,15 +80,22 @@ private lemma rootTrace_tendsto {α : Type*} {l : Filter α}
     (hlimA : Tendsto As l (𝓝 A)) (hlimZ : Tendsto Zs l (𝓝 Z))
     {q : ℝ} (hq : 0 < q) :
     Tendsto (fun i => rootTrace q (Zs i) (As i)) l (𝓝 (rootTrace q Z A)) := by
-  have hpow := tendsto_positive_rpow hq hA hAs hlimA
+  have hcont {r : ℝ} (hr : 0 < r) :
+      ContinuousOn (fun N : Matrix d d ℂ => N ^ r) {N | N.PosSemidef} := by
+    simpa only [CFC.nnrpow_eq_rpow (x := ⟨r, hr.le⟩) hr,
+      Matrix.nonneg_iff_posSemidef] using
+      (CFC.continuousOn_nnrpow (A := Matrix d d ℂ) ⟨r, hr.le⟩)
+  have hpow := (hcont hq A hA).tendsto.comp
+    (tendsto_nhdsWithin_iff.mpr ⟨hlimA, hAs⟩)
   have hstar : Tendsto (fun i => (Zs i)ᴴ) l (𝓝 Zᴴ) := by
     simpa only [Matrix.star_eq_conjTranspose] using hlimZ.star
   have hinner := (hstar.mul hpow).mul hlimZ
-  exact tendsto_tracePower (one_div_pos.mpr hq)
-    ((Matrix.nonneg_iff_posSemidef.mp CFC.rpow_nonneg).conjTranspose_mul_mul_same Z)
-    (.of_forall fun i =>
-      (Matrix.nonneg_iff_posSemidef.mp CFC.rpow_nonneg).conjTranspose_mul_mul_same (Zs i))
-    hinner
+  have hpos : (Zᴴ * (A ^ q) * Z).PosSemidef :=
+    (Matrix.nonneg_iff_posSemidef.mp CFC.rpow_nonneg).conjTranspose_mul_mul_same Z
+  have hpowers := (hcont (one_div_pos.mpr hq) _ hpos).tendsto.comp
+    (tendsto_nhdsWithin_iff.mpr ⟨hinner, .of_forall fun i =>
+      (Matrix.nonneg_iff_posSemidef.mp CFC.rpow_nonneg).conjTranspose_mul_mul_same (Zs i)⟩)
+  exact (Complex.continuous_re.comp continuous_id.matrix_trace).continuousAt.tendsto.comp hpowers
 
 /-- Subadditivity on the full PSD cone, retaining singular congruence and empty dimension. -/
 theorem rootTrace_add {A B Z : Matrix d d ℂ}
