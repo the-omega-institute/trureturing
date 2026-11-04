@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The maximal stable configuration lies in the reduced integer Laplacian image at every sink of a clique–path product exactly for K_4 square P_2.
+For i,j at least two, the maximal stable configuration lies in the reduced integer Laplacian image at every sink of K_i square P_j exactly for K_4 square P_2.
 
 **Definition 1.1 (The integer-image condition at a sink).**
 
@@ -50,7 +50,7 @@ Take s=(0,0), and compare the clique coordinates a=0 and b=1, which exist becaus
 
 Let S denote Polynomial.Chebyshev.S and put u_j=(S ℤ ((j:ℤ)−1)).eval((i:ℤ)+2). The case k=0 uses S ℤ 0=1 and S ℤ (−1)=0. For 1≤k<j, apply bounded_continuant_endpoint to the initial segment ending at k after casting x to a real sequence. Compatibility of Chebyshev evaluation with the integer-to-real map, injectivity of that map, and the Chebyshev recurrence give x(k)=((S ℤ (k:ℤ)).eval(i+2)−(S ℤ ((k:ℤ)−1)).eval(i+2))x(0) for k<j. Substitution at the last two indices, followed by the Chebyshev recurrence, yields (i+1)x(j−1)−x(j−2)=i u_j x(0). Compare this with the sink equation and cancel the nonzero integer i. The integer −x(0) then shows u_j divides ij−2.
 
-Induction on n using the Chebyshev recurrence shows (S ℤ n).eval(i+2)≥1 and (S ℤ (n+1)).eval(i+2)−(S ℤ n).eval(i+2)>i. At j=3, u_j=i²+4i+3>3i−2; the increment bound extends u_j>ij−2 to every j≥3. Since ij−2 is positive, it cannot be divisible by this larger positive integer. For j=2, the divisibility becomes i+2 dividing 2i−2. Subtracting this from 2(i+2) shows i+2 divides six, hence 2≤i≤4. The values two and three fail the original divisibility, leaving precisely i=4.
+Cast a_n=(S ℤ n).eval(i+2) to the rationals. The second order recurrence growth theorem with coefficient i+2 makes a_n positive and increasing. Its differences d_n=a_(n+1)−a_n satisfy the same recurrence; applying the theorem again shows they increase from d_0=i+1. Hence d_n>i, and a_(n+2)−in is nondecreasing. At j=3, u_j=i²+4i+3>3i−2; the increment bound extends u_j>ij−2 to every j≥3. Since ij−2 is positive, it cannot be divisible by this larger positive integer. For j=2, the divisibility becomes i+2 dividing 2i−2. Subtracting this from 2(i+2) shows i+2 divides six, hence 2≤i≤4. The values two and three fail the original divisibility, leaving precisely i=4.
 
 For K_4 square P_2 and an arbitrary sink s, define f(v) to be zero at s, five when v≠s has the same second coordinate as s, six when its second coordinate differs but its first coordinate agrees, and seven otherwise. Restrict f to the non-sink vertices. The product and path row formulas, checked for the finite choices of the two coordinates, give (Lf)(v)=3 at every non-sink vertex; its degree is four. The omitted sink term is zero because f(s)=0, so this restricted vector satisfies the reduced integer Laplacian equations for every s.
 
@@ -63,3 +63,4 @@ Finally, the condition at every sink supplies the condition at (0,0), so the div
 - Truth anchor: `D5/S3/StatisticalMechanics/SandpileCompleteMaximalIdentity.result`
 - Dependency: [D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination](../Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.md)
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/TwinFreeThetaRecurrence](../Combinatorics/SpectralGraph/TwinFreeThetaRecurrence.md)
+- Dependency: [D5/S3/Factorization/BoninShadowMarkoffPositivity](../Factorization/BoninShadowMarkoffPositivity.md)
