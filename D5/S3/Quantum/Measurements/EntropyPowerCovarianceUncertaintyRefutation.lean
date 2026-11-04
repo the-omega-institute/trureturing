@@ -7,6 +7,7 @@
    digest: A binary coherent-state mixture violates the covariance-corrected entropy bound. -/
 
 import Mathlib.Probability.Distributions.Gaussian.Real
+import D5.S3.Entropy.Mixing.MixtureEntropyBracket
 
 /-! A finite Gaussian-mixture counterexample to the covariance-corrected uncertainty relation
 of Hertz, Jabbour and Cerf, arXiv:1702.07286v2, Section III.B.
@@ -16,6 +17,7 @@ This is a subclass of the source's all-state reading. Its refutation concerns mi
 it does not settle the corresponding pure-state or Wigner-entropy conjectures. -/
 
 open MeasureTheory ProbabilityTheory
+open D5.S3.Entropy.Mixing.MixtureEntropyBracket (mixture)
 open scoped BigOperators NNReal
 
 noncomputable section
@@ -27,10 +29,6 @@ def gaussianWigner (μx μp a b c x p : ℝ) : ℝ :=
   (2 * Real.pi * Real.sqrt (a * c - b ^ 2))⁻¹ *
     Real.exp (-(c * (x - μx) ^ 2 - 2 * b * (x - μx) * (p - μp) +
       a * (p - μp) ^ 2) / (2 * (a * c - b ^ 2)))
-
-/-- The Wigner function of a finite mixture of Gaussian states. -/
-def mixtureWigner (n : ℕ) (w μx μp a b c : Fin n → ℝ) (x p : ℝ) : ℝ :=
-  ∑ i, w i * gaussianWigner (μx i) (μp i) (a i) (b i) (c i) x p
 
 def marginalX (W : ℝ → ℝ → ℝ) (x : ℝ) : ℝ := ∫ p, W x p
 
@@ -58,7 +56,8 @@ def claim : Prop :=
     (∀ i, 0 ≤ w i) → (∑ i, w i) = 1 →
     (∀ i, 0 < a i) → (∀ i, 0 < c i) →
     (∀ i, (1 : ℝ) / 4 ≤ a i * c i - b i ^ 2) →
-    let W := mixtureWigner n w μx μp a b c
+    let W := fun x p => mixture w
+      (fun i y => gaussianWigner (μx i) (μp i) (a i) (b i) (c i) y p) x
     Integrable (fun x => marginalX W x * Real.log (marginalX W x)) →
     Integrable (fun p => marginalP W p * Real.log (marginalP W p)) →
     Integrable (fun r : ℝ × ℝ => (r.1 ^ 2 + r.2 ^ 2) * W r.1 r.2) →
@@ -77,8 +76,6 @@ private def witnessW (d x p : ℝ) : ℝ :=
 private lemma component_factor (u v x p : ℝ) :
     gaussianWigner u v (1 / 2) 0 (1 / 2) x p =
       gaussianPDFReal u (1 / 2) x * gaussianPDFReal v (1 / 2) p := by
-  have hs : Real.sqrt (1 / 4 : ℝ) = 1 / 2 := by
-    rw [show (1 / 4 : ℝ) = (1 / 2) ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
   have hp := Real.sq_sqrt Real.pi_pos.le
   have hn := (Real.sqrt_pos.2 Real.pi_pos).ne'
   change (2 * Real.pi * Real.sqrt ((1 / 2) * (1 / 2) - (0 : ℝ) ^ 2))⁻¹ *
@@ -87,7 +84,7 @@ private lemma component_factor (u v x p : ℝ) :
   simp only [gaussianPDFReal, NNReal.coe_div, NNReal.coe_one,
     NNReal.coe_ofNat]
   norm_num only [zero_pow, mul_zero, sub_zero, zero_mul, zero_add]
-  rw [hs, show 2 * Real.pi * (1 / 2) = Real.pi by ring]
+  rw [show 2 * Real.pi * (1 / 2) = Real.pi by ring]
   simp only [div_one]
   rw [show -((1 / 2 : ℝ) * (x - u) ^ 2 + 1 / 2 * (p - v) ^ 2) /
       (1 / 2) = -(x - u) ^ 2 + -(p - v) ^ 2 by ring, Real.exp_add]
@@ -388,9 +385,8 @@ the universal covariance-corrected quadrature entropy inequality. -/
 theorem result : ¬ claim := by
   intro h
   let m : Fin 2 → ℝ := ![6, -6]
-  have hw : mixtureWigner 2 (fun _ => 1 / 2) m m
-      (fun _ => 1 / 2) (fun _ => 0) (fun _ => 1 / 2) = witnessW 6 := by
-    funext x p
+  have hw (x p : ℝ) : mixture (fun _ : Fin 2 => 1 / 2)
+      (fun i y => gaussianWigner (m i) (m i) (1 / 2) 0 (1 / 2) y p) x = witnessW 6 x p := by
     change (∑ i : Fin 2, 1 / 2 * gaussianWigner (m i) (m i) (1 / 2) 0 (1 / 2) x p) =
       (gaussianWigner 6 6 (1 / 2) 0 (1 / 2) x p +
         gaussianWigner (-6) (-6) (1 / 2) 0 (1 / 2) x p) / 2
@@ -400,7 +396,8 @@ theorem result : ¬ claim := by
     (fun _ => 1 / 2) (fun _ => by norm_num) (by norm_num [Fin.sum_univ_two])
     (fun _ => by norm_num) (fun _ => by norm_num) (fun _ => by norm_num)
   dsimp only at hc
-  rw [hw, (marginals 6).1, (marginals 6).2] at hc
+  simp_rw [hw] at hc
+  rw [(marginals 6).1, (marginals 6).2] at hc
   have hc := hc (mixture_entropy_integrable 6) (mixture_entropy_integrable 6)
     (second_integrable 6)
   rw [(moments 6).2.2.1, (moments 6).2.2.2.1, (moments 6).2.2.2.2] at hc
