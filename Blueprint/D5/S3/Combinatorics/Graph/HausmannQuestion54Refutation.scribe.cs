@@ -65,7 +65,7 @@ internal sealed class HausmannQuestion54RefutationDocument : IScribeDocumentDefi
         return Disp(All("V", Id("Type"), All("G", Call("SimpleGraph", Id("V")),
             All("R", Call("Set", Id("V")), Iff(Call("SmallComponents", g, r),
                 All("C", Call("ConnectedComponent", Call("induce", g, r)),
-                    Le(Call("Nat.card", Call("supp", Id("C"))), D(3))))))));
+                    Le(Call("NatCard", Call("supp", Id("C"))), D(3))))))));
     }
 
     private static Formula ClaimFormula()
