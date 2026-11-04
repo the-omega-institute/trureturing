@@ -326,4 +326,24 @@ theorem full_probability_injective {A : Finset α} (hA : 4 ≤ A.card)
       pushforward (fun C : FixedCycles A => paired b c C.val) ν) : μ = ν := by
   exact full_signed_injective hA ha hb hc hab hbc hac μ ν hF hG
 
+/-! The qualitative graph input for the quantitative inverse theorem: the two
+overlapping paired observations are jointly injective on the complete legal
+carrier.  This is exactly the three-specified-deletion reconstruction theorem,
+with the shared `b` coordinate supplied by both channels. -/
+theorem paired_joint_injective {A : Finset α} (hA : 4 ≤ A.card)
+    {a b c : α} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A)
+    (hab : a ≠ b) (hbc : b ≠ c) (hac : a ≠ c) :
+    Function.Injective
+      (fun C : FixedCycles A =>
+        (paired a b C.val, paired b c C.val)) := by
+  intro C D h
+  apply Subtype.ext
+  have hAB : paired a b C.val = paired a b D.val := congrArg Prod.fst h
+  have hBC : paired b c C.val = paired b c D.val := congrArg Prod.snd h
+  have hAB' := Prod.mk.inj hAB
+  have hBC' := Prod.mk.inj hBC
+  exact reconstruct_three hA ha hb hc hab hac hbc
+    C.property.1 D.property.1 C.property.2 D.property.2
+    hAB'.1 hAB'.2 hBC'.2
+
 end D5.S3.Combinatorics.CircularWords.PairedDeletionLaw
