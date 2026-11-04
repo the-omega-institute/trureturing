@@ -453,12 +453,21 @@ inverse modulo exactly the original scalar. In particular no relative
 phase direction has been omitted.
 
 The selected feedback and level belong to the open set $\Omega$ in
-(40.21). Choose a product neighborhood of them contained in $\Omega$,
-with $\xi<4$. Its strict conditions are
+(40.21). Its strict conditions are
 $uv>0$, $0<q=t-\delta<1$, $q<J_+$, $t_-<0$, and positive arc
 derivative greater than $49/180$. Here $u=|P|$, $v=|Q|$;
-$J_+=(3+A-B)/2$ and $t_-=(\xi-8+2B)/2$ are the original
-fixed-feedback arc data of (36.2).
+$J_+=(1+A-B)/2$ and $t_-=(\xi-8+2B)/2$ are the original
+fixed-feedback arc data of (36.2). At the selected point, (49.18)
+gives $x_*>16/25$ and $y_*<4/5$, hence
+
+$$
+J_+=\frac{3+2x_*-2y_*}{2}>\frac{67}{50}>1,
+\qquad B=2y_*<8/5<2.
+$$
+
+Choose a product neighborhood of the selected feedback and level
+contained in $\Omega$ with $J_+>1$, $B<2$ and $\xi<4$.
+All these conditions are strict and common-scalar invariant.
 
 It is important to distinguish the pure endpoint $q$ from the
 population of a general effect. Write
@@ -475,24 +484,32 @@ $$
 \begin{aligned}
 \rho_+&=2\delta+2r-\epsilon(E),\\
 \rho_-&=10-2r-2B-\epsilon(E),\\
-\rho_--\rho_+&=2(3+A-B-2r).
+\rho_--\rho_+&=2(1+A-B-2r)=4(J_+-r).
 \end{aligned}
 \tag{49.21}
 $$
 
-Since $t_-<0$, no effect can have negative branch equal to this
-prescribed $\xi$. Every original effect with $\rho(E,U)=\xi=2t$
-therefore has positive minimizing sign and satisfies exactly
+For every normalized positive effect, the same identities give
+$\rho_-=8-2B+2[(1-r)^2+|z_E|^2]\ge8-2B>\xi$, since $t_-<0$.
+Thus no effect can have negative branch equal to this prescribed $\xi$.
+Every original effect with $\rho(E,U)=\xi=2t$ therefore has strictly
+positive minimizing sign and satisfies exactly
 
 $$
 q=t-\delta=r-\epsilon(E)/2=r^2+|z_E|^2,\qquad
-q\le r\le\min\{\sqrt q,J_+\}.
+q\le r\le\min\{\sqrt q,J_+\}=\sqrt q.
 \tag{49.22}
 $$
 
-The upper bound permits a sign tie if it is feasible. It retains the
-whole mixed arc and its zero-coherence endpoint. In particular one
-must not set $r=q$ for mixed effects.
+Conversely, every $r\in[q,\sqrt q]$ and every coherence phase with
+$|z_E|^2=q-r^2$ give a normalized positive effect at this same original
+level: $F_E$ has trace one and determinant $r-q\ge0$, and
+$0<r<1$. Its positive distance is $2t$, and its negative distance is
+strictly larger. Thus (49.22) is the full feasible arc in both
+directions, with no sign tie in this neighborhood. It retains the
+zero-coherence endpoint $r=\sqrt q$ and every intermediate mixed
+effect. Its impurity is $2(r-q)$; one must not set $r=q$ for mixed
+effects.
 
 By Theorem 40.4, or precisely (43.8)--(43.9), the unique minimizing
 effect at this same $U$ and level is
@@ -508,8 +525,26 @@ f(E,U)\ge f(\widehat E,U)+\frac{49}{360}\epsilon(E).
 \tag{49.23}
 $$
 
-The ordinary transpose is retained. This effect is positive, trace
-one and rank one; $q<J_+$ makes its positive distance uniquely
+For the full arc, put $\Delta_+=d^2-u^2$,
+$b_+=e^2-v^2-\Delta_+$ and
+$\varphi_q(r)=\Delta_++b_+r-2uv\sqrt{q-r^2}$.
+The same-feedback identity (41.3) gives exactly
+
+$$
+f(E,U)-f(\widehat E,U)
+ =\varphi_q(r)-\varphi_q(q)
+   +2\bigl(uv|z_E|-\operatorname{Re}(Pz_E\bar Q)\bigr).
+$$
+
+The last summand is nonnegative. On $q\le r<\sqrt q$,
+$\varphi_q'(r)\ge\varphi_q'(q)>49/180$ by (40.20)--(40.21);
+continuity includes $r=\sqrt q$. This proves the impurity bound in
+(49.23) over the full arc, including arbitrary coherence phases.
+Equality with the minimizing value requires $r=q$ and the unique
+aligning phase, since $uv\sqrt{q(1-q)}>0$.
+
+The ordinary transpose is retained. The minimizing effect is positive,
+trace one and rank one; $q<J_+$ makes its positive distance uniquely
 minimizing. Its exact analytic objective is
 
 $$
@@ -915,11 +950,11 @@ $$
 
 For example the root bounds make the expression in parentheses larger
 than $1+24/25+32/25-8/5>0$. By continuity it stays positive for
-the nearby pure constructions. More generally their membership in
-$\Omega$ already enforces $q<J_+$ and $t_-<0$, hence the actual
-branch statements used in (49.21)--(49.23). Both original distance
-branches, not just a formal positive-branch constraint, are accounted
-for.
+the nearby pure constructions. Throughout the chosen neighborhood,
+(49.22) and $t_-<0$ give strictly positive minimizing sign for every
+effect at the prescribed level, hence the actual branch statements
+used in (49.21)--(49.23). Both original distance branches, not just
+a formal positive-branch constraint, are accounted for.
 
 ### 49.9. The actual right-side branches
 
