@@ -1,0 +1,135 @@
+**命题 20.2（保持可见校准的条件化修复）。** 在定义 20.1 下，令
+
+$$
+K=h^{-1/2}\rho h^{-1/2},\qquad
+q=Q(K),\qquad
+\sigma=h^{1/2}q h^{1/2},\qquad
+F(x)=P(q^{1/2}xq^{1/2}).
+\tag{20.3}
+$$
+
+则 $\sigma>0$、$\operatorname{Tr}\sigma=1$，并且
+
+$$
+P(\sigma)=h,\qquad \sigma|_A=\rho|_A.
+\tag{20.4}
+$$
+
+$F$ 是 Heisenberg 图像中到恰好 $A$ 的 UCP、$A$-双模、幂等映射；它也是 $\sigma$ 的实际左 GNS 投影，且
+
+$$
+F_*(\rho)=\sigma=F_*(\sigma).
+\tag{20.5}
+$$
+
+令 $\Delta=\rho-\sigma$，则有充分界
+
+$$
+\boxed{
+\|\Delta\|_1\le\epsilon,\qquad
+\|E-F\|_{\rm cb}
+\le\frac{\|\Delta\|_{\rm op}}{\lambda}
+\le\frac{\|\Delta\|_1}{\lambda}
+\le\frac{\epsilon}{\lambda_{\min}(P_A(\rho))}.
+\ }
+\tag{20.6}
+$$
+
+该定量原 GNS 推论为 repo-derived 解析推导；不主张常数最优或世界范围的新颖性。所复用的精确 GNS／模不变性判据见定理 7.1、[Carlen–Vershynina, *Recovery map stability for the Data Processing Inequality*, §§1.4、4](https://arxiv.org/html/1710.02409v3)，以及 [Bardet–Capel–Rouzé, *Approximate tensorization of the relative entropy for noncommuting conditional expectations*, §2.3](https://arxiv.org/html/2001.07981)。这些精确判据、既有紧酉平均与已假定 UCP 的稳定性结论不是式 (20.6) 的定量原 GNS 推论本身；这里的文献归属限于这些具体来源与命题范围。
+
+证明。先由左比较和 $P$ 的迹自伴性，对所有 $a\in A$ 得
+
+$$
+\operatorname{Tr}(a^\dagger E(x)h)
+=\operatorname{Tr}(a^\dagger x\rho)
+=\operatorname{Tr}(a^\dagger P(x\rho)).
+$$
+
+两侧被配对的矩阵均在 $A$ 中，故
+
+$$
+E(x)=P(x\rho)h^{-1}.
+\tag{20.7}
+$$
+
+这只是实际正交投影的公式，不涉及其正性。将其代入右序比较，并使用 $P$ 的双模性，得到
+
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl(\rho(E(x)a-xa)\bigr)
+&=\operatorname{Tr}\bigl((\rho h^{-1}ah-a\rho)x\bigr),\\
+\epsilon
+&=\sup_{a\in A,\ \|a\|_{\rm op}\le1}
+\|\rho h^{-1}ah-a\rho\|_1.
+\end{aligned}
+\tag{20.8}
+$$
+
+第二式使用完整复收缩球的算符范数／迹范数对偶；只给有限测量菜单时不能直接使用这一步。
+
+对 $b\in A$、$y\in M$，有 $Q(by)=Q(yb)$：与任意 $z\in A'$ 作迹配对，利用 $zb=bz$ 和迹循环性即可。于是
+
+$$
+Q(\rho h^{-1})=Q(h^{-1/2}\rho h^{-1/2})=q.
+\tag{20.9}
+$$
+
+$K>0$，且若 $m=\lambda_{\min}(\rho)>0$，则 $K\ge(m/\|h\|_{\rm op})I$。$Q$ 正且保单位元，故 $q\ge(m/\|h\|_{\rm op})I>0$。$q\in A'$ 与 $h$ 交换，所以 $\sigma=qh>0$。又由两平均交换，
+
+$$
+P(K)=h^{-1/2}P(\rho)h^{-1/2}=I,\qquad
+P(q)=QP(K)=I,\qquad
+P(\sigma)=h.
+$$
+
+由此 $\operatorname{Tr}\sigma=\operatorname{Tr}h=1$，且式 (20.4) 对所有复 $a\in A$ 成立。
+
+现在只把式 (20.8) 用于 $a=u\in U(A)$。左乘 $u^\dagger$ 不改变迹范数，得到
+
+$$
+\|u^\dagger\rho h^{-1}u h-\rho\|_1\le\epsilon.
+$$
+
+对 $U(A)$ 的归一 Haar 测度积分；由式 (20.9) 与迹范数的凸性，
+
+$$
+\|\sigma-\rho\|_1
+=\left\|\int_{U(A)}
+(u^\dagger\rho h^{-1}u h-\rho)\,du\right\|_1
+\le\epsilon.
+\tag{20.10}
+$$
+
+因此态误差界没有除以最小谱值。
+
+$q$ 与 $A$ 交换，且 $P$ 是迹正交投影。与任意 $a\in A$ 作迹配对可将 $q^{1/2}$ 从左侧移到右侧，故
+
+$$
+F(x)=P(xq)=P(x\sigma)h^{-1}.
+\tag{20.11}
+$$
+
+式 (20.3) 是 CP 夹乘与 UCP 映射 $P$ 的组合，且 $F(I)=P(q)=I$。$q$ 与 $A$ 交换、$P$ 双模，给出 $F(axb)=aF(x)b$。于是 $F(a)=a$、像恰为 $A$、$F^2=F$。式 (20.7) 换成校准 $\sigma$ 后，因 $P(\sigma)=h$，其右端正是式 (20.11)，证明 $F=E_{\sigma,A}$。普通迹对偶为
+
+$$
+F_*(s)=q^{1/2}P(s)q^{1/2}.
+\tag{20.12}
+$$
+
+将 $s=\rho,\sigma$ 代入即得式 (20.5)。$F_*$ 是 CPTP；$F$ 本身一般不保持普通迹。
+
+最后，由式 (20.7)、(20.11)，对每个有限 $k$、每个复矩阵 $X\in M_k\otimes M$，
+
+$$
+\begin{aligned}
+(E-F)^{(k)}(X)
+&=P^{(k)}\bigl(X(I_k\otimes\Delta)\bigr)
+(I_k\otimes h^{-1}),\\
+\|(E-F)^{(k)}(X)\|_{\rm op}
+&\le\|X\|_{\rm op}\|\Delta\|_{\rm op}/\lambda .
+\end{aligned}
+\tag{20.13}
+$$
+
+这里用的是已知 $P$ 的完全收缩性以及普通右乘的算符范数界，没有对 $E$ 使用 Schwarz 不等式、正性或完全正性。对所有有限 $k$ 取上确界并结合式 (20.10)，得到式 (20.6)。这也说明结论中的辅助一致控制来自显式矩阵公式，而非把输入假设换成放大缺陷。
+

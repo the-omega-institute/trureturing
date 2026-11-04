@@ -1,0 +1,89 @@
+**命题 21.1（原比较缺陷不能无条件控制合法映射距离）。** 固定 $A\subset M_2$ 为对角代数。对 $0<t<1/2$，取
+
+$$
+\rho_t=
+\begin{pmatrix}t^2&t/2\\ t/2&1-t^2\end{pmatrix},\qquad
+h_t=P_A(\rho_t)=\operatorname{diag}(t^2,1-t^2).
+\tag{21.1}
+$$
+
+这些校准均忠实，实际左 GNS 投影及原始缺陷恰为
+
+$$
+\begin{aligned}
+E_t(x)&=\operatorname{diag}\left(
+x_{11}+\frac{x_{12}}{2t},\
+x_{22}+\frac{t\,x_{21}}{2(1-t^2)}\right),\\
+\epsilon_t&=2t,\qquad
+\lambda_{\min}(h_t)=t^2 .
+\end{aligned}
+\tag{21.2}
+$$
+
+设 $\mathcal P$ 是所有正复线性映射 $M_2\to M_2$，不要求保单位元；$\mathcal U$ 是其中所有 UCP 映射。若 $\|T\|_{{\rm op}\to{\rm op}}=\sup_{\|x\|_{\rm op}\le1}\|T(x)\|_{\rm op}$，则
+
+$$
+\boxed{
+\begin{aligned}
+\inf_{T\in\mathcal P}\|E_t-T\|_{{\rm op}\to{\rm op}}
+&=\inf_{T\in\mathcal U}\|E_t-T\|_{{\rm op}\to{\rm op}}
+=\frac1{2t}=\frac1{\epsilon_t},\\
+\inf_{T\in\mathcal P}\|E_t-T\|_{\rm cb}
+&=\inf_{T\in\mathcal U}\|E_t-T\|_{\rm cb}
+=\frac1{2t}.
+\end{aligned}}
+\tag{21.3}
+$$
+
+故 $\epsilon_t\downarrow0$ 而距每个正映射或 UCP 映射的最佳距离均无界。非正性及坏角机制复用命题 9.2；这里的 repo-derived 定量增量是同一忠实二维族上原 $\epsilon_t$ 的精确计算及式 (21.3) 的距离结论。
+
+证明。$\operatorname{Tr}\rho_t=1$ 且 $\det\rho_t=t^2(3/4-t^2)>0$，故忠实。式 (20.7) 给出 $E_t$。对 $a=\operatorname{diag}(a_1,a_2)$，$a$ 与 $h_t$ 交换，因此式 (20.8) 中的矩阵为
+
+$$
+\rho_t a-a\rho_t
+=\frac t2
+\begin{pmatrix}0&a_2-a_1\\a_1-a_2&0\end{pmatrix}.
+$$
+
+其两个奇异值均为 $t|a_2-a_1|/2$，迹范数为 $t|a_2-a_1|$。完整复收缩球上 $|a_2-a_1|\le2$，并在 $a=\operatorname{diag}(1,-1)$ 取等，故原定义的 $\epsilon_t=2t$。等价地，该 $a$ 配合 $x=-i\sigma_y$ 已达到相同绝对比较值。
+
+对每个正复线性 $T$，$T(\sigma_y)$ Hermitian，其首个对角元为实数，而
+
+$$
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+E_t(\sigma_y)=
+\operatorname{diag}\left(-\frac{i}{2t},\frac{it}{2(1-t^2)}\right).
+$$
+
+由于 $\|\sigma_y\|_{\rm op}=1$，其首个对角元的虚部给出
+
+$$
+\|E_t-T\|_{{\rm op}\to{\rm op}}
+\ge\|(E_t-T)(\sigma_y)\|_{\rm op}
+\ge\frac1{2t}.
+\tag{21.4}
+$$
+
+这不依赖 $T$ 的值域是否为 $A$，也不依赖 $T$ 是否保单位元。另一方面，式 (20.3) 的构造在此处取 $q_t=I$、$\sigma_t=h_t$、$F_t=P_A$，于是
+
+$$
+(E_t-F_t)(x)
+=\operatorname{diag}\left(\frac{x_{12}}{2t},
+\frac{t\,x_{21}}{2(1-t^2)}\right).
+$$
+
+在每个有限放大上，输入块 $X_{12},X_{21}$ 的算符范数都不超过 $\|X\|_{\rm op}$，而输出是这两个块乘以所示标量后的直和。因 $t<1/2$，有 $t/[2(1-t^2)]<1/(2t)$，从而
+
+$$
+\|E_t-F_t\|_{\rm cb}\le1/(2t).
+$$
+
+取 $x=e_{12}$ 达到等号。$F_t$ 为 UCP，结合式 (21.4) 与 $\|\cdot\|_{{\rm op}\to{\rm op}}\le\|\cdot\|_{\rm cb}$，证明式 (21.3)。同时
+
+$$
+\|\rho_t-\sigma_t\|_1=t=\epsilon_t/2,\qquad
+\|\rho_t-\sigma_t\|_{\rm op}=t/2.
+$$
+
+态校准误差确实趋于零，但谱除数 $t^2$ 使映射距离发散。此族的两层估计与式 (20.6) 相容；它不把充分上界认作所有对象上的最优常数。
+
