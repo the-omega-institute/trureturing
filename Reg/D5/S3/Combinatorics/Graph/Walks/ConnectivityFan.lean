@@ -134,7 +134,6 @@ def arena : Arena where
     ∃ base, ∃ cycle : G.Walk base base, readout.readout () ⟨V, G, base⟩ cycle = true ∧
       (∀ otherBase (other : G.Walk otherBase otherBase),
         other.IsCycle → other.length ≤ cycle.length) ∧
-      (cycle.induce {vertex | vertex ∈ cycle.support} (fun _ hmem => hmem)).IsHamiltonianCycle ∧
       ∀ x : V, x ∉ cycle.support →
         ∃ (endpoint : Fin (min k cycle.length) → V)
           (paths : ∀ index, G.Walk x (endpoint index)),

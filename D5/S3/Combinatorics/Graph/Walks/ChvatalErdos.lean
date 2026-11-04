@@ -139,7 +139,7 @@ theorem isHamiltonian_of_connectivity_independence [Finite V] (G : SimpleGraph V
       · exact fun hadj => hnonadjacent hadj.symm
       · exact (hdistinct rfl).elim)
     rwa [Set.ncard_pair hne] at hbound
-  obtain ⟨root, cycle, hcycle, hmaximal, _, hfans⟩ := exists_maximal_cycle_fans hn hk hconn
+  obtain ⟨root, cycle, hcycle, hmaximal, hfans⟩ := exists_maximal_cycle_fans hn hk hconn
   by_contra hnot
   obtain ⟨outside, houtside⟩ : ∃ outside, outside ∉ cycle.support := by
     by_contra! hfull

@@ -168,28 +168,13 @@ private lemma exists_cycle [Fintype V] {G : SimpleGraph V} {k : ℕ}
   simp only [Finset.sum_const, Finset.card_univ, smul_eq_mul] at hlower
   omega
 
-private lemma induced_cycle_spans_support {G : SimpleGraph V} {base : V}
-    (cycle : G.Walk base base) (hcycle : cycle.IsCycle) :
-    (cycle.induce {vertex | vertex ∈ cycle.support} (fun _ hmem => hmem)).IsHamiltonianCycle := by
-  classical
-  apply Walk.isHamiltonianCycle_iff_isCycle_and_forall_mem_support.mpr
-  constructor
-  · rw [← Walk.isCycle_map_iff_of_injective
-      (f := (Embedding.induce {vertex | vertex ∈ cycle.support}).toHom) Subtype.val_injective,
-      Walk.map_induce]
-    exact hcycle
-  · intro vertex
-    rw [Walk.support_induce]
-    exact (List.mem_attachWith _ vertex).mpr vertex.property
-
-/-- A longest ordinary cycle, spanning its own support, with a fan from every outside vertex. -/
+/-- A longest ordinary cycle with a fan from every outside vertex. -/
 theorem exists_maximal_cycle_fans [Finite V] {G : SimpleGraph V} {k : ℕ}
     (hn : 3 ≤ Nat.card V) (hk : 2 ≤ k)
     (hconn : ∀ S : Set V, S.ncard < k → (G.induce Sᶜ).Connected) :
     ∃ base, ∃ cycle : G.Walk base base, cycle.IsCycle ∧
       (∀ otherBase (other : G.Walk otherBase otherBase),
         other.IsCycle → other.length ≤ cycle.length) ∧
-      (cycle.induce {vertex | vertex ∈ cycle.support} (fun _ hmem => hmem)).IsHamiltonianCycle ∧
       ∀ x : V, x ∉ cycle.support →
         ∃ (endpoint : Fin (min k cycle.length) → V)
           (paths : ∀ index, G.Walk x (endpoint index)),
@@ -210,7 +195,7 @@ theorem exists_maximal_cycle_fans [Finite V] {G : SimpleGraph V} {k : ℕ}
     cycle.IsCycle ∧ cycle.length = length
   obtain ⟨base, cycle, hcycle, hlength⟩ := Nat.findGreatest_spec (P := predicate)
     (hbound initialBase initial hinitial) ⟨initialBase, initial, hinitial, rfl⟩
-  refine ⟨base, cycle, hcycle, ?_, induced_cycle_spans_support cycle hcycle, ?_⟩
+  refine ⟨base, cycle, hcycle, ?_, ?_⟩
   · intro otherBase other hother
     rw [hlength]
     exact Nat.le_findGreatest (P := predicate) (hbound otherBase other hother)

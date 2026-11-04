@@ -26,9 +26,9 @@ internal sealed class ConnectivityFanDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/GraphInvariants/traversogianini2026brooks")),
                 Blocks(
-                    Paragraph(Text("Assume additionally that V has at least three vertices and k is at least two. There exists an actual closed G-walk C that is a cycle, and every actual cycle in G has length at most C.length. The walk C induced on its own support is Hamiltonian on that support. For each vertex x outside the support, an actual fan of exactly min(k, C.length) paths has distinct endpoints on C, is terminal-clean with respect to C, and has pairwise intersection only at x. All these clauses concern the same chosen cycle C.")),
-                    Paragraph(Text("A cycle exists because deletion connectivity forces every vertex to have degree at least two. An acyclic connected graph would be a tree; its edge count contradicts the sum of these degree bounds. Cycle length is bounded by the number of vertices, so a greatest attained length exists. Inducing the chosen cycle on its support preserves the cycle and includes every vertex of this induced type. Applying the fan theorem to that support gives the stated size and cleanliness.")),
-                    Paragraph(Text("In the formula, CycleCarrier(C) is the subtype of vertices in C.support, induceWalk(C) is the native induced walk on that subtype, and Fan(G,x,B,r) is the existential endpoint-and-walk statement of the preceding theorem with index type Fin(r), including pathhood, terminal cleanliness, pairwise intersection only at x and injective endpoints. This theorem neither asserts that the maximal cycle spans V nor that its length is at least k."))),
+                    Paragraph(Text("Assume additionally that V has at least three vertices and k is at least two. There exists an actual closed G-walk C that is a cycle, and every actual cycle in G has length at most C.length. For each vertex x outside the support, an actual fan of exactly min(k, C.length) paths has distinct endpoints on C, is terminal-clean with respect to C, and has pairwise intersection only at x. All these clauses concern the same chosen cycle C.")),
+                    Paragraph(Text("A cycle exists because deletion connectivity forces every vertex to have degree at least two. An acyclic connected graph would be a tree; its edge count contradicts the sum of these degree bounds. Cycle length is bounded by the number of vertices, so a greatest attained length exists. Applying the fan theorem to that support gives the stated size and cleanliness.")),
+                    Paragraph(Text("In the formula, Fan(G,x,B,r) is the existential endpoint-and-walk statement of the preceding theorem with index type Fin(r), including pathhood, terminal cleanliness, pairwise intersection only at x and injective endpoints. This theorem neither asserts that the maximal cycle spans V nor that its length is at least k."))),
                 DescribeRole.Theorem)), []));
 
     private static Formula All(string name, Formula type, Formula body) =>
@@ -65,8 +65,7 @@ internal sealed class ConnectivityFanDocument : IScribeDocumentDefinition
         var fans = All("x", v, Imp(new Formula.Not(Member(x, Call("support", c))),
             Call("Fan", g, x, Call("support", c), Call("min", k, Call("length", c)))));
         var result = Ex("a", v, Ex("C", Call("Walk", g, F.Id("a"), F.Id("a")),
-            And(Call("IsCycle", c), maximal,
-                Call("IsHamiltonianCycle", Call("induceWalk", c)), fans)));
+            And(Call("IsCycle", c), maximal, fans)));
         return Disp(All("V", Call("Type"), Imp(Call("Finite", v),
             All("G", Call("SimpleGraph", v), All("k", Call("Nat"),
                 Imp(Le(Num(3), Call("card", v)), Imp(Le(Num(2), k), Imp(conn, result))))))));
