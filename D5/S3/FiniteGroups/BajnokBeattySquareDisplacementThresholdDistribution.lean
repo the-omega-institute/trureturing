@@ -25,7 +25,7 @@ noncomputable section
 
 namespace D5.S3.FiniteGroups.BajnokBeattySquareDisplacementThresholdDistribution
 
-open Filter Set
+open Filter Set Classical
 open scoped Topology BigOperators
 open _root_.D5.S3.FiniteGroups.BajnokBeattySquareDisplacementSingleCrossing
 open _root_.D5.S3.FiniteGroups.BajnokBeattySquareDisplacementLogTwoBracket
@@ -92,10 +92,10 @@ private theorem finiteResidues_bijective
     apply Prod.ext
     · apply Fin.ext
       change c.val % a = u.val
-      exact c.property.1.trans (Nat.mod_eq_of_lt u.isLt)
+      exact (show c.val % a = u.val % a from c.property.1).trans (Nat.mod_eq_of_lt u.isLt)
     · apply Fin.ext
       change c.val % b = v.val
-      exact c.property.2.trans (Nat.mod_eq_of_lt v.isLt)
+      exact (show c.val % b = v.val % b from c.property.2).trans (Nat.mod_eq_of_lt v.isLt)
 
 private def reflection (n : ℕ) (hn : 0 < n) : Fin n ≃ Fin n where
   toFun x := ⟨n - 1 - x.val, by have := x.isLt; omega⟩
@@ -142,9 +142,10 @@ private theorem finite_crt_residue_count
     have hua := Nat.mod_lt h ha
     have hvb := Nat.mod_lt h hb
     have hd := reflected_difference a b h ha hb
-    simp only [Finset.mem_filter, Finset.mem_product, Finset.mem_range,
-      Prod.fst, Prod.snd]
-    exact ⟨⟨by omega, by omega⟩, hd.trans hj⟩
+    apply Finset.mem_filter.mpr
+    exact ⟨Finset.mem_product.mpr
+      ⟨Finset.mem_range.mpr (by omega), Finset.mem_range.mpr (by omega)⟩,
+      hd.trans hj⟩
   · intro x hx y hy hxy
     have hxlt := Finset.mem_range.mp (Finset.mem_filter.mp hx).1
     have hylt := Finset.mem_range.mp (Finset.mem_filter.mp hy).1
@@ -200,9 +201,10 @@ private theorem fiber_count_interval (a b : ℕ) (j : ℤ) :
     have huc : (u.toNat : ℤ) = u := Int.toNat_of_nonneg hu0
     have hvc : ((u + j).toNat : ℤ) = u + j := Int.toNat_of_nonneg hv0
     refine ⟨(u.toNat, (u + j).toNat), ?_, huc⟩
-    simp only [Finset.mem_filter, Finset.mem_product, Finset.mem_range,
-      Prod.fst, Prod.snd]
-    exact ⟨⟨by omega, by omega⟩, by omega⟩
+    apply Finset.mem_filter.mpr
+    exact ⟨Finset.mem_product.mpr
+      ⟨Finset.mem_range.mpr (by omega), Finset.mem_range.mpr (by omega)⟩,
+      by omega⟩
 
 private theorem fiber_count_formula (a b : ℕ) (j : ℤ) :
     (((Finset.product (Finset.range a) (Finset.range b)).filter (fun uv =>
@@ -297,10 +299,10 @@ private theorem ceil_cell_fraction
     exact_mod_cast Nat.succ_le_of_lt (Nat.mod_lt h hn)
   apply Int.ceil_eq_iff.mpr
   constructor
-  · push_cast
+  · simp only [Int.cast_add, Int.cast_natCast, Int.cast_one]
     apply (lt_div_iff₀ hnR).mpr
     nlinarith
-  · push_cast
+  · simp only [Int.cast_add, Int.cast_natCast, Int.cast_one]
     apply (div_le_iff₀ hnR).mpr
     nlinarith
 
@@ -352,24 +354,24 @@ private theorem idealDet_on_cell
 private theorem ideal_histogram_partition
     (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
     (lam : ℝ) (hlam : Irrational lam) (j : ℤ) (N : ℕ) :
-    ((Finset.range N).filter (fun k => idealDet a b (idealOrbit lam k) = j)).card =
+    ((Finset.range N).filter (fun (k : ℕ) => idealDet a b (idealOrbit lam k) = j)).card =
       ∑ h ∈ ((Finset.range (a * b)).filter (fun h => cellValue a b h = j)),
-        ((Finset.range N).filter (fun k => inCell (a * b) h (idealOrbit lam k))).card := by
+        ((Finset.range N).filter (fun (k : ℕ) => inCell (a * b) h (idealOrbit lam k))).card := by
   classical
-  let s := (Finset.range N).filter (fun k => idealDet a b (idealOrbit lam k) = j)
+  let s := (Finset.range N).filter (fun (k : ℕ) => idealDet a b (idealOrbit lam k) = j)
   let t := (Finset.range (a * b)).filter (fun h => cellValue a b h = j)
   have hm : 0 < a * b := Nat.mul_pos ha hb
   have hdet (k : ℕ) : idealDet a b (idealOrbit lam k) =
       cellValue a b (cellAt (a * b) (idealOrbit lam k)) :=
     idealDet_on_cell a b ha hb _ _ (idealOrbit_irrational lam hlam k)
       ((cellAt_eq_iff (a * b) hm _ _).mp rfl)
-  have hmap : (s : Set ℕ).MapsTo (fun k => cellAt (a * b) (idealOrbit lam k)) t := by
+  have hmap : (s : Set ℕ).MapsTo (fun (k : ℕ) => cellAt (a * b) (idealOrbit lam k)) t := by
     intro k hk
     have hkj := (Finset.mem_filter.mp hk).2
     exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (cellAt_lt (a * b) hm _),
       (hdet k).symm.trans hkj⟩
   calc
-    _ = ∑ h ∈ t, (s.filter (fun k => cellAt (a * b) (idealOrbit lam k) = h)).card :=
+    _ = ∑ h ∈ t, (s.filter (fun (k : ℕ) => cellAt (a * b) (idealOrbit lam k) = h)).card :=
       Finset.card_eq_sum_card_fiberwise hmap
     _ = _ := by
       apply Finset.sum_congr rfl
@@ -391,7 +393,7 @@ private theorem ideal_cell_sampling
     (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
     (lam : ℝ) (hlam : Irrational lam) (h : ℕ) (hh : h < a * b) :
     Tendsto (fun N : ℕ =>
-      (((Finset.range N).filter (fun k => inCell (a * b) h (idealOrbit lam k))).card : ℝ) /
+      (((Finset.range N).filter (fun (k : ℕ) => inCell (a * b) h (idealOrbit lam k))).card : ℝ) /
         (N : ℝ)) atTop (𝓝 (1 / ((a : ℝ) * (b : ℝ)))) := by
   classical
   have hmR : 0 < (a : ℝ) * (b : ℝ) := mul_pos (by exact_mod_cast ha) (by exact_mod_cast hb)
@@ -420,7 +422,7 @@ private theorem ideal_irrational_histogram
     (a b : ℕ) (ha : 0 < a) (hb : 0 < b) (hab : Nat.Coprime a b)
     (lam : ℝ) (hlam : Irrational lam) (j : ℤ) :
     Tendsto (fun N : ℕ =>
-      (((Finset.range N).filter (fun k =>
+      (((Finset.range N).filter (fun (k : ℕ) =>
         (b : ℤ) * ⌈(a : ℝ) * ((2 * (k : ℝ) + 3) * lam)⌉ -
           (a : ℤ) * ⌈(b : ℝ) * ((2 * (k : ℝ) + 3) * lam)⌉ = j)).card : ℝ) / (N : ℝ))
       atTop (𝓝 (((max 0 (min (a : ℤ) ((b : ℤ) - j) - max 0 (-j)) : ℤ) : ℝ) /
@@ -442,9 +444,9 @@ private theorem ideal_irrational_histogram
       _ = _ := by rw [hcR]
   have hcounts (N : ℕ) :
       (∑ h ∈ t,
-        (((Finset.range N).filter (fun k => inCell (a * b) h (idealOrbit lam k))).card : ℝ) /
+        (((Finset.range N).filter (fun (k : ℕ) => inCell (a * b) h (idealOrbit lam k))).card : ℝ) /
           (N : ℝ)) =
-      (((Finset.range N).filter (fun k => idealDet a b (idealOrbit lam k) = j)).card : ℝ) /
+      (((Finset.range N).filter (fun (k : ℕ) => idealDet a b (idealOrbit lam k) = j)).card : ℝ) /
         (N : ℝ) := by
     have hp := congrArg (fun q : ℕ => (q : ℝ) / (N : ℝ))
       (ideal_histogram_partition a b ha hb lam hlam j N)
@@ -457,7 +459,7 @@ private theorem ideal_irrational_histogram_support
     (a b : ℕ) (ha : 0 < a) (hb : 0 < b) (hab : Nat.Coprime a b)
     (lam : ℝ) (hlam : Irrational lam) (j : ℤ) :
     Tendsto (fun N : ℕ =>
-      (((Finset.range N).filter (fun k =>
+      (((Finset.range N).filter (fun (k : ℕ) =>
         (b : ℤ) * ⌈(a : ℝ) * ((2 * (k : ℝ) + 3) * lam)⌉ -
           (a : ℤ) * ⌈(b : ℝ) * ((2 * (k : ℝ) + 3) * lam)⌉ = j)).card : ℝ) / (N : ℝ))
       atTop (𝓝 (if -(a : ℤ) < j ∧ j < (b : ℤ) then
@@ -474,11 +476,11 @@ private theorem bad_prefix_le_arc
     (hK : ∀ k, K ≤ k → Bad k → Int.fract (ρ + (k : ℝ) * α) < δ)
     (N : ℕ) :
     ((Finset.range N).filter Bad).card ≤ K +
-      ((Finset.range N).filter fun k =>
+      ((Finset.range N).filter fun (k : ℕ) =>
         0 ≤ Int.fract (ρ + (k : ℝ) * α) ∧
           Int.fract (ρ + (k : ℝ) * α) < δ).card := by
   classical
-  let arc := (Finset.range N).filter fun k =>
+  let arc := (Finset.range N).filter fun (k : ℕ) =>
     0 ≤ Int.fract (ρ + (k : ℝ) * α) ∧ Int.fract (ρ + (k : ℝ) * α) < δ
   have hsub : (Finset.range N).filter Bad ⊆ Finset.range K ∪ arc := by
     intro k hk
@@ -512,7 +514,7 @@ private theorem shrinking_target_bad_density_zero
     have hδsmall : δ ≤ ε / 4 := min_le_left _ _
     obtain ⟨K, hK⟩ := hshrink δ hδpos hδle
     have harc : Tendsto (fun N : ℕ =>
-        (((Finset.range N).filter fun k =>
+        (((Finset.range N).filter fun (k : ℕ) =>
           0 ≤ Int.fract (ρ + (k : ℝ) * α) ∧
             Int.fract (ρ + (k : ℝ) * α) < δ).card : ℝ) / (N : ℝ))
         atTop (𝓝 δ) := by
@@ -523,7 +525,7 @@ private theorem shrinking_target_bad_density_zero
       (tendsto_order.mp (tendsto_const_div_atTop_nhds_zero_nat (K : ℝ))).2
         (ε / 4) (by linarith)
     have harc_lt : ∀ᶠ N : ℕ in atTop,
-        (((Finset.range N).filter fun k =>
+        (((Finset.range N).filter fun (k : ℕ) =>
           0 ≤ Int.fract (ρ + (k : ℝ) * α) ∧
             Int.fract (ρ + (k : ℝ) * α) < δ).card : ℝ) / (N : ℝ) < δ + ε / 4 :=
       (tendsto_order.mp harc).2 (δ + ε / 4) (by linarith)
@@ -531,7 +533,7 @@ private theorem shrinking_target_bad_density_zero
       with N hprefixN harcN hN
     have hNpos : (0 : ℝ) < (N : ℝ) := Nat.cast_pos.mpr hN
     have hcount : (((Finset.range N).filter Bad).card : ℝ) ≤ (K : ℝ) +
-        (((Finset.range N).filter fun k =>
+        (((Finset.range N).filter fun (k : ℕ) =>
           0 ≤ Int.fract (ρ + (k : ℝ) * α) ∧
             Int.fract (ρ + (k : ℝ) * α) < δ).card : ℝ) := by
       exact_mod_cast (bad_prefix_le_arc α ρ Bad δ K hK N)
@@ -542,15 +544,15 @@ open Classical in
 private theorem histogram_count_bounds
     (X Y : ℕ → ℤ) (B C : ℕ → Prop)
     (hXY : ∀ k, ¬ (B k ∨ C k) → X k = Y k) (z : ℤ) (N : ℕ) :
-    ((Finset.range N).filter fun k => X k = z).card ≤
-        ((Finset.range N).filter fun k => Y k = z).card +
+    ((Finset.range N).filter fun (k : ℕ) => X k = z).card ≤
+        ((Finset.range N).filter fun (k : ℕ) => Y k = z).card +
           (((Finset.range N).filter B).card + ((Finset.range N).filter C).card) ∧
-    ((Finset.range N).filter fun k => Y k = z).card ≤
-        ((Finset.range N).filter fun k => X k = z).card +
+    ((Finset.range N).filter fun (k : ℕ) => Y k = z).card ≤
+        ((Finset.range N).filter fun (k : ℕ) => X k = z).card +
           (((Finset.range N).filter B).card + ((Finset.range N).filter C).card) := by
   classical
-  let sX := (Finset.range N).filter fun k => X k = z
-  let sY := (Finset.range N).filter fun k => Y k = z
+  let sX := (Finset.range N).filter fun (k : ℕ) => X k = z
+  let sY := (Finset.range N).filter fun (k : ℕ) => Y k = z
   let sB := (Finset.range N).filter B
   let sC := (Finset.range N).filter C
   have hsubX : sX ⊆ sY ∪ (sB ∪ sC) := by
@@ -590,27 +592,28 @@ open Classical in
 private theorem histogram_difference_le
     (X Y : ℕ → ℤ) (B C : ℕ → Prop)
     (hXY : ∀ k, ¬ (B k ∨ C k) → X k = Y k) (z : ℤ) (N : ℕ) :
-    |(((Finset.range N).filter fun k => X k = z).card : ℝ) / (N : ℝ) -
-      (((Finset.range N).filter fun k => Y k = z).card : ℝ) / (N : ℝ)| ≤
+    |(((Finset.range N).filter fun (k : ℕ) => X k = z).card : ℝ) / (N : ℝ) -
+      (((Finset.range N).filter fun (k : ℕ) => Y k = z).card : ℝ) / (N : ℝ)| ≤
       (((Finset.range N).filter B).card : ℝ) / (N : ℝ) +
         (((Finset.range N).filter C).card : ℝ) / (N : ℝ) := by
   classical
   obtain ⟨hX, hY⟩ := histogram_count_bounds X Y B C hXY z N
-  have hX' : (((Finset.range N).filter fun k => X k = z).card : ℝ) ≤
-      (((Finset.range N).filter fun k => Y k = z).card : ℝ) +
+  have hX' : (((Finset.range N).filter fun (k : ℕ) => X k = z).card : ℝ) ≤
+      (((Finset.range N).filter fun (k : ℕ) => Y k = z).card : ℝ) +
         ((((Finset.range N).filter B).card : ℝ) +
           (((Finset.range N).filter C).card : ℝ)) := by exact_mod_cast hX
-  have hY' : (((Finset.range N).filter fun k => Y k = z).card : ℝ) ≤
-      (((Finset.range N).filter fun k => X k = z).card : ℝ) +
+  have hY' : (((Finset.range N).filter fun (k : ℕ) => Y k = z).card : ℝ) ≤
+      (((Finset.range N).filter fun (k : ℕ) => X k = z).card : ℝ) +
         ((((Finset.range N).filter B).card : ℝ) +
           (((Finset.range N).filter C).card : ℝ)) := by exact_mod_cast hY
-  have habs : |(((Finset.range N).filter fun k => X k = z).card : ℝ) -
-      (((Finset.range N).filter fun k => Y k = z).card : ℝ)| ≤
+  have habs : |(((Finset.range N).filter fun (k : ℕ) => X k = z).card : ℝ) -
+      (((Finset.range N).filter fun (k : ℕ) => Y k = z).card : ℝ)| ≤
       (((Finset.range N).filter B).card : ℝ) +
         (((Finset.range N).filter C).card : ℝ) :=
     abs_le.mpr ⟨by linarith, by linarith⟩
-  rw [← sub_div, abs_div, abs_of_nonneg (Nat.cast_nonneg N)]
-  exact (div_le_div_of_nonneg_right habs (Nat.cast_nonneg N)).trans_eq (add_div _ _ _)
+  rw [← sub_div, abs_div]
+  simpa only [abs_of_nonneg (Nat.cast_nonneg N)] using
+    (div_le_div_of_nonneg_right habs (Nat.cast_nonneg N)).trans_eq (add_div _ _ _)
 
 open Classical in
 private theorem histogram_transfer
@@ -622,10 +625,10 @@ private theorem histogram_transfer
       (((Finset.range N).filter C).card : ℝ) / (N : ℝ)) atTop (𝓝 0))
     (z : ℤ) (L : ℝ)
     (hY : Tendsto (fun N : ℕ =>
-      (((Finset.range N).filter fun k => Y k = z).card : ℝ) / (N : ℝ))
+      (((Finset.range N).filter fun (k : ℕ) => Y k = z).card : ℝ) / (N : ℝ))
       atTop (𝓝 L)) :
     Tendsto (fun N : ℕ =>
-      (((Finset.range N).filter fun k => X k = z).card : ℝ) / (N : ℝ))
+      (((Finset.range N).filter fun (k : ℕ) => X k = z).card : ℝ) / (N : ℝ))
       atTop (𝓝 L) := by
   classical
   have hlow := hY.sub (hB.add hC)
@@ -671,13 +674,14 @@ private theorem positive_gcd_coordinates (p r : ℤ) (hp : 0 < p) (hr : 0 < r) :
 
 private theorem ideal_histogram (p r : ℤ) (hp : 0 < p) (hr : 0 < r) (z : ℤ) :
     Tendsto (fun N : ℕ =>
-      (((Finset.range N).filter (fun k =>
+      (((Finset.range N).filter (fun (k : ℕ) =>
         r * ⌈(p : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉ -
           p * ⌈(r : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉ = z)).card : ℝ) /
         (N : ℝ)) atTop (𝓝 (mass p r z)) := by
   classical
   let d : ℤ := Int.gcd p r
   have hd : 0 < d := by
+    dsimp only [d]
     exact_mod_cast Int.gcd_pos_of_ne_zero_left r (ne_of_gt hp)
   have hd0 : d ≠ 0 := ne_of_gt hd
   obtain ⟨a, b, ha, hb, hab, hpa, hrb⟩ := positive_gcd_coordinates p r hp hr
@@ -687,7 +691,7 @@ private theorem ideal_histogram (p r : ℤ) (hp : 0 < p) (hr : 0 < r) (z : ℤ) 
   have hbdiv : r / d = (b : ℤ) := by rw [hrb, Int.mul_ediv_cancel_left _ hd0]
   let lam : ℝ := (d : ℝ) / (4 * Real.log 2)
   have hlam : Irrational lam := scaled_log_irrational d hd0 4 (by norm_num)
-  let J : ℕ → ℤ := fun k => idealDet a b (idealOrbit lam k)
+  let J : ℕ → ℤ := fun (k : ℕ) => idealDet a b (idealOrbit lam k)
   have harg (c : ℕ) (k : ℕ) :
       ((d * (c : ℤ) : ℤ) : ℝ) * (qAt k : ℝ) / (4 * Real.log 2) =
         (c : ℝ) * ((2 * (k : ℝ) + 3) * lam) := by
@@ -715,10 +719,15 @@ private theorem ideal_histogram (p r : ℤ) (hp : 0 < p) (hr : 0 < r) (z : ℤ) 
     have hm : mass p r z = if -(a : ℤ) < z / d ∧ z / d < (b : ℤ) then
         ((min (min (a : ℤ) (b : ℤ)) (min ((a : ℤ) + z / d) ((b : ℤ) - z / d)) : ℤ) : ℝ) /
           ((a : ℝ) * (b : ℝ)) else 0 := by
-      simp only [mass, dif_pos hz, if_pos hz, hadiv, hbdiv, Int.cast_natCast]
+      unfold mass
+      change (if _ : d ∣ z then _ else 0) = _
+      rw [dif_pos hz]
+      dsimp only
+      rw [hadiv, hbdiv]
+      simp only [Int.cast_min, Int.cast_add, Int.cast_sub, Int.cast_natCast]
     have hs := ideal_irrational_histogram_support a b ha hb hab lam hlam (z / d)
     change Tendsto (fun N : ℕ =>
-      (((Finset.range N).filter (fun k => J k = z / d)).card : ℝ) / (N : ℝ))
+      (((Finset.range N).filter (fun (k : ℕ) => J k = z / d)).card : ℝ) / (N : ℝ))
       atTop (𝓝 _) at hs
     rw [hm]
     simpa only [he] using hs
@@ -726,21 +735,26 @@ private theorem ideal_histogram (p r : ℤ) (hp : 0 < p) (hr : 0 < r) (z : ℤ) 
         p * ⌈(r : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉ = z) := by
       intro h
       exact hz ⟨J k, h.symm.trans (hdet k)⟩
-    have hzero (N : ℕ) : (Finset.range N).filter (fun k =>
+    have hzero (N : ℕ) : (Finset.range N).filter (fun (k : ℕ) =>
         r * ⌈(p : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉ -
           p * ⌈(r : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉ = z) = ∅ := by
       ext k
-      simp only [Finset.mem_filter, hfalse, and_false, Finset.not_mem_empty]
-    simpa only [hzero, Finset.card_empty, Nat.cast_zero, zero_div, mass, dif_neg hz, if_neg hz] using
+      simp only [Finset.mem_filter, hfalse, and_false, Finset.mem_empty]
+    have hm : mass p r z = 0 := by
+      unfold mass
+      change (if _ : d ∣ z then _ else 0) = 0
+      exact dif_neg hz
+    simpa only [hzero, Finset.card_empty, Nat.cast_zero, zero_div, hm] using
       (tendsto_const_nhds : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0))
 
+set_option maxHeartbeats 800000 in
 private theorem ceiling_bad_density (c : ℤ) (hc : c ≠ 0) (T : ℕ → ℕ)
     (hlo : ∀ k : ℕ,
       ((qAt k : ℝ)^2 - 1) * (c : ℝ) / (4 * (qAt k : ℝ) * Real.log 2) +
         1 / (2 * (qAt k : ℝ)) - 1 / (2 * (qAt k : ℝ) * (c : ℝ)) < (T k : ℝ))
     (hup : ∀ k : ℕ,
       (T k : ℤ) ≤ ⌈(c : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉) :
-    Tendsto (fun N : ℕ => (((Finset.range N).filter (fun k =>
+    Tendsto (fun N : ℕ => (((Finset.range N).filter (fun (k : ℕ) =>
       (T k : ℤ) ≠ ⌈(c : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉)).card : ℝ) /
       (N : ℝ)) atTop (𝓝 0) := by
   classical
@@ -802,21 +816,21 @@ private theorem ceiling_bad_density (c : ℤ) (hc : c ≠ 0) (T : ℕ → ℕ)
 private theorem actual_histogram (p r : ℤ) (hp5 : 5 ≤ p) (hr5 : 5 ≤ r)
     (T U : ℕ → ℕ) (hT : ∀ k, bracketSC p (qAt k) (T k))
     (hU : ∀ k, bracketSC r (qAt k) (U k)) (z : ℤ) :
-    Tendsto (fun N : ℕ => (((Finset.range N).filter (fun k =>
+    Tendsto (fun N : ℕ => (((Finset.range N).filter (fun (k : ℕ) =>
       r * (T k : ℤ) - p * (U k : ℤ) = z)).card : ℝ) / (N : ℝ)) atTop
       (𝓝 (mass p r z)) := by
   classical
   apply histogram_transfer
-    (fun k => r * (T k : ℤ) - p * (U k : ℤ))
-    (fun k => r * ⌈(p : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉ -
+    (fun (k : ℕ) => r * (T k : ℤ) - p * (U k : ℤ))
+    (fun (k : ℕ) => r * ⌈(p : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉ -
       p * ⌈(r : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉)
-    (fun k => (T k : ℤ) ≠ ⌈(p : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉)
-    (fun k => (U k : ℤ) ≠ ⌈(r : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉)
+    (fun (k : ℕ) => (T k : ℤ) ≠ ⌈(p : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉)
+    (fun (k : ℕ) => (U k : ℤ) ≠ ⌈(r : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉)
   · intro k hk
     rcases not_or.mp hk with ⟨hp, hr⟩
     rw [not_not.mp hp, not_not.mp hr]
-  · exact ceiling_bad_density p (by omega) T (fun k => (hT k).2.1) (fun k => (hT k).2.2)
-  · exact ceiling_bad_density r (by omega) U (fun k => (hU k).2.1) (fun k => (hU k).2.2)
+  · exact ceiling_bad_density p (by omega) T (fun (k : ℕ) => (hT k).2.1) (fun (k : ℕ) => (hT k).2.2)
+  · exact ceiling_bad_density r (by omega) U (fun (k : ℕ) => (hU k).2.1) (fun (k : ℕ) => (hU k).2.2)
   · exact ideal_histogram p r (by omega) (by omega) z
 
 private theorem originalSC_unique (p q : ℤ) (T U : ℕ)
@@ -840,7 +854,7 @@ theorem actual_square_displacement_threshold_distribution
       (∀ k : ℕ, bracketSC r (qAt k) (U k) ∧
         ∀ u : ℕ, originalSC r (qAt k) u → u = U k) ∧
       (∀ z : ℤ, Tendsto (fun N : ℕ =>
-        (((Finset.range N).filter (fun k =>
+        (((Finset.range N).filter (fun (k : ℕ) =>
           r * (T k : ℤ) - p * (U k : ℤ) = z)).card : ℝ) / (N : ℝ)) atTop
         (𝓝 (mass p r z))) := by
   classical
