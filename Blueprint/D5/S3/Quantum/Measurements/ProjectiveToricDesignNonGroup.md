@@ -48,6 +48,10 @@ $$\neg (\forall (d: \mathbb{N}), (((0: \mathbb{N}) < d) \to (\forall (X: \operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/ProjectiveToricDesignNonGroup.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/iosue-mooney-ehrenberg-gorshkov-2024-projective-toric-design-subgroup-conjecture` (refuted) by `D5/S3/Quantum/Measurements/ProjectiveToricDesignNonGroup.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"iosue-mooney-ehrenberg-gorshkov-2024-projective-toric-design-subgroup-conjecture","declaration_gid":"D5/S3/Quantum/Measurements/ProjectiveToricDesignNonGroup.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Joseph T. Iosue, T. C. Mooney, Adam Ehrenberg, Alexey V. Gorshkov (2024). *Projective toric designs, quantum state designs, and mutually unbiased bases*. DOI: [10.22331/q-2024-12-03-1546](https://doi.org/10.22331/q-2024-12-03-1546). URL: <https://arxiv.org/abs/2311.13479v3>.

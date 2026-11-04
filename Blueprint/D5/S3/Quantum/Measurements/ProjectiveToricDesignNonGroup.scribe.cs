@@ -88,7 +88,10 @@ internal sealed class ProjectiveToricDesignNonGroupDocument : IScribeDocumentDef
                             + "Uniqueness of symmetric quadratic and linear coefficients would force Mᵢ = M₁ + M₃, contradicting the finite matrix calculation. "
                             + "Thus X has no such subgroup carrier. Applying the universal assertion to d = 27 and this X contradicts that fact. "
                             + "The conclusion concerns these identity-containing representatives; it makes no assertion about whether a different choice of anchoring of a complete set of mutually unbiased bases yields a group, or about dimension six."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("iosue-mooney-ehrenberg-gorshkov-2024-projective-toric-design-subgroup-conjecture"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
