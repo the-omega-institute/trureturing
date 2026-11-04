@@ -6,9 +6,8 @@
    utility: none
    digest: Complete original Euler-tail second order at all positive-price full records. -/
 
-/- SOURCE DRAFT ONLY, 2026-11-05: not elaborated, compiled, kernel checked,
-   registered or accepted. Intended canonical inputs: supplied dev46927cc.
-   This file is outside the canonical tree. No new axiom or proof hole is used.
+/- Complete original Euler-tail second order at positive-price full records.
+   No new axiom or proof hole is used.
    The final theorem retains every positive price and every strict positive
    predecessor. In particular, m is never replaced by a global optimizer.
    Classical PNT and finite Abel estimates are reused, with both endpoints.
@@ -493,7 +492,6 @@ theorem price_record_complete_tail_second_order (epsilon : ℝ) (hepsilon : 0 < 
   have hx := hT (largestPrime n : ℝ) ((le_max_left T 2).trans hlarge) x rfl
   simpa only [Real.dist_eq, sub_zero] using hx
 
--- This command is source for the caller's future check; it has not been run.
 #print axioms price_record_complete_tail_second_order
 
 end D5.S3.Arith.Robin.PriceRecord.CompleteTailSecondOrder

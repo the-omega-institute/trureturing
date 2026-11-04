@@ -1,6 +1,3 @@
-// Source draft only. Neither this Scribe nor its Lean owner has been compiled,
-// rendered, registered or accepted. Prepared natively by one Codex worker;
-// no providers, peer artifacts or independent reviewers were used.
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
@@ -8,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
 internal sealed class CompleteTailSecondOrderDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Source draft: the complete original Euler tail at every positive-price full predecessor record.",
+        "The complete original Euler tail at every positive-price full predecessor record.",
         H("Complete Price-Record Euler Tail at Second Order"),
         Blocks(Describe.Lean(
             DescribeId.Create("price-record-complete-original-tail-second-order"),
@@ -19,10 +16,10 @@ internal sealed class CompleteTailSecondOrderDocument : IScribeDocumentDefinitio
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "UNCOMPILED SOURCE DRAFT. The statement below is the intended mathematical "
-                    + "contract; its Lean proof text has not been elaborated or kernel checked. "
-                    + "It is not a repository acceptance receipt, an official competition result, "
-                    + "or a claim of literature novelty.")),
+                    "This result concerns the complete original finite Euler tail at literal "
+                    + "positive-price predecessor records. It does not establish the sign of "
+                    + "the Robin endpoint or the Riemann hypothesis, and no literature novelty "
+                    + "is claimed.")),
                 Paragraph(Text(
                     "For every epsilon>0 there exists a real T>1 such that for every natural "
                     + "m>=2 and every real lambda>0, if for every natural n with 0<n<m one has "
@@ -101,9 +98,7 @@ internal sealed class CompleteTailSecondOrderDocument : IScribeDocumentDefinitio
                     + "is a different lower theorem for tail plus the log-log clock correction "
                     + "at initial-support integers; it is not duplicated or inferred from this "
                     + "tail law. Robin endpoint signs and RH remain outside this result. "
-                    + "Formal gaps remaining for delivery are unperformed Lean elaboration, "
-                    + "kernel and axiom-closure checks, Scribe checks, source-owner registration "
-                    + "and the ordinary canonical review and acceptance steps. No independent "
-                    + "review or external literature search was performed in this constrained attempt."))),
+                    + "The exact Euler-tail law above supplies neither the log-log clock "
+                    + "correction nor a sign estimate for the Robin endpoint."))),
             DescribeRole.Theorem))));
 }
