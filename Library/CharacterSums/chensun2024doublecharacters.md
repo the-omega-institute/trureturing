@@ -16,6 +16,15 @@ triage: anchor
 <!-- GID: D5/L/CharacterSums/chensun2024doublecharacters -->
 # The full double-character congruence modulo sixteen
 
+## Verified locator
+
+DOI: `10.48550/arXiv.2409.08213`.
+URL: https://arxiv.org/html/2409.08213v4#S1.E11.
+The verified scope is arXiv:2409.08213v4, Conjecture 1.1, equation (1.11),
+with the inclusive double sum defined in equation (1.8). This locator binds
+all four modulo-eight branches, including the actual imaginary quadratic
+class number; it does not assert a later-literature priority result.
+
 The source is arXiv:2409.08213v4, 1 April 2025, Conjecture 1.1,
 equation (1.11), with the inclusive double sum defined in (1.8).
 For every prime p>3 and n=(p-1)/2 it predicts, modulo16,
