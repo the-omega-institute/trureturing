@@ -9,7 +9,7 @@
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Tactic
 
@@ -17,7 +17,7 @@ import Mathlib.Tactic
 
 noncomputable section
 
-open scoped BigOperators Classical
+open scoped BigOperators
 
 namespace D5.S3.QuantumBounds.PolygonGameClassicalValue
 
@@ -79,28 +79,118 @@ private def attainingStrategy (P : ℕ) : Fin P → Bool → Bool × Bool × Boo
   fun i x => if i.val + 1 < P then (true, true, false)
     else if x then (true, false, true) else (false, false, false)
 
+open Classical in
 private lemma fibonacci_le_half (P : ℕ) (hP : 3 ≤ P) : Nat.fib (P - 1) ≤ 2 ^ (P - 1) := by
-  sorry
+  open D5.S1.Words.AdmissibleWords.AdmissibleCount in
+  calc
+    Nat.fib (P - 1) = Fintype.card {w : Fin (P - 3) → Bool // Adm (P - 3) w} := by
+      rw [admissibleWord_card_eq_fib]
+      congr 1
+      omega
+    _ ≤ Fintype.card (Fin (P - 3) → Bool) := Fintype.card_subtype_le _
+    _ = 2 ^ (P - 3) := by simp
+    _ ≤ 2 ^ (P - 1) := Nat.pow_le_pow_right (by decide) (by omega)
 
-private lemma local_violation_half (P : ℕ) (hP : 3 ≤ P)
+open Classical in
+private lemma local_violation_half (P : ℕ)
     (s : Fin P → Bool → Bool × Bool × Bool) (h : ¬ locallyLegal P s) :
     2 ^ (P - 1) ≤ (Finset.univ.filter (fun x => ¬ wins P s x)).card := by
   classical
-  sorry
+  obtain ⟨i, b, hbad⟩ : ∃ i b,
+      ((s i b).1.toNat + (s i b).2.1.toNat + (s i b).2.2.toNat : ZMod 2) ≠ 0 := by
+    simpa only [locallyLegal, not_forall] using h
+  calc
+    2 ^ (P - 1) = (Finset.univ.filter (fun x : Fin P → Bool => x i = b)).card := by
+      simpa only [Fintype.piFinset_univ, Finset.card_univ, Fintype.card_bool,
+        Fintype.card_fin] using (Fintype.card_filter_piFinset_const_eq_of_mem
+        (Finset.univ : Finset Bool) i (Finset.mem_univ b)).symm
+    _ ≤ _ := Finset.card_le_card (by
+      intro x hx
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hx ⊢
+      intro hw
+      exact hbad (by simpa only [hx] using hw.1 i))
 
+open Classical in
 private lemma varying_middle_half (P : ℕ) (hP : 3 ≤ P)
     (s : Fin P → Bool → Bool × Bool × Bool) (h : ¬ fixedMiddle P s) :
     2 ^ (P - 1) ≤ (Finset.univ.filter (fun x => ¬ wins P s x)).card := by
   classical
-  sorry
+  obtain ⟨i, hi⟩ : ∃ i, (s i false).2.1 ≠ (s i true).2.1 := by
+    simpa only [fixedMiddle, not_forall] using h
+  let flip : (Fin P → Bool) → (Fin P → Bool) :=
+    fun x => Function.update x i (!(x i))
+  have hinv (x : Fin P → Bool) : flip (flip x) = x := by
+    funext j
+    by_cases hji : j = i
+    · subst j
+      simp only [flip, Function.update_self, Bool.not_not]
+    · simp only [flip, Function.update_of_ne hji]
+  have hbit (b : Bool) : ((s i (!b)).2.1.toNat : ZMod 2) =
+      (s i b).2.1.toNat + 1 := by
+    cases b <;> cases hzero : (s i false).2.1 <;>
+      cases hone : (s i true).2.1 <;> simp_all <;> decide
+  have hsum (x : Fin P → Bool) :
+      (∑ j, ((s j (flip x j)).2.1.toNat : ZMod 2)) =
+        (∑ j, ((s j (x j)).2.1.toNat : ZMod 2)) + 1 := by
+    have hfun : (fun j => ((s j (flip x j)).2.1.toNat : ZMod 2)) =
+        Function.update (fun j => ((s j (x j)).2.1.toNat : ZMod 2)) i
+          ((s i (!(x i))).2.1.toNat : ZMod 2) := by
+      funext j
+      by_cases hji : j = i
+      · subst j
+        simp only [flip, Function.update_self]
+      · simp only [flip, Function.update_of_ne hji]
+    rw [hfun, Finset.sum_update_of_mem (Finset.mem_univ i), hbit]
+    rw [← Finset.add_sum_erase Finset.univ
+      (fun j => ((s j (x j)).2.1.toNat : ZMod 2)) (Finset.mem_univ i)]
+    simp only [Finset.sdiff_singleton_eq_erase]
+    ring
+  have hcard : (Finset.univ.filter (wins P s)).card ≤
+      (Finset.univ.filter (fun x => ¬ wins P s x)).card := by
+    apply Finset.card_le_card_of_injOn flip
+    · intro x hx
+      have hw : wins P s x := (Finset.mem_filter.mp hx).2
+      apply Finset.mem_filter.mpr
+      refine ⟨Finset.mem_univ _, ?_⟩
+      intro hwin
+      have hh := hwin.2.1
+      rw [hsum, hw.2.1, zero_add] at hh
+      exact one_ne_zero hh
+    · intro x _ y _ heq
+      have hh := congrArg flip heq
+      simpa only [hinv] using hh
+  have htotal := Finset.card_filter_add_card_filter_not
+    (s := (Finset.univ : Finset (Fin P → Bool))) (wins P s)
+  simp only [Finset.card_univ, Fintype.card_fun, Fintype.card_bool, Fintype.card_fin] at htotal
+  have hp : 2 ^ P = 2 * 2 ^ (P - 1) := by
+    conv_lhs => rw [show P = (P - 1) + 1 by omega]
+    rw [pow_succ, Nat.mul_comm]
+  omega
 
+
+open Classical in
 private lemma odd_middle_all (P : ℕ) (s : Fin P → Bool → Bool × Bool × Bool)
     (hfixed : fixedMiddle P s)
     (hodd : (∑ i, ((s i false).2.1.toNat : ZMod 2)) ≠ 0) :
     (Finset.univ.filter (fun x => ¬ wins P s x)).card = 2 ^ P := by
   classical
-  sorry
+  have hlose (x : Fin P → Bool) : ¬ wins P s x := by
+    intro hw
+    apply hodd
+    convert hw.2.1 using 1
+    apply Finset.sum_congr rfl
+    intro i _
+    cases hbit : x i
+    · rfl
+    · exact congrArg (fun b : Bool => (b.toNat : ZMod 2)) (hfixed i)
+  have hfilter : Finset.univ.filter (fun x => ¬ wins P s x) = Finset.univ := by
+    ext x
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, iff_true]
+    exact hlose x
+  rw [hfilter]
+  simp
 
+open Classical in
 private lemma affine_matching_rule (P : ℕ) (s : Fin P → Bool → Bool × Bool × Bool)
     (hlegal : locallyLegal P s) (hfixed : fixedMiddle P s)
     (M : Finset (Fin P)) (hM : IsMatching P M) :
@@ -109,37 +199,221 @@ private lemma affine_matching_rule (P : ℕ) (s : Fin P → Bool → Bool × Boo
         ((s i false).1.toNat : ZMod 2)) = (M.card : ZMod 2)) ↔
       baseline P s + ∑ i ∈ M, edgeCharge P s i = 0 := by
   classical
-  sorry
+  let a : Fin P → ZMod 2 := fun i => (s i false).1.toNat
+  let U := Finset.univ.filter (fun i => matchingInput P M i = false)
+  have hd : Disjoint M (M.image (finRotate P)) := by
+    apply Finset.disjoint_left.2
+    intro i hi himage
+    obtain ⟨k, hk, hki⟩ := Finset.mem_image.1 himage
+    exact hM k hk (hki ▸ hi)
+  have hU (i : Fin P) : i ∈ U ↔ i ∉ M ∧ (finRotate P).symm i ∉ M := by
+    simp only [U, Finset.mem_filter, Finset.mem_univ, true_and, matchingInput,
+      decide_eq_false_iff_not, not_or]
+  have hdU : Disjoint (M ∪ M.image (finRotate P)) U := by
+    apply Finset.disjoint_left.2
+    intro i hi hu
+    rcases Finset.mem_union.1 hi with hi | hi
+    · exact (hU i).1 hu |>.1 hi
+    · obtain ⟨k, hk, rfl⟩ := Finset.mem_image.1 hi
+      exact (hU _).1 hu |>.2 (by simpa only [Equiv.symm_apply_apply] using hk)
+  have hcover : (M ∪ M.image (finRotate P)) ∪ U = Finset.univ := by
+    ext i
+    simp only [Finset.mem_union, Finset.mem_univ, iff_true]
+    by_cases hi : i ∈ M
+    · exact Or.inl (Or.inl hi)
+    · by_cases hp : (finRotate P).symm i ∈ M
+      · exact Or.inl (Or.inr (Finset.mem_image.2
+          ⟨(finRotate P).symm i, hp, Equiv.apply_symm_apply _ _⟩))
+      · exact Or.inr ((hU i).2 ⟨hi, hp⟩)
+  have hsplit : baseline P s = (∑ i ∈ M, a i) +
+      (∑ i ∈ M, a (finRotate P i)) + ∑ i ∈ U, a i := by
+    change (∑ i, a i) = _
+    rw [← hcover, Finset.sum_union hdU, Finset.sum_union hd,
+      Finset.sum_image (fun i _ k _ hik => (finRotate P).injective hik)]
+  have he (i : Fin P) : ((s i true).2.2.toNat : ZMod 2) =
+      (s i true).1.toNat + (s i false).2.1.toNat := by
+    have hh := hlegal i true
+    rw [← hfixed i] at hh
+    apply (CharTwo.add_eq_zero).1
+    convert hh using 1 <;> ring
+  have hcharge : (∑ i ∈ M, edgeCharge P s i) = (M.card : ZMod 2) +
+      (∑ i ∈ M, a i) + (∑ i ∈ M, a (finRotate P i)) +
+      ∑ i ∈ M, ((s i true).1.toNat + (s (finRotate P i) true).2.2.toNat : ZMod 2) := by
+    simp only [edgeCharge, he, a, Finset.sum_add_distrib, Finset.sum_const, nsmul_eq_mul]
+    ring
+  change ((∑ i ∈ M, ((s i true).1.toNat +
+      (s (finRotate P i) true).2.2.toNat : ZMod 2)) + ∑ i ∈ U, a i = (M.card : ZMod 2)) ↔ _
+  rw [hsplit, hcharge]
+  have hn : (∑ i ∈ M, a i) + (∑ i ∈ M, a (finRotate P i)) + (∑ i ∈ U, a i) +
+      ((M.card : ZMod 2) + (∑ i ∈ M, a i) + (∑ i ∈ M, a (finRotate P i)) +
+        ∑ i ∈ M, ((s i true).1.toNat + (s (finRotate P i) true).2.2.toNat : ZMod 2)) =
+      ((∑ i ∈ M, ((s i true).1.toNat + (s (finRotate P i) true).2.2.toNat : ZMod 2)) +
+        ∑ i ∈ U, a i) + M.card := by
+    ring_nf
+    simp only [show (2 : ZMod 2) = 0 by decide, mul_zero, add_zero, zero_add]
+  rw [hn, CharTwo.add_eq_zero]
 
+open Classical in
 private lemma marked_edge (P : ℕ) (hodd : Odd P)
     (s : Fin P → Bool → Bool × Bool × Bool)
     (heven : (∑ i, ((s i false).2.1.toNat : ZMod 2)) = 0) :
     ∃ j : Fin P, edgeCharge P s j = 1 := by
-  sorry
+  have hsum : (∑ i, edgeCharge P s i) = 1 := by
+    simp only [edgeCharge, Finset.sum_add_distrib, Finset.sum_const,
+      Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    rw [Equiv.sum_comp (finRotate P) (fun i => ((s i false).1.toNat : ZMod 2)),
+      Equiv.sum_comp (finRotate P) (fun i => ((s i true).1.toNat : ZMod 2)),
+      Equiv.sum_comp (finRotate P) (fun i => ((s i false).2.1.toNat : ZMod 2)),
+      heven, hodd.natCast_zmod_two]
+    ring_nf
+    simp only [show (2 : ZMod 2) = 0 by decide, mul_zero, add_zero]
+  by_contra h
+  have hz : ∀ i, edgeCharge P s i = 0 := by
+    intro i
+    have hn : edgeCharge P s i ≠ 1 := fun hi => h ⟨i, hi⟩
+    have hv := (edgeCharge P s i).val_lt
+    have hvzero : (edgeCharge P s i).val = 0 := by
+      by_contra hh
+      have hone : (edgeCharge P s i).val = 1 := by omega
+      exact hn (ZMod.val_injective 2 (by simpa only [ZMod.val_one_eq_one_mod] using hone))
+    exact ZMod.val_injective 2 (by simpa using hvzero)
+  simp only [hz, Finset.sum_const_zero] at hsum
+  exact zero_ne_one hsum
 
+open Classical in
 private lemma matching_input_injective (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
     (M N : Finset (Fin P)) (hM : IsMatching P M) (hN : IsMatching P N)
     (hinput : matchingInput P M = matchingInput P N) : M = N := by
-  sorry
+  classical
+  obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : P ≠ 0)
+  let z : Fin (n + 1) → ℤ := fun i =>
+    (if i ∈ M then 1 else 0) - (if i ∈ N then 1 else 0)
+  have hinc (i : Fin (n + 1)) :
+      (if i ∈ M then (1 : ℤ) else 0) + (if (finRotate (n + 1)).symm i ∈ M then 1 else 0) =
+      (if i ∈ N then (1 : ℤ) else 0) + (if (finRotate (n + 1)).symm i ∈ N then 1 else 0) := by
+    have hm : ¬ (i ∈ M ∧ (finRotate (n + 1)).symm i ∈ M) := by
+      rintro ⟨hi, hp⟩
+      exact hM _ hp (by simpa only [Equiv.apply_symm_apply] using hi)
+    have hn : ¬ (i ∈ N ∧ (finRotate (n + 1)).symm i ∈ N) := by
+      rintro ⟨hi, hp⟩
+      exact hN _ hp (by simpa only [Equiv.apply_symm_apply] using hi)
+    have hb := congrFun hinput i
+    by_cases hmzero : i ∈ M <;> by_cases hmone : (finRotate (n + 1)).symm i ∈ M <;>
+      by_cases hnzero : i ∈ N <;> by_cases hnone : (finRotate (n + 1)).symm i ∈ N <;>
+        simp_all [matchingInput]
+  have hstep (i : Fin (n + 1)) : z (finRotate (n + 1) i) = -z i := by
+    have hh := hinc (finRotate (n + 1) i)
+    simp only [Equiv.symm_apply_apply] at hh
+    dsimp only [z]
+    linarith
+  have hform (k : ℕ) (hk : k < n + 1) : z ⟨k, hk⟩ = (-1 : ℤ) ^ k * z 0 := by
+    induction k with
+    | zero => simp
+    | succ k ih =>
+      have hk' : k < n := by omega
+      have hr : finRotate (n + 1) ⟨k, by omega⟩ = ⟨k + 1, hk⟩ := finRotate_of_lt hk'
+      rw [← hr, hstep, ih (by omega), pow_succ]
+      ring
+  have hz : z 0 = 0 := by
+    have hw := hstep (Fin.last n)
+    rw [finRotate_last] at hw
+    have he : z 0 = (-1 : ℤ) ^ (n + 1) * z 0 := by
+      calc
+        z 0 = -z (Fin.last n) := hw
+        _ = -((-1 : ℤ) ^ n * z 0) := by rw [hform n (by omega)]
+        _ = (-1 : ℤ) ^ (n + 1) * z 0 := by rw [pow_succ]; ring
+    rw [hodd.neg_one_pow] at he
+    linarith
+  ext i
+  have hi : z i = 0 := by rw [hform i.val i.isLt, hz, mul_zero]
+  dsimp only [z] at hi
+  by_cases hm : i ∈ M <;> by_cases hn : i ∈ N <;> simp_all
 
+
+open Classical in
 private lemma insert_avoiding (P : ℕ) (hP : 3 ≤ P) (j : Fin P)
     (N : Finset (Fin P)) (hN : N ∈ avoiding P j) :
     IsMatching P N ∧ IsMatching P (insert j N) ∧ j ∉ N ∧
       matchingInput P N j = false ∧ matchingInput P (insert j N) j = true := by
-  sorry
+  classical
+  obtain ⟨hmatch, hprev, hj, hnext⟩ := Finset.mem_filter.1 hN |>.2
+  have hself : finRotate P j ≠ j := by
+    obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : P ≠ 0)
+    intro hh
+    have hv := congrArg Fin.val hh
+    rw [coe_finRotate] at hv
+    split_ifs at hv with ht
+    · subst j
+      simp only [Fin.val_last] at hv
+      omega
+    · omega
+  refine ⟨hmatch, ?_, hj, ?_, ?_⟩
+  · intro i hi
+    rcases Finset.mem_insert.1 hi with rfl | hi
+    · simpa only [Finset.mem_insert, not_or] using And.intro hself hnext
+    · simp only [Finset.mem_insert, not_or]
+      refine ⟨?_, hmatch i hi⟩
+      intro heq
+      have hieq : i = (finRotate P).symm j := (Equiv.eq_symm_apply (finRotate P)).2 heq
+      exact hprev (hieq ▸ hi)
+  · simp only [matchingInput, decide_eq_false_iff_not, not_or]
+    exact ⟨hj, hprev⟩
+  · simp only [matchingInput, Finset.mem_insert_self, true_or, decide_true]
 
+
+open Classical in
 private lemma avoiding_count (P : ℕ) (hP : 3 ≤ P) (j : Fin P) :
     (avoiding P j).card = Nat.fib (P - 1) := by
   sorry
 
+open Classical in
 private lemma pairing_losses (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
     (s : Fin P → Bool → Bool × Bool × Bool)
     (hlegal : locallyLegal P s) (hfixed : fixedMiddle P s)
     (j : Fin P) (hj : edgeCharge P s j = 1) :
     (avoiding P j).card ≤ (Finset.univ.filter (fun x => ¬ wins P s x)).card := by
   classical
-  sorry
+  classical
+  have hpair (N : Finset (Fin P)) (hN : N ∈ avoiding P j) :
+      wins P s (matchingInput P N) → ¬ wins P s (matchingInput P (insert j N)) := by
+    intro hw hwin
+    obtain ⟨hm, hmj, hnot, _, _⟩ := insert_avoiding P hP j N hN
+    have hz := (affine_matching_rule P s hlegal hfixed N hm).1 (hw.2.2 N hm rfl)
+    have ho := (affine_matching_rule P s hlegal hfixed (insert j N) hmj).1
+      (hwin.2.2 (insert j N) hmj rfl)
+    rw [Finset.sum_insert hnot, hj] at ho
+    have he : baseline P s + ∑ i ∈ N, edgeCharge P s i = 1 := by
+      apply (CharTwo.add_eq_zero).1
+      convert ho using 1 <;> ring
+    rw [hz] at he
+    exact zero_ne_one he
+  let f : Finset (Fin P) → (Fin P → Bool) := fun N =>
+    if wins P s (matchingInput P N) then matchingInput P (insert j N) else matchingInput P N
+  apply Finset.card_le_card_of_injOn f
+  · intro N hN
+    simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_univ, true_and]
+    dsimp only [f]
+    split_ifs with hw
+    · exact hpair N hN hw
+    · exact hw
+  · intro M hM N hN heq
+    obtain ⟨hm, hmj, hmnot, hmzero, hmone⟩ := insert_avoiding P hP j M hM
+    obtain ⟨hn, hnj, hnnot, hnzero, hnone⟩ := insert_avoiding P hP j N hN
+    dsimp only [f] at heq
+    split_ifs at heq with hwM hwN hwN
+    · have he := matching_input_injective P hodd hP (insert j M) (insert j N) hmj hnj heq
+      have herase := congrArg (fun K : Finset (Fin P) => K.erase j) he
+      simpa only [Finset.erase_insert hmnot, Finset.erase_insert hnnot] using herase
+    · have he := congrFun heq j
+      rw [hmone, hnzero] at he
+      exact Bool.noConfusion he
+    · have he := congrFun heq j
+      rw [hmzero, hnone] at he
+      exact Bool.noConfusion he
+    · exact matching_input_injective P hodd hP M N hm hn heq
 
+
+open Classical in
 private lemma deterministic_losses (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
     (s : Fin P → Bool → Bool × Bool × Bool) :
     Nat.fib (P - 1) ≤ (Finset.univ.filter (fun x => ¬ wins P s x)).card := by
@@ -153,16 +427,28 @@ private lemma deterministic_losses (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
       · rw [odd_middle_all P s hfixed heven]
         exact (fibonacci_le_half P hP).trans (Nat.pow_le_pow_right (by decide) (by omega))
     · exact (fibonacci_le_half P hP).trans (varying_middle_half P hP s hfixed)
-  · exact (fibonacci_le_half P hP).trans (local_violation_half P hP s hlegal)
+  · exact (fibonacci_le_half P hP).trans (local_violation_half P s hlegal)
 
+open Classical in
 private lemma deterministic_bound (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
     (s : Fin P → Bool → Bool × Bool × Bool) :
     ((Finset.univ.filter (wins P s)).card : ℝ) / 2 ^ P ≤
       1 - (Nat.fib (P - 1) : ℝ) / 2 ^ P := by
   classical
   have hloss := deterministic_losses P hodd hP s
-  sorry
+  have htotal := Finset.card_filter_add_card_filter_not (s :=
+    (Finset.univ : Finset (Fin P → Bool))) (wins P s)
+  have hcard : (Finset.univ.filter (wins P s)).card + Nat.fib (P - 1) ≤ 2 ^ P := by
+    simpa using (Nat.add_le_add_left hloss (Finset.univ.filter (wins P s)).card).trans_eq
+      htotal
+  have hreal : ((Finset.univ.filter (wins P s)).card : ℝ) + (Nat.fib (P - 1) : ℝ) ≤
+      2 ^ P := by exact_mod_cast hcard
+  have hden : (0 : ℝ) < 2 ^ P := by positivity
+  apply (div_le_iff₀ hden).2
+  field_simp
+  linarith
 
+open Classical in
 private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
     locallyLegal P (attainingStrategy P) ∧ fixedMiddle P (attainingStrategy P) ∧
     (∑ i, ((attainingStrategy P i false).2.1.toNat : ZMod 2)) = 0 ∧
@@ -170,6 +456,7 @@ private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
     ∃ j : Fin P, ∀ i, edgeCharge P (attainingStrategy P) i = if i = j then 1 else 0 := by
   sorry
 
+open Classical in
 private lemma attaining_losses (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
     (Finset.univ.filter (fun x => ¬ wins P (attainingStrategy P) x)).card ≤
       Nat.fib (P - 1) := by
@@ -177,21 +464,39 @@ private lemma attaining_losses (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
   have hcharges := attaining_charges P hodd hP
   sorry
 
+open Classical in
 private lemma attainment (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
     ((Finset.univ.filter (wins P (attainingStrategy P))).card : ℝ) / 2 ^ P =
       1 - (Nat.fib (P - 1) : ℝ) / 2 ^ P := by
   classical
   have hlower := deterministic_losses P hodd hP (attainingStrategy P)
   have hupper := attaining_losses P hodd hP
-  sorry
+  have heq := Nat.le_antisymm hupper hlower
+  have htotal := Finset.card_filter_add_card_filter_not (s :=
+    (Finset.univ : Finset (Fin P → Bool))) (wins P (attainingStrategy P))
+  rw [heq] at htotal
+  simp only [Finset.card_univ, Fintype.card_fun, Fintype.card_bool, Fintype.card_fin] at htotal
+  have hreal : ((Finset.univ.filter (wins P (attainingStrategy P))).card : ℝ) +
+      (Nat.fib (P - 1) : ℝ) = 2 ^ P := by exact_mod_cast htotal
+  have hden : (2 : ℝ) ^ P ≠ 0 := by positivity
+  apply (div_eq_iff hden).2
+  field_simp
+  linarith
 
+open Classical in
 private lemma mixture_bound (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
     (μ : (Fin P → Bool → Bool × Bool × Bool) → ℝ)
     (hpos : ∀ s, 0 ≤ μ s) (hnorm : ∑ s, μ s = 1) :
     winProbability P μ ≤ 1 - (Nat.fib (P - 1) : ℝ) / 2 ^ P := by
   classical
   have hbound := deterministic_bound P hodd hP
-  sorry
+  calc
+    winProbability P μ = ∑ s, μ s *
+        (((Finset.univ.filter (wins P s)).card : ℝ) / 2 ^ P) := by
+      simp only [winProbability, mul_div_assoc]
+    _ ≤ ∑ s, μ s * (1 - (Nat.fib (P - 1) : ℝ) / 2 ^ P) :=
+      Finset.sum_le_sum (fun s _ => mul_le_mul_of_nonneg_left (hbound s) (hpos s))
+    _ = 1 - (Nat.fib (P - 1) : ℝ) / 2 ^ P := by rw [← Finset.sum_mul, hnorm, one_mul]
 
 theorem result : claim := by
   classical
