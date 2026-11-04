@@ -9,9 +9,6 @@
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
 import D5.S3.VertexAlgebra.LatticeHalfFockVirasoroSpectrum
 import Mathlib.Algebra.BigOperators.Group.Finset.Interval
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Order.SuccPred.Int
 
 /-! The exact graph metric and coordination sequence of the tea slab graph. -/
 
@@ -581,7 +578,7 @@ private lemma paired_slabs (m : ℕ) :
   · subst m; rfl
   · dsimp only [plusSlabs, minusSlabs]
     simp only [ite_eq_left (Nat.cast_nonneg m),
-      ite_eq_right (show ¬ 0 ≤ -(m : ℤ) by omega)]
+      ite_eq_right (not_le.mpr (Int.neg_neg_of_pos (Int.natCast_pos.mpr (Nat.pos_of_ne_zero hm))))]
     omega
 
 private lemma weighted_layer_sum (n : ℕ) (hn : 0 < n) :
@@ -697,11 +694,11 @@ private lemma period_four_sum (n : ℕ) (hn : 0 < n) :
       omega
     have hc : c = t + 0 := by
       dsimp only [c, t, plusSlabs]
-      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      rw [ite_eq_right (not_le.mpr (Int.neg_neg_of_pos (Int.natCast_pos.mpr hn)))]
       omega
     have he : e = t + 0 := by
       dsimp only [e, t, minusSlabs]
-      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      rw [ite_eq_right (not_le.mpr (Int.neg_neg_of_pos (Int.natCast_pos.mpr hn)))]
       omega
     have hn' : (n : ℤ) = 4*t + 0 := by dsimp only [t]; omega
     rw [ha, hb, hc, he] at hw
@@ -721,11 +718,11 @@ private lemma period_four_sum (n : ℕ) (hn : 0 < n) :
       omega
     have hc : c = t + 0 := by
       dsimp only [c, t, plusSlabs]
-      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      rw [ite_eq_right (not_le.mpr (Int.neg_neg_of_pos (Int.natCast_pos.mpr hn)))]
       omega
     have he : e = t + 0 := by
       dsimp only [e, t, minusSlabs]
-      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      rw [ite_eq_right (not_le.mpr (Int.neg_neg_of_pos (Int.natCast_pos.mpr hn)))]
       omega
     have hn' : (n : ℤ) = 4*t + 1 := by dsimp only [t]; omega
     rw [ha, hb, hc, he] at hw
@@ -745,11 +742,11 @@ private lemma period_four_sum (n : ℕ) (hn : 0 < n) :
       omega
     have hc : c = t + 1 := by
       dsimp only [c, t, plusSlabs]
-      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      rw [ite_eq_right (not_le.mpr (Int.neg_neg_of_pos (Int.natCast_pos.mpr hn)))]
       omega
     have he : e = t + 0 := by
       dsimp only [e, t, minusSlabs]
-      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      rw [ite_eq_right (not_le.mpr (Int.neg_neg_of_pos (Int.natCast_pos.mpr hn)))]
       omega
     have hn' : (n : ℤ) = 4*t + 2 := by dsimp only [t]; omega
     rw [ha, hb, hc, he] at hw
@@ -769,11 +766,11 @@ private lemma period_four_sum (n : ℕ) (hn : 0 < n) :
       omega
     have hc : c = t + 1 := by
       dsimp only [c, t, plusSlabs]
-      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      rw [ite_eq_right (not_le.mpr (Int.neg_neg_of_pos (Int.natCast_pos.mpr hn)))]
       omega
     have he : e = t + 0 := by
       dsimp only [e, t, minusSlabs]
-      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      rw [ite_eq_right (not_le.mpr (Int.neg_neg_of_pos (Int.natCast_pos.mpr hn)))]
       omega
     have hn' : (n : ℤ) = 4*t + 3 := by dsimp only [t]; omega
     rw [ha, hb, hc, he] at hw
