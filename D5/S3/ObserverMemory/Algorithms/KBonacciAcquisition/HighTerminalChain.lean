@@ -17,8 +17,8 @@ open scoped BigOperators
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
-open private point_integral firstZero_unique firstZero_exists firstZero_not_terminal numerical_total from
-  D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
+open private point_integral firstZero_exists firstZero_not_terminal numerical_total from
+  D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberCatalog
 namespace D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.HighTerminalChain
 
 /-- The actual reward for every original label, including zero. -/
