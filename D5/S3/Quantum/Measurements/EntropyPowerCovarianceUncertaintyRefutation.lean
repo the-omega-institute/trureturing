@@ -102,9 +102,8 @@ private lemma gaussian_moments (m : ℝ) :
   have hpdf (x : ℝ) :
       gaussianDensity m (1 / 2) x =
         gaussianPDFReal m (1 / 2) x := by
-    delta gaussianDensity
-    simp only [gaussianPDFReal, NNReal.coe_ofNat, NNReal.coe_inv, div_eq_mul_inv, one_mul,
-      mul_comm, mul_assoc]
+    rw [gaussianDensity_eq_pdf m (1 / 2) (by norm_num) x]
+    congr 1
   have hpow (n : ℕ) : Integrable (fun x => x ^ n * gaussianPDFReal m (1 / 2) x) := by
     apply (Integrable.iff_ofReal (𝕜 := ℂ)).mpr
     have h : Integrable (fun x =>
