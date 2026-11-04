@@ -108,7 +108,7 @@ internal sealed class JointRewardFiberCatalogDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("joint-reward-anchor"),
                 DeclarationHandle.Create(Owner + "anchor"), H("The original head-pair anchor"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every L and full score y, anchor is the reward of the original reference head pair R=(1,2;1,2,0); its full-cell completion is (1,1,2,0). The proved formula sums A over first-zero classes whose zero-based address is at least two, C over the two earlier classes, every P once and T once. Original index n is the zero-based address plus one, so the late condition is the original inequality 3<=n."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("For every L and full score y, anchor is the reward of referenceHead. When L is at least two this is the original reference head pair R=(1,2;1,2,0), whose full-cell completion is (1,1,2,0). When L is smaller, referenceHead uses the available first addresses, including the empty head at L=0. The proved formula sums A over first-zero classes whose zero-based address is at least two, C over the two earlier classes, every P once and T once. Original index n is the zero-based address plus one, so the late condition is the original inequality 3<=n."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("joint-reward-completecost"),
                 DeclarationHandle.Create(Owner + "completeCost"), H("Complete excess over the anchor"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
