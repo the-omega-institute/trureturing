@@ -96,7 +96,8 @@ private lemma reduced_square {n : ℕ} (X : Finset (Fin n)) :
   ext ⟨i, a⟩ ⟨j, b⟩
   fin_cases a <;> fin_cases b <;>
     simp [Matrix.mul_apply, Fintype.sum_prod_type, reducedForm, symplecticForm,
-      e, reducedIndexEquiv, Matrix.one_apply, Prod.ext_iff] <;> split_ifs <;> norm_num
+      e, reducedIndexEquiv, Matrix.one_apply, Prod.ext_iff]
+  split_ifs <;> norm_num
 
 private lemma reduced_card {n : ℕ} (X : Finset (Fin n)) :
     Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} = 2 * X.card := by
@@ -160,7 +161,8 @@ private lemma canonical_square (n : ℕ) : symplecticForm n * symplecticForm n =
   rcases j with ⟨j, b⟩
   fin_cases a <;> fin_cases b <;>
     simp [Matrix.mul_apply, Fintype.sum_prod_type, symplecticForm,
-      Matrix.one_apply, Prod.ext_iff] <;> split_ifs <;> norm_num
+      Matrix.one_apply, Prod.ext_iff]
+  split_ifs <;> norm_num
 
 private lemma physical_posDef {n : ℕ}
     (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
@@ -174,7 +176,7 @@ private lemma physical_posDef {n : ℕ}
       _ = -1 := by
         rw [canonical_square]
         ext i j
-        by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+        by_cases hij : i = j <;> simp [hij]
   exact IsUnit.of_mul_eq_one (-(symplecticForm n).map Complex.ofReal)
     (by rw [mul_neg, h, neg_neg])
 
@@ -227,7 +229,7 @@ private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [Decidab
       _ = -1 := by
         rw [hΩ]
         ext i j
-        by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+        by_cases hij : i = j <;> simp [hij]
   have hJJ : J * J = 1 := by
     dsimp only [J]
     rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Complex.I_mul_I, hΩC]
@@ -269,17 +271,17 @@ private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [Decidab
     have hmz : M *ᵥ z = 0 := by simpa only [hzero, zero_smul] using he
     have hz : z = 0 := (Matrix.mulVec_injective_iff_isUnit.mpr hunitM)
       (hmz.trans (mulVec_zero M).symm)
-    simpa only [hz, star_zero, dotProduct_zero, zero_ne_one] using hz1
+    simp only [hz, star_zero, dotProduct_zero, zero_ne_one] at hz1
   have hpv : 0 ≤ (star z ⬝ᵥ (M * M + M) *ᵥ z).re := hp.re_dotProduct_nonneg z
   have hmv : 0 ≤ (star z ⬝ᵥ (M * M - M) *ᵥ z).re := hm.re_dotProduct_nonneg z
   have hpq : (star z ⬝ᵥ (M * M + M) *ᵥ z).re = hH.eigenvalues i ^ 2 + hH.eigenvalues i := by
     simp only [add_mulVec, ← mulVec_mulVec, he, mulVec_smul, dotProduct_add,
-      dotProduct_smul, hz1, smul_eq_mul, mul_one, Complex.real_smul, Complex.add_re,
+      dotProduct_smul, hz1, mul_one, Complex.real_smul, Complex.add_re,
       Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
     ring
   have hmq : (star z ⬝ᵥ (M * M - M) *ᵥ z).re = hH.eigenvalues i ^ 2 - hH.eigenvalues i := by
     simp only [sub_mulVec, ← mulVec_mulVec, he, mulVec_smul, dotProduct_sub,
-      dotProduct_smul, hz1, smul_eq_mul, mul_one, Complex.real_smul, Complex.sub_re,
+      dotProduct_smul, hz1, mul_one, Complex.real_smul, Complex.sub_re,
       Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
     ring
   rw [hpq] at hpv
@@ -303,7 +305,7 @@ private lemma shifted_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
     Complex.real_smul, Complex.ofReal_sub, Complex.ofReal_one]
   ring
 
-private lemma principal_block_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
+private lemma principal_block_identity {ι : Type*}
     (V Ω : Matrix ι ι ℝ) (X : Finset ι) (x : ℝ) :
     ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).submatrix
         (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1) =
@@ -346,7 +348,7 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
       _ = _ := by rw [mul_assoc, hSS]
   have hscalar (t : ℝ) : Matrix.scalar ι (t : ℂ) = (t : ℂ) • (1 : Matrix ι ι ℂ) := by
     ext i j
-    by_cases hij : i = j <;> simp [Matrix.scalar, Matrix.diagonal, Matrix.one_apply, hij]
+    by_cases hij : i = j <;> simp [Matrix.scalar, Matrix.diagonal, hij]
   have hd (t : ℝ) : (∏ i, ((t - hH.eigenvalues i : ℝ) : ℂ)) =
       (-J).det * (H (-t)).det := by
     rw [← D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Spectral.det_pencil hH t]
@@ -703,13 +705,16 @@ private lemma settlement_main : claim := by
       (Finset.disjoint_product.mpr (Or.inl hAC))
       (Finset.disjoint_product.mpr (Or.inl hBC))
     rw [mode_interpolation_det V (symplecticForm n) _ (A ∪ B ∪ C)
-        (fun p => by simp only [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) x,
+        (fun p => by
+          simp only [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) x,
       mode_interpolation_det V (symplecticForm n) _ B
         (fun p => by simp only [Finset.mem_product, Finset.mem_univ, and_true]) x,
       mode_interpolation_det V (symplecticForm n) _ (A ∪ B)
-        (fun p => by simp only [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) x,
+        (fun p => by
+          simp only [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) x,
       mode_interpolation_det V (symplecticForm n) _ (B ∪ C)
-        (fun p => by simp only [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) x] at h
+        (fun p => by
+          simp only [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) x] at h
     exact h
   rcases lt_or_eq_of_le ha2 with ha2 | ha2
   · have hm (X : Finset (Fin n)) :
