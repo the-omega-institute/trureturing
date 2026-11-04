@@ -11,7 +11,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.LowBits
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter
-open SecondPeakHighD
+open SecondPeakHighD (Submask submask_le)
 open private A B L H K SU SV SW pow_split pow_lower
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Source
 

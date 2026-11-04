@@ -137,6 +137,7 @@ private theorem palin_windows (x q r1 t r2 : ℤ)
       exact ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩⟩
     · clear eq hw w
       subst q
+      clear ex hu u
       rcases hxd with hx4|hx8
       · obtain ⟨er1,et,er2⟩:=hex hx4 rfl
         subst x; subst r1; subst t; subst r2

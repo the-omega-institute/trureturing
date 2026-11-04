@@ -97,7 +97,7 @@ private theorem palindromic_lift (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     simp only [←Multiset.coe_add,Multiset.coe_singleton] at hu hx' hw' ⊢
     dsimp [bs,blocksWord,P0,P1,P2,P3,PX,PU,U,V,W,X,n]
     split_ifs
-    all_goals simp only [←Multiset.coe_add,Multiset.coe_nil,Multiset.coe_singleton,zero_add,add_zero]
+    all_goals simp only [←Multiset.coe_add,Multiset.coe_nil,Multiset.coe_cons,Multiset.coe_singleton,zero_add,add_zero]
     · rw [←hu,←hx',←hw']; ac_rfl
     · rw [←hw']; ac_rfl
   have hpos : ∀ pkt∈bs, ∀ i∈pkt.1, 0≤oldValue a b b a i ∧ 0≤newValue a b b a i := by

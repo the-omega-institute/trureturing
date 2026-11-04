@@ -59,7 +59,7 @@ private theorem lower_lift (a b c : ℕ) (hc : 2≤c) (hca : c<a) (hab : a<b) :
     · left
       simp [s,t,he,show a-c=1 by omega]
     · right
-      refine ⟨2^(a-c-2),by positivity,?_,?_⟩
+      refine ⟨2^(a-c-2),by simpa using pow_lower (a-c-2) 0 (Nat.zero_le _),?_,?_⟩
       · dsimp [s]
         push_cast
         rw [show a-c=(a-c-2)+2 by omega,pow_add]
@@ -110,7 +110,8 @@ private theorem lower_lift (a b c : ℕ) (hc : 2≤c) (hca : c<a) (hab : a<b) :
     have rn : (2^(b-1):ℕ)≤r := by omega
     have rz : ((2^(b-1):ℕ):ℤ)≤r := by exact_mod_cast rn
     have hm:=mul_le_mul_of_nonneg_right rz (show 0≤L x z by omega)
-    nlinarith only [hm,hpw,hNL,hyL,hceil.2]
+    have hpwL:=congrArg (fun n : ℤ => n*L x z) hpw
+    nlinarith only [hm,hpwL,hNL,hyL,hceil.2]
   have ht0 : 1≤t := by
     rcases ht with ⟨_,ht⟩|⟨q,hq,_,ht⟩ <;> omega
   have tcap : t≤2^(a-1) := by
@@ -128,12 +129,15 @@ private theorem lower_lift (a b c : ℕ) (hc : 2≤c) (hca : c<a) (hab : a<b) :
   have zeven : ∃ z0 : ℤ, z=2*z0 := by
     refine ⟨2^(c-1),?_⟩
     dsimp [z]
-    rw [show c=(c-1)+1 by omega,pow_succ]
-    ring
+    calc
+      (2:ℤ)^c=2^((c-1)+1) := congrArg (fun n : ℕ => (2:ℤ)^n) (by omega)
+      _ = 2*2^(c-1) := by rw [pow_succ]; ring
   have wr:=lower_windows s z h r t hs hz hh zeven ht hhd (by exact_mod_cast hr)
-    (by simpa [xs,yh] using hceil)
+    (by simpa [xs,yh,mul_assoc] using hceil)
   have wx : (s:ℤ)*z=x := xs.symm
-  have wy : 2*(s:ℤ)*z*h=y := by rw [←xs]; exact yh.symm
+  have wy : 2*(s:ℤ)*z*h=y := by calc
+    2*(s:ℤ)*z*h=2*((s:ℤ)*z)*h := by ring
+    _=y := by rw [←xs]; exact yh.symm
   simp only [wx,wy] at wr
   have sceq : ((s:ℤ)=2) ↔ s=2 := by omega
   simp only [sceq] at wr
@@ -158,7 +162,7 @@ private theorem lower_lift (a b c : ℕ) (hc : 2≤c) (hca : c<a) (hab : a<b) :
     simp only [←Multiset.coe_add,Multiset.coe_singleton] at hu hw ⊢
     dsimp [bs,blocksWord,P0,P1,P2,P3,U,V,W,X,n]
     split_ifs
-    all_goals simp only [←Multiset.coe_add,Multiset.coe_nil,Multiset.coe_singleton,zero_add,add_zero]
+    all_goals simp only [←Multiset.coe_add,Multiset.coe_nil,Multiset.coe_cons,Multiset.coe_singleton,zero_add,add_zero]
     all_goals rw [←hu,←hw]
     all_goals ac_rfl
   have hpos : ∀ pkt∈bs, ∀ i∈pkt.1, 0≤oldValue a b c a i ∧ 0≤newValue a b c a i := by
@@ -169,7 +173,7 @@ private theorem lower_lift (a b c : ℕ) (hc : 2≤c) (hca : c<a) (hab : a<b) :
     rcases hpk with rfl|rfl|rfl|rfl
     all_goals dsimp [P0,P1,P2,P3,U,V,W,X] at hi
     all_goals try split_ifs at hi
-    all_goals simp only [List.append_nil,List.nil_append,List.mem_append,List.not_mem_nil,or_false,false_or] at hi
+    all_goals try simp only [List.append_nil,List.nil_append,List.mem_append,List.not_mem_nil,or_false,false_or] at hi
     all_goals aesop (add safe apply [pos])
   have hneg : ∀ pkt∈bs, oldValue a b c a pkt.2≤0 ∧ newValue a b c a pkt.2≤0 := by
     intro pkt hpk
@@ -224,7 +228,9 @@ private theorem lower_lift (a b c : ℕ) (hc : 2≤c) (hca : c<a) (hab : a<b) :
       · simpa [Q0,E] using sm 3 _ (full_cap a b c 3)
       · have fresh:=(chain_values a b c a ha hb hc ha).2.2.2
         simp only [Q0,ite_true,List.map_cons,List.sum_cons]
-        rw [sm 3 _ (full_cap a b c 3),fresh]
+        rw [sm 3 _ (full_cap a b c 3)]
+        have hfresh : f (size a b c a)=E := by simpa only [f,E,ite_true] using fresh
+        rw [hfresh]
         dsimp [E]
         ring
     have mass1 : (P1.map f).sum=((full a b c a 0:ℤ)-((t:ℤ)-1))*F 0+u*F 2 := by
@@ -272,7 +278,7 @@ private theorem lower_lift (a b c : ℕ) (hc : 2≤c) (hca : c<a) (hab : a<b) :
     have zero : ((blocksWord [(Q0,n 2),(P1,n 0),(P2,n 3),(P3,n 1)]).map f).sum=0 := by
       cases side
       · exact ((hp.map (oldValue a b c a)).sum_eq).trans (source_totals a b c a ha hb hc ha).1
-      · simpa [bs,marked,Q0,freshAfter] using
+      · simpa [bs,marked,Q0,freshAfter,f,C] using
           marked_total a b c ha hb hc true 0 bs (by simp [bs]) hp
     have chk:=four_checks f C Q0 P1 P2 P3 (n 2) (n 0) (n 3) (n 1)
       (base a b c a 0-F 3+2*E)
@@ -282,7 +288,7 @@ private theorem lower_lift (a b c : ℕ) (hc : 2≤c) (hca : c<a) (hab : a<b) :
       (by nlinarith only [mass0,mass1,nb3,nb0,nt2,nt3])
       (by nlinarith only [mass0,mass1,mass2,nb3,nb0,nb1,nt2,nt3,nt1,start])
       zero nt2 nt0 nt3 nt1 wz.1 wz.2.1 wz.2.2.1 wz.2.2.2
-    cases side <;> simpa [bs,marked,Q0,freshAfter] using chk
+    cases side <;> simpa [bs,marked,Q0,freshAfter,f,C] using chk
   exact realize_packets a b c ha hb hc true 0 bs (by simp [bs]) hp hpos hneg (checks false) (checks true)
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter

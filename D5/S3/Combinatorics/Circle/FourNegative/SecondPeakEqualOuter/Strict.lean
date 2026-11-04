@@ -12,7 +12,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open SecondPeakHighD
+open SecondPeakHighD (Submask submask_le submask_predecessor bit_below)
 open private size sourceMod base newBase oldValue newValue chainLength chainStart
   source_totals chain_values nextBase nextNewBase charge
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
@@ -47,6 +47,13 @@ private theorem strict_selectors (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c
   let y : ℤ:=2^b
   let r : ℕ:=2^(b-a-2)
   let s : ℕ:=3*r
+  change ∃ v t : ℕ, 1≤v ∧ v≤4 ∧ v≤2^(c-1) ∧ 1≤t ∧ t≤s ∧
+      s≤2^(b-1) ∧ Submask (t-1) (s-1) ∧
+      ((∃ p : ℤ, 2≤p ∧ z=2*x ∧ y=2*p*x ∧ (v:ℤ)=2 ∧ 2*(t:ℤ)=3*p) ∨
+      (∃ p : ℤ, 4≤p ∧ y=p*z ∧ (v:ℤ)=1 ∧ (t:ℤ)=B x y/L x z) ∨
+      (y=2*z ∧ (v:ℤ)=2 ∧ (t:ℤ)=3) ∨
+      (x=4 ∧ z=16 ∧ y=32 ∧ (v:ℤ)=4 ∧ (t:ℤ)=6) ∨
+      (8≤x ∧ y=2*z ∧ (v:ℤ)=3 ∧ (t:ℤ)=5))
   have hx : 4≤x := by simpa [x] using pow_lower a 2 ha
   have hz : 8≤z := by simpa [z] using pow_lower c 3 (by omega)
   have hx0 : 0≤x := by omega
@@ -62,9 +69,10 @@ private theorem strict_selectors (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c
     calc
       (2:ℕ)^(b-1)=2^(a+(b-a-2)+1) := congrArg (fun n : ℕ => (2:ℕ)^n) (by omega)
       _ = 2*2^a*2^(b-a-2) := by rw [pow_add,pow_add]; norm_num; ring
-  have hxN : 4≤(2:ℕ)^a := by exact_mod_cast hx
+  have hxN : 4≤(2:ℕ)^a := by exact_mod_cast (show (4:ℤ)≤(2:ℤ)^a from hx)
   have hscap : s≤2^(b-1) := by dsimp [s]; rw [hw]; nlinarith only [hr,hxN]
   have hvcap : 4≤(2:ℕ)^(c-1) := by
+    change (2:ℕ)^2≤2^(c-1)
     exact Nat.pow_le_pow_right (by decide) (by omega)
   have sub (t : ℕ) (ht : t-1<r) : Submask (t-1) (s-1) := by
     simpa [s,r,Nat.mul_comm] using submask_predecessor (b-a-2) 3 (t-1) (by decide) ht
@@ -143,7 +151,7 @@ private theorem strict_selectors (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c
       have yz : y=2*z := by dsimp [y,z]; rw [hb1,pow_succ]; ring
       by_cases hq8 : a+3≤c
       · have hr4 : 4≤r := by
-          dsimp [r]
+          change (2:ℕ)^2≤2^(b-a-2)
           exact Nat.pow_le_pow_right (by decide) (by omega)
         refine ⟨2,3,by decide,by decide,by omega,by decide,by dsimp [s]; omega,hscap,sub 3 (by omega),?_⟩
         exact Or.inr (Or.inr (Or.inl ⟨yz,rfl,rfl⟩))
@@ -152,7 +160,7 @@ private theorem strict_selectors (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c
         have hs6 : s=6 := by dsimp [s]; rw [hr2]
         by_cases ha2 : a=2
         · refine ⟨4,6,by decide,by decide,by omega,by decide,by omega,hscap,?_,?_⟩
-          · rw [hs6]; norm_num [Submask,Nat.testBit_eq_decide_div_mod_eq]
+          · rw [hs6]; exact fun _ h => h
           · exact Or.inr (Or.inr (Or.inr (Or.inl ⟨by dsimp [x]; rw [ha2]; norm_num,
               by dsimp [z]; rw [hc2,ha2]; norm_num,
               by dsimp [y]; rw [hb1,hc2,ha2]; norm_num,rfl,rfl⟩)))
@@ -212,7 +220,7 @@ private theorem strict_lift (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c<b) :
     rw [←chain_inventory a b c a ha hb hc ha]
     simp only [←Multiset.coe_add,Multiset.coe_singleton] at ew ev ⊢
     dsimp [bs,blocksWord,P0,P1,P2,P3,w,u,vv,xx,n] at *
-    simp only [←Multiset.coe_add,Multiset.coe_nil,Multiset.coe_singleton,zero_add,add_zero] at *
+    simp only [←Multiset.coe_add,Multiset.coe_nil,Multiset.coe_cons,Multiset.coe_singleton,zero_add,add_zero] at *
     rw [←ew,←ev]
     ac_rfl
   have hpos : ∀ pkt∈bs, ∀ i∈pkt.1, 0≤oldValue a b c a i ∧ 0≤newValue a b c a i := by
@@ -222,7 +230,7 @@ private theorem strict_lift (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c<b) :
     simp only [bs,List.mem_cons,List.mem_nil_iff,or_false] at hpk
     rcases hpk with rfl|rfl|rfl|rfl
     all_goals dsimp [P0,P1,P2,P3,w,u,vv,xx] at hi
-    all_goals simp only [List.append_nil,List.nil_append,List.mem_append,List.not_mem_nil,or_false,false_or] at hi
+    all_goals try simp only [List.append_nil,List.nil_append,List.mem_append,List.not_mem_nil,or_false,false_or] at hi
     all_goals aesop (add safe apply [pos])
   have hneg : ∀ pkt∈bs, oldValue a b c a pkt.2≤0 ∧ newValue a b c a pkt.2≤0 := by
     intro pkt hpk
@@ -288,7 +296,9 @@ private theorem strict_lift (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c<b) :
       · simpa [Q1,E] using sm 3 _ (full_cap a b c 3)
       · have fresh:=(chain_values a b c a ha hb hc ha).2.2.2
         simp only [Q1,ite_true,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
-        rw [sm 3 _ (full_cap a b c 3),fresh]
+        rw [sm 3 _ (full_cap a b c 3)]
+        have hfresh : f (size a b c a)=E := by simpa only [f,E,ite_true] using fresh
+        rw [hfresh]
         rfl
     have mass2 : (P2.map f).sum=(full a b c a 0:ℤ)*F 0+((v:ℤ)-1)*F 1+((s:ℤ)-(t:ℤ))*F 2 := by
       have mt : (M:ℤ)-(T:ℤ)=(s:ℤ)-(t:ℤ) := by dsimp [M,T]; omega
@@ -334,8 +344,13 @@ private theorem strict_lift (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c<b) :
       cases side
       · have hz:=((hp.map (oldValue a b c a)).sum_eq).trans (source_totals a b c a ha hb hc ha).1
         exact hz
-      · simpa [bs,marked,Q1,withEar] using marked_total a b c ha hb hc false 1 bs (by simp [bs]) hp
-    have mcast : (M:ℤ)=(s:ℤ)-1 := by dsimp [M,s,r]; have := Nat.one_le_two_pow (n:=b-a-2); omega
+      · simpa [bs,marked,Q1,withEar,f,C] using marked_total a b c ha hb hc false 1 bs (by simp [bs]) hp
+    have mcast : (M:ℤ)=(s:ℤ)-1 := by
+      have hs0 : 1≤s := by
+        have hr0 : 1≤r := Nat.one_le_two_pow
+        dsimp [s]; omega
+      dsimp only [M]
+      omega
     rw [mcast] at mass0
     have chk:=four_checks f C P0 Q1 P2 P3 (n 2) (n 3) (n 0) (n 1)
       (2*(F 3-(s:ℤ)*F 2)) (2*(F 0-(s:ℤ)*F 2))
@@ -344,7 +359,7 @@ private theorem strict_lift (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c<b) :
       (by nlinarith only [mass0,mass1,nb2,nb3,start])
       (by nlinarith only [mass0,mass1,mass2,nb2,nb3,nb0,start])
       zero nt2 nt3 nt0 nt1 wz.1 wz.2.1 wz.2.2.1 wz.2.2.2
-    cases side <;> simpa [bs,marked,Q1,withEar] using chk
+    cases side <;> simpa [bs,marked,Q1,withEar,f,C] using chk
   exact realize_packets a b c ha hb hc false 1 bs (by simp [bs]) hp hpos hneg (checks false) (checks true)
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter
