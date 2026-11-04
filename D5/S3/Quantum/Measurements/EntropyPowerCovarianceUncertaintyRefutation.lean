@@ -15,8 +15,10 @@ import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
+/-! A finite Gaussian-mixture counterexample to the covariance-corrected uncertainty relation. -/
+
 open MeasureTheory ProbabilityTheory
-open scoped BigOperators
+open scoped BigOperators NNReal
 
 noncomputable section
 
@@ -77,7 +79,19 @@ private def witnessW (d x p : ℝ) : ℝ :=
 private lemma component_factor (u v x p : ℝ) :
     gaussianWigner u v (1 / 2) 0 (1 / 2) x p =
       gaussianPDFReal u (1 / 2) x * gaussianPDFReal v (1 / 2) p := by
-  sorry
+  have hs : Real.sqrt (1 / 4 : ℝ) = 1 / 2 := by
+    rw [show (1 / 4 : ℝ) = (1 / 2) ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  have hp := Real.sq_sqrt Real.pi_pos.le
+  have hn := (Real.sqrt_pos.2 Real.pi_pos).ne'
+  simp only [gaussianWigner, gaussianPDFReal, NNReal.coe_div, NNReal.coe_one,
+    NNReal.coe_ofNat]
+  norm_num only [zero_pow, mul_zero, sub_zero, zero_mul, zero_add] 
+  rw [hs, show 2 * Real.pi * (1 / 2) = Real.pi by ring]
+  simp only [div_one]
+  rw [show -((1 / 2 : ℝ) * (x - u) ^ 2 + 1 / 2 * (p - v) ^ 2) /
+      (1 / 2) = -(x - u) ^ 2 + -(p - v) ^ 2 by ring, Real.exp_add]
+  field_simp
+  nlinarith
 
 private lemma gaussian_moments (m : ℝ) :
     Integrable (fun x => x * gaussianPDFReal m (1 / 2) x) ∧
@@ -85,14 +99,86 @@ private lemma gaussian_moments (m : ℝ) :
     (∫ x, x * gaussianPDFReal m (1 / 2) x) = m ∧
     (∫ x, x ^ 2 * gaussianPDFReal m (1 / 2) x) = m ^ 2 + 1 / 2 ∧
     (∫ x, (x - m) ^ 2 * gaussianPDFReal m (1 / 2) x) = 1 / 2 := by
-  sorry
+  have hv : (1 / 2 : ℝ≥0) ≠ 0 := by norm_num
+  have hlp := memLp_id_gaussianReal (μ := m) (v := (1 / 2)) 2
+  have hi : Integrable (fun x : ℝ => x) (gaussianReal m (1 / 2)) :=
+    hlp.integrable (by norm_num)
+  have hs : Integrable (fun x : ℝ => x ^ 2) (gaussianReal m (1 / 2)) :=
+    hlp.integrable_sq
+  have transport (f : ℝ → ℝ) (hf : Integrable f (gaussianReal m (1 / 2))) :
+      Integrable (fun x => f x * gaussianPDFReal m (1 / 2) x) := by
+    rw [gaussianReal_of_var_ne_zero _ hv] at hf
+    have ht := (integrable_withDensity_iff_integrable_smul'
+      (measurable_gaussianPDF m (1 / 2)) (Filter.Eventually.of_forall
+        fun _ => gaussianPDF_lt_top)).1 hf
+    simpa only [toReal_gaussianPDF, smul_eq_mul, mul_comm] using ht
+  have hmean : (∫ x, x * gaussianPDFReal m (1 / 2) x) = m := by
+    simpa only [integral_gaussianReal_eq_integral_smul hv, smul_eq_mul, mul_comm]
+      using (integral_id_gaussianReal (μ := m) (v := (1 / 2)))
+  have hvv := variance_eq_sub hlp
+  simp only [variance_id_gaussianReal, Pi.pow_apply, id_eq, integral_id_gaussianReal,
+    NNReal.coe_div, NNReal.coe_one, NNReal.coe_ofNat] at hvv
+  have hsecond : (∫ x, x ^ 2 * gaussianPDFReal m (1 / 2) x) = m ^ 2 + 1 / 2 := by
+    rw [integral_gaussianReal_eq_integral_smul hv] at hvv
+    simp only [smul_eq_mul, mul_comm] at hvv
+    linarith
+  have hc := variance_fun_id_gaussianReal (μ := m) (v := (1 / 2))
+  rw [variance_eq_integral measurable_id'.aemeasurable, integral_id_gaussianReal,
+    integral_gaussianReal_eq_integral_smul hv] at hc
+  refine ⟨transport _ hi, transport _ hs, hmean, hsecond, ?_⟩
+  simpa only [smul_eq_mul, mul_comm, NNReal.coe_div, NNReal.coe_one,
+    NNReal.coe_ofNat] using hc
+
+private lemma gaussian_log (m x : ℝ) :
+    Real.log (gaussianPDFReal m (1 / 2) x) = -Real.log Real.pi / 2 - (x - m) ^ 2 := by
+  simp only [gaussianPDFReal, NNReal.coe_div, NNReal.coe_one, NNReal.coe_ofNat]
+  rw [show 2 * Real.pi * (1 / 2) = Real.pi by ring,
+    show (2 : ℝ) * (1 / 2) = 1 by norm_num, div_one,
+    Real.log_mul (inv_ne_zero (Real.sqrt_pos.2 Real.pi_pos).ne') (Real.exp_ne_zero _),
+    Real.log_inv, Real.log_sqrt Real.pi_pos.le, Real.log_exp]
+  ring
 
 private lemma gaussian_entropy (m : ℝ) :
     Integrable (fun x => gaussianPDFReal m (1 / 2) x *
       Real.log (gaussianPDFReal m (1 / 2) x)) ∧
     densityEntropy (gaussianPDFReal m (1 / 2)) =
       1 / 2 * Real.log (Real.pi * Real.exp 1) := by
-  sorry
+  have hi := gaussian_moments m
+  have hg := integrable_gaussianPDFReal m (1 / 2)
+  have hp : Integrable (fun x => (x - m) ^ 2 * gaussianPDFReal m (1 / 2) x) := by
+    convert (hi.2.1.sub (hi.1.const_mul (2 * m))).add (hg.const_mul (m ^ 2)) using 1
+    ext x
+    dsimp only [Pi.add_apply, Pi.sub_apply]
+    ring
+  have he (x : ℝ) : gaussianPDFReal m (1 / 2) x *
+      Real.log (gaussianPDFReal m (1 / 2) x) =
+      (-Real.log Real.pi / 2) * gaussianPDFReal m (1 / 2) x -
+        (x - m) ^ 2 * gaussianPDFReal m (1 / 2) x := by
+    rw [gaussian_log]
+    ring
+  refine ⟨((hg.const_mul _).sub hp).congr (Filter.Eventually.of_forall
+    fun x => (he x).symm), ?_⟩
+  simp only [densityEntropy, he]
+  rw [integral_sub (hg.const_mul _) hp, integral_const_mul,
+    integral_gaussianPDFReal_eq_one _ (by norm_num), hi.2.2.2.2,
+    Real.log_mul Real.pi_ne_zero (Real.exp_ne_zero _), Real.log_exp]
+  ring
+
+private lemma binary_pointwise (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
+    -((a + b) / 2 * Real.log ((a + b) / 2)) ≤
+      -(a * Real.log a + b * Real.log b) / 2 + (a + b) / 2 * Real.log 2 := by
+  have step (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
+      u * (Real.log u - Real.log 2) ≤ u * Real.log ((u + v) / 2) := by
+    rcases hu.eq_or_lt with rfl | hu
+    · simp
+    have hh : 0 < u / 2 := by positivity
+    have he := Real.log_le_log hh (show u / 2 ≤ (u + v) / 2 by linarith)
+    rw [Real.log_div hu.ne' (by norm_num)] at he
+    exact mul_le_mul_of_nonneg_left he hu.le
+  have h1 := step a b ha hb
+  have h2 := step b a hb ha
+  rw [add_comm b a] at h2
+  nlinarith
 
 private lemma binary_entropy_bound (f g : ℝ → ℝ)
     (hf : ∀ x, 0 ≤ f x) (hg : ∀ x, 0 ≤ g x)
@@ -103,7 +189,18 @@ private lemma binary_entropy_bound (f g : ℝ → ℝ)
     (hql : Integrable (fun x => (f x + g x) / 2 * Real.log ((f x + g x) / 2))) :
     densityEntropy (fun x => (f x + g x) / 2) ≤
       (densityEntropy f + densityEntropy g) / 2 + Real.log 2 := by
-  sorry
+  have hqi := (hfi.add hgi).div_const 2
+  have hbase : Integrable (fun x => -(f x * Real.log (f x) + g x * Real.log (g x)) / 2) :=
+    (hfl.add hgl).neg.div_const 2
+  have hmix : Integrable (fun x => (f x + g x) / 2 * Real.log 2) :=
+    hqi.mul_const (Real.log 2)
+  have hmajor := hbase.add hmix
+  have hi := integral_mono hql.neg hmajor (fun x => binary_pointwise (f x) (g x) (hf x) (hg x))
+  dsimp only [Pi.add_apply, Pi.neg_apply] at hi
+  rw [integral_neg, integral_add hbase hmix, integral_div, integral_neg, integral_add hfl hgl,
+    integral_mul_const, integral_div, integral_add hfi hgi, hfm, hgm] at hi
+  dsimp only [densityEntropy]
+  linarith
 
 private lemma mixture_entropy_integrable (d : ℝ) :
     Integrable (fun x => q d x * Real.log (q d x)) := by
@@ -142,7 +239,16 @@ private lemma correction_violation :
     2 * Real.log 2 < 1 / 2 * Real.log
       (((6 : ℝ) ^ 2 + 1 / 2) * (6 ^ 2 + 1 / 2) /
         (((6 : ℝ) ^ 2 + 1 / 2) * (6 ^ 2 + 1 / 2) - (6 ^ 2) ^ 2)) := by
-  sorry
+  have h := Real.log_lt_log (by norm_num : (0 : ℝ) < 16)
+    (by norm_num : (16 : ℝ) < 5329 / 145)
+  have he : Real.log (16 : ℝ) = 4 * Real.log 2 := by
+    rw [show (16 : ℝ) = 2 ^ 4 by norm_num, Real.log_pow]
+    norm_num
+  rw [he] at h
+  norm_num only [show (((6 : ℝ) ^ 2 + 1 / 2) * (6 ^ 2 + 1 / 2) /
+    (((6 : ℝ) ^ 2 + 1 / 2) * (6 ^ 2 + 1 / 2) - (6 ^ 2) ^ 2)) =
+      5329 / 145 by norm_num]
+  linarith
 
 /-- The equal mixture of coherent states with means `(6,6)` and `(-6,-6)` refutes
 the universal covariance-corrected quadrature entropy inequality. -/
