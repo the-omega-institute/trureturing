@@ -42,7 +42,11 @@ private theorem ledger_eq (w : ℕ → ℤ) (n : ℕ) :
     ledger w n = (w n - properGhost (ledger w) n) / (n : ℤ) := by
   unfold ledger
   rw [Nat.strongRecOn_eq]
-  simp only [properGhost, Finset.sum_coe_sort]
+  change (w n - ∑ d : ↥n.properDivisors, (d.1 : ℤ) * ledger w d.1) / (n : ℤ) = _
+  rw [show (∑ d : ↥n.properDivisors, (d.1 : ℤ) * ledger w d.1) =
+    ∑ d ∈ n.properDivisors, (d : ℤ) * ledger w d from
+    Finset.sum_coe_sort n.properDivisors (fun d => (d : ℤ) * ledger w d)]
+  rfl
 
 private theorem divisorGhost_eq (c : ℕ → ℤ) (n : ℕ) (hn : 0 < n) :
     divisorGhost c n = properGhost c n + (n : ℤ) * c n := by
@@ -74,6 +78,7 @@ theorem correction_integral (w : ℕ → ℤ) : IsCorrection w (correction w) :=
     (Nat.mul_pos hm (pow_pos hp.pos _))
   have hright := correction_equation w (m * p ^ k)
     (Nat.mul_pos hm (pow_pos hp.pos _))
+  dsimp only
   rw [hleft, hright]
   exact hg p hp k m hm
 
@@ -130,12 +135,13 @@ def moebiusTransform (w : ℕ → ℤ) (n : ℕ) : ℤ :=
 theorem moebius_identity (w : ℕ → ℤ) (n : ℕ) (hn : 0 < n) :
     (n : ℤ) * ledger w n = moebiusTransform w n -
       ∑ d ∈ n.divisors, ArithmeticFunction.moebius (n / d) * correction w d := by
-  have hsum : ∀ m, 0 < m →
+  have hsum : ∀ (m : ℕ), 0 < m →
       ∑ d ∈ m.divisors, (d : ℤ) * ledger w d = w m - correction w m := by
     intro m hm
     exact (correction_equation w m hm).symm
   have h := (ArithmeticFunction.sum_eq_iff_sum_mul_moebius_eq.mp hsum) n hn
-  rw [Nat.sum_divisorsAntidiagonal' (fun i j => ArithmeticFunction.moebius i *
+  simp only [Int.cast_id] at h
+  rw [Nat.sum_divisorsAntidiagonal' (fun i j => (ArithmeticFunction.moebius i : ℤ) *
     (w j - correction w j))] at h
   simpa only [moebiusTransform, mul_sub, sum_sub_distrib] using h.symm
 

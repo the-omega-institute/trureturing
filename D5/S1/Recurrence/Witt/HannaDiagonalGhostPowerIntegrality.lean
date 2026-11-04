@@ -311,7 +311,7 @@ theorem hasProd_eulerSeries (b : ℕ → ℤ) :
     HasProd (fun i => eulerFactor (i + 1) (b i)) (eulerSeries b) := by
   classical
   have hm : Multipliable (fun i => eulerFactor (i + 1) (b i)) := by
-    have h := PowerSeries.WithPiTopology.multipliable_one_add_of_tendsto_order_atTop_nhds_top
+    have h := PowerSeries.WithPiTopology.multipliable_one_add_of_tendsto_order_atTop_nhds_top ℤ
       (f := fun i => eulerFactor (i + 1) (b i) - 1) (by
         apply ENat.tendsto_nhds_top_iff_natCast_lt.mpr
         intro k
@@ -333,7 +333,7 @@ theorem hasProd_eulerSeries (b : ℕ → ℤ) :
     ext k
     have hlim : Filter.Tendsto (fun N => coeff k (ledgerProduct b N))
         Filter.atTop (nhds (coeff k (∏' i, eulerFactor (i + 1) (b i)))) := by
-      simpa only [ledgerProduct] using
+      simpa only [ledgerProduct, Function.comp_def] using
         ((PowerSeries.WithPiTopology.continuous_coeff ℤ k).tendsto _).comp
           hm.hasProd.tendsto_prod_nat
     have hconst : Filter.Tendsto (fun N => coeff k (ledgerProduct b N))

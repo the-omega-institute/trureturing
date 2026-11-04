@@ -31,7 +31,7 @@ theorem square_budget (n : ℕ) (hn : 0 < n) :
       have hdn := (Nat.mem_properDivisors.mp hd).1
       have hdlt := (Nat.mem_properDivisors.mp hd).2
       refine mem_filter.mpr ⟨Nat.mem_divisors.mpr ⟨Nat.div_dvd_of_dvd hdn, hn.ne'⟩, ?_⟩
-      exact (Nat.lt_div_iff_mul_lt hdn).mpr (by simpa using hdlt)
+      exact Nat.one_lt_div_of_mem_properDivisors hd
     · intro d hd e he h
       exact (Nat.div_eq_iff_eq_of_dvd_dvd hn.ne'
         (Nat.mem_properDivisors.mp hd).1 (Nat.mem_properDivisors.mp he).1).mp h
@@ -84,9 +84,9 @@ theorem power_budget (s n : ℕ) (hs : 2 ≤ s) (hn : 0 < n) :
     rw [he, pow_add]
     exact mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hdQ hdle _) (sq_nonneg _)
   have hp : (n : ℚ) ≤ (n : ℚ) ^ (s - 2) * n := by
-    have := one_le_pow₀ hnQ (s - 2)
+    have := one_le_pow₀ (n := s - 2) hnQ
     nlinarith
-  have hmul := mul_le_mul_of_nonneg_left hb (pow_nonneg (by positivity : (0 : ℚ) ≤ n) _)
+  have hmul := mul_le_mul_of_nonneg_left hb (pow_nonneg (by positivity : (0 : ℚ) ≤ n) (s - 2))
   have he : (n : ℚ) ^ (s - 2) * (n : ℚ) ^ 2 = (n : ℚ) ^ s := by
     rw [← pow_add, Nat.sub_add_cancel hs]
   rw [he] at hmul
