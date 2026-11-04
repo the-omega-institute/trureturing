@@ -3249,3 +3249,269 @@ C127 定理 37.2、推论 38.1 的全菜单协方差族另给一种准确的混�
 | [同源 C127](https://github.com/the-omega-institute/trureturing/blob/a7f2e0ace4222da66269c16b42ce09cabcd03178/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md) §§35–40，尤其定理 36.1、37.2、推论 36.2、38.1、39.1 | 完整背景中的 Z/I 对应及原 D 保持直接复用；全菜单混合曲率反例只区分具名 D 的锁定，不否定既有量子过程实现。它不供应本例所缺的准确四维共同未来载体。 |
 
 ## 追加锚（本行以下为增补区）
+
+## 36. 同源三阶泄漏的统一近零桥
+
+**定义 36.1（同一来源、同一完整仪器和近零预算）。** 设 $H=\mathbb C^d$、$d\ge1$，$M$ 为有限维记忆空间，且在标签选择前固定同一个归一联合态 $\rho\in\mathcal B(H\otimes M)$。沿用
+
+$$
+M_0=\operatorname{supp}\rho_M,\qquad \rho_M=\operatorname{Tr}_H\rho,\qquad
+\rho_M\ge\lambda I_{M_0},\qquad \lambda>0.
+\tag{36.1}
+$$
+
+把 $\rho$ 的输入视为 $H\otimes M_0$，记 $\iota:M_0\hookrightarrow M$ 为包含。标签节点是同一来源产生的 $X_s=p_s\otimes\sigma_s$，其中 $p_s$ 是秩一投影，
+
+$$
+\sigma_s=\operatorname{Tr}_H[(p_s\otimes I_M)\rho],\qquad
+\eta_s=\operatorname{Tr}\sigma_s,\qquad
+\eta_s=0\text{ 时不作归一化。}
+\tag{36.2}
+$$
+
+权 $w_s>0$、$\sum_sw_s=1$ 的节点构成正权复射影三阶设计，故沿用 (28.4) 的一至三阶矩。原装置是同一份完整有限 CP 仪器
+
+$$
+\{V_j:\mathcal B(H\otimes M)\to\mathcal B(H\otimes M)\}_{j\in\mathsf J},\qquad
+\sum_{j\in\mathsf J}V_j^\dagger(I_{H\otimes M})=I_{H\otimes M},
+\tag{36.3}
+$$
+
+其中 $\mathsf J$ 包含所有原成功和失败细标签。给定任意 $\mathsf S\subseteq\mathsf J$，定义真实未条件化泄漏
+
+$$
+\varepsilon_{\mathsf S}=\sum_sw_s\sum_{j\in\mathsf S}\operatorname{Tr}\!\left[((I_H-p_s)\otimes I_M)V_j(X_s)\right].
+\tag{36.4}
+$$
+
+这里的输入只限制在 $H\otimes M_0$，而输出仍在完整 $H\otimes M$；没有复位、独立记忆准备、未知端口或替换原映射。联合来源可为纯态或混态，不要求 $\rho$ 在 $H\otimes M_0$ 上满秩；谱下界只施加于同一来源的记忆边缘。
+
+对每个原标签定义唯一的规范 CP 记忆映射
+
+$$
+\Psi_j(Y)=\operatorname{Tr}_H V_j\!\left((I_H/d)\otimes\iota Y\iota^\dagger\right),\qquad Y\in\mathcal B(M_0),
+\tag{36.5}
+$$
+
+以及 $G_j=\Psi_j^\dagger(I_M)$. 只有在下述 Kraus 展开后才使用其块表示。
+
+### 定理 36.2（近零泄漏给原联合细支的显式统一模量）
+
+在定义 36.1 的前件下，对每个 $j$ 取任一有限 Kraus 表示，限制到来源支撑并按系统基 $\{e_i\}_{i=1}^d$ 写成
+
+$$
+V_j(Z)=\sum_\alpha K_{j\alpha}ZK_{j\alpha}^\dagger,\qquad
+K_{j\alpha}=\sum_{r,i=1}^d|e_r\rangle\langle e_i|\otimes K_{j\alpha,ri},\qquad K_{j\alpha,ri}:M_0\to M.
+\tag{36.6}
+$$
+
+直接展开 (36.5) 给出
+
+$$
+G_j=\frac1d\sum_{\alpha,r,i}K_{j\alpha,ri}^\dagger K_{j\alpha,ri}.
+\tag{36.5a}
+$$
+
+对 (36.3) 取每个输入系统对角块再求和，得到 $\sum_{j\in\mathsf J}G_j=I_{M_0}$，所以 $\sum_{j\in\mathsf S}G_j\le I_{M_0}$；当 $\mathsf S=\mathsf J$ 时规范映射的旗标和必为保迹的完整仪器；对真子集只保证次保迹，其保迹的充要条件是 $\sum_{j\notin\mathsf S}G_j=0$。
+
+置
+
+$$
+B_{j\alpha}=\frac1d\sum_iK_{j\alpha,ii},\qquad
+C_{j\alpha}=K_{j\alpha}-I_H\otimes B_{j\alpha},\qquad
+E_{\mathsf S}=\sum_{j\in\mathsf S,\alpha}\|C_{j\alpha}\|_{\mathrm{HS}}^2.
+\tag{36.7}
+$$
+
+则
+
+$$
+\boxed{\quad
+\varepsilon_{\mathsf S}\ge\frac{\lambda E_{\mathsf S}}{(d+1)(d+2)}.\quad}
+\tag{36.8}
+$$
+
+令 $\Phi_{\mathsf S}$ 为保留原标签的旗标映射
+
+$$
+\Phi_{\mathsf S}(Z)=\bigoplus_{j\in\mathsf S}V_{j,0}(Z),\qquad
+\widehat\Phi_{\mathsf S}(Z)=\bigoplus_{j\in\mathsf S}(\operatorname{id}_H\otimes\Psi_j)(Z),
+\tag{36.9}
+$$
+
+其中 $V_{j,0}$ 是 (28.3) 下的原输入支撑限制。采用不除二的 diamond 范数，统一地有
+
+$$
+\boxed{\quad
+\|\Phi_{\mathsf S}-\widehat\Phi_{\mathsf S}\|_\diamond
+\le\Delta_{\mathsf S}:=\min\!\left\{2,\;2\sqrt{(1+1/d)(d+1)(d+2)\frac{\varepsilon_{\mathsf S}}{\lambda}}\right\}.\quad}
+\tag{36.10}
+$$
+
+因此 $\varepsilon_{\mathsf S}=0$ 时每个被选原细支在整个 $H\otimes M_0$ 上精确等于 $\operatorname{id}_H\otimes\Psi_j$，不是只在标签节点上等于它。若 $\mathsf S$ 是真子集，(36.10) 只比较这个带完整原标签的次保迹旗标；它不认证未选失败动作，也不把次保迹映射补成另一份原完整仪器。
+
+**证明。** 先证明 (36.8)。取 $\rho=\sum_a|v_a\rangle\langle v_a|$ 的有限正分解，并写 $v_a=\sum_i e_i\otimes m_{ai}$，于是 $\rho_M=\sum_{a,i}|m_{ai}\rangle\langle m_{ai}|$，且 $\{m_{ai}\}_{a,i}$ 张成 $M_0$。固定一个 $j,\alpha$，记 $C_{ri}=C_{j\alpha,ri}$。由于 $(I-p)(I\otimes B)(p\otimes I)=0$，对 $p=|z\rangle\langle z|$ 的该 Kraus 泄漏等于
+
+$$
+f_a(z)=\left\|(I-p)\,C_{j\alpha}(z\otimes n_a(z))\right\|^2,\qquad
+n_a(z)=\sum_b\overline z_bm_{ab}.
+\tag{36.11}
+$$
+
+置 $u_{ri b}=C_{ri}m_{ab}$、$y_r(z)=\sum_{i,b}z_i\overline z_bu_{ri b}$。则
+
+$$
+f_a(z)=\sum_r\|y_r(z)\|^2-\left\|\sum_r\overline z_ry_r(z)\right\|^2.
+\tag{36.12}
+$$
+
+这里每个分量是 $z$ 与 $\bar z$ 的次数各至多三的多项式，因此 (28.4) 把有限设计平均精确替换为 Haar 平均。只需使用
+
+$$
+\int z_i\overline z_bz_k\overline z_c\,d\mu
+=\frac{\delta_{ib}\delta_{kc}+\delta_{ic}\delta_{kb}}{d(d+1)},\qquad
+\int z_{i_1}z_{i_2}z_{i_3}\overline z_{b_1}\overline z_{b_2}\overline z_{b_3}\,d\mu
+=\frac{\sum_{\pi\in S_3}\prod_t\delta_{i_t,b_{\pi(t)}}}{d(d+1)(d+2)}.
+\tag{36.13}
+$$
+
+因为 $\sum_iC_{ii}=0$，六个配对项逐项收缩后给出
+
+$$
+\begin{aligned}
+R_a&=\sum_{r,i,b}\|u_{ri b}\|^2,\qquad
+Q_a=\sum_r\left\|\sum_i u_{r i i}\right\|^2,\\
+T_a&=\operatorname{Re}\sum_{r,i,b}\langle u_{ri b},u_{b i r}\rangle,\\
+\int f_a\,d\mu&=\frac{(d+1)(R_a+Q_a)-T_a}{d(d+1)(d+2)}.
+\end{aligned}
+\tag{36.14}
+$$
+
+为使收缩透明，二阶项是 $(R_a+Q_a)/(d(d+1))$；三阶项的六个配对中，含 $\sum_i u_{ii b}$ 的三个项为零，剩下 $Q_a+R_a+T_a$ 除以 $d(d+1)(d+2)$。交换 $r$ 与 $b$ 是等距置换，故 $|T_a|\le R_a$，从而
+
+$$
+\int f_a\,d\mu\ge\frac{dR_a+(d+1)Q_a}{d(d+1)(d+2)}\ge\frac{R_a}{(d+1)(d+2)}.
+\tag{36.15}
+$$
+
+对 $a$ 求和并使用 $\rho_M\ge\lambda I_{M_0}$，有
+
+$$
+\begin{aligned}
+\sum_aR_a
+&=\sum_{r,i}\operatorname{Tr}(C_{ri}\rho_MC_{ri}^\dagger)\\
+&\ge\lambda\sum_{r,i}\operatorname{Tr}(C_{ri}^\dagger C_{ri})
+=\lambda\|C_{j\alpha}\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{36.16}
+$$
+
+对所选 $j,\alpha$ 求和便得到 (36.8)。这一步是同一来源的三阶矩加上记忆边缘谱底的 coercivity；它没有把来源替换为乘积态，也没有把一次输出误差或来源加权范数改称为全联合 diamond 误差。
+
+接着证明 (36.10)。对固定 $j,\alpha$，规范映射 (36.5) 的 Kraus 算子可取
+
+$$
+\frac1{\sqrt d}K_{j\alpha,ri}:M_0\to M,\qquad r,i=1,\ldots,d.
+\tag{36.17}
+$$
+
+这不是另选记忆映射，而是直接展开 (36.5)。在其 Kraus 环境的对角子空间上作一个固定酉旋转，把 $d^{-1/2}\sum_i|ii\rangle$ 取为第一环境向量。第一分量变为 $I_H\otimes B_{j\alpha}$，其余对角分量以及非对角分量都是 $I_H\otimes C_{j\alpha,ri}/\sqrt d$ 的正交线性组合；这里 $\sum_iC_{j\alpha,ii}=0$ 保证第一分量没有残差。把所有 $j,\alpha$ 的第一分量记为共同环境的主分量，原映射的共同 Kraus 算子则把 $K_{j\alpha}=I_H\otimes B_{j\alpha}+C_{j\alpha}$ 放在该主分量，并在残差环境分量置零。于是同一环境中的两个 Stinespring 算子 $A_{\mathsf S}$、$\widetilde A_{\mathsf S}$ 分别实现 $\Phi_{\mathsf S}$、$\widehat\Phi_{\mathsf S}$，且
+
+$$
+\begin{aligned}
+\|A_{\mathsf S}\|_{\mathrm{op}}&\le1,\qquad \|\widetilde A_{\mathsf S}\|_{\mathrm{op}}\le1,\\
+\|A_{\mathsf S}-\widetilde A_{\mathsf S}\|_{\mathrm{op}}^2
+&\le\sum_{j\in\mathsf S,\alpha}\left(\|C_{j\alpha}\|_{\mathrm{op}}^2+\frac1d\sum_{r,i}\|I_H\otimes C_{j\alpha,ri}\|_{\mathrm{op}}^2\right)\\
+&\le (1+1/d)E_{\mathsf S}.
+\end{aligned}
+\tag{36.18}
+$$
+
+第一行使用原仪器的完整性和 (36.17) 的规范效果：实际与规范所选旗标都是次保迹，故其 Stinespring 算子都是压缩。第二行的两组项位于正交环境分量，交叉项消失；最后一步是 $\|\cdot\|_{\mathrm{op}}\le\|\cdot\|_{\mathrm{HS}}$。对任意惰性参考和任意输入矩阵 $X$，Schatten 乘子不等式及偏迹收缩给出
+
+$$
+\|(\Phi_{\mathsf S}-\widehat\Phi_{\mathsf S})\otimes\operatorname{id}(X)\|_1
+\le(\|A_{\mathsf S}\|_{\mathrm{op}}+\|\widetilde A_{\mathsf S}\|_{\mathrm{op}})
+\|A_{\mathsf S}-\widetilde A_{\mathsf S}\|_{\mathrm{op}}\|X\|_1,
+\tag{36.19}
+$$
+
+即未经截断的上界为 $2\sqrt{(1+1/d)E_{\mathsf S}}$。代入 (36.8) 得 (36.10) 的第二项。两个次保迹 CP 映射的 diamond 范数各至多一，故差的 diamond 范数至多二，得到截断。$\square$
+
+### 推论 36.3（全部标签、实际概率和有限合法消费）
+
+若 $\mathsf S=\mathsf J$，则 $\widehat\Phi_{\mathsf J}$ 是保迹完整旗标仪器；若只选中 $\mathsf S$，则它是效果 $\sum_{j\in\mathsf S}G_j\le I_{M_0}$ 的次保迹旗标。对每个节点与原标签，记
+
+$$
+q_{js}=\operatorname{Tr}V_j(X_s),\qquad
+\widehat q_{js}=\operatorname{Tr}\!\left[(\operatorname{id}_H\otimes\Psi_j)(X_s)\right]
+=\operatorname{Tr}\Psi_j(\sigma_s).
+\tag{36.20}
+$$
+
+由 (36.10)，逐支未归一化误差满足
+
+$$
+\left\|V_j(X_s)-(\operatorname{id}_H\otimes\Psi_j)(X_s)\right\|_1\le\eta_s\Delta_{\mathsf S}\qquad(j\in\mathsf S),
+\tag{36.21}
+$$
+
+并且实际标签概率是 $\pi_s q_{js}$；准备成功的实际质量仍是 $\pi_s\eta_s$，数学权 $w_s$ 不替代 $\pi_s$。若 $\eta_s=0$，(36.21) 仍是零式，但不定义准备条件态。若两边的分支质量都严格为正，则可以沿用 (25.23) 的共同事件公式对归一化输出比较；任何分母为零的叶子都不条件化，且实际正分母必须保留。
+
+本推论只在每个有限调用的实际输入落在 $H\otimes M_0$ 的认证域、所消费的原标签包括全部需要的成功与失败动作、且控制器和接续满足既有推论 25.3 的共同类型时，才允许把 (36.10) 作为有限历史的逐槽预算并复用该有限组合结论。它不自动给下一次调用、失败后的未认证动作、站稳性、无限未来或有限样本置信证书；确定性真实映射预算可以作为另行明确给出的前件代入。
+
+### 命题 36.4（谱底与平方根依赖的相关混合反模型）
+
+取 $H=M=\mathbb C^2$，$P_b=|b\rangle\langle b|$，$0<\lambda\le1/2$，并固定同一相关混合来源
+
+$$
+\rho_\lambda=(1-\lambda)|00\rangle\langle00|+\lambda|11\rangle\langle11|,\qquad
+\rho_M=\operatorname{diag}(1-\lambda,\lambda),\qquad M_0=M.
+\tag{36.22}
+$$
+
+其记忆谱底恰为 $\lambda$。原完整仪器只有一个细标签 $j$，由一次性固定的酉
+
+$$
+U=I_H\otimes P_0+e^{\,i\theta Z_H}\otimes P_1,\qquad V_j=\operatorname{Ad}_U
+\tag{36.23}
+$$
+
+给出；没有失败标签可被删去。对任意三阶设计节点 $p=|z\rangle\langle z|$，
+
+$$
+\sigma_p=(1-\lambda)|z_0|^2P_0+\lambda|z_1|^2P_1,\qquad \eta_p=(1-\lambda)|z_0|^2+\lambda|z_1|^2,
+\tag{36.24}
+$$
+
+且唯一标签的泄漏为
+
+$$
+\operatorname{Tr}[((I-p)\otimes I)V_j(X_p)]
+=4\lambda\sin^2\theta\,|z_0|^2|z_1|^4.
+\tag{36.25}
+$$
+
+三阶矩给 $\int|z_0|^2|z_1|^4\,d\mu=1/12$，故
+
+$$
+\boxed{\qquad \varepsilon_{\{j\}}=\lambda\sin^2\theta/3.\qquad}
+\tag{36.26}
+$$
+
+另一方面，在输入 $p_+=|+\rangle\langle+|$ 与记忆 $P_1$ 上，实际输出的系统边缘为 $e^{i\theta Z}p_+e^{-i\theta Z}$。任何完整 $\operatorname{id}_H\otimes\Theta$ 比较映射在该输入上的系统边缘仍为 $p_+$；丢弃记忆的迹范数收缩给
+
+$$
+\left\|e^{i\theta Z}p_+e^{-i\theta Z}-p_+\right\|_1=2|\sin\theta|.
+\tag{36.27}
+$$
+
+因此实际联合输出到每一份完整 $\operatorname{id}_H\otimes\Theta$ 比较输出的未减半距离至少为 $2|\sin\theta|$。这里 $p_+\otimes P_1$ 是认证输入支撑内用于 diamond 下界的数学测试态，不授予从固定来源独立准备该记忆态的实际操作。当 $\theta\to0$ 时 (36.26) 是 $\lambda$ 乘以二次量，而 (36.27) 是一次量；当 $\lambda\downarrow0$ 时泄漏趋于零而该统一障碍不变。这说明正谱底以及平方根模量的尺度不能从来源边缘的非零性中删除。若在一个实际正的选中分支上先把两边都归一化，观测量 $Y_H\otimes I$ 还给出相应的下界 $|\sin2\theta|$；这句话只针对该正分母的归一化分支，不把一个任意次保迹映射冒充为完整比较仪器。
+
+### 定义 36.5（精确极限、重叠和残留边界）
+
+定理 36.2 在 $\varepsilon_{\mathsf S}=0$ 时复得定理 28.3 的来源支撑内精确因子化，并保留全部原标签和完整返回记忆。它新增的是同一三阶合同内的确定性近零桥：指数为 $1/2$，谱底依赖为 $\lambda^{-1/2}$，常数可取 (36.10) 的 $(1+1/d)(d+1)(d+2)$；该常数不宣称最优。 对 $d=1$ 有 $C_{j\alpha}=0$ 恒成立，故规范比较精确；对 $\mathsf S=\varnothing$，$\varepsilon_{\mathsf S}=E_{\mathsf S}=0$ 且两份旗标映射都是零映射。
+
+三阶矩、Kraus 展开及有限维 Stinespring 估计分别沿用 (28.4) 所引 Scott、Roy–Scott、Watrous 的成熟工具，以及 (25.15) 所引 Kretschmann–Schlingemann–Werner 的共同扩充界。新承重关系是 (36.14)–(36.16) 的同源 coercivity 与 (36.17)–(36.19) 对规范偏迹映射的环境对齐；它不是把已知 Choi 连续性或乘积记忆结论改名为全原联合 diamond 保证。满 steering 仍只负责 (29.3) 的效果识别，不能由 (36.10) 推出标量记忆效果；全部原标签都受检验时，规范比较必为保迹的完整原标签旗标；真子集的遗漏效果是否为零仍按定理 36.2 单独判断。
+
+## 追加锚（本行以下为增补区）
