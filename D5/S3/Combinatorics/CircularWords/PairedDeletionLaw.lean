@@ -139,6 +139,43 @@ theorem swap_has_leaf {A : Finset α} (hA : 4 ≤ A.card)
     simp only [List.append_eq, List.append_assoc] at pC pD pW pV pT
     rcases pC with hC | hC <;> rcases pD with hD | hD <;> omega
 
+/-! The same four-source obstruction with the two paired channels exchanged.
+
+This is kept as a separate lemma rather than hidden behind a symmetry tactic:
+the channel outputs are ordered pairs, so exchanging a channel also swaps the
+two coordinates of every output.  Making that transport explicit keeps the
+geometric content of the later short-path argument visible. -/
+theorem swap_has_leaf_swapped {A : Finset α} (hA : 4 ≤ A.card)
+    {a b c : α} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A)
+    (hab : a ≠ b) (hbc : b ≠ c) (hac : a ≠ c)
+    {C D E H : Cycle α}
+    (nC : C.Nodup) (nD : D.Nodup) (nE : E.Nodup) (nH : H.Nodup)
+    (sC : C.toFinset = A) (sD : D.toFinset = A)
+    (sE : E.toFinset = A) (sH : H.toFinset = A)
+    (hCD : paired b c C = paired b c D) (hDC : D ≠ C)
+    (hCE : paired a b C = paired a b E) (hEC : E ≠ C)
+    (hDH : paired a b D = paired a b H) (hHD : H ≠ D) : False := by
+  have hCD' : paired c b C = paired c b D := by
+    apply Prod.ext
+    · change delete c C = delete c D
+      exact congrArg Prod.snd hCD
+    · change delete b C = delete b D
+      exact congrArg Prod.fst hCD
+  have hCE' : paired b a C = paired b a E := by
+    apply Prod.ext
+    · change delete b C = delete b E
+      exact congrArg Prod.snd hCE
+    · change delete a C = delete a E
+      exact congrArg Prod.fst hCE
+  have hDH' : paired b a D = paired b a H := by
+    apply Prod.ext
+    · change delete b D = delete b H
+      exact congrArg Prod.snd hDH
+    · change delete a D = delete a H
+      exact congrArg Prod.fst hDH
+  exact swap_has_leaf hA hc hb ha hbc.symm hab.symm hac.symm
+    nC nD nE nH sC sD sE sH hCD' hDC hCE' hEC hDH' hHD
+
 /-- Every fixed-support cycle occurs among the permutations of A.toList;
 therefore this is the full finite carrier, for arbitrary ambient labels. -/
 theorem fixedCycles_finite (A : Finset α) :
