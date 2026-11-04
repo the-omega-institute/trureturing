@@ -10,7 +10,7 @@ import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
 import Mathlib.Algebra.BigOperators.Group.List.Basic
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Batteries.Tactic.OpenPrivate
-import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPaths
+import D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
 
 /-! The reproduced formula is attributed to Colin Barker, OEIS A286848,
 https://oeis.org/A286848, under CC-BY-SA-4.0,
@@ -28,7 +28,6 @@ open scoped BigOperators
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridTransfer
 open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPartition
-open D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridPaths
 open private rowEval orbit_values from D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridQuotient
 
 /-- Lift a quotient vector to every full state in its literal class. -/
@@ -218,7 +217,7 @@ theorem quotientSeries_identity : quotientSeries = P * Q⁻¹ :=
 /-- The original actual counts equal the certified quotient evaluation at every
 width at least two, with no assumed count relation or recurrence. -/
 theorem actualCount_quotient (k : ℕ) :
-    (BarkerMinimalGridEncoding.actualCount (k + 2) : ℤ) = evaluate (orbit k) := by
+    (BarkerMinimalGridTransfer.actualCount (k + 2) : ℤ) = evaluate (orbit k) := by
   calc
     _ = ∑ s : Fin 64, fullOrbit k ⟨s.val, by omega⟩ := actualCount_fullOrbit k
     _ = ∑ s : Fin 64, orbit k (classOf ⟨s.val, by omega⟩) := by
@@ -229,7 +228,7 @@ theorem actualCount_quotient (k : ℕ) :
 /-- The requested series has the actual subset count at each positive width and
 constant coefficient zero; no empty-grid count is redefined. -/
 noncomputable def actualSeries : PowerSeries ℚ := PowerSeries.mk fun n =>
-  if n = 0 then 0 else (BarkerMinimalGridEncoding.actualCount n : ℚ)
+  if n = 0 then 0 else (BarkerMinimalGridTransfer.actualCount n : ℚ)
 
 private theorem actualSeries_eq_quotientSeries : actualSeries = quotientSeries := by
   apply PowerSeries.ext

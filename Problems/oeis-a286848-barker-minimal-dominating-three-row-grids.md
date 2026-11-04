@@ -43,11 +43,11 @@ No analytic convergence hypothesis is involved.
 
 | Original clause | Lean counterpart |
 | --- | --- |
-| Actual row and column labels with open ends | `Encoding.Vertex n = Fin 3 × Fin n` and `Encoding.grid n`; labels are shifted by one |
+| Actual row and column labels with open ends | `Transfer.Vertex n = Fin 3 × Fin n` and `Transfer.grid n`; labels are shifted by one |
 | Closed domination, including self | Existing `SimpleGraph.IsDominating` |
-| No proper dominating subset | `Encoding.MinimalDominating` quantifies over every proper finite subset |
+| No proper dominating subset | `Transfer.MinimalDominating` quantifies over every proper finite subset |
 | Each actual subset exactly once | `minimalSets`, `actualCount`, `subsetWordEquiv` and `minimalWordEquiv` |
-| Every positive width | `Transfer.actualCount_one` and `Paths.actualCount_fullOrbit` at every `k`, covering widths `k+2` |
+| Every positive width | `Transfer.actualCount_one` and `Transfer.actualCount_fullOrbit` at every `k`, covering widths `k+2` |
 | Constant series coefficient zero | `Series.actualSeries`; the raw width-zero `actualCount` definition is unchanged |
 | Every numerator and denominator coefficient | Literal `Series.numerator` and `Quotient.denominator`, with `Series.P` and `Series.Q` |
 | Complete identity in rational formal series | Unconditional `Series.whole_identity : actualSeries = P * Q⁻¹` |
@@ -71,17 +71,17 @@ The bridges are actual subsets to accepted mask words, mask words to an exact
 full-state count with both open ends, the complete full-state count to a weighted
 quotient orbit, and that orbit to every coefficient of the literal rational
 expression. Finite agreement, rationality alone and an eventual recurrence omit
-parts of this question. The six Lean modules establish these bridges without
+parts of this question. The four Lean modules establish these bridges without
 assuming any count identity.
 
 ## Route
 
-`Encoding.minimal_iff_closed_private` retains domination and an existential
+`Transfer.minimal_iff_closed_private` retains domination and an existential
 closed private witness for every selected vertex. Its column criterion uses
 five columns: a witness is at horizontal distance at most one from its selected
 vertex, and any selected competitor at distance at most two. `Transfer` proves
 the equivalence with numeric masks and distinguishes a real empty column from
-an absent column. `Paths` sums all appended mask words once and checks both final
+an absent column. The same `Transfer` source sums all appended mask words once and checks both final
 real centres, including the shortest two-column boundary case. Width one is
 proved separately to have count two.
 
@@ -113,8 +113,7 @@ stated graph and predicate.
 ## Evidence
 
 The formal sources are
-`BarkerMinimalGridEncoding`, `BarkerMinimalGridTransfer`,
-`BarkerMinimalGridQuotient`, `BarkerMinimalGridPaths`,
+`BarkerMinimalGridTransfer`, `BarkerMinimalGridQuotient`,
 `BarkerMinimalGridPartition` and `BarkerMinimalGridSeries`, under
 `D5/S3/Combinatorics/Graph/Domination/`, with their Blueprint Scribes.
 The axiom closure of every public declaration is contained in
@@ -123,7 +122,7 @@ The settling statement has no hypotheses. The actual subset family is defined
 independently of the published polynomial data. The finite certificates are
 Lean proofs; no experiment or external program output is a proof premise.
 
-All $31$ public theorem escape audits remain **unfinished** under the exact
+The $31$ authored public theorem escape audits remain **unfinished** under the exact
 [target disclosure](https://github.com/the-omega-institute/trureturing/issues/22395#issuecomment-6421674861).
 No Reg mirror or `declared_validated` claim is supplied. Missing evidence includes
 lawful source-bound enrolled-template readout/application, realization,
@@ -136,9 +135,9 @@ statement check.
 
 | Mechanism or boundary | Status and evidence | Consequence |
 | --- | --- | --- |
-| Actual-subset fidelity | Proved: `Encoding.validWord_iff`, `minimal_iff_column_tests`; `Transfer.local_paddedWindow_iff` | Every labelled subset is tested for the original closed-domination and all-proper-subset minimality predicate; existential witnesses add no multiplicity |
-| Local private window and open ends | Proved: `Encoding.minimal_iff_column_tests`, `Paths.runWeight_iff_tests`, `accepted_cons_iff` | Five-column information suffices for the stated graph; absent padding and both terminal real centres remain explicit |
-| Every positive width | Proved: `Transfer.actualCount_one`, `Paths.actualCount_fullOrbit` | Width one has count two; widths `k+2` are covered for every natural `k` |
+| Actual-subset fidelity | Proved: `Transfer.validWord_iff`, `minimal_iff_column_tests`; `Transfer.local_paddedWindow_iff` | Every labelled subset is tested for the original closed-domination and all-proper-subset minimality predicate; existential witnesses add no multiplicity |
+| Local private window and open ends | Proved: `Transfer.minimal_iff_column_tests`, `Transfer.runWeight_iff_tests`, `accepted_cons_iff` | Five-column information suffices for the stated graph; absent padding and both terminal real centres remain explicit |
+| Every positive width | Proved: `Transfer.actualCount_one`, `Transfer.actualCount_fullOrbit` | Width one has count two; widths `k+2` are covered for every natural `k` |
 | All-state equitable quotient | Proved: `Partition.row_certificate`, `terminal_certificate`, `initial_certificate`; `Series.intertwines`, `lift_orbit`, `initial_sum` | All $4672$ states and their transition and start multiplicities reduce to $59$ weighted classes while retaining actual labelled counts |
 | Terminal-vector and coefficient mechanism | Proved: `Quotient.finite_annihilator`, `shifted_annihilator`; `Series.initial_convolutions`, `all_later_convolutions` | Exact initial degrees $0$–$49$ and every later degree are covered; no claim that the polynomial annihilates the full matrix is needed |
 | Complete original expression | Proved: `Series.quotientSeries_mul_Q`, `quotientSeries_identity`, `actualCount_quotient`, `whole_identity` | The entire literal rational formal series equals the independently defined actual-subset series |
@@ -150,6 +149,6 @@ statement check.
 The mathematical endpoint has no unproved count assumption or additional axiom.
 Equivalence between the published prose and the formal definitions remains a
 source-fidelity review responsibility. The bounded literature checks do not
-certify absence of every external solution. The $31$ escape audits remain
+certify absence of every external solution. The $31$ authored public theorem escape audits remain
 unfinished as disclosed above; their completion is not implied by successful
 Lean or CI checks.
