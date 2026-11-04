@@ -15,6 +15,8 @@ import Mathlib.Order.CompleteLattice.Finset
 import Mathlib.NumberTheory.Niven
 import Mathlib.NumberTheory.Real.GoldenRatio
 import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+import D5.S3.Arith.Lattices.GoldenIntegerRing
+import Mathlib.RingTheory.Norm.Transitivity
 
 /-! Native protocol composition on the full sixteen-bit carrier. -/
 
@@ -383,7 +385,7 @@ private theorem t_integral : IsIntegral ℤ t := by
     nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)]
   have ht : IsIntegral ℤ (phi⁻¹ : ℝ) :=
     hcos ▸ Real.isIntegral_two_mul_cos_rat_mul_pi (2 / 5)
-  exact ht.map (Complex.ofRealHom : ℝ →+* ℂ)
+  exact (isIntegral_algebraMap_iff (B := ℂ)).mpr ht
 
 private theorem beta_integral : IsIntegral ℤ beta := by
   apply IsIntegral.of_pow (n := 2) (by norm_num)
@@ -395,6 +397,7 @@ private theorem beta_integral : IsIntegral ℤ beta := by
   exact t_integral
 
 private theorem zeta_integral : IsIntegral ℤ zeta := by
+  unfold zeta
   convert Complex.isIntegral_exp_rat_mul_pi_mul_I (3 / 5) using 1 <;>
     push_cast <;> congr 1 <;> ring
 
@@ -419,6 +422,7 @@ private theorem gate_integral (j : Address) (b c : Basis) :
       ((beta_integral.pow 3).mul (hx b c))
   have hmul (A B : Mat) (hA : ∀ b c, IsIntegral ℤ (A b c))
       (hB : ∀ b c, IsIntegral ℤ (B b c)) (b c : Basis) : IsIntegral ℤ ((A * B) b c) := by
+    rw [Matrix.mul_apply]
     exact IsIntegral.sum _ (fun k _ => (hA b k).mul (hB k c))
   have hp : IsIntegral ℤ (goldenP j b c) := by
     apply IsIntegral.add
@@ -454,24 +458,27 @@ private theorem projector_integral {n : ℕ} (select : Basis → Fin n) (o : Fin
 private theorem operator_integral {L : Type} (T : Tree L) (p : Path T) (b c : Basis) :
     IsIntegral ℤ (operator T p b c) := by
   classical
-  induction T with
+  induction T generalizing b c with
   | leaf l =>
     simp only [operator, Matrix.one_apply]
     split_ifs <;> first | exact isIntegral_one | exact isIntegral_zero
   | call j d U ih =>
+    simp only [operator, Matrix.mul_apply]
     exact IsIntegral.sum _ (fun k _ => (ih p b k).mul (call_integral j d k c))
   | measure n select U ih =>
+    simp only [operator, Matrix.mul_apply]
     exact IsIntegral.sum _ (fun k _ =>
       (ih p.1 p.2 b k).mul (projector_integral select p.1 k c))
 
 /-- Every raw finite event of the original full-menu tree is an algebraic
 integer. The statement includes all terminal records, with arbitrary feedback,
 inverse calls expanded to nine forward calls and the original fixed root. -/
-theorem original_event_integral {L : Type} (T : Tree L)
+private theorem original_event_integral {L : Type} (T : Tree L)
     (event : Path T → Basis → Bool) : IsIntegral ℤ (eventMass T event) := by
   classical
   have hv (p : Path T) (z : Basis) :
       IsIntegral ℤ ((operator T p).mulVec omega0 z) := by
+    simp only [Matrix.mulVec, dotProduct]
     exact IsIntegral.sum _ (fun b _ => (operator_integral T p z b).mul
       (by simp only [omega0]; split_ifs <;>
         first | exact isIntegral_one | exact isIntegral_zero))
@@ -479,7 +486,7 @@ theorem original_event_integral {L : Type} (T : Tree L)
     apply (isIntegral_algebraMap_iff (B := ℂ)).mp
     change IsIntegral ℤ ((Complex.normSq ((operator T p).mulVec omega0 z) : ℝ) : ℂ)
     rw [Complex.normSq_eq_conj_mul_self]
-    exact ((hv p z).map (starRingEnd ℂ)).mul (hv p z)
+    exact ((hv p z).map (Complex.conjAe : ℂ →ₐ[ℝ] ℂ)).mul (hv p z)
   unfold eventMass
   apply IsIntegral.sum
   intro p _
@@ -489,7 +496,54 @@ theorem original_event_integral {L : Type} (T : Tree L)
   · exact hm p z
   · exact isIntegral_zero
 
-#print axioms original_event_integral
+/-- The two scalar masses occurring in the original reference comparison. -/
+def emptyTarget : ℝ := (13 - 5 * Real.sqrt 5) / 22
+def referenceTarget : ℝ := (9 * Real.sqrt 5 - 19) / 22
+
+private abbrev GoldenField :=
+  D5.S3.Arith.Lattices.GoldenIntegerRing.GoldenNumberField
+
+private def goldenEmbedding : GoldenField →ₐ[ℚ] ℝ :=
+  QuadraticAlgebra.lift ⟨Real.goldenRatio, by
+    simpa only [Rat.smul_def, Rat.cast_one, one_mul, smul_eq_mul, mul_one,
+      ← pow_two] using Real.goldenRatio_sq⟩
+
+private theorem target_nonintegral :
+    ¬ IsIntegral ℤ emptyTarget ∧ ¬ IsIntegral ℤ referenceTarget := by
+  have norm_obstruction (a : GoldenField) (n : ℚ)
+      (hn : Algebra.norm ℚ a = n) (hni : ¬ IsIntegral ℤ n) :
+      ¬ IsIntegral ℤ (goldenEmbedding a) := by
+    intro h
+    have ha : IsIntegral ℤ a :=
+      (isIntegral_algHom_iff goldenEmbedding goldenEmbedding.injective).mp h
+    exact hni (hn ▸ Algebra.isIntegral_norm ℚ ha)
+  have he : goldenEmbedding (⟨9/11,-5/11⟩ : GoldenField) = emptyTarget := by
+    simp [goldenEmbedding, QuadraticAlgebra.lift, emptyTarget, Real.goldenRatio]
+    ring
+  have hr : goldenEmbedding (⟨-14/11,9/11⟩ : GoldenField) = referenceTarget := by
+    simp [goldenEmbedding, QuadraticAlgebra.lift, referenceTarget, Real.goldenRatio]
+    ring
+  constructor
+  · rw [← he]
+    apply norm_obstruction _ (1/11)
+    · norm_num [Algebra.norm_apply, QuadraticAlgebra.norm]
+    · norm_num [Rat.isIntegral_iff]
+  · rw [← hr]
+    apply norm_obstruction _ (-1/11)
+    · norm_num [Algebra.norm_apply, QuadraticAlgebra.norm]
+    · norm_num [Rat.isIntegral_iff]
+
+/-- Raw events in any original native tree are algebraic integers and hence
+cannot equal either of the two nonintegral reference-comparison masses. -/
+theorem original_event_arithmetic {L : Type} (T : Tree L)
+    (event : Path T → Basis → Bool) :
+    IsIntegral ℤ (eventMass T event) ∧ eventMass T event ≠ emptyTarget ∧
+      eventMass T event ≠ referenceTarget := by
+  have h := original_event_integral T event
+  exact ⟨h, fun he => target_nonintegral.1 (he ▸ h),
+    fun he => target_nonintegral.2 (he ▸ h)⟩
+
+#print axioms original_event_arithmetic
 
 #print axioms original_native_projection
 end D5.S3.Quantum.Dynamics.NativeProtocolGraft
