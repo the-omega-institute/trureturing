@@ -6,9 +6,10 @@
    utility: none
    digest: Barker's coordination sequence formula for the tea uniform tiling. -/
 
+import D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
 import D5.S3.VertexAlgebra.LatticeHalfFockVirasoroSpectrum
-import Mathlib.Algebra.BigOperators.Group.Finset.Interval
+import Mathlib.Algebra.Order.Floor.BigOperators
 
 /-! The exact graph metric and coordination sequence of the tea slab graph. -/
 
@@ -579,7 +580,9 @@ private lemma paired_slabs (m : ℕ) :
   · dsimp only [plusSlabs, minusSlabs]
     simp only [ite_eq_left (Nat.cast_nonneg m),
       ite_eq_right (not_le.mpr (Int.neg_neg_of_pos (Int.natCast_pos.mpr (Nat.pos_of_ne_zero hm))))]
-    omega
+    have hsum := Int.sum_range_add_ediv (m : ℤ) (n := 4) (by decide)
+    norm_num [Finset.sum_range_succ] at hsum
+    simpa only [neg_neg, add_comm, add_left_comm, add_assoc] using hsum
 
 private lemma weighted_layer_sum (n : ℕ) (hn : 0 < n) :
     8 * ((∑ k ∈ Finset.Icc (-(n : ℤ)) n,
@@ -601,14 +604,11 @@ private lemma weighted_layer_sum (n : ℕ) (hn : 0 < n) :
   have hs : ∀ m : ℕ, (∑ k ∈ Finset.Icc (-(m : ℤ)) m, f k) + f 0 =
       ∑ r ∈ Finset.range (m + 1), (f (r : ℤ) + f (-(r : ℤ))) := by
     intro m
-    induction m with
-    | zero => simp only [Nat.cast_zero, neg_zero, Finset.Icc_self,
-        Finset.sum_singleton, Nat.zero_add, Finset.sum_range_one]
-    | succ m ih =>
-      simp only [Nat.cast_add, Nat.cast_one]
-      rw [Finset.sum_Icc_succ_eq_add_endpoints f, Finset.sum_range_succ, ← ih]
-      simp only [Nat.cast_add, Nat.cast_one]
-      ring
+    rw [D5.S1.Recurrence.Bilateral.HannaThetaFourModFour.symmetric_pair,
+      Finset.sum_range_succ']
+    simp only [Nat.cast_add, Nat.cast_one, neg_add, sub_eq_add_neg,
+      Nat.cast_zero, neg_zero]
+    ac_rfl
   have hsmall : ∀ m ∈ Finset.range n, f (m : ℤ) + f (-(m : ℤ)) =
       12 * (n : ℤ) - 9 * m := by
     intro m hm
