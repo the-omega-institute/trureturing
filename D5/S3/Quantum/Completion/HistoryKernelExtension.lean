@@ -4,9 +4,11 @@
    mirror-E: none(waiver:universal-positive-extension)
    anchors: []
    utility: none
-   digest: The fixed history-kernel extension law implies positivity on every finite ordered list. -/
+   digest: Kernel extension implies positivity on every finite list. -/
 
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Matrix.Positivity
+
+/-! Fixed-entry finite history tables and their universal extension law. -/
 
 noncomputable section
 
@@ -26,7 +28,7 @@ def finiteGram {X I : Type*} (K : X → X → ℂ) (L : I → X) : Matrix I I �
 def residualExtension {I : Type*} [Fintype I] (G : Matrix I I ℂ)
     (c : Matrix I Unit ℂ) (r : ℂ) : Matrix (I ⊕ Unit) (I ⊕ Unit) ℂ :=
   Matrix.fromBlocks G (G * c) (cᴴ * G)
-    (cᴴ * G * c + fun _ _ => star r * r)
+    (cᴴ * G * c + Matrix.of (fun _ _ : Unit => star r * r))
 
 /-- C129's universal law; there is no positivity or Hermitian premise. -/
 def KernelExtensionLaw {X : Type*} (K : X → X → ℂ) : Prop :=
@@ -35,35 +37,29 @@ def KernelExtensionLaw {X : Type*} (K : X → X → ℂ) : Prop :=
       finiteGram K (Sum.elim L (fun _ : Unit => h)) =
         residualExtension (finiteGram K L) c r
 
-private def oldFactor {I : Type*} (A : Matrix I I ℂ) : Matrix (I ⊕ Unit) I ℂ :=
-  Sum.elim A (fun _ _ => 0)
-
-private def residualFactor {I : Type*} (r : ℂ) : Matrix (I ⊕ Unit) Unit ℂ :=
-  Sum.elim (fun _ _ => 0) (fun _ _ => r)
-
-private theorem residualExtension_posSemidef {I : Type*} [Fintype I] [DecidableEq I]
+private theorem residualExtension_posSemidef {I : Type*} [Fintype I]
     (G : Matrix I I ℂ) (c : Matrix I Unit ℂ) (r : ℂ) (hG : G.PosSemidef) :
     (residualExtension G c r).PosSemidef := by
-  obtain ⟨A, hA⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hG.nonneg
-  have hA' : G = Aᴴ * A := by
-    simpa only [Matrix.star_eq_conjTranspose] using hA
-  have hGram := Matrix.fromBlocks_gram_posSemidef
-    (X := residualFactor (I := I) r) (Y := oldFactor A)
-  have hDiag : Matrix.fromBlocks G (0 : Matrix I Unit ℂ) 0
-      (fun _ _ : Unit => star r * r) =
-      Matrix.fromBlocks
-        ((oldFactor A)ᴴ * oldFactor A)
-        ((oldFactor A)ᴴ * residualFactor r)
-        ((residualFactor (I := I) r)ᴴ * oldFactor A)
-        ((residualFactor (I := I) r)ᴴ * residualFactor r) := by
+  classical
+  let D : Matrix Unit Unit ℂ := Matrix.of (fun _ _ => star r * r)
+  have hD : D.PosSemidef := by
+    convert Matrix.posSemidef_conjTranspose_mul_self
+      (Matrix.of (fun _ _ : Unit => r)) using 1
     ext i j
-    cases i <;> cases j <;>
-      simp [oldFactor, residualFactor, Matrix.fromBlocks, Matrix.mul_apply, hA']
-  rw [← hDiag] at hGram
-  have hp := hGram.conjTranspose_mul_mul_same
+    simp [D, Matrix.mul_apply, Matrix.conjTranspose_apply]
+  have hd : (Matrix.fromBlocks G (0 : Matrix I Unit ℂ) 0 D).PosSemidef := by
+    refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+      (hG.isHermitian.fromBlocks (by simp) hD.isHermitian) ?_
+    intro x
+    have hp := add_nonneg (hG.dotProduct_mulVec_nonneg (x ∘ Sum.inl))
+      (hD.dotProduct_mulVec_nonneg (x ∘ Sum.inr))
+    convert hp using 1
+    simp [Matrix.fromBlocks_mulVec, dotProduct, Fintype.sum_sum_type,
+      Function.comp_def]
+  have hp := hd.conjTranspose_mul_mul_same
     (Matrix.fromBlocks (1 : Matrix I I ℂ) c 0 (1 : Matrix Unit Unit ℂ))
   simpa [residualExtension, Matrix.fromBlocks_conjTranspose,
-    Matrix.fromBlocks_multiply, Matrix.mul_assoc] using hp
+    Matrix.fromBlocks_multiply, Matrix.mul_assoc, D] using hp
 
 /-- The universal same-entry law yields every finite table, without assuming
     Hermitian symmetry, a vector carrier, distinct labels, or nonzero residuals. -/
@@ -88,5 +84,26 @@ theorem extensionLaw_finiteGram_posSemidef {X : Type*} (K : X → X → ℂ)
       ext i j
       refine Fin.cases ?_ (fun i => ?_) i <;>
         refine Fin.cases ?_ (fun j => ?_) j <;> rfl
+
+/-- Finite positivity supplies the positive quadratic form on the free
+    finitely supported formal span, the input needed for C129 Theorem 2.4. -/
+theorem extensionLaw_kernel_posSemidef {X : Type*} (K : X → X → ℂ)
+    (hK : KernelExtensionLaw K) : (Matrix.of K).PosSemidef := by
+  classical
+  have hfin := extensionLaw_finiteGram_posSemidef K hK
+  refine ⟨?_, ?_⟩
+  · ext x y
+    have hh := (hfin 2 ![x, y]).isHermitian
+    exact hh.apply 0 1
+  · intro f
+    let e := (Fintype.equivFin f.support).symm
+    have hp := hfin (Fintype.card f.support) (fun i => (e i).val)
+    have hs := hp.submatrix (fun i : f.support => e.symm i)
+    have hs' : (Matrix.of (fun i j : f.support => K i.val j.val)).PosSemidef := by
+      simpa [finiteGram, Matrix.submatrix] using hs
+    have hq := hs'.dotProduct_mulVec_nonneg (fun i => f i.val)
+    simp only [dotProduct, Matrix.mulVec, Finset.mul_sum, Matrix.of_apply] at hq
+    simpa only [Finsupp.sum, Pi.star_apply, mul_assoc, Matrix.of_apply,
+      Finset.sum_coe_sort] using hq
 
 end D5.S3.Quantum.Completion.HistoryKernelExtension
