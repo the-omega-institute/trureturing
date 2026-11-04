@@ -1,0 +1,43 @@
+### 命题 13.1（一个显式内部纯态实现）
+
+对任意满足 [(1)](#eq-effect) 的有限分支，定义等距映射
+
+$$
+J_T\psi=\sum_\mu K_\mu\psi\otimes\lvert {\rm s},\mu\rangle
++\sqrt{I-E}\,\psi\otimes\lvert \rm f\rangle,
+$$
+
+其中所有记录相互正交。另为半深效果读数选择一个有限实现
+
+$$
+J_h\psi=E^{1/4}\psi\otimes\lvert {\rm h},{\rm s}\rangle
++\sqrt{I-\sqrt E}\,\psi\otimes\lvert {\rm h},{\rm f}\rangle.
+$$
+
+这只用于整体实现的存在例，任何成功效果为 $\sqrt E$ 的等距记录实现均可替代它；主定理不以它的更新方式为前提。增加内部试验类型记录 $B$，则
+
+$$
+\boxed{
+\lvert \Omega_{\rm cal}\rangle=\sum_s\sqrt{\frac{w_s}{2}}\lvert s\rangle_C\otimes
+\bigl(\lvert 0\rangle_B J_T\lvert \psi_s\rangle+\lvert 1\rangle_B J_h\lvert \psi_s\rangle\bigr)
+}
+\tag{25}
+$$
+
+为一个固定的整体纯态。读取校准记录 $s$ 和试验类型：类型零再读成功及原方向，类型一读半深成功，即可恢复 C113 的两类读数。
+
+**证明。**
+$J_T^*J_T=\sum K_\mu^*K_\mu+I-E=I$，同样 $J_h^*J_h=I$。两种试验类型与校准标签正交，且 $\sum w_s=1$，所以整体归一。相应联合概率分别为 $w_sr_E(p_s)/2$ 与 $w_sa_E(p_s)/2$。数值平方和加权平均即可形成 C113。
+
+若 C113 成立，成功部分化为
+
+$$
+\sqrt E\psi\otimes\sum_\mu c_\mu\lvert {\rm s},\mu\rangle.
+$$
+
+在所选成功分支内，没有再留下随输入方向变化的额外未读环境记录。保留的记录仍可包含成功／失败、校准标签与后续历史。
+
+这个有限模型证明“装置、校准、概率、后态和记录属于同一整体”在数学上相容。它不唯一决定所有可能的整体纯态，也不将一个 CP 映射的唯一性扩大到全部受控实现相位的唯一性。
+
+<a id="section-14"></a>
+

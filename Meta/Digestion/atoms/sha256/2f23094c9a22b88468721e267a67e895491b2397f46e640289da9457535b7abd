@@ -1,0 +1,38 @@
+### 命题 6.2（平方根误差阶与维数不能任意去除）
+
+对 qubit，取 $E=I$、$T=\operatorname{Ad}_{e^{-itZ/2}}$，$|t|\le\pi$。则
+
+$$
+\delta=\frac23\sin^2(t/2),\qquad
+\|T-\operatorname{id}\|_\diamond=2|\sin(t/2)|=\sqrt{6\delta}.
+$$
+
+因此一般不能把误差阶改成 $o(\sqrt\delta)$。另一方面，对 $d\ge2$，取
+$U_d=\operatorname{diag}(-1,1,\ldots,1)$，有
+
+$$
+\|\operatorname{Ad}_{U_d}-\operatorname{id}\|_\diamond=2,
+\qquad\delta_d=\frac{4(d-1)}{d(d+1)}\longrightarrow0.
+$$
+
+维数增长时的小平均缺陷不能单独控制最坏过程误差。
+
+**证明。**
+平均公式由 [(5)](#eq-mean-r) 直接计算。酉通道与恒等的 diamond 距离等于单位圆数值域距原点所给的 $2\sqrt{1-\nu^2}$：可将任意带参考纯输入的重叠写成 $\operatorname{Tr}(\rho U)$，极小化即得。qubit 两本征相位相差 $t$ 时 $\nu=|\cos(t/2)|$；$U_d$ 的两个相反相位可由等权叠加完全区分。
+
+单次成功概率 $p=\operatorname{Tr}(\rho E)>0$ 在两种分支中相同，因此
+
+$$
+\left\|\frac{T(\rho)}p-\frac{\mathcal L_E(\rho)}p\right\|_1
+\le\min\left\{2,\frac{\|T-\mathcal L_E\|_\diamond}{p}\right\}.
+\tag{14}
+$$
+
+不能省去这里的 $p$。例如 $E_\epsilon=\operatorname{diag}(1,\epsilon^2)$、$T=\operatorname{Ad}_Z\mathcal L_E$，则平均缺陷 $2\epsilon/3\to0$，但输入
+
+$$
+\psi_\epsilon=\frac{\epsilon\lvert 0\rangle+\lvert 1\rangle}{\sqrt{1+\epsilon^2}}
+$$
+
+以概率 $2\epsilon^2/(1+\epsilon^2)$ 成功，两个成功后态分别为 $\lvert -\rangle$ 与 $\lvert +\rangle$，迹范数距离为二。
+
