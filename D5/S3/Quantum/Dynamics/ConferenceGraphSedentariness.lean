@@ -256,12 +256,10 @@ private lemma three_projector_exp {V : Type} [Fintype V] [DecidableEq V]
     NormedSpace.exp (a • P + b • E + c • F) =
       Complex.exp a • P + Complex.exp b • E + Complex.exp c • F := by
   have hcomm : Commute (a • P) (b • E) := by
-    change (a • P) * (b • E) = (b • E) * (a • P)
-    simp only [Matrix.smul_mul, Matrix.mul_smul, hPE, hEP, smul_zero]
+    exact ((show Commute P E from hPE.trans hEP.symm).smul_left a).smul_right b
   have hcomm' : Commute (a • P + b • E) (c • F) := by
-    change (a • P + b • E) * (c • F) = (c • F) * (a • P + b • E)
-    simp only [add_mul, mul_add, Matrix.smul_mul, Matrix.mul_smul, hPF, hFP, hEF, hFE,
-      smul_zero, add_zero]
+    exact (((show Commute P F from hPF.trans hFP.symm).smul_left a).smul_right c).add_left
+      (((show Commute E F from hEF.trans hFE.symm).smul_left b).smul_right c)
   rw [Matrix.exp_add_of_commute _ _ hcomm', Matrix.exp_add_of_commute _ _ hcomm]
   rw [D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation.expIdempotent P hPP,
     D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation.expIdempotent E hEE,
