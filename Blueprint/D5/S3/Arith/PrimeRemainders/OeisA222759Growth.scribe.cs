@@ -41,13 +41,17 @@ internal sealed class OeisA222759GrowthDocument : IScribeDocumentDefinition
                 + "binomial identity. It asserts the first growth clause for every k,n "
                 + "in its stated domain, without assuming that the full set of primes "
                 + "satisfying the predicate is finite.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("noe-2013-a222759-prime-cube-growth"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula PrimeFormula() => Disp(All("j", Naturals(),
         Eq(Call("P", F.Id("j")), Call("nth", F.Id("Prime"),
