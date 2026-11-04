@@ -35,17 +35,22 @@ def limitMap : C((TopCat.limitCone F).pt, (TopCat.limitCone G).pt) where
   continuous_toFun := (continuous_pi fun j =>
     (t.app j).hom.continuous.comp ((continuous_apply j).comp continuous_subtype_val)).subtype_mk _
 
+/-- The actual continuous restriction of a bonding map to one thread fibre. -/
+def fiberMap (b : (TopCat.limitCone G).pt) {i j : J} (f : i ⟶ j) :
+    C({x : F.obj i // t.app i x = b.val i}, {x : F.obj j // t.app j x = b.val j}) where
+  toFun x := ⟨F.map f x.val, by
+    exact (ConcreteCategory.congr_hom (t.naturality f) x.val).trans
+      ((congrArg (fun y => G.map f y) x.property).trans (b.property f))⟩
+  continuous_toFun := by
+    apply Continuous.subtype_mk
+    exact (F.map f).hom.continuous.comp continuous_subtype_val
+
 /-- Fibres are actual closed subspaces, with their actual restricted maps. -/
 def fiberDiagram (b : (TopCat.limitCone G).pt) : J ⥤ TopCat.{max u v} where
   obj j := TopCat.of {x : F.obj j // t.app j x = b.val j}
-  map {i j} f := TopCat.ofHom {
-    toFun := fun x => ⟨F.map f x.val, by
-      have h := ConcreteCategory.congr_hom (t.naturality f) x.val
-      change t.app j (F.map f x.val) = G.map f (t.app i x.val) at h
-      rw [h,x.property,b.property f]⟩
-    continuous_toFun := ((F.map f).hom.continuous.comp continuous_subtype_val).subtype_mk _ }
-  map_id j := by ext x; apply Subtype.ext; exact ConcreteCategory.congr_hom (F.map_id j) x.val
-  map_comp f g := by ext x; apply Subtype.ext; exact ConcreteCategory.congr_hom (F.map_comp f g) x.val
+  map f := TopCat.ofHom (fiberMap F G t b f)
+  map_id j := by ext x; exact ConcreteCategory.congr_hom (F.map_id j) x.val
+  map_comp f g := by ext x; exact ConcreteCategory.congr_hom (F.map_comp f g) x.val
 
 /-- Proper-stage membership in every actual natural range forces membership
 in the actual final range. Fibre maps need not be onto. The index may have

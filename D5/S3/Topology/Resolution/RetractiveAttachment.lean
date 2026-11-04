@@ -6,7 +6,7 @@
    utility: none
    digest: Literal arbitrary-set continuous retractive attachments and their convergence. -/
 
-import Mathlib.Topology.Separation.Profinite
+import Mathlib.Topology.Separation.Regular
 import Mathlib.Topology.Sequences
 import Mathlib.Tactic
 
@@ -69,11 +69,11 @@ instance topology (t : ∀ i, P i → B) : TopologicalSpace (Space t) where
 
 variable (t : ∀ i, P i → B)
 
- theorem is_open_iff (s : Set (Space t)) : IsOpen s ↔
+theorem is_open_iff (s : Set (Space t)) : IsOpen s ↔
     (∀ i, IsOpen (component t i ⁻¹' s)) ∧
     ∀ b, core t b ∈ s → ∃ U, IsOpen U ∧ b ∈ U ∧ ∃ J : Finset I, basic t U J ⊆ s := Iff.rfl
 
- theorem continuous_core : Continuous (core t) := by
+theorem continuous_core : Continuous (core t) := by
   apply continuous_def.mpr
   intro s hs
   rw [isOpen_iff_mem_nhds]
@@ -81,19 +81,21 @@ variable (t : ∀ i, P i → B)
   obtain ⟨U,hU,hbU,J,hJ⟩ := hs.2 b hb
   exact mem_of_superset (hU.mem_nhds hbU) (fun b hb => hJ hb)
 
- theorem continuous_component (i : I) : Continuous (component t i) :=
+theorem continuous_component (i : I) : Continuous (component t i) :=
   continuous_def.mpr fun _ hs => hs.1 i
 
- theorem core_injective : Injective (core t) := Sum.inl_injective
+theorem core_injective : Injective (core t) := Sum.inl_injective
 
- theorem component_injective (i : I) : Injective (component t i) := by
+theorem component_injective (i : I) : Injective (component t i) := by
   intro x y h
   exact sigma_mk_injective (Sum.inr.inj h)
 
- theorem component_ne_core (i : I) (z : P i) (b : B) : component t i z ≠ core t b := by
-  simp [component,core]
+theorem component_ne_core (i : I) (z : P i) (b : B) : component t i z ≠ core t b := by
+  intro h
+  have h' : (Sum.inr ⟨i,z⟩ : B ⊕ (Σ i, P i)) = Sum.inl b := h
+  cases h'
 
- theorem is_open_component_image (i : I) (V : Set (P i)) (hV : IsOpen V) :
+theorem is_open_component_image (i : I) (V : Set (P i)) (hV : IsOpen V) :
     IsOpen (component t i '' V) := by
   refine ⟨fun j => ?_, ?_⟩
   · by_cases h : i = j
@@ -110,7 +112,7 @@ variable (t : ∀ i, P i → B)
     obtain ⟨z,hz,he⟩ := hb
     exact (component_ne_core t i z b he).elim
 
- theorem is_open_basic (ht : ∀ i, Continuous (t i)) (U : Set B) (hU : IsOpen U) (J : Finset I) :
+theorem is_open_basic (ht : ∀ i, Continuous (t i)) (U : Set B) (hU : IsOpen U) (J : Finset I) :
     IsOpen (basic t U J) := by
   apply (is_open_iff t _).mpr
   refine ⟨fun i => ?_, fun b hb => ⟨U,hU,hb,J,Subset.rfl⟩⟩
@@ -122,42 +124,67 @@ variable (t : ∀ i, P i → B)
     rw [he]
     exact hU.preimage (ht i)
 
- theorem continuous_retraction (ht : ∀ i, Continuous (t i)) :
+theorem continuous_retraction (ht : ∀ i, Continuous (t i)) :
     Continuous (collapse t) ∧ LeftInverse (collapse t) (core t) := by
   refine ⟨?_, fun _ => rfl⟩
   apply continuous_def.mpr
   intro U hU
   have he : collapse t ⁻¹' U = basic t U ∅ := by
     ext x
-    cases x <;> simp [collapse,basic]
+    cases x with
+    | inl b => rfl
+    | inr z =>
+      rcases z with ⟨i,z⟩
+      change (t i z ∈ U) ↔ (i ∉ (∅ : Finset I) ∧ t i z ∈ U)
+      simp
   rw [he]
   exact is_open_basic t ht U hU ∅
 
- theorem is_closed_component (ht : ∀ i, Continuous (t i)) (i : I) :
+theorem is_closed_component (ht : ∀ i, Continuous (t i)) (i : I) :
     IsClosed (range (component t i)) := by
   have he : (range (component t i))ᶜ = basic t univ {i} := by
     ext x
     cases x with
-    | inl b => simp [core,component,basic]
+    | inl b =>
+      change (core t b ∉ range (component t i)) ↔ b ∈ (univ : Set B)
+      constructor
+      · intro _; exact mem_univ _
+      · rintro _ ⟨z,hz⟩
+        exact component_ne_core t i z b hz
     | inr z =>
       rcases z with ⟨j,z⟩
-      by_cases h : i = j
-      · subst j; simp [component,basic]
-      · simp [component,basic, Sigma.mk.inj_iff, h, Ne.symm h]
+      change (component t j z ∉ range (component t i)) ↔
+        (j ∉ ({i} : Finset I) ∧ t j z ∈ (univ : Set B))
+      constructor
+      · intro hx
+        refine ⟨?_,mem_univ _⟩
+        intro hj
+        have hj : j = i := Finset.mem_singleton.mp hj
+        subst j
+        exact hx ⟨z,rfl⟩
+      · rintro ⟨hj,_⟩ ⟨y,hy⟩
+        apply hj
+        exact Finset.mem_singleton.mpr (congrArg Sigma.fst (Sum.inr.inj hy)).symm
   rw [← isOpen_compl_iff,he]
   exact is_open_basic t ht univ isOpen_univ {i}
 
- theorem is_closed_core : IsClosed (range (core t)) := by
+theorem is_closed_core : IsClosed (range (core t)) := by
   rw [← isOpen_compl_iff]
   refine ⟨fun i => ?_, ?_⟩
-  · have he : component t i ⁻¹' (range (core t))ᶜ = univ := by ext z; simp [core,component]
+  · have he : component t i ⁻¹' (range (core t))ᶜ = univ := by
+      ext z
+      change (component t i z ∉ range (core t)) ↔ True
+      constructor
+      · intro _; trivial
+      · rintro _ ⟨b,hb⟩
+        exact component_ne_core t i z b hb.symm
     rw [he]; exact isOpen_univ
   · intro b hb
     exact (hb ⟨b,rfl⟩).elim
 
 /-- An open set containing the entire compact core contains every component
 outside one finite exceptional set. Attachment maps may be nonconstant. -/
- theorem finite_exception_of_contains_core [CompactSpace B]
+theorem finite_exception_of_contains_core [CompactSpace B]
     (W : Set (Space t)) (hW : IsOpen W) (hc : range (core t) ⊆ W) :
     ∃ J : Finset I, ∀ i, i ∉ J → range (component t i) ⊆ W := by
   classical
@@ -170,7 +197,7 @@ outside one finite exceptional set. Attachment maps may be nonconstant. -/
   obtain ⟨b,hb,ht⟩ := mem_iUnion₂.mp (hs (mem_univ (t i z)))
   exact hJ b ⟨fun hij => hi (Finset.mem_biUnion.mpr ⟨b,hb,hij⟩),ht⟩
 
- theorem compact_space [CompactSpace B] [∀ i, CompactSpace (P i)] : CompactSpace (Space t) := by
+theorem compact_space [CompactSpace B] [∀ i, CompactSpace (P i)] : CompactSpace (Space t) := by
   classical
   constructor
   apply isCompact_iff_finite_subcover.mpr
@@ -197,7 +224,7 @@ outside one finite exceptional set. Attachment maps may be nonconstant. -/
     · obtain ⟨a,ha,hx⟩ := mem_iUnion₂.mp (hJ i hi ⟨z,rfl⟩)
       exact mem_iUnion₂.mpr ⟨a,Finset.mem_union_left _ ha,hx⟩
 
- theorem hausdorff (ht : ∀ i, Continuous (t i)) [T2Space B] [∀ i, T2Space (P i)] :
+theorem hausdorff (ht : ∀ i, Continuous (t i)) [T2Space B] [∀ i, T2Space (P i)] :
     T2Space (Space t) := by
   classical
   constructor
@@ -219,7 +246,8 @@ outside one finite exceptional set. Attachment maps may be nonconstant. -/
       refine ⟨(range (component t i))ᶜ,range (component t i),
         (is_closed_component t ht i).isOpen_compl,?_,?_,⟨z,rfl⟩,disjoint_compl_left⟩
       · simpa only [image_univ] using is_open_component_image t i univ isOpen_univ
-      · simp [core,component]
+      · rintro ⟨z,hz⟩
+        exact component_ne_core t i z b hz
   | inr x =>
     rcases x with ⟨i,x⟩
     by_cases hy : y ∈ range (component t i)
@@ -233,7 +261,7 @@ outside one finite exceptional set. Attachment maps may be nonconstant. -/
       simpa only [image_univ] using is_open_component_image t i univ isOpen_univ
 
 /-- Exact clopen algebra, with actual component traces and one finite defect. -/
- theorem is_clopen_iff [CompactSpace B] (ht : ∀ i, Continuous (t i)) (H : Set (Space t)) :
+theorem is_clopen_iff [CompactSpace B] (ht : ∀ i, Continuous (t i)) (H : Set (Space t)) :
     IsClopen H ↔ IsClopen (core t ⁻¹' H) ∧
       (∀ i, IsClopen (component t i ⁻¹' H)) ∧
       ∃ J : Finset I, ∀ i, i ∉ J → component t i ⁻¹' H = t i ⁻¹' (core t ⁻¹' H) := by
@@ -270,13 +298,17 @@ outside one finite exceptional set. Attachment maps may be nonconstant. -/
     refine ⟨isOpen_compl_iff.mp (hopen Hᶜ hV.compl.isOpen (fun i => (hP i).compl.isOpen) ?_),
       hopen H hV.isOpen (fun i => (hP i).isOpen) hJ⟩
     intro i hi
-    simpa only [preimage_compl] using congrArg Set.compl (hJ i hi)
+    ext z
+    change (¬ component t i z ∈ H) ↔ ¬ core t (t i z) ∈ H
+    exact not_congr (Set.ext_iff.mp (hJ i hi) z)
 
- theorem is_clopen_basic [CompactSpace B] (ht : ∀ i, Continuous (t i))
+theorem is_clopen_basic [CompactSpace B] (ht : ∀ i, Continuous (t i))
     (U : Set B) (hU : IsClopen U) (J : Finset I) : IsClopen (basic t U J) := by
   apply (is_clopen_iff t ht _).mpr
   refine ⟨?_,?_,J,?_⟩
-  · simpa only [core,basic,preimage_setOf_eq] using hU
+  · have he : core t ⁻¹' basic t U J = U := by ext b; rfl
+    rw [he]
+    exact hU
   · intro i
     by_cases hi : i ∈ J
     · have he : component t i ⁻¹' basic t U J = ∅ := by ext z; simp [component,basic,hi]
@@ -287,11 +319,11 @@ outside one finite exceptional set. Attachment maps may be nonconstant. -/
     ext z
     simp [component,core,basic,hi]
 
- theorem core_closed_embedding (ht : ∀ i, Continuous (t i)) : IsClosedEmbedding (core t) :=
+theorem core_closed_embedding (ht : ∀ i, Continuous (t i)) : IsClosedEmbedding (core t) :=
   ⟨IsEmbedding.of_leftInverse (continuous_retraction t ht).2 (continuous_retraction t ht).1 (continuous_core t),
     is_closed_core t⟩
 
- theorem component_clopen_embedding (i : I) [CompactSpace (P i)] [T2Space B] [∀ i, T2Space (P i)]
+theorem component_clopen_embedding (i : I) [CompactSpace (P i)] [T2Space B] [∀ i, T2Space (P i)]
     (ht : ∀ i, Continuous (t i)) :
     IsClosedEmbedding (component t i) ∧ IsClopen (range (component t i)) ∧
       IsCompact (range (component t i)) := by
@@ -300,7 +332,7 @@ outside one finite exceptional set. Attachment maps may be nonconstant. -/
     ⟨is_closed_component t ht i, ?_⟩, isCompact_range (continuous_component t i)⟩
   simpa only [image_univ] using is_open_component_image t i univ isOpen_univ
 
- theorem zero_dimensional [CompactSpace B] [T2Space B] [ZeroDimensionalSpace B]
+theorem zero_dimensional [CompactSpace B] [T2Space B] [ZeroDimensionalSpace B]
     [∀ i, CompactSpace (P i)] [∀ i, T2Space (P i)] [∀ i, ZeroDimensionalSpace (P i)]
     (ht : ∀ i, Continuous (t i)) : ZeroDimensionalSpace (Space t) := by
   classical
@@ -320,14 +352,16 @@ outside one finite exceptional set. Attachment maps may be nonconstant. -/
     | inr _ => exact ⟨hy.1,hVU hy.2⟩
   | inr z =>
     rcases z with ⟨i,z⟩
-    obtain ⟨V,hV,hz,hVW⟩ := isTopologicalBasis_isClopen.exists_subset_of_mem_open hx (hW.1 i)
+    have hzW : z ∈ component t i ⁻¹' W := hx
+    obtain ⟨V,hV,hz,hVW⟩ :=
+      (isTopologicalBasis_isClopen (X := P i)).exists_subset_of_mem_open hzW (hW.1 i)
     refine ⟨component t i '' V,?_,⟨z,hz,rfl⟩,?_⟩
     · exact ⟨(hV.isClosed.isCompact.image (continuous_component t i)).isClosed,
         is_open_component_image t i V hV.isOpen⟩
     · rintro _ ⟨z,hz,rfl⟩; exact hVW hz
 
 /-- Transverse convergence is exactly convergence of the actual attachment images. -/
- theorem transverse_tendsto_iff (ht : ∀ i, Continuous (t i))
+theorem transverse_tendsto_iff (ht : ∀ i, Continuous (t i))
     (a : ℕ → I) (ha : Injective a) (z : ∀ n, P (a n)) (b : B) :
     Tendsto (fun n => component t (a n) (z n)) atTop (𝓝 (core t b)) ↔
       Tendsto (fun n => t (a n) (z n)) atTop (𝓝 b) := by
@@ -349,7 +383,7 @@ def multiplicity (b : B) : Set I := {i | b ∈ range (t i)}
 
 /-- Infinite actual range multiplicity constructs an injective convergent
 natural sequence in the literal carrier, with its limit outside all terms. -/
- theorem sequence_of_infinite_multiplicity (ht : ∀ i, Continuous (t i))
+theorem sequence_of_infinite_multiplicity (ht : ∀ i, Continuous (t i))
     (b : B) (hb : (multiplicity t b).Infinite) :
     ∃ x : ℕ → Space t, Injective x ∧ Tendsto x atTop (𝓝 (core t b)) ∧
       ∀ n, x n ≠ core t b := by
@@ -374,7 +408,7 @@ def NoConvergentInjectiveSequence (X : Type*) [TopologicalSpace X] : Prop :=
 
 /-- In a Hausdorff sequence-free space every convergent natural sequence is
 eventually its limit. The proof extracts actual distinct off-limit values. -/
- theorem eventually_eq_of_no_sequence {X : Type*} [TopologicalSpace X] [T2Space X]
+theorem eventually_eq_of_no_sequence {X : Type*} [TopologicalSpace X] [T2Space X]
     (hX : NoConvergentInjectiveSequence X) (x : ℕ → X) (b : X)
     (hx : Tendsto x atTop (𝓝 b)) : ∀ᶠ n in atTop, x n = b := by
   classical
@@ -398,7 +432,7 @@ eventually its limit. The proof extracts actual distinct off-limit values. -/
 
 /-- Full arbitrary-set sequence characterization, including the empty index
 set. All three conditions are necessary, with actual attachment ranges. -/
- theorem no_sequence_iff [T2Space B] [∀ i, CompactSpace (P i)] [∀ i, T2Space (P i)]
+theorem no_sequence_iff [T2Space B] [∀ i, CompactSpace (P i)] [∀ i, T2Space (P i)]
     (ht : ∀ i, Continuous (t i)) :
     NoConvergentInjectiveSequence (Space t) ↔
       NoConvergentInjectiveSequence B ∧ (∀ i, NoConvergentInjectiveSequence (P i)) ∧
@@ -426,7 +460,9 @@ set. All three conditions are necessary, with actual attachment ranges. -/
         simpa only [Nat.cofinite_eq_atTop,mem_compl_iff,mem_singleton_iff] using h
       have hav : ∀ᶠ n in atTop, ∀ i ∈ multiplicity t b, x n ∉ range (component t i) :=
         (Filter.eventually_all_finite (hM b)).mpr fun i _ =>
-          hx.eventually ((is_closed_component t ht i).isOpen_compl.mem_nhds (by simp [component,core]))
+          hx.eventually ((is_closed_component t ht i).isOpen_compl.mem_nhds (by
+            rintro ⟨z,hz⟩
+            exact component_ne_core t i z b hz))
       obtain ⟨n,he,hne,hav⟩ := (he.and (hne.and hav)).exists
       cases hxn : x n with
       | inl c =>
@@ -446,7 +482,7 @@ set. All three conditions are necessary, with actual attachment ranges. -/
         intro m n h
         have heq : N+m = N+n := hi ((hp m).symm.trans ((congrArg (component t i) h).trans (hp n)))
         omega
-      have hshift : Injective (fun n : ℕ => N+n) := fun m n h => by omega
+      have hshift : Injective (fun n : ℕ => N+n) := fun _ _ h => Nat.add_left_cancel h
       have hlim : Tendsto (fun n => component t i (p n)) atTop (𝓝 (component t i z)) :=
         (hx.comp hshift.nat_tendsto_atTop).congr' (Filter.Eventually.of_forall fun n => (hp n).symm)
       exact hP i p z hp_inj ((component_clopen_embedding t i ht).1.tendsto_nhds_iff.mpr hlim)
