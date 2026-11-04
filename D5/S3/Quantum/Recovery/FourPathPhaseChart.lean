@@ -60,6 +60,9 @@ def phaseCoordinates (τ : ℝ) (w : PhaseVector) : Coordinates :=
     τ * (arg (w 2) - arg (w 3)) / 2,
     (arg (w 2) + arg (w 3)) / 2]
 
+/-- Remove only the common scalar argument, retaining all three relative coordinates. -/
+def normalizeCoordinates (p : Coordinates) : Coordinates := ![p 0, p 1, p 2, 0]
+
 /-- The oriented half difference of the first two actual arguments. -/
 def halfAngle (τ : ℝ) (w : PhaseVector) : ℝ :=
   τ * (arg (w 0) - arg (w 1)) / 2
@@ -334,6 +337,21 @@ private lemma chart_left_inverse {τ : ℝ} (hτ : τ = 1 ∨ τ = -1) (p : Coor
 private lemma coordinate_analytic (p : Coordinates) (i : Fin 4) :
     AnalyticAt ℝ (fun q : Coordinates => q i) p :=
   (ContinuousLinearMap.proj i : Coordinates →L[ℝ] ℝ).analyticAt p
+
+private lemma normalization_analytic (p : Coordinates) :
+    AnalyticAt ℝ normalizeCoordinates p := by
+  apply AnalyticAt.pi
+  intro i
+  fin_cases i
+  · exact coordinate_analytic p 0
+  · exact coordinate_analytic p 1
+  · exact coordinate_analytic p 2
+  · exact analyticAt_const
+
+private lemma chart_normalization (τ : ℝ) (p : Coordinates) (i : Fin 4) :
+    phaseChart τ p i =
+      Complex.exp ((p 3 : ℂ) * I) * phaseChart τ (normalizeCoordinates p) i := by
+  fin_cases i <;> simp [phaseChart, normalizeCoordinates]
 
 private lemma real_complex_analytic {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {f : E → ℝ} {x : E} (hf : AnalyticAt ℝ f x) :
@@ -711,7 +729,20 @@ theorem local_phase_chart {δ τ : ℝ} (hδ : 0 < δ ∧ δ < 2)
           phaseChart τ (phaseCoordinates τ w) = w)) ∧
       (∀ p ∈ S, ∀ q ∈ S, p 3 = 0 → q 3 = 0 → ∀ scalar : ℂ,
         (∀ i, phaseChart τ p i = scalar * phaseChart τ q i) → p = q ∧ scalar = 1) ∧
-      Set.BijOn (phaseChart τ) S (V ∩ {w | ∀ i, ‖w i‖ = 1}) := by
+      Set.BijOn (phaseChart τ) S (V ∩ {w | ∀ i, ‖w i‖ = 1}) ∧
+      ∃ W : Set PhaseVector, IsOpen W ∧
+        phaseChart τ (baseCoordinates δ) ∈ W ∧ W ⊆ V ∧
+        ∀ w ∈ W, AnalyticAt ℝ (normalizeCoordinates ∘ phaseCoordinates τ) w ∧
+          ((∀ i, ‖w i‖ = 1) →
+            let p := phaseCoordinates τ w
+            normalizeCoordinates p ∈ S ∧ normalizeCoordinates p 3 = 0 ∧
+            normalizeCoordinates p 0 = 4 - traceModulus w ∧
+            ‖Complex.exp ((p 3 : ℂ) * I)‖ = 1 ∧
+            (∀ i, w i = Complex.exp ((p 3 : ℂ) * I) *
+              phaseChart τ (normalizeCoordinates p) i) ∧
+            ∀ q ∈ S, q 3 = 0 → ∀ scalar : ℂ,
+              (∀ i, w i = scalar * phaseChart τ q i) →
+              q = normalizeCoordinates p ∧ scalar = Complex.exp ((p 3 : ℂ) * I)) := by
   obtain ⟨S, hSsub, hSopen, hSbase⟩ := eventually_nhds_iff.mp (chart_neighborhood hδ hτ)
   have hSp (p : Coordinates) (hp : p ∈ S) := hSsub p hp
   have hleft (p : Coordinates) (hp : p ∈ S) : phaseCoordinates τ (phaseChart τ p) = p :=
@@ -733,7 +764,7 @@ theorem local_phase_chart {δ τ : ℝ} (hδ : 0 < δ ∧ δ < 2)
   have hc : ContinuousOn (phaseChart τ) S := fun p hp =>
     (chart_analytic τ p (hSp p hp).2.1 (hSp p hp).1).continuousAt.continuousWithinAt
   have hopen : IsOpen S' := hc.isOpen_inter_preimage hSopen hVopen
-  refine ⟨S', V, hopen, hVopen, ⟨hSbase, hVbase⟩, hVbase, ?_, ?_, ?_, ?_⟩
+  refine ⟨S', V, hopen, hVopen, ⟨hSbase, hVbase⟩, hVbase, ?_, ?_, ?_, ?_, ?_⟩
   · intro p hp
     have hh := hSp p hp.1
     exact ⟨chart_unit hτ p hh.1, chart_trace hτ p hh.1 hh.2.1.le hh.2.2.1,
@@ -759,5 +790,53 @@ theorem local_phase_chart {δ τ : ℝ} (hδ : 0 < δ ∧ δ < 2)
       obtain ⟨hin, hr⟩ := (hVsub w hw.1).2 hw.2
       exact ⟨phaseCoordinates τ w,
         ⟨hin, by change phaseChart τ (phaseCoordinates τ w) ∈ V; rw [hr]; exact hw.1⟩, hr⟩
+  · have hnbase : normalizeCoordinates (phaseCoordinates τ
+        (phaseChart τ (baseCoordinates δ))) = baseCoordinates δ := by
+      rw [hleft _ hSbase]
+      ext i
+      fin_cases i <;> simp [normalizeCoordinates, baseCoordinates]
+    have hncont : ContinuousAt (normalizeCoordinates ∘ phaseCoordinates τ)
+        (phaseChart τ (baseCoordinates δ)) :=
+      (normalization_analytic _).continuousAt.comp hi.continuousAt
+    have hninto : ∀ᶠ w in 𝓝 (phaseChart τ (baseCoordinates δ)),
+        normalizeCoordinates (phaseCoordinates τ w) ∈ S' :=
+      hncont.eventually (hopen.mem_nhds (by
+        change normalizeCoordinates (phaseCoordinates τ
+          (phaseChart τ (baseCoordinates δ))) ∈ S'
+        rw [hnbase]
+        exact ⟨hSbase, hVbase⟩))
+    obtain ⟨W, hWsub, hWopen, hWbase⟩ := eventually_nhds_iff.mp hninto
+    refine ⟨W ∩ V, hWopen.inter hVopen, ⟨hWbase, hVbase⟩,
+      fun _ hw => hw.2, ?_⟩
+    intro w hw
+    refine ⟨(normalization_analytic _).comp (hVsub w hw.2).1, ?_⟩
+    intro hu
+    let p := phaseCoordinates τ w
+    let scalar₀ := Complex.exp ((p 3 : ℂ) * I)
+    have hn : normalizeCoordinates p ∈ S' := hWsub w hw.1
+    have hm : normalizeCoordinates p 3 = 0 := by simp [normalizeCoordinates]
+    have hr : phaseChart τ p = w := ((hVsub w hw.2).2 hu).2
+    have hfactor (i : Fin 4) : w i = scalar₀ * phaseChart τ (normalizeCoordinates p) i := by
+      rw [← hr]
+      exact chart_normalization τ p i
+    refine ⟨hn, hm, rfl,
+      phase_norm _, hfactor, ?_⟩
+    intro q hq hqm scalar hs
+    have hnonzero : scalar₀ ≠ 0 := Complex.exp_ne_zero _
+    have heq (i : Fin 4) : phaseChart τ (normalizeCoordinates p) i =
+        (scalar₀⁻¹ * scalar) * phaseChart τ q i := by
+      calc
+        phaseChart τ (normalizeCoordinates p) i =
+            scalar₀⁻¹ * (scalar₀ * phaseChart τ (normalizeCoordinates p) i) := by
+          simp [hnonzero]
+        _ = scalar₀⁻¹ * w i := by rw [hfactor i]
+        _ = (scalar₀⁻¹ * scalar) * phaseChart τ q i := by rw [hs i]; ring
+    obtain ⟨hqeq, hscalar⟩ := normalized_scalar_unique hτ
+      (normalizeCoordinates p) q hm hqm (hSp _ hn.1).2.2.2.2
+      (hSp q hq.1).2.2.2.2 (hleft _ hn.1) (hleft q hq.1) _ heq
+    refine ⟨hqeq.symm, ?_⟩
+    calc
+      scalar = scalar₀ * (scalar₀⁻¹ * scalar) := by simp [hnonzero]
+      _ = scalar₀ := by rw [hscalar, mul_one]
 
 end D5.S3.Quantum.Recovery.FourPathPhaseChart

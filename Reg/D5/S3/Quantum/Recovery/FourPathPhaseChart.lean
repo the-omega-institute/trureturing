@@ -55,7 +55,20 @@ def arena : Arena where
           phaseChart τ (phaseCoordinates τ w) = w)) ∧
       (∀ p ∈ S, ∀ q ∈ S, p 3 = 0 → q 3 = 0 → ∀ scalar : ℂ,
         (∀ i, phaseChart τ p i = scalar * phaseChart τ q i) → p = q ∧ scalar = 1) ∧
-      Set.BijOn (phaseChart τ) S (V ∩ {w | ∀ i, ‖w i‖ = 1})
+      Set.BijOn (phaseChart τ) S (V ∩ {w | ∀ i, ‖w i‖ = 1}) ∧
+      ∃ W : Set PhaseVector, IsOpen W ∧
+        phaseChart τ (baseCoordinates δ) ∈ W ∧ W ⊆ V ∧
+        ∀ w ∈ W, AnalyticAt ℝ (normalizeCoordinates ∘ phaseCoordinates τ) w ∧
+          ((∀ i, ‖w i‖ = 1) →
+            let p := phaseCoordinates τ w
+            normalizeCoordinates p ∈ S ∧ normalizeCoordinates p 3 = 0 ∧
+            normalizeCoordinates p 0 = 4 - traceModulus w ∧
+            ‖Complex.exp ((p 3 : ℂ) * I)‖ = 1 ∧
+            (∀ i, w i = Complex.exp ((p 3 : ℂ) * I) *
+              phaseChart τ (normalizeCoordinates p) i) ∧
+            ∀ q ∈ S, q 3 = 0 → ∀ scalar : ℂ,
+              (∀ i, w i = scalar * phaseChart τ q i) →
+              q = normalizeCoordinates p ∧ scalar = Complex.exp ((p 3 : ℂ) * I))
 
 private theorem rejected_fails : ¬ arena.Law rejected := by
   intro h
