@@ -88,5 +88,82 @@ def registration :
   familyRecord := none
   options := #[] }
 
+namespace HHalf
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => (ℝ → ℝ))
+
+def actual : Realization signature :=
+  realize signature (fun _ _ α => h α) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {α : ℝ}, 0 < α → R.readout () () α (1 / 2) = Real.log 2
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro he
+  have hb := he (α := 1) (by norm_num)
+  change (0 : ℝ) = Real.log 2 at hb
+  exact (ne_of_lt (Real.log_pos (by norm_num : (1 : ℝ) < 2))) hb
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 2, ?_⟩
+  change h 0 ≠ h 2
+  intro he
+  have hb := congrFun he 0
+  norm_num [h, _root_.D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining.hRenyi] at hb
+
+def source_registration : Registration arena (type_of% @h_half) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@h_half, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@h_half) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity.HHalf.unit
+  realizationName :=
+    `Reg.D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity.HHalf.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ α => h α) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+set_option pp.proofs false in
+#print h_half
+#print axioms registration
+
+end HHalf
+
 end
 end Reg.D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity
