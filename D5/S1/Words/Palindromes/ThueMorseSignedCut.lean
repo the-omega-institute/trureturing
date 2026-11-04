@@ -24,8 +24,8 @@ Per-declaration proof shape and candidate admission basis:
   from an arbitrary nonempty mixed factorization.
 The finite-factor definitions are consumed by these proofs. Local arithmetic
 and list-normalization helpers supply no separate content claim.
-The transition's source-bound registration is validated. The other two source
-bindings remain unfinished: https://github.com/the-omega-institute/trureturing/issues/26539.
+The cut and prefix-lower-bound source bindings remain unfinished:
+https://github.com/the-omega-institute/trureturing/issues/26539.
 Independent pre-freeze classification and fidelity review remain required.
 -/
 
