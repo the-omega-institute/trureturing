@@ -10,9 +10,7 @@ $$\forall (u: \mathbb{Z} \times (\mathbb{Z} \times \mathbb{Z})), (\forall (v: \m
 
 *Formalization.* `D5/S3/StatisticalMechanics/TsiCoordinationSequence.tsiGraph` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* N. J. A. Sloane, Colin Barker (2018). *OEIS A299289, coordination sequence for the tsi 3D uniform tiling*. URL: <https://oeis.org/A299289>.
+*Citation.* N. J. A. Sloane, Colin Barker (2018). *OEIS A299289, coordination sequence for the tsi 3D uniform tiling*. URL: <https://oeis.org/A299289>.
 
 *Commentary.*
 
