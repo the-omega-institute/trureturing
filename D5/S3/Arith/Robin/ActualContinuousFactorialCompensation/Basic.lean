@@ -294,7 +294,7 @@ theorem finite_smoothing {x : ℝ} (hx : 1 ≤ x) :
   rw [hbase, hramp]
   ring
 
-private lemma G_formula {x : ℝ} (hx : 1 ≤ x) :
+lemma G_formula {x : ℝ} (hx : 1 ≤ x) :
     G x = x * ((1 + gamma - Real.log x) * H x + 2 * J x) -
       Real.log (⌊x⌋₊.factorial : ℝ) - (1 + gamma) * ⌊x⌋₊ - alpha * (x - 1) := by
   rw [G, finite_smoothing hx, h1]

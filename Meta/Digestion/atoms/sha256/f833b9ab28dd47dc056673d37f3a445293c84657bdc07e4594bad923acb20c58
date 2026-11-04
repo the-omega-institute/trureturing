@@ -1,0 +1,24 @@
+**定理 31.1（固定原数据上的 C126/C124 等价）。** 对每份固定原 $q/L$，完整 C126 与完整 C124 在所有原数据上恒等对应。具体地，I、II 和 S 在上述原背景下推出：每个所需原对象和每个实际联合对象的原 $D$ 都满足假设 1.5 的全部导子律及曲率抵消。反向从原 D 得到 I、II、S。正向只消费 P/G、AC、I/II/S、X 及定理 30.1 的实际身份参考；不消费 F，不预设复张量，不假设原 $D$ 自守恒或中心零。
+
+**证明。** 将定理 22.1 中不使用 C 或 D 的部分直接用于固定 P/G：$E$ 是同一原空间上的 Euclidean Jordan 代数，$q$ 为正 Frobenius 型，$\mathfrak k$ 是原指定 Lie 代数内的斜伴随内导子代数。故 I 已给每个原 $D_a$ 的导子律。以下证明曲率等式。
+
+先把 I/II 的局部可能性列全，再对原实际参考使用它。使用成熟的有限简单 EJA 分类及其紧自同构表示，写
+
+$$
+E=\bigoplus_s J_s,\qquad
+Z=\bigoplus_s\mathbb R u_s,\qquad
+V_s=\{x\in J_s:\tau_s^J(x)=0\},\qquad
+\mathfrak k=\bigoplus_s\mathfrak k_s.
+\tag{31.1}
+$$
+
+这里 $q|_{J_s}$ 为正倍数的 Jordan 迹型，不同理想正交；因此 $E_0=\bigoplus_sV_s$，这也是固定 $q$ 投影所得的同一个 $E_0$。有限 EJA 的导子全是内导子的有限和，故这里的 $\mathfrak k_s$ 就是该简单理想的完整紧自同构 Lie 代数；该成熟内导子事实亦见 BGW Appendix E 的 Lemma E.1 证明及注 30，不把它误用于任意非半单 Jordan 代数。$D:E\to\mathfrak k$ 由 II 是 $\mathfrak k$ 模同态。下表中的表示资料只作为这个同态计算的已知中间步骤；简单因子采用不重复的约定，秩二矩阵另归入自旋项。
+
+| 简单 $J_s$ | $V_s$ 及维数 | $\mathfrak k_s$ 及其伴随表示 | 对 $V_s\to\mathfrak k_s$ 的结果 |
+| --- | --- | --- | --- |
+| $\mathbb R$ | $0$ | $0$ | 零 |
+| $H_n(\mathbb R),\ n\ge3$ | 无迹实对称，$n(n+1)/2-1$，不可约 | $\mathfrak{so}(n)$，维数 $n(n-1)/2$ | 零；$n=4$ 时伴随分成两个三维项，均不等于九维 $V_s$ |
+| $H_n(\mathbb C),\ n\ge3$ | 无迹 Hermitian，$n^2-1$ | $\mathfrak{su}(n)$ | $a\mapsto\lambda_s\delta_a$，$\lambda_s\in\mathbb R$，$\delta_ab=i[a,b]/2$ |
+| $H_n(\mathbb H),\ n\ge3$ | 无迹 quaternionic Hermitian，$n(2n-1)-1$，不可约 | $\mathfrak{sp}(n)$，维数 $n(2n+1)$ | 零 |
+| $H_3(\mathbb O)$ | 不可约二十六维 | 紧 $\mathfrak f_4$，维数五十二 | 零 |
+| $\mathrm{Spin}_m=\mathbb R\oplus\mathbb R^m,\ m\ge2$ | 标准向量 $\mathbb R^m$ | $\mathfrak{so}(m)=\Lambda^2\mathbb R^m$ | 仅 $m=3$ 有一维同态空间；它就是 $H_2(\mathbb C)$ 的上一复公式 |

@@ -79,7 +79,7 @@ The literal insertion definition is on page 2, minimum depth is on page 7,
 the arbitrary-language conjecture is on page 8, and the related open-question
 discussion is on page 11.
 
-`D5/S1/Words/HughesIterationDepthNoGap.result` proves the conjecture for
+`D5/S1/Words/IterationDepthNoGap.result` proves the conjecture for
 every alphabet and arbitrary languages `A,B`: if a natural depth `r`
 is attained, then every natural `q ≤ r` is attained. The literal insertion
 factorization consists of `k` source factors and `k+1` base factors, each
@@ -97,7 +97,7 @@ The result is stated at `closedSourceZero`; its spectrum is extensionally
 equal to the published zero-based spectrum.
 
 The companion
-`D5/S3/ConceptDynamics/InformationEscape/HughesIterationDepthNoGapRegistration`
+`D5/S3/ConceptDynamics/InformationEscape/IterationDepthNoGapRegistration`
 registers the theorem's source depth origin through a finite two-origin arena,
 with an inline realization bridge and a shifted-origin counterfactual for
 variation and sensitivity. The arena's finiteness does not impose finiteness

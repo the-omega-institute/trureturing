@@ -18,7 +18,7 @@ class BuildWorkContracts(unittest.TestCase):
     def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False, ci_budget=False, fib_failure=0, fib_selected=False, native_phases=()):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
         self.addCleanup(temp.cleanup)
-        root = Path(temp.name)
+        root = Path(temp.name).resolve()
         for name in ("tools/lean-inspector/inspect.sh", "tools/scripts/lib/resource-observation-lib.sh",
                      "tools/lean-inspector/build_work.py", "tools/scripts/workflow/ci_compute.py"):
             dest = root / name
@@ -34,7 +34,7 @@ class BuildWorkContracts(unittest.TestCase):
         script("tools/lean-inspector/reuse.py",
                "import sys\nsys.exit(" + str(0 if reused else 3) + " if sys.argv[1] == 'reuse' else 0)\n")
         script("tools/lean-inspector/native.py", "import sys\nfrom pathlib import Path\n" +
-               ("(Path(sys.argv[3] + '.logs') / 'report.exit.log').unlink()\n" if missing_phase_log else "") +
+               ("if sys.argv[1] == 'publish':\n    (Path(sys.argv[3] + '.logs') / 'report.exit.log').unlink()\n" if missing_phase_log else "") +
                "sys.exit(0)\n")
         script("tools/lean-inspector/fib_analysis.py", "import sys\nsys.exit(" + str(fib_failure) + ")\n")
         script("tools/scripts/worktree/lean-cache-ensure.sh", "#!/bin/bash\nexit 0\n")

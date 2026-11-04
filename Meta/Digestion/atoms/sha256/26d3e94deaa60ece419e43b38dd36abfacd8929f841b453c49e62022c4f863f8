@@ -1,0 +1,68 @@
+**命题 30.1（正权二阶设计不能普遍代替三阶合同）。** 存在固定真正混合来源、忠实记忆边缘及完整双记录 CP 原仪器，使正权二阶设计上的全部所选未条件化泄漏为零，但所选原联合支在整个来源记忆支撑上不等于 $\operatorname{id}_H\otimes\Psi$。所有准备概率严格正，原失败支完整保留。
+
+**证明。** 取 $H=Q=F=\mathbb C^2$、$M=Q\otimes F$，标签选择前的同一来源为
+
+$$
+\rho=|\Phi_2\rangle\langle\Phi_2|_{HQ}\otimes\tau_F,
+\qquad \tau_F=I_F/2.
+\tag{30.1}
+$$
+
+它秩二，$\rho_M=I_M/4$，所以 $M_0=M$。每个所用 $p$ 的原准备仪器完整取为 $\{\operatorname{Ad}_p\otimes\operatorname{id}_M,\operatorname{Ad}_{I_H-p}\otimes\operatorname{id}_M\}$，两个原记录及输出均保留；两支 CP，且总效果为单位。准备成功后接同一份下述被调用仪器，准备失败保留原失败输出。
+
+取四个单位向量
+
+$$
+z_1=|0\rangle,\qquad
+z_{k+2}=3^{-1/2}|0\rangle+\sqrt{2/3}\,e^{2\pi i k/3}|1\rangle
+\quad(k=0,1,2),
+\qquad p_s=|z_s\rangle\langle z_s|,
+\quad w_s=1/4.
+\tag{30.2}
+$$
+
+这些 Bloch 向量 $r_s$ 满足 $\sum_sr_s=0$、$\sum_sr_sr_s^{\mathsf T}=(4/3)I_3$；代入 $p_s=(I+r_s\cdot\sigma)/2$ 得
+$\frac14\sum_sp_s^{\otimes2}=\Pi_{\rm sym}^{(2)}/3$，故确为正权二阶设计。这个四面体设计本身是 Scott 所引成熟设计例子，不作为新构造。
+
+在 $H\otimes Q$ 中置
+
+$$
+\nu=|00\rangle-\tfrac12|11\rangle,\qquad
+K=\tfrac12|00\rangle\langle\nu|,\qquad
+K^{\dagger}K=\tfrac14|\nu\rangle\langle\nu|,
+\quad \|K\|_{\rm op}^2=5/16,
+\qquad L=\sqrt{I_{H\otimes Q}-K^{\dagger}K}.
+\tag{30.3}
+$$
+
+原标签恰为成功 $s$、失败 $f$，一次性固定
+
+$$
+V_s=\operatorname{Ad}_{K}\otimes\operatorname{id}_F,
+\qquad V_f=\operatorname{Ad}_{L}\otimes\operatorname{id}_F.
+\tag{30.4}
+$$
+
+$K^{\dagger}K+L^{\dagger}L=I$，故这是一份完整原仪器，$V_f$ 就是该反模型的实际失败动作，不是仅指定一个失败效果。
+
+对任意纯 $p=|z\rangle\langle z|$，同一原局部准备给
+
+$$
+X_p=\tfrac12|z,\overline z\rangle\langle z,\overline z|_{HQ}\otimes\tau_F,
+\qquad \eta_p=1/2.
+\tag{30.5}
+$$
+
+由 $\langle\nu|z_s,\overline z_s\rangle=|z_{s,0}|^2-\tfrac12|z_{s,1}|^2$，四个值依次为 $1,0,0,0$。因此 $V_s(X_{p_1})=\frac18|00\rangle\langle00|\otimes\tau_F$，其系统在 $p_1$；其余三个节点的原成功支为零。四个未条件化泄漏均为零，但没有将零成功节点删去。各节点准备失败率为 $1/2$，准备后原仪器失败率为 $\eta_{p_s}-\operatorname{Tr}V_s(X_{p_s})$，故 $s=1$ 时为 $3/8$，其余为 $1/2$。
+
+在另一个输入方向 $p=|1\rangle\langle1|$，$K|11\rangle=-|00\rangle/4$，所以
+
+$$
+V_s(X_p)=\tfrac1{32}|00\rangle\langle00|\otimes\tau_F,
+\qquad
+\operatorname{Tr}[((I_H-p)\otimes I_M)V_s(X_p)]=1/32>0.
+\tag{30.6}
+$$
+
+若 $V_s=\operatorname{id}_H\otimes\Psi$，它对这个 $p\otimes\sigma_p$ 的输出仍应在系统方向 $p$，与 (30.6) 矛盾。故二阶合同在该一般类中不足。这个单一完整反模型不主张每个特定来源都需要三阶、不判任意非设计节点集的最小基数，也不给四阶必要性；定理 28.3 已给三阶充分。$\square$
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bfa6fe93d01f0a1eed73b7c5c2e2f8d7e2817c087eaee8d03f4fd7d099df6cc7
+  normalized_sha256: sha256:bfa6fe93d01f0a1eed73b7c5c2e2f8d7e2817c087eaee8d03f4fd7d099df6cc7
+cas_ref: sha256:bfa6fe93d01f0a1eed73b7c5c2e2f8d7e2817c087eaee8d03f4fd7d099df6cc7
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/KBonacciAdditiveFutureKernel.actual_history_kernel_signature
+    target_statement_id: sha256:2287a4d485e63dd0cd374a5cb027624b8a78bea87b8e8cb5aacac9fad80ed309
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:a6753421c4cbdf6ff983eee00ce08f815a1abe397b0e3d051fa9f9b92c0b7cb3
+  normalized_sha256: sha256:a6753421c4cbdf6ff983eee00ce08f815a1abe397b0e3d051fa9f9b92c0b7cb3
+cas_ref: sha256:a6753421c4cbdf6ff983eee00ce08f815a1abe397b0e3d051fa9f9b92c0b7cb3
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropyAsymptotic.integral_gaussian_matrix
+    target_statement_id: sha256:115971ca6d1e0239ea796ae26e9f274b7893e3b89992266bd434752372e17e4f
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropyAsymptotic.replica_determinant_reduction
+    target_statement_id: sha256:629139fc88961f975e7b09adce197909e7ae16cbbbc521a13a5c2dc7cc02f219
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropyAsymptotic.replica_integral_determinant_formula
+    target_statement_id: sha256:000b05e30bbe5da40912d43ea1d643907acda5d06ed2ffdee2f07f27b7a8058c
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropyAsymptotic.replica_precision_projection
+    target_statement_id: sha256:2b389790cacc70c48bb020933f839360b4f51c47fbbb37ea0e300fcd43ac8761
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropyAsymptotic.uniform_precision_det
+    target_statement_id: sha256:1f3b64fc48d9e22ed230771e95061846dcafadb12072670fa12609163a355208
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropyAsymptotic.uniform_precision_pos_def
+    target_statement_id: sha256:79a026f6dac003949eb131c3519e72799f1aaca88c053ada2e4cf5d3e51c0d28
+receipts:
+  unresolved_subitems: []

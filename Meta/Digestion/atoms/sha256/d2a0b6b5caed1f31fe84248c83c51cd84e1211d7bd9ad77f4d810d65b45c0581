@@ -1,0 +1,117 @@
+### 定理 24.1（支撑变化下的名义秩控制）
+
+保留定义 23.1 的全部前件与 $u,D_*$。令
+
+$$
+\begin{aligned}
+P_0&=\operatorname{supp}E_0,&r_0&=\operatorname{rank}E_0,&P_0^\perp&=I_H-P_0,\\
+E_c&=P_0EP_0,&T_c(X)&=T(P_0XP_0),\\
+h&=\operatorname{Tr}(P_0^\perp E),&t_c&=\operatorname{Tr}(P_0E).
+\end{aligned}
+\tag{24.1}
+$$
+
+则有
+
+$$
+\begin{aligned}
+0\le h&\le(d-r_0)\epsilon,\qquad 0\le t_c\le r_0,\\
+\|T-T_c\|_\diamond
+&\le g:=2\sqrt{t_ch}+h
+\le g_0:=2\sqrt{r_0(d-r_0)\epsilon}+(d-r_0)\epsilon.
+\end{aligned}
+\tag{24.2}
+$$
+
+对 $D_c^*=d(d+1)(u+g_0)$，进一步有
+
+$$
+\|T-L_{E_0}\|_\diamond
+\le g_0+B(E_c,d,k,D_c^*)+2\sqrt\epsilon
+\le\beta_P,
+\tag{24.3}
+$$
+
+其中完全显式的名义秩上界为
+
+$$
+\beta_P=g_0+(\sqrt{2r_0}+3)\sqrt{d(d+1)(u+g_0)}+2\sqrt\epsilon.
+\tag{24.4}
+$$
+
+因此 $\min\{\beta_0,\beta_P\}$ 可代入 (23.10)–(23.11)。若 $r_0=0$，还可直接取 $\beta=d\epsilon$。
+
+**证明。** 由 $P_0^\perp E_0=0$、$\|E-E_0\|_{\mathrm{op}}\le\epsilon$，有
+$0\le P_0^\perp EP_0^\perp\le\epsilon P_0^\perp$，于是得到 $h$ 的上界；$E\le I_H$ 给 $t_c\le r_0$。
+
+为控制输入支撑的交叉项，置 $Z=P_0-P_0^\perp$ 和
+
+$$
+\mathcal R(X)=P_0XP_0^\perp+P_0^\perp XP_0
+             =\frac{X-ZXZ}{2}.
+$$
+
+酉共轭的 diamond 范数为一，故 $\|\mathcal R\|_\diamond\le1$。对每个 $b'>0$ 令
+
+$$
+W_{b'}=b'P_0+(b')^{-1}P_0^\perp,
+\qquad \Psi_{b'}(X)=T(W_{b'}XW_{b'}).
+$$
+
+$\Psi_{b'}$ 是正映射；它不必迹不增。(20.12) 对任意正映射适用，因而
+
+$$
+\|\Psi_{b'}\|_\diamond
+\le\operatorname{Tr}\Psi_{b'}(I_H)
+=(b')^2t_c+(b')^{-2}h.
+$$
+
+由于 $W_{b'}\mathcal R(X)W_{b'}=\mathcal R(X)$，有
+$T\mathcal R=\Psi_{b'}\mathcal R$。所以
+
+$$
+\|T\mathcal R\|_\diamond
+\le\inf_{b'>0}\{(b')^2t_c+(b')^{-2}h\}
+=2\sqrt{t_ch}.
+\tag{24.5}
+$$
+
+任一系数为零时由极限取下确界。映射 $X\mapsto T(P_0^\perp XP_0^\perp)$ 仍正，其效果迹为 $h$，由 (20.12) 得 diamond 范数至多 $h$。在恒等分解
+
+$$
+T-T_c=T\mathcal R+T(P_0^\perp(\cdot)P_0^\perp)
+$$
+
+中合并两项，证得 (24.2)。这里的输入缩放只用于同一正映射的数学范数估计，没有增设 $T$ 的二正或完全正前件。
+
+$T_c$ 的实际效果是 $E_c$，满足 $0\le E_c\le I_H$、$\operatorname{rank}E_c\le r_0$，且
+
+$$
+\|E_c-E_0\|_{\mathrm{op}}
+=\|P_0(E-E_0)P_0\|_{\mathrm{op}}\le\epsilon.
+$$
+
+对每个比较投影，$\|T(p_s)-T_c(p_s)\|_1\le g_0$，而 $\|G_s\|_{\mathrm{op}}\le1$，故
+$|R(T)-R(T_c)|\le g_0$。沿用 (23.12)、(23.14)，得到
+
+$$
+\begin{aligned}
+0\le Q(E_c)-R(T_c)
+&\le Q(E_0)-\widehat R+a+b+\nu+\omega_d(\epsilon)+g_0\\
+&=u+g_0.
+\end{aligned}
+\tag{24.6}
+$$
+
+将 (20.8)–(20.17) 应用于数学压缩 $T_c$ 及同一比较设计，再以 (23.16) 比较 $L_{E_c}$ 与 $L_{E_0}$，给出
+
+$$
+\|T-L_{E_0}\|_\diamond
+\le\|T-T_c\|_\diamond+\|T_c-L_{E_c}\|_\diamond
+    +\|L_{E_c}-L_{E_0}\|_\diamond,
+$$
+
+即 (24.3)。在 $B$ 中取支撑秩项，使用 $\|E_c\|_{\mathrm{op}}\le1$ 与 $\operatorname{rank}E_c\le r_0$，即得 (24.4)。若 $E_0=0$，则 $E\le\epsilon I_H$，直接由 (20.12) 得 $\|T-L_{E_0}\|_\diamond=\|T\|_\diamond\le d\epsilon$。
+
+任意小效果误差允许实际秩改变：例如 $E_0=\operatorname{diag}(1,0)$、$E=\operatorname{diag}(1,\epsilon)$，$0<\epsilon\le1$，满足 (23.2)，但秩分别为一和二。因此这里使用名义秩必须先经 (24.2) 与 (24.6) 支付输入泄漏及比较得分误差；不能在 (23.8) 中直接换秩。输入交叉块的缩放沿用 (20.16) 的正映射方法；新增的联系是把名义输入支撑误差同时接到得分预算和目标支撑秩界。$\square$
+

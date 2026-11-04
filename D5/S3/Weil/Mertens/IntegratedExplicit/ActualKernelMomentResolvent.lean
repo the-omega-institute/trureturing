@@ -544,7 +544,7 @@ private lemma correlation_kernel_integrable (D : ℝ) (hD : 0 ≤ D)
     dsimp only
     rw [correlation_support D hD x a hx ha s h, mul_zero])
 
-private lemma S_global (D : ℝ) (hD : 0 ≤ D)
+lemma S_global (D : ℝ) (hD : 0 ≤ D)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
     (ha : ∑ i, a i = 0) (t : ℝ) :
     S D x a t = (1 / 4) *

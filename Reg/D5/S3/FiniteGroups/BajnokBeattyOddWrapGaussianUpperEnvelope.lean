@@ -19,7 +19,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped Classical
 
-private theorem choose_grow_diagonal (n k m : ℕ) (hk : k ≤ n) (hm : 0 < m) :
+theorem choose_grow_diagonal (n k m : ℕ) (hk : k ≤ n) (hm : 0 < m) :
     Nat.choose n k < Nat.choose (n+2*m) (k+m) := by
   have step (a b : ℕ) (hba : b ≤ a) :
       a.choose b < (a+2).choose (b+1) := by

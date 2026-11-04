@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:30b08aaaf09e11dff8228ef58c63e1ce64b45f0c865abfecd833662bd8645a50
+  normalized_sha256: sha256:30b08aaaf09e11dff8228ef58c63e1ce64b45f0c865abfecd833662bd8645a50
+cas_ref: sha256:30b08aaaf09e11dff8228ef58c63e1ce64b45f0c865abfecd833662bd8645a50
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Explanatory interpretation of Proposition 13.2: the reference-support language and the warning to state support compression explicitly add no independent proposition beyond the qutrit clauses in atom 22dc1f5f50fcdd117911cbd820870ef06a7102976eba68194ea61a8852794acb; the section-14 anchor is structural.'
+    previous_atom_id: 22dc1f5f50fcdd117911cbd820870ef06a7102976eba68194ea61a8852794acb
+    next_atom_id: 903103524895e393395424409d85d2e4bda5469976f5b62e4518ef6efe4c37d3

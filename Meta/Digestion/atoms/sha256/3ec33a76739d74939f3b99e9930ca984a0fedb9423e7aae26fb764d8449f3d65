@@ -1,0 +1,63 @@
+**Theorem 45.4 (strict same-feedback, same-level purification below
+$c_0$).** Let $(E,U)$ be an original pair with $E$ mixed and
+$0<\rho(E,U)=\xi\le R$. If $g(E,U)\le c_0$, there is a normalized
+positive semidefinite rank-one effect $\widehat E$ satisfying
+
+$$
+\begin{aligned}
+ \rho(\widehat E,U)&=\rho(E,U)=\xi,\\
+ \rho_\sigma(\widehat E,U)&=\xi<\rho_{-\sigma}(\widehat E,U),\\
+ g(\widehat E,U)&<g(E,U),&
+ f(\widehat E,U)&<f(E,U),
+\end{aligned}
+\tag{45.14}
+$$
+
+where $\sigma$ is the unique minimizing sign of the input. The actual
+whole matrix $U$ is unchanged, and $\widehat E$ is a pure endpoint of
+that same sign arc. No uniform positive improvement size is asserted.
+
+*Proof.* The input belongs to $\mathfrak E_\sigma(U,\xi)$. Minimize
+$g(\cdot,U)$ on this nonempty compact arc. Its minimum is no larger
+than $g(E,U)\le c_0$, so Lemma 45.3 excludes every mixed minimizer.
+Every minimizing effect therefore has $q=t=t_\sigma$ by (45.3),
+and its coherence has an aligning phase by (36.7). Explicitly one
+may choose
+
+$$
+\begin{aligned}
+ \widehat z&=
+ \begin{cases}
+  \sqrt{t(1-t)}\,\bar P Q/(uv),&uv>0,\\
+  \sqrt{t(1-t)}\,\eta,&uv=0,\quad |\eta|=1,
+ \end{cases}\\
+ \widehat E&=\bigl(TF_\sigma(t,\widehat z)T^\dagger\bigr)^{\mathsf T}.
+\end{aligned}
+\tag{45.15}
+$$
+
+All allowed choices in (45.15) have that same arc-minimum value.
+For a mixed input, (45.3) gives $0<t<1$. The reconstructed matrix has
+
+$$
+ \operatorname{Tr}F_\sigma(t,\widehat z)=1,\qquad
+ \det F_\sigma(t,\widehat z)=t(1-t)-|\widehat z|^2=0,\qquad
+ F_\sigma(t,\widehat z)\succeq0.
+\tag{45.16}
+$$
+
+Unitary conjugation followed by ordinary transpose preserves positivity,
+trace and rank, so this is an actual normalized rank-one original effect.
+Moreover $t<q_{\mathrm{input}}<J_\sigma$, so its sign remains strictly
+$\sigma$. Equation (36.10), with $t^2+|\widehat z|^2=t$, proves exact
+preservation of the original level. Since $U$ is unchanged, the scalar
+phases minimizing its distance to either original $U_\pm$ are unchanged
+as well. No separate feedback is assigned to an effect component.
+
+If the new value equalled the input value, the old mixed input itself
+would attain the arc minimum at a value at most $c_0$, contradicting
+Lemma 45.3. The decrease is therefore strict. Subtracting the same
+$\kappa\xi$ proves the assertion for $f$. The construction includes
+$P=0$, $Q=0$ and zero input coherence, without dividing by a vanishing
+amplitude. $\square$
+

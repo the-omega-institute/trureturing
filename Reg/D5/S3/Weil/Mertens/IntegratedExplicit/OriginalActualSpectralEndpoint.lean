@@ -900,3 +900,30 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape
     continuation := .unknown
     familyRecord := none
     options := #[] })
+
+#check fun (arena : DependentFamily.Arena)
+    (family : DependentFamily.Registration arena (type_of% @OriginalActualSpectralEndpoint.spectral_correlation_convolution))
+    (selection : Contract.SourceSelection) =>
+  (show Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@OriginalActualSpectralEndpoint.spectral_correlation_convolution)
+      (DependentFamily.Realization arena.signature) Unit Unit from {
+    unitName := `D5.S3.Weil.Mertens.IntegratedExplicit.OriginalActualSpectralEndpoint.spectral_correlation_convolution.__information_unit
+    realizationName := Lean.Name.anonymous
+    realizationSource := none
+    generated := false
+    arena := .source ⟨arena⟩
+    objectArena := .source ⟨arena⟩
+    catalog := Lean.Name.anonymous
+    localNames := false
+    realization := .source arena ⟨family⟩
+    correspondence := { stage := .evidence, objectStage := .evidence }
+    bundleNonempty := .absent
+    readout := some (DependentFamily.realize arena.signature
+      family.actual.readout family.actual.anchor)
+    variation := .absent
+    sensitivity := .absent
+    partialSensitivity := none
+    escapeFrom := none
+    sourceSelection := some selection
+    continuation := .unknown
+    familyRecord := none
+    options := #[] })

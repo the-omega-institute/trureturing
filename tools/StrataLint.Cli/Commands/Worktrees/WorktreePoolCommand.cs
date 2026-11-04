@@ -28,8 +28,7 @@ internal static class WorktreePoolCommand
             if (!Directory.Exists(options.Path)) return null;
             var attached = runner.Run("git", ["branch", "--show-current"], options.Path,
                 BoundedProcessRunner.HangDetectionBudget);
-            if (attached.ExitCode != 0 || !IsIdleBranch(Encoding.UTF8.GetString(attached.StandardOutput).Trim()))
-                return null;
+            if (attached.ExitCode != 0) return null;
             if (Encoding.UTF8.GetString(attached.StandardOutput).Trim() == options.Branch) return null;
         }
         GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);

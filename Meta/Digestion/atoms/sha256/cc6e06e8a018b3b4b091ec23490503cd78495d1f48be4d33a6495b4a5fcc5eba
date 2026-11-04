@@ -1,0 +1,128 @@
+**Theorem 41.2 (strict increase of the attained selected raw defect).**
+The function $V$ is continuously differentiable on $(0,4)$,
+continuous on $(0,4]$, and has a finite positive left derivative at four.
+At its existing selected coordinates
+
+$$
+\begin{aligned}
+ t&=\xi/2,& \delta&=\delta_\circ(t),&q&=t-\delta,&p&=1-q,\\
+ x&=1-\delta/2,&y&=\sqrt{1-x^2},&
+ u&=2(hx+c),&v&=2hy,\\
+ S&=u\sqrt p+v\sqrt q,
+\end{aligned}
+$$
+
+one has
+
+$$
+ q<y^2,\qquad
+ V'(\xi)=hS\left(\sqrt p-\frac{x\sqrt q}{y}\right)>0.
+\tag{41.4}
+$$
+
+At $\xi=4$ the derivative in (41.4) means the left derivative.
+Consequently $V$ is strictly increasing throughout $0<\xi\le4$.
+
+*Proof.* For independent variables $0<\delta<2$, $0<q<1$ define
+$x=1-\delta/2$, $y=\sqrt{1-x^2}$, $u=2(hx+c)$, $v=2hy$ and
+
+$$
+ L(\delta,q)
+   =d^2(1-q)+e^2q-
+       \bigl(u\sqrt{1-q}+v\sqrt q\bigr)^2,
+ \qquad \mathcal H(t,\delta)=L(\delta,t-\delta).
+\tag{41.5}
+$$
+
+These functions are smooth on the indicated open domain and its
+corresponding open domain in $(t,\delta)$.
+Theorem 37.5 supplies the unique interior minimum on
+$J(t)=[\max\{0,t-1\},t]$, for $0<t\le2$.
+Subtracting $2\kappa t$ from $\mathcal H$ gives exactly the scalar
+objective of that theorem, so its argument remains $\delta_\circ(t)$.
+The actual selected value is therefore
+
+$$
+ W(t):=V(2t)=\mathcal H(t,\delta_\circ(t)).
+\tag{41.6}
+$$
+
+In particular the selected $\delta,q,x,y,u,v,p$ are all strictly
+positive, and $\delta<2$, $q<1$. No zero population or zero amplitude
+is differentiated in this proof.
+
+We justify differentiation of this attained value without assuming
+differentiability of the selector. Its continuity, and continuity of
+$V$ through four, are supplied by Theorem 39.2.
+Fix $t_0\in(0,2]$, put $\delta_0=\delta_\circ(t_0)$, and restrict
+to $t$ sufficiently near $t_0$ in $(0,2]$.
+Interiority and continuity ensure that $\delta_0\in J(t)$ and
+$\delta_\circ(t)\in J(t_0)$, and that both points lie in one open
+neighborhood on which (41.5) is smooth. Minimality at the two levels gives
+
+$$
+\begin{aligned}
+ \mathcal H(t,\delta_\circ(t))
+       -\mathcal H(t_0,\delta_\circ(t))
+ &\le W(t)-W(t_0)\\
+ &\le\mathcal H(t,\delta_0)-\mathcal H(t_0,\delta_0).
+\end{aligned}
+\tag{41.7}
+$$
+
+After division by $t-t_0$, both outer difference quotients tend to
+$\partial_t\mathcal H(t_0,\delta_0)$, by continuity of the selector
+and of that partial derivative. For $t<t_0$ both inequality directions
+reverse, giving the same limit. It follows that
+$W'(t)=L_q(\delta_\circ(t),t-\delta_\circ(t))$ in the interior,
+with the analogous left derivative at $t=2$.
+This expression is continuous in $t$. The interior scalar stationarity
+also gives $L_\delta=L_q$ at every selected point.
+
+Writing $D_0=d^2-e^2$ and $S=u\sqrt{1-q}+v\sqrt q$, direct
+differentiation of (41.5), with the other variable held fixed, yields
+
+$$
+\begin{aligned}
+ L_\delta
+   &=2hS\left(\sqrt{1-q}-\frac{x\sqrt q}{y}\right),\\
+ L_q&=u^2-v^2-D_0
+             +uv\frac{2q-1}{\sqrt{q(1-q)}},\\
+ L_{qq}&=\frac{uv}{2[q(1-q)]^{3/2}}>0.
+\end{aligned}
+\tag{41.8}
+$$
+
+For each fixed selected $\delta$, evaluate the second line at $q=y^2$.
+Since $\sqrt{1-y^2}=x>0$, substitution gives
+
+$$
+ L_q(\delta,y^2)
+    =4c^2+\frac{4hc}{x}-D_0
+    \ge4c^2+4hc-D_0
+    =4s(h+s-1)>0.
+\tag{41.9}
+$$
+
+Here the last identity uses $D_0=4h+8s$, $c^2=(1+h)/2$ and
+$c=(1+2h)s$. The latter follows from $2hc=c+s$ and $h^2=1/2$.
+For the strict sign, $1/2<h<1$ and $s^2=(1-h)/2$ give
+
+$$
+ s^2-(1-h)^2=(1-h)(h-1/2)>0.
+$$
+
+Both $s$ and $1-h$ are positive; hence $s>1-h$, proving (41.9).
+
+If a selected point had $q\ge y^2$, the last line of (41.8) and
+(41.9) would give $L_q>0$. On the other hand
+$q\ge y^2$ is equivalent to
+$\sqrt{1-q}\le x\sqrt q/y$, so $L_\delta\le0$.
+This contradicts the selected stationarity $L_\delta=L_q$.
+Thus $q<y^2$, and the first line of (41.8) is strictly positive.
+Combining $V'(\xi)=W'(\xi/2)/2=L_q/2=L_\delta/2$ proves
+(41.4), including its continuous left limit at four.
+The mean value theorem on any $[a,b]\subset(0,4]$ now proves
+$V(b)>V(a)$ whenever $a<b$. This calculation uses the attained
+selected scalar minimum only. $\square$
+
