@@ -460,6 +460,7 @@ private lemma sum_by_size (L : ℕ) (hL : 5 ≤ L) (E : ℤ) :
     have hb := packing_bound L hL B (Finset.mem_filter.mp hB).2
     exact Finset.mem_Icc.mpr ⟨Nat.zero_le _, by omega⟩
   have hp (n : ℕ) : S.filter (fun B => B.card = n) = placements L n := by
+    rw [placements.eq_1]
     exact Finset.filter_filter (Admissible L) (fun B => B.card = n) _
   have hs : bubbleCount L E =
       ∑ n ∈ Finset.Icc 0 (L / 5), ∑ B ∈ placements L n, f B := by
