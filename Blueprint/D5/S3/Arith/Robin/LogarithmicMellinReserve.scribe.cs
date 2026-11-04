@@ -84,23 +84,21 @@ internal sealed class LogarithmicMellinReserveDocument : IScribeDocumentDefiniti
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
-    private static Formula Call(string name, params Formula[] arguments) =>
-        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
-
     private static Formula LowLogIntegrabilityFormula()
     {
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula exponent = F.Id("b");
         Formula variable = F.Id("y");
+        Formula qualified(string owner, string name) => Seq(Operatorname,
+            Grp(F.Id(owner), Dot, F.Id(name)));
+        Formula at(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
         Formula moment = Parenthesized(Seq(
             variable, Colon, Sp, real, Sp, Mapsto, Sp,
-            Minus, Call("log", variable), Sp, Cdot, Sp,
+            Minus, at(qualified("Real", "log"), variable), Sp, Cdot, Sp,
             variable, Caret, Grp(Seq(exponent, Minus, D(1)))));
-        Formula integrable = Call("IntegrableOn", moment, Call("Ioc", D(0), D(1)),
-            Call("volume"));
-        return Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
-            [new Formula.BoundVariable(FormulaIdentifier.Create("b"), real)],
-            new Formula.Logic(Seq(D(0), Sp, Lt, Sp, exponent),
-                FormulaLogicOperator.Implies, integrable)));
+        Formula integrable = at(qualified("MeasureTheory", "IntegrableOn"), moment,
+            at(qualified("Set", "Ioc"), D(0), D(1)), qualified("MeasureTheory", "volume"));
+        return Disp(Seq(Forall, Sp, Parenthesized(Seq(exponent, Colon, Sp, real)), Comma, Sp,
+            Parenthesized(Seq(D(0), Sp, Lt, Sp, exponent)), Sp, Rightarrow, Sp, integrable));
     }
 }
