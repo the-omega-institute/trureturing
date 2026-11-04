@@ -1,0 +1,56 @@
+### 8.2 原概率的数值保持
+
+原准备轨道的闭包为 $c+S^2$，最小闭凸完成为 $c+\overline B^3$。任一原事件评价唯一写成
+
+$$
+f(tc+w)=\alpha t+B(b,w).
+$$
+
+原轨道上的 $0\le f\le1$ 给
+$\|b\|\le\min(\alpha,1-\alpha)$。于是定义
+
+$$
+\rho_w=\frac{I+w\cdot\sigma}{2},\qquad
+E_f=\alpha I+b\cdot\sigma,
+$$
+
+便有 $\rho_w\ge0$、$\operatorname{Tr}\rho_w=1$、$0\le E_f\le I$，且
+
+$$
+\boxed{f(c+w)=\operatorname{Tr}(\rho_wE_f).}
+\tag{8.1}
+$$
+
+Pauli 迹恒等式直接证明等式。完整原测试的归一性给 $\sum_jE_{f,j}=I$，全部原标签与失败均保留。
+
+对单位方向 $n,m$，数学锐效果 $P_m=(I+m\cdot\sigma)/2$ 满足
+
+$$
+\operatorname{Tr}(P_nP_m)=\frac{1+B(n,m)}2
+=\cos^2\frac\theta2
+=|\langle\psi_n,\psi_m\rangle|^2.
+$$
+
+因此平方律不是由“任何数都可平方”推出，而是完整原仿射评价、三维球与最小复振幅表示的同一配对。
+
+相位几何是
+
+$$
+S^1\longrightarrow S^3\longrightarrow S^2\cong\mathbb C P^1,
+$$
+
+映射为
+
+$$
+(z_1,z_2)\mapsto
+(2\Re(\bar z_1z_2),2\Im(\bar z_1z_2),|z_1|^2-|z_2|^2).
+$$
+
+整体相位改变振幅代表而保持内容；Bloch 对跖 $n,-n$ 对应不同且正交的纯态。
+
+**哪些是实际已有的。**
+
+(8.1) 对原事件逐项保真，但所有数学锐效果未必都在原菜单。例如仅有 $(I\pm\eta n\cdot\sigma)/2$、$0<\eta<1$，仍能分离全部方向而没有锐效果。闭凸完成也不自动供应实际随机混合准备。这些供应问题在下节的原过程接口中处理。
+
+<a id="section-9"></a>
+
