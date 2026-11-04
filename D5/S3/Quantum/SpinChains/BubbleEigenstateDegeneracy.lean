@@ -93,18 +93,9 @@ private def gapPrefix {n : ℕ} (f : Fin n → ℕ) (i : ℕ) : ℕ :=
 
 private lemma gap_prefix_step {n : ℕ} (f : Fin n → ℕ) (i : Fin n) :
     gapPrefix f (i.val + 1) = gapPrefix f i.val + f i + 4 := by
-  classical
-  have hs : (Finset.univ.filter (fun j : Fin n => j.val < i.val + 1)) =
-      insert i (Finset.univ.filter (fun j : Fin n => j.val < i.val)) := by
-    ext j
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_insert,
-      Fin.ext_iff]
-    omega
-  change (∑ j ∈ Finset.univ.filter (fun j : Fin n => j.val < i.val + 1),
-    (f j + 4)) = _
-  rw [hs, Finset.sum_insert (by simp)]
-  change f i + 4 + gapPrefix f i.val = _
-  omega
+  simpa only [gapPrefix, ← Nat.le_iff_lt_add_one, ← Fin.le_def, ← Fin.lt_def,
+    Finset.filter_ge_eq_Iic, Finset.filter_gt_eq_Iio, Nat.add_assoc] using
+    (Finset.sum_Iio_add_eq_sum_Iic (f := fun j : Fin n => f j + 4) i).symm
 
 private lemma gap_prefix_top {n : ℕ} (f : Fin n → ℕ) :
     gapPrefix f n = (∑ i, f i) + 4 * n := by
@@ -433,11 +424,8 @@ private lemma label_count (L : ℕ) (B : Finset (Fin L)) (E : ℤ) :
     have he (k : ℕ) : 2 * (k : ℤ) - B.card = E ↔
         k = (((B.card : ℤ) + E) / 2).toNat := by
       omega
-    have hf : B.powerset.filter (fun x => 2 * (x.card : ℤ) - B.card = E) =
-        B.powersetCard (((B.card : ℤ) + E) / 2).toNat := by
-      ext x
-      simp only [Finset.mem_filter, Finset.mem_powerset, Finset.mem_powersetCard, he]
-    rw [hf, Finset.card_powersetCard]
+    rw [Finset.filter_congr (fun x _ => he x.card), ← Finset.powersetCard_eq_filter,
+      Finset.card_powersetCard]
   · apply Finset.card_eq_zero.mpr
     apply Finset.filter_eq_empty_iff.mpr
     intro x hx he
@@ -480,9 +468,7 @@ private lemma sum_by_size (L : ℕ) (hL : 5 ≤ L) (E : ℤ) :
     have hb := packing_bound L hL B (Finset.mem_filter.mp hB).2
     exact Finset.mem_Icc.mpr ⟨Nat.zero_le _, by omega⟩
   have hp (n : ℕ) : S.filter (fun B => B.card = n) = placements L n := by
-    rw [placements.eq_1]
-    ext B
-    simp only [S, Finset.mem_filter, Finset.mem_univ, true_and]
+    exact Finset.filter_filter (Admissible L) (fun B => B.card = n) _
   have hs : bubbleCount L E =
       ∑ n ∈ Finset.Icc 0 (L / 5), ∑ B ∈ placements L n, f B := by
     change (∑ B ∈ S, f B) = _
