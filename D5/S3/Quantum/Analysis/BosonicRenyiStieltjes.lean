@@ -7,6 +7,8 @@
    digest: Positive Stieltjes representation for the bosonic Gaussian Renyi function. -/
 
 import D5.S3.Arith.Robin.LogarithmicMellinReserve
+import Mathlib.Analysis.Calculus.ParametricIntegral
+import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
@@ -379,12 +381,64 @@ private lemma logarithmic_integrable {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     exact (weight_integrable ha0 ha2 ha1).mul_continuousOn_of_subset hc
       measurableSet_Ioo isCompact_Icc Ioo_subset_Icc_self
 
+private lemma resolvent_integrable {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hv : 1 < ν) :
+    IntegrableOn (fun x => renyiWeight α x * (2 * ν / (ν ^ 2 - x ^ 2))) (Ioo 0 1) := by
+  have hc : ContinuousOn (fun x : ℝ => 2 * ν / (ν ^ 2 - x ^ 2)) (Icc 0 1) := by
+    intro x hx
+    have hp : 0 < ν ^ 2 - x ^ 2 := by nlinarith [hx.1, hx.2]
+    exact (continuousAt_const.div (continuousAt_const.sub (continuousAt_id.pow 2))
+      hp.ne').continuousWithinAt
+  exact (weight_integrable ha0 ha2 ha1).mul_continuousOn_of_subset hc
+    measurableSet_Ioo isCompact_Icc Ioo_subset_Icc_self
+
 private lemma logarithmic_derivative {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 < ν) :
     HasDerivAt (fun v => ∫ x in Ioo (0 : ℝ) 1,
       renyiWeight α x * Real.log (v ^ 2 - x ^ 2))
       (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * (2 * ν / (ν ^ 2 - x ^ 2))) ν := by
-  sorry
+  let a : ℝ := (ν + 1) / 2
+  let b : ℝ := ν + 1
+  let C : ℝ := 2 * b / (a ^ 2 - 1)
+  have ha : 1 < a := by dsimp only [a]; linarith
+  have han : a < ν := by dsimp only [a]; linarith
+  have hb : ν < b := by dsimp only [b]; linarith
+  have hCden : 0 < a ^ 2 - 1 := by nlinarith
+  have hmeas : ∀ᶠ v in nhds ν, AEStronglyMeasurable
+      (fun x => renyiWeight α x * Real.log (v ^ 2 - x ^ 2))
+      (volume.restrict (Ioo 0 1)) := by
+    filter_upwards [lt_mem_nhds hv] with v hv'
+    exact (logarithmic_integrable ha0 ha2 ha1 hv'.le).aestronglyMeasurable
+  have hbound : ∀ᵐ x ∂volume.restrict (Ioo (0 : ℝ) 1), ∀ v ∈ Ioo a b,
+      ‖renyiWeight α x * (2 * v / (v ^ 2 - x ^ 2))‖ ≤ renyiWeight α x * C := by
+    filter_upwards [ae_restrict_mem measurableSet_Ioo] with x hx
+    intro v hv'
+    have hw := (weight_pos ha0 ha2 ha1 hx.1.le hx.2).le
+    have hv1 : 1 < v := ha.trans hv'.1
+    have hden : a ^ 2 - 1 ≤ v ^ 2 - x ^ 2 := by nlinarith [hx.1, hx.2, hv'.1]
+    have hpos : 0 < v ^ 2 - x ^ 2 := lt_of_lt_of_le hCden hden
+    have hq : 0 ≤ 2 * v / (v ^ 2 - x ^ 2) := div_nonneg (by linarith) hpos.le
+    rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg hw hq)]
+    exact mul_le_mul_of_nonneg_left
+      (div_le_div₀ (by dsimp only [b]; linarith) (by linarith [hv'.2]) hCden hden) hw
+  have hdiff : ∀ᵐ x ∂volume.restrict (Ioo (0 : ℝ) 1), ∀ v ∈ Ioo a b,
+      HasDerivAt (fun t => renyiWeight α x * Real.log (t ^ 2 - x ^ 2))
+        (renyiWeight α x * (2 * v / (v ^ 2 - x ^ 2))) v := by
+    filter_upwards [ae_restrict_mem measurableSet_Ioo] with x hx
+    intro v hv'
+    have hv1 : 1 < v := ha.trans hv'.1
+    have hpos : 0 < v ^ 2 - x ^ 2 := by nlinarith [hx.1, hx.2]
+    convert! ((((hasDerivAt_id v).pow 2).sub_const (x ^ 2)).log hpos.ne').const_mul
+      (renyiWeight α x) using 1
+    norm_num
+  exact (hasDerivAt_integral_of_dominated_loc_of_deriv_le
+    (μ := volume.restrict (Ioo (0 : ℝ) 1)) (F := fun v x =>
+      renyiWeight α x * Real.log (v ^ 2 - x ^ 2))
+    (F' := fun v x => renyiWeight α x * (2 * v / (v ^ 2 - x ^ 2)))
+    (bound := fun x => renyiWeight α x * C)
+    (isOpen_Ioo.mem_nhds ⟨han, hb⟩) hmeas (logarithmic_integrable ha0 ha2 ha1 hv.le)
+    (resolvent_integrable ha0 ha2 ha1 hv).aestronglyMeasurable hbound
+    ((weight_integrable ha0 ha2 ha1).mul_const C) hdiff).2
 
 private lemma entropy_difference_pos {α ν : ℝ} (ha0 : 0 < α) (hv : 1 ≤ ν) :
     0 < ((ν + 1) / 2) ^ α - ((ν - 1) / 2) ^ α := by
@@ -422,13 +476,151 @@ private lemma renyiFunction_hasDerivAt {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 
   rw [resolvent_integral ha0 ha2 ha1 hv]
   exact renyiFunction_derivative ha0 ha1 hv
 
+private lemma renyiFunction_normalized_limit {α : ℝ} (ha0 : 0 < α) (ha1 : α ≠ 1) :
+    Tendsto (fun ν => renyiFunction α ν - Real.log ν) atTop (nhds (renyiConstant α)) := by
+  have hdf : HasDerivAt (fun t : ℝ => (1 + t) ^ α - (1 - t) ^ α) (2 * α) 0 := by
+    have hA := ((hasDerivAt_id (0 : ℝ)).const_add 1).rpow_const
+      (p := α) (Or.inl (by norm_num))
+    have hB := ((hasDerivAt_id (0 : ℝ)).const_sub 1).rpow_const
+      (p := α) (Or.inl (by norm_num))
+    convert! hA.sub hB using 1
+    norm_num
+    ring
+  have hratio : Tendsto (fun ν : ℝ => ν * ((1 + ν⁻¹) ^ α - (1 - ν⁻¹) ^ α))
+      atTop (nhds (2 * α)) := by
+    simpa only [Function.comp_def, zero_add, add_zero, sub_zero, one_rpow, sub_self,
+      inv_inv, smul_eq_mul]
+      using hdf.tendsto_slope_zero_right.comp
+        (tendsto_inv_atTop_nhdsGT_zero : Tendsto (fun ν : ℝ => ν⁻¹) atTop (nhdsWithin 0 (Ioi 0)))
+  have hlim := ((hratio.log (by positivity)).sub_const (α * Real.log 2)).div_const (α - 1)
+  have hval : (Real.log (2 * α) - α * Real.log 2) / (α - 1) = renyiConstant α := by
+    rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) ha0.ne']
+    dsimp only [renyiConstant]
+    field_simp [sub_ne_zero.mpr ha1]
+    ring
+  rw [hval] at hlim
+  apply hlim.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ)] with ν hv
+  have hv0 : 0 < ν := by linarith
+  have hvh : 0 < ν / 2 := by positivity
+  have hi : 0 < ν⁻¹ := inv_pos.mpr hv0
+  have hi1 : ν⁻¹ < 1 := by
+    simpa only [one_div] using (div_lt_one hv0).mpr hv
+  have hp : 0 < 1 + ν⁻¹ := by positivity
+  have hm : 0 < 1 - ν⁻¹ := by linarith
+  have hg : 0 < (1 + ν⁻¹) ^ α - (1 - ν⁻¹) ^ α :=
+    sub_pos.mpr (Real.rpow_lt_rpow hm.le (by linarith) ha0)
+  have hA : (ν + 1) / 2 = (ν / 2) * (1 + ν⁻¹) := by field_simp
+  have hB : (ν - 1) / 2 = (ν / 2) * (1 - ν⁻¹) := by field_simp
+  have hD : ((ν + 1) / 2) ^ α - ((ν - 1) / 2) ^ α =
+      (ν / 2) ^ α * ((1 + ν⁻¹) ^ α - (1 - ν⁻¹) ^ α) := by
+    rw [hA, hB, Real.mul_rpow hvh.le hp.le, Real.mul_rpow hvh.le hm.le]
+    ring
+  dsimp only [renyiFunction]
+  rw [hD, Real.log_mul (Real.rpow_pos_of_pos hvh α).ne' hg.ne', Real.log_rpow hvh,
+    Real.log_div hv0.ne' (by norm_num : (2 : ℝ) ≠ 0), Real.log_mul hv0.ne' hg.ne']
+  field_simp [sub_ne_zero.mpr ha1]
+  ring
+
+private lemma logarithm_normalization {ν x : ℝ} (hv : 1 < ν) (hx : x ∈ Icc 0 1) :
+    Real.log (ν ^ 2 - x ^ 2) - 2 * Real.log ν = Real.log (1 - (x / ν) ^ 2) := by
+  have hv0 : 0 < ν := by linarith
+  have hpos : 0 < ν ^ 2 - x ^ 2 := by nlinarith [hx.1, hx.2]
+  have hq : 1 - (x / ν) ^ 2 = (ν ^ 2 - x ^ 2) / ν ^ 2 := by field_simp
+  have hqp : 0 < 1 - (x / ν) ^ 2 := by rw [hq]; exact div_pos hpos (sq_pos_of_pos hv0)
+  have heq : ν ^ 2 - x ^ 2 = ν ^ 2 * (1 - (x / ν) ^ 2) := by field_simp
+  rw [heq, Real.log_mul (pow_ne_zero 2 hv0.ne') hqp.ne', Real.log_pow]
+  ring
+
+private lemma normalized_log_integrable {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hv : 1 < ν) :
+    IntegrableOn (fun x => renyiWeight α x * Real.log (1 - (x / ν) ^ 2)) (Ioo 0 1) := by
+  have hi := (logarithmic_integrable ha0 ha2 ha1 hv.le).sub
+    ((weight_integrable ha0 ha2 ha1).mul_const (2 * Real.log ν))
+  apply hi.congr_fun _ measurableSet_Ioo
+  intro x hx
+  change renyiWeight α x * Real.log (ν ^ 2 - x ^ 2) -
+    renyiWeight α x * (2 * Real.log ν) =
+    renyiWeight α x * Real.log (1 - (x / ν) ^ 2)
+  rw [← logarithm_normalization hv ⟨hx.1.le, hx.2.le⟩]
+  ring
+
+private lemma normalized_integral_eq {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hv : 1 < ν) :
+    (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (1 - (x / ν) ^ 2)) =
+      (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (ν ^ 2 - x ^ 2)) - Real.log ν := by
+  calc
+    _ = ∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (ν ^ 2 - x ^ 2) -
+        renyiWeight α x * (2 * Real.log ν) := by
+      apply setIntegral_congr_fun measurableSet_Ioo
+      intro x hx
+      change renyiWeight α x * Real.log (1 - (x / ν) ^ 2) =
+        renyiWeight α x * Real.log (ν ^ 2 - x ^ 2) - renyiWeight α x * (2 * Real.log ν)
+      rw [← logarithm_normalization hv ⟨hx.1.le, hx.2.le⟩]
+      ring
+    _ = (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (ν ^ 2 - x ^ 2)) -
+        (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x) * (2 * Real.log ν) := by
+      rw [integral_sub (logarithmic_integrable ha0 ha2 ha1 hv.le)
+        ((weight_integrable ha0 ha2 ha1).mul_const (2 * Real.log ν)), integral_mul_const]
+    _ = _ := by rw [weight_mass ha0 ha2 ha1]; ring
+
+private lemma logarithmic_normalized_limit {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) :
+    Tendsto (fun ν => (∫ x in Ioo (0 : ℝ) 1,
+      renyiWeight α x * Real.log (ν ^ 2 - x ^ 2)) - Real.log ν) atTop (nhds 0) := by
+  have hmeas : ∀ᶠ ν in atTop, AEStronglyMeasurable
+      (fun x => renyiWeight α x * Real.log (1 - (x / ν) ^ 2))
+      (volume.restrict (Ioo 0 1)) := by
+    filter_upwards [eventually_gt_atTop (1 : ℝ)] with ν hv
+    exact (normalized_log_integrable ha0 ha2 ha1 hv).aestronglyMeasurable
+  have hbound : ∀ᶠ ν in atTop, ∀ᵐ x ∂volume.restrict (Ioo (0 : ℝ) 1),
+      ‖renyiWeight α x * Real.log (1 - (x / ν) ^ 2)‖ ≤
+        renyiWeight α x * (-Real.log (3 / 4)) := by
+    filter_upwards [eventually_ge_atTop (2 : ℝ)] with ν hv
+    filter_upwards [ae_restrict_mem measurableSet_Ioo] with x hx
+    have hv0 : 0 < ν := by linarith
+    have hw := (weight_pos ha0 ha2 ha1 hx.1.le hx.2).le
+    have hr0 : 0 ≤ x / ν := div_nonneg hx.1.le hv0.le
+    have hr1 : x / ν ≤ 1 / 2 := (div_le_iff₀ hv0).mpr (by linarith [hx.2])
+    have harg : (3 / 4 : ℝ) ≤ 1 - (x / ν) ^ 2 := by
+      nlinarith [mul_nonneg hr0 (sub_nonneg.mpr hr1)]
+    have hloglo : Real.log (3 / 4) ≤ Real.log (1 - (x / ν) ^ 2) :=
+      Real.log_le_log (by norm_num) harg
+    have hloghi : Real.log (1 - (x / ν) ^ 2) ≤ 0 :=
+      Real.log_nonpos (by linarith) (by nlinarith [sq_nonneg (x / ν)])
+    rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg hw, abs_of_nonpos hloghi]
+    exact mul_le_mul_of_nonneg_left (neg_le_neg hloglo) hw
+  have hlim : ∀ᵐ x ∂volume.restrict (Ioo (0 : ℝ) 1),
+      Tendsto (fun ν => renyiWeight α x * Real.log (1 - (x / ν) ^ 2)) atTop (nhds 0) := by
+    apply ae_of_all
+    intro x
+    have ht : Tendsto (fun ν : ℝ => x / ν) atTop (nhds 0) := by
+      simpa only [div_eq_mul_inv, mul_zero] using
+        (tendsto_inv_atTop_zero : Tendsto (fun ν : ℝ => ν⁻¹) atTop (nhds 0)).const_mul x
+    have hl : Tendsto (fun ν : ℝ => 1 - (x / ν) ^ 2) atTop (nhds 1) := by
+      simpa only [zero_pow (by norm_num : (2 : ℕ) ≠ 0), sub_zero] using
+        tendsto_const_nhds.sub (ht.pow 2)
+    simpa only [Real.log_one, mul_zero] using (hl.log one_ne_zero).const_mul (renyiWeight α x)
+  have ht := tendsto_integral_filter_of_dominated_convergence
+    (μ := volume.restrict (Ioo (0 : ℝ) 1)) (f := fun _ => (0 : ℝ))
+    (fun x => renyiWeight α x * (-Real.log (3 / 4))) hmeas hbound
+    ((weight_integrable ha0 ha2 ha1).mul_const (-Real.log (3 / 4))) hlim
+  have ht' : Tendsto (fun ν => ∫ x in Ioo (0 : ℝ) 1,
+      renyiWeight α x * Real.log (1 - (x / ν) ^ 2)) atTop (nhds 0) := by
+    simpa only [integral_zero] using ht
+  apply ht'.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ)] with ν hv
+  exact normalized_integral_eq ha0 ha2 ha1 hv
+
 private lemma representation_atTop {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) :
     Tendsto (fun ν => renyiFunction α ν -
       ∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (ν ^ 2 - x ^ 2))
       atTop (nhds (renyiConstant α)) := by
-  have hm := weight_mass ha0 ha2 ha1
-  sorry
+  have hs := renyiFunction_normalized_limit ha0 ha1
+  have hi := logarithmic_normalized_limit ha0 ha2 ha1
+  have hlim := hs.sub hi
+  simpa only [sub_sub_sub_cancel_right, sub_zero] using hlim
 
 private lemma representation_of_one_lt {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 < ν) :
@@ -455,13 +647,72 @@ private lemma representation_of_one_lt {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 
   dsimp only [f] at hc
   linarith
 
+private lemma logarithmic_continuousWithinAt_one {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) : ContinuousWithinAt
+      (fun ν => ∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (ν ^ 2 - x ^ 2))
+      (Ici 1) 1 := by
+  let B := fun x => renyiWeight α x * (Real.log 4 - Real.log (1 - x ^ 2))
+  have hBi : Integrable B (volume.restrict (Ioo 0 1)) := by
+    convert! ((weight_integrable ha0 ha2 ha1).mul_const (Real.log 4)).sub
+      (logarithmic_integrable_at_one ha0 ha2 ha1) using 1
+    ext x
+    dsimp only [B, Pi.sub_apply]
+    ring
+  have hmeas : ∀ᶠ ν in nhdsWithin (1 : ℝ) (Ici 1), AEStronglyMeasurable
+      (fun x => renyiWeight α x * Real.log (ν ^ 2 - x ^ 2))
+      (volume.restrict (Ioo 0 1)) := by
+    filter_upwards [self_mem_nhdsWithin] with ν hv
+    exact (logarithmic_integrable ha0 ha2 ha1 hv).aestronglyMeasurable
+  have hbound : ∀ᶠ ν in nhdsWithin (1 : ℝ) (Ici 1),
+      ∀ᵐ x ∂volume.restrict (Ioo (0 : ℝ) 1),
+        ‖renyiWeight α x * Real.log (ν ^ 2 - x ^ 2)‖ ≤ B x := by
+    filter_upwards [self_mem_nhdsWithin,
+      nhdsWithin_le_nhds (gt_mem_nhds (by norm_num : (1 : ℝ) < 2))]
+      with ν hv1 hv2
+    change 1 ≤ ν at hv1
+    filter_upwards [ae_restrict_mem measurableSet_Ioo] with x hx
+    have hw := (weight_pos ha0 ha2 ha1 hx.1.le hx.2).le
+    have hxpos : 0 < 1 - x ^ 2 := by nlinarith [hx.1, hx.2]
+    have hvpos : 0 < ν ^ 2 - x ^ 2 := by nlinarith [hx.1, hx.2, hv1]
+    have hloglo : Real.log (1 - x ^ 2) ≤ Real.log (ν ^ 2 - x ^ 2) :=
+      Real.log_le_log hxpos (by nlinarith [hv1])
+    have hloghi : Real.log (ν ^ 2 - x ^ 2) ≤ Real.log 4 :=
+      Real.log_le_log hvpos (by nlinarith [sq_nonneg x, hv1])
+    have hl0 : Real.log (1 - x ^ 2) ≤ 0 := Real.log_nonpos hxpos.le (by nlinarith)
+    have hl4 : 0 ≤ Real.log 4 := Real.log_nonneg (by norm_num)
+    rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg hw]
+    exact mul_le_mul_of_nonneg_left (abs_le.mpr ⟨by linarith, by linarith⟩) hw
+  have hlim : ∀ᵐ x ∂volume.restrict (Ioo (0 : ℝ) 1),
+      Tendsto (fun ν => renyiWeight α x * Real.log (ν ^ 2 - x ^ 2))
+        (nhdsWithin (1 : ℝ) (Ici 1))
+        (nhds (renyiWeight α x * Real.log (1 ^ 2 - x ^ 2))) := by
+    filter_upwards [ae_restrict_mem measurableSet_Ioo] with x hx
+    have hxpos : 0 < (1 : ℝ) ^ 2 - x ^ 2 := by nlinarith [hx.1, hx.2]
+    exact (((continuousAt_id.pow 2).sub continuousAt_const).log hxpos.ne').const_mul
+      (renyiWeight α x) |>.continuousWithinAt
+  exact tendsto_integral_filter_of_dominated_convergence B hmeas hbound hBi hlim
+
+private lemma renyiFunction_continuousAt_one {α : ℝ} (ha0 : 0 < α) :
+    ContinuousAt (renyiFunction α) 1 := by
+  have hA : ContinuousAt (fun v : ℝ => ((v + 1) / 2) ^ α) 1 :=
+    ((continuousAt_id.add continuousAt_const).div_const 2).rpow_const (Or.inr ha0.le)
+  have hB : ContinuousAt (fun v : ℝ => ((v - 1) / 2) ^ α) 1 :=
+    ((continuousAt_id.sub continuousAt_const).div_const 2).rpow_const (Or.inr ha0.le)
+  exact ((hA.sub hB).log (entropy_difference_pos ha0 le_rfl).ne').div_const (α - 1)
+
 private lemma representation_at_one {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) :
     renyiFunction α 1 = renyiConstant α +
       ∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (1 ^ 2 - x ^ 2) := by
   have hr := fun v (hv : 1 < v) => representation_of_one_lt ha0 ha2 ha1 hv
-  have hi := logarithmic_integrable ha0 ha2 ha1 (ν := 1) le_rfl
-  sorry
+  have hl := (renyiFunction_continuousAt_one ha0).continuousWithinAt (s := Ioi (1 : ℝ))
+  have hi := (logarithmic_continuousWithinAt_one ha0 ha2 ha1).mono Ioi_subset_Ici_self
+  have heq : (fun v => renyiFunction α v) =ᶠ[nhdsWithin (1 : ℝ) (Ioi 1)]
+      (fun v => renyiConstant α +
+        ∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (v ^ 2 - x ^ 2)) := by
+    filter_upwards [self_mem_nhdsWithin] with v hv
+    exact hr v hv
+  exact tendsto_nhds_unique hl ((tendsto_const_nhds.add hi).congr' heq.symm)
 
 /-- Positive logarithmic Stieltjes representation, including the pure-mode endpoint. -/
 theorem stieltjes_representation {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
