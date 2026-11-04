@@ -1,5 +1,5 @@
 ---
-bibkey: coarsegraining-efron-stein
+bibkey: armstrong2026efronstein
 authors: Scott N. Armstrong
 year: 2026
 title: CoarseGraining Efron-Stein source proof

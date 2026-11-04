@@ -13,7 +13,7 @@ internal sealed class EfronSteinDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/EfronStein.efronStein_pi"),
                 H("Finite-product variance tensorization"),
                 StatementSource.FromLean(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/coarsegraining-efron-stein")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/armstrong2026efronstein")),
                 Blocks(
                     Paragraph(Text("The index type is any finite type, including the empty type. Each coordinate has its own arbitrary measurable space and probability measure. The observable is a measurable real function on their dependent product with a single pointwise absolute bound M. The outer sample x follows the full product law, and the replacement y follows the probability measure of coordinate i. The coefficient is one half.")),
                     Paragraph(Text("Splitting off one coordinate gives the two-factor variance decomposition. The two-point variance identity supplies that coordinate’s resampling term; Jensen’s inequality bounds each resampling term of the conditional mean by the corresponding term of the original observable. Induction on the number of coordinates and a measure-preserving reindexing give the stated finite-product inequality. The empty product has zero variance and an empty energy sum.")),
