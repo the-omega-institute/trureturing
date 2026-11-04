@@ -30,10 +30,12 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
                     Paragraph(Text("PositiveDual denotes all original real-linear functionals nonnegative on C, and Effects denotes all x with x and u-x in C. RealEndomorphisms denotes all original real-linear maps E to E. The notation K abbreviates the norm of the square of the transported operator, and IsLeast includes membership in the displayed bound set as well as its minimality. Here j is the canonical linear wrapping map to the copy E_u, and H_u is defined solely by H_u(j(v))=j(H(v)). The constructed copy is complete. The wrapping map and its inverse are continuous in the original finite-dimensional topology; no equality with the auxiliary ambient norm is asserted.")),
                     Paragraph(Text("For every positive original real-linear functional beta, its evaluation is bounded by its mass beta(u) times n(v). Applying beta to the attained endpoint inequalities proves this without dividing by its mass. Thus mass zero forces the original functional to vanish. The operator norm of beta transported to E_u is exactly beta(u), including in dimension zero.")),
                     Paragraph(Text("The square H_u squared acts on j(v) as j(H(H(v))). Its operator norm is exactly the infimum of all nonnegative c satisfying n(H(H(v))) at most c n(v) for every original v. This infimum is attained. Neither an ambient operator bound nor the square of the norm of H is substituted for this number.")),
-                    Paragraph(Text("A positive unital linear map contracts n. A linear equivalence whose inverse is also positive is an isometry; positivity and unitality alone do not imply isometry. Applying this conclusion to exp(tH) uses both the assumed positivity at t and at -t. Conjugation by j carries the actual exponential to exp(tH_u).")),
+                    Paragraph(Text("A positive unital linear map contracts n. A linear equivalence whose inverse is also positive is an isometry; positivity and unitality alone do not imply isometry. Applying this conclusion to exp(tH) uses both the assumed positivity at t and at -t. Independently, H(u)=0 makes the derivative of exp(tH)u vanish on the whole real line, so the actual exponential fixes u. Conjugation by j carries the actual exponential to exp(tH_u).")),
                     Paragraph(Text("Assume that every original exp(tH) is positive and fixes u. Its order norm is then preserved for every real t. If the separately supplied condition H(u)=0 also holds, an effect x in C with u-x in C has centered vector z=x-u/2 of order norm at most one half, and H(H(x))=H(H(z)). Positive-functional domination and the exact square-operator bound give the displayed all-time centered-orbit estimate.")),
-                    Paragraph(Text("The actual scalar orbit f(t)=beta(exp(tH)x) is twice continuously differentiable, with first derivative beta(exp(tH)Hx) and second derivative beta(exp(tH)H(Hx)). Taylor's theorem on the unoriented interval from 0 to any real s gives f(s) at most f(0)+s f'(0)+M s squared divided by two, where M=beta(u)K/2. Positivity makes this quadratic nonnegative on the entire real line. The existing quadratic discriminant theorem then gives f'(0) squared at most 2M f(0), including M=0. This proves the reverse certificate with exactly K=the operator norm of H_u squared, without division by mass or curvature. The positive-generator criterion and the same-constant closure argument remain separate; no full quantitative generator equivalence or optimality of K is asserted here.")),
-                    Paragraph(Text("Order-unit norm and positive-functional mass facts are classical; the present concrete interface retains the original cone, unit, functional and linear action in one construction. It asserts no literature priority or physical realization of the mathematical exponential.")))))));
+                    Paragraph(Text("The actual scalar orbit f(t)=beta(exp(tH)x) is twice continuously differentiable, with first derivative beta(exp(tH)Hx) and second derivative beta(exp(tH)H(Hx)). Taylor's theorem on the unoriented interval from 0 to any real s gives f(s) at most f(0)+s f'(0)+M s squared divided by two, where M=beta(u)K/2. Positivity makes this quadratic nonnegative on the entire real line. The existing quadratic discriminant theorem then gives f'(0) squared at most 2M f(0), including M=0. This proves the reverse certificate with exactly K=the operator norm of H_u squared, without division by mass or curvature. The positive-generator criterion remains separate; no full quantitative generator equivalence or optimality of K is asserted here.")),
+                    Paragraph(Text("For an arbitrary original preparation set P contained in the full positive dual, assume its finite nonnegative cone has closure equal to that dual. Finite-dimensionality identifies every original linear functional with its unique continuous-linear version. The closure is the usual topology on the original dual, not a replacement preparation set. A certificate with one fixed nonnegative q on P extends with exactly the same q to the full dual. Mathlib's weighted finite Cauchy-Schwarz inequality applies directly to signed evaluations with nonnegative weights and masses, including the empty sum. For each fixed effect the squared inequality describes a closed set of functionals, so it persists under closure.")),
+            Paragraph(Text("For r strictly positive and y and r u-y in C, apply the effect certificate to y/r and use the original linear maps. Multiplication by r squared leaves exactly q r beta(y) beta(u). There is no positive lower mass bound or division by mass. The attained order-radius bound supplies a finite strictly positive r for every positive y. Therefore beta(y)=0 forces beta(Hy)=0 for every positive original beta. The symbols Certificate, Cone and Closure in the display mean precisely this effect certificate, finite nonnegative cone and ordinary dual-topology closure.")),
+            Paragraph(Text("Order-unit norm and positive-functional mass facts are classical; the present concrete interface retains the original cone, unit, functional and linear action in one construction. It asserts no literature priority or physical realization of the mathematical exponential.")))))));
 
     private static Formula CoreStatement()
     {
@@ -83,13 +85,28 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
         var group=Implies(Call("PositiveUnitalAtEveryRealTime",H,C,u),And(
             All("t",Id("R"),All("v",Id("E"),Eq(N(Orbit(v)),N(v)))),
             Implies(Eq(Apply(H,u),F.D(0)),And(centered,reverse))));
+        var q=Id("q"); var P=Id("P"); var alpha=Id("alpha"); var y=Id("y"); var r=Id("r");
+        var certificateClosure=All("q",Id("R"),All("P",Call("Subsets",Id("PositiveDual")),
+            Implies(And(Le(F.D(0),q),
+                Eq(Call("Closure",Call("Cone",P)),Id("PositiveDual")),
+                All("alpha",P,Call("Certificate",H,q,alpha))),
+                And(All("beta",Id("PositiveDual"),Call("Certificate",H,q,beta)),
+                    All("beta",Id("PositiveDual"),All("r",Id("PositiveReals"),
+                        All("y",C,Implies(Call("mem",Call("sub",Scale(r,u),y),C),
+                            Le(Call("square",Call("abs",Apply(beta,Apply(H,y)))),
+                                Mul(Mul(Mul(q,r),Apply(beta,y)),Apply(beta,u))))))),
+                    All("beta",Id("PositiveDual"),All("y",C,
+                        Implies(Eq(Apply(beta,y),F.D(0)),
+                            Eq(Apply(beta,Apply(H,y)),F.D(0)))))))));
         return All("E", Id("Types"),
             Implies(Call("FiniteDimensionalRealNormedSpace", Id("E")),
                 All("A", Call("ConeUnitData", Id("E")), And(
                     first, Call("Complete",Eu), Call("Continuous",j),
                     Call("Continuous",Call("inverse",j)), dual,
                     All("H", Call("RealEndomorphisms", Id("E")),
-                        And(action, coefficient, transport, group)),
+                        And(action, coefficient, transport,
+                            Implies(Eq(Apply(H,u),F.D(0)),All("t",Id("R"),Eq(Orbit(u),u))),
+                            group, certificateClosure)),
                     Call("PositiveUnitalInverseIsometry",C,u,Id("n"))))));
     }
 

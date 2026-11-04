@@ -16,6 +16,7 @@ public import Mathlib.Analysis.Normed.Algebra.Exponential
 public import Mathlib.Analysis.SpecialFunctions.Exponential
 public import Mathlib.Analysis.Calculus.Taylor
 public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.Calculus.MeanValue
 public import Mathlib.Geometry.Convex.Cone.Pointed
 public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 public import Mathlib.Algebra.QuadraticDiscriminant
@@ -386,6 +387,22 @@ private lemma centered_orbit_bound [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] 
       gcongr
     _ = β A.unit * ‖A.operator H * A.operator H‖ / 2 := by ring
 
+private lemma vector_orbit_hasDerivAt [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
+    (x : E) (t : ℝ) :
+    HasDerivAt (fun s : ℝ => originalFlow H s x) (originalFlow H t (H x)) t := by
+  let : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have hd := (hasDerivAt_exp_smul_const (LinearMap.toContinuousLinearMap H) t).clm_apply
+    (hasDerivAt_const t x)
+  simpa [originalFlow, mul_apply_eq_comp] using hd
+
+private lemma flow_unit [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
+    (hu : H A.unit = 0) (t : ℝ) : originalFlow H t A.unit = A.unit := by
+  have hd (s : ℝ) : HasDerivAt (fun r : ℝ => originalFlow H r A.unit) 0 s := by
+    simpa [hu] using vector_orbit_hasDerivAt H A.unit s
+  have h := is_const_of_deriv_eq_zero (fun s => (hd s).differentiableAt)
+    (fun s => (hd s).deriv) t 0
+  simpa [originalFlow] using h
+
 private lemma scalar_square_bound (f : ℝ → ℝ) (hf : ContDiff ℝ 2 f)
     (hpos : ∀ t, 0 ≤ f t) (M : ℝ)
     (hsecond : ∀ t, |iteratedDeriv 2 f t| ≤ M) :
@@ -415,12 +432,10 @@ private lemma orbit_hasDerivAt [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
     (β : E →ₗ[ℝ] ℝ) (x : E) (t : ℝ) :
     HasDerivAt (fun s : ℝ => β (originalFlow H s x))
       (β (originalFlow H t (H x))) t := by
-  let : CompleteSpace E := FiniteDimensional.complete ℝ E
-  have hd := (hasDerivAt_exp_smul_const (LinearMap.toContinuousLinearMap H) t).clm_apply
-    (hasDerivAt_const t x)
+  have hd := vector_orbit_hasDerivAt H x t
   have hb : HasFDerivAt (LinearMap.toContinuousLinearMap β)
       (LinearMap.toContinuousLinearMap β)
-      ((NormedSpace.exp (t • LinearMap.toContinuousLinearMap H)) x) :=
+      (originalFlow H t x) :=
     (LinearMap.toContinuousLinearMap β).hasFDerivAt
   have h := hb.comp_hasDerivAt t hd
   simpa [Function.comp_def, originalFlow, mul_apply_eq_comp] using h
@@ -441,11 +456,13 @@ private lemma orbit_contDiff [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
 
 private lemma reverse_certificate [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
     (hu : H A.unit = 0)
-    (hflow : ∀ t : ℝ,
-      (∀ v ∈ A.cone, originalFlow H t v ∈ A.cone) ∧ originalFlow H t A.unit = A.unit)
+    (hpositive : ∀ t : ℝ, ∀ v ∈ A.cone, originalFlow H t v ∈ A.cone)
     (β : E →ₗ[ℝ] ℝ) (hβ : ∀ v ∈ A.cone, 0 ≤ β v)
     (x : E) (hx : x ∈ A.cone) (hux : A.unit - x ∈ A.cone) :
     |β (H x)| ^ 2 ≤ ‖A.operator H * A.operator H‖ * β x * β A.unit := by
+  have hflow (t : ℝ) :
+      (∀ v ∈ A.cone, originalFlow H t v ∈ A.cone) ∧ originalFlow H t A.unit = A.unit :=
+    ⟨hpositive t, A.flow_unit H hu t⟩
   let f : ℝ → ℝ := fun s => β (originalFlow H s x)
   have hd : deriv f = fun s => β (originalFlow H s (H x)) := by
     funext s
@@ -492,9 +509,10 @@ private lemma cone_certificate (H : E →ₗ[ℝ] E) (P : Set (E →L[ℝ] ℝ))
       rw [sq_abs] at ha
       have ht := mul_le_mul_of_nonneg_left ha (sq_nonneg (c α))
       nlinarith only [ht])
-  simp only [Certificate, Finsupp.sum, sum_apply, _root_.smul_apply, smul_eq_mul]
+  simp only [Finsupp.sum, sum_apply, _root_.smul_apply, smul_eq_mul]
   rw [sq_abs]
-  simpa only [← Finset.mul_sum] using hb
+  simp only [mul_assoc, ← Finset.mul_sum] at hb
+  nlinarith only [hb]
 
 private lemma closure_certificate (H : E →ₗ[ℝ] E) (P : Set (E →L[ℝ] ℝ))
     (K : ℝ) (hK : 0 ≤ K) (hP : P ⊆ A.positiveDual)
@@ -570,6 +588,7 @@ theorem original_order_unit_norm_interface [FiniteDimensional ℝ E] :
       IsLeast (A.operatorBounds (H * H)) ‖A.operator H * A.operator H‖ ∧
       (∀ t v, NormedSpace.exp (t • A.operator H) (A.wrap v) =
         A.wrap (originalFlow H t v)) ∧
+      (H A.unit = 0 → ∀ t, originalFlow H t A.unit = A.unit) ∧
       ((∀ t : ℝ,
         (∀ v ∈ A.cone, originalFlow H t v ∈ A.cone) ∧
           originalFlow H t A.unit = A.unit) →
@@ -601,14 +620,14 @@ theorem original_order_unit_norm_interface [FiniteDimensional ℝ E] :
   · intro β hβ
     exact ⟨A.positive_bound β hβ, A.positive_zero_mass β hβ, A.positive_norm β hβ⟩
   · intro H
-    refine ⟨fun v => ⟨rfl, rfl⟩, ?_, ?_, A.flow_transport H, ?_⟩
+    refine ⟨fun v => ⟨rfl, rfl⟩, ?_, ?_, A.flow_transport H, A.flow_unit H, ?_⟩
     · rw [A.operator_square, A.operator_norm]
     · rw [A.operator_square]
       exact (A.operator (H * H)).isLeast_opNorm
     · intro hflow
       exact ⟨A.flow_isometry H hflow,
         fun hu β hβ x hx hux t => A.centered_orbit_bound H hu hflow β hβ x hx hux t,
-        fun hu β hβ x hx hux => A.reverse_certificate H hu hflow β hβ x hx hux⟩
+        fun hu β hβ x hx hux => A.reverse_certificate H hu (fun t => (hflow t).1) β hβ x hx hux⟩
   · exact A.source_certificate
   · exact A.positive_inverse_isometry
 
