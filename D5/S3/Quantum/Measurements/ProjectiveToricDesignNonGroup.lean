@@ -7,10 +7,7 @@
    digest: An inverse spread gives a non-group projective toric 2-design in dimension 27. -/
 
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.LinearAlgebra.Matrix.Symmetric
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic
+import Mathlib.LinearAlgebra.Matrix.DotProduct
 
 /-!
 The formal reading is the representative slice with first phase zero in
@@ -46,7 +43,8 @@ def claim : Prop :=
       ∃ H : AddSubgroup (Fin d → Real.Angle), (H : Set (Fin d → Real.Angle)) = ↑X
 
 private def coord : Fin 27 ≃ (Fin 3 → ZMod 3) :=
-  (finFunctionFinEquiv (m := 3) (n := 3)).symm.trans (Equiv.piCongrRight fun _ => (ZMod.finEquiv 3).toEquiv)
+  (finFunctionFinEquiv (m := 3) (n := 3)).symm.trans
+    (Equiv.piCongrRight fun _ => (ZMod.finEquiv 3).toEquiv)
 
 private def phase (k : ZMod 3) : Real.Angle := ((2 * Real.pi / 3) * k.val : ℝ)
 
@@ -145,15 +143,15 @@ private theorem character_orthogonality (w : Fin 3 → ZMod 3) :
     { toFun := fun x => w ⬝ᵥ x
       map_zero' := dotProduct_zero w
       map_add' := dotProduct_add w }
-  let χ : AddChar (Fin 3 → ZMod 3) ℂ := ZMod.stdAddChar.compAddMonoidHom f
-  change ∑ x, χ x = 0
+  let ψ : AddChar (Fin 3 → ZMod 3) ℂ := ZMod.stdAddChar.compAddMonoidHom f
+  change ∑ x, ψ x = 0
   apply AddChar.sum_eq_zero_of_ne_one
   intro h
   apply hw
   apply dotProduct_eq_zero
   intro x
   apply ZMod.injective_stdAddChar
-  change χ x = ZMod.stdAddChar 0
+  change ψ x = ZMod.stdAddChar 0
   rw [h, AddChar.one_apply, AddChar.map_zero_eq_one]
 
 private theorem polynomial_shift (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
@@ -248,7 +246,8 @@ private theorem polynomial_unique (A B : Matrix (Fin 3) (Fin 3) (ZMod 3))
   have hAB : A = B := by
     ext i j
     have he : 2 * (A i j - B i j) = 0 := by
-      simpa only [single_one_dotProduct, Matrix.mulVec_single_one, Matrix.col, Matrix.transpose_apply] using
+      simpa only [single_one_dotProduct, Matrix.mulVec_single_one, Matrix.col,
+        Matrix.transpose_apply] using
         hp (Pi.single i 1) (Pi.single j 1)
     exact sub_eq_zero.mp ((mul_eq_zero.mp he).resolve_left ht)
   refine ⟨hAB, ?_⟩
