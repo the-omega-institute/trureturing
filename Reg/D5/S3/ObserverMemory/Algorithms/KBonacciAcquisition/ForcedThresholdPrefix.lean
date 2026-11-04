@@ -17,7 +17,7 @@ universe u
 
 @[reducible] def signature : Signature where
   Params := Σ Y : Type u, Σ Q : ℕ, Σ m : ℕ, Σ a : ℕ,
-    Σ _labels : ZMod (Q * m + 1) → Y, Y × Y × Y
+    Σ _labels : ZMod (Q * m + 1) → Y, Σ _outside : Y, Σ _rejected : Y, Y
   State p := Option (LiveRecord (p.2.1 * p.2.2.1))
   Role := Unit
   finiteRole := inferInstance
