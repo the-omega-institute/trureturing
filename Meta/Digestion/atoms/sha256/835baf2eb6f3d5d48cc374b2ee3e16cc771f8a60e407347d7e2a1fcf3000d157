@@ -1,0 +1,22 @@
+## 当前二元比较的三维图
+
+对两个单位幅度 x,y，记 z=⟨x,y⟩。它们的带尺度关系矩阵可写为
+
+```math
+R=\frac12
+\begin{pmatrix}1&\bar z\\z&1\end{pmatrix}
+=\frac12(I+\mathbf r\cdot\boldsymbol\sigma),
+\qquad
+\mathbf r=(\operatorname{Re}z,\operatorname{Im}z,0).
+```
+
+它是二元 Gram 的转置归一，仍为正，因此球点满足 ‖r‖≤1。切向条件令两端强度的一阶变化都为零，并有
+
+```math
+\Gamma_v(x,y)=-2\frac{d}{dt}\operatorname{Re}\langle x(t),y(t)\rangle.
+```
+
+单侧条件先约束实坐标的变化；反向点将其锁成零，共同复方向再锁住虚坐标。于是完整复比较保留。不同二元球图仍须来自同一个共同正核。
+
+\*\*白话图景。\*\*两个内容的差别先画成一个小关系球；新条件锁住球上比较怎样变化。所有这些小球必须由同一场转动一起带动。门的先后次序则在小回路里留下交换子，这也是内容的一部分。
+

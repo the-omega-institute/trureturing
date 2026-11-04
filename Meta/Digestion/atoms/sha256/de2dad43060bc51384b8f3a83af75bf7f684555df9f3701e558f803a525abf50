@@ -1,0 +1,73 @@
+#### 定理 7.3（项目原生全上下文二次响应刻画）
+
+在上述固定来源及终端接口前提下，
+
+$$
+
+\mathrm T_4\iff\mathrm T_{10}
+ \iff
+ P_w(\psi)=\langle \psi,E_w\psi\rangle,
+ E_w\succeq0,\sum_wE_w=I_H.
+
+$$
+
+若另外要求每个合法基态的确定性基底标定
+$P_w(e_\beta)=\delta_{w,\operatorname{label}(\beta)}$，则还等价于全部合法标签的
+$P_w(\psi)=|\psi_w|^2$，其余标签恒零。
+
+
+**证明。**
+
+这是固定源码 §86.1 的条件结论。给出其关键完整逻辑，并将外部表示论供应列明。
+
+令 $X=\mathbb P(H)$、$Cg=g\circ K_0$、
+$\mathcal E_2=\frac1{10}\sum_{t=0}^9\zeta^{-2t}C^t$。
+稠密制备射线及连续性先把任一实际 $f$ 上的关系延拓为整个 $X$ 的函数恒等式。射影门密度与紧空间上一致连续性，再将后接字的极限用于
+$P_w\circ U$，其中 $U$ 为任意数学酉。$R(C),\mathcal E_2$ 是有限个等距拉回的线性组合，故极限保持恒等式；这一步没有增加执行权限。
+
+使用已有复射影调和分解：
+
+$$
+
+L^2(X,\mu)=\widehat{\bigoplus}_{j\ge0}\mathcal H_j^\mathbb{C},
+ \mathcal H_0^\mathbb{C}\oplus\mathcal H_1^\mathbb{C}
+ =\{单位球上的复二次型\}.
+
+$$
+
+每个 $\mathcal H_j^\mathbb{C}$ 有限维、不可约、彼此不等价，酉作用保持各分量。这里 $\mu$ 是酉不变全支撑测度；这些表示论性质是 Galley–Masanes 与 Masanes–Galley–Müller 的已知中间结果。[Galley–Masanes](#ref-galley) [Masanes 等](#ref-masanes)
+完备性也可按多项式代数说明：所有双齐次 $(j,j)$ 多项式在单位球上的限制，组成含常数、共轭封闭且分离射线的代数，Stone–Weierstrass 给一致稠密性，继而给 $L^2$ 完备性。
+
+对每个 $j\ge2$，选 $a\in\operatorname{im}\Pi$，及 $\ker\Pi$ 中两个不同坐标 $b,c$，令
+
+$$
+
+Y_j(z)=z_a^2z_b^{j-2}\overline{z_c}^{j}.
+
+$$
+
+它为非零双次数 $(j,j)$ 多项式，收缩
+$\sum_d\partial_{z_d}\partial_{\bar z_d}Y_j=0$，所以位于最高调和分量 $\mathcal H_j^\mathbb{C}$。这是双齐次调和分解中收缩核的标准描述。两谱分裂给
+
+$$
+
+CY_j=\zeta^{4+j-2-j}Y_j=\zeta^2Y_j.
+
+$$
+
+于是 $\mathcal E_2Y_j=Y_j\ne0$，且
+$R(C)Y_j=R(\zeta^2)Y_j\ne0$；本原十次根保证 $\zeta^2$ 不在 $R$ 的三个根中。这个证据对任意高 $j$ 都成立，避免了模十频率混叠的漏洞。
+
+记到 $\mathcal H_j^\mathbb{C}$ 的正交投影为 $Q_j$。它与酉拉回和两个有限和算子交换。若 $Q_jP_w\ne0$，其全酉平移因不可约性张成整个 $\mathcal H_j^\mathbb{C}$。全上下文恒等式因此会使 $\mathcal E_2$ 或 $R(C)$ 在该整个空间为零，与 $Y_j$ 矛盾。故所有 $j\ge2$ 分量消失。$L^2$ 完备性、连续性及全支撑将几乎处处二次表示提升为处处二次表示；实值性使系数 Hermitian。
+
+非负性给 $E_w\succeq0$，总概率归一化给 $\sum E_w=I_H$。反向由引理 [引理 7.2](#lem:fourtime) 对任意共同后接酉成立。
+最后若给基底标定，各 $E_w$ 的对角元只有相应的零或一。正性给
+$|(E_w)_{ab}|^2\le(E_w)_{aa}(E_w)_{bb}$，零对角元消去整行列，所以合法标签恰为基投影，非法标签为零。
+
+**证明完。** ∎
+
+
+与前轮先给有限预测秩上界的路线相比，这个刻画不先假设响应属于有限多项式空间，也不先假设预测秩有限。它依赖*所有*制备、所有后接及所有标签，不能简写成“任意四个实验数值相等就证明 Born”。同样，标定独立于时间关系：常数律 $P_w=1/1024$ 满足两关系，却不是指定基底 Born 律。
+
+
+<a id="prop:quartic"></a>

@@ -1,0 +1,52 @@
+**Lemma 13.2 (Uniformly separated core below the second boundary).** There
+are constants $A_R,b,c_0>0$ such that every integer pair
+$\sqrt a\le h\le R_*\sqrt a$, $a\ge A_R$, and every actual law satisfying
+
+$$
+H(x)\le U_{a,h}
+\tag{13.3}
+$$
+
+has precisely $r$ marginals at least $b/a$, each at least $c_0$. All
+other $h$ marginals are less than $b/a<c_0$. Thus these sets are uniquely
+the largest and smallest actual marginals.
+
+**Proof.** By (13.2) choose $C_0\ge1$, depending only on $R$, such that
+(13.3) implies $H\le a^3+C_0a^2$. Apply Lemma 7.1 with
+$(C,L,R)=(C_0,1,R_*)$. Its threshold construction uses
+$b=4C_0$ and gives the floor $c_0=(8C_0+1)^{-1}$. If its threshold core
+has $a+j$ labels, its complement has $n=h+1-j$ labels. The lemma gives
+
+$$
+1\le j\le4C_0,\qquad v>0,\qquad
+\frac{H-B_0}{a^2}
+\ge\frac{(h+1-j)^2}{av}+2v+2j-2-O_R(a^{-1/2}).
+\tag{13.4}
+$$
+
+The integer $j$, the tail probability $v/a$ and the marginal partition
+all come from the same law. In particular $n>0$ eventually, since
+$h\ge\sqrt a$ and $j$ is bounded. Arithmetic--geometric mean gives
+
+$$
+\frac{H-B_0}{a^2}
+\ge2\sqrt2\,q+2j-2-O_R(a^{-1/2}).
+\tag{13.5}
+$$
+
+On the other hand,
+
+$$
+0\le\psi(q)-2\sqrt2\,q=(q-\sqrt2)_+^2
+\le (R_*-\sqrt2)_+^2<2.
+\tag{13.6}
+$$
+
+The strict gap between the last bound and $2$ depends only on $R$.
+Equations (13.2)--(13.3) therefore exclude every $j\ge2$ once $a$ is
+sufficiently large. Hence $j=1$, and the threshold core and tail have
+sizes $r$ and $h$. Finally increase $A_R$ until $b/a<c_0$. This proves
+both strict separation and uniqueness. Only the uniform compact-ratio
+certificate of Lemma 7.1 is used; no fixed-$h$ or fixed-width limiting
+statement is applied to varying parameters. ∎
+

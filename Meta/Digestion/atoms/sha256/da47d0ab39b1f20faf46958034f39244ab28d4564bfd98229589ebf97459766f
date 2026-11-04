@@ -1,0 +1,6 @@
+**Theorem 9.3 (finite static labels, finite online registers and the native structural criterion).** For every fixed native \(d:E\to\mathbb R_{>0}\) and every \(\epsilon>0\), the following are equivalent:
+
+1. An admissible finite static supplement exists.
+2. An admissible finite online supplement exists under Definition 9.1.
+3. The two structural requirements of Theorem 7.2 hold: every cyclic SCC has exactly one internal outgoing named edge at each vertex, and every root-starting condensation path meets at most one cyclic SCC.
+

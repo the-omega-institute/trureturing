@@ -1,0 +1,32 @@
+**推论 10.2（非空线性改进区间与精确端点）。** 对命题 10.1，记 $C_*=1+2\sqrt2$、$d=\sqrt{1+t^2}$、$\epsilon=12\sqrt2|t|$。两方均可取 $s_J=\sqrt2$，新旧证书分别为
+
+$$
+L(t)=\frac{2C_*d\,\epsilon}{\sqrt2-2C_*\epsilon},
+\qquad
+\delta_{\rm old}(t)=
+\min\left\{d,
+\frac{C_*\epsilon+\sqrt{C_*^2\epsilon^2+4C_*d\epsilon}}2\right\}.
+\tag{10.11}
+$$
+
+在非空区间
+
+$$
+0<|t|<\frac1{192\sqrt2 C_*}
+\tag{10.12}
+$$
+
+有 $|t|/2\le L(t)<\delta_{\rm old}(t)$。旧定理本已在固定条件下给 $O(\sqrt\epsilon)$ 的消失界及平凡截顶；这一族具有固定产品和非退化作用谱，使 (9.6) 给出严格更强的 $O(\epsilon)$ 上界。$t=0$ 仍是活动合同中的实现，$\epsilon=0$、局部交替及 $D_1=0$ 恰好同时成立。
+
+证明。(10.12) 等价于 $0<\epsilon<1/(16C_*)$，并保证 $|t|<1$，所以 $1\le d\le\sqrt2$ 且 (10.11) 的分母大于 $\sqrt2/2$。于是
+
+$$
+L(t)\le4C_*\epsilon
+ <\sqrt{C_*\epsilon}
+ \le\frac{C_*\epsilon+\sqrt{C_*^2\epsilon^2+4C_*d\epsilon}}2,
+\qquad L(t)<1\le d.
+\tag{10.13}
+$$
+
+这证明严格改进；自缺陷的下界 $|t|/2$ 由 (10.3) 与定理 9.2 得到。$t=0$ 的全部断言由 (10.1)–(10.6) 直接成立。∎
+

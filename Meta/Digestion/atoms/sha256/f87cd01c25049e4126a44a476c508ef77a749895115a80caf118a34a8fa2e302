@@ -1,0 +1,10 @@
+It is connected. Deleting a leaf
+does not alter genus or separate remaining vertices. If $g\geq1$, a
+cycle survives; if $g=0$ and $|A|\geq2$, the paths between anchors
+survive. Thus the result is not an isolated point. The surviving
+non-anchor vertices have degree two or three. Suppress degree-two
+vertices to obtain a cubic skeleton with its anchors, denoted $G(D)$.
+If everything is bivalent it is the circle. An anchor-to-anchor path
+may instead give the two-anchor strut. Suppression preserves the two
+distinct ends of a returning path and the IDs of parallel paths.
+

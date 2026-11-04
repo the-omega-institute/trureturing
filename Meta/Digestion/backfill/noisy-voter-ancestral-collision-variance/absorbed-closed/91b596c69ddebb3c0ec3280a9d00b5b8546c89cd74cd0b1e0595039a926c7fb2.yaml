@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:91b596c69ddebb3c0ec3280a9d00b5b8546c89cd74cd0b1e0595039a926c7fb2
+  normalized_sha256: sha256:91b596c69ddebb3c0ec3280a9d00b5b8546c89cd74cd0b1e0595039a926c7fb2
+cas_ref: sha256:91b596c69ddebb3c0ec3280a9d00b5b8546c89cd74cd0b1e0595039a926c7fb2
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/NoisyVoter/TerminatedHistories.terminated_history_source_correspondence
+    target_statement_id: sha256:efa99bc11609cf76418572a16a658f2810e88f3eead967e1bb345c5917e7a58a
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,115 @@
+### 引理 2：素数幂项只留下一个有限窗口
+
+定义
+
+
+<a id="display-19"></a>
+
+$$
+\tau_h(u)=
+\begin{cases}
+2\sinh((h-|u|)/2),&|u|\le h,\\
+0,&|u|>h,
+\end{cases}
+$$
+
+
+以及
+
+
+<a id="display-20"></a>
+
+$$
+\upsilon_h(u)=\Delta_h\tau_h(u).
+$$
+
+
+直接使用双曲函数加法公式，得到
+
+
+<a id="display-21"></a>
+
+$$
+\Delta_hg=\tau_h,
+$$
+
+
+从而
+
+
+<a id="display-22"></a>
+
+$$
+\operatorname{supp}\upsilon_h\subset[-2h,2h],
+\qquad
+\upsilon_h(0)=-2\sinh h.
+$$
+
+
+因此，对于 $d>2h$，
+
+
+<a id="display-23"></a><a id="eq-6"></a>
+
+$$
+\boxed{
+\Delta_h^2\mathscr K(d)
+=
+\Gamma_h(d)
++
+\sum_{|\log m-d|\le2h}
+\frac{\Lambda(m)}{\sqrt m}
+\,\upsilon_h(d-\log m),
+}
+$$
+
+<p align="center" data-equation-number="6"><a href="#eq-6">(6)</a></p>
+
+
+其中
+
+
+<a id="display-24"></a><a id="eq-7"></a>
+
+$$
+\Gamma_h(d)
+=
+\sum_{k\ge1}
+c_ke^{-\lambda_kd}
+\left[
+2\cosh(\lambda_kh)-2\cosh(h/2)
+\right]^2
+>0.
+$$
+
+<p align="center" data-equation-number="7"><a href="#eq-7">(7)</a></p>
+
+
+对固定 $d>0$，还有
+
+
+<a id="display-25"></a>
+
+$$
+\Gamma_h(d)=O(h^4).
+$$
+
+
+因为方括号为 $O(\lambda_k^2h^2)$，而在 $h<d/4$ 时，平方后的级数受一个指数衰减的可求和级数控制。
+
+式 (6) 很关键：**背景项被精确消去，剩余算术关系全部来自**
+
+
+<a id="display-26"></a>
+
+$$
+e^{d-2h}\le p^j\le e^{d+2h}
+$$
+
+
+**中的实际素数幂。** 这些项的符号仍完整保留。
+
+---
+
+<a id="section-3"></a>
+

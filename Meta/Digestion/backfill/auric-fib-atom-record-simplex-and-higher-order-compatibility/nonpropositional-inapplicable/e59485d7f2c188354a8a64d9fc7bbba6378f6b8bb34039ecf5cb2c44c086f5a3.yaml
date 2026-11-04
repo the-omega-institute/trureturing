@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e59485d7f2c188354a8a64d9fc7bbba6378f6b8bb34039ecf5cb2c44c086f5a3
+  normalized_sha256: sha256:e59485d7f2c188354a8a64d9fc7bbba6378f6b8bb34039ecf5cb2c44c086f5a3
+cas_ref: sha256:e59485d7f2c188354a8a64d9fc7bbba6378f6b8bb34039ecf5cb2c44c086f5a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项仅为定理 5.1 的标题和定位文本。完整数学义务在子句 26190160be2c293a974e14d29511295e8e74d5c080623e7218feff2de8e77a22；标题自身没有独立待覆盖命题。
+    previous_atom_id: 62a58f98c9b4b3fadaff9d555516b2ac9cec0d822de76d3faaa6d796420b4fda
+    next_atom_id: 26190160be2c293a974e14d29511295e8e74d5c080623e7218feff2de8e77a22

@@ -1,0 +1,30 @@
+### 定义 2：素数幂比值矩阵
+
+定义实对称矩阵 $\mathsf A$：
+
+
+<a id="display-29"></a>
+
+$$
+\mathsf A_{ii}=0,
+$$
+
+
+
+<a id="display-30"></a><a id="eq-9"></a>
+
+$$
+\boxed{
+\mathsf A_{ij}
+=
+\begin{cases}
+\dfrac{\log p}{p^{r/2}},
+&e^{|t_i-t_j|}=p^r,\ r\ge1,\\[2mm]
+0,&\text{否则}.
+\end{cases}
+}
+$$
+
+<p align="center" data-equation-number="9"><a href="#eq-9">(9)</a></p>
+
+

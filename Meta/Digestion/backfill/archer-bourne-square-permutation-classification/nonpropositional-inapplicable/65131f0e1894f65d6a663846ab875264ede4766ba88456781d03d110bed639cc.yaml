@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:65131f0e1894f65d6a663846ab875264ede4766ba88456781d03d110bed639cc
+  normalized_sha256: sha256:65131f0e1894f65d6a663846ab875264ede4766ba88456781d03d110bed639cc
+cas_ref: sha256:65131f0e1894f65d6a663846ab875264ede4766ba88456781d03d110bed639cc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Enclosing Section 8 scope-boundary and open-question block whose constituent heading, scope note, and open-problem atoms are nonpropositional.
+    previous_atom_id: cc9adaf967bc749eaa0abee51cab678f7c54582d125e07b3f176dd697e159b92
+    next_atom_id: b7d6e7d540f6e0f20aad413d54f1679cbd655cd367ef92787a53f35cf38426cb
+  chain_atoms:
+    - f80bdeff4e144ab1886b6286f1e2987f477f5c16b9e292ac619e55182087a754
+    - 9da7cb2a126e2e86e3d232daf7bc9d42f81ea2058360d5aaea6ce31ed9347234
+    - 2b2f7879422d403dd2b471d562eb65cf6183d212dd06377cda3f9d5d49b6dbb3

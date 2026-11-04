@@ -1,0 +1,40 @@
+#### 定理 2.4（真实 Hat 重投影的二维复酉表示）
+
+将四个实坐标跨物理／内部空间配对为
+$z=x+i x^\star\in\mathbb{C}^2$，定义
+
+$$
+M_D=\frac{I_2-iD}{\sqrt2}=e^{-i\pi D/4}\in\mathrm{SU}(2).
+$$
+
+则
+
+$$
+\boxed{\operatorname{Re}\bigl(M_D(x+i x^\star)\bigr)
+ =\frac{x+Dx^\star}{\sqrt2}.}
+$$
+
+其实四维表示为
+
+$$
+W_D=\frac1{\sqrt2}\begin{pmatrix}I_2&D\\-D&I_2\end{pmatrix}\in SO(4),
+$$
+
+并有 $M_D^4=-I_2$、$M_D^8=I_2$。
+
+**证明。**
+
+$D=D^\dagger$、$D^2=I$ 给
+$M_D^\dagger M_D=(I+iD)(I-iD)/2=I$。
+$D$ 的本征值为 $+1,-1$，故 $M_D$ 的谱为 $e^{-i\pi/4},e^{i\pi/4}$，行列式为一，指数式及幂式随即成立。
+直接展开
+$M_D(x+i x^\star)=2^{-1/2}[(x+Dx^\star)+i(x^\star-Dx)]$
+给实部和实矩阵表示。
+
+∎
+
+这是一条更直接的单量子比特门矩阵接口，但复结构是明确指定的跨空间配对；实部也不是 Born 概率。$U_D$ 与 $W_D$ 具有同一个可见前两行而不同的互补通道，说明可见投影并不唯一确定本体的可逆完成。
+对非零坐标可先归一化为 $z/\left\lVert z\right\rVert$，此时还须保留标尺及相位参考，才可恢复原来的 Hat 坐标。仅有单比特射线与标尺不够：$z$ 与 $iz$ 范数、射线相同，但输出实部一般不同。下述额外参考模式给出一种明确解决方式。
+
+<a id="statement-2-5"></a>
+

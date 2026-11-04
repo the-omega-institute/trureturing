@@ -1,0 +1,55 @@
+**定理 34.2（Strict extension of the entire prior union）。**
+For every integer $S\geq1$, every graph $H\in\mathcal V_s$
+has every original $E_s$-ground vector in $\operatorname{ran}P_s$,
+and has the qualitative same-minimum inequalities (32.20).
+At each such scale,
+
+$$
+\mathcal U_s^{\rm mp}\subsetneq\mathcal V_s,
+\qquad
+\{Y_n:n\geq1\}\subseteq
+       \mathcal V_s\setminus\mathcal U_s^{\rm mp}.
+\tag{34.3}
+$$
+
+Proof. Theorem 30.2 gives the conclusions on the entire
+$\mathcal U_s^{\rm mp}$ with exactly its hypotheses and
+endpoints. Corollary 32.3 gives them on $\mathcal D$ at
+the same original minimum, so they hold on their union.
+Proposition 33.2 supplies infinitely many connected interacting
+graphs in the difference for every scale and proves strictness.
+In particular, no previous sufficient theorem, example,
+counterexample, exceptional local minimum or scale alternative
+is removed or strengthened by (34.1).
+
+The additional mathematical inference is (32.11)–(32.18):
+the dominating vertex turns a component singlet ground vector
+into normalized weight-zero and weight-one trials with energy
+increments two and one, whose coupling to the actual spin-$S$
+fibre at $p$ has a negative direction at every exterior weight
+$|q|\leq S-1$. Equation (32.6), supplied by actual deficient
+attainment, places that direction strictly below the same
+whole-carrier $E_s$. The family (33.2) then separates this
+sufficient condition from every part of (30.2).
+The representation, singlet rotations, nonstrict comparison and
+finite spectral principles remain their classical or supplied
+intermediate results. This is an inference from those stated
+inputs, with no assertion of literature priority.
+
+For a connected even-order $H\notin\mathcal V_s$,
+every-ground confinement at that scale remains unresolved here.
+The all-even question retains (34.1) separately for every
+$S\geq1$; a scale-dependent old hypothesis is not promoted
+to an all-scale graph hypothesis. The joint equality and
+incidence conditions of Theorem 31.3 and the component and
+spin-one cone conditions of §§19–20 remain necessary conditions,
+not converses. The strict local result provides neither an
+actual nonsymmetric original-ground counterexample outside
+(34.1) nor a general solution for arbitrary $H$.
+All statements use simple unit-weight graphs, equal even fibres,
+positive coefficient-one adjacency and only global half filling
+on the entire complex carrier. They impose no product-state
+restriction on ground vectors and supply no numerical or
+scale-uniform global gap, other-weight or other-filling
+extension, or physical-realization conclusion. $\square$
+

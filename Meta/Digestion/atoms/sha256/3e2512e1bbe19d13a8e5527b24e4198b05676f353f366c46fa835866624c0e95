@@ -1,0 +1,183 @@
+**Definition 51.1 (fixed slices, original realization and the uniqueness question).**
+Retain the original domain
+$\mathcal K=\operatorname{Dens}_2\times U(4)$, where
+$\operatorname{Dens}_2=\{E\in\mathbb C^{2\times2}:E\succeq0,
+\operatorname{Tr}E=1\}$, and the ordinary transpose $\mathsf T$.
+The original optimizer pairs $(E_\sigma,U_\sigma)$ and certificate basis
+$T=(b_+\ b_-)$ are those of Sections 23 and 48. The distance remains
+
+$$
+\begin{aligned}
+ \rho_\sigma(E,U)
+ &=\min_{|\lambda|=1}
+   \bigl(\|E-E_\sigma\|_{\mathrm F}^2
+          +\|U-\lambda U_\sigma\|_{\mathrm F}^2\bigr),\\
+ \rho(E,U)&=\min\{\rho_+(E,U),\rho_-(E,U)\}.
+\end{aligned}
+\tag{51.1}
+$$
+
+Here $\|A\|_{\mathrm F}^2=\operatorname{Tr}(A^\dagger A)$.
+The scalar $\lambda$ multiplies the whole feedback; there are no separate
+pair or column quotients. Fix parameters in the full range
+
+$$
+ \sigma\in\{+,-\},\qquad
+ 0<\xi\le\frac{13}{4},\qquad
+ 0<q<\min\{1,\xi/2\},
+\tag{51.2}
+$$
+
+and set
+
+$$
+\begin{aligned}
+ p&=1-q,&x&=1-\frac\xi4+\frac q2,&y&=\sqrt{1-x^2},&L&=1+x,\\
+ h&=\frac1{\sqrt2},&c&=\cos(\pi/8),&s&=\sin(\pi/8),
+ &d&=2(h+c),\qquad e=2(h+s).
+\end{aligned}
+\tag{51.3}
+$$
+
+Thus $3/16<x<1$, $p,q>0$ and $y>0$. No uniform separation from the
+excluded population or $x=1$ limits is assumed. Use exactly the fixed
+pair order of (46.2):
+
+$$
+\begin{array}{c|c|c|c|c}
+ \sigma&J&K&(a,b,\ell,m)&(K_\sigma,K_{-\sigma})\\ \hline
+ +&(1,2)&(3,4)&(h,c,h,s)&(d,e)\\
+ -&(3,4)&(1,2)&(s,h,c,h)&(e,d).
+\end{array}
+\tag{51.4}
+$$
+
+In particular $0<a<b$ and $\ell>m>0$. For an actual phase feedback
+$U=\operatorname{diag}(v)U_\sigma$, $v\in\mathbb T^4$, define
+
+$$
+ X=\frac14\left|\sum_{j\in J}v_j\right|^2,
+ \qquad
+ Y=\frac14\left|\sum_{j\in K}v_j\right|^2,
+ \qquad
+ \left|\sum_jv_j\right|=2L.
+\tag{51.5}
+$$
+
+The complete attained domain, including its boundary, is
+
+$$
+ \mathcal T_x=\{(X,Y)\in[0,1]^2:\sqrt X+\sqrt Y\ge L\}.
+\tag{51.6}
+$$
+
+On it put $k=b-a$ and
+
+$$
+\begin{aligned}
+ Z&=\frac{L^2-X-Y}{2\sqrt{XY}},
+ &\Delta&=4XY-(L^2-X-Y)^2,\\
+ F&=\sqrt{(1-X)(1-Y)}\sqrt{1-Z^2},\\
+ R&=\sqrt{a^2X+b^2Y+ab(L^2-X-Y)}
+   =\sqrt{abL^2-akX+bkY},\\
+ C&=\sqrt{\ell^2(1-X)+m^2(1-Y)+2\ell mF},\\
+ \Gamma_\sigma(x,q;X,Y)&=\sqrt p\,R+\sqrt q\,C.
+\end{aligned}
+\tag{51.7}
+$$
+
+All square roots are nonnegative. Lemma 46.2 gives $X,Y\ge x^2$,
+$XY\ge x^2>0$ and $|Z|\le1$. Since
+$|\sqrt X-\sqrt Y|<L$, the factorization of $\Delta$ shows that
+$\Delta=0$ precisely on $\sqrt X+\sqrt Y=L$.
+Also $R^2\ge abL^2-ak>a^2>0$ throughout $\mathcal T_x$.
+
+These formulas retain a single actual realization. In fact Lemma 46.2
+constructs, for every point of $\mathcal T_x$, phases $\theta_J,\theta_K$
+and signs $\varepsilon_J,\varepsilon_K\in\{\pm1\}$ with
+
+$$
+\begin{aligned}
+ (v_j)_{j\in J}
+ &=e^{i\theta_J}\bigl(\sqrt X+i\varepsilon_J\sqrt{1-X},
+                         \sqrt X-i\varepsilon_J\sqrt{1-X}\bigr),\\
+ (v_j)_{j\in K}
+ &=e^{i\theta_K}\bigl(\sqrt Y+i\varepsilon_K\sqrt{1-Y},
+                         \sqrt Y-i\varepsilon_K\sqrt{1-Y}\bigr),\\
+ \cos(\theta_J-\theta_K)&=Z.
+\end{aligned}
+\tag{51.8}
+$$
+
+The ordered recoveries are those of (46.4), namely
+
+$$
+\begin{aligned}
+ M_+(v)&=h(v_1+v_2)+c(v_3+v_4),
+ &N_+(v)&=h(v_1-v_2)+is(v_3-v_4),\\
+ M_-(v)&=h(v_1+v_2)+s(v_3+v_4),
+ &N_-(v)&=h(v_1-v_2)-ic(v_3-v_4).
+\end{aligned}
+\tag{51.9}
+$$
+
+Choosing $\varepsilon_J\varepsilon_K$ with the sign of
+$\sin(\theta_J-\theta_K)$ gives, on that same whole feedback,
+$|M_\sigma|=2R$ and the maximal $|N_\sigma|=2C$.
+If the sine vanishes either product is allowed. The one arbitrary common
+scalar on all four $v_j$ remains allowed, including at boundary points.
+
+The pure effects and energy at this population are
+
+$$
+\begin{aligned}
+ \psi_+^\phi&=(\sqrt p,e^{i\phi}\sqrt q)^{\mathsf T},
+ &\psi_-^\phi&=(e^{i\phi}\sqrt q,\sqrt p)^{\mathsf T},\\
+ E&=(T\psi_\sigma^\phi(\psi_\sigma^\phi)^\dagger T^\dagger)^{\mathsf T},
+ &\mathsf E_\sigma(q)&=K_\sigma^2p+K_{-\sigma}^2q.
+\end{aligned}
+\tag{51.10}
+$$
+
+The same-feedback identity used in Theorem 46.4 is
+$g(E,U)=\mathsf E_\sigma(q)-|\chi|^2$, with
+$\chi=\sqrt p\,M_\sigma+e^{i\phi}\sqrt q\,N_\sigma$.
+The free coherence phase aligns these two recoveries and attains
+$|\chi|=2\Gamma_\sigma$ in (51.8). A zero weighted term imposes no
+alignment condition. The active branch distance is
+$8+2q-4L=4(1-x)+2q=\xi$; the two-sign budget
+(42.17)--(42.20) makes it the true original distance throughout (51.2).
+Thus the fixed-slice minimum is exactly
+$\mathsf E_\sigma(q)-4(\max_{\mathcal T_x}\Gamma_\sigma)^2$.
+This is a simultaneous recovery and distance realization, rather than
+independent optimizations of $M_\sigma$ and $N_\sigma$.
+
+Finally retain the determinant of (46.13), writing $D_\sigma$ for
+$\mathfrak D_\sigma$:
+
+$$
+\begin{aligned}
+ R_0&=ax+b,&\Gamma_0&=\sqrt p\,R_0+\sqrt q\,\ell y,\\
+ \mu&=\frac12\left(\frac{ak\sqrt p}{R_0}
+                         +\frac{\ell\sqrt q}{y}\right)>0,\\
+ \nu&=\frac12\left(k\sqrt p
+                +\frac{(\ell^2x-m^2)\sqrt q}{\ell y}\right),\\
+ D_\sigma(x,q)&=\frac{4\mu\nu x^2}{L}-m^2q.
+\end{aligned}
+\tag{51.11}
+$$
+
+No sign assumption on $\nu$ is made. The unresolved universal question is
+whether, for every tuple (51.2) with $D_\sigma(x,q)<0$, there is exactly
+one ordered pair $(X_*,Y_*)\in\mathcal T_x$ such that
+
+$$
+ \Gamma_\sigma(x,q;X,Y)
+ \le\Gamma_\sigma(x,q;X_*,Y_*)
+ \qquad\text{for every }(X,Y)\in\mathcal T_x.
+\tag{51.12}
+$$
+
+Only ordered pair lengths are at issue in (51.12); distinct feedback
+phases or effects with the same lengths are not identified by this question.
+

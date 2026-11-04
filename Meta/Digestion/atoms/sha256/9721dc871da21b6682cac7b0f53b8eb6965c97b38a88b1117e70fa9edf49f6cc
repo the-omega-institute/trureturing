@@ -1,0 +1,8 @@
+After earning $h$, exactly one of the following procedures applies.
+
+1. If $h<\ell+L$, a complete paid scan at the original root has
+   $O((d+1)^4)$ present nodes and directly acquires $(P,n)$.
+2. If $h\ge\ell+L$, the present physical address
+   $v=a^{h-L}$ has depth at least $\ell$. Its actual rank $q$ and
+   normalized cut $T=q-1$ satisfy
+

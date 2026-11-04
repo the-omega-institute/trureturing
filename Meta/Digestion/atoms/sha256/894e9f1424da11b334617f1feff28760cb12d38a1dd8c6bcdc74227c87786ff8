@@ -1,0 +1,57 @@
+#### 定理 2.2（Hat 重投影的正交完成）
+
+令 $D$ 如 [(1)](#eq-d)，并定义
+
+$$
+U_D=\frac1{\sqrt2}\begin{pmatrix}I_2&D\\I_2&-D\end{pmatrix}.
+$$
+
+则 $D^T=D$、$D^2=I_2$、$\det D=-1$，且
+
+<a id="eq-2"></a>
+
+$$
+\begin{aligned}
+ U_D&\in O(4),&
+ U_D&=(H_2\otimes I_2)\operatorname{diag}(I_2,D),\end{aligned}
+\tag{2}
+$$
+
+<a id="eq-completion"></a>
+
+$$
+\begin{aligned}
+ U_D(x,x^\star)
+ &=\frac1{\sqrt2}\bigl(x+Dx^\star,\ x-Dx^\star\bigr),&
+ H_2&=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+
+\end{aligned}
+\tag{3}
+$$
+
+将四个实坐标分别作为四个复振幅后，同一矩阵属于 $\operatorname{U}(4)$。其阶恰为八，且
+
+$$
+\operatorname{spec}(U_D)=\{1,-1,e^{i\pi/4},e^{-i\pi/4}\}.
+$$
+
+**证明。**
+
+$121+(3\sqrt{15})^2=256$，交叉项为零，直接得 $D^2=I$；行列式为 $-256/256=-1$。分块相乘得
+$U_DU_D^T=\frac12\operatorname{diag}(2I_2,2I_2)=I_4$，另一个乘积同理。右侧因子分解直接成立。
+在 $D$ 的 $+1$ 本征方向对应的两个副本上，$U_D$ 限制为 $H_2$，谱为 $\pm1$；在 $-1$ 本征方向上限制为
+$2^{-1/2}\bigl(\begin{smallmatrix}1&-1\\1&1\end{smallmatrix}\bigr)$，谱为 $e^{\pm i\pi/4}$。含原始八次单位根而全部本征值八次方为一，故阶恰八。实矩阵的复化仍满足 $U_D^\dagger U_D=I$。
+
+∎
+
+完整范数守恒具体为
+
+$$
+\left\lVert x+Dx^\star\right\rVert ^2+\left\lVert x-Dx^\star\right\rVert ^2
+ =2\bigl(\left\lVert x\right\rVert ^2+\left\lVert x^\star\right\rVert ^2\bigr).
+$$
+
+Hat 可见坐标是前两分量再乘固定标尺 $\sqrt2$；隐藏的互补分量使信息没有因取二维切面而在完整线性变换中消失。这是本文对高维投影直觉最直接的肯定性结果。
+
+<a id="statement-2-3"></a>
+

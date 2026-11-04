@@ -1,0 +1,58 @@
+#### 定理 5.5（两种主动朝向生成稠密单比特门集）
+
+令
+
+$$
+R_\theta=\begin{pmatrix}\cos\theta&-\sin\theta\\
+ \sin\theta&\cos\theta\end{pmatrix},\quad
+ D_0=D,\quad D_1=R_{\pi/3}DR_{\pi/3}^T,\quad
+ M_j=\frac{I-iD_j}{\sqrt2}.
+$$
+
+若在同一固定复振幅编码中，$M_0$ 与 $M_1$ 都可主动调用，则它们的正向有限门字在 $\mathrm{SU}(2)$ 中稠密。
+
+**证明。**
+
+写 $\sigma_x=\bigl(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\bigr)$、
+$\sigma_y=\bigl(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\bigr)$、
+$\sigma_z=\operatorname{diag}(1,-1)$。
+任意实对称二阶反射可写成 $D=a\sigma_x+b\sigma_z$，$a^2+b^2=1$。
+对本矩阵 $a=3\sqrt{15}/16$、$b=-11/16$。
+实平面旋转共轭使该 Pauli 轴旋转两倍角，直接相乘给
+
+$$
+\operatorname{Tr}(D_0D_1)=2\cos(2\pi/3)=-1,\qquad [D_0,D_1]\ne0.
+$$
+
+两门因此不对易，且
+
+$$
+\operatorname{Tr}(M_0M_1)=1-\frac12\operatorname{Tr}(D_0D_1)=\frac32.
+$$
+
+若 $C=M_0M_1$ 有限阶，其本征值是单位根，迹是代数整数。
+有理代数整数必为整数：将既约分数代入首一整系数多项式，分母整除分子幂，只能为一。$3/2$ 不是整数，矛盾。
+
+于是 $C\in\mathrm{SU}(2)$ 的本征角是 $\pi$ 的无理倍数，其幂闭包包含绕某个 Pauli 轴 $n$ 的完整圆群 $T_n$。
+令 $G$ 为两门生成群的闭包，故 $T_n\subset G$，且 $M_0T_nM_0^\dagger=T_m\subset G$。
+若 $m=\pm n$，则 $M_0$ 的伴随作用保持实直线 $\mathbb{R} n$。但该伴随作用是绕 $D_0$ 轴的 $\pi/2$ 旋转，唯一不变实直线就是其旋转轴。所以 $n$ 与 $D_0$ 共轴，$C$ 与 $M_0$ 对易，进而 $M_1=M_0^{-1}C$ 与 $M_0$ 对易，矛盾。故 $n,m$ 不平行。
+
+由绕 $n$ 的一个适当小角度旋转共轭 $T_m$，可得到第三个轴 $\ell$，使 $n,m,\ell$ 线性独立；其初始偏移方向为非零的 $n\times m$。
+三个圆群均包含在 $G$。映射
+
+$$
+(s,t,u)\longmapsto
+ e^{-is\,n\cdot\sigma}e^{-it\,m\cdot\sigma}e^{-iu\,\ell\cdot\sigma}
+$$
+
+在原点的微分满秩，故由局部逆函数定理，其像含 $\mathrm{SU}(2)$ 单位元邻域。于是 $G$ 为开子群；$\mathrm{SU}(2)$ 连通，故 $G=\mathrm{SU}(2)$。
+最后每个 $M_j^8=I$，逆可由七次正调用实现，因此正向有限字与含逆字生成同一个群，其闭包也为全群。
+
+∎
+
+这给出了一个具有精确矩阵及完整证明的候选：**同一种四分之一转动构件，在两个指定的主动朝向下，足以近似任意 $\mathrm{SU}(2)$ 门。**单独使用时，这等价于模整体相位的任意单比特门；带外部相干控制时不能省略相位接口。
+但被动地同时转动门和读口的坐标系，不会新增一个可调用控制。CPS 的星映射也未必让物理与内部平面同向旋转，故不能仅由 Hat 图案含 $60^\circ$ 朝向就声称这两个算子已被供应。
+该证明对任意实平面反射 $D$ 都成立，没有使用非周期性，因此不是 Hat 独有的普适性。它也没有提供纠缠资源，尚不能宣称任意多比特计算普适，更不能与原生黄金 $K$ 的既有多地址接口直接等同。
+
+<a id="sec-6"></a>
+

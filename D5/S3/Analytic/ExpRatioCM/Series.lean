@@ -50,10 +50,10 @@ theorem G_eq_F {i : ℕ} (hi : 1 ≤ i) {t : ℝ} (ht : 0 < t) : G i t = F i t :
     exact reciprocal_eq hs
   rw [G, he.iteratedDeriv_eq i, iteratedDeriv_const_add (by omega : 0 < i), F]
 
-private def weightedSeries (b : ℕ → ℝ) (k : ℕ) (t : ℝ) : ℝ :=
+def weightedSeries (b : ℕ → ℝ) (k : ℕ) (t : ℝ) : ℝ :=
   ∑' n : ℕ, b n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * t)
 
-private lemma summable_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
+lemma summable_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
     (hb : ∀ n, |b n| ≤ B ^ n) (k : ℕ) {t : ℝ} (ht : Real.log B < t) :
     Summable (fun n : ℕ => ‖b n * (n : ℝ) ^ k * Real.exp (-(n : ℝ) * t)‖) := by
   have hr : B * Real.exp (-t) < 1 := by
@@ -73,7 +73,7 @@ private lemma summable_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
       rw [show (n : ℝ) * (-t) = -(n : ℝ) * t by ring]
       ring
 
-private lemma hasDerivAt_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
+lemma hasDerivAt_weighted {b : ℕ → ℝ} {B : ℝ} (hB : 0 < B)
     (hb : ∀ n, |b n| ≤ B ^ n) (k : ℕ) {t : ℝ} (ht : Real.log B < t) :
     HasDerivAt (weightedSeries b k) (-weightedSeries b (k + 1) t) t := by
   let a : ℝ := (Real.log B + t) / 2

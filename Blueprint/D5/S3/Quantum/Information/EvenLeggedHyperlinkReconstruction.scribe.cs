@@ -17,6 +17,13 @@ internal sealed class EvenLeggedHyperlinkReconstructionDocument : IScribeDocumen
             Node("hyperlink", "The signed subset transform", "hyperlink", HyperlinkFormula(),
                 "Equation (5) defines the hyperlink by inclusion-exclusion over all subsets of I. The exponent is the natural-number difference between the two cardinalities, and the sign and set-function values are real. No symmetry or vanishing hypothesis is needed for this definition.",
                 AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(
+                DescribeId.Create("even-hyperlink-zeta"), DeclarationHandle.Create(Prefix + "hyperlink_zeta"),
+                H("Inverting the subset-sum transform"),
+                StatementSource.FromAuthor(Disp(HyperlinkZetaFormula())), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For any real-valued function v on finite subsets, applying the signed hyperlink transform to its subset sums recovers v at I. After interchanging the two finite sums, the coefficient of v K is the alternating sum over the subsets between K and I. This coefficient is one for K = I and zero otherwise. No finiteness of the ambient type, decidable equality, symmetry or empty-set condition is required."))),
+                DescribeRole.Theorem),
             Node("leg-inverse-coeff", "The triangular inverse coefficients", "legInverseCoeff", InverseCoefficientFormula(),
                 "The coefficient at rank zero is one. Odd ranks have coefficient zero. At a positive even rank r, the coefficient is minus one half of the sum over j : Fin r, whose summand is Nat.choose r val(j) times the coefficient at val(j) when val(j) is even, and zero otherwise. Here val(j) is the natural value of j : Fin r. Each binomial coefficient is cast to the rational numbers before multiplication. This recurrence determines a rational sequence by strong recursion.",
                 AssessedProvenance.FromRepo()),
@@ -63,7 +70,7 @@ internal sealed class EvenLeggedHyperlinkReconstructionDocument : IScribeDocumen
         Qualified("D5", "S3", "Quantum", "Information", "EvenLeggedHyperlinkReconstruction", name);
     private static Formula At(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
     private static Formula LocalCall(string name, params Formula[] args) => At(Local(name), args);
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => new Formula.LatexSequence([Open, value, Close]);
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Naturals() => Seq(Mathbb, Grp(X("N")));
     private static Formula Reals() => Seq(Mathbb, Grp(X("R")));
@@ -117,6 +124,19 @@ internal sealed class EvenLeggedHyperlinkReconstructionDocument : IScribeDocumen
         Formula sum = SumOver("B", Powerset(X("I")), Multiply(sign, At(X("S"), X("B"))));
         return All("alpha", Qualified("Type"), All("S", FunctionTo(setType, Reals()),
             All("I", setType, Equal(LocalCall("hyperlink", X("S"), X("I")), sum))));
+    }
+
+    private static Formula HyperlinkZetaFormula()
+    {
+        Formula AllTyped(string name, Formula type, Formula body) => Seq(Forall, Sp,
+            Parenthesized(Seq(X(name), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
+        Formula setType = FinsetOf(Alpha);
+        Formula sum = SumOver("K", Powerset(X("A")), At(X("v"), X("K")));
+        Formula zeta = Seq(LambdaLower, Sp, Parenthesized(Seq(X("A"), Colon, Sp, setType)),
+            Sp, Mapsto, Sp, Parenthesized(sum));
+        Formula equation = Equal(LocalCall("hyperlink", zeta, X("I")), At(X("v"), X("I")));
+        return Seq(Forall, Sp, Parenthesized(Seq(Alpha, Colon, Sp, Qualified("Type"), Star)), Comma, Sp,
+            Parenthesized(AllTyped("v", FunctionTo(setType, Reals()), AllTyped("I", setType, equation))));
     }
 
     private static Formula InverseCoefficientFormula()

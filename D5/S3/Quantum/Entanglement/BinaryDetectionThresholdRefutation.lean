@@ -357,7 +357,7 @@ private lemma IsLocal_of_atoms {I : Type} [Fintype I] (w : I → ℝ)
       simp [Ne.symm hne]
     · simp
 
-private def parityBox (G : (Fin 13) → (Fin 13) → Bool) (x y : (Fin 13)) (a b : Bool) : ℝ :=
+def parityBox (G : (Fin 13) → (Fin 13) → Bool) (x y : (Fin 13)) (a b : Bool) : ℝ :=
   if a.xor b = G x y then 1 / 2 else 0
 
 private lemma weighted_hit (x : (Fin 13)) (v : ℝ) :
@@ -864,7 +864,7 @@ private lemma reconstructed_minor_minor (p : (Fin 13 → Fin 13 → Bool → Boo
     rw [min_eq_right (mul_le_mul_of_nonneg_left hge (by norm_num : (0 : ℝ) ≤ 2))]
     linarith
 
-private lemma binary_eq (f g : Bool → Bool → ℝ) (ma mb : Bool)
+lemma binary_eq (f g : Bool → Bool → ℝ) (ma mb : Bool)
     (hn : (∑ a : Bool, ∑ b : Bool, f a b) = (∑ a : Bool, ∑ b : Bool, g a b))
     (ha : (∑ b : Bool, f ma b) = (∑ b : Bool, g ma b))
     (hb : (∑ a : Bool, f a mb) = (∑ a : Bool, g a mb))

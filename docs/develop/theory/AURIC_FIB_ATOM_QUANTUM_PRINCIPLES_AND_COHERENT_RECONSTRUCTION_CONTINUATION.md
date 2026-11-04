@@ -4175,3 +4175,660 @@ $$
 [VI](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md) 定理 85.1 的可数群及连续纯投影空间模型只承诺其唯一制备、原菜单的全词终端律与逐分支可逆性；VI §§95–99 的停止取得和 [VII](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VII.md) 的原完整历史／返回结论也保留各自来源、菜单和权重。这里没有给那些隐藏实现新增同一参考上的量子复合合同，故不能用 (71.1) 排除它们。类似地，[V18](AURIC_TRIANGULATION_COLLAPSE_AND_RECURSIVE_UNITARY_GATES_V18.md) 的三谱记录需要其自己的谱准备、相位和仪器；终端径向响应刚性不供应这些可读后继。复数域、线性酉振幅、固定 $K$、欧氏范数、站点因子化与初始化始终是本定理的输入。结论约束其中的概率响应接口，没有把完整量子起源或标准量子组合宣告为由原始关系单独导出。∎
 
 ## 追加锚（本行以下为增补区）
+## 73. 活跃代码交换下的联合 Born 刚性与全扇区泄漏边界
+
+**定义 73.1（完整响应与活跃代码合同）。** 保留定义 70.1 的十站点合法路径扇区 $H$、初态 $J|0,0\rangle=|1000100010\rangle$、地址字母表 $K_0,\ldots,K_6$、正向有限制备字 $W$、完整输出集
+
+$$
+\Omega_{10}=\{0,1\}^{10},\qquad \psi_W=WJ|0,0\rangle .
+$$
+
+令
+$P:S(H)\to\Delta(\Omega_{10})$
+为一个连续、全局相位不变且支撑保持的响应：
+
+$$
+P_w(e^{i\gamma}\psi)=P_w(\psi),\qquad
+\psi_w=0\Longrightarrow P_w(\psi)=0 .
+\tag{73.1}
+$$
+
+这里的单纯形假设只是普通的非负、归一化终端概率；它不解释概率为何存在。对每个有限 $W$ 假设原定义 70.1 的 Alice-$b_1$ 无信号条件
+
+$$
+\sum_{w:b_1=0}P_w(\psi_W)
+ =\sum_{w:b_1=0}P_w(K_5\psi_W).
+\tag{73.2}
+$$
+
+在代码坐标 $1=00,2=01,3=10,4=11$ 上定义
+
+$$
+p_i(\xi)=P_{J i}(J\xi),\qquad \xi\in\mathbb C^4,\quad \|\xi\|_2=1 .
+$$
+
+另加一个明确的活跃校准假设：对每个 $\pi\in S_4$ 和每个归一代码向量，
+
+$$
+p(\pi\xi)=\pi p(\xi).
+\tag{73.3}
+$$
+
+这里的 $\pi$ 是固定探测器标签上的响应函数等式，不是把被动标签重命名冒充为物理上已经执行的幅度交换门。假设 (73.3) 只在 $J(\mathbb C^4)$ 上量化。
+
+**定理 73.2（K5 加活跃 $S_4$ 的代码域联合响应刚性）。** 在定义 73.1 的条件下，(73.2) 与 (73.3) 蕴含
+
+$$
+p_i(\xi)=|\xi_i|^2\qquad(i=1,2,3,4)
+\tag{73.4}
+$$
+
+对每个归一 $\xi\in\mathbb C^4$ 成立。结论只涉及代码内四个输出；它不蕴含 $P$ 在其余 $1020$ 个输出或整个可达扇区上是 Born 响应。证明只使用 Bob 的 $I$ 与 $K_5$ 两个终端设置；$K_4$ 仍是制备字母表中的地址，但不需要另加为终端设置。
+
+**证明。** 写 $\xi=(u,v)\in\mathbb C^2\oplus\mathbb C^2$，其中 $u=(\xi_1,\xi_2)$ 是 $b_1=0$ 行，$v=(\xi_3,\xi_4)$ 是 $b_1=1$ 行，并置
+
+$$
+F(\xi)=p_1(\xi)+p_2(\xi),\qquad q_i=|\xi_i|^2 .
+$$
+
+由 (70.3)，任意代码向量 $J\xi$ 都有定义 70.1 的有限字列 $\psi_{W_n}$ 以整体相位收敛到它。连续性、(73.1) 以及 $K_5$ 的酉性把 (73.2) 延伸为
+
+$$
+F(T\xi)=F(\xi),\qquad T=K_Q\oplus K_Q,
+\tag{73.5}
+$$
+
+其中 $K_Q$ 是 (70.4) 的实际原生二维块。这个极限保留完整的 $1024$ 个输出；没有丢弃码外振幅，也没有把剩余概率重新归一。支撑保持只在理想代码向量上使码外概率为零，故此处 $\sum_{i=1}^4p_i=1$。更具体地，令完整事件差为
+
+$$
+D(\psi)=\sum_{w:b_1=0}P_w(K_5\psi)-\sum_{w:b_1=0}P_w(\psi).
+$$
+
+若 $\Delta=D(J\xi)=F(T\xi)-F(\xi)\ne0$，连续性给出 $J\xi$ 的邻域，使 $|D(\psi)-\Delta|<|\Delta|/2$。因此该邻域内 $D(\psi)$ 与 $\Delta$ 同号，且 $|D(\psi)|>|\Delta|/2$。由全局相位不变性和 (70.3)，某个实际有限正向字 $W$ 落入此相位对齐的邻域，给出同号严格差值。这只使用 $P$ 的连续性，不使用未知响应的 Born 误差界。
+
+令 $X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，并令
+
+$$
+A=X\oplus I_2,\qquad B=I_2\oplus X .
+$$
+
+由 (73.3) 的换位 $(12)$、$(34)$，分别有 $F(A\xi)=F(\xi)$ 与 $F(B\xi)=F(\xi)$。把块对 $(g,h)$ 与 $g\oplus h$ 识别，取实际矩阵生成的闭群
+
+$$
+\mathcal H=\overline{\langle (K_Q,K_Q),(X,I_2),(I_2,X)\rangle}
+ \ \subseteq U(2)\times U(2).
+$$
+
+这里 $\det X=-1$，所以两个换位确实属于所写的 $U(2)$ 因子。$F$ 对每个生成元不变；在任意单位向量上代入其逆像，便得对逆的不变性；逐次应用及连续性给出对整个 $\mathcal H$ 的不变性。
+
+以下直接在该群内取得独立的行作用。记 $\sigma_x=X$、$\sigma_y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)$、$\sigma_z=\operatorname{diag}(1,-1)$。由实际原生块 (70.4) 及 $\zeta^5=-1$、$\zeta^{10}=1$，
+
+$$
+\begin{aligned}
+E:=K_Q^5&=2Q-I_2=n_x\sigma_x+n_z\sigma_z,\\
+n_x&=2x^{3/2},\qquad n_z=2x-1,\qquad x=\varphi^{-1},\\
+n_x^2+n_z^2&=1,\qquad n_xn_z\ne0.
+\end{aligned}
+\tag{73.6}
+$$
+
+因此 $E^2=I_2$，$E$ 为酉反射且 $\det E=-1$。置 $C=EXEX=(EX)^2$。因为 $EX$ 酉且行列式为一，$C\in SU(2)$；并有精确群字
+
+$$
+T^5AT^{-5}A=C\oplus I_2,\qquad
+T^5BT^{-5}B=I_2\oplus C .
+$$
+
+这是同一 $T=K_Q\oplus K_Q$ 的五次幂与 (73.3) 所给代码坐标换位的组合，没有单独把任何一行的 $X$ 换成 $iX$。令
+
+$$
+N_1=\{g\in SU(2):g\oplus I_2\in\mathcal H\}.
+$$
+
+它是闭子群，且含有 $C$。由 $EX=n_xI_2+i n_z\sigma_y$ 和 $x^2+x=1$，
+
+$$
+\begin{aligned}
+C&=(n_x^2-n_z^2)I_2+2i n_xn_z\sigma_y,\\
+\operatorname{tr}C&=4n_x^2-2=16x^3-2=32x-18=16\sqrt5-34.
+\end{aligned}
+$$
+
+该迹的代数共轭为 $-16\sqrt5-34<-2$。v15 引理 4.1 因而给出 $C$ 无限阶；其两个本征值的本征轴由上式及 $n_xn_z\ne0$ 确定，所以
+
+$$
+\overline{\langle C\rangle}
+ =\{\exp(it\sigma_y):t\in\mathbb R\}\subseteq N_1 .
+$$
+
+用 $T\in\mathcal H$ 共轭第一行的这个圆，仍在 $N_1$ 中。设 $\alpha=3\pi/5$；从 $K_Q=\zeta[I+(\zeta-1)Q]$ 直接相乘得到
+
+$$
+K_Q\sigma_yK_Q^*
+ =\cos\alpha\,\sigma_y
+   +\sin\alpha\,(n_z\sigma_x-n_x\sigma_z).
+$$
+
+因为 $\sin\alpha\ne0$ 且 $n_x^2+n_z^2=1$，$i\sigma_y$ 与 $iK_Q\sigma_yK_Q^*$ 在 $\mathfrak{su}(2)$ 中实线性无关。v15 引理 4.2 遂给出 $N_1=SU(2)$：这两个圆的生成元及其非零交换子张成 $\mathfrak{su}(2)$。对第二个精确群字使用相同论证，得到 $N_2=\{g\in SU(2):I_2\oplus g\in\mathcal H\}=SU(2)$；两个块作用相乘，故 $SU(2)\times SU(2)\subseteq\mathcal H$。
+
+因此 $F$ 在两行上分别具有独立的 $SU(2)$ 不变性。具体地，对单位列 $h=(h_0,h_1)^T$，矩阵 $U_h=\left(\begin{smallmatrix}h_0&-\overline h_1\\h_1&\overline h_0\end{smallmatrix}\right)\in SU(2)$ 把 $(1,0)^T$ 送到 $h$；这证明每个固定范数的复二维球面上传递，包括两向量只差相位的情形。零行无需选择方向。于是定义连续函数 $f:[0,1]\to[0,1]$ 为 $f(t)=F(\sqrt t,0,\sqrt{1-t},0)$，支撑保持及归一化给出
+
+$$
+F(\xi)=f(q_1+q_2),\qquad f(0)=0,\quad f(1)=1 .
+\tag{73.7}
+$$
+
+最后用 (73.3) 把同一式传到任意二元子集：对任意不同的 $i,j$，
+
+$$
+p_i(\xi)+p_j(\xi)=f(q_i+q_j).
+\tag{73.8}
+$$
+
+取 $\xi=(\sqrt a,\sqrt b,\sqrt{1-a-b},0)$，其中 $a,b\ge0$ 且 $a+b\le1$。支撑保持给出 $p_4=0$，所以 (73.8) 的子集 $\{1,4\}$、$\{2,4\}$ 和 $\{1,2\}$ 分别给出
+
+$$
+ p_1=f(a),\qquad p_2=f(b),\qquad f(a+b)=f(a)+f(b).
+\tag{73.9}
+$$
+
+非负性使 $f$ 单调；有理等分给出 $f(m/n)=m/n$，连续性再给 $f(t)=t$。于是所有二元和为 $q_i+q_j$，并对互异的 $i,j,k$ 有
+
+$$
+2p_i=(p_i+p_j)+(p_i+p_k)-(p_j+p_k)=2q_i .
+$$
+这就得到 (73.4)，也包括零坐标和单位端点。证毕。
+
+**推论 73.3（非 Born 代码响应的实际有限见证）。** 取定义 73.1 中除 (73.2) 外的全部响应、来源及菜单假设，特别保留连续性、全局相位不变性、支撑保持、完整 $1024$ 输出，以及对每个 $\pi\in S_4$ 和每个归一复代码向量成立的活跃协变 (73.3)。若代码上存在 $\xi$ 和 $i$ 使 $p_i(\xi)\ne|\xi_i|^2$，则存在字母表 $\{K_0,\ldots,K_6\}$ 上的实际有限正向制备字 $W$（允许空字），使
+
+$$
+\sum_{w:b_1=0}P_w(K_5\psi_W)
+ \ne\sum_{w:b_1=0}P_w(\psi_W).
+$$
+
+见证的字、长度和边缘间隙可依赖于 $P$；不存在由本推论给出的统一字长、统一间隙或有限样本认证。证明是定理 73.2 对“每个有限正向字 $W$ 均满足 (73.2)”的逆否命题。等价地，若所有理想代码向量的 $D(J\xi)$ 都为零，上述群论与可加性论证就给出代码 Born 律；故非 Born 响应必有某个 $\Delta=D(J\xi)\ne0$，再由 (73.5) 后的连续性论证返回同号、绝对值大于 $|\Delta|/2$ 的实际有限见证。
+
+**命题 73.4（既有 72.1 扰动不满足活跃交换）。** §72.1 的矩阵扰动在其余假设下保持边缘，但不满足 (73.3)。取
+
+$$
+M=\frac12\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+q_{ab}=\frac14,\qquad |\det M|^2=\frac14,\qquad
+\tau=\frac{\lambda}{1024}>0 .
+$$
+
+交换代码坐标 $00$ 与 $01$ 时，振幅向量本身不变，而 (72.1) 的两个响应值为
+
+$$
+\widetilde P_{00}=\frac14+\tau,\qquad
+\widetilde P_{01}=\frac14-\tau .
+$$
+
+因此左侧 $p((12)\xi)=p(\xi)$，右侧 $(12)p(\xi)$ 却交换了两个不等值分量，活跃协变式失败。这个检验也说明被动标签重命名不能替代固定探测器上的主动幅度交换假设。
+
+**命题 73.5（较弱的行分块对称边界）。** 令
+
+$$
+G_{\rm row}=\{\pi\in S_4:\pi(\{1,2\})\in\{\{1,2\},\{3,4\}\}\},
+$$
+
+这是保留行分块 $\{1,2\}|\{3,4\}$ 的八元素群。对 $0<\lambda<1$，在每一行的无序对 $\{i,j\}$ 上定义
+
+$$
+ p_i=q_i+\lambda q_iq_j(q_i-q_j),\qquad
+ p_j=q_j-\lambda q_iq_j(q_i-q_j).
+\tag{73.10}
+$$
+
+两行分别使用同一公式。该响应连续、归一化、支撑保持、$G_{\rm row}$-协变，并保持两行和 $p_1+p_2=q_1+q_2$、$p_3+p_4=q_3+q_4$；但一般不等于 $q$。非负性来自
+$p_j\ge q_j(1-\lambda q_i)\ge0$
+及对称情形。故行分块稳定子不足以得到联合刚性；这里给出的是一个精确较弱对称边界，不主张任何普遍的最小子群结论。
+
+**命题 73.6（完整 $1024$ 输出的代码外反例）。** 在同一合法路径扇区上取两个输出字
+
+$$
+ u=1000000010,\qquad v=1000100010=J|0,0\rangle,
+$$
+
+它们均有 Alice 位 $b_1=0$，且 $u$ 在代码外。对任意归一 $\psi\in S(H)$ 写 $q_w(\psi)=|\psi_w|^2$，固定 $0<\lambda<1$，令
+
+$$
+ h(\psi)=\lambda q_u(\psi)q_v(\psi),
+$$
+
+并定义完整的 $1024$ 输出响应
+
+$$
+ P_u=q_u+h,\qquad P_v=q_v-h,\qquad P_w=q_w\quad(w\ne u,v).
+\tag{73.11}
+$$
+
+因为 $0\le h\le\lambda q_v$，所有分量非负且总和为一；(73.11) 连续、全局相位不变并支撑保持。修正项在同一 Alice 行内相消，所以 Alice 的完整边缘等于 Born 边缘；因而它满足 (73.2)，事实上对任意保持 $b_1$ 的 Bob 局部酉都满足同一行边缘恒等式。代码向量上 $q_u=0$，故 (73.11) 限制为 $p_i=q_i$，自动满足全 $S_4$ 代码协变。
+
+这个反例在实际有限原生字上已经偏离 Born。对单字 $W=K_3$，v15 的原生 $010$ 块给出
+
+$$
+K_3J|0,0\rangle=\alpha|1000000010\rangle+\beta|1000100010\rangle,
+\qquad |\alpha|^2=x=\varphi^{-1},\quad |\beta|^2=x^2=\varphi^{-2},
+\tag{73.12}
+$$
+
+其中 $\alpha=\zeta(\zeta-1)\varphi^{-3/2}$，$\beta=\zeta[1+(\zeta-1)\varphi^{-2}]$；这是同一实际三站点矩阵的两个块系数，且 $x+x^2=1$。因此 (73.11) 在此实际输出上给
+
+$$
+P_u=x+\lambda x^3,\qquad P_v=x^2-\lambda x^3,
+\tag{73.13}
+$$
+
+而其余 $1022$ 个原始输出仍按 (73.11) 保留。这是一个实际可达的全输出偏离，且不改变任何 Alice 行边缘；它证明代码上的主动协变不能推出整个可达扇区的响应刚性。
+
+**推论 73.7（范围、文献对应与未解决边界）。** 定理 73.2 比定理 71.1 使用更宽的响应类：不再假设一个共同的逐坐标径向函数，也不预设联合响应的形式；它只在代码上加入全归一复向量的活跃 $S_4$ 功能方程。相应结论更窄，只是 $J(\mathbb C^4)$ 上的四个联合 Born 概率。定理 71.1 的共同径向类仍给出其声明范围内全部有限制备字的必要充分条件；本节不替换它，也不把代码结论外推为全寄存器等价。
+
+证明消费 (70.3)–(70.4) 的原生十站点密度、(70.2) 的完整 $1024$ 输出事件和 v15 引理 4.1–4.2；只把 K5 的 $K_Q$ 用作无信号设置，未把 K4 当作额外终端设置。群论中只用实际的 $K_Q$、$K_Q^5$ 和换位；共轭时标量相位自行抵消，没有射影提升或额外的独立行相位不变性前提。独立 $SU(2)$ 行不变性及其对给定行向量相位的作用均是这些响应恒等式的推论，不把闭包中的矩阵供应为实际可执行控制。
+
+Freedman–Larsen–Wang，*The two-eigenvalue problem and density of Jones representation of braid groups*，arXiv:math/0103200，DOI 10.1007/s002200200636，第 6 节定理 6.2，供应 (70.3) 所复用的同一 Fibonacci 码逼近；不使用未知 $P$ 的 Born 误差估计。Busch，*Quantum states and generalized observables: a simple proof of Gleason’s theorem*, Phys. Rev. Lett. **91** (2003), 120403，DOI 10.1103/PhysRevLett.91.120403，讨论全效果域的可加概率；本节只使用一个完整终端响应的有限事件和普通单纯形。Zurek，*Probabilities from Entanglement, Born’s Rule from Envariance*, Phys. Rev. A **71** (2005), 052105，arXiv:quant-ph/0405161；Barnum，*No-signalling-based version of Zurek’s derivation of quantum probabilities: A note on “Environment-assisted invariance, entanglement, and probabilities in quantum physics”*, arXiv:quant-ph/0312150v1；以及 Schlosshauer–Fine，*On Zurek’s derivation of the Born rule*, arXiv:quant-ph/0312058v3，分别提供交换、对称性与其附加前提的成熟比较。Galley–Masanes，*Any modification of the Born rule leads to a violation of the purification and local tomography principles*, arXiv:1801.06414v4，第 5.2 节；Masanes–Galley–Müller，*The measurement postulates of quantum mechanics are operationally redundant*, arXiv:1811.11060v2，第 II.4 节，说明无信号与更一般联合／组合响应之间仍有余量；本节不借入它们的组合公理。
+
+全 $S_4$ 与行分块 $G_{\rm row}$ 是不同的校准目标；没有证明哪一个是普遍最小目标，也没有取得实际主动交换。连续响应、原生有限菜单、完整终端事件和代码极限的条件边界均保留；有限套件不能认证全代码功能方程，鲁棒误差、编译长度、有限样本和物理相位参考仍未给出。VI §§85、95–99 的全词经典表示也未被排除。复数振幅、欧氏归一化、固定 $K$、初始化、局部性以及概率响应的存在仍是输入；本节没有声称量子起源、概率来源或任何 Lean/kernel 结论。∎
+
+## 追加锚（本行以下为增补区）
+
+
+## 74. 原三源实部读者的零第二正交地址实现
+
+**假设 74.1（仅收缩读取菜单）。** 固定定义 64.1 的 $D\ge0$、
+$m=6\cdot2^D-3$、$L=3m+1$ 与同一个 $J_L$；比较位仍为 $c$，
+三块各有 $m$ 个原数据位，物理位置仍为 $2L-1=6m+1$。
+保留 §§62–65 已供应的相干制备、复振幅、张量组合、精确实角度、
+地址、时序及 Born 完整物理字终端测量合同。
+制备可以继续调用原来的第二正交地址；这里只要求读取字的每个脉冲均为
+$R_i(0,t)=\exp[-itP_{i-1}X_iP_{i+1}]$，$t\in\mathbb R$。
+输入不须为实振幅、乘积态或已知源；比较位的全码作用亦须指定。
+实际比较时比较位取原来的 $|0\rangle$，源及保留的制备历史不变。
+读取不访问源语法或控制器记录，不增加量子位或输入副本，不供应特别准备的相位态，
+不作中间测量、reset、后选择或丢弃终端字。
+
+**定理 74.2（同码、可恢复借位的确定性实部读取字）。** 在假设 74.1 下，
+对 $\epsilon\in\{+1,-1\}$ 存在仅依赖 $D,\epsilon$ 的确定性相位零原生字
+$\widehat V_\epsilon$，在整个 $L$ 位逻辑空间满足精确算子等式
+
+$$
+\begin{aligned}
+ \widehat V_\epsilon J_L&=J_L\widehat U_\epsilon,\\
+ \widehat U_\epsilon
+ &=R_{x,c}(-\pi/4)\,\operatorname C_c(T^\epsilon)\,R_{x,c}(\pi/4)
+   =S_c^\dagger U_{\epsilon,0}S_c,
+ \qquad S_c=\operatorname{diag}(1,i)_c,\\
+ \widehat U_\epsilon
+ &=\frac12
+ \begin{pmatrix}
+ I+T^\epsilon&i(T^\epsilon-I)\\
+ i(I-T^\epsilon)&I+T^\epsilon
+ \end{pmatrix}_c.
+\end{aligned}
+\tag{74.1}
+$$
+
+这里的 $S_c$ 只表达矩阵关系，不是被调用的门或输入相位资源。
+等式涵盖任意比较位、全部源块字及任意未触动的纠缠参考。
+每个三位受控交换可以暂借一个原输入位，其完整作用为
+$\operatorname{Fredkin}\otimes I$，故该位及其与其余输入的纠缠均恢复。
+最后所有原分隔位为零；码外作用由实际脉冲决定。
+令
+
+$$
+ K_L=42(L-2)+7=126m-35,
+ \qquad C_L=42(L-1)+5=126m+5.
+$$
+
+可取以下有限资源界：
+
+$$
+\begin{aligned}
+ N_x&\le96m+2,&N_{CY}&\le116m,\\
+ N_{\rm pulse}^{(0)}&\le96m+116mK_L+2
+                       \le212mC_L+2,&
+ N_{\rm site}&=6m+1.
+\end{aligned}
+\tag{74.2}
+$$
+
+其中 $N_x,N_{CY}$ 是读取字中的逻辑 $R_x$ 和受控 $Y$ 数，
+第二正交调用数及第二正交寻址数均为零。
+
+证明。先复用
+[Single Reference，定理 2.1、3.1](FIB_LEGAL_GATES_SINGLE_REFERENCE_AND_CERTIFIED_READOUT.md)
+的七脉冲 $CY$、二十一脉冲 SWAP 与五脉冲相邻 $CZ$ 全码交织。
+相距 $d\ge1$ 个数据间隔的 $CY$ 可先路由一个端点至相邻位置，执行相邻 $CY$，
+再逆路由，成本至多 $42(d-1)+7\le K_L$。
+路由恢复所有其他原数据，不要求它们为空白或与参考解纠缠。
+$R_x(t)$ 直接是一处相位零脉冲。
+
+为取得本源读者需要的受控交换，在证明内部使用如下标准实矩阵提升。
+对三个活动数据位上的复矩阵 $M=A+iB$，以及与它们不同的原输入位 $d$，定义
+
+$$
+ J=\begin{pmatrix}0&-1\\1&0\end{pmatrix}=-iY,
+ \qquad \mathcal R_d(M)=A\otimes I_d+B\otimes J_d.
+\tag{74.3}
+$$
+
+$J^2=-I$ 直接给
+$\mathcal R_d(MN)=\mathcal R_d(M)\mathcal R_d(N)$、
+$\mathcal R_d(M^\dagger)=\mathcal R_d(M)^T$。
+故酉矩阵提升为实正交矩阵，而实矩阵 $F$ 满足
+$\mathcal R_d(F)=F\otimes I_d$。
+这些是生成门字的代数运算，不把输入改编码，也不假定 $d$ 是 $J$ 的本征态。
+最终矩阵等式作为复线性等式作用于原来的全部复输入。
+
+具体把已知一位门写成
+$U=e^{i\delta}R_z(\alpha)R_y(\beta)R_z(\gamma)$，
+所有旋转继续采用本卷 $R_a(t)=e^{-it\sigma_a}$ 的角度约定。
+在数据位 $q$ 和借位 $d$ 上有
+
+$$
+\begin{aligned}
+ \mathcal R_d(e^{i\delta}I_q)&=R_{y,d}(\delta),\\
+ \mathcal R_d(R_{z,q}(t))
+ &=\operatorname{CNOT}_{q\to d}R_{y,d}(-t)
+                         \operatorname{CNOT}_{q\to d},\\
+ \mathcal R_d(R_{y,q}(t))&=R_{y,q}(t)\otimes I_d.
+\end{aligned}
+\tag{74.4}
+$$
+
+第二式在 $q=0,1$ 两支分别为 $R_y(-t),R_y(t)$，
+因为 $XR_y(-t)X=R_y(t)$。
+因此一个 $U$ 的提升至多用四个 $R_y$ 和四个 CNOT；
+原三个活动位之间的 CNOT 为实矩阵，提升后仍为该 CNOT 张量 $I_d$。
+一位门的标量 $e^{i\delta}$ 必须保留为借位上的旋转，不能在提升前删去。
+
+取 (64.6)–(64.7) 的精确 Fredkin 分解：十二个一位 $U(2)$ 门及十个 CNOT，
+完整矩阵恰为实的 $F=\operatorname{Fredkin}$。
+这复用 [Barenco 等，quant-ph/9503016v1，引理 4.3、5.1–5.2、6.1，
+推论 5.3](https://arxiv.org/html/quant-ph/9503016v1) 的标准中间供应。
+其角度可完全固定：在 (62.6) 中令
+$V_s=e^{si\pi/4}R_x(s\pi/4)$，三个调用的符号为 $+,-,+$。
+每个单控制 $V_s$ 的 (62.5) 目标矩阵可取
+
+$$
+ C=R_z(\pi/4),\qquad
+ B=R_y(-s\pi/8),\qquad
+ A=R_z(-\pi/4)R_y(s\pi/8),
+\tag{74.5}
+$$
+
+控制矩阵为
+$P_s=\operatorname{diag}(1,e^{si\pi/4})
+=e^{si\pi/8}R_z(s\pi/8)$。
+将这些已知矩阵逐个代入 (74.4)，给至多四十八个 $R_y$、五十八个 CNOT，
+且由乘法性整字严格等于 $F\otimes I_d$。
+这里保留的是原精确分解，未使用只对经典输入可忽略的相对相位 Toffoli。
+特别地，若先删去控制相位，提升后的终点会残留借位旋转，不能得到上述恒等。
+
+最后令 $S=\operatorname{diag}(1,i)$、$\mathscr S=S^{\otimes L}$。
+仅在生成的每个逻辑门上使用矩阵恒等式
+
+$$
+ S R_y(t)S^\dagger=R_x(-t),\qquad
+ \mathscr S\operatorname{CNOT}_{a\to b}\mathscr S^\dagger=CY_{a\to b}.
+\tag{74.6}
+$$
+
+因此逐门把实提升字中的 $R_y(t)$ 换成 $R_x(-t)$、CNOT 换成 $CY$，
+无需执行 $\mathscr S$。
+Fredkin 只是交换两个数据位，保持完整字的 Hamming 重量，
+故与 $\mathscr S$ 交换；替换字的最终作用仍严格为 $F\otimes I_d$。
+这同时证明未知借位的恢复和参考保持，未从空白输入制备一个相位参考。
+标准实提升和受控门分解在此仅是这条实际读取字的中间计算，不单立一般综合定理。
+
+按 §64 的次序，交换块 $0,1$ 再交换块 $1,2$，共 $2m$ 个 Fredkin，给 $T$；
+倒序给 $T^{-1}$。
+每门可选不参与该门的第三块第一数据位为 $d$，并在该门结束时恢复它。
+$m\ge3$，该选择始终存在，且完全由公开布局决定。
+两个阶段可以借不同原位，不增加寄存器或量子初始化。
+于是全码受控循环至多使用 $96m$ 个 $R_x$ 和 $116m$ 个 $CY$。
+加上比较位首尾两次 $R_x$，结合上述全码路由即得 (74.2) 与第一条交织。
+$S^\dagger R_y(t)S=R_x(t)$，且 $S_c$ 与受控循环交换，给 (74.1) 的第二式；
+直接作比较位的二乘二块矩阵乘法给最后一式。
+每一步均为全码算子等式，故张量任意参考恒等后仍成立。∎
+
+**定理 74.3（同一制备历史下每个完整物理字及参考条件态保持）。**
+在比较位初始为零时，对任意三块与未触动参考 $R$ 的密度算子 $\rho$，
+$\widehat V_\epsilon$ 与原 $V_{\epsilon,0}$ 的每个完整终端物理字概率相同，
+且该字对应的未归一参考条件态相同。
+特别，对 §§64–65 的全部实际源三元组，包括重复来源及 $D=0$，新读者给
+
+$$
+ \widehat p_{\mathbf s,\epsilon}^X(z,\mathbf x)
+ =\frac14\left|A_{\mathbf s}^X(\mathbf x)
+                 +(-1)^zA_{\mathbf s,\epsilon}^X(\mathbf x)\right|^2
+ =p_{\mathbf s,\epsilon,0}^X(z,\mathbf x).
+\tag{74.7}
+$$
+
+所有 $w=J_L(z,\mathbf x)$ 均按此式保留；全部码外字及原零系数字仍为零事件。
+取原保留记录中包含完整制备信息的任意可测历史 $\mathsf H$，设置固定 $o=0$，
+并记实际联合分量测度
+$\nu_{\mathbf s,\epsilon}^X(B)
+=\Pr_X\{\mathsf S=\mathbf s,\mathsf E=\epsilon,\mathsf H\in B\}$。
+在相同制备历史律及原条件制备合同下，对每个可测 $B$ 和每个物理字有
+
+$$
+ \Pr_X\{\mathsf H\in B,\mathsf E=\epsilon,
+                w=J_L(z,\mathbf x)\}
+ =\sum_{\mathbf s}\nu_{\mathbf s,\epsilon}^X(B)
+                       p_{\mathbf s,\epsilon,0}^X(z,\mathbf x).
+\tag{74.8}
+$$
+
+因此每个实际供应的历史条件输入都保持其完整字律；
+连续记录无需假设逐点条件概率存在，零质量历史不被条件化。
+
+证明。令 $I_0\psi=|0\rangle_c\otimes\psi$。
+由 (74.1) 及 $S_cI_0=I_0$，有
+
+$$
+ \widehat U_\epsilon I_0=S_c^\dagger U_{\epsilon,0}I_0,
+ \qquad
+ \widehat V_\epsilon J_LI_0
+ =e^{-i\chi_\epsilon}J_LS_c^\dagger J_L^\dagger
+                            V_{\epsilon,0}J_LI_0.
+\tag{74.9}
+$$
+
+右侧 $J_LS_c^\dagger J_L^\dagger$ 只在已知有码输出上使用。
+对 $w=J_L(z,\mathbf x)$，新终端振幅等于旧振幅乘以
+$e^{-i\chi_\epsilon}(-i)^z$；该因子模长一且与源、块字和参考无关。
+具体在 (65.5) 的同一原字典中，新振幅为
+
+$$
+ \frac{i^z}{2}\left[A_{\mathbf s}^X(\mathbf x)
+                   +(-1)^zA_{\mathbf s,\epsilon}^X(\mathbf x)\right].
+\tag{74.10}
+$$
+
+Born 合同立即给逐字等式 (74.7)，没有重新标号、粗粒化或仅比较一个边缘。
+更一般，使用 (65.6) 的 $o=0$ 行算子
+$B_{z,\mathbf x}=\langle\mathbf x|[I+(-1)^zT^\epsilon]/2$，
+新行算子恰为 $i^zB_{z,\mathbf x}$。
+因此新旧参考条件态均为
+
+$$
+ (B_{z,\mathbf x}\otimes I_R)\rho
+                         (B_{z,\mathbf x}^\dagger\otimes I_R).
+\tag{74.11}
+$$
+
+这包括块间纠缠和块与参考的纠缠，并不依赖源的系数表。
+(74.1) 也指定了比较位非零或与源纠缠时的完整作用；
+与原读者的逐字等价使用的是原比较任务的 $I_0$ 输入切片。
+
+最后按每个实际分量 $\nu^X$ 积分，得 (74.8)；
+参考条件态的等式同样逐分量积分。
+不假设三个选择者独立，不把共同随机性换成三个边缘的乘积，
+也不把不同 $X$ 的制备记录律宣告为相同。
+比较的共同历史是同一保留制备历史；新读取字本身有其已指定的不同控制表。
+若把控制表也作为输出记录，须保留相应读者标识，不能声称两个控制表逐字相同。
+完整物理字与同一制备历史的联合律则正是 (74.8)。∎
+
+## 75. 指定完成间隙、误差与取向边界
+
+**推论 75.1（§67 原指定来源的零地址实部间隙）。** 在假设 74.1 下，
+取原来的 $k=5n$、$D\ge k+2$ 和
+$(W_{0,k},W_{1,k},W_{2,k})$，两种完成使用同一个 $\widehat V_+$。
+不改变源、共同码或完整终端字典，仍有
+
+$$
+ \Pr_R\{z=0\}-\Pr_{\mathrm c}\{z=0\}
+ =\Delta_n:=\frac{M_n(1-\cos\theta_n)}2
+ >\Delta_*:=\frac{(4/5)^{23}(1-\cos1)}2>0.
+\tag{75.1}
+$$
+
+完整物理字律的总变差至少为 $\Delta_n$。
+§66 对原含标签字的逐字零交叉、全部标签层质量及全场信号分配原样保持，
+没有删除标签或按全场成功事件后选择。
+制备加这次读取的脉冲界可取
+
+$$
+ N_{\rm total}^{(0)}
+ \le3g_{X,D}C_L+96m+116m(126m-35)+2.
+\tag{75.2}
+$$
+
+证明。将 (74.7) 代入定理 67.1 的设置零结论，给 (75.1)。
+(74.7) 是每个原始字的等式，故定理 66.1 的分层关系逐字继承；
+经典聚合到比较位不能增加总变差，给所列下界。
+源制备仍使用定义 65.1 的 $3g_{X,D}C_L$ 上界，读取使用 (74.2)，相加得 (75.2)。
+在最小公共深度 $D=k+2$，位置数仍为 $36\cdot2^{k+2}-17$；
+读者原生脉冲界仍为 $O(4^D)$。
+因此零读取相位地址与非零统一信号并不构成一个适用于全部无界 $n$ 的固定有限装置。
+(75.1) 排除的仍仅为 §46 的指定正实模完成在同一读者上的相同预测，
+并未排除改变源编码、维数或效果的其他实模型。∎
+
+**命题 75.2（指定误差合同下的完整输出界）。** 设理想读取字为
+$\widehat V_\epsilon=V_N\cdots V_1$，实际实现为同一合法物理载体上的酉字
+$\widetilde V=\widetilde V_N\cdots\widetilde V_1$，并供应
+$\|\widetilde V_j-V_j\|_{\rm op}\le e_j$、$e=\sum_je_j$。
+对任意有码输入及参考，读取通道的未折半 diamond 距离至多 $\min(2,2e)$，
+完整物理字律的总变差至多 $\min(1,e)$，最终码外概率至多 $\min(1,e^2)$。
+这些界在每个保留制备历史条件下亦成立，只要误差合同在该条件下成立。
+
+若对完成 $X$ 另供应同一历史下实际输入与理想输入的迹距离界 $a_X$，
+读取误差和检测总变差界分别为 $e_X,d_X$，令
+$\tau_X=\min(1,a_X+e_X+d_X)$，则实际指定比较满足
+
+$$
+ \widetilde\Pr_R\{z=0\}-\widetilde\Pr_{\mathrm c}\{z=0\}
+ \ge\Delta_n-\tau_R-\tau_{\mathrm c}.
+\tag{75.3}
+$$
+
+特别，$\tau_R+\tau_{\mathrm c}<\Delta_*$ 足以保留严格正间隙。
+若仅给共同的逐脉冲酉误差上界 $\delta$，可用
+$e\le[96m+116mK_L+2]\delta$；这只是由已供应误差导出的界。
+
+证明。直接消费
+[Single Reference，定理 8.1](FIB_LEGAL_GATES_SINGLE_REFERENCE_AND_CERTIFIED_READOUT.md#v9-word-error)
+的有序字望远镜界及参考扩张界，使用 (74.1) 的最终零泄漏。
+完整字测量的迹距离收缩给总变差界；不要求中间脉冲保持逻辑码。
+再对输入误差、读取误差及检测误差用三角不等式，得到每个完成的事件误差
+$\le\tau_X$，将二者相减即为 (75.3)。
+如对历史有统一条件上界，积分保留同一界；如只供应可测的条件界，
+只能按各自实际历史律取其期望。
+这里没有推得硬件的 $e_j$、噪声阈值、有限样本率或统计独立性，
+一般非酉噪声、失败仪器及未供应的检测漂移仍需各自的通道或仪器合同。∎
+
+**命题 75.3（实部读取与通用取向读取的分界）。** 定理 74.2 不改变
+命题 67.2 的空白输入制备障碍；它也不提供原设置一的通用读者。
+事实上，在同一个全输入码、比较位 $|0\rangle$、相位零读取与完整字测量合同内，
+不存在对任意三块输入均输出
+$[1+\operatorname{Im}\operatorname{Tr}(T\rho)]/2$ 的比较位零概率的确定性读者。
+
+证明。由 Single Reference §7，物理反酉
+$\mathcal A=Z_{\rm par}K$ 与每个相位零脉冲及字投影交换。
+其在 $J_L$ 上的作用就是逻辑 Hamming 奇偶乘逐字共轭。
+故比较位初始为零时，每个终端字效果在源反酉
+$\mathcal A_s=Z_{{\rm par},s}K_s$ 下不变：
+任意输入 $\rho$ 与 $\mathcal A_s\rho\mathcal A_s^{-1}$ 给相同终端字律。
+$T$ 是保持 Hamming 重量的实置换，于是
+
+$$
+ \operatorname{Tr}\!\left(T\mathcal A_s\rho\mathcal A_s^{-1}\right)
+ =\overline{\operatorname{Tr}(T\rho)}.
+\tag{75.4}
+$$
+
+为见虚部确实可变，取三个块某一对应数据位上的单占据循环轨道
+$e_0,e_1,e_2$，满足 $Te_j=e_{j+1}$，下标模三，其余数据全零。
+令 $\omega=e^{2\pi i/3}$、
+$v=(e_0+\omega^{-1}e_1+\omega^{-2}e_2)/\sqrt3$。
+则 $Tv=\omega v$，而 $\mathcal A_s v=-\overline v$ 的本征值为
+$\overline\omega$，虚部符号相反且非零。
+(75.4) 与终端效果不变性排除所述全输入虚部读者。
+这个反例不宣称排除对另加限制的某个特殊源族使用其已有资源；
+它界定这里未取得的通用权限。
+
+实部在 (75.4) 下保持，(74.1) 的 $R_x$ 及受控循环也各与 $\mathcal A$ 交换，
+故新读者与该对称性相容。制备障碍量化从全零开始的可达态，
+本读者却接收原已制备的复态；它没有消除 (67.4) 中的非零制备距离。
+原来的第二正交相位可继续供应源制备和设置一，
+只是设置零的实际终端比较已无需在读取期间使用它。∎
+
+## 76. 实际供应对应与量子起源的保留前提
+
+**命题 76.1（本源条件增量的对应范围）。** §§74–75 的承重增量是
+原 (64.1)–(64.3) 三源载体、未知原位恢复、相位零脉冲和原完整历史终端律之间的
+(74.1)、(74.7)–(74.11)，以及原 §67 指定间隙在该读取菜单收缩下的保持。
+这些来源特定的条件综合推导为 repo-derived，不作文献新颖性或优先权断言。
+原生控制、相干源制备、复数域、Born 输出及条件组合仍是显式前提。
+
+证明。受控循环测量的标准机制归属
+[Oszmaniec–Brod–Galvão，*Measuring relational information between quantum states,
+and applications*，arXiv:2109.10006v1，Fig. 1、Appendix A](https://arxiv.org/html/2109.10006v1)：
+Fig. 1 分列实部与加入相位门的虚部读数，Appendix A 给循环置换的交换分解。
+一般单／双控制门分解归属前引 Barenco 原文；
+(74.3)–(74.6) 的实提升与矩阵共轭仅作为本实际读取字的中间工具。
+这些标准结果本身不供应原场系数、忠实节点字、实际历史律或这里的原生脉冲交织。
+
+[SequentialRegisterCircuit](../../../Blueprint/D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.md)
+的 `coordinate_gram`、`rectangular_unitary_coefficients` 和
+[OccupationPhysicalPreparation](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupationPhysicalPreparation.md)
+的 `fixed_register_next_step_coefficients` 分别供应其自身坐标和占据历史的对应；
+[CoherentFlagPort](../../../Blueprint/D5/S3/Quantum/Reduction/CoherentFlagPort.md)
+与 [OrthogonalCoherentEmbedding](../../../Blueprint/D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.md)
+供应各自完整 Kraus 端口及测量相对压缩。
+本源交织使用的是 Single Reference 的实际脉冲等式；这些条件性存在结果不替代它。
+`QuquintCertificateBridge.realification` 及 `phaseForm_realification`
+处理五维证书的十维实矩阵，也不提供原寄存器中的借位门字。
+
+[CartesianControlAngleMatrixInvertible](../../../Blueprint/D5/S3/Quantum/Matrix/CartesianControlAngleMatrixInvertible.md)
+的 `result` 及其私有 `E_mul_A`、`LinvPrime_mul_K` 给有限 Cartesian 符号角度矩阵的逆，
+不指定 $J_L$、相位零脉冲或完整读出效果。
+[SourcePairingLaws](../../../Blueprint/D5/S3/VertexAlgebra/SourceBPZ/SourcePairingLaws.md)
+的 `sourcePairing_neutralMode`、`sourcePairing_grade` 与
+[NormalScalarTranspose](../../../Blueprint/D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.md)
+的 `consumed_normal_product_form` 保留原格载体的复双线性配对与整数模式边界。
+其中双线性转置不是本读取模型的正密度、共轭转置或 Born 合同，
+也没有从顶点场到本原生源或仪器的映射。
+这些关系各在自己的载体内成立；只有上述显式交织才回接这里的实际操作。
+
+[原重构卷 §§4–7](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md)
+区分共同复结构、概率表示、相干递归及张量组合；
+[V17，定义 1.1、§§8–9](AURIC_SUM_PRODUCT_LOGARITHMS_AND_QUANTUM_PYTHAGOREAN_GEOMETRY_V17.md)
+保留组合、统计与相干层各自的前提。
+[V15，§§6、8–10](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)
+的固定黄金门近似闭包与精确算术边界，和本节另供连续实角度的读取菜单不同。
+本节不把这些近似结论提升为固定黄金有限字的精确 Fredkin 权限。
+
+最后，(74.7) 消费 Born 律；本卷 §§70–73 的响应刚性仍各有其初始化、
+可达性、连续性和代码协变条件，不能反过来无条件供应这里的所有终端概率。
+[EffectProbabilityExtension](../../../Blueprint/D5/S3/Quantum/Foundation/EffectProbabilityExtension.md)
+的全效果表示，以及
+[SpatiotemporalBornRuleDichotomy](../../../Blueprint/D5/S3/Quantum/Measurements/SpatiotemporalBornRuleDichotomy.md)
+的 `BornRuleExists`、私有 `born_identity` 等也保留各自的效果或顺序迹概率前提。
+新读者给的是完整破坏性终端字及其旁观参考条件态，
+不是保留三源的 Lüders 仪器或 §54 的共同拒绝仪器。
+复振幅、已制备源、Born 输出与条件组合的来源，以及动力学和物理相位参考的来源，
+均未由这次读取资源减少导出；完整量子起源仍未解决。∎
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,31 @@
+**Proposition 6.4 (First entry four, $n\ge8$).** Let $n\ge8$. The admissible indecomposable permutations of $[n]$ with $\pi(1)=4$ are exactly $A_n$, $B_n$, $C_n$, and in addition $D_n$ when $n\ge9$. Stance: suspected-novel (see §9).
+
+**Proof.** Let $\pi$ be one. Since $n\ge8$, $5\in V$; let $w=\mathrm{pos}(5)$, so $3\le w\le n-4$, and $w\le n-5$ for $T_3$ by Lemma 6.3. By Lemma 6.3, $M$ avoids $312$ and $321$, and $5$ is its least entry. Two entries $x>y$ of $M$ before $5$ would form the occurrence $x,y,5$ of $321$, and an entry $x$ before $5$ with a smaller entry $y$ after $5$ would form the occurrence $x,5,y$ of $312$; this is the standard block structure of $\{312,321\}$-avoiders (cf. Simion and Schmidt 1985; the explicit statement there was not verified). Hence the entries of $M$ before $5$ increase and are the $w-3$ least values of $V\setminus\{5\}$, which are $6,\dots,w+2$ (all of them lie in $V$ because $w+2\le n-2$, and $w+2\le n-3$ for $T_3$). Hence
+
+$$
+\pi(i)=i+3\quad(3\le i\le w-1),\qquad \pi(w)=5.
+$$
+
+The values of $q$ in positions $1,\dots,n-4$ are $5,\dots,n$ (Lemma 6.1), and $q(i)=5$ exactly for $i=\pi^{-1}(w)$. Since $q$ avoids $132$ and every other entry among positions $1,\dots,n-4$ exceeds $5$, all later entries among these positions increase.
+
+Case $w=4$. Then $\pi(3)=6$, $\pi(4)=5$, and $q(1)=\pi(4)=5$, so $q(i)=i+4$ for $1\le i\le n-4$. Claim: for odd $k\ge3$ with $k+1\le n-2$, $\pi(k)=k+3$ and $\pi(k+1)=k+2$. This holds for $k=3$. If it holds for an odd $k$ with $k+1\le n-4$, then $q(k)=\pi(k+3)=k+4$ and $q(k+1)=\pi(k+2)=k+5$, which is the claim for $k+2$. For even $n$ the claim with $k+1=n-2$ gives $\pi(n-3)=n$, $\pi(n-2)=n-1$, so the type is $T_1$ and $\pi=C_n$. For odd $n$ it gives $\pi(n-4)=n-1$ and $\pi(n-3)=n-2$, so the type is $T_3$ and $\pi=C_n$.
+
+Case $w=3$. Then $\pi(3)=5$ and $q(2)=\pi(\pi(2))=\pi(3)=5$, so $q(3),\dots,q(n-4)$ increase. Put $h=q(1)=\pi(4)\ge6$. If $h=6$, then $q(i)=i+4$ for $3\le i\le n-4$; if $\pi(i)=i+2$ for some $3\le i\le n-4$, then $\pi(i+2)=q(i)=i+4$; from $\pi(3)=5$, $\pi(4)=6$ this gives $\pi(t)=t+2$ for $3\le t\le n-2$, the type is $T_2$, and $\pi=A_n$. If $h\ge7$, then $q(3)=6$, so $\pi(5)=6$; a value $e\in\{7,\dots,h-1\}$ cannot follow the entry $6$ at position $5$, since $h,6,e$ would be an occurrence of $312$, and positions $1,\dots,4$ carry $4,3,5,h$; hence $h=7$ and $q(i)=i+4$ for $4\le i\le n-4$. Claim: for even $k\ge4$ with $k+1\le n-2$, $\pi(k)=k+3$ and $\pi(k+1)=k+2$. This holds for $k=4$. If it holds for an even $k$ with $k+1\le n-4$, then $q(k)=\pi(k+3)=k+4$ and $q(k+1)=\pi(k+2)=k+5$, the claim for $k+2$. For odd $n$, the claim with $k+1=n-2$ gives $\pi(n-3)=n$, $\pi(n-2)=n-1$, type $T_1$, and $\pi=B_n$. For even $n$ it gives $\pi(n-4)=n-1$, $\pi(n-3)=n-2$, type $T_3$, and $\pi=B_n$.
+
+Case $w=5$ (so $n\ge9$). Then $\pi(3)=6$, $\pi(4)=7$, $\pi(5)=5$, so $q(5)=5$, $q(1)=7$, $q(2)=6$. Since $q$ avoids $132$, the entries of $q$ in positions $3,\dots,n-4$ that exceed $q(2)=6$ increase; these are all of them except $q(5)=5$, and their values are $8,\dots,n$. So $q(3)=\pi(6)=8$, $q(4)=\pi(7)=9$ and $q(i)=i+4$ for $6\le i\le n-4$. If $\pi(i)=i+2$ for some $6\le i\le n-4$, then $\pi(i+2)=q(i)=i+4$; hence $\pi(t)=t+2$ for $6\le t\le n-2$, the type is $T_2$, and $\pi=D_n$.
+
+Case $w\ge6$. Then $\pi(3)=6$, $\pi(4)=7$, $\pi(5)=8$, so $q(1)=7$, $q(2)=6$, and $q(w)=\pi(\pi(w))=\pi(5)=8$. If $w\ge7$, then $q(3)=\pi(6)=9$, and $6,9,8$ at positions $2<3<w$ is an occurrence of $132$. If $w=6$, then $n\ge10$; the values $1,\dots,8$ occupy positions $1,\dots,6$, $\mathrm{pos}(2)\ge n-2$ and $n$, so $\pi(7)\ge9$ and $q(4)=\pi(7)\ge9$, and $6,q(4),8$ at positions $2<4<6$ is an occurrence of $132$. Both are impossible.
+
+Admissibility. Each of $A_n,B_n,C_n,D_n$ ends in $1$. Substituting Definition 2.3, their squares are
+
+$$
+\begin{aligned}
+A_n&:\ 6\,5\,7\,8\cdots n\,2\,1\,3\,4, \\
+B_n&:\ 7\,5\,6\,8\,9\cdots n\,1\,2\,3\,4\ \ (n\text{ odd}),\qquad 7\,5\,6\,8\,9\cdots n\,2\,3\,1\,4\ \ (n\text{ even}), \\
+C_n&:\ 5\,6\cdots n\,1\,2\,3\,4\ \ (n\text{ even}),\qquad 5\,6\cdots n\,2\,3\,1\,4\ \ (n\text{ odd}), \\
+D_n&:\ 7\,6\,8\,9\,5\,10\,11\cdots n\,2\,1\,3\,4.
+\end{aligned}
+$$
+
+In each square, the first $n-4$ entries are the values $5,\dots,n$ and are followed by a block of $1,2,3,4$ ending in $4$; the larger entries right of any entry increase (in the head one checks $6\,5\,7\cdots$, $7\,5\,6\,8\cdots$, $5\,6\cdots$ and $7\,6\,8\,9\,5\,10\cdots$ directly, and the tail blocks $2134$, $1234$, $2314$ have this property), so each square avoids $132$. For the permutations themselves we list, for each entry, the later entries smaller than it. In all four families the entry $4$ is followed by the smaller entries $3\,2\,1$, the entry $3$ by $2\,1$, and the entry $2$ by $1$. For the entry $n$ in a final segment $2\,n\,1$ the word is $1$. Every other entry $e$ lies strictly between the entries $3$ and $2$, and its word is: in $A_n$, $2\,1$; in $B_n$ and $C_n$, $f\,2\,1$ when $e$ is the first entry of an adjacent pair whose second entry is $f$, and $2\,1$ otherwise; in $D_n$, $5\,2\,1$ for $e\in\{6,7\}$ and $2\,1$ otherwise. Each of these words decreases and has length at most three, so $A_n$, $B_n$, $C_n$, $D_n$ avoid $312$ and $54321$, by the same reading as in the proof of Proposition 4.1. ∎
+

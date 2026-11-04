@@ -1,0 +1,44 @@
+**Theorem 12.3 (finite continuation and output bills).** For any finite
+actual continuation, sum the request/conversion work and write bounds,
+all counter commits, acquisition and transfers, and every required
+record and output copy. This gives a finite cumulative $C,W$ bound;
+peak $V$ is the retained boundary, the maximum active scratch, actual
+retained journal/output, and the separate original source backing.
+There is no constant cumulative-write or constant retained-age bound
+for an unbounded run. If the actual cut is $n$ and $u$ original updates
+complete, the source consumes exactly
+
+$$
+ F_{n+u+1}-F_{n+1}
+ \tag{PCR.34}
+$$
+
+new birth bits. Inside this cone the number of births is
+$F_{T+u+2}-F_{T+2}$, and the number of new physical nodes is twice
+that value. These physical operations, label promotions, allocations,
+actual synchronization and installation are not eliminated by prediction.
+
+Proof. Sequential composition adds work, writes and paid calls. Scratch
+can be released between calls but previously written bits remain in
+$W$; retained outputs and records remain in peak backing until actually
+released. Original total births at cut $n$ are $F_{n+1}-1$; subtracting
+the two completed totals proves (PCR.34). The local beta-origin total
+births through $T$ are $\sum_{k=1}^T F_k=F_{T+2}-1$, giving the local
+formulas. A representation of a request does not perform any of these
+source operations. Global $n$ is not recoverable from this local $T$
+alone, so (PCR.34) is an accounting fact about the actual execution,
+not an additional numerical register furnished by the boundary.
+
+For explicit full support at local age $t$ there are
+$N_t=2F_{t+2}-1$ nodes. A list of full physical addresses has payload
+$\sum_{w\in S_t(v)}(m+|w|)$ plus delimiters; it needs at least one
+record per node even if $m=0$. The terminal-boundary list has
+$F_{t+2}$ entries. An implementation can enumerate using the evaluator
+or forward substitution and charge each output letter and scratch
+operation; a compact description alone is not that explicit output.
+Likewise a chronological batch output contains $F_k$ orientation bits.
+Any proposed output bound must include these lengths. Costs for
+retained journals include actual literal payloads, replies, completed
+update acknowledgements and commit fields, as in GPO Proposition 35.1.
+$\square$
+

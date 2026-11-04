@@ -1,0 +1,23 @@
+**Proposition 10.4 (Exact scope of the literal set defect).** Let $F_{\mathrm{set}}(a)$ be the displayed right side of Theorem 6.4 when $\{x_A,x_B,x_C\}$ is an ordinary numeric set, and let $K_{\mathrm{set}}$ be the displayed constant in Theorem 6.5 with the same literal reading, leaving its finite-product definition of $\Omega(0)$ unchanged. With $V$ and $m$ of Convention 10.1 and $d_v=D_2^{(v)}$, their discrepancies are
+
+$$
+\begin{aligned}
+F_{\mathrm{set}}(a)-\mathrm{GM}^{(3)}_n(a)
+&=\frac{n-2}{4n(n-1)}\sum_{v\in V}(m(v)-1)\log d_v(\varepsilon(a)),\\
+K_{\mathrm{set}}-K_n
+&=\frac{n-2}{4n}\sum_{v\in V}(m(v)-1)\log\frac{v(1-v)}4.
+\end{aligned}
+$$
+
+For $n>2$, both discrepancies are strictly negative if any two party weights agree, and both are zero if the three weights are pairwise distinct. For $n=2$, these two discrepancies are zero regardless of ties. A product in the tree formula must still retain party multiplicities at $n=2$.
+
+**Proof.** Replace each party sum by $\sum_{v\in V}m(v)$ times its summand and subtract the two formulas. For $0<\varepsilon<1$ and $0<v<1$, every nonzero-residue factor of $d_v$ satisfies
+
+$$
+0<\varepsilon+(1-\varepsilon)^2v(1-v)\sin^2\frac{\pi c}{n}
+\le\varepsilon+\frac{(1-\varepsilon)^2}{4}
+=\frac{(1+\varepsilon)^2}{4}<1.
+$$
+
+Consequently $0<d_v<1$, and $0<v(1-v)/4\le1/16<1$. The logarithms are strictly negative; a tie supplies a positive integer $m(v)-1$. The coefficient is positive precisely when $n>2$. At $n=2$ it is zero, but no such zero coefficient protects the separate tree-product identity. ∎
+

@@ -1,0 +1,29 @@
+**Theorem 21.2 (endpoint sufficiency on the split carrier).** The map $z\mapsto\mathcal N(z)$ is a bijection from $\widehat X$ to its actual record image. Consequently, with the anchor retained, either full unmarked record has exactly the same history fibers as $E$. It determines the endpoint, its unique maximal predecessor sequence and every index at which the anchor occurs. It recovers the finite anchored history exactly for free anchors. For a cyclic anchor it fails to choose among all the occurrences $d_{a,z}+kp_a$, and hence among all words in (20.5), even when every predecessor state and name is supplied.
+
+Proof. The classification of actual records must include the split rational sides. For $z=t^-$ with $t>0$ rational, the subtractive Euclidean descent of Theorem 6.2, preserving the minus side by (20.2), reaches $1^-$ in finitely many steps and halts there. These are exactly the finite records: any point reaching $1^-$ is a finite forward image of it, and these images remain positive rational minus-points. Reverse the listed names and execute that chronological word from the fixed terminal state $1^-$; this reconstructs the endpoint uniquely. The halt marker is part of this information, including the record consisting only of $!$ at $1^-$ itself.
+
+For $t^+$ the same descent reaches $1^+$, then $0^+$, then repeats $0^+$ forever with name $L$. The zero point itself has record $LLLL\cdots$. Conversely an actual infinite record that is eventually all $L$ must reach $0^+$: if its state at the beginning of that tail had positive coordinate $x$, repeated inverse-$L$ steps would have numerical value $x/(1-nx)$ while defined, which cannot remain finite and positive for every $n$. The only zero-coordinate point is $0^+$. Thus a finite prefix of the record, reversed and executed from $0^+$, reconstructs the endpoint. This covers exactly zero and the positive rational plus-points. The tail is not a halt marker and cannot be substituted for one; it distinguishes the plus-points from the rational minus-points.
+
+All other endpoints are positive irrational points and have infinite predecessor records. Such a record is not eventually $L$ by the preceding argument and cannot be eventually $R$, since repeated inverse-$R$ steps subtract one and cannot remain positive forever. Hence both letters occur infinitely often. To prove uniqueness from its names $b_0,b_1,\ldots$, without assuming a binary-shift identification, form
+
+$$
+A_n=G_{b_0}\cdots G_{b_{n-1}}
+ =\begin{pmatrix}\alpha_n&\beta_n\\\gamma_n&\delta_n\end{pmatrix}.
+\tag{21.2}
+$$
+
+The endpoint is the result of applying the first incoming name to the next predecessor, and so forth. Its numerical coordinate therefore belongs, for each $n$ with $\gamma_n>0$, to the closed real interval
+
+$$
+\left[\frac{\beta_n}{\delta_n},
+      \frac{\alpha_n}{\gamma_n}\right],
+\qquad
+\frac{\alpha_n}{\gamma_n}-\frac{\beta_n}{\delta_n}
+ =\frac1{\gamma_n\delta_n}.
+\tag{21.3}
+$$
+
+This follows by letting the remaining nonnegative numerical input range from zero to arbitrarily large finite values in its increasing determinant-one fractional map; only containment in the closure is needed. Right multiplication by $G_L$ changes the lower row $(\gamma,\delta)$ to $(\gamma+\delta,\delta)$, and right multiplication by $G_R$ changes it to $(\gamma,\gamma+\delta)$. Starting from $(0,1)$, after the first $L$ both entries are positive. Infinitely many occurrences of each letter make their product tend to infinity. The widths in (21.3) tend to zero, so two endpoints with these same names have the same numerical coordinate. Both endpoints are irrational in this case and (16.4) assigns only one split point to that coordinate. They are therefore equal.
+
+The three cases exhaust actual records. This proves endpoint sufficiency including zero, the rational sides and termination. It asserts no surjectivity onto an arbitrary binary code space: for instance $RRRR\cdots$ is not an actual predecessor record. The endpoint determines the full records by (20.2), and the state record includes that endpoint. Thus both records and the endpoint recover each other on actual images. Pulling these maps back to the common source $\mathcal H$ gives precisely the fibers (20.5). Formula (20.6) then gives every possible starting occurrence, but nothing in the unmarked record selects one. $\square$
+

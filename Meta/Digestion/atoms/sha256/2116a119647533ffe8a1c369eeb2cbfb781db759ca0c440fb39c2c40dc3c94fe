@@ -1,0 +1,52 @@
+**Theorem 2.1 (support is exactly the visible chronological batches).**
+At a common normalized cut $T\ge0$, for any two beta-origin local
+histories with the stipulated chronological order, regardless of a law
+promise,
+
+$$
+ S_T=S'_T\quad\Longleftrightarrow\quad
+ W_k=W'_k\text{ for every }1\le k\le T-1.
+ \tag{PCR.3}
+$$
+
+An empty range imposes no condition. There are finite maps between this
+ordered support and $(T,W_1,\ldots,W_{T-1})$. They recover every visible
+parent address, its normalized update and orientation. By contrast, the
+full labelled state at $T$ is equivalent to $(T,W_1,\ldots,W_T)$.
+The latest batch $W_T$ has $F_T$ orientation bits for $T\ge1$; these are
+structurally invisible in presence-only support. There are
+$2^{F_{T+1}-1}$ supports at fixed $T\ge1$ when all batch assignments are
+allowed. At $T=0$ there is one support and one beta root.
+
+Proof. A beta-origin orbit after $T$ updates has $F_{T+2}$ leaves,
+regardless of orientations. These counts are strictly increasing for
+$T\ge0$, so complete support also determines $T$. The full binary node
+count is $2F_{T+2}-1$. A parent branching in update $k$ has final rank
+$T+2-k$. Its child subtrees have ranks $T+1-k$ and $T-k$. For
+$k\le T-1$ their leaf counts $F_{T+2-k},F_{T+1-k}$ are unequal, and their
+physical order recovers the bit. For $k=T$ both children are terminal,
+so their supports are the same in either order. Equivalently, their
+maximum depths differ by one exactly when the parent rank is at least
+three; this is [NRW, Lemma 1.4][NRW].
+
+Each branch's descendant leaf count determines its rank, hence its
+normalized branch update $k=T+2-\operatorname{rank}$. List recovered
+parents first by this update and then by their actual physical address.
+This recovers exactly $W_1,\ldots,W_{T-1}$ and their marked chronology.
+One may instead start a beta roster at zero and apply NRW Lemmas
+2.1--2.3's common-domain roster induction. It reads only these visible
+orientations and outputs exactly the same chronological words.
+
+Conversely, the words through $T-1$ construct the entire labelled local
+state at $T-1$. Its beta leaves determine the positions of both children
+created at $T$, independently of the last orientations; its other leaves
+remain in place. Thus they determine $S_T$. Labels at cut $T$ also
+determine the last bits by the position of beta at each newest cherry;
+older bits have already been recovered from support. Forward replacement
+proves the converse for the labelled state. For $T=0,1$, the same argument
+has no old batch, with respectively a beta root or one unlabelled cherry.
+Finally $\sum_{k=1}^{T-1}F_k=F_{T+1}-1$, and (PCR.3) is injective and
+surjective on the unrestricted assignments of these bits. This proves
+the count. Under a fixed law, some words are constrained; the count is
+not a claim that all supports occur in that restricted family. $\square$
+

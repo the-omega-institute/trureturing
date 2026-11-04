@@ -1,0 +1,4 @@
+**Theorem 19.1 (exact, per-tolerance, uniformly bounded and fixed-machine boundaries).** Keep the arbitrary actual graph and native law of Definition 16.1.
+
+1. At $\epsilon=0$, finite static supplementation and complete finite names-only online supplementation exist if and only if every cyclic SCC is a single directed named cycle and
+

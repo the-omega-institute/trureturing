@@ -1,0 +1,65 @@
+**Theorem 29.2 (U-input adapter and asymptotic minimax payload).**
+AAII Definition 94.1's existing ordinal journal is a recorder under
+(27.1), with a computable update from precisely $(U,J,e)$ and paid
+transient scratch. If $\mathscr R_{\rm sem}$ denotes all semantic
+recorders (27.1) and $\mathscr R_{\rm comp}$ those with computable
+decoding and such an update, define
+
+$$
+M_{\mathscr R}(N)=\inf_{R\in\mathscr R}\;
+ \max_{h:\,|h|=N}|J_R(h)|.
+\tag{IV.80}
+$$
+
+For $N\ge7$, both classes satisfy
+
+$$
+\frac{N+1}{16}\log_2\frac{N+1}{8}
+\le M_{\mathscr R_{\rm sem}}(N)
+\le M_{\mathscr R_{\rm comp}}(N)
+\le\sum_{j=1}^{N-1}\lceil\log_2j\rceil,
+\qquad M_{\mathscr R}(N)=\Theta(N\log N).
+\tag{IV.81}
+$$
+
+This is the asymptotic minimax retained binary-payload order, without
+a sharp leading constant or a total-resource optimum.
+
+**Proof.** Reuse the ordinal journal unchanged: before each actual
+event, append the zero-based left-to-right rank of its operand among
+the $L$ logical leaves, in exactly $\lceil\log_2L\rceil$ padded bits.
+There are no kind bits, per-event markers or retained widths, and a
+one-leaf event appends the empty word. No new sufficient code is needed.
+
+The adapter's first step is justified by the admitted input itself:
+$U$ retains leaf colours, hence supplies $a,c$ and the exact event
+count $N=a+2c-1$. AAII94's inverse uses its current endpoint only to
+obtain that count. Start in scratch at the known alpha, and run its
+replay for exactly $N$ iterations. At each iteration the recovered
+ordered scratch tree supplies $L$, the chunk width, the leaf at the
+next chunk's rank, and that leaf's sole enabled kind and logical
+address. The induction of AAII Theorem 94.2 therefore applies with
+$U$ in place of an ordered-source input: the scratch tree after each
+iteration is the actual historical term. At the end it is the
+required current ordered term, and exactly all of $J$ has been
+consumed. Zero-width events still advance the replay count.
+
+For update, reconstruct that current term from $(U,J)$, locate the
+supplied actual event $e=(\text{kind},p)$ in it, and compute its
+pre-edit leaf rank and $L$ in scratch. Append exactly the same padded
+ordinal bits. Its kind agrees with the leaf's actual guard. This
+computes the next $J$ using only the admitted inputs, with literal
+prefix preservation for every legal history. Replay trees, counters,
+leaf scans, the event and append workspace are paid transient data;
+none is retained as controller advice. The current ordered term is
+computed, not supplied as an additional input. AAII Proposition 94.3
+then gives the upper in (IV.81), with maximum zero at $N=0$ and
+$\sum_{j=1}^{N-1}\lceil\log_2j\rceil$ at $N\ge1$.
+
+Corollary 29.1 applies to every semantic recorder, and the effective
+class is a subclass. These facts prove the inequalities. The lower
+is $\Omega(N\log N)$ and the supplied upper is $O(N\log N)$.
+Although this sufficient journal also replays history, history
+recovery is not a premise of the lower bound or the minimax task.
+$\square$
+

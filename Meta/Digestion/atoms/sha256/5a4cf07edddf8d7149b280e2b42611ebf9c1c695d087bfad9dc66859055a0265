@@ -1,0 +1,21 @@
+**Proposition 10.3 (Sufficient certificate and the unresolved implication).** For an actual producer in Definition 4.1, suppose that for every $c\in C_+$ all the finitely many expressions in (10.11) vanish (or, equivalently, the sharper rectangle (10.14) vanishes). Then
+
+$$
+ d(P)<c_\star.
+\tag{10.16}
+$$
+
+Proof. Assume for contradiction that $d(P)=c_\star$. Proposition 4.2 supplies positive scalar gap masses and the rows used in Proposition 10.2, so the finite vanishing gives all split equalities. On each recurrent component $D$, first form the quotient
+
+$$
+S_D=D/\!\sim,\qquad s\sim t\ \Longleftrightarrow\ F_s=F_t,
+\tag{10.17}
+$$
+
+of equality of entire future laws. This is the predictive-state carrier; it is formed before the mutual-absolute-continuity quotient or any synchronization argument. The successor maps descend to $S_D$, and the split equalities give
+$\bar\tau_{l+r}=\bar\tau_r\bar\tau_l$ for $l,r\ge2$. The positive gap rows make each recurrent component of this finite labelled graph strongly connected. The elementary finite-map algebra on this quotient then makes every $\bar\tau_g$ a permutation and gives $\bar\tau_g=U^g$ for one cyclic permutation $U$.
+
+Proposition 5.3 supplies a finite word merging any pair of predictive states in one mutual-absolute-continuity class. Its action on $S_D$ is a composition of the permutations just obtained, hence is injective. Such a pair must therefore have been the same element of $S_D$, so every mutual-absolute-continuity class of predictive states is a singleton. Proposition 7.2 now gives the contradiction. Thus (10.16) is a sufficient certificate for the actual producer.
+
+The converse implication is deliberately absent: attainment has not been shown to force any expression in (10.11) or (10.14) to vanish. Nonvanishing supplies neither an attaining producer nor a positive lower bound for $c_\star-d(P)$. Without attainment, (10.3) is used only on positive gap events; null contexts and zero completion masses impose no conditional successor law. $\square$
+

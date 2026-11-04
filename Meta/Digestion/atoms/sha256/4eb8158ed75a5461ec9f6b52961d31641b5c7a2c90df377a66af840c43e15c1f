@@ -1,0 +1,23 @@
+**Corollary 29.1 (legal padding to every sufficiently large grade).**
+For each integer $N\ge7$, choose the largest power of two
+$m=2^d\le(N+1)/4$, and put $r=N-(4m-1)$. Every recorder has a legal
+history of exactly $N$ events whose retained length is at least
+
+$$
+\frac{dm}{2}=\frac m2\log_2m
+\ge\frac{N+1}{16}\log_2\frac{N+1}{8}.
+\tag{IV.79}
+$$
+
+The padded endpoint can be chosen independently of the recorder;
+no singleton orientation claim is made for it when $r>0$.
+
+**Proof.** First use Theorem 28.3. The leftmost leaf of $Q_d(m)$ is
+beta at $L^{d+1}$. Append the fixed sequence of splits at
+$L^{d+1},L^{d+2},\ldots,L^{d+r}$, empty for $r=0$.
+Each split creates the next left beta operand, so these are exactly
+$r$ legal events and leave a fixed endpoint. Prefix preservation
+retains the bound already obtained. Maximality of $m$ gives
+$m>(N+1)/8$; for $N\ge7$ the logarithms compared in (IV.79) are
+nonnegative, proving the stated weakening. $\square$
+

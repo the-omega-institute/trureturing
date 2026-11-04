@@ -1,0 +1,15 @@
+## 九、接回 Robin：再证明一条无条件正预算下界
+
+上面主要推进关系矩阵。下面直接回到原整数 $n$，保留
+
+$$
+T=\log n,
+\qquad
+R(n)=\frac{\sigma(n)}
+{e^\gamma n\log\log n}.
+$$
+
+Robin 判据要求对所有 $n>5040$ 有 $R(n)<1$，这与 RH 等价。[arxiv.org](https://arxiv.org/pdf/1112.6010?utm_source=chatgpt.com)
+
+为与核 $\mathscr K$ 区分，把前面使用的素数层修正预算记为 $\mathcal B(T)$。
+

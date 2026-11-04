@@ -1,0 +1,36 @@
+### 定理 9.2（两个方向决定第三个旋转轴）
+
+式 [(18)](#eq-polar) 的酉部分为
+
+<a id="eq-qubit-u"></a>
+
+$$
+\boxed{
+U_{F,E}=\frac{c_0I+i\mathbf d\cdot\boldsymbol\sigma}
+{\sqrt{c_0^2+|\mathbf d|^2}}.
+}
+\tag{19}
+$$
+
+若 $\mathbf d\ne0$，Bloch 旋转角大小满足
+
+$$
+\tan\frac{|\Theta|}{2}
+=\frac{|\mathbf b\times\mathbf a|}{a_0b_0+\mathbf a\cdot\mathbf b}.
+$$
+
+若 $U=e^{i\eta\widehat{\mathbf d}\cdot\boldsymbol\sigma}$，Bloch 旋转为绕 $\widehat{\mathbf d}$ 的角 $-2\eta$。
+
+**证明。**
+设 $L=\sqrt{c_0^2+|\mathbf d|^2}$。候选 $U$ 满足 $U^*U=I$、$\det U=1$。因 $\mathbf c\cdot\mathbf d=0$，直接计算
+
+$$
+U^*BA=LI+\frac{c_0\mathbf c+\mathbf d\times\mathbf c}{L}\cdot\boldsymbol\sigma.
+$$
+
+它自伴、迹为 $2L>0$，行列式为 $\det A\det B>0$，所以严格正。极分解唯一性给出公式。
+
+**白话。**一个滤片按一个方向改变份量，另一个滤片按另一个方向改变份量。两个方向不共线时，它们的先后差别产生一个法向，这个法向正是旋转轴。每片都没有额外拧转，合起来却能留下顺序旋转；它由关系的组合确定。
+
+<a id="section-10"></a>
+

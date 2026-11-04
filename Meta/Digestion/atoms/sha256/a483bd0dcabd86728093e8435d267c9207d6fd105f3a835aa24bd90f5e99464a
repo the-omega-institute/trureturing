@@ -1,0 +1,43 @@
+**Proposition 40.7 (a concrete native separation inside the common fiber).**
+Take the attained beta source $t_0=\beta$, obtained from the installed
+alpha root by its legal root promotion. The blocks $A,B$ give
+composition $(2,3)$ but different actual logical trees, primitive
+traces and addressed work:
+
+$$
+\begin{aligned}
+F_A(\beta)
+ &=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                  \langle\beta,\alpha\rangle\rangle,\\
+F_B(\beta)
+ &=\langle\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,
+                  \beta\rangle,\beta\rangle.
+\end{aligned}
+\tag{40.10}
+$$
+
+Proof. Apply whole-frontier replacement and the leftmost-beta split
+literally at each step. In the left-first entry order of LAB Definition
+9.3, their successful primitive words, with $\varepsilon$ the root
+address, are respectively
+
+$$
+\begin{aligned}
+A:&\quad S_\varepsilon\ S_L\ P_R\ S_{LL}\ P_{LR}\ S_R,\\
+B:&\quad S_\varepsilon\ S_L\ S_{LL}\ P_{LR}\ P_R\ S_{LLL}.
+\end{aligned}
+\tag{40.11}
+$$
+
+Each listed address is a leaf of the required type when edited, and
+the resulting trees are (40.10). Both have two alpha and three beta
+leaves, two promotions and four splits. The original legal read
+Tag at address $R$ returns branch in the first and beta in the second.
+The sums of successful-event address depths are respectively seven
+and nine, so even their addressed-work coordinate is different. The
+authentic root binding and current rights are retained through both
+runs; their replies and source records are not identified by pair
+equality. These are two alternative legal continuations of one fixed
+source, without a reset or a simultaneously available duplicate.
+$\square$
+

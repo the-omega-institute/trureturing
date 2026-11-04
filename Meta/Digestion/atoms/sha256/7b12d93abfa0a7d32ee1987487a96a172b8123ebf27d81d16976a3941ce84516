@@ -1,0 +1,42 @@
+#### 定理 7.3（尖锐重构稳定性）
+
+在定理 [7.2](#thm-ellipse) 的同一固定、已标定接口中，令
+
+$$
+m_\rho=(\operatorname{Tr}\rho A,\operatorname{Tr}\rho B,\operatorname{Tr}\rho N).
+$$
+
+任意两态满足
+
+$$
+\boxed{
+\frac{\|m_\rho-m_\sigma\|_2}{\sqrt{1+|c|}}
+\le\|\rho-\sigma\|_1
+\le\frac{\|m_\rho-m_\sigma\|_2}{\sqrt{1-|c|}}.
+}
+$$
+
+两端常数均尖锐。
+
+**证明。**
+
+读出矩阵 $L$ 的三行为 $a^{\mathsf T},b^{\mathsf T},n^{\mathsf T}$，其行 Gram 为
+
+$$
+LL^{\mathsf T}=
+\begin{pmatrix}1&c&0\\c&1&0\\0&0&1\end{pmatrix},
+$$
+
+特征值是 $1+c,1-c,1$。
+因此其最大、最小奇异值为 $\sqrt{1+|c|},\sqrt{1-|c|}$。
+两个单 qubit 态之差的迹范数等于其 Bloch 向量之差的欧氏范数；
+套用奇异值界得式。沿相应奇异向量取足够小的相反 Bloch 向量即达到常数。
+
+∎
+
+若 $|c|\to1$，重构病态；在退化端点，法向本身失去定义。
+这与“没有发散”要求相接：稳定三轴接口需要非退化标定或明确的误差预算。
+此界固定了 $c$，标定误差仍需另计。
+
+<a id="statement-7-4"></a>
+

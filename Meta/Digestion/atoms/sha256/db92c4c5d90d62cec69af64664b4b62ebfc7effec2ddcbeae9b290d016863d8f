@@ -1,0 +1,17 @@
+**Definition 21.1 (certificate separated from recorder redundancy).** For any positive block list $s_1,\ldots,s_r$, let
+
+$$
+T=T(s_1,\ldots,s_r),\qquad
+N=1+\sum_{i=1}^r(s_i+1),\qquad
+f_i=\sum_{j=i}^rs_j+r-i,
+$$
+
+so that Proposition 13.2 gives $F(T)=\prod_i f_i$. Define
+
+$$
+L_{\rm cut}=\sum_{i=1}^r\left\lceil\log_2s_i\right\rceil,\qquad
+E=\max\{0,L_{\rm cut}-G(T)\}.
+\tag{IV.55}
+$$
+The number $E$ is the excess forced by this selected-cut lower-bound certificate after comparison with the static endpoint width. It is a lower bound on $M_J(T)-G(T)$ for every admissible $J$; it is not the actual redundancy of Theorem 19.1 or of any other recorder.
+

@@ -4,7 +4,19 @@
 
 The full L1 deviation of independent finite convolution from uniform has an attained exact minimum.
 
-**Definition 1.1 (Ordinary independent convolution).**
+**Theorem 1.1 (Positive Poisson denominator).**
+
+$$\forall r \theta: \mathbb{R}, (0 < \operatorname{Real.sin}(\theta)) \Rightarrow 0 < 1-2r \operatorname{Real.cos}(\theta)+r^{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/IndependentConvolutionL1Minimum.poisson_denominator_pos_of_sin_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real radius and angle, a positive sine makes the Poisson quadratic strictly positive.
+
+**Definition 1.2 (Ordinary independent convolution).**
 
 $$\begin{gathered}\forall n: \mathbb{N}, \forall p, q: \operatorname{Fin}(n)\to \mathbb{R}, \forall k: \mathbb{N},\\\operatorname{ordinaryConvolution}(n,p,q,k)=\sum_{i,j:\operatorname{Fin}(n), \operatorname{val}(i)+\operatorname{val}(j)=k} p(i) q(j).\end{gathered}$$
 
@@ -18,7 +30,7 @@ $$\begin{gathered}\forall n: \mathbb{N}, \forall p, q: \operatorname{Fin}(n)\to 
 
 For real arrays p and q on Fin n, the coefficient at natural k is the sum of p(i)q(j) over i+j=k. The indices use ordinary natural addition.
 
-**Definition 1.2 (Full L1 deviation).**
+**Definition 1.3 (Full L1 deviation).**
 
 $$\begin{gathered}\forall n: \mathbb{N}, \forall p, q: \operatorname{Fin}(n)\to \mathbb{R},\\W_{n}=\operatorname{Nat.sub}(2n,1),\\\operatorname{fullL1}(n,p,q)=\sum_{k\in \operatorname{range}(W_{n})} \left|\operatorname{ordinaryConvolution}(n,p,q,k)-\frac{1}{W_{n}}\right|.\end{gathered}$$
 
@@ -34,7 +46,7 @@ Sum the absolute deviations from 1/(2n-1) over every natural output index k belo
 
 Here W_n is 2*n-1 computed by natural subtraction; range(W_n) contains every k from zero through W_n-1. The denominator is cast to the reals, and division is real division. As in Lean, division by zero has value zero.
 
-**Theorem 1.3 (Attained minimum for all real simplex factors and every n at least three).**
+**Theorem 1.4 (Attained minimum for all real simplex factors and every n at least three).**
 
 $$\begin{gathered}\forall n: \mathbb{N}, 3\le n\Rightarrow\\\operatorname{IsLeast}\left(\left\{v: \mathbb{R}|\exists p, q: \operatorname{Fin}(n)\to \mathbb{R}, p\in \Delta_{n}\land q\in \Delta_{n}\land \operatorname{fullL1}(n,p,q)=v\right\}, \frac{1}{2n-1}\right).\end{gathered}$$
 
@@ -68,4 +80,5 @@ A zero output coefficient supplies the lower bound directly. Otherwise the actua
 
 - Truth anchor: `D5/S3/TotalVariation/IndependentConvolutionL1Minimum.fullL1`
 - Truth anchor: `D5/S3/TotalVariation/IndependentConvolutionL1Minimum.ordinaryConvolution`
+- Truth anchor: `D5/S3/TotalVariation/IndependentConvolutionL1Minimum.poisson_denominator_pos_of_sin_pos`
 - Truth anchor: `D5/S3/TotalVariation/IndependentConvolutionL1Minimum.result`

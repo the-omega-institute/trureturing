@@ -1,0 +1,150 @@
+**引理 134.1（同一比较的实曲率及实际回接）。** 在定义 132.1 的固定常数类上，
+对 $b\in I=[1-\varepsilon,2+\varepsilon]$ 和 $|y|\le R$，
+
+$$
+|\partial_b\log C_y(b)|\le CD_Q,\qquad
+0\le\partial_b^2\log C_y(b)\le CD_Q,
+$$
+
+$$
+\max_{0\le k\le2}
+|\partial_b^k\{\log G_y(b)-\log C_y(b)\}|
+ \le\operatorname{poly}(Q)e^{-\kappa Q^3}\longrightarrow0
+\tag{134.1}
+$$
+
+对某个固定 $\kappa>0$ 成立。
+特别地，(132.5) 对同一个实际有限 escort 在整个 $I$ 上成立。
+
+**证明。** 在原闭区间上，实际方差已有直接供应：谱边界
+(119.31)、(119.48)–(119.50)、(119.53) 给出
+
+$$
+\operatorname{Var}_{\nu_{b,y}}F_y
+=\operatorname{Var}_{\mu_{b,y}}A_y
+ +\partial_b^2\log\mathbb E_{\mu_{b,y}}e^{b\ell}
+\le CD_Q+O(\delta),\qquad 1\le b\le2.
+\tag{134.2}
+$$
+
+这里 $D_Q$ 正是该供应中的 $M_Q$。以下证明外侧实领的新增结论，
+不用 (134.2) 形式微分，也不将未条件化矩改作同输出矩。
+
+先处理低组。由完整单组供应 `BinomialFiniteSurprise.result` 的 (128.7)，
+若 $b\le2$ 且 $b\in I_*$，则 $Z_j(b)\ge Z_j(2)\ge D_*\sqrt{C_j+1}$。
+若 $2<b\le2+2h$，Jensen 给
+
+$$
+\frac{Z_j(b)}{Z_j(2)}
+=\mathbb E_{2,j}e^{-(b-2)S_j}
+\ge\exp\{-(b-2)\mathbb E_{2,j}S_j\}
+\ge e^{-2hK(1)}.
+\tag{134.3}
+$$
+
+另一方面 $Z_j(b)\le U\sqrt{C_j+1}$，且 $b-1/2\ge1/4$。
+将 $S_j^k e^{-bS_j}$ 拆成
+$[S_j^k e^{-(b-1/2)S_j}]e^{-S_j/2}$，
+使用 $x^ke^{-x/4}\le[4(k+1)]^k$，可得 $k=1,2$ 的单组矩在 $I_*$ 上一致有界。
+空组仍为 $S_j=0,Z_j=1$。因此精确低组乘积满足
+
+$$
+|\partial_b\log Z_L|\le Cm_Q,\qquad
+0\le\partial_b^2\log Z_L
+=\sum_{j\notin H}\operatorname{Var}_{b,j}S_j\le Cm_Q.
+\tag{134.4}
+$$
+
+这仅对原本独立的比较低组求和，没有替换任何低质量或低元组。
+
+置 $n_H=|H|$、$R_y(b)=K_H(b,t_b)-t_bh_y$。
+(133.3) 给精确实对数分解
+
+$$
+\begin{aligned}
+\log C_y(b)
+={}&bc_0+n_H\log B+\log Z_L(b)
+ +\frac12\sum_{H}\log(2\pi v_j)
+ -\frac{n_H+1}{2}\log b\\
+&+\log(\sqrt{2\pi}\sigma\sqrt\delta)
+ -\frac12\log W_H(b)+R_y(b)+\log Q_y(b)
+ +\log\frac{\mathcal J_\eta(b,y)}{\mathcal J_0(b,y)}.
+\end{aligned}
+\tag{134.5}
+$$
+
+尤其 $-\frac12\log b$ 来自原输出噪声核，不能并入一个对 $b$ 不变的常数。
+(133.2)、(133.4) 控制最后四项中除 $R_y$ 外的前两次导数。
+对 $R_y$ 直接沿有限和求导：$r_j=v_j/v_*$、$s_b=2v_*t_b/b$ 满足
+$|s_b^{(k)}|\le C$，故 $D_j=1-s_br_j$ 的前两次导数至多 $Cr_j$。
+于是 $-\frac12\sum_H\log D_j$ 的前两次导数至多
+$C\sum_Hr_j\le C/\delta$。
+非中心项 $\sum_Ht_be_j^2/D_j$ 的前两次导数至多
+$C\|e\|^2/\delta$，噪声项 $\delta\sigma^2t_b^2/(2b)$ 的相应导数至多
+$C\sigma^2/\delta$，而 $t_bh_y$ 的相应导数至多 $C_R/\delta$。
+最终 $\sigma\le1$，因此
+
+$$
+|R_y|+|R_y'|+|R_y''|\le C_R/\delta.
+\tag{134.6}
+$$
+
+将 (134.4)、(134.6) 代入 (134.5)，得两个导数的上界
+$C(1+m_Q+\delta^{-1})\le CD_Q$。
+第二导数非负是同一个比较正测度积分的方差恒等式，
+对 $F_y^C$ 的常数 $-c_0$ 不敏感。
+
+还须把此界送到实际 $G_y$ 的外领。
+比较积分在 $\Re z>0$ 解析：在任何紧子集上，低组和有限，
+高组积分由 $e^{-b_0S_G}$ 支配，其中 $b_0>0$；
+势能固定次幂可通过保留一半的实指数吸收。
+$\lambda_y^G,\eta\mathcal D_G^2\ge0$，$-c_0$ 有界，故该支配亦允许求导。
+实际 $G_y$ 是有限整个函数。
+
+使用既有引理 130.1 的整个固定复圆盘 raw 误差，不重新证明它。
+对 $b\in I$，令 $a$ 为 $b$ 在 $[1,2]$ 上的最近点。
+$|b-a|\le\varepsilon=h/8$，所以 $|z-b|\le h/2$ 全部落在
+$|z-a|\le h$ 内。比较分母在实点之间满足
+
+$$
+e^{-CQ^2}\le C_y(b)/C_y(a)\le e^{CQ^2}.
+\tag{134.7}
+$$
+
+为核对两方向，(134.3) 与半 escort 上界给每个低组归一化常数的固定比值界；
+高组无输出常数之比为 $(a/b)^{n_H/2}$。
+(133.3)、$W_H\asymp\delta$、$c_R\le Q_y\le C_R$ 和 (134.6)
+使核积分在两个实参数之间之比至多 $e^{C_R/\delta}$，下界亦然。
+其中相同 $\sigma$ 精确抵消。
+秩一比值由 (133.2) 夹在固定正常数之间，$e^{bc_0}$ 也如此。
+相乘并用 $m_Q\le C Q^2$ 得 (134.7)。
+
+设 $\mathcal E_Q$ 如 (130.2)，并令 $e_Q=e^{CQ^2}\mathcal E_Q$，
+增大固定 $C$ 以覆盖 (134.7)。在整个 $|z-b|\le h/2$ 上，
+
+$$
+|G_y(z)-C_y(z)|\le e_Q C_y(b),\qquad
+\frac{|\partial_b^k(G_y-C_y)(b)|}{C_y(b)}
+ \le k!(2/h)^k e_Q\quad(0\le k\le2).
+\tag{134.8}
+$$
+
+第二式只对解析差应用经典 Cauchy 估计，未在复点除以比较配分，
+也未预设任何实际复对数。
+由原 $\mu>0$、$L\le lQ^3$ 和 $-cQ^4$ 尾指数，
+$e_Q\le Ce^{-\kappa Q^3}$ 对某个 $\kappa>0$ 最终成立。
+
+记 $f=\log C_y$ 为实对数、$r=(G_y-C_y)/C_y$ 为实比值。
+由已证 $|f'|+|f''|\le CD_Q$ 和 (134.8)，商法则给
+
+$$
+|r|\le e_Q,\qquad |r'|\le C(1+D_Q)e_Q,\qquad
+|r''|\le C(1+D_Q)^2e_Q.
+\tag{134.9}
+$$
+
+最终 $|r|\le1/2$，对实 $\log(1+r)$ 求两次导数即得 (134.1)。
+有限配分恒等式 $\partial_b^2\log G_y=\operatorname{Var}_{\nu_{b,y}}F_y$
+在 $I$ 的每一点成立；结合比较曲率界，得到 (132.5)。
+所有估计都只使用原严格噪声余量。∎
+

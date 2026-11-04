@@ -15,19 +15,25 @@ internal sealed class CatalanCompositionSquareParityDocument : IScribeDocumentDe
         H("Catalan Composition and Hanna's Parity Conjecture"),
         Blocks(
             Paragraph(Text("The generating equation and parity conjecture are recorded "
-                + "in hanna2024a374570. Write C for catalanSeries and A for generatingSeries. "
+                + "in hanna2024a374570. Write D for catalanUnit, C for catalanSeries, and A for generatingSeries. "
                 + "All coefficient indices and exponents are natural numbers. The series "
                 + "A, C, D, and B(r) have integer coefficients; X is the indeterminate. "
                 + "The operator subst(f,u) means composition f(u).")),
             Paragraph(Text("The operator mk forms a series from its coefficient function. "
-                + "The function catalan is Mathlib's natural Catalan sequence, natCast(Z) "
+                + "The function catalan is Mathlib's natural Catalan sequence, PowerSeries.catalanSeries "
+                + "is its generating series, natCast(Z) "
                 + "is Nat.castRingHom(Z), and intCast(ZMod(2)) is Int.castRingHom(ZMod(2)). "
                 + "The operator map applies the indicated ring homomorphism to every "
                 + "coefficient. Thus the binary Catalan formula is an equality in ZMod(2).")),
+            Node("catalanUnit", "The integral Catalan series", UnitCatalanDefinition(),
+                "D maps Mathlib's natural Catalan series PowerSeries.catalanSeries "
+                + "coefficientwise to the integers.", DescribeRole.Definition),
             Node("catalanSeries", "The shifted Catalan series", CatalanDefinition(),
-                "D is Mathlib's Catalan series mapped to integer coefficients, and C is "
-                + "its product with X. This fixes the shift in the OEIS equation.",
-                DescribeRole.Definition),
+                "C is the product of X with the integral Catalan series D. "
+                + "This fixes the shift in the OEIS equation.", DescribeRole.Definition),
+            Node("catalan_unit_zero", "Constant coefficient of the integral Catalan series",
+                Disp(Equal(Constant(UnitCatalan()), D(1))),
+                "Evaluating the degree-zero coefficient gives catalan(0) = 1."),
             Node("catalan_equation", "The Catalan equation and normalization",
                 Disp(CatalanNormalized()),
                 "Mapping Mathlib's Catalan identity to the integers and multiplying "
@@ -118,10 +124,11 @@ internal sealed class CatalanCompositionSquareParityDocument : IScribeDocumentDe
         Exists, Sp, K(), Colon, Sp, Naturals(), Comma, Sp,
         Equal(n, shifted ? Add(Power(D(2), K()), D(1)) : Power(D(2), K())));
 
-    private static Formula CatalanDefinition() => Disp(new Formula.Aligned([
-        Equal(UnitCatalan(), Call("map", Call("natCast", Integers()), Call("mk", Named("catalan")))),
-        Equal(Catalan(), Mul(X(), UnitCatalan()))
-    ]));
+    private static Formula UnitCatalanDefinition() => Disp(Equal(UnitCatalan(),
+        Call("map", Call("natCast", Integers()),
+            Seq(Named("PowerSeries"), Dot, Named("catalanSeries")))));
+
+    private static Formula CatalanDefinition() => Disp(Equal(Catalan(), Mul(X(), UnitCatalan())));
 
     private static Formula CatalanNormalized() => Conjunction(Equal(Constant(Catalan()), D(0)),
         Conjunction(Equal(Coefficient(D(1), Catalan()), D(1)), CatalanEquation(Catalan())));

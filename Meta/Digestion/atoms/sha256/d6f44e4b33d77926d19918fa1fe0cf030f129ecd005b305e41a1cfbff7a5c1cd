@@ -1,0 +1,72 @@
+### 定义 1：实际素数核
+
+所有对数均为自然对数。令 $\gamma$ 为欧拉常数，对 $x\ge1$ 定义
+
+<a id="eq-1"></a>
+
+$$
+\begin{aligned}
+\mathcal F(x)
+={}&x(1+\gamma-\log x)-\log(2\pi)\\
+&+\sum_{k=1}^{\infty}
+\frac{x^{-2k}}{2k(2k+1)}\\
+&+\sum_{p^j\le x}
+\log p\left(\frac{x}{p^j}-1\right),
+\end{aligned}
+\tag{1}
+$$
+
+其中 $p$ 遍历实际素数，$j\ge1$。再令
+
+<a id="eq-2"></a>
+
+$$
+\boxed{
+\mathscr K(t)=e^{-|t|/2}\mathcal F(e^{|t|}).
+}
+\tag{2}
+$$
+
+这是上一轮使用的真实核：素数幂项、常数项和无穷尾项均完整保留。素数幂端点 $x=p^j$ 的对应新增项为零，因此 $\mathcal F$ 连续。
+
+其对角总量为
+
+<a id="eq-3"></a>
+
+$$
+\boxed{
+S=\mathscr K(0)=2+\gamma-\log(4\pi)>0.
+}
+\tag{3}
+$$
+
+由标准素数显式公式积分，得到此前使用的真实零点展开
+
+<a id="eq-4"></a>
+
+$$
+\mathscr K(t)
+=
+\sum_{\rho}
+\frac{e^{(\rho-\frac12)t}}{\rho(1-\rho)},
+\tag{4}
+$$
+
+其中 $\rho$ 遍历实际非平凡零点并计重数。这里引用的经典输入是素数显式公式与零点计数估计；式 (1)—(4) 的联系是对这些公式的积分推导。[kskedlaya.org](https://kskedlaya.org/ant/chapter-8.html?utm_source=chatgpt.com)
+
+特别地，$S>0$ 不需要假设 RH。写 $\rho=\beta+i\tau$，则
+
+$$
+\Re\frac1{\rho(1-\rho)}
+=
+\frac{\beta(1-\beta)+\tau^2}
+{\bigl(\beta(1-\beta)+\tau^2\bigr)^2
++\tau^2(1-2\beta)^2}
+>0.
+$$
+
+共轭零点配对后，每一对的贡献都为正。
+
+---
+
+<a id="section-2"></a>

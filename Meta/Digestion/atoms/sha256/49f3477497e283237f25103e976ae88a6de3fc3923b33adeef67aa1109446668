@@ -1,0 +1,139 @@
+**Theorem 27.6 (uniform represented-bit work, cumulative writes and
+linear peak backing).** Use the fixed finite sequential multitape
+model of ACR §21.4: every symbol operation and one-cell head move is
+charged, every written bit is counted cumulatively, and peak backing
+includes every visited cell. Let $I$ be the actual encoded input length,
+including all source fields, query, optional actual cut and any extra
+claimed output fields; let $L_{\rm out}$ be the actual encoded output
+length, including any requested copy of $(P,n)$. Put
+
+$$
+ D=d+1,\qquad
+ \ell_d=\lceil\log_2(64(d+2)^4)\rceil,\qquad
+ R=\begin{cases}
+ |\operatorname{bin}(j)|,&\text{ordinal input},\\
+ |v|+1,&\text{physical-word input}.
+ \end{cases}
+\tag{PCR.78}
+$$
+
+There is one uniform implementation of both queries with
+
+$$
+ \begin{aligned}
+ C,W&=O\!\left(I+D^3\ell_d^2+D^2(R+1)^2+L_{\rm out}\right),\\
+ V_{\rm peak}&=O(I+D+R+L_{\rm out}).
+ \end{aligned}
+\tag{PCR.79}
+$$
+
+The constants are independent of source, period, transient, query and
+cut. Work $C$ and writes $W$ include preparation from raw authentic
+$(d,P)$, not just access to a prepared term evaluator. If $d$ itself is
+malformed, reject before synthesis in $O(I+L_{\rm out})$ work, writes
+and backing. Otherwise $D$ uses that parsed bound; on an invalid query
+field take $R$ to be its actual digit or symbol length plus one. The
+same bound covers all other invalid fields at their actual lengths.
+At an already-occurred query, the length of $n$ is charged in $I$;
+its numeric value adds no forward simulation. No all-previous-node,
+period or image table is expanded.
+
+Proof. First validate syntax and source length by scans of the actual
+input. A length scan may use a moving unary tally and one sequential
+conversion to binary: increment a binary accumulator at its low end
+with ripple carry, returning only across the changed carry prefix.
+Over all increments its bit visits and writes are linear, since bit
+$k$ changes $O(1+M/2^k)$ times during $M$ increments. Final reversal
+and comparison cost the represented lengths. Equivalently the unary
+tally can be counted by repeated adjacent pairing, whose sweep lengths
+form a geometric sum. This includes zero, delimiters and return scans,
+without scanning a huge declared length when the actual field is
+short. Syntax failures return immediately; recurrence failures use the
+same bounded source pass. ACR (ACR.85) supplies preparation in
+$O(D^3\ell_d^2)$ work and writes and $O(D+\ell_d)$ backing, including
+its polynomial output, coefficient convention and authentic seed.
+Regenerating and comparing the $2d$ bits has the same bound. Since
+$\ell_d=O(D)$, this is $O(D)$ peak backing beyond the retained input.
+This preparation preserves the full annihilator $m$, not only its
+unit-constant core factor.
+
+Here is a sequential implementation of each subsequent term evaluation.
+If $r=\deg m>0$, for the requested exponent $k\ge0$ compute
+$X^k\bmod m$ by left-to-right binary square-and-multiply, starting with
+one. Dot its coefficients with the original first $r$ source bits.
+The monic-quotient identity gives
+
+$$
+ s_k=\left\langle X^k\bmod m,(s_0,\ldots,s_{r-1})\right\rangle.
+\tag{PCR.80}
+$$
+
+This is Fiduccia's recurrence identity as stated by
+[Bostan--Mori, v1 §1.3, equation (3)][PCR-BM]. It requires a monic
+polynomial, not an invertible companion or a field quotient; hence it
+applies to $X^a g$, repeated factors, constants and an impulse. For
+$r=0$ return zero, after reading the requested exponent field.
+
+No indexed coefficient access is hidden in its arithmetic bound.
+Use contiguous coefficient strings of length $O(r+1)$ on a fixed
+number of tapes. To multiply two polynomials, sweep one factor and
+add a shifted copy of the other into a length-$2r+1$ accumulator.
+Each of the $O(r+1)$ shifts costs $O(r+1)$ head moves, copies and
+XOR writes, including the return scan; moving the alignment by one
+cell is charged. Mark the current alignment on a separate track.
+For reduction, sweep high coefficients downwards and, for every
+nonzero one, XOR the aligned monic divisor across at most $r+1$
+cells, then return to the next marked high position. At most $O(r+1)$
+positions are reduced, at cost $O((r+1)^2)$ including positioning.
+A marked unary sweep, delimited by the actual coefficient strings,
+controls these loops; it uses $O(r+1)$ cells and does not require a
+binary array-index operation at each coefficient. Buffer clearing,
+copying, end markers, multiplication by $X$, and the final dot product
+fit the same bound. Each exponent bit is read once while the other
+tape heads perform these scans, with $O((r+1)^2)$ work and writes per
+bit and $O(r+1)$ reused arithmetic backing. Thus a $K$-bit exponent
+costs $O(D^2(K+1))$ work and writes, using $O(D+K)$ bits if its
+explicit exponent copy is included. This is a bit and head-motion
+bound over $\mathbb F_2$, not merely a ring-operation count.
+
+Next bound every query operand. After $h$ selected edges, (PCR.39)
+gives $B_v+1\le3^{h+1}$, $1\le A_v<B_v$, and $1\le e_v\le1+2h$.
+For a word query $h\le|v|$, so all exact coordinates and evaluated
+exponents $A_v-1$ have $O(R+1)$ bits. There are at most $|v|+1$
+term evaluations, including the returned event bit. Coordinate
+addition, doubling, comparison, subtraction, label changes, end
+markers and buffer resizing take $O(R+1)$ sequential work and writes
+per step, using a constant number of reused strings. The input-word
+head only advances; there is no rescan of all earlier letters and no
+stored sibling list.
+
+For an ordinal query, $F_{2k+2}\ge2^k$ by induction, so locating
+$F_\tau\le j<F_{\tau+1}$ takes $O(R+1)$ successive additions.
+The final pair and every intermediate Fibonacci integer have
+$O(R+1)$ bits: the first one exceeding $j$ is at most $2j+1$.
+The bracket search, comparisons, its represented loop counter and
+initial two subtractions to obtain $(F_t,F_{t+1})$ therefore cost
+$O((R+1)^2)$ work and writes and $O(R+1)$ backing, with the small
+$\tau=2,3$ cases treated directly. Descent takes at most
+$t=\tau-2=O(R+1)$ edges, so the same coordinate-width bound applies.
+Its block counts, residual rank, remaining time and pair of Fibonacci
+values all have $O(R+1)$ bits. Every rank comparison/subtraction and
+pair rollback, including the zero slow block at $u=1$, takes
+$O(R+1)$ work and writes. A selected letter is appended with the
+output head kept at its end. No ancestor is retained when $u$
+decreases. There are $O(R+1)$ term evaluations, each at an exponent
+of $O(R+1)$ bits, so their total is $O(D^2(R+1)^2)$.
+
+The cut guard is one final sequential comparison of the computed
+$\tau=e+1$ with the supplied $n$, costing $O(I+R+1)$. It is not
+repeated along descent. Extra claimed fields are compared once with
+the resulting tuple in $O(I+R+L_{\rm out})$ work. Copying requested
+input fields and writing or retaining the explicit output cost their
+actual lengths. All controller state is either finite control, a
+represented counter bounded above, or one of the named strings.
+No loop traverses blank gaps beyond these contiguous buffers. At all
+times their total visited backing is
+$O(I+D+R+L_{\rm out})$, and all arithmetic, allocation, clearing,
+relocation, counter and output writes have already been included.
+This proves (PCR.79) for successes and each rejection path. $\square$
+

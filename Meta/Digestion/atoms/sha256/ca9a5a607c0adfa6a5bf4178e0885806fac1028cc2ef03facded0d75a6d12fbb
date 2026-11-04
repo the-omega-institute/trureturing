@@ -1,0 +1,54 @@
+**Lemma 6.2 (Finite certificate transfer).** For the same model and
+parameters, put
+
+$$
+\rho_0=\sqrt{\frac Z{4H}},\qquad
+\eta_h=1-\sqrt{1-\frac{Lh}{H}}.
+\tag{6.3}
+$$
+
+Then
+
+$$
+d_{N,m}\le J_m(v)
+\le\eta_h+\sqrt{\rho_0^2+\frac{\Delta}{16Hh}}.
+\tag{6.4}
+$$
+
+In particular, if $d_{N,m}-\eta_h>\rho_0$, then
+
+$$
+\Delta\ge
+16Hh\left((d_{N,m}-\eta_h)^2-\rho_0^2\right)>0.
+\tag{6.5}
+$$
+
+**Proof 6.2.** Substitute $x=jh$ into (5.6) and divide by
+$2\sqrt{Hhj}$. The exact normalized inequality is
+
+$$
+\frac{\left|v_j-\sqrt j\sqrt{1-jh/H}\right|}{\sqrt j}
+\le\sqrt{\rho_0^2+\frac{\Delta}{16Hhj}}
+\quad(1\le j\le L).
+\tag{6.6}
+$$
+
+Thus the original $\Delta/4$ becomes $\Delta/(16Hhj)$.
+Because $\Delta\ge0$, $j\ge1$, and $jh\le Lh<H$, the triangle
+inequality yields
+
+$$
+\frac{|v_j-\sqrt j|}{\sqrt j}
+\le\eta_h+\sqrt{\rho_0^2+\frac{\Delta}{16Hh}}.
+$$
+
+Take the maximum and use the feasibility from Lemma 6.1 to obtain
+(6.4). Under the additional hypothesis, the quantity
+$d_{N,m}-\eta_h$ is positive and greater than $\rho_0$, so squaring
+the resulting comparison with the square root preserves the inequality
+and gives (6.5). $\square$
+
+This is a necessary certificate. A feasible vector in (1.1) is not
+thereby a native realization, and the certificate supplies no converse
+construction of an encoder.
+

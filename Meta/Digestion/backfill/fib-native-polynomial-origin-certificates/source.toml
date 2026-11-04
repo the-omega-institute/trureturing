@@ -1,0 +1,5 @@
+source_id = "fib-native-polynomial-origin-certificates"
+path = "docs/develop/theory/FIB_NATIVE_POLYNOMIAL_ORIGIN_CERTIFICATES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:eb9715ed6c0921d84aba8f7af39b03db20b3b1ab73f98b9f8fc062a10693e020
+  normalized_sha256: sha256:eb9715ed6c0921d84aba8f7af39b03db20b3b1ab73f98b9f8fc062a10693e020
+cas_ref: sha256:eb9715ed6c0921d84aba8f7af39b03db20b3b1ab73f98b9f8fc062a10693e020
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/LengthGramDualImage.range_eq_dualCapRegion
+    target_statement_id: sha256:e8d98ac21d255af2a04c720a8f3c0a217969d872bf66572670846cbdff88563c
+  - gid: D5/S3/Geometry/Hyperideal/LengthGramDualMetric.dual_metric
+    target_statement_id: sha256:41e8e9666cf71126fbdbeff3962fdf92255a9cdcf6bbdb5bf284cc0608181341
+  - gid: D5/S3/Geometry/Hyperideal/LengthGramDualPairing.dual_pairing
+    target_statement_id: sha256:936e1340704630a3a096303d4ee33ed5f353a90b6c98acfbee166bc9569070c1
+  - gid: D5/S3/Geometry/Hyperideal/LengthGramInverseDiagonal.inverse_diagonal_pos
+    target_statement_id: sha256:3f94279e138236d1dc545245f7efdb15e97a17928cfac72a5d0cb52377681571
+  - gid: D5/S3/Geometry/Hyperideal/LengthGramRadialImage.radial_image_halfspace_slice
+    target_statement_id: sha256:b3816edc140e35d33be2c39e8a62e7677efdb1e8e4a7b18b0f21206d19241cbe
+  - gid: D5/S3/Geometry/Hyperideal/LengthGramUnitNormals.dual_unit_normal
+    target_statement_id: sha256:994aa7c220e47ce62dacbe44369da1bc1a4538be73d5974ba95b9e9156cba102
+  - gid: D5/S3/Geometry/Hyperideal/LorentzGramDeterminant.lorentz_gram_determinant
+    target_statement_id: sha256:8d0e8b4737963ab99d924bc64e8cfe80415bd7f39c2a8059cedc1bcfa98473a2
+receipts:
+  unresolved_subitems: []

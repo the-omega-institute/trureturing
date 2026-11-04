@@ -10,7 +10,31 @@ Clearing positive denominators yields the polynomial numerators N₄ and N₅. A
 
 The nonvanishing pair (Λ,A₅) allows recovery of the drift offset even when Λ=0. Since U>0, the equivalent pair (UΛ,A₅) also has no common zero.
 
-**Theorem 1.1 (drift vector nonzero).**
+**Theorem 1.1 (Fourth numerator and drift coefficient).**
+
+Lean statement: `D5/S3/Observer/CubicGain/StrictDriftVector.n4_parentLambda`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/StrictDriftVector.n4_parentLambda` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+When b,j,n,T,U are nonzero, the fourth polynomial numerator N₄ is TU(b²+r−r²)(b²+r−r²+br)Lambda. This identifies the same fourth coefficient in either fifth history.
+
+**Theorem 1.2 (Positive fourth coefficient for large b).**
+
+Lean statement: `D5/S3/Observer/CubicGain/StrictDriftVector.parentLambda_pos_of_four_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/CubicGain/StrictDriftVector.parentLambda_pos_of_four_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every 0≤r≤1 and b≥4, Lambda is strictly positive. The estimates j,n≥b bound the two negative reciprocal terms, while (b²−b−8)/(b(1+b))>0.
+
+**Theorem 1.3 (drift vector nonzero).**
 
 Lean statement: `D5/S3/Observer/CubicGain/StrictDriftVector.drift_vector_nonzero`
 
@@ -25,3 +49,5 @@ For every 0≤r≤1 and b>0, Λ≠0 or A₅≠0. Since U>0, the actual drift coe
 ## References
 
 - Truth anchor: `D5/S3/Observer/CubicGain/StrictDriftVector.drift_vector_nonzero`
+- Truth anchor: `D5/S3/Observer/CubicGain/StrictDriftVector.n4_parentLambda`
+- Truth anchor: `D5/S3/Observer/CubicGain/StrictDriftVector.parentLambda_pos_of_four_le`

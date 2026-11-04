@@ -1,0 +1,31 @@
+### 12.1 同一完整门给效果和后继
+
+在内部记录准备 $|0\rangle$ 上，完整酉门 $U$ 给分支
+
+$$
+M_e=(I\otimes\langle e|)U(I\otimes|0\rangle ).
+$$
+
+记录基完备及酉性给
+
+$$
+\sum_eM_e^*M_e=I,\qquad E_e=M_e^*M_e.
+$$
+
+在此前同根强度与概率的标定下，
+
+$$
+p(e\mid\psi)=\left\lVert M_e\psi\right\rVert ^2=\langle \psi,E_e\psi\rangle .
+$$
+
+非零概率时的条件态为 $M_e\psi/\left\lVert M_e\psi\right\rVert$。
+零概率不指定归一条件态。多个不读取的记录标签给
+$`\mathcal I_e(\rho)=\sum_\alpha M_{e\alpha}\rho M_{e\alpha}^*`$。
+这接回有限量子仪器的标准结构 [8](#ref-watrous)。
+
+单独的酉门是效果为 $I$、后继为 $`U\rho U^*`$ 的单结果仪器。
+效果 $I$ 本身不能保留所有不同门的后继差别。
+测量作为取得可区分记录的过程，仍须实际产生这些记录。
+
+<a id="statement-12-1"></a>
+

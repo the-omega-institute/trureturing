@@ -1,0 +1,11 @@
+**Definition 13.1 (finite prior and finite decision predicate).** Supply a finite list $A\subset\mathbb Q_{>0}$ of possible original responses and a target function $\tau$ on this list with finitely encoded, decidably comparable values. This is public side information independent of which listed source is actual. The list and the action formulas permit exact computation of hypothetical candidate responses; only actual reads enter the acquired transcript. Original-word recovery uses $\tau(x)=\operatorname{dec}(x)$; original predictive-class recovery may use $\tau(x)=\kappa_M(x)$ from (11.7).
+
+At an already read node let $u$ be the actual probe prefix and let $A'$ be the subset of original candidates compatible with all reports so far. For $a\in\{L,R\}$ and an integer $j$ define
+
+$$
+A'_{a,j}=\{x\in A':q_M(f_{ua}(x))=j\}.
+\tag{13.1}
+$$
+
+Define $D_0(A',u)$ to mean that $\tau$ is constant on $A'$, with the empty case vacuous. Recursively $D_{k+1}(A',u)$ holds when $\tau$ is constant on $A'$, or when there is an $a\in\{L,R\}$ for which $D_k(A'_{a,j},ua)$ holds for every nonempty block $A'_{a,j}$. The finite list gives only finitely many such blocks. This predicate refers to the original target values throughout, including when different current predictive classes have merged.
+

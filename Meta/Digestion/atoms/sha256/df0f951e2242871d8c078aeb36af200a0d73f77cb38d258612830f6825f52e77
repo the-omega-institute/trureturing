@@ -1,0 +1,11 @@
+**约定 84.3（相邻结果的保持域）。** 以下仓内结果各自有实质内容，但其源对象不能无映射地当作本十三维原生容量的供应。
+
+| 相邻结果 | 已供对象与本问题的接口边界 |
+| --- | --- |
+| [SkewCoherencePolygamyMixedRefutation](../../../Blueprint/D5/S3/Quantum/Information/SkewCoherencePolygamyMixedRefutation.md) | 固定 $2\times3$ 复密度矩阵、正平方根及两个偏迹上的混态反例；其平方根相干量不等于未知终端概率函数，未给原 $K$ 的响应容量。 |
+| [ExtremePOVMRankThreeThreeTwoSix](../../../Blueprint/D5/S3/Quantum/Measurement/ExtremePOVMRankThreeThreeTwoSix.md) | 复七维中由明确向量框、可逆归一化及支撑独立性构造八结果极端 POVM，秩向量 $(3,3,2,2,2,2,2,2)$。这是给定量子效果模型内的存在结论，不是原门字取得该仪器或非 Born 前容量的证明。 |
+| [Tomiyama Schwarz reduction §§13–15](TOMIYAMA_DIAGONAL_SCHWARZ_REDUCTION.md) | 已给矩阵映射族的闭条带和三维非正参数区 Schwarz 判据；其正性和矩阵维数不识别为本源的未知响应及原生未来闭包。 |
+| [PeriodicBoundarySchroder](../../../Blueprint/D5/S1/Recurrence/Algebraic/PeriodicBoundarySchroder.md) | 已给自然数数组递推及两个周期移位与形式幂级数的对应；没有到原生量子制备、读出或容量的关系映射。 |
+| [finite-context reset §14](FIB_LEGAL_EDGE_LOAD_FINITE_CONTEXT_RESET_NONATTAINMENT.md) | 给定非负 $N$ 状态隐表示、实际 reset 行、正分母及原可见律的周期正规形。有限状态假设和原损失／attainment 缺口保留，不能转成未知原 $P$ 的有限秩上界。 |
+| [self-calibration III §18](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_III.md) | 给定严格正矩阵来源、单条不可复制轨迹、固定动作和绝对误差合同，在额外正误差余量下转移同一可靠协议并给有限覆盖。其“余量”是额外条件；不消除 82.2 中任意小高阶响应的结构／噪声区别。 |
+

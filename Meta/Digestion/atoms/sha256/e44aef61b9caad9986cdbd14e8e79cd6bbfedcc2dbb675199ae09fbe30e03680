@@ -1,0 +1,34 @@
+**Definition 16.1 (Inclusive score and frozen response).** For a fibre of Proposition 15.3, put $I=[A_\ast,B_\ast]\cap\mathbb Z$. Partition every site of $I$ into the center $0$, the nonfixed future sites $J$, and all remaining frozen sites $F$. Write $\epsilon_j$ for the fixed bit at $j\in F$. Retain the original losses
+
+$$
+\ell_i(y,v)=(x_i^{y,v}-q_i^P(x^{y,v}))^2,\qquad
+S_P(y,v)=\sum_{i\in I}\ell_i(y,v),\qquad
+D_F(v)=\sum_{j\in F}[\ell_j(1,v)-\ell_j(0,v)].
+\tag{16.1}
+$$
+
+In particular $A_\ast,B_\ast\in F$ and both are scored. Set $\alpha=p(Y=1)$ and use
+
+$$
+\widehat p(y,v)=p_Y(y)p_V(v)
+\tag{16.2}
+$$
+
+only as scalar coefficients in finite sums of these same losses. For $i\in J$, write $Z_i=V_{-i}$ and define
+
+$$
+\begin{aligned}
+a_{i,y}(z)&=p(V_i=1\mid Y=y,Z_i=z),\\
+\pi_{i,y}(z)&=p(Y=y\mid Z_i=z),\\
+m_i(z)&=\sum_{y=0}^1\pi_{i,y}(z)a_{i,y}(z),\\
+G_i&=\mathbb E_{p_{Z_i}}\!\left[
+\operatorname{Var}_{\pi_i(\cdot\mid Z_i)}(a_{i,Y}(Z_i))
++\sum_{y=0}^1p_Y(y)(a_{i,y}(Z_i)-m_i(Z_i))^2\right],\\
+\Gamma_j&=\sum_{y,v}(\widehat p(y,v)-p(y,v))
+(\epsilon_j-q_j^P(x^{y,v}))^2\quad(j\in F).
+\end{aligned}
+\tag{16.3}
+$$
+
+All posteriors in these definitions belong to $P$. No posterior is recomputed with coefficients $\widehat p$. The square-loss algebra is the conditional Brier mechanism of Dawid--Lauritzen--Parry, *Proper Local Scoring Rules on Discrete Sample Spaces*, [arXiv:1104.2224v2, §4.2, Example 4.4 and (14)](https://arxiv.org/html/1104.2224v2), used here on the original legal fibres, including their forced singletons. The centering of a boundary response against a posterior is also the algebra used in [Anchor response, Theorem 6.2](FIB_LEGAL_EDGE_LOAD_OPTIMIZER_ANCHOR_RESPONSE_AND_RESET_VARIANCE_DENSITY.md#6-mean-covariance-and-exact-screening). That theorem concerns a finite optimizer's own reset slice; the actual-law identification of $p$, the inclusion of every frozen site and the boundary likelihoods below are supplied by Propositions 15.3 and 16.2.
+

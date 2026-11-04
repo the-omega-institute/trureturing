@@ -1,0 +1,23 @@
+**命题 5.2（The auxiliary self-matching claim in the sequel）。**
+[AK, Claim 3.3] is used with a group matching $f$ on a ground set,
+a source basis $S$ and a nonbasis image $T=f(S)$. It asserts the
+existence of $x\in E\setminus T$ and $s\in S$ with $s+x\notin E$.
+This assertion is false under the loopless sparse paving, zero-excluding
+self-matching hypotheses.
+
+Proof. In the $n=s=2$ member of the supplied interval family in Section 4, take
+$E=\{1,2,3,4\}$, forbidden basis $H=\{3,4\}$,
+$S=\{1,2\}$, and the group matching
+
+$$
+f(1)=4,\quad f(2)=3,\quad f(3)=2,\quad f(4)=1.
+$$
+
+All four sums are $5\notin E$; $T=H$ is not a basis.
+But $E\setminus T=\{1,2\}$ and
+$S+(E\setminus T)=\{2,3,4\}\subseteq E$.
+Thus this claim fails under the very sparse paving, loopless,
+zero-excluding self-matching conditions in which it is used.
+This delimits that proof step and does not assert a separate
+classification for arbitrary paving targets.
+

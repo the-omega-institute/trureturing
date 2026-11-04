@@ -1,0 +1,20 @@
+#### 命题 1.2（总体保范数与局部收缩）
+
+若 $J_{\mathrm{in}},J_{\mathrm{out}}$ 为等距嵌入，$U$ 酉，则
+$A=J_{\mathrm{out}}^\dagger UJ_{\mathrm{in}}$ 为收缩，且
+
+$$
+\left\lVert \psi\right\rVert ^2-\left\lVert A\psi\right\rVert ^2
+ =\left\lVert (I-J_{\mathrm{out}}J_{\mathrm{out}}^\dagger)UJ_{\mathrm{in}}\psi\right\rVert ^2.
+$$
+
+**证明。**
+
+将 $UJ_{\mathrm{in}}\psi$ 正交分解为输出子空间内外两部分，再用勾股等式与等距性。
+
+∎
+
+因此一个切面的长度、振幅或有效权重可以变小，剩余范数保存在被该接口省略的分量中。反过来，单有一个收缩或几何缩短也不能确定其唯一的高维酉来源。
+
+<a id="sec-2"></a>
+

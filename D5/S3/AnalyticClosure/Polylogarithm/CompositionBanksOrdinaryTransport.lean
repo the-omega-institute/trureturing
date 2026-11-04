@@ -31,8 +31,7 @@ local instance (p : Prop) : Decidable p := Classical.propDecidable p
 open private radial_one_sub_bound radial_majorant_integrable
   radial_one_sub_uniform_bound inner_arc_decay from
   D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksIntegralControl
-open private admissibleRemainder from
-  D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksSourceInduction
+open D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksSourceInduction (admissibleRemainder)
 
 private theorem ordinary_angular_subarc_vanishes : ∀ (first : ℕ+) (suffix : List ℕ+)
     (hfirst : 1 < (first : ℕ)) (ρ D : ℝ) (N : ℕ),
@@ -607,7 +606,7 @@ private theorem ordinary_integral_identity : ∀ (first : ℕ+) (suffix : List �
   have heq := tendsto_nhds_unique hintegralLimit
     (hright.congr' (Filter.EventuallyEq.symm hformula))
   simpa [E, integrand] using heq
-private theorem ordinary_admissible_remainder_step : ∀ (first : ℕ+) (suffix : List ℕ+)
+theorem ordinary_admissible_remainder_step : ∀ (first : ℕ+) (suffix : List ℕ+)
     (hfirst : 1 < (first : ℕ)) (ρ D : ℝ) (N : ℕ),
     0 < ρ → ρ < 1 → 0 ≤ D →
     (∀ w : ℂ, w ∈ Complex.slitPlane → 0 < ‖w‖ → ‖w‖ < ρ →

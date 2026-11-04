@@ -1,0 +1,19 @@
+## 4. 两个重叠地址上的逻辑量子比特
+
+本节将一种局部门放在相邻位置，展示“同一原子，多种关系”的实质。
+原生投影为
+$P=n_Ln_R+(1-n_L)(1-n_R)Q_C$，其中 $n=\lvert 1\rangle\langle 1\rvert$，
+$Q$ 取 [(8)](#eq-nativeQ)。
+固定四位串的外端为 $0$，中间允许 $00,01,10$，得到
+$H_3=\operatorname{span}\{\lvert 00\rangle,\lvert 01\rangle,\lvert 10\rangle\}$。
+原生三位投影在地址 $(0,b_1,b_2)$、$(b_1,b_2,0)$ 的限制分别是
+
+$$
+P_1=\lvert g_1\rangle\langle g_1\rvert,\quad
+P_2=\lvert g_2\rangle\langle g_2\rvert,\qquad
+g_1=\sqrt x\lvert 00\rangle+x\lvert 10\rangle,\quad
+g_2=\sqrt x\lvert 00\rangle+x\lvert 01\rangle.
+$$
+
+<a id="statement-4-1"></a>
+

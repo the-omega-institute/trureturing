@@ -1,0 +1,14 @@
+**Definition 19.4 (actual inherited-prefix congestion).** Fix the single event order and recursive recorder $J$ of Theorem 19.1. For every noninitial reachable source $t$, use its actual labelled predecessor words, with their full multiplicities, to define
+
+$$
+\begin{aligned}
+D_t(q)&=\sum_{e:u\to t}
+ \bigl|\{h\in\mathcal H(u):q\preceq J(h)\}\bigr|,\\
+C(t)&=\max_{\substack{q\text{ binary}\\D_t(q)>0}}
+ \frac{2^{|q|}D_t(q)}{F(t)}.
+\end{aligned}
+\tag{IV.46a}
+$$
+
+Set $C(\alpha)=1$. The maximum is over the finite nonempty set of prefixes of these actual lower words. In particular $D_t(\varepsilon)=F(t)\ge1$ and $C(t)\ge1$. Equal lower words on different labelled tokens remain separate contributions. The words in (IV.46a) are the ones already chosen recursively by $J$, not independently optimized codebooks at each endpoint, static ranks, or words chosen for a future horizon.
+

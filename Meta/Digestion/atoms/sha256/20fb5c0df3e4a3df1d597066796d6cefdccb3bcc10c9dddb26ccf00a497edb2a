@@ -1,0 +1,19 @@
+**Equation 3.3 (`eq:global`).**
+
+$$
+[G_I,\operatorname{Sym}^{\boldsymbol\ell}(\kappa_I)\alpha]
+ -[G_H,\operatorname{Sym}^{\boldsymbol\ell}(\kappa_H)\alpha]
+ +[G_X,\operatorname{Sym}^{\boldsymbol\ell}(\kappa_X)\alpha]=0.
+$$
+
+To realize it, use a representative involving surviving edge variables
+only and apply the empty-central-edge IHX. Arbitrary original
+coefficients first evacuate as just proved. Thus occupied central edges
+cause no extra assumption.
+
+An actual flag isomorphism $\phi:G\to T$ has signed chain map $U_\phi$,
+including its loop-flag swaps, and gives the relation
+
+<a id="eq-iso"></a>
+<a id="eq:iso"></a>
+

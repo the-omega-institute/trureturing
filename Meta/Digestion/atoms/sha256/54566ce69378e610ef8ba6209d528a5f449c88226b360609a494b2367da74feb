@@ -1,0 +1,26 @@
+**Lemma 8.2 (Equality on every positive initialization cell).**
+For a table of Definition 8.1 let
+$\omega_r=\nu(c_{\rm init}^{-1}\{r\})$. If it satisfies
+$q_k=1$ and $L_k=1-S_k$, then every $r$ with $\omega_r>0$, used as
+a deterministic initial state, has $q_k(r)=1$ and correct mass $S_k$.
+
+Proof. Let $q_k(r)$ and $C_k(r)$ be the $J_p$ masses of return within
+$k$ reads and of correct return within $k$ reads when the initial
+state is $r$. Independence and the fact that the seed has no later
+runtime role give the finite sums
+
+$$
+q_k=\sum_{r\in K}\omega_r q_k(r),\qquad
+q_k-L_k=\sum_{r\in K}\omega_r C_k(r),\qquad
+\sum_{r\in K}\omega_r=1.
+\tag{8.4}
+$$
+
+Since $0\le q_k(r)\le1$, the first equality forces $q_k(r)=1$
+whenever $\omega_r>0$. For each such deterministic start the
+inherited unrestricted bound applies, so $C_k(r)\le S_k$.
+The second equality, whose left side is $S_k$, forces equality in
+each positive-weight term. This uses only a finite measurable
+partition of the given seed space, with no atomlessness or extra
+randomness premise. $\square$
+

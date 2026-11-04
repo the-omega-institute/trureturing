@@ -1,0 +1,12 @@
+**定义 2.2（积分关系扩张）。**
+
+加法子群 $L\subset E$ 称为 $L_0$ 的积分关系扩张，当
+
+$$
+L_0\subset L,\qquad \left\langle L,L\right\rangle\subset\mathbb Z.
+$$
+
+若 $L\ne L_0$，称为严格扩张。该定义不预设偶性、幺模性或新的最短根。
+
+<a id="statement-2-3"></a>
+

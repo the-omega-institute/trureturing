@@ -1,0 +1,53 @@
+### 命题 13.2（参照没有覆盖的方向，可以藏住整个正缺额）
+
+<a id="prop-c94-nonfaithful-qutrit"></a>
+
+在 $\mathbb C^3$ 上定义
+
+$$
+E(x)=\operatorname{diag}\left(x_{11},x_{22},\frac{x_{11}+x_{22}}2\right),
+ \quad
+ R(\rho)=\operatorname{diag}\left(\rho_{11}+\frac{\rho_{33}}2,
+                    \rho_{22}+\frac{\rho_{33}}2,0\right).
+$$
+
+令 $D=\operatorname{diag}(1,-1,0)$、$\mathcal S=\operatorname{span}_{\mathbb R}\{I,D\}$。
+$R$ 是 CPTP，保持 $\mathcal S$ 读数，融合全部同读数态，并固定
+$\tau=\operatorname{diag}(1/2,1/2,0)$。
+但是 $D^2\notin\mathcal S$，所以原载体上的可见空间不成为代数。
+
+**证明。**
+$R$ 的 Kraus 算符可取
+
+$$
+P_1,\quad P_2,\quad
+ \frac{\lvert 1\rangle\langle 3\rvert}{\sqrt2},\quad
+ \frac{\lvert 2\rangle\langle 3\rvert}{\sqrt2}.
+$$
+
+其伴随乘积之和为 $I_3$，并直接给出上述 $R$。
+设 $d=\operatorname{Tr}(\rho D)$；迹一性使
+
+$$
+R\rho=\operatorname{diag}((1+d)/2,(1-d)/2,0).
+$$
+
+故输出只依赖当前读数，且该读数保持。所给 $\tau$ 也确实固定。
+
+然而 $D^2=\operatorname{diag}(1,1,0)$ 不可能写成 $aI+bD$：
+前两坐标迫使 $a=1,b=0$，第三坐标便应为一而非零。
+平方缺额在此恰为
+
+$$
+\boxed{E(D^2)-D^2=P_3\ge0,\qquad \operatorname{Tr}(\tau P_3)=0.}
+$$
+
+它不含负方向，却完整地落在参照的零支撑中，因而未被零平均排除。
+
+两份状态 $P_3$ 与 $(P_1+P_2)/2$ 对当前 $D$ 读数同为零，
+对新增关系 $D^2$ 的读数却分别为零与一。
+这给一个准确的遗漏二态对。压到 $P_1+P_2$ 后，可见空间才成为对角代数；
+原三维结论与压缩后的结论不能互换。
+若在同一个例子中改选忠实参照 $I_3/3$，
+则 $R(I_3/3)\ne I_3/3$，说明删除参照固定条件也允许这种非代数像。
+

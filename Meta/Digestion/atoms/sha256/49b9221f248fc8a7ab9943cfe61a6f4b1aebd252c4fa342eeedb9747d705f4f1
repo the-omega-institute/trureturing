@@ -1,0 +1,20 @@
+#### 定义 6.1（AURIC 酉关系复形）
+
+给一个有边界的有限共形三角复形 $\mathcal K$。其几何顶点集记作 $V$，每点配置纤维 $H_v\simeq\mathbb{C}^5$；几何顶点与纤维内五个模式的标签不能混同。
+每条有向几何边 $u\to v$ 给出 $U_{vu}:H_u\to H_v$，满足
+$U_{vu}^\dagger U_{vu}=I$、$U_{uv}=U_{vu}^\dagger$。
+选择严格正权 $w_e>0$。截面空间及相容能量为
+
+$$
+\mathcal H_{\mathcal K}=\bigoplus_{v\in V}H_v,\qquad
+ \mathcal E(\psi)=\sum_{e:u\to v}w_e\left\lVert \psi_v-U_{vu}\psi_u\right\rVert ^2 .
+$$
+
+每条无向边只选一个方向求和。
+
+这里采用的是单截面直和，维数为 $5|V|$；若每个顶点是独立的多体量子系统，则应使用张量积，维数为 $5^{|V|}$，动力学和相容能量必须另行定义。
+图上的向量丛、连接与相应 Laplacian 有标准数学背景。（[9](#ref-kenyon)）
+此外，本定义中反向边的伴随是关系记账规则，不自动授予物理上执行所有逆程序的权限。
+
+<a id="statement-6-2"></a>
+

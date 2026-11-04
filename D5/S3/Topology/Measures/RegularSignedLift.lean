@@ -242,7 +242,7 @@ theorem regular_jordanParts_of_regular_totalVariation
     exact Measure.Regular.restrict_of_measure_ne_top (measure_ne_top _ _)
   exact ⟨by simpa [j] using hposreg, by simpa [j] using hnegreg⟩
 
-private theorem regular_add
+theorem regular_add
     {K : Type u} [TopologicalSpace K] [CompactSpace K] [T2Space K]
     [MeasurableSpace K] [BorelSpace K]
     {μ ν : Measure K} [μ.Regular] [ν.Regular] : (μ + ν).Regular := by

@@ -42,6 +42,17 @@ internal sealed class BiasedTrineJointMeasurabilityThresholdDocument : IScribeDo
                     + "Supplemental Material TeX lines 151–158. The definition gives a real value "
                     + "for every real b; the compatibility theorem concerns the stated physical domain."),
             Describe.Lean(
+                DescribeId.Create("sum-strings"),
+                DeclarationHandle.Create(Module + ".sum_strings"),
+                H("A sum over the eight Boolean strings"),
+                StatementSource.FromAuthor(Disp(SumStringsFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any type A in any universe with an additive commutative monoid structure, "
+                        + "the sum of f over all functions Fin 3 → Bool is the displayed eight-term sum. "
+                        + "The coordinates are ordered 0, 1, 2, with false before true in each coordinate."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Module + ".result"),
                 H("The exact triplewise joint-measurability criterion"),
@@ -149,6 +160,24 @@ internal sealed class BiasedTrineJointMeasurabilityThresholdDocument : IScribeDo
             At(Qualified("ite"), LT(X("b"), Fraction(Negate(D(1)), D(3))), Add(D(1), X("b")),
                 At(Qualified("ite"), LE(X("b"), Fraction(D(1), D(3))), Fraction(D(2), D(3)),
                     Subtract(D(1), X("b"))))));
+
+    private static Formula SumStringsFormula()
+    {
+        Formula strings = Arrow(Fin(3), Qualified("Bool"));
+        Formula Term(bool a, bool b, bool c) => At(X("f"), Vector(
+            Qualified(a ? "true" : "false"), Qualified(b ? "true" : "false"),
+            Qualified(c ? "true" : "false")));
+        Formula right = Add(Add(Add(Add(Add(Add(Add(
+            Term(false, false, false), Term(false, false, true)),
+            Term(false, true, false)), Term(false, true, true)),
+            Term(true, false, false)), Term(true, false, true)),
+            Term(true, true, false)), Term(true, true, true));
+        Formula left = Seq(new Formula.Subscript(Sum, Seq(X("s"), Colon, Sp, strings)),
+            Sp, At(X("f"), X("s")));
+        return All("A", Seq(Qualified("Type"), Star),
+            All("inst", At(Qualified("AddCommMonoid"), X("A")),
+                All("f", Arrow(strings, X("A")), Equal(left, right))));
+    }
 
     private static Formula ResultFormula() => All("b", Reals(), All("η", Reals(),
         Arrow(LE(Negate(D(1)), X("b")), Arrow(LE(X("b"), D(1)),

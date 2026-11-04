@@ -1,0 +1,25 @@
+**引理 88.1（精确横角响应）。** 有
+
+$$\boxed{o=Q-(Q+1)\cos\theta,\qquad
+\beta=b_\lambda(\theta):=
+\arctan\left(\lambda\cot\frac\theta2\right).} \tag{88.1}$$
+
+其中 $0<\theta<\pi$、$0<\beta<\pi/2$，所以所有反三角分支确定。对固定 $r,h$，$\lambda$ 不随对边 $o$ 改变。
+
+**证明。** 第一式是第 65.1 式。令 $k=1-\cos\theta$，第 66.2 式在真正域内给出
+
+$$\cos^2\beta=\frac{(Q+h^2)k}{2(h^2-1)+(Q+1)k},$$
+
+它的推导只需要 $r,h,o>1$ 和真正性，不需要第 66.1 节用于后续不等式的锐角与长边限制。直接相减得
+
+$$\sin^2\beta=
+\frac{(h^2-1)(2-k)}{2(h^2-1)+(Q+1)k}.$$
+
+原始横边余弦
+
+$$\cos\beta=
+\frac{h\sqrt{(r+1)(o+1)}}
+{\sqrt{(r-1+2h^2)(o-1+2h^2)}}>0$$
+
+确定 $\beta$ 为锐角。两式相除，使用 $(2-k)/k=\cot^2(\theta/2)$，得到 (88.1)。
+

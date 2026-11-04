@@ -418,3 +418,329 @@ The parameter range includes $d=\tfrac12$, when $|w_d|=1$, and has $|w_d|<1$ for
 The displayed quartic supplies a strict lower bound, without identifying the exact supremum over all entire functions or over all quartics. These statements impose no conclusion on the rest of the sector interior, arbitrary grids, $n\ge3$, or $k=0$. The real-grid result of Kallioniemi reported in Remark 4.2 is not a premise of this argument. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 9. The uniform analytic bound for every simple conjugate pair
+
+**Definition 9.1 (Uniform error on the original entire class).** For real $a,b$ satisfying
+
+$$
+b>0,\qquad a^2+b^2\le1,
+$$
+
+put $w=a+ib$, $W_{a,b}=(w,\overline w)$ and $p_{a,b}(z)=(z-w)(z-\overline w)$. Use the class $\mathscr E_2(\mathbb D)$ of Definition 8.1, with no restriction on the coefficients or real values of its members. The actual two-point interpolant and its slope are
+
+$$
+I_{a,b}g(z)=\frac{z-\overline w}{w-\overline w}g(w)
++\frac{w-z}{w-\overline w}g(\overline w),\qquad
+S_{a,b}(g)=\frac{g(a+ib)-g(a-ib)}{2ib}.
+$$
+
+The denominator is nonzero, and $(I_{a,b}g)'(z)=S_{a,b}(g)$ for every $z$. Define
+
+$$
+T_{a,b,x}(g)=g'(x)-S_{a,b}(g),\qquad
+E(a,b)=\sup_{g\in\mathscr E_2(\mathbb D)}\ \sup_{-1\le x\le1}|T_{a,b,x}(g)|.
+$$
+
+Here the nodes are simple nonreal conjugates, including those on the unit circle. The case $b=0$ is excluded: the displayed interpolant does not define interpolation at a repeated node.
+
+**Lemma 9.2 (A real boundary kernel for the imaginary-axis slope).** Let $0<b\le1$, let $d\mu(\theta)=d\theta/(2\pi)$ on $[0,2\pi]$, and define
+
+$$
+B_b(\theta)=2\sum_{j=0}^\infty
+\frac{(-1)^{j+1}b^{2j+2}}{(2j+2)(2j+3)}\cos((2j+1)\theta).
+$$
+
+This is a continuous real function of $\theta$ and $b\in(0,1]$, has mean zero, and satisfies
+
+$$
+B_b(\pi-\theta)=-B_b(\theta),\qquad
+\cos\theta\,B_b(\theta)\le0,\qquad
+|B_b(\theta)|\le C<\frac{19}{50}<\frac{31}{81},
+$$
+
+where arguments are interpreted modulo $2\pi$ and
+
+$$
+C=\log\frac53+2\arctan\frac13-\frac79.
+$$
+
+If $h$ is entire and $H$ is its entire primitive with $H(0)=0$, then
+
+$$
+\frac1{2b}\int_{-b}^b H(it)\,dt
+=\int_0^{2\pi}h(e^{i\theta})B_b(\theta)\,d\mu(\theta).
+$$
+
+Stance: repo-derived.
+
+**Proof.** The absolute values of the summands are bounded by $2/[(2j+2)(2j+3)]$, a summable sequence independent of $b\le1$ and $\theta$. Thus the series converges absolutely and uniformly, including at $b=1$. The mean and the reflection identity follow term by term.
+
+For the integral identity first take $h(z)=z^m$, $m\ge0$, so $H(z)=z^{m+1}/(m+1)$. Symmetric integration gives
+
+$$
+\frac1{2b}\int_{-b}^b H(it)\,dt
+=\begin{cases}
+0,&m\text{ even},\\
+\displaystyle\frac{(-1)^{j+1}b^{2j+2}}{(2j+2)(2j+3)},&m=2j+1.
+\end{cases}
+$$
+
+These are precisely the moments $\int e^{im\theta}B_b(\theta)\,d\mu(\theta)$: for positive integers $m,r$, the integral of $e^{im\theta}\cos(r\theta)$ is $1/2$ when $m=r$ and zero otherwise. The zeroth moment vanishes. For an arbitrary entire $h(z)=\sum_{m\ge0}c_mz^m$, its Taylor series converges absolutely and uniformly on the closed disk, as does the integrated series for $H$. For example, Cauchy's coefficient estimate on any circle of radius $R>1$ bounds $|c_m|$ by $\max_{|z|=R}|h(z)|R^{-m}$. Consequently both integrals pass through the series, proving the identity for all complex coefficients.
+
+To control the kernel, the geometric series and $\int_0^1t^{2j+1}(1-t)\,dt=1/[(2j+2)(2j+3)]$ give
+
+$$
+B_b(\theta)=-2b^2\int_0^1t(1-t)
+\operatorname{Re}\frac{e^{-i\theta}}{1+b^2t^2e^{-2i\theta}}\,dt
+$$
+
+$$
+=-2b^2\cos\theta\int_0^1
+\frac{t(1-t)(1+b^2t^2)}{(1-b^2t^2)^2+4b^2t^2\cos^2\theta}\,dt.
+$$
+
+The sum of the integrals of the absolute values of the expanded geometric terms is at most $2\sum_{j\ge0}1/[(2j+2)(2j+3)]<\infty$. This justifies the interchange even for $b=1$; the geometric identity is needed only for $t<1$. If $b=1$ and $\cos\theta=0$, the integrand is zero for $t<1$ and its endpoint value can be set to zero. In particular $B_b=0$ when $\cos\theta=0$, and otherwise its sign is opposite to that of $\cos\theta$.
+
+Put $c=|\cos\theta|$. For $c>0$, substituting $y=bt$ gives
+
+$$
+|B_b(\theta)|=2c\int_0^b
+\frac{y(1-y/b)(1+y^2)}{(1-y^2)^2+4c^2y^2}\,dy
+\le\int_0^1(1-t)q(t,c)\,dt,
+$$
+
+where
+
+$$
+q(t,c)=\frac{2ct(1+t^2)}{(1-t^2)^2+4c^2t^2}.
+$$
+
+Indeed $1-y/b\le1-y$ on $0\le y\le b\le1$, and the integrands are nonnegative. For $0\le t\le1/3$, differentiation with respect to $c$ shows that $q(t,c)$ is nondecreasing on $0\le c\le1$: the sign of this derivative is the sign of $(1-t^2)^2-4c^2t^2$, which is nonnegative because $1-t^2\ge2t$. Therefore
+
+$$
+q(t,c)\le q(t,1)=\frac{2t}{1+t^2}\quad(0\le t\le1/3).
+$$
+
+For $1/3\le t<1$, the inequality $(1-t^2)^2+4c^2t^2\ge4ct(1-t^2)$ instead gives
+
+$$
+(1-t)q(t,c)\le\frac{1+t^2}{2(1+t)}.
+$$
+
+The preceding bounds also apply at $c=0$ by the already established value $B_b=0$. Integration yields
+
+$$
+\begin{aligned}
+|B_b(\theta)|
+&\le\int_0^{1/3}\frac{2t(1-t)}{1+t^2}\,dt
++\int_{1/3}^1\frac{1+t^2}{2(1+t)}\,dt\\
+&=\log\frac{10}{9}-\frac23+2\arctan\frac13
++\log\frac32-\frac19=C.
+\end{aligned}
+$$
+
+For completeness, the convergent series $\log[(1+s)/(1-s)]=2\sum_{r\ge0}s^{2r+1}/(2r+1)$ at $s=1/4$ gives
+
+$$
+\log\frac53\le\frac12+\frac1{96}
++\frac{2}{5}\frac{(1/4)^5}{1-1/16}=\frac{613}{1200}.
+$$
+
+The alternating series for $\arctan(1/3)$ gives $\arctan(1/3)\le1/3-1/81+1/1215=391/1215$. Hence
+
+$$
+C\le\frac{613}{1200}-\frac{163}{1215}
+=\frac{36613}{97200}<\frac{19}{50}<\frac{31}{81}.
+$$
+
+Both series follow by integrating their geometric series on compact subintervals of $(-1,1)$; the alternating remainder has the sign of its first omitted term. Thus these bounds involve no approximation of $C$. $\square$
+
+**Lemma 9.3 (The full interval for imaginary-axis nodes).** For every $0<b\le1$, every entire complex-valued $g$, and every $x\in[-1,1]$,
+
+$$
+\left|g'(x)-\frac{g(ib)-g(-ib)}{2ib}\right|\le\|g''\|_{\mathbb D}.
+$$
+
+Stance: repo-derived.
+
+**Proof.** Write $h=g''$ and $H=g'-g'(0)$. The fundamental theorem of calculus along the vertical segment gives
+
+$$
+\frac{g(ib)-g(-ib)}{2ib}=g'(0)+\frac1{2b}\int_{-b}^b H(it)\,dt.
+$$
+
+For real $|t|<1$ let
+
+$$
+P_t(\theta)=\frac{1-t^2}{1-2t\cos\theta+t^2},\qquad
+A_x(\theta)=\int_0^xP_t(\theta)\,dt\quad(|x|<1).
+$$
+
+The classical disk Poisson identity is $h(t)=\int h(e^{i\theta})P_t(\theta)\,d\mu(\theta)$. In this setting it follows directly from
+
+$$
+P_t(\theta)=1+2\sum_{m\ge1}t^m\cos(m\theta)
+$$
+
+and the absolutely convergent Taylor series of $h$ on the circle: its $m$th analytic moment is $t^m$, including negative real $t$. Integrating on the compact segment between $0$ and $x$ is legitimate because $|t|\le|x|<1$. Together with Lemma 9.2 this gives the identity on the actual function $g$,
+
+$$
+g'(x)-\frac{g(ib)-g(-ib)}{2ib}
+=\int_0^{2\pi}h(e^{i\theta})K_{x,b}(\theta)\,d\mu(\theta),\qquad
+K_{x,b}=A_x-B_b.
+$$
+
+We prove $\int|K_{x,b}|\,d\mu\le1$ for every $|x|<1$. First let $0\le x<1$. Here $A_x\ge0$, and $\int A_x\,d\mu=x$ because each $P_t$ has mean one. By Lemma 9.2, $B_b\le0$ on the half-circle $\cos\theta\ge0$, so $K_{x,b}\ge0$ there.
+
+On the other half-circle put $c=-\cos\theta\ge0$ and define
+
+$$
+A_1(\theta)=\int_0^1\frac{1-t^2}{1+2ct+t^2}\,dt.
+$$
+
+This is finite on that half-circle. Its integrand is nonincreasing in $t$: direct differentiation for general $\theta$ gives
+
+$$
+\frac{\partial P_t(\theta)}{\partial t}
+=\frac{2[(1+t^2)\cos\theta-2t]}{(1-2t\cos\theta+t^2)^2}\le0
+\quad(0\le t<1,\ \cos\theta\le0).
+$$
+
+The average of a nonincreasing function over $[0,x]$ is at least its average over $[0,1]$, so $A_x\ge xA_1$, also at $x=0$. Moreover,
+
+$$
+A_1\ge\int_0^1\frac{1-t^2}{(1+t)^2}\,dt
+=2\log2-1\ge\frac{31}{81}>C\ge B_b\ge0.
+$$
+
+For the penultimate rational lower bound, the same logarithm series used in Lemma 9.2, now at $s=1/3$, gives $\log2\ge2(1/3+1/81)=56/81$. Therefore, writing $u_+=\max\{u,0\}$,
+
+$$
+(B_b-A_x)_+\le(1-x)B_b
+\quad\text{on }\cos\theta\le0.
+$$
+
+Since this half-circle has $\mu$-measure $1/2$ and $0\le B_b\le C$, while the negative part of $K_{x,b}$ vanishes on the other half-circle, we obtain
+
+$$
+\begin{aligned}
+\int|K_{x,b}|\,d\mu
+&=\int K_{x,b}\,d\mu+2\int(-K_{x,b})_+\,d\mu\\
+&\le x+2(1-x)\int_{\cos\theta\le0}B_b\,d\mu\\
+&\le x+(1-x)C\le1.
+\end{aligned}
+$$
+
+Here $\int K_{x,b}\,d\mu=x$ uses the zero mean of $B_b$. For $-1<x<0$, put $u=-x$. The identities $P_{-t}(\theta)=P_t(\pi-\theta)$ and $B_b(\pi-\theta)=-B_b(\theta)$ imply
+
+$$
+K_{-u,b}(\theta)=-K_{u,b}(\pi-\theta).
+$$
+
+The change of variable $\theta\mapsto\pi-\theta$ preserves circle measure, so the same integral bound follows. The integral representation and the triangle inequality now give, for every $|x|<1$,
+
+$$
+\left|g'(x)-\frac{g(ib)-g(-ib)}{2ib}\right|
+\le\sup_{|z|=1}|g''(z)|\int|K_{x,b}|\,d\mu
+\le\|g''\|_{\mathbb D}.
+$$
+
+Finally $g'$ is continuous on the closed interval, and the fixed slope is finite since $b>0$. Letting $x$ tend to either endpoint proves the assertion at $x=\pm1$. No boundary Poisson formula at $t=\pm1$ is required. The kernel of Lemma 9.2 already includes $b=1$, so this argument applies directly to the pair $(i,-i)$ as well. $\square$
+
+**Lemma 9.4 (Horizontal displacement of a conjugate-pair slope).** For every admissible $a,b$ of Definition 9.1 and every entire $g$,
+
+$$
+|S_{a,b}(g)-S_{0,b}(g)|\le|a|\,\|g''\|_{\mathbb D}.
+$$
+
+Stance: repo-derived.
+
+**Proof.** For real $s$ between $0$ and $a$, set $F(s)=[g(s+ib)-g(s-ib)]/(2ib)$. Since $g$ is entire, differentiation in $s$ and then integration on the vertical segment give
+
+$$
+F'(s)=\frac{g'(s+ib)-g'(s-ib)}{2ib}
+=\frac1{2b}\int_{-b}^b g''(s+it)\,dt.
+$$
+
+Every point of this segment lies in the closed disk: $s^2+t^2\le a^2+b^2\le1$. Thus $|F'(s)|\le\|g''\|_{\mathbb D}$. Integrating on the segment from $0$ to $a$, with its orientation when $a<0$, proves the bound. All segment endpoints are included by continuity. $\square$
+
+**Theorem 9.5 (Complete simple-conjugate-pair classification).** For every real $a,b$ with $b>0$ and $a^2+b^2\le1$, every $g\in\mathscr E_2(\mathbb D)$ and every real $x\in[-1,1]$,
+
+$$
+|g'(x)-(I_{a,b}g)'(x)|\le1+|a|.
+$$
+
+The exact original entire-function uniform supremum is
+
+$$
+E(a,b)=1+|a|=\frac12\|p_{a,b}'\|_{[-1,1]}.
+$$
+
+Consequently the equality region for equation (36) of Ostrovskii–Shcherbakov in the simple two-node case $(n,k)=(2,1)$ is the whole admissible upper closed half-disk $\{(a,b):b>0,\ a^2+b^2\le1\}$. In particular every nonreal unit-circle conjugate pair is included. Stance: repo-derived.
+
+**Proof.** Admissibility implies $0<b\le1$, so Lemmas 9.3 and 9.4 yield
+
+$$
+\begin{aligned}
+|g'(x)-S_{a,b}(g)|
+&\le|g'(x)-S_{0,b}(g)|+|S_{0,b}(g)-S_{a,b}(g)|\\
+&\le(1+|a|)\|g''\|_{\mathbb D}\le1+|a|.
+\end{aligned}
+$$
+
+This holds for each actual entire $g$ and each $x$, hence bounds the two suprema in Definition 9.1 without exchanging a limit with either supremum. For the reverse inequality take the actual entire quadratic $g_0(z)=z^2/2$. It has $g_0''=1$, and
+
+$$
+S_{a,b}(g_0)=\frac{(a+ib)^2-(a-ib)^2}{4ib}=a,\qquad
+T_{a,b,x}(g_0)=x-a.
+$$
+
+Its maximum absolute error is $1+|a|$, attained at $x=-1$ when $a\ge0$ and at $x=1$ when $a\le0$. At $a=0$ both endpoints attain it. Finally $p_{a,b}(z)=z^2-2az+a^2+b^2$, so $p_{a,b}'(x)/2=x-a$ and its half-norm has exactly that value. The proof used only $a^2+b^2\le1$ throughout, including equality, and never identified the two distinct nodes. $\square$
+
+## 10. Mathematical correspondence and remaining pointwise questions
+
+**Remark 10.1 (Inputs and the added inference).** The source correspondence is as follows.
+
+| Mathematical input | Exact role |
+| --- | --- |
+| Ostrovskii–Shcherbakov, [arXiv:2508.13554v2, Section 6.2, Conjecture 6.3, equation (36)](https://arxiv.org/html/2508.13554v2#S6.SS2) | The entire complex-valued class, the closed disk, the real interval, the actual Lagrange interpolant, and the proposed uniform identity. Definition 9.1 specializes those objects with $n=2$, $k=1$ and two distinct nodes. The right side of (36) is $\|p_{a,b}'\|_I/2=1+|a|$. |
+| The classical disk Poisson formula, equivalently the geometric Fourier expansion of $P_t$ | Only the boundary representation of $h(t)$ for $|t|<1$ in Lemma 9.3. Its needed scalar moments and convergence are derived there. The usual Poisson kernel is also the one defined in Mathlib's [Analysis/Complex/Poisson](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Complex/Poisson.lean). |
+| The fundamental theorem of calculus for holomorphic functions along segments, Cauchy's coefficient estimate, geometric-series integration, and the integral triangle inequality | The slope identities, passage through Taylor series, elementary kernel bounds, and norm control in Lemmas 9.2–9.4. None of these classical inputs supplies the asserted interpolation bound by itself. |
+| Theorems 4.1 and 5.1, Remark 4.4, and Propositions 8.2–8.4 with Corollary 8.5 | The exact all-degree Schur-ratio regions, the $73/60$ refutation, and the quartic pointwise separation, respectively. Their existing hypotheses and conclusions are retained; they are not premises of the uniform upper bound. |
+
+The added mathematical inference is the signed boundary kernel $K_{x,b}$ with an explicitly bounded negative part on the whole real interval, combined with the displacement estimate for the actual slope. In particular Lemma 9.3 applies to the full entire-function class, with arbitrary complex coefficients. Its proof does not infer a norm estimate for that class from individual monomial estimates.
+
+**Remark 10.2 (Pointwise and uniform statements have different scopes).** For $0<d\le1/2$, the grid of Section 8 has $a=1-d$, $b=\sqrt3\,d$. Theorem 9.5 therefore gives the exact uniform value
+
+$$
+E(1-d,\sqrt3\,d)=2-d,
+$$
+
+attained by the quadratic at $x=-1$. On the identical actual grid, Proposition 8.2 and Corollary 8.5 still give
+
+$$
+\sup_{t\ge2}|L_d(m_t)|=d,
+\qquad
+\sup_{g\in\mathscr E_2(\mathbb D)}|L_d(g)|
+\ge d\sqrt{1+d^4/9}>d,
+\qquad 1\notin\mathcal K_d.
+$$
+
+This pointwise strict inequality at $x=1$ is compatible with the uniform value $2-d$; it neither supplies nor refutes the uniform upper bound. Likewise Remark 4.4 remains a refutation of Conjecture 6.2 with value $73/60$ at its stated shifted grid. The sector classification of Theorem 4.1 remains an all-monomial statement, not a characterization of the uniform equality region of Theorem 9.5.
+
+The source's Section 6.3, Proposition 6.2 asserts monomial maximization for a simple grid and a fixed point, and uses a compactness argument followed by an extreme-point assertion. The pointwise separation of Section 8 excludes that proposition on its displayed grids. Theorem 9.5 instead proves the analytic form of equation (36) directly; no compactness, extreme-point description, or asserted reduction to monomials from that section is a premise. The real-grid results of Kallioniemi, Howell and Shadrin, discussed in the source's Section 6.1 and in Remark 4.2, concern real interpolation nodes and are not premises for these nonreal pairs.
+
+**Remark 10.3 (Multiplicity and parameter boundaries).** A pair $(a+ib,a-ib)$ with $b>0$ satisfies the source's Definition 6.1 directly: each nonreal conjugate occurs once, and each real number has multiplicity zero. This fact does not identify arbitrary lists satisfying conjugate membership with lists having equal multiplicities for nonreal conjugates. Conjugate membership alone imposes no such multiplicity equality; the two-node simple case has no multiplicity ambiguity.
+
+The condition $b=0$ is outside Definition 9.1 and Theorem 9.5, irrespective of any confluent convention used for separate results on doubled real nodes. The classification includes all admissible points with $b>0$, so there is no remaining admissible subregion of simple pairs requiring negative witnesses. The cases $k=0$, larger numbers of nodes, and general grids in the original all-$n$, all-$k$ Conjecture 6.3 are not settled by this two-node derivative theorem.
+
+**Open question 10.4 (Exact pointwise analytic error).** For each admissible $a,b$ and each fixed $x\in[-1,1]$, determine
+
+$$
+\sup_{g\in\mathscr E_2(\mathbb D)}
+\left|g'(x)-\frac{g(a+ib)-g(a-ib)}{2ib}\right|,
+$$
+
+and hence the exact analytic Kallioniemi set of that pair. Theorem 9.5 determines the supremum of this quantity over the interval and supplies a quadratic attaining it at a far endpoint, but does not determine every pointwise value. In particular the exact pointwise supremum at $x=1$ on the grids $W_d$ is not identified by the quartic lower bound of Section 8.
+
+## 追加锚（本行以下为增补区）

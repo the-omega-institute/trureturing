@@ -1,0 +1,11 @@
+**问题 6.2（Paving targets with larger hyperplanes）。** For
+arbitrary loopless paving $N$ without dual paving, give a structural
+classification of failures when $|A|\le |B|$ over torsion-free
+abelian groups. Criterion (R) and the target-union bound (U) remain exact necessary
+tools, but a deficient $C_S$ can lie in a hyperplane of size greater
+than $r$; Proposition 5.3 exhibits this phenomenon even at a
+one-element gap. The missing inference is a classification of
+possible blocked-translation sets jointly with those larger target
+hyperplanes, rather than the minimal sumset equality used in
+Theorem 3.3. No complete classification in that wider class is asserted.
+

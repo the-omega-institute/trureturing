@@ -1,0 +1,91 @@
+### 定理 16.2（有限 C92 与可数整体态存在等价）
+
+<a id="thm-c92-countable-extension"></a>
+
+以下条件等价：
+
+1. 对每个有限 $\mathcal F_0\subseteq\mathcal F$，该有限边际资料满足 C92；
+
+2. 存在一套相容的前缀密度态 $(\widehat\rho_n)_{n\ge1}$，使
+
+
+   $$
+   \operatorname{Tr}_{n+1}\widehat\rho_{n+1}=\widehat\rho_n,
+   $$
+
+
+    且其局部边际实现全部 $\rho_S$；
+
+3. 拟局域 $C^*$ 代数
+
+
+   $$
+   \mathfrak A
+     =\overline{\bigcup_n\mathfrak A_n}^{\|\cdot\|}
+   $$
+
+
+    上存在实现全部资料的正归一线性泛函 $\omega$。
+
+**证明。**
+先证 $1\Rightarrow2$。
+固定前缀 $[n]=\{1,\ldots,n\}$，其中至多有 $2^n-1$ 个非空子集。
+因此全部 $S\in\mathcal F$、$S\subseteq[n]$ 构成有限资料。
+定理 [4.1](#thm-c92-extension) 给出共同态；对未被该资料覆盖的前缀点，
+张量一个均匀态即可得到前缀上的状态 $\sigma_n$。
+若前缀没有约束，也可直接取均匀态。
+这些选择只证明数学存在，不要求不同 $n$ 的 $\sigma_n$ 预先一致。
+
+对每个固定 $k$，$n\ge k$ 时定义
+
+$$
+\sigma_n^{(k)}=\operatorname{Tr}_{k+1:n}\sigma_n.
+$$
+
+它们位于有限维密度矩阵的紧集内。
+先选使 $k=1$ 的边际收敛的子列，再在其内选使 $k=2$ 收敛的子列，依次进行。
+取递增的对角子列 $n_j\ge j$，则对每个固定 $k$ 都存在
+
+$$
+\widehat\rho_k=\lim_{j\to\infty}\sigma_{n_j}^{(k)}.
+$$
+
+有限维中可用迹范数取极限。正性与迹一是闭条件，
+部分迹连续则给
+$\operatorname{Tr}_{k+1}\widehat\rho_{k+1}=\widehat\rho_k$。
+任意给定 $S\in\mathcal F$ 包含于某个前缀；
+所有充分大的 $\sigma_{n_j}$ 都实现 $\rho_S$，故极限也实现它。
+
+再证 $2\Rightarrow3$。
+在局部代数并集上，对 $X\in\mathfrak A_n$ 定义
+
+<a id="eq-c92-local-state"></a>
+
+$$
+\omega(X)=\operatorname{Tr}(\widehat\rho_nX).
+\tag{16.1}
+$$
+
+精确相容性保证该定义不依赖所选前缀。
+它复线性、保伴随、归一且正；有限态的 Cauchy–Schwarz 不等式给
+
+$$
+|\omega(X)|^2\le\omega(X^\dagger X)\le\left\lVert X\right\rVert^2.
+$$
+
+所以它唯一连续延拓到范数闭包 $\mathfrak A$。
+要验证闭包上的正性，给定 $a\in\mathfrak A$、$a\ge0$，
+取局部 $b_m\to a^{1/2}$，则 $b_m^\dagger b_m\to a$。
+由连续性和局部正性，
+$\omega(a)=\lim_m\omega(b_m^\dagger b_m)\ge0$。
+局部资料由式 [(16.1)](#eq-c92-local-state) 保留。
+
+最后，$3\Rightarrow1$：把 $\omega$ 限制到包含任意给定有限资料的前缀代数。
+有限矩阵迹对偶将该归一正泛函写成一个密度矩阵，它实现那些边际；
+再由定理 [4.1](#thm-c92-extension) 得有限资料的 C92。
+
+若一个前缀内允许无限多条单独读出约束，而不先合成一份边际态，
+仍可使用同一结论：每条等式在前缀密度态紧集中定义闭集；
+每个有限交非空，紧性使全部交非空，因而仍能先选择 $\sigma_n$。
+这是对资料形式的补充，不减弱“每个有限集合都通过”的量词。
+

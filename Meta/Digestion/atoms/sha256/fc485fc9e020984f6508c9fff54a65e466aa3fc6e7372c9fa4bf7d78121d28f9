@@ -1,0 +1,64 @@
+**Theorem 19.2 (source-relative full-order supplement).** For every
+$t\in\mathcal D$, the map $w\mapsto\mathcal W(w)$ is a bijection from
+$\mathcal H(t)$ to the product of binary-word sets with respectively
+$x_v$ left and $y_v$ right symbols. Consequently
+
+$$
+|\mathcal H(t)|=F_{PS}(t)
+:=\prod_{v\in I(t)}\binom{x_v+y_v}{x_v}.
+\tag{AA.74}
+$$
+
+The tapes recover every indexed generation event using the current source.
+They can be acquired online without a future endpoint or decoding the old
+history: a successful event at $p$ appends its actual side at every proper
+logical ancestor, and a newly split $p$ receives an empty tape. Both
+promotions and splits perform these appends. After each completed update,
+all previous indexed answers remain correct and the new last answer is
+the actual new event.
+
+Proof. At a subtree root the local prefix is forced: empty, $P$, $S$, or
+$PS$, as in Definition 17.1. After that prefix, its remaining event list
+is exactly a shuffle of the two child lists. The word $W_v$ specifies
+which child supplies each successive event. Conversely, take any two
+child lists and any binary word with their lengths as multiplicities;
+consume the next event of its specified child at each symbol. Both child
+orders and the common root prefix are respected, so Theorem 17.2 proves
+actual executability. Induction on the finite term gives the asserted
+bijection and the ordinary shuffle count (AA.74), including zero child
+counts and an empty product.
+
+Here is direct indexed decoding. Use one-based indices; zero is out of
+range. At a subtree first handle its forced root prefix. For a later
+index $j$, scan to the $j$th symbol of its actual tape. A missing symbol
+returns OutOfRange. Otherwise count occurrences of that side through this
+symbol, obtaining $i$, and descend to that actual child with index $i$.
+Each descent goes to a smaller subtree; the occurrence count is within
+that child's event count. Thus every in-range call returns its literal
+kind and full logical address, and every out-of-range call is checked
+without following a nonexistent link.
+
+For online acquisition, projecting $w$ followed by an event at $p$ changes
+exactly those $W_v$ for which $v$ is a proper ancestor of $p$, by the one
+actual side appended at the end. A split creates no strict descendant
+event at its own new tape. These identities prove the invariant by induction
+on actual events, starting from the allocated $\alpha$ and no tapes.
+No next side is guessed, and no future subtree is an input. $\square$
+
+For fixed $t$, the tapes have exactly $F_{PS}(t)$ possible contents.
+Any supplement supporting all indexed generation queries must separate
+these words, so it needs that many conditional values. The finite-product
+alphabet attains this bound, but the literal tapes use more storage than
+its logarithm. Standard enumerative coding may number this product: if
+$L$ positions in a length-$q$ tape are $j_1<\cdots<j_x$, the colex coordinate
+is $\sum_{i=1}^{x}\binom{j_i-1}{i}$. This is the classical constant-weight
+ranking method, obtained by reading the coordinate order backwards in
+Cover's enumerative method, not a new ranking theorem. Mixed-radix packing
+would use $\lceil\log_2F_{PS}(t)\rceil$ content bits. Its arithmetic,
+framing, counts, backing and update work would be additional. The actual
+retention construction here uses literal tapes and claims no installed
+packed variant. A coordinate of radix one contains no conditional order
+information; a larger coordinate cannot be omitted while fixing $t$ and
+all other coordinates, because the product bijection then supplies
+histories differing at an allowed indexed query.
+

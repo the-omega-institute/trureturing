@@ -1,0 +1,8 @@
+**定义 6.2（有限连续菜单与词长）。**
+
+固定有限集合 $\mathcal S=\{Y_1,\ldots,Y_m\}\subset\mathfrak k$。
+合法字是 $\prod_{\ell=1}^r e^{t_\ell Y_{i_\ell}}$，
+$t_\ell\in\mathbb R$。词长计实际调用数 $r$。
+
+<a id="statement-6-3"></a>
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:832ab1c7b4d3bf3f30a0624ee840d87351226b787454144ff604812ea5e91480
+  normalized_sha256: sha256:832ab1c7b4d3bf3f30a0624ee840d87351226b787454144ff604812ea5e91480
+cas_ref: sha256:832ab1c7b4d3bf3f30a0624ee840d87351226b787454144ff604812ea5e91480
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 1.3 fixes positive physical parameters and defines the width, quadratic differential expression, physical Hermite formula, energies and probabilists Hermite convention; it asserts no eigenfunction, norm, orthogonality, totality or graph theorem. Reuse the public PhysicalHermiteTests.width and value with d, h := hbar, m and w := omega; SchwartzCutoffGraph.differential uses a j := h^2/(2*m j) and b j := m j*w j^2/2. The energy expression is the existing finite sum in PhysicalHermiteTests.physical_hermite_tests and PhysicalGraphClosure.physical_graph_closure. The displayed Hermite recursion and empty sum/product rules specify the polynomial and finite-index conventions, including d = 0, rather than a separate theorem. This settles the original definitions only; Hermite lowering, physical-basis properties and the explicit dimension-zero graph objective remain separate propositions.
+    previous_atom_id: 92080417501f59cde053e5152cdf5bdd7caf487ba374ce268de691203437fa70
+    next_atom_id: 71d57c93e85e0675c5603783058153600f6de3864a8162271185adcf305dc051

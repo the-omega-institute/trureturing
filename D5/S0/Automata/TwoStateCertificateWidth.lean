@@ -117,7 +117,7 @@ noncomputable def cycleDomain (m : ℕ) : Finset (List (RoleAlphabet m)) :=
 noncomputable def cycleLabel {m : ℕ} (w : List (RoleAlphabet m)) : Bool :=
   decide (∃ i : Fin m, w = cycleWord (i,true))
 
-private theorem rotate_ne {m : ℕ} (hm : 2 ≤ m) (i : Fin m) : finRotate m i ≠ i := by
+theorem rotate_ne {m : ℕ} (hm : 2 ≤ m) (i : Fin m) : finRotate m i ≠ i := by
   have := i.neZero
   rw [finRotate_apply]
   intro h

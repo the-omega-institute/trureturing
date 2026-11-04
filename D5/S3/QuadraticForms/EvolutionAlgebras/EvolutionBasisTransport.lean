@@ -7,6 +7,9 @@
    digest: Basis transport conjugates all bilinear multiplication automorphisms and transfers joint quotient control to arbitrary finite dimensional modules. -/
 
 import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionAutomorphismControl
+import D5.S3.FiniteGroups.SuccessorQuotient
+import D5.S3.FiniteGroups.SuccessorPowerAssignments
+import D5.S3.QuadraticForms.EvolutionAlgebras.HuEvolutionLowerBound
 
 /- Escape audit for the newly public owner lemmas is unfinished: https://github.com/the-omega-institute/trureturing/issues/22095 -/
 

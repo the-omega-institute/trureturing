@@ -1,0 +1,2 @@
+**Definition 6.1 (Conformal decomposition).** A nonzero integer relation $z$ is conformally decomposable if $z=w+v$ for nonzero $w,v\in L_K$ without coordinate sign cancellation. Equivalently $w^+\le z^+$ and $w^-\le z^-$ coordinatewise, with $v=z-w$. Otherwise it is conformally indecomposable. This is an integer sign condition, not a real-span condition or a claim that a particular list generates the lattice.
+

@@ -1,0 +1,69 @@
+**Lemma 16.4 (The two exact support thresholds).** For $0<t<1/r$ put
+
+$$
+U(t)=1-t,\qquad V(t)=1-\frac{1-t}{a},\qquad
+C_0=r^2,\quad C_1=r^2+c,
+\tag{16.27}
+$$
+
+and define the polynomials
+
+$$
+P_j(t)=C_j V(t)\big[U(t)^2-V(t)^2\big]
+ -2ct\,U(t)^2\qquad(j=0,1).
+\tag{16.28}
+$$
+
+Each has exactly one real root in $(0,1/r)$. Denote the root of $P_0$ by $\delta_1$ and that of $P_1$ by $\delta_2$. They obey
+
+$$
+\frac{a-4}{a^2}<\delta_1<\delta_2<\frac{a-2}{a^2}
+<\frac1r<\frac1a.
+\tag{16.29}
+$$
+
+For each $0<\delta\le1/a$ there is also exactly one root $u_0\in(\mu,\mu+4/a^2)$ of
+
+$$
+r^2v_0(u_0^2-v_0^2)=2\gamma u_0^2,
+\qquad v_0=\frac{q-2u_0}{a}.
+\tag{16.30}
+$$
+
+It satisfies $u_0<\mu+3/a^2$. For $\delta<1/r$, it is less than, equal to, or greater than $\theta$ according as $\delta$ is less than, equal to, or greater than $\delta_1$.
+
+**Proof.** On $(0,1/r)$ one has $U>V>0$. Dividing $P_j(t)=0$ by $tU(t)^2$ gives
+
+$$
+C_j\frac{V(t)}t\left[1-\left(\frac{V(t)}{U(t)}\right)^2\right]=2c.
+\tag{16.31}
+$$
+
+The two positive factors on the left strictly decrease: $V(t)/t=(a-1)/(at)+1/a$, while $V(t)/U(t)$ strictly increases. Their product tends to infinity at zero and to zero at $1/r$. This proves existence and uniqueness in the stated region. At the first root, $P_1-P_0=cV(U^2-V^2)>0$, so $\delta_1<\delta_2$.
+
+At $t=(a-4)/a^2$, one has $U-V>3/a^2$ and $U,V\ge31/32$. Hence the positive term in (16.28) exceeds $6(31/32)^2$, whereas $2ctU^2\le4+2/a$. Both polynomials are positive there. At $t=(a-2)/a^2$, one has $U-V\le33/(32a^2)$ and $C_j\le9a^2/8$. Their positive term is at most $297/128$, whereas $2ctU^2\ge4(31/32)^3$. Both polynomials are negative there. This proves (16.29).
+
+For the scalar root consider
+
+$$
+\Phi(u)=2g_0(u)+a g_1\left(\frac{q-2u}{a}\right).
+\tag{16.32}
+$$
+
+On the ordered interval $\mu\le u\le1$, the lower argument is at least $\ell$, and $\Phi''(u)>4r^2$. Also $\Phi'(\mu)=-4\gamma/\mu^3<0$. The point $\mu+4/a^2$ is less than one, and integration of this second-derivative bound gives $\Phi'(\mu+4/a^2)>0$. Thus the root is unique and
+
+$$
+0<u_0-\mu<\frac{\gamma}{r^2\mu^3}<\frac3{a^2}.
+\tag{16.33}
+$$
+
+The derivative equation is exactly (16.30), with positive $u_0,v_0$. For $\delta<1/r$, the point $u=\theta$ belongs to this ordered interval and its lower argument is $V=V(\delta)$. Half its derivative is
+
+$$
+E_0=r^2(V^{-2}-\theta^{-2})-\frac{2\gamma}{V^3}
+=\frac{P_0(\delta)}{\theta^2V^3}.
+\tag{16.34}
+$$
+
+Strict increase of $\Phi'$ proves the final comparison. ∎
+

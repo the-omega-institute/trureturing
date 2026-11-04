@@ -1,0 +1,58 @@
+#### 定理 9.1（闭路交换子及显式余项）
+
+<a id="thm:loop"></a>
+
+对有界自伴 $A,B$，实数 $t,s$，置
+
+$$
+C(t,s)=e^{-itA}e^{-isB}e^{itA}e^{isB}.
+$$
+
+则
+
+$$
+\left\lVert C-I\right\rVert\le |ts|\left\lVert [A,B]\right\rVert,
+$$
+
+$$
+\boxed{
+ \left\lVert C-I+ts[A,B]\right\rVert
+ \le2|ts|(|t|\left\lVert A\right\rVert+|s|\left\lVert B\right\rVert)\left\lVert [A,B]\right\rVert.
+ }                                                        \tag{43}
+$$
+
+若 $ts\ne0$、$[A,B]\ne0$ 且
+$2(|t|\left\lVert A\right\rVert+|s|\left\lVert B\right\rVert)<1$，闭路严格非平凡。
+
+**证明。**
+
+令 $V=e^{-itA}$、$W=e^{-isB}$，则
+$C-I=[V,W]V^*W^*$。两次 Duhamel 积分给
+
+$$
+[V,B]=-i\int_0^t e^{-i(t-u)A}[A,B]e^{-iuA}\,du,
+$$
+
+$$
+[V,W]=-i\int_0^s e^{-i(s-v)B}[V,B]e^{-ivB}\,dv.
+$$
+
+周围因子均酉，双积分给第一界。
+将各酉因子换成恒等后，双积分为 $-ts[A,B]$。
+以酉伸缩估计比较每个被换因子，积分核误差至多
+$2(|t|\left\lVert A\right\rVert+|s|\left\lVert B\right\rVert)\left\lVert [A,B]\right\rVert$，
+乘积分面积得式 (43)。负参数用有向积分及绝对值处理。
+反三角不等式给最后结论。
+
+∎
+
+对 $A=X,B=Z$，主项为 $2itsY$。
+相邻黄金层从 $k\ge2$ 起满足
+$c_k+c_{k+1}\le r<1/2$，
+所以这些尺度上确实存在严格非平凡闭路。
+它们是内部输运的算符关系。
+若所有边只是完整参考框架的差 $U_{uv}=F_vF_u^*$，
+闭路乘积逐项抵消为 $I$，不能把纯坐标更换误作这种输运。
+
+<a id="statement-9-2"></a>
+

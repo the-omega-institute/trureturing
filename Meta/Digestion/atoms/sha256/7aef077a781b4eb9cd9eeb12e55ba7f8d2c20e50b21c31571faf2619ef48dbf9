@@ -1,0 +1,14 @@
+**Definition 1.4 (prefix quotas).** For an integer $F\ge1$ and $d\ge0$ put
+
+$$
+c_d(F)=\left\lfloor\frac{F}{2^d}\right\rfloor.
+\tag{IV.4}
+$$
+
+For a finite set $C$ of distinct words write
+$\lambda_C(q)=|\{x\in C:q\preceq x\}|$. For the codebook of a source,
+write $\lambda_t(q)=|\{h\in\mathcal H(t):q\preceq J(h)\}|$.
+Quotas refer to subtrees of the tree of **terminated words**, whose nodes
+as well as descendants may be occupied. They do not refer to disjoint
+infinite cylinders of a prefix-free code.
+

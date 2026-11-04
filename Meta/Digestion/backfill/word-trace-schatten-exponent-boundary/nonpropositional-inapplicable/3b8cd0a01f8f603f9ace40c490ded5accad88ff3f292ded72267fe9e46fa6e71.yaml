@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3b8cd0a01f8f603f9ace40c490ded5accad88ff3f292ded72267fe9e46fa6e71
+  normalized_sha256: sha256:3b8cd0a01f8f603f9ace40c490ded5accad88ff3f292ded72267fe9e46fa6e71
+cas_ref: sha256:3b8cd0a01f8f603f9ace40c490ded5accad88ff3f292ded72267fe9e46fa6e71
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic source pointer identifying the problem dossier and its spectrum and finite Schatten conventions; it contains no independent mathematical proposition.
+    previous_atom_id: 8f35eaf8795877d7cc20a9c2fafd07bddd41eeb4090efce2457450dc6cdea79c
+    next_atom_id: e6cafebc9ae57946ef98648d1acc7cc09d7347f1b1df95aa1f1ff266c978bcd1

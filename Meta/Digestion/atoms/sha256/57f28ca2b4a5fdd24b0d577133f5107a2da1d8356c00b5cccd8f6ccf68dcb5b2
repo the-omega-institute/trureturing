@@ -1,0 +1,57 @@
+### 命题 8.2（真实输出 qubit 的三轴条件）
+
+<a id="prop-c92-actual-qubit"></a>
+
+对任一实际输入态，辅助端口的约化态可以写成
+
+<a id="eq-c92-actual-qubit"></a>
+
+$$
+\beta=\begin{pmatrix}q&\gamma\\\overline\gamma&1-q\end{pmatrix}
+ =\frac12(I+x\sigma_x+y\sigma_y+z\sigma_z),
+ \quad
+ (x,y,z)=(2\operatorname{Re}\gamma,-2\operatorname{Im}\gamma,2q-1).
+\tag{8.3}
+$$
+
+其正性等价于
+
+<a id="eq-c92-actual-ball"></a>
+
+$$
+0\le q\le1,\qquad |\gamma|^2\le q(1-q),
+ \quad\text{等价地}\quad x^2+y^2+z^2\le1.
+\tag{8.4}
+$$
+
+对式 [(8.2)](#eq-c92-effect-isometry) 的规范实现，
+
+$$
+q=\operatorname{Tr}(\rho E),\qquad
+ \gamma=\operatorname{Tr}\!\left[\rho\sqrt{E(I-E)}\right]\ge0.
+$$
+
+若采用另外声明的分支操作或相位，$\gamma$ 一般可以为复数。
+
+**证明。**
+对 $V_E\rho V_E^\dagger$ 取系统部分迹，其两个对角元给 $q,1-q$，
+交叉元为 $\operatorname{Tr}(A\rho B)=\operatorname{Tr}(\rho BA)$。
+对任意迹一 Hermitian $2\times2$ 矩阵，正性由对角非负与行列式非负等价刻画；
+行列式为 $q(1-q)-|\gamma|^2$，直接代入得球内条件。
+等价地，其特征值为 $(1\pm\sqrt{x^2+y^2+z^2})/2$。
+
+$q$ 并不独自确定 $\gamma$。一个完全解析的例子是
+
+$$
+E=\operatorname{diag}(0,\tfrac12,1).
+$$
+
+输入中间本征向量的纯态，与输入两端本征向量的等权混合，都给 $q=1/2$；
+规范扩张的 $\gamma$ 却分别是 $1/2$ 与 $0$。
+前者辅助态为 $\lvert +\rangle\langle +\rvert$，后者为 $I_2/2$。
+即使读出概率相同，关系的相干坐标仍可能不同。
+
+若只保留二元经典记录，就对辅助端口去相干，得到上节的 $B(q)$，
+其 Bloch 向量落在一条直径上。若要得到球面纯态，则必须额外指定满足
+$|\gamma|^2=q(1-q)$ 的相干关系；不能仅从二项概率归一推出这一等号或相位。
+

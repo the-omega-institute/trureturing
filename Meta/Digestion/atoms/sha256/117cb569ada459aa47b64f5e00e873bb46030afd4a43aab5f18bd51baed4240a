@@ -1,0 +1,89 @@
+**Proposition 23.2 (the actual quotient and its length fibers).** For $x\in X_N^{\min}$ let $R(x)$ be the set of all finite words legal from $x$, including the empty word. The exact response quotient is the finite actual image
+
+$$
+V_N=\{R(x):x\in X_N\},\qquad
+\pi_{\min}(x)=R(x),\qquad
+x\sim y\ \Longleftrightarrow\ R(x)=R(y).
+\tag{23.4}
+$$
+
+Its values are completely specified by
+
+$$
+\begin{aligned}
+R(v_{i,0})
+ &=\operatorname{Pref}\{a^{h-i}b^{L-h+q}a:
+                  i\le h<N,\ q\in J_h\},\\
+R(v_{i,j})
+ &=\mathcal B(\{L-i-j+q:q\in J_i\})
+                  &&(j\ge1,\ i+j\le L),\\
+R(w_{i,t})
+ &=\mathcal B(\{q-t:q\in J_i,\ q\ge t\})
+                  &&(1\le t\le B_i),\\
+R(z_q)&=\{\varepsilon\} &&(0\le q<P).
+\end{aligned}
+\tag{23.5}
+$$
+
+In particular all terminal presentation states are identified. All nonterminal presentation states having equal languages in (23.5) are also identified, without further distinctions. Every legal quotient word lifts from every actual representative, the quotient is root reachable and acyclic, and its native edge duration is one. For
+
+$$
+F_{\min}(u)=(R(x_0\cdot u),|u|),\qquad u\in\mathcal P_o,
+\tag{23.6}
+$$
+
+every fiber has size at most two, and some fiber has size exactly two. Distinct histories in any one fiber have different residues $\#_a(u)\pmod N$.
+
+Proof. The partial maps and actual root are unchanged from (22.7), so reuse Proposition 22.3's exhaustive table of actual root words, its reachability and actual-image closure. That table is a statement about executions of the partial maps and does not require an injective readout. Its endpoint column here names presentation states, before applying $\pi_{\min}$. In particular the entire legal language consists of the base histories $a^i b^j$, the chain histories $p_i b^t$, and the terminal histories $p_i b^q a$ for $q\in J_i$, with precisely the ranges of that table. No additional horizon or promise is imposed.
+
+From $v_{i,0}$ one may first increase the initial $a$-run to an index $h$, then traverse $L-h$ base $b$-edges and $q$ selector $b$-edges, and take the final $a$-exit exactly for $q\in J_h$. From a base state with $j\ge1$, that initial run has already been fixed to $i$, leaving $L-i-j$ base $b$-edges before the selector. From $w_{i,t}$ exactly the exits with $q\ge t$ remain. Every such state has a terminal descendant, since each $J_i$ is nonempty and its maximum is $B_i$. Thus every legal suffix is a prefix of one of the stated terminal suffixes, and each such prefix is legal. This proves (23.5), including all stopping cuts. Each set used in $\mathcal B$ is nonempty.
+
+If $R(x)=R(y)$, every finite attempted word has the same maximal legal prefix from the two states. At its cuts the readout is always $\ast$, and each executed name $c$ contributes exactly $(c,1,\mathrm{ok})$. The first illegal attempt, when present, therefore occurs at the same position. The legal menus after any common legal prefix agree as well, since membership of each one-letter extension is the same. In particular the distinction between a terminal menu and a nonterminal menu agrees. Hence the entire responses, including their legality distinctions and empty responses, agree. Conversely, if the languages differ, a word legal on just one side gives different complete responses. This proves (23.4) for all finite attempted words, not only for selected successful continuations.
+
+For any $Q=R(x)\in V_N$ and $c\in\{a,b\}$, the name is legal exactly when the one-letter word $c$ belongs to $Q$. When legal,
+
+$$
+R(T_cx)=c^{-1}Q:=\{w:cw\in Q\}.
+\tag{23.7}
+$$
+
+This value is independent of the representative and belongs to $V_N$ by the actual-image closure of (22.7). Thus (23.7) is the full quotient transition law. Induction lifts every legal quotient word from every representative, including the fixed $x_0$, and projects every actual word back. Actual reachability makes every member of $V_N$ root reachable. The maximum word length in the finite language $Q$ strictly decreases along a legal edge, proving acyclicity of this quotient as well as of the presentation. The constant duration descends to every quotient edge. Terminal states have exactly $R=\{\varepsilon\}$, whereas every nonterminal state has a nonempty legal extension. Nonterminal identifications really occur: with $q_*=P-1=\rho(N-2,N-1)$ and the existing notation $w_{i,0}=v_{i,L-i}$,
+
+$$
+R(w_{N-2,q_*})=R(w_{N-1,q_*})
+ =\mathcal B(\{0\})=\{\varepsilon,a\}.
+\tag{23.8}
+$$
+
+These vertices exist since $B_{N-2}=B_{N-1}=q_*$. Equality in (23.5), rather than a chosen state label, specifies every identification, including any between different presentation depths.
+
+It remains to bound fibers of (23.6); identities between different depths cannot be discarded, but the length coordinate separates them. Fix a length $n$. Terminal root words exist exactly when $n=N+q$ for $0\le q<P$. By the supplied table and the bijection $\rho$, exactly the two words
+
+$$
+p_i b^q a,\quad p_j b^q a,
+\qquad q=\rho(i,j),\quad i<j,
+\tag{23.9}
+$$
+
+then reach the terminal quotient $\{\varepsilon\}$. Their $a$-counts are $i+1,j+1$, distinct modulo $N$. No nonterminal word can share their quotient endpoint.
+
+For $n<L$ every root word is $a^i b^{n-i}$, $0\le i\le n$. The endpoint of $a^n$ has an immediate legal $a$, whereas those with $i<n$ have only $b$ legal. Thus its response class is separate. For $i<n$, (23.5) gives
+
+$$
+R(x_0\cdot a^i b^{n-i})
+ =\mathcal B(\{L-n+q:q\in J_i\}).
+\tag{23.10}
+$$
+
+Equality for several indices forces their nonempty $J_i$ sets to agree by (23.3). Any chosen $q$ in that common set belongs to exactly two $J_i$'s, namely the endpoints of its indexed pair. Consequently at most two indices can occur in one fiber. The case $n=0$ is just the empty history.
+
+For $n\ge L$, all nonterminal histories of length $n$ have the form $p_i b^t$, where $t=n-L$ is fixed and $0\le t\le B_i$; $t=0$ includes every boundary base state. Their future languages are
+
+$$
+\mathcal B(A_i(t)),\qquad
+A_i(t)=\{q-t:q\in J_i,\ q\ge t\}\ne\varnothing.
+\tag{23.11}
+$$
+
+The first line of (23.5) at $v_{L,0}$ also reduces to this formula. If several indices have the same language, their $A_i(t)$ agree. Choose $s$ in that common nonempty set. The pair index $q=t+s$ then belongs to all their $J_i$'s, so again there are at most two such indices. At either nonterminal range a fixed $i$ specifies just one history of that length, with exactly $i$ occurrences of $a$. Distinct indices in $\{0,\ldots,N-1\}$ have distinct residues modulo $N$. This proves all the asserted fiber and residue properties, and (23.9) supplies a fiber of size two. $\square$
+

@@ -1,0 +1,5 @@
+source_id = "fig8-finite-field-exact-rt"
+path = "docs/develop/theory/FIG8_FINITE_FIELD_EXACT_RT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -7,6 +7,7 @@
    digest: Perfect evolution products force genuine monomial multiplication automorphisms and an exact diagonal arrow equation. -/
 
 import D5.S3.QuadraticForms.EvolutionAlgebras.HuEvolutionLowerBound
+import D5.S3.FiniteGroups.SuccessorQuotient
 import Mathlib.LinearAlgebra.Dimension.OrzechProperty
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Tactic

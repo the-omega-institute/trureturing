@@ -1,0 +1,43 @@
+**Correspondence 11.2 (the native witness and the four returned views).**
+For a concrete consumption of the witness fibre, both
+
+$$
+h_0=\rho B A_1\cdots A_{16},\qquad
+h_1=\rho A_1B A_2\cdots A_{16}
+\tag{IV.24}
+$$
+
+end at $U$. FetchGrowth$(3)$ returns $P_R$ and $S_L$, respectively.
+On that current $U$, Next$(3)$ actually executes $S_R$ and $S_{L^{17}}$,
+respectively: $R$ is a present beta leaf, whereas $L$ is a branch whose
+leftmost present logical leaf is at $L^{17}$. Thus the indexed serial
+choice affects both a complete reply and a real next source edit, even
+though the current source geometry and causal partial order agree.
+
+Precisely on the ordinal installation's actual returned image, AAII
+Theorem 97.2 identifies the supplemented views $(S_0,J_{\rm ord})$,
+$(B_0,J_{\rm ord})$, successful time $h$, and callable memory consisting
+of this retained source, bound journal and fixed driver with current
+rights. Here $S_0,B_0$ are AA Definition 17.3's oriented material support
+and terminal antichain, including unary beta markers. Prefix closure,
+maximal elements and arity parsing give $S_0\leftrightarrow B_0
+\leftrightarrow t$ and hence the reconstructed causal order. Head replay
+then gives the chosen serial $h$. Conversely native replay of $h$ gives
+$t$, both source views and its ordinal bits. These routes factor through
+the same $(t,h)$ and commute with the supplied complete seven-request
+service; (IV.24) excludes the corresponding bare-geometry serial inverse.
+They identify semantic contents on that acquired image, and create no
+absent reference, backing or authority.
+
+All costs remain separate: source vertices and fields, headers and links,
+reference widths and actual bindings, licensed scans/reads/writes and
+edits, rank arithmetic and scratch replay, reservations and coexisting
+old/new work, ingress and pending state, complete output, Print, End,
+ACK, root Return, clearing and retained cleared capacity. A charged
+additional observable serial channel would still change the conditioning;
+payment alone does not erase its information. Successful time here means
+literal generation order, not physical duration, queries/refusals,
+controller chronology or the entire I/O history. No busy-cut inverse,
+crash recovery, unknown late-history initialization or physical total-cost
+optimum follows.
+

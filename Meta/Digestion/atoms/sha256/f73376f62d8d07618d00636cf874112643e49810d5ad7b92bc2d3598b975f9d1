@@ -1,0 +1,44 @@
+### 定理 4.1（全部局部正则前驱）
+
+给定光滑正则球面曲线 $m$，记其速度、切向、法向与带向测地曲率为 $v_m,T_m,N_m,\kappa_m$。若
+
+$$
+\dot\beta=v_m\kappa_m,qquad -\frac\pi2<\beta<\frac\pi2,
+$$
+
+则
+
+$$
+\boxed{n=-\cos\beta\,T_m+\sin\beta\,N_m}
+$$
+
+是正则球面曲线，且其正向单位切向恰为 $m$。更精确地，
+
+$$
+\dot n=v_m\cos\beta\,m,\qquad v_n=v_m\cos\beta,\qquad \kappa_n=\tan\beta.
+$$
+
+反过来，每个正向单位切向为 $m$ 的局部正则前驱都由此给出，自由度为积分常数 $\beta(t_0)$。
+
+**证明。**式中的两个向量正交且单位，故 $|n|=1$、$n\cdot m=0$。用目标层的 Darboux 关系
+
+$$
+\dot T_m=v_m(-m+\kappa_mN_m),\qquad \dot N_m=-v_m\kappa_mT_m
+$$
+
+逐项求导，$\dot\beta=v_m\kappa_m$ 恰好消去 $T_m$ 和 $N_m$ 的多余项，得到 $\dot n=v_m\cos\beta,m$。又有 $N_n=n\times m=\sin\beta T_m+\cos\beta N_m$，所以
+
+$$
+\dot m=v_mT_m=v_m\cos\beta(-n+\tan\beta N_n).
+$$
+
+反向若 $m$ 是 $n$ 的正向单位切向，取 $\beta=\arctan\kappa_n$，由 $\kappa_nds_n=d(\arctan\kappa_n)$ 得 $\dot\beta=v_m\kappa_m$；反解框架递推即回到上式，故没有遗漏其他局部正则前驱。
+
+对任意 $\beta(t_0)\in(-\pi/2,\pi/2)$，在足够小的区间上总能维持严格区间条件。若要求整个给定区间，则必须存在常数 $\beta_0$ 使
+
+$$
+-\frac\pi2<\beta_0+\int_{t_0}^t v_m(u)\kappa_m(u)\,du<\frac\pi2
+$$
+
+全程成立；这既必要又充分。
+

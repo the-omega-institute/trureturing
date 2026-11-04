@@ -1,0 +1,10 @@
+**Equation 5.8 (`eq:linkR`).**
+
+$$
+F_C(a,b,c,d)-F_R(-b,-a+b,-c,-d)
+                  +F_C(-a+2b,b,c,d+a-b)=0,
+$$
+
+<a id="eq-linkB"></a>
+<a id="eq:linkB"></a>
+

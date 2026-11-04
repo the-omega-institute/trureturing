@@ -68,7 +68,31 @@ $$\operatorname{claim} = \left(\forall \left(d: \mathbb{N}\right), \left(\forall
 
 For every factorization d = a times b with a and b at least two, there is one finite set s of positive semidefinite complex matrices of trace one. For every special unitary matrix u, some member of s becomes nonseparable for every partition after conjugation by u. The chosen member can depend on u, but must serve all partitions at once. This is the fixed-coordinate reading of the question in main.tex, line 509, with partitions specified by the mixed-radix identifications above.
 
-**Theorem 1.6 (A finite grid supplies a common entangled state).**
+**Theorem 1.6 (Positive summands annihilate the orthogonal complement).**
+
+$$\forall \left(d: \mathbb{N}\right), \left(\forall \left(\iota: \operatorname{Type}\right), \left([\operatorname{Fintype}\left(\iota\right)], \left(\forall \left(w: \left(\iota\right) \to \left(\mathbb{R}\right)\right), \left(\forall \left(a: \left(\iota\right) \to \left(\operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\left(\forall \left(i: \iota\right), \left(\left(0: \mathbb{R}\right) \le w\left(i\right)\right)\right) \Rightarrow \left(\left(\forall \left(i: \iota\right), \left(\operatorname{Matrix.PosSemidef}\left(a\left(i\right)\right)\right)\right) \Rightarrow \left(\forall \left(v: \left(\operatorname{Fin}\left(d\right)\right) \to \left(\mathbb{C}\right)\right), \left(\forall \left(t: \mathbb{R}\right), \left(\left(\sum_{\left(i: \iota\right)} \left(\operatorname{SMul.smul}\left(w\left(i\right), a\left(i\right)\right)\right) = \operatorname{SMul.smul}\left(t, \operatorname{D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity}\left(v\right)\right)\right) \Rightarrow \left(\forall \left(j: \iota\right), \left(\left(\left(0: \mathbb{R}\right) < w\left(j\right)\right) \Rightarrow \left(\forall \left(x: \left(\operatorname{Fin}\left(d\right)\right) \to \left(\mathbb{C}\right)\right), \left(\left(\operatorname{dotProduct}\left(\operatorname{Star.star}\left(v\right), x\right) = \left(0: \mathbb{C}\right)\right) \Rightarrow \left(\operatorname{Matrix.mulVec}\left(a\left(j\right), x\right) = \left(0: \left(\operatorname{Fin}\left(d\right)\right) \to \left(\mathbb{C}\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/AbsolutelyEntangledAllPartitions.summand_kernel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every positively weighted positive semidefinite summand of a real multiple of a rank-one density annihilates every vector orthogonal to its defining vector.
+
+**Theorem 1.7 (Columns supported on one vector).**
+
+$$\forall \left(d: \mathbb{N}\right), \left(\forall \left(v: \left(\operatorname{Fin}\left(d\right)\right) \to \left(\mathbb{C}\right)\right), \left(\left(\neg \left(v = \left(0: \left(\operatorname{Fin}\left(d\right)\right) \to \left(\mathbb{C}\right)\right)\right)\right) \Rightarrow \left(\forall \left(a: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\left(\operatorname{Matrix.IsHermitian}\left(a\right)\right) \Rightarrow \left(\left(\forall \left(x: \left(\operatorname{Fin}\left(d\right)\right) \to \left(\mathbb{C}\right)\right), \left(\left(\operatorname{dotProduct}\left(\operatorname{Star.star}\left(v\right), x\right) = \left(0: \mathbb{C}\right)\right) \Rightarrow \left(\operatorname{Matrix.mulVec}\left(a, x\right) = \left(0: \left(\operatorname{Fin}\left(d\right)\right) \to \left(\mathbb{C}\right)\right)\right)\right)\right) \Rightarrow \left(\forall \left(j: \operatorname{Fin}\left(d\right)\right), \left(\exists \left(z: \mathbb{C}\right), \left(\left(\lambda \left(k: \operatorname{Fin}\left(d\right)\right) \mapsto \left(a\left(k, j\right)\right)\right) = \operatorname{SMul.smul}\left(z, v\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/AbsolutelyEntangledAllPartitions.supported_column` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every column of a Hermitian matrix annihilating the orthogonal complement of a nonzero vector is a complex scalar multiple of that vector.
+
+**Theorem 1.8 (A finite grid supplies a common entangled state).**
 
 $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(a: \mathbb{N}\right), \left(\forall \left(b: \mathbb{N}\right), \left(\left(2 \le a\right) \Rightarrow \left(\left(2 \le b\right) \Rightarrow \left(\left(d = \left(a\right) \cdot \left(b\right)\right) \Rightarrow \left(\exists \left(s: \operatorname{Finset}\left(\operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\left(\forall \left(\rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\left(\rho \in s\right) \Rightarrow \left(\left(\operatorname{Matrix.PosSemidef}\left(\rho\right)\right) \land \left(\operatorname{Matrix.trace}\left(\rho\right) = \left(1: \mathbb{C}\right)\right)\right)\right)\right) \land \left(\forall \left(u: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\left(u \in \operatorname{Matrix.specialUnitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right) \Rightarrow \left(\exists \left(\rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\left(\rho \in s\right) \land \left(\forall \left(p: \operatorname{Partition}\left(d\right)\right), \left(\neg \left(\operatorname{Separable}\left(p, \left(\left(u\right) \cdot \left(\rho\right)\right) \cdot \left(\operatorname{Star.star}\left(u\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -108,6 +132,8 @@ Finally, d = a times b with a and b at least two gives d at least four. Take s t
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/AbsolutelyEntangledAllPartitions.partitionEquiv`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/AbsolutelyEntangledAllPartitions.productState`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/AbsolutelyEntangledAllPartitions.result`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/AbsolutelyEntangledAllPartitions.summand_kernel`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/AbsolutelyEntangledAllPartitions.supported_column`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QutritPerturbationAttainment](../AbsolutePPT/QutritPerturbationAttainment.md)
 - Dependency: [D5/S3/Quantum/Entanglement/MoreauYosidaFormationSelectiveLoccRefutation](../MoreauYosidaFormationSelectiveLoccRefutation.md)
 - Dependency: [D5/S3/Quantum/Recovery/PurifiedLocalPath](../../Recovery/PurifiedLocalPath.md)

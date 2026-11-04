@@ -1,0 +1,58 @@
+**Theorem 18.2 (exact erasure fibre and recovery criterion).** For every
+$t\in\mathcal D$ and every $\sigma\in\Sigma(t)$, the split word is realized
+on this same source domain, and
+
+$$
+F_t(\sigma):=|\pi^{-1}(\sigma)|
+=\sum_{\gamma\in\Gamma(t,\sigma)}\ \prod_{j=0}^{s}m_j(\gamma)!.
+\tag{AA.69}
+$$
+
+In particular, source plus the complete split chronology determines the
+complete generation word on this fibre if and only if
+
+$$
+u_p=\ell_p+1\quad\text{for every }p\in A(t).
+\tag{AA.70}
+$$
+
+For the task of returning every indexed actual generation event, any
+additional label, conditional on fixed $(t,\sigma)$, must distinguish
+$F_t(\sigma)$ values. A fixed-width binary content field consequently needs
+at least $\lceil\log_2 F_t(\sigma)\rceil$ bits. This conditions on fixed
+initialization, orientation, settled phase, source binding and rights;
+it supplies no extra runtime length, allocation order or other archive.
+
+Proof. For any $\sigma$, promote each born-$\alpha$ branch immediately
+before its listed split; after the splits promote the born-$\alpha$ final
+$\beta$ leaves. Creating splits have already occurred, so this is a lift.
+In any lift, $P_p$ must be after its creating split and before its own split,
+if it has one. These are exactly the gap inequalities (AA.68).
+
+Fix an assignment $\gamma$. In each gap choose any ordering of its
+$m_j$ distinct promotions. The surrounding split chain and these chosen
+orders respect every generating edge of (AA.67): the creator precedes its
+child's promotion; a promotion precedes its own split; a born-$\beta$
+child split follows its creator by the ancestor order in $\sigma$.
+There is no further precedence between promotions in the same gap.
+Theorem 17.2 makes every resulting word executable. Conversely a lift
+uniquely specifies its gaps and their promotion orders. This is a bijection,
+proving (AA.69), including empty products and $0!=1$.
+
+Each interval in (AA.68) is nonempty. If one has two gaps, hold all other
+assignments fixed and use those two choices; they give different words.
+If every interval is a singleton, its forced gap is $\ell_p$. These
+$\ell_p$ are distinct: the root contributes at most one promotion with
+index zero, and each split creates exactly one born-$\alpha$ child, its
+right child. Thus no forced gap contains two promotions, and every
+factorial in the sole summand is one. This proves (AA.70). When $s=0$,
+the two possible endpoints are $\alpha$ and $\beta$, with respectively
+zero promotions and the single root promotion; both fibres have size one.
+
+Two distinct lifts have the same length and differ at an indexed event.
+An exact retained label identifying them would force one answer to that
+index on both. Pigeonhole counting proves the label bound. Enumeration
+of the finite gap assignments and within-gap permutations gives a matching
+conditional alphabet; this last finite coding fact is not an acquisition
+or total-storage theorem. $\square$
+

@@ -1,0 +1,16 @@
+**约定 84.2（文献与仓内供应的实际映射）。** 已知表示论、未来商、正性和算术事实只作为本源推导的中间供应；本卷不将它们另立为新的普遍定理，也不主张文献优先权。其精确使用域如下。
+
+| 原始供应 | 消费范围及不能迁移的前提 |
+| --- | --- |
+| Freedman–Larsen–Wang，[math/0103200v1 Theorem 0.1；§2 Definitions 1–2、Lemma 2.1、(1)–(3)；§6 Lemmas 6.1、6.3](https://arxiv.org/html/math/0103200v1)，DOI 10.1007/s002200200636 | `literature-attested`：可容许 Young 表上的 Jones–Wenzl 投影及编织定义、$(2,5)$ Jones 表示的密度；§6 另给 Fibonacci 标签和维数。77.2 把原全部十三路径及七门同时接到 $[4,4]$ 扇区，依 Theorem 0.1 取得密度。原印刷 $F_{\rm print}$ 的正右下角保留为引用事实，明确不与本酉规范混同；(77.11)–(77.12) 的相容规范由整个 Jones 表示支持，不以错误的字面对角共轭借用 §6 密度。 |
+| Galley–Masanes，[1610.04859v3 §2.3 Result 2、(16)、A.2/A.12](https://arxiv.org/html/1610.04859v3) | `literature-attested`：连续等变有限维射线表示的稳定子分类、实型、无重数及维数。78.3 先从本源实际矩阵的有限秩建立连续不变函数空间，再使用该分类；未借入物理闭包可执行性、混合制备或预装量子仿射结构。 |
+| Masanes–Galley–Müller，[1811.11060v2 Appendix A Lemmas 5、7](https://arxiv.org/html/1811.11060v2) | `literature-attested`：射线函数无重数与 $\operatorname{Sym}^k$ 算子表示分解。这里其有限维条件由 $r(P)<\infty$ 给出；没有以文献的状态估计前提取得本源容量。 |
+| 同文 §II.3–II.4、条件 (7)–(14) 与 measurement theorem | 全测量定理另需各维度 OPF 家族、混合与酉闭合、背景系统嵌入、保概率且相容结合的 $\star$ 组合，以及可能状态估计。单个十三维终端合同没有提供这些全维／复合条件；故不调用该全测量结论解释原生容量或测后仪器。 |
+| Galley–Masanes，[1801.06414v4 §§2–3、5.2](https://arxiv.org/html/1801.06414v4) | `literature-attested`：在已供复射线、酉动力学、组合和其 OPF 条件下研究非 Born 模型、纯化／局部层析及无信号边界。本卷高次族只完成原单系统终端合同，不宣称满足该文全部组合条件；旧 Alice 边缘相等也不等于一切复合无信号公理。 |
+| v15 §§3、6、8；旧续卷 §§70–73 | 原矩阵、全路径对应的局部数据、逆的正向替换、代数整数环、原代码／边缘、原 $u,v$ 四次反例和单字 $K_3$。80.2、81.1、82.1 对同一数据新增原生秩及精确接近关系，没有修改旧响应。 |
+| [原卷 11.3–11.4、27](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md)；[关系丛卷 §8](AURIC_FIB_RELATIONAL_BUNDLE_AND_PREDICTIVE_CLOSURE_THEORY.md) | 原未来效果的 $d^2$ 界已使用密度矩阵、迹概率、CP 仪器和有限完整载体；不能循环充当未知 $P$ 的 Born 前容量供应。原卷 27.1 的 $C=A^{1/2}TB^{1/2}$ 及实际相干比较仍分别要求交叉关系、准备和相位读者。 |
+| [EffectProbabilityExtension](../../../Blueprint/D5/S3/Quantum/Foundation/EffectProbabilityExtension.md) | 其整个正收缩效果域上的单一概率函数、有限可加、正性和归一化供应密度表示。本源原菜单没有先取得全效果函数；79.2 是另一组条件，未把该可加性暗中加入。 |
+| [AllFutureStatisticsSufficiency](../../../Blueprint/D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.md)、[MinimalPredictiveSummary](../../../Blueprint/D5/S3/Quantum/Fibers/MinimalPredictiveSummary.md) | 既有结论在给定迹零 Hermitian 载体、线性 Heisenberg 迭代及效果配对上研究全部统计／最小摘要；不决定未知终端响应，也不自行供应本卷的 $169$ 上界。 |
+| [FutureReadoutQuotient](../../../Blueprint/D5/S3/ObserverMemory/Dynamics/FutureReadoutQuotient.md)、[FiniteOperatorSystemStability](../../../Blueprint/D5/S3/Quantum/Fibers/FiniteOperatorSystemStability.md) | 前者对已给有限维线性载体取全部未来核的商；后者对已给矩阵算子系统和 unital CP 作用证明稳定化。它们保留各自的有限线性／矩阵前提，不能用“未来闭合”这个名称给任意响应加容量。 |
+| [SpatiotemporalBornRuleDichotomy](../../../Blueprint/D5/S3/Quantum/Measurements/SpatiotemporalBornRuleDichotomy.md)，含其 `born_identity`、`ray_identity`、`two_ray_equation` 私有辅助证明 | 其顺序迹概率、投影、密度态及给定通道语义仍为前提；不供应原生未知 $P$、源准备或新测后仪器。读取这些声明不构成对本卷新推导的形式核验。 |
+| [未来闭合记忆卷 §§15–17](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)；[VI §§85、99、101–110](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md) | 复用完整未来域、不可删的历史记录、精确状态数与线性维数的区别，以及全词经典替代模型、完整返回和后继仪器缺项。83.2 给本七字母档案的具体计数。 |

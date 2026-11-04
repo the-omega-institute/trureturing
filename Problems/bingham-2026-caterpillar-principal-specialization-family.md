@@ -51,7 +51,7 @@ these block weights. A part equal to one has no leaves and contributes the zerot
 
 For k = 3, let F(A,B,C,D,E) be the sum of
 A(c₀)B(c₁)C(c₂)D(c₃)E(c₄) over c₀,…,c₄ in {0,1,2} with consecutive colors unequal.
-The private helper `diagonal_identity` proves
+The identity `diagonal_identity` states
 
 $$F(B_5,w,w,B_4,B_3)=F(B_4,w,w,B_5,B_3)$$
 
@@ -71,36 +71,23 @@ does not establish formal polynomial equality.
 
 ## Evidence
 
-`D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.result` proves
-the exact conjunction for all positive j. Its public definitions retain the dependent vertex
-carrier, symmetrized source edge relation, actual proper-coloring sum, and the two five-part
-compositions. The coloring bijection, leaf factorization, repeated-weight identity, and
-coefficient separation are compiled helpers on its proof path. The proof uses no finite cutoff
-on j and no numerical specialization of X.
+`D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.result`
+establishes the displayed conjunction for every positive j. The dependent vertex carrier,
+symmetrized edge relation and proper-coloring sum represent the source graphs and polynomials.
+The coloring factorization includes empty leaf sets. The repeated-weight identity keeps the
+outside blocks 5 and 4 and the final block 3 fixed; it does not assert arbitrary endpoint
+replacement. The two-color formulas separate the coefficients at degree j+5.
 
 ## Triage
 
-`theorem`; the anchor is only the first question of Remark 3.11.
+`theorem`; this dossier concerns the first question of Remark 3.11.
 
-### What the settlement shows
-
-- Proved: the whole positive-j conjunction, by
-  `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.result`.
-- Proved on that result's live proof path: `coloring_factorization` expresses actual colorings
-  as independent leaf choices over proper spine colorings. It includes empty leaf sets.
-- Proved on that result's live proof path: `diagonal_identity` allows any repeated three-entry
-  polynomial middle-weight vector. The fixed outside blocks are 5 and 4, with final block 3.
-  This is the uniform mechanism for all positive j; it asserts no general endpoint replacement.
-- Proved on that result's live proof path: `ps2_alpha` and `ps2_beta` give the displayed exact
-  two-color monomials, and `ps2_ne` separates their coefficients at degree j+5.
-- Open here: whether these are the only composition pairs exhibiting the phenomenon, the
-  separate second question of Remark 3.11. The family proof supplies no classification.
-- Open here: the source's four-color questions and any analogous t-refined statement. This
-  resolution supplies no settlement of those questions or additional source results.
+The separate `BinghamCaterpillarUniquenessRefutation.result` refutes the exhaustive-pairs
+assertion using an eighteen-vertex witness. The family theorem supplies no classification.
+The source's four-color questions and analogous t-refined statements remain unresolved here.
 
 ## ASSUMED-UNVERIFIED
 
 The bounded literature screen described in the Library note found no earlier settlement;
-citation and third-party code searches were incomplete. No exhaustive absence or originality
-claim is made. No conclusion about uniqueness, arbitrary end blocks, four colors, or the
-t refinement is asserted.
+citation and third-party code searches were incomplete. This does not establish exhaustive
+absence, originality or priority.

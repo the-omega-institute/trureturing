@@ -1,0 +1,100 @@
+**Proposition 6.1 (a common first clock is insufficient on admitted sources).**
+There are two actual alpha-origin sources in the original $\mathscr R_3$
+with the same nonconstant aligned core, the same physical cone $v=bab$,
+the same normalization cut $e=5$, and the same first clock $A_1=11$,
+but second clocks $18$ and $19$. At the common admissible actual cut
+$n=8$, hence normalized cut $T=3$, paid full-root Read$(babbaa)$ replies
+one on the first source and zero on the second. At actual cut $n=7$
+their local supports are equal, and this equality fails after the one
+actual update to $n=8$.
+
+Proof. Let $y_i=i\bmod2$, and define
+
+$$
+ s^{(0)}=010101\cdots=y,\qquad
+ s^{(1)}=110101\cdots=y+\mathbf1_{i=0}.
+ \tag{PCR.17}
+$$
+
+Both are in $\mathscr R_3$: $E^2+1$ annihilates $y$, $E$ annihilates
+the impulse, and their product annihilates the sum. The impulse cannot
+have a nonzero periodic component; the unique coprime decomposition of
+ACR Theorem 27.3 therefore gives the same aligned core $y$ for both.
+The first source has order two and the second has order three. The core
+has least period two: it is nonconstant and $E^2+1$ annihilates it,
+whereas an order-one recurrence cannot generate this alternating word.
+The impulse has least annihilator $E$. Applying the two coprime
+projections to any annihilator of their sum forces divisibility by both
+$E$ and $E^2+1$, proving the asserted least order three. Original birth
+bits are $z_j=s_{j-1}$.
+
+Direct simultaneous old-leaf replacement gives the following complete
+leaf rosters at actual cut five. The entries appear in physical order;
+$A,B$ abbreviate alpha and beta only in this displayed roster.
+
+$$
+\begin{aligned}
+ s^{(0)}:&\quad aa:B,\ aba:A,\ abb:B,\ baaa:B,\ baab:A,
+                 \ bab:B,\ bba:A,\ bbb:B;\\
+ s^{(1)}:&\quad aaa:B,\ aaba:A,\ aabb:B,\ aba:B,\ abb:A,
+                 \ baa:A,\ bab:B,\ bb:B.
+\end{aligned}
+ \tag{PCR.18}
+$$
+
+To verify these rosters without an assumed clock, the beta parent lists
+for updates two through five are respectively
+
+$$
+\begin{aligned}
+ s^{(0)}:&\quad (\varepsilon),\ (b),\ (a,ba),\ (ab,baa,bb);\\
+ s^{(1)}:&\quad (\varepsilon),\ (a),\ (aa,b),\ (aab,ab,ba).
+\end{aligned}
+ \tag{PCR.19}
+$$
+
+Assign $z_1$ at update two, $z_2$ at update three, $z_3,z_4$ at
+update four, and $z_5,z_6,z_7$ at update five. These are exactly the
+bits of (PCR.17); the other old leaves become beta. This proves
+(PCR.18) by four finite substitutions. In the first source $bab$ was
+born alpha at cut four, while in the second it was born beta at cut
+five. Both are beta at five and branch at six. Thus they have exactly
+the same normalization cut, including the mixed-descriptor issue of
+NRW Lemma 2.1.
+
+Before $bab$ at cut five, the exterior forest has leaf counts
+$(A,B)=(2,3)$ and $(3,3)$ respectively, read directly from (PCR.18).
+After one update these beta counts become $5$ and $6$. Formula (PCR.1),
+with $F_6=8,F_7=13$, now gives
+
+$$
+ (I_1,I_2)=(8+3,13+5)=(11,18),\qquad
+ (I'_1,I'_2)=(8+3,13+6)=(11,19).
+ \tag{PCR.20}
+$$
+
+All these cone indices exceed one, so the impulse has disappeared from
+all local births. In fact $I_1>d=3$. The cones are genuinely core-only;
+their identical core is not being inferred from a zero-tail example.
+
+Their first normalized bit is $z_{11}=0$, so at normalized cut one
+both have alpha at relative $a$ and beta at relative $b$. In update two
+only relative $b$ branches, using $z_{18}=1$ in the first cone and
+$z_{19}=0$ in the second. Hence both supports at $T=2$ are
+$\{\varepsilon,a,b,ba,bb\}$, but relative $ba$ is beta only in the
+first. In update three it branches only there, so relative $baa$ is
+present only there. The common full-root separator is exactly $vbaa$
+$=babbaa$, of length six, with one paid presence reply per source.
+Its operand must be materialized and submitted at the actual root;
+no relative physical port has been introduced.
+
+For the original entrance at $d=3$, the bound is
+$n_0=N(6)=6$, since $F_5-1=4<6$ and $F_6-1=7\ge6$. Both actual
+cuts seven and eight are therefore admissible mature **global** cuts.
+Only the local comparison at $T=2$ is early: it has not reached the
+fixed-core order-two bound $F_s\ge2,T\ge s+2$ (which gives $s=3,T\ge5$),
+or the unknown-core bound. Thus its continuation failure contradicts
+neither maturity theorem. It is not a comparison of equal full-entry
+states: the supports outside this cone, and their erased original
+prefixes, need not agree. $\square$
+

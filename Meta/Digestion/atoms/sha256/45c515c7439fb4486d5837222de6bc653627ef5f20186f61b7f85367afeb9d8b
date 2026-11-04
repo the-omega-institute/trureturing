@@ -1,0 +1,28 @@
+**定义 24.1（生成元、全部关系和候选延拓）。** 固定一个原对象，取 $E_0$ 的实基 $e_1,\ldots,e_m$ 和 $Z$ 的实基 $c_1,\ldots,c_t$。以下是纸笔有限维线性条件，不假设实际可读菜单供应这些基向量的独立校准。记
+
+$$
+P_i=L_{e_i},\quad K_{ij}=[P_i,P_j]\ (i<j),\quad
+A_i=D_{e_i},\quad Q_{ij}=[P_i,A_j].
+\tag{24.1}
+$$
+
+取形式空间 $F=\mathbb R^m\oplus\Lambda^2\mathbb R^m$，标准形式符号记 $u_i,v_{ij}$。定义
+
+$$
+s(u_i)=P_i,\quad s(v_{ij})=K_{ij},\qquad
+t(u_i)=A_i,\quad t(v_{ij})=Q_{ij},
+\tag{24.2}
+$$
+
+其中 $s:F\twoheadrightarrow\mathfrak h$，$t:F\to\operatorname{End}_{\mathbb R}(E)$。$\ker s$ 包含这些算子的**每一条**实线性关系；特别不能把有冗余的 $K_{ij}$ 当作一组自由基。
+
+关系一致性条件为
+
+$$
+D_{c_\alpha}=0\quad(1\le\alpha\le t),\qquad
+t(F)\subset\mathfrak h,\qquad \ker s\subset\ker t.
+\tag{24.3}
+$$
+
+最后一项可在 $\ker s$ 的任意完整基上检验，像包含可在 $F$ 的形式基上检验。它们成立时存在唯一实线性 $T:\mathfrak h\to\mathfrak h$ 满足 $Ts=t$；此时 $TP_i=A_i$、$TK_{ij}=Q_{ij}$。这些条件未成立前，$T$ 并无定义，不能对“假定的延拓”先谈平方或取向。
+

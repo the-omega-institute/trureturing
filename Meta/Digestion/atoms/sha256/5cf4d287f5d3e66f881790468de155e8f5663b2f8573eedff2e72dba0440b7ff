@@ -1,0 +1,30 @@
+**Definition 10.2 (the entire three-state actual source).** There is one type $i$, actual image $X_i=\{p,s,t\}$, fixed initial state $p$, and declared current readout $q_i(x)=x$. The whole operation alphabet consists of three names $a,c,e:i\to i$, with domains and successors
+
+$$
+D_a=\{p,s\},\quad T_a(p)=p,\quad T_a(s)=s,
+\qquad D_c=\{p\},\quad T_c(p)=s,
+\qquad D_e=\{s\},\quad T_e(s)=t.
+\tag{10.2}
+$$
+
+There are exactly four named edges. The two occurrences of $a$ are the identical input token, not names qualified by their source vertex. There are no other legal operations, failure edges, resets or source archive fields; $t$ is terminal. Each complete one-step record consists of its success tag, executed name, successor and the fixed vector for that edge. Fix arbitrary
+
+$$
+A,C,B,E\in\mathbb R_{>0}^r,
+\qquad d(p,a)=A,\quad d(p,c)=C,\quad
+ d(s,a)=B,\quad d(s,e)=E.
+\tag{10.3}
+$$
+
+The one-step record can depend on the state through these stipulated data; its extra fields are not supplied to the online register. Equality of complete responses is equality of states: the empty response already separates distinct states by $q_i$, and determinism gives equal responses from the same state. Thus this is its own complete residual graph, and the vectors descend without a representative ambiguity.
+
+All actual root words and their joint native totals are exactly
+
+| Exact endpoint | Entire legal word family | Native total |
+| --- | --- | --- |
+| $p$ | $a^m$, $m\in\mathbb N_0$ | $mA$ |
+| $s$ | $a^mca^n$, $m,n\in\mathbb N_0$ | $C+mA+nB$ |
+| $t$ | $a^mca^ne$, $m,n\in\mathbb N_0$ | $C+E+mA+nB$ |
+
+Indeed, only $a$ can precede the unique possible $c$, only $a$ can follow it until the optional $e$, and nothing can follow $e$. The exponent $m=0$ in the first row is the empty word; $c,ce$ and all other zero-lap and terminal histories remain included. Choosing a finite cut adds no operation. The two exponents determine the ordered name word because the single $c$ marks their separation, even though $a$ has the same name on both sides. This is a concrete two-cycle path schema, using the established normal-form perspective of §§7–9 and Krieger–Rampersad–Shallit, [arXiv:0711.4990v1, Theorem 5 and its proof, pp.4–5](https://arxiv.org/pdf/0711.4990v1); neither path schemas nor their polynomial-growth characterization are new assertions here.
+

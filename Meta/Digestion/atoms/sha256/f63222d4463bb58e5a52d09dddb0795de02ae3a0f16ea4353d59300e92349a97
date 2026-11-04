@@ -1,0 +1,36 @@
+### 推论 4.3（黄金质量的精确缺陷和误差区间）
+
+$$
+\boxed{x-a=\frac{x^3t}{1-xt}.}
+ \tag{4}
+$$
+
+令$\bar t=\min\{1,13\Delta/12\}$，则
+
+$$
+\frac{x^3\Delta}{1-x\Delta}
+ \le x-a\le\frac{x^3\bar t}{1-x\bar t}.
+ \tag{5}
+$$
+
+若只知$\Delta\le\delta<12/13$，特别有
+
+$$
+0\le x-a\le
+ \frac{(13/12)x^3\delta}{1-(13/12)x\delta}.
+$$
+
+**证明。**
+
+$a=c/(x+c)=(1-t)/(x+1-t)$。
+利用$x+x^2=1$，整理得到式 [式 eq:goldmass](#eq:goldmass)。
+函数$t\mapsto x^3t/(1-xt)$在$[0,1]$严格递增，
+再用$\Delta\le t\le\bar t$即得。
+
+∎
+
+这里“十三个基输入足够”只发生在全域源假设已经把响应限制到$cq+d$之后。
+有限个测试不能独立认证全部未知连续函数满足源假设；
+尤其不能把这条结论反向用于证明密度、设置隔离或完整历史充分性。
+
+<a id="thm:fullsequence"></a>

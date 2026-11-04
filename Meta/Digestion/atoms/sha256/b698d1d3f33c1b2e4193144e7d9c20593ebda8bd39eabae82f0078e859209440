@@ -1,0 +1,43 @@
+**Theorem 10.1 (Local failure of a finite affine description).** Fix any integer $d\ge3$, and let $\mathcal S_d$ denote the actual Schwarz parameter set of the original map of Convention 2.1. Use the affine coordinates $(\lambda,p)$, $p=1-(d-1)q$, and write
+
+$$
+\widehat{\mathcal S}_d
+=\{(\lambda,p):(\lambda,(1-p)/(d-1))\in\mathcal S_d\}.
+$$
+
+For every $0\le p\le1$ one has
+
+$$
+\left[-\frac{\sqrt p}{d-1},\frac{\sqrt p}{d-1}\right]
+\subseteq\{\lambda:(\lambda,p)\in\widehat{\mathcal S}_d\}
+\subseteq[-\sqrt p,\sqrt p].
+$$
+
+For no open neighborhood $U$ of $(0,1/(d-1))$ in the original $(\lambda,q)$ plane do there exist finitely many closed affine half-planes $H_1,\ldots,H_N$ such that
+
+$$
+\mathcal S_d\cap U=U\cap\bigcap_{j=1}^NH_j.
+$$
+
+The same assertion holds at $(0,0)$ in $(\lambda,p)$ coordinates. The displayed inclusions demonstrate square-root order of the two signed section widths; they do not determine their optimal coefficient or a finite nonlinear description of $\mathcal S_d$. Stance: repo-derived; the necessary inequality in the second inclusion is Theorem 4.1(ii), also literature-attested as specified there.
+
+**Proof.** The first inclusion is Theorem 9.1. The second follows from the established necessary condition $\lambda^2\le p$, obtained with $X=E_{12}$ and probe $e_2$. In particular $\widehat{\mathcal S}_d\cap\{p=0\}=\{(0,0)\}$. For every $r\in[0,1]$, the first inclusion supplies both points
+
+$$
+z_+(r)=\left(\frac r{d-1},r^2\right),\qquad
+z_-(r)=\left(-\frac r{d-1},r^2\right).
+$$
+
+Suppose there were such a finite half-plane representation in an open neighborhood $W$ of $(0,0)$. Orient each half-plane as $a_j\lambda+b_jp\ge c_j$. Because the origin belongs to the represented set, $c_j\le0$. If $c_j<0$, its inequality holds strictly throughout some ball about the origin. The finitely many such inequalities therefore impose no restriction in a sufficiently small common ball contained in $W$.
+
+For an active inequality $c_j=0$, both $z_+(r)$ and $z_-(r)$ belong to $W$ for all sufficiently small positive $r$. Hence
+
+$$
+\frac{a_j}{d-1}+b_jr\ge0,\qquad
+-\frac{a_j}{d-1}+b_jr\ge0.
+$$
+
+Taking $r\downarrow0$ shows $a_j=0$, and the inequalities then imply $b_j\ge0$. Every active half-plane thus contains the whole line $p=0$. Choose a nonzero $\lambda$ sufficiently small that $(\lambda,0)$ is in the common ball. It satisfies every inactive inequality strictly and every active inequality weakly, so the assumed representation puts it in $\widehat{\mathcal S}_d$. This contradicts $\lambda^2\le p=0$.
+
+The transformation $(\lambda,q)\mapsto(\lambda,1-(d-1)q)$ is an invertible affine map; it takes open neighborhoods to open neighborhoods and closed affine half-planes to closed affine half-planes. Thus the contradiction proves the assertion in both coordinate systems. Only the necessary upper bound and the two included curves were used. In particular no assertion $\mathcal S_d=K_d$, no exclusion of semialgebraic descriptions, and no optimal cusp coefficient is part of this conclusion. ∎
+

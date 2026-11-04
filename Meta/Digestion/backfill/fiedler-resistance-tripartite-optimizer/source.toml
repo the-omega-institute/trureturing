@@ -1,0 +1,5 @@
+source_id = "fiedler-resistance-tripartite-optimizer"
+path = "docs/develop/theory/FIEDLER_RESISTANCE_TRIPARTITE_OPTIMIZER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,28 @@
+**Convention 12.1 (Scope of external inputs).** The family and its Schwarz question are Eq. (6) and §4 of Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1. The exact qubit criterion used as an intermediate step of Theorem 9.1 is Chruściński and Bhattacharya, arXiv:2404.10895v1, Proposition 3, Eq. (27), specialized to $a=b=p$, $\mu=0$ and real off-diagonal multiplier $\rho$. Theorem 9.1 combines that criterion with pair compressions and the coordinatewise Cauchy–Schwarz estimate; Theorem 10.1 applies its two signed curves to the actual Schwarz set. Neither statement asserts priority or worldwide absence of another proof. Tomiyama, *On the geometry of positive maps in matrix algebras. II*, Linear Algebra Appl. 69, 169–177, DOI 10.1016/0024-3795(85)90074-6, and Sun and Li, *k Positivity and Schwarz inequality for two linear maps*, Positivity 26, 16, DOI 10.1007/s11117-022-00863-8, are cited through the exact accessible results identified above. Overlap with their unavailable original full texts is not determined.
+
+The generalized-reduction range in §11 uses only the hypotheses and $k=1$ range of arXiv:2603.11204v1, Theorem 3.2, with the proof given there inline. Its Theorem 3.4 cannot supply its whole printed interval (3.10). In fact, take $d=3$, $k=1$, the identity as its input map and $a=3/2$. The identity is unital, trace-preserving, positive and satisfies its condition (2.8); moreover
+
+$$
+1-\frac{\sqrt{13}-1}{6}\le\frac32\le1+\frac{\sqrt{13}+1}{6}.
+$$
+
+Nevertheless its construction (3.9) is
+
+$$
+\Omega(X)=\frac12\bigl(\operatorname{tr}(X)I_3-X\bigr)
+=\Phi_{-1/2,\,1/2}(X),
+$$
+
+and the existing matrix-unit necessary test of Theorem 4.1 gives
+
+$$
+e_2^\ast\bigl(\Omega(E_{12}^\ast E_{12})
+-\Omega(E_{12})^\ast\Omega(E_{12})\bigr)e_2=-\frac14.
+$$
+
+This source limitation also prevents using a negative depolarizing interval larger than the exact interval in Definition 11.1.
+
+For Rutkowski, arXiv:2512.18900v3, Theorem 1, the general diagonal Gell–Mann hypothesis does contain the $d=3$ original family: its six off-diagonal eigenvalues are $\lambda$ and its two diagonal traceless eigenvalues are $1-3q$. The displayed illustrative family (19), with seven equal eigenvalues and one distinct one, intersects this permutation-symmetric family on $\lambda=1-3q$; that intersection alone does not describe the scope of its general theorem. Its whole printed sufficient criterion is not used here. Indeed, the same $\Omega$ is a positive unital map: for $X\ge0$, $\operatorname{tr}(X)I_3-X\ge0$. It has isotropic Gell–Mann eigenvalues $\mu_i=-1/2$ and hence zero spectral spread. Under the definition (14), $c_3(\mu)=0$: the scalar coefficient of the defect is one third of its trace, is nonnegative by the Hilbert–Schmidt contraction of $\Omega$, and vanishes on $X=I_3$. Thus its printed condition (15) is met, while the displayed matrix-unit defect is negative. This excludes that full printed criterion as a supplier, without making any statement about other corrected estimates. Since $p=0$ and $\lambda=-1/2$, this example is outside $K_3$ and cannot refute the sufficiency of $K_3$.
+
+For García-Velo and Ibort, arXiv:2601.02282v1, only the necessary tests of Theorem V.4 are used, as in Theorem 4.1. Their Proposition V.4 is not a Schwarz or CP supplier here. The identity and the parameter $(\lambda,q)=(-1/2,1/4)$ in the existing Remark 5.1 already refute the two directions of its printed Schwarz criterion; those counterexamples and the complete boundary theorem 8.1 are reused in their entirety. These are limitations of the specified source statements, not independent additional refutations or new classification claims.
+

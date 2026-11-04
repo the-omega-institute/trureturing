@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:8499993abb6034bd14afd75f8e966a06ea3b47bbc17fa6e67f6128d97e6835d3
+  normalized_sha256: sha256:8499993abb6034bd14afd75f8e966a06ea3b47bbc17fa6e67f6128d97e6835d3
+cas_ref: sha256:8499993abb6034bd14afd75f8e966a06ea3b47bbc17fa6e67f6128d97e6835d3
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/UncrossingFiber.adm_phi_fiber_common_endpoint
+    target_statement_id: sha256:e9e64d75e22bc4d1a940dd345d485202177c0e7d12881e27593cc04707fccbe0
+  - gid: D5/S1/Words/AdmissibleWords/UncrossingFiber.comparable_margin_unique
+    target_statement_id: sha256:9c6abeb2b4f29c14ec59b73593eeae570a04ca894f16cdf3004c69878e07f0ba
+  - gid: D5/S1/Words/AdmissibleWords/UncrossingFiber.same_margin_connected
+    target_statement_id: sha256:fad20d22cdfbff37895560d61798dfb52dbe6ef4214434d7f10dc154cc4d29c2
+  - gid: D5/S1/Words/AdmissibleWords/UncrossingFiber.sort_to_threshold
+    target_statement_id: sha256:2a24d75a57f5c8fea9402e1aeca8f78cd5ab0b1c612334a6d8bbb99f6b29eab7
+receipts:
+  unresolved_subitems: []

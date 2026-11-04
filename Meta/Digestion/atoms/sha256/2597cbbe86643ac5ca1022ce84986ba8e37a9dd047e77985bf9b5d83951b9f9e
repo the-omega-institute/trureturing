@@ -1,0 +1,9 @@
+**Definition 5.1 (Deterministic two-call rule).** Ignore $u$, without
+changing its law. First request the actual original address $2j$.
+After reply $x$, make the second actual call and then return according
+to this table, where $y$ is the second reply:
+
+| First reply $x$ | Second actual address | Output if $y=0$ | Output if $y=1$ |
+| --- | --- | --- | --- |
+| $0$ | $2(j+2)$ | $h_1(\sigma)$ | $h_0(\sigma)$ |
+| $1$ | $2(j+1)$ | $h_0(1-\sigma)$ | $h_0(\sigma)$ |

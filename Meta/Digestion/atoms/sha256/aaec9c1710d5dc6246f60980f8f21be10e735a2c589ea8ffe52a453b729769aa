@@ -1,0 +1,27 @@
+**Proposition 2.2 (the observation distinctions).** Equation (PCR.3)
+concerns complete ordered support. A fixed finite menu of paid literal
+presence tests need not determine its visible batches, even at a mature
+cut. Forgetting physical child order loses every orientation. The family
+$(S_T)_{T\ge0}$ determines every batch, whereas its timeless union is
+$\{a,b\}^*$ for every local trial and therefore separates none of them.
+Newest structural invisibility does not prevent inference of newest bits
+from older bits together with an authentic sufficiently restrictive law.
+
+Proof. For a nonempty relative word of length $h$, its creation time from
+beta lies between $h$ and $2h-1$: its first edge is born in update one,
+and each subsequent edge adds the initial label delay one or two. Hence
+any fixed menu with maximum word length $h$ receives only ones at
+$T\ge\max(0,2h-1)$, independently of its law and clocks. Such a cut can
+also be chosen above any maturity threshold below. Distinct mature
+supports therefore remain possible with the same menu replies. An
+adaptive menu likewise earns only its actual transcript; (PCR.3) grants
+no complete support from it.
+
+After physical order is forgotten, each rank has the same unordered
+Fibonacci tree, by induction on rank. For the cut-indexed family, apply
+Theorem 2.1 at $T=k+1$ to recover $W_k$. Every finite word is eventually
+created, by the delay bound, proving the timeless-union assertion. A
+recurrence can determine later bits from recovered earlier ones, without
+making a rank-two cherry's orientation a direct presence observation.
+$\square$
+

@@ -1,0 +1,33 @@
+**Definition 12.1 (Gaussian data, canonical contraction and ordinary purities).** Let $q\ge2$ be an integer, let $N_1,\ldots,N_q$ be positive finite integers, and set $N=\sum_{k=1}^qN_k$. Use the party coordinate blocks and projections $P_k$ of Theorem 3.8. Let $A,B$ be real symmetric $N\times N$ matrices, with $A>0$, and let $d,p\in\mathbb R^N$ be arbitrary. Put $W=A+iB$ and
+
+$$
+\psi(y)=c_A\exp\left[-\frac12(y-d)^\top W(y-d)+ip^\top y\right],
+\qquad c_A=\left(\frac{\det A}{\pi^N}\right)^{1/4}.
+$$
+
+This is the nonsingular finite-mode pure bosonic Gaussian wavefunction class, allowing arbitrary position–momentum phase correlations. Its centered convention agrees with Camargo and Nishida, [arXiv:2609.30754v2, §2.3, Eqs. (21)–(22)](https://arxiv.org/html/2609.30754v2#S2.SS3), with their $\mathbf R=A$, $\mathbf S=B$, and $\mathbf W=W$. No permutation symmetry is assumed.
+
+Let $R=\mathbb F_2^{q-1}$, $M=2^{q-1}$, $t_k=e_k$ for $k<q$, and $t_q=0$. For $y=(y_r)_{r\in R}$ set
+
+$$
+y'_r=\sum_{k=1}^qP_ky_{r+t_k},\qquad
+Z_2^{(q)}=\int_{(\mathbb R^N)^R}
+\prod_{r\in R}\psi(y_r)\overline{\psi(y'_r)}\prod_{r\in R}dy_r.
+$$
+
+The integral is the actual canonical replica contraction of Convention 2.4 with the pure-state density kernel $\psi(y)\overline{\psi(y')}$. The normalization $\int|\psi|^2=1$ makes its usual denominator equal to $1$. Use the entropy normalization of Definition 6.3 at order two,
+
+$$
+S_2^{(q)}=-2^{2-q}\log Z_2^{(q)}.
+$$
+
+For a nonempty proper set $S$ of party labels, write $\mathcal H_S=L^2(\mathbb R^{\sum_{k\in S}N_k})$ and define the ordinary reduced density operator and its purity by
+
+$$
+\rho_S=\operatorname{Tr}_{\mathcal H_{S^c}}|\psi\rangle\langle\psi|,
+\qquad E_S=\operatorname{Tr}_{\mathcal H_S}(\rho_S^2),
+\qquad S_2^{(2)}(S:S^c)=-\log E_S.
+$$
+
+Here $S^c$ is the complement in $\{1,\ldots,q\}$; a matrix subscript $S$ denotes all coordinates of these parties. Thus $A_{SS}$ has size $\sum_{k\in S}N_k$, and $B_{S S^c}$ contains every phase coupling across this cut. These are partial traces of the same state $\psi$, independently of the replica contraction.
+

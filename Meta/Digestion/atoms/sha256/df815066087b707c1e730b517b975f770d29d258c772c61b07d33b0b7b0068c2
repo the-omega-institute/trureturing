@@ -1,0 +1,15 @@
+**定理 10.4（原空间复合及统计相干性）。** A–E 下，每条已声明原空间边有保持原单位、原产品统计与全中心的 $*$-同构
+
+$$
+\mathcal A_{op}\simeq\mathcal A_o\otimes_{\mathbb C}\mathcal A_p
+=\bigoplus_{s,t}M_{d_sd_t}(\mathbb C),\quad
+\sigma_{op}(v\boxtimes w)=\sigma_o(v)\otimes\sigma_p(w).
+\tag{10.6}
+$$
+
+原产品事件的延伸在整个联合空间上是同一个 $\mathcal T_x\otimes\mathrm{id}$，其中 $\mathcal T_x=\sigma_pT_x\sigma_o^{-1}$。原记录、产品输入作用及既有括号比较都被保留。
+
+证明。E 的局部 Jordan 嵌入保留 $D$，所以由定理 10.2 的乘法公式延拓成复含幺 $*$-嵌入；式 (9.4) 使两像交换。E 的张成性和式 (9.5) 正好是本卷定义 1.3、定理 5.2 张量论证的“交换、生成、产品态分离”三项前件。对数学局部态，式 (9.1) 将原产品准备有限线性延拓为相应产品正泛函，足以消费该分离论证，取得 (10.6)，不另重证分类或复张量唯一性。规范迹及 (9.5) 给密度的产品公式。
+
+产品密度线性张成联合自伴部，因此原延伸式 (9.6) 唯一确定整个延伸，而非仅给一个任意的局部兼容映射。迭代复合的产品效果仍按同一因子表标记；既有括号比较保持这些统计。直接消费 [Atlas 命题 30.1](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md)，它的局部 tomography 在此由 E 的张成性给出，故全部已给比较相干，包括五边形。维数相等不替代这一条件，也不凭同构创造实际比较设备。∎
+

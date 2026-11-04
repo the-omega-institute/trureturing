@@ -1,0 +1,80 @@
+### 定理 10.1（模不变性与块乘积参照等价）
+
+<a id="thm-c94-modular"></a>
+
+对式 [(8.1)](#eq-c94-finite-blocks) 的可见代数与忠实 $\tau$，
+以下条件等价：
+
+1. $\tau^{it}\mathcal A\tau^{-it}=\mathcal A$ 对全部 $t\in\mathbb R$ 成立；
+
+2. $\log\tau$ 对中央块为块对角，且每块满足
+
+
+   <a id="eq-c94-modular-generator"></a>
+
+   $$
+   (\log\tau)|_{P_kH}
+     =h_{L,k}\otimes I_{R,k}+I_{L,k}\otimes h_{R,k}
+   \tag{10.1}
+   $$
+
+
+    对某些自伴 $h_{L,k},h_{R,k}$ 成立；
+
+3. $\tau$ 具有式 [(9.1)](#eq-c94-reference-product) 的块乘积形式。
+
+**证明。**
+条件 3 给每块
+$\log q_k+\log\tau_{L,k}\otimes I+I\otimes\log\tau_{R,k}$，
+把标量项并入任一因子即可得条件 2。
+条件 2 的两个张量项对易，指数化并分别归一可得条件 3；
+块的迹为 $q_k$，总迹一给 $\sum_kq_k=1$。
+
+条件 3 还直接给
+
+$$
+\tau^{it}(a\otimes I)\tau^{-it}
+ =(\tau_{L,k}^{it}a\tau_{L,k}^{-it})\otimes I,
+$$
+
+故得到条件 1。
+
+反过来，若条件 1 成立，模共轭是 $\mathcal A$ 的连续一参数自同构。
+它必须置换有限个最小中央投影；连续性和 $t=0$ 的恒等性迫使每个 $P_k$ 始终固定。
+所以 $\tau^{it}$、继而 $\log\tau$ 与全部 $P_k$ 对易。
+
+固定第 $k$ 块，令 $K_k=(\log\tau)|_{P_kH}$。
+对模不变性在零点微分，有
+
+$$
+[K_k,a\otimes I]\in B(H_{L,k})\otimes I\qquad(a\in B(H_{L,k})).
+$$
+
+记 $r_k=\dim H_{R,k}$，取
+$h_{L,k}=r_k^{-1}\operatorname{Tr}_{R,k}K_k$。
+对上述交换子取右侧部分迹，说明
+
+$$
+[K_k-h_{L,k}\otimes I,\ a\otimes I]=0
+ \qquad(a\in B(H_{L,k})).
+$$
+
+矩阵单位直接给
+$(B(H_{L,k})\otimes I)'=I\otimes B(H_{R,k})$，
+所以余项等于 $I\otimes h_{R,k}$。
+它自伴，故 $h_{R,k}$ 自伴，得到条件 2。
+
+这一有限生成元分解与项目 Atlas 的正规化群接口相接 [3](#ref-atlas)。
+在一般 von Neumann 代数中，忠实参照下的条件期望存在性与模不变性的对应，
+是 Takesaki 的既有定理 [9](#ref-takesaki1972)。
+本轮没有重新宣称该对应为数学首创；这里的推进是从任意读出算符系统出发，
+先由 C94 的二态与二值参考条件迫使通常代数，再接上这个结构。
+
+**白话图景。**参照不仅给一份概率表，它的对数也定义一族内部关系变换。
+如果这族变换始终把可见问题送回可见问题，参照就不能在可见与未读因子之间
+夹带一项会混合两边的对数耦合。
+每个块里它因而分成左右两项，指数化以后正好成为块乘积。
+这使“参照与读口相容”有了一个可证明的充要条件。
+
+<a id="section-11"></a>
+

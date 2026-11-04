@@ -1,0 +1,30 @@
+#### 定理 6.2（规范协变与闭路相容）
+
+令局部坐标变换 $G_v\in\operatorname{U}(5)$，同时变换
+
+$$
+\psi_v'=G_v\psi_v,\qquad U_{vu}'=G_vU_{vu}G_u^\dagger.
+$$
+
+则 $\mathcal E$ 不变。若图连通，取根 $r$ 和一棵生成树，其根到 $v$ 的输运为 $S_v$。
+记非树边的根闭路矩阵 $H_e=S_v^\dagger U_{vu}S_u$。有
+
+$$
+\ker L\ \simeq\ \bigcap_{e\notin T}\operatorname{Fix}(H_e),\qquad
+ L=d_U^\dagger d_U,
+$$
+
+其中 $(d_U\psi)_e=\sqrt{w_e}(\psi_v-U_{vu}\psi_u)$。
+
+**证明。**
+
+每项残差变为 $G_v(\psi_v-U_{vu}\psi_u)$，范数不变，且因平方和有 $\mathcal E=\langle\psi,L\psi\rangle$。
+零能量使每条边残差为零；树边依次强制 $\psi_v=S_v\xi$，$\xi=\psi_r$。
+其余边等价于 $\xi=H_e\xi$。反向由任意共同固定向量构造该截面即得零能量；两种映射互逆。
+
+∎
+
+非平凡闭路矩阵可以仍有固定向量，所以“存在一致状态”弱于“全部闭路矩阵为单位阵”。若每个三角面闭路矩阵均为 $I$，且复形单连通，则任何闭路可通过删除逆向边、跨越三角面缩到一点，其输运为 $I$。这里采用静态的闭路逻辑，不必先赋予一个外部线性时钟。
+
+<a id="statement-6-3"></a>
+

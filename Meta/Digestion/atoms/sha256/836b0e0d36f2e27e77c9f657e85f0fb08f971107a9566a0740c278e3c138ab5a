@@ -1,0 +1,66 @@
+### 定义 25.1（原记录、联合装置与同时校准合同）
+
+取非零有限维复 Hilbert 空间 $H,K,M$，$d=\dim H$；$M$ 是装置内部全部会影响以后调用的保留记忆，包括持续经典模式。矩阵代数记为 $\mathcal B(H)$，迹为通常未归一化迹。对复线性映射采用不除二的范数
+
+$$
+\|\Phi\|_\diamond
+=\sup_{R,X\ne0}
+\frac{\|(\Phi\otimes\operatorname{id}_R)(X)\|_1}{\|X\|_1},
+\tag{25.1}
+$$
+
+其中 $R$ 遍历有限维复参考，$X$ 是整个输入与 $R$ 上的任意矩阵。$\|\cdot\|_1,\|\cdot\|_{\mathrm{op}},\|\cdot\|_{\mathrm{HS}}$ 分别为迹范数、算子范数和 Hilbert–Schmidt 范数。以下映射误差均在 (25.1) 的拓扑中；本节的有限矩阵空间上各范数拓扑等价，不据此更换数值预算。
+
+固定一个实际完整仪器
+
+$$
+V_j:\mathcal B(H\otimes M)\longrightarrow\mathcal B(K\otimes M),
+\qquad j\in\mathsf J,
+\qquad \sum_jV_j\text{ 保迹},
+\tag{25.2}
+$$
+
+$\mathsf J$ 是有限的**原可访问记录**集合，包含全部成功和失败记录；每个 $V_j$ 完全正。校准和每次所覆盖调用使用同一个 (25.2)，不只要求装置名称相同或系统边缘相同。内部不再返回的新环境可在每次调用中丢弃；以后会返回的环境须计入同一 $M$。装置切换、遗漏的持续环境和未计入的时变控制不属于这个固定联合映射前件。
+
+校准实际采用与探针、外部参考及输出标签无关的乘积记忆准备 $\tau$，满足
+
+$$
+\operatorname{Tr}\tau=1,\qquad \tau\ge\lambda I_M,\qquad\lambda>0.
+\tag{25.3}
+$$
+
+因此同一校准分支为 $T_j(X)=\operatorname{Tr}_M V_j(X\otimes\tau)$。给定非零矩形算子 $K_j:H\to K$，置
+
+$$
+\mathcal A_j=\operatorname{Ad}_{K_j},\qquad
+\operatorname{Ad}_{K_j}(X)=K_jXK_j^*,\qquad
+E_j=K_j^*K_j,\qquad
+\sum_jE_j=I_H.
+\tag{25.4}
+$$
+
+要求这些效果在自伴实向量空间中线性独立，并对**同一仪器的全部原记录同时**给定
+
+$$
+\|T_j-\mathcal A_j\|_\diamond\le\delta_j,
+\qquad \delta_j\ge0.
+\tag{25.5}
+$$
+
+(25.2)–(25.5) 均为显式前件。尤其是原联合仪器的 CP、忠实乘积准备、全部单 Kraus 目标以及效果独立性，不从近饱和或其他表示／供应结论推得。效果独立性蕴含 $|\mathsf J|\le d^2$；结构性零效果不满足这个前件。
+
+选择任意自伴实对偶 $F_j$，并定义
+
+$$
+\begin{aligned}
+\operatorname{Tr}(F_jE_\ell)&=\delta_{j\ell},&
+\kappa_j&=\|F_j\|_1,\\
+h_j&=\sqrt{d\delta_j/\lambda},&
+e_j&=(2+h_j)h_j,\\
+e&=\sum_je_j,&t_j&=\kappa_je.
+\end{aligned}
+\tag{25.6}
+$$
+
+对偶存在：实 Gram 矩阵 $G_{a b}=\operatorname{Tr}(E_aE_b)$ 正定，故可取 $F_j=\sum_a(G^{-1})_{ja}E_a$。对偶的选择影响条件数及预算，不改变原目标和标签。
+

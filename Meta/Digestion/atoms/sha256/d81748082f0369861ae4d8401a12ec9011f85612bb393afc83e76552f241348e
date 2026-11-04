@@ -1,0 +1,8 @@
+**Remark 10.1 (Inputs and the added inference).** The source correspondence is as follows.
+
+| Mathematical input | Exact role |
+| --- | --- |
+| Ostrovskii–Shcherbakov, [arXiv:2508.13554v2, Section 6.2, Conjecture 6.3, equation (36)](https://arxiv.org/html/2508.13554v2#S6.SS2) | The entire complex-valued class, the closed disk, the real interval, the actual Lagrange interpolant, and the proposed uniform identity. Definition 9.1 specializes those objects with $n=2$, $k=1$ and two distinct nodes. The right side of (36) is $\|p_{a,b}'\|_I/2=1+|a|$. |
+| The classical disk Poisson formula, equivalently the geometric Fourier expansion of $P_t$ | Only the boundary representation of $h(t)$ for $|t|<1$ in Lemma 9.3. Its needed scalar moments and convergence are derived there. The usual Poisson kernel is also the one defined in Mathlib's [Analysis/Complex/Poisson](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Complex/Poisson.lean). |
+| The fundamental theorem of calculus for holomorphic functions along segments, Cauchy's coefficient estimate, geometric-series integration, and the integral triangle inequality | The slope identities, passage through Taylor series, elementary kernel bounds, and norm control in Lemmas 9.2–9.4. None of these classical inputs supplies the asserted interpolation bound by itself. |
+| Theorems 4.1 and 5.1, Remark 4.4, and Propositions 8.2–8.4 with Corollary 8.5 | The exact all-degree Schur-ratio regions, the $73/60$ refutation, and the quartic pointwise separation, respectively. Their existing hypotheses and conclusions are retained; they are not premises of the uniform upper bound. |

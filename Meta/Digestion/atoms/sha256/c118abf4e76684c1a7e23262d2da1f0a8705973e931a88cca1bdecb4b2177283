@@ -1,0 +1,37 @@
+**Definition 1.2 (Disjoint source labels).** Define the disjoint union
+
+$$
+\mathcal L=
+\bigl(\{\mathrm{initial}\}\times V\bigr)
+\sqcup
+\bigl(\{\mathrm{fresh}\}\times\mathbb N_{\geq1}\times V\bigr).
+$$
+
+Attach opinion coins and signs to these labels by
+
+$$
+B_{(\mathrm{initial},v)}=I_v,\quad
+B_{(\mathrm{fresh},n,v)}=F_{n,v},\qquad
+\sigma_\ell=2B_\ell-1\in\{-1,1\}.
+$$
+
+The birth time of an initial label is $0$, and the birth time of $(\mathrm{fresh},n,v)$ is $n$. Let
+
+$$
+\mathcal H=\sigma(R_{n,v},J_{n,v}:n\geq1,\ v\in V).
+$$
+
+The source label of the actual recursion is
+
+$$
+S_0(v)=(\mathrm{initial},v),\qquad
+S_n(v)=
+\begin{cases}
+(\mathrm{fresh},n,v),&R_{n,v}=1,\\
+S_{n-1}(J_{n,v}),&R_{n,v}=0.
+\end{cases}
+\tag{1.2}
+$$
+
+Equivalently, starting at $(v,n)$, follow the selected edge to the preceding time layer until the first refresh, or until time zero. The terminal fresh or initial coordinate is the label. These are the finite-time graphical histories of [1, Section 2], with their terminal opinion coordinates made explicit. If two histories reach the same space-time vertex, their subsequent backward histories agree. Conversely, equal terminal labels mean that the histories meet at that terminal vertex. Thus equality of source labels is precisely coalescence of these terminated histories; it does not mean merely that two opinion values happen to agree.
+

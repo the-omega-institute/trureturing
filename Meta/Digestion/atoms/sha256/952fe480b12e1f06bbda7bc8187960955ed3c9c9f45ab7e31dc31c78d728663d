@@ -1,0 +1,50 @@
+**Lemma 4.2 (First-zero subtree, same-parity second call).** If $t_0$
+has parity $\alpha$, then
+
+$$
+B_0\le\frac a2+a^2\eta.
+\tag{4.4}
+$$
+
+Proof. In phase $\beta$ both calls are separators. Thus $C_{00}$
+contains that entire phase, and the state $h_\beta(\sigma)$ has
+joint mass $a/2$ on it. Every particular endpoint state's prior is
+at most $a/2$, so
+
+$$
+m(C_{00})=\frac a2.
+\tag{4.5}
+$$
+
+This maximum is over individual four-state answers. It does not add
+an optimal phase-$\alpha$ state to an optimal phase-$\beta$ state.
+
+The leaf $C_{01}$ certifies phase $\alpha$ and imposes $e=0,f=1$,
+where $f$ is the active edge at $t_0$. Repetition $f=e$ makes it
+impossible. If the two distinct edges share a vertex, Lemma 3.2
+gives maximal state mass $a\eta/2$, for either orientation and any
+target position.
+
+For vertex-disjoint edges, independence and Lemma 3.1 give the
+following full-law maxima:
+
+$$
+\begin{array}{c|c|c}
+\text{target placement}&\text{product giving the maximum}&m(C_{01})\\ \hline
+v_\alpha\in e&\tfrac12 a^2(2\eta)&a^2\eta\\
+v_\alpha\in f&\tfrac12 c\eta&c\eta/2\\
+v_\alpha\notin e\cup f&\tfrac12 ac(2\eta)&ac\eta
+\end{array}
+\tag{4.6}
+$$
+
+The middle row uses the equal target-spin masses on a one edge;
+the last row uses the independent target factor. In particular it
+retains the full probability of the disjoint zero constraint.
+
+All nonzero cases are at most $a^2\eta$: for the adjacent case use
+$a/2\le a^2$, for the middle row of (4.6) use $c\le2a^2$, and for
+the last row use $c\le a$, as in (3.1). Repetition, adjacency and
+vertex-disjointness exhaust the possible edges. Adding (4.5) proves
+(4.4). $\square$
+

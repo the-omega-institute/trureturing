@@ -1,0 +1,20 @@
+**Equation 5.5 (`eq:autos`).**
+
+$$
+\begin{array}{c|l}
+ S&(-a,-b,-c,-d)\\
+ C&(-a,-b,-c,d+a+c)\\
+ P&(a,b,a-b-d,a-b+c-d).
+ \end{array}
+$$
+
+In particular the prism's stated signed edge map has *forward*
+cycle action $(a,b,d-c,a-b-c)$, whose inverse is the last row. Using
+the forward action for the inverse transport [(5.3)](#eq-L) would be a
+concrete error. The inverse row is used here.
+
+The seven self-returning resolution substitutions are
+
+<a id="eq-seven"></a>
+<a id="eq:seven"></a>
+

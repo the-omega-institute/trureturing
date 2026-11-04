@@ -70,7 +70,7 @@ private theorem cfc_negMulLog_smul (p : ℝ) (A : CStarMatrix n n ℂ)
     (fun x : ℝ => p * Real.negMulLog x), cfc_const_mul (Real.negMulLog p) (fun x : ℝ => x) A,
     cfc_const_mul p Real.negMulLog A, cfc_id' ℝ A]
 
-private noncomputable def realTrace (A : CStarMatrix n n ℂ) : ℝ :=
+noncomputable def realTrace (A : CStarMatrix n n ℂ) : ℝ :=
   (Matrix.trace (CStarMatrix.ofMatrix.symm A)).re
 
 omit [DecidableEq n] in
@@ -95,7 +95,7 @@ private theorem realTrace_sum {ι : Type*} (s : Finset ι) (A : ι → CStarMatr
   change (Matrix.trace (∑ i ∈ s, CStarMatrix.ofMatrix.symm (A i))).re = _
   rw [Matrix.trace_sum, Complex.re_sum]
 
-private theorem entropy_eq_trace_cfc (rho : DensityState n) :
+theorem entropy_eq_trace_cfc (rho : DensityState n) :
     vonNeumannEntropy rho = realTrace (cfc Real.negMulLog rho.1) := by
   have hA : IsSelfAdjoint rho.1 := IsSelfAdjoint.of_nonneg rho.2.1
   have hlog : ContinuousOn Real.log (spectrum ℝ rho.1) := by
@@ -224,7 +224,7 @@ noncomputable def recordState {ι : Type*} [Fintype ι] [DecidableEq ι]
     (rho : ι → DensityState n) : DensityState (ι × n) :=
   mixtureState p hp hs (fun i => productState (pointerState i) (rho i))
 
-private theorem marginalLeft_mixture {ι A B : Type*} [Fintype ι]
+theorem marginalLeft_mixture {ι A B : Type*} [Fintype ι]
     [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
     (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
     (rho : ι → DensityState (A × B)) :
@@ -240,7 +240,7 @@ private theorem marginalLeft_mixture {ι A B : Type*} [Fintype ι]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.smul_sum.symm
 
-private theorem marginalRight_mixture {ι A B : Type*} [Fintype ι]
+theorem marginalRight_mixture {ι A B : Type*} [Fintype ι]
     [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
     (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
     (rho : ι → DensityState (A × B)) :
@@ -256,14 +256,12 @@ private theorem marginalRight_mixture {ι A B : Type*} [Fintype ι]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.smul_sum.symm
 
-/-- Reading either factor uses its actual partial trace. Under the explicitly named orthogonal
-record assumption, the fragment carries the entire classical entropy of the pointer. -/
-theorem orthogonal_record_trace_gives_sbs_consensus
-    {ι : Type*} [Fintype ι] [DecidableEq ι]
+/-- The pointer alone makes the whole CQ components orthogonal; fragment states are arbitrary. -/
+theorem entropy_recordState {ι : Type*} [Fintype ι] [DecidableEq ι]
     (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
-    (rho : ι → DensityState n)
-    (hOrthogonal : Pairwise (fun i j => (rho i).1 * (rho j).1 = 0)) :
-    quantumMutualInformation (recordState p hp hs rho) = shannonEntropy p := by
+    (rho : ι → DensityState n) :
+    vonNeumannEntropy (recordState p hp hs rho) =
+      shannonEntropy p + ∑ i, p i * vonNeumannEntropy (rho i) := by
   have hprod : Pairwise (fun i j =>
       (productState (pointerState i) (rho i)).1 *
         (productState (pointerState j) (rho j)).1 = 0) := by
@@ -276,14 +274,22 @@ theorem orthogonal_record_trace_gives_sbs_consensus
     have hptr : (CStarMatrix.ofMatrix.symm (pointerState i).1) *
         (CStarMatrix.ofMatrix.symm (pointerState j).1) = 0 := pointerState_orthogonal hij
     rw [hptr, Matrix.zero_kronecker]
+  unfold recordState
+  rw [orthogonal_mixture_entropy p hp hs _ hprod]
+  simp only [vonNeumannEntropy_productState, entropy_pointerState, zero_add]
+
+/-- Reading either factor uses its actual partial trace. Under the explicitly named orthogonal
+record assumption, the fragment carries the entire classical entropy of the pointer. -/
+theorem orthogonal_record_trace_gives_sbs_consensus
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
+    (rho : ι → DensityState n)
+    (hOrthogonal : Pairwise (fun i j => (rho i).1 * (rho j).1 = 0)) :
+    quantumMutualInformation (recordState p hp hs rho) = shannonEntropy p := by
   have hsys : vonNeumannEntropy (mixtureState p hp hs pointerState) = shannonEntropy p := by
     rw [orthogonal_mixture_entropy p hp hs pointerState pointerState_orthogonal]
     simp only [entropy_pointerState, mul_zero, Finset.sum_const_zero, add_zero]
-  have hjoint : vonNeumannEntropy (recordState p hp hs rho) =
-      shannonEntropy p + ∑ i, p i * vonNeumannEntropy (rho i) := by
-    unfold recordState
-    rw [orthogonal_mixture_entropy p hp hs _ hprod]
-    simp only [vonNeumannEntropy_productState, entropy_pointerState, zero_add]
+  have hjoint := entropy_recordState p hp hs rho
   unfold quantumMutualInformation
   rw [hjoint]
   unfold recordState

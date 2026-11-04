@@ -94,7 +94,91 @@ $$\forall (j : \mathbb{N}^{+}), \operatorname{beta}\left(j\right) = ![4,j,j,5,3]
 
 The repeated internal part is the same arbitrary positive natural j in both positions. The proof uses the fixed end blocks 5,4,3 in the stated algebraic identity.
 
-**Definition 1.8 (Remark 3.11, first question).**
+**Definition 1.8 (Proper spine colors).**
+
+$$\forall (l : \mathbb{N}), \forall (k : \mathbb{N}), \forall (c : (\operatorname{Fin}\left(l\right)) \to (\operatorname{Fin}\left(k\right))), \operatorname{SpineGood}\left(c\right) \Leftrightarrow \forall (i : \operatorname{Fin}\left(l\right)), \forall (j : \operatorname{Fin}\left(l\right)), (\operatorname{Fin.val}\left(i\right) + 1 = \operatorname{Fin.val}\left(j\right)) \Rightarrow (\operatorname{c}\left(i\right) \ne \operatorname{c}\left(j\right))$$
+
+*Formalization.* `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.SpineGood` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Aram Bingham, Kyle Celano, Patricia Commins, Rosa Orellana, Jianping Pan, and Mary Claire Simone (2026). *Principal specializations of the t-chromatic symmetric function*. DOI: [10.48550/arXiv.2610.31785](https://doi.org/10.48550/arXiv.2610.31785). URL: <https://arxiv.org/abs/2610.31785v1>.
+
+*Commentary.*
+
+Consecutive spine vertices receive distinct colors.
+
+**Definition 1.9 (The choices at one leaf).**
+
+$$\forall (k : \mathbb{N}), \forall (c : \operatorname{Fin}\left(k\right)), \operatorname{leafSum}\left(c\right) = \sum_{d:\{d:\operatorname{Fin}\left(k\right)\mid d \ne c\}} \operatorname{Polynomial.X}^{\operatorname{Fin.val}\left(\operatorname{Subtype.val}\left(d\right)\right)}$$
+
+*Formalization.* `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.leafSum` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Aram Bingham, Kyle Celano, Patricia Commins, Rosa Orellana, Jianping Pan, and Mary Claire Simone (2026). *Principal specializations of the t-chromatic symmetric function*. DOI: [10.48550/arXiv.2610.31785](https://doi.org/10.48550/arXiv.2610.31785). URL: <https://arxiv.org/abs/2610.31785v1>.
+
+*Commentary.*
+
+The sum ranges over every color different from the incident spine color.
+
+**Definition 1.10 (The weight of one block).**
+
+$$\forall (k : \mathbb{N}), \forall (m : \mathbb{N}^{+}), \forall (c : \operatorname{Fin}\left(k\right)), \operatorname{blockWeight}\left(m, c\right) = \operatorname{Polynomial.X}^{\operatorname{Fin.val}\left(c\right)} \cdot \operatorname{leafSum}\left(c\right)^{\operatorname{PNat.val}\left(m\right) - 1}$$
+
+*Formalization.* `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.blockWeight` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Aram Bingham, Kyle Celano, Patricia Commins, Rosa Orellana, Jianping Pan, and Mary Claire Simone (2026). *Principal specializations of the t-chromatic symmetric function*. DOI: [10.48550/arXiv.2610.31785](https://doi.org/10.48550/arXiv.2610.31785). URL: <https://arxiv.org/abs/2610.31785v1>.
+
+*Commentary.*
+
+A positive part m gives one spine vertex and val(m) minus one leaves. The zeroth power accounts for an empty leaf set.
+
+**Theorem 1.11 (The complete finite spine sum).**
+
+$$\forall (l : \mathbb{N}), \forall (k : \mathbb{N}), \forall (a : \operatorname{Parts}\left(l\right)), \operatorname{ps}\left(\operatorname{caterpillar}\left(a\right), k\right) = \sum_{c:(\operatorname{Fin}\left(l\right)) \to (\operatorname{Fin}\left(k\right))} \operatorname{if} \operatorname{SpineGood}\left(c\right) \operatorname{then} \prod_{i:\operatorname{Fin}\left(l\right)} \operatorname{blockWeight}\left(\operatorname{a}\left(i\right), \operatorname{c}\left(i\right)\right) \operatorname{else} 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.ps_spine_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Aram Bingham, Kyle Celano, Patricia Commins, Rosa Orellana, Jianping Pan, and Mary Claire Simone (2026). *Principal specializations of the t-chromatic symmetric function*. DOI: [10.48550/arXiv.2610.31785](https://doi.org/10.48550/arXiv.2610.31785). URL: <https://arxiv.org/abs/2610.31785v1>.
+
+*Commentary.*
+
+The coloring bijection and independent leaf choices give this identity for every positive part vector and every number of colors.
+
+**Theorem 1.12 (Expanding a finite function sum).**
+
+$$\forall (A : Type*), [\operatorname{Fintype}\left(A\right)] \forall (n : \mathbb{N}), \forall (f : ((\operatorname{Fin}\left(n + 1\right)) \to (A)) \to (\operatorname{Polynomial}\left(\mathbb{Z}\right))), \sum_{c:(\operatorname{Fin}\left(n + 1\right)) \to (A)} \operatorname{f}\left(c\right) = \sum_{x:A} \sum_{c:(\operatorname{Fin}\left(n\right)) \to (A)} \operatorname{f}\left(\operatorname{Fin.cons}\left(x, c\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.sum_finfun_succ` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Aram Bingham, Kyle Celano, Patricia Commins, Rosa Orellana, Jianping Pan, and Mary Claire Simone (2026). *Principal specializations of the t-chromatic symmetric function*. DOI: [10.48550/arXiv.2610.31785](https://doi.org/10.48550/arXiv.2610.31785). URL: <https://arxiv.org/abs/2610.31785v1>.
+
+*Commentary.*
+
+The first value and the remaining function uniquely determine a function on Fin (n+1).
+
+**Theorem 1.13 (A leaf sum over the whole color set).**
+
+$$\forall (k : \mathbb{N}), \forall (c : \operatorname{Fin}\left(k\right)), \operatorname{leafSum}\left(c\right) = \sum_{d:\operatorname{Fin}\left(k\right)} \operatorname{if} (d \ne c) \operatorname{then} \operatorname{Polynomial.X}^{\operatorname{Fin.val}\left(d\right)} \operatorname{else} 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.leafSum_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Aram Bingham, Kyle Celano, Patricia Commins, Rosa Orellana, Jianping Pan, and Mary Claire Simone (2026). *Principal specializations of the t-chromatic symmetric function*. DOI: [10.48550/arXiv.2610.31785](https://doi.org/10.48550/arXiv.2610.31785). URL: <https://arxiv.org/abs/2610.31785v1>.
+
+*Commentary.*
+
+The forbidden color contributes zero; every other color contributes its monomial.
+
+**Definition 1.14 (Remark 3.11, first question).**
 
 $$claim \Leftrightarrow (\forall (j : \mathbb{N}^{+}), (\operatorname{ps}\left(\operatorname{caterpillar}\left(\operatorname{alpha}\left(j\right)\right), 2\right) \ne \operatorname{ps}\left(\operatorname{caterpillar}\left(\operatorname{beta}\left(j\right)\right), 2\right)) \land (\operatorname{ps}\left(\operatorname{caterpillar}\left(\operatorname{alpha}\left(j\right)\right), 3\right) = \operatorname{ps}\left(\operatorname{caterpillar}\left(\operatorname{beta}\left(j\right)\right), 3\right)))$$
 
@@ -106,7 +190,7 @@ $$claim \Leftrightarrow (\forall (j : \mathbb{N}^{+}), (\operatorname{ps}\left(\
 
 The domain is all positive integers, including j=1. Equality is formal polynomial equality in Z[X], with an indeterminate X. The second question, whether these are the only such pairs, is outside this statement.
 
-**Theorem 1.9 (The entire positive-parameter family).**
+**Theorem 1.15 (The entire positive-parameter family).**
 
 $$\forall (j : \mathbb{N}^{+}), (\operatorname{ps}\left(\operatorname{caterpillar}\left(\operatorname{alpha}\left(j\right)\right), 2\right) \ne \operatorname{ps}\left(\operatorname{caterpillar}\left(\operatorname{beta}\left(j\right)\right), 2\right)) \land (\operatorname{ps}\left(\operatorname{caterpillar}\left(\operatorname{alpha}\left(j\right)\right), 3\right) = \operatorname{ps}\left(\operatorname{caterpillar}\left(\operatorname{beta}\left(j\right)\right), 3\right))$$
 
@@ -127,11 +211,17 @@ Restricting a proper coloring to the spine and its leaves gives a bijection with
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.Parts`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.SpineGood`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.Vertex`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.alpha`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.beta`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.blockWeight`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.caterpillar`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.claim`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.edgeRel`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.leafSum`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.leafSum_eq`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.ps`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.ps_spine_sum`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.result`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.sum_finfun_succ`

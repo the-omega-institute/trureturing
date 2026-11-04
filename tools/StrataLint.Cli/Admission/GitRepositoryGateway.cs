@@ -185,7 +185,8 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
     public RawRepositorySnapshot ReadRevisionProjection(string revision, Func<string, bool> readContents,
         Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null) =>
         GitRepositorySnapshotReader.ReadRevisionProjection(revision,
-            (arguments, maximumOutputBytes, standardInput) => GitRaw(arguments, false, maximumOutputBytes, standardInput),
+            (arguments, maximumErrorBytes, standardInput, readStandardOutput) =>
+                GitStreaming(arguments, maximumErrorBytes, readStandardOutput, standardInput),
             (arguments, maximumErrorBytes, standardInput, readStandardOutput) =>
                 GitStreaming(arguments, maximumErrorBytes, readStandardOutput, standardInput),
             readContents, observeContentDigest);
@@ -242,6 +243,8 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 allowNonzero: false,
                 maximumOutputBytes,
                 standardInput),
+            (arguments, maximumErrorBytes, standardInput, readStandardOutput) =>
+                GitStreaming(arguments, maximumErrorBytes, readStandardOutput, standardInput),
             paths);
 
     private string GitText(params string[] arguments) => StrictUtf8.GetString(GitBytes(arguments));
