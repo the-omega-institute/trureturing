@@ -340,15 +340,20 @@ it is not a local combinatorial correspondence between the two classes.
 
 ## 追加锚（本行以下为增补区）
 
-## Scope correction for Problem 10
+**Correction 3.3 (Scope of Corollary 7).** In the sentence after Corollary 7,
+“addresses the injection” refers only to the existence of a length-preserving
+injection. The combinatorial explanation requested immediately before
+[Brignall–Ekhad–Smith–Vatter, §4, Problem 10, p. 8] is not supplied by this
+argument. This clarification replaces any reading of that sentence as answering
+Problem 10 in its requested explanatory sense. Corollary 7, its proof, the count
+comparison, and all other results above remain valid.
 
-The map in Corollary 7 is a valid length-preserving injection obtained from
-the cardinality inequality in Corollary 6.  It is an order-theoretic rank
-construction, however, and gives no local combinatorial correspondence
-between the two classes.  In the original source, Problem 10 is introduced
-by asking for a combinatorial explanation of that inequality before asking
-for the injection.  Thus the rank map does not supply the requested
-combinatorial explanation, and Problem 10 remains open in that intended
-structural sense.  Corollary 7, its proof, the count comparison, and all
-other results above remain valid.
-
+**Proof.** The rank rule applies to any two finite totally ordered sets whose
+cardinalities satisfy the required inequality. Corollary 6 supplies that
+inequality here; Corollary 7 proves that the resulting map is computable,
+injective, and length-preserving. This argument establishes no structural
+correspondence between the two pattern-avoidance classes. The distinction is
+also explicit after Corollary 7 and in the Problem 10 coverage row of Ma and
+Zhang, *Mathar's recurrence in OEIS A174193: FORMULA, 14 June 2016: a tableau-sum
+evaluation extending Brignall–Ekhad–Smith–Vatter (2009)*, v3, 4 November 2026
+([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)). $\square$
