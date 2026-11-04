@@ -11,6 +11,9 @@ import Mathlib.Data.Int.Interval
 import Mathlib.Data.Set.Card
 import Mathlib.Algebra.BigOperators.Group.Finset.Interval
 import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Algebra.BigOperators.Intervals
+
+/-! The exact graph metric and coordination sequence of the tea slab graph. -/
 
 noncomputable section
 
@@ -87,43 +90,491 @@ private def residual (i j p q : ℤ) : ℤ :=
 private def potential (v : ℤ × ℤ × ℤ) : ℕ :=
   v.2.2.natAbs + (residual v.1 v.2.1 (plusSlabs v.2.2) (minusSlabs v.2.2)).toNat
 
+private lemma residual_le_iff (i j p q d : ℤ) :
+    residual i j p q ≤ d ↔
+      0 ≤ d ∧ i ≤ p + d ∧ j ≤ p + d ∧ i + j ≤ p + d ∧
+        -q - d ≤ i ∧ -q - d ≤ j ∧ -q - d ≤ i + j := by
+  simp only [residual, max_le_iff]
+  omega
+
+private lemma slabs_nonneg (k : ℤ) : 0 ≤ plusSlabs k ∧ 0 ≤ minusSlabs k := by
+  dsimp only [plusSlabs, minusSlabs]
+  split <;> omega
+
 private lemma potential_step (u v : ℤ × ℤ × ℤ) (h : teaGraph.Adj u v) :
     potential u ≤ potential v + 1 := by
-  sorry
+  rcases u with ⟨i, j, k⟩
+  rcases v with ⟨a, b, l⟩
+  have hu := (residual_le_iff i j (plusSlabs k) (minusSlabs k)
+    (residual i j (plusSlabs k) (minusSlabs k))).mp le_rfl
+  have hv := (residual_le_iff a b (plusSlabs l) (minusSlabs l)
+    (residual a b (plusSlabs l) (minusSlabs l))).mp le_rfl
+  change _ ∨ _ ∨ _ at h
+  dsimp only at h
+  rcases h with ⟨hk, h⟩ | ⟨hk, h⟩ | ⟨hk, h⟩
+  · subst l
+    have hr : residual i j (plusSlabs k) (minusSlabs k) ≤
+        residual a b (plusSlabs k) (minusSlabs k) + 1 := by
+      rw [residual_le_iff]
+      rcases h with h | h | h | h | h | h <;> omega
+    dsimp only [potential]
+    omega
+  · subst l
+    have hr : residual i j (plusSlabs k) (minusSlabs k) ≤
+        residual a b (plusSlabs (k + 1)) (minusSlabs (k + 1)) +
+          (if 0 ≤ k then 2 else 0) := by
+      rw [residual_le_iff]
+      dsimp only [plusSlabs, minusSlabs] at hv ⊢
+      by_cases hk : 0 ≤ k
+      · simp only [ite_eq_left hk, ite_eq_left (show 0 ≤ k + 1 by omega)] at hv ⊢
+        rcases h with h | ⟨hm, h | h⟩ | ⟨hm, h | h⟩ <;> omega
+      · simp only [ite_eq_right hk] at hv ⊢
+        by_cases hk' : 0 ≤ k + 1
+        · have he : k = -1 := by omega
+          subst k
+          norm_num at hv ⊢
+          rcases h with h | ⟨hm, h⟩ | ⟨hm, h⟩ <;> omega
+        · simp only [ite_eq_right hk'] at hv ⊢
+          rcases h with h | ⟨hm, h | h⟩ | ⟨hm, h | h⟩ <;> omega
+    dsimp only [potential]
+    split at hr <;> omega
+  · subst k
+    have hr : residual i j (plusSlabs (l + 1)) (minusSlabs (l + 1)) ≤
+        residual a b (plusSlabs l) (minusSlabs l) + (if 0 ≤ l then 0 else 2) := by
+      rw [residual_le_iff]
+      dsimp only [plusSlabs, minusSlabs] at hv ⊢
+      by_cases hl : 0 ≤ l
+      · simp only [ite_eq_left hl, ite_eq_left (show 0 ≤ l + 1 by omega)] at hv ⊢
+        rcases h with h | ⟨hm, h | h⟩ | ⟨hm, h | h⟩ <;> omega
+      · simp only [ite_eq_right hl] at hv ⊢
+        by_cases hl' : 0 ≤ l + 1
+        · have he : l = -1 := by omega
+          subst l
+          norm_num at hv ⊢
+          rcases h with h | ⟨hm, h⟩ | ⟨hm, h⟩ <;> omega
+        · simp only [ite_eq_right hl'] at hv ⊢
+          rcases h with h | ⟨hm, h | h⟩ | ⟨hm, h | h⟩ <;> omega
+    dsimp only [potential]
+    split at hr <;> omega
+
+private lemma residual_descent (i j k p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q)
+    (h : 0 < residual i j p q) :
+    ∃ a b, teaGraph.Adj (a, b, k) (i, j, k) ∧
+      residual a b p q + 1 = residual i j p q := by
+  by_cases hi : 0 ≤ i
+  · by_cases hj : 0 ≤ j
+    · by_cases hi' : 0 < i
+      · refine ⟨i - 1, j, Or.inl ⟨rfl, Or.inl ⟨by omega, rfl⟩⟩, ?_⟩
+        dsimp only [residual] at h ⊢; omega
+      · refine ⟨i, j - 1, Or.inl ⟨rfl, Or.inr (Or.inr (Or.inl ⟨rfl, by dsimp only; omega⟩))⟩, ?_⟩
+        dsimp only [residual] at h ⊢; omega
+    · by_cases hi' : 0 < i
+      · refine ⟨i - 1, j + 1,
+          Or.inl ⟨rfl, Or.inr (Or.inr (Or.inr (Or.inr (Or.inl ⟨by omega, rfl⟩))))⟩, ?_⟩
+        dsimp only [residual] at h ⊢; omega
+      · refine ⟨i, j + 1, Or.inl ⟨rfl, Or.inr (Or.inr (Or.inr (Or.inl ⟨rfl, rfl⟩)))⟩, ?_⟩
+        dsimp only [residual] at h ⊢; omega
+  · by_cases hj : 0 < j
+    · refine ⟨i + 1, j - 1,
+        Or.inl ⟨rfl, Or.inr (Or.inr (Or.inr (Or.inr (Or.inr ⟨rfl, by dsimp only; omega⟩))))⟩, ?_⟩
+      dsimp only [residual] at h ⊢; omega
+    · refine ⟨i + 1, j, Or.inl ⟨rfl, Or.inr (Or.inl ⟨rfl, rfl⟩)⟩, ?_⟩
+      dsimp only [residual] at h ⊢; omega
+
+private lemma remove_plus (i j p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q)
+    (h : residual i j (p + 1) q = 0) :
+    ∃ a b, ((i = a ∧ j = b) ∨ (i = a + 1 ∧ j = b) ∨
+      (i = a ∧ j = b + 1)) ∧ residual a b p q = 0 := by
+  have hb := (residual_le_iff i j (p + 1) q 0).mp h.le
+  by_cases h0 : residual i j p q = 0
+  · exact ⟨i, j, Or.inl ⟨rfl, rfl⟩, h0⟩
+  · by_cases hi : 0 < i
+    · refine ⟨i - 1, j, Or.inr (Or.inl ⟨by omega, rfl⟩), ?_⟩
+      dsimp only [residual] at h0 ⊢; omega
+    · refine ⟨i, j - 1, Or.inr (Or.inr ⟨rfl, by omega⟩), ?_⟩
+      dsimp only [residual] at h0 ⊢; omega
+
+private lemma remove_minus (i j p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q)
+    (h : residual i j p (q + 1) = 0) :
+    ∃ a b, ((i = a ∧ j = b) ∨ (i = a - 1 ∧ j = b) ∨
+      (i = a ∧ j = b - 1)) ∧ residual a b p q = 0 := by
+  have hb := (residual_le_iff i j p (q + 1) 0).mp h.le
+  by_cases h0 : residual i j p q = 0
+  · exact ⟨i, j, Or.inl ⟨rfl, rfl⟩, h0⟩
+  · by_cases hi : i < 0
+    · refine ⟨i + 1, j, Or.inr (Or.inl ⟨by omega, rfl⟩), ?_⟩
+      dsimp only [residual] at h0 ⊢; omega
+    · refine ⟨i, j + 1, Or.inr (Or.inr ⟨rfl, by omega⟩), ?_⟩
+      dsimp only [residual] at h0 ⊢; omega
+
+private lemma inside_descent (i j k : ℤ) (hk : k ≠ 0)
+    (h : residual i j (plusSlabs k) (minusSlabs k) = 0) :
+    ∃ u, teaGraph.Adj u (i, j, k) ∧ potential u + 1 = potential (i, j, k) := by
+  by_cases hk' : 0 < k
+  · have hpq := slabs_nonneg (k - 1)
+    by_cases h0 : (k - 1) % 4 = 0
+    · have hp : plusSlabs k = plusSlabs (k - 1) + 1 := by
+        dsimp only [plusSlabs]
+        split <;> split <;> omega
+      have hq : minusSlabs k = minusSlabs (k - 1) := by
+        dsimp only [minusSlabs]
+        split <;> split <;> omega
+      have hr := h
+      rw [hp, hq] at hr
+      obtain ⟨a, b, hab, hr⟩ := remove_plus i j _ _ hpq.1 hpq.2 hr
+      refine ⟨(a, b, k - 1), ?_, ?_⟩
+      · refine Or.inr (Or.inl ⟨by dsimp only; omega, ?_⟩)
+        rcases hab with hab | hab | hab
+        · exact Or.inl hab
+        · exact Or.inr (Or.inl ⟨h0, Or.inl hab⟩)
+        · exact Or.inr (Or.inl ⟨h0, Or.inr hab⟩)
+      · dsimp only [potential]
+        rw [hr, h]
+        omega
+    · by_cases h2 : (k - 1) % 4 = 2
+      · have hp : plusSlabs k = plusSlabs (k - 1) := by
+          dsimp only [plusSlabs]
+          split <;> split <;> omega
+        have hq : minusSlabs k = minusSlabs (k - 1) + 1 := by
+          dsimp only [minusSlabs]
+          split <;> split <;> omega
+        have hr := h
+        rw [hp, hq] at hr
+        obtain ⟨a, b, hab, hr⟩ := remove_minus i j _ _ hpq.1 hpq.2 hr
+        refine ⟨(a, b, k - 1), ?_, ?_⟩
+        · refine Or.inr (Or.inl ⟨by dsimp only; omega, ?_⟩)
+          rcases hab with hab | hab | hab
+          · exact Or.inl hab
+          · exact Or.inr (Or.inr ⟨h2, Or.inl hab⟩)
+          · exact Or.inr (Or.inr ⟨h2, Or.inr hab⟩)
+        · dsimp only [potential]
+          rw [hr, h]
+          omega
+      · have hp : plusSlabs k = plusSlabs (k - 1) := by
+          dsimp only [plusSlabs]
+          split <;> split <;> omega
+        have hq : minusSlabs k = minusSlabs (k - 1) := by
+          dsimp only [minusSlabs]
+          split <;> split <;> omega
+        refine ⟨(i, j, k - 1), ?_, ?_⟩
+        · exact Or.inr (Or.inl ⟨by dsimp only; omega, Or.inl ⟨rfl, rfl⟩⟩)
+        · dsimp only [potential]
+          rw [← hp, ← hq, h]
+          omega
+  · have hpq := slabs_nonneg (k + 1)
+    by_cases h0 : k % 4 = 0
+    · have hp : plusSlabs k = plusSlabs (k + 1) := by
+        dsimp only [plusSlabs]
+        split <;> split <;> omega
+      have hq : minusSlabs k = minusSlabs (k + 1) + 1 := by
+        dsimp only [minusSlabs]
+        split <;> split <;> omega
+      have hr := h
+      rw [hp, hq] at hr
+      obtain ⟨a, b, hab, hr⟩ := remove_minus i j _ _ hpq.1 hpq.2 hr
+      refine ⟨(a, b, k + 1), ?_, ?_⟩
+      · refine Or.inr (Or.inr ⟨rfl, ?_⟩)
+        rcases hab with ⟨ha, hb⟩ | ⟨ha, hb⟩ | ⟨ha, hb⟩
+        · exact Or.inl ⟨ha.symm, hb.symm⟩
+        · exact Or.inr (Or.inl ⟨h0, Or.inl ⟨by dsimp only; omega, hb.symm⟩⟩)
+        · exact Or.inr (Or.inl ⟨h0, Or.inr ⟨ha.symm, by dsimp only; omega⟩⟩)
+      · dsimp only [potential]
+        rw [hr, h]
+        omega
+    · by_cases h2 : k % 4 = 2
+      · have hp : plusSlabs k = plusSlabs (k + 1) + 1 := by
+          dsimp only [plusSlabs]
+          split <;> split <;> omega
+        have hq : minusSlabs k = minusSlabs (k + 1) := by
+          dsimp only [minusSlabs]
+          split <;> split <;> omega
+        have hr := h
+        rw [hp, hq] at hr
+        obtain ⟨a, b, hab, hr⟩ := remove_plus i j _ _ hpq.1 hpq.2 hr
+        refine ⟨(a, b, k + 1), ?_, ?_⟩
+        · refine Or.inr (Or.inr ⟨rfl, ?_⟩)
+          rcases hab with ⟨ha, hb⟩ | ⟨ha, hb⟩ | ⟨ha, hb⟩
+          · exact Or.inl ⟨ha.symm, hb.symm⟩
+          · exact Or.inr (Or.inr ⟨h2, Or.inl ⟨by dsimp only; omega, hb.symm⟩⟩)
+          · exact Or.inr (Or.inr ⟨h2, Or.inr ⟨ha.symm, by dsimp only; omega⟩⟩)
+        · dsimp only [potential]
+          rw [hr, h]
+          omega
+      · have hp : plusSlabs k = plusSlabs (k + 1) := by
+          dsimp only [plusSlabs]
+          split <;> split <;> omega
+        have hq : minusSlabs k = minusSlabs (k + 1) := by
+          dsimp only [minusSlabs]
+          split <;> split <;> omega
+        refine ⟨(i, j, k + 1), ?_, ?_⟩
+        · exact Or.inr (Or.inr ⟨rfl, Or.inl ⟨rfl, rfl⟩⟩)
+        · dsimp only [potential]
+          rw [← hp, ← hq, h]
+          omega
 
 private lemma potential_descent (v : ℤ × ℤ × ℤ) (h : 0 < potential v) :
     ∃ u, teaGraph.Adj u v ∧ potential u + 1 = potential v := by
-  sorry
+  rcases v with ⟨i, j, k⟩
+  have hpq := slabs_nonneg k
+  have hr : 0 ≤ residual i j (plusSlabs k) (minusSlabs k) := le_max_left _ _
+  by_cases hz : residual i j (plusSlabs k) (minusSlabs k) = 0
+  · apply inside_descent i j k (by
+      intro hk
+      subst k
+      dsimp only [potential] at h
+      rw [hz] at h
+      norm_num at h) hz
+  · obtain ⟨a, b, hab, he⟩ := residual_descent i j k _ _ hpq.1 hpq.2 (by omega)
+    refine ⟨(a, b, k), hab, ?_⟩
+    have hr' : 0 ≤ residual a b (plusSlabs k) (minusSlabs k) := le_max_left _ _
+    dsimp only [potential]
+    omega
 
 private lemma geodesic (v : ℤ × ℤ × ℤ) :
     ∃ w : teaGraph.Walk (0, 0, 0) v, w.length = potential v := by
-  sorry
+  suffices ∀ m, ∀ v, potential v = m →
+      ∃ w : teaGraph.Walk (0, 0, 0) v, w.length = potential v from
+    this (potential v) v rfl
+  intro m
+  induction m using Nat.strong_induction_on with
+  | h m ih =>
+    intro v hv
+    by_cases hm : m = 0
+    · have hz : v = (0, 0, 0) := by
+        rcases v with ⟨i, j, k⟩
+        dsimp only [potential] at hv
+        have hk : k = 0 := by omega
+        subst k
+        have hr := (residual_le_iff i j 0 0 0)
+        have hb : residual i j 0 0 ≤ 0 := by
+          have hn : 0 ≤ residual i j 0 0 := le_max_left _ _
+          change (0 : ℕ) + (residual i j 0 0).toNat = m at hv
+          omega
+        have hb' := hr.mp hb
+        have hi : i = 0 := by omega
+        have hj : j = 0 := by omega
+        subst i; subst j; rfl
+      subst v
+      refine ⟨.nil, ?_⟩
+      dsimp only [potential, plusSlabs, minusSlabs, residual]
+      norm_num
+    · obtain ⟨u, hu, he⟩ := potential_descent v (by omega)
+      obtain ⟨w, hw⟩ := ih (potential u) (by omega) u rfl
+      refine ⟨w.append hu.toWalk, ?_⟩
+      rw [SimpleGraph.Walk.length_append, hw, SimpleGraph.Adj.length_toWalk, he]
 
 private lemma distance_formula (v : ℤ × ℤ × ℤ) :
     teaGraph.dist (0, 0, 0) v = potential v := by
-  sorry
+  obtain ⟨w, hw⟩ := geodesic v
+  refine le_antisymm (hw ▸ SimpleGraph.dist_le w) ?_
+  have hl := D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation.potential_dist
+    teaGraph potential potential_step w.reachable.symm
+  have hz : potential (0, 0, 0) = 0 := by rfl
+  simpa only [hz, zero_add, SimpleGraph.dist_comm] using hl
 
 private def regionShell (p q : ℤ) (d : ℕ) : Finset (ℤ × ℤ) :=
   ((Finset.Icc (-q - d) (p + d)).product (Finset.Icc (-q - d) (p + d))).filter
     (fun z => residual z.1 z.2 p q = d)
 
-private lemma region_shell_mem (p q i j : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q) (d : ℕ) :
+private lemma region_shell_mem (p q i j : ℤ) (_hp : 0 ≤ p) (_hq : 0 ≤ q) (d : ℕ) :
     (i, j) ∈ regionShell p q d ↔ residual i j p q = d := by
-  sorry
+  constructor
+  · intro h
+    exact (Finset.mem_filter.mp h).2
+  · intro h
+    have hb := (residual_le_iff i j p q d).mp h.le
+    exact Finset.mem_filter.mpr ⟨Finset.mem_product.mpr
+      ⟨Finset.mem_Icc.mpr ⟨by omega, by omega⟩,
+       Finset.mem_Icc.mpr ⟨by omega, by omega⟩⟩, h⟩
+
+private def hexagon (p q : ℤ) : Finset (ℤ × ℤ) :=
+  ((Finset.Icc (-q) p).product (Finset.Icc (-q) p)).filter
+    (fun z => -q ≤ z.1 + z.2 ∧ z.1 + z.2 ≤ p)
+
+private lemma hexagon_mem (p q i j : ℤ) :
+    (i, j) ∈ hexagon p q ↔
+      -q ≤ i ∧ i ≤ p ∧ -q ≤ j ∧ j ≤ p ∧ -q ≤ i + j ∧ i + j ≤ p := by
+  constructor
+  · intro h
+    obtain ⟨hbox, hsum⟩ := Finset.mem_filter.mp h
+    obtain ⟨hi, hj⟩ := Finset.mem_product.mp hbox
+    obtain ⟨hi0, hi1⟩ := Finset.mem_Icc.mp hi
+    obtain ⟨hj0, hj1⟩ := Finset.mem_Icc.mp hj
+    exact ⟨hi0, hi1, hj0, hj1, hsum⟩
+  · intro h
+    exact Finset.mem_filter.mpr ⟨Finset.mem_product.mpr
+      ⟨Finset.mem_Icc.mpr ⟨h.1, h.2.1⟩,
+       Finset.mem_Icc.mpr ⟨h.2.2.1, h.2.2.2.1⟩⟩, h.2.2.2.2⟩
+
+private lemma twice_sum_interval (a b : ℤ) :
+    2 * (∑ i ∈ Finset.Icc a b, i) = (a + b) * (Finset.Icc a b).card := by
+  have hs : (∑ i ∈ Finset.Icc a b, i) = ∑ i ∈ Finset.Icc a b, (a + b - i) := by
+    apply Finset.sum_bij (fun i _ => a + b - i)
+    · intro i hi
+      have hi' := Finset.mem_Icc.mp hi
+      exact Finset.mem_Icc.mpr ⟨by omega, by omega⟩
+    · intro i hi j hj he
+      omega
+    · intro j hj
+      have hj' := Finset.mem_Icc.mp hj
+      exact ⟨a + b - j, Finset.mem_Icc.mpr ⟨by omega, by omega⟩, by omega⟩
+    · intro i hi
+      omega
+  rw [Finset.sum_sub_distrib, Finset.sum_const] at hs
+  simp only [nsmul_eq_mul] at hs
+  nlinarith
+
+private lemma hexagon_card (p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q) :
+    2 * ((hexagon p q).card : ℤ) = p^2 + 4*p*q + q^2 + 3*p + 3*q + 2 := by
+  let r := fun i : ℤ => Finset.Icc (max (-q) (-q - i)) (min p (p - i))
+  have hc : (hexagon p q).card = ((Finset.Icc (-q) p).sigma r).card := by
+    apply Finset.card_bij (fun z _ => (⟨z.1, z.2⟩ : Σ _ : ℤ, ℤ))
+    · rintro ⟨i, j⟩ hz
+      have hb := (hexagon_mem p q i j).mp hz
+      apply Finset.mem_sigma.mpr
+      refine ⟨Finset.mem_Icc.mpr ⟨hb.1, hb.2.1⟩, ?_⟩
+      change j ∈ Finset.Icc _ _
+      rw [Finset.mem_Icc]
+      dsimp only
+      omega
+    · rintro ⟨i, j⟩ hi ⟨a, b⟩ hj he
+      have hi := congrArg (fun z : Σ _ : ℤ, ℤ => z.1) he
+      have hj := congrArg (fun z : Σ _ : ℤ, ℤ => z.2) he
+      dsimp only at hi hj
+      subst a; subst b; rfl
+    · rintro ⟨i, j⟩ hz
+      obtain ⟨hi, hj⟩ := Finset.mem_sigma.mp hz
+      change i ∈ Finset.Icc (-q) p at hi
+      change j ∈ r i at hj
+      have hi' := Finset.mem_Icc.mp hi
+      have hj' := Finset.mem_Icc.mp hj
+      refine ⟨(i, j), (hexagon_mem p q i j).mpr ?_, rfl⟩
+      omega
+  rw [Finset.card_sigma] at hc
+  have hu : Finset.Icc (-q) p = Finset.Icc (-q) (-1) ∪ Finset.Icc 0 p := by
+    ext i
+    simp only [Finset.mem_union, Finset.mem_Icc]
+    omega
+  have hd : Disjoint (Finset.Icc (-q) (-1)) (Finset.Icc (0 : ℤ) p) := by
+    rw [Finset.disjoint_left]
+    intro i hi hj
+    have hi' := Finset.mem_Icc.mp hi
+    have hj' := Finset.mem_Icc.mp hj
+    omega
+  have hs : ((hexagon p q).card : ℤ) =
+      ∑ i ∈ Finset.Icc (-q) (-1), (p + q + 1 + i) +
+      ∑ i ∈ Finset.Icc 0 p, (p + q + 1 - i) := by
+    rw [hc, Nat.cast_sum, hu, Finset.sum_union hd]
+    congr 1
+    · apply Finset.sum_congr rfl
+      intro i hi
+      have hi' := Finset.mem_Icc.mp hi
+      dsimp only [r]
+      rw [Int.card_Icc_of_le (max (-q) (-q - i)) (min p (p - i)) (by omega)]
+      omega
+    · apply Finset.sum_congr rfl
+      intro i hi
+      have hi' := Finset.mem_Icc.mp hi
+      dsimp only [r]
+      rw [Int.card_Icc_of_le (max (-q) (-q - i)) (min p (p - i)) (by omega)]
+      omega
+  rw [Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.sum_const,
+    Finset.sum_const] at hs
+  simp only [nsmul_eq_mul] at hs
+  have hn := twice_sum_interval (-q) (-1)
+  have hp' := twice_sum_interval 0 p
+  have cn := Int.card_Icc_of_le (-q) (-1) (by omega)
+  have cp := Int.card_Icc_of_le 0 p (by omega)
+  simp only [cn, cp] at hs hn hp'
+  nlinarith
 
 private lemma region_shell_zero (p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q) :
     2 * ((regionShell p q 0).card : ℤ) = p ^ 2 + 4 * p * q + q ^ 2 + 3*p + 3*q + 2 := by
-  sorry
+  have he : regionShell p q 0 = hexagon p q := by
+    ext z
+    rcases z with ⟨i, j⟩
+    rw [region_shell_mem p q i j hp hq, hexagon_mem]
+    have hn : 0 ≤ residual i j p q := le_max_left _ _
+    rw [show residual i j p q = (0 : ℕ) ↔ residual i j p q ≤ 0 by omega,
+      residual_le_iff]
+    omega
+  rw [he]
+  exact hexagon_card p q hp hq
 
 private lemma region_shell_pos (p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q)
     (d : ℕ) (hd : 0 < d) :
     ((regionShell p q d).card : ℤ) = 3 * (p + q) + 6 * d := by
-  sorry
+  have he : regionShell p q d =
+      hexagon (p + d) (q + d) \ hexagon (p + d - 1) (q + d - 1) := by
+    ext z
+    rcases z with ⟨i, j⟩
+    rw [region_shell_mem p q i j hp hq, Finset.mem_sdiff, hexagon_mem, hexagon_mem]
+    have h0 := (residual_le_iff i j p q (d : ℤ))
+    have h1 := (residual_le_iff i j p q ((d : ℤ) - 1))
+    omega
+  have hsub : hexagon (p + d - 1) (q + d - 1) ⊆ hexagon (p + d) (q + d) := by
+    rintro ⟨i, j⟩ hz
+    have hb := (hexagon_mem _ _ _ _).mp hz
+    apply (hexagon_mem _ _ _ _).mpr
+    omega
+  have hc := Finset.card_sdiff_add_card_eq_card hsub
+  have hc' := congrArg (fun t : ℕ => (t : ℤ)) hc
+  rw [← he, Nat.cast_add] at hc'
+  have hbig := hexagon_card (p + d) (q + d) (by omega) (by omega)
+  have hsmall := hexagon_card (p + d - 1) (q + d - 1) (by omega) (by omega)
+  nlinarith
 
 private lemma layer_sum (n : ℕ) :
     shell n = ∑ k ∈ Finset.Icc (-(n : ℤ)) n,
       (regionShell (plusSlabs k) (minusSlabs k) (n - k.natAbs)).card := by
-  sorry
+  let t := (Finset.Icc (-(n : ℤ)) n).sigma
+    (fun k => regionShell (plusSlabs k) (minusSlabs k) (n - k.natAbs))
+  let f : (Σ _ : ℤ, ℤ × ℤ) → ℤ × ℤ × ℤ := fun z => (z.2.1, z.2.2, z.1)
+  have hf : Function.Injective f := by
+    rintro ⟨k, i, j⟩ ⟨l, a, b⟩ he
+    change (i, j, k) = (a, b, l) at he
+    have hi := congrArg (fun z : ℤ × ℤ × ℤ => z.1) he
+    have hj := congrArg (fun z : ℤ × ℤ × ℤ => z.2.1) he
+    have hk := congrArg (fun z : ℤ × ℤ × ℤ => z.2.2) he
+    dsimp only at hi hj hk
+    subst a; subst b; subst l; rfl
+  have hs : {v | teaGraph.dist (0, 0, 0) v = n} = (↑(t.image f) : Set _) := by
+    ext v
+    rcases v with ⟨i, j, k⟩
+    change teaGraph.dist (0, 0, 0) (i, j, k) = n ↔ (i, j, k) ∈ t.image f
+    rw [distance_formula]
+    constructor
+    · intro h
+      have hpq := slabs_nonneg k
+      have hr : 0 ≤ residual i j (plusSlabs k) (minusSlabs k) := le_max_left _ _
+      have hb : k.natAbs ≤ n := by dsimp only [potential] at h; omega
+      refine Finset.mem_image.mpr ⟨⟨k, i, j⟩, ?_, rfl⟩
+      apply Finset.mem_sigma.mpr
+      change k ∈ Finset.Icc (-(n : ℤ)) n ∧
+        (i, j) ∈ regionShell (plusSlabs k) (minusSlabs k) (n - k.natAbs)
+      refine ⟨Finset.mem_Icc.mpr ⟨by omega, by omega⟩, ?_⟩
+      apply (region_shell_mem _ _ _ _ hpq.1 hpq.2 _).mpr
+      dsimp only [potential] at h
+      omega
+    · intro h
+      obtain ⟨⟨l, a, b⟩, ht, he⟩ := Finset.mem_image.mp h
+      have he' : (a, b, l) = (i, j, k) := he
+      have hi := congrArg (fun z : ℤ × ℤ × ℤ => z.1) he'
+      have hj := congrArg (fun z : ℤ × ℤ × ℤ => z.2.1) he'
+      have hk := congrArg (fun z : ℤ × ℤ × ℤ => z.2.2) he'
+      dsimp only at hi hj hk
+      subst a; subst b; subst l
+      obtain ⟨hk, hr⟩ := Finset.mem_sigma.mp ht
+      change k ∈ Finset.Icc (-(n : ℤ)) n at hk
+      change (i, j) ∈ regionShell (plusSlabs k) (minusSlabs k) (n - k.natAbs) at hr
+      have hk' := Finset.mem_Icc.mp hk
+      have hpq := slabs_nonneg k
+      have hr' := (region_shell_mem _ _ _ _ hpq.1 hpq.2 _).mp hr
+      dsimp only [potential]
+      omega
+  change Set.ncard _ = _
+  rw [hs, Set.ncard_coe_finset, Finset.card_image_of_injective t hf]
+  exact Finset.card_sigma _ _
 
 private lemma period_four_sum (n : ℕ) (hn : 0 < n) :
     (n % 4 = 0 →
