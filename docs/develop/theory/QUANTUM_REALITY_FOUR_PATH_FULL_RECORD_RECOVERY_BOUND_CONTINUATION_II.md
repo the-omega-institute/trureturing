@@ -4183,3 +4183,507 @@ first-loss and equality problem and does not determine its unrestricted solution
 
 ## 追加锚（本行以下为增补区）
 
+## 47. Both-sign quantitative recovery gain and a negative-determinant strict-exclusion region
+
+**Definition 47.1 (gain on the same attained triangle).** Use exactly the
+rows, recoveries, pure effects, active complex trace and constants of
+Definition 46.1. In particular $p=1-q$, $k=b-a>0$, $L=1+x$,
+$y=\sqrt{1-x^2}$, $R_0=ax+b$ and $C_0=\ell y$. For either sign,
+$0<x<1$ and $0\le q\le1$, let
+
+$$
+\begin{aligned}
+ \mathcal T_x&=\{(X,Y)\in[0,1]^2:\sqrt X+\sqrt Y\ge1+x\},\\
+ I_\sigma(x,q)&=\max_{(X,Y)\in\mathcal T_x}(\Gamma-\Gamma_0),\\
+ \eta_\sigma(x,q)&=\max\left\{0,
+       -\frac{L\mathfrak D_\sigma(x,q)}{4\mu x^2}\right\},\\
+ C_{\mathrm{gain},\sigma}(x,q)
+   &=\frac{\sqrt p\,k^2}{8R_0}
+       +\frac{2m\sqrt q\,L}{3\sqrt3\,x},\\
+ J_\sigma(x,q)&=\frac{\eta_\sigma(x,q)^2}
+                         {4C_{\mathrm{gain},\sigma}(x,q)}.
+\end{aligned}
+\tag{47.1}
+$$
+
+Here $\mu$ and $\mathfrak D_\sigma$ are exactly (46.13), and
+$\Gamma,\Gamma_0$ are the jointly attainable half-recovery amplitudes
+(46.11), not separately optimized recoveries. The maximum exists:
+$\mathcal T_x$ is compact, $XY\ge x^2>0$, and the expressions in
+(46.11) are continuous there. The canonical corner belongs to this same
+triangle and has $\Gamma=\Gamma_0$. Both summands defining
+$C_{\mathrm{gain},\sigma}$ are nonnegative and at least one is positive,
+including $q=0$ and $q=1$.
+
+**Theorem 47.2 (global quadratic gain envelope in both signs).** For both
+rows of (46.2), every $0<x<1$, every $q\in[0,1]$, and every point of the
+complete attained triangle, including its boundary,
+
+$$
+\begin{aligned}
+ \Gamma-\Gamma_0
+   &\le\eta_\sigma B_c-C_{\mathrm{gain},\sigma}B_c^2
+    \le J_\sigma,\\
+ 0&\le I_\sigma(x,q)\le J_\sigma(x,q).
+\end{aligned}
+\tag{47.2}
+$$
+
+In particular the possible improvement is at most quadratic in the
+negative part of the normalized determinant in (47.1). No sign assumption
+on $\nu$ or $\mathfrak D_\sigma$ is imposed.
+
+*Proof.* Abbreviate $A=A_c$, $B=B_c$, $H=H_c$ and
+$K=K_c=\sqrt L\,y/x$ only within this proof. Theorem 46.3 gives
+$A=H+xB\ge0$, $B,H\ge0$ and
+$\Delta=4LH-(H+LB)^2\ge0$. Its main-recovery identity yields
+
+$$
+ R_0^2-R^2=k(aH+R_0B),\qquad
+ 0\le R\le R_0,\qquad
+ R_0-R=\frac{k(aH+R_0B)}{R_0+R}\ge\frac{kB}{2}.
+\tag{47.3}
+$$
+
+Consequently the fourth term of (46.19) is at least
+$\sqrt p\,k^2B^2/(8R_0)$.
+
+For the coherent term, if $B>0$ then $H>0$. Put
+$u=(H+LB)^2/(4LH)\in[0,1]$. The exact formula for $F^2$ and the
+inequalities $1-X\le y^2$, $XY\ge x^2$ give
+
+$$
+ F\le K\sqrt{BH}\sqrt{1-u},\qquad
+ K\sqrt{BH}-F
+ \ge\frac{K(H+LB)^2\sqrt B}{8L\sqrt H}.
+\tag{47.4}
+$$
+
+The last step uses $1-\sqrt{1-u}\ge u/2$, valid also at $u=0,1$.
+For $z>0$, differentiation gives
+
+$$
+ \frac{d}{dz}\frac{(z+L)^2}{\sqrt z}
+   =\frac{(z+L)(3z-L)}{2z^{3/2}},\qquad
+ \frac{(z+L)^2}{\sqrt z}
+   \ge\frac{16L^{3/2}}{3\sqrt3}.
+\tag{47.5}
+$$
+
+Apply (47.5) with $z=H/B$. Equation (47.4) becomes the uniform estimate
+
+$$
+ K_c\sqrt{B_cH_c}-F
+       \ge\frac{2Ly}{3\sqrt3\,x}B_c^2.
+\tag{47.6}
+$$
+
+When $B_c=0$, both sides of (47.6) vanish, so this includes that boundary
+without division by $B_c$ or $H_c$. Multiplying by
+$\sqrt q\,\ell m/C_0=m\sqrt q/y$ gives the second summand of
+$C_{\mathrm{gain},\sigma}B_c^2$. Drop only the other nonnegative
+squares in the exact remainder (46.19). With
+$\delta_\sigma=L\mathfrak D_\sigma/(4\mu x^2)$, this proves
+
+$$
+ \Gamma_0-\Gamma
+   \ge\delta_\sigma B_c+C_{\mathrm{gain},\sigma}B_c^2.
+\tag{47.7}
+$$
+
+Since $-\delta_\sigma\le\eta_\sigma$, completing the remaining scalar
+square gives
+
+$$
+ \eta_\sigma B_c-C_{\mathrm{gain},\sigma}B_c^2
+ =\frac{\eta_\sigma^2}{4C_{\mathrm{gain},\sigma}}
+   -C_{\mathrm{gain},\sigma}
+       \left(B_c-\frac{\eta_\sigma}{2C_{\mathrm{gain},\sigma}}\right)^2.
+\tag{47.8}
+$$
+
+Taking the maximum and using the canonical corner proves (47.2).
+All denominators are positive fixed-slice quantities. The proof uses no
+division by $p$, $q$, $R$, $C$ or a determinant. At $q=0$ the coefficient
+$\nu=k/2>0$ and $\mathfrak D_\sigma>0$, so $J_\sigma=I_\sigma=0$;
+at $q=1$ the coherent summand keeps $C_{\mathrm{gain},\sigma}>0$ and
+the displayed proof applies unchanged. In the nonnegative-determinant
+slices $J_\sigma=0$, consistently with the already established
+Theorem 46.4; no new equality classification is asserted. $\square$
+
+**Theorem 47.3 (same-level lower bound for every actual pure input).**
+For $0<\xi\le R_\star=13/4$, either active sign, a pure original effect
+of away-population $q\in[0,1]$ and every relative coherence phase, put
+
+$$
+ x=1-\frac\xi4+\frac q2,\qquad
+ G_{\sigma}^{\mathrm{low}}(x,q)
+ =G_{\sigma}^{\mathrm{can}}(x,q)
+             -8\Gamma_0J_\sigma-4J_\sigma^2.
+\tag{47.9}
+$$
+
+If $0<x<1$, every actual $U\in U(4)$ with that effect and active
+complex-trace modulus $2(1+x)$ satisfies
+
+$$
+\begin{aligned}
+ g(E,U)&\ge G_{\sigma}^{\mathrm{low}}(x,q),\\
+ M_\sigma(\xi,q)&:=G_{\sigma}^{\mathrm{low}}(x,q)-V(\xi)>0
+ \quad\Longrightarrow\quad
+ g(E,U)>V(\xi),\quad f(E,U)>N_{\mathrm{geo}}(\xi).
+\end{aligned}
+\tag{47.10}
+$$
+
+The original distance is $\xi$ and its minimizing sign is unique.
+The feasible population range is $0\le q\le\min\{1,\xi/2\}$.
+For its endpoint $x=1$, (47.9) is replaced by the direct statement
+
+$$
+ UU_\sigma^\dagger=\lambda I_4,\qquad
+ \rho(E,U)=2q=\xi,\qquad
+ g(E,U)=K_{-\sigma}^2q.
+\tag{47.11}
+$$
+
+Here $|\lambda|=1$ is the one common feedback scalar. The feedback
+slice is a singleton modulo that scalar and its gain over the canonical
+amplitude is zero. No singular coefficient in (47.1) is evaluated at
+$x=1$.
+
+*Proof.* For a phase feedback, the same-feedback identity (23.12) and
+(46.17) imply, for every effect phase,
+
+$$
+ |\chi|\le2\Gamma\le2(\Gamma_0+J_\sigma),\qquad
+ g(E,U)=\mathsf E_\sigma(q)-|\chi|^2
+       \ge\mathsf E_\sigma(q)-4(\Gamma_0+J_\sigma)^2.
+\tag{47.12}
+$$
+
+This is (47.9); the two recoveries in $\chi$ belong to the same whole
+feedback. For an arbitrary actual $U$, apply Theorem 42.3 to that given
+matrix. Each positive-weight phase replacement has the same effect,
+the same complex active trace and the same true original level. In
+particular it has the same $q,x,\sigma$ and the same lower bound
+(47.12). The variance identity (42.16), with $\kappa\xi$ restored,
+gives
+
+$$
+ g(E,U)=\sum_j\theta_jg(E,U_j)
+               +\sum_j\theta_j\|(a_j-a)F^{1/2}\|_2^2
+       \ge G_{\sigma}^{\mathrm{low}}(x,q).
+\tag{47.13}
+$$
+
+The effect and its coherence phase are unchanged throughout this
+transport. The two-sign budget (42.17)--(42.20) proves the claimed
+unique minimizing sign, including for each replacement. Formula
+(46.8) gives the population range and $x\ge3/16>0$. At $x=1$ use the
+direct trace-equality argument (46.37), whose other sign distance is
+$8+2p>2q$. Finally $f=g-\kappa\xi$ proves the last comparison.
+The negative row uses its own $G_-^{\mathrm{can}}$; no ordering of
+negative canonical values against positive canonical values is assumed.
+No pure-slice estimate has been applied to a mixed input. $\square$
+
+**Theorem 47.4 (an explicit negative-determinant exclusion region).**
+Let $\mathcal R_+$ be the following region, defined entirely by the
+fixed functions in (46.11), (46.13), (46.25) and (47.1):
+
+$$
+\begin{aligned}
+ \mathcal R_+=\biggl\{(\xi,q):\;&0<\xi\le13/4,\quad 0<q<1,
+          \quad q<\xi/2,\quad x=1-\xi/4+q/2<\sqrt{2/3},\\
+ &\mathfrak D_+(x,q)<0,\quad C_{\mathrm{gain},+}(x,q)>1/4,
+       \quad\eta_+(x,q)<2/5,\\
+ &\Gamma_0(x,q)<13/10,\quad G_+^{\mathrm{can}}(x,q)>3\biggr\}.
+\end{aligned}
+\tag{47.14}
+$$
+
+It contains $(\xi,q)=(13/4,1/8)$, where $x=1/4$, and contains a
+relative neighborhood of that point in $(0,13/4]\times(0,1)$.
+For every slice in $\mathcal R_+$, every actual original pure pair in
+that slice, with arbitrary relative coherence phase, obeys
+
+$$
+ g(E,U)>\frac{771}{625}>\frac{17}{16}>V(\xi),\qquad
+ g(E,U)-V(\xi)>\frac{1711}{10000}.
+\tag{47.15}
+$$
+
+Thus this nonempty interior-population region excludes both same-level
+equality and strict competition even though its determinant is negative.
+
+*Proof.* First certify the anchor using rational inequalities. At
+$x=1/4$, $q=1/8$, put $u_0=\sqrt{7/8}$, $v_0=\sqrt{1/8}$,
+$y=\sqrt{15}/4$. The following open intervals have exact rational
+endpoints:
+
+$$
+\begin{array}{c|rrrrrr}
+ z&h&c&s&u_0&v_0&y\\ \hline
+ 1000z\text{ lower bound}&707&923&382&935&353&968\\
+ 1000z\text{ upper bound}&708&924&383&936&354&969.
+\end{array}
+\tag{47.16}
+$$
+
+They follow by squaring and $h^2=1/2$, $c^2=(1+h)/2$,
+$s^2=(1-h)/2$. For the upper bound on $c$, use also
+$h<442/625$, which follows by squaring; then
+$(1+h)/2<1067/1250<(924/1000)^2$. In particular
+
+$$
+ \frac{215}{1000}<k<\frac{217}{1000},\qquad
+ \frac{4399}{4000}<R_0<\frac{1101}{1000},\qquad
+ \frac{73}{500}<s^2<\frac{293}{2000}.
+\tag{47.17}
+$$
+
+At this anchor the exact coefficients reduce to
+
+$$
+ \mu=\frac12\left(\frac{hk u_0}{R_0}+\frac{hv_0}{y}\right),
+ \qquad
+ \nu=\frac12\left(k u_0-\frac{(s^2-1/8)v_0}{hy}\right).
+\tag{47.18}
+$$
+
+For completeness, monotone substitution of (47.16)--(47.17) gives
+
+$$
+\begin{aligned}
+ \mu&>\frac12\left(
+  \frac{707\cdot215\cdot935}{1101\cdot10^6}
+        +\frac{707\cdot353}{969\cdot1000}\right)>\frac{19}{100},\\
+ \mu&<\frac12\left(
+  \frac{708\cdot217\cdot936\cdot4}{4399\cdot10^6}
+        +\frac{708\cdot354}{968\cdot1000}\right)<\frac15,\\
+ \nu&>\frac12\left(\frac{215\cdot935}{10^6}
+        -\frac{43\cdot354}{2\cdot707\cdot968}\right)>\frac9{100},\\
+ \nu&<\frac{217\cdot936}{2\cdot10^6}<\frac{11}{100}.
+\end{aligned}
+\tag{47.19}
+$$
+
+Here $s^2-1/8>0$. Since $x^2/L=1/20$, these exact bounds imply
+
+$$
+\begin{aligned}
+ \mathfrak D_+&=\frac{\mu\nu}{5}-\frac{s^2}{8}
+  <\frac15\frac15\frac{11}{100}-\frac{73}{4000}<0,\\
+ 0<\eta_+&=\frac{5s^2}{8\mu}-\nu
+  <\frac{5(293/2000)}{8(19/100)}-\frac9{100}<\frac25.
+\end{aligned}
+\tag{47.20}
+$$
+
+For the gain coefficient it suffices to retain the coherent summand.
+Using $s>3/8$, $v_0>7/20$ and $\sqrt3<7/4$ gives
+
+$$
+ C_{\mathrm{gain},+}
+   >\frac{10s v_0}{3\sqrt3}
+   >\frac{10(3/8)(7/20)}{3(7/4)}=\frac14.
+\tag{47.21}
+$$
+
+The amplitude and energy satisfy
+
+$$
+\begin{aligned}
+ \Gamma_0&=u_0(c+h/4)+v_0hy\\
+ &<\frac{936}{1000}\frac{1101}{1000}
+       +\frac{354\cdot708\cdot969}{10^9}<\frac{13}{10},\\
+ \mathsf E_+(1/8)
+   &=\frac72(h+c)^2+\frac12(h+s)^2\\
+   &>\frac72\left(\frac{1630}{1000}\right)^2
+       +\frac12\left(\frac{1089}{1000}\right)^2>\frac{49}{5},\\
+ G_+^{\mathrm{can}}
+   &>\frac{49}{5}-4\left(\frac{13}{10}\right)^2
+      =\frac{76}{25}>3.
+\end{aligned}
+\tag{47.22}
+$$
+
+Also $1/4<\sqrt{2/3}$ and all population and level inequalities in
+(47.14) hold. This certifies the anchor without a numerical optimization.
+All functions defining its strict inequalities are continuous for
+$0<x<1$, $0<q<1$ and $C_{\mathrm{gain},+}>0$. Thus (47.14) contains
+a relative neighborhood of the anchor, with levels strictly below
+$13/4$ and populations on both sides of $1/8$.
+
+On every slice in (47.14), $0\le J_+<4/25$. Theorem 47.3 yields
+
+$$
+ g(E,U)>3-8\frac{13}{10}\frac4{25}
+                -4\left(\frac4{25}\right)^2
+          =\frac{771}{625}.
+\tag{47.23}
+$$
+
+For the selected comparator reuse (44.19) and Theorem 41.2, not an
+unproved negative-branch comparison:
+
+$$
+ V(\xi)\le V(13/4)<(h+s)^2-\frac3{16}<\frac{17}{16}.
+\tag{47.24}
+$$
+
+Indeed $h<5/7$, $s<2/5$ give
+$(h+s)^2<(39/35)^2<5/4$. Finally
+$771/625-17/16=1711/10000$, proving (47.15). $\square$
+
+**Proposition 47.5 (actual core population and nongeometric strict
+exclusions).** The slices in (47.14) contain actual pairs beyond both
+older cap sectors, the trace-triangle sector, the population-sensitive
+spectral-exclusion sector (44.12), and the nonnegative-determinant
+slices of Theorem 46.6. It includes nongeometric phase feedbacks in
+the interior of the attained triangle with both pairs split.
+
+*Proof.* At the certified anchor take either $\tau\in\{+1,-1\}$ and
+one common scalar $|\lambda|=1$, and set
+
+$$
+\begin{aligned}
+ v^\tau&=\left(\frac{1+\tau i\sqrt{15}}4,
+                  \frac{1-\tau i\sqrt{15}}4,1,1\right),\\
+ \beta^\tau&=\begin{pmatrix}\sqrt{7/8}\\-\tau i\sqrt{1/8}\end{pmatrix},
+ \qquad E=(T\beta^\tau(\beta^\tau)^\dagger T^\dagger)^{\mathsf T},
+ \qquad U=\lambda\operatorname{diag}(v^\tau)U_+.
+\end{aligned}
+\tag{47.25}
+$$
+
+This is a pure original effect and a whole unitary. The two trace
+moduli and original sign distances are exactly
+
+$$
+\begin{aligned}
+ A(v^\tau)&=\frac52,& B(v^\tau)&=\frac{\sqrt{15}}2,\\
+ \rho_+(E,U)&=\frac{13}{4},&
+ \rho_-(E,U)&=\frac{39}{4}-\sqrt{15}>\frac{13}{4}.
+\end{aligned}
+\tag{47.26}
+$$
+
+Thus the true original distance, not merely a branch distance, is the
+stated level. Moreover
+
+$$
+ A<2+\sqrt{8/3},\qquad B<2<23/6,\qquad
+ A+B=\frac{5+\sqrt{15}}2>4.
+\tag{47.27}
+$$
+
+These are the strict defining inequalities of the old core
+$\mathcal O$ in (37.1). Since $E$ is pure,
+$\epsilon(E)=0$, $L(p,0)=0$ in (44.2), and
+$\theta(p)>0$ for $p=7/8$; thus (44.12) does not apply. The
+spectral lower bound zero cannot yield the positive strict exclusion
+(47.15). Equation (47.20) separately rules out using the old
+nonnegative-determinant slice theorem.
+
+The anchor feedback itself is canonical, so its scalar comparison is
+already covered by Theorem 37.5. To demonstrate the new whole-slice
+consumer, retain $x=1/4$, $q=1/8$ but put
+
+$$
+ B_c=\varepsilon,\qquad H_c=d_0\varepsilon,\qquad
+ A_c=(x+d_0)\varepsilon,\qquad
+ d_0=\left(\frac{t_c}{2\mu}\right)^2>0.
+\tag{47.28}
+$$
+
+For
+
+$$
+ 0<\varepsilon<\min\left\{1,\frac{y^2}{x+d_0},
+                    \frac{4Ld_0}{(L+d_0)^2}\right\},
+\tag{47.29}
+$$
+
+one has $0<X,Y<1$ and
+$\Delta=4Ld_0\varepsilon-(L+d_0)^2\varepsilon^2>0$.
+Consequently Lemma 46.2 reconstructs actual whole phase feedbacks
+in the strict interior of the same triangle, with the same complex
+active trace $2L\lambda$. Both pairs in (46.14) have distinct entries;
+in particular the last pair is unequal, outside the enlarged geometric
+shape $\mathcal C_{34}$ of Definition 35.4. Choose the crossed
+orientation and effect phase aligning its two weighted recoveries.
+The already established instability formula (46.31) then gives, for
+all sufficiently small positive $\varepsilon$,
+
+$$
+ g(E_\varepsilon,U_\varepsilon)
+       <G_+^{\mathrm{can}}(1/4,1/8),\qquad
+ g(E_\varepsilon,U_\varepsilon)>V(13/4)+\frac{1711}{10000}.
+\tag{47.30}
+$$
+
+The second inequality is the new whole-slice comparison (47.15).
+The first shows why the canonical lower bound alone cannot prove it.
+The reconstruction can be chosen continuously at the canonical
+orientation: $X\to x^2$, $Y\to1$ and the pair centers align. Hence
+(47.27) persists for small $\varepsilon$. The effect stays pure with
+interior population, so the spectral-exclusion hypothesis remains
+false. The branch distance is still $13/4$ and the other branch is
+strictly larger by (42.20). Strict core inequalities, the sign gap,
+and membership in (47.14) persist on a relative neighborhood in the
+pure original domain restricted to $0<\rho\le13/4$, allowing level
+and population to vary. These
+are actual unscreened nongeometric pairs, not independent choices of
+recovery moduli. $\square$
+
+**Mathematical source correspondence and boundaries 47.6.** The new
+repo-derived deductions are the uniform cone-gap coefficient (47.6),
+the both-sign gain bound (47.2), its actual pure-slice consumer
+(47.9)--(47.13), and the nonempty negative-determinant exclusion region
+(47.14)--(47.30). Their mathematical premises are the original
+same-feedback formulas (23.9)--(23.13), Theorem 46.3's exact global
+remainder, and Theorem 42.3's same-effect, same-complex-trace variance
+transport. The finite Birkhoff--von Neumann statement used by that
+transport is the primary statement in Vourdas,
+[arXiv:2203.09468v1, Section II.1, (18)](https://arxiv.org/html/2203.09468v1),
+with probabilities over permutation matrices. It is applied forward
+to the doubly stochastic matrix of the given unitary's spectral
+basis, exactly as in (42.21)--(42.23). No new realization theorem,
+synchronization SDP exactness, unconstrained top-eigenspace premise,
+or literature-wide originality claim is used. The elementary
+square-root inequality and one-variable minimum in (47.4)--(47.5)
+are intermediate steps for this fixed record, not separate imported
+research results. The canonical determinant criterion, its equality
+lifts and the instability family are reused from Section 46; the
+positive geometric selection and selected-value monotonicity are
+reused from Theorems 37.5 and 41.2. The cutoff selected-value bound is
+(44.19). Theorem 45.5 already supplies global purity through $13/4$;
+it is not reproved by these slice estimates.
+
+The gain bound itself holds on the complete triangle for both signs,
+every $0<x<1$ and both endpoint populations. The actual original
+common-level consumer is restricted to pure effects and
+$0<\xi\le13/4$, with $x=1$ treated by (47.11). No mixed-input
+pointwise bound follows from (47.13) or from global-minimizer purity.
+No coefficient extension to $x=0$ is asserted. The bound is an upper
+estimate of the available gain, not its exact maximum or a
+classification of its maximizing triangle points. Outside the
+explicit strict region, $M_\sigma\le0$ is only failure of this
+certificate, not a competing original pair. The negative canonical
+comparison remains unevaluated, even though its own gain envelope
+and sufficient test (47.10) are available.
+
+The remaining negative-determinant positive slices, the unscreened
+negative branch, their joint level/population ordering, exact
+$\alpha,\beta$, endpoint equality and inclusion, first-branch
+exhaustion and immediate right-side behavior remain unresolved.
+Outside the classified slices, complete actual minimizing lifts
+still require the source42 variance-zero conditions, with singular
+effects, zero recoveries, zero coherence and repeated phases retained.
+Beyond $13/4$ these common-level transport and purity consumers give
+no unrestricted conclusion; mixed effects and nondiagonal lifts
+remain in the full problem. The strict excluded region narrows the
+unchanged first-loss/equality problem and does not solve it.
+
+## 追加锚（本行以下为增补区）
