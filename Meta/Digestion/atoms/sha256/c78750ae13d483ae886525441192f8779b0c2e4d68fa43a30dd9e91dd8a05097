@@ -1,0 +1,14 @@
+### 定义 1.1（反向规则等价）
+
+两份满秩参照 $\rho,\sigma$ 称为对同一 $\mathcal N$ 反向等价，记为
+$\rho\sim_{\mathcal N}\sigma$，若对每个输出准备 $\eta$ 与源端效果 $A$，
+
+$$
+\operatorname{Tr}[A\mathcal R_\rho(\eta)]
+ =\operatorname{Tr}[A\mathcal R_\sigma(\eta)].
+$$
+
+这是两个过程在二元“准备–读口”关系上的等价，等价于
+$\mathcal R_\rho=\mathcal R_\sigma$ 在整个 $\mathcal B(K_0)$ 上成立。
+若有实际供应的张成准备族和张成效果族，精确检验可缩为有限个比较。
+
