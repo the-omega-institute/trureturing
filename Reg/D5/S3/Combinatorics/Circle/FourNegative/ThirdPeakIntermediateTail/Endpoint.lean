@@ -84,7 +84,8 @@ private theorem zero_old : OriginalOrder 11 0 (List.finRange 11) := by
   refine ⟨List.Perm.refl _,?_,?_⟩
   · simp [hf]
   · intro n
-    simp [hf,modulus]
+    simp only [hf, ←List.map_take, List.map_const', List.sum_replicate, nsmul_zero]
+    norm_num [modulus]
 private theorem zero_new : OriginalOrder 12 0 (List.finRange 12) := by
   have hf : actualSource 12 0=fun _ => (0:ℤ) := by
     funext i
@@ -92,7 +93,8 @@ private theorem zero_new : OriginalOrder 12 0 (List.finRange 12) := by
   refine ⟨List.Perm.refl _,?_,?_⟩
   · simp [hf]
   · intro n
-    simp [hf,modulus]
+    simp only [hf, ←List.map_take, List.map_const', List.sum_replicate, nsmul_zero]
+    norm_num [modulus]
 private theorem bad_old : ¬ OriginalOrder 11 2 (List.finRange 11) := by
   intro H
   have hp := H.2.2 10
