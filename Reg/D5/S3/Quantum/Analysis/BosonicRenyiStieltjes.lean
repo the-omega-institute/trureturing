@@ -170,6 +170,85 @@ def registration :
 
 end WeightIntegrable
 
+namespace WeightMass
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ α => ∫ x in Ioo (0 : ℝ) 1, renyiWeight α x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {α : ℝ}, 0 < α → α < 2 → α ≠ 1 → R.readout () () α = 1 / 2
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (α := 1 / 2) (by norm_num) (by norm_num) (by norm_num)
+  norm_num [rejected, realize] at hb
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1 / 2, ?_⟩
+  change (∫ x in Ioo (0 : ℝ) 1, renyiWeight 0 x) ≠
+    ∫ x in Ioo (0 : ℝ) 1, renyiWeight (1 / 2) x
+  rw [weight_mass (α := (1 / 2 : ℝ)) (by norm_num) (by norm_num) (by norm_num)]
+  norm_num [renyiWeight]
+
+def source_registration : Registration arena (type_of% @weight_mass) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@weight_mass, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@weight_mass) (Realization signature) Unit Unit := {
+  unitName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.WeightMass
+    "unit"
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.WeightMass
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ α => ∫ x in Ioo (0 : ℝ) 1, renyiWeight α x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
+
+end WeightMass
+
+
 
 end
 end Reg.D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
