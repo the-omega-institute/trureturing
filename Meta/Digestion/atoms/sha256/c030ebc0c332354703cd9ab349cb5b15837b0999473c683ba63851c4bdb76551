@@ -1,0 +1,12 @@
+### 定义 4.4（过程的来源比较）
+
+对仅给复线性的 $\Phi:M_d(\mathbb C)\to M_m(\mathbb C)$，定义
+
+$$
+K_\Phi((a,u),(b,v))=\langle u,\Phi(a^*b)v\rangle.
+$$
+
+在这些标签的自由复线性包络上以该表定义半双线性 $B_\Phi$，
+令 $R_\Phi=\Re B_\Phi$，参考移位取乘 $\omega=e^{2\pi i/3}$。
+不先要求 $\Phi$ 正、保伴随、完全正或归一。
+
