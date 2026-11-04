@@ -258,15 +258,9 @@ theorem partition {ι : Type*} [Fintype ι]
     schattenNorm X p ^ p ≤
       ∑ j, schattenNorm (Hj j ^ (1 / p) * (∑ j, Hj j) ^ (-(1 / p)) * X) p ^ p := by
   have hp0 : 0 < p := by linarith [hp.1]
-  calc
-    schattenNorm X p ^ p = rectangularNorm X p ^ p :=
-      congrArg (fun t : ℝ => t ^ p) (rectangularNorm_square X hp0).symm
-    _ ≤ ∑ j, rectangularNorm (Hj j ^ (1 / p) * (∑ j, Hj j) ^ (-(1 / p)) * X) p ^ p :=
-      partition_rectangular Hj hHj hH X hp
-    _ = ∑ j, schattenNorm (Hj j ^ (1 / p) * (∑ j, Hj j) ^ (-(1 / p)) * X) p ^ p := by
-      apply Finset.sum_congr rfl
-      intro j _
-      exact congrArg (fun t : ℝ => t ^ p) (rectangularNorm_square _ hp0)
+  have h := partition_rectangular Hj hHj hH X hp
+  simp (config := { singlePass := true }) only [rectangularNorm_square _ hp0] at h
+  exact h
 
 #print axioms rootTrace_add
 #print axioms rootTrace_sum
