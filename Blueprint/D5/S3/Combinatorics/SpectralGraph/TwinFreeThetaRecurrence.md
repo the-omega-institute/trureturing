@@ -6,7 +6,7 @@ Continuant obstruction and coordinate dimensions.
 
 **Theorem 1.1 (Endpoint of a bounded recurrence).**
 
-$$\forall N: \operatorname{Nat}, (1 \le N) \Rightarrow (\forall t: \operatorname{Real}, \forall y: \operatorname{Nat} \to \operatorname{Real}, (\forall j: \operatorname{Nat}, (j + 2 \le N) \Rightarrow (y\left(j + 2\right) = t \cdot y\left(j + 1\right) - y\left(j\right))) \Rightarrow (y\left(N\right) = \operatorname{Polynomial}.\operatorname{eval}\left(t, \operatorname{Chebyshev}.\operatorname{S}\left(\operatorname{Real}, (N: \operatorname{Int}) - 1\right)\right) \cdot y\left(1\right) - \operatorname{Polynomial}.\operatorname{eval}\left(t, \operatorname{Chebyshev}.\operatorname{S}\left(\operatorname{Real}, (N: \operatorname{Int}) - 2\right)\right) \cdot y\left(0\right)))$$
+$$\forall N: \operatorname{Nat}, (1 \le N) \Rightarrow (\forall t: \operatorname{Real}, \forall y: \operatorname{Nat} \to \operatorname{Real}, (\forall j: \operatorname{Nat}, (j + 2 \le N) \Rightarrow (y\left(j + 2\right) = t \cdot y\left(j + 1\right) - y\left(j\right))) \Rightarrow (y\left(N\right) = \operatorname{Polynomial}.\operatorname{eval}\left(t, \operatorname{Polynomial}.\operatorname{Chebyshev}.\operatorname{S}\left(\operatorname{Real}, (\operatorname{Nat}.\operatorname{cast}\left(N\right): \operatorname{Int}) - 1\right)\right) \cdot y\left(1\right) - \operatorname{Polynomial}.\operatorname{eval}\left(t, \operatorname{Polynomial}.\operatorname{Chebyshev}.\operatorname{S}\left(\operatorname{Real}, (\operatorname{Nat}.\operatorname{cast}\left(N\right): \operatorname{Int}) - 2\right)\right) \cdot y\left(0\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TwinFreeThetaRecurrence.bounded_continuant_endpoint` (`✓ std3`). ∎
 

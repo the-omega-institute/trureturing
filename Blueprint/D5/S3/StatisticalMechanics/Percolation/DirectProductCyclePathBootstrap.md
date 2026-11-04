@@ -66,7 +66,7 @@ For every n at least 3 and m at least 1, m(C_n x P_m, 2) = n, with C_n the cycle
 
 **Theorem 1.6 (The degree of a path vertex).**
 
-$$\forall l \in \mathbb{N},\; \forall b \in \operatorname{Fin}\left(l + 1\right),\; \operatorname{card}\left(\operatorname{neighborFinset}\left(\operatorname{pathGraph}\left(l + 1\right), b\right)\right) = \operatorname{ite}\left(\operatorname{val}\left(b\right) < l, 1, 0\right) + \operatorname{ite}\left(0 < \operatorname{val}\left(b\right), 1, 0\right)$$
+$$\forall (l: \mathbb{N}), \forall (b: \operatorname{Fin}\left(l + 1\right)), \operatorname{Finset}.\operatorname{card}\left(\operatorname{SimpleGraph}.\operatorname{neighborFinset}\left(\operatorname{SimpleGraph}.\operatorname{pathGraph}\left(l + 1\right), b\right)\right) = (\operatorname{ite}\left(\operatorname{Fin}.\operatorname{val}\left(b\right) < l, 1, 0\right)) + (\operatorname{ite}\left(0 < \operatorname{Fin}.\operatorname{val}\left(b\right), 1, 0\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.path_neighbor_card` (`✓ std3`). ∎
 
@@ -80,7 +80,7 @@ In the path on l + 1 vertices, a vertex has a successor neighbour exactly when i
 
 **Theorem 1.7 (The sum of path degrees).**
 
-$$\forall l \in \mathbb{N},\; \sum_{b: \operatorname{Fin}\left(l + 1\right)} \operatorname{card}\left(\operatorname{neighborFinset}\left(\operatorname{pathGraph}\left(l + 1\right), b\right)\right) = 2 \cdot l$$
+$$\forall (l: \mathbb{N}), \sum_{b: \operatorname{Fin}\left(l + 1\right)} \operatorname{Finset}.\operatorname{card}\left(\operatorname{SimpleGraph}.\operatorname{neighborFinset}\left(\operatorname{SimpleGraph}.\operatorname{pathGraph}\left(l + 1\right), b\right)\right) = 2 \cdot l$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.sum_path_neighbor_card` (`✓ std3`). ∎
 
