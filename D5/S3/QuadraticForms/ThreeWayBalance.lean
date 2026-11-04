@@ -282,5 +282,3 @@ theorem three_way_quadratic_structure (U : A →+ A) (q : A → ℝ)
   exact ⟨Q, fun _ => rfl⟩
 
 end D5.S3.QuadraticForms.ThreeWayBalance
-
-
