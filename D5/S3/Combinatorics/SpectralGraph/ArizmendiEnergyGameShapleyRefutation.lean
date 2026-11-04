@@ -222,7 +222,7 @@ private theorem cut_energy {V : Type} [Fintype V] (b : V → Bool) :
   simpa only [graphEnergy, graphSpectrum, Multiset.map_map, Function.comp_def,
     sub_zero, RCLike.ofReal_real_eq_id, id_eq, Finset.sum] using he
 
-private theorem worth_cut {V : Type} [Fintype V] [DecidableEq V]
+theorem worth_cut {V : Type} [Fintype V] [DecidableEq V]
     (b : V → Bool) (S : Finset V) :
     worth (((⊤ : SimpleGraph Bool).comap b)) S =
       2 * Real.sqrt (((S.filter fun v => b v = false).card : ℝ) *
@@ -371,7 +371,7 @@ private theorem choose_weight_second (m k : ℕ) (hk : k ≤ m) :
       ((((m : ℝ) + 1) * ((m : ℝ) + 2)) * (m.factorial : ℝ)) := by ring
     _ = _ := by rw [hfac]; field_simp
 
-private theorem scarce_payoff {V : Type} [Fintype V] [DecidableEq V]
+theorem scarce_payoff {V : Type} [Fintype V] [DecidableEq V]
     (m : ℕ) (a b : V) (B : Finset V) (hbB : b ∉ B)
     (hB : univ.erase a = insert b B) (hcard : B.card = m)
     (w : Finset V → ℝ)
@@ -430,7 +430,7 @@ private theorem scarce_payoff {V : Type} [Fintype V] [DecidableEq V]
 
 open Finset
 
-private theorem two_scarce_profiles {V : Type} [Fintype V] [DecidableEq V]
+theorem two_scarce_profiles {V : Type} [Fintype V] [DecidableEq V]
     (a b : V) (hab : a ≠ b) (T : Finset V) (haT : a ∉ T) (hbT : b ∉ T) :
     (let G := ((⊤ : SimpleGraph Bool).comap (fun i => decide (i ≠ a ∧ i ≠ b)))
     worth G T = 0 ∧

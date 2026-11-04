@@ -114,6 +114,20 @@ class GuardedCommandTests(unittest.TestCase):
                 self.assertIsInstance(observation['process_scan_seconds'], float)
                 self.assertIsInstance(observation['elapsed_seconds'], float)
 
+    def test_ownership_sampling_reads_identities_without_unrelated_arguments(self):
+        identity = 'Tue Nov 3 10:00:00 2026'
+        def table(args, **kwargs):
+            self.assertNotIn('command=', args[-1],
+                             '[FAIL] ownership sampling must not read every process argument')
+            return ' 41 1 41 ' + identity + ' S\n 42 41 41 ' + identity + ' R\n'
+        with patch.object(subprocess, 'check_output', side_effect=table):
+            rows = self.fixture.observed_processes()
+        self.assertEqual(set(rows), {41, 42})
+        self.assertEqual(rows[42]['parent'], 41)
+        self.assertEqual(rows[42]['group'], 41)
+        self.assertEqual(rows[42]['identity'], identity)
+        self.assertEqual(rows[42]['state'], 'R')
+
     def test_unavailable_observation_does_not_replace_command_results_or_errors(self):
         output = io.StringIO()
         with patch.dict(os.environ, STRATALINT_NATIVE_COMMAND_OBSERVATION='1'), \
@@ -152,7 +166,7 @@ class GuardedCommandTests(unittest.TestCase):
                 # Infrastructure guard for a broken cancellation path. The
                 # verdict below checks settled state, never elapsed time.
                 super().join(timeout=5)
-        ps = ['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=,command=']
+        ps = ['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=']
         sampling_error, cleanup_error, fixture_error = (
             subprocess.TimeoutExpired(ps, 5) for _ in range(3))
         failures = iter([sampling_error, cleanup_error, fixture_error])

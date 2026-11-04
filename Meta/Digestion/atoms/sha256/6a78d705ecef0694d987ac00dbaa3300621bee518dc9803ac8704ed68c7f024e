@@ -1,0 +1,20 @@
+**命题 12.4（转置与测量—准备的局部障碍范围）。** 以下两个纸笔例子只针对各自所说的替代推理，不是其他全称条款的删除模型。
+
+第一，在单块 $M_d(\mathbb C)$、$d\ge2$ 上，转置正且保迹，但不能满足 E 的完整参考稳定性。令 $|\Omega_d\rangle=\sum_j|j\rangle\otimes|j\rangle$，则
+
+$$
+ (\mathrm{transpose}\otimes\mathrm{id}_d)
+ (|\Omega_d\rangle\langle\Omega_d|)=\mathrm{Swap}.
+$$
+
+交换算子在非零反对称向量上的二次型严格为负，所以此延伸不保正。它只驳斥“局部正性足够推出 CP”。
+
+第二，qubit 上的原 Z 测量后遗忘设备
+
+$$
+ M(X)=|0\rangle\langle0|X|0\rangle\langle0|
+      +|1\rangle\langle1|X|1\rangle\langle1|
+$$
+
+与恒等设备同效果 $I$，却在有非零非对角元的纯态上改变状态。因此“已知成功效果”不推出该原设备就是 $\operatorname{Ad}_{\sqrt E}$。这个例子本身可以透明且有 F，不能拿它证明缺少原细记录。只允许测量—准备的局部菜单也不能据此声称满足全部复合上的 B。两例证明分别由上述二次型及非对角元公式直接给出；不对未核对的其余全称条款作满足性声明。∎
+

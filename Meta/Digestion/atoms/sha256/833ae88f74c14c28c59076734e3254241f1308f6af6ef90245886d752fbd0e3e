@@ -1,0 +1,31 @@
+### 5.1 固定点不等于程序已经编码了自己
+
+在同一个输入输出系统上，确定性替换通道
+
+$$
+\mathcal R_a(\rho)=P_a\operatorname{Tr}\rho
+$$
+
+满足 $\mathcal R_a(P_a)=P_a$、$\mathcal R_a^2=\mathcal R_a$。这确实使 $a$ 成为局部固定点；完整实现则仍受定理 [4.2](#thm-c117-reset) 约束。若一个可逆过程满足 $\Phi^2=\Phi$，复合逆映射立即给 $\Phi=\operatorname{id}$，所以非平凡幂等复位不是可逆全局门。
+
+以下几种“自身”需要不同的接口：
+
+| 状态固定点 | $\Phi(P_a)=P_a$，只表示该状态不变。 |
+|---|---|
+| 过程幂等 | $\Phi^2=\Phi$，只表示重复运行不再改变该过程的结果。 |
+| 程序自我编码 | 需要给出编码 $\operatorname{code}(\Phi)$、解释器及输出一致性；固定点不提供这些数据。 |
+| 经典 quine | 程序输出自己的经典编码文本；它不是任意未知量子态的复制规则。 |
+| 量子复制 | 要求未知 $\psi$ 产生两个同态副本，是另外一个过程命题。 |
+
+最后一项仍由二元关系直接约束。若完整复制实现对两个输入给
+$V\psi=\psi\otimes\psi\otimes r_\psi$、
+$V\phi=\phi\otimes\phi\otimes r_\phi$，则
+
+$$
+\langle \psi,\phi\rangle=
+ \langle \psi,\phi\rangle^2\langle r_\psi,r_\phi\rangle.
+$$
+
+当 $0<|\langle \psi,\phi\rangle|<1$ 时，取模得到
+$|\langle \psi,\phi\rangle|\le|\langle \psi,\phi\rangle|^2$，矛盾。已知经典程序的正交编码可以复制，并不违背这条约束；其叠加输入一般会形成相关记录，而非两个独立同态副本。精确、确定且使用有限程序寄存器的通用量子编程也另有自己的限制 [11](#ref-programming)，不能由一个自复位固定点替代其条件。
+

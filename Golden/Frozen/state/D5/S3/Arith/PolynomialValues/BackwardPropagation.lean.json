@@ -1,0 +1,1 @@
+{"statement_id":"sha256:07b4293c67505390e5223783cac150e3a9b1dd2f31d93d42b69c0f3200c86846","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),16:PolynomialValues),19:BackwardPropagation),28:eval_int_mem_of_eval_nat_mem)","kind":"theorem"}]}

@@ -1,0 +1,10 @@
+**Corollary 3.5 (Order of vanishing and residual constant).** Let $\Gamma$ have $\gamma$ connected components $C_1,\dots,C_\gamma$. Then $\Delta(\varepsilon)=\varepsilon^\gamma D(\varepsilon)$ for the polynomial
+
+$$
+D(\varepsilon)=\sum_{(F,\rho)}\varepsilon^{|\rho|-\gamma}c(\varepsilon)^{m-|\rho|}w(F),\qquad D(0)=4^{-(m-\gamma)}\prod_{i=1}^{\gamma}|C_i|\,\kappa(C_i)>0 .
+$$
+
+Moreover $\Delta(\varepsilon)>0$ for $0<\varepsilon\le1$ and $D(\varepsilon)>0$ for $0\le\varepsilon\le1$. In particular, if $\Gamma$ is connected, then $\Delta(\varepsilon)=\varepsilon D(\varepsilon)$ and $D(0)=m\,\kappa(\Gamma)/4^{m-1}$. Stance: suspected-novel.
+
+**Proof.** Every rooted spanning forest has at least $\gamma$ trees, so $|\rho|\ge\gamma$ and $D$ is a polynomial. At $\varepsilon=0$ only the forests with exactly $\gamma$ trees survive; such a forest restricts to a spanning tree of each component, the choices are independent, and each tree $T_i$ of $C_i$ has $|C_i|$ choices of root, so the surviving sum is $\prod_i|C_i|\kappa(C_i)$, multiplied by $c(0)^{m-\gamma}=4^{-(m-\gamma)}$. Every component is connected, so $\kappa(C_i)>0$. For $0\le\varepsilon\le1$ all terms are nonnegative, and the term of the forests with $\gamma$ trees is positive at $\varepsilon<1$; at $\varepsilon=1$ the term $F=\varnothing$, $\rho=V$ contributes $1$. So $D>0$ on $[0,1]$ and $\Delta=\varepsilon^\gamma D>0$ on $(0,1]$. ∎
+

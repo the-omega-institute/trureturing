@@ -1,0 +1,75 @@
+**Definition 40.1 (original objects and geometric level coordinates).**
+Keep the record, normalized effects, ordinary transpose and actual shared
+feedback of the [source volume](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND.md),
+Definitions 1.1, 11.1 and 23.1. All section numbers 24--39 below refer to
+[Continuation I](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_I.md).
+The original domain is still $\mathcal K=\operatorname{Dens}_2\times U(4)$;
+$\rho$ is the joint distance (39.1), with both optimizer signs and only
+one common scalar feedback phase, and $f=g-\kappa\rho$.
+The realizable diagonal $w=\operatorname{diag}(UU_+^\dagger)$ and all of
+$A,B,P,Q,u,v$ are evaluated on that same actual $U$.
+
+Use $\mathcal C_{34}$ exactly as in Definition 35.4, with arbitrary
+normalized positive effects. Use $N_{\mathrm{geo}}$ exactly as in (38.2),
+its existing scalar argument $\delta_\circ(t)$ from Theorem 37.5,
+and its two selected original-pair orbits $\mathcal G_\xi$ from (39.2).
+These definitions make no full-domain minimizing assertion.
+Write $\epsilon(E)=1-\operatorname{Tr}(E^2)$ and $D_0=d^2-e^2$.
+The fixed constants of source Definition 23.1 satisfy
+
+$$
+ h=1/\sqrt2,\qquad 2hc=c+s,\qquad D_0=4h+8s,
+ \qquad \frac7{10}<h<\frac34,\quad c>\frac9{10},\quad s<\frac25.
+\tag{40.1}
+$$
+
+The rational inequalities follow by squaring and using
+$c^2=(1+h)/2$, $s^2=(1-h)/2$.
+For a geometric feedback with $x\ge0$ write
+
+$$
+\begin{aligned}
+ y&=\sqrt{1-x^2},& \delta&=2(1-x),& \tau&\in\{+1,-1\},\\
+ U&=\lambda\operatorname{diag}(x+\tau iy,x-\tau iy,1,1)U_+,
+       &|\lambda|&=1,\\
+ A&=2(1+x),& B&=2y,& P&=\lambda u,&Q&=\lambda\tau iv,\\
+ u&=2(hx+c)=d-h\delta,& v&=2hy,&
+ b&=u^2-v^2-D_0.
+\end{aligned}
+\tag{40.2}
+$$
+
+At $y=0$ either orientation describes the same feedback.
+For a positive-sign effect put
+
+$$
+ T^\dagger E^{\mathsf T}T
+   =\begin{pmatrix}1-r&z\\\bar z&r\end{pmatrix},\qquad
+ a=|z|,\qquad \eta=\epsilon(E)/2=r(1-r)-a^2.
+\tag{40.3}
+$$
+
+Thus $0\le r\le1$, $0\le a^2\le r(1-r)$, and positivity includes
+both rank-one and positive definite effects. When the positive sign
+attains $\rho=2t$, (36.10) gives
+
+$$
+ t=\delta+r^2+a^2,\qquad
+ a^2=t-\delta-r^2,\qquad \eta=\delta+r-t.
+\tag{40.4}
+$$
+
+For the coherence phase $z=\tau ia$, the exact defect is
+
+$$
+ \Phi_t(\delta,r)
+ =d^2-u^2+br-2uv\sqrt{t-\delta-r^2}.
+\tag{40.5}
+$$
+
+This is a specialization of source (23.12), not an optimization over
+independently chosen amplitudes. Replacing an arbitrary $z$ by
+$\tau i|z|$ at this same feedback cannot increase $g$ and preserves
+positivity, impurity and both original sign distances. If $v=0$,
+all coherence phases have the same value.
+

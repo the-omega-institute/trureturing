@@ -1,0 +1,34 @@
+### 命题 7.15（带内部空白记录的保单位实现）
+
+<a id="prop-c117-unital-bridge"></a>
+
+在允许的更大内部窗口中补足有限维数，使输出空间 $\mathcal H'$ 的维数为 $\dim H_{\rm in}$ 的整数倍，并把 $V$ 视为到 $\mathcal H'$ 的等距映射。存在有限维记录空间 $H_B$、固定单位向量 $\lvert 0\rangle_B$ 和酉映射
+
+$$
+U:H_{\rm in}\otimes H_B\longrightarrow\mathcal H',
+ \qquad
+ U(\psi\otimes\lvert 0\rangle_B)=V\psi.
+$$
+
+由此得到保单位嵌入
+
+<a id="eq-c117-unital-bridge"></a>
+
+$$
+\iota(a)=U(a\otimes I_B)U^*.
+\tag{15}
+$$
+
+对联合态 $\rho'=U(\rho\otimes\lvert 0\rangle\langle 0\rvert_B)U^*$，有
+$\operatorname{Tr}[\rho'\iota(a)]=\operatorname{Tr}(\rho a)$。
+
+**证明。**
+选输入正交基。$\psi\mapsto V\psi$ 把子空间
+$H_{\rm in}\otimes\lvert 0\rangle_B$ 的正交基映成输出中的正交组。两端维数相等，在各自正交补上补齐正交基即可得到 $U$。式 [(15)](#eq-c117-unital-bridge) 显然保乘法、伴随和单位；迹等式由酉不变性及 $\operatorname{Tr}\lvert 0\rangle\langle 0\rvert_B=1$ 得到。
+
+空白记录和扩大窗口均须在 $\Omega$ 的合法操作供给内，不能隐去这项资源条件，也不声称有限整体能无穷提供新记录。固定初始化同样重要：若输入与将被忽略的记录任意预相关，仅凭输入边缘态一般不能定义一个输入无关的固定约化通道。沿酉实现保留完整记录，则旧读口通过式 [(15)](#eq-c117-unital-bridge) 搬到新窗口，旧概率按式 [(11)](#eq-c117-state-consistency) 保持；忽略或选择记录后得到的局部操作属于另一种映射类型。
+
+**白话。**完整过程可以把来源搬进内部记录，让显示重新开始；扩大观察窗口时，就沿着这个完整搬运把旧问题一起带过去。只看显示或丢掉记录，是另一个操作。把这两层分清，才能同时说明为什么局部会复位、为什么来源没有消失，以及两位观察者后来怎样重新对齐。
+
+<a id="section-8"></a>
+

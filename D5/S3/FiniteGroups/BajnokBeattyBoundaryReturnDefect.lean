@@ -139,7 +139,7 @@ private theorem choose_two_step_nat (N k : ℕ) :
       rw [mul_assoc, ← hsecond]
     _ = Nat.choose N k * ((N+1)*(N+2)) := by ring
 
-private theorem choose_two_step_rat (N k : ℕ) (hk : k ≤ N) :
+theorem choose_two_step_rat (N k : ℕ) (hk : k ≤ N) :
     (Nat.choose (N+2) (k+1) : ℚ) * ((k : ℚ)+1) * ((N : ℚ)+1-k) =
       (Nat.choose N k : ℚ) * (((N : ℚ)+1)*((N : ℚ)+2)) := by
   have hcast :

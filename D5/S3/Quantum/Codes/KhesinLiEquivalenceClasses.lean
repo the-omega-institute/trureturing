@@ -69,7 +69,7 @@ Direct frozen dependencies:
     statement_id: sha256:476eee0dcb6c6799096786aad17f4a9642d2614705c1bf829b2b8c8fb90a78ae
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19215
 The source's XOR local-complementation expression is inlined in Step.complement;
-private lc_source identifies it with the frozen lc used throughout the proof.
+lc_source identifies it with the frozen lc used throughout the proof.
 -/
 
 import D5.S3.Quantum.Entanglement.GraphStateMonogamyForbiddenSubgraph
@@ -150,7 +150,7 @@ namespace D5.S3.Quantum.Codes.KhesinLiEquivalenceClasses
 
 set_option maxHeartbeats 1000000
 
-private theorem lc_source {V : Type} (G : SimpleGraph V) (v : V) :
+theorem lc_source {V : Type} (G : SimpleGraph V) (v : V) :
     lc G v = SimpleGraph.fromRel (fun x y => Xor (G.Adj x y) (G.Adj v x ∧ G.Adj v y)) := by
   ext x y
   rw [SimpleGraph.fromRel_adj]

@@ -1,0 +1,15 @@
+### 定义 16.9（承重综合、来源对应与剩余起源命题）
+
+本节的 `repo-derived` 综合是将同源、共同合法未来的准确行等价接到统计逆与实容量，导出局部有序完成，再在**固定预测实现**中分清最小锥、效果约束和饱和唯一性，并用原七地址的有限完整回返表阻止把局部二元中心化提升至全部菜单。紧群、三维旋转、凸锥与 qubit 几何的成熟步骤不是新的量子原理。引用和版本的条件对应如下；不主张穷尽文献或原创优先权。
+
+| 来源 | 实际消费的条件与工具 | 不由该来源或本节取得的内容 |
+|---|---|---|
+| [C115](AURIC_BINARY_SQUARE_TWO_COMPONENT_COMPOSITION_AND_INTERNAL_COMPLEX_STRUCTURE_C115.md) §§2、4–6；本卷 §§2–3、7–9、14 | 已有二元有序几何、同空间有向结合闭合及条件性的共同中心、记录、GNS 接口 | 不重证为新成果；本节未替这些接口取得原生前件 |
+| [相干重建续卷 II](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 定义 77.1、定理 77.2；v15 (3.1)–(3.2) | (16.20)–(16.29) 的同一十站点、七地址、十三路径、ready、完整标签、正向逆字和矩阵比较模型 | 未知响应律的 Born 性、全菜单实秩四、额外实际资源 |
+| Monras–Winter, *Quantum learning of classical stochastic processes: The completely-positive realization problem*, [arXiv:1412.3634v1](https://arxiv.org/html/1412.3634v1)，Lemma 3、4、7 及 §4 | `literature-attested`：稳定锥、群逆将稳定提升为不变、最小商实现；本节取 $D\leftrightarrow T_g,\tau\leftrightarrow x_\epsilon,\pi\leftrightarrow e_{f,w}$ 的源相对类比 | 原文是 stationary output process；本节是每个受控字后归一的终端行，不能挪用其随机过程假设或 CP 实现 |
+| Fanizza–Lumbreras–Winter, *Quantum theory in finite dimension cannot explain every general process with finite memory*, [arXiv:2209.11225v2](https://arxiv.org/html/2209.11225v2)，§2.1 (5)–(7)、§2.2 (8) | `literature-attested`：$C_{\min}\subseteq K\subseteq C_{\max}$ 的锥夹层及 SDR 必要条件背景；这里 $C_{\max}$ 改为所有合法终端效果非负的集合 | 不把其 stationary Hankel 域当成本节共同控制域；一个 Lorentz 锥不足以提供 CP 矩阵层次 |
+| Freedman–Larsen–Wang, *The two-eigenvalue problem and density of Jones representation of braid groups*, [math/0103200v1](https://arxiv.org/html/math/0103200v1)，§2、Theorem 0.1 | `literature-attested`：原卷 77.2 已对 $r=5,n=8,\lambda=[4,4]$ 的全十三维逐基逐门对应后使用的密度供应 | (16.25)–(16.29) 本身只用有限矩阵，不调用密度或将闭包门认作实际调用 |
+| Barnum–Hilgert, *Strongly symmetric spectral convex bodies are Jordan algebra state spaces*, [arXiv:1904.03753](https://arxiv.org/html/1904.03753)，Theorem 1.1 | `literature-attested`：spectral 与 strongly symmetric 的有限维紧凸集分类，用于区分另一条更强的状态空间路线 | 本节未假设或取得其完整 frame/spectral 供应，也不从名称调用该全分类 |
+| Araújo et al., *Quantum circuits cannot control unknown operations*, [arXiv:1309.7976](https://arxiv.org/html/1309.7976)，式 (1) 前后的相位论证 | `literature-attested`：普通未知 $U$ 的整体相位与受控相对相位不同，子空间实现可有额外信息 | 不把其电路禁定理当作所有物理控制的不可能性，亦不增添本源相干控制 |
+| [C118 §§140–149，固定版本](https://github.com/the-omega-institute/trureturing/blob/e54a4512cdaf8733f5e522d0ece9a826ec1dfebe/docs/develop/theory/AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md) | 两个固定生成词与二十四项校正目录；条件仍含有限复载体、全称实际细记录 F、实际支持逆、准备读回与准确有限校准包 | 不供应本节原生容量与锥、复中心、物理资源或时间；有限目录不等于整个无界菜单的一份有限证书 |
+| [C113 §§20–22，固定版本](https://github.com/the-omega-institute/trureturing/blob/5ccf20964da0a6695170f80f89e8383c92913a6c/docs/develop/theory/AURIC_INTERNAL_BALANCED_CALIBRATION_AND_FILTER_COMPOSITION_GEOMETRY_C113.md) | 同一正复线性分支、正确效果、指定 $J$、实际准确有限二阶设计与完整读回下的近饱和界，含奇异效果及矩形输出 | 不从任意小正缺陷推出准确 CP；不取得设计、读口漂移协议、原生前端或共同资源 |

@@ -1,0 +1,206 @@
+**定理 3.1（同一原载体与有限平方根供应）。** 在定义 2.7 的联合条件下，每个所需原载体本身是一个有限复代数的自伴随部
+
+$$
+\mathcal A_A\cong\bigoplus_sM_{n_s}(\mathbb C),\qquad
+E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,
+\quad u_A=I.
+\tag{3.1}
+$$
+
+大小 $n_s$ 可任意且不必相等，$n_s=1$ 的经典扇区保留。原评价有显式正双对偶运输；每个原事件在这些相容复坐标下 CP。每个所需实际联合对象具有普通复空间张量积；每个原合法有限历史的原身份、端口、记录、分组和原始概率保留。
+
+对每个数学效果 $0\le e\le u_A$，存在同一原签名中的一个完整有限装置 $W_e$，其指定成功事件及每个实际旁接为
+
+$$
+\Phi_{W_e}(\rho)=\sqrt e\,\rho\sqrt e,
+\qquad
+\Phi_{W_e\mid R}(X)=(\sqrt e\otimes I_R)X(\sqrt e\otimes I_R).
+\tag{3.2}
+$$
+
+它包含全部原失败叶及其原输出、原系数和原细化；奇异、零效果及零中心分量也适用。F 所指定的每个非零原返回细支有一个矩形 Kraus 算子及其原 $q$ 支持返回。该定理供应新命名的选中实现 $W_e$，不把已有同效果事件重新识别为它。
+
+证明。以下把成熟结构、膨胀及 CP 结果作为中间应用；新增连接是这些结构属于指定原群，且其精确原提升和原端点连成 (3.2) 的完整原装置。
+
+先固定一个原对象，省略下标。令 $K_0=G\cap O(g^0)$，它是紧群。对一个锥内点取 $K_0$ 的 Haar 平均得 $a\in C^\circ$ 且 $K_0a=a$。平均仍在内点：紧轨道有共同的正内点邻域界，其凸平均保留该界。取 $h\in G$ 满足 $hu=a$，定义
+
+$$
+q(x,y)=g^0(hx,hy),\qquad S=h^{\dagger_0}h.
+\tag{3.3}
+$$
+
+因为 $hC=C$，$q$ 在同一个 $C$ 上自对偶。原伴随封闭给 $S,S^{-1}\in G$，并且
+
+$$
+T^{\dagger_q}=S^{-1}T^{\dagger_0}S\in G,
+\qquad K_q=G\cap O(q)=h^{-1}K_0h\subset G_u.
+\tag{3.4}
+$$
+
+先得到此伴随封闭，才在 $\mathfrak g=\operatorname{Lie}(G)$ 内作自伴随/斜伴随分解。$G_u$ 在单位范数 $\|x\|_u=\inf\{t:-tu\le x\le tu\}$ 上等距，故是紧群。若 $X\in\mathfrak g_u$，其 $q$ 斜伴随部分属 $\operatorname{Lie}(K_q)$，故消去 $u$；自伴随部分也消去 $u$。该自伴随部分的指数对全部实参数属于紧群 $G_u$，所以有界；实自伴随谱遂迫使它为零。于是 $\mathfrak g_u=\operatorname{Lie}(K_q)$。商 $G/G_u\simeq C^\circ$ 可缩，连通 $G$ 的齐性空间纤维正合序列给 $G_u$ 连通，故 $G_u=K_q$。
+
+现在直接应用 Barnum–Wilce [arXiv:1202.4513v2](https://arxiv.org/abs/1202.4513v2) 定理 4(b)–(c)：原空间有限维，锥自对偶，指定 $G$ 闭、连通、内点上传递，(3.4) 在所选单位适配型下验证其伴随假设，且 $G_u=K_q$。于是 $X\mapsto Xu$ 从自伴随 Lie 部分同构到 $E$，给含幺 Euclidean Jordan 乘法，平方锥为原 $C$；$L_a\in\mathfrak g$ 且 $q$ 为正 Frobenius 型。这里 (3.3) 的方向是 $hu=a$；原文附录 Lemma C 所印 $ga=u$ 与 $\langle gx,gy\rangle$ 的配对不能直接用于本式。伴随封闭也由 (3.4) 实际验证，而非从正交稳定子本身猜出。附录 Corollary 1 的紧性与连通性论证在上述已验证前件下使用。
+
+将这个同一 $E$、$u$、$q$、$\circ$ 以及原 $D$ 代入 [V95 定义 1.1、定理 2.1](AURIC_COMPARISON_DYNAMICAL_CURVATURE_FINITE_FRAME_QUANTUM_V95.md)：有限非零实空间、含幺对称双线性乘法和正 Frobenius 型已经取得；实线性导子指派及全三元抵消正是 D。直接取得
+
+$$
+a\cdot b=a\circ b-iD_ab,
+\qquad D_ab=-D_ba,\qquad D_aa=0,
+\tag{3.5}
+$$
+
+以及忠实有限复 $C^*$ 代数，其自伴随部恰为原 $E$。不另输入自守或斜伴随。有限 $C^*$ 结构定理给 (3.1)；其自伴随平方锥与 Jordan 平方锥相同，故仍是原 $C$。V95 的结合子公式在这里把 (1.4) 精确识别为复乘法的结合性条件，未把二阶回路误称有限群词的等式。
+
+原评价需单独运输。令 $\tau_A=\sum_s\operatorname{Tr}_{n_s}$，定义唯一 $\tau_A$ 自伴随正定线性算子 $B_A$，满足
+
+$$
+g_A^0(x,y)=\tau_A((B_Ax)y).
+\tag{3.6}
+$$
+
+两种自对偶性给 $B_A(C_A)=C_A$。若原准备 $\alpha(y)=g_A^0(x_\alpha,y)$，则
+
+$$
+\rho_\alpha=B_Ax_\alpha\ge0,
+\quad \alpha(y)=\tau_A(\rho_\alpha y),
+\quad \tau_A(\rho_\alpha)=\alpha(u_A).
+\tag{3.7}
+$$
+
+原 Heisenberg 事件 $T_f:E_B\to E_A$ 的状态映射为
+
+$$
+\Phi_f=B_B T_f^{\dagger_0}B_A^{-1},
+\qquad \tau_B(\Phi_f(\rho)y)=\tau_A(\rho T_f(y)).
+\tag{3.8}
+$$
+
+因此原 $g^0$、原准备质量及原事件没有被辅助 $q$ 或普通迹替换。$T_f^{\dagger_q}$、$T_f^{\dagger_0}$ 和迹对偶具有明示的不同运输；没有一个仅凭命名就成为原物理返回 $U$。
+
+对实际联合对象，X 的嵌入由 (3.5) 复线性延拓成含幺 $*$ 嵌入；交叉 $D=0$ 给局部像交换。直接使用 V95 第 5 节的张量论证：乘积映射
+
+$$
+\pi:\mathcal A_A\otimes_{\rm alg}\mathcal A_B\longrightarrow\mathcal A_{AB},
+\quad a\otimes b\longmapsto\iota_A(a)\iota_B(b)
+\tag{3.9}
+$$
+
+由乘积张成满射。原乘积准备在 $\ker\pi$ 上全为零，P 使局部实际准备张成全部对偶，故其乘积泛函分离代数张量积，$\ker\pi=0$。有限维时取得普通复张量积，包括每对原中心扇区。联合状态 (3.7) 因而包括全部原相关态；一般不要求原 $B_{AB}=B_A\otimes B_B$，也不从中推出原 $g^0$ 因子化。
+
+以下对全部原事件应用 R。固定 $f:A\to B$ 的输入、输出块 $(s,t)$，用矩阵包含与中心投影定义复线性块映射 $\Phi_{ts}:M_{n_s}\to M_{m_t}$。取实际 $Q^{\otimes k}$，维数 $r=2^k\ge n_s$。R、P 和 (3.9) 给 $\Phi_f\otimes\mathrm{id}_r$ 在整个数学联合正锥上保正：先对实际准备保正，再用它们的正锥包覆盖该锥。数学上包含输入块、投影输出块，并对参考取等距 $V:\mathbb C^{n_s}\to\mathbb C^r$，先作 $X\mapsto(I\otimes V)X(I\otimes V^*)$ 再压回，得到 $\Phi_{ts}\otimes\mathrm{id}_{n_s}$ 保正。这些包含、角压缩只是证明操作，不主张实际供应角滤片。
+
+对每个非零 $\Phi_{ts}$，直接应用 Watrous《The Theory of Quantum Information》定理 2.22 的 (2)$\Rightarrow$(1)、(4)：定义域和值域是有限复 Euclidean 矩阵空间，映射非零，且已证输入维数层保正。零块不适用其非零前件，单独取空 Kraus 和即可。于是全部原事件有
+
+$$
+\Phi_f(\rho)_t=\sum_{s,\mu}K_{f,ts\mu}\rho_sK_{f,ts\mu}^*,
+\qquad \sum_{t,\mu}K_{f,ts\mu}^*K_{f,ts\mu}\le I_{n_s}.
+\tag{3.10}
+$$
+
+完整装置跨原事件再求和取等号。这些 $\mu$ 是数学指标，除非原接口另已供应，不能称作原可访问细记录。
+
+现在证明所需酉操作属于指定原群。由 BW 的 $L_a\in\mathfrak g$，在 (3.1) 的每个块有
+
+$$
+[L_a,L_b]x=\tfrac14[[a,b],x].
+\tag{3.11}
+$$
+
+Hermitian 交换子实张成 $\mathfrak{su}(n)$：若无迹 Hermitian $z$ 对全部 $i[a,b]$ 迹正交，则对固定 $a$ 与全部 Hermitian $b$ 配对得到 $[z,a]=0$；于是 $z$ 与全部矩阵交换，且无迹，故为零。取 $a,b$ 分别只支撑一个中心块，得到独立的各块内导子
+
+$$
+\bigoplus_s\operatorname{ad}\mathfrak{su}(n_s)\subset\mathfrak g_A,
+\qquad \prod_s PU(n_s)\subset G_A.
+\tag{3.12}
+$$
+
+后一包含是 Lie 群指数的精确包含：每个特殊酉有无迹斜 Hermitian 对数，一般酉的中心相位不影响共轭。$n_s=1$ 因子作用平凡。没有等块大小假设，也未加入跨中心相干或中心置换。对每个实际联合对象重新使用 P、G、D，特别取得 $AQ=\bigoplus_sM_{2n_s}$ 上各块独立的全部内酉共轭；不是用局部门稠密生成来替代联合供应。
+
+设
+
+$$
+a=\sqrt e,\qquad b=\sqrt{u_A-e},\qquad
+U_e=\begin{pmatrix}a&-b\\ b&a\end{pmatrix}\in\mathcal A_A\otimes M_2.
+\tag{3.13}
+$$
+
+$a,b$ 交换，$a^2+b^2=I$。这是有限 Julia–Halmos 膨胀的旋转形式，直接应用 Robinson [arXiv:1803.09329v1](https://arxiv.org/abs/1803.09329v1) 定理 0–2 的有限收缩膨胀构造，不把该文当实际供应定理。为核对 (3.12) 的确切群，令 $\theta=\arccos a$，逐块函数演算给
+
+$$
+U_e=\exp\begin{pmatrix}0&-\theta\\ \theta&0\end{pmatrix}.
+\tag{3.14}
+$$
+
+指数内逐块斜 Hermitian 且无迹，因此 $U_e$ 每块属 $SU(2n_s)$。奇异 $a$ 的有限谱函数同样定义，未取物理极限。Heisenberg 比较 $T(y)=U_e^*yU_e$ 在原 $(G_{AQ})_u$；$N_u$ 供应它，其状态响应正是 $\operatorname{Ad}_{U_e}$。这是对一个指定群元的原精确调用，不是把某个旧等信道器件替成相干膨胀。
+
+接原 $j_0$、此确定性比较及原 $m_0$。Xs 和 X 给它们对所有原联合输入的精确乘积作用，故指定成功词为
+
+$$
+A\xrightarrow{\,\mathrm{id}\otimes j_0\,}AQ
+\xrightarrow{\,f_{U_e}\,}AQ
+\xrightarrow{\,\mathrm{id}\otimes m_0\,}A,
+\qquad \rho\longmapsto a\rho a.
+\tag{3.15}
+$$
+
+每一步都是原合法连线。对任意实际相关参考 $R$，同记录乘积律与张成给同一计算，只将 $a,b$ 换成 $a\otimes I_R,b\otimes I_R$，取得 (3.2)。
+
+还须保留整个完整装置。每个原失败端 $r_\ell:Q\to B_\ell$ 的效果为 $d_\ell=\Phi_{r_\ell}^\dagger(I)$。归一给 $\sum_\ell d_\ell=p_1$，正性及 $p_1$ 秩一给
+
+$$
+d_\ell=t_\ell p_1,\qquad t_\ell\ge0,\qquad\sum_\ell t_\ell=1.
+\tag{3.16}
+$$
+
+令 $\omega_\ell=\Phi_{r_\ell}(p_1)\ge0$，保留原输出对象 $B_\ell$，$\tau(\omega_\ell)=t_\ell$。正映射的效果支持包含在 $p_1$，故它消去 $p_0$ 行列及交叉项，$\Phi_{r_\ell}(\sigma)=\operatorname{Tr}(p_1\sigma)\omega_\ell$。所以该原失败端在未丢弃其输出时的词为
+
+$$
+\rho\longmapsto b\rho b\otimes\omega_\ell
+\quad\text{于原对象 }AB_\ell;
+\qquad
+\rho\longmapsto t_\ell b\rho b
+\quad\text{于实际丢弃后}.
+\tag{3.17}
+$$
+
+带参考时保留 $(b\otimes I_R)X(b\otimes I_R)$ 和同一 $\omega_\ell$。$t_\ell=0$ 的原端仍保留为零支，绝不除以它。实际丢弃的每个原细记录也保留；若暴露它们，则 (3.17) 按那些原记录的原正权拆分。
+
+归一准备和确定性比较的非指定补记录均零响应。它们指定事件内部若有实际有限细化，(3.10) 与逐输入块的 Choi 秩一迫使准备子支为 $\beta_jp_0$，而比较子支在每个原中心块 $s$ 为 $c_{\gamma,s}\operatorname{Ad}_{U_{e,s}}$，其中 $\beta_j,c_{\gamma,s}\ge0$，$\sum_j\beta_j=1$、$\sum_\gamma c_{\gamma,s}=1$。这里不要求不同中心具有相同细记录权；原中心读取的细化也在内。其理由是每个原块内单位酉通道的正 Choi 矩阵秩一，正分解的每项均支撑在同一条射线上。指定成功读口及失败输出丢弃的实际细化同理。于是完全展开的每个原词叶逐原输入中心保留相应的 $\beta_j,c_{\gamma,s},t_{\ell a}$ 乘积；(3.15)–(3.17) 是按原分组的等式，不宣称内部细叶没有原因素。总迹恰为
+
+$$
+\tau(a\rho a)+\sum_\ell t_\ell\tau(b\rho b)=\tau(\rho).
+\tag{3.18}
+$$
+
+$e=0$ 时成功为原零支，$e=u_A$ 时端点失败为原零支，各零中心分量也逐块如此。准备若实际是 $\eta p_0$、读口若是 $\zeta m_0$，成功等式变为 $\eta\zeta a\rho a$；其原失败装置按原效果补全，不再擅用 (3.16) 的系数一补投影。条件化、返回或重标不删除 $\eta\zeta$。
+
+最后消费 F。对每个原非零 $S_a$，原正性、单中心支持及两条 (2.5) 正是 C118 式 (140.4) 所引用的支持正常形前件：
+
+$$
+S_a=\operatorname{Ad}_{G_a^{1/2}}\beta_a,
+\qquad \beta_a:P_a\mathcal A_AP_a\to Q_a\mathcal A_BQ_a
+\text{ 为含幺 Jordan 保星同构}.
+\tag{3.19}
+$$
+
+其支持上可逆共轭的正逆是 CP，故由 R 得 $\beta_a$ CP。在阶数至少二时，反乘法分支不能 CP：矩阵转置的 Choi 算子为交换算子，在反对称二维向量上为负；酉共轭不改此障碍。因此该原分支为保乘法，秩一角也直接同构于标量，存在原两块之间的一个矩形 $K_a$，使
+
+$$
+S_a(X)=K_aXK_a^*,\qquad
+U_a(Y)=q_aK_a^+Y(K_a^+)^*,
+\qquad K_a^+K_a=P_a,\quad K_aK_a^+=Q_a.
+\tag{3.20}
+$$
+
+第二式由原 $U_a$ 的支持限制和两条原返回式唯一确定，使用原 $q_a$，不将其放大。零细支仍零。F 的原遗忘 (2.6) 现在给原记录的一算子细化；一般 (3.10) 的数学指标没有被追认成这些端口。
+
+任取原准备 $\alpha$、原合法有限历史 $h=(f_1,\ldots,f_m)$ 和末端原效果 $z$，反复使用 (3.8) 得完整原始等式
+
+$$
+\alpha(T_{f_1}\cdots T_{f_m}z)
+=\tau\!\left[z\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha)\right].
+\tag{3.21}
+$$
+
+所有原中间质量、返回 $q$、准备因素、记录和相关参考均留在等式中；归一条件概率只在分母严格正时由这份原联合概率定义。原替换的全语境一致性保证它覆盖原域，不因只证明了新供应词而缩小历史量词。∎
+

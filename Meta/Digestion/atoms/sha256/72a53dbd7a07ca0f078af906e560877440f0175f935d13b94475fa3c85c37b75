@@ -1,0 +1,40 @@
+### 定理 4.2（加权收缩及非负回接谱）
+
+<a id="thm-c122-weighted-contraction"></a>
+
+在上述条件下，
+
+<a id="eq-c122-positive-contraction"></a>
+
+$$
+\Gamma_\sigma^{-1/2}S\Gamma_\sigma^{1/2}=T^\dagger T,
+ \qquad 0\le T^\dagger T\le I.
+\tag{26}
+$$
+
+因此 $N$ 从 $g_\sigma$ 到 $g_\tau$ 收缩，$S$ 对 $g_\sigma$ 自伴且为正收缩，其全部特征值属于 $[0,1]$。
+
+**证明。**
+各 $\Gamma$ 对 Hilbert–Schmidt 内积自伴，故
+
+$$
+T^\dagger T=\Gamma_\sigma^{1/2}N^*\Gamma_\tau^{-1}N\Gamma_\sigma^{1/2}
+ =\Gamma_\sigma^{-1/2}S\Gamma_\sigma^{1/2}\ge0.
+$$
+
+还需证明特征值不超过 $1$。$S$ 与这个正自伴算子相似，所以有非负实谱并可对角化。$S$ 保持取伴随；一个非零特征向量的 Hermitian 实部或虚部至少有一个非零，且具有同一实特征值。对任意 Hermitian $X=X_+-X_-$，正性与保迹性给出
+
+$$
+\|S(X)\|_1\le\operatorname{Tr} S(X_+)+\operatorname{Tr} S(X_-)=\|X\|_1.
+$$
+
+若 $S(X)=\lambda X$，便得 $\lambda\le1$。于是 $T^\dagger T\le I$，将 $x=\Gamma_\sigma^{-1/2}X$ 代入即可得到 $\|N(X)\|_\tau\le\|X\|_\sigma$。自伴性也可直接由
+
+$$
+g_\sigma(X,SY)=g_\tau(NX,NY)=g_\sigma(SX,Y)
+$$
+
+看出。
+
+这里的比较属于 Petz 单调度量族，对应函数 $f_{\rm met}(t)=\sqrt t$，其 Morozova–Chentsov 系数为 $c(x,y)=1/\sqrt{xy}$；相应散度是 $\chi^2_{1/2}$~ [8](#ref-petz1996)、[9](#ref-hansen2011)。以上证明没有调用单调度量分类定理。单调性本身容许一族不同度量，平方根配对仍须由本候选的互易规定或另外明列的结构条件确定。最新反向唯一性工作采用所有参考和通道上的接续、并行、双重反向及酉逆条件来确定 Petz 规则~ [5](#ref-retrodiction2026)；这里证明的是采用该规则后的几何后果。
+
