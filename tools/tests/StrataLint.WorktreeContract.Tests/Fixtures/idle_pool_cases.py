@@ -522,6 +522,87 @@ class IdlePoolCases:
             job.communicate("joined\n", timeout=10)
         self.assertEqual("claimed", json.loads(self.dormant_claim().stdout)["status"])
 
+    def pool_claim_unobservable_eligibility_preserves_idle_and_dormant(self):
+        import worktree_pool as pool
+        self.dormant_task()
+        (self.main / ".git/info/exclude").write_text(".lake/\n")
+        cache = self.tree / ".lake/cache"
+        cache.parent.mkdir()
+        cache.write_bytes(b"cache bytes\n")
+        for idle in (False, True):
+            if idle:
+                self.g(self.tree, "reset", "--hard", self.base)
+                self.make_idle(self.tree, self.base)
+            branch = self.g(self.tree, "symbolic-ref", "HEAD").strip()
+            metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+            files = [self.tree / "owned", cache, metadata / "HEAD", metadata / "logs/HEAD",
+                     self.main / ".git" / branch, self.main / ".git/logs" / branch]
+            before = {file: file.read_bytes() for file in files}
+            for exact in (False, True):
+                for boundary in (1, 2):
+                    with self.subTest(idle=idle, exact=exact, boundary=boundary):
+                        failure = PermissionError("fixture activity unavailable")
+                        with patch.object(pool.host_cleanup(), "active_paths",
+                                          side_effect=[set()] * (boundary - 1) + [failure]), \
+                                patch.object(pool, "commit_snapshot") as checkpoint:
+                            if exact:
+                                with self.assertRaisesRegex(pool.Refused, "task_activity_unavailable:"):
+                                    pool.claim(self.dormant_options(path=self.tree))
+                            else:
+                                self.assertEqual("no_idle", pool.claim(self.dormant_options())["status"])
+                        checkpoint.assert_not_called()
+                        self.assertEqual(before, {file: file.read_bytes() for file in files})
+                        self.assertFalse(self.g(self.main, "for-each-ref", "refs/heads/lane/math/next").strip())
+        with patch.object(pool.host_cleanup(), "active_paths", side_effect=PermissionError("unobservable")):
+            with self.assertRaises(PermissionError):
+                pool.task_users((self.tree,))
+
+    def pool_claim_mutation_and_other_io_failures_never_fall_back(self):
+        import worktree_pool as pool
+        self.dormant_task()
+        later = self.root / "zz-idle"
+        self.g(self.main, "worktree", "add", "-b", "lane/math/later", later, self.branch)
+        original_tree, self.tree = self.tree, later
+        self.age_task_head_log()
+        self.tree = original_tree
+        branch = self.g(self.tree, "symbolic-ref", "HEAD").strip()
+        options = self.dormant_options()
+        with patch.object(pool, "task_users", return_value=set()):
+            for error in (OSError("checkpoint I/O"), pool.Refused("checkpoint refused")):
+                with self.subTest(error=type(error).__name__), \
+                        patch.object(pool, "commit_snapshot", side_effect=error), \
+                        self.assertRaises(type(error)):
+                    pool.claim(options)
+            with patch.object(pool, "dormant_state", side_effect=OSError("state I/O")), \
+                    self.assertRaisesRegex(OSError, "state I/O"):
+                pool.claim(options)
+        self.assertEqual(branch, self.g(self.tree, "symbolic-ref", "HEAD").strip())
+        self.assertFalse(self.g(self.main, "for-each-ref", "refs/heads/lane/math/next").strip())
+        (self.tree / "owned").write_text("checkpointed source\n")
+        self.age_task_head_log()
+        timestamp = int(time.time()) - 5 * 3600
+        os.utime(self.tree / "owned", (timestamp, timestamp))
+        with patch.object(pool, "task_users", side_effect=[set(), set(), OSError("late activity")]), \
+                self.assertRaisesRegex(OSError, "late activity"):
+            pool.claim(options)
+        self.assertEqual("checkpointed source\n", self.g(self.main, "show", branch + ":owned"))
+        self.assertFalse(self.g(self.main, "for-each-ref", "refs/heads/lane/math/next").strip())
+        self.make_idle(self.tree, self.g(self.tree, "rev-parse", "HEAD").strip())
+        # The idle commit must remain in dev for qualification before testing post-allocation failure.
+        self.g(self.main, "update-ref", "refs/remotes/origin/dev", branch)
+        options.base = branch
+        for error in (OSError("allocation I/O"), pool.Refused("allocation refused")):
+            with self.subTest(error=type(error).__name__), \
+                    patch.object(pool, "task_users", return_value=set()), \
+                    patch.object(pool, "allocation_record", side_effect=error), \
+                    self.assertRaises(type(error)):
+                pool.claim(options)
+            self.assertEqual("lane/math/next", self.g(self.tree, "branch", "--show-current").strip())
+            self.g(self.tree, "switch", branch.removeprefix("refs/heads/"))
+            self.g(self.main, "branch", "-D", "lane/math/next")
+            self.make_idle(self.tree, self.g(self.tree, "rev-parse", "HEAD").strip())
+        self.assertEqual("lane/math/later", self.g(later, "branch", "--show-current").strip())
+
     def pool_activity_scope_excludes_unrelated_unobservable_process(self):
         command = [sys.executable, "-c", 'print("keyword args")']
         with subprocess.Popen(args=command, stdout=subprocess.PIPE, text=True) as child:

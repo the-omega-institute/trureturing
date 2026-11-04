@@ -77,6 +77,60 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    public void UnobservableIdleActivityPreservesCandidateAndOnlyImplicitlyCreatesFresh(bool exact, bool lowDisk)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        TestGit.Run(repository.Path, "update-ref", "refs/remotes/origin/dev", "HEAD");
+        var idle = Path.Combine(repository.Path, "idle");
+        var token = Guid.NewGuid().ToString("N");
+        var idleBranch = "lane/governance/idle-" + token;
+        TestGit.Run(repository.Path, "update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
+            "refs/heads/" + idleBranch, "HEAD");
+        TestGit.Run(repository.Path, "worktree", "add", idle, idleBranch);
+        File.WriteAllText(Path.Combine(repository.Path, ".git", "info", "exclude"), ".lake/\n");
+        Directory.CreateDirectory(Path.Combine(idle, ".lake"));
+        File.WriteAllText(Path.Combine(idle, ".lake", "sentinel"), "cached bytes\n");
+        var metadata = GitWorktreeDirectory.Read(idle)!;
+        var preserved = new[] { Path.Combine(idle, "README.md"), Path.Combine(idle, ".git"),
+            Path.Combine(idle, ".lake", "sentinel"), Path.Combine(metadata, "HEAD"),
+            Path.Combine(metadata, "logs", "HEAD"),
+            Path.Combine(repository.Path, ".git", "refs", "heads", idleBranch),
+            Path.Combine(repository.Path, ".git", "logs", "refs", "heads", idleBranch) }
+            .ToDictionary(path => path, File.ReadAllBytes);
+        var fresh = Path.Combine(repository.Path, "fresh");
+        var arguments = new List<string> { "--kind", "math", "--name", "unobservable",
+            "--base", "dev", "--path", exact ? idle : fresh, "--skip-restore" };
+        if (!exact) arguments.Add("--prefer-idle");
+
+        var result = WorktreeCommand.Run(repository.Path, arguments, new UnobservableActivityRunner(lowDisk));
+
+        Assert.Equal(!exact && !lowDisk, result.Success);
+        if (exact || lowDisk)
+        {
+            Assert.Equal(73, result.ExitCode);
+            Assert.Contains(lowDisk ? "WORKTREE_LOW_DISK_fixture" : "task_activity_unavailable:",
+                result.Error, StringComparison.Ordinal);
+            Assert.Equal("", TestGit.Run(repository.Path, "branch", "--list", "lane/math/unobservable"));
+        }
+        else
+        {
+            using var receipt = JsonDocument.Parse(result.Output);
+            Assert.Equal("succeeded", receipt.RootElement.GetProperty("status").GetString());
+            Assert.Equal(WorktreeHookFixture.RunGit(fresh, "rev-parse", "--show-toplevel").Trim(),
+                receipt.RootElement.GetProperty("path").GetString());
+            Assert.Equal("lane/math/unobservable", TestGit.Run(fresh, "branch", "--show-current").Trim());
+        }
+        Assert.Equal(!exact && !lowDisk, Directory.Exists(fresh));
+        Assert.Equal(idleBranch, TestGit.Run(idle, "branch", "--show-current").Trim());
+        foreach (var (path, bytes) in preserved) Assert.Equal(bytes, File.ReadAllBytes(path));
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void DormantTaskClaimUsesEmbeddedHostAndPreservesBranch(bool exact)
@@ -377,6 +431,35 @@ public sealed partial class WorktreeCommandTests
             var fixture = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "tests",
                 "StrataLint.WorktreeContract.Tests", "Fixtures", "activity_fixture.py");
             return inner.Run(fileName, ["-I", "-B", fixture, "--", .. arguments], workingDirectory, budget);
+        }
+    }
+
+    private sealed class UnobservableActivityRunner(bool lowDisk) : IWorktreeProcessRunner
+    {
+        private readonly ProductionWorktreeProcessRunner inner = new ProductionWorktreeProcessRunner()
+            .WithEnvironment(new Dictionary<string, string> { ["WORKTREE_REQUIRE_DISK_CHECK"] = "1" });
+
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments,
+            string workingDirectory, TimeSpan budget)
+        {
+            if (fileName != "python3" || !arguments.Contains("claim"))
+                return inner.Run(fileName, arguments, workingDirectory, budget);
+            const string inject = """
+                import sys
+                from pathlib import Path
+                program = Path(sys.argv[1]).read_text()
+                sys.argv = sys.argv[1:]
+                entry = "sys.exit(sys.modules['worktree_protocol'].main())"
+                fault = "def unavailable(*args, **kwargs):\n    raise PermissionError('fixture activity unavailable')\n"
+                fault += "sys.modules['worktree_pool'].host_cleanup().active_paths = unavailable\n"
+                if sys.argv.pop(1) == 'low-disk':
+                    fault += "def disk(*args):\n    raise sys.modules['worktree_pool'].host_cleanup().LowDiskSpace('WORKTREE_LOW_DISK_fixture')\n"
+                    fault += "sys.modules['worktree_pool'].host_cleanup().check_disk = disk\n"
+                assert program.count(entry) == 1
+                exec(compile(program.replace(entry, fault + entry), sys.argv[0], 'exec'))
+                """;
+            return inner.Run(fileName, ["-I", "-B", "-c", inject, arguments[2],
+                lowDisk ? "low-disk" : "normal", .. arguments.Skip(3)], workingDirectory, budget);
         }
     }
 

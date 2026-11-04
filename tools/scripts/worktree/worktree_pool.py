@@ -391,6 +391,14 @@ def task_users(paths):
     return host_cleanup().active_paths(codex, scopes=paths)
 
 
+def candidate_activity(paths):
+    # Only eligibility reads before checkpointing or branch allocation may skip a candidate.
+    try:
+        return task_users(paths)
+    except OSError as error:
+        raise Refused("task_activity_unavailable:" + str(error)) from error
+
+
 def no_task_users(path, paths):
     if any(held == path or path in held.parents for held in paths):
         raise Refused("task_active_process")
@@ -518,18 +526,18 @@ def claim(options):
                             if (path / pin).read_bytes() != expected[pin]:
                                 raise Refused("incompatible_pin:" + pin)
                     if activity is None:
-                        activity = task_users(candidates)
+                        activity = candidate_activity(candidates)
                     no_task_users(path, activity)
                     checkpoint = None
                     retained_branch = branch
                     if idle:
-                        no_task_users(path, task_users((path,)))
+                        no_task_users(path, candidate_activity((path,)))
                         if idle_state(options.source, path, dev) != state:
                             raise Refused("idle_identity_changed")
                     else:
                         if dormant_state(options.source, path, metadata) != state:
                             raise Refused("task_identity_changed")
-                        no_task_users(path, task_users((path,)))
+                        no_task_users(path, candidate_activity((path,)))
                         prepared = True
                         checkpoint = commit_snapshot(path, metadata, branch,
                             b"WIP checkpoint dormant worktree before reuse\n", stack, options.source)
