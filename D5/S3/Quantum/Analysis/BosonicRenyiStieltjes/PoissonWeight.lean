@@ -10,6 +10,7 @@ import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
 import Mathlib.MeasureTheory.Function.JacobianOneDim
 import Mathlib.Analysis.Complex.RemovableSingularity
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 
 /-! The positive-axis transform used by the logarithmic Renyi representation. -/
 
@@ -552,11 +553,238 @@ private lemma contour_balance {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   rw [hb, ht] at h
   nlinarith
 
+private lemma logTransform_weighted (α : ℝ) {w : ℂ} (hw : w ≠ 0) :
+    Complex.exp w * logTransform α w =
+      (Complex.exp w / (1 - Complex.exp w) - (α : ℂ) *
+        (Complex.exp ((α : ℂ) * w) / (1 - Complex.exp ((α : ℂ) * w)))) /
+          ((α - 1 : ℝ) : ℂ) := by
+  rw [logTransform, ite_eq_right hw]
+  field_simp [Complex.exp_ne_zero]
+
+private lemma norm_ratio_large {z : ℂ} (hz : 2 ≤ ‖z‖) : ‖z / (1 - z)‖ ≤ 2 := by
+  have hd : ‖z‖ - 1 ≤ ‖1 - z‖ := by
+    simpa only [norm_one, norm_sub_rev] using norm_sub_norm_le z (1 : ℂ)
+  rw [norm_div]
+  apply (div_le_iff₀ (show 0 < ‖1 - z‖ by linarith)).mpr
+  linarith
+
+private lemma norm_ratio_small {z : ℂ} (hz : ‖z‖ ≤ 1 / 2) :
+    ‖z / (1 - z)‖ ≤ 2 * ‖z‖ := by
+  have hd : 1 - ‖z‖ ≤ ‖1 - z‖ := by
+    simpa only [norm_one] using norm_sub_norm_le (1 : ℂ) z
+  rw [norm_div]
+  apply (div_le_iff₀ (show 0 < ‖1 - z‖ by linarith)).mpr
+  have hm := mul_le_mul_of_nonneg_left (show 1 / 2 ≤ ‖1 - z‖ by linarith)
+    (norm_nonneg z)
+  nlinarith
+
+private lemma logTransform_weighted_bound {α : ℝ} (ha0 : 0 < α) {w : ℂ} (hw : w ≠ 0) :
+    ‖Complex.exp w * logTransform α w‖ ≤
+      (‖Complex.exp w / (1 - Complex.exp w)‖ +
+        α * ‖Complex.exp ((α : ℂ) * w) / (1 - Complex.exp ((α : ℂ) * w))‖) /
+          |α - 1| := by
+  rw [logTransform_weighted α hw, norm_div, Complex.norm_real, Real.norm_eq_abs]
+  apply div_le_div_of_nonneg_right _ (abs_nonneg _)
+  simpa only [norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos ha0] using
+    norm_sub_le (Complex.exp w / (1 - Complex.exp w))
+      ((α : ℂ) * (Complex.exp ((α : ℂ) * w) / (1 - Complex.exp ((α : ℂ) * w))))
+
+private lemma vertical_integrable {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (x : ℝ) :
+    IntervalIntegrable (fun y : ℝ => contourKernel α r (x + y * Complex.I))
+      volume (-Real.pi) Real.pi := by
+  apply ContinuousOn.intervalIntegrable
+  apply (contourKernel_differentiable (r := r) ha0 ha2).continuousOn.comp
+    (show ContinuousOn (fun y : ℝ => (x : ℂ) + y * Complex.I)
+      (Set.uIcc (-Real.pi) Real.pi) by fun_prop)
+  intro y hy
+  have hy' : -Real.pi ≤ y ∧ y ≤ Real.pi := by
+    simpa only [Set.uIcc_of_le (neg_le_self Real.pi_pos.le), Set.mem_Icc] using hy
+  simpa using hy'
+
+private lemma vertical_integral_limit {f : ℝ → ℝ → ℂ} {L : ℂ} {b : ℝ → ℝ}
+    (hi : ∀ T, IntervalIntegrable (f T) volume (-Real.pi) Real.pi)
+    (hb : Filter.Tendsto b Filter.atTop (𝓝 0))
+    (hf : ∀ᶠ T in Filter.atTop, ∀ y ∈ Set.uIoc (-Real.pi) Real.pi,
+      ‖f T y - L‖ ≤ b T) :
+    Filter.Tendsto (fun T => ∫ y in (-Real.pi)..Real.pi, f T y) Filter.atTop
+      (𝓝 ((Real.pi - -Real.pi) • L)) := by
+  have hz : Filter.Tendsto (fun T => ∫ y in (-Real.pi)..Real.pi, f T y - L)
+      Filter.atTop (𝓝 (0 : ℂ)) := by
+    apply tendsto_zero_iff_norm_tendsto_zero.mpr
+    apply squeeze_zero' (Filter.Eventually.of_forall (fun _ => norm_nonneg _))
+      (hf.mono (fun T hT => intervalIntegral.norm_integral_le_of_norm_le_const hT))
+    simpa using hb.mul_const |Real.pi - -Real.pi|
+  have he : ∀ T, (∫ y in (-Real.pi)..Real.pi, f T y - L) =
+      (∫ y in (-Real.pi)..Real.pi, f T y) - (Real.pi - -Real.pi) • L := by
+    intro T
+    rw [intervalIntegral.integral_sub (hi T) intervalIntegrable_const,
+      intervalIntegral.integral_const]
+  simpa only [he, sub_add_cancel, zero_add] using hz.add_const ((Real.pi - -Real.pi) • L)
+
+private lemma contour_right_limit {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hr0 : 0 < r) (hr1 : r < 1) :
+    Filter.Tendsto (fun T : ℝ =>
+      ∫ y in (-Real.pi)..Real.pi, contourKernel α r (T + y * Complex.I)) Filter.atTop
+        (𝓝 ((Real.pi - -Real.pi) • (-complexTransform α (r : ℂ)))) := by
+  let c := complexTransform α (r : ℂ)
+  let C := (2 + α * 2) / |α - 1|
+  let b := fun T : ℝ => 2 * (C + r * ‖c‖) * Real.exp (-T)
+  apply vertical_integral_limit (fun T => vertical_integrable ha0 ha2 T) (b := b)
+  · simpa [b] using Real.tendsto_exp_neg_atTop_nhds_zero.const_mul (2 * (C + r * ‖c‖))
+  have hat : Filter.Tendsto (fun T : ℝ => Real.exp (α * T)) Filter.atTop Filter.atTop :=
+    Real.tendsto_exp_atTop.comp (Filter.tendsto_id.const_mul_atTop ha0)
+  filter_upwards [Filter.eventually_gt_atTop (0 : ℝ),
+    Real.tendsto_exp_atTop.eventually (Filter.eventually_ge_atTop (2 : ℝ)),
+    hat.eventually (Filter.eventually_ge_atTop (2 : ℝ)),
+    Real.tendsto_exp_atTop.eventually (Filter.eventually_ge_atTop (2 * r))]
+    with T ht hT haT hrT
+  intro y _
+  let w : ℂ := T + y * Complex.I
+  have he : ‖Complex.exp w‖ = Real.exp T := by simp [w, Complex.norm_exp]
+  have hea : ‖Complex.exp ((α : ℂ) * w)‖ = Real.exp (α * T) := by
+    simp [w, Complex.norm_exp, Complex.mul_re]
+  have hw : w ≠ 0 := by
+    intro h
+    have hh := congrArg Complex.re h
+    simp [w] at hh
+    linarith
+  have hwl : w ≠ (Real.log r : ℂ) := by
+    intro h
+    have hh := congrArg Complex.re h
+    simp [w] at hh
+    linarith [Real.log_neg hr0 hr1]
+  have hP : ‖Complex.exp w * logTransform α w‖ ≤ C := by
+    apply (logTransform_weighted_bound ha0 hw).trans
+    apply div_le_div_of_nonneg_right _ (abs_nonneg _)
+    exact add_le_add (norm_ratio_large (by rwa [he]))
+      (mul_le_mul_of_nonneg_left (norm_ratio_large (by rwa [hea])) ha0.le)
+  have hd : Real.exp T - r ≤ ‖Complex.exp w - (r : ℂ)‖ := by
+    simpa only [he, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr0] using
+      norm_sub_norm_le (Complex.exp w) (r : ℂ)
+  have hd0 : 0 < ‖Complex.exp w - (r : ℂ)‖ := by linarith [Real.exp_pos T]
+  have hdne := norm_ne_zero_iff.mp hd0.ne'
+  have hk : contourKernel α r w - -c =
+      (Complex.exp w * logTransform α w - (r : ℂ) * c) / (Complex.exp w - r) := by
+    rw [contourKernel_eq hr0 hwl, logTransform_log ha0 ha2 hr0 hr1]
+    change Complex.exp w * (logTransform α w - c) / (Complex.exp w - r) - -c = _
+    field_simp [hdne]
+    ring
+  rw [hk, norm_div]
+  apply (div_le_iff₀ hd0).mpr
+  calc
+    _ ≤ C + r * ‖c‖ := by
+      exact (norm_sub_le _ _).trans (add_le_add hP (by
+        simp only [norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr0, le_rfl]))
+    _ = b T * (Real.exp T / 2) := by
+      dsimp only [b]
+      rw [Real.exp_neg]
+      field_simp
+    _ ≤ b T * ‖Complex.exp w - (r : ℂ)‖ := by
+      apply mul_le_mul_of_nonneg_left (by linarith)
+      dsimp only [b, C]
+      positivity
+
+private lemma contour_left_limit {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hr0 : 0 < r) (hr1 : r < 1) :
+    Filter.Tendsto (fun T : ℝ =>
+      ∫ y in (-Real.pi)..Real.pi, contourKernel α r (-T + y * Complex.I)) Filter.atTop
+        (𝓝 (0 : ℂ)) := by
+  let c := complexTransform α (r : ℂ)
+  let A := fun T : ℝ =>
+    (2 * Real.exp (-T) + α * (2 * Real.exp (-(α * T)))) / |α - 1|
+  let b := fun T : ℝ => (2 / r) * (A T + Real.exp (-T) * ‖c‖)
+  have he0 := Real.tendsto_exp_neg_atTop_nhds_zero
+  have hea0 := he0.comp (Filter.tendsto_id.const_mul_atTop ha0)
+  have hA : Filter.Tendsto A Filter.atTop (𝓝 0) := by
+    simpa [A] using ((he0.const_mul 2).add ((hea0.const_mul 2).const_mul α)).div_const |α - 1|
+  have hb : Filter.Tendsto b Filter.atTop (𝓝 0) := by
+    simpa [b] using (hA.add (he0.mul_const ‖c‖)).const_mul (2 / r)
+  have hz := vertical_integral_limit (L := (0 : ℂ))
+    (fun T => vertical_integrable (r := r) ha0 ha2 (-T)) hb
+  simp only [smul_zero, Complex.ofReal_neg] at hz
+  apply hz
+  filter_upwards [Filter.eventually_gt_atTop (0 : ℝ),
+    he0.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1 / 2)),
+    hea0.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1 / 2)),
+    he0.eventually (gt_mem_nhds (half_pos hr0))] with T ht hT haT hrT
+  intro y _
+  let w : ℂ := -T + y * Complex.I
+  have he : ‖Complex.exp w‖ = Real.exp (-T) := by simp [w, Complex.norm_exp]
+  have hea : ‖Complex.exp ((α : ℂ) * w)‖ = Real.exp (-(α * T)) := by
+    simp [w, Complex.norm_exp, Complex.mul_re, mul_neg]
+  have hw : w ≠ 0 := by
+    intro h
+    have hh := congrArg Complex.re h
+    simp [w] at hh
+    linarith
+  have hwl : w ≠ (Real.log r : ℂ) := by
+    intro h
+    have hh : ‖Complex.exp w‖ = r := by
+      rw [h, ← Complex.ofReal_exp, Real.exp_log hr0]
+      simp [abs_of_pos hr0]
+    rw [he] at hh
+    linarith
+  have hP : ‖Complex.exp w * logTransform α w‖ ≤ A T := by
+    apply (logTransform_weighted_bound ha0 hw).trans
+    apply div_le_div_of_nonneg_right _ (abs_nonneg _)
+    have h1 := norm_ratio_small (z := Complex.exp w) (by rw [he]; exact hT.le)
+    have h2 := norm_ratio_small (z := Complex.exp ((α : ℂ) * w))
+      (by rw [hea]; exact haT.le)
+    simpa only [he, hea] using add_le_add h1 (mul_le_mul_of_nonneg_left h2 ha0.le)
+  have hd : r - Real.exp (-T) ≤ ‖Complex.exp w - (r : ℂ)‖ := by
+    simpa only [he, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hr0, norm_sub_rev] using
+      norm_sub_norm_le (r : ℂ) (Complex.exp w)
+  have hd0 : 0 < ‖Complex.exp w - (r : ℂ)‖ := by linarith
+  rw [sub_zero, contourKernel_eq hr0 hwl, logTransform_log ha0 ha2 hr0 hr1]
+  change ‖Complex.exp w * (logTransform α w - c) / (Complex.exp w - r)‖ ≤ b T
+  rw [mul_sub, norm_div]
+  apply (div_le_iff₀ hd0).mpr
+  calc
+    _ ≤ A T + Real.exp (-T) * ‖c‖ :=
+      (norm_sub_le _ _).trans (add_le_add hP (by simp only [norm_mul, he, le_rfl]))
+    _ = b T * (r / 2) := by dsimp only [b]; field_simp
+    _ ≤ b T * ‖Complex.exp w - (r : ℂ)‖ := by
+      apply mul_le_mul_of_nonneg_left (by linarith)
+      dsimp only [b, A]
+      positivity
+
 private lemma slit_transform_integral {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hr0 : 0 < r) (hr1 : r < 1) :
     (∫ q in Ioi (0 : ℝ), -(complexTransform α (-(q : ℂ))).im /
       (Real.pi * (r + q))) = (complexTransform α (r : ℂ)).re := by
-  sorry
+  let g := fun x : ℝ => Real.exp x * (density α (Real.exp x) / (r + Real.exp x))
+  have hi : Integrable g := by
+    simpa only [g, smul_eq_mul] using
+      (integrable_comp_exp (fun q => density α q / (r + q))).mpr
+        (density_resolvent_integrable ha0 ha2 ha1 hr0)
+  have htr := intervalIntegral_tendsto_integral hi
+    Filter.tendsto_neg_atTop_atBot Filter.tendsto_id
+  have hleft := (Complex.continuous_re.tendsto (0 : ℂ)).comp
+    (contour_left_limit ha0 ha2 ha1 hr0 hr1)
+  have hright := (Complex.continuous_re.tendsto
+    ((Real.pi - -Real.pi) • (-complexTransform α (r : ℂ)))).comp
+      (contour_right_limit ha0 ha2 ha1 hr0 hr1)
+  have hlim : Filter.Tendsto (fun T : ℝ => 2 * Real.pi * (∫ x in (-T)..T, g x))
+      Filter.atTop (𝓝 (2 * Real.pi * (complexTransform α (r : ℂ)).re)) := by
+    convert hleft.sub hright using 1
+    · funext T
+      exact contour_balance ha0 ha2 ha1 hr0 hr1 T
+    · simp only [Complex.zero_re, Complex.smul_re, Complex.neg_re]
+      dsimp only [smul_eq_mul]
+      ring
+  have he : (∫ x, g x) = (complexTransform α (r : ℂ)).re := by
+    apply mul_left_cancel₀ (mul_ne_zero two_ne_zero Real.pi_ne_zero)
+    exact tendsto_nhds_unique (htr.const_mul (2 * Real.pi)) hlim
+  calc
+    _ = ∫ q in Ioi (0 : ℝ), density α q / (r + q) := by
+      apply setIntegral_congr_fun measurableSet_Ioi
+      intro q hq
+      dsimp only
+      rw [← div_div, transform_boundary ha0 ha2 ha1 hq]
+    _ = ∫ x, g x := by
+      simpa only [g, smul_eq_mul] using
+        (integral_comp_exp (fun q => density α q / (r + q))).symm
+    _ = _ := he
 
 private lemma stieltjes_value {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hr0 : 0 < r) (hr1 : r < 1) :
