@@ -1,0 +1,136 @@
+**定理 24.1（固定根的已得事件与二次域行列式）。** 在定义 23.1–23.2 下，置
+
+$$
+\kappa=1+2\varphi^3,\qquad \Xi=\Xi_{\mathcal E},\quad p=p_{\mathcal E}.
+$$
+
+若 $p>0$，则
+
+$$
+ p\ge\kappa^{-2L}.
+\tag{24.1}
+$$
+
+若另有 $\operatorname{rank}\Xi=d$，则
+
+$$
+\det\Xi\ge\kappa^{-2Ld},\qquad
+\lambda_{\min}(\Xi)\ge\kappa^{-2Ld},\qquad
+\lambda_{\min}(\rho)\ge\frac{\kappa^{-2Ld}}p.
+\tag{24.2}
+$$
+
+这些界使用实际最大正向调用数 $L$、指定的 $d,e$、完整测量树和无分母原始概率。它们也蕴含较粗的 $\kappa^{-14Ld}$ 行列式界；不主张常数最优、与资源无关的谱隙，或所有量子态都属于此族。
+
+证明。数域和整性先固定为
+
+$$
+F_0=\mathbb Q(\zeta),\quad R_0=\mathbb Z[\zeta],\quad
+\mathbb K=F_0(\beta),\quad \mathcal R=\mathbb Z[\zeta,\beta],\quad
+k=\mathbb Q(\sqrt5).
+\tag{24.3}
+$$
+
+$\zeta$ 为本原十次单位根，$t=-(\zeta+\zeta^{-1})$，$t^2+t=1$，$\beta^4+\beta^2-1=0$。因此 $\mathcal R$ 中各数均为代数整数；式 (23.2) 没有有理分母。有限投影、矩阵乘法、记录求和和原生偏迹只作有限加乘，故 $c_h(i,z),\Xi_{ij},p,\det\Xi$ 都是 $\mathbb K$ 中代数整数。这里不要求 $\mathcal R$ 等于全整数环。条件化 $\rho=\Xi/p$ 才引入除法，$\rho$ 的各项不被断言仍为代数整数。
+
+复共轭在 $\mathbb K$ 上记为 $c$，由 $c(\zeta)=\zeta^{-1},c(\beta)=\beta$ 给出。$[F_0:\mathbb Q]=4$。按 V15 引理 9.4 的论证，若实数 $\beta$ 属于 $F_0$，它必属于 $F_0\cap\mathbb R=k$；但 $N_{k/\mathbb Q}(t)=-1$ 不可能等于 $N_{k/\mathbb Q}(\beta)^2$，所以 $\beta\notin F_0$，$[\mathbb K:\mathbb Q]=8$。全部八个嵌入正是
+
+$$
+\begin{array}{c|c|c}
+a&\sigma(\zeta)&\sigma(\beta)\\ \hline
+1,9&\zeta^a&+\beta\ \text{或}\ -\beta\\
+3,7&\zeta^a&+i\sqrt\varphi\ \text{或}\ -i\sqrt\varphi
+\end{array}
+\tag{24.4}
+$$
+
+每个 $a$ 有两个独立平方根选择。前一行 $\sigma(t)=t$，后一行 $\sigma(t)=-\varphi$。对任一这样的 $\sigma$，$\sigma\circ c$ 也是八个嵌入之一，但一般
+$\sigma(c(x))\ne\overline{\sigma(x)}$：例如后一行取 $x=\beta$。以下估计始终分别使用 $\sigma$ 与 $\sigma\circ c$。
+
+先复用 V15 命题 8.3 证明中逐门的实际矩阵估计。活跃块 $Q=uu^{\mathsf T}$、$u=(\beta,\beta^2)^{\mathsf T}$，满足
+
+$$
+\|\sigma(Q)\|_{\rm op}\le |\sigma(\beta)|^2+|\sigma(\beta)|^4
+          \le\varphi+\varphi^2=\varphi^3.
+$$
+
+完整 $\mathcal P_j$ 的其他控制块为零或单位，$|\sigma(\zeta)|=1$，所以
+
+$$
+\|\sigma(K_j)\|_{\rm op}\le1+2\varphi^3=\kappa.
+\tag{24.5}
+$$
+
+张量单位、地址重排和所有完整计算投影不改变该估计。这里仅复用逐门界；V15 命题 8.3 的酉字事件结论不被直接套给自适应树。
+
+对树中节点 $v$，令 $\ell_v$ 是从该节点开始到任一终叶的最大剩余正向调用数。对任意复向量 $w$，从节点 $v$ 继续所得所有终叶的嵌入分支向量平方范数之和至多为 $\kappa^{2\ell_v}\|w\|^2$。这是有限树上的逆向归纳：终叶为等号；门节点利用式 (24.5) 并消耗一个调用；测量节点各子树的 $\ell$ 至多为 $\ell_v$，而投影仍是原来的正交零一矩阵，因此
+
+$$
+\sum_{o\in O_v}\|\Pi_{v,o}w\|^2=\|w\|^2.
+$$
+
+此等式覆盖完整结果分解，允许各结果后采用不同门字和不同停止深度。于是对全部叶和任意事件子集都有
+
+$$
+\sum_{h\in\mathcal E}\|\sigma(v_h)\|^2
+\le\sum_{h\ \mathrm{all}}\|\sigma(v_h)\|^2
+\le\kappa^{2L}.
+\tag{24.6}
+$$
+
+同一归纳也适用于停在 $t_*$ 的完整前缀树。它不逐叶分别放大再求和，因而没有 $b^m$、叶数或报告数惩罚；完整性、有限深度、投影的有理零一性和没有中途条件归一化都是此步的前件。
+
+将各 $c_h(i,z)$ 按 $(h,z)$ 合并成一个 $d\times(e|\mathcal E|)$ 系数矩阵 $V$。逐项施加嵌入，精确等式为
+
+$$
+\sigma(\Xi)=\sigma(V)\big((\sigma\circ c)(V)\big)^{\mathsf T}.
+\tag{24.7}
+$$
+
+这不是 $\sigma(V)\sigma(V)^\dagger$。由式 (24.6)，两个矩阵的 Frobenius 范数分别至多 $\kappa^L$；Cauchy–Schwarz 和算符范数的次乘性给
+
+$$
+|\sigma(p)|\le\kappa^{2L},\qquad
+\|\sigma(\Xi)\|_{\rm op}\le\kappa^{2L},\qquad
+|\sigma(\det\Xi)|\le\kappa^{2Ld}.
+\tag{24.8}
+$$
+
+第一式直接对 $p=\sum_{h,i,z}c_h(i,z)c(c_h(i,z))$ 配对；第三式用 $d$ 个奇异值的乘积。不假设非物理嵌入后的 $\Xi$ 正或 Hermitian。至此，若只使用八次数域的整数范数，已可得 $p\ge\kappa^{-14L}$、$\det\Xi\ge\kappa^{-14Ld}$。更强指数来自实际奇偶分级，不能从“八次”本身取得。
+
+令 $\tau$ 是 $\mathbb K/F_0$ 的非平凡自同构，$\tau(\beta)=-\beta$、$\tau(\zeta)=\zeta$。它与这里明确给出的物理共轭 $c$ 交换。由 V15 引理 9.1，每条含计算投影的分支仍有
+
+$$
+c_h(i,z)\in
+\begin{cases}
+R_0,&\pi(i)+\pi(z)=\pi(\Omega_0)\pmod2,\\
+\beta R_0,&\pi(i)+\pi(z)\ne\pi(\Omega_0)\pmod2,
+\end{cases}
+$$
+
+其中 $\pi$ 为实际计算基词的 Hamming 奇偶。乘积中的共同输入和共同补词 $z$ 的奇偶各出现两次，因而
+
+$$
+\tau(\Xi)=J_R\Xi J_R,
+\qquad J_R=\operatorname{diag}_{i}((-1)^{\pi(i)}),
+\qquad \tau(p)=p,\quad\tau(\det\Xi)=\det\Xi.
+\tag{24.9}
+$$
+
+有限事件求和、反馈和停止均不改变这个逐项等式。$\mathbb K^\tau=F_0$，而物理 $\Xi$ 为正半定，所以 $p$ 和 $D=\det\Xi$ 是实数；再取 $F_0$ 内物理复共轭的不动域，得到
+
+$$
+p,D\in\mathcal O_k,\qquad k=\mathbb Q(\sqrt5).
+\tag{24.10}
+$$
+
+这里只对特定的 $\tau,c$ 使用已验证的交换关系；未将任意嵌入与物理共轭交换。$k$ 的另一个实嵌入 $\nu$ 由 $t\mapsto-\varphi$ 给出，可用式 (24.4) 后一行任意嵌入延拓。$p\ne0$ 时，其二次域范数为非零整数；$D>0$ 时同样如此。标准整数范数事实见 [Milne, *Algebraic Number Theory*, v3.08, Proposition 2.19、Corollaries 2.20–2.21](https://www.jmilne.org/math/CourseNotes/ANT.pdf)。于是式 (24.8) 给
+
+$$
+1\le|p\nu(p)|\le p\kappa^{2L},\qquad
+1\le|D\nu(D)|\le D\kappa^{2Ld},
+\tag{24.11}
+$$
+
+分别证明式 (24.1) 及行列式界。物理 $\operatorname{Tr}\Xi=p\le1$，所以 $\Xi$ 的每个特征值至多为一。满秩时其最小特征值不小于全部特征值的乘积 $D$；最后除以同一个 $p$，即得式 (24.2)。没有对 $\rho$ 的分母另作一次整数范数估计。证毕。
+

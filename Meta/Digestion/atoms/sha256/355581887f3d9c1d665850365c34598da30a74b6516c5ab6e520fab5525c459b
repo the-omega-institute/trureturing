@@ -1,0 +1,2 @@
+**Remark 8.1 (What is not computed).** The remainder $\Omega_{\mathtt q}(0)$ is given only as a finite product of trigonometric sums, equivalently as a weighted spanning-tree count of the Cayley multigraph $\Gamma_{\mathtt q}$; no further closed form in $n$ is claimed, nor its asymptotics as $n\to\infty$.
+

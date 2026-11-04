@@ -1,0 +1,60 @@
+**定理 23.1（一次活动提升认证原来的二元整体）。** 对一个给定的定义 20.1 实际延伸，C99 蕴含两方具有定理 21.2 的有限复 $C^*$ 重构，且其实际联合关系正好是
+
+$$
+\boxed{M=M_{\rm q},
+\qquad \Gamma=B_A\otimes S_B+S_A\otimes B_B.}
+\tag{23.1}
+$$
+
+此时原整体的复乘法是通常的代数张量乘法，第三方与原两方具有同一正内部标尺。第三方不必预先指定为量子比特；任何满足 C99 的活动第三方都至少为四维实空间。反向，每个具有 (23.1) 的实际整体都存在一个四维活动数学延伸；该延伸若由给定关系体供应，就满足 C99。
+
+证明。若 C99 成立，对实际对象 $AB$ 与 $C$ 应用定理 21.2。它推出实际 $M$ 是 Jordan 比较，完全不需要先指定外层四通道或内层 Jordan 性。下面证明这会消去定理 22.1 的全部 $\chi$。
+
+设 $e_i$ 是 $Z_A$ 的最小中心幂等元，$f_j$ 是 $Z_B$ 的相应幂等元。在联合 Jordan 代数中令 $e=e_i\otimes1$。由模作用，
+
+$$
+\mathbb L_e=L_{e_i}\otimes I,
+\qquad \mathbb L_e^2=\mathbb L_e,
+\qquad M(e,e)=e.
+\tag{23.2}
+$$
+
+Jordan 恒等式 $[\mathbb L_y,\mathbb L_{M(y,y)}]=0$ 在 $y=e+tx$ 的一次项给
+
+$$
+2[\mathbb L_e,\mathbb L_{M(e,x)}]
+=[\mathbb L_e,\mathbb L_x].
+\tag{23.3}
+$$
+
+将 $x$ 分成 $\mathbb L_e$ 的零与一本征分量。在每个分量 $M(e,x)=\varepsilon x$，$\varepsilon\in\{0,1\}$，故 $(2\varepsilon-1)[\mathbb L_e,\mathbb L_x]=0$。于是 $\mathbb L_e$ 与所有实际左乘对易。对 $1\otimes f_j$ 同理。
+
+在交换代数中，一个这样的元 $e$ 满足 $\mathbb L_{M(e,x)}=\mathbb L_e\mathbb L_x$：在任意 $y$ 上用两次左乘对易即可将 $M(M(e,x),y)$ 改写成 $M(e,M(x,y))$。因此
+
+$$
+\mathbb L_{e_i\otimes f_j}
+=\mathbb L_{e_i\otimes1}\mathbb L_{1\otimes f_j}
+=L_{e_i}\otimes L_{f_j}.
+\tag{23.4}
+$$
+
+这与 $M_{\rm q}$ 的左乘相同。各 $e_i\otimes f_j$ 张成 $Z_A\otimes Z_B$；结合 (22.5)，全部 $F_1$ 为零，得到 (23.1)。变化模板已由定理 21.1 确定。
+
+设外层得到的标尺是 $\lambda'$。其对实际 $AB$ 的曲率律限制到 $a\otimes1,c\otimes1$，给
+
+$$
+K^A_{ac}\otimes I
+=-\lambda' D^A_{B_A(a,c)}\otimes I.
+$$
+
+内层同式的系数为 $\lambda$；活动性和 (21.6) 保证能选 $D^A_{B_A(a,c)}\ne0$，故 $\lambda'=\lambda$。此时
+
+$$
+m_{AB}=M-i\sqrt\lambda\,\Gamma=m_A\otimes m_B.
+\tag{23.5}
+$$
+
+反向，若实际内层已有 (23.1)，取一个内部数学对象 $C=\operatorname{Herm}_2(\mathbb C)$，用同一 $\lambda$ 定义其交换子作用。对实际 $AB$ 与 $C$ 采用通常复代数张量乘法的实、虚两部分，即得满足定义 20.1 的活动延伸和乘积 Frobenius 内积。这证明作为代数模型的延伸存在；指定关系体是否已供应这个具体对象，要按定义 25.1 的对象供应判定。
+
+由外层定理 21.2，任意可用的 $C$ 均有至少一个非交换复矩阵块，所以 $\dim_{\mathbb R}J_C\ge4$；上述量子比特构造达到四维。这里的三方提升指三个系统的关系，并不声称第三方的实维数为三。∎
+

@@ -13,12 +13,6 @@ proof_shape: cHaarChannel: bind-only; consumers: momentOp, cHaarSingle, twoCopyI
 proof_shape: momentOp: bind-only; consumers: claim, momentOp2HaarEntries, momentOp2Formula, moment22Reindex, instanceN4, instanceN5, result.
 proof_shape: hsNormSq: bind-only; consumers: claim, result.
 proof_shape: claim: bind-only; consumers: result.
-proof_shape: swapHermitian: bind-only; consumers: twirlSwapTrace.
-proof_shape: swapSquare: bind-only; consumers: twirlFormula.
-proof_shape: traceSwap: bind-only; consumers: twirlFormula.
-proof_shape: twirlTrace: bind-only; consumers: twirlFormula.
-proof_shape: twirlSwapTrace: bind-only; consumers: twirlFormula.
-proof_shape: twirlFormula: bind-only; consumers: haarAverageEntry.
 proof_shape: haarAverageEntry: bind-only; consumers: momentOp2Formula.
 proof_shape: cHaarSingle: bind-only; consumers: twoCopyIntegrand.
 proof_shape: jointIndex: bind-only; consumers: twoCopyIntegrand, momentOp2HaarEntries, jointId, jointSwap, jointSwapRev, momentOp2Formula.
@@ -91,12 +85,6 @@ Direct frozen dependencies: cHaarChannel: F1.
 Direct frozen dependencies: momentOp: F13, F11, F12, F1.
 Direct frozen dependencies: hsNormSq: none.
 Direct frozen dependencies: claim: F13, F11, F12, F1.
-Direct frozen dependencies: swapHermitian: none.
-Direct frozen dependencies: swapSquare: none.
-Direct frozen dependencies: traceSwap: none.
-Direct frozen dependencies: twirlTrace: F3, F8, F4, F5.
-Direct frozen dependencies: twirlSwapTrace: F3, F8, F4, F7.
-Direct frozen dependencies: twirlFormula: F3, F6, F8, F4, F5, F7.
 Direct frozen dependencies: haarAverageEntry: F3, F6, F8, F4, F5, F7.
 Direct frozen dependencies: cHaarSingle: F1.
 Direct frozen dependencies: jointIndex: none.
@@ -184,75 +172,6 @@ def claim : Prop := ∀ (d e t : ℕ) [NeZero e],
 
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
-
-theorem swapHermitian : ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))).IsHermitian := by
-  ext ⟨a,b⟩ ⟨c,d⟩
-  simp only [Matrix.conjTranspose_apply, Prod.swap_prod_mk, Prod.mk.injEq]
-  simp [and_comm, eq_comm]
-
-theorem swapSquare : (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) = 1 := by
-  have h : Equiv.prodComm n n * Equiv.prodComm n n = (1 : Equiv.Perm (n×n)) := by
-    ext x <;> rfl
-  simp [← Matrix.permMatrix_mul, h]
-
-theorem traceSwap : Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))) = (Fintype.card n : ℂ) := by
-  simp only [Matrix.trace, Matrix.diag, Fintype.sum_prod_type]
-  simp [Prod.ext_iff, eq_comm]
-
-private theorem twirlTrace (Y : Matrix (n×n) (n×n) ℂ) :
-    Matrix.trace (Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = Matrix.trace Y := by
-  have h := hermitian_fixed_pairing (haarAverage n) haarAverage_hermitian
-    (Matrix.vec (1 : Matrix (n×n) (n×n) ℂ)) (Matrix.vec Y) haarAverage_identity_fixed
-  have hv : Matrix.vec (Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = (haarAverage n).mulVec (Matrix.vec Y) := by rfl
-  rw [← hv, Matrix.star_vec_dotProduct_vec, Matrix.star_vec_dotProduct_vec] at h
-  simpa using h
-
-private theorem twirlSwapTrace (Y : Matrix (n×n) (n×n) ℂ) :
-    Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) := by
-  have h := hermitian_fixed_pairing (haarAverage n) haarAverage_hermitian
-    (Matrix.vec ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)))) (Matrix.vec Y) haarAverage_swap_fixed
-  have hv : Matrix.vec (Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap))) = (haarAverage n).mulVec (Matrix.vec Y) := by rfl
-  rw [← hv, Matrix.star_vec_dotProduct_vec, Matrix.star_vec_dotProduct_vec,
-      swapHermitian.eq] at h
-  exact h
-
-private theorem twirlFormula (Y : Matrix (n×n) (n×n) ℂ) (hN : 2 ≤ Fintype.card n) :
-    Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap)) =
-      ((Matrix.trace Y - Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) / (Fintype.card n : ℂ)) /
-        ((Fintype.card n : ℂ)^2 - 1)) • (1 : Matrix (n×n) (n×n) ℂ) +
-      ((Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) - Matrix.trace Y / (Fintype.card n : ℂ)) /
-        ((Fintype.card n : ℂ)^2 - 1)) • (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) := by
-  letI : Nontrivial n := Fintype.one_lt_card_iff_nontrivial.mp (by omega)
-  obtain ⟨a,b,hab⟩ := exists_pair_ne n
-  obtain ⟨x,y,hxy⟩ := haarAverage_image_span (Matrix.vec Y) a b hab
-  have hv : Matrix.of (Function.curry (((haarAverage n).mulVec (Matrix.vec Y)) ∘ Prod.swap)) = x • (1 : Matrix (n×n) (n×n) ℂ) + y • (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) := by
-    ext r c
-    change ((haarAverage n).mulVec (Matrix.vec Y)) (c,r) = _
-    exact congrFun hxy (c,r)
-  have h0 := twirlTrace Y
-  have h1 := twirlSwapTrace Y
-  rw [hv, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul,
-      Matrix.trace_one, traceSwap] at h0
-  rw [hv, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_smul, Matrix.mul_one,
-      swapSquare, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul,
-      traceSwap, Matrix.trace_one] at h1
-  simp only [Fintype.card_prod, Nat.cast_mul, smul_eq_mul] at h0 h1
-  have hn : (Fintype.card n : ℂ) ≠ 0 := by exact_mod_cast (show Fintype.card n ≠ 0 by omega)
-  have hden : (Fintype.card n : ℂ)^2 - 1 ≠ 0 := by
-    have hi : (2 : ℤ) ≤ Fintype.card n := by exact_mod_cast hN
-    have hz : (Fintype.card n : ℤ)^2 - 1 ≠ 0 := by nlinarith
-    exact_mod_cast hz
-  have hx : x = (Matrix.trace Y - Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) / (Fintype.card n : ℂ)) /
-      ((Fintype.card n : ℂ)^2 - 1) := by
-    rw [← h0, ← h1]
-    field_simp [hn, hden]
-    <;> ring
-  have hy : y = (Matrix.trace ((Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * Y) - Matrix.trace Y / (Fintype.card n : ℂ)) /
-      ((Fintype.card n : ℂ)^2 - 1) := by
-    rw [← h0, ← h1]
-    field_simp [hn, hden]
-    <;> ring
-  rw [hv, hx, hy]
 
 private theorem haarAverageEntry {n : Type*} [Fintype n] [DecidableEq n]
     (r c : ((n×n)×(n×n))) (hN : 2 ≤ Fintype.card n) :

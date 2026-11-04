@@ -1,0 +1,2 @@
+Even infinitely many pure-$M$ reads cannot recover the whole source $P$: Lemma 3.2 supplies a distinct source with the same pure-$M$ trace sequence and the same $g,\delta$. Exact gain-and-drift recovery is thus strictly weaker than complete-target recovery.
+

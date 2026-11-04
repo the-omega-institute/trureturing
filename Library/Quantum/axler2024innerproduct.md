@@ -9,6 +9,7 @@ claim: Cauchy-Schwarz for inner product spaces yields the covariance entry bound
 strata_touched:
   - D5/S3/Quantum/Information/CovarianceSumBound
   - D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays
+  - D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH
 license: citation-only
 triage: anchor
 ---
@@ -64,6 +65,10 @@ product $\langle d,x\rangle=\sum_j \overline{d_j}\,x_j$. Cauchy-Schwarz gives
     |⟨d,x⟩|² ≤ (Σ_j |d_j|²) (Σ_j |x_j|²),
 
 which is the statement of `cs_sq`.
+
+For `unit_dot_le`, take $\mathbb R^3$ with the standard inner product. For a unit
+vector $a$ and any $x$, Cauchy-Schwarz gives $|a\cdot x|\le\|a\|\,\|x\|=\|x\|$,
+which is the statement of `unit_dot_le`.
 
 ## What this note does and does not attest
 

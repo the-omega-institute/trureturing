@@ -175,7 +175,7 @@ def nvm (x : (i : Coord V) → Ω → Value G i) : ℕ → V → Ω → Bool
 noncomputable def W (x : (i : Coord V) → Ω → Value G i) (u : V) (d t : ℕ) : Ω → ℝ :=
   fun ω => ∑ i ∈ Finset.Icc 1 t, (if nvm x i u ω = nvm x (i+d) u ω then 1 else 0 : ℝ)
 
-private instance coordinateLawProbability (ε : unitInterval) (hNbr : ∀ v, ∃ w, G.Adj v w)
+instance coordinateLawProbability (ε : unitInterval) (hNbr : ∀ v, ∃ w, G.Adj v w)
     (i : Coord V) : IsProbabilityMeasure (coordinateLaw G ε hNbr i) := by
   cases i with
   | initial v => exact instIsProbabilityMeasureBernoulliMeasure
@@ -248,7 +248,7 @@ theorem nvm_measurable [MeasurableSpace Ω]
     exact Measurable.ite ((hx (.refresh (t+1) v)) (measurableSet_singleton true))
       (hx (.fresh (t+1) v)) hcopy
 
-private theorem W_measurable [MeasurableSpace Ω]
+theorem W_measurable [MeasurableSpace Ω]
     (x : (i : Coord V) → Ω → Value G i) (hx : ∀ i, Measurable (x i))
     (u : V) (d t : ℕ) : Measurable (W x u d t) := by
   classical
@@ -293,7 +293,7 @@ private theorem local_erasure (x y : ((i : Coord V) → Value G i)) (r : ℕ) (u
       have : x (.refresh (s+1) w) = true := hs ▸ hA.2 w hadj
       simp_all
 
-private theorem repetition_spin (a b : Bool) :
+theorem repetition_spin (a b : Bool) :
     (if a = b then 1 else 0 : ℝ) = (1 + sgn a * sgn b) / 2 := by
   cases a <;> cases b <;> norm_num [sgn]
 
@@ -482,7 +482,7 @@ private theorem witness_bound (u : V) (d r : ℕ) (x : ((i : Coord V) → Value 
   · norm_num
 
 omit [G.LocallyFinite] in
-private theorem W_bound (u : V) (d t : ℕ) (x : ((i : Coord V) → Value G i)) :
+theorem W_bound (u : V) (d t : ℕ) (x : ((i : Coord V) → Value G i)) :
     ‖W (fun i ω => ω i) u d t x‖ ≤ (t : ℝ) := by
   classical
   change ‖∑ i ∈ Finset.Icc 1 t, repetition x u d i‖ ≤ (t : ℝ)
@@ -870,7 +870,7 @@ private theorem nvm_sample_eq (x : (i : Coord V) → Ω → Value G i) : ∀ t v
     exact ih _ ω
 
 omit [G.LocallyFinite] in
-private theorem W_sample_eq (x : (i : Coord V) → Ω → Value G i) (u : V) (d t : ℕ) (ω : Ω) :
+theorem W_sample_eq (x : (i : Coord V) → Ω → Value G i) (u : V) (d t : ℕ) (ω : Ω) :
     W (fun i y => y i) u d t (fun i => x i ω) = W x u d t ω := by
   classical
   apply Finset.sum_congr rfl

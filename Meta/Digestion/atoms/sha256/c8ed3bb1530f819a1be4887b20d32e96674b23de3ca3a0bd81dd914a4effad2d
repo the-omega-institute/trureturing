@@ -1,0 +1,42 @@
+**定义 29.3（完整 C126 及重构前的 F 读法）。** C126 保留定义 10.2 的全部非 D 背景：原全语境商、P/G、AC、精确 $N_u$、X/Xs、全事件 R、原 F/遗忘/具名支持双返回和全部原有限合法性；只将原 D 条款换成 (29.2)。X 仍保持原 $D$ 并要求原交叉 $D$ 为零。所有旧对象、联合对象、原输出、标签及参考仍受相同全称量词约束。
+
+为使假设 2.6 的后重构写法不暗含一个复代数前提，先在 P/G 已给的 Jordan 结构上说明它所表达的同一实合同。令 $\tau_A^J$ 是每个原始幂等元迹为一的 Jordan 迹，在各简单理想上相加，以 $\tau_A^J(x\circ y)$ 取对偶 $\sharp$。对于幂等元 $e$，令
+
+$$
+\mathsf C_e=2L_e^2-L_e,\qquad
+E_A(e)=\mathsf C_e(E_A),\qquad
+\operatorname{supp}x=\text{正元 }x\text{ 的非零谱幂等元之和}.
+\tag{29.3}
+$$
+
+这些定义只用实谱和 Jordan 乘法。原 Heisenberg 箭头 $T_S$ 的状态密度表示为 $S^J=T_S^\sharp$。若原 $g^0$ 下的准备 Riesz 向量为 $x_\alpha$，唯一算子 $B_A^J$ 由
+
+$$
+g_A^0(x,y)=\tau_A^J((B_A^Jx)\circ y),\qquad
+\rho_\alpha^J=B_A^Jx_\alpha,\qquad
+S^J=B_B^J T_S^{\dagger_0}(B_A^J)^{-1}
+\tag{29.4}
+$$
+
+给出；两种自对偶性使 $B_A^J$ 为锥自同构。这里 $\sharp$ 按规范 Jordan 迹定义，不能不经核对就当作固定 $q$ 伴随或原物理返回。
+
+于是对假设 2.6 同一份原资料 $(S,U,q_{\rm ret})$，令
+
+$$
+e=\operatorname{supp}((S^J)^\sharp u_B),\qquad
+h=\operatorname{supp}(S^J u_A).
+$$
+
+$e,h$ 各在一个原简单理想内；原支持式正是
+
+$$
+U^J=\mathsf C_e U^J\mathsf C_h,\qquad
+U^JS^J|_{E_A(e)}=q_{\rm ret}\operatorname{Id},\qquad
+S^JU^J|_{E_B(h)}=q_{\rm ret}\operatorname{Id}.
+\tag{29.5}
+$$
+
+原反向资料仍使用同一个正数 $q_{\rm ret}$。F 的同一实际有限联合细记录和遗忘仍是 $\widehat\Phi_f^J=(S_a^J)_a$、$d_B\widehat\Phi_f^J=\sum_aS_a^J=\Phi_f^J$，包括原零标签、返回、失败和所有有限合法接续。这里的 $q_{\rm ret}$ 就是 (2.5) 的原标量，不是 $q_A$ 这个双线性型。
+
+一旦取得复重构，$\tau_A^J=\sum_s\operatorname{Tr}_{n_s}$、$\mathsf C_e(x)=exe$；(29.5) 在自伴随部就是 (2.5)，复线性延拓给整个角上的相同等式，反向限制也成立。因此 (29.3)–(29.5) 指明原 F 合同的实含义，没有增加复坐标或改变原支持资料。下面的标定定理完全不消费 F；F 只在重构后的原细支结论中使用。
+

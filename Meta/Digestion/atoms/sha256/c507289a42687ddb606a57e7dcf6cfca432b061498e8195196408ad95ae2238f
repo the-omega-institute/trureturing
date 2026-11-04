@@ -1,0 +1,14 @@
+### 命题 16.1（忠实保留的准确条件）
+
+设 $\eta$ 是目标载体上的态，令 $\rho=\Phi_*(\eta)$，即 $\operatorname{tr}(\rho X)=\operatorname{tr}(\eta\Phi(X))$。若 $\rho$ 在 $\mathcal A$ 上忠实，则 $\pi$ 单射。若 $\eta>0$，反向也成立。因此使用忠实 $\eta$ 时，单射性恰好等价于拉回态在被保留代数上的忠实性。
+
+**证明。**若 $\pi(X)=0$，则
+
+$$
+\operatorname{tr}(\rho X^\dagger X)=\operatorname{tr}(\eta\pi(X)^\dagger\pi(X))=0,
+$$
+
+输入忠实性给 $X=0$。反过来，若 $0\ne X\in\mathcal A$，单射性给 $\pi(X)^\dagger\pi(X)\ne0$，目标忠实性使其期望为正。
+
+这里的拉回态可能不忠实；不能因为认证参照 $\eta$ 忠实就省略条件。在 v88 的保忠实态条件期望 $E$ 特例中，$C_{89}$ 等价于两生成元已在可见代数内；一般动力学中，保同一忠实态是前文不动关系与平均粗化定理的条件，不应倒写成本轮基本候选的前提 [6](#ref-v88)。
+

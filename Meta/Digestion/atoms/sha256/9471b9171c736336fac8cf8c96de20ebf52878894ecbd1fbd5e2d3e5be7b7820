@@ -1,0 +1,39 @@
+## 三、把反全纯误差识别为实际极点决定的投影能量
+
+将式（2.7）转到单位盘，吸收单位模常数后写为
+
+$$
+\boxed{\Phi=\frac IJ,}
+
+$$
+
+<a id="eq-3-1"></a>
+
+(3.1)
+
+其中 $I,J$ 是互素 Blaschke 乘积。
+
+$J$ 的零点就是实际 $\Phi$ 的极点，按极点阶数计入。在边界上，
+
+$$
+g=I\bar J.
+$$
+
+定义模型空间
+
+$$
+\boxed{
+K_J=H^2\ominus JH^2.
+}
+
+$$
+
+<a id="eq-3-2"></a>
+
+(3.2)
+
+模型空间和相应再生核、正交基是标准 Hardy 空间工具；这里将它们应用于同一个实际 ζ 边界函数。[arxiv.org](https://arxiv.org/pdf/1312.5018?utm_source=chatgpt.com)
+
+<!-- editorial-note: n12 begin -->
+<a id="n12"></a>
+

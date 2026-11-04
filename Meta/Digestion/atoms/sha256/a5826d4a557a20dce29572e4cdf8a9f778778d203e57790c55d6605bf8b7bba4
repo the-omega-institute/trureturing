@@ -1,0 +1,37 @@
+#### 定理 10.4（局部统一终点必须由内部记录保留差别）
+
+设完整复线性等距算符 $V:H\to H_S\otimes H_R$ 对所有单位 $\psi$ 满足
+
+$$
+V\psi=\omega_0\otimes\eta_\psi,\qquad\left\lVert \omega_0\right\rVert =1.
+$$
+
+则
+
+$$
+\boxed{\langle \eta_\psi,\eta_\phi\rangle =\langle \psi,\phi\rangle .}
+$$
+
+记录载体中存在输入空间的等距副本，特别地 $\dim H_R\ge\dim H$。
+
+**证明。**
+
+对两输出取内积，使用 $V$ 等距及 $\omega_0$ 归一即得。
+任取输入正交单位基，其记录像也正交，所以维数结论成立。
+线性记录映射可直接定义为
+$(\langle \omega_0|\otimes I)V$。
+
+□
+
+SWAP 给最简单实现：
+
+$$
+\psi_S\otimes\omega_{0,R}
+\longmapsto
+\omega_{0,S}\otimes\psi_R.
+$$
+
+局部读口都看到 $\omega_0$，完整内容仍依赖输入。
+
+<a id="statement-10-5"></a>
+

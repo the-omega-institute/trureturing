@@ -1,0 +1,178 @@
+**定理 6.1（自缺陷、完整对称缺陷及单位生成元）。** 在定义 5.1–5.2 的同一实现上，置
+
+$$
+c_A=u_B(1+2u_A\ell_A),\qquad
+c_B=u_A(1+2u_B\ell_B).
+\tag{6.1}
+$$
+
+若 $k_B>0$，定义
+
+$$
+r_A=
+\frac{\epsilon c_B+
+ \sqrt{\epsilon^2c_B^2+4k_B\epsilon c_A d_B}}{2k_B},
+\qquad
+\delta_A=\min\{d_A,r_A\};
+\tag{6.2}
+$$
+
+若 $k_B=0$，定义 $\delta_A=d_A$，不对 (6.2) 作 $0/0$ 解释。交换 $A,B$ 定义 $r_B,\delta_B$；其中 $r_B$ 只在 $k_A>0$ 时使用。则两方均有
+
+$$
+\begin{aligned}
+\sup_{\|a\|=1}\|D^J_aa\|&\le\delta_J,\\
+\|D^J_ac+D^J_ca\|&\le2\delta_J\|a\|\|c\|,\\
+\|D^J_{1_J}\|_{\rm op}
+ &\le u_J\min\{d_J,2\delta_J\}.
+\end{aligned}
+\tag{6.3}
+$$
+
+$\delta_J\le d_J$ 是与残差证书独立的平凡截顶。未除以曲率的结论也对零曲率分支成立：对每个单位 $a\in J_A$，
+
+$$
+k_B\|D^A_aa\|^2
+ \le\epsilon\bigl(c_A d_B+c_B\|D^A_aa\|\bigr),
+\tag{6.4}
+$$
+
+另有交换双方的式子。因此不借任何正活动下界就有逐实现的条件证书；只有在给出相应条件控制后，它才是一个族上的消失模量。
+
+证明。局部每个导子都消去单位，并由[比较曲率 V95 定理 2.1 第一项及其证明](AURIC_COMPARISON_DYNAMICAL_CURVATURE_FINITE_FRAME_QUANTUM_V95.md#2-有限正比较下自守与复乘法成为结论)对局部内积斜伴随。该项只用有限维、交换含幺正 Frobenius 乘法与导子律，不用 C95、局部交替或双曲率抵消。下列斜伴随步骤仅施于局部 $D^J_a$，不施于实际 $\Gamma_H$。
+
+先定义线性算子族 $Q$ 和实际差 $R$：
+
+$$
+Q_{a\otimes b}=D^A_a\otimes L^B_b+L^A_a\otimes D^B_b,
+\qquad R_H=\Gamma_H-Q_H.
+\tag{6.5}
+$$
+
+$Q$ 由张量泛性质线性延拓，尚不被断言为实际 $\Gamma$。由 (5.1)，$M(c\otimes1_B,1_A\otimes d)=c\otimes d$。将这两个输入代入 (5.2)，两个输出项各用一次模作用，得到对全部 $H,c,d$ 的精确等式
+
+$$
+R_H(c\otimes d)
+ =E(H,c\otimes1_B,1_A\otimes d).
+\tag{6.6}
+$$
+
+完整报告在此提供了比逐个简单张量估计更直接的界。将 $R$ 视为线性映射 $V\otimes V\to V$，其系数平方和为
+
+$$
+\sum_{\mu,i,j}
+ \|E(v_\mu,e_i\otimes1_B,1_A\otimes f_j)\|^2
+ \le u_A^2u_B^2\epsilon^2.
+\tag{6.7}
+$$
+
+因为 $(e_i\otimes1_B/u_B)_i$ 和 $(1_A/u_A\otimes f_j)_j$ 分别是 $V$ 内的正交单位族，可以各自补成正交单位基；(6.7) 左端除去单位因子后只是 $E$ 在三个输入槽上的 Hilbert–Schmidt 平方和的一部分。因此包括任意纠缠输入 $Y$，均有
+
+$$
+\|R_HY\|\le\rho\|H\|\|Y\|,
+\qquad \rho=\epsilon u_Au_B.
+\tag{6.8}
+$$
+
+这里没有把简单张量的范数界不经证明地延拓到任意张量，也没有隐去维数因子；完整平方和本身承担了延拓。
+
+记实际左乘为 $\mathbb L_XY=M(X,Y)$，并置
+
+$$
+F(X,Y)=M(X,Y)-(S_A\otimes S_B)(X,Y),\qquad
+K^J_{ac}=[L^J_a,L^J_c].
+\tag{6.9}
+$$
+
+$F$ 交换，但不要求其属于任何通道空间。残差定义的算子形式是
+
+$$
+[\Gamma_H,\mathbb L_X]-\mathbb L_{\Gamma_HX}
+       =E(H,X,\,\cdot\,).
+\tag{6.10}
+$$
+
+在此依次取 $H=a\otimes b$、$X=c\otimes1_B$ 与 $X=1_A\otimes d$。用 (5.1)、(6.5)，以及局部导子恒等式 $[D_a,L_c]=L_{D_ac}$，得到
+
+$$
+\begin{aligned}
+\mathbb L_{D^A_ac\otimes b}
+ &=L^A_{D^A_ac}\otimes L^B_b
+        +K^A_{ac}\otimes D^B_b+\mathcal A_{a,b,c},\\
+\mathcal A_{a,b,c}
+ &=[R_{a\otimes b},L^A_c\otimes I]
+                 -E(a\otimes b,c\otimes1_B,\,\cdot\,),\\
+\mathbb L_{a\otimes D^B_bd}
+ &=L^A_a\otimes L^B_{D^B_bd}
+        +D^A_a\otimes K^B_{bd}+\mathcal B_{a,b,d},\\
+\mathcal B_{a,b,d}
+ &=[R_{a\otimes b},I\otimes L^B_d]
+                 -E(a\otimes b,1_A\otimes d,\,\cdot\,).
+\end{aligned}
+\tag{6.11}
+$$
+
+特别地，没有在展开中使用 $D_1=0$。由 (5.4)、(6.8) 和 $\|[T,U]\|\le2\|T\|\|U\|$，
+
+$$
+\begin{aligned}
+\|\mathcal A_{a,b,c}\|_{\rm op}
+ &\le\epsilon c_A\|a\|\|b\|\|c\|,\\
+\|\mathcal B_{a,b,d}\|_{\rm op}
+ &\le\epsilon c_B\|a\|\|b\|\|d\|.
+\end{aligned}
+\tag{6.12}
+$$
+
+现在固定任意 $a\in J_A$，令 $z=D^A_aa$。第一条 (6.11) 取 $c=a$，因 $K^A_{aa}=0$，
+
+$$
+F(z\otimes b,Y)=\mathcal A_{a,b,a}Y.
+\tag{6.13}
+$$
+
+另取 $f,g,b\in J_B$、$c\in J_A$，记 $w=D^B_fg$。第二条 (6.11) 作用于 $z\otimes b$，再用 $F$ 的交换性和 (6.13)，得
+
+$$
+\begin{aligned}
+D^A_cz\otimes K^B_{fg}b
+ &=F(c\otimes w,z\otimes b)
+                    -\mathcal B_{c,f,g}(z\otimes b)\\
+ &=\mathcal A_{a,b,a}(c\otimes w)
+                    -\mathcal B_{c,f,g}(z\otimes b).
+\end{aligned}
+\tag{6.14}
+$$
+
+所以
+
+$$
+\|D^A_cz\|\|K^B_{fg}b\|
+ \le\epsilon\|b\|\|c\|\|f\|\|g\|
+          \bigl(c_A d_B\|a\|^2+c_B\|z\|\bigr).
+\tag{6.15}
+$$
+
+若 $k_B>0$，从定义 5.2 的有限表选单位基向量 $f,g,b$ 达到该最大值。再取 $\|a\|=1$、$c=a$。局部斜伴随性给
+
+$$
+\|z\|^2
+ =g_A(D^A_aa,z)=-g_A(a,D^A_az)
+ \le\|D^A_az\|.
+\tag{6.16}
+$$
+
+(6.15) 因而推出 (6.4)。$k_B=0$ 时 (6.4) 两侧仍满足所示非负不等式，但不提供除法。对 $k_B>0$，不等式
+$k_Bs^2-\epsilon c_Bs-\epsilon c_A d_B\le0$
+在 $s\ge0$ 中的解区域正是 $0\le s\le r_A$，包括 $\epsilon=0$、$d_B=0$ 或常数项为零的情形。另由 (5.5) 有 $\|z\|\le d_A$，得到第一条 (6.3)。交换双方得另一方。
+
+为证明完整双线性结论，置 $q_J(a)=D^J_aa$。实线性给 $q_J(ta)=t^2q_J(a)$，故 $\|q_J(a)\|\le\delta_J\|a\|^2$ 对全部 $a$ 成立。极化恒等式为
+
+$$
+D^J_ac+D^J_ca
+ =\tfrac12\bigl(q_J(a+c)-q_J(a-c)\bigr).
+\tag{6.17}
+$$
+
+当 $a,c$ 均为单位时，平行四边形恒等式给右端范数不超过 $2\delta_J$。双线性缩放覆盖任意非零 $a,c$，零输入时两侧均为零。最后 $D^J_a1_J=0$，故取 $c=1_J$ 得 $\|D^J_{1_J}a\|\le2u_J\delta_J\|a\|$；(5.5) 又独立给 $u_Jd_J$ 的上界。这证明全部 (6.3)。∎
+

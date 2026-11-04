@@ -1,0 +1,202 @@
+**Theorem 43.3 (quantitative all-effect phase isolation).**
+Suppose $0<\xi_0<4$ and $D_{\mathrm{sel}}(\xi_0)>0$.
+There are an open interval $I$ about $\xi_0$, with
+$\overline I\subset(0,4)$, and constants $r,c_1,c_2>0$ such that
+every original phase pair $(E,U)$ satisfying
+
+$$
+ \rho(E,U)=\xi\in I,\qquad d_U(U,\xi)<r
+\tag{43.5}
+$$
+
+has coordinates (43.2) near one of the selected orientations and
+obeys
+
+$$
+\begin{aligned}
+ f(E,U)-N(\xi)
+ &\ge c_1\bigl[(\delta-\delta_\xi)^2+a^2+b^2\bigr]
+                         +\frac{49}{360}\epsilon(E),\\
+ f(E,U)-N(\xi)
+ &\ge c_2 d_U(U,\xi)^2+\frac{49}{360}\epsilon(E).
+\end{aligned}
+\tag{43.6}
+$$
+
+Equality $f(E,U)=N(\xi)$ within (43.5) holds if and only if
+$(E,U)\in\mathcal G_\xi$. Every normalized positive effect at
+these actual feedbacks is included, with no rank or coherence-phase
+restriction on the input.
+
+*Proof.* Work first near one selected orientation at $\xi_0$.
+The selected level and feedback lie in the open set $\Omega$ of
+Theorem 40.4. Shrink a product neighborhood in level and chart
+coordinates so that all its points remain in $\Omega$. In particular
+$uv>0$, the negative sign has $t_-<0$, and the positive pure endpoint
+$k=t_+$ satisfies $0<k<1$ and $k<J_+$. Equations (43.3) and (36.2)
+give, with $t=\xi/2$,
+
+$$
+                  k=t-\delta=:q,\qquad p=1-q.
+\tag{43.7}
+$$
+
+The unique minimizing effect at this same actual feedback and
+original level is
+
+$$
+ \widehat E=\left[T\begin{pmatrix}
+ p&\sqrt{pq}\,\bar P Q/(uv)\\
+ \sqrt{pq}\,P\bar Q/(uv)&q
+ \end{pmatrix}T^\dagger\right]^{\mathsf T}.
+\tag{43.8}
+$$
+
+It is positive, trace one and rank one, and the strict condition
+$k<J_+$ makes the positive sign uniquely minimizing in the original
+joint distance. The exclusion $t_-<0$ applies to every effect at
+this $U$ and level, not just to (43.8). The inherited comparison is
+
+$$
+ f(E,U)\ge f(\widehat E,U)+\frac{49}{360}\epsilon(E).
+\tag{43.9}
+$$
+
+This comparison is unconditional on full-domain geometric optimality.
+It retains mixed effects and singular effects on the exact feasible
+arc, including its zero-coherence upper endpoint.
+
+Define the reduced analytic objective on this neighborhood by
+
+$$
+ \Psi(t,\delta,a,b)
+   =d^2p+e^2q-(\sqrt p\,u+\sqrt q\,v)^2-2\kappa t.
+\tag{43.10}
+$$
+
+Here $u,v$ are evaluated on (43.2), and $p,q$ are (43.7).
+It equals $f(\widehat E,U)$ by the original same-feedback identity.
+All square roots and amplitude moduli are analytic because
+$p,q,u,v$ are positive. At $a=b=0$ it is exactly
+$\mathcal H_{+,t}(\delta)=H^+_\delta(t-\delta)$ of (37.12).
+Put $\gamma_c=c-h>0$ and, for these scalar parameters, write
+
+$$
+\begin{aligned}
+ y&=\sqrt{1-x^2},&
+ S_0&=2(hx+c)\sqrt p+2hy\sqrt q,\\
+ L_a&=\frac{hx^2}{1+x}
+       \left(\frac{\gamma_c\sqrt p}{hx+c}+\frac{\sqrt q}{y}\right),&
+ L_b&=\gamma_c\sqrt p+
+                      \frac{(h^2x-s^2)\sqrt q}{hy},\\
+ K&=\begin{pmatrix}L_a&-s\sqrt q\\-s\sqrt q&L_b\end{pmatrix}.
+\end{aligned}
+\tag{43.11}
+$$
+
+These are the coefficients of (36.43), with $S_0>0$, $L_a>0$.
+For every nearby $t,\delta$, (36.52)--(36.54) give
+
+$$
+ \Psi(t,\delta,a,b)
+ =\mathcal H_{+,t}(\delta)
+       +2S_0\bigl(L_aa^2+L_bb^2-2s\sqrt q\,ab\bigr)
+       +o(a^2+b^2).
+\tag{43.12}
+$$
+
+The expansion holds for both orientations. Analyticity shows that
+$\partial_a\Psi=\partial_b\Psi=0$ identically along $a=b=0$;
+therefore the scalar--phase entries of its Hessian vanish there.
+The scalar stationary point is $\delta_\xi$, by Theorem 37.5.
+
+To bound its scalar Hessian, use $F,G$ in (37.12). On the interior
+of the positive feasible scalar interval, (37.22) gives
+$F''\le1-8hc$ and $G''\le0$. They are positive concave functions
+there, so their geometric mean is concave. Indeed its second
+derivative is
+
+$$
+ (\sqrt{FG})''
+   =\tfrac12\sqrt{G/F}\,F''+\tfrac12\sqrt{F/G}\,G''
+                    -\frac{(F'G-FG')^2}{4(FG)^{3/2}}\le0.
+\tag{43.13}
+$$
+
+The remaining terms of $\mathcal H_{+,t}$ are affine in $\delta$.
+Consequently, at every selected interior point,
+
+$$
+\begin{aligned}
+ h_t&:=\mathcal H''_{+,t}(\delta_\xi)\ge8hc-1>0,\\
+ \nabla^2_{(\delta,a,b)}\Psi(t,\delta_\xi,0,0)
+       &=\begin{pmatrix}h_t&0\\0&4S_0K\end{pmatrix},&
+ \det K&=D_{\mathrm{sel}}(\xi).
+\end{aligned}
+\tag{43.14}
+$$
+
+The scalar implicit function theorem applies to
+$\mathcal H'_{+,t}(\delta)=0$ because $h_t>0$.
+The selected solution is locally analytic in $t$: uniqueness and
+continuity from Theorems 37.5 and 39.2 identify it with that implicit
+solution. Thus its stationary point in (43.14) varies analytically.
+At $\xi_0$, $L_a>0$ and $\det K>0$ make the whole three-variable
+Hessian positive definite. By continuity choose a closed parameter
+interval about $\xi_0$ and a small convex coordinate ball about
+each $(\delta_\xi,0,0)$ on which the Hessian is uniformly bounded
+below by $\mu I_3$ for some $\mu>0$. This is possible by first
+taking a ball at the base point and then shrinking the parameter
+interval so that its centers remain inside a smaller ball.
+
+For $\mathbf z=(\delta,a,b)$ and
+$\mathbf z_\xi=(\delta_\xi,0,0)$, Taylor's integral formula on
+the connecting segment gives
+
+$$
+\begin{aligned}
+ \Psi(t,\mathbf z)-N(\xi)
+ &=\int_0^1(1-s_0)(\mathbf z-\mathbf z_\xi)^{\mathsf T}
+     \nabla^2\Psi(t,\mathbf z_\xi+s_0(\mathbf z-\mathbf z_\xi))
+                 (\mathbf z-\mathbf z_\xi)\,ds_0\\
+ &\ge\frac\mu2\|\mathbf z-\mathbf z_\xi\|_2^2.
+\end{aligned}
+\tag{43.15}
+$$
+
+The constant and linear Taylor terms are respectively $N(\xi)$
+and zero. Shrinking the balls if necessary, bounded chart derivatives
+give a uniform $C>0$ with
+
+$$
+ \|U-\lambda\operatorname{diag}
+                 (w_\tau(\delta_\xi,0,0))U_+\|_{\mathrm F}
+       \le C\|\mathbf z-\mathbf z_\xi\|_2.
+\tag{43.16}
+$$
+
+The displacement $d_U$ is no larger than the left side.
+Both orientations have the same objective calculation; take the
+smaller of their neighborhoods and bounds. Their selected orbits
+are disjoint at positive levels, and remain disjoint over a small
+closed level interval. The complete chart and its local inverse,
+together with compactness of the scalar circle, supply $r>0$ such
+that every phase feedback with $d_U<r$ lies in one of these coordinate
+balls, uniformly over a smaller interval $I$. More explicitly, a
+failure of such a radius would give levels in that closed interval
+and phase feedbacks converging to its selected graph from outside
+the open chart neighborhoods. A convergent subsequence and the
+continuity of that graph contradict their openness.
+This proves complete neighborhood coverage, not just coverage of
+chosen variation curves.
+
+Combining (43.9), (43.15) and (43.16) proves (43.6), with
+$c_1=\mu/2$ and $c_2=\mu/(2C^2)$ after any needed reduction of
+$\mu$. If $f=N$, (43.15) forces
+$\delta=\delta_\xi$, $a=b=0$. At that actual selected feedback,
+Theorem 40.4 gives the unique minimizing effect (43.8), which is
+the selected effect in (39.2). In particular a pure effect with
+misaligned coherence is not an additional equality case.
+Conversely every pair in $\mathcal G_\xi$ has $f=N(\xi)$ and
+satisfies (43.5). This proves the exact equality assertion. $\square$
+

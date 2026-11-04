@@ -1,0 +1,51 @@
+**定理 3.3（完整标架恒等式与中心的不可消去项）。** 定义 3.1 的任意自洽有向关系球满足
+
+$$
+\boxed{\mathfrak F^2
+=n(n-1)-2\operatorname{tr}Q+\tfrac12\operatorname{tr}Q^2
+=\tfrac12\|Q-2I\|_{\mathrm{HS}}^2+n(n-3).}\tag{3.1}
+$$
+
+$\mathfrak F$ 与正交标架无关。若括号中心的维数为 $z_0$，则
+
+$$
+\boxed{\mathfrak F^2\ge n(n-3)+2z_0,}\tag{3.2}
+$$
+
+等号恰当且仅当 $Q=2I$ 在中心正交补上成立。
+
+证明。度量不变性给 $\operatorname{ad}_u^\dagger=-\operatorname{ad}_u$。令 $T:\Lambda^2V\to V$，$T(u\wedge v)=[u,v]$。结构常数 $\langle[e_i,e_j],e_k\rangle$ 是全交替三形式，故
+
+$$
+TT^*=Q/2,\qquad
+\sum_{i<j}\|[e_i,e_j]\|^2=\tfrac12\operatorname{tr}Q.
+$$
+
+逐对计算得
+
+$$
+\|K_{e_i,e_j}\|_{\mathrm{HS}}^2=2,\qquad
+\langle K_{e_i,e_j},\operatorname{ad}_{[e_i,e_j]}\rangle_{\mathrm{HS}}
+=-2\|[e_i,e_j]\|^2.
+$$
+
+另有
+
+$$
+\begin{aligned}
+\sum_{i<j}\|\operatorname{ad}_{[e_i,e_j]}\|_{\mathrm{HS}}^2
+&=\sum_{i<j}\langle Q[e_i,e_j],[e_i,e_j]\rangle\\
+&=\operatorname{tr}(QTT^*)=\tfrac12\operatorname{tr}Q^2.
+\end{aligned}
+$$
+
+平方展开的交叉项是 $-4\sum_{i<j}\|[e_i,e_j]\|^2$。合并三项，得到 (3.1)。$\mathfrak F$ 是线性映射 $u\wedge v\mapsto E_{u,v}$ 从 $\Lambda^2V$ 到 $\mathfrak{so}(V)$ 的 Hilbert–Schmidt 范数，因而不依赖所选正交基。
+
+最后
+
+$$
+\langle Qu,u\rangle=\sum_i\|[e_i,u]\|^2
+$$
+
+给 $\ker Q=Z(V)$。在中心上 $Q-2I=-2I$，给平方和贡献 $4z_0$；其余部分非负，得到 (3.2) 及等号条件。∎
+

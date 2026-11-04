@@ -1,0 +1,61 @@
+**Theorem 27.2 (exact selected-task recovery, route agreement and
+dynamics compatibility).** Separately for each
+$Z\in\{S_\chi,B_\chi,T_\chi,M_\chi\}$ on this Ready domain,
+
+$$
+Z(h)=Z(h')\quad\Longleftrightarrow\quad h\sim_{Q_\chi}h'.
+\tag{AA.93}
+$$
+
+All twelve mathematical recovery maps between their actual images are
+finite on finite inputs, agree along every route, and commute with the
+specified lawful settled requests and their complete replies/successors.
+The actually callable maps supplied by §26 use current grants; the
+mathematical maps do not issue grants. If $A\supseteq R_\chi(t)$, an
+actual old-full-tape handoff supplies these views; its exact access
+requirement is stronger than direct selected access whenever
+$R_\chi(t)\ne H_\chi(t)$. Bare $S_0,B_0,T_c$ alone do not acquire the
+missing selected order on the family (AA.88).
+
+Proof. Source support and terminals recover one another by Definition
+17.3, and each parses the actual $t$. Their selected annotations then
+decode exactly $\nu_\chi$ by Theorem 24.2. Conversely, from $(t,\nu)$
+project the strict-descendant selected sides at each branch and attach
+them to its source support or terminals. No unselected serial extension
+is chosen for this operation. Theorem 17.2 reconstructs $t$ from $T_c$
+and constructs $T_c$ from $t$; the selected serial component is unchanged.
+Reading the selected fields of $M_\chi$ gives the same source and words;
+from $(t,\nu)$ construct the corresponding canonical source-indexed
+retained-object description with its fixed entry and binding roles.
+This describes the retained expression in the fixed installation; it
+does not create a live object or permission from a printed description.
+Section 26 independently constructs and retains the callable object.
+
+These operations recover exactly (AA.92) from each view and reconstruct
+its view on the actual image. Composing them therefore returns that
+same view, with no separately chosen marginal representative. Inverse
+and triangle identities, and agreement of arbitrary routes, follow.
+
+Equal $(t,\nu)$ gives the same guards, source replies and historical
+selected event at every index. NextSelected consequently navigates to
+the same current leaf and performs the same current source event. A
+successful event changes the source by (AA.65) and the selected component
+by (AA.91), including empty new branch tapes. Queries and refusals
+preserve both. Thus legality, complete replies and settled successors
+factor through (AA.92), and the explicit view maps commute with these
+updates. Induction handles every finite request sequence. This is the
+concrete legality/readout/successor correspondence required by the
+existing typed-view and predictive-memory suppliers, not a new generic
+quotient theorem.
+
+Conversely distinct $t$ values differ at a finite Tag address. At equal
+$t$, distinct selected words differ at a finite FetchSelected index;
+a proper-prefix difference is separated by in-range versus OutOfRange.
+Thus task equivalence implies equal (AA.92), proving each kernel in
+(AA.93). Handoff sufficiency and actual use follow from Theorems 24.2
+and 26.3, and its necessity from the same-source witnesses in Theorem
+24.2. Equation (AA.88) gives equal bare geometry/causal membership and
+different selected words and lawful NextSelected successors. Hence the
+annotations cannot be removed from these four recovery assertions.
+$\square$
+

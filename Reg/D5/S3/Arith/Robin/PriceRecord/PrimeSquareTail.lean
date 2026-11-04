@@ -99,4 +99,90 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms family
 #print axioms audit
 
+namespace LogarithmicRefinement
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∃ Y : ℝ, Real.exp 1 < Y ∧ ∀ y z : ℝ, Y ≤ y → y ≤ z →
+    let S := R.readout () y z
+    (|S - (1 / (y * Real.log y) - 1 / (y * Real.log y ^ 2)) +
+        (1 / (z * Real.log z) - 1 / (z * Real.log z ^ 2))| ≤
+      2 / (y * Real.log y ^ 3) + 5 / (y * Real.log y ^ 9)) ∧
+    (|S - (1 / (y * Real.log y) - 1 / (y * Real.log y ^ 2) + 2 / (y * Real.log y ^ 3)) +
+        (1 / (z * Real.log z) - 1 / (z * Real.log z ^ 2) + 2 / (z * Real.log z ^ 3))| ≤
+      6 / (y * Real.log y ^ 4) + 5 / (y * Real.log y ^ 9))
+
+def rejected : Realization signature :=
+  realize signature (fun _ y _ =>
+    2 / (y * Real.log y ^ 3) + 5 / (y * Real.log y ^ 9) + 1) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  rintro ⟨Y, _, hY⟩
+  have h := (hY Y Y le_rfl le_rfl).1
+  change |(2 / (Y * Real.log Y ^ 3) + 5 / (Y * Real.log Y ^ 9) + 1) -
+      (1 / (Y * Real.log Y) - 1 / (Y * Real.log Y ^ 2)) +
+      (1 / (Y * Real.log Y) - 1 / (Y * Real.log Y ^ 2))| ≤ _ at h
+  have ha := le_abs_self ((2 / (Y * Real.log Y ^ 3) + 5 / (Y * Real.log Y ^ 9) + 1) -
+      (1 / (Y * Real.log Y) - 1 / (Y * Real.log Y ^ 2)) +
+      (1 / (Y * Real.log Y) - 1 / (Y * Real.log Y ^ 2)))
+  linarith
+
+def family : Registration arena (type_of% @prime_square_tail_logarithmic_refinements) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨prime_square_tail_logarithmic_refinements, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨1, 1, 2, ?_⟩
+    norm_num [actual, realize, sum_Ioc_succ_top, Finset.sum_filter]
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@prime_square_tail_logarithmic_refinements) (Realization signature) Type Unit where
+  unitName :=
+    `D5.S3.Arith.Robin.PriceRecord.PrimeSquareTail.prime_square_tail_logarithmic_refinements.audit
+  realizationName :=
+    `Reg.D5.S3.Arith.Robin.PriceRecord.PrimeSquareTail.LogarithmicRefinement.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ y z =>
+    ∑ p ∈ (Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime, (1 : ℝ) / (p : ℝ) ^ 2)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.PriceRecord.PrimeSquareTail
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["arg", "body", "arg", "body", "body", "body", "body", "value"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
+
+end LogarithmicRefinement
+
 end Reg.D5.S3.Arith.Robin.PriceRecord.PrimeSquareTail

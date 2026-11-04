@@ -1,0 +1,28 @@
+# QThirtyTwoStructural
+
+## Abstract
+
+Second peak: unbounded q-32 selector
+
+For P>=7, put p=2^P,h=2^H,j=(50(4096p+33)) mod 129,v=(4096p+33-80j)/129. Since 80*50=1 mod 129, the exact equation is 129v+80j=4096p+33 with 0<=j<=128 and 1<=v<=32p. Set m=hj,M=h(50p-1),before=true. Then R=5v-1+h(768p+129j), and the first old and fresh endpoints are 10v-2+h(1536p+258j) and 20v-2+h(69120p+258j). Their upper slacks against A-1=132096hp+4 are positive under the residue and stock bounds. All other physical endpoint and slack polynomials have nonnegative coefficients under p=u+128,h=w+1.
+
+The bound j<2p and identity 50p-1=25*2^(P+1)-1 yield predecessor-mask inclusion. The dyadic shift by H transports the literal mask. The five small-p branches p=4,8,16,32,64 use (v,m/h,M/h)=(123,7,199),(245,15,399),(499,15,799),(994,36,1599),(2002,49,3199), always before=true. Each branch proves every integer window at every h>=1, including h=1,2, and transports its exact base mask by the dyadic shift. No bound on H or feasibility assumption is introduced.
+
+Finite consumes this structural theorem in every corresponding parameter branch without retaining a positive witness table. The unchanged original A2 endpoint is the consumer; the entire Circle objective and official delivery remain open.
+
+**Theorem 1.1 (q_thirtytwo_dyadic_good).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QThirtyTwoStructural.q_thirtytwo_dyadic_good`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QThirtyTwoStructural.q_thirtytwo_dyadic_good` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural P,H with 2<=P there exist natural v,m,M and before:Bool such that Good (2^P) 32 (2^H) v m M before. Good includes 1<=v, 2v<=4pq, m<M, 2M<8hpq, literal Submask m M, and every original old/new physical window.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QThirtyTwoStructural.q_thirtytwo_dyadic_good`
+- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QTwoStructural](QTwoStructural.md)

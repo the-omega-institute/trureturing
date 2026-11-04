@@ -1,0 +1,132 @@
+**Theorem 4.2 (complete signed law and optimal terminal decision).** For
+the actual sources of Definition 4.1, put $\Delta H=H_1-H_0=209952$.
+For every pair of partitions of $[4]$,
+
+$$
+\begin{aligned}
+p_1(\pi,\sigma)-p_0(\pi,\sigma)
+ &=\frac{\Delta H}{1944^4}K(\pi,\sigma),\\
+K(\pi,\sigma)
+ &=(-1)^{|\pi|+|\sigma|}
+ \bigl(|\mathcal M(\pi)|\,|\mathcal M(\sigma)|
+       -|\mathcal M(\pi)\cap\mathcal M(\sigma)|\bigr).
+\end{aligned}
+\tag{UJB.7601}
+$$
+
+Thus $K=0$ if either partition has a block of size at least three.
+With $\operatorname{TV}(p_0,p_1)=\frac12\sum_{\pi,\sigma}|p_1-p_0|$,
+
+$$
+\operatorname{TV}(p_0,p_1)=\frac1{1417176},\qquad
+\operatorname{Succ}_{1/2}^{\mathrm{opt}}
+ =\frac12+\frac1{2834352}.
+\tag{UJB.7602}
+$$
+
+A permitted optimal terminal rule chooses $S_1$ when
+$|\pi|+|\sigma|$ is even and $S_0$ when it is odd. Every zero-difference
+atom can instead be assigned either decision, or randomized.
+
+Proof. The counting argument also applies to two finite simple typed
+bipartite graphs with common positive parameters
+$\ell,r,d_A,d_T$, where $M=\ell d_A=rd_T$. For prescribed equalities
+$(\rho,\tau)$, let $Q(\rho,\tau)$ be the quotient graph with one vertex
+per block on each side and edge $j$ between the blocks containing $j$.
+Let $F_i(\rho,\tau)$ count its type-preserving homomorphisms into $G_i$.
+There is exactly one such map for each ordered edge tuple satisfying
+the prescribed equalities. Parallel edges collapse for this count,
+since the host is simple, but the probability denominator stays $M^4$.
+No automorphism division and no exclusion of unused cross-edges occur.
+
+By (UJB.7505), a connected tree with $u$ left and $v$ right vertices
+has $M d_T^{u-1}d_A^{v-1}$ homomorphisms. Products give the forest
+counts. A simple bipartite graph with at most four edges and no isolated
+vertices is a forest unless it is exactly a four-cycle. Here that
+cycle occurs exactly when $\rho,\tau$ are distinct members of
+$\mathcal P$: both sides have two blocks of size two, and the distinct
+matchings make all four endpoint pairs different. There are six ordered
+cases. Therefore $F_1-F_0=\Delta H$ on these six cases and is zero
+elsewhere. This uses the common degrees, not graph isomorphism.
+
+Let $N_i(\pi,\sigma)=M^4p_i(\pi,\sigma)$. Each prescribed equality
+count is the sum of $N_i$ over its coarsenings. Finite partition-lattice
+inversion gives the full exact law, as well as its signed difference:
+
+$$
+\begin{aligned}
+N_i(\pi,\sigma)
+ &=\sum_{\rho\succeq\pi,\ \tau\succeq\sigma}
+   \mu(\pi,\rho)\mu(\sigma,\tau)F_i(\rho,\tau),\\
+N_1(\pi,\sigma)-N_0(\pi,\sigma)
+ &=\Delta H
+   \sum_{\substack{\rho\in\mathcal M(\pi),\,
+                    \tau\in\mathcal M(\sigma)\\\rho\ne\tau}}
+       \mu(\pi,\rho)\mu(\sigma,\tau).
+\end{aligned}
+\tag{UJB.7603}
+$$
+
+Here $\mu$ is the inverse of the refinement incidence matrix. On an
+interval from $\pi$ to a matching $\rho$, each pair is either already
+a block or is obtained by merging two singletons. The interval is a
+product of two-element chains, whose inverse coefficients are $-1$
+for a merge and $1$ for no merge. Consequently
+$\mu(\pi,\rho)=(-1)^{|\pi|-2}$. All surviving summands in the second
+line have the same sign. Their number is the number of ordered distinct
+compatible matchings, exactly the parenthesis in (UJB.7601). A block
+of size at least three has no compatible matching. This proves every
+signed atom, without an enumeration of the $225$ pairs.
+
+For a fixed matching $\rho$, its refinements are itself, its two
+one-pair splittings, and the discrete partition. Their coefficients
+are $1,-1,-1,1$, with absolute sum $4$. Since the contributions to each
+$K$ have a common sign, absolute values introduce no cancellations:
+
+$$
+\sum_{\pi,\sigma}|K(\pi,\sigma)|=6\cdot4\cdot4=96,
+\qquad \sum_{\pi,\sigma}K(\pi,\sigma)=6(1-1-1+1)^2=0.
+\tag{UJB.7604}
+$$
+
+For an explicit compact description, the partition types with nonempty
+$\mathcal M$ are the discrete partition $D$, six one-pair partitions
+$E$, and three matchings $P$. Each $E$ has one matching completion,
+with two $E$ per matching. The cells $DD$, $DE/ED$, $DP/PD$ contribute
+respectively $6,-2,2$, with multiplicities $1,12,6$. Cells $EE$, $EP/PE$
+and $PP$ with different completions contribute $1,-1,1$, with
+multiplicities $24,24,6$. All other cells are zero. Equivalently the
+coefficients $(-2,-1,0,1,2,6)$ have multiplicities
+$(12,24,152,30,6,1)$.
+
+Thus generally $\operatorname{TV}=48|\Delta H|/M^4$. In the actual
+sources, (UJB.7506) gives
+
+$$
+H_0=17496\cdot2^2+2187\cdot8^2=209952,\qquad
+H_1=6561\cdot8^2=419904,
+$$
+
+and hence $48\cdot209952/1944^4=1/1417176$. For any randomized terminal
+decision with probability $d(h)$ of choosing $S_1$ at atom $h$, its
+equal-prior success is
+
+$$
+\frac12\sum_h\bigl[p_0(h)(1-d(h))+p_1(h)d(h)\bigr]
+ =\frac12+\frac12\sum_h(p_1(h)-p_0(h))d(h).
+$$
+
+It is maximized by $d=1$ on positive differences and $d=0$ on negative
+ones. The sum of positive differences is TV, proving (UJB.7602).
+Since $\Delta H>0$, (UJB.7601) identifies exactly those strict signs
+by the parity of the occupied endpoint counts. Stable typed equality
+computes these counts legally. This establishes terminal performance,
+not a one-bit bound on storage during acquisition.
+
+The prescribed rectangle $R$ of Theorem 3.3 has gap
+$\Delta H/M^4=\operatorname{TV}/48$. Each of the six exact strict-cycle
+atoms has the same gap, so their disjoint union has gap
+$\operatorname{TV}/8$. They retain the earlier separation, but neither
+is the complete optimal event. The pair of occupancies and its parity
+retain the full TV for this equal-prior task. $\square$
+

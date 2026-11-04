@@ -1,0 +1,61 @@
+### 证明：有限插值消主项，高幂压尾项
+
+取
+
+$$
+r=\frac{|\lambda_0|}{4},
+\qquad
+E=\{\lambda\in\mathcal T:|\lambda|\ge r\}.
+$$
+
+$E$ 是有限共轭对称集合，包含 $\lambda_0,\bar\lambda_0$。
+
+定义 Lagrange 基多项式
+
+$$
+\ell_0(z)
+=
+\prod_{\substack{\zeta\in E\\\zeta\ne\lambda_0}}
+\frac{z-\zeta}{\lambda_0-\zeta}.
+$$
+
+它在 $\lambda_0$ 取一，在 $E$ 的其他点取零。令
+
+$$
+\ell_{\bar0}(z)=\overline{\ell_0(\bar z)}.
+$$
+
+选单位复数 $u$，使
+
+$$
+\omega_{\lambda_0}u^2=-|\omega_{\lambda_0}|.
+
+$$
+
+<a id="eq-5-7"></a>
+
+(5.7)
+
+对整数 $m\ge1$，定义
+
+$$
+\boxed{
+p_m(z)
+=
+z^m
+\left[
+u\lambda_0^{-m}\ell_0(z)
++
+\bar u\,\bar\lambda_0^{-m}\ell_{\bar0}(z)
+\right].
+}
+
+$$
+
+<a id="eq-5-8"></a>
+
+(5.8)
+
+<!-- editorial-note: n26 begin -->
+<a id="n26"></a>
+

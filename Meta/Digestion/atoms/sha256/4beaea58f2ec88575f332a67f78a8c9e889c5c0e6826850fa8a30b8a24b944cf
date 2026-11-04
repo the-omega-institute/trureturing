@@ -1,0 +1,36 @@
+**Corollary 3.1 (Physical positive-sign branch).** Suppose $\rho,\sigma$
+are physical qubits, $r_z=0$, $\mathcal C(\rho)>0$,
+$\mathcal C(\sigma)>0$ and $s_xs_ys_z>0$. Define
+
+$$
+\alpha=\frac{|r_x|+|r_y|-1}{2}=\mathcal C(\rho),\quad
+\beta=\frac{|s_x|+|s_y|+|s_z|-1}{2}=\mathcal C(\sigma),\quad
+t=\min(\beta,|s_x|,|s_y|,|s_z|).
+$$
+
+Then the physical deficit
+$D=(1+\mathcal C(\rho))(1+\mathcal C(\sigma))-1-\mathcal C(\rho\otimes\sigma)$
+is strictly positive and equals
+
+$$
+D=\begin{cases}
+\alpha(1+t)/2,&\alpha\leq t/(1-t),\\
+t(1+2\alpha)/2,&\alpha\geq t/(1-t).
+\end{cases}
+$$
+
+Proof. Pauli conjugation flips any prescribed pair of Bloch signs.
+Because $r_z=0$, a choice of even sign changes makes both nonzero
+equatorial coordinates nonnegative. Since $s_xs_ys_z>0$, there are an
+even number of negative coordinates of $s$, and another such conjugation
+makes all three positive. These conjugations permute the four sign
+triples $(1,1,1),(-1,-1,1),(1,-1,-1),(-1,1,-1)$ of the fixed frame.
+On two qubits they therefore permute Wigner coordinates, preserve the
+full stabilizer polytope and preserve the $\ell_1$ norm.
+The single-qubit identity of Dutta–Tushar, Proposition 4.3, identifies
+$\alpha,\beta$ with the stated distances. Theorem 2.1 applies.
+The physical bounds are $0<\alpha\leq(\sqrt2-1)/2$ and
+$0<\beta\leq(\sqrt3-1)/2<1$, so $0<t<1$.
+Comparing the two expressions gives $\alpha(1-t)\leq t$ for the first
+piece. Both expressions are strictly positive. $\square$
+
