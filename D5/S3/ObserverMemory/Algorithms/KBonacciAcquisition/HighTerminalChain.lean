@@ -17,7 +17,7 @@ open scoped BigOperators
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
-open private point_integral firstZero_unique firstZero_exists numerical_total from
+open private point_integral firstZero_unique firstZero_exists firstZero_not_terminal numerical_total from
   D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
 namespace D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.HighTerminalChain
 
@@ -387,25 +387,20 @@ private theorem balanced_split_spec (a b S : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
 
 private theorem chain_firstZero {L : ℕ} (i j : Fin L) :
     FirstZero (chainWord L i.val) j ↔ j = i := by
-  constructor
-  · intro h
-    have hji : i.val ≤ j.val := by simpa [chainWord] using h.1
-    have hij : j.val ≤ i.val := by
-      by_contra hh
-      have := h.2 i (show i < j from by omega)
-      simp [chainWord] at this
-    exact Fin.ext (by omega)
-  · rintro rfl
+  have self : FirstZero (chainWord L i.val) i := by
     constructor
     · simp [chainWord]
     · intro k hk
       simpa [chainWord] using hk
+  constructor
+  · intro h
+    exact firstZero_unique h self
+  · rintro rfl
+    exact self
 
 private theorem chain_not_terminal {L : ℕ} (i : Fin L) :
     chainWord L i.val ≠ (fun _ => true) := by
-  intro h
-  have := congrFun h i
-  simp [chainWord] at this
+  exact firstZero_not_terminal ((chain_firstZero i i).2 rfl)
 
 /-- The actual A-free FullScore of 206.7; every unspecified cube row is zero. -/
 def balancedChain {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
@@ -438,7 +433,7 @@ def balancedChain {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
 
 private theorem ite_sum_zero {I : Type*} [Fintype I] (p : Prop) [Decidable p]
     (f : I → ℝ) : (if p then ∑ i, f i else 0) = ∑ i, if p then f i else 0 := by
-  by_cases h : p <;> simp [h]
+  exact Finset.ite_sum_zero p Finset.univ f
 
 private theorem chain_gamma {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
     (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) (j : Fin L) :
@@ -499,15 +494,14 @@ private theorem reward_linear {L : ℕ} (y : FullScore L) (b : Word L)
 
 private theorem succ_zero_label {L : ℕ} (hL : 3 ≤ L) :
     (⟨0,by omega⟩ : Fin L).succ = (1 : Fin (L+1)) := by
-  apply Fin.ext
-  change 1 = 1 % (L+1)
-  exact (Nat.mod_eq_of_lt (by omega)).symm
+  letI : NeZero L := ⟨by omega⟩
+  exact Fin.succ_zero_eq_one' (n := L)
 
 private theorem succ_one_label {L : ℕ} (hL : 3 ≤ L) :
     (⟨1,by omega⟩ : Fin L).succ = (2 : Fin (L+1)) := by
-  apply Fin.ext
-  change 2 = 2 % (L+1)
-  exact (Nat.mod_eq_of_lt (by omega)).symm
+  obtain ⟨n, rfl⟩ : ∃ n, L = n + 2 := ⟨L - 2, by omega⟩
+  simpa only [Fin.one_eq_mk_of_lt (by omega : 1 < n + 2)] using
+    (Fin.succ_one_eq_two (n := n))
 
 private theorem succ_eq_one {L : ℕ} (hL : 3 ≤ L) (n : Fin L) :
     n.succ = (1 : Fin (L+1)) ↔ n.val = 0 := by
