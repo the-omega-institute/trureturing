@@ -69,7 +69,7 @@ private theorem L_ket_high (m : ℤ) (S : Finset ℕ)
   · have hc : c q (ket S) = 0 := c_ket_tail q S hq
     have he : normal (m-q) q = b (m-q) * c q := by
       rw [normal_eq]
-      simp [show m-q+q ≠ 0 by omega]
+      simp [hm0]
     simp [summand, he, Module.End.mul_apply, hc]
   · have hp : ketBound S < m-q := by omega
     have hcut : ¬m-q ≤ -2 := by dsimp [ketBound] at hp; omega
