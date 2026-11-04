@@ -7,8 +7,6 @@
    digest: Positive Stieltjes representation for the bosonic Gaussian Renyi function. -/
 
 import D5.S3.Arith.Robin.LogarithmicMellinReserve
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
 
 /-! The scalar positive representation used in the Gaussian covariance entropy inequality.
 The mass follows from an arctangent primitive after the substitutions
@@ -94,7 +92,7 @@ theorem weight_pos {α x : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1)
         (Real.pi * ((1 + x) ^ (2 * α) + (1 - x) ^ (2 * α) -
           2 * (1 - x ^ 2) ^ α * Real.cos (Real.pi * α))) := by
     dsimp only [renyiWeight]
-    field_simp [sub_ne_zero.mpr ha1, Real.pi_ne_zero, hd.ne']
+    field_simp (disch := first | positivity | assumption | exact sub_ne_zero.mpr ha1)
   rw [heq]
   exact div_pos (mul_pos (mul_pos (mul_pos (by norm_num) ha0) hs)
     (Real.rpow_pos_of_pos hx _)) (mul_pos Real.pi_pos hd)
@@ -111,7 +109,7 @@ private lemma mobius_hasDerivAt {x : ℝ} (hx : x ∈ Ioo 0 1) :
   convert! ((hasDerivAt_const x (1 : ℝ)).sub (hasDerivAt_id x)).div
     ((hasDerivAt_const x (1 : ℝ)).add (hasDerivAt_id x)) hp using 1
   dsimp
-  field_simp
+  field_simp (disch := first | positivity | assumption)
   ring
 
 private lemma power_substitution_hasDerivAt {α x : ℝ} (hx : x ∈ Ioo 0 1) :
@@ -158,7 +156,7 @@ private lemma weight_substitution {α x : ℝ} (ha0 : 0 < α) (hx : x ∈ Ioo 0 
   by_cases ha1 : α = 1
   · subst α
     norm_num [Real.sin_pi]
-  · field_simp [hp.ne', hm.ne', hA.ne', hB.ne', hD.ne', hQ.ne', sub_ne_zero.mpr ha1]
+  · field_simp (disch := first | positivity | assumption | exact sub_ne_zero.mpr ha1)
     ring
 
 private def poissonDensity (α p : ℝ) : ℝ :=
@@ -203,13 +201,13 @@ private lemma power_substitution_integral {α : ℝ} (ha0 : 0 < α) (g : ℝ →
       dsimp only [f]
       rw [Real.rpow_rpow_inv hq.1.le ha0.ne']
       have hp : 1 + x ≠ 0 := ne_of_gt (by linarith [hx.1])
-      field_simp [hp]
+      field_simp (disch := first | positivity | assumption | simp only [hp])
       ring
     change poissonDensity α (f x) * g ((1 - (f x) ^ α⁻¹) / (1 + (f x) ^ α⁻¹)) *
       f' x = -(renyiWeight α x * g x)
     rw [hback, weight_substitution ha0 hx]
     dsimp only [f, f', poissonDensity]
-    field_simp
+    field_simp (disch := first | positivity | assumption)
   rw [hleft] at hs
   have heq := neg_injective hs
   simpa only [intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1),
@@ -232,7 +230,7 @@ private lemma poissonAngle_hasDerivAt {α p : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   unfold poissonAngle
   convert! hd.arctan using 1
   dsimp
-  field_simp
+  field_simp (disch := first | positivity | assumption)
   have hid : (1 - p * Real.cos (Real.pi * α)) ^ 2 +
       Real.sin (Real.pi * α) ^ 2 * p ^ 2 = 1 - 2 * p * Real.cos (Real.pi * α) + p ^ 2 := by
     nlinarith [congrArg (fun z : ℝ => p ^ 2 * z) (Real.sin_sq_add_cos_sq (Real.pi * α))]
@@ -281,7 +279,7 @@ private lemma weightPrimitive_hasDerivAt {α x : ℝ} (ha0 : 0 < α) (ha2 : α <
     (Real.pi * (α - 1))) _ x
   convert! hd using 1
   rw [hw]
-  field_simp
+  field_simp (disch := first | positivity | assumption)
 
 private lemma weightPrimitive_endpoints {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) : weightPrimitive α 1 - weightPrimitive α 0 = 1 / 2 := by
@@ -301,7 +299,7 @@ private lemma weightPrimitive_endpoints {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
       Real.sin (Real.pi * α) / (1 - Real.cos (Real.pi * α)) := by
     rw [Real.tan_eq_sin_div_cos, Real.sin_pi_div_two_sub, Real.cos_pi_div_two_sub,
       hsin, hcos]
-    field_simp [hs.ne']
+    apply (div_eq_div_iff hs.ne' (by nlinarith [sq_pos_of_pos hs])).mpr
     ring
   have hat : Real.arctan (Real.sin (Real.pi * α) / (1 - Real.cos (Real.pi * α))) =
       Real.pi / 2 - Real.pi * α / 2 := by
@@ -310,7 +308,7 @@ private lemma weightPrimitive_endpoints {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   dsimp only [weightPrimitive, poissonAngle]
   norm_num [Real.zero_rpow ha0.ne', Real.one_rpow, Real.arctan_zero]
   rw [hat]
-  field_simp [sub_ne_zero.mpr ha1, Real.pi_ne_zero]
+  field_simp (disch := first | positivity | assumption | exact sub_ne_zero.mpr ha1)
   ring
 
 /-- The endpoint singularity of the positive density is integrable. -/
@@ -507,7 +505,7 @@ private lemma renyiFunction_derivative {α ν : ℝ} (ha0 : 0 < α)
   unfold renyiFunction
   convert! hd using 1
   dsimp
-  field_simp
+  field_simp (disch := first | positivity | assumption)
 
 private lemma poisson_resolvent_integral {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 < ν) :
@@ -552,7 +550,7 @@ private lemma renyiFunction_normalized_limit {α : ℝ} (ha0 : 0 < α) (ha1 : α
   have hval : (Real.log (2 * α) - α * Real.log 2) / (α - 1) = renyiConstant α := by
     rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) ha0.ne']
     dsimp only [renyiConstant]
-    field_simp [sub_ne_zero.mpr ha1]
+    field_simp (disch := first | positivity | assumption | simp only [sub_ne_zero.mpr ha1])
     ring
   rw [hval] at hlim
   apply hlim.congr'
@@ -566,8 +564,10 @@ private lemma renyiFunction_normalized_limit {α : ℝ} (ha0 : 0 < α) (ha1 : α
   have hm : 0 < 1 - ν⁻¹ := by linarith
   have hg : 0 < (1 + ν⁻¹) ^ α - (1 - ν⁻¹) ^ α :=
     sub_pos.mpr (Real.rpow_lt_rpow hm.le (by linarith) ha0)
-  have hA : (ν + 1) / 2 = (ν / 2) * (1 + ν⁻¹) := by field_simp
-  have hB : (ν - 1) / 2 = (ν / 2) * (1 - ν⁻¹) := by field_simp
+  have hA : (ν + 1) / 2 = (ν / 2) * (1 + ν⁻¹) := by
+    field_simp (disch := first | positivity | assumption)
+  have hB : (ν - 1) / 2 = (ν / 2) * (1 - ν⁻¹) := by
+    field_simp (disch := first | positivity | assumption)
   have hD : ((ν + 1) / 2) ^ α - ((ν - 1) / 2) ^ α =
       (ν / 2) ^ α * ((1 + ν⁻¹) ^ α - (1 - ν⁻¹) ^ α) := by
     rw [hA, hB, Real.mul_rpow hvh.le hp.le, Real.mul_rpow hvh.le hm.le]
@@ -575,16 +575,18 @@ private lemma renyiFunction_normalized_limit {α : ℝ} (ha0 : 0 < α) (ha1 : α
   dsimp only [renyiFunction]
   rw [hD, Real.log_mul (Real.rpow_pos_of_pos hvh α).ne' hg.ne', Real.log_rpow hvh,
     Real.log_div hv0.ne' (by norm_num : (2 : ℝ) ≠ 0), Real.log_mul hv0.ne' hg.ne']
-  field_simp [sub_ne_zero.mpr ha1]
+  field_simp (disch := first | positivity | assumption | simp only [sub_ne_zero.mpr ha1])
   ring
 
 private lemma logarithm_normalization {ν x : ℝ} (hv : 1 < ν) (hx : x ∈ Icc 0 1) :
     Real.log (ν ^ 2 - x ^ 2) - 2 * Real.log ν = Real.log (1 - (x / ν) ^ 2) := by
   have hv0 : 0 < ν := by linarith
   have hpos : 0 < ν ^ 2 - x ^ 2 := by nlinarith [hx.1, hx.2]
-  have hq : 1 - (x / ν) ^ 2 = (ν ^ 2 - x ^ 2) / ν ^ 2 := by field_simp
+  have hq : 1 - (x / ν) ^ 2 = (ν ^ 2 - x ^ 2) / ν ^ 2 := by
+    field_simp (disch := first | positivity | assumption)
   have hqp : 0 < 1 - (x / ν) ^ 2 := by rw [hq]; exact div_pos hpos (sq_pos_of_pos hv0)
-  have heq : ν ^ 2 - x ^ 2 = ν ^ 2 * (1 - (x / ν) ^ 2) := by field_simp
+  have heq : ν ^ 2 - x ^ 2 = ν ^ 2 * (1 - (x / ν) ^ 2) := by
+    field_simp (disch := first | positivity | assumption)
   rw [heq, Real.log_mul (pow_ne_zero 2 hv0.ne') hqp.ne', Real.log_pow]
   ring
 
