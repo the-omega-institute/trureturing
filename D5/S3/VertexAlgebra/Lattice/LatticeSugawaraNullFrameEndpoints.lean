@@ -30,7 +30,6 @@ open LatticeGeneratingFieldLocality LatticeSugawaraCurrents
 open LatticeLightConeCoordinates LatticeLightConeCoordinates.NullFrame
 open LatticeBRSTModeFiltration LatticeSugawaraNullFrame
 open LatticeSugawaraVirasoro LatticeQuartetContraction
-open private actualBasis_apply from D5.S3.VertexAlgebra.Lattice.LatticeQuartetContraction
 open private tensor_sub_left from D5.S3.VertexAlgebra.Lattice.LatticeQuartetOperators
 open D5.S3.Quantum.Fermionic.BcGhostFock
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
