@@ -274,5 +274,110 @@ theorem finrank_eq_three (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
     · exact hthree
   exact ⟨hdim.symm.trans hthree,hthree⟩
 
+/-- The full orthogonal Lie algebra as actual skew endomorphisms of the same space. -/
+def skewEndomorphisms {V : Type*} [AddCommGroup V] [Module ℝ V]
+    (B : InnerProductSpace.Core ℝ V) : Submodule ℝ (V →ₗ[ℝ] V) := by
+  let : NormedAddCommGroup V := B.toNormedAddCommGroup
+  let : InnerProductSpace ℝ V := InnerProductSpace.ofCore B.toCore
+  exact {
+    carrier := {T | ∀ u v : V, ⟪T u,v⟫_ℝ = -⟪u,T v⟫_ℝ}
+    zero_mem' := by simp
+    add_mem' := by
+      intro T U hT hU u v
+      change ∀ u v : V, ⟪T u,v⟫_ℝ = -⟪u,T v⟫_ℝ at hT
+      change ∀ u v : V, ⟪U u,v⟫_ℝ = -⟪u,U v⟫_ℝ at hU
+      simp only [LinearMap.add_apply,inner_add_left,inner_add_right,hT,hU]
+      ring
+    smul_mem' := by
+      intro r T hT u v
+      change ∀ u v : V, ⟪T u,v⟫_ℝ = -⟪u,T v⟫_ℝ at hT
+      simp only [LinearMap.smul_apply,real_inner_smul_left,real_inner_smul_right,hT]
+      ring }
+
+private theorem skew_dimension_le_three {V : Type*} [AddCommGroup V] [Module ℝ V]
+    [FiniteDimensional ℝ V] (B : InnerProductSpace.Core ℝ V) (hV : finrank ℝ V = 3)
+    (S : Submodule ℝ (V →ₗ[ℝ] V))
+    (hS : ∀ T : S, ∀ u v : V, B.inner (T.val u) v = -B.inner u (T.val v)) :
+    finrank ℝ S ≤ 3 := by
+  classical
+  let : NormedAddCommGroup V := B.toNormedAddCommGroup
+  let : InnerProductSpace ℝ V := InnerProductSpace.ofCore B.toCore
+  let b : OrthonormalBasis (Fin 3) ℝ V := (stdOrthonormalBasis ℝ V).reindex (finCongr hV)
+  let f : S →ₗ[ℝ] (ℝ × ℝ × ℝ) := {
+    toFun T := (⟪T.val (b 0),b 1⟫_ℝ,⟪T.val (b 0),b 2⟫_ℝ,⟪T.val (b 1),b 2⟫_ℝ)
+    map_add' := by intro T U; ext <;> simp [inner_add_left]
+    map_smul' := by intro r T; ext <;> simp [real_inner_smul_left] }
+  have hf : Function.Injective f := by
+    rw [injective_iff_map_eq_zero]
+    intro T hT
+    have h01 : ⟪T.val (b 0),b 1⟫_ℝ = 0 := congrArg Prod.fst hT
+    have h02 : ⟪T.val (b 0),b 2⟫_ℝ = 0 := congrArg (fun z : ℝ × ℝ × ℝ => z.2.1) hT
+    have h12 : ⟪T.val (b 1),b 2⟫_ℝ = 0 := congrArg (fun z : ℝ × ℝ × ℝ => z.2.2) hT
+    have hdiag (v : V) : ⟪T.val v,v⟫_ℝ = 0 := by
+      have hh := hS T v v
+      change ⟪T.val v,v⟫_ℝ = -⟪v,T.val v⟫_ℝ at hh
+      have hs := real_inner_comm (T.val v) v
+      linarith
+    have hswap (i j : Fin 3) : ⟪T.val (b i),b j⟫_ℝ = -⟪T.val (b j),b i⟫_ℝ := by
+      rw [hS T (b i) (b j),real_inner_comm (b i) (T.val (b j))]
+    have hall (i j : Fin 3) : ⟪T.val (b i),b j⟫_ℝ = 0 := by
+      fin_cases i <;> fin_cases j
+      · exact hdiag _
+      · exact h01
+      · exact h02
+      · rw [hswap]; simpa using congrArg (fun z : ℝ => -z) h01
+      · exact hdiag _
+      · exact h12
+      · rw [hswap]; simpa using congrArg (fun z : ℝ => -z) h02
+      · rw [hswap]; simpa using congrArg (fun z : ℝ => -z) h12
+      · exact hdiag _
+    apply Subtype.ext
+    apply b.toBasis.ext
+    intro i
+    change T.val (b i) = 0
+    apply b.repr.injective
+    ext j
+    simp only [map_zero, PiLp.zero_apply]
+    rw [b.repr_apply_apply,real_inner_comm]
+    exact hall i j
+  have hh := LinearMap.finrank_le_finrank_of_injective hf
+  simpa using hh
+
+/-- The faithful original inclusion, without a replacement representation. -/
+def originalAction : OriginalLie G →ₗ[ℝ] (W →ₗ[ℝ] W) where
+  toFun K := K.val.toLinearMap
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+/-- The original full relation gives both dimensions and exactly the full
+orthogonal Lie algebra of a metric constructed from the original compact group. -/
+theorem original_rigidity (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
+    (A : OriginalLie G) (x : W) (ha : A ≠ 0) (hx : x ≠ 0) (hAx : A.val x = 0)
+    (h : FullReciprocity G A x) :
+    ∃ B : InnerProductSpace.Core ℝ W,
+      (∀ (g : G) (u v : W),
+        B.inner (g.val.val u) (g.val.val v) = B.inner u v) ∧
+      finrank ℝ W = 3 ∧ finrank ℝ (OriginalLie G) = 3 ∧
+      LinearMap.range (originalAction G) = skewEndomorphisms B := by
+  obtain ⟨B,hB,hcurves⟩ := compact_action_metric G hG
+  have hskew : ∀ K : OriginalLie G, ∀ u v : W,
+      B.inner (K.val u) v = -B.inner u (K.val v) := by
+    intro K
+    obtain ⟨c,hc,hcK⟩ := K.property
+    exact hcurves c hc K.val hcK
+  have hd := finrank_eq_three G hG A x ha hx hAx h
+  refine ⟨B,hB,hd.1,hd.2,?_⟩
+  have hinj : Function.Injective (originalAction G) := by
+    intro K L hKL
+    apply Subtype.ext
+    ext u
+    exact LinearMap.congr_fun hKL u
+  have hle : LinearMap.range (originalAction G) ≤ skewEndomorphisms B := by
+    rintro T ⟨K,rfl⟩
+    exact hskew K
+  apply Submodule.eq_of_le_of_finrank_le hle
+  rw [LinearMap.finrank_range_of_inj hinj,hd.2]
+  exact skew_dimension_le_three B hd.1 (skewEndomorphisms B) (fun T => T.property)
+
 end
 end D5.S3.Quantum.Algebra.OriginalCompactReciprocity
