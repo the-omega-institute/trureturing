@@ -16,6 +16,12 @@ triage: anchor
 
 <!-- GID: D5/L/GraphInvariants/hausmann2026weightedmaxcut -->
 
+## Verified locator
+
+- Primary HTML: https://arxiv.org/html/2611.05178v1
+- Source scope: Section 1 definitions of finite simple graphs, subcubic degree
+  and odd girth; Section 5, Question 5.4.
+
 Hausmann, *Weighted Max Cut in Subcubic Graphs*, arXiv:2611.05178v1,
 Section 1 and Question 5.4 in Section 5, fixes finite simple graphs,
 subcubic degree at most three, and odd girth as the shortest odd cycle length.

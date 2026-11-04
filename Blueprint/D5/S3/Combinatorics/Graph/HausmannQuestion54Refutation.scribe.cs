@@ -75,10 +75,12 @@ internal sealed class HausmannQuestion54RefutationDocument : IScribeDocumentDefi
             And(Call("Disjoint", l, r), And(Eq(Call("union", l, r), Call("univ", v)),
                 And(Call("IsIndepSet", g, l), Call("SmallComponents", g, r))))));
         return Disp(Iff(Id("claim"), All("V", Id("Type"),
-            All("finite", Call("Fintype", v), All("decEq", Call("DecidableEq", v),
-            All("G", Call("SimpleGraph", v), All("decAdj", Call("DecidableRel", Call("Adj", g)),
-                Imp(All("v", v, Le(Call("degree", g, Id("v")), D(3))),
-                    Imp(Call("OddGirthFive", g), conclusion)))))))));
+            Seq(OpenBracket, Call("Fintype", v), CloseBracket,
+                OpenBracket, Call("DecidableEq", v), CloseBracket,
+                All("G", Call("SimpleGraph", v),
+                    Seq(OpenBracket, Call("DecidableRel", Call("Adj", g)), CloseBracket,
+                        Imp(All("v", v, Le(Call("degree", g, Id("v")), D(3))),
+                            Imp(Call("OddGirthFive", g), conclusion))))))));
     }
 
     private static DocumentBlock Node(string selector, string title, Formula formula,
