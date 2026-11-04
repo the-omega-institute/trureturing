@@ -21,13 +21,15 @@ internal sealed class TwinFreeThetaRecurrenceDocument : IScribeDocumentDefinitio
     private static Formula BoundedContinuantEndpointFormula()
     {
         Formula n = V("N"), t = V("t"), y = V("y"), j = V("j");
+        Formula integerN = Cast(App(Q("Nat", "cast"), n), C("Int"));
         Formula EvalS(Formula index) =>
-            App(Q("Polynomial", "eval"), t, App(Q("Chebyshev", "S"), C("Real"), index));
+            App(Q("Polynomial", "eval"), t,
+                App(Seq(Q("Polynomial", "Chebyshev"), Dot, C("S")), C("Real"), index));
         Formula recurrence = All("j", C("Nat"), Implies(Le(Add(j, D(2)), n),
             Eqn(App(y, Add(j, D(2))), Sub(Mul(t, App(y, Add(j, D(1)))), App(y, j)))));
         Formula endpoint = Eqn(App(y, n),
-            Sub(Mul(EvalS(Sub(Cast(n, C("Int")), D(1))), App(y, D(1))),
-                Mul(EvalS(Sub(Cast(n, C("Int")), D(2))), App(y, D(0)))));
+            Sub(Mul(EvalS(Sub(integerN, D(1))), App(y, D(1))),
+                Mul(EvalS(Sub(integerN, D(2))), App(y, D(0)))));
         return All("N", C("Nat"), Implies(Le(D(1), n), All("t", C("Real"),
             All("y", Fn(C("Nat"), C("Real")), Implies(recurrence, endpoint)))));
     }
@@ -52,7 +54,7 @@ internal sealed class TwinFreeThetaRecurrenceDocument : IScribeDocumentDefinitio
     private static Formula Mul(Formula a,Formula b) => new Formula.Binary(a,FormulaBinaryOperator.Multiply,b);
     private static Formula MinusOf(Formula a) => new Formula.Negate(Parenthesized(a));
     private static Formula Fn(Formula a,Formula b) => new Formula.TypeArrow(a,b);
-    private static Formula Parenthesized(Formula f) => Seq(Open,f,Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Linear(Formula a,Formula b) => Seq(a,Sp,new Formula.Subscript(To,Seq(V("l"),OpenBracket,C("Real"),CloseBracket)),Sp,b);
     private static Formula Cast(Formula a,Formula t) => Parenthesized(Seq(a,Colon,Sp,t));
 }

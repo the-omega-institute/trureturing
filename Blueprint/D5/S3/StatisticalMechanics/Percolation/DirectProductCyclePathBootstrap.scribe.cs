@@ -78,23 +78,29 @@ internal sealed class DirectProductCyclePathBootstrapDocument : IScribeDocumentD
     {
         Formula l = F.Id("l"), b = F.Id("b");
         Formula size = new Formula.Binary(l, FormulaBinaryOperator.Add, D(1));
-        Formula value = Call("val", b);
+        Formula value = new Formula.Apply(Seq(Named("Fin"), Dot, Named("val")), [b]);
         Formula successor = Call("ite",
             new Formula.Relation(value, FormulaRelationOperator.LessThan, l), D(1), D(0));
         Formula predecessor = Call("ite",
             new Formula.Relation(D(0), FormulaRelationOperator.LessThan, value), D(1), D(0));
-        return Disp(All("l", Naturals(), All("b", Call("Fin", size),
-            Equal(Card(Call("neighborFinset", Call("pathGraph", size), b)),
-                new Formula.Binary(successor, FormulaBinaryOperator.Add, predecessor)))));
+        Formula path = new Formula.Apply(Seq(Named("SimpleGraph"), Dot, Named("pathGraph")), [size]);
+        Formula neighbors = new Formula.Apply(Seq(Named("SimpleGraph"), Dot, Named("neighborFinset")), [path, b]);
+        Formula card = new Formula.Apply(Seq(Named("Finset"), Dot, Named("card")), [neighbors]);
+        return Disp(Seq(Forall, Sp, Parenthesized(Seq(l, Colon, Sp, Naturals())), Comma, Sp,
+            Seq(Forall, Sp, Parenthesized(Seq(b, Colon, Sp, Call("Fin", size))), Comma, Sp,
+                Equal(card, new Formula.Binary(Parenthesized(successor),
+                    FormulaBinaryOperator.Add, Parenthesized(predecessor))))));
     }
 
     private static Formula PathDegreeSumFormula()
     {
         Formula l = F.Id("l"), b = F.Id("b");
         Formula size = new Formula.Binary(l, FormulaBinaryOperator.Add, D(1));
-        Formula sum = Seq(new Formula.Subscript(Sum, Seq(b, Colon, Sp, Call("Fin", size))), Sp,
-            Card(Call("neighborFinset", Call("pathGraph", size), b)));
-        return Disp(All("l", Naturals(),
+        Formula path = new Formula.Apply(Seq(Named("SimpleGraph"), Dot, Named("pathGraph")), [size]);
+        Formula neighbors = new Formula.Apply(Seq(Named("SimpleGraph"), Dot, Named("neighborFinset")), [path, b]);
+        Formula card = new Formula.Apply(Seq(Named("Finset"), Dot, Named("card")), [neighbors]);
+        Formula sum = Seq(new Formula.Subscript(Sum, Seq(b, Colon, Sp, Call("Fin", size))), Sp, card);
+        return Disp(Seq(Forall, Sp, Parenthesized(Seq(l, Colon, Sp, Naturals())), Comma, Sp,
             Equal(sum, new Formula.Binary(D(2), FormulaBinaryOperator.Multiply, l))));
     }
 
