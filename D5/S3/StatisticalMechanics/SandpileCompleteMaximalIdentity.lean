@@ -62,8 +62,8 @@ private lemma path_degree (j : ℕ) (t : Fin j) :
     ((SimpleGraph.pathGraph j).degree t : ℤ) =
       (if 0 < t.val then 1 else 0) + (if t.val + 1 < j then 1 else 0) := by
   obtain ⟨n, rfl⟩ : ∃ n : ℕ, j = n + 1 := ⟨j - 1, (Nat.sub_add_cancel (Fin.pos t)).symm⟩
-  have h := D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.path_neighbor_card
-    n t
+  have h :=
+    D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.path_neighbor_card n t
   have h' : (SimpleGraph.pathGraph (n + 1)).degree t =
       (if 0 < t.val then 1 else 0) + (if t.val + 1 < n + 1 then 1 else 0) := by
     simpa only [SimpleGraph.degree, Nat.add_lt_add_iff_right, add_comm] using h
@@ -84,7 +84,8 @@ private lemma total_mass (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j) :
         (i : ℤ) * ((i : ℤ) * j - 2) := by
   have hp : ∑ t : Fin j, ((SimpleGraph.pathGraph j).degree t : ℤ) = 2 * ((j : ℤ) - 1) := by
     obtain ⟨n, rfl⟩ : ∃ n : ℕ, j = n + 1 := ⟨j - 1, by omega⟩
-    have h := D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.sum_path_neighbor_card n
+    have h :=
+      D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.sum_path_neighbor_card n
     simpa only [SimpleGraph.degree, Nat.cast_add, Nat.cast_one, add_sub_cancel_right,
       Nat.cast_mul, Nat.cast_ofNat, Nat.cast_sum] using congrArg (fun a : ℕ => (a : ℤ)) h
   simp only [Fintype.sum_prod_type, SimpleGraph.degree_boxProd,
