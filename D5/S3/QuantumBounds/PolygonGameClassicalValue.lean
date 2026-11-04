@@ -7,14 +7,7 @@
    digest: The odd polygon game's classical value is one minus its Fibonacci loss fraction. -/
 
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
-import Mathlib.Logic.Equiv.Fin.Rotate
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring.RingNF
+import D5.S0.Automata.TwoStateCertificateWidth
 
 /-! The uniform-input polygon game, with arbitrary local deterministic response tables. -/
 
@@ -352,20 +345,11 @@ private lemma insert_avoiding (P : ℕ) (hP : 3 ≤ P) (j : Fin P)
       matchingInput P N j = false ∧ matchingInput P (insert j N) j = true := by
   classical
   obtain ⟨hmatch, hprev, hj, hnext⟩ := Finset.mem_filter.1 hN |>.2
-  have hself : finRotate P j ≠ j := by
-    obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : P ≠ 0)
-    intro hh
-    have hv := congrArg Fin.val hh
-    rw [coe_finRotate] at hv
-    split_ifs at hv with ht
-    · subst j
-      simp only [Fin.val_last] at hv
-      omega
-    · omega
   refine ⟨hmatch, ?_, hj, ?_, ?_⟩
   · intro i hi
     rcases Finset.mem_insert.1 hi with rfl | hi
-    · simpa only [Finset.mem_insert, not_or] using And.intro hself hnext
+    · simpa only [Finset.mem_insert, not_or] using And.intro
+        (D5.S0.Automata.TwoStateCertificateWidth.rotate_ne (m := P) (by omega) i) hnext
     · simp only [Finset.mem_insert, not_or]
       refine ⟨?_, hmatch i hi⟩
       intro heq
