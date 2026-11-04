@@ -958,3 +958,119 @@ supplementary-label counting proves an acquisition channel exists, and no paid
 acquisition theorem alone establishes four individually exact task kernels.
 
 ## 追加锚（本行以下为增补区）
+## 11. 原生有限树的 q 取得桥
+
+本节把一个 paid initial $q$ Read 精确展开为原生字面取得。它只增加一个已有来源、菜单、目标和费用的对应，不改写前十节的比较接口，也不把原来的长期目标缩成这个有限结果。
+
+### 11.1 合同与量词
+
+**定义 11.1（原生 q 取得合同）。** 令 $\mathcal T$ 是有限非空有序二叉树
+
+$$
+t::=\alpha\mid\beta\mid\langle s,t\rangle,
+\qquad q(\alpha)=a,\quad q(\beta)=b,\quad q(\langle s,t\rangle)=q(s)\times q(t),
+$$
+
+其中 $a=e_1,b=e_2,k=b\times a$，并令 $S=\{0,\pm a,\pm b,\pm k\}$。$L(t)$ 是叶数；若 $P(t)$ 是从根到叶的地址集合，令
+
+$$
+E(t)=\sum_{p\in P(t)}|p|.
+$$
+
+一个原生取得器是固定的确定程序 $\delta:C\to\operatorname{Op}(C,S)$ 和固定初态 $c_0$，从配置 $(c_0,0,t,[])$ 开始；这里 epoch 为 $0$，物理来源是唯一的 $t$，取得记录为空。$\operatorname{Op}$ 只有 `localStep`、对当前来源的 literal `read`、无条件 `applyRho` 和带完整输出的 `stop`。程序的 transition 只接收 control；不存在对 register、epoch、clock 或未记录 history 的隐藏读取；已取得的 replies 可以按声明方式存入 control，历史仍只按实际发生次序追加。它必须对每个有限 $t$ 有限停止并输出初始来源的 $q(t)$，包括 $q(t)=0$ 的来源。
+
+这是 all-domain 正确性合同。没有来源特定的程序或初始化、大小承诺、graft、数值 $q$ 端口、reset、copy 或 timing channel；所有 `applyRho` 都是同一寄存器上的真实更新。输出初始 $q(t)$ 的要求允许程序在已知更新次数后作有限算术解码，但不供应一个数值读口。下述不等式只对实际输入满足 $q(t)\ne0$ 的运行陈述；零输入仍属于正确性域和竞争者域。
+
+**约定 11.2（实际资源）。** 给一条有限运行 $\tau$，令
+
+$$
+R(\tau)=|\operatorname{reads}(\tau)|,\qquad
+J(\tau)=\{p:\text{某个 }\operatorname{read}(e,p,y)\text{ 出现在 }\tau\},
+$$
+
+并令 $W(\tau)=\sum_{\operatorname{read}(e,p,y)\in\tau}|p|$，重复调用重复计费。$R$ 是实际 Read 次数，$|J|$ 是不同 literal 地址数，$W$ 是提交地址字母的 tariff。$W$ 只有在每次查询都传送完整地址词时才等价于传送字母数；它不是 CPU 时间、能量或内存量。
+
+### 11.2 叶锥见证与动态下界
+
+对叶地址 $p\in P(t)$，写 $t^{p}$ 为只把该叶的 $\alpha/\beta$ 标签翻转所得树。$\rho$ 保持每个原有 branch constructor，因此在 $\rho^e t$ 中，原地址 $p$ 下仍有同一原叶的后继锥；若地址 $u$ 不以 $p$ 为前缀，则
+
+$$
+\operatorname{readout}(u,\rho^e t)=\operatorname{readout}(u,\rho^e t^p).
+$$
+
+这也覆盖 $u$ 在 $p$ 之上停止、离开该锥或落在另一个原锥的情形。没有 graft 时不会产生把一个未知来源出现复制到别处的第二锥。
+
+**引理 11.3（非零 q 的每叶敏感性）。** 若 $q(t)\ne0$，则对每个 $p\in P(t)$ 都有 $q(t^p)\ne q(t)$。
+
+**证明。** 对叶直接由 $a\ne b$ 得到。设 $t=\langle s,u\rangle$。非零叉积迫使 $q(s),q(u)$ 是互相正交的非零轴；翻转位于 $s$ 时，归纳假设给出 $q(s^p)\ne q(s)$。在七值集合 $S$ 上固定正交轴 $q(u)$，映射 $z\mapsto z\times q(u)$ 在所有与 $q(s)\times q(u)$ 相等的候选中只能取 $z=q(s)$：其余 $0,\pm q(u)$ 和第三轴的差均不平行于 $q(u)$。故叉积改变；右子树同理。证毕。
+
+**定理 11.4（自适应 rho 下的叶锥见证）。** 令 $\delta,c_0$ 满足定义 11.1 的 all-domain 正确性。对任意有限树 $t$、任意由控制器根据已经读到的回复自适应产生的 `localStep`/`applyRho` 调度，以及该调度的实际正确停止运行 $\tau$，若 $q(t)\ne0$，则每个 $p\in P(t)$ 都有事件
+
+$$
+\operatorname{read}(e,u,y)\in\tau,\qquad p\preceq u.
+$$
+
+**证明。** 假设某个 $p$ 没有这样的事件。沿 $\tau$ 逐事件重放来源 $t^p$：local step 和 applyRho 的控制转移不看来源；对每次 read，假设和叶锥事实给出相同回复，所以控制、epoch、所有更新、记录和 stop 均相同。两条运行因而输出相同值，但正确性要求它们分别输出 $q(t)$ 与 $q(t^p)$，这与引理 11.3 矛盾。这里 $t^p$ 可以是零 q 竞争者，故若只在 promised-nonzero 域声明正确性，重放论证并不成立。证毕。
+
+**推论 11.5（同时的 sourcewise 资源下界）。** 在定理 11.4 的条件下，对每个 $q(t)\ne0$ 的实际运行，
+
+$$
+R(\tau)\ge |J(\tau)|\ge L(t),\qquad W(\tau)\ge E(t).
+$$
+
+**证明。** 从每个叶锥见证事件各选一次。叶地址两两 prefix-incomparable，所以所选事件的地址彼此不同，给出 $R\ge|J|\ge L$；每个所选地址长度至少为其叶深度，求和给出 $W\ge E$。额外重复读和更深地址只增加相应费用。证毕。
+
+### 11.3 无 graft 的来源与 epoch 账
+
+**引理 11.6（原始来源证书）。** 在任意无 graft 的前缀中，若已经成功执行了 $e$ 次 `applyRho`，当前寄存器严格为 $\rho^e(t)$；所有 local steps、Reads、replies 和 executed stop/reject 仍按顺序留在记录中。对两个共同获得的前缀，控制器选择的下一 primitive 只由共同控制和共同记录决定。因而 source-independent 的 `applyRho` 只能旋转当前 q，
+
+$$
+q(\rho^e t)=R^e q(t),\qquad R^3=I,
+$$
+
+不能制造第二个来源、擦掉原始 epoch 或把旧版本回复当作新版本缓存。该来源证书是 `NativeSerialDepth.transfer` 所用的同一 replay 条件；定理 11.4 的叶锥论证允许任意 $e$ 的自适应序列，因此不把固定 epoch 偷换成静态查询模型。
+
+**边界 11.7（零 q 与资源坐标）。** 证明下界时 $q(t)\ne0$ 只用于保证每个叶都能被翻转见证；它不是取得器的输入承诺。零 q 树和翻转后落入零 q 的树仍必须被同一个 all-domain 程序正确处理。localStep 数、applyRho 次数、控制存储、输出计算、地址生成和物理寻址都不被 $R,|J|,W$ 偷换计入；本节只结算 literal Read 事件及其提交词长。
+
+### 11.4 完整原生生产与 comb 量级
+
+**定理 11.8（未改变来源的完整上构造）。** 复用 `NativeFullSourceProducer.sourceControl` 和 `initialControl`，并把已取得的完整树在 handoff 控制中作有限的 $q$ 计算；只把原 producer 的 terminal `stop` 替换为进入 handoff 的 source-independent `localStep`，此前每个 Read、回复和 localStep 保持不变。对任意有限 $t$，该共同程序从 $(c_0,0,t,[])$ 逐节点访问根和所有后继节点，保留全部 literal 回复、epoch、local steps 与停止前的顺序记录；它不执行 `applyRho`，物理来源始终为 $t$。若 $\tau_t$ 是这条实际记录，则
+
+$$
+R(\tau_t)=|J(\tau_t)|=2L(t)-1,
+\qquad W(\tau_t)=2E(t)-2L(t)+2.
+$$
+
+**证明。** `nodes t` 恰含根及每个内部节点和叶，每个地址只访问一次；因此节点数为 $2L-1$，且这些地址就是 $J$。更具体地，叶时 trace 是根地址的一次带实际 `alpha/beta` 回复的 Read；分支时 trace 先记录根的 `branch` Read，再按左子树、一个 `localStep`、右子树、一个 `localStep` 的实际次序追加。于是 `reads` 是 `(0,address,reply)` 的完整列表，而不是只保留终态的摘要。设内部节点深度和为 $I(t)$。根分解给 $I(t)=E(t)-2L(t)+2$，故所有节点地址长度和为 $I+E=2E-2L+2$。生产程序的有限终止、epoch 不变和实际读记录由 `native_source_producer` 的同一逐树归纳提供；handoff 只在这条完整前缀之后增加 source-independent local steps。
+
+令 $C_1=\beta$、$C_{m+1}=\langle\alpha,C_m\rangle$。这是叶字为 $\alpha^{m-1}\beta$ 的 alpha/beta comb，且 $q(C_m)$ 沿 $\pm b,\pm k$ 的有限循环，始终非零。它满足
+
+$$
+L(C_m)=m,\qquad E(C_m)=\frac{m^2+m-2}{2},\qquad
+R(\tau_{C_m})=2m-1,\qquad W(\tau_{C_m})=m(m-1).
+$$
+
+所以非零 comb 给出线性实际 Read 数和二次地址长度；下界只保证相同的线性、二次量级，不主张这些常数或该构造在所有程序中的最优性。
+
+### 11.5 Process Geometry 44.8 的消费者边界
+
+**命题 11.9（stationary q handoff）。** Process Geometry 44.8 的 paid initial $q$ Read 可以由定理 11.8 的 literal 前缀实现：在最后一个实际节点 Read 后，以 source-independent `localStep` 进入 44.8 的反馈控制，交付解码出的 $q(t)$；handoff 发生在 absorbing `stop` 之前。此阶段保持原来源 $t$、epoch $0$ 和完整 chronological record，因而其真实 trace 与一个单独的 numeric-port event 不同。44.8 后续反馈若使用 graft 或其他额外权限，仍属于该消费者自己声明的菜单，不属于本原生取得合同。
+
+三位只编码 $S$ 中取得的方向值（包括零的编码）；它们不编码完整 observer state、来源语法、地址档案、控制、epoch 或记录。因而这里没有总 observer-memory 上界。该桥只覆盖这个 paid initial $q$ 读；不能推出每一个 feedback function 都支付本节的 acquisition 下界，也不能说任意使用 $\rho$ 的取得器都保持原来源。
+
+### 11.6 方法归属、未决边界与长目标
+
+**记录解释 11.10。** 生产 trace 中的 `read(0,p,y)` 是一次实际根起始地址提交，`localStep` 是实际控制动作；没有把递归调用栈、解码表或 handoff 交付伪装成来源信息。重复地址若由另一阶段再次出现仍计入 $R$ 和 $W$，而 $J$ 只去重字面地址。这个区分正是动态 adaptive schedule 与静态 distinct-address 集合之间的接口。
+
+
+对 zero competitor 的处理是本节 all-domain 条件的关键：即使某个 $t^p$ 恰好落在 $q=0$，它仍要有有限真实运行，且该运行的控制和记录不能被 promise 排除。相反，若把目标改成“只在 nonzero 输入上输出”，则下界至多是一个不同的 promised problem，不能回填这里的 replay contradiction。
+
+本节还保留三种不同对象：初始来源 $t$、当前寄存器 $\rho^e(t)$、以及由 literal replies 解码出的有限语法记录。它们在无 graft 的 handoff 前可以互相按声明的映射关联，但不因此成为数值端口、完整 observer state 或物理取得。该区分也是后续任何 continuation correspondence 必须重新证明的接口。
+
+敏感性、certificate 和确定性 decision-tree 的一般方法归于 Buhrman–de Wolf 的 2002 survey（Definition 2、Proposition 1，pp.8–9）；它们不是本仓库的新发明。仓内 supplier 是 `NativeSerialMachine` 的真实菜单与 `Run`/`transfer`、`NativeDepthPatterns` 的原地址局部性，以及 `NativeFullSourceProducer` 的固定完整生产。本文的 repo-derived 增量只是把这三类既有材料装配成精确的原来源、原目标、实际地址 tariff 和 Process Geometry 44.8 消费者对应；没有新增 Lean 验证或文献原创性声明。
+
+本桥不关闭原任务的六项缺口： (i) complete finite B-program correspondence；(ii) actual acquired I/O and exact UJB；(iii) unchanged original-port continuation and records；(iv) coherent whole-resource backing；(v) spatial/boundary continuation correspondence；(vi) complete proof/check/reconciliation/acceptance。PR26130 与 experiment PR168 仍是分开的未完成草稿。C133 的 relation-to-N5 与 FIB full64 same-partition 义务也原样保留。更长的目标仍是寻找尽可能精简的关系结构，并在内部 lawful observers 下证明 space、time、boundary、memory 何时互相恢复；本节的有限 q 桥既不完成该目标，也不替它改写这些未决义务。
+
+**接受判据与反例边界。** 该桥的必要条件是七值 q 表、同一来源的四动作菜单、全域正确性和真实 chronological record 同时成立。若发现一个非零 q 树及其单叶翻转具有相同 q，或发现不读该叶锥即可在零 q 竞争者上保持同一完整 trace 而输出仍正确，则定理 11.4 立即失效；若 handoff 以 numeric-port 事件替代 literal trace，或在 handoff 前发生 graft/reset/copy，则命题 11.9 也不再是本合同。现有材料没有给出这些反例，因而本节结论是该明确合同下的 propose/accept，而不是超出其量词的普遍获取定律。
+
+## 11.99 追加锚
