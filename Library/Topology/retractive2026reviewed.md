@@ -15,6 +15,14 @@ triage: anchor
 
 # Exact scientific source and scope
 
+## Verified locator
+
+- URL: https://github.com/the-omega-institute/trureturing
+- Scope: repository provenance for the supplied independent mathematical source and its independent review; no external DOI is declared (`doi: null`).
+- Supplied source: `efimov_all_born_ancestries_global.tex`, 47,806 bytes, SHA-256 `ca017c88c526f556e904a56ea7176631a17b3e638641b8bf4ce65e46e7b4517d`.
+- Supplied independent review: `independent_review.tex`, 18,960 bytes, SHA-256 `19d4967d94d2a0510eb9f23ae345ddf899c1c9525ea4e2ffddbb0bab993bbefe`.
+- Attribution: both files were supplied to this implementation on 4 November 2026 as complete scientific inputs by the supplied independent mathematical source and reviewer; this locator records repository provenance and makes no priority, uniqueness, or original-solution claim.
+
 The supplied completed ordinary source is
 `efimov_all_born_ancestries_global.tex`, 47806 bytes, SHA-256
 `ca017c88c526f556e904a56ea7176631a17b3e638641b8bf4ce65e46e7b4517d`.
