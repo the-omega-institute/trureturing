@@ -73,4 +73,4 @@ Transport along the evident equivalence between G and the subtype of Finset.univ
 - Truth anchor: `D5/S3/FiniteGroups/Quandles/CentralLabels.Label`
 - Truth anchor: `D5/S3/FiniteGroups/Quandles/CentralLabels.goodLabelEquiv`
 - Truth anchor: `D5/S3/FiniteGroups/Quandles/CentralLabels.wholeGoodEquiv`
-- Dependency: [D5/S0/Certificates/Groups/TaGoodInvolutionBoundRefutation](../../../S0/Certificates/Groups/TaGoodInvolutionBoundRefutation.md)
+- Dependency: [D5/S3/FiniteGroups/Quandles/ConjugationSubquandle](ConjugationSubquandle.md)
