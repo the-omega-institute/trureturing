@@ -719,7 +719,7 @@ def inclusion : target F B p →ₗ[ℂ] relativeMassShell D H p where
   map_smul' z u := Subtype.ext rfl
 
 /- Genuine stability is supplied here, not an additional endpoint hypothesis. -/
-def shellP0 : Module.End ℂ (relativeMassShell D H p) where
+private def shellP0 : Module.End ℂ (relativeMassShell D H p) where
   toFun x := ⟨P0 F B x,
     P0_mem_shell F B H hHG hGH p x x.property⟩
   map_add' _x _y := Subtype.ext (map_add _ _ _)

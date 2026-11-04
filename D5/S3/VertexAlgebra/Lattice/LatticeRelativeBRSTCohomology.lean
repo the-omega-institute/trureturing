@@ -442,7 +442,6 @@ variable (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) (p : Charge
 local notation "𝒏" => shellN H p
 local notation "𝒅" => LatticeRelativeBRSTCohomology.Ground.shellD0 F H hHG hGH p
 local notation "𝒉" => LatticeRelativeBRSTCohomology.Ground.shellH F B H hHG hGH p
-local notation "𝒆" => LatticeRelativeBRSTCohomology.Ground.shellP0 F B H hHG hGH p
 local notation "𝜹" => shellDelta F H hHG hGH p
 local notation "𝒊" => LatticeRelativeBRSTCohomology.Ground.inclusion F B H hHG hGH p
 local notation "𝒑" => LatticeRelativeBRSTCohomology.Ground.projection F B H hHG hGH p
