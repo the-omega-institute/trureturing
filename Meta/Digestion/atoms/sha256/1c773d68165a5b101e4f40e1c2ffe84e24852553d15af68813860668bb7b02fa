@@ -1,0 +1,26 @@
+**Proposition 5.2 (sufficient complete-output error data).** Write
+$f_i=F_i'$ for source-family loss densities and define
+
+$$
+\kappa=\|K_T-\widetilde K_T\|_{\mathrm{op}},\qquad
+b_i=\frac1{p_i(a)}\int_0^T|f_i-\widetilde f_i|\,dt.
+$$
+
+For the fixed canonical instruments on all live inputs and arbitrary
+reference,
+
+$$
+d_{\mathrm{op}}\leq\kappa+\tfrac12\max_i b_i.
+\tag{IS.27}
+$$
+
+Proof. From (IS.3) and (IS.9), the failure density on a joint input is
+$(f_i/p_i(a))|f\rangle\langle f|\otimes\rho_{ii}^R$, where
+$\rho_{ii}^R\geq0$ and $\sum_i\operatorname{tr}\rho_{ii}^R=1$.
+Its integrated difference norm is
+$\sum_i b_i\operatorname{tr}\rho_{ii}^R\leq\max_i b_i$.
+For contractions $K,L$, adding and subtracting $L\rho K^*$ bounds
+$\|K\rho K^*-L\rho L^*\|_1$ by $2\|K-L\|_{\mathrm{op}}$, also
+after tensoring with the identity. Combine these estimates in (IS.7).
+$\square$
+

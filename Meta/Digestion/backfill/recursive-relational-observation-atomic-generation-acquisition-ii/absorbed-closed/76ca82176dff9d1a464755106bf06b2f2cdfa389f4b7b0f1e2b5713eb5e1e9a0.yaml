@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:76ca82176dff9d1a464755106bf06b2f2cdfa389f4b7b0f1e2b5713eb5e1e9a0
+  normalized_sha256: sha256:76ca82176dff9d1a464755106bf06b2f2cdfa389f4b7b0f1e2b5713eb5e1e9a0
+cas_ref: sha256:76ca82176dff9d1a464755106bf06b2f2cdfa389f4b7b0f1e2b5713eb5e1e9a0
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativePostClockInverse.postclock_inverse
+    target_statement_id: sha256:67015be7a1663edf4be6ce2d593780ec1b0994e60ecc8c15b66ad1244193a33e
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,19 @@
+**定义 1.2（原取得接口、档案与共同参数命题）。** 已读区域从根开始且始终为连通区间。活动时每步只允许向 $L$ 或 $R$ 取得该侧一条未读边，支付一单位新边数。回答 $0$ 表示两端不同，回答 $1$ 表示两端相同。式（CPI.1）禁止 $11$，故回答 $1$ 是 $00$ 标记；接口在首次标记立即吸收，此后只给固定拒绝。策略的动作只能可测地依赖原种子和已获有限动作—回答词，等待策略在每个活动步骤都查询。完整有限终止档案记为
+
+$$
+H=\bigl(U;(J_1,0),\ldots,(J_{T-1},0),(J_T,1)\bigr).
+\tag{CPI.3}
+$$
+
+其中 $T$ 为已支付边数，$\ell_T,r_T$ 为左右已获边数，$\ell_T+r_T=T$，空间范围为 $[-\ell_T,r_T]$。有限记录空间取离散可测结构，完整档案空间取与 $\mathcal U$ 的乘积结构；可另添一个无限未终止符号，使终止前的定义也总有取值。保留档案的任务允许读取已保留的 $U$ 和旧记录，不为终止后的原生接口增加读取端口。共同参数命题为
+
+$$
+\Lambda(\mathsf D)=1,\qquad
+\mathsf D=\{(x,y)\in(0,1)^2:x=y\}.
+\tag{CPI.4}
+$$
+
+“由实验律辨识”指这个性质在给定策略的整个档案分布的每条纤维上不变。分布是数学上的整个概率测度，不是一份实际档案，也不包含重置、重复取得或精确求值该测度的操作许可。
+
+源的路径回放、首次标记吸收和根位锚定沿用 PG27 的组合结构。相应的原源数学供应分别可见 [AdaptiveMarkerStoppingTails](../../../D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.lean) 的 `actualRun`、`zeroReplay`、`stopped_execution_replay_bridge`、`armLaw`、`conditionalSourceLaw`、`jointLaw`、`arm_alternating_mass`、`conditional_no_marker_cylinder_mass`。这些声明的概率源使用一个共同参数；下面的双参数概率式由式（CPI.2）推导。
+

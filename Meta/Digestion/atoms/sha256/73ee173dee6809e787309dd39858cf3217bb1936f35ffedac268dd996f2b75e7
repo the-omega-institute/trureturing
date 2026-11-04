@@ -1,0 +1,21 @@
+**Theorem 15.2 (finite descriptions do not make an age-free finite
+carrier).** Even for a fixed zero core and a fixed actual $v$, the
+family of all normalized cuts cannot be represented by one fixed finite
+state carrier which answers every local literal correctly, unless the
+unbounded age or equivalent state is supplied externally and charged.
+A finite description at each cut, such as (PCR.24), is consistent with
+this obstruction.
+
+Proof. The supports at ages $T=0,1,2,\ldots$ have strictly increasing
+leaf counts $F_{T+2}$. They are therefore pairwise different. For any
+two ages a word in the symmetric difference is a finite physical literal
+at the same retained prefix. A deterministic representation which
+answers all current literals must distinguish these ages, even before
+any further update. A finite carrier cannot do so for infinitely many
+ages. Allowing an external age argument, unbounded backing, a changing
+address journal or the actual source as additional readable state moves
+the information and its cost rather than refuting the argument. The
+binary age counter in (PCR.33) grows without bound; it is finite for
+each finite cut. This proof is independent of numerical phase extraction
+and already holds at $r=0$. $\square$
+

@@ -1,0 +1,119 @@
+**Proposition 6.1 (Exact product-Z curvature decomposition).** Let
+
+$$
+ \rho=\sigma_r\otimes\sigma_r,\qquad
+ \sigma_r=(I+rZ)/2,\qquad 0<r<1.
+$$
+
+For every $b$, $P=\rho$, and the path is
+
+$$
+A_t=\frac14[I+rt(ZI+IZ)+r^2ZZ].
+\tag{6.1}
+$$
+
+In the $Z$ product basis, labelled by $\sigma,\tau\in\{\pm1\}$,
+
+$$
+ \lambda_{\sigma\tau}(t)=\frac14[1+rt(\sigma+\tau)+r^2\sigma\tau].
+$$
+
+For $0\leq t<1$, all four eigenvalues are positive.
+The following calculations prove the exact decomposition. The
+active local-$Z$ covariance block
+and tangent are
+
+$$
+V_{ZZ}(t)=\begin{pmatrix}1-r^2t^2&r^2(1-t^2)\\
+r^2(1-t^2)&1-r^2t^2\end{pmatrix},
+ \qquad d_{ZZ}=(r,r)^{\mathsf T}.
+\tag{6.2}
+$$
+
+A longitudinal calculation alone would not establish the full operator
+norm in (3.9).  The transverse block is obtained as follows.
+For a diagonal $A_t$, the matrix-element formula is
+
+$$
+ \mathcal K_{A_t}(B,C)=\operatorname{Re}\sum_{\alpha,\beta}
+ L(\lambda_\alpha,\lambda_\beta)B_{\alpha\beta}C_{\beta\alpha}
+$$
+
+for centered observables (the centering does not change off-diagonal
+terms).  A local Pauli on $C$ with label $x$ or $y$ flips only $\sigma$;
+a local Pauli on $D$ with label $x$ or $y$ flips only $\tau$; a $z$
+label makes no flip.  The two matrix elements in the displayed sum
+can share an ordered pair only when both labels are $z$.  Therefore the
+entire $3\times3$ cross block, including every transverse entry, is
+
+$$
+B_t=\begin{pmatrix}0&0&0\\0&0&0\\0&0&r^2(1-t^2)\end{pmatrix}.
+\tag{6.3}
+$$
+
+The same transition argument shows that the active $Z$ coordinates have
+no covariance with the transverse coordinates and that $ZZ$ has no
+covariance with a transverse local Pauli.  Since both marginals have
+Bloch vector $rtZ$,
+
+$$
+ \mathcal Q_{p(t)}=\mathcal Q_{q(t)}
+ =\operatorname{diag}\left(\frac{rt}{\operatorname{atanh}(rt)},
+ \frac{rt}{\operatorname{atanh}(rt)},1-r^2t^2\right).
+$$
+
+Equation (6.3) and this full diagonal marginal metric prove
+the exact operator norm of the full normalized cross block:
+
+$$
+\boxed{\kappa_t=\frac{r^2(1-t^2)}{1-r^2t^2}.}
+\tag{6.4}
+$$
+
+Choose $W=ZZ$.  The only nonzero entries of $z_t$ are the two $Z$
+entries, and direct classical covariance gives
+
+$$
+z_t=rt(1-r^2)(1,1)^{\mathsf T},\qquad
+ v_t=1-r^4,\qquad e_t=0.
+\tag{6.5}
+$$
+
+Put
+
+$$
+ D_t=1+r^2-2r^2t^2,\qquad
+ E_t=(1+r^2)^2-4r^2t^2.
+$$
+
+The active block in (6.2) has eigenvalue $D_t$ on $(1,1)$,
+so
+
+$$
+d_t^{\mathsf T}V_t^+d_t=\frac{2r^2}{D_t},
+ \qquad
+ \frac{s_t}{1+\kappa_t}=\frac{2r^2}{D_t}.
+\tag{6.6}
+$$
+
+The Schur denominator is $(1-r^2)E_t/D_t$, while the residual score
+pairing is $-2r^2t(1-r^2)/D_t$.  Consequently
+
+$$
+\mathcal R_t=\frac{4r^4t^2(1-r^2)}{D_tE_t}.
+\tag{6.7}
+$$
+
+Finally direct diagonal differentiation gives
+
+$$
+G_{A_t}(H)=\frac{2r^2(1+r^2)}{E_t}
+ =d_t^{\mathsf T}V_t^+d_t+\mathcal R_t.
+\tag{6.8}
+$$
+
+Thus the Schur residual exactly recovers the curvature omitted by the
+scalar product-of-margins enclosure on this whole family. The
+complete transverse block (6.3) determines the full
+$\kappa_t$; decoupling of the tangent and $W$ alone is insufficient.
+

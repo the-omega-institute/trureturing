@@ -1,0 +1,6 @@
+### 命题 10.7（本节结论的来源和边界）
+
+本节的承重内容是引理 10.1 的短字正性归约、引理 10.2–10.3 的任意正数据显式插值、定理 10.4 的每个实际历史伴随和定理 10.6 的达到的秩二下界。它们是本卷在既有 $N/L_0$ 合同上的 repo-derived 推导。附录 K 定义 45.3、定理 45.4 提供正秩一合同及其 $2k-1$ 恢复结论；本卷定理 9.7、命题 9.8 提供上界所需的扫描可判性和实际秩二达到性；续卷 II 引理 75.3、76.3 及 [FIB Relational Continuation Geometry](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 定义 3.1--3.3 提供共同实际历史的纤维接口。
+
+Baldwin--Deutsch--Kalev，*Strictly-complete measurements for bounded-rank quantum-state tomography*，Definitions 1--2，[arXiv:1605.02109v1](https://arxiv.org/html/1605.02109v1)，区分低秩承诺域内唯一性与相对于更大矩阵域的严格完备性；其 PSD/POVM 假设不供应本节一般非对称逐项正矩阵的每一条短历史插值。van den Bos--Vaandrager，*State Identification for Labeled Transition Systems with Inputs and Outputs*，Definition 11、Theorem 6.1，[https://arxiv.org/html/1907.11034v2](https://arxiv.org/html/1907.11034v2)，研究一个共同自适应测试对候选状态的区分；其不相容性和测试图条件不推出本节的连续正混合交点。Petreczky--Bako--van Schuppen，*Realization theory of discrete-time linear switched systems*，Definition 6，[https://arxiv.org/html/1103.1343v2](https://arxiv.org/html/1103.1343v2)，把可观测性量化在全部输入／切换词上，而本节固定一条不可重置实际词；Breiding--Gesmundo--Michalek--Vannieuwenhoven，*Algebraic compressed sensing*，Theorem 4.9，[arxiv.org/html/2108.13208v2](https://arxiv.org/html/2108.13208v2)，给出一般代数纤维的 generic 结论，但 generic 维数不保证与逐项严格正秩一轨迹相交。这些文献只承担所述背景和边界，不承担 (10.6)、(10.19) 或 (10.21)。本节不作外部优先权或全球检索穷尽断言。
+

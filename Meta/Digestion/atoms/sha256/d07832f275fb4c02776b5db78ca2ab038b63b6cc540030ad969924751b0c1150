@@ -1,0 +1,22 @@
+**Definition 2.1 (partial birth experiment).** Let $J\subseteq I$. In a
+fixed design-derived order actually split each original owner $p\in J$
+once, with no Tick or Add. These logical leaves are prefix incomparable,
+so every such split is enabled and does not change another selected
+leaf. Let $A_J$, $E_J:\mathbb Q^V\to\mathbb Q^{V_J}$ and $C_J$ be
+the resulting law, literal old-cell inclusion and current terminal
+projection in the actual raw order. Put $B_J=C_J^{\mathsf T}$,
+$n_J=N+2|J|$ and $k_J=b+|J|$. The terminal experimental data are
+
+$$
+ \mathcal F_J(T,x)=
+ \left((C_JA_J^rB_J)_{r\ge0},
+       (C_JA_J^rE_Jx)_{r\ge0}\right).
+\tag{SC.4}
+$$
+
+This definition describes terminal impulse/free responses; it supplies
+no response oracle. Section 4 earns a finite encoding on one actual
+source. For a subset $S\subseteq V$, write $G_S$ for the diagonal sign
+matrices $D$ with $d_v=1$ off $S$; they act on old pairs by
+$(T,x)\mapsto(DTD,Dx)$.
+

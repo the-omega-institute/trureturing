@@ -1,0 +1,12 @@
+**定义 4.1（阶数尾部的两个上确界）。** 对实数 $N\ge1$，记
+
+$$
+\begin{aligned}
+M_B(N)&=\sup\{n^{3/2}B_{k,\ell}^2:
+k\ge2,\ \ell\ge1\text{ 整数},\ n=1+k(\ell+1)\ge N\},\\
+M_P(N)&=\sup\{n^{3/2}P_{k,\ell}(t):
+k\ge2,\ \ell\ge1\text{ 整数},\ n=1+k(\ell+1)\ge N,\ t\in\mathbb R\}.
+\end{aligned}
+\tag{4.1}
+$$
+

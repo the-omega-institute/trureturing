@@ -42,7 +42,8 @@ public sealed class ScribeDefinitionSelectionTests
         var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
         var error = new StringWriter();
 
-        Assert.Equal(0, ScribeEmitter.EmitPaths(root.Path, [path], false, TextWriter.Null, error, report));
+        var emitExit = ScribeEmitter.EmitPaths(root.Path, [path], false, TextWriter.Null, error, report);
+        Assert.True(emitExit == 0, $"Scoped emit exited {emitExit}: {error}");
         Assert.False(File.Exists(root.Resolve("Evidence/Scribe/emission.json")));
         File.WriteAllText(root.Resolve("Blueprint/D5/S0/Test/Scoped.md"), "drift\n");
         error.GetStringBuilder().Clear();

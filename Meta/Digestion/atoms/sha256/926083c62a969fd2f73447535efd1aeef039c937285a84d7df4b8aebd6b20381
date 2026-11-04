@@ -1,0 +1,183 @@
+**定理 10.1（第五 J 的二目标完全刻画）。** Let $y,\xi\in\mathbb R$ and let $W_1,W_2$ be distinct complete targets in $\mathcal F_y^J(\xi)$. Put
+
+$$
+t=\frac5{96}(y-12),\qquad
+Q_t(\ell)=\left(t^2-\frac38\right)\ell^2+
+                  \left(\frac{11}8-3t\right)\ell+1.              \tag{10.1}
+$$
+
+Then
+
+$$
+L_2(\{W_1,W_2\},(H_p(y),J,\xi))                                \tag{10.2}
+$$
+
+holds if and only if $\xi=0$ and there exist two distinct real roots $\ell_1,\ell_2$ of $Q_t$ such that
+
+$$
+\begin{gathered}
+1<\ell_i<\frac83,\qquad 0<t\ell_i-1<1,\\
+W_i=W_{\ell_i}=(P_{\ell_i},f_{\ell_i},0),\\
+P_\ell=\begin{pmatrix}
+t\ell-1&\ell-1\\
+1-3\ell/8&2-t\ell
+\end{pmatrix},\qquad
+f_\ell(T)=\frac8{5\ell}\,T(T-5)(T-7).
+\end{gathered}                                                     \tag{10.3}
+$$
+
+In particular, baseline drift and the gain ray are consequences of (10.2), not promises on the starting pair. This statement classifies two-target $L_2$ sets; it does not classify larger losing families or pairs required to collide only after one already specified sixth action.
+
+Proof. The actual cumulative matrices at clocks one through five, with fifth action $J$, are
+
+$$
+J,\quad L_0=MJ,\quad Q=J+L_0=
+\begin{pmatrix}1&1\\2&1\end{pmatrix},\quad
+C_0=JQ=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad Q.
+                                                                  \tag{10.4}
+$$
+
+By Lemma 9.3, (10.2) gives equality of all four terminal response functions of this same pair. Apply the terminal reconstruction subargument of Theorem 7.1, specifically (7.1), at the actual fifth matrix $Q$. Its hypotheses hold: $\det Q=-1$, $Q$ is nonnegative with no zero row, and each $QP_i$ is strictly positive rank one. That subargument determines the same matrix $X=f_i(7)QP_i$ and the same drift $d$ from the four response functions, including its zero-entry stratum. If $X\ne0$, invertibility and trace normalization give the same $P_i$ and $f_i(7)$; the common ancestor readings at clocks $0,1,2,3$ then give the same entire polynomial $f_i$, since their source trace factors are positive. This contradicts distinctness. Hence
+
+$$
+d_1=d_2=d,\qquad f_1(7)=f_2(7)=0.                              \tag{10.5}
+$$
+
+Only the terminal subargument is being applied here; the later fifth-$M$ baseline exclusion in Theorem 7.1 concerns a different actual child.
+
+For each of these same two targets write
+
+$$
+\begin{gathered}
+P_i=\begin{pmatrix}r_i&u_i\\v_i&1-r_i\end{pmatrix},\quad
+\jmath_i=u_i+v_i>0,\quad \ell_i=1+u_i>1,\quad
+a_i=\jmath_i+\ell_i>0,\\
+q_i=\jmath_i/a_i\in(0,1),\quad h_i=a_if_i,\quad
+\alpha_i=(1+r_i+\jmath_i)/a_i>0.
+\end{gathered}                                                     \tag{10.6}
+$$
+
+The trace factors at clocks $0,\ldots,5$ in (10.4) are
+
+$$
+1,\quad \jmath_i,\quad \ell_i,\quad a_i,\quad
+1+r_i+\jmath_i,\quad a_i.
+$$
+
+Use the common constants
+
+$$
+\begin{gathered}
+A=312/5-d,\quad B=\xi-d,\quad C=24-d,\quad D=48-d,\\
+K=15A-5B,\qquad L=-5A+15B,\qquad N=9A+9B.
+\end{gathered}                                                     \tag{10.7}
+$$
+
+The parent and actual fifth equations imply
+
+$$
+h_i(3)=A,\quad h_i(5)=B,\quad h_i(7)=0,\quad
+q_ih_i(1)=C,\quad (1-q_i)h_i(2)=D.                              \tag{10.8}
+$$
+
+Polynomial interpolation at the four distinct clocks $1,3,5,7$, valid for every degree at most three, gives
+
+$$
+\begin{aligned}
+16h_i(2)&=5C/q_i+K,\\
+16h_i(4)&=-C/q_i+N,\\
+16h_i(6)&=C/q_i+L.
+\end{aligned}                                                     \tag{10.9}
+$$
+
+For example, the coefficient rows of the interpolant at $2,4,6$, relative to its values at $1,3,5,7$, are respectively $(5,15,-5,1)/16$, $(-1,9,9,-1)/16$, $(1,-5,15,5)/16$. Thus each $q_i$ satisfies
+
+$$
+(1-q_i)(5C+Kq_i)=16Dq_i.                                      \tag{10.10}
+$$
+
+Let $w_J,w_M$ be the pair's common actual sixth responses after the fifth $J$. The actual fourth and sixth equations are
+
+$$
+y-d=\alpha_i h_i(4),\quad
+w_J-d=\alpha_i h_i(6),\quad
+w_M-d=(2-q_i)h_i(6),                                         \tag{10.11}
+$$
+
+because $\operatorname{tr}(MQP_i)=\jmath_i+2\ell_i=(2-q_i)a_i$.
+
+We first prove $q_1=q_2$. If $C=0$, then $d=24$ and $D=24$; division of (10.10) only by $q_i>0$ gives $K(1-q_i)=384$. This has at most one solution, including the case $K=0$, when it has none. Suppose instead that $C\ne0$ and $q_1\ne q_2$. They are roots of
+
+$$
+-Kq^2+(K-5C-16D)q+5C=0.
+$$
+
+The constant term is nonzero, so two distinct roots require $K\ne0$ and give $q_1q_2=-5C/K$. Equality of the sixth-$M$ responses in (10.11), using (10.9), gives
+
+$$
+(q_2-q_1)(2C+Lq_1q_2)=0,\qquad L=\frac{2K}{5}.                 \tag{10.12}
+$$
+
+The first two common responses in (10.11), and $\alpha_1\alpha_2>0$, also imply
+
+$$
+h_1(4)h_2(6)-h_2(4)h_1(6)=0.
+$$
+
+After multiplication by $256q_1q_2$, (10.9) makes this equation
+
+$$
+C(N+L)(q_1-q_2)=0,\qquad N+L=0.                              \tag{10.13}
+$$
+
+No gain sample or response is divided out in either cancellation. Equations (10.12)–(10.13) say $-11A+17B=0$ and $A+6B=0$, whence $A=B=0$, contradicting $K\ne0$. This proves $q_1=q_2=q$. The four values at $1,3,5,7$ now agree, so $h_1=h_2=h$ as polynomials.
+
+Suppose $d\ne0$. The initial read gives $h(0)=-a_id$, so $a_1=a_2=a$. Consequently $\jmath_i=qa$ and $\ell_i=(1-q)a$ agree. If either $h(4)$ or $h(6)$ is nonzero, its common response in (10.11) fixes $\alpha_i$, hence $r_i$; then $u_i=\ell_i-1$, $v_i=\jmath_i-u_i$ and $f_i=h/a$ agree as well. This again contradicts distinctness.
+
+The remaining nonzero-drift case has $h(4)=h(6)=0$. Since also $f_i(7)=0$, a nonzero polynomial of degree at most three must have exactly the form
+
+$$
+f_i(T)=\frac d{168}(T-4)(T-6)(T-7),                            \tag{10.14}
+$$
+
+where its initial value $f_i(0)=-d$ fixes the coefficient. The parent readings at $1,2,3$ then require, for either source,
+
+$$
+\jmath=\frac{28(d-24)}{15d},\qquad
+\ell=\frac{21(d-48)}{5d},\qquad
+a=\frac{14(d-312/5)}d.
+$$
+
+The identity $a=\jmath+\ell$ gives $d=1344/17$, and therefore $\jmath=13/10$, $\ell=33/20$, $u=v=13/20$. But rank one and trace one require
+
+$$
+uv=r(1-r)\le\frac14,\qquad
+\frac{169}{400}>\frac14,
+$$
+
+a contradiction even for one legal source. The three distinct roots in (10.14) also exclude a lower-degree exception. Thus $d=0$ is necessary.
+
+Now each target lies in the whole promised class $C_J(y)$ of (5.2), with exactly $D_0=0$, $\lambda=1$, baseline drift and the already proved seventh root. Apply the gain-ray conclusion (5.4) of Theorem 5.2. It gives $f_i(T)=\kappa_i T(T-5)(T-7)$, with $\kappa_i>0$, and the trace constraints there give
+
+$$
+\kappa_i\jmath_i=1,\qquad \kappa_i\ell_i=8/5.
+$$
+
+Hence $\jmath_i=5\ell_i/8$, $\kappa_i=8/(5\ell_i)$ and $\xi=0$. The common fourth reading is
+
+$$
+y=\frac{96}{5\ell_i}(1+r_i+\jmath_i)
+  =12+\frac{96}{5}\frac{1+r_i}{\ell_i}.
+$$
+
+Thus $r_i=t\ell_i-1$ with the common $t$ in (10.1), and the source is exactly (10.3). Its determinant is $-Q_t(\ell_i)$. Its four entries are strictly positive exactly when $1<\ell_i<8/3$ and $0<t\ell_i-1<1$. Equality of the two $\ell_i$ would now give equality of the complete targets, so the roots are distinct.
+
+Conversely, take any two distinct roots satisfying these strict inequalities. Formula (10.3) gives positive trace-one sources with determinant zero, and nonzero degree-three gains. Their trace factors along the entire original parent are
+
+$$
+1,\quad 5\ell/8,\quad \ell,\quad 13\ell/8,\quad
+(t+5/8)\ell.
+$$
+
+Multiplying by the gain samples at clocks $0,1,2,3,4$ gives exactly $0,24,48,312/5,y$. After fifth $J$ the reading is $0$; sixth $J$ reads $-y/2$ and sixth $M$ reads $-126/5$ on both targets. Every seventh reading is $0$, since both gains vanish at $7$. Lemma 9.3 proves (10.2). The sixth gain samples are $-48/(5\ell)\ne0$. All zero-sample and degree-drop cases were retained in (10.8)–(10.13) before the final form was deduced; no leading gain coefficient or unknown gain sample was used as a divisor. ∎
+

@@ -1,0 +1,19 @@
+**定义 79.1（完整 legal-world collision）。** [Strict-real joint-incidence support §§1–2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md) 在本节局部取 $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$、$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$，保持原 acquired word $J,M,J,M,M,M$、clocks $0,\ldots,7$ 与
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18),\qquad
+C(p,v)=\mathcal F(H_4,M,p,M,v),\quad p\ne24.
+$$
+
+此处用 $P_{\rm par}$ 区别于 qutrit spectator projection，whole world 为
+
+$$
+W=(P_{\rm par}(r,b),g,d),\qquad
+P_{\rm par}(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\quad 0<r<1,\quad b>0.
+$$
+
+$g$ 是每个 world 内同一个 nonzero real polynomial、$\deg g\le3$，$d\in\mathbb R$。以 $A_0=I_2,A_i=E_iA_{i-1}$ 累积该历史已执行的字母，clock $i$ 的读数为 $d+g(i)\operatorname{tr}(A_iP_{\rm par})$；各原读数必须按其真实 clock 已发生。允许较低 degree、sampled/repeated roots、zero drift、singular source 与 unbounded positive off-diagonal，不能靠 regular chart 排除它们。clock seven 的 $J/M$ 是两个 counterfactual alternatives，不是在同一 run 顺次多读两次。
+
+在同一 acquired $(p,v)$，$D_J$ 表示 $C(p,v)$ 中有一对 distinct legal worlds 的 terminal-$J$ responses 相等，$D_M$ 类似。$D_J\cap D_M$ 要求两个 collision pairs 共用同一 child；两 pairs 可以重叠，但每对内部必须 distinct。同一个 resultant index zero、complex root 或违反 strict guards 的 rational label 不是该见证。
+

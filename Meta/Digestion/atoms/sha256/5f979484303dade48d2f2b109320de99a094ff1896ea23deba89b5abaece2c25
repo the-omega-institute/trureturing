@@ -1,0 +1,19 @@
+### 16.2 叠加与门：共享相容锁住实际复线性
+
+主定理使实际完整过程成为
+
+$$
+F(x)=Vx,\qquad V^*V=I,
+$$
+
+每个结果分量为 $M_e=P_eV$。
+因此对于全部已声明相干表达，
+
+$$
+M_e\left(\sum_jc_jx_j\right)=\sum_jc_jM_ex_j.
+$$
+
+叠加经过同一门仍是对应后继的叠加。
+连续性也成为结果：$\left\lVert Vx-Vy\right\rVert =\left\lVert x-y\right\rVert$。
+这是对实际过程的约束，而不只是给样本后继另造一个线性插值。
+

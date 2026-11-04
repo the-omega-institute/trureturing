@@ -10,7 +10,7 @@ internal sealed class StirlingLuckyDisplacementSpectrumDocument
     private const string Prefix =
         "D5/S3/Combinatorics/StirlingLuckyDisplacementSpectrum.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/colmenarejo2024lucky");
+        LibraryNoteRef.Create("D5/L/PermutationPatterns/colmenarejo2024lucky");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every count of unlucky cars allowed by the bound is attained by a Stirling permutation.",

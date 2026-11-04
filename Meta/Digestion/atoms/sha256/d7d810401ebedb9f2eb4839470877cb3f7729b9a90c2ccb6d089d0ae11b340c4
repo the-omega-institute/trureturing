@@ -1,0 +1,59 @@
+**Theorem 7.1 (actual mixture and original-law bounds).** Suppose every positive stationary closed class $C$ has its own quotient and constants satisfying Theorem 6.1. Then for every $j\ge0$ and $d\in\{L,R\}$,
+
+$$
+e_d^P(j)=\sum_C w_C e_d^{P_C}(j).
+\tag{7.1}
+$$
+
+For every $r\ge0$,
+
+$$
+\max_C\sqrt{w_C}\,A_{P_C}(r)
+\le A_P(r)
+\le\sum_C\sqrt{w_C}\,A_{P_C}(r).
+\tag{7.2}
+$$
+
+In particular,
+
+$$
+A_P(r)\le\frac12\sum_C\sqrt{w_C}\left[
+\frac{m_{-,C}\rho_{-,C}^{\lfloor r/m_{-,C}\rfloor/2}}{1-\sqrt{\rho_{-,C}}}
++\frac{m_{+,C}\rho_{+,C}^{\lfloor r/m_{+,C}\rfloor/2}}{1-\sqrt{\rho_{+,C}}}
+\right]<\infty.
+\tag{7.3}
+$$
+
+The individual error bounds are the corresponding $w_C$-weighted sums of (6.1), and $\tau_P(r)=\sum_Cw_C\tau_{P_C}(r)$. None of these constants is asserted to be uniform over $\Theta_N$ or over the posterior band.
+
+**Proof.** A stationary finite irreducible Markov chain is ergodic for the one-step shift even if it is periodic. Apply this classical fact to the labeled-edge chain with states $(s,x,t)$ for which $M_x(s,t)>0$ and transitions from $(s,x,t)$ to $(t,y,u)$ of probability $M_y(t,u)$. Its stationary mass at $(s,x,t)$ is $\lambda_sM_x(s,t)$. Irreducibility of the hidden class connects the endpoint of any positive labeled edge to the start of any other, so this finite labeled-edge chain is irreducible. The visible law is its factor, obtained by retaining the label coordinate, and is therefore stationary ergodic. This proves the assertion for every $P_C$ without an aperiodicity premise.
+
+Merge repeated visible laws and write
+
+$$
+P=\sum_{\ell=1}^L v_\ell R_\ell,
+$$
+
+where the $R_\ell$ are distinct and $v_\ell>0$. For every finite visible word, the forward empirical frequency under $R_\ell$ converges almost surely to its $R_\ell$ cylinder probability. The countable collection of these frequencies identifies $R_\ell$ on the right half-line, since distinct visible laws differ on a cylinder. Therefore there is a right-half-line event $E_\ell^+$ of $R_\ell$ probability one and all other $R_k$ probabilities zero. The inverse shift gives a corresponding left-half-line event $E_\ell^-$.
+
+For $B\in\mathcal L_j$, $E_\ell^+\in\mathcal L_j$ and the conditional expectation identity under $P$ gives
+
+$$
+0=\int_{B\cap E_\ell^+}(X_0-p_j^L)\,dP
+=v_\ell\int_B(X_0-p_j^L)\,dR_\ell.
+$$
+
+Thus the $P$ version of $p_j^L$ restricts to an $R_\ell$ version. The same holds for $q_0$ since $E_\ell^+\in\mathcal E_0$. For $p_j^R$, use $E_\ell^-\in\mathcal R_j$. This works even at $j=0$, because the opposite half-line remains. Integrating the squared difference proves the error identity over distinct visible laws.
+
+If several hidden classes have the same visible law, their $q_0,p_j^d,e_d(j)$ are the same visible-law functionals. Splitting the weight $v_\ell$ among these equal terms proves (7.1) over the actual hidden classes without claiming to observe their hidden labels. Hidden periodic phases are not separate visible ergodic labels.
+
+For nonnegative numbers $a_C$, and any fixed $C_0$,
+
+$$
+\sqrt{w_{C_0}a_{C_0}}
+\le\sqrt{\sum_Cw_Ca_C}
+\le\sum_C\sqrt{w_Ca_C}.
+$$
+
+Apply these inequalities to (7.1), sum over both directions and $j\ge r$, and obtain (7.2). The number of classes is finite; inserting (6.2) proves (7.3). Nonnegative summation also proves the asserted $\tau$ identity. In particular, root summability of a finite mixture is equivalent to root summability of each positive-weight visible component, whether or not Theorem 6.1 supplies the latter. No aperiodicity assumption is needed. $\square$
+

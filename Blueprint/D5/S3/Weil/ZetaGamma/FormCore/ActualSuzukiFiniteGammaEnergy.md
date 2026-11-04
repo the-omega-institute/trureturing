@@ -31,4 +31,4 @@ This is convergence in the displayed physical H6 metric. The construction has un
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiFiniteGammaEnergy.actual_h6_finite_gamma_energy_unbounded`
-- Dependency: [D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample](ActualSuzukiDomainCounterexample.md)
+- Dependency: [D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiFinitePhysicalFeature](ActualSuzukiFinitePhysicalFeature.md)

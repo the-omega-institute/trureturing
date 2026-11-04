@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cc412837c4889a4f7d5b048a7fe8e07daebfe20d671bcfa4014bb0fbd3648cdd
+  normalized_sha256: sha256:cc412837c4889a4f7d5b048a7fe8e07daebfe20d671bcfa4014bb0fbd3648cdd
+cas_ref: sha256:cc412837c4889a4f7d5b048a7fe8e07daebfe20d671bcfa4014bb0fbd3648cdd
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/SelfConjugateTwoNodeSchurRatioRegion.second_inequality_region
+    target_statement_id: sha256:ac489f2ca57b20f392d146caa8d50508a6fcfbd6e75995f5b447f3b95300d2e7
+receipts:
+  unresolved_subitems: []

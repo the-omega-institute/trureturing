@@ -1,0 +1,19 @@
+**推论 96.2（原九列上的同一停止后缀及固定时序边界）。** 对定义 93.1 的实际未归一前缀 $r_i=A_{u_i}\rho_0$，$m_i=\operatorname{Tr}r_i=2^{-k(u_i)}$，在每个原前缀上下文的全部历史后执行同一个 $\pi_P$，忽略前缀身份与标签。则
+
+$$
+\begin{gathered}
+p_i(\ell,b)=\alpha_\ell\operatorname{Tr}(E_bU_\ell r_iU_\ell^\dagger),\qquad
+q_i(\ell,b)=\alpha_\ell\operatorname{Tr}(P_b r_i),\\
+\sum_{\ell,b}p_i(\ell,b)=\sum_{\ell,b}q_i(\ell,b)=m_i,\\
+\frac12\sum_{\ell,b}|p_i(\ell,b)-q_i(\ell,b)|<m_i\varepsilon,
+\qquad
+|\operatorname{Tr}[(F_{\pi_P}-P)r_i]|<m_i\varepsilon
+\quad(1\le i\le9).
+\end{gathered}
+\tag{96.8}
+$$
+
+证明。用 $A_{u_iw}=A_wA_{u_i}$ 代入 (95.1)，再用 $r_i\succeq0$ 和 $|\operatorname{Tr}(Hr_i)|\le\|H\|_\infty m_i$ 重复 (96.7)。其他前缀历史也执行同一后缀，全部留在所在上下文的完整档案中；(96.8) 只是其中 $u_i$ 事件的原质量，并未制备 $r_i/m_i$。由 (95.4)，它们在原五维逐路径同样成立。
+
+停止表可使 §92 第一处仪器的两条标签历史在不同检查点调用终端；因而 (92.7)–(92.8) 所需的共同剩余词 $t$ 不再存在，尽管所有尚未停止路径的 $N$ 位置仍由同一个串决定。取 $P=P_N$、$\varepsilon<1/12$，(96.1) 与 (92.1) 直接说明所获效果不在 $\mathcal B_N$。将早停路径虚填到共同终点会改变其终端效果，不能用填充后的最后一次终端替代已发生的早期终端。因此这是改变停止接口后越过原固定终点限制，与原定理的适用域相容。∎
+

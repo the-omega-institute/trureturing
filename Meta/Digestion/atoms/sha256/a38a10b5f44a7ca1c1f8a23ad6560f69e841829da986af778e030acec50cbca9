@@ -1,0 +1,254 @@
+**Lemma 7.1 (A core and tail certificate from one law).** Fix constants $C\ge1$ and $0<L\le R<\infty$. There are constants $A,E<\infty$, depending only on $C,L,R$, with the following property. For every pair of integers $a\ge A$, $h\ge1$ with $L\le h/\sqrt a\le R$, and every law $x\in\mathcal X(a,h)$ satisfying
+
+$$
+H(x)\le a^3+Ca^2,
+\tag{7.1}
+$$
+
+there are an integer $j$ and a real number $v$ such that
+
+$$
+1\le j\le4C,\qquad \frac{L^2}{8C}\le v\le j+Ea^{-1/2},
+\tag{7.2}
+$$
+
+and
+
+$$
+\frac{H(x)-B_0(a)}{a^2}
+\ge \frac{(h+1-j)^2}{av}+2v+2j-2-Ea^{-1/2}.
+\tag{7.3}
+$$
+
+More precisely, $a+j$ is the number of labels in a set $\mathcal C$ determined by the actual marginals of $x$, and $v=a\mathbb P_x(T\cap\mathcal D\ne\varnothing)$ for its complement $\mathcal D=[s]\setminus\mathcal C$. Thus the integer and the probability in (7.2)–(7.3) belong to the same law.
+
+**Proof.** All constants implicit in $O(\cdot)$ in this proof depend only on $C,L,R$; the estimates hold uniformly over (7.1). Put $I_i=\mathbf1_{\{i\in T\}}$ and $V=\operatorname{Var}(K)$. Since $y_i\le1$,
+
+$$
+H\ge\mathbb E K^3,\qquad
+\mathbb E K^3-a^3
+=\mathbb E[(K-a)^2(K+2a)]\ge2aV.
+\tag{7.4}
+$$
+
+The identity follows by expanding and using $\mathbb E K=a$. Consequently
+
+$$
+V\le Ca/2,\qquad p_*:=\mathbb P(K<a/2)\le2C/a.
+\tag{7.5}
+$$
+
+The second inequality follows by bounding $(K-a)^2$ below by $a^2/4$ on that event. The nonnegative residual is
+
+$$
+\mathcal R=H-\mathbb E K^3
+=\sum_i\mathbb E[K^2I_i](y_i^{-2}-1)\le Ca^2.
+$$
+
+Set $z_i^*=\mathbb P(i\in T,K\ge a/2)$. Restricting the nonnegative summands to $K\ge a/2$ yields
+
+$$
+\sum_i z_i^*(y_i^{-2}-1)\le4C.
+\tag{7.6}
+$$
+
+Take $b=4C$ and define
+
+$$
+\mathcal C=\{i:y_i\ge b/a\},\qquad
+\mathcal D=[s]\setminus\mathcal C.
+$$
+
+For $i\in\mathcal C$, (7.5) gives $z_i^*\ge y_i-p_*\ge y_i/2$. Hence
+
+$$
+\sum_{i\in\mathcal C}(y_i^{-1}-y_i)\le8C,
+\qquad y_i\ge c:=(8C+1)^{-1}\quad(i\in\mathcal C).
+\tag{7.7}
+$$
+
+Indeed each nonnegative summand in the sum is at most $8C$, so $1/y_i\le8C+y_i\le8C+1$. This produces a fixed positive lower bound on core marginals from (7.1), without assuming one in the original domain.
+
+Write
+
+$$
+m=|\mathcal C|,\qquad n=|\mathcal D|,\qquad
+t=\sum_{i\in\mathcal D}y_i,\qquad
+\delta=\sum_{i\in\mathcal C}(1-y_i).
+$$
+
+Since $y^{-1}-y\ge2(1-y)$ on $(0,1]$, (7.7) implies $\delta\le4C$. The common marginal budget gives
+
+$$
+a=m-\delta+t,\qquad n=h+1-\delta+t,
+\qquad t\le\frac{bn}{a}.
+\tag{7.8}
+$$
+
+Thus, for $a>b$,
+
+$$
+h+1-4C\le n\le\frac{h+1}{1-b/a}=O(\sqrt a),
+\qquad t=O(a^{-1/2}).
+\tag{7.9}
+$$
+
+The integer $j=m-a=\delta-t$ therefore satisfies $0\le j\le4C$ for all sufficiently large $a$: its lower bound follows from $j\ge-t>-1$. In particular
+
+$$
+m=a+j,\qquad n=h+1-j,\qquad n\ge L\sqrt a/2>0
+\tag{7.10}
+$$
+
+once $a$ is sufficiently large.
+
+Consider the actual event
+
+$$
+A=\{T\cap\mathcal D\ne\varnothing\},\qquad
+p=\mathbb P(A),\qquad e=\mathbb E[K\mathbf1_A],
+$$
+
+and the tail energy
+
+$$
+H_D=\mathbb E\left[K^2\sum_{i\in T\cap\mathcal D}y_i^{-2}\right].
+$$
+
+Positivity of every marginal and $n>0$ imply $p>0$. For $i\in\mathcal D$ one has $y_i<b/a$, so the tail contribution to $\mathcal R$ gives
+
+$$
+(1-b^2/a^2)H_D\le\mathcal R,\qquad H_D\le2Ca^2
+\tag{7.11}
+$$
+
+for sufficiently large $a$. If $K_D=|T\cap\mathcal D|$, then $K_D\ge1$ on $A$. Therefore
+
+$$
+\mathbb E[K^2\mathbf1_A]
+\le\mathbb E[K^2K_D]
+\le\frac{b^2}{a^2}H_D\le Q:=2Cb^2.
+\tag{7.12}
+$$
+
+Cauchy–Schwarz gives $e\le\sqrt{Qp}$. On $A^c$ one has $T\subseteq\mathcal C$ and $K\le m$, whence the mean constraint implies
+
+$$
+a\le m(1-p)+e,\qquad mp\le j+e\le j+\sqrt{Qp}.
+$$
+
+Using $\sqrt{Qp}\le mp/2+Q/(2m)$ gives
+
+$$
+p\le\frac{2j}{m}+\frac Q{m^2}=O(a^{-1}),\qquad
+e=O(a^{-1/2}).
+\tag{7.13}
+$$
+
+Put $v=ap$. As $j\ge0$ and $m=a+j$, the preceding mean inequality also gives
+
+$$
+v\le mp\le j+O(a^{-1/2}).
+\tag{7.14}
+$$
+
+To bound the tail energy sharply using this same probability, put
+
+$$
+U_D(T)=\sum_{i\in T\cap\mathcal D}y_i^{-1}.
+$$
+
+The actual marginal identity gives $\mathbb E U_D=n$. Pointwise Cauchy–Schwarz and $K_D\le K\le K^2$ give
+
+$$
+U_D^2\le K_D\sum_{i\in T\cap\mathcal D}y_i^{-2}
+\le K^2\sum_{i\in T\cap\mathcal D}y_i^{-2}.
+$$
+
+Since $U_D=0$ on $A^c$, another application of Cauchy–Schwarz gives
+
+$$
+H_D\ge\mathbb E U_D^2\ge\frac{n^2}{p},\qquad
+v\ge\frac{n^2}{2Ca}\ge\frac{L^2}{8C}.
+\tag{7.15}
+$$
+
+Combining this positive lower bound with (7.14) excludes $j=0$ for all sufficiently large $a$. This proves (7.2), after enlarging the uniform constant.
+
+It remains to retain the core contribution to order $a^2$, including the change of marginals under conditioning. The following elementary estimate will be applied to the conditional law. Suppose a law on nonempty subsets of $[m]$ has mean $q=m-d$ and marginals $u_i\ge\gamma>0$. With its own energy denoted by $H_m$ and $Z_T=\sum_{i\in T}u_i^{-2}$, one has
+
+$$
+\sum_i u_i^{-1}\ge m+d,\qquad
+\sum_i u_i^{-2}\le m+2d/\gamma^2.
+$$
+
+The first inequality is $u^{-1}\ge2-u$ summed over $i$; the second follows from $u^{-2}-1\le2(1-u)/\gamma^2$. The exact identity and pointwise bound
+
+$$
+H_m=m^2\sum_i u_i^{-1}-\mathbb E[(m^2-K^2)Z_T],
+\qquad 0\le m^2-K^2\le2m(m-K)
+$$
+
+therefore imply
+
+$$
+H_m\ge m^2(m+d)-2md(m+2d/\gamma^2)
+=m^2q-4md^2/\gamma^2.
+\tag{7.16}
+$$
+
+For each $i\in\mathcal C$, set
+
+$$
+r_i=\mathbb P(i\in T,A),\qquad z_i=y_i-r_i,\qquad \pi=1-p.
+$$
+
+By (7.13), $\pi>0$ for sufficiently large $a$. The conditional law $x^0=\mathcal L(T\mid A^c)$ is a law on nonempty subsets of $\mathcal C$ with
+
+$$
+y_i^0=z_i/\pi,\qquad q_0=(a-e)/\pi,\qquad
+d_0=m-q_0=\frac{j+e-mp}{\pi}\ge0.
+\tag{7.17}
+$$
+
+Here $d_0=O(1)$ and $r_i\le p=O(a^{-1})$. By (7.7), $z_i\ge c/2$ eventually, so $y_i^0\ge c/2$. Applying (7.16) to this actual conditional law yields
+
+$$
+H_0\ge m^2q_0-O(a),
+\tag{7.18}
+$$
+
+where $H_0$ uses the conditional marginals $y_i^0$. The original and conditional denominators must be compared: the derivative of $u^{-2}$ on $u\ge c/2$ gives
+
+$$
+0\le z_i^{-2}-y_i^{-2}\le16c^{-3}r_i,
+\qquad \sum_{i\in\mathcal C}r_i=\mathbb E[K-K_D;A]\le e.
+$$
+
+Let $H_C=H-H_D$. Restricting its nonnegative integrand to $A^c$, where $K\le m$, gives
+
+$$
+\begin{aligned}
+H_C
+&\ge\mathbb E\left[K^2\sum_{i\in T}y_i^{-2};A^c\right]\\
+&\ge\mathbb E\left[K^2\sum_{i\in T}z_i^{-2};A^c\right]
+       -16c^{-3}m^2e\\
+&=\frac{H_0}{\pi}-16c^{-3}m^2e\\
+&\ge\frac{m^2(a-e)}{(1-p)^2}-O(a^{3/2})\\
+&\ge a^3+(2j+2v)a^2-O(a^{3/2}).
+\end{aligned}
+\tag{7.19}
+$$
+
+The equality uses $y_i^0=z_i/\pi$: $H_0=\pi\mathbb E[K^2\sum_{i\in T}z_i^{-2};A^c]$. For the last inequality, $m=a+j$, $p=v/a$, and boundedness of $j,v$ give
+
+$$
+\frac{m^2a}{(1-p)^2}
+\ge(a+j)^2a(1+2v/a)
+\ge a^3+(2j+2v)a^2,
+$$
+
+while $m^2e/(1-p)^2=O(a^{3/2})$. Adding (7.15) and (7.19), and using $B_0(a)=a^3+2a^2+a$, proves (7.3).
+
+All divisions involve positive actual marginals or the positive event probabilities just established. The Cauchy–Schwarz inequality used here is the finite inner-product inequality; see S. Boyd and L. Vandenberghe, *Convex Optimization*, Appendix A.1 ([author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)). No independence of inclusion events, support connectedness, or restriction on the cardinalities was used. ∎
+

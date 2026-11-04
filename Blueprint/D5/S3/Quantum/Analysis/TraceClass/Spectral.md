@@ -57,4 +57,5 @@ Boundary cases: zero on a nonseparable space retains its full zero eigenspace wi
 - Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/Spectral.exists_faithful_reference_spectral_data`
 - Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/Spectral.exists_nonneg_trace_spectral_data`
 - Truth anchor: `D5/S3/Quantum/Analysis/TraceClass/Spectral.faithful_reference_finite_or_nat`
+- Dependency: [D5/S3/Quantum/Analysis/CompactEigenbasis](../CompactEigenbasis.md)
 - Dependency: [D5/S3/Quantum/Analysis/TraceClass/Compact](Compact.md)

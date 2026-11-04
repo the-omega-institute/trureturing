@@ -1,0 +1,50 @@
+**Definition 61.1 (source, randomness and quantified competitors).** Keep
+Definitions 53.1–53.3 and 57.1 without enlarging the source interface.
+In particular, the actual source has a known-alpha origin but an unknown
+current entry $t\in\mathcal D$; its old legal producer word is not an
+input to the attaching controller. The same opaque bound root, orientation,
+exclusive current $P/S$ rights, serialization, complete replies and local
+return acknowledgement are supplied. There is no Tag, Native Read,
+field, membership, history, allocation-name, duration or quota readout.
+The beta marker is material and is never a logical child. Source-dependent
+work records are initially empty. The finite framing and controller
+program, source backing, owned work, references, grants, preparation,
+communication, retention and clearing have their actual costs under
+Assumption 53.2.
+
+Add one separately supplied callable service delivering independent fair
+bits. Its law is independent of the entry, every compatible old producer
+word, source names and dispatcher state. Its binding, invocation rights,
+provider work and delivered traffic are paid resources. This is an
+explicit randomness premise, not a service constructed from the growth
+guards or obtained from a computed current representation. The service
+supplies no source-dependent information. Its product probability space
+is a semantic description of random choices; it does not assert that an
+infinite physical tape has already been allocated.
+
+A randomized competitor is an effective measurable controller using only
+these services and ordinary paid local computation. For every fixed
+admitted entry and every fixed compatible old producer word, it must
+return, with zero error, an exact entry constructor word and an exact
+constructor word for its actual current source. It retains the actual
+callable root and current rights and returns at a synchronized settled
+cut. It must finish after finitely many local steps, fair bits and
+completed requests with probability one. No erroneous returned word is
+allowed; a null set of nonterminating tapes is permitted. No uniform
+bound over random tapes is required. Expectations below are over this
+independent service after the entry and its old preparation have been
+fixed. Nonnegative costs may have infinite expectation for a competitor.
+Sufficient finite backing is required for each claimed finite execution;
+observable exhaustion is outside this installation.
+
+For a finite full ordered binary skeleton $K$, use precisely
+$\mathcal F_K,V_K,m$ of Definition 57.1: all nonvariable leaves are beta,
+and the $m\ge1$ root-or-right-born variable leaves vary independently
+between alpha and beta. All $2^m$ assignments are reachable by AA
+Theorem 17.2. A competitor may even be given $K$ when proving a lower
+bound. The attaining controller below is one source-independent program
+for every finite $t\in\mathcal D$, with no supplied skeleton, height,
+size, fuel or leaf types. Old preparation choices cannot be used as an
+extra correlated input. All results are uniform over compatible old
+legal histories satisfying the same attachment contract.
+

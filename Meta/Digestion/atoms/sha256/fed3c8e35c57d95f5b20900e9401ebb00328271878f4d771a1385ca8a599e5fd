@@ -1,0 +1,7 @@
+#### 说明 2.3（几何 $\mathbb{C}^2$ 与四模式 $\mathbb{C}^4$）
+
+原几何也可把两个实平面各记成一个复数，从而写 $\mathbb{R}^4\simeq\mathbb{C}^2$。但是实反射 $D$ 满足 $DJ=-JD$，其中 $J=\bigl(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\bigr)$。
+所以 $U_D$ 不与 $\operatorname{diag}(J,J)$ 对易，不是该天然 $\mathbb{C}^2$ 编码上的复线性门。更强地，$\det_{\mathbb{R}}U_D=-1$，而任何可逆复线性映射的实行列式为 $\left|\det_{\mathbb{C}}\right| ^2>0$，故它在任何复结构下都不能直接成为二维复线性门。定理 [2.2](#statement-2-2) 的量子实现使用另行声明的四振幅复化。下面通过换一种互补通道，得到真正的二维复酉完成。
+
+<a id="statement-2-4"></a>
+

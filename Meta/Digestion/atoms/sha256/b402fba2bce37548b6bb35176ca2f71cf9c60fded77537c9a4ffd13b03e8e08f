@@ -1,0 +1,6 @@
+**Theorem 5.2 (rooted boundary-history and record criterion).** Under Definition 5.1, let $T_{\mathrm{lit}}$ retain the root and complete ordered named-action/event word, so that $T_{\mathrm{lit}}$ is injective on $H$. Let $M$ be any specified deterministic function of the same history. The following are equivalent:
+
+1. ROOT, PREDECESSOR and RECORD.
+2. $B$ is injective on $H$, and $B$ is recoverable from $M$ on the actual images.
+3. $B$, $T_{\mathrm{lit}}$ and $M$ are pairwise mutually recoverable on the actual images.
+

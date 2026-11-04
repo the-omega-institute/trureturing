@@ -1,0 +1,18 @@
+## 1. 最新项目快照与本轮问题
+
+本轮只读核验的研究分支为 `dev`，不可变提交是
+`f22ccafb22873bb5445053498b0f64f9ea111ede`。
+提交时间为 2026-10-30 01:00:09（Asia/Singapore），标题为 *Ingest sink-incidence, six-phase energy and graph-deficit theory updates (#23767)*。相对上一稿 `52ce13dc…`，理论目录有 18 个变更路径，其中 4 个新增、14 个修改；当前理论目录含 1005 个文件。本轮针对性核验 17 份当前源码的 Git blob，并核对 4 份旧版本及差异。这是定向研究核验，不能解释为对全部项目证明的认证。
+
+与本轮最直接相关的证据如下。
+
+1. [《金字塔基础公式》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)已有隐藏纤维、最大熵完成与最坏误差预测；两种最优通常不同。
+2. [《信息逃逸与热力学作用》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/AURIC_FIB_PYRAMID_INFORMATION_ESCAPE_DYNAMICS_THERMODYNAMIC_ACTION.md)已有质量作用流、对数平均 mobility 及指数耗散不等于同端点最小二次作用的精确比较。
+3. [《KL 作用原卷》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md)定理 21.6 及其后续论述已有同一实际相邻律的 Markov 最大熵补全、条件互信息余项及逐边 Bellman 证书。
+4. [《真实切面恢复》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md)本轮新增的 §§14–17 使用条件期望递归构造共同探测列表，但保留 $4^d$ 目录工作；多项式实际 Read 数不等于多项式总计算工作。
+5. [《相干重构续卷》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)本轮新增的 §§64–67 给出共同有限码、三源循环比较及实际联合记录；假设 64.2 仍供应初始化、寻址、相位校准与 Born 合同，§67.3 明确量子起源尚未闭合。
+
+前稿 v14 与 v15 现已作为用户稿件转换收入项目。它们构成研究连续性，不能充当独立验证。本文引用 v15 的位置均指出具体数学前提；本轮新算术界另给自足证明。
+
+<a id="sec-2"></a>
+

@@ -1,0 +1,28 @@
+### Theorem 61.3 (two labels but four controller states)
+
+For the reader in Definition 61.1 and any \(n\ge1\),
+
+$$
+\kappa_n^{\mathrm{hist}}=2,
+\qquad K_{\min}(n)=4.
+$$
+
+There is no unique coarsest safe partition of the three histories.
+
+**Proof.** One label would merge all three classes and is impossible by Theorem
+61.2. Two labels suffice, for example
+\(\{1,2\}\mid\{3\}\), so \(\kappa_n^{\mathrm{hist}}=2\). The partition
+\(\{1,3\}\mid\{2\}\) is also safe. Any partition coarser than both merges all
+three classes and is unsafe, so no common coarsest safe partition exists.
+
+For the upper bound, use running states \(k_b,k_a\), with initial classes
+\(\{1,2\}\) and \(\{3\}\) sent to them. Execute \(b\) or \(a\), respectively;
+response \(0\) enters a halt state \(h_0\), and response \(1\) enters \(h_1\).
+This is a four-state controller.
+
+For the lower bound, at least two distinct halt states are needed for the two
+possible outputs. No initial source can be a halt state because its target is
+unknown. No single running state can serve all three classes, since every one
+of \(a,b,c\) returns \(\star\) on one class. Thus at least two running states
+are required, giving \(K\ge4\). \(\square\)
+

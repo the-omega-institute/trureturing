@@ -1,0 +1,48 @@
+**Theorem 38.2 (exact elimination and degree control).** For every $\alpha,\beta>0$, $\Phi_\nu(\alpha,\beta)$ holds if and only if there is a whole legal world in $\mathcal W_\delta(y)$ with source $P_\nu(\alpha,\beta)$. If $\Psi_{\nu,I}$ holds, one such whole world is explicitly
+
+$$
+ \begin{aligned}
+ P&=X_\nu/(\alpha+\beta),\\
+ H(\tau)&=(\alpha+\beta)
+              \sum_{j=0}^k\frac{N_{\nu,I,j}}{\Delta_{\nu,I}}\tau^j,\\
+ D(\tau)&=\sum_{j=0}^d
+              \frac{N_{\nu,I,k+1+j}}{\Delta_{\nu,I}}\tau^j,\qquad
+ \xi_i=y_i-B_{\nu,i}Q(i)-D(i).
+ \end{aligned}
+ \tag{38.5}
+$$
+
+The degrees below are total degrees in the two source parameters:
+
+| Data | Degree bound |
+|---|---:|
+| Gain columns of $R_\nu$ | $2$ |
+| Drift columns and $\lambda$ | $0$ |
+| $\Delta_{\nu,I}$, every $S_{\nu,I,r}$, and every drift numerator $N_{\nu,I,k+1+j}$ | $2(k+1)$ |
+| Every gain-legality numerator $N_{\nu,I,j}$, $0\le j\le k$ | $2k$ |
+
+There are at most
+
+$$
+                    2\binom{2L}{k+d+2}
+ \tag{38.6}
+$$
+
+bases in the two charts together. This counts bases, not arithmetic operations or root samples.
+
+**Proof.** At a nonsingular basis, Cramer's rule gives $w_\ell=N_\ell/\Delta$. The bordered determinant identity gives, for every signed raw constraint,
+
+$$
+ S_r=\Delta\lambda_r-R_r\operatorname{adj}(R_I)\lambda_I
+     =\Delta(\lambda_r-R_rw).
+ \tag{38.7}
+$$
+
+Thus (38.4) says exactly that this Cramer point satisfies every inequality in (38.2) and has a nonzero gain coefficient. Its source is legal by (37.1), and $(\alpha+\beta)Q\ne0$. Equations (37.3) and (38.7) verify each of the errors in (38.5) in the same whole world.
+
+For the converse, Lemma 37.2 makes the feasible coefficient set a compact polytope. A nonempty compact polytope is the convex hull of its vertices, and at each vertex $m$ linearly independent active constraint normals can be chosen. These standard facts apply also when the polytope has smaller affine dimension. If a feasible point has $q\ne0$, at least one vertex has $q\ne0$: otherwise every convex combination of vertices would have zero gain block. Choose the independent active rows at such a vertex. Their determinant is nonzero and Cramer's rule and (38.7) give precisely (38.4). This proves necessity without replacing the strict condition $H\ne0$ by its closure. The polyhedral suppliers used here are Kaibel, *Basic Polyhedral Theory*, Theorems 2, 13 and 15, with the bounded-polyhedron specialization of the Weyl–Minkowski description; their role is the vertex/Cramer step, not the source parametrization or its escape interpretation.
+
+For the degree statements, there are exactly $k+1$ columns depending on $\alpha,\beta$, each of degree at most two. All drift columns and the right-hand-side column are constant in these parameters. In each determinant monomial, each column occurs once. Hence $\deg\Delta\le2(k+1)$. Replacing a gain column leaves only $k$ quadratic columns, proving $\deg N_j\le2k$; replacing a drift column leaves $k+1$. The bordered determinant defining $S_r$ also has only $k+1$ quadratic columns, proving the same bound $2(k+1)$ for its degree. Estimating the two terms of (38.7) separately is unnecessary and would obscure this bound. Increasing $d$ adds only parameter-independent columns and more candidate row sets. Finally each chart has at most $\binom{2L}{m}$ choices of $I$. $\square$
+
+Theorem 38.2 eliminates the entire original-variable coefficient vectors, rather than allowing separate values of $H$ or $D$ at different reads. It allows degree drops, gain signs, all sampled gain roots and all exact active raw equalities. It imposes no positive lower bound on the Cramer gain block. In particular along passing worlds $Q$ may tend to zero, so the $Q=0$ auxiliary limits in (30.2) are retained; only an identically zero gain in an actual positive-scale world is excluded.
+

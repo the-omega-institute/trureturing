@@ -1,0 +1,35 @@
+#### 定理 9.3（读出稳定不等于全算符极限存在）
+
+在[(8)](#eq-productrecursion)中，假设每个 $P_n$ 及 $I-P_n$ 非零，以 $A\mapsto I\otimes A$ 识别相邻层。则
+
+$$
+
+\boxed{\left\lVert W_{n+1}-I\otimes W_n\right\rVert=|\zeta-1|.}
+
+$$
+
+因此这列门不在算符范数下形成 Cauchy 列。然而，在给定乘积态
+
+$$
+
+\rho^{(n)}=\rho_n\otimes\cdots\otimes\rho_1
+
+$$
+
+中，若 $r_j=\operatorname{Tr}(\rho_jP_j)$ 且 $\prod_{j=1}^nr_j\to0$，则
+
+$$
+
+\operatorname{Tr}(\rho^{(n)}W_n)
+=1+(\zeta-1)\prod_{j=1}^nr_j\longrightarrow1.
+
+$$
+
+**证明。** 
+相邻差为 $-(\zeta-1)(I-P_{n+1})\otimes E_n$，其中两个投影因子均非零，范数各为 $1$。期望公式由张量乘积迹及[(8)](#eq-productrecursion)直接得到。
+ ∎
+
+因此可以同时严格说：指定观察者的一项预测在分辨率下定格；全部可能输入上的门仍没有范数极限。若要使用其他极限，如强算符极限、局部态极限或某个测量距离，必须连同空间嵌入、允许状态与误差尺度一起定义。
+
+<a id="sec-10"></a>
+

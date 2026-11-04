@@ -1,0 +1,41 @@
+**定义 139.1（完整两行记录与实际参数）。** 对每个充分大的合法 $n$，固定不同正类行 $i_1,i_2$，记 $u_a=\operatorname{inl}i_a$，并固定一个负类顶点 $v$，均不依赖真实支持。保持原 $k_0,l_0,\lambda,\mathsf T$。
+完整 pair 记录依次对每个 $a=1,2$ 列出 $k_0$ 个 $(u_a,u_a)$ 和 $l_0$ 个 $(u_a,v)$，最后列出 $\mathsf T-2\lambda$ 个 $(v,v)$。
+完整 path 从 $v$ 出发，对每个 $a=1,2$ 依次作 $v\to u_a$、$k_0$ 次 $u_a\to u_a$、$u_a\to v$，再作 $l_0-1$ 次 $v\to u_a\to v$，最后作 $\mathsf T-2(k_0+2l_0)$ 次 $v\to v$。因 $l_0\ge1$ 且 $2(k_0+2l_0)\le4\lambda\le\mathsf T$，这些次数均为合法非负整数。
+
+两份记录的标记出发计数都恰为 $(k_0,l_0)$，所有其他正类行的出发计数均为 $(0,0)$。于是它们的共同分数为
+
+$$
+W_n=k_0\log\frac{1+r}{1-\epsilon_c}
+        +l_0\log\frac{1-r}{1+\epsilon_c},\quad
+W_n^*=\log\frac{M-q}{q},\quad
+\kappa_n=\lambda\epsilon_c+\frac1q+\frac qM.
+\tag{139.1}
+$$
+
+以下证明 $|W_n-W_n^*|=O(\kappa_n)$ 且 $J=\{i_1,i_2\}$。故只有一个非空分数组、$C=2$，实际三质量为
+
+$$
+A_m=\binom2m e^{mW_n}\binom{M-2}{q-m},\quad m=0,1,2,\qquad
+Z=\sum_{m=0}^2A_m,\qquad a_m=A_m/Z.
+\tag{139.2}
+$$
+
+不删除 $m=0$ 或 $m=2$，也不把组内标签拆成单独的 powered 质量。实际中心与原精确校准为
+
+$$
+\mu_n=\frac{A_1+2A_2}{Z},\qquad
+p_n=\frac{e^{W_n+h_n}}{1+e^{W_n+h_n}},\quad
+p_{c,n}=\frac{e^{h_n}}{1+e^{h_n}},\quad
+2p_n+(M-2)p_{c,n}=q.
+\tag{139.3}
+$$
+
+$h_n$ 是 (121.5) 唯一的共同赔率乘子，始终保留实际 $p_n$ 和 $\mu_n$。
+本节另要求原正噪声序列满足严格条件 (122.1)，并令
+
+$$
+\varepsilon_n=\lambda_n\epsilon_{c,n}+\frac1{q_n}+\frac{q_n}{M_n}
+       +\frac{Q_n^{11/4}}{q_n\sigma_n^2}.
+\tag{139.4}
+$$
+

@@ -1,0 +1,16 @@
+**命题 5.3（策略本身变化的误差）。** 在一个节点，控制器按 $\pi(a)$、$\widetilde\pi(a)$ 选择动作并记录标签；同一动作距离为 $\varepsilon_a$，则总 half-diamond 距离不超过
+
+<a id="eq-5-3"></a>
+
+$$
+\operatorname{TV}(\pi,\widetilde\pi)
++\sum_a\min\{\pi(a),\widetilde\pi(a)\}\varepsilon_a.
+\tag{5.3}
+$$
+
+**证明。** 令 $m_a=\min\{\pi(a),\widetilde\pi(a)\}$。在动作块中先配对共同质量 $m_a$，再把剩余质量留给单方通道。共同质量贡献至多 $m_a\varepsilon_a$；剩余质量的半迹范数求和为 $\operatorname{TV}(\pi,\widetilde\pi)$。对输入和参考取上确界即得。
+
+评分微小变化不保证最大值选择稳定。例如评分 $(0,\eta)$ 与 $(\eta,0)$ 的逐项差只有 $\eta$，确定性最大值选择却完全相反。若评分误差至多 $\eta$，且最佳动作与其余动作的间隔严格大于 $2\eta$，则最优动作保持不变，因为两端评分各最多移动 $\eta$。这使“预测成为观察者自身增长”进入整体因果原子的误差预算。
+
+<a id="sec-6"></a>
+

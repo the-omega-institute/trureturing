@@ -1,0 +1,36 @@
+**Corollary 14.1 (fixed mixed gain-ray threshold in every degree).** Fix any declared maximum degree $d\ge1$ and put $m=d+1$. On the full world domain (1.1)–(1.2), the least number of reads for a preassigned mixed acquisition word to admit all-input full-gain-ray extraction by an arbitrary countable palette is
+
+$$
+2m+2=2d+4.
+\tag{14.1}
+$$
+
+More precisely, every preassigned mixed terminal word with at most $2m+1$ reads fails all-input countable-palette extraction. The word $JM^{2m}$ succeeds with one fixed matrix at $2m+2$ reads and scale $\operatorname{tr}(JP)>0$.
+
+**Proof.** For $m\ge5$, Theorem 13.1 excludes interpolation for every original tuple $(m,a,\rho)$ with $0\le a\le2m-2$ and $\rho>0$. It therefore excludes every solution of the exact positive $JJ$ criterion, including its independent nonsingularity requirement. The complete critical classification in *FIB Critical Mixed Gain Words and Clock-Pencil Obstructions*, Sections 3–10, particularly Theorems 9.1 and 10.1, makes this absence equivalent to the absence of any all-input countable palette on a preassigned critical mixed word. The parameter correspondence is $d=m-1$, $K=2m-2$, $r=a+1$ and
+
+$$
+T=\{0,\ldots,2m\}\setminus\{a+1\},\qquad
+k_i=i\ (i\le a),\qquad k_i=i-2\ (i\ge a+2).
+\tag{14.2}
+$$
+
+Thus the criterion just excluded uses exactly $2m+1$ original reads, the acquired outlier, and both acquisitions of $M^a$ at clocks $a,a+2$. Its weights and operational matrix are precisely (1.8) and (2.1), with no exponent substituted for an acquisition clock. The classification's opposite-sign exceptional-source and countable-covering conclusions are essential to this implication: excluding the positive functional does not by itself exclude every unrestricted-sign identity or justify discarding exceptional sources.
+
+For $m=2,3,4$, the low-degree lower bounds are the already supplied Theorem 13.1, Lemma 13.2, Theorem 13.5 and Corollary 13.6 of that critical source. They exclude all-input palettes at the same critical budget and give the prior counts six, eight and ten. For every $m\ge2$, its Theorem 11.1 supplies the obstruction for mixed words with at most $2m$ reads. These credited results, together with Theorem 13.1 here for $m\ge5$, establish the claimed lower bound on every preassigned mixed terminal word.
+
+For the upper bound reuse *FIB Linear Gain-Ray Capacity and Hermite Readouts*, Theorem 6.1, equivalently the critical source's Theorem 14.1. It acquires $J$ followed by $2m$ individual $M$ actions. The initial read and every immediate read are counted, so the number is $2m+2$. At original clock $s+1$, $0\le s\le2m$, its cumulative matrix is $M^sJ$. The supplied Hermite readout uses the actual gain monomials $(s+1)^j$, $0\le j<m$, annihilates the constant drift, and returns
+
+$$
+\operatorname{tr}(JP)\,(\beta_0,\ldots,\beta_{m-1})^{\mathsf T}.
+\tag{14.3}
+$$
+
+Its clock-zero coefficient is zero, but that read is acquired. Since $\operatorname{tr}(JP)=P_{12}+P_{21}>0$, this is a nonzero gain ray for every strictly positive real rank-one trace-one source and every whole nonzero coefficient vector. It requires no root promise, restriction on coefficient signs or drift, actual-degree truncation, or nonvanishing of a particular spectral component. This is the credited upper construction, not a new construction. Combining the bounds proves (14.1). $\square$
+
+Theorem 13.1 settles the original all-degree positive $JJ$ decision (10.1) negatively. The alternative for fixed mixed gain extraction in Sections 10–11 is therefore its $2m+2$ branch at every $m\ge5$; Corollary 14.1 includes the credited lower degrees. No value, sign or singularity assertion about $\det\mathcal D$ is needed or obtained. Its independence from $\rho$ in (2.8) remains a separate identity.
+
+The quantifier in Corollary 14.1 fixes an acquisition word before ranging over all worlds and countable palettes. Its failures on different words do not assert a common failure world. In particular they do not rule out an adaptive protocol choosing different critical words on different histories. The separate adaptive gain-only critical question and global complete-target sharpness remain unresolved by this proof.
+
+For complete-target recovery with the specified fixed-linear gain mechanism, the general bounds remain the credited bounds (11.2), with the degree-one refinement stated there. The pure-$M$ exact gain-and-drift count $2d+3$ is still the credited Hermite theorem. The complete-target upper bound $2d+s+5\le3d+5$, $s=\deg g$, and sharpness only after the specified pure-$M$ calibration remain the supplied results of *FIB Moving-Trace Recovery and Sharp Calibrated Continuations*, Sections 2–6. Corollary 14.1 adds no unrestricted adaptive or complete-target lower bound and no global optimality claim for those different problems.
+

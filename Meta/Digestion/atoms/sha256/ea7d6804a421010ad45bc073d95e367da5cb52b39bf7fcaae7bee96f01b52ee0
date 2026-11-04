@@ -1,0 +1,41 @@
+**定理 3.4（隐藏方向的精确残差式）。** 不假设未来闭合，令
+
+<a id="eq-3-u09"></a>
+
+$$
+J=CH^{-1},\qquad P=JO,
+$$
+
+以及
+
+<a id="eq-3-u10"></a>
+
+$$
+ r_a(x)=OT_a(I-P)x,\qquad \tau(x)=\ell(I-P)x.
+$$
+
+若 $y_j=Ox_j$、$x_{j+1}=T_{a_{j+1}}x_j$，则恒有
+
+<a id="eq-3-6"></a>
+
+$$
+ y_{j+1}=B_{a_{j+1}}y_j+r_{a_{j+1}}(x_j),
+ \qquad
+ \ell x_j=dy_j+\tau(x_j).
+\tag{3.6}
+$$
+
+在全部校准列上 $r_a(Cu)=0$。**证明。** $OJ=I$，所以 $P^2=P$ 且 $PC=C$。分解 $x=Px+(I-P)x$，把 $Px=JOx$ 代回即可；在 $x=Cu$ 时余项直接消失。
+
+若估计产品一致有界于 $\widehat M$，逐步插入上式还得到
+
+$$
+\|\widehat y_n-y_n\|
+\le\widehat M\varepsilon_b+\widehat M\sum_{j=1}^n
+\bigl(\delta_j\|y_{j-1}\|+\|r_{a_j}(x_{j-1})\|\bigr).
+$$
+
+这把测量噪声与真正未建模的隐藏方向残差分开；降噪减少 $\delta_j$，不会自动消除 $r_{a_j}$。
+
+<a id="ex-3-5"></a>
+

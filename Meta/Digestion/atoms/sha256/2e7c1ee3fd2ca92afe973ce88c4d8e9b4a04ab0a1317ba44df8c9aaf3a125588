@@ -1,0 +1,74 @@
+**Definition 39.1 (one two-state evaluator and its actual cut pair).**
+Fix an effective numbering $M_j$ of finite machines on blank input for
+which eventual halting is undecidable. Let $H(j,n)$ be the decidable
+predicate that $M_j$ halts within its first $n$ simulated steps, including
+an initial-halting check when $n=0$. All simulations in this definition
+are bounded; $H$ is not an eventual-halting input port.
+
+The single selector $C^\dagger$ has states $0,1$, initial state $0$.
+The following disjoint cases give its complete transition/output table
+as a finite program. In the last two columns $q$ is its old state.
+
+| Actual event input | Next state | Selection bit |
+| --- | --- | --- |
+| $P_\varepsilon$ | $q$ | $1$ |
+| $P_{L^jRR}$ for $j\ge0$ | $1$ | $0$ |
+| $S_{L^j}$, $S_{L^jR}$ or $S_{L^jRL}$ for $j\ge0$ | $0$ | $0$ |
+| $P_{L^jRL^{n+2}R}$ for $j,n\ge0$ | $q$ | $q\,\mathbf1_{H(j,n)}$ |
+| Every other event | $q$ | $0$ |
+
+Scanning a finite address decides its case and, in a test case, its
+unique $j,n$. The first $R$ fixes $j$ and the following run of at least
+two $L$'s fixes $n$. These cases do not overlap the $RR$ setting events
+or any split case. The bounded simulation then terminates on every
+finite input. This is one fixed two-state selector for all $j,n$;
+its evaluator and workspace are not counted as two states of total
+apparatus. The reset and setting cases both make formerly different
+controls equal, to $0$ or $1$ respectively.
+
+For each $e\ge0$, put $r_e=L^eR$ and define the following actual words:
+
+$$
+\begin{aligned}
+u_e&=P_\varepsilon\,S_\varepsilon S_L\cdots S_{L^e}
+                     \,P_{r_e}S_{r_e},\\
+a_e&=P_{r_eR},\qquad b_e=S_{r_eL},\\
+w_e^0&=u_ea_eb_e,\qquad w_e^1=u_eb_ea_e.
+\end{aligned}
+\tag{AA.120}
+$$
+
+The split list in the first line contains exactly $e+1$ entries; for
+$e=0$ it is just $S_\varepsilon$. Let $t_e$ be their common endpoint.
+These words and their finite acquired records are effectively
+constructible from $e$, without simulating $M_e$ to completion.
+
+The root is first promoted and then split. Each successive pure-left
+spine leaf is born beta, so each indicated spine split is enabled.
+The right leaf $r_e$ is born alpha; its promotion and split create the
+incomparable leaves $r_eL$ of type beta and $r_eR$ of type alpha. Thus
+$a_e,b_e$ are both enabled and can occur in either order without
+interference. All prefixes are actual legal source executions, also
+by Theorem 17.2. Their common endpoint has all pure-left spine splits
+through $L^e$, and exactly the additional splits at $r_e$ and $r_eL$.
+For $j<e$ each right offshoot $L^jR$ is still alpha, and the next
+pure-left spine leaf $L^{e+1}$ is beta.
+
+The setup ends with control $0$. The $a_e$ event sets $1$ and $b_e$
+resets $0$. Consequently the two completed acquired cuts satisfy
+
+$$
+K_{C^\dagger}(w_e^0)=(t_e,P_\varepsilon,0),\qquad
+K_{C^\dagger}(w_e^1)=(t_e,P_\varepsilon,1).
+\tag{AA.121}
+$$
+
+Their complete source-indexed selected records agree: only the root
+promotion mark is one, every other local mark is zero and every selected
+side tape is empty. The shared selected identity is the literal
+$P_\varepsilon$, not an unspecified output bit. Theorem 32.3 gives
+these actual retained objects and current callable entries under
+Assumption 32.1. They are alternative executions of the same installed
+seed service, with equal binding roles, not independently assigned
+record tuples or imported histories.
+

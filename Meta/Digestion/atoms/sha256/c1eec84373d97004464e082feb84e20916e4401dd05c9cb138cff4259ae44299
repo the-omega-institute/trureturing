@@ -1,0 +1,103 @@
+**定理 8.1（共同第五三目标的第六增益非零）。** Let exactly three distinct targets lie in the same entire $\mathcal F(Y;m,j)$, with $\kappa=m-j\ne0$. If this triple has $L_3$, then each target has $g(6)\ne0$.
+
+Proof. Use the inherited pattern (4.7). Put $\nu=c_1-a_1=c_2-a_2=v_1y_1=v_2y_2$. This is nonzero, as noted in Definition 5.1, so only target $3$ could have $v_3=0$. Suppose it does. Theorem 7.1 excludes constant $b$ or $d$ without assuming anything about $a,c$. Alternatively, in this zero-sixth case the exclusion is direct: if $b$ is constant at $B_0=\delta_3$, then $x_1/y_1=x_2/y_2$ and $y_1\ne y_2$. Consequently
+
+$$
+d_i=B_0+\nu(1+1/y_i)\ (i=1,2),\qquad d_3=B_0
+$$
+
+are pairwise distinct. If $d$ is constant at $D_0=\delta_3$, the values $b_i=D_0-\nu(1+1/y_i)$ and $b_3=D_0$ are pairwise distinct instead. Either case identifies the entire triple by clock six and contradicts $L_3$.
+
+We may therefore use (7.19). The $d$ collision for $1,3$ and the $b$ collision for $2,3$ give
+
+$$
+v_1(p_1+s_1+2)=\kappa(s_1-s_3),\qquad
+v_2(p_2+x_2+1)=\kappa(s_2-s_3).
+\tag{8.1}
+$$
+
+Subtracting the common-$a$ equality from their difference, and using $v_iy_i=\nu\ne0$, gives
+
+$$
+y_2(s_1+1)-x_2y_1=0.
+\tag{8.2}
+$$
+
+Eliminating the common ratio $\nu/\kappa$ from (8.1) without dividing by $s_i-s_3$ also gives
+
+$$
+(s_1-s_3)y_1(p_2+x_2+1)-(s_2-s_3)y_2(p_1+s_1+2)=0.
+\tag{8.3}
+$$
+
+Here all three worlds and both sixth collisions are simultaneous.
+
+For the explicit elimination set
+
+$$
+\begin{aligned}
+B_*&=x+e(x+1)=x_2,& C_*&=x+e(x+2)+1=x_1+1,\\
+L_1&=C_*y+e(x+1),&L_2&=B_*y+ex,\\
+A_1&=(x+2)C_*+x+1,&A_2&=(x+1)B_*+x.
+\end{aligned}
+\tag{8.4}
+$$
+
+Both $B_*,C_*$ are positive, $y_1=L_1/C_*$ and $y_2=L_2/B_*$. Define the two quadratics in $y$
+
+$$
+\begin{aligned}
+f(y)&=L_2(C_*^2+L_1)-B_*^2L_1,\\
+g(y)&=B_*^2A_1L_1(B_*y+ex+B_*+1)\\
+&\qquad-C_*^2A_2L_2(C_*y+e(x+1)+C_*+1).
+\end{aligned}
+\tag{8.5}
+$$
+
+Their precise denominator clearings are
+
+$$
+\begin{aligned}
+f&=B_*C_*[y_2(s_1+1)-B_*y_1],\\
+eg&=B_*^2C_*^2[(s_1-s_3)y_1(p_2+B_*+1)
+-(s_2-s_3)y_2(p_1+s_1+2)].
+\end{aligned}
+\tag{8.6}
+$$
+
+Since $e\ne0$, equations (8.2)–(8.3) imply $f=g=0$. The $4\times4$ Sylvester determinant of (8.5) is the polynomial identity
+
+$$
+\operatorname{Res}_y(f,g)
+=-e^2(e+1)^2B_*^3C_*^3Q(e,x).
+\tag{8.7}
+$$
+
+The following complete array $(C_{ij})_{0\le i\le5,\,0\le j\le6}$ defines its remaining factor by
+
+$$
+Q(e,x)=\sum_{i=0}^5\sum_{j=0}^6 C_{ij}
+(e+1/15)^i(x-1/3)^j.
+\tag{8.8}
+$$
+
+Each row below lists increasing $j$:
+
+$$
+\begin{aligned}
+C_{0,\bullet}={}&(108146563/553584375,\ 16698349/6834375,\ 40306619/4100625,\\
+&64251628/4100625,\ 9014404/759375,\ 133084/30375,\ 496468/759375),\\
+C_{1,\bullet}={}&(46709666/7381125,\ 13573646/273375,\ 35337842/273375,\\
+&43256632/273375,\ 1023898/10125,\ 334964/10125,\ 44996/10125),\\
+C_{2,\bullet}={}&(3729724/98415,\ 3841387/18225,\ 8283152/18225,\\
+&8946697/18225,\ 12812/45,\ 57659/675,\ 281/27),\\
+C_{3,\bullet}={}&(2752618/32805,\ 160823/405,\ 919852/1215,\\
+&898112/1215,\ 17689/45,\ 4864/45,\ 538/45),\\
+C_{4,\bullet}={}&(166177/2187,\ 27895/81,\ 49627/81,\ 45392/81,\ 836/3,\ 214/3,\ 22/3),\\
+C_{5,\bullet}={}&(18032/729,\ 2968/27,\ 5165/27,\ 4570/27,\ 81,\ 20,\ 2).
+\end{aligned}
+\tag{8.9}
+$$
+
+Expansion verifies (8.7); every coefficient in (8.9) is strictly positive. Since $e>-1/15$ and $x>1/3$, $Q(e,x)>0$. Also $e\ne0$, $e+1>14/15$, $B_*>1/3$ and $C_*>4/3$. Thus the resultant is strictly negative. A common real root of $f,g$ would make the Sylvester determinant zero, including a drop in either quadratic's degree. This contradicts (8.2)–(8.3), proving the assertion. ∎
+

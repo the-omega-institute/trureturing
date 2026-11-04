@@ -1,0 +1,34 @@
+**Proposition 33.6 (period and deficient-rank boundaries).** Period cannot
+be substituted for minimal annihilator degree. The all-one stream has
+period $3$ (and every multiple of $3$) but least annihilator $E+1$. For
+$d=3$, its six-bit prefix has an all-one Hankel matrix of rank one, so its
+order-three fibre is non-singleton; the original first-passing
+$\rho_3$ selection retains its stated normalization bill. Thus period alone
+neither proves full rank nor licenses a canonical deficient-rank row.
+
+For every sparse-core source the exact criterion is
+$\operatorname{rank}H(P)=a+\deg(g)$, so the full-rank normalization
+(ACR.89) applies if and only if $a+\deg(g)=d$. To see why the sum is
+the relevant degree, apply the coprime projections of Theorem 27.3 to
+any annihilation relation for $s$. Each projected relation annihilates
+its component, so both least factors $E^a$ and $g$ divide the relation;
+their product already annihilates $s$. Theorem 21.2 identifies this
+least degree with the authentic Hankel rank. Only when this sum is
+strictly below $d$ does the deficient-rank bill (ACR.90) apply.
+Combining Theorem 33.4 with (ACR.89) and Theorem 29.2 gives polynomial
+local work, writes and backing for the exact original output on every
+fixed-$k$ member with $a+\deg(g)=d$, with the same separate physical bills.
+
+In particular $\deg(g)<d$ can be completed to full rank by a positive
+transient; a zero core has full rank exactly when $a=d$, as in
+Corollary 30.2. A nonminimal presented period has no effect on this
+criterion. A shorter transient also permits full rank if the core
+degree supplies the remainder. For the one-hot family the condition
+specializes to $a+p=d$; for other supports it uses the least core
+degree, not their presented period. No polynomial original normalizer
+on deficient fibres follows. The unrestricted unknown-law/unknown-cut
+general-$d$ polynomial-TOTAL target, exact deficient-rank $K_d$
+efficiency and unspecified $\rho_d$ affine-prefix property remain open;
+the auxiliary-order results of §§31--32 do not establish original
+$\rho_d$ hardness.
+

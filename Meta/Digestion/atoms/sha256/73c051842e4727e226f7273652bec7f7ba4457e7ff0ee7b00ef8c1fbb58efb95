@@ -1,0 +1,35 @@
+**Definition 143.1 (Coefficients in all complex tangent directions).**
+Use Definition 125.1 with (142.1)–(142.2) and $L_{\mathfrak s}=2$.
+For $z=(x_1+\mathrm i x_2)\xi+(x_3+\mathrm i x_4)v_+
+ +(x_5+\mathrm i x_6)e$ and $g=y_1+\mathrm i y_2$, write
+
+$$
+\ell_{i,w}(z,g)=\beta_{i,w}+U_{i,w}x+V_{i,w}y.
+\tag{143.1}
+$$
+
+All eight real coordinates are unrestricted. This is a change of
+coordinates for (125.4), not a restriction to real completions.
+For a fully specified algebraic evaluation of these coefficients put
+
+$$
+\begin{aligned}
+H(z)&=-\tfrac12(ez^\dagger+ze^\dagger),&
+S(z)&=\mathrm i\tau(ze^\dagger-ez^\dagger),\\
+X_1(z)&=\tfrac12\{b[H(z)+H(f)]+S(z)-S(f)\},&
+Y_1(z)&=\tfrac12\{b[H(z)+H(f)]-S(z)+S(f)\},\\
+K_-&=-\tfrac12\tau ee^\dagger+\tfrac{\mathrm i}2(D-\tfrac14bee^\dagger),\\
+\ell_{i,w}(z,g)&=\frac{a_w}{2}\operatorname{Tr}r_i
+ \{Q_w^\dagger X_1(z)Q_w+WQ_w^\dagger Y_1(z)Q_wW\\
+ &\hspace{42mm}+WQ_w^\dagger gK_-Q_w
+                      +Q_w^\dagger\bar gK_-^\dagger Q_wW\}.
+\end{aligned}
+\tag{143.2}
+$$
+
+Set $\mathcal F_f(z,g)=\max_{1\le i\le9,\ w\in\mathcal W_2}|\ell_{i,w}(z,g)|$,
+$m_f=\min_{z,g}\mathcal F_f(z,g)$ and
+$n_f=\min_z\mathcal F_f(z,0)$, as in (125.5).
+For an integer quadruple $a$ abbreviate
+$[a]=a_0+a_1\sqrt2+a_2\sqrt3+a_3\sqrt6$.
+

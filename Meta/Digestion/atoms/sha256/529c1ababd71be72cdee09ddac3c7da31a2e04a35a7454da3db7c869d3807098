@@ -1,0 +1,17 @@
+**Corollary 17.2 (Exact child and locally exhaustive M arc).** The
+child $C(p_*,v_*)$ is exactly the two-world set from Theorem 1.3.
+There is a connected open interval $I_0$ about $2/5$ on which the
+analytic base map $\beta$ of Theorem 10.1 is injective, takes values
+in $\operatorname{int}\mathcal U$, and every $C(\beta(\lambda))$
+consists exactly of $W_2(\lambda),W_3(\lambda)$. No distinct J pair
+exists in any of those entire children.
+
+Proof. Theorem 1.3 supplies two actual distinct worlds at the seed;
+Theorem 12.2 bounds the entire child by two. Lemma 17.1 and
+continuity of $\beta$ place a sufficiently small open parameter
+interval inside the rectangle. Intersect it with the injectivity
+interval supplied by Theorem 10.1. The two actual distinct M worlds
+persist there and exhaust each child by the same uniform bound.
+J injectivity excludes any independently selected J pair there.
+This completes all assertions of Theorem 12.2. ∎
+

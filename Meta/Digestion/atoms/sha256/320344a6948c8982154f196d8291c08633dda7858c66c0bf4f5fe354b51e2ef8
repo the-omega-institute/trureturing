@@ -1,0 +1,73 @@
+**Definition 7.1 (two carriers and their source data).** Retain the native
+source of Definitions 1.1--1.2, writing $H_{\rm n}=r/2$ for its upper
+height wall, so that $L$ can denote the endpoint differential operator.
+Fix one preparation height $k_0\in(0,H_{\rm n})$, preparation coordinates
+$(\alpha_0,\beta_0)$ and all the original preparation rotations. No
+preparation parameter varies with an unknown input. The mathematical
+suppliers in this section and §§8--10 are taken at revision
+`69eee5580efb61cf70564cc46a0fa24fc18351dd`.
+
+Write [E] for [the original endpoint appendix, §112](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md#112-the-original-maximal-domain-selector-and-the-full-endpoint-propagation-limit)
+and [S] for [its positivity and source-contact continuation, §§115--116](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#115-positivity-and-the-full-ground-state-form-of-the-actual-endpoint).
+Their endpoint data are exactly
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\qquad
+(x,y,z,w)(x',y',z',w')
+ =(x+x',y+y',z+z',w+w'+xy'),\\
+d\mu=dx\,dy\,dz\,dw,\qquad
+X_1=\partial_x,\quad X_2=\partial_y+x\partial_w,\quad
+X_3=\partial_z,\qquad L=-\sum_{i=1}^3X_i^2,\\
+L\Gamma=\delta_e,\qquad \deg\Gamma=-3,\qquad
+a,\eta>0,\qquad g_c=16\sqrt{a\eta},\\
+S_{\min}=(aL-\eta\partial_w^2-g_c\Gamma)
+                 |_{C_c^\infty(G\setminus\{e\};\mathbb C)}.
+\end{gathered}
+\tag{7.1}
+$$
+
+The notation $S_{\min}$ distinguishes this operator from reference [S].
+Let $h$ be the supplied coefficient-positive, $L^2(\mu)$-normalized zero
+state, $c_h=C(h)>0$ and $\rho_*=A(h)/C(h)$. The full endpoint, its
+transform and their entire complex domains remain
+
+$$
+\begin{gathered}
+D(H)=\{u\in D(S_{\min}^*):A(u)=\rho_*C(u)\},\qquad
+Hu=S_{\min}^*u,\\
+m=h^2\mu,\qquad J_hv=hv,\qquad
+K=J_h^{-1}HJ_h,\qquad T_t=e^{-tK},\\
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,\qquad
+D(K)=\{v\in\mathscr V:hv\in D(S_{\min}^*),
+                            A(hv)=\rho_*C(hv)\}.
+\end{gathered}
+\tag{7.2}
+$$
+
+Here $\mathscr V_0$ and the integral energy are precisely [S, (115.14)--(115.15)].
+In particular $m(G)=1$, $T_t$ is conservative and selfadjoint in $L^2(m)$,
+and $h$ is smooth and positive on $G\setminus\{e\}$. A source start
+always means the legitimate version of [S, Theorem 116.4]. There is no
+ordinary value $h(e)$ in these definitions. All Hilbert pairings below
+are antilinear in their first slot.
+
+Set $c_0=1/2-k_0/r$ and $\ell=2\pi r$. The slab and the intermediate
+quotient are
+
+$$
+\begin{gathered}
+\mathcal S=\{-k_0<x<H_{\rm n}-k_0\}\subset G,\qquad
+d_n=(0,0,0,n\ell),\\
+\mathcal B_\ell=G/\{d_n:n\in\mathbb Z\},\qquad
+\pi_\ell:G\longrightarrow\mathcal B_\ell,\qquad b_0=\pi_\ell(e),\\
+\Psi(x,y,z,w)
+ =\bigl(k_0+x,[\alpha_0+y/2],
+                    [\beta_0+c_0y-w/r]\bigr),\qquad p\in\mathcal S.
+\end{gathered}
+\tag{7.3}
+$$
+
+Both brackets reduce modulo $2\pi$. The quotient retains real $y,z$;
+only $w$ is reduced modulo $\ell$.
+

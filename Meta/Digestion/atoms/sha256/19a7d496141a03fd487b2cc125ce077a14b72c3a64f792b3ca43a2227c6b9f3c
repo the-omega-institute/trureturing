@@ -1,0 +1,12 @@
+#### 定义 2.1（相容完成问题）
+
+给定候选空间 $\mathcal X$、观察映射 $O$、已得记录 $r$ 和约束 $\mathcal C$，定义
+
+$$
+\mathcal M(r)=\{x\in\mathcal X: O(x)=r,\ \mathcal C(x)=0\}.
+$$
+
+若记录带误差，应以已声明的集合约束 $O(x)\in R$ 取代等式。一个目标读数是 $f:\mathcal X\to\mathcal Y$。预测可以是可行集合 $f(\mathcal M(r))$、某个评分下的最优点预测，或已标定联合律下的条件分布。三者类型不同。
+
+<a id="statement-2-2"></a>
+

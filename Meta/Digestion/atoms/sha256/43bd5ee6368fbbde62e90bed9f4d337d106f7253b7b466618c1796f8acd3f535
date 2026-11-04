@@ -1,0 +1,29 @@
+## 49. A zero-safe affine lift of three actual responses
+
+For $b>0$ define the following functions of the width alone:
+
+$$
+\begin{aligned}
+\mathsf C_5&=\frac{3(b+2)(8b-1)}{2TU},&
+\mathsf A_5&=\frac{b^2-16b-12}{2TU},\\
+\mathsf C_6&=\frac{3(80b^2+192b+31)}{5TU},&
+\mathsf A_6&=\frac{2b^2-24b-17}{TU},\\
+\mathsf C_7&=\frac{3(200b^2+503b+114)}{5TU},&
+\mathsf A_7&=\frac{5b^2-52b-36}{TU}.
+\end{aligned}
+\tag{49.1}
+$$
+
+These symbols denote gain coefficients; they are not the response
+coefficients $A_5,A_6$ of (19.3). Put
+
+$$
+L_{\rm w}(b)=
+\begin{pmatrix}
+\mathsf C_5&\mathsf A_5&6+U\mathsf A_5&5U\\
+\mathsf C_6&\mathsf A_6&17+2U\mathsf A_6&32U\\
+2\mathsf C_7&2\mathsf A_7&71+3U\mathsf A_7&105U
+\end{pmatrix}.
+\tag{49.2}
+$$
+

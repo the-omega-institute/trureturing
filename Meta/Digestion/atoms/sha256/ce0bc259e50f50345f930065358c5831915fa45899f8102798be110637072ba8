@@ -1,0 +1,20 @@
+**引理 10.4（第二行的唯一整数峰）。** 对 $m\ge4$ 令
+
+$$
+j_0=\left\lfloor\frac{2m}{3}\right\rfloor+1,
+\qquad
+k_m=\min\{m,\lfloor\theta_m\rfloor\}.
+\tag{10.10}
+$$
+
+则 $j_0\le k_m\le m$，且 $j\mapsto d_m(2,j)$ 在 $\{0,\ldots,m\}$ 上唯一于 $j=k_m$ 取得最大值；该最大值严格为正。
+
+**证明。** 置
+
+$$
+q(s)=2\sqrt2(\sqrt s-\sqrt{s-1})
+=\frac{2\sqrt2}{\sqrt s+\sqrt{s-1}}.
+$$
+
+它严格递减，并且 (10.7) 给出全部相邻差分。由 (10.8)，$\theta_m>j_0$。引理 10.3 排除了可行整数等式 $\theta_m=j$。因此若 $\theta_m<m$，差分在 $j=\lfloor\theta_m\rfloor$ 前为正、之后为负；若 $\theta_m>m$，全部可行差分为正。唯一峰正是 $k_m$，且其值至少为定理 5.1 的正见证 $d_m(2,j_0)>0$。∎
+

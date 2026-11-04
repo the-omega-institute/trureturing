@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays
 import Reg.Support.DependentFamily
 
+/-! Source-bound audits of separable rank-one rays and the squared inner-product bound. -/
+
 open LeanInformationAudit Matrix
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Resource.CompositeCones
@@ -102,3 +104,185 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 #print axioms registration
 
 end Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays
+
+namespace Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.CsSq
+
+universe u
+
+/-- Observe the squared norm of the complex inner-product operand. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ z => ‖z‖ ^ 2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {J : Type u} [Fintype J] (d x : J → ℂ),
+    R.readout () () (star d ⬝ᵥ x) ≤ (∑ j, ‖d j‖ ^ 2) * (∑ j, ‖x j‖ ^ 2)
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hbad := h (J := ULift.{u} (Fin 1)) (fun _ => 1) (fun _ => 1)
+  change (2 : ℝ) ≤ (∑ _ : ULift.{u} (Fin 1), ‖(1 : ℂ)‖ ^ 2) *
+    (∑ _ : ULift.{u} (Fin 1), ‖(1 : ℂ)‖ ^ 2) at hbad
+  norm_num at hbad
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change ‖(0 : ℂ)‖ ^ 2 ≠ ‖(1 : ℂ)‖ ^ 2
+  norm_num
+
+def source_registration : Registration arena.{u} (type_of% @cs_sq.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨cs_sq, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@cs_sq.{u}) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.CsSq.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.CsSq.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => ‖z‖ ^ 2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.CsSq
+
+namespace Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.RankOneUpper
+
+universe u
+
+/-- Observe the squared norm at each vector coordinate in the source sum. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ z => ‖z‖ ^ 2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+
+/-- Keep the arbitrary finite index type, dictionaries, and full matrix inequality. -/
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {J : Type u} [Fintype J] [DecidableEq J] (d : J → ℂ),
+    (((∑ j, R.readout () () (d j) : ℝ) : ℂ) • (1 : Matrix J J ℂ) -
+      vecMulVec d (star d)).PosSemidef
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro law
+  have bad := (law (J := ULift.{u} (Fin 1)) (fun _ => 0)).diag_nonneg
+    (i := ⟨0⟩)
+  norm_num [rejected, realize, Matrix.sub_apply, Matrix.smul_apply,
+    Matrix.one_apply, Matrix.vecMulVec_apply, Pi.star_apply, Complex.le_def] at bad
+
+def evidence : Registration arena.{u} (type_of% @rank_one_upper.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨rank_one_upper, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change ‖(0 : ℂ)‖ ^ 2 ≠ ‖(1 : ℂ)‖ ^ 2
+    norm_num
+
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@rank_one_upper.{u}) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.RankOneUpper.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.RankOneUpper.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨evidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => ‖z‖ ^ 2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "fn", "arg",
+        "fn", "arg", "arg", "arg", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print _root_.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.rank_one_upper
+#print axioms evidence
+#print axioms registration
+
+end Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.RankOneUpper

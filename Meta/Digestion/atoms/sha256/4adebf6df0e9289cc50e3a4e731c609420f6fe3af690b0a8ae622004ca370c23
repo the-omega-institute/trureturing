@@ -1,0 +1,22 @@
+**Proposition 56.3 (the entry archive is not current-view memory).**
+Let $K$ be any nonempty finite ordered full binary logical skeleton. Give every
+$L$-ending leaf type beta, and allow either type at each other leaf;
+for a singleton skeleton its root is allowed either type. If there
+are $m$ allowed-variable leaves, all $2^m$ entries belong to
+$\mathcal D$ and have exactly the same normalized endpoint $\nu(t)$.
+Their entry archives are different. Consequently none of the current
+views at the acquisition endpoint recovers that archive on this family.
+
+Proof. AA Theorem 17.2 admits every assignment with the stated leaf
+constraint, and (AAII.13) makes all its leaves beta while retaining $K$.
+Theorem 54.2 stores the different original assignments. The current
+support, material boundary and causal order are functions of the common
+normalized term; the current predictor code and its common retained
+entry have that same content too. Already $\alpha$ and $\beta$ have
+the common normalized endpoint beta, with different acquired entry
+reports and different probe replies. Thus recovery of the archive
+would not be single-valued. Exposing it or allowing a selector to read
+it enlarges $Q_A$ and requires an appropriately supplemented view.
+The result does not erase the archive from the actual joint process.
+$\square$
+

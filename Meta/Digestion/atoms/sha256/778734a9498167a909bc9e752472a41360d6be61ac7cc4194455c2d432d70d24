@@ -1,0 +1,20 @@
+**Definition 29.1 (the homogeneous binary class).** For a public
+integer $d\ge0$, let $\mathscr R_d$ contain every binary stream
+$s=(s_0,s_1,\ldots)$ for which there exist $0\le r\le d$ and
+$c_0,\ldots,c_{r-1}\in\mathbb F_2$ satisfying
+
+$$
+ s_{i+r}=\sum_{j=0}^{r-1}c_j s_{i+j}
+       \quad\text{for every integer }i\ge0.
+ \tag{GPO.75}
+$$
+
+The birth convention is $z_j=s_{j-1}$. At $r=0$, (GPO.75)
+means the identically zero stream. For $r>0$, the initial $r$ bits
+are arbitrary. No coefficient is required to be nonzero, no state
+transition must be invertible, and the presentation need not be minimal.
+Lower orders, zero streams, finite transients and eventually periodic
+streams are all included. The authentic promise is recurrence from
+index zero with this bound; an unspecified recurrence beginning only
+after an unbounded transient is a different class.
+

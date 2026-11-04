@@ -1,0 +1,5 @@
+source_id = "fractional-inflection-unbounded-polynomial-forcing"
+path = "docs/develop/theory/FRACTIONAL_INFLECTION_UNBOUNDED_POLYNOMIAL_FORCING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

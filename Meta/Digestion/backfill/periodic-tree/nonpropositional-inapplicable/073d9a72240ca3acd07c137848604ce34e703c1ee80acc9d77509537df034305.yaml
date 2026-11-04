@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:073d9a72240ca3acd07c137848604ce34e703c1ee80acc9d77509537df034305
+  normalized_sha256: sha256:073d9a72240ca3acd07c137848604ce34e703c1ee80acc9d77509537df034305
+cas_ref: sha256:073d9a72240ca3acd07c137848604ce34e703c1ee80acc9d77509537df034305
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Setup and reference accounting, with its mathematical premises retained. For every integer ell>1 with Odd ell and chi(ell)=legendreSym 5 ell=-1, including ell=3 and every odd composite inert base, and every natural k>=0, B_(ell,k) is the actual positive exact integer quotient Nat.fib(ell^(k+1))/Nat.fib(ell^k). Nat.fib_dvd, Nat.fib_pos, Nat.mul_div_cancel' and Nat.div_pos supply divisibility, exact multiplication and positivity; no prime assumption on ell is introduced. lambda5(x) means ((x^4-1)/5) mod 5, with exact integer division before reduction, never inversion of 5. The separate original explanation for prime ell>=7 uses existing frozen D5/S3/Arith/Primes/FibonacciPrimePowerLayer.fibonacci_prime_power_layer, statement_id sha256:7c43dad53d5775a89e4268698a44a8fc25fea5b6bf5afa9905bbc6cf0a643a1c, with q=ell and s=k+1, for factors' exact ranks and exponents' initial depths. That citation applies only to that explanatory specialization; it supplies no coverage of full native RP5/RP6 or of composite bases. The setup introduces notation and cites its separate frozen specialization; it is not a new RP5/RP6 proof. No single frozen GID covers the whole setup with its unrestricted base domain; coverage_gids remains empty.
+    previous_atom_id: 96e81f0debc4ce81f4b047bd34cf0244188190533bf667e119998b307a3ff267
+    next_atom_id: c5b75620463456f8f0624644b9d43c18e5067df9949627426fe5572f546b9dc1

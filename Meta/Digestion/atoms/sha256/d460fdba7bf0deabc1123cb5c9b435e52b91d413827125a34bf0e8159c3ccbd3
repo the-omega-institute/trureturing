@@ -1,0 +1,16 @@
+**Definition 56.1 (Two consistency equations).** Set
+
+$$
+\begin{gathered}
+\kappa_{\rm rec}=\alpha_{\rm w}Z+\gamma_{\rm w}\beta_{\rm w}-1,
+\qquad
+\eta_{\rm rec}=XZ+\gamma_{\rm w}Y,\\
+Q_{\rm rec}(E)=\alpha_{\rm w}E^2+(X-\beta_{\rm w})E-Y,\\
+R_{\rm rec}(E)=(X+\alpha_{\rm w}E)(Z+\gamma_{\rm w}E)-E.
+\end{gathered}
+\tag{56.1}
+$$
+
+The variable $E$ is a candidate value of $\epsilon$, not an action.
+All the coefficients in (56.1) are defined for every $b>0$.
+

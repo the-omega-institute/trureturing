@@ -1,0 +1,19 @@
+**Definition 133.1 (unchanged full source and local suppliers).** Retain all definitions, complete proofs and inherited hypotheses of [Appendix §§109–112](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md#109-one-source-coefficient-for-the-entire-original-maximal-zero-space) and §§115–117 and 129–132. For every original finite $a,\eta>0$, the group is the same $G=H^1\times\mathbb R$ with its original product, identity $e$, raw Haar measure $d\mu=dx\,dy\,dz\,d\zeta$, vector fields $X_1=\partial_x$, $X_2=\partial_y+x\partial_\zeta$, $X_3=\partial_z$, central units and unit-source field $\Gamma$ satisfying $L\Gamma=\delta_e$, $L=-\sum_iX_i^2$. Keep $g_c=16\sqrt{a\eta}$ and the coefficient-positive normalized state $`h=w_*/\|w_*\|_2`$, $`C_{\rm src}(w_*)=1`$. In the notation of §131, retain exactly
+
+$$
+\begin{gathered}
+D(H_{\rm end})=\{u\in D(S^*):A_{\rm src}(u)=\rho C_{\rm src}(u)\},\qquad
+\rho=A_{\rm src}(h)/C_{\rm src}(h),\qquad C_{\rm src}(h)>0,\\
+m=h^2\mu,\quad m(G)=1,\quad U_hF=hF,\quad
+K=U_h^{-1}H_{\rm end}U_h\ge0,\quad T_s=e^{-sK},\\
+V=V_0\oplus\mathbb C1,\quad
+V_0=\overline{C_c^\infty(G\setminus\{e\})}^{\,(115.14)},\quad
+\operatorname{tr}(F_0+c)=c,\\
+\mathscr E[F]=\int_{G\setminus\{e\}}
+\left(a\sum_{i=1}^3|X_iF|^2+\eta|\partial_\zeta F|^2\right)dm.
+\end{gathered}
+\tag{133.1}
+$$
+
+The density $g_s$ is exactly the actual source-start density of Theorem 117.2, starting at $e$ at original time zero. The form in (133.1) is the full conservative form, including its source coordinate. The local all-angle comparison, single $A_2$ extension, fixed radius, ordinary distributional gradients, source-inclusive weak equation and local smoothing of §§130–132 are retained as supplied results, with all their stated conditions.
+

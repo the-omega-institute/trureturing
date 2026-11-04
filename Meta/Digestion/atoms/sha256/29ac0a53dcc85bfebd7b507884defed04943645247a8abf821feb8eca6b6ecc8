@@ -1,0 +1,11 @@
+**推论 3.5（Immediate positive cases at equality）。** Under
+Definition 1.3 and $|A|=|B|$, $M$ is matched to $N$ if $A$ is not
+an arithmetic progression, or if $N$ has no circuit-hyperplanes.
+In particular it is matched to every uniform target of the same rank.
+
+Proof. Either hypothesis excludes the corresponding necessary
+condition in Theorem 3.3. A uniform rank-$r$ matroid has every
+$r$-subset as a basis and therefore has no circuit-hyperplane:
+a circuit-hyperplane in rank $r$ has size $r$, since deleting an
+element makes it independent of rank $r-1$.
+

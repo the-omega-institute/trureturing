@@ -1,0 +1,48 @@
+**引理 75.1（全词语言的有限类不能承载固定向量）。** Let $J$ be any finite nonempty alphabet, $U_j\in U(r)$, and suppose the closed matrix group $G=\overline{\langle U_j:j\in J\rangle}$ is infinite and complex irreducible on $\mathbb C^r$. Let $T_j\ge0$ be $k\times k$ real matrices whose sum $S$ is column stochastic and irreducible. Assume every finite word $w=j_1\cdots j_n$ has a positive labeled path somewhere in this graph: there are vertices $a_0,\ldots,a_n$ with
+
+$$
+\prod_{\ell=1}^n(T_{j_\ell})_{a_\ell a_{\ell-1}}>0.
+\tag{75.1}
+$$
+
+The endpoints may depend on the word. On $(\mathbb C^r)^k$, set $\Lambda=\sum_jT_j\otimes U_j$. Then $\|\Lambda\|_{1,2}\le1$, $\ker(I-\Lambda)=0$, and its Cesàro powers converge to zero in induced operator norm.
+
+证明。Nonnegativity, unitarity and the column sums give
+
+$$
+\sum_b\left\|\sum_{a,j}(T_j)_{ba}U_jx_a\right\|_2
+\le\sum_{b,a,j}(T_j)_{ba}\|x_a\|_2=\sum_a\|x_a\|_2.
+\tag{75.2}
+$$
+
+Suppose $\Lambda x=x\ne0$ and put $r_a=\|x_a\|_2$. Then $r\le Sr$ coordinatewise and the sums agree, so $r=Sr$ and every triangle inequality in (75.2) is an equality. A positive $r_a$ exists; the stationary equation propagates positivity along every positive edge, so irreducibility gives $r_a>0$ at every vertex. Normalize $v_a=x_a/r_a$. For each $b$,
+
+$$
+v_b=\sum_{a,j}q_{b;a,j}U_jv_a,\quad
+q_{b;a,j}=\frac{(T_j)_{ba}r_a}{r_b}\ge0,\quad \sum_{a,j}q_{b;a,j}=1.
+\tag{75.3}
+$$
+
+The exact Hilbert-space Jensen equality is
+
+$$
+\sum_{a,j}q_{b;a,j}\|U_jv_a-v_b\|_2^2
+=\sum_{a,j}q_{b;a,j}\|U_jv_a\|_2^2-\|v_b\|_2^2=0.
+\tag{75.4}
+$$
+
+Thus $U_jv_a=v_b$ on every positive labeled edge, with no residual phase. These stationary norm weights were derived from the putative fixed vector; they are not assumptions on preparation or on label probabilities. The equality concerns the normalized $v_a$, not generally $x_a$.
+
+Along a path for $w$, chronological composition gives $U_wv_{a_0}=v_{a_n}$. Thus the positive-word semigroup lies in the finite union of closed sets
+
+$$
+E_{ab}=\{g\in G:gv_a=v_b\}.
+\tag{75.5}
+$$
+
+The compact-unitary inverse argument in Theorem 74.1 applies to any finite family of unitaries, so the semigroup is dense in $G$. Hence the same finite union covers $G$.
+
+Some nonempty $E_{ab}$ has nonempty relative interior. Indeed, if every closed $E_{ab}$ had empty interior, each complement would be open dense. Successively intersecting these finitely many complements with a nonempty open set remains nonempty, contradicting their cover. Choose $g_0\in E_{ab}$. Then $E_{ab}=g_0H_a$ for the closed stabilizer subgroup $H_a=\{g:gv_a=v_a\}$. Its nonempty interior makes $H_a$ open. The open cosets cover compact $G$, so finitely many suffice; thus its index, and the orbit $O=Gv_a$, are finite.
+
+The complex span of this nonzero orbit is invariant and hence is $\mathbb C^r$ by irreducibility. Every $g\in G$ permutes $O$; if it fixes all of $O$, it fixes a spanning set and is the identity matrix. Therefore $G$ injects into the finite permutation group of $O$, contradicting infiniteness. There is no nonzero fixed vector. The mean-ergodic fact proved within Theorem 74.1 now yields the asserted operator-norm limit. ∎
+

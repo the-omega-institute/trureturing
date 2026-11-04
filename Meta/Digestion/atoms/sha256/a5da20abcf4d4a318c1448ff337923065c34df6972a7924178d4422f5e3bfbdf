@@ -1,0 +1,67 @@
+**Theorem 21.2 (original-time source approximation and coverage error).**
+The finite-list map in Definition 21.1 is Borel. Under the source
+coupling in Proposition 20.4, all retained interval starts and ends
+are exactly their original elapsed times in (16.2).
+For the maximum norm on the four coordinates write
+
+$$
+ \Omega_R(q;v)=\sup_{s,t\in[0,R],\,|s-t|\le v}|q_t-q_s|_\infty.
+\tag{21.2}
+$$
+
+On $\{C_\Lambda\ge T\}$ one has the same-time bound
+
+$$
+ \|\widehat{\mathsf Z}-\mathsf Z\|_{[0,T],\infty}
+      \le\Omega_{T+1}(\mathsf Z;\epsilon\vee\delta).
+\tag{21.3}
+$$
+
+In particular for $a_*>0$, $\lambda>0$,
+
+$$
+\begin{aligned}
+ \mathbb P(\|\widehat{\mathsf Z}-\mathsf Z\|_{[0,T],\infty}>a_*)
+ \le{}&\min(1,e^{\lambda T-\Lambda\varphi(\lambda)})\\
+ &+\mathbb P(\Omega_{T+1}(\mathsf Z;
+                         \epsilon\vee\delta)>a_*).
+\end{aligned}
+\tag{21.4}
+$$
+
+For every deterministic $\Lambda_n\uparrow\infty$ and
+$\epsilon_n,\delta_n\downarrow0$, the finite-list laws admit a
+common proof coupling on which their paths converge uniformly on
+$[0,T]$ almost surely to the original full source-start process.
+Their laws consequently converge weakly to its original law.
+This includes hidden $z$ in the source approximation. The modulus
+in (21.3)--(21.4) is a proof quantity; the finite-list map never
+queries it.
+
+**Proof.** In the coupling, $U_i$ sums exactly all small durations
+between the two successive retained labels. There is no inverse-clock
+drift by (16.1). Thus (21.1) is exactly $\tau_{\ell_i-}$, and
+$b_i+V_i=\tau_{\ell_i}$, proving elapsed-time correctness.
+On one discarded excursion of duration at most $\epsilon$,
+$\mathsf Z$ is within $\Omega_{T+1}(\mathsf Z;\epsilon)$ of its
+initial value $e$ at every relevant time. Although its individual
+location inside a represented $U_i$ was not sampled, the approximation
+is $e$ throughout that whole interval, so the same bound applies.
+At a source time both paths have value $e$.
+On a retained excursion, each polygon value is a convex combination
+of two true coordinate values at times at most $\delta$ apart.
+For a time at most $T$, both endpoints used are at most $T+\delta$.
+Each is within $\Omega_{T+1}(\mathsf Z;\delta)$ of the true value
+at that time. This proves (21.3), hence (21.4).
+
+By §16, $\tau_\Lambda\uparrow\infty$ almost surely as
+$\Lambda\uparrow\infty$. Thus coverage holds eventually under
+the common Poisson coupling. The continuous path $\mathsf Z$ is
+uniformly continuous on $[0,T+1]$, so (21.3) tends to zero almost
+surely. The construction has the stipulated finite marginal law
+at each stage; this coupling is not an extra path input. Independent
+stage draws retain the weak-convergence conclusion, without a claim
+that they converge almost surely to one another. Finite lists of
+sums, comparisons and coordinate interpolations prove the Borel
+assertion. $\square$
+

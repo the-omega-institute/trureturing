@@ -1,0 +1,86 @@
+**descending** order, from $z^{20}$ to $1$, are
+
+$$
+\begin{aligned}
+Q_{\mathrm a}:\quad[&8282903552,147117850880,1046123840160,3781797964784,\\
+&6804697209160,2376327669978,-15286238544580,-34132010728053,\\
+&-28009573334739,15424358467681,63822813623484,58128277943136,\\
+&-3817930130278,-53867345188568,-41704747973648,3272455310072,\\
+&18771481383656,5798685790240,-1832477208320,-1152683206144,
+ -148971378816],\\[2mm]
+Q_{\mathrm b}:\quad[&3048213835820,-25792101561215,74691937670917,
+ -38796690810182,\\
+&-227763268775886,400809602167211,134351464164455,-828866753144076,\\
+&296783976577872,850375399715950,-612773254519222,-501191479757676,\\
+&523615716111252,174418361487828,-253121839901464,-34607277044688,\\
+&71852012172800,3502342089856,-11152679223936,-133428292352,
+ 728342811648].
+\end{aligned}
+\tag{15.13}
+$$
+
+Here is an explicit arithmetic rule for reproducing the polynomial
+identities and gcds without choosing any roots. A determinant of size
+$n$ means $\sum_{\pi\in S_n}\operatorname{sgn}(\pi)
+\prod_{i=1}^n a_{i,\pi(i)}$. Expand (15.8), delete each of its eight
+columns, and compare its determinant coefficient by coefficient with
+$(-1)^{j+1}\nu V_j$ in (15.12). All coefficient differences vanish.
+Substitution of the same vectors in (15.9), and the four-by-four
+expansion, gives exactly (15.10) with (15.13). The identity $FV=0$
+also follows by the repeated-row cofactor identity.
+
+For nonzero $A,B\in\mathbb Q[z]$, ordinary long division removes the
+current leading term $a_mz^m$ of $A$ by subtracting
+$(a_m/b_n)z^{m-n}B$, until its degree is below $n=\deg B$.
+Iterate $(A,B)\mapsto(B,\operatorname{rem}(A,B))$ until the second
+entry is zero, and make the last nonzero entry monic. These operations
+on (15.8)–(15.13) have the following degree lists, including both
+initial inputs and every subsequent nonzero remainder. In all six
+gcd computations the final monic entry is $1$.
+
+| Inputs | Family $\mathrm a$ degrees | Family $\mathrm b$ degrees |
+| --- | --- | --- |
+| $V_0,V_1$ | $8,8,7,6,5,4,3,2,1,0$ | $8,8,7,6,5,4,3,2,1,0$ |
+| $Q,D$ | $20,24,20,19,18,\ldots,1,0$ | $20,27,20,19,18,\ldots,1,0$ |
+| $Q,N_0$ | $20,18,17,\ldots,1,0$ | $20,19,18,\ldots,1,0$ |
+
+The ellipses in these degree lists mean every consecutive integer in
+descending order. Since coprime univariate polynomials have no common
+complex zero, at least one of $V_0,V_1$ is nonzero at every real $z$.
+Also $\nu\ne0$ for $z>0$. Thus at least one maximal minor of $F$ is
+nonzero there, proving rank seven uniformly, including all zeros of
+individual entries or other minors. This argument does not use a
+sampled rank calculation.
+
+To verify the root and sign assertions, form the signed Sturm sequence
+
+$$
+R_0=Q,\quad R_1=Q',\qquad
+R_{k+1}=-\operatorname{rem}(R_{k-1},R_k),
+\tag{15.14}
+$$
+
+stopping at its last nonzero entry. In each family its degrees are
+$20,19,18,\ldots,1,0$, so $Q$ is squarefree. At a real argument let
+$\operatorname{var}$ count sign changes after zero entries are deleted;
+at $+\infty$ use leading-coefficient signs. Exact evaluation gives
+
+$$
+\begin{array}{c|cc}
+ &\operatorname{var}(0)&\operatorname{var}(+\infty)\\ \hline
+\mathrm a&7&4\\
+\mathrm b&11&3
+\end{array}
+\tag{15.15}
+$$
+
+For every row of the next table put
+
+$$
+I_n=[n/10^{12},(n+1)/10^{12}].
+\tag{15.16}
+$$
+
+Neither endpoint is a zero of the
+respective $Q$. The two variation entries refer to the left and right
+endpoints. An entry $[a,b]$ in the last column encloses the indicated

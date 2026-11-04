@@ -1,0 +1,29 @@
+**Proposition 19.3 (reconciliation with history acquisition).** Each
+point of the fixed-$t$ separated raw-history image
+$\{x_h:t(h)=t,\ h\in\mathcal H_A\}$ is isolated. Its identity task,
+and its transform under any fixed invertible assay power of $T_t$,
+therefore satisfies the necessary condition (19.1).
+This condition is not an effective sufficiency assertion for arbitrary
+presentations of isolated classes.
+
+Proof. Fix a nonzero image point $x_h$ and put $a=\|x_h\|_\infty>0$.
+Every image point with total gap count $Q'$ has norm at most
+$\lambda^{Q'}$. Choose an integer $q$ with $\lambda^q<a/2$.
+No such point with $Q'\ge q$ lies within distance $a/2$ of $x_h$.
+For fixed finite $t$, the birth count $n$ is fixed. There are finitely
+many legal addressed event orders ending at $t$ by AA Theorem 17.2,
+and finitely many allowed gap vectors with $Q'<q$. Theorem 4.1
+distinguishes their finitely many image points. A smaller positive
+radius excludes every other such point, proving isolation.
+An invertible finite linear map is a homeomorphism and preserves it.
+Zero can be a limit point but is not one of these known-unit images.
+The scout in §17 supplies an actual stopping procedure; this isolation
+argument alone supplies no such procedure for an arbitrary class.
+$\square$
+
+Reset may make a current field known zero, without recovering the
+entrance. Pairwise separation of current languages in Theorem 12.1
+is likewise compatible with Theorem 19.2: the separating continuation
+can depend on the two candidate fields and need not certify a finite
+stop against every other rational entrance.
+

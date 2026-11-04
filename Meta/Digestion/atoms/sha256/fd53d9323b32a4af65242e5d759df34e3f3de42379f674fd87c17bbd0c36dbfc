@@ -1,0 +1,8 @@
+**Corollary 4.2 (Gaps of the parity sectors).** With the single-qudit intrinsic term of Convention 2.2, for every odd $d\ge3$ the gaps are as follows. The even sector has $k=(d+1)/2$, odd exactly when $d\equiv1\pmod4$; the odd sector has $k=(d-1)/2$, odd exactly when $d\equiv3\pmod4$.
+
+| Sector and class of $d$ | $\Delta M$ when $3\nmid d$ | $\Delta M$ when $3\mid d$ |
+| --- | --- | --- |
+| $E_d$, $d\equiv1\pmod4$ | $\dfrac{2(d-1)}{(d+3)(d+5)}$ | $\dfrac{2(d^2+4d-13)}{(d+1)(d+5)(d+7)}$ |
+| $E_d$, $d\equiv3\pmod4$ | $\dfrac{2(d+1)}{(d+3)(d+7)}$ | $\dfrac{2(d^3+7d^2+11d-27)}{(d+1)(d+3)(d+5)(d+7)}$ |
+| $O_d$, $d\equiv3\pmod4$ | $\dfrac{2}{d+3}$ | $\dfrac{2(d^3+5d^2-d+27)}{(d-1)(d+1)(d+3)(d+5)}$ |
+| $O_d$, $d\equiv1\pmod4$ | $\dfrac{2(d^2+6d+17)}{(d+1)(d+3)(d+5)}$ | $\dfrac{2(d^2+2d+5)}{(d-1)(d+1)(d+5)}$ |

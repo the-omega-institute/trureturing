@@ -1,0 +1,30 @@
+**Definition 2.1 (every finite-index lattice and both outside rules).**
+Let $L_{\rm ph}\le(2\pi\mathbb Z)^2$ be any subgroup of finite index
+$d\ge1$, without a rectangular-lattice assumption. Put
+
+$$
+\mathbb T_L=\mathbb R^2/L_{\rm ph},\quad
+\mathcal M_L=(0,H_{\rm n})\times\mathbb T_L,\quad
+\psi_L(p)=(k_0+x,[\vartheta(p)]_L)\quad(p\in\mathcal S).
+\tag{2.1}
+$$
+
+The two global standard Borel observation spaces and maps are
+
+$$
+\begin{array}{ll}
+\mathcal B_L^0=\mathcal M_L\sqcup\{\bot\},&
+\chi_L^0(p)=\begin{cases}\psi_L(p)&p\in\mathcal S,\\\bot&p\notin\mathcal S,\end{cases}\\[3pt]
+\mathcal B_L^+=\mathcal M_L\sqcup(\{\mathrm{out}\}\times(G\setminus\mathcal S)),&
+\chi_L^+(p)=\begin{cases}\psi_L(p)&p\in\mathcal S,\\(\mathrm{out},p)&p\notin\mathcal S.\end{cases}
+\end{array}
+\tag{2.2}
+$$
+
+The wall points belong to the outside part. The bottom symbol means
+current unavailability; it is not a held last value or an absorbing
+state. The second rule discloses the exact current outside point.
+In both rules the source continues on all of $G$, can leave and
+reenter the slab, and starts at
+$b_0=\chi_L^\sigma(e)=(k_0,[0]_L)$, $\sigma\in\{0,+\}$.
+

@@ -1,0 +1,39 @@
+**定理 103.3（单次不匹配、原生保留量和非统一费用的边界）。** 上述制备关系具有以下精确限制。
+
+一次原交互在 $\psi$ 上的两个非零 Schmidt 权重恰为
+
+$$
+\left\{\frac{6-d}{8},\ \frac{2+d}{8}\right\}.
+\tag{103.11}
+$$
+
+它们既非三个等权，也非两个等权；单次输出的局部等距不能把它变为最大纠缠 qutrit 对。若完全不使用 $N$，则
+
+$$
+\lim_{m\to\infty}\Lambda^m(\rho_0)
+=\frac d2P_\xi+\frac{1-d/2}{2}(I_3-P_\xi),
+\tag{103.12}
+$$
+
+该极限仅在 $d=2/3$ 为 $I_3/3$。然而使用同一个原混合 $N$ 的 (103.4) 对全部允许 $d$ 都趋于 $I_3/3$。这一区别说明单次 Schmidt 障碍不是重复同源制备的障碍。
+
+收缩率 $r_N$ 随 $N$ 连续，且当混合 $N$ 趋于 $I_3$ 时 $r_N\to1$。故 (103.3) 没有跨所有安装的统一严格收缩率。更具体地，若 $d\ne2/3$，对任意固定有限 $n$，
+
+$$
+\lim_{N\to I_3}\left|\operatorname{Tr}(P_\xi\Theta_N^n\rho_0)-\frac13\right|
+=\left|\frac d2-\frac13\right|>0.
+\tag{103.13}
+$$
+
+因此不能把每个模型的收敛改写成对所有混合安装共同的有限调用上限。
+
+证明。一次输出的记录 Gram 矩阵为 $\frac12\left(\begin{smallmatrix}1&\omega_d\\\omega_d&1\end{smallmatrix}\right)$，(101.7) 给 (103.11)。局部等距保持非零 Schmidt 权重。对于 (103.12)，$\Lambda$ 及其 Hilbert–Schmidt 伴随均固定 $\mathscr F$，故其正交补不变；(103.8) 和紧性使 $\Lambda^2$ 在该补上严格收缩。其极限是到 $\mathscr F$ 的正交投影
+
+$$
+\Pi_{\mathscr F}(X)=\operatorname{Tr}(P_\xi X)P_\xi+
+ \frac{\operatorname{Tr}[(I_3-P_\xi)X]}{2}(I_3-P_\xi).
+\tag{103.14}
+$$
+
+原制备的 $P_\xi$ 人口为 $d/2$，得到所述极限。该固定子代数和无标签通道的性质已有 V 定理 89.1、环境记录及 Half-Gram 分类的供应；此处只用它比较同一制备的有／无 $N$ 接续。$N\mapsto\Theta_N$ 的矩阵条目和有限维算子范数连续，且 $r_{I_3}=1$，给收缩率的极限。固定 $n$ 后，$\Theta_N^n\rho_0$ 亦连续，而 $N=I_3$ 时 $P_\xi$ 人口被原通道保持，得 (103.13)。边界 $d=2/3$ 不在这项非统一人口论证之内，不从它推出该边界的相同下界。∎
+

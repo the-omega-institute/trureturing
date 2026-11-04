@@ -1,0 +1,32 @@
+**Theorem 32.1 (the smaller seed-only benchmark).** Suppose instead
+that the source supplies authentic public $r\ge0$ and the entire
+coefficient row of (GPO.75), with only the arbitrary initial $r$ bits
+unknown. No invertibility or minimality is assumed. For this class,
+all three class-wide readiness conditions are exactly
+
+$$
+ v_n=F_n-1\ge r\qquad(n\ge2).
+ \tag{GPO.79}
+$$
+
+Reading its first $r$ birth bits suffices to install the known
+recurrence with the earned seed. When $r=0$ no read is required.
+The number $r$ here is the supplied presentation length, not an
+inferred private minimal order.
+
+Proof. The first $r$ bits and the public row determine every later
+bit by forward induction. For $v<r$, choose two initial seeds
+agreeing below $v$ and differing at index $v$, extending both by
+that same public recurrence. Both are lawful regardless of its zero
+coefficients. At cut $n$ with $v_n=v$, Theorem 28.2 and (GPO.69)
+give identical incidence but different current labels and $\mathcal Q_1$.
+The same difference also distinguishes finite futures. This proves both
+directions, with the zero-order singleton treated separately.
+$\square$
+
+The benchmark supplies coefficients as authentic advice and only learns
+the seed. It is not the unknown-coefficient theorem with $2d$
+replaced by $d$, and it is not a claim that geometry authenticates the
+coefficient presentation. Its acquired-read schedule is the same
+construction below with $m=r$.
+

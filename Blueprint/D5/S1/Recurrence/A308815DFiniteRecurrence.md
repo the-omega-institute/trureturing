@@ -30,7 +30,21 @@ $$claim \Leftrightarrow \left(\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (n
 
 OEIS A308815, FORMULA section (no page numbers): “Conjecture: D-finite with recurrence: n*(2*n+1)*a(n) -32*(9*n-4)*(n-1)*a(n-1) +1024*(3*n^2-23*n+29)*a(n-2) +65536*(n-2)*(2*n-5)*a(n-3)=0. - _R. J. Mathar_, Jan 27 2020”. Here a is a308815. The assertion ranges over every natural n ≥ 3; lagged indices use natural subtraction, and the factors n-1 and n-2 outside a308815 use integer subtraction.
 
-**Theorem 1.3 (The recurrence holds).**
+**Theorem 1.3 (Coefficients of the Euler derivative).**
+
+$$\forall f \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \forall d \in \mathbb{N},\; \operatorname{coeff}\left(d, X \cdot \operatorname{derivative}\left(f\right)\right) = (d:\mathbb{Q}) \cdot \operatorname{coeff}\left(d, f\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/A308815DFiniteRecurrence.euler_coeff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. J. Mathar; OEIS Foundation Inc. (2020). *OEIS A308815 — D-finite recurrence for alternating Catalan numbers*. URL: <https://oeis.org/A308815>.
+
+*Commentary.*
+
+For every rational power series f and natural index d, multiplication of its formal derivative by X multiplies the coefficient of degree d by d.
+
+**Theorem 1.4 (The recurrence holds).**
 
 $$\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (n:\mathbb{Z}) \cdot (2 \cdot (n:\mathbb{Z}) + 1) \cdot \operatorname{a308815}\left(n\right) - 32 \cdot (9 \cdot (n:\mathbb{Z}) - 4) \cdot ((n:\mathbb{Z}) - 1) \cdot \operatorname{a308815}\left(n - 1\right) + 1024 \cdot (3 \cdot (n:\mathbb{Z})^{2} - 23 \cdot (n:\mathbb{Z}) + 29) \cdot \operatorname{a308815}\left(n - 2\right) + 65536 \cdot ((n:\mathbb{Z}) - 2) \cdot (2 \cdot (n:\mathbb{Z}) - 5) \cdot \operatorname{a308815}\left(n - 3\right) = 0$$
 
@@ -52,4 +66,5 @@ The ordinary Catalan series satisfies X C(X)^2-C(X)+1=0. Differentiation and eli
 
 - Truth anchor: `D5/S1/Recurrence/A308815DFiniteRecurrence.a308815`
 - Truth anchor: `D5/S1/Recurrence/A308815DFiniteRecurrence.claim`
+- Truth anchor: `D5/S1/Recurrence/A308815DFiniteRecurrence.euler_coeff`
 - Truth anchor: `D5/S1/Recurrence/A308815DFiniteRecurrence.result`

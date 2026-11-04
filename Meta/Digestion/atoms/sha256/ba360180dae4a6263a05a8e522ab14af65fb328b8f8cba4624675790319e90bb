@@ -1,0 +1,145 @@
+**引理 38.1（首次越界所需配对数）。** 固定任一侧及其锚、标签条件律，假设 $\mu\ne0$，写 $\Delta=|\mu|\in(0,1)$。令
+
+$$
+M=\inf\{n_j:|S_{n_j}|>b_j,\ j\ge0\},
+\tag{38.1}
+$$
+
+空集取 $\infty$。则
+
+$$
+\mathbb E M\le72\Delta^{-2}
+\left[\log\frac8\epsilon+\log\log(e+1/\Delta)\right].
+\tag{38.2}
+$$
+
+该界对所有锚距离和两种标签相同，并蕴含 $M<\infty$ 几乎处处。
+
+**证明。** 只在证明中定义
+
+$$
+A_0=\log(8/\epsilon),\qquad
+H=\log(e+1/\Delta),\qquad
+\mathcal A=A_0+\log H,\qquad
+v=\log(1/\Delta).
+\tag{38.3}
+$$
+
+有 $H>1$、$v>0$ 和 $\mathcal A\ge A_0\ge\log32>1$。取证明用的整数及其对应检查点
+
+$$
+j_\star=\left\lceil\log_2\frac{32\mathcal A}{\Delta^2}\right\rceil,
+\qquad n_\star=2^{j_\star}.
+\tag{38.4}
+$$
+
+它们依赖未知分离度，但从不供应给策略。天花板取整给出
+
+$$
+\frac{32\mathcal A}{\Delta^2}\le n_\star
+\le\frac{64\mathcal A}{\Delta^2},
+\qquad
+j_\star+1\le7+\frac{\log\mathcal A+2v}{\log2}.
+\tag{38.5}
+$$
+
+这里 $\log_2 x=(\log x)/(\log2)$。由 $\log2\ge1/2$、$\log\mathcal A\le\mathcal A$、$v\le H$ 及 $\mathcal A,H\ge1$，
+
+$$
+\begin{aligned}
+j_\star+1
+&\le7+2\log\mathcal A+4v\\
+&\le7+2\mathcal A+4H
+\le13\mathcal A H\le16\mathcal A H.
+\end{aligned}
+\tag{38.6}
+$$
+
+取对数后，$\log16\le\mathcal A$、$\log\mathcal A\le\mathcal A$、$\log H\le\mathcal A$，故
+
+$$
+\log(j_\star+1)\le3\mathcal A,
+\qquad
+L_{j_\star}=A_0+2\log(j_\star+1)\le7\mathcal A.
+\tag{38.7}
+$$
+
+结合（38.5），$n_\star\Delta^2\ge32\mathcal A\ge4L_{j_\star}$。此外对所有 $j\ge0$，
+
+$$
+L_{j+1}-L_j
+=2\log\frac{j+2}{j+1}\le2\log2\le L_j.
+$$
+
+所以 $L_j/2^j$ 不增，一旦在 $j_\star$ 达到上述界，以后所有检查点均有
+
+$$
+b_j=\sqrt{n_jL_j}\le\frac{n_j\Delta}{2},\qquad j\ge j_\star.
+\tag{38.8}
+$$
+
+若 $M>n_j$，则在该检查点还没有越界，因而 $|S_{n_j}|\le b_j$。对 $j\ge j_\star$，写 $\sigma=\operatorname{sgn}\mu$，得到事件包含
+
+$$
+\{M>n_j\}
+\subseteq\{\sigma S_{n_j}-n_j\Delta\le-n_j\Delta/2\}.
+$$
+
+由（37.1）对相应符号的一侧偏差估计，
+
+$$
+\Pr(M>n_j)\le\exp(-n_j\Delta^2/4),\qquad j\ge j_\star.
+\tag{38.9}
+$$
+
+这一包含不条件于证书正确，也不条件于此前没有错误证书。
+
+$M$ 取二的非负整数次幂或 $\infty$。在扩展非负实数意义下，逐点恒等式为
+
+$$
+M=1+\sum_{j\ge0}2^j\mathbf1_{\{M>2^j\}}.
+\tag{38.10}
+$$
+
+对有限 $M=2^J$，右侧为 $1+\sum_{j=0}^{J-1}2^j=2^J$；对 $M=\infty$ 两侧同为无穷。非负求和与（38.9）给出，令 $c=\Delta^2/4$，
+
+$$
+\mathbb E M
+\le n_\star+\sum_{j\ge j_\star}n_j e^{-cn_j}.
+\tag{38.11}
+$$
+
+由于 $e^{-cx}$ 递减，
+
+$$
+n_je^{-cn_j}\le2\int_{n_j/2}^{n_j}e^{-cx}\,dx.
+$$
+
+这些二进制区间除端点外不交，合起来是 $[n_\star/2,\infty)$，所以
+
+$$
+\sum_{j\ge j_\star}n_je^{-cn_j}
+\le2\int_{n_\star/2}^\infty e^{-cx}\,dx
+\le\frac2c=\frac8{\Delta^2}.
+\tag{38.12}
+$$
+
+最后由（38.5）及 $\mathcal A\ge1$，
+
+$$
+\mathbb E M\le\frac{64\mathcal A+8}{\Delta^2}
+\le\frac{72\mathcal A}{\Delta^2}.
+$$
+
+所有期望和求和在证明有限性之前均按非负扩展值解释；有限上界排除了 $M=\infty$ 的正概率。整个论证包含全部取整和早期检查点，没有对无界停止时刻直接使用期望恒等式。$\square$
+
+对两侧完整半线分别记首次越界配对数为 $M_-,M_+$。非对角线上每份锚条件律都有 $|\mu_s|=\Delta$，因此按（36.4）平均（38.2）后，
+
+$$
+\mathbb E_J M_s\le72\Delta^{-2}\mathcal A,
+\qquad J(M_s<\infty)=1,\qquad s\in\{-,+\}.
+\tag{38.13}
+$$
+
+这两个原律期望各自来自单侧条件律，未断言 $M_-$ 与 $M_+$ 独立。
+

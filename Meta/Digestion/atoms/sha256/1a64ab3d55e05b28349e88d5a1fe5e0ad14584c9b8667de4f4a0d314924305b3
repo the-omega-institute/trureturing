@@ -1,0 +1,95 @@
+We now prove the comparison for the actual channels.
+If $a=1$, then $R=P$ and $g=h=0$, so the claims follow directly.
+For the moment assume $a<1$ and $\rho$ positive definite. Define
+$$
+ T=\frac{P-KPK}{2},\qquad w=\frac{1+a}{2}.
+$$
+Both mixing weights are positive, and $R=wP+(1-w)KPK$. The exact
+relative-entropy mixing identity is
+$$
+ g=wD(P\Vert R)+(1-w)D(KPK\Vert R).
+$$
+Since $P,KPK,R\preceq MI$, the relative-entropy estimate above,
+$P-R=(1-a)T$, and $KPK-R=-(1+a)T$ give
+$$
+ g\geq\frac{w(1-a)^2+(1-w)(1+a)^2}{2M}\|T\|_2^2
+ =\frac{1-a^2}{2M}\|T\|_2^2.
+\tag{11.2}
+$$
+
+Write the actual marginal as
+$$
+ P_E=\frac{I+x_EX+y_EY+z_EZ}{2},\qquad
+ r_E^2=x_E^2+y_E^2+z_E^2,\qquad u_E=y_E^2+z_E^2.
+$$
+The reduced channel gives
+$R_E=(I+x_EX+a y_EY+a z_EZ)/2$. For binary entropy
+$\mathsf h(r)=-\sum_{\pm}(1\pm r)\log((1\pm r)/2)/2$, differentiation
+uses $\mathsf h'(r)=-\operatorname{atanh}r$. Thus
+$$
+ h_E=\int_a^1 t u_E f\!\left(\sqrt{x_E^2+t^2u_E}\right)dt
+ \leq\frac{1-a^2}{2}\,u_E f(r_E).
+$$
+The estimate follows because $f$ increases on $[0,1)$, as is also
+immediate from its positive series $\sum_{n\geq0}r^{2n}/(2n+1)$.
+
+To compare the two local tangents with the actual global tangent, put
+$T_E=\operatorname{tr}_{E^c}T=(y_EY+z_EZ)/2$. Then
+$$
+ T=\frac12T_C\otimes I+\frac12I\otimes T_D+T_0,
+ \qquad \operatorname{tr}_C T_0=\operatorname{tr}_D T_0=0.
+$$
+The three terms are Hilbert--Schmidt orthogonal: the marginal tangents
+are traceless, and the two partial traces of $T_0$ vanish. Therefore
+$$
+ \|T\|_2^2\geq\tfrac12(\|T_C\|_2^2+\|T_D\|_2^2)
+ =\frac{u_C+u_D}{4}.
+\tag{11.3}
+$$
+Adding the two marginal estimates and applying (11.2) and
+(11.3) yields
+$$
+ h\leq\frac{1-a^2}{2}f_*(u_C+u_D)
+ \leq2(1-a^2)f_*\|T\|_2^2\leq4Mf_*g.
+$$
+No division by $g$ or by $1-a^2$ is used. Inserting this inequality into
+the exact original deficit proves the first comparison.
+
+Now suppose $M\leq7/20$. Positivity of partial trace applied to
+$P\preceq MI_4$ gives $P_E\preceq2MI_2$. Consequently
+$$
+ \frac{1+r_E}{2}\leq2M,\qquad 0\leq r_E\leq4M-1\leq\frac25.
+$$
+For $0\leq r\leq2/5$, the same positive series gives the rational bound
+$$
+ f(r)=1+\sum_{n\geq1}\frac{r^{2n}}{2n+1}
+ \leq1+\frac{r^2}{3(1-r^2)}\leq\frac{67}{63}.
+$$
+It follows that
+$$
+ h\leq4\cdot\frac7{20}\cdot\frac{67}{63}\,g
+ =\frac{67}{45}g,
+$$
+and
+$$
+ \Delta\geq I_P+I_Q+\left(3-\frac{134}{45}\right)g
+ =I_P+I_Q+\frac1{45}g.
+$$
+The endpoint mutual informations are nonnegative by their exact
+relative-entropy expression, and $g\geq0$ by its mixing identity.
+
+Finally for arbitrary singular $\rho$ use
+$\rho_\varepsilon=(1-\varepsilon)\rho+\varepsilon I_4/4$.
+Both channels preserve the maximally mixed state, and
+$$
+ M_\varepsilon=(1-\varepsilon)M+\varepsilon/4.
+$$
+Thus $M\leq7/20$ implies $M_\varepsilon\leq7/20$. Entropy continuity
+proves (11.1) in the limit. More generally if $r_C,r_D<1$, the
+regularized marginal lengths converge to them, $M_\varepsilon\to M$,
+and continuity of $f$ on $[0,1)$ gives the two comparison inequalities
+by the same limit. This includes singular and nonreal inputs without
+replacing either endpoint mutual information by a lower truncation.
+$\square$
+
+

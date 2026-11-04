@@ -1,0 +1,9 @@
+**Convention 9.1 (exact width and representation).** A rational is encoded by a reduced signed binary numerator and positive binary denominator with framing. Write $\lambda$ for the total bit length of the actual $C,S$ words and put
+
+$$
+W=1+\lambda+\lceil\log_2(N+1)\rceil.
+\tag{CL.22}
+$$
+
+This is a bound parameter for the account, not advice given to the observer. At acquisition every coefficient in (CL.7)–(CL.8), every entry of $x_*$ and $z_*$, the acquired $y$, and the intermediate constant-degree rational expressions used to decode and form them have $O(W)$ bits. Integer square-root search uses $O(W)$-bit operands as well. There is no fixed precision bound over $\mathcal P$.
+

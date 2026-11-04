@@ -1,0 +1,31 @@
+**Definition 1.1 (Original normalization and remainders).** For $x>0$ and real $a,b$, let
+
+$$
+\begin{aligned}
+R(x)&=e^{x^2/2}\int_x^\infty e^{-t^2/2}\,dt,\\
+Y_{a,b}(x)&=(x^2+a)R(x)^2+bxR(x),\\
+c_k&=\frac{2^k\Gamma(k+1/2)}{\Gamma(1/2)}
+\quad(k\ge0),\\
+u_k(a,b)&=(b+1)c_k
+ +(k-a)(k-1)!\sum_{j=0}^{k-1}\frac{c_j}{j!}
+\quad(k\ge1).
+\end{aligned}
+$$
+
+Thus $c_0=1$. These are exactly the unscaled Gaussian Mills ratio and
+the expressions in Xu–Yang [XY, (1.8), (3.7)]. Throughout the remainder
+statements $b=a-2$, and, for every integer $n\ge2$, define
+
+$$
+\begin{aligned}
+D_n(x,a)&=Y_{a,a-2}(x)
+ -\left(a-1+\sum_{k=1}^n(-1)^ku_k(a,a-2)x^{-2k}\right),\\
+F_{n,a}(x)&=(-1)^nD_n(x,a).
+\end{aligned}
+$$
+
+A function $f$ is completely monotone, abbreviated CM, if it is
+$C^\infty$ on $(0,\infty)$ and
+$(-1)^mf^{(m)}(x)\ge0$ for every integer $m\ge0$ and every $x>0$.
+In particular the condition includes $m=0$.
+

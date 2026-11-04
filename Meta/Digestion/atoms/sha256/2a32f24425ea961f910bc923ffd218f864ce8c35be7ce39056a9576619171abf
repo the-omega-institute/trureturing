@@ -1,0 +1,22 @@
+## 6. One sequence for all finite schedules
+
+**(B6) Theorem 6.1 (finite-window density and compactness).** There is one sequence of Borel partitions $P^{(r)}$, independent of the finite schedule, such that for every $q$ and every $0<t_1<\cdots<t_q$,
+
+$$
+\operatorname{TV}\bigl(L_{P^{(r)}}^{t_1,\ldots,t_q},L_f^{t_1,\ldots,t_q}\bigr)\longrightarrow0.
+\tag{6.1}
+$$
+
+Consequently deterministic complete-record laws are dense in the stochastic complete-record class for weak convergence on the compact sequence space. The stochastic class is compact and the deterministic class is proper. The functional $J$ is discontinuous at every target with $J>0$.
+
+**Proof.** Use the existing atomless indicator approximation to choose one sequence with $1_{P_i^{(r)}}\to f_i$ weak-star in $L^\infty(m)$. The source-specific smoothing result gives $T_\delta u_r\to T_\delta u$ strongly in $L^2(m)$ for each fixed $\delta>0$. For a word $i_1,\ldots,i_q$, define backwards
+
+$$
+ b_q^{(r)}=1_{P_{i_q}^{(r)}},\qquad
+ b_j^{(r)}=1_{P_{i_j}^{(r)}}T_{t_{j+1}-t_j}b_{j+1}^{(r)},
+$$
+
+and the analogous $b_j$ using $f$. Assume $b_{j+1}^{(r)}\to b_{j+1}$ weak-star. Smoothing makes the next semigroup factors converge strongly in $L^2$. Against any $L^1$ test, truncate the test to a bounded $L^2$ function: the strong error is controlled by Cauchy--Schwarz, and the remaining factor is a fixed weak-star test; remove the truncation using the uniform $[0,1]$ bound. Induction reaches $b_1^{(r)}\to b_1$ weak-star. The Markov word formula pairs it with the actual $g_{t_1}\in L^2\subset L^1$; every cylinder probability converges. Finitely many words give total variation.
+
+The same induction proves continuity of every cylinder probability on the weak-star compact metrizable simplex of emissions. Its image in the compact finite-alphabet sequence space is compact. Theorem 5.2 gives a stochastic law outside the deterministic image, while the sequence above approximates it, proving proper density. All deterministic laws have $J=0$ and the target has $J>0$, so $J$ is discontinuous under weak record-law convergence. The sequence is pointwise in each fixed positive finite schedule; no uniform shrinking-gap, unbounded-horizon, feedback, rate, or computable refinement index is claimed. ∎
+

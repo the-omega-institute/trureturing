@@ -1,0 +1,77 @@
+**Proposition 6.2 (apparatus removal with an explicit local bill).** Compare
+the following two executions on the same commissioned source and same
+actual initial state. Both use Definition 1.2's sufficient taps. The
+comparison execution additionally uses $\nu p$ nondisturbing ideal
+weighted-integrator channels for (3.5) throughout $[0,T]$ and receives
+their $\nu p$ terminal scalars $m$. The receiver execution uses (2.2)
+and then (3.6) to deliver that original payload. If the requested memory
+interface is instead the revised monomial chart, it stops at $\mu$;
+the chart change and the omitted conversion are then explicit.
+Both deliver the same requested moment chart, endpoint and all actual
+continuation replies. The latter has zero such integrator channels and
+zero terminal integrator-source replies. It adds the finite filter's
+construction, arithmetic and storage, as follows.
+
+| Same-run coordinate | Common or receiver-specific bill |
+| --- | --- |
+| Preparation | Same actual initialization, known-law commissioning, clock/origin, bindings, grants, code and source backing; none is assigned zero cost. |
+| Acquisition source calls | One FlowStart, $\nu$ vector taps, one FlowStop and active duration $T$, in addition to initialization. A scalar-only sensor pays $\nu p$ scalar transactions with its different framing. |
+| Removed apparatus | $\nu p$ active integrator channels, their initialization/support and $\nu p$ separately acquired terminal scalars. |
+| Weight setup | Multiply the linear factors in (2.1), divide by their nonzero differences, then use (2.3). Dense coefficient multiplication and the final sums take a sufficient $O(\nu^3)$ scalar-operation budget; their work and stored coefficients are paid. |
+| Specified dense filter | Zero $\nu p$ destination scalars; for each $k,i,r$, multiply $W_{ki}y_{ir}$ and add it to that destination, including zero entries. Exactly $\nu^2p$ scalar multiplications and $\nu^2p$ scalar additions, plus the zero writes and actual loads/stores. |
+| Original chart output | When $m$ is required, precompute $T^{-1/2}D$ and apply the same dense zero-and-accumulate convention: another $\nu^2p$ multiplies and $\nu^2p$ additions, destination writes and actual loads/stores. Constructing the algebraic coefficients is paid setup. |
+| Optional other output | A requested Boundary array or full Space adds its coefficient matrices, solves, arithmetic, destination and export. No such output is silently free. |
+| Actual continuation | Same selected action calls, durations and complete source replies; local update work (5.1), buffers, parsing and retained consumer state coexist. |
+
+Proof. Theorem 2.2 gives equality of the moment values and the actual
+window endpoint. Equation (3.6) gives the original normalized chart when
+requested. Theorem 5.1 gives equality along the actual continuation, by
+induction with the same adaptive selectors. The comparison integrators
+have no source-disturbing effect, so their removal changes no source call
+or transition. The stated filter schedule has one multiply and one add
+for each of $\nu^2p$ triples. Constructing each Lagrange numerator by
+successive linear-factor multiplication uses $O(\nu^2)$ operations;
+doing so for $\nu$ nodes and then the $\nu^3$ weight terms gives the
+stated sufficient setup budget. These are arithmetic counts for this
+specific receiver, not bounds on bit operations or physical time. ∎
+
+During the filtering, count simultaneously the actual source field and
+its update backing; $B,C$; the nodes and $\nu^2$ weights if stored; the
+$\nu p$ actual tap payloads; the $\nu p$ moment destinations; current
+predictor and destination/scratch; clock/phase; code, parser, references,
+rights and communication buffers. If Time and Memory are both retained,
+both payload arrays remain charged. An optional Space solve adds its
+left-inverse matrix and state buffers. Scratch may be reused after its
+last consumer; retained caller copies and still-live exports cannot be
+replaced by separate maxima.
+When the original $m$ payload is produced out of place, its $\nu p$
+destination scalars coexist with $\mu$ until that conversion completes;
+if both charts are retained, both survive as additional charged arrays.
+
+For any chosen self-delimiting rational encoding let $\lambda(q)$ be
+the length of its actual reduced rational packet. Tap traffic is
+$\sum_{i,r}\lambda(y_{ir})$, together with actual requests, node/clock
+fields, tags, ACK, End and Return packets. Add commissioning/law handoff,
+selector operands, every continuation reply and every actual export with
+its copy multiplicity. Moments computed locally are not extra source
+responses. Sending them is still traffic. Source, mailbox and receiver
+copies coexist whenever the installed channel protocol requires them.
+No universal exact finite-binary length is assigned to arbitrary real
+replies. Genuine owner/token copying is a premise here; the PR57/PVC
+primitive implementations are not asserted to implement this sensor.
+
+Rational and algebraic widths are finite per instance and unbounded
+across inputs and continuation lengths. A finite program does not imply
+bounded lifetime memory, fixed precision, finite physical exhaustion
+margin or a uniform time bound. Local elapsed time, energy, commissioning,
+clock realization and source support remain actual resource coordinates;
+no numerical values for those physical coordinates are asserted.
+
+For prediction alone, retaining the sufficient taps and using (4.3)
+without creating a moment array is the cheaper sufficient alternative
+in added filtering work. The purpose of (2.2) is to provide the specified
+integrated-memory interface while removing its extra ideal measurement
+apparatus. The invertible recoding creates no information. The two full
+resource vectors have different apparatus and computation coordinates;
+there is no claimed total-cost or Pareto dominance over tap retention.
+

@@ -1,0 +1,55 @@
+**Theorem 7.3 (Uniform exclusion of an unbounded positive family).** For every integer $r\ge5$, one has $D_r>1/4$. For every such $r$ and every integer $N\ge2^{r+2}$, set
+
+$$
+h_0=N,\qquad h_1=\cdots=h_{r-1}=t=1,\qquad
+h_{r+j}=2^{j-1}(N+1)\quad(1\le j\le r).
+\tag{28}
+$$
+
+This is a positive cancellation row. Every nonerasing dictionary with this row into every nonempty finite alphabet satisfies
+
+$$
+E(\eta(u))\ge e_r+
+\frac{D_rN-2^r}
+ {\bigl((2^r+1)N+2^r\bigr)(\Lambda^r-1)}
+>e_r.
+\tag{29}
+$$
+
+*Proof.* Put $a=2^r$ and $y=\Lambda^r$. Since $\Lambda=2+1/y$, the binomial inequality gives
+
+$$
+y=\left(2+\frac1y\right)^r\ge a+\frac{ra}{2y}.
+$$
+
+If $y\le a+9/4$, then, since $r\ge5$ and $a\ge32$,
+
+$$
+\frac{ra}{2y}\ge\frac{ra}{2(a+9/4)}
+\ge\frac52\frac{32}{32+9/4}
+=\frac{320}{137}>\frac94.
+$$
+
+This would give $y>a+9/4$, a contradiction. Thus $D_r=y-a-2>1/4$.
+
+Theorem 4.2 applied to the independent parameters in (28) gives
+
+$$
+t+\sum_{i=0}^{j-1}2^{j-1-i}h_i
+=1+2^{j-1}N+(2^{j-1}-1)=2^{j-1}(N+1).
+$$
+
+It therefore supplies cancellation for every row (28). For this row, (26) becomes
+
+$$
+E(\eta(u))\ge2+\frac{N}{(2^r+1)N+2^r}.
+$$
+
+Subtracting (27) yields exactly the fraction in (29). Its numerator is positive because
+
+$$
+D_rN>\frac{N}{4}\ge2^r.
+$$
+
+The denominator is positive as well. This proves the exclusion for every dictionary with the prescribed lengths, including those with infinite exponent. The family is unbounded since $N$ is arbitrary above the stated threshold. This argument excludes neither all cancellation rows nor any family at $r=3$ or $r=4$. $\square$
+

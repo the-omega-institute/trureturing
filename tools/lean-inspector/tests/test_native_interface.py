@@ -3,7 +3,10 @@ import json
 import os
 import re
 import shutil
-import tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python 3.10 and earlier use the bundled tomli.
+    import tomli as tomllib
 
 from test_native_support import ROOT, publication, copy_contract_interface
 

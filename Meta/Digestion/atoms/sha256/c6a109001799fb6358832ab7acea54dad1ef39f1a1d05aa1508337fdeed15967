@@ -1,0 +1,59 @@
+**Definition 4.1 (a singleton-core exact-height procedure).** In the deep
+branch retain the aligned descriptor produced by Theorem 3.1; for $d=0$
+use the known zero descriptor. Put
+
+$$
+h_0=\begin{cases}n_0-2,&d>0,\\0,&d=0.\end{cases}
+$$
+
+Use ACR Definition 28.1's height procedure, with the following exact
+change: replace the core-presentation loop and its stages by this single
+earned aligned descriptor. Keep both integer-clock loops, all rank
+trials, termination tests, root-literal guards and the rank certificate.
+For clarity these ingredients are specified here.
+
+A present start $x$ of depth at most $h_0$ is presence-tested. Explore at
+most $\ell$ further physical levels ($\ell=0$ at $d=0$), paying both
+child-presence tests at each visited node and stopping at terminals.
+At a nonterminal frontier $p$, of depth $m$, enumerate both integers
+
+$$
+1\le A_1,A_2<F_{2m+4},\qquad 2\le q\le H-m.
+$$
+
+The integers are hypotheses, never replies. Extend the first two by
+the integer Fibonacci recurrence $I(k+2)=I(k+1)+I(k)$. Give the local
+root descriptor $(0,\beta)$. For a relative branch $w$ with local
+branch update $k$, its hypothesized global birth index is
+
+$$
+J(w)=I(k)+\sum_{ub\preceq w}
+ \lambda_{\sigma_{ua}}(k-1-\theta_u),\qquad
+\lambda_\alpha(t)=F_t,\quad\lambda_\beta(t)=F_{t+1}.
+$$
+
+Here $\theta_u$ is the already computed local branch update and
+$\sigma_{ua}$ the immutable initial label of that skipped sibling.
+This is ACR (ACR.115), with all proper-ancestor ages nonnegative.
+The descriptor evaluates $y_{J(w)-1}$ to assign the two physical
+child labels. Only paths are generated, not the whole trial tree.
+At proposed rank $q$, form a longest suffix $x_q$ of length $q-1$
+by choosing the rank-one decrement, with a fixed tie rule at rank two.
+For $q=2k+1$ form a short suffix $y_q$ of length $k$ by rank-two
+decrements. For $q=2k$ its length is $k-1$. Pay the following actual
+root-literal tests:
+
+$$
+\operatorname{Read}(px_q)=1,\qquad
+\begin{cases}
+\operatorname{Read}(py_qa)=0,&q=2k+1,\\
+\operatorname{Read}(py_qaa)=\operatorname{Read}(py_qba)=0,&q=2k.
+\end{cases}
+$$
+
+Reject malformed lengths or a literal exceeding $H$. On the first
+passing trial return height $q-1$; otherwise return zero. Recombine
+explored branches by one plus the maximum child height. Hypothetical
+clock pairs need not have a global realization. No fixed-seed shortcut
+and no numerical deep-cone clock is used.
+

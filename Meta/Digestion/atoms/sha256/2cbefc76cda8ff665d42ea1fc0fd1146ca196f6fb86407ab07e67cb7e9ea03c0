@@ -1,0 +1,28 @@
+**Theorem 78.2 (full-height-path preserving critical attainment).** For
+every fixed choice in Definition 78.1 there is one horizon-independent
+law $\mathsf V^{\mathsf Q_K}_\star\in
+\mathcal C^{\mathsf Q_K}_{\mathrm{crit},r}$ such that
+
+$$
+\begin{gathered}
+D((\mathsf V^{\mathsf Q_K}_\star)_T\Vert\mathbb P_T)
+ \le\lambda T+\nu\log(1+T)+O(1),\qquad T>0,\\
+\lim_{T\to\infty}
+\frac{D((\mathsf V^{\mathsf Q_K}_\star)_T\Vert\mathbb P_T)-\lambda T}
+     {\log(1+T)}=\nu(m,r).
+\end{gathered}
+\tag{78.2}
+$$
+
+The bounded term depends only on the fixed data and the choice of
+$p\in(1/2,1)$ in the construction, not on $T$. In particular its entire
+infinite height marginal is the unconditioned $\mathsf Q_K$.
+This full-height-preserving deduction is `repo-derived`; it is ordinary
+conditional mathematics under the inherited native premises.
+
+Proof. Fix $p\in(1/2,1)$ and put $g_p(t)=(1+t)^p-1$.
+The proof has four parts: an integrable height envelope, a scalar
+likelihood bound with explicit envelope dependence, a normalized
+infinite-path kernel, and full native reconstruction with entropy
+transport.
+

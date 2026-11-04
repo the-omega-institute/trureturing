@@ -281,7 +281,7 @@ private theorem charts_integral (b : Base) (N : ℕ) (q : ℝ → State)
         simpa only [Nat.cast_zero] using
           Finset.sum_range_sub (fun j : ℕ => (q j).2.2 i) N
 
-private theorem probability_derivative (b : Base) (k : ℝ → ℝ) (v t : ℝ)
+theorem probability_derivative (b : Base) (k : ℝ → ℝ) (v t : ℝ)
     (hk : HasDerivAt k v t) (i : Fin 5) :
     HasDerivAt (fun s => probability b (k s) i) (direction i * v) t := by
   fin_cases i

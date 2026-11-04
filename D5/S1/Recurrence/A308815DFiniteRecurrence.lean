@@ -14,9 +14,14 @@ Public theorem result:
 Direct frozen dependencies: none.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15923
 DTR reading: DTR-Unregistered for result (Observe); no Reg mirror is delivered.
+Public theorem euler_coeff: proof_shape: bind-only; escape_witness: none.
+Direct frozen dependencies of euler_coeff: none.
+Consumers: annihilation and MatharA174193OrderFourRecurrence.result.
+Publication escape audit unfinished:
+https://github.com/the-omega-institute/trureturing/issues/25507
 The Catalan series and its quadratic equation use pinned Mathlib directly;
 no new Catalan-series alias or companion quadratic theorem is introduced.
-All private theorem steps are bind-only; their consumers are:
+All helper theorem steps are bind-only; their consumers are:
   cat_ode -> certificate; p_coeff -> b_sum, high_p; b_sum -> a_eq;
   a_eq -> result; r_deriv -> certificate; certificate -> annihilation;
   high_p -> forcing_zero; forcing_zero -> annihilation;
@@ -146,7 +151,7 @@ private theorem forcing_zero (m : ℕ) :
     high_p m 2 (by omega), high_p m 3 (by omega), high_p m 4 (by omega),
     mul_zero, add_zero]
 
-private theorem euler_coeff (f : (PowerSeries ℚ)) (d : ℕ) :
+theorem euler_coeff (f : (PowerSeries ℚ)) (d : ℕ) :
     coeff d (X*derivative (R := ℚ) f) = (d : ℚ)*coeff d f := by
   cases d with
   | zero => simp

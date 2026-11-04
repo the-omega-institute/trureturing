@@ -1,0 +1,25 @@
+**Definition 5.1 (reachable boundary machine).** Suppose the boundary of a history depends on its endpoint, $B=b\circ\eta$, and satisfies the process descent conditions of §3. Write $\mathcal B_i$ for its reachable image of type $i$. Each legal named action then has a domain $\mathcal D_a\subseteq\mathcal B_i$, a successor $U_a:\mathcal D_a\to\mathcal B_j$, and a descended event label. Let $\rho:R\to\coprod_i\mathcal B_i$ be the boundary values at the roots. All sets and maps are restricted to these reachable images.
+
+If $B$ is a complete response quotient, completeness means the entire declared continuation family, legality and ordered event labels, including the empty-context readout. A finite selected response list is not substituted for that quotient. Completeness for this future family does not itself say anything about the past.
+
+Let $P$ be the map from the disjoint union of all reachable legal named-action domains:
+
+$$
+P:\coprod_{a:i\to j}\mathcal D_a\longrightarrow\coprod_j\mathcal B_j,
+\qquad P(a,z)=U_a(z).
+$$
+
+Its input retains the operation name, parameters, source type and predecessor boundary. Define the following three conditions:
+
+$$
+\begin{aligned}
+\mathrm{ROOT}:&\quad \rho\text{ is injective},\qquad
+\rho(R)\cap P\left(\coprod_a\mathcal D_a\right)=\varnothing;\\
+\mathrm{PREDECESSOR}:&\quad P\text{ is injective};\\
+\mathrm{RECORD}:&\quad \exists d:M(H)\to B(H),\qquad
+B^\#=d\circ M^\#.
+\end{aligned}
+$$
+
+PREDECESSOR requires both injectivity within each action and disjointness of the images of distinct named actions. By Theorem 2.2, RECORD is exactly $\ker M\subseteq\ker B$. It is a statement about actual records, not about arbitrary candidate memory strings.
+

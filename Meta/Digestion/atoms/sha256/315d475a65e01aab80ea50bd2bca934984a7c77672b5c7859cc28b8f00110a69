@@ -1,0 +1,41 @@
+#### 定理 2.2（读出的相对门公式）
+
+在上述前件下，
+
+<a id="equation-1"></a>
+
+<a id="eq-relative"></a>
+
+$$
+p_s(U,V;\rho_0)
+=\operatorname{Tr} [P_s(V)\rho_U]
+=\operatorname{Tr} [\Pi_sR\rho_0R^\dagger].
+\tag{1}
+$$
+
+纯种子时 $p_s=|\langle s\rvert R\lvert \psi_0\rangle |^2$。若只比较两条同种子射线 $U\Omega,V\Omega$，其转移概率为
+
+<a id="equation-2"></a>
+
+<a id="eq-seedoverlap"></a>
+
+$$
+q_\Omega(U,V)=|\langle\Omega,V^\dagger U\Omega\rangle|^2.
+\tag{2}
+$$
+
+**证明。**
+
+将定义代入迹，并循环移动 $V$，得到
+$\operatorname{Tr} (V\Pi_sV^\dagger U\rho_0U^\dagger)= \operatorname{Tr} (\Pi_sV^\dagger U\rho_0U^\dagger V)$。
+纯态投影的迹等于内积模平方，得到其余两式。
+
+∎
+
+相对门取代了两套绝对历史，但式 [(1)](#eq-relative) 保留 $\rho_0$，式 [(2)](#eq-seedoverlap) 保留状态泛函
+$\omega_\Omega(A)=\langle\Omega,A\Omega\rangle$。向量不能作为普通非零数从内积两侧相除。
+
+<a id="statement-2-3"></a>
+
+<a id="thm-seed"></a>
+

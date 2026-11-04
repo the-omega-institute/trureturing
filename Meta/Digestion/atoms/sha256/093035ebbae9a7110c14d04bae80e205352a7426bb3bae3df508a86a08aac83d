@@ -1,0 +1,15 @@
+**Definition 29.1 (alternative runs on the same attachment).** The following profiles include the actual acquisition calls and final zeroing on the original installation. Each row uses its own actual trajectory and endpoint; $a,c,L$ always refer to the common entry. The one-edit row is precisely Definitions 18.1–18.3, including last rearming. The propagation row is exactly Proposition 22.1's initial trial and trials after the first $L-1$ edits, with $u_s,N_s,D_s$ its own intermediate terms, material sizes and anchor eccentricities. Put
+
+$$
+R_{\rm mark}=L^2+\sum_{r:\eta_r=\beta}(L-r),\quad
+K_{\rm prop}=\sum_{s=0}^{L-1}D_s,\quad
+R_{\rm prop}=\sum_{s=0}^{L-1}\sum_{j\ne1}d_s(1,j).
+\tag{NLBAII.32}
+$$
+
+| Acquisition | Successful $P,S$ | Reset, Add, Read, Tick, Hold | Final material order and endpoint |
+| --- | --- | --- | --- |
+| Published one-edit scan | $a,c$ | $2,\ 2L+c,\ R_{\rm mark},\ 0,\ L+2$ | $3L+2c-1$, $\rho(t)$ |
+| Fixed binary batch | $a,K$ | $2,\ L+K,\ Lq,\ 0,\ q+2$ | $3L+2K-1$, $u_B$ |
+| Integer-age schedule | $a,L-1$ | $2,\ L^2,\ L,\ 0,\ L+1$ | $5L-3$, the endpoint of Theorem 27.2 |
+| Published anchor propagation | $a,c$ | $L+1,\ L,\ R_{\rm prop},\ K_{\rm prop},\ K_{\rm prop}+L+1$ | $3L+2c-1$, $\rho(t)$ |

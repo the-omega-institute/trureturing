@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:521201435f39c1c85cd67a0c6b1127ba60bb35b7a9752e5771a701c209a64880
+  normalized_sha256: sha256:521201435f39c1c85cd67a0c6b1127ba60bb35b7a9752e5771a701c209a64880
+cas_ref: sha256:521201435f39c1c85cd67a0c6b1127ba60bb35b7a9752e5771a701c209a64880
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/InteriorPrefixClassification.interior_necessity
+    target_statement_id: sha256:8e8d68dbbda488b52617ca8fa1b73f72ba5fb5592ed5f7681dd62cbe5b6d6783
+receipts:
+  unresolved_subitems: []

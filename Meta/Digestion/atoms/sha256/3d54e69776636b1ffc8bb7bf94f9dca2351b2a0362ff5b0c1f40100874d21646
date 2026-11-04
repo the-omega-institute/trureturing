@@ -1,0 +1,13 @@
+**Definition 20.4 (the internal consumer Next).** After receiving $U(k)$,
+Next first calls the actual retained FetchGrowth handler without an outer
+return. OutOfRange returns without growth. Otherwise let its actual result
+be $(e,p)$. Navigate from the bound root to that same historical address
+$p$ in the current source. Follow logical left children while the current
+subtree is a branch, reaching a current leaf $q$. Its current tag selects
+$P_q$ if $\alpha$ and $S_q$ if $\beta$. Execute that source operation and
+its tape maintenance, and output the acquired old event $(e,p)$ and the
+actually executed new event and address. Finish Print, acknowledgement and
+Return as in Definition 20.2. The internal call retains its index, result,
+continuation phase and references; it does not assume a received answer
+from a separate unbound converter.
+

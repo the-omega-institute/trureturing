@@ -1,0 +1,31 @@
+### 命题 10.3（qubit 的二元三维相容条件）
+
+对 $M_2$，任一非平凡真子代数可写成
+
+$$
+A_{\mathbf n}=\operatorname{span}_{\mathbb C}\{I,\mathbf n\cdot\boldsymbol\sigma\},\qquad |\mathbf n|=1.
+$$
+
+对忠实校准 $\rho_{\mathbf r}=(I+\mathbf r\cdot\boldsymbol\sigma)/2$、$|\mathbf r|<1$，
+
+$$
+\boxed{(\rho_{\mathbf r},A_{\mathbf n})\text{ 满足 }C_{88}
+\Longleftrightarrow \mathbf r\times\mathbf n=0.}
+$$
+
+**证明。**模流稳定等价于 $[\rho_{\mathbf r},\mathbf n\cdot\boldsymbol\sigma]=0$，而 Pauli 乘法给
+
+$$
+[\rho_{\mathbf r},\mathbf n\cdot\boldsymbol\sigma]
+=i(\mathbf r\times\mathbf n)\cdot\boldsymbol\sigma.
+$$
+
+相容时的映射是
+
+$$
+E_{\mathbf n}(x)=P_+xP_++P_-xP_-
+=\frac12\left[x+(\mathbf n\cdot\boldsymbol\sigma)x(\mathbf n\cdot\boldsymbol\sigma)\right].
+$$
+
+它保留轴向分量；要原样保持校准，校准向量就必须位于该轴。两个不共线的非零锚已经足以排除同一个非平凡轴；中心锚 $\mathbf r=0$ 与所有轴相容。
+

@@ -1,0 +1,29 @@
+**Proposition 7.1 (two mature cuts after total erasure require live input).**
+For every $d\ge0$ there are two admissible inputs of §1 with identical
+retained data and common entry resources but different numerical target
+and physical support. No source-blind source-free local calculation
+can recover the numerical cut on both, even with unlimited finite work
+and growing backing.
+
+Proof. Choose the identically zero member of $\mathscr R_d$. For
+$d>0$, execute the actual acquisition of GPO §33 once and retain its
+fixed acquired zero prefix and selected authentic seeded zero-law
+descriptor. For $d=0$ use its zero-order descriptor. Consider that same
+origin orbit at cuts $u$ and $u+1$, with any $u\ge n_0$, after making
+the stipulated complete erasure. Choose equal accessible entry control
+and backing, and retain the same root binding and valid rights. Both
+cuts satisfy the original maturity domain. The fixed earlier acquisition
+data are identical. Neither a copied phase nor an allocation/counter
+channel survives. The stationary interval is available on each input.
+
+Their targets differ: $u\ne u+1$, and
+$B_{u+1}-B_u=F_u>0$. Their physical supports differ as well, since
+update $u+1$ splits at least one beta leaf and adds persistent children;
+indeed its count increases from $2F_{u+1}-1$ to $2F_{u+2}-1$.
+A local program receiving no live reply has identical state transitions
+on the two equal entry memories, hence identical output if it terminates.
+It cannot output both cuts. For zero-error randomness couple the coin
+tape; the two output distributions are identical, while the required
+exact outputs differ. Growing local work cannot split this information
+fiber. $\square$
+

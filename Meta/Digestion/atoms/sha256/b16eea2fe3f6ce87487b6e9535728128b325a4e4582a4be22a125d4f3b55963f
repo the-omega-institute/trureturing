@@ -1,0 +1,36 @@
+**Convention 80.2 (the shared paid suppliers).** Use Theorem 77.4 unchanged
+for the first task. Set $R=3b-1$, $H=2R-1$, $\tau_j=jH$ and $m=(b+1)H$.
+It actually earns $u,T,x$, the binding, and the synchronized current
+
+$$
+ z=T^m x+r_T,\qquad
+ r_T=\sum_{j=1}^b T^{m-jH}J e_j.                 \tag{80.1}
+$$
+
+The initial free returns, not the advanced $z$ alone, earn $x$.
+Keep that acquired information until the completion controls have finished.
+No new source measurement is assumed at this cut.
+
+The same Lemmas 77.2–77.3 apply to a specimen of earned size $n$ with $s$
+ordered terminals and any known cap $R'\ge n$. Their proof uses a monic
+degree-$R'$ annihilator, $2R'$ returned vectors, and successive subtraction
+of previously earned free/pulse sequences. It does not require $R'=3s-1$.
+On the grown specimen below use $R'=n$, $H'=2n-1$ and $(s+1)H'$ Ticks.
+Positive-tree infection needs moments only through $2(n-s)+1\le2n-1$.
+Thus this change of cap uses exactly the existing acquisition proof, with
+its actual pulses and endpoint, rather than a new calibration oracle.
+
+For every earned positive tree law $A$ of order $n$, its all-terminal
+coordinate polynomials (77.12) have degree at most $I=n-s$. Consequently
+the stacked prospective readout $[C_A;C_AA;\ldots;C_AA^I]$ has column rank
+$n$. Choose its first $n$ independent rows in epoch/terminal order and call
+the resulting rational invertible matrix $R_A$. The finite selected germ
+is the labelled list of these rows applied to the current field. Alternatively
+the full germ $(C_AA^k w)_{0\le k<n}$ is sufficient. These have independent
+terminal-response meanings. Computing and exporting them is paid work;
+their values are not additional performed Reads. The transfer
+$\Phi_A(z)=C_A(zI-A)^{-1}J_A$, stored as reduced rational functions, earns
+the ordered onset distances, the complete material including subdivisions,
+its native root/syntax, and $A$ by the metric, root-recognition and infection
+suppliers used in §77. We also export that earned onset metric explicitly.
+

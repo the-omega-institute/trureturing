@@ -1,0 +1,23 @@
+**Definition 44.1 (weighted moments of the original error vector).** For the original integer clocks, put
+
+$$
+ \omega_i=\frac1{\prod_{0\le j<L,\ j\ne i}(i-j)}
+          =\frac{(-1)^{L-1-i}}{i!(L-1-i)!},\qquad
+ W_{ai}=\omega_i i^a\quad(0\le a<r),
+ \qquad g_i=W_{\bullet i}.
+ \tag{44.2}
+$$
+
+Thus $W$ has $r$ rows and all $L$ raw-error coordinates as columns. Define
+
+$$
+ b=Wy,\qquad
+ C_{\nu,aj}(\alpha,\beta)
+       =\sum_{i=0}^{L-1}\omega_i i^{a+j}B_{\nu,i}(\alpha,\beta)
+                  \quad(0\le j<p),\qquad
+ Z_\delta=W[-\delta,\delta]^L.
+ \tag{44.3}
+$$
+
+All weights and clocks in this definition are fixed. $b$ is not the scalar $\operatorname{tr}(MP)$ used in earlier sections. No processed coordinate of $W\xi$ is assigned an independent error allowance: $Z_\delta$ is the image of one common raw-error box.
+

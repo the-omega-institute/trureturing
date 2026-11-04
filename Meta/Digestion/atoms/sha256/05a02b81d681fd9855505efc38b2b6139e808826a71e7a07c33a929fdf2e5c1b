@@ -1,0 +1,51 @@
+**Theorem 2.2 (same-trajectory finite integration refinement).** For every
+source of Definition 1.1 and every actual window of Definition 1.2, the
+finite receiver returns exactly
+
+$$
+\mu_k=\int_0^T(t/T)^kCE(t)x_0\,dt\quad(0\leq k<\nu).
+\tag{2.4}
+$$
+
+Replacing separate nondisturbing ideal integrators by this receiver leaves
+the entire actual field trajectory on $[0,T]$ and the held endpoint $z$
+unchanged. It uses no second specimen, replayed source, future read or
+state-restoration operation.
+
+Proof. Each coordinate of $CE(t)x_0$ is a polynomial of degree below
+$\nu$. Apply the distinct-node Lagrange interpolation identity, component
+by component, with $\nu$ nodes, to get
+$CE(t)x_0=\sum_iL_i(t)y_i$. This is the standard interpolation supplier,
+with its exact degree and node hypotheses; it is not a new generic theorem.
+Multiply by $(t/T)^k$ and integrate the finite sum. Equations (2.1) and
+(2.2) give (2.4), including $\mu_0=Ty_0$ when $\nu=1$.
+The only source operations are the original nondisturbing taps, start and
+stop. The removed integrators were nondisturbing by their comparison
+contract. Local arithmetic occurs while held. Therefore both installations
+have $x(t)=E(t)x_0$ throughout the same active window and end at (1.2). ∎
+
+The refinement is relative to a run which already pays for these sufficient
+taps. It does not replace an arbitrary untapped continuous observation by
+finite data. Nor does it implement an operation that was required to leave
+the entrance $x_0$ unchanged: the actual endpoint is $E(T)x_0$.
+
+For a concrete common run, take $B=J_2$, $C=(1,0)$, $T=1$ and the
+actual initialized field $x_0=(2,3)$. Start, read at zero, read at one,
+and stop. The two replies are $2,5$ and the actual endpoint is $(5,3)$.
+Here $L_0(t)=1-t$, $L_1(t)=t$, so
+
+$$
+W=\begin{pmatrix}1/2&1/2\\1/6&1/3\end{pmatrix},\qquad
+\mu=(7/2,2).
+\tag{2.5}
+$$
+
+These are respectively the integrals of $2+3t$ and $t(2+3t)$ over the
+performed interval, computed after holding $(5,3)$. If the original
+alphabet includes duration two, actually calling it next advances this
+same field to $(11,3)$ and returns $11$. The inverse of the moment
+matrix first recovers entrance coefficients $(2,3)$; advancing by $T$
+is essential to get the current field before that later call. This
+example is a substitution into the general identities, not a numerical
+experiment or a restriction of their real domain.
+

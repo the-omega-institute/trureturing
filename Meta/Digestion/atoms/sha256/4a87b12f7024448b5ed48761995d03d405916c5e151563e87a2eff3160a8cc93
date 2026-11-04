@@ -1,0 +1,29 @@
+#### 定理 5.4（全态不扰动的精确限制）
+
+若等距 $V:H\to H\otimes E$ 满足
+
+$$
+\operatorname{Tr} _E(V\rho V^\dagger)=\rho
+$$
+
+对每个输入密度态都成立，则存在与输入无关的单位向量 $e$，使 $V\psi=\psi\otimes e$。环境不能获得任何关于输入的可区分信息。
+
+**证明。**
+
+基态 $\lvert j\rangle$ 的系统输出仍纯，故 $V\lvert j\rangle =\lvert j\rangle \lvert e_j\rangle$。对 $(\lvert j\rangle +\lvert k\rangle )/\sqrt2$，系统非对角元保持原值要求
+$\langle e_k|e_j\rangle=1$。单位向量的此内积迫使 $e_j=e_k$。由线性性得到所有输入上的结论。
+
+∎
+
+这是信息扰动关系的精确零扰动情形 [[14](#ref-disturb)]。推论 [3.3](#cor-copy) 的模式复制允许得到信息，是因为它只保持五个模式的经典人口。对一般 $\rho$ 忽略指针后得到
+
+$$
+\Delta(\rho)=\sum_s\Pi_s\rho\Pi_s,
+$$
+
+其模式相干可以变化。保留所有指针则仍有完整等距信息。固定总历史作为一种描述，与对未知输入实际施加测量耦合时保持完整输入态，是两个不同的命题。
+
+<a id="statement-5-5"></a>
+
+<a id="thm-limit"></a>
+

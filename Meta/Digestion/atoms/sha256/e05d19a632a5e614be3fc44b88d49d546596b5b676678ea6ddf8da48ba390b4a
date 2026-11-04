@@ -1,0 +1,47 @@
+**Theorem 19.1 (exact, per-tolerance, uniformly bounded and fixed-machine boundaries).** Keep the arbitrary actual graph and native law of Definition 16.1.
+
+1. At $\epsilon=0$, finite static supplementation and complete finite names-only online supplementation exist if and only if every cyclic SCC is a single directed named cycle and
+
+$$
+\ker(A_P)\cap\mathbb Z^{k(P)}=\{0\}
+\quad\text{for every }P\in\mathcal S.
+\tag{19.1}
+$$
+
+The same criterion holds for every $\epsilon\ge0$ when $K=\{0\}$. An attained complete-state bound is $|\mathcal S|$, using only the reduced path, with $q=1$. Exact endpoint and native vector without any supplement need not recover different schemas ending at the same vertex.
+
+2. For fixed $K$, existence at one positive tolerance and a separately chosen finite label or machine at each positive tolerance are equivalent to (18.1) and the cyclic-SCC condition. This statement imposes no uniform cardinality bound as tolerance grows.
+
+3. For fixed $K$, each of the following is equivalent to the cyclic-SCC condition together with
+
+$$
+\Gamma_P=\{0\}\quad\text{for every }P\in\mathcal S:
+\tag{19.2}
+$$
+
+there is a uniform finite upper bound on static alphabet size over all positive tolerances, allowing the labels to change; there is such a bound on complete online state size, allowing the machines to change; there is one fixed finite static label successful at every positive tolerance; there is one fixed complete finite names-only machine successful at every positive tolerance. A decoder may know the prescribed tolerance. Under (19.2), the same route-only machine with $|\mathcal S|$ complete states succeeds for every tolerance, including zero. In fact its decoder may use the condition $y-T(u)\in W$ without knowing the tolerance.
+
+Proof. A non-cycle cyclic SCC has the exact common-center obstruction (11.8), so cannot satisfy any item. Once all cyclic SCCs are cycles, at zero error the only same-schema overlap differences are the integer kernel. Under (19.1), the route label $P$ separates all comparisons within a schema: equal exact vectors force equal counts. The $q=1$ instance of the verified update (18.6) realizes that label, with one state per simple reduced path. If a nonzero integer $j$ lies in $\ker A_P$, choose for each integer $N\ge0$ a base $b\in\mathbb N_0^{k(P)}$ so that $b+ij$ is nonnegative for all $0\le i\le N$, for example $b_a=N|j_a|$. These $N+1$ distinct counts give legal words in this one schema with identical vector and endpoint. Every finite static alphabet fails for large enough $N$. This proves item 1. The support drops out at zero tolerance, and $\epsilon\{0\}=\{0\}$ for all tolerances. Cross-schema equal-vector paths explain the final limitation; the equal-duration acyclic supplier in Theorem 8.5 already realizes it.
+
+Item 2 is Theorem 18.1 and Corollary 18.2. For item 3 use the absorption relation
+
+$$
+\bigcup_{\epsilon>0}\epsilon\Delta K=W,
+\qquad
+\bigcup_{\epsilon>0}\epsilon K=W,
+\tag{19.3}
+$$
+
+which follows from the relative ball (17.6) and containment of each dilate in $W$. If (19.2) holds, every nonzero integer count difference has native image outside $W$. Thus two words of the same schema cannot explain the same $y$, even if two arbitrary finite tolerances are allowed for their respective errors. The route-only label and update therefore work at every tolerance. Testing $y-T(u)\in W$ identifies at most one count vector per label, and at least one on every actual observation. Cross-schema comparisons are separated by $P$. No measurement of $P$ by the source is assumed; it is the complete finite state already constructed.
+
+Conversely suppose $0\ne j\in\Gamma_P$. To rule out an arbitrary uniform budget $Q\ge1$, choose the $Q+1$ nonnegative counts $b+ij$, $0\le i\le Q$, with $b_a=Q|j_a|$. Their native centers, including the common offset, are
+
+$$
+x_i=T(P)+A_Pb+iA_Pj.
+\tag{19.4}
+$$
+
+All differences $x_0-x_i$ lie in $W$. By (17.6) choose one finite positive $\epsilon$ large enough that all these differences belong to $\epsilon K$; if $A_Pj=0$, every positive tolerance works. Thus $x_0$ is a common allowed observation for all $Q+1$ distinct words at that same endpoint. No static label with at most $Q$ values works at this tolerance, even if it was chosen specially for this tolerance. This disproves a uniform finite static budget, hence also a uniform online budget and either fixed finite object. The argument does not assume periodic labels, a residue construction or a fixed decoder. The route-only construction proves all reverse implications and the final assertion. $\square$
+
+Conditions (18.1) and (19.2) are different: injectivity of $A_P$ on $V_P$ permits a nonzero support-relative subgroup, while a uniform finite budget requires that subgroup to vanish. Theorem 13.1 and Proposition 13.2 give the delivered two-loop witnesses for this quantifier distinction and for integer versus real transversality. On a general graph, $|\mathcal S|$ replaces their one-state conclusion because finite route offsets and merging paths may need labels. In particular, a fixed finite machine successful at every tolerance need not have one state. If the graph is acyclic, all its schemas have zero cycle coordinates and the finite route-only machine meets every criterion automatically.
+

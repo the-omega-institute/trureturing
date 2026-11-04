@@ -1,0 +1,50 @@
+#### 定理 8.3（原生当前人口商不能递归闭合）
+
+从同一个种子 $\lvert 2\rangle$ 出发，两个合法历史
+
+$$
+\psi_+=K\lvert 2\rangle ,\qquad \psi_-=K^9\lvert 2\rangle =K^\dagger\lvert 2\rangle
+$$
+
+当前完整五模式概率完全相同：
+
+$$
+(p_0,p_1,p_2,p_3,p_{13})=(a,0,\delta,0,0).
+$$
+
+但共同再施加一个原生门 $K$ 后，
+
+<a id="equation-11"></a>
+
+<a id="eq-futurecounter"></a>
+
+$$
+\boxed{p_2(K\psi_+)=\varphi^{-4},\qquad
+p_2(K\psi_-)=1.}
+\tag{11}
+$$
+
+因此不存在仅以当前五模式人口为状态、能对这些历史给出正确下一步人口的自治更新函数。
+
+**证明。**
+
+$\mathcal P$ 在模式基中实对称，所以 $K$ 与 $K^\dagger$ 对实基向量给共轭输出，模平方相同。由式 [(8)](#eq-allpairs)，$p_2=1-a\delta\varphi^2=\delta$；活动块总概率一给 $p_0=a$。
+对负历史，$KK^9=I$。对正历史，
+
+$$
+a+\delta\omega^2=(a-\delta)-a\delta\omega
+=a\delta(1-\omega),
+$$
+
+故
+$|\langle 2\rvert K^2\lvert 2\rangle |^2=(a\delta)^2\varphi^2=\varphi^{-4}$。
+同一输入人口向量却要求两个不同后继，排除自治函数。
+
+∎
+
+这比“未知相位可能有用”更具体：被当前投影消去的差别，会被同一个合法原生后继重新变成可读概率。三个稳定占位均值更粗，当然也无法区分这两个历史。
+
+<a id="statement-8-4"></a>
+
+<a id="thm-futureclosure"></a>
+

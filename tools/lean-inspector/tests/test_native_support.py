@@ -99,6 +99,13 @@ import materials
 
 
 class NativeTestSupport:
+    # Process-table ownership is still sampled while a command runs, but the
+    # old 100 ms cadence made every long native build spend a material share
+    # of its wall budget in repeated `ps` scans.  Timeout enforcement remains
+    # on the waiter thread's absolute deadline; this cadence only bounds the
+    # diagnostic/settlement sampling overhead.
+    COMMAND_SAMPLE_INTERVAL = 0.5
+
     @classmethod
     def setUpClass(cls):
         cls.lake = os.environ.get('STRATALINT_NATIVE_LAKE_BIN') or subprocess.check_output(
@@ -228,7 +235,7 @@ defaultFacets = ["static"]
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
                      'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache.py',
                      'tools/scripts/worktree/cache_material.py',
-                     'tools/scripts/worktree/lean_cache_release.py',
+                     'tools/scripts/worktree/lean_cache_release.py', 'tools/scripts/worktree/lean_cache_topology.py',
                      'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
                      'tools/scripts/worktree/lean-git/git',
@@ -277,18 +284,21 @@ defaultFacets = ["static"]
     command_clock = staticmethod(time.monotonic)
 
     @staticmethod
-    def command_processes():
+    def command_processes(*, include_commands=True):
         # Same PID/start identity discipline as report-supervisor; ancestry and
         # sessions, rather than process groups, include its nested worker group.
-        output = subprocess.check_output(['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=,command='],
+        columns = 'pid=,ppid=,pgid=,lstart=,stat=' + (',command=' if include_commands else '')
+        output = subprocess.check_output(['ps', '-axo', columns],
             text=True, env=dict(os.environ, LC_ALL='C'), timeout=5)
         rows = {}
         for line in output.splitlines():
-            fields = line.split(None, 9)
-            if len(fields) == 10:
+            fields = line.split(None, 9 if include_commands else 8)
+            if len(fields) == (10 if include_commands else 9):
                 pid, parent, group = map(int, fields[:3])
                 rows[pid] = dict(pid=pid, parent=parent, group=group,
-                    identity=' '.join(fields[3:8]), state=fields[8], command=fields[9])
+                    identity=' '.join(fields[3:8]), state=fields[8])
+                if include_commands:
+                    rows[pid]['command'] = fields[9]
         return rows
 
     def owned_processes(self, command, *, sessions=False):
@@ -320,10 +330,12 @@ defaultFacets = ["static"]
     def observed_processes(self):
         observation = getattr(self, '_command_observation', None)
         if observation is None:
-            return self.command_processes()
+            return self.command_processes(include_commands=False)
         started = observation_value(time.perf_counter)
         try:
-            return self.command_processes()
+            # Ownership needs identities and ancestry, not the arguments of
+            # every unrelated host process on every half-second sample.
+            return self.command_processes(include_commands=False)
         finally:
             elapsed = observation_delta(started, observation_value(time.perf_counter))
             observation['process_scan_count'] += 1
@@ -343,8 +355,14 @@ defaultFacets = ["static"]
                         logs[str(path.relative_to(self.root))] = path.read_bytes()[-16384:].decode('utf-8', 'replace')
                     except FileNotFoundError:
                         pass  # A live phase may be moving startup logs to final.
+        processes = self.owned_processes(command, sessions=True)
+        descriptions = self.command_processes()
+        for row in processes:
+            current = descriptions.get(row['pid'])
+            if current and current['identity'] == row['identity']:
+                row['command'] = current['command']
         diagnostic = dict(command=list(args), timeout_seconds=120, fixture=str(self.root),
-            processes=self.owned_processes(command, sessions=True), logs=logs,
+            processes=processes, logs=logs,
             stdout=stdout, stderr=stderr)
         self.last_command_diagnostic = diagnostic
         print('NATIVE_COMMAND_TIMEOUT ' + json.dumps(diagnostic), file=sys.stderr, flush=True)
@@ -483,7 +501,7 @@ defaultFacets = ["static"]
                 while True:
                     self.owned_processes(command)
                     observe_pending()
-                    if completed.wait(0.1):
+                    if completed.wait(self.COMMAND_SAMPLE_INTERVAL):
                         break
                 if isinstance(outcome.get('error'), subprocess.TimeoutExpired):
                     stdout.seek(0); stderr.seek(0)
@@ -531,8 +549,8 @@ defaultFacets = ["static"]
         self.write('utility.json', json.dumps([dict(modulePath='Fixture.lean', claimGid='claim-gid', claimModule='External',
             claimSelector=claim, claimSourcePath='External.lean', claimSourceSha256='sha256:' + publication.digest(self.root / 'External.lean'),
             resultGid='result-gid', resultModule='Fixture', resultSelector='result')]))
-    def run_lake(self, *args, success=True):
-        self.ensure()
+    def restore_compiler(self):
+        """Restore supplied compiler material after dependency preparation."""
         if self.compiler_seed is not None:
             # The collection owns this read-only stage. Lake copies only its
             # registered producer outputs into this fixture's private cache;
@@ -541,6 +559,10 @@ defaultFacets = ["static"]
                 cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
             self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
             self.compiler_seed = None
+
+    def run_lake(self, *args, success=True):
+        self.ensure()
+        self.restore_compiler()
         result = self.guarded_command([self.lake, *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -567,7 +589,7 @@ defaultFacets = ["static"]
             output = Path(output) / self._testMethodName / phase
             output.mkdir(parents=True, exist_ok=True)
             for path in paths:
-                destination = output / path.relative_to(self.root)
+                destination = output / path.resolve().relative_to(self.root.resolve())
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(path, destination)
             (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
@@ -692,9 +714,11 @@ class NativeArtifactTestSupport(NativeSharedTestSupport):
 
 
 def stage_compiler(output):
-    """Build the report and input-discovery compilers; Lake owns their stage."""
+    """Build the declared compiler targets once; Lake owns their staged materials."""
     registration = json.loads((ROOT / 'tools/tests/StrataLint.Lean.Tests/Fixtures/native-compiler.json').read_text())
-    if set(registration) != {'package_directory', 'target'}:
+    if (set(registration) != {'package_directory', 'targets'}
+            or not isinstance(registration['targets'], list) or not registration['targets']
+            or any(not isinstance(target, str) or not target for target in registration['targets'])):
         raise ValueError('invalid native compiler fixture registration')
 
     class CompilerFixture(NativeTestSupport, unittest.TestCase):
@@ -707,7 +731,7 @@ def stage_compiler(output):
         fixture.compiler_seed = None
         mappings = fixture.root / 'compiler-outputs.jsonl'
         fixture.run_lake('-d', registration['package_directory'], 'build',
-                         '-o', str(mappings), registration['target'], 'inputDiscovery')
+                         '-o', str(mappings), *registration['targets'])
         fixture.run_lake('cache', 'stage', str(mappings), str(output))
         # Access permissions apply to the directory produced by Lake stage;
         # they do not select or discover build inputs or reusable materials.

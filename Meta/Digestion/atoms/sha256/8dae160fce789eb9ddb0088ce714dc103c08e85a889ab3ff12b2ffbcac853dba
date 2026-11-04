@@ -1,0 +1,11 @@
+**Corollary 2.4 (A separate sufficient test on $\pi_n$).** Put
+
+$$
+\tau=2(3-2\sqrt2)-\frac1{24}.
+\tag{2.6}
+$$
+
+If some $n$ satisfies $V_2(n)>\tau$, no $\theta\in\Theta_2$ can satisfy simultaneously the band, $A_{P_\theta}<\infty$ and strong zero as defined in §6.
+
+Proof. [Guarded, Corollary 6.4] gives $\mathcal R_{2,n}\le\tau$ under those three premises; Theorem 2.3 contradicts it. This is a sufficient conditional test. It supplies no value of $V_2(n)$ and no implication from attainment to strong zero. $\square$
+

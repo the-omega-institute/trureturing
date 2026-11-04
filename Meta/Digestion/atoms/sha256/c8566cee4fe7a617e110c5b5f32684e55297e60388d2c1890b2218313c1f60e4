@@ -1,0 +1,334 @@
+**Theorem 3.1 (full-class hidden-circle rigidity).** For every choice in
+Definition 2.1, the four assertions of Definition 2.3 are equivalent.
+When they hold, write $\rho=\rho_0(k,\alpha)$ and $A=A_0(k,\alpha)$ on
+$\Omega$. The common descended diffusion is exactly the one from (2.9),
+with
+
+$$
+m=2\pi\rho_0,\qquad A_{\rm av}=A_0,\qquad C_0=DA_0D,
+\qquad
+\overline{\mathscr G}f=m^{-1}\operatorname{div}_{k,\alpha}
+ (m C_0\nabla f).
+\tag{3.1}
+$$
+
+The completed form, operator, semigroup and lifetime correspondences are
+
+$$
+\begin{aligned}
+U\mathcal V&=\mathcal F\cap\mathcal H,\qquad
+\mathcal E(Uf,Ug)=\mathcal E_{\rm av}(f,g),\\
+U D(\mathcal L_{\rm av})&=D(\mathcal L)\cap\mathcal H,
+\qquad \mathcal L U=U\mathcal L_{\rm av},\\
+H_tU&=US_t^{\rm av},\\
+\tau_\Omega&=\inf\{t:K_t\notin I\}=\tau_B
+\quad\text{under the projected path coupling}.
+\end{aligned}
+\tag{3.2}
+$$
+
+The semigroup identity holds for every interior starting point and every
+bounded Borel base function, using the killed transition versions. The
+path-law identity holds for the whole killed path, not just in $L^2$ or
+outside an unspecified exceptional set.
+
+The equivalent symmetry condition is required only on $\Omega$.
+Smoothness extends its zero $\beta$ derivatives to $\overline\Omega$;
+it does not force symmetry on a neighbourhood outside the chosen cylinder.
+
+Proof. The proof separates the source-specific converse from the standard
+analytic correspondences, whose hypotheses are checked below.
+
+For the converse, suppose differential projectability holds. At any base
+point use compactly supported tests with zero first derivative and arbitrary
+symmetric second derivative in a local circle chart. Comparing (2.6) at
+two points of its fiber forces $a,b,d$ to have the same values there.
+The map from control covariance to base symbol is
+
+$$
+A\longmapsto DAD=\begin{pmatrix}a&b/2\\b/2&d/4\end{pmatrix},
+\tag{3.3}
+$$
+
+which is injective. Thus the entire $A$, not merely one variance, is basic.
+Tests with arbitrary first derivative and zero second derivative then
+force $B_1,B_2$ to be basic.
+
+Put $s=\log\rho$, a globally defined real smooth periodic function. Since
+$A$ is basic, (2.5) becomes
+
+$$
+\begin{pmatrix}B_1\\2B_2\end{pmatrix}
+=
+\begin{pmatrix}\partial_k a+\tfrac12\partial_\alpha b\\
+\partial_k b+\tfrac12\partial_\alpha d\end{pmatrix}
++A\begin{pmatrix}Ps\\Qs\end{pmatrix}.
+\tag{3.4}
+$$
+
+Invertibility of $A$ now shows that both $Ps$ and $Qs$ are basic. For
+$g=\partial_\beta s$, commutation with $P,Q$ gives $Pg=Qg=0$.
+The actual bracket in (1.7) gives
+
+$$
+0=[P,Q]g=-r^{-1}\partial_\beta g.
+\tag{3.5}
+$$
+
+Consequently $g$ is independent of $\beta$ on each fiber. Periodicity of
+the real logarithm yields
+
+$$
+2\pi g(k,\alpha)=\int_0^{2\pi}\partial_\beta s\,d\beta=0.
+\tag{3.6}
+$$
+
+Hence $\rho$ is basic. This is the native rigidity step: a general
+projection criterion alone does not force symmetry of a density.
+Positivity, the injective symbol map, the nonzero bracket and the actual
+circle period all enter this argument. Conversely, if $\rho,A$ are basic,
+(2.6) is immediately basic and equals (3.1).
+
+Next identify the restricted domain, without yet assuming symmetry.
+Compactness of $\overline\Omega$ gives uniform two-sided bounds for
+$\rho,A$; thus the full form norm is equivalent to
+
+$$
+\|F\|_{L^2(dq)}^2+\|PF\|_{L^2(dq)}^2+\|QF\|_{L^2(dq)}^2,
+\qquad dq=dk\,d\alpha\,d\beta.
+\tag{3.7}
+$$
+
+Let $M_0F=(2\pi)^{-1}\int F\,d\beta$ be unweighted angular averaging.
+On the smooth core,
+
+$$
+\partial_k M_0F=M_0PF,\qquad
+\tfrac12\partial_\alpha M_0F=M_0QF.
+\tag{3.8}
+$$
+
+The second identity uses periodicity to integrate
+$c(k)\partial_\beta F$ to zero. Jensen's inequality and (3.7) show that,
+if $F_n\to Uf$ in the full form norm, then $M_0F_n$ is Cauchy in
+$H^1_0(B)$ and converges in $L^2$ to $f$. This proves
+$\mathcal F\cap\mathcal H\subset U\mathcal V$.
+Conversely, approximate any $f\in\mathcal V$ by base core functions and
+pull them back. Fubini gives exactly
+
+$$
+\mathcal E(Uf,Ug)=\mathcal E_{\rm av}(f,g)
+\tag{3.9}
+$$
+
+first on the core and then by closure. This proves the first line of
+(3.2) for every coefficient pair. In particular a closed restricted
+averaged form always exists. Its existence has not established invariance.
+
+Assume now coefficient symmetry. Translations
+$R_\theta F(k,\alpha,\beta)=F(k,\alpha,\beta+\theta)$ are unitary in
+$L^2(\mu)$, preserve the core, commute with $P,Q$, and preserve the form.
+Their average is precisely $\Pi=UM_0=UK_\rho$. The action is strongly
+continuous in the form norm, as follows first on the core and then by
+its density. Averaging and Jensen therefore give
+
+$$
+\Pi\mathcal F\subset\mathcal F,\qquad
+\mathcal E(\Pi F,(1-\Pi)V)=0\quad(F,V\in\mathcal F).
+\tag{3.10}
+$$
+
+For the second assertion average the second argument over translations;
+the first argument is fixed by them and the averaged second argument is
+zero. Thus the closed form is an orthogonal direct sum on $\mathcal H$
+and $\mathcal H^\perp$. Equivalently, in the variational equation for
+$(\lambda+\mathcal L)^{-1}F$, the two components decouple. Uniqueness of
+that equation makes its resolvent, and hence its semigroup, preserve both
+subspaces. This is also the autonomous subspace case of the closed-form
+invariance criterion in [ADO, Theorem 2.2]: take the Hilbert space
+$L^2(\mu)$, form space $\mathcal F$ with its form norm, convex set
+$\mathcal H$, projection $\Pi$, and forcing zero. Boundedness and
+quasi-coercivity follow from (2.2); (3.10) verifies the criterion on the
+completed domain, not just on smooth functions.
+
+For clarity, the operator-domain assertion does not follow merely by
+writing (2.6). If $f\in D(\mathcal L_{\rm av})$ and $V\in\mathcal F$,
+(3.9)--(3.10) give
+
+$$
+\mathcal E(Uf,V)=\mathcal E(Uf,\Pi V)
+=\langle U\mathcal L_{\rm av}f,V\rangle_\mu.
+\tag{3.11}
+$$
+
+This proves $Uf\in D(\mathcal L)$ with the asserted image. Conversely,
+if $Uf\in D(\mathcal L)$, the reducing subspace property implies
+$\mathcal LUf\in\mathcal H$; testing its variational equation on all
+$Ug$, $g\in\mathcal V$, proves $f\in D(\mathcal L_{\rm av})$.
+This proves the second line of (3.2) and the $L^2$ semigroup identity.
+
+In the other direction, suppose only completed invariance. Every
+$Uf$ with $f\in C_c^\infty(B)$ lies in $D(\mathcal L)$: integration by
+parts gives the smooth compactly supported representative $-\mathscr GUf$
+in its variational definition. The difference quotients
+$(H_tUf-Uf)/t$ belong to the closed subspace $\mathcal H$ and converge in
+$L^2$ to $\mathscr GUf$. Hence this smooth function is basic almost
+everywhere. A smooth function that is fiber constant almost everywhere
+for a smooth positive density is fiber constant everywhere: its
+$\beta$ derivative vanishes distributionally, hence pointwise.
+This proves differential projectability. The equivalence of assertions
+1--3 is now established with the genuine completed domains.
+
+It remains to connect the actual killed path laws. The relevant standard
+facts are smooth SDE uniqueness, the absorbing realization of a regular
+local Dirichlet form, and interior heat smoothing. Here is their
+correspondence, including the reasons no exceptional starting point or
+additional lifetime is introduced.
+
+Choose the smooth positive square root $\Sigma$ of $A$, and define
+
+$$
+Y_j=\sum_{i=1}^2\Sigma_{ij}X_i,\qquad
+Y_0=\sum_{j=1}^2(\operatorname{div}_\mu Y_j)Y_j.
+$$
+
+Direct expansion of the adjoints in (2.2) gives
+
+$$
+\mathscr G=\sum_{j=1}^2Y_j^2+Y_0.
+\tag{3.12}
+$$
+
+Thus the smooth Stratonovich equation uses noise fields $\sqrt2Y_j$
+and drift $Y_0$. Smooth local coefficients give a unique strong solution
+from every point up to exit; this is [HR, Theorem 3.1], with its noise
+fields multiplied by $\sqrt2$. The coefficients extend past the compact
+closure, so there is no explosion before the height exit. The phases
+are compact circles. Their wrapping introduces no new stopping time.
+
+The form is regular and strongly local: its defining core is uniformly
+dense in $C_0(\Omega)$ and dense in its form domain, its energy is local,
+and the normal-contraction chain rule gives the Markov property.
+A smooth positive Radon measure has full support. The absorbing, or part,
+realization of this form is obtained by stopping the corresponding local
+process on leaving $\Omega$; its domain is exactly the closure (2.2).
+This is the usual Dirichlet-form stopping correspondence used in
+[G, Definitions 1.3 and Proposition 2.1]. One can apply it on a slightly
+larger interior cylinder and then take the part on $\Omega$: the smaller
+core, density and differential expression are precisely (2.2)--(2.4).
+To identify the part-form core, first approximate by form functions with
+compact support inside the smaller open cylinder, as in the regular
+part-form construction. Local mollification and a smooth partition of
+unity then approximate these functions by $C_c^\infty(\Omega)$ in the
+horizontal form norm: Friedrichs mollification for each smooth first-order
+field makes its commutator with convolution tend to zero. All supports
+remain away from the height faces. Thus the part closure is the specified
+closure, with no larger boundary domain inserted.
+On each compactly contained region the associated process solves the
+martingale problem for (3.12). Uniqueness of the smooth SDE identifies
+this process with the stopped SDE wherever the form construction initially
+provides it.
+
+There is no boundary ambiguity in this identification. The normal
+quadratic variation is $2a\,dt$, bounded below by a positive constant,
+and the normal drift $B_1$ is bounded. For example near the lower face,
+$v(k)=1-e^{-\lambda(k-l)}$ satisfies
+
+$$
+\mathscr Gv=e^{-\lambda(k-l)}(\lambda B_1-\lambda^2a)<0
+\tag{3.13}
+$$
+
+for fixed sufficiently large $\lambda$; the reflected expression works
+at the upper face. These barriers verify regularity of the height faces for the absorbing
+realization already selected by the part form. The part-form domain,
+rather than the interior differential expression alone, specifies this
+boundary condition. Continuous paths
+leave the open cylinder precisely when their height hits one of its
+faces. In particular the part-process stopping time is the stated $\tau_I$.
+
+Finally the bracket in (1.7) spans the missing tangent direction at every
+interior point. The smooth invertible frame change to the $Y_j$ preserves
+this bracket-generating property, and $Y_0$ is horizontal. Interior
+hypoellipticity therefore supplies the smooth heat kernel of the
+selfadjoint realization; [G, Proposition 2.1] and [H, §3.1.2] apply with
+zero potential. For compactly supported continuous tests the killed SDE
+expectation is also continuous in its interior starting point. To see the boundary issue
+in this assertion, use continuous dependence of the smooth SDE on initial
+data on a slightly larger cylinder. At a height-face hit the scalar
+height has nondegenerate martingale part and bounded drift, so it crosses
+the exterior immediately almost surely (the local Brownian oscillation
+property after time change). This makes earlier exit stable under uniform
+path approximation. If exit occurs exactly at the tested time, the test
+vanishes near the face and its terminal contribution still converges to
+zero. Before exit, ordinary continuous dependence applies. Bounded
+convergence proves the asserted continuity. The form heat solution is
+continuous by the interior smoothing just established. Their initially
+almost-everywhere identification therefore extends everywhere because
+$\mu$ has full support. Equality on these tests gives
+equality of transition measures, then on bounded Borel tests by the
+monotone-class theorem. This constructs the canonical transition version
+at every point; uniqueness of the SDE determines its path laws there.
+It does not infer a statement about all points from bare $L^2$ equality.
+The standard stopping correspondence and heat inputs here provide
+existence and identification, not the coefficient converse (3.4)--(3.6).
+
+For additional normalization detail, in local coordinates the instantaneous
+covariance and Itô drift of this SDE are
+
+$$
+2MAM^{\mathsf T}\,dt,\qquad
+M=\begin{pmatrix}1&0\\0&1/2\\0&c\end{pmatrix},\qquad
+\begin{pmatrix}B_1\\B_2\\2cB_2-b/r\end{pmatrix}.
+\tag{3.14}
+$$
+
+The last term $-b/r$ uses $PQ\beta=Pc=-1/r$; it is not discarded when
+there is a cross covariance. Equations (3.12)--(3.14) keep the original
+$2A\,dt$ control clock and the original angular coordinates.
+
+Under coefficient symmetry, the first two coordinate equations are the
+autonomous Itô system
+
+$$
+d\begin{pmatrix}K_t\\\alpha_t\end{pmatrix}
+=\begin{pmatrix}B_1\!\downarrow\\B_2\!\downarrow\end{pmatrix}(K_t,\alpha_t)\,dt
++\sqrt2\,D\Sigma_0(K_t,\alpha_t)\,dW_t,
+\tag{3.15}
+$$
+
+where a downward arrow denotes the corresponding base function, and
+$\alpha$ is taken modulo $2\pi$. Its uniformly elliptic generator is
+exactly (3.1). Its absorbing Friedrichs realization is (2.9), by the same
+form/stopping correspondence (now with an ordinary elliptic form).
+Starting two upstairs solutions at $(k,\alpha,\beta_1)$ and
+$(k,\alpha,\beta_2)$ with the same Brownian motion gives identical
+$(K,\alpha)$ paths by uniqueness of (3.15). Both are stopped at exactly
+$\tau_I$. This proves assertion 4, the pointwise semigroup formula, and
+the lifetime equality in (3.2). There is no time change.
+
+The lifetime is finite almost surely. Indeed $a\ge a_*>0$ and
+$|B_1|\le b_*$ on the closure. For $\lambda>b_*/a_*$, a positive
+multiple of
+$e^{\lambda(h-l)}-e^{\lambda(k-l)}$ is nonnegative on $\overline I$
+and has generator at most $-1$. Stopped Itô's formula bounds
+$\mathbb E_q(t\wedge\tau_I)$ by its finite initial value. Monotone
+convergence gives $\mathbb E_q\tau_I<\infty$. This argument applies
+also before imposing symmetry and concerns this fixed cylinder only.
+
+Conversely, assertion 4 makes $H_tUf$ fiber constant for every bounded
+base test. For $f\in C_c^\infty(B)$, stopped Dynkin's formula and the
+smooth core give, for every interior $q$,
+
+$$
+\lim_{t\downarrow0}\frac{(H_tUf)(q)-(Uf)(q)}t
+=(\mathscr GUf)(q).
+\tag{3.16}
+$$
+
+The integrand in Dynkin's formula is bounded, and path continuity at its
+interior start gives this limit. Therefore $\mathscr GUf$ is fiber
+constant, proving assertion 2. This completes the four-way equivalence.
+All converse calculations took place on $\Omega$; no observation of the
+process before killing can force coefficients outside it. $\square$
+

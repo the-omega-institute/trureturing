@@ -1,0 +1,21 @@
+**推论 47.2（带取整范围的明确常数）。** 若 $0<\epsilon<b_t$、$t+\delta\in(0,1)$，并且
+
+$$
+0<\delta^2\le\frac{\gamma_t^2}{4C_t},
+$$
+
+则上述规则满足
+
+$$
+\boxed{\quad
+\mathbb E_\delta\tau\ge\frac{\gamma_t^3}{8C_t\delta^2}.
+\quad}
+\tag{47.2}
+$$
+
+**证明。** 取确定整数
+$r=\lfloor\gamma_t^2/(2C_t\delta^2)\rfloor$。未取整值至少为二，所以 $r\ge\gamma_t^2/(4C_t\delta^2)$，并且
+$|\delta|\sqrt{C_t r/2}\le\gamma_t/2$。代入（47.1）得 $\mathbb E_\delta\tau\ge r\gamma_t/2$，即（47.2）。无穷期望自动满足下界。$\square$
+
+特别地，在局部范围 $0<|\delta|<d_t$ 内且满足推论的平方限制时，同一明确常数成立。这里的二值基线来自引理 46.1；没有将确定半径风险式中的 $r$ 替换为随机 $\tau$，也没有把固定半方差阈值改称二值错误阈值。
+

@@ -1,0 +1,35 @@
+**定义 17.3（点边识别的类型约束）。**
+消费本卷 §7 的 Choi–Kraus 对应时，有限维算子 $A:H_{\rm in}\to H_{\rm out}$
+对应向量
+
+$$
+|A\rangle\!\rangle=\sum_jA|e_j\rangle\otimes|\overline{e_j}\rangle
+\in H_{\rm out}\otimes\overline{H_{\rm in}},
+\qquad
+\langle\!\langle A|B\rangle\!\rangle=\operatorname{Tr}(A^\dagger B).
+$$
+
+共轭输入空间使该对象在同时改变基时不变。
+未归一 Choi 算子
+
+$$
+J_\Phi=\sum_{ij}\Phi(|e_i\rangle\langle e_j|)
+ \otimes|\bar e_i\rangle\langle\bar e_j|
+$$
+
+表示确定通道当且仅当 $J_\Phi\ge0$、$\operatorname{Tr}_{\rm out}J_\Phi=I$。
+具体地，$J=\sum_\mu|A_\mu\rangle\!\rangle\langle\!\langle A_\mu|$
+的谱分解逆向量化给 Kraus 族，矩阵单位比较给 $\Phi(X)=\sum_\mu A_\mu XA_\mu^\dagger$；
+输入坐标中的输出偏迹是 $(\sum_\mu A_\mu^\dagger A_\mu)^T$。
+这是 [Watrous Theorems 2.22、2.26](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)的准确类型。
+任意双系统态不一定有固定输入边际 $I/d_{\rm in}$，因而不一定表示确定门。
+纯 Choi 加保迹给单 Kraus 等距；同维时才是酉。
+“点还是边未知”可指这些候选类型的识别，不能删除其边际约束。
+
+完整等距还保持任意两态的迹范数距离，包括任意旁观参考：
+差算子在其像上与输入差算子酉等价，在正交补上为零，非零奇异值不变。
+所以完整切面运输若固定一个平衡态，不能严格吸引其他完整态到该态。
+恢复平衡必须标明约化、受限效果或条件分支。
+封闭固定酉轨道若在迹范数收敛，则相邻态距离恒定又趋零，轨道从起点就已固定；
+这精确消费本卷命题 11.9，而不把内部记录增长当成耗散的来源。
+

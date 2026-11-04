@@ -1,0 +1,58 @@
+**Definition 7.1 (Strict-triangle parameters and cited intermediates).**
+Throughout this section let $a,b,c$ be integers with
+$2\le a\le b\le c<a+b$, and retain the original labelled vertices,
+independent positive conductances, counting-measure Laplacian and all-pairs
+resistance of Definition 1.1. Put
+
+$$
+\begin{aligned}
+\eta&=\frac{(a+b-c)(a+c-b)(b+c-a)}{4abc},\\
+C_{a,b,c}&=n\left(n-3+\frac3{2+\eta}\right),\qquad n=a+b+c,\\
+h^*_{AB}&=\frac{a+b-c}{2ab},\qquad
+h^*_{AC}=\frac{a+c-b}{2ac},\qquad
+h^*_{BC}=\frac{b+c-a}{2bc}.
+\end{aligned}
+\tag{7.1}
+$$
+The notation $h^*_{IJ}$ assigns that value to every original edge of
+$E_{IJ}$; it places no restriction on competing assignments.
+
+The classical all-pairs and scaling identities (1.5)–(1.6) are used with
+exactly the correspondence in Convention 1.2 to Ghosh–Boyd–Saberi,
+[*Minimizing Effective Resistance of a Graph*](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf),
+§§2.4–2.5, equations (8), (13)–(15). The finite-list spectral comparison
+from the proof of the [general bipartite theorem](FIEDLER_RESISTANCE_GENERAL_BIPARTITE_OPTIMIZER.md),
+Theorem 3.1, equation (3.3), will be applied only as a matrix inequality.
+The new comparison below concerns all three edge classes simultaneously.
+Its part-sum determinant is the classical Gram-area, equivalently Heron,
+identity, expanded explicitly in Lemma 7.2.
+
+For the design correspondence, choose an $n$ by $(n-1)$ matrix $Q$ with
+orthonormal columns spanning $\mathbf1^\perp$. With the original incidence
+vectors $b_e=e_x-e_y$ and $x_e=Q^{\mathsf T}b_e$, the positive definite
+information matrix is
+
+$$
+\mathcal I(g)=Q^{\mathsf T}L(g)Q=\sum_{e\in E}g_e x_e x_e^{\mathsf T}.
+$$
+Rosa–Harman, [*Laplacian Network Optimization via Information Functions*,
+arXiv:2512.19279v1](https://arxiv.org/pdf/2512.19279v1),
+§§2.3–2.4 and Theorem 1, give the corresponding criteria
+$\Phi_A=(n-1)/\operatorname{tr}\mathcal I^{-1}$ and
+$\Phi_E=\lambda_{\min}(\mathcal I)$, so that
+$F=n(n-1)\Phi_E/\Phi_A$.
+Passing to $p_e=g_e/\sum_f g_f$ preserves this ratio and parametrizes every
+positive conductance ray. Consequently a design theorem for this same
+ratio, these same $x_e$, and the complete positive simplex would also
+supply the present optimization; a budget parametrization alone does not
+distinguish the problems. Their problem (1) selects a prescribed number
+of edges with fixed edge weights, problem (2) and its approximate-design
+relaxation optimize a chosen information criterion, and their Theorems
+1–5 supply spectral reformulation, derivatives and matrix updates.
+Those statements are used here at the specified intermediate identities,
+not as a whole optimizer for this ratio. No theorem from Harman,
+[*Minimal efficiency of designs under the class of orthogonally invariant
+information criteria*, DOI:10.1007/s001840300301](https://link.springer.com/article/10.1007/s001840300301),
+or from the [institutional article 16817](https://repository.uaeh.edu.mx/revistas/index.php/icbi/article/view/16817)
+is a premise of the proofs below.
+

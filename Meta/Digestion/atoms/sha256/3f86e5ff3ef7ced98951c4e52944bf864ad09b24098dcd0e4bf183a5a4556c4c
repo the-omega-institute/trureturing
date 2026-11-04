@@ -1,0 +1,22 @@
+**Theorem 106.2 (reporting under arbitrary original growth).** Every
+terminating path of an exact reporting receiver in Definition 106.1
+uses at least $k-d$ new successful scalar Reads. It may adaptively use
+the entire original menu, including native growth and arbitrary rational
+Adds. The same bound holds when it also owes a current predictor.
+
+**Proof.** Fix its realized finite path at $\theta$ and freeze the chosen
+frames, operands, addresses, edits and stopping decisions. Every current
+field is affine in the initial parameter: growth is a persistent
+zero-inclusion, Tick is a known linear adjacency and frozen Adds are
+common translations. If there are $m$ successful Reads, their replies
+are $A_*\theta+c_*$ for an $m$-row rational matrix $A_*$. If $d+m<k$,
+choose nonzero rational $\eta\in\ker R\cap\ker A_*$. The alternative
+$\theta+\eta$ starts with identical complete receiver data. Induction
+on complete calls gives the same path: each scalar agrees, all other
+replies, raw moves, framing, rights and guard outcomes agree, and identical
+local states choose identical next requests and stop. Pending finite bytes
+and disabled calls do not add rows. Its owed initial class differs by
+Theorem 105.2, so the common report cannot be exact on both inputs.
+This is the affine transcript supplier of §§49,61 applied to this newly
+attained image, rather than a dimension bound on arbitrary advice. $\square$
+

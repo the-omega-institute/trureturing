@@ -1,0 +1,11 @@
+**Proposition 56.2 (diagnostic chronology is not a pulse journal).** The recovered $L$ counts only the original consecutive pulse actions. The specimen in Theorem 56.1 has undergone $2N+L+N-1$ actual Ticks from its original unit preparation. Its $N-1$ diagnostic Ticks have not been rolled back. Numerically,
+
+$$
+x_{\rm now}=X\bigl(u\,0^{N-1}\bigr),
+\tag{56.3}
+$$
+
+but the diagnostic command/output suffix is not the actual pulse suffix $0^{N-1}$.
+
+Proof. Applying Tick $N-1$ times multiplies (52.1) by $T^{N-1}$, which gives (56.3). A zero pulse would additionally issue Add$(0)$ and Read after each Tick, with their acknowledgement and scalar output. The diagnostic protocol issues neither of those after each Tick; it has the one initial Read and the final Hold. Thus the equality is an equality of native fields, not of complete histories or their emissions. The historical field in (56.1), recovered from the acquired window with its stated starting cut, is the input to the word inverse. Applying that inverse instead to the advanced field would recover the numerical word $u0^{N-1}$, whose extra symbols cannot be called actual executed pulses. $\square$
+

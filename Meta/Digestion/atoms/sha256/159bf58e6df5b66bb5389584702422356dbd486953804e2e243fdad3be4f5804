@@ -1,0 +1,21 @@
+**Lemma 1.3 (exact output requires orthogonal input supports).** Let
+$\rho$ and $\sigma$ be density operators.  If one quantum instrument has
+an outcome effect $0\le E\le I$ with
+
+$$
+\operatorname{tr}(E\rho)=1,
+\qquad \operatorname{tr}(E\sigma)=0,
+\tag{1.4}
+$$
+
+then $\operatorname{supp}(\rho)\perp\operatorname{supp}(\sigma)$.
+
+Proof. Positivity gives
+$\operatorname{tr}((I-E)\rho)=0$ and
+$\operatorname{tr}(E\sigma)=0$.  Hence
+$(I-E)^{1/2}\rho^{1/2}=0$ and $E^{1/2}\sigma^{1/2}=0$.
+Therefore the support of $\rho$ is contained in the $1$-eigenspace of
+$E$, while the support of $\sigma$ is contained in its $0$-eigenspace.
+These eigenspaces are orthogonal.  A CPTP instrument followed by an exact
+classical transcript is a special case of this effect argument. $\square$
+

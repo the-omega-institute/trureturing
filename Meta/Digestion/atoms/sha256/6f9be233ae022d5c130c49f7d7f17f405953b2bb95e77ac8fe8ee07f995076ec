@@ -1,0 +1,64 @@
+**Theorem 13.1 (necessary and sufficient preservation of an auxiliary distinct-slope equality).** For any prefix in $\mathscr G$ and any legal final word, suppose that $X_0,X_1\in\mathcal P$ and finite real slopes $k_0\ne k_1$ satisfy
+$$
+\mathsf T_{k_0}X_0=\mathsf T_{k_1}X_1.
+\tag{13.1}
+$$
+Define
+$$
+\eta_j=\frac{\det X_j}{h(X_j)},\qquad S_j=\rho_N(X_j)=X_j-\eta_jN.
+$$
+Then
+$$
+\mathsf T_{k_0}S_0=\mathsf T_{k_1}S_1
+\quad\Longleftrightarrow\quad
+\begin{cases}
+\eta_0k_0=\eta_1k_1,\\
+(t_4-t)(\eta_0-\eta_1)=0.
+\end{cases}
+\tag{13.2}
+$$
+If $t_4\ne t$, this is equivalent to $\eta_0=\eta_1=0$, or equivalently $\det X_0=\det X_1=0$. Thus this correction preserves (13.1) exactly when both positive auxiliary matrices were already actual rank-one sources. If $t_4=t$, the exact condition is solely $\eta_0k_0=\eta_1k_1$. These assertions concern this construction, and do not assert impossibility of actual collisions.
+
+**Proof.** The prefix kernel equations give $\operatorname{tr}(A_iN)=t$ for $i=0,1,2,3$. Consequently
+$$
+\mathsf BN=(0,0,0,t_4-t)^{\mathsf T},\qquad
+\mathsf CN=(t,2t,3t,4t_4)^{\mathsf T},
+$$
+$$
+\mathsf T_kN=(kt,2kt,3kt,(t_4-t)+4kt_4)^{\mathsf T}.
+\tag{13.3}
+$$
+Using (13.1), equality of the corrected quotients is equivalent to
+$$
+\eta_0\mathsf T_{k_0}N=\eta_1\mathsf T_{k_1}N.
+\tag{13.4}
+$$
+Its first coordinate, with $t>0$, gives $\eta_0k_0=\eta_1k_1$. The next two coordinates repeat it. The last is
+$$
+(t_4-t)(\eta_0-\eta_1)+4t_4(\eta_0k_0-\eta_1k_1)=0,
+$$
+which, after the first condition, is exactly the second condition in (13.2). Conversely the two scalar conditions make every coordinate in (13.4) equal. This proves necessity and sufficiency without dividing by either slope or any sampled gain.
+
+If $t_4\ne t$, the second condition gives $\eta_0=\eta_1$. The first then gives $\eta_0(k_0-k_1)=0$; the distinct-slope hypothesis forces both coefficients to be zero. Their denominators are positive, so this is exactly determinant zero for both matrices. Conversely determinant zero makes both corrections vanish. One can also see the separation directly: the minor formed from the first and fourth coordinates of the two vectors in (13.3) is
+$$
+t(t_4-t)(k_0-k_1),
+$$
+nonzero under exactly these two hypotheses.
+
+If $t_4=t$, (13.3) instead becomes $kt(1,2,3,4)^{\mathsf T}$. Thus precisely the first scalar condition remains. For example, when $k_0=0$ and $k_1\ne0$, it requires $\eta_1=0$ and imposes no further condition on $\eta_0$ beyond the already assumed auxiliary equality and positivity. The reversed case is symmetric. This reconciles the level-preserving branch, including identity multipliers, without extending the two-zero-coefficient conclusion to it. Negative slopes and sampled gain erasures obey the same undivided identities.
+
+Every corrected $S_j$ is actual by Theorem 10.2. If (13.2) holds, put
+$$
+\Delta=\operatorname{tr}(S_0-S_1),\qquad
+D_0(\tau)=0,\qquad D_1(\tau)=\Delta\quad(\tau\in\mathbb R).
+$$
+At index zero, $\operatorname{tr}S_0=\operatorname{tr}S_1+\Delta$. At every $i=1,2,3,4$, (13.2) says exactly
+$$
+(1+ik_0)\operatorname{tr}(A_iS_0)
+=(1+ik_1)\operatorname{tr}(A_iS_1)+\Delta.
+\tag{13.5}
+$$
+These are all five original equations after adding the respective whole drifts, including an erased equation if a gain is zero. Proposition 1.2 supplies one fixed positive row in each run and positive columns through every unread atom of the same prescribed words. Distinct slopes ensure distinct targets. No existence of the auxiliary equality (13.1) is supplied by this preservation test. ∎
+
+The step from equal correction coefficients to zero correction coefficients uses $k_0\ne k_1$. This hypothesis belongs to Theorem 13.1, not to the universal multiplicity question. Neither that step nor the theorem proves uniqueness at a common nonzero slope.
+

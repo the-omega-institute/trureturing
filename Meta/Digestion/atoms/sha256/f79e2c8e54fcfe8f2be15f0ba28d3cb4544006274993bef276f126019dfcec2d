@@ -1,0 +1,11 @@
+**Definition 39.1 (the passive domain and the four data types).** Consider all pairs $(T,k)$ satisfying Definition 36.1 and $k\ge2N$, with authentic passive state $x=T^k e_0$. Define the expressions as follows.
+
+| Expression | Its own exposed mathematical data |
+| --- | --- |
+| Space | the actual rooted weighted path $T$ and current native cell vector $x$ |
+| Time | the actual paid ordered root transcript $(m_0,\ldots,m_k)$ of Definition 36.3 |
+| Boundary | the finite rational endpoint transfer $F_T$ of Proposition 37.4 and the current endpoint value $m_k$ |
+| Memory | the least monic recurrence $q$, the initial values $\mu=(m_0,\ldots,m_{N-1})$, and the predictive state $w=(e_0^{\mathsf T}T^j x)_{0\le j<N}$ |
+
+Memory's $w_j$ means the next $j$-tick autonomous root prediction from the current state, including $j=0$. It is a length-$N$ sufficient predictive state, not a stored complete journal. Boundary is a law and one current endpoint value, without a tick index. Space has native adjacency and a present field, without a journal. Time contains scalar observations and their order, without a coefficient list. None of these four mathematical data types contains a source handle or proof of the installed assumptions.
+

@@ -1,0 +1,30 @@
+**Definition 106.1 (the complete late information contract).** Start a
+late receiver at the settled $H\theta$ cut, with the same earned graph,
+bindings, rights and known phase. Fix a known rational matrix
+$R\in\mathbb Q^{r\times k}$ of rank $d$. The literal vector $s_0=R\theta$
+is genuinely retained. The entire other accessible receiver state is
+$\rho_\kappa(R\theta)$ for fixed field-independent context $\kappa$.
+This includes code inputs, reference bytes, selectors, parser and
+counters, prior controls, output/transport buffers, provider records,
+advice and observable resource attributes. Because the literal vector
+is included, equal $R\theta$ gives equal complete initial information.
+The case $d=0$ is a genuinely cold entrance. It requires actual clearing
+or isolation of the epoch-two samples, cancellation operands, full
+predictor and every dependent copy. A receiver retaining any of them
+does not meet that contract. Computation of $R\theta$, clearing work and
+surviving or isolated capacities are charged.
+
+An exact reporting receiver owes $\theta$, equivalently the initial
+dark full-service class. An exact current-predictor receiver instead
+owes a self-contained predictor at its own actual final graph and field,
+correct for every common sufficiently backed finite original continuation.
+It need not report $\theta$. It may not defer numerical acquisition until
+a later query, consult another dependent archive, or obtain its prediction
+by rereading the plant. Actual subsequent use of the retained prediction
+and genuine source rights is a separate operation. These are precisely
+the current-prediction meanings of Definition 61.1, restricted here to
+the attained family. Require pointwise exact finite termination on every
+$\theta\in\mathbb Q^k$. Only successful scalar Reads carry numerical
+source information; all other complete outcomes have their original
+field-independent content.
+

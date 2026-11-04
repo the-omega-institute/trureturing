@@ -1,0 +1,196 @@
+**Theorem 10.1 (One common stationary law at every comparison rank).** For every integer $N\ge2$, set
+
+$$
+k=N^2+1,\qquad m=2N^2=2(k-1),\qquad
+ a_\ell=\frac13+\frac{\ell-1}{24N^2},\qquad w_\ell=\frac1k,
+\quad 1\le\ell\le k.
+\tag{10.1}
+$$
+
+Use the two-state $A_\ell,\lambda_\ell,D_x$ of (3.2) with these parameters, and define
+
+$$
+M_x^{(N)}=\bigoplus_{\ell=1}^kD_xA_\ell,\qquad
+\lambda^{(N)}=(w_1\lambda_1,\ldots,w_k\lambda_k).
+\tag{10.2}
+$$
+
+This is one element of the original $\Theta_{2k}$. Its actual stationary law is
+
+$$
+P^{(N)}=\sum_{\ell=1}^kw_\ell R^{a_\ell},\qquad
+\mu_n=P^{(N)}_{[1,n]},\qquad
+\mu_n(w)=\lambda^{(N)}M_{w_1}^{(N)}\cdots M_{w_n}^{(N)}\mathbf1
+\quad\text{for every }n.
+\tag{10.3}
+$$
+
+All legal words have positive mass and every $\mu_n$ is band-compatible. Define
+
+$$
+\begin{aligned}
+z_\ell&=\frac{a_\ell}{(1-a_\ell)^2},&
+\rho_\ell&=\frac{a_\ell}{1+a_\ell},&
+\Delta&=\min_{\ell\ne h}|\rho_\ell-\rho_h|>0,\\
+Z_\ell&=\sum_{w\in B_m}z_\ell^{k(w)},&
+v_\ell(w)&=\frac{z_\ell^{k(w)}}{Z_\ell},&
+b_\ell&=\lambda_{\ell,0}(A_\ell^{m+1})_{00}>0,\\
+G&=\sum_{\ell=1}^kw_\ell b_\ell v_\ell v_\ell^{\mathsf T},&
+\gamma&=\lambda_k(G)>0.
+\end{aligned}
+\tag{10.4}
+$$
+
+The $v_\ell$ are column probability vectors on $B_m$; $\lambda_{\ell,0}=1/(1+a_\ell)$, and eigenvalues are decreasing. For every $n>m$ with $(n-m)\Delta\ge8$,
+
+$$
+\mathscr R_{N,n}(\mu_n)\ge
+c_m\left\lfloor\frac{n-2}{m}\right\rfloor
+\left[\gamma-4\exp\left(-\frac{(n-m)\Delta^2}{64}\right)\right]_+,
+\qquad [x]_+=\max(x,0).
+\tag{10.5}
+$$
+
+In particular,
+
+$$
+\liminf_{n\to\infty}\frac{\mathscr R_{N,n}(\mu_n)}n
+\ge\frac{c_m\gamma}{m}>0.
+\tag{10.6}
+$$
+
+In contrast, for every fixed $t\ge1$, every $n>t$ with $(n-t)\Delta\ge8$, and every deterministic family of disjoint length-$t$ intervals $C_j\subseteq[1,n]$,
+
+$$
+\sum_j\mathbb E_{\mu_n}\delta_{N,t}^{a_j,b_j}
+\bigl(\mu_n(W_{C_j}=\cdot\mid W_{C_j^c})\bigr)
+\le2n\exp\left(-\frac{(n-t)\Delta^2}{64}\right)\longrightarrow0.
+\tag{10.7}
+$$
+
+The adjacent bits in (10.7) are the actual observed adjacent bits, with zero at an open endpoint as in (1.10).
+
+Proof. The parameters in (10.1) lie in $[1/3,3/8]$ and are distinct. The persistent-mixture construction of Propositions 3.2–3.3 applies to any finite number of positive-weight components: their proofs use only the displayed parameter range, positive weights and block-diagonal matrices. Equivalently, apply those propositions with their component-count parameter equal to $k-1$, then compare against the rank $N$ used here. Each $A_\ell$ is stochastic, $\lambda_\ell A_\ell=\lambda_\ell$ and $(D_1A_\ell)^2=0$. Thus (10.2) directly satisfies every condition in (1.3). The joint law (1.4) has a persistent label $L\in\{1,\ldots,k\}$, and conditional on $L=\ell$ its visible law is $R^{a_\ell}$. All expectations involving $L$ below are under this one joint law, denoted $J^{(N)}$.
+
+The component insertion ratios, including $n=1$ and open endpoints, are exactly (3.4), and their linear inequalities survive the mixture. Each component whole-word marginal and each actual component block conditional has all nonnegative cut ranks at most two. Thus $\mathscr F_{N,n}^{0,0}$ is nonempty for $N\ge2$, and the component conditional is feasible in $\mathscr F_{N,t}^{a,b}$, including endpoint blocks and singleton completion sets. No conversion from real rank to a stationary realization is being made; (10.2) already supplies the actual nonnegative realization and all seams.
+
+The $z_\ell$ are distinct because $a/(1-a)^2$ is strictly increasing on $(0,1)$. For $0\le j\le k-1$ the legal word
+
+$$
+w_j=(10)^j0^{m-2j}\in B_m
+\tag{10.8}
+$$
+
+has $j$ ones, also at $j=k-1$ when the final zero string is empty. The matrix with rows $j$ and columns $\ell$ given by $v_\ell(w_j)=z_\ell^j/Z_\ell$ has determinant
+
+$$
+\left(\prod_{\ell=1}^kZ_\ell^{-1}\right)
+\prod_{\ell<h}(z_h-z_\ell)\ne0.
+\tag{10.9}
+$$
+
+Hence the vectors $v_\ell$ are linearly independent. The coefficient $b_\ell$ is the stationary probability, under component $\ell$, that the two endpoints of a segment of $m+1$ transitions are both zero. It is positive, for example because the all-zero path has positive probability. Therefore $G$ has rank $k$ and $\gamma=\lambda_k(G)>0$.
+
+Fix any interior length-$m$ interval $C=[c,d]$ and put
+
+$$
+\mathcal H=\sigma(W_{C^c}),\qquad
+\theta_\ell=J^{(N)}(L=\ell\mid\mathcal H),\qquad
+E=\{W_{c-1}=W_{d+1}=0\}\in\mathcal H.
+\tag{10.10}
+$$
+
+These are the posterior weights given the entire finite complement, not just its adjacent bits. On $E$, Proposition 3.3 gives the exact identity
+
+$$
+\mu_n(W_C=\cdot\mid\mathcal H)=\sum_{\ell=1}^k\theta_\ell v_\ell
+=\mathbb E_{J^{(N)}}[v_L\mid\mathcal H].
+\tag{10.11}
+$$
+
+Stationarity and the actual component transition law give
+
+$$
+J^{(N)}(L=\ell,E)=w_\ell b_\ell.
+\tag{10.12}
+$$
+
+In particular these weights are not replaced by the prior $w_\ell$ or normalized by $J^{(N)}(E)$.
+
+The complement contains a contiguous observed segment of length $s\ge(n-m)/2$. Lemma 4.3 applies under every component because $s\Delta\ge4$, including equality. Its nearest-mean classifier uses only that segment and has error at most
+
+$$
+\varepsilon_n=2\exp\left(-\frac{(n-m)\Delta^2}{64}\right).
+\tag{10.13}
+$$
+
+Given $\mathcal H$, the least conditional error of a label guess is $1-\max_\ell\theta_\ell$. A guess using the whole complement can use this segment classifier, so
+
+$$
+\mathbb E_{J^{(N)}}(1-\max_\ell\theta_\ell)\le\varepsilon_n.
+\tag{10.14}
+$$
+
+The bound is uniform in the position of $C$ for this fixed law. The constants depend on its separated means; there is no parameter-uniform rate.
+
+Let $V=v_L$ as a random column vector, and put
+
+$$
+G_{n,C}=\bigl(S_C^{0,0}(\mu_n)\bigr)^{\mathsf T}S_C^{0,0}(\mu_n).
+$$
+
+Equations (9.2), (10.11) and (10.12), with the original complement masses in (9.2), yield
+
+$$
+\begin{aligned}
+G&=\mathbb E_{J^{(N)}}[\mathbf1_EVV^{\mathsf T}],\\
+G_{n,C}&=\mathbb E_{J^{(N)}}\left[\mathbf1_E
+\mathbb E[V\mid\mathcal H]\mathbb E[V\mid\mathcal H]^{\mathsf T}\right],\\
+G-G_{n,C}&=\mathbb E_{J^{(N)}}[\mathbf1_E\operatorname{Cov}(V\mid\mathcal H)]\succeq0.
+\end{aligned}
+\tag{10.15}
+$$
+
+At a given complement choose an index $h$ of largest $\theta_h$. Conditional means minimize squared Euclidean error. Since probability vectors have squared Euclidean distance at most two,
+
+$$
+\begin{aligned}
+\operatorname{tr}\operatorname{Cov}(V\mid\mathcal H)
+&\le\sum_\ell\theta_\ell\|v_\ell-v_h\|_2^2
+\le2(1-\theta_h),\\
+\|G-G_{n,C}\|_{\mathrm{op}}
+&\le\operatorname{tr}(G-G_{n,C})
+\le2\varepsilon_n.
+\end{aligned}
+\tag{10.16}
+$$
+
+For the second line, positivity in (10.15) bounds the operator norm by the trace, and dropping $\mathbf1_E$ enlarges a nonnegative expectation. The eigenvalue variational principle gives
+
+$$
+\lambda_k(G_{n,C})\ge\gamma-2\varepsilon_n,\qquad
+\operatorname{tail}_{N^2}(S_C^{0,0}(\mu_n))
+\ge[\gamma-2\varepsilon_n]_+,
+\tag{10.17}
+$$
+
+because $k=N^2+1$. Choose $\lfloor(n-2)/m\rfloor$ consecutive disjoint length-$m$ intervals in $[2,n-1]$. Apply Theorem 9.2, retaining only their $00$ types. Equations (10.13) and (10.17) prove (10.5), and division by $n$ gives (10.6). The contexts of neighboring chosen blocks may overlap; Theorem 9.2 requires only disjoint site sets.
+
+For (10.7), fix $t$ and a block $C_j$ of that length. Under the same $J^{(N)}$ define $\theta_{\ell,j}=J^{(N)}(L=\ell\mid W_{C_j^c})$. Its actual conditional is the mixture of its actual component conditionals with these weights, as in (3.5). Lemma 4.2, with comparison rank $N\ge2$, gives
+
+$$
+\delta_{N,t}^{a_j,b_j}\bigl(\mu_n(W_{C_j}=\cdot\mid W_{C_j^c})\bigr)
+\le t(1-\max_\ell\theta_{\ell,j}).
+\tag{10.18}
+$$
+
+Indeed, its proof compares with a largest-weight feasible rank-two component, using convexity in the first argument of $\mathcal D_K$ and the bound $t$ on that discrepancy. It does not require an interior block. A complement segment has length at least $(n-t)/2$, so the same application of Lemma 4.3 and Bayes comparison gives
+
+$$
+\mathbb E_{J^{(N)}}(1-\max_\ell\theta_{\ell,j})
+\le2\exp\left(-\frac{(n-t)\Delta^2}{64}\right).
+\tag{10.19}
+$$
+
+There are at most $n/t$ disjoint blocks, proving (10.7). At an endpoint the component law in (10.18) is its true conditional; (3.6) is not used there. Thus the statement retains open endpoints, all original legal words, the same common matrices at every length and the entire complement in every predictor. $\square$
+

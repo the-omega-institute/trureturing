@@ -1,0 +1,10 @@
+**定义 9.1（固定先验的终止参数记忆任务）。** 在已知 $\Lambda$ 下，记对每个发生三元组 $i=(r_L,r_R,m)$，
+
+$$
+z_i=\int g_i(\theta)\Lambda(d\theta)>0,\qquad
+\nu_i(d\theta)=\frac{g_i(\theta)}{z_i}\Lambda(d\theta).
+\tag{CPI.50}
+$$
+
+本任务要求从已保留的摘要 $Z(H)$ 给出所有有界 Borel $v:(0,1)^2\to\mathbb R$ 的完整档案条件分数 $\mathbb E[v(\theta)\mid H]$ 的可测函数版本。此定义不将摘要解释为实际参数，不将精确实数积分视为免费计算，也不要求它支持所有继续取得任务。
+

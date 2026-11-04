@@ -1,0 +1,16 @@
+**Definition 1.2 (four views and their actual joint image).** A choice of expressions is four functions on this same $H$:
+
+$$
+S:H\to Y_S,\qquad T:H\to Y_T,\qquad
+B:H\to Y_B,\qquad M:H\to Y_M.
+$$
+
+$S$ records specified spatial incidence; $T$ records specified temporal data; $B$ records the chosen boundary response; $M$ records retained memory. These names impose no injectivity. In particular, a scalar duration, a literal event word and an ordered prefix archive are different possible functions. Their actual joint image is
+
+$$
+\mathcal J=(S,T,B,M)(H)\subseteq
+Y_S\times Y_T\times Y_B\times Y_M.
+$$
+
+All comparisons below use this common carrier. Replacing $\mathcal J$ by the product of the four separate images would admit combinations not supplied by a common history. Current type tags belong to the expressions whenever operations are to be transported through them.
+

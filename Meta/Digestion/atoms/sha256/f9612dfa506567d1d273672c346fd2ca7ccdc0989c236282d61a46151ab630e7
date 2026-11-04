@@ -1,0 +1,26 @@
+**定理 78.3（固定小正误差下的经典状态数发散）。** For each fixed $d,\theta$ as above and each fixed
+
+$$
+0<\epsilon<d(1-d)/3200,
+\tag{78.4}
+$$
+
+both $k_{\rm pair}(H,\epsilon)$ and $k_{\mathcal K_d}(H,\epsilon)$ tend to infinity as $H\to\infty$, even when a new comparator is chosen at each horizon.
+
+证明。Fix $k$. Retain only the parameters $(T_0,T_1,f_{\rm cl},p_+,p_-)$. They range over the compact space $X_k$: all entries lie in $[0,1]$, nonnegativity, column stochasticity of $T_0+T_1$, effect inequalities and the two probability-simplex equalities are closed finite-dimensional conditions. For each fixed $n$, every complete-record comparator probability is a polynomial in these parameters. TV is a continuous finite sum of their absolute differences from the fixed target probabilities.
+
+Let $\mathcal C_H\subset X_k$ impose both TV bounds at every $0\le n\le H$. Each is closed and $\mathcal C_{H+1}\subseteq\mathcal C_H$. If comparators with at most $k$ states worked at arbitrarily large horizons, padding smaller models to $k$ states would make every $\mathcal C_H$ nonempty. Padding is legal: append a block with $T_0=I$, $T_1=0$, zero preparation entries and any legal added effect coordinates. It changes neither outcome at any history.
+
+The nested compact sets would have nonempty intersection, giving one finite comparator with both errors at most $\epsilon$ at every depth. Its average pair error is then at most $\epsilon$, contradicting (78.1). Hence for each $k$ there is a finite $H_k$ such that neither minimum is at most $k$ for any $H\ge H_k$. This is exactly divergence. Only the pair of preparations was compactified; there is no need to extract a whole limiting preparation function on $\mathcal K_d$, or to assume it affine or continuous.
+
+The minima are finite at finite $H$ under the permitted arbitrary-preparation convention. For the pair, the two supplier prefix trees in V56 give exact matching. A finite construction for the full set is also available. Let $\mathcal N_H$ be all binary prefixes of length at most $H$, and let a finite hidden assignment $\omega\in\{0,1\}^{\mathcal N_H}$ give one binary output value to each node. States are $(\omega,h)$ with $h\in\mathcal N_H$. At nonleaves, branch $j$ sends $(\omega,h)$ to $(\omega,hj)$ with mass $1/2$; at leaves each branch is a mass-$1/2$ self-loop. The fixed effect is $f_{\rm cl}(\omega,h)=\omega_h$. For each $\rho$, put $x_h(\rho)=\operatorname{Tr}(\rho M_h)$ and prepare only roots, with weights
+
+$$
+p_\rho(\omega,\varnothing)
+=\prod_{h\in\mathcal N_H}
+\begin{cases}x_h(\rho),&\omega_h=1,\\1-x_h(\rho),&\omega_h=0.\end{cases}
+\tag{78.5}
+$$
+
+These nonnegative weights sum to one and have the required marginal $x_h(\rho)$ at each node. Each chronological prefix still has mass $2^{-|h|}$, giving exactly both entries of (72.7) for every $|h|\le H$. This construction uses $|\mathcal N_H|2^{|\mathcal N_H|}$ states; it is only an existence bound and does not assert an affine encoding or acquisition of any preparation. The construction shows that divergence concerns increasing finite memory, not finite-horizon nonexistence. ∎
+

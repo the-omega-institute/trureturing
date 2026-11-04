@@ -1,0 +1,44 @@
+**Theorem 25.2 (exact support-distance visibility criterion).** For every
+finite unticked extension, every $x\in\mathbb Q_{\ge0}^{V(s)}$ and
+every integer $r\ge0$,
+
+$$
+\Delta_r\ge0,\qquad
+\Delta_r=0\ \Longleftrightarrow\ r\le D_x.
+\tag{25.4}
+$$
+
+In particular an empty extension or zero field remains indistinguishable
+by these two placements for all finite $r$. For finite $D_x$, the first
+nonzero difference occurs at $D_x+1$. The theorem concerns the whole
+field, before imposing a particular terminal or digital precision.
+
+**Proof.** Let $D=T_uE-ET_s$. Old rows of $D$ are zero: old edges,
+diagonal coefficient and old coordinates are unchanged. At a fresh vertex
+$f$,
+
+$$
+(Dz)_f=\frac18\sum_{a\in V(s):\ a\sim_u f}z_a.
+\tag{25.5}
+$$
+
+Thus $D$ is nonnegative and detects precisely positive values on old
+crossing vertices. Telescoping the two powers gives
+
+$$
+\Delta_r=\sum_{k=0}^{r-1}T_u^{r-1-k}DT_s^kx.
+\tag{25.6}
+$$
+
+Every summand is nonnegative. Positive diagonal and positive edge entries
+imply that the support of $T_s^kx$ is exactly the closed radius-$k$
+neighbourhood of $\operatorname{supp}_+(x)$: a positive summand is a
+length-$k$ walk with optional stays, and a shortest path can be padded
+by stays. Hence $DT_s^kx$ is zero exactly when $k<D_x$.
+For $r\le D_x$, every term of (25.6) is zero. At $r=D_x+1$ the
+term $DT_s^{D_x}x$ is nonzero. At every later $r$ its image under
+$T_u^{r-1-D_x}$ remains nonzero because the diagonal is positive; other
+nonnegative terms cannot cancel it. This proves (25.4), including
+$r=0$ and the infinite-distance cases. Signed fields would permit
+cancellation and are outside this theorem. $\square$
+

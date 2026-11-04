@@ -1,0 +1,87 @@
+**Definition 4.1 (Native source).** Fix $0<Z<1$, and write
+
+$$
+r=1-Z,\qquad H=r/2,\qquad
+e_*=\sqrt{4ZH}=\sqrt{2Z(1-Z)},\qquad
+\mathbb T=\mathbb R/(2\pi\mathbb Z).
+\tag{4.1}
+$$
+
+In mode order $(0,1,2,3,13)$, the probability law and its tangent are
+
+$$
+p(k)=(k,H-k,Z,H-k,k),\qquad
+d_{\mathrm{prob}}=(1,-1,0,-1,1)^{\mathsf T},
+\qquad 0<k<H.
+\tag{4.2}
+$$
+
+All entries of $p(k)$ are positive and their sum is one. Fix any
+preparation height $k_0\in(0,H)$ and any preparation phases
+$\theta_s^{\mathrm{in}}$. Under the negative-phase convention,
+$\psi_s=\sqrt{p_s}\exp(-i\theta_s)$, and the original controls satisfy
+
+$$
+\dot p=d_{\mathrm{prob}}\dot k,\qquad
+\dot\theta_s=\frac{(d_{\mathrm{prob}})_s}{p_s(k)I(k)}\dot\chi,
+\qquad
+I(k)=\frac2k+\frac2{H-k}=\frac r{k(H-k)}.
+\tag{4.3}
+$$
+
+The phase increments relative to preparation have the form
+$(u,v,0,v,u)$, with
+
+$$
+du=\left(\frac12-\frac kr\right)d\chi,\qquad
+dv=-\frac kr\,d\chi,\qquad
+\alpha=u-v,\quad\beta=u.
+\tag{4.4}
+$$
+
+These are equalities of increments within groups, not restrictions on
+the preparation phases. The coordinate change between $(u,v)$ and
+$(\alpha,\beta)$ has an integer inverse and descends to $\mathbb T^2$.
+After a common gauge choice the middle amplitude is $\sqrt Z>0$;
+it fixes the representative of each ray. The moduli determine $k$,
+and the nonzero phase factors determine the two circle coordinates. By [F],
+Proposition 1.2, the exact reachable current-ray domain from each such
+preparation is
+
+$$
+\mathcal M=(0,H)\times\mathbb T^2.
+\tag{4.5}
+$$
+
+Producing histories are piecewise $C^1$ or absolutely continuous on
+finite compact time intervals, remain at interior heights throughout,
+and have finite phase variation. The initial real relation phase is
+chosen consistently with
+$d_{\mathrm{prob}}^{\mathsf T}\theta^{\mathrm{in}}$.
+Queries are permitted at every finite prefix; no return loop or integer
+winding is required. Real lifts may be used to integrate a history.
+The state is the current ray, with no retained real phase lift,
+endpoint state, or producing-history coordinate.
+
+For every real $s,t$, the straight native commands are
+
+$$
+P_s(k,\alpha,\beta)=(k+s,\alpha,\beta),\qquad
+\operatorname{dom}P_s=\{(k,\alpha,\beta)\in\mathcal M:0<k+s<H\},
+\tag{4.6}
+$$
+
+$$
+Q_t(k,\alpha,\beta)
+=\left(k,\alpha+\frac t2,\beta+
+\left(\frac12-\frac kr\right)t\right),\qquad
+\operatorname{dom}Q_t=\mathcal M.
+\tag{4.7}
+$$
+
+Convexity of the height interval makes (4.6) exactly the guard for the
+whole straight probability segment. Phase command parameters remain
+arbitrary real numbers; only resulting state phases are circle classes.
+Both signs and zero commands are included. If $|s|\ge H$, the
+probability domain is empty.
+

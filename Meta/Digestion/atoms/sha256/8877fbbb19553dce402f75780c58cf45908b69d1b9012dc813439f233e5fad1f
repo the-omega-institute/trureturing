@@ -1,0 +1,14 @@
+### 21.3. Metric, annihilator, and orientation
+
+Define the learned annihilator and its dimensions by
+
+$$
+Z=\operatorname{Ann}(\mu)=\{z:\mu(z,w)=0\text{ for all }w\},\quad m=\dim Z,
+$$
+
+$$
+ b_0=\#\{j:\mu(D_j,D_j)=0\},\qquad r=m-b_0.
+$$
+
+The zero-gain port test is an acquired equality in the earned metric; it is not provider advice. In native coordinates $Z$ is the span of the axes with $g_i=0$. Thus $r$ counts unanchored zero-gain directions after the authentic zero-gain ports have been removed.
+

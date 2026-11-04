@@ -1,0 +1,32 @@
+### Definition 61.1 (destructive calibrated reader)
+
+The initial source is \((i,z)\) with \(i\in\{1,2,3\}\) and \(z\in\{0,1\}\). The
+target is \(z\). The three actions have responses
+
+| calibration class | \(a\) | \(b\) | \(c\) |
+|---|---:|---:|---:|
+| \(i=1\) | \(z\) | \(z\) | \(\star\) |
+| \(i=2\) | \(\star\) | \(z\) | \(z\) |
+| \(i=3\) | \(z\) | \(\star\) | \(z\) |
+
+\(\star\) is independent of \(z\). Every action sends the reader to the same
+terminal state \(s_\dagger\); later responses contain only \(\star\). Let
+
+$$
+B_i=\{(0,s_{i,0}),(1,s_{i,1})\}.
+$$
+
+The class labels may themselves be represented by any three distinct legal FIB
+words. The example distinguishes retaining a history label from erasing it:
+when a label is retained, the initialization map \(c\) may use that label;
+when all three labels are erased, the initial candidate relation is their
+union and \(c\) must be constant on the erased fiber.
+
+For any nonempty candidate relation, write
+
+$$
+D(B)=\min\{n\in\mathbb N:B\in\mathcal W_n\},
+$$
+
+with \(D(B)=+\infty\) when the set on the right is empty.
+

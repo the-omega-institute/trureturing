@@ -1,0 +1,20 @@
+**Definition 6.8 (all-subsets boundedness equivalence and regular cuts).**
+For $g:W\to\mathbb N\cup\{\infty\}$, say that $g$ is bounded on
+$X\subseteq W$ when some finite $B\in\mathbb N$ satisfies
+$g(w)\le B$ for every $w\in X$. Empty sets are bounded. Write
+
+$$
+f\approx c
+\Longleftrightarrow
+\forall X\subseteq W\quad
+\bigl(c\text{ bounded on }X\ \Longleftrightarrow\
+      f\text{ bounded on }X\bigr).
+\tag{NIC.37}
+$$
+
+Both directions for every subset are required, as in [Vanden Boom,
+§1.2][VB]. A regular finite sublevel cut means that
+$\{w\in W:f(w)\le B\}$ is regular relative to $W$ for each finite
+$B\in\mathbb N$. This is an explicit hypothesis on $f$, with no
+association to a named automaton or cost framework assumed.
+

@@ -1,0 +1,25 @@
+**Proposition 99.1 (receiver vectors on their actual endpoints).**
+Construction 97.1 followed by $k$ actual feedback fragments has
+simultaneously
+
+$$
+\begin{aligned}
+\mathrm{Read}&=bN+k,&\mathrm{Tick}&=1+LN+k,\\
+\mathrm{Hold}&=1+LN+k,&\mathrm{Add}&=k,\\
+\mathrm{P}&=0,&\mathrm{S}&=0,
+\qquad x_{\mathrm{end}}=H_s^kA^{LN+1}x.
+\end{aligned}
+\tag{99.1}
+$$
+
+**Proof.** The primer contributes one Tick and Hold. Each of the $N$
+cycles contributes $b$ Reads and $L$ Tick/Hold pairs. Each fragment
+contributes one each of Add, Read, Tick and Hold. Reads and Holds
+are identity operations and only the stated Tick and Add calls alter
+the field. Equations (97.2) and (97.4) give the endpoint. $\square$
+
+The two comb bills (96.1) are separate **unprimed** runs. Neither that
+bill nor the germ-probe bill of Definition 98.1 replaces (99.1).
+Their endpoints and purposes differ. In particular no favorable
+coordinates from independent schedules are assembled into a new run.
+

@@ -1,0 +1,16 @@
+**(A4) Theorem 21.4 (complete-table residual group).** Two admissible native realizations have equal acquired $G,A,D,E,\mu$ tables exactly when there is a rational orthogonal map $U$ satisfying
+
+$$
+UB=B',\qquad UT=T'U,
+$$
+
+and, for all $x,y$,
+
+$$
+U\bigl(g*x*y\bigr)=g'*(Ux)*(Uy).
+$$
+
+On active axes $U$ is a signed permutation. On the zero-gain subspace it is orthogonal, fixes every named zero-gain port axis, and is further restricted by the $T$-intertwining and admissibility conditions.
+
+**Proof.** The two minimal selected Krylov realizations define $U=R'R^{-1}$. Equality of the Gram tables makes $U$ an isometry; equality of $A,D,E$ gives the linear and port intertwiners, and equality of $\mu$ gives the product equation. Conversely the displayed equations carry every calibration preparation and every command to the corresponding command, so induction as in Theorem 21.2 gives equality of the whole adaptive service. The nonzero rank-one ideals of coordinatewise multiplication are permuted. Orthogonality restricts the scalar on each active line to a sign, while the annihilator carries zero multiplication and may rotate subject to its port anchors and $T$. ∎
+

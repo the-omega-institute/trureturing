@@ -36,6 +36,24 @@ internal sealed class EvolutionBasisTransportDocument : IScribeDocumentDefinitio
     private static Formula Basis => SF.V("b");
     private static Formula Nu => SF.Call("transportProduct",E,Mu);
     private static Formula Aut(Formula p) => SF.Call("Aut",p);
+    private static Formula Apply(Formula f,params Formula[] args) => new Formula.Apply(f,[..args]);
+    private static Formula Qualified(string owner,string name) => Seq(Operatorname,Grp(F.Id(owner)),Dot,Operatorname,Grp(F.Id(name)));
+    private static Formula Instance(Formula t,Formula body) => Seq(OpenBracket,t,CloseBracket,Sp,body);
+    private static Formula NaturalAt(Formula index,Formula basis) => SF.All("i",index,SF.All("j",index,
+        SF.Imp(new Formula.Relation(SF.V("i"),FormulaRelationOperator.NotEqual,SF.V("j")),
+            SF.Eq(Apply(Mu,Apply(basis,SF.V("i")),Apply(basis,SF.V("j"))),D(0)))));
+    private static Formula ReindexedNatural()
+    {
+        var complex=SF.V("Complex");var i=SF.V("I");var n=SF.V("n");
+        var type = Seq(Operatorname, Grp(F.Id("Type")));
+        var reindexed=SF.Call("dimensionBasis",SF.V("hn"),Basis);
+        return SF.All("A",type,Instance(SF.Call("AddCommGroup",A),Instance(SF.Call("Module",complex,A),
+            Instance(SF.Call("FiniteDimensional",complex,A),SF.All("I",type,Instance(SF.Call("Fintype",i),
+                SF.All("n",SF.V("Nat"),SF.All("hn",SF.Eq(Apply(Qualified("Module","finrank"),complex,A),n),
+                    SF.All("mu",SF.Call("LinearMap",complex,A,SF.Call("LinearMap",complex,A,A)),
+                        SF.All("b",Apply(Qualified("Module","Basis"),i,complex,A),
+                            SF.Imp(NaturalAt(i,Basis),NaturalAt(SF.Call("Fin",n),reindexed))))))))))));
+    }
     private static Formula TransportContext(Formula f) => SF.All("A",SF.Type,SF.All("B",SF.Type,
         SF.Imp(SF.Call("ComplexVectorSpace",A),SF.Imp(SF.Call("ComplexVectorSpace",B),
             SF.All("e",SF.Call("LinearEquiv",A,B),SF.All("mu",SF.Call("BilinearProduct",A),f))))));
@@ -91,6 +109,10 @@ internal sealed class EvolutionBasisTransportDocument : IScribeDocumentDefinitio
                     "For any finite index type I and any basis b indexed by I, finrank equals card(I). Given finrank(A)=n, "
                     + "Fintype.equivFinOfCardEq and Basis.reindex produce the n-indexed basis. Its naturality follows by injectivity of the index equivalence. "
                     + "Thus the original natural basis is arbitrary, and the n-dimensional source quantifier is retained.",DescribeRole.Definition),
+                Desc("dimensionBasis_natural","Reindexing preserves zero mixed products",ReindexedNatural(),
+                    "Let A be a finite-dimensional complex vector space, I a finite index type, hn an equality finrank(A)=n, mu a bilinear product and b an I-indexed basis. "
+                    + "If mu(b(i),b(j))=0 for distinct I-indices, the same is true of dimensionBasis hn b for distinct Fin n indices. Injectivity of the reindexing equivalence preserves distinctness. "
+                    + "The arbitrary-module automorphism bound uses this to apply the coordinate theorem."),
                 Desc("finite_and_joint_bound","Joint control on the actual algebra group",BasisContext(
                     SF.And(SF.Call("Finite",Aut(Mu)),SF.Le(SF.Card(Aut(Mu)),
                         SF.Mul(SF.Mul(SF.Call("cycleWeight",beta),SF.Card(SF.Call("centralizer",beta))),SF.Call("BlockFactorialProduct",r))))),

@@ -1,0 +1,19 @@
+**Definition 1.2 (Finite names and their promises).** A name of a real
+number $x$ is a finite program which, on every natural-number input $n$,
+halts with a rational $a(n)$ satisfying $|a(n)-x|\le2^{-n}$. A name of a
+complex matrix supplies such programs for its real and imaginary entries.
+Inputs are names $a_\theta,a_N$ of the particular installed $\theta,N$,
+a name $a_P$ of a particular rank-one orthogonal projection $P\in M_3$,
+and a positive rational accuracy $\varepsilon$. Totality, the error
+bounds, the conditions in (1.1), and $P=P^\dagger=P^2$ with
+$\operatorname{Tr}P=1$ are promises. The codes must describe the same
+source, coordinate alignment and target throughout this run. There is no
+algorithmic test of all these promises in the conclusion.
+
+No name of $d$ or $\rho_0$ is required. The names are supplied calibrated
+information, not observations obtained from fair labels. Producing,
+authenticating and binding them to hardware are separate tasks. The
+finite arithmetic certificates below are conditional on the soundness of
+the input enclosures; they do not authenticate that binding or certify the
+global correctness of an arbitrary program.
+

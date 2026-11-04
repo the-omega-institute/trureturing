@@ -1,0 +1,64 @@
+**Theorem 8.2 (Complete sequence classification and all exact levels).**
+Fix integers $2\le a\le b\le c<a+b$. For every sequence of arbitrary
+positive original labelled assignments,
+
+$$
+F(g_j)\longrightarrow C_{a,b,c}
+\quad\Longleftrightarrow\quad
+\frac{g_j}{\lambda_2(g_j)}\longrightarrow h^*
+\quad\text{in every original edge coordinate}.
+\tag{8.4}
+$$
+For every $R_0>0$ the exact-resistance level has the attained maximum
+
+$$
+\max_{g\in\mathcal F_{a,b,c,R_0}}\lambda_2(g)
+=\frac{C_{a,b,c}}{R_0},
+\qquad
+\operatorname*{argmax}_{g\in\mathcal F_{a,b,c,R_0}}\lambda_2(g)
+=\left\{\frac{C_{a,b,c}}{R_0}h^*\right\}.
+\tag{8.5}
+$$
+For every sequence in that exact level set,
+
+$$
+\lambda_2(g_j)\longrightarrow\frac{C_{a,b,c}}{R_0}
+\quad\Longleftrightarrow\quad
+g_j\longrightarrow\frac{C_{a,b,c}}{R_0}h^*
+\quad\text{in every original edge coordinate}.
+\tag{8.6}
+$$
+The full original-vertex spectrum at the maximum is (7.11) with
+$\tau=C_{a,b,c}/R_0$.
+
+*Proof.* By $\eta\le1/4$, and in particular $\eta<1$,
+
+$$
+\frac{C_{a,b,c}}n=n-3+\frac3{2+\eta}>n-2.
+$$
+Thus a sequence satisfying the left side of (8.4) meets Lemma 8.1.
+Its normalized sequence is bounded, and every cluster point is connected
+and has resistance $C_{a,b,c}$. Theorem 7.3 forces every such point
+to be $h^*$. Hence the whole normalized sequence converges to $h^*$:
+otherwise a subsequence stays a fixed positive distance from $h^*$,
+and boundedness supplies a further cluster point at that distance,
+a contradiction. Conversely, normalized convergence to $h^*$ and
+continuity of $R$ there give
+$F(g_j)=R(g_j/\lambda_2(g_j))\to R(h^*)=C_{a,b,c}$.
+This proves both directions with no symmetry or boundedness premise
+on the original $g_j$.
+
+Theorem 5.1 supplies the exact scaling bijection for every positive
+resistance level. Applying Theorem 7.3 to that bijection gives (8.5):
+the unique point on its equality ray has scale $C/R_0$, all its original
+conductances are finite and positive, and its resistance is exactly
+$C/(C/R_0)=R_0$. Its spectrum follows from (7.11).
+
+For an exact-level sequence, $F(g_j)=R_0\lambda_2(g_j)$.
+If it is maximizing, (8.4) gives
+$g_j/\lambda_2(g_j)\to h^*$ and its scalar multiplier tends to
+$C/R_0$. Their product tends to $(C/R_0)h^*$, proving necessity in
+(8.6). Conversely, this original-coordinate convergence implies
+$\lambda_2(g_j)\to\lambda_2((C/R_0)h^*)=C/R_0$ by eigenvalue
+continuity and the actual spectral scale in Theorem 7.3. ∎
+

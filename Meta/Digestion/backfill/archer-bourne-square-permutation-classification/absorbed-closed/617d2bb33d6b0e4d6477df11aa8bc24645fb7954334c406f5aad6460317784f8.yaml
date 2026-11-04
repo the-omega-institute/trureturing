@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:617d2bb33d6b0e4d6477df11aa8bc24645fb7954334c406f5aad6460317784f8
+  normalized_sha256: sha256:617d2bb33d6b0e4d6477df11aa8bc24645fb7954334c406f5aad6460317784f8
+cas_ref: sha256:617d2bb33d6b0e4d6477df11aa8bc24645fb7954334c406f5aad6460317784f8
+coverage_gids:
+  - gid: D5/S3/Combinatorics/PermutationSquare/PermutationSquareFamilies.indecomposable_shape_and_prefix_iff
+    target_statement_id: sha256:88e72480d4d257074e54f0c034729a73dc02404fb6bc9579c0585136552896e8
+receipts:
+  unresolved_subitems: []

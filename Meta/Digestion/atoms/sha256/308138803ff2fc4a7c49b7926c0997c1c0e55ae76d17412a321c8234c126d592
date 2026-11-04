@@ -1,0 +1,6 @@
+For every
+designated original residual one can decide syntactically whether its
+canonical value is finite; this classification is parameter-independent.
+In the finite case its value is a finite expression $f_i(\mathbf p)$ in
+grounds, parameter atoms, fixed powers and pairs, and every solution of
+that case has that exact value.

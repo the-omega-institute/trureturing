@@ -1,0 +1,71 @@
+**Theorem 4.2 (attainment, complete acquisition and actual endpoint).**
+This one-source schedule finitely earns the old pair modulo $G_K$,
+its grown law, and its actual current field modulo that same group:
+
+$$
+ w=A^LEx+r_A,\qquad
+ r_A=\sum_{j=1}^k A^{L-\tau_j}Be_j.
+\tag{SC.10}
+$$
+
+It attains the necessary $c$ inherited splits with exactly
+
+$$
+ (S,P,\mathrm{Read},\mathrm{Add},\mathrm{Tick},\mathrm{Hold})
+ =\bigl(c,0,2Mk(k+1),k,(k+1)(2M-1),1+2M(k+1)\bigr),
+\tag{SC.11}
+$$
+
+$2c$ fresh source cells and $c$ appended labels, in addition to its
+own paid installation/preparation and local computation/storage/traffic.
+
+Proof. Apply the rational sequence and persistent-pulse arguments
+of [NLBAII, Lemmas 77.2–77.3][NLBAII] with order cap $R=M$, current
+law $A$, initial vector $Ex$ and $k$ terminal channels. Their statements
+concern a rational matrix and an earned cap, not positivity or
+invertibility: a monic annihilator of degree $M$ exists by
+Cayley–Hamilton. A fitted monic order-$M$ recurrence matching $2M$
+vector returns continues the genuine sequence because the product of
+the fitted and genuine annihilators annihilates their difference,
+whose first $2M$ values vanish. Thus the reuse applies also to zero
+returns, singular laws and repeated spectra.
+
+Explicitly the free block acquires $f_h=CA^hEx$ for $0\le h\le H$.
+The actual $j$th pulse block returns
+
+$$
+ y_{j,h}=f_{jH+h}
+   +\sum_{i<j}h_i((j-i)H+h)+h_j(h),\qquad
+ h_i(t)=CA^tBe_i.
+\tag{SC.12}
+$$
+
+Continue only the already earned free sequence and earlier pulse
+columns and subtract them in this identity. It earns the next
+$h_j(0),\ldots,h_j(H)$ before continuing that column. Induction on
+$j$ obtains every required moment and free value on this same run.
+Computed continuations are not further measurements. The genuine
+$3$-step moment (SC.7) is among these earned impulse entries.
+
+Lemma 2.2 and Theorem 2.3 with $J=I$ now return the branch-sign
+class. An effective representative respecting every known birth
+edge is obtained as follows. The raw infection representative may
+have signed fresh links. Its $p-pR$ coefficient has value $d_p$
+and its $pL-pLL$ coefficient has value $d_{pL}$ in $\{1,-1\}$.
+Flip those distinct old coordinates accordingly, keeping all
+terminals fixed. This normalizes these links to the actual $+1$
+values. Their only remaining sign choices are on $K$. Free pairings
+give $Ex$ in the same representative and hence its old restriction
+$x$. All operations use rational finite data, including exact square
+roots of promised rational squares, and terminate.
+
+The actual pulse at $\tau_j$ has $L-\tau_j$ subsequent Ticks.
+Linearity on the one field therefore gives exactly (SC.10).
+The receiver can compute its representative by replaying the known
+fixed field schedule from its acquired entrance representative,
+paying all local work; no source rollback or second run is involved.
+At the final Hold it retains the representative at $w$, the current
+term and genuine table/context. Each of $k+1$ blocks has $2M$ full
+terminal scans, $H$ Ticks and $2M$ Holds. There are $k$ pulse Adds,
+and the separate pre-growth Hold, giving (SC.11). $\square$
+

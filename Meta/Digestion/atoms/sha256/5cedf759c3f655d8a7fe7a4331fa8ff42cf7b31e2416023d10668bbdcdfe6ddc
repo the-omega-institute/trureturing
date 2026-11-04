@@ -1,0 +1,8 @@
+**命题 84.4（最新 mixed child 的 chosen-$J$ 局部证书）。** 保持定义 79.1 的实际 $H_4$、strict-real guards、chronological clocks 与 complete worlds。在 [Strict-real Theorem 8.2][F84STRICT] 的同一个 acquired sixth-$M$ base $(p^*,v^*)$，以该 entire child 三个 legal worlds 的 identity 为 target $z$。假设原 clock-seven $J$ 已获许可，实际 paid response 被保留，并且存在已供应的 source-independent discriminator，把三个 terminal-$J$ values 分配到三个不交 intervals。则该 fixed child 的 branch-label task 有一次 chosen-$J$ 的 $\mathcal W_1$ certificate。相反，在没有额外区分输入的同一 read-and-halt task 中，只选一次 terminal $M$ 不能恢复全部三个 labels。
+
+**证明。** Theorem 8.2 已穷尽该 entire child：恰有三个 legal complete worlds，其唯一 unordered terminal-$M$ collision pair 是一个 singular endpoint 与一个 ordinary endpoint，且 terminal $J$ 在整个 child 上 injective。无需重新隔离或 lift 其 algebraic roots。
+
+将这三个 pre-read complete states、原合法 $J$ 的 actual successors、三种 response classes 和正确 halt labels 组成有限模型。其 chosen action、read permission 与 successor fields 来自同一原合同；discriminator 只用已供应 intervals，不查询隐藏 world。每个非空 response class 只剩一个 $z$，所以读后 candidate relation 在 $\mathcal W_0$，读前 relation 在 $\mathcal W_1$。保留实际 branch costs 为各自标签，取 rank $1/0$，就得到 §62 的 finite chosen-action certificate。这个有限关系抽象使用 abstract interpretation 的保守性思想（Cousot–Cousot，DOI [10.1145/512950.512973](https://doi.org/10.1145/512950.512973)）；抽象本身不授予读取或动作权限。
+
+若只选原 terminal $M$ 然后 halt，该 actual collision pair 给出同一个 response，却有两个不同 target labels，因此 source-independent halt rule 不能同时正确。这个失败只针对所述 chosen action 与 read-and-halt task，不是所有后续协议的不可能性。∎
+

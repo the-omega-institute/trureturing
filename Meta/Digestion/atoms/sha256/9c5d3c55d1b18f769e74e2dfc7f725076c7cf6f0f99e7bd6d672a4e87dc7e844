@@ -1,0 +1,81 @@
+### 定理 18.4（有界增强成功域的有限预选协议及定量界）
+
+对任意有限 $B>0$ 和任意子集
+
+$$
+ \begin{aligned}
+ D&\subseteq\{R\in\mathcal I_k(\gamma):M(R)\le B\},
+       &&\text{或}\\
+ D&\subseteq\{R\in\mathcal I_k(\gamma):\|R\|_{\max}\le B\},
+ \end{aligned}
+\tag{18.6}
+$$
+
+均存在一个预先选定的有限协议族 $F$，使
+$D\subseteq\bigcup_{\Pi\in F}\operatorname{Succ}_{\varepsilon}(\Pi)$。
+每个成员都在完整 $\mathcal M_k$ 上保持 $\gamma$-可靠，因而也
+$\varepsilon$-可靠；每个成员在每个来源的每条 $\gamma$-允许误差历史上
+至多 $2k-1$ 次初始计入报告即停止。两种情形分别有充分上界
+
+$$
+ \begin{aligned}
+ \nu_{k,\varepsilon}(D)&\le |F|
+       \le\left\lceil\frac B\delta\right\rceil^{k^2+k-1}
+       &&\text{若 }M(R)\le B\text{ 于 }D,\\
+ \nu_{k,\varepsilon}(D)&\le |F|
+       \le\left\lceil\frac{kB}\delta\right\rceil^{k^2}
+       &&\text{若 }\|R\|_{\max}\le B\text{ 于 }D.
+ \end{aligned}
+\tag{18.7}
+$$
+
+特别地，$k=3$ 时两界分别为
+$\lceil B/\delta\rceil^{11}$、$\lceil3B/\delta\rceil^9$，
+且每个成员至多五报告停止。
+
+**证明。** 空 $D$ 取空族。先证明第一种有界性。置
+$m=k^2+k-1$、$n=\lceil B/\delta\rceil\ge1$，把 $(0,B]$ 分为
+
+$$
+ I_r=((r-1)B/n,rB/n]\quad(1\le r\le n).
+\tag{18.8}
+$$
+
+由引理 18.2，$\Phi_k(D)\subseteq(0,B]^m$，故它至多占据 $n^m$
+个乘积格。对每个被占据的格，选一个实际来源 $R_C\in D$，其坐标落在该格。
+同格内任意 $S\in D$ 满足
+$d_{\mathrm{op}}(R_C,S)\le B/n\le\delta$。
+中心属于 $D$，故每个 $R_C\in\mathcal I_k(\gamma)$。
+按定义 14.1 选取一个全域 $\gamma$-可靠、在 $R_C$ 上全误差成功的协议，
+再在同一容限 $\gamma$ 下应用定理 14.2，得到 $\widehat\Pi_C$。
+它仍在 $R_C$ 上全误差成功，并在完整 $\mathcal M_k$ 上
+$\gamma$-可靠，所有 $\gamma$-允许历史均至多 $2k-1$ 读停止。
+
+此后保持 $\widehat\Pi_C$ 的全部规则不变，包括容限 $\gamma$ 的
+(13.5) 末端判定。定理 18.3 保证它在同格内每个 $S$ 的全部
+$\varepsilon$-误差历史上成功。所有这些协议组成 $F$；格数给出第一界。
+此处正规形只在选定中心协议时应用一次，邻近来源的转移使用的确为同一协议。
+
+对第二种有界性，置 $n=\lceil kB/\delta\rceil\ge1$，以 (18.8) 对全部
+$k^2$ 个矩阵条目分格。严格正来源的条目均落在 $(0,B]$。
+每个被占据的矩阵格选取 $R_C\in D$；同格 $S$ 满足
+$\|R_C-S\|_{\max}\le B/n\le\delta/k$。
+引理 18.2 遂给出 $d_{\mathrm{op}}(R_C,S)\le\delta$。
+重复同一中心协议选择、正规形和转移步骤，至多需要 $n^{k^2}$ 个成员。
+两种构造都只在有限个非空格中取中心，不要求 $D$ 闭或紧，也不把来源
+替换为可能不在 $\mathcal M_k$ 中的格点或极限来源。
+
+这里使用的集合内中心、闭半径有限网是通常的度量覆盖工具，见
+Roman Vershynin，[*High-Dimensional Probability*，第一版，§4.2，
+Definition 4.2.1--4.2.2](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf)。
+格数计算是本证明的中间步骤；该文献不承担单轨迹的 (18.4) 或协议结论 (18.7)。
+后两者复用本模型的原子归约和定理 14.2，是本模型上的推导（repo-derived），
+不作外部首创性断言。
+
+(18.7) 只是充分的存在性上界，不主张最小值达到这些界。
+选中心和协议的存在性不提供格占据的判定算法、有限位实现或未知来源上的在线
+选择器，也不赋予运行者 $\Phi_k(R)$ 或完整矩阵。覆盖量词仍是每个来源至少
+有一个成功成员；不同成员没有合成一条实际运行。
+若把目标扩大到整个 $\mathcal I_k(\varepsilon)$，或只保留有界性而去掉
+$\mathcal I_k(\gamma)$ 前提，本证明不给出有限覆盖。∎
+

@@ -1,0 +1,45 @@
+**Theorem 21.1.** A parent sequence with finite limiting responses and
+no subsequence converging to a strict parent world has, after a
+subsequence, a limiting response on one of (21.1) or at $q_\infty$.
+
+**Proof.** Lemma 20.1 bounds drift and all gain coefficients. If
+$b\to b_0>0$ is finite and $r$ has an interior limit, the source,
+drift and gain have a strict parent limit. Its gain is nonzero by the
+unequal first two readings. The remaining limits with such $b_0$
+have $r\to0$ or $1$. A zero limiting $\Lambda$ would force
+$b_0=1/8$ by $F_{\rm par}=0$, but the cubics in (20.1) are nonzero there.
+Solving for $\epsilon$ and substituting in (19.3) gives exactly
+$R_0(b_0),R_1(b_0)$.
+
+If $b\to\infty$, then $d\to0$. Use the scaled polynomial
+$g_{\rm sc}=Ug$. Its samples at nodes $1,2,3,4$ converge to
+$(48,294/5,48,18)$, since $j/U,n/U,T/U\to1/2$.
+Fixed-node interpolation gives $g_{\rm sc}(5)\to-144/5$,
+$g_{\rm sc}(6)\to-90$. Since $V/U\to3/2$ and $(2U+n)/U\to5/2$,
+the limiting response is $q_\infty$. This argument scales the whole
+gain and does not assume its unscaled coefficients vanish at a rate.
+
+If $b\to0,j\to\infty$, then $d\to243/10$ and the samples
+(19.2) give $g(5)\to-24/5$. Since $V\to\infty$, bounded $P_5$
+is impossible. Otherwise let $j\to z\ge0$; then $r\to0$ or $1$.
+For $z>0$, (20.2) gives respectively
+$$
+\epsilon\to\frac{3z}{10(z-1)},\qquad
+\epsilon\to\frac{3z(z+1)}{5(2z^2-1)}.
+$$
+The poles are excluded by bounded drift. Substitution gives $\mathcal B_0(z)$
+or $\mathcal B_1(z)$.
+
+At $z=0$ one must retain the rates of vanishing traces. If $r\to0$,
+$$
+0\le r/j\le b/(1-r)\to0,\quad n/j\to1,\quad
+\Lambda j\to-8,\quad\epsilon/j\to-3/10.
+$$
+If $r\to1$, then $n\to1$, $\Lambda j\to-4$ and
+$\epsilon/j\to-3/5$. Equation (19.2) and the extrapolation weights of Lemma 2.2, without division by
+a limiting zero, give respectively
+$$
+(39/2,258/5)=\mathcal B_0(0),\qquad(18,399/5)=\mathcal B_1(0).
+$$
+These cases exhaust all escaping source sequences. ∎
+

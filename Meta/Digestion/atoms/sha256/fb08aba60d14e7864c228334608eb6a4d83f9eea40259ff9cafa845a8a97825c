@@ -1,0 +1,29 @@
+**Proposition 12.2 (saturation and its nontrivial-law qualification).**
+For every finite physical-word family $\mathcal W$, every $d\ge0$
+and every $s\in\mathscr C_d$, all words in the family are present at
+all sufficiently old mature cuts. More explicitly, with
+$L=\max(\{0\}\cup\{|w|:w\in\mathcal W\})$,
+
+$$
+ n\ge\max(n_0,2L)\quad\Longrightarrow\quad
+ \operatorname{Read}^{s}_n(w)=1\quad(w\in\mathcal W).
+ \tag{ACR.43}
+$$
+
+For $d\ge1$ this rules out a fixed age-independent finite word family
+separating the behaviors on all mature cuts. For $d=0$ there is only
+one behavior, and the empty family already separates behaviors
+vacuously. Saturation holds in both cases. It does not obstruct the
+adaptive age-dependent words in Definition 11.1.
+
+Proof. Every nonempty $w$ is born by $2|w|$ by (ACR.7), uniformly
+over the law, and the empty word is always present. Persistence proves
+(ACR.43). When $d\ge1$, the constant-zero and constant-one behaviors
+are distinct allowed streams, yet all the displayed replies coincide
+at a common sufficiently large cut. They cannot be separated by that
+family. The singleton case has no distinct pair. In Definition 11.1,
+the acquired $h$ grows with the actual cut by (ACR.27), and neither
+the spine family used on that run nor its later separators is fixed
+independently of those acquired replies. Thus the impossibility
+consequence has no application to Theorem 11.2. $\square$
+

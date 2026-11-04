@@ -1,0 +1,128 @@
+**定理 58.1（全来源构造与分解的正面上界）。** 在定义 57.1 的数学通道类内，
+两种 $X$ 各有一条共同构造通道和一条共同分解通道，满足
+
+$$
+\begin{aligned}
+E_{\rm con}^X(n)&\le U_{\rm con}(n)
+ :=\min\{1,\,1-a^2+a^2\sqrt{1-ab}\},\\
+E_{\rm dec}^X(n)&\le U_{\rm dec}(n)
+ :=\min\{1,\,r+a\sqrt{1-a^2}\}.
+\end{aligned}
+\tag{58.1}
+$$
+
+更强地，可报告构造的四个旗标 $(i,j,\mathrm{Stop})$，$i,j\in\{F,L\}$，
+以及分解的两个旗标 $(i,\mathrm{Stop})$。对应源输入上的旗标律分别为
+
+$$
+\tau_{\rm con}=a^2[FF]+ar[FL]+ra[LF]+r^2[LL],\qquad
+\tau_{\rm dec}=a[F]+r[L],
+\tag{58.2}
+$$
+
+方括号表示含 Stop 的正交经典旗标态。它们与源无关。
+设完整报告输出为 $\widehat\Phi,\widehat\Psi$，则全来源同时有
+
+$$
+\begin{aligned}
+D\bigl(\widehat\Phi(\pi_s^X\otimes\pi_t^X),
+       \tau_{\rm con}\otimes\pi_{\langle s,t\rangle}^X\bigr)
+ &\le U_{\rm con}(n),\\
+D\bigl(\widehat\Psi(\pi_{\langle s,t\rangle}^X),
+       \tau_{\rm dec}\otimes(\pi_s^X\otimes\pi_t^X)\bigr)
+ &\le U_{\rm dec}(n).
+\end{aligned}
+\tag{58.3}
+$$
+
+右侧比较对象是逐来源指定的基准态族，未断言有物理或数学通道实现这个基准族。
+误差比较包含所有报告旗标、Stop 和保留下来的目标载体；没有成功条件化。
+$FF$ 与 $F$ 表示所走的场分支，不称为精确成功。
+
+证明。以下固定 $X$ 并略去上标。记 $P_F=JJ^*$、$P_L=I-P_F$，
+$P_{ij}=P_i\otimes P_j$。取固定真空输出 $f=Je_{\varnothing}\in H$；
+对 $R$，$e_{\varnothing}$ 指零函数基。分解方向的固定输出取 $f\otimes f$。
+这些制备只依赖已知载体，属于数学比较类允许的固定资源。
+
+构造方向，定义场上的等距
+
+$$
+W(x\otimes y)=\mathcal U^*(e_0\otimes x\otimes y),\qquad
+A=JW(J^*\otimes J^*):H\otimes H\longrightarrow H.
+\tag{58.4}
+$$
+
+它满足 $A^*A=P_{FF}$。对任意迹类 $Y$ 定义报告通道
+
+$$
+\widehat\Phi(Y)=[FF]\otimes AYA^*
+ +\sum_{ij\ne FF}[ij]\otimes\operatorname{Tr}(P_{ij}Y)|f\rangle\langle f|.
+\tag{58.5}
+$$
+
+每个非场分支都实际输出固定 fallback，而不是删去其概率。
+该定义从不测量 $e_s,e_t$ 的标签；只投影到固定直和项，再将其余输入送入不可访问环境。
+对源乘积输入，四支质量正是 (58.2)，$FF$ 条件输出为纯态
+$|JW(w_s\otimes w_t)\rangle\langle JW(w_s\otimes w_t)|$。
+由 (57.4)–(57.5)，它与 $v_{\langle s,t\rangle}$ 的内积模为
+$\sqrt a$（$s\ne t$）或 $\sqrt{ab}$（$s=t$）。
+两个纯态的半迹距离为其内积模平方的一减平方根；这可在它们张成的至多二维空间
+直接对角化密度差得到。因此场分支距离至多 $\sqrt{1-ab}$。
+其他三支的归一化态距离各至多一。相同经典块的迹范数可加，故完整距离至多
+
+$$
+a^2\sqrt{1-ab}+ar+ra+r^2
+ =a^2\sqrt{1-ab}+1-a^2.
+\tag{58.6}
+$$
+
+分解方向，对根标准基 $e_q$，$0\le q<d_X$，定义
+
+$$
+B_q=(J\otimes J)(\langle e_q|\otimes I\otimes I)\mathcal U J^*,
+\qquad \sum_{q=0}^{d_X-1}B_q^*B_q=P_F.
+\tag{58.7}
+$$
+
+令
+
+$$
+\widehat\Psi(Y)=[F]\otimes\sum_q B_qYB_q^*
+ +[L]\otimes\operatorname{Tr}(P_LY)
+       |f\otimes f\rangle\langle f\otimes f|.
+\tag{58.8}
+$$
+
+$F$ 支是根子系统的偏迹，没有测量并报告根值 $q$；$q$ 是未观测扩张环境的 Kraus 索引。
+在嫁接源上，(57.4) 使这支质量为 $a$，条件输出恰为
+$|Jw_s\otimes Jw_t\rangle\langle Jw_s\otimes Jw_t|$。
+它与 $v_s\otimes v_t$ 的内积为 $a$，所以条件距离恰为 $\sqrt{1-a^2}$。
+$L$ 支质量 $r$ 全部保留并输出固定 fallback，给完整上界
+$r+a\sqrt{1-a^2}$。两式再用归一化态距离至多一，即得 (58.3)；
+遗忘报告旗标的偏迹给 (58.1) 的实际通道。
+
+还须在全部载体上验证正规性，不能只为所列源向量配像。
+(58.5) 的场支已有有界 Kraus 算子 $A$。对每个 $ij\ne FF$，取
+$P_{ij}(H\otimes H)$ 的任一可数正交基 $g_{ij,k}$，其 fallback Kraus 算子为
+$|f\rangle\langle g_{ij,k}|$。加上对应正交报告旗标后，所有
+$K_\nu^*K_\nu$ 的和强收敛至 $\sum_{ij}P_{ij}=I$。
+(58.8) 同理由有限个 $B_q$ 和 $|f\otimes f\rangle\langle g_{L,k}|$ 完成，
+其和强收敛至 $P_F+P_L=I$。任意基选择给同一重置映射
+$Y\mapsto\operatorname{Tr}(PY)|f\rangle\langle f|$，不向外报告基索引。
+
+具体地，对正迹类 $Y$，各 Kraus 项均正，部分和的迹递增至
+$\operatorname{Tr}Y$，因为强完备关系可逐项用于 $Y$ 的正谱展开并交换非负求和。
+尾和的迹就是其迹范数，故这些算子和按迹范数收敛。
+任意迹类可写为四个正迹类的线性组合，给出全域线性映射；
+每个有限矩阵放大的和仍为正，故完全正，且完备关系保证保迹。
+对偶为 $Z\mapsto\sum_\nu K_\nu^*ZK_\nu$；对有界递增正算子网，
+逐向量二次型的非负和与上确界交换，故对偶保持该上确界，即正规。
+这直接建立可分无限维载体上的通道，而非援引有限维 Choi 矩阵完成。
+
+本证明消费通常 Kraus／等距、重置、纯态距离和正交块迹范数方法。
+其有限维表述见 [Watrous，*The Theory of Quantum Information*，第 2 章，
+定理 2.22、2.26](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)；
+无限可数和的收敛与正规性已在此单独核对。
+新增的来源特定接合是 (57.4) 与固定根真空及场投影相配，从而得到
+全 $T^2$ 的 (58.2)–(58.6)、(58.8)，不把一般 Kraus 定理作为新增成果。∎
+

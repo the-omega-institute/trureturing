@@ -1,0 +1,13 @@
+**Definition 5.1 (original-seed feasible weights).** Give $S$ the sigma algebra
+of all subsets and let
+$$
+\mathsf P_\nu=\{(\nu(H=h))_{h\in S}:H:U\to S\text{ measurable}\}.
+$$
+For $p\in\mathsf P_\nu$ write
+$$
+C(p)=\sum_{h<\infty}p_hK_h+p_\infty K_\infty,\qquad
+E(p)=\sum_{h<\infty}p_hR_h^*.
+$$
+For $B\in[0,\infty)$ let $F_\nu(B)$ be the infimum of actual error over all
+lawful almost-sure-decision controllers with actual mean at most $B$.
+

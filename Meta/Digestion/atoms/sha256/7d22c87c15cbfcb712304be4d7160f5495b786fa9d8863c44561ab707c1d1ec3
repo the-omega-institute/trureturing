@@ -1,0 +1,21 @@
+#### 定理 9.6（树状重叠的 Bell 阻碍）
+
+$\rho_{AB}=\lvert \Phi^+\rangle\langle \Phi^+\rvert$ 与
+$\rho_{BC}=\lvert \Phi^+\rangle\langle \Phi^+\rvert$ 在共享的 $B$ 上都有边际 $I/2$，
+但不存在具有这两份边际的三比特状态。
+
+**证明。**
+
+若 $\rho_{ABC}$ 的 $AB$ 边际是秩一投影 $P$，
+令 $Q=I_{AB}-P$，则 $\operatorname{Tr}[(Q\otimes I)\rho_{ABC}]=0$。
+正性使 $\rho_{ABC}$ 的支撑包含于
+$\operatorname{ran}P\otimes H_C$，从而
+$\rho_{ABC}=P\otimes\sigma_C$。
+于是其 $BC$ 边际只能是 $(I_B/2)\otimes\sigma_C$，
+秩至少二，不可能等于纯 Bell 态。 ∎
+
+经典记录的树上延拓不能直接移植为任意量子密度矩阵的延拓：
+量子关联还受纠缠单配等全局约束。
+
+<a id="statement-9-7"></a>
+

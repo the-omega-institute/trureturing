@@ -153,18 +153,60 @@ def inventory(root):
     return records
 
 
-def identity(source, path):
+def identity(source, path, snapshot=None, deadline=None):
+    """Preserve native failures unless a fresh observation confirms identity drift."""
     path = Path(path).absolute()
     if path.is_symlink() or not path.is_dir():
         raise Refused("missing_or_linked_tree")
     path = path.resolve()
-    match = [r for r in inventory(source) if Path(r["worktree"]).resolve() == path]
-    if len(match) != 1 or common(path) != common(source):
+    marker = path / ".git"
+    def pointer_target(data):
+        lines = os.fsdecode(data).splitlines()
+        return (path / lines[0][8:]).resolve() if len(lines) == 1 and lines[0].startswith("gitdir: ") else None
+    pointer = None
+    try:
+        pointer = marker.read_bytes() if marker.is_file() and not marker.is_symlink() else None
+        snapshot = snapshot if snapshot is not None else (inventory(source), common(source))
+        return _read_identity(path, snapshot)
+    except (GitFailure, OSError, subprocess.TimeoutExpired):
+        if path.is_symlink() or not path.is_dir():
+            raise Refused("missing_or_linked_tree")
+        if marker.is_symlink() or not marker.exists():
+            raise Refused("git_pointer")
+        try:
+            previous_target = pointer_target(pointer) if pointer is not None else None
+            current = marker.read_bytes() if marker.is_file() else b""
+            changed = previous_target is not None and pointer_target(current) != previous_target
+        except OSError:
+            changed = False
+        if changed:
+            raise Refused("git_pointer_identity")
+        # The batch alarm still bounds native rechecks. An exhausted alarm must
+        # not start another native read after its execution budget has expired.
+        if deadline is None or time.monotonic() < deadline:
+            try:
+                rows = inventory(source)
+                previous = [row for row in snapshot[0] if Path(row["worktree"]).resolve() == path] if snapshot is not None else None
+                current = [row for row in rows if Path(row["worktree"]).resolve() == path]
+            except Exception:
+                pass
+            else:
+                if not current:
+                    raise Refused("repository_identity")
+                if previous is not None and current != previous:
+                    raise Refused("observed_identity_changed")
+        raise
+
+
+def _read_identity(path, snapshot):
+    rows, source_common = snapshot
+    match = [r for r in rows if Path(r["worktree"]).resolve() == path]
+    if len(match) != 1 or common(path) != source_common:
         raise Refused("repository_identity")
     if Path(value(path, "rev-parse", "--show-toplevel")).resolve() != path:
         raise Refused("tree_identity")
     metadata = Path(value(path, "rev-parse", "--absolute-git-dir")).resolve()
-    if metadata != common(source):
+    if metadata != source_common:
         pointer = path / ".git"
         if pointer.is_symlink() or not pointer.is_file():
             raise Refused("git_pointer")
@@ -242,6 +284,8 @@ def path_scopes(stack, source, path, reads=(), writes=()):
 def git_scope(stack, source, path):
     metadata = value(path, "rev-parse", "--absolute-git-dir")
     result = git(path, "symbolic-ref", "--quiet", "HEAD", check=False)
+    if result.returncode not in (0, 1):
+        raise GitFailure(result.stderr.decode(errors="replace").strip() or "git failed")
     branch = os.fsdecode(result.stdout).strip() if result.returncode == 0 else "HEAD"
     for reference in sorted({metadata + ":HEAD", branch if branch != "HEAD" else metadata + ":HEAD"}):
         acquire(stack, source, "ref:" + reference, True)
@@ -448,6 +492,7 @@ def main(argv=None):
     pool = commands.add_parser("pool")
     pool.add_argument("--dev", required=True)
     pool.add_argument("--force", action="store_true")
+    pool.add_argument("--exclude-path", type=Path, action="append", default=[])
     recovery = commands.add_parser("recover-init")
     recovery.add_argument("--path", type=Path, required=True)
     recovery.add_argument("--branch", required=True)
@@ -460,11 +505,12 @@ def main(argv=None):
     removal.add_argument("--force", action="store_true")
     removal.add_argument("--preview", action="store_true")
     removal.add_argument("--expected", action="append", default=[])
-    retirement = commands.add_parser("retire-branch")
-    retirement.add_argument("--branch", required=True)
-    retirement.add_argument("--commit", required=True)
-    retirement.add_argument("--preview", action="store_true")
-    retirement.add_argument("--expected-reflog-sha256")
+    pending = commands.add_parser("removal-pending")
+    pending.add_argument("--path", type=Path, required=True)
+    qualification = commands.add_parser("qualify")
+    qualification.add_argument("--path", action="append", type=Path, required=True)
+    qualification.add_argument("--stream", action="store_true")
+    qualification.add_argument("--budget-seconds", type=float)
     for action in ("prepare-mirror", "validate-mirror"):
         mirror = commands.add_parser(action)
         mirror.add_argument("--base", required=True)
@@ -495,23 +541,35 @@ def main(argv=None):
         elif options.action in ("return", "claim", "pool"):
             from worktree_pool import return_tree, claim, sweep
             result = (return_tree(options) if options.action == "return" else claim(options)
-                      if options.action == "claim" else sweep(options.source, options.dev, options.force))
+                      if options.action == "claim" else sweep(options.source, options.dev, options.force,
+                                                             options.exclude_path))
             print(json.dumps(result), flush=True)
             return 74 if result.get("pool", result).get("status") == "failed" else 0
         elif options.action == "recover-init":
             from worktree_publication import recover_initialization
             print(json.dumps(recover_initialization(options)), flush=True)
+        elif options.action == "qualify":
+            from worktree_preservation import qualify_batch
+            def emit(row):
+                print(json.dumps(dict(event="worktree_qualification_item", **row)), flush=True)
+            def emit_started(path):
+                print(json.dumps(dict(event="worktree_qualification_started", path=str(path))), flush=True)
+            result = qualify_batch(options, emit if options.stream else None,
+                                   emit_started if options.stream else None)
+            if options.stream:
+                result = dict(event=result["event"], status=result["status"], item_count=len(result["items"]))
+            print(json.dumps(result), flush=True)
+            return 74 if result["status"] == "failed" else 0
+        elif options.action == "removal-pending":
+            from worktree_preservation import removal_pending
+            print(json.dumps(removal_pending(options)), flush=True)
         elif options.action == "remove":
             from worktree_preservation import remove
             result = remove(options)
             print(json.dumps(result), flush=True)
+            if result["status"] == "refused":
+                return 68 if all(row.get("reason", "").startswith("locked_") for row in result["items"]) else 73
             return 74 if result["status"] == "failed" else 0
-        elif options.action == "retire-branch":
-            from worktree_preservation import retire_branch
-            result = retire_branch(options)
-            print(json.dumps(result), flush=True)
-            if result["status"] == "partial_or_indeterminate":
-                return 74
         elif options.action == "prepare-mirror":
             from worktree_publication import prepare_mirror
             print(json.dumps(prepare_mirror(options)), flush=True)
@@ -523,7 +581,16 @@ def main(argv=None):
             from worktree_publication import checkpoint, publish, finalize
             print(json.dumps(dict(checkpoint=checkpoint, publish=publish, finalize=finalize)[options.action](options)), flush=True)
         return 0
-    except (Refused, OSError, ValueError, subprocess.SubprocessError) as error:
+    except Exception as error:
+        # Only remove/qualify use the qualification failure boundary. Other
+        # commands retain their existing refusal and exception contracts.
+        if options.action in ("remove", "qualify") and (
+                isinstance(error, GitFailure) or not isinstance(error, Refused)):
+            from worktree_preservation import qualification_failure
+            print("WORKTREE_FAILED " + qualification_failure(error), file=sys.stderr, flush=True)
+            return 74
+        if not isinstance(error, (Refused, OSError, ValueError, subprocess.SubprocessError)):
+            raise
         if options.action == "checkpoint" and getattr(error, "native_locks", []):
             print(json.dumps(dict(event="worktree_checkpoint", status="failed", error=str(error),
                                   native_locks=error.native_locks)), flush=True)

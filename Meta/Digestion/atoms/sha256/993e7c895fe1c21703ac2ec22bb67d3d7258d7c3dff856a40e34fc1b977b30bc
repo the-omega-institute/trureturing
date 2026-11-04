@@ -1,0 +1,85 @@
+**Theorem 27.1 (original-source causal-release correspondence).**
+Under Assumptions 25.1 and 26.1, fix any original $a,\eta>0$,
+allowed preparation, interior $I$ and finite $T$ as above.
+For every deterministic sequence
+$\epsilon_n,\delta_n,\rho_n\downarrow0$ and $N_n\to\infty$,
+with the stated positive design ranges, the corresponding finite
+laws have a common coupling with the unchanged original source
+such that
+
+$$
+ \|\mathcal O_n-O^I\|_{[0,T]}\longrightarrow0,
+ \qquad \widehat S_n\longrightarrow T\wedge\theta_I
+                              \quad\hbox{almost surely}.
+\tag{27.1}
+$$
+
+Here $\mathcal O_n(t)$ is the actual ten-output path of Definition
+26.2 held at its own observation exit; $O^I(t)$ is precisely (17.1)
+at the same original elapsed time $t$. In particular their joint
+laws with the censored own exit converge in the uniform ten-output
+path topology times $[0,T]$. The consumer observes neither the
+original target exit nor any target modulus. Source contacts and
+observation exits are distinct events throughout this assertion.
+
+**Proof.** Use one original full source as Theorem 24.3's witness
+for all designs, taking the countable intersection of their
+probability-one version and coupling events. By (25.2), for the
+unstopped virtual polygon (26.1),
+
+$$
+ \|Q_n-\mathsf Z\|_{[0,T],\infty}
+ \le \Omega_T(\mathsf Z;\epsilon_n\vee\delta_n)
+                         +\Omega_T(\mathsf Z;2T/N_n).
+\tag{27.2}
+$$
+
+Indeed, on a cell $[t_j,t_{j+1}]$ its endpoints are sampled from
+$V$ at $t_{j-1},t_j$. Each endpoint differs from the source at the
+same sample time by at most the first modulus. Both sample times
+are at distance at most $2T/N_n$ from the present time. A convex
+combination gives (27.2). On the first cell the polygon is $e$
+and the second modulus alone suffices. Continuity makes (27.2)
+tend to zero almost surely. This is a same-time bound: no time
+change, retrospective endpoint execution, deleted duration or
+redistributed waiting time is involved.
+
+For completeness, the passage to the consumer's own exit uses the
+specific crossing supplier Lemma 21.3. Write $S=T\wedge\theta_I$.
+On every compact time interval strictly before $S$, the source
+height is uniformly inside $(l,u)$, so (27.2) gives
+$\liminf\widehat S_n\ge S$. If $S<T$, the original source height
+strictly crosses its attained wall arbitrarily soon after $S$:
+that lemma uses the locally elliptic original generator (21.6),
+positive coefficient $a$, bounded localized drift away from $e$,
+and the strong Markov property at that wall. Each such strict
+outward value before $S+b<T$ forces the continuous polygon to
+exit by $S+b$ for all sufficiently large $n$. Thus
+$\limsup\widehat S_n\le S$. If $S=T$, the censored upper bound is
+already $T$, including target exit exactly at $T$.
+This proves the exit convergence using strict crossings, not
+uniform path convergence alone. Theorem 26.3 identifies these
+polygon exits with actual native own exits, which is the additional
+passage needed for the prospective consumer.
+
+Uniform continuity of the original path now gives
+
+$$
+ \|Q_n(\,\cdot\wedge\widehat S_n)
+       -\mathsf Z(\,\cdot\wedge S)\|_{[0,T],\infty}
+ \le\|Q_n-\mathsf Z\|_{[0,T],\infty}
+                +\Omega_T(\mathsf Z;|\widehat S_n-S|)\to0.
+\tag{27.3}
+$$
+
+Add (26.3). The resulting actual triples converge uniformly to
+$(x,y,w)(\mathsf Z_{\,\cdot\wedge S})$. Formula (26.4) bounds
+the real phase errors by one half of the $b$ error and by
+$|c_0|$ times that error plus $r^{-1}$ times the integral error.
+Reducing only then modulo $2\pi$ and using uniform continuity
+of the exact ten-output map (7.8) on $I\times\mathbb T^2$
+proves (27.1), for every fixed preparation rotation. Weak joint
+convergence follows by bounded continuous tests. The source used
+in this proof continues conservatively after every observation
+exit. Only actual native outputs are held. $\square$
+

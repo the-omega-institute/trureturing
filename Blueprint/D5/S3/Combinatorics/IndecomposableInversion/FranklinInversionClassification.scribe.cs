@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.IndecomposableInversio
 internal sealed class FranklinInversionClassificationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/IndecomposableInversion/FranklinInversionClassification.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/franklin2024inversions");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/franklin2024inversions");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The positions of entries exceeding a later entry determine the star and five-block classification of indecomposable 321- and 1342-avoiders.",

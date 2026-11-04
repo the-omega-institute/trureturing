@@ -1,0 +1,52 @@
+**Theorem 4.1 (exact common-cut recovery and its precise failure).** On the
+entire real source domain of §1, Time and Memory have exactly kernel $K$
+as maps of the current $z$. They mutually recover their numerical views
+on their attained images. They always determine Boundary. Boundary recovers
+them if and only if
+
+$$
+\ker R_{\mathcal W}=K,
+\quad\text{equivalently}\quad
+D_{\mathcal W}|_A\text{ is injective}.
+\tag{4.2}
+$$
+
+A sufficient condition for (4.2) is that $\mathcal W$ contain $\nu$ words
+with pairwise distinct totals $s(w)$. No necessity of that number is
+asserted. Under (4.2), all four numerical views mutually recover if and
+only if $K=\{0\}$. When $K\ne\{0\}$, the three equal-kernel views recover
+the actual current behavior class $[z]\in\mathbb R^d/K$, and none recovers
+full Space on this unrestricted domain.
+
+Proof. The isomorphisms $V,H,U(T)$ in §3 give the explicit decoders
+
+$$
+y\longmapsto b=U(T)V^{-1}y,\qquad
+\mu\longmapsto b=U(T)H^{-1}\mu.
+\tag{4.3}
+$$
+
+Both land in $A$ on the specified images. Conversely, encode $b\in A$ as
+$y=VU(-T)b$ and $\mu=HU(-T)b$. Their kernels on current states are $K$
+because $E(-T)K=K$. Applying $D_{\mathcal W}$ yields Boundary. This
+also proves its kernel contains $K$.
+
+If Boundary recovers either other view, two current states with equal
+Boundary must have equal $b$, so $\ker R_{\mathcal W}\subseteq K$.
+Conversely (4.2) makes its attained-image decoder the unique map sending
+$D_{\mathcal W}b$ to $b\in A$. It is computable by an exact finite linear
+solve in the known matrices. Selecting $\nu$ distinct totals supplies
+an invertible Vandermonde block acting on all coefficient arrays, which
+is a sufficient special case. A smaller boundary can still be injective
+on the smaller space $A$; the exact test is (4.2).
+
+The map $[z]\mapsto\mathcal O z$ is a bijection from $\mathbb R^d/K$
+onto $A$. Hence (4.3) and the Boundary decoder identify that actual class,
+without selecting an allegedly actual hidden representative. If $K=0$,
+compute a left inverse $L$ of $\mathcal O$ from $B,C$. Then the common
+Space decoder is $z=Lb$; equivalently entrance recovery gives
+$z=E(T)L a$. If $0\ne h\in K$, $z$ and $z+h$ have the same three
+views and different Space, proving failure of full recovery. This is
+the standard kernel/factorization supplier applied to these explicit maps,
+not a new generic quotient construction. ∎
+

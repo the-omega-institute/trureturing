@@ -1,0 +1,22 @@
+**Definition 4.1 (the performed schedule).** Actually Hold once. Split
+all $c$ original beta owners in the fixed design order, with no Tick
+or Add, consuming complete returns and maintaining the real move/append
+table. Let $g(u)$ be the resulting known design and let
+
+$$
+ M=N+2c=2b+3c-1,\quad k=b+c,\quad
+ A=A_I,\quad E=E_I,\quad C=C_I,\quad B=C^{\mathsf T},
+ \quad H=2M-1,\quad \tau_j=jH,\quad L=(k+1)H.
+\tag{SC.9}
+$$
+
+Scan all $k$ raw terminals, in increasing raw-label order, at epochs
+$0,\ldots,H$ of the unmodified grown field $Ex$. At epoch $\tau_j$,
+after the preceding block's final scan, actually Add$(j,1)$; then
+scan at relative epochs $0,\ldots,H$ for that pulse block. A Hold
+is issued at every sampled epoch. Consecutive block boundaries retain
+both scans/Holds, the first before and the second after the pulse.
+One Tick separates consecutive epochs within a block. Earlier pulses
+are never removed. Each call is serially completed. There is no
+preliminary old-law numerical scan.
+

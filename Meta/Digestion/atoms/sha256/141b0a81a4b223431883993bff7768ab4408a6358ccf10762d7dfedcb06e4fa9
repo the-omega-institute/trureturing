@@ -1,0 +1,19 @@
+**Definition 9.1 (full open-path optimization target).** For $n\ge1$, let
+
+$$
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\text{ for }1\le i<n\}.
+$$
+
+The graph $\Gamma_n$ has every word in $B_n$ as a vertex and every legal Hamming-one pair as an edge. Endpoint tests use $w_0=w_{n+1}=0$; the first and last positions are not joined. On the entire probability simplex $\mathcal P(B_n)$, put
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}
+\qquad
+\Phi_n(\mu)=\sum_{\{w,z\}\in E(\Gamma_n)}h(\mu_w,\mu_z),
+\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu).
+\tag{9.1}
+$$
+
+Zero mass does not remove vertices, edges, or seams. The original target uses $c_\star=\lim_{n\to\infty}\kappa_n/n$, whose existence is part of the supplied original-goal background. These open-path quantities are not changed by the quotient construction.
+

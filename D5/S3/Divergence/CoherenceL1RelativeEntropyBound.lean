@@ -350,7 +350,7 @@ private theorem rowL2_le_rowL1 {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ) (k : 
   simpa only [PiLp.norm_single, PiLp.norm_eq_of_L1, PiLp.toLp_apply] using
     norm_sum_le (Finset.univ) (fun i => PiLp.single 2 i (v i))
 
-private theorem coherenceL1_eq_twice_upper {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ)
+theorem coherenceL1_eq_twice_upper {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ)
     (hρ : ρ.IsHermitian) : l1Coherence ρ = 2 * ∑ k, ‖WithLp.toLp 1 (fun j : Fin n => if k < j then ρ k j else 0)‖ := by
   have hnorm (i j : Fin n) : ‖ρ i j‖ = ‖ρ j i‖ := by
     have h := congrArg (fun A : Matrix (Fin n) (Fin n) ℂ => A i j) hρ.eq
@@ -394,7 +394,7 @@ open D5.S3.Quantum.Foundation.FiniteTraceDistance
 private theorem basisVector_sq {n : ℕ} (k : Fin n) : star ((Pi.single k (1 : ℂ))) ⬝ᵥ (Pi.single k (1 : ℂ)) = 1 := by
   simpa only [dotProduct_single_one, Pi.star_apply, Pi.single_eq_same, star_one]
 
-private theorem vector_dot_star {n : ℕ} (v : Fin n → ℂ) : v ⬝ᵥ star v = ((∑ j, ‖v j‖ ^ 2 : ℝ) : ℂ) := by
+theorem vector_dot_star {n : ℕ} (v : Fin n → ℂ) : v ⬝ᵥ star v = ((∑ j, ‖v j‖ ^ 2 : ℝ) : ℂ) := by
   simp only [dotProduct, Pi.star_apply, Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq,
     Complex.ofReal_sum, Complex.ofReal_pow]
 

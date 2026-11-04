@@ -1,0 +1,26 @@
+**定理 7.2（概率框架到完整仪器误差）。** 对 Hermitian 保持映射差 $\Delta$，令 $\delta p_{ij}=\operatorname{Tr}(E_i\Delta(\rho_j))$，则
+
+<a id="eq-7-2"></a>
+
+$$
+J_\Delta=\frac1d\sum_{ij}\delta p_{ij}F_i\otimes D_j^{\mathsf T},
+\qquad
+\|\Delta\|_\diamond
+\le\sum_{ij}|\delta p_{ij}|\|F_i\|_1\|D_j\|_1.
+\tag{7.2}
+$$
+
+**证明。** 双基给出 $X=\sum_j\operatorname{Tr}(D_jX)\rho_j$ 和 $\Delta(\rho_j)=\sum_i\delta p_{ij}F_i$。先在 Hermitian 空间成立，再作复线性延拓。映射 $X\mapsto F_i\operatorname{Tr}(D_jX)$ 的归一化 Choi 为 $F_i\otimes D_j^{\mathsf T}/d$，应用引理 7.1、张量迹范数乘法性与三角不等式得到第一项和第二项。完整记录的 Choi 矩阵是分块直和；各块迹范数相加，再除以二即得仪器界。
+
+对带结果仪器，各分支使用自己的输出双基；若联合概率误差至多 $\zeta_{aij}$，则
+
+<a id="eq-7-3"></a>
+
+$$
+\delta(\Phi,\Psi)\le
+\frac12\sum_{aij}\zeta_{aij}\|F_{a,i}\|_1\|D_j\|_1.
+\tag{7.3}
+$$
+
+<a id="cor-7-3"></a>
+

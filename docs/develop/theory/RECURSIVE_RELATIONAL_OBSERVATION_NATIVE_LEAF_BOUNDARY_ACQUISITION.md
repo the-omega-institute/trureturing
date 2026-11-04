@@ -3066,3 +3066,1155 @@ programme is therefore not concluded by these
 conditional source-relative results. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 25. A stationary unit tree with exactly one inaccessible leaf
+
+**Definition 25.1 (the incomplete-boundary installation).** Let $G=(V,E)$
+be any finite connected simple tree. Its actual field is $x\in\mathbb Q^V$,
+and its installed update $A$ is exactly its zero-diagonal unit adjacency
+matrix. An authenticated ordered roster $B=(\ell_1,\ldots,\ell_b)$, with
+$b\ge2$, consists of all degree-one vertices except exactly one vertex
+$h$. The order labels the accessible ports; it is not a planar order.
+Write $J=[e_{\ell_1},\ldots,e_{\ell_b}]$. Neither $G$, $N=|V|$, $h$,
+its attachment, a distance bound nor the entry field is receiver advice.
+
+The receiver has the fixed class description and finite controller, this
+actual roster and source binding, and the current rights to the following
+stationary service. The actual entry field can be arbitrary.
+
+| Request | Actual field successor | Semantic output |
+| --- | --- | --- |
+| Reset | $0$ on every actual vertex | ACK |
+| Add$(j,q)$, $1\le j\le b$, $q\in\mathbb Q$ | $x+q e_{\ell_j}$ | ACK |
+| Tick | $Ax$ | ACK |
+| Read$(j)$, $1\le j\le b$ | $x$ | the literal rational $x_{\ell_j}$ |
+| Hold | $x$, held for finite local work | ACK |
+
+There is no growth, internal field port, hidden-leaf port, coefficient
+query, constructor Read, supplied transfer table or physical inverse Tick.
+Only a requested Tick evolves the field. Reset zeros the whole actual
+field, including the cells not yet described to the receiver. Exact unit
+adjacency, the finite-tree promise, exact-one omission, authentic distinct
+leaf bindings, full Reset calibration, exclusive serialization and exact
+rational arithmetic are installation hypotheses. Observations made under
+these hypotheses do not certify an unknown instrument into this class.
+
+**Definition 25.2 (completed calls and their other branches).** Fix a
+source-independent finite serialization. A request consists of its kind,
+self-delimiting operands and End. A complete syntactically valid Add or
+Read with integer index outside $1,\ldots,b$ returns RangeRefusal and has
+identity graph and field successor. A complete malformed frame, including
+an unsupported request kind or a noncanonical rational encoding, returns
+BadFrame and has identity source successor. A proper incomplete prefix
+is retained by the parser; it has no completed semantic output and applies
+no source operation. Each complete response has its semantic payload and
+output End. The holder consumes the entire response, commits its matching
+local record, sends one fixed LocalACK and completes one fixed Return
+before exposing the next Ready cut. LocalACK is distinct from ACK. These
+fixed lifecycle tokens contain no source information. In particular Tick
+has no scalar output: a subsequent value requires a separate Read.
+
+Missing or revoked rights, wrong phase and insufficient granted backing
+disable execution; they are not RangeRefusal, BadFrame or successful ACK.
+A disabled attempted primitive makes no source transition. An interruption
+of a partially completed exchange is not a successful acquisition or a
+new settled predictive cut. No rollback of a previously executed source
+step is asserted. Acquisition starts at a settled Ready cut with an empty
+request parser, no unconsumed response and no in-flight mutation. This is
+a control-phase premise, not a restriction on the arbitrary entry field
+or a procedure for clearing an unknown interrupted exchange.
+The runs quantified below supply all finite backing,
+current rights, complete delivery and local commits they actually need,
+with no intervening writer, autonomous evolution or revocation. A finite
+reserve is not assumed to suffice for every source size or every future
+length. Any reserve, replenishment, provider support or surviving archive
+is part of the same process and its resource account.
+
+Write $c$ for the common binding roles, ordered roster, codec, rights and
+source-independent controller conventions. It contains no concealed
+geometry, size, field, earlier journal or response function. Resource
+availability, timing, allocator identities and private archives are not
+additional outputs of this task. If they are exposed to a future selector,
+they must instead be included in the compared state and resource account.
+
+**Theorem 25.3 (the part not determined by the visible metric).** Let $H$
+be the minimal connected subtree containing $B$. Its leaves are exactly
+$B$, and there are a unique $v\in V(H)\setminus B$ and integer $\ell\ge1$
+such that $G$ is $H$ with one pendant unit path of length $\ell$ at $v$.
+In particular $N=|V(H)|+\ell$. For fixed $H$ and internal $v$, changing
+$\ell$ between two different positive integers preserves all pairwise
+visible distances and changes the actual geometry and vertex count.
+
+Proof. A leaf of a minimal spanning subtree must be a specified terminal,
+since otherwise removing it preserves connectedness and the specified
+vertices. Conversely each member of $B$ has degree one even in $G$, and
+is a leaf of $H$ because $b\ge2$. The omitted leaf $h$ is not on a path
+between two other vertices, so is outside $H$.
+
+A component of $G-V(H)$ attaches to $H$ at exactly one vertex: connectedness
+gives an attachment, and two distinct attachment edges would produce a
+cycle. Root that component away from its attachment. A furthest vertex is
+a leaf of $G$ outside $B$. Thus there is exactly one such component. No
+vertex in it can have two children away from $H$, since extending the two
+child paths would give two different omitted leaves. It is therefore a
+nonempty path. Its attachment $v$ cannot lie in $B$, whose vertices have
+actual degree one. This proves all structural assertions. The path
+between two visible leaves stays in $H$, independently of $\ell$; the
+last assertion follows. $\square$
+
+**Definition 25.4 (the measured metric prefix).** For each
+$a=1,\ldots,b-1$ in that order, actually execute Reset; Add$(a,1)$; Hold.
+Read all $b$ ports in ascending order at epoch zero, then repeatedly
+execute Tick; Hold and read all $b$ ports in that order. Retain every
+reply and the first nonzero epoch at each $j\ne a$. End this metric
+phase when all those epochs have been found. Before moving to the next
+$a$, retain the acquired records; its initial Reset terminates the
+preceding pulse. After $a_*=b-1$, keep this last pulse and its complete
+sample prefix; do not yet Reset it.
+
+**Theorem 25.5 (earned hull without size advice).** Every metric phase
+terminates at
+
+$$
+D_a=\max_{j\ne a}d_G(\ell_a,\ell_j).
+\tag{25.1}
+$$
+
+The actual first nonzero reply at $j\ne a$ is one, at its distance from
+$\ell_a$. Symmetry supplies the complete matrix $d_{ij}$. Finite local
+calculation from that acquired matrix recovers the entire subdivided
+unit tree $H$, with its visible labels, even when $b=2$.
+
+Proof. At epoch $k$ of a trial the actual field is $A^k e_{\ell_a}$,
+by the executed Reset, Add and exactly $k$ Ticks. The matrix entry
+$(A^k)_{\ell_j,\ell_a}$ counts length-$k$ walks. Before the distance
+there is no such walk; at the distance there is precisely the unique
+simple path. This is Lemma 2.1 at unit weights and zero diagonal.
+Finiteness and connectedness give (25.1) without providing it to the
+stopping controller. Trials $1,\ldots,b-1$ include one end of every
+unordered pair, so their observations and symmetry earn all $d_{ij}$.
+These are also distances in $H$ by Theorem 25.3.
+
+Apply the classical leaf-metric construction of Lemma 2.3 to $H$, rather
+than to $G$. Explicitly, for $i<j$ and integer $0\le r\le d_{ij}$ form
+
+$$
+\begin{aligned}
+t_k&=(d_{ik}+d_{ij}-d_{jk})/2,\\
+h_k&=(d_{ik}+d_{jk}-d_{ij})/2,\\
+q(i,j,r)_k&=h_k+|r-t_k|\quad(1\le k\le b).
+\end{aligned}
+\tag{25.2}
+$$
+
+The three-path median in the actual tree gives exactly the distance
+vector of the vertex at position $r$ on $[\ell_i,\ell_j]$. Every vertex
+of $H$ lies on such a path, because $H$ has exactly the leaves $B$.
+For distinct $u,w\in H$, extend their connecting path past $w$ to a leaf
+of $H$; its distance coordinate attains $d_H(u,w)$. The triangle
+inequality bounds every coordinate difference by this number. Hence
+
+$$
+\delta_H(u)=(d_H(u,\ell_j))_{j=1}^b,
+\qquad \|\delta_H(u)-\delta_H(w)\|_\infty=d_H(u,w).
+\tag{25.3}
+$$
+
+Deduplicate (25.2) and join two vectors at sup distance one. This produces
+exactly $H$, including degree-two vertices. The argument includes the
+case of two visible leaves, when $H$ is their full unit path. Each
+labelled leaf is located by its zero coordinate. Lexicographic ordering
+of these integer vectors fixes a canonical local enumeration.
+
+This step is credited complete-leaf tree-metric reconstruction on the
+hull. Ilmavirta et al., [arXiv:2306.05253v2, Theorem 1 and §5.1](https://arxiv.org/abs/2306.05253v2),
+explicitly distinguish that classical tree-only theorem from their
+fixed-order comparison with arbitrary graphs. No fixed order is used
+as input here. Theorem 25.3 proves why this supplier alone cannot recover
+$G$ from the incomplete roster. $\square$
+
+## 26. The same pulse identifies the inaccessible attachment
+
+**Definition 26.1 (the comparison measurements).** Keep the last actual
+trial of Definition 25.4 at $a_*=b-1$. Its literal port values and the
+locally computed hull values are, respectively,
+
+$$
+m_j(k)=(A_G^k)_{\ell_j,\ell_{a_*}},\qquad
+h_j(k)=(A_H^k)_{\ell_j,\ell_{a_*}}.
+\tag{26.1}
+$$
+
+Only $m_j(k)$ is a source measurement. Calculate the finite hull walk
+vectors successively by its earned adjacency. Scan the retained last-trial
+samples for the first epoch with $m_j(k)>h_j(k)$ at each $j$, including
+$j=a_*$. Continue that same actual pulse by Tick; Hold and all-port
+Reads until each first excess is found. This uses only earned $H$ and
+actual received replies. No value of $v$ or $\ell$ is a stopping input.
+
+**Theorem 26.2 (first-excess attachment inverse).** Write
+$d_*=d_H(\ell_{a_*},v)$ and $d_j=d_H(v,\ell_j)$ for the actual attachment
+of Theorem 25.3. For every $j$ the first excess in (26.1) occurs at
+
+$$
+K_j=d_*+d_j+2,
+\qquad m_j(K_j)-h_j(K_j)=1.
+\tag{26.2}
+$$
+
+The all-port comparison terminates at $R=\max_jK_j$, and earns
+
+$$
+d_*=(K_{a_*}-2)/2,\qquad d_j=K_j-d_*-2.
+\tag{26.3}
+$$
+
+The vector $(d_j)_j$ locates $v$ uniquely in the already earned $H$.
+Moreover $R\ge D_{a_*}+2$ and $R\le2|V(H)|$.
+
+Proof. The walks in $H$ form a subset of those in $G$, with identical
+unit contributions. Any remaining walk must visit the first hidden
+vertex, call it $t_1$. Reaching it from $\ell_{a_*}$ takes at least
+$d_*+1$ steps, and reaching $\ell_j$ from it takes at least $d_j+1$.
+Thus its length is at least $K_j$. At equality both pieces must be their
+unique shortest paths. They concatenate to exactly one walk, consisting
+of the route to $v$, the excursion $v,t_1,v$, and the route to $\ell_j$.
+This argument allows repeated hull vertices in the concatenation; it
+counts a walk, not a claimed new simple path. It excludes any additional
+stay, detour or deeper tail visit at that length. Unit weights make its
+contribution exactly one. This proves (26.2), including its diagonal
+case, and then (26.3).
+
+The actual tree is finite, so all these epochs exist. The controller scans
+already received samples and then receives every subsequent epoch at every
+port until the last first excess. It therefore ends at exactly $R$.
+Equation (25.3) identifies the unique hull vertex with the vector (26.3).
+No physical interior reference is produced by that coordinate calculation.
+
+For every $j$, the triangle inequality gives
+$d_G(\ell_{a_*},\ell_j)\le d_*+d_j$. Maximizing proves
+$R\ge D_{a_*}+2$, so the metric prefix and comparison really do compose
+on the same pulse. Both $d_*,d_j\le |V(H)|-1$, whence
+$K_j\le2|V(H)|$. These bounds are deductions about the completed run,
+not size advice to the stopping algorithm. $\square$
+
+## 27. A finite ray comparison earns the tail and the returned zero
+
+**Definition 27.1 (local ray counts).** After earning $v$, let
+$H_\infty$ denote $H$ with a formal unit ray $v,t_1,t_2,\ldots$.
+Its diagonal walk count at the input leaf is denoted $r(k)$. This is
+finite data at every queried $k$: calculate it on the finite tree
+$H^{[k]}$ containing just the first $k$ ray vertices. A length-$k$ walk
+from $\ell_{a_*}$ cannot reach an omitted vertex of this finite tree,
+so that calculation gives exactly $r(k)$. No infinite array or physical
+ray is installed.
+
+In increasing $k$, compare $r(k)$ with the actual diagonal samples
+$m_{a_*}(k)$ already retained through $R$. If a first strict inequality
+has occurred, retain its first epoch. Otherwise keep the same pulse,
+executing Tick; Hold; Read$(a_*)$ at successive epochs and comparing
+each new reply, until the first inequality. Once the tail has been
+decoded, actually execute Reset; Hold. All local computations and the
+final predictor installation are protected by Hold.
+
+**Theorem 27.2 (unknown tail length and actual endpoint).** The first
+strict inequality in Definition 27.1 is
+
+$$
+K_\infty=2(d_*+\ell+1),\qquad
+r(K_\infty)-m_{a_*}(K_\infty)=1.
+\tag{27.1}
+$$
+
+Thus the actual measurements earn
+
+$$
+\ell=K_\infty/2-d_*-1,\qquad
+Z=\max\{R,K_\infty\},\qquad N=|V(H)|+\ell.
+\tag{27.2}
+$$
+
+The pulse is at $A_G^Ze_{\ell_{a_*}}$ immediately before the final
+Reset. The returned actual source after Reset; Hold is exactly $(G,0)$.
+The complete visible-labelled unit geometry, attachment and tail length
+have been acquired without any initially supplied size. Its coordinates
+are the vectors of (25.3) and disjoint tail labels $t_1,\ldots,t_\ell$.
+There is a unique isomorphism from this graph to the actual specimen
+fixing all visible labels. The posterior bound is $Z\le2N$.
+
+Proof. Identify the actual hidden path with the first $\ell$ vertices
+of the formal ray. Its walks are a subset of the ray's walks. An extra
+closed walk must visit $t_{\ell+1}$, which is at distance
+$d_*+\ell+1$ from the input leaf. Its length is therefore at least
+$K_\infty$. At that length there is exactly one: the shortest path to
+that vertex followed by the reverse shortest path. It contributes one.
+Before that epoch the two counts agree. This proves (27.1) and the
+length formula. In particular the first ray deficit can precede $R$;
+scanning the archive, rather than starting a new stopping clock at $R$,
+is necessary to obtain its first epoch.
+
+If the first deficit was already sampled, there are no extra source
+Ticks in this phase. Otherwise the continued diagonal measurements
+receive every epoch up to $K_\infty$. The actual last pulse epoch is
+therefore exactly $Z$. All local ray calculations use finite graphs
+and finite integer walk recurrences. Each comparison and every call
+terminates under the stated per-run backing premises. The structural
+finite $\ell$ gives eventual stopping, without a supplied bound.
+
+The hull map is fixed uniquely by its visible distance vectors. The only
+remaining vertices are the unique pendant path at the earned $v$, and
+their depths from $v$ fix their correspondence uniquely. This yields the
+claimed full graph isomorphism, while supplying no additional callable
+port. Actual pulse initialization and the counted Ticks give its
+pre-Reset field. Reset then zeros every one of those actual cells; it
+does not restore the arbitrary entry. The final Hold retains this zero
+while its predictor and any finite output are constructed.
+
+Put $n_H=|V(H)|$. Theorem 26.2 gives $R\le2n_H\le2N$, and
+$d_*\le n_H-1$ gives $K_\infty\le2(n_H+\ell)=2N$.
+This proves the posterior bound. $\square$
+
+**Corollary 27.3 (one acquired state and retained callable entry).** One
+fixed finite controller, independent of $N$, terminates on every
+installation of Definitions 25.1–25.2 and returns the complete acquired
+visible-labelled geometry with actual current field zero. Retaining the
+genuine roster/service binding and rights, the earned graph and a zero
+predictive vector installs the current five-command service on that same
+specimen. Geometry, numerical coordinates and transfer data do not create
+new references or grants.
+
+Proof. Concatenate Definitions 25.4, 26.1 and 27.1 without an intervening
+Reset of their last pulse. Theorems 25.5, 26.2 and 27.2 prove all stopping
+conditions and the common actual endpoint. They use only received
+samples, earned finite objects and source-independent arithmetic and
+control. At that endpoint, the stored zero vector equals the physical
+field under the earned isomorphism. The retained real service entry,
+rather than a numerical vertex name, is what permits the subsequent
+calls proved in §28. $\square$
+
+## 28. Full current service after the destructive calibration
+
+**Theorem 28.1 (all-but-one forcing and a paid later window).** On an
+earned tree of Definition 25.1 the visible set $B$ zero-forces every
+vertex. Put $I=N-b$. One can compute integer vector polynomials
+
+$$
+p_w(z)=\sum_{r=0}^{I}z^r p_{w,r},\quad p_{w,r}\in\mathbb Z^b,
+\qquad e_w=\sum_{r=0}^{I}A^rJp_{w,r}\quad(w\in V).
+\tag{28.1}
+$$
+
+Consequently, for every later actual rational field $x$, the passive
+window $y_r=J^{\mathsf T}A^rx$, $0\le r\le I$, recovers its starting
+field by
+
+$$
+x_w=\sum_{r=0}^{I}p_{w,r}^{\mathsf T}y_r.
+\tag{28.2}
+$$
+
+Actually acquiring that window means Hold; all-port Read, followed by
+$I$ repetitions of Tick; Hold; all-port Read. It costs $I$ Ticks,
+$I+1$ Holds and $b(I+1)$ scalar Reads. It returns the actual field
+$A^Ix$, at which the full predictor is initialized, rather than
+physically restoring $x$.
+
+Proof. Mark $B$. If marking stalls with an unmarked vertex, keep all
+unmarked vertices, their marked neighbors, and exactly the edges with
+at least one unmarked end. This is a finite forest with an edge, since
+every unmarked vertex retains its full original positive degree. Each
+retained marked vertex has at least two unmarked neighbors, or it could
+force. The unmarked vertices retain their original degrees, and at most
+one has degree one: the omitted leaf. Thus this forest has at most one
+degree-one vertex. Every finite forest with an edge has at least two
+such vertices, a contradiction. For example take the two endpoints of
+a maximal path in a nontrivial component. Marking therefore finishes
+in $I$ forces. Choose the first eligible ordered pair in the canonical
+finite enumeration earned in §27; this is an acquired-data selector.
+
+Start with $p_{\ell_j}$ equal to the constant $j$th input unit vector.
+When $u$ forces $w$, all its other neighbors are already marked, so set
+
+$$
+p_w(z)=z p_u(z)-\sum_{t\sim u,\ t\ne w}p_t(z).
+\tag{28.3}
+$$
+
+Since $Ae_u=\sum_{t\sim u}e_t$, induction proves (28.1); at the
+$s$th force its degree is at most $s$. All coefficients are integers.
+Transposing (28.1), using $A^{\mathsf T}=A$, and applying it to $x$
+gives (28.2). This instantiates the infection/polynomial-coordinate
+supplier of §§3–5 with one omitted leaf; it does not require a new
+coefficient-learning experiment for the already known unit law.
+
+The stipulated actual window uses no Reset or Add. Its literal samples
+are exactly the displayed $y_r$; its $I$ requested Ticks give endpoint
+$A^Ix$. Compute that vector from the recovered start and synchronize
+there. Singular adjacency causes no problem, since no inverse of $A$
+is invoked. The window and its coefficient construction are separate
+paid work if actually requested after calibration. $\square$
+
+**Theorem 28.2 (complete retained callable prediction).** From the final
+zero of Corollary 27.3, retain the earned graph, visible-coordinate map,
+a full predictive field $\widehat x=0$, the actual service binding and
+current rights, and matching parser/transport control. Every finite
+sufficiently backed common adaptive continuation of Definition 25.2 has
+identical complete outputs and corresponding actual/predictive successors
+at every settled cut. This includes arbitrary rational Add inputs,
+Reset, all declared refusals and the parser/disabled branches. The field
+invariant is
+
+$$
+\widehat x_w=x_{\phi(w)}\quad(w\in V(\widehat G)),
+\tag{28.4}
+$$
+
+where $\phi$ is the earned visible-label-fixing actual isomorphism.
+
+Proof. The final Reset establishes (28.4) on every actual cell. Forward
+every enabled real request through the retained entry, consume its whole
+output and completed return, and commit the matching update before the
+next Ready cut. Before forwarding, reserve the actual request, response,
+predictor-update and commit backing and check the common rights and phase.
+If the local reservation fails, the controller does not invoke the source;
+if the source execution guard fails, neither a successful real call nor a
+predictive state update occurs. Matching resource guards are part of this
+joint installation, rather than a consequence of equality of field vectors.
+For Reset replace the local vector by zero. For
+Add$(j,q)$ add $q$ at its earned visible coordinate. For Tick multiply
+by the earned unit adjacency, using a separate buffer. For Read return
+the predicted visible coordinate and compare/consume the literal reply;
+Hold leaves the vector fixed. The graph is stationary in every case.
+The table in Definition 25.1 and the graph isomorphism prove each
+successor identity and every semantic ACK or scalar identity.
+
+An out-of-range index changes neither vector and produces the same
+RangeRefusal. A complete malformed frame changes neither source and
+produces the same BadFrame. On each incomplete input prefix both parsers
+retain the same bytes and wait, applying no field transition. Once End
+completes a valid frame, the corresponding table branch applies exactly
+once. Lifecycle phase, output End, LocalACK and Return have the same
+fixed transitions; none secretly applies Tick. Missing authority, wrong
+phase or unavailable backing leaves the attempted primitive disabled on
+both sides; the predictor does not replace it by a source refusal. The
+successful-run theorem assumes delivery and commit resources; interruption
+after a real mutation supplies no stronger rollback or completion claim.
+
+These one-step statements induct over all exchanges and their byte/phase
+prefixes. At settled cuts, equal preceding acquired records and outputs
+make a common selector choose the same next finite frame and operands.
+Fixing a common random tape gives the same proof for each realized finite
+randomized continuation. Selectors may use the earned geometry, current
+predictor and actually received finite inputs; no source-dependent selector
+or response oracle is supplied for free. If the optional window of
+Theorem 28.1 is used for late reattachment, its actual advanced endpoint
+establishes the same invariant anew. This proves full continuing use,
+including nonzero fields outside the calibration-view domain below.
+$\square$
+
+**Corollary 28.3 (the exact declared continuation kernel).** Fix $c$,
+settled parser/transport phase and the accessible selector interface,
+with no unequal archive, timing, allocation or capacity channel. Among
+all trees of Definition 25.1 with arbitrary current rational fields,
+equality of complete replies for every finite common continuation is
+equivalent to a visible-label-fixing graph isomorphism preserving the
+current field.
+
+Proof. Such an isomorphism respects every source, parser, refusal and
+fixed-return rule, so suffices by the induction in Theorem 28.2.
+Conversely identical future service includes executing the deterministic
+Reset-based calibration of §§25–27. The same received prefixes give
+the same decisions and finite stop, so its proved inverse gives the same
+geometry. This argument identifies geometry independently of the old
+field because it begins with Reset. On that common geometry, identical
+future service also includes the separate passive starting-field window
+of Theorem 28.1. Equation (28.2) makes the two current fields equal.
+These are alternative distinguishing continuations from the compared
+cut, not two experiments simultaneously preserving one pre-Reset field.
+Their cost vectors cannot be combined into one cheaper physical run.
+$\square$
+
+## 29. Independent expressions on the final-zero calibration image
+
+**Definition 29.1 (the jointly realized image and four meanings).** Fix
+$c$ and the deterministic acquisition above: trial and port orders,
+canonical integer-vector enumeration, increasing-epoch archive scans,
+fixed request/reply serialization and the final Reset; Hold. A designated
+calibration interval starts with its first Reset and ends with that final
+Hold. Its command and semantic/lifecycle output journal has no wall times,
+local instruction timings, old entry field or earlier history. Consider
+only actual successful completed intervals on the promised class, at
+which the whole actual field is zero. Later cuts may retain this same
+designated interval, rather than treating a new total journal as Time.
+On this image the four data have the following independent meanings.
+
+| Expression | Exposed mathematical data, in common context $c$ |
+| --- | --- |
+| Space | The actual unrooted unit tree with its visible labels and whole present field zero, modulo visible-label-fixing isomorphism |
+| Time | The actual finite ordered request/reply journal of the designated canonical calibration interval |
+| Boundary | The visible linear response law $F_G(z)=J^{\mathsf T}(z\mathbf1-A_G)^{-1}J$, together with current visible output zero |
+| Memory | A finite reachable rational symmetric local predictor $(S,C,0)$, modulo rational orthogonal coordinate changes preserving its input columns |
+
+For an installed Time exposure the controller actually records the
+designated exchanges, including their requests, complete replies and
+lifecycle words, as they complete. Its finite archive is retained and
+charged separately from the predictor; no earlier journal or history port
+is assumed. A literal Boundary exposure likewise requires actually
+constructing and storing or transmitting its finite rational-function
+representation from the earned graph. These finite local constructions
+can finish under the final Hold on the same actual zero field. The four
+mathematical expressions do not make those records, computations or
+exports free.
+
+Here $S\in\mathbb Q^{n\times n}$ is symmetric,
+$C\in\mathbb Q^{n\times b}$, and reachability means
+$\operatorname{span}_{\mathbb Q}\{S^rCa:r\ge0,\ a\in\mathbb Q^b\}
+=\mathbb Q^n$. Its local meanings are update $\xi\mapsto S\xi$,
+visible Add $\xi\mapsto\xi+qCe_j$ and output $C^{\mathsf T}\xi$.
+Equivalent predictors have a rational orthogonal isomorphism $Q$ with
+$QS=S'Q$ and $QC=C'$. The installed earned representative is $(A_G,J,0)$,
+not an unrestricted copy of the calibration archive. Any actual journal
+archive is a distinct store and remains charged.
+
+Boundary is a finite rational matrix function with an input/output
+meaning: from zero, for any subsequent pulse sequence its Laurent
+coefficients give the visible convolution responses. It is calculated
+from the earned graph after the real measurements, rather than supplied
+as an initial full-response oracle or purportedly read as an infinite
+table. The matrix-function calculation, representation and any export
+are paid local work. The same genuine source entry and rights are
+retained in $c$; none of these numerical data produces physical access.
+
+**Theorem 29.2 (all recovery routes and their agreement).** On exactly
+the image of Definition 29.1, each of the four data determines the other
+three as mathematical data. The routes recover one and the same actual
+visible-labelled geometry and zero current field; all twelve directed
+conversions, their round trips and every intermediate route agree.
+They do not certify off-image numerical data as physical observations or
+recover erased entry history.
+
+Proof. Space gives the unit adjacency and the visible injection. Finite
+polynomial matrix arithmetic computes $F_G$ by adjugate and determinant.
+It also gives the reachable predictor $(A_G,J,0)$, reachability following
+from (28.1). Finally run the deterministic calibration locally on this
+earned graph: after each simulated Reset/Add/Tick its scalar and fixed
+outputs are determined. Its stopping tests terminate by §§25–27. This
+computes exactly the numerical contents of the actual designated Time
+journal on the stipulated image, including every zero, ACK, End and fixed
+return. It does not execute that journal again.
+
+Time contains the actual trial labels, epoch counts and scalar replies.
+The first arrivals, hull construction, first hull excesses and first ray
+deficit in §§25–27 reconstruct $H,v,\ell$ and hence $G$. The final
+Reset; Hold is part of this actual interval and gives current zero.
+Neither an old arbitrary input field nor a native growth history occurs
+among these decoded data.
+
+Boundary gives every moment by formal expansion at infinity:
+
+$$
+F_G(z)=\sum_{k\ge0}M_kz^{-k-1},\qquad M_k=J^{\mathsf T}A_G^kJ.
+\tag{29.1}
+$$
+
+Each requested coefficient is obtained by finite rational polynomial
+recursion on the supplied finite function, not by storing all coefficients.
+Use the appropriate columns of $M_k$ to simulate the calibration's
+successive finite trials and its same-last-pulse comparisons. The
+termination theorem holds on this promised response image, so this earns
+the same $G$ in finite local work. A purported arbitrary rational function
+is not promised a terminating class-recognition procedure by this argument.
+Conversely Space already computes this same $F_G$.
+
+Memory computes its transfer $C^{\mathsf T}(z\mathbf1-S)^{-1}C$, so takes
+the Boundary route to $G$. It remains to check that returning through the
+earned $(A_G,J,0)$ returns exactly the original Memory equivalence class.
+This is the minimal symmetric-realization supplier, with its hypotheses
+verified here, as follows. For any two finite reachable symmetric rational
+pairs $(S,C)$ and $(S',C')$ with equal transfer, (29.1) gives all equal
+moments. For finitely supported rational coefficient lists $a_r,b_s$,
+symmetry gives
+
+$$
+\left\langle\sum_rS^rCa_r,\sum_sS^sCb_s\right\rangle
+=\sum_{r,s}a_r^{\mathsf T}C^{\mathsf T}S^{r+s}Cb_s.
+\tag{29.2}
+$$
+
+The same Gram pairing holds in the second realization. Thus sending the
+first finite sum to the corresponding second finite sum is well-defined:
+a zero first sum has zero squared norm, so the second sum is also zero.
+It is isometric by the mixed pairing, and is onto by reachability of the
+second pair. Reachability of the first makes its domain the full first
+space. Increasing every power by one proves $QS=S'Q$; power zero proves
+$QC=C'$. Choosing a basis from rational input iterates writes its matrix
+as $VU^{-1}$ for rational basis matrices $U,V$, so $Q$ is rational and
+orthogonal. The intertwiner is unique because those iterates span. The
+converse follows directly by conjugating the resolvent. This checks both
+symmetry assumptions, all-moment equality and both reachability assumptions;
+no unobservable extra state is silently allowed.
+
+For clarity about all directions, let $E_i(G)$ denote the four just-defined
+data of this canonical interval, with Memory understood as its equivalence
+class. Let $D_i$ be the recovery of $G$ from each datum proved in the
+preceding paragraphs. Then
+
+$$
+D_iE_i(G)=G,\qquad E_iD_i(V_i)=V_i,
+\qquad \rho_{ij}=E_jD_i\quad(i\ne j).
+\tag{29.3}
+$$
+
+The second identity uses the actual-image restriction for Time, (29.1)
+for Boundary and (29.2) for Memory. It is not a definition of those views
+by desired inverses. For every pair $i,j$, (29.3) proves both inverse
+round trips, and for any third view $k$ it gives
+$\rho_{jk}\rho_{ij}=\rho_{ik}$ wherever interpreted, with identity maps
+when indices coincide. Thus all routes, including Time-to-Memory,
+Memory-to-Space and Boundary-to-Time, recover the same actual $G$ and
+zero field. Computation recovers numerical contents, not a new literal
+measurement, historical physical occurrence, service binding or grant.
+$\square$
+
+**Theorem 29.3 (the task kernel, zero-domain dynamics and full service).**
+On Definition 29.1's image, equality of any one of the four data is
+exactly equality for the complete current continuation task of Corollary
+28.3. Tick, Hold, Read, Reset, Add$(j,0)$ and the declared field-preserving
+refusals transport compatibly within this zero-domain convention. Nonzero
+Add leaves this four-view domain; the full predictor remains correct for
+it and all subsequent finite legal continuations.
+
+Proof. By Theorem 29.2 each datum determines precisely $G$ and current
+zero. Corollary 28.3 gives both implications for the full service kernel.
+Every listed zero-preserving completed operation retains $G,0$, so it
+retains Space, transfer, zero predictor and the designated calibration
+interval. It returns zero for a valid Read and its exact stipulated ACK
+or refusal otherwise. This is compatible with each conversion in (29.3).
+Additional later calls do not append to the designated Time interval;
+the total event journal is a different datum. Proper prefixes and disabled
+attempts are handled by the same common parser/phase, not mistaken for
+new completed view cuts.
+
+For any rational orthogonally equivalent predictor with $QA_G=SQ$ and
+$QJ=C$, initialize $\xi=0$ and maintain $\xi=Qx$. Its local Tick, Add,
+Read and Reset rules give respectively $S\xi$, $\xi+qCe_j$,
+$e_j^{\mathsf T}C^{\mathsf T}\xi$ and zero, exactly the source values
+because $Q^{\mathsf T}Q=\mathbf1$. The same real calls, parser branches
+and lifecycle rules are still used. This is coordinate transport of a
+retained callable service, not installation by a matrix. The earned
+representative uses $Q=\mathbf1$ and Theorem 28.2 directly. After a
+nonzero Add, Memory for full prediction has a nonzero current vector,
+while the old calibration Time and $F_G$ remain fixed. Consequently the
+zero-domain inverse is not an inverse of arbitrary controlled histories.
+$\square$
+
+## 30. Calls, literal traffic and coexisting material on one run
+
+**Definition 30.1 (one concrete finite representation).** Let
+$s(n)=\max\{1,\lfloor\log_2 n\rfloor+1\}$ for $n>0$, with $s(0)=1$.
+Encode a nonnegative integer by $1^{s(n)}0$ followed by its $s(n)$ binary
+digits; its length is $\lambda(n)=2s(n)+1$. A signed integer has its
+sign bit followed by this word, with positive sign for zero; write
+$\sigma(j)=1+\lambda(|j|)$. Encode reduced $p/q$, $q>0$, by the sign of
+$p$, the word for $|p|$ and the word for $q$, with the canonical zero
+$0/1$. Its exact length is
+
+$$
+\rho(p/q)=2s(|p|)+2s(q)+3.
+\tag{30.1}
+$$
+
+This is also a permissible variable-width rational-cell representation.
+It permits growing finite widths; it does not assume unit-cost rational
+arithmetic.
+
+For an explicit realization of Definition 25.2, use request kinds
+000, 001, 010, 011, 100 for Reset, Add, Tick, Read, Hold respectively;
+101, 110, 111 are unsupported kinds with no operands.
+Add carries the signed index word and rational word; Read carries the
+signed index word. Use semantic response kinds 00, 01, 10, 11 for ACK,
+Scalar, RangeRefusal, BadFrame respectively; Scalar also carries its
+rational word. Request End and response End are each 1, LocalACK is 0
+and Return is 1, in their prescribed protocol positions.
+
+The request parser first consumes three kind bits, then the operand
+shape fixed by that kind, then one End bit. In each numeric word it
+counts the unary run up to its terminating zero and consumes exactly
+that many digit bits, even if the resulting encoding is noncanonical.
+An empty unary run, a leading-zero padded word, negative zero, denominator
+zero, a nonreduced fraction, an unsupported kind or an incorrect End bit
+marks the completed request BadFrame. Otherwise an out-of-range integer
+selector marks RangeRefusal. BadFrame takes precedence when both tests
+fail. Thus every finite input prefix has a definite next parsing phase;
+absence of the remaining operand or End bits stays pending, and a
+recognized complete malformed request has no field effect. Extra bits
+belong to the next frame and cannot change the completed one. This is a
+framed serialized service, not an assertion of error correction against
+arbitrary transport corruption. The successful runs deliver each fixed
+response and handshake token correctly; interrupted responses retain
+their actual phase without an asserted rollback.
+
+Prefix lengths determine the payload boundary, so the fixed tokens
+carry no measurement. There are exactly nine nonoperand/nonvalue bits
+per completed source call.
+An incomplete request or response retains its actual prefix and phase,
+and is not charged as a fictitiously completed call. All its transmitted
+bits and backing still count if such prefixes are considered.
+
+Let $\mathcal I$ be the actual list of triples $(a,k,j)$ at which the
+calibration reads port $j$ in trial $a$. It contains all ports for
+epochs $0,\ldots,D_a$ when $a<b-1$, all ports for $0,\ldots,R$ in
+trial $a_*$, and just $j=a_*$ for $R<k\le Z$ in that trial.
+
+**Theorem 30.2 (exact successful calibration calls and wire words).** Put
+
+$$
+S_0=\sum_{a=1}^{b-2}D_a,
+\tag{30.2}
+$$
+
+with empty sum zero when $b=2$. For the one calibration through its
+actual final Reset; Hold, the source calls are exactly
+
+$$
+\begin{aligned}
+\mathcal Z&=\#\mathrm{Reset}=b,\\
+\mathcal A&=\#\mathrm{Add}=b-1,\\
+\mathcal T&=\#\mathrm{Tick}=S_0+Z,\\
+\mathcal R&=\#\mathrm{Read}
+=b\sum_{a=1}^{b-2}(D_a+1)+b(R+1)+(Z-R),\\
+\mathcal H&=\#\mathrm{Hold}
+=\sum_{a=1}^{b-2}(D_a+1)+Z+2.
+\end{aligned}
+\tag{30.3}
+$$
+
+It has $2(S_0+Z)+3b-1$ semantic ACKs and $\mathcal R$ literal scalar
+replies, including every zero. Write
+$C_{\rm cal}=\mathcal Z+\mathcal A+\mathcal T+\mathcal R+\mathcal H$.
+With Definition 30.1's codec its exact source-channel traffic is
+
+$$
+\begin{aligned}
+\beta_{\rm cal}={}&9C_{\rm cal}+(b-1)\rho(1)
++\sum_{a=1}^{b-1}\sigma(a)\\
+&+\sum_{(a,k,j)\in\mathcal I}
+\bigl(\sigma(j)+\rho(m_j^{(a)}(k))\bigr).
+\end{aligned}
+\tag{30.4}
+$$
+
+Installation, earlier preparation and entry storage, roster/reference/right
+supply, report delivery, provider support, local copies and later use
+contribute their own actual words on this same run in addition to (30.4).
+
+Proof. Each of the $b-1$ trials has one Reset, Add and initial Hold.
+The first $b-2$ have $D_a$ Tick/Hold pairs and $b(D_a+1)$ Reads.
+The retained last trial has $Z$ Tick/Hold pairs, all-port Reads through
+$R$ and diagonal-only Reads thereafter. The final Reset; Hold adds one
+to each of those two operations. This gives (30.3), including the
+$b=2$ case with just the single retained pulse. Every non-Read operation
+has one ACK; their sum is $2(S_0+Z)+3b-1$. Every Read has one rational
+reply and has been counted individually.
+
+The five request kinds and two-bit response kind, plus the two Ends,
+LocalACK and Return, give nine bits per call. The only Add operands are
+the $b-1$ unit rationals and their displayed actual selectors. Each Read
+has its selector and exactly its literal rational reply. Summing gives
+(30.4), with no discarded acknowledgement or unused scalar made free.
+The other listed channels are not source calls in (30.3), but their
+actual transmission/copy/allocation costs remain part of the process.
+$\square$
+
+**Definition 30.3 (retained output and full accounting).** A finite
+geometry report may consist of $b,n_H,\ell,N$, the attachment's index in
+the canonical hull enumeration, its $n_H$ ordered distance vectors, the
+sorted $n_H-1$ hull edges as pairs of those indices, and a current-Zero
+tag. The tail edges and visible locations then follow uniquely.
+Encoding each nonnegative integer in this report by $\lambda$, with a
+two-bit report tag 10, a one-bit Zero tag 0, output End 1, LocalACK 0
+and Return 1, gives the finite exported report length
+
+$$
+\begin{aligned}
+\beta_{\rm report}={}&6+\lambda(b)+\lambda(n_H)+\lambda(\ell)
++\lambda(N)+\lambda(i_v)\\
+&+\sum_{u\in V(H)}\sum_{j=1}^{b}\lambda(d_H(u,\ell_j))\\
+&+\sum_{\{u,w\}\in E(H)}\bigl(\lambda(i_u)+\lambda(i_w)\bigr).
+\end{aligned}
+\tag{30.4a}
+$$
+
+Here $i_u\in\{1,\ldots,n_H\}$ is the canonical hull index, and edges
+are sorted pairs with the smaller index first. Counts in the header
+determine every subsequent list length. This is a separate output
+channel; any request that initiates it and any transferred actual binding
+have their own literal traffic. A retained callable
+entry is the already held actual binding and grants; numerical report
+bytes are not a substitute for their actual backing or an authorized
+handoff. If the report is internal, its actual allocated words still
+count; if exported, every transmitted copy and return counts.
+
+For a run $\omega$, let $\mathcal R_t$ be its actual simultaneously
+live rational cells, $\mathcal U_t$ its other live integer words, and
+$\beta_{\rm rest}(t)$ the code, graph/index, parser, reference, grant,
+provider, journal, transport, pending and output bits not already counted
+in those sets. A concrete encoded-store account is
+
+$$
+\operatorname{Store}_{\omega}(t)
+=\sum_{q\in\mathcal R_t}\rho(q)
++\sum_{u\in\mathcal U_t}\operatorname{len}(u)
++\beta_{\rm rest}(t),\qquad
+\operatorname{Peak}_{\omega}=\max_t\operatorname{Store}_{\omega}(t).
+\tag{30.5}
+$$
+
+The first sums range over cell occurrences, so equal numbers in different
+cells are distinct stores. Shared backing is counted once; distinct
+source, predictor, archive or caller copies are counted separately.
+Memory-management and access metadata not encoded by (30.1) belong to
+$\beta_{\rm rest}$. Total literal traffic is the sum of actual wire and
+copy word lengths over all these channels, including (30.4), report,
+installation/preparation and every subsequent completed call or prefix.
+Local word operations, rational normalization and allocation/clearing
+work are separate computation coordinates. These are simultaneous
+per-run quantities; no minimum from another run is substituted.
+
+For example a separately materialized Time archive can store the complete
+ordered source-channel bitstream of length $\beta_{\rm cal}$, prefixed
+by its $\lambda(\beta_{\rm cal})$-bit length word. This costs their sum
+in numerical bits, in addition to the actual container/reference backing
+and the work and copy traffic of recording it. Protocol phase and the
+canonical controller parse the stream in its fixed directions. Retaining
+the separately indexed rational sample arrays as well pays for both
+copies. Exposing Time requires this actual record or an actually shared
+equivalent store, rather than assuming a surviving free transcript.
+
+**Proposition 30.4 (finite local computation with actual widths).** One
+direct implementation has finite work and storage on every admitted
+calibration, with the following explicit realization. Put
+
+$$
+Q=\sum_{i<j}(d_{ij}+1),\qquad n_H=|V(H)|,
+\qquad \Delta=\max_{w\in V}\deg_G(w).
+\tag{30.6}
+$$
+
+Form at most $Q$ candidate vectors of $b$ integers in (25.2). Naive
+construction, pairwise deduplication, canonical ordering and adjacency
+cost $O(Qb+Q^2b)$ integer operations/comparisons. The final-pulse hull
+walk comparison can use $O(Rn_H)$ integer additions and its actual
+sample comparisons. Recomputing each ray comparison at epoch $k$ by
+$k$ sparse walk updates on $H^{[k]}$ costs in total
+
+$$
+O\!\left(\sum_{k=0}^{Z}k(n_H+k)\right)
+=O\bigl(Z^2(n_H+Z)\bigr)
+\tag{30.7}
+$$
+
+integer additions/initializations, besides archive handling. Only two
+walk vectors and the finite graph for the current comparison are needed
+at once. Throughout this run $n_H+Z\le3N$. All displayed operation counts
+pay their actual word widths and bit operations.
+
+Proof. There are exactly the indicated pair/position candidates. Each
+has $b$ coordinates computable with integer addition, division by two
+and absolute value; on this image the divisions are exact. Direct
+comparison of every pair of candidates or retained vectors costs at most
+$b$ coordinate operations per pair. Adjacency and canonical ordering can
+be obtained within the same quadratic bound.
+
+A tree walk update initializes one number per vertex and adds once for
+each directed edge. The hull has $n_H-1$ edges. Propagating its input
+through every needed epoch, retaining current vectors and the actual
+read archive, proves the hull bound. The finite ray graph at epoch $k$
+has $n_H+k$ vertices and $n_H+k-1$ edges. Starting its input vector and
+performing $k$ such updates computes exactly the diagonal in Definition
+27.1. Summing gives (30.7). This deliberately simple implementation
+recomputes each finite comparison; it needs no infinite-ray state or
+unproved reuse of a changing truncation. Theorem 27.2 gives $Z\le2N$,
+hence the stated posterior storage bound. No runtime stopping decision
+consults that inequality.
+
+For any actual epoch-$k$ impulse, each nonnegative walk count is at most
+$\Delta^k$: there are at most $\Delta$ choices at every step. The finite
+comparison trees have maximum degree at most $\Delta$ as well, because
+adding the ray increases only the earned attachment degree to its actual
+value and gives the new ray vertices degree at most two. Their nonzero
+count magnitudes through epoch $k$ therefore need at most
+$1+\lceil k\log_2\max\{2,\Delta\}\rceil$ bits. Exact counters, indices,
+intermediate products, rational-function coefficients if constructed,
+and every operand/output use their actual widths too. This bound on
+impulse integers places no bound on the arbitrary rational entry field
+before the first Reset or on later arbitrary rational controls.
+$\square$
+
+**Proposition 30.5 (source, predictor, archives and continued use coexist).**
+A simultaneous realization of the preceding bounds may retain all
+acquisition arrays through the returned zero cut. It charges all the
+following live backing wherever present: the actual $N$ field cells and
+its separate synchronous Tick buffer; actual source incidence and service
+support; a distinct $N$-cell predictor and its Tick buffer after allocation;
+the earned hull and full graph, visible map and tail coordinates; up to
+$Qb$ candidate-coordinate words and deduplication records; the distance
+table, two finite ray/hull work vectors, samples/onset flags/counters and
+finite controller; the complete actual calibration journal if retained;
+all input/output, parser/pending, report and arithmetic scratch; genuine
+references, grants and their provider backing; and every coexisting
+preparation, supplier, caller or archived copy. Optional forcing
+polynomials or exported transfer data add their actual construction,
+coefficient and output stores. A finite program supplies no uniform
+bound on this material or on its lifetime traffic.
+
+Proof. The algorithms above use exactly finite lists, integer/rational
+words and sparse graphs, so the listed layout supplies their work and
+retained outputs without an oracle. In (30.5) the source and predictor
+cells are different occurrences even when their values agree. One
+synchronous adjacency update in either array uses $N$ zero initializations
+and $2(N-1)$ directed-neighbor additions, plus actual copying or buffer
+exchange; performing both updates pays both bills. Each Reset writes
+$N$ zero fields. A valid Add performs its rational addition and dispatch;
+Read copies/transmits the exact rational; Hold and every refusal still
+use their control, framing and return operations. Decoder comparisons,
+list scans, selectors, report construction and source/predictor dispatch
+are local paid work, not hidden source transitions.
+
+After calibration, a continuation contributes its own actual counts for
+Reset, Add, Tick, Read, Hold and refusals, and each valid Add operand and
+Read value contributes its own $\rho$ word. The nine-bit completed-call
+overhead and selector words remain as in Definition 30.1. A later passive
+window in Theorem 28.1 adds exactly its stated calls and $2I+1$ semantic
+ACKs, every scalar/selector/frame, polynomial construction, reconstruction
+and advanced-vector work. It is not included in (30.3). Building (28.3)
+by direct coefficient arrays uses at most $Nb(I+1)$ integer slots, with
+actual signed coefficients, and its graph scans and arithmetic are paid.
+
+If Boundary's rational function is materialized, the already earned
+finite $A,J$ allow polynomial determinant/adjugate construction, for
+example by the finite permutation expansion and finite polynomial
+arithmetic. Its possibly expensive coefficient growth and every export
+are additional work and backing, not a free all-response port. A
+non-native symmetric Memory representative similarly pays for its actual
+matrices, basis conversion and vector operations. All such choices are
+charged only when made on the run in question.
+
+There are sources of unbounded $\ell$ already for a fixed visible hull,
+and all have $N=n_H+\ell$ actual field cells. The acquired length/output,
+walk arrays and exact widths can grow too. Earlier provider records need
+not disappear because an observer's field was Reset; any surviving
+record is still counted, with actual isolation or clearing work if used.
+Thus the fixed instruction description and pointwise finite termination
+give no constant-space, constant-precision, polynomial bit-cost or
+lifetime-material theorem. The exact account is (30.5) and the sum of
+actual operations and traffic, with the displayed finite bounds for this
+chosen implementation. No global optimum or coordinatewise superiority
+over a different installation has been deduced. $\square$
+
+## 31. Exact exclusions and the source-relative gain
+
+**Proposition 31.1 (what the recovered data cannot distinguish).** The
+calibration inverse has the following exact boundaries.
+
+For the same promised $G$, different arbitrary entry fields give the same
+calibration journal after its first Reset and the same four final-zero
+data. A present visible snapshot need not determine a nonzero current
+interior field. If two leaves instead of exactly one may be omitted,
+even unit trees admit distinct current fields with identical complete
+visible five-command service. Reachability is necessary for the Memory
+uniqueness assertion as stated. None of these is a counterexample to
+Theorems 27.2 or 29.2 on their declared domains.
+
+Proof. Reset maps all entry fields to zero. From that moment the fixed
+calibration executes identical calls on the same $G$ and receives
+identical replies. It consequently cannot recover the erased entry or
+its preceding controls. More generally, from a zero cut the journals
+Reset; Hold and Add$(1,1)$; Reset; Hold have the same endpoint $G,0$ but
+different commands and outputs. Inserted zero-field Reads, Holds or Ticks
+supply further collisions for unrestricted historical Time. Their
+journals are outside the designated canonical interval convention.
+
+For an internal vertex $w$, zero and $e_w$ have the same current visible
+restriction. Such a vertex exists in the present class, which has at
+least three leaves. Theorem 28.1 separates these fields by a paid window,
+but no instantaneous snapshot inverse follows.
+
+For the two-omission claim, use a unit star with $b\ge2$ visible leaves
+and two hidden leaves $h_1,h_2$. Put $z=e_{h_1}-e_{h_2}$. Then
+$J^{\mathsf T}z=0$ and $Az=0$. Starting from $x$ and $x+z$, common
+visible Adds preserve this invisible difference, the first Tick kills
+it, and Reset also kills it; every preceding or subsequent visible Read
+agrees. Hold, refusals, parser and fixed outputs agree too. Induction
+therefore gives identical complete common adaptive service from distinct
+current fields. This violates the arbitrary-field kernel conclusion on
+that enlarged class. It does not assert a geometry collision inside the
+exact-one/unit class. The weighted different-order collision of Theorem
+8.1 remains a separate positive result with its own different weights
+and omission counts.
+
+Finally append an uncoupled rational symmetric scalar mode to any
+reachable predictor: $(S\oplus[\alpha],\binom C0,0)$. Its visible
+transfer is unchanged but its dimension is larger. It is not reachable
+and cannot be orthogonally equivalent to the original full realization.
+Thus equality of transfer without both reachability premises cannot
+justify the Memory inverse used in Theorem 29.2. $\square$
+
+**Theorem 31.2 (supplier correspondence and bounded acquisition gain).**
+The source-relative addition in §§25–30 is acquisition of the omitted
+attachment and its unknown positive length from physically performed
+unit-tree trials with one absent leaf port, including finite stopping,
+actual final zero and retained full current service. Its four-expression
+consequence is restricted to the final-zero canonical calibration image.
+It uses the following supplied mathematics at its actual hypotheses,
+rather than claiming a new general metric, forcing, realization or
+four-view principle.
+
+Proof. In this volume §§1–5, the native law can have positive rational
+links and arbitrary rational diagonal, and the supplied roster contains
+all leaves. Lemma 2.3 supplies precisely the hull reconstruction used
+in (25.2)–(25.3). The polynomial infection, advanced passive window,
+current predictor and continuation-kernel arguments of §§3–5 supply
+the algebraic consumers in §28. Their complete-roster premise does not
+supply the path outside $H$ in Theorem 25.3. Sections 17–24 reduce
+selected measurements on a complete ordered LAB roster and identify
+its original birth-typed root; sparse observations there do not mean
+that a leaf port is absent. Here the roster is incomplete, no planar
+order or birth type is given, and only unrooted visible-labelled unit
+geometry is recovered. The metric counterpair in Theorem 25.3 shows
+the genuine missing information; the two same-pulse defects in §§26–27
+supply it. The lower number of supplied leaf ports is obtained under
+stronger unit/exact-one/Reset hypotheses, with the costs in §30, not as
+a total dominance theorem over full-leaf weighted acquisition.
+
+The infection residual is literature-attested. [Burgarth and Maruyama,
+*Indirect Hamiltonian Identification through a small gateway*,
+arXiv:0903.0612v1, §II, DOI 10.1088/1367-2630/11/10/103019](https://arxiv.org/abs/0903.0612v1)
+uses a known graph, a unique healthy neighbor and its Hamiltonian
+spectral/preparation/tomography data. Only that one-neighbor linear
+identity is consumed in (28.3). Its Hamiltonian access and tomography
+are not installed scalar field ports here. The primary tree-metric
+reference and its fixed-order distinction are given in Theorem 25.5.
+
+Blåsten, Isozaki, Lassas and Lu, [*Inverse problems for discrete heat
+equations and random walks for a class of graphs*, arXiv:2107.00494v2,
+Definitions 1.1–1.2 and Theorems 1.3, 1.7–1.8](https://arxiv.org/abs/2107.00494v2),
+supply the inverse-spectral/source-to-solution and unique-continuation
+framework already credited in §9.1. Their direct graph-rigidity theorem
+requires the Two-Points Condition. It fails for the present incomplete
+roster: in the two-vertex set $\{v,t_1\}$, every visible leaf is strictly
+nearer to $v$ than to $t_1$, so only $v$ is extreme. Their full response
+map is not a finite acquired port, either. The forcing proof does verify
+absence of an invisible eigenfunction. More explicitly, choose their
+vertex measure and edge weights both one and their potential
+$q(w)=-\deg_G(w)$. Their Laplacian is
+$\Delta=A_G-\operatorname{diag}(\deg_G)$, so
+$-\Delta+q=-A_G$. An eigenvector of this operator vanishing on $B$
+vanishes everywhere by (28.1). This meets their no-invisible-eigenfunction
+premise, with known boundary measure one, for the corresponding
+spectral/source-to-solution equivalence. It does not identify their
+discrete heat update $\mathbf1+A_G$ with the installed Tick $A_G$, or
+install their full response map as a literal read. The particular
+missing-tail geometry and finite stopping are proved here, not obtained
+by dropping the Two-Points premise or changing the actual clock.
+
+The [Finite Observability Equivalence source](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.scribe.cs)
+concern arbitrary supplied finite real inner-product update/readout
+maps. Their present correspondence is update $A_G$, output $J^{\mathsf T}$,
+state $\mathbb R^N$, output $\mathbb R^b$ and horizon $I+1$.
+Equation (28.2) supplies the rational left inverse, and that identity
+persists over the reals, meeting its kernel/full-rank/Gram criteria.
+The theorem itself grants no Read or Reset. The [Minimal Symmetric
+Realization Uniqueness source](../../../D5/S3/Quantum/Measurements/MinimalSymmetricRealizationUniqueness.lean)
+with its [owning Scribe](../../../Blueprint/D5/S3/Quantum/Measurements/MinimalSymmetricRealizationUniqueness.scribe.cs)
+supplies the real Euclidean orthogonal intertwiner. Its private
+combination, Gram and kernel helpers use exactly the equal-all-moments
+and both symmetric/reachable hypotheses checked in (29.2). The rational
+basis argument there supplies the rational coordinate refinement. The
+owning Scribe attributes the mature symmetry theory to Willems; this
+application is not a new generic minimal-realization theorem.
+
+[Native Full Source Producer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean)
+with its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs)
+has a literal constructor/address Read, growing stacks and a retained
+chronology. Its private traversal, exact-read and stationarity proofs
+do not turn a scalar field response into that Read or bound its workspace.
+[Native Material Root Recognition](../../../D5/S3/Arith/FibonacciAtomic/Geometry/NativeMaterialRootRecognition.lean)
+with its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Geometry/NativeMaterialRootRecognition.scribe.cs)
+uses original birth typing, at least three logical leaves, full adjacency
+and the complete linear terminal list. Its finite compatibility test,
+private catalog/coordinate/uniqueness helpers and effective inverse
+retain those inputs. The present visible hull and omitted tail supply
+neither complete terminal order nor birth typing, so that result is not
+an inverse to an original ordered alpha/beta source here.
+
+The pinned mathlib [adjacency source](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Combinatorics/SimpleGraph/AdjMatrix.lean)
+provides `adjMatrix_pow_apply_eq_card_walk` for a finite simple graph,
+decidable vertex equality and semiring coefficients. Use the actual
+finite $G$ and coefficients $\mathbb Q$; it counts exactly the unit
+walks used above. It does not supply a full response oracle or stopping
+bound as input. This correspondence and the inspected D5 declarations
+are source-level suppliers, not a newly compiled application.
+
+The distinct public constructions also retain their actual conditions.
+[NLBA II §§45–50](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md#45-an-earned-root-read-installation-with-a-cleared-rational-preparation)
+already recovers prepared signed rational amplitudes by an installed
+original-root Read, known constructed geometry/roster, cleared handoff
+and successful asymmetric growth. Its [§§51–54](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md#51-one-growth-separation-through-the-original-first-terminal)
+separate owned field pairs using selected original-terminal experiments
+with growth and the selected advanced endpoint. Neither is the present
+unknown stationary geometry/incomplete-roster task. [AA II §§84–92](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md#84-growing-native-fields-with-two-declared-clock-phases)
+already recovers successful growing histories from a known-alpha nonzero
+seed under its installed positive-diagonal invertible laws and explicit
+clock phases. Unit adjacency, erased entry and a canonical stationary
+calibration are different premises. [Recovery Geometry II §§96–103](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY_II.md#96-persistent-local-calibration-on-the-native-material)
+already acquires unknown ordered native support from genuine zero under
+persistent address-dependent calibrated coefficients and a returning
+root Tick. Its root binding, address calibration and preparation do not
+come from the present incomplete leaf roster, and no such calibration
+is assumed for the unit adjacency here. These are positive supplied
+results, not absent or unresolved predecessors.
+
+The actual-source, rights, retained-use and historical-service conditions
+of NCR, PVC, PR57, the callable Atlas and Process Geometry remain those
+delimited in §§9 and 16. Their installed original tasks are not renamed
+as this five-command stationary service. The new correspondence is
+Corollary 27.3 and the invariant (28.4); the new geometry information is
+(26.2) and (27.1). Thus the credited ingredients are used as intermediate
+suppliers of a repository-derived source-specific synthesis, with no
+claim of worldwide priority or impossibility from a search absence.
+$\square$
+
+**Corollary 31.3 (the retained domain and precise residual obligations).**
+On the finite stationary unit-tree/exact-one-missing-leaf class, with
+$b\ge2$ authenticated visible leaves and the installed actual
+Reset/Add/Tick/Read/Hold service, the complete acquired geometry and
+zero-current callable predictor exist by this finite procedure without
+supplied size. Independently meaningful four-view numerical recovery
+holds on the final-zero canonical calibration image, with the same
+source, bindings, current rights and costs. It proves neither erased
+entry/history recovery, original ordered alpha/beta root/birth recovery,
+a generic incomplete weighted-tree inverse, a finite-noise guarantee,
+nor a global optimum. The unchanged fixed-$G_{\rm gc}$, original-$Q$,
+parked-consumer, original-initialization and other original-model
+obligations retain their original statements.
+
+Proof. Theorems 25.5–27.2 give actual measurements, finite stopping and
+the complete current endpoint. Theorems 28.1–28.2 give the optional
+advanced window and every continued service branch; Theorems 29.2–29.3
+give all view routes, kernels and their exact dynamics domain. Section
+30 charges this one acquisition and its actual later use, rather than
+mixing different specimens or interfaces. Theorem 25.3 and Proposition
+31.1 give exact counterevidence to metric-only, erased-history and
+indiscriminately enlarged view claims. The remaining exclusions follow
+from the explicit domain: a coordinate or numerical image test is not
+physical provenance, a right or a missing native structural input;
+exact integer comparisons are not a noisy instrument theorem; a finite
+algorithm is not a material optimum. A common actual process identifying
+this stationary installation with original alpha/beta, rational-path or
+quantum preparations, complete actions and outputs has not been supplied
+by these results. Establishing such a correspondence, or any of the
+excluded original tasks, requires its own hypotheses and proof. $\square$
+
+## 追加锚（本行以下为增补区）

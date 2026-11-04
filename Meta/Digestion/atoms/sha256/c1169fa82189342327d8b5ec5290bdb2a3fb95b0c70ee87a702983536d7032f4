@@ -1,0 +1,19 @@
+**Corollary 3.5 (Low-energy localization on the whole moving-mean domain).** For each fixed $M>0$, uniformly over every $\theta\in[0,1]$, every law with $d\le Ma^{3/2}$, and every choice of a least marginal, sufficiently large $a$ depending only on $M$ satisfies
+
+$$
+\frac1M\le\tau:=a^{3/2}t\le M,\qquad 1\le m\le M,
+\qquad
+\frac d{a^{3/2}}\ge\frac{m^2}{\tau}+2\tau-O_M(a^{-1}),
+\tag{3.10}
+$$
+
+and
+
+$$
+\sqrt a\,\delta\ge\tau\left(1+\frac1a-\frac\mu a\right).
+\tag{3.11}
+$$
+
+**Proof.** For large $a$, $W_a(\delta)\ge2\sqrt2\,a^{3/2}$, so this sublevel satisfies the energy restriction of Lemma 3.3 with a constant depending only on $M$. The dense branch would give $d\ge2a^2-Ca>Ma^{3/2}$ by Lemma 3.1, a contradiction. Thus Lemma 3.3 applies on the rare branch. Its coefficient is at least $a^3$ for large $a$, so
+$d\ge m^2/t+a^3t$. Each term is nonnegative. Hence $1/t\le d$, $a^3t\le d$ and $m^2\le dt$, proving the first three bounds in (3.10). Substituting the sharper coefficient $2a^3-O_M(a^2)$ proves its last inequality. Multiplication of the exact capacity (2.2) by $\sqrt a$ gives (3.11). ∎
+

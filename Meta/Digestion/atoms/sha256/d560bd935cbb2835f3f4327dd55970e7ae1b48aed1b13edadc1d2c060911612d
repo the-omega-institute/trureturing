@@ -1,0 +1,26 @@
+#### 命题 9.3（基态样本给重叠探针，不自动给尖锐读口）
+
+对独立制备的参考与数据输入 $\sigma\otimes\rho$，标准受控 SWAP 测试的肯定概率为
+
+$$
+p_+=\frac{1+\operatorname{Tr} (\sigma\rho)}2.
+$$
+
+因此它对数据的肯定效果是 $E_+=(I+\sigma)/2$。即使
+$\sigma=\lvert \beta\rangle \langle \beta\rvert$，一般也不是 $\lvert \beta\rangle \langle \beta\rvert$ 本身。
+
+**证明。**
+
+矩阵单位展开给
+$\operatorname{Tr} [\mathrm{SWAP}(\sigma\otimes\rho)]=\operatorname{Tr} (\sigma\rho)$，辅助干涉公式给 $p_+$。在 $\beta$ 的正交补上，$E_+$ 的本征值仍为 $1/2$，尖锐投影的本征值则为零。
+
+∎
+
+一般相关联合输入 $\tau$ 的公式应为 $p_+=(1+\operatorname{Tr} (\mathrm{SWAP}\,\tau))/2$，不能把 $\tau$ 自动换成其两个边缘的乘积。
+
+重复实验可由 $2p_+-1$ 估计独立输入的 Born 重叠，单次原始事件概率却不同。该区别可直接从标准重叠测量公式核对 [[10](#ref-ekert)]。已知制备门 $V$ 且能反演时，执行 $V^\dagger$ 后读标准基可以实现相应尖锐 PVM；只有一个未知基态样本时，上述公式没有供应这项能力。
+
+<a id="sec-10"></a>
+
+<a id="sec-mps"></a>
+

@@ -1,0 +1,66 @@
+**Lemma 2.1 (one side probe after a physical spine).** Let
+$v=\rho^{2j}u$ with $j\ge2$ and $u\in\mathcal T$. Define the mathematical
+quantity
+
+$$
+ h_a=\max\{s\ge0:P^\pi_v(a^s)=1\}.
+ \tag{GPO.5}
+$$
+
+Then $2\le h_a\le2j+\ell(u)-1$ and
+
+$$
+ P^\pi_v(a^{h_a-2}ba)=
+ \begin{cases}
+ 0,&\pi(a)=L,\\
+ 1,&\pi(a)=R.
+ \end{cases}
+ \tag{GPO.6}
+$$
+
+The test does not require $j$, an original leaf address, a label, or the
+semantic interpretation of $a$ as an input.
+
+Proof. Use the existing structural Fibonacci supplier
+$T_m=\rho^m\alpha$, $T_0=\alpha,T_1=\beta$,
+$T_{m+2}=\langle T_{m+1},T_m\rangle$ from
+[Fibonacci Atomic Relation Generation][FARG], Definition 3.1 and Theorem
+3.2. Also $\rho^{2j}\beta=T_{2j+1}$. For $m\ge1$, the left-only height
+of $T_m$ is $m-1$: it is zero for $T_1$, and each left step from $T_m$,
+$m\ge2$, reduces the index by one. Its right-only height is
+$\lfloor m/2\rfloor$: a right step reduces the index by two until $T_0$
+or $T_1$, both leaves. These statements follow directly by induction
+from that supplier, including $T_2=\langle T_1,T_0\rangle$.
+
+Let $d_L,d_R$ be the left-only and right-only heights of $u$, and let
+$\eta_L=0$ or $1$ according as its leftmost leaf is alpha or beta.
+Substitution preserves every original branch, and at its terminal
+original leaf installs $T_{2j}$ or $T_{2j+1}$. Consequently
+
+$$
+ h_L(v)=d_L+2j-1+\eta_L,\qquad h_R(v)=d_R+j.
+ \tag{GPO.7}
+$$
+
+The second identity is also ABT34.2's right-height supplier. Each original
+extreme path has at most $\ell(u)-1$ edges, since every branch on it has
+a distinct off-path leaf. Thus either physical interpretation gives the
+stated bound on $h_a$, and both heights are at least two.
+
+If $\pi(a)=L$, the final two edges of the extreme path lie inside its
+terminal leaf replacement: its left height is at least three. At the
+ancestor two edges before its terminal leaf the actual subtree is $T_3$.
+Indeed, the left descent reduces its index to three there. Since
+$T_3=\langle T_2,T_1\rangle$, the semantic word $RL$ is absent at that
+ancestor. The physical word $ba$ is exactly $RL$, proving the zero case.
+
+If $\pi(a)=R$, the replacement has right height $j\ge2$, so the same
+ancestor again belongs to that replacement, not to the unknown original
+context. At this ancestor its subtree is $T_4$ if the original terminal
+leaf was alpha, and $T_5$ if it was beta. The final right descents are
+$T_4,T_2,T_0$ or $T_5,T_3,T_1$. Both children of each of $T_4,T_5$
+are branches, by the recurrence. Hence semantic $LR$ is present there.
+Now the physical word $ba$ is $LR$, proving the one case. Every assertion
+concerns a subtree of the same actual $v$; none selects or supplies an
+unacquired original leaf to the controller. $\square$
+

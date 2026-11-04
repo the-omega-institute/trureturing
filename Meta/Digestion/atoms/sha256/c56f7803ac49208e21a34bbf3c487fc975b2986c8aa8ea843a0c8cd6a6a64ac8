@@ -1,0 +1,16 @@
+**约定 84.5（strict-real support reductions 的准确残余）。** 同一 [Strict-real §§7–10][F84STRICT] 的 Theorem 7.3 给出一个 finite $B_*>0$，同时约束每个 terminal-$J/M$ collision pair 的两个 endpoints：$b(W),b(W')<B_*$。Theorem 7.4 另给出 $q_\infty=(-216/5,-225)$ 附近的 whole-child empty-or-singleton neighbourhood，且 sufficiently large-$b$ acquired worlds 的 entire sixth-$M$ child 是 singleton。这里没有 explicit numerical bound，也没有把仅一个 endpoint 的 tail 估计当成整个 child 的分类。
+
+Theorem 8.4 的 singular-endpoint-$M$ bases 构成 finite nonempty set。更宽的 Theorem 9.10 只要求整个 same child 与 exceptional set $E(p,v)$ 相交，即使 exceptional world 不在所选两 pairs 中，也将同时有 actual distinct $J$ pair 和 actual distinct $M$ pair 的 base 放入明确的 finite complex outer set
+
+$$
+\begin{aligned}
+Z_E={}&V_{\mathbb C}(Q_{10},E_0N_J,E_0N_M)\\
+ &\cup V_{\mathbb C}(S_4,E_0N_J,E_0N_M)\\
+ &\cup V_{\mathbb C}(Q_{24},e_{24}n_{24,J},e_{24}n_{24,M}).
+\end{aligned}
+$$
+
+所有 symbols 按该来源 Definitions 9.1、9.6–9.7 与 Theorem 9.10；$E(p,v)$ 是 strict-real exceptional worlds，不是 quantum task $E(q)$。这个 containment 只给 necessary outer candidates；没有任何 candidate 由此被 isolation、strict-real lifting 或分类。两 pairs 必须在同一 actual acquired child，各自内部 distinct，允许重叠；其共同 responses 无需相同。Theorem 8.2 的 mixed-$M$ witness 因 whole-child $J$ injective，尤其不是 actual joint-$J/M$ witness。
+
+remaining noncompact limits 包括 $b\to0$、$r\to0,1$、无界 $r(1-r)/b$、finite-source singularities 和 denominator/ramification limits；children avoiding $E$ 亦不在上述 finite-image reduction 中。即使排除 $Z_E$ 的全部 legal candidates，也只结算 exceptional-meeting sector。actual joint child、same-$p$ sixth-$J$、fifth-$J$、common parent 与 ancestor obligations 均保留；没有 $H_4$ $L_3$、root $L_7$ 或 eight-versus-nine 结论。
+

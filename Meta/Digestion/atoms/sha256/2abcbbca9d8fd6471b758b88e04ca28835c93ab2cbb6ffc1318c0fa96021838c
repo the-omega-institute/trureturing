@@ -1,0 +1,36 @@
+**定理 7.5（合法可逆过程必为酉）。**
+设 $\Phi,\Psi:M_d(\mathbb C)\to M_d(\mathbb C)$ 都为 CPTP，
+且 $\Psi\Phi=\Phi\Psi=\operatorname{id}$。则存在酉 $U$，使
+$\Phi(X)=UXU^\dagger$。
+
+证明。
+取 Heisenberg 对偶 $T=\Phi^*,S=\Psi^*$，它们均含幺、CP、互为逆。
+正块矩阵
+$\left(\begin{smallmatrix}A^\dagger A&A^\dagger\\A&I\end{smallmatrix}\right)$
+在 $\operatorname{id}_2\otimes T$ 下仍正，
+Schur 补给 $T(A^\dagger A)\ge T(A)^\dagger T(A)$。
+施 $S$ 并对 $S$ 再用同一不等式：
+
+$$
+A^\dagger A\ge S(T(A)^\dagger T(A))\ge A^\dagger A.
+$$
+
+故全为等号，$S$ 单射给
+$T(A^\dagger A)=T(A)^\dagger T(A)$。
+对 $A+B,A+\mathrm{i} B$ 极化，得
+$T(A^\dagger B)=T(A)^\dagger T(B)$，故 $T$ 为 $*$-同构。
+
+$T(e_{ii})$ 是 $d$ 个非零正交投影、和为 $I_d$，所以均秩一。
+选单位 $u_0\in\operatorname{ran}T(e_{00})$，令 $u_i=T(e_{i0})u_0$。
+矩阵单位关系给 $u_i$ 正交归一且
+$T(e_{ij})=|u_i\rangle\langle u_j|$。
+于是 $T(A)=VAV^\dagger$，$V|i\rangle=u_i$；
+取对偶得 $U=V^\dagger$。
+证毕。
+
+可逆量子操作的更一般表示见 [nayak](#ref-nayak)。
+这里“可逆”是物理上存在合法逆过程；
+一个线性映射数学上可逆不保证其逆为正或 CP。
+
+<a id="cor:gatecertificate"></a>
+

@@ -1,0 +1,39 @@
+**Theorem 13.9 (Eventual exact minimum and all equality arrays).** For every fixed integer $h\ge2$, there is an integer $A(h)$ such that for every $a\ge A(h)$,
+$$
+\min_{x\in\mathcal X_{a,h}}H(x)=\Phi_{a,h}(u_h).
+\tag{13.22}
+$$
+Up to a relabeling of the $s$ labels, equality holds exactly for the array of Definition 13.2 with $u=u_h$:
+$$
+ x_{\{j\}}=\frac{u_h}{h}\ (j\in D),\qquad
+ x_C=(a-1)u_h,\qquad
+ x_{C\setminus\{i\}}=\frac{1-au_h}{r}\ (i\in C),
+\tag{13.23}
+$$
+and all other type masses zero. In particular, the $h$ tail labels have equal singleton masses, the core has one full type and all its missing-one types have equal masses, and the support may be disconnected.
+
+**Proof.** Let $x$ be a minimizer and choose $D$ as in Lemma 13.4. By Lemma 13.8 and (13.19), then by strict Jensen for
+$$
+ g_u(y)=\frac{a^2}{y}+\frac{bu}{y^2},
+$$
+we obtain
+$$
+H(x)\ge\frac{h^2}{u}+\frac{a^2r^2}{a-u}+\frac{bur^3}{(a-u)^2}
+=\Phi_{a,h}(u)\ge\Phi_{a,h}(u_h).
+\tag{13.24}
+$$
+The first inequality uses Cauchy--Schwarz on the actual $h$ tail marginals and Jensen on the actual core marginals; it does not replace the common array by independently chosen marginals. Definition 13.2 attains the last value, proving (13.22).
+
+Suppose equality holds. Strict convexity of $\Phi_{a,h}$ gives $u=u_h$, tail Cauchy equality gives $t_j=u_h/h$, and strict Jensen gives $y_i=(a-u_h)/r$ for every $i\in C$. Lemma 13.7 excludes every positive-mass event with $B>0$ and $K\ge2$, so the only tail-containing types are the singletons $\{j\}$.
+
+For a core-only type, equality in (13.20) forces every $\rho_i$ to vanish. Summing over $i\in C$ gives $Q(L)=0$. For integer $1\le L\le r$, the only zeros are $L=a$ and $L=r$; hence the remaining positive types are exactly $C$ and the $r$ types $C\setminus\{i\}$. Write their masses as $z$ and $b_i$. Normalization and the mean constraint give
+$$
+ z+\sum_i b_i=1-u_h,\qquad
+ rz+a\sum_i b_i=a-u_h,
+$$
+so $z=(a-1)u_h$ and $\sum_i b_i=1-au_h$. Since every core marginal equals $(a-u_h)/r$,
+$$
+1-u_h-b_i=\frac{a-u_h}{r},
+$$
+which forces $b_i=(1-au_h)/r$ for each $i$. This is (13.23). Conversely Definition 13.2 attains equality. Since $u_h<1/a$ eventually, the displayed masses and all marginals are admissible. ∎
+

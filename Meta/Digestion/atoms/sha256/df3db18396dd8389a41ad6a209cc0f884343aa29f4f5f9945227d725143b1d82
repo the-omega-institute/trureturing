@@ -1,0 +1,11 @@
+**命题 13.1（最优基数不保证给定读出可取得）。** 令
+$E=\{a,b\}$、$\mathcal F=\mathcal P(E)$。此模型的最优符号数为 $3$，但下表
+的给定读出 $r_{\mathrm{bad}}$ 有三个有效符号且不支持取得。表中的
+$r_{\mathrm{good}}$ 则达到最优值。
+
+| 配置 $C$ | $\operatorname{En}(C)$ | $r_{\mathrm{bad}}(C)$ | $r_{\mathrm{good}}(C)$ |
+| --- | --- | --- | --- |
+| $\varnothing$ | $\{a,b\}$ | $u$ | $a$ |
+| $\{a\}$ | $\{b\}$ | $v$ | $b$ |
+| $\{b\}$ | $\{a\}$ | $w$ | $a$ |
+| $\{a,b\}$ | $\varnothing$ | $u$ | $\ast$ |

@@ -1,0 +1,44 @@
+**定义 93.1（原生效果行、插入块与精确标量）。** 固定按定理 92.1–92.2 选择的九个前缀，仍保留 $u_1=\varnothing$。八个后缀按以下顺序固定：
+
+$$
+(h_1,\ldots,h_8)=(\varnothing,0,1,00,10,000,010,100).
+\tag{93.1}
+$$
+
+置
+
+$$
+e_0=I_3,\qquad
+e_m=Z_{h_m}=2^{-|h_m|}V_{h_m}^\dagger EV_{h_m}\quad(1\le m\le8).
+\tag{93.2}
+$$
+
+定义四个 $9\times9$ 实矩阵，行标 $m=0,\ldots,8$、列标 $i=1,\ldots,9$：
+
+$$
+H_{mi}=\operatorname{Tr}(e_mr_i),\qquad
+H^a_{mi}=\operatorname{Tr}(e_mA_a(r_i)),
+\quad a=0,1,N.
+\tag{93.3}
+$$
+
+非迹行的条目恰为原事件
+
+$$
+H_{mi}=p(u_i h_m,1),\qquad
+H^a_{mi}=p(u_i a h_m,1)\quad(m\ge1).
+\tag{93.4}
+$$
+
+迹行的条目则是没有后缀的两个终端结果之和：
+
+$$
+\begin{aligned}
+H_{0i}&=p(u_i,0)+p(u_i,1),\\
+H^a_{0i}&=p(u_i a,0)+p(u_i a,1).
+\end{aligned}
+\tag{93.5}
+$$
+
+例如 $u_kN$ 的列是先执行 $u_k$ 再执行 $N$；绝不是先在 $\rho_0$ 上执行 $N$。竞争表 $\widetilde H,\widetilde H^a$ 用同一时序和 (91.5) 定义。其非迹行包括完整的竞争后缀映射 $B_{h_m}$，没有假设其公平性。
+

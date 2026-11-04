@@ -1,0 +1,24 @@
+**Definition 15.1 (Scope of the finite restriction).** The source-specific
+result of Sections 9–14 is the literal primitive M normalization, the
+coprimality transfer for the unchanged original five-norm exceptional
+inventory, and the finite necessary base condition for the full
+independent-pair relation. It is repo-derived. The polynomial, valuation
+and plane-curve tools used inside its proof are classical: Sylvester
+resultants and their gcd criterion are as in M. Moreno Maza,
+*Advanced Computer Algebra: The resultant*, “The resultant”, Definition 4
+and Propositions 5–7,
+[primary text](https://www.csd.uwo.ca/~mmorenom/CS874/Lectures/ResultantGcd.html/node3.html).
+The determinant elimination is E. H. Bareiss, “Sylvester's Identity and
+Multistep Integer-Preserving Gaussian Elimination”, Mathematics of
+Computation 22, 565–578,
+[doi:10.1090/S0025-5718-1968-0226829-0](https://doi.org/10.1090/S0025-5718-1968-0226829-0).
+Gauss' lemma, height-one UFD valuations, Hensel factorization,
+Newton–Puiseux order estimates, discriminant multiplicativity and finite
+intersection of coprime plane curves are used in their ordinary
+characteristic-zero senses, with the needed applications proved above.
+No new general algebraic algorithm or worldwide priority is asserted.
+The all-world source and Vandermonde identifications are reused from S,
+Theorem 4.3 and Lemma 9.9, and IX, Sections 4–7. The independent-pair
+inverse correspondence is the existing X, Definition 6.3 and Proposition
+6.4, and XI, Sections 1–4, Theorem 5.3.1 and Definition 6.8.1.
+

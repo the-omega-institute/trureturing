@@ -1,0 +1,16 @@
+### 2.6 相关文献与使用范围
+
+Vandermeulen--Scott 的 [Lemma 5.3](https://arxiv.org/html/1607.00071v2) 证明
+两两不共线的 $m$ 个非零 Hilbert 向量的 $(m-1)$ 次张量幂线性无关；它给出本章
+“有限类需要有限张量阶”的已知背景。本章的有界读出直接用 (UJB.7406) 的乘积
+测试函数，因此没有把该文的未知混合分解定理冒充为本行逆。
+
+Berrut--Trefethen 的 [barycentric interpolation, §2](https://people.maths.ox.ac.uk/trefethen/barycentric.pdf)
+给出已知互异节点的 Lagrange 插值读出；(UJB.7410) 的交替二项式计算是其在
+等距 Bernoulli 节点上的显式有限差分版本，而不是新的一般插值定理。
+
+Bian--Abate 的 [Theorem 6 and Figure 1](https://arxiv.org/html/1701.04547v3)
+展示概率 Markov 链中 branching/bisimulation 与有限 trace law 之间的结构—取得
+差距及总变差界。本章的持久混合族把这个差距落实为同一 typed row 上的精确阶数
+和精确常数；它不声称解决该文的一般近似模型问题。
+

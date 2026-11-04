@@ -1,0 +1,37 @@
+**Definition 87.2 (an adequate subset and its actual replacement).**
+Use zero forcing in its usual sense: a colored vertex with exactly one
+uncolored neighbor may color that neighbor. Choose $Z\subseteq\mathcal O$
+such that $S_0\cup Z$ zero-forces the original material tree, identifying
+each initial label with its original physical terminal. Let $q=|Z|$ and
+let $a_Z$ count its alpha logical leaves. Adequacy is a sufficient
+combinatorial certificate, not a necessary condition for observing one
+fixed adjacency matrix. A certificate can be found by finite enumeration
+of subsets and forcing orders using the earned graph.
+
+For each selected beta owner $p$, actually execute
+$S_p;S_{pL}$. The second target is the beta made logical by the first
+split, rather than an attempt to split an unconverted material marker.
+For a selected alpha $p$, first execute $P_p$, then these two splits.
+Process selected original leaves in fixed address order, without any
+Tick, Add or Read. Distinct original logical leaves have disjoint cones.
+In either case the resulting local edges, besides the old parent edge,
+are
+
+$$
+p-pL-pLL-pLLL,\qquad p-pR,\qquad pL-pLR.
+\tag{87.1}
+$$
+
+The inherited masked label ends at $pLLL$. The two new readable labels
+are really bound at $pR,pLR$. All old cells, values and edges persist;
+every fresh value is zero. Let $E:\mathbb Q^N\to\mathbb Q^M$ be this
+literal inclusion, $B$ the actual grown adjacency, and $C$ restriction
+to all current labels outside the inherited mask. If $s$ is their count,
+then
+
+$$
+M=N+4q+a_Z,\qquad s=b-k+2q,\qquad
+E^{\mathsf T}E=I_N,\qquad E^{\mathsf T}BE=A.
+\tag{87.2}
+$$
+

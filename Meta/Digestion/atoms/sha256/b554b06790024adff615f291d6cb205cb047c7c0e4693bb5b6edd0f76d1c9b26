@@ -1,0 +1,30 @@
+**Proposition 19.3 (a strict-image obstruction).** Suppose $p>1$ and
+the aligned core satisfies $y_{-1}=0$ and $y_{-2}=1$. If neither
+$(0,0)$ nor $(-1,-1)$ belongs to $E_s$, then
+
+$$
+ R_s\subseteq Q_p\setminus\{(0,0),(-1,-1)\},
+ \qquad |R_s|\le p^2-2.
+ \tag{PCR.48}
+$$
+
+In particular every purely periodic source with these aligned terminal
+bits satisfies this obstruction. The presence of a transient can change
+the seed set, so this statement is not extended by forgetting $E_s$.
+
+Proof. Each of the four affine branches in (PCR.39) has an invertible
+linear part modulo every $p$. An edge into $(0,0)$ can have predecessor
+$(0,0)$ in the $a$ column, $(-1,0)$ in the $b,c=0$ case, or
+$(0,-1)$ in the $b,c=1$ case. The latter two require respectively
+$c_y(-1)=0$ and $c_y(0)=1$, both contrary to the assumed bits. Thus
+its only permitted incoming edges are from itself. An edge into
+$(-1,-1)$ in the $a,c=1$, $a,c=0$, or $b,c=0$ cases requires
+predecessor $(0,-1)$, $(-1,0)$, or $(-1,-1)$, respectively. These
+require $c_y(0)=1$ or $c_y(-1)=0$, again impossible. The remaining
+$b,c=1$ predecessor is $(-1,-1)$ itself and is permitted. Neither
+vertex can first be entered from its complement. The seed assumption
+therefore excludes them from (PCR.45). They are distinct for $p>1$.
+For a purely periodic source the sole seed is the root $(1,2)\bmod p$,
+which equals neither excluded pair: the second equality would require
+$p$ to divide both two and three. $\square$
+

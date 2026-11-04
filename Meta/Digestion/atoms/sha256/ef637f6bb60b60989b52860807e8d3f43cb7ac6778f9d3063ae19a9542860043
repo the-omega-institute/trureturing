@@ -1,0 +1,8 @@
+Couple native fields by $x'=Ux$. The initial fields satisfy this relation. Every old operation preserves it and its full reply:
+
+- Reset gives the two zero fields and the same acknowledgement.
+- Add$(j,u)$ gives $x'+u e_{\ell_j}=U(x+u e_{\ell_j})$ and the same acknowledgement.
+- Tick gives $T_{p'}x'=UT_px$ and the same acknowledgement.
+- Read$(j)$ gives $e_{\ell_j}^{\mathsf T}x'=e_{\ell_j}^{\mathsf T}x$ and changes neither field.
+- Hold leaves the relation unchanged, prevents further advancement and gives the same acknowledgement.
+

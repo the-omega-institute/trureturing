@@ -1,0 +1,56 @@
+**定理 102.1（锚定提升的逐历史完整对应）。** 假设 101.2、(101.5) 成立。取定义 91.1 的任意外定时序 $s\in\{\mathsf J,\mathsf N\}^*$，含 $k$ 个原仪器位置。以 $h\in\{0,1\}^k$ 标记全部原标签，$w_s(h)\in\mathcal W_s$ 为保留全部 $N$ 位置的原时间词，$|h\rangle_g$ 为这 $k$ 个原记录载体的张量基。只在当前系统上施原交互或 $N$、旧载体保持未触动，得到实际等距
+
+$$
+S_sx=2^{-k/2}\sum_{h\in\{0,1\}^k}U_{w_s(h)}x\otimes|h\rangle_g.
+\tag{102.1}
+$$
+
+对任意有限未触动参考 $Z$ 和任意 $X\in M_3\otimes\mathcal B(Z)$，其全部记录交叉块为
+
+$$
+(I\otimes\langle h|_g)(S_s\otimes I_Z)X(S_s^\dagger\otimes I_Z)
+(I\otimes|h'\rangle_g)
+=2^{-k}(U_{w_s(h)}\otimes I_Z)X(U_{w_s(h')}^\dagger\otimes I_Z),
+\tag{102.2}
+$$
+
+其中记录与 $Z$ 的张量顺序用恒等换位识别。特别地，每个对角块精确等于 $(A_{w_s(h)}\otimes\operatorname{id}_Z)(X)$。在原五维码上亦有
+
+$$
+\widehat K_{w_s(h)}B=2^{-k/2}BU_{w_s(h)},\qquad
+\widehat S_sB=(B\otimes I)S_s,
+\tag{102.3}
+$$
+
+其中系统控制仍为 $\widetilde N=BNB^\dagger+(I_5-BB^\dagger)$。故未归一 CP 后继、每个标签、每个 $N$ 位置、两种原终端和全部无条件质量均对应；不是仅终端的一个边缘分布对应。
+
+证明。定理 101.3 使每次未知提升都为 $\operatorname{Ad}_{S_\theta}$，并且在已出射记录与 $Z$ 上为恒等。按时序归纳展开，原交互增加一项 $2^{-1/2}V_j$ 和该次 $g_j$，$N$ 则只左乘当前系统，得到 (102.1)–(102.2)。没有把标签变成可选择的门。五维等式由 (101.2)、$\widetilde NB=BN$ 同样归纳。
+
+对于任意数学密度输入 $X\in M_3\otimes\mathcal B(Z)$，记 $\rho_X=\operatorname{Tr}_Z X$、$X_Z=\operatorname{Tr}_Q X$，对角块为 $X_h$，则 $\operatorname{Tr}X_h=2^{-k}$。使用任意 $X$ 说明完整映射域及参考合法性，不供应制备它的权利；唯一实际系统制备仍为 $\rho_0$。原终端仍仅是效果 $(E_1,E_0)$，其未归一可见参考输出及完整质量为
+
+$$
+\begin{gathered}
+\tau_{h,b}^{Z}(X)=\operatorname{Tr}_Q[(E_b\otimes I_Z)X_h],\\
+\operatorname{Tr}\tau_{h,b}^{Z}(X)
+=\operatorname{Tr}[E_bA_{w_s(h)}(\rho_X)]
+=2^{-k}\operatorname{Tr}[(U_{w_s(h)}^\dagger E_bU_{w_s(h)}\otimes I_Z)X],\\
+\sum_{b=0}^1\tau_{h,b}^{Z}(X)=2^{-k}X_Z,\qquad
+\sum_h\sum_{b=0}^1\tau_{h,b}^{Z}(X)=X_Z,\qquad
+\sum_h\sum_{b=0}^1\operatorname{Tr}\tau_{h,b}^{Z}(X)=1.
+\end{gathered}
+\tag{102.4}
+$$
+
+迹公式由 (102.2) 的对角块与部分迹给出；对两个效果求和，再用系统酉不改变参考边缘，得到后两项边缘恒等式。除最后的数值归一化外，这些等式线性地适用于任意矩阵 $X$；一般矩阵的总迹为 $\operatorname{Tr}X$，不缩小 (102.2) 的完整域。对密度输入，该参考输出为正：在部分迹中可等价地把 $E_b$ 的两个平方根放在 $X_h$ 两侧。故两终端质量均非负、逐历史之和为 $2^{-k}$；若某终端质量为零，相应正算子也为零，不作除法或丢弃该格。
+
+原制备的明确特化为 $\rho_X=\rho_0$。由于 $\rho_0$ 纯，密度 $X$ 此时必支撑在 $\operatorname{span}\{\psi\}\otimes Z$，所以 $X=\rho_0\otimes X_Z$，从而
+
+$$
+\tau_{h,b}^{Z}(\rho_0\otimes X_Z)=p_s(w_s(h),b)X_Z,\qquad
+\operatorname{Tr}\tau_{h,b}^{Z}(\rho_0\otimes X_Z)=p_s(w_s(h),b).
+$$
+
+这里 $p_s$ 始终指 (91.2) 固定 $\rho_0$ 的律；任意输入的质量使用 (102.4) 中的 $\rho_X$。取平凡参考即为原物理制备的双终端律；引入未触动参考只说明映射扩展，不授予参考制备或耦合权限。上述输出只描述终端记录及未触动参考，不指定原终端之后一个尚未供应的系统后继。五维效果 $P_5=BEB^\dagger$、$I_5-P_5$ 拉回正是 $E_1,E_0$，故 (102.4) 在完整数学域上也逐项对应五维码内映射；原实验使用上述 $\rho_0$ 特化。原初始制备来自 V 命题 91.3 的完整五维提升，不替换其原准备。
+
+每个原交互后立即测 $g_j$，也逐前缀给同一个 $X_h$。因此这种原读法保留定义 95.1 的原有界停止表：对每一停止叶 $\ell$，将 (102.4) 中的 $2^{-k},U_{w_s(h)}$ 换为该叶原来的 $\alpha_\ell=2^{-k(w_\ell)},U_{w_\ell}$，其 CP 后继和两个终端质量仍逐项相同，质量为 (95.1) 的 $p_{\rho_X}^{\pi}(\ell,b)$；原物理制备取 $\rho_X=\rho_0$。叶的参考边缘为 $\alpha_\ell X_Z$，完整停止表满足 $\sum_\ell\alpha_\ell=1$，包括在初始检查点立即停止的情形。若采用固定 $s$ 的相干保留，则末端再测全部 $g_j$ 给同一 (102.4)，并在原制备上给上述 $p_s$ 特化：旧载体的投影与以后只作用于系统、新载体的操作交换。这是固定时序的延期读取等价，不是把末端才知道的标签当成过去可用的停止信息。依赖标签的相干接续控制未在假设 101.2 中供应。∎
+

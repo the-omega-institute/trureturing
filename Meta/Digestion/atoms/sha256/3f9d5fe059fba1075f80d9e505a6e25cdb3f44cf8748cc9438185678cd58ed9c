@@ -1,0 +1,95 @@
+**Proposition 44.4 (The exact comparison and the information that remains absent).**
+The common-edge correspondence identifies one legal separator
+histogram both for assembling rows and for synchronizing a
+removable row. It does not identify a prescribed row history,
+does not give a general clique-sum canonical classification,
+and does not give physical or analytic realizations of the
+terminal module.
+
+Proof. Assembly uses (41.4), which the clique $K_2$ fixes from
+the endpoint totals. Interior descent additionally uses the
+local degrees $(2j+1;j,j)$, the invariant residual $00$
+count in (42.3), and the common choice (42.4). Theorem 39.2
+proves a universal first-moment statement only for existence
+over all extensions; it contains no assertion about arbitrary
+canonical modules. Likewise (40.3) recovers complete separator
+laws by linear statistics, while (40.4) optimizes disagreement
+of two fixed laws. These conclusions have different domains
+and do not replace one another.
+
+The actual shared-root comparator is Theorems 35.4–35.5,
+Proposition 35.6 and Theorem 38.2 with Proposition 38.3
+[Supplier41]. Its two-seven-cycle graph has thirteen vertices,
+ring dimension fourteen, $505=21^2+8^2$ mode variables,
+projective dimension $491$, and complete last module
+
+$$
+\mathcal F^{\mathrm{root}}_{491}
+=S^{\mathrm{root}}_{3,2}(-502)
+ \oplus S^{\mathrm{root}}_{3,2}(-500)^{201}.
+\tag{44.8}
+$$
+
+The edge graph instead has twelve vertices and (44.6).
+These presentations have different polynomial rings and
+different shared-boundary conditions. Their types $202$
+and $90$ count summands in the final free modules; they
+are not dimensions of a common physical state space,
+zero-mode counts or Atiyah–Singer indices. A terminal
+module and its homological position do not specify all
+intermediate Betti numbers or the $284$ or $491$
+differential matrices. Theorems 44.2–44.3 specify every
+final shift and multiplicity, not those middle matrices.
+
+Even within the edge graph, put zero on both shared vertices
+and on every branch except one. The two arrays of degree
+two with private rows $\{\{2\},\{4\}\}$ and
+$\{\varnothing,\{2,4\}\}$ are legal for every $k\ge2$.
+They have the same occupancy vector and the same shared
+histogram, yet different unordered row correlations.
+Thus even successful common-source realization does not
+recover a specified initial array, and it also cannot
+recover its order. An interpretation in terms of native
+operations would require a map preserving preparation,
+allowed transitions and the stated observables. An analytic
+index interpretation would require a specified graded
+operator, its domain and an appropriate ellipticity or
+kernel comparison. None of those structures is part of
+Definitions 41.1 or 44.1. The distinct smooth operators
+of §§30 and 34 [Supplier41] are not transported to this
+graph by agreement of numerical values.
+
+The attribution of the mathematical inputs is correspondingly
+specific. Theorem 28.2 supplies integral common-copy cycle
+realization; §§31–32 supply the slack/deficit coordinates
+and the degree-three translated canonical layers, with
+Miyazaki's §4 as their primary classification source.
+§§35–38 supply the actual common-root construction and
+comparison, including the distinction between canonical
+generator counts and entire quotient pieces in §36.
+Matsuda–Ohsugi–Shibata's Proposition 1.3 supplies the
+clique-sum toric-fiber and normality precedent for the
+retained $K_2$. Hochster, Danilov and Stanley supply the
+normal-monoid canonical framework in the precise graded
+form of Barile–Bruns, Theorems 5.1 and 4.5; Stacks 090U
+supplies the stated Auslander–Buchsbaum hypotheses.
+Rota's inversion and the finite maximal-coupling method
+are intermediate tools in the separator observation, with
+the warehouse's legal-pattern moment coordinates in
+*Hidden Relations*, C-28.3 and C-28.5 [Hidden40].
+
+The derivation particular to this application is the link
+between the attainable-pattern intersection, the explicit
+missing separator coordinates, the uniform edge-compatible
+descent, the resulting complete basic-tuple counts, and
+the endpoint-resolved quotient and terminal modules.
+It attributes the classical tools to their sources and
+makes no claim of worldwide priority or of a general
+canonical theorem for arbitrary clique sums. Every
+unbounded-parameter conclusion above follows from its
+given proof; finite table entries are evaluations of
+the displayed formulas, not a substitute for those proofs.
+$\square$
+
+[AB44]: https://stacks.math.columbia.edu/tag/090U
+

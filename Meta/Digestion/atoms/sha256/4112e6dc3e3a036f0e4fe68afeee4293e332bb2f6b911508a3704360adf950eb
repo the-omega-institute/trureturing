@@ -1,0 +1,18 @@
+**Lemma 2.2 (An explicit finite projective net).** For every positive
+rational $\delta\le1/16$, one can produce a finite list of rational
+rank-one projections $Q_1,\ldots,Q_M$ such that every complex qutrit
+rank-one projection is at Frobenius distance strictly less than
+$\delta/16$ from one of them. The list depends only on $\delta$.
+
+**Proof.** Choose an integer $m>128/\delta$. Enumerate all nonzero
+complex vectors whose six real coordinates are multiples of $1/m$ in
+$[-1,1]$, and output $Q_z=zz^\dagger/(z^\dagger z)$. Each denominator is
+a positive rational, so this is a finite effective list; duplicates do
+not matter. For a unit vector $v$, round each real coordinate to the
+nearest grid point. The resulting $z$ satisfies
+$\|z-v\|\le\sqrt6/(2m)<2/m<1$, hence $z\ne0$. Put $u=z/\|z\|$.
+The triangle inequality gives $\|u-v\|\le2\|z-v\|<4/m$.
+Expanding $uu^\dagger-vv^\dagger$ into two rank-one terms gives
+$\|uu^\dagger-vv^\dagger\|_F\le2\|u-v\|<8/m<\delta/16$.
+The normalized vector need not be computed to output $Q_z$. ∎
+

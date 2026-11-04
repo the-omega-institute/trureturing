@@ -1,0 +1,25 @@
+**Definition 28.2 (Collision functions independent of sheet labels).**
+For any local analytic labels $W^+,W^-$ define
+
+$$
+J_\Delta=(a(W^+)-a(W^-))^2,\qquad
+M_\Delta=(m(W^+)-m(W^-))^2.
+\tag{28.1}
+$$
+
+Sheet permutations leave both expressions unchanged; they are therefore
+global real analytic functions on $\Omega_*$. In this component the
+original independently chosen pair predicate is equivalent to
+$J_\Delta=M_\Delta=0$, because every distinct pair in a two-element
+entire child is that whole unordered child. This deduction imposes no
+new pair restriction on Definition 1.2.
+
+A continuous path leaving this component while preserving $p\ne24$
+must meet $\mathcal E_{\rm esc}=0$ or $D_{\rm crit}$: a path remaining
+in the open complement stays in its initial connected component.
+Critical crossings need not change cardinality, and barrier zeros need
+not be realizable escapes. The barrier is an algebraic overestimate
+of finite escape, not an exact realization assertion. The seed has
+$M_\Delta=0,J_\Delta>0$. Neither $J_\Delta>0$ throughout $\Omega_*$
+nor existence or absence of a common zero of (28.1) is established.
+

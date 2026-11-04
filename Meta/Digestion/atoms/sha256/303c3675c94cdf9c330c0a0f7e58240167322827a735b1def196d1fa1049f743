@@ -1,0 +1,41 @@
+**定理 B-41.3（实际条件完成的定量交叉和界）。** 对定义B-41.1的 $P,Q,K$，若非空子族
+$\mathcal C\subseteq\mathcal X(P\mid Q)$、$\mathcal D'\subseteq\mathcal X(Q\mid P)$ 在完整实际耳集上交叉相交，且 $m_K\ge1$，则
+
+$$
+|\mathcal C|+|\mathcal D'|
+\le s-G_{m_K}(n)\le s-G_m(n).
+\tag{41.7}
+$$
+
+证明。式(37.5)准确识别跨侧全部共同耳为 $E_K$ 中的共同耳。消费定理B-37.2证明中(37.7)–(37.9)的双族降交叉：它将两原族送到同一个实际兼容 $J\subseteq E_K$ 上的非空交叉相交向上族 $\mathscr C,\mathscr D\subseteq2^J$，各侧条件权重不减。原族本身无须极大；扩大与投影只用于该上界。局部删耳对应保留强制 $P$、禁止 $Q$，反侧保留强制 $Q$、禁止 $P$；这里只因两者大小均为二，最后的两侧权重才同为(41.3)。
+
+写 $d=|J|$，则 $1\le d\le m_K\le m$：两非空交叉相交族不能落在空载体上，而 $J\cup K$ 的全部 $d+4$ 条实际耳兼容。令
+
+$$
+\mu(\mathscr V)=\sum_{R\in\mathscr V}\omega_{|R|}^{(d)},\qquad
+\overline{\mathscr C}=\{J\setminus R:R\in\mathscr C\}.
+$$
+
+交叉相交给 $\overline{\mathscr C}\cap\mathscr D=\varnothing$，故由全部权重非负及(41.3)，
+
+$$
+|\mathcal C|+|\mathcal D'|
+\le\mu(\mathscr C)+\mu(\mathscr D)
+\le s-\bigl(\mu(\overline{\mathscr C})-\mu(\mathscr C)\bigr).
+\tag{41.8}
+$$
+
+对 $0\le r\le d$，令 $\alpha_r=|\mathscr C^{(r)}|/\binom dr$。向上性使每个入选 $r$ 元集的全部 $d-r$ 条向上包含边都指向入选集；每个 $(r+1)$ 元集至多承接 $r+1$ 条边，故 $\alpha_r\le\alpha_{r+1}$。非空性给 $\alpha_d=1$，与另一非空族交叉相交给 $\alpha_0=0$。补集交换 $r$ 层与 $d-r$ 层，将两个相对层配对便得到准确恒等式
+
+$$
+\begin{aligned}
+\mu(\overline{\mathscr C})-\mu(\mathscr C)
+&=\sum_{0\le r<d/2}\binom dr
+ (\omega_r^{(d)}-\omega_{d-r}^{(d)})(\alpha_{d-r}-\alpha_r)\\
+&\ge\omega_0^{(d)}-\omega_d^{(d)}=G_d(n).
+\end{aligned}
+\tag{41.9}
+$$
+
+偶数 $d$ 的中间层差为零；所有所列项非负，而 $r=0$ 项恰为所保留的缺口。代回(41.8)，再按(41.2)的方向使用 $d\le m_K\le m$，即得(41.7)。压缩前后均使用整个条件完成的权重，未将抽象迹个数替代实际剖分个数。∎
+

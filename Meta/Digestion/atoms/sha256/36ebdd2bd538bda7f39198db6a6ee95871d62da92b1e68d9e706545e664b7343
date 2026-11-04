@@ -1,0 +1,25 @@
+## 22. The fixed carrier and finite root-variation families
+
+The polynomial $R(x,p,v)$ here is exactly the integer polynomial of
+F, (31.8), with its published normalization. Equivalently, using the
+literal denominator-free $f$ and $k$ in F, (31.3)–(31.4), and
+$K=4k$, it is determined by exact polynomial division in
+
+$$
+\operatorname{Res}_d(f,K)=256D_x^8F_0(x,p,v)^2R(x,p,v).
+\tag{22.1}
+$$
+
+The quotient has $512$ nonzero monomials and coordinate degrees
+$(18,6,6)$. No primitive-part or monic rescaling is applied to $R$.
+The all-world assertion S, Theorem 4.1, gives
+
+$$
+R(x(W'),p,v)=0\qquad\text{for every }W'\in C(p,v),
+\tag{22.2}
+$$
+
+including $d=0$, $F_0=0$ and $\Lambda=0$. Its use here does not
+substitute a generic inverse for the faithful reconstruction F,
+Lemma 30.2 and Sections 34–36.
+

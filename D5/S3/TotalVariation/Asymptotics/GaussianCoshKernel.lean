@@ -55,7 +55,7 @@ theorem kernel_integrable (q d : ℝ) :
   apply mul_le_mul_of_nonneg_left _ (density_bounds u).1
   exact max_le (by linarith [Real.cosh_pos (q * u)]) (Real.exp_pos d).le
 
-private theorem cosh_quadratic_lower (x : ℝ) : 1 + x ^ 2 / 2 ≤ Real.cosh x := by
+theorem cosh_quadratic_lower (x : ℝ) : 1 + x ^ 2 / 2 ≤ Real.cosh x := by
   have h := D5.S3.Zeros.Jensen.FactorialJensenKernelBound.even_sum_le_cosh
     2 (x ^ 2) (sq_nonneg x)
   simpa [D5.S3.Zeros.Jensen.FactorialJensenKernelBound.evenFactorialSum,

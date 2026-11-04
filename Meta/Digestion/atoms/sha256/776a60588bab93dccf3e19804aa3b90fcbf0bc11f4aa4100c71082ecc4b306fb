@@ -1,0 +1,50 @@
+**图 1：** 精确 Hat 角点与一组十一三角剖分。橙色为三角形 $046$，其外心和垂心均在整个 Hat 外；红点是区域面积重心。图按精确坐标排版。
+
+图中内部线段：$02,03,04,46,06,68,08,09,(9,11),(0,11)$；对应的十一三角形完整列表见命题 [3.2](#statement-3-2)。$e_1,e_2$ 的箭头表示原稿的三角格方向。
+
+**原始 TikZ 图（完整源文披露；代码不执行）。**
+
+```latex
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.15,line join=round]
+\coordinate (p0) at (0,0);
+\coordinate (p1) at (-1.5,{-sqrt(3)/2});
+\coordinate (p2) at (-1,{-sqrt(3)});
+\coordinate (p3) at (1,{-sqrt(3)});
+\coordinate (p4) at (1.5,{-sqrt(3)/2});
+\coordinate (p5) at (3,{-sqrt(3)});
+\coordinate (p6) at (4.5,{-sqrt(3)/2});
+\coordinate (p7) at (4,0);
+\coordinate (p8) at (3,0);
+\coordinate (p9) at (3,{sqrt(3)});
+\coordinate (p10) at (1.5,{3*sqrt(3)/2});
+\coordinate (p11) at (1,{sqrt(3)});
+\coordinate (p12) at (0,{sqrt(3)});
+\fill[blue!7] (p0)--(p1)--(p2)--(p3)--(p4)--(p5)--(p6)--(p7)--(p8)--(p9)--(p10)--(p11)--(p12)--cycle;
+\fill[orange!22] (p0)--(p4)--(p6)--cycle;
+\foreach \a/\b in {0/2,0/3,0/4,4/6,0/6,6/8,0/8,0/9,9/11,0/11}
+ \draw[blue!50!black,thin] (p\a)--(p\b);
+\draw[very thick] (p0)--(p1)--(p2)--(p3)--(p4)--(p5)--(p6)--(p7)--(p8)--(p9)--(p10)--(p11)--(p12)--cycle;
+\foreach \i in {0,...,12}\fill (p\i) circle (1.6pt);
+\node[above left] at (p0) {$0$}; \node[left] at (p1) {$1$};
+\node[below left] at (p2) {$2$}; \node[below] at (p3) {$3$};
+\node[above] at (p4) {$4$}; \node[below] at (p5) {$5$};
+\node[right] at (p6) {$6$}; \node[above right] at (p7) {$7$};
+\node[above left] at (p8) {$8$}; \node[right] at (p9) {$9$};
+\node[above] at (p10) {$10$}; \node[above left] at (p11) {$11$};
+\node[left] at (p12) {$12$};
+\fill[red!70!black] (1.5,0) circle (2pt);
+\node[below right,text=red!70!black] at (1.5,0) {$C_{\rm area}$};
+\draw[-{Stealth},gray] (-1.8,-2.2)--(-.8,-2.2) node[right] {$e_1$};
+\draw[-{Stealth},gray] (-1.8,-2.2)--(-1.3,{-2.2+sqrt(3)/2}) node[left] {$e_2$};
+\end{tikzpicture}
+\caption{精确 Hat 角点与一组十一三角剖分。橙色为三角形 $046$，其外心和垂心均在整个 Hat 外；红点是区域面积重心。图按精确坐标排版。}
+\end{figure}
+```
+
+长边 $p_2p_3$ 的格中点 $(1,-2)$ 可加入一个 $180^\circ$ 标记点，使边界成为十四段：八条单位段、六条 $\sqrt3$ 段。这不增加原生拐角。整个铺砌的复形顶点还可能来自相邻瓦片的边界接点，应先统一细分这些接点，再剖分每块瓦片以消除 T 形接合。
+Hat 的八个标准 kite 又可各沿对称轴分成两个 $30^\circ$–$60^\circ$–$90^\circ$ 三角形，得到十六三角剖分；数目不同来自明确的细分规则，不是新的本体原子数。（[2](#ref-hat)）
+
+<a id="statement-3-3"></a>
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a1eef49c664709f21359152fc62503b83ce94c2e9fe8aa08ce190792ef6202cc
+  normalized_sha256: sha256:a1eef49c664709f21359152fc62503b83ce94c2e9fe8aa08ce190792ef6202cc
+cas_ref: sha256:a1eef49c664709f21359152fc62503b83ce94c2e9fe8aa08ce190792ef6202cc
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/ScalarAngleSmoothBranch.smooth_raw_branch_but_angle_not_parameter_lipschitz
+    target_statement_id: sha256:4e39cf5174f8618506881c5b81af1f40d1f7194991d90252e4b7c8edd6f0492e
+receipts:
+  unresolved_subitems: []

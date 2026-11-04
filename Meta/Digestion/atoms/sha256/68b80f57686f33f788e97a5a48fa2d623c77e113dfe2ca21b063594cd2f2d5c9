@@ -1,0 +1,27 @@
+### Theorem 62.2 (sound and complete finite closed-loop certificate)
+
+Suppose initial candidates lie in \(C_{c(i)}\). Every selected action is jointly
+legal on its support, every response successor lies in the support selected by
+\(v\), and every non-halt successor satisfies
+
+$$
+\rho(z,T_a(s),v(k,r_a(s)))<\rho(z,s,k).
+$$
+
+Every halt output is constant on its support. Then the controller is legal,
+terminates, and returns the target correctly. Conversely, for a finite
+deterministic controller that succeeds and terminates on all allowed sources,
+reachable supports and remaining execution lengths supply such \(C_k\) and
+\(\rho\).
+
+**Proof.** The support conditions give induction along every actual response
+history. The rank cannot decrease indefinitely in \(\mathbb N\), so execution
+terminates. Constancy on a halt support gives correctness. Conversely, take
+the exact reachable support at each controller state and define the rank to be
+the maximum remaining number of actions. Termination excludes a reachable
+non-halt cycle, so this rank strictly decreases. \(\square\)
+
+This is the execution layer missing from a static observation quotient. A
+mathematical hidden coordinate may occur in \(C_k\) and \(\rho\) without being
+an input available to the controller.
+

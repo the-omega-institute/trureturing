@@ -1,0 +1,17 @@
+**定义 138.1（归一化对数响应）。** 对任意非空实际有限纤维及任意实数 $y$，$G_{x,y}$ 与 $G_{x,0}$ 在实轴 $[1,2]$ 严格为正。令
+
+$$
+\mathcal R_{x,y}(z)=
+ \frac{G_{x,y}(z)G_{x,0}(1)}{G_{x,0}(z)G_{x,y}(1)},\qquad
+\Xi_{x,z}(y)=\log\frac{G_{x,y}(z)}{G_{x,0}(z)},\qquad
+L_{x,y}(z)=\Xi_{x,z}(y)-\Xi_{x,1}(y),
+\tag{138.1}
+$$
+
+先取 $z=1$ 附近与实对数相合的 germ，故 $L_{x,y}(1)=0$ 且 $e^{L_{x,y}}=\mathcal R_{x,y}$。对整个非恒零函数，$\operatorname{ord}_\zeta$ 表示零点重数，非零处取 $0$；定义
+
+$$
+\nu_{x,y}(\zeta)=\operatorname{ord}_\zeta G_{x,y}-\operatorname{ord}_\zeta G_{x,0}.
+\tag{138.2}
+$$
+

@@ -1,0 +1,100 @@
+**定理 6.2（任意非顶点真面的严格内点支配）。** 固定 $n\ge5$。
+对每个 $p\in\partial\Delta\setminus\mathcal V$，存在
+$p'\in\Delta^\circ$ 使 $\Phi(p')>\Phi(p)$。
+此结论涵盖每个真面的全部非顶点，包括任意数目的零坐标，
+并在原来的 $n$ 个计数质量上成立。
+
+证明。令 $S_p=\{i:p_i>0\}$，$k=|S_p|\ge2$，并置
+
+$$
+W=\operatorname{span}\{a_i-a_l:i\in S_p\}\subset H
+$$
+
+其中 $l\in S_p$。式 (5.6) 表明 $M(p)$ 的像恰为 $W$，
+在 $W^\perp$ 上为零，在 $W$ 上正定。
+至少有一个零坐标，故可在循环边指标上选取相邻的两个支撑指标 $l,r$，
+它们之间沿选定方向有 $m-1\ge1$ 个零坐标。
+因支撑至少有两个，$2\le m\le n-1$。
+在该间隙任选距 $l$ 为 $j$ 的指标 $k_0$，$1\le j<m$，置
+
+$$
+\theta=\frac jm,\qquad
+ d=a_r-a_l,\qquad
+ w=a_{k_0}-(1-\theta)a_l-\theta a_r,\qquad
+ z=(1-\theta)a_l+\theta a_r-\bar a(p).
+\tag{6.5}
+$$
+
+跨过循环指标 $0$ 时，用 $a_n=a_0$ 和
+$a_i-a_{i-1}=P\delta_i$（顶点指标也按周期解释）计算。
+若 $I$ 是间隙对应的 $m$ 个原始顶点，$J$ 是其中前 $j$ 个，则
+
+$$
+d=P\mathbf1_I,\qquad
+w=\mathbf1_J-\frac jm\mathbf1_I,\qquad
+\|w\|^2=\frac{j(m-j)}m=:b_0>0,\qquad
+\|d\|^2=\frac{m(n-m)}n.
+\tag{6.6}
+$$
+
+每个 $a_i-a_l$、$i\in S_p$ 在 $I$ 的全部坐标上取同一数值，
+所以 $w\perp W$。同时 $d,z\in W$。
+这一步保留了每个原始顶点的内积；若以块常数 $x_i=y_I$ 表示，
+范数贡献是 $|I|y_I^2$，不是 $y_I^2$。
+
+取
+
+$$
+p(t)=p+t\bigl(\varepsilon_{k_0}-(1-\theta)\varepsilon_l
+-\theta\varepsilon_r\bigr).
+$$
+
+对充分小的 $t>0$，它仍在 $\Delta$，因为只减去两个严格正的支撑坐标。
+其均值变化为 $tw$。逐项展开协方差，得到精确恒等式
+
+$$
+M(p(t))=M(p)-t\theta(1-\theta)dd^{\mathsf T}
++t(zw^{\mathsf T}+wz^{\mathsf T})+t(1-t)ww^{\mathsf T}.
+\tag{6.7}
+$$
+
+因此，无论 $\rho=\rho(p)$ 的重数是多少，$W$ 上的整个压缩都不增加。
+另一方面，取迹并使用 $w\perp W$，得到
+
+$$
+T(p(t))=T(p)+a_0t-b_0t^2,\qquad
+ a_0=b_0-\theta(1-\theta)\|d\|^2=\frac{j(m-j)}n>0.
+\tag{6.8}
+$$
+
+以下控制整个最大特征空间，而非单独选择一个特征向量。
+令 $T=T(p)$，并取 $0<t<1$ 足够小，使 $tb_0\le\rho/2$。
+在 $W\oplus W^\perp$ 中，(6.7) 对任意向量 $(x,y)$ 给出
+
+$$
+\begin{aligned}
+\langle M(p(t))(x,y),(x,y)\rangle
+&\le\rho\|x\|^2+2t\|z\|\|w\|\|x\|\|y\|
++\frac\rho2\|y\|^2\\
+&\le(\rho+C t^2)\|x\|^2+\rho\|y\|^2,\qquad
+ C=\frac{2\|z\|^2b_0}{\rho}.
+\end{aligned}
+$$
+
+最后一步使用 $2AB\le 2A^2/\rho+\rho B^2/2$。
+于是 $\rho(p(t))\le\rho+Ct^2$，并由 (6.8) 得到
+
+$$
+\Phi(p(t))\ge\frac{n(T+a_0t-b_0t^2)}{\rho+Ct^2}
+>\frac{nT}{\rho}=\Phi(p)
+\tag{6.9}
+$$
+
+只要再取 $t<\rho a_0/(\rho b_0+TC)$。
+所有限制都可与两个支撑坐标的正性限制同时满足。
+若 $p(t)$ 还有零坐标，令
+$p'=(1-\eta)p(t)+\eta(1/n,\ldots,1/n)$；
+定理 5.1 的非顶点连续性保证对充分小的 $\eta>0$ 仍保留 (6.9) 的严格性。
+此时 $p'\in\Delta^\circ$，对应同一实际 $n$ 顶点环上的有限正电导
+$c_i'=1/p_i'$。由 (5.5)，其乘积恰为 $\Phi(p')$。∎
+

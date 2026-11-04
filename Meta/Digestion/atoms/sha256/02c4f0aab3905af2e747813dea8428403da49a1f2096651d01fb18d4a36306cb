@@ -1,0 +1,10 @@
+**Definition 38.1 (the actual binary phase).** At the actual new origin of Theorem 37.1 keep the comb fixed. A binary request supplies a real bit $d\in\{0,1\}$. Next$(d)$ executes Tick; Add$(d)$; Hold; Read, including an actual Add$(0)$ when $d=0$, and returns the three ACKs and literal rational reply in that order. Write $w=d_0\cdots d_{m-1}$ for the binary input chain actually executed since this origin. Its field is
+
+$$
+x_w=A_n^m e+\sum_{i=0}^{m-1}d_iA_n^{m-1-i}e,\qquad
+x_{wd}=A_nx_w+de.
+\tag{UFS.91}
+$$
+
+The empty chain has field $e$. There is no growth, extra Tick, nonbinary Add or Reset in this phase. Read and Hold are permitted identity operations. No old binary word or length must be retained as the inverse's input. The current full predictive vector and the earned finite graph can be retained; their actual storage is charged.
+

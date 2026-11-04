@@ -1,0 +1,68 @@
+**Lemma 10.2 (Exact quotient and characteristic-polynomial identification).**
+The polynomial $P_M$ is primitive, of total degree $18$ in $(p,v,z)$,
+with $\deg_zP_M=18$ and constant leading coefficient
+
+$$
+c=[z^{18}]P_M=33917016093258200081122929199218750000000.
+\tag{10.3}
+$$
+
+It satisfies $P_M=c\chi_M$ in $\mathbb Q(p,v)[z]$.
+
+Proof. The following finite coefficient identities also specify the
+polynomial quotient without an expanded array. The arithmetic convention
+for regenerating all the finite identities in this chapter is as follows.
+An integer polynomial is its finite monomial-to-coefficient map. Addition,
+multiplication and differentiation use coefficient addition, convolution
+and the exponent rule. Exact division means leading-monomial division in
+lexicographic order $d>x>p>v>z$, with zero remainder; the quotient is
+checked by multiplication. Coefficients in a selected variable are
+collected before each resultant. For degrees $n,m$, form the Sylvester
+matrix from the descending coefficient rows of $A,xA,\ldots,x^{m-1}A$
+and $B,xB,\ldots,x^{n-1}B$, ordered to give the above product convention.
+Its determinant, or its fraction-free elimination, gives the resultant.
+For elimination one may choose the first nonzero pivot in row order,
+exchange rows with the corresponding sign, and update a trailing entry
+by $(a_{kk}a_{ij}-a_{ik}a_{kj})/a_{k-1,k-1}$, initially with previous
+pivot $1$. Each such division is exact. This is the usual Bareiss
+calculation of the same determinant. Thus these instructions involve
+only finite integer arithmetic; no numerical root or parameter sample
+occurs.
+
+Starting with IX, (4.1), (4.3)–(4.7), and (10.1), the divisions and
+multiplications in (10.2) give the following inventories:
+
+| Polynomial or identity | Exact result |
+| --- | --- |
+| $f[t:q]-2D^2f_M$ | $0$; $\deg_x f_M=7$, $74$ monomials |
+| $K[t:q]-4D^4K_M$ | $0$; $\deg_x K_M=14$, $525$ monomials |
+| $\operatorname{Res}_x(q,t)-1152Q$ | $0$; $Q$ primitive, $35$ monomials, total degree $4$, $z$-degree $4$ |
+| $\operatorname{Res}_x(F_0,t)-2592pvL$ | $0$; $L$ primitive, $20$ monomials, total degree $3$, $z$-degree $3$ |
+| $\operatorname{Res}_x(f_M,K_M)$ | $32509$ monomials, total degree $56$ |
+| $\operatorname{Res}_x(f_M,K_M)-82944Q^8L^2P_M$ | $0$ |
+| $P_M$ | content $1$, $1330$ monomials, coordinate degrees $(p,v,z)=(18,18,18)$; (10.3) |
+
+For clarity, the last row is obtained by exact division by the *whole*
+displayed divisor, not by selecting a factor of a numerical resultant.
+The same monomial rules, including the specified divisions, determine
+every coefficient and every zero residual in this table.
+
+At the generic source point, IX, Sections 6–7, identify $B$ with the
+original source field and make the actual $\tau_M$ primitive of degree
+$18$. The terminal equation gives $t=q\delta$ there. Thus the homogeneous
+substitutions defining $f_M,K_M$ vanish at $z=\tau_M$ without dividing
+by $q$. Their resultant identity yields
+
+$$
+Q(\tau_M)^8L(\tau_M)^2P_M(\tau_M)=0.
+\tag{10.4}
+$$
+
+A nonzero polynomial of terminal degree $4$ or $3$ cannot annihilate an
+element of degree $18$. Hence neither of the first two factors vanishes
+in this field, and $P_M(\tau_M)=0$. Comparing degrees and the leading
+coefficient proves $P_M=c\chi_M$. This is a generic function-field
+identity. Actual-world evaluation is through the robust regular functions
+and S, Lemma 9.9; (10.4) does not remove the sets $q=0,Q=0,L=0$ or
+$F_0=0$ from the original domain. ∎
+

@@ -45,6 +45,18 @@ internal sealed class DelayedRemoteControlDimensionWitnessDocument : IScribeDocu
                 "The final paragraph of Section III conjectures a violation for every initial pure data qubit. Here the norm is the Euclidean norm on complex coordinate functions, obtained with WithLp.toLp 2. For each unit data vector, the four real parameters and a unit data-measurement vector may be chosen separately. Every preparation must have positive probability, and S must exceed four. The labeling is fixed to x = 2m + n.",
                 AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
+                DescribeId.Create("delayed-rcqc-unit-coordinates"),
+                DeclarationHandle.Create(Prefix + "unit_coordinates"),
+                H("Normalization in two coordinates"),
+                StatementSource.FromAuthor(Disp(All(X("d"), VectorType(),
+                    Implies(Equal(EuclideanNorm(X("d")), D(1)),
+                        Equal(Add(NormSquared(At(X("d"), D(0))),
+                            NormSquared(At(X("d"), D(1)))), D(1)))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The squared moduli of the two coordinates of a Euclidean-unit complex qubit sum to one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("delayed-rcqc-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("Every pure data qubit admits the violation"),
                 StatementSource.FromAuthor(Disp(Local("claim"))),

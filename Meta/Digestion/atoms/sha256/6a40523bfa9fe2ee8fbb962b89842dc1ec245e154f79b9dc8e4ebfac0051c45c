@@ -1,0 +1,30 @@
+**Theorem 8.1.2 (Closed-rectangle separation and whole-arc containment).**
+For every $(p,v)\in\mathcal B$, the function
+$m:C(p,v)\longrightarrow\mathbb R$ is injective. In particular equality
+of the alternative $M$ readings forces equality of the complete worlds,
+including their entire gain polynomials and fixed drifts.
+
+For the very same graph $y(t)$ of Theorem 7.3.1 and its actual common
+base, including the coalesced attachment at $h=0$,
+
+$$
+\begin{gathered}
+-10.892041<\bar p(h)<-10.890360,\\
+-8.154582<\bar v(h)<-8.153505,
+\qquad0\le h\le1/250.
+\end{gathered}
+\tag{8.1.4}
+$$
+
+Consequently this entire finite base arc lies strictly inside
+$\mathcal B$. For every $0<h\le1/250$ its child contains the distinct
+$J$ pair of Theorem 7.3.1 but contains no distinct equal-$M$ pair at all.
+This excludes (6.8.5) at every base of this arc, including its selected
+singular passage. At $h=0$ only the attachment, not a distinct $J$ pair,
+is asserted.
+
+The ambient quantifiers in the theorem include every sign of the gain,
+all lower degrees, sampled zeros, repeated roots, zero drift, singular
+parent sources and unrelated unused companions. They do not impose the
+positive-drift bounds of the selected family on an arbitrary child.
+

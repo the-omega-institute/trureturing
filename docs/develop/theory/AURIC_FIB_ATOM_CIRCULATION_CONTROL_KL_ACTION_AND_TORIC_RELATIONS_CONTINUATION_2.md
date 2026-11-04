@@ -1250,3 +1250,943 @@ $\square$
 [AB44]: https://stacks.math.columbia.edu/tag/090U
 
 ## 追加锚（本行以下为增补区）
+## 45. Mixed five- and seven-cycles at one retained edge
+
+**Definition 45.1 (The mixed graph, semigroup and actual presentation).**
+Fix arbitrary integers $r,s\ge1$. Let $G=G^e_{r,s}$ consist of
+$r$ labelled five-cycles and $s$ labelled seven-cycles, all sharing
+exactly the same vertices $a,b$ and the retained edge $\{a,b\}$.
+All private vertices are distinct. The edge set is exactly the union
+of the cycle edge sets. Write $\mathscr C$ for these branches and
+$k_C=2$ or $3$ when $C$ has length $2k_C+1$. Order each cycle as
+$a,b,x_1,\ldots,x_{2k_C-1},a$. Put
+
+$$
+\begin{aligned}
+\mathcal I&=\operatorname{Ind}(G),\qquad
+\gamma_I=(1,\mathbf1_I)\quad(I\in\mathcal I),\\
+S&=\mathbb N\{\gamma_I:I\in\mathcal I\},\qquad
+R=\mathbb C[S],\qquad \deg X^{(m,c)}=m,\\
+P&=\mathbb C[z_I:I\in\mathcal I],\qquad
+\deg z_I=1,\qquad z_I\longmapsto X^{\gamma_I},\\
+\delta_C(m,c)&=k_Cm-\sum_{v\in C}c_v,\qquad
+ t=c_a,\quad u=c_b.
+\end{aligned}
+\tag{45.1}
+$$
+
+The empty independent set belongs to $\mathcal I$ and has its own
+variable and degree-one exponent. For $p=(m,c)$ let
+$p_C=(m,c|_C)$ retain the same degree and both shared coordinates.
+Let $K$ be the real cone specified by
+
+$$
+m\ge0,\qquad c_v\ge0,\qquad
+c_v+c_w\le m\quad(\{v,w\}\in E(G)),\qquad
+\delta_C(m,c)\ge0\quad(C\in\mathscr C),
+\tag{45.2}
+$$
+
+and define the integer set
+
+$$
+T=\{(m,c)\in\mathbb Z^{1+|V(G)|}:
+ c_v\ge1,\quad c_v+c_w\le m-1\ (\{v,w\}\in E(G)),\quad
+ \delta_C(m,c)\ge1\ (C\in\mathscr C)\}.
+\tag{45.3}
+$$
+
+Call $p\in T$ basic if no $q\in S$ of positive degree has
+$p-q\in T$. On one cycle use its own semigroup and strict
+inequalities for the same definition. The local vectors are
+$\nu_{C,j}=(2j+1;j\mathbf1_C)$, where $1\le j\le k_C-1$.
+All coordinates in (45.1) are coordinates of one global exponent;
+in particular $t,u$ are not separate branch parameters.
+
+**Theorem 45.2 (Complete mixed canonical classification).**
+The semigroup $S$ is $K\cap\mathbb Z^{1+|V(G)|}$, its group
+lattice is the full displayed lattice, and $R$ is a normal standard
+graded Cohen–Macaulay domain. Its graded canonical module has the
+interior-ideal realization
+
+$$
+\omega_R=\bigoplus_{p\in T}\mathbb C X^p,
+\qquad T=\operatorname{int}(K)\cap\mathbb Z^{1+|V(G)|}.
+\tag{45.4}
+$$
+
+A global $p\in T$ is basic if and only if at least one $p_C$ is
+locally basic. Its complete basic set is the disjoint union
+
+$$
+\begin{aligned}
+\Gamma_3&=\{(3;\mathbf1_{V(G)})\},\\
+\Gamma_5&=\{(5,c)\in T:c_a=c_b=2,\quad
+ c_v=2\text{ for every }v\in C
+ \text{ on at least one seven-cycle }C\}.
+\end{aligned}
+\tag{45.5}
+$$
+
+Thus $\{X^p:p\in\Gamma_3\cup\Gamma_5\}$ is exactly the minimal
+monomial generating set of this canonical ideal, with each monomial
+normalized to coefficient one. Their residue classes form a
+$\mathbb C$-basis of $\omega_R/R_+\omega_R$, where
+$R_+=\bigoplus_{m>0}R_m$. Every minimal homogeneous generating
+system has the same degrees and multiplicities; no other degree
+occurs.
+
+Proof. The local integral supplier is Theorem 28.2 of the preceding
+volume [Supplier41]. For a cycle of length $2k+1$, including $k=2$,
+its nonnegative integer edge bounds and total bound $\sum c_v\le km$
+are equivalent to a decomposition into exactly $m$ independent-set
+rows. To see explicitly that the supplied decomposition includes
+the boundary cases needed here, induct on $m$. At $m=0$ only zero
+occurs. A zero coordinate cuts the nonzero support into paths, each
+realized on the same $m$ rows by placing the two path colors in the
+first and last prescribed numbers of rows. If all coordinates are
+positive, not every edge can be saturated: saturation would give
+$2\sum c_v=(2k+1)m>2km$. Choose a slack edge $i,i+1$ and subtract
+the independent set $\{i+2,i+4,\ldots,i+2k\}$ in cyclic order.
+It meets every other edge once, has $k$ vertices and uses only
+positive coordinates. The remainder satisfies all inequalities in
+degree $m-1$, giving the induction.
+
+Now take an integer point of (45.2). Decompose every restriction
+$p_C$ into $m$ rows by this local result. On the retained edge
+there are precisely three states, with multiplicities
+
+$$
+\#A=t,\qquad \#B=u,\qquad \#O=m-t-u,
+\qquad A=\{a\},\ B=\{b\},\ O=\varnothing.
+\tag{45.6}
+$$
+
+These numbers are the same on every branch, regardless of its
+length. Rearrange each local array into these three blocks and take
+unions row by row. The choices agree on $a,b$, and every edge lies
+inside a branch, so these are $m$ independent sets of $G$. Conversely
+a global array satisfies (45.2). Restriction and reconstruction
+therefore give the additive bijection
+
+$$
+S\longleftrightarrow
+\{(p_C)_{C\in\mathscr C}:p_C\in S_C,\quad
+                   (m,t,u)\text{ is common to every }C\}.
+\tag{45.7}
+$$
+
+Here $S_C$ is the actual single-cycle semigroup, not merely a
+fractional relaxation. This argument verifies the hypotheses of the
+classical clique-sum correspondence in Matsuda–Ohsugi–Shibata,
+*Toric rings and ideals of stable set polytopes*,
+arXiv:1603.01850v1, Proposition 1.3 [MOS41]: at each gluing the
+intersection is the retained induced $K_2$, and the edge set is the
+union. Its toric fiber grading is (45.6), equivalent to $(m,t,u)$.
+The proposition supplies the toric-fiber and normality precedent;
+the mixed interior descent below requires the additional argument.
+
+The degree-one section of (45.2) is a bounded rational polytope,
+since every vertex has a neighbor and hence $0\le c_v\le1$.
+Clearing denominators in any rational point and using the global
+row decomposition expresses that point as an average of independent
+set indicators. Density of rational points and closedness of their
+finite convex hull show that this section is exactly the stable-set
+polytope of $G$. At degree zero all coordinates vanish. Homogenizing
+gives $K=\operatorname{cone}(S)$, and the integer construction gives
+$S=K\cap\mathbb Z^{1+|V(G)|}$.
+
+The empty and singleton indicators generate the full group lattice:
+$\gamma_\varnothing=(1,0)$ and
+$\gamma_{\{v\}}-\gamma_\varnothing=(0,e_v)$. The cone is rational
+and pointed, and a sufficiently small positive constant occupancy
+at degree one makes every defining form strictly positive, so its
+dimension is $1+|V(G)|$. The equality with its lattice points proves
+saturation and hence normality. Finite generation and standard
+grading follow from the degree-one rows; the monomial embedding in
+$\mathbb C[t_0,(t_v)_{v\in V(G)}]$ proves that $R$ is a domain.
+
+For this full-dimensional cone, equality in any of its nonzero
+supporting forms precludes an ambient open ball, whereas simultaneous
+strictness of its finitely many defining forms permits one. This
+characterizes the interior without assuming an irredundant facet
+list. For integer exponents it gives (45.3); its edge and coordinate
+bounds already force $m\ge3$. Moreover $T+S\subseteq T$.
+Hochster's theorem gives Cohen–Macaulayness. The Danilov–Stanley
+formula in Barile–Bruns, *$\mathbb Z^r$-graded rings and their
+canonical modules*, arXiv:2505.11402v1, §5 and Theorem 5.1 [BB41],
+now identifies (45.4) with the graded canonical module. Their monoid
+is $S$, their coefficient field is $\mathbb C$, and their lattice
+rank is $1+|V(G)|$; finite generation, normality, the full group,
+pointedness and full dimension were established above.
+
+For the local canonical input, Miyazaki, *Non-Gorenstein locus and
+almost Gorenstein property of the Ehrhart ring of the stable set
+polytope of a cycle graph*, arXiv:2205.01409v1, §4, Lemma 4.4 and
+the minimal-generator argument immediately before Theorem 4.5
+[Miyazaki42], supplies the seven-cycle generators $\nu_{C,1}$ and
+$\nu_{C,2}$. His $\ell=3$, $\eta(v)=c_v$,
+$\eta(-\infty)=m$ and $\eta_j=\nu_{C,j}$. His face layer
+$C_j=T^{\eta_j}R^{(0)}$ is a free module over the deficit-zero
+face algebra; it is not a freeness assertion over the whole cycle
+ring. Theorem 4.5 is the almost-Gorenstein conclusion. The five-cycle
+falls outside the section's hypothesis $\ell\ge3$.
+
+The local consequences used in the mixed argument can be checked
+directly as intermediate steps. For a five-cycle interior $p_C$,
+$p_C-\nu_{C,1}$ has nonnegative coordinates, degree $m-3\ge0$,
+edge sums at most $m-3$, and total at most
+$2m-1-5=2(m-3)$. Thus every such interior is
+$\nu_{C,1}+q_C$ with $q_C\in S_C$. For a seven-cycle write
+$\delta=3m-\sum_{v\in C}c_v$. If $\delta\ge2$, subtracting
+$\nu_{C,1}$ again leaves a semigroup point, since the new total is
+at most $3m-2-7=3(m-3)$. If $\delta=1$, deleting any vertex $v$
+leaves three disjoint cycle edges, so
+
+$$
+3m-1=\sum_{w\in C}c_w\le c_v+3(m-1),\qquad c_v\ge2.
+\tag{45.8}
+$$
+
+An edge then gives $m\ge5$. Subtracting $\nu_{C,2}$ leaves
+nonnegative coordinates, edge sums at most $m-5$, and total exactly
+$3m-1-14=3(m-5)$. Every seven-cycle interior is therefore
+$\nu_{C,j_C}+q_C$ for $j_C\in\{1,2\}$, $q_C\in S_C$.
+Conversely these sums are interior, because $\nu_{C,j}$ has positive
+coordinates, every edge slack one and deficit $k_C-j\ge1$.
+
+For local minimality, if $\nu_{C,j}-(q,d)$ is interior with
+$(q,d)\in S_C$, each edge slack of $(q,d)$ must be zero.
+Consequently $d_v+d_w=q$ on every cycle edge. Oddness forces
+$d_v=q/2$ everywhere, and the local total inequality gives
+$(2k_C+1)q/2\le k_Cq$. Thus $q=0$ and $d=0$.
+Generation and this minimality prove that the only local basic
+vectors are $\nu_{C,1}$ for a five-cycle and
+$\nu_{C,1},\nu_{C,2}$ for a seven-cycle. These are the local
+suppliers already used in §42; they do not assert the mixed result.
+
+Suppose now that every restriction of a global $p\in T$ is
+nonbasic. Choose the preceding local expressions
+
+$$
+p_C=\nu_{C,j_C}+q_C,\qquad
+n_C=\deg q_C=m-2j_C-1>0.
+\tag{45.9}
+$$
+
+The residual degrees $n_C$ may differ. In any $n_C$-row realization
+of $q_C$, the actual counts of the shared-edge states are
+
+$$
+A_C=t-j_C,\qquad B_C=u-j_C,\qquad
+O_C=n_C-A_C-B_C=m-t-u-1=:h.
+\tag{45.10}
+$$
+
+All counts are nonnegative integers. The last is independent both
+of $j_C$ and of $k_C$, and $h\ge0$ by the strict shared-edge bound.
+If $h>0$, select an $O$ row in every branch. If $h=0$, put
+$J=\max_{C\in\mathscr C}j_C$. Residual coordinate nonnegativity
+gives $t,u\ge J$. A branch attaining $J$ has positive residual
+degree, so
+
+$$
+t+u=m-1>2J.
+\tag{45.11}
+$$
+
+Hence $t>J$ or $u>J$. In the first case $A_C\ge t-J>0$
+on every branch, so select an $A$ row everywhere. Otherwise
+$B_C\ge u-J>0$ everywhere, so select a $B$ row everywhere.
+This proves the existence of a common removable state, including
+zero residual empty-state count and different local basic layers.
+It synchronizes one row and does not equate the residual array
+lengths or presume independent choices are compatible.
+
+Let $I_C$ be the selected local row. Its removal leaves
+$q_C-\gamma_{I_C}\in S_C$, whence
+$p_C-\gamma_{I_C}\in T_C$. The union $I=\bigcup_C I_C$ is an
+independent set of $G$: the selected states agree at both shared
+vertices and there are no cross edges. The single global remainder
+$p-\gamma_I$ has these interior restrictions and is in $T$ by
+(45.3). Thus $p$ is not basic.
+
+Conversely, if one restriction is locally basic, a positive-degree
+$q\in S$ restricts to a semigroup point of the same positive degree
+on that branch. Subtracting it while leaving $p-q\in T$ would
+contradict local basicness. This proves the asserted equivalence.
+A local $\nu_{C,1}$ forces degree three. Positivity and the edge
+bounds then force every coordinate of the connected graph to equal
+one. This vector has branch deficits $k_C-1\ge1$ and is interior.
+A local $\nu_{C,2}$ exists only on a seven-cycle and forces degree
+five and common endpoints $t=u=2$. The other restrictions can be
+any interiors at that same boundary. This is exactly (45.5), and
+there are no other basic degrees.
+
+Repeated synchronized subtraction decreases the integer degree,
+which is at least three for an interior, and therefore terminates
+at one of (45.5). This proves generation of the whole canonical
+ideal. Since $R$ is standard graded, any positive-degree semigroup
+subtraction can also be replaced by a degree-one subtraction: write
+the subtracted point as a sum of rows and use $T+S\subseteq T$.
+More directly, the monomial basis of $R_+\omega_R$ consists exactly
+of all nonbasic interior exponents. Distinct exponent monomials
+are linearly independent. Thus the complementary basic classes are
+a basis of the actual quotient $\omega_R/R_+\omega_R$.
+Graded Nakayama identifies the number and degree distribution of
+any minimal homogeneous generating system with this quotient's
+basis dimensions. Ordinary homogeneous linear combinations cannot
+reduce those dimensions. This proves all the minimality assertions.
+$\square$
+
+## 46. Exact mixed multiplicities and the entire final free module
+
+**Theorem 46.1 (Mixed type and terminal shifts in the actual grading).**
+For Definition 45.1 put
+
+$$
+M=8^r(45^s-44^s),\qquad
+D=5^r13^s+2\cdot3^r8^s,\qquad d=3+3r+5s.
+\tag{46.1}
+$$
+
+Then $|\Gamma_3|=1$, $|\Gamma_5|=M$,
+$\operatorname{type}(R)=1+M$, $|\mathcal I|=D$ and
+$\dim R=d$. In any minimal standard graded $P$-free resolution
+$\mathcal F_\bullet\to R$, the projective dimension is
+$c=D-d$ and the entire final module is
+
+$$
+\mathcal F_c
+=P(-(D-3))\ \oplus\ P(-(D-5))^M.
+\tag{46.2}
+$$
+
+The convention is $P(-h)_m=P_{m-h}$, so its free generator has
+degree $h$. Equivalently the only terminal graded Betti numbers are
+$\beta_{c,D-3}=1$ and $\beta_{c,D-5}=M$.
+
+Proof. At degree five with endpoints $c_a=c_b=2$, the five-cycle
+private triple $(x_1,x_2,x_3)$ satisfies precisely
+
+$$
+x_1,x_2,x_3\ge1,\qquad x_1,x_3\le2,\qquad
+x_1+x_2\le4,\quad x_2+x_3\le4,\quad
+x_1+x_2+x_3\le5.
+\tag{46.3}
+$$
+
+The last inequality is the strict cycle bound:
+$2+2+x_1+x_2+x_3\le2\cdot5-1$. It cannot be discarded.
+If $x_2=1$, the two endpoint-private coordinates are arbitrary
+in $\{1,2\}$, giving four choices. If $x_2=2$, their sum is
+at most three, giving three choices. If $x_2=3$, the edge bounds
+force $x_1=x_3=1$, giving one. No larger $x_2$ is possible.
+There are exactly $4+3+1=8$ triples. The nine edge-feasible
+triples include $(2,2,2)$, which is excluded because its cycle
+total is ten, whereas the required bound is nine.
+
+For a seven-cycle at this same boundary, the private quintuple
+$(y_1,\ldots,y_5)$ is specified by
+
+$$
+y_i\ge1,\qquad y_1,y_5\le2,\qquad
+y_i+y_{i+1}\le4\ (1\le i<5),\qquad
+\sum_{i=1}^5y_i\le10.
+\tag{46.4}
+$$
+
+Its local count $45$, with exactly $44$ choices other than
+$(2,2,2,2,2)$, is the supplied endpoint count of Proposition
+42.4, equations (42.8)–(42.9), also recorded at $(2,2)$ in
+Proposition 43.3. These are exactly the same degree and adjacent
+endpoint parameters, with the same strict total condition. The
+single excluded choice from those $45$ is the local basic vector
+$\nu_{C,2}$ when counting nonbasic choices. Thus no new local
+seven-cycle counting theorem is needed.
+
+Every triple in (46.3) and quintuple in (46.4) specifies a local
+interior vector with the same global boundary $(5,2,2)$. Their
+private coordinates are disjoint. By (45.7) and the interior
+inequalities, arbitrary such choices give exactly one global
+interior exponent. Theorem 45.2 says it is basic precisely when
+at least one of the $s$ seven-cycle choices is all twos. Thus
+there are $8^r45^s$ candidate interiors and exactly $8^r44^s$
+with no basic branch. Their difference is $M$. The quotient-basis
+statement of that theorem, together with the unique degree-three
+class, gives type $1+M$.
+
+To count the actual variables of $P$, let $f_n$ be the number of
+independent sets in a path on $n$ vertices. Splitting on its first
+vertex gives $f_0=1$, $f_1=2$ and
+$f_n=f_{n-1}+f_{n-2}$ for $n\ge2$. In shared state $O$, a five-cycle
+leaves its three-vertex private path, giving $f_3=5$, and a
+seven-cycle leaves its five-vertex path, giving $f_5=13$.
+In state $A$, the private neighbor of $a$ is forced absent;
+the remaining paths have respectively two and four vertices,
+giving $f_2=3$ and $f_4=8$. State $B$ gives the same counts.
+These states are disjoint and exhaustive, and all private choices
+are independent conditional on the one shared state. Hence
+$D=5^r13^s+2\cdot3^r8^s$. Distinct $I$ give distinct
+$\gamma_I$, so the map $P\to R$ has no linear relation;
+this is the stated standard graded presentation on all actual
+modes. The graph has $2+3r+5s$ vertices, and the full group lattice
+and cone in Theorem 45.2 give $\dim R=1+|V(G)|=d$.
+
+For the homological conclusion use these particular $R$ and $P$.
+The polynomial ring has depth $D$ at its homogeneous maximal ideal
+$\mathfrak n=(z_I)_I$, and its nonzero finite quotient $R$ has depth
+$d$ by Cohen–Macaulayness. Hilbert syzygy gives finite projective
+dimension. Auslander–Buchsbaum, Stacks Project, Proposition
+10.111.1, tag 090U [AB44], applied at $\mathfrak n$, gives
+$\operatorname{pd}_P R=D-d=c$. A minimal graded resolution
+localizes to a minimal local one, so this is also its graded
+length. The minimal homogeneous-generator and localization
+statements are also Barile–Bruns, Theorem 3.7 [BB41].
+
+The graded polynomial canonical module is $\omega_P=P(-D)$.
+Apply the classical graded canonical-Ext formula of Barile–Bruns,
+Theorem 4.5(a) and its proof [BB41], with regular graded-local ring
+$P$ and Cohen–Macaulay residue ring $R$ of codimension $c$:
+
+$$
+\omega_R\simeq\operatorname{Ext}^{c}_P(R,P(-D)),\qquad
+\operatorname{Ext}^{i}_P(R,P(-D))=0\quad(i\ne c).
+\tag{46.5}
+$$
+
+The canonical grading on the left is the interior grading (45.4),
+by their Theorem 5.1, followed by ordinary-degree coarsening. No
+extra grading translation is introduced. Dualizing the minimal
+resolution into $P(-D)$ gives in particular the cokernel presentation
+
+$$
+\operatorname{Hom}_P(\mathcal F_{c-1},P(-D))
+\longrightarrow\operatorname{Hom}_P(\mathcal F_c,P(-D))
+\longrightarrow\omega_R\longrightarrow0.
+\tag{46.6}
+$$
+
+Minimality puts all entries of the incoming map in $\mathfrak n$.
+Modulo $\mathfrak n$, its image vanishes, so the final dual free
+module is a minimal free cover of $\omega_R$. The image of
+$\mathfrak n$ in $R$ is $R_+$, since all degree-one modes occur.
+Consequently its generator degrees and multiplicities are exactly
+those of the actual quotient $\omega_R/R_+\omega_R$, already
+proved to be one in degree three and $M$ in degree five.
+A summand $P(-b)$ in $\mathcal F_c$ dualizes to $P(b-D)$,
+whose generator has degree $D-b$. Solving $D-b=3$ or $5$
+gives precisely (46.2), including every final summand. This uses
+the canonical module of the mixed ring itself and its minimal
+cover; it does not infer a free module from an alternating Hilbert
+numerator. $\square$
+
+**Proposition 46.2 (One five-cycle and one seven-cycle).**
+For $r=s=1$ the graph has ten vertices and
+
+$$
+D=113,\qquad d=11,\qquad M=8,\qquad
+\operatorname{type}(R)=9,\qquad
+\operatorname{pd}_P R=102,\qquad
+\mathcal F_{102}=P(-110)\oplus P(-108)^8.
+\tag{46.7}
+$$
+
+The eight degree-five canonical generators have all coordinates two
+on the seven-cycle, and the five-cycle private triples are exactly
+
+$$
+\{(x,1,z):x,z\in\{1,2\}\}
+\ \cup\ \{(1,2,1),(1,2,2),(2,2,1),(1,3,1)\}.
+\tag{46.8}
+$$
+
+Proof. With a single seven-cycle, condition (45.5) forces that
+branch to be $\nu_{C,2}$. Formula (46.3) gives exactly the eight
+triples in (46.8), so this lists every degree-five generator.
+The degree-three generator is $(3;\mathbf1_V)$.
+Substitution in (46.1) gives $D=5\cdot13+2\cdot3\cdot8=113$,
+$d=3+3+5=11$ and $M=8(45-44)=8$. The quotient basis gives
+type nine. Formula (46.2) gives length $113-11=102$ and
+shifts $113-3=110$, $113-5=108$, proving (46.7). $\square$
+
+## 追加锚（本行以下为增补区）
+## 47. Arbitrary retained-edge mixtures and the exact short-branch correction
+
+**Definition 47.1 (The finite mixed retained-edge family).**
+Fix a finite list
+$\mathbf k=(k_1,\ldots,k_t)$ with $t\ge2$, every
+$k_i\ge2$, and at least two distinct values. Let $G_{\mathbf k}$
+be the graph whose labelled cycles $C_i$ have length $2k_i+1$,
+whose common vertices are $a,b$, and whose common edge is the
+retained edge $ab$. The private vertices of $C_i$ are
+$x_{i,1},\ldots,x_{i,2k_i-1}$ in the cyclic order
+$a,b,x_{i,1},\ldots,x_{i,2k_i-1},a$. There are no cross-edges
+between private vertices of different cycles. Put
+$K=\max_i k_i$. For the actual independent-set presentation set
+
+$$
+\begin{aligned}
+\mathcal I&=\operatorname{Ind}(G_{\mathbf k}),
+&\gamma_I&=(1,\mathbf 1_I),\\
+S&=\mathbb N\{\gamma_I:I\in\mathcal I\},
+&R=\mathbb C[S],\\
+P&=\mathbb C[z_I:I\in\mathcal I],
+&z_I&\longmapsto X^{\gamma_I},
+\end{aligned}
+\tag{47.1}
+$$
+
+where the empty independent set is included and every $z_I$ has
+ordinary degree one. For $p=(m,c)$, write $\alpha=c_a$, $\beta=c_b$,
+$p_i=(m,c|_{C_i})$, and
+$\delta_i(p)=k_i m-\sum_{v\in C_i}c_v$. The strict interior set is
+
+$$
+T=\left\{p\in\mathbb Z^{1+|V(G_{\mathbf k})|}:
+\begin{array}{l}
+ c_v\ge1,\\
+ c_v+c_w\le m-1\quad(\{v,w\}\in E(G_{\mathbf k})),\\
+ \delta_i(p)\ge1\quad(1\le i\le t)
+\end{array}\right\}.
+\tag{47.2}
+$$
+
+A point of $T$ is basic when no positive-degree element of $S$ can
+be subtracted while staying in $T$. On the $i$-th cycle write
+
+$$
+\nu_{i,j}=(2j+1;\,j\mathbf 1_{C_i}),
+\qquad 1\le j<k_i .
+\tag{47.3}
+$$
+
+The local single-cycle classification and the common-edge semigroup
+decomposition are the supplied results of §§41–42 and §45; the point of
+this section is to make their mixed, unequal-length consequence exact.
+
+**Theorem 47.2 (All mixed canonical layers and their multiplicities).**
+The semigroup and its cone satisfy
+
+$$
+S=K_{\mathbf k}\cap\mathbb Z^{1+|V(G_{\mathbf k})|},
+\qquad
+K_{\mathbf k}=\left\{(m,c)\in\mathbb R\times\mathbb R^{V(G_{\mathbf k})}:
+\begin{array}{l}
+ m\ge0,\\
+ c_v\ge0\quad(v\in V(G_{\mathbf k})),\\
+ c_v+c_w\le m\quad(\{v,w\}\in E(G_{\mathbf k})),\\
+ k_i m-\sum_{v\in C_i}c_v\ge0\quad(1\le i\le t)
+\end{array}\right\}.
+\tag{47.4}
+$$
+
+Consequently $R$ is a normal standard-graded Cohen–Macaulay domain,
+$\dim R=3+\sum_i(2k_i-1)$, and its canonical module is the interior
+monomial ideal
+
+$$
+\omega_R=\bigoplus_{p\in T}\mathbb C X^p .
+\tag{47.5}
+$$
+
+A point $p\in T$ is basic if and only if one restriction is a local
+basic vector $\nu_{i,j}$. Hence, for $1\le j<K$, the complete layer
+of basic exponents of degree $2j+1$ is
+
+$$
+\Gamma_{2j+1}=\left\{p\in T:
+\begin{array}{l}
+m=2j+1,\quad c_a=c_b=j,\\
+ p_i=\nu_{i,j}\text{ for at least one }i\text{ with }k_i>j
+\end{array}\right\},
+\tag{47.6}
+$$
+
+and there are no basic exponents in any other degree. In particular,
+with $\varepsilon_{k,j}=\mathbf 1_{\{k>j\}}$, define
+
+$$
+\begin{aligned}
+L_k&=2k-1,\qquad N_j=2j-1,\qquad
+H_j[x,y]=\mathbf 1_{\{x+y\le2j\}},\\
+u_j[x]&=\mathbf 1_{\{x\le j\}}
+\qquad(1\le x,y\le N_j),\\
+B_{k,j}&=(2j+1)(k-1),\\
+A_{k,j}&=u_j^{\mathsf T}H_j^{\,2k-2}u_j
+ -\sum_{q=0}^{j-k}\binom{q+k-1}{k-1}^{\!2},
+\end{aligned}
+\tag{47.7}
+$$
+
+where a sum with negative upper limit is zero. Then
+
+$$
+M_j:=|\Gamma_{2j+1}|
+=\prod_{i=1}^t A_{k_i,j}
+ -\prod_{i=1}^t\bigl(A_{k_i,j}-\varepsilon_{k_i,j}\bigr),
+\qquad
+\operatorname{type}(R)=\sum_{j=1}^{K-1}M_j.
+\tag{47.8}
+$$
+Every $M_j$ is positive and $M_1=1$.
+
+*Proof.* For each branch, the local integer decomposition supplied in
+§41 realizes every integral point of the inequalities in (47.4) by
+exactly $m$ independent-set rows. On a retained edge the three row
+states are $A=\{a\}$, $B=\{b\}$, and $O=\varnothing$. A local
+array has the same multiplicities
+$\alpha,\beta,m-\alpha-\beta$ for these states on every branch. Sorting the rows into
+these three blocks and taking unions row by row gives global independent
+sets, and restriction is inverse to this construction. Thus the mixed
+integer decomposition, including degree zero, is exact. Empty and
+singleton rows generate the full lattice, so the cone is full
+dimensional. The normality, Cohen–Macaulayness, and (47.5) now follow
+from the normal stable-set semigroup argument and the
+Danilov–Stanley theorem in the form used in §45.
+
+The local classification in §42 says that a local interior is basic
+exactly when it is $\nu_{i,j}$ for some $j<k_i$. It remains to
+show that unequal residual degrees do not obstruct a common deletion.
+Suppose every restriction of a global $p\in T$ is nonbasic. Choose
+
+$$
+ p_i=\nu_{i,j_i}+q_i,
+ \qquad n_i=\deg q_i=m-2j_i-1>0.
+\tag{47.9}
+$$
+
+In an $n_i$-row realization of $q_i$, the counts of the three
+shared-edge states are
+
+$$
+ A_i=\alpha-j_i,\qquad B_i=\beta-j_i,\qquad
+ O_i=n_i-A_i-B_i=m-\alpha-\beta-1=:h.
+\tag{47.10}
+$$
+
+The last number is independent of both $i$ and $j_i$, and it is
+nonnegative by the strict inequality on the retained edge. If $h>0$,
+choose an $O$-row in every branch. If $h=0$, put
+$J=\max_i j_i$. Residual coordinate nonnegativity gives
+$\alpha,\beta\ge J$. A branch attaining $J$ has positive residual degree,
+so $m-1=\alpha+\beta>2J$. Therefore either $\alpha>J$ or $\beta>J$. In the
+first case every branch has $A_i=\alpha-j_i>0$; in the second every branch
+has $B_i=\beta-j_i>0$. Select that same state on all branches. The
+selected local rows have the same values on $a,b$, and the absence
+of cross-edges makes their union an independent set of $G_{\mathbf k}$.
+Deleting it leaves strict inequalities on every branch, so $p$ is not
+basic.
+
+Conversely, if $p_i=\nu_{i,j}$, any positive-degree global semigroup
+subtraction restricts to a positive-degree local subtraction and would
+contradict local minimality. This proves the equivalence in (47.6).
+Repeated deletion lowers degree and terminates, so these monomials
+ generate the whole interior ideal. Distinct exponent monomials are
+linearly independent, and $R_+\omega_R$ is spanned exactly by the
+nonbasic exponents. Thus the classes of the basic monomials form a
+basis of $\omega_R/R_+\omega_R$, even for arbitrary polynomial
+combinations; graded Nakayama gives all minimal generator degrees and
+multiplicities.
+
+It remains to count one boundary layer. At $m=2j+1$, $\alpha=\beta=j$,
+write the private coordinates on a branch as
+$x_1,\ldots,x_{L_k}$. The strict edge and total inequalities become
+
+$$
+ x_r\ge1,\qquad x_1,x_{L_k}\le j,\qquad
+ x_r+x_{r+1}\le2j,\qquad
+ \sum_{r=1}^{L_k}x_r\le B_{k,j}.
+\tag{47.11}
+$$
+
+The local basic vector occurs exactly once when $k>j$, namely the
+all-$j$ vector; it is excluded by the total bound when $k\le j$.
+The exact number of all vectors in (47.11) is proved in Theorem 47.3
+below, giving (47.8). For positivity, $A_{k,j}\ge1$ because
+$(j,1,j,1,\ldots,j)$ satisfies (47.11), with total-cap slack
+$j(k-2)$. When $j<K$, choose the all-$j$ vector on an eligible
+branch and this alternating vector on all others. Thus $M_j>0$. For
+$j=1$, every coordinate is forced to one and $M_1=1$. $\square$
+
+**Theorem 47.3 (Exact capped boundary count for every branch length).**
+For $k\ge2$ and $j\ge1$, $A_{k,j}$ in (47.7) is exactly the
+number of private vectors satisfying (47.11). In particular, the
+subtraction in (47.7) is required whenever $j\ge k$.
+
+*Proof.* The adjacent inequalities and positivity imply
+$x_r\le2j-1=N_j$. Therefore the uncapped vectors in (47.11) are counted
+by the matrix product $u_j^{\mathsf T}H_j^{2k-2}u_j$.
+To isolate those violating the total cap, set
+
+$$
+\begin{aligned}
+s_0&=j-x_1,\\
+s_r&=2j-x_r-x_{r+1}\quad(1\le r<L_k),\\
+s_{L_k}&=j-x_{L_k}.
+\end{aligned}
+\tag{47.12}
+$$
+
+All these slacks are nonnegative. Since $L_k=2k-1$, direct
+cancellation gives
+
+$$
+\sum_{r\ {\rm even}}s_r
+ =\sum_{r\ {\rm odd}}s_r
+ =L_kj-\sum_{r=1}^{L_k}x_r=:q\ge0,
+\tag{47.13}
+$$
+
+with $k$ terms in each sum. Since
+$B_{k,j}=L_kj-(j-k+1)$, a vector violates the total cap exactly
+when $0\le q\le j-k$. If $j<k$ this range is empty.
+
+For a fixed such $q$, choose two weak compositions of $q$ into
+$k$ parts, assign them respectively to the even and odd slacks in
+(47.12), and reconstruct
+
+$$
+ x_1=j-s_0,\qquad
+ x_{r+1}=2j-s_r-x_r\quad(1\le r<L_k).
+\tag{47.14}
+$$
+
+Equality of the two sums in (47.13) is exactly the final condition
+$s_{L_k}=j-x_{L_k}$, so reconstruction is inverse to (47.12). If
+$q\le j-k$, the recurrence gives
+$j-q\le x_r\le j+q$ for every $r$. Hence $x_r\ge k\ge2$,
+all endpoint and adjacency inequalities hold, and the reconstructed
+coordinates lie in $\{1,\ldots,N_j\}$. Thus this is a genuine
+bijection, not a count in a relaxed polytope. The two compositions have
+$\binom{q+k-1}{k-1}^2$ choices. Summing over $q=0,\ldots,j-k$
+proves (47.7). $\square$
+
+**Corollary 47.4 (Length generating function, spectrum, and growth).**
+For fixed $j$, the exact boundary counts have the rational length series
+
+$$
+\sum_{k\ge2}A_{k,j}w^{k-2}
+=u_j^{\mathsf T}H_j^2(I-wH_j^2)^{-1}u_j
+ -\sum_{k=2}^{j}\left(\sum_{q=0}^{j-k}
+ \binom{q+k-1}{k-1}^{\!2}\right)w^{k-2}.
+\tag{47.15}
+$$
+
+Let $N=2j-1$, and for $1\le\ell\le N$ put
+
+$$
+\theta_\ell=\frac{(2\ell-1)\pi}{2N+1},\qquad
+\lambda_\ell=\frac{(-1)^{\ell+1}}{2\sin(\theta_\ell/2)},\qquad
+w_\ell=\frac{\sin^2(j\theta_\ell)}{(2N+1)\sin^2(\theta_\ell/2)}.
+\tag{47.16}
+$$
+
+Then
+
+$$
+ A_{k,j}=\sum_{\ell=1}^{N}w_\ell\lambda_\ell^{\,2k-2}
+ -\sum_{q=0}^{j-k}\binom{q+k-1}{k-1}^{\!2}.
+\tag{47.17}
+$$
+
+The visible denominator of the first term in (47.15) is
+
+$$
+Q_N(w)=\det(I-wH_j^2)
+ =\sum_{r=0}^{N}(-1)^r\binom{N+r}{2r}w^r.
+\tag{47.18}
+$$
+
+No factor in (47.18) cancels in the boundary series: all $w_\ell>0$,
+so the least constant-coefficient recurrence for the infinite tail
+$k>j$ has order $N=2j-1$. For $j=1$, $A_{k,1}=1$. For
+$j\ge2$, with $\rho_\ell=\lambda_\ell^2$,
+
+$$
+0\le A_{k,j}-w_1\rho_1^{k-1}
+\le (j-w_1)\rho_2^{k-1}\quad(k>j),
+\qquad
+\frac{A_{k+1,j}}{A_{k,j}}\longrightarrow
+\rho_1=\left(2\sin\frac{\pi}{8j-2}\right)^{-2}.
+\tag{47.19}
+$$
+
+If all other branches are fixed and one eligible branch length $k>j$
+varies, write
+$C_j=\prod_{i<t}A_{k_i,j}$ and
+$E_j=\prod_{i<t}(A_{k_i,j}-\varepsilon_{k_i,j})$. Then
+
+$$
+M_j(k)=(C_j-E_j)A_{k,j}+E_j.
+\tag{47.20}
+$$
+
+Thus this layer is constant in $k$ when no other branch is eligible,
+and has ratio limit $\rho_1$ when at least one other branch is eligible.
+
+*Proof.* The finite correction in (47.15) is just the correction in
+Theorem 47.3, so the geometric matrix series gives the first identity.
+For the spectral form, take
+$v_\ell[x]=\cos((x-\tfrac12)\theta_\ell)$. The finite cosine sum gives
+
+$$
+(H_jv_\ell)[x]
+=\frac{\sin((N+1-x)\theta_\ell)}{2\sin(\theta_\ell/2)}
+=\lambda_\ell v_\ell[x],
+$$
+
+because $(N+\tfrac12)\theta_\ell=(2\ell-1)\pi/2$. Moreover
+$\|v_\ell\|^2=(2N+1)/4$ and
+$u_j^{\mathsf T}v_\ell=\sin(j\theta_\ell)/(2\sin(\theta_\ell/2))$,
+which proves (47.17) by orthogonal projection. For the general
+transfer-matrix, determinant, and rationality framework, see
+Bóna–Ju–Yoshida [BJY47] and Jiang–Yang–Zhong [JYZ47]. The
+trigonometric eigensystem and the boundary projection in
+(47.16)–(47.17) follow from the calculation above; the finite
+total-cap correction is supplied by Theorem 47.3.
+
+After reversing one index, the standard continuant for $H_j^2$ has
+$Q_0=1$, $Q_1=1-w$, and
+$Q_N=(2-w)Q_{N-1}-Q_{N-2}$. Induction gives the binomial expression
+(47.18). Since $\gcd(j,2N+1)=\gcd(j,4j-1)=1$,
+$\sin(j\theta_\ell)\ne0$: otherwise $2N+1$ would divide
+$(2\ell-1)j$, impossible for $1\le2\ell-1<2N+1$. The numbers
+$\rho_\ell$ are distinct and the weights sum to $\|u_j\|^2=j$,
+so every pole remains. The largest is $\rho_1$, and the remaining
+positive terms are bounded by $(j-w_1)\rho_2^{k-1}$, proving (47.19).
+Substitution of (47.19) into (47.8) gives (47.20). $\square$
+
+**Proposition 47.5 (Actual presentation and the complete terminal module).**
+Let $f_0=1$, $f_1=2$, and $f_n=f_{n-1}+f_{n-2}$. Put
+
+$$
+D=\prod_{i=1}^t f_{2k_i-1}+2\prod_{i=1}^t f_{2k_i-2},
+\qquad
+ d=3+\sum_{i=1}^t(2k_i-1),
+\qquad c=D-d.
+\tag{47.21}
+$$
+
+Then $|\mathcal I|=D$, $\dim R=d$, and $\operatorname{pd}_P R=c$. If
+$\mathcal F_\bullet\to R$ is the minimal standard-graded resolution,
+then its final module is
+
+$$
+\mathcal F_c
+=\bigoplus_{j=1}^{K-1}
+ P\bigl(-(D-2j-1)\bigr)^{M_j}.
+\tag{47.22}
+$$
+
+In the full exponent grading, with
+$\Sigma=\sum_{I\in\mathcal I}\gamma_I$, the same statement is
+
+$$
+\mathcal F_c
+=\bigoplus_{j=1}^{K-1}
+  \bigoplus_{p\in\Gamma_{2j+1}}P\bigl(-(\Sigma-p)\bigr).
+\tag{47.23}
+$$
+
+*Proof.* Conditional on the shared-edge state $O$, branch $i$ has a
+private path of length $2k_i-1$, giving $f_{2k_i-1}$ choices. States
+$A$ and $B$ each force one private endpoint absent and leave a path of
+length $2k_i-2$, giving $f_{2k_i-2}$ choices. These three cases are
+exclusive and exhaustive, proving $|\mathcal I|=D$, including the empty
+row in the $O$ case. The full lattice rank in Theorem 47.2 gives
+$d=1+|V(G_{\mathbf k})|$.
+
+The polynomial ring $P$ has depth $D$, while the nonzero
+Cohen–Macaulay quotient $R$ has depth $d$. Hilbert syzygy and
+Auslander–Buchsbaum (Stacks Project, tag 090U [AB44]) give
+$\operatorname{pd}_P R=D-d=c$. The graded canonical module of $P$
+is $P(-D)$ in ordinary degree and $P(-\Sigma)$ in the full exponent
+degree. The canonical Ext interface of Barile–Bruns [BB41] identifies
+$\omega_R$ with the top Ext of $R$ into this module and kills all
+other Ext degrees. Dualizing a minimal resolution, the incoming map to
+its last dual free module has entries in the homogeneous maximal ideal;
+modulo that ideal, its basis is therefore the canonical quotient
+$\omega_R/R_+\omega_R$. A summand $P(-\Theta)$ contributes the
+canonical generator $\Sigma-\Theta$, so (47.23) follows from
+(47.6). Coarsening to ordinary degree gives
+$\Theta=D-(2j+1)$, which is (47.22). This uses the actual canonical
+quotient and does not infer the terminal module from an alternating
+Hilbert numerator. $\square$
+
+**Proposition 47.6 (The $C_7+C_9$ terminal module).**
+For $\mathbf k=(3,4)$, the exact boundary counts are
+
+$$
+A_{3,1}=A_{4,1}=1,
+\qquad A_{3,2}=45,
+\qquad A_{4,2}=227,
+\qquad A_{3,3}=390.
+\tag{47.24}
+$$
+
+Thus
+
+$$
+(M_1,M_2,M_3)=(1,271,390),
+\qquad
+D=778,\quad d=15,\quad c=763,
+\tag{47.25}
+$$
+
+and
+
+$$
+\operatorname{type}(R)=662,
+\qquad
+\mathcal F_{763}
+=P(-775)\oplus P(-773)^{271}\oplus P(-771)^{390}.
+\tag{47.26}
+$$
+
+*Proof.* For $j=2$,
+
+$$
+H_2=\begin{pmatrix}1&1&1\\1&1&0\\1&0&0\end{pmatrix},
+\qquad
+H_2^2u_2=(5,4,2)^{\mathsf T},
+\qquad
+H_2^3u_2=(11,9,5)^{\mathsf T}.
+$$
+
+Hence $A_{3,2}=5^2+4^2+2^2=45$ and
+$A_{4,2}=11^2+9^2+5^2=227$. For $j=3$,
+$H_3^2u_3=(12,11,9,6,3)^{\mathsf T}$, so the uncapped count for
+$k=3$ is $12^2+11^2+9^2+6^2+3^2=391$. The correction in
+(47.7) is the single $q=0$ term, because $j-k=0$, and gives
+$A_{3,3}=390$. This is the short-branch total-cap subtraction.
+
+The multiplicity formula gives
+$M_2=45\cdot227-44\cdot226=271$ and
+$M_3=390\cdot A_{4,3}-390(A_{4,3}-1)=390$, without needing an
+uncapped replacement for the short branch. For the presentation,
+$f_5=13,f_7=34,f_4=8,f_6=21$, so
+$D=13\cdot34+2\cdot8\cdot21=778$. The graph has
+$2+5+7=14$ vertices, hence $d=15$, and (47.22) gives the stated
+shifts. $\square$
+
+**Proposition 47.7 (The five-cycle boundary count).**
+For every $j\ge1$, $A_{2,j}=j^3$.
+
+*Proof.* Choose the endpoint values $a,b\in\{1,\ldots,j\}$. The
+middle coordinate has exactly $2j+1-a-b$ positive choices: the
+total cap is the active bound and is no larger than either adjacent-edge
+bound. Therefore
+
+$$
+A_{2,j}=\sum_{a,b=1}^j(2j+1-a-b)=j^3.
+$$
+
+This agrees with (47.7), including its correction for every $j\ge2$.
+$\square$
+
+[BJY47]: https://arxiv.org/abs/math/0606163
+
+[JYZ47]: https://arxiv.org/html/2607.22008v1
+
+## 追加锚（本行以下为增补区）

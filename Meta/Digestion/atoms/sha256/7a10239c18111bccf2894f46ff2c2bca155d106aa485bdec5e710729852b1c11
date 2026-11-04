@@ -1,0 +1,35 @@
+**Lemma 5.2 (Credited endpoint separation).** With
+
+$$
+c=\frac{a}{9\cdot2^{10}}>0,
+\tag{5.2}
+$$
+
+the supplied geometric-kernel statistic satisfies
+
+$$
+\Delta(e^{-s})=cs+O_H(s^2).
+\tag{5.3}
+$$
+
+In particular $\Delta(e^{-s})\ge cs/2>0$ on a sufficiently small source-only endpoint neighborhood.
+
+Proof by the supplied correspondence. Proposition 27.2 of the continuation gives, with $R(s)=Z_1(e^{-s})/Z_0(e^{-s})$,
+
+$$
+R(s)=1+\frac a9s+O_H(s^2),\qquad
+\frac{Z_0(e^{-2s})}{Z_0(e^{-s})}=2^{-10}+O(s).
+\tag{5.4}
+$$
+
+These are source-owned polynomial-geometric estimates, including the degree-eight coefficient $a$. For the same $p_i$ as in (5.1), the exact identity is
+
+$$
+\Delta(e^{-s})
+=\frac{Z_0(e^{-2s})}{Z_0(e^{-s})}
+\left(\frac{R(2s)}{R(s)}-1\right).
+\tag{5.5}
+$$
+
+The denominator $R(s)$ tends to one. Dividing the two expansions gives $R(2s)/R(s)-1=(a/9)s+O_H(s^2)$; multiplying in (5.5) gives precisely (5.3), the continuation's separation formula (27.3). The positive sign is fixed by $a>0$. A bound on the absolute remainder by $C_\Delta s^2$ then makes it at most $cs/2$ when $s$ is sufficiently small. This is reuse of the supplied separation, not a new polynomial or kernel estimate. Its original row counterexample alone had no risk, accumulation or paid-mean guarantee; those require the controller and the next sections. $\square$
+

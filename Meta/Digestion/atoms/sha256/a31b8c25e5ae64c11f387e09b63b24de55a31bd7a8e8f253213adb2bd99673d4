@@ -1,0 +1,48 @@
+**定理 7.2（全部近最大点的一致内部分离）。** 对每个固定整数 $n\ge5$，
+存在仅依赖于 $n$ 的 $\epsilon_n>0$ 和 $\delta_n>0$，使
+
+$$
+p\in\Delta^\circ,\quad \Phi(p)\ge B_n-\epsilon_n
+\quad\Longrightarrow\quad \min_i p_i\ge\delta_n.
+\tag{7.4}
+$$
+
+尤其所有趋于 $B_n$ 的序列最终都落入同一个开单纯形内的紧子集。
+任意固定 $R_0>0$ 时，这些点经 (7.3) 对应的电导也落入
+$(0,\infty)^n$ 的一个紧子集。
+
+证明。定义实际边界水平
+
+$$
+\Gamma_n=\max\left\{A_n,\,
+\sup_{p\in\partial\Delta\setminus\mathcal V}\Phi(p)\right\}.
+$$
+
+首先证明 $\Gamma_n<B_n$。每个非顶点边界点都被定理 6.2 的内点严格支配，
+故其值严格小于 $B_n$。若这些边界值的上确界仍为 $B_n$，
+取逼近它的边界序列并在闭单纯形取收敛子列。
+极限非顶点时，连续性会给出一个值为 $B_n$ 的边界点，矛盾；
+极限为顶点时，(5.1) 对闭方向也成立，给出上极限不超过
+$A_n<B_n$，仍矛盾。结合 $A_n<B_n$，得所需严格间隙。
+
+令 $\epsilon_n=(B_n-\Gamma_n)/4>0$。
+存在 $\delta_n>0$ 使
+
+$$
+p\in\Delta^\circ,\quad\min_i p_i<\delta_n
+\quad\Longrightarrow\quad\Phi(p)\le\Gamma_n+\epsilon_n.
+\tag{7.5}
+$$
+
+否则可选取 $\min_i p_i\to0$ 而
+$\Phi(p)>\Gamma_n+\epsilon_n$ 的内点序列。其收敛子列的极限在边界；
+非顶点极限由连续性否定这一严格下界，顶点极限由 (5.1) 否定它。
+这证明 (7.5)，并因
+$\Gamma_n+\epsilon_n=B_n-3\epsilon_n<B_n-\epsilon_n$
+得到 (7.4)。必要时减小 $\delta_n$，可使 $\delta_n<1/n$。
+该论证证明分离常数存在，没有指定未经推导的数值。
+
+集合 $\{p\in\Delta:p_i\ge\delta_n\ \text{对所有 }i\}$ 是开单纯形内的紧集。
+其上 $T(p)$ 连续且严格为正，(7.3) 因而是取值于有限正电导的连续映射，
+像亦紧。这同时排除固定总电阻下近最大点的任一电导逃逸。∎
+

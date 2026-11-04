@@ -1,0 +1,150 @@
+### 命题 11.3（三维及以上同一初读纤维内的不相容认证机会）
+
+对每个 $k\ge3$，存在两个一次性固定的来源
+$R^{(L)},R^{(N)}\in\mathcal I_k$，其普通秩均恰为二且初读均为 $1$，满足：
+$R^{(L)}$ 有一个以 $L_0$ 开始的有限实际秩二证书，但任何以 $N$ 开始的
+完整历史永久保留秩一歧义；$R^{(N)}$ 有一个以 $N$ 开始的有限实际秩二
+证书，但任何以 $L_0$ 开始的完整历史永久保留秩一歧义。
+前述两个取得证书的固定词分别使用 $k+1$ 和 $k+2$ 次初始计入读数。
+
+**证明。** 下标仍为 $0,\ldots,k-1$，所有下列向量均为列向量。置
+
+$$
+\begin{gathered}
+ p=\frac1k\mathbf1,\qquad e=e_{k-1},\qquad
+ w=\mathbf1-e,\qquad f=\mathbf1+\frac18e,\\
+ u=e_0-e_1,\qquad v=e_0+e_1,\qquad
+ \delta=\frac1{2k},\qquad\varepsilon=\frac12,\\
+ \eta=\delta\varepsilon=\frac1{4k},\qquad
+ \tau=1+\frac1{8k},\qquad b=\frac{k-1}{k}.
+\end{gathered}
+\tag{11.5}
+$$
+
+定义实际来源与各自的秩一伴随来源为
+
+$$
+\begin{aligned}
+ R^{(L)}&=\tau^{-1}(pf^{\mathsf T}+\eta ew^{\mathsf T}),
+ & S^{(L)}&=\tau^{-1}pf^{\mathsf T},\\
+ R^{(N)}&=p\mathbf1^{\mathsf T}+\eta uv^{\mathsf T},
+ & S^{(N)}&=p\mathbf1^{\mathsf T}.
+\end{aligned}
+\tag{11.6}
+$$
+
+它们只依赖 $k$，不依赖协议的选择或运行数据。先验证环境域成员资格：
+
+$$
+\begin{aligned}
+ R^{(L)}
+ &=\frac1{2\tau}(p+\delta e)(f+\varepsilon w)^{\mathsf T}
+  +\frac1{2\tau}(p-\delta e)(f-\varepsilon w)^{\mathsf T},\\
+ R^{(N)}
+ &=\frac12(p+\delta u)(\mathbf1+\varepsilon v)^{\mathsf T}
+  +\frac12(p-\delta u)(\mathbf1-\varepsilon v)^{\mathsf T}.
+\end{aligned}
+\tag{11.7}
+$$
+
+括号内列向量的每个坐标至少为 $1/(2k)$；
+$f\pm\varepsilon w$ 的前 $k-1$ 个坐标为 $1\pm1/2$，末坐标为 $9/8$；
+$\mathbf1\pm\varepsilon v$ 的前两个坐标为 $1\pm1/2$，其余为 $1$。
+因而把显示的正系数吸收进列因子后，(11.7) 是定义 9.1 要求的两项
+严格正外积分解。$S^{(L)},S^{(N)}$ 则各有显示的一项严格正分解，普通秩为一。
+
+$p,e$ 线性无关，$f,w$ 线性无关；$p,u$ 线性无关，且在 $k\ge3$ 时
+$\mathbf1,v$ 线性无关。因此 (11.7) 的两列因子各自线性无关，两个行因子
+也各自线性无关。把两项写为一个满列秩 $k\times2$ 矩阵与满行秩
+$2\times k$ 矩阵之积，得到两个实际来源的普通秩均恰为二。
+这里 $k\ge3$ 保证 $v$ 有第三个坐标 $0$，所以第二对行因子确实无关。
+
+由 $f^{\mathsf T}p=\tau$、$w^{\mathsf T}e=0$、
+$\mathbf1^{\mathsf T}p=1$、$v^{\mathsf T}u=0$，四个矩阵均有迹 $1$。
+这是四个特定来源落入同一初读纤维的选择，不是把环境域归一化为迹一来源。
+
+先处理 $R^{(L)}$ 的实际认证。其列和为
+
+$$
+ s_j=\begin{cases}
+ (1+\eta)/\tau,&0\le j<k-1,\\
+ (9/8)/\tau,&j=k-1.
+ \end{cases}
+\tag{11.8}
+$$
+
+因为 $1+\eta>\tau$ 且 $9/8>\tau$，每个 $s_j>1=t$。
+实际执行命题 9.6 的 $L_0N^{k-1}$，取得且只使用该词上的初读及每一步
+读数，共 $k+1$ 次。式 (9.8) 失败，定理 9.7 就给出相对于整个
+$\mathcal M_k$ 的秩二证书。
+
+若反而先执行 $N$，则 $Ne=0$ 给出
+
+$$
+ NR^{(L)}=NS^{(L)}.
+\tag{11.9}
+$$
+
+伴随来源 $S^{(L)}$ 与实际来源的初读同为 $1$，故任何完整历史确定性
+后继规则均无法从这个分支排除该固定秩一来源。
+
+再处理 $R^{(N)}$。由于 $k\ge3$，有
+
+$$
+ Nu=e_1-e_2,\qquad
+ \mathbf1^{\mathsf T}Nu=0,\qquad v^{\mathsf T}Nu=1.
+$$
+
+所以
+
+$$
+ \operatorname{tr}(NR^{(N)})=b+\eta,\qquad
+ \mathbf1^{\mathsf T}NR^{(N)}=b\mathbf1^{\mathsf T}.
+\tag{11.10}
+$$
+
+从同一个初始 $R^{(N)}$ 实际依次执行一次 $N$、一次 $L_0$ 和 $k-1$ 次 $N$。
+包括初读在内，完整读数依次为
+
+$$
+ 1,\quad b+\eta,\quad
+ \underbrace{b,\ldots,b}_{k\text{ 个}}.
+\tag{11.11}
+$$
+
+其中第一原子后的 $b+\eta$ 必须读取；最后 $k$ 个读数分别来自
+$N^jL_0NR^{(N)}$（$0\le j<k$）。没有在两原子之间跳读，
+总收费为 $1+1+1+(k-1)=k+2$。
+
+若一个环境中的正秩一来源 $S=c\ell$ 产生这个完整历史，置
+$D=\sum_{i=0}^{k-2}c_i>0$。最后 $k$ 读给出
+
+$$
+ D\ell_j=b\quad(0\le j<k).
+$$
+
+于是全部 $\ell_j=b/D$，这强制第一原子后的读数为
+
+$$
+ \operatorname{tr}(NS)
+ =\sum_{i=0}^{k-2}c_i\ell_{i+1}
+ =D\frac bD=b,
+$$
+
+与实际取得的 $b+\eta$ 矛盾。环境中每个矩阵均逐项严格正、普通秩至多二；
+其中普通秩一矩阵总能写成严格正外积：取其一列为列因子，其余各列是该列
+的正倍数。因此上述排除覆盖了 $\mathcal M_k$ 中所有秩一来源，
+而不是只排除某一种外积表示。故 (11.11) 的整个环境纤维均为秩二。
+按定义 11.1 的固定词停止规则，它给出一个可靠的部分认证器。
+
+若反而先执行 $L_0$，则 $\mathbf1^{\mathsf T}u=0$ 给出
+
+$$
+ L_0R^{(N)}=L_0S^{(N)}.
+\tag{11.12}
+$$
+
+伴随来源 $S^{(N)}$ 也有初读 $1$。持续歧义原则再次覆盖任意确定性完整历史
+后继规则、任意后续动作数和任意停止层。两种认证机会与两种永久歧义均由
+运行前固定的 (11.6) 实现，证明完毕。∎
+

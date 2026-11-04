@@ -1,0 +1,51 @@
+**Definition 76.3 (source edit and replacement computation).** Return
+to the retained actual target along source links, paying this navigation,
+and execute exactly the original material source template, leaving the
+old global list and its bits intact. For $P$, attach the fresh terminal left marker.
+For $S$, reuse the old marker as the new left logical beta root, attach
+its fresh left marker and the fresh right alpha root, and initialize
+all new auxiliary slots null. The existing root-bound header, if any,
+is preserved, even when the target is the root. This is the actual source
+change, with the original structural assignments; it is not an edit of
+a decoded substitute.
+
+Copy the old list's $G$ bits to a backed integer $Q$; if $F=1$ set $Q=0$
+without reading a nonexistent list. Initialize backed $A=0,T=1$.
+Traverse the new source's branches in preorder. If $S$ created $p$, skip
+that branch's unit coordinate. At each old branch $v$, count its actual
+new child events. If it is a proper ancestor of the retained target,
+subtract one in the affected side to recover $x_v,y_v$; otherwise these
+counts already are the old ones. Compute $R_v$ from those old counts,
+and $R_v^+$ from the actual new counts. Perform
+
+$$
+r=Q\bmod R_v,\qquad Q\leftarrow\lfloor Q/R_v\rfloor,
+\qquad r^+\text{ by (AAII.37)},
+$$
+
+$$
+A\leftarrow A+r^+T,\qquad T\leftarrow TR_v^+.
+\tag{AAII.38}
+$$
+
+The multiplication in the first assignment uses the old $T$. Preserve
+operands in backed scratch until their uses finish. All arithmetic is
+ordinary finite binary-string arithmetic, with division and coefficients
+computed as in Definition 48.1; a radix one is a legal divisor.
+
+After this pass, extend the old list by its reserved $G^+-G$ cells and
+write exactly the $G^+$ bits of $A$, with leading zero padding. If a
+first header is reserved, initialize and bind it to the root. If $F^+=1$,
+there is no header or bit write. Keep $A$ and the pending list references
+backed throughout the extension and rewrite. Maintain explicit cursors
+for which fields and bits remain. Once the new header/list is completely
+linked and written, release the reservation status; none of its allocated
+history cells is abandoned or retained as a second persistent version.
+Pass the actual new event/address to the retained outer continuation,
+without an intermediate Ready or output. An addressed $P/S$ continuation
+seals Growth; a Next continuation seals both its retained old pair and
+this actual new pair as in Definition 77.5. That one outer continuation
+Prints all of its specified reply and End, takes the supplied local
+acknowledgement, Returns to the root, and clears occupied request,
+numerical, traversal, reservation and output contents before Ready.
+

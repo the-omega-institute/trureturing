@@ -1,0 +1,44 @@
+## 1. Domain, clocks, outputs, and the critical question
+
+Fix a declared maximum degree $d\ge1$ and write $m=d+1$. A world is a triple $(P,g,\delta)$ with $P$ a strictly entrywise positive real $2\times2$ matrix of rank one and trace one,
+
+$$
+g(t)=\sum_{j=0}^{m-1}\beta_jt^j,\qquad
+\beta\in\mathbb R^m\setminus\{0\},\qquad \delta\in\mathbb R.
+\tag{1.1}
+$$
+
+All lower actual degrees, coefficient signs, sampled roots, repeated roots, and constant drifts belong to the domain. Put
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+z_i=g(i)\operatorname{tr}(A_iP)+\delta,
+\tag{1.2}
+$$
+
+where each chronological action $E_i$ is one $M$ or one $J$, immediately followed by its read. The initial read counts. Thus $N$ reads have original clocks $0,\ldots,N-1$. No construction uses resets, copies, skipped reads, unread compound actions, additional sensors, empty-action reads, or clock renumbering.
+
+For a terminal word $w$, let $Z_w=(z_0,\ldots,z_{N-1})^{\mathsf T}$. A fixed real $m\times N$ matrix succeeds if
+
+$$
+CZ_w=s\beta\qquad\text{with }s\in\mathbb R\setminus\{0\}.
+\tag{1.3}
+$$
+
+The output concerns the entire declared coefficient vector, not just the highest coefficient or the actual-degree truncation. Either sign of $s$ is allowed. A countable palette has at most countably many fixed matrices per terminal word. Its selector may be any function of actual history, with no regularity assumption. Matrices whose entries themselves depend on observations are outside this contract.
+
+A fixed acquisition word is preassigned independently of observations. A deterministic adaptive protocol may choose actions, stopping, and its answer from actual history. Complete-target recovery means recovering $(P,g,\delta)$, and is different from gain-only extraction. Lower bounds for complete recovery equipped with (1.3) do not automatically apply to unrestricted nonlinear recovery.
+
+The critical mixed budget is
+
+$$
+N=2m+1=2d+3,
+\tag{1.4}
+$$
+
+with exactly $2m$ actions and both letters present. The results below classify the possible universal identities at this budget, resolve the countable-palette issue at their exceptional sources, and give an exact positive interpolation condition for fixed mixed acquisition. Positive interpolation itself is impossible for $m=3,4$, independently of the block determinant condition. Together with the degree-one case, this gives sharp fixed mixed thresholds of six, eight, and ten reads for $d=1,2,3$, respectively, even with arbitrary countable palettes. For $m\ge5$ the exact positive criterion remains open. A separate common-open-domain argument gives a six-read lower bound for degree-one complete-target protocols with the specified countable linear gain-output mechanism; no analogous adaptive lower bound is deduced in degrees two or three.
+
+The Hermite thresholds and constructions, critical classification, and quadratic/cubic feasibility proofs are supplied results, reproduced with complete proofs and credited in Section 18. The thresholds here concern the full immediate-read model, not a known-factor subspace or an unrestricted nonlinear recovery problem.
+

@@ -1,0 +1,57 @@
+**命题 89.3（约化成功块相等而完整标记输出可分）。** 在假设 89.1 下，定义 89.2 的两个方案有相等的系统约化成功块 $\lambda\tau_+=\lambda\tau_-$，并对每个共同合法后缀给相等的未归一化成功读数；但其保留彩票与历史的成功输出不相等。具体有一个档案事件在正方案的质量为 $\lambda m$，在负方案为零。因此把这条源矩阵等式当作完整输出相等，是不成立的。
+
+证明。令 $\mathcal H_\ell$ 是槽 $\ell$ 的原固定时序允许的全部历史，$\mathcal V$ 是共同后缀时序允许的全部历史。用 $L,H,F,V,B$ 分别记录彩票、前缀原生历史、旗标、后缀原生历史和终端结果，$b\in\{0,1\}$。完整联合律为
+
+$$
+\begin{aligned}
+\Pr_\pm(L=\ell,H=h,F=\varepsilon(\ell,h),V=v,B=b)
+ &=\lambda c_\ell^\pm p(hv,b),
+ \qquad h\in\mathcal H_\ell,\ v\in\mathcal V,\\
+\varepsilon(\ell,h)&=
+ \begin{cases}\mathrm{成功},&h=w_\ell,\\
+ \mathrm{失败},&h\ne w_\ell,
+ \end{cases}\\
+\Pr_\pm(L=\bot,H=\varnothing,F=\mathrm{填充},V=v,B=b)
+ &=(1-\lambda s_\pm)p(v,b).
+\end{aligned}
+\tag{89.3}
+$$
+
+其他值的质量为零。这里 $p(hv,b)=2^{-k(h)-k(v)}\operatorname{Tr}(E_bG_vG_h\rho_0)$，$E_1=E,E_0=I_3-E$，是原始无条件权重。对每个固定时序求全部历史和两终端，总质量为一；故 (89.3) 总和恰为 $\lambda s_\pm+(1-\lambda s_\pm)=1$，失败和填充没有被丢弃。固定后缀也在失败与填充运行中执行。
+
+只在数学上求成功块边缘，不按其质量归一化，有
+
+$$
+\begin{aligned}
+\Pr_\pm(F=\mathrm{成功},V=v,B=b)
+ &=\lambda\sum_\ell c_\ell^\pm p(w_\ell v,b)\\
+ &=\lambda\operatorname{Tr}(E_bA_v\tau_\pm).
+\end{aligned}
+\tag{89.4}
+$$
+
+故全部共同后缀的约化成功读数相等。完整成功输出却为
+
+$$
+\widehat\tau_\pm
+=\lambda\sum_\ell c_\ell^\pm
+ |\ell,w_\ell,\mathrm{成功}\rangle
+ \langle\ell,w_\ell,\mathrm{成功}|
+ \otimes A_{w_\ell}\rho_0.
+\tag{89.5}
+$$
+
+对同一槽 $\ell$，$c_\ell^+c_\ell^-=0$，所以两边占据互不相交的彩票档案块，均有迹 $\lambda m>0$。于是
+
+$$
+\operatorname{Tr}_{\rm 档案}\widehat\tau_+
+=\operatorname{Tr}_{\rm 档案}\widehat\tau_-
+=\lambda\tau_+,\qquad
+\|\widehat\tau_+-\widehat\tau_-\|_1=2\lambda m.
+\tag{89.6}
+$$
+
+更直接地，档案事件
+$\{F=\mathrm{成功},\ L\in\{\ell:c_\ell>0\}\}$
+在两个完整概率律中的质量分别为 $\lambda m$ 和零；对后缀及终端求和不改变这个读数。故完整输出总变差距离至少为 $\lambda m$。约化时的数学偏迹未物理擦除档案，未将完整输出宣布等价。∎
+

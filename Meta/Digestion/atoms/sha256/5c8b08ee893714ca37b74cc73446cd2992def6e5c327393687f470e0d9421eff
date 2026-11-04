@@ -1,0 +1,26 @@
+#### 定义 2.1（模式与占位读口）
+
+令
+
+$$
+\Sigma=(0,1,2,3,13)\ \longleftrightarrow\
+(000,100,010,001,101),\qquad H_5=\mathbb C ^\Sigma,
+\qquad \Pi_s=\lvert s\rangle \langle s\rvert .
+$$
+
+定义三个二值尖锐读出
+
+<a id="eq-N"></a>
+
+$$
+N_1=\Pi_1+\Pi_{13},\qquad N_2=\Pi_2,\qquad
+N_3=\Pi_3+\Pi_{13}.
+\tag{1}
+$$
+
+原项目的坐标记号为 $N_x=N_1,N_y=N_3,N_z=N_2$。数值标签 $(0,2,3,5,25)$ 与这里的逻辑标签 $(0,1,2,3,13)$ 对应。
+
+<a id="statement-2-2"></a>
+
+<a id="thm-five"></a>
+

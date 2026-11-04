@@ -1,0 +1,13 @@
+### 8.1 Finite incidence carrier
+
+Define finite types
+
+\[
+\mathsf{Edge}=\{\alpha,\beta,\gamma\},\qquad
+\mathsf{Party}=\{A,B,C\}
+\]
+
+and an incidence predicate \(\mathsf{Inc}(v,e)\). Define a source product law by a finite probability vector on each edge and a tensor product constructor. Define a response kernel with domain the product of the two incident edge alphabets.
+
+The first theorem should state normalization of the contraction (1.2) and invariance under local output channels.
+

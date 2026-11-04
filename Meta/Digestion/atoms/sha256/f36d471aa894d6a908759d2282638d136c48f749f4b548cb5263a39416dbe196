@@ -1,0 +1,22 @@
+**Lemma 34.1 (all-index feedback composition, including singular laws).**
+Let $p(E)s=0$ for every index $i\ge0$, and define $y$ at the same initial
+origin by $q(E)y=s$, where $p,q$ are monic binary polynomials. All
+nonleading taps, including the constant taps, may vanish. Then
+
+$$
+(pq)(E)y=0\quad(i\ge0),
+$$
+
+so the least all-index order of $y$ is at most $\deg p+\deg q$ and may
+be smaller. These equations describe an autonomous generator construction,
+not an added physical feedback, law-bit or chronological query service.
+
+Proof. Commuting forward shifts gives $p(E)q(E)y=p(E)s=0$ at every
+nonnegative index. Given the two finite seeds, monicity computes $s$ and
+then $y$ forward; their joint state defines an autonomous generator fixed
+before the first birth. No inverse transition or removal of a transient is
+used. Degree-zero $p=1$ means $s=0$, and degree-zero $q=1$ means $y=s$.
+The classical annihilator calculation is the ingredient already used in
+GPO Lemma 29.2; the physical indexed application below still requires
+Theorem 33.3's native replies. $\square$
+

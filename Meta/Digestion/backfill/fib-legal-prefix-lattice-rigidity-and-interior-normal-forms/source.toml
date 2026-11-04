@@ -1,0 +1,5 @@
+source_id = "fib-legal-prefix-lattice-rigidity-and-interior-normal-forms"
+path = "docs/develop/theory/FIB_LEGAL_PREFIX_LATTICE_RIGIDITY_AND_INTERIOR_NORMAL_FORMS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

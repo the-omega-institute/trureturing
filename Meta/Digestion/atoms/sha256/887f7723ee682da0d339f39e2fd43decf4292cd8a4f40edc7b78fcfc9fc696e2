@@ -1,0 +1,47 @@
+**定义 91.1（同一单制备源与时序域）。** 固定 V 定义 54.1、91.1 及本卷定义 80.1 的源：$0<d<1$、$\sin(2\theta)\ne0$，一个原相容纯制备 $\rho_0=\psi\psi^\dagger$，原效果 $E=qq^\dagger$，以及任意一个已安装、可重复且满足 $[N,P_\xi]\ne0$ 的 $N\in U(3)$。以下所有时序均使用这同一个 $N$。特别保留原矩阵的关系
+
+$$
+\begin{gathered}
+f=(1,-1,0)^{\mathsf T}/\sqrt2,\qquad
+q=(\xi+e)/\sqrt2,\qquad f^\dagger q=0,\\
+\psi=\sqrt d\,Uq+\mathrm i\sqrt{1-d}\,Uf,\qquad \rho_0=\psi\psi^\dagger,\\
+W=I_3-2ff^\dagger,\qquad
+V_0=U\exp(\mathrm i\theta W),\qquad V_1=V_0W,\\
+A_j(X)=\tfrac12V_jXV_j^\dagger\quad(j=0,1),\qquad
+A_N(X)=NXN^\dagger.
+\end{gathered}
+\tag{91.1}
+$$
+
+一个外定有限时序 $s$ 是字母表 $\{\mathsf J,\mathsf N\}$ 上的有限词；$\mathsf J$ 表示使用原随机仪器，$\mathsf N$ 表示使用 $N$。设 $k=k(s)$ 是仪器位置数，$\mathcal W_s$ 是把每个 $\mathsf J$ 替换为实际标签 $0$ 或 $1$、每个 $\mathsf N$ 替换为 $N$ 得到的全部 $2^k$ 条历史。最左字母最早作用，故对于 $w=b_1\cdots b_n\in\mathcal W_s$，
+
+$$
+\begin{gathered}
+U_w=U_{b_n}\cdots U_{b_1},\qquad
+U_0=V_0,\quad U_1=V_1,\quad U_N=N,\\
+A_w=2^{-k}\operatorname{Ad}_{U_w},\qquad
+R_w=U_w^\dagger EU_w,\qquad E_1=E,\quad E_0=I_3-E,\\
+p_s(w,b)=\operatorname{Tr}(E_bA_w\rho_0),\qquad
+p_s(w,0)+p_s(w,1)=2^{-k},\qquad
+\sum_{w\in\mathcal W_s}\sum_{b=0}^1p_s(w,b)=1.
+\end{gathered}
+\tag{91.2}
+$$
+
+空时序也在域内。时序长度、终点及 $N$ 的各个位置预先固定，不依赖随机标签；没有反馈或停止规则。$(w,b)$ 是完整输出，所有历史与两种终端结果均在 (91.2) 中。
+
+V 命题 91.3 供应其原五维来源：$B^\dagger B=I_3$，原五维分支与给定控制的角块延伸满足
+
+$$
+\begin{gathered}
+\widehat K_{\theta,j}B=2^{-1/2}BV_j,\qquad
+\widetilde N=BNB^\dagger+(I_5-BB^\dagger),\qquad
+\widetilde NB=BN,\\
+P_5=BEB^\dagger,\qquad
+B^\dagger(I_5-P_5)B=I_3-E.
+\end{gathered}
+\tag{91.3}
+$$
+
+因此沿同一时间词的五维复合在 $B\mathbb C^3$ 上等于 $2^{-k/2}BU_w$，原制备 $B\rho_0B^\dagger$ 与终端 $(P_5,I_5-P_5)$ 给出 (91.2)。$\rho_0$ 的原完整矩映射与纯制备来源仍由该命题承担；这里的数学效果域不增加任何制备。
+

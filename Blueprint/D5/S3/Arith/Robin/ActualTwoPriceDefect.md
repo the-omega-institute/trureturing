@@ -4,9 +4,45 @@
 
 Complete original prime-layer optimizers and their two-price pressure identity.
 
+**Theorem 1.1 (The original reciprocal-log price is positive).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualTwoPriceDefect.price_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualTwoPriceDefect.price_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real x>1, price(x)=1/(x*log(x)) is positive. This existing supplier is consumed by OriginalPrimeSourceOrder when identifying complete strict inventories.
+
+**Theorem 1.2 (The original reciprocal-log price decreases).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualTwoPriceDefect.price_antitone`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualTwoPriceDefect.price_antitone` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real x,y with 1<x and x<=y, price(y)<=price(x). The equal endpoint is included. OriginalPrimeSourceOrder uses this order in the closed inventory-interval sandwich.
+
+**Theorem 1.3 (Lower positive price enlarges the complete strict inventory).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualTwoPriceDefect.strictInteger_dvd`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualTwoPriceDefect.strictInteger_dvd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive real prices q,r with r<=q, strictInteger(q) divides strictInteger(r). The proof compares every natural factorization coordinate, retaining complete prime stacks, zero coordinates and equality-price behavior. OriginalPrimeSourceOrder consumes this result after establishing actual source-clock order.
+
 The objective is log(sigma(n)/n)-q*log(n). The strict integer selects every layer with marginal greater than q; the maximal integer also includes every equality layer. All primes, positive layers and simultaneous ties are retained.
 
-**Theorem 1.1 (The complete maximal optimizer).**
+**Theorem 1.4 (The complete maximal optimizer).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualTwoPriceDefect.maximalInteger_spec`
 
@@ -18,7 +54,7 @@ Lean statement: `D5/S3/Arith/Robin/ActualTwoPriceDefect.maximalInteger_spec`
 
 For every positive real price, the weak layer set is finite and each prime fiber is a complete initial interval. Its finite exponent product is positive, has the stated exponents, and is the greatest original optimizer in the stated order. Finiteness and optimality follow from the existing marginal decay and local threshold suppliers, without a finite prime or exponent truncation hypothesis.
 
-**Theorem 1.2 (Pressure across all activation events).**
+**Theorem 1.5 (Pressure across all activation events).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualTwoPriceDefect.pressure_integral`
 
@@ -30,7 +66,7 @@ Lean statement: `D5/S3/Arith/Robin/ActualTwoPriceDefect.pressure_integral`
 
 For a,b>1, the oriented integral of clock(u)*weight(u) is pressure(price(b))-pressure(price(a)). Here price(u)=1/(u*log(u)), weight(u)=(1+log(u))/(u^2*log(u)^2), and clock(u) is the logarithm of the same strict optimizing integer. Compact layer support proves stability on the correct side of a tie. The one-sided derivative and integrability are proved before the fundamental theorem of calculus is applied.
 
-**Theorem 1.3 (Keep the source integer at both prices).**
+**Theorem 1.6 (Keep the source integer at both prices).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualTwoPriceDefect.two_price_oriented`
 
@@ -42,7 +78,7 @@ Lean statement: `D5/S3/Arith/Robin/ActualTwoPriceDefect.two_price_oriented`
 
 For x,a>1, the actual defect of integerAt(x) at price(a) equals the oriented integral from x to a of (clock(u)-clock(x))*weight(u). The source integer is retained rather than replaced by an independently chosen inventory.
 
-**Theorem 1.4 (The same cost for every comparison optimizer).**
+**Theorem 1.7 (The same cost for every comparison optimizer).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualTwoPriceDefect.npc5_any_comparison_optimizer`
 
@@ -59,6 +95,9 @@ When A=clock(x)>1, every positive original optimizer at price(A), including the 
 - Truth anchor: `D5/S3/Arith/Robin/ActualTwoPriceDefect.maximalInteger_spec`
 - Truth anchor: `D5/S3/Arith/Robin/ActualTwoPriceDefect.npc5_any_comparison_optimizer`
 - Truth anchor: `D5/S3/Arith/Robin/ActualTwoPriceDefect.pressure_integral`
+- Truth anchor: `D5/S3/Arith/Robin/ActualTwoPriceDefect.price_antitone`
+- Truth anchor: `D5/S3/Arith/Robin/ActualTwoPriceDefect.price_pos`
+- Truth anchor: `D5/S3/Arith/Robin/ActualTwoPriceDefect.strictInteger_dvd`
 - Truth anchor: `D5/S3/Arith/Robin/ActualTwoPriceDefect.two_price_oriented`
 - Dependency: [D5/S3/Arith/GoldenResource/GoldenResource5040EndpointComparison](../GoldenResource/GoldenResource5040EndpointComparison.md)
 - Dependency: [D5/S3/Arith/GoldenResource/GoldenResourceOptimalLayerCount](../GoldenResource/GoldenResourceOptimalLayerCount.md)

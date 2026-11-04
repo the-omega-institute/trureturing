@@ -1,0 +1,21 @@
+#### 定义 2.1（态历史、基底历史及相对门）
+
+令 $U,V$ 为同一载体上的酉门字求值。待测态与完整基底为
+
+$$
+\rho_U=U\rho_0U^\dagger,\qquad
+P_s(V)=V\Pi_sV^\dagger.
+$$
+
+定义相对门
+
+$$
+R(U,V)=V^\dagger U.
+$$
+
+一条基底射线 $V\psi_0$ 与整套基底 $\{V\lvert s\rangle \}_s$ 是不同对象。
+
+<a id="statement-2-2"></a>
+
+<a id="thm-relative"></a>
+

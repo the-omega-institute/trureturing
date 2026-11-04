@@ -1,0 +1,55 @@
+**Lemma 7.2 (orientation at an odd cut, including the shortest fringe).**
+For every $u\in\mathcal T$, $k\ge1$ and global $\pi$, let
+$x=\rho^{2k+1}u$ and
+$h_a=\max\{s:P_x^\pi(a^s)=1\}$. Then
+$1\le h_a\le2k+n$. If $h_a=1$, then $\pi(a)=R$. If $h_a\ge2$, then
+
+$$
+ P_x^\pi(a^{h_a-2}ba)=
+ \begin{cases}0,&\pi(a)=L,\\1,&\pi(a)=R.\end{cases}
+                                                        \tag{GPO.24}
+$$
+
+Consequently the exponential bracketing and binary search of Proposition
+2.2, followed by this test only when $h_a\ge2$, acquires $\pi$ using
+exactly $2m_a+\mathbf1_{h_a\ge2}$ Reads, where
+$m_a=1+\lfloor\log_2h_a\rfloor$. Its maximum literal length is at most
+$2h_a$ and its total literal length is at most $2h_a(2m_a+1)$.
+
+Proof. Write $d_L,d_R$ for the original extreme-path lengths and
+$\eta_L,\eta_R\in\{0,1\}$ for the beta indicators of their terminal
+leaves. The existing recurrence for $T_i=\rho^i\alpha$ gives left height
+$i-1$ for $i\ge1$ and right height $\lfloor i/2\rfloor$. Preserving
+original branches therefore gives
+
+$$
+ h_L(x)=d_L+2k+\eta_L,\qquad
+ h_R(x)=d_R+k+\eta_R.                            \tag{GPO.25}
+$$
+
+Since $d_L,d_R\le n-1$, these imply the bounds and exclude $\pi(a)=L$
+when $h_a=1$. If $a$ means left, the terminal leaf replacement has left
+height at least two. Two edges before the end of that left path its
+subtree is exactly $T_3=\langle T_2,T_1\rangle$; the semantic suffix
+$RL$ is absent there. This proves the zero case.
+
+If $a$ means right and its terminal replacement has right height at least
+two, the ancestor two edges before the end is $T_4$ or $T_5$. Both its
+children are branches, so semantic $LR$ is present. The remaining case
+has right height one inside the replacement. It is necessarily $k=1$
+and an original alpha leaf, with replacement $T_3$. If the whole height
+is one, the first rule already applies. Otherwise the ancestor two edges
+before the end is the original parent of that terminal original leaf.
+Its left child is $\rho^3t$ for an actual nonempty original sibling $t$.
+Every $\rho^3t$ has a branch root, so $LR$ from that parent is present.
+This proves (GPO.24) also when its testing ancestor is outside the terminal
+replacement. No original leaf address is supplied to the actor.
+
+Presence on $a^s$ is the initial interval $0\le s\le h_a$. The existing
+bracketing calculation uses $m_a+1$ power tests and $m_a-1$ midpoint
+tests, all literal words of length at most $2h_a$. The optional final
+word has length $h_a$. The stated simultaneous bounds follow. All
+choices depend only on already paid bits and finite binary arithmetic;
+the installation's backing and progress make these actual terminating
+calculations. $\square$
+

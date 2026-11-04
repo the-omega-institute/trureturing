@@ -1,0 +1,179 @@
+**Theorem 15.2.2 (Exact rank, compatibility roots and strict failures).**
+All quotients in (15.9)–(15.10) are polynomials over $\mathbb Q$.
+For each family,
+
+$$
+FV=0,\quad\gcd(V_0,V_1)=1,\quad
+\operatorname{rank}F(z)=7\quad(z>0),\qquad
+\gcd(Q,D)=\gcd(Q,N_0)=1.
+\tag{15.11}
+$$
+
+Both $Q$ have degree twenty and are squarefree. All their positive real
+roots and the indicated ratio bounds are exhausted by (15.16) below.
+In particular, at a positive $Q_{\mathrm a}$ root the necessary ratios
+$S=N_1/N_0$, $T=N_2/N_0$ fail $0<S<2/z$, $T>0$; at a positive
+$Q_{\mathrm b}$ root they fail $0<S<2$, $T>0$.
+
+Proof. The following coefficient vectors specify a finite rational
+verification of all assertions. For this first table only, a vector
+$[c_0,\ldots,c_d]$ denotes $\sum_{k=0}^dc_kz^k$ in **ascending**
+order. They are the eight $V_j$ of (15.9).
+
+$$
+\begin{array}{c|l}
+\mathrm a,0&[-18384,-74640,64788,510864,372414,-234978,-353586,-134016,-16752]\\
+\mathrm a,1&[31868,146578,99126,-235775,-152253,48549,56186,15992,1792]\\
+\mathrm a,2&[-15192,-67908,-54474,70053,56166,10266,-5457,-5712,-1344]\\
+\mathrm a,3&[1900,8138,6048,-8092,-6549,-1791,709,952,224]\\
+\mathrm a,4&[-2232,29724,247428,397230,-125910,-332562,-135396,-16752]\\
+\mathrm a,5&[-27200,-165800,-309296,-82270,279104,204426,42790,1792]\\
+\mathrm a,6&[12480,68676,106602,5322,-92172,-62121,-15252,-1344]\\
+\mathrm a,7&[-1432,-7432,-10498,262,8578,6045,1826,224]\\
+\mathrm b,0&[-16848,-33504,72132,152376,-86226,-183846,67716,73650,-31650]\\
+\mathrm b,1&[2048,4648,-10144,-39252,3934,70633,-6714,-38494,13007]\\
+\mathrm b,2&[-1536,2832,10116,-9027,-12978,15405,2187,-10554,4131]\\
+\mathrm b,3&[256,-472,-1628,2073,2192,-4192,-231,2848,-1088]\\
+\mathrm b,4&[-16848,-17472,67416,19596,-126162,15420,68700,-25950]\\
+\mathrm b,5&[2048,11288,25426,6390,-40874,-10260,27212,-7174]\\
+\mathrm b,6&[-1536,-3864,-4824,-1725,9324,4005,-6648,1332]\\
+\mathrm b,7&[256,400,-118,129,158,-549,-14,142]
+\end{array}
+\tag{15.12}
+$$
+
+For completeness, the coefficient vectors of the two $Q$ in
+**descending** order, from $z^{20}$ to $1$, are
+
+$$
+\begin{aligned}
+Q_{\mathrm a}:\quad[&8282903552,147117850880,1046123840160,3781797964784,\\
+&6804697209160,2376327669978,-15286238544580,-34132010728053,\\
+&-28009573334739,15424358467681,63822813623484,58128277943136,\\
+&-3817930130278,-53867345188568,-41704747973648,3272455310072,\\
+&18771481383656,5798685790240,-1832477208320,-1152683206144,
+ -148971378816],\\[2mm]
+Q_{\mathrm b}:\quad[&3048213835820,-25792101561215,74691937670917,
+ -38796690810182,\\
+&-227763268775886,400809602167211,134351464164455,-828866753144076,\\
+&296783976577872,850375399715950,-612773254519222,-501191479757676,\\
+&523615716111252,174418361487828,-253121839901464,-34607277044688,\\
+&71852012172800,3502342089856,-11152679223936,-133428292352,
+ 728342811648].
+\end{aligned}
+\tag{15.13}
+$$
+
+Here is an explicit arithmetic rule for reproducing the polynomial
+identities and gcds without choosing any roots. A determinant of size
+$n$ means $\sum_{\pi\in S_n}\operatorname{sgn}(\pi)
+\prod_{i=1}^n a_{i,\pi(i)}$. Expand (15.8), delete each of its eight
+columns, and compare its determinant coefficient by coefficient with
+$(-1)^{j+1}\nu V_j$ in (15.12). All coefficient differences vanish.
+Substitution of the same vectors in (15.9), and the four-by-four
+expansion, gives exactly (15.10) with (15.13). The identity $FV=0$
+also follows by the repeated-row cofactor identity.
+
+For nonzero $A,B\in\mathbb Q[z]$, ordinary long division removes the
+current leading term $a_mz^m$ of $A$ by subtracting
+$(a_m/b_n)z^{m-n}B$, until its degree is below $n=\deg B$.
+Iterate $(A,B)\mapsto(B,\operatorname{rem}(A,B))$ until the second
+entry is zero, and make the last nonzero entry monic. These operations
+on (15.8)–(15.13) have the following degree lists, including both
+initial inputs and every subsequent nonzero remainder. In all six
+gcd computations the final monic entry is $1$.
+
+| Inputs | Family $\mathrm a$ degrees | Family $\mathrm b$ degrees |
+| --- | --- | --- |
+| $V_0,V_1$ | $8,8,7,6,5,4,3,2,1,0$ | $8,8,7,6,5,4,3,2,1,0$ |
+| $Q,D$ | $20,24,20,19,18,\ldots,1,0$ | $20,27,20,19,18,\ldots,1,0$ |
+| $Q,N_0$ | $20,18,17,\ldots,1,0$ | $20,19,18,\ldots,1,0$ |
+
+The ellipses in these degree lists mean every consecutive integer in
+descending order. Since coprime univariate polynomials have no common
+complex zero, at least one of $V_0,V_1$ is nonzero at every real $z$.
+Also $\nu\ne0$ for $z>0$. Thus at least one maximal minor of $F$ is
+nonzero there, proving rank seven uniformly, including all zeros of
+individual entries or other minors. This argument does not use a
+sampled rank calculation.
+
+To verify the root and sign assertions, form the signed Sturm sequence
+
+$$
+R_0=Q,\quad R_1=Q',\qquad
+R_{k+1}=-\operatorname{rem}(R_{k-1},R_k),
+\tag{15.14}
+$$
+
+stopping at its last nonzero entry. In each family its degrees are
+$20,19,18,\ldots,1,0$, so $Q$ is squarefree. At a real argument let
+$\operatorname{var}$ count sign changes after zero entries are deleted;
+at $+\infty$ use leading-coefficient signs. Exact evaluation gives
+
+$$
+\begin{array}{c|cc}
+ &\operatorname{var}(0)&\operatorname{var}(+\infty)\\ \hline
+\mathrm a&7&4\\
+\mathrm b&11&3
+\end{array}
+\tag{15.15}
+$$
+
+For every row of the next table put
+
+$$
+I_n=[n/10^{12},(n+1)/10^{12}].
+\tag{15.16}
+$$
+
+Neither endpoint is a zero of the
+respective $Q$. The two variation entries refer to the left and right
+endpoints. An entry $[a,b]$ in the last column encloses the indicated
+**thousand times** ratio on the entire closed interval $I_n$, not only
+at its algebraic root.
+
+| Family | $n$ | Variations | Sign of $N_0$ on $I_n$ | Ratio | Enclosure of $1000$ times ratio |
+| --- | --- | --- | --- | --- | --- |
+| $\mathrm a$ | $1063208818552$ | $7,6$ | $-$ | $N_1/N_0$ | $[5003,5004]$ |
+| $\mathrm a$ | $1064700680689$ | $6,5$ | $+$ | $N_1/N_0$ | $[4632,4633]$ |
+| $\mathrm a$ | $1244315019115$ | $5,4$ | $-$ | $N_2/N_0$ | $[-12,-11]$ |
+| $\mathrm b$ | $494812194094$ | $11,10$ | $+$ | $N_2/N_0$ | $[-58,-57]$ |
+| $\mathrm b$ | $595231123153$ | $10,9$ | $+$ | $N_1/N_0$ | $[2838,2839]$ |
+| $\mathrm b$ | $626933545430$ | $9,8$ | $-$ | $N_1/N_0$ | $[3550,3551]$ |
+| $\mathrm b$ | $1207999593070$ | $8,7$ | $+$ | $N_1/N_0$ | $[-2266,-2265]$ |
+| $\mathrm b$ | $1523742217801$ | $7,6$ | $+$ | $N_1/N_0$ | $[-5610,-5609]$ |
+| $\mathrm b$ | $1635486581057$ | $6,5$ | $+$ | $N_2/N_0$ | $[-1074,-1073]$ |
+| $\mathrm b$ | $1746481497259$ | $5,4$ | $+$ | $N_2/N_0$ | $[-152,-151]$ |
+| $\mathrm b$ | $1778429160158$ | $4,3$ | $+$ | $N_1/N_0$ | $[-2225,-2224]$ |
+
+The following rational interval operations completely specify the last
+two sign columns and give a direct way to reproduce them. For intervals,
+addition adds endpoints and multiplication takes the minimum and maximum
+of the four endpoint products. For a polynomial $f$, set
+$c=(2n+1)/(2\cdot10^{12})$, $h=1/(2\cdot10^{12})$, and expand exactly
+$f(c+u)=\sum_{k=0}^da_ku^k$. Start with $J_d=[a_d,a_d]$ and use
+
+$$
+J_k=[a_k,a_k]+[-h,h]J_{k+1}\quad(k=d-1,\ldots,0),
+\qquad\mathfrak I(f)=J_0.
+\tag{15.17}
+$$
+
+For each row, $\mathfrak I(N_0)=[A,B]$ excludes zero and has the
+printed sign. Multiply $\mathfrak I(N_1)$ or $\mathfrak I(N_2)$, as
+indicated, by $[1/B,1/A]$. Multiplying the resulting endpoints by
+$1000$ and rounding the lower down and upper up to integers gives the
+last column of (15.16). All coefficients, centers, radii, additions,
+products, divisions and endpoint comparisons in this prescription are
+rational. In particular it specifies denominator checks before division.
+
+Sturm's theorem applied to (15.14) shows that each open interior of
+$I_n$ contains exactly one positive root. The sums of these drops are
+$3$ and $8$, exactly (15.15)'s total drops. There are no other positive
+roots. At the first two $\mathrm a$ intervals $z>1$ but $S>4$, whereas
+$0<S<2/z<2$ is necessary. At its third interval $T<0$. The eight
+$\mathrm b$ intervals respectively give
+$T<0,S>2,S>2,S<0,S<0,T<0,T<0,S<0$.
+These contradict the stated necessary strict guards. This proves all
+claims of the theorem by the displayed finite arithmetic. ∎
+

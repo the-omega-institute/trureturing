@@ -1,0 +1,30 @@
+**Theorem 62.1 (exact rank-many Reads at the actual advanced field).** Let an original branching graph $u$ and exhaustive current map be earned and retained with authentic access. At a new phase entrance its entire current field is arbitrary in $\mathbb Q^N$, with no accessible field-dependent advice. Put $r=\operatorname{rank}_{\mathbb Q}A$ and use the earned $J,K,C,I$ of (58.3). There is a finite geometry-only selector and an actually executed experiment with exactly $r$ scalar Reads that installs a complete predictor at its actual endpoint
+
+$$
+w=A^{H+1}x,\qquad 0\le H\le I.
+\tag{62.1}
+$$
+
+Its other primitive counts are $H+1$ Tick and $H+1$ Hold, with no Add, growth or Reset. Rank-many Reads are the exact minimum for this arbitrary-field current-predictor task, even if alternative protocols may perform adaptive original growth. The experiment does not restore $x$: its discarded entry kernel is exactly $\ker A$.
+
+**Proof and selector.** Use exact pivot search in fixed material-coordinate order to select $r$ independent columns of $A$. Put these columns in $U\in\mathbb Q^{N\times r}$, a basis of $\operatorname{im}A$. Enumerate pairs $(k,j)$ in increasing $k=0,\ldots,I$ and then terminal order, computing the rows
+
+$$
+q_{k,j}=e_{\ell_j}^{\mathsf T}A^kU\in\mathbb Q^{1\times r}.
+\tag{62.2}
+$$
+
+Keep a row exactly when it increases the row rank of those already kept, stopping at $r$ rows. This stops: if every row annihilated $c$, then $K^{\mathsf T}Uc=0$, so $Uc=0$ by (58.3), and $c=0$. Let $M$ be the square matrix of selected rows in that order and $H$ their largest $k$. Then $M$ is invertible and $H\le I$. All selections depend only on the earned graph, not on the unknown field.
+
+Actually Tick once and Hold. Its field $z=Ax$ lies in $\operatorname{im}A$, uniquely $z=Uc$. For each selected row with $k=0$ actually Read its terminal. For levels $k=1,\ldots,H$, actually Tick; Hold, and Read exactly the selected terminals at that level. The selected literal replies obey
+
+$$
+y_{k,j}=e_{\ell_j}^{\mathsf T}A^kz=q_{k,j}c,
+\qquad y=Mc.
+\tag{62.3}
+$$
+
+Solve $c=M^{-1}y$ by finite rational elimination. Compute $w=A^HUc$ and install it before the settled return. All time levels were actually reached on this specimen, so (62.1) is the actual endpoint, rather than a reconstruction of the original $x$ advertised as current. The displayed calls give the exact counts and return the whole $r$ scalars and all intervening ACKs/returns.
+
+Symmetry implies $\ker A^2=\ker A$: if $A^2v=0$, then $\|Av\|^2=v^{\mathsf T}A^2v=0$. Iterating this implication gives $\ker A^n=\ker A$ for every $n\ge1$. Thus (62.1) discards exactly that entry kernel and retains rank $r$. Theorem 61.2 applies at this cleared arbitrary-current entrance and forces at least $r$ Reads on any exact predictor protocol. The same no-Tick contradiction applies to the earned branching graph. This proves the stated minimum, with no claim about other cost coordinates. $\square$
+

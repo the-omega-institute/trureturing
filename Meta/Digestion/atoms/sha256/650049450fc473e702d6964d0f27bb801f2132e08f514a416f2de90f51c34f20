@@ -1,0 +1,42 @@
+**Definition 20.1 (unchanged endpoint and the finite sampling premise).**
+Retain every datum of Definitions 7.1, 11.1 and 15.1, in particular
+$F,h,m$, the original entrance law $q_t m$, killed transition kernel
+$P_t^0$, spectral probability $\nu$, and lifetime tail $\kappa$.
+The full operator is still $H$, with the entire complex selector
+(112.5); $F$ is used only in its already established source-killed
+role (15.1). Fix a finite original elapsed horizon $T>0$, a local-time
+budget $\Lambda>0$, and deterministic $0<\epsilon,\delta\le1$.
+The local-time budget is not an elapsed-time horizon. Put
+
+$$
+\begin{gathered}
+ \mathfrak d(v)=\int_{(0,\infty)}s^2e^{-vs}\nu(ds),\qquad v>0,\\
+ \beta_\epsilon=\int_0^\epsilon v\mathfrak d(v)\,dv,
+ \qquad
+ \chi_\epsilon(\lambda)=\int_0^\epsilon
+           (1-e^{-\lambda v})\mathfrak d(v)\,dv,\\
+ \mathcal D_{\delta,T}=
+       \{j\delta: j\ge1,\ j\delta<T\}\cup\{T\},
+ \qquad M_\delta=\lceil T/\delta\rceil.
+\end{gathered}
+\tag{20.1}
+$$
+
+Thus $\mathfrak d$ is the original excursion-duration density, not
+an additional spectral measure or a new source condition. The grid
+contains at most $M_\delta$ positive times and has gaps at most
+$\delta$ when zero is included.
+
+The added interface supplies exact samples of the following finite
+list, with the joint laws specified in Lemma 20.2 and Definition 20.3:
+a Poisson count, ordered real labels, one duration and finitely many
+four-coordinate evaluations for each retained excursion, and one
+nonnegative scalar duration total in each intervening label interval.
+These are exact-real sampling primitives. No continuous excursion
+mark, entire source trajectory, target observation-exit flag, or
+target modulus is supplied. In particular the intervening scalar is
+literally a sum of durations; it does not specify the small excursions'
+positions, shapes or individual lifetimes. All four sampled coordinates,
+including hidden $z$, belong to the added source information. Sampling
+$z$ is neither an original observation nor a native actuator.
+

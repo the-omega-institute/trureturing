@@ -1,0 +1,194 @@
+**Lemma 2.1 (A two-sided second-excess bound).** For every conductance
+in Definition 1.1, set
+
+$$
+t=\lambda_2(L),\quad w=W/t,\quad
+P=I_n-\frac1n\mathbf1\mathbf1^{\mathsf T},\quad H=L/t-P.
+$$
+
+Then $H$ is positive semidefinite, $H\mathbf1=0$, and
+
+$$
+w\ge b,\qquad S:=\operatorname{tr}H=2w-n+1.
+\tag{2.1}
+$$
+
+The second elementary symmetric sum $E$ of the eigenvalues of this same
+matrix satisfies
+
+$$
+E\ge K(w):=\frac{a-1}{b}(w-a)+\frac{b-1}{a}(w-b).
+\tag{2.2}
+$$
+
+If equality holds in (2.2), all normalized $A$-degrees $r_i/t$ are $1$
+except possibly one, which is $w-a+1$. All normalized $B$-degrees $s_j/t$
+are likewise $1$ except possibly one, which is $w-b+1$.
+
+*Proof.* On $\mathbf1^\perp$, $P$ is identity and the eigenvalues of
+$L/t$ are at least $1$; both matrices vanish on constants. Hence $H\succeq0$
+and $H\mathbf1=0$. Let $U_B$ be the space supported on $B$ with coordinate
+sum zero, and take an orthonormal basis $f_1,\ldots,f_{b-1}$ there.
+Its projection on the $B$ coordinates is $I_b-\mathbf1_b\mathbf1_b^{\mathsf T}/b$.
+The Rayleigh bound gives
+
+$$
+b-1\le\sum_{\ell=1}^{b-1}f_\ell^{\mathsf T}(L/t)f_\ell
+=\frac{b-1}{b}\sum_j\frac{s_j}{t}=\frac{b-1}{b}w.
+\tag{2.3}
+$$
+
+Thus $w\ge b$. No invariance of $U_B$ has been assumed. Taking traces
+and using $\operatorname{tr}L=2W$ proves (2.1).
+
+Put $\rho=1/n$, $z_i=r_i/t-1$ and $\eta_j=s_j/t-1$. The two principal
+blocks of $H$ are
+
+$$
+H_A=\operatorname{diag}(z_i)+\rho\mathbf1_a\mathbf1_a^{\mathsf T},\qquad
+H_B=\operatorname{diag}(\eta_j)+\rho\mathbf1_b\mathbf1_b^{\mathsf T}.
+\tag{2.4}
+$$
+
+In particular $\sum_i z_i=w-a=:Z$ and $\sum_j\eta_j=w-b=:Q$.
+Write $e_2(z)=\sum_{i<k}z_i z_k$ and similarly for $\eta$.
+Both these quantities are nonnegative. Here is the arbitrary-size
+extension of the three-coordinate calculation in the proof of the cited
+three-hub Lemma 2.1. If
+$D=\operatorname{diag}(x_1,\ldots,x_r)+\rho\mathbf1_r\mathbf1_r^{\mathsf T}
+\succeq0$ with $r\ge3$, testing $e_i-e_j$ shows that at most one $x_i$
+can be negative. If one is negative, every other $x_j$ is strictly
+positive. On a triple containing the negative entry,
+
+$$
+0\le\det D_{\{i,j,k\}}
+=x_i x_j x_k+\rho(x_i x_j+x_i x_k+x_j x_k)
+$$
+
+forces the parenthesized expression to be strictly positive. On every
+other triple it is nonnegative. Summing over triples gives
+
+$$
+(r-2)\sum_{i<j}x_i x_j
+=\sum_{i<j<k}(x_i x_j+x_i x_k+x_j x_k)>0
+$$
+
+if a negative entry occurs. If all entries are nonnegative, their pair
+sum is nonnegative and vanishes precisely when at most one is positive.
+Consequently
+
+$$
+e_2(z)\ge0,\quad e_2(\eta)\ge0,
+\tag{2.5}
+$$
+
+and equality for either list means all its entries are nonnegative with
+at most one nonzero entry. This argument applies since both $a,b\ge4$.
+
+Choose Gram vectors $v_i,y_j\in\mathbb R^n$ for $H$, for example its
+positive semidefinite square-root columns. Then
+
+$$
+\begin{gathered}
+\langle v_i,v_k\rangle=\rho\quad(i\ne k),\qquad
+\|v_i\|^2=z_i+\rho,\\
+\langle y_j,y_\ell\rangle=\rho\quad(j\ne\ell),\qquad
+\|y_j\|^2=\eta_j+\rho,\qquad
+\sum_i v_i+\sum_j y_j=0.
+\end{gathered}
+\tag{2.6}
+$$
+
+The last equality follows by taking the squared norm and using
+$\mathbf1^{\mathsf T}H\mathbf1=0$.
+For vectors $u,v$, use the exterior product with coordinates
+$(u\wedge v)_{pq}=u_pv_q-u_qv_p$ for $p<q$; expansion gives
+$\|u\wedge v\|^2=\|u\|^2\|v\|^2-\langle u,v\rangle^2$.
+Thus squared Gram areas are second-order principal minors, and their sum
+is $E=((\operatorname{tr}H)^2-\operatorname{tr}(H^2))/2$.
+Split this sum as
+
+$$
+E=E_A+E_B+E_C,\quad
+E_A=\sum_{i<k}\|v_i\wedge v_k\|^2,\quad
+E_B=\sum_{j<\ell}\|y_j\wedge y_\ell\|^2,\quad
+E_C=\sum_{i,j}\|v_i\wedge y_j\|^2.
+$$
+
+The block formulas (2.4) give
+
+$$
+E_A=e_2(z)+(a-1)\rho Z,\qquad
+E_B=e_2(\eta)+(b-1)\rho Q.
+\tag{2.7}
+$$
+
+To retain the contributions from both sides simultaneously, put
+$V=\sum_i v_i=-\sum_j y_j$ and define centered vectors
+$\widetilde v_i=v_i-V/a$, $\widetilde y_j=y_j+V/b$.
+Their respective sums vanish. Bilinearity gives
+
+$$
+v_i\wedge y_j
+=\frac1a V\wedge\widetilde y_j
+ +\frac1b V\wedge\widetilde v_i
+ +\widetilde v_i\wedge\widetilde y_j.
+$$
+
+When squared and summed over $i,j$, every mixed inner product vanishes:
+for the first two terms use the two zero sums, for the first and third
+sum over $i$, and for the second and third sum over $j$. Since
+$V\wedge\widetilde v_i=V\wedge v_i$ and
+$V\wedge\widetilde y_j=V\wedge y_j$, the exact identity is
+
+$$
+E_C=\frac1b\sum_i\|v_i\wedge V\|^2
+    +\frac1a\sum_j\|y_j\wedge V\|^2
+    +T,\qquad
+T=\sum_{i,j}\|\widetilde v_i\wedge\widetilde y_j\|^2\ge0.
+\tag{2.8}
+$$
+
+For explicit evaluation, write $h_i=\|v_i\|^2$ and
+$D_A=\sum_i h_i=Z+a\rho$. Equations (2.6) imply
+$\|V\|^2=D_A+a(a-1)\rho$ and
+$\langle v_i,V\rangle=h_i+(a-1)\rho$. Therefore
+
+$$
+\begin{aligned}
+\sum_i\|v_i\wedge V\|^2
+&=D_A(D_A+a(a-1)\rho)-\sum_i(h_i+(a-1)\rho)^2\\
+&=2E_A+(a-1)(a-2)\rho Z.
+\end{aligned}
+\tag{2.9}
+$$
+
+Indeed $2E_A=D_A^2-\sum_i h_i^2-a(a-1)\rho^2$, so the final equality
+follows by substitution. Replacing $a,v_i,Z,V$ by
+$b,y_j,Q,-V$ gives, on the same Gram representation,
+
+$$
+\sum_j\|y_j\wedge V\|^2=2E_B+(b-1)(b-2)\rho Q.
+\tag{2.10}
+$$
+
+Combining (2.7)–(2.10), and using $\rho(a+b)=1$, yields the exact
+nonnegative-gap decomposition
+
+$$
+\begin{aligned}
+E-K(w)
+&=\left(1+\frac2b\right)e_2(z)
+ +\left(1+\frac2a\right)e_2(\eta)+T\ge0.
+\end{aligned}
+\tag{2.11}
+$$
+
+For example, the coefficient of $Z$ before simplification is
+$(a-1)\rho[1+2/b+(a-2)/b]=(a-1)/b$;
+the coefficient of $Q$ is $(b-1)/a$.
+This proves (2.2) without optimizing different matrices separately.
+If equality holds, both pair sums in (2.11) vanish. Their equality
+characterization following (2.5), together with their sums $Z=w-a$ and
+$Q=w-b$, proves the stated degree concentration. ∎
+

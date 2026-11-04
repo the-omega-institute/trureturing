@@ -4,6 +4,8 @@
 
 Exact rational determinant certificates for sharp-slice averaging.
 
+In the original edge coordinates, the asymmetric vector is x=(49/10,14/5,2,49/10,6/5,2). Its C2 partner swaps a with c and b with d, retaining r and o; this swap comes from the vertex permutation (0 1)(2 3). Their coordinate average is (49/10,2,2,49/10,2,2), and every coordinate in both displayed vectors is greater than one. The original Gram determinant equals the character determinant under the orthogonal basis change, giving the same exact values 189/80 and -274999/10000. Thus even this actual coordinate average with its vertex-relabeling partner cannot certify a negative determinant for the original input from a negative determinant of the average.
+
 Use the fixed character-coordinate Gram matrix gram with slot order (12,13,14,34,24,23). The asymmetric vector has parameters (r,o,A,B,xi,zeta)=(49/10,49/10,2,2,4/5,0), while its C2 average has the same first four parameters and xi=zeta=0.
 
 **Theorem 1.1 (Exact determinant reversal).**

@@ -1,0 +1,18 @@
+**Definition 59.1 (All-width reconstruction set).** Let
+$\mathcal R(p,v,w)$ consist of every retained reconstruction of
+Theorem 57.2 over all $b>0$, with its complete source, drift and gain.
+Write $x\sim y$ when their triples $(b,r,\epsilon)$ coincide.
+By Lemma 48.1 this is exactly equality of complete worlds; it is
+not equality of an acquired observable or an extra experiment.
+For such a reconstruction put
+
+$$
+\mathfrak a(x)=24+\epsilon+(T+2j+4r)
+ (\mathsf C_7+\mathsf A_7\epsilon+35t).
+\tag{59.1}
+$$
+
+Here $t=\epsilon/n$ by Lemma 56.2. By (54.4), $\mathfrak a(x)$
+is the literal terminal-J reading at clock seven of the same whole
+gain used in every other row.
+

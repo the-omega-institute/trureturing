@@ -1,0 +1,32 @@
+**定理 8.6（改变窗口后的精确尺度协变）。**
+
+<a id="thm-scaling"></a>
+
+$$
+P_+T=\varphi P_+,\qquad P_-T=\sigma P_-.
+$$
+
+对任意窗口及任意整数 $n$，
+
+$$
+\boxed{\ \Lambda(\sigma^nW)=\varphi^n\Lambda(W).\ }
+$$
+
+特别地 $\Lambda(\sigma^2W)=\varphi^2\Lambda(W)$。
+若 $W$ 关于原点星形，则 $\varphi^2\Lambda(W)\subseteq\Lambda(W)$；
+若 $W$ 还有界且内部非空，该包含不能成为固定窗口的等号。
+
+**证明。**
+
+由 $\varphi^2=\varphi+1$、$\sigma^2=\sigma+1$ 直接计算得两个读出恒等式。
+$T^n$ 在整数格上双射，所以
+$P_-v\in W$ 当且仅当 $P_-T^nv\in\sigma^nW$，
+同时 $P_+T^nv=\varphi^nP_+v$。这给出集合恒等式。
+原点星形使 $\sigma^2W\subseteq W$，故得到包含。
+若固定窗口下有等号，相对稠密保证存在非零点 $x\in\Lambda(W)$；
+反复应用反向尺度得 $\varphi^{-2n}x\in\Lambda(W)$。
+这些不同点趋向零，违反均匀离散性。证毕。
+ □
+
+<a id="statement-8-7"></a>
+

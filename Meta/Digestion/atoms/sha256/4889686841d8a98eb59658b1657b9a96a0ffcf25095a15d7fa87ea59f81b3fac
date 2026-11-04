@@ -1,0 +1,67 @@
+**Theorem 31.2 (strict separation bounds every compatible complete world).** Compute $(\widehat h,\widehat q,\widehat a)$ from the received prefix by (26.4). If
+
+$$
+ \gamma=e(y)-\rho>0,\qquad
+ \ell=\gamma/R_{k,d},\qquad B_\rho=\|\widehat q\|_\infty+a\rho,
+ \tag{31.2}
+$$
+
+then every $W\in\mathcal W_\rho(y)$ satisfies simultaneously
+
+$$
+ \begin{gathered}
+ \ell\le\|\operatorname{coeff}_kH\|_\infty
+                     \le\|\widehat h\|_\infty+a\rho,\qquad
+ \|\operatorname{coeff}_dD\|_\infty\le\|\widehat a\|_\infty+a\rho,\\
+ b\le b_{\rm sep}:=B_\rho/\ell,\qquad
+ \|P\|_{\max}\le1+b_{\rm sep},\qquad
+ \chi\le\chi_{\rm sep}:=\ell^{-1}+B_\rho\ell^{-2}.
+ \end{gathered}
+ \tag{31.3}
+$$
+
+Whenever $\mathcal W_\rho(y)\ne\varnothing$, the unchanged decoder (26.4), (26.10)–(26.11), used with radius $\rho$, is defined and has the simultaneous acquired-record bounds
+
+$$
+ \|\widehat P-P\|_{\max}\le C_{k,d}\chi_{\rm sep}\rho,
+ \qquad
+ \mathcal L\le\max\{a,C_{k,d}\chi_{\rm sep}\}\rho.
+ \tag{31.4}
+$$
+
+In particular the compatible complete targets are bounded. Any established lower bound on $e(y)$ exceeding $\rho$ can replace $e(y)$ in (31.2): this only decreases $\ell$ and enlarges the resulting upper bounds. All bounds are conditional on the original model and the declared raw radius. A failed strict inequality supplies no impossibility conclusion for an exact record.
+
+**Proof.** First consider any single legal world, without imposing a source bound. If $u\ge v$ in (30.5), then $v\le1/2$. The vector $w_i=U_i(uH)(i)+D(i)$ is in $\mathcal E_{12}$, and
+
+$$
+ \begin{aligned}
+ |Z(W)_i-w_i|
+ &=|H(i)|\left|(A_i)_{11}(1-t)+(A_i)_{22}t+V_iv\right|\\
+ &\le R_{k,d}\|\operatorname{coeff}_kH\|_\infty.
+ \end{aligned}
+ \tag{31.5}
+$$
+
+Here $|H(i)|\le S_k(i)\|\operatorname{coeff}_kH\|_\infty$ and the diagonal term is a convex combination of the two diagonal entries. If $v\ge u$, use $u\le1/2$ and $w_i=V_i(vH)(i)+D(i)$ in $\mathcal E_{21}$. Thus every actual world satisfies
+
+$$
+ \operatorname{dist}_\infty(Z(W),\mathcal E_{12}\cup\mathcal E_{21})
+          \le R_{k,d}\|\operatorname{coeff}_kH\|_\infty.
+ \tag{31.6}
+$$
+
+For a world compatible with $y$ at radius $\rho$, the triangle inequality now gives $e(y)\le\rho+R_{k,d}\|\operatorname{coeff}_kH\|_\infty$, proving the inferred lower bound $\ell$. The same fixed prefix inverse gives (26.9) with $\delta=\rho$, hence
+
+$$
+ b\|\operatorname{coeff}_kH\|_\infty\le B_\rho.
+$$
+
+This proves the bound on $b$, both coefficient upper bounds, and
+
+$$
+ \frac{1+b}{\|\operatorname{coeff}_kH\|_\infty}
+ \le\ell^{-1}+B_\rho\ell^{-2}.
+$$
+
+Use (26.13) for the source norm and Theorem 26.2 for the entire target. Its single decoder is the same function of $y,k,d,\rho$ in every compatible world. No independent prefix and tail realizations are combined. The coefficient lower bound is inferred; it asserts no lower bound on any particular sampled $H(i)$ and allows all actual gain roots. $\square$
+

@@ -1,0 +1,93 @@
+**Lemma 14.2 (Only the two adjacent core sizes survive).** There are
+$A_R,b,c_0>0$ such that, for $a\ge A_R$, $5/2\le q\le R$, every
+$x\in\mathcal X(a,h)$ with $H(x)\le U$ has a unique partition
+$C\dot\cup D=[a+1+h]$ with
+
+$$
+\begin{gathered}
+|C|=a+j,\quad |D|=h+1-j,\quad j\in\{1,2\},\\
+y_i\ge c_0\quad(i\in C),\qquad 0<y_k<b/a<c_0\quad(k\in D).
+\end{gathered}
+\tag{14.5}
+$$
+
+If $A=\{T\cap D\ne\varnothing\}$ and $v=a\mathbb P(A)$, then
+
+$$
+\begin{cases}
+q\le2\sqrt2+O_R(a^{-1/2}),&j=1,\\
+q\ge2\sqrt2-O_R(a^{-1/2}),\quad
+v=2+O_R(a^{-1/4}),&j=2.
+\end{cases}
+\tag{14.6}
+$$
+
+In particular, with $u=\sum_{k\in D}y_k$, the second case has
+$au\ge3/2$ eventually.
+
+**Proof.** The cap laws (14.4) give, uniformly for each $j=1,2$,
+
+$$
+\frac{S_j-B_0}{a^2}=\frac{q^2}{j}+4j-2+O_R(a^{-1/2}).
+\tag{14.7}
+$$
+
+Consequently $H\le U$ implies $H\le a^3+C_Ra^2$ for some fixed
+$C_R\ge1$. Apply Lemma 7.1 with $(C,L,R)=(C_R,5/2,R)$.
+Its actual-marginal threshold construction gives $b=4C_R$,
+$c_0=(8C_R+1)^{-1}$, a bounded positive integer $j$, and a positive
+$v\le j+O_R(a^{-1/2})$. Its lower bound, including the lower bound
+on $v$ there, implies
+
+$$
+\frac{H-B_0}{a^2}\ge\frac{q^2}{v}+2v+2j-2-O_R(a^{-1/2}).
+\tag{14.8}
+$$
+
+Replacing $v$ by $\min\{v,j\}$ changes this expression by at most
+$O_R(a^{-1/2})$. For each positive integer $k$, let
+
+$$
+\varphi_k(q)=\min_{0<w\le k}\{q^2/w+2w+2k-2\}.
+$$
+
+The scalar evaluation (7.23)--(7.28) shows that on
+$[5/2,R]$ only $k=1,2$ can attain
+$\min_k\varphi_k(q)=\min\{q^2+2,q^2/2+6\}$.
+Since $R<2\sqrt6$, no $k\ge3$ attains it, even at an endpoint of
+this compact interval. The bounded set of possible integers from
+Lemma 7.1 is finite. Continuity therefore gives a strictly positive
+uniform gap for its integers $k\ge3$. Equations (14.7)--(14.8)
+exclude all of them for sufficiently large $a$. This proves (14.5),
+after increasing the threshold until $b/a<c_0$.
+
+For $j=1$, $\varphi_1(q)=q^2+2$ throughout this range.
+If $q\ge2\sqrt2$, its excess over $q^2/2+6$ is $q^2/2-4$.
+Comparison with (14.7)--(14.8) bounds that excess by
+$O_R(a^{-1/2})$, giving the first line of (14.6).
+For $j=2$ and $5/2\le q\le2\sqrt2$,
+$\varphi_2(q)=2+2\sqrt2 q$ and
+
+$$
+\varphi_2(q)-(q^2+2)=q(2\sqrt2-q).
+$$
+
+The same comparison gives the lower bound on $q$ in (14.6).
+To obtain the asserted control of $v$, put $w=\min\{v,2\}$.
+Using $H\le S_2$ in (14.8) gives
+
+$$
+\frac{q^2}{w}+2w-\left(\frac{q^2}{2}+4\right)
+=(2-w)\left(\frac{q^2}{2w}-2\right)
+\le O_R(a^{-1/2}).
+\tag{14.9}
+$$
+
+The lower bound already proved for $q$ gives $q^2\ge8-O_R(a^{-1/2})$.
+The positive lower bound on $w$ from Lemma 7.1 therefore bounds the
+left side of (14.9) below by
+$2(2-w)^2/w-O_R(a^{-1/2})$. Hence
+$2-w=O_R(a^{-1/4})$; also $v\le2+O_R(a^{-1/2})$.
+Finally $u=\mathbb E|T\cap D|\ge\mathbb P(A)=v/a$.
+All these are identities or estimates for the original common law. ∎
+

@@ -1,0 +1,38 @@
+#### 定理 4.2（第三通道的复相关与 Gram 正性）
+
+对上述三元组与状态 $\rho$，令 $x=\operatorname{Tr}\rho A,y=\operatorname{Tr}\rho B,z=\operatorname{Tr}\rho C$。则
+
+$$
+
+z=\operatorname{Im}\operatorname{Tr}(\rho AB)=\frac1{2i}\operatorname{Tr}(\rho[A,B]).
+
+$$
+
+中心化双读口 $\delta A=A-xI,\delta B=B-yI$ 的 Gram 矩阵为
+
+$$
+
+G=
+ \begin{pmatrix}
+ 1-x^2&iz-xy\\
+ -iz-xy&1-y^2
+ \end{pmatrix}\succeq0,
+ \boxed{\det G=1-x^2-y^2-z^2.}
+
+$$
+
+逻辑 qubit 的约化态纯时行列式为零。三方差和恒满足
+$\operatorname{Var}(A)+\operatorname{Var}(B)+\operatorname{Var}(C)=3-x^2-y^2-z^2\ge2$。
+
+
+**证明。**
+
+由 $AB=iC$ 得第一式。Gram 的各项是 $\operatorname{Tr}\rho\delta A_i^\dagger\delta A_j$，所以任意复线性组合的二次型为一个正算符的期望，非负。展开给显示矩阵及其行列式。由定理 [定理 4.1](#thm:pauli) 的逻辑 qubit 表示及定理 [定理 3.2](#thm:ball)，纯性恰对应 $|r|=1$。方差用 $A_i^2=I$ 相加即可。
+
+**证明完。** ∎
+
+这就是此双读口的 Schrödinger–Robertson 不等式：
+$(1-x^2)(1-y^2)\ge x^2y^2+z^2$。第三分量位于两通道关联的虚部。普通先投影测 $A$ 再测 $B$ 并不读取该虚部：$P_a=(I+aA)/2$ 满足 $P_aBP_a=0$，所以其二值结果乘积的均值恒为零。相干相关读口或直接测 $C$ 必须另行给出。
+
+
+<a id="thm:realcomplex"></a>

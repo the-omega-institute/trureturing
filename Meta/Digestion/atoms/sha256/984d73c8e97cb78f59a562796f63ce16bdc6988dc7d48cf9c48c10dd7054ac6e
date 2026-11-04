@@ -1,0 +1,34 @@
+## 42. 实际全树来源核的 0/1 刚性与非正交边界
+
+本节固定实际来源域，而不把它改写成关联字、有限切片或单一轨道。令
+$T$ 是 $\alpha,\beta$ 上全部非空有限自由有序二叉树；$\langle s,t\rangle$
+是保留左右次序的内部节点，并令
+
+$$
+\rho(\alpha)=\beta,
+\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle .
+$$
+
+这正是 [Genealogical Fiber Transport](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.md)
+和 [Source Transport Centralizer](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.md)
+所使用的自由有序树与替换。唯一可读性给出构造子的单射性；后者的中心化定理还给出
+$\rho$ 的单射性。下面的 $K:T\times T\to\mathbb C$ 是一个明列模型输入，满足
+
+$$
+\begin{aligned}
+&K(t,s)=\overline{K(s,t)},
+&&\sum_{j,k=1}^{m}\overline{c_j}c_kK(t_j,t_k)\ge0,
+&&K(t,t)=1,\\
+&K(\rho s,\rho t)=K(s,t),
+&&K(\langle s,t\rangle,\langle u,v\rangle)=K(s,u)K(t,v).
+\end{aligned}
+\tag{42.1}
+$$
+
+第二行的两个等式分别对所有来源对和所有来源四元组成立；最后一个等式包括全部构造交叉项，
+不是只对相同标签或相同树形成立的局部规则。正性、归一化、全比较的 $\rho$ 保留和精确乘法
+都是模型输入，不由裸不确定性、信息守恒或 Read/Apply/Stop 过程推出。
+

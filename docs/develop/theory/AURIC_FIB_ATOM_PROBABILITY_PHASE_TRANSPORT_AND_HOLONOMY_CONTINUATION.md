@@ -1128,3 +1128,525 @@ above fixes its normalization for the present estimates.
 [Y11]: https://arxiv.org/abs/1612.09375
 
 ## 追加锚（本行以下为增补区）
+
+## 12. One original phase command and equal full density barycenters
+
+### 12.1 The original source and the state-only comparison
+
+**Definition 12.1 (Variable-height density representation).** Fix
+$0<Z<1$, $r=1-Z$, $X=Y=r/2$, $L=r/2$, one preparation height
+$k_{\rm in}\in(0,L)$ and arbitrary fixed preparation phases. In the
+middle-positive gauge put
+$\eta_s=\theta_s^{\rm in}-\theta_2^{\rm in}$, so $\eta_2=0$.
+The source is exactly the open-prefix source of Transport Definition 8.1
+and Theorem 8.2, with no terminal closing condition:
+
+$$
+\begin{aligned}
+\mathcal M&=(0,L)\times\mathbb T^2,\qquad
+\mathbb T=\mathbb R/2\pi\mathbb Z,\\
+\psi(k,u,v)&=\bigl(
+\sqrt{k}e^{-i(\eta_0+u)},\,
+\sqrt{L-k}e^{-i(\eta_1+v)},\,
+\sqrt Z,\,
+\sqrt{L-k}e^{-i(\eta_3+v)},\,
+\sqrt{k}e^{-i(\eta_{13}+u)}\bigr)^{\mathsf T},\\
+P(x)&=|\psi(x)\rangle\langle\psi(x)|\in M_5(\mathbb C).
+\end{aligned}
+\tag{12.1}
+$$
+
+The mode order remains $(0,1,2,3,13)$. Both circles have their actual
+$2\pi$ periods; fixed preparation phases are not assumed equal within
+either bottom group. All points in (12.1) are reachable by finite
+full-support original histories from the one fixed preparation. This is
+the exact synthesis statement of Transport Theorem 8.2, with
+$h=(u,v,0,v,u)$, not an additional preparation service.
+
+For a density matrix $R$ use the original signed, doubled $02$ readouts
+
+$$
+\begin{aligned}
+A_R&=|0\rangle\langle2|+|2\rangle\langle0|,&
+q_R(R)&=\operatorname{tr}(A_RR),\\
+A_I&=-i|0\rangle\langle2|+i|2\rangle\langle0|,&
+q_I(R)&=\operatorname{tr}(A_IR).
+\end{aligned}
+\tag{12.2}
+$$
+
+Thus $C_{02}(R)=R_{20}$, $q_R=2\operatorname{Re}C_{02}$ and
+$q_I=2\operatorname{Im}C_{02}$. In particular the sign is the sign of
+$\overline{\psi_0}\psi_2$ in (10.1), and
+$\|A_R\|_{\rm op}=\|A_I\|_{\rm op}=1$.
+Write $D(R,S)=\frac12\|R-S\|_1$.
+
+An affine predictor here is a real affine function $f$ on the convex
+hull of $P(\mathcal M)$, with one fixed set of coefficients for the
+prescribed command. It may use every entry of the complete $5\times5$
+matrix, with no positivity constraint on its prediction. A common CPTP
+implementation is one channel $\Phi:M_5\to M_5$, independent of the
+unknown current height, phases and producing history. All accessible
+ancillas, controllers and classical inputs are fixed and independent of
+that source; an accessible source-correlated programme changes this
+contract. A finite deterministic adaptive protocol with these same
+inputs is included through its induced channel. No postselection or
+extra failure alternative is included.
+
+This is the state-only contract of [Original-control instruments,
+§1][OC12], applied to the present phase request. Its Theorem 4.1 and
+§§17–18, 26 concern horizontal filtering and source-height assistance;
+their operations and success/failure laws are retained. Transport
+Theorem 9.8 already excludes finite shared affine prediction of all
+futures. [Native affine continuation, Theorems 7.4 and 8.4][NA12]
+also supply repeated-command approximation and lossless affine-action
+obstructions. Below the comparison is one application of one command,
+with an explicit finite relation between complete density matrices.
+
+### 12.2 A finite certificate inside the fixed original source
+
+**Theorem 12.2 (Eight reachable rays and one full-domain phase request).**
+Under Definition 12.1 take the original relative command
+
+$$
+\gamma(s)=(a(s),b(s))=(0,4\pi s),\qquad 0\le s\le1,
+\qquad T=T_\gamma.
+\tag{12.3}
+$$
+
+Its entire guard is $\mathcal M$. Define
+
+$$
+\begin{gathered}
+k_1=r/8,\qquad k_2=3r/8,\qquad s_1=1,\quad s_2=-1,\\
+\lambda_1=\frac{\sqrt3}{1+\sqrt3},\qquad
+\lambda_2=\frac1{1+\sqrt3},\qquad
+c=\lambda_1\sqrt{Zk_1}=\lambda_2\sqrt{Zk_2}
+ =\frac{\sqrt{3Zr/8}}{1+\sqrt3}>0.
+\end{gathered}
+\tag{12.4}
+$$
+
+For $\varepsilon,\tau\in\{1,-1\}$ and $j\in\{1,2\}$, specify source
+points $x_{\varepsilon j\tau}=(k_j,u_{\varepsilon j},v_\tau)$ by
+
+$$
+e^{-iu_{\varepsilon j}}=\varepsilon s_j e^{i\eta_0},
+\qquad e^{-iv_\tau}=\tau.
+\tag{12.5}
+$$
+
+Let $P_{\varepsilon j\tau}=P(x_{\varepsilon j\tau})$ and
+$P'_{\varepsilon j\tau}=P(Tx_{\varepsilon j\tau})$.
+The two finite probability laws
+
+$$
+\mu_\varepsilon
+ =\sum_{j=1}^2\sum_{\tau=\pm1}
+       \frac{\lambda_j}{2}\,\delta_{x_{\varepsilon j\tau}}
+\tag{12.6}
+$$
+
+have the following properties.
+
+1. Each of their eight distinct rays has all five original probabilities
+   strictly positive, and is reachable from the same fixed preparation.
+   Their complete density barycenters are exactly equal:
+
+$$
+\sum_{j,\tau}\frac{\lambda_j}{2}P_{+j\tau}
+ =\sum_{j,\tau}\frac{\lambda_j}{2}P_{-j\tau}=R_0.
+\tag{12.7}
+$$
+
+2. After (12.3), their barycenters $R'_\varepsilon$ have original signed
+   readouts and trace distance
+
+$$
+\begin{gathered}
+R'_\varepsilon=\sum_{j,\tau}\frac{\lambda_j}{2}
+                         P'_{\varepsilon j\tau},\qquad
+q_I(R'_\varepsilon)=-4\varepsilon c,\\
+|q_I(R'_+)-q_I(R'_-)|=8c,\qquad
+D(R'_+,R'_-)=4\sqrt2\,c.
+\end{gathered}
+\tag{12.8}
+$$
+
+3. For every affine predictor in Definition 12.1,
+
+$$
+\max_{\varepsilon,j,\tau}
+ \left|f(P_{\varepsilon j\tau})-q_I(P'_{\varepsilon j\tau})\right|
+ \ge4c=\frac{\sqrt{6Zr}}{1+\sqrt3}.
+\tag{12.9}
+$$
+
+   This finite-set minimax value is attained by
+   $f_*(R)=\frac{\sqrt3-1}{\sqrt3+1}q_R(R)$.
+   Thus (12.9) also bounds below the worst-input error on the entire
+   variable-height source. The same lower bound applies to the Euclidean
+   error of any affine predictor of the original $02$ pair or all ten
+   original outputs, by selecting their $q_I$ coordinate.
+
+4. For every common CPTP implementation in Definition 12.1,
+
+$$
+\begin{aligned}
+\max_{\varepsilon,j,\tau}
+ \left|q_I(\Phi(P_{\varepsilon j\tau}))
+              -q_I(P'_{\varepsilon j\tau})\right|&\ge4c,\\
+\max_{\varepsilon,j,\tau}
+ D\bigl(\Phi(P_{\varepsilon j\tau}),P'_{\varepsilon j\tau}\bigr)
+ &\ge2\sqrt2\,c
+   =\frac{\sqrt{3Zr}}{1+\sqrt3}>0.
+\end{aligned}
+\tag{12.10}
+$$
+
+   No optimality of the latter channel lower bound is asserted.
+   In particular no such channel implements this one original command
+   exactly throughout $\mathcal M$.
+
+**Proof.** Transport Theorems 9.2–9.3 give, with
+$A=K=m_\gamma=M_\gamma=0$ and $B=4\pi$,
+
+$$
+T(k,u,v)=\bigl(k,u+4\pi(1/2-k/r),v-4\pi k/r\bigr).
+\tag{12.11}
+$$
+
+The probability coordinate is unchanged at every intermediate time.
+The command is therefore lawful at every $0<k<L$ and every phase,
+with finite phase variation $4\pi$, and no other starting state in
+the specified source needs to be excluded. It appends to each actual
+history by adding $4\pi s$ to its own real control lift. It does not
+replace that lift by a common absolute phase.
+
+The values (12.5) are ordinary points of the two original circles.
+For example one may choose $v_+=0$, $v_-=\pi$, and
+$u_{\varepsilon j}=-\eta_0$ or $-\eta_0+\pi$ according as
+$\varepsilon s_j=1$ or $-1$. Transport Theorem 8.2 supplies an exact finite
+history for each such prescribed $(k_j,u,v)$ from the one chosen
+$k_{\rm in},\theta^{\rm in}$. Specifically its synthesis uses
+$L_*=2(u-v)$ and the zero-winding rectangle residual
+$h-L_*w(k_{\rm in})$, followed by the fixed-height phase leg of
+increment $L_*$ and a phase-fixed probability leg to $k_j$.
+These are precisely its original controls. Their finite collection
+of interior heights and finite real phase increments ensures full
+support and finite phase variation on every constituent history.
+Nothing requires a change of preparation, a sensor or a uniform
+resource bound over all of $\mathcal M$.
+
+For a calculation in the full original Hilbert space put
+
+$$
+\begin{aligned}
+|a\rangle&=|0\rangle+
+                  e^{-i(\eta_{13}-\eta_0)}|13\rangle,\\
+|b\rangle&=e^{-i\eta_1}|1\rangle+e^{-i\eta_3}|3\rangle,
+\qquad |e\rangle=|2\rangle.
+\end{aligned}
+\tag{12.12}
+$$
+
+Their supports are disjoint, $\|a\|^2=\|b\|^2=2$ and $\|e\|^2=1$.
+Equations (12.1) and (12.5) give exactly
+
+$$
+|\psi_{\varepsilon j\tau}\rangle
+ =\varepsilon s_j\sqrt{k_j}|a\rangle
+       +\tau\sqrt{L-k_j}|b\rangle+\sqrt Z|e\rangle.
+\tag{12.13}
+$$
+
+The squared norm is $2k_j+2(L-k_j)+Z=1$.
+At both heights all five probabilities are positive. Distinct heights
+give distinct rays; at a fixed height the positive middle entry fixes
+the ray gauge and both independent signs change nonzero entries.
+This proves distinctness and nondegeneracy for every permitted $Z$.
+
+Averaging the two values of $\tau$ first cancels every cross term
+involving $b$. The remaining expression at height $k_j$ is
+
+$$
+\begin{aligned}
+\frac12\sum_\tau P_{\varepsilon j\tau}
+ ={}&k_j|a\rangle\langle a|+(L-k_j)|b\rangle\langle b|
+          +Z|e\rangle\langle e|\\
+ &+\varepsilon s_j\sqrt{Zk_j}
+        (|a\rangle\langle e|+|e\rangle\langle a|).
+\end{aligned}
+\tag{12.14}
+$$
+
+The last term cancels on summing over $j$ because
+$\lambda_1\sqrt{Zk_1}=\lambda_2\sqrt{Zk_2}=c$.
+Writing $\bar k=\lambda_1k_1+\lambda_2k_2=\sqrt3\,r/8$ gives
+
+$$
+R_0=\bar k|a\rangle\langle a|
+       +(L-\bar k)|b\rangle\langle b|+Z|e\rangle\langle e|.
+\tag{12.15}
+$$
+
+In particular, if
+$W=\operatorname{diag}(1,e^{-i\eta_1},1,e^{-i\eta_3},
+e^{-i(\eta_{13}-\eta_0)})$, the common matrix is the complete
+five-mode matrix
+
+$$
+R_0=W
+\begin{pmatrix}
+\bar k&0&0&0&\bar k\\
+0&L-\bar k&0&L-\bar k&0\\
+0&0&Z&0&0\\
+0&L-\bar k&0&L-\bar k&0\\
+\bar k&0&0&0&\bar k
+\end{pmatrix}
+W^\dagger.
+\tag{12.16}
+$$
+
+This proves equality of every diagonal and every measured or unmeasured
+off-diagonal entry, not only equality of the native menu. Its nonzero
+eigenvalues are $2\bar k$, $2(L-\bar k)$ and $Z$, all positive.
+
+At $k_1$ the increments of $(u,v)$ in (12.11) are
+$(3\pi/2,-\pi/2)$; at $k_2$ they are $(\pi/2,-3\pi/2)$.
+Consequently the phase factors multiplying both bottom groups are
+$i$ at $k_1$ and $-i$ at $k_2$. These statements use reduction modulo
+$2\pi$ on each circle. They do not treat the real command increment
+$4\pi$ as an identity operation. The exact output representatives are
+
+$$
+|\psi'_{\varepsilon j\tau}\rangle
+ =i\varepsilon\sqrt{k_j}|a\rangle
+      +i s_j\tau\sqrt{L-k_j}|b\rangle+\sqrt Z|e\rangle.
+\tag{12.17}
+$$
+
+In the original $02$ orientation this gives
+
+$$
+C_{02}(P'_{\varepsilon j\tau})=-i\varepsilon\sqrt{Zk_j},
+\qquad q_I(P'_{\varepsilon j\tau})=-2\varepsilon\sqrt{Zk_j}.
+\tag{12.18}
+$$
+
+The cancellation over $\tau$ still removes every $b$ cross term.
+The two $a$--$e$ terms now add instead of canceling, so
+
+$$
+R'_\varepsilon
+ =R_0+2i\varepsilon c
+       (|a\rangle\langle e|-|e\rangle\langle a|).
+\tag{12.19}
+$$
+
+Since $a_0=1$, its $20$ entry is $-2i\varepsilon c$.
+This proves both signed readout assertions in (12.8).
+On the orthonormal pair $a/\sqrt2,e$, the difference $R'_+-R'_-$
+has matrix
+
+$$
+\begin{pmatrix}0&4i\sqrt2\,c\\-4i\sqrt2\,c&0\end{pmatrix};
+\tag{12.20}
+$$
+
+it is zero on the orthogonal complement. Its two nonzero eigenvalues
+are $4\sqrt2\,c$ and $-4\sqrt2\,c$. Thus its trace norm is
+$8\sqrt2\,c$ and its trace distance is $4\sqrt2\,c$.
+This verifies the normalization in (12.8).
+
+For an affine $f$, its weighted prediction on either list equals
+$f(R_0)$ by (12.7). If its maximum absolute error on the eight inputs
+is $E$, (12.18) therefore implies
+
+$$
+|f(R_0)+4c|\le E,\qquad |f(R_0)-4c|\le E.
+\tag{12.21}
+$$
+
+The triangle inequality gives $8c\le2E$, proving (12.9).
+For the asserted finite-set attainment, the original input readout is
+$q_R(P_{\varepsilon j\tau})=2\varepsilon s_j\sqrt{Zk_j}$.
+Put $t=(\sqrt3-1)/(\sqrt3+1)$. The absolute errors of $f_*=tq_R$
+at the two heights are respectively
+
+$$
+2\sqrt{Zk_1}(1+t)=4c,
+\qquad 2\sqrt{Zk_2}(1-t)=4c.
+\tag{12.22}
+$$
+
+They do not depend on $\varepsilon$ or $\tau$. This is attainment
+only on these eight inputs; no full-source minimax equality is inferred.
+
+For a CPTP $\Phi$, $q_I\circ\Phi$ is an affine predictor, so (12.9)
+gives the first inequality of (12.10). For its state error put
+
+$$
+E_D=\max_{\varepsilon,j,\tau}
+       D\bigl(\Phi(P_{\varepsilon j\tau}),P'_{\varepsilon j\tau}\bigr).
+$$
+
+Linearity of $\Phi$ and convexity of the trace norm give, separately
+for each sign,
+
+$$
+D(\Phi(R_0),R'_\varepsilon)
+ \le\sum_{j,\tau}\frac{\lambda_j}{2}
+       D\bigl(\Phi(P_{\varepsilon j\tau}),P'_{\varepsilon j\tau}\bigr)
+ \le E_D.
+\tag{12.23}
+$$
+
+Apply the triangle inequality between $R'_+$ and $R'_-$ to obtain
+$4\sqrt2\,c\le2E_D$. This proves the second inequality of (12.10).
+In unhalved trace norm its lower bound is $4\sqrt2\,c$.
+For comparison, the single-observable inequality is
+$|q_I(R)-q_I(S)|\le\|R-S\|_1=2D(R,S)$; using that inequality alone
+would give only $E_D\ge2c$. The stronger bound in (12.10) uses both
+original $0$--$2$ and $13$--$2$ matrix entries in (12.19), without
+adding either to the native measurement menu. $\square$
+
+The convex compatibility step is established mathematics. In
+Simon–Bužek–Gisin, [*The no-signaling condition and quantum dynamics*,
+equations (1)–(5)][SBG12], their pure projectors correspond here to
+$P_{\varepsilon j\tau}$, their weights to $\lambda_j/2$, and their
+component dynamics to $P(x)\mapsto P(Tx)$. Only the algebraic implication
+that a common affine map preserves equal convex combinations is used.
+Their remote ensemble preparation, spacelike separation and no-signaling
+premises are not premises or conclusions of Theorem 12.2.
+
+Chefles–Jozsa–Winter, [*On the existence of physical transformations
+between sets of quantum states*, §2, Theorem 2][CJW12], characterize a
+common pure-state transformation by
+$G_{\rm in}=M\circ G_{\rm out}$ with $M\succeq0$ and $M_{ii}=1$.
+Here their indexed input and target projectors would be the eight
+$P_{\varepsilon j\tau}$ and $P'_{\varepsilon j\tau}$. Their fixed
+blank-ancilla dilation is exactly the source-independent assistance
+premise in Definition 12.1. The contradiction (12.7)–(12.19) already
+rules out such a channel by linearity, without having to solve for
+that Gram multiplier. Their Corollary 1 concerns transformations in
+both directions; it is not used to infer one-way impossibility from
+the reversibility of the native ray map. These standard results do not
+supply the particular reachable eight-ray equality or its constants.
+
+The source-specific deduction is (12.7)–(12.10), including the complete
+matrix (12.16), for the unchanged five-mode transport. It is
+repo-derived ordinary mathematics, with the convex compatibility and
+channel methods attributed above. Propositions 10.9 and 11.6–11.7
+compare matrices with equal native menus, whereas (12.7) is equality
+of the complete matrix. No worldwide-priority or formal-certification
+claim is made.
+
+### 12.3 The surviving nonlinear state and source-law action
+
+**Definition 12.3 (Native ray action and its law pushforward).** Retain
+the original partially defined $T_\gamma$ of Transport Theorems 9.2–9.3.
+For a command with chronological data $(A,B,K)$ and actual extrema
+$(m_\gamma,M_\gamma)$ its domain and formula remain
+
+$$
+\begin{gathered}
+D_\gamma=(-m_\gamma,L-M_\gamma),\qquad
+\mathcal D_\gamma=D_\gamma\times\mathbb T^2,\\
+T_\gamma(k,u,v)=
+ \left(k+A,\ u+B/2-(kB+K)/r,\ v-(kB+K)/r\right).
+\end{gathered}
+\tag{12.24}
+$$
+
+The domain uses the entire path excursions, not only its terminal
+height. On $P(\mathcal D_\gamma)$ the exact ray representation is
+$\mathcal R_\gamma(P(x))=P(T_\gamma x)$.
+It is well-defined because (12.1) is injective: the diagonal recovers
+$k$, and the nonzero middle reference recovers both phase circles.
+For a phase-only command with real increment $B$, its explicit form is
+
+$$
+\begin{aligned}
+\mathcal R_B(P)&=U_B(k(P))P\,U_B(k(P))^\dagger,
+\qquad k(P)=P_{13,13},\\
+U_B(k)&=\operatorname{diag}\left(
+e^{-iB(1/2-k/r)},e^{iBk/r},1,e^{iBk/r},
+e^{-iB(1/2-k/r)}\right).
+\end{aligned}
+\tag{12.25}
+$$
+
+This is the supplied nonlinear ray action written in complete density
+coordinates. At one fixed known height, $U_B(k)$ is one unitary for
+all phases. Its dependence on $k$ in (12.25) does not provide a common
+unitary or CPTP implementation on the variable-height source.
+Theorem 12.2 prohibits an affine implementation there for $B=4\pi$;
+it does not identify two distinct native pure states having the same
+complete projector.
+
+For a Borel probability law $\nu$ on $\mathcal M$ with
+$\nu(\mathcal D_\gamma)=1$, define its lawful successor and density
+barycenter by
+
+$$
+\nu^\gamma=(T_\gamma)_\#\nu,
+\qquad \mathcal B(\nu)=\int_{\mathcal M}P(x)\,d\nu(x).
+\tag{12.26}
+$$
+
+These finite-dimensional matrix integrals exist since $P$ has trace
+norm one; they are positive and have trace one. The pushforward is on
+the original ray carrier, with its original command and guard. In
+particular, whenever $\nu$ is concentrated on the lawful concatenated
+domain, the supplied identity
+$T_{\gamma*\delta}=T_\delta\circ T_\gamma$ gives
+$(\nu^\gamma)^\delta=\nu^{\gamma*\delta}$. This follows by integrating
+each Borel test against the two compositions. A law assigning positive
+mass to refused states is outside (12.26); restriction and normalization
+would be conditioning, rather than the stated total-law continuation.
+
+For (12.6), equations (12.7)–(12.19) read
+
+$$
+\mathcal B(\mu_+)=\mathcal B(\mu_-)=R_0,
+\qquad
+\mathcal B(\mu_+^\gamma)=R'_+\ne R'_-
+ =\mathcal B(\mu_-^\gamma).
+\tag{12.27}
+$$
+
+Consequently no function $F_\gamma$ of the mixed barycenter alone,
+even a nonlinear function, can satisfy
+$F_\gamma(\mathcal B(\nu))=\mathcal B(\nu^\gamma)$ for all native
+laws in (12.26) for this one command. Its value at $R_0$ would have to
+equal both distinct matrices in (12.27). The exact nonlinear action
+on pure projectors (12.25), and the exact pushforward on retained
+source laws (12.26), therefore survive with their distinct domains.
+An arbitrary nonlinear extension off the pure image need not respect
+this law compatibility, so is not supplied by the pure-state formula.
+
+The finite laws (12.6) are algebraic convex-decomposition tests. Their
+constituent points are individually reachable original rays, but these
+identities install no random ensemble preparation, reset, physical
+mixing operation, height sensor or source-dependent programme. In
+particular (12.27) does not assert that an unknown laboratory mixed
+specimen executes the native constituent law. It identifies exactly
+which compatibility requirement fails if that law is to factor through
+the full density barycenter.
+
+No source, evolution or readout map to the critical endpoint is
+constructed by these finite matrices. The full original endpoint
+source/selector and observation correspondence required in [Source
+contact, Definitions 115.4 and 116.5][SC12] remains a separate
+mathematical obligation. Neither the nonlinear source dimension, its
+matrix representation nor this obstruction determines physical spatial
+dimension.
+
+[OC12]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md
+[NA12]: FIB_NATIVE_CONTINUATION_AFFINE_OBSTRUCTION_AND_APPROXIMATION.md
+[SBG12]: https://arxiv.org/html/quant-ph/0102125v1
+[CJW12]: https://arxiv.org/html/quant-ph/0307227v1
+[SC12]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md
+
+## 追加锚（本行以下为增补区）

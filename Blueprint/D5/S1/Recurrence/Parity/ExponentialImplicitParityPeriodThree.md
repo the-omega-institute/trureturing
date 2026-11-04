@@ -138,7 +138,31 @@ $$\forall s: (\mathbb{N} \to \mathbb{Q}), \operatorname{egfSeries}\left(s\right)
 
 For OEIS A392208 (2026-01-24), the ordinary coefficient of x^n is s(n)/n!. The displayed fraction is rational division; no natural-number or integer division is used.
 
-**Theorem 1.12 (The first derivative has constant coefficient one).**
+**Theorem 1.12 (Products are binomial convolutions).**
+
+$$\forall f: (\mathbb{N} \to \mathbb{Q}), g: (\mathbb{N} \to \mathbb{Q}), \operatorname{egfSeries}\left(\operatorname{egfMul}\left(f, g\right)\right) = \operatorname{egfSeries}\left(f\right) \cdot \operatorname{egfSeries}\left(g\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.egfSeries_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exponential generating series of the binomial convolution of two rational sequences is the product of their exponential generating series.
+
+**Theorem 1.13 (Differentiation shifts the sequence).**
+
+$$\forall f: (\mathbb{N} \to \mathbb{Q}), \operatorname{derivative}\left(\operatorname{egfSeries}\left(f\right)\right) = \operatorname{egfSeries}\left((fun n: \mathbb{N} \mapsto f\left(n + 1\right))\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.derivative_egfSeries` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Formal differentiation of a rational exponential generating series shifts its coefficient sequence forward by one index.
+
+**Theorem 1.14 (The first derivative has constant coefficient one).**
 
 $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{ExpDefines}\left(A\right)) \Rightarrow \operatorname{constantCoeff}\left(\operatorname{DQ}\left(A\right)\right) = 1$$
 
@@ -150,7 +174,7 @@ $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{E
 
 Evaluating the defining equation at constant coefficient zero yields A'(0)=1, which the identification of the OEIS-defined sequence with the recurrence uses.
 
-**Definition 1.13 (Coefficient form of the ODE).**
+**Definition 1.15 (Coefficient form of the ODE).**
 
 $$\forall s: (\mathbb{N} \to \mathbb{Q}), \operatorname{EgfOde}\left(s\right) = \forall n: \mathbb{N}, \operatorname{s}\left(n + 2\right) = \operatorname{egfPow}\left((j \mapsto \operatorname{s}\left(j + 1\right)), 5, n\right) + 3 \cdot \operatorname{egfMul}\left(\operatorname{egfMul}\left(s, \operatorname{egfPow}\left((j \mapsto \operatorname{s}\left(j + 1\right)), 3\right)\right), (j \mapsto \operatorname{s}\left(j + 2\right)), n\right)$$
 
@@ -162,7 +186,7 @@ $$\forall s: (\mathbb{N} \to \mathbb{Q}), \operatorname{EgfOde}\left(s\right) = 
 
 This is the coefficient recurrence for the ODE derived from OEIS A392208 (2026-01-24), written over rational sequences using the public binomial convolution operations.
 
-**Theorem 1.14 (Uniqueness of the coefficient ODE).**
+**Theorem 1.16 (Uniqueness of the coefficient ODE).**
 
 $$\forall s: (\mathbb{N} \to \mathbb{Q}), t: (\mathbb{N} \to \mathbb{Q}), ((\operatorname{s}\left(0\right) = 0) \land \left((\operatorname{s}\left(1\right) = 1) \land \left((\operatorname{t}\left(0\right) = 0) \land \left((\operatorname{t}\left(1\right) = 1) \land \left((\operatorname{EgfOde}\left(s\right)) \land (\operatorname{EgfOde}\left(t\right))\right)\right)\right)\right)) \Rightarrow s = t$$
 
@@ -174,7 +198,7 @@ $$\forall s: (\mathbb{N} \to \mathbb{Q}), t: (\mathbb{N} \to \mathbb{Q}), ((\ope
 
 For OEIS A392208 (2026-01-24), two rational coefficient sequences satisfying the same triangular ODE recurrence and initial coefficients 0,1 agree everywhere. Strong induction uses the vanished top coefficient in the nonlinear term.
 
-**Definition 1.15 (Exact OEIS integer-sequence predicate).**
+**Definition 1.17 (Exact OEIS integer-sequence predicate).**
 
 $$\forall s: (\mathbb{N} \to \mathbb{Z}), \operatorname{OEISDefines}\left(s\right) = \left((\operatorname{constantCoeff}\left(\operatorname{egfSeries}\left((n \mapsto \operatorname{castQ}\left(\operatorname{s}\left(n\right)\right))\right)\right) = 0) \land (\operatorname{DQ}\left(\operatorname{egfSeries}\left((n \mapsto \operatorname{castQ}\left(\operatorname{s}\left(n\right)\right))\right)\right) = \operatorname{subst}\left(\operatorname{expQ}\left(\right), \operatorname{egfSeries}\left((n \mapsto \operatorname{castQ}\left(\operatorname{s}\left(n\right)\right))\right) \cdot (\operatorname{DQ}\left(\operatorname{egfSeries}\left((n \mapsto \operatorname{castQ}\left(\operatorname{s}\left(n\right)\right))\right)\right))^{3}\right))\right)$$
 
@@ -186,7 +210,7 @@ $$\forall s: (\mathbb{N} \to \mathbb{Z}), \operatorname{OEISDefines}\left(s\righ
 
 This expands the defining expression from OEIS A392208 (2026-01-24): castQ maps every integer coefficient to the rationals before forming its EGF, whose constant coefficient is zero and whose derivative is the substituted exponential shown here.
 
-**Theorem 1.16 (The recurrence sequence satisfies the OEIS equation).**
+**Theorem 1.18 (The recurrence sequence satisfies the OEIS equation).**
 
 $$\operatorname{OEISDefines}\left(a\right)$$
 
@@ -198,7 +222,7 @@ $$\operatorname{OEISDefines}\left(a\right)$$
 
 The named witness connects the repository sequence a to the exact generating-function predicate from OEIS A392208 (2026-01-24). Its proof follows the integer recurrence through the rational coefficient ODE and reconstructs the implicit exponential equation.
 
-**Theorem 1.17 (The OEIS equation determines the recurrence sequence).**
+**Theorem 1.19 (The OEIS equation determines the recurrence sequence).**
 
 $$\forall s: (\mathbb{N} \to \mathbb{Z}), (\operatorname{OEISDefines}\left(s\right)) \Rightarrow s = a$$
 
@@ -210,7 +234,7 @@ $$\forall s: (\mathbb{N} \to \mathbb{Z}), (\operatorname{OEISDefines}\left(s\rig
 
 Every integer sequence satisfying the exact equation of OEIS A392208 (2026-01-24) equals a. The proof derives the ODE and A'(0)=1, applies triangular uniqueness over the rationals, and then recovers equality of the integer coefficients.
 
-**Theorem 1.18 (Every OEIS-defined sequence has period three modulo two).**
+**Theorem 1.20 (Every OEIS-defined sequence has period three modulo two).**
 
 $$\forall s: (\mathbb{N} \to \mathbb{Z}), (\operatorname{OEISDefines}\left(s\right)) \Rightarrow \forall n: \mathbb{N}, \operatorname{ModEqZ}\left(2, \operatorname{s}\left(n + 3\right), \operatorname{s}\left(n\right)\right)$$
 
@@ -222,7 +246,7 @@ $$\forall s: (\mathbb{N} \to \mathbb{Z}), (\operatorname{OEISDefines}\left(s\rig
 
 Identification with a transfers the kernel-verified period-three congruence to every integer sequence satisfying OEIS A392208 (2026-01-24).
 
-**Theorem 1.19 (Every OEIS-defined sequence satisfies the parity law).**
+**Theorem 1.21 (Every OEIS-defined sequence satisfies the parity law).**
 
 $$\forall s: (\mathbb{N} \to \mathbb{Z}), (\operatorname{OEISDefines}\left(s\right)) \Rightarrow \forall n: \mathbb{N}, (1 \le n) \Rightarrow (\operatorname{Even}\left(\operatorname{s}\left(n\right)\right)) \Leftrightarrow (3 \mid n)$$
 
@@ -234,7 +258,7 @@ $$\forall s: (\mathbb{N} \to \mathbb{Z}), (\operatorname{OEISDefines}\left(s\rig
 
 This public companion transfers the parity theorem for a to every integer sequence satisfying the exact OEIS A392208 (2026-01-24) equation. It remains conditional on that defining predicate and is distinct from the unconditional atom anchor.
 
-**Theorem 1.20 (The A392208 parity conjecture).**
+**Theorem 1.22 (The A392208 parity conjecture).**
 
 $$\forall n: \mathbb{N}, (1 \le n) \Rightarrow (\operatorname{Even}\left(\operatorname{a}\left(n\right)\right)) \Leftrightarrow (3 \mid n)$$
 
@@ -255,10 +279,12 @@ This is the unconditional atom clause for the repository sequence a: at every po
 - Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.a392208_parity_conjecture`
 - Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.a_oeisDefines`
 - Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.a_recurrence`
+- Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.derivative_egfSeries`
 - Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.egfMul`
 - Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.egfOde_unique`
 - Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.egfPow`
 - Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.egfSeries`
+- Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.egfSeries_mul`
 - Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.exp_definition_derivative_zero`
 - Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.exp_definition_implies_ode`
 - Truth anchor: `D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.initial_residues_mod_two`

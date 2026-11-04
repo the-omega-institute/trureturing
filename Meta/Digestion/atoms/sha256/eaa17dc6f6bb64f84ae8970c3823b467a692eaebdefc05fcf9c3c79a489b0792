@@ -1,0 +1,23 @@
+**Theorem 25.3 (sufficient uniform accepting-transcript hitting).**
+Suppose a single source-blind algorithm, given $d,H$, constructs a
+list $\mathcal U_{d,H}\subseteq\{0,1\}^{b(d,H)}$ of polynomially
+many explicit tapes in polynomial TOTAL work, cumulative writes and
+backing. Assume that for every admitted source and mature cut with
+the earned spine $h=(H-1)/2$, some list member satisfies
+$C_{s,n}(u)=1$. Then the original coin-free entrance admits
+deterministic acquisition of $P,n$ with polynomial every-execution
+preparation, local work, writes, Reads, literal traffic and backing.
+
+Proof. Earn the spine, construct the list and run the bounded finder
+on its members against the actual root. Failed runs leave their
+certified prefixes unused and may be overwritten; each run remains
+on the same stationary source and uses no updates. The assumed
+hitting member returns an authentic answer by Theorem 22.2.
+Polynomial list length times polynomial per-run bounds, plus full
+list construction and copying, proves every charged acquisition
+coordinate polynomial. No membership test for the hidden source or
+enumeration of its law is used. This condition hits an accepting
+adaptive transcript; it requires neither pointwise approximation of
+every depth function nor a small Walsh norm. Canonical normalization
+and the physical tariffs still have their separate bills. $\square$
+

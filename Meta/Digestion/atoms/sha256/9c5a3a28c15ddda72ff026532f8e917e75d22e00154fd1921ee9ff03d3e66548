@@ -1,0 +1,22 @@
+### 定义 3.1（交叉匹配见证）
+
+给定两个子层匹配 $\mathcal M_0,\mathcal M_1$，交叉匹配见证是一个边族
+
+$$
+\mathcal X\subseteq\mathscr E_{n+1}
+$$
+
+满足：
+
+$$
+|\mathcal X|=\gamma_n,
+$$
+
+$\mathcal X$ 内部两两顶点不交，并且每条 $x\in\mathcal X$ 与
+
+$$
+\bigcup\mathcal M_0\ \cup\ \bigcup\mathcal M_1
+$$
+
+不交。这里的交叉只表示它属于递归层声明的 cross family；它可以含有两侧顶点，也可以含有新顶点，具体分类必须在实例中给出。
+

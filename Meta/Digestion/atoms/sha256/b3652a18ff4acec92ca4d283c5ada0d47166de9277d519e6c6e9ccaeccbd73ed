@@ -1,0 +1,71 @@
+**Theorem 11.1 (recoverability and complete equality criterion).** Suppose (10.1) has $A=B=C=X$ almost surely. Then there exist incident maps $f_A,f_B,f_C$ such that
+
+$$
+X=f_A(\beta,\gamma)=f_B(\gamma,\alpha)=f_C(\alpha,\beta)
+\quad\text{almost surely}.
+\tag{11.1}
+$$
+
+In particular,
+
+$$
+C_{\rm src}\ge\frac12H(X).
+\tag{11.2}
+$$
+
+Equality in (11.2) holds on this same realization if and only if both of the following conditions hold: the three source pairs are unconditionally independent, and for every $x$ with $p_x:=\mathbb P(X=x)>0$,
+
+$$
+\nu(\alpha,\beta,\gamma\mid X=x)
+=\nu_\alpha(\alpha\mid x)\nu_\beta(\beta\mid x)\nu_\gamma(\gamma\mid x)
+\quad\text{for all }\alpha,\beta,\gamma.
+\tag{11.3}
+$$
+
+Thus the conditional requirement is a threefold product on each positive output fiber, including its zero cells.
+
+*Proof.* First derive (11.1) from the stochastic kernels. For a source triple $s$ with $\nu(s)>0$, the conditional product of the three response vectors must give mass one to the output diagonal. Otherwise its positive off-diagonal mass would contribute positively to $\mathbb P(A,B,C\text{ not all equal})$. Choose one positive coordinate in each response vector. Their labels must be the same, say $x_s$. Keeping the chosen coordinates of the other two vectors fixed shows that every positive coordinate in any one vector has label $x_s$. Each of the three vectors is therefore $\delta_{x_s}$.
+
+If an incident pair $(\beta,\gamma)$ has positive marginal mass, it has at least one positive extension $\alpha$. The preceding argument makes $K_A(\cdot\mid\beta,\gamma)$ a point mass. Its label cannot depend on the chosen extension because it is the same kernel row. Define $f_A$ to be this label, and do the same for $f_B,f_C$. On zero-marginal incident pairs assign any label of the nonempty output alphabet; these assignments affect no probability. This proves (11.1), and in particular
+
+$$
+H(X\mid\alpha,\beta)=H(X\mid\alpha,\gamma)
+=H(X\mid\beta,\gamma)=H(X\mid\alpha,\beta,\gamma)=0.
+\tag{11.4}
+$$
+
+Theorem 10.2 now gives (11.2), since $I(A;B)=I(A;C)=H(X)$.
+
+For the full equality assertion, retain all terms in a different, exact entropy balance. The classical conditional dual total correlation, averaged over the positive $X$-fibers, is the intermediate quantity
+
+$$
+\begin{aligned}
+\mathcal D_X
+&:=H(\alpha,\beta\mid X)+H(\alpha,\gamma\mid X)
+  +H(\beta,\gamma\mid X)-2H(\alpha,\beta,\gamma\mid X)\\
+&=I(\alpha;\beta,\gamma\mid X)
+  +I(\beta;\gamma\mid\alpha,X)\ge0.
+\end{aligned}
+\tag{11.5}
+$$
+
+By (11.4), each unconditional source-pair entropy is $H(X)$ plus its entropy conditional on $X$, and the same holds for the source triple. Substituting into (10.7) yields the exact same-law identity
+
+$$
+2C_{\rm src}-H(X)
+=I(\alpha;\beta)+I(\alpha;\gamma)+I(\beta;\gamma)+\mathcal D_X.
+\tag{11.6}
+$$
+
+All four terms are nonnegative. Vanishing of the first three is exactly unconditional pairwise source independence, by the zero-relative-entropy characterization. It remains to identify $\mathcal D_X=0$ without replacing it by conditional pairwise independence.
+
+Since (11.5) is a finite average of nonnegative terms, $\mathcal D_X=0$ forces, on every positive $x$-fiber, both
+
+$$
+\alpha\perp(\beta,\gamma)\mid X=x,
+\qquad I(\beta;\gamma\mid\alpha,X=x)=0.
+\tag{11.7}
+$$
+
+The first relation makes the conditional law of $(\beta,\gamma)$ given $(\alpha,x)$ equal to its law given $x$ for every positive $\alpha$ in that fiber. Thus the second term of (11.7) equals $I(\beta;\gamma\mid X=x)$, which must be zero. The fiber law is consequently the product in (11.3). This argument only divides by positive conditioning masses; cells outside the conditional marginal supports have zero mass on both sides of (11.3). Conversely, (11.3) makes both conditional information terms in (11.5) zero. Together with unconditional pairwise independence, (11.6) then proves equality. This establishes both directions on the stipulated joint law. ∎
+

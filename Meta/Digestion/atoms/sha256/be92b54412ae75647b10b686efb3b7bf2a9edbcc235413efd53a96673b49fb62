@@ -1,0 +1,51 @@
+**Theorem 31.2 (bijection with paid polynomial access).** For every
+fixed $V$, Definition 31.1 is a bijection at every dimension, with a
+uniform computable inverse. If $V$ has polynomial serial work,
+cumulative writes and visited backing in $t$, both access directions
+have polynomial bounds in $d$. Nevertheless the first-row selection
+on the fibres of Theorem 31.3 computes the existential closure of $V$.
+
+Proof. For $d=3t$, the product $f_xq_w$ has degree below $2t$,
+and $r$ has degree below $t$. Consequently coefficients
+$2t,\ldots,3t-1$ of any returned $p$ are exactly $w$.
+Conversely, given any monic degree-$3t$ polynomial $p$, read this
+band to recover $q_w$, and form $a=p+E^{2t}q_w$, of degree below
+$2t$. Unique division by the monic degree-$t$ polynomial $q_w$ gives
+
+$$
+a=fq_w+r,\qquad \deg f<t,\quad\deg r<t.
+$$
+
+The coefficients of $f$ recover $x$, those of $r$ at exponents
+$1,\ldots,t-1$ recover $z$, and $b=r_0\oplus1\oplus A_t(x,w)$.
+These equations are inverse identities in both directions, proving
+surjectivity and injectivity without a nonzero constant-coefficient
+assumption. At $t=1$, both $z$ and the verifier witness are empty;
+the same division and constant-term formula apply. The remaining
+dimensions have the explicit direct inverse. In particular
+$\widehat\rho^V_{3t}(0)=(1,0,\ldots,0)$, since at ordinal zero
+$x=w=z=0$ and $p=E^{3t}+1$, independently of $V$.
+
+Use the sequential tape model of §21.4. Let $C_V(t),W_V(t),V_V(t)$
+bound the verifier on its own counted tapes, including its input and
+one-bit sequential output; its finite program is fixed. Multiplication
+and monic division take $O(d^2)$ binary updates on $O(d+1)$ data.
+With $\ell_d$ of §21.4, each array operation costs
+$O((d+1)\ell_d^2)$ by the paid scan construction. Parsing, allocating,
+copying verifier inputs, head returns, counter writes and emitting the
+row or inverse ordinal are included. Running that verifier directly
+as a subroutine adds at most one call in either direction. Thus
+
+$$
+\begin{aligned}
+C_{\rm access}&=O(C_V(t)+(d+1)^3\ell_d^2),\\
+W_{\rm access}&=O(W_V(t)+(d+1)^3\ell_d^2),\\
+V_{\rm access}&=O(V_V(t)+d+1+\ell_d).
+\end{aligned}
+$$
+
+Outside the $3t>0$ branch there is no verifier call. These are costs
+for one requested access, including all source-independent preparation;
+they give no polynomial bound for writing the entire $2^d$-row list.
+The claimed existential identity follows next. $\square$
+

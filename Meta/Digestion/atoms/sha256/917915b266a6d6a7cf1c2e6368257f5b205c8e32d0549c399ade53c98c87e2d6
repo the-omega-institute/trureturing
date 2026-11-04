@@ -1,0 +1,24 @@
+**Proof of sufficiency and forward realization.** From (5.1)–(5.2), $h>0$, $c>x>d$, $b>0$, and $\gcd(c,d)=\gcd(x,d)=1$. Also
+$$
+ac+bd=(x-md)c+(mc-d)d=cx-d^2>0.
+$$
+Theorem 2.1 supplies a legal word for every admitted $A_1$. The following are explicit forward word matrices for the next transitions:
+$$
+K=L^QU\quad(\sigma=+1),\qquad
+K=L^{Q-1}UJ\quad(\sigma=-1),\qquad
+H=L^hJ.
+\tag{5.8}
+$$
+All exponents are nonnegative; replace $L,U$ by $MJ,JM$ to obtain literal $M/J$ words. Execute the word for $A_1$, then the displayed words for $K,H$, reading only at their endpoints. Equation (5.7) follows from the parameter definitions, and multiplication gives
+$$
+A_1f=\binom x d=f+mr_0,
+$$
+$$
+A_2f=\binom{x+d}{c+d}=f+(m+1)r_0,
+$$
+$$
+A_3f=\binom{c+d}{d+(h+1)c}=f+(m+1+h)r_0.
+\tag{5.9}
+$$
+All have the same $\ell$ level $t$. Thus $N=f\ell$ annihilates every prefix difference. The retained rank test makes its line the entire kernel. Formula (3.5), now with all coefficients positive, gives the strict fixed polar sign. This constructs a member of $\mathscr G$ on a single legal cumulative history, proving sufficiency. Proposition 1.2 realizes every actual positive source on these very words, with unchanged row and positive unread columns. The signed vectors in (5.9) are algebraic coordinates, not replacements for those sources. The conjugate correspondence of Theorem 4.1 restores the negative branch without extra reads or operations. ∎
+

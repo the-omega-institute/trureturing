@@ -1,0 +1,39 @@
+**Theorem 56.2 (the original P/S kernel needs no Tag port).** On the
+domain of Definition 56.1, each current view has exactly the $Q_A$
+task kernel: two current terms are task-equivalent if and only if they
+are equal. The existing AA material-support and causal inverses give
+mutual recovery of these views on their actual images; every route
+returns the same current view. They commute with every completed $Q_A$
+operation, its entire reply and its settled semantic successor. These
+are current-source assertions, not inverses of the entry acquisition.
+
+Proof. AA Definition 17.3 gives prefix closure from $B_A$ to $S_A$ and
+maximal material addresses in the reverse direction, expressly including
+unary markers. Arity parsing recovers the same $u$. AA Theorem 17.2
+recovers that $u$ from $T_A$ and conversely specifies its causal event
+order. Parsing $M_A$ gives $u$ by Theorem 55.2. These are the cited
+existing inverses; they are not new general geometry or causal-recovery
+theorems.
+
+Equal terms give equal complete replies and logical successors by
+Definition 53.3. Conversely, take unequal finite ordered terms and
+descend through common binary branch constructors until reaching the
+first different constructor. Its address $p$ is present in both terms:
+if either current subtree were not a branch, that would already be the
+first difference. At $p$, a single original $P_p$ separates all three
+possibilities, since alpha gives Growth, beta gives wrong-type refusal,
+and branch gives branch refusal. Thus no unavailable Tag call is needed
+for this task separation. Equality of $u$ is its exact kernel.
+
+All the described maps decode and re-encode the same $u$. Hence inverse
+and triangle identities hold on actual images with the common binding
+context preserved. For a success $e$, take the actual source replacement
+and the new causal event at its actual address; this is the same
+$E(u')$ whether calculated before or after conversion. For a refusal
+or BadFrame nothing in these contents changes. Theorem 55.2 supplies
+the full reply, actual callable step and synchronized code update.
+Finite-request induction proves commutation, including source successors,
+rather than only equality of static readouts. No assertion identifies
+private allocation names, code-work duration or the intermediate pending
+states with these current views. $\square$
+

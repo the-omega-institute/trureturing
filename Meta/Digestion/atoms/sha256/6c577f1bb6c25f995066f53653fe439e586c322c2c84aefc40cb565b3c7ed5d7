@@ -1,0 +1,40 @@
+## 1. 有限测试与完整未来行为商
+
+固定带接口类型的实际来源
+
+$$
+Z=\bigsqcup_{\tau\in I}Z_\tau .
+$$
+
+令 $\mathscr T_{\le n}$ 是深度至多 $n$ 的有限自适应测试族。测试保留完整有序
+转录：事件、成功或拒绝、失败终端、实际记录、权限和后继类型。假设测试族对
+有限前缀和声明的合法自适应串接封闭，并且
+
+$$
+\mathscr T_{\le n}\subseteq\mathscr T_{\le n+1},\qquad
+\mathscr T=\bigcup_{n\ge0}\mathscr T_{\le n}.
+$$
+
+对 $z,u\in Z_\tau$ 定义档案 law 残余
+
+$$
+z\,A_n^{\mathrm{law}}\,u
+\iff
+\forall E\in\mathscr T_{\le n},\quad
+\operatorname{Law}_z(E)=\operatorname{Law}_u(E).
+\tag{MPC.1}
+$$
+
+完整未来行为关系定义为
+
+$$
+z\sim_{\mathscr T}u
+\iff
+\forall E\in\mathscr T,\quad
+\operatorname{Law}_z(E)=\operatorname{Law}_u(E).
+\tag{MPC.2}
+$$
+
+这里的等式是同一类型上完整转录 law 的等式，不是某个成功读数或总概率的边缘
+等式。
+

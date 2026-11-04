@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:5b81b9a84af35ac28f499ab07557947ecbc3ec9c4018d4a43a5fc75b96857f01
+  normalized_sha256: sha256:5b81b9a84af35ac28f499ab07557947ecbc3ec9c4018d4a43a5fc75b96857f01
+cas_ref: sha256:5b81b9a84af35ac28f499ab07557947ecbc3ec9c4018d4a43a5fc75b96857f01
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/FiniteResidualStopping.archive_probability_law
+    target_statement_id: sha256:050e5aa2b5ea26320fa961927d96a939713c4848a5c079bc84c931facac0b65c
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/FiniteResidualStopping.residual_sound
+    target_statement_id: sha256:a88f7c7be03a1d1145d829ba558a5c76b376b335fea73eff43d6d8458ac1d138
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/FiniteResidualStopping.trace_iff_stopping
+    target_statement_id: sha256:c77b181d85e2cca39fc0f5c09794e2efe7de6e63c853fac6fded025a7afb23d2
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/SixStateResidualSeparation.counterkernel_facts
+    target_statement_id: sha256:74a8b81f5868ce21d4e073875d29828acbe847743c3ec4edecfabdb5ac36ee80
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/SixStateResidualSeparation.result
+    target_statement_id: sha256:6a6e88c393d3bfa28902d678f927b04a56f0b35c3f8423d53300b6e2b5128887
+receipts:
+  unresolved_subitems: []

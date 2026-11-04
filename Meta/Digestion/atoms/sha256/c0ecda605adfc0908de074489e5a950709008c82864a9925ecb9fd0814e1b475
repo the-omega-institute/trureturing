@@ -1,0 +1,6 @@
+For $L=1$ use the empty word, $S=\ell=0$. On any admitted entry, the following single-source procedure acquires every coordinate in $\pi(C_0)$ and returns modulo $H$:
+
+1. At each $t=0,\ldots,L-1$, call current ReadF once at the actual source $C_0+tS$ and retain its answer $a_t$.
+2. After each of these calls, including the last, execute $W_d$ once on that source.
+3. For every $p\in G$ with $e<h$, choose any acquired index $t_p$ for which $v_p(H/a_{t_p})=h$, and set $x_p=(-t_p d)\bmod p^h$. For $p\in G$ with $e=h$, set $x_p=0$.
+

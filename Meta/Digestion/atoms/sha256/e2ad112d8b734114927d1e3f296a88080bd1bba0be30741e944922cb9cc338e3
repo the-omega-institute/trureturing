@@ -1,0 +1,18 @@
+**Theorem 61.2 (bounded-word iff for reciprocal scalars).** If $r=1$, the endpoint map (59.3) is injective on the disjoint union $\coprod_{L\ge0}D_s^L$ if and only if $s\nmid p$. For $s\mid p$, unequal-length colliding $D_s$ words can be constructed finitely.
+
+**Proof.** Sufficiency is Theorem 61.1. For necessity, $\gcd(q,s)=1$. Choose $d\ge1$ with $s^d\equiv1\pmod q$, using $d=1$ if $q=1$. Then
+
+$$
+C=\frac{(s^d-1)v}{s}\in\mathbb Z.
+\tag{61.4}
+$$
+
+If $C\ge0$, put $j=0,k=C$. If $C<0$, put $j=\lceil -C/s^d\rceil$ and $k=C+s^dj$, so $0\le k<s^d$. In both cases $j,k\ge0$ and $k-s^dj=C$. Choose $m\ge1$ large enough that $j<s^m$ and $k<s^{m+d}$. Write $j$ and $k$ in base $s$, padding with zeros to exactly $m$ and $m+d$ digits, respectively, with the least significant digit first in chronological order. These are allowed actual pulse words. A length-$h$ such word encoding integer $J$ has endpoint $(v+sJ)/s^h$ by (59.3). Therefore
+
+$$
+\frac{v+sj}{s^m}=\frac{v+sk}{s^{m+d}},
+\tag{61.5}
+$$
+
+because $sk-s^{d+1}j=(s^d-1)v$. The lengths are unequal. This covers negative and zero $v$ as well as positive $v$. $\square$
+

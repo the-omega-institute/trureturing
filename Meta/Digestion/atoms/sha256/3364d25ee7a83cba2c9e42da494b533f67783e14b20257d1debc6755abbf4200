@@ -1,0 +1,43 @@
+**定理 9.2（精确矩比较及尖锐均匀值区域）。** 对每个 $p\in\Delta^\circ$，
+在顶点 Fourier 基 $f_k(j)=n^{-1/2}z^{kj}$ 的非恒定部分中，有
+
+$$
+M(p)_{km}=\frac{q_{m-k}-\overline q_kq_m}
+ {n\,\overline d_kd_m}\quad(1\le k,m<n),\qquad
+T(p)=\tau_n-2\rho_n|q_1|^2-E_n(p). \tag{9.2}
+$$
+
+特别地，令 $a=|q_1|^2$、$b=|q_2-q_1^2|$，则
+
+$$
+\rho(p)\ge\rho_n(1-a+b),\qquad
+\Phi(p)\le
+\frac{n\,[\,\tau_n-2\rho_na-E_n(p)\,]}{\rho_n(1-a+b)}. \tag{9.3}
+$$
+
+在完整区域 $E_n(p)\ge T_n|q_1(p)|^2$ 上，
+
+$$
+\Phi(p)\le U_n=\frac{n(n^2-1)}3\sin^2\frac{\pi}{n}, \tag{9.4}
+$$
+
+且等号当且仅当 $p_i=1/n$ 对每条边成立。
+
+证明。式 (5.4) 的最小流能量在 Fourier 基中给出 (9.2)：
+关联矩阵在第 $k$ 模上的乘子是 $d_k$，
+$\langle f_k,\operatorname{diag}(p)f_m\rangle=q_{m-k}/n$，
+减去循环流均值的秩一项为 $\overline q_kq_m/n$。
+取迹即得第二式。对指标 $\{1,n-1\}$ 的二阶主压缩作对角酉共轭后，
+其两个特征值为 $\rho_n(1-a\pm b)$，所以 Rayleigh 原理给出 (9.3)。
+正性使 $|q_1|<1$，所有分母均为正。
+
+若 $E_n\ge(\tau_n-2\rho_n)a$，则 $T(p)\le\tau_n(1-a)$，
+而 $\rho(p)\ge\rho_n(1-a)$，得到 (9.4)。
+若取等号且 $q_1=0$，则 $E_n=0$，所有非恒定 Fourier 系数均为零，
+Fourier 反演给出均匀 $p$。
+若取等号且 $q_1\ne0$，Rayleigh 等号迫使 $f_1$ 为最大特征向量。
+(9.2) 的 $(2,1)$ 元为零，给出
+$\overline q_1=\overline q_2q_1$，从而 $|q_2|=1$。
+严格正的概率对至少两个不同的 $z^{2i}$ 赋正质量，故三角不等式严格，
+不可能有 $|q_2|=1$。均匀点直接取等号。∎
+

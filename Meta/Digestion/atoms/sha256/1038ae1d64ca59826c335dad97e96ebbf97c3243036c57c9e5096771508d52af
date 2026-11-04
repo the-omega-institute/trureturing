@@ -1,0 +1,39 @@
+**Definition 11.1 (fixed native joint contract and complete route families).** Use the actual typed deterministic source and complete response quotient of Definitions 1.1–1.2, restricted to its finite root-reachable graph as in Definition 7.1. Write $o$ for the fixed root, reserving $r\ge1$ for the number of native channels. The graph has $n\ge1$ vertices, finitely many named edges, and may have no edges. All legal finite root words, including the empty word and every stopping prefix, belong to $\mathcal P_o$. Distinct names with the same source and successor remain distinct edges. An executed continuing failure is a legal edge with its declared output; an illegal attempt is not an executed operation. Stopping is a cut, not an extra token.
+
+Fix $d:E\to\mathbb R_{>0}^r$, with every coordinate representative independent on the actual complete residual quotient. These are native data, not weights to be chosen. For $u\in\mathcal P_o$, set
+
+$$
+z(u)=o\cdot u,\qquad T(u)=\sum_{e\text{ occurring in }u}d(e),
+\qquad T(\varepsilon_o)=0.
+\tag{11.1}
+$$
+
+Each coordinate is an additive observation of this same actual execution. Fix $\epsilon>0$. The final typed endpoint is exact, and the entire possible joint observation set for $u$ is
+
+$$
+\mathcal O_\epsilon(u)=\{z(u)\}\times
+             \bigl(T(u)+[-\epsilon,\epsilon]^r\bigr).
+\tag{11.2}
+$$
+
+Every vector in this one final closed box is allowed. No component independence, probabilistic noise law, segmentwise error budget or relation between different executions is assumed. The origins, units and native calibrations are fixed.
+
+A finite static supplement $h:\mathcal P_o\to H$ is successful if $(z(u),h(u),y)$ determines $u$ for every $y\in T(u)+[-\epsilon,\epsilon]^r$. A complete finite online supplement has one finite state set $M$, one fixed initial value $m_0$, and one total map $U:M\times\mathcal A\to M$ on the typed parameterized operation names, with
+
+$$
+\mu(\varepsilon_o)=m_0,\qquad \mu(ua)=U(\mu(u),a).
+\tag{11.3}
+$$
+
+Only the full current value and the actually executed name enter $U$. A name shared across vertices is the identical token. Current vertex, route, phase and every persistent control coordinate used in an update are part of $M$. There is no input of intermediate endpoints, edge identifiers, source replies, clock values, an archive, elapsed step number, stop event or future operation. This is the joint $r\ge1$ version of Definitions 9.1 and 10.1, with a unique initialization rather than an arbitrary initial source state.
+
+An SCC is *cyclic* when it contains a nonempty directed closed walk. Call it a single directed named cycle when its internal edges are exactly one directed cycle through all its vertices, counting parallel names separately; external exits are unrestricted. Under this condition, let
+
+$$
+A_C=\sum_{e\text{ in the directed cycle of }C}d(e)
+       \in\mathbb R_{>0}^r
+\tag{11.4}
+$$
+
+be its full-lap vector. It is independent of the entry vertex, by additivity. A root condensation route is any finite directed path in the SCC condensation DAG beginning at the root component, including its length-zero path. Its *complete co-visited family* consists of $A_C$ for every cyclic component on that route, including the starting or final component when cyclic. Independence of that family always means linear independence over $\mathbb R$, with the empty family independent. It does not mean pairwise independence, absence of integer relations alone, or independence of cycles on mutually exclusive routes.
+

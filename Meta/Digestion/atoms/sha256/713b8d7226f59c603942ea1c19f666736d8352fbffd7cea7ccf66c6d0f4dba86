@@ -1,0 +1,57 @@
+**Theorem 17.2 (authentic integer child transport).** For every $v$,
+including cones containing singular births, the root boundary and child
+boundaries satisfy
+
+$$
+ (e_\varepsilon,A_\varepsilon,B_\varepsilon)=(1,1,2),
+ \qquad e_{vx}=e_v+\delta_x(c_v),
+ \tag{PCR.38}
+$$
+
+and the following exact integer table:
+
+$$
+\begin{array}{c|c|c}
+ c_v &(A_{va},B_{va})&(A_{vb},B_{vb})\\ \hline
+ 1 &(B_v,A_v+B_v)&(A_v+B_v+1,A_v+2B_v+2)\\
+ 0 &(A_v+B_v,A_v+2B_v)&(B_v,A_v+B_v+1).
+\end{array}
+ \tag{PCR.39}
+$$
+
+The children are created at actual cut $e_v+1$. Their normalization
+origins are $e_v+1$ for beta and $e_v+2$ for alpha; neither is the
+parent's normalization origin. In particular $1\le A_v<B_v$ and
+$A_{vx}>A_v$. If $v$ is genuinely core-only, then so are both children,
+$c_v=y_{A_v-1}$, and reduction of this table modulo the least period
+$p$ is a well-defined transport depending only on $(A_v,B_v)\bmod p$.
+
+Proof. The alpha root becomes beta at cut one, and its first two birth
+batches begin at indices one and two. A child born at parent-local cut
+one branches at cut two if initially beta, and at cut three if initially
+alpha. Its beta normalization is therefore at parent-local cut one or
+two, proving (PCR.38). By (PCR.1), the parent's first four batch starts
+are $A,B,A+B,A+2B$.
+
+The $a$ child has no preceding sibling inside $v$. Its first two starts
+are therefore $B,A+B$ in the beta case and $A+B,A+2B$ in the alpha
+case. For the $b$ child, the $a$ sibling contributes its beta-leaf
+mass just before each relevant update. If $c_v=0$, that sibling is born
+alpha and has beta masses zero and one at parent-local cuts one and
+two. The right beta child's starts are $B,A+B+1$. If $c_v=1$, the
+sibling is born beta and has beta masses one and two at cuts two and
+three. The right alpha child's starts are $A+B+1,A+2B+2$. These masses
+are independent of the sibling's later orientation bits. The preceding
+exterior of $v$ is already included in the parent's batch starts, by
+[ACR, Theorem 27.2][ACR]; adding precisely these internal masses gives
+(PCR.39), with the original one-based indices and physical order.
+
+The inequalities hold at the root and are preserved by each integer
+row; they also give strict increase of $A$ at every descent. A child's
+birth events are a subset of its parent's future birth events, so
+core-only evolution is hereditary. On that domain its first bit is the
+aligned core bit; periodicity makes it a function of $A\bmod p$.
+Induction on the address proves that these equations recover the actual
+boundary of every physical node, rather than a separately chosen local
+trial. $\square$
+

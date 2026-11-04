@@ -1,0 +1,54 @@
+**应用 25.2（同一读口下的谱值不足）。** 取 $M_2(\mathbb C)$、$\rho_0=|0\rangle\langle0|$、$\rho_+=|+\rangle\langle+|$、$|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$。
+二态本征值都为 $(1,0)$，固定效果 $F=|0\rangle\langle0|$ 却给概率 $1$ 与 $1/2$。
+这是[预测波 §1](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)谱值不足机制在准备—效果关系中的直接实例。
+同时以同一酉变换状态和效果，$\rho'=U\rho U^\dagger,F'=UFU^\dagger$，则 $\operatorname{Tr}(\rho'F')=\operatorname{Tr}(\rho F)$；这才是保该关系的被动表示改变。
+
+对任意有限含单位交换 $*$-子代数 $\mathcal B\subset M_d$，令其最小非零投影为 $P_j$，则 $P_jP_k=\delta_{jk}P_j$、$\sum_jP_j=I$。
+所有 $B_i\in\mathcal B$ 同时写为 $B_i=\sum_jb_{ij}P_j$，状态限制是 $\mu_j=\operatorname{Tr}(\rho P_j)$，故
+
+$$
+\operatorname{Tr}\bigl[\rho f(B_1,\ldots,B_k)\bigr]
+ =\sum_j\mu_j f(b_{1j},\ldots,b_{kj}). \tag{25.1}
+$$
+
+投影的正交乘法先证明多项式公式；有限联合谱上的任意函数都由其谱值定义，给一般 $f$。
+一个这样的切面有经典联合结果，不代表不同切面的结果已有同一非上下文赋值。
+同步转置 $\rho\mapsto\rho^{\mathsf T},A\mapsto A^{\mathsf T}$ 保持每个自伴谱和迹配对，且在每个交换切面内保持乘法；一般却只有 $(AB)^{\mathsf T}=B^{\mathsf T}A^{\mathsf T}$。
+具体取
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z=\operatorname{diag}(1,-1).
+$$
+
+$XY=iZ$，而 $X^{\mathsf T}=X,Y^{\mathsf T}=-Y,Z^{\mathsf T}=Z$，所以 $(XY)^{\mathsf T}=iZ$、$X^{\mathsf T}Y^{\mathsf T}=-iZ$。
+在同步不变的 $\rho_0$ 上，两种有向词矩分别为 $i,-i$。
+这说明交换切面数据不规定跨切面的有向组合，并未凭空授予测量这些复词矩的读口。
+转置也不能作为任意复参考下的合法量子过程：令 $|\Omega\rangle=(|00\rangle+|11\rangle)/\sqrt2$，则
+
+$$
+(\operatorname{id}_2\otimes {\mathsf T})(|\Omega\rangle\langle\Omega|)
+ =\tfrac12\sum_{j,k=0}^1|j\rangle\langle k|\otimes|k\rangle\langle j|
+ =\tfrac12\mathrm{Swap}.
+$$
+
+它在反对称单位向量 $(|01\rangle-|10\rangle)/\sqrt2$ 上的本征值是 $-1/2$，违反正性。
+这正是本卷 §7 的“每个有限复参考、全部联合正输入”条件区别于单系统正性的用途（标准 Choi–Kraus/Watrous 完全正性准则）。
+
+为检验把静态关系强制改为经典答案表的后果，消费标准 Mermin–Peres 方阵（Mermin，PRL 65, 3373；Cabello，[arXiv:0808.2456](https://arxiv.org/abs/0808.2456)）：
+
+$$
+\begin{array}{ccc}
+X\otimes I&I\otimes X&X\otimes X\\
+I\otimes Y&Y\otimes I&Y\otimes Y\\
+X\otimes Y&Y\otimes X&Z\otimes Z
+\end{array}. \tag{25.2}
+$$
+
+九个算子自伴、平方为单位，每行每列两两对易。三行乘积及前两列乘积均为 $I_4$，末列乘积为 $-I_4$。
+例如 $(X\otimes Y)(Y\otimes X)=Z\otimes Z$，而 $(X\otimes X)(Y\otimes Y)=-Z\otimes Z$；其余四项由不同张量因子对易直接得到。
+若为九格赋与上下文无关的 $\pm1$，并在每个交换上下文保持乘法，则六个约束相乘时每格出现两次，左边为 $+1$，右边为 $-1$，矛盾。
+方阵本身是一致的静态量子表示；排除的是这个明确的非上下文确定赋值条件，不是所有隐变量模型。
+因此 (25.1)、复合方向与 (25.2) 是关系描述必须分别保留的条件；单个谱表或“静态”一词不能替代它们。
+

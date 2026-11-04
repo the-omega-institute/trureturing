@@ -1,0 +1,44 @@
+**Corollary 32.4 (dynamics of an executed control followed by a new
+assay).** Let $F$ be the field transformation of an actually executed,
+known finite fixed-graph word of Tick, Hold and terminal Adds with
+operands in $D^{-1}\mathbb Z$. Its actual replies and costs are paid.
+More generally the same assertion holds for an earned deterministic
+control with a proved effective lattice-preserving field map $F$ and
+its own actual execution. After that control, actually perform a new
+Construction 32.1 assay. The new endpoint and numerical contents are
+
+$$
+\begin{aligned}
+s^+&=A_n^H F(s),\\
+\mathrm{Time}^+&=R_H(F(s)),\\
+\mathrm{Boundary}^+&=R_H(A_n^H F(s)),\\
+\mathrm{Memory}^+&=D A_n^H F(s).
+\end{aligned}
+\tag{32.5}
+$$
+
+For each pair of the four views, recovery commutes with this composite
+actual dynamics. Bare control $F$ is not identified with the control
+plus assay, and no inverse of a noninjective $F$ or of its entire past
+journal is concluded.
+
+Proof. Every primitive in the fixed word preserves $\Lambda_D$ by
+integrality and the stated operands, so $F(s)$ is an admitted entrance.
+The newly executed $H$ Ticks give (32.5), with their actual deterministic
+read word. If $\Phi_\nu(s)$ denotes any numerical view of Definition
+32.2, including $\Phi_{\rm Time}(s)=R_H(A_n^{-H}s)$, and
+$\Psi_\nu$ is its inverse in (32.2), its transported update is exactly
+
+$$
+\Phi_\nu\circ(A_n^H F)\circ\Psi_\nu.
+\tag{32.6}
+$$
+
+Substituting $\Psi_\nu\Phi_\nu=\operatorname{Id}$ shows that
+conversion before or after (32.6) gives the same result in every
+other view. The actual measurement and endpoint equations establish
+that these maps describe the executed composite, not a fictitious
+measurement of a bare Add. Growth and off-lattice controls require a
+new qualifying chart if one is claimed; the broader predictor of
+Corollary 32.3 still follows them. $\square$
+

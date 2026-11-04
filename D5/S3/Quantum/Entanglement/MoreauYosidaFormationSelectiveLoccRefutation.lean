@@ -205,7 +205,7 @@ private def witnessInstrument : LocalInstrument 5 where
 
 private def witnessProtocol : Protocol 5 3 := .alice witnessInstrument (fun _ => .done)
 
-private def minor {a b : ℕ} (M : Coeff a b) (i k : Fin a) (j l : Fin b) : ℂ :=
+def minor {a b : ℕ} (M : Coeff a b) (i k : Fin a) (j l : Fin b) : ℂ :=
   M i j * M k l - M i l * M k j
 
 private def minors (M : Coeff 5 3) : ℝ := ∑ i, ∑ k, ∑ j, ∑ l,

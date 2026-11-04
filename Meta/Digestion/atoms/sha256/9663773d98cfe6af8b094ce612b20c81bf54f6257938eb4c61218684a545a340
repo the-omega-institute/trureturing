@@ -1,0 +1,108 @@
+**定理 62.4。** 所有不同实际普通世界对在 SAME 子片中，按 $q_1<q_2$ 排序后，恰为 (62.30)–(62.31) 通过以下 ALL 过滤所得对：
+
+$$
+s>2q,\qquad S>2r,
+\tag{62.32}
+$$
+
+$$
+tM_p=m,\qquad -U\rho t=n,\qquad (S+4)(5-\rho)t=\kappa,
+\tag{62.33}
+$$
+
+$$
+t[(r-a)M_p+H(r)]=3a,\qquad
+M_p=H(q)\alpha+2(q+r-1),
+\tag{62.34}
+$$
+
+以及 EACH 端的 untouched 原常数
+
+$$
+\begin{aligned}
+h_i&=s_i+5-(2q_i+2a+1),\quad F_i=3\theta_i-h_i\eta_i,\\
+C_i&=\bar C-15q_i\theta_i-[(q_i-1)s_i+D_0(q_i)]F_i=0,
+\qquad i=1,2.
+\end{aligned}
+\tag{62.35}
+$$
+
+严格父域、SAME $a_0,\tau,m,n,\kappa$、BOTH 严格源、BOTH $Q$、BOTH 原 $C$ 均是必要的保留条件。
+
+证明必要性。不同实际世界若 $q$ 相同，由 (62.12)–(62.13) 固定整个三元组，矛盾。因此可排序 $q<r$。取 $s=s_1,t=\theta_2>0,\rho=-\eta_2/t>0$，由 (62.11) 得 $s\ge4$。SAME $n$ 给
+
+$$
+\eta_1=-\rho tU/u,\qquad
+\beta=\frac{\eta_2-\eta_1}{\ell t}=2\rho/u>0.
+$$
+
+先只定义 $\alpha=(\theta_1-\theta_2)/(\ell t)$，不预设其符号；置 $k_s=(s_2-s_1)/\ell$。相减 SAME $m$ 和 SAME $\kappa$ 的两式，给
+
+$$
+k_s=(s+1)\alpha-\beta,\qquad
+k_s(5-\rho)=(s+4)(5\alpha-\beta).
+$$
+
+消元不除 $5-\rho$，得到
+
+$$
+\alpha[15+(s+1)\rho]=\beta[s-1+\rho].
+$$
+
+现在 $s\ge4,\rho>0$ 使两括号都正，故直接由固定方程推得
+$\alpha=\beta L_p/K_p=R_pL_p>0$。无需借旧屏障或次序定理。于是
+
+$$
+k_s=R_p[(s+1)L_p-K_p]=R_p(s^2-16),
+$$
+
+给全部坐标及 $S=s_2$，包含 $s=S=4$。第二端给 (62.33) 和第一个 (62.34)。从 $Q_2-Q_1=0$ 得
+
+$$
+0=\ell m+t[H(r)-H(q)-\ell H(q)\alpha].
+$$
+
+$H(q)-H(r)=2\ell(q+r-1)$，只除已正的 $\ell t$ 后得第二个 (62.34)。两端原常数各自给 (62.35)。必要性完成。
+
+证明充分性。取通过 ALL 过滤的任意元组。首先
+
+$$
+u\eta_1=U\eta_2=-U\rho t=n.
+$$
+
+又 $(s+1)\alpha-\beta=R_pV_p$，故
+
+$$
+(s+1)\theta_1+\eta_1
+=t[(s+1-\rho)+\ell((s+1)\alpha-\beta)]
+=t(S+1-\rho)=m.
+$$
+
+第二端的 ordinary 直接由 $tM_p=m$ 成立。再有精确恒等式
+
+$$
+5\alpha-\beta=R_p(s-4)(5-\rho),\qquad
+S-s=\ell R_p(s-4)(s+4).
+$$
+
+因此
+
+$$
+(s+4)(5\theta_1+\eta_1)=(S+4)(5-\rho)t=\kappa,
+$$
+
+第二端由过滤也给 SAME $\kappa$。这里保留 $5-\rho=0,\kappa=0,s=4$，没有取消它们。
+
+第一个 (62.34) 恢复第二端 $Q$；将第二个乘 $\ell t$ 并反向上述 $Q$ 差式，恢复第一端 $Q$。两个 $C_i=0$ 各自独立保留。对 EACH 端固定
+
+$$
+P_i=P(q_i,s_i),\quad
+g_i(x)=s_i\tau[\theta_i x^2+(\eta_i-5\theta_i)x+F_i],\quad
+d_i=a_0-s_i\tau F_i.
+\tag{62.36}
+$$
+
+严格源过滤给严格 $P_i$，$s_i\tau\theta_i\ne0$ 给整个非零增益。SAME $m,n$ 恢复每个偶系数及 (62.9) 的原一次式；各 $Q$ 与 untouched $C_i$ 恢复奇二次和常数，三次自动。因此 EACH 世界满足 BOTH 整个恒等式、ALL SAME 六行及 SAME 第七响应 $z$。不同 $q,r$ 给不同源及整个目标，完成原世界对 iff。∎
+
+没有除 $H,B_7,D_7,s-4,s-4q,5-\rho$、样本、残式首项或判别式。$H=0$ 可在任一端，$D_7,B_7$ 零点仍按方程保留。$q=1$ 在原坐标域合法，由定理 62.2 和完整过滤拒绝。若实际对跨低、高两域，则必 $q<a,r>1$，同一 iff 仍适用。定理不主张存在不同普通对，且不延伸到 $\kappa>8m$。
+

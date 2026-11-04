@@ -1,0 +1,13 @@
+Here is a complete elementary expansion bound for the cube. For every
+subset $W\subseteq V(Q_k)$ its edge boundary satisfies
+$|\partial_E W|\ge\min(|W|,2^k-|W|)$. Induct from $Q_0$, where both
+possible subsets have zero boundary. Split $Q_k$ into two $(k-1)$-cubes
+of size $M=2^{k-1}$, and let their intersections with $W$ have sizes
+$a,b$. Internal boundaries give at least
+$\min(a,M-a)+\min(b,M-b)$ by induction. The matching between halves
+adds at least $|a-b|$ crossing edges, since at most $\min(a,b)$ matched
+pairs have both ends in $W$. Assume $a\ge b$. If $a,b\le M/2$, the
+sum of these three bounds is $2a\ge a+b$. If $a,b\ge M/2$, it is
+$2M-2b\ge2M-a-b$. In the remaining case $b\le M/2\le a$, it is
+$M\ge\min(a+b,2M-a-b)$. This proves the induction in every case.
+

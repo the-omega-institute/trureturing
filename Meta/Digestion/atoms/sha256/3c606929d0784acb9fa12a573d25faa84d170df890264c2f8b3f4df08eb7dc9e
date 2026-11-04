@@ -1,0 +1,26 @@
+**定义 3.1（任意阶环的尖锐问题）。** 对每个整数 $n\ge5$，
+在带标号的 $C_n$ 上沿用计数测度 Laplacian，并令 $R_n$ 为所有
+$\binom n2$ 个无序不同顶点对的有效电阻之和。定义
+
+$$
+\mathcal M_n=\sup_{c\in(0,\infty)^n}\lambda_2(L(c))R_n(c),\qquad
+\mathcal A_n=\{c\in(0,\infty)^n:
+\lambda_2(L(c))R_n(c)=\mathcal M_n\}.
+$$
+
+由电导缩放律，固定任意 $R_0>0$ 的尖锐上确界等于 $\mathcal M_n/R_0$，
+达到性等价于 $\mathcal A_n\ne\varnothing$，全部等号情形由
+$\mathcal A_n$ 及缩放描述。
+定理 2.1 只给出严格下界 $\mathcal M_{12}>143(2-\sqrt3)$，
+以及十二阶环上不变向量不可能达到全局最优的结论；
+全部 $n\ge5$ 的 $\mathcal M_n$、达到或不达到，以及 $\mathcal A_n$ 的完整刻画仍待确定，
+包括 $n=12$ 的精确最优值与达到性。
+
+路径与一般图的相关结果有各自的图类限制。
+[全路径固定电阻优化定理](FIEDLER_RESISTANCE_PATH_OPTIMIZER.md)，
+定理 2.1、推论 3.1，处理的是 $P_n$。
+[既有 $K_{2,3}$ 反例](../../../Blueprint/D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.md)
+给出电阻 $23/3$ 下非不变向量的值 $48/23$ 与全部不变可行向量的值 $2$。
+这些结果分别用于路径尖锐问题和一般图不变性命题；
+本卷的有限十二阶环结论不重复这些图类的证明，也不把它们当作任意环的尖锐解。
+

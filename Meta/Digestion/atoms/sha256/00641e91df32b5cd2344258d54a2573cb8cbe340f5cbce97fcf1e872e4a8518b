@@ -1,0 +1,176 @@
+**定理 82.2（全人口固定差谱的显式充要条件）。**
+对定义 81.1 中的任意 $z$，正第二权重的成员资格恰为
+
+$$
+\boxed{
+(a,b)\in\mathcal S_z
+\ \Longleftrightarrow\
+\begin{cases}
+0<b\leq a,\quad a+b\leq1,\quad d>0,\\
+X(1-X)\geq A+2B,\\
+XYZW\geq AB,
+\end{cases}}
+\qquad(b>0),
+\tag{XII.6}
+$$
+
+其中右侧使用 (XII.5) 的同一个确定四元组。
+合格时 $(X,Y,Z,W)$ 本身满足 (XII.3)，因而是实际密度见证的共同实部谱。
+没有 $P\geq1/2$ 的前提。
+零轴单独为
+
+$$
+(a,0)\in\mathcal S_z
+\ \Longleftrightarrow\
+0\leq a\leq2\sqrt{m(1-m)},\qquad m=\max\{P,1/2\}.
+\tag{XII.7}
+$$
+
+$d=0$ 时没有正 $b$；$P=1$ 时整个域只有 $(0,0)$。
+
+**证明。** 从 (XII.3) 出发，$b>0$ 强制四个谱坐标严格正。
+$w\leq V$ 及 $x+y\geq Q$ 因而给 $V>0$、$Q<1$，即 $d>0$。
+$a+b\leq1$ 是两个密度矩阵的迹距离上界。
+
+先作一个只替换存在见证的约化。若 $xw>A$，置
+
+$$
+x'=\frac{x+w+\sqrt{(x+w)^2-4A}}2,\qquad w'=A/x'.
+\tag{XII.8}
+$$
+
+因 $x\geq w>0$、$A<xw$，有 $x'>x$、$0<w'<w$、
+$x'+w'=x+w$、$x'w'=A$。保留 $y,\xi$ 后仍降序且迹一；
+$P,Q,V$ 约束改善，$x'y\geq xy\geq A$、$x'w'=A\geq B$，
+而新四乘积为 $Ay\xi\geq AB$。
+所以只须考虑另一个满足 $xw\leq A$ 的共同谱。
+
+对这个谱，$x\geq1/4$、$x\geq\sqrt A=a/2$。
+由 $y,\xi\leq x$ 和 $w\leq A/x$ 得
+
+$$
+1\leq3x+A/x,\qquad 3x^2-x+A\geq0.
+\tag{XII.9}
+$$
+
+二次式在 $x\geq1/4$ 上严格递增。
+若 $a\leq1/2$，其大根为 $h(a)$，小根至多 $1/6$；
+故 (XII.9) 与 $x\geq1/4,a/2$ 恰要求 $x\geq h(a)$。
+若 $a\geq1/2$，在 $x=a/2$ 处二次式为 $a(a-1/2)\geq0$，
+故 $x\geq a/2$ 已足够；这也包括判别式为负的情形。
+又由 (XII.3) 得
+
+$$
+x\geq P,\qquad xV\geq B,\qquad
+x(1-Q)\geq x(\xi+w)\geq2xw\geq2B.
+\tag{XII.10}
+$$
+
+因为 $B/d=\max\{B/V,2B/(1-Q)\}$，这些下界正是 $x\geq X$。
+同时
+
+$$
+x(1-x)=xy+x\xi+xw\geq A+2B=:C.
+\tag{XII.11}
+$$
+
+这里 $x\xi\geq y\xi\geq B$。
+在正 $b$ 的权重范围内 $a<1$，且
+$b^2\leq a(1-a)$，所以
+$a^2+2b^2\leq2a-a^2<1$，从而 $C<1/4$。
+记
+
+$$
+x_\pm=\frac{1\pm\sqrt{1-4C}}2.
+\tag{XII.12}
+$$
+
+还有
+$(a/2)(1-a/2)-C=(a-a^2-b^2)/2\geq0$，故
+$x_-\leq a/2\leq h(a)$。
+于是每个约化见证的第一坐标都在 $[X,x_+]$ 内。
+
+下面固定 $x\in[X,x_+]$，用 $T_x=1-x$、
+$u_x=A/x$、$q_x=Q-x$、$k_x=\max\{u_x,q_x\}$，并定义
+
+$$
+\begin{aligned}
+W_x^0&=\min\{V,u_x,T_x/3,(T_x-k_x)/2\},\\
+Y_x&=\max\{k_x,(T_x-W_x^0)/2\},\qquad
+Z_x=T_x-Y_x-W_x^0.
+\end{aligned}
+\tag{XII.13}
+$$
+
+首先 $k_x\leq x$：$u_x\leq x$ 来自 $x\geq\sqrt A$，
+$q_x\leq x$ 来自 $Q\leq2P\leq2x$。
+(XII.11) 在整个区间成立。四个 $W_x^0$ 上限分别都至少为 $B/x$：
+前两项使用 $xV\geq B$、$A\geq B$；
+第三项使用 $xT_x\geq A+2B\geq3B$；
+最后一项在 $k_x=u_x$ 时使用 $xT_x-A\geq2B$，
+在 $k_x=q_x$ 时使用 $x(1-Q)\geq2B$。
+
+这四个上限还都至少为 $1-3x$。
+对 $V$ 使用 $x\geq P\geq(1-V)/3$；
+对 $u_x$ 使用 (XII.9)；
+对 $T_x/3$ 使用 $x\geq1/4$；
+对 $(T_x-k_x)/2$ 使用
+$k_x\leq x\leq5x-1$。因此
+
+$$
+W_x^0\geq\max\{B/x,1-3x\}>0,\qquad k_x\leq x.
+\tag{XII.14}
+$$
+
+给定 $w$ 后，在 $y+\xi=T_x-w$、$y\geq\xi\geq w$、
+$y\geq k_x$ 中，$y\xi$ 的最大值由
+$y=\max\{k_x,(T_x-w)/2\}$ 取得。
+存在这样的 $y\leq x$ 恰额外要求 $k_x\leq x$、$w\geq1-3x$；
+$w$ 的上限恰为 $W_x^0$。
+在两种最大乘积表达式上，
+
+$$
+\begin{array}{c|c}
+y\xi w&\dfrac{d}{dw}(y\xi w)\\ \hline
+w(T_x-w)^2/4&(T_x-w)(T_x-3w)/4\\
+k_xw(T_x-k_x-w)&k_x(T_x-k_x-2w)
+\end{array}
+\tag{XII.15}
+$$
+
+导数在 $w\leq W_x^0$ 的相应分支上非负，换支处函数连续。
+这里仅为上界暂时放松 $y\xi\geq B$；
+其余约束由 (XII.14) 保证在 $w=W_x^0$ 同时可行。
+故保留约束下最大的四乘积为
+
+$$
+F(x)=xY_xZ_xW_x^0.
+\tag{XII.16}
+$$
+
+现在合并选择器。因为
+
+$$
+\frac{T_x-k_x}{2}
+=\min\{(T_x-u_x)/2,(1-Q)/2\},
+$$
+
+且对任意实 $u_x,T_x$，
+$\min\{u_x,(T_x-u_x)/2\}\leq T_x/3$，所以
+
+$$
+W_x^0=\min\{d,u_x,v_x\},\qquad v_x=(T_x-u_x)/2.
+\tag{XII.17}
+$$
+
+在 (XII.14) 的可行区间内，$F$ 的全部非恒等开分支归入下表。
+导数固定 $A,B,P,Q,V$，从而也固定 $d$。
+
+| $W_x^0$ | $Y_x$ | $F(x)$ | $F'(x)$ |
+| --- | --- | --- | --- |
+| $d$ | $(T_x-d)/2$ | $dx(T_x-d)^2/4$ | $d(T_x-d)(1-d-3x)/4$ |
+| $d$ | $u_x$ | $Ad(T_x-A/x-d)$ | $Ad(-1+A/x^2)$ |
+| $d$ | $q_x$ | $dx(Q-x)(1-Q-d)$ | $d(1-Q-d)(Q-2x)$ |
+| $u_x$ | $(T_x-u_x)/2$ | $A(T_x-A/x)^2/4$ | $A(T_x-A/x)(-1+A/x^2)/2$ |
+| $v_x$ | $u_x$ | $A(T_x-A/x)^2/4$ | $A(T_x-A/x)(-1+A/x^2)/2$ |
+| $u_x$ | $q_x$ | $A(Q-x)(1-Q-A/x)$ | $A[-(1-Q)+AQ/x^2]$ |

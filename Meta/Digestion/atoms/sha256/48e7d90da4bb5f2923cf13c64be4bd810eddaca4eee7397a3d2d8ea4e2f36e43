@@ -1,0 +1,43 @@
+**Definition 14.1 (Coefficient matrix and rational enclosures).** Form
+the $12\times13$ matrix $\mathcal M=(L\mid z)$ with ordered rows
+$b^5\mathsf A,\ldots,\mathsf A,b^5\mathsf B,\ldots,\mathsf B$ and
+ordered columns $b^{12},\ldots,1$. Its first twelve columns form
+$L$. For any one of the projection centers $c$ used here or in
+Section 15, put $L_0=L(c,p_c,v_c)$ and $C=L_0^{-1}$.
+
+The following explicit centered bounds fix the rational evaluation
+of these matrices. For an entry polynomial $f(r,p,v)$, expand
+
+$$
+f(c+x,p_c+y,v_c+z)=\sum_{i,j,k}f_{ijk}x^iy^jz^k,
+\qquad
+\varepsilon_f=\sum_{i+j+k>0}|f_{ijk}|e^ih^{j+k}.
+$$
+
+Its value lies in $f_{000}+[-\varepsilon_f,\varepsilon_f]$ on the
+whole box. Denote the nonnegative entrywise error matrix by
+$\mathcal E_L$ and the analogous last-column vector by
+$\mathcal E_z$. Thus a rational upper bound for
+$\|I-CL\|_\infty$ is
+
+$$
+Q=\max_i\sum_{j=1}^{12}\sum_{k=1}^{12}
+                   |C_{ij}|(\mathcal E_L)_{jk}.
+$$
+
+For a fixed rational $\bar b$ put
+$w=(\bar b^{12},\ldots,\bar b)^t$ and $z_0=z(c,p_c,v_c)$. A rational
+residual bound is
+
+$$
+\eta=\max_i\left(
+ |(C(L_0w+z_0))_i|
+ +\sum_{j=1}^{12}|C_{ij}|
+       \left\{(\mathcal E_z)_j+
+          \sum_{k=1}^{12}(\mathcal E_L)_{jk}|w_k|\right\}\right).
+$$
+
+All coefficient expansions in this definition are finite binomial
+expansions of the polynomials of Definition 13.1. The inverse is
+exactly $\operatorname{adj}(L_0)/\det L_0$, not a rounded inverse.
+

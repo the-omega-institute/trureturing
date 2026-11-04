@@ -1,0 +1,47 @@
+**定义 76.2（任意比较器的紧参数多面体）。** 取变量
+
+$$
+R=(R_{ij})\in\mathbb R^{k\times k},\qquad
+f_{\rm cl},p_+,p_-\in\mathbb R^k
+\tag{76.3}
+$$
+
+及多面体 $\mathcal P_k$，其完整约束为
+
+$$
+\begin{gathered}
+\sum_i(p_+)_i-1=0,\qquad \sum_i(p_-)_i-1=0,\\
+R_{ij}\ge0\ (1\le i,j\le k),\qquad
+1-\sum_iR_{ij}\ge0\ (1\le j\le k),\\
+(f_{\rm cl})_i\ge0,\quad 1-(f_{\rm cl})_i\ge0,\quad
+(p_+)_i\ge0,\quad(p_-)_i\ge0\ (1\le i\le k).
+\end{gathered}
+\tag{76.4}
+$$
+
+有 $k^2+3k=\nu$ 个变量、两个等式和 $k^2+5k$ 个不等式，共 $m$ 个约束多项式，次数及整数系数绝对值均至多一。非负性和列和界使 $R$ 的各项在 $[0,1]$，两个制备为概率向量；效果亦在 $[0,1]^k$。故 $\mathcal P_k$ 非空、闭、有界且凸，是其自身唯一的紧连通分支。等式约束造成的空内部不妨碍这些性质。
+
+每个 (72.3) 的比较器给 $R=T_0$ 及 $\mathcal P_k$ 中一点。反之，每个 $\mathcal P_k$ 中一点都可取
+
+$$
+T_0=R,\qquad
+T_1=\operatorname{diag}\left(1-\sum_iR_{i1},\ldots,1-\sum_iR_{ik}\right)
+\tag{76.5}
+$$
+
+完成为合法分支和。因此这一参数域没有加入逐支公平性，也没有删去不可约性失败、不可达状态或隐藏冗余。
+
+在此域上定义实际目标多项式
+
+$$
+\begin{split}
+g(R,f_{\rm cl},p_+,p_-)=Q^2\sum_{n=0}^N\big[&
+ (\mathbf1^{\mathsf T}R^np_+-2^{-n})^2
+ +(\mathbf1^{\mathsf T}R^np_--2^{-n})^2\\
+ &+(f_{\rm cl}^{\mathsf T}R^n(p_+-p_-)-a_n)^2\big],
+\end{split}
+\tag{76.6}
+$$
+
+其中 $a_n$ 是同一实际双世界 (73.1) 的加权对比，$R^0=I_k$。
+

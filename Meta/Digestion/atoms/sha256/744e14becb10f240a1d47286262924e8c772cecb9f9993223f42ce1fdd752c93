@@ -1,0 +1,23 @@
+**Lemma 1.2 (inherited image and inverse).** The image $\mathcal I=\rho[\mathcal T]$ has disjoint grammar and finite inverse
+
+$$
+\begin{aligned}
+\mathcal I&::=\beta\mid E\mid\langle\mathcal I,\mathcal I\rangle,\\
+\delta(\beta)&=\alpha,\qquad \delta(E)=\beta,\\
+\delta\langle y,z\rangle&=\langle\delta y,\delta z\rangle
+\quad(y,z\in\mathcal I).
+\end{aligned}
+\tag{POC.3}
+$$
+
+In particular $\rho$ is injective, beta is the only image leaf, and every subtree of an image is alpha or an image. Write $\mathcal B=\mathcal I\setminus\{\beta\}$ for its branch images.
+
+Proof. These are FCS Proposition 1.4 and BPS Lemma 1.2's native image facts. Every source constructor gives the indicated image case. Alpha is never a root image, so $E$ cannot be a pair of images. The cases are therefore disjoint. Recursion decreases finite size; induction proves $\delta\rho=\mathrm{id}$ and $\rho\delta=\mathrm{id}$ on their respective domains. The subtree assertion follows from the two children of $E$ and from the pair-of-images case. For later finite representatives set
+
+$$
+B_0=\beta,\qquad B_{j+1}=\langle B_j,B_j\rangle.
+\tag{POC.4}
+$$
+
+For $j\ge1$ these are distinct branch images with height $j$. The distinct trees $\langle\alpha,B_j\rangle$ are nonimage branches, since they are neither $E$ nor pairs of images. Thus both branch types used below are infinite. The inverse is a mathematical construction, not a native port. $\square$
+

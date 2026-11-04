@@ -1,0 +1,23 @@
+**假设 91.2（唯一竞争制备和完整矩阵域的合法性）。** 竞争者只已知其载体为 $\mathbb C^3$，由一个任意密度矩阵 $\sigma_0$、一个固定效果 $F$ 和三个固定复线性映射组成：
+
+$$
+\begin{gathered}
+\sigma_0\succeq0,\quad \operatorname{Tr}\sigma_0=1,\qquad
+0\preceq F\preceq I_3,\\
+B_0,B_1:M_3(\mathbb C)\longrightarrow M_3(\mathbb C)\ \text{CP},
+\qquad B_0+B_1\ \text{TP},\\
+B_N:M_3(\mathbb C)\longrightarrow M_3(\mathbb C)\ \text{CPTP}.
+\end{gathered}
+\tag{91.4}
+$$
+
+这些条件从一开始作用于全部矩阵域。每个时间词使用同一组映射，$B_w=B_{b_n}\cdots B_{b_1}$，竞争联合概率为
+
+$$
+\widetilde p(w,1)=\operatorname{Tr}(FB_w\sigma_0),\qquad
+\widetilde p(w,0)=\operatorname{Tr}((I_3-F)B_w\sigma_0).
+\tag{91.5}
+$$
+
+不假设 $\sigma_0$ 纯、$F$ 投影、可达或效果信息完备、逐支公平、分支酉、逆为 CP、表示之间有正合同，亦不给整个 $\mathcal K_d$ 指派任何竞争制备。精确概率等式是数学前提，不是有限样本已获得精确实数的断言。已知复维数、Born 迹配对、CP 合法性和固定时间齐次组合均保留为前提。
+

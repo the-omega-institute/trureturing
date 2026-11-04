@@ -1,0 +1,21 @@
+**Corollary 2.8 (bounded classical-discard future consumption).** Fix a nonnegative integer $L$ and a common initial classical record, for example one particular acquired record. Conditional on that same record, compare only newly generated future outputs, with the same initial seed law in both comparisons. Consider one common future policy making at most $L$ terminal-consumer calls of Definition 2.1, each on fresh independent input, and retaining only classical history. It may adapt its real single/pair POVM and stopping to that history and common randomness. If $P_\rho^{\pi,L},P_\sigma^{\pi,L}$ are these conditional complete future-history laws, then
+
+$$
+ \operatorname{TV}(P_\rho^{\pi,L},P_\sigma^{\pi,L})
+ \le\min\{1,L\,d_{\mathrm{cons}}(\rho,\sigma)\}.
+\tag{2.32}
+$$
+
+Proof. Include the seed and pad stopped calls with a common dummy output. At a fixed past history the same next action is selected, so its two conditional output laws differ by at most $q=d_{\mathrm{cons}}(\rho,\sigma)$. For history laws $P,Q$ and their next-step kernels $K_\rho,K_\sigma$, insert the intermediate law $PK_\sigma$. Contraction of total variation under a common kernel and the pointwise bound give
+
+$$
+ \operatorname{TV}(PK_\rho,QK_\sigma)
+ \le\int\operatorname{TV}(K_\rho(\cdot\mid H),K_\sigma(\cdot\mid H))\,dP(H)
+     +\operatorname{TV}(P,Q)
+ \le q+\operatorname{TV}(P,Q).
+$$
+
+Induction over $L$ calls, starting from the common seed, proves (2.32), with the trivial cap one. At $L=0$ the distance is zero. On the confidence event of Theorem 2.3 one may substitute its particular lawful $\widehat\rho$ for $\sigma$ and multiply (2.9) by $L$. This is a statement about subsequent conditional prediction laws; preparing $\widehat\rho$ or evaluating arbitrary supplied effects with finite arithmetic has not thereby been implemented. The bound supplies no fixed error for unlimited future calls, coherent consumers on arbitrarily many copies, or surviving source-dependent quantum memory. $\square$
+
+The inverse and decoder constants used here are the exact parent §§13–17 suppliers: the nonsingular-polarization certificate, product-distance bound, rational Gram scan, bounded-independent concentration event and fixed-filter perturbation. Their concentration step uses the ranges two and one and the $65$-setting union bound in parent Proposition 14.2; no new concentration hypothesis is imposed. The external inputs used in the displayed intermediate arguments are finite-dimensional Holevo–Helstrom discrimination with equal priors, and classical data processing/order comparison for probability laws. The new conclusions are the repository-derived combination into the specified consumer quotient, unchanged-decoder prediction estimate and uniform crossover and prediction budgets; they assert no historical priority, new general discrimination theorem, quantum-memory rate, or physical installation of the granted measurement class.
+

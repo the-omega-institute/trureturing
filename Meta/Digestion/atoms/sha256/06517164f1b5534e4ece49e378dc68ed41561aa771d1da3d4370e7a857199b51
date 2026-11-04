@@ -1,0 +1,11 @@
+**Definition 71.1 (fixed-block field representation).** After (69.2), choose two finite straight-line blocks $W_L,W_R$ of the original path menu. Their commands and rational Add operands may depend on the earned law and fixed context, but not on future selectors, intermediate returned values or the current field. Reads, Holds and all acknowledgements are actually executed and consumed. No reset, inverse Tick or other field actuator is allowed. Interpreting a selector $L$ as the paired procedure $H_L;W_L$ and $R$ as $H_R;W_R$, ask whether the settled path field is a single function $E(a,b)$ of the current native source, independent of the selector route. This is an endpoint requirement; complete native and path reply traces remain their respective actual traces, without an assumed equality between them.
+
+Let $m,n$ be the numbers of Ticks in $W_L,W_R$. Command induction gives their field effects
+
+$$
+F(x)=T^m x+c,\qquad G(x)=T^n x+d,\qquad c,d\in\mathbb Q^N.
+\tag{71.1}
+$$
+
+An Add operand $u$ contributes $uT^r b$, where $r$ is the number of subsequent Ticks in that block. Reads and Holds do not change (71.1). This formula counts the actual block, including zero operands and redundant observations.
+

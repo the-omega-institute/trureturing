@@ -1,0 +1,30 @@
+**定理 84.1（所有原归一化分支全局酉且公平）。** 每个定义 82.1 的实现有酉 $U_0,U_1$，使 $T_j=\operatorname{Ad}_{U_j}$ 于整个 $M_3(\mathbb C)$。其紧群到源 $G$ 的 $\pi$ 是同构；一个固定酉坐标使匹配的源 $SU(2)$ 作用为 $1\oplus S$。
+
+证明。定理 83.1 给每个 $T\in\mathscr S$ 完整 CP 逆。$T(I)$ 是序单位；令 $Q_T=T(I)^{1/2}$，则 $\operatorname{Ad}_{Q_T^{-1}}T$ 和其逆 $T^{-1}\operatorname{Ad}_{Q_T}$ 都 UCP。两次 Schwarz 给乘法性，复全矩阵 $*$ 自同构为酉内自同构，故还原后 $T_j=\operatorname{Ad}_{A_j}$，$A_j$ 可逆。
+
+Haar 平均 $T(I)$ 得整个群固定的 $\Omega_2\succ0$。令 $B'_j=\Omega_2^{-1/2}A_j\Omega_2^{1/2}$，则 $B'_j$ 酉。原仪器和 TP 此时在整个已饱和的三维支持上给
+
+$$
+A_0^\dagger A_0+A_1^\dagger A_1=2I,
+\qquad \sum_{j=0}^1(B'_j)^\dagger\Omega_2B'_j=2\Omega_2.
+\tag{84.1}
+$$
+
+置 $D_j=(B'_j)^\dagger\Omega_2B'_j$，酉共轭保持 Hilbert–Schmidt 范数，所以
+
+$$
+\sum_j\|D_j-\Omega_2\|_{\rm HS}^2
+=\sum_j\|D_j\|_{\rm HS}^2-2\|\Omega_2\|_{\rm HS}^2=0.
+\tag{84.2}
+$$
+
+故每个 $B'_j$ 与 $\Omega_2$ 交换，$A_j=B'_j$ 酉。这是从实际 TP 和导出的全局公平性，不是从可达态上的迹一直接推出逐支 TP。Nayak–Sen，[*Invertible Quantum Operations and Perfect Encryption of Quantum States*](https://arxiv.org/html/quant-ph/0605041v4)，定理 2.1 的假设为全输入域上的 CPTP 映射和 CPTP 左逆；只在此时其等维结论适用。上面的完整 CP 逆、保单位化和原 TP 和论证给出此前缺少的桥。
+
+现在 $\mathscr S,G$ 都是闭的紧矩阵 Lie 群。满射 $\pi$ 的微分满射：单位分支之像为 $G^0$，因为紧 Lie 群只有有限多个分支。取紧 Lie 代数上的 Ad 不变内积，$\ker d\pi$ 的正交补仍为理想，且同构于 $\operatorname{Lie}G$。在此补理想中提升源的实际 $\mathfrak{su}(2)$，从单连通 $SU(2)$ 积分，得到 $\lambda:SU(2)\to\mathscr S$，$\pi\lambda(S)=\operatorname{Ad}_{1\oplus S}|_{\mathscr S_c}$。积分定理的域确为 $SU(2)$ 而非 $SO(3)$；参见 Hall 的矩阵群与单连通积分工具，文献对应见 §90。
+
+到 $PU(3)$ 的这个作用经覆盖 $SU(3)\to PU(3)$ 提升为三维复酉表示。三维复 $SU(2)$ 表示只有自旋一、$1\oplus2$ 或三个平凡线。前后两种的中心 $-I_2$ 在共轭上平凡，不能供应源 $\mathscr S_c$ 中中心变号的基本实四维模。因此一个固定酉把提升写成 $1\oplus S$。
+
+在 $\operatorname{Herm}_3$ 中，这个作用分解为两个平凡线、唯一的交叉基本实四维模和唯一下块无迹伴随实三维模。紧群完全可约性及重数一表明这两个非平凡模都完整位于 $\mathscr R$，$L$ 在它们上为同构。故 $\dim\mathscr R\in\{8,9\}$，$\ker L$ 为零或一条平凡线。
+
+若 $k\in\ker\pi$，它是酉共轭，所以在 Hilbert–Schmidt 内积下正交；它保持 $\mathscr R$、$\ker L$ 及 $\mathscr W=\mathscr R\cap(\ker L)^\perp$。对 $X\in\mathscr W$，$(k-I)X$ 同时在 $\ker L$ 和 $\mathscr W$，故为零。全部交叉四维模属于 $\mathscr W$，其 Hermitian 矩阵的复 $*$ 代数生成全部 $M_3$：两种实虚交叉矩阵给 $E_{0r},E_{r0}$，再相乘给所有矩阵单位。因此固定它们的酉共轭只能是恒等，$\ker\pi=1$。此证同时覆盖八维与九维可达空间。源下块 $SU(2)$ 正规于 $G\subseteq\operatorname{Ad}(1\oplus U(2))$，同构 $\pi$ 因而使匹配的 $SU(2)$ 也正规于竞争者群。∎
+

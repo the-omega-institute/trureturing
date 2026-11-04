@@ -1,0 +1,48 @@
+### 命题 3.2（零关系、代表无关与重叠一致）
+
+<a id="prop-c92-address-identity"></a>
+
+C92 蕴含：若 $W(h)=W(g)$，则 $b_R(h)=b_R(g)$。
+特别地，任意两块在交叠部分的边际相同。
+
+**证明。**
+若 $W(k)=0$，对 $k$ 与 $-k$ 分别使用 C92，得到
+$b_R(k)\le0$ 与 $-b_R(k)\le0$，故 $b_R(k)=0$。
+将 $k=h-g$ 代入，得到代表无关。
+
+若 $D=C\cap C'$，任取 $D$ 上的 Hermitian 算符 $Z$，
+在 $C$ 分量使用 $Z\otimes I_{C\setminus D}$，
+在 $C'$ 分量使用其负的同一嵌入，其他分量取零。
+总算符恒为零，故两边对 $Z$ 的期望相等。
+有限矩阵的迹配对非退化，遂有
+
+$$
+\operatorname{Tr}_{C\setminus D}R_C
+ =\operatorname{Tr}_{C'\setminus D}R_{C'}.
+$$
+
+若交集为空，这只重复已经得到的归一条件。
+
+取所有嵌入局部算符的实线性和空间
+
+<a id="eq-c92-operator-system"></a>
+
+$$
+\mathcal S=\left\{W(h):h_C\in\operatorname{Herm}(\mathcal H_C)\right\}
+ \subseteq\operatorname{Herm}(\mathcal H).
+\tag{3.1}
+$$
+
+它包含 $I$。一般不对算符乘法封闭，不能直接称为子代数。
+其复化 $\mathcal S+i\mathcal S$ 是一个有限维算符系统。
+前一命题使
+
+<a id="eq-c92-local-functional"></a>
+
+$$
+\ell_R(W(h)):=b_R(h)
+\tag{3.2}
+$$
+
+成为与局部表达方式无关的实线性泛函。
+

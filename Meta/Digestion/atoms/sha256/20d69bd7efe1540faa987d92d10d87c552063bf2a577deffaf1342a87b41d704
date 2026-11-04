@@ -1,0 +1,83 @@
+**定理 103.2（每个原混合 $N$ 的确定性块、边缘收敛和原载体纠缠消费者）。** 对 (103.1)，
+
+$$
+r_N<1\quad\Longleftrightarrow\quad[N,P_\xi]\ne0.
+\tag{103.2}
+$$
+
+在原允许域内，对全部 $X\in M_3$、$n\ge0$ 有
+
+$$
+\left\|\Theta_N^n(X)-\frac{\operatorname{Tr}X}{3}I_3\right\|_2
+\le r_N^n\left\|X-\frac{\operatorname{Tr}X}{3}I_3\right\|_2.
+\tag{103.3}
+$$
+
+进一步，若假设 101.2、(101.5) 成立，在唯一原纯制备上执行 $s_\star^n$，将其 $4n$ 个原载体相干保留，实际联合态为
+
+$$
+|\Psi_n\rangle=S_{s_\star^n}\psi,\qquad
+\rho_n=\operatorname{Tr}_{\rm arch}|\Psi_n\rangle\langle\Psi_n|
+=\Theta_N^n(\rho_0),\qquad
+\|\rho_n-I_3/3\|_2\le\sqrt{2/3}\,r_N^n.
+\tag{103.4}
+$$
+
+对于 $n\ge1$，在这同一档案载体内存在三维子空间及最大纠缠单位向量 $|\Phi_n\rangle$，满足
+
+$$
+\left\||\Psi_n\rangle\langle\Psi_n|-|\Phi_n\rangle\langle\Phi_n|\right\|_1
+\le\min\{2,\ 2\sqrt2\,r_N^n\}.
+\tag{103.5}
+$$
+
+当 $\sqrt{2/3}\,r_N^n<1/3$ 时，实际 $|\Psi_n\rangle$ 的 Schmidt 秩为三，其纠缠熵趋于 $\log3$。这给每个已安装混合 $N$ 的同源、无选择、模型依赖的渐近制备关系；不声称有限 $n$ 必达精确最大纠缠，也不声称已取得作用于档案 Schmidt 子空间的控制。
+
+证明。由 $V_1=V_0W$ 和 $D_W(X)$ 与 $W$ 交换，
+
+$$
+\Lambda(X)=V_0D_W(X)V_0^\dagger=UD_W(X)U^\dagger.
+\tag{103.6}
+$$
+
+非选择演化与 $\theta$ 无关。物理等距 (101.1) 本身固定；按原标签基 $g_j$ 写出的分支及交叉块仍须保留该基的 $\theta$ 对应，不能只用非选择通道替代。$D_W$ 是 Hilbert–Schmidt 空间中的正交投影，故所有这些映射均收缩。等式 $\|\Lambda^2X\|_2=\|X\|_2$ 当且仅当两次投影均保持范数，即
+
+$$
+[X,W]=0,\qquad [UXU^\dagger,W]=0.
+\tag{103.7}
+$$
+
+原 $W$ 是坐标换位 $(01)$，$U^\dagger WU$ 是 $(02)$；二者生成所有三坐标置换。与它们交换的矩阵必须对角元全同、非对角元全同，故其空间恰为 $\mathscr F$。反向 $I_3,P_\xi$ 被每个原置换固定，所以
+
+$$
+\|\Lambda^2X\|_2=\|X\|_2\quad\Longleftrightarrow\quad X\in\mathscr F,
+\qquad \Lambda(X)=X\quad(X\in\mathscr F).
+\tag{103.8}
+$$
+
+若一个非零无迹 $X$ 在 $\Theta_N$ 下保持范数，收缩链迫使 $X\in\mathscr F$ 且 $NXN^\dagger\in\mathscr F$。无迹部分为一条复直线，所以 $X=zD_\xi$，$ND_\xi N^\dagger=tD_\xi$。后一个等式的两边 Hermitian，使 $t$ 为实数；$\det D_\xi=2/27\ne0$ 又给 $t^3=1$，故 $t=1$，即 $[N,P_\xi]=0$。在混合情形，没有单位无迹矩阵能保持范数；有限维单位球面的紧性给 $r_N<1$。不混合时 $\Theta_N(D_\xi)=D_\xi$，所以 $r_N=1$。证明包括 $N\xi\perp\xi$ 以及 $d=2/3$，不除以 $1-3d/2$，也不要求 $N$ 接近恒等。
+
+$\Theta_N$ 保迹且保单位，无迹空间不变。对 $X-(\operatorname{Tr}X)I_3/3$ 逐次用收缩率得 (103.3)。这是一项具体块的严格收缩证明；[Sanz–Pérez-García–Wolf–Cirac，0909.5347，§II、Proposition 3](https://arxiv.org/abs/0909.5347) 中原始性、外周谱与满秩极限之间的关系是已有背景，此处没有把一般原始通道定理作为新增内容或用未知统一谱隙代替 $r_N$。
+
+定理 102.1 的每个原交互等距与系统酉的复合仍为等距，故 $|\Psi_n\rangle$ 是这同一输入和原载体的纯联合输出，部分迹给 (103.4)；$\|\rho_0-I_3/3\|_2=\sqrt{2/3}$。写其 Schmidt 展开
+
+$$
+|\Psi_n\rangle=\sum_{a=1}^3\sqrt{\lambda_{na}}\,|u_{na}\rangle|v_{na}\rangle,
+\qquad
+|\Phi_n\rangle=\frac1{\sqrt3}\sum_{a=1}^3|u_{na}\rangle|v_{na}\rangle.
+\tag{103.9}
+$$
+
+$\lambda_{na}$ 是 $\rho_n$ 的全部本征值；零本征值的档案向量补成正交组即可，因为 $n\ge1$ 时档案维数为 $2^{4n}\ge3$。这里使用标准 Schmidt 分解，仅把其两侧明确指定为原系统与本次原载体，没有供应一个独立纠缠准备。并且
+
+$$
+\begin{aligned}
+\|\Psi_n-\Phi_n\|^2
+&=\sum_a\frac{(\lambda_{na}-1/3)^2}{(\sqrt{\lambda_{na}}+1/\sqrt3)^2}\\
+&\le3\|\rho_n-I_3/3\|_2^2\le2r_N^{2n}.
+\end{aligned}
+\tag{103.10}
+$$
+
+两个纯态密度的迹范数距离至多两倍向量距离，且至多二，得 (103.5)。$\lambda_{na}\ge1/3-\sqrt{2/3}r_N^n$ 给满秩判据，有限维熵的连续性给极限。五维实际输出在系统侧再施 $B$，全部非零 Schmidt 系数及以上距离不变。∎
+

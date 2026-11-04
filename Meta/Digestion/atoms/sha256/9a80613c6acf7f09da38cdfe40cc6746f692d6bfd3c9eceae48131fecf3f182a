@@ -1,0 +1,23 @@
+**命题 91.3（K42 不存在这种固定实际 qutrit assignment）。** 对定义 91.1 的实际 same-composition $\rho^3$ 族，不存在定义 91.2 所允许的 $n,A_i,\epsilon_i$ 实现 (91.4)。这同时排除精确保留 (91.2) 两个分别固定策略空间中的任一相容模式。
+
+**证明。** 这正是本卷定理 83.4 与 [Scale 定理 26.6][F91SCALE26] 的 bounded application。参数对应为：来源侧指标 $i\in[42]$ 对应一个目标侧 fixed task/threshold pair $(A_i,\epsilon_i)$；两侧都检验同一个指标 subset $J$ 的一个共同 realization 是否存在。只对应这个交模式，不把 tree strategy 识别为 qutrit decoder。
+
+对目标 catalogue 置
+
+$$
+S=\operatorname{span}_{\mathbb R}\{I_3,A_1,\ldots,A_{42}\},\qquad
+ d_{\rm task}=\dim_{\mathbb R}S-1\le8.
+$$
+
+定理 83.4 的 $m$ 在此为 $d_{\rm task}$，不是 task 数 $42$，也不是 (88.2) 的 scalar $d$。该定理对这个 fixed actual finite positive horizon 的同一个 compact convex image
+
+$$
+\Omega_S=
+ \{((F^n)^\dagger\circ\mathcal D^\dagger)|_S:
+                    \mathcal D\ {\rm CPTP}\}
+$$
+
+给出 $\dim\operatorname{aff}\Omega_S\le5d_{\rm task}\le40$，且任何 infeasible catalogue 都有大小至多 $5d_{\rm task}+1\le41$ 的非空 infeasible subset。其 rank-five 与 finite Helly 证明已在 §83.4 给出，这里不重复，也不把所有 ambient linear maps 当作可实现 maps。
+
+假设 (91.4)。full set $[42]$ 必 infeasible，故原 theorem 在同一个 $\Omega_S$ 中给某个 nonempty infeasible $J$，$|J|\le41$。但此 $J$ 是 proper subset，(91.2)、(91.4) 要求它 feasible，矛盾。∎
+

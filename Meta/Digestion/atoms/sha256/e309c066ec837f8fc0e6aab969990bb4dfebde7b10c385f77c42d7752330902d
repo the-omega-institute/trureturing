@@ -1,0 +1,34 @@
+**命题 89.2（同 map 的 midpoint contraction）。** 若定义 88.1 中同一个 $\mathcal D$ 在两个 phases $\varphi,\psi$ 的 losses 都不超过 $\eta+\delta$，令 $r=|e^{i\varphi}-e^{i\psi}|$，则
+
+$$
+(w-h-U)r\le2V.
+\tag{89.2}
+$$
+
+**证明。** 取 short-arc representatives $\varphi=m+t$、$\psi=m-t$，必要时互换两者，使 $0\le t\le\pi/2$；此时 $r=2\sin t$。由命题 89.1 写
+
+$$
+e^{i\varphi}(K_\varphi)_{12}=-w+A_\varphi+iB_\varphi,
+\qquad |A_\varphi|\le U,\quad |B_\varphi|\le V,
+$$
+
+并对 $\psi$ 同样写。直接取 midpoint quadrature，
+
+$$
+\begin{aligned}
+\operatorname{Im}\bigl(e^{im}(K_\varphi-K_\psi)_{12}\bigr)
+ &=(2w-A_\varphi-A_\psi)\sin t
+       +(B_\varphi-B_\psi)\cos t,\\
+|(K_\varphi-K_\psi)_{12}|&\ge(w-U)r-2V.
+\end{aligned}
+$$
+
+另一方面，$\mathcal T$ 是同一个 positive unital map。在 Hermitian $X$ 的 order interval $-\|X\|I\le X\le\|X\|I$ 上作用，得到 $\|\mathcal T(X)\|\le\|X\|$。而
+
+$$
+K_\varphi-K_\psi=\mathcal T(E_\varphi-E_\psi),\qquad
+\|E_\varphi-E_\psi\|=hr.
+$$
+
+于是 $|(K_\varphi-K_\psi)_{12}|\le hr$，合并得 (89.2)。整个比较中的两个 $K$ 一直由一个 $\mathcal T$ 产生；独立 single-effect attainability 不能替代这一步。∎
+

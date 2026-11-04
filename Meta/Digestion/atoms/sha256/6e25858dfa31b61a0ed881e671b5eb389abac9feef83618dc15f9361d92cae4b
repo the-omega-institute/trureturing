@@ -1,0 +1,37 @@
+**Theorem 4.1 (exact finite-copy binary error).** Give $U_n$ and $V_n$
+equal prior probability and allow an arbitrary joint POVM on the $m$ supplied
+specimens (and the common $W$, apparatus and reference registers).  The exact
+minimum average error is
+
+$$
+p_m(n)=\frac{1-\sqrt{1-(1-\delta/w_n)^{2m}}}{2}.
+\tag{4.1}
+$$
+
+Proof. The overlap of the tensor powers is
+$(1-\delta/w_n)^m$ by (3.3).  Let $\kappa$ be the common tensor factor
+formed by the exact $W$ register, apparatus and reference, allowing the
+reference $\tau$ to be mixed; $\kappa$ is a common density operator.  The
+two inputs are
+$\rho_{U_n}^{(m)}\otimes\kappa$ and $\rho_{V_n}^{(m)}\otimes\kappa$; since
+$\operatorname{tr}\kappa=1$,
+
+$$
+\bigl\|(\rho_{U_n}^{(m)}-\rho_{V_n}^{(m)})\otimes\kappa\bigr\|_1
+=\bigl\|\rho_{U_n}^{(m)}-\rho_{V_n}^{(m)}\bigr\|_1\,\|\kappa\|_1
+=\bigl\|\rho_{U_n}^{(m)}-\rho_{V_n}^{(m)}\bigr\|_1.
+$$
+
+The equal-prior pure-state binary discrimination formula therefore gives
+$p=(1-\sqrt{1-|\langle\psi,\phi\rangle|^{2}})/2$; this is the
+Barnett--Croke result, [arXiv:0810.1970v1, §3.1, equation (12)](https://arxiv.org/html/0810.1970v1),
+under its stated two-state and POVM assumptions.  Substitution yields
+(4.1).  The displayed trace-norm identity shows that the common factor
+leaves the Helstrom minimum unchanged even when $\tau$ is mixed. $\square$
+
+This formula is used only for the bare cut with no source-dependent side
+record, equivalently $\eta_{U_n}=\eta_{V_n}$.  A source-dependent record
+changes the input overlap and is treated separately in §5.  The formula
+does not assert that a native Read can implement the Helstrom effect, that
+the copies can be prepared, or that a joint-control menu is available.
+

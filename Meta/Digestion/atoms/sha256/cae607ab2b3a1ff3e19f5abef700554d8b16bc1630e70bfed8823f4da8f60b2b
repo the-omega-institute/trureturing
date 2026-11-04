@@ -1,0 +1,20 @@
+**Corollary 23.3 (Uniform carrier localization).** For every $t\in I$,
+at the exact base $(p_t,v_t)$ of (20.6), $R(x,p_t,v_t)$ has no root
+in
+
+$$
+(0,1/5),\qquad(3/10,2/5),\qquad(3/5,4/5),
+\tag{23.12}
+$$
+
+and has at most one root, counted with multiplicity, in $(2/5,3/5)$.
+It is nonzero at each endpoint
+$0,1/5,3/10,2/5,3/5,4/5$.
+
+Proof. Choose a closed cell containing $t$. Lemma 23.2 encloses the
+exact source responses and every coefficient of (22.4) at this same
+$t$. The exact coefficient signs are among (23.8), so (23.7),
+Descartes' rule and the multiplicity-preserving map (22.4) give the
+claimed open-interval bounds. The first and last coefficient signs,
+together with (22.7), exclude all listed endpoints. ∎
+

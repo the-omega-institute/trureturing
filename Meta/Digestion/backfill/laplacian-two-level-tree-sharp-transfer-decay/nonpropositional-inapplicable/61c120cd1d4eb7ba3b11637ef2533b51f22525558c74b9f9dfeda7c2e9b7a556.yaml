@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61c120cd1d4eb7ba3b11637ef2533b51f22525558c74b9f9dfeda7c2e9b7a556
+  normalized_sha256: sha256:61c120cd1d4eb7ba3b11637ef2533b51f22525558c74b9f9dfeda7c2e9b7a556
+cas_ref: sha256:61c120cd1d4eb7ba3b11637ef2533b51f22525558c74b9f9dfeda7c2e9b7a556
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure notation definition (Definition 4.1: asymptotic tail suprema M_B(N), M_P(N) and threshold discriminant D_N) formalized by public Lean definitions tailBoundingSet, tailTransferSet, tailBoundingSup, tailTransferSup, tailThresholdD in D5/S3/Quantum/Dynamics/LaplacianTwoLevelTreeSharpTransferDecay and consumed by covered Theorem 4.2.'
+    previous_atom_id: 9f7c61fc1eecca9111c1185bf486126e7a122d3332c7d48b5d2b6cf1c76c3c3f
+    next_atom_id: 545c08c1eea12764dfe7f24190b818c8b85930ff8ced14092d350076851a5aa5

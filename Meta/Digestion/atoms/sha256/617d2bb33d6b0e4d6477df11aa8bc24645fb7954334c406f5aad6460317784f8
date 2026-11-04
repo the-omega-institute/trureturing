@@ -1,0 +1,16 @@
+**Lemma 3.2 (Shape).** Let $n\ge2$ and let $\pi$ be an admissible indecomposable permutation of $[n]$, with $m=\pi(1)$ and $p=\mathrm{pos}(n)$. Then:
+
+(a) $\pi(n)=1$;
+
+(b) $2\le m\le4$, and the values $2,\dots,m-1$ appear right of position $1$ in decreasing order;
+
+(c) $q(p)=1$, $q(n)=m$, $q(p+1)<q(p+2)<\cdots<q(n)$, and $p\ge n-m+1$; in particular $n$ lies in one of the last four positions, and $p=n-1$ when $m=2$;
+
+(d) the entries $\pi(p+1),\dots,\pi(n)$ decrease.
+
+Stance: part (a) is standard: it is the decomposition $\pi=\sigma\,1\,\tau$ of a $312$-avoider, with every entry of $\sigma$ smaller than every entry of $\tau$, that underlies the Catalan enumeration of $312$-avoiders (cf. R. Simion and F. W. Schmidt 1985; this exact formulation there was not verified); it is used as a known step and its short proof is included. Parts (b)–(d): suspected-novel (see §9).
+
+**Proof.** (a) Write $\pi=\sigma\,1\,\tau$. Every entry of $\sigma$ is smaller than every entry of $\tau$, for otherwise an entry $c$ of $\sigma$ and a smaller entry $b$ of $\tau$ give the occurrence $c,1,b$ of $312$. If $\tau$ were nonempty, then with $k$ the length of $\sigma1$ the first $k$ positions would carry exactly $\{1,\dots,k\}$ with $k<n$, contradicting indecomposability. So $\tau$ is empty. (b) $m\ne1$ by (a) and $n\ge2$. Since $\pi$ avoids $312$, the values $2,\dots,m-1$, all smaller than $m$, appear after $m$ in decreasing order (an increasing pair among them would form $312$ with $m$), and $1$ comes last; with $m$ in front this is a decreasing subsequence of length $m$, so $m\le4$ because $\pi$ avoids $54321$. (c) $q(p)=\pi(n)=1$ and $q(n)=\pi(1)=m$. Since $q$ avoids $132$, the entries of $q$ after its entry $1$ increase (a decreasing pair among them would form $132$ with $1$); so $q(p+1),\dots,q(n)$ increase. These are $n-p$ distinct values in $\{2,\dots,m\}$, so $n-p\le m-1$. If $m=2$ then $p\ge n-1$ and $p\ne n$ by (a). (d) Every entry right of $n$ is smaller than $n$, and an increasing pair among them would form $312$ with $n$. ∎
+
+Conversely, every permutation ending in $1$ is indecomposable, since no proper initial segment of positions contains the value $1$.
+

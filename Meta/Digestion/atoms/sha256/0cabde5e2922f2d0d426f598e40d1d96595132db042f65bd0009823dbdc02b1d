@@ -1,0 +1,101 @@
+**Theorem 108.1 (One return, uniformly finite history family).**
+Under Assumption 106.2, fix any allowed $d,\theta,N$ and any of its
+original nine-prefix bases. For every full completion $\mathsf J$ and
+every $\gamma\ne\gamma'$ in the closed disk, there are a prefix event
+$i\in\{1,\ldots,9\}$ and an actual intermediate history
+$w\in\{0,1,N\}^{\le17}$ such that the last line of (107.4) is nonzero.
+In particular the original binary terminal can distinguish coherent
+retention from dephasing after just one forward return, for every full
+completion, when this finite collection of original history contexts
+is allowed. No extra record effect is needed in this extension.
+
+More precisely, there is a constant $\varepsilon>0$ depending on the
+fixed $d,\theta,N$ and prefix basis, but independent of the completion
+and of $\gamma,\gamma'$, for which
+
+$$
+\max_{i,\ |w|\le17}
+ |p_\gamma(u_i,w,1)-p_{\gamma'}(u_i,w,1)|
+ \ge\varepsilon|\gamma-\gamma'|.
+\tag{108.1}
+$$
+
+The same completion is used on both sides. This does not compare two
+unknown devices with unrelated completions, and does not assert their
+joint identification from the terminal data.
+
+Proof. First $K(h)$ is never a scalar matrix, for any $\|h\|\le1$.
+Indeed its Hermitian part is
+$(th^\dagger+ht^\dagger)/2$, which has a zero direction in dimension
+three. If $K(h)=kI_3$, this forces $\operatorname{Re}k=0$ and
+$th^\dagger+ht^\dagger=0$. Since $t\ne0$, decomposing $h$ into its
+component parallel to $t$ and its orthogonal component shows that
+$h=i r t$ for some real $r$. Substitution gives
+
+$$
+K(h)=i\bigl[s_\theta c_\theta D+
+ (r\cos(2\theta)-s_\theta c_\theta b r^2)tt^\dagger\bigr].
+\tag{108.2}
+$$
+
+Here $a_+\perp f$, $t\parallel f$, and
+$\|a_+\|^2=1-\alpha^2=5/8$.
+A nonzero vector orthogonal to both $a_+$ and $f$ is killed by (108.2),
+so a scalar $K(h)$ would have to be zero. But its action on $a_+$ is
+$i s_\theta c_\theta(5/8)a_+\ne0$. This contradiction uses the actual
+source constants and $\sin(2\theta)\ne0$.
+
+Next suppose $H_z(C,h)=0$ for every $C\in U(3)$ and some $z\ne0$.
+As $CV_0$ ranges over all unitaries, this says
+
+$$
+\operatorname{Herm}(W Q^\dagger zK(h)Q)=0\qquad(Q\in U(3)).
+\tag{108.3}
+$$
+
+Fix a unit vector in the $+1$ eigenspace of $W$ and vary its image under
+$Q$. Its diagonal expectation in (108.3) proves
+$\operatorname{Herm}(zK(h))=0$. Write $zK(h)=iA$, $A=A^\dagger$.
+Equation (108.3) now says that $Q^\dagger A Q$ commutes with $W$ for
+every $Q$. An orthogonal pair with one vector in each eigenspace of
+$W$ can be mapped to any orthogonal pair. Thus every off-diagonal
+matrix element of $A$ in every orthonormal basis vanishes. Applying
+this to $(x+y)/\sqrt2,(x-y)/\sqrt2$ for orthonormal eigenvectors shows
+that all eigenvalues of $A$ are equal. Hence $A$ is scalar, forcing
+$K(h)$ to be scalar, a contradiction.
+
+V Theorem 95.1 supplies the dense positive-word conjugation orbit of
+the actual $V_0,V_1,N$, for every installed mixing $N$ in the present
+contract. The adjoint calculations here do not install inverse gates.
+Continuity and the nine-prefix span therefore show that at least one
+finite actual $w$ and one $i$ have a nonzero pairing in (107.4).
+To bound the length, apply the finite-span observation method already
+supplied by Coherent Reconstruction, Definition 28.1 and Application
+28.2, to the real vector space of complex $3\times3$ matrices. Start
+with $K(h)$ and close under conjugation by the three actual unitaries.
+Its real dimension is at most $18$, so the spans of the words of
+length at most $17$ already give the full orbit span: an earlier
+plateau is invariant, and otherwise dimension $18$ has been reached.
+The functional $K'\mapsto\operatorname{Tr}
+[r_i\operatorname{Herm}(zWV_0^\dagger K'V_0)]$ is real linear.
+It cannot vanish on all of this finite spanning set when some orbit
+pairing is nonzero. This proves the asserted length bound.
+
+Finally define $\varepsilon$ by the exact finite-dimensional expression
+
+$$
+\varepsilon=
+ \min_{\|h\|\le1,\ |z|=1}
+ \max_{i,\ |w|\le17}
+ a_w\left|\operatorname{Tr}[r_iH_z(C_w,h)]\right|.
+\tag{108.4}
+$$
+
+The maximum is continuous, and it is positive at every point by the
+proof just given. Compactness of the closed ball times the unit circle
+makes its minimum strictly positive. Real homogeneity in $z$ proves
+(108.1), including the zero-difference case. All masses in (108.4)
+retain both their prefix and intermediate factors. This uses a finite
+family of separate externally fixed contexts, not a preparation
+lottery or a gate chosen by a desired label. $\square$
+

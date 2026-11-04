@@ -1,0 +1,5 @@
+**Theorem 7.1 (one informative added read and two total Ticks).** For uniform exact identification of the parameter, or of the native coefficient law, from the zero entrance in the enlarged family/menu:
+
+1. At least one informative Read$_e$ is necessary; the old observations alone never suffice.
+2. No policy that uses at most one total Tick on its identifying runs can succeed uniformly, even if it uses arbitrarily many legal Adds, Resets, Holds, leaf Reads and Read$_e$ calls.
+

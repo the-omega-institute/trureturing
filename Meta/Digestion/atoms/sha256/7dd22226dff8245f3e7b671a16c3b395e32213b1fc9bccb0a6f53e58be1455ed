@@ -1,0 +1,66 @@
+**Theorem 272.2 (the cylinder transfer excludes that candidate).**
+Under Assumption 272.1, for every such $\kappa$,
+
+$$
+\begin{aligned}
+p_{\rm U}(s)
+ &=\|P_R e^{-i\kappa sH_{\mathbb C}}P_L\mathbf1\|_2^2=o(s),\\
+p_{\rm M}(s)
+ &=\mathbb P(X_0\in[L],X_s\in[R])
+   =\langle F_L,T(s)F_R\rangle_M
+   =\frac{s}{4}+o(s),\\
+\lim_{s\downarrow0}\frac{p_{\rm M}(s)-p_{\rm U}(s)}s&=\frac14.
+\end{aligned}
+\tag{272.1}
+$$
+
+In particular these readouts cannot reproduce the joint histories of
+Theorem 270.4 with this generator, state, projections and linear clock,
+even just for this one pair event for all sufficiently small positive
+$s$. Conditional on the first $L$, both probabilities are divided by
+the same positive $a=M([L])$, so the conditional mismatch persists.
+
+*Proof.* IV, Theorem 111.5 supplies, for these exact biased cylinders,
+$F_L,F_R\in\mathcal D$, energies $1/4$, mixed energy $-1/4$,
+and the second line of (272.1). Symmetry of $T$ identifies its ordering
+with the $c(s)$ of that theorem. The same-law identification in §271
+ensures this is the history law obtained from the original chains.
+
+For the first line, write $\nu_L(B)=\|\mathbf1_B(H_{\mathbb C})F_L\|^2$.
+The existing form domain gives
+$\int_0^\infty\lambda\,d\nu_L(\lambda)=\mathcal E(F_L)=1/4$.
+The mature spectral theorem and form-domain calculus used here are
+Teschl, §3.1, Theorem 3.7 and (3.50)–(3.51); no twice differentiable
+vector assumption is imported. For $t\ne0$,
+
+$$
+\begin{aligned}
+\frac{\|(e^{-itH_{\mathbb C}}-I)F_L\|_2^2}{|t|}
+ &=\int_0^\infty
+   \frac{4\sin^2(t\lambda/2)}{|t|}\,d\nu_L(\lambda),\\
+0\le\frac{4\sin^2(t\lambda/2)}{|t|}
+ &\le\min(|t|\lambda^2,4/|t|)\le2\lambda.
+\end{aligned}
+\tag{272.2}
+$$
+
+The integrand tends to zero for each finite $\lambda$. Dominated
+convergence by the integrable $2\lambda$ shows that (272.2) tends
+to zero as $t\to0$. Since $P_RF_L=0$ and $\|P_R\|\le1$,
+
+$$
+\|P_R e^{-itH_{\mathbb C}}F_L\|_2^2
+ =\|P_R(e^{-itH_{\mathbb C}}-I)F_L\|_2^2=o(|t|).
+\tag{272.3}
+$$
+
+Substituting $t=\kappa s$ proves $p_{\rm U}(s)=o(s)$ for fixed
+finite nonzero $\kappa$. The Lüders branch formula in Assumption 272.1
+is exactly this squared norm, since its first unnormalized branch
+is $P_L\psi=F_L$. Subtracting the supplied Markov asymptotic proves
+the last line of (272.1). The first outcome has probability
+$\|F_L\|^2=a>0$ in both models, giving the conditional assertion.
+Only finite first spectral moment was used; no $O(s^2)$ estimate,
+operator-domain membership of $F_L$, or second spectral moment is
+asserted. $\square$
+

@@ -1,0 +1,73 @@
+**命题 86.3（一个全 qutrit CPTP map 的 quadratic phase neighbourhood）。** 对每个 center $\alpha\in\mathbb R/(2\pi\mathbb Z)$，令 $Z_\alpha=\operatorname{diag}(1,e^{i\alpha},1)$，
+
+$$
+\begin{aligned}
+B_\alpha&=U_0Z_\alpha(\mathsf P_0\oplus d)Z_\alpha^\dagger U_0^\dagger,\\
+\mathcal D_\alpha(X)&=\operatorname{Tr}(B_\alpha X)E_\alpha
+       +\operatorname{Tr}((I_3-B_\alpha)X)|f\rangle\langle f|.
+\end{aligned}
+\tag{86.6}
+$$
+
+这是一个 fixed input-independent terminal complex qutrit CPTP map，满足对所有 phases $\varphi$ 的 global bound
+
+$$
+L_{\mathcal D_\alpha}(\varphi)
+ \le\eta+B_q|e^{i\varphi}-e^{i\alpha}|^2.
+\tag{86.7}
+$$
+
+在 $\varphi=\alpha$ 时它达到 exact individual optimum $\eta$。
+
+**证明。** $0\le B_\alpha\le I_3$，两个 prepared states 都 trace one。input-first Choi matrix 为
+
+$$
+B_\alpha^{\mathsf T}\otimes E_\alpha
+ +(I_3-B_\alpha)^{\mathsf T}\otimes|f\rangle\langle f|\ge0,
+$$
+
+output partial trace 是 $I_3$，故这是真正的 whole-qutrit CPTP realization。令 $u=\varphi-\alpha$、$r(u)=|1-e^{iu}|$，因为 $f$ 与全部 $E_\varphi$ 正交，
+
+$$
+\mathcal D_\alpha^\dagger(E_\varphi)=a(u)B_\alpha,\qquad
+ a(u)=\operatorname{Tr}(E_\varphi E_\alpha)=1-h^2r(u)^2.
+$$
+
+由 (85.1) 及已供应的 phase conjugation，
+
+$$
+\mathcal N^\dagger(B_\alpha)=Z_\alpha C_0Z_\alpha^\dagger,
+\qquad
+C_0=\begin{pmatrix}
+1-y&w/2&0\\w/2&(y+3d)/4&0\\0&0&\eta
+\end{pmatrix},\qquad 0\le C_0\le I_3.
+\tag{86.8}
+$$
+
+只对这些明确的 effect images 使用 conjugation；未假定实际 $F$ phase covariant。由 unitary invariance，
+
+$$
+L_{\mathcal D_\alpha}(\varphi)=\|a(u)C_0-E_u\|,\qquad
+ C_0-E_0=H_0\oplus\eta,\qquad
+ H_0=-\eta Q_\vartheta+d(I_2-Q_\vartheta).
+$$
+
+这是定理 81.4 已供应的 residual identity，不重证其 optimizer。令 $\sigma_x,\sigma_y$ 为 usual Pauli matrices；$H_0$ real symmetric，eigenvalues 为 $-\eta,d$，且
+
+$$
+E_0-E_u=[h(1-\cos u)\sigma_x-h\sin u\,\sigma_y]\oplus0.
+$$
+
+$H_0$ 的 traceless real part 与 $\sigma_y$ anticommute。因此
+
+$$
+\begin{aligned}
+\|H_0-h\sin u\,\sigma_y\|
+ &=\frac{\eta-d}{2}
+       +\sqrt{\frac{(\eta+d)^2}{4}+h^2\sin^2u}\\
+ &\le\eta+\frac{h^2\sin^2u}{\eta+d}.
+\end{aligned}
+$$
+
+第一行至少为 $\eta$，也控制了 full residual 中的 spectator scalar $\eta$。剩余 cosine perturbation 的 norm 为 $h(1-\cos u)=hr(u)^2/2$，scaling perturbation 的 norm 不超过 $h^2r(u)^2$，因为 $\|C_0\|\le1$。最后用 $\sin^2u\le r(u)^2$，三角不等式给出 (86.7)。当 $u=0$，residual 的 norm 恰为 $\eta$。∎
+

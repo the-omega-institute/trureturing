@@ -1,0 +1,133 @@
+### 引理 16.2（实际 $H_k$ 的终端尾部与非负秩一像的闭分离）
+
+设 $k\ge3$，$H_k$ 为引理 12.4 按 (12.5)、(12.7)--(12.9a)
+构造的来源，递归中的参数可作该引理允许的任意选择。记
+$T=T_{k-1}$ 为定义 13.1 的终端非重复数据向量，并定义辅助数据集合
+
+$$
+ \mathcal V_k=\{T(c\ell):c\in\mathbb R_{\ge0}^{k},\quad
+                     \ell\in\mathbb R_{\ge0}^{1\times k}\},
+ \qquad \mathcal Z_k=\overline{\mathcal V_k}.
+\tag{16.3}
+$$
+
+这里允许零因子的辅助像不改变来源域 $\mathcal M_k$。
+实际 $H_k$ 满足
+
+$$
+ \begin{aligned}
+ (a_{k-3},a_{k-2},a_{k-1})(H_k)&=(3,2,1),\\
+ (b^{(k-1)}_{k-3},b^{(k-1)}_{k-2},b^{(k-1)}_{k-1})(H_k)
+     &=(55/24,3/2,1).
+ \end{aligned}
+\tag{16.4}
+$$
+
+对任意 $\lambda>0$，到整个辅助闭包的最大范数距离满足
+
+$$
+ \operatorname{dist}_\infty\bigl(\lambda T(H_k),\mathcal Z_k\bigr)
+       >\frac{\lambda}{128}.
+\tag{16.5}
+$$
+
+**证明。** 基例 $H_3$ 由 (12.5) 直接给出纯 $N$ 读数 $(3,2,1)$
+和第一行 $(55/24,3/2,1)$。对终端切口，$b^{(n-1)}_j(H_n)=(H_n)_{0j}$。
+(12.7) 向左添加新列、向下添加新行，所以
+
+$$
+ b^{(n)}_{j+1}(H_{n+1})=b^{(n-1)}_j(H_n)
+       \quad(0\le j<n),\qquad
+ a_{i+1}(H_{n+1})=a_i(H_n)\quad(0\le i<n),
+\tag{16.6}
+$$
+
+后一式就是 (12.8)。两个序列的末三项均保留，归纳得到 (16.4)。
+这一结论使用实际递归矩阵的继承坐标，不另选来源。
+
+将 $T$ 的任意数据向量写为
+$z=(\alpha_0,\ldots,\alpha_{k-1},\beta_0,\ldots,\beta_{k-2})$，
+其中被省去的 $\beta_{k-1}=\alpha_{k-1}$ 只是同一坐标的别名。定义连续
+二次多项式
+
+$$
+ \Phi_k(z)=
+   (\alpha_{k-3}-\beta_{k-3})\alpha_{k-1}
+       -(\alpha_{k-2}-\beta_{k-2})\beta_{k-2}.
+\tag{16.7}
+$$
+
+对任意非负因子 $c,\ell$，直接展开相应的五个不同数据坐标：
+
+$$
+ \begin{aligned}
+ \alpha_{k-3}&=c_0\ell_{k-3}+c_1\ell_{k-2}+c_2\ell_{k-1},
+ &\beta_{k-3}&=c_0\ell_{k-3},\\
+ \alpha_{k-2}&=c_0\ell_{k-2}+c_1\ell_{k-1},
+ &\beta_{k-2}&=c_0\ell_{k-2},\\
+ \alpha_{k-1}&=c_0\ell_{k-1}.
+ \end{aligned}
+\tag{16.8}
+$$
+
+因此
+
+$$
+ \Phi_k(T(c\ell))=c_0c_2\ell_{k-1}^{\,2}\ge0,
+ \qquad \mathcal Z_k\subseteq\{z:\Phi_k(z)\ge0\}.
+\tag{16.9}
+$$
+
+第一式没有除以任何因子，故零因子同样在内；第二式由多项式连续性成立。
+即使一列因子或一行因子沿序列无界，只要数据收敛，其极限仍满足该不等式。
+
+另一方面，(16.4) 给出
+
+$$
+ \Phi_k(T(H_k))=(3-55/24)\cdot1-(2-3/2)(3/2)=-1/24.
+\tag{16.10}
+$$
+
+令 $r=1/128$，设 $\|z-T(H_k)\|_\infty\le r$，并记相关坐标的扰动为
+
+$$
+ \begin{aligned}
+ u&=\alpha_{k-3}-3,&v&=\alpha_{k-2}-2,&w&=\alpha_{k-1}-1,\\
+ s&=\beta_{k-3}-55/24,&t&=\beta_{k-2}-3/2.
+ \end{aligned}
+$$
+
+五者的绝对值均至多 $r$。式 (16.7) 的精确展开为
+
+$$
+ \Phi_k(z)=-\frac1{24}+u-s+\frac{17}{24}w-\frac32v+t
+                     +(u-s)w-vt+t^2.
+\tag{16.11}
+$$
+
+逐项取上界，得到整个闭球上的严格负界
+
+$$
+ \Phi_k(z)\le-\frac1{24}+\frac{125}{24}r+4r^2
+             =-\frac3{4096}<0.
+\tag{16.12}
+$$
+
+故半径 $1/128$ 的闭数据球与 $\mathcal Z_k$ 不交。若到该闭集的距离
+不大于 $1/128$，取逼近距离下确界的数据序列；该序列在有限维数据空间中
+有界，存在收敛子列。其极限属于闭集 $\mathcal Z_k$，同时属于上述闭球，
+矛盾。因此单位尺度下的距离严格大于 $1/128$。这里使用的数据有界性
+不要求任何因子序列有界。
+
+最后，$T$ 对矩阵线性，$\Phi_k$ 为二次齐次式，而
+$\lambda\mathcal V_k=\mathcal V_k$ 对所有 $\lambda>0$ 成立，故
+$\lambda\mathcal Z_k=\mathcal Z_k$。距离按 $\lambda$ 缩放，证明 (16.5)；
+相应半径 $\lambda/128$ 的闭球上还保有
+$\Phi_k\le-3\lambda^2/4096$。
+
+秩一条目多项式消去的相关背景见
+[*The Algebraic Combinatorial Approach for Low-Rank Matrix Completion*，
+Theorem 34、Remark 35](https://arxiv.org/html/1211.4116v4)（条目观测的电路关系）。
+本条的迹—首行观测恒等式 (16.9) 及其对实际递归 $H_k$ 的闭分离界，
+是由 (12.5)、(12.7)--(12.8) 和上述代数计算得到的本卷推导（repo-derived）。∎
+

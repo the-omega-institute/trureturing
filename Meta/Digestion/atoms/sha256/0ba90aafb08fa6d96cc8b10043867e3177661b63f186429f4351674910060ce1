@@ -1,0 +1,36 @@
+**Lemma 51.2 (an edit/Tick commutator with a literal first-terminal test).** For every $q\in\mathbb Q^N$,
+
+$$
+e_e^{\mathsf T}B_z^{\kappa_z}(B_z\iota_z-\iota_zA)q=q_z.
+\tag{51.2}
+$$
+
+Consequently the difference of the two alternative scalar functions in (51.1) is
+
+$$
+w^+_{z,j}(q)-w^-_{z,j}(q)=(A^jq)_z.
+\tag{51.3}
+$$
+
+**Proof.** In the promotion case a single fresh vertex $a=zL$ is attached to $z$. In the split case the old marker $z=vL$ persists and fresh vertices $a=zL$ and $b=vR$ are attached to $z$ and $v$, respectively. Old-old edges are unchanged. Directly applying adjacency to an old field with fresh zeros gives
+
+$$
+(B_z\iota_z-\iota_zA)q=
+\begin{cases}
+q_z e_a,&g_z=P_z,\\
+q_z e_a+q_v e_b,&g_z=S_v.
+\end{cases}
+\tag{51.4}
+$$
+
+The unique path from $e$ to $a$ has length $\kappa_z$. Hence its length-$\kappa_z$ walk count is exactly one. In the split case $e$ is outside the old beta cone, so
+$\operatorname{dist}(e,b)=\operatorname{dist}(e,z)=\kappa_z-1$. A tree is bipartite and its adjacency has zero diagonal; walks to $b$ therefore have the parity of $\kappa_z-1$, not $\kappa_z$. Its length-$\kappa_z$ count is zero. Substitution in (51.4) proves (51.2), including its sign. The two actual scalar functions are
+
+$$
+w^+_{z,j}(q)=e_e^{\mathsf T}B_z^{\kappa_z+1}\iota_zA^jq,
+\quad
+w^-_{z,j}(q)=e_e^{\mathsf T}B_z^{\kappa_z}\iota_zA^{j+1}q.
+$$
+
+Subtract them and apply (51.2) to $A^jq$. No source experiment performing that subtraction or undoing an edit is part of the identity. $\square$
+

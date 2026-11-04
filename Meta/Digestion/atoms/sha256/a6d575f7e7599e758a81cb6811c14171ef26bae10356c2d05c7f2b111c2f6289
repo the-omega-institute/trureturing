@@ -1,0 +1,58 @@
+**Theorem 82.3 (sharp worst-case Read count in the enlarged class).** Every
+receiver of Definition 82.1 has an admitted input on which it uses at least
+four successful late terminal Reads. Four suffice. The necessity includes
+pointwise-finite adaptive protocols with original growth and arbitrary
+rational Adds; the positive attainment needs neither.
+
+**Proof of necessity.** Suppose an exact receiver used at most three Reads
+on every input. Before its first Read every reply is field-independent, so
+its first Read cut is common. It must reach such a cut in finite time:
+stopping without a Read would give the same answer on different words, and
+an infinite readless execution would contradict pointwise termination.
+Freeze its row, of parity $p$, and choose two different colliding
+$p$-polynomials $P_0,P_1$ by Lemma 82.2. Write $q=1-p$.
+Leave the opposite component $Q$ free among monic $q$-polynomials with
+degree above both $P_i$. Every $P_i+Q$ is a genuine polynomial (82.1),
+and all give the same first reply, including its complete scalar frame.
+Thus they share the next finite readless path. A stop there already fails;
+an infinite such path contradicts termination on these actual inputs.
+
+At the now fixed second Read there are two cases. If its parity is $q$,
+Lemma 82.2 supplies two colliding monic choices $Q_0,Q_1$ of sufficiently
+high degree. The four polynomials $P_i+Q_j$ share both replies. At the
+third Read its row sees only one factor. Fix that factor and vary the other;
+two different admitted words then share all three replies. If instead the
+second parity is $p$, fix $P_0$. All high monic $Q$ share its second
+reply. A third $p$-Read leaves all those $Q$ indistinguishable. A third
+$q$-Read has two colliding high monic $Q$ by Lemma 82.2. Again two
+different words share the entire three-Read transcript.
+
+At each stage the argument also covers a stop before the next Read. The
+selected rows do not anticipate an unobserved component: the next row is
+fixed only after the preceding common complete replies. Identical receiver
+state chooses identical operands, growth addresses, raw bindings, grants,
+frames and stop decisions. Common Adds cancel. Structural guards and
+complete refusals coincide because the structural paths coincide. Thus the
+frozen-path argument is an induction on actual complete replies, not an
+assumption of a nonadaptive schedule. The two final words must receive the
+same report, a contradiction. No uniform time or length cutoff was used.
+
+For attainment use exactly NLBAII Definition 76.1 and Corollary 76.2:
+
+$$
+\operatorname{Tick}^3;\operatorname{Hold};
+\operatorname{Read}(LL);\operatorname{Read}(RR);
+\operatorname{Tick};\operatorname{Hold};
+\operatorname{Read}(LL);\operatorname{Read}(RR);\operatorname{Hold}.
+\tag{82.4}
+$$
+
+Its four performed scalars $Y_4(w)$ are the two indicated coordinates
+at epochs three and four. The supplier proves their injectivity for all
+finite monic quaternary words, exact enumeration terminating on the whole
+promised image, and installation of full service at
+$v=A^4F_w(A)e$. It uses four Reads, four Ticks and three Holds, zero
+late Add or growth. This positive theorem, including its improvement to
+four Ticks, is credited rather than reproved as new content. Combining it
+with the new necessity proves the exact Read optimum. $\square$
+

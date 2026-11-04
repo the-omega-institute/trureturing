@@ -1,0 +1,56 @@
+**推论 16.2（恰四世界原根失败的两个混合二步响应都恒定）。**
+For any $a_0\in\mathbb R$, let $K$ consist of exactly four distinct
+complete worlds in the entire initial-$a_0$ fiber. If
+$L_7(K,(a_0))$, then for each chronological word
+$v=E_1E_2\in\{JM,MJ\}$ there is a real $b_v$ such that
+
+$$
+\delta_W+g_W(2)\operatorname{tr}(E_2E_1P_W)=b_v
+\qquad(W\in K).
+\tag{16.13}
+$$
+
+Moreover $L_5(K,(a_0,E_1,r_{E_1},E_2,b_v))$ holds for both
+words, with $r_J=j$, $r_M=m$ the unequal constants of Theorem
+15.3. No equality or inequality between $b_{JM}$ and $b_{MJ}$
+is asserted.
+
+Proof. Theorem 15.3 supplies pairwise different sources and both
+constant first responses $j\ne m$ on $K$. For each first action
+$E_1$, its only nonempty response intersection within $K$ is
+exactly $K$, so recursion gives
+$L_6(K,H_{E_1})$, where $H_{E_1}=(a_0,E_1,r_{E_1})$.
+For the selected mixed second action $E_2$, recursion supplies a
+real $b$ with the full intersection
+
+$$
+C=K\cap\mathcal F(H_{E_1},E_2,b),\qquad
+L_5(C,(H_{E_1},E_2,b)).
+\tag{16.14}
+$$
+
+The stopping guard gives $|C|\ge2$. A two-world $L_5$ at clock
+two is impossible by the same source, Lemma 22.3. If $|C|=3$,
+this literal $C$ has all the hypotheses of Theorem 16.1: its
+sources differ, it inherits both first-response equations and the
+initial reading, and every member realizes the same mixed second
+history with response $b$. That theorem excludes its $L_5$.
+Thus $|C|=4$ and $C=K$. Set $b_v=b$. This proves (16.13) and
+the stated retained $L_5$ for each word separately. The full
+ambient fiber may contain other worlds; only its displayed
+intersection with $K$ is used. ∎
+
+The mixed-prefix triple exclusion and its four-world consequence
+are repository-derived model-specific deductions. The pair root
+classification, actual-product certificates, finite-game recursion,
+polynomial interpolation and positive-source chart are reused
+suppliers, not separate new general results. Theorem 15.3 and
+its source-injection supplier, the cited core's Theorem 30.1,
+retain their exact four-world original-root hypotheses in the
+corollary. These conclusions do not decide whether any exactly-four
+original-root $L_7$ support exists, do not extract one from a larger
+or infinite support, and do not prove or refute an unrestricted
+eight-read decoder. No gain direction, known gain plane, promise
+detector or union inverse is supplied. No external-priority claim
+is made.
+

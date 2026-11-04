@@ -1,0 +1,33 @@
+**定义 35.1（有序识别下的两个实结构）。** 沿用定义 30.1 的 $B,U,f,q,g=Uf,a=Uq,S_\pm$ 和 $E_y$。
+另作字面有序识别：将该仪器的物理基 $(e_0,\ldots,e_4)$ 逐项对应定义 20.1 的 $(e_N,e_2,e_3,e_5,e_{25})$，即[预测波 §5](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)的位置标签 $m=(0,1,2,3,13)$。
+这是两个数学载体的对应前提，不供应物理端口映射或 $S_\pm$ 的安装。
+取定义 20.1 的固定 $K=\mathsf K$、$D=\operatorname{diag}(1,i,i,i,1)$，以 $V(s)=e^{-isK}$ 表示五维等待；$U$ 仍是三维置换，不是 $V$。
+
+允许输入为任意复密度矩阵 $\rho\in M_5(\mathbb C)$。
+原生菜单仅有 $s\ge0$ 的 $V(s)$、完整秩一读取 $\mathcal J_j(X)=P_jXP_j$（$P_j=e_je_j^\dagger$）、Stop、有限记录反馈及输入无关的可测经典随机化。
+每条记录保留全部读取标签及最终 Stop；失败事件若由记录命名，其质量仍计入总质量。
+经典合并记录不改成保持粗块相干的 Lüders 读取；不增加量子辅助、参考、复制、独立相位或任意正交控制，也不授予输入制备。
+
+物理坐标实效果与 $D$ 帧实效果分别指 $F=\overline F$ 与 $D^\dagger FD=\overline{D^\dagger FD}$，二者不同。
+§30 的擦除 Kraus 菜单使用前者；本原生菜单使用后者。
+固定基实操作的约定见 [Wu 等的文献说明](../../../Library/Quantum/wu2021imaginarity.md)及其[伴随论文 §III](https://arxiv.org/abs/2103.01805v1)；允许全部实 Kraus 操作的资源理论不把这些操作加入这里的固定菜单。
+
+为给出本源的精确参数对应，置
+
+$$
+x=\frac{\sqrt2+1}{\sqrt{12}},\qquad y=\frac{\sqrt2-2}{\sqrt{12}},\qquad
+G=Bg=\begin{pmatrix}1/2\\0\\-1/\sqrt2\\1/2\\0\end{pmatrix},\qquad
+H=Ba=\begin{pmatrix}x/\sqrt2\\y/\sqrt2\\x\\x/\sqrt2\\y/\sqrt2\end{pmatrix}.
+\tag{35.1}
+$$
+
+由预测波 §17.1 的 $B=((e_0+e_3)/\sqrt2,(e_1+e_4)/\sqrt2,e_2)$ 和 $U$ 交换末两坐标，得到 (35.1)，且 $G^\dagger G=H^\dagger H=1$、$G^\dagger H=0$。
+依定义 30.1 及应用 30.2，在 $0<t<1$、$\alpha_t=\sqrt{1-t^2}$ 下，
+
+$$
+\rho_{t,\pm}:=S_\pm(ff^\dagger)=\psi_{t,\pm}\psi_{t,\pm}^\dagger,
+\qquad\psi_{t,\pm}=\alpha_tG\pm itH,\qquad
+E_y=\tfrac12(G+iH)(G+iH)^\dagger.
+\tag{35.2}
+$$
+

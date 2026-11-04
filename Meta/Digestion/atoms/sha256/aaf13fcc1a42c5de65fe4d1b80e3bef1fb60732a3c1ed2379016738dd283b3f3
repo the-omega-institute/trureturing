@@ -1,0 +1,20 @@
+**Lemma 30.3 (unary sharpness at every shorter length).** For every
+$K\ge1$ and $0\le v<2K-1$, two streams of $\mathscr M_K$
+agree at indices below $v$ and differ at $v$.
+
+Proof. For $v\le K-1$, use the zero stream and $0^v1^\infty$.
+The latter uses a path of $v$ zero-output states into a one-output
+fixed point, for $v+1\le K$ states. This covers $K=1,v=0$.
+
+For $K\le v\le2K-2$, put $r=v-(K-1)$, so
+$1\le r\le K-1$. One source is a $K$-cycle with its unique one
+at phase $r$, starting at phase zero. The other has one initial
+zero-output transient state, followed by a $(K-1)$-cycle with its
+unique one positioned to first occur at index $r$. Both use at most
+$K$ states. Both first emit one at $r$. The second's next one is at
+$r+K-1=v$, whereas the first's next one is at $r+K=v+1$.
+There is no other one before $v$, so the streams agree on precisely
+the asserted prefix and differ at its next bit. These are unary
+witnesses; multi-input sharpness examples are not being substituted
+for them. $\square$
+

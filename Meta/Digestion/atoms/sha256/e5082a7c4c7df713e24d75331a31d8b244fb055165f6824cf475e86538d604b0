@@ -1,0 +1,4 @@
+**推论 3.2（MJM 历史上的条件强制）。** A correct at-most-eight-read full-domain protocol reaching the history (3.1) without its last action and read must take fourth action $M$.
+
+Proof. Stopping fails on the three targets, and fourth $J$ enters Theorem 3.1. The fourth-$M$ subtree remains a separate obligation. For instance $\varepsilon=1/12,\lambda=1,\delta=0$ gives the literal losing parent $(-21,M,0,J,65/12,M,0,J,-21/2)$; its selected fifth reads are $-220/3,-196/3$, and its selected sixth reads at $MM,MJ,JM,JJ$ are respectively $-345/4,-75/4,-155/2,-35/2$. All final reads are zero. ∎
+

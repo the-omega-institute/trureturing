@@ -1,0 +1,24 @@
+**定义 62.2（证明中的固定源与记号）。** 以下固定定理 62.1 的参数，置 $c=d/2\in(0,1/2)$。在 $(\xi,e,f)$ 基中，去掉不影响共轭作用的公共相位，原生成元为
+
+$$
+\begin{gathered}
+V'_j=1\oplus B_j,\qquad z_\theta=e^{-2\mathrm i\theta},\qquad
+R=\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1),\\
+D_\theta=\operatorname{diag}(1,z_\theta),\qquad
+B_0=RD_\theta,\quad B_1=B_0Z.
+\end{gathered}
+\tag{62.2}
+$$
+
+当一个实模型被假定存在时，记 $T_j=2\Phi_j$、$T_h=T_{j_n}\cdots T_{j_1}$、$X_{h,\rho}=T_h\sigma(\rho)$。由两终端等式而非额外公平性假设，
+
+$$
+\operatorname{Tr}X_{h,\rho}=1,\qquad
+\operatorname{Tr}(F X_{h,\rho})=
+\operatorname{Tr}(E V_h\rho V_h^\dagger).
+\tag{62.3}
+$$
+
+$V_h$ 与 $V'_h$ 在此处有同一共轭作用。所有闭包均取有限维线性映射的通常范数拓扑；实 CP 映射始终指在完整实矩阵代数上的实 Kraus 映射，而非只在对称矩阵锥上为正的映射。
+

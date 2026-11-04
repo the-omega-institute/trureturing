@@ -1,0 +1,16 @@
+#### 定义 5.1（五模式中的三元 Fourier 编码）
+
+令 $\omega=e^{2\pi i/3}$，取 $\psi=(\alpha,\beta)^T$。定义
+
+$$
+
+a_j=\frac{\alpha+\omega^{-j}\beta}{\sqrt3}, j=0,1,2,
+  V\psi=(a_0,a_1,a_2)^T.
+
+$$
+
+将三个输出依次放到 AURIC 的 $\lvert 1\rangle,\lvert 3\rangle,\lvert 2\rangle$，空模式与 $\lvert 13\rangle$ 振幅取零。这样三个占位均值就是
+$X=q_0,Y=q_1,Z=q_2$，其中 $q_j=|a_j|^2$。
+
+
+<a id="thm:trineisometry"></a>

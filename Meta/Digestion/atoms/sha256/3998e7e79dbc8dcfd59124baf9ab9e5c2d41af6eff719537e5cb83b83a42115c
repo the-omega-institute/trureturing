@@ -1,0 +1,47 @@
+**Definition 142.1 (The order-three member).**
+Use the original source of V Definition 91.1, with the sole preparation
+$\psi=2^{-1/2}Uq+\mathrm i2^{-1/2}Ue$, where the present
+$e=(1,-1,0)^{\mathsf T}/\sqrt2$ is V's vector $f$. In the ordered
+orthonormal basis $(\xi,v_+,e)$ of (141.1), fix
+
+$$
+\begin{gathered}
+d=\tfrac12,\quad\theta=\tfrac\pi4,\quad W=\operatorname{diag}(1,1,-1),\qquad
+N=\begin{pmatrix}-1/2&\mathrm i\sqrt3/2&0\\
+\mathrm i\sqrt3/2&-1/2&0\\0&0&1\end{pmatrix},\\
+\psi=\begin{pmatrix}1/2\\(-1+\mathrm i\sqrt6)/4\\
+(\sqrt3+\mathrm i\sqrt2)/4\end{pmatrix},\qquad
+V=\begin{pmatrix}1&0&0\\0&-1/2&-\mathrm i\sqrt3/2\\
+0&\sqrt3/2&-\mathrm i/2\end{pmatrix},\\
+U_0=V,\quad U_1=VW,\quad U_N=N,\qquad
+U_{b_1\cdots b_k}=U_{b_k}\cdots U_{b_1},\quad U_\varnothing=I_3,\\
+(u_1,\ldots,u_9)=(\varnothing,0,1,00,10,000,010,100,N),\\
+\kappa(u)=\#\{j:u_j\in\{0,1\}\},\qquad
+r_i=2^{-\kappa(u_i)}U_{u_i}\psi\psi^\dagger U_{u_i}^\dagger,\\
+\mathcal W_2=(\varnothing,0,1,N,00,01,0N,10,11,1N,N0,N1,NN),\\
+a_w=2^{-\kappa(w)},\qquad Q_w=U_wV,\qquad
+\rho(i,w)=13(i-1)+\operatorname{pos}_{\mathcal W_2}(w).
+\end{gathered}
+\tag{142.1}
+$$
+
+Here $V=e^{-\mathrm i\pi/4}V_0$ is used only inside system
+conjugations. This common scalar cancels from every original
+probability, including mixed histories containing $N$; it is not
+a rotation of the retained record. Keep all original schedules,
+clocks, labels and installed operations. Every occurrence of $0$ or
+$1$ denotes its original random label, with no label selection.
+In the present coordinates the original return constants are
+
+$$
+\begin{gathered}
+b=\frac{3+2\sqrt2}{12},\qquad t=\tau e,\qquad
+\tau=\frac{2+\sqrt2}{8},\\
+D=\begin{pmatrix}1/2&-1/4&0\\-1/4&1/8&0\\0&0&3/8\end{pmatrix},
+\qquad \|D\|_{\rm HS}=\frac{\sqrt{34}}8,\\
+A=\tfrac12,\qquad f=(\xi+\mathrm i v_+)/\sqrt2,\qquad
+h_0(\eta)=Ae+\eta f.
+\end{gathered}
+\tag{142.2}
+$$
+

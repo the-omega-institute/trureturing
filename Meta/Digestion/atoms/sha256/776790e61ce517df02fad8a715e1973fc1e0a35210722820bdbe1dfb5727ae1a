@@ -1,0 +1,243 @@
+**定理 19.2（单位像秩三与非例外比例秩二的完整守卫排除）。** Under Definition 19.1, put
+
+$$
+w_A=J^4MJJ,\qquad w_B=J^4MMJ.
+$$
+
+
+Suppose either
+
+1. $\operatorname{rank}\mathscr H=3$; or
+2. $\operatorname{rank}\mathscr H=2$ and, for a real constant $\gamma\ne13/4$, the map identity $E=\gamma\Delta$ holds on $V$.
+
+Then
+
+$$
+D_{w_A}|_V=0,
+\tag{19.4}
+$$
+
+
+and at least one of the following holds:
+
+$$
+P_{(w_A,0)}=P_{(w_A,1)},
+\tag{19.5a}
+$$
+
+
+$$
+P_{(w_B,0)}=P_{(w_B,1)}
+\quad\hbox{and}\quad D_{w_B}|_V=0.
+\tag{19.5b}
+$$
+
+
+Consequently a required original full same-source separation guard fails at $w_A$ or $w_B$. The conclusion concerns the original complete tuple and its whole kernel; it has no assumptions on the gain guards, source equalities, sample roots, or other branches.
+
+Proof.
+
+Write $p(T)=rT+sT^2+hT^3$. The coefficient rows of $m,E,\Delta$, in that order, are
+
+$$
+(2,5,14),\qquad(8,40,176),\qquad(2,8,26),
+$$
+
+
+whose determinant is $-240$. Direct coefficient comparison also gives
+
+$$
+\begin{aligned}
+p(5)&=m+E-\frac52\Delta,\\
+p(6)&=2m+\frac94E-8\Delta,\\
+p(7)&=\frac{21}{5}m+\frac{21}{5}E-\frac{35}{2}\Delta,\\
+\kappa&=m+\frac54E-\frac{11}{2}\Delta,\\
+\lambda&=\frac{16}{5}m+\frac{16}{5}E-15\Delta.
+\end{aligned}
+\tag{19.6}
+$$
+
+
+In case 1, $m,E,\Delta$ are independent on $V$. Moreover, each of the pairs
+
+$$
+(\lambda,\Delta),\qquad(p(6)-m,\Delta),\qquad(\lambda,\kappa)
+\tag{19.7}
+$$
+
+
+is independent: their first two coefficient minors in the $(r,s,h)$ coordinates are respectively $-32,-30,-2$.
+
+In case 2, $m,\Delta$ are independent. Otherwise $m,E,\Delta$, and hence $\mathscr H$, would have rank at most one. Formula (19.6) then shows that the first two pairs in (19.7) are independent, and that $\kappa\ne0$. Relative to $(m,\Delta)$, the determinant for the last pair is
+
+$$
+\det\begin{pmatrix}
+16/5&16\gamma/5-15\\
+1&5\gamma/4-11/2
+\end{pmatrix}=\frac{4\gamma-13}{5}\ne0.
+\tag{19.8}
+$$
+
+
+Thus all three pairs in (19.7) are independent in either case.
+
+We first obtain identities for every one of the $16$ slots below $J^4$. For such a slot put
+
+$$
+t_q=b_q+c_q>0,\quad d_q=1-a_q\in(0,1),\quad
+T_q=t_q+d_q=\operatorname{tr}(MP_q)>0,
+$$
+
+
+and write $p_q=g_q-k_q$. Its even ancestors give $p_q(2)=p(2)$ and $p_q(4)=p(4)$. Therefore
+
+$$
+p_q-p=\rho_q v,\qquad v(T)=\frac{T(T-2)(T-4)}6,
+$$
+
+
+for a scalar-valued linear map $\rho_q$. Its two odd ancestors have response difference $\Delta$. Since $v(3)-v(1)=-1$,
+
+$$
+\Delta=t_q\bigl(\Delta-\rho_q\bigr),
+\qquad \rho_q=(1-1/t_q)\Delta.
+$$
+
+
+Also $v(1)+v(3)=0$, so averaging these odd ancestors gives
+
+$$
+(t_q-1)(k_q+m)=0.
+$$
+
+
+We have proved, on the whole $V$,
+
+$$
+g_q=k_q+p+(1-1/t_q)\Delta v,
+\qquad (t_q-1)(k_q+m)=0.
+\tag{19.9}
+$$
+
+
+In particular, $k_q=-m$ for a fixed nonunit source; for a unit source its constant is still unrestricted by these four ancestors.
+
+Consider the two slots of $w_A$. At clocks $5,6,7$ their cumulative matrices are
+
+$$
+M,\quad JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad M,
+$$
+
+
+with trace factors $T_q,1+c_q,T_q$. The clock-seven response minus the clock-five response equals
+
+$$
+T_q\bigl(g_q(7)-g_q(5)\bigr)
+=T_q\bigl(\lambda+15(1-1/t_q)\Delta\bigr),
+\tag{19.10}
+$$
+
+
+because $v(7)-v(5)=15$. Comparing the two slots and using the independence of $\lambda,\Delta$ proves that they have the same $T$, then the same $t$, and hence the same $d=T-t$. Their nonconstant gain parts in (19.9) agree.
+
+If $t\ne1$, their constants are both $-m$. If $t=1$, their common fifth response gives
+
+$$
+(T-1)(k_0-k_1)=d(k_0-k_1)=0,
+$$
+
+
+and $d>0$ again identifies the constants. This proves (19.4), including its constant component.
+
+If the two sources at $w_A$ coincide, (19.5a) completes the proof. Assume that they differ. Their common $t,d$ then imply different $c$. Their common sixth response, with their already equal entire gains, forces
+
+$$
+g_{(w_A,0)}(6)=g_{(w_A,1)}(6)=0
+\quad\hbox{as maps on }V.
+\tag{19.11}
+$$
+
+
+For $t\ne1$, formula (19.9) would instead give
+
+$$
+g(6)=p(6)-m+8(1-1/t)\Delta\ne0
+$$
+
+
+by (19.7). Thus these two sources have $t=1$. Write their common $d$ as $d_*\in(0,1)$. Equation (19.11) gives $k=-p(6)$. Consequently the common fifth response of the entire $J^4M$ subtree is
+
+$$
+y=R_{J^4M}=(1+d_*)\bigl(p(5)-p(6)\bigr)+p(6)
+=p(5)-d_*\kappa.
+\tag{19.12}
+$$
+
+
+We next show that all eight slots in this subtree have unit signature. If a slot $q\in S_{J^4M}$ had $t_q\ne1$, then (19.9), $v(5)=5/2$, and (19.6) would give
+
+$$
+y=m+T_qE-\frac52\frac{T_q}{t_q}\Delta.
+\tag{19.13}
+$$
+
+
+But (19.12) gives
+
+$$
+y=(1-d_*)m+\left(1-\frac54d_*\right)E
++\left(-\frac52+\frac{11}{2}d_*\right)\Delta.
+\tag{19.14}
+$$
+
+
+In case 1 independence of $m,E,\Delta$ makes the coefficients of $m$ in (19.13) and (19.14) incompatible, since $d_*>0$. In case 2 substitute $E=\gamma\Delta$; independence of $m,\Delta$ gives exactly the same contradiction. Therefore
+
+$$
+t_q=1\qquad(q\in S_{J^4M}).
+\tag{19.15}
+$$
+
+
+This uses one shared fifth response on the original whole kernel, simultaneously for both sixth-action branches.
+
+For each such slot, its fifth response now determines its whole gain:
+
+$$
+k_q=-p(5)-\frac{d_*}{d_q}\kappa,\qquad
+ g_q(6)=\left(1-\frac{d_*}{d_q}\right)\kappa,\qquad
+ g_q(7)=\lambda-\frac{d_*}{d_q}\kappa.
+\tag{19.16}
+$$
+
+
+Only the positive fixed source scalar $d_q$ was inverted.
+
+Finally consider the two slots of $w_B$, writing their $d$'s as $d_0,d_1$. Their cumulative matrices at clocks $5,6,7$ are
+
+$$
+M,\quad M^2,\quad JM^2=\begin{pmatrix}1&2\\1&1\end{pmatrix}.
+$$
+
+
+By (19.15) their traces are $1+d_q,2+d_q,2+c_q$. Substituting (19.16) into their common sixth response yields
+
+$$
+0=(d_0-d_1)\left(1+\frac{d_*}{d_0d_1}\right)\kappa.
+\tag{19.17}
+$$
+
+
+Here $\kappa\ne0$ as a linear map, and the scalar factor in parentheses is strictly positive. Thus $d_0=d_1=d$. Formula (19.16) then identifies their entire gains and constants, proving $D_{w_B}|_V=0$. Their common seventh gain map is nonzero:
+
+$$
+g(7)=\lambda-\frac{d_*}{d}\kappa\ne0
+\tag{19.18}
+$$
+
+
+by the independence of $\lambda,\kappa$. Their seventh response equality, with trace $2+c_q$, therefore forces $c_0=c_1$. The common $d$ and $t=1$ give identical $a,b,c$, so the sources also coincide. This proves (19.5b).
+
+In both alternatives, a fixed same-source leaf has its full four-component difference zero on all of $V$. It is therefore an applicable original separation guard that fails. No polynomial sample or value of a linear map at a selected vector was divided out. All claims of nonzero maps used linear independence on the entire kernel. ∎
+
+

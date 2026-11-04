@@ -1,0 +1,30 @@
+**Proposition 5.2 (domain and observation boundaries).** None of the
+following substitutions is part of Theorem 5.1: replacing the original
+stream by its core, treating a final invisible batch as directly read,
+fixing one clock seed, using a nonminimal Hankel block as nonsingular,
+or replacing an acquired support by a finite menu without a completeness
+proof. The theorem needs no restriction excluding any such source.
+
+**Proof.** The small-root branch decodes only births through $n-1$;
+the deep branch decodes only normalized batches through $T-1$.
+A final rank-two cherry has identical support for its two orientations,
+so no final orientation is used as a presence observation. The alignment
+inverse uses the actual $+1$ identity in Theorem 2.2; deleting it
+would replace $y$ by $Ey$ in the Hankel cancellation, which differs
+for any nonconstant periodic core. Proposition 3.2 shows why nonminimal
+padding cannot be inverted indiscriminately. Proposition 4.3 shows why
+an aligned core alone cannot replace the original output. The selector
+pays the complete scan and every negative terminal test, resolving the
+finite-menu distinction of PCR Proposition 2.2.
+
+Both shallow seeds are enumerated. ACR Proposition 28.5 gives actual
+sources in $\mathscr R_5$ at the same depth-three address $aba$ with
+clock pairs $(9,14)$ and $(9,15)$, while their first seed and local
+normalization cut agree. Its argument only establishes the failure
+of that exact-clock shortcut; it is not an acquisition lower bound.
+Here neither coordinate is discarded. Exponential-period sources in
+NRW Theorem 2.4 remain admitted: the three finite windows and the
+Hankel inverse do not materialize their period. Singular transients
+are handled by the depth cutoff and the later original-parent induction,
+never by reversing a noninvertible all-index transition. $\square$
+

@@ -1,0 +1,59 @@
+**Theorem 13.1 (effective native axes and exact residual ambiguity).** The earned data of Theorem 12.2 effectively determine the whole native coefficient law and its positive-support graph up to an ordered-port-fixing permutation. No simple-spectrum premise on $T$ and no additional source call is needed. Two sources in the same class and common installation have equal complete calibration tables for a fixed schedule if and only if their laws are related by such a permutation. Here the table includes all measured moment and Square-window scalars; pulse choices are the deterministic functions of the moment table in Definition 12.1.
+
+**Proof.** Use the classical diagonal-contraction method in [Anandkumar et al., Appendix D][CMTensor] on the acquired algebra: multiplication $L_z:v\mapsto\mu(z,v)$ satisfies
+
+$$
+R L_zR^{-1}=\operatorname{diag}(Rz).
+\tag{CM.13}
+$$
+
+The rows $r_a$ of the unknown invertible $R$ are pairwise distinct. For $z(t)=(1,t,\ldots,t^{N-1})^{\mathsf T}$, every row difference $(r_a-r_c)z(t)$ is a nonzero polynomial of degree at most $N-1$. Their product is nonzero with degree at most
+
+$$
+d=\binom N2(N-1).
+\tag{CM.14}
+$$
+
+A nonzero degree-at-most-$d$ polynomial cannot vanish at all integers $0,\ldots,d$. Thus one of these finitely many $t$ gives distinct diagonal entries in (CM.13). For $N=1$ the empty product is one and $d=0$. The controller forms each rational $L_{z(t)}$ and tests whether its characteristic polynomial is squarefree by the polynomial gcd with its derivative. By (CM.13), the successful test is exactly the distinct-entry condition and will occur.
+
+Write $\lambda_a$ for the eigenvalues of that successful matrix. They are rational, because they are the actual rational coordinates of $Rz(t)$; one of them is allowed to be zero. They are found without an eigenvalue oracle: clear denominators in the characteristic polynomial, record and remove a zero root if present, then enumerate the finitely many signed numerator divisors of the remaining nonzero constant coefficient and positive denominator divisors of its leading coefficient, test, and divide out the found linear factors. Stop when the remaining polynomial is constant. This is the ordinary rational-root theorem, as supplied at the pinned upstream by [num_dvd_of_is_root and den_dvd_of_is_root][CMRoots]. The promised splitting and simple roots ensure that this finite calculation finds all $N$ roots. In particular a removed zero root is retained in the root list and is not discarded from the reconstruction.
+
+For each $\lambda_a$, rational elimination on $L_{z(t)}-\lambda_a I$ gives a one-dimensional nullspace. Choose its unique vector $v_a$ whose first nonzero coordinate is one. This fixes a deterministic rational nonzero vector even for $\lambda_a=0$. By (CM.13), $Rv_a$ lies on the unique coordinate axis whose diagonal entry is $\lambda_a$. Thus
+
+$$
+Rv_a=\gamma_a e_{\pi(a)},\qquad
+\gamma_a\in\mathbb Q\setminus\{0\}.
+$$
+
+Nonvanishing of $\gamma_a$ follows from invertibility of $R$ and $v_a\ne0$. It does not follow from, or require, $\lambda_a\ne0$. The eigenvalue $\lambda_a=(Rz(t))_{\pi(a)}$ evaluates the chosen multiplier; the amplitude $\gamma_a=(Rv_a)_{\pi(a)}$ evaluates its eigenvector. Using the acquired product rather than division by an eigenvalue gives
+
+$$
+F(v_a)=\mu(v_a,v_a)
+=R^{-1}(\gamma_a^2e_{\pi(a)})=\gamma_av_a.
+\tag{CM.15}
+$$
+
+If $i_a$ is that first nonzero coordinate, compute $\gamma_a=\mu(v_a,v_a)_{i_a}/(v_a)_{i_a}$ and set $w_a=v_a/\gamma_a$. Both divisors are nonzero by the preceding argument; with the chosen normalization $(v_a)_{i_a}=1$. The calculation uses only the earned table and the computed eigenvector, not the unknown $R$ or a new source Square. Then $Rw_a=e_{\pi(a)}$. For example, with $N=2$, $B=e_1$, $T=\begin{pmatrix}0&1\\1&0\end{pmatrix}$ and $R=I$, the first candidate $z(0)=(1,0)^{\mathsf T}$ has distinct eigenvalues $1,0$. Its zero eigenline gives $v=e_2$, $\mu(v,v)=e_2$, $\gamma=1$ and $w=e_2$, so it is recovered by the same rule.
+
+This normalization removes sign and scale on every eigenline. It needs neither an invertible multiplier $L_{z(t)}$ nor an invertible source law $T$, and imposes no additional condition on NQB or QLAB-Sq. Order the eigenvalues increasingly, identify each port by the unique equality $D_j=w_a$, and reorder the columns with those $b$ port atoms first in their authentic order and the remaining atoms in eigenvalue order. Write $W=[w_1\ \cdots\ w_N]$. Then $RW=P$ is a permutation matrix and
+
+$$
+\widehat T=W^{-1}AW=P^{\mathsf T}TP,
+\qquad \widehat B=W^{-1}D=P^{\mathsf T}B,
+\qquad \widehat x=W^{-1}z=P^{\mathsf T}x.
+\tag{CM.16}
+$$
+
+These recover every diagonal and off-diagonal coefficient, hence the weighted native graph, in a port-labelled representative. The anonymous remaining atoms are not raw native references. In particular $W^{\mathsf T}GW=I$, so the Gram-normalized and matrix-inverse conversions agree.
+
+For completeness, consider equal tables on two sources, and let $R,R'$ be their proof matrices chosen by the same Gram pivots. Their $G,A,D,E,F$ and $\mu$ agree. Put $U=R'R^{-1}$. The learned identities give $UT=T'U$, $UB=B'$ and
+
+$$
+U(x\odot y)=(Ux)\odot(Uy)\quad(x,y\in\mathbb Q^N).
+\tag{CM.17}
+$$
+
+This is the elementary rigidity of the finite function algebra. Each $Ue_v$ is a nonzero idempotent, so every one of its coordinates is zero or one. Distinct such columns have disjoint supports by (CM.17). There are $N$ disjoint nonempty supports in $N$ coordinates, forcing each to be a singleton. Thus $U$ is a permutation, and $UB=B'$ fixes the ordered port correspondence. Conversely a port-fixing permutation intertwines Reset, Add, Tick, Read, Hold and native Square, preserves zero, and preserves every deterministic trial and reply. It therefore gives equal full calibration tables. The full-interface rigidity principle is mature; [diagonal_interface_conjugacy][CMDiag] and its [owning Scribe][CMDiagS] concern a supplied diagonal-operator interface on complex finite-state transfer spaces. They supply neither (CM.9)–(CM.12) nor a general acquisition theorem for these weighted matrices. $\square$
+
+The bounded integer search and atom normalization are a finite exact decoder of the earned table, not a polynomial bit-work or conditioning claim. Equal linear moments alone only give the orthogonal realization ambiguity of [minimal_symmetric_realization_uniqueness][CMMS] and its [owning Scribe][CMMSS]. In that supplier the state spaces are finite-dimensional real inner-product spaces, update is symmetric, input map is $B$, equality concerns every $B^{\mathsf T}T^kB$, and both reachable spans are full. Its private combination, Gram and kernel arguments establish that coordinate conclusion. The actual acquired multiplication is the extra premise that reduces it to (CM.17).
+

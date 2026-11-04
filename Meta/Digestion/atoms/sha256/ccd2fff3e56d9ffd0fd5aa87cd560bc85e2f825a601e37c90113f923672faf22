@@ -1,0 +1,49 @@
+**Proposition 7.3 (An explicit counterlaw for every $a\ge7$).** At
+
+$$
+\delta=\frac1{2a},\qquad
+\varepsilon=\frac{(2r-1)\delta}{r^2},\tag{7.6}
+$$
+
+the law (7.2) is feasible and satisfies
+
+$$
+H_d-\mathcal H(\varepsilon)
+\ge\frac{(2r-1)^2\delta^2}{r^2\mu^3}>0.\tag{7.7}
+$$
+
+**Proof.** The strict mass inequality in (7.3) is equivalent to
+
+$$
+(2a+1)(a+2)<(a-1)(a+1)^2.
+$$
+
+The difference is $a^3-a^2-6a-3$, positive for $a\ge7$ since it is at least $6a^2-6a-3$. Also $\varepsilon<1/(ar)$ and $\mu\ge7/9$. For every $0\le z\le\varepsilon$ these imply
+
+$$
+\mu-\frac{2z}{a}\ge\frac9{10}\mu>0,
+$$
+
+because $2/(a^2r)\le2/(7^2\cdot8)<7/90\le\mu/10$. Direct differentiation of (7.4) gives
+
+$$
+\mathcal H''(z)
+=\frac{4r^2}{(\mu+z)^3}
+ +\frac{8r^2}{a(\mu-2z/a)^3}
+ -\frac{24(2r-1)\delta}{a(\mu-2z/a)^4}
+\le\frac{6r^2}{\mu^3}.
+$$
+
+The last step uses $8/[a(9/10)^3]\le2$ for $a\ge7$. Taylor's theorem and (7.5) now yield
+
+$$
+\begin{aligned}
+\mathcal H(\varepsilon)-H_d
+&\le-\frac{4(2r-1)\delta\varepsilon}{\mu^3}
+ +\frac{3r^2\varepsilon^2}{\mu^3}\\
+&=-\frac{(2r-1)^2\delta^2}{r^2\mu^3}.
+\end{aligned}
+$$
+
+This proves both feasibility and strict improvement. ∎
+

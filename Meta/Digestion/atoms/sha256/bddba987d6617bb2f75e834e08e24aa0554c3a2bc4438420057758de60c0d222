@@ -1,0 +1,25 @@
+**Definition 79.1 (the four actual returned expressions).** Fix the
+installation, bound root, rights and returned domain of §75. As in AA
+Definition 17.3, $S_0$ is the oriented address support of the actual
+source edges, and $B_0$ is its actual terminal antichain, including unary
+markers. Let $\mathcal Z$ denote the readable root-bound annotation of
+Definition 75.2, empty when $F=1$. Define
+
+$$
+S_Z=(S_0,\mathcal Z),\qquad B_Z=(B_0,\mathcal Z),\qquad
+T_Z=w.
+\tag{AAII.40}
+$$
+
+Memory $M_Z$ selects the actual retained source and global-record fields,
+their live readable backing, the installed callable $Q_g$ driver and its
+current authority. It does not select the request archive, arbitrary
+cleared scratch identities, elapsed ticks or full controller chronology.
+These are meanings of spatial support, terminal boundary, actual serial
+generation time and current callable memory on this one process. The
+spatial and boundary expressions are expressly supplemented views; their
+annotation is an actual attachment, not bare geometry in disguise.
+Equality of their semantic contents is rooted oriented equality with
+bindings retained, up to raw fresh-name spellings, in this fixed
+installation as in AA Definition 21.1.
+

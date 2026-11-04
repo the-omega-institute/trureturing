@@ -1,0 +1,64 @@
+#### 证明
+
+令
+
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad
+\beta=\varphi^{-1/2}.
+$$
+
+因为
+
+$$
+\beta^4+\beta^2-1=0,
+$$
+
+所以 $\beta$ 是代数整数；$\zeta$ 也是代数整数。项目给出的 $K$ 的矩阵元都属于
+
+$$
+\mathbb Z[\zeta,\beta].
+$$
+
+有限矩阵乘积、计算基投影和有限求和保持代数整数性。因此每条未归一分支的矩阵元，以及事件概率中的有限和
+
+$$
+\sum_{h,y}|(M_h)_{yx}|^2
+$$
+
+都是代数整数。
+
+有理代数整数只能是整数；再由 $0\le p\le1$，得到结论。证毕。[来源：V15 §8](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)
+
+所以，在这个操作合同内，有限协议无法精确产生概率 $1/2$，尽管相关编码可以有任意好的近似。
+
+而若另行允许每轮新的独立制备，并不断重复至成功，则可以用两次偏币读出接受 $01,10$，得到精确公平结果。项目中一轮成功率为
+
+$$
+s=2\varphi^{-3},
+$$
+
+于是
+
+$$
+\mathbb ET=\frac1s,
+$$
+
+但任意固定轮数 $M$ 后仍有
+
+$$
+\Pr(\mathrm{abort})=(1-s)^M>0.
+$$
+
+这提供了一个严格实例：
+
+$$
+\boxed{
+\text{有限深协议、条件化、几乎必然终止的无限重复}
+}
+$$
+
+对应不同的操作资源。它们在极限图中都可以有清楚的数学位置，但不能在成本分析中自动互换。[来源：V15 §11](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)
+
+<a id="sec-9"></a>
+

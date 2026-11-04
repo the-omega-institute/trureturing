@@ -1,0 +1,175 @@
+### 定理 23.2（共同误差预算与名义平方根分支）
+
+在定义 23.1 的全部前件下，
+
+$$
+0\le Q(E)-R(T)\le u.
+\tag{23.7}
+$$
+
+特别地，$u<0$ 与这些前件不相容。置 $D_*=d(d+1)u$、$k=\dim K$，并沿用 (20.5) 的函数 $B$，则
+
+$$
+\boxed{
+\|T-L_{E_0}\|_\diamond
+\le B(E,d,k,D_*)+2\sqrt\epsilon.
+}
+\tag{23.8}
+$$
+
+一个只需名义读数预算与维数的上界是
+
+$$
+\boxed{
+\|T-L_{E_0}\|_\diamond\le\beta_0,
+\qquad
+\beta_0=\min\{d+1,\ 2\sqrt{dD_*}+2\sqrt\epsilon\}.
+}
+\tag{23.9}
+$$
+
+(23.8) 中的秩是实际 $\operatorname{rank}E$。不假设 $E$ 与 $E_0$ 有共同支撑，也不以 $\operatorname{rank}E_0$ 代替它。
+
+进一步，设 $\tau,\tau_0$ 为普通输入态，$\|\tau-\tau_0\|_1\le\gamma$，令
+
+$$
+p=\operatorname{Tr}(E\tau),\qquad
+q=\operatorname{Tr}(E_0\tau_0),\qquad M_0=\|E_0\|_{\mathrm{op}}.
+$$
+
+若 $\beta$ 是 (23.8) 或 (23.9) 给出的任一上界，置
+$U=\beta+M_0\gamma$、$V=\epsilon+M_0\gamma/2$。则
+
+$$
+\|T(\tau)-L_{E_0}(\tau_0)\|_1\le U,
+\qquad |p-q|\le\min\{U,V\}.
+\tag{23.10}
+$$
+
+当且仅当两边成功率都为正时，所述两个归一化输出同时有定义；在 $p,q>0$ 下，
+
+$$
+\boxed{
+\left\|\frac{T(\tau)}p-\frac{L_{E_0}(\tau_0)}q\right\|_1
+\le\min\left\{2,\frac{U+\min\{U,V\}}{\max\{p,q\}}\right\}.
+}
+\tag{23.11}
+$$
+
+同一输入时可取 $\gamma=0$，得到 $\min\{2,(\beta+\epsilon)/\max\{p,q\}\}$。若仅知名义成功率 $q>V$，则 $p\ge q-V>0$，且 (23.11) 右侧还可上界为 $\min\{2,(U+V)/q\}$。
+
+**证明。** 先比较实际联合读数与 $R(T)$。由于 $T$ 正且 $T^\dagger(I_K)=E\le I_H$，对每个标签有
+$0\le T^\dagger(G_s)\le E\le I_H$。两个等迹态之差 $X=\rho_s-p_s$ 自伴且迹为零，故
+
+$$
+\left|\operatorname{Tr}[T^\dagger(G_s)X]\right|
+\le\tfrac12\|X\|_1.
+$$
+
+这是效果与迹距离的成熟对偶估计，亦是 [Watrous，第 3 章定理 3.4](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf) 的二元态判别特例；它只对输入上的效果使用正性。同时，$T(\rho_s)\ge0$，所以
+
+$$
+\left|\operatorname{Tr}[(F_s-G_s)T(\rho_s)]\right|
+\le q_s\|F_s-G_s\|_{\mathrm{op}}.
+$$
+
+在恒等式
+
+$$
+\operatorname{Tr}[F_sT(\rho_s)]-\operatorname{Tr}[G_sT(p_s)]
+=\operatorname{Tr}[(F_s-G_s)T(\rho_s)]
+ +\operatorname{Tr}[G_sT(\rho_s-p_s)]
+$$
+
+中取加权和，并用 (23.5)，得到
+
+$$
+|R(T)-\widehat R|\le a+b+\nu.
+\tag{23.12}
+$$
+
+以下效果扰动只用成熟的正矩阵平方根单调性和 Schatten 乘子估计；为固定包括奇异效果的适用范围，将所需步骤写在本证明内。对正矩阵 $A$，谱演算给收敛的积分
+
+$$
+\sqrt A=\frac1\pi\int_0^\infty t^{-1/2}A(A+tI)^{-1}\,dt.
+$$
+
+对每个 $t>0$，$A(A+tI)^{-1}=I-t(A+tI)^{-1}$ 关于 $A\ge0$ 单调，因此平方根单调。若 $0\le A,B$、$\|A-B\|_{\mathrm{op}}\le\epsilon$，则
+
+$$
+\sqrt A\le\sqrt{B+\epsilon I}\le\sqrt B+\sqrt\epsilon I.
+$$
+
+后一不等式是 $B$ 的逐本征值标量不等式。交换 $A,B$ 后得到
+
+$$
+\|\sqrt A-\sqrt B\|_{\mathrm{op}}\le\sqrt\epsilon.
+\tag{23.13}
+$$
+
+此处未交换两个不对易的矩阵，亦未使用正谱底。取 $A=E,B=E_0$，有
+
+$$
+\begin{aligned}
+|\operatorname{Tr}E-\operatorname{Tr}E_0|&\le d\epsilon,\\
+|\operatorname{Tr}\sqrt E-\operatorname{Tr}\sqrt{E_0}|&\le d\sqrt\epsilon,\\
+\operatorname{Tr}\sqrt E+\operatorname{Tr}\sqrt{E_0}&\le2d.
+\end{aligned}
+$$
+
+代入 $Q$ 的公式，并用 $0\le Q(E),Q(E_0)\le1$，得
+
+$$
+|Q(E)-Q(E_0)|\le\omega_d(\epsilon).
+\tag{23.14}
+$$
+
+由同一正 $T$、实际效果 $E$、指定 $J$ 及 (23.1)，(16.8) 与 (20.8)–(20.17) 的代数推导适用于这里的比较评价 $R(T)$，给出
+
+$$
+\delta=Q(E)-R(T)\ge0,\qquad
+\|T-L_E\|_\diamond\le B(E,d,k,d(d+1)\delta).
+\tag{23.15}
+$$
+
+这些公式只要求比较投影的精确二阶矩；用它们评价同一 $T$ 并不声称实际准备已等于比较投影。原实际精确校准合同与这里的漂移合同通过 (23.12) 区分。由 (23.12)–(23.14)，有 $\delta\le u$，证得 (23.7)。$B$ 的各项对最后一个非负变量非减，故可用 $D_*$ 代入。
+
+令 $A=\sqrt E$、$A_0=\sqrt{E_0}$。对每个有限参考及任意矩阵输入，展开
+
+$$
+AXA-A_0XA_0=(A-A_0)XA+A_0X(A-A_0).
+$$
+
+两边张量恒等映射后，Schatten 乘子估计和等距 $J$ 给
+
+$$
+\|L_E-L_{E_0}\|_\diamond
+\le(\|A\|_{\mathrm{op}}+\|A_0\|_{\mathrm{op}})
+       \|A-A_0\|_{\mathrm{op}}
+\le2\sqrt\epsilon.
+\tag{23.16}
+$$
+
+与 (23.15) 取三角不等式即得 (23.8)。(20.12) 又给
+$\|T\|_\diamond\le\operatorname{Tr}E\le d$，而
+$\|L_{E_0}\|_\diamond=M_0\le1$；(20.5) 中的输入维数项至多 $2\sqrt{dD_*}$。两种上界共同给出 (23.9)。成熟的平均平方根最优性仍按 [Barnum，第 IV、VIII 节](https://arxiv.org/html/quant-ph/0205155v1) 的操作算子前件引用；(23.12) 与正分支 (23.15) 的组合不被归给该 CP 最优性结论。
+
+最后，对不同输入先插入 $L_{E_0}(\tau)$。其输入迹范数放大至多 $M_0$，故未归一化差至多 $U$。另一方面，
+
+$$
+p-q=\operatorname{Tr}[(E-E_0)\tau]
+       +\operatorname{Tr}[E_0(\tau-\tau_0)],
+$$
+
+第一项绝对值至多 $\epsilon$；第二项因输入差迹为零、$0\le E_0\le M_0I$，绝对值至多 $M_0\gamma/2$。取迹还给 $|p-q|\le U$，证得 (23.10)。写 $X=T(\tau)\ge0$、$Y=L_{E_0}(\tau_0)\ge0$。当 $p,q>0$ 时，
+
+$$
+\left\|\frac Xp-\frac Yq\right\|_1
+\le\frac{\|X-Y\|_1+|p-q|}{p},
+\qquad
+\left\|\frac Xp-\frac Yq\right\|_1
+\le\frac{\|X-Y\|_1+|p-q|}{q}.
+$$
+
+取较小上界，并用两个态之间的距离至多二，即得 (23.11)。全证明只要求原分支正性；没有将 $T$ 的任意参考放大解释为正输出态。$\square$
+

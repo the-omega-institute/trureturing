@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Record Lake's invocation-local project build actions, never artifact hashes."""
+import hashlib
 import json
 import os
 from pathlib import Path
 import re
 import sys
+import subprocess
+import uuid
 import tempfile
 
 BUILT = re.compile(r'^[^\s]+ \[[0-9]+/[0-9]+\](?: \(Optional\))? Built ([^\s:]+)')
@@ -62,6 +65,55 @@ def observations(logs, phases):
         print('LEAN_INSPECTOR_TIMING ' + json.dumps(timing, sort_keys=True), flush=True)
     except (OSError, ValueError, KeyError, TypeError):
         print('LEAN_INSPECTOR_TIMING_UNAVAILABLE', flush=True)
+
+
+
+def export_observations(root, logs, report, inspector_exit, *phases):
+    """Export invocation-local raw telemetry to the caller's captured log.
+
+    Binding and stream trailers make missing/truncated transport distinguishable
+    from an empty stream. These observations never decide report acceptance.
+    """
+    invocation = uuid.uuid4().hex
+    def emit(kind, **fields):
+        print('LEAN_INSPECTOR_OBSERVATION ' + json.dumps(dict(
+            schema='stratalint-native-observations-v1', invocation_id=invocation,
+            kind=kind, **fields), sort_keys=True), flush=True)
+    checkout = None
+    try:
+        checkout = subprocess.run(['git', '-C', str(root), 'rev-parse', '--verify', 'HEAD'],
+            capture_output=True, text=True, check=True, timeout=5).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        pass
+    report_hash = None
+    try:
+        digest = hashlib.sha256()
+        with report.open('rb') as source:
+            for chunk in iter(lambda: source.read(1024 * 1024), b''):
+                digest.update(chunk)
+        report_hash = digest.hexdigest()
+    except OSError:
+        pass
+    emit('binding', repository=str(root.resolve()), checkout_sha=checkout,
+         github_sha=os.environ.get('GITHUB_SHA'), run_id=os.environ.get('GITHUB_RUN_ID'),
+         run_attempt=os.environ.get('GITHUB_RUN_ATTEMPT'), job=os.environ.get('GITHUB_JOB'),
+         workflow_ref=os.environ.get('GITHUB_WORKFLOW_REF'),
+         event=os.environ.get('GITHUB_EVENT_NAME'), report=str(report.resolve()),
+         report_sha256=report_hash, inspector_exit=int(inspector_exit), phases=phases)
+    for name in ('native-phases.jsonl', 'native-work.jsonl'):
+        count, digest = 0, hashlib.sha256()
+        try:
+            with (logs / name).open('rb') as source:
+                for count, raw in enumerate(source, 1):
+                    digest.update(raw)
+                    # Preserve every raw field and incomplete/malformed line.
+                    # JSON encoding prevents a raw line becoming a log command.
+                    emit('record', stream=name, line=count, raw=raw.decode('utf-8'))
+            emit('stream-end', stream=name, lines=count, sha256=digest.hexdigest(), status='complete')
+        except (OSError, UnicodeError) as error:
+            emit('stream-end', stream=name, lines=count, sha256=None,
+                 status='unavailable', error=str(error))
+    emit('end')
 
 
 def output_names(directory):
@@ -144,7 +196,9 @@ def record(root, logs, destination, *phases):
 
 if __name__ == '__main__':
     try:
-        if sys.argv[1:2] == ['--observations']:
+        if sys.argv[1:2] == ['--export']:
+            export_observations(*(Path(argument) for argument in sys.argv[2:5]), *sys.argv[5:])
+        elif sys.argv[1:2] == ['--observations']:
             observations(Path(sys.argv[2]), sys.argv[3:])
         else:
             record(*(Path(argument) for argument in sys.argv[1:4]), *sys.argv[4:])

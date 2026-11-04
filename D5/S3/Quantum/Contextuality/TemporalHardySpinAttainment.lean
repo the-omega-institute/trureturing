@@ -47,7 +47,7 @@ def claim : Prop :=
       seqProb ψ PA₁ PB₁ = 0 ∧ seqProb ψ (1 - PA₁) PB₂ = 0 ∧
       seqProb ψ PA₂ (1 - PB₁) = 0 ∧ seqProb ψ PA₂ PB₂ = 1 / 4
 
-private def coeff (n : ℕ) (r : ℝ) (k : Fin (n + 1)) : ℝ :=
+def coeff (n : ℕ) (r : ℝ) (k : Fin (n + 1)) : ℝ :=
   spinRad n k * r ^ k.val
 
 private def tilt (n : ℕ) (r : ℝ) : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ :=
@@ -76,7 +76,7 @@ private lemma coeff_sq_sum (n : ℕ) (r : ℝ) :
   rw [← pow_mul, ← pow_mul]
   ring
 
-private lemma ladder_pair (n k : ℕ) (hk : k < n) :
+lemma ladder_pair (n k : ℕ) (hk : k < n) :
     Real.sqrt ((k + 1 : ℝ) * (n - k : ℝ)) * Real.sqrt (n.choose (k + 1) : ℝ) =
       (n - k : ℝ) * Real.sqrt (n.choose k : ℝ) ∧
     Real.sqrt ((k + 1 : ℝ) * (n - k : ℝ)) * Real.sqrt (n.choose k : ℝ) =
@@ -95,10 +95,10 @@ private lemma ladder_pair (n k : ℕ) (hk : k < n) :
         (k + 1 : ℝ) ^ 2 * (n.choose (k + 1) : ℝ) := by nlinarith [h]
     rw [he, Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq (by positivity)]
 
-private def binomVector (n : ℕ) (r : ℝ) : Fin (n + 1) → ℂ :=
+def binomVector (n : ℕ) (r : ℝ) : Fin (n + 1) → ℂ :=
   fun k => (coeff n r k : ℂ)
 
-private lemma raising_entry (n : ℕ) (i j : Fin (n + 1)) :
+lemma raising_entry (n : ℕ) (i j : Fin (n + 1)) :
     Jplus n i j = if i.val + 1 = j.val then
       (Real.sqrt ((j.val : ℝ) * ((n : ℝ) + 1 - j.val)) : ℂ) else 0 := by
   unfold Jplus
@@ -146,7 +146,7 @@ private lemma lower_ladder (n : ℕ) (r : ℝ) (i j : Fin (n + 1))
       _ = _ := by rw [he]; push_cast; ring
   exact_mod_cast hh
 
-private lemma raising_action (n : ℕ) (r : ℝ) (i : Fin (n + 1)) :
+lemma raising_action (n : ℕ) (r : ℝ) (i : Fin (n + 1)) :
     (Jplus n *ᵥ binomVector n r) i =
       ((n : ℂ) - i.val) * (r : ℂ) * binomVector n r i := by
   change ∑ j, Jplus n i j * binomVector n r j = _
@@ -165,7 +165,7 @@ private lemma raising_action (n : ℕ) (r : ℝ) (i : Fin (n + 1)) :
     intro j hj
     rw [raising_entry, if_neg (by have := j.isLt; omega), zero_mul]
 
-private lemma lowering_action (n : ℕ) (r : ℝ) (i : Fin (n + 1)) :
+lemma lowering_action (n : ℕ) (r : ℝ) (i : Fin (n + 1)) :
     ((Jplus n)ᴴ *ᵥ binomVector n r) i * (r : ℂ) =
       (i.val : ℂ) * binomVector n r i := by
   change (∑ j, (Jplus n)ᴴ i j * binomVector n r j) * (r : ℂ) = _
@@ -309,7 +309,7 @@ private lemma z_eigenspace (n : ℕ) (v : Fin (n + 1) → ℂ) :
         Complex.ofReal_div, Complex.ofReal_natCast, Complex.ofReal_ofNat]
     · rw [Pi.single_eq_of_ne hi]; ring
 
-private def ray (n : ℕ) (w : Fin (n + 1) → ℂ) (d : ℝ) :
+def ray (n : ℕ) (w : Fin (n + 1) → ℂ) (d : ℝ) :
     Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ :=
   (d : ℂ)⁻¹ • vecMulVec w (star w)
 

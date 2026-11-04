@@ -1,0 +1,31 @@
+## 13. Information retained, literature correspondence and remaining scope
+
+The observable inputs to (10.4) are the three one-party entropies and the three pairwise mutual informations, all calculated from the same $P$. Equivalently, the one-party and two-party marginal tables suffice. A single chosen cyclic inequality needs just the two pair tables incident to its central output. Corollary 12.2 instead needs the declared common output alphabet, uniformity of $A$, and the two probabilities in (12.3), with no independence of errors. Theorem 11.2 needs the exact Bernoulli diagonal output law, including absence of every off-diagonal event.
+
+These observable quantities constrain $\mathfrak d_{\rm src}(\nu)$ of a candidate hidden lift in §4; they do not identify the hidden law or its defect. In particular (10.4) is only a necessary condition for a lift of a given budget. A statistic that retains an arbitrary FIB quotient need not retain the marginal tables, entropy values or error events just specified. Applying these certificates after such a quotient requires a supplied map proving that the requisite quantities are determined by it. The fiber identity (2.8), by itself, gives no such entropy access.
+
+The product-source baseline used inside Theorem 10.2 is literature-attested: Tobias Fritz, *Beyond Bell's theorem: correlation scenarios*, [arXiv:1206.5115v2](https://arxiv.org/abs/1206.5115v2), Lemma 2.14 and equation (2.10), in the classical triangle with mutually independent sources. The total correlation in (10.2) is Watanabe's classical quantity (*Information theoretical analysis of multivariate correlation*, IBM Journal of Research and Development 4, 66–82); the dual total correlation in (10.7) and (11.5) is the classical entropy quantity of Han (*Nonnegative entropy measures of multivariate symmetric correlations*, Information and Control 36, 133–156). They are attributed intermediate identities here. Fano's conditional-entropy inequality is also an attributed intermediate; its use in (12.4) composes it with the source-budget certificate.
+
+Marc-Olivier Renou, Yuyi Wang, Sadra Boreiri, Salman Beigi, Nicolas Gisin and Nicolas Brunner, *Limits on correlations in networks for quantum and no-signaling resources*, [arXiv:1901.08287v1](https://arxiv.org/abs/1901.08287v1), Theorem 1, prove the independent-source triangle bound
+
+$$
+P(a,b,c)\le\sqrt{P_A(a)P_B(b)P_C(c)}.
+$$
+
+Their Theorem 2 extends the Finner bound to arbitrary graphs of independent bipartite quantum sources and fractional independent-set weights; the classical multipartite-source version is also discussed there. This is independent-source context, not a KL-budget theorem for (10.1), and it is not the distinct Renou et al. four-output nonlocality family cited in §7.
+
+Ivan Šupić, Jean-Daniel Bancal and Nicolas Brunner, *Quantum nonlocality in networks can be demonstrated with an arbitrarily small level of independence between the sources*, [arXiv:2007.12950v1](https://arxiv.org/abs/2007.12950v1), equations (3)–(5), introduce a central variable $\lambda$ and require pointwise minorization
+
+$$
+p(\alpha,\beta,\gamma\mid\lambda)
+\ge\epsilon_1 p(\alpha)p(\beta)p(\gamma),\qquad\epsilon_1>0,
+$$
+
+with their accompanying pointwise upper comparison. That restriction, for every $\lambda$, is different from the upper bound $D(\nu\Vert\nu_\alpha\nu_\beta\nu_\gamma)\le c$ on one actual source law. The latter allows structural zeros even where the product of the marginals is positive, as Proposition 12.1 demonstrates. None of the pointwise minorization conclusions is imported as a consequence of a KL upper budget.
+
+The relevant repository suppliers have correspondingly narrower mathematical scopes. `Entropy/Submodularity/MarkovDataProcessing` supplies finite Markov data processing and its conditional-product equality characterization; `MutualInformationChainRule`, `ConditionalMutualInformation` and `StrongSubadditivity` supply the finite entropy identities and inequalities. `Entropy/ConditionalEntropyEquality` handles point masses only on positive-marginal conditioning slices, and `CommonStateEntropyBound` concerns a state determined by either of two supplied coordinates. Its deterministic-readout premise is supplied here by the kernel-support argument, rather than postulated for stochastic outputs. `Estimation/FanoSharp` supplies the finite $\log(m-1)$ correction for a non-singleton target alphabet. These are the D5 modules under `D5/S3/` and their corresponding Blueprint Scribe sources; their existing statements do not by themselves assert Theorem 11.2.
+
+`ConceptDynamics/PartialIdentification/FiniteIndependentSourceGrouping` preserves the full elementary product law under regrouping and restriction. Its companion `IndependentSourceCounterfactualFactorization` requires disjoint readout supports for response independence. The triangle supports overlap, so that disjoint-support result cannot certify independence of $A,B,C$. `Quantum/Entanglement/TriangleInflationSoundness` constructs observable laws on independent continuous source copies with four-output measurable kernels. That product-source construction is not transferred unchanged to dependent $\nu$. The separate `TriangleSymmetricLocalRefutation` concerns a fully symmetric four-output local model with agreement probability $41/144>1/4$; it concerns imperfect agreement under independent sources, rather than a nonconstant exact common record at a source-KL boundary.
+
+The source-budget certificate, its same-realization equality analysis and the binary finite-lift exclusion are repo-derived consequences in this finite incidence model. They are not assertions of worldwide novelty or resolutions of a named external open problem. The Bernoulli exclusion is a concrete strengthening of the observable budget test exactly at its boundary; Proposition 12.1 shows why that exclusion cannot be extended to all finite output alphabets. Determining the infimum source cost for binary common records over unbounded finite source alphabets remains a separate mathematical question. Likewise, arbitrary output laws, physical source installation, statistical estimation from samples, infinite-alphabet extensions and the physical EJM noise-threshold obligations in §9 require additional arguments.
+

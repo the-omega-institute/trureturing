@@ -1,0 +1,39 @@
+**Theorem 6.1 (attained family-relative acquisition).** In the enlarged service, perform on the actual zero field
+
+$$
+\operatorname{Add}(1,1),\quad
+\operatorname{Tick},\quad
+\operatorname{Tick},\quad
+\operatorname{Read}_e.
+\tag{CL.17}
+$$
+
+The acquired scalar is
+
+$$
+y=\epsilon^2S.
+\tag{CL.18}
+$$
+
+This exact observation effectively determines $S,C$, the native law $T$ and the actual current field on this same source. No Reset or leaf Read is used.
+
+**Proof.** Because $Q$ fixes $e_{\ell_1}$ and $e_c$,
+
+$$
+Te_{\ell_1}=\tfrac12 e_{\ell_1}+\epsilon e_c,\qquad
+Te_c=\tfrac12 e_c+\epsilon\Bigl(\sum_j e_{\ell_j}+C e_d+S e_e\Bigr).
+$$
+
+After the two paid Ticks the actual field is therefore
+
+$$
+x_*=
+\frac14 e_{\ell_1}+\epsilon e_c+
+\epsilon^2\Bigl(\sum_j e_{\ell_j}+C e_d+S e_e\Bigr).
+\tag{CL.19}
+$$
+
+The nondestructive native $e$ read gives (CL.18). Decode $S=y/\epsilon^2$ and take the unique positive $C$ satisfying $C^2=1-S^2$. This is an effective rational operation on the promised image, rather than a real-number oracle: if $S=p/q$ is reduced with $q>0$, compute the integer square root of $q^2-p^2$. It is an integer $r$ because $(qC)^2=q^2-p^2$ and a rational whose square is an integer has denominator one in reduced form. Finite integer square-root search returns it, and $C=r/q$. The promise ensures $C\ge4/5$, including $C=1$ when $S=0$.
+
+Substitute the decoded values into (CL.4), or the complete entry list (CL.7)–(CL.8), to obtain the actual native law in its promised vertex correspondence. Formula (CL.19) gives the actual advanced field, not a field before the two Ticks. The read does not change it. The source has not been reset or replaced. $\square$
+

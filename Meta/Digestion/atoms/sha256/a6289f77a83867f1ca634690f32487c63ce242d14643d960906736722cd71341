@@ -1,0 +1,19 @@
+**定义 5.2（全效果相融赋值）。**
+在定理 [4.5](#thm:globalcomplex) 的代数中取
+
+$$
+\operatorname{Eff}_5=\{E=E^\dagger:0\le E\le I\}.
+$$
+
+赋值 $\mu:\operatorname{Eff}_5\to[0,\infty)$ 满足
+
+$$
+\mu(I)=1,\qquad
+\mu(E+F)=\mu(E)+\mu(F)\quad(E,F\ge0,\ E+F\le I).
+$$
+
+同一效果在不同测量细分中取同一值。
+量词覆盖全部所声明的效果，而不是只覆盖五个模式投影。
+
+<a id="thm:born"></a>
+

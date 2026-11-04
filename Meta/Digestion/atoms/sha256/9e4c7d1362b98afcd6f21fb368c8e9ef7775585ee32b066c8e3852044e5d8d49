@@ -1,0 +1,36 @@
+**Theorem 4.1 (infinite joint endpoint).** Query left except for the single
+right query numbered $2N_*$ when $N_*<\infty$, and stop at the first marker.
+This controller has zero terminal risk and
+actual mean cost
+$$
+K_\infty=
+\begin{cases}
+2I_\mu-a+w_{N_*},&I_\mu<\infty,\\
++\infty,&I_\mu=\infty.
+\end{cases}
+$$
+The zero-risk claim is almost sure under the fixed source. The finite value is
+attained by this controller; when $I_\mu=\infty$, zero risk remains attained
+but is outside every finite mean-cost budget.
+
+**Proof.** PG27.15--27.18 give the exact tail identity, the sign-minimizing
+shape sequence, and the telescoping correction
+$\sum_m\min(0,v_m)=w_{N_*}$. The marker occurs almost surely for every
+$q<1$, while Tonelli gives the stated finite-mean criterion. The present
+controller uses the same $Q$, both arms, and the original seed, so no new
+endpoint realization is introduced. The finite-prefix formulas also give
+$$
+K_n\uparrow K_\infty,\qquad R_n^*\longrightarrow0.
+$$
+Indeed $\sum_m|v_m|<1$ by PG27.17 and $M_N\to0$. If $I_\mu=\infty$,
+the baseline partial sums diverge while their signed correction stays bounded;
+no subtraction of two infinite quantities is used. Strict increase follows from
+$$
+\begin{aligned}
+K_1-K_0&=1,\\
+K_{2N+1}-K_{2N}&=\min\{M_N,bM_{N-1}+aM_{N+1}\}>0 &&(N\ge1),\\
+K_{2N+2}-K_{2N+1}&=bM_N+aM_{N+1}>0 &&(N\ge0).
+\end{aligned}
+$$
+All terms are source survival probabilities. $\square$
+

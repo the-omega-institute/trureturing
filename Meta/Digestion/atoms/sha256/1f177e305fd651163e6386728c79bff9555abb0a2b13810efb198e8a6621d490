@@ -1,0 +1,63 @@
+**Definition 1.1 (source and owning references).** Write [N] for
+[Probability, phase transport and holonomy](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md),
+[B] for its
+[observation-quotient continuation](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY_CONTINUATION.md),
+and [G] for
+[Native two-control Green attraction, critical stability and periodic binding](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md).
+Fix the double wall, with
+
+$$
+0<Z<1,\qquad r=1-Z,\qquad L=r/2,\qquad X=Y=L,
+\qquad J=(0,L).
+$$
+
+The five probabilities, in mode order $(0,1,2,3,13)$, are
+
+$$
+p_k=(k,L-k,Z,L-k,k),\qquad k\in J.
+\tag{1.1}
+$$
+
+Fix an arbitrary preparation height and arbitrary preparation phases
+$\theta_s^0$. They remain fixed throughout. Phase coordinates are increments,
+not constraints equating the preparation phases. In the negative phase
+convention a representative at $(k,\alpha,\beta)$ is
+
+$$
+\begin{aligned}
+\psi_0&=\sqrt{k}\,e^{-i(\theta_0^0+\beta)},&
+\psi_1&=\sqrt{L-k}\,e^{-i(\theta_1^0+\beta-\alpha)},\\
+\psi_2&=\sqrt Z\,e^{-i\theta_2^0},&
+\psi_3&=\sqrt{L-k}\,e^{-i(\theta_3^0+\beta-\alpha)},\\
+\psi_{13}&=\sqrt{k}\,e^{-i(\theta_{13}^0+\beta)}.
+\end{aligned}
+\tag{1.2}
+$$
+
+Thus $\alpha=u-v$ and $\beta=u$ for the two grouped increments $u,v$.
+Both $\alpha$ and $\beta$ have period $2\pi$. The integral change of torus
+coordinates $(u,v)\mapsto(u-v,u)$ has determinant one. There is no further
+finite quotient. The source and the bottom behavioral quotient are
+
+$$
+\mathcal M=J\times\mathbb T^2,\qquad
+\mathcal B=J\times\mathbb T,\qquad
+\pi(k,\alpha,\beta)=(k,\alpha),\qquad
+\mathbb T=\mathbb R/(2\pi\mathbb Z).
+\tag{1.3}
+$$
+
+After removing the fixed preparation rotations, the independent bottom
+coherence and middle-reference coherence are respectively
+
+$$
+z=\sqrt{k(L-k)}e^{i\alpha},\qquad w=\sqrt{Zk}e^{i\beta}.
+\tag{1.4}
+$$
+
+The raw outputs retain their original factor two and their fixed rotations.
+[N, Theorem 8.2] realizes every point of $\mathcal M$ by a finite original
+history. [B, Theorems 10.5--10.6] identify (1.3) as the exact quotient for
+bottom outputs and command lawfulness, including refusal. This quotient
+is an input here, not a consequence of any diffusion assumption.
+

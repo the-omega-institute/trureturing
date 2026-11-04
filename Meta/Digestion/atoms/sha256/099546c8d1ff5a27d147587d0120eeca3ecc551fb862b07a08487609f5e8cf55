@@ -1,0 +1,65 @@
+**Proposition 8.2 (Full-exterior band without predictive splitting, and a strict risk bound).** For Proposition 8.1, the laws $F_0,F_1$ are distinct and mutually absolutely continuous, with
+
+$$
+f_0(2)-f_1(2)=3/200,\qquad
+\frac{dF_0}{dF_1}=\frac{f_0(G_0)}{f_1(G_0)}>0.
+\tag{8.7}
+$$
+
+There is no almost-sure strict-right decoder of the original context. Nevertheless the entire-exterior posterior lies strictly in $(1/4,1/2)$ on every positive free exterior cell and is zero on the forced cells. The split successor future laws differ whenever the left split distance $l$ is odd. The law is strictly nonattaining:
+
+$$
+d(P)\le\frac{50349663}{363522968}<\frac17<\frac{1800}{12559}\le c_\star.
+\tag{8.8}
+$$
+
+Proof. After the first future gap $g$, both starting contexts have successor $g\bmod2$. Factoring on that first-gap cylinder proves the full density ratio (8.7); distinctness follows at $g=2$. Since both actual Palm context masses are positive, a right decoder would separate two equivalent future measures into disjoint probability-one sets, which is impossible.
+
+For a free center with nearest anchors $-l,r$, left context $c$, and next future gap $h$ after $r$, the center-one and center-zero paths reach possibly different contexts at $r$, but coincide after $h$. Their full-exterior odds are therefore exactly
+
+$$
+R=\frac{f_c(l)f_{l\bmod2}(r)f_{r\bmod2}(h)}
+{f_c(l+r)f_{(l+r)\bmod2}(h)},\qquad q_0=\frac{R}{1+R}.
+\tag{8.9}
+$$
+
+The full-left channel is common, and the entire tail after $h$ cancels, as a measure factorization. All $A$ entries lie in $[24/25,26/25]$. The geometric factors in (8.9) leave $4/9$, so
+
+$$
+\frac{1536}{4225}
+=\frac49\frac{(24/25)^3}{(26/25)^2}
+\le R\le
+\frac49\frac{(26/25)^3}{(24/25)^2}
+=\frac{2197}{4050}.
+\tag{8.10}
+$$
+
+The lower bound exceeds $1/3$ and the upper bound is below $1$, proving the strict band. If $l$ is odd, $\tau_{l+r}(c)\ne\tau_r\tau_l(c)$ and (8.7) shows their future laws differ. Thus the band does not force predictive split equality.
+
+For a simple independent risk bound, let $F_0=\{X_{-1}=X_1=0\}$. The event $\{X_{-1}=X_1=1\}$ is an anchor followed by gap $2$, so inclusion-exclusion gives
+
+$$
+Q(G_0=2)=679/2704,\qquad
+P(F_0)=1-2\iota+\iota Q(G_0=2)=61489/94592.
+\tag{8.11}
+$$
+
+Because $X_0=1$ implies $F_0$, the exterior-measurable estimator
+
+$$
+\widehat q=\frac{\iota}{P(F_0)}\mathbf1_{F_0}
+=\frac{18928}{61489}\mathbf1_{F_0}
+\tag{8.12}
+$$
+
+has squared risk
+
+$$
+\mathbb E(X_0-\widehat q)^2
+=\iota-\frac{\iota^2}{P(F_0)}
+=\frac{50349663}{363522968}<1/7.
+\tag{8.13}
+$$
+
+The posterior minimizes squared risk on the full exterior, and [R, §1][R] supplies $c_\star\ge1800/12559>1/7$. This proves (8.8). The example is therefore a counterexample to the band-to-predictive-split implication, not an attaining law. $\square$
+

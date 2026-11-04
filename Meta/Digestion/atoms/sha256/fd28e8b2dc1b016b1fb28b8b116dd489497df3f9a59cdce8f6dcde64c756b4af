@@ -1,0 +1,52 @@
+**Proposition 13.5 (one finite local implementation, with solver width
+paid).** On a valid A acquisition there is an exact implementation of
+the routes, gap decoder and predictor installation using
+$O(N^4+QN^2)$ rational operations and $O(N^3)$ simultaneous rational
+slots, besides the actual source and the nonnumerical stores in §14.
+For C the corresponding nominal routes and inherited serial inverse use
+$O(N^4)$ rational operations and $O(N^3)$ rational slots, plus the
+actual digital extraction and integer/frame work. These are attained
+arithmetic-operation upper bounds, not bit bounds, optima or a uniform
+conditioning claim. A's total off-image recognizer has no supplied
+historical $Q$ and is not assigned the valid-image $Q$ bound.
+
+**Proof.** The earned tree gives $O_I$ with at most $b(I+1)\le N^2$
+rows. Sparse multiplication constructs the powers; the explicit forcing
+coefficient construction (5.2) gives $D_I$. AAII Proposition 90.4 gives
+the conservative matrix/forcing bounds, with $O(N^3)$ slots.
+For A, on each successive reverse tree compute and cache its rational
+inverse by finite pivoted elimination. At size $M$ this uses $O(M^3)$
+operations and $O(M^2)$ scratch. There are at most $n\le N$ such
+trees, giving $O(N^4)$ preprocessing in total, with one inverse arena
+live at a time. Each of the $Q$ actual reverse Ticks then uses one
+matrix-vector multiplication of at most $O(N^2)$ operations. Initial
+route calculations and the $I$ present-to-historical inverse Ticks
+fit within $O(N^4)$. The alpha doubling and counter work are finite and
+included at actual width. This proves the A count on its valid image.
+The termination proof for arbitrary candidates is Theorem 4.3, without
+assuming a true $Q$ for rejected inputs.
+
+C needs one reverse field solve per recovered successful letter by
+AAII Theorem 85.1, rather than an unknown-gap loop. Its existing
+Proposition 90.4 gives $O(N^4)$ rational work with the stated slots.
+For each actual report (10.2), exact integer floor/division, shifts,
+denominator construction and conversion to a rational are finite
+additional operations. Computing the source's digital floor in (8.1)
+also pays the actual-width numerator/denominator arithmetic; it is not
+a unit-cost exact-real measurement. $\square$
+
+Let $W$ be the maximum actual width of a numerator, denominator, integer
+operand or counter in the chosen finite implementation, including all
+elimination and construction intermediates. Let $\mathcal A(W)$ bound
+the implementation's exact rational/integer operation cost at that
+width, including reduction. The rational-work contributions above are
+bounded by $O((N^4+QN^2)\mathcal A(W))$ for A and
+$O(N^4\mathcal A(W))$ for C, with numerical storage $O(N^3W)$ bits.
+Add all stated integer/digitizer, copying, framing, allocation and source
+costs. Each finite run has finite $W$; the source-width bound in
+Proposition 13.4 is not a bound for every inverse/elimination
+intermediate. A gap count may be retained in binary at its actual
+$\ell(q_i)$ width, but an exported literal Tick word has its actual
+$Q$ Tick letters. Compressing the local counter does not make those
+physical historical Ticks or an explicitly requested literal export free.
+

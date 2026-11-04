@@ -1,0 +1,29 @@
+**定义 15.1（有序开半圆与端部多项式）。** 固定站点 $j$，置 $a=j+p$、$n=p-1$，定义两个从 $j$ 向 $a$ 行走的实际有序势字
+
+$$
+u=(v_{j+1},\ldots,v_{j+p-1}),\qquad
+z=(v_{j-1},\ldots,v_{j-p+1}).
+$$
+
+这里 $z$ 表示势字；以下节点向量另记 $\psi$。对任意势字 $b=(b_1,\ldots,b_k)$，令
+
+$$
+\mathcal K_b(x,t)=K_k(x+tb_1,\ldots,x+tb_k),\qquad\mathcal K_\varnothing=1.
+$$
+
+本卷事实 3.2 的 continuant 是所用输入。记
+
+$$
+F=\mathcal K_u,\quad G=\mathcal K_z,\quad
+B=\mathcal K_{(u_1,\ldots,u_{n-1})},\quad
+D=\mathcal K_{(z_1,\ldots,z_{n-1})},\quad d_a=x+tv_a,
+$$
+
+$$
+M=\frac{F+G}{2},\qquad E=d_aF-B+D,\qquad
+\delta=\sum_{r=1}^n u_r-\sum_{r=1}^n z_r.
+\tag{15.1}
+$$
+
+$B,D$ 删去的是各自有序字的末位，因而不能只用无方向的半圆谱代替这些数据。
+

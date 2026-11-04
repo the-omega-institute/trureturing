@@ -1,0 +1,106 @@
+**Definition 8.5.1 (Centred response bounds on the given tubes).** In
+this subsection $c_i,X_i,T_i,t_i,\rho,\Delta$ are exactly those of
+(7.2.2)–(7.2.3), with $0\le i<128$. In particular the centres use that
+same seed, the same five $Q_{45}$-rounded Newton corrections per cell,
+and the same ordering $y=(R,B,E,k,\ell)$; they are not independently
+selected points on another branch. All centre definitions retain the
+$240$-bit outward enclosure prescription of Section 7.2. The following
+new response bounds use Definition 8.3.1's $160$-bit prescription.
+
+For all source-circuit enclosures in this subsection, fix the following
+expression convention. Use the first expression
+$B_{\mathrm{coef}}=6/T-2/U$ in (7.1.1), not its algebraically equal
+single quotient. Every displayed rational constant, such as $24/5$,
+$27/5$ or $1/8$, is one rational input. Other quotients mean multiplication
+of the numerator by the reciprocal of the denominator. Evaluate the
+named quantities $j,n,T,U$ by (6.1.4), then the displayed expressions
+(7.1.1)–(7.1.5), with powers before products and products before sums;
+within either level use the displayed left-to-right order. No terms
+are collected, cancelled or replaced by an algebraically equivalent
+expression. Scalar inputs to the two-coefficient algebra are $(u,0)$.
+In its product use exactly
+$(AC+(tB)D,AD+BC)$; in its inverse form
+$L=(A A)-t(B B)$, then $(A L^{-1},(-B)L^{-1})$.
+All operations in these scalar expressions are rounded outward at the
+specified precision. Negation reverses endpoints exactly.
+
+Differentiate each scalar operation by (7.2.4) in its displayed order.
+Thus the product derivative is $\dot u\,v+u\,\dot v$, and the reciprocal
+derivative is $((-\dot u)u^{-1})u^{-1}$, with the same enclosed
+reciprocal at both occurrences. Differentiate the explicit factor $t$
+in the pair operations as well. Matrix products use increasing-index
+sums starting at zero. In Gauss–Jordan elimination retain the old pivot
+and the old elimination factor for each entire row operation; multiply
+by the enclosed pivot reciprocal to normalize every row entry.
+These conventions also apply at $240$ bits when determining the exact
+rounded centres and preconditioners of (7.2.3). Norm sums formed from
+absolute interval endpoints and rational weights, and the final scalar
+quotient in $D_i$, are exact rational operations. Lemma 8.5.3 gives
+sufficient continuation bounds with this convention, replacing the
+tight upper-bound column of the first table in Lemma 7.2.2 wherever
+that table is used here.
+
+Evaluate precisely the rational circuit (7.1.1)–(7.1.5) in the algebra
+$\epsilon^2=t$, with $r=R+\epsilon$, $b=B+k\epsilon$,
+$e=E+\ell\epsilon$. Set
+
+$$
+f_p(y,t)=p_{\mathrm{av}}(y,t),\qquad
+f_v(y,t)=v_{\mathrm{av}}(y,t),\qquad
+J_i=D_yG(c_i,t_i).
+\tag{8.5.1}
+$$
+
+The exact rational row and scalar for either $f\in\{f_p,f_v\}$ are
+
+$$
+u_{f,i}=D_yf(c_i,t_i)J_i^{-1},\qquad
+b_{f,i}=f(c_i,t_i)-u_{f,i}G(c_i,t_i).
+\tag{8.5.2}
+$$
+
+Every $J_i$ is invertible by the ordered pivot bounds of Lemma 8.5.2;
+alternatively the sufficient contraction bounds of Lemma 8.5.3 and
+(7.3.5)–(7.3.8) imply invertibility also at the tube centre.
+
+Here are finite enclosure definitions for these rational quantities and
+the needed derivatives. Differentiate the six-variable scalar circuit
+using (7.2.4), including the derivative of $t$ in pair multiplication
+and in its inverse. Enclose the point values of $G,D_yG,f,D_yf$ at
+$(c_i,t_i)$ by the $160$-bit endpoint rules. Invert the interval point
+matrix enclosing $J_i$ by Gauss–Jordan elimination on its augmentation
+by the identity. Use pivots $1,\ldots,5$ in order, normalize the entire
+pivot row, then eliminate that column in every other row in increasing
+row order; use the old elimination factor for the entire row update.
+No row interchange or replacement of an interval pivot by an exact
+one is made. Let $\mathcal C_i$ be the resulting interval inverse.
+For interval finite sums use increasing indices starting from zero.
+Let $\mathcal U_{f,i}$ be the interval row obtained from the point
+$D_yf$ enclosure times $\mathcal C_i$, and let
+$\mathcal B_{f,i}$ be the point $f$ enclosure minus that row times the
+point $G$ enclosure. They contain $u_{f,i}$ and $b_{f,i}$.
+
+Write $[\partial_jf]_{X_i,T_i}$ and
+$[\partial_jG_k]_{X_i,T_i}$ for the derivative enclosures on the
+whole product box, in variable order $(R,B,E,k,\ell,t)$. Define
+
+$$
+\begin{aligned}
+\mathcal D_{f,i,j}
+ &=[\partial_jf]_{X_i,T_i}
+   -\sum_{k=1}^5(\mathcal U_{f,i})_k
+                    [\partial_jG_k]_{X_i,T_i},\\
+\eta_{f,i}
+ &=\sum_{j=1}^5\rho_j|\mathcal D_{f,i,j}|_{\sup}
+       +\Delta|\mathcal D_{f,i,6}|_{\sup},\\
+\mathcal V_{f,i}
+ &=\mathcal B_{f,i}
+      +\mathcal O_{160}([-\eta_{f,i},\eta_{f,i}]).
+\end{aligned}
+\tag{8.5.3}
+$$
+
+The sum defining $\eta$ is an exact rational sum of the interval
+absolute endpoints. In differentiating $f-u_{f,i}G$, the row $u_{f,i}$
+is fixed at the centre, so its derivatives are not included.
+

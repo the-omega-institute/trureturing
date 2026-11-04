@@ -1,0 +1,51 @@
+**命题 69.3（同一五站点来源的精确区分表）。** 保留定义 68.1 的五站点、全零初始化、制备次序 $K_2$ 后 $K_1$、Alice 位 $1$ 和 Bob 站点 $2,3,4$。新增设置 $s=2$ 为制备后在 Bob 的同一地址正向调用两次 $K_3$。记
+
+$$
+ u_2=\zeta^2[1+(\zeta^2-1)\varphi^{-1}],\qquad
+ v_2=\zeta^2(\zeta^2-1)\varphi^{-3/2},\qquad
+ |u_2|=x^2,\quad |v_2|=z=\sqrt{1-x^4}.
+ \tag{69.6}
+$$
+
+设置 $2$ 的完整振幅与响应权重是
+
+$$
+ \begin{array}{c|ccccc}
+ w&00000&01000&00100&00010&01010\\ \hline
+ \psi^{(2)}_w&u^2u_2&uvu_2&\zeta^3v&u^2v_2&uvv_2\\
+ f_\epsilon(|\psi^{(2)}_w|)&x^8&x^6y^2&y^2&x^4z^2H_\epsilon&x^2y^2z^2H_\epsilon
+ \end{array}
+ \tag{69.7}
+$$
+
+其中 $u,v$ 仍为 (68.2)，并置
+
+$$
+ H_\epsilon=1+\epsilon\sin^2\!\left(\pi\frac{\log z}{\log y}\right),\qquad
+ T_\epsilon=x^4+z^2H_\epsilon,\qquad
+ Z_2=x^2T_\epsilon+y^2=1+x^2z^2(H_\epsilon-1).
+ \tag{69.8}
+$$
+
+每个字的概率是 (69.7) 第二行权重除以 $Z_2$；其余 $27$ 个字严格为零。相对设置 $0$，Alice 零边缘的带符号差为
+
+$$
+ m_0(f_\epsilon)-m_2(f_\epsilon)
+ =\frac{x^2y^4z^2(H_\epsilon-1)}{Z_2}.
+ \tag{69.9}
+$$
+
+故这个额外原生设置区分 (69.3) 中每个 $\epsilon\ne0$，符号等于 $\epsilon$ 的符号。制备两次、设置两次，共四次正向 $K$ 调用；没有中间测量、条件成功或新增连续角度。
+
+证明。v15 式 (3.2) 给活跃块
+$K^2|000\rangle=u_2|000\rangle+v_2|010\rangle$。
+投影块的模平方恒等式为
+$|u_2|^2=1-\varphi^{-3}|\zeta^2-1|^2$。
+代入 $|\zeta^2-1|^2=\varphi+2$ 与 $x^2=1-x$ 得 $|u_2|^2=x^4$；酉性给 $|v_2|^2=1-x^4$。
+对来源 (68.4) 的前两支展开活跃块，第三支受阻而只获相位 $\zeta^2$，得到 (69.7) 的振幅，包括全部相位。前两支的未分裂模长为 $x^2=y^4$、$xy=y^3$；周期性给
+$f_\epsilon(y^kz)=y^{2k}z^2H_\epsilon$，得到权重行。
+
+令 $A=x^4$、$B=x^2y^2$、$C=y^2$。有 $A+B=x^2$、$A+B+C=1$，
+$m_0=(A+C)/(A+B+C)$，$m_2=(AT_\epsilon+C)/[(A+B)T_\epsilon+C]$。
+通分分子为 $BC(T_\epsilon-1)=x^2y^4z^2(H_\epsilon-1)$，即 (69.9)。全部权重的和为 $Z_2>0$。由 $y<z<1$，其中正弦平方严格为正，故得到区分及符号结论。这里给出的是完整终端响应的精确比较，不把某个 Born 近似误差界用于改变后的响应。∎
+

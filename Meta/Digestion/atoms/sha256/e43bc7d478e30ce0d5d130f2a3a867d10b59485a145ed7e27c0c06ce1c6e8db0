@@ -1,0 +1,30 @@
+**原生供应的准确消费。** 原卷 §8.1 的 $H_1,H_2,H_3$ 是 Hamiltonian，门为
+$R_j(t)=e^{-itH_j}$；五条耦合边不等于金字塔的全部几何棱。
+[Legal Gates §13.1](FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md#13-a-clean-encoded-circuit-compiler-inside-the-existing-legal-pulse-model)
+已经证明 $J_2|ab\rangle=|a0b\rangle$ 下
+
+$$
+D=R_2(\pi),\quad DJ_2=J_2D_{00},\quad
+D_{00}=\operatorname{diag}(-1,1,1,1),\quad
+S=R_3(\pi/2)R_1(\pi/2),\quad S^\dagger DSJ_2=J_2CZ.
+$$
+
+码逻辑顺序为 $(00,01,10,11)$，对应物理模式 $(0,3,1,13)$。
+$S$ 在码上为 $-X\otimes X$；分隔位可在中途激发但精确返回。
+这些是全码等距恒等式，故包括外部参考；不是删除空分支。
+$D$ 在额外合法态 $|010\rangle$ 上为负一，不能把四维码矩阵当成全五维恒等式。
+$D_{00}|++\rangle$ 的二维系数矩阵秩为二，确为纠缠态。
+
+单一固定 $H_1+H_2+H_3$ 的等待不等于独立寻址。
+原卷 §8.3 已给任意实角度的三控制精确群 $D_5SO(5)D_5^\dagger$，
+$D_5=\operatorname{diag}(1,i,i,i,1)$；原卷 §8.6 已给另供
+$S_*=e^{i\pi P_{13}/2}$ 后的精确 $SU(4)\oplus1$、$SU(5)$ 与
+$\{V\in U(5):\det V\in\{1,i,-1,-i\}\}$。
+这些是现有供应而非本节的新发现；固定 $S_*$ 的四次幂为一，不等于免费的连续相位源。
+仅在码上有局部 $X$ 旋转与 $CZ$ 时，换基
+$D_C=\operatorname{diag}(1,i,i,1)$ 使它们同时为实正交矩阵：
+对两个 $-iX$ 生成元直接共轭得实反对称矩阵，$CZ$ 仍为实对角。
+所以“能纠缠”本身不提供全部复控制。
+完整五维菜单与[单 Y 地址的可扩展码编译器](FIB_LEGAL_GATES_SINGLE_REFERENCE_AND_CERTIFIED_READOUT.md#3-a-constructive-polynomial-compiler-with-one-second-quadrature-address)
+是不同资源合同，后者的 $7,21,42$ 常数与精确成本仍由该 supplier 承担。
+

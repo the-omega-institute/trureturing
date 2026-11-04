@@ -1,0 +1,38 @@
+#### 定理 5.2：原生左右反序
+
+定义复线性算子
+
+<a id="eq-eq:native-mirror"></a>
+
+```math
+S e_{\beta_1\cdots\beta_5}=e_{\beta_5\cdots\beta_1}.\tag{12}
+```
+
+则  $S=S^\dagger=S^{-1}$ ， $Sv=v$ ，而且
+
+<a id="eq-eq:mirror-covariance"></a>
+
+```math
+S\mathcal P_jS^\dagger=\mathcal P_{6-j},\qquad
+ SK_jS^\dagger=K_{6-j}\quad(0\le j\le6).\tag{13}
+```
+
+
+**证明。**
+
+完整位置变化是  $b_ k\leftrightarrow b_ {6-k}$ （ $-1\le k\le7$ ），旁观位  $b_ 8$  固定。
+它交换两端相同的固定边界，且反序不改变无相邻  $1$  的性质，因此是合法正交基的对合置换。
+投影
+ $\mathcal P_ j=n_ {j-1}n_ {j+1}+(1-n_ {j-1})(1-n_ {j+1})Q_ j$ 
+对两个邻居对称，中心被送到  $6-j$ ，故逐项得到式 [(13)](#eq-eq:mirror-covariance)。
+初态的中间串  $00100$  是回文，故保持。
+
+**证毕。**
+
+
+这个镜像保持同一个  $\zeta$ ，它改变空间地址，没有把每个门变成逆门。
+接下来说明  $S$  不仅是一个形式上定义的酉矩阵，而且具有原生有限字实现。
+
+
+<a id="stmt-5-3"></a>
+

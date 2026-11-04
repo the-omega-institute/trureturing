@@ -1,0 +1,86 @@
+**Proposition 18.2 (Finite original-score contrast certificate).** Under Assumption 18.1 there is a terminal-pinned finite weighted acceptance presentation of exactly the positive compatible original words, whose path weight is the inclusive original score $S_P[A_\ast,B_\ast]$. Expand its edges into physical unit steps and form the synchronous pair graph with the allowed persistent boundary tags. Trim it by retaining exactly vertices and edges on an entry-to-exit path. Write $d_e$ for the left-minus-right edge weight, $\alpha_i$ for each entry-record offset and $\beta_f$ for each exit-record offset. Every equal-physical-length compatible original contrast vanishes if and only if the following finite real system has a solution:
+
+$$
+V_v-V_u=d_e\quad(e:u\longrightarrow v),\qquad
+V_{v(i)}=\alpha_i\quad\hbox{for every entry record }i,\qquad
+V_{v(f)}=-\beta_f\quad\hbox{for every exit record }f.
+\tag{18.2}
+$$
+
+Distinct records at the same vertex impose their equations separately. The empty trim graph gives a vacuous system. If (18.2) is inconsistent and $n\ge1$ is the number of trim **unit-pair vertices**, excluding virtual boundary bookkeeping nodes, there are genuine positive compatible original patterns with nonzero contrast, common displacement at most $2n-1$ and inclusive scored length at most $2n$.
+
+Proof. Write $\theta=\vartheta$ from (17.7), and retain $H$ from (17.8). For a boundary mode put
+
+$$
+t_B=\mathbf R(\eta)=\Phi_\eta(\mathbf1),\qquad
+t_+=\mathbf R(\xi)=\Phi_\xi(\mathbf1),\qquad
+\beta(c,h)=(1-\theta(c,h,b;t_+))^2,
+\tag{18.3}
+$$
+
+where $\Phi_{g_1\cdots g_m}=\Phi_{g_1}\circ\cdots\circ\Phi_{g_m}$. Thus the type is $\mathbf1$ at $R$, but is $t_B$, generally different from $\mathbf1$, at $B_\ast$. The final loss uses the suffix *after* the following gap $b$, hence $\mathbf R(\xi)$ in (18.3).
+
+A carrier vertex consists of finite language/phase control, its persistent boundary tag, and $(c,h,t)\in S\times\Gamma\times\mathcal T$. Its current anchor has predictive state $\tau_h(c)$. A permitted outgoing gap $g\in\Gamma$ gives an edge
+
+$$
+(c,h,t)\longrightarrow(\tau_h(c),g,t')
+\quad\Longleftrightarrow\quad t=\Phi_g(t'),
+\qquad \operatorname{length}(e)=g,\qquad
+\operatorname{weight}(e)=H(c,h,g;t'),
+\tag{18.4}
+$$
+
+with the corresponding control update and unchanged tag. Entry records have the prescribed actual $(c,h)$, arbitrary $t\in\mathcal T$, and weight zero. Exit records require accepting control, $t=t_B$, and the specified predictive/phase test after propagating $\tau_h(c)$ through $\eta$; their weight is $\beta(c,h)$.
+
+An authorized word supplies its forward trajectory and its joint suffix types, so gives an accepting path. Conversely, for a path with gaps $g_1,\ldots,g_m$, the exit pin and (18.4) force, by backward induction,
+
+$$
+t_k=\mathbf R(g_{k+1}\cdots g_m\eta)\quad(0\le k\le m).
+\tag{18.5}
+$$
+
+The forward recurrence forces the actual predictive trajectory of that same word, precisely as in (17.10). Noninjectivity of $\Phi_g$ creates no extra accepted assignment: the terminal pin determines every earlier type. The control and tags enforce the authorized boundary matches; positivity of the actual finite gap products gives positive original patterns. This proves exact acceptance without independently mixing attainable coordinates or adding inverse maps.
+
+For completeness, the two weights at a site with adjacent anchor gaps $l,r$ are $M L_a(z)$ and $B L_b(z)$, where $M=f_c(l+r)$, $B=f_c(l)f_{\tau_l(c)}(r)$ and $(a,b)$ is (17.6). The supplied full-exterior bridge identifies their ratio with the original $q_i^P$, giving (17.7). At an occupied anchor its loss is $(1-\theta)^2$; inside the following gap the legal zero insertions contribute the $\theta^2$ terms of (17.8), and forced neighboring zeros contribute zero. The half-open anchor intervals partition $[A_\ast,B_\ast)$, including every fixed scaffold site, and (18.3) adds exactly the remaining occupied endpoint. Thus (17.9) gives
+
+$$
+\sum_e\operatorname{weight}(e)+\beta(c_m,h_m)
+=S_P[A_\ast,B_\ast],\qquad
+\sum_e\operatorname{length}(e)=B_\ast-A_\ast.
+\tag{18.6}
+$$
+
+Both endpoints are scored. A deletion may destroy an earlier guard or leave the accepted family; its merged gap is still evaluated under the original row, through $2G$. No conditioning of $P$ onto bounded gaps occurs. If an authorized mode has $A_\ast=B_\ast$, an allowed entry/exit coincidence uses $\beta$ once and no $H$. Empty or short interiors and overlapping joining anchors are decided by the finite control, with each physical anchor counted once.
+
+Subdivide every length-$g$ edge into a private chain of $g$ unit edges, placing its weight on the first edge and zero on the others. Entry and exit records remain at original boundary vertices. Pair arbitrary unit steps synchronously, without requiring equal gap labels or equal numbers of gaps, and retain the boundary tags before trimming. Private chains prevent starting or ending inside a gap. Accepted pair paths are exactly the allowed original pairs with equal displacement, hence equal inclusive scored length. Their weight is
+
+$$
+\alpha_i+\sum_e d_e+\beta_f
+=S_P(x)-S_P(x').
+\tag{18.7}
+$$
+
+Here $\alpha_i$ is the difference of the two zero entry weights, and $\beta_f$ is the difference of the two losses (18.3). Every boundary record is retained even if several occur at one vertex. The common left reset, spatial phase matching and intact third guard give the same original exterior channels for the two words. Their finite original likelihoods are positive on that disintegration. Consequently any accepted product witness lifts to positive compatible original patterns, rather than merely to a synthetic pair of carrier paths.
+
+A solution of (18.2) telescopes (18.7) to zero. Conversely, suppose every accepted contrast is zero. For a trim vertex $v$, define $V_v$ as the entry offset plus the edge sum of any entry-to-$v$ prefix. Any two such prefixes can be followed by a common $v$-to-exit suffix, including its exit offset. The persistent tags make both concatenations authorized. Their zero contrasts make the two prefix values equal. Appending an edge proves its equation; the empty prefix of each entry record and each complete prefix at an exit record give all boundary equations in (18.2). This also handles disconnected trim components, multiple entries/exits and boundary coincidences. Directed-cycle equations alone would not impose these transient and boundary conditions.
+
+For a constructive bound, choose for every trim vertex $v$ a simple entry-to-$v$ prefix $P_v$ and a simple $v$-to-exit suffix $Q_v$, each with at most $n-1$ unit edges and its chosen boundary record. Let $p(P_v)$ include its entry offset, let $q(Q_v)$ include its exit offset, and set $V_v=p(P_v)$. If the system is inconsistent, these candidate values fail some equation. A failed exit equation makes $P_{v(f)}$ a nonzero accepted contrast. A failed entry equation at $i$ makes the two accepted contrasts
+
+$$
+\alpha_i+q(Q_{v(i)})\quad\hbox{and}\quad
+p(P_{v(i)})+q(Q_{v(i)})
+$$
+
+different, so one is nonzero. A failed edge equation $e:u\to v$ makes the accepted contrasts of $P_u e Q_v$ and $P_vQ_v$ differ by the nonzero residual $V_u+d_e-V_v$, so again one is nonzero. The longest displayed accepted walk has at most
+
+$$
+(n-1)+1+(n-1)=2n-1
+\tag{18.8}
+$$
+
+unit edges. These walks retain the tags and lift by (18.5)--(18.7). Their original displacement is therefore at most $2n-1$, and their inclusive scored length is that displacement plus one, at most $2n$. For its boundary mode the entire unchanged-left-anchor-to-$R$ displacement is also at most $(A_\ast-T_\ast)+(2n-1)+|\eta|$, where $|\eta|$ is physical length. When the trim graph is empty there is no accepted pair and no witness assertion; an authorized zero-edge path instead contributes a trim vertex and its entry/exit equations.
+
+The finite-language control, product, subdivision, additive-potential telescoping and simple-path arguments are standard suppliers used inside this application. [Mohri, *Weighted Automata Algorithms*, §§1 and 6.3](https://cs.nyu.edu/~mohri/pub/hwa.pdf) supplies initial/final-weight, trim and reweighting algebra; its stronger pushing and equivalence hypotheses are not transferred to these signed contrasts. Generic product provenance is [Fliess, *Sur divers produits de séries formelles*, §3, Proposition 1, p.183, and the tensor-product remark, p.187](https://www.numdam.org/item/10.24033/bsmf.1777.pdf), as described in the [corresponding literature note](../../../Library/Automata/fliess1974products.md). The repository's [Zero loop potential equivalence](../../../Blueprint/D5/S3/Observer/AgencyHolonomy/ZeroLoopPotentialEquivalence.md) is a connected-groupoid result, and [Action graph communication bound](../../../Blueprint/D5/S3/ObserverMemory/Prediction/ActionGraphCommunicationBound.md) uses natural costs; neither is directly applied to this directed signed boundary system. The actual-word posterior construction and original-pattern lift above provide the FIB application, without a literature-novelty assertion.
+
+All construction and residual tests use exact arithmetic and equality relative to the supplied finite real data and their generated expressions. They do not acquire $\mathcal T$, certify it from numerical approximations, or provide arbitrary-real computability. The bound depends on the resulting graph, with no uniform bound in $G$, guards or the producer and no optimality assertion. The criterion neither asserts an actual inconsistent instance nor proves original-risk attainment or nonattainment; it does not settle the unresolved original implication following (17.10). $\square$
+

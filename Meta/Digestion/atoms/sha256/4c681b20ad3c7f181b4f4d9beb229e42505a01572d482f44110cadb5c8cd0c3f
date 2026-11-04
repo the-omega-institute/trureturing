@@ -1,0 +1,82 @@
+## 2. A parity-split construction
+
+The following notation is used for $k\geq2$.  Set
+
+$$
+r=k+2,\qquad q=r-1=k+1,\qquad N=2^q,
+\qquad \tau=r+2,
+$$
+
+and let
+
+$$
+E_r=\{j\in\{0,\ldots,r\}:j\equiv r\pmod 2\}.
+$$
+
+For $j\in E_r$, take $\binom rj$ coordinate labels.  Of these labels,
+$\binom qj$ are marked $\varepsilon=0$ and $\binom q{j-1}$ are marked
+$\varepsilon=1$; binomial coefficients outside $0\leq a\leq q$ are zero.
+Pascal's identity shows that the total number of labels is
+
+$$
+\sum_{j\in E_r}\binom rj=2^{r-1}=N.
+$$
+
+Let
+
+$$
+c=\frac{\tau+r/2-1}{2},\qquad u=\tau-c=\frac r4+\frac32.
+$$
+
+On the $N$ labels define diagonal real matrices by
+
+$$
+\begin{aligned}
+(A_0)_{j,\varepsilon}&=(B_0)_{j,\varepsilon}=\tau+j-c-\varepsilon,\\
+(A_1)_{j,\varepsilon}&=c+\varepsilon,\\
+(B_1)_{j,\varepsilon}&=c+1-\varepsilon.
+\end{aligned}
+\tag{2.1}
+$$
+
+All entries are strictly positive: $c>0$ and $u>0$, while
+$\tau+j-c-\varepsilon=u+j-\varepsilon\geq u-1>0$.  Hence this is a
+commuting positive definite quadruple.
+
+We use the forward difference
+
+$$
+\Delta^m f(x)=\sum_{a=0}^m(-1)^{m-a}\binom ma f(x+a).
+\tag{2.2}
+$$
+
+The parity split in (2.1) gives, for every integer $m\geq0$,
+
+$$
+\begin{aligned}
+&\sum_{j\in E_r}\binom q{j-1}(u+j-1)^m
+-\sum_{j\in E_r}\binom qj(u+j)^m\\
+&\hspace{35mm}=\Delta^q(x\mapsto x^m)(u).
+\end{aligned}
+\tag{2.3}
+$$
+
+Indeed, in the first sum put $a=j-1$.  The indices in that sum have the
+parity of $q$, whereas those in the second have the opposite parity, and
+$(-1)^{q-a}$ is respectively $+1$ and $-1$.  The standard finite-difference
+calculus gives
+
+$$
+\Delta^q(x\mapsto x^m)(u)\geq0\quad(u\geq0,m\in\mathbb Z_{\geq0}).
+\tag{2.4}
+$$
+
+For completeness, if $m<q$ the difference is zero; if $m\geq q$, repeated
+use of the fundamental theorem of calculus gives
+
+$$
+\Delta^q f(u)=\int_{[0,1]^q}f^{(q)}(u+t_1+\cdots+t_q)\,dt_1\cdots dt_q,
+$$
+
+and $f^{(q)}(x)=m!/(m-q)!\,x^{m-q}\geq0$.
+

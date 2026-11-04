@@ -1,0 +1,71 @@
+#### 定理 4.2（给定来源的端点仪器）
+
+给定 $p=p_\kappa$，且 $\kappa_-<\kappa<\kappa_+$。令
+
+$$
+
+w_+=\frac{\kappa-\kappa_-}{\kappa_+-\kappa_-},\qquad
+w_-=1-w_+.
+
+$$
+
+存在二结果对角仪器，其在输入 $\rho=\operatorname{diag} p$ 上，以概率 $w_\pm$ 产生条件态 $\operatorname{diag} p_{\kappa_\pm}$。两个条件态分别实现两种三角剖分完成，并且各自具有原来的三个均值。
+
+**证明。** 
+纤维对 $\kappa$ 仿射，所以
+
+$$
+
+p=w_+p_{\kappa_+}+w_-p_{\kappa_-}.
+
+$$
+
+对 $p_s>0$，定义
+
+$$
+
+(M_\pm)_{ss}=\sqrt{\frac{w_\pm(p_{\kappa_\pm})_s}{p_s}}.
+
+$$
+
+上式的两个平方相加为 $1$。若 $p_s=0$，则两个加权端点概率也为 $0$；可在该未占据分量定义 $(M_+)_{ss}=1,(M_-)_{ss}=0$，使完备关系在全空间成立。于是 $M_+^\dagger M_++M_-^\dagger M_-=I$，且
+
+$$
+
+M_\pm\operatorname{diag}(p)M_\pm^\dagger=w_\pm\operatorname{diag}(p_{\kappa_\pm}).
+
+$$
+
+这同时证明分支概率及条件态结论。
+ ∎
+
+该仪器由<em>给定的来源</em> $p$ 标定。它作为固定仪器可作用于任意态，但在别的未知输入上不再保证选择该输入的两个纤维端点。端点处只剩一个有正概率的目标分支；纤维宽度为零时不存在非平凡二完成。
+
+同样的 Kraus 算子作用于具有相同对角 $p$ 的相干态时，分支<em>对角</em>仍为这些端点，分支的非对角元则由仪器决定。特别是，不能从 $p=w_+p_++w_-p_-$ 推出任意同对角纯态也等于那两个对角态的混合。
+
+理由很直接：若 $\lvert \psi\rangle\langle \psi\rvert=\sum_oq_o\rho_o$ 且 $q_o>0$，对每个 $v\perp\psi$ 有 $\sum_oq_o\langle v,\rho_ov\rangle=0$。正性使每项为零，故每个 $\rho_o$ 的支撑都在 $\operatorname{span}\{\psi\}$ 中，只能等于原纯态。一个纯态不能在保持非选择态不变时拆成不同后态。
+
+五个模式全部出现的具体例子是 $p_s=1/5$。此时两个 Kraus 算子可取
+
+$$
+
+M_+=\operatorname{diag}(1,0,1/\sqrt2,0,1),\qquad
+M_-=\operatorname{diag}(0,1,1/\sqrt2,1,0).
+
+$$
+
+两结果各以 $1/2$ 出现，其条件对角分别为
+
+$$
+
+p_+=(\tfrac25,0,\tfrac15,0,\tfrac25),\qquad
+p_-=(0,\tfrac25,\tfrac15,\tfrac25,0).
+
+$$
+
+它们各自仍有 $(X,Y,Z)=(2/5,2/5,1/5)$，而隐藏关系取相反端点。这是抽象仪器的精确构造，未附加有限原生黄金门词的精确实现结论。
+
+<a id="statement-4-3"></a>
+
+<a id="thm-parity"></a>
+

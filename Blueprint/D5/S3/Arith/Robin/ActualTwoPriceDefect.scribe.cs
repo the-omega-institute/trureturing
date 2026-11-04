@@ -10,6 +10,27 @@ internal sealed class ActualTwoPriceDefectDocument : IScribeDocumentDefinition
         "Complete original prime-layer optimizers and their two-price pressure identity.",
         H("Actual optimizers and two-price defects"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("actual-robin-price-positive"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualTwoPriceDefect.price_pos"),
+                H("The original reciprocal-log price is positive"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real x>1, price(x)=1/(x*log(x)) is positive. This existing supplier is consumed by OriginalPrimeSourceOrder when identifying complete strict inventories."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-robin-price-antitone"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualTwoPriceDefect.price_antitone"),
+                H("The original reciprocal-log price decreases"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For real x,y with 1<x and x<=y, price(y)<=price(x). The equal endpoint is included. OriginalPrimeSourceOrder uses this order in the closed inventory-interval sandwich."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-strict-integer-divisibility"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualTwoPriceDefect.strictInteger_dvd"),
+                H("Lower positive price enlarges the complete strict inventory"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive real prices q,r with r<=q, strictInteger(q) divides strictInteger(r). The proof compares every natural factorization coordinate, retaining complete prime stacks, zero coordinates and equality-price behavior. OriginalPrimeSourceOrder consumes this result after establishing actual source-clock order."))),
+                DescribeRole.Theorem),
             Paragraph(Text("The objective is log(sigma(n)/n)-q*log(n). The strict integer selects every layer with marginal greater than q; the maximal integer also includes every equality layer. All primes, positive layers and simultaneous ties are retained.")),
             Describe.Lean(
                 DescribeId.Create("actual-maximal-integer-specification"),

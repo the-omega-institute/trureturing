@@ -1,0 +1,65 @@
+### 5.1 A concrete three-dimensional EJM encoding
+
+There is an exact geometric encoding of the four EJM outcomes that makes the three-dimensional connection concrete without identifying the network with physical space. Let \(t_0,t_1,t_2,t_3\in\mathbb R^3\) be the unit vectors at the vertices of a regular tetrahedron, so
+
+\[
+t_i\cdot t_j=
+\begin{cases}
+1,&i=j,\\
+-1/3,&i\ne j.
+\end{cases}
+\]
+
+For an output triple \((a,b,c)\), put
+
+\[
+d_{ab}=t_a\cdot t_b,\quad
+d_{bc}=t_b\cdot t_c,\quad
+d_{ca}=t_c\cdot t_a,
+\]
+\[
+S=d_{ab}+d_{bc}+d_{ca},\qquad
+R=d_{ab}d_{bc}+d_{bc}d_{ca}+d_{ca}d_{ab}.
+\]
+
+Then the exact EJM table (5.1) is the symmetric Gram polynomial
+
+\[
+P_{\mathrm{EJM}}(a,b,c)=\frac{4+S+6R}{256}.
+\tag{5.2}
+\]
+
+The three equality patterns give
+
+\[
+\begin{array}{c|c|c|c}
+\text{pattern}&S&R&(4+S+6R)/256\\
+\hline
+a=b=c&3&3&25/256\\
+\text{exactly two equal}&1/3&-5/9&1/256\\
+a,b,c\text{ all distinct}&-1&1/3&5/256.
+\end{array}
+\]
+
+Among the 64 ordered output triples, four are all equal, 36 have exactly two equal entries, and 24 are all distinct. Thus every entry is nonnegative and the total mass is
+
+\[
+\frac{4\cdot25+36\cdot1+24\cdot5}{256}=1.
+\]
+
+The Gram expression therefore specifies an exact rational probability law on the 64 output triples.
+
+This identity is an exact finite calculation. It is a genuine three-dimensional representation of the output symmetry because the four outcomes are encoded by a regular tetrahedron in \(\mathbb R^3\). It is not a proof that the causal sources are spatial axes.
+
+The term \(S\) is a sum of pairwise Gram interactions. The term \(R\) is the symmetric sum of pairwise products among the three edge-pair Gram entries, so it is a cycle-sensitive invariant that still respects the full permutation symmetry of \(a,b,c\). Equivalently,
+
+\[
+256P_{\mathrm{EJM}}
+=5-4(\delta_{ab}+\delta_{bc}+\delta_{ca})
++32\,\mathbf 1_{\{a=b=c\}}.
+\]
+
+The last form makes the three pattern weights transparent; the Gram form makes the regular-tetrahedron, three-dimensional realization transparent. The identification of \(R\) with a physical curvature or holonomy remains a conjectural interpretation. What is proved here is only the polynomial identity (5.2).
+
+The encoding also explains why a purely low-order quotient can be blind. A statistic that retains only one-party means or a single pairwise Gram average can preserve the same \((X,Y,Z)\) while losing the cycle-sensitive \(R\) sector. A global triangle-local test must keep enough lifted data to decide whether the pairwise Gram sectors and the symmetric cycle sector admit one common product-source realization.
+

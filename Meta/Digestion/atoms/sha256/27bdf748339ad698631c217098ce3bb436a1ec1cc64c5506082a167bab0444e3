@@ -1,0 +1,12 @@
+**Definition 73.1 (the native independent layer).** Fix an integer $k\ge1$. From the owned alpha, for $j=0,\ldots,k-1$ execute $P_{R^j}$ and then $S_{R^j}$, consuming both whole Growth replies. This prepares incomparable beta leaves
+
+$$
+p_i=R^iL\quad(0\le i<k),
+\qquad\text{and one continuing alpha at }R^k.
+\tag{73.1}
+$$
+
+A valid selector Select$(i)$, $0\le i<k$, means the actual original call $S_{p_i}$. For a subset $U\subseteq\{0,\ldots,k-1\}$, let $t_U$ be the source after precisely those distinct selections in $U$. At an unused $i$ the complete reply is Growth$(S,p_i)$ and the successor is $t_{U\cup\{i\}}$; at a used $i$ the reply is Refusal(branch) and the source stays $t_U$. Every subset, every ordering of its elements and every finite sequence with repetitions is legal under sufficient backing. Different subsets are distinguished by an actual Select in their symmetric difference. The original $P_{p_i}$ also distinguishes beta from branch by wrong-type versus branch refusal, without changing either source. Each partial sequence extends to one reaching all $k$ selected leaves. Thus equality of subsets is exactly equality of the complete Select continuation task on this reached layer, although that task is smaller than unrestricted $Q_A$.
+
+**Proof of the source assertions.** At step $j$ the continuing leaf $R^j$ is alpha, so its promotion and split have the stated guards and leave the next continuing alpha at $R^{j+1}$. Its left beta is never touched by later preparation. The addresses $p_i$ are incomparable; a split at one cannot affect another. After that split the same address is a branch, proving the two complete-reply cases and all successor statements. Choosing any enumeration of a subset reaches it, and appending its complement reaches the full subset. Initially the prepared support has $1+3k$ vertices; at $t_U$ it has $1+3k+2|U|$, reaching $1+5k$ at the full subset. The same source, terminal-boundary and causal-order inverses of Definition 69.2 recover this present layer; the causal order does not specify the permutation of its independent selections. $\square$
+

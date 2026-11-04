@@ -1,0 +1,57 @@
+**Definition 27.3 (two iterative supplied-data queries).** For a physical
+word, start at (PCR.69). At each proper prefix $u$, evaluate
+$c_u=s_{A_u-1}$ from the full-source recurrence and seed, and follow only
+the supplied next physical letter by (PCR.37)--(PCR.39). The child's
+initial label is beta for delay one and alpha for delay two; its
+creation time is $e_u+1$. Keep only the current coordinates and immutable
+label, not an ancestor stack. At the final word, return $j=A_v$ and
+the tuple of Definition 27.1, evaluating its event bit if not yet done.
+Denote the ordinal component by $Q_s(v)$.
+
+For an ordinal $j\ge1$, successive Fibonacci additions locate the
+unique bracket in Theorem 27.2. Put
+
+$$
+ t=\tau(j)-2,\qquad u=t,\qquad q=j-F_{\tau(j)}.
+\tag{PCR.73}
+$$
+
+Begin at the same actual root with $(F_u,F_{u+1})$ and residual rank
+$q$. When $u>0$, evaluate its actual bit $c$ and delays. The two
+first-letter block sizes are
+
+$$
+ N_x(u)=
+ \begin{cases}
+ F_{u-\delta_x(c)+1},&u\ge\delta_x(c),\\
+ 0,&u<\delta_x(c).
+ \end{cases}
+\tag{PCR.74}
+$$
+
+Select $a$ if $q<N_a(u)$; otherwise select $b$ and subtract $N_a(u)$.
+Append that one letter, update only that child's actual coordinates and
+initial label, and replace $u$ by $u-\delta_x(c)$. Update the Fibonacci
+pair by subtraction, retaining no table: a delay-one step takes
+$(F_u,F_{u+1})$ to $(F_{u+1}-F_u,F_u)$; a delay-two step with $u\ge2$
+takes it to $(2F_u-F_{u+1},F_{u+1}-F_u)$. At $u=1$ only the delay-one
+block is nonempty. Stop at $u=0$, where the residual rank must be zero,
+and return the literal and its tuple. Denote the literal by $U_s(j)$.
+
+Integers use canonical binary nonnegative representations (zero has
+one digit); an ordinal must be positive. Reject wrong signs, malformed
+integer fields, a nonbinary $P$, a prefix length different from $2d$,
+a nonphysical letter, or a source prefix with no order-at-most-$d$
+passing recurrence. The last check can use the synthesized register
+length and regenerate the prefix for comparison within (ACR.85)'s
+bound; a failed synthesis is not replaced by a guessed periodic tail.
+An authentic source always passes. A passing finite representation
+alone does not certify acquisition or physical provenance. If labels
+or coordinates are supplied as extra claimed fields, compare them with
+the recomputed tuple and reject disagreement. In the already-occurred
+task require a valid acquired $n$ and return the event tuple only if
+$\tau(j)\le n$, equivalently $e_v+1\le n$; otherwise return
+$\mathsf{not\ yet\ occurred}$. Missing $n$ is invalid for that task.
+The whole-origin-orbit task imposes no such guard and certifies no
+current occurrence.
+

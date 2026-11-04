@@ -1,0 +1,50 @@
+**Proposition 13.3 (failure of the post-word weighted condition at the right initial cut).** For every $m\ge1$, take the right cut $j=0$ of Theorem 12.3 with the identity quotient:
+
+$$
+V=V_0^R=X_{-\infty:-1},\qquad Z=H_1,\qquad W=X_{1:m},\qquad U=X_0.
+$$
+
+For almost every $v$ on $\{X_{-1}=0,S_0=s\}$, the post-word residual of (12.1) is
+
+$$
+\Delta(v)=\sum_{w:p_v(w)>0}p_v(w)\Delta_w(v)
+=\begin{cases}1/6,&s=0,\\1/5,&s=1.\end{cases}
+\tag{13.6}
+$$
+
+Any good set whose positive-probability words have global diameter at most $\rho<1$ has no positive-probability word here. Consequently its bad-word variance divided by the exact denominator $\Delta(v)$ is one. Thus (12.7) fails for every $\eta<1$ on these positive-measure sets, and the global-diameter condition (12.2) fails for every $\kappa<1$.
+
+**Proof.** The whole past identifies $s$ and the previous bit. On the stated event, $U$ is Bernoulli with parameter $a_s$ and $Z=(1-s,U)$ determines $U$. In particular,
+
+$$
+\mathcal D(U;Z\mid V=v)=a_s(1-a_s).
+$$
+
+For the word $0^m$, put $T_{s,m}=\prod_{i=2}^{m}t_{s+i\bmod2}$, with the empty product equal to one. Its two center masses are
+
+$$
+\mathbb P(U=1,W=0^m\mid V=v)=a_sT_{s,m},\qquad
+\mathbb P(U=0,W=0^m\mid V=v)=\frac12T_{s,m}.
+\tag{13.7}
+$$
+
+Both are positive. Hence $\Delta_{0^m}(v)=q_s(1-q_s)>0$, where $q_s=a_s/(1/2+a_s)$. More generally, $X_1=1$ forces $U=0$, while, conditional on $X_1=0$ and the known phase, observations $X_2,\ldots,X_m$ give no further information about $U$. Since $Z$ determines $U$, summing the posterior variances therefore gives
+
+$$
+\Delta(v)=\mathbb P(X_1=0\mid V=v)q_s(1-q_s)
+=(a_s+1/2)\frac{a_s(1/2)}{(a_s+1/2)^2}
+=\frac{a_s/2}{a_s+1/2}.
+$$
+
+This is (13.6), with no dependence on $m\ge1$. Proposition 13.2 says that every positive-probability word has global forward diameter one. Thus the entire positive residual is carried by bad words, and both weighted left-hand sides equal $\Delta(v)$. The phase/previous-zero events have probabilities $8/22$ and $9/22$, respectively, so failure is not confined to null conditioning data.
+
+The denominator is essential. Dividing the same residual by the variance *before* observing $W$ instead gives
+
+$$
+\frac{\Delta(v)}{\mathcal D(U;Z\mid V=v)}
+=\begin{cases}8/9,&s=0,\\9/10,&s=1.\end{cases}
+\tag{13.8}
+$$
+
+Accordingly, this obstruction to the exact post-word condition (12.7) does not disprove variants normalized by the pre-observation variance. No failure at the left initial cut or after a finite burn-in follows from this calculation. $\square$
+

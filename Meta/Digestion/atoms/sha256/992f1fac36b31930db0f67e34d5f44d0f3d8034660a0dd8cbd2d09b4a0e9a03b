@@ -1,0 +1,8 @@
+**Convention 2.2 (Edge cost).** For positive integers $a,b$ put $\varphi(a,b)=\sqrt{a^2+b^2}/\max(a,b)=\sqrt{1+r^2}$ with $r=\min(a,b)/\max(a,b)\in(0,1]$, so $\Phi(G)=\sum_{uv\in E}\varphi(d_u,d_v)$ and $E(G)=\sum_{uv\in E}(\varphi(d_u,d_v)-1)$. For integers $D\ge k\ge1$ put $\psi(D,k)=\varphi(D,k)-1=\sqrt{1+k^2/D^2}-1$. Finally
+
+$$
+c_\ell=\ell\left(\frac{\sqrt{(\ell+1)^2+4}}{\ell+1}-1\right)\qquad(\ell\ge1).
+$$
+
+Stance: repo-derived (notation fixed in this volume).
+

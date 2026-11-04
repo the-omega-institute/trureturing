@@ -47,6 +47,19 @@ internal sealed class EvolutionAutomorphismControlDocument : IScribeDocumentDefi
     private static Formula R => SF.Call("supportRelation",Mu,B);
     private static Formula Beta => SF.Call("beta",R);
     private static Formula Aut => SF.Call("Aut",Mu);
+    private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
+    private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula StructureMapInjective()
+    {
+        var coord=SF.Call("Coord",N);var m=SF.V("M");var x=SF.V("x");var y=SF.V("y");
+        Formula Repr(Formula v)=>Apply(Seq(B,Dot,Operatorname,Grp(F.Id("equivFun"))),v);
+        return SF.All("n",SF.V("Nat"),SF.All("mu",SF.Call("Product",N),
+            SF.All("b",Apply(Qualified("Module","Basis"),SF.Call("Fin",N),SF.V("Complex"),coord),
+                SF.Imp(SF.Call("perfect",Mu),SF.All("M",SF.Call("LinearMap",SF.V("Complex"),coord,coord),
+                    SF.Imp(SF.All("x",coord,SF.All("y",coord,
+                        SF.Eq(Repr(Apply(Mu,x,y)),Apply(m,SF.Mul(Repr(x),Repr(y)))))),
+                        Apply(Qualified("Function","Injective"),m)))))));
+    }
     private static Formula Context(Formula f) => SF.All("n",SF.Call("NaturalNumbers"),
         SF.All("mu",SF.Call("Product",N),
             SF.All("b",SF.Call("Basis",SF.Call("Fin",N),SF.Call("Complex"),SF.Call("Coord",N)),
@@ -63,6 +76,9 @@ internal sealed class EvolutionAutomorphismControlDocument : IScribeDocumentDefi
             Paragraph(Text("For the coordinate estimates the space is Coord(n)=Fin(n) to the complex numbers. The multiplication is a bilinear map, with no associativity or unit assumption. "
                 + "NaturalBasisAt(mu,b) means mu(b(i),b(j))=0 whenever i differs from j. Perfectness means all pair products span the coordinate space. "
                 + "The support relation has an arrow i to j exactly when the j-coordinate of mu(b(i),b(i)) in b is nonzero; loops are retained.")),
+            Desc("structure_map_injective","An injective structure map",StructureMapInjective(),
+                "For every dimension n, product mu, basis b and perfectness hypothesis, a complex-linear map M expressing every product as M of the coordinatewise coordinate product is injective. "
+                + "The pair products span the space, so M is surjective and hence injective in finite dimension. This fact controls monomiality and supported permutations."),
             Desc("Aut","All multiplication automorphisms",
                 SF.All("A",SF.Type,SF.Imp(SF.Call("ComplexVectorSpace",SF.V("A")),
                     SF.All("mu",SF.Call("BilinearProduct",SF.V("A")),

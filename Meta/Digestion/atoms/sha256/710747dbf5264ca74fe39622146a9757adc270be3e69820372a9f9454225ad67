@@ -1,0 +1,88 @@
+**Theorem 4.1 (Uniform interior minimum and all equality laws).** For every fixed $0<\delta_0\le1$ there is an integer $A(\delta_0)\ge7$ such that, simultaneously for all integers $a\ge A(\delta_0)$ and all $\theta\in[0,1-\delta_0]$, the minimizer $t_*$ of Lemma 1.2 satisfies
+
+$$
+0<t_*<\frac{1-\theta}{a},\qquad
+\min_x H(x)=h_\theta(t_*).\tag{4.1}
+$$
+
+A law attains this minimum if and only if it is (1.4) at $t=t_*$, for some choice of $e$. Its least-marginal label is unique. Its positive-mass types are exactly $\{e\}$, $C$, and $C\setminus\{j\}$ for $j\in C$, and its incidence support has exactly the two components $\{e\}$ and $C$. There is no restriction to such supports in the minimization. The case $\theta=0$ is the endpoint classification of the parent volume's Theorem 12.5; (4.1) extends its mean range with one threshold uniform on each stated interval.
+
+**Proof.** Put $t_0=1/(\sqrt2\,a^{3/2})$. For large $a$ depending only on $\delta_0$, $t_0\le\delta_0/a\le(1-\theta)/a$; this is the first use of the interior restriction. Thus (1.4) supplies an actual trial law of energy $h_\theta(t_0)$. By (1.5), uniformly in the whole interval of $\theta$,
+
+$$
+h_\theta(t_0)-B=2\sqrt2\,a^{3/2}+O(a^{1/2}).\tag{4.2}
+$$
+
+Consider the entire trial sublevel
+
+$$
+\mathcal U_{a,\theta}=\{x:H(x)\le h_\theta(t_0)+1\}.
+$$
+
+For every law in this sublevel, $d\le4a^{3/2}$ eventually, with a threshold independent of the law and of $\theta$. Corollary 3.5 with the fixed value $M=4$ gives $1/4\le\tau\le4$ and
+
+$$
+\frac{m^2-1}{\tau}
++\left(\frac1\tau+2\tau-2\sqrt2\right)\le O(a^{-1}).\tag{4.3}
+$$
+
+The two terms on the left are nonnegative, and
+
+$$
+\frac1\tau+2\tau-2\sqrt2
+=\frac{2(\tau-1/\sqrt2)^2}{\tau}.
+$$
+
+Therefore, uniformly on this entire sublevel,
+
+$$
+m^2-1=O(a^{-1}),\qquad
+\tau=\frac1{\sqrt2}+O(a^{-1/2}),\qquad
+\beta=O(a^{-1}),\qquad
+t\Xi_\theta(t)=2+O(a^{-1/2})>0.\tag{4.4}
+$$
+
+For the last assertion substitute $t=\tau a^{-3/2}$ in (1.2); the coefficient multiplying $\tau^2$ in $3-t\Xi_\theta(t)$ is $2+O(a^{-1})$. All thresholds here depend only on the fixed trial bound, apart from the feasibility threshold depending on $\delta_0$.
+
+The scalar derivative also gives, for any fixed positive $w$,
+
+$$
+\frac{h_\theta'(w a^{-3/2})}{a^3}
+=-\frac1{w^2}+2+O_w(a^{-1}),\tag{4.5}
+$$
+
+uniformly for $\theta\in[0,1]$. Strict convexity brackets $a^{3/2}t_*$ between any fixed values on opposite sides of $1/\sqrt2$, once $a$ is large. Hence $a^{3/2}t_*\to1/\sqrt2$ uniformly in $\theta$. In particular $t_*<(1-\theta)/a$ uniformly on the specified interior interval. This is the second use of $\delta_0$, and makes (1.4) at $t_*$ admissible.
+
+For an arbitrary law outside $\mathcal U_{a,\theta}$, one has
+$H>h_\theta(t_0)+1>h_\theta(t_*)$. For a law inside, (2.5) and (4.4) imply
+
+$$
+H\ge h_\theta(t)+\beta\Xi_\theta(t)\ge h_\theta(t_*).
+$$
+
+The feasible family at $t_*$ attains this bound. This proves the global minimum without assuming that a minimizing law has already been found.
+
+If equality holds, all the terms in
+
+$$
+\begin{aligned}
+H-h_\theta(t_*)={}&h_\theta(t)-h_\theta(t_*)
+ +\beta\Xi_\theta(t)+\frac ut+\mathcal G_\alpha
+ +\sum_{i\in C}\frac{S_i+D_i}{y_i^2}
+\end{aligned}
+$$
+
+are nonnegative. Strict scalar convexity gives $t=t_*$; positivity of $\Xi_\theta(t)$ gives $\beta=0$. Thus $e$ occurs only as the singleton $\{e\}$. Equality in Jensen makes every core marginal $(q-t)/r$, and every $S_i$ is zero. Summing their residual representations gives
+
+$$
+0=\mathbb E\left[Q_a(L)\mathbf1_{\{T\ne\{e\}\}}\right].
+$$
+
+On this remaining event $I=0$ and $L=K\ge1$. The only integer zeros of $Q_a$ there are $a,r$. Thus the remaining positive masses lie at $C$ and $C\setminus\{j\}$. Write these masses as $z,b_j$. Normalization and the mean imply
+
+$$
+z+\sum_jb_j=1-t,\qquad rz+a\sum_jb_j=q-t,
+$$
+
+so $z=\theta+(a-1)t$ and $\sum_jb_j=\delta-at$. The marginal equality $1-t-b_j=(q-t)/r$ forces $b_j=(\delta-at)/r$ for each $j$. These are exactly (1.4). Conversely Lemma 1.2 proves their equality. Feasibility is strict at $t_*$, so every displayed mass is positive. Finally $t_*=O(a^{-3/2})$ while all core marginals tend uniformly to one. This proves uniqueness of the rare label and the claimed support components. ∎
+

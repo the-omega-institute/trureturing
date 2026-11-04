@@ -1,0 +1,5 @@
+source_id = "fib-native-long-time-phase-critical-entropy"
+path = "docs/develop/theory/FIB_NATIVE_LONG_TIME_PHASE_CRITICAL_ENTROPY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

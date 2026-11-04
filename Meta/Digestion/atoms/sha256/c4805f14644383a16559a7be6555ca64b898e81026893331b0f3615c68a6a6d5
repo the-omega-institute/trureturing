@@ -1,0 +1,67 @@
+#### 定理 7.1（关系的精确 Gram 约束与完成）
+
+记 $a_0=\omega(A),b_0=\omega(B),z=\omega(AB)$，则
+
+$$
+G=\begin{pmatrix}
+1&a_0&b_0\\
+a_0&1&z\\
+b_0&\bar z&1
+\end{pmatrix}\succeq0,
+\qquad
+\boxed{|z-a_0b_0|^2\le(1-a_0^2)(1-b_0^2).}
+$$
+
+固定 $a_0,b_0\in[-1,1]$ 后，允许关系 $z$ 恰为上述闭圆盘，
+其中充分性指存在某个二值量子接口实现数据。
+每个这样的数据组都可由某个 qubit 接口及某个可能混合的 qubit 态实现。
+
+**证明。**
+
+对任意复系数 $\lambda_j$，$G$ 的二次型为
+
+$$
+\omega\bigl[(\lambda_0I+\lambda_1A+\lambda_2B)^\dagger
+(\lambda_0I+\lambda_1A+\lambda_2B)\bigr]\ge0.
+$$
+
+对左上角一取 Schur 补，正性等价于
+
+$$
+\begin{pmatrix}
+1-a_0^2&z-a_0b_0\\
+\bar z-a_0b_0&1-b_0^2
+\end{pmatrix}\succeq0,
+$$
+
+给圆盘约束。反向令 $c=\Re z$。
+若 $|c|<1$，取 $s=\sqrt{1-c^2}$，
+$A=\sigma_z,B=c\sigma_z+s\sigma_x$，以及
+
+$$
+\rho=\frac12\left[
+I+a_0\sigma_z+\frac{b_0-ca_0}{s}\sigma_x
++\frac{\Im z}{s}\sigma_y\right].
+$$
+
+圆盘不等式整理后恰为该 Bloch 向量平方和不超过一，
+故 $\rho$ 正且迹一；代入得到全部指定读数。
+若 $c=\pm1$，$G$ 的正性先给 $|z|\le1$，于是 $z=\pm1$；
+再由主子块的零方向得到 $b_0=\pm a_0$。
+取 $B=\pm A$ 及 $\omega(A)=a_0$ 的 qubit 态即可。
+
+∎
+
+关系不等式也可写成
+
+$$
+(\omega(S)-a_0b_0)^2+\omega(C)^2
+\le\operatorname{Var}(A)\operatorname{Var}(B).
+$$
+
+对称协方差和有向关系共享同一正性预算。
+一般两端均值与复关系共含四个实数据；固定接口的算符关系可以进一步降维。
+上述存在性证明没有改变已固定原生菜单的可达范围。
+
+<a id="thm-ellipse"></a>
+

@@ -1,0 +1,23 @@
+#### 命题 3.3（共同过去通常留下共轭）
+
+若两历史共同右乘 $W$，即 $U'=UW,V'=VW$，则
+
+$$
+R'=W^\dagger RW.
+$$
+
+两条同种子射线的重叠变为
+$|\langle W\Omega,RW\Omega\rangle|^2$，共同过去可转移到种子，却一般没有消失。
+
+**证明。**
+
+直接相乘即得。反例取 $U=Z,V=I,\Omega=\lvert 0\rangle$，原重叠为一。共同先行 Hadamard 门后，二态为 $\lvert -\rangle$、$\lvert +\rangle$，重叠为零。
+
+∎
+
+对完整基底，右乘 $W$ 还改变其参考列。只要求 $W\psi_0$ 与 $\psi_0$ 同射线，不足以保证全部带标签概率保持；读口须同时稳定或一起协变。
+
+<a id="statement-3-4"></a>
+
+<a id="thm-descent"></a>
+

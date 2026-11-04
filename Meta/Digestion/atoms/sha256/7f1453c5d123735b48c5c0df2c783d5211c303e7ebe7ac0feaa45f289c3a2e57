@@ -1,0 +1,44 @@
+**Proposition 43.2 (width, traffic and local arithmetic on this word).** Put
+
+$$
+W=2DL(D+1)=2DM.
+\tag{NLBAII.64}
+$$
+
+Every nonnegative integer source coordinate, literal waveform operand and scalar reply in this acquisition is less than $2^W$, including nonnegative partial Tick sums. In particular their numerical magnitudes need at most $W$ binary bits; their signed rational packet frames and copies cost their full actual lengths. The bounds
+
+$$
+D_0\le3L-2,\qquad D\le4L+1,\qquad
+K\le1+(L-1)D
+\tag{NLBAII.65}
+$$
+
+give $O(L^2)$ final material and $O(L^3)$ bits per widest numerical word. They assert no constant-width scalar, total bit-time optimum or uniformly bounded lifetime store.
+
+Proof. At any stage, the field at any vertex is a sum of contributions from a subset of the $M$ input occurrences. Occurrence $(r,j)$ has exponent $H(j-1)+D-r$, distinct for all such pairs, and has been propagated at most $D$ times. Its coefficient is the relevant nonnegative walk count and is at most $3^D<B$. All exponent positions lie in $0,\ldots,M-1$. Thus the whole coordinate, and any partial nonnegative sum in computing it, is at most
+
+$$
+\sum_{e=0}^{M-1}(B-1)B^e=B^M-1<B^M=2^W.
+\tag{NLBAII.66}
+$$
+
+The same exponent bound applies to each input. The positive integer in (NLBAII.58) has exponent $E_{rj}=H(j-1)+D-r$ and exactly $2DE_{rj}+1$ numerator bits. The actual $y$ is a positive integer because every old block has a positive distance coefficient. Its numerator also has at most $W$ bits. Zeroing after the last observation cannot enlarge any magnitude.
+
+The normalized graph has $3L-1$ vertices, so every $\delta_i\le3L-2$. For $i>0$, (NLBAII.51) gives $k_i\le D$, and $k_0=1$. This proves (NLBAII.65) and the sufficient asymptotic bounds.
+
+For explicit literal growth traffic let
+
+$$
+\begin{aligned}
+G&=\sum_{p\text{ entry logical node}}|p|,
+& G_\alpha&=\sum_{p\text{ entry alpha leaf}}|p|,\\
+J&=\sum_{i=0}^{L-1}\left(k_i|p_i|+\frac{k_i(k_i-1)}2\right),
+& M_g&=2L-1+K.
+\end{aligned}
+\tag{NLBAII.67}
+$$
+
+The original addressed request and reply payloads are respectively $2(G+J)+4M_g$ and $2(G_\alpha+J)+5M_g$ bits, by §17's $2|p|+4$ request, $2|p|+5$ success and five-bit refusal meanings. Every payload additionally pays its actual completion, End, acknowledgement and return costs. The field-input integers are denominator-one reduced rationals. For a positive numerator of bit length $b$, §17's signed self-delimiting numerator and denominator-one encoding has $2b+5$ payload bits, besides the operation tag and raw-label frame. Consequently each of the $M$ inputs pays its own $b=2DE_{rj}+1$, and the sole $y$ pays the same literal rational rule at its actual bit length. Original raw labels use their $O(\log(L+1))$ encodings; the anchor, appended counters and stored indices pay their actual lengths as well. This accounts for transmitted words, not just the number of scalar calls.
+
+One finite implementation constructs an input by computing its finite integer exponent, shifting a one by $2DE_{rj}$ positions and emitting the entire reduced rational frame. It reuses one operand workspace only after the preceding Add and return finish. The decoder performs exactly $M$ successive quotient/remainder extractions by $B=2^{2D}$, and one zero comparison per extracted digit, retaining the first positive index of each of the $L$ blocks. It need not retain a full $L$-by-$(D+1)$ response matrix. With ordinary full-word copying, each shift or quotient/remainder costs its actual at-most-$W$ bit work; $O(MW)$ bit reads/writes suffice for these waveform/digit operations, in addition to counter/exponent arithmetic, literal I/O, source work, graph construction and map/report copies. Counters, index products, comparisons, address concatenations, the $L$ locally computed tree distances and their maximum all pay their actual finite arithmetic and traversal costs. A direct repeated breadth-first traversal computes the required distances on the earned normalized graph using finite indexed adjacency lists, with no source call. No algebraic operation at growing width is declared a unit-cost physical primitive. $\square$
+

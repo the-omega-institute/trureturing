@@ -1,0 +1,53 @@
+**Theorem 146.4 (Original nonlinear full-law endpoint on a positive interval).**
+Set
+
+$$
+\Delta_a=\frac3{4096},\qquad
+\eta_a=\min\left\{\eta_0,\frac{3}{16384E}\right\},
+\tag{146.10}
+$$
+
+where $E,\eta_0$ are the explicit source constants of (144.1). Then
+$\eta_a>0$, and for every $0<\eta\le\eta_a$ the original full-history
+thresholds of Definition 126.2 satisfy
+
+$$
+\boxed{\qquad \nu_a(\eta)-\mu_a(\eta)
+\ge\frac{3}{8192}\eta>0.\qquad}
+\tag{146.11}
+$$
+
+All compact minimizers of the unchanged original $\mu_a(\eta)$ have
+
+$$
+\frac{3}{8192L}\eta\le|\gamma|
+\le\frac{M-9/16384}{\underline c}\eta\le G\eta,
+\tag{146.12}
+$$
+
+and both extremal retention radii of Definition 131.1 are attained and
+obey the same positive lower and upper bounds. Thus the original
+full-history endpoint is type III throughout this interval.
+
+*Proof.* The gap (146.9) permits the weaker certified value
+$\delta_a\ge\Delta_a$. Apply Theorem 127.1 with this $\Delta_a$.
+It applies throughout (146.10), its threshold gap is
+$\Delta_a\eta/2=3\eta/8192$, and its retention bounds are (146.12).
+The attainment and type-III statements are the endpoint criterion of
+Theorem 124.2 together with Definition 131.1. The construction retains
+one full ten-dimensional completion per hypothesis, shared across
+emission, the single forward return and every history; compared
+hypotheses may use different completions. All original prefix masses,
+the factors $a_w/2$, both terminal labels, clocks, schedules, sole
+preparation and installed menu remain unchanged. No normalized rows,
+extra preparation, randomization, postselection, record-phase gauge or
+new control is introduced.
+
+The certificate is source-specific and repo-derived. It does not give an
+exact optimizer or exact optimum value, and it makes no claim of global
+novelty or of resolving an external named problem. Its only literature
+intermediates are the finite-source decoder and comparison results already
+cited in §§106, 116, 118 and the Chebyshev signed-witness principle cited
+in §128. The remaining dependence is the original return premise VI
+Assumption 106.2. $\square$
+

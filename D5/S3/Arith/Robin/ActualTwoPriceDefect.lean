@@ -286,10 +286,10 @@ def pressure (q : ℝ) : ℝ :=
 def defect (a : ℝ) (n : ℕ) : ℝ :=
   pressure (price a) - W n + price a * Real.log n
 
-private theorem price_pos {x : ℝ} (hx : 1 < x) : 0 < price x := by
+theorem price_pos {x : ℝ} (hx : 1 < x) : 0 < price x := by
   exact one_div_pos.mpr (mul_pos (by linarith) (Real.log_pos hx))
 
-private theorem price_antitone {x y : ℝ} (hx : 1 < x) (hxy : x ≤ y) :
+theorem price_antitone {x y : ℝ} (hx : 1 < x) (hxy : x ≤ y) :
     price y ≤ price x := by
   rcases eq_or_lt_of_le hxy with rfl | hxy
   · exact le_rfl
@@ -337,7 +337,7 @@ theorem compact_layer_support {a b : ℝ} (ha : 1 < a) (hab : a ≤ b) :
       ((price_antitone (ha.trans_le hu.1) hu.2).trans hgain)
 
 /-- As price falls, the exact strict integer grows by divisibility. -/
-private theorem strictInteger_dvd {q r : ℝ} (hq : 0 < q) (hr : 0 < r)
+theorem strictInteger_dvd {q r : ℝ} (hq : 0 < q) (hr : 0 < r)
     (hrq : r ≤ q) : strictInteger q ∣ strictInteger r := by
   apply (Nat.factorization_le_iff_dvd
     (by have := strictInteger_pos hq; omega)

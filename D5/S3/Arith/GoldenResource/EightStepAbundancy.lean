@@ -29,7 +29,7 @@ open D5.S3.Arith.GoldenResourceObjectiveFactorization
 /-- The denominator of the gain from the positive prime layer `k`. -/
 def layerDenominator (p k : ℕ) : ℕ := ∑ i ∈ range k, p ^ (i + 1)
 
-private theorem denominator_mono (p : ℕ) {a b : ℕ} (h : a ≤ b) :
+theorem denominator_mono (p : ℕ) {a b : ℕ} (h : a ≤ b) :
     layerDenominator p a ≤ layerDenominator p b :=
   sum_le_sum_of_subset (range_mono h)
 
@@ -72,14 +72,14 @@ private theorem cutoff_exponent {p k : ℕ} (hp : p.Prime) (hk : 1 ≤ k) :
   unfold optimalExponent
   split_ifs <;> omega
 
-private theorem denominator_pos {p k : ℕ} (hp : p.Prime) (hk : 1 ≤ k) :
+theorem denominator_pos {p k : ℕ} (hp : p.Prime) (hk : 1 ≤ k) :
     0 < layerDenominator p k := by
   have h := denominator_mono p hk
   have h1 : layerDenominator p 1 = p := by simp [layerDenominator]
   rw [h1] at h
   exact hp.pos.trans_le h
 
-private theorem layer_ratio_identity {p k : ℕ} (hp : p.Prime) (hk : 1 ≤ k) :
+theorem layer_ratio_identity {p k : ℕ} (hp : p.Prime) (hk : 1 ≤ k) :
     (1 - (p : ℝ)⁻¹ ^ (k + 1)) / (1 - (p : ℝ)⁻¹ ^ k) =
       1 + 1 / (layerDenominator p k : ℝ) := by
   have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp.ne_zero

@@ -629,21 +629,7 @@ private theorem selectedPrimePowers_lower :
 
 theorem E1Lambda_sub_E1p_lower {x : ℝ} (hx : 286 ≤ x) :
     (319 / 500 : ℝ) ≤ E₁Λ x - E₁p x := by
-  have hid : E₁Λ x - E₁p x =
-      ∑ n ∈ Ioc 0 ⌊x⌋₊, if ¬n.Prime then vonMangoldt n / n else 0 := by
-    unfold E₁Λ E₁p
-    rw [sum_filter]
-    calc
-      _ = ∑ n ∈ Ioc 0 ⌊x⌋₊,
-          (vonMangoldt n / n - if n.Prime then log n / n else 0) := by
-        rw [sum_sub_distrib]; ring
-      _ = _ := by
-        apply sum_congr rfl
-        intro n hn
-        split_ifs with hp
-        · simp [vonMangoldt_apply_prime hp]
-        · simp
-  rw [hid]
+  rw [E₁Λ.sub_E1p_eq_sum_nonprime]
   apply selectedPrimePowers_lower.trans
   apply sum_le_sum_of_subset_of_nonneg
   · intro n hn

@@ -19,6 +19,11 @@ internal sealed class FiniteEndpointPairingDocument : IScribeDocumentDefinition
                 + "permutation recurrence. P(s,r)(x) is this actual first-return endpoint. "
                 + "A first-return segment has no intermediate point in E. "
                 + "For a permutation J of E, extend(J) acts as J on E and fixes X outside E.")),
+            Node("involution-square", "An Involutive Permutation Squares to the Identity", "square_of_involutive",
+                Disp(All("X", V("Type"), All("p", Call("Perm", V("X")),
+                    Imp(Call("Involutive", V("p")),
+                        Equal(Multiply(V("p"), V("p")), Num(1)))))),
+                "Applying an involutive permutation twice fixes every element, so its square is the identity permutation."),
             Node("endpoint-involution", "First Return Reverses the Same Path", "endpoint_pairing_involutive",
                 Context(Call("Involutive", P())),
                 "The identity q^n*r*q^n=r reverses any segment with endpoints fixed by r. "

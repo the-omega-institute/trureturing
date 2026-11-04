@@ -1,0 +1,20 @@
+**Proposition 49.3 (attained exact widths and local work).** The above route can use the acquisition bound of Proposition 41.3, followed by $O(N^3)$ rational operations to construct fixed inverse matrices. The $L$ pulse updates and the observation-window synchronization use $O(N(L+N))$ further rational operations when the redundant native record is retained. For $H<a$, one finite local decoder uses at most
+
+$$
+O\bigl(Q_LN(L+1)+N^2+NL\bigr)
+$$
+
+additional rational operations and exact comparisons, without further source calls. Its current rational words and transient numerator products have width $O(W_L)$; its menu words and output require $O(Ld_H+L+1)$ binary data bits. The numerical input and scalar-root traffic of Proposition 49.2 is at most $O((N+L)W_L)$ bits, with actual fixed acknowledgements and operation framing added. These are sufficient bounds, without an optimality assertion.
+
+Proof. The acquisition calculation and its square-root charges are already supplied in §41. Constructing $K$ and the observation matrix uses successive sparse products; exact elimination constructs their inverses with a conservative cubic field-operation allowance, at the actual fixed widths included in $F$.
+
+After $t$ total Ticks from the authentic preparation, all native coordinate denominators divide $D^t$: Tick multiplies by $D^{-1}(DT)$ and an integral pulse introduces no new denominator. Through the last observation reply, $t\le L+3N-1$. Every current coordinate has magnitude at most $(H+1)\|s\|_\infty$. This was proved in Theorem 48.1 at pulse cuts, and remains true during diagnostic Ticks because $Ts=s-b\le s$ entrywise. Intermediate Tick and post-Add cuts have the same bound. Since the total encoding of $s$ is included in $F$, the reduced numerator and denominator lengths are
+
+$$
+O\bigl(F+(L+3N)\log_2(D+1)+\log_2(H+2)\bigr).
+$$
+
+For fixed-matrix products use a common denominator equal to the product of the relevant fixed denominators, whose logarithm is at most $F$, together with $D^t$. Taking at most $N$ summands adds only $O(\log(N+1))$ bits. Reduction and cross-multiplication for equality use widths within an absolute constant factor of this envelope. The same argument bounds the recovered pulse endpoint, the current predictive vector, the computed baseline $T^Lx_*$ and every locally simulated candidate. Intermediate products before reduction have at most twice these widths.
+
+For a decoder with an explicit finite bound, list the $Q_L$ candidate menu words and evaluate each starting at the retained $x_*$ by $L$ sparse local updates $v\mapsto Tv+u_i b$. Compare its final native vector with the recovered $x_L$. Each candidate takes $O(N(L+1))$ rational operations and comparisons, and no candidate sends a command to the specimen. A candidate counter and its $L$ symbols suffice to form the finite list successively; no table of all endpoints is required. The actual-image promise supplies one match and Theorem 45.2 supplies exactly one. A candidate word and a distinct retained output copy each have at most $Ld_H$ symbol bits, with length and framing charged. The baseline calculation, matrix-vector observation inverse and current synchronization fit the remaining allowance. All counters, including the enumeration counter of at most $\lceil\log_2 Q_L\rceil+1$ bits, are finite and charged. Finally each of the $O(N+L)$ scalar replies has width $O(W_L)$, and each of the $L$ nonnegative integer inputs has width $O(\log_2(H+2))\subseteq O(W_L)$. This proves the numerical traffic bound. $\square$
+

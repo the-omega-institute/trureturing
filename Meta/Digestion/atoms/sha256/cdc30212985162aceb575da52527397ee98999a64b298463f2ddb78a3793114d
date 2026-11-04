@@ -1,0 +1,26 @@
+### 命题 5.1（相同即时 Born 响应不决定相同未来）
+
+在内部二维代码上令$P_i=\lvert i\rangle\langle i\rvert$、$X\lvert i\rangle=\lvert 1-i\rangle$。
+两仪器
+
+$$
+\mathcal I_i(\rho)=P_i\rho P_i,
+ \qquad \mathcal J_i(\rho)=XP_i\rho P_iX
+$$
+
+对每个输入给相同结果概率$\operatorname{Tr}(P_i\rho)$，却有不同的条件后继。
+重复使用时，第一仪器的后续标签保持不变，第二仪器的标签严格交替。
+
+**证明。**
+
+酉共轭保持迹，所以两概率相同。
+正质量分支的归一状态分别为$\lvert i\rangle\langle i\rvert$和$\lvert 1-i\rangle\langle 1-i\rvert$。
+再次测量计算标签分别得到$i$与$1-i$，归纳给结论。
+
+∎
+
+因此，下一节的 CP 仪器与归一更新是明确增加的有效结构前件。
+它们仍可全部内生；但源中旧终端响应的 Born 结论并不供应这些前件。
+源 §109 的标量终端缺陷，也不能直接替换下节完整仪器的迹距离误差。
+此区分使概率重构和长期动态稳定的推理没有循环。
+

@@ -1,0 +1,25 @@
+**Definition 5.1 (The one-extra-core-label singleton family).** For integers $a\ge2$, $h\ge1$, partition $[a+1+h]=C\mathbin{\dot\cup}D$ with $|C|=r=a+1$, $|D|=h$. For the actual parameter domain
+
+$$
+0<\varepsilon\le1/a,
+$$
+
+define
+
+$$
+x_{\{d\}}=\frac\varepsilon h\quad(d\in D),\qquad
+x_C=(a-1)\varepsilon,\qquad
+x_{C\setminus\{i\}}=\frac{1-a\varepsilon}{a+1}\quad(i\in C),
+\tag{5.1}
+$$
+
+and set all other masses to zero. Denote this family by $\mathcal S(a,h)$. At $h=1$ it is the family of [*CDSO incidence moments and capacity phases*, Theorem 10.1](CDSO_INCIDENCE_MOMENTS_AND_CAPACITY_PHASES.md); the tail singleton mass is now split equally over $h$ labels. Its actual marginals and mean are
+
+$$
+y_i=\frac{a-\varepsilon}{a+1}\quad(i\in C),\qquad
+y_d=\frac\varepsilon h\quad(d\in D),\qquad
+\mathbb E K=a.
+$$
+
+Indeed the masses sum to $\varepsilon+(a-1)\varepsilon+1-a\varepsilon=1$, and the mean is $\varepsilon+(a+1)(a-1)\varepsilon+a(1-a\varepsilon)=a$. The parameter domain is exactly the one giving nonnegative displayed masses and positive marginals. Its endpoint $\varepsilon=1/a$ is called the cap. At that endpoint the missing-one types have zero mass, as permitted in Definition 1.1.
+

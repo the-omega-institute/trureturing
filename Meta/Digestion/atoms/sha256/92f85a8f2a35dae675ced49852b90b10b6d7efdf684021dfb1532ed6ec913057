@@ -1,0 +1,51 @@
+**Theorem 55.2 (sharp native branching criterion).** Let $u\in\mathcal D$ be earned, with its complete material/terminal correspondence. Physically establish zero at every vertex, then actually Add one at the first canonical terminal $e$ and Hold. For every finite binary word $w=d_0\cdots d_{m-1}$ execute each digit as
+
+$$
+\operatorname{Tick};\ \operatorname{Add}(e,d_i);\ \operatorname{Hold};\ \operatorname{Read}(e).
+$$
+
+Call this complete composite Next$(d_i)$: it returns all three acknowledgements and the literal Read scalar, through the earned raw binding of $e$. No growth, Reset, other Add or extra Tick belongs to this encoding phase. Its actual field is
+
+$$
+x_w=F_w(A_u)e,\qquad
+F_w(z)=z^m+\sum_{i=0}^{m-1}d_i z^{m-1-i}.
+\tag{55.1}
+$$
+
+The map $w\mapsto x_w$, including the empty word and every all-zero word, is injective if and only if $u$ is a branch, equivalently $b\ge2$. Four material vertices suffice and are the minimum material size in this native class. On every branching graph the two functionals $e^{\mathsf T}A_ux_w$ and $e^{\mathsf T}A_u^2x_w$ suffice to recover the word and its length by a terminating exact greedy calculation.
+
+**Proof.** The actual recurrence is $x_{wd}=A_ux_w+de$, starting at $e$, which proves (55.1). Put $A=A_u$ and
+
+$$
+r_j=e^{\mathsf T}A^{2j}e=\|A^je\|^2,\qquad a_j=r_{j+1}\quad(j\ge0).
+$$
+
+The norm is the ordinary rational-coordinate sum of squares, viewed in $\mathbb R$ for Cauchy–Schwarz. For a leaf $e$ with neighbour $v$, $r_0=r_1=1$ and $r_2=\deg(v)$. In a connected branching material tree $\deg(v)\ge2$. Every $r_j$ is positive: bouncing on the edge incident with $e$ is a closed walk of length $2j$. Symmetry gives
+
+$$
+r_{j+1}=\langle A^je,A^{j+2}e\rangle,
+\qquad r_{j+1}^2\le r_jr_{j+2}.
+\tag{55.2}
+$$
+
+Thus the positive ratios $r_{j+1}/r_j$ are nondecreasing. Starting with $r_2/r_1\ge2$ yields $a_0=1$, $a_{j+1}\ge2a_j$ and
+
+$$
+a_D>\sum_{j<D}a_j\quad(D\ge1).
+\tag{55.3}
+$$
+
+Indeed $a_j\le 2^{-(D-j)}a_D$ and the finite geometric sum is strictly less than one. This is a fixed-leaf argument; a theorem about the total number of closed walks alone would not establish (55.2) at this $e$.
+
+A tree is bipartite, so its odd return moments at $e$ vanish. For any finite binary-coefficient polynomial $F(z)=\sum_k c_kz^k$ the two numbers are exactly
+
+$$
+Y_1=\sum_{j\ge0}c_{2j+1}a_j,
+\qquad Y_2=\sum_{j\ge0}c_{2j}a_j.
+\tag{55.4}
+$$
+
+Each sum is uniquely decoded by superincreasing greedy subtraction. Construct $a_0,a_1,\ldots$ by exact sparse powers until the next weight exceeds $\max(Y_1,Y_2)$; for zero totals no positive weight is required. Descend the constructed list, subtracting a weight exactly when the remaining total is at least it, separately for each parity. Equation (55.3) proves that this decision is the actual highest remaining digit: all lower weights together are smaller. A genuine sum is exhausted. Interleave the lists; the highest nonzero coefficient is the leading monic coefficient of $F_w$. Its degree is $m$ and the lower coefficients, in reverse order, are exactly the chronological digits. If $F=1$, this gives the empty word. All-zero words have $F=z^m$, so they are not discarded as leading-zero encodings. The weights grow at least geometrically, proving termination without an input length bound. Applying this to (55.1) proves injectivity.
+
+The only nonbranching terms are alpha and beta. At alpha, $A=0$ and the empty word and the one-letter word $1$ both give $e$. At beta, $A^2=\mathrm{Id}$ on its two-vertex material path, and the empty word and $00$ both give $e$. No inverse of the full field can distinguish either pair. A branch in $\mathcal D$ has at least a left beta leaf and a right alpha leaf; its smallest material tree is $\langle\beta,\alpha\rangle$, with four vertices. This proves necessity and the minimum. $\square$
+

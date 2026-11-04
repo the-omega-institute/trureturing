@@ -395,7 +395,7 @@ def powerMaximum {n : ℕ} (A : CountMat n n) (m : ℕ) : ℕ :=
 
 /- Standard counting normalization, used only by the original q upper bound.
    No independent mathematical credit is assigned. -/
-private theorem numbered_path_count {n : ℕ} (A : CountMat n n) :
+theorem numbered_path_count {n : ℕ} (A : CountMat n n) :
     ∀ (d : ℕ) (i j : Fin n),
       Finite (FinitePath A d i j) ∧ Nat.card (FinitePath A d i j) = (A ^ d) i j := by
   classical
@@ -433,6 +433,33 @@ private theorem numbered_path_count {n : ℕ} (A : CountMat n n) :
       intro t _
       rw [Nat.card_prod, Nat.card_fin, (ih t j).2]
 
+/-- Every entry of the first factor is bounded by the original power maximum.
+    This extracts the existing proof-local bound consumed by square_order_upper. -/
+theorem factor_entry_upper {n k m : ℕ}
+    {A : CountMat n n} {B : CountMat k k}
+    {R : CountMat n k} {S : CountMat k n}
+    (hB : ∀ j : Fin k, ∃ l : Fin k, B j l ≠ 0)
+    (psiA : ∀ i j, EdgePair R S i j ≃ FinitePath A m i j)
+    (psiB : ∀ t z, EdgePair S R t z ≃ FinitePath B m t z) :
+    ∀ (i : Fin n) (j : Fin k), R i j ≤ powerMaximum A m := by
+  classical
+  intro i j
+  obtain ⟨l, ⟨snum⟩⟩ := first_factor_rows hB psiB j
+  let f : Fin (R i j) → FinitePath A m i l :=
+    fun r => psiA i l ⟨j, r, snum⟩
+  have hf : Function.Injective f := by
+    intro x y hxy
+    have hh := (psiA i l).injective hxy
+    have hp : (x, snum) = (y, snum) := by
+      have h := sigma_mk_injective hh
+      exact h
+    exact congrArg Prod.fst hp
+  letI : Finite (FinitePath A m i l) := (numbered_path_count A m i l).1
+  have hcount := Nat.card_le_card_of_injective f hf
+  rw [Nat.card_fin, (numbered_path_count A m i l).2] at hcount
+  exact hcount.trans (Finset.le_sup (f := fun ij : Fin n × Fin n =>
+    (A ^ m) ij.1 ij.2) (Finset.mem_univ (i, l)))
+
 /- The consumed row-witness helper supplies an actual S edge directly from
    psiB and essential B; no swapped compatibility certificate is needed. -/
 theorem square_order_upper {n k m : ℕ}
@@ -441,22 +468,7 @@ theorem square_order_upper {n k m : ℕ}
     (c : CompatibleCertificate A B R S m) :
     Fintype.card (Edge R) ≤ n * k * powerMaximum A m := by
   classical
-  have hentry (i : Fin n) (j : Fin k) : R i j ≤ powerMaximum A m := by
-    obtain ⟨l, ⟨snum⟩⟩ := first_factor_rows c.essentialB.1 c.psiB j
-    let f : Fin (R i j) → FinitePath A m i l :=
-      fun r => c.psiA i l ⟨j, r, snum⟩
-    have hf : Function.Injective f := by
-      intro x y hxy
-      have hh := (c.psiA i l).injective hxy
-      have hp : (x, snum) = (y, snum) := by
-        have h := sigma_mk_injective hh
-        exact h
-      exact congrArg Prod.fst hp
-    letI : Finite (FinitePath A m i l) := (numbered_path_count A m i l).1
-    have hcount := Nat.card_le_card_of_injective f hf
-    rw [Nat.card_fin, (numbered_path_count A m i l).2] at hcount
-    exact hcount.trans (Finset.le_sup (f := fun ij : Fin n × Fin n =>
-      (A ^ m) ij.1 ij.2) (Finset.mem_univ (i, l)))
+  have hentry := factor_entry_upper c.essentialB.1 c.psiA c.psiB
   rw [(square_order_identity c).1]
   calc
     (∑ i, ∑ j, R i j) ≤ ∑ _i : Fin n, ∑ _j : Fin k, powerMaximum A m := by

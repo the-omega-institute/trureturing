@@ -1,0 +1,54 @@
+#### 定理 4.2：两个固定反射与完整黄金门的差别；继承结果
+
+在上述同一实基中，
+
+<a id="eq-eq:old-density"></a>
+
+```math
+\overline{\langle K_P^5,K_Q^5\rangle}=O(2),\qquad
+ \overline{\{[W]:W\in\langle K_P,K_Q\rangle\}}=PU(2).\tag{8}
+```
+
+只保留反射时，到  $S_ 0=\operatorname{diag}(1,i)$  的精确射影距离为
+
+<a id="eq-eq:old-gap"></a>
+
+```math
+\inf_{O\in O(2),|c|=1}\|O-cS_0\|_{\rm op}=\sqrt{2-\sqrt2}.\tag{9}
+```
+
+
+**证明。**
+
+令  $R_ P=2P-I$ 、 $R_ Q=2Q-I$ 。
+它们实正交，且
+ $\operatorname{Tr}(R_ PR_ Q)=4\operatorname{Tr}(PQ)-2=4x^2-2=4-2\sqrt5$ 。
+若乘积有限阶，其迹是互逆单位根之和，每个代数共轭都在  $[-2,2]$  中。
+但另一个共轭为  $4+2\sqrt5\gt 2$ ，矛盾。
+故乘积的幂在  $SO(2)$  中稠密，加一个反射给全部  $O(2)$ 。
+
+把  $P$  换写成  $\operatorname{diag}(1,0)$ ，令
+ 
+
+```math
+J=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)
+```
+
+ 。
+完整门  $K_ P=\operatorname{diag}(\zeta^2,\zeta)$  将生成元  $J$  共轭为
+ $\cos\theta J-i\sin\theta\sigma_ x$ ，与  $J$  实线性无关。
+两者及其交换子张成  $\mathfrak{su}(2)$ ，所以闭包含  $SU(2)$ ，射影闭包即  $PU(2)$ 。
+逆门由九次正向调用给出，未增加门类型。
+
+最后  $O\lvert +\rangle$  为实单位向量，与  $S_ 0\lvert +\rangle=\lvert +i\rangle$  的重叠模恒为  $1/\sqrt2$ ，给式 [(9)](#eq-eq:old-gap) 下界。
+取  $O=I,c=e^{-i\pi/4}$  时两个对角误差模均为该值，达到下界。
+
+**证毕。**
+
+
+此处重要的逻辑是：一个固定地址只有十个幂；两个相容而不交换的地址加上原生复相位，才产生全部单比特射影操作。
+反射、旋转和不缩放的几何词汇不能代替对生成群的检验。
+
+
+<a id="sec:28"></a>
+

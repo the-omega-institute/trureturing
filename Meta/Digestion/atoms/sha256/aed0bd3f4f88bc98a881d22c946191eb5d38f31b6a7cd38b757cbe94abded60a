@@ -1,0 +1,54 @@
+**定理 3.1（可由近似表核证的逆与更新误差）。** 固定向量范数及其诱导算子范数，行泛函使用相应对偶范数。已知
+
+<a id="eq-3-u04"></a>
+
+$$
+\widehat H=H+E,\quad
+\widehat H^{(a)}=H^{(a)}+E_a,\quad
+\widehat c=c+e_c,
+$$
+
+误差分别不超过 $\varepsilon_H,\varepsilon_a,\varepsilon_c$。若 $\widehat H$ 可逆且
+
+<a id="eq-3-u05"></a>
+
+$$
+\rho=\|\widehat H^{-1}\|\varepsilon_H<1,
+\qquad
+h_\dagger=\frac{\|\widehat H^{-1}\|}{1-\rho},
+$$
+
+其中
+
+$$
+\widehat B_a=\widehat H^{(a)}\widehat H^{-1},
+\qquad
+\widehat d=\widehat c\widehat H^{-1}.
+$$
+
+则误差球中的 $H$ 一定可逆，并有
+
+<a id="eq-3-2"></a>
+
+$$
+\begin{aligned}
+\|H^{-1}\|&\le h_\dagger,\\
+\|B_a-\widehat B_a\|&\le h_\dagger(\varepsilon_a+\|\widehat B_a\|\varepsilon_H),\\
+\|d-\widehat d\|&\le h_\dagger(\varepsilon_c+\|\widehat d\|\varepsilon_H).
+\end{aligned}
+\tag{3.2}
+$$
+
+**证明。** $H=\widehat H(I-\widehat H^{-1}E)$，Neumann 级数给出逆的界。直接相乘得到
+
+<a id="eq-3-u06"></a>
+
+$$
+B_a-\widehat B_a=(-E_a+\widehat B_aE)H^{-1},\qquad
+d-\widehat d=(-e_c+\widehat dE)H^{-1}.
+$$
+
+应用次乘性即可。严格阈值不可删除：$\widehat H=[1]$、$\varepsilon_H=1$ 的误差球含有奇异 $H=[0]$。Euclidean 范数下，该判据等价于 $\sigma_{\min}(\widehat H)>\varepsilon_H$；这里的误差球是输入保证，不是从观察到一张表自动获得的置信区间。
+
+<a id="thm-3-2"></a>
+

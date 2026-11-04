@@ -1,0 +1,5 @@
+source_id = "fib-schedule-compatibility-escape-filtration"
+path = "docs/develop/theory/FIB_SCHEDULE_COMPATIBILITY_ESCAPE_FILTRATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

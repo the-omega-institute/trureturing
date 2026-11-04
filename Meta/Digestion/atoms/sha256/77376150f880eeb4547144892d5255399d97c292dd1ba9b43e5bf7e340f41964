@@ -1,0 +1,53 @@
+## 1. Model, targets, and the scope of sharpness
+
+Fix a declared maximum degree $d\ge1$ and put $m=d+1$. A world is a triple $(P,g,\delta)$ with
+
+$$
+P\in\operatorname{Mat}_2(\mathbb R),\qquad P_{ab}>0,\qquad
+\operatorname{rank}P=1,\qquad \operatorname{tr}P=1,
+$$
+
+$$
+g(t)=\sum_{k=0}^d\beta_k t^k,\qquad
+\beta\in\mathbb R^{d+1}\setminus\{0\},\qquad \delta\in\mathbb R.
+\tag{1.1}
+$$
+
+Write $s=\deg g$, so $0\le s\le d$. The declared coefficient space remains all of $\mathbb R^{d+1}$, including when the actual degree drops. Coefficient signs, gain roots at acquisition clocks, repeated roots, and the constant drift are unrestricted.
+
+The atoms, cumulative matrices, and observations are
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad A_0=I,
+$$
+
+$$
+A_i=E_iA_{i-1},\qquad E_i\in\{M,J\},\qquad
+z_i=g(i)\operatorname{tr}(A_iP)+\delta.
+\tag{1.2}
+$$
+
+There is one trajectory. Each individual action has its immediate read, and the initial read is counted. Thus $N$ total reads occur at original clocks $0,\ldots,N-1$. Chronological words list the actions in the order performed; multiplication in (1.2) is on the left. There are no resets, copies, skipped reads, unread compound actions, inverse acquisition actions, or extra sensors. A deterministic protocol can choose its next action, stopping, and answer from its entire actual history, with no regularity assumption on those choices.
+
+The complete target is the actual normalized triple $(P,g,\delta)$. An unnormalized positive rank-one source $R$ and gain $G$ correspond to this target by
+
+$$
+P=R/\operatorname{tr}R,\qquad g=(\operatorname{tr}R)G.
+\tag{1.3}
+$$
+
+Indeed $g(i)\operatorname{tr}(A_iP)=G(i)\operatorname{tr}(A_iR)$. The unnormalized equivalence $(R,G)\sim(cR,G/c)$ for $c>0$ therefore introduces no remaining equivalence in the normalized target.
+
+A fixed linear gain-ray output on a terminal word $w$ is a fixed matrix $C_w$ such that
+
+$$
+C_w(z_0,\ldots,z_{N-1})^{\mathsf T}=\lambda\beta,
+\qquad \lambda\ne0.
+\tag{1.4}
+$$
+
+The matrix entries must not be selected from the observed values. A countable-palette mechanism permits at most countably many preassigned matrices per word and arbitrary history-dependent selection among them. Complete recovery with this mechanism is a more restricted task than unrestricted nonlinear complete recovery. Our upper construction returns exactly $\beta$ with one matrix per terminal word.
+
+A **calibrated continuation at clock $T$** starts after the pure chronological prefix $M^T$, with its entire actual history available and with the actual $g$, $\delta$, and $t_P=\operatorname{tr}(MP)$ known. These are the supplied calibration data; no further information about $P$ is supplied. Here $T\ge0$ is fixed, and the already counted read at clock $T$ is not repeated. Continuation counts refer only to the additional reads after it. Our sharp continuation theorem concerns this problem and the protocols constrained to start with $M^{2d+2}$. It does not give global sharpness for protocols using earlier mixed actions or different calibration.
+

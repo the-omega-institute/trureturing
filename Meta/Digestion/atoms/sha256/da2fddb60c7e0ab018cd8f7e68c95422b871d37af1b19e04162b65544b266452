@@ -1,0 +1,33 @@
+**定义 87.1（同源测度模型与带权列）。** 固定 V §§91–95 的全部对象和量词，即 (80.1) 中的一个 $\rho_0$、一个 $E=qq^\dagger$、原随机仪器和任意一个已安装的 $[N,P_\xi]\ne0$。原五维来源仍取 V 命题 91.3；本节只比较其单系统完整记录律 (80.2)。沿用 V §93 和 (84.2) 的原九列、九行与四表，记
+
+$$
+\alpha_w=2^{-k(w)},\qquad
+\alpha_i=\alpha_{u_i},\qquad
+P_i=G_{u_i}\rho_0,\qquad r_i=\alpha_iP_i.
+\tag{87.1}
+$$
+
+其中 $u_1=\varnothing$，$u_1,\ldots,u_8$ 是深度不超过七的原生词，第九词为 V 定理 92.2 所选的 $u_kN$。$N$ 不作任何特别选择；包括 $d=2/3$ 和 $N\xi\perp\xi$。
+
+令 $(\Omega,\Sigma)$ 为任意可测空间，$\mathcal M(\Omega)$ 为其有限、可数可加实符号测度空间，以总变差范数赋范，正锥为非负测度。经典模型给一个概率测度 $\mu$、一个可测响应 $f:\Omega\to[0,1]$，以及三个固定正实线性映射 $B_a:\mathcal M(\Omega)\to\mathcal M(\Omega)$，满足
+
+$$
+\begin{gathered}
+u(\nu)=\nu(\Omega),\qquad e(\nu)=\int_\Omega f\,d\nu,\\
+u\circ(B_0+B_1)=u,\qquad u\circ B_N=u.
+\end{gathered}
+\tag{87.2}
+$$
+
+条件对整个测度空间成立；不要求 $uB_j=u/2$。通常的可测次随机核仪器是其中一类：$B_a\nu(S)=\int\kappa_a(\omega,S)\,d\nu(\omega)$，$\kappa_0(\omega,\Omega)+\kappa_1(\omega,\Omega)=\kappa_N(\omega,\Omega)=1$。允许一般正线性映射使结论也覆盖不先指定核表示的模型。所有隐藏时钟和记忆均可包含在 $\Omega$；没有其基数、拓扑或维数上限，也没有预设确定响应。
+
+置 $x_i=B_{u_i}\mu$、$X\beta=\sum_i\beta_i x_i$，$R\beta=\sum_i\beta_i r_i$。$C$ 仍是 (84.2) 的原质量行和八个带权终端行。要求精确匹配原四表：
+
+$$
+CX=H=\mathcal LR,\qquad
+CB_aX=H^a=\mathcal LA_aR\quad(a=0,1,N).
+\tag{87.3}
+$$
+
+其中每个非迹条目是 $p(u_i h_t,1)$ 或 $p(u_i a h_t,1)$，每个质量条目是无后缀的两终端质量之和，完全保留 V (93.4)–(93.5) 的权重与时序。若还要求匹配同一时序中未列入四表的其余记录及全部词质量，模型类只会进一步缩小。
+

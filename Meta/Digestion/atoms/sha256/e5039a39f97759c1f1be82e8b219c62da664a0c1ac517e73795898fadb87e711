@@ -1,0 +1,17 @@
+**Definition 3.1 (positive stationary component).** A finite stationary hidden chain has finitely many closed irreducible classes $C$ of positive stationary weight
+
+$$
+w_C=\sum_{s\in C}\lambda_s>0.
+$$
+
+All transient states have zero stationary mass. On $C$, set $\lambda^C_s=\lambda_s/w_C$ and $M_x^C=M_x|_{C\times C}$. These matrices and $\lambda^C$ specify the actual law conditional on belonging to $C$, denoted $J_C$, with visible law $P_C$. Each $\lambda^C_s$ is positive. Because a closed class has no outgoing $A$-edge, it has no outgoing $M_x$-edge, so the restricted matrices still sum to a stochastic matrix. The scalar no11 condition passes to each such class by nonnegativity. No parameter or visible observation is changed by this conditional decomposition.
+
+For the remainder of this section fix $C$ and abbreviate its matrices and normalized stationary vector by $M_x$ and $\lambda$. Define the reverse labeled matrices on $C$ by
+
+$$
+\check M_x(s,t)=\frac{\lambda_t M_x(t,s)}{\lambda_s}.
+\tag{3.1}
+$$
+
+They are defined only on this positive-mass class. Their sum is stochastic by stationarity. Reverse motion from $H_i$ to $H_{i-1}$ reads $X_{i-1}$, whereas forward motion from $H_i$ to $H_{i+1}$ reads $X_i$.
+

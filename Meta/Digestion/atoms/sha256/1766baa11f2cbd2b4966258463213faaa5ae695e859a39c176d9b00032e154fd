@@ -1,0 +1,88 @@
+**Theorem 31.1 (native unimodular family).** Define
+
+$$
+\gamma=\langle\beta,\alpha\rangle,
+\qquad t_0=\gamma,
+\qquad t_{n+1}=\langle\gamma,\langle t_n,\beta\rangle\rangle
+\quad(n\ge0).
+\tag{31.1}
+$$
+
+Every $t_n$ is reachable by the original P/S constructors. Its material
+size, number of terminals, number of beta leaves and forcing horizon are
+
+$$
+N_n=4+8n,\quad b_n=2+3n,\quad c_n=1+2n,\quad I_n=2+5n.
+\tag{31.2}
+$$
+
+For its original adjacency $A_n$, $\det A_n=1$ and $0,1,-1$ are not
+eigenvalues. In particular $A_n$ and $A_n^{-1}$ preserve every
+$\Lambda_D$. For $n\ge1$ these are branching sources to which both
+the dense negative results and the separately assured-lattice positive
+result apply, on their different entrance classes.
+
+Proof. Every alpha in (31.1) has an R-ending logical address, and
+prepending the branch addresses in the recurrence does not change its
+last letter. The original reachable-term criterion, AA Theorem 17.2,
+therefore gives birth legality. Gamma has four material vertices, two
+terminals and one beta leaf. One recurrence adds two branch roots,
+one gamma and one beta outside the old term, hence eight vertices,
+three terminals and two beta leaves. This proves (31.2), including
+$I=N-b$. Distinct sizes give an infinite family.
+
+For a rooted material tree $u$ write
+$p_u(z)=\det(z\operatorname{Id}-A_u)$ and let $q_u(z)$ be the
+characteristic polynomial after deleting its material root. The empty
+determinant is one. The base pairs are
+
+$$
+(p_\alpha,q_\alpha)=(z,1),\qquad
+(p_\beta,q_\beta)=(z^2-1,z).
+\tag{31.3}
+$$
+
+The ordinary tree determinant expansion at a binary root gives
+
+$$
+\begin{aligned}
+q_{\langle l,r\rangle}&=p_l p_r,\\
+p_{\langle l,r\rangle}&=z p_l p_r-q_l p_r-p_l q_r.
+\end{aligned}
+\tag{31.4}
+$$
+
+Indeed a nonzero permutation term has only fixed points or edge
+transpositions: a longer permutation cycle would require a graph cycle.
+The root is either fixed, contributing $z p_lp_r$, or transposed
+with the left or right child. That transposition has permutation sign
+minus and product of its two off-diagonal entries one; deleting the
+paired root and child leaves respectively $q_lp_r$ or $p_lq_r$.
+Deleting only the root gives the two separate subtrees, proving both
+identities. Thus no new determinant or matching principle is assumed.
+
+For gamma, (31.3)–(31.4) give
+
+$$
+(p_\gamma(0),q_\gamma(0))=(1,0),\qquad
+(p_\gamma(1),q_\gamma(1))=(-1,0).
+\tag{31.5}
+$$
+
+For an arbitrary old pair $(p_t,q_t)$, substitution first in
+$u=\langle t,\beta\rangle$ and then in
+$\langle\gamma,u\rangle$ sends its evaluation pair at zero to
+$(p_t(0),q_t(0))$, and its pair at one to
+$(p_t(1),p_t(1))$. For example at zero the inner pair is
+$(q_t(0),-p_t(0))$, while at one it is $(-p_t(1),0)$.
+Therefore $p_{t_n}(0)=1$ and $p_{t_n}(1)=-1$ for every $n$.
+
+The material tree is bipartite. Multiplying coordinates in one color
+class by minus one conjugates $A_n$ to $-A_n$; consequently
+$p_{t_n}(-z)=(-1)^{N_n}p_{t_n}(z)$. Since $N_n$ is even,
+$p_{t_n}(-1)=-1$. These three nonzero evaluations exclude $0,1,-1$.
+Also $p_{t_n}(0)=(-1)^{N_n}\det A_n=1$.
+The adjugate formula now makes $A_n^{-1}$ integer, proving its lattice
+automorphism assertion. No claim that every real eigenmode expands
+is used; (30.3) concerns rational vectors. $\square$
+

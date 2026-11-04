@@ -1,0 +1,22 @@
+**推论 2.7 (Density with uniform quantifiers).** For every $\varepsilon>0$
+there exists $n_0$ such that for every $n\ge n_0$ and every complete
+legal reverse extension $e$ of $[3]\times[n]$,
+
+$$
+\frac{\#\{I\in\mathcal C_n:
+\operatorname{per}_{R_e}(I)\ne n+4\}}{|\mathcal C_n|}
+\le\frac{50832}{n}<\varepsilon. \tag{2.19}
+$$
+
+One may take
+$n_0=\max\{11,\lceil50832/\varepsilon\rceil+1\}$.
+Thus the exceptional fraction is $O(1/n)$, uniformly in $e$.
+
+*Proof.* The positive coefficients of (2.14) give $T_n\ge n^6/144$.
+Divide (2.12) by this lower bound and use
+$353\cdot144=50832$. The stated $n_0$ gives the strict inequality.
+This is the fixed-height-three instance of the density question in
+Conjecture 4.1 of Lafrenière et al., arXiv:2505.04000v1. Its proof
+uses the return reflection (2.9), not a premise that all good states
+have exact period $n+4$. $\square$
+

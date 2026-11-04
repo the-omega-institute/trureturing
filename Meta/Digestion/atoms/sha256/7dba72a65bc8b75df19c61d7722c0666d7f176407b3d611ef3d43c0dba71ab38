@@ -1,0 +1,29 @@
+**Theorem 14.1 (At most two regular worlds on the entire closed strip).**
+For every $(p,v)\in\mathcal S$,
+
+$$
+|C_{\rm reg}(p,v)|\le2.
+\tag{14.22}
+$$
+
+Proof. Any original regular world gives $x>0$ and $R(x,p,v)=0$
+by (12.13). If $x\le34$, the finite coefficient bounds place it in
+one of the six closed ranges of (14.7); if $x\ge34$, the tail
+exclusion in (14.21a)–(14.21b) applies directly to the source. The
+first two ranges are contained in $[1/3,5/12]$; the fourth and fifth
+are contained in $[19/10,63/25]$; the last is $[27,34]$. The necessary
+quadratic excludes actual worlds on all these exterior ranges. Thus
+every regular world has $x\in I_c$, where (14.6) allows at most two
+distinct carrier roots. Equations (14.9) and (14.21), followed by
+the faithful inverse, allow at most one complete world over each.
+This proves (14.22).
+
+Every use of a source restriction above was a consequence of that
+same world's original equations. No division by $A$, $F_0$, $d$,
+$D_s$ at a singular source, a gain sample, a leading gain coefficient
+or a root difference is used. The sole additional inverse division
+$U-\tau$ occurs after its strict positivity on $I_c$ is proved.
+Neither a carrier root nor a zero of $\Phi$ is asserted to be a
+faithful world. The count therefore retains negative gains, lower
+degrees, sampled zeros, repeated roots and arbitrary own drifts. ∎
+

@@ -1,0 +1,15 @@
+对每个 $R\in\mathcal M_k$，下列条件等价：
+
+1. $R\in\mathcal I_k(\varepsilon)$。
+2. 成立有限共同来源判据
+
+   $$
+    \forall p\in P_{\varepsilon}(R)\quad
+    \exists q\in\{0,\ldots,k-1\}\quad
+       \neg\mathsf C_q(R,(p_0,\ldots,p_q)).
+   \tag{14.6}
+   $$
+
+3. 存在一个单次补全正规形，在 $R$ 的每条允许误差历史上于至多 $2k-1$
+   次初始计入读数内输出 $2$，并在完整 $\mathcal M_k$ 上 $\varepsilon$-可靠。
+

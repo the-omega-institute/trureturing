@@ -1,0 +1,32 @@
+**Definition 37.1 (two charts and their quadratic trace numerators).** For $\alpha,\beta>0$ put $s=\alpha+\beta$ and
+
+$$
+ X_{12}(\alpha,\beta)=
+ \begin{pmatrix}\alpha&1\\\alpha\beta&\beta\end{pmatrix},
+ \qquad
+ X_{21}(\alpha,\beta)=
+ \begin{pmatrix}\alpha&\alpha\beta\\1&\beta\end{pmatrix},
+ \qquad P_\nu=X_\nu/s,\quad \nu\in\{12,21\}.
+ \tag{37.1}
+$$
+
+Both matrices $P_\nu$ are strictly positive, rank one, and trace one. In the first chart $(P_{12})_{12}=1/s$, and in the second $(P_{21})_{21}=1/s$. With $U_i,V_i$ as in (30.2), define
+
+$$
+ \begin{aligned}
+ B_{12,i}&=U_i+(A_i)_{11}\alpha+(A_i)_{22}\beta+V_i\alpha\beta,\\
+ B_{21,i}&=V_i+(A_i)_{11}\alpha+(A_i)_{22}\beta+U_i\alpha\beta.
+ \end{aligned}
+ \tag{37.2}
+$$
+
+For whole polynomials $Q(\tau)=\sum_{j=0}^kq_j\tau^j$ and $F(\tau)=\sum_{j=0}^df_j\tau^j$, set $H=sQ$, $D=F$. Then at every original clock, simultaneously,
+
+$$
+ H(i)\operatorname{tr}(A_iP_\nu)+D(i)
+       =B_{\nu,i}(\alpha,\beta)Q(i)+F(i).
+ \tag{37.3}
+$$
+
+Here $\tau$ denotes the original polynomial variable; $s$ is a parameter indexing different whole worlds, not a rescaled acquisition clock. The identity is exact, including all clocks where $Q(i)=0$. Actual legality is $q\ne0$; no sign or sampled-value restriction is imposed on $Q$.
+

@@ -1,0 +1,15 @@
+## 25. Finite rational differential inequalities
+
+**Lemma 25.1.** On each $B_i$, $0<r<1$, $b>0$ and
+
+$$
+1<\widehat D<6/5,\quad .04<H<.05,\quad .23<\mathcal J<.25,\quad .25<\mathcal N<.27.
+$$
+
+With derivative columns $(r,b)$, the entries of $D\mathcal R$ lie strictly
+between the following endpoints, all divided by $10^6$:
+
+| Box | $p_r$ | $p_b$ | $v_r$ | $v_b$ |
+| --- | --- | --- | --- | --- |
+| $B_1$ | $[-17691121,-17691120]$ | $[725498392,725498393]$ | $[103013504,103013505]$ | $[-1673536106,-1673536105]$ |
+| $B_2$ | $[16740247,16740248]$ | $[705190458,705190459]$ | $[-101110471,-101110470]$ | $[-1568667529,-1568667528]$ |

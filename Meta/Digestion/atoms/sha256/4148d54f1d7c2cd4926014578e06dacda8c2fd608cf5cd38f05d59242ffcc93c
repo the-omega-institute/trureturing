@@ -1,0 +1,48 @@
+**Proposition 11.3 (three co-visited loops with exact recovery but no finite positive-error completion).** There is a complete actual source with $r=3$, exactly three successive cyclic SCCs, pairwise real-independent full-lap vectors, and an injective exact integer count map, for which exact endpoint and exact native vector recover every finite legal root word without a supplement, while every finite supplement fails at every positive tolerance. The source uses the identical loop token at all three cyclic vertices and the identical crossing token at both crossings.
+
+Proof. Use one type, actual states $p_0,p_1,p_2,t$, fixed root $p_0$, and current readout $q(x)=x$. The entire operation set consists of three names $a,c,e$, with domains and successors
+
+$$
+\begin{aligned}
+D_a&=\{p_0,p_1,p_2\},& T_a(p_i)&=p_i,\\
+D_c&=\{p_0,p_1\},& T_c(p_0)&=p_1,& T_c(p_1)&=p_2,\\
+D_e&=\{p_2\},& T_e(p_2)&=t.
+\end{aligned}
+\tag{11.16}
+$$
+
+There are no other legal operations. At $p_1$ the operation $a$ is a declared continuing failure with successor $p_1$; at the other two cyclic vertices it is a success. Every one-step response retains that tag, the executed name, successor and native vector, with no archive field. The register receives only $a$ in all three cases, and only $c$ at both crossings. Distinct states have different empty responses by the identity current readout, and equal states have equal complete responses by determinism. Hence this is exactly its complete response quotient, including the continuing failure and the terminal exit.
+
+Fix the positive vectors
+
+$$
+A=(1,1,1),\qquad B=(1,2,3),\qquad
+F=\sqrt2\,A+\sqrt3\,B,\qquad J=(1,1,1).
+\tag{11.17}
+$$
+
+The native loop increments at $p_0,p_1,p_2$ are respectively $A,B,F$. Both $c$ edges and the $e$ edge have increment $J$. All three channels therefore have fixed positive increments on every actually executed edge, including the continuing failure. These vectors describe one fixed source law.
+
+The entire legal language and its native totals are
+
+| Typed endpoint | All legal root words, with nonnegative exponents | Native vector |
+| --- | --- | --- |
+| $p_0$ | $a^m$ | $mA$ |
+| $p_1$ | $a^mca^n$ | $J+mA+nB$ |
+| $p_2$ | $a^mca^nca^\ell$ | $2J+mA+nB+\ell F$ |
+| $t$ | $a^mca^nca^\ell e$ | $3J+mA+nB+\ell F$ |
+
+The table is exhaustive because only $a$ may repeat before or between the successive $c$ operations, $e$ is available only at $p_2$, and $t$ has no successor. It includes the empty word, each zero-lap crossing, stopping in each component, arbitrary continuing failures and all exits. The number and positions of the $c$ tokens distinguish the chronological segments, even though the token is the same at both crossings.
+
+The vectors $A,B$ are independent. Because the coefficients $\sqrt2,\sqrt3$ are nonzero, neither $A,F$ nor $B,F$ is a dependent pair. Yet the complete family $(A,B,F)$ has real rank two. Its integer map is injective: if
+
+$$
+jA+kB+hF=0,\qquad (j,k,h)\in\mathbb Z^3,
+$$
+
+independence of $A,B$ gives $j+h\sqrt2=0$ and $k+h\sqrt3=0$. If $h\ne0$ the first equation makes $\sqrt2$ rational, a contradiction. Thus $h=0$ and then $j=k=0$. This proves injectivity on the entire integer lattice, not just on nonnegative counts. In each endpoint row of the table, equality of exact native totals consequently forces equality of its exponents. Different rows are distinguished by the exact endpoint. Thus the exact endpoint-vector map is injective on every legal root word, with no finite supplement needed at $\epsilon=0$.
+
+For every positive $\epsilon$, apply the dependent-route argument (11.10)–(11.12) to the single family ending at $p_2$, with $k=3$ and $s=2$. For each $Q$ it gives more than $Q$ distinct actual words from that row whose full three-coordinate boxes contain one common vector. No $Q$-valued static label can separate those explanations, and every finite online register would give such a label. Appending the same executed $e$ translates all these centers by $J$ and gives terminal witnesses as well. Integer injectivity therefore does not prevent arbitrarily large positive-error ambiguity.
+
+There are exactly three cyclic SCCs, all co-visited and each one loop, so their number is at most $r=3$. The example simultaneously refutes pairwise independence, integer injectivity and the bound of at most $r$ co-visited cycles as sufficient replacements for full real independence. It also shows why Theorem 11.2 must not be used as a classification at $\epsilon=0$. It does not rely on changing the native instruments, dropping prefixes, or giving the register the differing response tags. $\square$
+

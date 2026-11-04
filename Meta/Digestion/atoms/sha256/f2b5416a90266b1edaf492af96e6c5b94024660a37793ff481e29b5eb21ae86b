@@ -1,0 +1,40 @@
+**Proposition 58.2 (attained acquisition counts).** Definition 54.1's
+actual acquisition uses precisely
+
+$$
+\begin{aligned}
+\#P\text{ attempts}&=n,&\#S\text{ attempts}&=0,\\
+\#\text{successful promotions}&=a,&
+\#\text{fresh source vertices}&=a,\\
+|C(t)|&=2a+3b-1,&|C(\nu(t))|&=3L-1,\\
+I_{\rm acq}&=2D+4n,&O_{\rm acq}&=2D_\alpha+5n.
+\end{aligned}
+\tag{AAII.17}
+$$
+
+$I_{\rm acq},O_{\rm acq}$ count literal request and reply bits,
+excluding the $n$ separate End, acknowledgement and Return operations.
+Under the source-field convention of AA Proposition 22.1, these
+promotions make $4a$ located parent/left/right assignments. With
+root-based navigation and parent-chain return, the requests use $D$
+logical child-link descents and $D$ parent-link ascents. The two
+result words have $4n$ constructor payload bits in total.
+
+Proof. Theorem 54.2 gives one $P$ attempt at every logical node, with
+success exactly at the $a$ entry alpha leaves. A finite full binary
+logical tree with $L$ leaves has $n=2L-1$ nodes. Its material tree adds
+one marker for each of its $b$ beta leaves, giving $n+b$ vertices.
+The $a$ promotions add one each and leave $L$ beta leaves, proving the
+two material orders.
+
+An address-$p$ request has $3+|A(p)|=2|p|+4$ bits. Every refusal reply
+has five bits; a successful reply at an entry alpha contributes its
+additional $2|p|$ bits. Summing over the actual visited nodes proves
+the traffic identities. Every such target is present, so root descent
+and the specified parent return each traverse its depth. A promotion
+initializes the new marker's three source fields and writes its old
+target's left attachment: four assignments, exactly as in AA Proposition
+22.1. It appends no routing-tape cells in this minimal installation.
+Finally both logical codes retain all $n$ nodes, each with a two-bit
+constructor payload. $\square$
+

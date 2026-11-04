@@ -1,0 +1,16 @@
+### Theorem 60.7 (static labels are only a controller lower bound)
+
+If a deterministic finite controller has \(K\) states and succeeds within
+budget \(n\), then
+
+$$
+\kappa_n^{\mathrm{hist}}\le K.
+$$
+
+The inequality can be strict.
+
+**Proof.** Partition \(I\) by the controller's initial state. Histories in one
+block use the same continuation, so their candidate-relation union lies in
+\(\mathcal W_n\) by Theorem 60.5. The number of blocks is at most \(K\). The
+strict example is given in Theorem 61.3. \(\square\)
+

@@ -1,0 +1,72 @@
+**定理 46.2（全来源的正实模核）。** 对 $n\ge1$ 令
+
+$$
+h_n=r_n=\frac1{5n},\qquad a_n=b_n=1-h_n,\qquad
+R_n(s,t)=a_nQ_{h_n}(s,t)+r_n\delta_{s,t}.
+\tag{46.7}
+$$
+
+则 $R_n$ 是全 $T$ 上的归一化实 Gram 核，并且
+
+$$
+R_n(s,t)=\left|K_n^{\mathrm c}(s,t)\right|
+\qquad(s,t\in T).
+\tag{46.8}
+$$
+
+它保持 $\rho$，对不同来源满足 $0<R_n(s,t)\le a_n<1$，且所有重复标签的复
+Gram 测试均非负。存在一个与 $n$ 无关的实 Hilbert 空间
+$\mathcal H_R=\ell^2(\mathsf E;\mathbb R)\oplus\ell^2(T;\mathbb R)$ 及单位向量
+
+$$
+\eta_n^R(t)=\sqrt{a_n}\,U_{h_n}(t)\oplus\sqrt{r_n}\,e_t
+\tag{46.9}
+$$
+
+实现该核。对所有 $s,t,u,v\in T$，若
+$D_{R_n}(s,t,u,v):=R_n(\langle s,t\rangle,\langle u,v\rangle)
+-R_n(s,u)R_n(t,v)$，则
+
+$$
+\sup_{T^4}|D_{R_n}|\le a_n(h_n+r_n)=\frac{2a_n}{5n}<\frac1n.
+\tag{46.10}
+$$
+
+**证明。** 由 (45.5) 和 (46.6)，$Q_h(\rho s,\rho t)=Q_h(s,t)$。对任意
+可重复的 $t_1,\ldots,t_M$ 和 $c_1,\ldots,c_M\in\mathbb C$，把实空间复
+化后有
+
+$$
+\sum_{i,j}\overline{c_i}c_jR_n(t_i,t_j)
+=a_n\left\|\sum_i c_iU_{h_n}(t_i)\right\|^2
+ +r_n\sum_{x\in\{t_i\}}
+       \left|\sum_{i:t_i=x}c_i\right|^2\ge0.
+\tag{46.11}
+$$
+
+这同时证明正性、重复标签的处理、归一化和 (46.9) 的 Gram 表示。
+对 $s\ne t$，两核的 delta 项都为零，故
+$|K_n^{\mathrm c}(s,t)|=a_n|P_{h_n}^{\mathrm c}(s,t)|=a_nQ_{h_n}(s,t)$；
+对 $s=t$，两边都为 $1$，证明 (46.8)。所有局部因子严格为正且只有有限个非单位因子，
+故 $Q_h(s,t)>0$。实对称性给 Hermitian 性，运输由 (45.5) 和 $\rho$ 的单射性保持。
+delta 分量给出来源标签的忠实性；因此 (46.8) 也给出 $R_n(s,t)=1$ 当且仅当 $s=t$。
+
+对四棵树置
+
+$$
+A=Q_h(s,u),\quad B=Q_h(t,v),\quad d=\delta_{s,u},\quad e=\delta_{t,v},
+\quad C=H_h(\ell(s,t),\ell(u,v)).
+$$
+
+地址分解与 (45.15) 同样给出 $Q_h(\langle s,t\rangle,\langle u,v\rangle)=ABC$，
+而构造子的单射性给出对应 delta 为 $de$。于是有精确恒等式
+
+$$
+D_{R_n}=a_nAB(C-1)+r_na_n(A-d)(B-e).
+\tag{46.12}
+$$
+
+因为 $1-\sqrt b\le h$ 且 $1-c\le h$，故 $|C-1|\le h$。又
+$0\le A,B\le1$，且 $d=1$ 时 $A=1$、$d=0$ 时 $|A-d|=A$，所以
+$|A-d|,|B-e|\le1$。式 (46.10) 随即成立。∎
+

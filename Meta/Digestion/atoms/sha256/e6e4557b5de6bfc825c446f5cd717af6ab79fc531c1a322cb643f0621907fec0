@@ -1,0 +1,20 @@
+**推论 5.2（访问概率而非最坏深度）。** 若 $q_{k-1}^{\Psi}(h)$ 是到达节点 $h$ 的概率，则
+
+<a id="eq-5-2"></a>
+
+$$
+D(\Omega_N^\Phi,\Omega_N^\Psi)
+\le d_0+\sum_{k=1}^N\sum_hq_{k-1}^\Psi(h)\varepsilon_{k,h}.
+\tag{5.2}
+$$
+
+交换 $\Phi,\Psi$ 后的访问概率界也成立。若全部活动调用误差不超过 $\varepsilon$，$T$ 是实际调用次数，则
+
+$$
+D(\Omega_N^\Phi,\Omega_N^\Psi)
+\le\min\left\{1,\ d_0+
+\varepsilon\min\{\mathbb E_\Phi\min(T,N),\mathbb E_\Psi\min(T,N)\}\right\}.
+$$
+
+**证明。** 在主定理的逐轮估计中保留 $\sum_hq_h\varepsilon_{k,h}$，不用最坏上界；活动层的概率总和等于截断调用次数的期望。交换两模型后再取两者较小者，并与距离上界一取最小。
+

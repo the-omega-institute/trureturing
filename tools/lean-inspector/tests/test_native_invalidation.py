@@ -164,6 +164,43 @@ def main (args : List String) : IO Unit := do
         self.assertIn('raw.incomplete_closure:raw_missing', inspect([], False))
         self.assertFalse(output.exists())
 
+    def test_report_format_finishes_before_module_callbacks(self):
+        # Delay the real format job so callback ordering is observable without
+        # a large build or a machine-dependent thread-count assertion.
+        config = self.root / 'tools/lean-inspector/lakefile.lean'
+        source = config.read_text()
+        expression = 'let format ← inputBinFile (root / ".lake/build/lean-inspector" / "report-format")'
+        lines = [line for line in source.splitlines() if line.strip() == expression]
+        self.assertEqual(len(lines), 1)
+        line = lines[0]
+        indent = line[:len(line) - len(line.lstrip())]
+        source = source.replace(line, line + '\n' + indent +
+            'let format ← format.mapM fun value => do\n' + indent +
+            '  IO.sleep 50\n' + indent +
+            '  observePhase s!"test-format-{mod.name}" "finish"\n' + indent +
+            '  pure value')
+        callback = '      observePhase "lake-report-programs-callback" "start"'
+        self.assertEqual(source.count(callback), 1)
+        config.write_text(source.replace(callback, callback + '\n'
+            '      observePhase s!"test-callback-{mod.name}" "start"'))
+        phases = self.root / 'format-phases.jsonl'
+        self.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
+        self.build()
+        completed = set()
+        callbacks = set()
+        for line in phases.read_text().splitlines():
+            event = json.loads(line)
+            phase = event['phase']
+            if phase.startswith('test-format-'):
+                completed.add(phase.removeprefix('test-format-'))
+            elif phase.startswith('test-callback-'):
+                module = phase.removeprefix('test-callback-')
+                self.assertIn(module, completed,
+                    'module callback ran before its format dependency completed: ' + module)
+                callbacks.add(module)
+        self.assertEqual(callbacks, set(self.stamps()))
+        self.assertGreater(len(callbacks), 1)
+
     def test_native_report_format_invalidates_every_module(self):
         # Report format changes invalidate every module row.
         self.build()
@@ -236,7 +273,26 @@ def producerValue : Nat := 1
             self.assertEqual(result.returncode, 0, '[FAIL] module_binding_scope\n' + result.stdout + result.stderr)
             return result.stdout + result.stderr
 
+        phases = self.root / 'preparation-phases.jsonl'
+        self.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
         build()
+        observations = [json.loads(line) for line in phases.read_text().splitlines()]
+        modules = {'D5.A', 'D5.B', 'D5.Alone', 'Fixture'}
+        for phase, operation in [('lake-prepare-module', 'judge-inputs-fetch'),
+                                 ('lake-prepare-module', 'prepared-report-fetch'),
+                                 ('lake-export-fetch', 'export-info-fetch'),
+                                 ('lake-compiler-continuation', 'compiler-continuation'),
+                                 ('lake-compiler-inputs', 'compiler-inputs')]:
+            selected = [row for row in observations if row['phase'] == phase
+                        and row.get('operation') == operation]
+            self.assertEqual({row['module'] for row in selected}, modules)
+            for module in modules:
+                pair = [row for row in selected if row['module'] == module]
+                self.assertEqual([row['boundary'] for row in pair], ['start', 'finish'])
+                self.assertLessEqual(pair[0]['monotonic_ms'], pair[1]['monotonic_ms'])
+        for phase in ['lake-prepare', 'lake-prepare-register']:
+            self.assertEqual([row['boundary'] for row in observations if row['phase'] == phase],
+                             ['start', 'finish'])
         rows = self.report()[0]
         self.assertEqual(len(rows), 4)
         self.assertTrue(all('inputs' not in row['information_templates'] for row in rows))

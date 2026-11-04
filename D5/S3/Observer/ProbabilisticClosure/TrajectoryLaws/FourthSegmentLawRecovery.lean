@@ -448,14 +448,14 @@ private theorem beta_real (k : Depth) : (betaMass (rate k)).toReal = 1-(rate k:�
   simp [betaMass]
 private theorem mass_finite (k : Depth) : alphaMass (rate k) ≠ ∞ ∧ betaMass (rate k) ≠ ∞ := by
   simp [alphaMass,betaMass]
-private theorem pmf_real_sum (ν : PMF Depth) : (∑' k,(ν k).toReal) = 1 := by
+theorem pmf_real_sum (ν : PMF Depth) : (∑' k,(ν k).toReal) = 1 := by
   rw [← ENNReal.tsum_toReal_eq (ν.apply_ne_top),ν.tsum_coe,ENNReal.toReal_one]
 theorem pmf_real_summable (ν : PMF Depth) : Summable (fun k => (ν k).toReal) :=
   ENNReal.summable_toReal (by rw [ν.tsum_coe]; exact ENNReal.one_ne_top)
 
 def mean (ν : PMF Depth) : ℝ := ∑' k,(ν k).toReal*(rate k:ℝ)
 
-private theorem mean_summable (ν : PMF Depth) : Summable (fun k => (ν k).toReal*(rate k:ℝ)) := by
+theorem mean_summable (ν : PMF Depth) : Summable (fun k => (ν k).toReal*(rate k:ℝ)) := by
   apply Summable.of_nonneg_of_le (fun k => mul_nonneg ENNReal.toReal_nonneg (rate k).property.1)
     (fun k => mul_le_of_le_one_right ENNReal.toReal_nonneg (rate k).property.2)
     (pmf_real_summable ν)

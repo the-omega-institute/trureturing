@@ -31,11 +31,6 @@ attribute [local instance] Matrix.seminormedAddCommGroup
 attribute [local irreducible] spectralInverseSqrt spectralSupport
 namespace Original8340Global
 
--- Reuse the existing private constant with Lean's numeric private-name component.
-local macro "st37_kron_id_apply" : term =>
-  return Lean.mkIdent (Lean.mkPrivateNameCore
-    `D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
-    `D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence.kron_id_apply)
 -- Select the existing CLM operator norm at the original matrix norms and topology.
 private abbrev explicitCLMnorm (𝕜 : Type*) [NontriviallyNormedField 𝕜]
     [NormedSpace 𝕜 ℂ]
@@ -868,11 +863,11 @@ theorem whole_original_ST37
       MatrixMap.kron (MatrixMap.of_kraus (KK x) (KK x)) LinearMap.id
         (MatrixMap.kron (N x).toLinearMap LinearMap.id X) = X := by
     ext ⟨i,u⟩ ⟨j,w⟩
-    rw [st37_kron_id_apply]
+    rw [D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence.kron_id_apply]
     have hh : (fun a b => MatrixMap.kron (N x).toLinearMap LinearMap.id X
         (a,u) (b,w)) = N x (fun a b => X (a,u) (b,w)) := by
       ext a b
-      exact st37_kron_id_apply
+      exact D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence.kron_id_apply
         (N x).toLinearMap q X (a,u) (b,w)
     rw [hh]
     exact congrArg (fun M : Matrix (Fin d) (Fin d) ℂ => M i j)

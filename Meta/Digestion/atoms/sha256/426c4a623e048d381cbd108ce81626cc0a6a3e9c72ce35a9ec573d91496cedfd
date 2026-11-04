@@ -1,0 +1,85 @@
+**Definition 7.2.1 (The continuation tubes).** All terminating decimals in Section 7 are exact rationals. Define componentwise rounding by
+
+$$
+Q_{45}(u)=10^{-45}\left\lfloor10^{45}u+\frac12\right\rfloor.
+\tag{7.2.1}
+$$
+
+Start with
+
+$$
+c_{-1}=(0.8995316741215983,\ 0.1285667303082648,
+6.80570463553447,\ -1.2189475090087154,\ -40.43312488361048).
+\tag{7.2.2}
+$$
+
+For $i=0,\ldots,127$ put
+
+$$
+\begin{gathered}
+T_i=[i/8000000,(i+1)/8000000],\qquad
+ t_i=(2i+1)/16000000,\qquad \Delta=1/16000000,\\
+c_i^{(0)}=c_{i-1},\qquad
+c_i^{(a+1)}=Q_{45}\!\left(c_i^{(a)}-
+ [D_yG(c_i^{(a)},t_i)]^{-1}G(c_i^{(a)},t_i)\right)
+\quad(0\le a<5),\\
+c_i=c_i^{(5)},\qquad C_i=Q_{45}\bigl([D_yG(c_i,t_i)]^{-1}\bigr),\\
+\rho=(1/4000000,\ 1/4000000,\ 1/20000,\ 1/400000,\ 3/40000),\\
+X_i=\prod_{j=1}^5[c_{i,j}-\rho_j,c_{i,j}+\rho_j],\qquad
+\|z\|_\rho=\max_j |z_j|/\rho_j.
+\end{gathered}
+\tag{7.2.3}
+$$
+
+Here $\rho_B=\rho_2$ and $\rho_k=\rho_4$. Matrix rounding is entrywise. These formulas define rational centres and preconditioners, rather than approximations used as exact roots. The 128 closed parameter cells cover exactly $[0,1/62500]$.
+
+Here is a rational enclosure prescription for every inequality used below. A scalar interval operation first uses the endpoint rules (6.4.6), then replaces its lower endpoint $a$ by $2^{-240}\lfloor2^{240}a\rfloor$ and its upper endpoint $b$ by $2^{-240}\lceil2^{240}b\rceil$. Singleton rational constants are enclosed by the same rule. Products use the four endpoint products; powers mean repeated multiplication. Inverses are formed only after excluding zero. In particular these operations are enclosures, not floating point equalities.
+
+Differentiate the displayed circuit in the six independent variables $(R,B,E,k,\ell,t)$. For an interval value $u$ with derivative vector $\dot u$, propagate
+
+$$
+\begin{aligned}
+\dot{(u+v)}&=\dot u+\dot v,\\
+\dot{(uv)}&=\dot u\,v+u\,\dot v,\\
+\dot{(u^{-1})}&=-\dot u\,u^{-1}u^{-1}.
+\end{aligned}
+\tag{7.2.4}
+$$
+
+These rules apply to the scalar operations inside (7.1.3), including the derivative of its factor $t$. They specify enclosures of $G,D_yG,G_t$ without numerical differentiation. Matrix inversion in (7.2.3) can be enclosed by Gauss–Jordan elimination: use diagonal pivots in increasing order, normalize the entire pivot row, and eliminate that column in every other row. No row interchange is required here. Each pivot interval excludes zero; for every rounded entry in (7.2.3), both enclosure endpoints give the same integer in (7.2.1). Hence this enclosure prescription determines the exact rounded rational recurrence.
+
+For a vector or matrix of intervals let $|\cdot|_{\sup}$ mean the largest absolute endpoint, entrywise. Define the rational numbers
+
+$$
+\begin{aligned}
+q_i&=\max_j\sum_{k=1}^5
+ \bigl|[I-C_iD_yG(X_i,T_i)]_{jk}\bigr|_{\sup}\frac{\rho_k}{\rho_j},\\
+\beta_i&=\max_j\frac{
+ |[C_iG(c_i,t_i)]_j|_{\sup}
+ +\Delta|[C_iG_t(c_i,T_i)]_j|_{\sup}}{\rho_j},\\
+D_i&=\frac{1}{1-q_i}\max_j
+ \frac{|[C_iG_t(X_i,T_i)]_j|_{\sup}}{\rho_j}.
+\end{aligned}
+\tag{7.2.5}
+$$
+
+In particular the derivative enclosure in $D_i$ uses the whole tube, while the one in $\beta_i$ has fixed centre $c_i$.
+
+For a common seam $\sigma_i=(i+1)/8000000$, $0\le i<127$, put
+
+$$
+\begin{gathered}
+\widetilde c_i=(c_i+c_{i+1})/2,\qquad
+\widetilde\rho_{i,j}=\rho_j+|c_{i,j}-c_{i+1,j}|/2,\\
+\widetilde X_i=\prod_j[
+\widetilde c_{i,j}-\widetilde\rho_{i,j},
+\widetilde c_{i,j}+\widetilde\rho_{i,j}],\\
+\widetilde q_i=\max_j\sum_k
+ |[I-C_iD_yG(\widetilde X_i,\sigma_i)]_{jk}|_{\sup}
+ \frac{\widetilde\rho_{i,k}}{\widetilde\rho_{i,j}}.
+\end{gathered}
+\tag{7.2.6}
+$$
+
+This is a box containing the convex hull of the two neighboring tubes; both neighboring seam roots are in that box.
+

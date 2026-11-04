@@ -1,0 +1,28 @@
+**定理 7.8（连续门群的自伴生成元）。**
+若 $U:\mathbb R\to U(d)$ 连续，$U(t+s)=U(t)U(s)$、$U(0)=I$，
+则存在自伴 $H$，使
+
+$$
+U(t)=e^{-\mathrm{i} tH/\hbar},\qquad
+\mathrm{i}\hbar\,\frac{d}{dt}\psi(t)=H\psi(t).
+$$
+
+证明。
+所有 $U(t)$ 两两交换且正规，有限维中可同时酉对角化。
+每个对角分量是 $\mathbb R\to U(1)$ 的连续群同态。
+在零邻域选连续辐角，群律给局部可加关系，
+连续性使辐角为线性函数，再由群律推广到全轴。
+故各分量为 $e^{-\mathrm{i}\omega_jt}$；
+取 $H=\hbar\,\operatorname{diag}(\omega_j)$ 并还原共同基，微分即得方程。
+证毕。
+
+单个离散酉门总可插值：
+若 $U=\sum_je^{\mathrm{i}\theta_j}P_j$，任取 $\tau>0$ 及整数 $k_j$，
+
+$$
+H=-\frac{\hbar}{\tau}\sum_j(\theta_j+2\pi k_j)P_j
+$$
+
+都给 $U=e^{-\mathrm{i}\tau H/\hbar}$。
+因此离散结构允许连续描述，却未唯一决定时间单位、能谱分支或物理 Hamiltonian。
+

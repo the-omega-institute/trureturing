@@ -1,0 +1,26 @@
+**Lemma 8.1 (P7).** Every interpolation candidate satisfies $a\le m+b-2$.
+
+**Proof.** If $a\ge m+b-1$, the prefix contains the $m$ consecutive original clocks
+
+$$
+b,\ldots,b+m-1,
+$$
+
+carrying exactly the exponents $b,\ldots,b+m-1$. Apply Lemma 5.2 at $s=t_0=b$. It gives $\epsilon R(t)>0$ for every $t\le b$.
+
+But the original clocks $0,1$ are retained in this prefix, and
+
+$$
+R(0)=1,\qquad R(1)=-1/\rho.
+$$
+
+They have opposite signs, so one is opposite to $\epsilon$. Both clocks are at most $b$. This is a contradiction, proving the bound. $\square$
+
+Combining Lemmas 6.1, 7.1, and 8.1 gives
+
+$$
+2\le b\le m-2,\qquad m-1\le a\le m+b-2\le2m-4
+$$
+
+with the central parity in (3.4). This proves the gap and transition assertions of Theorem 3.1, including both right-edge exclusions.
+

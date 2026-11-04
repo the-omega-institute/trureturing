@@ -1,0 +1,30 @@
+**Theorem 2.1 (source-specific linear global counting).**
+For the exact $M$, unit-edge free-root form and $H$ of Definition 1.1,
+$H$ has compact resolvent, its zero eigenvalue is simple, and its positive
+eigenvalues form the infinite sequence in Definition 1.2. Set
+$B=2\varphi/b=2\varphi^3$. Then
+
+$$
+\begin{aligned}
+N_H^+(\lambda)&=0 &&(0\le\lambda<\varphi^{-1}),\\
+N_H^+(\lambda)&\le B\lambda &&(\lambda\ge0),\\
+N_H^+(\lambda)&\ge b\lambda-1 &&(\lambda>b^{-1}),\\
+\frac b2\lambda\le N_H^+(\lambda)&\le B\lambda
+                              &&(\lambda\ge2b^{-1}),\\
+\frac jB\le\lambda_j&\le\frac j b &&(j\ge1).
+\end{aligned}
+\tag{2.1}
+$$
+
+All bounds concern the same operator; their constants are not asserted
+optimal. No simplicity of positive eigenvalues is assumed.
+
+*Proof.* First, IV, (98.5) with $h=0$ gives
+
+$$
+\|C\|^2\le\|J\|^2\le\frac a{1-a}=\varphi.
+\tag{2.2}
+$$
+
+Compactness of $C$ and density of its range in the infinite-dimensional
+$\mathscr G_0$ are supplied by IV, §§98 and 111. 

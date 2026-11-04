@@ -1,0 +1,52 @@
+**Theorem 6.2 (Exact errors and both risk bounds).** For the same controller, put $\rho_i=v_i/u_i$. Then $\rho_0>1$ and $0<\rho_1<1$. Its wrong-label probabilities are exactly
+
+$$
+e_0:=\mathsf P_{0,q}(D=1)=\frac1{1+\rho_0^L},\qquad
+e_1:=\mathsf P_{1,q}(D=0)=\frac1{1+\rho_1^{-L}},
+\tag{6.6}
+$$
+
+and each is at most $\alpha$.
+
+Proof. The signs follow from $v_0-u_0=d$ and $u_1-v_1=d$, with all move probabilities positive. At any interior coordinate, the conditional multiplier of $\rho_i^{J_n}$ is
+
+$$
+u_i\rho_i+v_i\rho_i^{-1}+w_i
+=v_i+u_i+w_i=1.
+\tag{6.7}
+$$
+
+After absorption its multiplier is also one. Thus $\rho_i^{J_n}$ is a martingale with initial value one. For this fixed $q$ and finite $L$, it is bounded between the smaller and larger of $\rho_i^{-L}$ and $\rho_i^L$. Lemma 6.1 has already proved $N<\infty$ almost surely. Bounded convergence at deterministic $n\to\infty$ therefore gives, with $H_i=\mathsf P_i(J_N=L)$,
+
+$$
+1=H_i\rho_i^L+(1-H_i)\rho_i^{-L}.
+\tag{6.8}
+$$
+
+Because $\rho_i\ne1$, solving yields
+
+$$
+H_i=\frac{1-\rho_i^{-L}}{\rho_i^L-\rho_i^{-L}}
+=\frac1{1+\rho_i^L}.
+\tag{6.9}
+$$
+
+The upper boundary emits one and the lower emits zero, so $e_0=H_0$ and $e_1=1-H_1$, proving (6.6). This derivation includes the holding probability in (6.7); it does not replace holding gaps by free trials.
+
+For $0<x<y$, integration gives $\log(y/x)=\int_x^y z^{-1}\,dz\ge(y-x)/y$. Apply this to $(u_0,v_0)$ and to $(v_1,u_1)$. Since $v_0\le1$ and $u_1\le1$,
+
+$$
+\log\rho_0\ge\frac d{v_0}\ge d,\qquad
+\log\rho_1^{-1}\ge\frac d{u_1}\ge d.
+\tag{6.10}
+$$
+
+The ceiling in (4.1) ensures $Ld\ge\ell$. Each error in (6.6) is consequently at most
+
+$$
+\frac1{1+e^{Ld}}\le\frac1{1+e^\ell}=\alpha.
+\tag{6.11}
+$$
+
+This also covers arbitrarily small positive $\ell$ and the resulting possibility $L=1$. All martingale bounds here are at the selected finite $L$; no uniform martingale bound across changing designs was needed. $\square$
+

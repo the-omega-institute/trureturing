@@ -1,0 +1,44 @@
+**命题 95.2（完整停止叶及原五维逐路径律）。** 固定这样的表 $\pi$。令 $\Lambda_\pi$ 为全部停止叶，叶 $\ell$ 保留动作位置、实际时间词 $w_\ell$、其中每一个原标签和全部已执行 $N$。可以另附由这些标签确定的失配标记 $m_\ell$ 和超时标记 $t_\ell$，两者不合并或删去叶。记
+
+$$
+\begin{gathered}
+\alpha_\ell=2^{-k(w_\ell)},\qquad U_\ell=U_{w_\ell},\qquad
+R_\ell=U_\ell^\dagger EU_\ell,\qquad E_1=E,\quad E_0=I_3-E,\\
+p_\mu^\pi(\ell,b)=\alpha_\ell\operatorname{Tr}(E_bU_\ell\mu U_\ell^\dagger),
+\qquad b\in\{0,1\}.
+\end{gathered}
+\tag{95.1}
+$$
+
+则对每个数学密度矩阵 $\mu\succeq0$、$\operatorname{Tr}\mu=1$，
+
+$$
+\sum_b p_\mu^\pi(\ell,b)=\alpha_\ell>0,\qquad
+\sum_{\ell\in\Lambda_\pi}\alpha_\ell=1,\qquad
+F_\pi=\sum_\ell\alpha_\ell R_\ell\in[0,I_3].
+\tag{95.2}
+$$
+
+$\operatorname{Tr}(F_\pi\mu)$ 是不条件化的原终端“是”质量。任意完整记录接受系数 $a(\ell,b)\in[0,1]$ 的数学扩张为
+
+$$
+F_{\pi,a}=\sum_\ell\alpha_\ell
+ [a(\ell,1)R_\ell+a(\ell,0)(I_3-R_\ell)]\in[0,I_3].
+\tag{95.3}
+$$
+
+物理二元事件只需 $a\in\{0,1\}$；一般系数不供应抽签设备。
+
+证明。沿每条叶逐字使用 $A_{w_\ell}=\alpha_\ell\operatorname{Ad}_{U_\ell}$。每个 $\mathsf J$ 子节点各得父质量一半，$\mathsf N$ 保质量；有限完整停止截面把根质量一分配给全部叶，给出 (95.2)。这正是[关系丛 §8、定理 8.2](AURIC_FIB_RELATIONAL_BUNDLE_AND_PREDICTIVE_CLOSURE_THEORY.md#8-输出解析仪器预测观察者与受约束量子控制)及[相干重建 (26.3)–(26.5)](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#26-有界有向词矩在完整递归原子中的闭合应用) 的既有完整树律在本源的应用。标记为叶的确定函数，故标记事件的质量是相应叶的原质量之和。终端某一结果可以为零，仍保留该格；叶质量本身严格正。(95.3) 的每项在 $0$ 与 $\alpha_\ell I_3$ 之间，故其和有界。
+
+再用 (91.3)，同一叶的原五维复合满足
+
+$$
+\widehat K_{w_\ell}B=\sqrt{\alpha_\ell}\,BU_\ell,\qquad
+\widetilde N=BNB^\dagger+(I_5-BB^\dagger),\qquad
+P_5=BEB^\dagger.
+\tag{95.4}
+$$
+
+于是原输入 $B\rho_0B^\dagger$、同一标签停止表及一次 $(P_5,I_5-P_5)$ 给出 $p_{\rho_0}^\pi$，两个终端、失配及超时均逐路径对应。对数学输入 $B\mu B^\dagger$ 也成立；这不是供应额外制备。五维接受效果满足 $B^\dagger\widehat F_{\pi,a}B=F_{\pi,a}$；此处只比较原 $B\mathbb C^3$ 扇区，不主张整个五维输入域上的近似。∎
+

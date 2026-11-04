@@ -1,0 +1,16 @@
+**Theorem 87.3 (paid acquisition, historical inverse and current predictor).** On the one actual source at $(t,x_h)$ execute Hold and all $b$ terminal Reads at epoch zero. For $r=1,\ldots,d$, execute one actual Tick, Hold, and all $b$ terminal Reads. Consume each complete acknowledgement and rational reply before proceeding. During the final held interval compute
+
+$$
+Y=O_dx_h,\qquad
+\widehat x_h=D_dY=x_h,\qquad
+x_{\rm now}=T_t^dD_dY,\qquad
+m_{\rm now}=O_dx_{\rm now}.
+\tag{87.4}
+$$
+
+Then the actual source is at $(t,x_{\rm now})$. The controller recovers exactly $w$ from $(t,\widehat x_h)$ by the appropriate inverse in §85, and installs an exact complete-current-service predictor at $x_{\rm now}$, not at $x_h$.
+
+Proof. At each sampled epoch the actual state is $T_t^rx_h$, since there has been no growth, Add or Reset in this interval and only the counted Ticks occur. Serialization and Hold ensure that its $b$ Reads belong to that same epoch. This proves the literal $Y$ identity and the actual final endpoint. Proposition 87.2 supplies the computed left inverse, not a response oracle. The finite rational computations in (87.4) then give the stated fields and current prediction block exactly. Both inverse word procedures terminate on this input by Theorems 85.1–85.2. The current program, roster, genuine binding and rights are retained along with the computed state; its continued-service invariant is proved in §89. None of these computations resets, reverses or copies the physical source. $\square$
+
+The retained block $m_{\rm now}$ means the next $d+1$ autonomous terminal response vectors from the present field under the known current law, before another intervention. It is a computed prediction block, not a claim that those future replies were already observed. The actual acquired block is $Y$. The two blocks correspond to epochs $0,\ldots,d$ and $d,\ldots,2d$ of this same uninterrupted diagnostic run.
+

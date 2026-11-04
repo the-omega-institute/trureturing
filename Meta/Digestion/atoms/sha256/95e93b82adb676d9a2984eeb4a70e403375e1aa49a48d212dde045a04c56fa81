@@ -1,0 +1,32 @@
+**Theorem 3.1 (actual global spectral consumers).**
+For $s>0$ define
+
+$$
+Z_H^+(s)=\operatorname{Tr}_{\mathscr G_0}(e^{-sH}|_{\mathscr G_0})
+       =\sum_{j\ge1}e^{-s\lambda_j},\qquad
+Z_H(s)=1+Z_H^+(s).
+\tag{3.1}
+$$
+
+These traces are finite, and the constant $B$ of Theorem 2.1 satisfies
+
+$$
+\frac b s e^{-s/b}\le Z_H^+(s)\le\frac B s\quad(s>0),
+\qquad
+\frac b{es}\le Z_H^+(s)\le\frac B s\quad(0<s\le b).
+\tag{3.2}
+$$
+
+In particular,
+
+$$
+\begin{gathered}
+\lim_{\lambda\to\infty}\frac{\log N_H^+(\lambda)}{\log\lambda}=1,
+\qquad
+\lim_{j\to\infty}\frac{\log\lambda_j}{\log j}=1,\\
+\lim_{s\downarrow0}\frac{\log Z_H^+(s)}{\log(1/s)}
+ =\lim_{s\downarrow0}\frac{\log Z_H(s)}{\log(1/s)}=1.
+\end{gathered}
+\tag{3.3}
+$$
+

@@ -1,0 +1,33 @@
+**Definition 11.1 (Dense infimum and centered incidence).** Retain Definition 1.1, with no restriction on the cardinalities of positive-mass types, and the notation of Definition 7.1. For $0<\delta\le1$ define
+
+$$
+\mathscr D_a(\delta)
+=\inf\{H(x):x\text{ satisfies Definition 1.1 and }\min_i y_i\ge\tau\}.
+\tag{11.1}
+$$
+
+The additional condition in (11.1) defines the dense part of the original domain; it imposes neither exchangeability nor a prescribed support. For a vector $v\in\mathbb R^s$ let
+
+$$
+\Pi v=v-\frac1s\Bigl(\sum_i v_i\Bigr)\mathbf1,
+\qquad \|v\|^2=\sum_i v_i^2.
+$$
+
+For each actual law put
+
+$$
+\begin{aligned}
+z&=r-K,\qquad
+\Phi(z)=z(z-1)(3r-z-1),\\
+\Delta&=\mathbb E K^3-Z,\qquad
+d_i=y_i-\mu,\qquad V=\|d\|^2,\\
+c_i&=\mathbb E[(K^2-r^2)I_i],\qquad c^\circ=\Pi c,\\
+\kappa&=\sqrt{\frac{2a}{s}},\qquad
+A=\kappa(2r-1)\delta,\\
+Q_*&=\frac{A^2}{r^2\mu^3}
+=\frac{2a}{s}\frac{(2r-1)^2\delta^2}{r^2\mu^3}.
+\end{aligned}\tag{11.2}
+$$
+
+Every expectation in these definitions is taken under the same $x$. The reference moment $Z$ is still the adjacent-cardinality moment, rather than an imposed third moment. The polynomial deficit in Lemma 3.1, the centered identity (8.7), and the actual comparison laws (7.2) will be used below. The optimization of feasible joint moments and the distinction between tight bounds and attained bounds have the classical background of D. Bertsimas and I. Popescu, *Optimal inequalities in probability theory: A convex optimization approach*, SIAM J. Optim. 15(3), 780–804, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903), pp.780–781. The nonlinear dense estimate here is a repo-derived consequence of the actual incidence relation proved below; it is not an application of a theorem optimizing the moment coordinates independently.
+

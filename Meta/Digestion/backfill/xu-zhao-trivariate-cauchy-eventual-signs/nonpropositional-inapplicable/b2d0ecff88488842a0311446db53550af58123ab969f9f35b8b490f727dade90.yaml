@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b2d0ecff88488842a0311446db53550af58123ab969f9f35b8b490f727dade90
+  normalized_sha256: sha256:b2d0ecff88488842a0311446db53550af58123ab969f9f35b8b490f727dade90
+cas_ref: sha256:b2d0ecff88488842a0311446db53550af58123ab969f9f35b8b490f727dade90
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only exact application of pinned mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679, Mathlib/Algebra/Field/GeomSum.lean, geom_sum_eq with x=(1/2 : Real) and length n+1. For the original real sequence v0=-2 and vm=(2^m)^(-1) for m>=1, the prefix through every n>=0 is the geometric prefix minus 3, hence -1-(2^n)^(-1)<0. At n=0 this is -2. pow_pos and inv_pos give strict positivity for every tail term m>=1. Thus tail positivity alone does not ensure positive prefixes. This uses no D5 theorem, native coefficient proxy, eventual-sign theorem, or threshold assumption.'
+    previous_atom_id: 480296c9ee7511d421b869565aa4e36e9a07dc9b1baea0fc48caffb2b387e435
+    next_atom_id: 54454e8424a11c6ca738d280a729a5e253d673dbf1b803e94a9f65064c2c27d9

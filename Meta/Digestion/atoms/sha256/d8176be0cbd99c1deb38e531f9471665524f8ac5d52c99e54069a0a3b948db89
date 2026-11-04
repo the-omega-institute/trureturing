@@ -1,0 +1,82 @@
+**Corollary 53.1 (The equal-width alternative for an independent M
+pair).** If (53.1) holds, its independently chosen M pair either has
+unequal widths, or has a common width $0<b<\rho$ satisfying
+(47.3)–(47.6). This assertion imposes no equality of widths on the
+J pair and no relation between the two common terminal readings.
+
+**Proof.** If the two M widths agree, that pair satisfies exactly
+Definition 47.1, so Theorem 47.2 applies. Otherwise it is in the
+unequal-width alternative. The J pair does not enter that theorem's
+hypotheses or proof. $\square$
+
+For the four worlds of Proposition 40.1, the source intervals (40.2)
+give, with exact rational decimal endpoints,
+
+$$
+\begin{gathered}
+b_A\in(0.1148,0.1149),\qquad b_C\in(0.1172,0.1173),\\
+b_D\in(0.2175,0.2176),\qquad b_B\in(0.3115,0.3116).
+\end{gathered}
+\tag{53.2}
+$$
+
+These intervals are pairwise disjoint. Consequently none of the six
+pairs among those four worlds meets the equal-width hypothesis.
+The fixed-width exclusion supplies no obstruction to that J
+construction, no assertion about its continuations, and no exclusion
+of additional companions in its entire child. Its listed M readings
+remain pairwise distinct by Proposition 40.1; that finite comparison
+is not injectivity of M on the entire child.
+
+The preceding results differ from the relevant parent theorems in
+*FIB common-parent geometry and two exact mixed children* as follows.
+Its Theorem 3.2 concerns equal projective gain directions on the
+five-row parent: outside the saturated direction each direction has
+at most one complete world. When $p\ne24$ the saturated direction
+is absent. That theorem compares proportional whole gains; it does
+not impose equal widths or compare the three shared actual responses
+$p,v,m$ of arbitrary distinct worlds. The affine response kernel and
+identities (47.3)–(47.4) supply those latter constraints without a
+proportional-gain hypothesis.
+
+Its Theorem 4.1 describes the exceptional slice $b=\beta$ at the
+parent parameter $\beta$; at the present parent $\beta=1/8$.
+Its Theorem 5.1 excludes full fifth-M $L_2$ supports contained in that
+exceptional slice and supplies the associated direction restrictions.
+A fifth-M $L_2$ support requires both sixth actions and their
+continuations; a single terminal-M pair after the specified sixth M
+is a different assertion. In addition an arbitrary common width here
+need not equal $1/8$. Thus neither the exceptional-slice result nor
+its full-support exclusion gives (47.3), (47.4), or the range
+$b\ge\rho$ for actual M pairs at arbitrary common widths. The new
+identities apply also at the exceptional width when their actual-world
+hypotheses hold.
+
+The zero-safe parent and complete-world meaning are inherited from
+Sections 1–2, 19 and 31 and the cited Common Parent Theorem 2.1.
+The model-specific affine reduction, cofactor line, fixed-width
+identities and corner exclusion are those of *A zero-safe fixed-width
+obstruction for the independent-pair problem*, expressed here with
+that whole-world correspondence. Section 51 also derives
+$n_1\ne n_2$ from the stated hypotheses, rather than adding it as a
+restriction. Fixed-node polynomial interpolation, the cofactor
+identity, bilinear interpolation, Descartes' rule and the intermediate
+value theorem are the classical tools within these proofs.
+
+The necessary identities do not themselves supply legal sources,
+their full parent lifts, or a shared acquired child. No sufficiency
+or sharp existence threshold at $\rho$ follows. The exclusion is
+confined to equal widths at least $\rho$; it does not exclude
+unequal-width M pairs or establish any realizable equal-width pair
+below $\rho$. The existence of the independent pairs in (53.1), or
+a global impossibility theorem for them, remains unresolved.
+
+Every universal full-parent identity above retains $\Lambda=0$,
+vanishing sampled gains, lower degrees, repeated gain roots and zero
+drift wherever the original rows permit them. The original entire
+child still contains all legal worlds of Definitions 1.1–1.2,
+including its singular and degenerate strata. The distinctions of
+(47.5) and the nonzero $\epsilon$ of Lemma 48.2 are forced only under
+the explicitly stated collision and $p\ne24$ hypotheses; they are
+not replacements for the unrestricted domain.
+

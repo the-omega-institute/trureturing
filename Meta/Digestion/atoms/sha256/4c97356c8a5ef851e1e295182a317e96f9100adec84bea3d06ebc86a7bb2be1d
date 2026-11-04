@@ -1,0 +1,41 @@
+**Theorem 3.1 (exact full-native-menu equivalence).** On the entrance
+class of Section 1,
+
+$$
+ (T,x)\sim_{\rm service}(T',x')
+ \quad\Longleftrightarrow\quad
+ \exists D\in G_K:\quad (T',x')=(DTD,Dx).
+\tag{SC.8}
+$$
+
+For the forwardly constructed equivalence, every complete adaptive
+continuation has matching whole outputs and a sign transport of its
+full law/field successor at every cut.
+
+Proof. An original branch stays a branch forever. Neither $P$ nor $S$
+can target it. Extend $D\in G_K$ by $1$ at every future birth and use
+the same design, bindings, rights, codec and parser on both sources.
+All current terminals have sign $1$, so terminal Add and Read
+intertwine. Tick intertwines since
+$(DAD)(Dz)=DAz$. Hold is identity. A promotion attaches at a
+sign-$1$ alpha. A split attaches at a sign-$1$ beta owner and its
+sign-$1$ marker. All new coefficients are consequently still $+1$;
+zero diagonal/field births and old coefficient/field retention agree.
+The raw move/append rules and grants also agree. Guards depend on
+the common logical code; range, malformed and disabled behavior on
+the common context; proper prefixes on the same parser bytes. None
+depends on a hidden coefficient sign. This checks every operation
+and identity/refusal branch of the complete interface. Inducting on
+received prefixes and completed calls proves the stated successor
+invariant. An adaptive next input is identical because its complete
+past visible record is identical.
+
+For necessity, perform the particular common continuation that splits
+all original beta owners and then the finite free/pulse experiment
+of Section 4. Equality of all future service gives equality of this
+actual experiment's complete returns. Its deterministic subtractions
+give equal data (SC.4) for $J=I$. Theorem 2.3 leaves precisely $G_K$.
+The proof of the scan uses only Lemma 2.2 and the existing rational
+recurrence; it does not assume (SC.8). Thus the implication is not
+circular. $\square$
+

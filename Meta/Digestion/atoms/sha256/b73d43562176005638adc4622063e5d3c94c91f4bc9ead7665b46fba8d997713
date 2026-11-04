@@ -1,0 +1,19 @@
+**Definition 18.3 (a source-independent entry traversal).** Starting with the armed entry, maintain a finite stack of logical addresses, initially just $\varepsilon$. At each visit to an address $p$, issue the real $P_p$ and consume its complete reply.
+
+1. A branch refusal records a branch and schedules $pL,pR$ in left-first order.
+2. Growth$(P,p)$ records an entry $\alpha$ leaf and completes its edit assay.
+3. A wrong-type refusal records an entry $\beta$ leaf; issue the real $S_p$, consume Growth$(S,p)$, and complete its edit assay.
+
+Neither leaf case schedules descendants. An absent-address refusal is an off-premise failure for this procedure, not an alternative successful reconstruction. The procedure's control uses the acquired replies, addresses and stack, never an unknown subtree as a runtime argument. It maintains the raw length, increasing it after each successful split. A successful assay at $p$ with decoded old label $j$ records the entry and current bindings
+
+$$
+\begin{array}{c|c|c}
+\text{entry leaf}&\text{entry binding}&\text{current binding after its assay}\\ \hline
+\alpha&j\mapsto p&j\mapsto pL\\
+\beta&j\mapsto pL&j\mapsto pLL,\quad n+1\mapsto pR.
+\end{array}
+\tag{NLBAII.6}
+$$
+
+Previously obtained bindings are retained. When the stack is empty, actually Reset and Hold. Retain an entry report $(t,\lambda_0)$ separately from the mutable current code and binding table. This report records the acquired entry, not the unobserved old successful word.
+

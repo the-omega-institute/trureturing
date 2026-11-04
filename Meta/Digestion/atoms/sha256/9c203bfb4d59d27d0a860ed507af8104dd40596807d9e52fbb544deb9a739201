@@ -1,0 +1,20 @@
+### 8.1. A smaller streaming statistic for a smaller task
+
+The full-burst task retains the entire ordered word. For the distinct task of deciding only the constant-word predicate
+
+$$
+\mathsf{Const}_n=1\quad\Longleftrightarrow\quad Y_0=Y_1=\cdots=Y_{n-1},
+$$
+
+the uniform sampler can stream a sufficient witness statistic on the same run. Store the first two-bit label $Y_0$, a one-bit disagreement flag $d$, and the supplied read-count/timing state. Initialize $d=0$ and, on each later read, update
+
+$$
+d\leftarrow d\lor 1_{\{Y_j\ne Y_0\}};
+$$
+
+the final answer is $1-d$. If the run length is supplied as data, a counter needs $\lceil\log_2(n+1)\rceil$ bits (or the equivalent exact timer/index register); the source reference, detector/controller context, framing and clock remain charged. Thus the retained label payload for this predicate is two bits plus one flag, with the counter and interface state, while fresh detector randomness is still consumed for every one of the $n$ reads. By contrast, the full-record task retains $2n$ label payload bits, all $n$ chronological labels, and their timing/framing metadata. The streaming statistic is a sufficient retained record only for $\mathsf{Const}_n$; it does not replace the complete-law or full-word task and does not assert a globally minimal memory bill.
+
+A prepared independent tape moves the randomness to initialization, tape storage, access and consumption; it is a different interface and is not free. The fixed-pair purifier is already a sufficient conditional alternative for one positive pair, but its partition may depend on $(t,s)$ and its acquisition or description cost is uncontrolled. A complete collision profile in Theorem 5.1 is a law-level input, not a finite acquired record. The coefficient sum $2^n-1$ gives no uniform numerical rate. Existing finite exact-real sampling and prospective consumers remain sufficient for their own declared tasks.
+
+The finite source-only criterion is therefore a deletion boundary: fresh detector randomness can be removed for a continuing same-source task exactly on the one-hot class, while changing the task to one pair, changing the timing menu, supplying a prepared tape, or retaining a stateful detector changes the comparison. No universal alpha/beta minimality, global resource optimum, physical proof, or four-view inverse is claimed.
+

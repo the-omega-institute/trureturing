@@ -1,0 +1,20 @@
+### 9.1. 一个有归一化保证的记录模型
+
+取正交路径基 $|h\rangle$、归一化输入 $\sum_h\psi_h|h\rangle$（$\sum_h|\psi_h|^2=1$）及单位记录向量 $r_h$。允许记录耦合
+
+$$
+|h\rangle|0\rangle_R\longmapsto|h\rangle|r_h\rangle_R.
+$$
+
+路径因子正交，故即使 $r_h$ 不正交，这仍是等距映射。路径再经酉门 $U$ 后，给定输出 $y$ 的未归一记录向量为
+
+$$
+v_y=\sum_h a_{yh}r_h,\quad a_{yh}=U_{yh}\psi_h,
+\quad p(y)=a_y^\dagger G a_y,
+\quad G_{hk}=\langle r_h,r_k\rangle.
+$$
+
+对 $y$ 求和，酉性的列正交消掉交叉项，得 $\sum_yp(y)=\sum_h|\psi_h|^2=1$。相同记录给振幅先求和；正交记录给模平方先求和。
+
+<a id="thm-gram"></a>
+

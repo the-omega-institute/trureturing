@@ -1,0 +1,45 @@
+**Theorem 151.1 (Positive jump of the optimized original threshold).**
+Let $(\lambda_j,\sigma_j,\rho_j)$ be the seven signed rows of (146.1),
+and put $B_{\rm lb}=\sum_j\lambda_jc_j$. The exact certificate (146.4)
+gives $B_{\rm lb}>189/4096$. Define the source-only variation bound
+
+$$
+L_{\rm lb}=\sup_{|s|\le\rho}\max_{1\le j\le7}
+\left(|\partial_s\beta_{\rho_j,s}|+R_*'\|\partial_sU_{\rho_j,s}\|\right),
+\qquad K_{\rm jump}=L_{\rm lb}+{3\over2}C_{\rm ref,*},
+\tag{151.1}
+$$
+
+and set
+
+$$
+\Delta={3\over4096},\qquad G_0={5\over4096},\qquad
+\rho_\Delta=\min\left\{\rho_f,{G_0-\Delta\over2K_{\rm jump}}\right\},\qquad
+\eta_\Delta=\min\left\{\eta_*,{\Delta\over4E_*}\right\}.
+\tag{151.2}
+$$
+
+For every fixed $0<\eta\le\eta_\Delta$ and every nonzero
+$|t|\le\rho_\Delta$,
+
+$$
+\boxed{\qquad \mu_{a,t}(\eta)-\mu_{a,0}(\eta)
+       \ge {\Delta\over2}\eta>0.\qquad}
+\tag{151.3}
+$$
+
+Indeed, every minimizer of $n_{a,t}$ lies in the uniform ball of
+(148.1). The signed cancellation in (146.1), followed by the mean-value
+bound (151.1), gives
+
+$$
+n_{a,t}\ge {189\over4096}-L_{\rm lb}|t|,\qquad
+m_{a,t}\ge n_{a,t}-C_{\rm ref,*}\epsilon_{N_t}.
+\tag{151.4}
+$$
+
+Since $m_{a,0}<23/512$ by (146.8), (150.2), and (151.2) imply
+$m_{a,t}-m_{a,0}\ge\Delta$. Applying the two uniform remainder bounds
+(148.3) gives (151.3). The quantifiers are phase-by-phase: no claim is
+made that an optimizer has the same coordinates for different $t$.
+

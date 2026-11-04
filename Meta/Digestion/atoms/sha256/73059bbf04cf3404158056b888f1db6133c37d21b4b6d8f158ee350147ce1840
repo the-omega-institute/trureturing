@@ -1,0 +1,11 @@
+**Definition 1.2 (fixed linear gain-ray output).** For a fixed terminal word $w$ with $N-1$ actions, write $Z_w=(z_0,\ldots,z_{N-1})^{\mathsf T}$. A fixed real matrix $C\in\mathbb R^{m\times N}$ succeeds at a world if
+
+$$
+CZ_w=s\beta\qquad\text{for some }s\in\mathbb R\setminus\{0\}.
+\tag{1.3}
+$$
+
+Either sign of $s$ is allowed. A countable palette assigns at most countably many fixed matrices to each terminal word; the selector can be any function of actual history. Matrix entries chosen from the observed data are outside this definition. Complete-target recovery returns $(P,g,\delta)$; gain-only recovery returns the ray in (1.3). These are different tasks.
+
+Fixed acquisition means that the action word is preassigned independently of data. An early output along such a word can be retained while finishing the word, with zero columns appended to its matrix. Consequently early stopping does not improve the lower bound for fixed acquisition proved below. Adaptively chosen words are treated separately.
+

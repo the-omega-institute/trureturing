@@ -1,0 +1,28 @@
+**Theorem 90.1 (a paid assay with no restorative actuation).** Choose
+$N$ independent rows of $OE$ by geometry-only rational pivots in
+epoch/sensor order. Let their invertible matrix be $R$ and their
+largest epoch $H\le M-1$. Actually Hold; perform the selected
+epoch-zero Reads, then $H$ rounds Tick; Hold with precisely the
+selected designated-sensor Reads at each epoch. The real result is
+
+$$
+y=Rx,\qquad x=R^{-1}y,\qquad w=B^HEx=L_Hx.
+\tag{90.1}
+$$
+
+All epoch-zero candidate rows are zero by $CE=0$, so none is in the
+selected independent list; the initial Hold is nevertheless real.
+The assay uses $N$ Reads, $H$ Ticks, $H+1$ Holds and zero Adds,
+besides Definition 89.1's construction. Install the complete predictor
+at this actual $w$. The $N$ scalar coordinate is the arbitrary-entry
+necessity already used in Theorem 88.1; it is not a current-only,
+birth, sensor or total-cost minimum.
+
+**Proof.** Theorem 89.2 gives rank $N$ for $OE$, hence the selector
+terminates. The physical field at epoch $j$ is $B^jEx$, so its
+selected literal replies are exactly $Rx$. Held finite exact solving
+earns the original entry and its actual advanced field. No local
+inverse calculation moves the source or restores old physical values.
+The complete-return and current-service supplier applies at this
+proved endpoint. $\square$
+

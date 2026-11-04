@@ -1,0 +1,32 @@
+### 定义 1.1（失败超图、匹配与横截）
+
+有限失败超图为
+
+$$
+\mathscr H=(V,\mathscr E),
+$$
+
+其中 $V$ 是有限顶点集，$\mathscr E\subseteq 2^V\setminus\{\varnothing\}$ 是有限失败边族。边可以代表一个候选观察集合、一个修复动作集合，或一个由证书合同声明的联合关系；顶点含义必须在具体实例中固定。
+
+匹配数定义为
+
+$$
+\nu(\mathscr H)=\max\{|\mathcal M|:\mathcal M\subseteq\mathscr E,
+\ e\cap e'=\varnothing\ (e\ne e')\}.
+$$
+
+横截数定义为
+
+$$
+\tau(\mathscr H)=\min\{|T|:T\subseteq V,
+\ T\cap e\ne\varnothing\ \forall e\in\mathscr E\}.
+$$
+
+空边族的横截数取 $0$。每个横截至少要击中匹配中的每一条边，因此
+
+$$
+\boxed{\nu(\mathscr H)\le\tau(\mathscr H).}
+$$
+
+不等式一般严格。例如三角图的三条二元边满足 $\nu=1$ 而 $\tau=2$。
+

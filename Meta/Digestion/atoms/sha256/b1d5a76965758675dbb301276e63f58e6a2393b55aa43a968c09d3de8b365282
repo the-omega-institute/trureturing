@@ -1,0 +1,93 @@
+**定义 101.1（列、行及同一事件表）。** 按定理 92.1 任取
+$p_1,\ldots,p_8\in\{0,1\}^{*}$，各长至多七，$p_1=\varnothing$，
+使 $r_i=A_{p_i}\rho_0$ 为下列八维空间的基：
+
+$$
+\mathscr S_c=\{X\in Q:\operatorname{Tr}(P_\xi X)=c\operatorname{Tr}X\}.
+\tag{101.1}
+$$
+
+按定理 92.2 选择任意一个使 $A_Nr_k\notin\mathscr S_c$ 的 $k$，
+置 $p_9=p_kN$、$r_9=A_Nr_k$。
+于是 $r_1,\ldots,r_9$ 为整个 $Q$ 的基，$|p_9|\le8$。
+这些选择可依赖指定的真实源和 $N$。
+固定第二卷定理 40.1 的八个实际原生后缀
+
+$$
+(h_1,\ldots,h_8)=(\varnothing,0,1,00,10,000,010,100).
+\tag{101.2}
+$$
+
+定义九个目标读出及九个竞争读出
+
+$$
+\begin{aligned}
+\ell_0(X)&=\operatorname{Tr}X,&m_0(x)&=u(x),\\
+\ell_m(X)&=\operatorname{Tr}(EA_{h_m}X),&
+m_m(x)&=e(B_{h_m}x)\quad(1\le m\le8),\\
+x_i&=B_{p_i}s_0&& (1\le i\le9).
+\end{aligned}
+\tag{101.3}
+$$
+
+$h_1=\varnothing$ 给 $\ell_1(X)=\operatorname{Tr}(EX)$、$m_1=e$。
+第零行是质量，与八个是读出共同构成多输出系统；
+它不是第九个是后缀。目标的四个实矩阵为
+
+$$
+H_{mi}=\ell_m(r_i),\qquad
+H^a_{mi}=\ell_m(A_ar_i),\quad a=0,1,N,
+\quad 0\le m\le8,\quad1\le i\le9.
+\tag{101.4}
+$$
+
+假设的精确比较只有同样四块：
+
+$$
+m_m(x_i)=H_{mi},\qquad m_m(B_ax_i)=H^a_{mi}
+\quad\text{对所有上述 }m,i,a.
+\tag{101.5}
+$$
+
+对 $m\ge1$，时间顺序分别是 $p_i h_m$ 和 $p_i a h_m$，例如
+
+$$
+H^a_{mi}=\operatorname{Tr}(EA_{h_m}A_aA_{p_i}\rho_0),\qquad
+m_m(B_ax_i)=e(B_{h_m}B_aB_{p_i}s_0).
+\tag{101.6}
+$$
+
+质量行分别为
+
+$$
+\begin{aligned}
+H_{0i}&=\operatorname{Tr}(EA_{p_i}\rho_0)
+       +\operatorname{Tr}((I_3-E)A_{p_i}\rho_0),\\
+H^a_{0i}&=\operatorname{Tr}(EA_aA_{p_i}\rho_0)
+       +\operatorname{Tr}((I_3-E)A_aA_{p_i}\rho_0),\\
+m_0(x_i)&=e(x_i)+(u-e)(x_i),\\
+m_0(B_ax_i)&=e(B_ax_i)+(u-e)(B_ax_i).
+\end{aligned}
+\tag{101.7}
+$$
+
+所以质量来自同一空后缀的两个终端结果；没有把其一省略。
+$N$ 在时序中是替代控制，$0,1$ 是一次原生仪器的互斥结果。
+对选定标签词取联合事件，不把 $0$ 或 $1$ 改成可强迫发生的门。
+对同一预定时序中的其他随机标签历史，控制位置仍相同。
+
+第二卷 (40.4) 与本卷 (93.8)–(93.10) 给九个 $\ell_m$ 独立。
+具体地，$Z_h=2^{-|h|}U_h^\dagger EU_h$；按原坐标，
+以 $I_3,Z_{h_1},\ldots,Z_{h_8}$ 为列的矩阵 $\mathcal E$ 满足
+
+$$
+\det\mathcal E=\frac{6561}{2^{36}}\sin^7(2\theta)\ne0.
+\tag{101.8}
+$$
+
+真实迹配对的坐标度量为
+$J_{\rm tr}=\operatorname{diag}(1,1,1,2,2,2,2,2,2)$，
+故泛函矩阵为 $\mathcal E^{\mathsf T}J_{\rm tr}$，也可逆。
+这个供应保留了后缀的全部 $2^{-|h|}$ 权重。
+它与九个 $r_i$ 的独立性都是指定目标的事实，不是竞争者的先验承诺。
+

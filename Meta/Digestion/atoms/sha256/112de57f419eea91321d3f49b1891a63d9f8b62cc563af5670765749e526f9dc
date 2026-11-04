@@ -1,0 +1,2 @@
+**Attribution 12.5.** Lemma 12.1 is the posterior-variance refinement of Lemma 5.1, using the conditional SDPI in Lemma 4.3 and the variance identity (5.5). Theorem 12.3 reuses Lemma 3.3, Proposition 11.1, the Jensen and tail steps of Theorem 6.1, and the existing geometric sums (6.2)--(6.3). Warning 12.3A is abstract and supplies no FIB producer or resolution of either open assertion.
+

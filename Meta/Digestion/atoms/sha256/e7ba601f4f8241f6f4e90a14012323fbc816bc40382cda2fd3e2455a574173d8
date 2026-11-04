@@ -1,0 +1,19 @@
+### Definition 62.1 (controller support and rank)
+
+Fix finite sets \(I,Z,S,K,A,O\), initial candidate relations
+\(B_i\subseteq Z\times S\), and a deterministic controller with initialization
+\(c:I\to K\), action/output map
+
+$$
+u:K\longrightarrow A\sqcup\operatorname{Halt}(Z),
+$$
+
+and response update \(v:K\times O\to K\). If \(u(k)=a\in A\), \(k\) is a
+running state; if \(u(k)=\operatorname{Halt}(\widehat z)\), it is a halt state.
+A support \(C_k\subseteq Z\times S\) records the candidates compatible with
+controller state \(k\). A rank is a map
+
+$$
+\rho:\{(z,s,k):(z,s)\in C_k\}\longrightarrow\mathbb N.
+$$
+

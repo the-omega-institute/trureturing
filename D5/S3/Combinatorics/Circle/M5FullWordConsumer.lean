@@ -18,7 +18,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.M5FullWordConsumer
 
-open SourceWidth
+open SourceWidth SourcePrefixInventory
 open Fin.NatCast
 open scoped BigOperators
 
@@ -229,8 +229,6 @@ private def sourceData {k t L : ℕ} {a b : ℤ} {p d x : Fin k}
     simpa only [Fin.coe_ofNat_eq_mod, Nat.reduceMod, one_ne_zero, ite_false] using hbase 5
   · change base 6 = -sourceSeed t x 6
     simpa only [Fin.coe_ofNat_eq_mod, Nat.reduceMod, ite_true] using hbase 6
-  · change base 7 = sourceSeed t x 7
-    simpa only [Fin.coe_ofNat_eq_mod, Nat.reduceMod, one_ne_zero, ite_false] using hbase 7
   · change (2 : ℤ) ^ sourceLength t x 0 = (2 : ℤ) ^ L
     rw [h.x_row_length]
   · change (2 : ℤ) ^ sourceLength t x 1 = (2 : ℤ) ^ L
@@ -267,6 +265,8 @@ private def sourceData {k t L : ℕ} {a b : ℤ} {p d x : Fin k}
     have hh := source_seed_formula h 6 (by decide)
     norm_num only [Nat.reduceMod, ite_true] at hh
     omega
+  · change base 7 = sourceSeed t x 7
+    simpa only [Fin.coe_ofNat_eq_mod, Nat.reduceMod, one_ne_zero, ite_false] using hbase 7
   · change 2 * actualSource k t (sourceParent t x 7) =
       -(2 : ℤ) ^ (sourceLength t x 6 + 1) * sourceSeed t x 6
     have hh := source_terminal_formula h 6 (by decide)
@@ -301,16 +301,16 @@ theorem exists_full_word {k t L : ℕ} {a b : ℤ} {p d x : Fin k}
   classical
   let D := sourceArithmetic h
   let R := sourceData h
-  obtain ⟨A, f, hA, hAP, hf, hfg, heq, hprev, hnext⟩ := canonical_mask_height D
+  obtain ⟨A, f, hA, hAP, hf, hfg, heq, hprev, hnext⟩ := canonical_mask_height D.toPrefixArithmetic
   obtain ⟨Sn, hSn⟩ := mask_exists (R.len 2) A (by omega)
-    (by rw [R.pow2]; change A < D.q
-        have hq := (arithmetic_geometry D).2.2.2.2.2.2.2.1
-        have hP := (arithmetic_geometry D).2.2.2.2.2.2.1; omega)
+    (by rw [(show (2 : ℤ) ^ R.len 2 = D.q from R.pow2)]; change A < D.q
+        have hq := (arithmetic_geometry D.toPrefixArithmetic).2.2.2.2.2.2.2.1
+        have hP := (arithmetic_geometry D.toPrefixArithmetic).2.2.2.2.2.2.1; omega)
   obtain ⟨Sw, hSw⟩ := mask_exists (R.len 4) (D.H / 4 - A) (by omega)
-    (by rw [R.pow4]; change D.H / 4 - A < D.H / 4; omega)
-  obtain ⟨⟨preJ⟩, hZ0, hZv⟩ := wj_prefix R A f hA hAP hf hfg heq Sn Sw hSn hSw
+    (by rw [(show (2 : ℤ) ^ R.len 4 = D.H / 4 from R.pow4)]; change D.H / 4 - A < D.H / 4; omega)
+  obtain ⟨⟨preJ⟩, hZ0, hZv⟩ := wj_prefix R.toRowData A f hA hAP hf hfg heq Sn Sw hSn hSw
   obtain ⟨K⟩ := select_T R A hA hAP hprev hnext Sn Sw hSn hSw
-  obtain ⟨preT⟩ := t_extension R A f heq Sn Sw hSn hSw preJ K
+  obtain ⟨preT⟩ := t_extension R.toRowData A f heq Sn Sw hSn hSw preJ K
   obtain ⟨preV⟩ := uv_extension R K preT
   obtain ⟨pre⟩ := complete_occurrences R K preV
   let phi : Occ R.len → Fin k := physical (t := t) x

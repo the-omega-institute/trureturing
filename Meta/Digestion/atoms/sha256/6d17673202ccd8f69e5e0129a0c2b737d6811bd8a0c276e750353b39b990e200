@@ -1,0 +1,31 @@
+**Definition 131.1 (fixed source, form and coordinates).** Fix the original parameters $a,\eta>0$ and write $\zeta$ for the original fourth coordinate. Retain the original data $G=H^1\times\mathbb R$, raw Haar measure $d\mu=dx\,dy\,dz\,d\zeta$, the vector fields $X_1=\partial_x$, $X_2=\partial_y+x\partial_\zeta$, $X_3=\partial_z$, the unit source $\Gamma$, and $g_c=16\sqrt{a\eta}$. Retain the source coefficient maps, written $A_{\rm src},C_{\rm src}$ only to distinguish them from the principal matrix below, the selector
+
+$$
+D(H_{\rm end})=\{f\in D(S^*):A_{\rm src}(f)=\rho C_{\rm src}(f)\},\qquad
+\rho=\frac{A_{\rm src}(h)}{C_{\rm src}(h)},
+\tag{131.1}
+$$
+
+and the actual positive, coefficient-positive normalized state $`h=w_*/\|w_*\|_2`$ with $`C_{\rm src}(w_*)=1`$. Thus $m=h^2\mu$ is a probability measure, $U_hF=hF$, $K=U_h^{-1}H_{\rm end}U_h\ge0$, and $T_\sigma=e^{-\sigma K}$. For real vectors, the complete form and its trace are retained as
+
+$$
+\begin{aligned}
+V&=V_0\oplus\mathbb C1,
+&V_0&=\overline{C_c^\infty(G\setminus\{e\})}^{\,(115.14)},
+\\
+E[F,G]&=\int\!\left[a\sum_{i=1}^3(X_iF)(X_iG)+\eta(\partial_\zeta F)(\partial_\zeta G)\right]dm,
+&\operatorname{tr}(F_0+c)&=c.
+\end{aligned}
+\tag{131.2}
+$$
+
+The punctured weak gradients in the source form are kept distinct from the ordinary distributional gradients used after the removable-point argument. For $\kappa=\sqrt{\eta/a}$, define
+
+$$
+\Phi(x,y,z,t)=(x,y,z,\kappa t+xy/2),\qquad
+f_h(Z)=\sqrt\kappa\,h(\Phi Z),\qquad w(Z)=f_h(Z)^2,
+\tag{131.3}
+$$
+
+where $Z=(x,y,z,t)$. A source-inclusive realization means one fixed $R_0\in(0,1]$ and one globally defined extension $\widetilde w$ with $\widetilde w=w$ almost everywhere on $B(0,2R_0)$, such that $\widetilde w\in A_2(\mathbb R^4)$ and every real heat orbit $F_\sigma=T_\sigma v$ has, after pullback $u(\sigma,Z)=F_\sigma(\Phi Z)$, ordinary distributional spatial gradients on $B(0,R_0)$ and satisfies the full weighted weak equation there for every real smooth test, including tests with arbitrary value at $Z=0$.
+

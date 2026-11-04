@@ -1,0 +1,104 @@
+**Theorem 14.2 (equality at every attainable finite deadline).** For every field, dimension and pair of physical matrices in Definition 14.1, and for every integer $t\ge k$,
+
+$$
+R_G(t)=R_S(t)
+\quad\Longleftrightarrow\quad
+\bigl(G_i\ne0\text{ for every }i\in I\bigr)
+\ \text{and}\ \bigl(i\mapsto[G_i]\text{ is a bijection }I\to P\bigr).
+$$
+
+Every other such rank-$k$ matrix satisfies $R_G(t)<R_S(t)$ for every integer $t\ge k$. Both probabilities are zero for $0\le t<k$, and every $t\ge k$ has positive recovery probability for both matrices. Column permutation, multiplication of individual columns by nonzero scalars, and invertible row-basis transformations preserve the equality criterion and each recovery-time distribution. This classifies equality in the all-horizon recovery comparison used in the proof of Theorem 13.1.
+
+**Proof.** Fix an arbitrary $t\ge k$. Sections 12–13 already give the weak comparison at every horizon, including original zero columns. We use that comparison without repeating its averaging proof. By Theorem 10.2 and the positive constant factor $(t!)^{1/t}$, $x\mapsto Q_t(x)^{1/t}$ is concave on the entire nonnegative orthant. The nonnegative root is used throughout. A basis of $V$, followed by repetitions of one of its rays if $t>k$, supplies a positive summand at $u$, so $Q_t(u)>0$.
+
+We first determine a strict curvature property at $u$. An invertible linear map preserves the spanning condition on words; replacing any representative by a nonzero multiple preserves it as well. Therefore the word polynomial is invariant under the coordinate permutations induced by $\operatorname{GL}(V)$, as in the proof of Theorem 12.1. This group is transitive on ordered pairs of distinct rays: choose independent representatives of the first pair, extend to a basis, do the same for the second pair, and map the first basis to the second. Since $u$ is fixed by all these permutations, differentiating the polynomial invariance shows that all entries of $\nabla Q_t(u)$ are equal, and that there are real numbers $A_t,B_t$ such that
+
+$$
+\partial_p^2Q_t(u)=A_t\quad(p\in P),
+\qquad \partial_p\partial_rQ_t(u)=B_t\quad(p\ne r).
+$$
+
+For a word $w\in P^{t-2}$ write $L(w)=\operatorname{span}_K\{a_{w(j)}:0\le j<t-2\}$. Direct differentiation of the word sum, marking an ordered pair of distinct positions in a length-$t$ word, gives, for distinct $p,r$,
+
+$$
+\begin{aligned}
+\partial_p^2Q_t(u)
+&=t(t-1)N^{-(t-2)}
+  \sum_{w\in P^{t-2}}\mathbf1_{\{L(w)+p=V\}},\\
+\partial_p\partial_rQ_t(u)
+&=t(t-1)N^{-(t-2)}
+  \sum_{w\in P^{t-2}}\mathbf1_{\{L(w)+p+r=V\}}.
+\end{aligned}
+$$
+
+Here $p,r$ themselves denote their one-dimensional subspaces. To justify the common factor, after marking the ordered positions their letters are fixed to $p,p$ or $p,r$; the remaining letters form $w$, and their evaluated product is $N^{-(t-2)}$. There are $t(t-1)$ choices of marked positions. This counts repeated occurrences with their derivative multiplicities, including the diagonal second derivative. Since $L(w)+p\subseteq L(w)+p+r$, subtracting gives
+
+$$
+B_t-A_t=t(t-1)N^{-(t-2)}
+\bigl|\{w\in P^{t-2}:L(w)+p\ne V,\ L(w)+p+r=V\}\bigr|>0.
+$$
+
+For the strict inequality, extend $a_p,a_r$ to a basis $a_p,a_r,b_1,\ldots,b_{k-2}$ of $V$. The complement $D=\operatorname{span}_K\{b_1,\ldots,b_{k-2}\}$ has dimension $k-2\ge1$. Take a word containing once each ray $[b_1],\ldots,[b_{k-2}]$, and fill its remaining $t-k$ positions with $[b_1]$. It has exactly length $t-2$ and span $D$. Thus $L(w)+p$ has dimension $k-1$, whereas $L(w)+p+r=V$. This one word proves positivity for every $t\ge k$, including $t=k$, over every finite field.
+
+Consequently, for every nonzero $h\in\mathbb R^P$ with $\sum_p h_p=0$,
+
+$$
+\begin{aligned}
+\nabla Q_t(u)\cdot h&=0,\\
+h^T\nabla^2Q_t(u)h
+&=A_t\sum_p h_p^2+B_t\sum_{p\ne r}h_ph_r
+=(A_t-B_t)\sum_p h_p^2<0.
+\end{aligned}
+$$
+
+Let $x\in\Delta$ with $x\ne u$, allowing zero coordinates, and put $h=x-u$. Since $u$ is strictly positive, $u+sh$ lies in the positive orthant for all real $s$ in some neighborhood of zero. By continuity $Q_t(u+sh)>0$ on a possibly smaller neighborhood. Hence
+
+$$
+\psi(s)=Q_t(u+sh)^{1/t}
+$$
+
+is twice continuously differentiable there, with
+
+$$
+\psi'(0)=0,\qquad
+\psi''(0)=\frac1t Q_t(u)^{1/t-1}(A_t-B_t)\sum_p h_p^2<0.
+$$
+
+Taylor's formula gives $\psi(s)=\psi(0)+\tfrac12\psi''(0)s^2+o(s^2)<\psi(0)$ for all sufficiently small positive $s$. If $Q_t(x)=Q_t(u)$, concavity on the closed segment from $u$ to $x$ would instead give
+
+$$
+\psi(s)\ge(1-s)Q_t(u)^{1/t}+sQ_t(x)^{1/t}=\psi(0)
+\qquad(0\le s\le1),
+$$
+
+a contradiction. The already supplied weak maximum $Q_t(x)\le Q_t(u)$ from Theorem 12.1 is therefore strict for every $x\in\Delta\setminus\{u\}$. The argument includes boundary weights without differentiating a root at a zero evaluation.
+
+Suppose first that every column of $G$ is nonzero. Physical fiber transport gives $R_G(t)=Q_t(x(G))$. The preceding strictness says that equality with $R_S(t)=Q_t(u)$ holds exactly when $x_p(G)=1/N$ for every $p$. Each fiber size is a nonnegative integer and there are exactly $N$ positions and $N$ rays, so this means each fiber has exactly one member, precisely the asserted bijection. Conversely, this bijection gives $x(G)=u$ and equality at every horizon, independently of the representative scalings.
+
+Now suppose that $G$ has at least one zero column. Rank $k$ supplies an original nonzero column $G_j$. On the same physical alphabet define
+
+$$
+G'_i=\begin{cases}G_j,&G_i=0,\\G_i,&G_i\ne0.\end{cases}
+$$
+
+Every column of $G'$ is nonzero, its column span contains that of $G$, and its fiber at $[G_j]$ has at least two positions. Hence $G'$ still has rank $k$ and $x(G')\ne u$. For every original sample sequence, at every horizon, each old sampled generator is zero or is an unchanged new generator. Therefore
+
+$$
+\operatorname{span}_K\{G_{X_\ell}:\ell<t\}
+\subseteq\operatorname{span}_K\{G'_{X_\ell}:\ell<t\},
+\qquad
+R_G(t)\le R_{G'}(t)=Q_t(x(G'))<Q_t(u)=R_S(t).
+$$
+
+All draws still take place at their original uniform physical positions. The inequality compares two generators on that same probability space; it does not condition away any draw or identify physical positions.
+
+For $t<k$, the span of $t$ columns has dimension at most $t$, so both recovery events are empty. For any $t\ge k$, rank $k$ supplies $k$ physical basis columns of $G$; the analogous basis exists among the simplex columns. Sampling those $k$ positions in a fixed order and then repeating the first position gives a spanning word of length $t$ and probability $N^{-t}>0$ for either generator. Thus all and only the deadlines $t\ge k$ are attainable.
+
+Finally, a nonzero scaling of each column preserves every sampled span. An invertible row transformation maps each sampled span isomorphically onto the transformed span, preserving full recovery, zeros and the bijectivity of the ray map. A column permutation is a bijection of physical positions and induces a measure-preserving relabeling of the iid uniform sample sequences. It preserves the distribution of $T_C$, and permutes the fibers of the ray map without changing their sizes. These operations therefore preserve both the criterion and all the asserted comparisons. $\square$
+
+The original physical model is that of Bertuzzo–Ravagnani–Yaakobi, [*The DNA Coverage Depth Problem: Duality, Weight Distributions, and Applications*, arXiv:2603.06489v1](https://arxiv.org/html/2603.06489v1), Section 2, Problems A and B; Section 3, Conjecture 3.2 concerns the expected-time optimizer of Theorem 13.1. Their predecessor [arXiv:2507.20639v1](https://arxiv.org/html/2507.20639v1), Section III, Example 1 already reports expected uniqueness for binary $[7,3]$ codes, with simplex expectation $47/12$ and nonsimplex expectation at least $17/4$. That expected-time computation is overlap, rather than a consequence first asserted here.
+
+For the expected-time comparison, Kong–Elishco–Wang–Duman, [*The Coverage Depth Problem in Distributed DNA Data Storage*, arXiv:2610.02931v1](https://arxiv.org/pdf/2610.02931v1), Corollary II.4 (pp. 6–7), Lemma IV.2 (pp. 18–19), and Theorem IV.3 with its equality proof (pp. 19–20) already supply minimization and uniqueness for every nonnegative projective probability law, including laws with zero ray weights, for $k\ge2$; Corollary IV.4 also supplies a quantitative expected gap. In their notation $\pi_p=x_p(C)$ and $\pi(U)=\sum_{p\subseteq U}x_p(C)$ for a nonzero physical generator $C$, by the exact physical fiber identity above. Their standing physical model on p. 4 excludes zero columns but retains repetitions and nonzero scalar multiples with multiplicity. For an original $G$ with zeros, the same-index $G'$ just constructed is an actual nonzero generator with those exact fiber weights; the samplewise containment also gives $T_G\ge T_{G'}$. Thus invoking their expected-time result on $G'$ is a faithful comparison with the original law, and does not assert that $G$ itself has a probability law on $P$. Expected uniqueness and its quantitative form are supplied results, not additional numbered conclusions of this section.
+
+The finite-deadline equality criterion uses the strict difference $B_t-A_t$ and its propagation from $u$ to every boundary point along a concave root segment. The root concavity itself is Theorem 10.2; the non-strict concavity context in Brändén–Huh, [*Lorentzian polynomials*, arXiv:1902.03719v8](https://arxiv.org/abs/1902.03719v8), Sections 2–3, supplies no strictness premise here. A strict expected-time inequality alone does not imply strictness at each prescribed deadline. Theorem 14.2 concerns only exact full-span recovery, length $N$, rank $k$ and iid uniform physical-position sampling with replacement. Its proof asserts no stability estimate or rate of separation, and no priority claim concerning other finite-deadline comparisons.
+

@@ -1,0 +1,25 @@
+## 27. 半方差阈值的严格越阈半径
+
+沿用定理 5.1 的
+$$
+V(t)=\frac{t(1-t)^2}{(1+t)((1-t)^2+t)}>0
+$$
+以及定理 18.2 中的
+$$
+C_t^{\rm low}=\frac{1+2t}{t^2}+\frac3{t(1-t)},
+\qquad
+c_t^{\rm low}=\frac{V(t)^2}{2C_t^{\rm low}}.
+\tag{27.1}
+$$
+为避免与（20.1）的指数常数混淆，令
+$$
+A_t=\frac1\gamma\log\frac{2\mathcal C}{V(t)}.
+\tag{27.2}
+$$
+这些常数只依赖固定的 $t$，且 $0<V(t)<1<2\mathcal C$，故 $A_t>0$。对 $0<|\delta|<d$ 定义首次严格越过半方差的整数半径
+$$
+ r_*(t,\delta)=\min\left\{r\in\mathbb Z_{\ge1}:
+ E_r(P_{t,t+\delta})<\frac{V(t)}2\right\}.
+\tag{27.3}
+$$
+

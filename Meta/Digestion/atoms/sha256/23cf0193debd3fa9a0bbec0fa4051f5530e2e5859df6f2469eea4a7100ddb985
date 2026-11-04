@@ -1,0 +1,44 @@
+**Definition 48.4 (preflight, source edit and local maintenance).** For an
+enabled event at a current leaf $p$, keep the actual event kind, acquired
+address, target reference and source binding in pending backing.
+Before editing, walk its $d=|p|$ proper logical ancestors. At each,
+compare the traversed child's reference to the actual left/right links
+to obtain $d_v\in\{L,R\}$. Count its current child events by Definition
+48.1 and compute $R,b,R',b'$ from the old counts and that one side
+increment. Add $b'-b$ to a reserved-cell total and add one to a
+reserved-header total precisely when $R=1<R'$. No rank is needed for
+this reservation calculation. Discard a local arithmetic work result
+after its total has been backed. Return to the target before editing.
+
+Reserve supplies exactly these additional record cells and headers,
+together with the one or two source vertices for the original $P/S$
+source template. Reserved objects have actual references, rights and
+pending list links; their links and initialization are charged. No
+finite-capacity or failure branch is added. Source editing is exactly
+AA Definition 20.2: promote by attaching one terminal left marker, or
+split by reusing the old unary marker as the left beta root, adding its
+marker and a right alpha root. Initialize every fresh auxiliary slot
+null; the split root's new coordinate remains null.
+
+After this one source edit, walk the same ancestor chain. At each
+ancestor compute the new child counts $(x',y')$ from the actual current
+source. The old counts are exactly $(x'-1,y')$ on side $L$ and
+$(x',y'-1)$ on side $R$. They are nonnegative. Compute the old width
+from these old counts, and read that many old bits from this ancestor's
+bound header, or take rank zero when its old radix is one. Apply
+(AAII.3). If the new width is positive, bind a reserved header if none
+was previously needed and extend its list by exactly $b'-b$ reserved
+cells. Overwrite the list with the new zero-padded $b'$-bit rank.
+Previously allocated cells are reused in place. Pending subphases keep
+the current header, remaining input/output bits and any not-yet-linked
+cells explicit. No service call is admitted during this maintenance.
+
+No list of all ancestor plans is retained. Preflight and maintenance
+may recount subtrees and recompute coefficients. Once an ancestor has
+been updated, its source counts are still the same new counts; record
+writes do not change the source-edge projection. The old counts of an
+ancestor not yet updated are therefore still obtained by the stated
+single decrement. At the last ancestor all reserved record material
+has been attached. BuildAnswer, Print, End, the supplied local ACK,
+root Return and scratch clearing/reuse then follow AA Definition 20.2.
+

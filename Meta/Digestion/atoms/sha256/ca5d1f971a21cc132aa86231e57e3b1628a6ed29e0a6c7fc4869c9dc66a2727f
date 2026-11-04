@@ -1,0 +1,17 @@
+**Definition 12.1 (Face-value notation).** For the fixed exterior triple,
+define, for integers $2\le k<n/2$,
+
+$$
+\beta_n(k)=n(n-3)+\begin{cases}
+ n+1+\dfrac2{n-2},&k=2,\\[4pt]
+ n-k+1+\dfrac{n-1}{n-2k+1},&k\ge3.
+ \end{cases}
+\tag{12.1}
+$$
+
+All face values below refer to connected nonnegative assignments on
+exactly the original vertices, as in Definition 9.1, and to the
+scale-invariant product $F$. The smaller bipartite class has size $m$
+for $\mathcal D_{AB}$, $b$ for $\mathcal D_{AC}$, and $a$ for
+$\mathcal D_{BC}$; all are strictly less than $n/2$ by $c>a+b$.
+

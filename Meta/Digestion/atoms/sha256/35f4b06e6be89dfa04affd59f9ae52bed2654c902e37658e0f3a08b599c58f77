@@ -1,0 +1,103 @@
+**Theorem 142.2 (Nine actual columns and the complete scalar kernel; repo-derived).**
+The source (142.1) is allowed by VI Definition 114.1. Its ninth
+prefix is the required escape from $\mathscr S_{1/4}$. With the
+coordinate map $\mathbf c$ in (141.4), its weighted source determinant is
+
+$$
+\det(\mathbf c(r_1),\ldots,\mathbf c(r_9))
+ =\frac{34263+45684\sqrt2+103680\sqrt3+38880\sqrt6}{2^{43}}>0.
+\tag{142.3}
+$$
+
+The 117 literal rows $q_{i,w}$ of VI (116.2), with $w\in\mathcal W_2$,
+have real rank 34 on the full 36-dimensional lift
+$\operatorname{Herm}_3\oplus\operatorname{Herm}_3\oplus M_3(\mathbb C)$.
+Their kernel is precisely
+
+$$
+\mathscr K=\{(xI_3,-xI_3,\mathrm i yI_3):x,y\in\mathbb R\}.
+\tag{142.4}
+$$
+
+Thus $L_{\mathfrak s}=2$ is a valid choice for VI Proposition 118.2.
+For this choice $d_f$ is exactly the maximum of the absolute 117
+original outcome-$1$ differences; each corresponding outcome-$0$
+difference is its negative.
+
+*Proof.* The first two coordinates of $N$ have eigenvalues
+$e^{2\pi\mathrm i/3}$ and $e^{-2\pi\mathrm i/3}$, while $Ne=e$.
+Consequently $N$ is unitary of order three, and $N^2\ne W$, since
+$N^2e=e$ and $We=-e$. Also $[N,P_\xi]\ne0$. The assumptions
+$0<d<1$ and $\sin(2\theta)\ne0$ hold. V Proposition 91.3 gives
+the sole preparation's original five-dimensional source and full
+matrix response. Multiplying the matrices in (142.1) gives (142.3)
+and
+
+$$
+\operatorname{Tr}(P_\xi r_1)=\tfrac14,\qquad
+\operatorname{Tr}(P_\xi r_9)=\frac{25+12\sqrt2}{64}>\tfrac14,
+\qquad\operatorname{Tr}r_9=1.
+\tag{142.5}
+$$
+
+The first eight columns lie in $\mathscr S_{1/4}$ by V Theorem 92.1;
+(142.3) makes them independent, and (142.5) proves the escape of the
+literal prefix $N$. Their masses are $2^{-|u_i|}$ for $i\le8$ and
+$1$ for $i=9$, without normalization. These are the suppliers in
+V §§92–93 and VI Definition 114.1. Applying VI (106.3), with
+$a_+=(1/\sqrt2,-1/(2\sqrt2),0)^{\mathsf T}$, gives (142.2).
+
+Here is an exact rank certificate. Let $E_{ab}$ be the matrix units,
+and order the real Hermitian basis as
+
+$$
+\mathcal H=(E_{11},E_{22},E_{33},E_{12}+E_{21},
+ \mathrm i(E_{12}-E_{21}),E_{13}+E_{31},
+ \mathrm i(E_{13}-E_{31}),E_{23}+E_{32},\mathrm i(E_{23}-E_{32})).
+\tag{142.6}
+$$
+
+Order the complex-matrix real basis as
+$\mathcal Z=(E_{11},\mathrm iE_{11},E_{12},\mathrm iE_{12},\ldots,
+E_{33},\mathrm iE_{33})$, with matrix units in row order. Let
+$\mathcal L$ have row $\rho(i,w)$ equal to
+
+$$
+\bigl((q_{i,w}(H,0,0))_{H\in\mathcal H},
+(q_{i,w}(0,H,0))_{H\in\mathcal H},
+(q_{i,w}(0,0,Z))_{Z\in\mathcal Z}\bigr).
+\tag{142.7}
+$$
+
+Let $T$ be the submatrix in the first 34 rows and all columns except
+columns 3 and 36. All entries of $\mathcal L$ lie in
+$\mathbb Z[1/2,\sqrt2,\sqrt3]$. Reduce this ring to $\mathbb F_{97}$
+by $\sqrt2\mapsto14$, $\sqrt3\mapsto10$; their squares are $2,3$
+modulo 97. In forming complex matrices one can equivalently use
+$\mathrm i\mapsto22$, whose square is $-1$. Gaussian elimination
+on $T$ uses the successive row swaps
+$(22,23),(23,24),(24,25),(25,26)$ and gives the following pivot residues:
+
+$$
+\begin{aligned}
+(&85,37,16,57,36,37,54,37,42,38,83,31,16,50,34,38,53,\\
+ &30,11,93,53,10,22,78,38,32,80,92,36,7,83,21,88,32).
+\end{aligned}
+\tag{142.8}
+$$
+
+For precision, at step $j$ swap the indicated rows if there is a
+swap with first coordinate $j$, retain the pivot row unscaled, and
+replace every subsequent entry by
+$T_{kl}-T_{kj}T_{jj}^{-1}T_{jl}$ for $k,l>j$.
+The product of (142.8) is $3$ modulo 97; the four swaps have positive
+combined sign. Thus $\det T\not=0$. This calculation uses the
+original factors $a_w/2$ and original $r_i$ in (142.7).
+Every row annihilates (142.4) directly, so the rank is at most 34;
+the minor proves equality and the exact kernel claim. The maps
+VI (118.8), as well as the retention functionals VI (116.11),
+annihilate this kernel. They therefore factor through these 117 rows,
+which proves the asserted decoder length. The coordinate minor proves
+rank only: neither it nor an inverse-coordinate norm replaces $d_f$.
+The two-label assertion follows from VI (114.3). $\square$
+

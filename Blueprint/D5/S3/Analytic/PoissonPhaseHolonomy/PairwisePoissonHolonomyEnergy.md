@@ -23,3 +23,4 @@ This conditional analytic theorem does not assert that off-critical zeros exist 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/PoissonPhaseHolonomy/PairwisePoissonHolonomyEnergy.pairwise_poisson_holonomy_energy`
+- Dependency: [D5/S3/Analytic/Asymptotics/ExponentialAbsIntegrability](../Asymptotics/ExponentialAbsIntegrability.md)

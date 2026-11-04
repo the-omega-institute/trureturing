@@ -1,0 +1,12 @@
+### 6.1 保留失败质量才能正确条件化
+
+对次归一化正算子 $A,B$，令 $p=\operatorname{Tr}A$、$q=\operatorname{Tr}B$，并置
+
+<a id="eq-6-u01"></a>
+
+$$
+\overline D(A,B)=\tfrac12\|A-B\|_1+\tfrac12|p-q|.
+$$
+
+<a id="thm-6-1"></a>
+

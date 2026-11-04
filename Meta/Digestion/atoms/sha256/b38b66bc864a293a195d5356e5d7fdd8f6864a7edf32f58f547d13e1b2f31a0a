@@ -1,0 +1,56 @@
+**Definition 118.2 (fixed source-dependent localization and constants).**
+Use the actual probability densities $g_t,g_{t+\Delta}\in L^2(G,m)$ of (117.2).
+They are strictly positive $m$-a.e., and their laws assign no mass to $e$.
+Fix any auxiliary resolvent discount $\alpha>0$ and use the original
+$d_\alpha$ of (116.4). Its role is separate from the native probability
+$r_{\rm N}$; no numerical inequality between them is imposed. Set
+
+$$
+B=\frac{\sup_{\lambda\ge0}(\lambda+\alpha)e^{-2(t+\Delta)\lambda}}
+         {\alpha d_\alpha},\qquad
+0<\|g_{t+\Delta}\|_2^2\le B<\infty.
+\tag{118.3}
+$$
+
+The inequality is (117.3); $\alpha$ is not a new source parameter.
+Identify $G$ with its original $\mathbb R^4$ coordinates, with Euclidean norm
+$|x|$. Choose $R>1$ large enough that, for
+
+$$
+C=\{x:1/R\le|x|\le R\},\qquad
+D=\{x:1/(2R)<|x|<2R\},
+\tag{118.4}
+$$
+
+$$
+\int_{G\setminus C}g_t\,dm\le\frac1{20},\qquad
+\int_{G\setminus C}g_{t+\Delta}\,dm\le\frac1{20}.
+\tag{118.5}
+$$
+
+Such a common $R$ exists by monotone convergence along the compact annuli
+exhausting $M=G\setminus\{e\}$. The domain $D$ is bounded, connected and smooth,
+$C\subset D$, and $\overline D\subset M$. These choices precede every choice of $f$.
+For the same full diffusion put $\tau_D=\inf\{s\ge0:Z_s\notin D\}$, and denote
+its part semigroup on $D$ by
+
+$$
+Q_s^D v(x)=\mathbb E_x[v(Z_s);\ s<\tau_D],\qquad x\in D,
+\tag{118.6}
+$$
+
+with the properly associated versions. Write $H_D$ for the Dirichlet
+realization on $D$ of the original expression $S$ in (115.1), and $k_D$ for
+the continuous interior kernel of $e^{-sH_D}$ relative to the original $\mu$.
+Its existence and correspondence to (118.6) are proved below. Define
+
+$$
+p_D(s,x,y)=\frac{k_D(s,x,y)}{h(x)h(y)},\qquad
+\kappa=\min_{x,y\in C}p_D(\Delta,x,y),\qquad
+\delta=\min\left\{\frac1{20},\frac{\kappa}{1000B}\right\}.
+\tag{118.7}
+$$
+
+This density belongs only to the bounded off-source part. No global
+pointwise heat kernel, or kernel evaluation at $e$, is included in the definition.
+

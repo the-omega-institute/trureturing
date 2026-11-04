@@ -1,0 +1,20 @@
+**Definition 90.2 (literal traffic, distinct from call counts).** For the stated attained implementation fix a field codec using a three-bit command tag, a self-delimiting signed integer for an ordinal, and a self-delimiting reduced rational. If $\lambda(k)$ is the binary length of $k\ge0$, with $\lambda(0)=0$, encode an integer $z$ by its sign, $1^{\lambda(|z|)}0$, and its $\lambda(|z|)$ magnitude bits; forbid negative zero. Its length is $2\lambda(|z|)+2$. Encode a reduced $q=A/B$, $B>0$, by that signed numerator and the positive-denominator length prefix and bits. Its length is
+
+$$
+\rho(q)=2\lambda(|A|)+2\lambda(B)+3.
+\tag{90.1}
+$$
+
+Reset/Tick/Hold requests then have three bits; Read$(j)$ has $3+2\lambda(|j|)+2$; Add$(j,q)$ has this length plus $\rho(q)$. Use distinct fixed three-bit Ack, RangeRefusal, BadFrame and scalar-reply tags; a scalar reply has length $3+\rho(q)$. This codec is an explicit finite backing/serialization choice, not a constant-width real-number port. Unused complete tags and noncanonical complete rational frames take BadFrame; proper frame prefixes remain pending as in §84. End, local acknowledgement, channel bindings and Return/cleanup remain additional real service events.
+
+For success addresses $p_1,\ldots,p_n$ and refused-probe addresses $r_1,\ldots,r_f$, the sum of growth request/reply payload bits on one raw or outward growth channel is exactly
+
+$$
+G_{\rm bits}
+=\sum_{k=1}^n(4|p_k|+9)+
+  \sum_{j=1}^f(2|r_j|+9).
+\tag{90.2}
+$$
+
+The $-$ run pays $G_{\rm bits}$; the declared $+$ adapter pays $2G_{\rm bits}$, since both its outward and inner channels really carry these frames. Add the sum of the field-request/reply lengths above for every field call in Proposition 90.1, including the inner Ticks, and every actual End/local acknowledgement, return traversal, dispatch, copying and cleanup on every channel. These are exact sums over the same run, not an estimate using a different source word or a hypothetical shorter diagnostic. A different fixed codec changes those literal lengths and must be accounted with its own actual words.
+

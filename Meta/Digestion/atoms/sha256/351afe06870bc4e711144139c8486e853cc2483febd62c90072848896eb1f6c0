@@ -1,0 +1,44 @@
+**定理 83.4（实际 rank-five image 的 bounded incompatibility）。** 在定义 83.3 下，令
+
+$$
+S=\operatorname{span}_{\mathbb R}\{I_3,A_1,\ldots,A_N\},\qquad
+m=\dim_{\mathbb R}S-1\le8.
+$$
+
+每个不属于 $\mathscr K$ 的 finite task set 都含一个不属于 $\mathscr K$ 的非空 subset，其大小不超过 $5m+1\le41$。因此整个 catalogue feasible 当且仅当其每个大小至多 $5m+1$ 的 subset feasible，后者允许对不同 subsets 选择不同 decoders，但始终使用原来同一个 $S,T_n,A_i,\epsilon_i$。
+
+对 fixed-$q$ phase family，单独的 $E_\varphi(q)$ 可取 $m\le3$，得到 $16$；若再加入 $P$，可取 $m\le4$，得到 $21$。这些是上界，不声称 sharp。
+
+**证明。** supplier 的整个 Hermitian linear image 由五个 real coordinates
+$(x,y,d,\operatorname{Re}z,\operatorname{Im}z)$ 给出。$\Delta_W\operatorname{Ad}_{U_0^\dagger}$ onto $\mathcal H_2\oplus\mathbb R$，而 $G_s$ 在这些 coordinates 上的 determinant 是
+
+$$
+(\alpha^2-\beta^2)s^2=s^3\ne0.
+$$
+
+故每个 fixed finite $n\ge1$ 都有 $\operatorname{rank}_{\mathbb R}T_n=5$，包括全部 complex off-diagonal degrees of freedom。
+
+现将同一 Choi set 线性映到
+
+$$
+\Omega_S=\{(T_n\circ\mathcal D^\dagger)|_S:\mathcal D\ {\rm CPTP}\}.
+$$
+
+这是非空 compact convex set；每点按定义有一个 realizing decoder。其所在 affine space 是从 $S$ 到 $\operatorname{ran}T_n$ 的 real-linear maps，且 $I_3$ 的值固定为 $I_3$，维数至多 $5m$。每个 task 切出其中的 convex compact subset
+
+$$
+\Omega_i=\{L\in\Omega_S:\|L(A_i)-A_i\|_{\rm op}\le\epsilon_i\}.
+$$
+
+在这个同一个 affine space 使用经典 finite Helly theorem：空的 full intersection 必有至多 dimension 加一项的空 subintersection。该中间定理见 [Weisstein, “Helly's Theorem”](https://mathworld.wolfram.com/HellysTheorem.html)，其 finite real-convex statement 亦见 [Mathlib 的固定源表述][F83HELLY]。不重新证明 Helly，也不把它当作新的 quantum theorem。这里的新增对应在于从实际 $F^n$ 的 rank-five entire image 得到维数并只在 $\Omega_S$ 中求交；不假定任意 ambient linear map 都可实现。更精确地，$\dim\operatorname{aff}\Omega_S+1$ 也给出上界。
+
+最后 $E_\varphi(q)$ 均在 $\operatorname{span}_{\mathbb R}(D_q,X,Y)$ 中，其中
+
+$$
+D_q=\operatorname{diag}(1-q,q,0),\quad
+X=|\xi\rangle\langle e|+|e\rangle\langle\xi|,\quad
+Y=i(|\xi\rangle\langle e|-|e\rangle\langle\xi|).
+$$
+
+加入 $I_3$ 给 $m\le3$，再加 $P$ 给 $m\le4$。当 $0<q<1$ 且 phases 含 $0,\pi,\pi/2$ 时这两个维数分别达到 $3,4$；short 或 degenerate catalogues 可更小。$m=0$ 时所有 tasks 为 scalar identities，loss 恒为零；empty list 亦总 feasible。∎
+

@@ -1,0 +1,32 @@
+**Definition 17.1 (the declared full-complex suppliers).** All coordinates in this section are the original $(\lambda,q)$ coordinates; put $p=1-2q$. Define
+
+$$
+\begin{aligned}
+\mathcal T&=\{(\lambda,q):0\le q\le1/2,\ -p/2\le\lambda\le p\},\\
+\mathcal Q&=\{(\lambda,q):0\le q\le1/2,\ 4\lambda^2\le p\},\\
+\mathcal D&=\{(t,(1-t)/3):-1/3\le t\le1\},\qquad G=(1/6,4/9),\\
+\mathcal P_k&=\left\{(\lambda,q):0\le q\le1/2,\
+ \max\left\{-\frac p{k-1},-\frac{3-k+3(k-1)p}{4k}\right\}\le\lambda\le p\right\}
+ \quad(k=2,3),\\
+\mathcal B&=\{(\lambda,q):|\lambda|\le1/3,\ 0\le q\le(1-\lambda^2)/2\},\\
+\mathcal N&=K_3\cap\{\lambda\le0\}.
+\end{aligned}
+$$
+
+Also let $\mathcal R$ consist of the real parameter pairs for which the original $\Phi_{\lambda,q}$ equals
+
+$$
+R_{a,\Psi}(X)=\frac{\operatorname{tr}(X)I_3-a\Psi(X)}{3-a}
+$$
+
+for some $0\le a\le3/4$ and a positive, unital, trace-preserving complex-linear $\Psi:M_3(\mathbb C)\to M_3(\mathbb C)$ satisfying $\|\Psi(X)\|_F\le\|X\|_F$ for every complex $X$. Define precisely
+
+$$
+\mathcal C_{\rm declared}
+ =\operatorname{conv}\left(\mathcal T\cup\mathcal Q\cup\mathcal D\cup\{G\}
+ \cup\mathcal P_2\cup\mathcal P_3\cup\mathcal B\cup\mathcal N\cup\mathcal R\right).
+\tag{17.1}
+$$
+
+The suppliers here are consumed in their whole stated ranges: $\mathcal T$ is Remark 4.4 and Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1, Proposition 2.1(2); $\mathcal Q$ is Theorem 9.1; $\mathcal D$, $G$ and $\mathcal R$ are the constructions of §11 at the valid $k=1$ reduction range of Mukhamedov and Chruściński, arXiv:2603.11204v1, Theorem 3.2, with the hypotheses and direct justification in Proposition 11.2. The sets $\mathcal P_k$ are the quadrilaterals in Definition 11.1 and the cited [k-positive-region result](../../../Blueprint/D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.md), combined with Choi's unital $2$-positive Schwarz implication. The sets $\mathcal B$ and $\mathcal N$ are Theorems 13.2 and 15.1. Thus each listed point supplies the Schwarz inequality for every original complex input and probe. The exact $q=0$ interval is contained in $\mathcal T$, the curves used in §§10–11 are contained in $\mathcal Q$, the supplier hull $\mathcal H_3$ of §11 converts into a subset of (17.1), and the negative cap arc is contained in $\mathcal N$. Theorem 8.1 supplies restricted probes and is not included as a full-complex supplier.
+

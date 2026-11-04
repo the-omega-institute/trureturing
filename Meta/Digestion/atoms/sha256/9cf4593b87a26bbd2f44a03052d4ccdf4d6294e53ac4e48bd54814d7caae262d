@@ -1,0 +1,20 @@
+**Definition 53.1 (entry source and logical navigation).** Retain AA
+Definitions 17.1 and 17.3. An entry is a finite term
+$t\in\mathcal D$ on one actual source obtained by a finite legal LAB
+word from its originally allocated $\alpha$. Write $\mathcal L(t)$
+for all its logical positions, including branches, and $F(t)$ for its
+logical leaves. Logical navigation follows a letter only at a binary
+branch. A strict logical descendant of either kind of leaf is absent.
+In particular, the material left marker of a $\beta$ is not a logical
+child or an addressable growth target.
+
+The source object is the persistent rooted oriented material tree
+$C(t)$, with the original parent, left and right fields. A successful
+$P_p$ retains its target vertex and attaches one fresh left marker.
+A successful $S_p$ retains its target as a branch, reuses its old marker
+as the left logical $\beta$ root, attaches that vertex's fresh marker,
+and attaches a fresh right $\alpha$ root. These are exactly AA
+Definition 20.2's source templates. They add respectively one and two
+source vertices and delete none. Auxiliary observer records are not
+source vertices.
+

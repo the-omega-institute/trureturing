@@ -1,0 +1,43 @@
+**Theorem 54.2 (exact unknown entry and actual changed endpoint).** For
+every finite entry $t\in\mathcal D$, every actual legal old producer word
+ending there, and every installation satisfying Assumption 53.2, the same
+controller of Definition 54.1 terminates. It returns an owned exact entry
+code for $t$ and a distinct owned current code for the actual source
+$\nu(t)$, on the same callable root and current authority. It visits
+exactly $\mathcal L(t)$ in preorder, encounters no absent refusal, and
+performs precisely one successful promotion at every entry $\alpha$
+leaf and no other successful event.
+
+Proof. A promotion adds a material marker but changes no logical branch,
+logical position or logical descendant relation. Before any scheduled
+visit, all earlier changes therefore lie at already visited entry leaves.
+These leaves are incomparable with a later scheduled subtree. Every
+scheduled target is the root or a child of a branch whose branch refusal
+has already been obtained. It is an actual entry position, and no earlier
+promotion changes its entry constructor. These assertions are an invariant
+of the backed traversal, not information supplied to the controller.
+
+Prove the visit assertion by induction on the finite entry subtree at its
+scheduled address, allowing an arbitrary pending continuation outside that
+subtree. At an entry $\alpha$, its actual $P$ succeeds, records the entry
+$\alpha$ and leaves the actual $\beta$; no logical child is scheduled.
+At an entry $\beta$, the actual wrong-type refusal leaves it unchanged
+and records $\beta$. At a branch, the actual branch refusal leaves it
+unchanged. The left and then right induction hypotheses apply because
+their cones are disjoint. Their actual endpoints are $\nu(v),\nu(w)$,
+and the assembled preorder words describe $\langle v,w\rangle$ and
+$\langle\nu(v),\nu(w)\rangle$. The pending continuation receives no
+unobserved subtree value.
+
+Every visit uses one finite complete request and a finite returned reply;
+the source template and finite backing supply each successful completion.
+The induction proves finitely many visits and finite local stack work,
+without a supplied stopping bound. It also proves that an absent answer
+never occurs. The current code is assembled from the actual effects on
+the very root being called, while the entry code records the constructors
+before their first probes. At termination both result records have actual
+owned backing, and the root reference and rights remain retained for
+the continuation. Reading or exporting those codes is subsequent paid
+use of these records. The endpoint is $\nu(t)$, not a restoration of
+$t$. $\square$
+

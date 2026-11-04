@@ -83,11 +83,8 @@ internal static class GitRepositorySnapshotReader
     {
         var scopes = EnumerationScopes(pathspecs).ToArray();
         var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scopes[0]]));
-        IEnumerable<string> untracked = ParseNulStrings(Git(root,
-            ["ls-files", "--others", "--exclude-standard", "-z", .. scopes[0]]));
         if (scopes.Length > 1)
         {
-            var combinedUntracked = untracked.ToHashSet(StringComparer.Ordinal);
             for (var index = 1; index < scopes.Length; index++)
             {
                 var scope = scopes[index];
@@ -97,11 +94,12 @@ internal static class GitRepositorySnapshotReader
                         throw new InvalidOperationException($"git index mode changed during enumeration: {path}");
                     tracked[path] = mode;
                 }
-                combinedUntracked.UnionWith(ParseNulStrings(Git(root,
-                    ["ls-files", "--others", "--exclude-standard", "-z", .. scope])));
             }
-            untracked = combinedUntracked;
         }
+        var untracked = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var scope in UntrackedEnumerationScopes(root, pathspecs))
+            untracked.UnionWith(ParseNulStrings(Git(root,
+                ["ls-files", "--others", "--exclude-standard", "-z", .. scope])));
         var paths = tracked.Keys
             .Concat(untracked)
             .Distinct(StringComparer.Ordinal)
@@ -199,6 +197,55 @@ internal static class GitRepositorySnapshotReader
         return (entries, inventory, links, paths, inspectedDirectories);
     }
 
+    private static IEnumerable<string[]> UntrackedEnumerationScopes(string root, IReadOnlyList<string>? pathspecs)
+    {
+        // Git can descend through an entire untracked tree even when a shallow
+        // glob admits only its parent's immediate files. Expand only that glob's
+        // immediate entries; Git still decides ignore rules and untrackedness.
+        // Exclusions and other magic retain their single-invocation semantics.
+        if (pathspecs is null || pathspecs.Count == 0 || HasOtherPathspecMagic(pathspecs))
+        {
+            foreach (var scope in EnumerationScopes(pathspecs)) yield return scope;
+            yield break;
+        }
+        var expanded = new List<string>();
+        foreach (var pathspec in pathspecs)
+        {
+            const string glob = ":(glob)";
+            var prefix = pathspec.StartsWith(glob, StringComparison.Ordinal) && pathspec.EndsWith("/*", StringComparison.Ordinal)
+                ? pathspec[glob.Length..^2] : null;
+            if (prefix is null || prefix.IndexOfAny(['*', '?', '[', ']']) >= 0 || !RepoPath.TryCreate(prefix, out _))
+            {
+                expanded.Add(pathspec);
+                continue;
+            }
+            var directory = new DirectoryInfo(Path.Combine(root, prefix));
+            var linkedAncestor = false;
+            for (var ancestor = directory.Parent; ancestor is not null && ancestor.FullName != root; ancestor = ancestor.Parent)
+                if (ancestor.LinkTarget is not null)
+                {
+                    linkedAncestor = true;
+                    break;
+                }
+            if (linkedAncestor || !directory.Exists || directory.LinkTarget is not null)
+            {
+                expanded.Add(pathspec);
+                continue;
+            }
+            foreach (var entry in directory.EnumerateFileSystemInfos())
+                if ((entry.Attributes & FileAttributes.Directory) == 0 || entry.LinkTarget is not null)
+                    expanded.Add(":(literal)" + prefix + "/" + entry.Name);
+        }
+        // An empty shallow glob is an empty selection, not an unscoped query.
+        if (expanded.Count > 0)
+            foreach (var scope in EnumerationScopes(expanded)) yield return scope;
+    }
+
+    private static bool HasOtherPathspecMagic(IReadOnlyList<string> pathspecs) =>
+        pathspecs.Any(static path => path.StartsWith(':')
+            && !path.StartsWith(":(literal)", StringComparison.Ordinal)
+            && !path.StartsWith(":(glob)", StringComparison.Ordinal));
+
     private static IEnumerable<string[]> EnumerationScopes(IReadOnlyList<string>? pathspecs)
     {
         if (pathspecs is null || pathspecs.Count == 0)
@@ -209,9 +256,7 @@ internal static class GitRepositorySnapshotReader
 
         // Positive path selections form a union. Other Git magic, including
         // exclusions, retains its native single-invocation semantics.
-        if (pathspecs.Any(static path => path.StartsWith(':')
-                && !path.StartsWith(":(literal)", StringComparison.Ordinal)
-                && !path.StartsWith(":(glob)", StringComparison.Ordinal)))
+        if (HasOtherPathspecMagic(pathspecs))
         {
             yield return ["--", .. pathspecs];
             yield break;
@@ -248,20 +293,22 @@ internal static class GitRepositorySnapshotReader
                 arguments,
                 maximumOutputBytes,
                 standardInput),
+            (arguments, maximumErrorBytes, standardInput, readStandardOutput) =>
+                BoundedProcessRunner.RunStreaming("git", arguments, root, TimeSpan.FromSeconds(120),
+                    maximumErrorBytes, readStandardOutput, standardInput),
             paths);
     }
 
     internal static RawRepositorySnapshot ReadRevisionProjection(string revision,
-        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        GitStreamReader<GitRepositoryTreeEntry[]> readTree,
         GitStreamReader<IReadOnlyDictionary<string, GitRepositoryBlob>> runGitStreaming,
         Func<string, bool> readContents,
         Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
         ArgumentNullException.ThrowIfNull(readContents);
-        var treeResult = runGit(["ls-tree", "-r", "-l", "-z", revision], MaximumGitOutputBytes, default);
-        EnsureSuccess(treeResult);
-        var tree = ParseTree(treeResult.StandardOutput).OrderBy(static entry => entry.Path, StringComparer.Ordinal).ToArray();
+        var tree = GitRepositoryTreeStream.Read(revision, readTree)
+            .OrderBy(static entry => entry.Path, StringComparer.Ordinal).ToArray();
         foreach (var entry in tree)
             if (!IsSupportedMode(entry.Mode) || entry.ObjectType != "blob" || entry.Size is null)
                 throw new InvalidOperationException($"protected base has non-regular entry {entry.Path} ({entry.Mode} {entry.ObjectType})");
@@ -364,16 +411,12 @@ internal static class GitRepositorySnapshotReader
     internal static RawRepositorySnapshot ReadRevision(
         string revision,
         Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        GitStreamReader<GitRepositoryTreeEntry[]> readTree,
         IReadOnlyList<string>? paths = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
         ArgumentNullException.ThrowIfNull(runGit);
-        var treeResult = runGit(
-            ["ls-tree", "-r", "-l", "-z", revision],
-            MaximumGitOutputBytes,
-            default);
-        EnsureSuccess(treeResult);
-        var all = ParseTree(treeResult.StandardOutput).ToArray();
+        var all = GitRepositoryTreeStream.Read(revision, readTree);
         var tree = paths is null ? all : all.Where(entry =>
             paths.Any(selection => MatchesRevisionSelection(entry.Path, selection))).ToArray();
         if (paths is not null && tree.Any(static entry => entry.Mode == "120000"))
@@ -659,39 +702,6 @@ internal static class GitRepositorySnapshotReader
 
     private static InvalidOperationException InvalidBatchOutput(string objectId) =>
         new($"git cat-file --batch emitted invalid data for object {objectId}");
-
-    internal static IEnumerable<GitRepositoryTreeEntry> ParseTree(byte[] bytes)
-    {
-        foreach (var entry in SplitNul(bytes))
-        {
-            var tab = Array.IndexOf(entry, (byte)'\t');
-            if (tab <= 0) throw new InvalidOperationException("git tree emitted invalid metadata");
-            var metadata = StrictUtf8.GetString(entry.AsSpan(0, tab))
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var path = StrictUtf8.GetString(entry.AsSpan(tab + 1));
-            if (metadata.Length is not (3 or 4) || !RepoPath.TryCreate(path, out _))
-            {
-                throw new InvalidOperationException($"git tree emitted invalid entry: {path}");
-            }
-
-            long? size = null;
-            if (metadata.Length == 4 && metadata[3] != "-")
-            {
-                if (!long.TryParse(
-                        metadata[3],
-                        System.Globalization.NumberStyles.None,
-                        System.Globalization.CultureInfo.InvariantCulture,
-                        out var parsedSize))
-                {
-                    throw new InvalidOperationException($"git tree emitted invalid entry: {path}");
-                }
-
-                size = parsedSize;
-            }
-
-            yield return new GitRepositoryTreeEntry(metadata[0], metadata[1], metadata[2], path, size);
-        }
-    }
 
     private static Dictionary<string, string> ParseIndex(byte[] bytes)
     {

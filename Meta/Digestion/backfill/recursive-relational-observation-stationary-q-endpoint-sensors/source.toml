@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-stationary-q-endpoint-sensors"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_STATIONARY_Q_ENDPOINT_SENSORS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

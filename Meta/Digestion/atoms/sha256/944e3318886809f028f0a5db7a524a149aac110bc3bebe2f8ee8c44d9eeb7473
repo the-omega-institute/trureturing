@@ -1,0 +1,62 @@
+**Lemma 14.2 (Five necessary lifts).** Each center matrix in the
+following table is nonsingular. With $Q,\eta$ as just defined, the
+table gives strict rational upper bounds on $Q$ and
+$\eta/(1-Q)$ throughout $I_i\times\mathcal U$.
+
+| $i$ | Exact $\bar b$ | $Q$ upper bound | $\eta/(1-Q)$ upper bound |
+| --- | --- | --- | --- |
+| 1 | $0.04078295904882838405264306362514449405106$ | $4\cdot10^{-18}$ | $12\cdot10^{-23}$ |
+| 2 | $0.04091698421060610059422739287384503573542$ | $2\cdot10^{-18}$ | $43\cdot10^{-24}$ |
+| 3 | $-3.176868004886463132107916325401810483894$ | $25\cdot10^{-10}$ | $309\cdot10^{-6}$ |
+| 4 | $-0.4358328034096036222134460606876310285942$ | $2\cdot10^{-15}$ | $43\cdot10^{-19}$ |
+| 5 | $-0.5819863165350697596394747517356607978584$ | $8\cdot10^{-15}$ | $128\cdot10^{-18}$ |
+
+Every actual finite common root in the corresponding box therefore
+has respectively the following necessary $b$ enclosure:
+
+$$
+\begin{array}{c|c}
+i&b\\\hline
+1&(0.0407829590488283,0.0407829590488285)\\
+2&(0.0409169842106060,0.0409169842106062)\\
+3&(-3.178,-3.176)\\
+4&(-0.436,-0.435)\\
+5&(-0.583,-0.581).
+\end{array}
+$$
+
+Proof. The exact determinant comparisons at the five rational
+centers are
+
+$$
+10^{k_i}\le-\det L_0<10^{k_i+1},\qquad
+(k_1,k_2,k_3,k_4,k_5)=(32,31,20,26,23).
+$$
+
+They follow by expansion of the coefficient matrix, and the
+adjugate identity gives $CL_0=I$. Substitution into Definition 14.1
+then gives the table's rational inequalities. In particular $Q<1$
+on each whole box, so $CL$ and $L$ are invertible there.
+
+For a common root $b$, evaluation of every matrix row gives
+
+$$
+L u+z=0,\qquad u=(b^{12},\ldots,b)^t.
+$$
+
+Subtract the fixed vector $w$ and multiply by $C$. The geometric
+series inverse estimate yields
+
+$$
+\|u-w\|_\infty
+\le\frac{\|C(Lw+z)\|_\infty}{1-\|I-CL\|_\infty}
+\le\frac{\eta}{1-Q}.
+$$
+
+The last coordinate gives the displayed enclosures. Rows three
+through five violate $b>0$. In each remaining row, Lemma 13.2
+permits only one $r$, and invertibility of $L$ permits at most one
+$b$. Common Parent Geometry, Theorem 12.3, then gives at most one
+complete world at that source. No projected root is being asserted
+to have a legal lift. ∎
+

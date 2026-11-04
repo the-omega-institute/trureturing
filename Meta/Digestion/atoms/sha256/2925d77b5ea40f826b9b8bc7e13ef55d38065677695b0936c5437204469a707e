@@ -1,0 +1,22 @@
+**Lemma 3.1 (signs and positive trace).** Every positively oriented kernel generator in Definition 1.3 has
+$$
+n_{11},n_{22}\ge0,\qquad n_{12},n_{21}\le0,
+\qquad \operatorname{tr}N>0.
+\tag{3.1}
+$$
+The prefix trace map
+$$
+\mathcal L_{\rm pre}X=
+\bigl(\operatorname{tr}(A_iX)\bigr)_{i=0}^3
+\tag{3.2}
+$$
+is invertible on the four-dimensional full matrix space.
+
+**Proof.** On the positive rank-one matrix $(\begin{smallmatrix}uv&u\\v&1\end{smallmatrix})$, $u,v>0$, the polar is
+$$
+n_{11}+n_{22}uv-n_{12}v-n_{21}u>0.
+$$
+Take $u=v$ to zero to obtain $n_{11}\ge0$. Take $u=v$ to infinity and divide by $u^2$ to obtain $n_{22}\ge0$. Take $(u,v)=(T^{-2},T)$ and divide by $T$ as $T$ tends to infinity to obtain $n_{12}\le0$; $(u,v)=(T,T^{-2})$ gives $n_{21}\le0$.
+
+If the trace were zero, both diagonal entries would vanish. Rank one would force at least one off-diagonal entry to vanish. Then nonzero $N$ would be a negative multiple of $E_{12}$ or $E_{21}$. Its prefix level equations would force, respectively, the lower-left or upper-right entry of every endpoint to vanish. A triangular nonnegative integral unimodular matrix has diagonal product one, hence both diagonal entries one. The three endpoint differences would lie in a one-dimensional off-diagonal span, contradicting rank three. Thus the trace is positive. Finally, $\mathcal L_{\rm pre}X=0$ implies $X=vN$ by the prefix kernel condition; its zero initial trace forces $v=0$. This proves invertibility. ∎
+

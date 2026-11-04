@@ -1,0 +1,89 @@
+**Theorem 10.1 (A genuine family with gap of order $r^{3/2}$).** For every integer $a\ge4$, put $r=a+1$, $s=a+2$, $H=[a+1]$ and $e=a+2$. For each real $0<\varepsilon\le1/a$, define the one array
+
+$$
+x_{\{e\}}=\varepsilon,\qquad x_H=(a-1)\varepsilon,\qquad
+x_{H\setminus\{j\}}=\frac{1-a\varepsilon}{a+1}\quad(j\in H),
+$$
+
+with every other type mass zero. This is an actual profile of mean $q=a$ with positive marginals. Its support hypergraph, with vertices $[s]$ and hyperedges the positive-mass types, has two connected components. Define
+
+$$
+E_a=2a^3-2a-1,\qquad A_a=2a^3+2a^2-2a-1.
+$$
+
+Its energy and gap are exactly
+
+$$
+2J_s(x)=\frac{(a+1)^2[a^3+\varepsilon E_a]}{(a-\varepsilon)^2}
++\frac1\varepsilon,\tag{10.1}
+$$
+
+$$
+2\bigl(J_s(x)-F_r(a)\bigr)
+=\frac1\varepsilon+
+\frac{(a+1)^2\varepsilon(A_a-a\varepsilon)}{(a-\varepsilon)^2}>0.\tag{10.2}
+$$
+
+For $\varepsilon_a=1/(\sqrt2\,a^{3/2})$ the limit is
+
+$$
+\frac{J_s(x(\varepsilon_a))-F_{a+1}(a)}{a^{3/2}}
+\longrightarrow\sqrt2,
+\qquad
+\frac{J_s(x(\varepsilon_a))-F_{a+1}(a)}{(a+1)^{3/2}}
+\longrightarrow\sqrt2.\tag{10.3}
+$$
+
+Thus no constant $c>0$ can satisfy $J_s(x)-F_r(q)\ge cr^2$ uniformly for all integers $r\ge5$, all finite $s\ge r+1$ and all actual profiles with $q\in[r-1,r]$.
+
+**Proof.** The displayed masses are nonnegative and sum to
+
+$$
+\varepsilon+(a-1)\varepsilon+1-a\varepsilon=1.
+$$
+
+Their cardinality mean is
+
+$$
+\varepsilon+(a+1)(a-1)\varepsilon+a(1-a\varepsilon)=a.
+$$
+
+Counting the types containing each hub gives
+
+$$
+y_i=\frac{a-\varepsilon}{a+1}>0\quad(i\in H),\qquad
+y_e=\varepsilon>0,
+$$
+
+$$
+\begin{aligned}
+w_i&=\frac{a^3(1-a\varepsilon)}{a+1}
+ +(a+1)^2(a-1)\varepsilon
+ =\frac{a^3+\varepsilon E_a}{a+1}\quad(i\in H),\\
+w_e&=\varepsilon.
+\end{aligned}
+$$
+
+In particular the extra marginal is retained. The only positive-mass type containing $e$ is $\{e\}$, while $H$ itself has positive mass. No positive-mass type meets both $H$ and $\{e\}$, so the incidence support has these two components. This remains true at $\varepsilon=1/a$, where all missing-one masses are zero; the core marginals remain positive there.
+
+Summing $w_i/y_i^2$ gives (10.1). Since $2F_r(a)=a(a+1)^2$, subtraction gives (10.2). Its denominator is positive. Moreover $a\varepsilon\le1$ and $A_a>1$ for $a\ge4$, so both summands are strictly positive. Hence these arrays do not improve or tie the candidate.
+
+The choice $\varepsilon_a$ lies in $(0,1/a]$. Dividing (10.2) by $2a^{3/2}$ gives
+
+$$
+\frac{J_s(x(\varepsilon_a))-F_r(a)}{a^{3/2}}
+=\frac1{\sqrt2}
++\frac{(1+1/a)^2\bigl(A_a/a^3-\varepsilon_a/a^2\bigr)}
+ {2\sqrt2(1-\varepsilon_a/a)^2}.
+$$
+
+As $a\to\infty$, the second term tends to $1/\sqrt2$, proving the first limit in (10.3). The second follows from $a/(a+1)\to1$. A wholly rational infinite subfamily is
+
+$$
+a=2b^2,\qquad \varepsilon=\frac1{4b^3},\qquad b\in\mathbb Z,\ b\ge2;
+$$
+
+it has exactly the same limit. Thus the gap divided by $r^2$ tends to zero through actual positive-marginal arrays. For any proposed $c>0$, a sufficiently large member violates the asserted uniform lower bound. ∎
+
+The formulas (10.1)–(10.3) do not assert that these arrays minimize $J_s$, or determine the largest positive gap for any fixed $r$. They restrict the possible scale of a uniform all-$r$ gap. The exact array family has disconnected support; it is not itself a connected finite graph construction at every prescribed budget. Theorem 7.1 can realize a fixed profile asymptotically under its stated budget hypotheses, but does not identify the finite optimum or transfer (10.2) to every integer graph budget.
+

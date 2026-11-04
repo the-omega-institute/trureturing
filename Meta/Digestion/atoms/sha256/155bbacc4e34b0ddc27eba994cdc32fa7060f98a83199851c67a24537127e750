@@ -1,0 +1,51 @@
+### 引理 5.1（同资料条件精确确定对偶像）
+
+<a id="lem-c94-dual-range"></a>
+
+若 $R$ 保留全部 $\mathcal S$ 读数且同资料同输出，则
+
+<a id="eq-c94-range"></a>
+
+$$
+E(s)=s\quad(s\in\mathcal S),\qquad
+ \operatorname{ran}E=\mathcal A.
+\tag{5.2}
+$$
+
+因此 $E^2=E$、$R^2=R$。
+
+**证明。**
+对全部密度态的读数保持给
+$\operatorname{Tr}\rho(E(s)-s)=0$。密度态实线性张成 $\operatorname{Herm}(H)$，
+故 $E(s)=s$。
+
+对任意 $X=X^\dagger\in\mathcal S^\perp$，
+因为 $I\in\mathcal S$，有 $\operatorname{Tr} X=0$。
+若 $X\ne0$，取
+$0<\varepsilon<1/(d\left\lVert X\right\rVert_{\mathrm{op}})$，
+则 $\rho_\pm=I/d\pm\varepsilon X$ 都为严格正密度态，
+并且 $\rho_+\sim_{\mathcal S}\rho_-$。
+同资料条件给 $R(X)=0$；$X=0$ 情形显然。
+
+任取 $B=B^\dagger$，对全部这样的 $X$ 都有
+
+$$
+\operatorname{Tr}(XE(B))=\operatorname{Tr}(R(X)B)=0.
+$$
+
+由于 $E(B)$ 自伴，有限维双正交给 $E(B)\in\mathcal S$。
+再由复线性性得 $\operatorname{ran}E\subseteq\mathcal A$。
+另一方面 $E$ 固定 $\mathcal S$ 及其复线性包，故像恰为 $\mathcal A$。
+像上的恒等性给 $E^2=E$，取对偶得 $R^2=R$。
+
+目前只知道像是一个算符系统；幂等本身没有证明它对通常乘法闭合。
+另外，对偶像 $\operatorname{ran}E$ 与状态映射像 $\operatorname{ran}R$ 是两个不同对象。
+后者一般不对普通矩阵乘法闭合。
+
+**白话图景。**如果两份输入对当前全部问题给相同答案，规范输出就必须一样。
+这迫使输出的每一个问题，拉回输入后都只能使用当前已经读到的关系。
+反过来，每个旧问题都被原样保留。
+因此对偶过程恰好投到当前读口空间；但这个空间能否承担乘法，还需要下一步检查。
+
+<a id="section-6"></a>
+

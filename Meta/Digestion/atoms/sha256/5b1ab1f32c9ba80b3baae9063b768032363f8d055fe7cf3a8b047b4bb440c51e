@@ -1,0 +1,19 @@
+**Definition 95.1 (the actual combs and their natural scan).**
+Let $u_0=\alpha$ and $u_m=\langle\beta,u_{m-1}\rangle$, with $m\ge3$
+odd. These are reachable original terms in $\mathcal D$. Their material
+vertices and edges are
+
+$$
+\begin{gathered}
+q_i=R^i\ (0\le i\le m),\qquad
+p_i=R^iL,\quad \ell_i=R^iLL\ (0\le i<m),\\
+q_i-p_i-\ell_i\ (i<m),\qquad q_i-q_{i+1}\ (i<m).
+\end{gathered}
+\tag{95.1}
+$$
+
+There are $N=3m+1$ vertices and $b=m+1$ terminals. Use the natural
+canonical order $\ell_0,\ldots,\ell_{m-1},q_m$ and period $L=b$, which
+is even. This is an infinite family of different original material
+sizes, with the same original unit law and literal Read contract.
+

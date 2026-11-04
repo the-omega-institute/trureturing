@@ -1,0 +1,64 @@
+**定理 85.1（每个实际纯输入的秩一约束）。** 在 (84.3) 中，$F$ 秩一，且每个属于原 $\mathcal K_d$ 的纯态都有秩一编码。存在一个对所有实际纯输入共同的 $p_*\in[c,1/2]$，使
+
+$$
+b=\frac{1-p_*}{1-c},\quad
+k^2=\frac{p_*(1-p_*)}{c(1-c)},\quad
+A_F=\frac{c}{2p_*},\quad t_F=\frac{1-c}{4(1-p_*)}.
+\tag{85.1}
+$$
+
+证明。任取实际纯态，因其 $\xi$ 人口为 $c$，固定无关总体相位后写为 $\sqrt c\,\xi+\sqrt{1-c}\,r_0$。下块 $SU(2)$ 在单位球上传递；对精确群响应恒等式右平移变量，使源向量的下块变成 $e_1$。编码侧相应酉变换 $\Sigma=\sigma(\rho)$ 保持其正性、秩和迹，固定效果不变。只是等式坐标代换，不添加初始态或控制。
+
+令
+
+$$
+S(u)=\begin{pmatrix}u_1&-\bar u_2\\u_2&\bar u_1\end{pmatrix},
+\quad |u_1|^2+|u_2|^2=1,
+\qquad f_c(u)=\frac12|\sqrt c+\sqrt{1-c}\,u_1|^2.
+\tag{85.2}
+$$
+
+响应 $\operatorname{Tr}[F(1\oplus S(u))\Sigma(1\oplus S(u))^\dagger]$ 等于 $f_c(u)$。它在整个圆
+
+$$
+u_1=-a_0,\qquad u_2=r_0'e^{\mathrm i\varphi},
+\quad a_0=\sqrt{c/(1-c)}>0,\quad r_0'=\sqrt{1-a_0^2}>0
+\tag{85.3}
+$$
+
+上为零。正矩阵迹配对等于 $\|F^{1/2}(1\oplus S(u))\Sigma^{1/2}\|_{\rm HS}^2$，所以每个支持幅度分别为零。对 $v=(s_0,x,y)\in\operatorname{ran}\Sigma$、$w=(a_0',b_0,t_0)\in\operatorname{ran}F$，其幅度恒等式完整为
+
+$$
+\bar a_0's_0-a_0(\bar b_0x+\bar t_0y)
++r_0'\bar t_0x e^{\mathrm i\varphi}
+-r_0'\bar b_0y e^{-\mathrm i\varphi}=0.
+$$
+
+比较常数项及两个非零频率的 Laurent 系数，给
+
+$$
+\bar t_0x=0,\qquad \bar b_0y=0,\qquad
+\bar a_0's_0=a_0(\bar b_0x+\bar t_0y).
+\tag{85.4}
+$$
+
+非零源交叉响应及 $kz\ne0$ 使编码交叉非零，故可选一个 $v$ 同时有 $s_0\ne0$ 和 $(x,y)\ne0$。若 $x,y$ 都非零，(85.4) 迫使全部 $w=0$，与响应非零矛盾。若 $x\ne0,y=0$，则每个 $w$ 有 $t_0=0$，且 $\bar a_0's_0=a_0\bar b_0x$，故全部 $w$ 在同一非零复直线；非零 $w$ 的 $a_0',b_0$ 都非零。固定该 $w$ 再作用于任意支持向量，得到 $y=0$ 及相同的 $s_0/x$ 比，全部 $v$ 也在一条复直线。$x=0,y\ne0$ 对称。因此 $\operatorname{rank}F=\operatorname{rank}\Sigma=1$。此论证逐个覆盖全部实际纯态，不指定它们的编码。
+
+回到固定源坐标，$F$ 的非零交叉列沿 $e_1$。秩一正性使它的下块支持恰沿 $e_1$，故
+
+$$
+t_F-1/(4b)=0,\qquad 1/(2b)>0,\qquad
+A_F/(2b)=1/(4k^2).
+\tag{85.5}
+$$
+
+于是 $b>0$、$t_F=1/(4b)$、$A_F=b/(2k^2)$。源纯性给 $Q=zz^\dagger/c$、$\|z\|^2=c(1-c)$。编码秩一及非零交叉使其下块垂直于 $z$ 的本征值为零，故 $1-p(\rho)=b(1-c)$；它对所有纯输入都是同一个 $p_*=1-b(1-c)\in(0,1)$。余下二乘二行列式给 $k^2c(1-c)=p_*(1-p_*)$，即 (85.1)。效果唯一非零本征值及其合法性余量是
+
+$$
+\lambda(p)=\frac{c}{2p}+\frac{1-c}{2(1-p)},\qquad
+1-\lambda(p)=\frac{(p-c)(1-2p)}{2p(1-p)}.
+\tag{85.6}
+$$
+
+在 $0<c<1/2$、$0<p<1$ 中，$F\preceq I$ 恰要求 $p\in[c,1/2]$。两端都保留，且都是秩一投影。∎
+

@@ -1,0 +1,4 @@
+## 1. Scope
+
+Let $a_n$ be the number of permutations $\pi$ of $\{1,\dots,n\}$ that avoid $312$ and $54321$ and whose square $\pi\circ\pi$ avoids $132$, and let $b_n$ be the number of those that are indecomposable. This volume classifies the indecomposable ones completely: for $n\ge9$ there are exactly $\lfloor n/2\rfloor+4$ of them, falling into seven explicit families, and the values for $n\le8$ are determined by the same arguments. Combined with the decomposition of $a$ through $b$ recorded as cited fact (b), this gives a rational generating function for $a_n$ and a linear recurrence of order seven valid for $n\ge12$.
+

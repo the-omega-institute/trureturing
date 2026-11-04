@@ -224,7 +224,7 @@ Put t=exp(−2). The product difference is (1+t)t−(1−t)^2/4=(3t^2+6t−1)/4.
 
 **Theorem 1.18 (Half-integer orders are noninteger).**
 
-$$\forall k \in \mathbb {Z},\; \forall n \in \mathbb {Z},\; k + \frac{1}{2} \ne n$$
+$$\forall k \in \mathbb {Z},\; \forall n \in \mathbb {Z},\; (\operatorname {Int.cast}\left(k\right):\mathbb {R}) + \frac{1}{2} \ne (\operatorname {Int.cast}\left(n\right):\mathbb {R})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/BesselProductOrderLogConvexity/Result.half_noninteger` (`✓ std3`). ∎
 
@@ -232,7 +232,7 @@ $$\forall k \in \mathbb {Z},\; \forall n \in \mathbb {Z},\; k + \frac{1}{2} \ne 
 
 *Commentary.*
 
-If k+1/2 were an integer n, doubling would give 2k+1=2n, which contradicts parity. Integer arguments are coerced to real numbers in the displayed comparison.
+For integers k and n, the real number k+1/2 differs from n because doubling would equate an odd integer with an even one.
 
 **Theorem 1.19 (Refutation of order log-convexity).**
 

@@ -27,14 +27,33 @@ internal sealed class ElementaryChannelDivisibilityDocument : IScribeDocumentDef
         "Exact Kraus-space criterion for elementary right division of finite quantum channels.",
         H("Elementary channel divisibility"), Blocks(
             Paragraph(Text("The index type I is finite. Matrices act on the complex coordinate space I → ℂ. The inner product is conjugate linear in its first argument, and tr denotes Matrix.trace. CP is the existing complete-positivity predicate, quantifying every finite amplification; CPTP also preserves the trace of every matrix. No assertion about a physical gate set, a local operations protocol, a success probability or a preparation cost follows from these statements.")),
+            Node("factorofkernel", "Matrix factorization from kernel inclusion", "factor_of_kernel",
+                FactorOfKernelFormula(),
+                "If every vector annihilated by R is also annihilated by S, then S factors as CR. The linear map induced by S on the quotient by ker R descends to the range of R and extends to the whole finite coordinate space.",
+                DescribeRole.Theorem, false),
+            Node("kernelofsubpsd", "Kernel inclusion from positive domination", "kernel_of_sub_psd",
+                KernelOfSubPsdFormula(),
+                "If B and A − tB are positive semidefinite and t > 0, every vector annihilated by A is annihilated by B. On such a vector the two positivity inequalities force the quadratic form of B to vanish, and positive semidefiniteness then forces B to annihilate the vector.",
+                DescribeRole.Theorem, false),
             Node("orthogonalunitpair", "Ordered orthogonal unit pair", "OrthogonalUnitPair",
                 Context(All("x", V, All("y", V, Iff(App("OrthogonalUnitPair", Xv, Yv),
                     And(EqTo(Inner(Xv, Xv), D(1)), EqTo(Inner(Yv, Yv), D(1)), EqTo(Inner(Xv, Yv), D(0))))))),
                 "The two vectors are separately normalized and orthogonal in the displayed order.", DescribeRole.Definition, true),
+            Node("basispair", "Distinct coordinate vectors form an orthogonal unit pair", "basis_pair",
+                Context(All("r", I, All("s", I,
+                    Implies(Seq(Named("r"), Neq, Named("s")),
+                        Pair(Apply(Seq(Named("Pi"), Dot, Named("single")), Named("r"), D(1)),
+                            Apply(Seq(Named("Pi"), Dot, Named("single")), Named("s"), D(1))))))),
+                "Two distinct coordinate vectors have unit norm and zero ordered inner product.",
+                DescribeRole.Theorem, false),
             Node("ketbra", "Rank one operator", "ketbra",
                 Context(All("u", V, All("v", V, EqTo(App("ketbra", Uv, Wv),
                     App("vecMulVec", Uv, App("star", Wv)))))),
                 "The operator ketbra(u,v) sends z to u⟨v,z⟩.", DescribeRole.Definition, true),
+            Node("ketbrastar", "Adjoint of a rank one operator", "ketbra_star",
+                KetbraStarFormula(),
+                "Taking the adjoint exchanges the two vectors of the rank one operator.",
+                DescribeRole.Theorem, false),
             Node("elementaryk", "First elementary Kraus operator", "elementaryK",
                 Context(All("t", RealType(), All("x", V, EqTo(App("elementaryK", T, Xv),
                     Filter(SquareRoot(Subtract(D(1), T)), Xv))))),
@@ -81,6 +100,37 @@ internal sealed class ElementaryChannelDivisibilityDocument : IScribeDocumentDef
                 "In input-first Choi coordinates let A = C(Φ) and Z = (|y⟩⟨x|)ᵀ ⊗ I. Hilbert–Schmidt orthogonality identifies the tests with ker A ⊆ ker(ZA Z*). If this inclusion holds, square roots factor as √B = C√A for B = ZA Z*. The operator norm bound gives B ≤ ‖C‖²A, and t = 1/(2(‖C‖²+1)) gives A−tB ≥ 0, including singular A. The exact Choi matrix of the residual is D(A−tB)D*, where D = Rᵀ ⊗ I and R is the inverse filter. Its congruence is invertible for 0 < t < 1.",
                 "For distinct basis vectors eᵣ,eₛ, take Φ = elementary(15/16,eᵣ,eₛ) and Q = elementary(3/4,eᵣ,eₛ). Direct Kraus algebra gives Q∘Q = Φ, hence Φ∘Q⁻¹ = Q. For any unit u, the diagonal sufficient test fails: the Hilbert–Schmidt tests Eᵣᵢ for i ≠ r force either uᵣ = 0 or all other coordinates to vanish, while a diagonal orthogonal test gives 1−|I||uᵣ|² = 0. Both alternatives contradict normalization when |I| ≥ 2. The intrinsic kernel criterion transfers this obstruction to every finite Kraus representation. These are finite-dimensional conclusions; no dimension-one pair or infinite-dimensional domination statement is included.")
         )));
+
+    private static Formula FactorOfKernelFormula()
+    {
+        Formula r = Named("R"), s = Named("S"), c = Named("C"), v = Named("v");
+        return Context(All("R", M, All("S", M,
+            Implies(All("v", V,
+                    Implies(EqTo(App("mulVec", r, v), D(0)),
+                        EqTo(App("mulVec", s, v), D(0)))),
+                Some("C", M, EqTo(s, Multiply(c, r)))))));
+    }
+
+    private static Formula KernelOfSubPsdFormula()
+    {
+        Formula a = Named("A"), b = Named("B"), v = Named("v");
+        return Context(All("A", M, All("B", M, All("t", RealType(),
+            Implies(And(App("PosSemidef", b), Seq(D(0), Lt, T),
+                    App("PosSemidef", Subtract(a, Smul(T, b)))),
+                All("v", V, Implies(EqTo(App("mulVec", a, v), D(0)),
+                    EqTo(App("mulVec", b, v), D(0)))))))));
+    }
+
+    private static Formula KetbraStarFormula()
+    {
+        Formula n = Named("n"), u = Named("u"), w = Named("w");
+        Formula vector = Parenthesized(Seq(n, To, ComplexType()));
+        return All("n", Named("Type"),
+            Seq(Forall, Sp, OpenBracket, App("Fintype", n), CloseBracket,
+                OpenBracket, App("DecidableEq", n), CloseBracket, Comma, Sp,
+                All("u", vector, All("w", vector,
+                    EqTo(Adj(App("ketbra", u, w)), App("ketbra", w, u))))));
+    }
 
     private static Formula KrausExistence() => All("Phi", Map,
         Implies(App("CPTP", Phi), Some("K", Parenthesized(Seq(Parenthesized(Seq(I, Times, I)), To, M)),
@@ -174,7 +224,7 @@ internal sealed class ElementaryChannelDivisibilityDocument : IScribeDocumentDef
     private static Formula Named(string s) => Seq(Operatorname, Grp(F.Id(s)));
     private static Formula RealType() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula ComplexType() => Seq(Mathbb, Grp(F.Id("C")));
-    private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
+    private static Formula Parenthesized(Formula x) => new Formula.LatexSequence([Open, x, Close]);
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
         string prose, DescribeRole role, bool literature, params string[] remaining)
     {

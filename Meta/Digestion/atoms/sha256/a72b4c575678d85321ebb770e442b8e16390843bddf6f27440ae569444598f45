@@ -1,0 +1,59 @@
+**Theorem 34.2 (four recovery routes on the law-ready domain).** Fix
+one of the authentic classes and its bound, the actual chronological
+rule and one actual binding as above. On the completed, law-ready
+cuts $n\ge N(m)$ for $m>0$, separately each of
+
+$$
+ S_n,\qquad\partial S_n,\qquad
+ \mathcal T_n^{\rm birth},\qquad M_n^{\rm earned}
+ \tag{GPO.85}
+$$
+
+determines the other three mathematical data views, the same current
+labelled tree, and its entire behavior of Definition 31.1. Every
+recovery route agrees with the direct route. The result also holds
+on $n\ge2$ for the zero-order singleton. It recovers the actual
+ordered beta-birth chronology (GPO.74), including its physical parent
+addresses and newest bits; it does not recover an arbitrary observer
+journal, hidden generator presentation or physical durations.
+
+Proof. From $S_n$ use Theorem 28.2 to recover $n$ and the actual
+mature word of length $v_n\ge m$. Its first $m$ bits give exactly
+the canonical $\widehat L$ chosen during actual acquisition. This
+recovers (GPO.84). The law then generates the stream through $B_n$.
+Forward replacement from the known actual alpha origin, with the actual
+chronological rule, yields each successive parent address, update index
+and birth bit through cut $n$. By induction on updates and on the
+within-update birth order these are precisely the actual events, not a
+law-equivalent history with a different allocation order. Thus it yields
+$\mathcal T_n^{\rm birth}$ and $X_n$.
+
+From the terminal boundary take prefix closure and apply that same
+algorithm. From the actual birth trace, execute its specified replacements
+from alpha; the result is $X_n$ and its actual incidence. From earned
+memory, generate the same finite stream prefix and perform that same
+forward replacement; its counters supply the actual cut and phase.
+The generator selected from its first $m$ bits is the same canonical
+one, even when the hidden source has a different but equivalent
+presentation. These explicit operations prove each direction. Every
+route returns the views of this same actual stream, chronological rule
+and update count. Hence composing routes gives the direct value, and
+the round trips are identities on these data images. Theorem 31.2
+supplies the common future behavior.
+
+The binding and rights are held fixed as actual prerequisites throughout.
+No decoding map constructs a missing root, obtains a grant, verifies
+source authenticity or repairs a lost synchronization. Nor does this
+proof give a bijection of all material bytes: a scratch allocation or
+extra stationary read can change an observer journal without changing
+any birth event or source incidence. $\square$
+
+The temporal claim has actual event content beyond its integer $n$.
+For example the constant-zero and constant-one birth laws belong to
+$\mathscr R_d$ for every $d\ge1$ and $\mathscr M_K$ for every
+$K\ge1$. At the same $n\ge3$ their unequal root-child shapes
+occupy opposite ports. Thus $n$ alone still cannot recover physical
+incidence across either such class. The zero-order singleton is the
+explicit exception. Scalar time has not been inverted into arbitrary
+space. A known chronological event count also gives no physical duration.
+

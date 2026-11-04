@@ -1,0 +1,46 @@
+**定理 3.2（字乘积的稳定传播）。** 设精确闭合成立。若所有精确产品范数至多 $M$、估计产品范数至多 $\widehat M$，包括空产品，每步差不超过 $\delta$，且 $\|\widehat b-b\|\le\varepsilon_b$，则
+
+<a id="eq-3-3"></a>
+
+$$
+\|\widehat B_w\widehat b-B_wb\|
+\le\widehat M\varepsilon_b+n\widehat M M\delta\|b\|.
+\tag{3.3}
+$$
+
+若 $\|\widehat d-d\|\le\varepsilon_d$，概率差满足
+
+<a id="eq-3-4"></a>
+
+$$
+|\widehat p(w)-p(w)|
+\le \|\widehat d\|
+\bigl(\widehat M\varepsilon_b+n\widehat M M\delta\|b\|\bigr)
++\varepsilon_dM\|b\|.
+\tag{3.4}
+$$
+
+**证明。** 逐次把估计乘积中的第 $j$ 个因子替换为精确因子，得到望远镜恒等式
+
+$$
+\widehat B_w-B_w
+=\sum_{j=1}^n
+\widehat B_{a_n}\cdots\widehat B_{a_{j+1}}
+(\widehat B_{a_j}-B_{a_j})
+B_{a_{j-1}}\cdots B_{a_1}.
+$$
+
+对每项应用 $\widehat M,M,\delta$ 的界，再把 $\widehat b-b$ 和 $\widehat d-d$ 分开，即得（3.3）和（3.4）。共同收缩范数且 $\|b\|,\|\widehat d\|\le1$ 时，界化简为 $\varepsilon_b+n\delta+\varepsilon_d$。相似变换
+
+<a id="eq-3-u07"></a>
+
+$$
+B'=\begin{pmatrix}0&t\\t^{-1}&0\end{pmatrix},\quad t>1,
+\qquad (B')^2=I
+$$
+
+说明不能无条件把单步范数反复取幂：虽然 $\|B'\|_2=t>1$，所有产品仍至多为 $t$。
+规范变换必须同时输运噪声单位；若真实读数被削弱而噪声未变，条件数恶化具有实际意义。
+
+<a id="prop-3-3"></a>
+

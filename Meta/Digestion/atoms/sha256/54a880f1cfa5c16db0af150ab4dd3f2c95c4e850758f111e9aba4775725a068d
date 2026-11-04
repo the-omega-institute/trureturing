@@ -1,0 +1,9 @@
+**Definition 117.1 (the retained endpoint and the source evaluation).** Fix arbitrary original $a,\eta>0$. Retain exactly $G$, $e$, $\mu$, the unit source $\Gamma$, the actual selector $A(u)=\rho C(u)$, $H$, the coefficient-positive normalized $h$, $m=h^2\mu$, $U_h$, $K=U_h^{-1}HU_h$ and $T_t=e^{-tK}$ of §§115–116. In particular $m(G)=1$, $m(\{e\})=0$ and $K\ge0$. Use the entire complex $L^2(G,m)$ with
+
+$$
+\langle u,v\rangle_m=\int_G\overline u v\,dm.
+\tag{117.1}
+$$
+
+The source trace, form domain and shifted energy are precisely $\operatorname{tr}$, $\mathscr V$ and $\mathscr E_r$ of (116.1). The parameter $r>0$ below is a resolvent discount, with $b_r,d_r$ unchanged from (116.1) and (116.4); it is not a native transition probability. Let $Z$ be the conservative diffusion properly associated with this full form as in Theorem 116.3, and use its actual source-start law $\mathbb P_e$. All positive times refer to the original clock. No killed process, invariant initial distribution, pointwise value of $h$ at $e$, or change of selector is substituted.
+

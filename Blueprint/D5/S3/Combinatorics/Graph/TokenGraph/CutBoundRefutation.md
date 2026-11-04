@@ -64,7 +64,21 @@ $$(claim) \Leftrightarrow (\forall (n: \mathbb{N}), \forall (G: \operatorname{Si
 
 Appendix D.2, page 39: "In contrast, the following bound was shown to hold on our dataset"; "Conjecture 7. For all G and for all 1 ≤ k ≤ ⌊n/2⌋" followed by "λ_min(A(F_k(G))) ≥ −(C(G)+M_k(G))/2." The formula quantifies all finite simple graphs with decidable adjacency, with unit edge weights. This is a specialization of the source's all-graphs assertion. Fin n labels the n vertices; Nat.div n 2 is floor(n/2). The tokenGraph is the existing finite-subset graph: two equally sized subsets differ by one token moved along an edge. The natural cut and matching cardinalities are coerced to real numbers before division by two. No connectedness or bipartiteness hypothesis is imposed.
 
-**Theorem 1.6 (A phase test contradicts the bound).**
+**Lemma 1.6 (Real and complex adjacency matrices).**
+
+$$\forall (n: Type), [\operatorname{Fintype}\left(n\right)], [\operatorname{DecidableEq}\left(n\right)], \forall (G: \operatorname{SimpleGraph}\left(n\right)), [\operatorname{DecidableRel}\left(\operatorname{SimpleGraph}.\operatorname{Adj}\left(G\right)\right)], \operatorname{Matrix}.\operatorname{map}\left(\operatorname{SimpleGraph}.\operatorname{adjMatrix}\left(\mathbb{R}, G\right), \operatorname{Complex}.\operatorname{ofReal}\right) = \operatorname{SimpleGraph}.\operatorname{adjMatrix}\left(\mathbb{C}, G\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.adjMatrix_complex_map` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Anuj Apte; Ojas Parekh; James Sud (2025). *Conjectured Bounds for 2-Local Hamiltonians via Token Graphs*. URL: <https://arxiv.org/abs/2506.03441v2>.
+
+*Commentary.*
+
+Mapping the real zero-one adjacency matrix entrywise by Complex.ofReal gives the complex adjacency matrix. This identity lets lambdaMin40 apply the complex Rayleigh estimate to the real adjacency matrix.
+
+**Theorem 1.7 (A phase test contradicts the bound).**
 
 $$\neg claim$$
 
@@ -84,6 +98,7 @@ Take the five-cycle blow-up with five independent blocks of size 40 and complete
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.adjMatrix_complex_map`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.claim`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.crosses`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lambdaMin`

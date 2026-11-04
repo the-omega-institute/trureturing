@@ -1,0 +1,33 @@
+#### 定理 6.3（完整记录的概率递归）
+
+有 $\sum_a p(ha)=p(h)$。当 $p(h)>0$，
+
+$$
+p(ha)=p(h)p(a\mid h),\quad
+p(a\mid h)=\operatorname{Tr}\Phi_a^h\left(\frac{\sigma_h}{p(h)}\right).
+$$
+
+对互斥的完整记录集合 $A$，$p(A)=\sum_{h\in A}p(h)$，其粗化操作为 $\sum_{h\in A}\Phi_h$。
+
+**证明。**
+
+由 $\sigma_{ha}=\Phi_a^h(\sigma_h)$，线性和保迹性给归一化递归；提取标量 $p(h)$ 给条件乘法。完整记录互斥，其操作按分支加和，取迹得最后一式。
+
+∎
+
+若单 Kraus 分支为 $M_h$，记录粗化是
+
+$$
+\sum_hM_h\rho M_h^\dagger.
+$$
+
+它一般不同于
+
+$$
+\left(\sum_hM_h\right)\rho\left(\sum_kM_k\right)^\dagger.
+$$
+
+后者含交叉项，还未必迹不增，必须另行实现。已经形成正交记录后不去读取它，不会恢复被丢失的相干；相干恢复需要相应联合操作。
+
+<a id="sec-7"></a>
+

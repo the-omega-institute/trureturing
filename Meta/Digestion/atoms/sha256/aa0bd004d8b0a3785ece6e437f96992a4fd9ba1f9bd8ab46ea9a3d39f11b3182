@@ -1,0 +1,41 @@
+#### 定理 4.2（明确端口条件下的单门型通用性）
+
+假设可以把同一个固定 $G$ 作用到任意指定的有序逻辑比特对，并供应计算基辅助位 $\lvert 0\rangle,\lvert 1\rangle$。除这些初始化、端口调用和重复使用外，不供应其他任意酉门。则对每个有限 $n$，该模型的有限 $G$ 电路在 $\operatorname{PU}(2^n)$ 上稠密。
+
+**证明。**
+
+<strong>单比特操作由同一门供应。</strong>选择端口置于 $\lvert 0\rangle$ 或 $\lvert 1\rangle$，分别在数据上精确实现 $A$ 或 $B$，且辅助位保持原计算基态、与数据不纠缠，可再次使用。定理[3.2](#thm-dense)遂给每个数据位的完整 $\operatorname{SU}(2)$ 闭包。这里的连续局部操作来自有限固定门的闭包，不是额外的可调资源。
+
+<strong>两比特相互作用不消失。</strong>置 $D=A^{-1}B$，有
+
+$$
+G=(I\otimes A)\bigl(\lvert 0\rangle\langle 0\rvert\otimes I+\lvert 1\rangle\langle 1\rvert\otimes D\bigr).
+$$
+
+$\operatorname{Tr} D=\varphi^{-2}$，故 $D\in\operatorname{SU}(2)$ 非标量。适当局部共轭将其对角化为 $e^{i\theta Z}$，$0<\theta<\pi$。移去闭包中已有的局部因子后，闭包包含
+
+$$
+E_\theta=\exp[-i(\theta/2)Z\otimes Z],
+$$
+
+因为受控 $e^{i\theta Z}$ 等于
+$\exp[i(\theta/2)I\otimes Z]E_\theta$。
+共轭一个局部 Lie 生成元给
+
+$$
+\operatorname{Ad}_{E_\theta}(iI\otimes X)
+=i\cos\theta\,I\otimes X+i\sin\theta\,Z\otimes Y.
+$$
+
+由 $\sin\theta\ne0$，闭包的 Lie 代数包含 $iZ\otimes Y$。
+与已有局部 Pauli 生成元取交换子，即产生全部九个
+$i\sigma_a\otimes\sigma_b$；再加六个局部生成元，张成 $\mathfrak{su}(4)$。因此两比特闭包包含 $\operatorname{SU}(4)$。
+
+<strong>扩展到有限寄存器。</strong>任意有序对可调用，故任意两位置上都有上述全部相互作用。由 Pauli 字串归纳：已有某支持集上的非恒等字串时，选支持内一位与新增一位的双位 Pauli，让共有位置的两个 Pauli 反交换；两生成元的交换子产生扩大一位的 Pauli 字串，再用局部共轭选择各轴。于是得到全部 $4^n-1$ 个非恒等 Pauli 生成元，张成 $\mathfrak{su}(2^n)$。有限维闭包含整个 $\operatorname{SU}(2^n)$，因而射影稠密。逆门始终可由 $G^9$ 供应。
+
+∎
+
+此架构要求选择端口既能在调用局部门时固定为计算基值，也能在调用两比特相互作用时承载量子相干态。如果该端口永远只允许经典选择，所有数据作用都只是分别的 $A,B$，上述多比特通用性不成立。
+
+<a id="statement-4-3"></a>
+

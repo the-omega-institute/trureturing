@@ -1,0 +1,2 @@
+最后 $T_E-\mathcal L_E=\mathcal L_E(\Phi_E-\operatorname{id})$，而 $\|\mathcal L_E\|_\diamond=\|E\|$，即得 (86.1)。这里复用《AURIC_FIB_APPROXIMATE_ONLINE_RECOVERY_MEMORY》定理 40.1 中的居中 Hermitian Kraus 恒等式和完全正范数工具；新增估计是 (86.3)–(86.4) 的全向量方差控制，取代固定维数的迹上界。∎
+

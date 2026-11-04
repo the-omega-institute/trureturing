@@ -1,0 +1,71 @@
+**Editorial note — equation (11) remains a qualified bridge.** The cited Lacey–Petermichl–Reguera paper supplies a weighted Hilbert-transform theorem for $A_2$ weights, but $W(\xi)\asymp\log(e+|\xi|)$ by itself does not instantiate the $A_2$ test or the exact interval-truncation/finite-cell-mean composition used here. A complete proof must show the Fourier-side truncation identity, boundedness of the finite-rank cell-mean correction on the chosen $H_W$ completion, and the duality map into the $P$-energy space. The density sentence also needs a fixed smooth target, approximation in the completed norm, and a diagonal passage through the nested atomic/step spaces; an arbitrary uniform bounded-variation assertion is insufficient. The signs and conjugations in the integration-by-parts residual identity require the distributional $K'$, endpoint terms, and the zero-cell constraints to be checked together. Accordingly, $\mathcal E_k\to0$, (11), and the downstream lower bound are retained as author claims but remain `ASSUMED-UNVERIFIED` pending those bridges.
+
+这里需要区分两个命题：
+
+$$
+\mathcal R_k\to0
+$$
+
+已经由变分逼近的能量收敛得到；但它本身不能直接推出未加权的 $L^2$ 残差趋零。
+
+式 (6) 的权重恰好补上这一点。
+
+令
+
+$$
+W(\xi)=1+m(\xi),
+$$
+
+并定义
+
+$$
+\|F\|_{H_W}^2
+=
+\frac1{2\pi}\int W(\xi)|\widehat F(\xi)|^2\,d\xi.
+$$
+
+考虑投影
+
+$$
+\mathcal T_0F
+=
+\mathbf1_I F
+-
+\sum_{\text{粗格 }J}
+\mathbf1_J\frac1{|J|}\int_JF.
+$$
+
+这个算子把全线函数送入“支撑在 $I$、每个粗格均值为零”的空间。
+
+由 $W(\xi)\asymp\log(e+|\xi|)$，$W$ 是 $A_2$ 权重。区间截断在 Fourier 端可表示为调制后的 Hilbert 变换之差，所以它在 $H_W$ 上有界；有限个格均值修正也是有界算子。这里使用的加权 Hilbert 变换定理，可以在 Lacey–Petermichl–Reguera 的论文中找到直接证明。[arxiv.org](https://arxiv.org/pdf/0906.1941?utm_source=chatgpt.com)
+
+因此存在固定常数 $C_{\mathcal T_0}<\infty$，使
+
+$$
+\|\mathcal T_0F\|_P
+\leq C_{\mathcal T_0}\|F\|_{H_W}.
+$$
+
+对偶化后，
+
+$$
+\boxed{
+\mathcal E_k
+\preceq
+C_{\mathcal T_0}^2\mathcal R_k^*\mathcal R_k.
+}
+$$
+<a id="eq-11"></a>
+<div class="equation-caption">Equation (11).</div>
+
+于是 $\mathcal R_k\to0$ 蕴含 $\mathcal E_k\to0$。
+
+这里没有遗漏完成空间：先用光滑函数逼近，再截断到窗口、去除粗格均值，最后用阶梯函数逼近，即可得到原有限原子读出的能量稠密性。阶梯逼近的统一有界变差给出 $O(|\xi|^{-1})$ 的 Fourier 尾，足以支配对数权重积分。
+
+定理得证。
+
+**一个实用的细节是：式 (7) 中的常数已经明确给出，并不需要知道上述 Hilbert 变换算子的具体范数。后者只用于证明误差最终趋零。**
+
+---
+
+<a id="section-4-finite-frequency-envelope"></a>

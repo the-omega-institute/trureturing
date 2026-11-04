@@ -1,0 +1,16 @@
+**Definition 6.2 (The complementary exact optimizer problem).** For each
+fixed integer triple $2\le a\le b\le c$ with $c\ne a+b$, the
+complementary exact problem is to determine $M_{a,b,c}$ and the set
+
+$$
+\mathcal E_{a,b,c}
+=\{g\in\mathcal P_{a,b,c}:F(g)=M_{a,b,c}\},
+$$
+
+including whether this set is empty. Theorem 4.3 proves the strict
+gap $M_{a,b,c}<U_n$, and Proposition 6.1 gives an additional upper
+estimate when $c>a+b$. Neither determines the exact smaller value
+or the positive attainment and equality classification for these
+triples. Theorem 5.1 transfers precisely this remaining problem
+to every positive resistance level.
+

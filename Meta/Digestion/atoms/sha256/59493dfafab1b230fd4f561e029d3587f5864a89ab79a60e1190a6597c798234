@@ -1,0 +1,8 @@
+**Definition 3.3 (Scope of the unrestricted threshold problem).** A finite word $w$ is rich if it has exactly $|w|+1$ distinct palindromic factors, including the empty word; an infinite word is rich if every finite factor is rich. Let $\mathcal C_d$ be all one-sided infinite rich words over an alphabet of $d$ letters, without additional recurrence, morphicity or aperiodicity conditions. Put
+
+$$
+RT(\mathcal C_d)=\inf_{x\in\mathcal C_d}E(x).
+$$
+
+The unrestricted target is $`RT(\mathcal C_d)=E^*(u_{2d-1})`$ for every $d\ge2$, as in source Conjecture 3. With $d=r+1$, Corollary 3.1 constrains candidate morphic families for its upper inequality. It supplies a necessary restriction: it neither constructs such a family nor proves the lower inequality for all of $\mathcal C_d$. Corollary 3.2 gives no sufficiency statement for spectral cancellation, richness or an ordinary exponent bound.
+

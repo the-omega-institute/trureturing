@@ -1,0 +1,21 @@
+**定义 1.2（同一实际律上的两种观察）。** 令
+
+$$
+X=\{x\in\{0,1\}^{\mathbb Z}:x_jx_{j+1}=0\ \text{对所有 }j\in\mathbb Z\},\qquad
+(Tx)_j=x_{j+1},\qquad X_j(x)=x_j.
+$$
+
+$[w]_a$ 表示从整数位置 $a$ 起出现词 $w$ 的柱集。$P$ 是 $X$ 上的平稳 Borel 概率律，$P_n$ 是它在原位点 $1,\ldots,n$ 上的实际边缘。置
+
+$$
+\begin{aligned}
+\mathcal E_i&=\sigma(X_j:j\ne i),& F_i&=\{X_{i-1}=X_{i+1}=0\},\\
+\mathcal F_r&=\sigma(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r),& r&\ge1,\\
+\eta&=\mathbb E_P[X_0\mid\mathcal E_0],&\eta_r&=\mathbb E_P[X_0\mid\mathcal F_r],\\
+E_r(P)&=\mathbb E_P[(X_0-\eta_r)^2].
+\end{aligned}
+\tag{1.2}
+$$
+
+后验只按各自实际律的几乎处处等价类解释。特别地，参数 $q$ 不表示后验。合法性给出 $\eta=0$ 于 $F_0^c$。
+

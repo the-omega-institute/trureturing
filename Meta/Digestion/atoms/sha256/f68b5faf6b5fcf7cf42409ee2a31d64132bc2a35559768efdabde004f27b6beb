@@ -1,0 +1,21 @@
+**Theorem 10.4 (unbounded finite-certification obstruction and truthful-path scope).** Remove the supplied original-depth bound and allow arbitrary adaptive requests of strictly positive rational radii. No policy under Definition 10.1 can both stop finitely and recover the exact original word for every finite original history and every admissible error sequence.
+
+More precisely, fix any finite truthful transcript, meaning that at each read its rational report is the exact current response of one original source, while its certified radius is strictly positive. For every finite chronological prefix $v$ and every integer $N\ge0$, that same finite transcript is compatible with an original word $w'$ beginning with $v$ and satisfying $|w'|>N$. Thus, even restricted to nonempty original histories, a finite truthful transcript certifies neither the first ancestral $L/R$ letter nor any finite upper bound on the original depth, and hence neither the exact depth nor the exact original word. These assertions concern original ancestry, not the known probe letters in the controller's own transcript.
+
+Proof. Let $x$ be the original rational on the truthful path, with read radii $\epsilon_1,\ldots,\epsilon_m>0$ and chronological probe prefixes $u_1,\ldots,u_m$. If $m>0$, choose $\eta>0$ smaller than every $\epsilon_i$; if $m=0$, choose any $\eta>0$. Each $f_{u_i}$ is nonexpansive by (10.6), so every positive rational $z$ with $|z-x|<\eta$ satisfies
+
+$$
+|f_{u_i}(z)-y_i|
+=|f_{u_i}(z)-f_{u_i}(x)|
+\le |z-x|<\epsilon_i.
+\tag{10.8}
+$$
+
+Induction through the given finite transcript shows that its very same reports are admissible from $z$: preceding reports agree, so the deterministic controller requests the same precision and takes the same actions. Each named action is legal and has the same name-only label. This induction also preserves a stopping decision if it occurs at the end of the transcript. It does not assume continuity of the controller's choices as functions of a report; the reports themselves are identical.
+
+For the prefix assertion use the classical descendant-density result of Alkauskas–Steuding, *Statistical properties of the Calkin–Wilf tree: real and $p$-adic distribution*, [arXiv:0801.0054v2](https://arxiv.org/abs/0801.0054v2), Corollary 3: every nonempty open interval in $\mathbb R_{>0}$ contains a node reached by continuing any prescribed finite Calkin–Wilf path. Its left and right children are exactly Definition 6.1's chronological actions. This is density for chronological descendants; no Stern–Brocot prefix identification is used.
+
+There are only finitely many rationals in $Q_N$. Choose a nonempty open interval inside $(x-\eta,x+\eta)\cap\mathbb R_{>0}$ avoiding $Q_N$ and $x$. The cited density applied to the prefix $v$ gives $z=B(w')$ in this interval, with $w'$ extending $v$. Theorem 6.2 and $z\notin Q_N$ imply $|w'|>N$. Equation (10.8) and the transcript induction give the claimed compatibility. In particular take $v=L$ and $v=R$ to obtain the two first-letter possibilities, and let $N$ be any proposed finite depth upper bound. This is a finite-path proof with strictly positive slack, not an assertion that every nontruthful boundary-saturating transcript has these ambiguities.
+
+Finally suppose an all-source always-correct policy also always stops finitely. Run it on the original root with truthful reports, an admissible error sequence. Its promised finite stopping supplies such a finite transcript. The compatibility just proved supplies a different finite original word with the identical stopped transcript and hence the identical output, contradicting correctness. Arbitrarily small adaptively chosen positive radii do not change this argument: a finite truthful path has only finitely many of them, with a positive minimum. The conclusion does not address an infinite reading sequence, a zero-radius read, a supplied finite original-depth bound or a stronger joint channel. $\square$
+

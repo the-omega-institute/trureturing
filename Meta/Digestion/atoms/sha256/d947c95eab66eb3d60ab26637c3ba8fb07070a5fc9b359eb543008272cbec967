@@ -1,0 +1,40 @@
+**Correspondence 8.2 (mature allocation and enumeration).** Finite
+prefix-subtree sets are laminar: two intersecting prefix subtrees are
+nested. Fife and Oxley,
+[*Laminar Matroids*, arXiv:1606.08354v1](https://arxiv.org/html/1606.08354v1),
+abstract and introduction, give the capacity-defined independent-set
+framework for laminar families. Thus finite laminar capacity allocation
+is mature mathematics. The descent and ordering argument inside Theorem
+2.1 is not a new generic matroid theorem; it supplies the particular
+floor quotas, token lower bounds and strict-ancestor slack needed by the
+native simultaneous induction.
+
+Cover, [*Enumerative Source Encoding* (1973)](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf),
+§I Propositions 1–2 and its inverse algorithm,
+[doi:10.1109/TIT.1973.1054929](https://doi.org/10.1109/TIT.1973.1054929),
+supplies finite set indexing and inversion. Enumeration and pigeonhole
+counting are not new claims. They alone do not provide literal-prefix
+coherence over the native predecessor partition.
+
+Seroussi and Weinberger,
+[arXiv:1412.2192v1, Procedure E1 and Theorem 1](https://arxiv.org/html/1412.2192v1),
+use type-class indexing for universal fixed-to-variable random-number
+generation and expected output-length optimality. Zhou and Bruck,
+[arXiv:1209.0730v1, the status-tree construction and Definition 1](https://arxiv.org/html/1209.0730v1),
+retain a status tree for streaming unbiased output. Kaspi and Merhav,
+[arXiv:1301.0079v1, the zero-delay contract and Theorem 1](https://arxiv.org/html/1301.0079v1),
+use causal instantaneous coding in a rate/distortion setting. Their
+probabilistic objectives, retained states or instantaneous-code contracts
+are different from this full-fibre complete-word worst-case recovery
+problem; those statements do not establish (IV.5).
+
+The repo-derived increment is the simultaneous native floor-quota
+construction, its exact per-source complete-word minimax consequence,
+and the conditional mapping to the unchanged acquired service and four
+returned expressions. The suppliers above do not state that conjunction.
+This is a source-specific synthesis, with no worldwide-priority or
+exhaustive-literature claim. The proofs are ordinary mathematical
+arguments; no new Lean declaration or kernel certification is asserted.
+The weaker ceiling guarantee, installed rewriting/ordinal/weighted
+alternatives and fixed-width obstruction retain their respective scopes.
+

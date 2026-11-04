@@ -1,0 +1,38 @@
+**Definition 8.2 (pure C histories and robust algorithms).** Let
+$\mathcal W$ be all finite legal successful addressed native words from
+alpha, including the empty word. For $w\in\mathcal W$ of length $n$,
+execute its successful clocked growths after the paid seed, with no
+extra field interventions during encoding. Its field obeys the existing
+post-clock recurrence
+
+$$
+x_\varepsilon=1,\qquad x_{wg}=T_{t(wg)}\iota_gx_w.
+\tag{8.2}
+$$
+
+No old serial word or predictor is supplied at handoff. The current
+geometry/terminal correspondence is earned as in Assumption 2.3, and
+$n=I(t(w))$ is therefore known without knowing the old serial order.
+All coordinates of $x_w$ are positive, its denominators divide $8^n$,
+and $0<x_{w,v}\le\lambda^n$. These are AAII §§85 and 90 on exactly
+this recurrence and seed.
+
+A robust recovery policy is a causal algorithm whose next acquired
+input, local computation and stopping/output decision depend only on
+its installed program, earned context, its own optional fixed random
+tape and actual received complete record. It may request any legal
+finite controls in the complete C menu, including arbitrary rational
+Adds, Reset, further growth, refused probes, Holds and extra Ticks.
+It must return the original successful word $w$ correctly and terminate
+after finitely many operations for every $w$ in its asserted domain and
+every legal sequence of nuisance choices. A precision cap $B$ means
+every valid Read in every such execution uses $p\le B$. Local and
+provider storage, input generation and all additional calls remain paid.
+Pointwise finite termination is required; no common stopping-time bound
+is assumed. For a randomized policy the pathwise version requires these
+properties for every fixed random tape. No almost-sure assertion is
+substituted for this version.
+The lower bound below applies even when the seed's precision-one Read is
+excluded from the recovery policy's cap. A cap for the whole installed
+run must also cover that seed Read; the attained upper bound includes it.
+

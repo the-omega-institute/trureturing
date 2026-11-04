@@ -1,0 +1,39 @@
+**Theorem 22.4 (authentic operator-image correspondence and reversibility).**
+On every authentic input in $\mathscr R_d$, the accepted operator domain is
+exactly
+
+$$
+\mathcal O_s=
+ \{(x^{A_v},x^{B_v}):v\text{ is genuinely core-only in the original source}\}
+\tag{PCR.55}
+$$
+
+when $r>0$, with the stated zero-tag interpretation at $r=0$.
+The operator-to-code and code-to-operator maps are inverse between
+$\mathcal O_s$ and the valid codes. Its cardinality is exactly $K_s$.
+These assertions include zero, constants, all allowed singular transients,
+nonminimal private presentations and arbitrary repeated core factors.
+
+Proof. Synthesis identifies the entire original stream by GPO Lemma 29.2;
+the coprime decomposition and Theorem 18.2 therefore compute its actual
+seeds. Theorem 17.2 lifts every edge out of a seed to the corresponding
+literal physical child in that same source. Conversely every genuinely
+core-only address has a unique seed prefix by (PCR.43), so it supplies a
+seed-reachable graph path. Thus (PCR.54) is exactly $R_s$, in both
+directions. A shortest witness needs at most $N-|E_s|$ edges, hence is
+within the chosen reachability horizon. Shortening preserves only its
+endpoint: it can change both its address and its positive normalization
+time. A requested original witness's time must instead be evaluated along
+that witness by (PCR.47).
+
+By (PCR.28), $u\mapsto x^u$ is a bijection from $\mathbb Z/p\mathbb Z$
+onto $\langle x\rangle$. The explicit scan in Definition 22.3 terminates
+and computes its inverse for arbitrary supplied coefficients, rejecting
+elements outside this subgroup. Composing this bijection in both
+coordinates with the two realization directions for $R_s$ proves
+(PCR.55). In particular an accepted pair has an actual source cone and
+every actual safe cone's pair is accepted. Ordered enumeration gives
+inverse residue rank/unrank, and quotient powering gives inverse operator
+coding/decoding. At $p=1$, $R_s=\{(0,0)\}$; both constants have $K_s=1$,
+with the zero tag only for the zero core. $\square$
+

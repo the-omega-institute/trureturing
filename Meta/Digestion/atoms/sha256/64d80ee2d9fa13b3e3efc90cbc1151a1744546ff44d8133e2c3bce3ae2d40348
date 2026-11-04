@@ -1,0 +1,32 @@
+**Definition 31.1 (the three readiness questions).** Fix one authentic
+class $\mathscr C=\mathscr R_d$ or $\mathscr M_K$ and the actual
+common service of Definition 27.1. At a completed cut $n\ge2$,
+consider three recovery tasks from the current incidence, or equivalently
+its terminal boundary:
+
+- recover the whole current labelled physical tree $X_n$;
+- answer the original $\mathcal Q_1$ of Definition 24.1 at this
+  very cut, before making its next update;
+- supply the complete finite future presence/update behavior at this
+  cut: for every finite serial word of literal presence queries and
+  real updates, give all presence replies and the resulting physical
+  supports and labelled trees, including absent-word replies. Equivalently
+  serve these data along every finite adaptive policy using only actual
+  replies and its independently supplied local inputs.
+
+The last task has no bound on the chosen finite number of updates or
+query-word length. It includes every such finite continuation of this
+same source, rather than a separately chosen law for each experiment.
+LocalStep and stop have their usual source-free effect. The specified
+successor is the physical tree; private generator state names, its
+implementation work, observer program counter, hidden writer and durations
+are not additional coordinates of this behavioral task. Equality of
+private presentations is not required. Actual execution and payment of
+operations remain distinct from a hypothetical evaluator's prediction.
+
+For an attained visible word $w=z_1\cdots z_{v_n}$, write
+$\mathscr C[w]$ for its compatible infinite streams. Individual
+readiness means that the desired answer is constant over this fiber.
+Uniform readiness at $n$ means that one effective recovery rule works
+for every source in the promised class at that cut.
+

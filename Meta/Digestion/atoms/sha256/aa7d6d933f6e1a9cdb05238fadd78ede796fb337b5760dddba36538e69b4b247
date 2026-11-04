@@ -1,0 +1,14 @@
+**推论 83.2（固定 finite catalogue 的正 slack margin）。** 对定理 83.1 中固定 $q$ 与固定 $N\ge2$ 个不同 phases，存在 $\delta_*>0$，使得只要 $0\le\delta<\delta_*$，要求每个任务的 error 不超过 $\eta+\delta$ 仍恰需 $N$ 个 dictionary labels。
+
+**证明。** 对每一 pair 定义
+
+$$
+\delta_{ij}=\min_{\mathcal D\ {\rm CPTP}}
+ \max\{L_{2,\mathcal D}(E_{\varphi_i})-\eta,
+         L_{2,\mathcal D}(E_{\varphi_j})-\eta\}.
+$$
+
+两个 terms 均非负；compact Choi set 上 minimum 达到。若 $\delta_{ij}=0$，同一 minimizer 就违反定理 83.1，故 $\delta_{ij}>0$。有限个 pairs 的 minimum $\delta_*$ 为正。若某 label 含两个 tasks 且都达到阈值 $\eta+\delta$，则 $\delta_{ij}\le\delta<\delta_*$，矛盾。individual optimal maps 给出 matching sufficiency。∎
+
+$\delta_*$ 依赖整个 finite catalogue 与 $q$；此证明不给出 uniform phase-separation-free margin、$q\downarrow0$ margin 或一般 positive-slack capacity。$q=0$ 时所有 phases 是同一 $P$，一个 decoder 达到零。若另外规定 labels 用长度 $\ell$、禁止相邻 $11$ 的 data words 编码，前置固定 seam $0$ 不计入 $\ell$ 且无其他端点条件，则仅该静态编码的可用 word 数为 $F_{\ell+2}$，故条件为 $F_{\ell+2}\ge N$。这是 §76 的同一 Fibonacci counting，未计任务取得或在线更新。
+

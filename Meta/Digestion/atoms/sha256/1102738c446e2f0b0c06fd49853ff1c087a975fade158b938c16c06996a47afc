@@ -1,0 +1,55 @@
+#### 定义 2.1（五模式纤维）
+
+取模式
+
+$$
+
+\Sigma=(0,1,2,3,13)=(000,100,010,001,101),
+
+$$
+
+其中位串按左、中、右排列。几何坐标按左、右、中排列：
+
+$$
+
+v_0=0,\quad v_1=e_x,\quad v_2=e_z,\quad
+v_3=e_y,\quad v_{13}=e_x+e_y.
+
+$$
+
+对概率律 $p$，记
+
+$$
+
+X=p_1+p_{13},\quad Y=p_3+p_{13},\quad Z=p_2,
+\quad R=1-Z,\quad\kappa=p_{13}.
+
+$$
+
+给定可行 $(X,Y,Z)$，所有完成构成闭区间纤维
+
+<a id="eq-fiber"></a>
+
+$$
+
+p_\kappa=(R-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\tag{1}
+
+$$
+
+<a id="eq-endpoints"></a>
+
+$$
+
+\kappa_-=\max(0,X+Y-R),\qquad
+\kappa_+=\min(X,Y).
+\tag{2}
+
+$$
+
+其中 $0\le Z\le1$、$0\le X,Y\le R$。$R=0$ 时只有模式 $2$，纤维退化。
+
+<a id="statement-2-2"></a>
+
+<a id="thm-triangulation"></a>
+

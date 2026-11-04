@@ -1,0 +1,56 @@
+**Definition 135.1 (the unchanged source and the full marginal partition class).** Retain the entire telescope of Definition 134.1, including (134.1)–(134.12), all its original hypotheses and the complete inherited suppliers of Appendix II §§115–117, 123–125 and 133. Thus $a,\eta,d>0$ are arbitrary original finite parameters, $G=H^1\times\mathbb R$ has the product in (134.1), $e=(0,0,0,0)$, and the raw Haar measure is $d\mu=dx\,dy\,dz\,d\zeta$. The original unit-source field satisfies $L\Gamma=\delta_e$, with $X_1=\partial_x$, $X_2=\partial_y+x\partial_\zeta$, $X_3=\partial_z$, $L=-\sum_{r=1}^3X_r^2$, $D_\zeta=-i\partial_\zeta$ and $g_c=16\sqrt{a\eta}$. Keep the coefficient-one vector $w_*$, the coefficient-positive normalization $h=w_*/\|w_*\|_{L^2(\mu)}$, and precisely the actual selector
+
+$$
+\begin{gathered}
+S=(aL+\eta D_\zeta^2-g_c\Gamma)|_{C_c^\infty(G\setminus\{e\};\mathbb C)},\qquad
+\rho=\frac{A_{\rm src}(h)}{C_{\rm src}(h)},\qquad C_{\rm src}(h)>0,\\
+D(H_{\rm end})=\{u\in D(S^*):A_{\rm src}(u)=\rho C_{\rm src}(u)\},\qquad H_{\rm end}u=S^*u,\\
+m=h^2\mu,\qquad m(G)=1,\qquad U_hv=hv,\qquad
+K=U_h^{-1}H_{\rm end}U_h\ge0,\qquad T_s=e^{-sK}.
+\end{gathered}
+$$
+
+The source coefficients and central units are those already fixed in Definition 134.1. The full form domain is still $\mathscr V=\mathscr V_0\dotplus\mathbb C1$ with the closure and energy in (134.3); it is not its killed part. The measure $m$ is the same nonatomic Borel probability, absolutely continuous with respect to the raw Haar measure, with $m(\{e\})=0$. The actual conservative diffusion starts at $e$ at original time zero, and the three observation epochs remain $2d,3d,4d$. Its supplied real densities satisfy
+
+$$
+g_s>0\quad m\text{-a.e.},\qquad
+g_s\in L^2(m),\qquad \int_Gg_s\,dm=1,\qquad
+g_{s+r}=T_rg_s\quad(s>0,\ r\ge0).
+$$
+
+Conservation, self-adjointness, positivity improvement at every positive time, and $\ker K=\mathbb C1$ are the original endpoint and source suppliers. In particular $T_s1=1$ and the real $L^2(m)$ subspace is preserved. The finite bound needed below is exactly Theorem 133.2 for this fixed tuple; no parameter-uniform estimate is assumed. Set, as before,
+
+$$
+P=T_d,\qquad g=g_{2d},\qquad
+M=1+\|g_d\|_{L^\infty(m)}<\infty,\qquad c=\frac1{4M},
+$$
+
+and allow any real Borel representative $b$ with $[b]=g_d$ and $0<b\le M$ at every point of the whole $G$. With $\mathcal L=\{0,1,3,B\}$ keep
+
+$$
+f_3=cb,\qquad f_B=\frac14,\qquad
+f_0=f_1=\frac{3/4-cb}{2},\qquad
+\mathcal C(u,v,w)=\int_Gg\,u\,P(vPw)\,dm.
+$$
+
+Define $\mathscr D_{12}(a,\eta,d,b)$ to consist of single pointwise Borel partitions $D=(D_y)_{y\in\mathcal L}$ of the whole $G$, pairwise disjoint with union $G$, satisfying all twelve equalities
+
+$$
+\int_Gg_{rd}\mathbf1_{D_y}\,dm
+=\int_Gg_{rd}f_y\,dm
+\qquad(r\in\{2,3,4\},\ y\in\mathcal L).
+$$
+
+In the fixed order $(0,1,3,B)$, distinguish the prescribed stochastic slice and the actual partition slice:
+
+$$
+\begin{aligned}
+A^f_{yz}&=\mathcal C(f_y,f_z,f_3),\\
+q_D&=P\mathbf1_{D_3},\\
+A^D_{yz}&=\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_3})
+=\int_Gg\mathbf1_{D_y}P(\mathbf1_{D_z}q_D)\,dm.
+\end{aligned}
+$$
+
+All pairings and matrix ranks below are real. In particular $q_D$ is the actual terminal factor in $A^D$; the propagation identity $Pf_3=cg$ describes the prescribed readout and does not identify $q_D$ with $cg$.
+

@@ -1,0 +1,61 @@
+**定理 42.2（实际全树来源的精确 0/1 刚性）。** 若只保留 (42.1) 中的 Hermitian
+条件、全比较 $\rho$ 保留和全部四元组的精确乘法，则对任意 $s,t\in T$，
+
+$$
+K(s,t)\in\{0,1\}.
+\tag{42.3}
+$$
+
+因此定理的 0/1 结论本身不消费正性、归一化或 faithfulness；这些条件仍是原核模型的独立输入，
+在下述 Hilbert 解释和忠实特例中才被消费。
+
+**证明。** 先置
+$f_n(u):=K(\alpha,\rho^n u)$，并令 $a_n=f_n(\alpha)$。由 (42.1) 的 $\rho$ 保留两次、
+(42.2) 及精确乘法，
+
+$$
+\begin{aligned}
+a_n
+ &=K(\rho^2\alpha,\rho^{n+2}\alpha)\\
+ &=K(\langle\beta,\alpha\rangle,
+       \langle\rho^{n+1}\alpha,\rho^n\alpha\rangle)\\
+ &=K(\beta,\rho^{n+1}\alpha)K(\alpha,\rho^n\alpha)
+ =a_n^2.
+\end{aligned}
+$$
+
+复数方程 $z=z^2$ 只有 $z=0,1$ 两个解，故每个 $a_n$ 都在这两个值中。因为
+$\beta=\rho\alpha$，有 $f_n(\beta)=a_{n+1}$。若 $s,t\in T$，再次用两次 $\rho$ 保留、
+$\rho^2\alpha=\langle\beta,\alpha\rangle$ 和精确乘法，得到递推式
+
+$$
+f_n(\langle s,t\rangle)
+ =K(\beta,\rho^{n+2}s)K(\alpha,\rho^{n+2}t)
+ =f_{n+1}(s)f_{n+2}(t).
+\tag{42.4}
+$$
+
+对 $u$ 的自由树结构作归纳，(42.4) 与两个叶子的结论给出
+$f_n(u)\in\{0,1\}$ 对所有 $n,u$ 成立。因此
+$K(\alpha,u)=f_0(u)\in\{0,1\}$。
+
+还需处理首项为 $\beta$ 的比较。对叶子，Hermitian 性、$\beta=\rho\alpha$ 和上面的结论给出
+$K(\beta,\alpha),K(\beta,\beta)\in\{0,1\}$。对 $u=\langle s,t\rangle$，轨道恒等式 (42.2)
+（用于 $\beta=\rho\alpha$）和两次 $\rho$ 保留给出
+
+$$
+\begin{aligned}
+K(\beta,\langle s,t\rangle)
+ &=K(\langle\rho\beta,\beta\rangle,
+       \langle\rho^2s,\rho^2t\rangle)\\
+ &=K(\rho\beta,\rho^2s)K(\beta,\rho^2t)\\
+ &=K(\alpha,s)K(\alpha,\rho t)
+ =f_0(s)f_1(t)\in\{0,1\}.
+\end{aligned}
+\tag{42.5}
+$$
+
+最后对 $s,t$ 的总节点数作强归纳。若首项是叶子，已由 (42.4) 和 (42.5) 处理；若两者
+都是内部节点，精确乘法把比较化为两个严格更小的比较；若首项是内部节点而末项是叶子，
+Hermitian 性把它化为已处理的叶子首项并取共轭。$0,1$ 在共轭和乘法下闭合，故得到 (42.3)。∎
+

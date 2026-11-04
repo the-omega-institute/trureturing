@@ -1,0 +1,17 @@
+**Corollary 109.4 (finite-alphabet retention, not rational-slot minimality).**
+If each parameter independently ranges over a fixed $2^h$-element rational
+alphabet, $h\ge1$, a complete exact binary supplement to the constant
+designated Boundary must distinguish $2^{kh}$ full-service classes and
+has worst-case length at least $kh$ bits, including parameter-dependent
+lengths, selectors and metadata. This is the existing counting principle
+on the new attained image. It is not a $kh$-Read bound or a $k$-slot
+bound for unrestricted exact rational archives.
+
+**Proof.** Theorem 105.2 separates all $2^{kh}$ cases while Boundary
+merges them. There are only $2^{kh}-1$ binary strings of length at most
+$kh-1$, even allowing variable lengths and the empty string. Thus a
+complete record shorter than $kh$ on every case cannot distinguish
+them. Any separate parameter-dependent metadata belongs to that record.
+Arbitrary nonlinear rational packing has a different alphabet and is
+not excluded by this argument. $\square$
+

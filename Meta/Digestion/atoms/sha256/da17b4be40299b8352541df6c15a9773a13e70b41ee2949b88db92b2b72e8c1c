@@ -1,0 +1,63 @@
+**Proposition 6.1 (Both source-coordinate directions on the original sector).**
+Let $H=\mathbb C^5$ and
+
+$$
+B=\big((e_0+e_3)/\sqrt2,\ (e_1+e_4)/\sqrt2,\ e_2\big),\qquad
+\Pi=BB^\dagger,\qquad P_5=BEB^\dagger.
+\tag{6.1}
+$$
+
+Use the original five-dimensional Kraus operators
+$\widehat K_{\theta,j}$ of V (54.7) and the installed lift
+$\widetilde N=BNB^\dagger+(I_5-\Pi)$ of VI (95.4). The maps
+
+$$
+\mathcal L(X)=BXB^\dagger,\qquad
+\mathcal C(Y)=B^\dagger YB
+\tag{6.2}
+$$
+
+are mutually inverse positive, trace-preserving coordinate maps between
+$M_3$ and the supported sector $\{Y\in M_5:Y=\Pi Y\Pi\}$.
+They preserve every compiled preterminal branch, its substate and
+classical record in both directions. They also preserve both
+probabilities of the single original terminal
+$(P_5,I_5-P_5)$. The actual five-dimensional preparation is the original
+$B\rho_0B^\dagger$ supplied by V Proposition 91.3, without an additional
+preparation choice.
+
+**Proof.** $B^\dagger B=I_3$ gives
+$\mathcal C\mathcal L=\operatorname{id}$ and
+$\mathcal L\mathcal C(Y)=\Pi Y\Pi=Y$ on the stated sector.
+These formulas give positivity, trace preservation on that domain,
+and the same identities for subnormalized matrices. The source's
+intertwining identity is
+
+$$
+\widehat K_{\theta,j}B=BV_j/\sqrt2,\qquad
+\widetilde N B=BN.
+\tag{6.3}
+$$
+
+Thus $\mathcal L A_j(X)=\widehat K_{\theta,j}\mathcal L(X)
+\widehat K_{\theta,j}^\dagger$ and
+$\mathcal L A_N(X)=\widetilde N\mathcal L(X)\widetilde N^\dagger$.
+Compressing gives the converse on every supported branch. In particular
+all those branches stay in the sector. Induction gives the word
+substate correspondence, with the same factor $2^{-k(w)}$.
+The controller sees the same outcome labels, hence traverses the same
+table and makes the same stopping decisions. Finally
+$B^\dagger P_5B=E$ and
+$B^\dagger(I_5-P_5)B=I_3-E$ give both terminal probabilities.
+The comparison law in (3.5) transfers by the same trace identities.
+No approximation is lost in either direction. ∎
+
+Outside $Y=\Pi Y\Pi$, compression followed by lifting gives
+$\Pi Y\Pi$, not $Y$. Thus the converse is not an inverse on arbitrary
+five-dimensional inputs. Compression here is a coordinate map, not an
+installed physical recovery command. The original terminal has supplied
+effects and record probabilities; no particular postmeasurement
+instrument was specified. Accordingly neither Proposition 6.1 nor the
+total-variation bound asserts a postterminal-state inverse, an
+instrument approximation, a diamond-norm bound or a new reference port.
+

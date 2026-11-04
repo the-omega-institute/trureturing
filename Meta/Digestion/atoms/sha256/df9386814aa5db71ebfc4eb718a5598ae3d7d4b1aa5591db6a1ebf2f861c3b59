@@ -1,0 +1,13 @@
+**Corollary 9.2 (Length boundary for every nonempty marker).** Let $r\ge3$. Every attaining pair $(\eta,p)\in\mathcal L_r$ whose output is rich on exactly $r+1$ actual letters satisfies
+
+$$
+H\ge2r+3\cdot2^r-2+\gcd(2,r+1).
+\tag{38}
+$$
+
+In particular, for $r=3$ and four actual letters, $H\ge30$. This is a necessary condition in $\mathcal L_r$, with no assertion of feasibility or sharpness at the lower bound.
+
+*Proof.* Write $H_0=2S_r-2^r=2r+3\cdot2^r-2$. If $m\ge2$, Theorem 8.2 gives $H\ge H_0+(m-1)S_r>H_0$. If $m=1$, the same theorem gives $H\ge H_0$, with equality possible only at $h_0=1$, $h_1=\cdots=h_{r-1}=t=2$. The complete supplied family (19) then gives exactly (34). Theorem 9.1 would force $E(\eta(u))\ge5$, whereas (27) and $\Lambda^r>2^r\ge8$ give $e_r<2+1/7<5$. Hence equality is impossible, and $H>H_0$ for every marker length.
+
+Put $g=\gcd(2,r+1)$. Formula (33) shows that $g$ divides $H$. The same formula at the positive cancellation row (34) shows that $g$ divides $H_0$. Therefore the strict integer inequality $H>H_0$ implies $H\ge H_0+g$, proving (38). For $r=3$, $H_0=28$ and $g=2$. The distinction between $m=1$ and $m\ge2$ was only a proof by cases; the corollary imposes no global minimum-marker assumption. $\square$
+

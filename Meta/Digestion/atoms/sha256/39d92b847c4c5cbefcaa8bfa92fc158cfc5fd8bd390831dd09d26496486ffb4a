@@ -1,0 +1,20 @@
+**Theorem 5.3 (A two-label enlargement beats the entire specified family).** Let $\kappa>2\sqrt2$ and take any sequence (1.2). For all sufficiently large $n$, the actual law
+
+$$
+|C|=a_n+2,\qquad |D|=h_n-1,\qquad
+x_C=\frac{a_n-1}{a_n+1},\qquad
+x_{\{d\}}=\frac{2}{(a_n+1)(h_n-1)}\quad(d\in D),
+\tag{5.6}
+$$
+
+with all other masses zero, has strictly smaller energy than every member of $\mathcal S(a_n,h_n)$. Its limiting normalized gap is $\kappa^2/2+6$, strictly below the family minimum limit $\kappa^2+2$.
+
+**Proof.** The conditions $a\ge2$, $h\ge2$ make (5.6) precisely (3.1) with $j=2$, so its mean, positive actual marginals and exact energy follow from Theorem 3.1. The normalized energy difference between it and the minimum of $\mathcal S(a,h)$ tends, by (3.3) and Proposition 5.2, to
+
+$$
+\left(\frac{\kappa^2}{2}+6\right)-(\kappa^2+2)
+=4-\frac{\kappa^2}{2}<0.
+$$
+
+The difference is therefore strictly negative eventually, proving comparison against the entire explicitly defined family, including its interior parameters. This conclusion concerns the growing-surplus regime and does not assert a failure of any fixed-$h$ endpoint theorem. ∎
+

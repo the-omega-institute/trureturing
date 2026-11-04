@@ -1,0 +1,36 @@
+### 16.9 顺序、干涉与理论闭合
+
+若结果 $e$ 后接完整条件菜单 $\{N_{f|e}\}_f$，则
+
+$$
+M_{ef}=N_{f|e}M_e,\qquad
+\sum_fM_{ef}^*M_{ef}=M_e^*M_e.
+$$
+
+因此细化结果求和回到原效果，理论在顺序接续下闭合。
+已声明独立复合的过程由张量积接续；保留或忽略正交记录由直和与偏迹处理。
+这些组合仍满足完全正性和总量条件。
+
+对同一相干分支，
+
+$$
+\left\lVert M(x+y)\right\rVert ^2
+=\left\lVert Mx\right\rVert ^2+\left\lVert My\right\rVert ^2
++2\operatorname{Re} \langle Mx,My\rangle .
+$$
+
+相位改变交叉项，产生干涉。
+相同二次式的三条路径包含--排除组合恒为零：
+
+$$
+\begin{aligned}
+I_3={}&w(x+y+z)-w(x+y)-w(x+z)-w(y+z)\\
+&+w(x)+w(y)+w(z)=0,
+\end{aligned}
+$$
+
+其中 $w(v)=\left\lVert Mv\right\rVert ^2$。
+该结论比较同一个固定过程与一致路径组合；
+若堵住路径时改变整个仪器，已经改变了被比较的映射，不能直接套用。
+两门也不必交换，故历史顺序通常不能从过程地址中删去。
+

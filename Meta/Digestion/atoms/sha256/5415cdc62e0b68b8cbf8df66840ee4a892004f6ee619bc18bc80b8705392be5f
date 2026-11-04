@@ -1,0 +1,6 @@
+**Proposition 79.4 (native realizations of the three cases).** The first specimen of NLBAII §71.1, $u=\langle\beta,\langle\beta,\alpha\rangle\rangle$, realizes both $g=1$ and $g=2$ for different omitted pairs. The term $u=\langle\beta,\langle\beta,\beta\rangle\rangle$ realizes $g=3$.
+
+**Proof.** On the first specimen the terminals are $LL,RLL,RR$. Omit $RLL,RR$: their path is $RLL,RL,R,RR$, with $d=3$ and sole attachment $j=2$, so $g=\gcd(5,3)=1$. Omit instead $LL,RR$: the path is $LL,L,\varepsilon,R,RR$, with $d=4$ and sole attachment $j=3$, so $g=\gcd(6,4)=2$. The hidden zero vector has path values $(1,0,-1,0,1)$ and zeros off the path.
+
+On $u=\langle\beta,\langle\beta,\beta\rangle\rangle$, omit $RLL,RRL$. Their path $RLL,RL,R,RR,RRL$ has $d=4$ and sole attachment $j=2$, so $g=\gcd(6,3)=3$. Path values $(1,1,0,-1,-1)$, extended by zero, form a hidden eigenvalue-one vector. The neighbour equations verify both displayed vectors directly, and the terms obey the original birth restriction. These are symbolic instances of the class theorem. NLBA §31.1 already supplies a two-hidden-leaf zero-mode counterpair, which is not the new classification here. $\square$
+

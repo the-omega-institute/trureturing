@@ -1,0 +1,39 @@
+**Theorem 26.2 (exact first-contact worst-case peak precision).** Fix any
+family (25.7) at $r=d+1$. For reporting placement, or jointly reporting
+placement and whole actual current, the minimum worst-case peak requested
+digital precision is $3r+1$. The minimum is over deterministic causal
+protocols which are pointwise finite for every allowed provider sequence,
+may adaptively use all original raw growth, rational Add, Tick, Hold,
+Reset and digital Read calls, and have no additional source-dependent
+channel. Costs other than peak precision are not minimized by this result.
+
+**Proof.** Construction 26.1 attains $3r+1$ for every provider choice.
+For necessity suppose all requested precisions were at most $3r$.
+By (25.8) the initial sup-norm difference is $2^{-3r}$. Along a common
+adaptive path, identical rational Adds leave the difference unchanged,
+raw growth includes it by zeros, Hold preserves it, Reset makes it zero,
+and each actual Tick contracts it by at most $7/8$. Thus every paired
+current coordinate differs by at most $2^{-3r}$.
+
+For any requested $p\le3r$, their scaled coordinate difference has
+absolute value at most one. The two floors therefore differ by at most
+one, so the adjacent integer sets in (25.2) intersect. Choose a common
+allowed complete integer reply from that intersection. Every other reply
+is common because the graph/control/rights context is common and the same
+command is issued. The provider law permits each of these choices after
+every prefix; no latent constraint prevents the recursive construction.
+All operands, addresses, precision choices, guards, framing and stopping
+choices remain identical.
+
+If the protocol stops on this common path, its placement output cannot be
+correct for both original histories. If it never stops, the constructed
+provider sequence is allowed for each actual history, contradicting robust
+pointwise termination. Hence a successful protocol must exceed $3r$ on
+some allowed run. No uniform horizon, nonadaptivity or fixed number of
+Reads was assumed. Reset does not evade this placement obstruction:
+it erases the current difference but cannot change which original window
+occurred. For a **current-only** task Reset can deliberately produce known
+zero; no such precision lower bound is asserted. For later contact
+$r>d+1$, (26.1) remains sufficient, but the sharpness proof is not
+claimed there. $\square$
+

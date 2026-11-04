@@ -1,0 +1,7 @@
+## 参考文献
+
+1. AURIC 项目，[FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md](https://github.com/the-omega-institute/trureturing/blob/9ccde90c0c0d10b50d8ebcd55a8499b357c787d1/docs/develop/theory/FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md)，固定提交，§§12--16。
+2. AURIC 项目，[FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md](https://github.com/the-omega-institute/trureturing/blob/9ccde90c0c0d10b50d8ebcd55a8499b357c787d1/docs/develop/theory/FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md)，固定提交，定理 11.2。
+3. AURIC 项目，[AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md](https://github.com/the-omega-institute/trureturing/blob/9ccde90c0c0d10b50d8ebcd55a8499b357c787d1/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)，固定提交，§§51--56。
+4. M. Freedman, M. Larsen, and Z. Wang, “A Modular Functor Which is Universal for Quantum Computation,” [arXiv:quant-ph/0001108](https://arxiv.org/abs/quant-ph/0001108)。本文只使用其 Fibonacci 编织密度/编译性结果。
+5. 关于 Rydberg 链与 Fibonacci 路径的操作层区别，[arXiv:1909.09652](https://arxiv.org/abs/1909.09652)。

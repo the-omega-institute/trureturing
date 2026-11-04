@@ -1,0 +1,11 @@
+**Proposition 57.2 (same-run source operations and complete traffic).** One realization is the original acquisition, the $L$ original pulse actions, and Theorem 56.1's diagnostic acquisition and held decoding. With Add returning its original fixed acknowledgement, its exact source counts before a later continuation are
+
+| Source operation or emitted item | Count |
+| --- | --- |
+| Tick | $3N+L-1$ |
+| Add | $L$ |
+| Read | $L+2$ |
+| Hold | $N+2$ |
+| Scalar root replies | $3N+1+2L$ |
+| Add acknowledgements | $L$ |
+| Hold acknowledgements | $N+2$ |

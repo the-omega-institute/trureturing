@@ -282,14 +282,14 @@ lemma dot_star_self {J : Type*} [Fintype J] (x : J → ℂ) :
   push_cast
   rfl
 
-private lemma cs_sq {J : Type*} [Fintype J] (d x : J → ℂ) :
+lemma cs_sq {J : Type*} [Fintype J] (d x : J → ℂ) :
     ‖star d ⬝ᵥ x‖ ^ 2 ≤ (∑ j, ‖d j‖ ^ 2) * (∑ j, ‖x j‖ ^ 2) := by
   have h := norm_inner_le_norm (𝕜 := ℂ) (WithLp.toLp 2 d) (WithLp.toLp 2 x)
   rw [EuclideanSpace.inner_toLp_toLp, dotProduct_comm] at h
   have hsq := (sq_le_sq₀ (norm_nonneg _) (mul_nonneg (norm_nonneg _) (norm_nonneg _))).mpr h
   simpa only [mul_pow, EuclideanSpace.norm_sq_eq, PiLp.toLp_apply] using hsq
 
-private lemma rank_one_upper {J : Type*} [Fintype J] [DecidableEq J] (d : J → ℂ) :
+lemma rank_one_upper {J : Type*} [Fintype J] [DecidableEq J] (d : J → ℂ) :
     (((∑ j, ‖d j‖ ^ 2 : ℝ) : ℂ) • (1 : Matrix J J ℂ) -
       vecMulVec d (star d)).PosSemidef := by
   let t : ℝ := ∑ j, ‖d j‖ ^ 2

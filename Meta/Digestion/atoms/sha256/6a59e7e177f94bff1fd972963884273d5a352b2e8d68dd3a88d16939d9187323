@@ -1,0 +1,146 @@
+**Theorem 14.2 (classification at support size at most four).** For every choice of the nonempty finite alphabets, source law $\nu$, and nonnegative row-normalized stochastic incident kernels of Definition 10.1, assume $A=B=C=X$ almost surely and $2\le m\le4$. Then
+
+$$
+C_{\rm src}=\frac12H(X)
+\quad\Longleftrightarrow\quad
+m=4\ \text{and the actual joint law has the form (14.1)}.
+$$
+
+In this form let $T_i^b=\operatorname{supp}q_i^b$, $T_i=T_i^0\cup T_i^1$, and let $b_i:T_i\to\mathbb F_2$ record the block. Every positive-marginal incident kernel row is forced to be the point mass at its corresponding entry in
+
+$$
+\begin{aligned}
+f_A(s_2,s_3)&=h\bigl(b_2(s_2)+b_3(s_3),b_2(s_2)\bigr),\\
+f_B(s_3,s_1)&=h\bigl(b_1(s_1),b_1(s_1)+b_3(s_3)\bigr),\\
+f_C(s_1,s_2)&=h\bigl(b_1(s_1),b_2(s_2)\bigr).
+\end{aligned}
+\tag{14.2}
+$$
+
+Conversely, every choice of the disjointly supported probability vectors in Definition 14.1, on arbitrary finite source alphabets admitting such vectors, gives a realization of (14.1) by these incident point-mass kernels. On zero-marginal incident pairs all three kernels may be completed by arbitrary probability vectors on $\mathcal O$. No additional restriction is imposed on those rows.
+
+For every equality realization define $e_i=\tfrac12\bigl(H(q_i^0)+H(q_i^1)\bigr)$. Its exact entropies and source cost are
+
+$$
+\begin{aligned}
+H(X)&=\log4,& H(S_i)&=\log2+e_i,\\
+H(S_1,S_2,S_3)&=\log4+e_1+e_2+e_3,
+& C_{\rm src}&=\log2.
+\end{aligned}
+\tag{14.3}
+$$
+
+*Proof.* Assume equality. Apply Theorem 11.1 on the original stochastic law (10.1). Its kernel-support argument forces all three response rows at each positive source triple to be point masses at the same symbol, and makes $X$ a function of each incident pair. Its equality criterion, equivalently the vanishing of every nonnegative term in (11.6), gives unconditional pairwise independence of $S_1,S_2,S_3$ and the conditional product law (11.3). These are properties of the given sources and kernels; no different realization is substituted.
+
+Write $\mu_i(s)=\mathbb P(S_i=s)$, $T_i=\{s:\mu_i(s)>0\}$, and $r_i^x(s)=\mathbb P(S_i=s\mid X=x)$ for $x\in\mathcal O_X$. Every $p_x$ is positive. Conditional product structure and source-pair independence give, for $i\ne j$,
+
+$$
+\begin{aligned}
+\mathbb P(X=x,S_i=s,S_j=t)&=p_xr_i^x(s)r_j^x(t),\\
+\sum_xp_xr_i^x(s)r_j^x(t)&=\mu_i(s)\mu_j(t).
+\end{aligned}
+\tag{14.4}
+$$
+
+For $s\in T_i$ set
+
+$$
+\ell_i(s)(x)=\frac{r_i^x(s)}{\mu_i(s)},\qquad
+w_i(s)(x)=p_x\ell_i(s)(x)=\mathbb P(X=x\mid S_i=s),\qquad
+C_i(s)=\{x:w_i(s)(x)>0\}.
+$$
+
+All $w_i(s)$ are probability vectors and $\sum_s\mu_i(s)w_i(s)=p$. For every $s\in T_i$ and $t\in T_j$, the pair has strictly positive probability $\mu_i(s)\mu_j(t)$. Recoverability from that pair and (14.4) imply
+
+$$
+|C_i(s)\cap C_j(t)|=1.
+\tag{14.5}
+$$
+
+Indeed, the conditional mass at $x$ is positive exactly on this intersection, and the conditional law of $X$ at that pair is a point mass. This is the usual positive-weight mixture-selector support criterion, also expressed by the private selector helper and the upper-entropy equality theorem in `Entropy/Mixing/MixtureEntropyUpperEquality`; here it is applied to the pair-component vectors $r_i^x\otimes r_j^x$. Positivity is asserted only on $T_i\times T_j$.
+
+No $C_i(s)$ can be the whole $\mathcal O_X$. If it were, (14.5) would make every $C_j(t)$ a singleton for each of the other two sources $j$. Thus $X$ would be a function of either of those sources separately. Their unconditional independence would then make $X$ independent of itself. Explicitly, for distinct positive symbols $x,y$, the two readout events would have joint probability $p_xp_y>0$, although they require $X=x$ and $X=y$ simultaneously. This contradiction uses $m\ge2$. Therefore every posterior row $w_i(s)$ has a zero coordinate.
+
+Use the positive definite weighted inner product $\langle a,b\rangle_p=\sum_xp_xa(x)b(x)$ on $\mathbb R^{\mathcal O_X}$, and put
+
+$$
+E_0=\{a:\langle a,1\rangle_p=0\},\qquad
+V_i=\operatorname{span}\{\ell_i(s)-1:s\in T_i\}.
+$$
+
+Normalization gives $V_i\subset E_0$. Equation (14.4) gives $\langle\ell_i(s),\ell_j(t)\rangle_p=1$; since each of the two vectors has weighted mean one, it follows that $V_i\perp V_j$ for $i\ne j$. Consequently
+
+$$
+\dim V_1+\dim V_2+\dim V_3\le\dim E_0=m-1.
+\tag{14.6}
+$$
+
+This is the classical weighted-orthogonality method for pairwise independent variables: compare Gavinsky and Pudlák, *On the Joint Entropy of $d$-Wise-Independent Variables*, [arXiv:1503.08154v4](https://arxiv.org/abs/1503.08154v4), §3.1, where centered coordinate functions give weighted orthogonal columns. Here the functions are conditional likelihoods on the positive $X$-alphabet; their orthogonality has been verified directly from the actual law in (14.4). The paper's logarithms are base two; the dimension argument is independent of that convention.
+
+Each $V_i$ is nonzero: otherwise all $\ell_i(s)=1$, hence $w_i(s)=p$ has full support, contradicting the preceding paragraph. Thus (14.6) implies $m\ge4$. In the stipulated range necessarily $m=4$ and all three dimensions equal one. In particular this already excludes equality for two or three positive output symbols.
+
+For each $i$, multiplication of likelihood coordinates by $p_x$ now places every posterior on one affine line
+
+$$
+w_i(s)=p+t_i(s)d_i,\qquad d_i\ne0,\quad \sum_xd_i(x)=0.
+\tag{14.7}
+$$
+
+The nonzero vector $d_i$ has both positive and negative coordinates. Since all $p_x>0$, the set of real $t$ for which $p+td_i$ is a probability vector is the interval $[a_i,c_i]$, where
+
+$$
+a_i=\max_{d_i(x)>0}\frac{-p_x}{d_i(x)}<0,
+\qquad
+c_i=\min_{d_i(x)<0}\frac{-p_x}{d_i(x)}>0.
+$$
+
+Every point with $a_i<t<c_i$ has all coordinates positive. Every actual posterior has a zero coordinate, so $t_i(s)$ is either $a_i$ or $c_i$. Both possibilities occur: averaging (14.7) with weights $\mu_i(s)$ gives $\sum_s\mu_i(s)t_i(s)=0$, whereas $a_i<0<c_i$. This derives two nonempty blocks $T_i^0,T_i^1$ of the original marginal support, with one posterior vector $w_i^b$ on each block. No binary quotient is assumed in advance, and the source values inside a block have not been identified with one another in the actual law.
+
+Define the random bit $B_i=b_i(S_i)$ by these blocks, and let $\rho_i(b)=\mathbb P(B_i=b)>0$. The three bits are pairwise independent, as functions of pairwise independent sources. For any source values in blocks $u,v$, (14.4) gives the exact posterior
+
+$$
+\mathbb P(X=x\mid S_i=s,S_j=t)
+=\frac{w_i^u(x)w_j^v(x)}{p_x}.
+\tag{14.8}
+$$
+
+It is a point mass by recoverability and depends only on the two blocks. Thus there is a map $F_{ij}:\mathbb F_2^2\to\mathcal O_X$ such that $X=F_{ij}(B_i,B_j)$ almost surely. All four block pairs have positive probability $\rho_i(u)\rho_j(v)$. Every positive output occurs, so $F_{ij}$ is surjective onto four symbols and hence bijective. This holds for each source pair. It follows in particular that every $B_i$ is a function of $X$.
+
+Take $h=F_{12}$. Since $B_3$ is a function of $X$, write $B_3=g(B_1,B_2)$. Each row and each column of the binary table $g$ contains distinct entries. For instance, equal entries at $(u,0)$ and $(u,1)$ would give the same pair $(B_1,B_3)$ for the distinct outputs $h(u,0)$ and $h(u,1)$, contradicting bijectivity of $F_{13}$. The column argument uses $F_{23}$. If $g(0,0)=c$, the row and column restrictions force $g(0,1)=g(1,0)=1+c$ and $g(1,1)=c$. Relabel the third bit by adding $c$. Then
+
+$$
+B_3=B_1+B_2\quad\text{almost surely}.
+\tag{14.9}
+$$
+
+Let $a=\mathbb P(B_1=1)$ and $b=\mathbb P(B_2=1)$; both lie strictly between zero and one. Independence of $B_1,B_2$ makes the conditional probabilities $\mathbb P(B_3=1\mid B_1=0)$ and $\mathbb P(B_3=1\mid B_1=1)$ equal to $b$ and $1-b$. Independence of $B_1,B_3$ forces these to agree, giving $b=1/2$. Interchanging the first two bits and using independence of $B_2,B_3$ gives $a=1/2$. Thus every pair $(B_1,B_2)=(u,v)$ has mass $1/4$ and $p_{h(u,v)}=1/4$. The parity table and its weighted-orthogonality interpretation are classical binary pairwise-independence structure; the Hadamard/code constructions in Gavinsky–Pudlák §4 give the corresponding known balanced examples. Here the binary structure and its weights have been deduced from the original stochastic realization.
+
+It remains to recover the whole conditional source distributions. On the original $\Omega_i$ define
+
+$$
+q_i^b(s)=
+\begin{cases}
+\mu_i(s)/\rho_i(b),&s\in T_i^b,\\
+0,&s\notin T_i^b.
+\end{cases}
+\tag{14.10}
+$$
+
+These are probability vectors with disjoint supports. Since the posterior is constant within a block, $w_i^b(x)=\mathbb P(X=x\mid B_i=b)$. Since $B_i$ is a function of $X$, this equals $p_x/\rho_i(b)$ when the block label of $x$ is $b$, and zero otherwise. Bayes' identity then gives $r_i^x=q_i^b$ for the label $b$ determined by $x$. For $s\notin T_i$, the same equality holds with both sides zero: $0=\mu_i(s)=\sum_xp_xr_i^x(s)$ and all summands are nonnegative. Substitution into the conditional threefold product (11.3), together with (14.9) and $p_x=1/4$, proves (14.1) for every original source triple. This is the required reconstruction of arbitrary within-block source noise, not just a classification of the three bits.
+
+For the converse, start with any probability vectors and bijection in Definition 14.1. Summing its nonnegative right side over all triples and all four output labels gives total mass one. The marginal of each source and every source pair are
+
+$$
+\mu_i=\frac12(q_i^0+q_i^1),\qquad
+\nu_{ij}(s,t)=\frac14\bigl(q_i^0(s)+q_i^1(s)\bigr)
+                         \bigl(q_j^0(t)+q_j^1(t)\bigr)
+=\mu_i(s)\mu_j(t).
+\tag{14.11}
+$$
+
+Hence the source pairs are independent, and their positive supports are exactly $T_i\times T_j$. Disjoint block supports imply that the bit triple at every positive source triple is $(u,v,u+v)$ for a unique $(u,v)$. The maps (14.2) use precisely the two permitted incident sources and all return $h(u,v)$ there. Set each active kernel row to the point mass at that map value. Extend each other row by any normalized probability vector. Multiplying these kernels with the source marginal of (14.1) in (10.1) gives exactly the joint law (14.1) with $A=B=C=X$. Thus arbitrary within-block stochastic source noise is allowed, without any shared output randomness. Every zero-marginal pair has zero contribution for each of its extensions, so the arbitrary completions cannot alter this law. For an existing realization with (14.1), Theorem 11.1 forces the same active rows, and (14.2) identifies their labels.
+
+Finally $X$ is uniform on four symbols, and the source law given $X=h(u,v)$ is the threefold product of $q_1^u,q_2^v,q_3^{u+v}$. Therefore $H(S_1,S_2,S_3\mid X)=e_1+e_2+e_3$. The sources determine $X$, so their triple entropy is $H(X)$ plus that conditional entropy. Each $B_i$ is a fair bit determined by $S_i$, and $S_i$ conditional on $B_i=b$ has law $q_i^b$, giving $H(S_i)=\log2+e_i$. These are precisely the standard entropy chain and disjoint-mixture identities used in §§11–12. They prove (14.3) and $C_{\rm src}=3\log2-\log4=\log2=H(X)/2$. The point-source special case is Proposition 12.1 with $G=\mathbb F_2$; the necessity and the reconstruction (14.10) concern arbitrary original finite source alphabets.
+
+The classical independent-source triangle premises in Fritz, *Beyond Bell's theorem: correlation scenarios*, [arXiv:1206.5115v2](https://arxiv.org/abs/1206.5115v2), Definition 2.12 and Lemma 2.14, require the full source product. Likewise Renou et al., *Limits on correlations in networks for quantum and no-signaling resources*, [arXiv:1901.08287v1](https://arxiv.org/abs/1901.08287v1), Theorems 1–2, impose independent network sources. Neither independent-source hypothesis is substituted for (14.4): at the equality classified here $C_{\rm src}=\log2>0$, although every source pair is independent. The likelihood-space and posterior-support reconstruction above is a repo-derived consequence of the same-law equality criterion in Theorem 11.1, using weighted orthogonality, selector supports and binary parity as attributed intermediate tools. ∎
+

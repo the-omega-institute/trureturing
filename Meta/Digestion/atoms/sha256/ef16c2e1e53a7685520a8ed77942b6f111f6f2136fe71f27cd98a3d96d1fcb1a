@@ -1,0 +1,68 @@
+**Theorem 16.2 (a closed sufficient interval in the original $q$).** For every $\epsilon\in[0,1/40000]$, every complex $X$ and every complex probe $v$, one has
+
+$$
+\begin{aligned}
+S_{1/2,\,1/3+\epsilon}(X)&\ge c(\epsilon)\|X_0\|_F^2 I_3,\\
+v^\ast S_{1/2,\,1/3+\epsilon}(X)v
+ &\ge c(\epsilon)\|X_0\|_F^2\|v\|^2,\\
+c(\epsilon)&=\frac1{10944}-\frac72\epsilon-9\epsilon^2>0.
+\end{aligned}
+\tag{16.6}
+$$
+
+Therefore the original map is Schwarz on the entire closed interval
+
+$$
+\lambda=\tfrac12,\qquad 0\le q\le\frac{40003}{120000}.
+\tag{16.7}
+$$
+
+For $q>0$ in (16.7) and a nonzero probe, the scalar defect is zero exactly for scalar inputs. Equality in the lower bound (16.6) has the same criterion. At $q=0$ the scalar defect is zero exactly when $y_{ij}v_j=0$ for every $i\ne j$, where $Y=X-\operatorname{diag}(X)$. The zero probe always gives equality.
+
+**Proof.** Work first with the original traceless complex $X_0=D+Y$ and a unit complex probe $v$. Set $N=\|X_0\|_F^2=\|D\|_F^2+\|Y\|_F^2$. The original defect identity, with $3q=1+3\epsilon$ and $1-3q=-3\epsilon$, gives exactly
+
+$$
+\begin{aligned}
+S_{1/2,\,1/3+\epsilon}(X_0)-S_{1/2,1/3}(X_0)
+={}&\epsilon\left(NI_3-3D^\ast D
+ +\tfrac32(D^\ast Y+Y^\ast D)-3\operatorname{diag}(Y^\ast Y)\right)\\
+&-9\epsilon^2D^\ast D.
+\end{aligned}
+\tag{16.8}
+$$
+
+In particular $q$ has not been rescaled. The estimates
+
+$$
+\begin{gathered}
+\|Dv\|^2\le\|D\|_F^2,\qquad
+v^\ast\operatorname{diag}(Y^\ast Y)v\le\|Y\|_F^2,\\
+3\operatorname{Re}\langle Dv,Yv\rangle
+ \ge-3\|D\|_F\|Y\|_F\ge-\tfrac32N
+\end{gathered}
+$$
+
+give a lower bound $-(7/2)\epsilon N-9\epsilon^2N$ for (16.8) on $v$. Here the positive $\epsilon NI_3$ term is included: $N-3N-(3/2)N=-(7/2)N$. Apply Theorem 16.1 and undo the scalar shift and probe normalization to obtain (16.6). Since $c$ is decreasing on this nonnegative interval,
+
+$$
+c(\epsilon)\ge c(1/40000)
+ =\frac{1058461}{273600000000}>0.
+$$
+
+Theorem 16.1 is strict on every nonscalar input and nonzero probe, so the lower bound (16.6) is also strict in that case, including both endpoints of the $\epsilon$ interval.
+
+For $0\le q\le1/3$, retain $\lambda=1/2$ and write $\theta=3q$. Affine dependence of the original map gives
+
+$$
+\Phi_{1/2,q}=(1-\theta)\Phi_{1/2,0}+\theta\Phi_{1/2,1/3}.
+$$
+
+Proposition 4.2 supplies the first endpoint, and Theorem 16.1 supplies the second. The convexity identity of Remark 4.4 proves the Schwarz inequality throughout this closed segment. For $q>0$, its term $\theta S_{1/2,1/3}(X)$ makes the defect strictly positive on every nonzero probe when $X$ is nonscalar. Together with (16.6) and $1/3+1/40000=40003/120000$, this proves (16.7) with the stated equality boundary. At $q=0$, Proposition 4.2 gives
+
+$$
+v^\ast S_{1/2,0}(X)v
+ =\tfrac14\|Yv\|^2+\tfrac12\sum_{i\ne j}|y_{ij}v_j|^2,
+$$
+
+whose equality criterion is exactly the one asserted. No step excludes zero coordinates, singular defects or closed parameter endpoints. ∎
+

@@ -1,0 +1,106 @@
+**定理 10.4（唯一严格正乘子与全部互补谱的必要曲率）。** 在任何内点局部极大值
+$p$ 处，定理 8.1 给出 $p\in\mathscr D_n$。存在唯一的 $W\in\operatorname{Sym}(E)$ 满足
+
+$$
+W\succ0,\qquad \operatorname{tr}_E W=1,\qquad
+\|v_i\|^2=\beta\,(\Pi v_i)^{\mathsf T}W(\Pi v_i)\quad\text{对全部 }i. \tag{10.3}
+$$
+
+对每个 $\xi\in\ker\mathcal R_p$，令
+$H_\xi=\Pi(-w_\xi w_\xi^{\mathsf T}+C_\xi GC_\xi)\Pi$。
+则局部极大值必须满足完整二阶条件
+
+$$
+\begin{aligned}
+0&\ge-\|w_\xi\|^2-\beta\operatorname{tr}(WH_\xi)\\
+&=-\|w_\xi\|^2+\beta\|W^{1/2}\Pi w_\xi\|^2
+-\beta\sum_{\nu<\rho}
+ \frac{\|W^{1/2}\Pi C_\xi e_\nu\|^2}{\rho-\nu}.
+\end{aligned} \tag{10.4}
+$$
+
+和对 $QH$ 的任一完整正交特征基 $Me_\nu=\nu e_\nu$ 取，
+包括所有重数；不只保留邻近的一个互补特征值。
+
+证明。局部极大性的一阶方向条件是
+$\operatorname{tr}C_\xi\le\beta\lambda_{\max}(\Pi C_\xi\Pi)$ 对所有 $\xi$ 成立。
+有限维凸分离给出 $W\succeq0$、迹为一，使
+$\operatorname{tr}C_\xi=\beta\operatorname{tr}(W\Pi C_\xi\Pi)$：
+否则将迹一正半定矩阵的紧凸集合在线性读数映射下与目标读数分离，
+得到某个违反上述方向条件的 $\xi$。
+于是 $\|v_i\|^2-\beta(\Pi v_i)^{\mathsf T}W(\Pi v_i)$ 对 $i$ 为常数；
+其 $p$ 加权和为 $T-\beta\rho=0$，故该常数为零。
+两个乘子的差迹为零，并与 $\mathcal R_p$ 的满像正交，
+所以乘子唯一。
+
+先允许 $W$ 半正定以推导 (10.4)。
+由定理 10.3，每个核向量可延伸为解析双轨迹
+$p(t)=p+t\xi+t^2\eta+O(t^3)$。
+协方差的二阶展开为
+
+$$
+M(p(t))=M+tC_\xi+t^2(C_\eta-w_\xi w_\xi^{\mathsf T})+O(t^3).
+$$
+
+顶层一阶压缩为 $\alpha I_E$。对互补块消元，顶层二阶矩阵为
+$\Pi C_\eta\Pi+H_\xi$；沿双轨迹它是 $\gamma I_E$。
+该 Schur 补计算只用互补逆 $G$：
+解互补分量的一阶项为 $tGC_\xi x$，代回顶层即给出 $t^2\Pi C_\xi GC_\xi\Pi$。
+一阶乘子恒等式又给出
+$\operatorname{tr}C_\xi=\beta\alpha$、
+$\operatorname{tr}C_\eta=\beta(\gamma-\operatorname{tr}WH_\xi)$。
+代入商，二次系数恰为
+$(n/\rho)(-\|w_\xi\|^2-\beta\operatorname{tr}WH_\xi)$。
+局部极大性使其非正。展开 $G$ 的完整谱分解得到 (10.4)。
+
+最后排除秩一 $W=uu^{\mathsf T}$。令 $h_i=\langle u,v_i\rangle$；
+(10.3) 给出 $\|v_i\|^2=\beta h_i^2$，所以 $h_i\ne0$。
+定义
+
+$$
+S=\sum_i p_i/h_i,\qquad
+w=\sum_i p_iv_i/h_i,\qquad C=\sum_i(p_i/h_i)v_iv_i^{\mathsf T}.
+$$
+
+与 (8.4) 同一代数恒等式给出
+$Cu=0$、$\operatorname{tr}C=0$、$\langle u,w\rangle=1$、
+$\|w\|^2<\beta$。严格性来自 $a_i$ 的仿射无关性。
+正解析曲线
+$p_i(t)=p_i(1+t/h_i)/(1+tS)$ 满足
+
+$$
+M(t)=\frac{M+tC}{1+tS}-\frac{t^2ww^{\mathsf T}}{(1+tS)^2},\quad
+T(t)=\frac T{1+tS}-\frac{t^2\|w\|^2}{(1+tS)^2}. \tag{10.5}
+$$
+
+取 $E$ 的另一单位向量 $v\perp u$，写 $\delta=v^{\mathsf T}Cv$。
+若 $\delta\ne0$，选 $\delta t<0$，则 $u$ 分支成为顶层；
+其与另一顶层的间隙为一阶，其余谱隙固定。
+二阶秩一项的交叉影响为 $O(|t|^3)$，故
+$\rho(t)=\rho/(1+tS)-t^2/(1+tS)^2+O(|t|^3)$。
+于是目标增加
+$(n/\rho)(\beta-\|w\|^2)t^2+O(|t|^3)>0$，矛盾。
+
+若 $\delta=0$，取 (10.5) 的切向量
+$\xi_i=p_i(1/h_i-S)$。有
+$w_\xi=w$、$C_\xi=C-SM$，
+所以 $\Pi C_\xi\Pi=-S\rho I_E$，即 $\xi\in\ker\mathcal R_p$。
+又 $QC_\xi u=0$、$\langle u,w_\xi\rangle=1$，
+故 $\operatorname{tr}(WH_\xi)=u^{\mathsf T}H_\xi u=-1$。
+(10.4) 的右边等于 $\beta-\|w\|^2>0$，矛盾。
+所以唯一乘子严格正定。
+
+这也确定了完整的一阶临界方向集。
+令 $A_\xi=\Pi C_\xi\Pi$，则最大特征值的一侧方向导数与乘子恒等式给出
+
+$$
+D^+\Phi(p)[\xi]=\frac{n\beta}{\rho}
+ [\,\operatorname{tr}(WA_\xi)-\lambda_{\max}(A_\xi)\,]. \tag{10.6}
+$$
+
+正定的 $W$ 对 $A_\xi$ 的两个特征方向都赋严格正质量，
+所以括号为零当且仅当 $A_\xi$ 为标量矩阵，即
+$\xi\in\ker\mathcal R_p$；其余方向一阶严格下降。
+因此 (10.4) 在全部一阶临界方向上给出双集的必要曲率，
+没有因舍去某个互补特征值或某类临界方向而缩小条件。∎
+

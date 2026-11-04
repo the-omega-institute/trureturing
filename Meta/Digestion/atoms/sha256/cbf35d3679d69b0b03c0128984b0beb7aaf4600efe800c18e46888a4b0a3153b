@@ -1,0 +1,25 @@
+**Proposition 70.3 (exact returned image and interface distinction).**
+Across all promised acquisitions and completed $Q_J$ continuations the
+physical returned image is exactly $\mathcal I$. For fixed acquired entry
+$t$, it is exactly $J[\operatorname{Desc}(t)]$, where
+$\operatorname{Desc}(t)$ comprises the finite legal LAB successors of $t$,
+including $t$ itself. These assertions do not extend the inverse to every
+intermediate physical cut and do not equate $Q_J$ with raw $Q_A$ on $J(v)$.
+
+Proof. Every represented success is an ordinary LAB successor of $v$;
+refusals and unsupported requests preserve it. Conversely every finite
+legal successor word is realized by the corresponding successful outer
+frames by Theorem 70.2. This gives the fixed-entry equality. Taking all
+entries includes every $J(t)$ already at acquisition return and adds no
+term outside $J[\mathcal D]$, proving the global equality.
+
+For $v=\alpha$, a successful outer promotion has the actual intermediate
+term beta after its first inner return. Bare beta is outside $\mathcal R$,
+so $K$ is undefined there. There is no outer Ready cut at that point.
+For $v=\beta$, outer $P_\varepsilon$ returns wrong type; raw
+$P_\varepsilon$ on the physical $J(v)$ returns branch. The two interfaces
+therefore have different replies on the same physical source. The
+proved correspondence concerns the adapter's outer interface and full
+return, not a client bypassing it, arbitrary interruptions or raw busy
+states. $\square$
+

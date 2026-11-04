@@ -1,0 +1,134 @@
+**定理 5.1（顶点附近的一致路径界）。** 对每个 $n\ge5$，
+$\Phi$ 在 $\Delta\setminus\mathcal V$ 上连续，在 $\Delta^\circ$ 上等于
+实际环的 $\lambda_2R$。固定任一顶点 $\varepsilon_\ell$，
+令 $q\in\Delta$、$q_\ell=0$，并定义
+
+$$
+K_\ell(q)=\sum_{i\ne\ell}q_i(a_i-a_\ell)(a_i-a_\ell)^{\mathsf T},\qquad
+\Psi_\ell(q)=\frac{n\operatorname{tr}K_\ell(q)}{\lambda_{\max}(K_\ell(q))}.
+$$
+
+则 $\max_{q_\ell=0}\Psi_\ell(q)=A_n$，且对所有这样的 $q$ 以及
+所有 $0<\epsilon<1$，均有
+
+$$
+(1-\epsilon)\Psi_\ell(q)
+\le\Phi\bigl((1-\epsilon)\varepsilon_\ell+\epsilon q\bigr)
+\le\frac{\Psi_\ell(q)}{1-\epsilon},
+\tag{5.1}
+$$
+
+从而
+
+$$
+\left|\Phi\bigl((1-\epsilon)\varepsilon_\ell+\epsilon q\bigr)
+-\Psi_\ell(q)\right|\le\frac{A_n\epsilon}{1-\epsilon}.
+\tag{5.2}
+$$
+
+特别地，顶点逼近的上确界极限恰为
+
+$$
+\lim_{\delta\downarrow0}\,
+\sup\{\Phi(p):p\in\Delta^\circ,\ 0<1-p_\ell\le\delta\}=A_n.
+\tag{5.3}
+$$
+
+式 (5.2) 对方向 $q$ 一致，允许 $q$ 随 $\epsilon$ 任意变化、趋于任意面，
+以及各坐标具有任意不同的衰减尺度。
+
+证明。先验证 (4.1) 与实际模型的关系。把 $e_i$ 定向为 $i\to i+1$，
+$e_0$ 定向为 $n\to1$，令关联矩阵为 $D$。
+对 $h\in H$，所有满足 $Dz=h$ 的流都写成
+
+$$
+z_i=t+\sum_{j=1}^i h_j=t+\langle a_i,h\rangle\quad(1\le i<n),
+\qquad z_0=t.
+$$
+
+采用经典的最小耗散原理，或直接令
+$u=L(c)^+h$、$z_*=\operatorname{diag}(c_i)D^{\mathsf T}u$：
+$Dz_*=h$，且 $\sum_i r_i(z_*)_i=\mathbf1^{\mathsf T}D^{\mathsf T}u=0$。
+于是 $z_*$ 与所有常循环流在电阻内积下正交，得到
+
+$$
+\begin{aligned}
+h^{\mathsf T}L(c)^+h
+&=\min_t\sum_i r_i\bigl(t+\langle a_i,h\rangle\bigr)^2\\
+&=s\left[\sum_i p_i\langle a_i,h\rangle^2
+-\left(\sum_i p_i\langle a_i,h\rangle\right)^2\right]
+=s\,h^{\mathsf T}M(p)h.
+\end{aligned}
+\tag{5.4}
+$$
+
+这里最小点为 $t=-\sum_i p_i\langle a_i,h\rangle$。
+这也将第 2 节式 (1) 的流计算直接接到任意 $n$ 的实际边上。
+全点对恒等式
+$\sum_{i<j}(\delta_i-\delta_j)(\delta_i-\delta_j)^{\mathsf T}=nP$
+给出 $R(c)=n\operatorname{tr}L(c)^+$。
+电学伪逆和迹公式的经典出处仍是
+[Ghosh–Boyd–Saberi，DOI:10.1137/050645452](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf)，
+§§2.4–2.5，式 (8)、(13)–(15)；这里只使用其电学恒等式。
+由 (5.4) 和谱分解，内点上有
+
+$$
+L(c)^+|_H=sM(p),\qquad
+\lambda_2(L(c))=\frac1{s\rho(p)},\qquad
+R(c)=nsT(p),\qquad \lambda_2R=\Phi(p).
+\tag{5.5}
+$$
+
+向量 $a_1,\ldots,a_{n-1}$ 线性无关：若
+$\sum_{i=1}^{n-1}\alpha_i a_i=0$，其未投影的累积向量为常数，
+但第 $n$ 坐标为零，故各坐标均为零，依次相减给出所有 $\alpha_i=0$。
+因此 $a_0,\ldots,a_{n-1}$ 仿射无关，且
+
+$$
+M(p)=\sum_i p_i(a_i-\bar a)(a_i-\bar a)^{\mathsf T}
+\tag{5.6}
+$$
+
+在支撑大小为 $k$ 的点上秩恰为 $k-1$。
+事实上二次型为零当且仅当该向量与全部支撑点之差正交。
+非顶点时 $k\ge2$，故 $T,\rho>0$；连续性由矩阵元素和最大特征值的
+连续性得到。内点时 $M$ 在 $H$ 上正定。
+
+先取 $\ell=0$。删边后的普通路径若有正边电阻 $q_i$，
+其唯一流为 $z_i=\langle a_i,h\rangle$，同一能量计算给出
+$L_{P_n}^+|_H=K_0(q)$。
+因此约定 4.2 的完整路径定理直接给出 $\Psi_0(q)\le A_n$，
+并在 $q_i$ 与 $d_i/s_i$ 成比例时取等号。
+若一些 $q_i=0$，以正 $q$ 逼近：由于
+
+$$
+\|a_i\|^2=\frac{i(n-i)}n\ge\frac{n-1}n,\qquad
+\operatorname{tr}K_0(q)\ge\frac{n-1}n,
+$$
+
+分母在整个闭方向单纯形上不为零，连续延拓保持该上界。
+这一步没有以单位质量的缩点路径替换原来的 $n$ 个顶点。
+对一般 $\ell$，循环重标号给出完全相同的路径、电学恒等式和范数界。
+
+令 $v=\sum_{i\ne\ell}q_i(a_i-a_\ell)$、$K=K_\ell(q)$。
+将 (5.6) 在 $p=(1-\epsilon)\varepsilon_\ell+\epsilon q$ 处展开，得到
+
+$$
+M(p)=\epsilon(K-\epsilon vv^{\mathsf T}),\qquad
+vv^{\mathsf T}\preceq K.
+\tag{5.7}
+$$
+
+后一不等式是标量 Cauchy–Schwarz 不等式
+$(\sum_i q_i\langle a_i-a_\ell,h\rangle)^2
+\le\sum_i q_i\langle a_i-a_\ell,h\rangle^2$。
+所以
+
+$$
+(1-\epsilon)K\preceq K-\epsilon vv^{\mathsf T}\preceq K.
+$$
+
+对迹和最大特征值分别使用这些序界，即得 (5.1)，继而得 (5.2)。
+上界对全部闭方向一致；下界取上述严格正的路径最优方向，令
+$\epsilon\downarrow0$，便证明 (5.3)。∎
+

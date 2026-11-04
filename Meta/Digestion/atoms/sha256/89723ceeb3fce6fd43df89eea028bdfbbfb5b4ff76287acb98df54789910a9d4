@@ -1,0 +1,29 @@
+**Counterexample 8.4 (the band boundary of this example).** The law (8.5) does not satisfy $\mathsf B(P)$. On the exterior event
+
+$$
+G=\{X_{-4}=X_4=1,\ X_{-3:-1}=X_{1:3}=000\},
+$$
+
+one has $P(G)=1/64$ and $q_0=9/16>1/2$.
+
+**Proof.** For the two possible center bits, the finite cylinder masses are
+
+$$
+\begin{aligned}
+P(G,X_0=1)&=\lambda M_1B^3M_1B^3M_1\mathbf1=\frac9{1024},\\
+P(G,X_0=0)&=\lambda M_1B^3M_0B^3M_1\mathbf1=\frac7{1024}.
+\end{aligned}
+\tag{8.9}
+$$
+
+For example, $\lambda M_1B^3=(1/32,3/32)$. Multiplication by $M_1$ gives $(3/64,0)$, then by $B^3$ gives $(3/512,9/512)$; the final $M_1\mathbf1$ gives $9/1024$. Multiplication instead by $M_0$ gives $(1/64,4/64)$, then by $B^3$ gives $(1/512,7/512)$, hence $7/1024$.
+
+The left boundary $1$ fixes $H_{-3}=1$ and the right boundary $1$ fixes $H_5=1$. More explicitly, $M_1$ has rank one, so any further finite left likelihood and right likelihood multiply both center masses by the same respective factors. They cancel in the conditional center ratio on every feasible exterior extension. Passing to the entire exterior by bounded conditional-expectation convergence preserves this ratio. Therefore
+
+$$
+q_0=\frac9{9+7}=\frac9{16}\quad\text{on }G,
+\qquad P(G)=\frac{16}{1024}=\frac1{64}.
+$$
+
+Both immediate neighbors of the center are zero on $G$, so the upper band bound fails there. This prevents the example from being used as a counterexample to a band-restricted theorem. It does not repair the failed composition step, which already fails within the explicit two-sided block hypotheses. The example has finite output root sum by Proposition 8.2; no divergent root sum is claimed. $\square$
+

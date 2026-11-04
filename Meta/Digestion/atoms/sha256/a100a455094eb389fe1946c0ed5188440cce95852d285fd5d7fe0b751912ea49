@@ -1,0 +1,31 @@
+**Lemma 3.1 (local square-root overlap).** Let $q$ be a fixed source
+context and compare the two replacements $A$ and $B$ there, with all other
+leaves unchanged and total common scale $w$.  On the two child cylinders of
+$q$, the numerator values in (113.7) are
+
+$$
+\begin{array}{c|cc}
+&[qL]&[qR]\\ \hline
+A&\varphi^{s(q)+1}&\varphi^{s(q)+3}\\
+B&\varphi^{s(q)+2}&\varphi^{s(q)+2}.
+\end{array}
+\tag{3.1}
+$$
+
+Their contribution to the Hellinger inner product
+$\int\sqrt{f_Af_B}\,dM$ is $2\sqrt\varphi/w$, whereas the common scale
+contribution is $\varphi^2/w$.  The deficit is therefore
+
+$$
+\delta/w,
+\qquad
+\delta=\varphi^2-2\sqrt\varphi=(\sqrt\varphi-1)^2>0.
+\tag{3.2}
+$$
+
+Proof. The cylinder masses are $M([qL])=\varphi^{-s(q)-1}$ and
+$M([qR])=\varphi^{-s(q)-2}$.  Multiplying each by the geometric mean of
+the corresponding numerator values gives $\sqrt\varphi/w$ twice.  Every
+unchanged cylinder contributes its common numerator divided by $w$; only
+the exchanged pair has the deficit in (3.2). $\square$
+

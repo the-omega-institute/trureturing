@@ -1,0 +1,5 @@
+source_id = "parity-sector-stabilizer-entropy-gap"
+path = "docs/develop/theory/PARITY_SECTOR_STABILIZER_ENTROPY_GAP.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

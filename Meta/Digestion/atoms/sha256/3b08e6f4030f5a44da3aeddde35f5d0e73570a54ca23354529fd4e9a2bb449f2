@@ -1,0 +1,66 @@
+**Lemma 2.1 (Trace excess and its equality condition).** Let $g\in[0,\infty)^E$
+have connected support, and put
+
+$$
+t=\lambda_2(g),\qquad
+\widehat g=\frac gt,\qquad
+P=I_n-\frac1n\mathbf1\mathbf1^{\mathsf T},\qquad
+H=L(\widehat g)-P.
+$$
+
+Then $H\succeq0$, $H\mathbf1=0$, and, for every $I\in\{A,B,C\}$,
+
+$$
+D_I:=\sum_{x\in I}d_x(\widehat g)\ge |I|.
+\tag{2.1}
+$$
+
+In particular,
+
+$$
+T:=\operatorname{tr}L(\widehat g)=D_A+D_B+D_C\ge n,\qquad
+S:=\operatorname{tr}H=T-(n-1)\ge1.
+\tag{2.2}
+$$
+
+If $S=1$, then $H$ annihilates each of the three spaces
+
+$$
+U_I=\{z\in\mathbb R^V:z_x=0\ (x\notin I),\
+                         \sum_{x\in I}z_x=0\}.
+\tag{2.3}
+$$
+
+*Proof.* Both $L(\widehat g)$ and $P$ vanish on constants. On
+$\mathbf1^\perp$, $P$ is identity and all eigenvalues of $L(\widehat g)$
+are at least $1$. This proves the two assertions about $H$.
+
+Fix a part $I$ of size $m\ge2$ and take an orthonormal basis
+$f_1,\ldots,f_{m-1}$ of $U_I$. Because $I$ is independent, the principal
+block of $L(\widehat g)$ on $I$ is diagonal with entries
+$d_x(\widehat g)$. The projection onto $U_I$ on those coordinates is
+$I_m-\mathbf1_m\mathbf1_m^{\mathsf T}/m$. The Rayleigh lower bound,
+applied to each basis vector, therefore gives
+
+$$
+m-1\le\sum_{\ell=1}^{m-1}f_\ell^{\mathsf T}L(\widehat g)f_\ell
+=\frac{m-1}{m}D_I.
+\tag{2.4}
+$$
+
+Since $m-1>0$, this is (2.1). In particular it holds for $m=2$;
+no invariance of $U_I$ under $L$ is assumed. Summing (2.1) over the
+partition of all original vertices proves (2.2).
+
+If $S=1$, then $T=n$ and all three nonnegative gaps $D_I-|I|$ vanish.
+For each fixed $I$, equality in (2.4) gives
+
+$$
+\sum_{\ell=1}^{m-1}f_\ell^{\mathsf T}Hf_\ell=0.
+$$
+
+Every summand is nonnegative. A zero quadratic form of a positive
+semidefinite matrix is a kernel vector, as follows by orthogonal
+spectral decomposition. Hence $Hf_\ell=0$ for every $\ell$, proving
+that $H$ annihilates $U_I$. ∎
+

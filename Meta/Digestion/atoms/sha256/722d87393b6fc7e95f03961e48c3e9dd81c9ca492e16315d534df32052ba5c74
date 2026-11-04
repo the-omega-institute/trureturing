@@ -1,0 +1,9 @@
+**Definition 36.4 (finite blocks).** For $r\ge0$ let
+
+$$
+H_r=(m_{i+j})_{0\le i,j\le r},\qquad
+K_r=[e_0,Te_0,\ldots,T^r e_0].
+$$
+
+The identity $H_r=K_r^{\mathsf T}K_r$ is the existing positive-moment Gram identity, instantiated here by symmetry of this actual $T$ and this prepared $e_0$. Thus the ordinary Gram rank and positivity results apply. There is no new moment-realization framework in this notation.
+

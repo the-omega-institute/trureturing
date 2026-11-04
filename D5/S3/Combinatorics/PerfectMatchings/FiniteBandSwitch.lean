@@ -40,10 +40,10 @@ def Bad (P J : Perm (Fin 4)) : Prop := (P * J).SameCycle (J 0) 1
 
 def Regular (P J : Perm (Fin 4)) : Prop := ¬ Good P J ∧ ¬ Bad P J
 
-private def thirdPairing : Perm (Fin 4) := swap 0 1 * swap 2 3
+def thirdPairing : Perm (Fin 4) := swap 0 1 * swap 2 3
 
 /-- The three forms follow structurally from the pairing axioms. -/
-private theorem pairing_three_forms (P : Perm (Fin 4))
+theorem pairing_three_forms (P : Perm (Fin 4))
     (hP : Function.Involutive P) (hfree : ∀ x, P x ≠ x) :
     P = J0 ∨ P = thirdPairing ∨ P = J1 := by
   generalize h0 : P (0 : Fin 4) = z
@@ -84,7 +84,7 @@ private theorem pairing_three_forms (P : Perm (Fin 4))
 
 /-- Every orbit of an involution consists of a point and its partner.
 The proof is a natural-power induction, rather than finite orbit enumeration. -/
-private theorem same_cycle_involutive_iff {Y : Type*} [Finite Y]
+theorem same_cycle_involutive_iff {Y : Type*} [Finite Y]
     (p : Perm Y) (hp : Function.Involutive p) (x y : Y) :
     p.SameCycle x y ↔ x = y ∨ p x = y := by
   constructor

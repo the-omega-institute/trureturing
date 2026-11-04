@@ -1,0 +1,4 @@
+This constant is uniform over all center times $s\ge\tau$.
+
+4. Pass from almost every time to every original semigroup time. For any fixed $s\ge\tau$, (132.17)–(132.18) imply the spatial bound $|u(t)|\le C_\tau\|v\|_2$ almost everywhere on $B(0,R_1)$ for almost every $t\in(s-d/2,s+d/2)$. Choose such times $t_n\to s$. Strong $L^2(G,m)$ continuity of the original semigroup and the exact chart yield
+

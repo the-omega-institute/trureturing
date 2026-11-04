@@ -1,0 +1,114 @@
+**命题 36.2（实际极射线的记录分离及读后零模质量）。** 在定义 36.1 的对象与菜单中成立以下三项。
+
+1. $\ker A=\mathbb Rz$，$A$ 的规范极分解为 $A=\widetilde J_p|A|$，其中
+
+$$
+\begin{aligned}
+n&=\sqrt{5+2\sqrt2},\\
+\widetilde J_p&=\frac{A\bigl((5+\sqrt2)I+A^2\bigr)}{\sqrt2\,n},\\
+\widetilde J_pz&=0,\qquad \widetilde J_p^T=-\widetilde J_p,\qquad
+\widetilde J_p^2=-P,\qquad [\widetilde J_p,A]=0.
+\end{aligned}
+\tag{36.2}
+$$
+
+故 $J_p=\widetilde J_p|_E=A|_E(-A^2|_E)^{-1/2}$ 是 $E$ 上的正交复结构，所有等待 $O(t)|_E$ 都与之交换。它不是全 $V$ 上的复结构。若改在物理全实化上对 $-iK$ 作规范极分解，其极因子是 $D\widetilde J_pD^\dagger$ 的物理复线性延拓，核为复线 $D\mathbb Cz$，支撑为 $DE_{\mathbb C}$；该支撑实八维，作为内部复空间是四维，仍非 $E_{J_p}$。
+
+2. 取两个明确物理输入 $Dx,Dy$，其中
+
+$$
+x=e_N,\qquad y=J_px=-\frac{e_2+(1+\sqrt2)e_3+e_5}{n}.
+\tag{36.3}
+$$
+
+$x,y$ 均为 $E$ 中的单位向量，在 $E_{J_p}$ 中属于同一复射线，而在原物理载体中为正交输入。协议“立即完整读取，然后 Stop”的全部记录为 $r_j=(j,\mathrm{Stop})$，其两个分布按原标签顺序恰为
+
+$$
+p_x=(1,0,0,0,0),\qquad
+p_y=\frac{(0,1,(1+\sqrt2)^2,1,0)}{5+2\sqrt2},\qquad
+\operatorname{TV}(p_x,p_y)=1.
+\tag{36.4}
+$$
+
+每个分布总质量为一，Stop 质量为一，失败质量为零，零概率标签也保留。任何给这条内部复射线指定同一个完整记录律 $q$ 的模型均满足
+
+$$
+\max\{\operatorname{TV}(p_x,q),\operatorname{TV}(p_y,q)\}\ge\frac12.
+\tag{36.5}
+$$
+
+效果层面更精确地，令 $w_j\in[0,1]$ 为一次完整读后对结果 $j$ 接受某事件的经典概率。在 $E$ 上压缩的实对称效果为 $F_w=P\operatorname{diag}(w)P|_E$。其概率下降到 $E_{J_p}$ 的复射线，当且仅当
+
+$$
+[F_w,J_p]=0
+\quad\Longleftrightarrow\quad
+w_N=w_3=w_{25}=\frac{w_2+w_5}{2}=:\lambda.
+\tag{36.6}
+$$
+
+此时 $F_w=\lambda I_E$，概率与输入无关。特别地，五个单标签效果都不下降；确定性合并标签时，只有空事件及全事件下降。先作任何固定等待再读，(36.6) 的判据不变。
+
+3. 对任意物理密度输入，以 $\widehat\rho=D^\dagger\rho D$ 表示，在同一帧的非选择完整读为 $\Phi(\widehat\rho)=\sum_jP_j\widehat\rho P_j$。其物理暗线质量恰为
+
+$$
+\operatorname{Tr}\bigl(R_0\Phi(\widehat\rho)\bigr)
+=\frac{\widehat\rho_{2,2}+\widehat\rho_{5,5}}2\in[0,1/2].
+\tag{36.7}
+$$
+
+即使输入支撑满足 $P\widehat\rho P=\widehat\rho$，上端点仍可达到：取 $f=(e_2+e_5)/\sqrt2\in E$、$\widehat\rho=ff^T$，初始暗线质量为零，而
+
+$$
+\Phi(ff^T)=\tfrac12(P_2+P_5),\qquad
+\operatorname{Tr}\bigl(R_0\Phi(ff^T)\bigr)=\tfrac12,\qquad
+\operatorname{Tr}\bigl(P\Phi(ff^T)P\bigr)=\tfrac12.
+\tag{36.8}
+$$
+
+两个实际分支各以概率 $1/2$ 输出 $e_2$ 或 $e_5$，均离开 $E$，也离开 $E_{\mathbb C}$。原读没有质量损失；事后投回极支撑会丢掉质量 $1/2$，不是同一个完整仪器。因此删除等待的零模不能使原完整读成为极支撑内的仪器。
+
+证明。暗线与旋转频率复用[SecondOrder 定理 63.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)、[静态相融纤维命题 44](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)及[Measurement Relative Quantum Boundary 定理 4.1 的证明](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md)：$V$ 为暗线与两条正交旋转平面的直和，频率平方为 $(5\pm\sqrt{17})/2$。以下计算把该既有分解接到本源的完整读取，不另立谱或控制定理。
+只为计算按 $(N,25)\oplus(2,3,5)$ 重排，仍有
+
+$$
+A=\begin{pmatrix}0&B\\-B^T&0\end{pmatrix},\qquad
+B=\begin{pmatrix}1&1&1\\1&0&1\end{pmatrix},\qquad
+C=BB^T=\begin{pmatrix}3&2\\2&2\end{pmatrix}.
+$$
+
+$\det C=2>0$、$C_{11}=3>0$，故 $C>0$。由 $C^2-5C+2I=0$ 得
+
+$$
+C^{1/2}=\frac{C+\sqrt2 I}{n},\qquad
+C^{-1/2}=\frac1{\sqrt2 n}
+\begin{pmatrix}2+\sqrt2&-2\\-2&3+\sqrt2\end{pmatrix},\qquad
+Q=C^{-1/2}B=\frac1n
+\begin{pmatrix}1&1+\sqrt2&1\\1+\sqrt2/2&-\sqrt2&1+\sqrt2/2\end{pmatrix}.
+\tag{36.9}
+$$
+
+第一式的右端正定且平方为 $C$，第二式为其逆。于是 $QQ^T=I_2$，$Q^TQ$ 是 $(e_2-e_5)^\perp$ 在三坐标块内的投影。令
+
+$$
+\widetilde J_p=\begin{pmatrix}0&Q\\-Q^T&0\end{pmatrix},\qquad
+H=\begin{pmatrix}C^{1/2}&0\\0&B^TC^{-1/2}B\end{pmatrix}.
+$$
+
+$H\ge0$，$H^2=-A^2$，$\widetilde J_pH=A$，且极因子在核上为零，故 $H=|A|$。代入 (36.9) 得 (36.2) 的多项式公式及其余恒等式。这里使用的是成熟极分解工具：[Moretti–Oppio，Theorem 2.18、Proposition 2.19](https://arxiv.org/html/1611.09029v4)明确保留核，只有单射时极因子才是酉的反自伴随算子；其复线性交换判据见 Proposition 2.23。物理全实化的结论由同一个等式的物理复线性延拓得到；原 $J_0$ 保持全部物理复线性读与等待，与把此极因子当作新标量作用是不同的命题。
+
+由 (36.9) 第一行得到 (36.3)，$\|y\|^2=(2+(1+\sqrt2)^2)/n^2=1$，$y_2=y_5$，且 $x^Ty=0$。物理输入的读概率为 $|e_j^\dagger Du|^2=|u_j|^2$，故得 (36.4)。内部乘法 $iu=J_pu$ 却识别 $x,y$，于是三角不等式给 $1\le\operatorname{TV}(p_x,q)+\operatorname{TV}(q,p_y)$，即 (36.5)。这也在物理全实化的极支撑上给出同一射线识别的反例。
+
+对实对称 $F$，射线不变性等价于 $e^{-\theta J_p}Fe^{\theta J_p}=F$，在零点微分得 $[F,J_p]=0$，反向由指数成立。单标签压缩均为非零实秩一效果；非零秩一实对称算子不能与正交复结构交换的既有论证见 [Measurement Relative Quantum Boundary，Corollary 25.1 的证明](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md)。本源的加权判据还可直接计算：在 $(N,25)$ 块 $F_w$ 为 $\operatorname{diag}(w_N,w_{25})$，在 $(f,e_3)$ 块为 $\operatorname{diag}((w_2+w_5)/2,w_3)$。这两个块之间的极映射为
+
+$$
+Q_E=\frac1n\begin{pmatrix}\sqrt2&1+\sqrt2\\1+\sqrt2&-\sqrt2\end{pmatrix}.
+$$
+
+$Q_E$ 的四项均非零，故两个对角块与它交织当且仅当四个对角值相等，得到 (36.6)。等待与 $J_p$ 交换，等待后效果为 $(O(t)|_E)^TF_w(O(t)|_E)$，故交换判据不变。此处只检验原生效果；没有以效果的线性张成授予额外测量。
+
+最后 $R_0$ 仅在模式 $2,5$ 有对角元 $1/2$。完整读消去非对角项，直接给 (36.7)；正性和迹一给其区间。$f\perp z$，而 $|\langle z,e_2\rangle|^2=|\langle z,e_5\rangle|^2=1/2$，逐分支求和得 (36.8)。这些是给定合法输入的结论，不是这些输入已由原菜单制备的结论。
+
+本命题的 `repo-derived` 承重点是同一个五模式极因子与原生效果、完整记录及读后质量的联合对应。奇数实维障碍已由本卷命题 4.7、定义 20.2 给出；[静态相融纤维 Native57/58/64](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)及 §§19–21 的独立翻转、固定相位控制仍各按其原合同，本命题不重证也不借用那些扩大的权限。§35 的符号态对与普适 $E_y$ 障碍保持原量词；(36.3) 是另一对输入，所检验的是新极射线识别。
+
+因此此极构造供应了等待相容性，但未供应定义 20.2、34.1 所需的共同状态—效果—仪器—组合关系。若采用定义 4.4、定理 4.5 及命题 4.6 的正向路线，还须在同一个操作表示中供应非零事件角、相融矩阵单位、局部复单位及保持它的运输。Moretti–Oppio Theorem 4.3 另要求强连续、不可约且局部忠实的 Poincaré 表示及非负质量平方；两条旋转平面上的本等待没有实例化这些前提。另一条成熟充分路线 [Niestegge，§5 Definition 1、Theorem 1、Corollary 1](https://arxiv.org/html/1402.0158v2)要求在其论文的实有序可观察量空间及乘法合同上，对每个可观察量 $a$ 线性指定 skew order derivation $D_a$，满足 $[D_a,D_b]=-[R_a,R_b]$、$D_aa=0$，再以平方正性取得复 $C^*$ 表示；一只作用在向量上的 $A$ 不是这个对应。概率标定、全参考与并置的其余前提仍按定义 20.2、34.1 保留；[Symplectic 假设 35.3](SYMPLECTIC_PREDICTIVE_COMPLETION.md)的振幅及辛尺度也仍为所给前提。这里排除的是所声明的同系统极射线下降，不排除原物理 $\mathbb C^5$，也不判定另行改变编码、载体或操作合同的表示。∎
+

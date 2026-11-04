@@ -1,0 +1,26 @@
+**Definition 79.1 (policy, observation kernel and attachment divisor).** Let $u\in\mathcal D$ be an actually earned branching original tree with $b\ge3$ terminals, $N$ material cells, unit adjacency $A$, complete raw/canonical correspondence and authentic full current/fresh rights. At a new entrance $x$ is arbitrary in $\mathbb Q^N$ and every accessible receiver record or advice is independent of $x$. Choose two distinct actual terminals $a,b_*$ by their earned canonical positions, and put
+
+$$
+S=\operatorname{Term}(u)\setminus\{a,b_*\},\qquad
+C_S h=(h_s)_{s\in S}.
+\tag{79.1}
+$$
+
+During acquisition keep geometry fixed, allow no Reset, and allow Reads only in $S$. Known rational Adds at any originally available terminal, Ticks, Holds and field-independent identity outcomes remain permitted. After handoff the owed task is full original current service, including both omitted Read ports and original growth, with every real grant retained. The omissions are a temporary acquisition policy, not missing hardware or revoked authority.
+
+Let the unique material path be $a=v_0,\ldots,v_d=b_*$. Define
+
+$$
+\begin{aligned}
+m_*&=d+2,\\
+\mathcal J&=\{j\in\{0,\ldots,d\}:v_j\text{ has an off-path neighbour}\},\\
+g&=\gcd\bigl(m_*,\{j+1:j\in\mathcal J\}\bigr),\\
+\mathcal W&=\bigcap_{k\ge0}\ker(C_SA^k),\qquad
+r=\operatorname{rank}_{\mathbb Q}A,\\
+\epsilon_g&=\begin{cases}1,&g\text{ even},\\0,&g\text{ odd}.\end{cases}
+\end{aligned}
+\tag{79.2}
+$$
+
+There is an off-path component because a tree with at least three leaves is not this single leaf-to-leaf path, so $\mathcal J\ne\varnothing$. Every leaf in an off-path component belongs to $S$. Reversal sends $j+1$ to $m_*-(j+1)$; it preserves $g$. Thus the divisor is independent of the direction chosen on the path.
+

@@ -49,6 +49,8 @@ and $N$-integrality literature listed in the preregistration does not settle the
 exact fractional-index assertions in the passages read. Literature completeness
 is `ASSUMED-UNVERIFIED`.
 
+**Related settlement.** Roberto Blanco Gómez, *Supercongruences modulo p^(3k) and integrality for factorial ratios with fractional arguments, with proofs of conjectures of P. Bala*, Zenodo, [DOI 10.5281/zenodo.23426707](https://doi.org/10.5281/zenodo.23426707), record dated 2026-10-16, Corollary 1.5, proves that A347855 itself is integer-valued; that record precedes the preregistration in #18693. The stronger integrality of c(n) is not stated there. Whether its closed formula for the 3-adic valuation yields c(n) directly is `ASSUMED-UNVERIFIED`.
+
 ## Route
 
 Legendre's formula converts factorial divisibility to inequalities between sums

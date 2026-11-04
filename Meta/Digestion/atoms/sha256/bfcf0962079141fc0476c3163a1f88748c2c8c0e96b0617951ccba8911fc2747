@@ -1,0 +1,66 @@
+**Definition 39.1 (projection polynomials and the sample scale).** Collect the polynomials $\Delta_{\nu,I},N_{\nu,I,j}$ for $0\le j\le k$, and $S_{\nu,I,r}$ from both charts, including those needed in (38.4). Substitute
+
+$$
+                    \alpha=x,\qquad \beta=s-x,
+ \tag{39.1}
+$$
+
+and adjoin the two boundary polynomials $x,s-x$. Call this finite family $\mathscr F\subset\mathbb R[s,x]$, keeping zero members as fixed zero signs. Its nonzero members have total degree at most $D_*=2(k+1)$.
+
+Factor each nonzero member, over $\mathbb R[s,x]$, in the form
+
+$$
+                p(s,x)=c_p(s)\prod_{h\in\mathscr H}h(s,x)^{e(p,h)}.
+ \tag{39.2}
+$$
+
+Here $c_p$ is a nonzero polynomial in $s$, the distinct $h$ that actually occur form one common list $\mathscr H$, and each $h$ is irreducible, primitive as a polynomial in $x$ over $\mathbb R[s]$, and of positive $x$ degree. Constant real factors are absorbed into $c_p$; fix any exact normalization of the factors. This is an algebraic specification with the given real coefficients, not a bit-computability assumption.
+
+Form the finite univariate family $\mathscr P\subset\mathbb R[s]$ consisting of all $c_p$, all nonzero coefficients of each $h$ as a polynomial in $x$, and
+
+$$
+ \operatorname{Res}_x(h,\partial_xh),\qquad
+ \operatorname{Res}_x(h,\widetilde h)
+                         \quad(h\ne\widetilde h\text{ in }\mathscr H).
+ \tag{39.3}
+$$
+
+Use the ordinary Sylvester determinants for these resultants. None of the displayed resultants is the zero polynomial: over the characteristic-zero field $\mathbb R(s)$, irreducible positive-degree $h$ is squarefree, and two distinct primitive factors are coprime. Zero coefficient polynomials are not included in $\mathscr P$. Constant nonzero polynomials have no roots.
+
+The following positive numbers are determined by this finite data:
+
+$$
+ \zeta=\min\big(\{1\}\cup
+       \{r>0:p(r)=0\text{ for some }p\in\mathscr P\}\big),\qquad
+ \varepsilon=\zeta/2,\qquad s_*=\zeta/4.
+ \tag{39.4}
+$$
+
+The root set is finite, so $\zeta>0$. In particular no member of $\mathscr P$ vanishes on $(0,\varepsilon)$. Roots at $s=0$ are harmless and are not included in the positive-root set.
+
+At the one scale $s_*$, let
+
+$$
+             0=r_0<r_1<\cdots<r_a<r_{a+1}=s_*
+ \tag{39.5}
+$$
+
+be the distinct roots in $(0,s_*)$ of $\prod_{h\in\mathscr H}h(s_*,x)$, together with the displayed endpoints. Take the finite sample set
+
+$$
+ \mathscr T=
+       \{r_1,\ldots,r_a\}\ \cup\
+       \{(r_j+r_{j+1})/2:0\le j\le a\}.
+ \tag{39.6}
+$$
+
+For each chart define the Boolean number
+
+$$
+ \mathsf{Pass}_\nu(y,\delta)=
+       \bigvee_{x_*\in\mathscr T}\Phi_\nu(x_*,s_*-x_*).
+ \tag{39.7}
+$$
+
+Thus (39.7) requires only finitely many signs of the specified determinant polynomials at finitely many roots and intervening samples of univariate polynomials. The disjunction includes root samples as well as open intervals. In particular an exactly active equality can be the only passing possibility.
+

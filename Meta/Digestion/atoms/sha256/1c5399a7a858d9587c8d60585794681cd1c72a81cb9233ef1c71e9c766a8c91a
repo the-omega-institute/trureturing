@@ -1,0 +1,11 @@
+**Theorem 21.1 (whole-fiber canonical stability and its two sharp boundaries).** Fix $S\ge2$ and write
+
+$$
+ c=F_S,\qquad \rho=F_{S-1}/F_S,\qquad
+ b_t=1/\rho,\qquad b_c=1+\rho,\qquad
+ \lambda_S(P)=\operatorname{tr}(JM^SP).
+ \tag{21.1}
+$$
+
+The two numbers $b_t,b_c$ are distinct and are the endpoints of $I_S$. On the entire $\mathcal F_b$ the following classification holds.
+

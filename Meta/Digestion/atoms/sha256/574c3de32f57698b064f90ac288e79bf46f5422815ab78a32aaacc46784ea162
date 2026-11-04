@@ -1,0 +1,17 @@
+## 3. 两个复基态怎样产生三个实关系分量
+
+
+采用标准 Pauli 矩阵
+
+$$
+
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+ \sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},
+ \sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+
+$$
+
+它们是三个算符方向；$\mathbb{C}^2$ 只有两个互相正交的基态。下面给出标准 Bloch 表示的全部所需计算。[Preskill](#ref-preskill)
+
+
+<a id="thm:hopf"></a>

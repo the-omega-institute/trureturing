@@ -1,0 +1,79 @@
+**Theorem 21.1 (Strict budgets for every actual cancellation dictionary).** Let $(\eta,p)\in\mathcal L_4$ have any finite actual output alphabet and let its actual positive integer length row satisfy $hv_\beta=0$. Use (76) and choose the actual factors $Z_n$ of Theorem 18.2. For every $i\in\{0,\ldots,7\}$ the following assertions hold, with density always taken in the index $k\in\mathbb N$ of $n=i+8k$.
+
+If $C_i>J_i$, then $Q_{i+8k}>e_4$ for all sufficiently large $k$, and the same is true of $|Z_{i+8k}|/\operatorname{per}(Z_{i+8k})$.
+
+If $C_i=J_i$, the set
+
+$$
+\mathcal V_i=\{k\ge0:Q_{i+8k}>e_4\}
+\tag{99}
+$$
+
+has positive natural density. The set
+
+$$
+\mathcal W_i=\left\{k\ge0:
+\frac{|Z_{i+8k}|}{\operatorname{per}(Z_{i+8k})}>e_4\right\}
+\tag{100}
+$$
+
+has positive lower density, for every choice of the actual returns realizing (77). In both cases the witnessing lengths are unbounded. Consequently
+
+$$
+E(\eta(u_9))=e_4\quad\Longrightarrow\quad
+C_i<J_i\quad\text{for every }0\le i<8.
+\tag{101}
+$$
+
+No richness condition is needed for any of these implications.
+
+*Proof.* Put $P_n=hM^n b_8>0$. The actual factor formulas (79)–(80) and the exact residual (91) give
+
+$$
+Q_{i+8k}-e_4
+ =\frac{C_i-J_i+S_i(k)}{P_{i+8k}}.
+\tag{102}
+$$
+
+If $C_i-J_i>0$, then $S_i(k)\to0$ makes its numerator positive for every sufficiently large $k$. The least-period inequality (80) proves the first assertion without requiring $P_n$ to be the least period.
+
+If $C_i=J_i$, (102) gives the exact equality of index sets
+
+$$
+\mathcal V_i=\{k\ge0:S_i(k)>0\}.
+\tag{103}
+$$
+
+Apply the whole sign theorem of Jason P. Bell and Stefan Gerhold, [*The Positivity Set of a Recurrence Sequence*, arXiv:math/0506398v1, Theorem 2](https://arxiv.org/pdf/math/0506398v1). It states that for a nonzero real linear recurrence sequence with no positive dominating characteristic root, its positivity and negativity sets have positive natural density. All its hypotheses hold here: Proposition 20.1 proves real values, a constant-coefficient real recurrence for every $k\ge0$, nonzeroness on each fixed residue, and the absence of every positive real characteristic root in its exact support. The dominant roots are the roots of largest modulus within that support; none is positive. All roots are nonzero and there is no finite-support degeneracy. The theorem requires no independence of the arguments of the characteristic roots and no nondegeneracy condition on their quotients. Thus it applies separately to all eight sequences (98), even in the presence of multiplicative relations among their phases.
+
+It follows that the limit
+
+$$
+\delta_i=\lim_{N\to\infty}
+ \frac{\#(\mathcal V_i\cap\{0,\ldots,N-1\})}{N}>0
+\tag{104}
+$$
+
+exists. By (80), $\mathcal V_i\subseteq\mathcal W_i$, so
+
+$$
+\liminf_{N\to\infty}
+ \frac{\#(\mathcal W_i\cap\{0,\ldots,N-1\})}{N}
+ \ge\delta_i>0.
+\tag{105}
+$$
+
+Only lower density is asserted for the least-period set; a smaller least period can add indices not described by (103).
+
+For the length assertion, $M^n b_8$ is the Parikh vector of $\varphi^n(8)$. Every source image has at least two letters and every $h_j\ge1$, hence
+
+$$
+P_n=|\eta(\varphi^n(8))|\ge|\varphi^n(8)|\ge2^n,
+\qquad |Z_n|\ge P_n.
+\tag{106}
+$$
+
+The eventual set in the strict-excess case and the positive-density set in the equality case both contain arbitrarily large $k$. Their actual witnesses therefore have unbounded lengths. Either alternative $C_i\ge J_i$ produces a finite actual factor with ordinary least-period exponent strictly above $e_4$, contradicting exact attainment. This proves (101) simultaneously for all eight budgets.
+
+For precision, these densities count recursion indices, not physical positions in $x$, and (102) gives $Q_{i+8k}\to e_4$ because its numerator is bounded and its denominator tends to infinity. Thus the assertion of strict violations does not assert a uniform positive excess, a strict asymptotic-exponent gap, or a positive density of offending output positions. If $C_i<J_i$, the same formula shows that this particular certified ratio is eventually below $e_4$ on that residue; it provides no upper bound on other actual factors or on smaller least periods. The sign theorem itself is reused in full; its combination with the actual simultaneous boundary extensions and the nonzero stride residual proves the strict necessary condition. $\square$
+

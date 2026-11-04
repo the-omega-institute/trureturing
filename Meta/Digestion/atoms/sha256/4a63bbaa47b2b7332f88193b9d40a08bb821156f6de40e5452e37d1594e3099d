@@ -1,0 +1,76 @@
+Moreover, for every real $\varepsilon>0$ there is a natural $N\ge1$ such
+that every natural $n\ge N$ is an original control as above and satisfies
+$|k_n(t)-a|<\varepsilon$ for every $t\in I$. Nevertheless, for every
+natural $n\ge1$,
+
+$$
+\left|S_c[k_n](1)-S_c[t\mapsto a](1)\right|=\frac12,
+\qquad
+\bigl(S_c[k_{n+1}](1)\bigr)_{n\in\mathbb N}
+\not\longrightarrow S_c[t\mapsto a](1).
+\tag{ST.7}
+$$
+
+These assertions concern the scalar hazard and the coordinate costs in
+(ST.2). They impose no common upper bound on the number of pieces.
+
+Proof. At any $t\in[j/n,(j+1)/n]$ all tents except the $j$th vanish;
+neighboring tents are also zero at a shared endpoint. The remaining tent
+is the smaller of the two distances to the cycle endpoints. Splitting at
+the midpoint gives (ST.3), continuity of $C_n$, $C_n(0)=C_n(1)=0$, and
+$0\le C_n(t)\le c/(4n)$ on $I$. Since $2-t\ge1$ and $n\ge1$, (ST.1)
+gives the height bounds and error estimate in (ST.4). The five probabilities
+are $(k_n,c-k_n,Z,c-k_n,k_n)$; each is at least $m>0$. The equal base
+coordinates are positive, $Z>0$, and $2c+Z=1$, so the base is valid.
+
+On every open rising leg $C_n'=c/2$, and on every open falling leg
+$C_n'=-c/2$. Differentiating (ST.1) gives
+
+$$
+k_n'=-\frac{C_n'}{2-t}-\frac{C_n}{(2-t)^2}
+ =\begin{cases}
+ -(c-k_n)/(2-t),&\text{on rising legs},\\
+ k_n/(2-t),&\text{on falling legs}.
+ \end{cases}
+\tag{ST.8}
+$$
+
+The expressions extend continuously to each closed leg. Together with the
+constant phase they supply a finite piecewise-$C^1$ partition at the times
+$j/(2n)$, $0\le j\le2n$. Integrating the continuous rates on each piece
+and telescoping, including a partition truncated at any point of $I$,
+expresses each coordinate as its initial value plus an integral of an
+integrable derivative. Thus both coordinates are absolutely continuous.
+The constant phase has finite variation, and the strict probability
+bounds give the remaining original-control conditions. Formula (ST.1)
+at the endpoints gives $k_n(0)=k_n(1)=a$.
+
+The derivative formula before the case split and the bounds on $C_n$
+give $|k_n'|\le c/2+c/(4n)\le3c/4$ off the finite corner set.
+Absolute continuity and the fundamental theorem on every subinterval
+then give $|k_n(y)-k_n(x)|\le(3c/4)|y-x|$ for $x,y\in I$.
+Summing over partitions proves the variation bound. The phase derivative
+and variation are zero. Its length integrand is therefore $|k_n'|$,
+which is integrable by absolute continuity. The squared derivative is
+measurable and dominated almost everywhere by $9c^2/16$ on the unit
+interval, hence integrable. Integrating these two bounds proves (ST.5).
+
+The height lies strictly between $0$ and $c$. In (ST.8) the rising-leg
+derivative is negative and the falling-leg derivative positive.
+Substitution into (ST.2) gives $h_c[k_n](t)=1/(2-t)$ away from the finite
+corner set, proving (ST.6). The latter function is continuous on $I$, so
+the actual hazard is interval integrable from $0$ to every $t\in I$.
+Its integral is $-\log(1-t/2)$, as follows by differentiating this
+primitive and evaluating at zero. Exponentiation proves
+$S_c[k_n](t)=1-t/2$. For waiting, both coordinates are constant, their
+probability coordinates are strictly positive, and their derivatives
+vanish on all of $\mathbb R$. Thus waiting is an original control and
+has zero hazard and survival one at every real time.
+
+Given $\varepsilon>0$, choose a natural $M>c/(4\varepsilon)$ and set
+$N=M+1$. For every $n\ge N$, (ST.4) gives
+$|k_n(t)-a|\le c/(4n)<\varepsilon$ on $I$, while all the original-control
+and resource conclusions remain valid. At time one the actual survival
+is $1/2$ for every $n\ge1$, whereas waiting has survival one. This proves
+the discrepancy in (ST.7). The sequence indexed by $n+1$ is constantly
+$1/2$; uniqueness of real limits excludes convergence to one. $\square$

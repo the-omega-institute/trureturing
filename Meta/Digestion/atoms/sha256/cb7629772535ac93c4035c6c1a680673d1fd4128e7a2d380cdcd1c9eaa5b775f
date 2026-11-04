@@ -1,0 +1,36 @@
+### Theorem 60.5 (memory fibers and the noncommuting quantifiers)
+
+For a memory map \(m:I\to M\), the memory is safe for budget \(n\) exactly when
+
+$$
+\forall u\in m(I),\qquad
+\bigcup_{i:m(i)=u}B_i\in\mathcal W_n.
+$$
+
+Moreover, \(\mathcal K_n\) is downward closed and
+
+$$
+\mathcal K_n\subseteq\mathcal K_{n+1}.
+$$
+
+It need not be closed under unions.
+
+**Proof.** After the memory value \(u\) is retained, every history in its
+fiber remains possible, so the correct current candidate relation is their
+union. The same continuation must work for the union, proving necessity. If
+the union belongs to \(\mathcal W_n\), choose its protocol, proving
+sufficiency. Restricting a successful protocol to a smaller candidate set
+preserves success, and allowing more actions preserves an old protocol. The
+union statement is false in the example below. \(\square\)
+
+Thus the relevant quantifiers are
+
+$$
+\forall i\ \exists\pi_i
+\quad\text{versus}\quad
+\exists\pi\ \forall i.
+$$
+
+The first does not imply the second. A task-compatible memory is therefore a
+cover by members of \(\mathcal K_n\), not generally an equivalence quotient.
+

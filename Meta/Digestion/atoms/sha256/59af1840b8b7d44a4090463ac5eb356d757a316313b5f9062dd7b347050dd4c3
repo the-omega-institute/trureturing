@@ -1,0 +1,66 @@
+**Application 13.4 (the conditional-support form of the existing variance argument).** Fix a component and a forward quotient as in Proposition 11.1, and work with its joint quotient producer (11.2). Keep the original fields, endpoints, and word order of Theorem 12.3. In each direction separately, fix a positive integer block length $m_d$ and retain the full joint-channel premise
+
+$$
+\mathbb P(W_j^d=w,Z_{j+m_d}^d=t\mid U,Z_j^d=z,V_j^d)
+=B_w^d(z,t),\qquad
+B_w^R=\bar M_w,\quad B_w^L=R_w.
+\tag{13.9}
+$$
+
+Here $R_w$ uses the canonical quotient reverse, not an assumed lumping of the original hidden reverse. Proposition 11.1 and Lemma 3.3 on the quotient producer supply (13.9) at every cut. For $p_{j,v}^d(w)>0$, restrict the normalized rows to
+
+$$
+\begin{aligned}
+I_{j,v,w}^d
+&=\{z:\mathbb P(Z_j^d=z\mid V_j^d=v,W_j^d=w)>0\},\\
+c_{j,v}^d(w)
+&=\max_{z,z'\in I_{j,v,w}^d}
+\operatorname{TV}\left(
+\frac{B_w^d(z,\cdot)}{(B_w^d\mathbf1)_z},
+\frac{B_w^d(z',\cdot)}{(B_w^d\mathbf1)_{z'}}\right).
+\end{aligned}
+\tag{13.10}
+$$
+
+This is the posterior support marginal over $U$, not a separate support chosen after conditioning on $U=0$ or $U=1$. It is nonempty and all its row denominators are positive by (5.3). A singleton gives coefficient zero; null words are omitted, with no coefficient assigned to them.
+
+Suppose that, separately for $d=L,R$, there is $0\le\kappa_d<1$ such that at **every required shifted cut** $j$,
+
+$$
+\sum_{w:p_{j,v}^d(w)>0}
+p_{j,v}^d(w)c_{j,v}^d(w)\Delta_{j,w}^d(v)
+\le\kappa_d\Delta_j^d(v)
+\quad\text{for almost every }v,
+\qquad
+\Delta_j^d(v)=\sum_w p_{j,v}^d(w)\Delta_{j,w}^d(v).
+\tag{13.11}
+$$
+
+The last sum also omits null words. This denominator is again the post-word residual (12.1). If the required cuts are all $j\ge0$, then (12.8)--(12.10) hold with these constants. More generally, if (13.11) holds at every $j\ge b_d$ for fixed integers $b_d\ge0$, then
+
+$$
+e_d^{P_C}(j)\le\frac14\kappa_d^{\lfloor(j-b_d)/m_d\rfloor}
+\quad(j\ge b_d),
+\qquad e_d^{P_C}(j)\le\frac14\quad(0\le j<b_d),
+\tag{13.12}
+$$
+
+and in particular
+
+$$
+A_{P_C}(0)\le\frac{b_L+b_R}{2}
++\frac12\sum_{d=L,R}\frac{m_d}{1-\sqrt{\kappa_d}}<\infty.
+\tag{13.13}
+$$
+
+These constants may depend on the component. If each positive stationary component supplies them, Theorem 7.1 gives the original-law finite-mixture conclusion.
+
+To obtain these statements, use (13.9), which is exactly (5.1), for both roles it plays in Lemma 5.1. First, it gives the conditional Markov kernel (5.4) on each $(v,w)$-fiber. Restricting that kernel to $I_{j,v,w}^d$ is the classical support restriction already allowed in Lemma 4.3. Its application gives
+
+$$
+\mathcal D(U;Z_{j+m_d}^d\mid V_j^d=v,W_j^d=w)
+\le c_{j,v}^d(w)\Delta_{j,w}^d(v).
+$$
+
+Second, the same joint-channel premise makes $W_j^d$ conditionally independent of $U$ given $(Z_j^d,V_j^d)$ and hence gives the observation-variance identity (5.5). Sum the preceding inequality over words, use (13.11), and integrate, just as in Lemma 12.1. The resulting recursion is bounded by $\kappa_d\mathcal D(U;Z_j^d\mid V_j^d)$, because $\kappa_d\ge0$. Start at $b_d$ with variance at most $1/4$, iterate complete blocks, and handle any positive-length remainder by Lemma 5.1 with coefficient one; a zero-length remainder requires no block. The Jensen step (6.7)--(6.8) and the same geometric sums prove (13.12)--(13.13). This is an application of Lemmas 4.3, 5.1, and 12.1, not a new standalone SDPI. Conditional Markovness alone without the full premise (13.9) would not justify the observation-variance identity.
+

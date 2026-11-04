@@ -1,0 +1,10 @@
+**定义 5.1（所需例外对）。** A required pair consists of two targets in the same entire $\mathcal F(Y;m,j)$, $\kappa\ne0$, such that
+
+$$
+H_1(5)=H_2(5)=H_1(7)=H_2(7)=\kappa,\qquad
+\delta_1\ne\delta_2,\qquad a_1=a_2,\quad c_1=c_2.
+\tag{5.1}
+$$
+
+This is the pair appearing in (4.7). Neither $v_i=H_i(6)$ can vanish: $v_1y_1=v_2y_2$ would then force both to vanish, and the common $a$ would give equal drifts. A common original left source factor is equivalent to common $x$, since $D$ is invertible; a common right factor is equivalent to common $y$.
+

@@ -1,0 +1,113 @@
+**Proposition 8.2 (Inherited polynomial witnesses and capacity bounds).**
+For each integer $b\ge1$, all four contracts in (8.5) admit a model
+of dimension $2b+3$ with
+
+$$
+\operatorname{err}(A)^2\le4ZH+\frac{8H^2}{\sqrt b}.
+\tag{8.6}
+$$
+
+Consequently for $n\ge5$ and $b=\lfloor(n-3)/2\rfloor$, each capacity
+$e_{n,\mathcal C}$ defined within one of these four classes satisfies,
+when $0<Z<2/3$,
+
+$$
+4ZH+\Gamma_{\mathrm{exp}}(n,Z)
+\le e_{n,\mathcal C}(Z)^2
+\le4ZH+\frac{8H^2}{\sqrt{\lfloor(n-3)/2\rfloor}}.
+\tag{8.7}
+$$
+
+Here $e_{n,\mathcal C}$ is notation for the capacity of the indicated
+class, including $e_n^{\mathrm{aff}}$ for the literal class; it is not
+an assertion that the four capacities coincide.
+
+**Proof 8.2.** Use the interior Bernstein construction of [F],
+§§7.1–7.3 and §11.6:
+
+$$
+\kappa_j=\frac{H(j+1)}{b+2},\qquad
+P_b(k)=\sum_{j=0}^b
+A(\kappa_j)\binom bj(k/H)^j(1-k/H)^{b-j}
+=\sum_{j=0}^b\pi_j k^j.
+\tag{8.8}
+$$
+
+Every node is interior. The companion's finite moment and
+Cauchy–Schwarz proof, including $b=1$, gives
+
+$$
+|P_b(k)-A(k)|\le\sqrt2\,H b^{-1/4}
+\quad(0<k<H).
+\tag{8.9}
+$$
+
+Store $K_{\mathrm{ht}}=k$ and $f_j=k^jU(\alpha)$,
+$0\le j\le b$, and use the fixed linear decoder
+$D(\sum_{j=0}^b\pi_jf_j,0)$. This uses $1+2(b+1)=2b+3$
+coordinates. By (4.9), its exact squared readout error is
+
+$$
+4(P_b(k)-A(k))^2+4Zk,
+$$
+
+so (8.9) proves (8.6). The decoder reads the stored features linearly;
+it does not perform a nonlinear polynomial evaluation on the stored
+height.
+
+For all real straight commands use
+
+$$
+P_s:\quad K_{\mathrm{ht}}'=K_{\mathrm{ht}}+s,\qquad
+f_j'=\sum_{h=0}^j\binom jh s^{j-h}f_h,
+$$
+
+$$
+Q_t:\quad K_{\mathrm{ht}}'=K_{\mathrm{ht}},\qquad
+f_j'=R_{t/2}f_j.
+\tag{8.10}
+$$
+
+These maps are affine and exactly intertwine (4.6)–(4.7).
+The binomial identities have their polynomial values also at zero
+commands. On the actual image the probability guard is precisely
+$0<K_{\mathrm{ht}}+s<H$, and the phase guard is the entire image.
+
+For each prescribed path use the affine map of [F], Proposition 9.1,
+
+$$
+K_{\mathrm{ht}}'=K_{\mathrm{ht}}+\Delta_k,\qquad
+f_j'=R_{L_\chi/2}
+\sum_{h=0}^j\binom jh\Delta_k^{j-h}f_h.
+\tag{8.11}
+$$
+
+Substitution gives $(k+\Delta_k)^jU(\alpha+L_\chi/2)$, exactly the
+encoding of the actual endpoint. The source beta mixed term remains
+present in (8.3); this particular allowed encoder forgets it.
+The stored height determines the full guard (8.2). Replacing $T$
+by any intermediate time in (8.1) gives the exact intermediate
+encoding. Induction over finite lawful concatenations gives all finite
+prefixes. At every such state the same uniform readout bound applies,
+as established in [F], §§7.3 and 9.2.
+
+Thus the upper witness belongs to each class separately. The lower
+bound comes from (8.5) and Theorem 7.2, while $2b+3\le n$ gives
+the upper bound in (8.7). $\square$
+
+For every $\epsilon>e_*$, one sufficient degree in this inherited
+construction is
+
+$$
+b=\max\left\{1,\
+\left\lceil
+\left(\frac{8H^2}{\epsilon^2-4ZH}\right)^2
+\right\rceil\right\}.
+\tag{8.12}
+$$
+
+This is an exact-real finite construction on the entire open source.
+The degree and coordinate counts are sufficient bounds, not optimal
+ones. The upper estimate is inherited content, used to compare the
+explicit lower estimate under matching obligations.
+

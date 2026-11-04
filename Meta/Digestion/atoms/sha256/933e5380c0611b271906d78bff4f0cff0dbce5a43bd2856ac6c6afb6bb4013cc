@@ -1,0 +1,33 @@
+**Definition 21.1 (Finite tensor coefficients).** For a polynomial
+$G$ in $m$ variables $z_1,\ldots,z_m$ on a rational box
+$\prod_\nu[l_\nu,u_\nu]$, fix a degree vector $\mathbf n$ at least
+its coordinate degrees. Expand exactly
+
+$$
+G(l_1+(u_1-l_1)y_1,\ldots,l_m+(u_m-l_m)y_m)
+       =\sum_{\mathbf k}g_{\mathbf k}\mathbf y^{\mathbf k}.
+$$
+
+The tensor Bernstein coefficient with index
+$0\le i_\nu\le n_\nu$ is
+
+$$
+\mathcal B_{\mathbf i}(G)
+ =\sum_{\mathbf k\le\mathbf i}g_{\mathbf k}
+       \prod_{\nu=1}^m
+           \frac{\binom{i_\nu}{k_\nu}}{\binom{n_\nu}{k_\nu}}.
+\tag{21.3}
+$$
+
+Missing power coefficients are zero. All substitutions and sums in
+(21.3) are exact rational operations. The identity
+
+$$
+y^k=\sum_{i=k}^n
+ \frac{\binom{i}{k}}{\binom nk}\binom ni y^i(1-y)^{n-i}
+$$
+
+shows that these are precisely the coefficients in a nonnegative
+basis summing to one on the box. Their minimum therefore bounds $G$
+from below, including the box boundary.
+

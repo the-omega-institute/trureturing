@@ -15,6 +15,10 @@ internal sealed class ConditionalSubentropyGuessingBoundDocument : IScribeDocume
                 "Equation (2), PDF page 2: \"Q(ρ) = ⟨H(M(ρ))⟩_M − C_n where C_n := 1/2 + 1/3 + … + 1/n.\" The sum runs from 2 through n, inclusive.", AssessedProvenance.FromLiterature(Source)),
             Node("simplexCoords", SimplexCoordsFormula(),
                 "Equation (3), PDF page 2: \"this uniform measure (normalised to have total volume unity) is given by dx = (n − 1)! dx_1 … dx_{n−1}.\" The first n−1 coordinates are nonnegative and have sum at most one.", AssessedProvenance.FromLiterature(Source)),
+            Node("simplex_volume", SimplexVolumeFormula(),
+                "The standard simplex in n coordinates has volume equal to the reciprocal of n factorial.", AssessedProvenance.FromRepo(), role: DescribeRole.Lemma),
+            Node("simplex_sum_boundary_null", SimplexSumBoundaryNullFormula(),
+                "Every positive level set of the coordinate sum has zero volume.", AssessedProvenance.FromRepo(), role: DescribeRole.Lemma),
             Node("subentropySpectrum", SpectrumFormula(),
                 "Equation (4), PDF page 2: \"Introducing η(y) := −y ln y, we then obtain a third expression for the subentropy from eq.(2): Q(ρ) = n ∫_{Δn} η(λ · x) dx − C_n.\" Real.negMulLog is η. The Lebesgue integral is multiplied by (n−1)!, as in equation (3).", AssessedProvenance.FromLiterature(Source)),
             Node("subentropy", SubentropyFormula(),
@@ -26,10 +30,10 @@ internal sealed class ConditionalSubentropyGuessingBoundDocument : IScribeDocume
             Node("result", ClaimBody(),
                 "The simplex integral equals the determinant-integral subentropy on positive semidefinite trace-one matrices. Gaussian radial decomposition proves this equality without a simple-spectrum assumption. Normalizing the nonzero blocks gives a probability ensemble; zero blocks contribute zero. The ensemble guessing bound gives the inequality.", AssessedProvenance.FromRepo(Source), true))));
 
-    private static DocumentBlock.Describe Node(string name, Formula formula, string text, AssessedProvenance provenance, bool theorem = false) =>
-        Describe.Lean(DescribeId.Create("conditionalsubentropy-" + name.ToLowerInvariant()), DeclarationHandle.Create(Owner + name),
+    private static DocumentBlock.Describe Node(string name, Formula formula, string text, AssessedProvenance provenance, bool theorem = false, DescribeRole? role = null) =>
+        Describe.Lean(DescribeId.Create("conditionalsubentropy-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Owner + name),
             H(name), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(text))),
-            theorem ? DescribeRole.Theorem : DescribeRole.Definition,
+            role ?? (theorem ? DescribeRole.Theorem : DescribeRole.Definition),
             theorem ? new OpenProblemResolutionClaim(
                 ProblemSlugRef.Create("datta-dorlas-jozsa-benatti-2014-conditional-subentropy-conjecture-2"),
                 ResolutionKind.Proved) : null);
@@ -42,6 +46,17 @@ internal sealed class ConditionalSubentropyGuessingBoundDocument : IScribeDocume
         Formula nonnegative = All("i", Call("Fin", Sub(Id("n"), D(1))), Leq(D(0), Apply(Id("y"), Id("i"))));
         Formula sumBound = Leq(SumOver("i", Call("Fin", Sub(Id("n"), D(1))), Apply(Id("y"), Id("i"))), D(1));
         return All("n", Natural, Eqn(Call("simplexCoords", Id("n")), SetOf("y", coordinates, And(nonnegative, sumBound))));
+    }
+    private static Formula SimplexVolumeFormula() => All("n", Natural,
+        Eqn(Call("volume", Call("simplexCoords", Add(Id("n"), D(1)))),
+            Pow(Typed(Call("Nat.factorial", Id("n")), ENNRealType), new Formula.Negate(D(1)))));
+    private static Formula SimplexSumBoundaryNullFormula()
+    {
+        Formula coordinates = Arrow(Call("Fin", Id("n")), Real);
+        Formula sum = SumOver("i", Call("Fin", Id("n")), Apply(Id("u"), Id("i")));
+        Formula levelSet = SetOf("u", coordinates, Eqn(sum, Id("t")));
+        return All("n", Natural, All("t", Real,
+            Imp(Lt(D(0), Id("t")), Eqn(Call("volume", levelSet), D(0)))));
     }
     private static Formula SpectrumFormula()
     {
@@ -84,6 +99,7 @@ internal sealed class ConditionalSubentropyGuessingBoundDocument : IScribeDocume
         Seq(Bracket(Call("Fintype", Id(name))), Bracket(Call("DecidableEq", Id(name))), body));
     private static Formula Natural => Seq(Mathbb, Grp(Id("N")));
     private static Formula Real => Seq(Mathbb, Grp(Id("R")));
+    private static Formula ENNRealType => Call("ENNReal");
     private static Formula Complex => Seq(Mathbb, Grp(Id("C")));
     private static Formula MatrixType(Formula index) => Call("Matrix", index, index, Complex);
     private static Formula Id(string name) => StrataLint.Scribe.FormulaDsl.Id(name);
@@ -91,6 +107,8 @@ internal sealed class ConditionalSubentropyGuessingBoundDocument : IScribeDocume
     private static Formula Bracket(Formula body) => Seq(OpenBracket, body, CloseBracket, Sp);
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Apply(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+    private static Formula Add(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Add, right);
+    private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(value, exponent);
     private static Formula Call(string name, params Formula[] args)
     {
         Formula[] words = name.Split('.').Select(part => (Formula)Seq(Operatorname, Grp(Id(part)))).ToArray();
@@ -101,6 +119,7 @@ internal sealed class ConditionalSubentropyGuessingBoundDocument : IScribeDocume
     private static Formula ExistsAt(string name, Formula domain, Formula body) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
     private static Formula Arrow(Formula left, Formula right) => new Formula.TypeArrow(left, right);
     private static Formula Eqn(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula Lt(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
     private static Formula Leq(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula Sub(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
     private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);

@@ -1,0 +1,20 @@
+**Corollary 133.3 (the original equal-gap marginal mixed pencil).** Retain the full original source, native-parameter, process and readout telescope of Definitions 127.1 and 129.1. For every original finite $a,\eta,t,d>0$, put $\Delta_1=\Delta_2=d$ and $P=T_d$. Then (129.16) and (129.22) hold for the actual density. For every real $(\alpha,\beta,\gamma)$ with $(\alpha,\beta)\ne(0,0)$, the original marginal pencil
+
+$$
+\varphi=\alpha g_t+\beta g_{t+d}=\alpha g_t+\beta Pg_t,\qquad
+Q(v)=\int_G\varphi vPv\,dm+\gamma\int_Gg_t vP^2v\,dm
+\tag{133.17}
+$$
+
+has a bounded real negative test at every positive global angular frequency, with mutually orthogonal real polar pairings between distinct positive frequencies. For every Borel $E$ with $m(E)>0$,
+
+$$
+n_-(Q|_{\mathcal V_G})=n_-(Q|_{\mathcal V_E})
+=n_-(Q|_{\mathcal V_E^{\rm lin}})=\infty.
+\tag{133.18}
+$$
+
+Here $\mathcal V_E$ is the real bounded Borel class space supported in $E$, and $\mathcal V_E^{\rm lin}=\ker\Lambda_E$ retains exactly the equations $\Lambda_E(v)=(\ell_{yzw}(v))_{y,z,w\in L}$ of (125.2) and (127.3), the fixed pointwise Borel simplex tuple, distinct labels, signs and common-readout trilinear form. In particular $r_E=\operatorname{rank}\Lambda_E\le37$; no approximate or weakened constraints replace these exact first-order equations. Emission-overlap choices of $E$ are unchanged.
+
+**Proof.** Apply Theorem 133.2 with $\tau=t$ to obtain the actual global boundedness (129.16), for every original tuple, hence (129.22). Corollary 129.3 now applies directly, with its complete proof and substitutions $f=\alpha g_t+\beta Pg_t$, $w=g_t$, $c=\gamma$ retained. Its source nonconstancy, rotation and local regularity suppliers are unchanged, and $\|Pg_t\|_\infty\le\|g_t\|_\infty$. This gives the stated global sectors and (133.18), including every real $\gamma$ with no sign restriction. Its localization uses Proposition 127.2: a finite constrained bound $k$ would imply a global bound $k+r_E\le k+37$, contradicting the global infinite index. No localization of individual angular sectors to an arbitrary $E$ is asserted. $\square$
+

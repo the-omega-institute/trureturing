@@ -1,0 +1,21 @@
+**Definition 58.1 (saved old values and the marked plant).** Take an arbitrary attachment of Assumption 34.1: $t\in\mathcal D$ has $a$ alpha leaves, $c$ beta leaves and $L=a+c\ge3$, arbitrary $x\in\mathbb Q^{V(t)}$, and an arbitrary exhaustive initial raw bijection. Execute exactly the arming and preorder marking of Definition 34.2, retaining every initial literal $z_j$ before its Add$(j,1-z_j)$. After the map is earned, arrange these saved numbers in the original canonical terminal order. They are old field data, not new source ports.
+
+The supplier Theorem 34.3 earns $t,\lambda_0$ and the actual $u=\rho(t),\lambda$, where
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+$$
+
+Let $V_0=V(t)$, $T_0$ be its original terminals, and $W=V_0\setminus T_0$. The actual final sizes and marked field $m$ are
+
+$$
+b=L+c,\quad N=3L+2c-1,\quad I=N-b=2L+c-1=|V_0|,
+\qquad
+m_v=\begin{cases}x_v,&v\in W,\\1,&v\notin W.\end{cases}
+\tag{58.1}
+$$
+
+Every old vertex is now internal and every fresh vertex is now a current terminal. These assertions include the old beta marker, which is retained as a new logical beta root when its parent is split.
+

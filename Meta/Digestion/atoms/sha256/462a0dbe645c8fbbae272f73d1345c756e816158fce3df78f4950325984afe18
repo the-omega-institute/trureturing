@@ -1,0 +1,23 @@
+They satisfy $P$ with their original values.
+
+For a residual sort the actual blocks have a common finite ground shape
+and satisfy all its offset equations. There is no nonzero cycle. At
+the chosen minimum vertex the actual block is normal. Set
+$z_j=E(U_{j,0})$, so $B(z_j)=U_{j,0}$. Lemma 2.5 reconstructs every
+actual block as $\tau_{a_U}B(z_j)$. With the actual explicit ranks this
+recovers the entire canonical code of *every* name, not merely its
+shape. Expanding the original names therefore gives the original tuple
+$\mathbf x$ itself. No bound, shape marker or canonical filling is
+substituted for that source. This proves the other inclusion.
+
+All branch operations are finite syntactic, graph or integer operations,
+and finite free-shape unification terminates. The native templates are
+finite descriptions even though their arguments and expanded values
+have no common size bound. An unused original variable has its name and
+unconstrained residual sort and is recovered in exactly the same way.
+For $d=0$ the output tuple is empty; a ground successful presentation
+has that tuple as its image and an inconsistent one has no image. For
+an empty presentation the construction is also valid; in particular
+one may take $k=0,m=d$, $P$ true and $F(\mathbf z)=\mathbf z$.
+All zero-dimensional products have their singleton meaning. $\square$
+

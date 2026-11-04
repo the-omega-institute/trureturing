@@ -1,0 +1,57 @@
+**Lemma 8.1 (odd-offset node table and newborn exclusion).** Fix arbitrary
+$t\in\mathcal T$, $k\ge1$, and $y=\rho^{2k+1}t$. At every semantic
+address $p$ put
+
+$$
+ B_k^o(p)=pR^kL,\qquad C_k^o(p)=pR^kLL,
+ \qquad b=P_y(B_k^o(p)),\quad c=P_y(C_k^o(p)).       \tag{GPO.26}
+$$
+
+At a present original node their pairs are respectively $00,10,11$ for
+alpha, beta and branch. If $p$ was originally absent, both bits are zero,
+even if $p$ is now present. In particular, on all addresses without a
+presence promise,
+
+$$
+ P_y(pR^kLL)=1\quad\Longleftrightarrow\quad
+                  r_t(p)=\mathsf{branch}.          \tag{GPO.27}
+$$
+
+Proof. The recurrence $T_{i+2}=\langle T_{i+1},T_i\rangle$ gives, for
+all $i,s\ge0$,
+
+$$
+ P_{T_i}(R^sL)=1\iff i\ge2s+2,\qquad
+ P_{T_i}(R^sLL)=1\iff i\ge2s+3.                   \tag{GPO.28}
+$$
+
+For $s=0$, an $L$ child exists exactly at ranks at least two, and an
+$LL$ descendant exactly at ranks at least three. A further initial $R$
+requires a branch and lowers rank by two; induction on $s$ proves both
+criteria, with ranks zero and one failing at the first edge. These are
+applications of the guarded atomic navigation supplier of Atomic Block
+Conjugacy, Theorem 3.2; nonnegative final rank alone is not being used
+as a reachability condition.
+
+At an original alpha or beta leaf the current subtree is $T_{2k+1}$ or
+$T_{2k+2}$. Equation (GPO.28) gives $00$ or $10$. At an original branch,
+the right child is $\rho^{2k+1}s$ for a nonempty original $s$. Follow
+$R^{k-1}$ there. Each original branch encountered preserves both children;
+after reaching an original leaf the remaining atomic rank is at least
+three, since at most $k-1$ atomic right edges have removed two each.
+Thus two further left edges are possible. If all $k-1$ right edges instead
+end at an original branch, its left child is an odd substituted nonempty
+tree and has a branch root, so the same two left edges are possible.
+This proves $P_{\rho^{2k+1}s}(R^{k-1}LL)=1$ in every case. Hence $c=1$,
+and its prefix probe has $b=1$.
+
+For original absence, take the first original leaf prefix $z$ of $p$ and
+write $p=zw$ with $w\ne\varepsilon$. This is the original-leaf
+factorization in ActualLeafHistoryRigidity.actual_address_geometry.
+The corresponding replacement is $T_{2k+1+\eta}$, $\eta\in\{0,1\}$.
+If $w$ fails, both probes fail. If it succeeds, each of its edges starts
+at a branch and lowers rank by one or two. Its reached rank is therefore
+at most $2k+1$. Formula (GPO.28) makes $R^kL$, and consequently $R^kLL$,
+absent. The argument includes all later-born addresses and proves
+(GPO.27). $\square$
+

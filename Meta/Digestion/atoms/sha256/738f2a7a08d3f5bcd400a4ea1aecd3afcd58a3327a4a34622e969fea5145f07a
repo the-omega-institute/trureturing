@@ -1,0 +1,33 @@
+**Assumption 7.1 (the one-completion service variant).** Keep Definition
+1.1 and all the source, advice, observation, common-initialization,
+backing, writer, progress and continuation conditions of Assumption 1.2.
+The entrance register is still the authentic
+$v=\rho^{2k}u$, with $k\ge1$ and $A\le n=\ell(u)\le B<2A$;
+the target is still $(\pi,u,k,n)$. The following is an additional
+installation condition, replacing the two-call acquisition schedule of
+Assumption 5.1 for this variant only. The actor may execute one completed
+applyRho on this same register and then obtain stationary paid total Read
+at that first completion, before issuing another update. Its only accessible
+actuator result is the common completion acknowledgement. The register
+remains stationary through acquisition, output formation and handoff, and
+the same global $\pi$ applies to every old and newly created branch.
+Thus the attained register is
+
+$$
+ x=\rho v=\rho^{2k+1}u.                         \tag{GPO.23}
+$$
+
+The preparation count $d=1$ is known from the actor's completed act;
+$2k+1$ is not supplied as a numeric epoch. All preparation, installation,
+Read, maintenance, allocation, retained access and writer costs are paid.
+No completion timing, allocation pattern, identity or hidden full reply
+provides an extra source channel. Stationarity forbids interleaving even
+a second preparation update with these Reads.
+
+This first-completion Read grant is a premise about the installed service.
+A service that mandates two completed calls before granting Read, as allowed
+by Assumption 5.1, need not have it. Neither that assumption nor Theorem
+5.2 installs the present variant. The source algebra and authentic entrance
+history are unchanged; the availability cut is different. The two-call
+result and all its charges remain valid in their original scope.
+

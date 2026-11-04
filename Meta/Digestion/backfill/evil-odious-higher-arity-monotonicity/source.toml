@@ -1,0 +1,5 @@
+source_id = "evil-odious-higher-arity-monotonicity"
+path = "docs/develop/theory/EVIL_ODIOUS_HIGHER_ARITY_MONOTONICITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

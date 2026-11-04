@@ -99,11 +99,11 @@ def BornData {X : Type u} [TopologicalSpace X] [MeasurableSpace X]
     (μ n).1.totalVariation (V.clopen n : Set X)ᶜ = 0 ∧
     (1 / 2 : ℝ≥0∞) ≤ (μ n).1.toJordanDecomposition.posPart univ}
 
-private noncomputable def pointJordan {X : Type u} [MeasurableSpace X] (x : X) :
+noncomputable def pointJordan {X : Type u} [MeasurableSpace X] (x : X) :
     JordanDecomposition X :=
   ⟨Measure.dirac x, 0, Measure.MutuallySingular.zero_right⟩
 
-private noncomputable def regularPoint {X : Type u} [TopologicalSpace X]
+noncomputable def regularPoint {X : Type u} [TopologicalSpace X]
     [PseudoMetrizableSpace X] [CompactSpace X] [MeasurableSpace X] [BorelSpace X]
     (x : X) : RegularSigned X :=
   ⟨(pointJordan x).toSignedMeasure, by
@@ -111,12 +111,14 @@ private noncomputable def regularPoint {X : Type u} [TopologicalSpace X]
     exact ⟨inferInstanceAs (Measure.Regular (Measure.dirac x)),
       inferInstanceAs (Measure.Regular (0 : Measure X))⟩⟩
 
-private theorem born_nonempty {X : Type u} [TopologicalSpace X]
+/-- The original Dirac construction applied to an entire supplied point list.
+The support index is unchanged; this is one legal BornData value. -/
+noncomputable def pointBornData {X : Type u} [TopologicalSpace X]
     [PseudoMetrizableSpace X] [CompactSpace X] [MeasurableSpace X] [BorelSpace X]
-    (V : SupportFamily X) : Nonempty (BornData V) := by
+    (V : SupportFamily X) (x : ℕ → X) (hx : ∀ n, x n ∈ (V.clopen n : Set X)) :
+    BornData V := by
   classical
-  choose x hx using V.nonempty
-  refine ⟨⟨fun n => regularPoint (x n), fun n => ?_⟩⟩
+  refine ⟨fun n => regularPoint (x n), fun n => ?_⟩
   simp only [regularPoint, SignedMeasure.totalVariation,
     JordanDecomposition.toJordanDecomposition_toSignedMeasure, pointJordan,
     add_zero]
@@ -125,6 +127,13 @@ private theorem born_nonempty {X : Type u} [TopologicalSpace X]
       Set.indicator_of_notMem (show x n ∉ (V.clopen n : Set X)ᶜ from not_not.mpr (hx n))]
   · rw [Measure.dirac_apply_of_mem (mem_univ _)]
     norm_num
+
+private theorem born_nonempty {X : Type u} [TopologicalSpace X]
+    [PseudoMetrizableSpace X] [CompactSpace X] [MeasurableSpace X] [BorelSpace X]
+    (V : SupportFamily X) : Nonempty (BornData V) := by
+  classical
+  choose x hx using V.nonempty
+  exact ⟨pointBornData V x hx⟩
 
 private theorem born_card_le {X : Type u} [TopologicalSpace X] [MeasurableSpace X]
     [MeasurableSpace.CountablyGenerated X] (V : SupportFamily X) :

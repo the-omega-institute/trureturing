@@ -1,0 +1,14 @@
+**定义 8.1（已排除同源叶的词族）。** 定义七动作词集合
+
+$$
+\begin{aligned}
+\mathcal W_{\mathrm{bad}}=\{w\in\{J,M\}^7:\ &
+w\text{ 含 }MMMMM,\\
+&\text{或含 }M\text{ 且至少有三个起点不同的 }JJ,\\
+&\text{或含 }MJMJMJ\text{ 或 }JMJMJM\}.
+\end{aligned}
+\tag{8.1}
+$$
+
+这里第二个条件允许交叠；该定义与以下证明均无需枚举词表。
+

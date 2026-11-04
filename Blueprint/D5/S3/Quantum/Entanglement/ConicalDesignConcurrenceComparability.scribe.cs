@@ -43,8 +43,169 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Wzcf),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("wang-zhou-chen-fei-2026-conical-design-concurrence-comparability"),
-                    ResolutionKind.Proved))),
+                    ResolutionKind.Proved)),
+            PhysicalApplication()),
         []));
+
+    private static DocumentBlock PhysicalApplication()
+    {
+        Formula l = LambdaLower, t = F.Id("t"), x = F.Id("X"), a = F.Id("A"), h = F.Id("H");
+        Formula phi = new Formula.Subscript(Phi, D(2));
+        Formula rho = new Formula.Subscript(Rho, Star);
+        Formula mt = new Formula.Subscript(F.Id("M"), t);
+        Formula bound = Call("B_E", Call("E", l), rho);
+        Formula answer = new Formula.Fraction(Sub(Mul(t, Root(Add(Square(t), D(1)))), Square(t)), D(2));
+        Formula q = F.Id("Q"), i2 = new Formula.Subscript(F.Id("I"), D(2)), i4 = new Formula.Subscript(F.Id("I"), D(4));
+        return new DocumentBlock.Section(H("A physical six-effect family with a strict comparison"), Blocks(
+            Paragraph(Text("This analytical application uses the existing bound_normal_form and ratio ordering in this module. "
+                + "The physical realization and singular-value calculation below are mathematical exposition, not additional kernel-checked declarations. "
+                + "The cited Wang–Zhou–Chen–Fei and Siudzinska sources supply the conjecture and bound conventions; no priority claim for this example is made.")),
+            new DocumentBlock.Section(H("Six complex effects and their design constants"), Blocks(
+                Paragraph(Text("Work on the complex two-qubit space, in computational order 00, 01, 10, 11. "
+                    + "For every real parameter in the following interval, take both signs for each of the three ordinary Pauli matrices (i denotes the complex imaginary unit):")),
+                Display(Seq(D(0), F.Lt, l, Leq, new Formula.Fraction(D(1), Root(D(2))))),
+                Display(Seq(new Formula.Subscript(SigmaLower, F.Id("x")), Eq,
+                    SmallMatrix([D(0), D(1)], [D(1), D(0)]), Comma, Quad, Sp,
+                    new Formula.Subscript(SigmaLower, F.Id("y")), Eq,
+                    SmallMatrix([D(0), new Formula.Negate(F.Id("i"))], [F.Id("i"), D(0)]), Comma, Quad, Sp,
+                    new Formula.Subscript(SigmaLower, F.Id("z")), Eq,
+                    SmallMatrix([D(1), D(0)], [D(0), new Formula.Negate(D(1))]))),
+                Display(Seq(new Formula.Apply(new Formula.Subscript(F.Id("E"), Seq(F.Id("k"), Comma, Pm)), [l]), Eq,
+                    new Formula.Fraction(i2, D(2)), Pm, new Formula.Fraction(l, Root(D(2))),
+                    new Formula.Subscript(SigmaLower, F.Id("k")), Comma, Quad, Sp,
+                    F.Id("k"), InMacro, OpenBrace, F.Id("x"), Comma, F.Id("y"), Comma, F.Id("z"), CloseBrace)),
+                Paragraph(Text("Each Pauli matrix is Hermitian with eigenvalues +1 and -1, so every effect has eigenvalues "),
+                    Math(Seq(Rational(1, 2), Pm, new Formula.Fraction(l, Root(D(2))))),
+                    Text(". They lie between zero and one on the whole interval. Every effect has trace one and is nonzero. "
+                        + "At the included upper endpoint its eigenvalues are zero and one, so it is rank one; positive definiteness is not required. "
+                        + "Each plus/minus pair sums to the identity. The six effects sum to three times the identity: they are three binary POVMs, "
+                        + "not one globally normalized six-outcome POVM, and no rescaling is applied.")),
+                Paragraph(Text("Suppress the common argument lambda in the effects below. The cross terms cancel within each pair, giving")),
+                Display(Seq(new Formula.Subscript(Sum, Seq(F.Id("s"), Eq, Pm)),
+                    Tensor(new Formula.Subscript(F.Id("E"), Seq(F.Id("k"), Comma, F.Id("s"))),
+                        new Formula.Subscript(F.Id("E"), Seq(F.Id("k"), Comma, F.Id("s")))), Eq,
+                    new Formula.Fraction(i4, D(2)), Plus, Square(l),
+                    Tensor(new Formula.Subscript(SigmaLower, F.Id("k")), new Formula.Subscript(SigmaLower, F.Id("k"))))),
+                Paragraph(Text("Here kronecker denotes the tensor product. For the literal tensor swap F, entrywise evaluation of the displayed Pauli matrices gives the first identity below, and summing the three pair identities gives the second:")),
+                Display(Seq(new Formula.Subscript(Sum, F.Id("k")), Tensor(new Formula.Subscript(SigmaLower, F.Id("k")),
+                        new Formula.Subscript(SigmaLower, F.Id("k"))), Eq, D(2), F.Id("F"), Minus, i4)),
+                Display(Seq(new Formula.Subscript(Sum, Seq(F.Id("k"), Comma, F.Id("s"))),
+                    Tensor(new Formula.Subscript(F.Id("E"), Seq(F.Id("k"), Comma, F.Id("s"))),
+                        new Formula.Subscript(F.Id("E"), Seq(F.Id("k"), Comma, F.Id("s")))), Eq,
+                    Parenthesized(Sub(Rational(3, 2), Square(l))), i4, Plus, D(2), Square(l), F.Id("F"))),
+                Display(Seq(Alpha, Eq, Sub(Rational(3, 2), Square(l)), Comma, Quad, Sp,
+                    Beta, Eq, D(2), Square(l), Comma, Quad, Sp,
+                    Alpha, Minus, Beta, Eq, D(3), Parenthesized(Sub(Rational(1, 2), Square(l))), Geq, D(0))),
+                Paragraph(Text("Thus alpha is at least beta and beta is strictly positive, exactly as required by Design. "
+                    + "The value lambda = 0 is excluded: it would give beta = 0 and leave the bound undefined.")))),
+            new DocumentBlock.Section(H("A mixed density state and the same-design convention"), Blocks(
+                Display(Seq(phi, Eq, new Formula.Fraction(Add(Ket(D(0, 0)), Ket(D(1, 1))), Root(D(2))), Comma, Quad, Sp,
+                    rho, Eq, Rational(1, 2), Projector(phi), Plus, Rational(1, 2), Projector(D(0, 1)))),
+                Paragraph(Text("Both displayed vectors have norm one and are orthogonal. Each projector is positive semidefinite with trace one; "
+                    + "their equal mixture is therefore positive semidefinite with trace one and has rank two. It is an actual mixed density state. "
+                    + "Use the six effects in the order x+, x-, y+, y-, z+, z- on both subsystems. In particular, the second effect is not complex-conjugated, "
+                    + "which matters for the imaginary entries of the y Pauli matrix:")),
+                Display(Seq(new Formula.Subscript(Call("P_E", rho), Seq(F.Id("i"), Comma, F.Id("j"))), Eq,
+                    Call("tr", Mul(rho, Tensor(new Formula.Subscript(F.Id("E"), F.Id("i")),
+                        new Formula.Subscript(F.Id("E"), F.Id("j"))))))),
+                Paragraph(Text("The trace norm is the sum of singular values. For this dimension c(2) = 1, and the untruncated bound is")),
+                Display(Eqn(bound, new Formula.Fraction(Sub(Sub(NormOne(Call("P_E", rho)), Alpha), Beta), Beta))),
+                Paragraph(Text("Apply the owner's realignedFlip convention, "),
+                    Math(Seq(new Formula.Subscript(x, Seq(Parenthesized(Seq(F.Id("a"), Comma, F.Id("b"))), Comma,
+                        Parenthesized(Seq(F.Id("c"), Comma, F.Id("e"))))), Eq,
+                        new Formula.Subscript(rho, Seq(Parenthesized(Seq(F.Id("a"), Comma, F.Id("e"))), Comma,
+                            Parenthesized(Seq(F.Id("b"), Comma, F.Id("c"))))))),
+                    Text(". In computational order this gives")),
+                Display(Seq(rho, Eq, SmallMatrix(
+                    [Rational(1, 4), D(0), D(0), Rational(1, 4)],
+                    [D(0), Rational(1, 2), D(0), D(0)], [D(0), D(0), D(0), D(0)],
+                    [Rational(1, 4), D(0), D(0), Rational(1, 4)]), Comma, Quad, Sp,
+                    x, Eq, SmallMatrix([Rational(1, 4), D(0), D(0), Rational(1, 2)],
+                        [D(0), D(0), Rational(1, 4), D(0)], [D(0), Rational(1, 4), D(0), D(0)],
+                        [D(0), D(0), D(0), Rational(1, 4)]))))),
+            new DocumentBlock.Section(H("The entire parameter interval in the normal form"), Blocks(
+                Paragraph(Text("The owner's Q(2) is the projector onto the maximally entangled vector above. Set")),
+                Display(Seq(q, Eq, Projector(phi), Comma, Quad, Sp, mt, Eq,
+                    i4, Plus, Parenthesized(Sub(t, D(1))), q, Comma, Quad, Sp,
+                    t, Eq, Root(Add(D(1), new Formula.Fraction(Mul(D(2), Alpha), Beta))), Eq,
+                    Root(new Formula.Fraction(D(3), Mul(D(2), Square(l)))), Geq, Root(D(3)))),
+                Paragraph(Text("Use the orthonormal basis consisting, in order, of "), Math(phi),
+                    Text(", "), Math(new Formula.Fraction(Sub(Ket(D(0, 0)), Ket(D(1, 1))), Root(D(2)))),
+                    Text(", |01>, and |10>. The last two coordinates do not couple to the first two, and M_t acts as diag(t,1,1,1). "
+                        + "Consequently the transformed matrix has the following two diagonal blocks:")),
+                Display(Seq(mt, x, mt, Eq, SmallMatrix(
+                    [new Formula.Fraction(Square(t), D(2)), new Formula.Negate(new Formula.Fraction(t, D(4))), D(0), D(0)],
+                    [new Formula.Fraction(t, D(4)), D(0), D(0), D(0)],
+                    [D(0), D(0), D(0), Rational(1, 4)], [D(0), D(0), Rational(1, 4), D(0)]))),
+                Display(Seq(a, Eq, SmallMatrix([new Formula.Fraction(Square(t), D(2)), new Formula.Negate(new Formula.Fraction(t, D(4)))],
+                    [new Formula.Fraction(t, D(4)), D(0)]), Comma, Quad, Sp,
+                    h, Eq, SmallMatrix([D(0), Rational(1, 4)], [Rational(1, 4), D(0)]))),
+                Paragraph(Text("The off-diagonal signs in A are opposite. This block is not Hermitian, so its eigenvalues cannot be substituted for singular values. "
+                    + "For the two singular values s1 and s2 of any complex 2-by-2 matrix A, the sum of their squares is tr(A* A) and their product is |det A|. Hence")),
+                Display(Seq(Square(Parenthesized(Add(new Formula.Subscript(F.Id("s"), D(1)), new Formula.Subscript(F.Id("s"), D(2))))), Eq,
+                    Call("tr", Mul(new Formula.Power(a, Star), a)), Plus, D(2), new Formula.Absolute(Call("det", a)))),
+                Display(Seq(Call("tr", Mul(new Formula.Power(a, Star), a)), Eq,
+                    new Formula.Fraction(new Formula.Power(t, D(4)), D(4)), Plus,
+                    new Formula.Fraction(Square(t), D(8)), Comma, Quad, Sp,
+                    Call("det", a), Eq, new Formula.Fraction(Square(t), new Formula.Number(16)))),
+                Paragraph(Text("Since t is positive, taking the nonnegative square root yields the first block's trace norm. "
+                    + "The second block has two singular values equal to one quarter. Unitary invariance for the basis change and additivity over the two blocks give")),
+                Display(Seq(NormOne(a), Eq, new Formula.Fraction(Mul(t, Root(Add(Square(t), D(1)))), D(2)), Comma, Quad, Sp,
+                    NormOne(h), Eq, Rational(1, 2))),
+                Display(Seq(NormOne(Mul(Mul(mt, x), mt)), Eq,
+                    new Formula.Fraction(Add(Mul(t, Root(Add(Square(t), D(1)))), D(1)), D(2)))),
+                Paragraph(Text("The existing bound_normal_form subtracts (t squared minus one)/2 and then one. "
+                    + "Equivalently its offset is (t squared plus one)/2. Therefore the exact formulas throughout the stated interval are")),
+                Display(Seq(NormOne(Call("P_E", rho)), Eq,
+                    Beta, new Formula.Fraction(Add(Mul(t, Root(Add(Square(t), D(1)))), D(1)), D(2)))),
+                Display(Seq(bound, Eq, NormOne(Mul(Mul(mt, x), mt)), Minus,
+                    new Formula.Fraction(Add(Square(t), D(1)), D(2)), Eq, answer)))),
+            new DocumentBlock.Section(H("Positive bounds with an exact strict comparison"), Blocks(
+                Paragraph(Text("For every allowed parameter, t is positive and sqrt(t squared plus one) is strictly larger than t. "
+                    + "The displayed bound is thus strictly positive on the entire interval. At the included upper endpoint and at a second interior parameter it becomes")),
+                Display(Seq(l, Eq, new Formula.Fraction(D(1), Root(D(2))), Colon, Quad, Sp,
+                    Alpha, Eq, Beta, Eq, D(1), Comma, Quad, Sp,
+                    new Formula.Fraction(Alpha, Beta), Eq, D(1), Comma, Quad, Sp,
+                    t, Eq, Root(D(3)), Comma, Quad, Sp, bound, Eq, Sub(Root(D(3)), Rational(3, 2)), F.Gt, D(0))),
+                Display(Seq(l, Eq, new Formula.Fraction(D(1), Root(D(6))), Colon, Quad, Sp,
+                    Alpha, Eq, Rational(4, 3), Comma, Quad, Sp, Beta, Eq, Rational(1, 3), Comma, Quad, Sp,
+                    new Formula.Fraction(Alpha, Beta), Eq, D(4), Comma, Quad, Sp, t, Eq, D(3), Comma, Quad, Sp,
+                    bound, Eq, new Formula.Fraction(Sub(Mul(D(3), Root(new Formula.Number(10))), D(9)), D(2)))),
+                Paragraph(Text("The strict comparison reduces to 3 sqrt(10) > 6 + 2 sqrt(3). "
+                    + "Both sides are positive, so squaring preserves and reflects the inequality: it becomes 42 > 24 sqrt(3), "
+                    + "or 7 > 4 sqrt(3). Squaring these positive quantities gives 49 > 48. Thus")),
+                Display(Seq(new Formula.Fraction(Sub(Mul(D(3), Root(new Formula.Number(10))), D(9)), D(2)), F.Gt,
+                    Sub(Root(D(3)), Rational(3, 2)), F.Gt, D(0))),
+                Paragraph(Text("Because both bounds are positive, replacing each B by max(0,B) preserves this strict improvement for the same mixed state. "
+                    + "This example does not settle strictness for every distinct ratio pair or identify concurrence for arbitrary states. "
+                    + "The arbitrary pure-state formula and mixed-state convex-roof obligations are separate from this application."))))));
+    }
+
+    private static DocumentBlock Display(Formula value) => new DocumentBlock.DisplayFormula(Disp(value));
+    private static Formula Tensor(Formula left, Formula right) => Call("kronecker", left, right);
+    private static Formula Rational(long numerator, long denominator) =>
+        new Formula.Fraction(new Formula.Number(numerator), new Formula.Number(denominator));
+    private static Formula Root(Formula value) => Seq(Sqrt, Grp(value));
+    private static Formula Square(Formula value) => new Formula.Power(value, D(2));
+    private static Formula Ket(Formula value) => Seq(Bar, value, Rangle);
+    private static Formula Projector(Formula value) => Seq(Ket(value), Langle, value, Bar);
+    private static Formula NormOne(Formula value) => new Formula.Subscript(new Formula.Norm(value), D(1));
+    private static Formula SmallMatrix(params Formula[][] rows)
+    {
+        var entries = new System.Collections.Generic.List<Formula> { Begin, Grp(F.Id("bmatrix")) };
+        for (var r = 0; r < rows.Length; r++)
+        {
+            if (r > 0) entries.Add(RowBreak);
+            for (var c = 0; c < rows[r].Length; c++)
+            {
+                if (c > 0) entries.Add(Amp);
+                entries.Add(rows[r][c]);
+            }
+        }
+        entries.Add(End);
+        entries.Add(Grp(F.Id("bmatrix")));
+        return Seq([.. entries]);
+    }
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(

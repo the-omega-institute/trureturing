@@ -1,0 +1,35 @@
+**定义 1.1（完整三次合同）。** 固定已知矩阵
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+记 $\mathcal W_3$ 为全部三元组 $(P,g,\delta)$ 的集合，其中 $P$ 是四项严格正、秩一且迹为一的二阶实矩阵，$g\in\mathbb R[t]\setminus\{0\}$、$\deg g\le3$，$\delta\in\mathbb R$。初始累计矩阵为 $A_0=I$，第 $i$ 个动作是一个原子 $E_i\in\{M,J\}$，并有
+
+$$
+A_i=E_iA_{i-1},\qquad
+z_i=g(i)\operatorname{tr}(A_iP)+\delta.
+\tag{1.1}
+$$
+
+初读 $z_0$ 计入预算；每个原子之后立即读取一次，原时钟为连续整数 $0,1,\ldots$。轨迹不可重置、不可复制，不允许空动作重复读数、未读复合动作、跳读、重编号或额外传感器。源、增益与漂移在整条轨迹上固定。恢复目标是完整的 $(P,g,\delta)$，不只是若干未来读数。
+
+这一矩阵域与单一正列来源、固定正行量具的秩一模型一致。事实上，若 $P=(\begin{smallmatrix}x&y\\z&w\end{smallmatrix})$ 四项严格正且 $xw=yz$，则
+
+$$
+P=\begin{pmatrix}x\\z\end{pmatrix}(1,y/x).
+$$
+
+分母 $x>0$，等式的右下项由 $zy/x=w$ 保证。$M$ 把正列 $(u,v)^{\mathsf T}$ 变成 $(v,u+v)^{\mathsf T}$，$J$ 把它变成 $(v,u)^{\mathsf T}$，两者都保持严格正性。故任意原子轨迹都由同一初始列的连续演化与同一固定行实现，不需要更换来源或量具。
+
+本合同采用第二卷定义 51.1 的规范。若原变量是严格正秩一 $R$ 与非零增益 $G$，则 $s=\operatorname{tr}R>0$，且
+
+$$
+P=R/s,\qquad g=sG
+$$
+
+保持全部读数。若两原世界有相同规范目标，则 $R'=cR,G'=G/c,\delta'=\delta$，其中 $c=\operatorname{tr}R'/\operatorname{tr}R>0$；反向也成立。因此迹一规范恰去掉关系与增益之间的正尺度自由度，不去掉漂移坐标或增益的符号、根。
+
+模变换群的可识别性概念见 Li–Lee–Bresler，Definition 2.7、Theorem 2.8，原始文本及适用边界列于第 8 节。这里没有从一般双线性模型移入采集次数定理。
+

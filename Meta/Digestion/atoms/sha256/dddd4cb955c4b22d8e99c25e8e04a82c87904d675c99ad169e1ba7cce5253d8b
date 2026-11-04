@@ -1,0 +1,98 @@
+## 32. The determinant polynomial and an isolated algebraic source
+
+For $f=p,v$ define polynomial derivative numerators
+$$
+ U_{f,r}=H\partial_rN_f-N_f\partial_rH,\qquad
+ U_{f,b}=H\partial_bN_f-N_f\partial_bH.
+$$
+The bivariate determinant polynomial is specified without numerical
+interpolation by the finite coefficient formula
+$$
+ \mathscr K(r,b)=U_{p,r}U_{v,b}-U_{p,b}U_{v,r}.
+ \tag{32.1}
+$$
+It satisfies $\det DA=\mathscr K/H^4$. At $b=1$ set
+$$
+ Q(r)=13r^4-39r^3+24r^2+3r-11.
+$$
+The explicit degree-fifteen critical polynomial is
+$$
+ \begin{aligned}
+ \Phi_{\rm f}(r)={}&1335360r^{15}-16024320r^{14}+91908080r^{13}
+ -330185604r^{12}+798510927r^{11}\\
+ &-1292187068r^{10}+1284776451r^9-476294549r^8
+ -610032429r^7+1012598771r^6\\
+ &-495508869r^5-152421889r^4+265749570r^3
+ -59836247r^2-33422962r+10386802.
+ \end{aligned}
+ \tag{32.2}
+$$
+Exact polynomial expansion and cancellation give
+$$
+ D(r,1)=5Q(r),\qquad
+ \mathscr K(r,1)=-225Q(r)\Phi_{\rm f}(r),\qquad
+ \det DA(r,1)=-\frac{9\Phi_{\rm f}(r)}{25Q(r)^3}.
+ \tag{32.3}
+$$
+These formulas specify both the determinant orientation, using input
+order $(r,b)$ and output order $(p,v)$, and the polynomial scale.
+Zeros of $Q$ are poles of this chart and cannot be accepted as roots
+of its response determinant. No assertion is made that $\Phi_{\rm f}$ is the
+minimal polynomial of the selected root.
+
+Let
+$$
+ I_0=\left(\frac{31379336181}{10^{11}},
+                \frac{31379336182}{10^{11}}\right).
+$$
+There is exactly one zero $\alpha_{\rm f}$ of $\Phi_{\rm f}$ in $I_0$.
+More narrowly, put
+$$
+ L_{\rm f}=313793361813579284608955011483891013811213350270349554597836.
+$$
+Then the exact algebraic specification is
+$$
+ \Phi_{\rm f}(\alpha_{\rm f})=0,\qquad
+ \frac{L_{\rm f}}{10^{60}}<\alpha_{\rm f}<\frac{L_{\rm f}+1}{10^{60}}.
+ \tag{32.4}
+$$
+
+**Proof of isolation.** Rational Horner evaluation gives
+$\Phi_{\rm f}(31379336181/10^{11})>0$ and
+$\Phi_{\rm f}(31379336182/10^{11})<0$. On their closed interval,
+outward rational interval evaluation of the derivative gives
+$$
+ -21289867<\Phi_{\rm f}'(r)<-21289866.
+ \tag{32.5}
+$$
+The intermediate value theorem and strict decrease prove existence and
+uniqueness. Exact rational evaluation also gives
+$\Phi_{\rm f}(L_{\rm f}/10^{60})>0>\Phi_{\rm f}((L_{\rm f}+1)/10^{60})$, proving (32.4).
+These tests are on the printed polynomial, rather than on an approximate
+root's residual. ∎
+
+Define exact algebraic values
+$$
+ (p_{\rm f},v_{\rm f},a_{\rm f},m_{\rm f})=(p,v,a,m)(\alpha_{\rm f},1),\qquad d_{\rm f}=d(\alpha_{\rm f},1).
+ \tag{32.6}
+$$
+The following strict rational enclosures hold:
+$$
+ \begin{array}{c|cc}
+ \text{quantity}&\text{lower numerator}&\text{upper numerator}\\\hline
+ p_{\rm f}&82766464368943&82766464368944\\
+ v_{\rm f}&444178429468760&444178429468761\\
+ a_{\rm f}&815368979291905&815368979291906\\
+ m_{\rm f}&1695320121161200&1695320121161201\\
+ d_{\rm f}&30226790237556&30226790237557.
+ \end{array}
+ \tag{32.7}
+$$
+Every entry is divided by $10^{12}$. In particular $p_{\rm f}\ne24$.
+Decimal illustrations, carrying no extra exactness claim, are
+$$
+ \alpha_{\rm f}\approx0.3137933618135793,\quad
+ p_{\rm f}\approx82.76646436894354,\quad
+ v_{\rm f}\approx444.1784294687601.
+$$
+

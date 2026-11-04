@@ -1,0 +1,256 @@
+**引理 8.1（联合二项式估计）。** 对整数 $b>a\ge5$，有
+
+$$
+\left|H-\frac{\delta L}{16}\right|\le27\delta .
+\tag{8.1}
+$$
+
+因而 $H>0$，且显式的、只依赖于 $a$ 的相对误差为
+
+$$
+\left|\frac{H}{\delta L/16}-1\right|\le \frac{432}{L}.
+\tag{8.2}
+$$
+
+**证明。** 复用 (7.3)、(7.12)、(7.21)–(7.22)，令
+
+$$
+\alpha_a(t)=\mu_a'(t),\qquad
+g_n(t)=\mu_{n+1}(t)-\mu_n(t),\qquad
+G_n(t)=n(n+1)g_n(t).
+$$
+
+字面的全部阶乘权重已经由 (7.21) 接到优先级积分，故有限望远镜求和给出
+
+$$
+H=\sum_{n=a}^{b-1}L_{a,n},\qquad
+L_{a,n}=\int_0^1\alpha_a(t)g_n(t)\,dt .
+\tag{8.3}
+$$
+
+以下直接证明对每个 $n\ge a\ge5$ 的积分估计，不把固定概率的渐近式用于 $t=0$ 附近。
+
+（一）先给出所需的有限二项式矩界。若 $X\sim\operatorname{Bin}(M,t)$、$M\ge1$、$0<t\le1$，写 $\lambda=Mt$。经典移位恒等式
+
+$$
+\mathbb E\frac1{X+1}
+=\frac{1-(1-t)^{M+1}}{(M+1)t}\le\frac1\lambda
+$$
+
+采用仓内[保留零行的逆矩](../../../Library/Analytic/znidaric2005inversemoments.md)中的同一全分布公式。正二项式逆矩与移位逆矩的文献背景见 Žnidarič，[*Asymptotic expansion for inverse moments of binomial and Poisson distributions*, arXiv:math/0511226v1](https://arxiv.org/pdf/math/0511226v1)，(1.1)–(1.4)。这里所有不移位的逆矩均只在 $X\ge1$ 上求和，不给零值取负幂；不使用该文的固定参数渐近展开。
+
+由 $((k+1)(k+2))^{-1}=\int_0^1u^k(1-u)\,du$ 及二项式定理，
+
+$$
+\begin{aligned}
+\mathbb E\frac1{(X+1)(X+2)}
+&=\int_0^1(1-u)(1-t+tu)^M\,du\\
+&\le\int_0^1v e^{-\lambda v}\,dv
+\le\int_0^\infty v e^{-\lambda v}\,dv=\lambda^{-2}.
+\end{aligned}
+$$
+
+这里用 $v=1-u$ 及 $1-tv\le e^{-tv}$。对每个整数 $k\ge1$，有
+$k^{-1}\le2/(k+1)$、$k^{-2}\le6/((k+1)(k+2))$。相乘后用 Cauchy–Schwarz，得到
+
+$$
+\mathbb E[X^{-1};X\ge1]\le\frac2\lambda,\qquad
+\mathbb E[X^{-2};X\ge1]\le\frac6{\lambda^2},\qquad
+\mathbb E[X^{-3/2};X\ge1]\le\frac{2\sqrt3}{\lambda^{3/2}}.
+$$
+
+令 $W=X+1$。由于 $\mathbb EW=\lambda+1$，
+
+$$
+\mathbb E\frac{(W-\lambda)^2}{W}
+=\mathbb EW-2\lambda+\lambda^2\mathbb EW^{-1}\le1.
+$$
+
+平方根有理化及 Cauchy–Schwarz 因而给出
+
+$$
+\left|\mathbb EW^{-1/2}-\lambda^{-1/2}\right|
+\le\frac1\lambda\mathbb E\frac{|W-\lambda|}{\sqrt W}
+\le\frac1\lambda.
+$$
+
+另一方面，
+
+$$
+\begin{aligned}
+T&:=\mathbb E[X^{-1/2};X\ge1],\\
+T-\mathbb E(X+1)^{-1/2}
+&=\mathbb E[X^{-1/2}-(X+1)^{-1/2};X\ge1]-\mathbb P(X=0).
+\end{aligned}
+$$
+
+其中期望的被积项介于 $0$ 与 $1/(2X^{3/2})$ 之间；
+$\mathbb P(X=0)=(1-t)^M\le e^{-\lambda}\le1/\lambda$。
+因此当 $\lambda\ge1$ 时，
+
+$$
+\left|T-\lambda^{-1/2}\right|
+\le\frac2\lambda+\frac{\sqrt3}{\lambda^{3/2}}
+\le\frac4\lambda.
+$$
+
+另由 $\operatorname{Var}X=\lambda(1-t)$，
+
+$$
+\left|\mathbb E\sqrt X-\sqrt\lambda\right|
+\le\mathbb E\frac{|X-\lambda|}{\sqrt\lambda}
+\le1.
+$$
+
+这些都是有限分布的估计，并且保留了 $\mathbb P(X=0)$。
+
+（二）估计导数。令 $Z=1+\operatorname{Bin}(a-1,t)$、$\lambda=at$。
+上述移位恒等式在此给出 $\mathbb EZ^{-1}\le1/\lambda$；又
+$\mathbb EZ=\lambda+1-t$，故
+
+$$
+\mathbb E\frac{(Z-\lambda)^2}{Z}\le1-t\le1,\qquad
+\left|\mathbb EZ^{-1/2}-\lambda^{-1/2}\right|\le\lambda^{-1}.
+$$
+
+为同时处理 $Z=1$，对每个整数 $k\ge1$ 定义
+
+$$
+A(k)=\frac1{1+\sqrt{1-1/k}}.
+$$
+
+若 $s=\sqrt{1-1/k}$，直接有理化给出
+
+$$
+A(k)=\frac12+\frac1{8k}+r_k,\qquad
+r_k=\frac{3+s}{8k^2(1+s)^3},\qquad
+0\le r_k\le\frac3{8k^2},\qquad
+0\le A(k)-\frac12\le\frac1{2k}.
+$$
+
+最后两个界来自 $(3+s)/(1+s)^3\le3$ 和
+$A(k)-1/2=1/(2k(1+s)^2)$。特别地 $A(1)=1$、$r_1=3/8$，没有舍去端点。
+因为 $d_{Z-1}=A(Z)/\sqrt Z$，(7.12) 给出
+
+$$
+\begin{aligned}
+0\le\alpha_a(t)&\le\min\{\sqrt a,t^{-1/2}\},\\
+\left|\alpha_a(t)-\frac1{2\sqrt t}\right|
+&\le\frac{\sqrt a}{2}
+ \left(\lambda^{-1}+\mathbb EZ^{-3/2}\right)
+\le\frac1{\sqrt a\,t}.
+\end{aligned}
+$$
+
+第一行使用 $d_r\le1$、$d_{Z-1}\le Z^{-1/2}$ 以及
+$\mathbb EZ^{-1/2}\le(\mathbb EZ^{-1})^{1/2}$；第二行用 $Z\ge1$。
+
+（三）估计度数增量。令 $N=n+1$、$K\sim\operatorname{Bin}(N,t)$。
+复用引理 7.3 的条件 Jensen 差：$q_{n,0}=0$，对 $1\le k\le N$，
+
+$$
+\begin{aligned}
+q_{n,k}
+&=\sqrt{\frac kN}
+-\frac{N-k}{N}\sqrt{\frac kn}
+-\frac kN\sqrt{\frac{k-1}{n}}\\
+&=\frac{\sqrt k}{N\sqrt n}\bigl(A(k)-A(N)\bigr).
+\end{aligned}
+$$
+
+因为 $A$ 递减，这也逐项证明非负性；$k=N$ 时恰为零。
+于是有包含全部端点的有限和
+
+$$
+G_n(t)=\sqrt n\sum_{k=1}^N
+ \binom Nk t^k(1-t)^{N-k}\sqrt k\bigl(A(k)-A(N)\bigr).
+$$
+
+由 $A(k)-A(N)\le1/(2k)$ 及（一）的第一个逆矩界，
+
+$$
+0\le G_n(t)\le\frac{\sqrt n}{2}\mathbb E[K^{-1/2};K\ge1]
+\le\frac{\sqrt n}{2}\sqrt{\frac2{Nt}}
+\le\frac1{\sqrt{2t}}.
+$$
+
+现在设 $nt\ge1$，令 $\lambda=Nt$、
+$T=\mathbb E[K^{-1/2};K\ge1]$、$U=\mathbb E\sqrt K$。
+使用上面的 $r_k$ 精确分解，
+
+$$
+\begin{aligned}
+G_n(t)&=\frac{\sqrt n}{8}\left(T-\frac UN\right)+R_n(t),\\
+R_n(t)&=\sqrt n\,\mathbb E[\sqrt K(r_K-r_N);K\ge1],\\
+|R_n(t)|
+&\le\frac{3\sqrt n}{8}\mathbb E[K^{-3/2};K\ge1]
+ +\frac{3\sqrt n}{8N^2}\mathbb E\sqrt K\\
+&\le\frac{3\sqrt3}{4nt^{3/2}}+\frac{3\sqrt t}{8n}.
+\end{aligned}
+$$
+
+此处 $\sqrt n/N^{3/2}\le1/n$、
+$\sqrt{nN}/N^2\le1/n$，且 Jensen 给 $U\le\sqrt{Nt}$。
+把 $T$ 换成 $\lambda^{-1/2}$ 的误差至多
+$1/(2\sqrt n\,t)$，把 $U$ 换成 $\sqrt\lambda$ 的误差至多
+$1/(8\sqrt n)$。换完后的主项为
+$\sqrt{n/N}(1-t)/(8\sqrt t)$。
+再用 $1-\sqrt{n/N}\le1/(2n)$，得到完整的误差界
+
+$$
+\begin{aligned}
+\left|G_n(t)-\frac{1-t}{8\sqrt t}\right|
+&\le\frac1{2\sqrt n\,t}+\frac1{8\sqrt n}
++\frac1{16n\sqrt t}
++\frac{3\sqrt3}{4nt^{3/2}}+\frac{3\sqrt t}{8n}\\
+&\le\left(\frac{17}{16}+\frac{3\sqrt3}{4}\right)
+ \frac1{\sqrt n\,t}
+\le\frac5{2\sqrt n\,t}.
+\end{aligned}
+$$
+
+第二行只用 $nt\ge1$、$0<t\le1$、$n\ge1$；
+最后用 $\sqrt3<7/4$。没有未展开的余项。
+
+（四）将积分分成 $[0,1/a]$ 和 $[1/a,1]$。
+在第一段，由（二）和（三）的全域上界，
+
+$$
+0\le\int_0^{1/a}\alpha_a(t)G_n(t)\,dt
+\le\sqrt a\int_0^{1/a}\frac{dt}{\sqrt{2t}}=\sqrt2.
+$$
+
+在第二段，$nt\ge1$，故
+
+$$
+\begin{aligned}
+\left|\alpha_a(t)G_n(t)-\frac{1-t}{16t}\right|
+&\le\alpha_a(t)\left|G_n(t)-\frac{1-t}{8\sqrt t}\right|
++\frac{1-t}{8\sqrt t}
+ \left|\alpha_a(t)-\frac1{2\sqrt t}\right|\\
+&\le\frac{21}{8\sqrt a\,t^{3/2}}.
+\end{aligned}
+$$
+
+这个上界的积分不超过 $21/4$，而
+
+$$
+\int_{1/a}^1\frac{1-t}{16t}\,dt
+=\frac{L-1+1/a}{16}.
+$$
+
+因此，对全部整数 $n\ge a\ge5$，
+
+$$
+\left|n(n+1)L_{a,n}-\frac L{16}\right|
+\le\sqrt2+\frac{21}{4}+\frac1{16}<7<27.
+\tag{8.4}
+$$
+
+$t=0$ 时 $\alpha_a(0)=\sqrt a$、$g_n(0)=0$；
+$t=1$ 时 $g_n(1)=0$。两端均是原有限多项式的值；
+上述含 $t^{-1/2}$ 的界仅在 $t>0$ 使用，且在零处可积。
+最后将 (8.4) 除以 $n(n+1)$，用 (8.3) 及
+$\sum_{n=a}^{b-1}(n(n+1))^{-1}=\delta$ 得 (8.1)。
+$H>0$ 复用 (7.19)，相对误差则由除以 $\delta L/16$ 得到。∎
+

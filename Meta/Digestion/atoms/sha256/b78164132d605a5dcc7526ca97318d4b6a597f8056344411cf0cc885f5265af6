@@ -1,0 +1,23 @@
+### 推论 3.3（任意读取顺序的链式记账）
+
+设 $\pi=(i_1,\ldots,i_k)$ 是互不重复的特征顺序，令
+
+$$
+A_0=\varnothing,
+\qquad
+A_r=\{i_1,\ldots,i_r\}.
+$$
+
+则
+
+$$
+\boxed{
+\mathsf E_\omega(\varnothing)-\mathsf E_\omega(A_k)
+=\sum_{r=1}^{k}G_{i_r}(A_{r-1}).
+}
+$$
+
+总收益与顺序无关，但每一步的边际数值可以不同。\(\square\)
+
+因此，单特征排行榜不能代表完整信息价值：它只测量一个特定上下文中的一阶取消量。
+

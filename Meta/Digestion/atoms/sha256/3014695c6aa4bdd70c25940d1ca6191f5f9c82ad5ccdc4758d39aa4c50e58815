@@ -1,0 +1,32 @@
+**Proposition 10.9 (Native pure reconstruction is not mixed tomography).**
+Let
+
+$$
+\rho_0=\frac1{10}I_5+\frac12|+\rangle\langle+|,
+\qquad |+\rangle=\frac1{\sqrt5}(1,1,1,1,1)^{\mathsf T},
+$$
+
+and
+
+$$
+\rho_\pm=\rho_0\pm\frac1{50}(|1\rangle\langle3|+|3\rangle\langle1|).
+\tag{10.17}
+$$
+
+Both are positive definite because $\lambda_{\min}(\rho_0)=1/10$ and the
+perturbation norm is $1/50$. They have the same diagonal $p_i=1/5$ and the
+same five native coherences $C_{ij}=1/10$, but their $1$--$3$ entries differ.
+Thus the pure full-support, calibrated-phase hypotheses are essential.
+
+The native formulas give exact expectations in the declared source model;
+they are not finite experimental acquisition claims. The reconstruction is
+neither mixed-state tomography nor full Yoneda data. In particular, a mixed
+state is not assumed to obey the pure-state nonlinear transport law.
+Proof. The eigenvalue and norm bounds give positivity by Weyl's inequality.
+The perturbation changes only the unmeasured $1$--$3$ pair, so the stated
+native data agree while the density matrices are distinct. $\square$
+
+[T10]: AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md
+[K10]: https://arxiv.org/html/1510.03007v2
+[GR10]: https://arxiv.org/html/0902.3846
+

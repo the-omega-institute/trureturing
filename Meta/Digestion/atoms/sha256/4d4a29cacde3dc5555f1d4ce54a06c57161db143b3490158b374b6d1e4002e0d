@@ -1,0 +1,24 @@
+**Theorem 36.2 (same-run six-operation costs).** Let the entry beta leaves have preorder assay positions $B\subseteq\{1,\ldots,L\}$ and define the actual old-roster scan length sum
+
+$$
+R_{\rm mark}=\sum_{s=0}^{L-1}\bigl(L+|B\cap\{1,\ldots,s\}|\bigr)
+=L^2+\sum_{q\in B}(L-q)\le L(L+c).
+\tag{NLBAII.47}
+$$
+
+For exactly Definitions 34.2, 35.1 and 35.2 on this one actual run, including its final whole-zero Hold, the primitive counts are
+
+$$
+\begin{aligned}
+P&=2L-1,&S&=c,&\mathrm{Reset}&=0,\\
+\mathrm{Read}&=L+R_{\rm mark}+b(I+1),\\
+\mathrm{Add}&=2L+c+b(I+1),\\
+\mathrm{Tick}&=2I+1,&\mathrm{Hold}&=L+2I+4.
+\end{aligned}
+\tag{NLBAII.48}
+$$
+
+There are $a+2c$ fresh material cells, $4a+8c$ structural assignments under §21's convention, and $a+2c$ binding assignments. Fixed field acknowledgements number $3L+c+b(I+1)+4I+5$; scalar Read replies are counted separately. There are also all $2L-1+c$ complete addressed replies and their frames, and every request, return and dispatch cost.
+
+Proof. The traversal calls P once at all $2L-1$ entry logical positions and S once at each of the $c$ beta leaves. Initial arming uses $L$ Reads and $L$ Adds. The $L$ assays read the old roster, giving (NLBAII.47), and rearm by $L+c$ Adds. Their Holds number $L$, besides the initial and post-arming Holds and final marking Hold, giving $L+3$. Observation adds $b(I+1)$ Reads, $I$ Ticks and $I$ Holds. Reversed control adds $I+1$ Ticks, $b(I+1)$ Adds and $I+1$ Holds. Summing gives (NLBAII.48); Adds, Ticks and Holds have the displayed number of fixed acknowledgements. Successful growth and binding writes have exactly the persistent local templates of §§17 and 21. The mathematical reconstruction and control do not call Reset indirectly. $\square$
+

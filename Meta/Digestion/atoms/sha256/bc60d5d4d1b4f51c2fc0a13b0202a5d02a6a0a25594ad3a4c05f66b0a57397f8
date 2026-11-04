@@ -1,0 +1,35 @@
+#### 定理 6.2（正性与共同背景相消）
+
+$K_\rho$ 是归一化 Hermitian 正半定核。其一个特征表示是
+
+$$
+\xi_w=U_w\sqrt\rho\in\operatorname{HS}(H),\qquad
+K_\rho(v,w)=\langle\xi_v,\xi_w\rangle_{\mathrm{HS}}.
+$$
+
+若所列串接均合法，且求值满足 $U_{gv}=U_gU_v$、$U_{vg}=U_vU_g$，则
+
+$$
+K_\rho(gv,gw)=K_\rho(v,w),\qquad
+K_\rho(vg,wg)=K_{U_g\rho U_g^\dagger}(v,w).
+$$
+
+**证明。**
+
+对任意有限系数 $c_w$，令 $A=\sum_wc_wU_w$，则
+
+$$
+\sum_{v,w}\bar c_vc_wK_\rho(v,w)
+=\operatorname{Tr} (\rho A^\dagger A)=\left\lVert A\sqrt\rho\right\rVert _{\mathrm{HS}}^2\ge0.
+$$
+
+酉性给对角为一，取伴随给 Hermitian 对称。两种续接分别消去 $U_g^\dagger U_g$，或以迹循环性将共同右因子吸收到来源。
+
+∎
+
+纯来源时，$K_\rho$ 是 $U_w\psi_0$ 的 Gram 核。混态时 $|K_\rho|^2$ 一般不是局部混态间的保真度：$\rho=I/2,U_v=I,U_w=Z$ 给相同局部输出 $I/2$，却有 $K_\rho(v,w)=0$。保留同一净化参考后，核才是联合纯态的重叠；已知受控相对门也可通过干涉读取 $\operatorname{Tr} (\rho U_v^\dagger U_w)$ [[10](#ref-ekert)]。这两种接口都比只给两个局部混态更丰富。
+
+<a id="statement-6-3"></a>
+
+<a id="thm-gram"></a>
+

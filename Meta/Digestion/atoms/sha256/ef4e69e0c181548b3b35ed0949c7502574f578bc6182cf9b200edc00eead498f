@@ -1,0 +1,63 @@
+**Lemma 13.7 (Strict deficit payment).** In the notation of Lemma 13.4, put
+$$
+ b=(a-1)(2a+1),\qquad c=\min_{i\in C}y_i.
+$$
+If
+$$
+\frac3{\delta^2}>\frac{\max\{\alpha,\beta\}}{c^2},
+\tag{13.18}
+$$
+then
+$$
+H(x)\ge\sum_{j\in D}\frac1{t_j}
+ +\sum_{i\in C}\left(\frac{a^2}{y_i}+\frac{bu}{y_i^2}\right).
+\tag{13.19}
+$$
+The inequality is strict if any positive-mass event with $B>0$ has $K\ge2$.
+
+**Proof.** Write
+$$
+H_D=\sum_{j\in D}\frac1{t_j}+Z,
+\qquad
+Z=\mathbb E\!\left[(K^2-1)\sum_{j\in T\cap D}t_j^{-2}\right].
+$$
+For $i\in C$, let $I_i=\mathbf1_{\{i\in T\}}$ and
+$$
+\Delta_i=\mathbb E[(K^2-L^2)I_i]\ge0.
+$$
+Using (13.6), the exact core decomposition is
+$$
+H=\sum_{j\in D}t_j^{-1}+Z
+ +\sum_{i\in C}\left(\frac{a^2}{y_i}-\frac{(2a+1)u}{y_i^2}
+ +\frac{R_i+\Delta_i}{y_i^2}\right).
+\tag{13.20}
+$$
+On $A$, the individual weighted deficits must first be seen to be nonnegative. For $I_i=0$,
+$$
+c_0B-\rho_i=(2a+1)\bigl(a(B-1)+L\bigr)\ge0,
+$$
+and for $I_i=1$,
+$$
+c_0B-\rho_i=c_0(B-1)+(2a+1)L+a^2-L^2\ge0,
+\qquad c_0=a(2a+1).
+$$
+The last inequality is immediate when $L\le a$; when $L=r=a+1$, it reduces to $c_0B\ge0$. Off $A$ the same expression is $-\rho_i\le0$. Therefore, before applying the weight bound,
+$$
+\sum_{i\in C}\frac{\mathbb E[c_0B-\rho_i;A]}{y_i^2}
+\le\frac1{c^2}\mathbb E\!\left[\sum_{i\in C}(c_0B-\rho_i);A\right]
+\le\frac{\max\{\alpha,\beta\}}{c^2}\mathbb E[(K-1);A].
+\tag{13.21}
+$$
+Indeed, summing the unweighted deficits on $A$ gives
+$$
+ r c_0(B-1)+r(2a+1)L+L(a^2-L^2)
+\le\alpha(B-1)+\beta L
+\le\max\{\alpha,\beta\}(K-1).
+$$
+On the other hand, on $A$,
+$$
+Z\text{ has integrand at least }\frac{B(K^2-1)}{\delta^2}
+\ge\frac{3(K-1)}{\delta^2}.
+$$
+Condition (13.18) pays every positive weighted deficit, with strict surplus whenever $K\ge2$. Adding $c_0u=\mathbb E[c_0B]$ to each core coefficient in (13.20) changes $-(2a+1)u$ into $bu$, and the nonnegative $\Delta_i$ can be discarded. This proves (13.19) and its strictness assertion. ∎
+

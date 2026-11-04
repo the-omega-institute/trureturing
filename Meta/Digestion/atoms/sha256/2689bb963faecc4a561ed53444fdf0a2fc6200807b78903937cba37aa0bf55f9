@@ -1,0 +1,17 @@
+**Definition 30.1 (the unary Moore promise).** For a public integer
+$K\ge1$, let $\mathscr M_K$ consist of the streams
+
+$$
+ s_i=g(f^i(q_0)),\qquad i\ge0,
+ \qquad \varnothing\ne Q,\quad |Q|\le K,
+ \quad f:Q\to Q,\quad g:Q\to\{0,1\}.
+ \tag{GPO.76}
+$$
+
+The machine emits $g(q)$ and then changes to $f(q)$ at each birth.
+The set, transition, output map and initial state are unknown. Unreachable
+states, nonminimal presentations, constant outputs, transient paths and
+singular transitions are allowed; strong connectivity is not assumed.
+The bound is on this autonomous unary source, not on the growing tree,
+the observer or the full service runtime.
+

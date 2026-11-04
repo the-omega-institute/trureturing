@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bd63db24ad8c516927c4e154080f4e0701acaea7ad44c27bc73e7e81838686ac
+  normalized_sha256: sha256:bd63db24ad8c516927c4e154080f4e0701acaea7ad44c27bc73e7e81838686ac
+cas_ref: sha256:bd63db24ad8c516927c4e154080f4e0701acaea7ad44c27bc73e7e81838686ac
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/ContractingIntegralSeparation.polynomial_sub_pow_isUnit
+    target_statement_id: sha256:2fa03f62909fefdcefca5698f7aa4ac6a02307ca88b743af57767abc16adc030
+receipts:
+  unresolved_subitems: []

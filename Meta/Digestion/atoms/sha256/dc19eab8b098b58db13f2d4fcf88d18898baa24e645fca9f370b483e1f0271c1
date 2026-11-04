@@ -1,0 +1,20 @@
+**Comparison 6.2 (Consequence of the inherited one-read optimum).**
+Original, Theorem 11.4, and Risk, Theorem 4.1, already establish the
+attained one-read minimum
+
+$$
+\varepsilon_1=1-\frac a2-a^2b.
+\tag{6.3}
+$$
+
+Writing $\varepsilon_2$ for (6.1), subtraction gives
+
+$$
+\varepsilon_1-\varepsilon_2=a^3b>0.
+\tag{6.4}
+$$
+
+This strict improvement is a consequence of the new two-read value
+and the inherited one-read value, rather than an independent
+one-read discovery or a separate optimization problem solved here.
+

@@ -1,0 +1,28 @@
+**Lemma 4.3 (binary variance and the conditional-Markov premise).** If $U\longrightarrow Z\longrightarrow Z'$ is a Markov chain, with finite $Z,Z'$ and transition matrix $K$, then
+
+$$
+\mathcal D(U;Z')\le d_K\mathcal D(U;Z).
+\tag{4.5}
+$$
+
+Its conditional form requires
+
+$$
+\mathbb P(Z'\in\cdot\mid U,Z,V)=K_V(Z,\cdot)
+\quad\text{almost surely},\qquad
+\operatorname{diam}_{\rm TV}(K_V)\le d\quad\text{almost surely}.
+\tag{4.6}
+$$
+
+Under (4.6), $\mathcal D(U;Z'\mid V)\le d\mathcal D(U;Z\mid V)$.
+
+**Proof.** Let $p=\mathbb P(U=1)$. If $p\in\{0,1\}$ both variances vanish. Otherwise set $a=\mathcal L(Z\mid U=1)$, $b=\mathcal L(Z)$. Since $b\ge pa$, $a\ll b$, and Bayes' formula gives
+
+$$
+\mathbb E[U\mid Z=i]=p\frac{a_i}{b_i},\qquad
+\mathcal D(U;Z)=p^2\chi^2(a\Vert b).
+\tag{4.7}
+$$
+
+The Markov premise gives the same representation at $Z'$ with $aK,bK$. Lemma 4.1 proves (4.5). Under (4.6), apply this proof on almost every $V$-fiber and integrate. The domination $b\ge pa$ holds fiberwise; null fibers and deterministic $U$ cause no exception. Rows outside the conditional support may be deleted, or extended by an existing feasible row without increasing the diameter. $\square$
+

@@ -1,0 +1,38 @@
+**Lemma 2.3 (Effective positive-word sweep).** Given valid model names
+and $\delta$ as above, there is a terminating search for a finite
+reference word
+
+$$
+\omega=0v_1\cdots v_M,\qquad
+S_0=V_0,\qquad S_j=U_{v_j}S_{j-1},\qquad
+\|S_j^\dagger ES_j-Q_j\|_F<\delta/16,
+\tag{2.2}
+$$
+
+with every $v_j$ a nonempty positive word over $\{0,1,N\}$. Consequently
+$R_j=S_j^\dagger ES_j$ form a strict $\delta/8$ projective net. Neither
+the search nor its checkpoints use $d$ or any eventual target $P$.
+
+**Proof.** The positive-word conjugation density of [Predictive Waves V,
+Theorem 95.1](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_V.md#95-任意一个混合控制把实际原生闭包扩到-pu3)
+is the substantive source supplier. It applies to every angle and
+control in (1.1), including $\langle\xi,N\xi\rangle=0$; it supplies no
+installed inverses. For each already chosen prefix $S_{j-1}$, the
+conjugates $S_{j-1}^\dagger U_v^\dagger EU_vS_{j-1}$ are dense in the
+rank-one projections. Restricting to nonempty positive words preserves
+density: the subfamily obtained by placing any one fixed letter before
+arbitrary positive words is a fixed unitary conjugate of a dense orbit.
+Thus (2.2) has a strict witness at each step.
+
+Search finite stages of words and precisions. At stage $s$, examine all
+nonempty words of length at most $s$ with a norm upper bound from Lemma
+2.1 of accuracy $2^{-s}$. Each stage terminates on the input promises.
+A strict witness is eventually examined finely enough that its upper
+bound is below $\delta/16$. Retain the first certified witness in a
+fixed ordering and proceed to the next $j$. Finiteness of the list
+proves termination. The triangle inequality and Lemma 2.2 give the
+strict $\delta/8$ net. The initial $0$ ensures at least one instrument
+call in the reference word, and nonempty $v_j$ give strictly increasing
+checkpoint positions. Reference labels here are mathematical search
+data, not requests that $\mathsf J$ produce particular outcomes. ∎
+

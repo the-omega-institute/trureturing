@@ -1,0 +1,30 @@
+**Definition 19.1 (source-calibrated residue relation).** On
+$Q_p=(\mathbb Z/p\mathbb Z)^2$, define $c_y(A)=y_{A-1}$ by original
+periodic indexing. Define maps $f_a,f_b:Q_p\to Q_p$ by the two columns
+of (PCR.39), using $c_y(A)$ and reducing the result modulo $p$. Retain
+on each edge $q\xrightarrow{x}f_x(q)$ the positive integer weight
+$\delta_x(c_y(A))$ from (PCR.37). The seed set and its initial times are
+
+$$
+ E_s=\{(A_c,B_c)\bmod p:c\in C_s\},\qquad
+ \{(c,e_c,(A_c,B_c)\bmod p):c\in C_s\}.
+ \tag{PCR.44}
+$$
+
+The second object retains multiplicities of residue seeds at distinct
+addresses or times. Let $N_y$ be the $p^2$ by $p^2$ nonnegative integer
+matrix with row $r$, column $q$ equal to
+$\mathbf1_{r=f_a(q)}+\mathbf1_{r=f_b(q)}$. Write $\mathbf1_{E_s}$ for
+the indicator column. Put
+
+$$
+ R_s=\left\{q\in Q_p:
+ \left[\left(\sum_{j=0}^{p^2-|E_s|}N_y^j\right)
+                  \mathbf1_{E_s}\right]_q>0\right\}.
+ \tag{PCR.45}
+$$
+
+At $p=1$ this uses the single residue $(0,0)$ and the zeroth matrix
+power. Formula (PCR.45), the explicit edge table and the finite defect
+construction specify $R_s$ without an oracle for reachable histories.
+

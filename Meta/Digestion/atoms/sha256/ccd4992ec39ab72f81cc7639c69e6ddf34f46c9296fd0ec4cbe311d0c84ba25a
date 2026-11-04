@@ -1,0 +1,22 @@
+**命题 B-27.2（同纤维包络及目标取反）。** $`\underline f`$ 在 &#x1D4AB; 上凸，$`\overline f`$ 在 &#x1D4AB; 上凹，并且
+
+```math
+\underline{(-f)}=-\overline f,\qquad
+\overline{(-f)}=-\underline f.
+```
+
+证明。取 &#x1D45A;<sub>&#x30;</sub>&#x2C;&#x1D45A;<sub>&#x31;</sub>&#x2208;&#x1D4AB;、&#x30;&#x2264;&#x1D461;&#x2264;&#x31;，分别取实现下界的律 &#x1D45D;<sup>&#x30;</sup>&#x2C;&#x1D45D;<sup>&#x31;</sup>。混合律 &#x1D45D;<sup>&#x1D461;</sup>&#x3D;&#x28;&#x31;&#x2212;&#x1D461;&#x29;&#x1D45D;<sup>&#x30;</sup>&#x2B;&#x1D461;&#x1D45D;<sup>&#x31;</sup> 的均值为 &#x1D45A;<sub>&#x1D461;</sub>&#x3D;&#x28;&#x31;&#x2212;&#x1D461;&#x29;&#x1D45A;<sub>&#x30;</sub>&#x2B;&#x1D461;&#x1D45A;<sub>&#x31;</sub>，所以
+
+```math
+\underline f(m_t)\le\mathbb E_{p^t}f
+=(1-t)\underline f(m_0)+t\underline f(m_1).
+```
+
+同样混合实现上界的律，因上界至少为每个相容律的目标值得
+
+```math
+\overline f(m_t)\ge(1-t)\overline f(m_0)+t\overline f(m_1).
+```
+
+目标取负把同一集合上的最小值换为最大值的负数，直接得到两个反号等式；两侧从始至终使用相同 &#x2131;<sub>&#x1D45A;</sub>。∎
+

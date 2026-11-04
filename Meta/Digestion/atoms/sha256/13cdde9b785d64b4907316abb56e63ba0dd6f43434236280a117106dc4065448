@@ -1,0 +1,20 @@
+**Proposition 14.2 (coordinate and realization correspondence under $J$).** For a conjugated history $A_i'=JA_iJ$, take $X'=JXJ$ and
+$$
+f_K'=-Jf_K,\qquad \ell_K'=-\ell_KJ,\qquad
+(a',b',c',d')=(b,a,d,c).
+$$
+Then
+$$
+N'=JNJ,\quad r_K'=Jr_K,\quad l_K'=l_KJ,\quad t'=t,
+\quad h'(X')=h(X),\quad
+\rho_{N'}(X')=J\rho_N(X)J.
+\tag{14.1}
+$$
+In the cone coordinates, $(\xi',\nu',\zeta')=(-\xi,-\nu,\zeta)$; the five inequalities and inverse in Section 11 correspond exactly.
+
+**Proof.** The displayed parameter substitution gives the identities for $N',r_K',l_K',t'$. Substitution into (10.4) gives the identities for $h'$ and $\rho_{N'}$. If $E=\operatorname{diag}(-1,1)$, then $P'=JPE$, so
+$$
+(P')^{-1}X'P'=E(P^{-1}XP)E.
+$$
+The off-diagonal coordinates change sign and the lower-right coordinate is unchanged. In (11.5) the positive column becomes its $J$ permutation and the positive row becomes its $J$ permutation, proving exact equivalence of all inequalities and their inverses. Every transition $JW_iJ$ is a legal word, with an empty multiplier represented by $JJ$. For actual sources, the positive factors transfer as $f_+'=Jf_+$ and $\ell_+'=\ell_+J$, and trace cyclicity preserves all original signals. The slopes, whole drifts and recorded indices are unchanged. This is a correspondence between histories and their actual realizations, with no conjugation or inverse acquisition added to a run. ∎
+

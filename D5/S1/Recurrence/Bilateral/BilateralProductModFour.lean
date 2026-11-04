@@ -8,7 +8,13 @@
 
 /-
 ofSeries_inverse: proof_shape: bind-only; consumer: HannaBilateralReversionParity.coe_inverse
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19114
+Escape audit unfinished for ofSeries_inverse:
+https://github.com/the-omega-institute/trureturing/issues/19114
+Escape audit unfinished for the public agreement, geometric, fixed-point and Laurent interface:
+agree_iff, agree_refl, agree_add, agree_mul, agree_pow, agree_inverse, agree_shift,
+geometric_spec, geometric_coeff, equation_iff, embed_coeff, embed_injective,
+embed_inverse, negative_factorization, laurent_zero, zeroTerm_series.
+https://github.com/the-omega-institute/trureturing/issues/20261
 -/
 
 import Mathlib.RingTheory.LaurentSeries
@@ -17,10 +23,10 @@ import Mathlib.RingTheory.PowerSeries.WellKnown
 open PowerSeries
 namespace D5.S1.Recurrence.Bilateral.BilateralProductModFour
 
-private noncomputable def positiveTerm (c : ℕ) (A : PowerSeries ℤ) (k : ℕ) :=
+noncomputable def positiveTerm (c : ℕ) (A : PowerSeries ℤ) (k : ℕ) :=
   X ^ k * (A ^ k * (A ^ k + X) ^ (c * k - 1) * (X ^ k + A) ^ (c * k - 1))
 
-private noncomputable def negativeTerm (c : ℕ) (A : PowerSeries ℤ) (k : ℕ) :=
+noncomputable def negativeTerm (c : ℕ) (A : PowerSeries ℤ) (k : ℕ) :=
   X ^ (c * k ^ 2) * (A ^ (c * k ^ 2) *
     invOfUnit (1 + X * A ^ k) 1 ^ (c * k + 1) *
     invOfUnit (1 + X ^ k * A) 1 ^ (c * k + 1))
@@ -70,22 +76,22 @@ private theorem sum_zero (c : ℕ) (hc : 2 ≤ c) (A : PowerSeries ℤ) :
   rw [← coeff_zero_eq_constantCoeff, (finite_window c hc A 0 0 le_rfl).2]
   simp [bilateralTerm]
 
-private def Agree (d : ℕ) (A B : PowerSeries ℤ) : Prop :=
+def Agree (d : ℕ) (A B : PowerSeries ℤ) : Prop :=
   ∀ n < d, coeff n A = coeff n B
 
-private theorem agree_iff (d : ℕ) (A B : PowerSeries ℤ) :
+theorem agree_iff (d : ℕ) (A B : PowerSeries ℤ) :
     Agree d A B ↔ (X : PowerSeries ℤ) ^ d ∣ A - B := by
   simp [Agree, X_pow_dvd_iff, map_sub, sub_eq_zero]
 
-private theorem agree_refl (d : ℕ) (A : PowerSeries ℤ) : Agree d A A :=
+theorem agree_refl (d : ℕ) (A : PowerSeries ℤ) : Agree d A A :=
   fun _ _ => rfl
 
-private theorem agree_add {d : ℕ} {A B F G : PowerSeries ℤ}
+theorem agree_add {d : ℕ} {A B F G : PowerSeries ℤ}
     (h : Agree d A B) (h' : Agree d F G) : Agree d (A + F) (B + G) := by
   intro n hn
   simp only [map_add, h n hn, h' n hn]
 
-private theorem agree_mul {d : ℕ} {A B F G : PowerSeries ℤ}
+theorem agree_mul {d : ℕ} {A B F G : PowerSeries ℤ}
     (h : Agree d A B) (h' : Agree d F G) : Agree d (A * F) (B * G) := by
   apply (agree_iff _ _ _).mpr
   have ha := dvd_mul_of_dvd_left ((agree_iff _ _ _).mp h) F
@@ -93,11 +99,11 @@ private theorem agree_mul {d : ℕ} {A B F G : PowerSeries ℤ}
   convert dvd_add ha hb using 1
   ring
 
-private theorem agree_pow {d : ℕ} {A B : PowerSeries ℤ}
+theorem agree_pow {d : ℕ} {A B : PowerSeries ℤ}
     (h : Agree d A B) (k : ℕ) : Agree d (A ^ k) (B ^ k) :=
   (agree_iff _ _ _).mpr (((agree_iff _ _ _).mp h).trans (sub_dvd_pow_sub_pow A B k))
 
-private theorem agree_inverse {d : ℕ} {A B : PowerSeries ℤ}
+theorem agree_inverse {d : ℕ} {A B : PowerSeries ℤ}
     (hA : constantCoeff A = 1) (hB : constantCoeff B = 1)
     (h : Agree d A B) : Agree d (invOfUnit A 1) (invOfUnit B 1) := by
   have he : invOfUnit A 1 - invOfUnit B 1 =
@@ -108,7 +114,7 @@ private theorem agree_inverse {d : ℕ} {A B : PowerSeries ℤ}
   rw [he]
   exact dvd_mul_of_dvd_right ((agree_iff _ _ _).mp h) _
 
-private theorem agree_shift {d k : ℕ} {A B : PowerSeries ℤ}
+theorem agree_shift {d k : ℕ} {A B : PowerSeries ℤ}
     (hk : 0 < k) (h : Agree d A B) : Agree (d + 1) (X ^ k * A) (X ^ k * B) := by
   apply (agree_iff _ _ _).mpr
   have hx : (X : PowerSeries ℤ) ∣ X ^ k := by
@@ -143,12 +149,12 @@ private theorem sum_agree (c : ℕ) (hc : 2 ≤ c) {d : ℕ} {A B : PowerSeries 
   simp only [nonzeroSum, coeff_mk]
   exact Finset.sum_congr rfl fun j _ => term_agree c hc h j n hn
 
-private noncomputable def geometric : PowerSeries ℤ := invOfUnit (1 + X) 1
+noncomputable def geometric : PowerSeries ℤ := invOfUnit (1 + X) 1
 
-private theorem geometric_spec : geometric * (1 + X) = 1 :=
+theorem geometric_spec : geometric * (1 + X) = 1 :=
   invOfUnit_mul _ 1 (by simp)
 
-private noncomputable def step (c : ℕ) (A : PowerSeries ℤ) : PowerSeries ℤ :=
+noncomputable def step (c : ℕ) (A : PowerSeries ℤ) : PowerSeries ℤ :=
   2 * geometric - 1 + 2 * ((1 + A) * nonzeroSum c A)
 
 private theorem step_zero (c : ℕ) (hc : 2 ≤ c) (A : PowerSeries ℤ) :
@@ -172,7 +178,7 @@ private theorem step_agree (c : ℕ) (hc : 2 ≤ c) {d : ℕ} {A B : PowerSeries
   unfold step
   ring
 
-private noncomputable def approximation (c : ℕ) : ℕ → PowerSeries ℤ
+noncomputable def approximation (c : ℕ) : ℕ → PowerSeries ℤ
   | 0 => 1
   | d + 1 => step c (approximation c d)
 
@@ -201,7 +207,7 @@ private theorem generating_fixed (c : ℕ) (hc : 2 ≤ c) :
   exact (generating_agree c hc (n + 2) n (by omega)).trans
     (step_agree c hc (generating_agree c hc (n + 1)) n (by omega)).symm
 
-private theorem equation_iff (c : ℕ) (A : PowerSeries ℤ) :
+theorem equation_iff (c : ℕ) (A : PowerSeries ℤ) :
     (1 + X) * (1 + A) * (1 - 2 * nonzeroSum c A) = 2 ↔ A = step c A := by
   constructor
   · intro he
@@ -231,21 +237,21 @@ private theorem polynomial_unique (c : ℕ) (hc : 2 ≤ c) (B : PowerSeries ℤ)
   ext n
   exact ha (n + 1) n (by omega)
 
-private noncomputable def embed : PowerSeries ℤ →+* LaurentSeries ℚ :=
+noncomputable def embed : PowerSeries ℤ →+* LaurentSeries ℚ :=
   (HahnSeries.ofPowerSeries ℤ ℚ).comp (PowerSeries.map (Int.castRingHom ℚ))
 
-private theorem embed_coeff (A : PowerSeries ℤ) (N : ℕ) :
+theorem embed_coeff (A : PowerSeries ℤ) (N : ℕ) :
     (embed A).coeff (N : ℤ) = ((coeff N A : ℤ) : ℚ) := by
   change ((A.map (Int.castRingHom ℚ) : PowerSeries ℚ) : LaurentSeries ℚ).coeff (N : ℤ) = _
   simp only [LaurentSeries.coeff_coe_powerSeries, coeff_map, Int.coe_castRingHom]
 
-private theorem embed_injective : Function.Injective embed := by
+theorem embed_injective : Function.Injective embed := by
   intro A B h
   have hm : A.map (Int.castRingHom ℚ) = B.map (Int.castRingHom ℚ) :=
     HahnSeries.ofPowerSeries_injective (Γ := ℤ) (R := ℚ) h
   exact PowerSeries.map_injective (Int.castRingHom ℚ) Int.cast_injective hm
 
-private theorem embed_inverse (A : PowerSeries ℤ) (hA : constantCoeff A = 1) :
+theorem embed_inverse (A : PowerSeries ℤ) (hA : constantCoeff A = 1) :
     embed (invOfUnit A 1) = (embed A)⁻¹ := by
   apply Eq.symm
   apply inv_eq_of_mul_eq_one_left
@@ -257,7 +263,7 @@ noncomputable def laurentTerm (c : ℕ) (A : PowerSeries ℤ) (j : ℤ) : Lauren
   x ^ j * B ^ j * (B ^ j + x) ^ ((c : ℤ) * j - 1) *
     (x ^ j + B) ^ ((c : ℤ) * j - 1)
 
-private theorem negative_factorization {F : Type*} [Field F]
+theorem negative_factorization {F : Type*} [Field F]
     (x u : F) (hx : x ≠ 0) (hu : u ≠ 0) (c k : ℕ) :
     x ^ (-(k : ℤ)) * u ^ (-(k : ℤ)) *
       (u ^ (-(k : ℤ)) + x) ^ (-((c * k + 1 : ℕ) : ℤ)) *
@@ -320,7 +326,7 @@ private theorem laurent_normalization (c : ℕ) (hc : 2 ≤ c)
     simp only [negativeTerm, map_mul, map_pow, embed_inverse (1 + X * A ^ j.natAbs) (by simp),
       embed_inverse (1 + X ^ j.natAbs * A) (by simp [ne_of_gt hk]), map_add, map_one]
 
-private theorem laurent_zero (c : ℕ) (A : PowerSeries ℤ) :
+theorem laurent_zero (c : ℕ) (A : PowerSeries ℤ) :
     laurentTerm c A 0 = (1 + embed X)⁻¹ * (1 + embed A)⁻¹ := by
   simp [laurentTerm]
 
@@ -402,7 +408,7 @@ theorem ofSeries_inverse (B : PowerSeries ℚ) (hB : constantCoeff B ≠ 0) :
   simpa only [map_mul, map_one] using congrArg (HahnSeries.ofPowerSeries ℤ ℚ)
     (PowerSeries.inv_mul_cancel B hB)
 
-private theorem zeroTerm_series (c : ℕ) (A : PowerSeries ℤ) (hA : constantCoeff A = 1) :
+theorem zeroTerm_series (c : ℕ) (A : PowerSeries ℤ) (hA : constantCoeff A = 1) :
     laurentTerm c A 0 = HahnSeries.ofPowerSeries ℤ ℚ
       ((1 + X)⁻¹ * (1 + A.map (Int.castRingHom ℚ))⁻¹) := by
   have ha : constantCoeff (1 + A.map (Int.castRingHom ℚ)) ≠ 0 := by
@@ -453,7 +459,7 @@ theorem generating_unique (c : ℕ) (hc : 2 ≤ c) (B : PowerSeries ℤ)
     B = generatingSeries c :=
   polynomial_unique c hc B h0 (equation_of_laurent c hc B h0 hB)
 
-private theorem geometric_coeff (n : ℕ) : coeff n geometric = (-1 : ℤ) ^ n := by
+theorem geometric_coeff (n : ℕ) : coeff n geometric = (-1 : ℤ) ^ n := by
   have hg : rescale (-1 : ℤ) (mk 1) * (1 + X) = 1 := by
     simpa using congrArg (rescale (-1 : ℤ)) (mk_one_mul_one_sub_eq_one ℤ)
   have he : geometric = rescale (-1 : ℤ) (mk 1) := by

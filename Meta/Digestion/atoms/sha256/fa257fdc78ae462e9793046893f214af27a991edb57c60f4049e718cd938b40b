@@ -1,0 +1,25 @@
+## 12. 可见压缩、精确信息分解与 Petz 恢复接口
+
+<a id="sec-c94-visible-compression"></a>
+
+定义可见资料代数
+$\mathcal D=\bigoplus_k B(H_{L,k})$，其迹取各块迹之和。
+可见压缩映射为
+
+<a id="eq-c94-compression"></a>
+
+$$
+C(\rho)=\bigoplus_k\operatorname{Tr}_{R,k}(P_k\rho P_k)
+ =\bigoplus_k a_k(\rho).
+\tag{12.1}
+$$
+
+它是 CPTP 映射，且
+
+$$
+C(\tau)=\bigoplus_kq_k\tau_{L,k}>0.
+$$
+
+对 $b=\bigoplus_kb_k\in\mathcal D$，其对偶为
+$C^*(b)=\bigoplus_k b_k\otimes I_{R,k}$。
+

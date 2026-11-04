@@ -1,0 +1,28 @@
+### 21.2. Continued use on the same source
+
+Retain the learned coordinate $z$ with invariant $x=Rz$. The numerical service uses
+
+$$
+\begin{array}{c|c}
+\text{actual command}&\text{synchronized update}\ \hline
+\operatorname{Reset}&z\leftarrow0\\
+\operatorname{Add}(j,u)&z\leftarrow z+uD_j\\
+\operatorname{Tick}&z\leftarrow Az\\
+Q_g&z\leftarrow\mu(z,z)\\
+\operatorname{Read}(j)&E_jz\\
+\operatorname{Hold}&z\leftarrow z.
+\end{array}
+$$
+
+Call the displayed state maps $\widetilde U_c:\mathcal Z\to\mathcal Z$, treating `Read` as the identity state map with the displayed reply. Write $U_c:\mathcal X\to\mathcal X$ for the actual native state maps. The controller forwards the actual command, retains the complete reply and successor, and then commits the synchronized update. A common adaptive policy uses the same returned replies and the same external random tape in the two descriptions.
+
+**(A2) Theorem 21.2 (synchronized complete continuation).** For every sufficiently backed finite adaptive word over this exact menu, including legal operands, refusals, invalid frames, pending states and complete identity successors, the numerical service and the actual source have equal complete replies and corresponding committed successor states under $x=Rz$. The assertion includes singular $T$ and every gain vector $g$.
+
+**Proof.** For every $z\in\mathcal Z$ and every legal command and operand, the invariant needed for a committed call is
+
+$$
+R\widetilde U_c(z)=U_c(Rz).
+$$
+
+For `Add`, $R(z+uD_j)=Rz+uB_j$; for `Tick`, $R(Az)=TRz$; for $Q_g$, $R\mu(z,z)=Q_g(Rz)$; and for `Read`, $E_jz=B_j^{\mathsf T}Rz$. `Reset`, `Read` as a state map, and `Hold` give the remaining identities. These equalities hold for every rational state, rather than only the calibration states. The source protocol decides whether a frame is legal before committing the corresponding transition; the observer copies that decision and retains the whole reply, including ACK, End and Return where required. A refusal or invalid frame has the same identity successor on both sides. A pending request retains its phase and bytes and has no completed state update; its eventual completion is handled by the same committed-call rule. Induction on committed calls, together with these protocol phases, proves equality of replies and corresponding successor states. The same induction is pointwise for a fixed common random tape, so adaptive branch choices coincide. A numerical forecast made without forwarding a call is not counted as an additional source observation. ∎
+

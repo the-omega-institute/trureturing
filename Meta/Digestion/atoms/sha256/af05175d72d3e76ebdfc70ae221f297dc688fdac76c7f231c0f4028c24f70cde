@@ -1,0 +1,8 @@
+**Example 17.3 (an interior saving on the actual paid trajectory).** Take $k=1,d=0$, $N=5$, $T=4$, $b=8/5$, $H(t)=t-5$, and $D(t)=0$. This fiber is realized, for example, by
+
+$$
+P=\frac15\begin{pmatrix}1&2\\2&4\end{pmatrix};
+$$
+
+no promise that this is the actual representative is supplied. One has $b\in I_4=(3/2,5/3)$, while $r_1=2,r_2=3$ and $b=8/5$ is an endpoint of $I_5=(8/5,5/3)$. Perform $M$ at original clock $5$ and retain its zero-gain read; then perform $J$ at clock $6$. The terminal matrix $JM^5$ is injective on the entire $\mathcal F_{8/5}$, so (16.2) and Corollary 9.2 recover any actual source in it. The exact additional cost is $2$, rather than $r_2=3$, and the total after the five paid calibration reads is $7$. This saves one read against the interior actual-degree guarantee $N+s+2=8$, without skipping the root clock or excluding any source from the fiber.
+

@@ -1,0 +1,42 @@
+### 引理 1：双差分消去背景项
+
+当所有取样点位于正半轴时，
+
+
+<a id="display-16"></a>
+
+$$
+\Delta_hN(t)
+=
+-2h\sinh(h/2)e^{t/2},
+$$
+
+
+所以
+
+
+<a id="display-17"></a><a id="eq-5"></a>
+
+$$
+\boxed{\Delta_h^2N(t)=0.}
+$$
+
+<p align="center" data-equation-number="5"><a href="#eq-5">(5)</a></p>
+
+
+这里 $\Delta_h^2$ 表示连续施加两次 $\Delta_h$。
+
+**证明。** 指数项 $e^{\pm t/2}$ 被一次差分消去，而直接展开可得
+
+
+<a id="display-18"></a>
+
+$$
+\Delta_h(te^{t/2})
+=
+2h\sinh(h/2)e^{t/2}.
+$$
+
+
+第二次差分再消去剩余的 $e^{t/2}$。证毕。
+

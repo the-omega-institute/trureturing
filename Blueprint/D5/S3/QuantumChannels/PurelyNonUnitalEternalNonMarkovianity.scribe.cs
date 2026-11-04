@@ -12,6 +12,9 @@ internal sealed class PurelyNonUnitalEternalNonMarkovianityDocument : IScribeDoc
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A rotating replacement state gives a completely positive trace-preserving qubit dynamics whose unital part is divisible, while its generator fails conditional complete positivity at every positive time.",
         H("Purely non-unital eternal non-Markovianity"), Blocks(
+            Entry("affine", "affine", "An affine qubit map", AffineFormula(),
+                "For a complex scalar a and a complex qubit matrix B, affine(a,B) sends each matrix X to aX + Matrix.trace(X)B.",
+                AssessedProvenance.FromRepo(Source)),
             Entry("unital-part", "unitalPart", "The translation-free part", UnitalFormula(),
                 "Eqs. (9)–(11), pages 3–4, decompose the Bloch action into M(t)r + τ(t). On arbitrary complex qubit matrices, subtracting half the trace times Phi(t)(1) − 1 removes the translation. Matrix.trace is the complex trace, 1 is the identity matrix, and the dot is complex scalar multiplication.",
                 AssessedProvenance.FromLiterature(Source)),
@@ -45,6 +48,16 @@ internal sealed class PurelyNonUnitalEternalNonMarkovianityDocument : IScribeDoc
         OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
+
+    private static Formula AffineFormula()
+    {
+        Formula a = V("a"), b = V("B");
+        Formula identity = Parenthesized(Seq(Qualified("LinearMap", "id"), Colon, Sp, Map()));
+        Formula trace = App(Qualified("Matrix", "traceLinearMap"), Fin(), Complex(), Complex());
+        Formula action = new Formula.Binary(Scalar(a, identity), FormulaBinaryOperator.Add,
+            App(Qualified("LinearMap", "smulRight"), trace, b));
+        return Disp(All("a", Complex(), All("B", Mat(), Equal(Call("affine", a, b), action))));
+    }
 
     private static Formula UnitalFormula()
     {

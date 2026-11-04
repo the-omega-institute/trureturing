@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers prove common-stage clopen reflection, regular signed-measure lifting, exact eventual point-pair equality and uniform strong-dual norm separation of compact Stonean weak-star embeddings, without the CH induction.
+claim: Problem 8.2 asks whether Theorem A can be obtained from CH in place of diamond(S); actual_CH_Talagrand_scheme_and_endpoints now has a successful targeted Lean 4.35 build proving the full literal scheme, A-G, finite disjoint images and closed copies, no 2DCP, full signed dual-ball exclusion, Grothendieck convergence and point-space consequences on exactly one actual finalPrefix; scoped axiom inspection and three independent reviews have passed; PR 22319 tracks delivery CI, and no official acceptance is claimed.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -306,6 +306,106 @@ endpoints open. Its information registration remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/21448; no
 `declared_validated` registration or solved-problem claim is made.
 
+## Delayed whole-fibre signed splitting
+
+The construction-specific sources `SignedDelayedSplit` and
+`SignedDelayedSuccessor` in `D5.S3.Topology.Measures` implement the local
+delayed common-row step in the proposed CH construction. Their role is
+in the signed induction associated with the paper's conditions (A)–(G).
+The local refinement combines compact metric selection, norm-preserving
+signed lifting, ordered columns and signed reference convergence. No
+literature novelty claim is made for this assembled proof.
+
+`exists_delayed_fibre_pools` starts with the actual continuous onto
+predecessor projection, original supports V(n), target points y(n) in
+V(n) and Q, and both infinite original intersections J with N(e).
+It chooses infinite subsets of those exact intersections and cluster
+points z(e). Eventual coordinate E on the whole original supports
+transfers convergence of selected points to every point of the fibre:
+every clopen neighborhood of z(e) eventually contains the entire fibre
+over y(n). No old fibre is assumed to be a singleton.
+
+`exists_delayed_pool_plan` resolves the equal and distinct cluster cases
+internally. Equal points retain the two original parity pools as target
+column pools. Distinct points give an old clopen separator. Finite
+thinning separates the entire target fibres; an independent infinite
+target reserve is split from one source pool, while each source set
+stays in its original N(e). Both target column parities use this reserve.
+Target auxiliary parity and source reservoir parity therefore have
+separate meanings in this branch.
+
+`exists_parity_ordered_split` is the consumed finite-construction core.
+The finite earlier exclusion R is fixed first. Whole target-fibre
+convergence and auxiliary-support avoidance of the selected point let
+the next target be chosen in its prescribed column pool. The clopen
+is literally H = p inverse-image (V(n) intersect Q) minus R. Its finite
+Boolean tests are fixed next, and only then are auxiliary indices
+chosen. All norm-preserving signed lifts satisfy the finite signed
+marginal bound; the other rows are never replaced by positive measures.
+The prescribed Dirac target gives mass one on H. Thus the finite strict
+thirteen-forty-eighths and one-sixth bounds hold. Closure of the even
+H's gives one split with onto old projection, whole-support fibre E,
+and the scheduled signed G estimates.
+
+`exists_internal_delayed_split` consumes both cluster branches and the
+core, selecting its own target reference and pools. It returns infinite
+M(e) inside the original source J and N(e), and one clopen of the same
+split separating the entire fibres over y(n) on M(0) and M(1). In the
+distinct case these source indices avoid every chosen target support,
+so the new coordinate is false on their whole original supports.
+Every target slice lies above Q. If the original source signed measures
+are carried by a disjoint clopen P, the true sheet is absent above P.
+Projection therefore transfers old source F without singleton fibres.
+A genuine successor lift supplies one regular source reference; whole
+support E gives that same reference to every selection. Its quantifier
+order is one reference followed by all lift selections.
+
+`SignedDelayedSuccessor.exists_delayed_successor` starts from actual
+born signed data and the original old laws. Old I, J and N exist only
+on genuinely old rows. Every row has signed sequences for the old labels
+and the residual label, with norm one, support-nullity, regular Jordan
+parts and positive Jordan mass at least one half. The target row is old;
+its target sequence is prescribed Dirac data. The new row uses its own
+internally chosen signed birth clusters. It has no invented old J or N.
+
+For auxiliary columns c(q), its final sets have the exact formulas:
+
+- I(r) contains the indices c(q).m(r) with code(r) < q; on the actual
+  target row it additionally contains M(0) union M(1).
+- J at the actual source pair is exactly M(0) union M(1); every other
+  old-label J is its fixed-label auxiliary range.
+- Every genuinely born old N is preserved. New-row old-label N(e) is
+  the corresponding fixed-label auxiliary parity range.
+
+These sets satisfy A–C, exact one-step I/J refinement sufficient for the
+inherited almost-inclusion D, whole-support E, and common every-choice
+signed F. Residual selection occurs only after the final I is fixed:
+compact metric weak-star compactness selects its residual J on that I,
+then splits J into two infinite reservoirs. Whole-support E transfers
+its regular reference to every signed lift selection. This includes
+old/old, new-row/old-label, old-row/residual and doubly new cases. The
+scheduled G witnesses are merely two infinite index sets, without an
+extra membership requirement in the updated I. The same output also
+retains each even column's strict 13/48 and 1/6 bounds and each odd
+column's zero true-sheet mass. Actual norm-preserving lift classes are
+inhabited for every old and residual label.
+
+The result is a local compact metric split supplier. Literal ordinal
+successor insertion and readback, once-born raw I/J/N, stage-local delayed
+eligibility, compatible well-founded raw-history recursion, and the final
+omega-one cube construction remain further obligations. The local
+supplier proves neither anti-homeomorphism, the Grothendieck endpoint nor
+the entire signed dual-ball endpoint. Problem 8.2, full CH Lean completion
+and official acceptance remain open.
+
+The owning Reg mirrors preserve the unabridged source telescopes and
+actual proof applications. Four-slot information registration remains
+unfinished under https://github.com/the-omega-institute/trureturing/issues/21750:
+full realization and source reconstruction, lawful enrolled readout,
+whole-family variation and sensitivity, and observational dependence
+are still missing. These source bindings are not `declared_validated`
+registrations.
+
 ## Verified locator
 
 Canonical arXiv record: https://arxiv.org/abs/2607.06808v2.
@@ -476,3 +576,365 @@ no new literature theorem is attributed to Kania–Kąkol. The sufficient
 hypothesis remains unproved for the proposed CH construction. Neither
 result supplies CH bookkeeping, the signed induction, capture/global
 obligations, the closed-copy prohibition or a solution of Problem 8.2.
+
+
+## Quantitative signed clopen oscillation criterion
+
+On an arbitrary-universe compact Hausdorff zero-dimensional Borel space K,
+`SignedGrothendieckCriterion.weak_of_signed_clopen_oscillation` assumes the
+following explicit property O. Every regular signed norm-one sequence carried
+in total variation by pairwise disjoint nonempty clopens, with positive Jordan
+mass at least one half, has a single clopen Z at which the evaluations are at
+least one sixth infinitely often and zero infinitely often. Under O, arbitrary
+weak-star-convergent sequences in the full real continuous dual of C(K,Real)
+converge under every continuous double-dual test. Uniform boundedness is
+derived, and no positivity or nonemptiness premise is added.
+
+The analytic argument combines the unconditional raw signed restriction split
+with signed clopen disjointization at parameter 1/96. The latter gives one
+constant sign and fixed TV error below 1/48. On the oscillating clopen, the
+selected original evaluations exceed 7/48 infinitely often and have absolute
+value below 1/48 infinitely often, excluding a real limit. A positive raw
+captured-mass limit would yield a norm-one disjointly carried weak-star
+convergent normalized tail by reciprocal continuity, so the mass limit must
+be zero. The small captured part, the weak complementary part and the
+all-subsequence criterion give the full dual implication.
+
+This is a synthesis of classical analytic mechanisms, not a claim of global
+mathematical novelty or attribution of this exact quantitative formulation
+to Kania and Kakol. The cited article supplies the Talagrand-scheme context;
+O remains a separate conditional hypothesis. No formal CH instance of O,
+full signed-ball endpoint, anti-homeomorphism result or official solution of
+Problem 8.2 is established by this criterion.
+
+`SignedGrothendieckCriterion.eventually_eq_of_signed_clopen_oscillation`
+also proves, under exactly O, that every convergent point sequence is
+eventually equal to its limit. It requires no metric, first-countability or
+injectivity assumption. The repository-derived proof uses actual signed
+Dirac measures and the finite/infinite range distinction; it supplies no
+CH instance of O or completed global CH construction.
+
+## The full signed-ball analytic reduction
+
+Write $D=C(K,\mathbb R)^*$ and $Ts(g)=\int g\,ds$. For compact Hausdorff
+Borel $K$, `SignedBallReduction.exists_normalized_disjoint_embedding` takes
+an arbitrary weak-star continuous injection $h:\beta\mathbb N\to D$ with
+$\|h(p)\|\leq1$ for every $p$. Its output is a sequence of regular signed
+measures $b_n$, pairwise disjoint Borel sets $E_n$, and a continuous
+injection $f:\beta\mathbb N\to D$ satisfying
+
+$$|b_n|(K)=1,\qquad |b_n|(K\setminus E_n)=0,\qquad
+f(n)=Tb_n,\qquad \|f(p)\|\leq1\quad(p\in\beta\mathbb N).$$
+
+The quantification covers the entire real signed dual unit ball. Neither
+positivity, constant raw KPR norms nor a preselected collision-free
+subsequence is an input. No zero-dimensionality is needed at this stage.
+
+Signed RMK represents the principal values. The raw signed restriction
+splitting gives, after an increasing selection,
+$x_n=Tu_n+Tv_n$, with literal disjoint Borel carriers for $u_n$,
+$Tv_n\to V$ against every member of $D^*$, and
+$r_n=\|Tu_n\|\to r\geq0$. The selected original full extension $\widehat x$
+is still injective: an injection of the discrete index set induces an
+injection of its ultrafilter spaces. Banach–Alaoglu extends the bounded
+$Tu_n$ sequence. At every free ultrafilter $p$, continuous-function
+evaluation and uniqueness of limits give
+
+$$\widehat u(p)=\widehat x(p)-V.$$
+
+If $r=0$, then $Tu_n\to0$ in norm, so $\widehat x(p)=V$ at every free
+$p$. There are two distinct free ultrafilters, contradicting injection.
+Thus $r>0$, and a tail has $r_n>0$. Normalize on that tail by the actual
+norms: $b_n=u_n/r_n$. Scalar variation and restriction identities preserve
+regularity and the literal carrying sets and give $|b_n|(K)=1$. The
+varying normalization is justified by the norm estimate
+
+$$\left\|\frac{Tu_n}{r_n}-\frac{Tu_n}{r}\right\|
+ \leq \left|r_n^{-1}-r^{-1}\right|\sup_m\|Tu_m\|\longrightarrow0.$$
+
+Consequently $\widehat b(p)=(\widehat x(p)-V)/r$ at every free $p$.
+This proves free/free injection. Disjoint carriers and variation mass one
+give principal/principal injection: equal measures carried by two disjoint
+sets would have zero total variation.
+
+For completeness, separate injection on these two pieces does not yet
+give full injection. Each principal value can coincide with at most one
+free value. `CountableAvoidance.exists_infinite_notMem` avoids this
+countable collection by an actual infinite subset $A\subseteq\mathbb N$.
+Starting with an infinite pool, split each pool into two disjoint infinite
+sets and choose a half absent from the next forbidden ultrafilter. An
+infinite diagonal set is contained in every fixed later pool modulo a
+finite set; freeness makes these finite errors irrelevant. On the clopen
+of ultrafilters containing $A$, both orientations of principal/free
+collision are excluded. An increasing enumeration of $A$ therefore yields
+injection on the entire compactification, not only on its remainder.
+
+`WeakStarPerturbation.norm_sub_le_of_denseRange` supplies the needed
+global perturbation step for arbitrary real normed spaces. If weak-star
+continuous $f,g:T\to X^*$ satisfy $\|f(i(a))-g(i(a))\|\leq\epsilon$ on
+a dense range, then the same estimate holds for every $p\in T$.
+The proof uses the inverse image of the weak-star closed norm ball under
+$f-g$; it does not assert continuity of the norm. If every unequal pair
+of $f$-values has distance at least $c$ and $2\epsilon<c$, equality of two
+$g$-values contradicts the triangle inequality. This is the full-domain
+`injective_of_approximation` theorem.
+
+For zero-dimensional $K$, `SignedBallReduction.SignedClopenCollision`
+states the remaining analytic sufficient hypothesis. For **every** regular
+signed sequence $z_n$ of variation mass one, carried by pairwise disjoint
+nonempty clopens $W_n$, with $z_n^+(K)\geq1/2$, **every** continuous
+extension of its principal integration functionals has a collision at two
+distinct free ultrafilters. This is a sequence-level collision statement;
+it contains no KPR supplier or nonembedding conclusion.
+
+`not_injective_signed_ball_of_collision` derives nonembedding of the whole
+signed ball from exactly this hypothesis. Apply the full normalization
+above, then directly reuse
+`WeakStarNormSeparation.exists_pos_le_norm_sub` to obtain a global gap
+$c>0$. Put $\eta=\min(c/16,1/4)$. The existing signed clopen
+disjointization supplies normalized regular signed restrictions $t_n$,
+disjoint nonempty clopens, and variation error less than $2\eta$. Its
+further increasing selection supplies one common sign $s\in\{1,-1\}$
+such that $(st_n)^+(K)\geq1/2$. Multiply the whole selected original
+sequence by this same sign; the global gap remains $c$. Banach–Alaoglu
+extends $st_n$. The principal error bound transfers to every ultrafilter,
+and $2(2\eta)<c$ preserves full injection, contradicting the collision
+hypothesis.
+
+These are repository deductions from classical signed RMK, KPR splitting,
+Banach–Alaoglu and the existing clopen and norm-separation suppliers, not
+new results attributed to Kania–Kąkol. Establishing SignedClopenCollision
+for the intended CH compactum, the transfinite construction, signed
+induction and global capture remains outside this analytic reduction.
+The reduction alone is not a solution of Problem 8.2.
+
+## Ordinary ordinal successor and arrival readback
+
+`D5.S3.Topology.InverseLimit.SignedOrdinalSuccessor.exists_successor`
+constructs an ordinary successor from a valid partial predecessor through a
+proper ordinal `a >= omega`. The input is one literal cube Prefix, its onto
+base restriction, all previously launched support and legal signed
+enumerations, permanent birth entries, and the strict old I/J laws. It does
+not assume a complete history or an extension theorem. CH supplies the
+current exhaustive clopen/support enumerations; the launch support is
+pulled back along the actual restriction and its entire signed enumeration
+is constructed before whole-sequence treatment. Support launch indices and
+signed measure labels have separate types and fields.
+
+The actual local supplier is
+`SignedSplitSuccessor.exists_measured_dynamic_split`. The row index is the
+ordinal interval `[omega,a]`, the new row is `a`, old signed labels are
+strictly below `a`, and the residual label is `a`. The new row restriction
+is the identity on the actual current carrier. The supplier's same executed
+split supplies all four reservoir cases. Literal insertion reuses
+`SignedSuccessorCoordinates.exists_successor_coordinates`, preserving the
+whole earlier Prefix. The enlarged birth pack reads each reservoir at its
+unique arrival stage `succ(max(row,label))` and retains every earlier entry.
+The arrival pack is additional through-stage data; a strict prefix is not
+silently completed with an unborn row.
+
+`Result.quantitative_g` transfers the same split's quantitative certificate
+to the literal new-coordinate clopen. One fixed StrictMono target index
+works for every norm-one signed lift of the original treated sequence:
+even positions have value strictly greater than one sixth and odd
+positions have value zero. Historical G is separate from A–F. The regular
+common every-choice F certificate is transported to the literal cube by
+`Result.literal_f`: for every row and label, one fixed regular reference
+measure of variation at most one works for every norm-one lift of the
+original whole signed sequence. The same coordinate equivalence pushes the
+reference forward and pulls every arbitrary lift back. `Result.literal_e`
+covers every old coordinate and the new sheet, with the original I/J sets.
+
+This is a repository-derived composition and birth-readback construction,
+not a literature novelty claim or a full CH realization. Delayed execution
+with an exposed strictly increasing target index, fixed cofinal launch and
+treatment reservations, well-founded existence and validity induction,
+proper-limit integration, the final omega-one Prefix and the full problem's
+functional-analytic endpoints remain separate obligations. The final
+omega-one Prefix is used only for its carrier, cone and projections;
+`Prefix.Data` and `Prefix.Laws` remain on proper slices.
+
+## Actual initial ordinal prefix
+
+`SignedOrdinalInitial.H0` constructs the entire Boolean cube at every
+finite stage and at omega. Its literal restrictions are onto by extending
+each Boolean function with false outside the smaller coordinate domain.
+`SignedOrdinalInitial.predecessor` constructs the first predecessor at
+omega without CH or an assumed predecessor. Old rows and earlier arrival
+births have empty exact ordinal domains, so their obligations are eliminated
+by proved contradictions. This supplies the actual initial input to the
+transfinite construction; it does not establish the global CH recursion.
+
+## Executed result to the next predecessor
+
+`SignedOrdinalPredecessor.nextP` consumes the same executed successor
+`Result` and constructs a predecessor on its literal extended Prefix.
+It preserves the original Label-indexed U/V/nu families and onto proofs,
+reads permanent reservoirs from the same arrival archive, and proves the
+next A/B/C/E/F from the actual I/J and literal E/F certificates. No next
+predecessor or complete-history assumption supplies the construction.
+The global recursion must still retain the original whole Q/R packages:
+nextP stores only current I/J and its weaker predecessor F interface,
+not all historical DI/DJ, the bounded regular F reference, or Q.B.
+
+A bounded arXiv check on 26 October 2026 found the primary paper still at
+v2. The newest title/abstract query for "Talagrand compacta" or "2DCP"
+returned this paper and the earlier mathematical paper 2606.27568v1,
+alongside three unrelated materials-science matches. No later CH answer
+was identified within that search; this is not a proof of global novelty.
+
+
+## Literal proper-limit predecessor
+
+`SignedOrdinalLimit.construct` takes an actual strict `Prefix l`, with
+`omega < l < omega-one` and `IsSuccLimit l`, an archive of the original
+whole born U/V/nu families and their onto proofs, the permanent birth
+archive, historical I/J, the genuine earlier omega-stage base invariant,
+and exactly `H.Laws A.data`. It constructs the literal `Prefix (succ l)`
+and its actual `SignedOrdinalSuccessor.Predecessor`. Every old carrier is
+unchanged, the new top is `H.limitCarrier`, and all maps are literal
+coordinate restrictions with proved onto fields.
+
+The entire dependent U/V/nu pack is cast once along the old-carrier
+equality, preserving every original Label and its onto proof. Permanent
+N reads the same arrival entry at `succ(max(row,label))`; the limit
+introduces no new birth. `Result.extension` retains the very same proper-
+limit Extension chosen by the construction. Its DI/DJ and regular
+norm-at-most-one F remain available, with exact predecessor I/J readbacks.
+The weaker predecessor F accepts arbitrary original signed-measure
+sequences: proper compact metrizability supplies regularity internally.
+
+This is the local proper-limit step for the ordinal recursion, not the
+global well-founded history or a solution of Problem 8.2. Its authored
+public additions are data structures and construction definitions; the
+transport proofs are private and consumed. The inherited information
+audit remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/21750.
+
+## Proper-stage continuous clopen obstruction
+
+`ContinuousFiniteImageTail.proper_F_clopen_dichotomy` uses the original
+`SignedProperLimit.Prefix.Data` and `Laws`. At a proper stage c, every whole
+Dirac lift of the original birth sequence has only finitely many visits or
+only finitely many misses of each clopen along its original J(r,d,c). The
+reference is chosen after the entire selected lift, exactly as in F. No split
+event, final-stage convergence or final common J is assumed.
+
+Its consumer `no_continuous_pool_separation` extends a continuous clopen set
+preimage from a closed domain to an ambient clopen. For pools in the original
+disjoint reservoirs whose union is the stored earlier J, DJ leaves only a
+finite error at c. Removing that error from each original C-pool leaves two
+infinite opposite indicator pools, contradicting the dichotomy. This is a
+repository-derived local step in the finite-image argument; it does not
+construct a raw history or assert that a delayed event occurs. The final
+application still needs the constructed arrival/birth readback and the same
+executed event, followed by reflection of the ambient preimage to one later
+proper stage. No final FI/AH, full CH Talagrand or official solution is claimed.
+
+## Actual coherent history from CH
+
+`SignedOrdinalHistory.run` now constructs one coherent family of actual
+countable-stage states from `continuum = aleph-one` alone. A strict-past
+well-founded fixpoint proves totality and pairwise coherence, then recovers
+the canonical present values. The run unfolds to its own actual advancement:
+the initial predecessor, the same selected successor Q/R, or the literal
+proper-limit extension of its own strict archive. No complete-history or
+step-supplier hypothesis provides the run.
+
+Whole original U/B/V/nu birth families, their onto proofs and every original
+Label are preserved by exact transports. Permanent reservoirs are read from
+the same outgoing event at max(row,label). Proper F retains regular signed
+limits of total variation at most one for arbitrary original norm-one lifts.
+Cofinal ordinary, delayed and launch treatments refer to the same selected
+Q/R and the original birth clopen codec; local delayed eligibility is proved
+stable after construction without consulting a future final space.
+
+This closes the coherent-history construction step, not Problem 8.2. The
+literal final omega-one Prefix, post-run Data/Laws, concrete RawHistory and
+joint signed-ball/Grothendieck/anti-homeomorphism endpoints remain separate
+obligations. FullCHLeanSolved and officialSolved remain zero. The four-slot
+information audit is unfinished under issue 21750; the compiled Reg modules
+currently reconstruct the exact source statements and do not claim
+`declared_validated` registration.
+
+
+## Literal final space and every proper slice
+
+`SignedOrdinalRealization.finalPrefix` constructs the literal omega-one
+Prefix from the same canonical coherent `SignedOrdinalHistory.run`, without
+an assumed completed history. Its final space is the actual compatible-thread
+subset of the Boolean cube. The initial omega cube remains an onto image.
+Every proper cutoff, including zero, finite cutoffs, omega and successor last
+rows, has concrete `properData` and the original `properLaws`. No Data, metric
+or countable-stage F is asserted at the final omega-one cutoff.
+
+Whole U/B/V/nu families and all original Label-by-Nat measures are read from
+the same actual birth through equality of literal carriers. Successor
+carriers, projections, permanent reservoirs, historical J and prepared
+measures read the identical selected Q/R. `SignedOrdinalRawHistory.rawHistory`
+is the concrete raw history of this run; no raw-history supplier remains in
+that construction.
+
+These results complete the final-space and proper-slice construction layer.
+Ordinary and delayed treatment cofinality, and support-launch cofinality, are
+proved on the actual run. `SignedOrdinalActualReindex` supplies one eta for
+the actual whole-birth measure and every support launch, including self-row
+events and rejected reservations. Its new labels decode to original measure
+labels no larger than themselves. `SignedOrdinalReindexedLaws` therefore
+retains all original A-F laws on every proper cutoff, including every-choice
+signed F and the regular reference measure of norm at most one. Every new
+label reads the same actual whole-birth measure at every natural index.
+
+`SignedOrdinalActualG` transports the unchanged selected Result to the literal
+successor carrier. A single clopen and strictly increasing column sequence,
+fixed before the signed lifts, give both the infinite evaluations at least
+one sixth and the infinite exact zero evaluations for every complete signed
+norm-one lift sequence. No positivity restriction is added. The private
+`actual_scheme` composition in `TalagrandTopologicalConsequences` combines
+these statements on the same finalPrefix, retaining the initial cube and
+literal onto restrictions. Its targeted Lean build has passed. The subsequent public total theorem below
+consumes this composition together with the geometric and analytic endpoints.
+
+The information audit remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/21750. The delivered
+Reg modules check exact source reconstruction, including the public transport
+and proper-slice statements; this does not constitute a declared_validated
+four-slot registration.
+
+## Combined CH theorem
+
+`TalagrandTopologicalConsequences.actual_CH_Talagrand_scheme_and_endpoints`
+has passed a targeted Lean 4.35 build. Its only input is continuum = aleph-one.
+Every conclusion concerns exactly `(SignedOrdinalRealization.finalPrefix
+hCH).LimitSpace`, with its actual inherited topology. The proof consumes the
+complete original scheme, closed-cover Boolean insertion at successors,
+proper-limit and final-thread equations, and the G coordinate-cylinder
+identity. Every proper stage is compact Hausdorff, zero-dimensional and
+metrizable. No diamond, completed-history, capture, Hball or no-sequence
+hypothesis remains.
+
+The same space has finite continuous disjoint images of closed domains;
+therefore every two disjoint homeomorphic closed subspaces are finite,
+stronger than Theorem A's nonmetrizable closed-copy prohibition. It has no
+nonempty compact binary-copy tower, with no nesting or infinitude restriction.
+The actual signed endpoint theorem gives full regular signed oscillation,
+excludes all continuous StoneCech injections into the entire real signed dual
+unit ball, and proves convergence under arbitrary continuous bidual tests for
+every weak-star convergent dual sequence, without an input norm bound.
+Every convergent point sequence is eventually its actual limit. Evaluation
+and the omega-cube quotient yield point-space no-beta, infinitude, failure of
+first countability and nonmetrizability.
+
+This is the combined formal target of the original Problem 8.2, preregistered
+in https://github.com/the-omega-institute/trureturing/issues/22300 before its
+first combined compilation. The Problems dossier
+`kania-kakol-2026-problem-8-2-ch-talagrand` records the exact statement bridge
+and bounded literature search. The scoped report and canonical Scribe emission have passed: 66 modules and
+2,138 declarations, with only propext, Classical.choice and Quot.sound.
+Three independent fixed-source reviews approved; PR 22319 tracks the separate
+required CI and merge evidence. The unavailable oracle seat used its documented
+Codex fallback, without a model-family diversity claim.
+Official acceptance and worldwide uniqueness are not claimed; officialSolved
+remains zero. Problem 8.1 and the full Cp metrizable quotient problem remain
+outside this theorem. The information registration remains unfinished under
+issue 21750; exact-source Reg reconstruction is not declared_validated.

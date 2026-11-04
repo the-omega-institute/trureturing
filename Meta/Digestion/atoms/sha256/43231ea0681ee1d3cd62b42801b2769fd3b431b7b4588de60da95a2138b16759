@@ -1,0 +1,158 @@
+**Theorem 7.3 (All positive weights, exact maximum, rigidity and spectrum).**
+For every integer triple $2\le a\le b\le c<a+b$,
+
+$$
+0<\eta\le\frac14,\qquad
+\eta=\frac14\ \Longleftrightarrow\ a=b=c,
+\qquad
+M_{a,b,c}=C_{a,b,c}
+=n\left(n-3+\frac3{2+\eta}\right).
+\tag{7.9}
+$$
+For every one of the $ab+ac+bc$ independently positive finite original
+edge assignments,
+
+$$
+F(g)\le C_{a,b,c},\qquad
+F(g)=C_{a,b,c} \Longleftrightarrow\
+g=\tau h^*\text{ for some }\tau>0.
+\tag{7.10}
+$$
+This is a unique ray in the labelled coordinate space. On that ray the
+actual Fiedler eigenvalue is $\lambda_2(g)=\tau$, the resistance is
+$R(g)=C_{a,b,c}/\tau$, and the full original $n$-vertex spectrum is
+
+$$
+0\ \text{once},\qquad
+\tau\ \text{with multiplicity }n-3,\qquad
+\frac{\tau(3-\sqrt{1-4\eta})}{2},\qquad
+\frac{\tau(3+\sqrt{1-4\eta})}{2}.
+\tag{7.11}
+$$
+Each of the last two entries has multiplicity one, with multiplicities
+added when they coincide. On the auxiliary domain
+$\mathcal C_{a,b,c}$ the bound is $R(h)\le C_{a,b,c}$, with equality
+exactly at $h=h^*$. Thus nonnegative competitors do not create further
+normalized equality points.
+
+*Proof.* Write $x=a+b-c$, $y=a+c-b$, $z=b+c-a$. These are positive,
+$a=(x+y)/2$, $b=(x+z)/2$, $c=(y+z)/2$, and
+
+$$
+\eta=\frac{2xyz}{(x+y)(x+z)(y+z)}\le\frac14.
+$$
+The three arithmetic-geometric mean inequalities in the denominator
+are simultaneous equalities exactly when $x=y=z$, equivalently
+$a=b=c$. This proves the first assertions in (7.9).
+
+Take any $h\in\mathcal C_{a,b,c}$ and the matrices in Lemma 7.2.
+The nonzero-vertex spectral excesses
+$q_k=\lambda_k(h)-1$ for $2\le k\le n$ are nonnegative; together with
+one zero they are all the eigenvalues of $H$. Put
+
+$$
+\Delta=\sum_{k=2}^n\frac{q_k}{1+q_k},\qquad
+\delta_* =\frac{1+2\eta}{2+\eta}.
+$$
+Then $S=\sum q_k\ge1$ and $R(h)/n=n-1-\Delta$.
+The cited finite-list identity gives
+
+$$
+\Delta\ge\frac{S+2E(H)}{1+S+E(H)}.
+\tag{7.12}
+$$
+Indeed, if $e_j$ are the elementary symmetric sums of the $q_k$,
+$e_0=1$, its exact ratio is
+$\Delta=(\sum_{j\ge1}j e_j)/(\sum_{j\ge0}e_j)$.
+The ratio retaining only $e_0,e_1,e_2$ is strictly less than $2$, since
+$2(1+S+E)-(S+2E)=2+S>0$; each omitted term has coefficient $j\ge3$.
+Thus (7.12) applies with no rank premise.
+
+If $1<S\le2$, set $s=S-1\in(0,1]$ and use Lemma 7.2. The numerator
+in the difference between the right side of (7.12) and $\delta_*$ is
+
+$$
+\begin{aligned}
+(1-\eta)(S-1)+3(E(H)-\eta)
+&>\left(\frac14-\eta\right)s\ge0,
+\end{aligned}
+\tag{7.13}
+$$
+after multiplication by the positive denominator
+$(1+S+E(H))(2+\eta)$. Hence $\Delta>\delta_*$ in this case.
+If $S>2$, the trace comparison (3.5) gives
+
+$$
+\Delta\ge\frac S{1+S}>\frac23\ge\delta_*;
+$$
+the last inequality is equivalent to $\eta\le1/4$.
+If $S=1$, Lemma 7.2 gives $E(H)\ge\eta$, and the right side of
+(7.12) is increasing in $E(H)$, so $\Delta\ge\delta_*$.
+Consequently every $h\in\mathcal C$ satisfies
+
+$$
+R(h)\le n(n-1-\delta_*)
+=n\left(n-3+\frac3{2+\eta}\right)=C_{a,b,c},
+\tag{7.14}
+$$
+and equality forces $S=1$.
+
+We next determine the actual original edge coordinates when $S=1$.
+Lemma 2.1 says $H$ annihilates each $U_I$ in (2.3), so
+$L(h)(e_x-e_y)=e_x-e_y$ for distinct vertices of the same part.
+At a vertex $r$ outside that part this equality reads
+$-h_{\{r,x\}}+h_{\{r,y\}}=0$. At $x,y$ it gives
+$d_x(h)=d_y(h)=1$, because $x,y$ are nonadjacent.
+Every part has at least two vertices. Applying the outside-coordinate
+identity to each part shows that each cross-part block is constant
+in both endpoint labels, and every vertex degree is $1$.
+Thus, if those three block values are $u,v,w$ on $AB,AC,BC$,
+
+$$
+bu+cv=1,\qquad au+cw=1,\qquad av+bw=1.
+$$
+Equivalently, the three block totals $ab u,ac v,bc w$ have pair sums
+$a,b,c$. Their unique solution is exactly (7.1). Hence $h=h^*$.
+Block constancy has followed from unrestricted equality, including
+when one or more parts have size two.
+
+It remains to show that this positive assignment has the stated scale
+and attains the bound. All three values in (7.1) are finite and positive,
+and its vertex degrees are all $1$. For this explicit assignment,
+$U_A\oplus U_B\oplus U_C$ is invariant with eigenvalue $1$ and
+dimension $n-3$: the cross-part sums of each difference vector vanish.
+On its orthogonal complement the orthonormal basis
+$f_A,f_B,f_C$ gives the restriction of the same original Laplacian as
+
+$$
+T=\begin{pmatrix}
+1&-\sqrt{ab}\,h^*_{AB}&-\sqrt{ac}\,h^*_{AC}\\
+-\sqrt{ab}\,h^*_{AB}&1&-\sqrt{bc}\,h^*_{BC}\\
+-\sqrt{ac}\,h^*_{AC}&-\sqrt{bc}\,h^*_{BC}&1
+\end{pmatrix},\qquad
+\xi=(\sqrt a,\sqrt b,\sqrt c)^{\mathsf T},\qquad T\xi=0.
+\tag{7.15}
+$$
+Let $K_*=T-I_3+\xi\xi^{\mathsf T}/n$. It is symmetric, annihilates
+$\xi$, has trace $1$, and its diagonal entries are $a/n,b/n,c/n$.
+The purely algebraic part of (7.5)–(7.7), with all $z_I=0$, gives
+$E(K_*)=\eta$. Thus its other two eigenvalues are
+
+$$
+q_\pm=\frac{1\pm\sqrt{1-4\eta}}2>0.
+$$
+On $\xi^\perp$, $T=I_3+K_*$. Its two nonzero eigenvalues are
+$1+q_-$ and $1+q_+$, and both exceed $1$. This proves (7.11) at
+$\tau=1$, with $\lambda_2(h^*)=1$ on the original $n$ vertices.
+The two remaining eigenvalues have sum $3$ and product $2+\eta$, so
+(1.5) gives
+
+$$
+R(h^*)=n\left(n-3+\frac3{2+\eta}\right)=C_{a,b,c}.
+$$
+This proves attainment and the unique normalized equality on
+$\mathcal C$. For arbitrary positive $g$, the normalization
+$h=g/\lambda_2(g)$ belongs to $\mathcal C$ and has $R(h)=F(g)$.
+Equation (7.14), the just-proved equality necessity and scaling (1.6)
+give (7.9)–(7.11) with $\tau=\lambda_2(g)$. ∎
+

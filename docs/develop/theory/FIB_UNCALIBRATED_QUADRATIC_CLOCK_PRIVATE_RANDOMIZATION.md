@@ -4147,3 +4147,571 @@ Neither source is used as a minimax or boundary-layer theorem
 for the present experiment. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 14. An affine continuation with zero second-order risk coefficient
+
+**Definition 14.1 (affine continuation).** Retain the complete source,
+chronology, target and risk of Definitions 1.1--1.2, with $m>0$ and
+$E=1/10$. Put
+
+$$
+\begin{gathered}
+r=\frac{11}{24},\qquad k=\frac{13}{24},\qquad
+p_0=\frac1{24},\qquad L=\frac{11}{60},\\
+a_0=\frac{389}{1080},\qquad \beta=\frac{25}{648},\qquad
+P_c(t)=\min\{k,\max\{p_0,a_0-t/3-\beta c\}\}
+\quad(t\ge1/2),\\
+P(t)=P_0(t),\qquad h_0=\frac{43}{45},\qquad x_0=\frac2{45}.
+\end{gathered}
+\tag{14.1}
+$$
+
+For each $c>0$, use the independent uniform seed $u\in[0,1]$.
+After the first report choose index $2$ when $u<r$ and index $1$
+otherwise; after index $2$ choose $3$. At every real $01$ history
+$(r_0,r_1)$ put $\bar h=\max\{1/2,(r_0-r_1)/(2m)\}$ and
+choose $2$ when $r\le u<r+P_c(\bar h)$, and $3$ otherwise.
+Use exactly the terminal ratios, positive-gain test, fallback $z$,
+and projection onto $K$ in (11.3) and Definition 11.1. Denote this
+strategy by $\Gamma^{\mathrm{aff}}$.
+
+For the analysis use exactly the coordinates $(x,\alpha,e,h,v,d_j,b_j)$
+in (13.1), with the rows $w_j(x)$ in (11.4), and the projection
+$\Pi$ in (13.3). For $0<c\le1/200$, $h\ge9/10$ and
+$h+cv\ge359/400>1/2$. The actual path probabilities and errors
+before projection are therefore
+
+$$
+\begin{gathered}
+\lambda_c=(P_c(h+cv),\ k-P_c(h+cv),\ r),\qquad
+\delta_j=\frac{cb_j}{12(\alpha+cd_j)},\\
+\ell_c=\sum_j\lambda_{c,j}|\Pi(x+\delta_j)-x|,\qquad
+\widetilde\ell_c=\sum_j\lambda_{c,j}|\delta_j|,\\
+\Phi=\frac{P(h)|b_{012}|+(k-P(h))|b_{013}|+r|b_{023}|}
+ {12\alpha}.
+\end{gathered}
+\tag{14.2}
+$$
+
+The errors here are the original four coordinates
+$\eta_i=mc e_i/2$. The identity for $\delta_j$ is (11.17) with
+$A=m\alpha$ and these errors, and so does not depend on the
+continuation probability. Every $(x,\alpha,e)$ in
+$[-1/10,1/10]\times[1,\infty)\times[-1,1]^4$ is realized by
+$\tau=z+x$, $A=m\alpha$, $B=0$ and this error vector.
+The loss is independent of arbitrary finite $B$.
+
+**Lemma 14.2 (global support and equality exhaustion).** On the entire
+coordinate domain in Definition 14.1, $\Phi\le L$. Equality holds
+exactly at $\alpha=1$ and the following faces, or their simultaneous
+error sign reversals, where $-1\le u\le1$:
+
+$$
+\begin{array}{c|c|c}
+ &x&e\\ \hline
+\mathsf L_1&-1/10&(1,1,u,-1)\\
+\mathsf L_2&-1/10&(1,u,1,-1)\\
+\mathsf R&1/10&(1,u,-1,-1).
+\end{array}
+\tag{14.3}
+$$
+
+**Proof.** Set $p=P(h)$ and $q=k-p$. Since $h\ge9/10$,
+the upper truncation is inactive, $p\ge p_0$ and $q\le1/2$.
+The convex cube support calculation (11.6) applies with exactly
+these $p,q,r$, the same $x$ and the same four errors: each row
+sums to zero, and the seven nonzero vertex values of
+$\sum_j(P(h),q,r)_j|b_j|$, divided by $2$, are its $M_i$.
+Thus it suffices to bound $M_i/\alpha$ by $11/10$.
+
+When $x\le0$, $h\ge1>h_0$, hence $p=p_0$ and $q=1/2$.
+The seven functions are precisely the left-half functions in the
+proof of Lemma 11.2 at $E=1/10$. They are convex in $x$;
+their maxima at $x=-1/10$ and $x=0$ are respectively $11/10$
+and $13/12$. Convex interpolation is strictly below $11/10$
+for $x>-1/10$. Division by $\alpha\ge1$ then shows that
+equality on this half requires $x=-1/10$, $\alpha=1$.
+
+For $x\ge0$, the subtractions (11.8) use only
+$p\ge p_0$, $q\le1/2$, $p+q+r=1$ and $0\le x\le1/2$;
+these conditions hold here. It remains to bound
+
+$$
+C=M_3=1-x/12+2p(1-x),\qquad
+J=M_7=1-p+x(2-r+p),\qquad M_6=3x.
+\tag{14.4}
+$$
+
+If $x\le x_0$, then $h\ge1-x\ge h_0$, so $p=p_0$ and
+
+$$
+C=13/12-x/6\le13/12<11/10,\qquad
+J=23/24+19x/12\le1111/1080<11/10.
+\tag{14.5}
+$$
+
+For $x>x_0$ on the affine branch $h\le h_0$, put
+$w=1/\alpha$. Substitution of $p=a_0-\alpha(1-x)/3$ gives
+
+$$
+\begin{aligned}
+C/\alpha&=\left(\frac{929}{540}-\frac{217x}{270}\right)w
+ -\frac23(1-x)^2,\\
+J/\alpha&=\left(\frac{691}{1080}+\frac{1027x}{540}\right)w
+ +\frac13(1-x)^2.
+\end{aligned}
+\tag{14.6}
+$$
+
+Both coefficients of $w$ are positive for $0\le x\le1/10$.
+Each expression is therefore strictly smaller than its value at
+$\alpha=1$ when $\alpha>1$. At $\alpha=1$, direct subtraction
+gives
+
+$$
+\begin{aligned}
+11/10-C&=\frac{(1-10x)(25-36x)}{540},\\
+11/10-J&=\frac{(1-10x)(36x+137)}{1080}.
+\end{aligned}
+\tag{14.7}
+$$
+
+Both are nonnegative and vanish only at $x=1/10$.
+If instead $x>x_0$ and $h>h_0$, decrease the gain to
+$\alpha_0=h_0/(1-x)>1$. Along this decrease $p=p_0$
+and each nonnegative $M_i/\alpha$ increases; at the boundary
+(14.6) gives a strict bound. Finally $3x/\alpha\le3/10<11/10$.
+This proves the global bound and confines all equality to the two
+endpoints with $\alpha=1$.
+
+At the left endpoint the probability triple is
+$(p_0,1/2,r)$; at the right it is
+$(13/216,13/27,r)$, since $P(9/10)=13/216$.
+These are exactly the endpoint triples in (13.6)--(13.7).
+The signed-support identity (13.6) concerns only the endpoint
+rows and these triples, so its four signed linear forms and
+coefficient vectors (13.7) apply without a change of parameters.
+Their only supports equal to $12L$ have one free error coordinate
+and force all other coordinates to their displayed signs.
+Consequently their equality sets are exactly (14.3) and their
+reversals. Every other signed support is strictly smaller.
+This proves equality exhaustion on the whole cube, rather than
+only at its vertices. $\square$
+
+**Lemma 14.3 (uniform expansion at all equality faces).** Near the
+left faces put $\rho=0$, $P_h=0$; near the right face put
+$\rho=-\beta$, $P_h=-1/3$. Define
+
+$$
+\Psi=\frac1{12}\left\{
+\frac{P_hv+\rho}{\alpha}(|b_{012}|-|b_{013}|)
+-\frac{P(h)|b_{012}|d_{012}+(k-P(h))|b_{013}|d_{013}
+ +r|b_{023}|d_{023}}{\alpha^2}\right\}.
+\tag{14.8}
+$$
+
+Uniformly on sufficiently small closed neighborhoods of the faces,
+including their reversals and intersections,
+
+$$
+\widetilde\ell_c=c\Phi+c^2\Psi+O(c^3).
+\tag{14.9}
+$$
+
+For a limiting face point $e_*$, let $t=x+1/10$ on the left,
+$t=1/10-x$ on the right, and $g=\alpha-1$. Within the source
+domain, as $(t,g,e)\to(0,0,e_*)$,
+
+$$
+\Phi(x,\alpha,e)=\Phi(x_*,1,e)-D(u)t-Q(u)g+o(t+g),
+\tag{14.10}
+$$
+
+with strictly positive coefficients
+
+$$
+\begin{array}{c|c|c}
+ &D(u)&Q(u)\\ \hline
+\mathsf L_1,\mathsf L_2&(15u+19)/144&11/60\\
+\mathsf R&(917-489u)/6480&(81u+247)/1200.
+\end{array}
+\tag{14.11}
+$$
+
+Sign reversal preserves $D,Q$. The values of $\Psi$ on the
+positive faces and the reversed right face are
+
+$$
+\begin{array}{c|c}
+ &\Psi(x_*,1,e_*)\\ \hline
+\mathsf L_1&11(3u^2+8u+13)/5760\\
+\mathsf L_2&-(3u^2-30u-17)/960\\
+\mathsf R&(u-1)(282u+391)/12960\\
+-\mathsf R&-(141u^2+167u-158)/6480.
+\end{array}
+\tag{14.12}
+$$
+
+On a reversed left face $\Psi$ is the negative of its positive-face
+value.
+
+**Proof.** The limiting prefixes are $11/10$ on the left and
+$9/10$ on the right. They are separated from $h_0=43/45$,
+the lower history clamp, and the upper probability truncation.
+For all small $c$, the same branches remain active on fixed closed
+neighborhoods of the faces. There
+$P_c(h+cv)=P(h)+c(P_hv+\rho)$ exactly. Expanding
+$(\alpha+cd_j)^{-1}=\alpha^{-1}-cd_j\alpha^{-2}+O(c^2)$
+uniformly gives (14.8)--(14.9). The $b_j$ remain bounded, and
+the expansion does not differentiate $|b_j|$; it is uniform even
+where $b_j=0$.
+
+For the face derivatives and substitutions, the three signed
+values $b_j/12$ are exactly (13.11), since the $x,e$ coordinates
+and terminal ratios are unchanged. The left first-order
+probabilities and their local derivatives also coincide with those
+in Theorem 13.3, so its left values of $D,Q,\Psi$ apply with
+$E=1/10$, $\alpha=1$, $p=p_0$, $q=1/2$, and $r=11/24$.
+On the right set
+
+$$
+\begin{gathered}
+(a_{012},a_{013},a_{023})
+ =\left(-\frac{4u+5}{20},\frac{u-7}{40},-\frac{11}{60}\right),\\
+(d_{012},d_{013},d_{023})
+ =\left(-\frac u2,\frac{1-3u}{12},\frac16\right),\qquad
+v=\frac{1-u}{4},\qquad
+f=|a_{012}|-|a_{013}|=\frac{9u+3}{40}.
+\end{gathered}
+\tag{14.13}
+$$
+
+All $a_j$ here are strictly negative on $[-1,1]$.
+Differentiating the explicit rows in (11.4), with
+$p=13/216$, $q=13/27$, gives
+
+$$
+\begin{aligned}
+D&=\frac f3-p\frac u2+q\frac{1-3u}{12}+\frac r6
+ =\frac{917-489u}{6480},\\
+Q&=L+\frac3{10}f=\frac{81u+247}{1200},\\
+\Psi_{\mathsf R}&=(-v/3-\beta)f
+ +\sum_j(p,q,r)_j a_jd_j
+ =\frac{(u-1)(282u+391)}{12960}.
+\end{aligned}
+\tag{14.14}
+$$
+
+Upon reversing all errors, $v,d_j$ reverse while $|a_j|$ do
+not. The probability correction $-\beta$ is unchanged.
+Thus the reversed value is
+$(v/3-\beta)f-\sum_j(p,q,r)_j a_jd_j$, giving the last
+row of (14.12). The left reversal rule follows because its
+correction $\rho$ is zero.
+
+The smallest possible values of $D,Q$ are positive: on the left
+$D\ge1/36$, $Q=L$; on the right
+$D\ge107/1620$, $Q\ge83/600$.
+For nonzero $b_j$ the derivatives in (14.10) are continuous as
+the errors approach $e_*$. The only zero face value is
+$b_{012}=0$ at the left intersection $e_*=(1,1,1,-1)$,
+or its reversal. At this vector $b_{012}(x,e_*)=0$ for every
+$x$. The affine dependence on $x$ consequently gives
+
+$$
+\bigl||b_{012}(x,e)|-|b_{012}(x_*,e)|\bigr|
+ \le |x-x_*|\,|\partial_x b_{012}(x,e)|=o(|x-x_*|)
+\tag{14.15}
+$$
+
+as $e\to e_*$. Its gain derivative also tends to zero.
+The other terms have continuous derivatives. Integration of these
+local derivatives proves (14.10) with remainder $o(t+g)$,
+without a rate assumption on $e-e_*$, including intersections
+and all sign faces. $\square$
+
+**Theorem 14.4 (global risk of the affine continuation).** For every
+$m>0$, Definition 14.1 is a total lawful strategy for the original
+three chronological readings. At $E=1/10$,
+
+$$
+\boxed{\mathcal R(\Gamma^{\mathrm{aff}})
+ =\frac{11c}{60}+o(c^2)\qquad(c\downarrow0).}
+\tag{14.16}
+$$
+
+Moreover, for every $0<c\le1/200$,
+
+$$
+R_{\mathrm{private}}(c,1/10)
+ \le\mathcal R(\Gamma^{\mathrm{aff}})
+ \le B_{\mathrm{new}}(c):=
+ \frac{c(132+121c)}{720(1-c)}.
+\tag{14.17}
+$$
+
+**Proof.** The probability $P_c$ always lies in $[p_0,k]$.
+The history rules are total on all real legal histories. The
+terminal rule uses a positive denominator or the finite fallback,
+and then projection onto the finite prior. Thus it is defined even
+on unreachable histories or when $c$ is outside the band of the
+bounds. Every seed acquires exactly $012$, $013$ or $023$ in
+chronological order. For each fixed complete world, the path events
+are seed intervals and the terminal answer is one of three fixed
+real numbers. This proves per-world measurability, including
+boundary seeds; no world-space measure is required.
+
+To prove the finite bound, clamping is nonexpansive and the affine
+part has slope $-1/3$, so on each complete world
+
+$$
+|P_c(h+cv)-P(h)|\le c|v|/3+\beta c\le\frac{133c}{648}.
+\tag{14.18}
+$$
+
+The exact row difference (11.18) uses our same $x,e$, and gives
+$\bigl||b_{012}|-|b_{013}|\bigr|\le8(1-x)$.
+Lemma 14.2 therefore yields
+
+$$
+\sum_j\lambda_{c,j}|b_j|
+ \le\frac{11\alpha}{5}+8(1-x)\frac{133c}{648}.
+\tag{14.19}
+$$
+
+As in (13.1), $|d_{012}|\le1$ and
+$|d_{013}|,|d_{023}|\le1/2$, so
+$\alpha+cd_j\ge\alpha(1-c)>0$. Projection cannot increase
+error. Using $1-x\le11/10$ and $\alpha\ge1$ in (14.2) gives
+
+$$
+\ell_c\le\frac{Lc}{1-c}
+ +\frac{1463c^2}{9720(1-c)}
+ \le\frac{Lc}{1-c}+\frac{121c^2}{720(1-c)}
+ =B_{\mathrm{new}}(c),
+\tag{14.20}
+$$
+
+where $121/720-1463/9720=341/19440>0$.
+This estimate is uniform over all finite gains and offsets and the
+entire original error cube, proving (14.17).
+
+For the matching second-order lower limit for this consumer, fix
+before the seed the legal complete world
+
+$$
+\tau=z+1/10,\qquad A=m,\qquad B=0,\qquad
+\eta=\frac{mc}{2}(1,1,-1,-1).
+\tag{14.21}
+$$
+
+Its prefix has $v=0$ and $h=9/10$, and its path probabilities
+are $(13/216-\beta c,13/27+\beta c,r)$ throughout the band.
+Its three interpolation errors are exactly those in (13.14):
+all point inward and their largest magnitude is
+$9c/[20(1-c/2)]\le1/5$ for $c\le4/11$.
+Thus projection is inactive. If $W(c)$ denotes the exact rational
+loss (13.14), its new expected loss is
+
+$$
+\begin{aligned}
+W_{\mathrm{aff}}(c)
+ &=W(c)-\beta c\left\{
+ \frac{9c}{20(1-c/2)}-\frac{3c}{20(1-c/6)}\right\}\\
+ &=Lc+\left(\frac5{432}-\frac{3\beta}{10}\right)c^2+O(c^3)
+ =Lc+O(c^3).
+\end{aligned}
+\tag{14.22}
+$$
+
+The parameter correspondence to (13.13)--(13.14) is exact:
+$x=1/10$, $\alpha=1$, $e=(1,1,-1,-1)$ and the same
+terminal estimates; only the $012/013$ probabilities transfer
+mass $\beta c$. Hence this is a fixed-before-seed complete-world
+witness for this consumer, and gives its lower limiting quotient
+zero after subtracting $Lc$ and dividing by $c^2$.
+
+For the upper limit, first retain the full unbounded gain domain.
+The rows (11.4) have absolute coefficient sums at most $36/5$.
+For all $\alpha\ge4$ and $0<c\le1/200$, any probability
+triple in (14.2) consequently satisfies
+
+$$
+\ell_c\le\widetilde\ell_c\le\frac{3c}{5(\alpha-c)}
+ \le\frac{3c}{5(4-c)}<Lc.
+\tag{14.23}
+$$
+
+After division by $c$, this tail has a uniform strict gap from
+$L$, whereas $W_{\mathrm{aff}}(c)/c\to L$. For all sufficiently
+small $c$ the supremum is attained on the compact set
+$|x|\le1/10$, $1\le\alpha\le4$, $e\in[-1,1]^4$,
+since the projected loss is continuous there. This removes no
+source worlds from the definition of risk.
+
+On this compact set, the global Lipschitz bound (14.18) and the
+uniform reciprocal bounds give
+$\widetilde\ell_c=c\Phi+O(c^2)$ uniformly, including at the
+probability kink. For any sequence $c\downarrow0$, choose
+maximizers and pass to a convergent subsequence. By (14.22),
+$\ell_c/c$ has lower limit at least $L$, while
+$\ell_c\le\widetilde\ell_c$ and Lemma 14.2 give upper limit
+at most $L$. Its limit point therefore satisfies $\Phi=L$ and
+belongs to exactly the faces (14.3) or their reversals.
+
+Let $t,g$ be its inward distance and gain excess in Lemma 14.3.
+Since $\Phi(x_*,1,e)\le L$ for every $e$ and the two
+penalties in (14.10) are positive, a sufficiently small neighborhood
+has $\Phi\le L-\gamma(t+g)$ for some $\gamma>0$.
+Combining (14.9) with the lower witness
+$\ell_c\ge Lc-O(c^3)$ proves $t+g=O(c)$.
+Pass to a further subsequence with $t/c\to s\ge0$,
+$g/c\to a\ge0$. No rate for the errors' distance to the
+limiting face has been assumed or deduced.
+
+The projected and unprojected losses divided by $c$ both tend to
+$L$, so their difference divided by $c$ tends to zero. Every
+limiting path probability is positive. An outward path with limiting
+absolute error coefficient $M$ therefore requires $s\ge M$:
+otherwise its projection loss divided by $c$ tends to its positive
+path probability times $M-s$. The other endpoint remains a
+positive distance away and cannot clip these $O(c)$ errors.
+This argument uses the exact scalar projection in each one fixed
+world and supplies all the necessary bounds below.
+
+Dropping the nonpositive error-support deficit and gain penalty
+in (14.9)--(14.10) gives
+
+$$
+\limsup\frac{\ell_c-Lc}{c^2}
+ \le\Psi(x_*,1,e_*)-D(u)s-Q(u)a
+ \le\Psi(x_*,1,e_*)-D(u)s.
+\tag{14.24}
+$$
+
+The following table exhausts its upper bounds. Each displayed
+expression is nonpositive on its stated interval.
+
+| limiting face | interval | necessary $s\ge$ | upper expression in (14.24) |
+|---|---|---|---|
+| $\mathsf L_1$ | $[-1,1/3]$ | $11(1-u)/40$ | $11(u+1)(3u-1)/960$ |
+| $\mathsf L_1$ | $[1/3,1]$ | $(u+7)/40$ | $(3u-5)(3u-1)/2880$ |
+| $-\mathsf L_1$ | $[-1,1]$ | $0$ | $-11(3u^2+8u+13)/5760$ |
+| $\mathsf L_2$ | $[-1,1]$ | $1/5$ | $-(3u-5)^2/2880$ |
+| $-\mathsf L_2$ | $[-1,1]$ | $3(1-u)/10$ | $11(u+1)(3u-5)/960$ |
+| $\mathsf R$ | $[-1,1]$ | $0$ | $(u-1)(282u+391)/12960$ |
+| $-\mathsf R$ | $[-1,-1/3]$ | $(7-u)/40$ | $-(3u+1)(227u+11)/28800$ |
+| $-\mathsf R$ | $[-1/3,1]$ | $(4u+5)/20$ | $-(3u+1)(96u+475)/43200$ |
+
+Indeed, on $\mathsf L_1$ all nonzero path errors point outward
+at the left endpoint, and their maximum absolute coefficient is
+$11(1-u)/40$ for $u\le1/3$ and $(u+7)/40$ for $u\ge1/3$;
+all three coefficients meet at $11/60$ when $u=1/3$.
+On $\mathsf L_2$, path $023$ gives $1/5$; on its reversal,
+path $012$ gives $3(1-u)/10$. The reversed $\mathsf L_1$
+errors point inward. On $\mathsf R$ the errors point inward;
+on its reversal they point outward, and (14.13) has largest
+absolute coefficient $(7-u)/40$ for $u\le-1/3$ and
+$(4u+5)/20$ for $u\ge-1/3$. All three meet at $11/60$
+when $u=-1/3$. These facts give the third column directly.
+Substitution of (14.11)--(14.12) gives the fourth column.
+For its third row, $3u^2+8u+13\ge8$ on $[-1,1]$.
+In its sixth row $282u+391\ge109$; in the seventh both
+$3u+1$ and $227u+11$ are nonpositive; in the eighth both
+$3u+1$ and $96u+475$ are nonnegative. The signs of the
+other factorizations are immediate from their interval endpoints.
+
+Thus every limiting face, every sign reversal and their intersections
+have upper quotient at most zero. The compactness argument, the
+uniform expansion, the inward-rate estimate and the discarded
+nonpositive support deficit also cover arbitrary off-face sequences.
+The gain tail (14.23) covers escaping gains. Every sequence of
+maximizers therefore has limiting upper quotient at most zero.
+Together with (14.22), this proves (14.16) for the complete source.
+The simultaneous summands always evaluate one pre-seed world's
+four original errors; the strategy acquires only its actual triple.
+$\square$
+
+**Corollary 14.5 (comparisons and unrestricted residual envelope).**
+On $0<c\le1/200$, $B_{\mathrm{new}}$ is strictly below the
+Section 13 bound, with
+
+$$
+B_{\mathrm{prefix}}(c)-B_{\mathrm{new}}(c)
+ =\frac{c^2(211+605c)}{720(1-c)(9-5c)}>0.
+\tag{14.25}
+$$
+
+For all sufficiently small positive $c$, the actual risks satisfy
+$\mathcal R(\Gamma^{\mathrm{aff}})
+ <\mathcal R(\Gamma^{\mathrm{prefix}})$.
+All earlier applicable consumers remain available in the upper
+minimum, with (14.17) added on its stated band. The original
+arbitrary-seed lower bound remains $H/2$; specifically,
+
+$$
+\begin{gathered}
+\frac H2=\frac{11c}{20(3+c)}
+ \le R_{\mathrm{private}}(c,1/10)\le B_{\mathrm{new}}(c)
+ \qquad(0<c\le1/200),\\
+0\le\liminf_{c\downarrow0}
+ \frac{R_{\mathrm{private}}(c,1/10)-H/2}{c^2}
+ \le\limsup_{c\downarrow0}
+ \frac{R_{\mathrm{private}}(c,1/10)-H/2}{c^2}
+ \le\frac{11}{180}.
+\end{gathered}
+\tag{14.26}
+$$
+
+**Proof.** Subtracting (14.17) from (13.18) gives (14.25),
+whose denominators are positive on the entire stated band.
+Theorem 13.4 concerns exactly the unchanged old consumer, and
+(14.16) concerns the affine consumer; their difference is
+$5c^2/432+o(c^2)>0$ eventually. Proposition 11.4 and Theorem
+13.5 compare all earlier applicable published upper bounds on
+this band, so (14.25) also improves their minimum. Outside this
+band the earlier domains and conclusions remain unchanged.
+
+Theorem 3.3 applies to all strategies of Definition 1.2, including
+the present one; $H/2=11c/[20(3+c)]$ here because $c<3E$
+and $E=1/10$. Expanding it gives
+$H/2=Lc-11c^2/180+O(c^3)$. Use the sharper actual-consumer
+expansion (14.16), rather than the finite majorant, for the last
+inequality in (14.26). The witness (14.21) supports the exact
+coefficient of this specified consumer only. Neither equality in
+the last inequality, existence of an unrestricted second-order
+coefficient, nor a finite-noise unrestricted minimax value follows.
+The finite band includes its upper endpoint. At $c=0$ the
+terminal quadratic interpolation recovers the origin exactly for
+all finite gains and offsets. No uniformity in a varying $E$ is
+asserted.
+
+The intermediate methods are joint cube supports, reciprocal
+expansion, compactness and scalar projection. Their clock inputs
+are the original interpolation identities (11.4), (11.17) with
+$\eta=mc e/2$, $A=m\alpha$, $x=\tau+3/2$, and the
+endpoint signed supports (13.6)--(13.7). The new affine probability
+requires its own global support proof (14.4)--(14.7); the old
+probability's global maximizer assertion is not transferred.
+The endpoint-only results of Section 12 retain their restricted
+scope and are not used as unrestricted second-order lower bounds.
+
+The bounded-error regression correspondence in Casini--Garulli--Vicino,
+[*A linear programming approach to online set membership parameter estimation for linear regression models*, Section 4, equations (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf),
+uses known regressors and feasible strips. Its parameters correspond
+to $(i^2,i,1)$, $(A,2A\tau,A\tau^2+B)$ and noise bound
+$mc/2$ here; its coordinate orthotope bounds do not identify the
+nonlinear ratio $\tau=\theta_1/(2\theta_2)$ under the present
+chronological choices. Krieg--Novak--Ullrich,
+[*On the power of adaption and randomization*, Sections 1--2](https://arxiv.org/html/2406.07108v2),
+uses continuous linear targets on convex Banach-space input classes
+and product measurability of randomized loss. The augmented clock
+reports are linear, but the target remains the displayed nonlinear
+ratio and Definition 1.2 requires only per-world seed measurability.
+Those hypotheses therefore do not supply (14.16), a minimax
+interchange, or an unrestricted second-order lower certificate.
+The affine continuation and its global risk calculation are
+repo-derived mathematical deductions; no literature-priority or
+empirical-realization assertion is made. $\square$
+
+## 追加锚（本行以下为增补区）

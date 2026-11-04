@@ -1,0 +1,4 @@
+**Corollary 4.6 (The CDSO half of the universal-vertex assertion fails for every cyclomatic number).** For every $\ell\ge1$ there is an order $n$, namely every $n\ge3\ell+9$ and, for $\ell=1$, every $n\ge7$, such that no minimizer of the CDSO index in $\mathcal G(n,\ell)$ has a vertex adjacent to all other vertices. In particular the CDSO half of the assertion quoted in cited fact (b) is false for each fixed $\ell\ge1$. Stance: suspected-novel for $\ell\ge2$ and for $\ell=1$ with $n\ge8$ (see §6); the failure at $(n,\ell)=(7,1)$ was obtained earlier in this project (repo-derived), and the proof below covers it uniformly.
+
+**Proof.** Theorems 4.3 and 4.5. ∎
+

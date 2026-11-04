@@ -1,0 +1,99 @@
+**命题 35.5（修正的正物理主质量与剩余标量相位）。** 在定义 35.3 下，令
+
+$$
+H(x)=\sum_{\nu_i<1}d_{i,*}\chi(e^x)e^{-\nu_i x}\alpha_i
+       \quad\text{于 }L^2(\mathbb R,e^{2x}dx;L^2(J,da)).
+\tag{35.18}
+$$
+
+幂块为空时 $H=0$。置
+
+$$
+J_H=\frac12\int_{\mathbb R}e^{(2+is)x}
+                       \langle H(x),\psi\rangle_{L^2(da)}\,dx,
+\qquad \Lambda=is\overline\beta+J_H.
+\tag{35.19}
+$$
+
+$H$ 实，支撑于 $x\le\log b_c$，且各指数 $\nu_i<1$，所以这些积分绝对收敛。令 $u_E=U_E+h_E$。对每个充分小 $E$，$u_E\in D(\mathscr A)$，并有
+
+$$
+E\|u_E\|_2^2\longrightarrow
+ m_{\rm corr}=\frac14\int e^{2x}
+          \|W(x)+H(x)\|_{L^2(da)}^2\,dx>m_W/2,
+\tag{35.20}
+$$
+
+$$
+\langle R_E,f_0\rangle=\operatorname{Re}(b\Lambda e^{isT})+o(1).
+\tag{35.21}
+$$
+
+若 $\Lambda\ne0$，取任意 $\arg(b\Lambda)$，令
+
+$$
+T_*=(\pi/2-\arg(b\Lambda))/s,
+\qquad D_{\rm comp}=e^{-2T_*}.
+$$
+
+若 $\Lambda=0$，任取固定 $D_{\rm comp}>0$。两种情形下，$E_j=D_{\rm comp}e^{-j/L}$ 对每个充分大整数 $j$ 都给出非零原域向量 $u_{E_j}$，满足 (35.16) 以及
+
+$$
+\langle R_{E_j},f_0\rangle\longrightarrow0,
+\qquad
+\|\langle R_{E_j},\cdot\rangle|_Z\|_{Z^*}\longrightarrow0.
+\tag{35.22}
+$$
+
+$Z$ 上使用定义 33.1 的有限维范数。$D_{\rm comp}$ 仅为此有限相容构造的标量相位常数，未被识别为 (33.22) 所需的最终谱相位常数。
+
+证明。由 (33.13)、固定内截断以及 $W$ 左端质量可积，
+
+$$
+w_{U_E}(T+\cdot)\longrightarrow W
+                   \quad\text{于 }L^2(e^{2x}dx\,da).
+\tag{35.23}
+$$
+
+对 $\nu_i<1$，(35.3)、(35.1) 给出
+
+$$
+w_{\kappa_i^{-1}\chi_Tr_i}(T+\cdot)
+       \longrightarrow\chi(e^x)e^{-\nu_i x}\alpha_i
+                   \quad\text{于同一加权 }L^2\text{ 空间}.
+\tag{35.24}
+$$
+
+具体地，$\mu>\nu_i$ 且 $\mu<1$ 的高慢项带有额外因子 $e^{-(\mu-\nu_i)T}$；$\mu=1$ 的临界项至多多出 $\sqrt T$，仍由 $e^{-(1-\nu_i)T}$ 消去。物理 $L^2$ 余项的相应范数由 $Ce^{-(1-\nu_i)T}$ 控制而趋零，固定内区亦然。所处理高项是真实原向量中的项，未通过删除高项更换原算子。
+
+真零和临界归一化向量在此加权物理范数中有界，其系数由 (35.17) 满足 $d_i(E)\to0$，故总贡献趋零。由 (35.17)、(35.23)--(35.24)，
+
+$$
+w_{u_E}(T+\cdot)\longrightarrow W+H
+                           \quad\text{于 }L^2(e^{2x}dx\,da).
+$$
+
+(35.1) 给出 (35.20) 的极限。$H$ 在 $x>\log b_c$ 为零，故 (35.10) 给出 $m_{\rm corr}>m_W/2$，并证明 $u_E$ 对每个充分小 $E$ 非零；不需排除允许共振或假定任何块非空。
+
+$h_E$ 紧支撑，原 $f_0$ 的全测试零能方程给出 $q(h_E,f_0)=0$，故
+
+$$
+\langle R_E,f_0\rangle
+       =\langle C_E,f_0\rangle+E\langle h_E,f_0\rangle.
+\tag{35.25}
+$$
+
+在 $x\le\log b_c$ 上，(35.2) 的移位余项在 $e^{2x}$ 物理范数中趋零：外部余项的平方积分至多为 $Ce^{-2dT}$，固定内区至多为 $Ce^{-2T}$。该区域内的站波 $G_{be^{isT}}(x)$ 的同一范数一致有界。因此 (35.24) 和消失的真零、临界贡献可用于 (35.25) 的质量配对，得到
+
+$$
+\begin{aligned}
+E\langle h_E,f_0\rangle
+ &=\frac14\int e^{2x}\Big\langle H(x),
+       (be^{is(T+x)}+\overline b e^{-is(T+x)})\psi
+                         \Big\rangle_{L^2(da)}\,dx+o(1)\\
+ &=\operatorname{Re}(be^{isT}J_H)+o(1).
+\end{aligned}
+$$
+
+结合 (35.4) 以及 $-s\operatorname{Im}z=\operatorname{Re}(isz)$，恰得 (35.21)。若 $\Lambda\ne0$，$T_j=T_*+\pi j/s$ 使 $\operatorname{Re}(b\Lambda e^{isT_j})=0$。因 $s=2\pi L$，$e^{-2T_j}=D_{\rm comp}e^{-j/L}$；若 $\Lambda=0$，(35.21) 对任意趋零 $E$ 均为 $o(1)$。$K$ 配对已由 (35.16) 精确消去，$Z=K\oplus\mathbb C f_0$ 且有限维，故得 (35.22)。$\square$
+

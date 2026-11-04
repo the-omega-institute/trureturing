@@ -32,6 +32,12 @@ internal sealed class CovarianceSumBoundDocument : IScribeDocumentDefinition
                 Eqn(V(F.Id("A")), Seq(E(Sq(F.Id("A"))), Sp, Minus, Sp,
                     Sq(E(F.Id("A"))))), DescribeRole.Definition,
                 literature: "D5/L/Quantum/gibilisco2007covariance"),
+            RepoResult("expect-scalar", "expect_smul", "Expectation of a real scalar multiple",
+                "For every finite index type, moving a real scalar through the density-state expectation multiplies the expectation by that scalar.",
+                ExpectSmulFormula()),
+            RepoResult("expect-identity", "expect_one", "Expectation of the identity",
+                "Every density state has unit expectation on the identity observable, by its trace-one condition.",
+                ExpectOneFormula()),
             Result("symmetry", "covariance_symm", "Symmetry",
                 "Exchanging the two observables preserves symmetrized covariance.",
                 Eqn(C(F.Id("A"), F.Id("B")), C(F.Id("B"), F.Id("A"))),
@@ -84,6 +90,46 @@ internal sealed class CovarianceSumBoundDocument : IScribeDocumentDefinition
             H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create(literature)),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static DocumentBlock RepoResult(string id, string declaration, string title, string prose,
+        Formula formula, DescribeRole role = DescribeRole.Theorem) =>
+        Describe.Lean(DescribeId.Create("covsum-" + id), DeclarationHandle.Create(Module + declaration),
+            H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula ExpectSmulFormula()
+    {
+        var n = F.Id("n");
+        var rho = F.Id("rho");
+        var t = F.Id("t");
+        var A = F.Id("A");
+        var matrix = Call("Matrix", n, n, Complexes());
+        var body = Eqn(Call("expectation", rho, Seq(Grp(t), Sp, Cdot, Sp, A)),
+            Seq(t, Sp, Times, Sp, Call("expectation", rho, A)));
+        return Disp(Seq(
+            Forall, Sp, Parenthesized(Seq(n, Colon, Sp, F.Id("Type"), Star)), Sp,
+            OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", n), CloseBracket, Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(rho, Colon, Sp, Call("DensityState", n))), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(t, Colon, Sp, Reals())), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(A, Colon, Sp, matrix)), Comma, Sp, body));
+    }
+
+    private static Formula ExpectOneFormula()
+    {
+        var n = F.Id("n");
+        var rho = F.Id("rho");
+        return Disp(Seq(
+            Forall, Sp, Parenthesized(Seq(n, Colon, Sp, F.Id("Type"), Star)), Sp,
+            OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", n), CloseBracket, Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(rho, Colon, Sp, Call("DensityState", n))), Comma, Sp,
+            Eqn(Call("expectation", rho, D(1)), D(1))));
+    }
+
+    private static Formula Parenthesized(Formula formula) => Seq(Open, formula, Close);
+    private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula Complexes() => Seq(Mathbb, Grp(F.Id("C")));
 
     private static Formula E(Formula a) => Call("E", Rho, a);
     private static Formula V(Formula a) => Call("Var", Rho, a);

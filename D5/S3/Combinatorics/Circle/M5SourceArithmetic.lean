@@ -20,7 +20,7 @@ open SourceWidth
 open Fin.NatCast
 open scoped BigOperators
 
-private structure Arithmetic where
+structure PrefixArithmetic where
   N : ℤ
   Q : ℤ
   C : ℤ
@@ -39,7 +39,6 @@ private structure Arithmetic where
   u : ℤ
   F : ℤ
   y : ℤ
-  a0 : ℤ
   N_quarter : N = 4 * Q - 1
   C_quarter : C = 2 * Q - 1
   Q_positive : 0 < Q
@@ -79,15 +78,18 @@ private structure Arithmetic where
   branch : (F = H / 2 ∧ 4 ≤ H / 2) ∨ F ≤ H / 4
   y_source : y = N - F * u
   y_minimum : b ≤ y
-  a0_bounds : a ≤ a0 ∧ a0 ≤ z
   odd_z : z % 2 = 1
   odd_n : n % 2 = 1
   odd_b : b % 2 = 1
   odd_w : w % 2 = 1
   odd_u : u % 2 = 1
+
+private structure Arithmetic extends PrefixArithmetic where
+  a0 : ℤ
+  a0_bounds : a ≤ a0 ∧ a0 ≤ z
   odd_a0 : a0 % 2 = 1
 
-private theorem arithmetic_geometry (D : Arithmetic) :
+theorem arithmetic_geometry (D : PrefixArithmetic) :
     0 < D.n ∧ 0 < D.z ∧ 0 < D.b ∧ 0 < D.w ∧ 0 < D.v ∧ 0 < D.u ∧
       2 ≤ D.H / 4 ∧ D.q = 2 * (D.H / 4) ∧
       D.N + D.a ≤ D.H * D.w ∧ D.b < D.w ∧ D.z ≤ 2 * D.a - 3 := by
@@ -121,7 +123,7 @@ private theorem arithmetic_geometry (D : Arithmetic) :
     nlinarith only [hmul, hHw, D.N_b, hn0, ha]
   exact ⟨hn0, hz0, hb0, hw0, hv0, hu0, hP0, hq, hHw, hwb, by omega⟩
 
-private theorem canonical_mask_height (D : Arithmetic) :
+theorem canonical_mask_height (D : PrefixArithmetic) :
     let P0 := D.H / 4
     let K := D.w - D.n
     let g := (D.w - 1) / 2
@@ -219,7 +221,7 @@ private theorem half_source_bounds (D : Arithmetic) (hF : D.F = D.H / 2) :
     D.u < 2 * D.z ∧ D.N + 1 ≤ D.H * D.u ∧ D.n < D.H ^ 2 * D.Δ ∧
       2 * D.H < D.n ∧ 2 * D.n < D.b1 ∧ D.b < D.u ∧
       D.n < D.H * (D.u - D.b) ∧ 2 * (D.u - D.b) ≤ D.u - 1 := by
-  obtain ⟨hn0, hz0, hb0, _, _, _, _, _, _, _, _⟩ := arithmetic_geometry D
+  obtain ⟨hn0, hz0, hb0, _, _, _, _, _, _, _, _⟩ := arithmetic_geometry D.toPrefixArithmetic
   have hH8 := D.H_eight
   have hH4 := D.H_four
   have hδ2 := D.delta_two
@@ -270,7 +272,7 @@ private theorem half_source_bounds (D : Arithmetic) (hF : D.F = D.H / 2) :
     omega
   exact ⟨huz, hHu, hnδ, hnH, hnB1, hbu, hBu, hwidth⟩
 
-private theorem gate_limits (D : Arithmetic) :
+theorem gate_limits (D : PrefixArithmetic) :
     let ell := (D.u - D.z) / 2
     let hi := D.u - (D.z + 1) / 2
     let W := (D.u - 1) / 2
@@ -287,7 +289,7 @@ private theorem lower_T_coefficient (D : Arithmetic) (hF : D.F ≤ D.H / 4) :
     D.u > 2 * D.z ∧ ∃ c : ℕ, (c : ℤ) ≤ D.q - 1 ∧
       (D.u - D.z) / 2 ≤ (c : ℤ) * D.z ∧
       (c : ℤ) * D.z ≤ D.u - (D.z + 1) / 2 := by
-  obtain ⟨hn0, hz0, hb0, _, _, hu0, _, _, _, _, _⟩ := arithmetic_geometry D
+  obtain ⟨hn0, hz0, hb0, _, _, hu0, _, _, _, _, _⟩ := arithmetic_geometry D.toPrefixArithmetic
   have hH := D.H_eight
   have hH4 := D.H_four
   have hHq := D.H_q
@@ -300,7 +302,7 @@ private theorem lower_T_coefficient (D : Arithmetic) (hF : D.F ≤ D.H / 4) :
   let ell := (D.u - D.z) / 2
   let hi := D.u - (D.z + 1) / 2
   let W := (D.u - 1) / 2
-  obtain ⟨hell0, hW0, hell, hhi, hW, hhiW⟩ := gate_limits D
+  obtain ⟨hell0, hW0, hell, hhi, hW, hhiW⟩ := gate_limits D.toPrefixArithmetic
   have hzW : D.z ≤ W := by
     have hou := D.odd_u
     dsimp only [W]
@@ -341,7 +343,7 @@ private theorem lower_T_coefficient (D : Arithmetic) (hF : D.F ≤ D.H / 4) :
   exact ⟨huz, c, hcmax, hc, hupper⟩
 
 
-private theorem wj_geometry (D : Arithmetic) (f : ℤ) (hf : 0 ≤ f)
+theorem wj_geometry (D : PrefixArithmetic) (f : ℤ) (hf : 0 ≤ f)
     (hfg : f ≤ (D.w - 1) / 2) :
     2 * D.C = D.N - 1 ∧ D.N = D.H * D.n + D.b1 ∧ D.b - D.z = D.Δ ∧
       D.w < D.b1 ∧ 0 < D.N - (D.q + 1) * D.w ∧

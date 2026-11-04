@@ -1,0 +1,40 @@
+### 1.3 一次运行的分离不是等价商
+
+固定一个实验 $E$。一次运行对有序对 $(z,u)$ 提供零误差分离，当且仅当存在
+同一个转录空间中的可测集合 $H$，使
+
+$$
+\mu_z^E(H)=1,\qquad \mu_u^E(H)=0.
+\tag{UJB.7307}
+$$
+
+记此性质为 $\operatorname{Sep}_E(z,u)$，并令
+
+$$
+\operatorname{Sep}_{\le n}(z,u)
+\iff
+\exists E\in\mathscr T_{\le n}:\operatorname{Sep}_E(z,u).
+\tag{UJB.7308}
+$$
+
+它是“实验加解码器”的性质，不是配置上的等价关系。若
+$z\,A_n^{\mathrm{law}}\,u$，所有深度不超过 $n$ 的实验 law 都相同，故
+
+$$
+\operatorname{Sep}_{\le n}(z,u)\Longrightarrow
+z\not\!A_n^{\mathrm{law}}u.
+\tag{UJB.7309}
+$$
+
+反向蕴含不成立；law 不同只说明存在统计差异。有限目标类要有一次统一解码，
+必须在同一个实验上给出互不相交的支持分割，而不是对每一对目标分别挑不同
+实验。若不同 law 的支持重叠，观察者可以作出有错误概率的估计，却不能从一次
+记录零误差认证来源。
+
+这也解释了几个必须保留的反例。法则残余卷的 $0.9/0.1$ noisy-bit 模型中，
+两个 law 已被 $A_1^{\mathrm{law}}$ 分开，但二者的有限支持相同，所以没有
+一次运行的 $\operatorname{Sep}_{\le1}$。同一卷的三个集中 law
+$\{a\},\{b\},\{a\}$ 说明 $\operatorname{Sep}$ 不具传递性，不能把它再商化。
+只有在 Dirac 转录、共同实验解码器以及后继合同都闭合时，law 可识别和一次
+运行分离才会在该有限任务中重合。
+

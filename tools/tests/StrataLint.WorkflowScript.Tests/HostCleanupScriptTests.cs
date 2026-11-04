@@ -44,30 +44,35 @@ public sealed class HostCleanupScriptTests
     {
         if (OperatingSystem.IsWindows())
         {
-            yield return ["unsupported-platform"];
+            yield return ["unsupported-platform", "unsupported-platform"];
             yield break;
         }
         var root = TestRepositoryLayout.FindRoot();
-        var result = TestProcessRunner.Run("python3",
-            ["-B", Path.Combine(root, "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/host_reclaim_tests.py"),
-                root, "--list-tests"], root, TimeSpan.FromSeconds(120), 1024 * 1024);
-        Assert.True(result.ExitCode == 0,
-            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
-        var probes = JsonSerializer.Deserialize<string[]>(result.StandardOutput);
-        Assert.NotNull(probes);
-        Assert.NotEmpty(probes);
-        Assert.Equal(probes.Length, probes.Distinct(StringComparer.Ordinal).Count());
-        foreach (var probe in probes) yield return [probe];
+        foreach (var fixture in new[]
+                 { "host_reclaim_tests.py", "host_remnant_tests.py", "host_remnant_isolation_tests.py",
+                     "host_remnant_recovery_tests.py" })
+        {
+            var result = TestProcessRunner.Run("python3",
+                ["-B", Path.Combine(root, "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures", fixture),
+                    root, "--list-tests"], root, TimeSpan.FromSeconds(120), 1024 * 1024);
+            Assert.True(result.ExitCode == 0,
+                Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+            var probes = JsonSerializer.Deserialize<string[]>(result.StandardOutput);
+            Assert.NotNull(probes);
+            Assert.NotEmpty(probes);
+            Assert.Equal(probes.Length, probes.Distinct(StringComparer.Ordinal).Count());
+            foreach (var probe in probes) yield return [fixture, probe];
+        }
     }
 
     [Theory]
     [MemberData(nameof(HostReclamationCases))]
-    public void HostReclamationProtectsDependenciesAndCoordinatesCacheWriters(string probe)
+    public void HostReclamationProtectsDependenciesAndCoordinatesCacheWriters(string fixture, string probe)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("python3",
-            ["-B", Path.Combine(root, "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/host_reclaim_tests.py"),
+            ["-B", Path.Combine(root, "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures", fixture),
                 root, probe],
             root, TimeSpan.FromSeconds(120), 1024 * 1024);
         Assert.True(result.ExitCode == 0,
@@ -76,13 +81,28 @@ public sealed class HostCleanupScriptTests
     }
 
     [Fact]
-    public void MissingChildDuringReclamationFailsSummary()
+    public void RemnantBlueprintHistoryBeyondTipAndCommitSamplesIsRecoverable()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/host_remnant_recovery_tests.py"),
+                root, "RemnantRecoveryTests.test_recovery_mixed_history_outside_tip_and_commit_samples"],
+            root, TimeSpan.FromSeconds(120), 1024 * 1024);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("Ran 1 test", Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void MissingChildDuringReclamationWarnsAndContinues()
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root, "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/host_reclaim_tests.py"),
-                root, "HostReclaimTests.test_partial_removal_reports_failed_summary"],
+                root, "HostReclaimTests.test_partial_removal_warns_and_continues_with_successful_summary"],
             root, TimeSpan.FromSeconds(120), 1024 * 1024);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));

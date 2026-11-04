@@ -206,7 +206,7 @@ private theorem horizontal_continuous (B : Model) (i : Fin 2) : Continuous (fun 
   · simp only [horizontal,hi,ite_false]
     fun_prop
 private theorem coefficient_smooth (B : Model) (i j : Fin 2) : ContDiffOn ℝ ∞ (fun q => B.rho q * B.A q i j) B.neighbourhood := B.smooth_rho.mul (B.smooth_A i j)
-private theorem drift_continuous (B : Model) (j : Fin 2) : ContinuousOn (fun q => drift B q j) B.neighbourhood := by
+theorem drift_continuous (B : Model) (j : Fin 2) : ContinuousOn (fun q => drift B q j) B.neighbourhood := by
   apply ContinuousOn.mul
     (B.smooth_rho.continuousOn.inv₀ (fun q hq => ne_of_gt (B.positive_rho q hq)))
   apply continuousOn_finset_sum; intro i _; exact ((coefficient_smooth B i j).continuousOn_fderiv_of_isOpen
@@ -226,7 +226,7 @@ private theorem coefficient_fderiv_periodic (B : Model) (i j : Fin 2)
   have he := hd.hasFDerivAt.comp q ((hasFDerivAt_id q).add_const v); have he' : HasFDerivAt f (fderiv ℝ f (q+v)) q := by
     simpa only [Function.comp_def,id_eq,ContinuousLinearMap.comp_id,hp] using he
   exact he'.fderiv.symm
-private theorem drift_periodic (B : Model) (j : Fin 2)
+theorem drift_periodic (B : Model) (j : Fin 2)
     (q : Triple) (hq : q 0 ∈ Icc B.l B.u) (a b : ℤ) :
     drift B (q + ![0,(a:ℝ)*(2*Real.pi),(b:ℝ)*(2*Real.pi)]) j = drift B q j := by
   unfold drift; rw [B.periodic_rho]; congr 1; apply Finset.sum_congr rfl; intro i _; rw [coefficient_fderiv_periodic B i j q hq a b]; congr 1; simp [horizontal]
@@ -352,7 +352,7 @@ private theorem average_sum (m : ℕ) (f : ℕ → SignPair → ℝ) : average (
   | zero => simp [average]
   | succ m ih =>
     simp only [Finset.sum_range_succ,average_add,ih]
-private theorem fraction_bounds (B : Model) (z : Triple) (v : Fin 2 → ℝ)
+theorem fraction_bounds (B : Model) (z : Triple) (v : Fin 2 → ℝ)
     (hz : Alive B z) : 0 < hitFraction B z v ∧ hitFraction B z v ≤ 1 := by
   unfold hitFraction; split_ifs with hp hn
   · exact ⟨lt_min (by norm_num) (div_pos (sub_pos.mpr hz.2) hp),min_le_left _ _⟩
@@ -658,7 +658,7 @@ private theorem firstWallTime_eq_lifetime (B : Model) (δ : ℝ) (hδ : 0 < δ)
     · exact (ne_of_lt ha.2) he
   exact le_antisymm (csInf_le hbound hmem) (le_csInf ⟨_,hmem⟩ hleast)
 def physicalState (B : Model) (z : Triple) : ℝ × AddCircle (2*Real.pi) × AddCircle (2*Real.pi) := ((sourceMap B z) 0,((sourceMap B z) 1 : AddCircle (2*Real.pi)), ((sourceMap B z) 2 : AddCircle (2*Real.pi)))
-private theorem trajectory_zero (B : Model) (δ : ℝ) (hδ : 0 < δ)
+theorem trajectory_zero (B : Model) (δ : ℝ) (hδ : 0 < δ)
     (w : List SignPair) (z : Triple) (hz : Alive B z) :
     trajectory B δ z w 0 = z := by
   cases w with
@@ -671,9 +671,9 @@ private theorem trajectory_zero (B : Model) (δ : ℝ) (hδ : 0 < δ)
         exact (fraction_bounds B z (increment B δ z e) hz).1.le
       ext i
       fin_cases i <;> simp [trajectory,hn,chord,min_eq_left hfrac]
-private def cutParameter (δ cap t : ℝ) : ℝ := min (max (t/δ) 0) cap
-private def cutChord (δ cap : ℝ) (z : Triple) (v : Fin 2 → ℝ) (t : ℝ) : Triple := chord z v (cutParameter δ cap t)
-private theorem cutParameter_lipschitz (δ cap : ℝ) : LipschitzWith ‖δ⁻¹‖₊ (cutParameter δ cap) := by
+def cutParameter (δ cap t : ℝ) : ℝ := min (max (t/δ) 0) cap
+def cutChord (δ cap : ℝ) (z : Triple) (v : Fin 2 → ℝ) (t : ℝ) : Triple := chord z v (cutParameter δ cap t)
+theorem cutParameter_lipschitz (δ cap : ℝ) : LipschitzWith ‖δ⁻¹‖₊ (cutParameter δ cap) := by
   have hlin : LipschitzWith ‖δ⁻¹‖₊ (fun t : ℝ => t/δ) := by
     rw [lipschitzWith_iff_dist_le_mul]; intro x y; simp only [Real.dist_eq, div_eq_mul_inv, ←sub_mul, abs_mul]; simp [mul_comm]
   exact (hlin.max_const 0).min_const cap
@@ -824,7 +824,7 @@ def zeta (B : Model) (n : ℕ) (w : Fin (n^3) → SignPair) : ℝ := sInf {t : �
 /-- The unreweighted uniform law on all independent sign-pair words. -/
 def tailProbability (B : Model) (n : ℕ) (t : ℝ) : ℝ := (1/4:ℝ)^(n^3) * ∑ w : Fin (n^3) → SignPair, if t < zeta B n w then 1 else 0
 def excessExpectation (B : Model) (n : ℕ) (R : ℝ) : ℝ := (1/4:ℝ)^(n^3) * ∑ w : Fin (n^3) → SignPair, max (zeta B n w-R) 0
-private theorem actual_state_bridge (B : Model) (n : ℕ) (hn : 0 < mesh n)
+theorem actual_state_bridge (B : Model) (n : ℕ) (hn : 0 < mesh n)
     (w : Fin (n^3) → SignPair) (t : ℝ) (ht : 0 ≤ t) :
     commandArea B n w t = command B n w t 2 ∧
     heldState B n w t = physicalState B (command B n w t) := by

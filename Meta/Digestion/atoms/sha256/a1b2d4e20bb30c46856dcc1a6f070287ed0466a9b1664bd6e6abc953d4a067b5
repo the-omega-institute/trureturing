@@ -1,0 +1,76 @@
+## 52. A positive-root range excluding every common-width M pair
+
+For $b\ge1$ every strict source has
+
+$$
+b<n<b+1.
+\tag{52.1}
+$$
+
+Indeed $n-b=r(b+1-r)/b>0$ and
+$b+1-n=(1-r)(b-r)/b>0$. The three different corner values of
+$\mathcal B_b$ on $[b,b+1]^2$ are
+
+$$
+\begin{aligned}
+\mathcal B_b(b,b)=F_{\rm w}(b)
+ &=5289b^5+8141b^4-12957b^3-44608b^2-80537b-33300,\\
+\mathcal B_b(b,b+1)=\mathcal B_b(b+1,b)=G_{\rm w}(b)
+ &=5289b^5+9430b^4-3050b^3-2708b^2+3700b+3942,\\
+\mathcal B_b(b+1,b+1)=H_{\rm w}(b)
+ &=5289b^5+10719b^4+8146b^3+26681b^2+21726b+2486.
+\end{aligned}
+\tag{52.2}
+$$
+
+The descending coefficient signs of $F_{\rm w}$ have exactly one
+change. Descartes' rule of signs gives at most one positive root,
+counted with multiplicity. The exact evaluations
+
+$$
+F_{\rm w}(2)=-176958<0,\qquad F_{\rm w}(3)=918426>0
+\tag{52.3}
+$$
+
+and the intermediate value theorem give such a root
+$\rho\in(2,3)$. It is the unique positive root. Since the leading
+coefficient is positive, $F_{\rm w}(b)\ge0$ for $b\ge\rho$.
+The exact shifted expansion
+
+$$
+G_{\rm w}(2+u)=5289u^5+62320u^4+283950u^3
+              +628432u^2+681148u+296238
+\tag{52.4}
+$$
+
+is positive for $u\ge0$. All coefficients of $H_{\rm w}$ in
+(52.2) are positive, so $H_{\rm w}(b)>0$ for $b>0$.
+
+Let $b\ge\rho$. For $x,y\in(b,b+1)$ put $s=x-b$, $t=y-b$.
+Bilinear interpolation gives exactly
+
+$$
+\mathcal B_b(x,y)
+=(1-s)(1-t)F_{\rm w}(b)
++\{s(1-t)+(1-s)t\}G_{\rm w}(b)
++stH_{\rm w}(b).
+\tag{52.5}
+$$
+
+Here $0<s,t<1$. The first term is nonnegative, and the last two
+are positive, including at $b=\rho$. Thus
+$\mathcal B_b(x,y)>0$ throughout this open square. By (52.1) the
+actual $n_1,n_2$ lie in it, contradicting (47.3). Hence every pair
+in (47.1) has $b<\rho$.
+
+For such a pair $b<\rho<3$, so (51.5) gives $H_0(b)<0$.
+Multiplication of (47.4) by $d_1-d_2$ now gives
+
+$$
+3T H_2(b)(n_1-n_2)(d_1-d_2)
+=5H_0(b)(d_1-d_2)^2<0.
+\tag{52.6}
+$$
+
+This proves (47.6) and completes Theorem 47.2. $\square$
+
