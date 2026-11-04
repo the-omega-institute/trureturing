@@ -44,33 +44,33 @@ private def teaAdj (u v : ℤ × ℤ × ℤ) : Prop :=
        ((u.1 = v.1 - 1 ∧ u.2.1 = v.2.1) ∨
         (u.1 = v.1 ∧ u.2.1 = v.2.1 - 1)))))
 
-private lemma teaAdj_symm : ∀ ⦃u v : ℤ × ℤ × ℤ⦄, teaAdj u v → teaAdj v u := by
-  intro u v h
-  rcases h with ⟨hk, h⟩ | h | h
-  · left
-    refine ⟨hk.symm, ?_⟩
-    rcases h with h | h | h | h | h | h
-    · exact Or.inr (Or.inl h)
-    · exact Or.inl h
-    · exact Or.inr (Or.inr (Or.inr (Or.inl h)))
-    · exact Or.inr (Or.inr (Or.inl h))
-    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr h))))
-    · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inl h))))
-  · exact Or.inr (Or.inr h)
-  · exact Or.inr (Or.inl h)
+private lemma teaAdj_symm : Std.Symm teaAdj := ⟨by
+    intro u v h
+    rcases h with ⟨hk, h⟩ | h | h
+    · left
+      refine ⟨hk.symm, ?_⟩
+      rcases h with h | h | h | h | h | h
+      · exact Or.inr (Or.inl h)
+      · exact Or.inl h
+      · exact Or.inr (Or.inr (Or.inr (Or.inl h)))
+      · exact Or.inr (Or.inr (Or.inl h))
+      · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inr h))))
+      · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inl h))))
+    · exact Or.inr (Or.inr h)
+    · exact Or.inr (Or.inl h)⟩
 
-private lemma teaAdj_irrefl : ∀ u : ℤ × ℤ × ℤ, ¬ teaAdj u u := by
-  intro u h
-  rcases h with ⟨_, h⟩ | h | h
-  · rcases h with h | h | h | h | h | h <;> omega
-  · omega
-  · omega
+private lemma teaAdj_irrefl : Std.Irrefl teaAdj := ⟨by
+    intro u h
+    rcases h with ⟨_, h⟩ | h | h
+    · rcases h with h | h | h | h | h | h <;> omega
+    · omega
+    · omega⟩
 
 /-- The triangular layers and tetrahedral or prismatic slabs of the tea tiling. -/
 def teaGraph : SimpleGraph (ℤ × ℤ × ℤ) where
   Adj := teaAdj
-  symm := ⟨teaAdj_symm⟩
-  loopless := ⟨teaAdj_irrefl⟩
+  symm := teaAdj_symm
+  loopless := teaAdj_irrefl
 
 /-- Vertices at graph distance exactly n from the representative origin. -/
 def shell (n : ℕ) : ℕ := Set.ncard {v | teaGraph.dist (0, 0, 0) v = n}
