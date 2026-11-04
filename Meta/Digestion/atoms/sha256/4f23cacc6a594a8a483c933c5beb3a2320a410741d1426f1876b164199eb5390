@@ -1,0 +1,76 @@
+**Theorem 47.3 (same-level lower bound for every actual pure input).**
+For $0<\xi\le R_\star=13/4$, either active sign, a pure original effect
+of away-population $q\in[0,1]$ and every relative coherence phase, put
+
+$$
+ x=1-\frac\xi4+\frac q2,\qquad
+ G_{\sigma}^{\mathrm{low}}(x,q)
+ =G_{\sigma}^{\mathrm{can}}(x,q)
+             -8\Gamma_0J_\sigma-4J_\sigma^2.
+\tag{47.9}
+$$
+
+If $0<x<1$, every actual $U\in U(4)$ with that effect and active
+complex-trace modulus $2(1+x)$ satisfies
+
+$$
+\begin{aligned}
+ g(E,U)&\ge G_{\sigma}^{\mathrm{low}}(x,q),\\
+ M_\sigma(\xi,q)&:=G_{\sigma}^{\mathrm{low}}(x,q)-V(\xi)>0
+ \quad\Longrightarrow\quad
+ g(E,U)>V(\xi),\quad f(E,U)>N_{\mathrm{geo}}(\xi).
+\end{aligned}
+\tag{47.10}
+$$
+
+The original distance is $\xi$ and its minimizing sign is unique.
+The feasible population range is $0\le q\le\min\{1,\xi/2\}$.
+For its endpoint $x=1$, (47.9) is replaced by the direct statement
+
+$$
+ UU_\sigma^\dagger=\lambda I_4,\qquad
+ \rho(E,U)=2q=\xi,\qquad
+ g(E,U)=K_{-\sigma}^2q.
+\tag{47.11}
+$$
+
+Here $|\lambda|=1$ is the one common feedback scalar. The feedback
+slice is a singleton modulo that scalar and its gain over the canonical
+amplitude is zero. No singular coefficient in (47.1) is evaluated at
+$x=1$.
+
+*Proof.* For a phase feedback, the same-feedback identity (23.12) and
+(46.17) imply, for every effect phase,
+
+$$
+ |\chi|\le2\Gamma\le2(\Gamma_0+J_\sigma),\qquad
+ g(E,U)=\mathsf E_\sigma(q)-|\chi|^2
+       \ge\mathsf E_\sigma(q)-4(\Gamma_0+J_\sigma)^2.
+\tag{47.12}
+$$
+
+This is (47.9); the two recoveries in $\chi$ belong to the same whole
+feedback. For an arbitrary actual $U$, apply Theorem 42.3 to that given
+matrix. Each positive-weight phase replacement has the same effect,
+the same complex active trace and the same true original level. In
+particular it has the same $q,x,\sigma$ and the same lower bound
+(47.12). The variance identity (42.16), with $\kappa\xi$ restored,
+gives
+
+$$
+ g(E,U)=\sum_j\theta_jg(E,U_j)
+               +\sum_j\theta_j\|(a_j-a)F^{1/2}\|_2^2
+       \ge G_{\sigma}^{\mathrm{low}}(x,q).
+\tag{47.13}
+$$
+
+The effect and its coherence phase are unchanged throughout this
+transport. The two-sign budget (42.17)--(42.20) proves the claimed
+unique minimizing sign, including for each replacement. Formula
+(46.8) gives the population range and $x\ge3/16>0$. At $x=1$ use the
+direct trace-equality argument (46.37), whose other sign distance is
+$8+2p>2q$. Finally $f=g-\kappa\xi$ proves the last comparison.
+The negative row uses its own $G_-^{\mathrm{can}}$; no ordering of
+negative canonical values against positive canonical values is assumed.
+No pure-slice estimate has been applied to a mixed input. $\square$
+
