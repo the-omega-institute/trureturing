@@ -46,7 +46,8 @@ private theorem avg_const_mul (c : ℝ) (f : ℕ → ℝ) (N : ℕ) :
 
 private theorem avg_div (f : ℕ → ℝ) (c : ℝ) (N : ℕ) :
     avg (fun (k : ℕ) => f k / c) N = avg f N / c := by
-  simp only [avg, Finset.sum_div]
+  unfold avg
+  rw [← Finset.sum_div]
   ring
 
 /-- The bracket supplies normalization invisible to every pair detector. -/
@@ -70,6 +71,7 @@ private theorem bracket_bounds (T : Params → ℕ → ℕ) (p : Params)
     have hh := (hT k).2.1
     rw [he] at hh
     dsimp [D]
+    rw [neg_div]
     linarith
   have hup (k : ℕ) : D T p k < 1 := by
     have hh : (T p k : ℝ) ≤
@@ -115,8 +117,8 @@ private theorem avg_eventual_close (f g : ℕ → ℝ) (c : ℝ) (hc : 0 ≤ c)
       apply Finset.sum_le_sum
       intro k hk
       by_cases hkK : k < K
-      · simp only [if_pos hkK]; linarith
-      · simp only [if_neg hkK, add_zero]
+      · simp only [ite_eq_left hkK]; linarith
+      · simp only [ite_eq_right hkK, add_zero]
         exact hK k (Nat.le_of_not_gt hkK)
     have hprefix : (∑ k ∈ (Finset.range N).filter (fun (k : ℕ) => k < K), |f k - g k|) ≤ C := by
       apply Finset.sum_le_sum_of_subset_of_nonneg
@@ -173,7 +175,7 @@ private theorem mass_reference (p r : Params) (a b : ℕ) (ha : 0 < a) (hb : 0 <
             ((a : ℝ) * (b : ℝ)) else 0 := by
       unfold mass
       change (if _ : d ∣ z then _ else 0) = _
-      rw [dif_pos hz]
+      rw [dite_eq_left hz]
       dsimp only
       rw [hadiv, hbdiv]
       simp only [Int.cast_min, Int.cast_add, Int.cast_sub, Int.cast_natCast]
@@ -199,12 +201,12 @@ private theorem mass_reference (p r : Params) (a b : ℕ) (ha : 0 < a) (hb : 0 <
             (min ((a : ℤ) + z / d) ((b : ℤ) - z / d)) : ℤ) : ℝ) := by
         exact_mod_cast hcard.trans hc
       rw [hcR]
-      rw [hm, if_pos hj]
+      rw [hm, ite_eq_left hj]
     · have hc : max 0 (min (a : ℤ) ((b : ℤ) - z / d) - max 0 (-(z / d))) = 0 := by omega
       have hcR : (((box a b).filter (fun uv => (uv.2 : ℤ) - uv.1 = z / d)).card : ℝ) = 0 := by
         exact_mod_cast hcard.trans hc
       rw [hcR]
-      rw [hm, if_neg hj, zero_div]
+      rw [hm, ite_eq_right hj, zero_div]
   · have hf : (box a b).filter (fun uv => digit d uv = z) = ∅ := by
       apply Finset.filter_eq_empty_iff.mpr
       intro uv _ he
@@ -212,7 +214,7 @@ private theorem mass_reference (p r : Params) (a b : ℕ) (ha : 0 < a) (hb : 0 <
     have hm : mass p.val r.val z = 0 := by
       unfold mass
       change (if _ : d ∣ z then _ else 0) = 0
-      exact dif_neg hz
+      exact dite_eq_right hz
     rw [hm, hf]
     simp only [Finset.card_empty, Nat.cast_zero, zero_div]
 
@@ -285,7 +287,9 @@ private theorem range_moments (n : ℕ) :
         norm_num [Finset.sum_range_succ, bernoulli_zero, bernoulli_one, bernoulli_two]
         <;> ring
   constructor
-  · exact_mod_cast h1
+  · have h := congrArg (fun x : ℚ => (x : ℝ)) h1
+    push_cast at h
+    exact h
   · exact_mod_cast h2
 
 /-- Only finite rectangle algebra is used. The two finite digits here are
@@ -301,8 +305,19 @@ private theorem rectangle_moments (p r : Params) (a b : ℕ) (ha : 0 < a) (hb : 
   let d : ℝ := Int.gcd p.val r.val
   have haR : (a : ℝ) ≠ 0 := by exact_mod_cast ha.ne'
   have hbR : (b : ℝ) ≠ 0 := by exact_mod_cast hb.ne'
-  have hpR : (p.val : ℝ) = d * (a : ℝ) := by exact_mod_cast hpa
-  have hrR : (r.val : ℝ) = d * (b : ℝ) := by exact_mod_cast hrb
+  have hpR : (p.val : ℝ) = d * (a : ℝ) := by
+    dsimp only [d]
+    exact_mod_cast hpa
+  have hrR : (r.val : ℝ) = d * (b : ℝ) := by
+    dsimp only [d]
+    exact_mod_cast hrb
+  have hbox : box a b = ((Finset.range a) ×ˢ (Finset.range b) : Finset (ℕ × ℕ)) := by
+    ext uv
+    constructor
+    · intro h
+      exact Finset.mem_product.mpr (Finset.mem_product.mp h)
+    · intro h
+      exact Finset.mem_product.mpr (Finset.mem_product.mp h)
   obtain ⟨ha1, ha2⟩ := range_moments a
   obtain ⟨hb1, hb2⟩ := range_moments b
   have hi1 (u : ℕ) : (∑ v ∈ Finset.range b, d * ((v : ℝ) - (u : ℝ))) =
@@ -313,7 +328,8 @@ private theorem rectangle_moments (p r : Params) (a b : ℕ) (ha : 0 < a) (hb : 
   have hs1 : (∑ uv ∈ box a b, (digit (Int.gcd p.val r.val) uv : ℝ)) =
       d * (a : ℝ) * (∑ v ∈ Finset.range b, (v : ℝ)) -
         d * (b : ℝ) * (∑ u ∈ Finset.range a, (u : ℝ)) := by
-    simp only [box, Finset.sum_product, digit, Int.cast_mul, Int.cast_sub, Int.cast_natCast]
+    rw [hbox, Finset.sum_product]
+    simp only [digit, Int.cast_mul, Int.cast_sub, Int.cast_natCast]
     change (∑ u ∈ Finset.range a, ∑ v ∈ Finset.range b, d * ((v : ℝ) - (u : ℝ))) = _
     simp_rw [hi1]
     simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range,
@@ -337,7 +353,8 @@ private theorem rectangle_moments (p r : Params) (a b : ℕ) (ha : 0 < a) (hb : 
       d^2 * (a : ℝ) * (∑ v ∈ Finset.range b, (v : ℝ)^2) -
         2 * d^2 * (∑ u ∈ Finset.range a, (u : ℝ)) * (∑ v ∈ Finset.range b, (v : ℝ)) +
         d^2 * (b : ℝ) * (∑ u ∈ Finset.range a, (u : ℝ)^2) := by
-    simp only [box, Finset.sum_product, digit, Int.cast_mul, Int.cast_sub, Int.cast_natCast]
+    rw [hbox, Finset.sum_product]
+    simp only [digit, Int.cast_mul, Int.cast_sub, Int.cast_natCast]
     change (∑ u ∈ Finset.range a, ∑ v ∈ Finset.range b, (d * ((v : ℝ) - (u : ℝ)))^2) = _
     simp_rw [hi2]
     simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.sum_const,
@@ -528,7 +545,7 @@ private theorem fine_odd_grid (δ : ℝ) (hδ : 0 < δ) :
   have hm : 1 ≤ m := by dsimp [m]; omega
   have hmn : n ≤ m := by dsimp [m]; omega
   have hmR : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
-  refine ⟨m, hm, ⟨n, by dsimp [m]; omega⟩, ?_⟩
+  refine ⟨m, hm, ⟨n, rfl⟩, ?_⟩
   have hlt : 1 / δ < (m : ℝ) := lt_of_lt_of_le hn (by exact_mod_cast hmn)
   have hh := (div_lt_iff₀ hδ).mp hlt
   apply (div_lt_iff₀ hmR).mpr
@@ -657,7 +674,16 @@ theorem actual_square_displacement_actual_moments :
     have heW : W = T r := by
       funext k
       exact (hT r k).2 (W k) (hW k).1.1
-    simpa only [Y, heV, heW] using hhist z
+    rw [heV, heW] at hhist
+    convert hhist z using 1
+    funext N
+    apply congrArg (fun s : Finset ℕ => (s.card : ℝ) / (N : ℝ))
+    ext k
+    constructor
+    · intro hk
+      exact Finset.mem_filter.mp hk
+    · intro hk
+      exact Finset.mem_filter.mpr hk
   have hbr : ∀ (p : Params) (k : ℕ), bracketSC p.val (qAt k) (T p k) := fun p k => (hT p k).1
   have hmarg := marginal_limits T hbr hfreq
   refine ⟨T, hT, hmarg, ?_⟩
