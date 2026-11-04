@@ -650,6 +650,87 @@ set_option pp.proofs false in
 
 end NormalizedLogIntegrable
 
+namespace NormalizedIntegralEq
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ ν => Real.log ν) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ ν => Real.log ν + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {α ν : ℝ}, 0 < α → α < 2 → α ≠ 1 → 1 < ν →
+    (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (1 - (x / ν) ^ 2)) =
+      (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (ν ^ 2 - x ^ 2)) -
+        R.readout () () ν
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (α := 1 / 2) (ν := 2) (by norm_num) (by norm_num) (by norm_num)
+    (by norm_num)
+  have ha := normalized_integral_eq (α := 1 / 2) (ν := 2)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  change _ = _ - (Real.log 2 + 1) at hb
+  linarith
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 1, 2, ?_⟩
+  change Real.log 1 ≠ Real.log 2
+  rw [Real.log_one]
+  exact ne_of_lt (Real.log_pos (by norm_num : (1 : ℝ) < 2))
+
+def source_registration : Registration arena (type_of% @normalized_integral_eq) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@normalized_integral_eq, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@normalized_integral_eq) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.NormalizedIntegralEq.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.NormalizedIntegralEq.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ ν => Real.log ν) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+set_option pp.proofs false in
+#print normalized_integral_eq
+#print axioms registration
+
+end NormalizedIntegralEq
 
 end
 end Reg.D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
