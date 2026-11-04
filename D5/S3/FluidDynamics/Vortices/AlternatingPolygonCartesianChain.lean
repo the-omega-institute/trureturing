@@ -42,13 +42,14 @@ private theorem block_radial_chain (m : ℕ) (hm : 1 ≤ m) :
   have hS0 : (chargeMatrix m).mulVec (fun _ => (1 : ℝ)) = charge (2 * m) := by
     rw [chargeMatrix_diagonal]
     ext j
-    simp [charge]
+    simp [Matrix.mulVec_diagonal, charge]
   have hS1 : (chargeMatrix m).mulVec (fun j => charge (2 * m) j / d) =
       fun _ => d⁻¹ := by
     rw [chargeMatrix_diagonal]
     ext j
+    rw [Matrix.mulVec_diagonal]
     change (-1 : ℝ) ^ (j.val + 2) * (charge (2 * m) j / d) = d⁻¹
-    rw [mul_div_assoc, show (-1 : ℝ) ^ (j.val + 2) = charge (2 * m) j by rfl,
+    rw [← mul_div_assoc, show (-1 : ℝ) ^ (j.val + 2) = charge (2 * m) j by rfl,
       charge_square, one_div]
   have hB : (blockB m).mulVec (fun _ => (1 : ℝ)) = 0 := by
     rw [blockB, ← Matrix.mulVec_mulVec, hS0, Matrix.sub_mulVec]
@@ -71,14 +72,18 @@ private theorem block_radial_chain (m : ℕ) (hm : 1 ≤ m) :
     calc
       _ = (diagonalWeight m + 1 - (((2 * m : ℕ) : ℝ) ^ 2 - 1) / 12) * d⁻¹ := by ring
       _ = 1 := by rw [hdiff, mul_inv_cancel₀ hd]
+  have hz (A : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ) :
+      A.mulVec (fun _ => 0) = 0 := by
+    ext j
+    simp [Matrix.mulVec, dotProduct]
   constructor
   · rw [Matrix.fromBlocks_mulVec]
     ext p
-    cases p <;> simp [radial0, hB]
+    cases p <;> simp [radial0, hB, hz]
   · rw [Matrix.fromBlocks_mulVec]
     change Sum.elim _ _ = _
     ext p
-    cases p <;> simp [radial1, radial0, hC, d]
+    cases p <;> simp [radial1, radial0, hC, d, hz]
 
 /-- The exact real Cartesian chain corresponding to v0=(0,1), v1=(s/d,0). -/
 theorem cartesian_chain (m : ℕ) (hm : 1 ≤ m) :
@@ -89,6 +94,7 @@ theorem cartesian_chain (m : ℕ) (hm : 1 ≤ m) :
   let M := Matrix.fromBlocks 0 (blockB m) (blockC m) 0
   have hJR : J * R = R * M := by
     have h := congrArg (fun A => R * A) (rotated_jacobian_all m hm)
+    dsimp only [R, J, M] at h ⊢
     simpa only [← Matrix.mul_assoc, rotation_mul_transpose, Matrix.one_mul] using h
   constructor
   · change J.mulVec (R.mulVec (radial0 m)) = 0
@@ -99,22 +105,26 @@ theorem cartesian_chain (m : ℕ) (hm : 1 ≤ m) :
 
 theorem cartesian0_ne_zero (m : ℕ) (hm : 1 ≤ m) : cartesian0 m ≠ 0 := by
   intro h
-  have hi : Function.Injective (AlternatingPolygonSpectrum.rotation (2 * m)).mulVec := by
-    exact Matrix.mulVec_injective_iff_isUnit.mpr
-      (isUnit_iff_exists_inv.mpr ⟨_, rotation_mul_transpose (2 * m),
-        mul_eq_one_comm.mp (rotation_mul_transpose (2 * m))⟩)
-  have hz : radial0 m = 0 := hi (by simpa only [Matrix.mulVec_zero] using h)
+  have hz : radial0 m = 0 := by
+    have h' := congrArg (AlternatingPolygonSpectrum.rotation (2 * m)).transpose.mulVec h
+    simpa only [cartesian0, Matrix.mulVec_mulVec,
+      mul_eq_one_comm.mp (rotation_mul_transpose (2 * m)),
+      Matrix.one_mulVec, Matrix.mulVec_zero] using h'
   have hcoord := congrFun hz (.inr ⟨0, by omega⟩)
   norm_num [radial0] at hcoord
 
 /-- The complete real linearized flow has an unbounded orbit, even in the dipole and square. -/
 theorem unbounded_linear_drift (m : ℕ) (hm : 1 ≤ m) :
-    (∀ t : ℝ, realOperator m (cartesian1 m + t • cartesian0 m) = cartesian0 m) ∧
+    (∀ t : ℝ, HasDerivAt (fun τ : ℝ => cartesian1 m + τ • cartesian0 m)
+      (realOperator m (cartesian1 m + t • cartesian0 m)) t) ∧
       ¬ Bornology.IsBounded (Set.range (fun t : ℝ => cartesian1 m + t • cartesian0 m)) := by
   constructor
   · intro t
-    rw [map_add, map_smul, (cartesian_chain m hm).1, (cartesian_chain m hm).2,
-      smul_zero, add_zero]
+    have hA : realOperator m (cartesian1 m + t • cartesian0 m) = cartesian0 m := by
+      rw [map_add, map_smul, (cartesian_chain m hm).1, (cartesian_chain m hm).2,
+        smul_zero, add_zero]
+    rw [hA]
+    simpa using ((hasDerivAt_id t).smul_const (cartesian0 m)).const_add (cartesian1 m)
   · intro h
     obtain ⟨C, hC, hbound⟩ := h.exists_pos_norm_le
     have hn : 0 < ‖cartesian0 m‖ := norm_pos_iff.mpr (cartesian0_ne_zero m hm)

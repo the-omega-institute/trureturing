@@ -255,7 +255,7 @@ private theorem rotate_smul {N : ℕ} (θ a : ℝ) (z : Configuration N) :
   cases p <;> simp [rotate, mul_sub, mul_add] <;> ring
 
 /-- Collision freedom is invariant under a common physical rotation. -/
-private theorem collision_free_rotate {N : ℕ} {z : Configuration N} (θ : ℝ) :
+theorem collision_free_rotate {N : ℕ} {z : Configuration N} (θ : ℝ) :
     CollisionFree (rotate θ z) ↔ CollisionFree z := by
   unfold CollisionFree
   simp only [rotate_distance]

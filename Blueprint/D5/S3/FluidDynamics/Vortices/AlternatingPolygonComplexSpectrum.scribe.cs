@@ -13,9 +13,9 @@ internal sealed class AlternatingPolygonComplexSpectrumDocument : IScribeDocumen
         H("Alternating Polygon Complex Spectrum"), Blocks(
             Paragraph(Text("The full extension is set out in the 4 November 2026 note by Haobo Ma and Wenlin Zhang, in that order. Barry and Kevrekidis retain prior credit for equilibrium, instability and the small-spectrum classification. The existing Conjecture 4.4 real-root theorem and its field, rotation, Fourier and determinant proof bodies are reused. No priority certification is made.")),
             Node("spectralRoot", "spectralRoot", "One square root of each folded spectral value. The neutral label is handled first, so the dipole does not identify its neutral mode with a nonzero internal mode.", DescribeRole.Definition),
-            Node("spectralRoot_sq", "spectralRoot sq", "The exact declaration below uses the hypotheses and objects of this module.", DescribeRole.Theorem),
+            Node("spectralRoot_sq", "spectralRoot sq", "Each explicit complex root squares to the corresponding folded squared value.", DescribeRole.Theorem),
             Node("all_complex_roots", "all complex roots", "Every complex characteristic root is one of these explicit signed values, and conversely.", DescribeRole.Theorem),
-            Node("spectralRoot_ne_zero", "spectralRoot ne zero", "The exact declaration below uses the hypotheses and objects of this module.", DescribeRole.Theorem),
+            Node("spectralRoot_ne_zero", "spectralRoot ne zero", "Every label strictly below the neutral label gives a nonzero complex root.", DescribeRole.Theorem),
             Node("no_cross_label_collision", "no cross label collision", "Signed roots at different folded labels never collide, including both imaginary families.", DescribeRole.Theorem),
             Node("signed_root_multiplicities", "signed root multiplicities", "Complete nonzero algebraic and geometric multiplicities of both signed roots.", DescribeRole.Theorem))));
 

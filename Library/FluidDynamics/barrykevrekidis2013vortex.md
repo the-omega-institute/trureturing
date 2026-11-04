@@ -7,7 +7,24 @@ doi: 10.1088/1751-8113/46/44/445001
 url: https://arxiv.org/abs/1306.1545v2
 claim: "The paper studies equilibria and linear stability of few-vortex clusters in the precessing point-vortex model of a Bose–Einstein condensate and conjectures (Conjecture 4.4) that for N >= 6 the regular N-gon of alternating charges has N/2 - 2 distinct pairs of real eigenvalues."
 strata_touched:
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonCartesianChain
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonComplexSpectrum
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonDecomposition
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonDerivative
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonFourier
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonJordan
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonModes
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonMultiplicity
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonNeutral
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonOrientation
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonParameters
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonPhysicalDerivative
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonPhysicalSpectrum
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonRealBoundary
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonRealSpaces
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonSmallCases
   - D5/S3/FluidDynamics/Vortices/AlternatingPolygonSpectrum
+  - D5/S3/FluidDynamics/Vortices/AlternatingPolygonTransport
   - D5/S3/FluidDynamics/Vortices/InverseChordCirculant
 license: citation-only
 triage: anchor

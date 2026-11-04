@@ -13,12 +13,12 @@ internal sealed class AlternatingPolygonDecompositionDocument : IScribeDocumentD
         H("Alternating Polygon Decomposition"), Blocks(
             Paragraph(Text("The full extension is set out in the 4 November 2026 note by Haobo Ma and Wenlin Zhang, in that order. Barry and Kevrekidis retain prior credit for equilibrium, instability and the small-spectrum classification. The existing Conjecture 4.4 real-root theorem and its field, rotation, Fourier and determinant proof bodies are reused. No priority certification is made.")),
             Node("block", "block", "Injection of the entire two-dimensional Fourier block into actual Cartesian space.", DescribeRole.Definition),
-            Node("coordinates_block", "coordinates block", "The exact declaration below uses the hypotheses and objects of this module.", DescribeRole.Theorem),
+            Node("coordinates_block", "coordinates block", "The complete Cartesian coordinate equivalence sends a block injection to its single Fourier coordinate.", DescribeRole.Theorem),
             Node("block_restriction", "block restriction", "The actual restriction action on each block, including the neutral block.", DescribeRole.Theorem),
             Node("reconstruct", "reconstruct", "Completeness: every Cartesian displacement is the sum of its actual invariant blocks.", DescribeRole.Theorem),
             Node("unique_coefficients", "unique coefficients", "Directness: the complete block expansion has unique coefficients.", DescribeRole.Theorem),
             Node("invariantSpace", "invariantSpace", "The actual invariant subspace belonging to a single Fourier label.", DescribeRole.Definition),
-            Node("invariantSpace_finrank", "invariantSpace finrank", "The exact declaration below uses the hypotheses and objects of this module.", DescribeRole.Theorem),
+            Node("invariantSpace_finrank", "invariantSpace finrank", "Each actual Cartesian Fourier block has complex dimension two.", DescribeRole.Theorem),
             Node("geometric_eq_algebraic", "geometric eq algebraic", "All complex nonzero geometric multiplicities equal the full algebraic multiplicities.", DescribeRole.Theorem),
             Node("geometric_multiplicity_of_mode", "geometric multiplicity of mode", "Exact geometric multiplicity at each folded label, with all collisions counted.", DescribeRole.Theorem))));
 

@@ -9,7 +9,6 @@
 import D5.S3.FluidDynamics.Vortices.AlternatingPolygonDerivative
 import D5.S3.FluidDynamics.Vortices.AlternatingPolygonNeutral
 import D5.S3.FluidDynamics.Vortices.AlternatingPolygonRealSpaces
-import Mathlib.RingTheory.Polynomial.ScaleRoots
 
 /-! Physical scaling follows from the field, and preserves every Jordan filtration. -/
 noncomputable section
@@ -30,7 +29,7 @@ theorem smul_genEigenspace {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
   simp only [Module.End.mem_genEigenspace]
   have hp (k : ℕ) : ((a • A - (a * μ) • (1 : Module.End K V)) ^ k) v =
       a ^ k • ((A - μ • 1) ^ k) v := by
-    rw [hshift, smul_pow]
+    rw [hshift, _root_.smul_pow]
     rfl
   simp only [LinearMap.mem_ker, hp, smul_eq_zero, pow_ne_zero _ ha, false_or]
 
@@ -40,8 +39,10 @@ theorem charpoly_smul_eval {K ι : Type*} [Field K] [Fintype ι] [DecidableEq ι
     (a • A).charpoly.eval x = a ^ Fintype.card ι * A.charpoly.eval (x / a) := by
   rw [Matrix.eval_charpoly, Matrix.eval_charpoly, ← Matrix.det_smul]
   congr 1
-  rw [smul_sub, Matrix.scalar_apply, Matrix.scalar_apply, ← smul_smul,
-    smul_eq_mul, mul_div_cancel₀ _ ha]
+  rw [smul_sub]
+  ext i j
+  by_cases hij : i = j <;>
+    simp [Matrix.scalar_apply, Matrix.diagonal_apply, hij, mul_div_cancel₀ _ ha]
 
 /-- Polynomial, rather than root-list, scaling of an actual square matrix. -/
 theorem charpoly_smul_polynomial {K ι : Type*} [Field K] [Infinite K]
@@ -50,29 +51,33 @@ theorem charpoly_smul_polynomial {K ι : Type*} [Field K] [Infinite K]
   apply Polynomial.funext
   intro x
   rw [charpoly_smul_eval A ha]
-  simp [Polynomial.eval_comp, div_eq_mul_inv, mul_comm]
+  simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_comp, Polynomial.eval_X]
+  rw [div_eq_mul_inv, mul_comm x a⁻¹]
 
 /-- The physical derivative at the radius selected by b and Omega. -/
 def parameterOperator (m : ℕ) (b Ω : ℝ) : Module.End ℂ (Cartesian m) :=
   ((AlternatingPolygonParameters.jacobian (2 * m) b Ω
     (AlternatingPolygonParameters.radius b Ω • polygon (2 * m))).map Complex.ofRealHom).toLin'
 
-theorem parameterOperator_eq (m : ℕ) {b Ω : ℝ} (hb : 0 < b) (hΩ : 0 < Ω) :
-    parameterOperator m b Ω = (2 * Ω : ℂ) • actualOperator m := by
+theorem parameter_matrix_eq (m : ℕ) {b Ω : ℝ} (hb : 0 < b) (hΩ : 0 < Ω) :
+    (AlternatingPolygonParameters.jacobian (2 * m) b Ω
+      (AlternatingPolygonParameters.radius b Ω • polygon (2 * m))).map Complex.ofRealHom =
+        (2 * Ω : ℂ) • (jacobian (2 * m)).map Complex.ofRealHom := by
   have hR := ne_of_gt (AlternatingPolygonParameters.radius_pos hb hΩ)
   have hbR : b = 4 * Ω * AlternatingPolygonParameters.radius b Ω ^ 2 := by
     rw [AlternatingPolygonParameters.radius_sq hb hΩ]
     field_simp
-  unfold parameterOperator actualOperator
   rw [AlternatingPolygonParameters.jacobian_scaling _ hR hbR]
-  apply LinearMap.ext
-  intro v
-  ext p
-  simp [Matrix.mulVec, dotProduct, Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro q _
+  ext p q
+  change ((2 * Ω * jacobian (2 * m) p q : ℝ) : ℂ) =
+    (2 * Ω : ℂ) * (jacobian (2 * m) p q : ℂ)
   push_cast
-  ring
+  rfl
+
+theorem parameterOperator_eq (m : ℕ) {b Ω : ℝ} (hb : 0 < b) (hΩ : 0 < Ω) :
+    parameterOperator m b Ω = (2 * Ω : ℂ) • actualOperator m := by
+  unfold parameterOperator actualOperator
+  rw [parameter_matrix_eq m hb hΩ, map_smul]
 
 /-- Every eigenvalue and every Jordan filtration level transports from the actual field. -/
 theorem parameter_genEigenspace (m : ℕ) {b Ω : ℝ} (hb : 0 < b) (hΩ : 0 < Ω)
@@ -80,7 +85,8 @@ theorem parameter_genEigenspace (m : ℕ) {b Ω : ℝ} (hb : 0 < b) (hΩ : 0 < �
     (parameterOperator m b Ω).genEigenspace ((2 * Ω : ℂ) * μ) n =
       (actualOperator m).genEigenspace μ n := by
   rw [parameterOperator_eq m hb hΩ]
-  exact smul_genEigenspace _ (Complex.ofReal_ne_zero.mpr (by positivity)) μ n
+  exact smul_genEigenspace _
+    (mul_ne_zero (by norm_num) (Complex.ofReal_ne_zero.mpr (ne_of_gt hΩ))) μ n
 
 theorem parameter_charpoly (m : ℕ) {b Ω : ℝ} (hb : 0 < b) (hΩ : 0 < Ω) :
     ((AlternatingPolygonParameters.jacobian (2 * m) b Ω
@@ -88,10 +94,8 @@ theorem parameter_charpoly (m : ℕ) {b Ω : ℝ} (hb : 0 < b) (hΩ : 0 < Ω) :
       C ((2 * Ω : ℂ) ^ (4 * m)) *
         (((jacobian (2 * m)).map Complex.ofRealHom).charpoly).comp
           (C (2 * Ω : ℂ)⁻¹ * X) := by
-  have h := congrArg LinearMap.charpoly (parameterOperator_eq m hb hΩ)
-  simp only [parameterOperator, actualOperator, Matrix.charpoly_toLin',
-    ← Matrix.toLin'_smul] at h
-  rw [h, charpoly_smul_polynomial _ (Complex.ofReal_ne_zero.mpr (by positivity))]
+  rw [parameter_matrix_eq m hb hΩ, charpoly_smul_polynomial _
+    (mul_ne_zero (by norm_num) (Complex.ofReal_ne_zero.mpr (ne_of_gt hΩ)))]
   simp [Fintype.card_sum, show 2 * m + 2 * m = 4 * m by omega]
 
 /-- The chain length stays two; only the generalized vector is rescaled. -/
@@ -99,7 +103,8 @@ theorem parameter_neutral_chain (m : ℕ) [NeZero (2 * m)] (hm : 1 ≤ m)
     {b Ω : ℝ} (hb : 0 < b) (hΩ : 0 < Ω) :
     parameterOperator m b Ω (neutral0 m) = 0 ∧
       parameterOperator m b Ω ((2 * Ω : ℂ)⁻¹ • neutral1 m) = neutral0 m := by
-  have ha : (2 * Ω : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (by positivity)
+  have ha : (2 * Ω : ℂ) ≠ 0 :=
+    mul_ne_zero (by norm_num) (Complex.ofReal_ne_zero.mpr (ne_of_gt hΩ))
   rw [parameterOperator_eq m hb hΩ]
   constructor
   · simp only [LinearMap.smul_apply, (neutral_chain m hm).1, smul_zero]

@@ -13,11 +13,11 @@ internal sealed class AlternatingPolygonJordanDocument : IScribeDocumentDefiniti
         H("Alternating Polygon Jordan"), Blocks(
             Paragraph(Text("The full extension is set out in the 4 November 2026 note by Haobo Ma and Wenlin Zhang, in that order. Barry and Kevrekidis retain prior credit for equilibrium, instability and the small-spectrum classification. The existing Conjecture 4.4 real-root theorem and its field, rotation, Fourier and determinant proof bodies are reused. No priority certification is made.")),
             Node("actualOperator", "actualOperator", "The actual complexification, acting on Cartesian displacements.", DescribeRole.Definition),
-            Node("modeOperator", "modeOperator", "The exact declaration below uses the hypotheses and objects of this module.", DescribeRole.Definition),
+            Node("modeOperator", "modeOperator", "The full paired Fourier operator acts by the two off-diagonal coefficients at each cyclic label.", DescribeRole.Definition),
             Node("rotationCoordinates", "rotationCoordinates", "The existing orthogonal rotation, used as an actual coordinate equivalence.", DescribeRole.Definition),
             Node("cartesianCoordinates", "cartesianCoordinates", "Cartesian -> radial/tangential -> paired Fourier coordinates.", DescribeRole.Definition),
             Node("actual_normal_form", "actual normal form", "Every coordinate, and therefore every invariant block, belongs to the actual Cartesian derivative, with no assumed spectral hypothesis.", DescribeRole.Theorem),
-            Node("actual_nonzero_semisimple", "actual nonzero semisimple", "Full generalized eigenspaces transport through the actual Fourier similarity; the nonzero restriction argument applies to all complex \u03bc.", DescribeRole.Theorem))));
+            Node("actual_nonzero_semisimple", "actual nonzero semisimple", "Full generalized eigenspaces transport through the actual Fourier similarity; the nonzero restriction argument applies to all complex \\u03bc.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("alternating-polygon-jordan-" + name),

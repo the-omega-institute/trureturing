@@ -63,7 +63,12 @@ theorem hasFDerivAt_normalized (N : ℕ) :
       ((AlternatingPolygonSpectrum.jacobian N).toLin'.toContinuousLinearMap)
       (AlternatingPolygonSpectrum.polygon N) := by
   have h := hasFDerivAt_field 2 (1 / 2) (polygon_collision_free N)
-  simpa only [AlternatingPolygonParameters.jacobian, normalized_field,
-    AlternatingPolygonSpectrum.jacobian] using h
+  have hJ : AlternatingPolygonParameters.jacobian N 2 (1 / 2)
+      (AlternatingPolygonSpectrum.polygon N) = AlternatingPolygonSpectrum.jacobian N := by
+    ext p q
+    unfold AlternatingPolygonParameters.jacobian AlternatingPolygonSpectrum.jacobian
+    rw [normalized_field]
+  rw [hJ, normalized_field] at h
+  exact h
 
 end D5.S3.FluidDynamics.Vortices.AlternatingPolygonDerivative
