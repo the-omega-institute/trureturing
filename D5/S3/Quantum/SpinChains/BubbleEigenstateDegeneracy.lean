@@ -9,10 +9,6 @@
 module
 
 public import D5.S3.Combinatorics.Geometry.MiuraRunCompositions
-public import Mathlib.Data.Finset.Powerset
-public import Mathlib.Data.Fintype.BigOperators
-public import Mathlib.Data.Finset.Sort
-public import Mathlib.Data.Fin.Basic
 
 /-! Labelled placements of separated three-site bubbles on a periodic chain. -/
 
