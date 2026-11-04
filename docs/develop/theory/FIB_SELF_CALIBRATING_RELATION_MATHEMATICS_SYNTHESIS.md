@@ -645,15 +645,29 @@ $$
 \qquad \rho_n:G_n\to R_n,
 $$
 
-一个固定的成对比较 $c_n:M_n^2\to[0,\infty)$，以及由同一记录域上的全部有限列表共享的 Gram 核
+一个固定的成对比较 $c_n:M_n^2\to[0,\infty)$，以及由同一记录域上的全部有限列表共享的内积 Gram 核
 
 $$
 K_n(g,g')
-=c_n(\alpha_n(g),\alpha_n(g'))
-=\langle F_n\alpha_n(g),F_n\alpha_n(g')\rangle.
+=\langle F_n\alpha_n(g),F_n\alpha_n(g')\rangle,
 $$
 
-这里 $K_n$ 必须对同一 $G_n$ 的每个有限列表保持不变；它不能只在失败线、某个有限样本或重命名的旧核上成立。若采用加性、锚定的 C133 接口，还要给出带符号比较群 $A_n$、共同标记 $U_n$ 和读数 $q_n^{\rm C133}$，使
+并且平方距离由极化关系给出
+
+$$
+c_n(\alpha_n(g),\alpha_n(g'))
+=K_n(g,g)+K_n(g',g')-2\operatorname{Re}K_n(g,g').
+$$
+
+这里 $K_n$ 必须对同一 $G_n$ 的每个有限列表保持不变；它不能只在失败线、某个有限样本或重命名的旧核上成立。还必须逐个档案满足
+
+$$
+\rho_n(g)=\rho_n(g')
+\quad\Longleftrightarrow\quad
+c_n(\alpha_n(g),\alpha_n(g'))=0,
+$$
+
+并要求目标在这些零比较纤维上恒定。若采用加性、锚定的 C133 接口，还要给出带符号比较群 $A_n$、共同标记 $U_n$ 和读数 $q_n^{\rm C133}$，使
 
 $$
 M_n=A_n,\qquad
