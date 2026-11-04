@@ -56,6 +56,9 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
             Node("psd_cauchy_schwarz", PsdCauchySchwarzFormula(),
                 "A positive semidefinite complex matrix satisfies Cauchy–Schwarz for its sesquilinear form: the squared absolute mixed value is bounded by the product of the two real diagonal values. The form may be degenerate.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("P_sq", ConstantProjectionSquareFormula(),
+                "The all-ones matrix divided by its positive dimension is idempotent.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("fire", FireFormula(), "Section 2, pages 2–3: “Let |𝜙ᵢ⟩ = (𝐼^{⊗𝑖} ⊗ 𝑈 ⊗ 𝐼^{⊗(𝑛−𝑖−1)})|𝜓⟩.” A Boolean word labels the tensor eigenbasis; true is u₊ and false is u₋. Angles are in radians.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("isoSuccess", SuccessFormula(), "Section 2, page 3: “these final states have an equal prior probability”. The success is the mean of the Born probabilities for the correct outcomes. LocalPOVM is the existing finite family of positive semidefinite effects summing to the identity.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("rCount", CountFormula("rCount", Eq), "Section 4, page 7: “For each 0 ≤ 𝑘 ≤ 𝑛, let 𝑅𝑘 be the number of coefficient-squares from 𝑆𝑘 in the RHS of a Real equation”. Observation 1 places a word on this side exactly when its two selected bits agree. The inner cardinality counts the true bits.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
@@ -119,6 +122,15 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
         var instances = Seq(OpenBracket, Call("Fintype", h), CloseBracket, Comma, Sp,
             OpenBracket, Call("DecidableEq", h), CloseBracket, Comma, Sp, Parenthesized(parameters));
         return All("h", V("Type"), instances);
+    }
+
+    private static Formula ConstantProjectionSquareFormula()
+    {
+        var ones = Call(Q("Matrix", "of"),
+            LambdaOf("i", FinN, LambdaOf("j", FinN, Cast(D(1), Complex))));
+        var projection = Call(Q("HSMul", "hSMul"), Call(Q("Inv", "inv"), Cast(N, Real)), ones);
+        return All("n", Nat, Impl(Seq(D(0), Sp, Lt, Sp, N),
+            Eqn(Mul(Parenthesized(projection), Parenthesized(projection)), projection)));
     }
 
     private static Formula FireFormula() => All("n", Nat, All("theta", Real, All("i", FinN, All("psi", State,

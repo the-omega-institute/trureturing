@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
 import D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation
 import D5.S3.Fourier.PositiveFourierApproximationRefutation
+import D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
 
 /-! Sharp return probabilities for strongly regular conference graphs. -/
 
@@ -46,21 +47,17 @@ private lemma conference_identity {m : ℕ} (hm : 1 ≤ m)
     G.adjMatrix ℂ * G.adjMatrix ℂ =
       (m : ℂ) • (1 : Matrix V V ℂ) - G.adjMatrix ℂ +
         (m : ℂ) • Matrix.of (fun _ _ => (1 : ℂ)) := by
-  rw [← pow_two, hG.matrix_eq]
-  ext u v
-  simp only [Matrix.add_apply, Matrix.smul_apply]
-  have hm' : ((m - 1 : ℕ) : ℂ) = (m : ℂ) - 1 := by
-    simpa only [Nat.cast_one] using (Nat.cast_sub (R := ℂ) hm)
-  by_cases huv : u = v
-  · subst v
-    simp [Matrix.sub_apply, Matrix.smul_apply, SimpleGraph.adjMatrix_apply, nsmul_eq_mul]
-    ring
-  · by_cases ha : G.Adj u v
-    · simp [Matrix.sub_apply, Matrix.smul_apply,
-        SimpleGraph.adjMatrix_apply, huv, ha, nsmul_eq_mul, hm']
-      ring
-    · simp [Matrix.sub_apply, Matrix.smul_apply,
-        SimpleGraph.adjMatrix_apply, huv, ha, nsmul_eq_mul]
+  have hcomp := G.one_add_adjMatrix_add_compl_adjMatrix_eq_of_one ℂ
+  rw [G.compl_adjMatrix_eq_adjMatrix_compl ℂ] at hcomp
+  simp only [Pi.one_def] at hcomp
+  have hc : Gᶜ.adjMatrix ℂ = Matrix.of (fun _ _ => (1 : ℂ)) - 1 - G.adjMatrix ℂ := by
+    rw [← hcomp]
+    abel
+  rw [← pow_two, hG.matrix_eq, hc, ← Nat.cast_smul_eq_nsmul ℂ,
+    ← Nat.cast_smul_eq_nsmul ℂ, ← Nat.cast_smul_eq_nsmul ℂ]
+  rw [Nat.cast_sub hm]
+  push_cast
+  module
 
 private lemma conference_projectors {m : ℕ} (hm : 1 ≤ m)
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
@@ -111,9 +108,6 @@ private lemma conference_projectors {m : ℕ} (hm : 1 ≤ m)
     dsimp [θ, τ]
     dsimp [n] at hrr
     linear_combination -hrr / 4
-  have hJJ : J * J = n • J := by
-    ext i j
-    simp [J, Matrix.mul_apply, hG.card, n]
   have hAJ : A * J = (2 * (m : ℂ)) • J := by
     ext i j
     have h := G.adjMatrix_mulVec_const_apply_of_regular (α := ℂ) (a := 1) (v := i)
@@ -122,15 +116,19 @@ private lemma conference_projectors {m : ℕ} (hm : 1 ≤ m)
     simpa only [Nat.cast_mul, Nat.cast_ofNat] using h
   have hJA : J * A = (2 * (m : ℂ)) • J := by
     have h := congrArg Matrix.transpose hAJ
-    have hJT : Jᵀ = J := by ext i j; rfl
+    have hJT : Jᵀ = J := Matrix.transpose_replicateCol (fun _ : V => (1 : ℂ))
     have hAT : Aᵀ = A := G.transpose_adjMatrix
     rw [Matrix.transpose_mul, Matrix.transpose_smul, hJT, hAT] at h
     exact h
   have hPP : P * P = P := by
-    dsimp [P]
-    simp only [Matrix.smul_mul, Matrix.mul_smul, hJJ, smul_smul]
-    congr 1
-    field_simp
+    have hp := D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.P_sq
+      (Fintype.card V) (by rw [hG.card]; omega)
+    have he := congrArg (Matrix.reindexAlgEquiv ℝ ℂ (Fintype.equivFin V).symm) hp
+    change (n⁻¹ • Matrix.of (fun _ _ : V => (1 : ℂ))) *
+      (n⁻¹ • Matrix.of (fun _ _ : V => (1 : ℂ))) =
+        n⁻¹ • Matrix.of (fun _ _ : V => (1 : ℂ))
+    simpa [map_mul, map_smul, Matrix.reindex_apply, Matrix.submatrix,
+      RCLike.real_smul_eq_coe_smul (K := ℂ), hG.card, n, Pi.smul_def, smul_eq_mul] using he
   have hAP : A * P = (2 * (m : ℂ)) • P := by
     dsimp [P]
     rw [Matrix.mul_smul, hAJ]
@@ -153,10 +151,7 @@ private lemma conference_projectors {m : ℕ} (hm : 1 ≤ m)
   have hPB : P * B = 0 := by
     dsimp [B]
     rw [mul_sub, Matrix.mul_smul, hPA, hPP, sub_self]
-  have hQQ : Q * Q = Q := by
-    dsimp [Q]
-    simp only [sub_mul, mul_sub, one_mul, mul_one, hPP]
-    abel
+  have hQQ : Q * Q = Q := IsIdempotentElem.one_sub hPP
   have hBQ : B * Q = B := by dsimp [Q]; rw [mul_sub, mul_one, hBP, sub_zero]
   have hQB : Q * B = B := by dsimp [Q]; rw [sub_mul, one_mul, hPB, sub_zero]
   have hBB : B * B = (m : ℂ) • Q - B := by
@@ -208,8 +203,8 @@ private lemma conference_projectors {m : ℕ} (hm : 1 ≤ m)
   have hFE : F * E = 0 := by
     conv_lhs => lhs; dsimp only [F]
     rw [Matrix.smul_mul, sub_mul, Matrix.smul_mul, hQE, hBE, sub_self, smul_zero]
-  have hPQ : P * Q = 0 := by dsimp [Q]; rw [mul_sub, mul_one, hPP, sub_self]
-  have hQP : Q * P = 0 := by dsimp [Q]; rw [sub_mul, one_mul, hPP, sub_self]
+  have hPQ : P * Q = 0 := IsIdempotentElem.mul_one_sub_self hPP
+  have hQP : Q * P = 0 := IsIdempotentElem.one_sub_mul_self hPP
   have hPE : P * E = 0 := by
     dsimp [E]
     rw [Matrix.mul_smul, mul_sub, Matrix.mul_smul, hPB, hPQ, smul_zero, sub_self, smul_zero]
@@ -368,10 +363,13 @@ private lemma square_lower {m : ℕ} (hm : 1 ≤ m) (hs : IsSquare (4 * m + 1)) 
     rw [hq', Real.sqrt_sq (Nat.cast_nonneg _)]
   let x : ℝ := (q : ℝ) * t / 2
   have hx : (4 * (m : ℝ) + 1) * t / 2 = (q : ℝ) * x := by dsimp [x]; rw [hq']; ring
-  rw [hroot, hx, Complex.sq_norm, Complex.normSq_apply, Complex.exp_ofReal_mul_I]
-  simp only [Complex.add_re, Complex.add_im, Complex.ofReal_re, Complex.ofReal_im,
-    Complex.mul_re, Complex.mul_im, Complex.I_re, Complex.I_im, mul_zero, mul_one,
-    sub_zero, zero_add, add_zero]
+  rw [hroot, hx]
+  change 1 ≤ ‖Complex.exp (((q : ℝ) * x : ℝ) * I) +
+    (4 * (m : ℝ) * Real.cos x : ℝ)‖ ^ 2
+  rw [Complex.sq_norm, Complex.normSq_add, Complex.normSq_ofReal,
+    Complex.normSq_eq_norm_sq, Complex.norm_exp_ofReal_mul_I,
+    Complex.exp_ofReal_mul_I]
+  simp [-Complex.ofReal_cos, -Complex.ofReal_sin]
   have hbound := odd_cos_bound q hodd x
   have hprod : |Real.cos x * Real.cos ((q : ℝ) * x)| ≤
       (q : ℝ) * Real.cos x ^ 2 := by
@@ -387,7 +385,7 @@ private lemma square_lower {m : ℕ} (hm : 1 ≤ m) (hs : IsSquare (4 * m + 1)) 
     nlinarith
   have hnonneg := mul_nonneg (mul_nonneg (by positivity : 0 ≤ 4 * (m : ℝ)) hcoef)
     (sq_nonneg (Real.cos x))
-  nlinarith [Real.sin_sq_add_cos_sq ((q : ℝ) * x)]
+  nlinarith
 
 private lemma floor_attainment {m : ℕ} (hm : 1 ≤ m)
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
@@ -475,13 +473,12 @@ private lemma nonsquare_small {m : ℕ} (hm : 1 ≤ m) (hs : ¬ IsSquare (4 * m 
     Real.norm_eq_abs, sq_abs]
   have hcos : Real.cos ((j.natAbs : ℝ) * (2 * Real.pi / r)) =
       Real.cos ((j : ℝ) * (2 * Real.pi / r)) := by
-    have habs : (j.natAbs : ℝ) = |(j : ℝ)| := by
-      simpa only [Int.cast_natCast, Int.cast_abs] using
-        congrArg (fun k : ℤ => (k : ℝ)) (Int.natCast_natAbs j)
-    rw [habs]
-    rcases le_total 0 (j : ℝ) with hj0 | hj0
-    · rw [abs_of_nonneg hj0]
-    · rw [abs_of_nonpos hj0, neg_mul, Real.cos_neg]
+    rw [Nat.cast_natAbs, Int.cast_abs]
+    calc
+      Real.cos (|(j : ℝ)| * (2 * Real.pi / r)) =
+          Real.cos |(j : ℝ) * (2 * Real.pi / r)| := by
+        rw [abs_mul, abs_of_nonneg (div_nonneg (by positivity) hr.le)]
+      _ = Real.cos ((j : ℝ) * (2 * Real.pi / r)) := Real.cos_abs _
   rw [hcos]
   have hj' := lt_of_lt_of_le hj (min_le_left _ _)
   dsimp only [f] at hj'
