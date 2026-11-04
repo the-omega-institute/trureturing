@@ -232,10 +232,10 @@ private lemma regularTransform_eq {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) {z : 
   rw [dslope_of_ne _ hz1, slope_def_field]
   simp only [Complex.one_cpow, powerSlope_one, one_mul]
   rw [powerSlope, dslope_of_ne _ hz1, slope_def_field, Complex.one_cpow]
-  dsimp only [complexTransform]
+  rw [complexTransform.eq_1]
   congr 1
-  field_simp [sub_ne_zero.mpr hz1, sub_ne_zero.mpr hpow, hz0,
-    Complex.ofReal_ne_zero.mpr ha0.ne']
+  field_simp (disch := first | positivity | assumption | exact sub_ne_zero.mpr hz1 |
+    exact sub_ne_zero.mpr hpow | exact Complex.ofReal_ne_zero.mpr ha0.ne')
   ring
 
 private lemma exp_eq_one_strip {w : ℂ} (hlo : -(2 * Real.pi) < w.im)
@@ -355,9 +355,10 @@ private lemma contourKernel_eq {α r : ℝ} (hr0 : 0 < r) {w : ℂ}
     (hw : w ≠ (Real.log r : ℂ)) :
     contourKernel α r w = Complex.exp w *
       (logTransform α w - logTransform α (Real.log r : ℂ)) / (Complex.exp w - r) := by
-  simp only [contourKernel, dslope_of_ne _ hw, slope_def_field,
+  rw [contourKernel.eq_1]
+  simp only [dslope_of_ne _ hw, slope_def_field,
     ← Complex.ofReal_exp, Real.exp_log hr0]
-  field_simp [sub_ne_zero.mpr hw]
+  field_simp (disch := first | positivity | assumption | exact sub_ne_zero.mpr hw)
 
 private lemma contour_rectangle {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (T : ℝ) :
     (∫ x in (-T)..T, contourKernel α r (x - Real.pi * Complex.I)) -
@@ -467,7 +468,7 @@ private lemma contourKernel_top {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   rw [contourKernel_eq hr0 hw, logTransform_boundary,
     logTransform_log ha0 ha2 hr0 hr1, Complex.exp_add_pi_mul_I, ← Complex.ofReal_exp]
   push_cast
-  field_simp
+  field_simp (disch := first | positivity | assumption)
   rw [show -Complex.exp (x : ℂ) - (r : ℂ) =
     -(Complex.exp (x : ℂ) + (r : ℂ)) by ring, div_neg, neg_neg, add_comm]
 
@@ -480,7 +481,7 @@ private lemma contourKernel_top_im {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   have hb := transform_boundary ha0 ha2 ha1 (Real.exp_pos x)
   have hi := (div_eq_iff Real.pi_ne_zero).mp hb
   simp only [zero_mul, add_zero, sub_zero]
-  field_simp
+  field_simp (disch := first | positivity | assumption)
   nlinarith [hi]
 
 private lemma contourKernel_bottom {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
@@ -504,7 +505,7 @@ private lemma contourKernel_bottom {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   rw [Complex.exp_conj, Complex.exp_add_pi_mul_I, ← Complex.ofReal_exp]
   simp only [map_neg, Complex.conj_ofReal, map_mul, map_sub, hf]
   push_cast
-  field_simp
+  field_simp (disch := first | positivity | assumption)
   rw [show -Complex.exp (x : ℂ) - (r : ℂ) =
     -(Complex.exp (x : ℂ) + (r : ℂ)) by ring, div_neg, neg_neg, add_comm]
 
@@ -559,7 +560,7 @@ private lemma logTransform_weighted (α : ℝ) {w : ℂ} (hw : w ≠ 0) :
         (Complex.exp ((α : ℂ) * w) / (1 - Complex.exp ((α : ℂ) * w)))) /
           ((α - 1 : ℝ) : ℂ) := by
   rw [logTransform, ite_eq_right hw]
-  field_simp [Complex.exp_ne_zero]
+  field_simp (disch := exact Complex.exp_ne_zero _)
 
 private lemma norm_ratio_large {z : ℂ} (hz : 2 ≤ ‖z‖) : ‖z / (1 - z)‖ ≤ 2 := by
   have hd : ‖z‖ - 1 ≤ ‖1 - z‖ := by
@@ -667,7 +668,7 @@ private lemma contour_right_limit {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
       (Complex.exp w * logTransform α w - (r : ℂ) * c) / (Complex.exp w - r) := by
     rw [contourKernel_eq hr0 hwl, logTransform_log ha0 ha2 hr0 hr1]
     change Complex.exp w * (logTransform α w - c) / (Complex.exp w - r) - -c = _
-    field_simp [hdne]
+    field_simp (disch := assumption)
     ring
   rw [hk, norm_div]
   apply (div_le_iff₀ hd0).mpr
@@ -678,7 +679,7 @@ private lemma contour_right_limit {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     _ = b T * (Real.exp T / 2) := by
       dsimp only [b]
       rw [Real.exp_neg]
-      field_simp
+      field_simp (disch := positivity)
     _ ≤ b T * ‖Complex.exp w - (r : ℂ)‖ := by
       apply mul_le_mul_of_nonneg_left (by linarith)
       dsimp only [b, C]
@@ -742,7 +743,7 @@ private lemma contour_left_limit {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   calc
     _ ≤ A T + Real.exp (-T) * ‖c‖ :=
       (norm_sub_le _ _).trans (add_le_add hP (by simp only [norm_mul, he, le_rfl]))
-    _ = b T * (r / 2) := by dsimp only [b]; field_simp
+    _ = b T * (r / 2) := by dsimp only [b]; field_simp (disch := positivity)
     _ ≤ b T * ‖Complex.exp w - (r : ℂ)‖ := by
       apply mul_le_mul_of_nonneg_left (by linarith)
       dsimp only [b, A]
