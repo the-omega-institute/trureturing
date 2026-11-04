@@ -141,3 +141,210 @@ $$
 **对应 4.3（用途与量子接口范围）。**`repo-derived`：本卷的无条件新增约束是精确轨道余量及独立轨道上界；有序树恒等式把同一 (R) 传递到全部有限实际历史。它们限制反例和误差预算，不把一般去锚分类记为完成，也不额外供应准备、记录、参考、联合或时间操作。三历史强正 Gram、完整测试效果、最小输入空间上的 Kraus 延拓及其实际接口，继续依赖前述五点桥梁列出的表示条件。有限平均、非负界与四点极化是常规工具；此处不作独立文献优先权主张。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 5. 独立有限窗口的固定边框预算
+
+**定义 5.1（轨道方窗与实际右平移）。**对整数 $L\ge1$，置
+
+$$
+C_L(u,v)=\frac1{L^2}\sum_{0\le n,m<L}c(U^nu,U^mv),\qquad
+K_L(a,u;b,v)=\frac1{L^2}\sum_{0\le n,m<L}c(a\cdot U^nu,b\cdot U^mv).
+\tag{5.1}
+$$
+
+在自由实差空间 $E$ 上定义线性算子
+
+$$
+\mathcal T_L^u e_a=\frac1L\sum_{n=0}^{L-1}
+\bigl(e_{a\cdot U^nu}-e_{U^nu}\bigr),\qquad
+\mathcal A_L=\mathcal T_L^1.
+\tag{5.2}
+$$
+
+单位 $a=1$ 时右端为零，故此定义与 $e_1=0$ 相容。这些平均只是有限标量和或自由空间向量，不作为 $M$ 中的新对象或单位。
+
+**定理 5.2（独立轨道平均律）。**在定义 1.1 与 (R) 下，令
+
+$$
+W(a,b;u,v)=3c(a,b)+9\bigl(\Omega(u)+\Omega(v)\bigr).
+$$
+
+对全部四标签及 $L\ge1$，有
+
+$$
+\left|K_L(a,u;b,v)-c(a,b)-C_L(u,v)\right|
+\le\frac{2W(a,b;u,v)}L.
+\tag{5.3}
+$$
+
+**证明。**令 $H_{n,m}=c(a\cdot U^nu,b\cdot U^mv)$、$Q_L=\{0,\ldots,L-1\}^2$，并写 $Q_L+k=\{(n+k,m+k):(n,m)\in Q_L\}$。引理 1.2 与推论 2.2 给 $0\le H_{n,m}\le W(a,b;u,v)$，对全部独立 $n,m\ge0$ 成立。对 (R) 的输入 $(a,b,U^nu,U^mv)$ 在 $Q_L$ 上求和，得到精确式
+
+$$
+\begin{aligned}
+&3L^2\bigl(K_L(a,u;b,v)-c(a,b)-C_L(u,v)\bigr)\\
+&\quad=\sum_{k=1}^2\left(
+\sum_{Q_L\setminus(Q_L+k)}H_{n,m}
+-\sum_{(Q_L+k)\setminus Q_L}H_{n,m}\right).
+\end{aligned}
+\tag{5.4}
+$$
+
+两差集基数相等，每个至多 $2kL$。各项属于同一 $[0,W]$，故第 $k$ 个括号绝对值至多 $2kLW$。对 $k=1,2$ 求和并除以 $3L^2$，即得 (5.3)。此外，同步等距给 $\Omega(U^ru)=\Omega(u)$；用 $U^ru,U^sv$ 替换 $u,v$，同一预算也适用于任意独立起点 $r,s\ge0$。这里仅增长一元标记次数，所有乘积仍有一个二元结点；未使用随树深增长的预算。
+
+**定理 5.3（平均右平移恢复原配对）。**对全部 $a,b,u,v$ 与 $L\ge1$，有
+
+$$
+\left|B(\mathcal T_L^ue_a,\mathcal T_L^ve_b)-B(e_a,e_b)\right|
+\le\frac{3[c(a,b)+q(a)+r(b)]+27[\Omega(u)+\Omega(v)]}L.
+\tag{5.5}
+$$
+
+**证明。**四点极化给
+
+$$
+\begin{aligned}
+2B(\mathcal T_L^ue_a,\mathcal T_L^ve_b)
+={}&-K_L(a,u;b,v)+K_L(a,u;1,v)\\
+&+K_L(1,u;b,v)-C_L(u,v).
+\end{aligned}
+$$
+
+前三项分别用 (5.3)，其主项为 $c(a,b)+C_L(u,v)$、$q(a)+C_L(u,v)$、$r(b)+C_L(u,v)$。共同的 $C_L$ 精确抵消，剩余 $2B(e_a,e_b)$。三个误差预算相加后除以二，得到 (5.5)。此式不预设 $B$ 对称或正定。
+
+**推论 5.4（平均缺陷的双向消去）。**置
+
+$$
+D_n(a,u)=e_{a\cdot U^nu}-e_{a\cdot p_n}-e_{U^nu}+e_{p_n},\qquad
+\overline D_L(a,u)=\frac1L\sum_{n=0}^{L-1}D_n(a,u).
+$$
+
+则 $D_0(a,u)=D(a,u)$、$\overline D_L(a,u)=(\mathcal T_L^u-\mathcal A_L)e_a$，且
+
+$$
+\left|B(\overline D_L(a,u),\mathcal A_Le_z)\right|
+\le\frac{6[c(a,z)+q(a)+r(z)]+27\Omega(u)+81\Omega(1)}L,
+\tag{5.6}
+$$
+
+$$
+\left|B(\mathcal A_Le_z,\overline D_L(a,u))\right|
+\le\frac{6[c(z,a)+q(z)+r(a)]+27\Omega(u)+81\Omega(1)}L.
+\tag{5.7}
+$$
+
+**证明。**第一方向对 $(u,1)$ 与 $(1,1)$ 两次使用 (5.5) 并相减；第二方向对 $(1,u)$ 与 $(1,1)$ 使用同式。主配对均精确抵消，不借对称性对调 $B$。固定 $v$ 时，测试向量也可换为 $\mathcal T_L^ve_z$，相同计算给有限固定预算除以 $L$ 的界。
+
+## 6. 三次滑移保留的未来测试域
+
+**命题 6.1（尾部行列恒等式）。**令 $P_nx=x\cdot p_{3n}$、$Y_n(a,u)=a\cdot U^{3n}u$。对全部 $m\ge n\ge0$ 及 $a,u,z$，
+
+$$
+\begin{aligned}
+c(Y_n(a,u),P_mz)
+&=c(P_n(a\cdot u),P_mz)\\
+&=c(U^{3n}(a\cdot u),P_mz)\\
+&=c(a\cdot u,P_{m-n}z),
+\end{aligned}
+\tag{6.1}
+$$
+
+交换两个参数后的四项也相等。因此前三种实际历史对 $\bigcup_{m\ge n}P_m(M)$ 的全部测试具有相同行列。
+
+**证明。**置 $f_j=c(a\cdot U^ju,b\cdot U^jv)$。(R) 与同步等距给 $f_j+f_{j+1}+f_{j+2}=3c(a,b)+3c(u,v)$；相邻两式相减得 $f_{j+3}=f_j$。式 (6.1) 每一项都能从两个右输入同步撤去 $3n$ 次标记。例如首项为
+
+$$
+c\bigl(a\cdot U^{3n}u,z\cdot U^{3n}p_{3(m-n)}\bigr)
+=c(a\cdot u,z\cdot p_{3(m-n)}).
+$$
+
+第二项的右输入取 $(1,p_{3(m-n)})$，第三项的左背景取 $1$、右输入取 $(a\cdot u,p_{3(m-n)})$，同样得到最后一项。反向式逐项使用相同滑移。没有将 $(a\cdot u)\cdot p_{3n}$ 重括号为 $a\cdot(u\cdot p_{3n})$。引理 1.2 还给全部独立 $m,n\ge0$ 的统一界
+
+$$
+c(Y_n(a,u),P_mz)\le3c(a,z)+9[\Omega(u)+\Omega(1)].
+$$
+
+此测试域不被宣告等于 $M$；命题没有把 $P_mz$ 换成任意原始 $z$。
+
+## 7. 复制历史对一致次线性项的消去
+
+**定理 7.1（有符号关系解的一致次线性消去）。**设处处有限的 $d:M^2\to[0,\infty)$、$h:M^2\to\mathbb R$ 都满足与 (R) 相同的四变量线性关系。若
+
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon<\infty\ \forall a,b,\qquad
+|h(a,b)|\le\varepsilon d(a,b)+C_\varepsilon,
+\tag{7.1}
+$$
+
+则 $h=0$。
+
+**证明。**令 $\Phi_k(x)=x\cdot U^kx$，并对函数定义正平均算子
+
+$$
+(Pf)(a,b)=\frac13\sum_{k=0}^2f(\Phi_k(a),\Phi_k(b)).
+$$
+
+关系的输入 $(u,v)=(a,b)$ 给 $Pd=2d$、$Ph=2h$，从而
+
+$$
+2^n|h(a,b)|=|P^nh(a,b)|\le P^n|h|(a,b)
+\le\varepsilon2^nd(a,b)+C_\varepsilon.
+$$
+
+先除以 $2^n$ 并令 $n\to\infty$，再令 $\varepsilon\downarrow0$。所有迭代都使用原始实际历史 $x_{j+1}=x_j\cdot U^{k_j}x_j$，复制已带完整括号的 $x_j$，不改变其内部括号。平均精确放大因子为 $2^n$，没有用逐历史的最坏深度界替代平均。
+
+**推论 7.2（对称性的一致次线性充分条件）。**若定义 1.1 与 (R) 下还满足：对每个 $\varepsilon>0$ 存在有限 $C_\varepsilon$，使全部 $a,b$ 有
+
+$$
+|c(a,b)-c(b,a)|\le\varepsilon\frac{c(a,b)+c(b,a)}2+C_\varepsilon,
+\tag{7.2}
+$$
+
+则 $c$ 对称。
+
+**证明。**$d=(c+c^{\mathsf T})/2$ 与 $h=c-c^{\mathsf T}$ 都满足同一关系，应用定理 7.1。原始非负性只给 $|h|\le2d$，未给 (7.2)。对固定 $a,u$ 的缺陷配对也未被证明组成满足完整四变量关系的函数，故本推论不消去该缺陷。
+
+## 8. 不能由平均或有界性替代的关系
+
+**问题 8.1（撤平均与回拉）。**沿用问题 4.2，目标仍为全部 $a,u,z$ 上 $B(D(a,u),e_z)=B(e_z,D(a,u))=0$。定理 5.3 保留原配对，推论 5.4 消去平均缺陷对平均探针的配对，二者不等于以下尚未取得的回拉：
+
+$$
+\begin{aligned}
+B(D(a,u),e_z)-B(\overline D_L(a,u),\mathcal A_Le_z)&\longrightarrow0,\\
+B(e_z,D(a,u))-B(\mathcal A_Le_z,\overline D_L(a,u))&\longrightarrow0.
+\end{aligned}
+\tag{8.1}
+$$
+
+标量序列 $\cos(2\pi n/3)$ 的平均为零极限而第零项非零，故单有平均消失不能恢复原值；该序列不是完整 (R) 模型的反例。命题 6.1 的未来测试域也尚未回拉到任意原始探针。这些是原目标的未证步骤，不作为新增公理。
+
+**命题 8.2（合法模型中的平均锚费用可正）。**在 $M=\mathbb C$ 的加法来源中，单位为 $0$，取 $Ua=\omega a+t$、$c(a,b)=|a-b|^2$。若 $3\mid L$，则
+
+$$
+C_L(1_M,1_M)=\frac23|t|^2.
+\tag{8.2}
+$$
+
+**证明。**单位轨道依次为 $0,t,(1+\omega)t$，三点两两距离平方均为 $|t|^2$。有序独立选取两个相位的九种情形中，六种不同；对三的倍数窗口计数即得。该来源满足完整 (R)，所以共同平均锚费用不能被要求为零，平均也不产生新的真实单位。
+
+**命题 8.3（有界同步核不保证根稳定或均值换序）。**存在对称、非负、对角零且同步 $U$ 等距的核，满足推论 2.2 的两项轨道上界，但相应 $S$ 不保持双侧根；其有界双序列费用还可有不同的两个迭代极限。本命题不提供满足 (R) 的乘法。
+
+**证明。**取标签 $1,a_n,b_n$，$n\ge0$，令 $U1=1$、$Ua_n=a_{n+1}$、$Ub_n=b_{n+1}$。在自由差空间定义对称 $B$：
+
+$$
+B(e_{a_n},e_{a_m})=0,\qquad B(e_{b_n},e_{b_m})=\delta_{nm},\qquad
+B(e_{a_n},e_{b_m})=\frac12\mathbf1_{n>m}.
+$$
+
+置 $c(x,y)=B(e_x-e_y,e_x-e_y)$。则 $q(a_n)=r(a_n)=0$、$q(b_n)=r(b_n)=1$，且 $c(a_n,b_m)=\mathbf1_{n\le m}$；两个不同 $b$ 标签间费用为 $2$，其余由上述定义取得。所有费用非负，同步移位保持它们。预算为 $\Omega(a_n)=0$、$\Omega(b_n)=4$、$\Omega(1)=0$，故推论 2.2 的两项数值界成立。可是 $e_{a_0}$ 为根向量，$B(Se_{a_0},e_{b_0})=1/2$。$B$ 也可连续扩张到这些自由基的 $\ell^1$ 完成，$S$ 的算子范数为 $1$，故加入这些连续性与幂有界条件仍不保证根稳定。另外
+
+$$
+\lim_{n\to\infty}\lim_{m\to\infty}c(a_n,b_m)=1,\qquad
+\lim_{m\to\infty}\lim_{n\to\infty}c(a_n,b_m)=0.
+$$
+
+因此轨道上界本身不授权均值换序。该核整体有界且非零，由命题 2.4 可知它不可能与任何乘法一起满足全部 (R)；它只排除丢失完整关系后的工具捷径。
+
+**对应 8.4（平均结果与表示条件）。**`repo-derived`：第 5–7 节把原始关系的轨道预算用于有限窗口边界、双侧配对及复制历史；有限求和、极化与正平均算子是通常工具，不主张这些工具的文献新意。上述结果尚未推出五点负型、双侧根性或一般仿射表示。三历史强正几何、效果与 Born 读数、最小输入空间上的 Kraus 延拓继续以五点桥梁的表示与实际接口为前件；平均不补充准备、参考、联合或时间操作。
+
+## 追加锚（本行以下为增补区）
