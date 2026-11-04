@@ -91,12 +91,15 @@ theorem solvable_comap (f : L →ₗ⁅k⁆ M) [IsSolvable f.ker]
   let h : g.ker →ₗ⁅k⁆ f.ker :=
     { ((I.comap f).incl.toLinearMap.comp g.ker.incl.toLinearMap).codRestrict f.ker.toSubmodule
         (fun x => by
-          rw [LieHom.mem_ker]
-          exact congrArg Subtype.val (LieHom.mem_ker.mp x.property)) with
+          change f x.val.val = 0
+          exact congrArg (fun z : I => z.val) (LieHom.mem_ker.mp x.property)) with
       map_lie' := fun {x y} => rfl }
-  haveI : IsSolvable g.ker :=
-    (show Function.Injective h from fun x y hxy =>
-      Subtype.ext (Subtype.ext (congrArg Subtype.val hxy))).lieAlgebra_isSolvable
+  have hh : Function.Injective h := by
+    intro x y hxy
+    apply Subtype.ext
+    apply Subtype.ext
+    exact congrArg (fun z : f.ker => z.val) hxy
+  haveI : IsSolvable g.ker := hh.lieAlgebra_isSolvable
   exact solvable_of_solvable_kernel g
 
 private theorem derivedSeriesOfIdeal_map (f : L →ₗ⁅k⁆ M)
@@ -162,10 +165,13 @@ theorem injective_on_simple_ideal (f : L →ₗ⁅k⁆ M) [IsSolvable f.ker]
   let h : g.ker →ₗ⁅k⁆ f.ker :=
     { (I.incl.toLinearMap.comp g.ker.incl.toLinearMap).codRestrict f.ker.toSubmodule
         (fun x => x.property) with map_lie' := fun {x y} => rfl }
-  have hh : Function.Injective h := fun x y hxy =>
-    Subtype.ext (Subtype.ext (congrArg Subtype.val hxy))
+  have hh : Function.Injective h := by
+    intro x y hxy
+    apply Subtype.ext
+    apply Subtype.ext
+    exact congrArg (fun z : f.ker => z.val) hxy
   haveI : IsSolvable g.ker := hh.lieAlgebra_isSolvable
-  exact LieHom.ker_eq_bot.mp (HasTrivialRadical.eq_bot_of_isSolvable g.ker)
+  exact (LieHom.ker_eq_bot g).mp (HasTrivialRadical.eq_bot_of_isSolvable g.ker)
 
 /-- A nonzero projection of a simple ideal onto a simple quotient factor is a
 proved Lie equivalence. Both ideals and maps here are the actual objects. -/
@@ -177,7 +183,8 @@ noncomputable def simpleIdealEquiv_of_surjection [IsSimple k M]
     rcases IsSimple.eq_bot_or_eq_top g.ker with h | h
     · exact h
     · obtain ⟨x,hx⟩ := hx
-      exact False.elim (hx (LieHom.mem_ker.mp (by rw [h]; exact LieSubmodule.mem_top x)))
+      have hxg : x ∈ g.ker := by rw [h]; exact LieSubmodule.mem_top x
+      exact False.elim (hx (LieHom.mem_ker.mp hxg))
   have hJ : I.map f = ⊤ := by
     rcases IsSimple.eq_bot_or_eq_top (I.map f) with h | h
     · obtain ⟨x,hx⟩ := hx
@@ -185,7 +192,7 @@ noncomputable def simpleIdealEquiv_of_surjection [IsSimple k M]
       rw [h, LieSubmodule.mem_bot] at hh
       exact False.elim (hx hh)
     · exact h
-  refine LieEquiv.ofBijective g ⟨LieHom.ker_eq_bot.mp hk, ?_⟩
+  refine LieEquiv.ofBijective g ⟨(LieHom.ker_eq_bot g).mp hk, ?_⟩
   intro y
   have hy : y ∈ I.map f := by rw [hJ]; exact LieSubmodule.mem_top y
   exact LieIdeal.mem_map_of_surjective hf hy

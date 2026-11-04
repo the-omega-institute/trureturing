@@ -583,6 +583,14 @@ private theorem skew_iff_coefficients (D : Module.End k (ι → k)) :
 end D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.BlockForm
 
 namespace D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Decomposition
+
+private theorem map_triple_bracket_zero {R L M : Type*} [CommRing R]
+    [LieRing L] [LieAlgebra R L] [LieRing M] [LieAlgebra R M]
+    (f : L →ₗ⁅R⁆ M) (h : ∀ u v w : M, ⁅u, ⁅v,w⁆⁆ = 0) (x y z : L) :
+    f ⁅x, ⁅y,z⁆⁆ = 0 :=
+  (f.map_lie x ⁅y,z⁆).trans
+    ((congrArg (fun t : M => ⁅f x,t⁆) (f.map_lie y z)).trans (h (f x) (f y) (f z)))
+
 open DirectSum
 open D5.S3.QuadraticForms.EvolutionAlgebras.DerivationAnnihilatorObstruction D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.BlockLinear D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Normalized
 attribute [local instance 100] LieRing.ofAssociativeRing
@@ -998,18 +1006,21 @@ private theorem normalizedReducedHom_surjective [CharZero k]
     congrFun (LieHom.mem_ker.mp D.property) i
   refine ⟨D.val, ?_⟩
   funext a
-  rw [normalizedReducedHom_of_diagonal_zero μ b label w hn hsq hw hsep hl D.val hd a]
+  have hnorm := normalizedReducedHom_of_diagonal_zero μ b label w hn hsq hw hsep hl D.val hd a
   have hrest : restrictBlock b label D.val.val a = (f a).val :=
     congrFun (restrict_assemble b label (fun c => (f c).val)) a
   have he : (⟨restrictBlock b label D.val.val a,
       restrictBlock_mem_stabilizer_of_diagonal_zero μ b label w hn hsq hw hsep hl D.val hd a⟩ :
       D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer (B a) (W a)) = f a :=
     Subtype.ext hrest
-  rw [he]
-  exact Classical.choose_spec
-    (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom_surjective
+  exact hnorm.trans ((congrArg
+    (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom
       (B a) (W a)
-      (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _) (F a))
+      (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _)) he).trans
+    (Classical.choose_spec
+      (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom_surjective
+        (B a) (W a)
+        (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _) (F a))))
 
 include hn hsq hw hsep in
 private noncomputable def diagonalReducedKernelBlockHom [CharZero k]
@@ -1017,7 +1028,10 @@ private noncomputable def diagonalReducedKernelBlockHom [CharZero k]
     ((diagonalHom μ b label w hn hsq hw hsep).comp
       (normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl).ker →ₗ⁅k⁆
     (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom
-      _ _ (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm
+      (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k)
+        (1 : Matrix {i : ι // label i = a} {i : ι // label i = a} k))
+      (blockW b label w a)
+      (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm
         {i : ι // label i = a})).ker := by
   let N := ((diagonalHom μ b label w hn hsq hw hsep).comp
     (normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl).ker
@@ -1035,10 +1049,10 @@ private noncomputable def diagonalReducedKernelBlockHom [CharZero k]
           ((normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl.comp N.incl)).map_lie x y) }
   refine { f.toLinearMap.codRestrict _ (fun x => ?_) with
     map_lie' := fun {x y} => Subtype.ext (f.map_lie x y) }
-  rw [LieHom.mem_ker]
+  apply LieHom.mem_ker.mpr
   have hz := congrFun (LieHom.mem_ker.mp x.val.property) a
-  rw [normalizedReducedHom_of_diagonal_zero μ b label w hn hsq hw hsep hl x.val.val (hd x) a] at hz
-  exact hz
+  have hnorm := normalizedReducedHom_of_diagonal_zero μ b label w hn hsq hw hsep hl x.val.val (hd x) a
+  exact hnorm.symm.trans hz
 
 include hn hsq hw hsep in
 private theorem normalizedReducedHom_kernel_solvable [CharZero k]
@@ -1054,20 +1068,24 @@ private theorem normalizedReducedHom_kernel_solvable [CharZero k]
     apply Subtype.ext
     have he := assemble_restrict_of_cross_zero b label x.val.val.val
       (derivation_cross_zero μ b label w hn hsq hsep x.val.val)
-    rw [← he]
-    have hh : restrictBlock b label x.val.val.val = 0 := by
-      funext a
-      exact congrArg (fun z => z.val.val) (hx a)
-    rw [hh]
-    exact map_zero (assemble b label)
+    apply he.symm.trans
+    have hh : restrictBlock b label x.val.val.val = 0 :=
+      funext (fun a => congrArg Subtype.val (congrArg Subtype.val (hx a)))
+    exact (congrArg (assemble b label) hh).trans (map_zero (assemble b label))
   haveI : LieRing.IsNilpotent g.ker :=
     D5.S3.QuadraticForms.LieRadicalTransfer.nilpotent_of_triple_bracket_zero (k := k) (by
       intro x y z
-      apply hi
-      intro a
-      rw [map_lie, map_lie]
-      exact D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom_kernel_triple_zero
-        _ _ _ (LinearMap.nondegenerate_toLinearMap₂'_of_det_ne_zero' (by simp)) _ _ _)
+      refine hi ⁅x, ⁅y, z⁆⁆ (fun a => ?_)
+      let q := diagonalReducedKernelBlockHom μ b label w hn hsq hw hsep hl a
+      let B : LinearMap.BilinForm k ({i : ι // label i = a} → k) :=
+        Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k)
+      let W := blockW b label w a
+      have hND : B.Nondegenerate :=
+        LinearMap.nondegenerate_toLinearMap₂'_of_det_ne_zero' (by simp)
+      exact map_triple_bracket_zero q
+        (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom_kernel_triple_zero
+          B W (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _) hND)
+        x y z)
   haveI : IsLieAbelian (ι → k) :=
     ⟨fun x y => by ext i; simp [Ring.lie_def, mul_comm]⟩
   exact D5.S3.QuadraticForms.LieRadicalTransfer.solvable_of_solvable_kernel g
@@ -1204,7 +1222,10 @@ theorem nonzero_square_reduced_orthogonal_surjection [CharZero k]
   let w := squareRepresentative μ b
   letI : Fintype (Set.range (fun i => k ∙ μ (b i) (b i))) :=
     Fintype.ofSurjective label (Set.rangeFactorization_surjective (f := fun i => k ∙ μ (b i) (b i)))
-  obtain ⟨b', hn', hsq'⟩ := exists_class_normalization μ b hn
+  let normalization := exists_class_normalization μ b hn
+  let b' : Module.Basis ι k V := normalization.choose
+  have hn' : ∀ i j, i ≠ j → μ (b' i) (b' j) = 0 := normalization.choose_spec.1
+  have hsq' : ∀ i, μ (b' i) (b' i) = w (label i) := normalization.choose_spec.2
   have hw : ∀ a, w a ≠ 0 := representatives_nonzero μ b hs
   have hsep : ∀ a c, a ≠ c → ∀ s t : k, s • w a + t • w c = 0 → s = 0 ∧ t = 0 := by
     intro a c hac s t h

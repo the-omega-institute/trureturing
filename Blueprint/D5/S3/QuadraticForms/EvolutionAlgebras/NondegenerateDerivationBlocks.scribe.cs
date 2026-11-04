@@ -13,6 +13,10 @@ internal sealed class NondegenerateDerivationBlocksDocument : IScribeDocumentDef
         "Stabilizer kernels and derivation blocks of nondegenerate evolution algebras.",
         H("Derivation blocks of nondegenerate evolution algebras"),
         Blocks(
+            Describe.Lean(DescribeId.Create("full-reduced-surjection"), DeclarationHandle.Create(
+                Prefix + "nonzero_square_reduced_orthogonal_surjection"), H("Full derivations and nondegenerate reduced blocks"),
+                StatementSource.FromAuthor(Disp(FullReducedFormula())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Over an algebraically closed field of characteristic zero, every finite natural basis with nonzero squares admits a normalization and an actual surjective Lie map from all actual derivations to the product of the reduced block skew algebras. The kernel is solvable. The map subtracts each class scalar diagonal before applying the canonical setwise-preserver quotient action. Pointwise-stabilizer lifts prove surjectivity. The common diagonal and reduced kernel embeds into a product of canonical kernels with zero triple brackets, and the remaining diagonal quotient is abelian. Every small, empty, isotropic and degenerate block is retained here; no semisimplicity hypothesis on derivations is imposed. The original semisimple full block decomposition remains a separate theorem with its original hypotheses. This is part of the supplied Ma-then-Zhang credited argument; the linear and Lie constructions retain classical credit."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("mul-basis-right"),
                 DeclarationHandle.Create(Prefix + "mul_basis_right"),
@@ -132,6 +136,21 @@ internal sealed class NondegenerateDerivationBlocksDocument : IScribeDocumentDef
     private static Formula LieEquivalence(Formula a, Formula b) =>Call("LieEquiv", X("k"), a, b);
     private static Formula Sum(Formula i, Formula type, Formula body) =>Call("DirectSum", type, Fn(i, body));
     private static Formula Nonempty(Formula t) =>Call("Nonempty", t);
+    private static Formula FullReducedFormula()
+    {
+        var bp = Seq(X("b"), Apos);
+        var reduced = Apply(Qualified("Decomposition", "reducedBlockForm"), bp, Label, Representative, X("a"));
+        var target = All(X("a"), Lines, Call("skewAdjointLieSubalgebra", reduced));
+        Formula body = Some(X("f"), Call("LieHom", X("k"), Der, target),
+            And(Apply(Qualified("Function", "Surjective"), X("f")),
+                Apply(Qualified("LieAlgebra", "IsSolvable"), Apply(Qualified("LieHom", "ker"), X("f")))));
+        body = Some(bp, Basis(Iota, X("V")), And(Natural(bp, Iota), body));
+        body = Hyp(All(X("i"), Iota, Ne(Apply(Mu, Apply(X("b"), X("i")), Apply(X("b"), X("i"))), D(0))), body);
+        body = Hyp(Natural(X("b"), Iota), body);
+        body = All(X("b"), Basis(Iota, X("V")), body);
+        body = All(Iota, Type, Instance(Call("Fintype", Iota), body));
+        return ProductContext(Instance(Call("IsAlgClosed", X("k")), Instance(Call("CharZero", X("k")), body)));
+    }
     private static Formula AlgebraContext(Formula body) =>All(X("k"), Type, Instance(Call("Field", X("k")), All(X("V"), Type, Instance(Call("AddCommGroup", X("V")), Instance(Call("Module", X("k"), X("V")), body)))));
     private static Formula ProductContext(Formula body) =>AlgebraContext(All(Mu, Product, body));
     private static Formula NaturalProductContext(Formula body) =>ProductContext(All(Iota,Type,
