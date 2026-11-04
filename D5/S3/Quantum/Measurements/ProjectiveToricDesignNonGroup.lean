@@ -46,7 +46,9 @@ private def coord : Fin 27 ≃ (Fin 3 → ZMod 3) :=
   (finFunctionFinEquiv (m := 3) (n := 3)).symm.trans
     (Equiv.piCongrRight fun _ => (ZMod.finEquiv 3).toEquiv)
 
-private def phase (k : ZMod 3) : Real.Angle := ((2 * Real.pi / 3) * k.val : ℝ)
+private def phase_map : ZMod 3 →+ Real.Angle :=
+  (AddCircle.equivAddCircle (1 : ℝ) (2 * Real.pi) one_ne_zero
+    (mul_ne_zero two_ne_zero Real.pi_ne_zero)).toAddMonoidHom.comp ZMod.toAddCircle
 
 private def matrices : Fin 27 → Matrix (Fin 3) (Fin 3) (ZMod 3) :=
   ![!![0, 0, 0; 0, 0, 0; 0, 0, 0],
@@ -81,35 +83,26 @@ private def polynomial (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
     (b x : Fin 3 → ZMod 3) : ZMod 3 := x ⬝ᵥ M.mulVec x + b ⬝ᵥ x
 
 private def point (p : Fin 27 × (Fin 3 → ZMod 3)) (j : Fin 27) : Real.Angle :=
-  phase (polynomial (matrices p.1) p.2 (coord j))
+  phase_map (polynomial (matrices p.1) p.2 (coord j))
 
 private def counterexample : Finset (Fin 27 → Real.Angle) := by
   classical
   exact Finset.univ.image point
 
 private theorem phase_character (k : ZMod 3) :
-    (Real.Angle.toCircle (phase k) : ℂ) = ZMod.stdAddChar k := by
-  rw [phase, Real.Angle.toCircle_coe, ZMod.stdAddChar_apply, ZMod.toCircle_eq_circleExp]
+    (Real.Angle.toCircle (phase_map k) : ℂ) = ZMod.stdAddChar k := by
+  change (Real.Angle.toCircle (AddCircle.equivAddCircle (1 : ℝ) (2 * Real.pi) _ _
+    (ZMod.toAddCircle k)) : ℂ) = _
+  rw [ZMod.toAddCircle_apply, AddCircle.equivAddCircle_apply_mk]
+  simp only [inv_one, one_mul]
+  change (Real.Angle.toCircle (((k.val : ℝ) / 3 * (2 * Real.pi) : ℝ) : Real.Angle) : ℂ) = _
+  rw [Real.Angle.toCircle_coe, ZMod.stdAddChar_apply, ZMod.toCircle_eq_circleExp]
   congr 2
   ring
 
-private theorem phase_add (a b : ZMod 3) : phase (a + b) = phase a + phase b := by
-  apply AddCircle.homeomorphCircle'.injective
-  change Real.Angle.toCircle (phase (a + b)) = Real.Angle.toCircle (phase a + phase b)
-  apply Subtype.ext
-  simp (config := { congrConsts := false }) only
-    [Real.Angle.toCircle_add, Circle.coe_mul, phase_character, AddChar.map_add_eq_mul]
-
-private theorem phase_injective : Function.Injective phase := by
-  intro a b h
-  apply ZMod.injective_stdAddChar
-  simpa (config := { congrConsts := false }) only [phase_character] using
-    congrArg (fun t => (Real.Angle.toCircle t : ℂ)) h
-
-private def phase_map : ZMod 3 →+ Real.Angle where
-  toFun := phase
-  map_zero' := by norm_num (config := { congrConsts := false }) [phase]
-  map_add' := phase_add
+private theorem phase_injective : Function.Injective phase_map :=
+  (AddCircle.equivAddCircle (1 : ℝ) (2 * Real.pi) one_ne_zero
+    (mul_ne_zero two_ne_zero Real.pi_ne_zero)).injective.comp (ZMod.toAddCircle_injective 3)
 
 private theorem coord_zero : coord 0 = 0 := by
   change (finFunctionFinEquiv (m := 3) (n := 3)).symm (0 : Fin 27) =
@@ -405,9 +398,9 @@ private theorem counterexample_anchored :
   classical
   intro φ hφ
   obtain ⟨p, _, rfl⟩ := Finset.mem_image.mp hφ
-  change phase (polynomial (matrices p.1) p.2 (coord 0)) = 0
+  change phase_map (polynomial (matrices p.1) p.2 (coord 0)) = 0
   rw [coord_zero]
-  norm_num (config := { congrConsts := false }) [polynomial, phase]
+  norm_num (config := { congrConsts := false }) [polynomial]
 
 private theorem counterexample_card : counterexample.card = 27 ^ 2 := by
   classical
@@ -464,9 +457,9 @@ private theorem counterexample_zero : 0 ∈ counterexample := by
   apply Finset.mem_image.mpr
   refine ⟨(0, 0), Finset.mem_univ _, ?_⟩
   funext j
-  change phase (polynomial (matrices 0) 0 (coord j)) = 0
+  change phase_map (polynomial (matrices 0) 0 (coord j)) = 0
   have hz : matrices 0 = 0 := by decide
-  simp (config := { congrConsts := false }) [polynomial, hz, phase]
+  simp (config := { congrConsts := false }) [polynomial, hz]
 
 private theorem counterexample_not_group :
     ¬ ∃ H : AddSubgroup (Fin 27 → Real.Angle),
@@ -485,13 +478,13 @@ private theorem counterexample_not_group :
       polynomial (matrices 1 + matrices 3) 0 x := by
     apply phase_injective
     calc
-      _ = phase (polynomial (matrices 1) 0 x) +
-          phase (polynomial (matrices 3) 0 x) := by
+      _ = phase_map (polynomial (matrices 1) 0 x) +
+          phase_map (polynomial (matrices 3) 0 x) := by
         simpa (config := { congrConsts := false }) only
           [point, Pi.add_apply, Equiv.apply_symm_apply] using
           congrFun hp (coord.symm x)
       _ = _ := by
-        rw [← phase_add]
+        rw [← map_add phase_map]
         congr 1
         simp (config := { congrConsts := false }) only
           [polynomial, Matrix.add_mulVec, dotProduct_add, zero_dotProduct, add_zero]
