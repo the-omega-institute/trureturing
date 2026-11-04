@@ -11,6 +11,7 @@ import D5.S3.Fourier.SparseGeneratorFamily
 import D5.S3.ObserverMemory.Algorithms.SaturatedActualHistories
 import D5.S3.ArithUnits.MercaCosetFiberLift
 import D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse
+import Mathlib.NumberTheory.Bernoulli
 
 /-! Fourier analysis of the inverse squared chord kernel on a finite cyclic group. -/
 

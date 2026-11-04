@@ -72,6 +72,8 @@ import Mathlib.Analysis.Fourier.ZMod
 import Mathlib.Analysis.CStarAlgebra.Spectrum
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.LinearAlgebra.Eigenspace.Matrix
+import Mathlib.LinearAlgebra.Matrix.Circulant
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

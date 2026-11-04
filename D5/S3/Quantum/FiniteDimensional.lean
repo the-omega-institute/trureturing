@@ -5,7 +5,10 @@
    anchors: []
    digest: Formalize finite-dimensional complex matrix-algebra and probability skeletons. -/
 
-import Mathlib
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.LinearCombination
 
 namespace D5.S3.Quantum.FiniteDimensional
 
