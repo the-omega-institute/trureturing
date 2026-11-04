@@ -1,0 +1,65 @@
+### 49.4. Exact algebraic root and rational isolation
+
+Set
+
+$$
+\omega=c/h=\sqrt{1+h},\quad v_0=s^2/h^2=1-h,\quad
+k=\omega-1,\quad \ell=1-x^2,\quad z=\sqrt{q/p}/y,\quad
+\mathsf H=h+4s.
+$$
+
+Thus $q=z^2\ell/(1+z^2\ell)$ and $p=1/(1+z^2\ell)$.
+Define the two polynomials
+
+$$
+\begin{aligned}
+\mathcal F(x,z)={}&x+\omega
+ +[\mathsf H+\omega+(1-2\omega)x-2x^2]z\\
+ &+[1-2x^2-\omega x]z^2
+ +\ell[\mathsf H-(1+2\omega)x-2x^2]z^3
+ -(x+\omega)\ell^2z^4,\\
+\mathcal P(x,z)={}&k^2x^2+kx^2(2x+\omega-v_0)z\\
+ &+(x+\omega)[(1+v_0)x^3-v_0(1+x)]z^2.
+\end{aligned}
+\tag{49.14}
+$$
+
+Substitution in (49.7) and (49.4) gives the exact unsquared identities
+
+$$
+\mathcal F=\frac{z(1+z^2\ell)}{4h^2}
+    (\mathscr L_\delta-\mathscr L_q),\qquad
+\mathcal P=\frac{(1+x)(x+\omega)}{h^2p}D.
+\tag{49.15}
+$$
+
+Every multiplier is positive for $0<x<1,z>0$. In the first identity
+$D_0/(4h^2)=\mathsf H+h=\mathsf H+\omega^2-1$.
+There is no squaring or unspecified radical branch.
+
+Here is a rational certificate on
+$\mathcal R=[16/25,13/20]\times[32/25,13/10]$.
+Positive square comparisons using (49.2) give
+
+$$
+\begin{gathered}
+7071/10000<h<7072/10000,\qquad
+1913/5000<s<3827/10000,\\
+\omega_-:=2613/2000<\omega<6533/5000=:\omega_+,\\
+\mathsf H_-:=179/80<\mathsf H<1119/500=:\mathsf H_+,\\
+v_-:=183/625<v_0<2929/10000=:v_+.
+\end{gathered}
+\tag{49.16}
+$$
+
+On $\mathcal R$, $\mathcal F_{\mathsf H}=z+\ell z^3>0$, whereas
+$\mathcal F_\omega=1+(1-2x)z-xz^2-2x\ell z^3-\ell^2z^4<0$:
+indeed $x>1/2$ and $xz^2>1$.
+Writing $\mathcal F=x+\omega+\sum_{i=1}^4B_i z^i$, direct bounds are
+
+| Coefficient derivative | Rational upper bound on $\mathcal R$ |
+| --- | --- |
+| $B_1'=1-2\omega-4x$ | $-4173/1000<-4$ |
+| $B_2'=-4x-\omega$ | $-7733/2000<-19/5$ |
+| $B_3'=-2\mathsf Hx+3(1+2\omega)x^2-(1+2\omega)-4x+8x^3$ | $-2345219/1000000<-2$ |
+| $B_4'=\ell(5x^2+4\omega x-1)$ | $52086573/20000000<3$ |

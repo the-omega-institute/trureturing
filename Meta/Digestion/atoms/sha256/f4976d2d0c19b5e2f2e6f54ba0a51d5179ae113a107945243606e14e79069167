@@ -1,0 +1,67 @@
+### 命题 4.2（退相位读口的参照类）
+
+<a id="prop-c123-z-reference-classes"></a>
+
+在忠实 qubit 态的开 Bloch 球内，$N=\Delta_Z$ 的参照等价类恰为：
+
+1. 开 $Z$ 轴上的全部对角态构成同一类；其共同反向为 $\Delta_Z$。
+
+2. 每个轴外态单独构成一个类。
+
+**证明。**
+写 $\sigma_{ii}=\langle i\rvert\sigma\lvert i\rangle>0$。由 Petz 公式，
+
+$$
+R_\sigma(A)=\sum_{i=0}^1\langle i\rvert A\lvert i\rangle\,Q_i^\sigma,
+ \qquad
+ Q_i^\sigma=
+ \frac{\sigma^{1/2}P_i\sigma^{1/2}}{\sigma_{ii}}.
+$$
+
+$Q_i^\sigma$ 是秩一密度矩阵，且它对应的单位列向量
+$\sigma^{1/2}\lvert i\rangle/\sqrt{\sigma_{ii}}$ 的第 $i$ 个分量严格为正。
+若 $R_\rho=R_\sigma$，两个 $Q_i$ 分别相同；上述正分量同时固定了每列的相位，所以
+
+$$
+\rho^{1/2}=\sigma^{1/2}\operatorname{diag}(d_0,d_1),\qquad d_0,d_1>0.
+$$
+
+当 $\sigma$ 非对角时，$\sigma^{1/2}$ 的非对角元也非零。
+右端必须 Hermitian，迫使 $d_0=d_1$；再由归一化得到 $d_0=d_1=1$，即
+$\rho=\sigma$。当 $\sigma$ 对角时，同式迫使 $\rho$ 对角；反之所有对角忠实态都给
+$Q_i=P_i$，故反向都等于 $\Delta_Z$。
+
+<a id="fig-c123-reference-classes"></a>
+
+```latex
+\begin{tikzpicture}[>=Latex,font=\small,scale=0.95]
+  \begin{scope}
+    \fill[teal!3] (0,0) circle (1.48);
+    \draw[gray!60] (0,0) circle (1.48);
+    \draw[->,gray!70] (-1.7,0)--(1.8,0) node[right] {$x$};
+    \draw[->,gray!70] (0,-1.68)--(0,1.78) node[above] {$z$};
+    \draw[teal!75!black,line width=2pt] (0,-1.43)--(0,1.43);
+    \fill[white] (0,-1.48) circle(0.045);
+    \draw[teal!75!black] (0,-1.48) circle(0.045);
+    \fill[white] (0,1.48) circle(0.045);
+    \draw[teal!75!black] (0,1.48) circle(0.045);
+    \fill[orange!85!black] (0.75,0.6) circle(0.055);
+    \fill[orange!85!black] (-0.7,-0.6) circle(0.055);
+    \node[anchor=west,align=left,text=orange!70!black] at (0.88,0.64) {轴外：\!单点类};
+    \node[anchor=east,text=teal!75!black] at (-0.10,0.85) {同一类};
+    \node at (0,-2.02) {$\mathcal C_\sigma$ 的 $xz$ 截面};
+  \end{scope}
+  \begin{scope}[shift={(5.1,-0.7)}]
+    \draw[->,very thick,teal!75!black] (0,0)--(0,2.25)
+       node[above] {$\boldsymbol e_z$};
+    \draw[->,thick] (0,0)--(1.75,0) node[right] {$\boldsymbol u$};
+    \draw[->,thick] (0,0)--(-0.95,-0.75) node[above left] {$\boldsymbol v$};
+    \draw[->,very thick,orange!85!black] (0,0)--(1.35,1.55)
+       node[above right] {$\boldsymbol n$};
+    \draw[dashed,gray] (1.35,1.55)--(1.35,0);
+    \draw[dashed,gray] (1.35,1.55)--(0,1.55);
+    \node[align=center] at (0.35,-1.32) {参照横向分量非零时，\\三个算子方向闭合成 $M_2$};
+  \end{scope}
+\end{tikzpicture}
+```
+

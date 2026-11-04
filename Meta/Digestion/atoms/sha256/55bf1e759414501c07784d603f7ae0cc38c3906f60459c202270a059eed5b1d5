@@ -1,0 +1,28 @@
+### 推论 3.4（给定目标代数的正确量词）
+
+<a id="cor-c123-target-algebra"></a>
+
+对任意含幺子代数 $\mathcal A$，以下三者等价：
+
+<a id="eq-c123-target-criterion"></a>
+
+$$
+\mathcal R_\sigma\text{ 恢复 }\mathcal A
+ \quad\Longleftrightarrow\quad
+ \mathcal A\subseteq\mathfrak F_\sigma
+ \quad\Longleftrightarrow\quad
+ \alpha_t^\sigma(\mathcal A)\subseteq\mathfrak A_{\mathcal N}
+ \quad(\forall t\in\mathbb R).
+\tag{25}
+$$
+
+不要求 $\mathcal A$ 自身模不变，只要求它的整个模轨道仍在可恢复内容内。
+
+**证明。**
+第一等价是固定代数的定义，第二等价由
+[(23)](#eq-c123-modular-core) 及将 $t$ 换成 $-t$ 得到。
+
+这一区别确有实质：若 $\mathcal N=\operatorname{id}$，所有参照的回推都是恒等通道，每个子代数都被恢复；一个任意选取的子代数却未必对一般 $\sigma$ 的模作用不变。
+只有当目标是整个 $\mathfrak A_{\mathcal N}$ 时，
+[(25)](#eq-c123-target-criterion) 才等价于该最大代数自身的模不变性。
+

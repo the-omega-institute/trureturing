@@ -1,0 +1,33 @@
+### 5.5 三态闭环能补什么：相位关系而非外部绝对方向
+
+两两转移概率也不足以保留所有复相位关系。定义三态的 Bargmann 闭环量
+
+$$
+B_{123}=\operatorname{Tr}(\rho_1\rho_2\rho_3).
+$$
+
+对 qubit $\rho_j=(I+n_j\cdot\boldsymbol\sigma)/2$，直接使用 Pauli 乘法得到
+
+<a id="eq-c123-bargmann-triple"></a>
+
+$$
+B_{123}=\frac14\left[1+n_1\cdot n_2+n_2\cdot n_3+n_3\cdot n_1
+                +i\,n_1\cdot(n_2\times n_3)\right].
+\tag{35}
+$$
+
+例如 $+X,+Y,+Z$ 三个纯态与其共同复共轭，所有二元转移概率都为 $1/2$，三态闭环量却分别为 $(1+i)/4$ 和 $(1-i)/4$。
+
+若实际供应三份独立准备、受控循环置换以及同一辅助 qubit 的 $X,Y$ 读口，这个额外关系可以被读出。取
+$C\lvert a,b,c\rangle=\lvert b,c,a\rangle$，则展开基指标给出
+
+$$
+\operatorname{Tr}\bigl[C(\rho_1\otimes\rho_2\otimes\rho_3)\bigr]=B_{123}.
+$$
+
+把控制位准备为 $\lvert +\rangle$，按控制值 $1$ 运行 $C$，其约化矩阵为
+$\frac12\left(\begin{smallmatrix}1&B_{123}^*\\B_{123}&1\end{smallmatrix}\right)$。
+所以辅助位的 $X,Y$ 期望分别为 $\operatorname{Re} B_{123},\operatorname{Im} B_{123}$。这类循环测试及关系不变量已有系统研究 [9](#ref-relational2021)。
+
+读出虚部需要实际的共同相位控制；它不是从匿名的二元概率自动出现。若把所有准备、门和读口一并复共轭，整体描述仍可给相同概率。因此三态实验补充的是相对于已供应读口的闭环关系，不是宇宙的绝对方向；它也不消除前面例子的隐藏重数部门。
+

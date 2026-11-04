@@ -1,0 +1,157 @@
+**Lemma 53.3 (strict joint curvature of the original coherent factor).**
+For any fixed scalar $A>0$, define $\mathcal D_A$ by the inequalities
+in (53.8). The function
+
+$$
+ F_A(X,Y)=\sqrt{(1-X)(1-Y)}
+       \sqrt{1-\frac{(A-X-Y)^2}{4XY}}
+\tag{53.12}
+$$
+
+has negative definite Hessian at every point of $\mathcal D_A$ and
+is strictly concave there.
+
+**Proof.** On $\mathcal D_A$ put
+
+$$
+ S=X+Y,\qquad B=A-S>0,\qquad
+ \theta=\frac{B^2}{4XY}\in(0,1),\qquad u=1-X>0,\quad v=1-Y>0.
+\tag{53.13}
+$$
+
+All quantities in the following differentiation are smooth there.
+For $H=4\theta=B^2/(XY)$, the Hessian is
+
+$$
+ \nabla^2H=
+ \begin{pmatrix}
+ \dfrac{2(A-Y)^2}{X^3Y}&
+ \dfrac{A^2-X^2-Y^2}{X^2Y^2}\\[4pt]
+ \dfrac{A^2-X^2-Y^2}{X^2Y^2}&
+ \dfrac{2(A-X)^2}{XY^3}
+ \end{pmatrix},
+\tag{53.14}
+$$
+
+and
+
+$$
+ \det(\nabla^2H)=
+ \frac{(A-X-Y)^2\bigl(3A^2-2A(X+Y)-(X-Y)^2\bigr)}{X^4Y^4}.
+\tag{53.15}
+$$
+
+The full numerator factorization is
+
+$$
+\begin{aligned}
+ &4(A-X)^2(A-Y)^2-(A^2-X^2-Y^2)^2\\
+ &\quad=\bigl[2(A-X)(A-Y)-(A^2-X^2-Y^2)\bigr]
+          \bigl[2(A-X)(A-Y)+(A^2-X^2-Y^2)\bigr]\\
+ &\quad=(A-S)^2\bigl(3A^2-2AS-(X-Y)^2\bigr).
+\end{aligned}
+\tag{53.16}
+$$
+
+Since $A>S$, the last factor satisfies
+
+$$
+ 3A^2-2AS-(X-Y)^2>S^2-(X-Y)^2=4XY>0.
+\tag{53.17}
+$$
+
+The diagonal entries of (53.14) are positive. Thus $\nabla^2\theta$
+is positive definite, although positive semidefiniteness will suffice.
+Also
+
+$$
+ \theta_X=-\frac{B(A+X-Y)}{4X^2Y}<0,\qquad
+ \theta_Y=-\frac{B(A-X+Y)}{4XY^2}<0.
+\tag{53.18}
+$$
+
+Define column vectors
+
+$$
+ e=\begin{pmatrix}1/u\\1/v\end{pmatrix},\qquad
+ d=\begin{pmatrix}1/u\\-1/v\end{pmatrix},\qquad
+ r=-\frac{\nabla\theta}{2(1-\theta)}.
+\tag{53.19}
+$$
+
+Here $d,e$ are auxiliary vectors, distinct from the optimizer constants
+in (51.3), and both components $r_1,r_2$ are positive. Factor
+$F_A=wg$, where $w=\sqrt{uv}$ and $g=\sqrt{1-\theta}$. Then
+
+$$
+\begin{aligned}
+ \frac{\nabla w}{w}&=-\frac e2,&
+ \frac{\nabla^2w}{w}&=-\frac14dd^{\mathsf T},&
+ \frac{\nabla g}{g}&=r,\\
+ \frac{\nabla^2g}{g}
+ &=-\frac{\nabla^2\theta}{2(1-\theta)}-rr^{\mathsf T}.
+\end{aligned}
+\tag{53.20}
+$$
+
+The product rule gives the exact joint identity
+
+$$
+ -\frac{\nabla^2F_A}{F_A}
+ =\frac{\nabla^2\theta}{2(1-\theta)}
+   +\frac14dd^{\mathsf T}+rr^{\mathsf T}
+   +\frac12\bigl(er^{\mathsf T}+re^{\mathsf T}\bigr).
+\tag{53.21}
+$$
+
+The mixed term carries a plus sign because $w$ decreases and $g$
+increases in both coordinates. This mixed term alone need not be
+positive semidefinite. To control it together with the other terms,
+write uniquely
+
+$$
+ r=\alpha e+\beta d,\qquad
+ \alpha=\frac{ur_1+vr_2}{2},\qquad
+ \beta=\frac{ur_1-vr_2}{2}.
+\tag{53.22}
+$$
+
+These auxiliary coefficients obey
+
+$$
+ \alpha>0,\qquad \alpha^2-\beta^2=uvr_1r_2>0.
+\tag{53.23}
+$$
+
+For a column direction $h_0$, put $t=e^{\mathsf T}h_0$ and
+$z=d^{\mathsf T}h_0$. The quadratic form of the last three
+summands of (53.21) is exactly
+
+$$
+\begin{aligned}
+ \frac14z^2+(\alpha t+\beta z)^2+t(\alpha t+\beta z)
+   &=(\alpha^2+\alpha)t^2
+       +\beta(2\alpha+1)tz+(\beta^2+1/4)z^2.
+\end{aligned}
+\tag{53.24}
+$$
+
+Its symmetric coefficient matrix has positive first diagonal entry,
+and its determinant is
+
+$$
+ (\alpha^2+\alpha)(\beta^2+1/4)
+       -\beta^2(\alpha+1/2)^2
+   =\frac{\alpha+\alpha^2-\beta^2}{4}>0.
+\tag{53.25}
+$$
+
+It is therefore positive definite. The vectors $e,d$ are linearly
+independent, so a nonzero $h_0$ cannot give $t=z=0$.
+The first summand of (53.21) is positive semidefinite by
+(53.14)--(53.17). Hence the full right side is positive definite.
+Since $F_A>0$, its Hessian is negative definite. Restricting to any
+nonconstant line segment in the convex set $\mathcal D_A$ gives a
+strictly negative second directional derivative and proves strict
+concavity. $\square$
+

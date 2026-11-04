@@ -1,0 +1,50 @@
+### 定义 32.1（固定来源数据与共同支配分解）
+
+固定定义 25.1–定理 25.2 的同一 $\Omega$、三维实比较空间 $W$、整个原未来域及全部原标签 $\mathcal I$。原响应 $F_i:S(W)\to[0,1]$ 连续，允许非仿射；每个原完整菜单归一化，并满足全部已供应的仿射控制、记录、标签与因果关系 $\mathcal D$。另保留**实际固定**的有限非负生成数据 $J,\lambda_{ijr},B_{ijr}$、整个原图上的精确展开 (25.1)，以及满足 (25.3) 和原恒零掩码的兼容常数族 $c_i$ 与活动种子下界 $\kappa>0$。这些是来源前件，不由小残差或种子数推出。
+
+设原四时残差满足 (21.1)，沿用 (25.2) 的同一个投影 $P$，定义
+
+$$
+\delta=5\varepsilon,\qquad \theta=\delta/\kappa,\qquad
+G_i=\frac{PF_i+\theta c_i}{1+\theta},\qquad
+ t=\frac1{1+\theta}.
+\tag{32.1}
+$$
+
+此处 $t$ 是标量权重，不是 (21.1) 的控制字。定理 25.2 和 (25.8) 给出整个原图上的正仿射族 $G$，满足同一 $\mathcal D$，且 $G_i\ge tF_i$；没有假设原 $F$ 满足准确四时关系或 Born 形式。先取 $\theta>0$，置
+
+$$
+\gamma=1-t=\frac{\theta}{1+\theta},\qquad
+H_i=\frac{G_i-tF_i}{\gamma},\qquad
+G_i=tF_i+\gamma H_i.
+\tag{32.2}
+$$
+
+$H_i\ge0$。对每个原完整菜单 $q$，使用其全部原标签得
+
+$$
+\sum_{u\in\Gamma_q}H_{q,u}
+=\frac{1-t}{\gamma}=1,\qquad 0\le H_{q,u}\le1.
+\tag{32.3}
+$$
+
+对任一原关系 $\sum_\ell d_\ell F_{i_\ell}(B_\ell n)=d$，$F,G$ 满足同式，故
+
+$$
+\sum_\ell d_\ell H_{i_\ell}(B_\ell n)
+=\frac{d-td}{\gamma}=d.
+\tag{32.4}
+$$
+
+这包括 $d\ne0$ 的仿射关系，因为 $t+\gamma=1$，也包括已经供应的跨请求原始因果边。每个原零叶、失败、端口、器件、程序、历史和档案标签都留在原索引中。若 $F_i\equiv0$，定理 25.2 给 $G_i\equiv0$，从而 $H_i\equiv0$；但只在某个输入上 $F_i(n)=0$，并不强迫 $G_i(n)$ 或 $H_i(n)$ 为零。两类零不可混同，也不删掉任一原零分支。
+
+$H$ 是数学残差族；若某个 $F_i$ 非仿射，(32.2) 中对应 $H_i$ 也非仿射。这一分解不供应物理混合、硬币、reset、准备或新过程，也不保证保持未列入 $\mathcal D$ 的非线性过程或更新等式。对同一完整标签集上的概率行，记 $\operatorname{TV}(x,y)=\tfrac12\sum_u|x_u-y_u|$，则
+
+$$
+\operatorname{TV}(F_q(n),G_q(n))
+=\gamma\operatorname{TV}(F_q(n),H_q(n))\le\gamma.
+\tag{32.5}
+$$
+
+这里使用正归一分解，而非把逐标签误差相加，故没有标签数因子。它以 (25.8) 的强前件为依据，不把 §31.3 中仅有逐标签误差时的通用估计改判为无条件的无标签数界。
+
