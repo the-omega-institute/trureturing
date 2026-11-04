@@ -171,7 +171,7 @@ private lemma h_continuousOn {α : ℝ} (hα : 0 < α) : ContinuousOn (h α) (Ic
 private lemma h_zero {α : ℝ} (hα : 0 < α) : h α 0 = 0 := by
   by_cases ha : α = 1 <;> simp [h_eq, ha, Real.zero_rpow hα.ne']
 
-private lemma h_half {α : ℝ} (hα : 0 < α) : h α (1 / 2) = Real.log 2 := by
+lemma h_half {α : ℝ} (hα : 0 < α) : h α (1 / 2) = Real.log 2 := by
   by_cases hne : α = 1
   · simpa [h, hne, one_div] using Real.binEntropy_two_inv
   have ha : 1 - α ≠ 0 := sub_ne_zero.mpr (Ne.symm hne)
