@@ -96,7 +96,7 @@ specific interfaces.
 The mathematical source is the Lean module
 [HalvingPartitionNonregularity](../D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.lean),
 with its [canonical Blueprint](../Blueprint/D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.md)
-and [source bibliography](../Library/Recurrence/alekseyev2026halving.md).
+and [source bibliography](../Library/Words/alekseyev2026halving.md).
 The list classification and bijection, the dyadic formula and the recurrence
 obstruction are repository proofs; the paper supplies the definition and
 question. Existing Mathlib Cayley-Hamilton and recurrence-uniqueness results are

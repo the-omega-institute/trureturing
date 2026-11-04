@@ -8,7 +8,7 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
 {
     private const string Prefix = "D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/alekseyev2026halving");
+        LibraryNoteRef.Create("D5/L/Words/alekseyev2026halving");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact halving-partition count admits no finite integral family closed under both decimations.",
