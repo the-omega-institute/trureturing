@@ -1,0 +1,26 @@
+**Definition 48.0 (original domain and cross-volume conventions).** This
+section retains the original normalized domain
+$\mathcal K=\operatorname{Dens}_2\times U(4)$, ordinary transpose, the two
+optimizer signs, one whole feedback unitary, the exact joint squared
+Frobenius distance, and exactly one common feedback scalar quotient. Put
+$R_\star=13/4$ and retain $g$, $f=g-\kappa\rho$, $V(\xi)$, the attained
+sets $\mathcal A_\xi$ and $\mathcal A_{\mathrm{ph,p},\xi}$, and the endpoint
+set $\mathcal E_\xi(a_\xi)$ from Sections 42 and 45 of Continuation II.
+
+References to Section 23 and its numbered identities mean the
+[source volume, Section 23](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND.md#23-exact-global-reduction-to-realizable-feedback-diagonals).
+References to Section 37 and Theorem 37.5 mean
+[Continuation I, Section 37](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_I.md#37-exact-cap-envelopes-unique-scalar-selection-and-core-screening);
+references to (39.1) mean
+[Continuation I, Section 39](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_I.md#39-original-first-transition-endpoints-and-a-selected-level-eighteen-fifths-obstruction).
+References to Section 42, Theorem 42.3 and (42.16)--(42.20) mean
+[Continuation II, Section 42](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md#42-a-selected-thirteen-fourths-obstruction-and-all-effect-phase-transport).
+References to Section 45, Lemma 45.2, Theorems 45.5 and 45.7, and
+(45.20)--(45.21) mean
+[Continuation II, Section 45](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md#45-strict-fixed-feedback-purification-and-global-purity-through-thirteen-fourths).
+References to Section 46, Lemma 46.2, Theorems 46.3, 46.4 and 46.6,
+Corollary 46.5 and (46.28)
+mean [Continuation II, Section 46](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md#46-global-coherent-cone-remainder-and-the-exact-two-sign-canonical-slice-comparison).
+Numbers 48 and 49 refer to the sections, statements and identities of this
+volume; the distinct Section 47 remains in Continuation II.
+
