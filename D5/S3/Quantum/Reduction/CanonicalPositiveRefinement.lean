@@ -101,15 +101,15 @@ theorem canonical_refinement_completely_positive
     rw [hf]
     simp only [Matrix.smul_apply, smul_eq_mul]
     congr 1
-    change (R * (fun r s => Z b (r, i.2) (s, j.2)) * R) i.1 j.1 = _
+    change (R * (show Matrix (d b) (d b) ℂ from fun r s => Z b (r, i.2) (s, j.2)) * R) i.1 j.1 = _
     calc
-      _ = (R * (fun r s => Z b (r, i.2) (s, j.2)) * Rᴴ) i.1 j.1 := by rw [hR]
+      _ = (R * (show Matrix (d b) (d b) ℂ from fun r s => Z b (r, i.2) (s, j.2)) * Rᴴ) i.1 j.1 := by rw [hR]
       _ = _ := by simp [W, Matrix.mul_apply, Fintype.sum_prod_type, Matrix.kroneckerMap_apply,
       Matrix.one_apply, Matrix.conjTranspose_apply, Finset.sum_mul, mul_assoc,
-      mul_ite, ite_mul]
+      mul_ite, ite_mul, apply_ite]
   rw [heq]
   exact ((hZ b).mul_mul_conjTranspose_same W).smul
-    (show (0 : ℂ) ≤ (c a b : ℂ) from Complex.ofReal_nonneg (hc a b).1)
+    (by simpa [Complex.le_def] using (hc a b).1 : (0 : ℂ) ≤ (c a b : ℂ))
 
 #print axioms canonical_refinement_completely_positive
 

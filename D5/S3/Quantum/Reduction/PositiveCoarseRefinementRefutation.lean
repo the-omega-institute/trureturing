@@ -54,7 +54,10 @@ private theorem coarse_cp : (transpose_half + reduction_half).IsCompletelyPositi
   have hr : (r : ℂ) * (r : ℂ) = 1 / 2 := by
     have hrR : r * r = (1 / 2 : ℝ) :=
       Real.mul_self_sqrt (show (0 : ℝ) ≤ 1 / 2 by norm_num)
-    exact_mod_cast hrR
+    calc
+      (r : ℂ) * (r : ℂ) = ((r * r : ℝ) : ℂ) := (Complex.ofReal_mul r r).symm
+      _ = ((1 / 2 : ℝ) : ℂ) := congrArg Complex.ofReal hrR
+      _ = 1 / 2 := by norm_num
   have hr2 : (r : ℂ) ^ 2 = 1 / 2 := by simpa only [pow_two] using hr
   let K : Fin 2 × Fin 2 → Matrix (Fin 2) (Fin 2) ℂ :=
     fun ij => (r : ℂ) • Matrix.single ij.1 ij.2 1

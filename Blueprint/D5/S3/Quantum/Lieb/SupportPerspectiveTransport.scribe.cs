@@ -70,10 +70,8 @@ internal sealed class SupportPerspectiveTransportDocument : IScribeDocumentDefin
                     "SupportPerspectiveTransformer consumes these interfaces and supplies "
                     + "the exact kernel-inclusion reconstruction, mixed spectral products "
                     + "and final congruence cancellations. The Jensen and transport "
-                    + "modules and the transformer have passed explicit targeted "
-                    + "Lean builds and a joint scoped report using only standard "
-                    + "Lean axioms. Information-audit binding is assessed separately. "
-                    + "Identity regularization and "
+                    + "modules supply positive-map inequalities without a complete "
+                    + "positivity hypothesis. Identity regularization and "
                     + "trace data processing remain outside this source endpoint."))), DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)
