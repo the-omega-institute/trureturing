@@ -44,8 +44,7 @@ open LatticeSugawaraNullFrameEndpoints
 open D5.S3.Quantum.Fermionic.BcGhostFock
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.HomologicalAlgebra.FiniteSupportEndomorphismCalculus
-open private actualBasis_apply sector_current ghost_sector from
-  D5.S3.VertexAlgebra.Lattice.LatticeQuartetContraction
+open private sector_current from D5.S3.VertexAlgebra.Lattice.LatticeQuartetContraction
 
 variable {D : LatticeData} (F : NullFrame D)
 

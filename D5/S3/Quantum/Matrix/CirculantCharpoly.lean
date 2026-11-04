@@ -20,15 +20,19 @@ namespace D5.S3.Quantum.Matrix.CirculantCharpoly
 
 variable (n : ℕ) [NeZero n]
 
-theorem circulant_charpoly (b : ZMod n → ℂ) :
-    (Matrix.circulant b).charpoly = ∏ j : ZMod n, (X - C (ZMod.dft b j)) := by
-  have hs := D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.circulant_spectral n b
+/-- The normalized Fourier transform has nonzero determinant. -/
+lemma transform_det_ne_zero :
+    (D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform n).det ≠ 0 := by
   have hu := D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform_unitary n
   have hi : IsUnit (D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform n) :=
     isUnit_iff_exists_inv.mpr
       ⟨(D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform n)ᴴ, hu⟩
-  have hd : (D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform n).det ≠ 0 :=
-    ((Matrix.isUnit_iff_isUnit_det _).mp hi).ne_zero
+  exact ((Matrix.isUnit_iff_isUnit_det _).mp hi).ne_zero
+
+theorem circulant_charpoly (b : ZMod n → ℂ) :
+    (Matrix.circulant b).charpoly = ∏ j : ZMod n, (X - C (ZMod.dft b j)) := by
+  have hs := D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.circulant_spectral n b
+  have hd := transform_det_ne_zero n
   have hcp := Matrix.charpoly_eq_of_mul_eq_mul hd hs.symm
   change (Matrix.diagonal (ZMod.dft b)).charpoly = (Matrix.circulant b).charpoly at hcp
   rw [Matrix.charpoly_diagonal] at hcp
@@ -80,7 +84,7 @@ private lemma odd_prod {A : Type*} [CommMonoid A] (m : ℕ) (g : ℕ → A) :
   rw [← prod_mul_distrib, ← Ico_add_one_right_eq_Icc, prod_Ico_eq_prod_range]
   simp only [Nat.add_sub_cancel, show 1 + (m + m) = 2 * m + 1 by omega]
 
-private lemma character_pair (n : ℕ) [NeZero n] (j l : ℕ) (hl : l ≤ n) :
+lemma character_pair (n : ℕ) [NeZero n] (j l : ℕ) (hl : l ≤ n) :
     ZMod.stdAddChar ((j : ZMod n) * (l : ZMod n)) +
       ZMod.stdAddChar ((j : ZMod n) * ((n - l : ℕ) : ZMod n)) =
         (2 * Real.cos (2 * Real.pi * j * l / n) : ℝ) := by

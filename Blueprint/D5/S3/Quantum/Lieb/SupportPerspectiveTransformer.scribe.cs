@@ -10,6 +10,11 @@ internal sealed class SupportPerspectiveTransformerDocument : IScribeDocumentDef
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact supported perspective transformer for positive finite matrix maps.",
         H("SupportPerspectiveTransformer"), Blocks(
+            Describe.Lean(DescribeId.Create("mixed-spectral-root-products"),
+                DeclarationHandle.Create("D5/S3/Quantum/Lieb/SupportPerspectiveTransformer.spectral_sqrt_inverse_products"),
+                H("The actual roots multiply to their support"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every finite decidable coordinate type n and PSD matrix Q, set R=sqrt(Q), W=spectralInverseSqrt(Q), and P=spectralSupport(Q). Then R W=P, W R=P, P W=W and W P=W. The inverse root is zero on the kernel; the zero matrix and empty carrier are included."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("supported-positive-map-transformer"),
                 DeclarationHandle.Create("D5/S3/Quantum/Lieb/SupportPerspectiveTransformer.supportedPerspective_transformer"),
                 H("Positive maps contract the supported perspective"),

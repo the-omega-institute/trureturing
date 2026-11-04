@@ -1,0 +1,21 @@
+### 定义 17.3（原生黄金四时选择关系）
+
+令 $x=(\sqrt5-1)/2$，供应一个实际字 $t\in\mathcal L$，$A_t$ 是绕某单位轴旋转 $\theta=\pm3\pi/5$。要求对所有 $a,b\in\mathcal L$、$q\in\mathcal F$、$w\in\Gamma_q$，在相同输入资源和原始质量下有
+
+$$
+p(at^3b;q,w)+x^2p(atb;q,w)
+=p(ab;q,w)+x^2p(at^2b;q,w).
+\tag{17.6}
+$$
+
+这是 [V24 引理 7.2](AURIC_TWO_BASIS_STATES_THREE_CHANNELS_PHASE_CHIRALITY_AND_RECURSIVE_SQUARE_LAW_V24.md) 和[相干重建续卷 II §85](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 的同一准确四时系数关系。新前端不消费它们的已给复射线、有限复载体或 Born 实现，而将 (17.6) 作为未知原生响应的独立前件。它不是近似校准，也不是只有有限个已测上下文的等式。
+
+其简洁比较几何是同一旋转轨道上的加权四边形闭合：
+
+$$
+A_t^3+x^2A_t=I+x^2A_t^2.
+\tag{17.7}
+$$
+
+式 (17.7) 由 $A_t$ 的轴向特征值 $1$ 和平面旋转角给出；它是**方向**的关系，不能自行推出未知 $F$ 保持这个关系。式 (17.6) 额外要求每个原生响应保持这个特定四点平衡，且对所有共同实际前后文成立。系数相等不供应实验性混合装置或四条同时存在的样本。
+

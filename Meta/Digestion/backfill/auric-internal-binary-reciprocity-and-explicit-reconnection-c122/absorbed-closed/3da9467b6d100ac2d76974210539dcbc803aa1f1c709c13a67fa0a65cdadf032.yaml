@@ -1,0 +1,35 @@
+fingerprints:
+  raw_sha256: sha256:3da9467b6d100ac2d76974210539dcbc803aa1f1c709c13a67fa0a65cdadf032
+  normalized_sha256: sha256:3da9467b6d100ac2d76974210539dcbc803aa1f1c709c13a67fa0a65cdadf032
+cas_ref: sha256:3da9467b6d100ac2d76974210539dcbc803aa1f1c709c13a67fa0a65cdadf032
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/FiniteDiamondDistance.result
+    target_statement_id: sha256:d0a588687519b932fa3aaa795f91740e103ff7ac10043e2c6171408a38e1f47c
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel
+    target_statement_id: sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceDistance_le_one
+    target_statement_id: sha256:e39763e0eaa049a1552c3521e69a0c41d255ca2c7d54cf73a839fdb6299cc4b5
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_eq_max_re_tr_U
+    target_statement_id: sha256:3487611db943d93cce4a86af60f6499c8a001bc73fe819953d9bfd08a4e811b1
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_neg
+    target_statement_id: sha256:d7a81ef774c91a733d963a18aa1a998fd412bb6e352db4f96b70ec875b1b00ec
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_nonneg
+    target_statement_id: sha256:7412f30d565d9b30ebbf77bf0f5b93d44fe0082f8be41fd64fea60f00cdf2dfa
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_of_posSemidef
+    target_statement_id: sha256:4f19dad9c3563d9aba3fa6f97f41f0e49ed46af1457c14f015225ae27d019565
+  - gid: D5/S3/Quantum/Matrix/UniformVarianceTraceBound.re_trace_mul_le
+    target_statement_id: sha256:849ed780fd13e933571625fbc095b3962c052476dc5c175d8206bc7abdc4d0fe
+  - gid: D5/S3/Quantum/Matrix/UniformVarianceTraceBound.trace_centered_defect
+    target_statement_id: sha256:fe6fa63099f220aa2900835e4097a510028ab15d60ef3a2af1709dba4937d94c
+  - gid: D5/S3/Quantum/Recovery/BurriReplacementDecoder.pure_kraus_overlap
+    target_statement_id: sha256:f68316cb3d1c4ab6ee16a2fe00a3a68bbaceb908ef4d7e4b6217b1783cf7b969
+  - gid: D5/S3/Quantum/Recovery/CanonicalEntanglementFidelity.canonical_purification
+    target_statement_id: sha256:0faff8d7e7376d4b84d058e609e03f0b81aa93fa06b83375caa2391e8598c599
+  - gid: D5/S3/Quantum/Recovery/KrausCompletion.row_reset_action
+    target_statement_id: sha256:7ac70900fdb944bbe2e13d225cf5420ec33dba2b3b9800d4bc5d6ec097debd4d
+  - gid: D5/S3/Quantum/Recovery/SpectralTransposeRecovery.spectral_decoder_normalization
+    target_statement_id: sha256:499da784c162b807334a4c5d1e1d1ac77d0412d1617de1bf14b521f7eff8b401
+  - gid: D5/S3/Quantum/Recovery/SpectralTransposeRecovery.spectral_support_on_kraus
+    target_statement_id: sha256:ef85286a0608cd00e11b9a2a13ab41ada2b55490437e7f89d708986f5a7284a9
+receipts:
+  unresolved_subitems: []
