@@ -7,6 +7,7 @@
    digest: A binary coherent-state mixture violates the covariance-corrected entropy bound. -/
 
 import D5.S3.Entropy.Mixing.MixtureEntropyBracket
+import D5.S3.Fourier.Asymptotics.GaussianComplexMoments
 
 /-! A finite Gaussian-mixture counterexample to the covariance-corrected uncertainty relation
 of Hertz, Jabbour and Cerf, arXiv:1702.07286v2, Section III.B.
@@ -98,17 +99,21 @@ private lemma gaussian_moments (m : ℝ) :
     (∫ x, (x - m) ^ 2 * gaussianPDFReal m (1 / 2) x) = 1 / 2 := by
   have hv : (1 / 2 : ℝ≥0) ≠ 0 := by norm_num
   have hlp := memLp_id_gaussianReal (μ := m) (v := (1 / 2)) 2
-  have hi : Integrable (fun x : ℝ => x) (gaussianReal m (1 / 2)) :=
-    hlp.integrable (by norm_num)
-  have hs : Integrable (fun x : ℝ => x ^ 2) (gaussianReal m (1 / 2)) :=
-    hlp.integrable_sq
-  have transport (f : ℝ → ℝ) (hf : Integrable f (gaussianReal m (1 / 2))) :
-      Integrable (fun x => f x * gaussianPDFReal m (1 / 2) x) := by
-    rw [gaussianReal_of_var_ne_zero _ hv] at hf
-    have ht := (integrable_withDensity_iff_integrable_smul'
-      (measurable_gaussianPDF m (1 / 2)) (Filter.Eventually.of_forall
-        fun _ => gaussianPDF_lt_top)).1 hf
-    simpa only [toReal_gaussianPDF, smul_eq_mul, mul_comm] using ht
+  have hpdf (x : ℝ) :
+      D5.S3.Fourier.Asymptotics.GaussianComplexMoments.gaussianDensity m (1 / 2) x =
+        gaussianPDFReal m (1 / 2) x := by
+    simp only [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.gaussianDensity,
+      gaussianPDFReal, NNReal.coe_ofNat, NNReal.coe_inv, div_eq_mul_inv, one_mul,
+      mul_comm, mul_assoc]
+  have hpow (n : ℕ) : Integrable (fun x => x ^ n * gaussianPDFReal m (1 / 2) x) := by
+    apply (Integrable.iff_ofReal (𝕜 := ℂ)).mpr
+    have h : Integrable (fun x =>
+        D5.S3.Fourier.Asymptotics.GaussianComplexMoments.densityMonomial m (1 / 2) n 0 x) :=
+      D5.S3.Fourier.Asymptotics.GaussianComplexMoments.density_monomial_integrable
+        m (1 / 2) (by norm_num) n 0
+    simpa only [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.densityMonomial,
+      zero_mul, Complex.exp_zero, mul_one, hpdf, RCLike.ofReal_eq_complex_ofReal,
+      Complex.ofReal_mul, Complex.ofReal_pow] using h
   have hmean : (∫ x, x * gaussianPDFReal m (1 / 2) x) = m := by
     simpa only [integral_gaussianReal_eq_integral_smul hv, smul_eq_mul, mul_comm]
       using (integral_id_gaussianReal (μ := m) (v := (1 / 2)))
@@ -122,9 +127,10 @@ private lemma gaussian_moments (m : ℝ) :
   have hc := variance_fun_id_gaussianReal (μ := m) (v := (1 / 2))
   rw [variance_eq_integral measurable_id'.aemeasurable, integral_id_gaussianReal,
     integral_gaussianReal_eq_integral_smul hv] at hc
-  refine ⟨transport _ hi, transport _ hs, hmean, hsecond, ?_⟩
-  simpa only [smul_eq_mul, mul_comm, NNReal.coe_div, NNReal.coe_one,
-    NNReal.coe_ofNat] using hc
+  refine ⟨?_, hpow 2, hmean, hsecond, ?_⟩
+  · simpa only [pow_one] using hpow 1
+  · simpa only [smul_eq_mul, mul_comm, NNReal.coe_div, NNReal.coe_one,
+      NNReal.coe_ofNat] using hc
 
 private lemma gaussian_log (m x : ℝ) :
     Real.log (gaussianPDFReal m (1 / 2) x) = -Real.log Real.pi / 2 - (x - m) ^ 2 := by
