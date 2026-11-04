@@ -57,10 +57,10 @@ private lemma conference_identity {m : ℕ} (hm : 1 ≤ m)
     ring
   · by_cases ha : G.Adj u v
     · simp [Matrix.sub_apply, Matrix.smul_apply,
-        SimpleGraph.adjMatrix_apply, SimpleGraph.compl_adj, huv, ha, nsmul_eq_mul, hm']
+        SimpleGraph.adjMatrix_apply, huv, ha, nsmul_eq_mul, hm']
       ring
     · simp [Matrix.sub_apply, Matrix.smul_apply,
-        SimpleGraph.adjMatrix_apply, SimpleGraph.compl_adj, huv, ha, nsmul_eq_mul]
+        SimpleGraph.adjMatrix_apply, huv, ha, nsmul_eq_mul]
 
 private lemma conference_projectors {m : ℕ} (hm : 1 ≤ m)
     {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
@@ -484,7 +484,9 @@ private lemma nonsquare_small {m : ℕ} (hm : 1 ≤ m) (hs : ¬ IsSquare (4 * m 
     · rw [abs_of_nonpos hj0, neg_mul, Real.cos_neg]
   rw [hcos]
   have hj' := lt_of_lt_of_le hj (min_le_left _ _)
-  simpa only [f, ← Real.Angle.coe_zsmul, zsmul_eq_mul, Real.Angle.cos_coe] using hj'
+  dsimp only [f] at hj'
+  rw [← Real.Angle.coe_zsmul, Real.Angle.cos_coe, zsmul_eq_mul] at hj'
+  exact hj'
 
 private lemma family_small (c : ℝ) (hc : 0 < c) :
     ∃ N : ℕ, ∀ (m : ℕ), 1 ≤ m → N ≤ 4 * m + 1 →
