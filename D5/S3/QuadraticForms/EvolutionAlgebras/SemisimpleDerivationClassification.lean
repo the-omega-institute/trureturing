@@ -59,7 +59,7 @@ set_option maxHeartbeats 800000
 namespace D5.S3.QuadraticForms.EvolutionAlgebras.SemisimpleDerivationClassification.RadicalTransfer
 variable {k L N : Type*} [Field k] [LieRing L] [LieAlgebra k L]
 variable [LieRing N] [LieAlgebra k N]
-private theorem trivialRadical_of_equiv [LieAlgebra.HasTrivialRadical k L]
+theorem trivialRadical_of_equiv [LieAlgebra.HasTrivialRadical k L]
     (e : L ≃ₗ⁅k⁆ N) : LieAlgebra.HasTrivialRadical k N := by
   apply (LieAlgebra.hasTrivialRadical_iff_no_abelian_ideals k N).mpr
   intro I hI

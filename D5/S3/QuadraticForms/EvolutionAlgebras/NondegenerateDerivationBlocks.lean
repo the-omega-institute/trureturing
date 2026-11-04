@@ -274,6 +274,23 @@ private theorem derivation_off_diagonal_skew (D : derivations μ) (i j : ι) (hi
   · rw [derivation_cross_zero μ b label w hn hsq hsep D i j hc,
       derivation_cross_zero μ b label w hn hsq hsep D j i (Ne.symm hc), neg_zero]
 
+include hn hsq hw in
+private theorem derivation_diagonal_eq_on_class [CharZero k]
+    (D : derivations μ) (i j : ι) (hc : label i = label j) :
+    b.repr (D.val (b i)) i = b.repr (D.val (b j)) j := by
+  have hi := square_equation μ b hn D i
+  have hj := square_equation μ b hn D j
+  rw [hsq, hc] at hi
+  rw [hsq] at hj
+  have hh : (2 * (b.repr (D.val (b i)) i - b.repr (D.val (b j)) j)) •
+      w (label j) = 0 := by
+    calc
+      _ = (2 * b.repr (D.val (b i)) i) • w (label j) -
+          (2 * b.repr (D.val (b j)) j) • w (label j) := by rw [mul_sub, sub_smul]
+      _ = 0 := by rw [← hi, ← hj, sub_self]
+  exact sub_eq_zero.mp ((mul_eq_zero.mp
+    ((smul_eq_zero.mp hh).resolve_right (hw _))).resolve_left two_ne_zero)
+
 include hn hsq hw hsep in
 private theorem derivation_bracket_diagonal_zero (D E : derivations μ) (i : ι) :
     b.repr ((⁅D, E⁆ : derivations μ).val (b i)) i = 0 := by
@@ -634,6 +651,149 @@ private noncomputable def productToDerivationsGeneral :
     intro f g
     apply Subtype.ext
     exact (assemble b label).map_lie _ _
+
+include hn hsq hsep in
+private theorem project_derivation (D : derivations μ) (a : α) (x : V) :
+    blockProject b label a (D.val x) =
+      restrictBlock b label D.val a (blockProject b label a x) := by
+  have he := assemble_restrict_of_cross_zero b label D.val
+    (derivation_cross_zero μ b label w hn hsq hsep D)
+  rw [← he, project_assemble]
+  rw [restrict_assemble]
+
+include hn hsq hsep in
+private noncomputable def restrictDerivation (a : α) :
+    derivations μ →ₗ⁅k⁆ Module.End k ({i : ι // label i = a} → k) where
+  toFun D := restrictBlock b label D.val a
+  map_add' := by
+    intro D E
+    apply LinearMap.ext
+    intro x
+    funext i
+    simp [restrictBlock, map_add]
+  map_smul' := by
+    intro c D
+    apply LinearMap.ext
+    intro x
+    funext i
+    simp [restrictBlock, map_smul]
+  map_lie' := by
+    intro D E
+    apply LinearMap.ext
+    intro x
+    funext i
+    change blockProject b label a
+      (D.val (E.val (blockInclude b label a x)) -
+        E.val (D.val (blockInclude b label a x))) i = _
+    rw [map_sub, project_derivation μ b label w hn hsq hsep D,
+      project_derivation μ b label w hn hsq hsep E,
+      project_derivation μ b label w hn hsq hsep E,
+      project_derivation μ b label w hn hsq hsep D,
+      project_include_same]
+    rfl
+
+include hn hsq hw hsep in
+private noncomputable def classDiagonal (hl : Function.Surjective label) (a : α) :
+    derivations μ →ₗ⁅k⁆ k where
+  toFun D := b.repr (D.val (b (Classical.choose (hl a)))) (Classical.choose (hl a))
+  map_add' := by intro D E; simp
+  map_smul' := by intro c D; simp
+  map_lie' := by
+    intro D E
+    change b.repr ((⁅D,E⁆ : derivations μ).val (b (Classical.choose (hl a))))
+      (Classical.choose (hl a)) = _
+    rw [derivation_bracket_diagonal_zero μ b label w hn hsq hw hsep D E]
+    simp [Ring.lie_def, mul_comm]
+
+include hn hsq hw hsep in
+private theorem classDiagonal_coefficient [CharZero k]
+    (hl : Function.Surjective label) (a : α) (D : derivations μ)
+    (i : {i // label i = a}) :
+    classDiagonal μ b label w hn hsq hw hsep hl a D = b.repr (D.val (b i.val)) i.val :=
+  derivation_diagonal_eq_on_class μ b label w hn hsq hw D _ _
+    ((Classical.choose_spec (hl a)).trans i.property.symm)
+
+include hn hsq hw hsep in
+private theorem classDiagonal_square (hl : Function.Surjective label)
+    (a : α) (D : derivations μ) :
+    D.val (w a) = (2 * classDiagonal μ b label w hn hsq hw hsep hl a D) • w a := by
+  have hh := D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Equations.square_equation μ b hn D (Classical.choose (hl a))
+  rw [hsq, Classical.choose_spec (hl a)] at hh
+  exact hh
+
+include hn hsq hw hsep in
+private noncomputable def correctedRestrict (hl : Function.Surjective label) (a : α) :
+    derivations μ →ₗ⁅k⁆ Module.End k ({i : ι // label i = a} → k) where
+  toFun D := restrictDerivation μ b label w hn hsq hsep a D -
+    classDiagonal μ b label w hn hsq hw hsep hl a D • (1 : Module.End k _)
+  map_add' := by
+    intro D E
+    simp only [map_add, add_smul]
+    abel
+  map_smul' := by
+    intro c D
+    simp only [map_smul, smul_sub, smul_smul, smul_eq_mul, RingHom.id_apply]
+  map_lie' := by
+    intro D E
+    rw [(restrictDerivation μ b label w hn hsq hsep a).map_lie,
+      (classDiagonal μ b label w hn hsq hw hsep hl a).map_lie]
+    have hc (u v : k) : ⁅u,v⁆ = 0 := by simp [Ring.lie_def, mul_comm]
+    simp only [hc, zero_smul, sub_zero, lie_sub, sub_lie, lie_smul, smul_lie]
+    simp only [Ring.lie_def, mul_one, one_mul, sub_self, smul_zero, sub_zero,
+      zero_sub, neg_zero]
+
+include hn hsq hw hsep in
+private theorem correctedRestrict_mem_preserver [CharZero k]
+    (hl : Function.Surjective label) (a : α) (D : derivations μ) :
+    correctedRestrict μ b label w hn hsq hw hsep hl a D ∈
+      D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserver
+        (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+        (blockW b label w a) := by
+  classical
+  constructor
+  · apply (LinearMap.mem_skewAdjointSubmodule _).mpr
+    apply (D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.BlockForm.skew_iff_coefficients _).mpr
+    intro i j
+    change restrictBlock b label D.val a (Pi.single i (1 : k)) j -
+        classDiagonal μ b label w hn hsq hw hsep hl a D * ((Pi.single i (1 : k) : {i : ι // label i = a} → k) j) =
+      -(restrictBlock b label D.val a (Pi.single j (1 : k)) i -
+        classDiagonal μ b label w hn hsq hw hsep hl a D * ((Pi.single j (1 : k) : {i : ι // label i = a} → k) i))
+    rw [restrictBlock_coefficient, restrictBlock_coefficient]
+    by_cases hij : i = j
+    · subst j
+      rw [← classDiagonal_coefficient μ b label w hn hsq hw hsep hl a D i]
+      simp
+    · have hv : i.val ≠ j.val := fun h => hij (Subtype.ext h)
+      rw [derivation_off_diagonal_skew μ b label w hn hsq hw hsep D i.val j.val hv]
+      simp [Pi.single_apply, hij, Ne.symm hij]
+  · intro x hx
+    induction hx using Submodule.span_induction with
+    | mem x hx =>
+        obtain ⟨c,rfl⟩ := hx
+        change restrictBlock b label D.val a (blockProject b label a (w c)) -
+          classDiagonal μ b label w hn hsq hw hsep hl a D •
+            (blockProject b label a (w c)) ∈ blockW b label w a
+        rw [← project_derivation μ b label w hn hsq hsep D a (w c),
+          classDiagonal_square μ b label w hn hsq hw hsep hl c D, map_smul]
+        exact (blockW b label w a).sub_mem
+          ((blockW b label w a).smul_mem _ (Submodule.subset_span ⟨c,rfl⟩))
+          ((blockW b label w a).smul_mem _ (Submodule.subset_span ⟨c,rfl⟩))
+    | zero => simp
+    | add x y hx hy ihx ihy =>
+        simpa only [map_add] using (blockW b label w a).add_mem ihx ihy
+    | smul c x hx ih =>
+        simpa only [map_smul] using (blockW b label w a).smul_mem c ih
+
+include hn hsq hw hsep in
+private noncomputable def correctedPreserverHom [CharZero k]
+    (hl : Function.Surjective label) (a : α) : derivations μ →ₗ⁅k⁆
+      D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserver
+        (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+        (blockW b label w a) :=
+  { (correctedRestrict μ b label w hn hsq hw hsep hl a).toLinearMap.codRestrict _
+      (fun D => correctedRestrict_mem_preserver μ b label w hn hsq hw hsep hl a D) with
+    map_lie' := fun {D E} => Subtype.ext
+      ((correctedRestrict μ b label w hn hsq hw hsep hl a).map_lie D E) }
 
 include hn hsq hw hsep in
 private theorem productToDerivationsGeneral_injective :

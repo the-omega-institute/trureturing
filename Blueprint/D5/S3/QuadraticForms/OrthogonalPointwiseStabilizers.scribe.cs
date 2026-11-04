@@ -14,6 +14,23 @@ internal sealed class OrthogonalPointwiseStabilizersDocument : IScribeDocumentDe
         H("Orthogonal pointwise stabilizers"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("setwise-preserver"),
+                DeclarationHandle.Create(Prefix + "preserver"),
+                H("Setwise skew preserver"),
+                StatementSource.FromAuthor(Disp(PreserverFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any bilinear form B over a field and subspace W, these are the actual B-skew endomorphisms carrying W into W. Pointwise stabilizers are included. This is the carrier needed after subtracting the class scalar diagonal of a full evolution derivation."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("setwise-quotient-action"),
+                DeclarationHandle.Create(Prefix + "preserverQuotientLieHom"),
+                H("Action on the nondegenerate quotient"),
+                StatementSource.FromAuthor(Disp(FormContext(Call("LieHom", X("k"),
+                    Call("preserver", X("B"), X("W")), Call("skewAdjointLieSubalgebra", QuotientForm))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For symmetric B, restriction to W-perpendicular preserves the kernel of the restricted form and therefore induces an actual skew Lie action on the quotient. This construction retains every zero, isotropic and degenerate subspace, and does not require B itself to be nondegenerate or the Lie algebra to be semisimple. The existing pointwise-stabilizer action factors through this canonical construction."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("stabilizer-stabilizer"),
                 DeclarationHandle.Create(Prefix + "stabilizer"),
                 H("stabilizer"),
@@ -62,6 +79,13 @@ internal sealed class OrthogonalPointwiseStabilizersDocument : IScribeDocumentDe
                 Blocks(Paragraph(Text("Over an algebraically closed field of characteristic zero, a finite-dimensional nondegenerate symmetric form has the standard orthogonal Lie algebra of its dimension."))),
                 DescribeRole.Theorem))));
 
+    private static Formula PreserverFormula() => AlgebraContext(
+        All(X("B"), Bilin, All(X("W"), Submodule,
+        Eq(Call("preserver", X("B"), X("W")), Seq(OpenBrace, X("f"), Sp, Colon, Sp,
+            Apply(Qualified("Module", "End"), X("k"), X("V")), Sp, Mid, Sp,
+            And(Member(X("f"), Call("skewAdjointLieSubalgebra", X("B"))),
+                All(X("w"), X("V"), Imp(Member(X("w"), X("W")),
+                    Member(Apply(X("f"), X("w")), X("W"))))), CloseBrace)))));
     private static Formula Parenthesized(Formula content) =>Seq(Open, content, Close);
     private static Formula X(string name) =>F.Id(name);
     private static Formula Name(string name) =>Seq(Operatorname, Grp(X(name)));
