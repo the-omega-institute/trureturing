@@ -15,7 +15,7 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumChannels/chiribella2009networks")),
             Blocks(
                 Paragraph(Text("The carrier Basis is the set of all functions from Fin 16 to Bool, with shifted sites 0 through 15 representing the original sites -1 through 14. All operators are full matrices on these 65536 basis words. The root Omega is the computational word with ones at shifted positions 0, 4 and 8. No factorization of the 2584-dimensional legal subspace is used.")),
-                Paragraph(Text("The native menu uses the actual fourteen golden matrices K at addresses 0 through 13: Q is t times the zero-number projection plus t squared times the number projection plus beta cubed times bit flip; P is the product of neighboring number projections plus the product of their complements times Q; K is zeta times identity plus zeta times (zeta minus one) times P. Here phi=(1+sqrt(5))/2, t=phi inverse, beta=sqrt(t), and zeta=exp(3 pi i/5). An inverse call is interpreted as nine forward calls and costs nine. A forward call costs one.")),
+                Paragraph(Text("The menu is that of V88 definitions 23.1, 23.2 and 28.1. It uses the actual fourteen golden matrices K at addresses 0 through 13: Q is t times the zero-number projection plus t squared times the number projection plus beta cubed times bit flip; P is the product of neighboring number projections plus the product of their complements times Q; K is zeta times identity plus zeta times (zeta minus one) times P. Here phi=(1+sqrt(5))/2, t=phi inverse, beta=sqrt(t), and zeta=exp(3 pi i/5). An inverse call is interpreted as nine forward calls and costs nine. A forward call costs one.")),
                 Paragraph(Text("A finite native tree has gate nodes, finite complete diagonal measurement nodes and labeled leaves. A measurement is specified by a function from Basis to Fin n: outcome o has the diagonal projector whose entries are one exactly on the fiber of o. Surjectivity is unnecessary, so zero projectors and their full successor trees remain. Feedback can depend on the whole acquired path. Leaf labels distinguish active cuts from absorbed stops; each stop has its failure, refusal, early or normal kind and its own identifying code.")),
                 Paragraph(Text("For prefix T and continuation table C, E(p) denotes extension(T,C,p). At an active leaf E first reads original bit b1, at shifted index 2, and then executes C(p,j). At an absorbed leaf E is the single original stopped leaf: its operator is identity, its archive is empty, its added cost is zero and its read tag is none. CutLaw states these two cases, including each active read tag, diagonal projector, archive entry and terminal stop label.")),
                 Paragraph(Text("G is graft(T,E). Each G path has a unique split into the original path p and an added path q of E(p), with inverse attach(T,E,p,q). The original-record projection keeps the original program pi, the full original path p, the optional original read j, the final stop and every terminal basis word z. Original path identities are retained even when two paths have equal labels or zero mass. Only the added path q is summed out. The event e is any Boolean predicate on this retained record and z.")),
@@ -43,7 +43,7 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
         Formula tag = Call("readTag", Call("label", T, p), Call("Apply", C, p), q);
         Formula record = Call("Record", pi, p, tag, Call("label", Ep, q));
         Formula product = Call("MatMul", Call("Op", Ep, q), Call("Op", T, p));
-        Formula mass = Call("normSq", Call("Apply", Call("mulVec", product, F.Id("Omega")), z));
+        Formula mass = Call("normSq", Call("Apply", Call("mulVec", product, Call("omegaZero")), z));
         Formula sum = FiniteSum(p, path, FiniteSum(q, Call("Path", Ep),
             FiniteSum(z, Call("Basis"), IfThenElse(Call("Apply", e, record, z), mass, D(0)))));
         Formula r = Call("attach", T, E, p, q);
@@ -53,7 +53,8 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
             Rel(Call("c", G, r), Eq, Rel(Call("c", T, p), Plus, Call("c", Ep, q))),
             Rel(Call("label", G, r), Eq, Call("label", Ep, q)))));
         Formula bound = Rel(Call("L", G), Eq,
-            Call("FiniteSup", path, Call("Lambda", p,
+            Seq(Operatorname, Grp(F.Id("sup")), Underscore,
+                Grp(p, Sp, InMacro, Sp, path), Sp,
                 Rel(Call("c", T, p), Plus, Call("L", Ep)))));
         Formula law = And(Rel(Call("projectedMass", T, C, pi, e), Eq, sum), bound,
             All("p", path, Call("CutLaw", Call("label", T, p), Call("Apply", C, p))), semantics);
