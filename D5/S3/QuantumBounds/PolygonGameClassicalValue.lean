@@ -11,7 +11,10 @@ import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Tactic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring.RingNF
 
 /-! The uniform-input polygon game, with arbitrary local deterministic response tables. -/
 
@@ -129,8 +132,15 @@ private lemma varying_middle_half (P : ℕ) (hP : 3 ≤ P)
     · simp only [flip, Function.update_of_ne hji]
   have hbit (b : Bool) : ((s i (!b)).2.1.toNat : ZMod 2) =
       (s i b).2.1.toNat + 1 := by
-    cases b <;> cases hzero : (s i false).2.1 <;>
-      cases hone : (s i true).2.1 <;> simp_all <;> decide
+    cases b with
+    | false =>
+      change ((s i true).2.1.toNat : ZMod 2) = (s i false).2.1.toNat + 1
+      cases hzero : (s i false).2.1 <;> cases hone : (s i true).2.1
+      all_goals first | exact (hi (hzero.trans hone.symm)).elim | decide
+    | true =>
+      change ((s i false).2.1.toNat : ZMod 2) = (s i true).2.1.toNat + 1
+      cases hzero : (s i false).2.1 <;> cases hone : (s i true).2.1
+      all_goals first | exact (hi (hzero.trans hone.symm)).elim | decide
   have hsum (x : Fin P → Bool) :
       (∑ j, ((s j (flip x j)).2.1.toNat : ZMod 2)) =
         (∑ j, ((s j (x j)).2.1.toNat : ZMod 2)) + 1 := by
@@ -237,7 +247,8 @@ private lemma affine_matching_rule (P : ℕ) (s : Fin P → Bool → Bool × Boo
     have hh := hlegal i true
     rw [← hfixed i] at hh
     apply (CharTwo.add_eq_zero).1
-    convert hh using 1 <;> ring
+    convert hh using 1
+    ring
   have hcharge : (∑ i ∈ M, edgeCharge P s i) = (M.card : ZMod 2) +
       (∑ i ∈ M, a i) + (∑ i ∈ M, a (finRotate P i)) +
       ∑ i ∈ M, ((s i true).1.toNat + (s (finRotate P i) true).2.2.toNat : ZMod 2) := by
@@ -382,8 +393,8 @@ private lemma avoiding_count (P : ℕ) (hP : 3 ≤ P) (j : Fin P) :
     change (j + (⟨k.val + 2, by omega⟩ : Fin (n + 3))) + 1 =
       j + ⟨l.val + 2, by omega⟩ ↔ _
     rw [add_assoc, add_left_cancel_iff, Fin.ext_iff,
-      Fin.val_add_one_of_lt' (by simp only [Fin.val_mk]; omega)]
-    simp only [Fin.val_mk]
+      Fin.val_add_one_of_lt' (by change k.val + 2 + 1 < n + 3; omega)]
+    change k.val + 2 + 1 = l.val + 2 ↔ k.val + 1 = l.val
     omega
   have eavoid (k : Fin n) : e k ≠ (finRotate (n + 3)).symm j ∧
       e k ≠ j ∧ e k ≠ finRotate (n + 3) j := by
@@ -392,19 +403,19 @@ private lemma avoiding_count (P : ℕ) (hP : 3 ≤ P) (j : Fin P) :
       rw [finRotate_symm_apply, sub_eq_add_neg] at hh
       have he : (⟨k.val + 2, by omega⟩ : Fin (n + 3)) = -1 := add_left_cancel hh
       have hv := congrArg Fin.val he
-      simp only [Fin.val_mk, Fin.coe_neg_one] at hv
+      simp only [Fin.coe_neg_one] at hv
       omega
     · intro hh
       have he : (⟨k.val + 2, by omega⟩ : Fin (n + 3)) = 0 :=
         add_left_cancel (hh.trans (add_zero j).symm)
       have hv := congrArg Fin.val he
-      simp only [Fin.val_mk, Fin.val_zero] at hv
+      simp only [Fin.val_zero] at hv
       omega
     · intro hh
       rw [finRotate_apply] at hh
       have he : (⟨k.val + 2, by omega⟩ : Fin (n + 3)) = 1 := add_left_cancel hh
       have hv := congrArg Fin.val he
-      simp only [Fin.val_mk, Fin.val_one] at hv
+      simp only [Fin.val_one] at hv
       omega
   have represent (N : Finset (Fin (n + 3))) (hN : N ∈ avoiding (n + 3) j)
       (i : Fin (n + 3)) (hi : i ∈ N) : ∃ k, e k = i := by
@@ -525,7 +536,8 @@ private lemma pairing_losses (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
     rw [Finset.sum_insert hnot, hj] at ho
     have he : baseline P s + ∑ i ∈ N, edgeCharge P s i = 1 := by
       apply (CharTwo.add_eq_zero).1
-      convert ho using 1 <;> ring
+      convert ho using 1
+      ring
     rw [hz] at he
     exact zero_ne_one he
   let f : Finset (Fin P) → (Fin P → Bool) := fun N =>
@@ -633,7 +645,7 @@ private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
     simp only [hpoint, Finset.sum_ite, Finset.sum_const_zero, zero_add, Finset.sum_const,
       nsmul_eq_mul, mul_one, Finset.filter_ne', Finset.card_erase_of_mem (Finset.mem_univ j),
       Finset.card_univ, Fintype.card_fin]
-    convert hnum using 1 <;> congr 1 <;> omega
+    exact hnum
   refine ⟨?_, ?_, ?_, hbase, j, ?_⟩
   · intro i x
     cases x
@@ -644,8 +656,7 @@ private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
   · intro i
     rw [hzero, hone]
     split_ifs <;> rfl
-  · change (∑ i, ((attainingStrategy (n + 3) i false).2.1.toNat : ZMod 2)) = 0
-    convert hbase using 1
+  · convert hbase using 1
     apply Finset.sum_congr rfl
     intro i _
     rw [hzero]
@@ -659,13 +670,13 @@ private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
         have hv := congrArg Fin.val hh
         simp only [Fin.val_zero, j, Fin.val_last] at hv
         omega
-      simp only [edgeCharge, hzero, hone, hr, ite_true, if_neg hz, Prod.fst, Prod.snd,
+      simp only [edgeCharge, hzero, hone, hr, ite_true, ite_eq_right hz,
         Bool.toNat_true, Bool.toNat_false, Nat.cast_one, Nat.cast_zero, add_zero]
       decide
     · by_cases hn : finRotate (n + 3) i = j <;>
-        simp only [edgeCharge, hzero, hone, hi, hn, ite_true, ite_false, Prod.fst,
-          Prod.snd, Bool.toNat_true, Bool.toNat_false, Nat.cast_one, Nat.cast_zero,
-          add_zero, zero_add] <;> decide
+        simp only [edgeCharge, hzero, hone, hi, hn, ite_true, ite_false, Bool.toNat_true,
+          Bool.toNat_false, Nat.cast_one, Nat.cast_zero,
+          add_zero] <;> decide
 
 
 open Classical in
