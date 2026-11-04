@@ -6,7 +6,7 @@ For every n at least three, the unit qubit tuples with imaginary Bargmann invari
 
 **Theorem 1.1 (An upper bound for a finite weighted mean).**
 
-$$\forall (I : \operatorname{Type}), [\operatorname{Fintype}\left(I\right)], \forall (w : (I) \to (\mathbb{R})), \forall (c : (I) \to (\mathbb{R})), \forall (M : \mathbb{R}), (\forall (k : I), 0 \le w\left(k\right)) \Rightarrow ((\sum_{k : I} (w\left(k\right)) = 1) \Rightarrow ((\forall (k : I), c\left(k\right) \le M) \Rightarrow ((\sum_{k : I} (c\left(k\right) \cdot w\left(k\right)) \le M) \land ((\sum_{k : I} (c\left(k\right) \cdot w\left(k\right)) = M) \Leftrightarrow (\forall (k : I), (c\left(k\right) < M) \Rightarrow (w\left(k\right) = 0))))))$$
+$$\forall (\iota : \operatorname{Type}*), [\operatorname{Fintype}\left(\iota\right)] \forall (w : (\iota) \to (\mathbb{R})), \forall (c : (\iota) \to (\mathbb{R})), \forall (M : \mathbb{R}), (\forall (k : \iota), (0 : \mathbb{R}) \le w\left(k\right)) \Rightarrow ((\sum_{k : \iota} (w\left(k\right)) = (1 : \mathbb{R})) \Rightarrow ((\forall (k : \iota), c\left(k\right) \le M) \Rightarrow ((\sum_{k : \iota} (c\left(k\right) \cdot w\left(k\right)) \le M) \land ((\sum_{k : \iota} (c\left(k\right) \cdot w\left(k\right)) = M) \Leftrightarrow (\forall (k : \iota), (c\left(k\right) < M) \Rightarrow (w\left(k\right) = (0 : \mathbb{R})))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BargmannImaginaryMaximizers.weighted_edge_bound` (`✓ std3`). ∎
 
