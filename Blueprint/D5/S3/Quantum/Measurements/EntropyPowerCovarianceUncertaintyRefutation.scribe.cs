@@ -102,7 +102,10 @@ internal sealed class EntropyPowerCovarianceUncertaintyRefutationDocument : IScr
                     Paragraph(Text(
                         "The counterexample consists of mixed states with positive Wigner functions. "
                             + "The statement for pure states, the joint Wigner-entropy inequality, the extension to several modes and states with negative Wigner functions are outside this conclusion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hertz-jabbour-cerf-2017-covariance-corrected-entropy-power-uncertainty"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("entropy-power-covariance-" + declaration.ToLowerInvariant()),

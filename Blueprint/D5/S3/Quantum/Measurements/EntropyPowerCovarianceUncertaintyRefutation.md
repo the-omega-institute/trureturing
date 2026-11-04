@@ -132,6 +132,10 @@ $$\neg (\forall (n: \mathbb{N}), (\forall (w: (\operatorname{Fin}\left(n\right))
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/EntropyPowerCovarianceUncertaintyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hertz-jabbour-cerf-2017-covariance-corrected-entropy-power-uncertainty` (refuted) by `D5/S3/Quantum/Measurements/EntropyPowerCovarianceUncertaintyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hertz-jabbour-cerf-2017-covariance-corrected-entropy-power-uncertainty","declaration_gid":"D5/S3/Quantum/Measurements/EntropyPowerCovarianceUncertaintyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Anaelle Hertz, Michael G. Jabbour, Nicolas J. Cerf (2017). *Entropy-power uncertainty relations: towards a tight inequality for all Gaussian pure states*. DOI: [10.1088/1751-8121/aa852f](https://doi.org/10.1088/1751-8121/aa852f). URL: <https://arxiv.org/abs/1702.07286v2>.
