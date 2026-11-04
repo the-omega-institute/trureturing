@@ -11,6 +11,24 @@ import D5.S1.Words.Palindromes.PeriodDoubling.SignedCutLowerBound
 
 /-! Reflections of literal Thue-Morse factors and the signed cut potential. -/
 
+/-
+Per-declaration proof shape and candidate admission basis:
+* transition_period_doubling: content; escape-witness candidate is the strong
+  induction identifying the original adjacent transition with literal u_pd.
+  Live consumer: reflect_derivative.
+* allowed_factor_signed_cut: content; escape-witness candidates are
+  reflect_derivative and reflect_extend, transporting both literal reflection
+  laws and resolving the rounded odd endpoints. Live consumer: mixed_signed_lower.
+* combined_prefix_signed_lower: content; escape-witness candidate is the
+  induction in mixed_signed_lower that extracts consecutive literal factors
+  from an arbitrary nonempty mixed factorization.
+The finite-factor definitions are consumed by these proofs. Local arithmetic
+and list-normalization helpers supply no separate content claim.
+The transition's source-bound registration is validated. The other two source
+bindings remain unfinished: https://github.com/the-omega-institute/trureturing/issues/26539.
+Independent pre-freeze classification and fidelity review remain required.
+-/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
