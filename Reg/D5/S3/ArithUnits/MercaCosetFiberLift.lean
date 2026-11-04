@@ -3,6 +3,8 @@ import D5.S3.ArithUnits.MercaCosetFiberLift
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
+/-! Source registrations for coset-fiber lifting and the rational finite sum. -/
+
 open _root_.D5.S3.ArithUnits.MercaCosetFiberLift
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -213,7 +215,8 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   realization := .source arena ⟨source⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ ell => ∑ t : Fin ell, (t.val : ℚ)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ ell => ∑ t : Fin ell, (t.val : ℚ))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

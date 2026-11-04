@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum
 import Reg.Support.SingleDependentReadout
 
+/-! Source registration for the nonzero real-root count of the polygon Jacobian. -/
+
 namespace Reg.D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum
 open _root_.D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -11,7 +13,9 @@ abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ m => {x : ℝ | x ≠ 0 ∧ (jacobian (2 * m)).charpoly.IsRoot x}.ncard) (fun e => nomatch e)
+  realize signature
+    (fun _ _ m => {x : ℝ | x ≠ 0 ∧ (jacobian (2 * m)).charpoly.IsRoot x}.ncard)
+    (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ m =>
@@ -61,7 +65,9 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   realization := .source arena ⟨source⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ m => {x : ℝ | x ≠ 0 ∧ (jacobian (2 * m)).charpoly.IsRoot x}.ncard) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ _ m => {x : ℝ | x ≠ 0 ∧ (jacobian (2 * m)).charpoly.IsRoot x}.ncard)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
