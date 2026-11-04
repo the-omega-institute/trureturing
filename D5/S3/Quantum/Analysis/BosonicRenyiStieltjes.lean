@@ -17,7 +17,7 @@ using integrability of the logarithmic endpoint singularity. -/
 
 namespace D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
 
-open Real Set MeasureTheory Filter
+open Real Set MeasureTheory Filter PoissonWeight
 
 noncomputable section
 
@@ -39,33 +39,6 @@ private def poissonAngle (α p : ℝ) : ℝ :=
 
 private def weightPrimitive (α x : ℝ) : ℝ :=
   poissonAngle α (((1 - x) / (1 + x)) ^ α) / (Real.pi * (α - 1))
-
-private lemma sine_factor_pos {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) :
-    0 < -Real.sin (Real.pi * α) / (α - 1) := by
-  rcases lt_or_gt_of_ne ha1 with ha | ha
-  · have hs : 0 < Real.sin (Real.pi * α) :=
-      Real.sin_pos_of_pos_of_lt_pi (mul_pos Real.pi_pos ha0)
-        (by nlinarith [Real.pi_pos])
-    exact div_pos_of_neg_of_neg (neg_neg_of_pos hs) (sub_neg.mpr ha)
-  · have hs : 0 < Real.sin (Real.pi * α - Real.pi) :=
-      Real.sin_pos_of_pos_of_lt_pi (by nlinarith [Real.pi_pos])
-        (by nlinarith [Real.pi_pos])
-    rw [Real.sin_sub_pi] at hs
-    exact div_pos hs (sub_pos.mpr ha)
-
-private lemma cosine_lt_one {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) :
-    Real.cos (Real.pi * α) < 1 := by
-  have hs := sine_factor_pos ha0 ha2 ha1
-  have hsin : Real.sin (Real.pi * α) ≠ 0 := by
-    intro hz
-    rw [hz, neg_zero, zero_div] at hs
-    exact lt_irrefl 0 hs
-  refine lt_of_le_of_ne (Real.cos_le_one _) ?_
-  intro he
-  have hsq := Real.sin_sq_add_cos_sq (Real.pi * α)
-  rw [he] at hsq
-  have hz : Real.sin (Real.pi * α) = 0 := by nlinarith
-  exact hsin hz
 
 private lemma weight_denominator_pos {α x : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hx0 : 0 ≤ x) (hx1 : x < 1) :
