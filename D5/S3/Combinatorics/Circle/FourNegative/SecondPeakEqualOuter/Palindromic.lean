@@ -190,6 +190,7 @@ private theorem palindromic_lift (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
         List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
       all_goals rw [sm 2 M1 cap1]
       all_goals try ring
+      simp only [f,ite_true]
       rw [(chain_values a b b a ha hb hb ha).2.2.2]
     have mass2 : (Q2.map f).sum=(full a b b a 3:ℤ)*F 3+swap+((M2:ℤ)-(M1:ℤ))*F 2+pay2 := by
       have mp : (P2.map f).sum=(full a b b a 3:ℤ)*F 3+swap+((M2:ℤ)-(M1:ℤ))*F 2 := by
@@ -199,6 +200,7 @@ private theorem palindromic_lift (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
         not_true_eq_false,not_false_eq_true,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
       all_goals rw [mp]
       all_goals try ring
+      simp only [f,ite_true]
       rw [(chain_values a b b a ha hb hb ha).2.2.2]
     have mass3 : (P3.map f).sum=(full a b b a 0:ℤ)*F 0-swap+((full a b b a 2:ℤ)-(M2:ℤ))*F 2 := by
       simp only [P3,List.map_append,List.sum_append,massU]
@@ -230,21 +232,27 @@ private theorem palindromic_lift (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     rw [j1] at nb1 nt1
     rw [j2] at nb2 nt2
     rw [j3] at nb3 nt3
+    have fullcast : (full a b b a 2:ℤ)=((2^(b-1):ℕ):ℤ)-1 := by
+      change (((2^(b-1):ℕ)-1:ℕ):ℤ)=((2^(b-1):ℕ):ℤ)-1
+      have hp:=Nat.one_le_two_pow (n:=b-1)
+      omega
     have mid1 : (M1:ℤ)=(full a b b a 2:ℤ)+1-s1 := by
-      have powpos:=Nat.one_le_two_pow (n:=b-1)
-      dsimp [full,chainLength,s1] at *
-      omega
+      change (M1:ℤ)=((2^(b-1):ℕ):ℤ)-q+r1 at m1
+      rw [fullcast]
+      dsimp only [s1]
+      linarith only [m1]
     have mid2 : (M2:ℤ)=(full a b b a 2:ℤ)+1-s2 := by
-      have powpos:=Nat.one_le_two_pow (n:=b-1)
-      dsimp [full,chainLength,s2] at *
-      omega
+      change (M2:ℤ)=((2^(b-1):ℕ):ℤ)-q+r2 at m2
+      rw [fullcast]
+      dsimp only [s2]
+      linarith only [m2]
     have wz:=win side
     have zero : ((blocksWord [(P0,n 1),(Q1,n 2),(Q2,n 3),(P3,n 0)]).map f).sum=0 := by
       cases side
-      · simpa [Q1,Q2] using ((hp.map (oldValue a b b a)).sum_eq).trans (source_totals a b b a ha hb hb ha).1
+      · simpa [Q1,Q2,f] using ((hp.map (oldValue a b b a)).sum_eq).trans (source_totals a b b a ha hb hb ha).1
       · have hz:=marked_total a b b ha hb hb false e bs (by simp [bs]) hp
         by_cases he : ep0<0
-        all_goals simpa [bs,marked,e,Q1,Q2,he,withEar] using hz
+        all_goals simpa [bs,marked,e,Q1,Q2,he,withEar,f,C] using hz
     have chk:=four_checks f C P0 Q1 Q2 P3 (n 1) (n 2) (n 3) (n 0)
       (2*(F 2-F 1)) (2*(F 2-F 1+F 3-s1*F 2+pay1))
       (2*(F 2-F 1+F 0-s2*F 2+swap)) (F 2) (F 3) (base a b b a 0) (F 1)
@@ -254,7 +262,7 @@ private theorem palindromic_lift (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
         congrArg (fun z : ℤ => z*F 2) mid1,congrArg (fun z : ℤ => z*F 2) mid2])
       zero nt1 nt2 nt3 nt0 wz.1 wz.2.1 wz.2.2.1 wz.2.2.2
     cases side <;> by_cases he : ep0<0
-    all_goals simpa [bs,marked,e,Q1,Q2,he,withEar] using chk
+    all_goals simpa [bs,marked,e,Q1,Q2,he,withEar,f,C] using chk
   exact realize_packets a b b ha hb hb false e bs (by simp [bs]) hp hpos hneg (checks false) (checks true)
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter

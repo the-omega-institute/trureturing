@@ -99,8 +99,10 @@ private theorem palin_choices (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     by_cases hn : E0<0
     · have hc:=ceil_remainder E0 (L x y) hL hn
       have cast : (r1:ℤ)=(-E0+L x y-1)/L x y := by
-        change ((if E0<0 then ((-E0+L x y-1)/L x y).toNat else 0):ℤ)=_
-        rw [if_pos hn]
+        have rr : r1=((-E0+L x y-1)/L x y).toNat := by
+          change (if E0<0 then ((-E0+L x y-1)/L x y).toNat else 0)=_
+          rw [if_pos hn]
+        rw [rr]
         exact Int.toNat_of_nonneg (by omega)
       rw [cast]
       exact hc.2
@@ -128,12 +130,14 @@ private theorem palin_choices (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     intro i hi
     change (t ||| r1).testBit i=true
     rw [Nat.testBit_or]
-    exact Bool.or_eq_true.mpr (Or.inr hi)
+    simp only [Bool.or_eq_true]
+    exact Or.inr hi
   have st : Submask t r2 := by
     intro i hi
     change (t ||| r1).testBit i=true
     rw [Nat.testBit_or]
-    exact Bool.or_eq_true.mpr (Or.inl hi)
+    simp only [Bool.or_eq_true]
+    exact Or.inl hi
   have rr:=submask_le r1 r2 sr
   have tt:=submask_le t r2 st
   have cost:=or_cost t r1

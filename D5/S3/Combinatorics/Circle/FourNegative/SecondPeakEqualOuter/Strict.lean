@@ -167,12 +167,7 @@ private theorem strict_selectors (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c
         · have hx8 : 8≤x := by simpa [x] using pow_lower a 3 (by omega)
           refine ⟨3,5,by decide,by decide,by omega,by decide,by omega,hscap,?_,?_⟩
           · rw [hs6]
-            intro e he
-            have ee : e=2 := by
-              have hh:=bit_below 4 3 e (by decide) he
-              interval_cases e <;> (try norm_num [Nat.testBit_eq_decide_div_mod_eq] at he ⊢)
-            subst e
-            norm_num [Nat.testBit_eq_decide_div_mod_eq]
+            exact SecondPeakHighD.submask_of_land 4 5 (by decide)
           · exact Or.inr (Or.inr (Or.inr (Or.inr ⟨hx8,yz,rfl,rfl⟩)))
 
 set_option maxHeartbeats 2400000 in
