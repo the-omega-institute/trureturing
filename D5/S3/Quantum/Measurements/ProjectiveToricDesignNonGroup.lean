@@ -97,17 +97,18 @@ private theorem phase_add (a b : ZMod 3) : phase (a + b) = phase a + phase b := 
   apply AddCircle.homeomorphCircle'.injective
   change Real.Angle.toCircle (phase (a + b)) = Real.Angle.toCircle (phase a + phase b)
   apply Subtype.ext
-  simp only [Real.Angle.toCircle_add, Circle.coe_mul, phase_character, AddChar.map_add_eq_mul]
+  simp (config := { congrConsts := false }) only
+    [Real.Angle.toCircle_add, Circle.coe_mul, phase_character, AddChar.map_add_eq_mul]
 
 private theorem phase_injective : Function.Injective phase := by
   intro a b h
   apply ZMod.injective_stdAddChar
-  simpa only [phase_character] using
+  simpa (config := { congrConsts := false }) only [phase_character] using
     congrArg (fun t => (Real.Angle.toCircle t : ℂ)) h
 
 private def phase_map : ZMod 3 →+ Real.Angle where
   toFun := phase
-  map_zero' := by norm_num [phase]
+  map_zero' := by norm_num (config := { congrConsts := false }) [phase]
   map_add' := phase_add
 
 private theorem coord_zero : coord 0 = 0 := by
@@ -118,7 +119,7 @@ private theorem coord_zero : coord 0 = 0 := by
   apply Fin.ext
   change 0 = (finFunctionFinEquiv (fun _ : Fin 3 => (0 : Fin 3)) : ℕ)
   rw [finFunctionFinEquiv_apply]
-  simp
+  simp (config := { congrConsts := false })
 
 private theorem matrices_symmetric (i : Fin 27) : (matrices i).IsSymm := by
   revert i
@@ -137,7 +138,7 @@ private theorem character_orthogonality (w : Fin 3 → ZMod 3) :
       if w = 0 then (27 : ℂ) else 0 := by
   classical
   by_cases hw : w = 0
-  · simp [hw]
+  · simp (config := { congrConsts := false }) [hw]
   rw [ite_eq_right hw]
   let f : (Fin 3 → ZMod 3) →+ ZMod 3 :=
     { toFun := fun x => w ⬝ᵥ x
@@ -159,7 +160,7 @@ private theorem polynomial_shift (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
     polynomial M b (h + y) - polynomial M b y =
       polynomial M b h + ((2 : ZMod 3) • M.mulVec h) ⬝ᵥ y := by
   rw [polynomial, polynomial, polynomial]
-  simp only [Matrix.mulVec_add, dotProduct_add, add_dotProduct,
+  simp (config := { congrConsts := false }) only [Matrix.mulVec_add, dotProduct_add, add_dotProduct,
     smul_dotProduct, smul_eq_mul]
   rw [dotProduct_comm (M.mulVec h) y, hM.dotProduct_mulVec_comm (x := y) (y := h)]
   ring
@@ -178,13 +179,14 @@ private theorem quadratic_energy (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
       rw [Matrix.mulVec_zero]
       exact (smul_eq_zero.mp hh).resolve_left (by decide)
     · rintro rfl
-      simp
+      simp (config := { congrConsts := false })
   have he : (∑ x : Fin 3 → ZMod 3, ZMod.stdAddChar (polynomial M b x)) *
       (∑ y : Fin 3 → ZMod 3, ZMod.stdAddChar (-polynomial M b y)) = (27 : ℂ) := by
     calc
       _ = ∑ x : Fin 3 → ZMod 3, ∑ y : Fin 3 → ZMod 3,
           ZMod.stdAddChar (polynomial M b x - polynomial M b y) := by
-        simp only [Fintype.sum_mul_sum, sub_eq_add_neg, AddChar.map_add_eq_mul]
+        simp (config := { congrConsts := false }) only
+          [Fintype.sum_mul_sum, sub_eq_add_neg, AddChar.map_add_eq_mul]
       _ = ∑ h : Fin 3 → ZMod 3, ∑ y : Fin 3 → ZMod 3,
           ZMod.stdAddChar (polynomial M b h + ((2 : ZMod 3) • M.mulVec h) ⬝ᵥ y) := by
         rw [Finset.sum_comm]
@@ -203,12 +205,12 @@ private theorem quadratic_energy (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
       _ = ∑ h : Fin 3 → ZMod 3, ZMod.stdAddChar (polynomial M b h) *
           (∑ y : Fin 3 → ZMod 3,
             ZMod.stdAddChar (((2 : ZMod 3) • M.mulVec h) ⬝ᵥ y)) := by
-        simp only [AddChar.map_add_eq_mul, Finset.mul_sum]
+        simp (config := { congrConsts := false }) only [AddChar.map_add_eq_mul, Finset.mul_sum]
       _ = _ := by
-        simp_rw [character_orthogonality, hz]
-        simp [polynomial]
+        simp_rw (config := { congrConsts := false }) [character_orthogonality, hz]
+        simp (config := { congrConsts := false }) [polynomial]
   apply Complex.ofReal_injective
-  push_cast
+  push_cast (config := { congrConsts := false })
   rw [← Complex.mul_conj']
   convert he using 1
   rw [map_sum]
@@ -216,13 +218,13 @@ private theorem quadratic_energy (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
   apply Finset.sum_congr rfl
   intro y _
   exact AddChar.starComp_apply
-    (by norm_num [ZMod.ringChar_zmod_n] : 0 < ringChar (ZMod 3)) (polynomial M b y)
+    (by norm_num (config := { congrConsts := false }) [ZMod.ringChar_zmod_n] : 0 < ringChar (ZMod 3)) (polynomial M b y)
 
 private theorem spread_evaluation (g : Fin 3 → ZMod 3) (hg : g ≠ 0) :
     Function.Bijective (fun i : Fin 27 => (matrices i).mulVec g) := by
   classical
   apply (Fintype.bijective_iff_injective_and_card _).mpr
-  refine ⟨?_, by norm_num [Fintype.card_fun]⟩
+  refine ⟨?_, by norm_num (config := { congrConsts := false }) [Fintype.card_fun]⟩
   intro i j hij
   by_contra hne
   change matrices i *ᵥ g = matrices j *ᵥ g at hij
@@ -240,21 +242,24 @@ private theorem polynomial_unique (A B : Matrix (Fin 3) (Fin 3) (ZMod 3))
     have hxy := h (x + y)
     have hx := h x
     have hy := h y
-    simp only [polynomial, Matrix.mulVec_add, dotProduct_add, add_dotProduct] at hxy hx hy
+    simp (config := { congrConsts := false }) only
+      [polynomial, Matrix.mulVec_add, dotProduct_add, add_dotProduct] at hxy hx hy
     rw [hA.dotProduct_mulVec_comm (x := y) (y := x),
       hB.dotProduct_mulVec_comm (x := y) (y := x)] at hxy
     linear_combination hxy - hx - hy
   have hAB : A = B := by
     ext i j
     have he : 2 * (A i j - B i j) = 0 := by
-      simpa only [single_one_dotProduct, Matrix.mulVec_single_one, Matrix.col,
+      simpa (config := { congrConsts := false }) only
+        [single_one_dotProduct, Matrix.mulVec_single_one, Matrix.col,
         Matrix.transpose_apply] using
         hp (Pi.single i 1) (Pi.single j 1)
     exact sub_eq_zero.mp ((mul_eq_zero.mp he).resolve_left ht)
   refine ⟨hAB, ?_⟩
   funext i
   have he := h (Pi.single i 1)
-  simpa only [polynomial, hAB, dotProduct_single_one, add_left_cancel_iff] using he
+  simpa (config := { congrConsts := false }) only
+    [polynomial, hAB, dotProduct_single_one, add_left_cancel_iff] using he
 
 private theorem exponent_overlap (i k : Fin 27) (b c : Fin 3 → ZMod 3)
     (h : (i, b) ≠ (k, c)) :
@@ -271,11 +276,11 @@ private theorem exponent_overlap (i k : Fin 27) (b c : Fin 3 → ZMod 3)
     left
     have he (x : Fin 3 → ZMod 3) :
         polynomial (matrices i) b x - polynomial (matrices i) c x = (b - c) ⬝ᵥ x := by
-      simp only [polynomial, sub_dotProduct]
+      simp (config := { congrConsts := false }) only [polynomial, sub_dotProduct]
       ring
-    simp_rw [he]
+    simp_rw (config := { congrConsts := false }) [he]
     rw [character_orthogonality, ite_eq_right (sub_ne_zero.mpr hbc)]
-    norm_num
+    norm_num (config := { congrConsts := false })
   · right
     have he : (∑ x : Fin 3 → ZMod 3,
         ZMod.stdAddChar (polynomial (matrices i) b x - polynomial (matrices k) c x)) =
@@ -284,7 +289,8 @@ private theorem exponent_overlap (i k : Fin 27) (b c : Fin 3 → ZMod 3)
       apply Finset.sum_congr rfl
       intro x _
       apply congrArg (fun k : ZMod 3 => ZMod.stdAddChar k)
-      simp only [polynomial, Matrix.sub_mulVec, dotProduct_sub, sub_dotProduct]
+      simp (config := { congrConsts := false }) only
+        [polynomial, Matrix.sub_mulVec, dotProduct_sub, sub_dotProduct]
       ring
     rw [he]
     exact quadratic_energy _ ((matrices_symmetric i).sub (matrices_symmetric k))
@@ -296,7 +302,8 @@ private theorem quadratic_rectangle (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
       ((2 : ZMod 3) • (a₁ - b₁)) ⬝ᵥ M.mulVec (a₁ - b₂) := by
   have ha₂ : a₂ = b₁ + b₂ - a₁ := by linear_combination hs
   rw [ha₂]
-  simp only [Matrix.mulVec_add, Matrix.mulVec_sub, dotProduct_add, dotProduct_sub,
+  simp (config := { congrConsts := false }) only
+    [Matrix.mulVec_add, Matrix.mulVec_sub, dotProduct_add, dotProduct_sub,
     add_dotProduct, sub_dotProduct, smul_dotProduct, smul_eq_mul]
   rw [hM.dotProduct_mulVec_comm (x := b₁) (y := a₁),
     hM.dotProduct_mulVec_comm (x := b₂) (y := a₁),
@@ -317,8 +324,8 @@ private theorem exponent_moment (a₁ a₂ b₁ b₂ : Fin 3 → ZMod 3) :
         polynomial (matrices i) c a₁ + polynomial (matrices i) c a₂ -
           polynomial (matrices i) c b₁ - polynomial (matrices i) c b₂ = 0 := by
       rcases h with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;> ring
-    simp_rw [hz, AddChar.map_zero_eq_one]
-    norm_num [Fintype.card_fun]
+    simp_rw (config := { congrConsts := false }) [hz, AddChar.map_zero_eq_one]
+    norm_num (config := { congrConsts := false }) [Fintype.card_fun]
   · intro hn
     let s := a₁ + a₂ - b₁ - b₂
     let q := fun i : Fin 27 => a₁ ⬝ᵥ (matrices i).mulVec a₁ +
@@ -329,24 +336,26 @@ private theorem exponent_moment (a₁ a₂ b₁ b₂ : Fin 3 → ZMod 3) :
           polynomial (matrices i) c b₁ - polynomial (matrices i) c b₂ = q i + s ⬝ᵥ c := by
       rw [dotProduct_comm s c]
       dsimp only [q, s]
-      simp only [polynomial, dotProduct_add, dotProduct_sub]
+      simp (config := { congrConsts := false }) only [polynomial, dotProduct_add, dotProduct_sub]
       ring
     have hsum : (∑ i : Fin 27, ∑ c : Fin 3 → ZMod 3,
         ZMod.stdAddChar (polynomial (matrices i) c a₁ + polynomial (matrices i) c a₂ -
           polynomial (matrices i) c b₁ - polynomial (matrices i) c b₂)) =
         (∑ i : Fin 27, ZMod.stdAddChar (q i)) * (if s = 0 then (27 : ℂ) else 0) := by
-      simp_rw [he, AddChar.map_add_eq_mul, ← Finset.mul_sum, character_orthogonality]
+      simp_rw (config := { congrConsts := false })
+        [he, AddChar.map_add_eq_mul, ← Finset.mul_sum, character_orthogonality]
       exact (Finset.sum_mul _ _ _).symm
     rw [hsum]
     by_cases hs : s = 0
     · rw [ite_eq_left hs]
       have hpair : a₁ + a₂ = b₁ + b₂ :=
-        sub_eq_zero.mp (by simpa only [s, sub_sub] using hs)
+        sub_eq_zero.mp (by simpa (config := { congrConsts := false }) only [s, sub_sub] using hs)
       have hh : a₁ - b₁ ≠ 0 := by
         intro hz
         have ha : a₁ = b₁ := sub_eq_zero.mp hz
         apply hn
-        exact Or.inl ⟨ha, add_left_cancel (by simpa only [ha] using hpair)⟩
+        exact Or.inl ⟨ha, add_left_cancel (by simpa (config := { congrConsts := false }) only
+          [ha] using hpair)⟩
       have hg : a₁ - b₂ ≠ 0 := by
         intro hz
         have ha : a₁ = b₂ := sub_eq_zero.mp hz
@@ -364,7 +373,7 @@ private theorem exponent_moment (a₁ a₂ b₁ b₂ : Fin 3 → ZMod 3) :
         calc
           _ = ∑ i : Fin 27, ZMod.stdAddChar
               (((2 : ZMod 3) • (a₁ - b₁)) ⬝ᵥ (matrices i).mulVec (a₁ - b₂)) := by
-            simp_rw [hq]
+            simp_rw (config := { congrConsts := false }) [hq]
           _ = ∑ y : Fin 3 → ZMod 3,
               ZMod.stdAddChar (((2 : ZMod 3) • (a₁ - b₁)) ⬝ᵥ y) :=
             Fintype.sum_bijective _ (spread_evaluation _ hg) _ _ (fun _ => rfl)
@@ -382,14 +391,14 @@ private theorem point_injective : Function.Injective point := by
     apply phase_injective
     have hp_at := congrFun hp (coord.symm x)
     rw [point, point] at hp_at
-    simpa only [Equiv.apply_symm_apply] using hp_at
+    simpa (config := { congrConsts := false }) only [Equiv.apply_symm_apply] using hp_at
   have hs : (∑ x : Fin 3 → ZMod 3,
       ZMod.stdAddChar (polynomial (matrices p.1) p.2 x - polynomial (matrices q.1) q.2 x)) =
       27 := by
-    simp_rw [he, sub_self, AddChar.map_zero_eq_one]
-    norm_num [Fintype.card_fun]
+    simp_rw (config := { congrConsts := false }) [he, sub_self, AddChar.map_zero_eq_one]
+    norm_num (config := { congrConsts := false }) [Fintype.card_fun]
   rcases exponent_overlap p.1 q.1 p.2 q.2 hne with hz | hz
-  all_goals rw [hs] at hz; norm_num at hz
+  all_goals rw [hs] at hz; norm_num (config := { congrConsts := false }) at hz
 
 private theorem counterexample_anchored :
     ∀ φ ∈ counterexample, φ ⟨0, by decide⟩ = 0 := by
@@ -398,12 +407,12 @@ private theorem counterexample_anchored :
   obtain ⟨p, _, rfl⟩ := Finset.mem_image.mp hφ
   change phase (polynomial (matrices p.1) p.2 (coord 0)) = 0
   rw [coord_zero]
-  norm_num [polynomial, phase]
+  norm_num (config := { congrConsts := false }) [polynomial, phase]
 
 private theorem counterexample_card : counterexample.card = 27 ^ 2 := by
   classical
   rw [counterexample, Finset.card_image_of_injective _ point_injective]
-  norm_num [Fintype.card_fun]
+  norm_num (config := { congrConsts := false }) [Fintype.card_fun]
 
 private theorem counterexample_design : design2 counterexample := by
   classical
@@ -424,14 +433,14 @@ private theorem counterexample_design : design2 counterexample := by
     rw [← map_add phase_map, ← map_sub phase_map, ← map_sub phase_map]
     exact phase_character _
   have hm := exponent_moment (coord a₁) (coord a₂) (coord b₁) (coord b₂)
-  have hc : (counterexample.card : ℂ) = 729 := by rw [counterexample_card]; norm_num
+  have hc : (counterexample.card : ℂ) = 729 := by rw [counterexample_card]; norm_num (config := { congrConsts := false })
   constructor
   · intro h
     rw [he, hc]
-    exact hm.1 (by simpa only [coord.injective.eq_iff] using h)
+    exact hm.1 (by simpa (config := { congrConsts := false }) only [coord.injective.eq_iff] using h)
   · intro h
     rw [he]
-    exact hm.2 (by simpa only [coord.injective.eq_iff] using h)
+    exact hm.2 (by simpa (config := { congrConsts := false }) only [coord.injective.eq_iff] using h)
 
 private theorem counterexample_overlap : mubOverlap counterexample := by
   classical
@@ -457,7 +466,7 @@ private theorem counterexample_zero : 0 ∈ counterexample := by
   funext j
   change phase (polynomial (matrices 0) 0 (coord j)) = 0
   have hz : matrices 0 = 0 := by decide
-  simp [polynomial, hz, phase]
+  simp (config := { congrConsts := false }) [polynomial, hz, phase]
 
 private theorem counterexample_not_group :
     ¬ ∃ H : AddSubgroup (Fin 27 → Real.Angle),
@@ -478,12 +487,14 @@ private theorem counterexample_not_group :
     calc
       _ = phase (polynomial (matrices 1) 0 x) +
           phase (polynomial (matrices 3) 0 x) := by
-        simpa only [point, Pi.add_apply, Equiv.apply_symm_apply] using
+        simpa (config := { congrConsts := false }) only
+          [point, Pi.add_apply, Equiv.apply_symm_apply] using
           congrFun hp (coord.symm x)
       _ = _ := by
         rw [← phase_add]
         congr 1
-        simp only [polynomial, Matrix.add_mulVec, dotProduct_add, zero_dotProduct, add_zero]
+        simp (config := { congrConsts := false }) only
+          [polynomial, Matrix.add_mulVec, dotProduct_add, zero_dotProduct, add_zero]
   exact matrices_not_add p.1
     (polynomial_unique _ _ (matrices_symmetric p.1)
       ((matrices_symmetric 1).add (matrices_symmetric 3)) p.2 0 he).1
