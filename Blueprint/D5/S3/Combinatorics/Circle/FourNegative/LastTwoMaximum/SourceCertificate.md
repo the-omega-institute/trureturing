@@ -8,5 +8,5 @@ The common proof derives every packet check from the four actual positive banks,
 
 ## References
 
-- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/LastTwoMaximum/Arithmetic](Arithmetic.md)
 - Dependency: [D5/S3/Combinatorics/Circle/FourNegative/LastTwoMaximum/Banks](Banks.md)
+- Dependency: [D5/S3/Combinatorics/Circle/FourNegative/LastTwoMaximum/BorrowArithmetic](BorrowArithmetic.md)
