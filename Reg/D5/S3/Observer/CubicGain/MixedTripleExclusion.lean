@@ -329,7 +329,7 @@ def registration :
 #check @mixed_prefix_three_world_exclusion
 
 namespace JMJPair
-abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature (ℕ × Bool)
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature (Σ _ : ℕ, Bool)
   (fun _ => Finset World3) (fun _ => Bool)
 def actual : Realization signature := realize signature
   (fun _ p T => decide (Losing p.1 T [true, false, true, p.2])) (fun e => nomatch e)
@@ -340,7 +340,7 @@ abbrev arena : Arena where
     (W Z : World3) (_hne : W ≠ Z)
     (_hW : readings W [true, false, true, E] = ![0, 24, 48, z, v])
     (_hZ : readings Z [true, false, true, E] = ![0, 24, 48, z, v]),
-    R.readout () (n, E) {W, Z} = true ↔
+    R.readout () ⟨n, E⟩ {W, Z} = true ↔
       W.drift = Z.drift ∧
       (∀ j : ℕ, 2 ≤ j → j ≤ n →
         (gain 3 W.coeff).eval ((4 + j : ℕ) : ℝ) = 0 ∧
@@ -401,7 +401,7 @@ def family : Registration arena (type_of% @jmj_pair_losing_iff) where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(3, true), ∅, {leftWorld, rightWorld}, ?_⟩
+    refine ⟨⟨3, true⟩, ∅, {leftWorld, rightWorld}, ?_⟩
     intro h
     have hp := (jmj_pair_losing_iff 3 (by omega) true (936/25) (144/5)
       leftWorld rightWorld pair_ne pair_history.1 pair_history.2).mpr pair_conditions
