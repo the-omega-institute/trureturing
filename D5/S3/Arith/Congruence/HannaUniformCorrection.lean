@@ -293,21 +293,6 @@ theorem coefficient_monotone (s : ℤ) (hs : 2 ≤ s) : Monotone (f s) := by
     ← coefficient_eq s (by omega)] at hij'
   exact_mod_cast hij'
 
-/-- The Jordan sum uses the full integer weight through its faithful natural
-power representative. -/
-def J (s : ℤ) (n : ℕ) : ℤ := moebiusTransform (weight s) n
-
-/-- Exact Möbius inversion of the constructed Euler exponents. -/
-theorem jordan_identity (s : ℤ) (n : ℕ) (hn : 0 < n) :
-    (n : ℤ) * c s n = J s n -
-      ∑ d ∈ n.divisors, ArithmeticFunction.moebius (n / d) * a s d :=
-  moebius_identity (weight s) n hn
-
-/-- Uniform natural-logarithmic error, at every positive index. -/
-theorem jordan_error (s : ℤ) (n : ℕ) (hn : 0 < n) :
-    |(c s n : ℝ) - (J s n : ℝ) / n| ≤ 1 + Real.log n :=
-  logarithmic_error (weight s) n hn
-
 private theorem coeff_exponential_ones : ∀ n, coeff n (exponentialSum (fun _ => (1 : ℚ))) = 1 := by
     intro n
     induction n using Nat.strong_induction_on with

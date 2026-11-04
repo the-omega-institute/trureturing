@@ -119,14 +119,6 @@ theorem correction_unique (w a : ℕ → ℤ) (ha : IsCorrection w a) :
   intro n hn
   exact (bounded_ledger_unique w a c ha.1 hcZ n hn).1
 
-/-- Every integral exponential correction uses the constructed positive-index
-integer Euler exponents, not an independently chosen divisor account. -/
-theorem correction_ledger_unique (w a c : ℕ → ℤ) (ha : IsCorrection w a)
-    (hc : ∀ n, 0 < n → w n - a n = divisorGhost c n) :
-    ∀ n, 0 < n → c n = ledger w n := by
-  intro n hn
-  exact (bounded_ledger_unique w a c ha.1 hc n hn).2
-
 /-- The uncorrected Möbius transform; at power weights this is the Jordan sum. -/
 def moebiusTransform (w : ℕ → ℤ) (n : ℕ) : ℤ :=
   ∑ d ∈ n.divisors, ArithmeticFunction.moebius (n / d) * w d

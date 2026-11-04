@@ -62,7 +62,7 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                     + "correction theorem use this necessary integrality condition.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
 
-            Describe.Lean(DescribeId.Create("h3-eulerSeries"),
+            Describe.Lean(DescribeId.Create("h3-eulerseries"),
                 DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.eulerSeries"), H("The coefficientwise stabilized integer Euler series"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("This is the existing integer Euler object built from finite prefixes of the primitive ledger, with b(i) attached to part size i+1. It is now public for actual coefficient consumers."))), DescribeRole.Definition),
@@ -72,7 +72,7 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Every prefix through part size N agrees with the integer series through degree N. This is the original owner proof, publicly reused by the infinite product bridge."))), DescribeRole.Theorem),
 
-            Describe.Lean(DescribeId.Create("h3-hasProd-eulerSeries"),
+            Describe.Lean(DescribeId.Create("h3-hasprod-eulerseries"),
                 DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.hasProd_eulerSeries"), H("An actual infinite Euler product"),
                 StatementSource.FromLean(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The orders of eulerFactor(i+1,b(i))-1 tend to infinity. Coefficientwise stabilization then identifies the topological infinite product with the existing integer Euler series. The coefficient ring has its standard discrete topology."))), DescribeRole.Theorem),

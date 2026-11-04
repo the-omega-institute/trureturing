@@ -18,7 +18,7 @@ internal sealed class BoundedEulerCorrectionDocument : IScribeDocumentDefinition
             Node("moebius_identity", "moebius identity", "Mobius inversion applies to the exact constructed ghost equation, producing the correction term with mu(n/d).", DescribeRole.Theorem),
             Node("logarithmic_error", "logarithmic error", "The absolute Mobius value is at most one and each positive-index correction is less than its index. Complementary divisors convert the normalized divisor sum into reciprocal divisors, bounded by the harmonic sum and one plus the natural logarithm. No positivity assumption on the original weights is used.", DescribeRole.Theorem))));
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("boundedeulercorrection-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("boundedeulercorrection-" + name.ToLowerInvariant().Replace("_", "-")),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 }

@@ -9,7 +9,7 @@ internal sealed class ColouredEulerLedgerDocument : IScribeDocumentDefinition
             Node("ColouredPartition", "ColouredPartition", "The carrier is a finite sigma of finite products of symmetric powers. Finite cardinality is actual type cardinality, not a symbol assigned to the desired coefficient.", DescribeRole.Definition),
             Node("coloured_coefficient", "coloured coefficient", "Fintype cardinality gives the product of multichoose values for every partition. Mathlib identifies this weighted partition generating function with its infinite product. The shared local-factor reconstruction and the actual HasProd theorem of the existing Euler series identify the two coefficient functions.", DescribeRole.Theorem))));
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("colouredeulerledger-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("colouredeulerledger-" + name.ToLowerInvariant().Replace("_", "-")),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 }
