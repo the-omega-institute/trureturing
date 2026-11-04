@@ -3523,3 +3523,663 @@ obligations remain. The normalized-effect pair-domain conclusions
 above do not assert a whole-POVM or native-acquisition result.
 
 ## 追加锚（本行以下为增补区）
+## 46. Global coherent cone remainder and the exact two-sign canonical-slice comparison
+
+This section keeps the original record, ordinary transpose, one common feedback
+scalar, and the joint distance
+
+$$
+ \rho(E,U)=\min_{\sigma\in\{+,-\}}
+ \min_{|\lambda|=1}
+ \left(\|E-E_\sigma\|_{\mathrm F}^{2}
+       +\|U-\lambda U_\sigma\|_{\mathrm F}^{2}\right).
+\tag{46.1}
+$$
+
+Write $g$ for the original defect, $f=g-\kappa\rho$, and
+$V(\xi)=N_{\mathrm{geo}}(\xi)+\kappa\xi$ for the existing selected
+geometric value. The fixed constants are $h=1/\sqrt2$,
+$c=\cos(\pi/8)$, $s=\sin(\pi/8)$, $d=2(h+c)$ and $e=2(h+s)$;
+$T=(b_+\ b_-)$ is the source certificate basis. Write
+$R_\star=13/4$ for the established level cutoff, reserving $R$ below
+for a recovery half-modulus. No new quotient or independent feedback
+is introduced.
+
+**Definition 46.1 (the two active rows and the attained phase triangle).**
+Fix an optimizer sign $\sigma$. Relative to $U_\sigma$, put
+$v=\operatorname{diag}(UU_\sigma^\dagger)$. The fixed pair order and the
+main and crossed recoveries are
+
+$$
+\begin{array}{c|c|c|c|c|c|c}
+ \sigma&J&K&M&N&(a,b,\ell,m)&(K_\sigma,K_{-\sigma})\\ \hline
+ +&(1,2)&(3,4)&P&Q&(h,c,h,s)&(d,e)\\
+ -&(3,4)&(1,2)&Q&P&(s,h,c,h)&(e,d).
+\end{array}
+\tag{46.2}
+$$
+
+Here the source recoveries are
+
+$$
+\begin{aligned}
+ P(w)&=h(w_1+w_2)+c(w_3+w_4),\\
+ Q(w)&=h(w_1-w_2)+is(w_3-w_4),
+\end{aligned}
+\tag{46.3}
+$$
+
+with $w=\operatorname{diag}(UU_+^\dagger)$. Thus, with indices
+kept in the original coordinate order,
+
+$$
+\begin{aligned}
+M_+(v)&=h(v_1+v_2)+c(v_3+v_4),
+&N_+(v)&=h(v_1-v_2)+is(v_3-v_4),\\
+M_-(v)&=h(v_1+v_2)+s(v_3+v_4),
+&N_-(v)&=h(v_1-v_2)-ic(v_3-v_4).
+\end{aligned}
+\tag{46.4}
+$$
+
+The second row follows from $U_-U_+^\dagger=\operatorname{diag}(1,-1,-i,i)$;
+the labels $J,K$ specify which fixed pair is active while all
+coordinate indices remain unchanged. In both rows $0<a<b$, $\ell>m>0$, and $k=b-a$.
+
+Let $q$ be the population away from the active optimizer and put $p=1-q$.
+The pure effects in the two rows are represented in the $T=(b_+\ b_-)$ basis
+by
+
+$$
+ \beta_+^\phi=\begin{pmatrix}\sqrt p\\ e^{i\phi}\sqrt q\end{pmatrix},
+ \qquad
+ \beta_-^\phi=\begin{pmatrix}e^{i\phi}\sqrt q\\ \sqrt p\end{pmatrix},
+ \qquad
+ E=(T\beta_\sigma^\phi(\beta_\sigma^\phi)^\dagger T^\dagger)^{\mathsf T}.
+\tag{46.5}
+$$
+
+Every $\phi$ is allowed. Define the energy, with a notation separate from the
+determinant below, by
+
+$$
+ \mathsf E_\sigma(q)=K_\sigma^2p+K_{-\sigma}^2q.
+\tag{46.6}
+$$
+
+For $0<x<1$, let $y=\sqrt{1-x^2}$, $L=1+x$, and impose the active complex
+trace modulus
+
+$$
+ \left|\operatorname{Tr}(UU_\sigma^\dagger)\right|=2L.
+\tag{46.7}
+$$
+
+The pure distance to this sign branch is then
+
+$$
+ \xi=8-4L+2q=4(1-x)+2q.
+\tag{46.8}
+$$
+
+All conclusions below concerning the true original distance and original
+equality lifts use $0<\xi\le R_\star$. The two-sign budget
+(42.17)--(42.20) implies that a sign branch equal to $\xi$ in this range
+is the unique minimizing original sign. In particular (46.8) is then
+$\rho(E,U)$, and $x=1-\xi/4+q/2\ge3/16>0$. The phase-triangle
+identities and the fixed-branch comparison themselves hold for every
+$0<x<1$ and $q\in[0,1]$.
+
+For the phase calculation restrict now to actual phase feedbacks
+$U=\operatorname{diag}(v)U_\sigma$, with $|v_j|=1$ for every $j$.
+For arbitrary actual $U$, the passage to these phase calculations is
+the same-effect, same-complex-trace transport used in Corollary 46.5.
+Set
+
+$$
+ X=\frac14\left|\sum_{j\in J}v_j\right|^2,
+ \qquad
+ Y=\frac14\left|\sum_{j\in K}v_j\right|^2.
+\tag{46.9}
+$$
+
+The actually attained two-pair domain is
+
+$$
+ 0\le X,Y\le1,
+ \qquad \sqrt X+\sqrt Y\ge L.
+\tag{46.10}
+$$
+
+For a point in this domain define
+
+$$
+\begin{aligned}
+ Z&=\frac{L^2-X-Y}{2\sqrt{XY}},
+&F&=\sqrt{(1-X)(1-Y)}\sqrt{1-Z^2},\\
+ R_0&=ax+b,&C_0&=\ell y,\\
+ R&=\sqrt{a^2X+b^2Y+ab(L^2-X-Y)},\\
+ C&=\sqrt{\ell^2(1-X)+m^2(1-Y)+2\ell mF},\\
+ \Gamma&=\sqrt p\,R+\sqrt q\,C,&
+ \Gamma_0&=\sqrt p\,R_0+\sqrt q\,C_0.
+\end{aligned}
+\tag{46.11}
+$$
+
+The lower bounds in (46.10) imply $X,Y>0$ when $0<x<1$, so $Z$ is defined.
+The quantities $R,C$ are half-moduli of the main and crossed recoveries. In
+particular, $C$ is the largest crossed half-modulus attainable with these same
+pair lengths and the same trace. It is not obtained by optimizing the two
+recoveries independently.
+
+Use the cone coordinates
+
+$$
+ A_c=X-x^2,\qquad B_c=1-Y,\qquad H_c=A_c-xB_c,\qquad
+ K_c=\frac{\sqrt L\,y}{x}.
+\tag{46.12}
+$$
+
+These are distinct from the source feedback moduli $A(w)$ and $B(w)$. Put
+
+$$
+\begin{aligned}
+ \mu&=\frac12\left(\frac{ak\sqrt p}{R_0}+\frac{\ell\sqrt q}{y}\right)>0,\\
+ \nu&=\frac12\left(k\sqrt p+
+       \frac{(\ell^2x-m^2)\sqrt q}{\ell y}\right),\\
+ t_c&=\frac{m\sqrt q\sqrt L}{x},\\
+ \mathfrak D_\sigma(x,q)&=\frac{4\mu\nu x^2}{L}-m^2q.
+\end{aligned}
+\tag{46.13}
+$$
+
+Equivalently, with $L_a=2\mu x^2/L$ and $L_b=2\nu$,
+$\mathfrak D_\sigma=L_aL_b-m^2q$. On the positive row this is exactly the
+local determinant $\mathscr D$ in (36.43), after $p=1-q$; the new assertion
+below is global on (46.10), rather than a local second-variation test.
+
+**Lemma 46.2 (actual pair reconstruction and the coupled triangle).** Every
+point of (46.10) is attained by a whole phase feedback, and every whole phase
+feedback with (46.7) gives a point of (46.10). More precisely, write
+$r=\sqrt X$, $z=\sqrt Y$. There are phases $\alpha,\beta$ and signs
+$\varepsilon_1,\varepsilon_2\in\{\pm1\}$ such that, in the fixed pair order,
+
+$$
+\begin{aligned}
+(v_j)_{j\in J}
+ &=e^{i\alpha}\bigl(r+i\varepsilon_1\sqrt{1-X},
+                         r-i\varepsilon_1\sqrt{1-X}\bigr),\\
+(v_j)_{j\in K}
+ &=e^{i\beta}\bigl(z+i\varepsilon_2\sqrt{1-Y},
+                         z-i\varepsilon_2\sqrt{1-Y}\bigr),
+\end{aligned}
+\tag{46.14}
+$$
+
+and
+
+$$
+ \cos(\alpha-\beta)=Z.
+\tag{46.15}
+$$
+
+There remains one arbitrary common scalar multiplying all four entries.
+For these pairs the largest crossed modulus is $2C$, and it is attained by
+choosing $\varepsilon_1\varepsilon_2$ to have the sign of
+$\sin(\alpha-\beta)$; if that sine vanishes either product is allowed.
+
+*Proof.* Since $r,z\le1$ and $r+z\ge1+x$, each of $r,z$ is at least $x$.
+Also $(1-r)(1-z)\ge0$ gives $rz\ge r+z-1\ge x$, hence
+$XY\ge x^2$. The trace equation for the two pair sums is
+
+$$
+ L^2=X+Y+2\sqrt{XY}\cos(\alpha-\beta),
+\tag{46.16}
+$$
+
+which proves (46.15) and the necessity of (46.10). Conversely,
+(46.10) gives $X,Y\in[x^2,1]$ and $r+z\ge L$, while
+$|r-z|\le1<L$. These two triangle inequalities give $|Z|\le1$
+and hence the two pairs in (46.14);
+taking a cosine with value $Z$ realizes the trace. This proves exact
+attainment, including the boundary. Expanding (46.4) on (46.14) gives
+$|M|=2R$ and
+
+$$
+ \frac{|N|^2}{4}=\ell^2(1-X)+m^2(1-Y)
+ +2\ell m\varepsilon_1\varepsilon_2
+       \sqrt{(1-X)(1-Y)}\sin(\alpha-\beta).
+\tag{46.17}
+$$
+
+The stated orientation realizes $C$ and no larger value is possible. The
+construction is a single whole feedback, so no independently chosen pair or
+column has been introduced. $\square$
+
+**Theorem 46.3 (global coherent cone inequality and the exact five-term
+remainder).** On all of the attained triangle (46.10),
+
+$$
+\begin{aligned}
+ \Delta&:=4XY-(L^2-X-Y)^2
+       =4LH_c-(A_c+B_c)^2,\\
+ F^2&=\frac{(1-X)B_c\Delta}{4XY},\\
+ 0&\le F\le K_c\sqrt{B_cH_c}.
+\end{aligned}
+\tag{46.18}
+$$
+
+Equality in the last inequality holds exactly when $B_c=0$; it is
+strict whenever $B_c>0$. On the same entire triangle,
+
+$$
+\boxed{\begin{aligned}
+ \Gamma_0-\Gamma={}&
+ \mu\left(\sqrt{H_c}-\frac{t_c\sqrt{B_c}}{2\mu}\right)^2
+ +\frac{L\mathfrak D_\sigma(x,q)}{4\mu x^2}B_c\\
+ &+\frac{\sqrt q\,\ell m}{C_0}
+       \left(K_c\sqrt{B_cH_c}-F\right)\\
+ &+\frac{\sqrt p}{2R_0}(R-R_0)^2
+ +\frac{\sqrt q}{2C_0}(C-C_0)^2 .
+\end{aligned}}
+\tag{46.19}
+$$
+
+This identity is valid for $q=0$ and $q=1$, and when $C=0$.
+Its denominators use the positive fixed slice quantities
+$x,y,R_0,C_0,\mu$; the cone identity additionally uses $XY\ge x^2>0$.
+Here $R_0=ax+b>0$, $C_0=\ell y>0$, and $\mu>0$ even at
+$q=0$ or $q=1$, since $a,k,\ell>0$ and $p+q=1$.
+
+*Proof.* Substitution of $X=x^2+A_c$, $Y=1-B_c$ into the first expression
+in (46.18) gives the second expression. Since $\Delta\ge0$ on the attained
+triangle, $H_c\ge0$. From (46.12), $1-X\le y^2$ and $XY\ge x^2$; hence
+
+$$
+ F^2=\frac{(1-X)B_c\Delta}{4XY}
+ \le\frac{y^2}{x^2}B_cLH_c=K_c^2B_cH_c.
+\tag{46.20}
+$$
+
+If $B_c>0$, then $A_c+B_c>0$ and (46.18) gives $H_c>0$ and
+$\Delta<4LH_c$. If $X<1$ the preceding estimates are strict. If $X=1$,
+then $F=0$ whereas $K_c\sqrt{B_cH_c}>0$. Thus the final inequality is
+strict on every such point, including repeated-pair and aligned-center
+boundaries.
+
+The same trace equation gives
+
+$$
+ R^2=R_0^2-akA_c-bkB_c,\qquad
+ C^2=C_0^2-\ell^2A_c+m^2B_c+2\ell mF.
+\tag{46.21}
+$$
+
+For $z\ge0$ and $z_0>0$,
+
+$$
+ z_0-z=-\frac{z^2-z_0^2}{2z_0}
+       +\frac{(z-z_0)^2}{2z_0}.
+\tag{46.22}
+$$
+
+Apply (46.22) to $R,R_0$ and $C,C_0$, with weights $\sqrt p,\sqrt q$.
+After substituting $A_c=H_c+xB_c$, the linear part is
+
+$$
+ \mu H_c+\nu B_c-\frac{\sqrt q\,\ell m}{C_0}F.
+\tag{46.23}
+$$
+
+Since $\sqrt q\,\ell mK_c/C_0=t_c$, completing the square in (46.23) gives
+
+$$
+ \mu H_c+\nu B_c-t_c\sqrt{B_cH_c}
+ =\mu\left(\sqrt{H_c}-\frac{t_c\sqrt{B_c}}{2\mu}\right)^2
+  +\frac{L\mathfrak D_\sigma(x,q)}{4\mu x^2}B_c.
+\tag{46.24}
+$$
+
+Together with the two root remainders this is (46.19). No division by
+$q,p,C$, a variable recovery amplitude, a coherence or a determinant
+was made. $\square$
+
+**Theorem 46.4 (necessary and sufficient canonical comparison in both signs).**
+For fixed $\sigma$, $0<x<1$ and $q\in[0,1]$, define
+
+$$
+ G_\sigma^{\mathrm{can}}(x,q)
+   =\mathsf E_\sigma(q)-4\Gamma_0^2.
+\tag{46.25}
+$$
+
+Then the canonical corner $(X,Y)=(x^2,1)$ is a minimum of the complete
+pure phase slice with (46.7) and population $q$ if and only if
+
+$$
+                 \mathfrak D_\sigma(x,q)\ge0.
+\tag{46.26}
+$$
+
+If (46.26) holds, every pure phase pair in that slice satisfies
+
+$$
+                   g(E,U)\ge G_\sigma^{\mathrm{can}}(x,q),
+\tag{46.27}
+$$
+
+and equality holds exactly at the canonical pairs
+
+$$
+\begin{array}{c|c|c}
+\sigma&v_\sigma^\tau&\beta_\sigma^\tau\\ \hline
++&(x+\tau iy,x-\tau iy,1,1)&(\sqrt p,-\tau i\sqrt q)\\
+-&(1,1,x+\tau iy,x-\tau iy)&(\tau\sqrt q,\sqrt p),
+\end{array}
+\qquad \tau\in\{\pm1\},
+\tag{46.28}
+$$
+
+up to the one common scalar. This equality statement is unchanged when the
+determinant is zero. For $\mathfrak D_\sigma(x,q)<0$, actual pure phase pairs
+with the same $x,q$ and sign-branch distance have strictly smaller $g$
+than (46.25). When $0<\xi\le R_\star$, that sign is active and
+these are strict competitors at the same true original distance.
+
+*Proof.* By (46.17), the aligned pure recovery is
+$\chi=\sqrt p\,M+e^{i\phi}\sqrt q\,N$, and
+$|\chi|\le2\Gamma$. Every point of the triangle, including the value $2C$,
+is attained by one whole feedback and a phase $\phi$ aligning the two terms;
+if a weighted term is zero, there is no phase condition. The exact
+same-feedback identity (23.12) therefore gives
+$g=\mathsf E_\sigma(q)-|\chi|^2$ and the lower estimate in (46.27).
+The sign-branch distance is (46.8). Whenever $0<\xi\le R_\star$,
+(42.17)--(42.20) makes the other original sign strictly larger, so
+this is also the true joint distance.
+
+If $\mathfrak D_\sigma\ge0$, every term in (46.19) is nonnegative, hence
+$\Gamma\le\Gamma_0$. If $q>0$ and $B_c>0$, the third term is strictly
+positive by (46.18). If $B_c=0$ and $A_c>0$, then (46.21) gives
+$C^2<C_0^2$ and the last square is positive. Thus for $q>0$ equality
+forces $A_c=B_c=0$. For $q=0$, $t_c=0$, $\nu=k/2>0$, and the
+unsquared linear form in (46.23) forces $H_c=B_c=0$, hence $A_c=0$. At
+the corner, on the positive row $M=2\lambda R_0$ and
+$N=2\tau i\lambda C_0$, while on the negative row
+$M=2\lambda R_0$ and $N=2\tau\lambda C_0$. Aligning the two
+weighted terms gives exactly (46.28). If $q=0$ or $q=1$, the unused phase
+represents the same singleton effect; zero recovery amplitudes likewise impose
+no phase condition. This proves necessity and sufficiency and the complete
+phase kernel, including determinant zero.
+
+For the converse, $\mathfrak D_\sigma<0$ implies $q>0$. Put
+$d_0=(t_c/(2\mu))^2>0$. For sufficiently small
+$\varepsilon>0$, set
+
+$$
+ B_c=\varepsilon,\qquad H_c=d_0\varepsilon,\qquad
+ A_c=(x+d_0)\varepsilon.
+\tag{46.29}
+$$
+
+Then $X=x^2+A_c$, $Y=1-B_c$ lie in $(0,1)$ and
+
+$$
+ \Delta=4Ld_0\varepsilon-(1+x+d_0)^2\varepsilon^2>0.
+\tag{46.30}
+$$
+
+Thus (46.29) is an actual interior triangle family. From (46.18),
+$F=K_c\sqrt{d_0}\varepsilon+O(\varepsilon^2)$; substituting in (46.19)
+gives
+
+$$
+ \Gamma-\Gamma_0
+ =\left(\frac{t_c^2}{4\mu}-\nu\right)\varepsilon
+   +O(\varepsilon^2)
+ =-\frac{L\mathfrak D_\sigma(x,q)}{4\mu x^2}\varepsilon
+   +O(\varepsilon^2)>0
+\tag{46.31}
+$$
+
+for all sufficiently small nonzero $\varepsilon$. The reconstruction in
+Lemma 46.2 and the aligning phase give one actual whole unitary and one pure
+effect at the unchanged branch distance, which is the true original
+distance when $0<\xi\le R_\star$. Hence its $g$ is strictly smaller.
+For the positive interior-population sector with (36.42), the local
+same-distance direction already present in Theorem 36.5 is recovered
+as the local part of this construction. The global contribution here is
+(46.18)--(46.24); the positive local instability is the cited result. $\square$
+
+**Corollary 46.5 (all actual original equality lifts in the nonnegative
+slices).** Suppose $0<\xi\le R_\star$, the active sign is $\sigma$, and
+$\mathfrak D_\sigma(x,q)\ge0$. The lower bound (46.27) and its equality set
+hold for every actual $U\in U(4)$ with the stated pure effect, active trace
+and distance. The complete original equality lifts are as follows.
+
+1. If $0<q<1$, the two effects in (46.28) are distinct. A source42
+spectral/Birkhoff decomposition of the given $U$ has the same effect, the same
+complex active trace and positive weights. Equality in the source42 identity
+(42.16) forces every positive-weight phase replacement to be one of the same
+canonical orientation. The effect selects one $\tau$, and the nonzero trace
+$2L\lambda$ fixes the same common scalar in every replacement. Their averaged
+diagonal therefore has four entries of modulus one. Row norms of the actual
+unitary $UU_\sigma^\dagger$ force all off-diagonal entries to vanish, so
+
+$$
+ U=\lambda\operatorname{diag}(v_\sigma^\tau)U_\sigma.
+\tag{46.32}
+$$
+
+2. If $q=1$, the two orientations represent the same singleton effect, but
+their nonzero scalar recoveries are opposite: they are
+$2\tau i\ell y\lambda$ on the positive row and $2\tau\ell y\lambda$ on
+the negative row. The variance term in (42.16) permits only one orientation
+with positive weight. The same row-norm argument gives (46.32), with either
+orientation allowed for this singleton effect.
+
+3. If $q=0$, the equality family is larger. In the fixed pair order of
+(46.2), every equality lift and only an equality lift has
+
+$$
+ UU_\sigma^\dagger=\lambda\,(W_2\oplus I_2),
+ \qquad W_2\in U(2),\qquad \operatorname{Tr}W_2=2x.
+\tag{46.33}
+$$
+
+Here $W_2$ acts on the active pair $J$ and $I_2$ on $K$. In the original
+coordinate order this is $\lambda(W_2\oplus I_2)$ for $\sigma=+$ and
+$\lambda(I_2\oplus W_2)$ for $\sigma=-$; the fixed pair order in (46.2)
+only records which block is active. Equivalently,
+
+$$
+ W_2=Z_2\begin{pmatrix}x+iy&0\\0&x-iy\end{pmatrix}Z_2^\dagger,
+ \qquad Z_2\in U(2).
+\tag{46.34}
+$$
+
+Indeed the two entries on $K$ are $\lambda$ in every phase replacement,
+so unitarity isolates that two-dimensional block. Their active trace is
+$2x\lambda$, giving (46.33). The two unit eigenvalues of $W_2$ have positive real
+sum $2x$, so they are $x+iy$ and $x-iy$; the unitary spectral theorem
+gives exactly (46.34). Conversely (46.33) has the required active
+trace and main recovery, and therefore attains (46.27). This is the required
+larger $q=0$ block lift; it is a fixed-slice equality family, not an assertion
+that all such points minimize the unrestricted level.
+
+*Proof.* Theorem 42.3 supplies actual phase replacements with the same complex
+trace, same effect, same active sign and the exact variance identity. Apply
+Theorem 46.4 to each replacement. Equality in the weighted sum is equivalent
+to equality in every positive-weight phase term and to zero variance. The
+three cases above then follow from the displayed recoveries and the unitary
+row norms. Conversely, the listed matrices have the same trace and the same
+recovery data, so the original formula (23.12) and the active distance formula
+(23.11) give equality. The argument retains singular effects, zero coherence,
+zero recoveries, repeated eigenvalues and nonunique Birkhoff decompositions in
+the source transport; no phase formula is applied directly to a nonphase
+unitary diagonal. $\square$
+
+**Theorem 46.6 (positive-sign whole-class exclusion and separated-contact
+consequence).** At a fixed $0<\xi\le R_\star$, the pure positive-active population
+range is
+
+$$
+ 0\le q\le\min\{1,\xi/2\},\qquad
+ x=1-\frac{\xi}{4}+\frac q2.
+\tag{46.35}
+$$
+
+For $0<x<1$, the canonical value in (46.25) is the positive geometric
+scalar value with $\delta=2(1-x)$ and $q=\xi/2-\delta$. The existing scalar
+ordering of Theorem 37.5 gives
+
+$$
+ G_+^{\mathrm{can}}(x,q)\ge V(\xi),
+\tag{46.36}
+$$
+
+with equality only at the selected geometric population. If $x=1$ the
+slice is treated directly: an actual unitary with active trace modulus four
+is $\lambda I_4$ relative to $U_\sigma$, so
+
+$$
+ \xi=2q,\qquad g=K_{-\sigma}^2q
+\tag{46.37}
+$$
+
+for every relative coherence phase. The other sign distance is
+$8+2p>2q$, so these are the true original distances for both signs.
+At $q=0$ this is the original optimizer at distance zero.
+The positive scalar endpoint in (46.37)
+is strictly above the unique interior value $V(\xi)$ at every feasible positive
+level. Consequently, every nongeometric pure positive-active original pair
+with $g\le V(\xi)$ (equivalently $f\le N_{\mathrm{geo}}(\xi)$) satisfies
+
+$$
+                 0<x<1,\qquad \mathfrak D_+(x,q)<0.
+\tag{46.38}
+$$
+
+All pure original pairs in the positive slices with
+$\mathfrak D_+\ge0$ obey $g\ge V(\xi)$. Equality to $V(\xi)$
+requires the unique selected population of Theorem 37.5 and is exactly
+$\mathcal G_\xi$, the selected $0<q<1$ part of Corollary 46.5.
+By Theorem 45.5 every original global minimizer through $R_\star$ is
+pure, so these slice conclusions apply to every positive-active global
+minimizer in this interval.
+
+At either established boundary $b=\alpha$ or $b=\beta$, the
+selected geometric pair is an original global minimizer. Its determinant cannot
+be negative, because (46.31) would give a strict same-level competitor. Any
+additional pure positive-active global contact at that level therefore has a
+different away-population, even when the selected determinant is zero.
+
+*Proof.* The relation (46.35) is (46.8) solved for $x$, and the displayed
+population range is exactly the pure interval. For $0<x<1$ combine
+(46.27) with (46.36). If a nongeometric pair had
+$\mathfrak D_+\ge0$ and $g\le V$, both inequalities would be equalities;
+Corollary 46.5 and the unique scalar selection would then put the pair
+in $\mathcal G_\xi$, a contradiction. The endpoint
+$x=1$ follows from equality in the trace triangle: all four diagonal entries
+are the same scalar, and (46.37) follows from the inactive recovery being zero.
+No division by $y$ is used there. At either boundary, Theorem 39.5
+gives the attained original minimum $g=V(b)$ and the geometric
+minimizers; (42.3) places these levels below $R_\star$. Theorem 45.5
+provides purity of all their global contacts. A negative selected determinant
+contradicts (46.31), while a zero determinant still has the unique fixed-slice
+equality kernel (46.28); hence another contact must change $q$. $\square$
+
+**Corollary 46.7 (a sector beyond the earlier shifted-support hypotheses).**
+For $q=1$ on the positive row, the determinant has the sign of
+
+$$
+ n(x)=(h^2+s^2)x^3-s^2(1+x).
+\tag{46.39}
+$$
+
+Its root from (36.44) is below $4/5$, since
+$n(4/5)=(32-161s^2)/125>0$ and $s^2<3/20$. Hence every
+$x\in(4/5,\sqrt{2/3})$ has $\mathfrak D_+(x,1)>0$ and
+$\xi=6-4x\in(0,13/4)$. At the same time the shifted-support hypotheses of
+(36.30) fail: the first required shift is
+$h(\sqrt p-x\sqrt q/y)=-hx/y<0$. These slices also satisfy
+$2(1+x)<2+\sqrt{8/3}$. By continuity, nearby $0<q<1$ slices retain these
+strict inequalities. Theorem 46.4 and Corollary 46.5 nevertheless order every actual feedback
+and every pure-effect coherence phase in these slices. This is a full-triangle result,
+with all feedbacks in the fixed slice included.
+
+**Mathematical source correspondence 46.8.** The ordinary-transpose density
+coordinates, exact recoveries, common scalar action and both joint-distance
+branches are source (23.2), (23.9)--(23.13). The attained diagonal domain and
+its direct unitary realizations are source Theorem 23.2; the exact two-pair
+phase reconstruction used in Lemma 46.2 is the established compatibility
+argument behind Sections 35 and 42. The source42 theorem (42.15)--(42.16)
+provides same-effect, same-complex-trace phase replacements and the positive
+scalar variance used in Corollary 46.5. Theorem 36.5 and (36.43)--(36.56)
+provide the previously established positive local instability direction; it
+is reused here only for attribution. Theorem 37.5 supplies the positive
+rank-one scalar ordering through distance four. Theorem 45.5 states, through
+$R_\star$, the exact equalities (45.17)
+$m=m_{\mathrm p}=m_{\mathrm{ph}}=m_{\mathrm{ph,p}}$ and
+$\mathcal A_{\mathrm{ph},\xi}=\mathcal A_\xi\cap\mathcal P_\xi$; its proof and
+the purity reduction are not reproved here.
+
+For the realizability correspondence, Jasper--Loreaux--Weiss,
+*Thompson's theorem for compact operators and diagonals of unitary operators*,
+[arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3),
+states the finite prescribed-complex-diagonal and singular-value theorem.
+For dimension four and singular values all equal to one, its partial-sum
+conditions are $\sum_{j=1}^k|w|_j^*\le k$ for $1\le k\le4$,
+and its final condition is $|w|_1^*+|w|_2^*+|w|_3^*-|w|_4^*\le2$.
+These are exactly $|w_j|\le1$ and
+$\sum_j|w_j|-2\min_j|w_j|\le2$, the source domain (23.1).
+A square matrix with these four singular values is unitary. This is a
+realizability statement over all unitaries, with no converse asserted
+for one fixed normal orbit. The Birkhoff--von Neumann step used in
+source42 is the finite doubly-stochastic decomposition cited there from
+Vourdas, arXiv:2203.09468v1, Section II.1, equation (18); it is used only
+forward from the spectral decomposition of the given actual unitary.
+
+The global-certificate comparisons are bounded correspondences only.
+Bandeira--Boumal--Singer, *Tightness of the maximum likelihood semidefinite
+relaxation for angular synchronization*, [arXiv:1411.3272v3](https://arxiv.org/html/1411.3272v3),
+Lemma 4.3 and Section 4.3 require a positive-semidefinite Hermitian slack,
+an annihilation condition and a real-diagonal condition for their fixed
+unit-diagonal SDP. Soltanalian--Stoica, *Designing Unimodular Codes via
+Quadratic Optimization is not Always Hard*, [arXiv:1303.0152v1](https://arxiv.org/html/1303.0152v1),
+Theorem 2 assumes an actual unimodular vector in the top eigenspace of the
+unchanged unconstrained quadratic objective. Neither result matches the
+prescribed trace/population problem with a variable effect, so neither is
+used as a proof premise. The new proof is the explicit nonlinear remainder
+(46.19) on the actual coupled triangle. No literature-wide originality claim
+is made.
+
+**Unresolved mathematical obligations 46.9.** The new result does not order
+all remaining populations and both signs against $V(\xi)$. It leaves the
+negative-determinant positive sector, the entire negative canonical and
+interior families, and their coupled level/population comparison. It does not
+compute exact $\alpha$ or $\beta$, decide whether they coincide, determine the
+maximal exhaustive-geometric-equality prefix or endpoint inclusion, or
+identify and exhaust the first globally minimizing branch. A determinant-zero
+slice has a complete fixed-population equality kernel, but coupled variation
+of population and level can still have higher-order behavior; it does not
+select a first boundary. Separated pure contacts, simultaneous contacts and
+coalescence remain possible.
+
+Through $R_\star$, (45.17) already excludes mixed global minimizers
+and identifies the attained pure, phase and original minimum values.
+Outside the canonical nonnegative slices, the remaining pure phase
+minimizers and their complete actual original lifts still require
+classification by the source42 variance-zero condition (42.25), with
+singular effects, zero coherence, zero recovery and repeated phases
+retained. For mixed sublevel competitors, Theorem 45.4 supplies the
+same-level strict pure improvement in its stated value range; no direct
+pure-slice bound for a mixed input is asserted here. Beyond $R_\star$,
+the purity and transport consumers do not apply, and all mixed effects
+and actual nondiagonal lifts remain in the unrestricted comparison.
+The exact alpha/beta endpoint equality, immediate right-side behavior, all first-branch
+obligations, and the full unrestricted first-loss/equality problem therefore
+remain open. This section supplies a necessary global relation toward the unchanged
+first-loss and equality problem and does not determine its unrestricted solution.
+
+## 追加锚（本行以下为增补区）
+
