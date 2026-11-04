@@ -126,7 +126,7 @@ theorem integrable_subentropy_kernel {ι : Type*} [Fintype ι] [DecidableEq ι]
 matrices, including the boundary with zero or repeated eigenvalues. -/
 theorem continuousOn_matrixSubentropy {ι : Type*} [Fintype ι] [DecidableEq ι] :
     ContinuousOn (@matrixSubentropy ι _ _) {A | A.PosSemidef ∧ A.trace = 1} := by
-  letI : FirstCountableTopology (Matrix ι ι ℂ) := inferInstanceAs
+  let : FirstCountableTopology (Matrix ι ι ℂ) := inferInstanceAs
     (FirstCountableTopology (ι → ι → ℂ))
   apply continuousOn_of_dominated (bound := fun t : ℝ => 1 / (1 + t)^2)
   · intro A hA
@@ -135,7 +135,8 @@ theorem continuousOn_matrixSubentropy {ι : Type*} [Fintype ι] [DecidableEq ι]
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
     obtain ⟨hlo, hhi⟩ := density_kernel_bounds hA.1 hA.2 t ht
     simpa [Real.norm_eq_abs, abs_of_nonneg hlo] using hhi
-  · simpa only [IntegrableOn, Nat.reduceAdd, add_comm] using (UniformIntegrals.inverse_power 1 (by norm_num) 0).1
+  · simpa only [IntegrableOn, Nat.reduceAdd, add_comm] using
+      (UniformIntegrals.inverse_power 1 (by norm_num) 0).1
   · filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
     intro A hA
     unfold subentropyKernel
