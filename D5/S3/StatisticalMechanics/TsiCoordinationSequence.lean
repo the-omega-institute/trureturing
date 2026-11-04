@@ -276,7 +276,8 @@ private def intervalShell (c : ℤ) (d : ℕ) : Finset ℤ :=
 
 private lemma interval_shell_mem (c i : ℤ) (d : ℕ) :
     i ∈ intervalShell c d ↔ gap c i = d := by
-  simp only [intervalShell, Finset.mem_filter, Finset.mem_Icc]
+  change i ∈ (Finset.Icc (min 0 c - d) (max 0 c + d)).filter (fun z => gap c z = d) ↔ _
+  simp only [Finset.mem_filter, Finset.mem_Icc]
   constructor
   · exact And.right
   · intro h
@@ -307,7 +308,9 @@ private def rectangleShell (c e : ℤ) (d : ℕ) : Finset (ℤ × ℤ) :=
 
 private lemma rectangle_shell_mem (c e i j : ℤ) (d : ℕ) :
     (i, j) ∈ rectangleShell c e d ↔ gap c i + gap e j = d := by
-  simp only [rectangleShell, Finset.mem_biUnion, Finset.mem_range,
+  change (i, j) ∈ (Finset.range (d + 1)).biUnion
+    (fun t => intervalShell c t ×ˢ intervalShell e (d - t)) ↔ _
+  simp only [Finset.mem_biUnion, Finset.mem_range,
     Finset.mem_product, interval_shell_mem]
   constructor
   · rintro ⟨t, ht, hx, hy⟩
@@ -317,7 +320,9 @@ private lemma rectangle_shell_mem (c e i j : ℤ) (d : ℕ) :
 
 private lemma rectangle_shell_card_zero (c e : ℤ) :
     (rectangleShell c e 0).card = (c.natAbs + 1) * (e.natAbs + 1) := by
-  simp only [rectangleShell, Nat.zero_add, Finset.range_one, Finset.singleton_biUnion,
+  change ((Finset.range (0 + 1)).biUnion
+    (fun t => intervalShell c t ×ˢ intervalShell e (0 - t))).card = _
+  simp only [Nat.zero_add, Finset.range_one, Finset.singleton_biUnion,
     Nat.sub_zero, Finset.card_product, interval_shell_card, ite_true]
 
 private lemma rectangle_shell_card_pos (c e : ℤ) (d : ℕ) (hd : 0 < d) :
