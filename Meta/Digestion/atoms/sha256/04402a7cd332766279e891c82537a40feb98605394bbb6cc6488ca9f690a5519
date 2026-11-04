@@ -1,0 +1,2 @@
+**Remark 8.2 (Many parties).** For $\mathtt q\ge4$ the volume gives the exact determinants (Proposition 5.1), their bipartite factorization (Theorem 5.3) and the order-two identity (Theorem 7.1). It makes no claim about the large-squeezing law of a genuine $\mathtt q$-party multi-entropy for $\mathtt q\ge4$ and $n\ge3$: such a law depends on the normalization chosen for the genuine combination, and the coefficient of $\log\varepsilon$ must be recomputed from the replica counts for each choice.
+

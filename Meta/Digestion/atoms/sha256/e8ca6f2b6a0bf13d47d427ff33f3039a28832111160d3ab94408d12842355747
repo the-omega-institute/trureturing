@@ -1,0 +1,35 @@
+### 定理 7.7（同维双向合法可逆过程是酉共轭）
+
+若 $N,R:M_d(\mathbb C)\to M_d(\mathbb C)$ 均为通道，且 $RN=\operatorname{id}$，
+则存在酉 $U$，$N(X)=UXU^*$、$R(X)=U^*XU$。
+
+**证明。**
+同维有限线性空间上的左逆也是双向逆，故 $NR=\operatorname{id}$。
+令 $\Phi=N^*$、$\Psi=R^*$，都是保单位完全正映射。
+Kraus 等距表示给 Schwarz 不等式
+$\Phi(A^*A)\ge\Phi(A)^*\Phi(A)$；
+再施加 $\Psi$ 并对 $\Psi$ 使用同一不等式，可得
+
+$$
+A^*A\ge\Psi(\Phi(A)^*\Phi(A))
+ \ge\Psi(\Phi(A))^*\Psi(\Phi(A))=A^*A.
+$$
+
+因为 $\Psi$ 可逆，原 Schwarz 余量为零。
+将 $A+tB$ 代入并分别比较实、虚交叉项，得
+$\Phi(A^*B)=\Phi(A)^*\Phi(B)$。
+所以 $\Phi$ 是含幺 $*$-自同构。
+
+取矩阵单位 $E_{ij}$。$\Phi(E_{ii})$ 是两两正交且总和为 $I$ 的最小投影；
+它们秩均为一。取各自单位像向量 $u_i$，
+$\Phi(E_{ij})$ 的初始及终止空间给
+$\Phi(E_{ij})=c_{ij}\lvert u_i\rangle\langle u_j\rvert$，
+乘法与伴随给 $c_{ij}c_{jl}=c_{il}$、$c_{ji}=\bar c_{ij}$、
+$|c_{ij}|=1$。调整 $u_i$ 的相位可使全部 $c_{ij}=1$，
+得到 $\Phi=\operatorname{Ad}_W$。取迹伴随即得 $N=\operatorname{Ad}_{W^*}$。
+
+因此，在已经供应连续可逆时间参数的条件下，前面的指数形式和
+Schrödinger 方程成立。一般有损过程的 Petz 双反向性
+$(N^\sharp)^\sharp=N$ 则是*反推指派的对合*，
+不等于 $N^\sharp N=\operatorname{id}$；不能用前者替代本定理的假设。
+

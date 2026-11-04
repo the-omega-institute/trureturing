@@ -1,0 +1,27 @@
+### 定理 7.1（关系的关系给六维比较代数）
+
+这六个独立方向满足
+
+$$
+\begin{aligned}
+[\mathcal R_x,\mathcal R_y]&=\mathcal R_{R_xy},\\
+[\mathcal R_x,L_y]&=L_{R_xy},\\
+[L_x,L_y]&=-\mathcal R_{R_xy}.
+\end{aligned}
+\tag{7.1}
+$$
+
+其 Lie 代数为 $\mathfrak{so}(1,3)$。定义
+
+$$
+J\mathcal R_x=L_x,\qquad JL_x=-\mathcal R_x,
+$$
+
+则 $J^2=-I$，且
+$J[X,Y]=[JX,Y]=[X,JY]$。
+
+**证明。**
+前两式由 (6.2) 与 $B$-斜对称性得到。第三式作用于 $(t,z)$ 的向量部分为
+$B(y,z)x-B(x,z)y=-R_{R_xy}z$。六个算子保持
+$t^2-B(z,z)$，并线性独立，因此张成六维 $\mathfrak{so}(1,3)$。对三类括号代入 $J$ 定义即可核对所有恒等式。
+

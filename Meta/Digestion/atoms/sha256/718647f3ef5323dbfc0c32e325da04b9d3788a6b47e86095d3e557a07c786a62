@@ -1,0 +1,10 @@
+## 18. 未来自治与规范代表的动态交换
+
+<a id="sec-c94-dynamics"></a>
+
+以下设 $R=R_\tau$ 已满足 C94，$E=R^*$ 为保 $\tau$ 的条件期望。
+对一个通道 $\Phi$，令 $F=\Phi^*$。
+Atlas III 已证明当前代数上的未来自治当且仅当
+$F(\mathcal A)\subseteq\mathcal A$ [3](#ref-atlas)。
+本轮的接续是把这个既有条件写成实际规范整理 $R$ 的精确相容式。
+

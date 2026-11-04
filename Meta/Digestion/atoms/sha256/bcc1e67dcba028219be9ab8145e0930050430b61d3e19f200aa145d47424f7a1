@@ -1,0 +1,45 @@
+## 10. 共尾读口不等于条件态轨迹收敛
+
+<a id="sec-c117-two-limits"></a>
+
+读口扩张和结果条件化有不同的数学对象。
+若 $\bigcup_n\mathcal A_n$ 在 $\mathcal A$ 中范数稠密，
+且 $\widetilde\omega_n$ 是整个 $\mathcal A$ 上的状态，
+其限制与 $\omega$ 在 $\mathcal A_n$ 上一致，
+则对每个固定 $a\in\mathcal A$，有 $\widetilde\omega_n(a)\to\omega(a)$。
+证明是：取某个 $b\in\mathcal A_N$ 逼近 $a$，
+对 $n\ge N$，
+
+$$
+|\widetilde\omega_n(a)-\omega(a)|\le2\|a-b\|.
+$$
+
+这里比较的是同一来源的兼容读数。
+
+一条成功历史 $h$ 的条件态则是
+
+$$
+\omega_h(a)=
+ \frac{\omega(h^*ah)}{\omega(h^*h)}
+ \qquad\bigl(\omega(h^*h)>0\bigr).
+$$
+
+分母为零时不定义条件态。
+即使读口已经完整，条件态也可以不收敛：
+取 $\mathcal A_n=\mathcal B_n=M_2(\mathbb C)$、
+$\omega(a)=\langle 0\rvert a\lvert 0\rangle$，并取历史
+
+$$
+h_n=\sigma_x^n,\qquad k_n=I.
+$$
+
+两方都已访问完整代数，所有历史成功概率也都是一；
+第一方的条件态却在 $\lvert 0\rangle,\lvert 1\rangle$ 之间交替，第二方保持 $\lvert 0\rangle$。
+再取 $h_n=(-1)^nI$，所有条件态与射线都相同，
+归一化比较向量仍不收敛。
+
+共尾链应共享单位，并使用未经重新条件化的状态限制。
+角代数 $p\mathcal Ap$ 的单位是 $p$；
+若 $\omega(p)<1$，再除以 $\omega(p)$ 已经改变归一接口，
+不能把它悄然混进同一限制链。
+

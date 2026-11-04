@@ -1,0 +1,52 @@
+**定理 6.2（有限见证端点的全维生成及既有量子公理接口）。** 在定义 6.1 的范围内，精确 C96 网络生成的有限系统恰为有限直和复矩阵代数。其完整状态、效果、过程及连续可逆时间分别具有通常有限量子理论的密度矩阵、Born 概率、完全正仪器及 Hamilton 形式。角闭包若省略，仅从任意多个二能级系统及有限直和不能得到每个单纯维数。
+
+证明。先将定理 2.1 的有限残差端点接到代数生成。选局部取向，使 $B_s=c_s\times$，记 $s_s=\sqrt\lambda c_s\in\{1,-1\}$。用标准 Pauli 矩阵 $\sigma=(\sigma_1,\sigma_2,\sigma_3)$ 定义
+
+$$
+\Phi_s(\alpha,u)=\alpha I-s_su\cdot\sigma.
+$$
+
+Pauli 乘法公式给
+
+$$
+\Phi_s(S_s(x,y)-i\sqrt\lambda B_s(x,y))=\Phi_s(x)\Phi_s(y).
+$$
+
+复线性延拓后，$\Phi_s$ 是到 $M_2(\mathbb C)$ 的含幺 $*$ 同构。其自伴随平方锥为矩阵正锥：局部特征值为 $\alpha\pm\|u\|$，故正性等价于 $\alpha\ge\|u\|$。由 (2.5)，$N$ 个局部系统给 $M_{2^N}(\mathbb C)$。对任何 $d\ge1$，取 $2^N\ge d$ 并选秩 $d$ 的投影 $p$，角代数为 $M_d(\mathbb C)$；有限直和给所有有限复 $C^*$ 代数。张量积、有限直和及角运算也都保持此类，所以没有生成别的有限代数。若只用前两种操作，简单块的大小仍为 $2^N$，从而缺少 $M_3(\mathbb C)$。这些矩阵与角结构的标准事实在此承担由局部有限证书到全维供应的桥梁。
+
+余下的状态—过程表示直接使用[比较曲率 V95，定义 5.1、定理 5.2](AURIC_COMPARISON_DYNAMICAL_CURVATURE_FINITE_FRAME_QUANTUM_V95.md)的完整有限接口。具体对应为
+
+$$
+\mathcal A=\bigoplus_sM_{d_s}(\mathbb C),\qquad
+\rho_s\ge0,\qquad\sum_s\operatorname{Tr}\rho_s=1,
+$$
+
+以及
+
+$$
+p(j\mid\rho)=\sum_s\operatorname{Tr}(\rho_se_{j,s}),\qquad
+ e_{j,s}\ge0,\quad\sum_je_{j,s}=I_{d_s}.
+$$
+
+纯态与秩一投影效果的概率为 $|\langle\phi,\psi\rangle|^2$。线性概率与完整菜单是定义 6.1 的解释前件；复平方形式由矩阵重构提供。复合使用同一 $m_A\otimes m_B$，所以得到通常复 Hilbert 张量积及纠缠正态，并且局部效果的张量线性张成联合自伴随空间。
+
+所有有限矩阵参考已由角闭包供应，故“对全部参考保正”恰为完全正。标准 Choi–Kraus 表示于是给跨块过程
+
+$$
+\Phi(\rho)_t=\sum_{s,\nu}K_{ts\nu}\rho_sK_{ts\nu}^*,\qquad
+\sum_{t,\nu}K_{ts\nu}^*K_{ts\nu}=I_{d_s}.
+$$
+
+结果标签 $j$ 给完全正分支 $\Phi_j$，总和保迹，记录为 $\sum_j\Phi_j(\rho)\otimes|j\rangle\langle j|$。指定投影测量可使用 $\rho\mapsto p_j\rho p_j$，但效果本身不唯一决定实际更新；相同效果可由不同仪器实现。连续可逆族逐矩阵块为酉共轭。对由本候选固定的括号，有
+
+$$
+B(H,X)=\frac{i}{2\sqrt\lambda}[H,X],\qquad
+\dot\rho=-\frac{i}{2\sqrt\lambda}[H,\rho].
+$$
+
+纯态代表可取 $i(2\sqrt\lambda)\dot\psi=H\psi$。只有再把内部时间、能量与物理单位对应，才能把 $2\sqrt\lambda$ 记成物理 $\hbar$；命题 4.2 证明其数值仍可整体重标。连续的一参数自同构不会置换有限多个中心块，故存在超选择中心不妨碍这一结论。
+
+上述有限 $C^*$、完全正、仪器和时间表示是标准工具及 V95 的复用；新联合限制是完整有限见证、其尺度失配的精确残差，以及沿共同局部系统的同步。在[二元参考与充分约化 V94，定理 4.2、9.1](AURIC_BINARY_REFERENCE_ENDOGENOUS_SUFFICIENT_REDUCTION_AND_QUANTUM_VISIBLE_ALGEBRA_V94.md#thm-c94-main)声明的全矩阵代数 $B(H)$ 合同下，若回缩保持全部可见读数、合并同资料态、固定忠实参照，并对一个二元参考上的全部联合正输入保正，则直接复用该卷的唯一完全正块重置结论。该特殊回缩的二元参考结论不把任意二正过程升级成完全正过程。
+
+在此重构出的全矩阵块上选定同一个 CPTP 正向步长 $\Phi$，可进一步连接[手性、守恒关系与内生终态 V95，定义 3.1、定理 5.1](AURIC_CHIRAL_ORIENTATION_CONSERVED_RELATIONS_AND_ENDOGENOUS_QUANTUM_TERMINAL_STATES_V95.md#thm-c95-equivalence)。该卷的守恒读口为 $\mathcal S=\operatorname{Fix}\Phi^*\cap\operatorname{Herm}$；对其中每对同守恒资料、支撑正交的态要求某个有限正向延伸使输出不再正交，恰好等价于全部实际迭代收敛，并给出每个资料纤维内由 $\Phi$ 唯一决定的 $\Omega_\rho=\lim_n\Phi^n(\rho)$。这里只复用其已给定量子过程后的判据：C96 提供过程的复代数载体与共同变化尺度，终态判据另约束所选过程的衰减关系，不成为本候选的第二条公理。两者不互相替代，因为 C96 仍允许非平凡酉过程，而其任意两输入的迹距离不随迭代改变；由该卷命题 2.1，非固定初态没有吸引极限。取向的选择、变化尺度、衰减和终点因而是彼此不同的关系条件。∎
+

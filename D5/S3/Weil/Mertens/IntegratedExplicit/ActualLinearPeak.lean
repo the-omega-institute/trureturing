@@ -7,6 +7,7 @@
    digest: The actual integrated arithmetic kernel exceeds its linear envelope if RH fails. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.WholeFormula
+import D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
 import D5.S3.Analytic.Laplace.NonnegativeBoundary
 import D5.S3.Analytic.ShiftedXiPoisson.ShiftedPoissonSemigroup
 import D5.S3.Weil.Probability.AnalyticLogarithmicContinuation
@@ -608,6 +609,234 @@ theorem actual_linear_peak_of_not_rh (hnot : ¬ RiemannHypothesis) :
   exact hnone t ht
 
 #print axioms actual_linear_peak_of_not_rh
+
+namespace ActualKernelSubexponential
+
+open ActualKernelLocalPositivity
+
+private def L (z : ℂ) : ℂ :=
+  ∫ t : ℝ in Ioi 0, Complex.exp (-z * t) * (K t : ℂ)
+
+private theorem K_eq_linearKernel {t : ℝ} (ht : 0 < t) : K t = linearKernel t := by
+  rw [linearKernel_arithmetic ht]
+  simp only [K, abs_of_pos ht]
+
+private theorem K_complex {t : ℝ} (ht : 0 < t) :
+    (K t : ℂ) = Complex.exp (-(t : ℂ) / 2) * actualH t := by
+  rw [K_eq_linearKernel ht, linearKernel_complex]
+
+private theorem exponential_moment {b : ℝ} (hb : b < 0) (n : ℕ) :
+    IntegrableOn (fun t : ℝ => t ^ n * Real.exp (b * t)) (Ioi 0) := by
+  have hi : b ∈ interior (integrableExpSet id (volume.restrict (Ioi (0 : ℝ)))) := by
+    apply mem_interior.mpr
+    exact ⟨Iio 0, fun c hc => integrableOn_exp_mul_Ioi hc 0, isOpen_Iio, hb⟩
+  change Integrable _ (volume.restrict (Ioi (0 : ℝ)))
+  simpa only [id_eq] using
+    integrable_pow_mul_exp_of_mem_interior_integrableExpSet hi n
+
+private theorem integrand_continuous (z : ℂ) :
+    Continuous (fun t : ℝ => Complex.exp (-z * t) * (K t : ℂ)) := by
+  exact (show Continuous (fun t : ℝ => Complex.exp (-z * t)) by fun_prop).mul
+    (Complex.continuous_ofReal.comp K_continuous)
+
+private theorem integrand_norm (z : ℂ) (t : ℝ) :
+    ‖Complex.exp (-z * t) * (K t : ℂ)‖ = Real.exp (-z.re * t) * |K t| := by
+  simp [Complex.norm_exp, Complex.norm_real, Real.norm_eq_abs]
+
+private theorem laplace_integrable
+    (hsub : ∀ β : ℝ, 0 < β → ∃ C : ℝ, 0 < C ∧
+      ∀ t : ℝ, |K t| ≤ C * Real.exp (β * |t|))
+    {z : ℂ} (hz : 0 < z.re) :
+    IntegrableOn (fun t : ℝ => Complex.exp (-z * t) * (K t : ℂ)) (Ioi 0) := by
+  by_cases hright : 1 / 2 < z.re
+  · apply (linearKernel_laplace_integrable hright).congr
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    rw [K_eq_linearKernel ht]
+  · obtain ⟨C, _, hC⟩ := hsub (z.re / 2) (by linarith)
+    have hmajor : IntegrableOn
+        (fun t : ℝ => C * Real.exp ((-(z.re / 2)) * t)) (Ioi 0) :=
+      (integrableOn_exp_mul_Ioi (by linarith : -(z.re / 2) < 0) 0).const_mul C
+    refine hmajor.mono' (integrand_continuous z).aestronglyMeasurable ?_
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    rw [integrand_norm]
+    calc
+      Real.exp (-z.re * t) * |K t| ≤
+          Real.exp (-z.re * t) * (C * Real.exp ((z.re / 2) * t)) :=
+        mul_le_mul_of_nonneg_left (by simpa only [abs_of_pos (show 0 < t from ht)] using hC t)
+          (Real.exp_nonneg _)
+      _ = C * Real.exp ((-(z.re / 2)) * t) := by
+        rw [mul_left_comm, ← Real.exp_add]
+        congr 2
+        ring
+
+private theorem laplace_analytic
+    (hsub : ∀ β : ℝ, 0 < β → ∃ C : ℝ, 0 < C ∧
+      ∀ t : ℝ, |K t| ≤ C * Real.exp (β * |t|)) :
+    AnalyticOnNhd ℂ L {z | 0 < z.re} := by
+  have hopen : IsOpen {z : ℂ | 0 < z.re} :=
+    isOpen_lt continuous_const Complex.continuous_re
+  have hd : DifferentiableOn ℂ L {z | 0 < z.re} := by
+    intro z₀ hz₀
+    change 0 < z₀.re at hz₀
+    let F : ℂ → ℝ → ℂ := fun z t => Complex.exp (-z * t) * (K t : ℂ)
+    let F' : ℂ → ℝ → ℂ := fun z t =>
+      (-(t : ℂ) * Complex.exp (-z * t)) * (K t : ℂ)
+    obtain ⟨C, _, hC⟩ := hsub (z₀.re / 4) (by linarith)
+    let bound : ℝ → ℝ := fun t => C * (t * Real.exp ((-(z₀.re / 4)) * t))
+    have hb : IntegrableOn bound (Ioi 0) := by
+      change Integrable bound (volume.restrict (Ioi (0 : ℝ)))
+      simpa only [bound, pow_one, IntegrableOn] using
+        (exponential_moment (by linarith : -(z₀.re / 4) < 0) 1).const_mul C
+    have hF'c : Continuous (F' z₀) := by
+      exact ((show Continuous (fun t : ℝ => -(t : ℂ)) by fun_prop).mul
+        (show Continuous (fun t : ℝ => Complex.exp (-z₀ * t)) by fun_prop)).mul
+        (Complex.continuous_ofReal.comp K_continuous)
+    have hbound : ∀ᵐ t ∂volume.restrict (Ioi (0 : ℝ)),
+        ∀ z ∈ {w : ℂ | z₀.re / 2 < w.re}, ‖F' z t‖ ≤ bound t := by
+      filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht z hz
+      have ht0 : 0 ≤ t := ht.le
+      have hexp : Real.exp (-z.re * t) ≤ Real.exp (-(z₀.re / 2) * t) := by
+        apply Real.exp_le_exp.mpr
+        exact mul_le_mul_of_nonneg_right (by linarith) ht0
+      have hk : |K t| ≤ C * Real.exp ((z₀.re / 4) * t) := by
+        simpa only [abs_of_pos (show 0 < t from ht)] using hC t
+      dsimp only [F', bound]
+      simp only [norm_mul, norm_neg, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_nonneg ht0, Complex.norm_exp, Complex.mul_re, Complex.neg_re,
+        Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
+      calc
+        t * Real.exp (-z.re * t) * |K t| ≤
+            t * Real.exp (-(z₀.re / 2) * t) * (C * Real.exp ((z₀.re / 4) * t)) :=
+          mul_le_mul (mul_le_mul_of_nonneg_left hexp ht0) hk
+            (abs_nonneg _) (mul_nonneg ht0 (Real.exp_nonneg _))
+        _ = C * (t * Real.exp ((-(z₀.re / 4)) * t)) := by
+          calc
+            _ = C * t * (Real.exp (-(z₀.re / 2) * t) *
+                Real.exp ((z₀.re / 4) * t)) := by ring
+            _ = C * t * Real.exp (-(z₀.re / 4) * t) := by
+              rw [← Real.exp_add,
+                show -(z₀.re / 2) * t + (z₀.re / 4) * t = -(z₀.re / 4) * t by ring]
+            _ = _ := by ring
+    have hdiff : ∀ᵐ t ∂volume.restrict (Ioi (0 : ℝ)),
+        ∀ z ∈ {w : ℂ | z₀.re / 2 < w.re}, HasDerivAt (F · t) (F' z t) z := by
+      exact ae_of_all _ fun t z _ => by
+        simpa only [F, F', Pi.neg_apply, id_eq, neg_mul, mul_neg, neg_one_mul,
+          one_mul, mul_comm, mul_left_comm, mul_assoc] using
+          (((hasDerivAt_id z).neg.mul_const (t : ℂ)).cexp.mul_const (K t : ℂ))
+    have hderiv := hasDerivAt_integral_of_dominated_loc_of_deriv_le
+      (μ := volume.restrict (Ioi (0 : ℝ))) (F := F) (F' := F') (bound := bound)
+      (s := {z : ℂ | z₀.re / 2 < z.re})
+      ((isOpen_lt continuous_const Complex.continuous_re).mem_nhds (by
+        change z₀.re / 2 < z₀.re
+        linarith))
+      (Eventually.of_forall fun z => (integrand_continuous z).aestronglyMeasurable)
+      (laplace_integrable hsub hz₀) hF'c.aestronglyMeasurable hbound hb hdiff
+    exact hderiv.2.differentiableAt.differentiableWithinAt
+  exact hd.analyticOnNhd hopen
+
+private theorem laplace_initial {z : ℂ} (hz : 1 / 2 < z.re) :
+    L z = ((firstLiMass : ℂ) * z - deriv shiftedXi z / shiftedXi z) /
+      (z ^ 2 - 1 / 4) := by
+  rw [← linearKernel_laplace hz]
+  apply integral_congr_ae
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+  rw [K_complex ht, linearKernel_complex]
+
+private theorem cross_initial {z : ℂ} (hz : 1 / 2 < z.re) :
+    (z ^ 2 - 1 / 4) * shiftedXi z * L z =
+      (firstLiMass : ℂ) * z * shiftedXi z - deriv shiftedXi z := by
+  have hD : z ^ 2 - 1 / 4 ≠ 0 := by
+    rw [show z ^ 2 - 1 / 4 = (z - 1 / 2) * (z + 1 / 2) by ring]
+    apply mul_ne_zero
+    · intro h
+      have he := congrArg Complex.re h
+      norm_num at he
+      linarith
+    · intro h
+      have he := congrArg Complex.re h
+      norm_num at he
+      linarith
+  have hX : shiftedXi z ≠ 0 := xiReading_ne_zero_right (by
+    change 1 < (z + 1 / 2).re
+    norm_num
+    linarith)
+  calc
+    (z ^ 2 - 1 / 4) * shiftedXi z * L z =
+        shiftedXi z * ((z ^ 2 - 1 / 4) * L z) := by ring
+    _ = shiftedXi z * ((firstLiMass : ℂ) * z - deriv shiftedXi z / shiftedXi z) := by
+      rw [laplace_initial hz, mul_div_cancel₀ _ hD]
+    _ = _ := by
+      rw [mul_sub, mul_div_cancel₀ _ hX]
+      ring
+
+private theorem cross_identity
+    (hsub : ∀ β : ℝ, 0 < β → ∃ C : ℝ, 0 < C ∧
+      ∀ t : ℝ, |K t| ≤ C * Real.exp (β * |t|))
+    {z : ℂ} (hz : 0 < z.re) :
+    (z ^ 2 - 1 / 4) * shiftedXi z * L z =
+      (firstLiMass : ℂ) * z * shiftedXi z - deriv shiftedXi z := by
+  let f : ℂ → ℂ := fun w => (w ^ 2 - 1 / 4) * shiftedXi w * L w
+  let g : ℂ → ℂ := fun w =>
+    (firstLiMass : ℂ) * w * shiftedXi w - deriv shiftedXi w
+  have hf : AnalyticOnNhd ℂ f {w | 0 < w.re} := fun w hw =>
+    (((analyticAt_id.pow 2).sub analyticAt_const).mul
+      (shiftedXi_differentiable.analyticAt w)).mul (laplace_analytic hsub w hw)
+  have hg : AnalyticOnNhd ℂ g {w | 0 < w.re} := fun w _ =>
+    ((analyticAt_const.mul analyticAt_id).mul
+      (shiftedXi_differentiable.analyticAt w)).sub
+      (shiftedXi_differentiable.analyticAt w).deriv
+  have hnear : f =ᶠ[𝓝 (1 : ℂ)] g := by
+    filter_upwards [(isOpen_lt continuous_const Complex.continuous_re).mem_nhds
+      (show (1 / 2 : ℝ) < (1 : ℂ).re by norm_num)] with w hw
+    exact cross_initial hw
+  exact analytic_continuation_unique hf hg (convex_halfSpace_re_gt 0).isPreconnected
+    (show (1 : ℂ) ∈ {w : ℂ | 0 < w.re} by norm_num) hnear hz
+
+/-- Every positive exponential rate bounds the full literal arithmetic K,
+with a rate-dependent positive constant and all real arguments. This is
+definitionally the original implication to Mathlib's RiemannHypothesis.
+The single local data operator supplies both the growth operand and the
+zeta-zero operand of that exact definition; neither component is an anchor. -/
+theorem actual_kernel_subexponential_implies_rh :
+    let data : (ℝ × ℂ) → (ℝ × ℂ) :=
+      fun p => (ActualKernelLocalPositivity.K p.1, riemannZeta p.2)
+    (∀ β : ℝ, 0 < β → ∃ C : ℝ, 0 < C ∧
+      ∀ t : ℝ, |(data (t, 0)).1| ≤ C * Real.exp (β * |t|)) →
+      ∀ (rho : ℂ) (_ : (data (0, rho)).2 = 0)
+        (_ : ¬∃ n : ℕ, rho = -2 * (n + 1)) (_ : rho ≠ 1), rho.re = 1 / 2 := by
+  change (∀ β : ℝ, 0 < β → ∃ C : ℝ, 0 < C ∧
+    ∀ t : ℝ, |ActualKernelLocalPositivity.K t| ≤ C * Real.exp (β * |t|)) →
+      RiemannHypothesis
+  intro hsub
+  let G : ℂ → ℂ := fun z => (firstLiMass : ℂ) * z - (z ^ 2 - 1 / 4) * L z
+  have hG : AnalyticOnNhd ℂ G {z | 0 < z.re} := by
+    intro z hz
+    exact (analyticAt_const.mul analyticAt_id).sub
+      (((analyticAt_id.pow 2).sub analyticAt_const).mul (laplace_analytic hsub z hz))
+  have hode : ∀ z ∈ {z : ℂ | 0 < z.re}, deriv shiftedXi z = G z * shiftedXi z := by
+    intro z hz
+    have hc := cross_identity hsub hz
+    dsimp only [G]
+    linear_combination hc
+  have hfree :=
+    D5.S3.Weil.Probability.AnalyticLogarithmicContinuation.analytic_linear_ode_zero_free
+      (isOpen_lt continuous_const Complex.continuous_re)
+      (convex_halfSpace_re_gt 0).isPreconnected
+      (fun z _ => shiftedXi_differentiable.analyticAt z) hG
+      (p := (1 / 2 : ℂ)) (by norm_num)
+      (by rw [shiftedXi_half]; norm_num) hode
+  apply D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh
+  intro rho hzero hright hone
+  have hw : 0 < (rho - (1 / 2 : ℂ)).re := by
+    simp only [Complex.sub_re]
+    norm_num
+    linarith
+  have hx : xiReading rho = 0 := (xiReading_eq_zero_iff_nontrivial rho).mpr
+    ⟨hzero, by linarith, hone⟩
+  exact hfree (rho - 1 / 2) hw (by
+    simpa only [shiftedXi, sub_add_cancel] using hx)
+
+end ActualKernelSubexponential
 
 end D5.S3.Weil.Mertens.IntegratedExplicit
 end

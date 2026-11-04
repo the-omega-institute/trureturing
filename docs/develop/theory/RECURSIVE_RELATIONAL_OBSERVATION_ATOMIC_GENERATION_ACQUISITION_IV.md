@@ -3348,3 +3348,239 @@ recorder and $k$; no common infinite hard history or completion of the
 persistent RRO goal is asserted.
 
 ## 追加锚（本行以下为增补区）
+## 39. Pair capacity for arbitrary-order labelled-bit tails
+
+**Definition 39.1 (the physical pair count).** Use the causal record
+contract of Definition 34.1. Thus $k\ge1$ is fixed before the inputs,
+$K_0$ is any fixed finite word, every label occurs once in an arbitrary
+order with an arbitrary bit, the settled public input is the exact current
+set $A$, and the only persistent private record is the visible whole word
+$K$. POP and APPEND each cost one, every edit and every intermediate word is
+charged, and separately paid scratch is cleared at each logical cut. For a
+terminal assignment $x\in\{0,1\}^k$, let $R_x$ contain **all** reachable
+terminal words. These fibres may be history-dependent, have many words, and
+be disconnected. Put
+
+$$
+T_L=\{w\in\{0,1\}^{*}:|w|\le L\},\qquad
+\delta(u,v)=|u|+|v|-2|\operatorname{lcp}(u,v)|,
+$$
+
+and, for integers $L,D\ge0$,
+
+$$
+P(L,D)=\#\bigl\{\{u,v\}\subseteq T_L:u\ne v,
+\ \delta(u,v)\le2D\bigr\}.
+\tag{IV.111}
+$$
+
+The metric $\delta$ is the shortest POP/APPEND distance, so every actual
+update path is at least its endpoint distance.
+
+**Theorem 39.2 (edge-specific pair-capacity obstruction).** Every
+admissible causal recorder with finite peak $L$ and worst logical update bill
+$D$ satisfies
+
+$$
+ k2^{k-1}\le P(L,D),
+\tag{IV.112}
+$$
+
+and, for every $L,D\ge0$,
+
+$$
+P(L,D)=
+\sum_{t=1}^{L}2^{L-t}
+\left(\sum_{d=1}^{\min(2D,t)}2^d
++\sum_{\substack{1\le i,j\le t\\i+j\le2D}}2^{i+j-2}\right).
+\tag{IV.113}
+$$
+
+Moreover,
+
+$$
+P(L,D)\le5\,2^L(2^D-1),
+\tag{IV.114}
+$$
+
+for all $L,D\ge0$, and the closed form
+
+$$
+P(L,D)=5\,2^L(2^D-1)-(D+1)2^{2D}+1
+\tag{IV.115}
+$$
+
+holds whenever $L\ge2D-1$ (in particular, for every $L\ge0$ when
+$D=0$).
+
+**Proof.** Let $e=\{x,y\}$ be a Boolean-cube edge whose differing label is
+$j$. Run all other labels first in one fixed order, with their common bits.
+The two runs have the same initial word and the same first $k-1$ inputs, so
+causality gives the same word $z_e$ immediately before the last insertion.
+If internal choices are allowed, choose one allowed outcome of this common
+prefix and use that same outcome for the two completions; the all-outcomes
+contract makes both completions admissible. Let $u_e\in R_x$ and
+$v_e\in R_y$ be the two terminal outputs. Each last
+update has at most $D$ actual edits, hence
+$\delta(u_e,v_e)\le\delta(u_e,z_e)+\delta(z_e,v_e)\le2D$.
+Exact terminal decoding makes $u_e\ne v_e$. If two cube edges selected the
+same unordered pair of words, decoding that pair would give the same
+unordered pair of assignments, and hence the same cube edge. Thus
+$e\mapsto\{u_e,v_e\}$ is injective. This proves (IV.112). The argument uses
+no global choice of one representative per assignment and no connectedness
+of any $R_x$; an assignment can use different representatives on its
+incident edges.
+
+For the count, assign a distinct word pair to its unique lowest common
+ancestor $w$. If $w$ has depth $L-t$, there are $2^{L-t}$ choices for it.
+If one endpoint is $w$ and the other is $d$ edges below, there are $2^d$
+choices for $1\le d\le\min(2D,t)$. Otherwise the endpoints lie in opposite
+child subtrees at distances $i,j\ge1$ from $w$, with $i,j\le t$ and
+$i+j\le2D$; there are $2^{i-1}2^{j-1}=2^{i+j-2}$ choices. The left/right
+roles count each unordered pair once. Summing over $t$ proves (IV.113),
+including the empty sum for $L=0$ or $D=0$.
+
+For $D=0$ every count is zero. Assume $D\ge1$. Divide (IV.113) by
+$2^L$ and extend the nonnegative sum to all $t\ge1$. An ancestor term of
+depth $d$ contributes
+$2^d\sum_{t=d}^{\infty}2^{-t}=2$, so these terms contribute $4D$. A
+cross-branch pair $(i,j)$ contributes
+$2^{i+j-2}\sum_{t=\max(i,j)}^{\infty}2^{-t}=2^{\min(i,j)-1}$. For
+$m=\min(i,j)$ there is one diagonal pair and $2(2D-2m)$ off-diagonal
+pairs. Therefore
+
+$$
+4D+\sum_{m=1}^{D}(4D-4m+1)2^{m-1}=5(2^D-1),
+$$
+
+which gives (IV.114). When $t\ge2D$, the inner bracket in (IV.113) is
+constant and equals
+
+$$
+\sum_{d=1}^{2D}2^d+\sum_{s=2}^{2D}(s-1)2^{s-2}
+=(D+1)2^{2D}-1.
+$$
+
+If $L\ge2D-1$, every omitted term in the infinite geometric sum has
+$t\ge2D$. Its normalized tail is therefore
+$2^{-L}((D+1)2^{2D}-1)$, and subtracting it from
+$2^{-L}5\,2^L(2^D-1)$ proves (IV.115). For $D=0$, both sides are zero for
+all $L$. $\square$
+
+**Corollary 39.3 (near-minimal memory and the $D=1$ boundary).** Exact
+terminal decoding gives
+
+$$
+2^k\le|T_L|=2^{L+1}-1,\qquad L\ge k.
+\tag{IV.116}
+$$
+
+Combining (IV.112) with (IV.114) gives the integer necessity
+
+$$
+D\ge
+\left\lceil\log_2\left(1+\frac{k\,2^{k-L}}{10}\right)\right\rceil.
+\tag{IV.117}
+$$
+
+Consequently, for any fixed integer additive allowance $c\ge0$, the regime
+$L\le k+c$ forces
+
+$$
+D\ge\left\lceil\log_2\left(1+\frac{k}{10\,2^c}\right)\right\rceil,
+$$
+
+so the worst logical update is logarithmic in $k$ at fixed additive peak
+redundancy. These are necessary bounds; they provide no matching coding
+construction and do not rule out constant $D$ when an unrestricted linear
+peak is available.
+
+For $D\le1$, the concatenation of the $k$ update paths puts every terminal
+word within distance $k$ of the same $K_0$. A radius-$k$ ball in the binary
+word tree is contained isometrically in a radius-$k$ ball of the infinite
+trivalent tree. That ball has $3\,2^k-2$ vertices and $3\,2^k-3$ edges;
+its $3\,2^{k-1}-2$ internal vertices have degree three. A distance-two
+pair has a unique midpoint, so the number of distance-one-or-two pairs is
+
+$$
+(3\,2^k-3)+3(3\,2^{k-1}-2)=15\,2^{k-1}-9.
+$$
+
+Thus (IV.112) excludes $D\le1$ for every $k\ge15$ with arbitrary fixed
+$K_0$. If $K_0=\varepsilon$, all terminal words lie in $T_k$, and (IV.115)
+gives $P(k,1)=5\,2^k-7$; hence the same obstruction excludes $D\le1$ for
+$k\ge10$. These are sufficient exclusions, not sharp thresholds, and they
+make no claim that every fixed $D>1$ is impossible.
+
+The parameters $k=L=10,D=1$ separate static capacity from update capacity:
+$T_{10}$ has $2047$ words for $1024$ assignments, but (IV.112) asks for
+$5120$ distinct physical pairs while $P(10,1)=5113$. The model itself is
+inhabited at peak $L=k$: initialize $K_0=0^k$, let public $A$ select the
+labelled positions in $K$, and rebuild the required tail in paid scratch;
+this has exact current decoding, peak $k$, and at most $2k$ paid edits per
+arbitrary-order update. With a fixed known arrival order, appending each
+new bit gives the separate comparison $L=k,D=1$. Neither comparison is a
+construction for the unrestricted logarithmic-update target.
+
+**Theorem 39.4 (prepared native current-term consequence).** Apply the
+contract of Definition 30.1 to the known-alpha, beta-left recorder and use
+the prepared family of Proposition 37.1. Its explicit marker is
+
+$$
+C=\langle\beta,\alpha\rangle,\qquad
+M=\langle\langle C,\alpha\rangle,\alpha\rangle
+=\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,\alpha\rangle,
+$$
+
+with four leaves. The preparation has exactly $3k+4$ native events, each
+insertion has exactly two legal native events, and a full assignment has
+grade $5k+4$. At every macro-cut on this family, public $A$ computes the
+same $U_{k,A}$ used by the native decoder, and the coding word is literally
+$K=J$ after the fixed preparation. No new encoding or canonical native
+representative is introduced.
+
+Let $d_{\rm native}$ be the largest actual POP/APPEND bill of one of the two
+native suffix events over all prepared orders and assignments, and let $L$
+include the preparation, every settled macro-cut, both native subcuts and
+every intermediate edit word. The induced labelled-bit recorder has
+
+$$
+D_{\rm code}\le2d_{\rm native},\qquad
+ d_{\rm native}\ge
+\left\lceil\frac12\left\lceil\log_2\left(1+\frac{k\,2^{k-L}}{10}\right)\right\rceil\right\rceil.
+\tag{IV.118}
+$$
+
+For $L\le k+c$ this is the corresponding logarithmic necessary condition
+with $k/(10\,2^c)$. The equality $K=J$ is at every macro-cut; the two
+subevent bills are both included in the logical bill, while U acquisition,
+address navigation, reconstruction, scratch, source access and all other
+physical service remain separately paid. Preparation cost is charged on the
+native side and is not hidden in the insertion suffix sum. The native bound
+is a necessary condition for this prepared restriction, not an all-native
+update algorithm or a claim about a common cube embedding. In particular,
+combining $D_{\rm code}\le2$ with (IV.115) gives only the optional prepared
+consequence that $L=k$ and $d_{\rm native}=1$ cannot hold for $k\ge30$;
+the general bound (IV.118) is the result retained here.
+
+**Definition 39.5 (suppliers and limits).** The LCA decomposition and
+trivalent-ball shell count are classical tree counting inside this
+application. The existing Hypercube source supplies the cube edge count;
+Definitions 30.1 and 34.1, Proposition 37.1 and the published journal/
+preparation interfaces supply the native guards, exact current-term
+readout, paid-tail accounting and the ordinal $U$-input correspondence.
+The bounded source-relative contribution is the edge-specific injection
+(IV.112), its all-height count and the consequent near-minimal-memory
+inequality, followed by the faithful prepared native mapping. It is not a
+new general counting framework, a repetition of the separator theorem in
+§35, or a claim that the cited classical suppliers are project inventions.
+
+No global terminal representative choice, common cube embedding, physical
+$U$ acquisition service, navigation or scratch bound, total-service optimum,
+matching tradeoff, or actual native implementation follows. The unrestricted
+all-$k$ $O(k)$-peak/$O(\log k)$-worst-update coding question and its native
+counterpart remain open; no all-constant-$D$ impossibility, Lean/kernel
+verification, exhaustive originality result or completion of the persistent
+RRO goal is asserted.
+
+## 追加锚（本行以下为增补区）

@@ -48,3 +48,31 @@ does not exclude alternative primitive lattices.
 DOI: https://doi.org/10.2140/cnt.2025.14.1
 
 Source: https://arxiv.org/abs/2406.04045v1
+
+## Necessary congruences in the even-radius top strip
+
+The repository's necessity result applies to every pair in Z/2 × Z/(2k).
+For integers t ≥ 1 and 0 ≤ r < t with k=2t²−r, a signed coefficient
+cover of radius 2t forces 2 | r and, when t is odd, 4 | r. It imposes no
+chosen lattice form or distinctness hypothesis on the pair.
+
+The mechanism uses the actual relation quotient. For n ≥ 2 and
+0 ≤ δ < n, a square [0,n)² covering Z²/L with quotient order n²−δ
+forces L to have basis (n,−εb), (−a,εn), where ε=±1,
+0 ≤ a,b < n and ab=δ. Least adjacent-column displacements and
+determinant divisibility force this basis; the determinant-index identity
+is supplied by pinned Mathlib, not claimed as new mathematics.
+
+For an arbitrary covering pair, the affine odd coefficient class becomes
+a square torsor under the sum-and-difference map. Its relation quotient
+has order 2k, so the rigidity result applies with n=2t and δ=2r.
+Parity forces both displacement parameters to be even. When t is odd,
+failure of 4 | r would force the entire original relation kernel into
+4Z², contradicting the first Z/2 factor. Thus the argument excludes
+alternative pairs, beyond checking the displayed sufficient construction.
+
+This is a repo-derived necessary direction in the stated top strip,
+alongside the sufficient family above. The source comparison remains
+arXiv:2406.04045v1, Conjecture 4.1 and Theorems 4.2–4.4. The revised
+paper has not been read; neither the full conjecture nor literature
+novelty is asserted by this increment.

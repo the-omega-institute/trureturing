@@ -108,7 +108,7 @@ section
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-private noncomputable def reciprocalRoots (L : Matrix ι ι ℝ) : ℝ :=
+noncomputable def reciprocalRoots (L : Matrix ι ι ℝ) : ℝ :=
   ((L.charpoly.roots.filter (· ≠ 0)).map (·⁻¹)).sum
 
 private theorem sum_filter_inv (s : Multiset ℝ) :
@@ -120,14 +120,14 @@ private theorem sum_filter_inv (s : Multiset ℝ) :
   rw [hz, add_zero] at h
   simpa only [Multiset.filter_map, Function.comp_def, ne_eq, inv_eq_zero] using h
 
-private theorem reciprocalRoots_eq_sum (L : Matrix ι ι ℝ) (hL : L.IsHermitian) :
+theorem reciprocalRoots_eq_sum (L : Matrix ι ι ℝ) (hL : L.IsHermitian) :
     reciprocalRoots L = ∑ i, (hL.eigenvalues i)⁻¹ := by
   classical
   rw [reciprocalRoots, sum_filter_inv, hL.roots_charpoly_eq_eigenvalues]
   simp
 
 /-- A spectral reciprocal trace from algebraic generalized-inverse equations. -/
-private theorem reciprocalRoots_eq_trace (L P T : Matrix ι ι ℝ) (hL : L.IsHermitian)
+theorem reciprocalRoots_eq_trace (L P T : Matrix ι ι ℝ) (hL : L.IsHermitian)
     (hLT : L * T = 1 - P) (hLP : L * P = 0) (hPT : P * T = 0) :
     reciprocalRoots L = T.trace := by
   classical

@@ -1,0 +1,16 @@
+### 7.6 自由正核的全部拼接，以及它的适用边界
+
+先暂时只考虑一组已标定向量的 Gram 数据，不附加算符词积约束。共同地址的块记为 $C$，两方私有地址分别有块 $A,B$。令
+
+$$
+G_1=\begin{pmatrix}C&X\\X^*&A\end{pmatrix}\geq0,
+ \qquad
+ G_2=\begin{pmatrix}C&Y\\Y^*&B\end{pmatrix}\geq0.
+$$
+
+这里 $C^+$ 是 Moore–Penrose 逆，记
+
+$$
+R_1=A-X^*C^+X,\qquad R_2=B-Y^*C^+Y.
+$$
+

@@ -1,0 +1,116 @@
+**Theorem 50.3 (the entire positive-active pure branch on $I$).** For every $\xi\in[11/5,9/4]$, every original normalized positive rank-one $E$ with the ordinary transpose convention, and every single original $U\in U(4)$ such that $\rho_+(E,U)=\rho(E,U)=\xi$,
+
+$$
+ g(E,U)\ge V(\xi),\qquad D_{\mathrm{sel}}(\xi)>0.
+\tag{50.9}
+$$
+
+Both level endpoints and both population endpoints are included. If the actual population slice satisfies $\mathfrak D_+(x,q)<0$, then
+
+$$
+ g(E,U)-V(\xi)>\frac{1196031}{1600000000}>\frac7{10000}.
+\tag{50.10}
+$$
+
+Such negative-determinant slices are nonempty. The existing selected positive geometric pairs attain $V(\xi)$; negative-determinant slices cannot attain it. No additional exhaustive equality or original-lift classification is asserted here.
+
+*Proof.* First compare scalars on the entire feasible population interval. Under $\delta=t-q=2(1-x)$, the positive-row quantities of (37.12) are $F=4(1-q)R_0^2$ and $G=4qh^2y^2$, and
+
+$$
+ \mathcal H_{+,t}(\delta)+\kappa\xi=G_\xi(q),\qquad
+ G_\xi''(q)\ge8hc-1>4\quad(0<q<1).
+\tag{50.11}
+$$
+
+Indeed $d\delta/dq=-1$, (37.22) gives $F''\le1-8hc$, $G''\le0$, and the geometric mean $\sqrt{FG}$ is concave as in the proof of Theorem 37.5. The remaining energy term is affine. The source selector is interior, so integration of (50.11), using $G'_\xi(q_\xi)=0$, gives
+
+$$
+ G_\xi(q)-V(\xi)\ge2(q-q_\xi)^2\qquad(0\le q\le1).
+\tag{50.12}
+$$
+
+Continuity extends this inequality to $q=0,1$. C4 certifies $G'_\xi(9/20)\le-1/10<0$ for every $\xi\in I$. The strictly increasing derivative and its unique zero therefore imply
+
+$$
+                        q_\xi>9/20.
+\tag{50.13}
+$$
+
+Next extend C1--C3 from $\xi=9/4$ to the whole level interval, rather than assuming those one-level signs suffice. At fixed $0<q\le1$, differentiation in $x$ gives
+
+$$
+ \nu_x=\frac{\sqrt q(h^2-s^2x)}{2hy^3}>0,\qquad
+ \frac{\mu_x}{\mu}\ge-\frac h{R_0},\qquad
+ \partial_x\log(t_c^2/\mu)\le\frac1L-\frac2x+\frac h{R_0}<\frac1L-\frac1x<0.
+\tag{50.14}
+$$
+
+For the middle inequality, the logarithmic derivatives of the two nonnegative summands of $2\mu$ are $-h/R_0$ and $x/y^2$; take their positive weighted average, omitting a zero summand. This also handles $q=1$ directly. The strict inequality uses $R_0=hx+c>hx$. Thus $\omega_x>0$. At $q=0$ the formula is instead $\omega=k/2>0$, independent of $x$, without a logarithm of zero. Since decreasing $\xi$ increases $x$ at fixed $q$, C1--C3 yield throughout $I$
+
+$$
+\begin{aligned}
+ \omega(\xi,q)&\ge1/10000&&\text{if }q\in[0,1/10]\cup[3/8,1],\\
+ \omega(\xi,q)&\ge-21/1000&&\text{if }q\in[1/10,3/8].
+\end{aligned}
+\tag{50.15}
+$$
+
+In particular $\mathfrak D_+<0$ forces $1/10<q<3/8$ and $0<-\omega\le21/1000$, because the determinant has the sign of $\omega$. At the selected $q_\xi>9/20>3/8$, (50.15) gives $\omega\ge1/10000>0$, hence $D_{\mathrm{sel}}(\xi)>0$ under the exact determinant identification of (50.5).
+
+On a negative slice, $x\le\bar x=9/20+q/2\le51/80$. The function $\sqrt q(1+\bar x)/\bar x$ increases on $[1/10,3/8]$: its derivative has the sign of $\bar x^2+\bar x-q\ge1/4+1/2-3/8=3/8>0$. Since $(1+x)/x$ decreases with $x$, its left endpoint gives
+
+$$
+ \frac{2s\sqrt q\,L}{3\sqrt3\,x}\ge\frac{2s}{\sqrt{30}}>\frac{38}{275}.
+\tag{50.16}
+$$
+
+Also $\sqrt p>3/4$, $k>21/100$ and $R_0\le h(51/80)+c<7/5$. Consequently
+
+$$
+\begin{aligned}
+ B_{\mathrm{gain}}&>\frac{38}{275}+\frac{6615}{2240000}=\frac{99359}{704000}>\frac7{50},\\
+ J&\le\frac{(21/1000)^2}{4(7/50)}=\frac{63}{80000},\\
+ \Gamma_0^2&\le R_0^2+h^2y^2=h^2+c^2+2hc x<(h+c)^2<(5/3)^2,\\
+ G_\xi(q)-V(\xi)&>2(9/20-3/8)^2=9/800.
+\end{aligned}
+\tag{50.17}
+$$
+
+The third line is Cauchy--Schwarz with $p+q=1$, so $\Gamma_0<5/3$. The last line uses (50.12)--(50.13) and the strict separation $q<3/8$.
+
+For a whole phase feedback, apply the existing quadratic-gain consumer (47.9)--(47.12) directly with the parameter map in (50.3). It gives, for every effect phase,
+
+$$
+ g(E,U)-V(\xi)\ge G_\xi(q)-V(\xi)-8\Gamma_0J-4J^2.
+\tag{50.18}
+$$
+
+This invokes the simultaneous main and crossed recoveries on the same attained triangle; it does not replace them by independently attainable extrema. If $\omega\ge0$, then $J=0$ and (50.12) proves (50.9), including $q=0,1$. If $\omega<0$, (50.17)--(50.18) give
+
+$$
+\begin{aligned}
+ g(E,U)-V(\xi)&>\frac9{800}-\frac{40}{3}\frac{63}{80000}-4\left(\frac{63}{80000}\right)^2
+                    =\frac{1196031}{1600000000},\\
+ \frac{1196031}{1600000000}-\frac7{10000}&=\frac{76031}{1600000000}>0.
+\end{aligned}
+\tag{50.19}
+$$
+
+Finally transfer these inequalities to each arbitrary original $U$, without identifying phase-only feedbacks with all unitaries. Theorem 42.3, applied forward to that very $U$, supplies positive weights $\theta_j$ of sum one and whole phase unitaries $U_j$ with the same effect and the same complex trace $\operatorname{Tr}(U_jU_+^\dagger)=\operatorname{Tr}(UU_+^\dagger)$. Thus $q,x,\xi$ are unchanged. The original two-sign budget (42.17) gives for the original pair and for every replacement
+
+$$
+ \rho_- -\xi\ge18-8(c+s)-2\xi\ge18-8(c+s)-9/2>3.
+\tag{50.20}
+$$
+
+Their positive branches are therefore uniquely active, their true joint distances equal $\xi$, and the original metric still uses one whole-feedback scalar. Put $F=T^\dagger E^{\mathsf T}T$ and $\mathbf a=(P(w),Q(w))$, $\mathbf a_j=(P(w_j),Q(w_j))$. Equations (42.15)--(42.23) give $\mathbf a=\sum_j\theta_j\mathbf a_j$ and the exact nonnegative variance identity
+
+$$
+ g(E,U)=\sum_j\theta_jg(E,U_j)+\sum_j\theta_j\|(\mathbf a_j-\mathbf a)F^{1/2}\|_2^2.
+\tag{50.21}
+$$
+
+Every replacement satisfies the same bound (50.18), because its population slice and determinant are unchanged. A finite positive weighted average preserves the strict uniform bound (50.19), and the nonnegative variance preserves both comparisons. This proves (50.9)--(50.10) for every original $U$, with the ordinary transpose and all relative effect phases retained.
+
+For nonemptiness, (50.8) gives a negative determinant at $(\xi,q)=(9/4,1/4)$, where $x=9/16$. The actual phase diagonal $(x+iy,x-iy,1,1)$ with its single feedback $U=\operatorname{diag}(w)U_+$ and any effect (50.1) at that population has $A=2(1+x)$ and true original level $9/4$ by (50.20). Thus the strict exclusion concerns realized original slices. Attainment at each level by the existing selected positive pairs follows from Theorem 37.5 and its actual-distance check (37.23), without a new equality or lift argument. $\square$
+

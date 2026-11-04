@@ -1,0 +1,31 @@
+**Proposition 32.2 (current recovery can discard full native history).**
+The recorder $R_*$ need not determine the full addressed history from
+$(U,J_*)$. There are two distinct legal histories of grade seven with
+the same ordered endpoint and the same $J_*$. In contrast $Q_0(1)$ has
+a unique full history.
+
+**Proof.** Start with the legal five-event prefix
+
+$$
+h_0=P_\varepsilon S_\varepsilon S_L P_R S_R.
+\tag{IV.98}
+$$
+
+Its successive terms are $\alpha$, $\beta$, $C$,
+$\langle C,\alpha\rangle$, $\langle C,\beta\rangle$, and
+$\langle C,C\rangle$. Thus all guards use the actual beta-left native
+rules. The two continuations $P_{LR}P_{RR}$ and $P_{RR}P_{LR}$ promote
+the two different right alpha leaves in opposite orders, reaching in
+both cases
+$\langle\langle\beta,\beta\rangle,\langle\beta,\beta\rangle\rangle
+=Q_1(2)$. They are distinct addressed histories. Grade seven belongs to
+$\mathcal S_2$, since $M_2=4$ and $\Delta_2=1$. At that cut (IV.91) is
+just the serialization of the common current term, with no journal
+suffix. The pair $(U,J_*)$ is therefore identical for these histories,
+so it cannot recover their different chronologies. On the other hand,
+the only history of $Q_0(1)=\langle\beta,\beta\rangle$ is
+$P_\varepsilon S_\varepsilon P_R$, as also checked in Theorem 28.3.
+Consequently a singleton ordered endpoint must not be described as
+having nonunique histories without an additional native instance.
+$\square$
+

@@ -1,0 +1,44 @@
+**Definition 21.1 (two declared tasks on one process).** Fix the installation,
+root binding, rights and Ready domain of §20. The causal task $Q_c$ consists
+of Tag, HasPromotion, HasSplit and addressed $P/S$, with their complete
+finite replies, enabledness/refusals and resulting settled source. Records
+are auxiliary to this task and are not permitted selector inputs. The full
+generation task $Q_g$ additionally permits FetchGrowth and Next, with
+Next's returned pair and actual source/record successor. Its settled semantic
+state is the current source and routing tapes with this fixed binding and
+rights. Input, pending state and output are empty at Ready.
+
+Task equivalence compares the same future finite request sequences, their
+legality and outputs, and the corresponding semantic successors at every
+step. These are semantic service tasks. Neither task exposes allocator
+numerals, obsolete scratch identities, elapsed primitive ticks, the request
+archive, or arbitrary intermediate controller cuts. The actual process
+contains those intermediate transitions and resources; they have not been
+identified with successful growth events. Equality of source and record
+objects below means rooted oriented equality of their contents and actual
+binding relations in this fixed installation, disregarding raw fresh-name
+spellings. It does not compare unrelated roots or different authorities.
+
+Let $T_c$ be the labelled causal order of actual creation/lifecycle events,
+$T_s=\pi(w)$ the actual split word, and $T_g=w$ the actual successful
+generation word. Complete controller chronology $T_{\rm ctl}$ instead
+records input, source edits, tape updates, query work, printing and return;
+it is not any of these three observations.
+
+Memory $M_c$ selects the actual retained source fields and the bound service
+entry of §20 restricted to $Q_c$, with its present authority; attached tape
+backing is not part of this observation.
+Memory $M_g$ is the retained source plus actual attached tapes, their live
+readable backing and the §20 callable driver. These are acquired objects,
+not tables of answers to hypothetical requests. Define the expressly
+supplemented spatial and boundary views
+
+$$
+S_g=(S_0,\mathcal W),\qquad B_g=(B_0,\mathcal W).
+\tag{AA.76}
+$$
+
+The tape component denotes actual attached local record contents. These
+are not claims that bare geometry contains serial order, nor unrestricted
+copies of the entire controller history in each view.
+

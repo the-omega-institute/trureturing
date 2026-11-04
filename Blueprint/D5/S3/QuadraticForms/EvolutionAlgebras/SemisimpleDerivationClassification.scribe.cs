@@ -14,6 +14,26 @@ internal sealed class SemisimpleDerivationClassificationDocument : IScribeDocume
         H("Semisimple derivation algebras are sums of orthogonal algebras"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("diagonalzero"),
+                DeclarationHandle.Create(Prefix + "diagonal_zero"),
+                H("Zero diagonal coefficients"),
+                StatementSource.FromAuthor(Disp(OrthogonalParameters(
+                    All(X("i"), X("n"), Eq(Call("val", X("A"), X("i"), X("i")), D(0)))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Every diagonal coefficient of an orthogonal Lie algebra matrix vanishes in characteristic zero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("coefficientskew"),
+                DeclarationHandle.Create(Prefix + "coefficient_skew"),
+                H("Skew transpose coefficients"),
+                StatementSource.FromAuthor(Disp(OrthogonalParameters(
+                    All(X("i"), X("n"), All(X("j"), X("n"),
+                        Eq(Call("val", X("A"), X("j"), X("i")),
+                            Seq(Minus, Call("val", X("A"), X("i"), X("j"))))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Transposing the indices negates each coefficient of an orthogonal Lie algebra matrix."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("claim"),
                 DeclarationHandle.Create(Prefix + "claim"),
                 H("claim"),
@@ -33,6 +53,10 @@ internal sealed class SemisimpleDerivationClassificationDocument : IScribeDocume
                     ProblemSlugRef.Create("kaygorodov-martin-gonzalez-viruel-2026-evolution-algebra-derivations-conjecture-5"),
                     ResolutionKind.Proved)))));
 
+    private static Formula OrthogonalParameters(Formula body) => All(X("k"), Type,
+        Instance(Call("Field", X("k")), Instance(Call("CharZero", X("k")),
+        All(X("n"), Type, Instance(Call("Fintype", X("n")), Instance(Call("DecidableEq", X("n")),
+        All(X("A"), So(X("n")), body)))))));
     private static Formula Parenthesized(Formula content) =>Seq(Open, content, Close);
     private static Formula X(string name) =>F.Id(name);
     private static Formula Name(string name) =>Seq(Operatorname, Grp(X(name)));

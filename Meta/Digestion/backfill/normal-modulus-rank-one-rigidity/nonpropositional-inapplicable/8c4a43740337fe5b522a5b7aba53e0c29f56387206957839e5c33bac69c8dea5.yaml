@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8c4a43740337fe5b522a5b7aba53e0c29f56387206957839e5c33bac69c8dea5
+  normalized_sha256: sha256:8c4a43740337fe5b522a5b7aba53e0c29f56387206957839e5c33bac69c8dea5
+cas_ref: sha256:8c4a43740337fe5b522a5b7aba53e0c29f56387206957839e5c33bac69c8dea5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'section heading only: this atom contains no mathematical proposition or formalizable claim.'
+    previous_atom_id: 0df8e2639e4c80661d2bce7a043e2b671943610f9950a40a26e97a95c8bc8afc
+    next_atom_id: 9209ca3827f42782ddf9a590856ee8b8d885ea6dabaaa56b2dc81312c896dda2

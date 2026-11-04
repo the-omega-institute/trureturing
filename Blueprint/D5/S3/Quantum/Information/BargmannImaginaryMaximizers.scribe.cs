@@ -14,6 +14,9 @@ internal sealed class BargmannImaginaryMaximizersDocument : IScribeDocumentDefin
         "For every n at least three, the unit qubit tuples with imaginary Bargmann invariant tau n form one unitary orbit of a latitude polygon, allowing an independent phase at each vertex.",
         H("All qubit maximizers of the imaginary Bargmann invariant"),
         Blocks(
+            Node("weighted_edge_bound", "An upper bound for a finite weighted mean", WeightedEdgeBoundFormula(),
+                "Nonnegative weights of total mass one preserve a common upper bound; equality holds exactly when every term strictly below the bound has zero weight.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Describe.Lean(
                 DescribeId.Create("qubit-latitude"),
                 DeclarationHandle.Create(Module + "latitude"),
@@ -58,9 +61,24 @@ internal sealed class BargmannImaginaryMaximizersDocument : IScribeDocumentDefin
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-            DescribeId.Create("bargmannmax-" + name), DeclarationHandle.Create(Module + name),
+            DescribeId.Create("bargmannmax-" + name.Replace('_', '-')), DeclarationHandle.Create(Module + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
+
+    private static Formula WeightedEdgeBoundFormula()
+    {
+        Formula iota = Iota, w = X("w"), c = X("c"), m = X("M"), k = X("k");
+        Formula SumOf(Formula term) => Seq(new Formula.Subscript(Sum, Seq(k, Sp, Colon, Sp, iota)), Sp, Parenthesized(term));
+        Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+        Formula mean = SumOf(Multiply(At(c, k), At(w, k)));
+        Formula nonnegative = All(k, iota, Le(Typed(D(0), Reals()), At(w, k)));
+        Formula bound = All(k, iota, Le(At(c, k), m));
+        Formula equality = IffOf(Equal(mean, m), All(k, iota,
+            Imp(new Formula.Relation(At(c, k), FormulaRelationOperator.LessThan, m), Equal(At(w, k), Typed(D(0), Reals())))));
+        return Disp(All(iota, Seq(Named("Type"), Star), Seq(OpenBracket, Call("Fintype", iota), CloseBracket, Sp,
+            All(w, Arrow(iota, Reals()), All(c, Arrow(iota, Reals()), All(m, Reals(),
+                Imp(nonnegative, Imp(Equal(SumOf(At(w, k)), Typed(D(1), Reals())), Imp(bound, And(Le(mean, m), equality))))))))));
+    }
 
     private static Formula LatitudeDotFormula()
     {

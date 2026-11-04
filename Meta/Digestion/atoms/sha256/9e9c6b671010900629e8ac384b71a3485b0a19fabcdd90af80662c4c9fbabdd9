@@ -1,0 +1,21 @@
+**定义 22.1（内部历史、替代准备、观察及控制域）。** 固定唯一全局态 $\Omega$ 与全局载体 $\mathcal H_\Omega$。在当前有限切口声明嵌入 $\iota:M_d\to B(\mathcal H_\Omega)$、替代准备标签域 $\mathcal D_{\rm prep}$、观察设置域 $\mathcal D_{\rm obs}$、内部参照与记忆读出域 $\mathcal D_{\rm ref}$、允许延续控制域 $\mathcal D_{\rm ctrl}$，以及联合合法标签集
+
+$$
+\mathcal J\subseteq
+\mathcal D_{\rm prep}\times\mathcal D_{\rm obs}
+\times\mathcal D_{\rm ref}\times\mathcal D_{\rm ctrl}.
+$$
+
+对每个 $\alpha\in\mathcal J$，指定由内部量子门序列组成的整体历史 $U_\alpha$ 与切口读数
+
+$$
+\operatorname{Tr}(s_\alpha x)
+=\langle\Omega,U_\alpha^\dagger\iota(x)U_\alpha\Omega\rangle
+\qquad(x\in M).
+\tag{22.1}
+$$
+
+$\Omega$ 归一，$\iota$ 为保单位元的 $*$-嵌入，因此 $s_\alpha$ 是密度矩阵。设置、参照及记忆也属于历史标签及相应切口，不作为整体之外的独立装置。$\mathcal J$ 不假设为直积；共同起源不供应独立性、全部准备或全部控制。切口所保留的记忆和结果属于 $s_\alpha$ 的同一联合对象；未纳入 $M$ 的历史数据不能据此声称已保留或可返回。原生效果菜单是另行指定的 $\mathcal O_\alpha\subseteq[0,I]_M$，其内部记录与延续仍按 $\mathcal J$ 的合法关系决定。
+
+命题 20.2 的 $\rho$ 是此内部接口所声明的忠实比较校准；若以内部备选读数的加权校准表示，需给定 $s_{\alpha_j}$ 与正权重 $w_j$，满足 $\sum_jw_j=1$、$\rho=\sum_jw_js_{\alpha_j}>0$。不假定全部数学密度矩阵都出现在该准备域。$\sigma$ 定义为同一 $M$ 上用于比较的归一正泛函，不断言存在新的可执行准备标签使 $s_\alpha=\sigma$；式 (20.3) 不改变全局 $\Omega$，也不把 Haar 平均当作可用门菜单。式 (20.1) 是比有限原生测量菜单更强的完整复比较球假设，是否由某个原生接口供应须另证。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8590ac7a070c9418b8389327fbf768449c06b9e815db2e8f63f621430c2deaf6
+  normalized_sha256: sha256:8590ac7a070c9418b8389327fbf768449c06b9e815db2e8f63f621430c2deaf6
+cas_ref: sha256:8590ac7a070c9418b8389327fbf768449c06b9e815db2e8f63f621430c2deaf6
+coverage_gids:
+  - gid: D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitOrdinaryCoefficients.result
+    target_statement_id: sha256:906bce0bbbbb4ce20b32bf84723e07d531da0d5cfdeb15c7492aac8a663eb6ea
+receipts:
+  unresolved_subitems: []

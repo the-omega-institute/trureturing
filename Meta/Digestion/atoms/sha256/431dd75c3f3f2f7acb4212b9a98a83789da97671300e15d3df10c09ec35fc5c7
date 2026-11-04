@@ -1,0 +1,16 @@
+**Definition 4.3 (Lifted and cut vertices).** The first six rows of the
+following table are $v_0,\ldots,v_5$, also denoted $z_0,\ldots,z_5$.
+The remaining rows are the four cut-edge intersections.
+
+| $j$ | $z_j=(a,b,c,d,e)$ |
+| --- | --- |
+| 0 | $(0,0,0,0,0)$ |
+| 1 | $(0,1,0,0,0)$ |
+| 2 | $(0,1,1,0,0)$ |
+| 3 | $(1,0,0,0,0)$ |
+| 4 | $(1,1,0,1,0)$ |
+| 5 | $(1,1,1,1,1)$ |
+| 6 | $(2/3,1/3,1/3,0,0)$ |
+| 7 | $(2/3,1,1/3,2/3,0)$ |
+| 8 | $(1,1/3,1/3,1/3,1/3)$ |
+| 9 | $(1,1,1/3,1,1/3)$ |

@@ -1,0 +1,10 @@
+## 7. 来源与完整白话
+
+[1] R. Łukasik, *Some generalization of Cauchy’s and the quadratic functional equations*, Aequationes Mathematicae 83 (2012), 75–86, [DOI:10.1007/s00010-011-0106-x](https://doi.org/10.1007/s00010-011-0106-x)，Theorem 4, pp. 82–83。有限自同构群的平均方程允许到群阶为止的广义多项式；本文不把三向平均式本身或一般极化工具声称为新发现。任意自同态的可见商、非负性排除奇部、缺陷关系与原接口对应给出本稿的具体推导。
+
+[2] R. Mosseri and R. Dandoloff, *Geometry of entangled states, Bloch spheres and Hopf fibrations*, [quant-ph/0108137](https://arxiv.org/abs/quant-ph/0108137)，§2。只用于复二维振幅的相位商几何。
+
+[3] P. Busch, *Quantum states and generalized observables: a simple proof of Gleason’s theorem*, [quant-ph/9909073](https://arxiv.org/abs/quant-ph/9909073)。全效果评价及其非负、归一和可加前件不省略。
+
+[4] J. Watrous, *The Theory of Quantum Information*, Chapter 2, Theorem 2.22, [公开章节](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)。有限维 CP、Choi、Kraus、Stinespring 等价不供应原过程的来源条件。
+

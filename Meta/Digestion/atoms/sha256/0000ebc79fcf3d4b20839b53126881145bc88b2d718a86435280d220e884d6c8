@@ -1,0 +1,22 @@
+### 9.3 圆和椭圆的既有历史条件
+
+给起点 $\mathbf p$、历史单位切向 $\mathbf u$、目标 $\mathbf q\ne\mathbf p$，
+令 $\mathbf b=\mathbf p\times\mathbf u$。
+在明确的平面截球圆类中，圆平面由
+
+$$
+(\mathbf b+\kappa\mathbf p)\cdot\mathbf r=\kappa,
+\qquad
+\kappa=\frac{\mathbf b\cdot\mathbf q}{1-\mathbf p\cdot\mathbf q}
+$$
+
+确定。写 $\mathbf r=X\mathbf p+Y\mathbf u+Z\mathbf b$，
+代入 $Z=\kappa(1-X)$ 得
+
+$$
+X^2+Y^2+\kappa^2(1-X)^2=1.
+$$
+
+所以球面圆在历史平面上的投影是圆或椭圆。
+这是 v78--v82 的历史弧消费者；光滑性本身不强迫实际轨迹属于圆类。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:335ab8ec2f15ec5dde98f41942016798bfcdc934c00008bbbf5337ddd2b7f810
+  normalized_sha256: sha256:335ab8ec2f15ec5dde98f41942016798bfcdc934c00008bbbf5337ddd2b7f810
+cas_ref: sha256:335ab8ec2f15ec5dde98f41942016798bfcdc934c00008bbbf5337ddd2b7f810
+coverage_gids:
+  - gid: D5/S3/FiniteGroups/RelativeFrattiniKernel.isPGroup_automorphism_kernel
+    target_statement_id: sha256:731408a29cf683db4b8284847a399607e8a249c210a7ee4648b32139aee72d51
+  - gid: D5/S3/FiniteGroups/RelativeFrattiniKernel.isPGroup_outer_kernel
+    target_statement_id: sha256:53d72f104da418d926d878468419e0729f8a4fe407d315296c2ac8b468db8445
+receipts:
+  unresolved_subitems: []

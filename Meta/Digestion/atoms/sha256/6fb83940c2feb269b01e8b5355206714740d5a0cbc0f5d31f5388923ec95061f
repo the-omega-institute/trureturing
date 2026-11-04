@@ -1,0 +1,77 @@
+### 定理 6：得到一个有限步条件形式的 RH 等价命题
+
+> **Editorial note — RH criterion boundary.** For the reverse implication, the supplied proof requires a normally convergent actual-zero expansion for $K$ in the relevant domain, a meromorphic Laplace-transform continuation, the exact pole locations, nonzero residues after multiplicity (no cancellation), and an identity-theorem argument linking the transform of the bounded kernel to that continuation. These reverse-direction analytic suppliers remain `ASSUMED-UNVERIFIED` and separate from the forward-direction premise below and from the inherited Robin decomposition (28) and budget limit (32). The cited six links do not establish these manuscript-specific bridges. Consequently (35) is retained as the author's proposed equivalence, conditional on both directions' premises; it does not prove RH, and the all-window matrix inequality remains unproved.
+
+> **Editorial note — forward RH premise.** The forward direction $\mathrm{RH}\Rightarrow K\text{ positive semidefinite}\Rightarrow\mathcal S_D\succeq0$ requires an actual-zero expansion equal to this arithmetic $K$, with normal convergence in the domain needed to pass to finite Gram forms and with the coefficients/signs that make RH imply positivity. Neither v37's block algebra nor the predecessor's finite-core discussion supplies that analytic identification. This actual-zero-expansion/normal-convergence and RH-to-positive-core premise remains `ASSUMED-UNVERIFIED`; the fixed-window convergence and strict tolerance argument use it conditionally. It is distinct from the reverse Laplace/pole/multiplicity/noncancellation premises in the adjacent note.
+
+固定
+
+$$
+\varepsilon_*=\frac18.
+$$
+
+对每个正整数窗口长度 $D$，按上述方式固定粗网格和稠密细化。则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall D\in\mathbb N_{>0},\
+\exists\text{有限 }k,J,\Omega:
+\quad
+\mathcal S_k-c_D\mathcal U_{k,J,\Omega}
++\frac18G_*\succeq0.
+}
+$$
+<a id="eq-35"></a>
+<div class="equation-caption">Equation (35).</div>
+
+**证明。**
+
+若 RH 成立，实际核 $K$ 全局正定，因此每个窗口的
+
+$$
+\mathcal S_D\succeq0.
+$$
+
+由式 (16) 的收敛和 $G_*\succ0$，每个固定窗口最终满足式 (35) 中的有限条件。
+
+反过来，若每个整数窗口都有这样的有限条件，由定理 4，
+
+$$
+K+\frac18P
+$$
+
+在所有有限窗口上正定，从而在整个实线上正定。两点测试给出
+
+$$
+\left|K(t)+\frac18P(t)\right|
+\leq S+\frac18p_0.
+$$
+
+所以
+
+$$
+|K(t)|\leq S+\frac14p_0
+\qquad(t\in\mathbb R).
+$$
+
+实际核因而全局有界。
+
+而实际零点展开的 Laplace 变换具有极点
+
+$$
+s=\rho-\frac12,
+$$
+
+对应留数为
+
+$$
+\frac{\operatorname{mult}(\rho)}{\rho(1-\rho)}\ne0.
+$$
+
+有界的 $K$ 使其 Laplace 变换在 $\Re s>0$ 解析，因此不能有 $\Re\rho>1/2$ 的零点；再用函数方程对称性，全部非平凡零点只能位于 $\Re\rho=1/2$。证毕。
+
+---
+
+<a id="section-final-position"></a>

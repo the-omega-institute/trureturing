@@ -1,0 +1,14 @@
+### 18.1 双 Bell 椭圆就是通用 qubit 复制的精确边界
+
+对 qubit，定义各向同性收缩通道
+
+$$
+\Lambda_v(X)=vX+(1-v)\operatorname{Tr}(X)I_2/2,
+ \qquad -1/3\le v\le1.
+$$
+
+它的归一 Choi 态正是前文的
+$\sigma_v=v\Phi+(1-v)I_4/4$。
+这里“两个出口实现 $\Lambda_v,\Lambda_w$”指存在
+$\mathcal C:M_2\to M_2\otimes M_2$，使其两个约化通道分别等于它们。
+

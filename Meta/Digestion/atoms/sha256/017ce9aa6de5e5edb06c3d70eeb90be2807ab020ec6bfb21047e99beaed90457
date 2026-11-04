@@ -1,0 +1,20 @@
+### 定理 11.1（有谱隙时的有限精度稳定）
+
+若 $\mathcal F^\perp$ 非零，记 $\gamma>0$ 为 $L$ 在该空间上的最小特征值，则对全部 $x$ 和 $t\ge0$，
+
+$$
+\boxed{\|T_t(x)-E(x)\|_\rho\le e^{-\gamma t}\|x-E(x)\|_\rho.}
+$$
+
+因此给定误差 $\varepsilon>0$，若初始残差大于 $\varepsilon$，只需
+
+$$
+t\ge\frac1\gamma\log\frac{\|x-E(x)\|_\rho}{\varepsilon}.
+$$
+
+若初始残差不超过 $\varepsilon$，取 $t=0$ 即可。
+
+**证明。**有限维自伴谱分解把 $L$ 对角化。零特征空间正是 $\operatorname{Fix}\Phi$，其正交投影为 $E$；其余特征方向在 $T_t$ 下乘以 $e^{-t\lambda}$，且 $\lambda\ge\gamma$。各方向平方长度相加得范数界，解指数不等式即得精度界。
+
+若 $\mathcal F=M_d$，则 $L=0$、$E=\operatorname{id}$，已经精确稳定，无需正谱隙。即使 $\gamma>0$，非零特征方向在任何有限 $t$ 仍非零，所以本定理保证有限精度，不保证有限步精确消灭全部残差。
+

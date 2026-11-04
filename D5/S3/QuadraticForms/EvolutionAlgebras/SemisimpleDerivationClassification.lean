@@ -43,6 +43,8 @@ utility none: structural existence and Lie equivalences; no finite certificate o
     consumers: external settling endpoint
 -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22191. -/
+
 import D5.S3.QuadraticForms.EvolutionAlgebras.DerivationAnnihilatorObstruction
 import D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers
 import D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks
@@ -137,7 +139,7 @@ end D5.S3.QuadraticForms.EvolutionAlgebras.SemisimpleDerivationClassification.Ra
 namespace D5.S3.QuadraticForms.EvolutionAlgebras.SemisimpleDerivationClassification.SmallOrthogonal
 attribute [local instance 100] LieRing.ofAssociativeRing
 variable {k : Type*} [Field k] [CharZero k]
-private theorem diagonal_zero {n : Type*} [Fintype n] [DecidableEq n]
+theorem diagonal_zero {n : Type*} [Fintype n] [DecidableEq n]
     (A : LieAlgebra.Orthogonal.so n k) (i : n) : A.val i i = 0 := by
   have h := congrArg (fun M : Matrix n n k => M i i)
     ((LieAlgebra.Orthogonal.mem_so n k A.val).mp A.property)
@@ -146,7 +148,7 @@ private theorem diagonal_zero {n : Type*} [Fintype n] [DecidableEq n]
     rw [two_mul]
     exact eq_neg_iff_add_eq_zero.mp h
   exact (mul_eq_zero.mp ht).resolve_left two_ne_zero
-private theorem coefficient_skew {n : Type*} [Fintype n] [DecidableEq n]
+theorem coefficient_skew {n : Type*} [Fintype n] [DecidableEq n]
     (A : LieAlgebra.Orthogonal.so n k) (i j : n) : A.val j i = -A.val i j := by
   exact congrArg (fun M : Matrix n n k => M i j)
     ((LieAlgebra.Orthogonal.mem_so n k A.val).mp A.property)

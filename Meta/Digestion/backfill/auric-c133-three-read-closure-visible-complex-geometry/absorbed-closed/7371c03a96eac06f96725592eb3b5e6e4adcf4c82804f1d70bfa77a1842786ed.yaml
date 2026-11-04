@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7371c03a96eac06f96725592eb3b5e6e4adcf4c82804f1d70bfa77a1842786ed
+  normalized_sha256: sha256:7371c03a96eac06f96725592eb3b5e6e4adcf4c82804f1d70bfa77a1842786ed
+cas_ref: sha256:7371c03a96eac06f96725592eb3b5e6e4adcf4c82804f1d70bfa77a1842786ed
+coverage_gids:
+  - gid: D5/S0/Observation/ThreeReadBudget.three_read_budget_nullspace
+    target_statement_id: sha256:ef4c8d04db6ab345616424b907cd84faa657d5becbfdd96bcfe46627614c1399
+receipts:
+  unresolved_subitems: []
