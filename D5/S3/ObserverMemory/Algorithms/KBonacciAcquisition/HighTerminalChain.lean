@@ -1,4 +1,5 @@
-/- GID: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/HighTerminalChain generality: I
+/- GID: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/HighTerminalChain
+   generality: I
    mirror-B: D5/B/S3/ObserverMemory/Algorithms/KBonacciAcquisition/HighTerminalChain
    mirror-E: none(waiver:symbolic-finite-measures)
    anchors: []
@@ -25,9 +26,7 @@ def reward {L : ℕ} (y : FullScore L) (b : Word L) (r : Fin (L + 1)) : ℝ := F
 
 /-- An arbitrary legal whole output function is evaluated on every word. -/
 def score {L : ℕ} (y : FullScore L) (f : Word L → Fin (L + 1)) : ℝ := ∑ b, reward y b (f b)
-
-private def constantTable (stop : Bool) (L : ℕ) (r : Fin (L + 1)) : Catalog stop L :=
-  ⟨fun _ => r, ⟨[], by simp, by simp, by simp, by intros; rfl⟩⟩
+private def constantTable (stop : Bool) (L : ℕ) (r : Fin (L + 1)) : Catalog stop L := ⟨fun _ => r, ⟨[], by simp, by simp, by simp, by intros; rfl⟩⟩
 
 /-- Maximum over the original complete catalog, not a normalized law. -/
 def support {L : ℕ} (stop : Bool) (y : FullScore L) : ℝ := by
@@ -41,26 +40,25 @@ def gamma {L : ℕ} (y : FullScore L) (i : Fin L) : ℝ := ∑ b, if FirstZero b
 open Classical in
 /-- Pair mass at the original first-zero address. -/
 def pairMass {L : ℕ} (y : FullScore L) (i : Fin L) : ℝ := ∑ b, if FirstZero b i then y.P b else 0
-
 private theorem reward_nonneg {L : ℕ} (y : FullScore L) (b : Word L) (r : Fin (L + 1)) : 0 ≤ reward y b r := by
   refine Fin.cases ?_ (fun i => ?_) r
-  · simp only [reward, Fin.cases_zero, baseline] have := y.nonnegA b; have := y.nonnegP b; have := y.nonnegT split <;> linarith
-  · simp only [reward, Fin.cases_succ, numerical] split · exact add_nonneg (y.nonnegC b) (y.nonnegP b) · exact le_rfl
-
+  · simp only [reward, Fin.cases_zero, baseline]
+    have := y.nonnegA b; have := y.nonnegP b; have := y.nonnegT
+    split <;> linarith
+  · simp only [reward, Fin.cases_succ, numerical]
+    split
+    · exact add_nonneg (y.nonnegC b) (y.nonnegP b)
+    · exact le_rfl
 private theorem gamma_nonneg {L : ℕ} (y : FullScore L) (i : Fin L) : 0 ≤ gamma y i := by
   classical
   exact Finset.sum_nonneg (fun b _ => by split <;> simp_all [FullScore.nonnegC])
-
 private theorem pairMass_nonneg {L : ℕ} (y : FullScore L) (i : Fin L) : 0 ≤ pairMass y i := by
   classical
   exact Finset.sum_nonneg (fun b _ => by split <;> simp_all [FullScore.nonnegP])
-
-private theorem score_le_support {L : ℕ} (stop : Bool) (y : FullScore L)
-    (f : Catalog stop L) : score y f.val ≤ support stop y := by
+private theorem score_le_support {L : ℕ} (stop : Bool) (y : FullScore L) (f : Catalog stop L) : score y f.val ≤ support stop y := by
   classical
   unfold support
   exact Finset.le_sup' (fun f : Catalog stop L => score y f.val) (Finset.mem_univ f)
-
 private theorem collect_classes {L : ℕ} (y : FullScore L) (f : Word L → Fin (L + 1)) (I : Finset (Fin L))
     (hits : ∀ i ∈ I, ∀ b, FirstZero b i → f b = i.succ) (terminal : f (fun _ => true) = 0) :
     (∑ i ∈ I, (gamma y i + pairMass y i)) + y.T ≤ score y f := by
@@ -81,33 +79,42 @@ private theorem collect_classes {L : ℕ} (y : FullScore L) (f : Word L → Fin 
   apply Finset.sum_le_sum
   intro b _
   by_cases hb : b = (fun _ => true)
-  · subst b simp [FirstZero, terminal, reward, baseline, y.terminalA, y.terminalP]
-  · simp only [hb, ite_false, add_zero] by_cases hex : ∃ i ∈ I, FirstZero b i · obtain ⟨i,hi,hbi⟩ := hex
+  · subst b
+    simp [FirstZero, terminal, reward, baseline, y.terminalA, y.terminalP]
+  · simp only [hb, ite_false, add_zero]
+    by_cases hex : ∃ i ∈ I, FirstZero b i
+    · obtain ⟨i,hi,hbi⟩ := hex
       rw [Finset.sum_eq_single i]
-      · rw [ite_eq_left hbi, hits i hi b hbi] simp [reward, numerical, hbi]
-      · intro j hj hji exact ite_eq_right (fun hbj => hji (firstZero_unique hbj hbi))
+      · rw [ite_eq_left hbi, hits i hi b hbi]
+        simp [reward, numerical, hbi]
+      · intro j hj hji
+        exact ite_eq_right (fun hbj => hji (firstZero_unique hbj hbi))
       · exact fun h => False.elim (h hi)
     · have hz : ∀ i ∈ I, ¬FirstZero b i := by
         intro i hi hbi; exact hex ⟨i,hi,hbi⟩
       simp only [Finset.sum_eq_zero (fun i hi => ite_eq_right (hz i hi))]
       exact reward_nonneg y b (f b)
-
 private theorem pair_collect {L : ℕ} (y : FullScore L) (i j : Fin L) (hij : i < j) :
     gamma y i + pairMass y i + gamma y j + pairMass y j + y.T ≤ support true y := by
   classical
   let f := table (.inr (.inr ⟨(i,j),hij⟩)) (i.succ,j.succ,0)
-  have h := collect_classes y f.val {i,j} (by intro k hk b hb simp only [Finset.mem_insert, Finset.mem_singleton] at hk
+  have h := collect_classes y f.val {i,j} (by
+    intro k hk b hb
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hk
     rcases hk with rfl | rfl
     · simp [f, table, cell, label, hb.1]
-    · have hbi := hb.2 i hij simp [f, table, cell, label, hbi, hb.1]) (by simp [f,table,cell,label])
+    · have hbi := hb.2 i hij
+      simp [f, table, cell, label, hbi, hb.1]) (by simp [f,table,cell,label])
   have hs := score_le_support true y f
   simp only [Finset.sum_pair (ne_of_lt hij)] at h
   linarith
-
 private theorem single_collect {L : ℕ} (y : FullScore L) (i : Fin L) : gamma y i + pairMass y i + y.T ≤ support true y := by
   classical
   let f := table (.inr (.inl i)) (i.succ,0,0)
-  have h := collect_classes y f.val {i} (by intro k hk b hb have : k = i := Finset.mem_singleton.mp hk subst k
+  have h := collect_classes y f.val {i} (by
+    intro k hk b hb
+    have : k = i := Finset.mem_singleton.mp hk
+    subst k
     simp [f,table,cell,label,hb.1]) (by simp [f,table,cell,label])
   have hs := score_le_support true y f
   simp only [Finset.sum_singleton] at h
@@ -121,22 +128,35 @@ private theorem collect_two_classes {L : ℕ} (y : FullScore L) (I : Finset (Fin
   have casesI : I = ∅ ∨ (∃ i, I = {i}) ∨ (∃ i j, I = {i,j}) := by
     by_cases h0 : I.card = 0
     · exact Or.inl (Finset.card_eq_zero.mp h0)
-    · by_cases h1 : I.card = 1 · exact Or.inr (Or.inl (Finset.card_eq_one.mp h1))
-      · obtain ⟨i,j,_,h⟩ := Finset.card_eq_two.mp (show I.card = 2 by omega) exact Or.inr (Or.inr ⟨i,j,h⟩)
+    · by_cases h1 : I.card = 1
+      · exact Or.inr (Or.inl (Finset.card_eq_one.mp h1))
+      · obtain ⟨i,j,_,h⟩ := Finset.card_eq_two.mp (show I.card = 2 by omega)
+        exact Or.inr (Or.inr ⟨i,j,h⟩)
   rcases casesI with h | ⟨i,h⟩ | ⟨i,j,h⟩
-  · subst I have h := collect_classes y (constantTable true L 0).val ∅ (by simp) rfl
+  · subst I
+    have h := collect_classes y (constantTable true L 0).val ∅ (by simp) rfl
     have hs := score_le_support true y (constantTable true L 0)
     simpa using h.trans hs
-  · subst I simp only [Finset.sum_singleton] have := single_collect y i have := pairMass_nonneg y i linarith
-  · subst I by_cases he : i = j · subst j simp only [Finset.insert_eq_of_mem (Finset.mem_singleton_self _), Finset.sum_singleton]
+  · subst I
+    simp only [Finset.sum_singleton]
+    have := single_collect y i
+    have := pairMass_nonneg y i
+    linarith
+  · subst I
+    by_cases he : i = j
+    · subst j
+      simp only [Finset.insert_eq_of_mem (Finset.mem_singleton_self _), Finset.sum_singleton]
       have := single_collect y i
       have := pairMass_nonneg y i
       linarith
-    · rw [Finset.sum_pair he] rcases lt_or_gt_of_ne he with hlt | hgt · have := pair_collect y i j hlt
+    · rw [Finset.sum_pair he]
+      rcases lt_or_gt_of_ne he with hlt | hgt
+      · have := pair_collect y i j hlt
         have := pairMass_nonneg y i; have := pairMass_nonneg y j
         linarith
-      · have := pair_collect y j i hgt have := pairMass_nonneg y i; have := pairMass_nonneg y j linarith
-
+      · have := pair_collect y j i hgt
+        have := pairMass_nonneg y i; have := pairMass_nonneg y j
+        linarith
 
 /-- Pair coefficients vanish outside the first two original first-zero classes. -/
 def EarlyPair {L : ℕ} (y : FullScore L) : Prop := ∀ b i, FirstZero b i → 2 ≤ i.val → y.P b = 0
@@ -160,17 +180,15 @@ def latePeak {L : ℕ} (y : FullScore L) : ℝ := Finset.univ.sup' ⟨none, Fins
 
 open Classical in
 /-- Maximum sum of at most two distinct late class totals, including the empty set. -/
-def twoLate {L : ℕ} (y : FullScore L) : ℝ := ((Finset.univ : Finset (Finset (Fin L))).filter
-    (fun I => I.card ≤ 2 ∧ ∀ i ∈ I, 2 ≤ i.val)).sup' ⟨∅, by simp⟩ (fun I => ∑ i ∈ I, gamma y i)
+def twoLate {L : ℕ} (y : FullScore L) : ℝ := ((Finset.univ : Finset (Finset (Fin L))).filter (fun I => I.card ≤ 2 ∧ ∀ i ∈ I, 2 ≤ i.val)).sup'
+      ⟨∅, by simp⟩ (fun I => ∑ i ∈ I, gamma y i)
 
 /-- Optimal smaller early C+P total. -/
 def earlyCapacity {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) : ℝ := min ((early hL y + pairTotal y) / 2)
     (pairTotal y + min (gamma y ⟨0, by omega⟩) (gamma y ⟨1, by omega⟩))
 
 /-- The high-terminal lower bound of the optimized chain supplier. -/
-def highLower {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) : ℝ := max (max 0 (twoLate y - early hL y - pairTotal y))
-    (latePeak y - earlyCapacity hL y)
-
+def highLower {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) : ℝ := max (max 0 (twoLate y - early hL y - pairTotal y)) (latePeak y - earlyCapacity hL y)
 private theorem pair_partition {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) (hy : EarlyPair y) :
     pairMass y ⟨0, by omega⟩ + pairMass y ⟨1, by omega⟩ = pairTotal y := by
   classical
@@ -191,24 +209,23 @@ private theorem pair_partition {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) (hy : 
       · exact Or.inl (Fin.ext h0)
       · exact Or.inr (Fin.ext (show i.val = 1 by omega))
     rcases hc with hc | hc
-    · have hfirst : FirstZero b (⟨0, by omega⟩ : Fin L) := hc ▸ hi have hn : ¬FirstZero b (⟨1, by omega⟩ : Fin L) := by
+    · have hfirst : FirstZero b (⟨0, by omega⟩ : Fin L) := hc ▸ hi
+      have hn : ¬FirstZero b (⟨1, by omega⟩ : Fin L) := by
         intro hj
         have hh := congrArg Fin.val (firstZero_unique hfirst hj)
         norm_num at hh
       simp [hfirst,hn]
-    · have hfirst : FirstZero b (⟨1, by omega⟩ : Fin L) := hc ▸ hi have hn : ¬FirstZero b (⟨0, by omega⟩ : Fin L) := by
+    · have hfirst : FirstZero b (⟨1, by omega⟩ : Fin L) := hc ▸ hi
+      have hn : ¬FirstZero b (⟨0, by omega⟩ : Fin L) := by
         intro hj
         have hh := congrArg Fin.val (firstZero_unique hfirst hj)
         norm_num at hh
       simp [hfirst,hn]
-
-private theorem anchor_le_support {L : ℕ} (hL : 3 ≤ L) (y : FullScore L)
-    (hy : EarlyPair y) : inputAnchor hL y ≤ support true y := by
+private theorem anchor_le_support {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) (hy : EarlyPair y) : inputAnchor hL y ≤ support true y := by
   have h := pair_collect y (⟨0, by omega⟩ : Fin L) ⟨1, by omega⟩ (by change (0 : ℕ) < 1; omega)
   have hp := pair_partition hL y hy
   unfold inputAnchor early
   linarith
-
 private theorem capacity_nonneg {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) : 0 ≤ earlyCapacity hL y := by
   have h0 := gamma_nonneg y (⟨0, by omega⟩ : Fin L)
   have h1 := gamma_nonneg y (⟨1, by omega⟩ : Fin L)
@@ -217,10 +234,8 @@ private theorem capacity_nonneg {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) : 0 �
   constructor
   · linarith
   · exact add_nonneg hS (le_min h0 h1)
-
 private theorem smaller_early_le_capacity {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) (hy : EarlyPair y) :
-    min (gamma y ⟨0, by omega⟩ + pairMass y ⟨0, by omega⟩)
-      (gamma y ⟨1, by omega⟩ + pairMass y ⟨1, by omega⟩) ≤ earlyCapacity hL y := by
+    min (gamma y ⟨0, by omega⟩ + pairMass y ⟨0, by omega⟩) (gamma y ⟨1, by omega⟩ + pairMass y ⟨1, by omega⟩) ≤ earlyCapacity hL y := by
   have hp := pair_partition hL y hy
   have h0 := pairMass_nonneg y (⟨0, by omega⟩ : Fin L)
   have h1 := pairMass_nonneg y (⟨1, by omega⟩ : Fin L)
@@ -229,23 +244,20 @@ private theorem smaller_early_le_capacity {L : ℕ} (hL : 3 ≤ L) (y : FullScor
   unfold earlyCapacity early
   apply le_min
   · linarith
-  · rcases le_total (gamma y (⟨0, by omega⟩ : Fin L)) (gamma y ⟨1, by omega⟩) with h | h · rw [min_eq_left h]; linarith
+  · rcases le_total (gamma y (⟨0, by omega⟩ : Fin L)) (gamma y ⟨1, by omega⟩) with h | h
+    · rw [min_eq_left h]; linarith
     · rw [min_eq_right h]; linarith
-
-private theorem late_le_capacity_add_delta {L : ℕ} (hL : 3 ≤ L)
-    (y : FullScore L) (hy : EarlyPair y) (j : Fin L) (hj : 2 ≤ j.val) :
+private theorem late_le_capacity_add_delta {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) (hy : EarlyPair y) (j : Fin L) (hj : 2 ≤ j.val) :
     gamma y j ≤ earlyCapacity hL y + delta hL true y := by
   have h0 := pair_collect y (⟨0, by omega⟩ : Fin L) j (by change 0 < j.val; omega)
   have h1 := pair_collect y (⟨1, by omega⟩ : Fin L) j (by change 1 < j.val; omega)
   have hp := pair_partition hL y hy
   have hjP := pairMass_nonneg y j
   have hc := smaller_early_le_capacity hL y hy
-  have hsum : inputAnchor hL y = (gamma y ⟨0, by omega⟩ + pairMass y ⟨0, by omega⟩) +
-      (gamma y ⟨1, by omega⟩ + pairMass y ⟨1, by omega⟩) + y.T := by
+  have hsum : inputAnchor hL y = (gamma y ⟨0, by omega⟩ + pairMass y ⟨0, by omega⟩) + (gamma y ⟨1, by omega⟩ + pairMass y ⟨1, by omega⟩) + y.T := by
     unfold inputAnchor early; linarith
   unfold delta
-  rcases le_total (gamma y (⟨0, by omega⟩ : Fin L) + pairMass y ⟨0, by omega⟩)
-      (gamma y (⟨1, by omega⟩ : Fin L) + pairMass y ⟨1, by omega⟩) with h | h
+  rcases le_total (gamma y (⟨0, by omega⟩ : Fin L) + pairMass y ⟨0, by omega⟩) (gamma y (⟨1, by omega⟩ : Fin L) + pairMass y ⟨1, by omega⟩) with h | h
   · rw [min_eq_left h] at hc; linarith
   · rw [min_eq_right h] at hc; linarith
 
@@ -280,46 +292,48 @@ theorem arbitrary_input_lower_bound {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) (
     linarith
   exact max_le (max_le hd h2) hm
 
-
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PreselectedResidualBound
 open Classical
 
 /-- The source's clamped allocation of pair mass to the first chain word. -/
 def balancedSplit (a b S : ℝ) : ℝ := min S (max 0 ((b + S - a) / 2))
-
-private theorem balanced_split_spec (a b S : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hS : 0 ≤ S) :
-    0 ≤ balancedSplit a b S ∧ balancedSplit a b S ≤ S ∧
+private theorem balanced_split_spec (a b S : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hS : 0 ≤ S) : 0 ≤ balancedSplit a b S ∧ balancedSplit a b S ≤ S ∧
     min (a + balancedSplit a b S) (b + (S - balancedSplit a b S)) = min ((a+b+S)/2) (S + min a b) := by
   unfold balancedSplit
   constructor
   · exact le_min hS (le_max_left _ _)
   constructor
   · exact min_le_left _ _
-  · rcases le_total 0 ((b+S-a)/2) with h | h · rw [max_eq_right h] rcases le_total S ((b+S-a)/2) with k | k · rw [min_eq_left k]
+  · rcases le_total 0 ((b+S-a)/2) with h | h
+    · rw [max_eq_right h]
+      rcases le_total S ((b+S-a)/2) with k | k
+      · rw [min_eq_left k]
         have hab : a+S ≤ b := by linarith
-        rw [min_eq_left (by linarith : a+S ≤ b+(S-S)),
-          min_eq_left (by linarith : a ≤ b), min_eq_right (by linarith : S+a ≤ (a+b+S)/2)]
+        rw [min_eq_left (by linarith : a+S ≤ b+(S-S)), min_eq_left (by linarith : a ≤ b), min_eq_right (by linarith : S+a ≤ (a+b+S)/2)]
         ring
-      · rw [min_eq_right k] have heq : a+(b+S-a)/2 = b+(S-(b+S-a)/2) := by ring rw [min_eq_left heq.le]
+      · rw [min_eq_right k]
+        have heq : a+(b+S-a)/2 = b+(S-(b+S-a)/2) := by ring
+        rw [min_eq_left heq.le]
         have hm : (a+b+S)/2 ≤ S+min a b := by
           rcases le_total a b with hab | hab
           · rw [min_eq_left hab]; linarith
           · rw [min_eq_right hab]; linarith
         rw [min_eq_left hm]
         ring
-    · rw [max_eq_left h, min_eq_right hS] rw [add_zero, sub_zero, min_eq_right (by linarith : b+S ≤ a),
-        min_eq_right (by linarith : b ≤ a), min_eq_right (by linarith : S+b ≤ (a+b+S)/2)]
+    · rw [max_eq_left h, min_eq_right hS]
+      rw [add_zero, sub_zero, min_eq_right (by linarith : b+S ≤ a), min_eq_right (by linarith : b ≤ a), min_eq_right (by linarith : S+b ≤ (a+b+S)/2)]
       ring
-
 private theorem chain_firstZero {L : ℕ} (i j : Fin L) : FirstZero (chainWord L i.val) j ↔ j = i := by
   have self : FirstZero (chainWord L i.val) i := by
     constructor
     · simp [chainWord]
-    · intro k hk simpa [chainWord] using hk
+    · intro k hk
+      simpa [chainWord] using hk
   constructor
-  · intro h exact firstZero_unique h self
-  · rintro rfl exact self
-
+  · intro h
+    exact firstZero_unique h self
+  · rintro rfl
+    exact self
 private theorem chain_not_terminal {L : ℕ} (i : Fin L) : chainWord L i.val ≠ (fun _ => true) := by
   exact firstZero_not_terminal ((chain_firstZero i i).2 rfl)
 
@@ -350,13 +364,10 @@ def balancedChain {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg :
     have h0 := chain_not_terminal (⟨0,by omega⟩ : Fin L)
     have h1 := chain_not_terminal (⟨1,by omega⟩ : Fin L)
     simp only [point, ite_eq_right (Ne.symm h0), ite_eq_right (Ne.symm h1), add_zero]
-
 private theorem ite_sum_zero {I : Type*} [Fintype I] (p : Prop) [Decidable p]
     (f : I → ℝ) : (if p then ∑ i, f i else 0) = ∑ i, if p then f i else 0 := by
   exact Finset.ite_sum_zero p Finset.univ f
-
-private theorem chain_gamma {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
-    (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) (j : Fin L) :
+private theorem chain_gamma {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) (j : Fin L) :
     gamma (balancedChain hL g S t hg hS ht) j = g j := by
   classical
   unfold gamma
@@ -368,12 +379,10 @@ private theorem chain_gamma {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : 
     simpa only [mul_ite,mul_one,mul_zero,chain_firstZero,ite_mul,one_mul,zero_mul] using this
   simp_rw [hp]
   simp
-
 private theorem chain_pair_total {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) :
     pairTotal (balancedChain hL g S t hg hS ht) = S := by
   classical
   simp [pairTotal,balancedChain,Finset.sum_add_distrib,point]
-
 private theorem chain_early_pair {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) :
     EarlyPair (balancedChain hL g S t hg hS ht) := by
   classical
@@ -384,55 +393,43 @@ private theorem chain_early_pair {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S
     subst i
     omega
   simp [balancedChain,point,off ⟨0,by omega⟩ (by simp),off ⟨1,by omega⟩ (by simp)]
-
 private def hit {L : ℕ} (b : Word L) (r : Fin (L + 1)) : Prop := ∃ i, FirstZero b i ∧ r = i.succ
-
 private theorem hit_chain {L : ℕ} (i : Fin L) (r : Fin (L + 1)) : hit (chainWord L i.val) r ↔ r = i.succ := by
   simp [hit,chain_firstZero]
-
-private theorem reward_linear {L : ℕ} (y : FullScore L) (b : Word L) (r : Fin (L + 1)) :
-    reward y b r = (if r = 0 then y.A b else 0) + (if hit b r then y.C b else 0) + (if r = 0 ∨ hit b r then y.P b else 0) +
-      (if b = (fun _ => true) ∧ r = 0 then y.T else 0) := by
+private theorem reward_linear {L : ℕ} (y : FullScore L) (b : Word L) (r : Fin (L + 1)) : reward y b r = (if r = 0 then y.A b else 0) +
+      (if hit b r then y.C b else 0) + (if r = 0 ∨ hit b r then y.P b else 0) + (if b = (fun _ => true) ∧ r = 0 then y.T else 0) := by
   classical
   refine Fin.cases ?_ (fun i => ?_) r
   · have hn : ¬hit b (0 : Fin (L + 1)) := by
       rintro ⟨i,_,h⟩
       exact Fin.succ_ne_zero i h.symm
     simp [reward,baseline,hn]
-  · have hh : hit b i.succ ↔ FirstZero b i := by simp [hit] by_cases h : FirstZero b i <;>
+  · have hh : hit b i.succ ↔ FirstZero b i := by simp [hit]
+    by_cases h : FirstZero b i <;>
       simp [reward,numerical,hh,h,Fin.succ_ne_zero]
-
 private theorem succ_zero_label {L : ℕ} (hL : 3 ≤ L) : (⟨0,by omega⟩ : Fin L).succ = (1 : Fin (L+1)) := by
   letI : NeZero L := ⟨by omega⟩
   exact Fin.succ_zero_eq_one' (n := L)
-
 private theorem succ_one_label {L : ℕ} (hL : 3 ≤ L) : (⟨1,by omega⟩ : Fin L).succ = (2 : Fin (L+1)) := by
   obtain ⟨n, rfl⟩ : ∃ n, L = n + 2 := ⟨L - 2, by omega⟩
   simpa only [Fin.one_eq_mk_of_lt (by omega : 1 < n + 2)] using (Fin.succ_one_eq_two (n := n))
-
 private theorem succ_eq_one {L : ℕ} (hL : 3 ≤ L) (n : Fin L) : n.succ = (1 : Fin (L+1)) ↔ n.val = 0 := by
   rw [← succ_zero_label hL,Fin.succ_inj,Fin.ext_iff]
-
 private theorem succ_eq_two {L : ℕ} (hL : 3 ≤ L) (n : Fin L) : n.succ = (2 : Fin (L+1)) ↔ n.val = 1 := by
   rw [← succ_one_label hL,Fin.succ_inj,Fin.ext_iff]
-
 private theorem early_labels_distinct {L : ℕ} (hL : 3 ≤ L) : (1 : Fin (L+1)) ≠ 2 := by
   intro h
   have hh := congrArg Fin.val h
   change 1 % (L+1) = 2 % (L+1) at hh
   rw [Nat.mod_eq_of_lt (by omega : 1 < L+1),Nat.mod_eq_of_lt (by omega : 2 < L+1)] at hh
   omega
-
 private theorem early_one_ne_zero {L : ℕ} (hL : 3 ≤ L) : (1 : Fin (L+1)) ≠ 0 := by
   rw [←succ_zero_label hL]
   exact Fin.succ_ne_zero _
-
 private theorem early_two_ne_zero {L : ℕ} (hL : 3 ≤ L) : (2 : Fin (L+1)) ≠ 0 := by
   rw [←succ_one_label hL]
   exact Fin.succ_ne_zero _
-
-private theorem chain_score {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t)
-    (f : Word L → Fin (L + 1)) :
+private theorem chain_score {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) (f : Word L → Fin (L + 1)) :
     score (balancedChain hL g S t hg hS ht) f = (∑ i, if f (chainWord L i.val) = i.succ then g i else 0) +
       (if f (chainWord L 0) = 0 ∨ f (chainWord L 0) = 1 then
         balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S else 0) +
@@ -442,8 +439,7 @@ private theorem chain_score {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : 
   classical
   unfold score
   simp_rw [reward_linear,Finset.sum_add_distrib]
-  have hc : (∑ b, if hit b (f b) then (balancedChain hL g S t hg hS ht).C b else 0) =
-      ∑ i, if f (chainWord L i.val) = i.succ then g i else 0 := by
+  have hc : (∑ b, if hit b (f b) then (balancedChain hL g S t hg hS ht).C b else 0) = ∑ i, if f (chainWord L i.val) = i.succ then g i else 0 := by
     change (∑ b, if hit b (f b) then ∑ i, point (chainWord L i.val) (g i) b else 0) = _
     simp_rw [ite_sum_zero]
     rw [Finset.sum_comm]
@@ -461,10 +457,8 @@ private theorem chain_score {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : 
     have hadd (p : Prop) [Decidable p] (a b : ℝ) : (if p then a+b else 0) = (if p then a else 0)+(if p then b else 0) := by
       split <;> simp
     simp_rw [hadd,Finset.sum_add_distrib]
-    have h0 := point_integral (chainWord L 0) (balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S)
-      (fun b => if f b = 0 ∨ hit b (f b) then 1 else 0)
-    have h1 := point_integral (chainWord L 1) (S-balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S)
-      (fun b => if f b = 0 ∨ hit b (f b) then 1 else 0)
+    have h0 := point_integral (chainWord L 0) (balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S) (fun b => if f b = 0 ∨ hit b (f b) then 1 else 0)
+    have h1 := point_integral (chainWord L 1) (S-balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S) (fun b => if f b = 0 ∨ hit b (f b) then 1 else 0)
     simp only [mul_ite,mul_one,mul_zero] at h0 h1
     rw [h0,h1]
     have hz : hit (chainWord L 0) (f (chainWord L 0)) ↔ f (chainWord L 0) = 1 :=
@@ -484,9 +478,7 @@ private theorem chain_score {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : 
   rw [hterm]
   simp only [ite_self,Finset.sum_const_zero,zero_add]
   ring
-
-private theorem chain_coefficient_mass {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
-    (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) :
+private theorem chain_coefficient_mass {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) :
     coefficientMass (balancedChain hL g S t hg hS ht) = (∑ i, g i) + S + t := by
   classical
   simp only [coefficientMass,balancedChain,zero_add,Finset.sum_add_distrib]
@@ -501,13 +493,15 @@ private theorem chain_beta {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : �
 private theorem catalog_two_factor {L : ℕ} (hL : 3 ≤ L) (stop : Bool) (f : Catalog stop L) : ∃ i j : Fin L, i < j ∧
       ∀ b c, b i = c i → b j = c j → f.val b = f.val c := by
   obtain ⟨xs,hlen,hlow,_,hfactor⟩ := f.property
-  have single (i : Fin L) (hf : ∀ b c, b i = c i → f.val b = f.val c) :
-      ∃ i j : Fin L, i < j ∧ ∀ b c, b i = c i → b j = c j → f.val b = f.val c := by
+  have single (i : Fin L) (hf : ∀ b c, b i = c i → f.val b = f.val c) : ∃ i j : Fin L, i < j ∧ ∀ b c, b i = c i → b j = c j → f.val b = f.val c := by
     by_cases hi : i.val = 0
-    · refine ⟨⟨0,by omega⟩,⟨1,by omega⟩,by change (0:ℕ)<1; omega,?_⟩ intro b c h _
+    · refine ⟨⟨0,by omega⟩,⟨1,by omega⟩,by change (0:ℕ)<1; omega,?_⟩
+      intro b c h _
       have he : i = (⟨0,by omega⟩ : Fin L) := Fin.ext hi
       exact hf b c (by simpa only [he] using h)
-    · refine ⟨⟨0,by omega⟩,i,by change (0 : ℕ) < i.val; omega,?_⟩ intro b c _ h exact hf b c h
+    · refine ⟨⟨0,by omega⟩,i,by change (0 : ℕ) < i.val; omega,?_⟩
+      intro b c _ h
+      exact hf b c h
   cases xs with
   | nil =>
       exact single ⟨0,by omega⟩ (fun b c _ => hfactor b c rfl)
@@ -534,28 +528,30 @@ private theorem catalog_two_factor {L : ℕ} (hL : 3 ≤ L) (stop : Bool) (f : C
                 · simpa [lowReply,hj] using hbj
               rcases lt_trichotomy i j with hij | hij | hij
               · exact ⟨⟨i,hi⟩,⟨j,hj⟩,hij,hf⟩
-              · subst j exact single ⟨i,hi⟩ (fun b c h => hf b c h h)
+              · subst j
+                exact single ⟨i,hi⟩ (fun b c h => hf b c h h)
               · exact ⟨⟨j,hj⟩,⟨i,hi⟩,hij,fun b c h₁ h₂ => hf b c h₂ h₁⟩
 
 /-- Restriction of every complete native table to chain rows is an original
 increasing stopped pair table; off-chain values are not identified. -/
-private theorem chain_represented {L : ℕ} (hL : 3 ≤ L) (stop : Bool)
-    (f : Catalog stop L) : ∃ a : Pair L, ∃ labels : Labels (Fin (L + 1)), (∀ n : Fin L, f.val (chainWord L n.val) =
-        (table (.inr (.inr a)) labels).val (chainWord L n.val)) ∧
+private theorem chain_represented {L : ℕ} (hL : 3 ≤ L) (stop : Bool) (f : Catalog stop L) : ∃ a : Pair L, ∃ labels : Labels (Fin (L + 1)),
+      (∀ n : Fin L, f.val (chainWord L n.val) = (table (.inr (.inr a)) labels).val (chainWord L n.val)) ∧
       f.val (fun _ => true) = (table (.inr (.inr a)) labels).val (fun _ => true) := by
   obtain ⟨i,j,hij,hf⟩ := catalog_two_factor hL stop f
   let a : Pair L := ⟨(i,j),hij⟩
   let labels : Labels (Fin (L + 1)) := (f.val (chainWord L 0), f.val (chainWord L (i.val+1)), f.val (fun _ => true))
   refine ⟨a,labels,?_,?_⟩
-  · intro n by_cases hni : n.val ≤ i.val · have hnj : n.val ≤ j.val := by have := hij; change i.val < j.val at this; omega
+  · intro n
+    by_cases hni : n.val ≤ i.val
+    · have hnj : n.val ≤ j.val := by have := hij; change i.val < j.val at this; omega
       have hn : (chainWord L n.val) i = false := by simp [chainWord]; omega
       have hnj' : (chainWord L n.val) j = false := by simp [chainWord]; omega
       simpa [table,cell,label,a,labels,hn] using hf
         (chainWord L n.val) (chainWord L 0) (by rw [hn]; simp [chainWord]) (by rw [hnj']; simp [chainWord])
-    · by_cases hnj : n.val ≤ j.val · have hn : (chainWord L n.val) i = true := by simp [chainWord]; omega
+    · by_cases hnj : n.val ≤ j.val
+      · have hn : (chainWord L n.val) i = true := by simp [chainWord]; omega
         have hn' : (chainWord L n.val) j = false := by simp [chainWord]; omega
-        simpa [table,cell,label,a,labels,hn,hn'] using hf
-          (chainWord L n.val) (chainWord L (i.val+1)) (by rw [hn]; simp [chainWord])
+        simpa [table,cell,label,a,labels,hn,hn'] using hf (chainWord L n.val) (chainWord L (i.val+1)) (by rw [hn]; simp [chainWord])
           (by rw [hn']; simp [chainWord]; have := hij; change i.val<j.val at this; omega)
       · have hn : (chainWord L n.val) i = true := by simp [chainWord]; omega
         have hn' : (chainWord L n.val) j = true := by simp [chainWord]; omega
@@ -571,11 +567,12 @@ private theorem cell_correct_label {L : ℕ} (g : Fin L → ℝ) (a : Pair L) (k
   unfold cellCorrect
   rw [Finset.sum_eq_single n]
   · simp
-  · intro j _ hj simp [show n.succ ≠ j.succ from fun h => hj (Fin.succ_injective _ h).symm]
+  · intro j _ hj
+    simp [show n.succ ≠ j.succ from fun h => hj (Fin.succ_injective _ h).symm]
   · simp
 
-private def chainCell {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (a : Pair L) (k : Fin 3) (r : Fin (L + 1)) : ℝ :=
-  cellCorrect g a k r + (if cell (.inr (.inr a)) (chainWord L 0) = k ∧ (r = 0 ∨ r = 1) then
+private def chainCell {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (a : Pair L) (k : Fin 3) (r : Fin (L + 1)) : ℝ := cellCorrect g a k r +
+    (if cell (.inr (.inr a)) (chainWord L 0) = k ∧ (r = 0 ∨ r = 1) then
       balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S else 0) +
     (if cell (.inr (.inr a)) (chainWord L 1) = k ∧ (r = 0 ∨ r = 2) then
       S-balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S else 0) +
@@ -583,8 +580,7 @@ private def chainCell {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (
 
 private theorem table_score_cells {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t)
     (a : Pair L) (labels : Labels (Fin (L + 1))) :
-    score (balancedChain hL g S t hg hS ht) (table (.inr (.inr a)) labels).val =
-      chainCell hL g S t a 0 labels.1 + chainCell hL g S t a 1 labels.2.1 +
+    score (balancedChain hL g S t hg hS ht) (table (.inr (.inr a)) labels).val = chainCell hL g S t a 0 labels.1 + chainCell hL g S t a 1 labels.2.1 +
       chainCell hL g S t a 2 labels.2.2 := by
   classical
   rw [chain_score]
@@ -597,7 +593,8 @@ private theorem table_score_cells {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (
     symm
     rw [Finset.sum_eq_single (cell (.inr (.inr a)) (chainWord L n.val))]
     · simp
-    · intro k _ hk simp [Ne.symm hk]
+    · intro k _ hk
+      simp [Ne.symm hk]
     · simp
   have hp (n : ℕ) (r : Fin (L + 1)) (w : ℝ) : (if label labels (cell (.inr (.inr a)) (chainWord L n)) = 0 ∨
           label labels (cell (.inr (.inr a)) (chainWord L n)) = r then w else 0) =
@@ -619,16 +616,18 @@ private theorem table_score_cells {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (
   <;> ring
 
 private theorem chain_cell_zero {L : ℕ} (a : Pair L) (n : ℕ) : cell (.inr (.inr a)) (chainWord L n) = 0 ↔ n ≤ a.val.1.val := by
-  by_cases hi : a.val.1.val < n <;> by_cases hj : a.val.2.val < n <;> simp [cell,chainWord,hi,hj] <;> omega
+  by_cases hi : a.val.1.val < n <;> by_cases hj : a.val.2.val < n <;>
+    simp [cell,chainWord,hi,hj] <;> omega
 
-private theorem chain_cell_one {L : ℕ} (a : Pair L) (n : ℕ) : cell (.inr (.inr a)) (chainWord L n) = 1 ↔
-      a.val.1.val < n ∧ n ≤ a.val.2.val := by
-  by_cases hi : a.val.1.val < n <;> by_cases hj : a.val.2.val < n <;> simp [cell,chainWord,hi,hj] <;> omega
+private theorem chain_cell_one {L : ℕ} (a : Pair L) (n : ℕ) : cell (.inr (.inr a)) (chainWord L n) = 1 ↔ a.val.1.val < n ∧ n ≤ a.val.2.val := by
+  by_cases hi : a.val.1.val < n <;> by_cases hj : a.val.2.val < n <;>
+    simp [cell,chainWord,hi,hj] <;> omega
 
 private theorem chain_cell_two {L : ℕ} (a : Pair L) (n : ℕ) : cell (.inr (.inr a)) (chainWord L n) = 2 ↔ a.val.2.val < n := by
   have ha := a.property
   change a.val.1.val < a.val.2.val at ha
-  by_cases hi : a.val.1.val < n <;> by_cases hj : a.val.2.val < n <;> simp [cell,chainWord,hi,hj] <;> omega
+  by_cases hi : a.val.1.val < n <;> by_cases hj : a.val.2.val < n <;>
+    simp [cell,chainWord,hi,hj] <;> omega
 
 private theorem cell_correct_zero {L : ℕ} (g : Fin L → ℝ) (a : Pair L) (k : Fin 3) : cellCorrect g a k 0 = 0 := by
   have hz (n : Fin L) : (0 : Fin (L+1)) ≠ n.succ := Ne.symm (Fin.succ_ne_zero n)
@@ -641,8 +640,7 @@ private theorem late_peak_nonneg {L : ℕ} (y : FullScore L) : 0 ≤ latePeak y 
 
 private theorem late_le_peak {L : ℕ} (y : FullScore L) (i : Fin L) (hi : 2 ≤ i.val) : gamma y i ≤ latePeak y := by
   unfold latePeak
-  have h := Finset.le_sup' (fun o : Option (Fin L) => o.elim (0 : ℝ) (fun i => if 2 ≤ i.val then gamma y i else 0))
-    (Finset.mem_univ (some i))
+  have h := Finset.le_sup' (fun o : Option (Fin L) => o.elim (0 : ℝ) (fun i => if 2 ≤ i.val then gamma y i else 0)) (Finset.mem_univ (some i))
   simpa [hi] using h
 
 private theorem two_late_subset {L : ℕ} (y : FullScore L) (I : Finset (Fin L)) (hcard : I.card ≤ 2) (hlate : ∀ i ∈ I, 2 ≤ i.val) :
@@ -659,7 +657,8 @@ private theorem chain_late_le {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t 
 private theorem chain_two_late {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t)
     (i j : Fin L) (hi : 2 ≤ i.val) (hj : 2 ≤ j.val) (hne : i ≠ j) :
     g i + g j ≤ twoLate (balancedChain hL g S t hg hS ht) := by
-  have h := two_late_subset (balancedChain hL g S t hg hS ht) {i,j} (by simp [hne]) (by intro k hk
+  have h := two_late_subset (balancedChain hL g S t hg hS ht) {i,j} (by simp [hne]) (by
+      intro k hk
       simp only [Finset.mem_insert,Finset.mem_singleton] at hk
       rcases hk with rfl | rfl <;> assumption)
   simpa [Finset.sum_pair hne,chain_gamma] using h
@@ -671,8 +670,7 @@ private theorem chain_single_late {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (
     (by simp) (by intro k hk; have : k=i := Finset.mem_singleton.mp hk; simpa [this] using hi)
   simpa [chain_gamma] using h
 
-private theorem last_cell_le {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
-    (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) (a : Pair L)
+private theorem last_cell_le {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) (a : Pair L)
     (hhigh : latePeak (balancedChain hL g S t hg hS ht) ≤ t) (r : Fin (L + 1)) :
     chainCell hL g S t a 2 r ≤ t := by
   have ha := a.property
@@ -680,36 +678,38 @@ private theorem last_cell_le {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t :
   have hj : 1 ≤ a.val.2.val := by omega
   refine Fin.cases ?_ (fun n => ?_) r
   · simp [chainCell,cell_correct_zero,chain_cell_two,show ¬a.val.2.val<1 by omega]
-  · simp only [chainCell,cell_correct_label,chain_cell_two,Fin.succ_ne_zero,and_false,
-      ite_false,add_zero,show ¬a.val.2.val<0 by omega,
+  · simp only [chainCell,cell_correct_label,chain_cell_two,Fin.succ_ne_zero,and_false, ite_false,add_zero,show ¬a.val.2.val<0 by omega,
       show ¬a.val.2.val<1 by omega,false_and]
     split_ifs with hn
     · exact (chain_late_le hL g S t hg hS ht n (by omega)).trans hhigh
     · exact ht
 
-private theorem middle_cell_le {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
-    (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) (a : Pair L) (hi : 1 ≤ a.val.1.val) (r : Fin (L + 1)) :
+private theorem middle_cell_le {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) (a : Pair L)
+    (hi : 1 ≤ a.val.1.val) (r : Fin (L + 1)) :
     chainCell hL g S t a 1 r ≤ latePeak (balancedChain hL g S t hg hS ht) := by
   refine Fin.cases ?_ (fun n => ?_) r
   · simpa [chainCell,cell_correct_zero,chain_cell_one,show ¬a.val.1.val<0 by omega,
       show ¬a.val.1.val<1 by omega] using late_peak_nonneg (balancedChain hL g S t hg hS ht)
-  · simp only [chainCell,cell_correct_label,chain_cell_one,Fin.succ_ne_zero,and_false,
-      ite_false,add_zero,show ¬a.val.1.val<0 by omega,
+  · simp only [chainCell,cell_correct_label,chain_cell_one,Fin.succ_ne_zero,and_false, ite_false,add_zero,show ¬a.val.1.val<0 by omega,
       show ¬a.val.1.val<1 by omega,false_and,Fin.reduceEq]
     split_ifs with hn
     · exact chain_late_le hL g S t hg hS ht n (by omega)
     · exact late_peak_nonneg _
-private theorem head_first_cell_le {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
-    (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (a : Pair L) (hi : a.val.1.val = 0) (r : Fin (L + 1)) :
+private theorem head_first_cell_le {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (a : Pair L) (hi : a.val.1.val = 0)
+    (r : Fin (L + 1)) :
     chainCell hL g S t a 0 r ≤ g ⟨0,by omega⟩ + balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S := by
   have hs := balanced_split_spec _ _ S (hg ⟨0,by omega⟩) (hg ⟨1,by omega⟩) hS
   refine Fin.cases ?_ (fun n => ?_) r
-  · simp [chainCell,cell_correct_zero,chain_cell_zero,hi] exact hg ⟨0,by omega⟩
-  · by_cases hn : n.val = 0 · have he : n = (⟨0,by omega⟩ : Fin L) := Fin.ext hn rw [chainCell,cell_correct_label]
+  · simp [chainCell,cell_correct_zero,chain_cell_zero,hi]
+    exact hg ⟨0,by omega⟩
+  · by_cases hn : n.val = 0
+    · have he : n = (⟨0,by omega⟩ : Fin L) := Fin.ext hn
+      rw [chainCell,cell_correct_label]
       simp only [chain_cell_zero]
       rw [he]
       simp [chain_cell_zero,hi,succ_zero_label hL,early_labels_distinct hL,early_one_ne_zero hL]
-    · have hn' : ¬n.val ≤ a.val.1.val := by omega have hne : n.succ ≠ (1 : Fin (L+1)) := (succ_eq_one hL n).not.mpr hn
+    · have hn' : ¬n.val ≤ a.val.1.val := by omega
+      have hne : n.succ ≠ (1 : Fin (L+1)) := (succ_eq_one hL n).not.mpr hn
       simp [chainCell,cell_correct_label,chain_cell_zero,hi,hn,hne]
       exact add_nonneg (hg ⟨0,by omega⟩) hs.1
 
@@ -722,17 +722,26 @@ private theorem head_middle_cell_le {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ)
   have hj : 1 ≤ a.val.2.val := by omega
   have hs := balanced_split_spec _ _ S (hg ⟨0,by omega⟩) (hg ⟨1,by omega⟩) hS
   refine Fin.cases ?_ (fun n => ?_) r
-  · left simp [chainCell,cell_correct_zero,chain_cell_one,hi,hj] exact hg ⟨1,by omega⟩
-  · by_cases hn0 : n.val = 0 · left have he : n = (⟨0,by omega⟩ : Fin L) := Fin.ext hn0 rw [chainCell,cell_correct_label]
+  · left
+    simp [chainCell,cell_correct_zero,chain_cell_one,hi,hj]
+    exact hg ⟨1,by omega⟩
+  · by_cases hn0 : n.val = 0
+    · left
+      have he : n = (⟨0,by omega⟩ : Fin L) := Fin.ext hn0
+      rw [chainCell,cell_correct_label]
       simp only [chain_cell_one]
       rw [he]
       simp [chain_cell_one,hi,hj,succ_zero_label hL,early_labels_distinct hL,early_one_ne_zero hL]
       exact add_nonneg (hg ⟨1,by omega⟩) (sub_nonneg.mpr hs.2.1)
-    · by_cases hn1 : n.val = 1 · left have he : n = (⟨1,by omega⟩ : Fin L) := Fin.ext hn1 rw [chainCell,cell_correct_label]
+    · by_cases hn1 : n.val = 1
+      · left
+        have he : n = (⟨1,by omega⟩ : Fin L) := Fin.ext hn1
+        rw [chainCell,cell_correct_label]
         simp only [chain_cell_one]
         rw [he]
         simp [chain_cell_one,hi,hj,succ_one_label hL,early_two_ne_zero hL]
-      · right have hne : n.succ ≠ (2 : Fin (L+1)) := (succ_eq_two hL n).not.mpr hn1
+      · right
+        have hne : n.succ ≠ (2 : Fin (L+1)) := (succ_eq_two hL n).not.mpr hn1
         simp only [chainCell,cell_correct_label,chain_cell_one,hi, Fin.succ_ne_zero,false_or,hne,and_false,ite_false,add_zero,
           Nat.lt_irrefl,false_and,Fin.reduceEq]
         split_ifs
@@ -766,10 +775,8 @@ private theorem late_first_two_le {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (
 
 private theorem table_score_bound {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t B : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t)
     (hhigh : latePeak (balancedChain hL g S t hg hS ht) ≤ t) (hW : g ⟨0,by omega⟩ + g ⟨1,by omega⟩ + S + t ≤ B)
-    (hX0 : g ⟨0,by omega⟩ + balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S +
-      latePeak (balancedChain hL g S t hg hS ht) + t ≤ B)
-    (hX1 : g ⟨1,by omega⟩ + (S-balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S) +
-      latePeak (balancedChain hL g S t hg hS ht) + t ≤ B)
+    (hX0 : g ⟨0,by omega⟩ + balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S + latePeak (balancedChain hL g S t hg hS ht) + t ≤ B)
+    (hX1 : g ⟨1,by omega⟩ + (S-balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S) + latePeak (balancedChain hL g S t hg hS ht) + t ≤ B)
     (hP : S + latePeak (balancedChain hL g S t hg hS ht) + t ≤ B) (hTwo : twoLate (balancedChain hL g S t hg hS ht) + t ≤ B)
     (a : Pair L) (labels : Labels (Fin (L + 1))) :
     score (balancedChain hL g S t hg hS ht) (table (.inr (.inr a)) labels).val ≤ B := by
@@ -780,28 +787,32 @@ private theorem table_score_bound {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (
     rcases head_middle_cell_le hL g S t hg hS ht a hi labels.2.1 with hmid | hmid
     · linarith
     · linarith
-  · have hi' : 1 ≤ a.val.1.val := by omega have hmid := middle_cell_le hL g S t hg hS ht a hi' labels.2.1
+  · have hi' : 1 ≤ a.val.1.val := by omega
+    have hmid := middle_cell_le hL g S t hg hS ht a hi' labels.2.1
     have hs := balanced_split_spec _ _ S (hg ⟨0,by omega⟩) (hg ⟨1,by omega⟩) hS
     refine Fin.cases ?_ (fun n => ?_) labels.1
     · have he : chainCell hL g S t a 0 0 = S := by
         simp [chainCell,cell_correct_zero,chain_cell_zero,hi']
       rw [he]
       linarith
-    · by_cases hn0 : n.val = 0 · have he : n = (⟨0,by omega⟩ : Fin L) := Fin.ext hn0 rw [he]
-        have he : chainCell hL g S t a 0 (⟨0,by omega⟩ : Fin L).succ =
-            g ⟨0,by omega⟩ + balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S := by
+    · by_cases hn0 : n.val = 0
+      · have he : n = (⟨0,by omega⟩ : Fin L) := Fin.ext hn0
+        rw [he]
+        have he : chainCell hL g S t a 0 (⟨0,by omega⟩ : Fin L).succ = g ⟨0,by omega⟩ + balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S := by
           rw [chainCell,cell_correct_label]
           simp [chain_cell_zero,succ_zero_label hL,early_labels_distinct hL,early_one_ne_zero hL]
         rw [he]
         linarith
-      · by_cases hn1 : n.val = 1 · have he : n = (⟨1,by omega⟩ : Fin L) := Fin.ext hn1 rw [he]
-          have he : chainCell hL g S t a 0 (⟨1,by omega⟩ : Fin L).succ =
-              g ⟨1,by omega⟩ + (S-balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S) := by
+      · by_cases hn1 : n.val = 1
+        · have he : n = (⟨1,by omega⟩ : Fin L) := Fin.ext hn1
+          rw [he]
+          have he : chainCell hL g S t a 0 (⟨1,by omega⟩ : Fin L).succ = g ⟨1,by omega⟩ + (S-balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S) := by
             rw [chainCell,cell_correct_label]
             simp [chain_cell_zero,hi',succ_one_label hL,early_two_ne_zero hL,Ne.symm (early_labels_distinct hL)]
           rw [he]
           linarith
-        · have hb := late_first_two_le hL g S t hg hS ht a hi' n (by omega) labels.2.1 linarith
+        · have hb := late_first_two_le hL g S t hg hS ht a hi' n (by omega) labels.2.1
+          linarith
 private theorem full_view_determines (stop : Bool) (xs : List ℕ) (q r : ℕ → Bool)
     (h : view false xs q = view false xs r) : view stop xs q = view stop xs r := by
   induction xs with
@@ -868,10 +879,8 @@ private theorem chain_support_upper {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ)
   change support stop y - inputAnchor hL y ≤ D
   linarith
 
-private theorem chain_peak_excess_lower {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
-    (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) :
-    latePeak (balancedChain hL g S t hg hS ht) - early hL (balancedChain hL g S t hg hS ht) ≤
-      delta hL true (balancedChain hL g S t hg hS ht) := by
+private theorem chain_peak_excess_lower {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) :
+    latePeak (balancedChain hL g S t hg hS ht) - early hL (balancedChain hL g S t hg hS ht) ≤ delta hL true (balancedChain hL g S t hg hS ht) := by
   let y := balancedChain hL g S t hg hS ht
   have he : 0 ≤ early hL y := add_nonneg (gamma_nonneg _ _) (gamma_nonneg _ _)
   have hd : 0 ≤ delta hL true y := by
@@ -919,8 +928,7 @@ exactly the same complete N and O excess throughout the high-terminal slice. -/
 theorem balanced_chain_exact {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ) (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t)
     (hhigh : latePeak (balancedChain hL g S t hg hS ht) ≤ t) :
     let V := balancedChain hL g S t hg hS ht
-    beta V = g ∧ coefficientMass V = (∑ i, g i) + S + t ∧
-      pairTotal V = S ∧ inputAnchor hL V = g ⟨0,by omega⟩ + g ⟨1,by omega⟩ + S + t ∧
+    beta V = g ∧ coefficientMass V = (∑ i, g i) + S + t ∧ pairTotal V = S ∧ inputAnchor hL V = g ⟨0,by omega⟩ + g ⟨1,by omega⟩ + S + t ∧
       EarlyPair V ∧ (∀ i, gamma V i = g i) ∧
       delta hL false V = max (highLower hL V) (latePeak V - early hL V) ∧
       delta hL true V = max (highLower hL V) (latePeak V - early hL V) := by
@@ -935,7 +943,8 @@ theorem balanced_chain_exact {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t :
     exact sub_le_sub_right (stopped_support_le_full V) _
   refine ⟨chain_beta hL g S t hg hS ht,chain_coefficient_mass hL g S t hg hS ht,
     chain_pair_total hL g S t hg hS ht,?_,hP,chain_gamma hL g S t hg hS ht,?_,?_⟩
-  · simp only [inputAnchor,early,chain_gamma,chain_pair_total] rfl
+  · simp only [inputAnchor,early,chain_gamma,chain_pair_total]
+    rfl
   · exact le_antisymm (chain_support_upper hL g S t hg hS ht hhigh false) (hlo.trans hmono)
   · exact le_antisymm (chain_support_upper hL g S t hg hS ht hhigh true) hlo
 
@@ -953,8 +962,8 @@ private theorem total_gamma {L : ℕ} (y : FullScore L) : (∑ i, gamma y i) = �
 
 /-- The chain gives an actual same-Q, same-anchor comparison on precisely the
 source branch mu <= E + DeltaO; the complementary branch is not asserted here. -/
-theorem balanced_chain_comparison {L : ℕ} (hL : 3 ≤ L) (y : FullScore L)
-    (hA : ∀ b, y.A b = 0) (hP : EarlyPair y) (hhigh : latePeak y ≤ y.T) (hbranch : latePeak y ≤ early hL y + delta hL true y) :
+theorem balanced_chain_comparison {L : ℕ} (hL : 3 ≤ L) (y : FullScore L) (hA : ∀ b, y.A b = 0) (hP : EarlyPair y) (hhigh : latePeak y ≤ y.T)
+    (hbranch : latePeak y ≤ early hL y + delta hL true y) :
     ∃ V : FullScore L, (∀ b, V.A b = 0) ∧ EarlyPair V ∧ beta V = beta y ∧
       coefficientMass V = coefficientMass y ∧ inputAnchor hL V = inputAnchor hL y ∧
       delta hL false V ≤ delta hL true y := by
@@ -982,7 +991,8 @@ theorem balanced_chain_comparison {L : ℕ} (hL : 3 ≤ L) (y : FullScore L)
     simp only [coefficientMass,hA,zero_add,Finset.sum_add_distrib,pairTotal]
   refine ⟨V,(by intro b; rfl),hx.2.2.2.2.1,hx.1.trans hb.symm,hx.2.1.trans hm.symm,?_,?_⟩
   · simpa only [inputAnchor,early] using hx.2.2.2.1
-  · rw [hx.2.2.2.2.2.2.1,hlow,hpeak,he] exact max_le (arbitrary_input_lower_bound hL y hP) (by linarith)
+  · rw [hx.2.2.2.2.2.2.1,hlow,hpeak,he]
+    exact max_le (arbitrary_input_lower_bound hL y hP) (by linarith)
 
 #print axioms balanced_chain_comparison
 
