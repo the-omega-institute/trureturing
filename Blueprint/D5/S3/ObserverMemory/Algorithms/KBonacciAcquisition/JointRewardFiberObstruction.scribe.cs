@@ -86,5 +86,5 @@ internal sealed class JointRewardFiberObstructionDocument : IScribeDocumentDefin
                 H("Every stopped cell has numerical dominance"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural L, n,j,k,l in Fin L with j<k<l, real t at least zero, every original stopped Schedule L and cell c in Fin 3, reading of point(baseWord,t) is at most reading of threePoints. At most two selected bits can be queried, so at least one singleton word shares the base word's cell. Nonnegativity of all three prescribed masses then proves domination, including empty and zero-reward cells."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }

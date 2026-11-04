@@ -13,7 +13,6 @@ import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRea
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators
-open Classical in
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
 namespace D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
 
@@ -348,6 +347,7 @@ def witnessScore {L : ℕ} (n j k l : Fin L) (hnj : n < j) (hjk : j < k)
     simp [threePoints,point,Ne.symm hj,Ne.symm hk,Ne.symm hl]
   terminalP := rfl
 
+open Classical in
 private theorem mask_point {L : ℕ} (w : Word L) (n i : Fin L) (t : ℝ)
     (hw : FirstZero w n) (b : Word L) :
     (if FirstZero b i then point w t b else 0) =
@@ -370,6 +370,7 @@ private theorem witness_numerical {L : ℕ} (n j k l : Fin L)
     (hnj : n < j) (hjk : j < k) (hkl : k < l) (t : ℝ) (ht : 0 ≤ t) (i : Fin L) :
     numerical (witnessScore n j k l hnj hjk hkl t ht) i =
       if i = n then threePoints n j k l t else fun _ => 0 := by
+  classical
   funext b
   have hj := mask_point (singletonWord n j k l j) n i t
     (singleton_firstZero n j k l j hnj hjk hkl hnj) b
@@ -431,7 +432,7 @@ private theorem untouched_cell {L : ℕ} (n j k l : Fin L)
         have hjk' : j ≠ k := ne_of_lt hjk
         have hkl' : k ≠ l := ne_of_lt hkl
         have hjl' : j ≠ l := ne_of_lt (hjk.trans hkl)
-        tauto
+        aesop
       rcases hchoose with h | h | h
       · left; simp [cell,singletonWord,h.1,h.2]
       · right; left; simp [cell,singletonWord,h.1,h.2]
