@@ -214,11 +214,11 @@ private theorem banks_masses (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
     simp [xval]
   intro i
   fin_cases i <;> simp only [banks,bankMasses,
-    Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
+    Matrix.cons_val_zero,Matrix.cons_val_succ,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
     Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,Function.comp_apply]
   all_goals simp only [List.map_append,List.sum_append,mv,mw,mu,mx,Int.cast_add,
     Int.cast_mul,Int.cast_natCast,masks.1,masks.2,uval,xval',V,W,
-    Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
+    Matrix.cons_val_zero,Matrix.cons_val_succ,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
     Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,Function.comp_apply]
   all_goals split_ifs <;> ring
 
