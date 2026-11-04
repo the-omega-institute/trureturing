@@ -776,3 +776,73 @@ $$
 where the last equality uses $\alpha+\beta=1/3$. This proves the formula and its stated zero. The vanishing is a property of this entropy combination and entails no separability conclusion. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Replica three: finite formula and squeezing
+
+**Convention 13.1 (Physical and scalar domains).** The physical family is the real $e^-$ fully symmetric pure bosonic Gaussian family of Definition 6.1, with positive integer party sizes $x,y,z$, $N=x+y+z\ge3$, and $a\ge1$. All logarithms are natural. Put
+
+$$
+\kappa=\frac{3(a^2-1)}{4(N-1)},\qquad s=xy+xz+yz,\qquad
+D_x=1+\kappa x(y+z),\quad D_y=1+\kappa y(x+z),\quad D_z=1+\kappa z(x+y).
+$$
+
+The Fourier squeezing parameter is $(a^2-1)/(N-1)$; $\kappa$ is three quarters of it. The scalar expression $V(k,x,y,z)=[2\log(1+ks)-\log D_x-\log D_y-\log D_z]/12$, with $D_x=1+kx(y+z)$ and its labelled companions, also makes sense for nonnegative real $k,x,y,z$. This scalar extension does not assert fractional physical mode counts. The three cut terms retain their multiplicity when party sizes tie.
+
+**Theorem 13.2 (Actual integral-defined order-three formula).** On the physical domain of Convention 13.1,
+
+$$
+\mathrm{GM}^{(3)}_3(x:y:z;a)
+=\frac1{12}\log\frac{(1+\kappa s)^2}{D_xD_yD_z}.
+$$
+
+**Proof.** Apply the integral-to-Fourier product identity of the fully symmetric pure Gaussian family, with the three cuts indexed by parties as in Theorem 10.1. At replica three, $\sin^2(\pi/3)=\sin^2(2\pi/3)=3/4$. The nine tripartite weights comprise one zero weight, two occurrences each of $3x(y+z)/4$, $3y(x+z)/4$ and $3z(x+y)/4$, and two occurrences of $3s/4$. Thus the tripartite product is $D_x^2D_y^2D_z^2(1+\kappa s)^2$, while the three cut products are $D_x^2,D_y^2,D_z^2$. Substitution into $(2\log P_3-3\sum_{i=A,B,C}\log P_i)/24$ gives the stated formula. All factors are positive, including at $a=1$, so the logarithmic steps preserve the original integrals and normalizations. ∎
+
+**Theorem 13.3 (Scalar strict negativity).** For every $k,x,y,z>0$, $V(k,x,y,z)<0$.
+
+**Proof.** With $N=x+y+z$ and $p=xyz$, direct expansion gives
+
+$$
+D_xD_yD_z-(1+ks)^2=k^2p\,[N+k(Ns-p)].
+$$
+
+Here $Ns-p=x^2y+x^2z+xy^2+xz^2+y^2z+yz^2+2xyz>0$. The quotient in Theorem 13.2's scalar expression therefore lies strictly between zero and one. ∎
+
+**Theorem 13.4 (Vacuum and squeezing).** For every positive real scalar triple, $V(0,x,y,z)=0$ and $k\mapsto V(k,x,y,z)$ is strictly decreasing on $[0,\infty)$. Consequently, for every positive integer physical tripartition, $\mathrm{GM}^{(3)}_3$ is zero at $a=1$, strictly decreasing on $[1,\infty)$, and strictly negative at every $a>1$. All positive tripartitions tie at vacuum.
+
+**Proof.** Write $r_x=x(y+z)$ and its two labelled companions. Then $r_x+r_y+r_z=2s$, and $0<r_i<s$ for each party. For $k>0$,
+
+$$
+12\,\frac{\partial V}{\partial k}
+=\frac{2s}{1+ks}-\sum_{i=A,B,C}\frac{r_i}{1+kr_i}<0,
+$$
+
+since each summand $r_i/(1+kr_i)$ strictly exceeds $r_i/(1+ks)$. The logarithm arguments stay positive on the closed nonnegative ray. Continuity at zero and the mean value theorem give strict decrease on that whole ray. Direct substitution gives the vacuum value. On the physical domain, $a\mapsto3(a^2-1)/(4(N-1))$ is strictly increasing on $[1,\infty)$, which transfers the conclusion to the actual integrals through Theorem 13.2. No negative derivative at vacuum is asserted. ∎
+
+**Theorem 13.5 (Strict pair mixing).** Fix $k,x,y,z>0$ and $0\le t\le1$. Put $x'=(1-t)x+ty$ and $y'=tx+(1-t)y$. Then
+$$
+V(k,x',y',z)\le V(k,x,y,z),
+$$
+with equality exactly when $t=0$, $t=1$ or $x=y$.
+
+**Proof.** Fix $u=x+y$ and write $p=xy$, $q=x'y'$. The numerator of the positive logarithmic quotient is $A(p)=[1+k(p+uz)]^2$, and its denominator is $(1+kuz)B(p)$, where
+$$
+B(p)=(1+kp)^2+kuz(1+kp)+k^2pz^2.
+$$
+Direct expansion gives
+$$
+A(p)B(q)-A(q)B(p)=k^2z(q-p)\,H,
+$$
+where
+$$
+H=u+z+ku(p+q+2uz+2z^2)
++k^2\big[upq+zp(u^2-q)+zqu^2+u^2z^2(u+z)\big]>0.
+$$
+Indeed $p,q>0$ and $u^2-q=x'^2+x'y'+y'^2>0$. Since $q-p=t(1-t)(x-y)^2$, every proper mixing of an unequal pair strictly reduces the quotient and hence its logarithm. The endpoints are identity and full swap; a tied pair is unchanged. Symmetry of the three labelled factors gives equality in each of these cases. ∎
+
+**Theorem 13.6 (Strict Schur comparison).** Fix $k>0$. For any two positive real triples $X,Y$ of the same total, if $X$ is more mixed than $Y$ in descending-prefix-sum majorization, then $V(k,X)\le V(k,Y)$, with equality if and only if $X$ is a permutation of $Y$.
+
+**Proof.** Divide both triples by their common positive total $N$ and replace $k$ by $kN^2$; the value is unchanged. The classical positive T-transform characterization of majorization (Marshall, Olkin and Arnold) gives a finite chain from the normalized $Y$ to the normalized $X$. Theorem 13.5 decreases the value at each step and characterizes equality. If the final values agree, all steps have equal values and every step is a permutation, so their composition is a permutation. Conversely every permutation preserves the expression. This argument compares majorized triples; it makes no injectivity assertion about incomparable triples. ∎
+
+**Sources and boundaries.** The order-three statements in this section are from the research note by Haobo Ma then Wenlin Zhang, *An exact balancing law for order-three Gaussian multi-entropy* (4 November 2026, CC BY 4.0). The pair-product cross-difference proof above is an algebraic derivation of its balancing conclusion. The physical family and equal-party observation are due to Camargo and Nishida, arXiv:2609.30754v1 and v2 (v2: 12 October 2026, §5 and Figures 1–2). Classical majorization is credited to Marshall, Olkin and Arnold. Higher-replica balancing, physical replica-one continuation, other Gaussian branches and fixed-squeezing large-$N$ limits remain separate questions. The specialized order-four constants and remainders for $(m,1,1)$ do not restrict the broader order-four product formula. No worldwide priority claim is made.
+
+## 追加锚（本行以下为增补区）
