@@ -76,6 +76,8 @@ private theorem range_weight (lo hi : ℕ) (h : lo≤hi) :
   simpa only [bitRange,show lo+(hi-lo)=hi by omega] using range_weight_raw lo (hi-lo)
 private theorem mask_nil : maskOf []=0 := rfl
 private theorem mask_one (e : ℕ) : maskOf [e]=2^e := by simp [maskOf]
+private theorem mask_cons (e : ℕ) (l : List ℕ) :
+    maskOf (e::l)=2^e+maskOf l := by simp [maskOf]
 
 set_option maxHeartbeats 2400000 in
 /-- Exact masks in original V/W coordinates, not capacities. In particular W3
@@ -99,7 +101,7 @@ private theorem native_mask_values (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
   fin_cases mode <;> simp [branch,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,Fin.mk.injEq,Fin.reduceEq] at hm
   all_goals constructor <;> intro i <;> fin_cases i
   all_goals norm_num [vbits,wbits,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,Fin.mk.injEq,Fin.reduceEq,ite_true,ite_false,
-    mask_nil,mask_one,maskOf_append,Nat.cast_add,Nat.cast_pow,Nat.cast_ofNat]
+    mask_nil,mask_one,mask_cons,maskOf_append,Nat.cast_add,Nat.cast_pow,Nat.cast_ofNat]
   all_goals simp (disch := omega) only [range_weight,half_power,quarter_power,
     pow_add,hp.1,hp.2.1,hp.2.2,reserve,Fin.reduceEq,ite_true,ite_false]
   all_goals dsimp only [xval,rval,sval,qval]
@@ -212,7 +214,8 @@ private theorem banks_masses (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
     simp [xval]
   intro i
   fin_cases i <;> dsimp only [banks,bankMasses,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,Fin.mk.injEq,Fin.reduceEq]
-  all_goals simp only [List.map_append,List.sum_append,mv,mw,mu,mx,Int.cast_add,
+  all_goals trace_state
+  all_goals try simp only [List.map_append,List.sum_append,mv,mw,mu,mx,Int.cast_add,
     Int.cast_mul,Int.cast_natCast,masks.1,masks.2,uval,xval',V,W]
   all_goals split_ifs <;> ring
 
