@@ -336,7 +336,80 @@ def registration :
 
 end StieltjesRepresentation
 
+namespace PowerPoissonRescale
 
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ a => a ^ 2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (a b α : ℝ), b ≠ 0 →
+    R.readout () () a + b ^ 2 - 2 * (a * b) * Real.cos (Real.pi * α) =
+      b ^ 2 * (1 - 2 * (a / b) * Real.cos (Real.pi * α) + (a / b) ^ 2)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h 1 1 0 (by norm_num)
+  norm_num [rejected, realize] at hb
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  norm_num [actual, realize]
+
+def source_registration : Registration arena (type_of% @power_poisson_rescale) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@power_poisson_rescale, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@power_poisson_rescale) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.PowerPoissonRescale.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.PowerPoissonRescale.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ a => a ^ 2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+set_option pp.proofs false in
+#print power_poisson_rescale
+#print axioms registration
+
+end PowerPoissonRescale
 
 
 end
