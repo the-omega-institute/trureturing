@@ -102,8 +102,21 @@ theorem extensionLaw_kernel_posSemidef {X : Type*} (K : X → X → ℂ)
     have hs' : (Matrix.of (fun i j : f.support => K i.val j.val)).PosSemidef := by
       simpa [finiteGram, Matrix.submatrix] using hs
     have hq := hs'.dotProduct_mulVec_nonneg (fun i => f i.val)
-    simp only [dotProduct, Matrix.mulVec, Finset.mul_sum, Matrix.of_apply] at hq
-    simpa only [Finsupp.sum, Pi.star_apply, mul_assoc, Matrix.of_apply,
-      Finset.sum_coe_sort] using hq
+    simp only [dotProduct, Matrix.mulVec, Finset.mul_sum, Matrix.of_apply,
+      Pi.star_apply, ← mul_assoc] at hq
+    change 0 ≤ ∑ i ∈ f.support, ∑ j ∈ f.support, star (f i) * K i j * f j
+    have heq : (∑ i : f.support, ∑ j : f.support,
+        star (f i.val) * K i.val j.val * f j.val) =
+        ∑ i ∈ f.support, ∑ j ∈ f.support, star (f i) * K i j * f j := by
+      calc
+        _ = ∑ i : f.support, ∑ j ∈ f.support,
+            star (f i.val) * K i.val j * f j := by
+          apply Finset.sum_congr rfl
+          intro i hi
+          exact Finset.sum_coe_sort f.support
+            (fun j => star (f i.val) * K i.val j * f j)
+        _ = _ := Finset.sum_coe_sort f.support
+          (fun i => ∑ j ∈ f.support, star (f i) * K i j * f j)
+    exact heq ▸ hq
 
 end D5.S3.Quantum.Completion.HistoryKernelExtension

@@ -74,12 +74,13 @@ internal sealed class HistoryKernelExtensionDocument : IScribeDocumentDefinition
     {
         Formula g = F.Id("G"), c = F.Id("c"), r = F.Id("r");
         Formula u = Call("Unit");
-        return All(I, Type, Seq(OpenBracket, Call("Fintype", I), CloseBracket, Comma, Sp,
-            All(g, Matrix(I, I), All(c, Matrix(I, u), All(r, C,
-                Eq(Call("residualExtension", g, c, r),
-                    Call("fromBlocks", g, Mul(g, c), Mul(Star(c), g),
-                        Seq(Mul(Mul(Star(c), g), c), Sp, Plus, Sp,
-                            Call("constantMatrix", Mul(Star(r), r)))))))));
+        Formula block = Call("fromBlocks", g, Mul(g, c), Mul(Star(c), g),
+            Seq(Mul(Mul(Star(c), g), c), Sp, Plus, Sp,
+                Call("constantMatrix", Mul(Star(r), r))));
+        Formula body = All(g, Matrix(I, I), All(c, Matrix(I, u), All(r, C,
+            Eq(Call("residualExtension", g, c, r), block))));
+        return All(I, Type, Seq(OpenBracket, Call("Fintype", I), CloseBracket,
+            Comma, Sp, body));
     }
 
     private static Formula LawFormula()
