@@ -176,6 +176,37 @@ theorem swap_has_leaf_swapped {A : Finset α} (hA : 4 ≤ A.card)
   exact swap_has_leaf hA hc hb ha hbc.symm hab.symm hac.symm
     nC nD nE nH sC sD sE sH hCD' hDC hCE' hEC hDH' hHD
 
+/-! A four-source alternating chain always contains one of the two forbidden
+orientations.  These wrappers are the form used by the later incidence-graph
+construction: the middle shared vertex is either an `F` fibre or a `G` fibre. -/
+theorem no_four_source_chain_gfg {A : Finset α} (hA : 4 ≤ A.card)
+    {a b c : α} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A)
+    (hab : a ≠ b) (hbc : b ≠ c) (hac : a ≠ c)
+    {C₀ C₁ C₂ C₃ : Cycle α}
+    (n₀ : C₀.Nodup) (n₁ : C₁.Nodup) (n₂ : C₂.Nodup) (n₃ : C₃.Nodup)
+    (s₀ : C₀.toFinset = A) (s₁ : C₁.toFinset = A)
+    (s₂ : C₂.toFinset = A) (s₃ : C₃.toFinset = A)
+    (h01 : paired b c C₀ = paired b c C₁) (hne01 : C₀ ≠ C₁)
+    (h12 : paired a b C₁ = paired a b C₂) (hne12 : C₂ ≠ C₁)
+    (h23 : paired b c C₂ = paired b c C₃) (hne23 : C₃ ≠ C₂) : False := by
+  exact swap_has_leaf hA ha hb hc hab hbc hac
+    n₁ n₂ n₀ n₃ s₁ s₂ s₀ s₃ h12 hne12
+    h01.symm hne01 h23 hne23
+
+theorem no_four_source_chain_fgf {A : Finset α} (hA : 4 ≤ A.card)
+    {a b c : α} (ha : a ∈ A) (hb : b ∈ A) (hc : c ∈ A)
+    (hab : a ≠ b) (hbc : b ≠ c) (hac : a ≠ c)
+    {C₀ C₁ C₂ C₃ : Cycle α}
+    (n₀ : C₀.Nodup) (n₁ : C₁.Nodup) (n₂ : C₂.Nodup) (n₃ : C₃.Nodup)
+    (s₀ : C₀.toFinset = A) (s₁ : C₁.toFinset = A)
+    (s₂ : C₂.toFinset = A) (s₃ : C₃.toFinset = A)
+    (h01 : paired a b C₀ = paired a b C₁) (hne01 : C₀ ≠ C₁)
+    (h12 : paired b c C₁ = paired b c C₂) (hne12 : C₂ ≠ C₁)
+    (h23 : paired a b C₂ = paired a b C₃) (hne23 : C₃ ≠ C₂) : False := by
+  exact swap_has_leaf_swapped hA ha hb hc hab hbc hac
+    n₁ n₂ n₀ n₃ s₁ s₂ s₀ s₃ h12 hne12
+    h01.symm hne01 h23 hne23
+
 /-- Every fixed-support cycle occurs among the permutations of A.toList;
 therefore this is the full finite carrier, for arbitrary ambient labels. -/
 theorem fixedCycles_finite (A : Finset α) :
