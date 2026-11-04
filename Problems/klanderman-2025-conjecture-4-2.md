@@ -74,9 +74,9 @@ exposition in its matching Blueprint Scribe. The designated theorem is
 `result : Not claim`. The current scoped compiled report validates the literal
 closed negation and the axiom closure. All declarations use only `propext`,
 `Classical.choice` and `Quot.sound`; there is no `sorry`, `native_decide` or new
-axiom. This is a local kernel result, with independent source-fidelity and
-prefreeze judgment pending. No frozen state, PR, merged resolution or
-delivered-solve count is asserted.
+axiom. The kernel result concerns the full assertion quoted above. The source
+correspondence and bounded literature findings are recorded in the owning
+source note.
 
 The module exports no other theorem: the strict chain, component verification
 and generated-system identification are private, consumed proof helpers.
@@ -88,9 +88,7 @@ CLAUDE §3.9; no additional public theorem audit target is introduced.
 Tier 1 external named conjecture, preregistered before the original probe.
 Admission basis is `open-problem-resolution`, with the source, full-event
 preregistration, bounded literature check and refutation use recorded above.
-Its source-fidelity and admission conditions remain subject to independent
-prefreeze assessment. There are no direct frozen D5 dependencies: all imports
-are pinned Mathlib. No new escape-witness or original framework is claimed.
+There are no direct frozen D5 dependencies: all imports are pinned Mathlib. No new escape-witness or original framework is claimed.
 
 Theorem-by-theorem shape and live consumers:
 
@@ -126,5 +124,4 @@ statements is established here.
 ## ASSUMED-UNVERIFIED
 
 Worldwide openness, originality and priority are unverified beyond the stated
-bounded search. Independent source-fidelity and prefreeze judgments, later
-freeze/PR/required-check/merge stages, and any delivered-solve credit are pending.
+bounded search.
