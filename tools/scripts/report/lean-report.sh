@@ -28,4 +28,9 @@ INSPECTOR_ARGS=(--repository "$ROOT" --output "${LEAN_REPORT:-$ROOT/.lake/build/
 if [[ -n "${STRATALINT_LEAN_REPORT_LOG_DIR:-}" ]]; then
   INSPECTOR_ARGS+=(--log-dir "$STRATALINT_LEAN_REPORT_LOG_DIR")
 fi
-exec "$ROOT/tools/lean-inspector/inspect.sh" "${INSPECTOR_ARGS[@]}"
+command=("$ROOT/tools/lean-inspector/inspect.sh" "${INSPECTOR_ARGS[@]}")
+if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
+  exec python3 -B "$ROOT/tools/scripts/maintenance_log.py" run \
+    --repository "$ROOT" --script lean-report -- "${command[@]}"
+fi
+exec "${command[@]}"

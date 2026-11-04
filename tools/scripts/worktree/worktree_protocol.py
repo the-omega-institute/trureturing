@@ -20,6 +20,16 @@ import sys
 import time
 from urllib.parse import unquote, urlsplit
 
+try:
+    from maintenance_log import safe_append
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    try:
+        from maintenance_log import safe_append
+    except ImportError:
+        def safe_append(script, event, *, repository=None, **fields):
+            return False
+
 if __name__ == "__main__":
     sys.modules["worktree_protocol"] = sys.modules[__name__]
 
@@ -463,7 +473,7 @@ def reuse(options, allow_recovered_base=False):
                     branch=options.branch, base_revision=base)
 
 
-def main(argv=None):
+def _main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=Path.cwd())
     commands = parser.add_subparsers(dest="action", required=True)
@@ -596,6 +606,23 @@ def main(argv=None):
                                   native_locks=error.native_locks)), flush=True)
         print("WORKTREE_RETAINED " + str(error), file=sys.stderr, flush=True)
         return 68 if options.action == "remove" and str(error).startswith("locked_") else 73
+
+
+def main(argv=None):
+    requested = list(sys.argv[1:] if argv is None else argv)
+    log_repository = Path.cwd()
+    started = time.monotonic()
+    try:
+        exit_code = _main(argv)
+    except BaseException as error:
+        safe_append("worktree-protocol", "run_finished", repository=log_repository,
+                    action=requested[0] if requested else "", exit_code=1,
+                    duration_seconds=round(time.monotonic() - started, 3), error_type=type(error).__name__)
+        raise
+    safe_append("worktree-protocol", "run_finished", repository=log_repository,
+                action=requested[0] if requested else "", exit_code=exit_code,
+                duration_seconds=round(time.monotonic() - started, 3))
+    return exit_code
 
 
 if __name__ == "__main__":

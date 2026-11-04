@@ -27,4 +27,9 @@ fi
 # producer receives it only as an explicit argument, never from the environment.
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
-exec "${cli[@]}" ensure-cache ${donor[@]+"${donor[@]}"} ${restore[@]+"${restore[@]}"}
+command=("${cli[@]}" ensure-cache ${donor[@]+"${donor[@]}"} ${restore[@]+"${restore[@]}"})
+if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
+  exec python3 -B "$ROOT/tools/scripts/maintenance_log.py" run \
+    --repository "$ROOT" --script lean-cache-ensure -- "${command[@]}"
+fi
+exec "${command[@]}"

@@ -6,6 +6,14 @@
 # is the default. gh uses GH_TOKEN or its normal authenticated configuration.
 set -euo pipefail
 
+ROOT="$(cd "$(dirname "$0")/../.." && pwd -P)"
+if [[ "${TRURETURING_MAINTENANCE_LOG_ACTIVE:-0}" != 1 && -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
+  export TRURETURING_MAINTENANCE_LOG_ACTIVE=1
+  exec python3 -B "$ROOT/tools/scripts/maintenance_log.py" run \
+    --repository "$ROOT" --script scribe-release -- \
+    "$ROOT/tools/scripts/scribe-release.sh" "$@"
+fi
+
 fail() {
   printf 'SCRIBE_RELEASE %s\n' "$2" >&2
   exit "$1"
@@ -53,7 +61,6 @@ command -v dotnet >/dev/null 2>&1 || fail 2 'MissingTool: dotnet'
 if [[ "$MODE" != local ]]; then
   command -v gh >/dev/null 2>&1 || fail 2 'MissingTool: gh'
 fi
-ROOT="$(cd "$(dirname "$0")/../.." && pwd -P)"
 PROJECT="$ROOT/tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
 [[ -f "$ROOT/global.json" && -f "$PROJECT" && -d "$ROOT/Blueprint" ]] \
   || fail 2 'InvalidRepository: global.json, Blueprint and the Scribe host are required'

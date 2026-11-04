@@ -30,6 +30,20 @@ fi
 creation_arguments=()
 if [[ "${WORKTREE_PREFER_IDLE:-0}" == 1 ]]; then creation_arguments+=(--prefer-idle); fi
 
+if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
+  exec python3 -B "$ROOT/tools/scripts/maintenance_log.py" run \
+    --repository "$ROOT" --script worktree-init -- \
+    dotnet run \
+    --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
+    --configuration Release \
+    -- \
+    worktree \
+    --kind "$KIND" \
+    --name "$NAME" \
+    --path "$TARGET" \
+    --base "$BASE" \
+    ${creation_arguments[@]+"${creation_arguments[@]}"}
+fi
 exec dotnet run \
   --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
   --configuration Release \

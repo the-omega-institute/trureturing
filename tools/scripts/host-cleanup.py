@@ -23,7 +23,14 @@ import tempfile
 import time
 import uuid
 
+try:
+    from maintenance_log import safe_append
+except (ImportError, OSError):
+    def safe_append(script, event, *, repository=None, **fields):
+        return False
+
 REPOSITORY = Path(__file__).resolve().parents[2]
+LOG_REPOSITORY = REPOSITORY
 # BSD file flags by which the owner or the system marks an entry as not to be removed or changed.
 PROTECTED_FLAGS = (stat.UF_IMMUTABLE | stat.UF_APPEND | stat.UF_NOUNLINK |
                    stat.SF_IMMUTABLE | stat.SF_APPEND | stat.SF_NOUNLINK)
@@ -62,7 +69,10 @@ class LowDiskSpace(RuntimeError):
 
 
 def emit(event, **fields):
-    print(json.dumps(dict(event=event, **fields), ensure_ascii=True), flush=True)
+    row = dict(event=event, **fields)
+    print(json.dumps(row, ensure_ascii=True), flush=True)
+    if event.endswith("_summary") or event.endswith("_warning") or event == "worktree_disk":
+        safe_append("host-cleanup", event, repository=LOG_REPOSITORY, **fields)
 
 
 def check_disk(paths, allow_low_disk=False):
@@ -1088,6 +1098,8 @@ def run_clean(options):
 
 
 def clean_from_anchor(options, caller, disk_descriptor):
+    global LOG_REPOSITORY
+    LOG_REPOSITORY = options.repository
     codex = options.codex_home.absolute()
     sshx = options.sshx_home.absolute()
     if codex.is_symlink() or sshx.is_symlink():
@@ -1139,6 +1151,9 @@ def clean_from_anchor(options, caller, disk_descriptor):
             print(json.dumps(dict(event="host_cleanup_warning", path=result["path"],
                                   action=result["action"], reason=result["reason"],
                                   diagnostic=result.get("detail") or result["reason"])), file=sys.stderr)
+            safe_append("host-cleanup", "host_cleanup_warning", repository=LOG_REPOSITORY,
+                        path=result["path"], action=result["action"], reason=result["reason"],
+                        diagnostic=result.get("detail") or result["reason"])
 
     def unobservable(path, error):
         reason = "vanished" if isinstance(error, FileNotFoundError) else "unreadable"
@@ -1256,6 +1271,9 @@ def main(arguments=None):
     clean.add_argument("--delete", action="store_true")
     clean.add_argument("--verbose", action="store_true", help="list individual paths, including kept artifacts")
     options = parser.parse_args(arguments)
+    global LOG_REPOSITORY
+    if options.command == "clean":
+        LOG_REPOSITORY = options.repository
     try:
         if options.command == "active-paths":
             codex = Path(os.environ.get("CODEX_HOME") or Path.home() / ".codex")
@@ -1278,9 +1296,13 @@ def main(arguments=None):
             return run_clean(options)
     except LowDiskSpace as error:
         print(str(error), file=sys.stderr)
+        safe_append("host-cleanup", "run_finished", repository=LOG_REPOSITORY,
+                    exit_code=73, error=str(error))
         return 73
     except (OSError, ValueError, subprocess.SubprocessError) as error:
         print("HOST_CLEANUP_FAILED " + str(error), file=sys.stderr)
+        safe_append("host-cleanup", "run_finished", repository=LOG_REPOSITORY,
+                    exit_code=1, error=str(error))
         return 1
 
 
