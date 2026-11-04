@@ -140,7 +140,7 @@ def cell {L : ℕ} : Schedule L → (Fin L → Bool) → Fin 3
   | .inl _, _ => 0
   | .inr (.inl i), b => if b i then 1 else 0
   | .inr (.inr a), b => if b a.val.1 then (if b a.val.2 then 2 else 1) else 0
-private def addresses {L : ℕ} : Schedule L → List ℕ
+def addresses {L : ℕ} : Schedule L → List ℕ
   | .inl _ => []
   | .inr (.inl i) => [i.val]
   | .inr (.inr a) => [a.val.1.val, a.val.2.val]
@@ -191,7 +191,7 @@ def table {L : ℕ} (s : Schedule L) (t : Labels (Fin (L + 1))) : Catalog true L
               simpa [h₁,← hfirst] using (List.cons.inj hh).2
             simp [cell,h₁,← hfirst,hsecond]⟩
 
-private theorem represented {L : ℕ} (f : Catalog true L) :
+theorem represented {L : ℕ} (f : Catalog true L) :
     ∃ s t, table s t = f := by
   classical
   obtain ⟨xs,hbudget,hlow,hincr,hcell⟩ := f.property
