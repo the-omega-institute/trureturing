@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HausmannQuestion54Refutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hausmann-2026-question-5-4-refutation` (refuted) by `D5/S3/Combinatorics/Graph/HausmannQuestion54Refutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hausmann-2026-question-5-4-refutation","declaration_gid":"D5/S3/Combinatorics/Graph/HausmannQuestion54Refutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Will Hausmann (2026). *Weighted Max Cut in Subcubic Graphs*. URL: <https://arxiv.org/html/2611.05178v1>.
