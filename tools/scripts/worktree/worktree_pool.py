@@ -372,7 +372,7 @@ def host_cleanup():
     return _HOST_CLEANUP
 
 
-def no_idle(options, reason=None):
+def no_idle(options, reason=None, candidate_refusals=()):
     # The implicit creator defers its disk gate until reuse has been exhausted.
     if os.environ.get("WORKTREE_REQUIRE_DISK_CHECK") == "1":
         try:
@@ -383,12 +383,32 @@ def no_idle(options, reason=None):
     result = dict(event="worktree_init", status="no_idle")
     if reason is not None:
         result["reason"] = reason
+    if candidate_refusals:
+        result["candidate_refusals"] = list(candidate_refusals)
     return result
 
 
 def task_users(paths):
     codex = Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex")))
     return host_cleanup().active_paths(codex, scopes=paths)
+
+
+def candidate_activity(paths):
+    # Only eligibility reads before checkpointing or branch allocation may skip a candidate.
+    try:
+        return task_users(paths)
+    except OSError as error:
+        # Linux can expose a matched process identity while a proc inventory
+        # is transitioning.  The diagnostic is never admission evidence:
+        # wait only on the retained pidfd for complete group exit, then repeat
+        # the same full activity inventory.  Persistent or ambiguous failures
+        # remain fail-closed refusals.
+        if host_cleanup().wait_for_linux_activity_transition(error):
+            try:
+                return task_users(paths)
+            except OSError as retry_error:
+                error = retry_error
+        raise Refused("task_activity_unavailable:" + str(error)) from error
 
 
 def no_task_users(path, paths):
@@ -486,8 +506,10 @@ def claim(options):
         reference = "refs/heads/" + options.branch
         git(options.source, "check-ref-format", reference)
         activity = None
+        refusals = []
         for candidate in candidates:
             allocated_branch = prepared = False
+            stage = "qualification"
             try:
                 with ExitStack() as stack:
                     if candidate.is_symlink():
@@ -517,19 +539,24 @@ def claim(options):
                         for pin in PINS:
                             if (path / pin).read_bytes() != expected[pin]:
                                 raise Refused("incompatible_pin:" + pin)
+                    stage = "activity"
                     if activity is None:
-                        activity = task_users(candidates)
+                        activity = candidate_activity(candidates)
                     no_task_users(path, activity)
                     checkpoint = None
                     retained_branch = branch
                     if idle:
-                        no_task_users(path, task_users((path,)))
+                        stage = "activity_recheck"
+                        no_task_users(path, candidate_activity((path,)))
+                        stage = "state_recheck"
                         if idle_state(options.source, path, dev) != state:
                             raise Refused("idle_identity_changed")
                     else:
+                        stage = "state_recheck"
                         if dormant_state(options.source, path, metadata) != state:
                             raise Refused("task_identity_changed")
-                        no_task_users(path, task_users((path,)))
+                        stage = "activity_recheck"
+                        no_task_users(path, candidate_activity((path,)))
                         prepared = True
                         checkpoint = commit_snapshot(path, metadata, branch,
                             b"WIP checkpoint dormant worktree before reuse\n", stack, options.source)
@@ -589,4 +616,5 @@ def claim(options):
                 attached = git(candidate, "symbolic-ref", "--quiet", "HEAD", check=False)
                 if options.path or allocated_branch or prepared or attached.stdout.strip() == reference.encode():
                     raise
-        return no_idle(options)
+                refusals.append(dict(path=str(candidate), stage=stage, reason=str(error)))
+        return no_idle(options, candidate_refusals=refusals)
