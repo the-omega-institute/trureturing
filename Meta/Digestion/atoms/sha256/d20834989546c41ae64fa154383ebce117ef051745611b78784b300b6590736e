@@ -1,0 +1,56 @@
+**Definition 48.1 (active rows, labels and the coupled producer).** Let
+$h=1/\sqrt2$, $c=\cos(\pi/8)$, $s=\sin(\pi/8)$,
+$d=2(h+c)$ and $e=2(h+s)$. In the certificate basis
+$F=T^\dagger E^{\mathsf T}T$, write $F\succeq0$ and
+$\operatorname{Tr}F=1$, with $H_0=\operatorname{diag}(d^2,e^2)$. For the
+active sign $\sigma$ use the rows
+
+$$
+\begin{aligned}
+ r_1^+&=(h,h),&r_2^+&=(h,-h),
+ &r_3^+&=(c,is),&r_4^+&=(c,-is),\\
+ r_1^-&=(h,h),&r_2^-&=(-h,h),
+ &r_3^-&=(-ic,s),&r_4^-&=(ic,s).
+\end{aligned}
+\tag{48.1}
+$$
+
+These are the two source recovery rows after expressing the feedback
+relative to $U_\sigma$. If $V_\sigma=UU_\sigma^\dagger$, define
+
+$$
+ a_\sigma(V_\sigma)=\sum_{i=1}^4(V_\sigma)_{ii}r_i^\sigma,\qquad
+ L_i^\sigma=r_i^\sigma F^{1/2},\qquad
+ b_\sigma=a_\sigma(V_\sigma)F^{1/2}.
+\tag{48.2}
+$$
+
+The source identity is
+
+$$
+ g(E,U)=\operatorname{Tr}(H_0F)-\|b_\sigma\|_2^2.
+\tag{48.3}
+$$
+
+For a pure effect $F=\psi\psi^\dagger$, $\|\psi\|=1$, put
+$\ell_i^\sigma=r_i^\sigma\psi$, $\chi_\sigma=a_\sigma(V_\sigma)\psi$, and
+
+$$
+ q_+(\psi)=|\psi_2|^2,\qquad q_-(\psi)=|\psi_1|^2.
+\tag{48.4}
+$$
+
+The active branch of the exact original distance is
+
+$$
+ \rho_\sigma(E,U)=8+2q_\sigma(\psi)-2|\operatorname{Tr}V_\sigma|.
+\tag{48.5}
+$$
+
+On $0<\xi\le R_\star$, a branch at level $\xi$ is the unique minimizing
+original sign by the supplied two-sign budget (42.17)--(42.20). Every
+phase feedback below is a whole unitary
+$U=\operatorname{diag}(v)U_\sigma$ with $v_i\in\mathbb T$; no independent
+column or effect control is introduced. The four rows in (48.1) are
+pairwise distinct.
+

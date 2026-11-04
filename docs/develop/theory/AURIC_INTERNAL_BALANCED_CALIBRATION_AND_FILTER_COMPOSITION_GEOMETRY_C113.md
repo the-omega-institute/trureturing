@@ -3515,3 +3515,756 @@ $$
 三阶矩、Kraus 展开及有限维 Stinespring 估计分别沿用 (28.4) 所引 Scott、Roy–Scott、Watrous 的成熟工具，以及 (25.15) 所引 Kretschmann–Schlingemann–Werner 的共同扩充界。新承重关系是 (36.14)–(36.16) 的同源 coercivity 与 (36.17)–(36.19) 对规范偏迹映射的环境对齐；它不是把已知 Choi 连续性或乘积记忆结论改名为全原联合 diamond 保证。满 steering 仍只负责 (29.3) 的效果识别，不能由 (36.10) 推出标量记忆效果；全部原标签都受检验时，规范比较必为保迹的完整原标签旗标；真子集的遗漏效果是否为零仍按定理 36.2 单独判断。
 
 ## 追加锚（本行以下为增补区）
+
+## 37. Original instrument and finite response domain
+
+**定义 37.1（Original-model scope）。** The mathematical data are those of
+C113 definitions 25.1, 27.1–27.3, 32.1, theorems 25.2, 32.2, 33.1,
+corollary 25.3 and definitions 34.1–34.2. Their source is the unchanged
+[original C113 text](https://github.com/the-omega-institute/trureturing/blob/2ecdfbb41b5bd234229ea9b61176a174a4c4de90/docs/develop/theory/AURIC_INTERNAL_BALANCED_CALIBRATION_AND_FILTER_COMPOSITION_GEOMETRY_C113.md).
+The following repo-derived consequences concern its same instrument and table.
+
+All statements below concern the original parameter domain
+
+$$
+0<\theta\le 2^{-13}=1/8192.
+$$
+
+The model assumes finite complex Hilbert spaces, Born evaluation and CP instruments.
+It does not derive these assumptions from native AURIC relations.
+Let $H=K=M=\mathbb C^2$, $Q_b=|b\rangle\langle b|$, $b=1,2$,
+and $\tau=I_M/2$. The faithful preparation condition is on the memory $\tau$;
+the system preparation $P_0$ is pure. Set
+
+$$
+\begin{split}
+&\zeta=e^{2\pi i/3},\quad \psi_0=(1,0)^T,\quad
+\psi_k=(1/\sqrt3,\sqrt{2/3}\,\zeta^{k-1})^T\ (1\le k\le3),\\
+&P_j=|\psi_j\rangle\langle\psi_j|,\quad K_j=P_j/\sqrt2,
+\quad E_j=P_j/2,\quad \mathcal A_j=\operatorname{Ad}_{K_j},\\
+&U_b(\theta)=e^{-ib\theta\sigma_y},\quad
+V_j^\theta(X)=\sum_{b=1}^2 (K_jU_b\otimes Q_b)X(K_jU_b\otimes Q_b)^*.
+\end{split}
+$$
+
+These are the fixed original four-label instrument and its initial state
+$P_0\otimes\tau$. The instrument is repeatedly applied without resets,
+repreparations, intermediate controls, new labels or additional read ports.
+Every success/failure label $j\in\{0,1,2,3\}$ is retained. The private mode $b$ persists.
+The same $\theta$ is fixed throughout all calls; it is not an available control.
+For a word $w=j_1\cdots j_m$, with
+$L_{w,b}=K_{j_m}U_b\cdots K_{j_1}U_b$, its unconditioned probability is
+
+$$
+p_\theta(w)=\tfrac12\sum_b\operatorname{Tr}(L_{w,b}P_0L_{w,b}^*).
+$$
+
+All words, including zero-probability words, are retained; for each length $m$,
+$\sum_{|w|=m}p_\theta(w)=1$. The sequence index is $n\in\mathbb N_0$.
+The tetrahedral nonselective channel has Bloch action
+$\mathcal D(t,\mathbf r)=(t,\mathbf r/3)$. Thus after $n$ calls in mode $b$
+the Bloch vector is $3^{-n}R_y(2bn\theta)e_z$. Evaluating the *new* label 0
+on the next call and averaging the two initial memory weights gives
+
+$$
+s_n=\frac14+\frac{3^{-n}}8
+ [\cos(2(n+1)\theta)+\cos(4(n+1)\theta)].                     \tag{37.1}
+$$
+
+The table to be certified is exactly
+
+$$
+\mathsf H_{ab}=s_{a+b},\qquad 0\le a,b\le4.                 \tag{37.2}
+$$
+
+Its row $a$ is a prefix of $a$ complete calls; its column $b$ is a
+common suffix of $b$ complete calls followed by the new-label-0 event.
+It is a fixed row/column summation of the complete word-probability table,
+$\mathsf H_{ab}=\sum_{|w|=a,|v|=b}p_\theta(wv0)$.
+The longest entry uses nine calls. Summing old records is a mathematical
+marginalization, not an operation that removes the records or reads them.
+
+## 38. Full-domain finite-error rank theorem
+
+**定理 38.1（Singular-value scale and error threshold）。**
+
+For every parameter in the full domain,
+
+$$
+\boxed{\frac{\theta^6}{8230118400}\le
+ \sigma_{\min}(\mathsf H(\theta))\le
+ \frac{65536}{3645}\theta^6.}                              \tag{37.3}
+$$
+
+In addition, the exact local leading term is
+
+$$
+\boxed{\sigma_{\min}(\mathsf H(\theta))=
+ \frac{64}{12605}\theta^6+O(\theta^8).}                    \tag{37.4}
+$$
+
+The constants in (37.3) are not claimed optimal. In particular, (37.3) is a parameter-dependent gap, not a
+uniform positive gap as $\theta\downarrow0$.
+
+For any complex error matrix $E$,
+
+$$
+\sigma_{\min}(\mathsf H+E)\ge
+ \frac{\theta^6}{8230118400}-\|E\|_{\rm op}.               \tag{37.5}
+$$
+
+Consequently an arbitrary matrix $\widehat{\mathsf H}$, with no symmetry,
+reality or Hankel requirement, has rank five whenever
+
+$$
+\boxed{\max_{a,b}|\widehat{\mathsf H}_{ab}-\mathsf H_{ab}|
+ <\frac{\theta^6}{41150592000}.}                           \tag{37.6}
+$$
+
+A hypothetical fixed four-label qubit CP comparison instrument with the same
+initial state and no intervening operations also exists whose exact table has
+rank four and entry error less than $16\theta^6$. Its construction appears
+below. This existence statement is distinct from the exclusion threshold (37.6)
+and does not supply a new legal operation of the original instrument.
+
+证明。 The lower and upper bounds are proved in §§40–41, the leading term
+in §42, the error statements in §43 and the CP comparison in §44.
+
+## 39. Exact determinant and rational coefficient identities
+
+**定义 39.1（Moment nodes and coefficient convention）。**
+
+Use the five nodes and weights
+
+$$
+z_0=1,\ c_0=1/4,\qquad
+z_{\pm,b}=3^{-1}e^{\pm2ib\theta},\quad
+c_{\pm,b}=e^{\pm2ib\theta}/16\quad(b=1,2).
+$$
+
+Then $s_n=\sum_\ell c_\ell z_\ell^n$. For
+$Z_{a\ell}=z_\ell^a$, the identity is
+
+$$
+\mathsf H=ZCZ^T,\quad C=\operatorname{diag}(c_\ell),
+\quad \det\mathsf H=2^{-18}\prod_{\ell<k}(z_k-z_\ell)^2.   \tag{37.7}
+$$
+
+The transpose is ordinary transpose. The matrix is real symmetric but is not
+positive semidefinite. No positive Gram argument is used.
+With $q_m=(10-6\cos(m\theta))/9$, taking the modulus of (37.7) gives
+
+$$
+|\det\mathsf H|=2^{-18}(2/3)^{12}
+ \sin^2(2\theta)\sin^2(4\theta)\sin^4\theta\sin^4(3\theta)
+ q_2^2q_4^2.                                             \tag{37.8}
+$$
+
+The six differences inside the four-node cluster have half-angle multipliers
+$1,3,4,2,3,1$, whose product is 72. The other four squared distances
+produce $q_2^2q_4^2$. Formula (37.8) is also an exact Laurent
+identity with $w=e^{2i\theta}$ and complex conjugation represented by
+$w\mapsto1/w$.
+
+For the finite coefficient identities, work in $\mathbb Q[t]/(t^8)$, $t=\theta^2$.
+The exact entry formula is
+
+$$
+[t^k]s_n=\frac{\mathbf1_{k=0}}4+
+ \frac{(-1)^k(2^{2k}+4^{2k})(n+1)^{2k}}
+ {8\,3^n(2k)!}.                                         \tag{37.9}
+$$
+
+For a submatrix with row set $I$ and column set $J$ of size $k$, its
+coefficient polynomial is the finite permutation sum
+
+$$
+\sum_{\pi\in S_k}\operatorname{sgn}(\pi)
+\prod_{r=1}^k s_{i_r+j_{\pi(r)}}(t)\pmod{t^8}.
+$$
+
+Put $e_0=1$ and $e_k=\sum_{|I|=k}\det\mathsf H_{I,I}$. Then the coefficient
+of $\lambda^{5-k}$ is $(-1)^ke_k$, and the independent Newton trace identities are
+
+$$
+k e_k=\sum_{j=1}^k(-1)^{j-1}e_{k-j}\operatorname{Tr}(\mathsf H^j),
+\qquad 1\le k\le5.
+$$
+
+These finite rational operations, together with (37.9), specify every coefficient
+through $t^7$, including all 25 four-by-four minors; their full exact arrays
+are the data cited in definition 46.1. In particular, for
+$p(\lambda,t)=\det(\lambda I-\mathsf H(t))$,
+the following coefficient statements are exact:
+
+$$
+\begin{split}
+[\lambda^3]p&=P+O(t),&P&=2783/13122,\\
+[\lambda^2]p&=At+O(t^2),&A&=36515/1062882,\\
+[\lambda]p&=Bt^3+O(t^4),&B&=-50420/43046721,\\
+[1]p&=-Dt^6+O(t^7),&D&=256/43046721.
+\end{split}                                             \tag{37.10}
+$$
+
+All lower powers preceding the displayed leading terms in (37.10) are exactly zero. Also the
+upper-left four-by-four principal minor $F(t)$ has
+
+$$
+F(t)=-\frac{10}{59049}t^3-\frac{136}{177147}t^4+R_5(t).    \tag{37.11}
+$$
+
+The higher coefficients of $F$ are
+$800/19683$ at $t^5$, $-262676/55801305$ at $t^6$, and
+$-89446592/33480783$ at $t^7$. They are not needed for the bound (37.3).
+The five generalized Vandermonde identities used below are the polynomial
+identities (37.13), one for each missing row exponent.
+
+## 40. Nonasymptotic lower bound
+
+**定理 40.1（Lower singular-value bound）。** Under definition 37.1, the lower inequality in (37.3) holds.
+
+证明。
+
+For $0\le x\le1$,
+$x/2\le\sin x\le x$. For example, integrate
+$1-u^2/2\le\cos u\le1$ on this interval; the lower integral is at least
+$5x/6$, which is stronger than required. Here every sine argument in (37.8)
+is below one. Also $4/9\le q_m\le16/9$, since $-1\le\cos(m\theta)\le1$.
+Substitution into (37.8) yields the explicit determinant bounds
+
+$$
+\frac{\theta^{12}}{688747536}\le |\det\mathsf H|
+ \le\frac{65536}{43046721}\theta^{12}.                    \tag{37.12}
+$$
+
+For clarity, their rational constants are obtained from
+
+$$
+2^{-18}(2/3)^{12}\,[2^2\,4^2\,3^4]\,2^{-12}(4/9)^4
+ =1/(16\cdot3^{16}),
+$$
+
+and the upper expression replaces $2^{-12}(4/9)^4$ by $(16/9)^4$.
+In particular the determinant is nonzero throughout the positive domain.
+
+Let $I\subset\{0,1,2,3,4\}$ and a node subset $S$ both have size four.
+If the missing row exponent is $r$, then
+
+$$
+\det Z_{I,S}=V(S)e_{4-r}(S),\qquad
+ V(S)=\prod_{\ell<k\in S}(z_k-z_\ell).                    \tag{37.13}
+$$
+
+Here $e_j$ is the elementary symmetric polynomial of degree $j$ in the
+four nodes. Identity (37.13) follows by alternating the determinant and dividing
+by the ordinary Vandermonde, or directly by expanding the five finite polynomial identities
+for the five choices of the missing exponent. Since all node moduli are at most one,
+$|e_j|\le\binom4j\le6$.
+
+If $S$ contains the node 1 and three cluster nodes, then its three
+1-to-cluster distances are at most $4/3$. Write cluster angles as
+$2r\theta$, $r\in\{-2,-1,1,2\}$. Its three internal distances have
+product at most $(2/3)^3\theta^3\prod_{r<s}|r-s|$. The four possible
+triple products have maximum 12. Hence
+
+$$
+|V(S)|\le(4/3)^3(2/3)^3\,12\theta^3
+ =2048\theta^3/243.
+$$
+
+If $S$ contains all four cluster nodes, the product of the six full angle
+differences is $4608\theta^6$, giving
+
+$$
+|V(S)|\le512\theta^6/81\le512\theta^3/81.
+$$
+
+(The last inequality uses $\theta\le1$.) A common, deliberately loose bound is
+
+$$
+|\det Z_{I,S}|\le K\theta^3,\qquad
+ K=6(2048/243+512/81)=7168/81.                             \tag{37.14}
+$$
+
+For any four-row sets $I,J$, finite Cauchy–Binet applied to (37.7) gives
+
+$$
+\det\mathsf H_{I,J}=\sum_{|S|=4}
+ \Big(\prod_{\ell\in S}c_\ell\Big)\det Z_{I,S}\det Z_{J,S}.
+$$
+
+This formula follows directly by determinant multilinearity: terms with
+repeated selected columns vanish, and grouping distinct selections gives the
+sum. There are five subsets, with weight products of modulus at most
+$1/16384$. By (37.14), every four-by-four minor is at most
+
+$$
+\frac{5K^2}{16384}\theta^6=\frac{15680}{6561}\theta^6.
+$$
+
+The fourth compound matrix has dimension five by five and consists of these
+minors in orthonormal exterior bases. Consequently
+
+$$
+\|\bigwedge^4\mathsf H\|_{\rm op}\le
+\|\bigwedge^4\mathsf H\|_{\rm F}\le
+\frac{78400}{6561}\theta^6.                               \tag{37.15}
+$$
+
+To recall the finite spectral fact being used, apply the singular value
+decomposition to $\mathsf H$. Exterior powers of its unitary factors are
+unitary, and the exterior power of its diagonal singular-value factor has
+entries consisting of all products of four singular values. Thus, with
+$\sigma_1\ge\cdots\ge\sigma_5$, its operator norm is
+$\sigma_1\sigma_2\sigma_3\sigma_4$, and
+$|\det\mathsf H|=\prod_i\sigma_i$. This does not use positivity of
+$\mathsf H$. Dividing (37.12) by (37.15) proves
+
+$$
+\sigma_5\ge\frac{1/688747536}{78400/6561}\theta^6
+ =\theta^6/8230118400.
+$$
+
+## 41. Analytic remainder and upper bound on the entire domain
+
+**定理 41.1（Upper singular-value bound）。** Under definition 37.1, the upper inequality in (37.3) holds.
+
+证明。
+
+Every entry in (37.9) is entire in complex $t$, as is $F(t)$. On
+$|t|=1/16$, choose either square root, with modulus $1/4$. The elementary
+complex cosine estimate gives
+
+$$
+|\cos(2(n+1)\sqrt t)|\le e^{(n+1)/2},\qquad
+|\cos(4(n+1)\sqrt t)|\le e^{n+1}.
+$$
+
+Since $e<3$ and $e^{1/2}<2$, multiplication by $3^{-n}$ bounds these
+by 2 and 3, respectively. The bounds follow also from the exponential series:
+$e=\sum 1/k!<3$, and $e^{1/2}=\sqrt e<2$. Thus $|s_n(t)|<7/8$,
+and determinant expansion gives $|F(t)|\le24$ on this circle. Cauchy's
+coefficient estimate yields $|[t^k]F|\le24\cdot16^k$. For
+$0\le t\le T=2^{-26}$, $16t<1/2$, so
+
+$$
+|R_5(t)|\le\sum_{k\ge5}24(16t)^k\le48\cdot16^5t^5.       \tag{37.16}
+$$
+
+The following endpoint comparisons are exact rational inequalities; each
+ratio is increasing with $t$ on the interval:
+
+$$
+\frac{(136/177147)T}{10/59049}=\frac{17}{251658240}<\frac18,
+\quad
+\frac{48\cdot16^5T^2}{10/59049}
+ =\frac{177147}{2684354560}<\frac18.                       \tag{37.17}
+$$
+
+Equations (37.11), (37.16), (37.17) imply, for every positive $t\le T$,
+
+$$
+|F(t)|>\frac5{59049}t^3.                                 \tag{37.18}
+$$
+
+Every four-by-four minor is an entry of the fourth compound matrix and has
+absolute value at most its operator norm. Therefore
+$\sigma_1\sigma_2\sigma_3\sigma_4\ge|F(t)|$.
+Combining (37.18) with the upper determinant bound (37.12) gives
+
+$$
+\sigma_5\le\frac{65536/43046721}{5/59049}\theta^6
+ =\frac{65536}{3645}\theta^6.
+$$
+
+This completes (37.3) on the entire original domain, with uniform analytic
+bounds rather than a finite-grid or asymptotic premise.
+
+## 42. Exact leading coefficient and endpoint
+
+**定理 42.1（The three small eigenvalue branches）。** Under definition 37.1, (37.4) holds, with the branches (37.20) and the rank-two endpoint below.
+
+证明。
+
+At zero,
+
+$$
+\mathsf H_0=(uu^T+vv^T)/4,\quad
+u=(1,1,1,1,1)^T,\quad v=(1,1/3,1/9,1/27,1/81)^T,
+$$
+
+These vectors are independent, so
+$\mathsf H_0$ has rank two. Its two nonzero eigenvalues are the positive
+roots of
+
+$$
+\lambda^2-(20093/13122)\lambda+2783/13122=0.               \tag{37.19}
+$$
+
+The product in (37.19) also follows from
+$P=(5\|v\|^2-(\sum v_a)^2)/16$.
+For the other three roots, use the exact vanishings in (37.10).
+The analytic polynomial $p(tu,t)/t^3$ extends to $t=0$ and there equals
+$u^2(Pu+A)$. Its nonzero root $-A/P$ is simple. The analytic implicit
+function theorem gives a real root branch
+$\lambda=t(-A/P+O(t))$. Similarly $p(t^2v,t)/t^5$ extends to
+$Av^2+Bv$, with simple nonzero root $-B/A$, and
+$p(t^3w,t)/t^6$ extends to $Bw-D$, with simple root $D/B$.
+All divisions are valid analytic extensions by the exact coefficient
+vanishings in (37.10). These are three distinct real eigenvalues for sufficiently
+small positive $t$; together with the two nonzero limiting roots (37.19) they
+exhaust the five eigenvalues. Explicitly,
+
+$$
+\begin{split}
+\lambda_{(2)}&=-\frac{36515}{225423}\theta^2+O(\theta^4),\\
+\lambda_{(4)}&=\frac{20168}{591543}\theta^4+O(\theta^6),\\
+\lambda_{(6)}&=-\frac{64}{12605}\theta^6+O(\theta^8).
+\end{split}                                             \tag{37.20}
+$$
+
+For a real symmetric matrix the singular values are absolute eigenvalues.
+The branch $\lambda_{(6)}$ has the least absolute value near zero, which
+proves (37.4). Locally there are three positive and two negative eigenvalues;
+(37.12) and continuity imply the same inertia on the connected positive domain.
+The endpoint $\theta=0$ is only a separate rank-two limiting fact.
+
+For (37.3), the determinant and compound bounds plus the single controlled
+minor (37.11) suffice; (37.10), (37.19), (37.20) identify the sharper leading coefficient.
+Neither conclusion requires a clustering theorem.
+
+## 43. Finite error interfaces and common linear carriers
+
+**定理 43.1（Complex errors and finite-window exclusion）。** Equations (37.5), (37.6), (37.21), (37.22) hold with the following common-carrier interpretation.
+
+证明。
+
+For the Euclidean operator norm,
+$\sigma_{\min}(A)=\min_{\|x\|=1}\|Ax\|$, so the triangle inequality proves
+$\sigma_{\min}(A+E)\ge\sigma_{\min}(A)-\|E\|_{\rm op}$.
+This proves (37.5) without assuming real or symmetric errors.
+Also $\|E\|_{\rm op}\le\|E\|_{\rm F}\le5\|E\|_{\max}$, proving (37.6).
+All thresholds are strict; equality at the lower bound is not certified.
+
+For sequence errors $\widehat s_n=s_n+\delta_n$, $0\le n\le8$, the
+Hankel error $E_{ab}=\delta_{a+b}$ satisfies the sharper explicit interface
+
+$$
+\|E\|_{\rm op}\le
+ \Big(\sum_{n=0}^8m_n|\delta_n|^2\Big)^{1/2},\qquad
+(m_0,\ldots,m_8)=(1,2,3,4,5,4,3,2,1).                   \tag{37.21}
+$$
+
+Thus the weighted square root in (37.21) below
+$\theta^6/8230118400$ suffices. Uniform sequence error $\varepsilon$
+recovers $5\varepsilon$; an unweighted sequence Euclidean norm gives
+$\sqrt5\|\delta\|_2$. The multiplicity identity is exact; Hankel structure
+alone does not turn arbitrary SVD truncation into a Hankel model.
+
+If a common real vector space $V$ of dimension at most four supplies states
+$x_a$ and suffix evaluations $\ell_b$ independent of $a$, its table
+$A_{ab}=\ell_b(x_a)$ factors through $V$ and has rank at most four.
+The same algebra applies to a complex *linear* factorization of dimension at
+most four. A Hilbert-space dimension is a different quantity: a quantum
+Hilbert space of dimension $d$ has up to $d^2$ real Hermitian linear
+coordinates, and retained memory must be counted. The source model itself
+has a two-dimensional local system and a CP joint realization.
+
+For any rank-at-most-four complex matrix $A$, choose a unit vector in its
+kernel. Then $\|\mathsf H-A\|_{\rm op}\ge\sigma_5(\mathsf H)$.
+Conversely, deleting the least singular component from an SVD gives a
+rank-four matrix at operator error exactly $\sigma_5$. This finite proof
+establishes the needed distance identity, and in particular
+
+$$
+\inf_{\operatorname{rank}A\le4}\|\mathsf H-A\|_{\max}
+ \ge\sigma_5(\mathsf H)/5
+ \ge\theta^6/41150592000.                                \tag{37.22}
+$$
+
+It excludes a common four-dimensional linear realization that approximates
+the original table strictly inside (37.6). It also applies to the smaller sets
+of Hankel or legally induced CP tables, when those tables actually factor
+through four dimensions. It does not infer CP realizability from matrix rank.
+
+If $\widehat{\mathsf H}$ has a certified estimation error
+$\varepsilon_{\rm est}$ per entry and a candidate model fits it to
+$\varepsilon_{\rm fit}$ per entry, the sufficient exclusion condition is
+$5(\varepsilon_{\rm est}+\varepsilon_{\rm fit})<
+\theta^6/8230118400$. No such estimation or fitting errors, sampling access,
+independent repetitions, confidence levels or sample budgets are supplied here.
+Unconstrained SVD truncation need not preserve real/Hankel entries, probabilities,
+full word normalization, CP, a fixed repeated instrument or common source.
+
+## 44. A hypothetical fixed CP comparison at the same exponent
+
+**定理 44.1（Rank-four CP comparison）。** On the domain in definition 37.1 there exists a fixed complete four-label CP comparison instrument whose selected table has exact rank four and maximum entry error below $16\theta^6$.
+
+证明。
+
+This is a mathematical existence construction inside the assumed complex/Born/CP
+class. It is not an operation performed on the actual $V_j^\theta$, and it
+does not assert that the original legal menu supplies a tilted-axis control.
+Keep the same $P_0\otimes\tau$, all four labels, complete failure records,
+and system and memory spaces. Define the unit vector and fixed rotation
+
+$$
+k=(5,0,3)/\sqrt{34},\quad r=\sqrt{68/5},\quad
+\phi=r\theta,\quad \widetilde U=e^{-i(\phi/2)k\cdot\sigma}.
+$$
+
+The single hypothetical repeated instrument is
+
+$$
+\widetilde V_j(X)=(K_j\widetilde U\otimes I_M)
+ X(K_j\widetilde U\otimes I_M)^*.
+$$
+
+It is CP and complete, since $\sum_j\widetilde U^*E_j\widetilde U=I$.
+The memory is a spectator; no resets, additional preparations or intermediate
+controls occur. By isotropy of the tetrahedral nonselective channel and the
+rotation formula $e_z\cdot R_k(\alpha)e_z=k_z^2+(1-k_z^2)\cos\alpha$,
+its table is generated by
+
+$$
+\widetilde s_n=\frac14+\frac{3^{-n}}4
+ \left[\frac9{34}+\frac{25}{34}\cos((n+1)r\theta)\right]. \tag{37.23}
+$$
+
+This has four distinct exponential nodes
+$1,1/3,e^{i\phi}/3,e^{-i\phi}/3$ with nonzero weights on the stated positive
+domain, since $0<\phi<4/8192<1$. Its five-by-five table has rank four (or use the common four-dimensional
+real system Hermitian space directly for the upper rank bound).
+For the error, put $x=(n+1)\theta$, $a=9/34$, $p=25/34$. The true
+cosine mixture has even moments $\mu_{2j}=(2^{2j}+4^{2j})/2$; the tilted
+mixture has moments $\widetilde\mu_0=1$,
+$\widetilde\mu_{2j}=p(68/5)^j$ for $j\ge1$.
+They agree at orders 0, 2, 4, while
+
+$$
+\mu_6-\widetilde\mu_6=1152/5,\qquad
+(\mu_8+\widetilde\mu_8)/(4\cdot8!)=5669/15750.
+$$
+
+Real Taylor expansion of each cosine through degree six, with remainder
+bounded by the eighth power divided by $8!$, therefore gives
+
+$$
+\left|s_n-\widetilde s_n+\frac2{25}3^{-n}x^6\right|
+ \le\frac{5669}{15750}3^{-n}|x|^8.                        \tag{37.24}
+$$
+
+For $0\le n\le8$ and $\theta^2\le2^{-26}$, the exact finite maximum
+of the resulting upper factors is
+
+$$
+\max_{0\le n\le8}3^{-n}
+ \left[\frac2{25}(n+1)^6+
+ \frac{5669}{15750}(n+1)^8\,2^{-26}\right]
+ =\frac{10569663795625}{684913065984}<16,                  \tag{37.25}
+$$
+
+attained at $n=4$. Thus $\|\mathsf H-\widetilde{\mathsf H}\|_{\max}
+<16\theta^6$, and $\|\mathsf H-\widetilde{\mathsf H}\|_{\rm op}<80\theta^6$.
+Equation (37.25) is a maximum over nine exact rational factors after a uniform
+analytic remainder bound, and holds for every parameter in the domain. The comparison supplies an
+actual CP realization for this upper approximation statement; it does not
+follow from SVD. Together with (37.22), the best table approximation within
+this class of four-dimensional CP linear models has exponent six, with
+nonoptimal constants. No optimal CP error coefficient or full-word distance
+at order $\theta^6$ is asserted.
+
+## 45. Exact connection with the nominal calibration budget
+
+**定理 45.1（The actual section 32.7 budget and its finite-event interface）。** The budget (37.26) has the conversion (37.28) and cannot activate (37.6) anywhere on the domain of definition 37.1.
+
+证明。
+
+The source diamond norm is not divided by two. In its notation,
+$d=2$, $\lambda=1/2$, $\delta_j=2\theta$,
+$F_j=3P_j-I$, $\kappa_j=3$, $\|E_j\|_{\rm op}=1/2$. Consequently
+
+$$
+h=\sqrt{8\theta},\quad g=(2+h)h,\quad h_j=h,\quad e_j=g,
+\quad e=4g,\quad t_j=12g,
+$$
+
+and the actual source *budget expression* is exactly
+
+$$
+\Delta(\theta)=\min\{2,4g+2f(12g)\},\qquad
+f(t)=\frac{(\sqrt{1+t}+1)t}{1+\sqrt{1-t}}.                 \tag{37.26}
+$$
+
+The domain implies $h\le1/32$ and $12g\le195/256<1$, so no radical
+or invertibility precondition is omitted. The comparison channel in theorem
+25.2 uses $\mathcal A_j\otimes\widehat B_j$ with $\widehat B_j$ CPTP.
+Corollary 25.3 permits arbitrary correlated intermediate memory without reset.
+After tracing that private memory, every complete accessible history is
+exactly the nominal $\{\mathcal A_j\}$ history. That nominal table is
+
+$$
+\mathsf H^{\rm nom}_{ab}=s^{\rm nom}_{a+b},\qquad
+s^{\rm nom}_n=1/4+3^{-n}/4=s_n(0).                        \tag{37.27}
+$$
+
+For entry $s_n$, the legal protocol uses exactly $N=n+1$ calls and the
+same terminal event. Its complete output trace-norm difference is at most
+$\min\{2,(n+1)\Delta\}$. The difference has trace zero; for a common event
+$0\le P\le I$, the positive/negative decomposition gives
+$|\operatorname{Tr}(PX)|\le\|X\|_1/2$. Thus the already supplied corollary 25.3
+interface really does imply
+
+$$
+|s_n-s_n^{\rm nom}|\le B_n:=
+ \min\{1,(n+1)\Delta(\theta)/2\},\qquad0\le n\le8.        \tag{37.28}
+$$
+
+In particular the maximum entry budget is $B_8=\min\{1,9\Delta/2\}$,
+and an operator error budget is $(\sum m_nB_n^2)^{1/2}\le5B_8$.
+These are comparison-to-nominal budgets, not estimation errors of a measured
+actual table. Nothing in (37.26)–(37.28) supplies statistical sampling accuracy.
+
+The numeric expression (37.26) obeys a useful rigorous lower bound on the
+entire domain: $f\ge0$, $g\ge2h$, $8h\le1/4<2$, hence
+
+$$
+\Delta\ge\min\{2,8h\}=8h.
+$$
+
+Therefore every $B_n\ge\min\{1,4h\}\ge h$, and
+$B_8\ge h>\theta^6/41150592000$. The source budget cannot activate (37.6)
+anywhere in the stated domain, including at saturation of the minimum in
+(37.26). This is a lower bound on the *chosen upper-bound expression*, not a
+lower bound on the true diamond defect.
+
+The nominal error itself can also be distinguished from this loose budget:
+using $1-\cos x\le x^2/2$,
+
+$$
+|s_n-s_n(0)|\le\tfrac54 3^{-n}(n+1)^2\theta^2,
+\quad\max_{0\le n\le8}|s_n-s_n(0)|\le\tfrac53\theta^2.
+$$
+
+For the first entry, $1-\cos x\ge x^2/4$ for $|x|\le1$
+(e.g. Taylor's alternating bound), so
+$|s_0-s_0(0)|\ge5\theta^2/8$, itself larger than the threshold (37.6).
+The nominal rank-two comparison is not an order-six table approximant.
+The separate tilted-axis comparison (37.23) is.
+
+Locally $f(t)=t+O(t^2)$, and the untruncated expression is below two for
+sufficiently small positive $\theta$. Thus (37.26) also gives
+
+$$
+\Delta=28g+O(g^2)=112\sqrt{2\theta}+O(\theta).
+$$
+
+No upper bound has been reversed into a lower bound on $\theta$. No small
+$\Delta$ has been identified with rank stability, exact closure, an
+attained estimation error or additional experimental resources.
+
+## 46. Exact data, reused algebra and remaining mathematical boundaries
+
+**定义 46.1（Finite rational data and proof scope）。** The full characteristic
+and 25 minor coefficient arrays in $\mathbb Q[t]/(t^8)$, the Newton trace
+polynomials, the five generalized Vandermonde row patterns, endpoint rational
+ratios, CP moments and the nine factors of (37.25) are recorded as
+[exact rational data](https://github.com/the-omega-institute/trureturing-experiments/blob/9d1a6542cd2d59a9140e4c926c790f2ef061e01d/experiments/auric/c113-finite-error-rank/certificate.json)
+in the fixed private [source/data unit](https://github.com/the-omega-institute/trureturing-experiments/tree/9d1a6542cd2d59a9140e4c926c790f2ef061e01d/experiments/auric/c113-finite-error-rank).
+The coefficient convention and finite permutation/Newton formulas are in
+§39; the all-parameter proofs are §§40–45. The rational data citation is not
+a substitute for the sine bounds, complex Cauchy remainder, exterior-power
+spectral calculation, simple-root implicit-function deduction, real cosine
+remainder, error norm conversion or nominal-history comparison proved here.
+
+The finite compound/Cauchy–Binet algebra is also the mathematical interface of
+[CompoundMatrices](https://github.com/the-omega-institute/trureturing/blob/2ecdfbb41b5bd234229ea9b61176a174a4c4de90/D5/S3/Quantum/Schatten/CompoundMatrices.lean),
+including its attributed physlib origin. The finite identities needed here
+are explicitly given in (37.7), (37.13)–(37.15). The associated mathlib pin is
+v4.35.0, revision `56a005855ea17e0b0958f73ec801ae140b0a1679`.
+The new content is the repo-derived original-model synthesis of the
+full-domain order-six bounds, sharp coefficient, finite-error interfaces,
+actual nominal budget and hypothetical CP comparison. These are no
+literature-priority claims.
+
+**定义 46.2（Limits of the finite theorem）。** Equations (37.3)–(37.6),
+(37.21)–(37.28) concern the selected finite table. They do not determine a full
+future carrier, minimal physical dimension, native complex/Born/CP origin,
+original-menu availability of comparison controls, empirical source
+stationarity or statistical precision. The CP comparison concerns existence
+in the assumed model class and only the selected table; it does not assert
+full word-probability approximation at order six. Optimal constants and the
+best CP leading error coefficient remain undetermined. The FourPath and
+continuing AURIC targets are not consequences of this finite theorem.
+
+The known reference frame is finite moment/Vandermonde algebra, compound
+matrices and norm perturbation. Ordinary transpose in (37.7), rather than a
+positive-Gram interpretation, is essential. The order-six gap, order-six CP
+table comparison and order-one-half nominal budget have separate maps and
+norms. All original protocol constraints apply to the actual table;
+comparison constructions grant no additional operational authority.
+
+## 47. The distinct same-source three-design contract
+
+**定义 47.1（No identification of the two moduli）。** The modulus
+$\Delta_{\mathsf S}$ in (36.10) has the target
+$\bigoplus_{j\in\mathsf S}(\operatorname{id}_H\otimes\Psi_j)$,
+with $\Psi_j$ fixed by (36.5). Its premises include one fixed correlated
+source, its faithful memory support bound, a positive-weight complex
+projective three-design, the actual unconditioned leakage
+$\varepsilon_{\mathsf S}$, the same complete CP instrument and the selected
+original labels. In contrast, (32.7) and (37.26) compare with the nominal
+$\mathcal A_j\otimes\widehat B_j$ and, after tracing private memory, the
+nominal tetrahedral $\mathcal A_j$ histories of (37.27). These targets and
+contracts are different.
+
+The original rank witness starts from $P_0\otimes\tau$ and repeats
+(32.3); it supplies no three-design preparation or new source menu. Applying
+§36 requires its own actual leakage and source assumptions, and finite
+composition requires every actual invocation to lie in the certified input
+support, all consumed success/failure branches, and the common continuation
+types of corollary 36.3. To use any resulting comparison for §43 one must
+additionally identify its same selected prefix/suffix events and establish
+an actual table-error bound in the norm of (37.5) or (37.21), strictly below
+$L=\theta^6/8230118400$ (or the maximum-entry bound (37.6)). There is no
+identification of $\Delta_{\mathsf S}$ with (32.7), or automatic replacement
+of either target by the other. The existence of (36.10) supplies neither this
+rank-error interface nor source stationarity, certified sample precision,
+future capacity or native resources.
+
+## 48. The exact positive-refinement interface and its scope
+
+**定义 48.1（Canonical coarse equality is an additional premise）。** On an
+already complex finite direct-sum matrix algebra $\bigoplus_bM_{d_b}(\mathbb C)$,
+take arbitrary finite sets of original labels $a$ and original centers $b$,
+and arbitrary finite block dimensions $d_b$. Let $S_a$ be complex-linear
+original fine-record maps, each positive on the
+componentwise positive cone, and let $E_b\ge0$. The exact premise
+
+$$
+\sum_a S_a(X)_b=\sqrt{E_b}X_b\sqrt{E_b}
+\qquad\text{for every complex input }X\text{ and every original block }b
+$$
+
+is the canonical-single-filter coarse equality. Under precisely these
+premises, [canonical_refinement_coefficients and
+canonical_refinement_completely_positive](https://github.com/the-omega-institute/trureturing/blob/dc97e7044750e3b788268e692f467f00cb2d53c1/D5/S3/Quantum/Reduction/CanonicalPositiveRefinement.lean)
+give $S_a(X)_b=c_{ab}\sqrt{E_b}X_b\sqrt{E_b}$, with
+$0\le c_{ab}\le1$, $\sum_ac_{ab}=1$ on every nonzero effect block, zero
+output on every zero effect block, no off-center output, and positivity of
+every finite ancillary amplification of each original fine map. Neither
+singular effects nor unequal block dimensions are excluded.
+
+General coarse CP and fixed trace effects do not supply that equality:
+[PositiveCoarseRefinementRefutation.result](https://github.com/the-omega-institute/trureturing/blob/dc97e7044750e3b788268e692f467f00cb2d53c1/D5/S3/Quantum/Reduction/PositiveCoarseRefinementRefutation.lean)
+uses $S(X)=X^{\mathsf T}/2$ and
+$T(X)=(\operatorname{Tr}(X)I-X^{\mathsf T})/2$ on $M_2(\mathbb C)$.
+Both are positive complex-linear maps with trace effects $I/2$; their sum is
+the CP depolarizing channel, while the transpose branch is not CP.
+Consequently the canonical result does not derive CP from positivity and
+arbitrary coarse CP. C113 already assumes complex matrices, Born evaluation
+and CP in definition 37.1; the canonical theorem neither removes those
+premises here nor supplies exact full-future capacity or the missing native
+AURIC resource relations.
+
+## 追加锚（本行以下为增补区）
