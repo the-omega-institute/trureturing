@@ -652,6 +652,7 @@ class LinuxProcessObserver:
             poller = select.poll()
             poller.register(self.pidfd, select.POLLIN)
             result["revents"] = sum(events for _, events in poller.poll(0))
+            result["poll_finished_monotonic_ns"] = time.monotonic_ns()
             if check_current:
                 info = os.stat(self.process)
                 anchor = self.binding.get("anchor", {})

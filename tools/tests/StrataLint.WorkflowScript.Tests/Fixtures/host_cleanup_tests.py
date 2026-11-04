@@ -782,22 +782,20 @@ class HostCleanupTests(unittest.TestCase):
 
     @unittest.skipUnless(sys.platform.startswith("linux"), "requires native Linux proc/pidfd")
     def test_native_pidfd_dead_leader_live_worker(self):
-        # Kernel clear_child_tid + futex joins the leader's actual exit. The
-        # worker retains cwd/fd until the parent releases its pipe; no sleeps,
-        # proc-state polling, signals, or synthetic proc records are involved.
+        # A thread pidfd joins actual leader exit; the process pidfd must still
+        # be nonready. PIDFD_THREAD (Linux 6.9+) is O_EXCL in linux/pidfd.h.
+        # Unsupported Linux kernels fail this probe, never silently skip it.
+        # The worker owns cwd/fd until pipe release; no sleeps or signals.
         source = r"""
 #define _GNU_SOURCE
-#include <errno.h>
 #include <fcntl.h>
-#include <linux/futex.h>
 #include <pthread.h>
-#include <stdatomic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/syscall.h>
 #include <unistd.h>
-static atomic_int leader_alive = 1;
 static const char *directory;
+static int release_fd;
 static void *worker(void *unused) {
     (void)unused;
     if (chdir(directory)) _exit(10);
@@ -805,21 +803,16 @@ static void *worker(void *unused) {
     if (fd < 0) _exit(11);
     long tid = syscall(SYS_gettid);
     if (dprintf(1, "ready %ld %d\n", tid, fd) < 0) _exit(12);
-    while (atomic_load(&leader_alive)) {
-        if (syscall(SYS_futex, &leader_alive, FUTEX_WAIT, 1, NULL, NULL, 0)
-                && errno != EAGAIN && errno != EINTR) _exit(13);
-    }
-    if (dprintf(1, "leader-exited\n") < 0) _exit(14);
     char command;
-    ssize_t count = read(0, &command, 1);
+    ssize_t count = read(release_fd, &command, 1);
     if (count < 0 || (count == 1 && command != 'X')) _exit(15);
     if (close(fd)) _exit(16);
     return NULL;
 }
 int main(int argc, char **argv) {
-    if (argc != 2) return 17;
+    if (argc != 3) return 17;
     directory = argv[1];
-    if (syscall(SYS_set_tid_address, &leader_alive) < 0) return 18;
+    release_fd = atoi(argv[2]);
     pthread_t thread;
     if (pthread_create(&thread, NULL, worker, NULL)) return 19;
     char command;
@@ -835,46 +828,61 @@ int main(int argc, char **argv) {
                                    "-x", "c", "-o", str(probe), "-"],
                                   input=source, capture_output=True, text=True)
         self.assertEqual(0, compiled.returncode, compiled.stdout + compiled.stderr)
-        with subprocess.Popen([str(probe), str(self.root)], stdin=subprocess.PIPE,
-                              stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as child:
-            observer = None
-            try:
-                ready = child.stdout.readline().split()
-                self.assertEqual("ready", ready[0], ready)
-                worker, held_fd = map(int, ready[1:])
-                process = Path("/proc") / str(child.pid)
-                observer = cleanup.LinuxProcessObserver(process)
-                self.assertEqual("matched", observer.binding["identity"], observer.binding)
-                self.assertEqual(0, observer.sample()["revents"])
-                iterdir = Path.iterdir
-                def only_probe(path):
-                    return iter([process]) if path == Path("/proc") else iterdir(path)
-                with patch.object(Path, "iterdir", only_probe):
-                    active = cleanup.active_paths(self.root / "codex", scopes=(self.root,))
-                self.assertIn(self.root, active)
-                self.assertIn(self.root / "held", active)
-                child.stdin.write("L")
-                child.stdin.flush()
-                self.assertEqual("leader-exited\n", child.stdout.readline())
-                status = cleanup.LinuxProcessObserver.read(observer.proc_fd, "status")
-                fields = dict(line.split(":", 1) for line in status.splitlines() if ":" in line)
-                self.assertEqual("Z", fields["State"].split()[0], status)
-                self.assertEqual("2", fields["Threads"].strip(), status)
-                live = observer.sample()
-                self.assertEqual(0, live["revents"], live)
-                self.assertEqual("not_observed", live["group_exit"])
-                # A live worker really holds these paths even when the leader's
-                # inventory is inaccessible. Partial task evidence cannot admit.
-                task = process / "task" / str(worker)
-                self.assertEqual(str(self.root), os.readlink(task / "cwd"))
-                self.assertEqual(str(self.root / "held"), os.readlink(task / "fd" / str(held_fd)))
-                diagnostic = None
-                with patch.object(Path, "iterdir", only_probe):
+        release_read, release_write = os.pipe()
+        try:
+            with os.fdopen(release_write, "wb", buffering=0) as release, \
+                 subprocess.Popen([str(probe), str(self.root), str(release_read)], stdin=subprocess.PIPE,
+                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                                  pass_fds=(release_read,)) as child:
+                observer, thread_pidfd = None, None
+                try:
+                    ready = child.stdout.readline().split()
+                    self.assertEqual("ready", ready[0], ready)
+                    worker, held_fd = map(int, ready[1:])
+                    process = Path("/proc") / str(child.pid)
+                    observer = cleanup.LinuxProcessObserver(process)
+                    self.assertEqual("matched", observer.binding["identity"], observer.binding)
                     try:
-                        active = cleanup.active_paths(self.root / "codex", scopes=(self.root,))
+                        thread_pidfd = os.pidfd_open(child.pid, os.O_EXCL)
                     except OSError as error:
-                        self.assertTrue(str(error).startswith("linux_activity_unavailable "), str(error))
-                        refusal = json.loads(str(error).split(" ", 1)[1])
+                        self.fail("native leader-exit synchronization requires PIDFD_THREAD: "
+                                  + repr(error) + "; kernel=" + str(os.uname()))
+                    self.assertEqual(0, observer.sample()["revents"])
+                    iterdir = Path.iterdir
+                    def only_probe(path):
+                        return iter([process]) if path == Path("/proc") else iterdir(path)
+                    with patch.object(Path, "iterdir", only_probe):
+                        active = cleanup.active_paths(self.root / "codex", scopes=(self.root,))
+                    self.assertIn(self.root, active)
+                    self.assertIn(self.root / "held", active)
+                    child.stdin.write("L")
+                    child.stdin.flush()
+                    leader_exit = select.poll()
+                    leader_exit.register(thread_pidfd, select.POLLIN)
+                    events = leader_exit.poll()
+                    self.assertTrue(any(flags & select.POLLIN for _, flags in events), events)
+                    status = cleanup.LinuxProcessObserver.read(observer.proc_fd, "status")
+                    fields = dict(line.split(":", 1) for line in status.splitlines() if ":" in line)
+                    self.assertEqual("Z", fields["State"].split()[0], status)
+                    self.assertEqual("2", fields["Threads"].strip(), status)
+                    live = observer.sample()
+                    self.assertEqual(0, live["revents"], live)
+                    self.assertEqual("not_observed", live["group_exit"])
+                    # A live worker really holds these paths even when the leader's
+                    # inventory is inaccessible. Partial task evidence cannot admit.
+                    task = process / "task" / str(worker)
+                    self.assertEqual(str(self.root), os.readlink(task / "cwd"))
+                    self.assertEqual(str(self.root / "held"), os.readlink(task / "fd" / str(held_fd)))
+                    diagnostic = None
+                    output, errors = io.StringIO(), io.StringIO()
+                    with patch.object(Path, "iterdir", only_probe), \
+                         contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+                        original_return_code = cleanup.main(["active-paths", "--scope", str(self.root)])
+                    if original_return_code == 1:
+                        self.assertEqual("", output.getvalue())
+                        prefix = "HOST_CLEANUP_FAILED linux_activity_unavailable "
+                        self.assertTrue(errors.getvalue().startswith(prefix), errors.getvalue())
+                        refusal = json.loads(errors.getvalue()[len(prefix):])
                         diagnostic = refusal["diagnostic"]
                         self.assertIn(diagnostic["original_error"]["errno"],
                                       (cleanup.errno.EACCES, cleanup.errno.ENOENT, cleanup.errno.ESRCH))
@@ -885,25 +893,32 @@ int main(int argc, char **argv) {
                         self.assertLessEqual(diagnostic["fault"]["monotonic_ns"],
                                              diagnostic["refusal"]["monotonic_ns"])
                     else:
-                        self.assertIn(self.root, active)
-                        self.assertIn(self.root / "held", active)
-                child.stdin.write("X")
-                child.stdin.flush()
-                child.stdin.close()
-                self.assertEqual(0, child.wait(), child.stderr.read())
-                exited = observer.sample()
-                self.assertTrue(exited["revents"] & select.POLLIN, exited)
-                self.assertEqual("observed", exited["group_exit"])
-                print(json.dumps(dict(probe="native_pidfd_dead_leader_live_worker", live=live,
-                                      exited=exited, diagnostic=diagnostic), sort_keys=True), flush=True)
-            finally:
-                if not child.stdin.closed:
-                    child.stdin.close()  # EOF releases both controlled phases, including assertion failure.
-                child.wait()
-                if observer is not None:
-                    observer.close()
-                child.stdout.close()
-                child.stderr.close()
+                        self.assertEqual(0, original_return_code, errors.getvalue())
+                        self.assertIn(str(self.root), json.loads(output.getvalue()))
+                        self.assertIn(str(self.root / "held"), json.loads(output.getvalue()))
+                    release.write(b"X")
+                    release.close()
+                    child.stdin.close()
+                    self.assertEqual(0, child.wait(), child.stderr.read())
+                    exited = observer.sample()
+                    self.assertTrue(exited["revents"] & select.POLLIN, exited)
+                    self.assertEqual("observed", exited["group_exit"])
+                    print(json.dumps(dict(probe="native_pidfd_dead_leader_live_worker", live=live,
+                                          exited=exited, diagnostic=diagnostic,
+                                          original_return_code=original_return_code), sort_keys=True), flush=True)
+                finally:
+                    release.close()
+                    if not child.stdin.closed:
+                        child.stdin.close()  # EOF releases the leader even on assertion failure.
+                    child.wait()
+                    if thread_pidfd is not None:
+                        os.close(thread_pidfd)
+                    if observer is not None:
+                        observer.close()
+                    child.stdout.close()
+                    child.stderr.close()
+        finally:
+            os.close(release_read)
 
     def test_linux_disappearing_links_preserve_observable_siblings(self):
         process = self.root / "proc/123"
