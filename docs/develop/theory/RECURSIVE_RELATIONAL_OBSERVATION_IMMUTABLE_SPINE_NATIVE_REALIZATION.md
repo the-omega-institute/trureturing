@@ -552,3 +552,605 @@ or (IS.7). Complete native UJB execution, independent experimental and
 reconciliation checks, and acceptance remain unestablished.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. A service-bound native entry and return
+
+**Definition 7.1 (the composed immutable-spine service).** Fix the
+particular frontend of ML22–24, its actual original port $o$, the public
+$N,a,b$, its original-indexed mutable cache and its ordered occurrence
+receipts. Retain its receive, validation, Read, receipt, cache-update,
+printing and Close paths. The evaluator is the immutable-spine translation
+of §§1–3, with its private reference and bit names disjoint from the
+frontend's names. Only the actual reserve and the null binding are shared.
+The source connection, cache cells and occurrence records are not value tokens.
+
+At the frontend's accepted arithmetic entry, first set its busy bit and
+read the head of its actual accepted header:
+
+$$
+ h=\mathsf{eval.input.refs[1]},\qquad
+ \mathsf{is2.received}:=h.                                      \tag{IS.8}
+$$
+
+This is a reference read followed by a register write, not a transmission
+of a parsed tuple. The loader follows these very cells. Initialize the
+logical stack heads to null by separate register writes; do not clear
+any old backing frame. Install a return register whose value is the
+actual native location $r_{\rm eval}$. At $r_{\rm eval}$ the first action
+clears the busy bit, and its literal successor is the original frontend
+return handler. Its successful path reaches the original receive entry.
+
+Before ordinary frontend printing, bind the same return register to the
+original frontend return handler. End and Ack retain their original
+ordinary-output meaning. A Return requires the acknowledged output phase,
+reads the installed return register with current rights, and puts that
+actual reference into native control. A native indirect routine return
+likewise reads its supplied return register; it does not interpret a
+host integer as a code address. Literal code-reference binding and this
+indirect reference transfer are the existing ML-P binding/control
+interface, lowered to literal native locations. Original-port bit,
+End and Ack operations retain their separate connection selection.
+
+The printer reads the computed register-zero spine and uses the same
+ordinary output connection as the frontend. A local acknowledged bit,
+without the installed return reference and its actual control transfer,
+does not meet this definition. Code locations, return slots and their
+grants are material in the composed installation.
+
+**Theorem 7.2 (candidate-specific service correspondence).** Suppose the
+composed installation of Definition 7.1 is supplied, every tested current
+right is present, its declared finite allocations are backed, and the
+original input/output/provider operations complete. At each accepted
+arithmetic entry, (IS.8) realizes (IS.3) on the same physical chain.
+For every accepted arithmetic frame the evaluator's completed output is
+its unchanged ML10–11/UJB16.2 result, emitted by Print, End and Ack.
+Its actual Return reaches $r_{\rm eval}$ while busy is still one; only
+then is busy cleared and the original frontend resumed. A subsequent
+Read, including an old original slot, calls $o$ and appends a fresh
+occurrence receipt. Close reaches that frontend's terminal handler.
+
+Proof. The accepted header is produced and validated by the original
+frontend. The two actions in (IS.8) retain its actual head identity;
+every loader field read tests the current grant on that backing. No
+input bit is obtained from a numerical reference result. The disjoint
+namespace makes every evaluator write target either its own register
+or a newly extracted frame. Its source/header reads do not target the
+source connection, cache or receipt links. Theorem 2.3 and Corollary 3.2
+therefore apply to this actual word.
+
+The printer follows that computed spine, so its length marks and payload
+are the computed frame. End precedes Ack. Return reads the installed
+reference to $r_{\rm eval}$; the native control write is part of Return,
+rather than an observer's replacement of the counter. The busy bit has
+no write on this path before $r_{\rm eval}$. Its first write then clears
+busy and its successor is the original return handler used by ordinary
+frontend answers. This proves the two common-cut relations required
+by Proposition 3.4.
+
+The unchanged ML23 paths then transmit the actual operand to $o$,
+capture its actual two-bit reply before Ack, and append a new record
+header with that operand and reply. Even an equal operand uses a newly
+extracted header; it is not identified with a previous equal record.
+The classifier's slot cursor walks the original cache spine, so equal
+data at indices zero and fifteen do not identify those cells. A
+repeated informative reply is checked against its old value; the
+original mask/value pair is retained. Constant and absent replies
+retain their original behavior. Induction over the finite Read list
+proves ordered-record and cache preservation. Close writes the original
+closed bit, prints its original terminal frame and returns to the
+original closed wait. $\square$
+
+The hypotheses include actual primitive completion and adequate material.
+This theorem neither asserts those premises for an unexecuted full
+session nor turns arithmetic output into a source reply. It specifies
+the entry/return construction for Proposition 3.4; the standalone
+graph of §3 retains its stated, narrower scope.
+
+## 8. Public operand widths and a prospective evaluator envelope
+
+**Definition 8.1 (public arithmetic parameters).** For an accepted frame
+$x$, let $L=|x|$, $N\ge4$ its sample count, $t$ its cylinder count,
+and $0\le a\le b$, $b>0$, its numerator and denominator as represented
+before reduction. Set
+
+$$
+\begin{aligned}
+ r_*&=\min(N,72),&s_*&=\min(N,243),\\
+ D&=1944^N(128)_{r_*}(256)_{s_*},\\
+ m&=64(N+L+t+2),&Y&=64(t+2)(m+1),\\
+ A&=(16N+3)2^{\min(N,243)},\\
+ D_0&=L+Y+(N+1)^2+A+m+1024 .
+\end{aligned}                                                   \tag{IS.9}
+$$
+
+Falling factorials have their ordinary finite-product meaning.
+These parameters depend only on public code and received bytes;
+$D$ uses the original block caps, not an attained partition.
+
+Let $Q,R$ be the translated source-location and register counts, and
+$d$ the number of declared routines including outer main. Unused
+declared banks remain in $R$. Define
+
+$$
+\begin{aligned}
+ B_x&=16^{d+1}(D_0+1),\\
+ E_x&=R(B_x+1)+\lceil\log_2 Q\rceil+1,\\
+ U_{\rm step}(x)&=2^{E_x},&
+ U_{\rm push}(x)&=2^{E_x},&
+ U_{\rm out}(x)&=Y .
+\end{aligned}                                                   \tag{IS.10}
+$$
+
+These loose integers are not runtime measurements, installation offers
+or lower bounds.
+
+**Theorem 8.2 (represented-width bound for this evaluator).** At every
+translated source-instruction boundary on $x$, every logical register
+word has length at most $B_x$. Every completed arithmetic scalar used
+outside internal word routines has at most $m$ bits. The computed
+unframed register-zero output has length at most $Y$.
+
+Proof. Use the meanings established in ML10–11. Each admitted summand
+denominator $1944^N(128)_r(256)_s$ divides $D$: $r\le r_*$,
+$s\le s_*$, and an initial falling factorial divides a longer one
+with the same initial factor. Summands are nonnegative. ML11.5
+identifies the completed sum as an evidence probability, so every
+partial sum is at most one. Its reduced numerator and denominator
+are at most $D$, with denominator dividing $D$. Null evidence is $0/1$.
+Moreover
+
+$$
+ \log_2 D<26N,\qquad b<2^{L+1}.                                \tag{IS.11}
+$$
+
+The two unreduced mixture contributions have denominators at most $bD$.
+Their reduced sum has denominator dividing $bD$ and numerator at most
+that denominator. Before reduction the rational-addition cross-products
+and sum have at most $52N+2L+5$ bits. A positive-evidence conditional
+ratio forms products of two integers bounded by $bD$, obeying the same
+allowance. Zero evidence does not form that ratio.
+
+The other scalar bounds do not rely on the probability bound. A
+type-map weight is at most $27^{r+s}$ and there are at most
+$36^{r+s}$ maps, so its accumulated $J$ is at most $972^{2N}$.
+A partial label-assignment count is at most $256^N$. A subset index
+and its doubled power have at most $N+2$ bits. Loop indices, degrees,
+occupancies and falling-factorial products obey their finite vector
+sizes or (IS.11). The increment before a failed loop test and the
+borrowed subtraction residue add at most a constant. All are below $m$.
+
+A label-subset array has at most $2^{\min(N,243)}$ entries. Each
+entry has at most $8N+1$ payload bits and its ML.17 record at most
+$16N+3$ bits. This gives $A$. The seen-edge array has at most $N^2$
+zero/one entries. Coordinate, requirement, occupancy and partition
+vectors have their declared finite lengths; their record delimiters
+and scalar payloads fit $(N+1)^2+m+1024+A$. Remaining input has
+length at most $L$. All returned words at the combinatorial boundaries
+are bounded by $D_0$, after including the output estimate below.
+
+There are $3(t+1)$ evidence fractions and at most $t$ ratios. A
+nonnegative rational with numerator/denominator widths at most $m$
+has ML-F length at most $4m+3$, including explicit zero payloads and
+sign. Its outer V-word has length at most $8m+7$. The list headers
+and positivity bit, including $t=0$, fit the remaining allowance
+in $64(t+2)(m+1)$. This proves $Y$ without executing the output.
+
+Internal word temporaries also need a bound. In transfer, normalization
+or framing, each temporary is a prefix, suffix or reversal of a supplied
+word, with at most its unary marks and delimiter. Ripple arithmetic
+uses at most the two argument widths plus carry/borrow; shift-add
+multiplication uses at most their sum plus two. Division uses at most
+four times the larger argument width plus eight. Get and Put store
+the original serialized vector, a reversed record prefix and selected
+replacement; an individual temporary is bounded by four vector
+lengths plus four scalar widths plus eight. Gcd and reduction call
+these routines without enlarging the supplied scalar values. The
+eight-bit return word has one pending identifier because the call
+graph is acyclic.
+
+One routine layer, excluding deeper calls, therefore enlarges a bound
+$z\ge D_0$ on supplied words to at most $16(z+1)$ for an individual
+temporary. The loop invariants just described bound each temporary
+throughout a loop. Semantic outer results and arrays remain bounded
+by $D_0$ after each call. Induction down the acyclic call graph, of
+depth at most $d$, bounds all private temporaries by
+$16^{d+1}(D_0+1)$. Repeated outer calls reuse their banks, without
+increasing that depth. Sharing Copy and Clear add no growth beyond a
+supplied head or the empty word. This includes normalization and
+dispatch instruction boundaries. $\square$
+
+**Theorem 8.3 (non-retrospective complete evaluator bounds).** On every
+accepted $x$, the translated evaluator executes at most
+$U_{\rm step}(x)$ source instructions and $U_{\rm push}(x)$ pushes.
+These and $U_{\rm out}(x)$ apply to the entire accepted domain,
+including null evidence, endpoint/unreduced priors, partial masks
+and arbitrary finite cylinder lists.
+
+Proof. There are $2^{B_x+1}-1$ Boolean words of length at most $B_x$,
+so the semantic state has at most
+
+$$
+ Q(2^{B_x+1}-1)^R\le Q\,2^{R(B_x+1)}<2^{E_x} .                 \tag{IS.12}
+$$
+
+ML11.6 and Theorem 1.4 give termination of the deterministic semantic
+run. A repeated semantic state before halt would repeat its entire
+future, contradicting termination. Hence (IS.12), with the slack in
+(IS.10), bounds executed instructions including the terminal one.
+Every push is an instruction; Theorem 8.2 bounds output.
+
+Different immutable-frame histories can represent the same semantic
+state. The next logical instruction depends only on the words and
+source location; those extra identities are charged below. No completed
+evaluator run supplies a step count to this argument. $\square$
+
+The no-repetition step is the usual finite-configuration argument,
+used inside this source-specific derivation rather than asserted
+as a new general theorem; the repository's
+[space-bounded configuration account](../../../Library/ConceptDynamics/cook2006pversusnp.md),
+Proposition 5, already uses that argument. The represented-width, divisor and
+service-reserve application is repo-derived.
+
+## 9. Whole-session material and the host-owner boundary
+
+**Definition 9.1 (finite service chronology and frontend encoding).**
+A chronology $z$ specifies finite public initialization, a finite
+Read list, an accepted arithmetic frame $x$, a finite subsequent
+Read list and Close. The original source is fixed throughout.
+Let $q$ count all Reads, $S$ sum their operand lengths, and $I$
+count all received bits, including framing, initialization and Close.
+Every occurrence is retained; an acquisition-only final probe remains
+in the first Read list. Multiple accepted evaluations use sums of
+their evaluator bounds and seed/loader allocations, retaining old frames.
+
+For the fixed frontend let $F_0$ count its field locations and $R_0$
+its reference and binary registers together. Set
+
+$$
+\begin{aligned}
+ Z&=L+I+S+15N+t+1024,\qquad B_F=64Z^2,\\
+ E_F&=(R_0+4)(32B_F^2+1)+\lceil\log_2F_0\rceil
+               +\operatorname{bitlength}(I)+8,\qquad U_F=2^{E_F}.
+\end{aligned}                                                   \tag{IS.13}
+$$
+
+This frontend encoding retains active requests, public prior, indexed
+cache, receipt occurrences/links, temporary words/headers, cursors,
+return references, phases and binary latches. Dead retained allocations
+are erased only from this semantic cost analysis, never from material
+accounting or the actual continuation representation.
+
+**Proposition 9.2 (frontend envelope on this chronology).** Under its
+original primitive-completion conditions, the frontend, excluding
+evaluator and provider internal transitions, executes fewer than
+$U_F$ field actions and extracts fewer than $U_F$ reserve cells.
+Total printed bits are at most $7q+2Y+6$.
+
+Proof. ML22–24 give finite receive/validate/Read/print contracts.
+A received word or suffix has at most $I$ bits; receipt payloads
+together have $2S+3q$ bits and $q$ headers. Cache has $15N$
+two-bit entries. Unary conversion for shape and cylinder iteration
+has value at most $N$ or $t$. Its doubling scans a fixed snapshot
+and grows by at most the resulting unary value. Prior comparison
+scans the two actual received payloads. Other words are copies,
+framed copies, cursor suffixes or concatenations of these words.
+
+There are $R_0$ named cursors/banks, a fixed number of pending
+headers per bank, and at most $I+q$ visible receipt/request components.
+Their simultaneously active cells/headers fit $B_F$, including unary,
+wrapping and partial-append phases: their linear payload bounds are
+multiplied by the fixed bank count, less than $64\cdot1024$, while
+$Z\ge1024$. Canonically number active cells, preserving equality,
+four reference fields and eight bits. At most $32B_F^2$ bits per
+bank, with four additional pending banks, encode these fields,
+positions and shapes. $B_F$ also exceeds the fixed code/reference
+name count. Thus fewer than $2^{(R_0+4)(32B_F^2+1)}$ encoded states
+suffice at each frontend location.
+
+Between successive input signals, evaluator handoffs, provider
+completions and suspensions, the semantic frontend is deterministic
+and terminates. The non-repetition argument bounds each segment.
+Fewer than $32(I+1)$ segments occur, since each request consumes
+received bits and has a fixed number of completion cuts. The slack
+in (IS.13) covers these segments and boundary actions. Each field
+action extracts at most one cell. This analysis first interprets
+allocation with an unlimited fresh supply; its extraction bound then
+justifies a finite reserve, without assuming that reserve to prove
+its own size.
+
+Read prints seven bits, arithmetic at most $2Y+3$, Close three,
+and initialization no answer. Their sum gives the output bound.
+Waiting charges retained material without an elapsed-time claim.
+$\square$
+
+**Theorem 9.3 (sufficient native reserve and retained composed census).**
+For one evaluation a sufficient extraction reserve is
+
+$$
+ K=5+L+U_{\rm push}(x)+U_F .                                    \tag{IS.14}
+$$
+
+Let $F$ count fully composed literal native locations, $R_c$ reference
+registers and $B_c$ binary registers. Session input arrives through the
+frontend, with no separately preinstalled $L$-cell input shadow.
+Excluding the initializer seed, the prepared block counts are
+
+$$
+\begin{aligned}
+ n&=K+F+R_c+B_c+1,\\
+ r&=4(K+F+1)+R_c,&c&=8(K+1)+21F+B_c,\\
+ O_C&=3n+1+O_s,& A_C&=2r+5n+15+A_s,&C_C&=2c+2+C_s .
+\end{aligned}                                                   \tag{IS.15}
+$$
+
+Source shadows, Source descriptors, targets, grants, unused reserve,
+initializer wiring and the output-return slot remain retained.
+The seed includes its unused wide scan. At fixed adequate reference
+width $w$, this owner occupies $O_C+wA_C+C_C$ native bits from
+completed installation through acknowledged return and Close;
+earlier preparation/installation prefixes are bounded by that layout.
+
+Proof. Seed consumes five cells, loader $L$, and each source push one.
+Proposition 9.2 pays frontend extraction, including input, validation,
+operand transmission, fresh receipt headers/payloads, pending fields
+and Close. Garbage frames or cleared heads return no cells.
+This gives (IS.14).
+
+Code and reserve blocks have four references, reference registers one,
+native latch four, binary registers none. Their bit shapes are 21,
+eight, zero and one respectively; native latch has eight bits.
+These give $n,r,c$. Theorem 4.2's descriptor/target calculation gives
+the displayed totals. Input cells are already extracted from $K$;
+an additional installed $L$ would describe the standalone fixture,
+not this composition. Execution changes only counted fields.
+$\square$
+
+**Definition 9.4 (common-cut demand, including other owners).** At each
+cut from source preparation through cleanup take the union of actual
+owned bindings, assigning each binding once. Owners are the composed
+graph and public preparation, original source, connection/provider,
+input/output peer, initializer/shared wiring, inherited jobs, observers,
+and any concurrently installed mutable B component. Shared wiring
+is counted once; distinct headers, shadows and targets stay distinct.
+
+Let $(O_j,A_j,C_j)$ upper-bound each owner's census at those cuts,
+and $O_*=\sum_jO_j$ with that actual identification. A common
+injective naming needs an offered width
+
+$$
+ w_*\ge\lceil\log_2(O_*+1)\rceil .                              \tag{IS.16}
+$$
+
+Owner-local widths can instead use actual tagged foreign references,
+charging both owner and slot bits. A local installer width proves
+neither composed representation. Width migration pays old/new overlap
+and rewrites. Common native material is bounded by
+
+$$
+ S_*(z)=\sum_j(O_j+w_*A_j+C_j)+S_{\rm migration}(z).             \tag{IS.17}
+$$
+
+Original source/provider terms are their actual ML25 preparation,
+route, navigation and returned-buffer terms. Its $q$ calls examine
+at most $S+q$ vertices and navigate at most $S$ links, in addition
+to operand/reply buffers, grants, Ack and retained call records.
+Source preparation and route words are additional.
+
+In particular, insert the existing original-owner census at
+$k=15N$, with $f=1$ when $q>0$ and $f=0$ otherwise:
+
+$$
+\begin{aligned}
+ D_s&=(5k^2+13k+6)/2,&V_s&=8k+8,&H_s&=3k+3,\\
+ O_{\rm src}&=V_s+H_s+D_s,&
+ A_{\rm src}&=16+4V_s+2H_s+D_s,&C_{\rm src}&=D_s,\\
+ O_{\rm port}&=1+2S+5q+f,&
+ A_{\rm port}&=10+2S+7q+2f,&C_{\rm port}&=2S+3q .
+\end{aligned}
+$$
+
+The port row includes its binding, actual transmitted provider-request
+and returned-latch buffers, cleared wire cells retained on the paid
+free list, and its free-list header. It excludes the native peer cell
+already paid in $K$. The source row includes its original route
+headers and side words. Grant bits are one per object, separate
+from $C$. For widening arenas the old/new overlap is additional;
+these local row widths cannot replace (IS.16).
+
+For the chosen initializer a sufficient operation allowance is
+
+$$
+ I_C\le128n+16r+4c+64 .                                        \tag{IS.18}
+$$
+
+Both passes have fixed per-block paths, bounded per-reference paths,
+and three bit vertices per copied bit; the slack pays tests,
+directory, grants, latch and control actions. Seed initialization
+and public preparation are separately paid input operations.
+The composed controller has the sufficient transition allowance
+
+$$
+ V_C\le I_C+
+ F\bigl(U_{\rm step}(x)+U_F+2L+2Y+R+64\bigr).                  \tag{IS.19}
+$$
+
+Each lowered private path is acyclic with at most $F$ vertices,
+$R$ pays initial stack-head resets, input/output loops have the
+displayed lengths, and seed/return paths fit the constant.
+Add source preparation/provider work, external delivery, rights
+delivery, inherited work, observers and cleanup to obtain $V_*(z)$.
+Reference transport carries the actual widths; a transition count
+does not erase those separate bit-work coordinates.
+
+**Definition 9.5 (host demand and the unsupplied offer).** A host layout
+contract $\mathcal H$ supplies upper storage functions for actual
+Blocks/reference lists/byte buffers, Source descriptors, code nodes,
+lists, tuples, dictionaries, sets, integers/counters, initializer
+wires/headers and compiler/library material. It also supplies upper
+work for creation, access, resizing, hashing, integer arithmetic,
+copying and release. Denote these functions by $h_{\mathcal H}$
+and $w_{\mathcal H}$. Host pointer widths and object/container
+headers are paid even when a modeled arena uses fewer index bits.
+
+For the actual owner graph define demand expressions using
+(IS.14)–(IS.19) as upper cardinalities and operation counts:
+
+$$
+\begin{aligned}
+ H_{\mathcal H}(z)
+ &=\max_u\sum_{\text{objects/buffers/containers owned at }u}
+                       h_{\mathcal H}(\text{type, capacity, widths}),\\
+ W_{\mathcal H}(z)
+ &=\sum_{\text{preparation, installation, native, provider, observer,
+                         and cleanup operations}}
+                       w_{\mathcal H}(\text{type, widths, capacity}).
+\end{aligned}                                                   \tag{IS.20}
+$$
+
+The population includes original/translated assembly and labels,
+field/native graphs, block/descriptor/target lists/maps, reserve,
+initializer state/wires, frozen-frame maps/reference tuples, source
+preparer's retained cuts/event/address words, source/connection
+identity sets/counters, request/reply buffers, output lists, and
+handoff/return observers' retained copies. Counter widths depend
+on $V_*$, not just $N$. An observer at every preparation cut pays
+every retained observation, not one terminal census. Acknowledgement
+and reference clearing do not delete retained containers.
+Preparation temporaries, rehashing and width migration use their
+actual overlaps in the maximum.
+
+Substitution requires the actual host layout contract and the inherited/
+concurrent owner manifest with common-cut capacities/work. No such
+full-session contract or actual $(H_{\rm reserved},W_{\rm backed})$
+offer is a premise of §§7–8. The remaining inequalities are
+
+$$
+ H_{\mathcal H}(z)\le H_{\rm reserved},\qquad
+ W_{\mathcal H}(z)\le W_{\rm backed}.                           \tag{IS.21}
+$$
+
+Their supplier is the existing host/resource owner of the complete
+chronology. Current original-port rights and finite operation
+completion belong to the source/connection owner; output occupancy
+and Ack completion belong to its actual output peer. None is supplied
+by a logical bound, physical RAM total, tiny allocation or retrospective
+run count.
+
+This is an uninstantiated host demand expression with named missing
+offers, not a concrete proved host upper bound or an exceeded offer.
+Even a loose sufficient bound above an offer would not exclude an
+implementation; exclusion needs a necessary lower bound in the
+same units and owner scope.
+
+**Proposition 9.6 (separate finite mutable B prefixes).** A concurrently
+retained ML-C mutable B component adds its program/input/code/reserve,
+head/control/busy state and source/target/routing/observer material
+in Definitions 9.4–9.5. For input length $\ell$ and a requested
+$p$-step B prefix, $C\le\ell+p+1$ instantiated cells and $b_1\le C$
+give the existing ML6.2 bound
+
+$$
+ D_{\rm route}\le1+\frac{C(C+1)}2+C(C+1).
+$$
+
+Controller/navigation and installation retain the ML-C suppliers
+at these finite parameters. This includes $p=0$ and every finite
+nonhalting prefix, without arbitrary B termination. Mutable B
+positions remain distinct from immutable value tokens.
+
+Proof. At most one frontier tape position is reached per completed
+move; the extra one permits a pending frontier action. Apply ML6.2
+and its prefix/controller account. Common-cut union retains both
+components while either executes. A changed shared value token
+would alter every alias and violate §1; separate mutable material
+avoids that identification. $\square$
+
+## 10. The three unchanged chronologies and the composed actual image
+
+**Proposition 10.1 (public instantiation without a full execution).**
+For the fixed translation, $Q=10983$, $R=360$, $d=34$. Retain all
+original acquisition calls, including their acquisition-only final
+probe, then append post-evaluation $\mathrm{Read}(LL)$ and Close.
+The parameters of (IS.9)–(IS.14), with $d_0=D_0+1$, are:
+
+| Frame | $N$ | $L$ | $t$ | acquisition calls / operand bits | total $q/S$ | $I$ | $m$ | $Y$ | $d_0$ |
+| --- | ---: | ---: | ---: | --- | --- | ---: | ---: | ---: | ---: |
+| positive-full | 4 | 387 | 2 | 74 / 2176 | 75 / 2178 | 5376 | 25280 | 6471936 | 6499725 |
+| positive-partial | 4 | 386 | 2 | 73 / 2115 | 74 / 2117 | 5249 | 25216 | 6455552 | 6483276 |
+| null-nine-distinct-left | 9 | 839 | 2 | 149 / 9676 | 150 / 9678 | 21507 | 54528 | 13959424 | 14091180 |
+
+In every row,
+
+$$
+ B_x=16^{35}d_0,\quad E_x=360(16^{35}d_0+1)+15,\quad
+ K=5+L+2^{E_x}+2^{E_F}.                                       \tag{IS.22}
+$$
+
+The frontend exponents $E_F$ in row order are
+$244562584912076855181626$, $224715089010335365988666$ and
+$44666665685474872606720316$. Substitute the same $K$ in (IS.15),
+with composed counts $F=225718$, $R_c=604$, $B_c=57$.
+The evaluator word and numerical consumer are unchanged; the code
+also includes service, explicit resets and actual return binding.
+
+The original-source $(O,A,C)$ rows are $(10064,11727,9393)$ for
+both $N=4$ frames and $(47939,51627,46443)$ for $N=9$.
+The port/connection rows after the appended Read are respectively
+$(4733,4893,4581)$, $(4606,4764,4456)$ and
+$(20108,20418,19806)$. These are inserted with (IS.15) into the
+same union (IS.17), together with any actual peer, inherited,
+observer and mutable-B owners. No inherited-owner census is
+inferred from these three rows.
+
+Proof. Initialization uses the represented public prior prefix.
+Read on $w$ receives $2|w|+3$ bits, arithmetic $2L+3$, and Close
+two. Appended $LL$ adds one call, two operand bits and seven
+received bits. These give $I,q,S$ without altering earlier counts.
+Each represented prior is $1/3$ and each cylinder count two.
+Substitution gives $m,Y,d_0$ and (IS.22). The frontend's fixed
+banks/locations and literal composition of Definition 7.1 give
+the other counts. These are input/code-derived parameters, not
+attained full-run counts or host offers. No acquisition-only check
+is relabelled as post-evaluation evidence. $\square$
+
+**Proposition 10.2 (the concrete supplier map).** On Definition 7.1's
+actual reachable image retain the frontend's original root/connection,
+public data, original-indexed cache and all occurrence receipts;
+installed code/output-return reference; immutable spines, tokens and
+logical heads; native location/latches, busy old head and phase;
+current grants; input/output occupancy, End/Ack state, pending
+allocations and meter. Include each retained B component with its
+own head/control/routing annotations. Process Geometry3.2–3.5
+and the Typed Residual Resource Boundary suppliers apply with
+these complete same-source labels and resource responses.
+AA17.3 converts the actual guarded work supports and terminal
+antichains with the same annotations.
+
+Proof. Each native instruction tests the named actual code/operand
+fields, grants or latches, then transfers control by a retained
+successor or return reference. Each source call uses the same port;
+its actual returned record is retained. Pending phase determines
+committed fields and busy-macro data. Consistent fresh-reference
+renaming therefore preserves root reads, legality, complete primitive
+labels, resource updates and annotated successor. These are the
+existing process suppliers' hypotheses on this actual image, rather
+than an independently prepared product of summaries.
+
+Seed has its actual guarded AA support/boundary; B conversion keeps
+its ML7.2 domain. Neither conversion reconstructs spines, rights or
+control after their annotations are erased. The reachable ML31.4
+case $W=(R,M)$ on $00$ has the same bare work tree before and
+after its first move and a different next action. Retaining disjoint
+service/spine material preserves that witness. No bare-tree
+sufficiency or actual serial-history recovery follows. $\square$
+
+C117 affine/positive-response repair, inverse-limit and periodic-MPS
+suppliers keep their original response, continuity, range,
+physical-state and rank hypotheses. No identification of this service
+with those carriers is made. They do not supply (IS.8), native
+completion, current grants or (IS.21). The new content is this
+particular composition and input/code-derived envelope with explicit
+owner terms; generic quotients, adaptive continuation and spatial
+equivalences are reused.
+
+## 追加锚（本行以下为增补区）
