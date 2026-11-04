@@ -25,7 +25,7 @@ is both the hafnian of the triangular array with $u(i,j)=i$ for $1\le i<j\le 2n$
 | The recurrence and initial value | `D5.S3.Combinatorics.PerfectMatchings.CallanA002067Dyck.IsSourceSequence` | Exact shifted form with $a(0)=1$ and $k<n+1$. |
 | Every nonnegative index | `n : ℕ` in `claim` and `result` | Includes the empty case. |
 | Hafnian of the constant-row triangular array | `hafnian n` | Complete-graph perfect matchings, with each edge weighted by its smaller one-based endpoint. |
-| Weighted Dyck paths | `weightedDyckSum n` | Mathlib Dyck words and the position/upper-height product. |
+| Weighted Dyck paths | `weightedDyckSum n` | Mathlib Dyck words and the position/upper-height product. The agreed `pathWeight` filter is `fun j => p.toList.getD j DyckStep.D = DyckStep.U` rather than the literal `p.toList[j]? = some DyckStep.U`; the predicates agree at every `j`, as proved by `D5.S3.Combinatorics.PerfectMatchings.CallanA002067Dyck.getD_up_iff` (private; `CallanA002067Dyck.lean:59`). See the [binding convention](https://github.com/the-omega-institute/trureturing/issues/23975#issuecomment-6558192984). |
 | Existence and every recurrence solution | `claim` | The existential conjunct and the universal implication are both present. |
 | Both equalities | `result : claim` | Kernel-checked conjunction for every `n`. |
 
