@@ -22,6 +22,6 @@ internal sealed class CountableHankelIntegerWitnessDocument : IScribeDocumentDef
                 H("The finite coefficient form equals the complete ordinary-square sum"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every index type iota, complex maps z,w with norm(z(i)) at most one and summable norm(w(i)), natural N and real coefficient vector u on Fin(N+1), the real part of the complete sum_i w(i) (sum_a u(a) z(i) to power a) squared equals sum_ab u(a) u(b) Re(sum_i w(i) z(i) to power (a+b)). This consumed identity needs neither injectivity nor conjugation nor a finite head. The original proof uses absolute moment summability and finite HasSum expansion, and is unchanged."))),
+                Blocks(Paragraph(Text("For every index type iota, complex maps z,w with norm(z(i)) at most one and summable norm(w(i)), natural N and real coefficient vector u on Fin(N+1), the real part of the complete sum_i w(i) (sum_a u(a) z(i) to power a) squared equals sum_ab u(a) u(b) Re(sum_i w(i) z(i) to power (a+b)). This consumed identity needs neither injectivity nor conjugation nor a finite head. Absolute moment summability and the finite HasSum expansion identify the two forms."))),
                 DescribeRole.Theorem))));
 }

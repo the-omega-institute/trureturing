@@ -32,7 +32,7 @@ internal sealed class CountableHankelNegativeWitnessDocument : IScribeDocumentDe
                 H("Absolute convergence for every real polynomial"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every index type iota, complex maps z,w, node norm bound norm(z(i)) at most one for all i, summability of norm(w(i)) over all i, and real polynomial p, the complex series w(i) times the ordinary square of p evaluated at z(i) is summable. This consumed helper retains the original proof by the finite coefficient absolute-sum evaluation bound. It does not require node injectivity or any conjugation assumption."))),
+                Blocks(Paragraph(Text("For every index type iota, complex maps z,w, node norm bound norm(z(i)) at most one for all i, summability of norm(w(i)) over all i, and real polynomial p, the complex series w(i) times the ordinary square of p evaluated at z(i) is summable. A finite coefficient absolute sum bounds every evaluation; summability follows by domination. It does not require node injectivity or any conjugation assumption."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("pair-polynomial"),
@@ -40,7 +40,7 @@ internal sealed class CountableHankelNegativeWitnessDocument : IScribeDocumentDe
                 H("Existing real interpolation on one finite conjugate head"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every complex node map z on any index type, permutation c with z(c(i))=conjugate(z(i)), finite set E invariant under c, index i0 in E, and nonreal z(i0), there exists a real polynomial p whose value at each z(i), i in E, is I when z(i)=z(i0), minus I when z(i)=conjugate(z(i0)), and zero otherwise. No injectivity of z is assumed in this helper. The proof consumes the existing finite real pair interpolant."))),
+                Blocks(Paragraph(Text("For every complex node map z on any index type, permutation c with z(c(i))=conjugate(z(i)), finite set E invariant under c, index i0 in E, and nonreal z(i0), there exists a real polynomial p whose value at each z(i), i in E, is I when z(i)=z(i0), minus I when z(i)=conjugate(z(i0)), and zero otherwise. No injectivity of z is assumed in this helper. The proof applies NewtonHankelRealRootCriterion.exists_real_pair_interpolant to the finite node image."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("peak"),
@@ -56,7 +56,7 @@ internal sealed class CountableHankelNegativeWitnessDocument : IScribeDocumentDe
                 H("Exact chosen value at the nonzero target"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every real polynomial p, complex z0,b, nonzero z0, p evaluated at z0 equal to I, and natural m, the evaluation of peak p z0 b m at z0 equals b. This is the unchanged algebraic peak proof, now consumed by the uniform family construction."))),
+                Blocks(Paragraph(Text("For every real polynomial p, complex z0,b, nonzero z0, p evaluated at z0 equal to I, and natural m, the evaluation of peak p z0 b m at z0 equals b. Evaluation uses I squared equal to minus one and cancellation of the nonzero target power."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("peak-bound"),
@@ -64,6 +64,6 @@ internal sealed class CountableHankelNegativeWitnessDocument : IScribeDocumentDe
                 H("Quantitative localization of the original peak"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every real polynomial p, complex z0,b,z, nonzero z0, norm(z) at most one, and natural m, the norm of peak p z0 b m evaluated at z is at most norm(b) times (C squared plus C) times (norm(z)/norm(z0)) to power m, where C is the sum over the support of p of the absolute value of its coefficients. This bound makes no interpolation assumption on p. The original proof and ordinary polynomial evaluation are unchanged."))),
+                Blocks(Paragraph(Text("For every real polynomial p, complex z0,b,z, nonzero z0, norm(z) at most one, and natural m, the norm of peak p z0 b m evaluated at z is at most norm(b) times (C squared plus C) times (norm(z)/norm(z0)) to power m, where C is the sum over the support of p of the absolute value of its coefficients. This bound makes no interpolation assumption on p. The coefficient absolute-sum bound and the bounds on the real and imaginary parts of b/z0 to power m control this ordinary polynomial evaluation."))),
                 DescribeRole.Theorem))));
 }
