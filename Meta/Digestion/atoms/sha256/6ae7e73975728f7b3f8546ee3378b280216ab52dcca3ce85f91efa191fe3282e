@@ -1,0 +1,42 @@
+### 定理 2.3（内积表示与完成）
+
+<a id="c133-hilbert"></a>
+
+在 $V/\mathcal N$ 上，推进 $T=[U]$ 是等距同构，且
+$J=(I+2T)/\sqrt3$ 满足 $J^2=-I$。以 $if=Jf$ 定义复数乘法后，唯一实部为原读数的复内积由
+
+<a id="c133-complex-reading"></a>
+
+$$
+B(f,g)=R(f,g)+iR(J_0f,g)
+\tag{4}
+$$
+
+下降得到。其完成 $\mathcal H$ 有实线性稠密表示 $\iota:V\to\mathcal H$，满足
+
+$$
+R(f,g)=\Re\langle\iota f,\iota g\rangle,\qquad
+ \iota(Ug)=\zeta\,\iota(g),\quad
+ \zeta=-\tfrac12+i\tfrac{\sqrt3}{2},\quad\operatorname{ker}\iota=\mathcal N.
+$$
+
+保持原配方稠密像的完成唯一到酉等价。
+
+**证明。**
+$Q\circ U=Q$ 使 $\mathcal N$ 对 $U$ 稳定；商上 $I+T+T^2=0$，所以 $T^{-1}=-I-T$。实极化先给 $T$ 保持内积。将
+$r(Tf,g)=r(f,T^{-1}g)$ 代入 $J$，得到
+$r(Jf,g)=-r(f,Jg)$ 与 $r(Jf,Jg)=r(f,g)$。
+因此式 [(4)](#c133-complex-reading) 第一槽共轭线性、第二槽线性，且 Hermitian，自读为 $Q$。其虚部被实部唯一固定为 $R(J_0f,g)$。
+
+若 $Q(g)>0$，在该商空间的 $Q(f+tg)\ge0$ 中取复数
+$t=-\overline{B(f,g)}/Q(g)$；若 $Q(g)=0$，则用根空间结论。两种情形均给
+
+<a id="c133-cauchy-schwarz"></a>
+
+$$
+|R(f,g)|^2\le |B(f,g)|^2\le Q(f)Q(g).
+\tag{5}
+$$
+
+因此商内积可完成。原配方在任意两个完成中的对应等距，因稠密而唯一延伸为酉映射。
+
