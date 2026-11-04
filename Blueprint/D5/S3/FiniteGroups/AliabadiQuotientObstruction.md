@@ -4,7 +4,7 @@
 
 Every finite nonabelian group has a multiset satisfying the abelianization obstruction which is not a multiset of right quotients of two bijective enumerations.
 
-**Theorem 1.1 (A single nonidentity commutator suffices).**
+**Theorem 1.1 (A nonidentity element of the commutator subgroup suffices).**
 
 $$\forall G \in Typeu,\; \forall group \in \operatorname{Group}\left(G\right),\; \forall finite \in \operatorname{Fintype}\left(G\right),\; \forall hna \in \left(\neg \operatorname{IsMulCommutative}\left(G\right)\right),\; \exists A \in \operatorname{Multiset}\left(G\right),\; \operatorname{MultisetCard}\left(A\right) = \operatorname{FintypeCard}\left(G\right) \land \left(\operatorname{MultisetProd}\left(\operatorname{MultisetMap}\left(\operatorname{AbelianizationOf}\left(G\right), A\right)\right) = 1 \land \left(\neg \left(\exists b \in \operatorname{Fin}\left(\operatorname{FintypeCard}\left(G\right)\right) \to G,\; \exists c \in \operatorname{Fin}\left(\operatorname{FintypeCard}\left(G\right)\right) \to G,\; \operatorname{Bijective}\left(b\right) \land \left(\operatorname{Bijective}\left(c\right) \land A = \operatorname{RightQuotientMultiset}\left(b, c\right)\right)\right)\right)\right)$$
 
