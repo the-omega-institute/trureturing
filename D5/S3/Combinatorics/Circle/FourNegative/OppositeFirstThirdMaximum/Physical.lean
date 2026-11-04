@@ -11,7 +11,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxHeartbeats 6000000
+set_option maxHeartbeats 400000
 namespace D5.S3.Combinatorics.Circle.FourNegative.OppositeFirstThirdMaximum
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private C A B L K SU SV SW gates from
@@ -219,7 +219,18 @@ private theorem physical_joint (a b d m : ℕ) (early : Bool)
       all_goals dsimp [op,np] at o0 o1 o2 o3 n0 n1 n2 n3 j0 j1 j2 j3
       all_goals simp only [hEeq,hNeq] at j0 j1 j2 j3 ⊢
       all_goals dsimp [A,B,L,K,C,SU,SV,SW] at o0 o1 o2 o3 n0 n1 n2 n3 j0 j1 j2 j3 ⊢
-      all_goals nlinarith only [o0,o1,o2,o3,n0,n1,n2,n3,j0.1,j0.2,j1.1,j1.2,j2.1,j2.2,j3.1,j3.2]
+      · linear_combination -o2
+      · linear_combination n2+j1.2
+      · linear_combination -o2-j1.1-o3
+      · linear_combination n2+j1.2+n3+j2.2
+      · linear_combination -o2-j1.1-o3-j2.1-o0
+      · linear_combination n2+j1.2+n3+j2.2+n0+j3.2
+      · linear_combination -o0
+      · linear_combination n0+j3.2
+      · linear_combination o0+j3.1+o1+j0.1
+      · linear_combination -n0-j3.2-n1-j0.2-n2
+      · linear_combination o0+j3.1+o1+j0.1+o2+j1.1
+      · linear_combination -n0-j3.2-n1-j0.2-n2-j1.2-n3
     rw [he]
     exact hwi
   have checks:=complete_checks p q pn qn E N early cp cq ototal ntotal actualMargins
