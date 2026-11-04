@@ -197,7 +197,7 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
             totals.2.2,Int.cast_add,hA]
           rw [hh]
           ring
-        · simpa [m,P,rowBanks,hi] using hh
+        · simpa [m,P,rowBanks,f,hi] using hh
     -- Native chain mass and doubled actual terminal, in V,W,X,U order.
     have terminal (i : Fin 4) :
         2*(dd i:ℚ)=rowHeads x r s q side i-(M:ℚ) ∧
@@ -227,6 +227,7 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
       fin_cases i <;> cases side
       all_goals norm_num [j,chainLength,nextBase,nextNewBase,F,oldbc,newbc] at nr1 nr2
       all_goals try simp (disch := omega) only [half_power,pc.1,pc.2.1,pc.2.2] at nr1
+      all_goals simp only [show (2:ℚ)^a=x from rfl] at nr1
       all_goals norm_num [rowHeads,rowBase] at nr1 nr2 ⊢
       all_goals dsimp only [M,F] at nr1 nr2 ⊢
       all_goals constructor <;> linarith only [nr1,nr2]
