@@ -232,7 +232,8 @@ private theorem negative : ¬ arena.Law rejected := by
   intro law
   rcases law [true] with equal | ⟨a, rest, equal⟩
   · cases equal
-  · have impossible := congrArg List.length equal
+  · change ([] : List Bool) = List.replicate a true ++ false :: rest at equal
+    have impossible := congrArg List.length equal
     simp at impossible
 
 def evidence : Registration arena
@@ -245,6 +246,7 @@ def evidence : Registration arena
     fun e => nomatch e⟩
   dependence := by
     intro i
+    cases i
     exact ⟨(), [], [true], by decide⟩
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}

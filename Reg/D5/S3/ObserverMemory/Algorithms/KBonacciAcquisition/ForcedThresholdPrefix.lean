@@ -68,7 +68,9 @@ private theorem negative : ¬ arena.{u}.Law rejected := by
       ∃ budget c, NarrowWindowCost.execute 8 (by decide) π budget w (some 0) [] =
         some (rejected.readout () ⟨ULift.{u} Bool, 2, 4, 3, (fun _ => lo), lo, hi, lo⟩
           (OriginalRecord 8 (by decide) w), c) := by
-    intro history free
+    intro history
+    dsimp only
+    intro free
     exact ⟨0, 0, rfl⟩
   obtain ⟨B, rest, impossible, _⟩ := law 2 4 3 (by decide) (by decide)
     (by decide) false (fun _ => lo) lo hi lo (by decide) 0 π correct
@@ -85,6 +87,7 @@ def evidence : Registration arena.{u}
     fun e => nomatch e⟩
   dependence := by
     intro i
+    cases i
     refine ⟨⟨ULift.{u} Bool, 2, 4, 3, (fun _ => ⟨false⟩),
       ⟨false⟩, ⟨true⟩, ⟨false⟩⟩, none, some ⟨0, 0, 5⟩, ?_⟩
     decide
@@ -121,4 +124,5 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 
 #print axioms evidence
 #print axioms registration
+end
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.ForcedThresholdPrefix
