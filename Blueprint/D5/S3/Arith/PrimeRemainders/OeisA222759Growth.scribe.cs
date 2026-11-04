@@ -21,7 +21,7 @@ internal sealed class OeisA222759GrowthDocument : IScribeDocumentDefinition
                 "P", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("literal-cubic-remainder", "The literal cubic remainder", RemainderFormula(),
                 "choose(a,b) is the natural binomial coefficient. NatMod(a,m) is the "
-                + "least nonnegative remainder on division by a positive m. Thus for "
+                + "least nonnegative remainder on division by a positive m, with NatMod(a,0)=a. Thus for "
                 + "a positive prime q, cubicRemainder(n,q) lies between zero and q cubed "
                 + "minus one. It is compared with the integer n itself.",
                 "cubicRemainder", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -68,7 +68,7 @@ internal sealed class OeisA222759GrowthDocument : IScribeDocumentDefinition
         var pointwise = All("i", Call("Fin", k), And(Lt(D(0), qi),
             And(Call("Prime", qi), new Formula.Relation(Call("cubicRemainder", n, qi),
                 FormulaRelationOperator.NotEqual, n))));
-        var witnesses = Some("q", Seq(Call("Fin", k), Sp, To, Sp, Naturals()),
+        var witnesses = Some("q", Seq(Open, Call("Fin", k), Sp, To, Sp, Naturals(), Close),
             And(Call("Injective", q), pointwise));
         return Disp(All("k", Naturals(), All("n", Naturals(),
             Imp(Le(D(3), k), Imp(Le(D(1), n),
