@@ -1,0 +1,13 @@
+### 6.2 观察者共同内容的条件化定义
+
+设 $\mathcal N_A,\mathcal N_B,\mathcal N_C$ 是同一已声明源部门的三个读出。
+各自使用源参照 $\sigma$ 的实际运输
+$\tau_A=\mathcal N_A(\sigma)$ 等，并按前文定义 $\mathcal R_A$ 等。
+定义观察者之间的预测接口
+
+$$
+\mathcal T_{BA}=\mathcal N_B\mathcal R_A.
+$$
+
+它将 A 的记录通过同一参照解释为源内容，再给出 B 的预测。
+

@@ -1,0 +1,68 @@
+### 定理 3.2（最大可恢复代数与规范输出表示）
+
+<a id="thm-c123-maximal-correctable-algebra"></a>
+
+$\mathcal A$ 可准确恢复，当且仅当
+$\mathcal A\subseteq\mathfrak A_{\mathcal N}$。
+而且存在唯一含幺 $*$-表示
+$\beta_{\mathcal N}:\mathfrak A_{\mathcal N}\to\mathcal B(K_0)$ 满足
+
+<a id="eq-c123-canonical-beta"></a>
+
+$$
+\beta_{\mathcal N}(A)E_i=E_iA,
+ \qquad
+ \beta_{\mathcal N}(A)
+ =S^{-1/2}\mathcal N(A)S^{-1/2},
+ \quad S=\mathcal N(I)>0.
+\tag{21}
+$$
+
+它满足 $\mathcal N^*\beta_{\mathcal N}(A)=A$，且由最大混合参照
+$\pi=I/d$ 的 Petz 回推实现：
+$\beta_{\mathcal N}=\mathcal R_\pi^*|_{\mathfrak A_{\mathcal N}}$。
+
+**证明。**
+若 $\mathcal Q$ 恢复 $\mathcal A$，引理~[2.4](#lem-c123-output-representation) 给
+$\beta(A)E_j=E_jA$ 及 $E_i^*\beta(A)=AE_i^*$。
+因此 $AE_i^*E_j=E_i^*E_jA$，证明必要性。
+
+反过来，设 $A\in\mathfrak A_{\mathcal N}$。
+在 $K_0=\operatorname{span}_iE_iH$ 上定义
+
+<a id="eq-c123-beta-span"></a>
+
+$$
+\beta_{\mathcal N}(A)\left(\sum_iE_i\xi_i\right)
+ =\sum_iE_iA\xi_i.
+\tag{22}
+$$
+
+核对良定义：令 $W(\xi_i)_i=\sum_iE_i\xi_i$，则
+$W^*W=[E_i^*E_j]_{ij}$。
+对角作用 $D_A(\xi_i)_i=(A\xi_i)_i$ 与该 Gram 矩阵交换，故保持
+$\ker W=\ker W^*W$；因此零表示仍映为零。
+乘法、单位关系直接来自 [(22)](#eq-c123-beta-span)；
+$D_A$ 与 Gram 矩阵交换还给
+$\beta_{\mathcal N}(A)^*=\beta_{\mathcal N}(A^*)$，所以它为 $*$-表示。
+由于这些向量张成 $K_0$，交织关系也保证唯一性。
+Kraus 求和给
+
+$$
+\mathcal N^*\beta_{\mathcal N}(A)=A,\qquad
+ \beta_{\mathcal N}(A)S=\mathcal N(A)=S\beta_{\mathcal N}(A).
+$$
+
+这证明忠实性及 [(21)](#eq-c123-canonical-beta)。
+最后 $\mathcal N(\pi)=S/d$，代入 Petz 伴随公式即得
+$\mathcal R_\pi^*(A)=S^{-1/2}\mathcal N(A)S^{-1/2}$。
+故同一条完全正保迹 $\mathcal R_\pi$ 恢复整个
+$\mathfrak A_{\mathcal N}$，也恢复其每个子代数。
+
+这个操作刻画说明 $\mathfrak A_{\mathcal N}$ 不依赖 Kraus 表示的选择。
+式~[(20)](#eq-c123-intrinsic-algebra) 中所有 $i,j$ 都必需：只检查
+$E_i^*E_i$ 会漏掉不同分支之间的相干比较。
+例如 $E_0=I/\sqrt2,E_1=Z/\sqrt2$ 时，自比较都是 $I/2$，却有
+$E_0^*E_1=Z/2$；真实可恢复代数是 $\operatorname{span}\{I,Z\}$。
+这些 Kraus 分支是该通道的一种数学表示，不能由存在一种表示便推定每个分支已经被观察者单独供应。
+

@@ -1,0 +1,15 @@
+## 4. 一个读口、一份参照，以及它们生成的三维几何
+
+<a id="sec-c123-three-dimensional-geometry"></a>
+
+本章把同一个参照等价候选画成最小可计算的图像。简记前文的过程为
+$N=\mathcal N$、Petz 反向为 $R_\sigma=\mathcal R_\sigma$，回接为 $T_\sigma=R_\sigma N$，并记
+
+$$
+\mathcal C_\sigma
+ =\{\rho>0:\operatorname{Tr}\rho=1,\ R_\rho=R_\sigma\},\qquad
+ \mathfrak F_\sigma=\operatorname{Fix}T_\sigma^*.
+$$
+
+这里比较的是*整个反向通道*是否相同。两份参照都能被某一个二元读数接受，远不足以推出它们属于同一类。
+

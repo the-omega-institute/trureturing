@@ -1,0 +1,90 @@
+### 定理 2.6（忠实参照等价）
+
+<a id="thm-c123-reference-equivalence"></a>
+
+对同一 $\mathcal N$ 及两份忠实状态 $\rho,\sigma$，下列条件等价：
+
+1. $\rho\sim_{\mathcal N}\sigma$，即
+    $\mathcal R_\rho=\mathcal R_\sigma$ 在*全部* $\mathcal B(K_0)$ 上成立。
+
+2. $\mathcal T_\sigma(\rho)=\rho$。
+
+3. $\rho=\Gamma_\sigma(a)$，其中 $a\in\mathfrak F_\sigma$ 正定，且
+    $\operatorname{Tr}\sigma a=1$。
+
+4. 在定理~[2.3](#thm-c123-fixed-blocks) 的分解中，
+
+
+   <a id="eq-c123-equivalent-reference-class"></a>
+
+   $$
+   \rho=\bigoplus_\alpha Q_\alpha\otimes\omega_\alpha,
+     \qquad Q_\alpha>0,\quad\sum_\alpha\operatorname{Tr} Q_\alpha=1.
+   \tag{17}
+   $$
+
+因此条件2虽然只说一个状态能被恢复，却强制两个由各自参照定义的回推在共同输出角上完全相同。
+
+**证明。**
+条件1给
+$\mathcal R_\sigma\mathcal N(\rho)
+=\mathcal R_\rho\mathcal N(\rho)=\rho$。
+条件2、3、4的等价已由定理~[2.3](#thm-c123-fixed-blocks) 给出。
+只需证明条件4推出条件1；这里必须核对全部输出算子。
+
+取 $\mathcal A=\mathfrak F_\sigma$，并置
+$\beta=\mathcal R_\sigma^*|_{\mathcal A}$。
+引理~[2.4](#lem-c123-output-representation) 与
+[2.5](#lem-c123-modular-intertwining) 均适用。
+乘积块保证
+
+<a id="eq-c123-relative-filter"></a>
+
+$$
+C=\rho^{1/2}\sigma^{-1/2}
+ =\bigoplus_\alpha Q_\alpha^{1/2}S_\alpha^{-1/2}\otimes I
+ \in\mathfrak F_\sigma,
+\tag{18}
+$$
+
+且 $C$ 在该代数内可逆。
+令 $\gamma=\mathcal N(\rho)$。因为 $\rho=C\sigma C^*$，双模关系给
+$\gamma=\beta(C)\tau\beta(C)^*$。
+要取其正平方根，不能任意交换 $\beta(C)$ 与 $\tau$。
+注意
+
+$$
+D=\sigma^{-1/4}C\sigma^{1/4}
+   =\sigma^{-1/4}\rho^{1/2}\sigma^{-1/4}>0,
+ \qquad D\in\mathfrak F_\sigma.
+$$
+
+模交织遂给
+
+$$
+\beta(C)\tau^{1/2}
+ =\tau^{1/4}\beta(D)\tau^{1/4}>0.
+$$
+
+这个正算子的平方等于
+$\beta(C)\tau\beta(C)^*=\gamma$，所以
+
+<a id="eq-c123-output-root"></a>
+
+$$
+\gamma^{1/2}=\beta(C)\tau^{1/2},\qquad
+ \gamma^{-1/2}=\tau^{-1/2}\beta(C)^{-1}.
+\tag{19}
+$$
+
+于是，以同一组 $E_i$ 写出的新参照 Petz Kraus 算子逐项满足
+
+$$
+\rho^{1/2}E_i^*\gamma^{-1/2}
+ =C\bigl(\sigma^{1/2}E_i^*\tau^{-1/2}\bigr)\beta(C)^{-1}
+ =CL_i\beta(C)^{-1}=L_i.
+$$
+
+最后一步是 [(13)](#eq-c123-intertwiners)。
+所以两条完全正映射在每个 $Y\in\mathcal B(K_0)$ 上相等；证明没有把量词缩到 $\mathcal N$ 的像。
+

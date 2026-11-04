@@ -1,0 +1,13 @@
+### 5.3 准确模核会跳变，有限次回接却可以连续
+
+下面使用一个完整可算的例子，将两种稳定性分开。令
+
+$$
+N=\mathcal D_Z,\qquad
+ \mathcal D_Z(X)=\lvert 0\rangle\langle 0\rvert X\lvert 0\rangle\langle 0\rvert+\lvert 1\rangle\langle 1\rvert X\lvert 1\rangle\langle 1\rvert,
+ \qquad \sigma_r=\frac{I+rX}{2},\quad |r|<1.
+$$
+
+本小节的 $X,Y,Z$ 表示 Pauli 矩阵。记
+$a=\sqrt{1-r^2}$，$S_r=\mathcal R_{\sigma_r}N$。
+
