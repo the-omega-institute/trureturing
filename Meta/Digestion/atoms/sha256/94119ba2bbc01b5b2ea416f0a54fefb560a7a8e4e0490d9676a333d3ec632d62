@@ -1,0 +1,70 @@
+### theorem 3.1: 定理 2：隐藏纤维的 Fréchet 区间
+
+固定金字塔点 $(X,Y,Z)$ 后，所有实现它的概率填充恰好由：
+
+$$
+\boxed{
+\max(0,X+Y+Z-1)
+\le
+\kappa
+\le
+\min(X,Y)
+}
+$$
+
+给出。
+
+等价地：
+
+$$
+\boxed{
+\kappa_-=
+\max(0,X+Y-r),
+\qquad
+\kappa_+=
+\min(X,Y).
+}
+$$
+
+#### 证明
+
+由：
+
+$$
+p_{13}=\kappa\ge0,
+$$
+
+得到下界 $0$。
+
+由：
+
+$$
+p_1=X-\kappa\ge0,
+\qquad
+p_3=Y-\kappa\ge0,
+$$
+
+得到：
+
+$$
+\kappa\le X,
+\qquad
+\kappa\le Y.
+$$
+
+由：
+
+$$
+p_0=r-X-Y+\kappa\ge0,
+$$
+
+得到：
+
+$$
+\kappa\ge X+Y-r.
+$$
+
+将所有上下界合并即可。证毕。
+
+---
+

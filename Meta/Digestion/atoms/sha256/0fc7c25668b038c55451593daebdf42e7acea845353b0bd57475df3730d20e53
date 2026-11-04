@@ -1,0 +1,32 @@
+**命题 18.4（所选链的记忆与转移秩）。** 在 $\mathcal U$ 内，
+
+$$
+\begin{aligned}
+\Delta=0
+&\iff\alpha=\beta
+\iff\mu^{(2)}_{t,\kappa}\text{ 的下一位只需末一位预测}\\
+&\iff\det K=0
+\iff\operatorname{rank}K=2,
+\end{aligned}
+\tag{18.7}
+$$
+
+而 $\Delta\ne0$ 时 $\operatorname{rank}K=3$，该位源的最小 Markov 阶为二。
+
+证明。直接通分及展开行列式得
+
+$$
+\beta-\alpha=\frac{\Delta}{t(1-2t)},\qquad
+\det K=\alpha-\beta=-\frac{\Delta}{t(1-2t)}.
+\tag{18.8}
+$$
+
+末位为零的两个上下文 $00,10$ 都有正质量，
+下一位为一的条件概率分别是 $\alpha,\beta$，
+故只读末一位当且仅当它们相等。末位为一时下一位恒为零。
+当 $\alpha=\beta$ 时第一、第三行相同，而第二行与它们线性无关，
+所以秩恰为二；其余情形行列式非零，秩为三。
+即使 $\Delta=0$ 也不是独立位源：$t>0$ 时独立会给
+$\mathbb P(11)=t^2>0$，与 no11 矛盾。因此此时最小阶为一。
+上述记忆和秩结论属于指定链；任意同三位律的未知来源仍可保留更长记忆。证毕。
+

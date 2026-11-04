@@ -1,0 +1,22 @@
+## 8. 二分冲突图上的严格刚化定理
+
+定义图 $G=(V,E)$ 的分数填充多面体：
+
+$$
+Q(G)=
+\left\{
+x\in\mathbb R^V:
+0\le x_v\le1,\;
+x_u+x_v\le1
+\;\text{for every }uv\in E
+\right\}.
+$$
+
+定义独立集凸包：
+
+$$
+\operatorname{STAB}(G)=
+\operatorname{conv}
+\{\mathbf 1_I:I\subseteq V,\ I\text{ independent}\}.
+$$
+

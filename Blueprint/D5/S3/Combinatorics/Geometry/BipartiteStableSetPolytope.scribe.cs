@@ -11,7 +11,7 @@ internal sealed class BipartiteStableSetPolytopeDocument : IScribeDocumentDefini
     private static Formula V => F.Id("V");
     private static Formula G => F.Id("G");
     private static Formula Real => F.Id("Real");
-    private static Formula Vector => Seq(V, To, Real);
+    private static Formula Vector => Seq(V, To, Sp, Real);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Bipartite graphs are exactly the finite graphs whose independent-set hull is described by bounds and edge inequalities.",

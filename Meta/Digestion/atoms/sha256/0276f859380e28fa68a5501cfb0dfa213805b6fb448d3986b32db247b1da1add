@@ -1,0 +1,27 @@
+**定理 24.5（复根时的阻尼统计振荡）。**
+恰当 $\mathscr D<0$ 时出现共轭复根。此时
+
+$$
+R=\sqrt{\alpha-\beta}\in(0,1),\quad
+\lambda_\pm=Re^{\pm i\omega},\quad
+\cos\omega=-\frac\alpha{2R},\quad 0<\omega<\pi,
+$$
+
+而实相关可写成
+
+$$
+C_\ell=R^\ell\big[A\cos(\ell\omega)+B\sin(\ell\omega)\big],
+\qquad
+A=C_0,\quad
+B=\frac{C_1/R-C_0\cos\omega}{\sin\omega}.
+\tag{24.12}
+$$
+
+证明。实系数二次式的判别式负当且仅当两根非实共轭，
+乘积为 $\alpha-\beta>0$，所以模为 $R$；定理 24.4 给 $R<1$。
+实部为 $-\alpha/2$，虚部非零，故所选上半平面根确定
+$\omega\in(0,\pi)$ 且 $\sin\omega>0$。
+将共轭指数解的实部、虚部作为实解基，再代入初值即得 (24.12)。
+它表述平稳随机位源在空间延迟上的衰减相关，
+没有引入量子振幅、物理相位或额外时间动力学。证毕。
+

@@ -1,0 +1,19 @@
+**定义 19.1（固定密度的独立截面）。** 对 $0<t<1/2$ 置
+
+$$
+q=\frac{t}{1-t},\qquad
+\kappa_*(t)=\frac{t^2}{1-t},\qquad p_*=p(t,\kappa_*(t)),
+\qquad h_1(t)=(1-t)H_b(q).
+\tag{19.1}
+$$
+
+$\kappa_*$ 属于 (17.2) 的严格内部，因为
+$\kappa_*>0$、$t-\kappa_*=t(1-2t)/(1-t)>0$，且
+$1-3t+\kappa_*=(1-2t)^2/(1-t)>0$。
+相应一阶转移矩阵与平稳律为
+
+$$
+P_t=\begin{pmatrix}1-q&q\\1&0\end{pmatrix},\qquad (1-t,t).
+\tag{19.2}
+$$
+

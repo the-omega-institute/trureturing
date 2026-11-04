@@ -82,7 +82,7 @@ def source_registration :
     fun e => nomatch e⟩
   dependence := dependence.{u}
 
-def registration : Contract.Registration
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@stableSetPolytope_eq_edgeRegion_iff.{u}) (Realization signature.{u}) Unit Unit := {
   unitName := `Reg.D5.S3.Combinatorics.Geometry.BipartiteStableSetPolytope.unit
   realizationName :=

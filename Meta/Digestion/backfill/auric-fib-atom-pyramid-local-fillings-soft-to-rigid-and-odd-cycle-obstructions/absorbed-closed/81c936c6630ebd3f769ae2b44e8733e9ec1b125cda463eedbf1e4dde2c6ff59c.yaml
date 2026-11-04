@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:81c936c6630ebd3f769ae2b44e8733e9ec1b125cda463eedbf1e4dde2c6ff59c
+  normalized_sha256: sha256:81c936c6630ebd3f769ae2b44e8733e9ec1b125cda463eedbf1e4dde2c6ff59c
+cas_ref: sha256:81c936c6630ebd3f769ae2b44e8733e9ec1b125cda463eedbf1e4dde2c6ff59c
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Geometry/BipartiteStableSetPolytope.stableSetPolytope_eq_edgeRegion_iff
+    target_statement_id: sha256:970aee5f8dc3fea6727fc31253ff572b12729a245002c14daf801c47be4ae9fc
+receipts:
+  unresolved_subitems: []

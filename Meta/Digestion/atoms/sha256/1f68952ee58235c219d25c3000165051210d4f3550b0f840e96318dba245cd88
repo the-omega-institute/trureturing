@@ -1,0 +1,24 @@
+## 14. 与 trureturing 当前进展的对应
+
+我按 `trureturing` 当前 `dev` 分支检查到的头部提交是：
+
+- [`b40c4b1`](https://github.com/the-omega-institute/trureturing/commit/b40c4b1cddd454c51ede5862bd91c2fac3537b42)，时间为 2026-10-10；
+- 相关理论文档包括 [`AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md`](https://github.com/the-omega-institute/trureturing/blob/b40c4b1cddd454c51ede5862bd91c2fac3537b42/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)、边界演算、局部重构、相关与原生延拓、内蕴分类和隐藏关系统计等文件。
+
+最近几批提交可以这样理解：
+
+| 当前方向 | 对 AURIC 金字塔的意义 |
+|---|---|
+| [FIB 白盒卷 66.17/66.19 与 dyadic 前缀尾工具](https://github.com/the-omega-institute/trureturing/commit/0916b99b4223dc2177bf422a50a95f4f4c18d54d) | 把局部相位、有限前缀和尾部边界变成可计算对象 |
+| [return compatibility stability](https://github.com/the-omega-institute/trureturing/commit/a8e0ab756490c6e7dc9822b40f4070a223d25242) | 研究边界变化如何稳定地传播到返回值与预测纤维 |
+| [Hance 24-cell preparation-noncontextuality threshold](https://github.com/the-omega-institute/trureturing/commit/72c1606a3669ac10e5e21ee0cac1115a99145511) | 将局部非语境性、阈值和全局一致性的边界推进到更复杂的有限结构 |
+| 当前头部的 weighted sign theorem / Robin tail gap 合并 | 复用已证明的加权符号定理，同时保留真实剩余缺口，而不是用形式化重写掩盖它 |
+
+GitHub 的当前 PR 列表也显示，项目正在把 AURIC FIB 金字塔连接到 escape dynamics、prediction fibers、typed bridge 和 thermodynamic action 等更高层接口。[GitHub](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+项目 README 的方法论与这里的推导完全一致：它强调逻辑依赖、区分、观察者恢复和可检查证明；同时明确提醒，局部一致不保证全局一致，有限树上的延拓定理与有环结构必须分开处理，并把 Lean 源和证明项视为权威对象。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com)
+
+因此，最自然的下一步不是再增加一层比喻，而是把上面的对象正式冻结为可检查接口。
+
+---
+

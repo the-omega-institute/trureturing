@@ -1,0 +1,10 @@
+### theorem 8.1: 定理 5：二分图软填充可以概率刚化
+
+若 $G$ 是二分图，则：
+
+$$
+\boxed{
+Q(G)=\operatorname{STAB}(G).
+}
+$$
+

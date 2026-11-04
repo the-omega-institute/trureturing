@@ -1,0 +1,8 @@
+# AURIC FIB ATOM 金字塔：从局部填充、软到刚，到全局环路障碍
+
+**Reference input: open.** 本卷完整保存用户供文，包括陈述、证明、表格、例子、代码来源与拟议形式化接口。供文中的“定理”“严格证明”“正式冻结”等语言属于开放参考输入；本卷未新增 Lean、Blueprint、Reg 或 Frozen 声明，不认证物理实现或算法优势。Lean 声明、证明项及其内核核验的公理闭包是本库形式系统内的数学真源。
+
+**来源。** Author kind: mixed user-supplied material; original author and model unknown. Receipt date: 2026-10-10. 来源标识为本会话供文 auric-fib-atom-local-fillings-soft-to-rigid-and-odd-cycle-obstructions。接收原文 SHA-256 为 `5d33d12203c037526ff87e7e82600f24670de86e0690c8edd16f8e807f1c19cc`，原始字节数为 29016。全部原句与公式内容保留，数学分隔符和标题层级作结构规范化，声明地址仅供本文定位。按用户指定，本卷只添加理论正文，不运行消化；没有 atom 或形式化覆盖状态的新增主张。
+
+**历史归属与复用。** 供文对 dev、README 和 PR 的“当前”判断归属其引用的 b40c4b1cddd454c51ede5862bd91c2fac3537b42 等历史快照，不认证交付时移动分支的状态。静态纤维沿用 [Foundational Formulas and Relations](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)、[Boundary Calculus](AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md) 和 [Output-Resolved Instrument Closure](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md)。独立集多面体、全酉模性、树上概率缝合、支持函数及 Steiner 面积公式是既有数学方法；本卷不将其应用或改写宣称为原创定理。
+

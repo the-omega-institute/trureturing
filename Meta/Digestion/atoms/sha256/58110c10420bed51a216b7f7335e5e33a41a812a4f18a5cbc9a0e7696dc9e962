@@ -1,0 +1,32 @@
+### theorem 7.1: 定理 4：固定姿态宇宙中的软到刚单调性
+
+若 $\tau_1\ge\tau_2$，并且容器坐标系与姿态集合固定，则：
+
+$$
+V_{\tau_2,L}\subseteq V_{\tau_1,L},
+$$
+
+并且在共同顶点上：
+
+$$
+E_{\tau_1,L}\subseteq E_{\tau_2,L}.
+$$
+
+因此：
+
+$$
+\boxed{
+\operatorname{STAB}(G_{\tau_2,L})
+\subseteq
+\operatorname{STAB}(G_{\tau_1,L}),
+}
+$$
+
+其中：
+
+$$
+\operatorname{STAB}(G)=
+\operatorname{conv}
+\{\chi^I:I\text{ 是 }G\text{ 的独立集}\}.
+$$
+
