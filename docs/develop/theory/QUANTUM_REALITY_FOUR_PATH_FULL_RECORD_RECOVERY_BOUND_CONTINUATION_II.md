@@ -4276,7 +4276,7 @@ $$
  \delta=\min\{D_{ik},D_{il},D_{jk},D_{jl}\}>0
 $$
 
-and let $R_{ij;kl}$ have entries $+1 at $(i,k),(j,l)$, entries $-1 at
+and let $R_{ij;kl}$ have entries $+1$ at $(i,k),(j,l)$, entries $-1$ at
 $(i,l),(j,k)$, and zero elsewhere. Both
 $D+\delta R_{ij;kl}$ and $D-\delta R_{ij;kl}$ are nonnegative doubly
 stochastic matrices. By the finite Birkhoff--von Neumann decomposition,
