@@ -429,5 +429,116 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
 
 end LogKoteljanskii
 
+namespace ModeInterpolationDet
+
+#print _root_.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.mode_interpolation_det
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature
+    (Σ n : ℕ, Σ _ : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ,
+      Σ _ : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ, Finset (Fin n))
+    (fun _ => ℝ) (fun _ => ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ p x =>
+    ((reducedCovariance (Sigma.fst (Sigma.snd p))
+      (Sigma.snd (Sigma.snd (Sigma.snd p)))).map Complex.ofReal + (x : ℂ) •
+      (Complex.I • (reducedCovariance (Sigma.fst (Sigma.snd (Sigma.snd p)))
+        (Sigma.snd (Sigma.snd (Sigma.snd p)))).map Complex.ofReal)).det) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ}
+    (V ω : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
+    (Y : Finset (Fin n × Fin 2)) (X : Finset (Fin n)),
+    (∀ p, p ∈ Y ↔ p.1 ∈ X) → ∀ (x : ℝ),
+    (((V.map Complex.ofReal) +
+      (x : ℂ) • (Complex.I • ω.map Complex.ofReal)).submatrix
+      (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val).det =
+      R.readout () ⟨n, V, ω, X⟩ x
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := @h 0 0 0 ∅ ∅ (by simp) 0
+  norm_num [rejected, realize] at hh
+
+lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  let X : Finset (Fin 1) := Finset.univ
+  let ι := {p : Fin 1 × Fin 2 // p.1 ∈ X}
+  have hc : Fintype.card {p : Fin 1 × Fin 2 // p.1 ∈ X} = 2 := by decide
+  have : Nonempty ι := ⟨⟨(0, 0), by simp [X]⟩⟩
+  have hm : (reducedCovariance (1 : Matrix (Fin 1 × Fin 2) (Fin 1 × Fin 2) ℝ) X).map
+      Complex.ofReal = (1 : Matrix ι ι ℂ) := by
+    rw [reducedCovariance, Matrix.submatrix_one _ Subtype.val_injective]
+    exact Matrix.map_one Complex.ofReal rfl rfl
+  have hz : (reducedCovariance (0 : Matrix (Fin 1 × Fin 2) (Fin 1 × Fin 2) ℝ) X).map
+      Complex.ofReal = (0 : Matrix ι ι ℂ) := by ext; simp [reducedCovariance]
+  refine ⟨⟨1, 0, 1, X⟩, 0, 1, ?_⟩
+  change (((reducedCovariance (0 : Matrix (Fin 1 × Fin 2) (Fin 1 × Fin 2) ℝ) X).map
+    Complex.ofReal) + (0 : ℂ) • (Complex.I •
+      (reducedCovariance (1 : Matrix (Fin 1 × Fin 2) (Fin 1 × Fin 2) ℝ) X).map
+        Complex.ofReal)).det ≠
+    (((reducedCovariance (0 : Matrix (Fin 1 × Fin 2) (Fin 1 × Fin 2) ℝ) X).map
+      Complex.ofReal) + (1 : ℂ) • (Complex.I •
+        (reducedCovariance (1 : Matrix (Fin 1 × Fin 2) (Fin 1 × Fin 2) ℝ) X).map
+          Complex.ofReal)).det
+  rw [hz, hm]
+  norm_num [Matrix.det_smul, hc]
+
+def source_registration : Registration arena (type_of% @mode_interpolation_det) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@mode_interpolation_det, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@mode_interpolation_det) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.ModeInterpolationDet.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.ModeInterpolationDet
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p x =>
+    ((reducedCovariance (Sigma.fst (Sigma.snd p))
+      (Sigma.snd (Sigma.snd (Sigma.snd p)))).map Complex.ofReal + (x : ℂ) •
+      (Complex.I • (reducedCovariance (Sigma.fst (Sigma.snd (Sigma.snd p)))
+        (Sigma.snd (Sigma.snd (Sigma.snd p)))).map Complex.ofReal)).det) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
+    definition := none
+    coordinates := #[0, 1, 2, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end ModeInterpolationDet
+
 end
 end Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
