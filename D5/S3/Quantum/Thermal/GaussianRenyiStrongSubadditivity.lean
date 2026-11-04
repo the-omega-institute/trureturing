@@ -199,16 +199,14 @@ private lemma uncertainty_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
   have hP : P.PosSemidef := hV.2
   have hQ : Q.PosSemidef := by
     have heq : Pᵀ = Q := by
-      ext i j
-      have hs := congrArg (fun M : Matrix ι ι ℝ => M i j) (physical_skew V Ω hV)
-      have hv := congrArg (fun M : Matrix ι ι ℝ => M i j) hV.1
-      change Ω j i = -Ω i j at hs
-      change V j i = V i j at hv
-      simp [P, Q, hs, hv, sub_eq_add_neg]
+      dsimp only [P, Q]
+      rw [Matrix.transpose_add, Matrix.transpose_smul, ← Matrix.transpose_map,
+        ← Matrix.transpose_map, hV.1, physical_skew V Ω hV,
+        Matrix.map_neg _ Complex.ofReal_neg, smul_neg, sub_eq_add_neg]
     exact heq ▸ hP.transpose
   have hsum : P + Q = (2 : ℝ) • V.map Complex.ofReal := by
-    ext i j
-    simp only [P, Q, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, two_smul]
+    dsimp only [P, Q]
+    rw [two_smul]
     abel
   have hps : (V.map Complex.ofReal).PosSemidef := by
     have h := (hP.add hQ).smul (show (0 : ℝ) ≤ 1 / 2 by norm_num)
@@ -305,12 +303,10 @@ private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [Decidab
   have hunitM : IsUnit M := (hunitS.mul (IsUnit.of_mul_eq_one J hJJ)).mul hunitS
   have hminus : (V.map Complex.ofReal - J).PosSemidef := by
     have heq : (V.map Complex.ofReal + J)ᵀ = V.map Complex.ofReal - J := by
-      ext i j
-      have hs := congrArg (fun N : Matrix ι ι ℝ => N i j) (physical_skew V Ω hV)
-      have hv := congrArg (fun N : Matrix ι ι ℝ => N i j) hV.1
-      change Ω j i = -Ω i j at hs
-      change V j i = V i j at hv
-      simp [J, hs, hv, sub_eq_add_neg]
+      dsimp only [J]
+      rw [Matrix.transpose_add, Matrix.transpose_smul, ← Matrix.transpose_map,
+        ← Matrix.transpose_map, hV.1, physical_skew V Ω hV,
+        Matrix.map_neg _ Complex.ofReal_neg, smul_neg, sub_eq_add_neg]
     exact heq ▸ hV.2.transpose
   have hp : (M * M + M).PosSemidef := by
     have h := hV.2.conjTranspose_mul_mul_same (J * S)
@@ -430,12 +426,11 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
     rw [pow_two, ← Matrix.det_mul, neg_mul_neg, hJJ, Matrix.det_one]
   intro x hx0 hx1
   have ht : (H x)ᵀ = H (-x) := by
-    ext i j
-    have hs := congrArg (fun N : Matrix ι ι ℝ => N i j) (physical_skew V Ω hV)
-    have hv := congrArg (fun N : Matrix ι ι ℝ => N i j) hV.1
-    change Ω j i = -Ω i j at hs
-    change V j i = V i j at hv
-    simp [H, J, hs, hv, smul_eq_mul]
+    dsimp only [H, J]
+    rw [Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_smul,
+      ← Matrix.transpose_map, ← Matrix.transpose_map, hV.1, physical_skew V Ω hV,
+      Matrix.map_neg _ Complex.ofReal_neg, smul_neg, smul_neg,
+      Complex.ofReal_neg, neg_smul]
   have hdt : (H (-x)).det = (H x).det := by rw [← ht, Matrix.det_transpose]
   have hprod : (∏ i, ((hH.eigenvalues i ^ 2 - x ^ 2 : ℝ) : ℂ)) = (H x).det ^ 2 := by
     calc
