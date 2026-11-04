@@ -169,7 +169,7 @@ private lemma spanning_of_rank (A : Fin 2 → Bond) (r : ℕ)
         ((List.ofFn fun i => A (Fin.append ![p.1, p.2] b i)).prod).trace
       rw [List.ofFn_comp' (Fin.append ![p.1, p.2] b) A,
         List.ofFn_fin_append, List.map_append, List.prod_append]
-      simp [List.map_ofFn, List.ofFn_succ, Matrix.mul_assoc]
+      simp [List.map_ofFn, List.ofFn_succ, Matrix.mul_assoc, Function.comp_def]
     change Submodule.span ℂ (Set.range (fun p : Fin 2 × Fin 2 => L (A p.1 * A p.2))) = _
     rw [he]
   have hle : 4 ≤ Module.finrank ℂ S := by
