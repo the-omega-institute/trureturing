@@ -107,7 +107,7 @@ private theorem harmonic_forward_difference {d : ℕ} {f : Lattice d → ℝ}
 private theorem harmonic_mixed_difference {d : ℕ} {f : Lattice d → ℝ}
     (hf : Harmonic f) (k : ℕ) (w : Word d k) :
     Harmonic (mixedDifference k w f) := by
-  induction k generalizing w with
+  induction k with
   | zero => exact hf
   | succ k ih =>
     exact harmonic_forward_difference (ih (Fin.tail w)) (w 0)
@@ -131,9 +131,14 @@ private theorem square_laplacian {d : ℕ} (hd : 0 < d)
         intro v _
         ring
       _ = _ := by
-        simp [Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum,
-          Fintype.card_prod, Fintype.card_fin, Fintype.card_bool, nsmul_eq_mul]
-        <;> ring
+        rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
+        rw [← Finset.mul_sum]
+        rw [Finset.sum_const]
+        have hcard : (Finset.univ : Finset (Direction d)).card = 2 * d := by
+          simp [Fintype.card_prod, Fintype.card_fin, Fintype.card_bool, Nat.mul_comm]
+        rw [hcard]
+        rw [nsmul_eq_mul]
+        norm_num [Nat.cast_mul]
   change (2 * (d : ℝ))⁻¹ * (∑ v : Direction d, (f (x + step v)) ^ 2) -
       (f x) ^ 2 = _
   simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, square, fwdDiff]
@@ -147,6 +152,7 @@ private theorem sum_words_succ {d k : ℕ} (F : Word d (k + 1) → ℝ) :
       ∑ v : Direction d, ∑ w : Word d k, F (Fin.cons v w) := by
   rw [← (Fin.consEquiv (fun _ : Fin (k + 1) => Direction d)).sum_comp,
     Fintype.sum_prod_type]
+  simp [Fin.consEquiv]
 
 /-- Every iterate of `P-I` on a harmonic square is the normalized sum of all
 ordered mixed-difference squares, including order zero and repeated letters. -/
