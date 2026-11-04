@@ -4,13 +4,15 @@
    mirror-E: none(waiver:finite-dimensional-classical-analysis)
    anchors: []
    utility: none
-   digest: Simultaneous rational approximation and one matrix denominator preserve a negative real subspace. -/
+   digest: Simultaneous integer approximation preserves a negative real subspace. -/
 
 import D5.S3.Constants.Moments.CountableHankelNegativeWitness
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Analysis.Normed.Module.Normalize
 import Mathlib.Topology.MetricSpace.ProperSpace
 import Mathlib.Topology.Order.Compact
+
+/-! Uniform Gram perturbations and one denominator preserve an entire real span. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -35,7 +37,7 @@ private theorem family_form_gram {k d : ℕ} (M : Fin d → Fin d → ℝ)
   classical
   calc
     _ = ∑ a, ∑ b, ∑ j, ∑ l, t j * t l * (A j a * A l b * M a b) := by
-      simp only [family_form, Finset.sum_mul, Finset.mul_sum]
+      simp only [family_form, Finset.sum_mul_sum, Finset.sum_mul]
       apply Finset.sum_congr rfl
       intro a _
       apply Finset.sum_congr rfl
@@ -82,9 +84,12 @@ private theorem family_form_scale_rows {k d : ℕ} (M : Fin d → Fin d → ℝ)
     apply Finset.sum_congr rfl
     intro j _
     ring
-  simp only [family_form, hlin, Finset.mul_sum]
+  dsimp only [family_form]
+  simp_rw [hlin]
+  rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro a _
+  rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro b _
   ring
@@ -187,7 +192,7 @@ theorem exists_integer_negative_family_quadratic_of_gap {k d : ℕ}
   have hscale (j : Fin k) (a : Fin d) :
       (B.num j a : ℝ) = (B.den : ℝ) * T j a := by
     have h := B.num_div_den j a
-    have h' : (B.num j a : ℝ) / (B.den : ℝ) = T j a := by exact_mod_cast h
+    have h' : (B.num j a : ℝ) / (B.den : ℝ) = (B j a : ℝ) := by exact_mod_cast h
     exact (div_eq_iff hD).mp h' |>.trans (mul_comm _ _)
   refine ⟨B.num, ?_⟩
   intro t ht
@@ -230,7 +235,8 @@ theorem exists_integer_negative_family_quadratic {k d : ℕ}
     simp [family_form, S]
   let u := NormedSpace.normalize t
   have hu : u ∈ K := by
-    simpa [K, Metric.mem_sphere, dist_zero_right] using NormedSpace.norm_normalize ht
+    simpa only [K, Metric.mem_sphere, dist_zero_right] using
+      (NormedSpace.norm_normalize ht : ‖u‖ = 1)
   have hu_scale : ‖t‖ • u = t := NormedSpace.norm_smul_normalize t
   have hg : family_form M A u ≤ -γ * S u := by
     have h := (le_div_iff₀ (hS u hu)).mp (hγK u hu)

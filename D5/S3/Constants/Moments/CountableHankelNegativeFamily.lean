@@ -4,7 +4,7 @@
    mirror-E: none(waiver:countable-spectrum-classical-analysis)
    anchors: []
    utility: none
-   digest: A common head and exponent give a uniform negative polynomial family for the complete spectrum. -/
+   digest: A common head and exponent give a complete-spectrum negative family. -/
 
 import D5.S3.Constants.Moments.CountableHankelNegativeWitness
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
@@ -85,7 +85,7 @@ theorem exists_real_negative_family {ι : Type*} {k : ℕ} (z w : ι → ℂ)
         exact hsep l j (hzi (h.trans (hzc (s j)).symm))
       have hpzero : (p j).eval₂ Complex.ofRealHom (z (s l)) = 0 := by
         simpa [hnode, hpair] using hp j (s l) (hsE l)
-      simp [P, peak, hpzero, hjl]
+      simp [P, peak, Polynomial.eval₂_pow, hpzero, hjl]
   have hqvalue (m : ℕ) (t : Fin k → ℝ) (j : Fin k) :
       (q m t).eval₂ Complex.ofRealHom (z (s j)) = (t j : ℂ) * b j := by
     simp [q, Polynomial.eval₂_finsetSum, Polynomial.eval₂_smul, hvalue, mul_ite]
@@ -120,7 +120,7 @@ theorem exists_real_negative_family {ι : Type*} {k : ℕ} (z w : ι → ℂ)
           ⟨j, Finset.mem_univ _, (hzi (h.trans (hzc (s j)).symm)).symm⟩)
       have hpzero (j : Fin k) : (p j).eval₂ Complex.ofRealHom (z i) = 0 := by
         simpa [hzj j, hzcj j] using hp j i hi
-      simp [q, P, peak, Polynomial.eval₂_finsetSum, hpzero]
+      simp [q, P, peak, Polynomial.eval₂_finsetSum, Polynomial.eval₂_pow, hpzero]
     calc
       _ = ∑ i ∈ L ∪ R, w i * ((q m t).eval₂ Complex.ofRealHom (z i)) ^ 2 := by
         symm
@@ -214,8 +214,7 @@ theorem exists_real_negative_family {ι : Type*} {k : ℕ} (z w : ι → ℂ)
   have hbound := mul_le_mul_of_nonneg_right hm.le hS
   have htail_re := hre.trans (htail_sum m t)
   have hhead_re : (-2 * (∑ j, (t j : ℂ) ^ 2)).re = -2 * (∑ j, (t j) ^ 2) := by
-    simp only [← Complex.ofReal_pow, ← Complex.ofReal_sum]
-    simp
+    simp [pow_two, Complex.mul_re]
   rw [hhead_re]
   linarith
 
