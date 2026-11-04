@@ -3886,3 +3886,272 @@ The existing finite native and service checks provide source bindings for these 
 **Continuation boundary.** The next execution may use this representation only after a fresh packed implementation has passed the alias, primitive, installer, LAB-prefix, session, and census falsifiers and after its measured $U$ supplies each owner at a common cut. It must still execute the unchanged fixed table/compiler/adapter/copier/B/LAB path on acquired positive N4, partial/cylinder, and authentic null N9 inputs, perform Arithmetic Print/End/Ack/Return, continue Reads on the same original port, and record the complete simultaneous ML.16 vector. Loading completion, a component output, a host-memory saving, or the existence of a finite $U$ is not C completion.
 
 ## 追加锚（本行以下为增补区）
+
+## 27. Packed storage consumed by the installed interpreter
+
+### 27.1. Concrete representation and its operation equations
+
+The private implementation `packed_constructor.PackedStorage` is used by
+`NativeEngine.seal`, `Installer.tick`, and the original `Arena` allocation
+path. `full_execution.run_case` supplies the same bank to source preparation,
+the connection, and `MeasuredEngine`. It does not supply a second evaluator.
+The compiler, immutable table, converter, copier, B driver, LAB growth,
+returned-head decoder, service graph and original-port operation keep their
+existing instruction graphs and transition methods. This section establishes
+storage correspondence for those actual consumers; it does not assert that a
+complete arithmetic session has executed.
+
+**Definition 27.1 (canonical packed references).** A retained reference is null
+or a pair $(o,j)$ identifying the $j$th record of owner $o$. Write
+
+$$
+ c(\bot)=0,\qquad
+ c(o,j)=1+\frac{(o+j)(o+j+1)}2+j.
+$$
+
+`PackedRefs` stores each $c$ in a little-endian byte slice. Its slice width is
+at least one byte and grows to fit a written value. Widening copies every old
+slice into the low bytes of its new slice and fills the additional bytes with
+zero. This host width is independent of the modeled owner's reference width.
+Integer arithmetic, including the integer square root in the inverse, is exact;
+there is no 32-bit or 64-bit handle restriction on the finite mathematical domain.
+
+For a nonzero code $z$, set $n=z-1$,
+$s=\lfloor(\sqrt{8n+1}-1)/2\rfloor$,
+$j=n-s(s+1)/2$, and $o=s-j$. The canonical proxy dictionary contains exactly
+one proxy for each allocated owner/record pair. Decoding a nonnull reference
+returns that proxy, so source `is` tests remain identity tests rather than
+comparisons of field values. Equal-valued objects retain distinct identities.
+
+**Lemma 27.2 (literal reference storage).** For every finite vector, every
+in-range field $i$, and every null or allocated reference $x$, a read after a
+write at $i$ returns precisely $x$, other positions are unchanged, and any
+host widening preserves every previously stored reference and alias.
+
+*Proof.* The triangular intervals
+$[s(s+1)/2,(s+1)(s+2)/2)$ partition the nonnegative integers. The displayed
+inverse therefore recovers the unique $(o,j)$ with $o+j=s$. Zero is outside
+all nonnull codes. Fixed-width little-endian conversion is inverse to the
+corresponding integer read when the value fits. Widening adds only leading
+zero bytes, separately in each field slice. The proxy lookup is a function of
+the recovered pair, with one value per pair. $\square$
+
+**Definition 27.3 (records actually accessed by the consumers).** A
+`PackedBlock` has the original fixed reference fields, bit bytearray, bit
+width, grant, and directory `next`. Its directory reference is a separate
+packed field, excluded from the native arity test, just as the original
+`Block.next` is excluded from `len(Block.refs)`. `PackedSource` has the
+three reference fields `block`, `next`, `forward` and its original grant.
+`PackedObj` has the original kind and field-name schema; a named reference
+field occupies one packed reference position. Its optional `bit` field
+stores the original values zero, one, or the cleared value `None`. The host
+nullable encoding uses a distinct byte value for `None`; this is not a new
+modeled bit value or a change to the original cleanup semantics. The `writes`
+member remains observer metadata.
+
+Each packed block is a subclass of the original `Block`; packed sources and
+arena objects likewise retain their original source types. The native
+interpreter still accesses `.refs[i]`, `.data`, `.bits`, `.bit(i)`, `.put(i,b)`,
+`.width`, `.next`, and `.grant`. The C initializer binds the *same bytearray*
+returned by `.data`, using its existing buffer interface. There is no copied
+answer, shadow target, reference interpreter, or unpack-and-execute fallback.
+
+**Lemma 27.4 (complete accessor correspondence).** Under the owner/record
+bijection, every storage operation used by `NativeEngine.microtick`,
+`ServiceEngine.microtick`, `Installer.tick`, `BitKernel.run`,
+`OriginalConnection.send/invoke/ack`, `OriginalPort.call`, `Arena`, and
+`Buffer` has the following exact source effect.
+
+| Actual access | Decoded effect |
+| --- | --- |
+| `refs[i]`, `next`, descriptor `block/next/forward` | Read the corresponding source reference; a write changes exactly that field. |
+| `data`, `bits`, `bit(i)`, `put(i,b)` | Read or update the same bit positions in the retained bytearray. |
+| C initializer clear/read/write vertices | Access the bound source or pending-target bytearray at the original literal byte/mask; retain the original latch and cursor. |
+| `len(refs)`, `width`, `grant` | Return the original arity, bit width, or current grant, including a pending zero grant. |
+| named arena field insertion | Materialize exactly one field of the original schema before the same write; preserve every older field. |
+| arena bit clear and free-list linking | Preserve `None`, every cleared reference, the old pool, and the actual new free-list links. |
+| proxy identity, null, iteration, and slices | Preserve identity/null tests, order, field count, and fixed-shape assignments. |
+
+*Proof.* Reference positions satisfy Lemma 27.2. Block accessors and C buffers
+share each retained mutable bytearray, so the original mask update and byte
+view have identical effects. The directory occupies its own packed position and
+cannot alter a native reference selector. Named field insertion appends one
+position without changing the existing key-to-position map; the bit key has
+its own nullable byte. Grant access uses the retained slot grant directly.
+`PackedStorage.import_sources` first creates one record for each distinct
+public block and descriptor, then copies the actual descriptor edges through
+the identity map. Thus forward references, cycles, shared blocks and aliases
+are preserved before installation starts. This import is public-source
+preparation, not a replacement of the paid installer. Every item in the table
+is implemented by these accessors, not postulated as an additional backend
+invariant. $\square$
+
+### 27.2. Consumer transitions, refusals and all finite prefixes
+
+**Theorem 27.5 (installed-consumer correspondence).** Fix any valid finite
+public installation source of the existing production preparer, including its
+finite reserve and current rights. Assume host backing for the represented
+finite prefix, its preparation overlap, and exact byte/integer operations;
+this premise supplies storage, not a correctness invariant. Replace its
+block/descriptor storage and
+any supplied source/connection arenas by `PackedStorage`. For every finite
+installation, native, or original-port prefix, decoding gives the original
+consumer state at the *same* primitive cut, with the same selected successor,
+latches, refusal, output and charge deltas. The statement includes pending
+allocation, partial bit initialization, forward relocation, saved old PC,
+occupied input/output, End/Ack/Return, waiting, busy and permanent Close cuts.
+
+*Proof.* At public preparation the two-pass import of Lemma 27.4 establishes
+the bijection; it preserves all supplied bytes, grants, entry descriptors and
+edges. At `Installer.tick`, allocation creates a distinct zero-grant target
+and stores it as pending. The next grant transition changes that same grant.
+Clearing, directory linking, bit-kernel binding and the individual C vertices
+then satisfy the corresponding rows of Lemma 27.4. The reference pass follows
+the actual source descriptor and its actual forward field; the entry-write
+uses the translated entry descriptor. Installer control vertices, counters
+and all charge calls are the original ones.
+
+After sealing, `NativeEngine.microtick` is unchanged. Its full operation set
+is `rr/rw/br/bw/address/save/rfield/wfield/bfield/vfield/literal/nil/null/equal/`
+`test/shape/goto/send/end/ack/return/fault/commit/codebit/coderef`.
+Reference and bit operations obey Lemma 27.4. Literal assignments do not
+consult a host identifier. Null, equality, bit and shape tests therefore
+choose the same successor reference. `commit` reads the same saved old PC
+and stores the same new control reference. `fault` retains the same refusal
+charge and has no completion successor. The service extension has only
+`portsend/sourcecall/sourceack`; it uses the same occupied latch, operand
+chain, original bound port and returned two-bit latch. The source provider
+follows the same arena edges and executes the same buffer cleanup operations.
+No backend method calls a modeled charge function or changes one of these
+branches. All surrounding register, finite-controller and I/O guards remain
+the original methods. Induction on these actual transitions proves the
+claim, including a prefix ending before commit or at refusal. $\square$
+
+**Corollary 27.6 (original parameter family).** Theorem 27.5 composes with the
+existing A/B source correspondence for every finite bilateral non-erasing B
+program and finite binary input, including immediate halt and finite prefixes
+of nonhalting runs. For the particular service it preserves every
+source-permitted $N\ge4$, every supplied rational representation $a/b\in[0,1]$
+with $b>0$, endpoints and unreduced fractions included, every $15N$ indexed
+mask/value assignment, every finite cylinder list, and every finite original
+operand. Repeats, long words, informative absences, partial slots, old-slot
+rereads, equal observations at distinct indices, once-shared full injections
+and promised arrays outside the prior support remain in scope.
+
+*Proof.* The representation lemmas depend on finite fields and identities,
+not on the word length, a numeric normalizer, a prior-support test, or the
+termination of a B program. They neither shorten a received word nor reindex
+a receipt/cache row. The same graph therefore consumes the same original
+bytes and references under the existing A/B hypotheses. Those hypotheses,
+including fixed-table address bounds and the supplied valid framing, are
+not discharged merely by changing storage. A zero normalizer remains zero;
+no ratio is defined there. Any unfinished arithmetic execution remains
+unfinished. $\square$
+
+**Theorem 27.7 (same-cut resource transport).** At corresponding cuts of
+Theorem 27.5, each owner's retained object/field/grant counts, owner reference
+width, cumulative operation vector, and widening overlap equal those of the
+original consumer. This includes initializer source and target, directory
+material, old jobs, roots, pending scratch, inputs, receipts, caches, code and
+control reads, returned-head decoder, cleanup, and free pools.
+
+*Proof.* Each represented block, descriptor and arena object has exactly one
+retained packed record; unchanged controller and kernel objects retain their
+original identities. The additional directory position represents the
+already counted `Block.next`;
+it is not an extra native field. First-field insertion and allocation have
+the same deltas. The same `Arena.alloc/write/sample` and installer census
+methods charge the same width migration and overlap before the same update.
+A zero-valued grant still occupies one grant bit. C-kernel events are still
+charged by the original initializer counters. Theorem 27.5 preserves every
+other charge call. Apply Theorem 25.7 to the single shared chronology and
+sum owners only after fixing the cut. Host proxy, schema, packed-width and
+allocator costs are additional host costs and do not reduce this sum.
+$\square$
+
+### 27.3. Paid material and the execution boundary
+
+**Proposition 27.8 (loader lower bound does not authorize a reserve).** At
+$r=361$, an arithmetic word of length $L$ converts to
+$m=32(L+363)$ B bits with $b=5m/8$ marked bits. The original complete loader
+retains
+
+$$
+ D=(13m^2+m)/16+751,\qquad W=D+29m/8+6
+$$
+
+work objects. Consequently even the relaxed $L=0$ case requires
+$W=109675399$ work objects. The three original arithmetic words give the
+following *bare-loader* bounds, before every other use of the same reserve.
+
+| Original case | $L$ | $W$ |
+| --- | ---: | ---: |
+| positive full | 387 | 468089257 |
+| positive partial | 386 | 466841971 |
+| null nine distinct left | 839 | 1202219521 |
+
+For a capacity $K$, the existing installer retains
+
+$$
+ O(K)=8109329+3K,\quad R(K)=32574125+13K,\quad
+ B(K)=9546573383+16K,
+$$
+
+with $w=\operatorname{bitlength}(O(K)+62)$ and
+$S(K)=B(K)+wR(K)+O(K)$. Substituting $K=W$ gives respectively
+$S=208098147041$, $207571792349$, and $533562546347$ modeled bits. These
+numbers neither supply an upper bound on $K$ nor measure host RSS.
+
+*Proof.* Apply the existing loader/routing count to the actual converted
+word, retaining every marked bit and proper-ancestor append. Substitute its
+length and marked-bit count, then the installer source/target census. The
+quadratic term remains a real collection of distinct routing cells after
+packing. Other reserve consumers can only increase the necessary capacity.
+$\square$
+
+**Proposition 27.9 (constructive host obstruction test).** Let $h_B,h_D,h_S,
+h_V,h_R,h_A,h_b$ be the measured shallow allocation sizes, on the intended
+Python runtime, of a `PackedBlock`, `PackedSource`, `PackedSlot`, `RefView`,
+`PackedRefs`, empty reference bytearray, and empty bit bytearray. Every
+installed reserve cell retains two distinct block records and one source
+descriptor. Hence even discarding all payload bytes, dictionary entries,
+handles, controller material and preparer temporaries, its host allocation
+is bounded below by
+
+$$
+ H_{cell}=2(h_B+h_S+h_V+h_R+h_A+h_b)
+              +(h_D+h_S+h_R+h_A+h_b).
+$$
+
+The original selected cases therefore require at least $W H_{cell}$ host
+bytes in this concrete backend. If this lower bound exceeds a proposed
+resident reservation, that reservation fails before a full run starts. If
+it exceeds both available memory and an explicitly backed paging supply,
+this backend has no such supported host plan. This is an allocation lower
+bound derived from retained source objects, not extrapolation from a small
+run's RSS or from a compressed code description.
+
+*Proof.* Each constructor creates its own proxy, record, reference vector
+and bytearrays; each block additionally creates its reference view. None is
+shared between a reserve's source block, descriptor and target. Shallow sizes
+exclude referenced objects, so summing these distinct allocations does not
+double-count them. Payload, nonempty-array overhead and every omitted
+allocation are nonnegative. $\square$
+
+A sufficient paid $K$ still needs a bound for the whole selected chronology:
+received words, cache and receipt rows, connection/provider buffers, converter,
+load, all subsequent copier/B/LAB work, returned-head scan, output, cleanup,
+and retained earlier jobs. Its owner widths and simultaneous widening overlap
+must be computed at those same cuts. A completed finite dry run could witness
+such a bound, but Proposition 26.19 cannot be used circularly to authorize that
+very run without its own backing. No sufficient $K$, host reservation, or
+complete ML.16 vector is supplied here. The original positive law, partial
+conditional law and authentic NullEvidence executions, their continued
+same-port Reads, C, D and independent acceptance remain outstanding.
+
+The pairing and byte round-trip facts are standard encodings. The concrete
+consumer correspondence and allocation bounds here are repo-derived ordinary
+source-level proofs; they are not Lean verification or claims of literature
+originality. Existing A/B suppliers retain their stated hypotheses and scope.
+
+## 追加锚（本行以下为增补区）
