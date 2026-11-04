@@ -170,13 +170,9 @@ private lemma physical_posDef {n : ℕ}
   apply uncertainty_posDef V (symplecticForm n) hV
   have h : (symplecticForm n).map Complex.ofReal *
       (symplecticForm n).map Complex.ofReal = -1 := by
-    calc
-      _ = (symplecticForm n * symplecticForm n).map Complex.ofReal :=
-        (Matrix.map_mul (f := Complex.ofRealHom)).symm
-      _ = -1 := by
-        rw [canonical_square]
-        ext i j
-        by_cases hij : i = j <;> simp [hij]
+    change Complex.ofRealHom.mapMatrix (symplecticForm n) *
+      Complex.ofRealHom.mapMatrix (symplecticForm n) = -1
+    rw [← map_mul, canonical_square, map_neg, map_one]
   exact IsUnit.of_mul_eq_one (-(symplecticForm n).map Complex.ofReal)
     (by rw [mul_neg, h, neg_neg])
 
@@ -224,12 +220,8 @@ private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [Decidab
     have h := hV.2.isHermitian.sub hpos.isHermitian
     simpa only [add_sub_cancel_left] using h.eq
   have hΩC : Ω.map Complex.ofReal * Ω.map Complex.ofReal = -1 := by
-    calc
-      _ = (Ω * Ω).map Complex.ofReal := (Matrix.map_mul (f := Complex.ofRealHom)).symm
-      _ = -1 := by
-        rw [hΩ]
-        ext i j
-        by_cases hij : i = j <;> simp [hij]
+    change Complex.ofRealHom.mapMatrix Ω * Complex.ofRealHom.mapMatrix Ω = -1
+    rw [← map_mul, hΩ, map_neg, map_one]
   have hJJ : J * J = 1 := by
     dsimp only [J]
     rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Complex.I_mul_I, hΩC]
@@ -334,12 +326,8 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
   let H := fun x : ℝ => V.map Complex.ofReal + (x : ℂ) • J
   have hSS : S * S = V.map Complex.ofReal := CFC.sqrt_mul_sqrt_self _ hpos.posSemidef.nonneg
   have hΩC : Ω.map Complex.ofReal * Ω.map Complex.ofReal = -1 := by
-    calc
-      _ = (Ω * Ω).map Complex.ofReal := (Matrix.map_mul (f := Complex.ofRealHom)).symm
-      _ = -1 := by
-        rw [hΩ]
-        ext i j
-        by_cases hij : i = j <;> simp [hij]
+    change Complex.ofRealHom.mapMatrix Ω * Complex.ofRealHom.mapMatrix Ω = -1
+    rw [← map_mul, hΩ, map_neg, map_one]
   have hJJ : J * J = 1 := by
     dsimp only [J]
     rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Complex.I_mul_I, hΩC]
