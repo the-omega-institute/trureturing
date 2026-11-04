@@ -4,7 +4,7 @@
    mirror-E: none(waiver:pure-finite-group-theorem)
    anchors: []
    utility: none
-   digest: A singleton nonidentity commutator padded by identities obstructs right quotients. -/
+   digest: One nonidentity element of the commutator subgroup obstructs right quotients. -/
 
 import Mathlib.GroupTheory.Abelianization.Defs
 import Mathlib.GroupTheory.Perm.Support
