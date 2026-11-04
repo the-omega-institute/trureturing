@@ -67,17 +67,17 @@ internal sealed class BargmannImaginaryMaximizersDocument : IScribeDocumentDefin
 
     private static Formula WeightedEdgeBoundFormula()
     {
-        Formula iota = X("I"), w = X("w"), c = X("c"), m = X("M"), k = X("k");
+        Formula iota = Iota, w = X("w"), c = X("c"), m = X("M"), k = X("k");
         Formula SumOf(Formula term) => Seq(new Formula.Subscript(Sum, Seq(k, Sp, Colon, Sp, iota)), Sp, Parenthesized(term));
         Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
         Formula mean = SumOf(Multiply(At(c, k), At(w, k)));
-        Formula nonnegative = All(k, iota, Le(D(0), At(w, k)));
+        Formula nonnegative = All(k, iota, Le(Typed(D(0), Reals()), At(w, k)));
         Formula bound = All(k, iota, Le(At(c, k), m));
         Formula equality = IffOf(Equal(mean, m), All(k, iota,
-            Imp(new Formula.Relation(At(c, k), FormulaRelationOperator.LessThan, m), Equal(At(w, k), D(0)))));
-        return Disp(All(iota, Named("Type"), Seq(OpenBracket, Call("Fintype", iota), CloseBracket, Comma, Sp,
+            Imp(new Formula.Relation(At(c, k), FormulaRelationOperator.LessThan, m), Equal(At(w, k), Typed(D(0), Reals())))));
+        return Disp(All(iota, Seq(Named("Type"), Star), Seq(OpenBracket, Call("Fintype", iota), CloseBracket, Sp,
             All(w, Arrow(iota, Reals()), All(c, Arrow(iota, Reals()), All(m, Reals(),
-                Imp(nonnegative, Imp(Equal(SumOf(At(w, k)), D(1)), Imp(bound, And(Le(mean, m), equality))))))))));
+                Imp(nonnegative, Imp(Equal(SumOf(At(w, k)), Typed(D(1), Reals())), Imp(bound, And(Le(mean, m), equality))))))))));
     }
 
     private static Formula LatitudeDotFormula()
