@@ -8,14 +8,7 @@
 
 import D5.S3.Arith.Robin.LogarithmicMellinReserve
 import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.Analysis.Calculus.Deriv.Slope
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
 
 /-! The scalar positive representation used in the Gaussian covariance entropy inequality.
 The mass follows from an arctangent primitive after the substitutions
@@ -167,6 +160,60 @@ private lemma weight_substitution {α x : ℝ} (ha0 : 0 < α) (hx : x ∈ Ioo 0 
     norm_num [Real.sin_pi]
   · field_simp [hp.ne', hm.ne', hA.ne', hB.ne', hD.ne', hQ.ne', sub_ne_zero.mpr ha1]
     ring
+
+private def poissonDensity (α p : ℝ) : ℝ :=
+  -Real.sin (Real.pi * α) /
+    (Real.pi * (α - 1) * (1 - 2 * p * Real.cos (Real.pi * α) + p ^ 2))
+
+private lemma power_substitution_integral {α : ℝ} (ha0 : 0 < α) (g : ℝ → ℝ) :
+    (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * g x) =
+      ∫ p in Ioo (0 : ℝ) 1, poissonDensity α p *
+        g ((1 - p ^ α⁻¹) / (1 + p ^ α⁻¹)) := by
+  let f := fun x : ℝ => ((1 - x) / (1 + x)) ^ α
+  let f' := fun x : ℝ => -2 * α * ((1 - x) / (1 + x)) ^ (α - 1) / (1 + x) ^ 2
+  let G := fun p : ℝ => poissonDensity α p * g ((1 - p ^ α⁻¹) / (1 + p ^ α⁻¹))
+  have hf : ContinuousOn f (uIcc 0 1) := by
+    rw [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
+    intro x hx
+    have hp : 0 < 1 + x := by linarith [hx.1]
+    exact (((continuousAt_const.sub continuousAt_id).div
+      (continuousAt_const.add continuousAt_id) hp.ne').rpow_const
+        (Or.inr ha0.le)).continuousWithinAt
+  have hd : ∀ x ∈ Ioo (0 : ℝ) 1, HasDerivAt f (f' x) x :=
+    fun x hx => power_substitution_hasDerivAt (α := α) hx
+  have hn : ∀ x ∈ Ioo (0 : ℝ) 1, f' x ≤ 0 := by
+    intro x hx
+    exact div_nonpos_of_nonpos_of_nonneg
+      (mul_nonpos_of_nonpos_of_nonneg (by nlinarith : -2 * α ≤ 0)
+        (Real.rpow_nonneg (mobius_mem hx).1.le _)) (sq_nonneg _)
+  have hs := intervalIntegral.integral_comp_mul_deriv_of_deriv_nonpos
+    (a := 0) (b := 1) (g := G) hf
+    (by simpa only [min_eq_left zero_le_one, max_eq_right zero_le_one] using hd)
+    (by simpa only [min_eq_left zero_le_one, max_eq_right zero_le_one] using hn)
+  have hzero : f 0 = 1 := by norm_num [f]
+  have hone : f 1 = 0 := by norm_num [f, Real.zero_rpow ha0.ne']
+  rw [hzero, hone, intervalIntegral.integral_symm (a := 0) (b := 1)] at hs
+  have hleft : (∫ x in (0 : ℝ)..1, (G ∘ f) x * f' x) =
+      -(∫ x in (0 : ℝ)..1, renyiWeight α x * g x) := by
+    rw [← intervalIntegral.integral_neg]
+    apply intervalIntegral.integral_congr_Ioo_of_le (by norm_num)
+    intro x hx
+    have hq := mobius_mem hx
+    have hback : (1 - (f x) ^ α⁻¹) / (1 + (f x) ^ α⁻¹) = x := by
+      dsimp only [f]
+      rw [Real.rpow_rpow_inv hq.1.le ha0.ne']
+      have hp : 1 + x ≠ 0 := ne_of_gt (by linarith [hx.1])
+      field_simp [hp]
+      ring
+    change poissonDensity α (f x) * g ((1 - (f x) ^ α⁻¹) / (1 + (f x) ^ α⁻¹)) *
+      f' x = -(renyiWeight α x * g x)
+    rw [hback, weight_substitution ha0 hx]
+    dsimp only [f, f', poissonDensity]
+    field_simp
+  rw [hleft] at hs
+  have heq := neg_injective hs
+  simpa only [intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1),
+    integral_Ioc_eq_integral_Ioo] using heq
 
 private lemma poissonAngle_hasDerivAt {α p : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hp : p ∈ Ioo 0 1) :
@@ -462,12 +509,21 @@ private lemma renyiFunction_derivative {α ν : ℝ} (ha0 : 0 < α)
   dsimp
   field_simp
 
+private lemma poisson_resolvent_integral {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hv : 1 < ν) :
+    (∫ p in Ioo (0 : ℝ) 1, poissonDensity α p *
+      (2 * ν / (ν ^ 2 - ((1 - p ^ α⁻¹) / (1 + p ^ α⁻¹)) ^ 2))) =
+      α * (((ν + 1) / 2) ^ (α - 1) - ((ν - 1) / 2) ^ (α - 1)) /
+        (2 * (α - 1) * (((ν + 1) / 2) ^ α - ((ν - 1) / 2) ^ α)) := by
+  sorry
+
 private lemma resolvent_integral {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 < ν) :
     (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * (2 * ν / (ν ^ 2 - x ^ 2))) =
       α * (((ν + 1) / 2) ^ (α - 1) - ((ν - 1) / 2) ^ (α - 1)) /
         (2 * (α - 1) * (((ν + 1) / 2) ^ α - ((ν - 1) / 2) ^ α)) := by
-  sorry
+  rw [power_substitution_integral ha0]
+  exact poisson_resolvent_integral ha0 ha2 ha1 hv
 
 private lemma renyiFunction_hasDerivAt {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 < ν) :
