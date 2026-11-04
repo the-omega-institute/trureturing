@@ -254,14 +254,14 @@ private lemma identity_divisibility (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j)
     (Polynomial.Chebyshev.S ℤ ((j : ℤ) - 1)).eval (i + 2 : ℤ) ∣ (i : ℤ) * j - 2 := by
   obtain ⟨x, h0, hr, he⟩ := path_reduction i j hi hj h
   have hx := path_elimination i j hj x h0 hr
-  have hi0 : (i : ℤ) ≠ 0 := by omega
+  have hi0 : (i : ℤ) ≠ 0 := Nat.cast_ne_zero.mpr (by omega : i ≠ 0)
   refine ⟨-x 0, ?_⟩
   apply mul_left_cancel₀ hi0
   nlinarith [he, hx]
 
 private lemma continuant_growth (i j : ℕ) (hi : 2 ≤ i) (hj : 3 ≤ j) :
     (i : ℤ) * j - 2 < (Polynomial.Chebyshev.S ℤ ((j : ℤ) - 1)).eval (i + 2 : ℤ) := by
-  have hi' : (2 : ℤ) ≤ i := by omega
+  have hi' : (2 : ℤ) ≤ i := Int.ofNat_le.mpr hi
   have hg : ∀ n : ℕ, 1 ≤ (S ℤ (n : ℤ)).eval (i + 2 : ℤ) ∧
       (i : ℤ) < (S ℤ ((n : ℤ) + 1)).eval (i + 2 : ℤ) -
         (S ℤ (n : ℤ)).eval (i + 2 : ℤ) := by
@@ -304,8 +304,8 @@ private lemma divisibility_classification (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤
     · exact ⟨rfl, rfl⟩
   · have hg := continuant_growth i j hi (by omega)
     have hp : (0 : ℤ) < (i : ℤ) * j - 2 := by
-      have hi' : (2 : ℤ) ≤ i := by omega
-      have hj' : (3 : ℤ) ≤ j := by omega
+      have hi' : (2 : ℤ) ≤ i := Int.ofNat_le.mpr hi
+      have hj' : (3 : ℤ) ≤ j := Int.ofNat_le.mpr (by omega : 3 ≤ j)
       nlinarith
     have hb := Int.le_of_dvd hp h
     omega
