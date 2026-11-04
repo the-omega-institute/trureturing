@@ -7,7 +7,7 @@
    digest: Original powers identify every native submask and both physical mass rows. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail.Masks
 
-/-! Intended source, UNCOMPILED. Rational coefficients avoid truncating divisions;
+/-! Rational coefficients avoid truncating divisions;
 all actual label values and all physical prefix sums remain integers. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

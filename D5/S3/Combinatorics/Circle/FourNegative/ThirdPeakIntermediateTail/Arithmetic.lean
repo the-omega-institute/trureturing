@@ -7,10 +7,9 @@
    digest: Universal paired seam and slack polynomials for the original intermediate-tail cone. -/
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 
-/-! Intended source, UNCOMPILED. The 56 exact positive-polynomial certificates
-are the caller's independently checked certificates for the supplied Pro proof.
-They are checked here by ring and positivity on actual nonnegative offsets;
-they are neither finite tests nor additional assumptions. -/
+/-! The 56 exact positive-polynomial certificates are proved by ring and
+positivity on the nonnegative offsets of the original intermediate-tail cone.
+They give universal inequalities throughout 2≤a≤d<b<c. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail

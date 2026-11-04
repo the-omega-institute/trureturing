@@ -2,9 +2,9 @@ import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail.Endpoin
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/-! Faithful intended dependent-family registration, UNVERIFIED.
-The full original telescope has eight binders and coordinates [0,1,2,3].
-No declared_validated or source-binding acceptance is asserted. -/
+/-! Dependent-family registration of the full original eight-binder telescope.
+The coordinates [0,1,2,3] retain all original exponents, with both actual
+OriginalOrder readouts and their natural seed operands. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open LeanInformationAudit

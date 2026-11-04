@@ -8,7 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail.Arithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
 
-/-! Intended source, UNCOMPILED. A bit list is an actual list of exponents of
+/-! A bit list is an actual list of exponents of
 original physical labels. Its mask is the natural sum of those distinct powers.
 Binary-sum injectivity proves its native bitIndices, so its length is a genuine
 popcount. No capacity or numerical stock is substituted for a physical subset. -/

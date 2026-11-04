@@ -8,8 +8,8 @@
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail.Physical
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
-/-! Complete intended endpoint source, UNCOMPILED. No kernel, registration,
-official completion or unrestricted Circle/J/C3.1 closure is asserted. -/
+/-! The full original intermediate-tail joint lift for every 2≤a≤d<b<c.
+Unrestricted four-gap joint lifting and Circle/J/C3.1 remain open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail

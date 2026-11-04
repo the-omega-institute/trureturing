@@ -9,7 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail.Banks
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 import D5.S3.Combinatorics.Circle.FourNegative.Adjacent.FourNegativeAdjacentDoubleSchedule
 
-/-! Intended source, UNCOMPILED. Fresh is the first positive occurrence in bank1
+/-! Fresh is the first positive occurrence in bank1
 only in mode III, and the first positive occurrence in bank2 otherwise. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
