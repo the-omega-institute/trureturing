@@ -102,8 +102,8 @@ private lemma gaussian_moments (m : ℝ) :
   have hpdf (x : ℝ) :
       gaussianDensity m (1 / 2) x =
         gaussianPDFReal m (1 / 2) x := by
-    simp only [gaussianDensity,
-      gaussianPDFReal, NNReal.coe_ofNat, NNReal.coe_inv, div_eq_mul_inv, one_mul,
+    delta gaussianDensity
+    simp only [gaussianPDFReal, NNReal.coe_ofNat, NNReal.coe_inv, div_eq_mul_inv, one_mul,
       mul_comm, mul_assoc]
   have hpow (n : ℕ) : Integrable (fun x => x ^ n * gaussianPDFReal m (1 / 2) x) := by
     apply (Integrable.iff_ofReal (𝕜 := ℂ)).mpr
@@ -116,14 +116,16 @@ private lemma gaussian_moments (m : ℝ) :
       Complex.ofReal_mul, Complex.ofReal_pow] using h
   have hmean : (∫ x, x * gaussianPDFReal m (1 / 2) x) = m := by
     have h := density_moment_one m (1 / 2) (by norm_num) 0
-    simp only [densityMonomial, tiltedMean, gaussianMGF, gaussianExponent, zero_mul,
+    dsimp only [densityMonomial, tiltedMean, gaussianMGF, gaussianExponent] at h
+    simp only [zero_mul,
       mul_zero, add_zero, Complex.exp_zero, mul_one, pow_one, hpdf,
       ← Complex.ofReal_mul, integral_complex_ofReal] at h
     norm_num at h
     exact h
   have hsecond : (∫ x, x ^ 2 * gaussianPDFReal m (1 / 2) x) = m ^ 2 + 1 / 2 := by
     have h := density_moment_two m (1 / 2) (by norm_num) 0
-    simp only [densityMonomial, tiltedMean, gaussianMGF, gaussianExponent, zero_mul,
+    dsimp only [densityMonomial, tiltedMean, gaussianMGF, gaussianExponent] at h
+    simp only [zero_mul,
       mul_zero, add_zero, Complex.exp_zero, mul_one, hpdf, ← Complex.ofReal_pow,
       ← Complex.ofReal_mul, integral_complex_ofReal] at h
     norm_num at h
