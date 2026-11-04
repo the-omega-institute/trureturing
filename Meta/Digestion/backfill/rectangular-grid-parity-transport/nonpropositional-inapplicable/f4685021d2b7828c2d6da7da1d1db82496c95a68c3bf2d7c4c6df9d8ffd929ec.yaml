@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f4685021d2b7828c2d6da7da1d1db82496c95a68c3bf2d7c4c6df9d8ffd929ec
+  normalized_sha256: sha256:f4685021d2b7828c2d6da7da1d1db82496c95a68c3bf2d7c4c6df9d8ffd929ec
+cas_ref: sha256:f4685021d2b7828c2d6da7da1d1db82496c95a68c3bf2d7c4c6df9d8ffd929ec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure pinned-upstream closure; no usable repository frozen GID supplies this exact unrestricted integer four-unit-step clause. At Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679, use List.foldr_hom₂, List.foldr_append, List.foldr_map and List.sum_replicate. Interpret the source Definition 9.1 product as m((x,y,z),(x2,y2,z2))=(x+x2,y+y2,z+z2+x*y2), with zero identity, g(E)=(1,0,0), g(W)=(-1,0,0), g(N)=(0,1,0), g(S)=(0,-1,0), and signature the defining right fold of m(g(s),c). For append, instantiate foldr_hom₂ on u with f(c,unit)=m(c,signature(v)), op1=op3=(s,c)↦m(g(s),c), constant Unit op2, initial c=0 and unit=(). Compatibility is componentwise polynomial associativity; foldr_append gives signature(u++v)=m(signature(u),signature(v)). For a repeated actual step s with g(s)=(a,b,0), instantiate foldr_hom₂ on replicate n () with scalar op1((),k)=k+1, constant Unit op2, op3((),c)=m(g(s),c), f(k,unit)=(k*a,k*b,0), and initial 0,(). Its compatibility reduces to a*b=0 in the four constructors. foldr_map and sum_replicate evaluate the scalar fold to n. Thus signed horizontal words H(t), using |t| copies of E or W, have signature (t,0,0); signed vertical words V(t) similarly have (0,t,0). Applying the append equality and polynomial normalization gives H(t)++[N]++H(-t)++[S] signature (0,0,t). For every x,y,z in Z, H(x)++V(y)++H(z-x*y)++[N]++H(-(z-x*y))++[S] therefore has signature (x,y,z). All steps after the generic fold suppliers are instantiation and coordinate/integer normalization; no new D5 declaration, project GID coverage, axiom or kernel-verification claim is made. The claim is only for finite unrestricted words: no region, fixed-length, self-avoidance, grid-feasibility, area or reversal obligation is settled.'
+    previous_atom_id: 9da4b20678a3e02991b372cf30c657f2ec633855af64dc753a42516f47bc4c5b
+    next_atom_id: 5e14ec839cb91b5e2b61430ab16c91743cbbec122181d1e7c32c368136b030bf

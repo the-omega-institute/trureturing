@@ -1,0 +1,24 @@
+### 命题 4.6（有限可逆过程与时间生成元）
+
+同维 CPTP 过程若有 CPTP 左逆，则为酉共轭。
+若再给连续一参数 CPTP 群，则存在自伴 $H$，使
+
+$$
+\mathcal T_t(\rho)=e^{-itH/\hbar}\rho e^{itH/\hbar},
+ \qquad i\hbar\dot\rho=[H,\rho].
+$$
+
+**证明。**
+两过程的 Kraus 族记为 $A_i,B_j$。恒等通道的 Choi 秩一给
+$B_jA_i=c_{ji}I$。对非零 $A_i$，左逆保迹保证某个乘积非零；
+同维使相应 $B_j$ 可逆，因而全部 $A_i$ 共线。
+合并成一个 $A$ 后，保迹给 $A^*A=I$，方阵即酉。
+有限维连续群具有生成元 $\mathcal L$；各映射为星自同构，故 $\mathcal L$ 是保星导子。
+令 $D_0=\sum_k\mathcal L(E_{k1})E_{1k}$，导子律给
+$[D_0,E_{ij}]=\mathcal L(E_{ij})$；保星性使 $D_0+D_0^*$ 为中心。
+换成反自伴部分并写为 $-iH/\hbar$ 即得结论。
+
+选定纯态相位代表后有 $i\hbar\dot\psi=H\psi$。
+三读的公共相位参照与一般 Hamiltonian 时间演化承担不同作用；
+本轮没有由 $U$ 唯一决定实际 $H$、时间单位或 $\hbar$。
+
