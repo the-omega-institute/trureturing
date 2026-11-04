@@ -1,0 +1,19 @@
+### 9.1 qubit 中的点积、叉积与手性
+
+写
+
+$$
+A=a_0I+\mathbf a\cdot\boldsymbol\sigma>0,\qquad
+B=b_0I+\mathbf b\cdot\boldsymbol\sigma>0.
+$$
+
+定义
+
+$$
+c_0=a_0b_0+\mathbf a\cdot\mathbf b>0,
+\quad\mathbf c=a_0\mathbf b+b_0\mathbf a,
+\quad\mathbf d=\mathbf b\times\mathbf a.
+$$
+
+Pauli 乘法给 $BA=c_0I+(\mathbf c+i\mathbf d)\cdot\boldsymbol\sigma$。
+

@@ -1,0 +1,36 @@
+### 命题 11.1（小步旋转的首个非零阶）
+
+设 $X,Y\ge0$，$A_\epsilon=e^{-\epsilon X/2}$、$B_\epsilon=e^{-\epsilon Y/2}$。乘积的极酉部分满足
+
+$$
+\boxed{
+U_\epsilon=I+\frac{\epsilon^2}{8}[Y,X]+O(\epsilon^3).
+}
+\tag{24}
+$$
+
+**证明。**
+写 $K=I+\epsilon h+\epsilon^2k+O(\epsilon^3)$，其中
+$h=-(X+Y)/2$，$k=(X^2+Y^2)/8+YX/4$。由 $h=h^*$ 得
+$|K|=I+\epsilon h+\epsilon^2(k+k^*)/2+O(\epsilon^3)$，故
+$K|K|^{-1}=I+\epsilon^2(k-k^*)/2+O(\epsilon^3)$，即结论。
+
+若把几何阶数记为 $s=\epsilon^2$，可写
+
+$$
+H_{\rm geom}=\frac{i\hbar}{8}[Y,X],\qquad
+U_\epsilon=I-\frac{is}{\hbar}H_{\rm geom}+O(s^{3/2}).
+$$
+
+这给自伴生成元形式，但不确定经验钟速或实际 Hamiltonian。若直接重复滤波并保持 $N\epsilon^2$ 不变，正衰减通常在 $N\epsilon$ 阶累积，成功率可能趋零。
+
+若实际供应倒数补偿，则可精确分离条件旋转：$K=UC$，取 $0<c\le\lambda_{\min}(C)$，正收缩 $D=cC^{-1}$ 满足
+
+$$
+KD=cU.
+$$
+
+先补偿再通过原两片，联合成功分支为 $\rho\mapsto c^2U\rho U^*$，成功率为 $c^2$。成功率不能删去。
+
+<a id="section-12"></a>
+
