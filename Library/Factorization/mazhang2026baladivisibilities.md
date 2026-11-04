@@ -2,7 +2,7 @@
 bibkey: mazhang2026baladivisibilities
 authors: Haobo Ma; Wenlin Zhang
 year: 2026
-title: "Bala’s parity conjecture and product extensions of his divisibilities (2026): revision 3"
+title: "Bala's parity conjecture and product extensions of his divisibilities (2026): OEIS A295462, References (#19, 23 August 2026)"
 doi: null
 url: https://oeis.org/A295431
 claim: "Corollary 5: five fixed divisibilities of T(n) and two product families with explicit sufficient constants."

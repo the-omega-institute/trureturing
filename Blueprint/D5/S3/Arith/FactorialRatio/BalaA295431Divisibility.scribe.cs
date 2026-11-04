@@ -29,7 +29,7 @@ internal sealed class BalaA295431DivisibilityDocument : IScribeDocumentDefinitio
             Node("signed_denominator", All("n",Nat(),All("R",Nat(),Eq(Call("signed_denominator",n,r),signed))),
                 "This integer product runs over 1 <= i <= R with gcd(i,12)=1. Subtraction takes place in the integers before the rational cast. None of its factors is zero, even when R exceeds 12n. A product over an empty set equals one.", DescribeRole.Definition),
             Node("first_constant", All("R",Nat(),Eq(Call("first_constant",r),c)),
-                "C(R)=36*(R-1)!*lcm(1,...,12R), independently of k. Natural subtraction occurs only in the factorial index; the theorem assumes R>=1. The constant is sufficient, with no minimality assertion.", DescribeRole.Definition),
+                "C(R)=36*(R-1)!*lcm(1,...,12R), independently of k. NatSub denotes natural subtraction, which occurs only in the factorial index; the theorem assumes R>=1. The constant is sufficient, with no minimality assertion.", DescribeRole.Definition),
             Node("second_constant", All("R",Nat(),Eq(Call("second_constant",r),d)),
                 "D(R)=(R-1)!*lcm(1,...,R). The least common multiple is mathlib Nat.lcmUpto. This is a sufficient constant for the signed family.", DescribeRole.Definition),
             Node("claim", Eq(Call("claim"),Par(ClaimBody())),
