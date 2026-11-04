@@ -8,7 +8,7 @@
 
 import D5.S3.Quantum.Matrix.CirculantCharpoly
 import D5.S3.Fourier.SparseGeneratorFamily
-import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
+import D5.S3.ObserverMemory.Algorithms.SaturatedActualHistories
 import D5.S3.ArithUnits.MercaCosetFiberLift
 import D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse
 
@@ -135,14 +135,10 @@ private lemma dft_shift (N : ℕ) [NeZero N] (f : ZMod N → ℂ) (a k : ZMod N)
   simpa only [sub_neg_eq_add, mul_neg, neg_neg, mul_comm] using
     D5.S3.Fourier.FullBispectrumStability.dft_translation f (-a) k
 
-private lemma spectrum_fin_val (N : ℕ) [NeZero N] (j : Fin N) :
-    ((ZMod.finEquiv N) j).val = j.val := by
-  rw [D5.S3.ConceptDynamics.Coding.CountedOrderTypeGyration.finEquiv_eq_natCast]
-  exact ZMod.val_natCast_of_lt j.isLt
-
 private lemma modeValue_sum (N : ℕ) [NeZero N] : ∑ k : ZMod N, modeValue N k = 0 := by
   rw [← (ZMod.finEquiv N).toEquiv.sum_comp]
-  simp only [modeValue, RingEquiv.toEquiv_eq_coe, EquivLike.coe_coe, spectrum_fin_val]
+  simp only [modeValue, RingEquiv.toEquiv_eq_coe, EquivLike.coe_coe,
+    D5.S3.ObserverMemory.Algorithms.SaturatedActualHistories.fin_equiv_val]
   rw [Fin.sum_univ_eq_sum_range (fun k : ℕ =>
     ((N : ℂ) ^ 2 - 1) / 12 - (k : ℂ) * ((N : ℂ) - k) / 2)]
   have h2q := sum_range_pow N 2
@@ -282,7 +278,7 @@ private lemma spectrum_weights (m : ℕ) [NeZero (2 * m)] :
     · intro h
       simp [h]
   simp only [weights, Matrix.circulant_apply, InverseChordCirculant.chordWeight, hz,
-    spectrum_fin_val]
+    D5.S3.ObserverMemory.Algorithms.SaturatedActualHistories.fin_equiv_val]
   by_cases hjk : j = k
   · simp [hjk]
   · simp only [ite_eq_right hjk]
@@ -342,7 +338,8 @@ theorem alternating_weight_sum (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m)) :
       rw [← hsum, ← e.sum_comp]
       congr 1
       refine Finset.sum_congr rfl fun k _ => ?_
-      rw [show (e k).val = k.val from spectrum_fin_val (2*m) k]
+      rw [show (e k).val = k.val from
+        D5.S3.ObserverMemory.Algorithms.SaturatedActualHistories.fin_equiv_val (2*m) k]
 
 def gamma (m : ℕ) (k : ZMod (2 * m)) : ℝ :=
   let r := min k.val (2*m - k.val)
@@ -416,7 +413,8 @@ theorem product_spectrum (m : ℕ) [NeZero (2 * m)] (hm : 3 ≤ m) (y : ℝ) :
       hsign (e.symm i) (e.symm j), spectrum_weights]
     change (((-1 : ℝ)^(e.symm i-e.symm j).val *
       InverseChordCirculant.chordWeight (2 * m) (e (e.symm i-e.symm j)) : ℝ) : ℂ) = _
-    rw [← spectrum_fin_val (2 * m) (e.symm i-e.symm j), map_sub]
+    rw [← D5.S3.ObserverMemory.Algorithms.SaturatedActualHistories.fin_equiv_val
+      (2 * m) (e.symm i-e.symm j), map_sub]
     change (((-1 : ℝ)^(e (e.symm i)-e (e.symm j)).val *
       InverseChordCirculant.chordWeight (2 * m) (e (e.symm i)-e (e.symm j)) : ℝ) : ℂ) = _
     simp only [RingEquiv.apply_symm_apply]
