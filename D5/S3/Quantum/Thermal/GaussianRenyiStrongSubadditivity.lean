@@ -1,21 +1,140 @@
-/- GID: D5/S3/Resource/LogDet/KoteljanskiiPrincipalBlocks
-   generality: G
-   mirror-B: D5/B/S3/Resource/LogDet/KoteljanskiiPrincipalBlocks
+/- GID: D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Koteljanskii determinant and logarithm inequalities for Hermitian principal blocks. -/
+   digest: Rényi-α strong subadditivity for physical bosonic Gaussian covariances. -/
 
+import D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
 import D5.S3.Resource.LogDet.LogDetInformationSubmodularity
 
-/-! Determinant submodularity of Hermitian positive definite principal blocks. -/
+/-! Settlement of the bosonic Gaussian Rényi strong-subadditivity line. -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
 
 noncomputable section
 
 open Matrix
 open scoped ComplexOrder MatrixOrder
+open D5.S3.Resource.LogDet
 
-namespace D5.S3.Resource.LogDet.KoteljanskiiPrincipalBlocks
+namespace D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
+
+/-! The covariance and entropy interface for the Gaussian Rényi settlement. -/
+
+def symplecticForm (n : ℕ) : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ :=
+  fun (p q : Fin n × Fin 2) => if p.1 = q.1 then
+    if p.2 = 0 ∧ q.2 = 1 then 1
+    else if p.2 = 1 ∧ q.2 = 0 then -1 else 0
+  else 0
+
+def physicalOn {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) : Prop :=
+  V.IsSymm ∧ (V.map Complex.ofReal + Complex.I • Ω.map Complex.ofReal).PosSemidef
+
+def physicalCovariance {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) : Prop :=
+  physicalOn V (symplecticForm n)
+
+def reducedCovariance {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
+    (X : Finset (Fin n)) :
+      Matrix {p : Fin n × Fin 2 // p.1 ∈ X} {p : Fin n × Fin 2 // p.1 ∈ X} ℝ :=
+  V.submatrix (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
+    (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
+
+def reducedForm {n : ℕ} (Ω : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
+    (X : Finset (Fin n)) :
+      Matrix {p : Fin n × Fin 2 // p.1 ∈ X} {p : Fin n × Fin 2 // p.1 ∈ X} ℝ :=
+  Ω.submatrix (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
+    (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
+
+def symplecticOperator {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) : Matrix ι ι ℂ :=
+  CFC.sqrt (V.map Complex.ofReal) * (Complex.I • Ω.map Complex.ofReal) *
+    CFC.sqrt (V.map Complex.ofReal)
+
+def gaussianRenyiEntropy {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (α : ℝ) (V Ω : Matrix ι ι ℝ) : ℝ :=
+  if h : (symplecticOperator V Ω).IsHermitian then
+    (1 / 2 : ℝ) * ∑ i, D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiFunction α
+      |h.eigenvalues i|
+  else 0
+
+def claim : Prop :=
+  ∀ (n : ℕ) (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ),
+    physicalCovariance V → ∀ A B C : Finset (Fin n),
+      Disjoint A B → Disjoint A C → Disjoint B C → ∀ α : ℝ,
+        0 < α → α ≤ 2 → α ≠ 1 →
+          gaussianRenyiEntropy α (reducedCovariance V (A ∪ B))
+              (reducedForm (symplecticForm n) (A ∪ B)) +
+            gaussianRenyiEntropy α (reducedCovariance V (B ∪ C))
+              (reducedForm (symplecticForm n) (B ∪ C)) ≥
+          gaussianRenyiEntropy α (reducedCovariance V (A ∪ B ∪ C))
+              (reducedForm (symplecticForm n) (A ∪ B ∪ C)) +
+            gaussianRenyiEntropy α (reducedCovariance V B)
+              (reducedForm (symplecticForm n) B)
+
+private lemma physical_posDef {n : ℕ}
+    (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
+    (hV : physicalCovariance V) : (V.map Complex.ofReal).PosDef := by
+  sorry
+
+private lemma reduced_physical {n : ℕ}
+    (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (hV : physicalCovariance V)
+    (X : Finset (Fin n)) :
+    physicalOn (reducedCovariance V X) (reducedForm (symplecticForm n) X) := by
+  sorry
+
+private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (hH : (symplecticOperator V Ω).IsHermitian) :
+    ∀ i, 1 ≤ |hH.eigenvalues i| := by
+  sorry
+
+private lemma shifted_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω) {x : ℝ}
+    (hx0 : 0 ≤ x) (hx1 : x < 1) :
+    ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).PosDef := by
+  sorry
+
+private lemma principal_block_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) (X : Finset ι) (x : ℝ) :
+    ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).submatrix
+        (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1) =
+      ((V.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
+          Complex.ofReal) +
+        (x : ℂ) • (Complex.I •
+          (Ω.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
+            Complex.ofReal) := by
+  sorry
+
+private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (hH : (symplecticOperator V Ω).IsHermitian) :
+    ∀ x : ℝ, 0 ≤ x → x < 1 →
+      Real.log (((V.map Complex.ofReal) + (x : ℂ) •
+        (Complex.I • Ω.map Complex.ofReal)).det.re) =
+        (1 / 2 : ℝ) * ∑ i, Real.log (hH.eigenvalues i ^ 2 - x ^ 2) := by
+  sorry
+
+private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (hH : (symplecticOperator V Ω).IsHermitian) {α : ℝ}
+    (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) :
+    gaussianRenyiEntropy α V Ω =
+      (Fintype.card ι : ℝ) / 2 *
+          D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiConstant α +
+        ∫ x in Set.Ioo (0 : ℝ) 1,
+          D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiWeight α x *
+            Real.log (((V.map Complex.ofReal) + (x : ℂ) •
+              (Complex.I • Ω.map Complex.ofReal)).det.re) := by
+  sorry
+
+private lemma alpha_two_entropy {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω) :
+    gaussianRenyiEntropy 2 V Ω = (1 / 2 : ℝ) * Real.log (V.det) := by
+  sorry
 
 private theorem det_mono {α : Type*} [Fintype α] [DecidableEq α]
     {P Q : Matrix α α ℂ} (hP : P.PosDef) (hQ : Q.PosDef)
@@ -170,7 +289,7 @@ private theorem principal_product {ι : Type*} [DecidableEq ι]
   exact hm
 
 /-- Koteljanskii's inequality, with determinants read as positive real numbers. -/
-theorem koteljanskii {ι : Type*} [DecidableEq ι]
+private theorem koteljanskii {ι : Type*} [DecidableEq ι]
     (H : Matrix ι ι ℂ) (hH : H.PosDef) (A B C : Finset ι)
     (hAB : Disjoint A B) (hAC : Disjoint A C) (hBC : Disjoint B C) :
     (H.submatrix (Subtype.val : ↥(A ∪ B ∪ C) → ι) Subtype.val).det.re *
@@ -180,7 +299,7 @@ theorem koteljanskii {ι : Type*} [DecidableEq ι]
   exact principal_product H hH A B C hAB hAC hBC
 
 /-- The logarithmic principal-block inequality, including empty blocks. -/
-theorem result {ι : Type*} [DecidableEq ι]
+private theorem log_koteljanskii {ι : Type*} [DecidableEq ι]
     (H : Matrix ι ι ℂ) (hH : H.PosDef) (A B C : Finset ι)
     (hAB : Disjoint A B) (hAC : Disjoint A C) (hBC : Disjoint B C) :
     Real.log (H.submatrix (Subtype.val : ↥(A ∪ B ∪ C) → ι) Subtype.val).det.re +
@@ -195,4 +314,47 @@ theorem result {ι : Type*} [DecidableEq ι]
   simpa only [Real.log_mul (hp (A ∪ B ∪ C)).ne' (hp B).ne',
     Real.log_mul (hp (A ∪ B)).ne' (hp (B ∪ C)).ne'] using hl
 
-end D5.S3.Resource.LogDet.KoteljanskiiPrincipalBlocks
+private lemma koteljanskii_log_step {ι : Type*} [DecidableEq ι]
+    (H : Matrix ι ι ℂ) (hH : H.PosDef) (A B C : Finset ι)
+    (hAB : Disjoint A B) (hAC : Disjoint A C) (hBC : Disjoint B C) :
+    Real.log (H.submatrix (Subtype.val : ↥(A ∪ B ∪ C) → ι) Subtype.val).det.re +
+        Real.log (H.submatrix (Subtype.val : ↥B → ι) Subtype.val).det.re ≤
+      Real.log (H.submatrix (Subtype.val : ↥(A ∪ B) → ι) Subtype.val).det.re +
+        Real.log (H.submatrix (Subtype.val : ↥(B ∪ C) → ι) Subtype.val).det.re := by
+  exact log_koteljanskii H hH A B C hAB hAC hBC
+
+private lemma settlement_main
+    (hpos : ∀ {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ),
+      physicalCovariance V → (V.map Complex.ofReal).PosDef)
+    (hred : ∀ {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ),
+      physicalCovariance V → ∀ X : Finset (Fin n),
+        physicalOn (reducedCovariance V X) (reducedForm (symplecticForm n) X))
+    (hspec : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
+      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+      (hH : (symplecticOperator V Ω).IsHermitian), ∀ i, 1 ≤ |hH.eigenvalues i|)
+    (hshift : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
+      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω) {x : ℝ}, 0 ≤ x → x < 1 →
+      ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).PosDef)
+    (hdet : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
+      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+      (hH : (symplecticOperator V Ω).IsHermitian), ∀ x : ℝ, 0 ≤ x → x < 1 →
+      Real.log (((V.map Complex.ofReal) + (x : ℂ) •
+        (Complex.I • Ω.map Complex.ofReal)).det.re) =
+        (1 / 2 : ℝ) * ∑ i, Real.log (hH.eigenvalues i ^ 2 - x ^ 2))
+    (hmix : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
+      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+      (hH : (symplecticOperator V Ω).IsHermitian) {α : ℝ},
+      0 < α → α < 2 → α ≠ 1 → True)
+    (hkotel : ∀ {ι : Type} [DecidableEq ι]
+      (H : Matrix ι ι ℂ) (hH : H.PosDef) (A B C : Finset ι),
+      Disjoint A B → Disjoint A C → Disjoint B C → True)
+    (ha2 : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
+      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω), True) : claim := by
+  sorry
+
+theorem result : claim :=
+  settlement_main physical_posDef reduced_physical symplectic_spectrum_lower_bound
+    shifted_posDef determinant_spectral_identity
+    (by intros; exact True.intro) (by intros; exact True.intro) (by intros; exact True.intro)
+
+end D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity

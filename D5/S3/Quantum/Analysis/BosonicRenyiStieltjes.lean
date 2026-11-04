@@ -926,19 +926,6 @@ theorem stieltjes_representation {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     exact representation_at_one ha0 ha2 ha1
   · exact representation_of_one_lt ha0 ha2 ha1 hv
 
-/-- The scalar input to the Gaussian covariance entropy settlement. -/
-theorem result {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) :
-    (∀ x ∈ Ico (0 : ℝ) 1, 0 < renyiWeight α x) ∧
-      IntegrableOn (renyiWeight α) (Ioo 0 1) ∧
-      (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x) = 1 / 2 ∧
-      ∀ ν, 1 ≤ ν →
-        IntegrableOn (fun x => renyiWeight α x * Real.log (ν ^ 2 - x ^ 2)) (Ioo 0 1) ∧
-          renyiFunction α ν = renyiConstant α +
-            ∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (ν ^ 2 - x ^ 2) := by
-  exact ⟨fun x hx => weight_pos ha0 ha2 ha1 hx.1 hx.2,
-    weight_integrable ha0 ha2 ha1, weight_mass ha0 ha2 ha1,
-    fun ν hv => stieltjes_representation ha0 ha2 ha1 hv⟩
-
 end
 
 end D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
