@@ -40,6 +40,23 @@ theorem poisson_denominator_pos_of_sin_pos {r θ : ℝ} (hs : 0 < Real.sin θ) :
     0 < 1 - 2 * r * Real.cos θ + r ^ 2 := by
   nlinarith [sq_nonneg (r - Real.cos θ), sq_pos_of_pos hs, Real.sin_sq_add_cos_sq θ]
 
+/-- Positivity throughout the nonintegral Renyi order range. -/
+theorem power_poisson_denominator_pos {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) : 0 < 1 - 2 * r * Real.cos (Real.pi * α) + r ^ 2 := by
+  rcases lt_or_gt_of_ne ha1 with ha | ha
+  · exact poisson_denominator_pos_of_sin_pos
+      (Real.sin_pos_of_pos_of_lt_pi (mul_pos Real.pi_pos ha0)
+        (by nlinarith [Real.pi_pos]))
+  · have hs : 0 < Real.sin (-(Real.pi * α)) := by
+      rw [Real.sin_neg]
+      have h := Real.sin_pos_of_pos_of_lt_pi
+        (by nlinarith [Real.pi_pos] : 0 < Real.pi * α - Real.pi)
+        (by nlinarith [Real.pi_pos] : Real.pi * α - Real.pi < Real.pi)
+      rwa [Real.sin_sub_pi] at h
+    simpa only [Real.cos_neg] using
+      (poisson_denominator_pos_of_sin_pos
+        (r := r) hs)
+
 /-- Metya–Mukherjee, Conjecture 4.7: the exact minimum over every pair of real
 closed real simplex factors, including boundary points and ordinary natural index convolution. -/
 theorem result (n : ℕ) (hn : 3 ≤ n) :

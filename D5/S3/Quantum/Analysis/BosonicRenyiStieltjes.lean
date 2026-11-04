@@ -44,16 +44,24 @@ private lemma weight_denominator_pos {α x : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hx0 : 0 ≤ x) (hx1 : x < 1) :
     0 < (1 + x) ^ (2 * α) + (1 - x) ^ (2 * α) -
       2 * (1 - x ^ 2) ^ α * Real.cos (Real.pi * α) := by
-  have hc := cosine_lt_one ha0 ha2 ha1
   have hp : 0 < 1 + x := by linarith
   have hm : 0 < 1 - x := by linarith
   have hr : 1 - x ^ 2 = (1 + x) * (1 - x) := by ring
   have htwo : 2 * α = α * (2 : ℕ) := by ring
   rw [htwo, Real.rpow_mul_natCast hp.le, Real.rpow_mul_natCast hm.le,
     hr, Real.mul_rpow hp.le hm.le]
-  have hprod : 0 < (1 + x) ^ α * (1 - x) ^ α :=
-    mul_pos (Real.rpow_pos_of_pos hp _) (Real.rpow_pos_of_pos hm _)
-  nlinarith [sq_nonneg ((1 + x) ^ α - (1 - x) ^ α), mul_pos hprod (sub_pos.mpr hc)]
+  let a := (1 + x) ^ α
+  let b := (1 - x) ^ α
+  have hb : 0 < b := Real.rpow_pos_of_pos hm _
+  have heq : a ^ 2 + b ^ 2 - 2 * (a * b) * Real.cos (Real.pi * α) =
+      b ^ 2 * (1 - 2 * (a / b) * Real.cos (Real.pi * α) + (a / b) ^ 2) := by
+    field_simp
+    ring
+  change 0 < a ^ 2 + b ^ 2 - 2 * (a * b) * Real.cos (Real.pi * α)
+  rw [heq]
+  exact mul_pos (sq_pos_of_pos hb)
+    (D5.S3.TotalVariation.IndependentConvolutionL1Minimum.power_poisson_denominator_pos
+      ha0 ha2 ha1)
 
 /-- The Stieltjes density is strictly positive throughout `[0, 1)`. -/
 theorem weight_pos {α x : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1)
@@ -199,8 +207,9 @@ private lemma poissonAngle_hasDerivAt {α p : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   have hd := ((hasDerivAt_id p).mul_const (Real.sin (Real.pi * α))).div
     ((hasDerivAt_const p (1 : ℝ)).sub
       ((hasDerivAt_id p).mul_const (Real.cos (Real.pi * α)))) hden.ne'
-  have hk : 0 < 1 - 2 * p * Real.cos (Real.pi * α) + p ^ 2 := by
-    nlinarith [sq_nonneg (1 - p), mul_pos hp.1 (sub_pos.mpr hc)]
+  have hk :=
+    D5.S3.TotalVariation.IndependentConvolutionL1Minimum.power_poisson_denominator_pos
+      (r := p) ha0 ha2 ha1
   unfold poissonAngle
   convert! hd.arctan using 1
   dsimp
