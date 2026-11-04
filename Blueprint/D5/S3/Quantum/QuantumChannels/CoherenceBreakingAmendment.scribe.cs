@@ -35,6 +35,12 @@ internal sealed class CoherenceBreakingAmendmentDocument : IScribeDocumentDefini
                 Blocks(
                     Paragraph(Text("Section 5 conjectures amendment for incoherent trace-preserving Kraus channels with coherence-breaking index n at least two. The n-th iterate is coherence-breaking, and none of the iterates with 1 <= k < n is coherence-breaking, as in the minimum defining the index in Section 2, Eq. (1). There is one unitary U whose conjugation, inserted in every intervening slot, makes the composite fail to be coherence-breaking. Trace preservation is the Kraus completeness equality below.")),
                     new DocumentBlock.DisplayFormula(KrausChannelFormula()))),
+            Node("monomial-unitary", "Unitary monomial matrices", MonomialUnitaryFormula(),
+                "monomial_unitary", DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A permutation matrix with one unit-modulus coefficient in each column is unitary.")))),
+            Node("monomial-projection", "Monomial conjugation commutes with diagonal erasure", MonomialProjectionFormula(),
+                "monomial_projection", DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Conjugation by a monomial matrix commutes with offDiag for arbitrary complex coefficients; no unit-modulus hypothesis is needed.")))),
             Describe.Lean(DescribeId.Create("coherence-breaking-amendment-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("A permutation with fourth-root phases amends the channel"),
@@ -54,6 +60,31 @@ internal sealed class CoherenceBreakingAmendmentDocument : IScribeDocumentDefini
         Describe.Lean(DescribeId.Create("coherence-breaking-amendment-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), provenance, prose, role);
+
+    private static Formula MonomialMatrix(Formula sigma, Formula omega) =>
+        Call("D5.S3.Quantum.Matrix.MonomialDiagonalPreserving.monomial",
+            Call("Equiv.symm", sigma), Call("Function.comp", omega, Call("Equiv.symm", sigma)));
+
+    private static Formula MonomialUnitaryFormula()
+    {
+        Formula d = V("d"), sigma = V("sigma"), omega = V("omega"), c = V("c");
+        Formula norm = All("c", Fin(d), Equal(Mul(At(omega, c), Call("star", At(omega, c))), D(1)));
+        Formula member = new Formula.Relation(MonomialMatrix(sigma, omega), FormulaRelationOperator.MemberOf,
+            Call("Matrix.unitaryGroup", Fin(d), Field("C")));
+        return Disp(All("d", Field("N"), All("sigma", Call("Equiv.Perm", Fin(d)),
+            All("omega", Fun(Fin(d), Field("C")), Implies(norm, member)))));
+    }
+
+    private static Formula MonomialProjectionFormula()
+    {
+        Formula d = V("d"), sigma = V("sigma"), omega = V("omega"), x = V("X");
+        Formula m = MonomialMatrix(sigma, omega);
+        Formula conjugation = Call("LinearMap.mulLeftRight", Field("C"),
+            Parenthesized(Seq(m, Comma, Sp, Adjoint(m))));
+        Formula eq = Equal(Call("offDiag", At(conjugation, x)), At(conjugation, Call("offDiag", x)));
+        return Disp(All("d", Field("N"), All("sigma", Call("Equiv.Perm", Fin(d)),
+            All("omega", Fun(Fin(d), Field("C")), All("X", Mat(d), eq)))));
+    }
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name)
