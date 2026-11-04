@@ -5,7 +5,7 @@ year: 2026
 title: "BrooksSubcubic, finite chordal elimination and finite Menger certificates: Lean sources"
 doi: null
 url: https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic
-claim: "Subcubic four-clique-free graphs are three-colorable; finite chordal graphs are exactly those admitting perfect elimination rankings."
+claim: "Subcubic four-clique-free graphs are three-colorable; finite chordal graphs admit perfect elimination rankings; finite Menger certificates and Hamiltonian closure and Ore degree-sum criteria hold."
 strata_touched:
   - D5/S3/Combinatorics/Graph/Brooks/Coloring
   - D5/S3/Combinatorics/Graph/Brooks/Cuts
@@ -16,6 +16,7 @@ strata_touched:
   - D5/S3/Combinatorics/Graph/Chordal/Characterization
   - D5/S3/Combinatorics/Graph/Walks/MengerCertificates
   - D5/S3/Combinatorics/Graph/Walks/EdgeMengerCertificates
+  - D5/S3/Combinatorics/Graph/Walks/HamiltonianClosure
 license: Apache-2.0
 triage: anchor
 ---

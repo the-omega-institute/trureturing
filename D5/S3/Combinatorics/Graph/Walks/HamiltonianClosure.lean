@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Walks/HamiltonianClosure
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [library/GraphInvariants/traversogianini2026brooks]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Hamiltonian]
    utility: none
    digest: Endpoint degree sums reroute spanning paths and preserve Hamiltonicity under closure. -/
 import D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
