@@ -108,7 +108,7 @@ private noncomputable def unitary_isometry (V : Matrix n n ℂ)
     exact ContinuousLinearMap.inner_map_map_of_mem_unitary
       (Unitary.map_mem (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) hV) x y
 
-private theorem trace_rank_one_sum (r : ι → EuclideanSpace ℂ n) (a : ι → ℝ)
+theorem trace_rank_one_sum (r : ι → EuclideanSpace ℂ n) (a : ι → ℝ)
     (γ : ι → ℂ) (V : Matrix n n ℂ) :
     Matrix.trace (V * ∑ j, ((a j : ℂ) * γ j) •
       Matrix.vecMulVec (r j).ofLp (star (r j).ofLp)) =

@@ -1,0 +1,27 @@
+## 14. 黄金门优化：下确界为零却没有有限最小元
+
+采用前稿 v15 的单逻辑位码
+
+$$
+J|q\rangle=|1\,0\,q\,0\,1\,0\rangle.
+$$
+
+两个固定地址上的 $K_P,K_Q$ 精确保码，码内投影分别为
+
+$$
+P=|1\rangle\langle1|,\qquad
+Q=\begin{pmatrix}\varphi^{-1}&\varphi^{-3/2}\\
+\varphi^{-3/2}&\varphi^{-2}\end{pmatrix}.
+$$
+
+v15 给出其射影群稠密性：两个五次幂反射之积的迹为 $4-2\sqrt5$，共轭 $4+2\sqrt5>2$ 排除有限阶；所得实转动圆及 $K_P$ 共轭后的不同轴生成 $SU(2)$。这一单比特码结论不依赖多体编织稠密性外部定理。完整证明见[前稿 v15 第 4–5 节](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)；本轮并未把收录行为视为重新认证。
+
+设 $\mathcal W_L$ 为上述两地址门的长度至多 $L$ 的正字，$X$ 为逻辑取反，定义
+
+$$
+e_L=\min_{C\in\mathcal W_L}\min_{\theta\in\mathbb{R}/(2\pi\mathbb Z)}
+\left\lVert CJ-e^{i\theta}JX\right\rVert_{\rm op}.
+$$
+
+<a id="statement-14-1"></a>
+

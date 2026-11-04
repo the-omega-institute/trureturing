@@ -1,0 +1,2 @@
+**Convention 2.1 (Matrices and weights).** All matrices are real or complex square matrices indexed by a finite set. For a permutation $g$ of a finite set $R$, $M_g$ is the matrix with entries $(M_g)_{r,s}=1$ if $r=g(s)$ and $0$ otherwise. For $u\in R$, $\mathbf 1_u$ is the indicator column vector of $u$. A weight vector is $x=(x_1,\dots,x_{\mathtt q})$ with $\mathtt q\ge2$, every $x_k>0$ and $\sum_k x_k=1$.
+

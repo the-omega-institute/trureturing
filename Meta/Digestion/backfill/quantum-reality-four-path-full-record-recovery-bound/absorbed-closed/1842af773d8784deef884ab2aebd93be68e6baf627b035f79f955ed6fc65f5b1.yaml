@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1842af773d8784deef884ab2aebd93be68e6baf627b035f79f955ed6fc65f5b1
+  normalized_sha256: sha256:1842af773d8784deef884ab2aebd93be68e6baf627b035f79f955ed6fc65f5b1
+cas_ref: sha256:1842af773d8784deef884ab2aebd93be68e6baf627b035f79f955ed6fc65f5b1
+coverage_gids:
+  - gid: D5/S3/Quantum/Recovery/FourPathQuadraticMajorant.four_path_quadratic_majorant
+    target_statement_id: sha256:87568265249f1446e2294c04131d355d67d620bab33a3e9bea3dc20e3a76e27e
+receipts:
+  unresolved_subitems: []

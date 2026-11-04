@@ -1,0 +1,142 @@
+### 49.5. Exact original-level effect elimination and phase coordinates
+
+Use (43.2), for either $\tau=\pm1$ and a single $|\lambda|=1$:
+
+$$
+\begin{aligned}
+X&=-\cos b\cos a+\sqrt{(1+x)^2-\cos^2b\sin^2a},\quad
+Y=\sqrt{1-X^2},\\
+w_\tau&=(e^{ia}(X+\tau iY),e^{ia}(X-\tau iY),
+                         e^{i\tau b},e^{-i\tau b}),\\
+U&=\lambda\operatorname{diag}(w_\tau)U_+,\qquad x=1-\delta/2,\\
+A&=2(1+x)=4-\delta,\\
+P/\lambda&=2(hXe^{ia}+c\cos b),\qquad
+Q/\lambda=2\tau(ihYe^{ia}-s\sin b),\\
+B&=2|iYe^{ia}-\sin b|.
+\end{aligned}
+\tag{49.20}
+$$
+
+The radicals are the positive branches through $X=x_*,Y=y_*$.
+Theorem 43.2 gives both the complete local chart and its analytic
+inverse modulo exactly the original scalar. In particular no relative
+phase direction has been omitted.
+
+The selected feedback and level belong to the open set $\Omega$ in
+(40.21). Its strict conditions are
+$uv>0$, $0<q=t-\delta<1$, $q<J_+$, $t_-<0$, and positive arc
+derivative greater than $49/180$. Here $u=|P|$, $v=|Q|$;
+$J_+=(1+A-B)/2$ and $t_-=(\xi-8+2B)/2$ are the original
+fixed-feedback arc data of (36.2). At the selected point, (49.18)
+gives $x_*>16/25$ and $y_*<4/5$, hence
+
+$$
+J_+=\frac{3+2x_*-2y_*}{2}>\frac{67}{50}>1,
+\qquad B=2y_*<8/5<2.
+$$
+
+Choose a product neighborhood of the selected feedback and level
+contained in $\Omega$ with $J_+>1$, $B<2$ and $\xi<4$.
+All these conditions are strict and common-scalar invariant.
+
+It is important to distinguish the pure endpoint $q$ from the
+population of a general effect. Write
+
+$$
+F_E=T^\dagger E^{\mathsf T}T=
+ \begin{pmatrix}1-r&z_E\\\bar z_E&r\end{pmatrix},\qquad
+\epsilon(E)=2[r(1-r)-|z_E|^2].
+$$
+
+The identities (41.3), at this actual $U$, give
+
+$$
+\begin{aligned}
+\rho_+&=2\delta+2r-\epsilon(E),\\
+\rho_-&=10-2r-2B-\epsilon(E),\\
+\rho_--\rho_+&=2(1+A-B-2r)=4(J_+-r).
+\end{aligned}
+\tag{49.21}
+$$
+
+For every normalized positive effect, the same identities give
+$\rho_-=8-2B+2[(1-r)^2+|z_E|^2]\ge8-2B>\xi$, since $t_-<0$.
+Thus no effect can have negative branch equal to this prescribed $\xi$.
+Every original effect with $\rho(E,U)=\xi=2t$ therefore has the
+positive sign as its unique minimizing sign and satisfies exactly
+
+$$
+q=t-\delta=r-\epsilon(E)/2=r^2+|z_E|^2,\qquad
+q\le r\le\min\{\sqrt q,J_+\}=\sqrt q.
+\tag{49.22}
+$$
+
+Conversely, every $r\in[q,\sqrt q]$ and every coherence phase with
+$|z_E|^2=q-r^2$ give a normalized positive effect at this same original
+level: $F_E$ has trace one and determinant $r-q\ge0$, and
+$0<r<1$. Its positive distance is $2t$, and its negative distance is
+strictly larger. Thus (49.22) is the full feasible arc in both
+directions, with no sign tie in this neighborhood. It retains the
+zero-coherence endpoint $r=\sqrt q$ and every intermediate mixed
+effect. Its impurity is $2(r-q)$; one must not set $r=q$ for mixed
+effects.
+
+By Theorem 40.4, or precisely (43.8)--(43.9), the unique minimizing
+effect at this same $U$ and level is
+
+$$
+\widehat E=
+ \left[T\begin{pmatrix}
+ 1-q&\sqrt{q(1-q)}\,\bar P Q/(uv)\\
+ \sqrt{q(1-q)}\,P\bar Q/(uv)&q
+ \end{pmatrix}T^\dagger\right]^{\mathsf T},
+\qquad
+f(E,U)\ge f(\widehat E,U)+\frac{49}{360}\epsilon(E).
+\tag{49.23}
+$$
+
+For the full arc, put $\Delta_+=d^2-u^2$,
+$b_+=e^2-v^2-\Delta_+$ and
+$\varphi_q(r)=\Delta_++b_+r-2uv\sqrt{q-r^2}$.
+The same-feedback identity (41.3) gives exactly
+
+$$
+f(E,U)-f(\widehat E,U)
+ =\varphi_q(r)-\varphi_q(q)
+   +2\bigl(uv|z_E|-\operatorname{Re}(Pz_E\bar Q)\bigr).
+$$
+
+The last summand is nonnegative. On $q\le r<\sqrt q$,
+$\varphi_q'(r)\ge\varphi_q'(q)>49/180$ by (40.20)--(40.21);
+continuity includes $r=\sqrt q$. This proves the impurity bound in
+(49.23) over the full arc, including arbitrary coherence phases.
+Equality with the minimizing value requires $r=q$ and the unique
+aligning phase, since $uv\sqrt{q(1-q)}>0$.
+
+The ordinary transpose is retained. The minimizing effect is positive,
+trace one and rank one; $q<J_+$ makes its positive distance uniquely
+minimizing. Its exact analytic objective is
+
+$$
+\Psi(t,\delta,a,b)=d^2p+e^2q
+ -(\sqrt p\,|P|+\sqrt q\,|Q|)^2-2\kappa t,\qquad
+q=t-\delta,\quad p=1-q.
+\tag{49.24}
+$$
+
+All its moduli and roots are analytic in this neighborhood, since
+$p,q,u,v>0$. At $a=b=0$ it is $\mathcal H(t,\delta)$.
+The phase expansion (43.12), with $S_0=2\Gamma$, is
+
+$$
+\Psi=\mathcal H(t,\delta)
+ +4\Gamma(L_aa^2+L_bb^2-2s\sqrt q\,ab)
+ +O((|a|+|b|)^4).
+\tag{49.25}
+$$
+
+The exact symmetry $(a,b)\mapsto(-a,-b)$ removes odd total
+phase degrees. It follows either from the moduli in (49.20) or from
+their squared expressions. All statements hold for both orientations,
+with identical objective and the same common-scalar action.
+

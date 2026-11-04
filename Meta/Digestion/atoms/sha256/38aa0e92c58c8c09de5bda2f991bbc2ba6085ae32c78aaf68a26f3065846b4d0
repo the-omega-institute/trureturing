@@ -1,0 +1,36 @@
+**定理 85.1（支撑内的对称正收缩与返回计数）。** 在定义 84.1 的供应及 S、H 下，对每个非零效果，存在唯一的完全正映射 $\Phi_{E,F}:\mathcal C_E\to\mathcal C_E$，满足
+
+$$
+\begin{gathered}
+T_{E,F}=\mathcal L_E\Phi_{E,F},\qquad
+\Phi_{E,F}(P_E)=\Phi_{E,F}^*(P_E)=P_E,\qquad
+\Phi_{E,F}=\Phi_{E,F}^*,\\
+0\le\Phi_{E,F}\le\operatorname{id}\quad\text{在 Hilbert--Schmidt 算子序中},\qquad
+\Phi_{E^2,F}=\Phi_{E,F}^{\,2},\\
+q_E^{-1}T_{E^\vee,F}T_{E,F}|_{\mathcal C_E}
+ =\Phi_{E^\vee,F}\Phi_{E,F}.
+\end{gathered}
+\tag{85.1}
+$$
+
+这里第一行在原代数上由支撑压缩延拓；两个 $\Phi$ 均只是数学分解，不声明为实际过程。原分支不读取支撑外输入，也不向支撑外输出。即使 R 不成立，全部正输入 $\rho\in\mathcal C_E$ 仍有
+
+$$
+\tau\bigl(T_{E^\vee,F}T_{E,F}(\rho)\bigr)=q_E\tau(\rho).
+\tag{85.2}
+$$
+
+证明。省略框架。成功效果给输入支撑；S 又给 $T_E(1)=E$。对正输入 $X$，$\tau((1-P)T_E(X))=\tau(T_E(1-P)X)=0$，故输出也在角内。H 用于效果 $E^2$，给 $T_{E^2}=T_E^2$；取成功效果并用 S，得 $T_E(E)=E^2$。
+
+把各输入、输出简单块的 Kraus 算子填入 $\bigoplus_\alpha\mathbb C^{d_\alpha}$ 上的矩阵 $K_j$。成功效果与 S 分别给 $\sum_jK_j^*K_j=\sum_jK_jK_j^*=E$。因此
+
+$$
+\sum_j\|EK_j-K_jE\|_2^2
+ =2\tau(E^3)-2\tau\bigl(E T_E(E)\bigr)=0.
+\tag{85.3}
+$$
+
+每项非负，故 $EK_j=K_jE$；这包括不同中心块之间的 Kraus 算子，只允许相同数值谱的交织，不预设中心块逐一不动。置 $L_j=E^{-1/2}K_j$，逆只在支撑取。则 $\sum_jL_j^*L_j=\sum_jL_jL_j^*=P$，给所需双随机完全正映射 $\Phi_E$。所有 $L_j$ 与 $E$ 对易，故 $\Phi_E$ 与 $\mathcal L_E$ 对易。角内 $\mathcal L_E$ 可逆，S 推出 $\Phi_E=\Phi_E^*$，也给唯一性。
+
+对 $A=\sqrt E$ 做同一分解，H 及函数演算相容性给 $\Phi_E=\Phi_A^2$。所以 $\Phi_E$ 在 Hilbert--Schmidt 空间上半正定；双随机完全正映射由 Schwarz 不等式和迹保持而为 Hilbert--Schmidt 收缩，故其谱在 $[0,1]$。同理得到 $\Phi_{E^2}=\Phi_E^2$。$E^\vee$ 与 $E$ 在支撑内互为正标量倍的逆，其 Kraus 交织也与 $E$ 对易；$\mathcal L_{E^\vee}\mathcal L_E=q\operatorname{id}_{\mathcal C}$，得到 (85.1) 最后一式。两 $\Phi$ 都保迹，故得 (85.2)。∎
+

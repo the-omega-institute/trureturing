@@ -81,7 +81,7 @@ def schattenPow {m n : Type*} [Fintype m] [Fintype n] [DecidableEq m] [Decidable
 def schattenNorm {m n : Type*} [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n]
     (p : ℝ) (A : Matrix m n ℂ) : ℝ := schattenPow p A ^ (1 / p)
 /-- The sum of powers of the eigenvalues of a Hermitian matrix. -/
-private def eigenPow {n : Type*} [Fintype n] [DecidableEq n]
+def eigenPow {n : Type*} [Fintype n] [DecidableEq n]
     (q : ℝ) (A : Matrix n n ℂ) : ℝ :=
   if hA : A.IsHermitian then ∑ i : n, (hA.eigenvalues i) ^ q else 0
 section LinearMap
@@ -297,7 +297,7 @@ lemma schattenPow_eq_columnGram (p : ℝ) (hp : 0 < p) (A : Matrix m n ℂ) :
   · have hn := T.isPositive_adjoint_comp_self.nonneg_eigenvalues finrank_euclideanSpace i
     simp only [hgram] at hn
     exact hn
-private lemma schattenPow_eq_rowGram (p : ℝ) (hp : 0 < p) (A : Matrix m n ℂ) :
+lemma schattenPow_eq_rowGram (p : ℝ) (hp : 0 < p) (A : Matrix m n ℂ) :
     schattenPow p A = ∑ i : m,
       ((Matrix.isHermitian_mul_conjTranspose_self A).eigenvalues i) ^ (p / 2) := by
   rw [schattenPow_eq_columnGram p hp A]
@@ -307,11 +307,11 @@ private lemma schattenPow_eq_eigenPow_columnGram (p : ℝ) (hp : 0 < p) (A : Mat
     schattenPow p A = eigenPow (p / 2) (Aᴴ * A) := by
   rw [schattenPow_eq_columnGram p hp A, eigenPow,
     dif_pos (Matrix.isHermitian_conjTranspose_mul_self A)]
-private lemma schattenPow_eq_eigenPow_rowGram (p : ℝ) (hp : 0 < p) (A : Matrix m n ℂ) :
+lemma schattenPow_eq_eigenPow_rowGram (p : ℝ) (hp : 0 < p) (A : Matrix m n ℂ) :
     schattenPow p A = eigenPow (p / 2) (A * Aᴴ) := by
   rw [schattenPow_eq_rowGram p hp A, eigenPow,
     dif_pos (Matrix.isHermitian_mul_conjTranspose_self A)]
-private lemma schattenPow_eq_eigenPow (p : ℝ) (hp : 0 < p) (A : Matrix n n ℂ)
+lemma schattenPow_eq_eigenPow (p : ℝ) (hp : 0 < p) (A : Matrix n n ℂ)
     (hA : A.PosSemidef) : schattenPow p A = eigenPow p A := by
   rw [schattenPow_eq_eigenPow_columnGram p hp A]
   exact eigenPow_sq hA p
@@ -334,7 +334,7 @@ private lemma schattenPow_zero_iff (p : ℝ) (hp : 0 < p) (A : Matrix m n ℂ) :
     exact Matrix.toEuclideanLin.injective (hlin.trans (map_zero Matrix.toEuclideanLin).symm)
   · rintro rfl
     simp [schattenPow]
-private lemma schattenPow_sqrt_smul (p : ℝ) (hp : 0 < p) (w : ℝ) (hw : 0 ≤ w)
+lemma schattenPow_sqrt_smul (p : ℝ) (hp : 0 < p) (w : ℝ) (hw : 0 ≤ w)
     (A : Matrix m n ℂ) :
     schattenPow p ((Real.sqrt w : ℂ) • A) = w ^ (p / 2) * schattenPow p A := by
   have hgram : ((Real.sqrt w : ℂ) • A)ᴴ * ((Real.sqrt w : ℂ) • A) =

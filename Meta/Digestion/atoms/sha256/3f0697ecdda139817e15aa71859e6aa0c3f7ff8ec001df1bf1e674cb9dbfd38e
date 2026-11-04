@@ -1,0 +1,8 @@
+## 5. Attainability and global-minimum boundaries
+
+Theorem 3.1 is a universal lower bound. It does not establish a protocol attaining $1-\cos(\pi/8)$, a matching upper bound on the full diamond error, an optimizing protocol, or an exact global minimum. These conclusions require additional mathematics beyond the lower-bound proof.
+
+In particular, equality in the fixed-Kraus entanglement-fidelity estimate would not alone establish equality in (3.15). The quadratic estimate, completeness sum, actual-feedback trace estimate, two-effect trace-norm inequality, and diamond supremum all have to support any claimed equality. A small normalized Choi error is not an upper bound on the error for every reference input.
+
+The proof uses the exact record (1.1), all-outcome retention, finite POVMs on its full two-dimensional record space, and arbitrary four-dimensional unitary feedback. It proves the inequality for every finite outcome count, without a uniform bound on that count. It does not assert a result for postselected protocols, a different record, a chosen encoding subspace, or a global optimizer obtained by restricting feedback to an ansatz.
+

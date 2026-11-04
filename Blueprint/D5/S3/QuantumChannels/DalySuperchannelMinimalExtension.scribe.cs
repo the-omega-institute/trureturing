@@ -30,6 +30,10 @@ internal sealed class DalySuperchannelMinimalExtensionDocument : IScribeDocument
                 "Section 2, page 3: \"Now any linear map is determined by its action on basis elements so for a linear L : M_d → M_r we get a vector space isomorphism from L(M_d, M_r) onto M_d(M_r) via L ↦ (L(E_{i,j})).\" The forward action applies L to each matrix unit. Its inverse maps X and Y to the matrix with entry ∑ i, ∑ j, Y i j * X (i,k) (j,l). Only the input carrier A requires Fintype and DecidableEq instances.", Literature()),
             Entry("induced", "induced", "The induced map on Choi matrices", InducedFormula(),
                 "After Definition 3.4, page 5: \"If Γ is a QSC it induces a map Γ̃ : S(d_1, r_1) → S(d_2, r_2) via Γ̃ = R_2 ∘ Γ ∘ R_1^{−1}.\" For a full superchannel S the same composition acts on all block matrices. The displayed expression uses the forward and inverse Choi linear equivalences.", Literature()),
+            Entry("choi-transport", "choi_induced_apply", "Transport through the Choi map", ChoiTransportFormula(),
+                "Applying a linear supermap and then inputFirstChoi equals applying the induced matrix map to inputFirstChoi. All four dimensions and both linear maps are arbitrary.", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
+            Entry("complete-cp-transport", "preserving_cp_induced", "Complete CP preservation on Choi matrices", PreservingCpFormula(),
+                "A linear supermap that preserves complete positivity after tensoring with every auxiliary identity induces a completely positive map on the full Choi matrix algebra.", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
             Entry("rank", "e", "The reduced Choi rank", RankFormula(),
                 "Section 4, page 10: \"The dimension e can be chosen to be the rank of Tr_{r_1} Tr_{r_2} C_{Γ̃}\" The permutation Equiv.prodProdProdComm changes ((d1,r1),(d2,r2)) to ((d1,d2),(r1,r2)); partialTraceRight traces out the latter pair, and Matrix.rank takes the complex rank.", Literature()),
             Entry("question", "claim", "The minimum-rank extremality question", Disp(Equal(V("claim"), Parenthesized(ClaimBody()))),
@@ -116,6 +120,21 @@ internal sealed class DalySuperchannelMinimalExtensionDocument : IScribeDocument
     private static Formula InducedFormula() => Disp(Dims(All("S", SuperMap(), Equal(Call("induced", V("S")),
         Compose(Member(Call("choiEquiv", Fin(V("d2")), Fin(V("r2"))), "toLinearMap"),
             Compose(V("S"), Member(Member(Call("choiEquiv", Fin(V("d1")), Fin(V("r1"))), "symm"), "toLinearMap")))))));
+    private static Formula ChoiTransportFormula()
+    {
+        Formula s = V("S"), phi = V("phi");
+        Formula inputChoi(Formula f) => Call(Q("LiJiangPolarPairOptimalityRefutation", "inputFirstChoi"), f);
+        return Disp(Dims(All("S", SuperMap(), All("phi", Map(V("d1"), V("r1")),
+            Equal(inputChoi(App(s, phi)), App(Call("induced", s), inputChoi(phi)))))));
+    }
+    private static Formula PreservingCpFormula()
+    {
+        Formula s = V("S"), t = V("t");
+        Formula preservation = All("d", Nat(), All("r", Nat(),
+            All("t", Tensor(Map(V("d1"), V("r1")), Map(V("d"), V("r"))),
+                Imp(Cp(Lift(t)), Cp(Lift(Tmap(s, Q("LinearMap", "id"), t)))))));
+        return Disp(Dims(All("S", SuperMap(), Imp(preservation, Cp(Call("induced", s))))));
+    }
     private static Formula RankFormula()
     {
         Formula shuffle = Call(Q("Equiv", "prodProdProdComm"), Fin(V("d1")), Fin(V("r1")), Fin(V("d2")), Fin(V("r2")));

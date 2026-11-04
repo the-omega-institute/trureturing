@@ -405,7 +405,7 @@ public sealed partial class RemoveWorktreesCommandTests
     {
         var result = Run(new InventoryRunner(), "--help");
         Assert.True(result.Success, result.Error);
-        foreach (var text in new[] { "--names", "--force", "300", "timeout", "complete", "whitespace", "24", "lock", "identity", "0/2", "WORKTREE_REMOVE_RESULT" })
+        foreach (var text in new[] { "--names", "--force", "1800", "timeout", "complete", "whitespace", "24", "lock", "identity", "0/2", "WORKTREE_REMOVE_RESULT" })
             Assert.Contains(text, result.Output, StringComparison.Ordinal);
         Assert.Contains("StrataLint worktree remove --names", WorktreeCommand.Usage, StringComparison.Ordinal);
     }

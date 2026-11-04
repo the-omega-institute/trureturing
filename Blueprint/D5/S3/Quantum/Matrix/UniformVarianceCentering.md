@@ -1,0 +1,61 @@
+# Uniform variance and block centering
+
+## Abstract
+
+A uniform variance budget on every unit vector controls simultaneous block means and the full ambient centered Gram operator.
+
+**Theorem 1.1 (Simultaneous means and the ambient Gram bound).**
+
+$$(\forall H: Type, (\forall G: Type, (\forall J: Type, [\operatorname{NormedAddCommGroup}(H)] [\operatorname{InnerProductSpace}(\mathbb{C},H)] [\operatorname{FiniteDimensional}(\mathbb{C},H)], [\operatorname{NormedAddCommGroup}(G)] [\operatorname{InnerProductSpace}(\mathbb{C},G)] [\operatorname{FiniteDimensional}(\mathbb{C},G)], [\operatorname{Fintype}(J)], (\forall V: \operatorname{LinearIsometry}(\mathbb{C},G,H), (\forall h: \operatorname{Family}(J,\operatorname{LinearMap}(\mathbb{C},H,H)), \forall \Delta: \mathbb{R}, (\forall e: G, ((((\forall j: J, \operatorname{IsSymmetric}(h_{j})) \land (0 \le \Delta \land ((\forall x: G, ((\Vert x \Vert = 1) \Rightarrow (\sum_{j\in J} (\Vert h_{j}(V(x)) - \Re(\operatorname{inner}(V(x),h_{j}(V(x)))) V(x) \Vert)^{2} \le \Delta))) \land (((\exists x: G, \Vert x \Vert = 1)) \Rightarrow (\Vert e \Vert = 1)))))) \Rightarrow ((\forall c: \operatorname{Family}(J,\mathbb{R}), (\forall L: \operatorname{Family}(J,\operatorname{LinearMap}(\mathbb{C},G,H)), (\forall Q: \operatorname{LinearMap}(\mathbb{C},G,G), ((((\forall j: J, c_{j} = \Re(\operatorname{inner}(V(e),h_{j}(V(e))))) \land ((\forall j: J, L_{j} = h_{j} V - c_{j} V) \land Q = \sum_{j\in J} L_{j}^{*} L_{j}))) \Rightarrow (((\forall x: G, ((\Vert x \Vert = 1) \Rightarrow ((\sum_{j\in J} (\Re(\operatorname{inner}(V(x),h_{j}(V(x)))) - c_{j})^{2} \le 4 \Delta \land \sum_{j\in J} (\Vert L_{j}(x) \Vert)^{2} \le 5 \Delta)))) \land ((\forall x: G, (\Re(\operatorname{inner}(x,Q(x))) = \sum_{j\in J} (\Vert L_{j}(x) \Vert)^{2} \land \Re(\operatorname{inner}(x,Q(x))) \le 5 \Delta (\Vert x \Vert)^{2})) \land (\Vert Q \Vert \le 5 \Delta \land ((\forall A: \operatorname{ContinuousLinearMap}(\mathbb{C},H,H), \Vert \sum_{j\in J} L_{j}^{*} A L_{j} \Vert \le 5 \Delta \Vert A \Vert) \land (\forall n: \mathbb{N}, (\forall R: \operatorname{Family}(J,\operatorname{LinearMap}(\mathbb{C},\operatorname{Ltwo}(\operatorname{Fin}(n),G),\operatorname{Ltwo}(\operatorname{Fin}(n),H))), (((\forall j: J, (\forall x: \operatorname{Ltwo}(\operatorname{Fin}(n),G), (\forall r: \operatorname{Fin}(n), R_{j}(x)(r) = L_{j}(x(r)))))) \Rightarrow ((\forall A: \operatorname{ContinuousLinearMap}(\mathbb{C},\operatorname{Ltwo}(\operatorname{Fin}(n),H),\operatorname{Ltwo}(\operatorname{Fin}(n),H)), \Vert \sum_{j\in J} R_{j}^{*} A R_{j} \Vert \le 5 \Delta \Vert A \Vert))))))))))))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/UniformVarianceCentering.hermitian_block_centering_and_gram_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let H and G be arbitrary finite-dimensional complex Hilbert spaces, including the zero space. Let J be any finite index type, V a complex linear isometry from G into H, and h(j) Hermitian complex linear endomorphisms of H. Assume delta is nonnegative and the sum of squared ambient residuals h(j)Vx minus Re(inner(Vx,h(j)Vx))Vx is at most delta for every unit x in G.
+
+Choose an anchor e in G. The anchor is required to have norm one only when G has a unit vector; in a zero block this requirement is vacuous. Define c(j)=Re(inner(Ve,h(j)Ve)), L(j)=h(j)V-c(j)V as a rectangular complex linear map from G into the whole ambient H, and Q=sum(j) L(j) adjoint composed with L(j).
+
+For every unit x, the sum of squared mean displacements from the anchor is at most 4 delta and the sum of squared norms of L(j)x is at most 5 delta. For every vector x, with no normalization, Re(inner(x,Qx)) equals that same ambient energy and is at most 5 delta times norm(x) squared. The operator norm of the actual bounded operator Q is at most 5 delta. For every bounded complex linear endomorphism A of the full ambient H, the actual centered Kraus adjoint sum(j) L(j) adjoint composed with A composed with L(j) has operator norm at most 5 delta times the operator norm of A. This bound also holds at every finite reference size n: on the L2 sum of n copies, apply each same L(j) coordinatewise and allow every bounded complex linear A on the entire amplified ambient space, including operators coupling different reference coordinates.
+
+The proof forms the real coefficient direction from the mean displacements. Cauchy-Schwarz controls its scalar variance. Compact Rayleigh extrema of the compressed symmetric operator are eigenvectors; their equal superposition bounds the spectral diameter. A Pythagorean expansion then separates variance from mean displacement. Applying the resulting bound to the actual rectangular residual maps gives the Gram estimate. Cauchy-Schwarz for the two residual-vector families then bounds every matrix coefficient of the centered Kraus adjoint and hence its operator norm. Summing the actual residual energy over reference coordinates preserves the same 5 delta constant, so the same argument applies at every finite reference size.
+
+For a center block of a finite complex matrix direct sum, V is its canonical isometric inclusion and h(j) acts on the entire direct-sum Hilbert space. Thus all components transferred to other center blocks remain in L(j)x and Q. There is no hypothesis that the individual Kraus operators preserve a block. Applying this statement to each nonzero block uses its own anchor; zero factors contribute zero. No spectral simplicity, positive lower eigenvalue, dimension bound, or sum of Kraus squares is needed for this implication.
+
+Ltwo(Fin(n),G) denotes the Hilbert L2 direct sum of n copies of G; the displayed defining equations specify the coordinatewise reference amplification uniquely. This is the all-vector implication from the variance hypothesis in C109 equation 86.3 to equation 86.4 and the compressed Gram bound. The passage from the same actual S/H CP-TNI branches to the normalized map, the derivation of equation 86.3 from its Hilbert-Schmidt spectral lower bound, and the Hermitian Kraus construction remain separate obligations. The actual centered rectangular family has the complete-reference trace-norm estimate of hermitian_centered_kraus_trace_bound in UniformVarianceTraceBound; the actual direct-sum construction and conditional global defect bound are given by hermitian_direct_sum_centering and hermitian_unital_direct_sum_defect_trace_bound. The original complete Theorem 86.1 is open. Mathematical block vectors and inclusions assert no operational preparation or additional process supply.
+
+**Theorem 1.2 (The actual global direct sum and all its center transfers).**
+
+$$(\forall I: Type, (\forall E: \operatorname{Family}(I,Type), (\forall J: Type, [\operatorname{Fintype}(I)] [\operatorname{DecidableEq}(I)] [\forall i: I, \operatorname{NormedAddCommGroup}(E_{i})] [\forall i: I, \operatorname{InnerProductSpace}(\mathbb{C},E_{i})] [\forall i: I, \operatorname{FiniteDimensional}(\mathbb{C},E_{i})] [\operatorname{Fintype}(J)] \forall \Delta: \mathbb{R}, (\forall h: \operatorname{Family}(J,\operatorname{LinearMap}(\mathbb{C},\operatorname{Ltwo}(I,E),\operatorname{Ltwo}(I,E))), (\forall e: \operatorname{Sections}(E), ((((\forall j: J, \operatorname{IsSymmetric}(h_{j})) \land (0 \le \Delta \land ((\forall i: I, (\forall x: E_{i}, ((\Vert x \Vert = 1) \Rightarrow (\sum_{j\in J} (\Vert h_{j}(\operatorname{blockInclusion}(E,i)(x)) - \Re(\operatorname{inner}(\operatorname{blockInclusion}(E,i)(x),h_{j}(\operatorname{blockInclusion}(E,i)(x)))) \operatorname{blockInclusion}(E,i)(x) \Vert)^{2} \le \Delta)))) \land (\forall i: I, (((\exists x: E_{i}, \Vert x \Vert = 1)) \Rightarrow (\Vert e_{i} \Vert = 1))))))) \Rightarrow ((\forall n: \mathbb{N}, (\forall B: \operatorname{Family}(\operatorname{Product}(J,I,I),\operatorname{LinearMap}(\mathbb{C},\operatorname{Ltwo}(\operatorname{Fin}(n),\operatorname{Ltwo}(I,E)),\operatorname{Ltwo}(\operatorname{Fin}(n),\operatorname{Ltwo}(I,E)))), (((\forall t: \operatorname{Product}(J,I,I), B_{t} = \operatorname{Ref}(n,\operatorname{blockProjection}(E,\operatorname{secondsecond}(t))) \operatorname{Ref}(n,h_{\operatorname{first}(t)} - \operatorname{centralMean}(h,e,\operatorname{first}(t))) \operatorname{Ref}(n,\operatorname{blockProjection}(E,\operatorname{secondfirst}(t))))) \Rightarrow (((\forall x: \operatorname{Ltwo}(\operatorname{Fin}(n),\operatorname{Ltwo}(I,E)), \sum_{t\in \operatorname{Product}(J,I,I)} (\Vert B_{t}(x) \Vert)^{2} \le 5 \Delta (\Vert x \Vert)^{2}) \land (\forall A: \operatorname{ContinuousLinearMap}(\mathbb{C},\operatorname{Ltwo}(\operatorname{Fin}(n),\operatorname{Ltwo}(I,E)),\operatorname{Ltwo}(\operatorname{Fin}(n),\operatorname{Ltwo}(I,E))), \Vert \sum_{t\in \operatorname{Product}(J,I,I)} B_{t}^{*} A B_{t} \Vert \le 5 \Delta \Vert A \Vert)))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/UniformVarianceCentering.hermitian_direct_sum_centering` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let I and J be arbitrary finite types and E(i) arbitrary finite-dimensional complex Hilbert spaces. The ambient H is the actual Hilbert L2 direct sum of the E(i). V(i) inserts a vector into coordinate i and P(i) projects onto that coordinate. The same arbitrary Hermitian h(j) acts on all of H. The variance assumption is required only for unit vectors in each individual input block, with every output component of h(j)V(i)x retained. Each anchor e(i) has norm one whenever its block admits a unit vector; zero blocks and empty index types are included.
+
+Set c(j,i)=Re(inner(V(i)e(i),h(j)V(i)e(i))), c(j)=sum(i) c(j,i)P(i) and ell(j)=h(j)-c(j). For every natural reference size n, amplify these actual operators coordinatewise on Ltwo(Fin(n),H), and define B(j,i,k)=Ref(P(k)) Ref(ell(j)) Ref(P(i)). The theorem bounds the sum of squared norms of all these B(j,i,k)x by 5 delta norm(x) squared for every amplified vector x. It also bounds the actual Kraus adjoint sum(j,i,k) B adjoint A B in operator norm by 5 delta norm(A), for every complex bounded operator A on the full amplified space, including reference couplings.
+
+The original coefficient-direction and extremal-superposition variance argument is consumed separately for each actual input inclusion. The squared norms are summed over the orthogonal output projections and then over input coordinates and reference coordinates. Thus transferred components are counted in their actual output blocks; no block-preservation hypothesis or mixed-center all-vector variance premise occurs. The original same-S/H construction and its delta=beta variance bridge remain open.
+
+**Lemma 1.3 (The operator bound from the actual Kraus energy).**
+
+$$(\forall H: Type, (\forall G: Type, (\forall J: Type, [\operatorname{NormedAddCommGroup}(H)] [\operatorname{InnerProductSpace}(\mathbb{C},H)] [\operatorname{FiniteDimensional}(\mathbb{C},H)] [\operatorname{NormedAddCommGroup}(G)] [\operatorname{InnerProductSpace}(\mathbb{C},G)] [\operatorname{FiniteDimensional}(\mathbb{C},G)] [\operatorname{Fintype}(J)] (\forall L: \operatorname{Family}(J,\operatorname{LinearMap}(\mathbb{C},G,H)), (\forall b: \mathbb{R}, (((0 \le b \land (\forall x: G, ((\Vert x \Vert = 1) \Rightarrow (\sum_{j\in J} (\Vert L_{j}(x) \Vert)^{2} \le b))))) \Rightarrow ((\forall A: \operatorname{ContinuousLinearMap}(\mathbb{C},H,H), \Vert \sum_{j\in J} L_{j}^{*} A L_{j} \Vert \le b \Vert A \Vert))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/UniformVarianceCentering.kraus_adjoint_norm_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary finite-dimensional complex Hilbert input and output spaces, a finite rectangular family L and nonnegative b, a bound sum(j) norm(L(j)x) squared at most b on every unit input gives norm(sum(j) L(j) adjoint A L(j)) at most b norm(A) for every bounded ambient A. The direct-sum trace proof applies this Cauchy-Schwarz estimate to the actual transfer family and to the channel-contraction step.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Matrix/UniformVarianceCentering.hermitian_block_centering_and_gram_bound`
+- Truth anchor: `D5/S3/Quantum/Matrix/UniformVarianceCentering.hermitian_direct_sum_centering`
+- Truth anchor: `D5/S3/Quantum/Matrix/UniformVarianceCentering.kraus_adjoint_norm_le`

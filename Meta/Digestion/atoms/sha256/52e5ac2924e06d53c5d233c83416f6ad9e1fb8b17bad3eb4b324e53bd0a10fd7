@@ -1,0 +1,21 @@
+### 6.2 归一后只剩两种手性
+
+令 $s=\sqrt{\kappa(\Phi(e),\Phi(e))}$，$R_x=\Phi(x)/s$。则
+
+$$
+\kappa(R_x,R_y)=B(x,y),\qquad R_xx=0.
+$$
+
+相对于 $B$，它恰为两种单位叉积中的一种。因而
+
+$$
+\begin{aligned}
+R_xR_yz&=B(x,z)y-B(x,y)z,\\
+[R_x,R_y]&=R_{R_xy},\\
+B(R_xy,R_xy)&=B(x,x)B(y,y)-B(x,y)^2.
+\end{aligned}
+\tag{6.2}
+$$
+
+三重积式可以在一个正向正交基上直接验证；其余两式由它得到。内容自身以 $\{x,y\}=R_xy$ 成为与原 $\mathfrak g$ 同构的紧 Lie 代数，Jacobi 不必另列为新公理。
+

@@ -1,0 +1,6 @@
+### [7] 块正矩阵的对偶范数界
+
+<a id="ref-positive-swz"></a>
+
+Stanisław J. Szarek, Elisabeth Werner and Karol Życzkowski, *Geometry of sets of quantum maps: a generic positive map acting on a high-dimensional system is not completely positive*, J. Math. Phys. **49**, 032113, DOI [10.1063/1.2841325](https://doi.org/10.1063/1.2841325)，[arXiv:0710.1571v2](https://arxiv.org/html/0710.1571v2)，推论 3 后明确陈述块正矩阵满足 $\operatorname{Tr}(G^2)\le(\operatorname{Tr}G)^2$，并将它与可分球的对偶几何联系起来。
+

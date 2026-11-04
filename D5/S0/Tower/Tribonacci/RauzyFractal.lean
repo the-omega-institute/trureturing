@@ -38,7 +38,7 @@ noncomputable def oneZeroPrefixMap (z : Complex) : Complex → Complex :=
 noncomputable def oneOneZeroPrefixMap (z : Complex) : Complex → Complex :=
   fun w ↦ 1 + z + z ^ 3 * w
 
-private theorem conjugateCoordinate_cons
+theorem conjugateCoordinate_cons
     (Q : Nat) (z : Complex) (head : Bool)
     (tail : TribonacciName Q)
     (h : TribonacciAdmissible (Q + 1) (Fin.cons head tail.1)) :
@@ -67,7 +67,7 @@ private theorem zero_prefix_mem_window {z : Complex} (w : Complex)
   rw [conjugateCoordinate_cons Q z false name]
   simp [zeroPrefixMap]
 
-private theorem one_zero_prefix_mem_window {z : Complex} (w : Complex)
+theorem one_zero_prefix_mem_window {z : Complex} (w : Complex)
     (hw : w ∈ tribonacciInternalWindow z) :
     oneZeroPrefixMap z w ∈ tribonacciInternalWindow z := by
   obtain ⟨Q, name, rfl⟩ := hw

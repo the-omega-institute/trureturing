@@ -1,0 +1,32 @@
+**定义 11.1（原始对的距离与联合缺陷）。** 保持定义 9.1 的紧空间
+
+$$
+\mathcal K=\operatorname{Dens}_2\times U(4)
+$$
+
+及定理 9.4 的两个优化集
+
+$$
+\mathcal S_\sigma
+ =\{(E_\sigma,e^{i\varphi}U_\sigma):\varphi\in\mathbb R\},
+\qquad
+\mathcal S=\mathcal S_+\cup\mathcal S_-.
+$$
+
+在 $\mathcal K$ 上定义
+
+$$
+\rho(E,U)
+ =\min_{\sigma\in\{+,-\},\ |\lambda|=1}
+ \left(\|E-E_\sigma\|_{\mathrm F}^2
+       +\|U-\lambda U_\sigma\|_{\mathrm F}^2\right)
+$$
+
+以及
+
+$$
+g(E,U)=a(E)+\tau(E,U),
+$$
+
+其中 $a$ 与 $\tau$ 正是式 (9.12) 的连续缺陷。$\rho$ 对反馈的标量相位取商，保留效果与反馈的共同符号选择；它不把同一原始结果的两个谱向量当成两个可重新控制的结果。
+

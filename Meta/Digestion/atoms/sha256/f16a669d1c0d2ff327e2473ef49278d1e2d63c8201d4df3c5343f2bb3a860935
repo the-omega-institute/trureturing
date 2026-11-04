@@ -1,0 +1,49 @@
+**Mathematical source correspondence and boundaries 47.6.** The new
+repo-derived deductions are the uniform cone-gap coefficient (47.6),
+the both-sign gain bound (47.2), its actual pure-slice consumer
+(47.9)--(47.13), and the nonempty negative-determinant exclusion region
+(47.14)--(47.30). Their mathematical premises are the original
+same-feedback formulas (23.9)--(23.13), Theorem 46.3's exact global
+remainder, and Theorem 42.3's same-effect, same-complex-trace variance
+transport. The finite Birkhoff--von Neumann statement used by that
+transport is the primary statement in Vourdas,
+[arXiv:2203.09468v1, Section II.1, (18)](https://arxiv.org/html/2203.09468v1),
+with probabilities over permutation matrices. It is applied forward
+to the doubly stochastic matrix of the given unitary's spectral
+basis, exactly as in (42.21)--(42.23). No new realization theorem,
+synchronization SDP exactness, unconstrained top-eigenspace premise,
+or literature-wide originality claim is used. The elementary
+square-root inequality and one-variable minimum in (47.4)--(47.5)
+are intermediate steps for this fixed record, not separate imported
+research results. The canonical determinant criterion, its equality
+lifts and the instability family are reused from Section 46; the
+positive geometric selection and selected-value monotonicity are
+reused from Theorems 37.5 and 41.2. The cutoff selected-value bound is
+(44.19). Theorem 45.5 already supplies global purity through $13/4$;
+it is not reproved by these slice estimates.
+
+The gain bound itself holds on the complete triangle for both signs,
+every $0<x<1$ and both endpoint populations. The actual original
+common-level consumer is restricted to pure effects and
+$0<\xi\le13/4$, with $x=1$ treated by (47.11). No mixed-input
+pointwise bound follows from (47.13) or from global-minimizer purity.
+No coefficient extension to $x=0$ is asserted. The bound is an upper
+estimate of the available gain, not its exact maximum or a
+classification of its maximizing triangle points. Outside the
+explicit strict region, $M_\sigma\le0$ is only failure of this
+certificate, not a competing original pair. The negative canonical
+comparison remains unevaluated, even though its own gain envelope
+and sufficient test (47.10) are available.
+
+The remaining negative-determinant positive slices, the unscreened
+negative branch, their joint level/population ordering, exact
+$\alpha,\beta$, endpoint equality and inclusion, first-branch
+exhaustion and immediate right-side behavior remain unresolved.
+Outside the classified slices, complete actual minimizing lifts
+still require the source42 variance-zero conditions, with singular
+effects, zero recoveries, zero coherence and repeated phases retained.
+Beyond $13/4$ these common-level transport and purity consumers give
+no unrestricted conclusion; mixed effects and nondiagonal lifts
+remain in the full problem. The strict excluded region narrows the
+unchanged first-loss/equality problem and does not solve it.
+

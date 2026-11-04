@@ -4,6 +4,10 @@ import Reg.Support.SingleDependentReadout
 
 /-! Source-bound observation of the frequency in rotating-phase injectivity. -/
 
+set_option linter.style.longLine false
+set_option linter.unusedVariables false
+set_option linter.unusedSimpArgs false
+
 namespace Reg.D5.S3.Zeros.CriticalPoints.RankOneTraceBound.Rotating
 
 open _root_.D5.S3.Zeros.CriticalPoints.ThreeLinesSchurMoment
@@ -334,3 +338,85 @@ def registration.{u_1,u_3} : LeanInformationAudit.Contract.Registration.{_, _, _
   options := #[] }
 end
 end Reg.D5.S3.Zeros.CriticalPoints.RankOneTraceBound.Phase
+
+namespace Reg.D5.S3.Zeros.CriticalPoints.RankOneTraceBound.TraceIdentity
+set_option linter.style.longLine false
+set_option linter.unusedVariables true
+set_option linter.unusedSimpArgs true
+open _root_.D5.S3.Zeros.CriticalPoints.RankOneTraceBound
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Matrix
+noncomputable section
+universe u v
+/-- Read the real weight as the complex coefficient in the trace expansion. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℂ)
+def actual : Realization signature :=
+  realize signature (fun _ _ a => (a : ℂ)) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ a => (a : ℂ) + 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {ι : Type u} [Fintype ι] {n : Type v} [Fintype n] [DecidableEq n]
+    (r : ι → EuclideanSpace ℂ n) (a : ι → ℝ) (γ : ι → ℂ) (V : Matrix n n ℂ),
+    Matrix.trace (V * ∑ j, ((a j : ℂ) * γ j) •
+      Matrix.vecMulVec (r j).ofLp (star (r j).ofLp)) =
+        ∑ j, R.readout () () (a j) * γ j * inner ℂ (r j) (V.toEuclideanLin (r j))
+private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  let r : ULift.{u} Unit → EuclideanSpace ℂ (ULift.{v} Unit) :=
+    fun _ => EuclideanSpace.single ⟨()⟩ 1
+  have hh := h r (fun _ => 0) (fun _ => 1) 1
+  norm_num [rejected, realize, r, EuclideanSpace.inner_single_left,
+    Matrix.toEuclideanLin, dotProduct] at hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  norm_num [actual, realize]
+
+def source_registration : Registration arena (type_of% @trace_rank_one_sum) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@trace_rank_one_sum, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@trace_rank_one_sum) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Zeros.CriticalPoints.RankOneTraceBound.TraceIdentity.unit
+  realizationName := `Reg.D5.S3.Zeros.CriticalPoints.RankOneTraceBound.TraceIdentity.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ a => (a : ℂ)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Zeros.CriticalPoints.RankOneTraceBound
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+set_option pp.proofs false in
+#print trace_rank_one_sum
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Zeros.CriticalPoints.RankOneTraceBound.TraceIdentity

@@ -197,6 +197,19 @@ private theorem exists_real_conjugate_pair_interpolant {d : Nat}
     _ = f.eval w := (Polynomial.eval_eq_sum_range' hnat_degree w).symm
     _ = conjugatePairValues z w := hf_eval w (by exact hw)
 
+/-- Real interpolation with an explicit evaluation interface on a finite
+conjugate-stable set. The coefficient vector is consumed by countable-spectrum
+head isolation. -/
+theorem exists_real_pair_interpolant {d : ℕ} (roots : Fin d → ℂ) (z : ℂ)
+    (hzmem : z ∈ Finset.univ.image roots) (hz : conj z ≠ z)
+    (hconj : ∀ w, w ∈ Finset.univ.image roots ↔
+      conj w ∈ Finset.univ.image roots) :
+    ∃ c : Fin d → ℝ, ∀ w ∈ Finset.univ.image roots,
+      vectorPolynomialValue c w =
+        if w = z then Complex.I else if w = conj z then -Complex.I else 0 := by
+  simpa only [conjugatePairValues] using
+    exists_real_conjugate_pair_interpolant roots z hzmem hz hconj
+
 private theorem newtonHankel_isHermitian {d : Nat} (roots : Fin d -> Complex) :
     (newtonHankel roots).IsHermitian := by
   rw [Matrix.isHermitian_iff_isSymm]

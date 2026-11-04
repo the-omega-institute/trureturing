@@ -55,6 +55,39 @@ internal sealed class UnicyclicSkewnessMinimumDocument : IScribeDocumentDefiniti
                     + "in Section III E 1, main.tex lines 416-420, and the Appendix, line 792."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("simplex-functional"),
+                DeclarationHandle.Create(Prefix + "simplexFunctional"),
+                H("The second- and third-moment functional"),
+                StatementSource.FromAuthor(Disp(SimplexFunctionalFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every natural n and every real vector x indexed by Fin n, this functional "
+                    + "is three times the square of the second power sum minus twice the third power sum. "
+                    + "Its definition requires neither positivity nor membership in the simplex."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("normalized-simplex"),
+                DeclarationHandle.Create(Prefix + "normalized_simplex"),
+                H("Normalized inverse rates belong to the standard simplex"),
+                StatementSource.FromAuthor(Disp(NormalizedSimplexFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every positive natural n and every positive real rate vector k on Fin n, "
+                    + "the inverse rates divided by their first power sum are nonnegative and sum to one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("skewness-normalized"),
+                DeclarationHandle.Create(Prefix + "skewness_normalized"),
+                H("Skewness as a functional of normalized inverse rates"),
+                StatementSource.FromAuthor(Disp(SkewnessNormalizedFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every natural n and every real rate vector k, skewness equals "
+                    + "simplexFunctional evaluated at the inverse rates divided by their first power sum. "
+                    + "The identity uses total real division and needs no positivity or nonzero-denominator "
+                    + "hypothesis. It follows by moving the common denominator outside each power sum."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The sharp lower bound and its attaining rates"),
@@ -137,6 +170,38 @@ internal sealed class UnicyclicSkewnessMinimumDocument : IScribeDocumentDefiniti
             Equal(Typed(At(Local("skewness"), X("k")), Reals()),
                 Subtract(Divide(Multiply(D(3), Power(second, D(2))), Power(first, D(4))),
                     Divide(Multiply(D(2), third), Power(first, D(3)))))));
+    }
+
+    private static Formula SimplexFunctionalFormula() =>
+        All("n", Naturals(), All("x", RateType(),
+            Equal(Typed(At(Local("simplexFunctional"), X("x")), Reals()),
+                Subtract(Multiply(D(3), Power(PowerSum(D(2), X("x")), D(2))),
+                    Multiply(D(2), PowerSum(D(3), X("x")))))));
+
+    private static Formula SkewnessNormalizedFormula()
+    {
+        Formula inverseRates = LambdaOf("j", FinOf(X("n")),
+            At(Qualified("Inv", "inv"), At(X("k"), X("j"))));
+        Formula normalized = LambdaOf("i", FinOf(X("n")),
+            Divide(At(Qualified("Inv", "inv"), At(X("k"), X("i"))),
+                PowerSum(D(1), inverseRates)));
+        return All("n", Naturals(), All("k", RateType(),
+            Equal(At(Local("skewness"), X("k")),
+                At(Local("simplexFunctional"), normalized))));
+    }
+
+    private static Formula NormalizedSimplexFormula()
+    {
+        Formula inverseRates = LambdaOf("j", FinOf(X("n")),
+            At(Qualified("Inv", "inv"), At(X("k"), X("j"))));
+        Formula normalized = LambdaOf("i", FinOf(X("n")),
+            Divide(At(Qualified("Inv", "inv"), At(X("k"), X("i"))),
+                PowerSum(D(1), inverseRates)));
+        return All("n", Naturals(), Implication(Less(Typed(D(0), Naturals()), X("n")),
+            All("k", RateType(), Implication(
+                All("i", FinOf(X("n")), Less(Typed(D(0), Reals()), At(X("k"), X("i")))),
+                new Formula.Relation(Parenthesized(normalized), FormulaRelationOperator.MemberOf,
+                    At(Qualified("stdSimplex"), Reals(), FinOf(X("n"))))))));
     }
 
     private static Formula MinimumValueFormula()

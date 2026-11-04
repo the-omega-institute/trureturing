@@ -1,0 +1,93 @@
+**Corollary 46.7 (a sector beyond the earlier shifted-support hypotheses).**
+For $q=1$ on the positive row, the determinant has the sign of
+
+$$
+ n(x)=(h^2+s^2)x^3-s^2(1+x).
+\tag{46.39}
+$$
+
+Its root from (36.44) is below $4/5$, since
+$n(4/5)=(32-161s^2)/125>0$ and $s^2<3/20$. Hence every
+$x\in(4/5,\sqrt{2/3})$ has $\mathfrak D_+(x,1)>0$ and
+$\xi=6-4x\in(0,13/4)$. At the same time the shifted-support hypotheses of
+(36.30) fail: the first required shift is
+$h(\sqrt p-x\sqrt q/y)=-hx/y<0$. These slices also satisfy
+$2(1+x)<2+\sqrt{8/3}$. By continuity, nearby $0<q<1$ slices retain these
+strict inequalities. Theorem 46.4 and Corollary 46.5 nevertheless order every actual feedback
+and every pure-effect coherence phase in these slices. This is a full-triangle result,
+with all feedbacks in the fixed slice included.
+
+**Mathematical source correspondence 46.8.** The ordinary-transpose density
+coordinates, exact recoveries, common scalar action and both joint-distance
+branches are source (23.2), (23.9)--(23.13). The attained diagonal domain and
+its direct unitary realizations are source Theorem 23.2; the exact two-pair
+phase reconstruction used in Lemma 46.2 is the established compatibility
+argument behind Sections 35 and 42. The source42 theorem (42.15)--(42.16)
+provides same-effect, same-complex-trace phase replacements and the positive
+scalar variance used in Corollary 46.5. Theorem 36.5 and (36.43)--(36.56)
+provide the previously established positive local instability direction; it
+is reused here only for attribution. Theorem 37.5 supplies the positive
+rank-one scalar ordering through distance four. Theorem 45.5 states, through
+$R_\star$, the exact equalities (45.17)
+$m=m_{\mathrm p}=m_{\mathrm{ph}}=m_{\mathrm{ph,p}}$ and
+$\mathcal A_{\mathrm{ph},\xi}=\mathcal A_\xi\cap\mathcal P_\xi$; its proof and
+the purity reduction are not reproved here.
+
+For the realizability correspondence, Jasper--Loreaux--Weiss,
+*Thompson's theorem for compact operators and diagonals of unitary operators*,
+[arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3),
+states the finite prescribed-complex-diagonal and singular-value theorem.
+For dimension four and singular values all equal to one, its partial-sum
+conditions are $\sum_{j=1}^k|w|_j^*\le k$ for $1\le k\le4$,
+and its final condition is $|w|_1^*+|w|_2^*+|w|_3^*-|w|_4^*\le2$.
+These are exactly $|w_j|\le1$ and
+$\sum_j|w_j|-2\min_j|w_j|\le2$, the source domain (23.1).
+A square matrix with these four singular values is unitary. This is a
+realizability statement over all unitaries, with no converse asserted
+for one fixed normal orbit. The Birkhoff--von Neumann step used in
+source42 is the finite doubly-stochastic decomposition cited there from
+Vourdas, arXiv:2203.09468v1, Section II.1, equation (18); it is used only
+forward from the spectral decomposition of the given actual unitary.
+
+The global-certificate comparisons are bounded correspondences only.
+Bandeira--Boumal--Singer, *Tightness of the maximum likelihood semidefinite
+relaxation for angular synchronization*, [arXiv:1411.3272v3](https://arxiv.org/html/1411.3272v3),
+Lemma 4.3 and Section 4.3 require a positive-semidefinite Hermitian slack,
+an annihilation condition and a real-diagonal condition for their fixed
+unit-diagonal SDP. Soltanalian--Stoica, *Designing Unimodular Codes via
+Quadratic Optimization is not Always Hard*, [arXiv:1303.0152v1](https://arxiv.org/html/1303.0152v1),
+Theorem 2 assumes an actual unimodular vector in the top eigenspace of the
+unchanged unconstrained quadratic objective. Neither result matches the
+prescribed trace/population problem with a variable effect, so neither is
+used as a proof premise. The new proof is the explicit nonlinear remainder
+(46.19) on the actual coupled triangle. No literature-wide originality claim
+is made.
+
+**Unresolved mathematical obligations 46.9.** The new result does not order
+all remaining populations and both signs against $V(\xi)$. It leaves the
+negative-determinant positive sector, the entire negative canonical and
+interior families, and their coupled level/population comparison. It does not
+compute exact $\alpha$ or $\beta$, decide whether they coincide, determine the
+maximal exhaustive-geometric-equality prefix or endpoint inclusion, or
+identify and exhaust the first globally minimizing branch. A determinant-zero
+slice has a complete fixed-population equality kernel, but coupled variation
+of population and level can still have higher-order behavior; it does not
+select a first boundary. Separated pure contacts, simultaneous contacts and
+coalescence remain possible.
+
+Through $R_\star$, (45.17) already excludes mixed global minimizers
+and identifies the attained pure, phase and original minimum values.
+Outside the canonical nonnegative slices, the remaining pure phase
+minimizers and their complete actual original lifts still require
+classification by the source42 variance-zero condition (42.25), with
+singular effects, zero coherence, zero recovery and repeated phases
+retained. For mixed sublevel competitors, Theorem 45.4 supplies the
+same-level strict pure improvement in its stated value range; no direct
+pure-slice bound for a mixed input is asserted here. Beyond $R_\star$,
+the purity and transport consumers do not apply, and all mixed effects
+and actual nondiagonal lifts remain in the unrestricted comparison.
+The exact alpha/beta endpoint equality, immediate right-side behavior, all first-branch
+obligations, and the full unrestricted first-loss/equality problem therefore
+remain open. This section supplies a necessary global relation toward the unchanged
+first-loss and equality problem and does not determine its unrestricted solution.
+

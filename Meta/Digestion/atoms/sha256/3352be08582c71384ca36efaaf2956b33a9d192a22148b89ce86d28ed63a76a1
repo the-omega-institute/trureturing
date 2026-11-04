@@ -1,0 +1,53 @@
+**Definition 37.1 (finite presentation and current leaf counts).**
+A supplied presentation consists of a finite nonempty address-state set
+$H$, an initial address state $h_0$, two total tables
+$\ell,\varrho:H\to H$, and the selector table
+
+$$
+(\delta,\lambda):Q\times\{P,S\}\times H
+                    \longrightarrow Q\times\{0,1\}.
+\tag{AA.113}
+$$
+
+Put $d(\varepsilon)=h_0$, $d(pL)=\ell(d(p))$ and
+$d(pR)=\varrho(d(p))$. The selector is exactly
+$C(q,(k,p))=(\delta(q,k,d(p)),\lambda(q,k,d(p)))$ on every event input.
+Both tables and this correspondence are premises, not a certificate
+extracted from an arbitrary total program. All their domains are supplied
+finite sets with explicit enumerations. Regular address predicates and
+finite combinations of them fit this presentation by their product
+classifier. No finite bound on address length or tree size is imposed.
+
+For a finite LAB source $t$, define $m(t)\in\mathbb N^{H\times\{\alpha,\beta\}}$
+by counting its current logical leaves of each address state and type.
+Material unary markers are excluded. Let $a_h,b_h$ denote the unit
+vectors for $(h,\alpha),(h,\beta)$. An event type $(P,h)$ has input and
+output vectors $a_h,b_h$; type $(S,h)$ has input and output vectors
+$b_h,b_{\ell(h)}+a_{\varrho(h)}$. Denote them by
+$i_{k,h},o_{k,h}$. Thus a successful event at address $p$ changes counts by
+
+$$
+m(t\cdot(k,p))=m(t)-i_{k,d(p)}+o_{k,d(p)},
+\qquad m(t)\ge i_{k,d(p)}.
+\tag{AA.114}
+$$
+
+Coincident classifier states cause ordinary addition of token counts;
+no distinctness of $h,\ell(h),\varrho(h)$ is assumed. Counts can be computed
+by a finite source traversal carrying the classifier along logical edges.
+They are an abstraction for the following decision, not a replacement for
+the actual source, its literal addresses or its selected records.
+
+To compare controls $q,r$, use a common counter vector $m$ and paired
+control $(q,r)$. At type $(k,h)$ with $m\ge i_{k,h}$, compare the two
+bits. If they differ, enter a designated error control. If they agree,
+move to $(\delta(q,k,h),\delta(r,k,h))$ and replace $m$ by
+$m-i_{k,h}+o_{k,h}$. Error means an unequal selection bit, not a source
+refusal or a hardware failure. This is a finite-control multiset system.
+It is an ordinary finite-place Petri net after adding one control place
+per pair and one error place: each transition consumes the current
+control token and the stated input leaf token, and produces the next
+control or error token and the stated output leaf tokens. Its initial
+marking has exactly one control token. There are no zero tests, resets,
+inhibitor arcs, source-size guards or final exact-marking constraints.
+

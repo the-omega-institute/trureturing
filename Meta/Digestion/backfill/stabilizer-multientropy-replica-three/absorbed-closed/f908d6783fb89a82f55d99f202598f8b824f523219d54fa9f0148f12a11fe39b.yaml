@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:f908d6783fb89a82f55d99f202598f8b824f523219d54fa9f0148f12a11fe39b
+  normalized_sha256: sha256:f908d6783fb89a82f55d99f202598f8b824f523219d54fa9f0148f12a11fe39b
+cas_ref: sha256:f908d6783fb89a82f55d99f202598f8b824f523219d54fa9f0148f12a11fe39b
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Partitions/CoarseThreeBlockRefinement.PartyPartition
+    target_statement_id: sha256:e3c09417ca49261691ae1e594772d94049d1533918f15510a5496a9e2cf8e2c3
+  - gid: D5/S3/Combinatorics/Partitions/CoarseThreeBlockRefinement.nontrivialPartitions
+    target_statement_id: sha256:10cc4d616f3049304410a4c5b814fdfa10f63d54580eff3400fdb0ce9bd0e9f6
+  - gid: D5/S3/Combinatorics/Partitions/CoarseThreeBlockRefinement.partOf
+    target_statement_id: sha256:3f65673de87e378e3674ad394dd9b2d8a6370c5e6ec2001d2e94bf8691218b3b
+  - gid: D5/S3/Combinatorics/Partitions/CoarseThreeBlockRefinement.partitionsOfCard
+    target_statement_id: sha256:957f78f912969b2d2570b66c30ce8ca33851371e083f8b36aba0bac98474c600
+  - gid: D5/S3/Combinatorics/Partitions/CoarseThreeBlockRefinement.stirling_and_three_block_refinement_count
+    target_statement_id: sha256:2ce83c1d0619a23011dfcfa605f5b9206fbb54c5dac1f5f120ae98e3c1045fc5
+  - gid: D5/S3/Combinatorics/Partitions/CoarseThreeBlockRefinement.twoOrThreePartitions
+    target_statement_id: sha256:3eab8e6c70512937faf2d1983ec9c14f521e1244aa4c12a3b63f2c93cd8612d6
+receipts:
+  unresolved_subitems: []

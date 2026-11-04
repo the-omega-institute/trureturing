@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-intrinsic-classification-and-polygon-geometry"
+path = "docs/develop/theory/AURIC_FIB_ATOM_INTRINSIC_CLASSIFICATION_AND_POLYGON_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

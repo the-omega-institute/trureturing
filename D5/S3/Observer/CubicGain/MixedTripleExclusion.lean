@@ -40,7 +40,7 @@ private theorem losing_pair_step (n : ℕ) (T : Finset World3) (v : List Bool)
   intro W hW
   have hm : W ∈ responseSlice T v E z := he.symm ▸ hW
   exact (Finset.mem_filter.mp hm).2
-private theorem losing_pair_suffix (n : ℕ) (T : Finset World3) (v : List Bool)
+theorem losing_pair_suffix (n : ℕ) (T : Finset World3) (v : List Bool)
     (hT : T.card = 2) (h : Losing n T v) (u : List Bool) (hu : u.length ≤ n) :
     Losing (n - u.length) T (v ++ u) ∧
       (u ≠ [] → ∀ W ∈ T, ∀ Z ∈ T,
@@ -105,7 +105,7 @@ private theorem acquisition_three (E F G : Bool) :
     acquisition [E,F,G] = action G * action F * action E := by
   change acquisition ([E,F] ++ [G]) = _
   rw [acquisition_append, acquisition_two, Matrix.mul_assoc]
-private theorem read_concat (W : World3) (v u : List Bool) :
+theorem read_concat (W : World3) (v u : List Bool) :
     readAt W (v ++ u) (v.length + u.length) =
       (gain 3 W.coeff).eval ((v.length + u.length : ℕ) : ℝ) *
         Matrix.trace (acquisition u * acquisition v * W.source) + W.drift := by
@@ -129,7 +129,7 @@ private theorem pair_read_difference (n : ℕ) (T : Finset World3) (v : List Boo
         (gain 3 Z.coeff).eval ((v.length + u.length : ℕ) : ℝ) • Z.source))) =
       Z.drift - W.drift := by
   exact equal_read_difference W Z v u ((losing_pair_suffix n T v hT h u hun).2 hu W hW Z hZ)
-private theorem pair_common_drift (n : ℕ) (T : Finset World3) (v : List Bool)
+theorem pair_common_drift (n : ℕ) (T : Finset World3) (v : List Bool)
     (hT : T.card = 2) (h : Losing n T v) (hn : 3 ≤ n)
     (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) : W.drift = Z.drift := by
   let S : Mat := acquisition v *
@@ -182,7 +182,7 @@ private theorem pair_gain_zero_of_drift (n : ℕ) (T : Finset World3) (v : List 
   have hz' : acquisition (v ++ p) * D = acquisition (v ++ p) * 0 := by simpa using hz
   have hd0 : D = 0 := (acquisition_unit (v ++ p)).mul_left_cancel hz'
   exact weighted_sources_zero W Z hP _ _ (sub_eq_zero.mp hd0)
-private theorem pair_gain_zero (n : ℕ) (T : Finset World3) (v : List Bool)
+theorem pair_gain_zero (n : ℕ) (T : Finset World3) (v : List Bool)
     (hT : T.card = 2) (h : Losing n T v) (hn : 3 ≤ n)
     (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) (hP : W.source ≠ Z.source)
     (j : ℕ) (hj : 2 ≤ j) (hjn : j ≤ n) :
@@ -190,7 +190,7 @@ private theorem pair_gain_zero (n : ℕ) (T : Finset World3) (v : List Bool)
       (gain 3 Z.coeff).eval ((v.length+j : ℕ) : ℝ) = 0 := by
   exact pair_gain_zero_of_drift n T v hT h W Z hW hZ
     (pair_common_drift n T v hT h hn W Z hW hZ) hP j hj hjn
-private theorem four_evaluations (β γ : Coeff 3) (t : Fin 4 → ℝ)
+theorem four_evaluations (β γ : Coeff 3) (t : Fin 4 → ℝ)
     (ht : Function.Injective t)
     (he : ∀ i, (gain 3 β).eval (t i) = (gain 3 γ).eval (t i)) : β = γ := by
   apply evaluation_injective 3 4 t ht (by omega)

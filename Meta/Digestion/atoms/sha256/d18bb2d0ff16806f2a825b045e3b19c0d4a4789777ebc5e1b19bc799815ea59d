@@ -1,0 +1,47 @@
+**Definition 40.8 (mathematical suppliers and limits of the bridge).**
+The cross-interface obstruction of Theorem 40.2 and its same-source
+block-retention consequence are `repo-derived` deductions. The pair
+laws, the identity $M^2=M+I$, pair residue recovery and finite-profile
+sufficiency are reused suppliers, not new results of this section.
+[GraftAffineClosure](../../../D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean)
+supplies `step`, `run`, the alpha composition $(1,0)$ and the affine
+laws within `result`. Its false/true convention is replacement/graft;
+the named words here require no Boolean conversion. Its arithmetic
+graft is identified only with the composition effect of the LAB split,
+not with a native root-graft permission.
+
+[WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean)
+supplies `leftStep`, `rightStep`, `wordMatrix` and
+`unimodular_wordMatrix`. For chronological $w$ the column matrix is
+`wordMatrix(reverse w)`, as in §6.
+[UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean)
+supplies matrix generation; it supplies no substitute for rational
+evaluation freeness. That freeness is the explicitly applied rooted
+uniqueness of §6, also consistent with the free-anchor result of §20.
+
+The supporting rational enumeration is `literature-attested` in Calkin
+and Wilf, [*Recounting the Rationals*, pp. 360–363,
+DOI:10.1080/00029890.2000.12005205](https://doi.org/10.1080/00029890.2000.12005205):
+the root is $1/1$, and the children of $p/q$ are $p/(p+q)$ and
+$(p+q)/q$. These rules and unique enumeration are also stated in Glasby,
+[*Enumerating the rationals from left to right*, introduction, pp. 1–2,
+arXiv:1011.2823v1](https://arxiv.org/abs/1011.2823v1). They supply the
+positive-rational tree, not a LAB compiler. The retention proof uses
+elementary finite counting; its equiprobable interpretation is the
+classical logarithmic measure for $N$ equally likely messages in
+Shannon, [*A Mathematical Theory of Communication*, introduction,
+DOI:10.1002/j.1538-7305.1948.tb01338.x](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x).
+No channel-coding, error, thermodynamic or worldwide originality claim
+follows from these deductions.
+
+Section 39's interval $K$ and full profiles refer to the declared
+rooted source and its authentic action/read sequence. They do not
+turn a composition code into (40.3), or recover the missing block
+choices in Definition 40.4. State-dependent words, signed or inverse
+actions, history-aware representations, other source domains and
+other codomains are outside Theorem 40.2. The retention bounds concern
+only the stated finite family and exposed channels, not all native
+history fibers or minimum whole-installation memory. Finite mathematical
+existence, actual paid acquisition, lawful references, completion,
+resource costs and physical realization remain separate obligations.
+

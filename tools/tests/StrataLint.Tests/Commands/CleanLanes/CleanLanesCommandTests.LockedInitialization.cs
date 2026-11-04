@@ -33,6 +33,7 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Equal("initialization_in_progress", ReasonFor(result.Output, lane));
+        Assert.Empty(ReadEvents(result.Error, "clean_lanes_warning"));
         Assert.Equal(1, qualified);
         Assert.True(Directory.Exists(lane));
     }
@@ -61,7 +62,7 @@ public sealed partial class CleanLanesCommandTests
 
         var preview = fixture.RunWithRaw(runner, "--lanes-only");
         Assert.True(preview.Success, preview.Error);
-        Assert.Contains(ReadItems(preview.Output), item => ItemMatches(item, lane, "would_remove", "merged_to_dev"));
+        Assert.Contains(ReadItems(preview.Output), item => ItemMatches(item, lane, "would_remove", "head_commit_age"));
         Assert.True(qualified > 0);
         var removal = fixture.RunWithRaw(runner, "--force", "--lanes-only");
         Assert.True(removal.Success, removal.Error);
@@ -78,7 +79,7 @@ public sealed partial class CleanLanesCommandTests
         fixture.LockLane(lane, "worktree-init:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         using var reference = WorktreeInitializationScope.AcquireReference(lane, branch);
         var preview = fixture.Run("--lanes-only");
-        Assert.Contains(ReadItems(preview.Output), item => ItemMatches(item, lane, "would_remove", "merged_to_dev"));
+        Assert.Contains(ReadItems(preview.Output), item => ItemMatches(item, lane, "would_remove", "head_commit_age"));
         var removal = fixture.Run("--force", "--lanes-only");
         Assert.StartsWith("checkpoint_failed:busy_scope:ref:", ReasonFor(removal.Output, lane));
         Assert.True(Directory.Exists(lane));
@@ -116,24 +117,27 @@ public sealed partial class CleanLanesCommandTests
         fixture.LockLane(lane, reason);
         var preview = fixture.Run("--lanes-only");
         Assert.True(preview.Success, preview.Error);
-        Assert.Contains(ReadItems(preview.Output), item => ItemMatches(item, lane, "would_remove", "merged_to_dev"));
+        Assert.Contains(ReadItems(preview.Output), item => ItemMatches(item, lane, "would_remove", "head_commit_age"));
         Assert.True(Directory.Exists(lane));
         var result = fixture.Run("--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane), result.Output);
     }
 
-    [Fact]
-    public void CurrentLockIsRetainedByAutomaticSelection()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CurrentLockIsRetainedByAutomaticSelection(bool force)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/current-lock");
         fixture.LockLane(lane);
         File.SetLastWriteTimeUtc(Path.Combine(fixture.WorktreeGitDirectory(lane), "locked"),
             new DateTime(2030, 1, 2, 0, 0, 0, DateTimeKind.Utc));
-        var result = fixture.Run("--force", "--lanes-only");
+        var result = fixture.Run(force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
         Assert.True(result.Success, result.Error);
         Assert.Equal("locked_recent", ReasonFor(result.Output, lane));
+        Assert.Empty(ReadEvents(result.Error, "clean_lanes_warning"));
         Assert.True(Directory.Exists(lane));
     }
 }

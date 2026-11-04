@@ -1,0 +1,2 @@
+**定义 B-14.1（经典事件表示）。** 取计数内积空间 $`H=\mathbb{\text{ℝ}}^\Sigma`$，基 $`e_I`$ 正交归一化。事件 $`E`$ 表为 $`H_E=\mathrm{span}\{e_I:I\in E\}`$ 及对角投影 $`P_E=\sum_{I\in E}e_Ie_I^{\mathsf{\text{𝖳}}}`$。
+

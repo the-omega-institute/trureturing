@@ -1,0 +1,67 @@
+### 定理 5：相对近正性只消耗 $\varepsilon p_0$ 的主裕量
+
+若式 (23) 在所需窗口 $[0,D]$ 成立，$D\geq L$，则
+
+$$
+\boxed{
+Q(T)\geq
+-(S+\varepsilon p_0)
+\left(1+\frac3L+\frac4{L^2}\right)
+-\frac{\log(2\pi)}{\sqrt T}
+-\mathfrak r(T,D),
+}
+$$
+<a id="eq-30"></a>
+<div class="equation-caption">Equation (30).</div>
+
+其中 $\mathfrak r(T,D)$ 是实际远尾的无条件上界。
+
+**证明的关键。**
+
+令
+
+$$
+K_\varepsilon=K+\varepsilon P.
+$$
+
+窗口正性给出两点约束
+
+$$
+|K_\varepsilon(s)|
+\leq S+\varepsilon p_0
+\qquad(0\leq s\leq D).
+$$
+
+将 $K=K_\varepsilon-\varepsilon P$ 代入式 (29)。其中来自 $-\varepsilon P$ 的有限窗口修正为
+
+$$
+\varepsilon\left[
+\left(1+\frac1L\right)P(L)
+-
+L\int_0^{D-L}
+e^{-v/2}
+\frac{L+v+2}{(L+v)^3}
+P(L+v)\,dv
+\right].
+$$
+
+这个量非负。因为 $P$ 正且递减，并且
+
+$$
+L\int_0^\infty
+e^{-v/2}
+\frac{L+v+2}{(L+v)^3}\,dv
+<
+1+\frac1L.
+$$
+
+所以它可以安全地作为有利项保留，或丢去。
+
+其余有限窗口积分的权重总量不超过
+
+$$
+\frac2L+\frac4{L^2}.
+$$
+
+加上端点项、拱形项和远尾，得到式 (30)。证毕。
+

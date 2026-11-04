@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6e29ce8ba74d74ebfcbefcfdfe06781f656810184e800c3efcd63cc08f30dfa1
+  normalized_sha256: sha256:6e29ce8ba74d74ebfcbefcfdfe06781f656810184e800c3efcd63cc08f30dfa1
+cas_ref: sha256:6e29ce8ba74d74ebfcbefcfdfe06781f656810184e800c3efcd63cc08f30dfa1
+coverage_gids:
+  - gid: D5/S3/Arith/Additive/PlasticNestedFamily.whole_theorem_two_one
+    target_statement_id: sha256:9d2befef605cee17262421043f4b9312426acfc19c78be2f2f34ffc9174f5e5e
+receipts:
+  unresolved_subitems: []

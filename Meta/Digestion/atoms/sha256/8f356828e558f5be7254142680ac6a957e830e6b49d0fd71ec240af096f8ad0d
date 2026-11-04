@@ -1,0 +1,12 @@
+**Definition 2.3 (The seven families).** For the values of $n$ indicated, define permutations of $[n]$ as follows; inside parentheses an adjacent pair is listed, and "$\cdots$" continues the evident pattern.
+
+- $I_n$ for $n\ge2$: $\pi(t)=t+1$ for $1\le t\le n-1$ and $\pi(n)=1$, that is $2\,3\cdots n\,1$.
+- $J_n$ for $n\ge5$: $2\,4\,3\,5\,6\cdots n\,1$.
+- $K_{n,j}$ for $n\ge6$ and $0\le j\le\lfloor(n-6)/2\rfloor$: $\pi(1)=2$, $\pi(2)=5$, $\pi(3)=4$, $\pi(2i+2)=2i+5$ and $\pi(2i+3)=2i+4$ for $1\le i\le j$, $\pi(2j+4)=3$, $\pi(t)=t+1$ for $2j+5\le t\le n-1$, $\pi(n)=1$; that is $2\,5\,4\,(7\,6)(9\,8)\cdots(2j{+}5\;\,2j{+}4)\,3\,(2j{+}6)\cdots n\,1$.
+- $A_n$ for $n\ge6$: $4\,3\,5\,6\cdots n\,2\,1$, that is $\pi(t)=t+2$ for $3\le t\le n-2$.
+- $B_n$ for odd $n\ge7$: $4\,3\,5\,(7\,6)(9\,8)\cdots(n\;\,n{-}1)\,2\,1$, that is $\pi(3)=5$, $\pi(2i)=2i+3$ and $\pi(2i+1)=2i+2$ for $2\le i\le(n-3)/2$, $\pi(n-1)=2$, $\pi(n)=1$.
+- $B_n$ for even $n\ge8$: $4\,3\,5\,(7\,6)(9\,8)\cdots(n{-}1\;\,n{-}2)\,2\,n\,1$, that is $\pi(3)=5$, $\pi(2i)=2i+3$ and $\pi(2i+1)=2i+2$ for $2\le i\le(n-4)/2$, $\pi(n-2)=2$, $\pi(n-1)=n$, $\pi(n)=1$.
+- $C_n$ for even $n\ge4$: $4\,3\,(6\,5)(8\,7)\cdots(n\;\,n{-}1)\,2\,1$, that is $\pi(2i+1)=2i+4$ and $\pi(2i+2)=2i+3$ for $1\le i\le(n-4)/2$, $\pi(n-1)=2$, $\pi(n)=1$.
+- $C_n$ for odd $n\ge5$: $4\,3\,(6\,5)(8\,7)\cdots(n{-}1\;\,n{-}2)\,2\,n\,1$, that is $\pi(2i+1)=2i+4$ and $\pi(2i+2)=2i+3$ for $1\le i\le(n-5)/2$, $\pi(n-2)=2$, $\pi(n-1)=n$, $\pi(n)=1$.
+- $D_n$ for $n\ge9$: $4\,3\,6\,7\,5\,8\,9\cdots n\,2\,1$, that is $\pi(3)=6$, $\pi(4)=7$, $\pi(5)=5$, $\pi(t)=t+2$ for $6\le t\le n-2$.
+

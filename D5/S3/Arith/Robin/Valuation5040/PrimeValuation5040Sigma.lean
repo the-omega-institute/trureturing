@@ -108,9 +108,21 @@ theorem normalized_sigma_of_jointFiber5040_le_of_ordered_bound {W n : ℕ}
   rw [normalized_sigma_5040_mul_of_coprime hn0 hn210]
   exact mul_le_mul_of_nonneg_left (hratio.trans hmBound) (by norm_num)
 
+/- The 5040 block converts the strict abundancy threshold into an exact residual
+   threshold.  This is the usable contrapositive form for excluding a whole
+   valuation fibre: no analytic assertion about the residual ratio is hidden
+   in the bridge. -/
+theorem normalized_sigma_5040_gt_two_iff {n : ℕ} (hn0 : n ≠ 0)
+    (hn : n.Coprime 210) :
+    ((ArithmeticFunction.sigma 1 (5040 * n) : ℝ) / (5040 * n) > 2) ↔
+      ((ArithmeticFunction.sigma 1 n : ℝ) / n > (210 / 403 : ℝ)) := by
+  rw [normalized_sigma_5040_mul_of_coprime hn0 hn]
+  constructor <;> intro h <;> nlinarith
+
 #print axioms sigma_5040_mul_of_coprime
 #print axioms normalized_sigma_5040_mul_of_coprime
 #print axioms normalized_sigma_of_jointFiber5040
 #print axioms normalized_sigma_of_jointFiber5040_le_of_ordered_bound
+#print axioms normalized_sigma_5040_gt_two_iff
 
 end D5.S3.Arith.Robin.Valuation5040.PrimeValuation5040Sigma

@@ -1,0 +1,66 @@
+### 定理 9.3（球面曲率给半立体角相位）
+
+在纯态完成 $S^1\to S^3\to S^2$ 上，局部归一振幅取
+
+$$
+\psi(\theta,\phi)=
+\begin{pmatrix}\cos(\theta/2)\\ e^{i\phi}\sin(\theta/2)\end{pmatrix}.
+$$
+
+其连接与曲率为
+
+$$
+a=i\psi^\dagger d\psi=-\tfrac12(1-\cos\theta)d\phi,\qquad
+F=da=-\tfrac12\sin\theta\,d\theta\wedge d\phi.
+$$
+
+沿闭合内容路径的水平振幅相位为
+
+$$
+\boxed{\gamma_{\mathrm{geom}}
+=-\frac{\Omega_{\mathrm{solid}}}{2}\pmod{2\pi}.}
+\tag{9.5}
+$$
+
+整个球面不存在一份连续光滑、处处定义的归一振幅代表。
+
+**证明。**
+对显示的 $\psi$ 直接微分即得 $a,F$。若水平提升为 $\Psi=e^{i\chi}\psi$，则
+
+$$
+0=\Psi^\dagger d\Psi=i\,d\chi+\psi^\dagger d\psi,
+$$
+
+所以 $d\chi=a$。对局部闭合路径用 Stokes 定理，
+$\gamma=\oint a=\int F=-\Omega_{\mathrm{solid}}/2$。
+跨图时加上相位过渡函数，结果仍模 $2\pi$ 良定；两份跨面相差整球面，$\int_{S^2}F=-2\pi$，不会改变相位。
+
+若存在全局光滑振幅截面，其 $a$ 就是全局一形式，Stokes 定理将给 $\int_{S^2} da=0$，与 $-2\pi$ 矛盾。
+
+这得到标准 Hopf 几何相位；Berry 的原论文研究了相应绝热量子相位。 [6](#ref-berry) 本文的等式由已构造的连接直接推出，不依赖绝热近似。把它实现为原干涉读数，还需要原相干参考与实际控制路径；这些供应条件不是 $Q8$ 单独保证的。
+
+```latex
+\begin{tikzpicture}[>=Latex,scale=.84]
+\fill[pale] (0,0) circle(2.25);
+\draw[ink!40] (0,0) circle(2.25);
+\draw[dashed,ink!35] (0,0)--(0,1.837);
+\draw[dashed,ink!35] (0,0)--(-1.591,-.919);
+\draw[dashed,ink!35] (0,0)--(1.591,-.919);
+\draw[very thick,->,accent,domain=0:90,samples=45,variable=\t]
+ plot({-2.25*sin(\t)/sqrt(2)},{2.25*(-sin(\t)/sqrt(6)+sqrt(2/3)*cos(\t))});
+\draw[very thick,->,warm,domain=0:90,samples=45,variable=\t]
+ plot({2.25*(-cos(\t)+sin(\t))/sqrt(2)},{-2.25*(cos(\t)+sin(\t))/sqrt(6)});
+\draw[very thick,->,ink,domain=0:90,samples=45,variable=\t]
+ plot({2.25*cos(\t)/sqrt(2)},{2.25*(-cos(\t)/sqrt(6)+sqrt(2/3)*sin(\t))});
+\node[above] at (0,1.86){\(e_3\)};
+\node[left] at (-1.62,-.93){\(e_1\)};
+\node[right] at (1.62,-.93){\(e_2\)};
+\node at (0,.12){\(\Omega_{\mathrm{solid}}=\pi/2\)};
+\node[anchor=west,align=left,text width=8cm] at (3.25,.5)
+{\textbf{内容走完闭环，回到同一点。}\\[2mm]
+三个大圆四分之一弧围住一个球面八分区。\\[2mm]
+水平振幅却得到 \(e^{-i\pi/4}\)。\\[2mm]
+局部补偿唯一，不等于只看终点就知道全部路径信息。};
+\end{tikzpicture}
+```
+

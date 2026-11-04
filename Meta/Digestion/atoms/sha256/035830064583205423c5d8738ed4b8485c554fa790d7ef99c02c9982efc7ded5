@@ -1,0 +1,97 @@
+### 定理 4.2（对称加权 Hilbert–Schmidt 收缩）
+
+<a id="thm-c90-contraction"></a>
+
+定义
+
+$$
+T(X)=\tau^{-1/4}\mathcal N(\sigma^{1/4}X\sigma^{1/4})\tau^{-1/4}.
+$$
+
+则对全部复矩阵 $X$，$\left\lVert T(X)\right\rVert_2\le\left\lVert X\right\rVert_2$。
+
+**证明。**
+在闭条带 $0\le\operatorname{Re}z\le1$ 上定义解析族
+
+<a id="eq-c90-analytic-family"></a>
+
+$$
+T_z(X)=\tau^{-z/2}
+       \mathcal N(\sigma^{z/2}X\sigma^{z/2})\tau^{-z/2}.
+\tag{4.1}
+$$
+
+矩阵幂用严格正矩阵的实对数定义，故每个矩阵元解析。
+在 $z=it$ 时，左右的虚幂都是酉矩阵；分别从两侧乘酉矩阵保持 Schatten 范数，
+不要求它们互为伴随。由引理 [4.1](#lem-c90-endpoints)，
+
+<a id="eq-c90-left-endpoint"></a>
+
+$$
+\left\lVert T_{it}(X)\right\rVert_1\le\left\lVert X\right\rVert_1.
+\tag{4.2}
+$$
+
+再令
+
+$$
+\Psi(X)=\tau^{-1/2}
+       \mathcal N(\sigma^{1/2}X\sigma^{1/2})\tau^{-1/2}.
+$$
+
+它完全正，且 $\Psi(I)=\tau^{-1/2}\mathcal N(\sigma)\tau^{-1/2}=I$。
+因而
+
+$$
+T_{1+it}(X)=\tau^{-it/2}
+       \Psi(\sigma^{it/2}X\sigma^{it/2})\tau^{-it/2},
+ \qquad
+ \left\lVert T_{1+it}(X)\right\rVert_\infty\le\left\lVert X\right\rVert_\infty.
+$$
+
+先取可逆的 $X,Y$，满足 $\left\lVert X\right\rVert_2=\left\lVert Y\right\rVert_2=1$。
+写极分解 $X=UD$、$Y=VE$，其中 $U,V$ 酉，$D,E>0$，且
+$\operatorname{Tr} D^2=\operatorname{Tr} E^2=1$。构造解析测试函数
+
+<a id="eq-c90-test-function"></a>
+
+$$
+f(z)=\operatorname{Tr}\!\left[
+ E^{2z}V^\dagger\,
+ T_z\!\left(UD^{2(1-z)}\right)\right].
+\tag{4.3}
+$$
+
+在左边界，$\left\lVert UD^{2(1-it)}\right\rVert_1=1$、
+$\left\lVert E^{2it}V^\dagger\right\rVert_\infty=1$，故 $|f(it)|\le1$。
+在右边界，$\left\lVert UD^{-2it}\right\rVert_\infty=1$、
+$\left\lVert E^{2+2it}V^\dagger\right\rVert_1=1$，故 $|f(1+it)|\le1$。
+这里分别使用迹配对的 $S_1$–$S_\infty$ 对偶性。
+
+固定上述正矩阵后，虚幂酉、实幂在闭条带内有界，所以 $f$ 在整个条带有界。
+三线引理给出 $|f(1/2)|\le1$。
+也可直接将最大模原理应用于
+$f(z)e^{\delta z^2}$ 与高度为 $2R$ 的矩形：两个竖边的界不超过
+$e^\delta$，横边随 $R\to\infty$ 被 $e^{-\delta R^2}$ 压住；
+先令 $R\to\infty$，再令 $\delta\downarrow0$，得到相同结论。
+在中点，式 [(4.3)](#eq-c90-test-function) 正是
+
+$$
+f(1/2)=\operatorname{Tr}(Y^\dagger T(X)).
+$$
+
+对全部 Hilbert–Schmidt 单位测试矩阵 $Y$ 取上确界，便得到所需收缩。
+
+最后处理奇异矩阵。将极分解中的部分等距映射延拓为酉矩阵，
+对 $D\ge0$ 取
+
+$$
+D_\varepsilon=
+ \frac{D+\varepsilon I}{\left\lVert D+\varepsilon I\right\rVert_2},
+ \qquad X_\varepsilon=UD_\varepsilon,
+$$
+
+对 $Y$ 同样处理。正则化后的矩阵可逆、HS 范数为一，且收敛于原矩阵。
+上述界对每个 $\varepsilon>0$ 成立，有限维连续性允许令
+$\varepsilon\downarrow0$。一般范数由缩放恢复，零矩阵情形直接成立。
+

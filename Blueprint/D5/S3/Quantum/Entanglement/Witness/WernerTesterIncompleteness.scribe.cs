@@ -44,6 +44,9 @@ internal sealed class WernerTesterIncompletenessDocument : IScribeDocumentDefini
                     + "The formula is from main.tex, line 946. Nat.cast explicitly includes d in the reals; "
                     + "the dots between real coefficients and complex matrices denote real scalar multiplication.",
                 "werner", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("design-average", "The normalized identity matrix", DesignAverageFormula(),
+                "The normalized identity on d coordinates is the identity matrix scaled by the real reciprocal of d.",
+                "designAverage", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("claim", "Completeness without permuting indices", ClaimFormula(),
                 "The bipartite completeness assertion asks for two complex testers detecting each entangled density matrix, "
                     + "in arbitrary natural dimensions, by a projective norm strictly greater than one. "
@@ -124,6 +127,11 @@ internal sealed class WernerTesterIncompletenessDocument : IScribeDocumentDefini
             "Finally take d = 3 and μ = 1/3. Completeness would supply testers with image projective norm "
                 + "strictly greater than one for this entangled density matrix. Each tester is a contraction, "
                 + "so the uniform estimate makes that same norm at most one, a contradiction.")));
+
+    private static Formula DesignAverageFormula() => All("d", Naturals(),
+        Equal(Typed(LocalCall("designAverage", X("d")), Square(X("d"))),
+            Smul(new Formula.Fraction(D(1), NatToReal(X("d"))),
+                Typed(D(1), Square(X("d"))))));
 
     private static Formula IsTesterFormula()
     {

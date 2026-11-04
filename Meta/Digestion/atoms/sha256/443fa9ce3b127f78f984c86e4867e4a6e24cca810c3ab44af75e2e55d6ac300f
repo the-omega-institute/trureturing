@@ -1,0 +1,68 @@
+### 远尾没有使用 RH
+
+无条件素数定理给出某些固定 $C,c>0$，使
+
+$$
+|\psi(u)-u|
+\leq Cu e^{-c\sqrt{\log u}}
+$$
+
+在充分大 $u$ 上成立。[kskedlaya.org](https://kskedlaya.org/ant/chapter-8.html?utm_source=chatgpt.com)
+
+由它可取
+
+$$
+\begin{aligned}
+\mathfrak r(T,D)
+={}&
+L\sqrt T\left(\frac1D+\frac1{D^2}\right)\\
+&\times
+\left[
+\frac{2C}{c^2}(1+c\sqrt D)e^{-c\sqrt D}
++\log(2\pi)e^{-D}
+\right].
+\end{aligned}
+$$
+<a id="eq-31"></a>
+<div class="equation-caption">Equation (31).</div>
+
+选择
+
+$$
+D=A(\log T)^2,
+\qquad A>\frac1{4c^2},
+$$
+
+就有
+
+$$
+\mathfrak r(T,D)\to0.
+$$
+
+另一方面，项目的[严格 Euler 库存根修正定理](https://github.com/the-omega-institute/trureturing/blob/08e8767227de53351c42cb35028e01de5e88287d/Blueprint/D5/S3/Arith/Robin/EulerLayerRootCorrection.md)保留了全部高层和严格端点规则。接入前文的积分恒等式后给出
+
+$$
+\sqrt T\log T\,\mathcal B(T)
+\longrightarrow
+C_{\mathrm{inv}}
+:=2(\sqrt2-1).
+$$
+<a id="eq-32"></a>
+<div class="equation-caption">Equation (32).</div>
+
+因此只要
+
+$$
+\boxed{
+\varepsilon(1-\log2)
+<
+2\sqrt2-4-\gamma+\log(4\pi),
+}
+$$
+<a id="eq-33"></a>
+<div class="equation-caption">Equation (33).</div>
+
+就保留了严格的渐近 Robin 裕量。
+
+右侧常数正是经典 Ramanujan–Robin 分析中出现的主裕量；这里并不把它当作新发现的常数。[arxiv.org](https://arxiv.org/pdf/1211.6944?utm_source=chatgpt.com)
+

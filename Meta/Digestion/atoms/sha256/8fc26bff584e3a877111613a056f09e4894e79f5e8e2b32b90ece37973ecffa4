@@ -1,0 +1,23 @@
+### 定理 1：真实关系的算术极限
+
+当 $h\downarrow0$ 时，
+
+
+<a id="display-31"></a><a id="eq-10"></a>
+
+$$
+\boxed{
+\frac{W_h}{2h}
+-\log(1/h)I_m
+\longrightarrow
+(1-\gamma-\log\pi)I_m-\mathsf A
+}
+$$
+
+<p align="center" data-equation-number="10"><a href="#eq-10">(10)</a></p>
+
+
+在矩阵算子范数中成立。
+
+因此，任意固定有限组中心的 $W_h$，在充分小的 $h>0$ 下都严格正定。
+

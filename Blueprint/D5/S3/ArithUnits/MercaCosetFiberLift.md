@@ -66,7 +66,19 @@ $$\forall (n:\mathbb{N}), \forall (K:\operatorname{Subgroup}((\mathbb{Z}/n\mathb
 
 The center uses the cardinality of the subgroup, while the finite set is an explicit argument.
 
-**Theorem 1.6 (The complete uniform lift theorem).**
+**Theorem 1.6 (The rational triangular sum).**
+
+$$\forall (ell: \mathbb{N}), (0 < ell) \Rightarrow (\sum_{t: \operatorname{Fin}\left(ell\right)} (\operatorname{Fin.val}\left(t\right): \mathbb{Q}) = \frac{((ell: \mathbb{Q})) \cdot ((ell: \mathbb{Q}) - 1)}{2})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/MercaCosetFiberLift.sum_fin_rat` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The rational sum of the representatives of Fin ell is ell times ell minus one divided by two.
+
+**Theorem 1.7 (The complete uniform lift theorem).**
 
 $$\forall (N:\mathbb{N}), \forall (\ell:\mathbb{N}), \forall (K:\operatorname{Subgroup}((\mathbb{Z}/N\mathbb{Z})^{\times})), \forall (c:(\mathbb{Z}/N\mathbb{Z})^{\times}), 1 < N \land \operatorname{Prime}(\ell) \land \operatorname{Coprime}(\ell, N) \Rightarrow\\{}\operatorname{let} \pi_{N,\ell} = \operatorname{reduceUnits}(N, \ell) \operatorname{in} \operatorname{let} H = \pi_{N,\ell}^{-1}(K) \operatorname{in} \operatorname{let} e = \operatorname{unitOfCoprime}(\ell) \operatorname{in} \operatorname{let} C = \operatorname{cosetFinset}(N, K, c) \operatorname{in} \operatorname{let} C' = \operatorname{cosetFinset}(N, K, e^{-1}c) \operatorname{in} \operatorname{let} L = \operatorname{liftedFinset}(N, \ell, C) \operatorname{in} \lvert H\rvert = \lvert K\rvert(\ell-1) \land\\{}\lvert L\rvert = \lvert K\rvert(\ell-1) \land\\{}(\exists d \in (\mathbb{Z}/N\ell\mathbb{Z})^{\times}, \pi_{N,\ell}(d) = c \land L = \operatorname{cosetFinset}(N\ell, H, d)) \land\\{}M_{N\ell}(L) = \ell M_{N}(C)+\frac{N\lvert K\rvert\ell(\ell-1)}{2}-\ell M_{N}(C') \land\\{}F_{N\ell}(H,L) = \ell(F_{N}(K,C)-F_{N}(K,C')) \land\\{}F_{N\ell}(H,L) = \ell(M_{N}(C)-M_{N}(C'))$$
 
@@ -86,3 +98,4 @@ Index all representative blocks by (u,t) in C times {0,...,ell minus one}, with 
 - Truth anchor: `D5/S3/ArithUnits/MercaCosetFiberLift.moment`
 - Truth anchor: `D5/S3/ArithUnits/MercaCosetFiberLift.reduceUnits`
 - Truth anchor: `D5/S3/ArithUnits/MercaCosetFiberLift.result`
+- Truth anchor: `D5/S3/ArithUnits/MercaCosetFiberLift.sum_fin_rat`

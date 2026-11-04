@@ -1,0 +1,45 @@
+## 4. 完整扩张定理：通过全部二元见证，恰好存在同一个全态
+
+<a id="sec-c92-extension"></a>
+
+定义有限维实内积空间
+
+$$
+\mathfrak V=\bigoplus_{C\in\mathscr C}\operatorname{Herm}(\mathcal H_C),
+ \qquad
+ \langle h,r\rangle_{\mathfrak V}=\sum_C\operatorname{Tr}(h_Cr_C),
+$$
+
+以及边际映射和其迹伴随
+
+<a id="eq-c92-marginal-adjoint"></a>
+
+$$
+A(X)=(\operatorname{Tr}_{C^c}X)_{C\in\mathscr C},
+ \qquad A^*(h)=W(h).
+\tag{4.1}
+$$
+
+伴随等式来自部分迹定义：
+$\langle h,A(X)\rangle=\operatorname{Tr}(XW(h))$。
+令
+
+$$
+\mathcal K=A(\mathcal D(\mathcal H)),\qquad
+ \mathcal D(\mathcal H)=\{\sigma\ge0:\operatorname{Tr}\sigma=1\}.
+$$
+
+$\mathcal D(\mathcal H)$ 非空、紧且凸；有限线性映射连续，故 $\mathcal K$ 也紧且凸。
+对任何 $h$，谱分解直接给出它的支撑函数
+
+<a id="eq-c92-support-function"></a>
+
+$$
+\max_{k\in\mathcal K}\langle h,k\rangle
+ =\max_{\sigma\in\mathcal D(\mathcal H)}\operatorname{Tr}(\sigma W(h))
+ =\lambda_{\max}(W(h)).
+\tag{4.2}
+$$
+
+最后的最大值由最大特征值的一条单位本征向量达到。
+

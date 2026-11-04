@@ -1,0 +1,49 @@
+**Theorem 31.2 (source-local selected decoder and exact record
+correspondence).** For every selector of Definition 30.1 and every finite
+lawful history, the record $\mathcal R_C$ and $K_C$ recover one another
+by finite algorithms on their actual images. In particular the source,
+marks and selected tapes recover every indexed selected kind/address,
+including checked OutOfRange. The decoder does not need an unselected
+serial history or reconstruct missing membership from final control.
+
+Proof. At a logical subtree root, its birth type and current constructor
+determine its occurred local prefix: empty, $P$, $S$, or $PS$, exactly as
+in Theorem 17.2. Filter this prefix using its actual local marks, retaining
+$P$ before $S$ if both are marked. Every local root event precedes every
+strict-descendant event. At a branch, recursively decode its two selected
+child lists and merge them by the successive sides in its actual $V_v$,
+consuming the next event of the indicated child. Prepend the filtered local
+prefix. At a logical leaf there are no child lists. Logical addresses are
+carried along the recursion; a unary material marker is never traversed
+as a logical child.
+
+Induction on the finite logical subtree proves this outputs exactly its
+selected subword. The induction hypothesis gives the actual child lists;
+projection of the actual selected word gives exactly their merge tape,
+with the required multiplicities and no missing or excess symbol. The
+local prefix has the actual membership supplied by the marks. This is
+the credited routing/shuffle method of §§19 and 24 with its previously
+missing local-prefix input now acquired explicitly.
+
+Direct indexed decoding handles the marked local prefix first. For a
+later index, subtract its length, scan to that position of $V_v$, count
+the occurrences of its side through that symbol and descend to the actual
+child with that count as its new index. A zero index or missing symbol
+returns OutOfRange. Each recursive descent uses a smaller subtree and
+each scan is finite. At a leaf, an index beyond its local selected prefix
+is out of range. This proves termination and correctness without a full
+word materialization; counters and accumulated addresses still require
+backing when used operationally.
+
+In the reverse direction, given actual $(t,\nu,q)$, set a local mark
+exactly for each identity appearing in $\nu$ and project its selected
+strict-descendant sides at every branch. LAB identities occur at most
+once, so this recovers every local bit unambiguously. These are precisely
+the original marks and tapes. The forward decoder recovers the same
+$\nu$, and both directions retain $t,q$, proving both round trips on
+the actual images. This is not a decision procedure for realizability
+of arbitrary proposed records. Theorem 30.3 shows that dropping all local
+membership data cannot uniformly preserve this correspondence, even
+when every selected side tape and current control remain. It does not
+make this two-slot layout an optimal code. $\square$
+

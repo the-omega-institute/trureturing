@@ -6,6 +6,7 @@
    utility: none
    digest: Complete native harmonic-edge optimization on a positive normalized simplex. -/
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Combinatorics.Graph.LegalWords.EdgeCount
 import Mathlib.Analysis.Convex.StdSimplex
 import Mathlib.Analysis.Calculus.Deriv.Slope

@@ -1,0 +1,8 @@
+**定理 296.2（随机退化不能增加信息）。** 若 $E\succeq F$，则对任意先验 $p$、决策集 $D$ 和损失函数 $\ell$，有
+
+$$
+\boxed{
+\mathcal R_E(p)\le\mathcal R_F(p).
+}
+$$
+

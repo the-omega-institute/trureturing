@@ -100,7 +100,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     norm_num [actual, realize, actualSource, centered, modulus] at hh
 
 def source_registration : Registration arena
-    (type_of% (@_root_.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced)) where
+    (type_of% @actualSource_orbit_zero_balanced) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actualSource_orbit_zero_balanced, rejected, rejected_law⟩
@@ -127,7 +127,9 @@ def source_registration : Registration arena
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced)
     (Realization signature) Nat Bool where
-  unitName := `D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced.__information_unit
+  unitName := Lean.Name.str
+    `D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.actualSource_orbit_zero_balanced
+    "__information_unit"
   realizationName := `Reg.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.source_registration
   realizationSource := none
   generated := false
@@ -166,5 +168,99 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   options := #[]
 
 #print axioms source_registration
+
+end Reg.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence
+
+namespace Reg.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence
+
+open _root_.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence
+
+abbrev allEqualSignature : Signature where
+  Params := Σ k : ℕ, Fin k
+  State p := Fin p.1 → ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def allEqualActual : Realization allEqualSignature :=
+  realize allEqualSignature (fun _ p g => g p.2)
+    (fun e => nomatch e)
+
+def allEqualRejected : Realization allEqualSignature :=
+  realize allEqualSignature (fun _ p g => g p.2 + 1) (fun e => nomatch e)
+
+abbrev allEqualArena : Arena where
+  signature := allEqualSignature
+  Law R := ∀ {k : ℕ} (hk : 0 < k) (g : Fin k → ℕ),
+    (∀ h, g h = g (finRotate k h)) →
+      ∀ h, R.readout () ⟨k, h⟩ g = g ⟨0, by omega⟩
+
+private theorem allEqualRejectedLaw : ¬ allEqualArena.Law allEqualRejected := by
+  intro h
+  have hbad := h (k := 1) (by decide) (fun _ => 0) (by intro; rfl) (0 : Fin 1)
+  norm_num [allEqualRejected, realize] at hbad
+
+private theorem allEqualDependence :
+    ObservationalDependence allEqualSignature allEqualActual := by
+  intro i
+  refine ⟨⟨2, 0⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+  norm_num [allEqualActual, realize]
+
+def allEqualSourceRegistration :
+    Registration allEqualArena (type_of% @all_equal_of_adjacent) where
+  actual := allEqualActual
+  bridge := Iff.rfl
+  variation := ⟨all_equal_of_adjacent, allEqualRejected, allEqualRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨allEqualRejected, fun j hj => (hj (Subsingleton.elim j i)).elim,
+        rfl, allEqualRejectedLaw⟩
+    · intro e
+      exact nomatch e
+  dependence := allEqualDependence
+
+def allEqualRegistration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.all_equal_of_adjacent)
+      (Realization allEqualSignature) Unit Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.all_equal_of_adjacent.unit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence.allEqualSourceRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨allEqualArena⟩
+  objectArena := .source ⟨allEqualArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source allEqualArena ⟨allEqualSourceRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some
+    (realize allEqualSignature (fun _ p g => g p.2)
+      (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence
+    definition := none
+    coordinates := #[0, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms allEqualSourceRegistration
+#print axioms allEqualRegistration
 
 end Reg.D5.S3.Combinatorics.Circle.Orbit.ZeroIncidence

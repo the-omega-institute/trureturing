@@ -1,0 +1,113 @@
+### 证明
+
+记
+
+$$
+z=\frac{\log2}{T\log T},
+\qquad
+b=\lfloor\log_2T\rfloor\ge3.
+$$
+
+选择最后一个严格活跃的二进素数层：
+
+$$
+a=\max\{j:\lambda_{2,j}>z\}.
+$$
+
+因为
+
+$$
+\lambda_{2,b}>
+\nu_{2,b}
+=\frac1{b2^b}
+\ge z,
+$$
+
+所以
+
+$$
+a\ge b\ge3.
+$$
+
+由前缀收益比较，在这个实际活跃指数处有
+
+<a id="eq-31"></a>
+
+$$
+\mathcal B_2(T)\ge e_2(a).
+\tag{31}
+$$
+
+置
+
+$$
+x=2^{-a-1}\le\frac1{16}.
+$$
+
+最后一层严格活跃给出
+
+$$
+\begin{aligned}
+z
+&<\lambda_{2,a}\\
+&=\log\left(1+\frac{x}{1-2x}\right)\\
+&<\frac{x}{1-2x}
+\le\frac87x.
+\end{aligned}
+$$
+
+因此
+
+<a id="eq-32"></a>
+
+$$
+x>\frac78z.
+\tag{32}
+$$
+
+另一方面，
+
+$$
+e_2(a)
+=
+-\log(1-x)
+-\sum_{j>a}\frac1{j2^j}.
+$$
+
+利用
+
+$$
+-\log(1-x)\ge x,
+$$
+
+以及
+
+$$
+\sum_{j>a}\frac1{j2^j}
+\le
+\frac1{a+1}\sum_{j>a}2^{-j}
+=
+\frac{2x}{a+1},
+$$
+
+得到
+
+$$
+e_2(a)
+\ge
+x\left(1-\frac2{a+1}\right)
+\ge\frac x2
+>\frac7{16}z.
+$$
+
+最后，
+
+$$
+\mathcal B(T)\ge\mathcal B_2(T)
+\ge e_2(a)
+>
+\frac{7\log2}{16T\log T}.
+$$
+
+证毕。
+

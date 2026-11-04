@@ -76,30 +76,6 @@ theorem odd_construction (k : ℕ) (hk : 1 ≤ k) :
           if map a = b then p a * f b else 0 := by intro b;split_ifs <;> ring
       simp_rw [point]
       simp
-    have bit_cases (z : ZMod 2) : z = 0 ∨ z = 1 := by
-      have hv : z.val < 2 := ZMod.val_lt z
-      have hz : z.val = 0 ∨ z.val = 1 := by omega
-      rcases hz with hz | hz
-      · left
-        rw [← ZMod.natCast_zmod_val z,hz]
-        simp
-      · right
-        rw [← ZMod.natCast_zmod_val z,hz]
-        simp
-    have bitSign_add (a b : ZMod 2) : bitSign (a + b) = bitSign a * bitSign b := by
-      rcases bit_cases a with rfl | rfl <;> rcases bit_cases b with rfl | rfl <;>
-        simp [bitSign,boolSign,show (1 : ZMod 2) + 1 = 0 from by decide]
-    have boolBit_bitBool (z : ZMod 2) : (fun b : Bool => (b.toNat : ZMod 2)) ((fun z : ZMod 2 => decide (z = 1)) z) = z :=
-      by rcases bit_cases z with rfl | rfl <;> simp []
-    have bitSign_boolBit (b : Bool) : bitSign ((fun b : Bool => (b.toNat : ZMod 2)) b) = boolSign b := by
-      cases b <;> simp [bitSign,boolSign]
-    have prod_boolSign {n : ℕ} (x : Fin n → Bool) (I : Finset (Fin n)) :
-        (∏ i ∈ I, boolSign (x i)) = bitSign (∑ i ∈ I, (fun b : Bool => (b.toNat : ZMod 2)) (x i)) := by
-      classical
-      induction I using Finset.induction_on with
-      | empty => simp [bitSign,boolSign]
-      | @insert i I hi ih =>
-          rw [Finset.prod_insert hi, Finset.sum_insert hi, bitSign_add, bitSign_boolBit, ih]
     have subset_response_formula {n : ℕ} (alpha gamma : Fin n → ZMod 2)
         (x : Setting n) (I : Finset (Fin n)) :
         response (tableOfAlphaGamma alpha gamma) x I =
@@ -286,59 +262,6 @@ theorem odd_construction (k : ℕ) (hk : 1 ≤ k) :
     simp only [Fin.snoc_castSucc,Fin.snoc_last,zero_mul,add_zero]
     rw [character]
     rfl
-  have settingWeight_eq_sum {n : ℕ} (x : Fin n → Bool) :
-      (fun x => hammingDist x (fun _ => false)) x = ∑ i, (x i).toNat := by
-    classical
-    dsimp only
-    unfold hammingDist
-    rw [Finset.card_filter]
-    apply Finset.sum_congr rfl
-    intro i hi
-    cases x i <;> simp
-  have parity_sum {n : ℕ} (x : Fin n → Bool) :
-      ∑ i, (fun b : Bool => (b.toNat : ZMod 2)) (x i) = ((fun x => hammingDist x (fun _ => false)) x : ZMod 2) := by
-    rw [settingWeight_eq_sum, Nat.cast_sum]
-  have setting_parity {n : ℕ} (x : Setting n) : ∑ i, (fun b : Bool => (b.toNat : ZMod 2)) (x.1 i) = 0 := by
-    rw [parity_sum, ZMod.natCast_eq_zero_iff_even]
-    exact (even_iff_two_dvd).mpr (Nat.dvd_of_mod_eq_zero x.2)
-  have evenSetting_freeSetting {d : ℕ} (x : Setting (d+1)) :
-      evenSetting (freeSetting x) = x := by
-    apply Subtype.ext
-    funext i
-    refine Fin.lastCases ?_ (fun j => ?_) i
-    · simp only [evenSetting,evenExtension,Fin.snoc_last,freeSetting]
-      have h := setting_parity x
-      rw [Fin.sum_univ_castSucc] at h
-      have hs : (∑ j : Fin d, (fun b : Bool => (b.toNat : ZMod 2)) (x.1 j.castSucc)) = (fun b : Bool => (b.toNat : ZMod 2)) (x.1 (Fin.last d)) := by
-        have hz := CharTwo.add_self_eq_zero ((fun b : Bool => (b.toNat : ZMod 2)) (x.1 (Fin.last d)))
-        linear_combination h-hz
-      dsimp only at hs
-      simp only [hs]
-      have hc (b : Bool) : decide ((b.toNat : ZMod 2) = 1) = b := by cases b <;> decide
-      exact hc _
-    · simp only [evenSetting,evenExtension,Fin.snoc_castSucc,freeSetting]
-      have hc (b : Bool) : decide ((b.toNat : ZMod 2) = 1) = b := by cases b <;> decide
-      exact hc _
-  have bit_cases (z : ZMod 2) : z = 0 ∨ z = 1 := by
-    have hv : z.val < 2 := ZMod.val_lt z
-    have hz : z.val = 0 ∨ z.val = 1 := by omega
-    rcases hz with hz | hz
-    · left
-      rw [← ZMod.natCast_zmod_val z,hz]
-      simp
-    · right
-      rw [← ZMod.natCast_zmod_val z,hz]
-      simp
-  have boolBit_bitBool (z : ZMod 2) : (fun b : Bool => (b.toNat : ZMod 2)) ((fun z : ZMod 2 => decide (z = 1)) z) = z :=
-    by rcases bit_cases z with rfl | rfl <;> simp []
-  have freeSetting_evenSetting {d : ℕ} (x : Fin d → ZMod 2) :
-      freeSetting (evenSetting x) = x := by
-    funext i
-    simp [freeSetting,evenSetting,evenExtension,boolBit_bitBool]
-  have settingWeight_snoc {d : ℕ} (x : Fin d → Bool) (b : Bool) :
-      (fun x => hammingDist x (fun _ => false)) (Fin.snoc x b) = (fun x => hammingDist x (fun _ => false)) x + b.toNat := by
-    rw [settingWeight_eq_sum,Fin.sum_univ_castSucc,settingWeight_eq_sum]
-    simp
   have evenExtension_weight {d : ℕ} (x : Fin d → ZMod 2) :
       (fun x => hammingDist x (fun _ => false)) (evenExtension x) =
         (fun x => hammingDist x (fun _ => false)) (fun i => (fun z : ZMod 2 => decide (z = 1)) (x i)) + ((fun z : ZMod 2 => decide (z = 1)) (∑ i, x i)).toNat := by
@@ -423,9 +346,6 @@ theorem odd_construction (k : ℕ) (hk : 1 ≤ k) :
       have hr : 0 < (2 : ℝ)^k := by positivity
       have ha := le_of_not_gt hn
       nlinarith
-  have bitSign_add (a b : ZMod 2) : bitSign (a + b) = bitSign a * bitSign b := by
-    rcases bit_cases a with rfl | rfl <;> rcases bit_cases b with rfl | rfl <;>
-      simp [bitSign,boolSign,show (1 : ZMod 2) + 1 = 0 from by decide]
   have bitSign_injective : Function.Injective bitSign := by
     intro a b h
     rcases bit_cases a with rfl | rfl <;> rcases bit_cases b with rfl | rfl <;>

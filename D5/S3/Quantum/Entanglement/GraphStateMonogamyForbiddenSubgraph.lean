@@ -183,7 +183,7 @@ private def Ladder (k : ℕ) (H : SimpleGraph (Fin k)) : Prop :=
 
 open Classical in
 /-- The adjacency block of `G` with rows in `A` and columns outside `A`, over `ZMod 2`. -/
-private noncomputable def cut {V : Type} [DecidableEq V] (G : SimpleGraph V) (A : Finset V) :
+noncomputable def cut {V : Type} [DecidableEq V] (G : SimpleGraph V) (A : Finset V) :
     Matrix {x // x ∈ A} {x // x ∉ A} (ZMod 2) :=
   (G.adjMatrix (ZMod 2)).submatrix Subtype.val Subtype.val
 
@@ -218,6 +218,85 @@ def claim : Prop :=
   ∀ (n : ℕ) (G : SimpleGraph (Fin n)), ViolatesMMI G →
     ∃ (s : List (Fin n)) (c i j k : Fin n), IsClaw (lcSeq G s) c i j k ∧
       IsGeneralizedStar (lcSeq G s) (Finset.univ \ {i, j, k}) ![{i}, {j}, {k}]
+
+/-- A vertex set and its complement have the same graph-state entropy. -/
+theorem compl_eq : ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) (A : Finset V),
+    entropy G Aᶜ = entropy G A := by
+  classical
+  intro V _ _ G A
+  unfold entropy
+  have h : cut G Aᶜ = (cut G A).transpose.submatrix
+      (Equiv.subtypeEquivRight (fun x => Finset.mem_compl))
+      (Equiv.subtypeEquivRight (fun x => by simp)) := by
+    ext r c
+    simp only [cut, SimpleGraph.adjMatrix_apply, Matrix.submatrix_apply, Matrix.transpose_apply,
+      Equiv.subtypeEquivRight_apply]
+    by_cases h : G.Adj r c
+    · rw [if_pos h, if_pos h.symm]
+    · rw [if_neg h, if_neg (fun h' => h h'.symm)]
+  rw [h, Matrix.rank_submatrix, Matrix.rank_transpose]
+
+/-- Pulling a graph back along an equivalence preserves its entropy profile. -/
+theorem relabel : ∀ {V W : Type} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
+    (G : SimpleGraph V) (e : W ≃ V) (A : Finset W),
+    entropy (G.comap e) A = entropy G (A.map e.toEmbedding) := by
+  classical
+  intro V W _ _ _ _ G e A
+  unfold entropy
+  have h : cut (G.comap e) A = (cut G (A.map e.toEmbedding)).submatrix
+      (Equiv.subtypeEquiv e (fun x => by simp))
+      (Equiv.subtypeEquiv e (fun x => by simp)) := by
+    ext r c
+    rfl
+  rw [h, Matrix.rank_submatrix]
+
+/-- Local complementation preserves the entropy of every vertex set. -/
+theorem lc_eq : ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) (v : V)
+    (A : Finset V), entropy (lc G v) A = entropy G A := by
+  classical
+  intro V _ _ G v A
+  -- the case `v ∈ A`: a row operation by an involution
+  have mem : ∀ B : Finset V, v ∈ B → entropy (lc G v) B = entropy G B := by
+    intro B hv
+    classical
+    unfold entropy
+    set N : Matrix {x // x ∈ B} {x // x ∈ B} (ZMod 2) :=
+      fun a a' => if G.Adj v a ∧ (a' : V) = v then 1 else 0 with hN
+    have hNN : N * N = 0 := by
+      ext a a''
+      simp only [hN, Matrix.zero_apply]
+      apply Finset.sum_eq_zero
+      intro a' _
+      by_cases h : (a' : V) = v
+      · simp [h]
+      · simp [h]
+    have h2 : N + N = 0 := by
+      ext a b
+      simp only [Matrix.add_apply, Matrix.zero_apply, CharTwo.add_self_eq_zero]
+    have hE : (1 + N) * (1 + N) = 1 := by
+      rw [add_mul, mul_add, mul_add, one_mul, mul_one, one_mul, hNN, add_zero, add_assoc, h2,
+        add_zero]
+    have hdet : IsUnit (1 + N).det := by
+      have := congrArg Matrix.det hE
+      rw [Matrix.det_mul, Matrix.det_one] at this
+      exact isUnit_iff_exists_inv.2 ⟨_, this⟩
+    have hM : cut (lc G v) B = (1 + N) * cut G B := by
+      ext a b
+      rw [Matrix.add_mul, Matrix.one_mul, Matrix.add_apply, Matrix.mul_apply,
+        Finset.sum_eq_single ⟨v, hv⟩]
+      · simp only [hN, cut, Matrix.submatrix_apply, SimpleGraph.adjMatrix_apply, lc]
+        have hab : (a : V) ≠ b := fun h => b.2 (h ▸ a.2)
+        by_cases h1 : G.Adj a b <;> by_cases h2 : G.Adj v a <;> by_cases h3 : G.Adj v b <;>
+          simp +decide [h1, h2, h3, hab]
+      · intro a' _ ha'
+        have : (a' : V) ≠ v := fun h => ha' (Subtype.ext h)
+        simp [hN, this]
+      · simp
+    rw [hM, Matrix.rank_mul_eq_right_of_isUnit_det _ _ hdet]
+  by_cases hv : v ∈ A
+  · exact mem A hv
+  · rw [← compl_eq (lc G v), ← compl_eq G]
+    exact mem Aᶜ (Finset.mem_compl.2 hv)
 
 /-- The conjecture holds. -/
 theorem result : claim := by
@@ -527,79 +606,6 @@ theorem result : claim := by
         left_inv := fun _ => rfl
         right_inv := fun _ => rfl }
     rw [e.finrank_eq, Module.finrank_prod]
-  -- a set and its complement have the same entropy
-  have compl_eq : ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) (A : Finset V),
-      entropy G Aᶜ = entropy G A := by
-    intro V _ _ G A
-    unfold entropy
-    have h : cut G Aᶜ = (cut G A).transpose.submatrix
-        (Equiv.subtypeEquivRight (fun x => Finset.mem_compl))
-        (Equiv.subtypeEquivRight (fun x => by simp)) := by
-      ext r c
-      simp only [cut, SimpleGraph.adjMatrix_apply, Matrix.submatrix_apply, Matrix.transpose_apply,
-        Equiv.subtypeEquivRight_apply]
-      by_cases h : G.Adj r c
-      · rw [if_pos h, if_pos h.symm]
-      · rw [if_neg h, if_neg (fun h' => h h'.symm)]
-    rw [h, Matrix.rank_submatrix, Matrix.rank_transpose]
-  -- relabelling the vertices
-  have relabel : ∀ {V W : Type} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]
-      (G : SimpleGraph V) (e : W ≃ V) (A : Finset W),
-      entropy (G.comap e) A = entropy G (A.map e.toEmbedding) := by
-    intro V W _ _ _ _ G e A
-    unfold entropy
-    have h : cut (G.comap e) A = (cut G (A.map e.toEmbedding)).submatrix
-        (Equiv.subtypeEquiv e (fun x => by simp))
-        (Equiv.subtypeEquiv e (fun x => by simp)) := by
-      ext r c
-      rfl
-    rw [h, Matrix.rank_submatrix]
-  -- local complementation leaves every entropy unchanged
-  have lc_eq : ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) (v : V)
-      (A : Finset V), entropy (lc G v) A = entropy G A := by
-    intro V _ _ G v A
-    -- the case `v ∈ A`: a row operation by an involution
-    have mem : ∀ B : Finset V, v ∈ B → entropy (lc G v) B = entropy G B := by
-      intro B hv
-      classical
-      unfold entropy
-      set N : Matrix {x // x ∈ B} {x // x ∈ B} (ZMod 2) :=
-        fun a a' => if G.Adj v a ∧ (a' : V) = v then 1 else 0 with hN
-      have hNN : N * N = 0 := by
-        ext a a''
-        simp only [hN, Matrix.zero_apply]
-        apply Finset.sum_eq_zero
-        intro a' _
-        by_cases h : (a' : V) = v
-        · simp [h]
-        · simp [h]
-      have h2 : N + N = 0 := by
-        ext a b
-        simp only [Matrix.add_apply, Matrix.zero_apply, CharTwo.add_self_eq_zero]
-      have hE : (1 + N) * (1 + N) = 1 := by
-        rw [add_mul, mul_add, mul_add, one_mul, mul_one, one_mul, hNN, add_zero, add_assoc, h2,
-          add_zero]
-      have hdet : IsUnit (1 + N).det := by
-        have := congrArg Matrix.det hE
-        rw [Matrix.det_mul, Matrix.det_one] at this
-        exact isUnit_iff_exists_inv.2 ⟨_, this⟩
-      have hM : cut (lc G v) B = (1 + N) * cut G B := by
-        ext a b
-        rw [Matrix.add_mul, Matrix.one_mul, Matrix.add_apply, Matrix.mul_apply,
-          Finset.sum_eq_single ⟨v, hv⟩]
-        · simp only [hN, cut, Matrix.submatrix_apply, SimpleGraph.adjMatrix_apply, lc]
-          have hab : (a : V) ≠ b := fun h => b.2 (h ▸ a.2)
-          by_cases h1 : G.Adj a b <;> by_cases h2 : G.Adj v a <;> by_cases h3 : G.Adj v b <;>
-            simp +decide [h1, h2, h3, hab]
-        · intro a' _ ha'
-          have : (a' : V) ≠ v := fun h => ha' (Subtype.ext h)
-          simp [hN, this]
-        · simp
-      rw [hM, Matrix.rank_mul_eq_right_of_isUnit_det _ _ hdet]
-    by_cases hv : v ∈ A
-    · exact mem A hv
-    · rw [← compl_eq (lc G v), ← compl_eq G]
-      exact mem Aᶜ (Finset.mem_compl.2 hv)
   -- rows of `A'` with independent restrictions outside `A` bound the entropy of `A` from below
   have crit : ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) (A A' : Finset V)
       (hA' : A' ⊆ A) (h : ∀ T ⊆ A', T.Nonempty → ∃ b ∉ A, Odd (T.filter (G.Adj · b)).card),

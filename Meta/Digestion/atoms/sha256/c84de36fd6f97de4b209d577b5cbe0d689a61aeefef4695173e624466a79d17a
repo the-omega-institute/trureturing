@@ -1,0 +1,66 @@
+**引理 100.1（近纯邻域中的原输入升级）。** 设 $\mathcal A、\mathcal B$ 是原有限复矩阵直和，T 为二者间的保自伴映射，A、L 是各由一个线性算子实现的 CP 映射，且其输出确实留在 $\mathcal B$。允许两纯映射有不同的中心置换。若 $\|T-A\|_\diamond\le\eta$，则
+
+$$
+\|T-L\|_\diamond\le\nu(T-L)+2\eta.
+\tag{100.1}
+$$
+
+“单 Kraus”不要求实现算子本身为秩一。纯邻居是证明坐标，不是新供应的实际操作。本引理只将成熟的纯映射范数等式接到本卷的近邻条件，不将所用范数等式认领为新结果。
+
+证明。先直接应用 Magajna 的定理 1.1。对任意矩形 $V,W:H\to K$，记 $\Delta=\operatorname{Ad}_V-\operatorname{Ad}_W$，取
+
+$$
+a=\frac{V+W}{\sqrt2},\qquad b=\frac{V-W}{\sqrt2},\qquad
+\Delta^\dagger(X)=a^\dagger Xb+b^\dagger Xa.
+\tag{100.2}
+$$
+
+Magajna 对 $B(L)$ 上的右端给出完全有界范数、通常算子范数及其自伴限制范数三者相等。为接上矩形参数，将 a、b 嵌入 $B(H\oplus K)$ 的左下角：
+
+$$
+\widehat a=\begin{pmatrix}0&0\\a&0\end{pmatrix},\qquad
+\widehat b=\begin{pmatrix}0&0\\b&0\end{pmatrix}.
+$$
+
+相应的对称初等算子仅将输入的 K 角送到输出的 H 角，其非零部分正是 (100.2)。角压缩和角嵌入在每个矩阵层都是收缩，嵌入还是等距；将输入限制在 K 角给反向不等式。因此矩形 $\Delta^\dagger$ 也满足
+
+$$
+\|\Delta^\dagger\|_{\rm cb}
+=\|\Delta^\dagger\|_{\infty\to\infty}
+=\|\Delta^\dagger\|_{\infty,\rm sa\to\infty,\rm sa}.
+\tag{100.3}
+$$
+
+有限迹对偶把最左项变成 $\|\Delta\|_\diamond$，把最右项变成自伴迹范数算子范数。对任一自伴输入作正负谱分解，这个自伴范数恰为 $\nu(\Delta)$；再对原正输入作谱分解，凸性给纯输入极值。所用成熟等式于是为
+
+$$
+\|\operatorname{Ad}_V-\operatorname{Ad}_W\|_\diamond
+=\nu(\operatorname{Ad}_V-\operatorname{Ad}_W)
+=\max_{\|v\|=1}\|Vvv^\dagger V^\dagger-Wvv^\dagger W^\dagger\|_1.
+\tag{100.4}
+$$
+
+不要求 V、W 等距、可逆或有相同成功效果。范数不减半，左端包含任意数学矩阵参考。
+
+对每个输入中心块分别限制 V、W；两个输出仍视为同一总输出 Hilbert 空间中的矩阵，且都是原输出代数中的元素。任意参考输入的迹范数是各输入块迹范数之和，三角不等式使差映射的 diamond 范数不超过各块范数的最大值；只用一个输入块取得反向界。$\nu$ 也取这些输入块的最大值，所以 (100.4) 保留在原直和上，包括两纯映射具有不同中心置换的情形。最后
+
+$$
+\|T-L\|_\diamond
+\le\eta+\|A-L\|_\diamond
+=\eta+\nu(A-L)
+\le2\eta+\nu(T-L),
+$$
+
+得到 (100.1)。∎
+
+本引理的近纯条件不能以一般 CP 条件代替。所用成熟边界是 Watrous 书中的 Werner–Holevo 通道区分例：对 $d\ge2$，
+
+$$
+\Phi_\pm(X)=\frac{\operatorname{Tr}(X)I\pm X^{\mathsf T}}{d\pm1},\qquad
+\nu(\Phi_+-\Phi_-)=\frac4{d+1},\qquad
+\|\Phi_+-\Phi_-\|_\diamond=2.
+\tag{100.5}
+$$
+
+这里对同书例 3.36 的通道对取等先验：对原纯态 $\rho$，差输出为 $2(d\rho^{\mathsf T}-I)/(d^2-1)$，谱给前一个距离；其 Choi 支撑为正交的对称、反对称空间，最大纠缠输入给后一个距离。这个已有例子只排除一般过程的无参考范数塌缩，不是 C111 的反模型，也不作为本卷新增命题。
+

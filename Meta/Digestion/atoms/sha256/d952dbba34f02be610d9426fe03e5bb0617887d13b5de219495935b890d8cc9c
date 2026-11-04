@@ -1,0 +1,19 @@
+### 命题 19.1（由共同正关系核到 Hilbert 载体）
+
+设内部标签集为 $S$，共同复核 $K$ 满足
+$K(t,s)=\overline{K(s,t)}$，且每个有限组合都有
+$\sum_{s,t}\overline{c_s}K(s,t)c_t\ge0$。
+则有限形式和的空间，按零范数方向取商，具有内积
+
+$$
+\left\langle\sum_sc_se_s,\sum_td_te_t\right\rangle
+ =\sum_{s,t}\overline{c_s}K(s,t)d_t.
+$$
+
+若核秩有限，该商就是有限维复 Hilbert 空间。
+
+**证明。**
+正二次式通过考察 $\|x+zy\|^2\ge0$ 得到 Cauchy–Schwarz。
+因而零范数元与全部向量内积为零，商上的内积与代表选取无关且正定。
+有限维空间已经完备；一般情形可另作完备化。
+

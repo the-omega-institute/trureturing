@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:c527123ce4ba5bfcfb042e2d81c150c91a8c184d6bc87e3cce7419f251b8e80c
+  normalized_sha256: sha256:c527123ce4ba5bfcfb042e2d81c150c91a8c184d6bc87e3cce7419f251b8e80c
+cas_ref: sha256:c527123ce4ba5bfcfb042e2d81c150c91a8c184d6bc87e3cce7419f251b8e80c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Enclosing Section 2 heading and cited-facts preamble block whose constituent heading and bibliographic summary atoms are nonpropositional.
+    previous_atom_id: 05edde602cab312310a6c8e43954538d8a3efe80fe7b9e21e277dd8739b89e34
+    next_atom_id: 6bed98db14e137a3f62645eb8339f49c6bbd6e2225ab46e00bf7d9ca7faac229
+  chain_atoms:
+    - a9402e53bf6e4c580a8ff48abe838d5bbb9b600a3dd65a9d61618db7e8b56b31
+    - 77b1530d6aee0b3949e9383e7c2a8288b88f4a49845c19d1661d34f03efadecd

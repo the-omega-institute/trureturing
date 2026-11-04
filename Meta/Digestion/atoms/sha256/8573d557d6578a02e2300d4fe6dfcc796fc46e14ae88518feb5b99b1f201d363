@@ -1,0 +1,37 @@
+### 命题 8.1（内生中点平方的完整零边界与满边界）
+
+对全部二态，
+
+$$
+0\le\mathcal I(\rho_0,\rho_1)\le1.
+$$
+
+零值当且仅当 $\rho_0=\rho_1$；值为一当且仅当两态支撑正交。
+若两态对易，谱概率分别为 $p_i,q_i$，则
+
+$$
+\mathcal I(\rho_0,\rho_1)
+ =\frac12\sum_{i:p_i+q_i>0}\frac{(p_i-q_i)^2}{p_i+q_i}.
+$$
+
+**证明。**
+在中点支撑上令 $A=\sigma^{-1/2}\delta\sigma^{-1/2}$。
+由 $\sigma\pm\delta=\rho_{0,1}\ge0$，得到 $-I\le A\le I$。
+因此
+
+$$
+\mathcal I=\operatorname{Tr}(\sigma^{1/2}A\sigma^{1/2}A)
+ \le \operatorname{Tr}(\sigma A^2)\le1.
+$$
+
+第一不等式是对 $A\sigma^{1/2}$ 与 $\sigma^{1/2}A$ 使用
+Hilbert–Schmidt Cauchy–Schwarz；两者的平方范数同为 $\operatorname{Tr}(\sigma A^2)$。
+非负性来自原定义；零范数恰好等价于 $\delta=0$。
+
+若 $\mathcal I=1$，上面两个不等式都取等号。
+忠实性给 $A^2=I$，两个 HS 向量相等给 $[A,\sigma]=0$。
+令 $P_\pm=(I\pm A)/2$，便有
+$\rho_0=2\sigma P_+$、$\rho_1=2\sigma P_-$，所以支撑正交。
+反过来，支撑正交时 $A$ 就是这两个支撑上的正负单位元，代入得一。
+对易公式由共同对角基中 $\sigma_i=(p_i+q_i)/2$、$\delta_i=(p_i-q_i)/2$ 得到。
+

@@ -1,0 +1,10 @@
+**Lemma 6.1 (The tail of the square).** Let $n\ge4$ and let $\pi$ be admissible and indecomposable with $\pi(1)=4$. Then $q(n-3),\dots,q(n)$ is a permutation of $\{1,2,3,4\}$ with $q(n)=4$, and consequently
+
+$$
+\{\pi(n-3),\pi(n-2),\pi(n-1)\}=\{n,\ \mathrm{pos}(2),\ \mathrm{pos}(3)\}.
+$$
+
+Stance: suspected-novel (see §9).
+
+**Proof.** $q(n)=\pi(1)=4$. For $k\in\{1,2,3\}$ let $p_k$ be the position of $k$ in $q$. Since $q$ avoids $132$, the entries right of $p_k$ that exceed $k$ increase, and the last of them is $q(n)=4$; so they all lie in $\{k+1,\dots,4\}$. Entries right of $p_k$ smaller than $k$ lie in $\{1,2\}$. Hence every entry right of $P=\min(p_1,p_2,p_3)$ is at most $4$; together with $q(P)\le3$ this shows that positions $P,\dots,n$ carry exactly $\{1,2,3,4\}$, so $P=n-3$. Finally $q(i)=1$ iff $\pi(i)=n$, $q(i)=2$ iff $\pi(i)=\mathrm{pos}(2)$, and $q(i)=3$ iff $\pi(i)=\mathrm{pos}(3)$, because $\pi(n)=1$. ∎
+

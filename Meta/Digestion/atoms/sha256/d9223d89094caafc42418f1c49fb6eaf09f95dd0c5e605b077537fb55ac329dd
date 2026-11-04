@@ -1,0 +1,25 @@
+### 定义 2.3（对称加权平方比较）
+
+对归一忠实参照 $\sigma$，定义
+
+$$
+\|X\|_{2,\sigma^{-1}}
+ :=\left\lVert \sigma^{-1/4}X\sigma^{-1/4}\right\rVert_2,
+ \qquad
+ Q_\sigma(\rho):=\|\rho-\sigma\|_{2,\sigma^{-1}}^2.
+$$
+
+二态自身的平方区别为
+
+<a id="eq-c90-binary-information"></a>
+
+$$
+\mathcal I(\rho_0,\rho_1)
+ :=\|\delta\|_{2,\sigma^{-1}}^2
+ =Q_\sigma(\rho_0)=Q_\sigma(\rho_1).
+\tag{2.1}
+$$
+
+这是由态的区别与内部校准形成的二次关系量，不将它误写成另一条 Born 概率规则。
+后文证明 $0\le\mathcal I\le1$，并说明对称权的精确选择范围。
+

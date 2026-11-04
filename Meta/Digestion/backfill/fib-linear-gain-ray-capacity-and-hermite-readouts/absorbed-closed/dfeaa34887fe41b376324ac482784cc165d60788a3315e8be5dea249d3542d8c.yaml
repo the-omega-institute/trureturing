@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:dfeaa34887fe41b376324ac482784cc165d60788a3315e8be5dea249d3542d8c
+  normalized_sha256: sha256:dfeaa34887fe41b376324ac482784cc165d60788a3315e8be5dea249d3542d8c
+cas_ref: sha256:dfeaa34887fe41b376324ac482784cc165d60788a3315e8be5dea249d3542d8c
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/GainRayCompleteRecovery.complete_recovery
+    target_statement_id: sha256:868704f2dcac59f909df36aa115deaf62bad7cf4cd1a026908301007ad2e1aee
+receipts:
+  unresolved_subitems: []

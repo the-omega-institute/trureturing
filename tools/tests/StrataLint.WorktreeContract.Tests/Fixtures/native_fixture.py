@@ -12,6 +12,8 @@ import tempfile
 import time
 import unittest
 
+from activity_fixture import FixtureActivity
+
 
 class FixtureInterrupted(Exception):
     pass
@@ -31,6 +33,7 @@ class NativeFixture(unittest.TestCase):
 
     def run(self, result=None):
         self.workspaces = []
+        self.activity_scope = None
         self.commands_settled = True
         self.jobs_settled = True
         self.command_serial = 0
@@ -51,6 +54,8 @@ class NativeFixture(unittest.TestCase):
         finally:
             successful = (completed and self.cleanups_successful and self.commands_settled and self.jobs_settled
                           and not self.fixture_interrupted)
+            if self.activity_scope is not None:
+                self.activity_scope.__exit__(None, None, None)
             for root in self.workspaces:
                 if successful:
                     shutil.rmtree(root)
@@ -79,6 +84,9 @@ class NativeFixture(unittest.TestCase):
         temporary._finalizer.detach()
         root = Path(temporary.name).resolve()
         self.workspaces.append(root)
+        if self.activity_scope is None:
+            self.activity_scope = FixtureActivity(root / ".activity-bin")
+            self.activity_scope.__enter__()
         return root
 
     @staticmethod

@@ -1,0 +1,38 @@
+## 一个完整的精确模型
+
+取 A=A\*，内部记录为两态系统。令
+
+```math
+U_\varepsilon=e^{-i\varepsilon A\otimes\sigma_y}.
+```
+
+由 σy²=I 及 σy|0⟩=i|1⟩，
+
+```math
+U_\varepsilon(\psi\otimes|0\rangle)
+=
+\cos(\varepsilon A)\psi\otimes|0\rangle+
+\sin(\varepsilon A)\psi\otimes|1\rangle.
+```
+
+完整切向为 Aψ⊗|1⟩，而新记录概率为
+
+```math
+\boxed{
+p_1(\varepsilon)=\varepsilon^2\langle A^2\rangle+O(\varepsilon^4).
+}
+```
+
+取 A=(π/2)P，其中 P 为投影，在 ε=1 得到
+
+```math
+\cos A=I-P,\qquad \sin A=P,
+```
+
+```math
+\psi\longmapsto
+(I-P)\psi\otimes|0\rangle+P\psi\otimes|1\rangle.
+```
+
+这就是完整投影测量。新结果的条件态在 ε→0⁺ 时可趋向 Aψ/‖Aψ‖，未必趋向原态，因为该结果概率同时趋于零；零概率点不指定归一条件态。
+

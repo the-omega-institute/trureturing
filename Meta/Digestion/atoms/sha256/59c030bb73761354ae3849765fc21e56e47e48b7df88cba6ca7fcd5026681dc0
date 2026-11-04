@@ -1,0 +1,15 @@
+## 1. 最新项目进展与本轮的证明目标
+
+本轮只读固定的 `dev` 提交为
+`d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a`。
+提交时间为 2026-10-30 01:43:03（Asia/Singapore），合并 #23783，主题为区分近似 Walsh 范数与合法取得。相对 v16 的 `f22ccafb…`，理论目录有六个路径变化，其中一新增、五修改；当前理论树含 1006 个文件。本轮核验了二十份当前源码与五份前版源码的 Git blob，按主题阅读有关章节。这是有范围的研究审计，不是对整个仓库的形式化认证。
+
+真正最新且与本题直接相关的两项进展是：
+
+1. [《真实切面恢复》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md)新增 §§18--20：指定实际一阶来源的近似 Walsh $\ell^1$ 范数可指数大，同时整个允许的一阶类仍有两条常量探测词的合法取得方法；已知目标公式还有 $O(H)$ 计数器求值。**一个谱表示的系数范数，不等于所有电路或实际取得协议的成本。**
+2. [《统一联合律桥》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_UNIFIED_JOINT_LAW_BRIDGE.md)新增 §2：给定完整实际过去的下一探针校准律，才能由塔式递归推出条件乘积律。相同单次边缘不提供独立乘法。它还区分完整概率律的可识别性与一份有限记录对隐藏来源的零误差识别。
+
+本题的主要数学基础已经出现在未变更的《金字塔基础公式》、[《读口与记录三角形》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_READOUT_CLOSURE_AND_RECORD_TRIANGLE.md)、[《关系三角形与反演精度》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_MOMENT_TRIANGLES_AND_INVERSE_PRECISION.md)及[《概率、相位运输与完整回路》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md)中。前稿 v14、v15 的仓库转录是研究连续性，不是额外独立验证。本文进一步把这些材料组织成一条从加乘电路到复四角关系、再到黄金门的证明链。
+
+<a id="statement-1-1"></a>
+

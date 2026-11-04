@@ -529,10 +529,10 @@ class QualificationCases:
         self.assertEqual("locked_recent", row["error"])
         self.assertTrue(self.tree.is_dir())
 
-    def pool_final_qualification_defers_later_candidates(self):
+    def pool_final_qualification_continues_later_candidates(self):
         self.pool_final_qualification_failure_cases("pool")
 
-    def pool_return_final_qualification_defers_later_candidates(self):
+    def pool_return_final_qualification_continues_later_candidates(self):
         self.pool_final_qualification_failure_cases("return")
 
     def pool_final_qualification_failure_cases(self, action):
@@ -554,7 +554,7 @@ class QualificationCases:
                         self.make_idle(later, self.base)
                     candidates = [older, newer, later]
                     failed = newer if prior_eviction else older
-                    deferred = candidates[candidates.index(failed) + 1:]
+                    later_candidates = candidates[candidates.index(failed) + 1:]
                     reference = self.g(failed, "symbolic-ref", "HEAD").strip()
                     qualified, removals = [], []
                     cause = "initialization_in_progress" if refused else "fatal: final pool qualification broke"
@@ -585,12 +585,13 @@ class QualificationCases:
                         if action == "return":
                             self.assertIn(result["status"], ("returned", "already_idle"))
                             result = result["pool"]
-                            deferred.append(self.tree)
+                            later_candidates.append(self.tree)
                         self.assertEqual("failed", result["status"])
-                        self.assertEqual([older] if prior_eviction else [], removals)
-                        expected_qualified = candidates[:candidates.index(failed) + 1]
-                        if prior_eviction:
-                            expected_qualified.insert(1, older)
+                        self.assertEqual([target for target in candidates if target != failed]
+                                         + ([self.tree] if action == "return" else []), removals)
+                        expected_qualified = [target for target in candidates
+                                              + ([self.tree] if action == "return" else [])
+                                              for _ in range(1 if target == failed else 2)]
                         self.assertEqual(expected_qualified, qualified)
                         rows = {row["path"]: row for row in result["items"]}
                         row = rows[str(failed)]
@@ -601,10 +602,9 @@ class QualificationCases:
                         self.assertEqual(reference, row["branch"])
                         self.assertEqual(self.base, row["head"])
                         self.assertTrue(failed.is_dir())
-                        for target in deferred:
-                            self.assertTrue(target.is_dir())
-                            self.assertEqual("retained", rows[str(target)]["outcome"])
-                            self.assertEqual("idle_sweep_deferred", rows[str(target)]["reason"])
+                        for target in later_candidates:
+                            self.assertFalse(target.exists())
+                            self.assertEqual("removed", rows[str(target)]["outcome"])
                         if prior_eviction:
                             self.assertEqual("removed", rows[str(older)]["outcome"])
                             self.assertEqual(self.base, rows[str(older)]["checkpoint"]["commit"])

@@ -20,6 +20,14 @@ internal sealed class CoherentHistorySchmidtDocument : IScribeDocumentDefinition
                 + "the complex dimension of the range of its multiplication linear map. "
                 + "This supplies the decomposition and rank clauses of the coherent-history atom; "
                 + "its fixed-register pure-state circuit clause remains open.")),
+            Describe.Lean(DescribeId.Create("history-legal-boundary"), DeclarationHandle.Create(
+                "D5/S3/Quantum/Entanglement/CoherentHistorySchmidt.legal_iff"),
+                H("Legal concatenations select a feasible occupation boundary"),
+                StatementSource.FromAuthor(Disp(LegalBoundaryFormula)),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/raveh2024dicke")),
+                Blocks(Paragraph(Text(
+                    "A concatenation has total occupation a exactly when its prefix occupation "
+                    + "is a feasible boundary and its suffix occupation is the complementary multiset.")))),
             Theorem("history-word-state", "coefficient_eq_uniform_word", "Coefficients come from the full uniform word state",
                 Parameters(All("u", Word(t), All("v", Word(s),
                     Eq(Call("C", a, t, s, u, v), V(Add(t, s), a, Call("FinAppend", u, v)))))),
@@ -129,6 +137,18 @@ internal sealed class CoherentHistorySchmidtDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/raveh2024dicke")),
             Blocks(Paragraph(Text(text))), role);
+
+    private static Formula LegalBoundaryFormula
+    {
+        get
+        {
+            var feasible = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("b"), Call("Boundary", a, t),
+                And(Eq(Call("occupation", u), Val(b)), Eq(Call("occupation", v), Complement(b))));
+            var appended = new Formula.Apply(Seq(Operatorname, Grp(Id("Fin"), Dot, Id("append"))), [u, v]);
+            return DiscreteOccupation(All("t", N, All("s", N, All("u", Word(t), All("v", Word(s),
+                Iff(Eq(Call("occupation", appended), a), feasible))))));
+        }
+    }
 
     private static Formula Id(string name) => F.Id(name);
     private static Formula a => Id("a");

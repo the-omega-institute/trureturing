@@ -1,0 +1,19 @@
+#### 命题 10.3（一般 Schur 消元）
+
+若 $Q=\left(\begin{smallmatrix}A&B\\B^\dagger&C\end{smallmatrix}\right)\succeq0$ 且 $C\succ0$，则
+
+$$
+\min_z(b,z)^\dagger Q(b,z)
+=b^\dagger(A-BC^{-1}B^\dagger)b.
+$$
+
+只要内部块可逆，逐块消元次序不影响最终边界二次型。
+
+**证明。**
+
+配方为 $(z+C^{-1}B^\dagger b)^\dagger C(z+C^{-1}B^\dagger b)$ 加右侧。次序无关由 $\min_x\min_y E=\min_{x,y}E$ 及唯一最小元得到。高斯积分另有行列式归一化因子，不能把本最小化公式直接冒充积分公式。
+
+∎
+
+<a id="statement-10-4"></a>
+

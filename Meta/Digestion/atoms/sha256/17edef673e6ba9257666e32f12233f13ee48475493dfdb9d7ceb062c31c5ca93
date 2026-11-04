@@ -1,0 +1,23 @@
+### 定义 2.3（停住关系）
+
+对 $A\in\mathfrak g$、$x\in W$，定义
+
+$$
+A\mathrel{\mathsf S}x\quad\Longleftrightarrow\quad Ax=0.
+$$
+
+它等价于 $\exp(tA)x=x$ 对所有 $t\in\mathbb R$ 成立。记
+$\mathfrak g_x=\{K\in\mathfrak g:Kx=0\}$。
+
+这里 $A\ne0$ 是*有效矩阵作用非零*。不能用作用为零的抽象控制中心制造非零见证。闭包中的 $A$ 也不自动是原菜单已经精确供应的连续器件：稠密可数旋转子群的闭包可以是 $SO(3)$，自身却没有非平凡连续路径。
+
+原 $x\in W$ 是完整预测差的实线性内容，不要求每个差都是实际准备。因此候选必须覆盖完整 $W$，不能只覆盖来源轨道或可视化方向。C117 的
+
+$$
+p(\pm\mid n,m)=\frac{1\pm(m\cdot n)^3}{2}
+$$
+
+正好说明三维方向标签不保证三维完整预测空间。 [2](#ref-c117)
+
+<a id="section-3"></a>
+

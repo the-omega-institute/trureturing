@@ -1,0 +1,4 @@
+Put an edge
+$P_p\prec S_p$ when both exist, and an edge from the creating split
+$S_{\operatorname{parent}(p)}$ to the first local event at $p$, when that
+event exists. Their transitive closure is the generation causal order.
