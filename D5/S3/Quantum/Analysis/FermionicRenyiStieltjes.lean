@@ -297,7 +297,10 @@ theorem stieltjes_representation {α σ : ℝ} (ha0 : 0 < α) (ha1 : α < 1)
   by_cases hs0 : σ = 0
   · subst σ
     constructor
-    · simp [IntegrableOn]
+    · have hi : IntegrableOn (fun u => fermionicWeight α u * 0) (Ioo (0 : ℝ) 1) :=
+        (weight_integrable ha0 ha1).mul_const 0
+      simpa only [zero_pow (by norm_num : 2 ≠ 0), mul_zero, sub_zero,
+        Real.log_one, mul_zero] using hi
     · simp only [zero_pow (by norm_num : 2 ≠ 0), mul_zero, sub_zero, Real.log_one,
         mul_zero, integral_zero, add_zero, fermionicRenyiFunction, add_zero]
       rw [show ((1 : ℝ) / 2) ^ α + (1 / 2) ^ α = 2 * (1 / 2) ^ α by ring,

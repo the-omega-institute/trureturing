@@ -19,7 +19,7 @@ namespace D5.S3.Quantum.Subentropy.DensityKernel
 open _root_.D5.S3.Quantum.Subentropy.Basic
 open _root_.D5.S3.Quantum.Subentropy.KernelBounds
 
-private theorem det_spectral {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem det_spectral {ι : Type*} [Fintype ι] [DecidableEq ι]
     {A : Matrix ι ι ℂ} (hA : A.IsHermitian) (s : ℝ) :
     (1 + s • A).det = ∏ i, ((1 + s * hA.eigenvalues i : ℝ) : ℂ) := by
   let U : Matrix ι ι ℂ := hA.eigenvectorUnitary

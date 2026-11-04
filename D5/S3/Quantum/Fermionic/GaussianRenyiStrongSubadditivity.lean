@@ -4,10 +4,13 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Fermionic Gaussian Renyi strong subadditivity for orders strictly between zero and one. -/
+   digest: Fermionic Gaussian Renyi strong subadditivity for orders between zero and one. -/
 
 import D5.S3.Quantum.Analysis.FermionicRenyiStieltjes
 import D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
+import D5.S3.Quantum.Subentropy.DensityKernel
+
+/-! Strong subadditivity from a positive mixture of principal log determinants. -/
 
 noncomputable section
 
@@ -51,16 +54,56 @@ private def interpolation {ι : Type*} [Fintype ι] [DecidableEq ι]
     (G : Matrix ι ι ℝ) (u : ℝ) : Matrix ι ι ℂ :=
   1 + (u : ℂ) • (Complex.I • G.map Complex.ofReal)
 
-private lemma skew_hermitian {ι : Type*} [Fintype ι] [DecidableEq ι]
+private lemma skew_hermitian {ι : Type*}
     (G : Matrix ι ι ℝ) (hG : Gᵀ = -G) :
     (Complex.I • G.map Complex.ofReal).IsHermitian := by
-  sorry
+  apply Matrix.IsHermitian.ext
+  intro i j
+  have hs := congrArg (fun M : Matrix ι ι ℝ => M i j) hG
+  simp (config := { congrConsts := false }) only [Matrix.transpose_apply, Matrix.neg_apply] at hs
+  simp (config := { congrConsts := false }) [Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, hs]
+
+private lemma interpolation_diagonal {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (G : Matrix ι ι ℝ) (h : (Complex.I • G.map Complex.ofReal).IsHermitian) (u : ℝ) :
+    interpolation G u = Unitary.conjStarAlgAut ℂ _ h.eigenvectorUnitary
+      (Matrix.diagonal (fun i => ((1 + u * h.eigenvalues i : ℝ) : ℂ))) := by
+  have hd : Matrix.diagonal (fun i => ((1 + u * h.eigenvalues i : ℝ) : ℂ)) =
+      1 + (u : ℂ) • Matrix.diagonal (RCLike.ofReal ∘ h.eigenvalues) := by
+    ext i j
+    by_cases hij : i = j
+    · subst j
+      simp (config := { congrConsts := false }) [Matrix.smul_apply]
+    · simp (config := { congrConsts := false }) [hij, Matrix.smul_apply]
+  rw [hd, map_add, map_one, map_smul, ← h.spectral_theorem]
+  rfl
+
+private lemma interpolation_nonneg_iff {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (G : Matrix ι ι ℝ) (h : (Complex.I • G.map Complex.ofReal).IsHermitian) (u : ℝ) :
+    (interpolation G u).PosSemidef ↔ ∀ i, 0 ≤ 1 + u * h.eigenvalues i := by
+  rw [interpolation_diagonal G h u, Unitary.conjStarAlgAut_apply,
+    Unitary.isUnit_coe.posSemidef_star_right_conjugate_iff,
+    Matrix.posSemidef_diagonal_iff]
+  simp (config := { congrConsts := false }) only [Complex.zero_le_real]
+
+private lemma interpolation_submatrix {ι κ : Type*} [Fintype ι] [DecidableEq ι]
+    [Fintype κ] [DecidableEq κ] (G : Matrix ι ι ℝ) (f : κ → ι)
+    (hf : Function.Injective f) (u : ℝ) :
+    (interpolation G u).submatrix f f = interpolation (G.submatrix f f) u := by
+  change (1 : Matrix ι ι ℂ).submatrix f f +
+      (u : ℂ) • (Complex.I • (G.map Complex.ofReal).submatrix f f) = _
+  rw [Matrix.submatrix_one f hf]
+  rfl
 
 private lemma interpolation_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
     (G : Matrix ι ι ℝ) (h : (Complex.I • G.map Complex.ofReal).IsHermitian)
     (hb : ∀ i, |h.eigenvalues i| ≤ 1) {u : ℝ} (hu0 : 0 ≤ u) (hu1 : u < 1) :
     (interpolation G u).PosDef := by
-  sorry
+  rw [interpolation_diagonal G h u, Unitary.conjStarAlgAut_apply,
+    Unitary.isUnit_coe.posDef_star_right_conjugate_iff, Matrix.posDef_diagonal_iff]
+  intro i
+  rw [Complex.zero_lt_real]
+  have hi := (abs_le.mp (hb i)).1
+  nlinarith [mul_nonneg hu0 (by linarith : 0 ≤ h.eigenvalues i + 1)]
 
 private lemma reduced_physical {n : ℕ}
     (G : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (hG : physicalCovariance G)
@@ -68,7 +111,28 @@ private lemma reduced_physical {n : ℕ}
     (reducedCovariance G X)ᵀ = -(reducedCovariance G X) ∧
       ∃ h : (Complex.I • (reducedCovariance G X).map Complex.ofReal).IsHermitian,
         ∀ i, |h.eigenvalues i| ≤ 1 := by
-  sorry
+  have hs : (reducedCovariance G X)ᵀ = -(reducedCovariance G X) := by
+    change (G.submatrix Subtype.val Subtype.val)ᵀ = -(G.submatrix Subtype.val Subtype.val)
+    rw [Matrix.transpose_submatrix, hG.1]
+    rfl
+  refine ⟨hs, skew_hermitian _ hs, ?_⟩
+  obtain ⟨h, hb⟩ := hG.2
+  have hp (u : ℝ) (hu : u = 1 ∨ u = -1) :
+      (interpolation (reducedCovariance G X) u).PosSemidef := by
+    have hfull : (interpolation G u).PosSemidef :=
+      (interpolation_nonneg_iff G h u).mpr (fun i => by
+        have hi := abs_le.mp (hb i)
+        rcases hu with rfl | rfl <;> linarith [hi.1, hi.2])
+    have hr := hfull.submatrix
+      (Subtype.val : {p : Fin n × Fin 2 // p.1 ∈ X} → Fin n × Fin 2)
+    rw [interpolation_submatrix G _ Subtype.val_injective] at hr
+    exact hr
+  intro i
+  have hp1 := (interpolation_nonneg_iff _ (skew_hermitian _ hs) 1).mp
+    (hp 1 (Or.inl rfl)) i
+  have hm1 := (interpolation_nonneg_iff _ (skew_hermitian _ hs) (-1)).mp
+    (hp (-1) (Or.inr rfl)) i
+  exact abs_le.mpr ⟨by linarith, by linarith⟩
 
 private lemma determinant_log_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
     (G : Matrix ι ι ℝ) (hG : Gᵀ = -G)
@@ -76,7 +140,47 @@ private lemma determinant_log_identity {ι : Type*} [Fintype ι] [DecidableEq ι
     (hb : ∀ i, |h.eigenvalues i| ≤ 1) {u : ℝ} (hu0 : 0 ≤ u) (hu1 : u < 1) :
     Real.log (interpolation G u).det.re =
       (1 / 2 : ℝ) * ∑ i, Real.log (1 - u ^ 2 * h.eigenvalues i ^ 2) := by
-  sorry
+  have hd (t : ℝ) : (interpolation G t).det =
+      ∏ i, ((1 + t * h.eigenvalues i : ℝ) : ℂ) := by
+    simpa (config := { congrConsts := false }) only
+      [interpolation, RCLike.real_smul_eq_coe_smul (K := ℂ)] using
+      D5.S3.Quantum.Subentropy.DensityKernel.det_spectral h t
+  have ht : (interpolation G u)ᵀ = interpolation G (-u) := by
+    change (1 + (u : ℂ) • (Complex.I • G.map Complex.ofReal))ᵀ =
+      1 + ((-u : ℝ) : ℂ) • (Complex.I • G.map Complex.ofReal)
+    rw [Matrix.transpose_add, Matrix.transpose_one, Matrix.transpose_smul,
+      Matrix.transpose_smul, ← Matrix.transpose_map, hG,
+      Matrix.map_neg _ Complex.ofReal_neg, smul_neg, smul_neg,
+      Complex.ofReal_neg, neg_smul]
+  have hdt : (interpolation G (-u)).det = (interpolation G u).det := by
+    rw [← ht, Matrix.det_transpose]
+  have hp : (∏ i, ((1 - u ^ 2 * h.eigenvalues i ^ 2 : ℝ) : ℂ)) =
+      (interpolation G u).det ^ 2 := by
+    calc
+      _ = (∏ i, ((1 + u * h.eigenvalues i : ℝ) : ℂ)) *
+          (∏ i, ((1 + (-u) * h.eigenvalues i : ℝ) : ℂ)) := by
+        rw [← Finset.prod_mul_distrib]
+        apply Finset.prod_congr rfl
+        intro i hi
+        push_cast
+        ring
+      _ = _ := by rw [← hd u, ← hd (-u), hdt, pow_two]
+  have hpos := interpolation_posDef G h hb hu0 hu1
+  have hdr : ((interpolation G u).det.re : ℂ) = (interpolation G u).det := by
+    apply Complex.ext
+    · rfl
+    · simpa (config := { congrConsts := false }) only
+        [Complex.ofReal_im, Complex.zero_im] using hpos.det_pos.2
+  rw [← hdr, ← Complex.ofReal_pow, ← Complex.ofReal_prod] at hp
+  have hr := Complex.ofReal_injective hp
+  have hterms (i : ι) : 0 < 1 - u ^ 2 * h.eigenvalues i ^ 2 := by
+    have hi := abs_le.mp (hb i)
+    have hs : h.eigenvalues i ^ 2 ≤ 1 := by nlinarith [hi.1, hi.2]
+    nlinarith [sq_nonneg u, mul_nonneg (sq_nonneg u) (sub_nonneg.mpr hs)]
+  have hl := congrArg Real.log hr
+  rw [Real.log_prod (fun i _ => (hterms i).ne'), Real.log_pow] at hl
+  norm_num (config := { congrConsts := false }) at hl
+  linarith only [hl]
 
 private lemma entropy_mixture {n : ℕ}
     (G : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (hG : physicalCovariance G)
@@ -86,7 +190,41 @@ private lemma entropy_mixture {n : ℕ}
     fermionicGaussianRenyiEntropy α (reducedCovariance G X) =
       (X.card : ℝ) * Real.log 2 + ∫ u in Ioo (0 : ℝ) 1,
         fermionicWeight α u * Real.log (interpolation (reducedCovariance G X) u).det.re := by
-  sorry
+  obtain ⟨hskew, h, hb⟩ := reduced_physical G hG X
+  have hs (i : {p : Fin n × Fin 2 // p.1 ∈ X}) :=
+    stieltjes_representation ha0 ha1 (hb i)
+  have heq (u : ℝ) (hu : u ∈ Ioo (0 : ℝ) 1) :
+      fermionicWeight α u * Real.log (interpolation (reducedCovariance G X) u).det.re =
+        (1 / 2 : ℝ) * ∑ i, fermionicWeight α u *
+          Real.log (1 - u ^ 2 * h.eigenvalues i ^ 2) := by
+    rw [determinant_log_identity _ hskew h hb hu.1.le hu.2, ← Finset.mul_sum]
+    ring
+  have hi := (integrable_finsetSum Finset.univ (fun i _ => (hs i).1)).const_mul
+    (1 / 2 : ℝ)
+  constructor
+  · exact IntegrableOn.congr_fun hi (fun u hu => (heq u hu).symm) measurableSet_Ioo
+  · have hint : (∫ u in Ioo (0 : ℝ) 1, fermionicWeight α u *
+          Real.log (interpolation (reducedCovariance G X) u).det.re) =
+        (1 / 2 : ℝ) * ∑ i, ∫ u in Ioo (0 : ℝ) 1,
+          fermionicWeight α u * Real.log (1 - u ^ 2 * h.eigenvalues i ^ 2) := by
+      rw [setIntegral_congr_fun measurableSet_Ioo heq, integral_const_mul,
+        integral_finsetSum Finset.univ (fun i _ => (hs i).1)]
+    have hsum : (∑ i, fermionicRenyiFunction α (h.eigenvalues i)) =
+        (Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} : ℝ) * Real.log 2 +
+          ∑ i, ∫ u in Ioo (0 : ℝ) 1,
+            fermionicWeight α u * Real.log (1 - u ^ 2 * h.eigenvalues i ^ 2) := by
+      calc
+        _ = ∑ i, (Real.log 2 + ∫ u in Ioo (0 : ℝ) 1,
+            fermionicWeight α u * Real.log (1 - u ^ 2 * h.eigenvalues i ^ 2)) := by
+          exact Finset.sum_congr rfl (fun i _ => (hs i).2)
+        _ = _ := by rw [Finset.sum_add_distrib]; simp (config := { congrConsts := false })
+    have hcard : Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} = 2 * X.card := by
+      rw [Fintype.card_congr (Equiv.prodSubtypeFstEquivSubtypeProd
+        (p := fun i => i ∈ X) (β := Fin 2)), Fintype.card_prod]
+      simp (config := { congrConsts := false }) [Nat.mul_comm]
+    rw [fermionicGaussianRenyiEntropy, dite_eq_left h, hsum, hint, hcard]
+    push_cast
+    ring
 
 private lemma mode_interpolation_det {n : ℕ}
     (G : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
@@ -95,7 +233,15 @@ private lemma mode_interpolation_det {n : ℕ}
     ((interpolation G u).submatrix
       (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val).det =
       (interpolation (reducedCovariance G X) u).det := by
-  sorry
+  let e : ↥Y ≃ {p : Fin n × Fin 2 // p.1 ∈ X} :=
+    Equiv.subtypeEquivRight hYX
+  rw [interpolation_submatrix G _ Subtype.val_injective]
+  have heq : (interpolation (reducedCovariance G X) u).submatrix e e =
+      interpolation (G.submatrix (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val) u := by
+    rw [interpolation_submatrix _ e e.injective]
+    rfl
+  rw [← heq]
+  exact Matrix.det_submatrix_equiv_self e _
 
 private lemma settlement_main : claim := by
   intro n G hG A B C hAB hAC hBC α ha0 ha1
@@ -117,26 +263,31 @@ private lemma settlement_main : claim := by
       (Finset.disjoint_product.mpr (Or.inl hAC))
       (Finset.disjoint_product.mpr (Or.inl hBC))
     rw [mode_interpolation_det G _ (A ∪ B ∪ C)
-        (fun p => by simp only [Finset.mem_union, Finset.mem_product,
-          Finset.mem_univ, and_true]) u,
+        (fun p => by
+          simp (config := { congrConsts := false }) only
+            [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) u,
       mode_interpolation_det G _ B
-        (fun p => by simp only [Finset.mem_product, Finset.mem_univ, and_true]) u,
+        (fun p => by
+          simp (config := { congrConsts := false }) only
+            [Finset.mem_product, Finset.mem_univ, and_true]) u,
       mode_interpolation_det G _ (A ∪ B)
-        (fun p => by simp only [Finset.mem_union, Finset.mem_product,
-          Finset.mem_univ, and_true]) u,
+        (fun p => by
+          simp (config := { congrConsts := false }) only
+            [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) u,
       mode_interpolation_det G _ (B ∪ C)
-        (fun p => by simp only [Finset.mem_union, Finset.mem_product,
-          Finset.mem_univ, and_true]) u] at hk
+        (fun p => by
+          simp (config := { congrConsts := false }) only
+            [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) u] at hk
     exact hk
   have hpoint : ∀ᵐ u ∂(volume.restrict (Ioo (0 : ℝ) 1)),
       fermionicWeight α u * L (A ∪ B ∪ C) u + fermionicWeight α u * L B u ≤
         fermionicWeight α u * L (A ∪ B) u + fermionicWeight α u * L (B ∪ C) u := by
     filter_upwards [ae_restrict_mem measurableSet_Ioo] with u hu
-    simpa only [mul_add] using mul_le_mul_of_nonneg_left (hk u hu.1.le hu.2)
-      (weight_pos ha0 ha1 hu.1.le hu.2).le
+    simpa (config := { congrConsts := false }) only [mul_add] using
+      mul_le_mul_of_nonneg_left (hk u hu.1.le hu.2) (weight_pos ha0 ha1 hu.1.le hu.2).le
   have hi := integral_mono_ae ((hm (A ∪ B ∪ C)).1.add (hm B).1)
     ((hm (A ∪ B)).1.add (hm (B ∪ C)).1) hpoint
-  simp only [Pi.add_apply] at hi
+  simp (config := { congrConsts := false }) only [Pi.add_apply] at hi
   rw [integral_add (hm (A ∪ B ∪ C)).1 (hm B).1,
     integral_add (hm (A ∪ B)).1 (hm (B ∪ C)).1] at hi
   have hUC : Disjoint (A ∪ B) C := Finset.disjoint_union_left.mpr ⟨hAC, hBC⟩
