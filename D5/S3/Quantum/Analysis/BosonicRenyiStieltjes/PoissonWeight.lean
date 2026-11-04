@@ -8,6 +8,8 @@
 
 import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
 import Mathlib.MeasureTheory.Function.JacobianOneDim
+import Mathlib.Analysis.Complex.RemovableSingularity
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 
 /-! The positive-axis transform used by the logarithmic Renyi representation. -/
 
@@ -160,6 +162,79 @@ private lemma density_resolvent_integrable {α r : ℝ} (ha0 : 0 < α) (ha2 : α
 private def complexTransform (α : ℝ) (z : ℂ) : ℂ :=
   (1 / (1 - z) - (α : ℂ) * z ^ (α : ℂ) / (z * (1 - z ^ (α : ℂ)))) /
     ((α - 1 : ℝ) : ℂ)
+
+private lemma power_eq_one {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) {z : ℂ}
+    (hz0 : z ≠ 0) (hz : z ^ (α : ℂ) = 1) : z = 1 := by
+  rw [Complex.cpow_def_of_ne_zero hz0] at hz
+  obtain ⟨n, hn⟩ := Complex.exp_eq_one_iff.mp hz
+  have hi := congrArg Complex.im hn
+  norm_num [Complex.mul_im, Complex.mul_re, Complex.log_im] at hi
+  have hlo : -(2 * Real.pi) < Complex.arg z * α := by
+    nlinarith [mul_lt_mul_of_pos_right (Complex.neg_pi_lt_arg z) ha0, Real.pi_pos]
+  have hhi : Complex.arg z * α < 2 * Real.pi := by
+    nlinarith [mul_le_mul_of_nonneg_right (Complex.arg_le_pi z) ha0.le, Real.pi_pos]
+  have hnlo : (-1 : ℝ) < n := by nlinarith [Real.pi_pos]
+  have hnhi : (n : ℝ) < 1 := by nlinarith [Real.pi_pos]
+  have hn0 : n = 0 := by
+    have hlo' : (-1 : ℤ) < n := by exact_mod_cast hnlo
+    have hhi' : n < (1 : ℤ) := by exact_mod_cast hnhi
+    omega
+  simp only [hn0, Int.cast_zero, zero_mul] at hn
+  have hlog : Complex.log z = 0 :=
+    (mul_eq_zero.mp hn).resolve_right (Complex.ofReal_ne_zero.mpr ha0.ne')
+  simpa [hlog] using (Complex.exp_log hz0).symm
+
+private def powerSlope (α : ℝ) : ℂ → ℂ := dslope (fun z => z ^ (α : ℂ)) 1
+
+private lemma powerSlope_one (α : ℝ) : powerSlope α 1 = (α : ℂ) := by
+  simp only [powerSlope, dslope_same, Complex.deriv_cpow_const Complex.one_mem_slitPlane,
+    Complex.one_cpow, mul_one]
+
+private lemma powerSlope_ne_zero {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) {z : ℂ}
+    (hz : z ∈ Complex.slitPlane) : powerSlope α z ≠ 0 := by
+  by_cases hz1 : z = 1
+  · subst z
+    rw [powerSlope_one]
+    exact Complex.ofReal_ne_zero.mpr ha0.ne'
+  · rw [powerSlope, dslope_of_ne _ hz1]
+    simp only [slope, smul_eq_mul, Complex.one_cpow]
+    exact mul_ne_zero (inv_ne_zero (sub_ne_zero.mpr hz1))
+      (sub_ne_zero.mpr (fun h => hz1 (power_eq_one ha0 ha2
+        (Complex.slitPlane_ne_zero hz) h)))
+
+private lemma powerSlope_differentiable (α : ℝ) :
+    DifferentiableOn ℂ (powerSlope α) Complex.slitPlane := by
+  apply (Complex.differentiableOn_dslope
+    (Complex.isOpen_slitPlane.mem_nhds Complex.one_mem_slitPlane)).mpr
+  exact differentiableOn_id.cpow_const (fun _ hz => hz)
+
+private def regularTransform (α : ℝ) (z : ℂ) : ℂ :=
+  dslope (fun w => (α : ℂ) * w ^ (α : ℂ) / (w * powerSlope α w)) 1 z /
+    ((α - 1 : ℝ) : ℂ)
+
+private lemma regularTransform_differentiable {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) :
+    DifferentiableOn ℂ (regularTransform α) Complex.slitPlane := by
+  apply DifferentiableOn.div_const
+  apply (Complex.differentiableOn_dslope
+    (Complex.isOpen_slitPlane.mem_nhds Complex.one_mem_slitPlane)).mpr
+  exact ((differentiableOn_id.cpow_const (fun _ hz => hz)).const_mul _).div
+    (differentiableOn_id.mul (powerSlope_differentiable α))
+    (fun z hz => mul_ne_zero (Complex.slitPlane_ne_zero hz)
+      (powerSlope_ne_zero ha0 ha2 hz))
+
+private lemma regularTransform_eq {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) {z : ℂ}
+    (hz0 : z ≠ 0) (hz1 : z ≠ 1) :
+    regularTransform α z = complexTransform α z := by
+  have hpow : z ^ (α : ℂ) ≠ 1 := fun h => hz1 (power_eq_one ha0 ha2 hz0 h)
+  dsimp only [regularTransform]
+  rw [dslope_of_ne _ hz1, slope_def_field]
+  simp only [Complex.one_cpow, powerSlope_one, one_mul]
+  rw [powerSlope, dslope_of_ne _ hz1, slope_def_field, Complex.one_cpow]
+  dsimp only [complexTransform]
+  congr 1
+  field_simp [sub_ne_zero.mpr hz1, sub_ne_zero.mpr hpow, hz0,
+    Complex.ofReal_ne_zero.mpr ha0.ne']
+  ring
 
 private lemma transform_boundary {α q : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hq : 0 < q) :
