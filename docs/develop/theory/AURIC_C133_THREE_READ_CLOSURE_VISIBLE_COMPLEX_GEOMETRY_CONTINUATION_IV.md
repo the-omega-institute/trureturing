@@ -167,7 +167,7 @@ $$
 
 ## 4. 三正历史的有限提升与反模型
 
-**命题 4.1（有限族的正提升）。**取原历史 $a_1,\ldots,a_r$，令 $P=\mathbb N^{3r}$、$\rho(n)=\sum_{i,k}n_{i,k}U^ka_i$，令 $\sigma$ 循环各组三坐标。则
+**命题 4.1（有限族的正提升）。**取原历史 $a_1,\ldots,a_r$，令 $P=\mathbb N^{3r}$、$\rho(n)=\sum_{i,k}n_{i,k}U^ka_i$，令 $\sigma e_{i,k}=e_{i,k+1 (\mathrm{mod} 3)}$ 循环各组三坐标。则
 
 $$
 F\rho\sigma=\omega F\rho=FU\rho.
@@ -223,7 +223,7 @@ c_{\rm out}(T_{e,r}(U_{\rm in}a),U_{\rm out}(T_{e,r}a))=0.
 \tag{5.2}
 $$
 
-则有唯一有界复线性 $K_{e,r}$，满足 $K_{e,r}F_{\rm in}(a)=F_{\rm out}(T_{e,r}a)$、$\sum_{e,r}K_{e,r}^*K_{e,r}=I$、$E_e=\sum_rK_{e,r}^*K_{e,r}$。
+则有唯一有界复线性 $K_{e,r}$，满足 $K_{e,r}F_{\rm in}(a)=F_{\rm out}(T_{e,r}a)$、$\sum_{e,r}K_{e,r}^*K_{e,r}=I$，并得到表示各 $c_e$ 的唯一复效果 $E_e=\sum_rK_{e,r}^*K_{e,r}$。
 
 **证明。**置 $G(a)=\bigoplus_{e,r}F_{\rm out}(T_{e,r}a)$。(5.1) 给全体成对距离相等，且 $G(0)=0$，所以实 Gram 矩阵相同。于是 $F_{\rm in}(a)\mapsto G(a)$ 延伸为实线性等距 $W$。(5.2) 给 $W$ 与相位交织，故 $W$ 复线性；坐标即 $K_{e,r}$。按事件再极化得效果等式。因此 $\mathcal I_e(\rho)=\sum_rK_{e,r}\rho K_{e,r}^*$ 给完全正仪器；任意辅助 Hilbert 空间上的正性直接由各 $K_{e,r}\otimes I$ 保持正算子得到。实际参考过程是否等于此扩张，仍须原参考接口确认。
 
