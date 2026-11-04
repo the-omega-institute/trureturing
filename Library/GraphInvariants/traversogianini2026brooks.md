@@ -2,10 +2,10 @@
 bibkey: traversogianini2026brooks
 authors: Juan Pablo Traverso Gianini
 year: 2026
-title: "BrooksSubcubic, finite chordal elimination and finite Menger certificates: Lean sources"
+title: "Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure"
 doi: null
-url: https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic
-claim: "Subcubic four-clique-free graphs are three-colorable; finite chordal graphs are exactly those admitting perfect elimination rankings."
+url: https://github.com/jtraverso
+claim: "Subcubic four-clique-free graphs are three-colorable; finite chordal graphs admit perfect elimination rankings; finite Menger certificates and Hamiltonian closure and Ore degree-sum criteria hold."
 strata_touched:
   - D5/S3/Combinatorics/Graph/Brooks/Coloring
   - D5/S3/Combinatorics/Graph/Brooks/Cuts
@@ -16,6 +16,7 @@ strata_touched:
   - D5/S3/Combinatorics/Graph/Chordal/Characterization
   - D5/S3/Combinatorics/Graph/Walks/MengerCertificates
   - D5/S3/Combinatorics/Graph/Walks/EdgeMengerCertificates
+  - D5/S3/Combinatorics/Graph/Walks/HamiltonianClosure
 license: Apache-2.0
 triage: anchor
 ---
@@ -29,6 +30,9 @@ Connectedness is not a hypothesis. The theorem is the subcubic specialization
 of Brooks' theorem, not a new graph-coloring theorem.
 
 ## Verified locator
+
+Author source collection: https://github.com/jtraverso. The immutable theorem
+source locators are given with each result below.
 
 https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic
 
@@ -278,3 +282,45 @@ attribution above also apply to this slice. The original Diestel text is not a
 checked source here. No novelty is claimed. Retire this edge port only when the
 receiver's own adopted Mathlib pin supplies the equivalent entire finite edge
 theorem and affected consumers and records have migrated lawfully.
+
+
+## Hamiltonian single-edge closure and Ore's theorem
+
+The same immutable Juan Pablo Traverso Gianini source supplies the known
+Bondy--Chvatal single-edge closure theorem and Ore's degree-sum theorem. For
+any finite vertex type V and simple undirected graph G, distinct nonadjacent
+u,v with |V| ≤ deg_G(u)+deg_G(v) satisfy
+(G sup edge(u,v)).IsHamiltonian if and only if G.IsHamiltonian. The closure
+statement has no external cardinality or connectedness hypothesis. For
+|V| ≥ 3, the same degree-sum bound on every distinct nonadjacent pair implies
+G.IsHamiltonian. The degrees are those of the original G.
+
+The selected live source is MengerHamilton/ClosureAux.lean, the
+endpoint-neighborhood counting and index-crossing argument in
+exists_cycArr_of_path and the single-edge reduction in
+isHamiltonian_of_sup_edge, together with Hamiltonian.lean's
+isHamiltonian_sup_edge_iff and ore. The native receiver uses actual Walk
+prefixes and reversed suffixes, the existing EdgeSlicing cycle-opening
+theorem, and PathRingSplicing's actual cycle construction. Full support
+counts establish that the two rearranged pieces span every vertex exactly
+once. The donor's CycArr representation, complete-graph construction,
+MengerCore, Menger, ChvatalErdosAux, Dirac and Chvatal--Erdos are not received
+as part of this theorem.
+
+The donor and receiver pins, Apache-2.0 license, authorship, copyright and
+no-NOTICE source-tree reading above apply. The full software license remains
+in docs/reports/licenses/menger-hamiltonian-LICENSE.txt. Historical locators
+are J. A. Bondy and V. Chvatal, *A method in graph theory*, Discrete
+Mathematics 15 (1976), 111--135,
+[DOI 10.1016/0012-365X(76)90078-9](https://doi.org/10.1016/0012-365X(76)90078-9),
+and Oystein Ore, *Note on Hamilton Circuits*, The American Mathematical
+Monthly 67 (1960), 55,
+[DOI 10.2307/2308928](https://doi.org/10.2307/2308928).
+Crossref metadata verifies these locators; the original full papers have
+not been read. This is attributed known-theorem source reception with no
+originality or global theorem-absence claim.
+
+Retire the port only when the receiver's own adopted Mathlib pin supplies
+the equivalent complete finite single-edge closure and Ore statements,
+after the affected consumers and frozen records migrate lawfully. Upstream
+acceptance alone does not meet this retirement condition.
