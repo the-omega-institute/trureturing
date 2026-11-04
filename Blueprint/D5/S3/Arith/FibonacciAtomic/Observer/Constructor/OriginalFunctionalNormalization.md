@@ -49,4 +49,4 @@ The system and reconstruction depend on syntax alone, independently of natural p
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalFunctionalNormalization.root_link_normalization`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalFunctionalNormalization.value_power`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalFunctionalNormalization.value_subst`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/CompletionHomogeneousFixedPoints](../CompletionHomogeneousFixedPoints.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeRootLinkNormalization](NativeRootLinkNormalization.md)
