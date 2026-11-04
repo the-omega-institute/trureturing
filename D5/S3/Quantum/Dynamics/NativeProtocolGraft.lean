@@ -1445,4 +1445,137 @@ theorem original_event_resource_bounds {L : Type} (T : Tree L)
 
 #print axioms original_event_coordinates_and_bound
 #print axioms original_event_resource_bounds
+
+namespace Actual
+
+/-- A computational vector on the complete original carrier. -/
+def ket (b : Basis) : Basis → ℂ := fun z => if z = b then 1 else 0
+
+private theorem flip_ne (i : Fin 16) (b : Basis) : flip i b ≠ b := by
+  intro h
+  have hi := congrFun h i
+  simp only [flip, Function.update_same] at hi
+  cases b i <;> simp_all
+
+private theorem flip_eq (i : Fin 16) (z b : Basis) :
+    flip i z = b ↔ z = flip i b := by
+  constructor <;> intro h
+  · rw [← h, Coeff.flip_flip]
+  · rw [h, Coeff.flip_flip]
+
+private theorem gate_ket (j : Address) (b : Basis) :
+    (gate j).mulVec (ket b) =
+      (zeta * (1 + (zeta - 1) * Coeff.evalO t Coeff.t_sq (Coeff.diagonal j b))) • ket b +
+      (if Coeff.active j b then zeta * (zeta - 1) * beta^3 else 0) •
+        ket (flip (center j) b) := by
+  funext z
+  simp only [gate, Matrix.smul_mulVec, Matrix.add_mulVec, Matrix.one_mulVec,
+    Pi.smul_apply, Pi.add_apply, smul_eq_mul, Coeff.p_action, ket]
+  by_cases hz : z = b
+  · subst z
+    simp [Ne.symm (flip_ne (center j) b)]
+    ring
+  · by_cases hf : z = flip (center j) b
+    · subst z
+      simp only [Coeff.flip_flip, if_pos rfl, hz, if_false, mul_zero,
+        mul_one, zero_add, Coeff.active_flip]
+      split_ifs <;> ring
+    · have hfb : flip (center j) z ≠ b := by
+        simpa only [flip_eq] using hf
+      simp [hz, hf, hfb]
+
+/-- Source sites b1,b2,b3 are shifted positions 2,3,4; all other bits
+remain the original root bits. -/
+def sourceWord (x y z : Bool) : Basis :=
+  Function.update (Function.update (Function.update rootWord 2 x) 3 y) 4 z
+
+def a : ℂ := zeta * (1 + (zeta - 1) * t)
+def b : ℂ := zeta * (zeta - 1) * beta^3
+def c : ℂ := zeta * (1 + (zeta - 1) * t^2)
+
+/-- The original three forward source calls, in chronological order. -/
+def sourceTree : Tree Cut :=
+  .call 3 .forward (.call 2 .forward (.call 1 .forward (.leaf .active)))
+
+def sourceVector : Basis → ℂ :=
+  (gate 1).mulVec ((gate 2).mulVec ((gate 3).mulVec omega0))
+
+def fiveTermVector : Basis → ℂ :=
+  (a^2*b) • ket (sourceWord false false false) +
+  (a*b^2) • ket (sourceWord true false false) +
+  (zeta*a*c) • ket (sourceWord false false true) +
+  (zeta*b*c) • ket (sourceWord true false true) +
+  (zeta*b^2) • ket (sourceWord false true false)
+
+private theorem source_start : omega0 = ket (sourceWord false false true) := by
+  have h : rootWord = sourceWord false false true := by decide
+  simp only [omega0, ket, h]
+
+private theorem source_steps :
+    sourceVector = fiveTermVector := by
+  have h3 : (gate 3).mulVec (ket (sourceWord false false true)) =
+      b • ket (sourceWord false false false) +
+      c • ket (sourceWord false false true) := by
+    rw [gate_ket]
+    have hf : flip (center 3) (sourceWord false false true) =
+        sourceWord false false false := by decide
+    rw [hf]
+    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
+      rootWord, Coeff.evalO, a, b, c]
+    module
+  have h20 : (gate 2).mulVec (ket (sourceWord false false false)) =
+      a • ket (sourceWord false false false) +
+      b • ket (sourceWord false true false) := by
+    rw [gate_ket]
+    have hf : flip (center 2) (sourceWord false false false) =
+        sourceWord false true false := by decide
+    rw [hf]
+    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
+      rootWord, Coeff.evalO, a, b]
+  have h21 : (gate 2).mulVec (ket (sourceWord false false true)) =
+      zeta • ket (sourceWord false false true) := by
+    rw [gate_ket]
+    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
+      rootWord, Coeff.evalO]
+  have h10 : (gate 1).mulVec (ket (sourceWord false false false)) =
+      a • ket (sourceWord false false false) +
+      b • ket (sourceWord true false false) := by
+    rw [gate_ket]
+    have hf : flip (center 1) (sourceWord false false false) =
+        sourceWord true false false := by decide
+    rw [hf]
+    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
+      rootWord, Coeff.evalO, a, b]
+  have h11 : (gate 1).mulVec (ket (sourceWord false false true)) =
+      a • ket (sourceWord false false true) +
+      b • ket (sourceWord true false true) := by
+    rw [gate_ket]
+    have hf : flip (center 1) (sourceWord false false true) =
+        sourceWord true false true := by decide
+    rw [hf]
+    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
+      rootWord, Coeff.evalO, a, b]
+  have h12 : (gate 1).mulVec (ket (sourceWord false true false)) =
+      zeta • ket (sourceWord false true false) := by
+    rw [gate_ket]
+    norm_num [Coeff.diagonal, Coeff.active, left, right, center, sourceWord,
+      rootWord, Coeff.evalO]
+  rw [sourceVector, source_start, h3, Matrix.mulVec_add,
+    Matrix.mulVec_smul, Matrix.mulVec_smul, h20, h21,
+    Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul,
+    Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul,
+    h10, h12, h11]
+  dsimp only [fiveTermVector]
+  module
+
+/-- Exact sparse action of the actual original full matrices on the fixed root. -/
+theorem original_source_vector :
+    (operator sourceTree ()).mulVec omega0 = fiveTermVector ∧
+    calls sourceTree () = 3 := by
+  constructor
+  · simpa [sourceTree, operator, callMatrix, Matrix.mulVec_mulVec] using source_steps
+  · rfl
+
+end Actual
+
 end D5.S3.Quantum.Dynamics.NativeProtocolGraft
