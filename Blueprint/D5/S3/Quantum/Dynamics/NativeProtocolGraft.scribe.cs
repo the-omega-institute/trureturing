@@ -33,7 +33,7 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
                     Paragraph(Text("The scalars t, beta and zeta of the actual matrices are algebraic integers: rational-angle exponential and cosine integrality give zeta and t, and beta squared equals t. Every number projection and bit flip has integer entries. Finite matrix addition, multiplication and powers therefore preserve entrywise integrality. Induction through the actual tree gives integral branch-matrix entries. Applying the fixed root, multiplying each amplitude by its physical complex conjugate and summing the selected raw events preserve integrality. The real event mass is reflected from its injective complex embedding. No success normalization is performed.")),
                     Paragraph(Text("Set q=(13-5 sqrt(5))/22 and w=(9 sqrt(5)-19)/22. In the existing quadratic golden field with generator phi, these are the images of coordinate pairs (9/11,-5/11) and (-14/11,9/11). Their field norms are respectively 1/11 and -1/11. Integrality would force an integer field norm; both rational values fail that condition. Consequently p differs from both q and w. This argument only needs absolute algebraic integrality of p and does not assert that p lies in the quadratic field.")),
                     Paragraph(Text("These exclusions apply directly to any original-record event formed by the stop-aware graft above. They do not establish that the actual chi preparation and its faithful-support Petz pullback have ideal masses q and w. Quadratic integer coordinates, the whole-tree nonphysical-conjugate estimate and the arithmetic factor-eleven bounds are supplied below. The actual reference-state realization, original-record comparison and total-variation consumers remain separate obligations. Total Born-mass normalization and the equality of the ninth gate power with its inverse are not used or proved here."))),
-                DescribeRole.Theorem), CoordinateNode(), ResourceNode())));
+                DescribeRole.Theorem), CoordinateNode(), ResourceNode(), EmptyPetzNode())));
 
 
     private static DocumentBlock CoordinateNode() => Describe.Lean(
@@ -62,6 +62,52 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
             Paragraph(Text("For x=A+B tau the integer norm is A squared minus A B minus B squared, and the product of its two real evaluations equals that norm. Its nonvanishing is reused from the existing golden-integer norm theorem through the coordinate correspondence (A-B,B). For u=11q=(4,-5) and u=11w=(-5,9), the norms are 11 and minus 11. Direct expansion proves that the norm of 11x-u is divisible by 11. The existing original_event_arithmetic theorem supplies non-equality with q and w. Thus the nonzero norm has absolute value at least 11. The whole-tree conjugate bound and the triangle inequality give the stated denominators.")),
             Paragraph(Text("The arithmetic inequalities do not identify q or w as the ideal probabilities of the actual chi/Petz experiments. Their empty-prefix and five-call source-history realization, preservation of original records and failure zeros, graft resource identities and total-variation comparison still require the specified original-object consumers. The cut determinant and spectral clauses of V88 theorem 24.1 remain outside this event result."))),
         DescribeRole.Theorem);
+
+    private static DocumentBlock EmptyPetzNode() => Describe.Lean(
+        DescribeId.Create("original-empty-petz-consumer"),
+        DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeProtocolGraft.Actual.original_empty_petz_consumer"),
+        H("Actual faithful calibration and the original empty-input Petz event"),
+        StatementSource.FromAuthor(EmptyPetzStatement()),
+        AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/stewarttall2025algebraic")),
+        Blocks(
+            Paragraph(Text("Use the same full sixteen-bit carrier, root, fourteen addresses, selectors and stop-aware continuations defined above. The source tree is exactly the chronological three forward calls K3,K2,K1, ending at an active cut. The bijection cut splits shifted bit 2, the original b1, from all fifteen remaining bits. Reduced(v) is the existing partialTraceRight of the rank-one full-carrier matrix, reindexed only by this bijection. This mathematical reduction adds no physical deletion, state preparation or protection of the complement.")),
+            Paragraph(Text("The actual gate action on a computational vector has its original diagonal coefficient and one possible center-flip coefficient. Applying it three times to the original root gives a squared times b at 000, a times b squared at 100, zeta times a times c at 001, zeta times b times c at 101, and zeta times b squared at 010, with all other native bits unchanged. Here a=-t, b=-beta times zeta to the fourth, c=-t times zeta cubed. The partial trace contracts equal complement words. It gives chi exactly, with entries t,gamma,conjugate gamma,t squared, where gamma=t squared times beta times conjugate of zeta to the fourth. These weights are computed from that same pure native vector.")),
+            Paragraph(Text("The theorem proves that chi is positive definite, has trace one and determinant t to the fourth. Its positive square root is chiRoot=(chi+t squared I)/sqrt(1+2t squared). Positivity of the actual partial trace and uniqueness of the positive square root are reused directly. No faithfulness or square-root identity is assumed. The source tree has exactly three expanded forward calls.")),
+            Paragraph(Text("For every full-carrier vector v, summing the two reduced outputs of the actual original b1 projectors gives delta(Reduced(v)), where delta(X) is the diagonal matrix with entries Xii. Each original j output remains a distinct branch; this equality is their mathematical marginal. The empty original root reduces to P0. Its actual j=0 projected vector is the same root and its j=1 vector is zero.")),
+            Paragraph(Text("The fixed mathematical Petz map is petz(Y)=sqrt(chi) delta(W Y W) sqrt(chi), with W the existing continuous functional calculus of inverse square root at delta(chi). The existing diagonal functional-calculus theorem identifies W with diag(beta inverse,t inverse). Direct evaluation on the actual empty-root reduction gives petz(Reduced(Omega))11=q=(13-5sqrt(5))/22=t to the fourth divided by (1+2t squared). This is an ideal comparison value, not a native operation or an assumed input probability.")),
+            Paragraph(Text("For every complete original continuation table C from the native b1 read to trees of Stop labels, let T=extensionAt(active,C). For the actual terminal event z1=1, summing all acquired paths and terminal complement words, eventMass(T,e) differs from the real part of that same Petz entry and obeys the displayed factor-eleven lower bound. The maximum is that of the complete syntactic tree, including zero, failure and stopped outcomes. The proof consumes original_event_arithmetic and original_event_resource_bounds at this actual T and event. No arbitrary event-mass surrogate, conditioning or success normalization is introduced.")),
+            Paragraph(Text("This consumer establishes the three-call calibration and empty-input comparison. The original five-call prefix K3,K2,K1,K10,K13 with every X,Y archive and retained j, its ideal w value, the full identity extension on the complement and original records, failure-zero law and total-variation consumers remain open. Full V88 theorem 24.1 still requires its actual cut determinant and spectral bounds. Total Born normalization for arbitrary native trees and the semantic identity of the ninth gate power with its inverse remain unproved here. The fixed source obligations are not narrowed to this consumer."))),
+        DescribeRole.Theorem);
+
+    private static Formula EmptyPetzStatement()
+    {
+        Formula v=F.Id("v"), j=F.Id("j"), C=F.Id("C");
+        Formula root=Call("omegaZero"), chi=Call("chi"), R=Call("Reduced",root);
+        Formula projected=Call("mulVec",Call("projector",Call("readBit",D(2)),j),v);
+        Formula emptyProjected=Call("mulVec",Call("projector",Call("readBit",D(2)),j),root);
+        Formula native=All("v",Call("FullVector"),
+            Rel(FiniteSum(j,Call("Fin",D(2)),Call("Reduced",projected)),Eq,Call("delta",Call("Reduced",v))));
+        Formula empty=All("j",Call("Fin",D(2)),
+            Rel(emptyProjected,Eq,IfThenElse(Rel(j,Eq,D(0)),root,D(0))));
+        Formula T=Call("extensionAt",Call("active"),C);
+        Formula ev=Call("terminalBitOne",D(2));
+        Formula mass=Call("eventMass",T,ev), q=Call("Re",Call("entry",Call("petz",R),D(1),D(1)));
+        Formula K=Power(Call("kappa"),Seq(D(2),Star,Call("maxCalls",T)));
+        Formula conjugate=Seq(Frac,Grp(D(1,3),Plus,D(5),Sqrt,Grp(D(5))),Grp(D(2,2)));
+        Formula bound=Leq(Seq(Frac,Grp(D(1)),Grp(D(1,1),Star,Parenthesized(Seq(K,Plus,conjugate)))),
+            Call("abs",Seq(mass,Minus,q)));
+        Formula allContinuations=All("C",Call("Function",Call("Fin",D(2)),Call("Tree",Call("Stop"))),
+            And(new Formula.Relation(mass,FormulaRelationOperator.NotEqual,q),bound));
+        return Disp(And(
+            Rel(Call("Reduced",Call("mulVec",Call("Op",Call("sourceTree"),Call("unit")),root)),Eq,chi),
+            Rel(Call("calls",Call("sourceTree"),Call("unit")),Eq,D(3)),
+            Call("PosDef",chi),Rel(Call("trace",chi),Eq,D(1)),
+            Rel(Call("det",chi),Eq,Power(Call("t"),D(4))),
+            Rel(Call("cfc",Call("sqrt"),chi),Eq,Call("chiRoot")),
+            native,Rel(R,Eq,Call("P0")),empty,
+            Rel(Call("entry",Call("petz",R),D(1),D(1)),Eq,Call("complex",Call("emptyTarget"))),
+            allContinuations));
+    }
 
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Power(Formula a, Formula b) => Seq(Grp(Parenthesized(a)), Caret, Grp(b));

@@ -1612,9 +1612,6 @@ private theorem source_rest (x y z x' y' z' : Bool) :
   cases x <;> cases y <;> cases z <;>
     cases x' <;> cases y' <;> cases z' <;> decide
 
-private theorem source_bit (x y z : Bool) : sourceWord x y z 2 = x := by
-  simp [sourceWord]
-
 /-- The lawful reduction is positive on every actual full-carrier vector. -/
 private theorem reduced_positive (v : Basis → ℂ) : (reduced v).PosSemidef :=
   D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight_posSemidef
@@ -1867,7 +1864,7 @@ private theorem read_cut (i : Fin 2) (e : Rest) :
 private theorem projected_cut (v : Basis → ℂ) (j i : Fin 2) (e : Rest) :
     ((projector (readBit 2) j).mulVec v) (cut.symm (i,e)) =
       if i = j then v (cut.symm (i,e)) else 0 := by
-  simp [projector, read_cut]
+  simp [projector, Matrix.mulVec_diagonal, read_cut]
 
 private theorem reduced_projector (v : Basis → ℂ) (o : Fin 2) :
     reduced ((projector (readBit 2) o).mulVec v) =
@@ -1881,15 +1878,15 @@ private theorem reduced_projector (v : Basis → ℂ) (o : Fin 2) :
 private theorem native_delta (v : Basis → ℂ) :
     (∑ j : Fin 2, reduced ((projector (readBit 2) j).mulVec v)) =
       delta (reduced v) := by
+  rw [Fin.sum_univ_two, reduced_projector, reduced_projector]
   ext i j
-  simp only [Matrix.sum_apply, reduced_projector, Fin.sum_univ_two]
   fin_cases i <;> fin_cases j <;> simp [delta]
 
 private theorem read_empty (j : Fin 2) :
     (projector (readBit 2) j).mulVec omega0 =
       if j = 0 then omega0 else 0 := by
   funext z
-  simp only [projector, Matrix.diagonal_mulVec, Pi.smul_apply, smul_eq_mul,
+  simp only [projector, Matrix.mulVec_diagonal, Pi.smul_apply, smul_eq_mul,
     Pi.zero_apply]
   by_cases hz : z = rootWord
   · subst z
@@ -1909,7 +1906,8 @@ private theorem inverse_root :
     D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_diagonal]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [inverseRoot, beta, t, Real.sqrt_sq (inv_nonneg.mpr Coeff.phi_positive.le)]
+    simp [inverseRoot, beta, t, Real.sqrt_sq (inv_nonneg.mpr Coeff.phi_positive.le),
+      Real.sqrt_sq Coeff.phi_positive.le]
 
 /-- The fixed mathematical Petz formula. This definition adds no native gate. -/
 def petz (Y : Qubit) : Qubit :=
@@ -1933,11 +1931,10 @@ private theorem petz_empty_entry :
   simp only [starRingEnd_apply]
   have hg : star gamma * gamma = t^5 := by rw [mul_comm, gamma_norm]
   calc
-    _ = (star gamma * gamma) / ((rootScale : ℂ)^2 * beta^2) := by field_simp; ring
+    _ = (star gamma * gamma) / ((rootScale : ℂ)^2 * beta^2) := by field_simp <;> ring
     _ = t^4/(1+2*t^2) := by
       rw [hg, rootScale_sq, Coeff.beta_sq]
-      field_simp
-      ring
+      field_simp <;> ring
 
 private theorem empty_target_value :
     ((emptyTarget : ℝ) : ℂ) = t^4/(1+2*t^2) := by
@@ -1958,7 +1955,9 @@ private theorem empty_target_value :
   have hd : 1+2*t^2 ≠ 0 := by
     rw [← rootScale_sq]
     exact pow_ne_zero 2 (Complex.ofReal_ne_zero.mpr rootScale_pos.ne')
-  field_simp
+  apply (eq_div_iff hd).2
+  rw [div_mul_eq_mul_div]
+  apply (div_eq_iff (by norm_num : (11 : ℂ) ≠ 0)).2
   linear_combination -(11*t^2-t+4)*Coeff.t_sq
 
 /-- The actual three-call calibration, native read and fixed Petz empty-input
