@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
 import D5.S3.Resource.LogDet.LogDetInformationSubmodularity
 import D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
-import Mathlib.LinearAlgebra.SymplecticGroup
+import D5.S3.Estimation.GaussianThermometryJointMeasurementRefutation
 
 /-! Settlement of the bosonic Gaussian Rényi strong-subadditivity line. -/
 
@@ -38,7 +38,9 @@ def physicalOn {ι : Type*} [Fintype ι] [DecidableEq ι]
   V.IsSymm ∧ (V.map Complex.ofReal + Complex.I • Ω.map Complex.ofReal).PosSemidef
 
 def physicalCovariance {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) : Prop :=
-  physicalOn V (symplecticForm n)
+  D5.S3.Estimation.GaussianThermometryJointMeasurementRefutation.IsGaussianMeasurementCov
+    (V.submatrix ((finCongr (Nat.mul_comm 2 n)).trans finProdFinEquiv.symm)
+      ((finCongr (Nat.mul_comm 2 n)).trans finProdFinEquiv.symm))
 
 def reducedCovariance {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
     (X : Finset (Fin n)) :
@@ -71,6 +73,79 @@ def claim : Prop :=
               (reducedCovariance (symplecticForm n) (A ∪ B ∪ C)) +
             gaussianRenyiEntropy α (reducedCovariance V B)
               (reducedCovariance (symplecticForm n) B)
+
+private lemma index_bridge (n : ℕ) :
+    let e : Fin (2 * n) ≃ Fin n × Fin 2 :=
+      (finCongr (Nat.mul_comm 2 n)).trans finProdFinEquiv.symm
+    let f := ((Equiv.prodComm (Fin n) (Fin 2)).trans
+      (Equiv.prodCongr finTwoEquiv (Equiv.refl (Fin n)))).trans
+        (Equiv.boolProdEquivSum (Fin n))
+    ∀ i, f (e i) = if i.val % 2 = 0 then
+      Sum.inl ((Fin.cast (Nat.mul_comm 2 n) i).divNat)
+      else Sum.inr ((Fin.cast (Nat.mul_comm 2 n) i).divNat) := by
+  intro e f i
+  dsimp [e, f, Equiv.boolProdEquivSum, finTwoEquiv, finProdFinEquiv, finCongr]
+  split_ifs with h h0 h0
+  · exfalso
+    change ((Fin.cast (Nat.mul_comm 2 n) i).modNat == (1 : Fin 2)) = true at h
+    rw [beq_iff_eq] at h
+    have hv := congrArg Fin.val h
+    change i.val % 2 = 1 at hv
+    omega
+  · rfl
+  · rfl
+  · exfalso
+    change ¬((Fin.cast (Nat.mul_comm 2 n) i).modNat == (1 : Fin 2)) = true at h
+    rw [beq_iff_eq, Fin.ext_iff] at h
+    change ¬i.val % 2 = 1 at h
+    have hm := Nat.mod_lt i.val (by decide : 0 < 2)
+    omega
+
+private lemma physicalCovariance_iff {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) :
+    physicalOn V (symplecticForm n) ↔ physicalCovariance V := by
+  let e : Fin (2 * n) ≃ Fin n × Fin 2 :=
+    (finCongr (Nat.mul_comm 2 n)).trans finProdFinEquiv.symm
+  have hform : ((symplecticForm n).map Complex.ofReal).submatrix e e =
+      (-Matrix.J (Fin n) ℂ).submatrix
+        (fun i : Fin (2 * n) => if i.val % 2 = 0 then
+          Sum.inl ((Fin.cast (Nat.mul_comm 2 n) i).divNat)
+          else Sum.inr ((Fin.cast (Nat.mul_comm 2 n) i).divNat))
+        (fun i : Fin (2 * n) => if i.val % 2 = 0 then
+          Sum.inl ((Fin.cast (Nat.mul_comm 2 n) i).divNat)
+          else Sum.inr ((Fin.cast (Nat.mul_comm 2 n) i).divNat)) := by
+    dsimp only [symplecticForm]
+    rw [Matrix.submatrix_map, Matrix.submatrix_submatrix]
+    rw [← Matrix.submatrix_map]
+    have hm : (-Matrix.J (Fin n) ℝ).map Complex.ofReal = -Matrix.J (Fin n) ℂ := by
+      change Complex.ofRealHom.mapMatrix (-Matrix.J (Fin n) ℝ) = -Matrix.J (Fin n) ℂ
+      rw [map_neg]
+      exact congrArg Neg.neg (Matrix.map_J (Fin n) Complex.ofRealHom)
+    rw [hm]
+    congr 1 <;> funext i <;> exact index_bridge n i
+  constructor
+  · rintro ⟨hs, hp⟩
+    refine ⟨hs.submatrix e, ?_⟩
+    have h := hp.submatrix e
+    change ((V.map Complex.ofReal).submatrix e e +
+      Complex.I • ((symplecticForm n).map Complex.ofReal).submatrix e e).PosSemidef at h
+    rw [hform] at h
+    exact h
+  · rintro ⟨hs, hp⟩
+    change (V.submatrix e e).IsSymm at hs
+    have hs' := hs.submatrix e.symm
+    have hp' : ((V.map Complex.ofReal).submatrix e e +
+      Complex.I • ((symplecticForm n).map Complex.ofReal).submatrix e e).PosSemidef := by
+      rw [hform]
+      exact hp
+    have h := hp'.submatrix e.symm
+    constructor
+    · simp only [Matrix.submatrix_submatrix, Function.comp_def, Equiv.apply_symm_apply] at hs'
+      exact hs'
+    · change (((V.map Complex.ofReal).submatrix e e).submatrix e.symm e.symm +
+        Complex.I • (((symplecticForm n).map Complex.ofReal).submatrix e e).submatrix
+          e.symm e.symm).PosSemidef at h
+      simp only [Matrix.submatrix_submatrix, Function.comp_def, Equiv.apply_symm_apply] at h
+      exact h
 
 private lemma reduced_square {n : ℕ} (X : Finset (Fin n)) :
     reducedCovariance (symplecticForm n) X * reducedCovariance (symplecticForm n) X = -1 := by
@@ -167,7 +242,7 @@ private lemma canonical_square (n : ℕ) : symplecticForm n * symplecticForm n =
 private lemma physical_posDef {n : ℕ}
     (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
     (hV : physicalCovariance V) : (V.map Complex.ofReal).PosDef := by
-  apply uncertainty_posDef V (symplecticForm n) hV
+  apply uncertainty_posDef V (symplecticForm n) ((physicalCovariance_iff V).mpr hV)
   have h : (symplecticForm n).map Complex.ofReal *
       (symplecticForm n).map Complex.ofReal = -1 := by
     change Complex.ofRealHom.mapMatrix (symplecticForm n) *
@@ -180,7 +255,7 @@ private lemma reduced_physical {n : ℕ}
     (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (hV : physicalCovariance V)
     (X : Finset (Fin n)) :
     physicalOn (reducedCovariance V X) (reducedCovariance (symplecticForm n) X) := by
-  rcases hV with ⟨hs, hp⟩
+  rcases (physicalCovariance_iff V).mpr hV with ⟨hs, hp⟩
   constructor
   · exact hs.submatrix (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
   · let f : {q : Fin n × Fin 2 // q.1 ∈ X} → Fin n × Fin 2 := fun p => p.1
@@ -678,7 +753,7 @@ private lemma settlement_main : claim := by
       L (A ∪ B ∪ C) x + L B x ≤ L (A ∪ B) x + L (B ∪ C) x := by
     have h := log_koteljanskii
       (V.map Complex.ofReal + (x : ℂ) • (Complex.I • (symplecticForm n).map Complex.ofReal))
-      (shifted_posDef V (symplecticForm n) hV hp hx0 hx1)
+      (shifted_posDef V (symplecticForm n) ((physicalCovariance_iff V).mpr hV) hp hx0 hx1)
       (A ×ˢ (Finset.univ : Finset (Fin 2))) (B ×ˢ Finset.univ) (C ×ˢ Finset.univ)
       (Finset.disjoint_product.mpr (Or.inl hAB))
       (Finset.disjoint_product.mpr (Or.inl hAC))
