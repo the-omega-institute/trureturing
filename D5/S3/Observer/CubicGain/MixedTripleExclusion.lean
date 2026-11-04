@@ -40,7 +40,7 @@ private theorem losing_pair_step (n : ℕ) (T : Finset World3) (v : List Bool)
   intro W hW
   have hm : W ∈ responseSlice T v E z := he.symm ▸ hW
   exact (Finset.mem_filter.mp hm).2
-private theorem losing_pair_suffix (n : ℕ) (T : Finset World3) (v : List Bool)
+theorem losing_pair_suffix (n : ℕ) (T : Finset World3) (v : List Bool)
     (hT : T.card = 2) (h : Losing n T v) (u : List Bool) (hu : u.length ≤ n) :
     Losing (n - u.length) T (v ++ u) ∧
       (u ≠ [] → ∀ W ∈ T, ∀ Z ∈ T,
@@ -105,7 +105,7 @@ private theorem acquisition_three (E F G : Bool) :
     acquisition [E,F,G] = action G * action F * action E := by
   change acquisition ([E,F] ++ [G]) = _
   rw [acquisition_append, acquisition_two, Matrix.mul_assoc]
-private theorem read_concat (W : World3) (v u : List Bool) :
+theorem read_concat (W : World3) (v u : List Bool) :
     readAt W (v ++ u) (v.length + u.length) =
       (gain 3 W.coeff).eval ((v.length + u.length : ℕ) : ℝ) *
         Matrix.trace (acquisition u * acquisition v * W.source) + W.drift := by
@@ -129,7 +129,7 @@ private theorem pair_read_difference (n : ℕ) (T : Finset World3) (v : List Boo
         (gain 3 Z.coeff).eval ((v.length + u.length : ℕ) : ℝ) • Z.source))) =
       Z.drift - W.drift := by
   exact equal_read_difference W Z v u ((losing_pair_suffix n T v hT h u hun).2 hu W hW Z hZ)
-private theorem pair_common_drift (n : ℕ) (T : Finset World3) (v : List Bool)
+theorem pair_common_drift (n : ℕ) (T : Finset World3) (v : List Bool)
     (hT : T.card = 2) (h : Losing n T v) (hn : 3 ≤ n)
     (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) : W.drift = Z.drift := by
   let S : Mat := acquisition v *
@@ -182,7 +182,7 @@ private theorem pair_gain_zero_of_drift (n : ℕ) (T : Finset World3) (v : List 
   have hz' : acquisition (v ++ p) * D = acquisition (v ++ p) * 0 := by simpa using hz
   have hd0 : D = 0 := (acquisition_unit (v ++ p)).mul_left_cancel hz'
   exact weighted_sources_zero W Z hP _ _ (sub_eq_zero.mp hd0)
-private theorem pair_gain_zero (n : ℕ) (T : Finset World3) (v : List Bool)
+theorem pair_gain_zero (n : ℕ) (T : Finset World3) (v : List Bool)
     (hT : T.card = 2) (h : Losing n T v) (hn : 3 ≤ n)
     (W Z : World3) (hW : W ∈ T) (hZ : Z ∈ T) (hP : W.source ≠ Z.source)
     (j : ℕ) (hj : 2 ≤ j) (hjn : j ≤ n) :
@@ -190,7 +190,7 @@ private theorem pair_gain_zero (n : ℕ) (T : Finset World3) (v : List Bool)
       (gain 3 Z.coeff).eval ((v.length+j : ℕ) : ℝ) = 0 := by
   exact pair_gain_zero_of_drift n T v hT h W Z hW hZ
     (pair_common_drift n T v hT h hn W Z hW hZ) hP j hj hjn
-private theorem four_evaluations (β γ : Coeff 3) (t : Fin 4 → ℝ)
+theorem four_evaluations (β γ : Coeff 3) (t : Fin 4 → ℝ)
     (ht : Function.Injective t)
     (he : ∀ i, (gain 3 β).eval (t i) = (gain 3 γ).eval (t i)) : β = γ := by
   apply evaluation_injective 3 4 t ht (by omega)
@@ -992,129 +992,5 @@ theorem mixed_prefix_three_world_exclusion (a₀ j m b : ℝ) (hℓ : m-j ≠ 0)
         simpa [nh,hco W hW] using he.trans (first W₀ hW₀).2.2.symm
       have := mul_right_cancel₀ hn0 eq0
       linarith
-
-
-private theorem losing_pair_of_suffix (n : ℕ) (W Z : World3) (hne : W ≠ Z)
-    (v : List Bool)
-    (he : ∀ u : List Bool, u ≠ [] → u.length ≤ n →
-      readAt W (v ++ u) (v.length + u.length) =
-        readAt Z (v ++ u) (v.length + u.length)) :
-    Losing n {W, Z} v := by
-  induction n generalizing v with
-  | zero => simp [Losing, hne]
-  | succ n ih =>
-    refine ⟨by simp [hne], ?_⟩
-    intro E
-    have hE := he [E] (by simp) (by simp)
-    have hs : responseSlice {W, Z} v E
-        (readAt W (v ++ [E]) (v.length + 1)) = {W, Z} := by
-      ext U
-      simp only [responseSlice, Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
-      constructor
-      · exact And.left
-      · intro hU
-        refine ⟨hU, ?_⟩
-        rcases hU with rfl | rfl
-        · rfl
-        · simpa using hE.symm
-    refine ⟨readAt W (v ++ [E]) (v.length + 1), ?_⟩
-    rw [hs]
-    apply ih
-    intro u hu hn
-    have hh := he ([E] ++ u) (by simp) (by simp; omega)
-    simpa [List.append_assoc, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hh
-
-private theorem jmj_trace_pos (W : World3) (i : Fin 4) :
-    0 < Matrix.trace (acquisition ([true, false, true].take i.val) * W.source) := by
-  have h00 := W.legal.1 0 0
-  have h01 := W.legal.1 0 1
-  have h10 := W.legal.1 1 0
-  have h11 := W.legal.1 1 1
-  fin_cases i <;>
-    norm_num [acquisition, Raw,
-      D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.word,
-      D5.S3.Arith.FibonacciAtomic.SelfCalibratingRawWords.atomic,
-      D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.matrixM,
-      Matrix.mul_apply, Matrix.trace, Fin.sum_univ_two] <;> positivity
-
-private theorem jmj_world_eq_of_source_drift (W Z : World3)
-    (hp : W.source = Z.source) (hd : W.drift = Z.drift)
-    (he : readings W [true, false, true] = readings Z [true, false, true]) : W = Z := by
-  have hc : W.coeff = Z.coeff := by
-    apply four_evaluations W.coeff Z.coeff (fun i : Fin 4 => (i.val : ℝ))
-    · intro i j h
-      apply Fin.ext
-      change (i.val : ℝ) = (j.val : ℝ) at h
-      exact_mod_cast h
-    · intro i
-      have hh := congrFun he i
-      change (gain 3 W.coeff).eval (i.val : ℝ) *
-          Matrix.trace (acquisition ([true, false, true].take i.val) * W.source) + W.drift =
-        (gain 3 Z.coeff).eval (i.val : ℝ) *
-          Matrix.trace (acquisition ([true, false, true].take i.val) * Z.source) + Z.drift at hh
-      rw [← hp, ← hd] at hh
-      exact mul_right_cancel₀ (ne_of_gt (jmj_trace_pos W i)) (add_right_cancel hh)
-  cases W
-  cases Z
-  cases hp
-  cases hc
-  cases hd
-  rfl
-
-/-- Complete native pairs at either fourth child of the actual JMJ history.
-The horizon is arbitrary; at horizon three the gain condition is exactly the
-four zero samples of the two worlds at original clocks six and seven. -/
-theorem jmj_pair_losing_iff (n : ℕ) (hn : 3 ≤ n) (E : Bool) (z v : ℝ)
-    (W Z : World3) (hne : W ≠ Z)
-    (hW : readings W [true, false, true, E] = ![0, 24, 48, z, v])
-    (hZ : readings Z [true, false, true, E] = ![0, 24, 48, z, v]) :
-    Losing n {W, Z} [true, false, true, E] ↔
-      W.drift = Z.drift ∧
-      (∀ j : ℕ, 2 ≤ j → j ≤ n →
-        (gain 3 W.coeff).eval ((4 + j : ℕ) : ℝ) = 0 ∧
-        (gain 3 Z.coeff).eval ((4 + j : ℕ) : ℝ) = 0) ∧
-      (∀ F : Bool, readAt W [true, false, true, E, F] 5 =
-        readAt Z [true, false, true, E, F] 5) := by
-  have hcard : ({W, Z} : Finset World3).card = 2 := by simp [hne]
-  have hmemW : W ∈ ({W, Z} : Finset World3) := by simp
-  have hmemZ : Z ∈ ({W, Z} : Finset World3) := by simp
-  constructor
-  · intro hl
-    have hd := pair_common_drift n {W, Z} [true, false, true, E] hcard hl hn W Z hmemW hmemZ
-    have hp : W.source ≠ Z.source := by
-      intro hp
-      apply hne
-      apply jmj_world_eq_of_source_drift W Z hp hd
-      funext i
-      have hi : i.val < 4 := i.isLt
-      have hw := congrFun hW ⟨i.val, by change i.val < 5; omega⟩
-      have hz := congrFun hZ ⟨i.val, by change i.val < 5; omega⟩
-      have hh := hw.trans hz.symm
-      fin_cases i <;> simpa [readings, readAt] using hh
-    refine ⟨hd, ?_, ?_⟩
-    · intro j hj hjn
-      simpa using pair_gain_zero n {W, Z} [true, false, true, E] hcard hl hn
-        W Z hmemW hmemZ hp j hj hjn
-    · intro F
-      simpa using (losing_pair_suffix n {W, Z} [true, false, true, E] hcard hl
-        [F] (by simp; omega)).2 (by simp) W hmemW Z hmemZ
-  · rintro ⟨hd, hz, hf⟩
-    apply losing_pair_of_suffix n W Z hne
-    intro u hu hun
-    by_cases hu1 : u.length = 1
-    · cases u with
-      | nil => simp at hu1
-      | cons F u =>
-        have hut : u = [] := by simpa using hu1
-        subst u
-        simpa using hf F
-    · have hu2 : 2 ≤ u.length := by
-        have hu0 : u.length ≠ 0 := by simpa using hu
-        omega
-      obtain ⟨hw, hzz⟩ := hz u.length hu2 hun
-      rw [read_concat, read_concat]
-      simp only [List.length_cons, List.length_nil, Nat.reduceAdd]
-      rw [hw, hzz]
-      simpa using hd
 
 end D5.S3.Observer.CubicGain.MixedTripleExclusion
