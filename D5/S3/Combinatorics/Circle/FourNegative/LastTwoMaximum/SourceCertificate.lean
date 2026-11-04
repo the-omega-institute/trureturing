@@ -6,7 +6,7 @@
    utility: none
    digest: Actual-source packet checks with one literal preterminal ear. -/
 import D5.S3.Combinatorics.Circle.FourNegative.LastTwoMaximum.Banks
-import D5.S3.Combinatorics.Circle.FourNegative.LastTwoMaximum.Arithmetic
+import D5.S3.Combinatorics.Circle.FourNegative.LastTwoMaximum.BorrowArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 
 set_option autoImplicit false
@@ -20,8 +20,10 @@ open private x y z A B D L K H SU SV SW vNat quotientT wBit hybridOld hybridNew
 open private firstBank hybridLabels borrowBanks singletonBanks banksWord terminals
   mixedMass masks_masses singleton_masses borrow_inventory singleton_inventory banks_good
   from D5.S3.Combinatorics.Circle.FourNegative.LastTwoMaximum.Banks
-open private singleton_scalar_windows borrow_selector_windows window
+open private singleton_scalar_windows window
   from D5.S3.Combinatorics.Circle.FourNegative.LastTwoMaximum.Arithmetic
+open private borrow_selector_windows
+  from D5.S3.Combinatorics.Circle.FourNegative.LastTwoMaximum.BorrowArithmetic
 open private full from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
 open private size sourceMod base newBase charge nextBase nextNewBase oldValue newValue
   chainLength chainStart chain_values source_signs negatives
