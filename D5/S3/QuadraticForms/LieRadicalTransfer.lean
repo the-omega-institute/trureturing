@@ -15,7 +15,7 @@ The full arbitrary dependent Lie telescopes, exact source reconstruction,
 lawful enrolled readout and variation/sensitivity remain unregistered.
   solvable_of_solvable_kernel: proof_shape: content;
     escape_witness: solvable_of_solvable_kernel;
-    consumers: KMV full quotient kernel (in progress)
+    consumers: NondegenerateDerivationBlocks.Decomposition.normalizedReducedHom_kernel_solvable
   derivedSeriesOfIdeal_map: proof_shape: content;
     escape_witness: derivedSeriesOfIdeal_map; consumers: solvable_map
   solvable_map: proof_shape: bind-only; escape_witness: none;
@@ -34,7 +34,8 @@ import Mathlib.Algebra.Lie.Nilpotent
 Standard solvable-extension and radical arguments use mathlib's actual derived
 series and radical. These are supporting mathematics for the Ma-then-Zhang
 credited KMV evolution-algebra argument, not a claim of a new classical theorem.
-This working module does not yet prove the complete evolution-algebra quotient.
+The actual evolution-algebra quotient is constructed by the consuming
+EvolutionAlgebras.DerivationRadicalQuotient module.
 -/
 
 set_option autoImplicit false

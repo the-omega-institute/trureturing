@@ -10,15 +10,15 @@
 admission_basis: escape-witness
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19944
 utility none: actual classical Lie structure, not a finite certificate or algorithm.
-escape_witness: contracted_double_rotation, ad_square_zero_eq_zero
+escape_witness: isolate_rotation_five, isolate_rotation_three, soFourEquiv
 The proof-shape assessment is the author's and awaits independent whole review.
-  hasTrivialRadical_of_card_ne_four: proof_shape: content;
-    escape_witness: contracted_double_rotation, ad_square_zero_eq_zero;
+  hasTrivialRadical_of_card_ne_four: proof_shape: bind-only;
+    escape_witness: none;
     consumers: so_four_hasTrivialRadical, hasTrivialRadical
   so_four_hasTrivialRadical: proof_shape: bind-only; escape_witness: none;
     consumers: hasTrivialRadical
   hasTrivialRadical: proof_shape: bind-only; escape_witness: none;
-    consumers: KMV full radical-quotient construction (in progress)
+    consumers: DerivationRadicalQuotient.quotient_of_nonzero_squares
 Classical orthogonal structure is credited as classical. The evolution-algebra
 application retains the supplied Ma-then-Zhang credit and makes no priority claim.
 -/
@@ -51,13 +51,13 @@ private def rotation (i j : n) : Orthogonal.so n k :=
     simp [Matrix.transpose_sub, Matrix.transpose_single, neg_sub]⟩
 
 private def rotationProjector (i j : n) (A : Orthogonal.so n k) : Orthogonal.so n k :=
-  -⁅rotation i j, ⁅rotation i j, A⁆⁆
+  -⁅rotation (k := k) i j, ⁅rotation (k := k) i j, A⁆⁆
 
 private theorem rotation_square (i j : n) (hij : i ≠ j) :
     (rotation (k := k) i j).val * (rotation i j).val =
       -(Matrix.single i i 1 + Matrix.single j j 1) := by
   simp [rotation, sub_mul, mul_sub, Matrix.single_mul_single_of_ne,
-    hij, Ne.symm hij]
+    hij, Ne.symm hij] <;> abel
 
 private theorem rotationProjector_entry (i j : n) (hij : i ≠ j)
     (A : Orthogonal.so n k) (r s : n) :
@@ -68,8 +68,10 @@ private theorem rotationProjector_entry (i j : n) (hij : i ≠ j)
       -(X * (X * Y - Y * X) - (X * Y - Y * X) * X) =
       -(X * X * Y) + 2 • (X * Y * X) - Y * (X * X) := by
     noncomm_ring
-  change (-( (rotation i j).val * ((rotation i j).val * A.val - A.val * (rotation i j).val) -
-    ((rotation i j).val * A.val - A.val * (rotation i j).val) * (rotation i j).val)) r s = _
+  change ((-((rotation (k := k) i j).val *
+    ((rotation (k := k) i j).val * A.val - A.val * (rotation (k := k) i j).val) -
+    ((rotation (k := k) i j).val * A.val - A.val * (rotation (k := k) i j).val) *
+      (rotation (k := k) i j).val)) : Matrix n n k) r s = _
   rw [hexpand, rotation_square i j hij]
   simp only [rotation, Matrix.sub_mul, Matrix.mul_sub,
     Matrix.single_mul_mul_single, one_mul, mul_one, Matrix.add_mul, Matrix.mul_add,
@@ -79,7 +81,8 @@ private theorem rotationProjector_entry (i j : n) (hij : i ≠ j)
     by_cases hsi : s = i <;> by_cases hsj : s = j <;>
     simp_all [Matrix.single_apply, Matrix.single_mul_apply_same,
       Matrix.single_mul_apply_of_ne, Matrix.mul_single_apply_same,
-      Matrix.mul_single_apply_of_ne, diagonal_zero, coefficient_skew] <;> ring
+      Matrix.mul_single_apply_of_ne, diagonal_zero, coefficient_skew A i j, eq_comm] <;>
+    (try rw [coefficient_skew A r s]) <;> ring
 
 private theorem rotationProjector_mem (I : LieIdeal k (Orthogonal.so n k))
     {A : Orthogonal.so n k} (hA : A ∈ I) (i j : n) : rotationProjector i j A ∈ I :=
@@ -110,13 +113,26 @@ private theorem isolate_rotation_five (A : Orthogonal.so n k)
           (¬(r = i ∨ r = t) ∧ (s = i ∨ s = t)))) ↔
         (r = i ∧ s = j) ∨ (r = j ∧ s = i) := by
     aesop
+  have hmask (p q u v : Prop) [Decidable p] [Decidable q] [Decidable u]
+      [Decidable v] (x : k) :
+      (if p then (if q then (if u then (if v then x else 0) else 0) else 0) else 0) =
+      if p ∧ q ∧ u ∧ v then x else 0 := by
+    by_cases hp : p <;> by_cases hq : q <;> by_cases hu : u <;> by_cases hv : v <;>
+      simp [hp,hq,hu,hv]
+  simp only [hmask, hsupport]
   by_cases h : (r = i ∧ s = j) ∨ (r = j ∧ s = i)
-  · rcases h with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ <;>
-      simp_all [rotation, Matrix.single_apply, coefficient_skew]
-  · have hn := mt hsupport.mp h
-    simp only [not_and_or] at hn
-    rcases hn with h₁ | h₂ | h₃ | h₄ <;>
-      simp_all [rotation, Matrix.single_apply]
+  · rcases h with ⟨hr,hs⟩ | ⟨hr,hs⟩
+    · subst r; subst s
+      simp [rotation, Matrix.single_apply, hij, Ne.symm hij]
+    · subst r; subst s
+      simp [rotation, Matrix.single_apply, hij, Ne.symm hij, coefficient_skew A i j]
+  · have h₁ : ¬ (i = r ∧ j = s) := by
+      rintro ⟨rfl,rfl⟩
+      exact h (Or.inl ⟨rfl,rfl⟩)
+    have h₂ : ¬ (j = r ∧ i = s) := by
+      rintro ⟨rfl,rfl⟩
+      exact h (Or.inr ⟨rfl,rfl⟩)
+    simp [h,rotation,Matrix.single_apply,h₁,h₂]
 
 private theorem isolate_rotation_three (A : Orthogonal.so n k)
     (i j t : n) (hij : i ≠ j) (hit : i ≠ t) (hjt : j ≠ t)
@@ -129,17 +145,17 @@ private theorem isolate_rotation_three (A : Orthogonal.so n k)
     simpa using hr
   apply Subtype.ext
   ext r s
-  rcases hcover r with rfl | rfl | rfl <;>
-    rcases hcover s with rfl | rfl | rfl <;>
-    simp [rotationProjector_entry, hit, hjt, hij, Ne.symm hit, Ne.symm hjt,
-      Ne.symm hij, rotation, Matrix.single_apply, coefficient_skew]
+  rcases hcover r with hr | hr | hr <;>
+    rcases hcover s with hs | hs | hs <;>
+    simp [hr, hs, rotationProjector_entry, hit, hjt, hij, Ne.symm hit, Ne.symm hjt,
+      Ne.symm hij, rotation, Matrix.single_apply, coefficient_skew A i j, diagonal_zero]
 
 private theorem rotation_neg (i j : n) : rotation (k := k) j i = -rotation i j := by
   apply Subtype.ext
   simp [rotation, neg_sub]
 
 private theorem rotation_adjacent (i j t : n) (hij : i ≠ j) (hjt : j ≠ t)
-    (hit : i ≠ t) : ⁅rotation (k := k) i j, rotation j t⁆ = rotation i t := by
+    (hit : i ≠ t) : ⁅rotation (k := k) i j, rotation j t⁆ = rotation (k := k) i t := by
   apply Subtype.ext
   simp [rotation, Ring.lie_def, sub_mul, mul_sub,
     Matrix.single_mul_single_of_ne, hij, hjt, hit,
@@ -152,10 +168,29 @@ private theorem rotation_self (i : n) : rotation (k := k) i i = 0 := by
 private theorem sum_rotations (A : Orthogonal.so n k) :
     (∑ i, ∑ j, (A.val i j / 2) • rotation i j) = A := by
   apply Subtype.ext
+  change (Orthogonal.so n k).incl (∑ i, ∑ j, (A.val i j / 2) • rotation i j) = A.val
+  simp only [map_sum, map_smul]
+  change (∑ i, ∑ j, (A.val i j / 2) •
+    (Matrix.single i j 1 - Matrix.single j i 1)) = A.val
   ext r s
-  simp only [LieSubalgebra.coe_sum, SetLike.val_smul, rotation, Matrix.sum_apply,
-    Matrix.smul_apply, Matrix.sub_apply, Matrix.single_apply, smul_eq_mul]
-  simp [Finset.sum_sub_distrib, mul_ite, coefficient_skew]
+  simp [Matrix.sum_apply, Matrix.smul_apply, Matrix.sub_apply, Matrix.single_apply,
+    smul_eq_mul, mul_sub, mul_ite, Finset.sum_sub_distrib]
+  have hdelta (f : n → n → k) (r s : n) :
+      (∑ i, ∑ j, if i = r ∧ j = s then f i j else 0) = f r s := by
+    rw [Finset.sum_eq_single r]
+    · simp
+    · intro i hi hir
+      exact Finset.sum_eq_zero (fun j hj => by simp [hir])
+    · simp
+  have hdelta' (f : n → n → k) (r s : n) :
+      (∑ i, ∑ j, if j = r ∧ i = s then f i j else 0) = f s r := by
+    rw [Finset.sum_eq_single s]
+    · simp
+    · intro i hi his
+      exact Finset.sum_eq_zero (fun j hj => by simp [his])
+    · simp
+  simp only [hdelta, hdelta']
+  rw [coefficient_skew A r s]
   ring
 
 private theorem ideal_eq_top_of_rotation_mem (I : LieIdeal k (Orthogonal.so n k))
@@ -237,10 +272,12 @@ theorem isSimple_of_card_ne_four (hn : 3 ≤ Fintype.card n) (hfour : Fintype.ca
           (rotationProjector_mem I (rotationProjector_mem I hAI i t) j t) i u) j v
     have hR : rotation (k := k) i j ∈ I := by
       have h := I.smul_mem (A.val i j)⁻¹ hisolate
+      change (A.val i j)⁻¹ • (A.val i j • rotation i j) ∈ I at h
       simpa only [smul_smul, inv_mul_cancel₀ hijA, one_smul] using h
     exact ideal_eq_top_of_rotation_mem I i j hij hR
   refine ⟨hideal, ?_⟩
   intro habelian
+  letI : IsLieAbelian (Orthogonal.so n k) := habelian
   obtain ⟨i,hi⟩ := exists_outside (∅ : Finset n) (by simp; omega)
   obtain ⟨j,hj⟩ := exists_outside ({i} : Finset n) (by simp; omega)
   have hji : j ≠ i := by simpa using hj
@@ -252,123 +289,14 @@ theorem isSimple_of_card_ne_four (hn : 3 ≤ Fintype.card n) (hfour : Fintype.ca
   have hh := congrArg (fun R : Orthogonal.so n k => R.val i t) hz
   simp [rotation, Matrix.single_apply, Ne.symm ht'.1, ht'.1] at hh
 
-private theorem single_sandwich (A B : Matrix n n k) (i j r s : n) :
-    (A * Matrix.single i j 1 * B : Matrix n n k) r s = A r i * B j s := by
-  have h (x : n) : (A * Matrix.single i j 1 : Matrix n n k) r x =
-      if x = j then A r i else 0 := by
-    by_cases hx : x = j
-    · subst x
-      simp
-    · simp [hx]
-  rw [Matrix.mul_apply]
-  simp_rw [h]
-  simp [ite_mul]
-
-private theorem double_rotation_entry (A : Orthogonal.so n k) (i j r s : n) :
-    (⁅A, ⁅A, rotation i j⁆⁆).val r s =
-      (if s = j then (A.val * A.val) r i else 0) -
-      (if s = i then (A.val * A.val) r j else 0) -
-      2 * (A.val r i * A.val j s - A.val r j * A.val i s) +
-      (if r = i then (A.val * A.val) j s else 0) -
-      (if r = j then (A.val * A.val) i s else 0) := by
-  change (A.val * (A.val * (rotation i j).val - (rotation i j).val * A.val) -
-    (A.val * (rotation i j).val - (rotation i j).val * A.val) * A.val : Matrix n n k) r s = _
-  have he (X Y : Matrix n n k) : X * (X * Y - Y * X) - (X * Y - Y * X) * X =
-      X * X * Y - (X * Y * X + X * Y * X) + Y * (X * X) := by noncomm_ring
-  rw [he]
-  simp only [rotation, Matrix.sub_mul, Matrix.mul_sub, Matrix.sub_apply, Matrix.add_apply]
-  rw [single_sandwich, single_sandwich]
-  by_cases hs : s = j <;> by_cases ht : s = i <;>
-    by_cases hr : r = i <;> by_cases hu : r = j <;>
-    simp_all [Matrix.mul_single_apply_same, Matrix.mul_single_apply_of_ne,
-      Matrix.single_mul_apply_same, Matrix.single_mul_apply_of_ne] <;> ring
-
-private theorem square_transpose (A : Orthogonal.so n k) :
-    (A.val * A.val).transpose = A.val * A.val := by
-  rw [Matrix.transpose_mul, (Orthogonal.mem_so n k A.val).mp A.property, neg_mul_neg]
-
-private theorem contracted_double_rotation (A : Orthogonal.so n k) (r i : n) :
-    ∑ j, (⁅A, ⁅A, rotation i j⁆⁆).val r j =
-      ((Fintype.card n : k) - 4) * (A.val * A.val) r i +
-        if r = i then Matrix.trace (A.val * A.val) else 0 := by
-  simp_rw [double_rotation_entry, diagonal_zero, mul_zero, zero_sub,
-    mul_neg, sub_neg_eq_add]
-  simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib, Finset.sum_const,
-    nsmul_eq_mul, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, ite_true,
-    Finset.card_univ]
-  have hs : (∑ j, A.val r j * A.val i j) = -(A.val * A.val) r i := by
-    calc
-      (∑ j, A.val r j * A.val i j) = ∑ j, -(A.val r j * A.val j i) :=
-        Finset.sum_congr rfl (fun j _ => by rw [coefficient_skew A j i, mul_neg])
-      _ = -(A.val * A.val) r i := by rw [Finset.sum_neg_distrib]; rfl
-  rw [← Finset.mul_sum, hs]
-  have hsym : (A.val * A.val) i r = (A.val * A.val) r i :=
-    congrArg (fun X : Matrix n n k => X r i) (square_transpose A)
-  by_cases hri : r = i
-  · subst r
-    simp only [ite_true, Finset.sum_ite_irrel, Matrix.trace, Matrix.diag_apply]
-    ring
-  · simp only [hri, ite_false, Finset.sum_ite_irrel, Finset.sum_const_zero, hsym]
-    ring
-
-private theorem trace_square_zero_of_ad_square_zero (A : Orthogonal.so n k)
-    (hA : ∀ B : Orthogonal.so n k, ⁅A, ⁅A, B⁆⁆ = 0)
-    (hn : 3 ≤ Fintype.card n) : Matrix.trace (A.val * A.val) = 0 := by
-  have hi (i : n) :
-      ((Fintype.card n : k) - 4) * (A.val * A.val) i i +
-        Matrix.trace (A.val * A.val) = 0 := by
-    simpa [hA] using (contracted_double_rotation A i i).symm
-  have hs : (∑ i, (((Fintype.card n : k) - 4) * (A.val * A.val) i i +
-      Matrix.trace (A.val * A.val))) = 0 := Finset.sum_eq_zero (fun i _ => hi i)
-  rw [Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_const,
-    nsmul_eq_mul, Finset.card_univ] at hs
-  change ((Fintype.card n : k) - 4) * Matrix.trace (A.val * A.val) +
-    (Fintype.card n : k) * Matrix.trace (A.val * A.val) = 0 at hs
-  have ht : (2 * ((Fintype.card n : k) - 2)) * Matrix.trace (A.val * A.val) = 0 := by
-    linear_combination hs
-  have h2 : (Fintype.card n : k) ≠ 2 := by
-    exact_mod_cast (show Fintype.card n ≠ 2 by omega)
-  exact (mul_eq_zero.mp ht).resolve_left (mul_ne_zero (by norm_num) (sub_ne_zero.mpr h2))
-
-private theorem square_zero_of_ad_square_zero (A : Orthogonal.so n k)
-    (hA : ∀ B : Orthogonal.so n k, ⁅A, ⁅A, B⁆⁆ = 0)
-    (hn : 3 ≤ Fintype.card n) (hfour : Fintype.card n ≠ 4) : A.val * A.val = 0 := by
-  have ht := trace_square_zero_of_ad_square_zero A hA hn
-  have h4 : (Fintype.card n : k) ≠ 4 := by exact_mod_cast hfour
-  ext r i
-  have hh : ((Fintype.card n : k) - 4) * (A.val * A.val) r i = 0 := by
-    simpa [hA, ht] using (contracted_double_rotation A r i).symm
-  exact (mul_eq_zero.mp hh).resolve_left (sub_ne_zero.mpr h4)
-
-private theorem ad_square_zero_eq_zero (A : Orthogonal.so n k)
-    (hA : ∀ B : Orthogonal.so n k, ⁅A, ⁅A, B⁆⁆ = 0)
-    (hn : 3 ≤ Fintype.card n) (hfour : Fintype.card n ≠ 4) : A = 0 := by
-  have hs := square_zero_of_ad_square_zero A hA hn hfour
-  apply Subtype.ext
-  ext i j
-  have hh := congrArg (fun B : Orthogonal.so n k => B.val i j) (hA (rotation i j))
-  change (⁅A, ⁅A, rotation i j⁆⁆).val i j = 0 at hh
-  rw [double_rotation_entry] at hh
-  simp [hs, diagonal_zero] at hh
-  exact hh
-
 /-- A standard orthogonal Lie algebra in dimension three or at least five has
 trivial actual solvable radical. This proof works over every characteristic-zero
 field, without algebraic closedness. The dimension-four split case is separate. -/
 theorem hasTrivialRadical_of_card_ne_four
     (hn : 3 ≤ Fintype.card n) (hfour : Fintype.card n ≠ 4) :
     HasTrivialRadical k (Orthogonal.so n k) := by
-  apply (hasTrivialRadical_iff_no_abelian_ideals k (Orthogonal.so n k)).mpr
-  intro I hI
-  letI : IsLieAbelian I := hI
-  apply le_antisymm ?_ bot_le
-  intro A hA
-  change A = 0
-  apply ad_square_zero_eq_zero A ?_ hn hfour
-  intro B
-  have hAB : ⁅A, B⁆ ∈ I := lie_mem_left k (Orthogonal.so n k) I _ _ hA
-  exact congrArg Subtype.val
-    (trivial_lie_zero I I (⟨A, hA⟩ : I) (⟨⁅A, B⁆, hAB⟩ : I))
+  have : IsSimple k (Orthogonal.so n k) := isSimple_of_card_ne_four hn hfour
+  infer_instance
 
 private def skewThree (a b c : k) : Orthogonal.so (Fin 3) k :=
   ⟨!![0,a,b; -a,0,c; -b,-c,0], by

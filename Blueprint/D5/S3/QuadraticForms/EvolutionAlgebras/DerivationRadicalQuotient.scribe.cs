@@ -25,9 +25,44 @@ internal sealed class DerivationRadicalQuotientDocument : IScribeDocumentDefinit
                 "including the actual split dimension-four case. The first isomorphism theorem therefore identifies the " +
                 "kernel with the actual radical and gives the displayed quotient. This is the quotient part of Corollary 8 " +
                 "of the supplied note by Haobo Ma, then Wenlin Zhang. Orthogonal structure and the radical facts are classical. " +
-                "The nonabelian simple-ideal classification and genuine G2 exclusion are separate obligations.")),
-                DescribeRole.Theorem)))));
+                "The actual simple-ideal classification and the literal Serre G2 exclusion are stated separately below."))),
+                DescribeRole.Theorem),
+            Entry("simple_ideal_type", "Every actual nonabelian simple ideal", IdealContext(SimpleType()),
+                "Every actual nonabelian simple Lie ideal of the actual derivation algebra is Lie equivalent to standard so3 or to so_m for m at least five. A solvable kernel cannot contain a nonzero simple ideal. A nonzero coordinate projection has ideal image because the full map is surjective; simplicity of the coordinate then gives the equivalence. If that coordinate has size four, the proved actual so4 equivalence with so3 times so3 supplies a nonzero size-three projection. This concerns ideals, not arbitrary subalgebras or faithful actions."),
+            Entry("simple_ideal_not_sl3", "Exclusion of actual sl3", IdealContext(Excluded(Call("SpecialLinear.sl", Call("Fin", D(3)), X("k")))),
+                "No such simple ideal is Lie equivalent to the actual standard special linear algebra sl3. Its proved dimension eight is not m choose two for any m. The simple-ideal type theorem supplies an actual orthogonal equivalence before the dimension argument."),
+            Entry("simple_ideal_not_g2", "Exclusion of the actual Serre G2", IdealContext(Excluded(Call("LieAlgebra.g2", X("k")))),
+                "The target is literally mathlib's LieAlgebra.g₂ k, defined by the G2 Cartan matrix and Serre relations. The companion SerreG2MatrixImage source constructs a surjection from this actual object to a proved fourteen-dimensional matrix image. A hypothetical ideal equivalence transports simplicity to the Serre object, so its nonzero surjection is injective and gives a proved correspondence. Fourteen is not m choose two. No unconditional Serre dimension theorem, assumed equivalence or dimension-tagged proxy is used."))));
 
+    private static DocumentBlock.Describe Entry(string name, string title, Formula formula, string text) =>
+        Describe.Lean(DescribeId.Create(name.Replace('_','-').ToLowerInvariant()), DeclarationHandle.Create(
+            "D5/S3/QuadraticForms/EvolutionAlgebras/DerivationRadicalQuotient." + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+    private static Formula Der => Call("derivations", X("mu"));
+    private static Formula SimpleType() => Some(X("m"), Call("Nat"), And(
+        new Formula.Logic(Eq(X("m"), D(3)), FormulaLogicOperator.Or,
+            new Formula.Relation(D(5), FormulaRelationOperator.LessThanOrEqual, X("m"))),
+        Call("Nonempty", Call("LieEquiv", X("k"), X("I"),
+            Call("LieAlgebra.Orthogonal.so", Call("Fin", X("m")), X("k"))))));
+    private static Formula Excluded(Formula target) => Seq(Neg, Call("Nonempty",
+        Call("LieEquiv", X("k"), X("I"), target)));
+    private static Formula Domain(Formula body)
+    {
+        body = Imp(Eq(Call("LinearMap.ker", X("mu")), Call("bot")), body);
+        body = Imp(Call("IsEvolutionAlgebra", X("mu")), body);
+        body = All(X("mu"), Call("LinearMap", X("k"), X("V"), Call("LinearMap", X("k"), X("V"), X("V"))), body);
+        body = Instance(Call("FiniteDimensional", X("k"), X("V")), body);
+        body = Instance(Call("Module", X("k"), X("V")), body);
+        body = Instance(Call("AddCommGroup", X("V")), body);
+        body = All(X("V"), Call("Type"), body);
+        body = Instance(Call("CharZero", X("k")), body);
+        body = Instance(Call("IsAlgClosed", X("k")), body);
+        body = Instance(Call("Field", X("k")), body);
+        return All(X("k"), Call("Type"), body);
+    }
+    private static Formula IdealContext(Formula body) => Domain(All(X("I"),
+        Call("LieIdeal", X("k"), Der), Instance(Call("LieAlgebra.IsSimple", X("k"), X("I")), body)));
     private static Formula Result()
     {
         var k = X("k"); var v = X("V"); var mu = X("mu");

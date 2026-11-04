@@ -3,14 +3,15 @@
    mirror-B: D5/B/S3/QuadraticForms/SerreG2MatrixTable
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/QuadraticForms/SerreG2MatrixImage.serreMap_surjective; premises=D5/S3/QuadraticForms/SerreG2MatrixTable.bracket
    digest: Integral matrix relations for the seven-dimensional G2 representation. -/
 
 /-
 admission_basis: escape-witness
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19944
-utility none: integral Lie representation data consumed by scalar extension and
-actual Serre correspondence. These are classical G2 matrices. The evolution
+utility numeric-reduction: the integral bracket identities are discharged by kernel
+reduction of scalar entries and consumed by actual Serre surjectivity, through
+scalar extension, Lie closure, the Serre relations and the fourteen word images. These are classical G2 matrices. The evolution
 algebra application credits Haobo Ma, then Wenlin Zhang; no priority is claimed.
 -/
 
@@ -20,7 +21,6 @@ import Mathlib.Tactic.FinCases
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option Elab.async false
 
 namespace D5.S3.QuadraticForms.SerreG2MatrixTable
 attribute [local instance 100] LieRing.ofAssociativeRing

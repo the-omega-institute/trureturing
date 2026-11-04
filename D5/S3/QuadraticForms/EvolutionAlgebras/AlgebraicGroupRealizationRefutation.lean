@@ -49,7 +49,7 @@ open D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionAutomorphismTangentBridge
 namespace D5.S3.QuadraticForms.EvolutionAlgebras.AlgebraicGroupRealizationRefutation.Dimensions
 attribute [local instance 100] LieRing.ofAssociativeRing
 open LieAlgebra
-variable {k : Type} [Field k] [CharZero k]
+variable {k : Type*} [Field k] [CharZero k]
 
 private def upperMap (m : ℕ) : Orthogonal.so (Fin m) k →ₗ[k] ({p : Fin m × Fin m // p.1 < p.2} → k) :=
   LinearMap.pi fun p => (LinearMap.proj p.val.2).comp
