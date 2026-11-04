@@ -276,6 +276,170 @@ private theorem rotation_sl2 {T : Type*} [LieRing T] [LieAlgebra ℂ T]
 
 variable {K : Type u} [LieRing K] [LieAlgebra ℝ K] [FiniteDimensional ℝ K]
 attribute [local instance] LieRing.ofAssociativeRing
+/-- No orthogonal complement survives a least-frequency rotation subalgebra. -/
+private theorem minimum_frequency_span_eq_top
+    (B : InnerProductSpace.Core ℝ K)
+    (hinv : ∀ x y z : K, B.inner ⁅x,y⁆ z = -B.inner y ⁅x,z⁆)
+    (a u v : K) (ha : a ≠ 0)
+    (hcent : ∀ z : K, ⁅a,z⁆ = 0 → ∃ c : ℝ, z = c • a)
+    (μ : ℝ) (hμ : 0 < μ)
+    (hau : ⁅a,u⁆ = μ • v) (hav : ⁅a,v⁆ = -μ • u) (huv : ⁅u,v⁆ = μ • a)
+    (hmin : ∀ (ρ : ℝ) (x : K), 0 < ρ → x ≠ 0 →
+      ⁅a,⁅a,x⁆⁆ = -(ρ^2) • x → μ ≤ ρ) :
+    Submodule.span ℝ {a,u,v} = ⊤ := by
+  classical
+  let : NormedAddCommGroup K := B.toNormedAddCommGroup
+  let : InnerProductSpace ℝ K := InnerProductSpace.ofCore B.toCore
+  let P : Submodule ℝ K := Submodule.span ℝ {a,u,v}
+  have haP : a ∈ P := Submodule.subset_span (by simp)
+  have huP : u ∈ P := Submodule.subset_span (by simp)
+  have hvP : v ∈ P := Submodule.subset_span (by simp)
+  have hgen (x : K) (hx : x ∈ ({a,u,v} : Set K))
+      (y : K) (hy : y ∈ ({a,u,v} : Set K)) : ⁅x,y⁆ ∈ P := by
+    simp only [Set.mem_insert_iff,Set.mem_singleton_iff] at hx hy
+    rcases hx with rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl
+    all_goals first
+      | simpa only [lie_self] using P.zero_mem
+      | simpa only [hau] using P.smul_mem μ hvP
+      | simpa only [hav] using P.smul_mem (-μ) huP
+      | simpa only [huv] using P.smul_mem μ haP
+      | rw [← lie_skew]; exact P.neg_mem (by
+          first | simpa only [hau] using P.smul_mem μ hvP
+                | simpa only [hav] using P.smul_mem (-μ) huP
+                | simpa only [huv] using P.smul_mem μ haP)
+  have hclosed {x y : K} (hx : x ∈ P) (hy : y ∈ P) : ⁅x,y⁆ ∈ P := by
+    induction hx using Submodule.span_induction generalizing y with
+    | mem x hx =>
+      induction hy using Submodule.span_induction with
+      | mem y hy => exact hgen x hx y hy
+      | zero => simpa using P.zero_mem
+      | add y z _ _ hy hz => simpa [lie_add] using P.add_mem hy hz
+      | smul c y _ hy => simpa [lie_smul] using P.smul_mem c hy
+    | zero => simpa using P.zero_mem
+    | add x z _ _ hx hz => simpa [add_lie] using P.add_mem (hx hy) (hz hy)
+    | smul c x _ hx => simpa [smul_lie] using P.smul_mem c (hx hy)
+  let S : LieSubalgebra ℝ K := { P with lie_mem' := hclosed }
+  let M : LieSubmodule ℝ S K :=
+    { Pᗮ with
+      lie_mem := by
+        intro s m hm
+        apply (P.mem_orthogonal' _).mpr
+        intro t ht
+        change ⟪⁅(s : K),m⁆,t⟫_ℝ = 0
+        rw [hinv]
+        have hs : (s : K) ∈ P := s.property
+        rw [(P.mem_orthogonal' m).mp hm ⁅(s : K),t⁆ (hclosed hs ht),neg_zero] }
+  have hMzero : Subsingleton M := by
+    by_contra htriv
+    let : Nontrivial M := not_subsingleton_iff_nontrivial.mp htriv
+    let aS : S := ⟨a,haP⟩
+    let uS : S := ⟨u,huP⟩
+    let vS : S := ⟨v,hvP⟩
+    have haSn : aS ≠ 0 := fun hz => ha (congrArg Subtype.val hz)
+    have hAU : ⁅aS,uS⁆ = μ • vS := Subtype.ext hau
+    have hAV : ⁅aS,vS⁆ = -μ • uS := Subtype.ext hav
+    have hUV : ⁅uS,vS⁆ = μ • aS := Subtype.ext huv
+    have hμc : (μ : ℂ) ≠ 0 := by exact_mod_cast hμ.ne'
+    let ac : ℂ ⊗[ℝ] S := (μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ aS)
+    let uc : ℂ ⊗[ℝ] S := (μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ uS)
+    let vc : ℂ ⊗[ℝ] S := (μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ vS)
+    have hbase (x y z : S) (h : ⁅x,y⁆ = μ • z) :
+        ⁅(μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ[ℝ] x),(μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ[ℝ] y)⁆ =
+          (μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ[ℝ] z) := by
+      simp only [TensorProduct.smul_tmul',smul_eq_mul,mul_one,
+        LieAlgebra.ExtendScalars.bracket_tmul,h]
+      rw [TensorProduct.tmul_smul,TensorProduct.smul_tmul']
+      apply congrArg (fun c : ℂ => c ⊗ₜ[ℝ] z)
+      change (μ : ℂ)*((μ : ℂ)⁻¹*(μ : ℂ)⁻¹) = (μ : ℂ)⁻¹
+      field_simp
+    have hacuc : ⁅ac,uc⁆ = vc := hbase aS uS vS hAU
+    have hacvc : ⁅ac,vc⁆ = -uc := by
+      have hh : ⁅aS,vS⁆ = μ • (-uS) := by simpa using hAV
+      simpa only [ac,vc,uc,TensorProduct.tmul_neg,smul_neg] using hbase aS vS (-uS) hh
+    have hucvc : ⁅uc,vc⁆ = ac := hbase uS vS aS hUV
+    have hacn : ac ≠ 0 := by
+      apply smul_ne_zero (inv_ne_zero hμc)
+      intro hz
+      apply haSn
+      have hh := congrArg (rpart (M := S)) hz
+      simpa using hh
+    let H : ℂ ⊗[ℝ] S := (2*Complex.I) • ac
+    let E : ℂ ⊗[ℝ] S := uc + Complex.I • vc
+    let F : ℂ ⊗[ℝ] S := -uc + Complex.I • vc
+    have t : IsSl2Triple H E F := rotation_sl2 ac uc vc hacn hacuc hacvc hucvc
+    have hCpos : 0 < finrank ℂ (ℂ ⊗[ℝ] M) := by
+      rw [Module.finrank_baseChange]
+      exact finrank_pos
+    let : Nontrivial (ℂ ⊗[ℝ] M) := Module.nontrivial_of_finrank_pos hCpos
+    obtain ⟨w,hwn,hw⟩ := exists_small_weight (V := ℂ ⊗[ℝ] M) t
+    have hzero (m : M) (hm : ⁅aS,m⁆ = 0) : m = 0 := by
+      have hh : ⁅a,(m : K)⁆ = 0 := congrArg Subtype.val hm
+      obtain ⟨c,hc⟩ := hcent m hh
+      have hp := (P.mem_orthogonal' (m : K)).mp m.property a haP
+      rw [hc,real_inner_smul_left] at hp
+      have hnn : ⟪a,a⟫_ℝ ≠ 0 := fun hh => ha (B.definite a hh)
+      have hc0 : c = 0 := (mul_eq_zero.mp hp).resolve_right hnn
+      apply Subtype.ext
+      simpa [hc0] using hc
+    have hHaction : ⁅H,w⁆ = ((2*Complex.I)/(μ : ℂ)) • ⁅(1 : ℂ) ⊗ₜ[ℝ] aS,w⁆ := by
+      simp [H,ac,smul_lie,smul_smul,div_eq_mul_inv]
+    have hscalar : (2*Complex.I)/(μ : ℂ) ≠ 0 :=
+      div_ne_zero (mul_ne_zero (by norm_num) Complex.I_ne_zero) hμc
+    have hr := (part_bracket aS w).1
+    have hi := (part_bracket aS w).2
+    rcases hw with hw | hw
+    · rw [hHaction] at hw
+      have hz : ⁅(1 : ℂ) ⊗ₜ[ℝ] aS,w⁆ = 0 :=
+        (smul_eq_zero.mp hw).resolve_left hscalar
+      have hrz : rpart w = 0 := hzero _ (by rw [← hr,hz]; simp)
+      have hiz : ipart w = 0 := hzero _ (by rw [← hi,hz]; simp)
+      exact hwn (by rw [decompose w,hrz,hiz]; simp)
+    · rw [hHaction] at hw
+      have hc : ((2*Complex.I)/(μ : ℂ))⁻¹ = -(μ : ℂ)*Complex.I/2 := by
+        field_simp
+        simp [Complex.I_sq]
+      have had : ⁅(1 : ℂ) ⊗ₜ[ℝ] aS,w⁆ = (-(μ : ℂ)*Complex.I/2) • w := by
+        have hh := congrArg (fun z => ((2*Complex.I)/(μ : ℂ))⁻¹ • z) hw
+        rw [smul_smul,inv_mul_cancel₀ hscalar,one_smul,hc] at hh
+        exact hh
+      have hparts := part_smul (-(μ : ℂ)*Complex.I/2) w
+      have hreal : ⁅aS,rpart w⁆ = (μ/2) • ipart w := by
+        rw [← hr,had,hparts.1]
+        simp [neg_div,neg_smul]
+      have himag : ⁅aS,ipart w⁆ = -(μ/2) • rpart w := by
+        rw [← hi,had,hparts.2]
+        simp [neg_div,neg_smul]
+      have hrr : ⁅a,⁅a,((rpart w : M) : K)⁆⁆ = -((μ/2)^2) • ((rpart w : M) : K) := by
+        have hh : ⁅aS,⁅aS,rpart w⁆⁆ = -((μ/2)^2) • rpart w := by
+          rw [hreal,lie_smul,himag,smul_smul]
+          congr 1
+          ring
+        exact congrArg Subtype.val hh
+      have hii : ⁅a,⁅a,((ipart w : M) : K)⁆⁆ = -((μ/2)^2) • ((ipart w : M) : K) := by
+        have hh : ⁅aS,⁅aS,ipart w⁆⁆ = -((μ/2)^2) • ipart w := by
+          rw [himag,lie_smul,hreal,smul_smul]
+          congr 1
+          ring
+        exact congrArg Subtype.val hh
+      have hm : μ ≤ μ/2 := by
+        by_cases hz : rpart w = 0
+        · have hin : ((ipart w : M) : K) ≠ 0 := by
+            intro hi0
+            have hiz : ipart w = 0 := Subtype.ext hi0
+            exact hwn (by rw [decompose w,hz,hiz]; simp)
+          exact hmin (μ/2) _ (by linarith) hin hii
+        · have hrn : ((rpart w : M) : K) ≠ 0 := fun hh => hz (Subtype.ext hh)
+          exact hmin (μ/2) _ (by linarith) hrn hrr
+      linarith
+  have hperp : Pᗮ = ⊥ := by
+    apply le_antisymm ?_ bot_le
+    intro x hx
+    change x = 0
+    have hz : (⟨x,hx⟩ : M) = 0 := Subsingleton.elim _ _
+    exact congrArg Subtype.val hz
+  have hPtop : P = ⊤ := Submodule.orthogonal_eq_bot_iff.mp hperp
+  exact hPtop
+
 /-- A positive invariant metric and a one-dimensional centralizer force dimension one or three. -/
 theorem finrank_eq_one_or_three (B : InnerProductSpace.Core ℝ K)
     (hinv : ∀ x y z : K, B.inner ⁅x,y⁆ z = -B.inner y ⁅x,z⁆)
@@ -283,8 +447,8 @@ theorem finrank_eq_one_or_three (B : InnerProductSpace.Core ℝ K)
     (hcent : ∀ z : K, ⁅a,z⁆ = 0 → ∃ c : ℝ, z = c • a) :
     finrank ℝ K = 1 ∨ finrank ℝ K = 3 := by
   classical
-  letI : NormedAddCommGroup K := B.toNormedAddCommGroup
-  letI : InnerProductSpace ℝ K := InnerProductSpace.ofCore B.toCore
+  let : NormedAddCommGroup K := B.toNormedAddCommGroup
+  let : InnerProductSpace ℝ K := InnerProductSpace.ofCore B.toCore
   let br : K →ₗ[ℝ] K →ₗ[ℝ] K := (LieAlgebra.ad ℝ K).toLinearMap
   by_cases hD : br a = 0
   · left
@@ -327,157 +491,12 @@ theorem finrank_eq_one_or_three (B : InnerProductSpace.Core ℝ K)
   change ⁅u,v⁆ = μ • a' at huv
   change ∀ (ρ : ℝ) (x : K), 0 < ρ → x ≠ 0 → ⁅a',⁅a',x⁆⁆ = -(ρ^2) • x → μ ≤ ρ at hmin
   let P : Submodule ℝ K := Submodule.span ℝ {a',u,v}
-  have haP : a' ∈ P := Submodule.subset_span (by simp)
-  have huP : u ∈ P := Submodule.subset_span (by simp)
-  have hvP : v ∈ P := Submodule.subset_span (by simp)
-  have hgen (x : K) (hx : x ∈ ({a',u,v} : Set K))
-      (y : K) (hy : y ∈ ({a',u,v} : Set K)) : ⁅x,y⁆ ∈ P := by
-    simp only [Set.mem_insert_iff,Set.mem_singleton_iff] at hx hy
-    rcases hx with rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl
-    all_goals first
-      | simpa only [lie_self] using P.zero_mem
-      | simpa only [hau] using P.smul_mem μ hvP
-      | simpa only [hav] using P.smul_mem (-μ) huP
-      | simpa only [huv] using P.smul_mem μ haP
-      | rw [← lie_skew]; exact P.neg_mem (by
-          first | simpa only [hau] using P.smul_mem μ hvP
-                | simpa only [hav] using P.smul_mem (-μ) huP
-                | simpa only [huv] using P.smul_mem μ haP)
-  have hclosed {x y : K} (hx : x ∈ P) (hy : y ∈ P) : ⁅x,y⁆ ∈ P := by
-    induction hx using Submodule.span_induction generalizing y with
-    | mem x hx =>
-      induction hy using Submodule.span_induction with
-      | mem y hy => exact hgen x hx y hy
-      | zero => simpa using P.zero_mem
-      | add y z _ _ hy hz => simpa [lie_add] using P.add_mem hy hz
-      | smul c y _ hy => simpa [lie_smul] using P.smul_mem c hy
-    | zero => simpa using P.zero_mem
-    | add x z _ _ hx hz => simpa [add_lie] using P.add_mem (hx hy) (hz hy)
-    | smul c x _ hx => simpa [smul_lie] using P.smul_mem c (hx hy)
-  let S : LieSubalgebra ℝ K := { P with lie_mem' := hclosed }
-  let M : LieSubmodule ℝ S K :=
-    { Pᗮ with
-      lie_mem := by
-        intro s m hm
-        apply (P.mem_orthogonal' _).mpr
-        intro t ht
-        change ⟪⁅(s : K),m⁆,t⟫_ℝ = 0
-        rw [hinv]
-        have hs : (s : K) ∈ P := s.property
-        rw [(P.mem_orthogonal' m).mp hm ⁅(s : K),t⁆ (hclosed hs ht),neg_zero] }
-  have hMzero : Subsingleton M := by
-    by_contra htriv
-    letI : Nontrivial M := not_subsingleton_iff_nontrivial.mp htriv
-    let aS : S := ⟨a',haP⟩
-    let uS : S := ⟨u,huP⟩
-    let vS : S := ⟨v,hvP⟩
-    have haSn : aS ≠ 0 := by
-      intro hz
-      have hh := congrArg (fun x : S => ‖(x : K)‖) hz
-      change ‖a'‖ = ‖(0 : K)‖ at hh
-      simpa [haunit] using hh
-    have hAU : ⁅aS,uS⁆ = μ • vS := Subtype.ext hau
-    have hAV : ⁅aS,vS⁆ = -μ • uS := Subtype.ext hav
-    have hUV : ⁅uS,vS⁆ = μ • aS := Subtype.ext huv
-    have hμc : (μ : ℂ) ≠ 0 := by exact_mod_cast hμ.ne'
-    let ac : ℂ ⊗[ℝ] S := (μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ aS)
-    let uc : ℂ ⊗[ℝ] S := (μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ uS)
-    let vc : ℂ ⊗[ℝ] S := (μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ vS)
-    have hbase (x y z : S) (h : ⁅x,y⁆ = μ • z) :
-        ⁅(μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ[ℝ] x),(μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ[ℝ] y)⁆ =
-          (μ : ℂ)⁻¹ • ((1 : ℂ) ⊗ₜ[ℝ] z) := by
-      simp only [TensorProduct.smul_tmul',smul_eq_mul,mul_one,
-        LieAlgebra.ExtendScalars.bracket_tmul,h]
-      rw [TensorProduct.tmul_smul,TensorProduct.smul_tmul']
-      apply congrArg (fun c : ℂ => c ⊗ₜ[ℝ] z)
-      change (μ : ℂ)*((μ : ℂ)⁻¹*(μ : ℂ)⁻¹) = (μ : ℂ)⁻¹
-      field_simp
-    have hacuc : ⁅ac,uc⁆ = vc := hbase aS uS vS hAU
-    have hacvc : ⁅ac,vc⁆ = -uc := by
-      have hh : ⁅aS,vS⁆ = μ • (-uS) := by simpa using hAV
-      simpa only [ac,vc,uc,TensorProduct.tmul_neg,smul_neg] using hbase aS vS (-uS) hh
-    have hucvc : ⁅uc,vc⁆ = ac := hbase uS vS aS hUV
-    have hvcuc : ⁅vc,uc⁆ = -ac := by rw [← lie_skew,hucvc]
-    have hacn : ac ≠ 0 := by
-      apply smul_ne_zero (inv_ne_zero hμc)
-      intro hz
-      apply haSn
-      have hh := congrArg (rpart (M := S)) hz
-      simpa using hh
-    let H : ℂ ⊗[ℝ] S := (2*Complex.I) • ac
-    let E : ℂ ⊗[ℝ] S := uc + Complex.I • vc
-    let F : ℂ ⊗[ℝ] S := -uc + Complex.I • vc
-    have t : IsSl2Triple H E F := rotation_sl2 ac uc vc hacn hacuc hacvc hucvc
-    have hCpos : 0 < finrank ℂ (ℂ ⊗[ℝ] M) := by
-      rw [Module.finrank_baseChange]
-      exact finrank_pos
-    letI : Nontrivial (ℂ ⊗[ℝ] M) := Module.nontrivial_of_finrank_pos hCpos
-    obtain ⟨w,hwn,hw⟩ := exists_small_weight (V := ℂ ⊗[ℝ] M) t
-    have hzero (m : M) (hm : ⁅aS,m⁆ = 0) : m = 0 := by
-      have hh : ⁅a',(m : K)⁆ = 0 := congrArg Subtype.val hm
-      obtain ⟨c,hc⟩ := hcent' m hh
-      have hp := (P.mem_orthogonal' (m : K)).mp m.property a' haP
-      rw [hc,real_inner_smul_left,real_inner_self_eq_norm_sq,haunit] at hp
-      have hc0 : c = 0 := by simpa using hp
-      apply Subtype.ext
-      simpa [hc0] using hc
-    have hHaction : ⁅H,w⁆ = ((2*Complex.I)/(μ : ℂ)) • ⁅(1 : ℂ) ⊗ₜ[ℝ] aS,w⁆ := by
-      simp [H,ac,smul_lie,smul_smul,div_eq_mul_inv]
-    have hscalar : (2*Complex.I)/(μ : ℂ) ≠ 0 :=
-      div_ne_zero (mul_ne_zero (by norm_num) Complex.I_ne_zero) hμc
-    have hr := (part_bracket aS w).1
-    have hi := (part_bracket aS w).2
-    rcases hw with hw | hw
-    · rw [hHaction] at hw
-      have hz : ⁅(1 : ℂ) ⊗ₜ[ℝ] aS,w⁆ = 0 :=
-        (smul_eq_zero.mp hw).resolve_left hscalar
-      have hrz : rpart w = 0 := hzero _ (by rw [← hr,hz]; simp)
-      have hiz : ipart w = 0 := hzero _ (by rw [← hi,hz]; simp)
-      exact hwn (by rw [decompose w,hrz,hiz]; simp)
-    · rw [hHaction] at hw
-      have hc : ((2*Complex.I)/(μ : ℂ))⁻¹ = -(μ : ℂ)*Complex.I/2 := by
-        field_simp
-        simp [Complex.I_sq]
-      have had : ⁅(1 : ℂ) ⊗ₜ[ℝ] aS,w⁆ = (-(μ : ℂ)*Complex.I/2) • w := by
-        have hh := congrArg (fun z => ((2*Complex.I)/(μ : ℂ))⁻¹ • z) hw
-        rw [smul_smul,inv_mul_cancel₀ hscalar,one_smul,hc] at hh
-        exact hh
-      have hparts := part_smul (-(μ : ℂ)*Complex.I/2) w
-      have hreal : ⁅aS,rpart w⁆ = (μ/2) • ipart w := by
-        rw [← hr,had,hparts.1]
-        simp [neg_div,neg_smul]
-      have himag : ⁅aS,ipart w⁆ = -(μ/2) • rpart w := by
-        rw [← hi,had,hparts.2]
-        simp [neg_div,neg_smul]
-      have hrr : ⁅a',⁅a',((rpart w : M) : K)⁆⁆ = -((μ/2)^2) • ((rpart w : M) : K) := by
-        have hh : ⁅aS,⁅aS,rpart w⁆⁆ = -((μ/2)^2) • rpart w := by
-          rw [hreal,lie_smul,himag,smul_smul]
-          congr 1
-          ring
-        exact congrArg Subtype.val hh
-      have hii : ⁅a',⁅a',((ipart w : M) : K)⁆⁆ = -((μ/2)^2) • ((ipart w : M) : K) := by
-        have hh : ⁅aS,⁅aS,ipart w⁆⁆ = -((μ/2)^2) • ipart w := by
-          rw [himag,lie_smul,hreal,smul_smul]
-          congr 1
-          ring
-        exact congrArg Subtype.val hh
-      have hm : μ ≤ μ/2 := by
-        by_cases hz : rpart w = 0
-        · have hin : ((ipart w : M) : K) ≠ 0 := by
-            intro hi0
-            have hiz : ipart w = 0 := Subtype.ext hi0
-            exact hwn (by rw [decompose w,hz,hiz]; simp)
-          exact hmin (μ/2) _ (by linarith) hin hii
-        · have hrn : ((rpart w : M) : K) ≠ 0 := fun hh => hz (Subtype.ext hh)
-          exact hmin (μ/2) _ (by linarith) hrn hrr
-      linarith
-  have hperp : Pᗮ = ⊥ := by
-    apply le_antisymm ?_ bot_le
-    intro x hx
-    change x = 0
-    have hz : (⟨x,hx⟩ : M) = 0 := Subsingleton.elim _ _
-    exact congrArg Subtype.val hz
-  have hPtop : P = ⊤ := Submodule.orthogonal_eq_bot_iff.mp hperp
+  have ha'n : a' ≠ 0 := by
+    intro hz
+    have hh := congrArg norm hz
+    simpa [haunit] using hh
+  have hPtop : P = ⊤ := minimum_frequency_span_eq_top B hinv a' u v ha'n
+    hcent' μ hμ hau hav huv hmin
   have hua0 : ⟪u,a'⟫_ℝ = 0 := by rw [real_inner_comm]; exact hau0
   have hva0 : ⟪v,a'⟫_ℝ = 0 := by rw [real_inner_comm]; exact hav0
   have hvu0 : ⟪v,u⟫_ℝ = 0 := by rw [real_inner_comm]; exact huv0
