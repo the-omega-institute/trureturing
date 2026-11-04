@@ -11,12 +11,13 @@ import D5.S3.Quantum.Fermionic.BcGhostBRST
 /-!
 # The half-normal form of the original cubic ghost charge
 
-SOURCE-ONLY DRAFT: no Lean elaboration or kernel acceptance is asserted here.
+The original cubic charge equals the half-normal sum on every algebraic ghost
+state. The ordered terms and their joint expansion have statewise finite support.
 
-The outer ordering and half coefficient reuse the completed 2026-10-12
+The outer ordering and half coefficient reuse the retained
 `LatticeBcGhostBrstCharge.N`/`A` source mechanism (retained source SHA256
 `c86ba73030f046ed86c83c5e4103a9970910a7b6c83eb1f76860c284b8ccd3a8`).
-Only the PRESENT `CountableOccupationFock.Fock`, `BcGhostFock.b/c`,
+Only the original `CountableOccupationFock.Fock`, `BcGhostFock.b/c`,
 `BcGhostVirasoro.L` and `BcGhostBRST.Qg` occur in this module. The historical
 namespace hierarchy is neither imported nor recreated.
 
@@ -27,10 +28,6 @@ Retain the original ghost-source attribution and the Scott Carnahan/vertexAlg
 Apache-2.0 attribution of the related field/normal-product constructions
 (vertexAlg revision 4453e34ec390e82a0c789c731ada8f9a6e86bdea), as recorded in
 the supplied `BcGhostStateField` source. No literature novelty is claimed.
-
-Algebraic normalization checks, using exact occupation signs, give zero on the
-vacuum, `-2 • ket {0,3} + ket {1,2}` on `ket {0}`, `ket {1,3}` on `ket {1}`,
-and `2 • ket {1,5}` on `ket {3}` for both displayed charges.
 
 The only reindexing below is `(n,q) ↦ (-n,q)`. It follows the two-sided support
 proof for the actual ordered term and the joint support proof for its expansion.
