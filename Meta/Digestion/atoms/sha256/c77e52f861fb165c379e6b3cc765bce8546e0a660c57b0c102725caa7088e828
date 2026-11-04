@@ -1,0 +1,90 @@
+**Definition 4.1 (All sixty stabilizer vectors).** Each row of the first
+table specifies the three signed nonidentity elements of a stabilizer
+group $G_i$, with identity implicit. For a signed Pauli $\epsilon AB$
+in that row put
+
+$$
+\tau_i=\frac14\left(I\otimes I+
+\sum_{\epsilon AB\in G_i\setminus\{I\otimes I\}}
+\epsilon A\otimes B\right),\qquad
+p_i(4j+k)=\frac{1+\sum_{\epsilon AB\in G_i\setminus\{I\otimes I\}}
+\epsilon\chi_A(j)\chi_B(k)}{16},
+$$
+
+where $\chi_I=1$, $\chi_X(q,p)=(-1)^p$,
+$\chi_Y(q,p)=(-1)^{q+p}$ and $\chi_Z(q,p)=(-1)^q$.
+Thus the displayed Wigner vector is also determined directly by the
+signed group; indices in every subsequent mixture refer to this table.
+The table includes entangled stabilizers as well as product stabilizers.
+Completeness follows by enumerating the maximal commuting unsigned Pauli
+triples: the fifteen nonidentity labels each commute with six distinct
+nonidentity labels, and each triple accounts for six ordered pairs,
+giving fifteen triples. Each has four consistent sign choices, hence
+sixty distinct rank-one projectors. The rows give all these choices;
+distinctness also follows from Pauli trace orthogonality. This is the
+same signed-commuting-generator classification expressed by
+`Enumeration.candidates`, `stabilizer_two_generators` and `projector_wigner`
+in [QubitWignerDistanceTensorRules](../../../D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules.lean).
+
+| $i$ | Signed nonidentity group elements | $p_i$ in coordinate order |
+| --- | --- | --- |
+| 0 | +IZ +ZI +ZZ | 1/4 1/4 0 0 1/4 1/4 0 0 0 0 0 0 0 0 0 0 |
+| 1 | +IZ +XI +XZ | 1/4 1/4 0 0 0 0 0 0 1/4 1/4 0 0 0 0 0 0 |
+| 2 | +IX +ZI +ZX | 1/4 0 1/4 0 1/4 0 1/4 0 0 0 0 0 0 0 0 0 |
+| 3 | +IX +XI +XX | 1/4 0 1/4 0 0 0 0 0 1/4 0 1/4 0 0 0 0 0 |
+| 4 | +IZ +YI +YZ | 1/4 1/4 0 0 0 0 0 0 0 0 0 0 1/4 1/4 0 0 |
+| 5 | +XX -YY +ZZ | 1/8 1/8 1/8 -1/8 1/8 1/8 -1/8 1/8 1/8 -1/8 1/8 1/8 -1/8 1/8 1/8 1/8 |
+| 6 | +IY +ZI +ZY | 1/4 0 0 1/4 1/4 0 0 1/4 0 0 0 0 0 0 0 0 |
+| 7 | +IX +YI +YX | 1/4 0 1/4 0 0 0 0 0 0 0 0 0 1/4 0 1/4 0 |
+| 8 | +IY +XI +XY | 1/4 0 0 1/4 0 0 0 0 1/4 0 0 1/4 0 0 0 0 |
+| 9 | +IZ -YI -YZ | 0 0 0 0 1/4 1/4 0 0 1/4 1/4 0 0 0 0 0 0 |
+| 10 | +IZ -XI -XZ | 0 0 0 0 1/4 1/4 0 0 0 0 0 0 1/4 1/4 0 0 |
+| 11 | +XY +YX +ZZ | 1/4 0 0 0 0 1/4 0 0 0 0 0 1/4 0 0 1/4 0 |
+| 12 | +XZ +YY +ZX | 1/4 0 0 0 0 0 1/4 0 0 1/4 0 0 0 0 0 1/4 |
+| 13 | -IY +ZI -ZY | 0 1/4 1/4 0 0 1/4 1/4 0 0 0 0 0 0 0 0 0 |
+| 14 | -IX +ZI -ZX | 0 1/4 0 1/4 0 1/4 0 1/4 0 0 0 0 0 0 0 0 |
+| 15 | +IX -YI -YX | 0 0 0 0 1/4 0 1/4 0 1/4 0 1/4 0 0 0 0 0 |
+| 16 | +IX -XI -XX | 0 0 0 0 1/4 0 1/4 0 0 0 0 0 1/4 0 1/4 0 |
+| 17 | +IY +YI +YY | 1/4 0 0 1/4 0 0 0 0 0 0 0 0 1/4 0 0 1/4 |
+| 18 | +XX +YZ +ZY | 1/4 0 0 0 0 0 0 1/4 0 0 1/4 0 0 1/4 0 0 |
+| 19 | -IY +XI -XY | 0 1/4 1/4 0 0 0 0 0 0 1/4 1/4 0 0 0 0 0 |
+| 20 | -IX +XI -XX | 0 1/4 0 1/4 0 0 0 0 0 1/4 0 1/4 0 0 0 0 |
+| 21 | -XY -YX +ZZ | 0 1/4 0 0 1/4 0 0 0 0 0 1/4 0 0 0 0 1/4 |
+| 22 | +IZ -ZI -ZZ | 0 0 0 0 0 0 0 0 1/4 1/4 0 0 1/4 1/4 0 0 |
+| 23 | -XX +YY +ZZ | 1/8 1/8 -1/8 1/8 1/8 1/8 1/8 -1/8 -1/8 1/8 1/8 1/8 1/8 -1/8 1/8 1/8 |
+| 24 | +XZ -YX +ZY | 1/8 1/8 -1/8 1/8 1/8 -1/8 1/8 1/8 1/8 1/8 1/8 -1/8 -1/8 1/8 1/8 1/8 |
+| 25 | -XY +YZ +ZX | 1/8 1/8 1/8 -1/8 1/8 -1/8 1/8 1/8 -1/8 1/8 1/8 1/8 1/8 1/8 -1/8 1/8 |
+| 26 | -XZ -YY +ZX | 0 0 1/4 0 1/4 0 0 0 0 0 0 1/4 0 1/4 0 0 |
+| 27 | +XZ -YY -ZX | 0 1/4 0 0 0 0 0 1/4 1/4 0 0 0 0 0 1/4 0 |
+| 28 | -IZ +ZI -ZZ | 0 0 1/4 1/4 0 0 1/4 1/4 0 0 0 0 0 0 0 0 |
+| 29 | +IY -YI -YY | 0 0 0 0 1/4 0 0 1/4 1/4 0 0 1/4 0 0 0 0 |
+| 30 | +XX -YZ -ZY | 0 0 1/4 0 0 1/4 0 0 1/4 0 0 0 0 0 0 1/4 |
+| 31 | +IX -ZI -ZX | 0 0 0 0 0 0 0 0 1/4 0 1/4 0 1/4 0 1/4 0 |
+| 32 | +IY -XI -XY | 0 0 0 0 1/4 0 0 1/4 0 0 0 0 1/4 0 0 1/4 |
+| 33 | -IX -XI +XX | 0 0 0 0 0 1/4 0 1/4 0 0 0 0 0 1/4 0 1/4 |
+| 34 | -IY +YI -YY | 0 1/4 1/4 0 0 0 0 0 0 0 0 0 0 1/4 1/4 0 |
+| 35 | -IX +YI -YX | 0 1/4 0 1/4 0 0 0 0 0 0 0 0 0 1/4 0 1/4 |
+| 36 | -XZ +YX +ZY | 1/8 -1/8 1/8 1/8 1/8 1/8 -1/8 1/8 -1/8 1/8 1/8 1/8 1/8 1/8 1/8 -1/8 |
+| 37 | +XY +YZ -ZX | 1/8 1/8 -1/8 1/8 -1/8 1/8 1/8 1/8 1/8 -1/8 1/8 1/8 1/8 1/8 1/8 -1/8 |
+| 38 | +XY -YZ +ZX | 1/8 -1/8 1/8 1/8 1/8 1/8 1/8 -1/8 1/8 1/8 -1/8 1/8 -1/8 1/8 1/8 1/8 |
+| 39 | +XZ +YX -ZY | 1/8 1/8 1/8 -1/8 -1/8 1/8 1/8 1/8 1/8 1/8 -1/8 1/8 1/8 -1/8 1/8 1/8 |
+| 40 | -IZ +XI -XZ | 0 0 1/4 1/4 0 0 0 0 0 0 1/4 1/4 0 0 0 0 |
+| 41 | -IZ -ZI +ZZ | 0 0 0 0 0 0 0 0 0 0 1/4 1/4 0 0 1/4 1/4 |
+| 42 | +XX +YY -ZZ | 1/8 -1/8 1/8 1/8 -1/8 1/8 1/8 1/8 1/8 1/8 1/8 -1/8 1/8 1/8 -1/8 1/8 |
+| 43 | -IY -YI +YY | 0 0 0 0 0 1/4 1/4 0 0 1/4 1/4 0 0 0 0 0 |
+| 44 | -IX -YI +YX | 0 0 0 0 0 1/4 0 1/4 0 1/4 0 1/4 0 0 0 0 |
+| 45 | +IY -ZI -ZY | 0 0 0 0 0 0 0 0 1/4 0 0 1/4 1/4 0 0 1/4 |
+| 46 | -IY -XI +XY | 0 0 0 0 0 1/4 1/4 0 0 0 0 0 0 1/4 1/4 0 |
+| 47 | -XX -YZ +ZY | 0 0 0 1/4 1/4 0 0 0 0 1/4 0 0 0 0 1/4 0 |
+| 48 | -IX -ZI +ZX | 0 0 0 0 0 0 0 0 0 1/4 0 1/4 0 1/4 0 1/4 |
+| 49 | -IZ -XI +XZ | 0 0 0 0 0 0 1/4 1/4 0 0 0 0 0 0 1/4 1/4 |
+| 50 | -IZ +YI -YZ | 0 0 1/4 1/4 0 0 0 0 0 0 0 0 0 0 1/4 1/4 |
+| 51 | -XX +YZ -ZY | 0 1/4 0 0 0 0 1/4 0 0 0 0 1/4 1/4 0 0 0 |
+| 52 | +XY -YX -ZZ | 0 0 0 1/4 0 0 1/4 0 1/4 0 0 0 0 1/4 0 0 |
+| 53 | -XZ +YY -ZX | 0 0 0 1/4 0 1/4 0 0 0 0 1/4 0 1/4 0 0 0 |
+| 54 | -XY +YX -ZZ | 0 0 1/4 0 0 0 0 1/4 0 1/4 0 0 1/4 0 0 0 |
+| 55 | -XZ -YX -ZY | -1/8 1/8 1/8 1/8 1/8 1/8 1/8 -1/8 1/8 -1/8 1/8 1/8 1/8 1/8 -1/8 1/8 |
+| 56 | -XY -YZ -ZX | -1/8 1/8 1/8 1/8 1/8 1/8 -1/8 1/8 1/8 1/8 1/8 -1/8 1/8 -1/8 1/8 1/8 |
+| 57 | -IZ -YI +YZ | 0 0 0 0 0 0 1/4 1/4 0 0 1/4 1/4 0 0 0 0 |
+| 58 | -IY -ZI +ZY | 0 0 0 0 0 0 0 0 0 1/4 1/4 0 0 1/4 1/4 0 |
+| 59 | -XX -YY -ZZ | -1/8 1/8 1/8 1/8 1/8 -1/8 1/8 1/8 1/8 1/8 -1/8 1/8 1/8 1/8 1/8 -1/8 |
