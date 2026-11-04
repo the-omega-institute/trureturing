@@ -1,0 +1,26 @@
+#### 命题 5.3（线性摘要的精确维数要求）
+
+<a id="prop:linearstat"></a>
+
+对自伴 $F_j$，线性摘要 $(\operatorname{Tr}\rho F_1,\ldots,\operatorname{Tr}\rho F_m)$
+在全部 $D$ 维密度态上决定 $\mathcal{S}_\infty$ 的所有态值，
+当且仅当
+
+$$
+\mathcal{S}_\infty\subseteq\operatorname{span}_\mathbb{R}\{I,F_1,\ldots,F_m\}.
+ \tag{16}
+$$
+
+若 $\mathcal{S}_\infty=M_D(\mathbb{C})_{\mathrm{sa}}$，则 $m\ge D^2-1$。
+
+**证明。**
+
+包含关系给线性重建。反之，取与 $I,F_j$ 正交却与某
+$A\in\mathcal{S}_\infty$ 不正交的 Hermitian 矩阵 $X$。
+充分小的 $t>0$ 使 $\rho_\pm=I/D\pm tX$ 都为密度矩阵。
+二者摘要相同而目标不同，矛盾。
+
+∎
+
+<a id="statement-5-4"></a>
+

@@ -560,7 +560,7 @@ namespace Walk
 variable {G} {start finish : V}
 
 
-private theorem outgoingMultiplicity_edgeMultiplicity_concat
+theorem outgoingMultiplicity_edgeMultiplicity_concat
     [Fintype E] [DecidableEq E] [DecidableEq V]
     (walkSoFar : G.Walk start finish) (edge : E)
     (legal : G.source edge = finish) (vertex : V) :

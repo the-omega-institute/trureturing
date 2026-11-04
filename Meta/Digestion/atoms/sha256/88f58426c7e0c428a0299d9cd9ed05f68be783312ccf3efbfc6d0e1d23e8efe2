@@ -1,0 +1,32 @@
+**Theorem 5.2 (exact reduction, positivity, and zero error).** For every original
+seed law and every finite budget,
+$$
+\boxed{F_\nu(B)=\inf\{E(p):p\in\mathsf P_\nu,\ C(p)\le B\}.}
+$$
+An attained minimizing selector yields an optimal original-source controller.
+Conversely an optimal original-source controller yields a minimizing selector
+by Theorem 4.2. This equivalence distinguishes an infimum from an attained
+minimum without changing the seed domain.
+
+For every finite integer $L$ with $K_{L+1}>B$,
+$$
+F_\nu(B)\ge R_L^*\left(1-\frac{B}{K_{L+1}}\right)>0.
+$$
+Consequently finite-budget zero error, and also zero infimum error, occur
+exactly when $I_\mu<\infty$ and $B\ge K_\infty$. In that case the constant
+selector $H=\infty$ attains zero for every original seed law. When
+$I_\mu=\infty$, every finite budget has strictly positive infimum risk;
+arbitrarily small error remains attainable with sufficiently large finite
+budgets by constant finite horizons.
+
+**Proof.** Every $p$ in the displayed set has an original-seed realization by
+definition and Theorem 4.2, giving one inequality; every admissible policy has
+a dominating such selector, giving the other. The same argument proves the
+attainment equivalence. Because $K_h$ increases, $C(p)\le B$ implies
+$p(H\ge L+1)\le B/K_{L+1}$. The cap risks are nonincreasing and positive
+at every finite depth, so the remaining mass contributes at least $R_L^*$
+per unit, proving the bound. If $B<K_\infty$, the limit in Theorem 4.1 gives
+such an $L$. Zero error also forces $H=\infty$ almost surely since
+$R_h^*>0$ for each finite $h$, and its least mean is $K_\infty$. The infinite
+route and the finite-horizon limit prove the remaining assertions. $\square$
+

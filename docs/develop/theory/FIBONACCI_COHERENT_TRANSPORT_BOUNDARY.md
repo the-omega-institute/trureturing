@@ -4742,3 +4742,182 @@ Fibonacci 网格上的**单向、全点、有限**进位历史；上述编码结
 
 
 ## 追加锚（本行以下为增补区）
+
+## 41. 原生开放前缀、三叶融合扩展与跨切口脉冲
+
+**定义 41.1（逐位路径对应与普通迹切口）。** 固定 §33 的初始接缝零、
+不作 End 筛选的全部开放前缀。对每个整数 $L\ge0$，令 $n_L=3L+1$，
+$c_0=\tau,c_1=\mathbf1$；沿用
+
+$$
+p_{L,0}=F_{3L+1},\qquad p_{L,1}=F_{3L},\qquad
+A_L=M_{p_{L,0}}\oplus M_{p_{L,1}},
+$$
+
+零大小块略去。融合路径、端点块代数 $\mathfrak A_n$ 与实际右扩展
+$j_n$ 均取[融合链卷](FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md)
+定义 12.1、式（FT.2）–（FT.5）。对原生前缀的低到高位串
+$b_1,\ldots,b_{3L}$ 定义 $\theta_L$：
+
+$$
+x_0=\mathbf1,\qquad x_1=\tau,\qquad
+x_{j+1}=\begin{cases}\mathbf1&b_j=1,\\ \tau&b_j=0,\end{cases}
+\quad 1\le j\le3L.
+\tag{41.1}
+$$
+
+这里编码的是原生位；它与融合卷 §12.1 的标签编码互补。以逐基映射
+定义线性重标记
+$\Theta_L(E_{uv})=E_{\theta_L(u),\theta_L(v)}$，并记
+$j^{(3)}_L=j_{n_L+2}\circ j_{n_L+1}\circ j_{n_L}$。
+本节 $\Theta_L$ 专指这个重标记，与 §34 的表示耦合映射分别使用。
+切口 $E_L:A_{L+1}\to A_L$ 固定为式（36.2）的普通块迹 CPTP 映射：
+
+$$
+(E_L\sigma)_s=\sum_{t,e:s\to t}V_e^*\sigma_tV_e,
+\qquad E_L^\dagger=i_L.
+\tag{41.2}
+$$
+
+求和取 §27.1 的实际边，不作平均或 Perron 加权；section $R_L$
+可取式（36.3）的任意归一化非负出边权重。
+
+**定理 41.2（全部长度及双端点的实际塔对应；repo-derived）。** 对每个
+$L\ge0$，式（41.1）给双射
+$W_{L,s}\to\mathsf P_{n_L}(c_s)$，$s=0,1$，故
+$\Theta_L:A_L\to\mathfrak A_{n_L}$ 是保持普通块迹的块星同构。
+对每枚实际矩阵单位，均有
+
+$$
+\Theta_{L+1}i_L=j^{(3)}_L\Theta_L.
+\tag{41.3}
+$$
+
+证明。§27.1 的实际边表在式（41.1）下恰为下表；输入接缝不同的
+同名边仍分别计数，最后一列依次给新加的三个融合标签的原生位编码。
+
+| 边型 | 输入接缝 | 输出接缝 | 三位后缀 |
+| --- | --- | --- | --- |
+| null | 0 或 1 | 0 | 000 |
+| 2 | 0 | 0 | 100 |
+| 3 | 0 或 1 | 0 | 010 |
+| 25 | 0 | 1 | 101 |
+| 5 | 0 或 1 | 1 | 001 |
+
+由融合规则，从 $\tau$ 出发的合法三步后缀恰为
+$000,010,100$（终点 $\tau$）与 $001,101$（终点 $\mathbf1$）；
+从 $\mathbf1$ 出发恰为 $000,010$（终点 $\tau$）与 $001$
+（终点 $\mathbf1$）。所以在接缝次序 $0=\tau,1=\mathbf1$ 下，
+转移矩阵就是 §33.1 的 $B=\left(\begin{smallmatrix}3&2\\2&1\end{smallmatrix}\right)$。
+
+空前缀对应 $x_0=\mathbf1,x_1=\tau$。连接实际边就是连接各组三位，
+每个组间接缝的守卫与融合合法性相同；反过来，将任一合法路径在
+$x_1$ 之后每三步切开，由表唯一恢复各条实际边及接缝。因此对全部
+$L$ 和两终态得到双射，包括 $L=0$ 时终态 $\mathbf1$ 的空块。逐正交基重标记
+保持矩阵单位的乘法、伴随及普通迹，给所述星同构。式（33.2）对
+全部实际出边求和，融合式（FT.5）的三次复合对全部合法三步后缀
+求和；上表逐项配对，故（41.3）在每个 $E_{uv}$ 上成立。$\square$
+
+**定义 41.3（指定的单次跨切口 TL 脉冲）。** 在细融合代数
+$\mathfrak A_{n_L+3}$ 上，$P_{n_L}$ 严格取融合卷 §14 的带权
+Temperley–Lieb 正交投影：邻接由 Fibonacci 融合给定，
+$d_{\mathbf1}=1,d_\tau=\varphi,\delta=\varphi$，矩阵元为（FT.12）。
+对每个 $z\in\mathbb C$、$|z|=1$ 置
+
+$$
+U_{L,z}=I+(z-1)P_{n_L},\qquad
+\operatorname{Ad}_U(X)=UXU^*,\qquad
+T_{L,z}=\Theta_{L+1}^{-1}\operatorname{Ad}_{U_{L,z}}\Theta_{L+1}.
+\tag{41.4}
+$$
+
+融合卷命题 15.1 保证 $U_{L,z}$ 酉；它保持细端点块，故 $T_{L,z}$
+是 $A_{L+1}$ 上的 CPTP 通道。这里投影指标正是粗末端 $n_L$，
+不是只作用于旧内部指标 $i<n_L$ 的情形。
+
+**定理 41.4（普通迹切口的精确参考完备分类；repo-derived）。** 对每个
+整数 $L\ge0$ 和每个复数 $z$、$|z|=1$，存在 CPTP 映射
+$\Phi_{L,z}:A_L\to A_L$，使每个有限参考维数 $q\ge1$ 以及
+$A_{L+1}\otimes M_q$ 中的每个 density $\rho$（各块正半定、总普通迹为一）都满足
+
+$$
+(E_L\otimes\mathrm{id}_q)
+ (T_{L,z}\otimes\mathrm{id}_q)(\rho)
+=(\Phi_{L,z}\otimes\mathrm{id}_q)
+ (E_L\otimes\mathrm{id}_q)(\rho),
+\tag{41.5}
+$$
+
+当且仅当 $L=0$ 或 $z=1$。量词包括细层两个端点块及其全部态，
+不限制后缀、选定 section 的像或可分离态。成立时
+$\Phi_{L,z}=\mathrm{id}_{A_L}$。
+
+证明。定理 41.2 保持普通迹并交织实际包含，所以（41.2）的迹对偶
+在融合坐标中就是 $j^{(3)}_L$。直接应用本卷定理 35.1、36.2，
+取唯一分支 $J=\operatorname{Ad}_{U_{L,z}}$，后继存在的充要条件是
+
+$$
+U_{L,z}^*j^{(3)}_L(\mathfrak A_{n_L})U_{L,z}
+\subseteq j^{(3)}_L(\mathfrak A_{n_L}).
+\tag{41.6}
+$$
+
+这是子代数的像保持条件，并非要求逐点固定。存在时，本卷的唯一性
+公式给 $\Phi_{L,z}=E_LT_{L,z}R_L$，不依赖 section 权重。
+有限维直和矩阵代数由 densities 线性张成，故（41.5）在 $q=1$
+对全部 densities 成立即给线性 intertwining；该恒等式张量每个
+有限恒等仍成立，完全正性包括可纠缠态。这正是（41.5）的量词范围。
+
+若 $z=1$，细通道恒等，直接取粗恒等。若 $L=0$，$A_0=\mathbb C$，
+定理 36.1 给 $E_0:M_3\oplus M_2\to\mathbb C$ 为普通两块迹之和；
+块内酉共轭保持该迹，所以任意单位相位都取
+$\Phi_{0,z}=\mathrm{id}_{\mathbb C}$，并满足全部参考恒等式。
+
+以下对所有 $L>0$、$|z|=1,z\ne1$ 给同一类障碍。记 $n=3L+1$，
+取粗全零位词 $u$，其终态为 $\tau$；将全零三位后缀接上，所得
+细路径 $\xi$ 除 $x_0=\mathbf1$ 外所有标签均为 $\tau$。仅将
+$x_n$ 改为 $\mathbf1$ 得 $\xi'$。由于 $n\ge4$，两侧邻居均为
+$\tau$，新路径仍合法；两条细路径都终止于 $\tau$。$\xi'$ 的粗
+末窗是 $001$，故粗终态为 $\mathbf1$，而 $\xi$ 的粗前缀就是 $u$。
+
+令 $b=j^{(3)}_L(|u\rangle\langle u|)$。固定除 $x_n$ 外的全部标签
+得到 $P_n$ 不变的二维纤维；按 $[\xi',\xi]$ 排列，融合式（FT.14）给
+
+$$
+P_n=\begin{pmatrix}r^2&rs\\rs&r\end{pmatrix},\qquad
+b=\begin{pmatrix}0&0\\0&1\end{pmatrix},\qquad
+r=\varphi^{-1},\quad s=\sqrt r,\quad r^2+r=1,\quad 0<r<1.
+\tag{41.7}
+$$
+
+因此 $U=I+(z-1)P_n$ 在该纤维内满足精确矩阵元等式
+
+$$
+(U^*bU)_{\xi',\xi}=(\overline z-1)rs(1-r+rz).
+\tag{41.8}
+$$
+
+第一因子在 $z\ne1$ 时非零；最后因子若为零，则
+$z=-(1-r)/r=-r$，其模为 $r<1$，与单位相位矛盾。所以（41.8）
+对每个允许的非平凡相位都非零。每个三次扩展像中的可观测量在
+不同粗终态之间的矩阵元均为零，故 $U^*bU$ 不属于该像，违反
+（41.6）。这个障碍位于完整细态域的一个端点块中，已足以否定须在
+两块全部态上成立的后继；它不是对输入域加后缀限制。$\square$
+
+定理 41.2、41.4 的联合应用取本卷实际边与普通迹下降作为原生接口。
+融合路径、$F$ 数据和黄金链局部矩阵的先例分别见 Trebst–Troyer–Wang–Ludwig，
+[*A short introduction to Fibonacci anyon models*](https://arxiv.org/html/0902.3275v1)，
+§§2.3–2.4、3.1（特别是局部相互作用矩阵），以及 Feiguin 等，
+[*Interacting anyons in topological quantum liquids: The golden chain*](https://arxiv.org/abs/cond-mat/0612341)，
+Model、Mapping and exact solution。上述已知结构与本卷定理 35.1、36.2
+作为中间输入；这里的 repo-derived 内容是指定原生前缀的逐基对应与
+该指定切口、指定单脉冲的联合分类，不主张这些通用供应结论的原创性，
+也不主张世界范围的新颖性。
+
+定理 41.4 只涉及给定有限直和代数上的精确条件通道；其 $E_L$ 采用普通块迹，
+不以融合卷 §12.3 的 Perron 加权迹替换。有限参考是旁观系统，不会返回
+参与后续动作；（41.5）不推出无限参考、信息取得、任意返回记忆的
+续接或物理控制权限。若将该边界用于推论 35.2 的有限 adaptive history，
+仍须逐支满足其合法域、可读记录和选择器条件；本定理不另授予这些假设。
+
+## 追加锚（本行以下为增补区）

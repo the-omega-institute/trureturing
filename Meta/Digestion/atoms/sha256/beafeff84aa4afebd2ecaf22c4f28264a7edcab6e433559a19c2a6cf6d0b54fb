@@ -1,0 +1,43 @@
+**Theorem 26.1 (the same original target under dyadic and integer ports).** Let
+
+$$
+c=\frac13,\qquad
+P^- =\{c\}\cup\{c-1/m:m\in\mathbb Z,\ m\ge4\},\qquad
+\sigma(c)=1,\quad \sigma(c-1/m)=0.
+\tag{26.1}
+$$
+
+All are originals from the same rational chronological source. With all integer ports, the stationary read $q_3$ acquires $\sigma$ exactly, although $\sigma$ is not locally constant at $c$ in the relative ordinary two-sided metric. With the restricted, numerically unbounded menu $\{q_{2^n}:n\ge0\}$, no pointwise-finite stationary controller acquires $\sigma$ on this same prior, whereas one actual $L$ followed by $q_4$ does. These comparisons preserve the original target and the menu within each stationary/forward comparison. They make no assertion that every integer port is necessary for a particular prior or task.
+
+Proof. The prior has a finite rational presentation and decidable membership: accept $c$; otherwise require $0<x<c$ and that $1/(c-x)$ is an integer at least four. At $c$, the sequence $c-1/m$ approaches from below with the other target value, so no two-sided relative metric neighborhood has constant $\sigma$. Yet the exact floor convention gives
+
+$$
+q_3(c)=1,\qquad q_3(c-1/m)=0\quad(m\ge4).
+\tag{26.2}
+$$
+
+This is a valid one-read stationary algorithm. At $c$ its cell includes the endpoint on the right, with no smaller point, and so (24.3) holds there. Every smaller member of the prior is isolated. Ordinary two-sided metric locality is therefore not a necessary replacement for the exact floor-cell condition, even with an effective one-read certificate.
+
+Now suppose a stationary controller with just the dyadic menu terminates correctly at $c$. Its finite run queries finitely many exponents; let $N$ be their maximum, taking $N=0$ if there are no queries. Since $3$ never divides $2^n$, the fractional part of $2^nc$ is either $1/3$ or $2/3$. Choose an integer $m>\max(4,3\cdot2^N)$. For every queried exponent,
+
+$$
+0<\frac{2^n}{m}<\frac13\le\{2^nc\},
+\qquad
+q_{2^n}(c-1/m)=q_{2^n}(c).
+\tag{26.3}
+$$
+
+Replay of that finite adaptive branch gives identical decisions and output on the smaller promised original, contradicting its target $0$. This argument also covers a fixed source-independent auxiliary oracle: its answers are the same on the replay. It places no common bound on the controller's query exponents or stopping times, only a finite maximum on the one completed run at $c$.
+
+On the other hand monotonicity and the endpoint identity give
+
+$$
+L(c)=\frac14,\qquad
+0<L(c-1/m)<\frac14,
+\qquad
+q_4(L(c))=1,\quad q_4(L(c-1/m))=0.
+\tag{26.4}
+$$
+
+Thus actually perform $L$ and read the available dyadic port $q_4$; its report is the exact value of $\sigma$ of the original. It is not a task distinguishing the final values under a changed prior. Both this forward algorithm and the impossible stationary dyadic algorithm start with (26.1) and aim at that same $\sigma(x)$. The stationary all-integer algorithm (26.2) uses only $q_3$, so the counterexample does not require all integer scales for its positive stationary solution. Theorem 24.3's general simulation of a $q_4$ request instead calls for $q_{\Lambda_4}=q_{12}$, absent from the dyadic menu. The menu's numerical unboundedness provides neither that port nor a replacement for its relevant endpoint: (26.3) rules out every finite combination of stationary dyadic reports on this task. $\square$
+

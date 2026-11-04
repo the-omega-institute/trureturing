@@ -14,6 +14,12 @@ internal sealed class BinaryDetectionThresholdRefutationDocument : IScribeDocume
         "The Section 4.3 conjecture eta* = 4/(m+4) is refuted at m = 13 by a three-input leader model and a universal local extension at efficiency 6/25.",
         H("Refuting the binary detection threshold conjecture"),
         Blocks(
+            Node("parity-box", "The binary parity distribution", ParityBoxFormula(),
+                "At each input pair the parity box gives probability one half exactly to the two Boolean output pairs whose xor is the prescribed bit.",
+                "parityBox", DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("binary-eq", "A binary table is determined by its marginals and one entry", BinaryEqualityFormula(),
+                "Two real two-by-two tables agree when their total masses, one selected row sum, one selected column sum and the selected corner entry agree.",
+                "binary_eq", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("isns", "No-signalling box", IsNSFormula(), "Cope, Section 2, arXiv v3 p. 2: “However, we do assume that Alice and Bob can isolate their systems, also referred to here as devices, from communicating with each other.” Inputs are Fin m and outputs are Bool; the formula also records nonnegativity and normalization.", "IsNSBox", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("lossy", "Lossy extension", LossyFormula(), "Cope, Section 2, arXiv v3 p. 2: “The model considered here adds an extra output to both parties to alter the original distribution p(ab|xy) in the following way:” The four branches are equation (3), with none denoting F.", "lossy", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("local", "Local box", IsLocalFormula(), "Cope, Section 2, arXiv v3 p. 2: “These distributions may always be expressed as convex combinations of deterministic distributions p(ab|xy)=δₐ,ₐₓδᵦ,ᵦᵧ, which are finite in number.” The finite weights run over pairs of deterministic Option Bool response functions.", "IsLocal", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -40,6 +46,31 @@ internal sealed class BinaryDetectionThresholdRefutationDocument : IScribeDocume
         Describe.Lean(DescribeId.Create("cope-refutation-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula ParityBoxFormula()
+    {
+        Formula g = F.Id("G"), x = F.Id("x"), y = F.Id("y"), a = F.Id("a"), b = F.Id("b");
+        Formula parity = new Formula.Apply(Qualified("Bool", "xor"), [a, b]);
+        return All("G", ArrowMany(Fin(N(13)), Fin(N(13)), Bool()),
+            All("x", Fin(N(13)), All("y", Fin(N(13)), All("a", Bool(), All("b", Bool(),
+                Eq(Call("parityBox", g, x, y, a, b), Ite(Eq(parity, new Formula.Apply(g, [x, y])),
+                    new Formula.Fraction(N(1), N(2)), N(0))))))));
+    }
+
+    private static Formula BinaryEqualityFormula()
+    {
+        Formula f = F.Id("f"), g = F.Id("g"), ma = F.Id("ma"), mb = F.Id("mb");
+        Formula a = F.Id("a"), b = F.Id("b");
+        Formula Total(Formula table) => FiniteSum("a", Bool(),
+            FiniteSum("b", Bool(), new Formula.Apply(table, [a, b])));
+        Formula Row(Formula table) => FiniteSum("b", Bool(), new Formula.Apply(table, [ma, b]));
+        Formula Column(Formula table) => FiniteSum("a", Bool(), new Formula.Apply(table, [a, mb]));
+        Formula corner = Eq(new Formula.Apply(f, [ma, mb]), new Formula.Apply(g, [ma, mb]));
+        Formula body = Imp(Eq(Total(f), Total(g)), Imp(Eq(Row(f), Row(g)),
+            Imp(Eq(Column(f), Column(g)), Imp(corner, Eq(f, g)))));
+        return All("f", ArrowMany(Bool(), Bool(), Real()), All("g", ArrowMany(Bool(), Bool(), Real()),
+            All("ma", Bool(), All("mb", Bool(), body))));
+    }
 
     private static Formula Q(string name) => Seq(Operatorname, Grp(F.Id(name)));
 

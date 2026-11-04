@@ -1,0 +1,26 @@
+**Proposition 39.13 (a fixed finite current profile loses unbounded original unit information).** For every authentic prefix with $c>0$ and finite $C$, the current full $\mathsf P_C(f_u(x))$ fails to recover even the original $q_1(x)$ on the unrestricted positive carrier. In particular it cannot recover the original rational or word. Pure translations have the different exact law
+
+$$
+c=0\ \Longrightarrow\ u=R^b,\ a=d=1,\qquad
+q_m(f_u(x))=q_m(x)+mb,
+\tag{39.26}
+$$
+
+so every original profile through $C$ is recoverable from the corresponding current one and conversely.
+
+Proof. If $c>0$, then
+
+$$
+f_u(x)=a/c-\frac1{c(cx+d)}.
+\tag{39.27}
+$$
+
+Whenever $cx+d>C$, every $m\le C$ has
+
+$$
+q_m(f_u(x))=\lceil ma/c\rceil-1.
+\tag{39.28}
+$$
+
+If $ma/c$ is an integer the subtracted positive amount is less than $1$; otherwise its fractional part is at least $1/c$ while the subtracted amount is less than $1/c$. This proves (39.28) in both cases. Choose an integer $K>C+d+1$, and the two actual originals $x=K+1/3$, $y=K+4/3$. Both satisfy that tail condition, have identical instantaneous and hence full current profiles, but have original unit indices $K$ and $K+1$. This supplies the missing $q_1$ obstruction directly. For the explicit real action $u=L$, their current reports are $m-1$ for every $m\le C$. Both originals are actual reachable rational sources by Theorem 6.2. For $c=0$, the determinant forces $a=d=1$ and the source law is $x\mapsto x+b$; a word containing $L$ has positive lower-left entry, so its authentic word consists only of $R$. The integer floor identity proves both profile factors in (39.26). Earned localization or old retained information changes this global question exactly through (39.7) and (39.17). $\square$
+

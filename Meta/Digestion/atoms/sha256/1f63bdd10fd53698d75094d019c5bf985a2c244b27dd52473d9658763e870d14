@@ -1,0 +1,90 @@
+**Lemma 45.2 (crossed-amplitude defect floor at an active sign).** Let
+$U\in U(4)$ be actual, let $0<\xi\le R$, and let $\sigma$ be admissible
+for its level arc. Then
+
+$$
+                       \Delta_{-\sigma}>c_0.
+\tag{45.4}
+$$
+
+The bound applies to arbitrary actual unitary lifts, including zero
+amplitudes and repeated feedback eigenvalues.
+
+*Proof.* Choose any effect in (45.2). The minimizing sign is unique
+by Theorem 42.3. Set $x_i=(UU_\sigma^\dagger)_{ii}$,
+$S=|\sum_i x_i|=S_\sigma$, and $\mu=\frac14\sum_i x_i$.
+Nonnegativity of the effect-distance summand in (39.1) gives
+$8-2S\le\xi$, so $S\ge19/8$. Unitarity gives $|x_i|\le1$ and hence
+
+$$
+ \sum_{i=1}^4|x_i-\mu|^2
+   =\sum_{i=1}^4|x_i|^2-\frac{S^2}{4}
+   \le4-\frac{S^2}{4}
+   \le\frac{663}{256}<\frac{13}{5}.
+\tag{45.5}
+$$
+
+The arithmetic mean $\mu$ is only used to center this vector; it is
+not a new feedback phase or an additional quotient.
+For the positive sign, $x=w$. For the negative sign, the fixed
+identity $U_-U_+^\dagger=\operatorname{diag}(1,-1,-i,i)$ gives
+$x=(w_1,-w_2,iw_3,-iw_4)$. Consequently (23.2) yields
+
+$$
+\begin{array}{c|c|c|c}
+ \sigma&\text{crossed amplitude }\sum_i\ell_i x_i
+           &\ell&\sum_i|\ell_i|^2\\ \hline
+ +&Q&(h,-h,is,-is)&2-h\\
+ -&P&(h,-h,-ic,ic)&2+h .
+\end{array}
+\tag{45.6}
+$$
+
+In each row $\sum_i\ell_i=0$, so the amplitude equals
+$\sum_i\ell_i(x_i-\mu)$. The finite complex Cauchy--Schwarz inequality
+therefore gives
+
+$$
+\begin{aligned}
+ \sigma=+\quad v^2
+   &\le(2-h)\sum_i|x_i-\mu|^2
+          <\frac{13}{10}\frac{13}{5}=\frac{169}{50},\\
+ \sigma=-\quad u^2
+   &\le(2+h)\sum_i|x_i-\mu|^2
+          <\frac{11}{4}\frac{13}{5}=\frac{143}{20}.
+\end{aligned}
+\tag{45.7}
+$$
+
+Here $h>7/10$ and $h<3/4$ are among (42.6).
+Those same half-angle bounds, with $c>9/10$ and $s>3/8$, give
+
+$$
+\begin{aligned}
+ e^2=4(h+s)^2&>4(43/40)^2>23/5,\\
+ d^2=4(h+c)^2&>4(8/5)^2>10,\\
+ e^2&<4(23/20)^2<6,
+\end{aligned}
+\tag{45.8}
+$$
+
+where the last line uses $h<3/4$ and $s<2/5$. Thus for the same
+actual feedback as in (45.5)--(45.7),
+
+$$
+\begin{aligned}
+ \sigma=+\quad
+ \Delta_--c_0&=\frac{3e^2}{4}-v^2
+       >\frac{69}{20}-\frac{169}{50}=\frac7{100}>0,\\
+ \sigma=-\quad
+ \Delta_+&=d^2-u^2>10-\frac{143}{20}
+                  =\frac{57}{20}>\frac32>c_0.
+\end{aligned}
+\tag{45.9}
+$$
+
+This proves (45.4). Every trace and amplitude in these inequalities
+is evaluated on the given $U$; no separately attained extrema have
+been combined. The active trace cannot vanish because $S\ge19/8$;
+the inactive trace is unrestricted. $\square$
+

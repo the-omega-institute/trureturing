@@ -1,0 +1,29 @@
+#### 定义 9.1（固定相位的共同分支任务）
+
+给有限实际幅度 $x_1,\ldots,x_n\in H$，$n\ge1$，
+它们相对于同一内部参考已确定。
+共同分支是一个到非零输出空间的复线性收缩 $M:H\to W$，满足
+
+$$
+Mx_1=\cdots=Mx_n=\xi.
+$$
+
+其共同强度为 $t=\left\lVert \xi\right\rVert ^2$。
+输出 $\xi$ 包括此成功支路中全部相关记录，不能暗留依赖输入标签的记录。
+
+本任务是既有受支配核与共同振幅提取理论的具体应用：
+基础与记录卷已有正交地址的 $1/m$ 特例及任意记录族的提取条件，
+Closure 已有正核支配到收缩的表示[5](#ref-foundations)、[6](#ref-closure)。
+下面显式求解非正交有限族，包括奇异情况。
+
+令
+
+$$
+D=\operatorname{span} _\mathbb C \{x_j-x_1:1\le j\le n\},\qquad
+P=P_{D^\perp},\qquad q=Px_1.
+$$
+
+于是所有 $Px_j=q$。
+
+<a id="statement-9-2"></a>
+

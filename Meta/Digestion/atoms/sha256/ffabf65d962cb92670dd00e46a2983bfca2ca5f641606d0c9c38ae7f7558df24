@@ -1,0 +1,18 @@
+**Equation 3.1 (`eq:cycleinverse`).**
+
+$$
+(T_G^{-1}y)_h=y_h\ (h\ne e),\qquad
+ (T_G^{-1}y)_e=\sum_{h\ne e}b_{uh}y_h.
+$$
+
+At $u$ the boundary is zero by this formula; at $v$ it is zero by the
+merged-vertex equation, and elsewhere it is unchanged. This proves both
+inverse equations, including bridges, loops among the surviving edges,
+and parallel edges. Nonloopness is essential.
+
+The cohomology pullback $`\kappa_G=T_G^*`$ extends a surviving cochain by
+zero. Its inverse $\theta_G$ has the explicit computation rule
+
+<a id="eq-evacuate"></a>
+<a id="eq:evacuate"></a>
+

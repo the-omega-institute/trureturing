@@ -215,7 +215,7 @@ private lemma necessity (b η : ℝ) (hd : |b| ≤ 1 - η)
   unfold trineThreshold
   split_ifs <;> have ha := abs_le.mp (show |b| ≤ 1 - η from hd) <;> linarith
 
-private lemma sum_strings {α : Type*} [AddCommMonoid α] (f : (Fin 3 → Bool) → α) :
+lemma sum_strings {α : Type*} [AddCommMonoid α] (f : (Fin 3 → Bool) → α) :
     (∑ s, f s) = f ![false, false, false] + f ![false, false, true] +
       f ![false, true, false] + f ![false, true, true] +
       f ![true, false, false] + f ![true, false, true] +

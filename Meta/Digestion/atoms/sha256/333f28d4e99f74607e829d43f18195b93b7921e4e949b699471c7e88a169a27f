@@ -1,0 +1,5 @@
+**all** reachable settled words $R_{A,x}$ over all histories and allowed
+outcomes with that assignment. With finite peak these sets are finite,
+nonempty, and disjoint for different $x$ at the same $A$, by (IV.99).
+In particular put $R_x=R_{[k],x}$ for terminal $x\in\{0,1\}^k$.
+

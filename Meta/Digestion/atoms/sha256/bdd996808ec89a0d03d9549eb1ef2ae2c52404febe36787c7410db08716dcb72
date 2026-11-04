@@ -1,0 +1,12 @@
+### 证明
+令 \(D=E-\Gamma_R^*(E)\ne0\)。取 \(D\) 的两个极值本征态，并在其上构造足够小的迹零扰动 \(\Delta\)，使
+\[
+X_\pm=\frac{I}{\dim(\mathcal H\otimes\mathcal R)}\pm t\Delta
+\]
+仍为密度矩阵。由 \(\Gamma_R(\Delta)=0\)，两态经典摘要相同；而
+\[
+\operatorname{Tr}(E X_+)-\operatorname{Tr}(E X_-)
+=2t\operatorname{Tr}(D\Delta)\ne0.
+\]
+证毕。
+

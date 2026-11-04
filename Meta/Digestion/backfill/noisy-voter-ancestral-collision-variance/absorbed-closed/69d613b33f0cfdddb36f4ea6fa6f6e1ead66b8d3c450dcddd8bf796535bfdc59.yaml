@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:69d613b33f0cfdddb36f4ea6fa6f6e1ead66b8d3c450dcddd8bf796535bfdc59
+  normalized_sha256: sha256:69d613b33f0cfdddb36f4ea6fa6f6e1ead66b8d3c450dcddd8bf796535bfdc59
+cas_ref: sha256:69d613b33f0cfdddb36f4ea6fa6f6e1ead66b8d3c450dcddd8bf796535bfdc59
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/NoisyVoter/FiniteCausalInputs.finite_history_factorization
+    target_statement_id: sha256:0f76de92555c2d3bc7e6e60789da928ddc2c5fb1eff093a11b2692a8ee9f2d4a
+receipts:
+  unresolved_subitems: []

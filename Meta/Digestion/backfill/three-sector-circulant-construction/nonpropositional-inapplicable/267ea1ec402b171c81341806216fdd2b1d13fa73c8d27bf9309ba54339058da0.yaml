@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:267ea1ec402b171c81341806216fdd2b1d13fa73c8d27bf9309ba54339058da0
+  normalized_sha256: sha256:267ea1ec402b171c81341806216fdd2b1d13fa73c8d27bf9309ba54339058da0
+cas_ref: sha256:267ea1ec402b171c81341806216fdd2b1d13fa73c8d27bf9309ba54339058da0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Source attribution, interpretation boundary and definitions of the integer parameters, generators and three sectors; no independent proposition is asserted. The adjacent lattice theorem remains supplied by its existing absorbed atom.
+    previous_atom_id: null
+    next_atom_id: af581cf3f822527a359da1082f6712c5b56fe2408d10e10e8330c032bede5308

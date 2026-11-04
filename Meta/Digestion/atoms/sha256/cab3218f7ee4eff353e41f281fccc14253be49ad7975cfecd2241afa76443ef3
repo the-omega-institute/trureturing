@@ -1,0 +1,45 @@
+**Proposition 34.2 (already sufficient records and the exact missing
+coordinate).** Under the corresponding initialized owned-service
+premises, each of the following supports the same selected recall and
+continued-use task for every selector in Definition 30.1: the complete
+all-event tapes of Theorem 19.2; the complete successful-address journal
+of Proposition 22.2; and an online selected identity journal together
+with current selection state. None of these capabilities is refuted by
+Theorem 30.3. In contrast, selected successful addresses alone, even with
+$t$ and final $q$, do not uniformly support this adaptive task.
+
+Proof. Full tapes reconstruct the actual complete $w$. Replay the known
+installed $C$ from its actual $q_0$ through this finite word to recover
+$\nu_C(w)$ and $q_C(w)$. The full address journal reconstructs event kinds
+from all occurrences and birth types, as Proposition 22.2 proves, and
+therefore permits the same replay. These are terminating finite computations
+with paid scans and workspace. Their existing maintained source binding
+and current rights support the same current-source left descent; on each
+new successful event maintain the chosen full representation and apply
+$C$ to its acquired identity. The original record/reply/return discipline
+continues to supply actual retention and use on that representation.
+
+Alternatively, start at the same known seed and, for each actual selected
+receipt, append its kind and self-delimiting address to a retained linked
+bit journal before the next Ready. Update current $q$ for every successful
+receipt, selected or not. Literal parsing and scanning recover each
+selected event, with checked OutOfRange. NextSelected consumes that
+acquired identity on the same live source, applies the same actual growth
+and updates the journal and $q$. The acquisition and finite-return proof
+is the induction of §32 with journal append replacing local marks and
+ancestor tape appends. Thus this is a credited sufficient representation,
+not a capability newly absent from existing journal methods.
+
+For the negative statement, all $w_{n,z}$ have the same selected address
+list $p_0,\ldots,p_{n-1}$, source and final state, but the distinct replies
+of Theorem 30.3. Counting only selected occurrences cannot say whether an
+unrecorded promotion preceded a recorded split. In the fixed-$\chi$
+address-journal alternative after Theorem 26.3, membership is already
+fixed by $t,\chi$; that premise is not retained by this adaptive transfer.
+The full journal in Proposition 22.2 has all occurrences and retains its
+original sufficiency without modification. On (AA.102), one acquired
+kind bit per selected entry attains exactly the $n$ conditional bits
+missing from the common selected address list. The source-local marked
+layout stores these distinctions differently and is not asserted to
+be their cheapest encoding. $\square$
+

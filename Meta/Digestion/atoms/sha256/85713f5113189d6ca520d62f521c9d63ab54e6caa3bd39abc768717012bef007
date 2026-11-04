@@ -1,0 +1,50 @@
+**图 2。**
+
+```latex
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex,font=\small]
+\begin{scope}[xshift=-3.5cm]
+\draw[ink,thick] (0,0) circle(1.65);
+\draw[->,ink!60] (-1.85,0)--(1.95,0) node[right] {$X$};
+\draw[->,ink!60] (0,-1.85)--(0,1.95) node[above] {$Y$};
+\coordinate (S) at (1.65,0);
+\coordinate (R) at (.825,.825);
+\coordinate (T) at (0,1.65);
+\draw[warm,thick] (S)--(T);
+\fill[accent] (S) circle(2.5pt) node[below right] {$\mathbf e_x$};
+\fill[ink] (R) circle(2.5pt) node[right] {$\mathbf r$};
+\fill[warm] (T) circle(2.5pt) node[left] {$\mathbf r_{\rm res}$};
+\node[align=center,text width=5.7cm] at (0,-2.35)
+{抽出同一关系的份额\\剩余点最多到球面};
+\end{scope}
+\begin{scope}[xshift=3.8cm]
+\draw[->,ink!55] (-.3,0)--(2.3,0);
+\draw[->,ink!55] (0,-1.5)--(0,1.6);
+\draw[->,accent,thick] (0,0)--(1.6,.8) node[right] {$x=q+r$};
+\draw[->,warm,thick] (0,0)--(1.6,-.8) node[right] {$y=q-r$};
+\draw[->,ink,thick] (0,0)--(1.6,0) node[midway,below] {$q$};
+\draw[->,accent,dashed] (1.6,0)--(1.6,.8);
+\draw[->,warm,dashed] (1.6,0)--(1.6,-.8);
+\node[align=center,text width=5.7cm] at (1,-2.35)
+{实非负重叠的二态\\共同部分与相反余量正交};
+\end{scope}
+\end{tikzpicture}
+\caption{左图取单位二元关系 $z=(1+i)/2$，最大共同权重为 $1/2$，
+原关系点位于共同纯关系点与剩余球面点的中点。
+右图表示相位已对齐的二态分解，其比例只作示意。}
+\end{figure}
+```
+
+当单位二态实际相位对齐为 $z\ge0$ 时，
+
+$$
+q=\frac{x+y}{2},\qquad r=\frac{x-y}{2},\qquad
+q\perp r,\qquad
+\left\lVert q\right\rVert ^2=\frac{1+z}{2},\quad\left\lVert r\right\rVert ^2=\frac{1-z}{2}.
+$$
+
+这给“共同内容加不同余量”一个直观的规范二元实例。
+即使 $x\perp y$，仍有共同*后选择分支*强度 $1/2$；
+它不是原纯密度算符的共同正子算符。
+

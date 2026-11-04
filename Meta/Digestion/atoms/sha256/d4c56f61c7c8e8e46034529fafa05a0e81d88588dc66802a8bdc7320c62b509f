@@ -1,0 +1,131 @@
+### 定理 11.1（两份各向同性边际的完整椭圆相容域）
+
+<a id="thm-c92-isotropic-ellipse"></a>
+
+令
+
+<a id="eq-c92-isotropic-ellipse"></a>
+
+$$
+\mathcal E=\{(v,w)\in\mathbb R^2:
+ v^2+w^2+vw\le v+w\},
+ \qquad p_-=(-\tfrac13,-\tfrac13).
+\tag{11.1}
+$$
+
+则所有存在共同全态的参数对，恰为
+
+<a id="eq-c92-isotropic-full-region"></a>
+
+$$
+\boxed{\qquad
+ \mathcal C_{\rm iso}
+ =\operatorname{conv}\bigl(\{p_-\}\cup\mathcal E\bigr).
+ \qquad}
+\tag{11.2}
+$$
+
+尤其在通常的白噪声可见度范围 $v,w\ge0$ 内，判据恰为
+
+<a id="eq-c92-isotropic-positive-region"></a>
+
+$$
+\boxed{\qquad v^2+w^2+vw\le v+w.\qquad}
+\tag{11.3}
+$$
+
+这是已有一般椭圆分类在 qubit 上的特例 [2](#ref-npr2021)。
+
+**证明。**
+先只看两个有效二维块。对一个块上的逻辑 qubit 态
+
+$$
+\eta=\frac12(I+x\sigma_x+y\sigma_y+z\sigma_z),
+ \qquad x^2+y^2+z^2\le1,
+$$
+
+两项投影期望为
+
+<a id="eq-c92-ellipse-readouts"></a>
+
+$$
+F_L=\frac{1+z}{2},\qquad
+ F_R=\frac{1-z/2+\sqrt3x/2}{2}.
+\tag{11.4}
+$$
+
+令 $F_L=(1+3v)/4$、$F_R=(1+3w)/4$，得到
+
+$$
+z=\frac{3v-1}{2},\qquad
+ x=\frac{\sqrt3}{2}(v+2w-1).
+$$
+
+存在某个 $y$ 使逻辑态合法，当且仅当 $x^2+z^2\le1$。
+代入并展开，这恰为 $v^2+w^2+vw\le v+w$。
+
+*必要性。*
+记 $\mathcal T=\mathcal T_0\oplus\mathcal T_1$。
+对任意全态 $\rho$，令 $t$ 为它在 $\mathcal T$ 上的权重。
+两投影在 $\mathcal T^\perp$ 为零，跨支撑项也不贡献投影期望。
+在 $t>0$ 时，把 $\mathcal T$ 上的归一压缩态在两个重复块上取部分迹，
+便得到上述某个逻辑态 $\eta$。
+所以 $(F_L,F_R)$ 是该椭圆读出与零点之间的凸组合。
+零点 $F_L=F_R=0$ 对应可见度 $p_-$，从而所有兼容参数都位于
+式 [(11.2)](#eq-c92-isotropic-full-region) 右侧。
+$t=0$ 直接给出 $p_-$。
+
+*充分性。*
+不能仅凭两个投影期望就断言全部边际正确，下面给出明确构造。
+对 $\eta=\begin{pmatrix}a&c\\\overline c&1-a\end{pmatrix}$，
+定义
+
+<a id="eq-c92-ellipse-completion"></a>
+
+$$
+\chi_\eta=\frac12\sum_{b=0}^1
+ \left[
+ a\lvert e_b\rangle\langle e_b\rvert+c\lvert e_b\rangle\langle f_b\rvert
+ +\overline c\lvert f_b\rangle\langle e_b\rvert
+ +(1-a)\lvert f_b\rangle\langle f_b\rvert
+ \right].
+\tag{11.5}
+$$
+
+它是两个相同逻辑块的等权混合，故为合法全态。
+由 $e_b=g_b$、$f_b=(2h_b-g_b)/\sqrt3$ 直接取部分迹，有
+
+$$
+\begin{aligned}
+ (\chi_\eta)_{AB}
+ &=a\Phi+\frac{1-a}{3}(I_4-\Phi),\\
+ (\chi_\eta)_{BC}
+ &=\left[\frac23(1-a)+\frac{2\operatorname{Re} c}{\sqrt3}\right]\Phi
+ +\left[\frac{1+2a}{12}-\frac{\operatorname{Re} c}{2\sqrt3}\right]I_4.
+ \end{aligned}
+$$
+
+两份完整边际确实都是各向同性态。
+取 $a=(1+z)/2$、$\operatorname{Re} c=x/2$，它们的 Bell 概率恰为
+式 [(11.4)](#eq-c92-ellipse-readouts)。
+故每个 $\mathcal E$ 点都被某个 $\chi_\eta$ 实现。
+再与前节的 $\tau_0$ 混合，便实现它与 $p_-$ 的全部凸组合。
+
+*非负象限。*
+椭圆上每个坐标都在 $[-1/3,1]$ 内，因为它来自合法投影期望。
+若从 $p_-$ 向某个椭圆点的线段进入非负象限，首次进入处必在一条坐标轴上，
+另一坐标位于 $[0,1]$。两段轴线 $(s,0),(0,s)$、$0\le s\le1$ 均在
+$\mathcal E$ 内。由椭圆盘的凸性，进入处至原椭圆点的整段仍在 $\mathcal E$。
+所以凸包在非负象限中没有扩大椭圆，得到式 [(11.3)](#eq-c92-isotropic-positive-region)。
+
+沿对角线 $v=w$，式 [(11.3)](#eq-c92-isotropic-positive-region) 退化为
+$3v^2\le2v$，重新得到 $0\le v\le2/3$。
+单边 $v=1$ 时，另一边只能有 $w=0$；
+这也可直接从纯 Bell 边际迫使整体为乘积态得到。
+
+这个椭圆来自三维球对两条*非正交读出方向*的线性投影。
+未被两个读出固定的 $y$ 坐标，是它们交换子方向上的交叉关系；
+在球面边界与球内之间如何选择，仍取决于实际相干内容。
+这里证明的是静态相容域和读出几何。
+若把椭圆进一步解释为时间轨道，仍须指定相应动力学，而不能仅凭形状推断。
+

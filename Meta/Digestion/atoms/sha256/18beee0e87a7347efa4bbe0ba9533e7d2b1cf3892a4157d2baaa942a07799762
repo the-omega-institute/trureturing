@@ -1,0 +1,233 @@
+**Lemma 14.3 (A mean-aware residual on every actual type).** On the
+entire sublevel of Lemma 14.2, use its $j,m,r,n,C,D$ and put
+
+$$
+\begin{gathered}
+t_k=y_k\ (k\in D),\quad u=\sum_{k\in D}t_k,\quad
+\delta=\max_{k\in D}t_k,\quad c=\min_{i\in C}y_i,\\
+B=|T\cap D|,\quad L=|T\cap C|,\quad K=L+B,\quad A=\{B>0\},\\
+\alpha=mr(2m-1),\quad \beta=3m^2-3m+1,\\
+Q(l)=(m-l)(r-l)(2m-1+l)=\alpha-\beta l+l^3,\\
+f_u(y)=\frac{r^2}{y}-\frac{d(j-1+u)}{y^2},\quad
+\bar y=\frac{a-u}{m},\quad
+\mathcal S_f=\sum_{i\in C}f_u(y_i)-m f_u(\bar y),\\
+\mathcal B_j(w)=\frac{r^2m^2}{a-w}
+             -\frac{d(j-1+w)m^3}{(a-w)^2},\quad
+\mathcal A_j(u)=\frac{\mathcal B_j(0)-\mathcal B_j(u)}{u},\\
+\eta_0=\sqrt{\alpha-\mathcal A_j(u)},\quad
+\eta_c=\frac{rn}{j},\quad \eta=\max\{\eta_0,\eta_c\},\quad
+\gamma=\eta^2-\alpha+\mathcal A_j(u)\ge0.
+\end{gathered}
+\tag{14.10}
+$$
+
+The square root is positive for sufficiently large $a$.
+On $A$ define
+
+$$
+\begin{gathered}
+V_T=\sum_{k\in T\cap D}t_k^{-1},\qquad
+Z_T=K^2\sum_{k\in T\cap D}t_k^{-2},\\
+\mathcal G_T=Z_T+Q(L)-\mathcal A_j(u)B-2\eta V_T+\gamma B
+ -\frac\gamma r\bigl(m(B-1)+L\bigr).
+\end{gathered}
+\tag{14.11}
+$$
+
+There are $\kappa_R,C_R>0$ such that, uniformly on this sublevel,
+
+$$
+\begin{aligned}
+\mathcal G_{\{k\}}&=(t_k^{-1}-\eta)^2\quad(k\in D),\\
+\mathcal G_T&\ge\kappa_Ra^3\quad(B>0,\ K\ge2),\\
+\mathcal S_f&\ge\frac{a^2}{2}\sum_{i\in C}(y_i-\bar y)^2,\\
+0\le\mathbb E[\mathcal G_T;A]+\mathbb E[Q(L);A^c]
+ +\mathcal S_f&\le C_Ra.
+\end{aligned}
+\tag{14.12}
+$$
+
+In particular
+
+$$
+\begin{gathered}
+\mathbb P(A,K\ge2)=O_R(a^{-2}),\qquad
+c\ge1-O_R(a^{-1/2}),\qquad
+\delta\le\frac{1+O_R(a^{-1/4})}{\eta},\\
+\frac{\eta^2}{a^3}=\max\left\{2,\frac{n^2}{j^2a}\right\}
+                         +O_R(a^{-1}).
+\end{gathered}
+\tag{14.13}
+$$
+
+**Proof.** The threshold partition gives $u\le bn/a=O_R(a^{-1/2})$.
+On $0\le w\le u$, differentiation of (14.10) gives
+
+$$
+\mathcal B_j'(w)=\frac{r^2m^2}{(a-w)^2}
+ -\frac{dm^3(a+w+2j-2)}{(a-w)^3}
+=-a^2+O_R(a).
+\tag{14.14}
+$$
+
+Thus $\mathcal A_j(u)=a^2+O_R(a)$,
+$\alpha-\mathcal A_j(u)=2a^3+O_R(a^2)$,
+$\eta_0=\sqrt2\,a^{3/2}+O_R(\sqrt a)$ and
+$\eta,\gamma^{1/2}=O_R(a^{3/2})$. These follow from rational
+expressions with $a-w\ge a/2$, uniformly for both possible $j$.
+They give the last assertion of (14.13).
+
+For $i\in C$, let $I_i=\mathbf1_{\{i\in T\}}$ and set
+
+$$
+\rho_i=(1-I_i)d(r-L)+I_i(m-L)(m-L-1),\qquad R_i=\mathbb E\rho_i.
+\tag{14.15}
+$$
+
+Every $\rho_i\ge0$: when $I_i=0$ one has $L\le r$;
+when $I_i=1$ the last two factors are consecutive integers.
+Their sum is $Q(L)$, nonnegative at every integer $0\le L\le m$.
+The exact expansion
+
+$$
+\rho_i=I_i(L^2-r^2)+d(r-L)
+$$
+
+gives, using $\mathbb E L=a-u$,
+
+$$
+R_i=\mathbb E[L^2I_i]-r^2y_i+d(j-1+u).
+\tag{14.16}
+$$
+
+The term $j-1$ here retains the difference between the original
+mean $a$ and the adjacent lower core size $r$.
+Since $K^2\ge L^2$ and $0<y_i\le1$, (14.16) yields
+
+$$
+H\ge H_D+\mathcal B_j(u)+\mathbb E Q(L)+\mathcal S_f,
+\qquad H_D=\mathbb E[Z_T;A].
+\tag{14.17}
+$$
+
+On the interval $c_0\le y\le1$,
+
+$$
+f_u''(y)=\frac{2\{r^2y-3d(j-1+u)\}}{y^4}\ge a^2
+\tag{14.18}
+$$
+
+for sufficiently large $a$: the subtracted term is $O_R(a)$,
+whereas $r^2y\ge r^2c_0$, and eventually it is at most half of
+$r^2y$. Jensen applied to $f_u(y)-a^2y^2/2$ proves the third line
+of (14.12), including nonnegativity of $\mathcal S_f$.
+
+The original mean gives the cap correction without assuming the cap:
+
+$$
+a\le m\mathbb P(A^c)+\mathbb E[L+B;A],\qquad
+ru-j\le m\mathbb E[B-1;A]+\mathbb E[L;A].
+\tag{14.19}
+$$
+
+Also $\mathbb E[V_T;A]=n$, by the actual inclusion probability of
+each tail label. Substituting (14.11) into (14.17), and applying
+(14.19) with multiplier $\gamma/r\ge0$, gives
+
+$$
+H\ge E_j+\mathbb E[\mathcal G_T;A]+\mathbb E[Q(L);A^c]
+                 +\mathcal S_f,\qquad
+E_j=\mathcal B_j(0)+2\eta n-\frac{j\gamma}{r}.
+\tag{14.20}
+$$
+
+For a tail singleton, $L=0$, $B=K=1$, so (14.11) is exactly the
+square in (14.12). For every other type meeting $D$, completing
+each reciprocal square gives
+
+$$
+\mathcal G_T\ge
+\eta^2\left(1-\frac B{K^2}\right)
+-\mathcal A_j(u)(B-1)-\beta L+L^3-\frac\gamma r(K-1).
+\tag{14.21}
+$$
+
+If $2\le K\le\sqrt a$, then $B/K^2\le1/2$ and $B,L\le\sqrt a$.
+Since $\eta^2\ge a^3$ eventually, (14.21) is at least
+$a^3/2-O_R(a^{5/2})\ge a^3/4$.
+If $K>\sqrt a$, every reciprocal $z=t_k^{-1}$ exceeds $a/b$.
+Consequently $K^2z>4\eta$ eventually and
+
+$$
+Z_T-2\eta V_T\ge\tfrac12 Z_T
+\ge\frac{BK^2a^2}{2b^2},\qquad
+\mathcal G_T\ge\frac{BK^2a^2}{2b^2}-\mathcal A_j(u)B
+                 +\gamma\left(1-\frac{K-1}{r}\right).
+\tag{14.22}
+$$
+
+For $K\le m=r+1$ the last term is nonnegative, giving at least
+$Ba^3/(4b^2)$ eventually. If $K>m$, then $K\le m+n$ and that term
+is at least $-\gamma n/r=-O_R(a^{5/2})$, while the first term is
+at least $Ba^4/(2b^2)$. Thus (14.22) is again at least
+$a^3/(4b^2)$ eventually. This proves the second line of (14.12)
+with $\kappa_R=\min\{1/4,1/(4b^2)\}$, for every allowed actual type.
+
+It remains to bound the residual in (14.20). Direct expansion gives
+
+$$
+\mathcal B_j(0)=a^3+2ja^2+O(a),\qquad
+S_j=a^3+4ja^2+\frac{n^2a}{j}+O_R(a).
+\tag{14.23}
+$$
+
+If $\eta=\eta_c$, then
+
+$$
+E_j=\mathcal B_j(0)+\frac{rn^2}{j}
+                 +\frac{j\eta_0^2}{r}=S_j+O_R(a).
+\tag{14.24}
+$$
+
+For $j=1$ the inequality $q\ge5/2$ ensures $\eta_c>\eta_0$
+eventually. For $j=2$, (14.6) implies
+$n/\sqrt a\ge2\sqrt2-O_R(a^{-1/2})$, and hence
+$(\eta_0-\eta_c)_+=O_R(a)$. Completing the scalar square in
+$2\eta n-(j/r)(\eta^2-\eta_0^2)$ shows that if $\eta_0>\eta_c$,
+its value at $\eta_0$ is its value at $\eta_c$ minus
+$(j/r)(\eta_0-\eta_c)^2=O_R(a)$. Thus (14.24) remains true in
+both cases. Since $H\le U\le S_j$, (14.20) proves the last line
+of (14.12); all its residuals are nonnegative by the signs just proved.
+
+The nonsingleton bound and strong Jensen now give
+$\mathbb P(A,K\ge2)=O_R(a^{-2})$ and
+$\sum_{i\in C}(y_i-\bar y)^2=O_R(a^{-1})$.
+As $\bar y=1-O_R(a^{-1})$, this proves the assertion about $c$.
+For a tail label $k$, put $x_k=x_{\{k\}}$ and
+$p_2=\mathbb P(A,K\ge2)$. Actual marginals satisfy
+$0\le t_k-x_k\le p_2$ and $\eta p_2=O_R(a^{-1/2})$.
+If $t_k\ge1/\eta$, then $x_k\ge t_k/2$ eventually. Writing
+$z=\eta t_k\ge1$, its singleton square in (14.12) gives
+
+$$
+\frac\eta2\frac{(z-1)^2}{z}
+\le x_k(t_k^{-1}-\eta)^2\le C_Ra,
+\qquad \frac{(z-1)^2}{z}=O_R(a^{-1/2}).
+$$
+
+For $z\ge1$, this implies $z-1=O_R(a^{-1/4})$.
+Labels with $t_k<1/\eta$ already satisfy the asserted upper bound.
+Taking the maximum proves the remaining assertion of (14.13).
+
+The expectation step is the elementary pointwise-certificate form of
+weak duality, as in D. Bertsimas and I. Popescu, *Optimal inequalities
+in probability theory: A convex optimization approach*, SIAM J. Optim.
+15(3), 780--804, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903),
+Theorem 2.1, p.785. The particular residual (14.11), its signs and its
+common-law cap correction are repo-derived here; no strong-duality or
+independent moment-realizability assertion is used. Strong Jensen is
+finite Jensen applied to the function with its displayed quadratic
+subtracted, in the sense of S. Boyd and L. Vandenberghe, *Convex
+Optimization*, §3.1.8, pp.77--78,
+[author text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf). ∎
+

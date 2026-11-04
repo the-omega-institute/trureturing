@@ -1,0 +1,66 @@
+## 14. 本轮形成的理论与可检验的后续问题
+
+现在可以把“它们都有关联”写成一组保持运算的映射：
+
+$$
+\begin{aligned}
+\text{正权电路的加乘}
+&\xrightarrow{\log}\text{log-sum-exp 与加法},
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{五模式四角乘积比}
+&\xrightarrow{\log}\text{隐藏关联的对偶坐标 }\eta,
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{三读出相容纤维}
+&\xrightarrow{\text{最大熵投影}}\text{KL 勾股分解},
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{正交直和与张量复合}
+&\xrightarrow{ \left\lVert \cdot\right\rVert ^{2}}\text{可加与可乘的重量},
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{条件复振幅表 }M
+&\longmapsto(\eta,\Phi;\,st/R^2)
+\longmapsto\text{纠缠双平方和},
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\tau\otimes\tau=\mathbf1\oplus\tau
+&\xrightarrow{d}\varphi^2=1+\varphi
+\xrightarrow{\text{相容}}\text{黄金门的相位与转移权重}.
+\end{aligned}
+$$
+
+<a id="table-1"></a>
+
+| 层次 | 精确对象 | 勾股或相容结论 |
+| --- | --- | --- |
+| 欧氏占位几何 | 五点与指定标准内积 | 九直角一等边；两剖分对应纤维两端 |
+| 概率信息几何 | 同一五律、最大熵参考 | KL 分解；Fisher 可见与隐藏切向正交 |
+| 统计记录几何 | 同源后验均值及记录权重 | 三记录最小性；协方差等于面积平方加和 |
+| 复振幅几何 | 条件两比特纯态和四角复比 | 双曲平方加相位平方；$C^2+\lvert r\rvert^2=1$ |
+| 黄金相干块 | 融合规则、投影与编织关系 | 黄金归一三角及相对相位 $e^{\pm3\pi i/5}$ |
+
+本轮的中心推进是定理 [9.3](#statement-9-3)、[10.2](#statement-10-2) 及复关系递归：它们把“关系也需要预测”变成明确的缺失参数与可检验恒等式。三个稳定读出控制可见部分；$\eta$ 度量底面概率关系；$\Phi$ 是这些概率不显示的一项相干关系。把实际观测过程写成 Kraus 分支后，其递归增量也有确定的复对数形式。
+
+接下来的关键任务可以按实际读出提出。首先，给一个具体允许仪器菜单，说明怎样取得 $\kappa$ 与相位回路，而不仅是定义它们。其次，为该取得协议证明误差、样本、相干控制和门数成本；最新 Walsh 结果提醒我们不能用一个表示范数代替所有资源下界。再次，针对某项操作，验证它是否保持所用条件纯态、独立性或最大熵族；这些条件决定哪一种勾股式继续有效。
+
+项目[《相干重构续卷》](https://github.com/the-omega-institute/trureturing/blob/d3c5bc77408d91c0f11eb05bf86e8876a7cd7f4a/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)§67.3 仍把复标量、Born 测量、系统组合和动力学的起源列为未闭合的桥。本文给出了在明确结构中通往这些问题的约束方程；如果要声称从更少公理重建量子理论，还须证明所需结构由那些公理唯一或操作等价地得到。黄金门的已有普适性也应继续按 v15 的编码、可用地址和近似闭包使用；有限精确实现与任意精度逼近仍有算术差别。
+
+<a id="sec-bibliography"></a>
+

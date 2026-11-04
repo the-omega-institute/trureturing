@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:68ee2579d820e8c645d4d357411ac832a08095ab46123a233dd12e17712f2bac
+  normalized_sha256: sha256:68ee2579d820e8c645d4d357411ac832a08095ab46123a233dd12e17712f2bac
+cas_ref: sha256:68ee2579d820e8c645d4d357411ac832a08095ab46123a233dd12e17712f2bac
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityJointSimplex.tp_exact_fidelity_reconstruction
+    target_statement_id: sha256:1efb7cbcb9f4299629e2248b28c244e75a0ceab109e80d6e037f2236beec74e0
+receipts:
+  unresolved_subitems: []

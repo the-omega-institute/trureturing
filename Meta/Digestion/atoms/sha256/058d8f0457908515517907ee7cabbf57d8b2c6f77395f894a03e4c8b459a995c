@@ -1,0 +1,26 @@
+**定理 8.2（全历史一致预测的精确最小状态数）。**
+
+<a id="thm:memory"></a>
+
+对 $0<\epsilon<x/2$，令
+
+<a id="eq:N"></a>
+
+$$
+N_\epsilon=\min\{n\ge0:p_n\le2\epsilon\}
+ =\max\left\{0,
+ \left\lceil\frac{\log\!\left(\frac{(1-q_0)(x-2\epsilon)}{2\epsilon q_0}\right)}
+ {2\log\varphi}\right\rceil\right\}.
+ \tag{21}
+$$
+
+则最少状态数恰为
+
+<a id="eq:memory"></a>
+
+$$
+\boxed{|S|_{\min}=N_\epsilon+2.}
+ \tag{22}
+$$
+
+若 $\epsilon\ge x/2$，一个状态足够；

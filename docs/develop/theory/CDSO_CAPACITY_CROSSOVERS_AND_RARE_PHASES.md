@@ -4090,3 +4090,698 @@ Finally a label permutation relating two minimizing laws must carry their actual
 The new all-law optimization and inverse reconstruction in (18.27)–(18.37) use weak duality, finite Jensen, and Behrend's geometry only in the attributed intermediate roles above. Their scope is the fixed-$k$, fixed-$\eta$ interval (18.1); they assert no endpoint or transition-layer classification, growing-$k$ asymptotic regime, small-$a$ classification, least sufficient threshold, global rare/dense comparison, or prescribed finite-graph realization. The full text of Zhao–Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not an input, and its possible overlap remains unassessed. No worldwide priority claim is made. ∎
 
 ## 追加锚（第18节之后为增补区）
+
+## 19. Exact saturated-block intervals and their two collision boundaries
+
+**Definition 19.1 (Saturated-block parameters).** Fix an integer $m\ge4$ and assume
+
+$$
+\begin{gathered}
+a\in\mathbb Z,\qquad a\ge A(m):=2^{16}m^2,\qquad
+r=a+1,\quad s=a+2,\quad n=s-m,\quad c=2a+1,\\
+0<\delta\le1,\qquad \theta=1-\delta,\quad q=r-\delta,\quad
+\gamma=c\delta,\quad \tau=\frac{3(2a+3)\delta}{r^2},\\
+t=\frac{2\delta}{m},\qquad U=1-t,\qquad
+V=1-\frac{1-\delta}{n},\qquad \xi=1-\frac2m,\qquad
+\delta_{\rm eq}=\frac{m}{2a+4-m}.
+\end{gathered}
+\tag{19.1}
+$$
+
+The actual-law domain, energy $H$, infimum $\mathscr D_a(\delta)$ and subtractand $B$ are precisely Definitions 1.1 and 11.1. In particular every nonempty subset remains allowed. The functions $f,g$ are (18.2), with the parameters (19.1); the fixed-$\eta$ restrictions in (18.1) are not imposed here. The bound $A(m)$ is sufficient, with no least-threshold assertion. The relations
+
+$$
+mU+nV=q,\qquad
+U>V\ \Longleftrightarrow\ 0<\delta<\delta_{\rm eq}
+\tag{19.2}
+$$
+
+hold. For an $m$-element label set $C\subseteq[s]$, write $N=[s]\setminus C$ and define
+
+$$
+\mathcal Z_C(t)=\left\{z\in\mathbb R_{\ge0}^{\binom C2}:
+\sum_{j\in C\setminus\{i\}}z_{ij}=t\quad(i\in C)\right\}.
+\tag{19.3}
+$$
+
+Here $z_{ij}=z_{ji}$ denotes an unordered edge coordinate. A saturated $C$-law is the actual omission law
+
+$$
+\bar x_{\{i,j\}}=z_{ij}\quad(\{i,j\}\subseteq C),\qquad
+\bar x_{\{h\}}=\frac{\theta}{n}\quad(h\in N),\qquad
+\bar x_J=0\quad\text{for all other proper }J\subsetneq[s],
+\quad z\in\mathcal Z_C(t).
+\tag{19.4}
+$$
+
+This definition allows zero pair masses. It makes sense on all $0<\delta\le1$; $C$ is the high-marginal block only in the strict coalescence range in (19.2).
+
+**Lemma 19.2 (Two unique ordered thresholds).** Put
+
+$$
+\begin{aligned}
+E_0(\delta)&=f'(U)+\frac c{U^2}-g'(V),\\
+E_1(\delta)&=f'(U)+\frac c{V^2}-g'(V),\\
+P_j(\delta)&=(r^2+jc)UV(U^2-V^2)
+ -2c\delta(U^3-\xi V^3),\qquad j=0,1.
+\end{aligned}
+\tag{19.5}
+$$
+
+There is exactly one zero $\delta_j$ of $E_j$ on $[0,1]$, and
+
+$$
+0<\delta_-:=\delta_0<\delta_+:=\delta_1<\delta_{\rm eq}.
+\tag{19.6}
+$$
+
+Each threshold is equivalently the unique root of $P_j=0$ in $0<\delta<\delta_{\rm eq}$, with $U,V$ given by (19.1). On the entire interval $[0,1]$,
+
+$$
+E_j=\frac{P_j}{U^3V^3},\qquad
+E_j'(\delta)\le-\frac{2a^2}{m}<0.
+\tag{19.7}
+$$
+
+Consequently $E_0\le0\le E_1$ holds exactly on $[\delta_-,\delta_+]$.
+
+**Proof.** The definitions extend continuously to $\delta=0$. Throughout $[0,1]$ one has $n\ge a/2$, $c\le3a$, $U\ge1/2$ and $V\ge1-2/a$. Define
+
+$$
+A_*=V^{-2}-U^{-2},\qquad B_*=V^{-3}-\xi U^{-3},\qquad
+R_j=r^2+jc.
+$$
+
+Using $a^2=r^2-c$ and $U-\theta=\xi\delta$ gives
+
+$$
+E_j=R_j A_*-2c\delta B_*.
+\tag{19.8}
+$$
+
+Multiplication by the positive $U^3V^3$ proves the polynomial identity in (19.7). Since $U'=-2/m$ and $V'=1/n$,
+
+$$
+\begin{aligned}
+A_*'&=-\frac{2}{nV^3}-\frac{4}{mU^3}\le-\frac4m,\\
+B_*'&=-\frac{3}{nV^4}-\frac{6\xi}{mU^4},\\
+E_j'&=R_jA_*'-2cB_*-2c\delta B_*'\\
+&\le-\frac{4a^2}{m}+16c+\frac{12c}{n}+\frac{192c}{m}\\
+&\le-\frac{4a^2}{m}+192a+72
+\le-\frac{4a^2}{m}+200a
+\le-\frac{2a^2}{m}.
+\end{aligned}
+\tag{19.9}
+$$
+
+Here $V^{-3},V^{-4}<2$, $U^{-3}\le8$, $U^{-4}\le16$, $0\le\xi\le1$, $m\ge4$, $a\ge9$ and $a\ge100m$ justify the successive estimates. In particular the estimate does not require $U>V$.
+
+At zero, $U=1$ and $V=1-1/n$, so $E_j(0)=R_j(V^{-2}-1)>0$. At $\delta_{\rm eq}$, $U=V$ and
+
+$$
+E_j(\delta_{\rm eq})
+=-\frac{2c\delta_{\rm eq}(1-\xi)}{U^3}<0.
+$$
+
+Continuity and (19.9) prove existence and uniqueness, including absence of further roots on $[0,1]$. In the open coalescence range,
+
+$$
+E_1-E_0=c(V^{-2}-U^{-2})>0.
+\tag{19.10}
+$$
+
+Thus $E_1(\delta_-)>0$, giving the strict root order. Monotonicity now proves the last assertion. ∎
+
+**Lemma 19.3 (Two supporting bounds over every cardinality).** Assume $0<\delta<\delta_{\rm eq}$ and set
+
+$$
+S=m f(U)+n g(V).
+$$
+
+For any original dense actual law, order its marginals decreasingly, let $C$ be its first $m$ labels and put
+
+$$
+D=\sum_{i\in C}y_i-mU.
+$$
+
+Then both bounds
+
+$$
+H(x)\ge S+E_0D,\qquad H(x)\ge S+E_1D
+\tag{19.11}
+$$
+
+hold. Equality in either bound forces every individual marginal to be $U$ on $C$ and $V$ on $N$. For the first bound, equality further requires that every supported atom omit either one label or two labels of $C$. For the second, equality further requires that every supported atom omit either one label of $N$ or two arbitrary labels. These are necessary equality conditions; the mass constraints will further restrict them in Theorem 19.4.
+
+**Proof.** The parameter inequalities needed for the certificates and convexity are
+
+$$
+\delta_{\rm eq}<\frac ma<\frac12,\quad
+n-1\ge\frac a2,\quad
+\gamma\le3m,\quad \tau\le\frac{9m}{a^2}<\frac9{10}.
+\tag{19.12}
+$$
+
+Two adjacent pivots are used: $(P_0,h_0)=(\{1,\ldots,m-1\},m)$ and $(P_1,h_1)=(C,m+1)$, with $k_j=|P_j|$. The function $\mathcal G_{P_j,h_j}$ is the algebraic function (18.3), with its lower index set of size $s-k_j-1$ and with the present parameters. Thus no existence or strict-interior assertion of Lemma 18.3 is being invoked.
+
+For either pivot, put $\omega=y_{h_j}^{-2}$, $\alpha_i=y_i^{-2}$, $W=\sum_i\alpha_i$ and $b_i=c(\omega-\alpha_i)_+$. The ordered mean gives
+
+$$
+y_{h_j}\ge1-\frac{1+\delta}{s-k_j}\ge1-\frac3a,
+\qquad \omega<(16/15),\qquad \alpha_i\ge1.
+\tag{19.13}
+$$
+
+Define $R_y(T)$ by exactly (18.5). Its all-cardinality argument can be checked with (19.13), independently of the narrower parameters (18.1). At $|T|=r$ it is $b_i$ for the omitted label. At $|T|=a$ it is $c\sum_{i\notin T}(\alpha_i-\omega)_+$. At $|T|=s$ it is $2W+2c\omega>0$. For every remaining nonempty cardinality, put $e=s-|T|\in[3,s-1]$. The bracket multiplying $r-|T|$ in (18.5) is at least
+
+$$
+3se-2s-e-e^2-2c\omega
+\ge7s-12-2c\omega
+>\frac{41a-2}{15}>0.
+\tag{19.14}
+$$
+
+The middle inequality follows from concavity in $e$ and the endpoint values $7s-12$ and $2s(s-2)$. The omitted $b_i$ are nonnegative. Hence the complete zero set is still (18.6), with the present pivot, and expectation gives the same-law identity
+
+$$
+H(x)=\mathcal G_{P_j,h_j}(y)+\mathbb E_xR_y(T).
+\tag{19.15}
+$$
+
+This identity is just expansion using $\mathbb E(r-K)=\delta$ and $\mathbb EW_T=\sum_i1/y_i$, as in (18.13); no restriction of the original support has been made.
+
+Both $f$ and $g$ are strictly convex on $[\tau,1]$, because their second derivatives are (18.14), with $r^2\tau-3\gamma=6\delta>0$. Average the coordinates of $P_j$, leave $h_j$ fixed, and average the remaining coordinates. Denote the resulting repeated-coordinate vector by $z^{(j)}$. Finite Jensen and the linear dependence of the cross term on the coordinates in $P_j$ give
+
+$$
+H(x)\ge\mathcal G_{P_j,h_j}(z^{(j)}).
+\tag{19.16}
+$$
+
+Equality requires residual zero on every positive-mass atom and equal coordinates within each of the two averaged groups. The lower averaged coordinate is at least
+
+$$
+1-\frac{1+\delta}{s-k_j-1}\ge1-\frac3a>\frac9{10},
+\tag{19.17}
+$$
+
+since the other $k_j+1$ coordinates are at most one. Ordering bounds the other coordinates below by that average. Thus $z^{(j)}$ belongs to the compact slice $\mathcal B_q$ of (18.3), even when some original individual marginals lie outside $\mathcal B$.
+
+For clarity, strong convexity on this box also holds with the present parameters. For a pivot with $k\le m$, the only off-diagonal Hessian entries are the $P$--$h$ entries, of absolute value at most $9a$. Its diagonal entries on $[9/10,1]^s$ are bounded below by $2a^2$ on $P$, $2a^2-4ka$ at $h$, and $2a^2-36m$ elsewhere. Indeed $\sum_{i\in P}y_i+\delta-k\ge-k/10$, $\gamma\le3m$, and $z^{-3}<3/2$, $z^{-4}<2$ on that interval. Subtracting the absolute off-diagonal row sums leaves at least $a^2$ in every row under (19.1). Applying $2|v_iv_h|\le v_i^2+v_h^2$ to its quadratic form proves
+
+$$
+\nabla^2\mathcal G_{P_j,h_j}\succeq a^2 I_s
+\quad\text{on }\mathcal B.
+\tag{19.18}
+$$
+
+Let $y^C$ have coordinates $U$ on $C$ and $V$ on $N$. It is in the relative interior of $\mathcal B_q$, by (19.1), (19.2), (19.12). With $D_C(y)=\sum_{i\in C}y_i+2\delta-m$, the two algebraic identities are
+
+$$
+\begin{aligned}
+\mathcal G_{P_0,h_0}(y)
+ &=\sum_{i\in C}f(y_i)+\sum_{i\in N}g(y_i)
+   +\frac{cD_C(y)}{y_{h_0}^2},\\
+\mathcal G_{P_1,h_1}(y)
+ &=\sum_{i\in C}f(y_i)+\sum_{i\in N}g(y_i)
+   +\frac{cD_C(y)}{y_{h_1}^2}.
+\end{aligned}
+\tag{19.19}
+$$
+
+Since $D_C(y^C)=0$, both functions have value $S$ at $y^C$. Their respective gradients there are $f'(U)+c/U^2$ and $f'(U)+c/V^2$ on every label of $C$, and $g'(V)$ on every label of $N$. Grouping preserves the total on $C$ as well as the total on $N$. The supporting inequality obtained by integrating (19.18) on the line segment from $y^C$ to $z^{(j)}$ therefore gives
+
+$$
+\mathcal G_{P_j,h_j}(z^{(j)})
+\ge S+E_jD+\frac{a^2}{2}\|z^{(j)}-y^C\|^2.
+\tag{19.20}
+$$
+
+Equations (19.16) and (19.20) prove (19.11). If equality holds, (19.20) fixes the grouped vector to $y^C$, and strict Jensen fixes every individual coordinate. At this two-level vector, the pivot in the first bound has marginal $U$, so (18.6) allows all singleton omissions but only pair omissions within $C$. The pivot in the second bound has marginal $V$, so it allows only singleton omissions in $N$ but every pair omission. This proves all stated necessities.
+
+The convex-combination inequality and first-order supporting inequality used here are classical: Stephen Boyd and Lieven Vandenberghe, *Convex Optimization*, §§3.1.8 and 3.1.3, respectively, pp.77–78 and 69–70, [author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf). Their hypotheses are supplied by (18.14), (19.17) and (19.18); the strengthened term in (19.20) follows directly by integration. Convexity is asserted for these auxiliary marginal functions, not for $H$ as a function of law masses. ∎
+
+**Theorem 19.4 (Exact closed saturated interval and every minimizing actual law).** Under (19.1), the saturated laws (19.4) are globally minimizing in Definition 11.1 if and only if
+
+$$
+\delta\in[\delta_-,\delta_+].
+\tag{19.21}
+$$
+
+On that closed interval the exact value is
+
+$$
+\boxed{\quad \mathscr D_a(\delta)=m f(U)+n g(V).\quad}
+\tag{19.22}
+$$
+
+The corresponding dense infimum of $d(x)$ is (19.22) minus $B$. Every minimizing actual law is exactly (19.4), for one $m$-element $C$ and an arbitrary array (19.3). This includes both endpoints and every feasible zero pair-mass boundary. There are exactly $\binom{s}{m}$ distinct labeled marginal patterns. For each pattern, (19.4) is an affine bijection from the full compact polytope $\mathcal Z_C(t)$ onto the entire minimizing-law fibre, with inverse $z_{ij}=\bar x_{\{i,j\}}$ and affine dimension
+
+$$
+\binom m2-m=\frac{m(m-3)}2.
+\tag{19.23}
+$$
+
+Its relative interior consists of the arrays with every edge positive; its relative boundary consists of the arrays with at least one zero edge. Its vertices have positive-support components that partition $C$ into single edges and odd cycles: single edges have mass $t$, and cycle edges have mass $t/2$. No further endpoint equality laws occur.
+
+For every $0<\delta<\delta_-$ and every $\delta_+<\delta\le1$, each saturated actual law admits an actual dense-law perturbation of the same mean with strictly smaller energy. Thus (19.21) concerns exact global minimization in the original domain, not merely validity of an auxiliary stationary condition.
+
+**Proof.** The constant edge array $z_{ij}=t/(m-1)$ is strictly positive and feasible. Every feasible array has total pair mass $mt/2=\delta$; the singleton mass in (19.4) is $\theta$. Hence these are nonnegative laws of total mass one, with only omission sizes two and one. Their atoms are nonempty, their mean is $a\delta+r\theta=q$, and their actual marginals are exactly $U$ on $C$ and $V$ on $N$. On all $0<\delta\le1$ these are at least $1/2$ and $1-2/a$, respectively, whereas $\tau\le9/a<1/2$. Thus (19.4) is an original dense actual law throughout that range, without requiring $U>V$ for its feasibility.
+
+For any such law its incidence second moments are
+
+$$
+\begin{aligned}
+M_C&=r^2U-c(\delta-t)=a^2U+c\theta
+ &&\text{at each label of }C,\\
+M_N&=r^2V-c\delta
+ &&\text{at each label of }N.
+\end{aligned}
+\tag{19.24}
+$$
+
+Dividing by the squared actual marginals gives energy $S=m f(U)+n g(V)$, independently of the chosen edge array.
+
+Now let $\delta\in[\delta_-,\delta_+]$. Lemma 19.2 gives $E_0\le0\le E_1$, and $E_1-E_0>0$. Choose
+
+$$
+\rho=\frac{E_1}{E_1-E_0}\in[0,1],\qquad
+\rho E_0+(1-\rho)E_1=0.
+\tag{19.25}
+$$
+
+For any original dense actual law, combine its two bounds (19.11) with these nonnegative coefficients. This gives $H(x)\ge S$, with the same $S$ independently of the ordering labels. Equation (19.24) attains it and proves (19.22).
+
+If a law attains $S$, its nonnegative gaps in this convex combination vanish for each positively weighted bound. At least one weight is positive. Lemma 19.3 then fixes all individual marginals to $y^C$. The strict inequality $U>V$ recovers $C$ uniquely as its high-marginal labels.
+
+For $\delta\in[\delta_-,\delta_+)$, one has $\rho>0$, including $\rho=1$ at $\delta_-$. Equality in the first certificate permits only singleton omissions and pair omissions within $C$. Their total masses must be $\theta$ and $\delta$, since the mean is $q$. The sum of omission probabilities on $C$ is $m(1-U)=2\delta$. The internal pairs already account for all $2\delta$, so every singleton omission in $C$ has mass zero. Consequently the pair degree at every label of $C$ is $t$, and each singleton omission in $N$ has mass $1-V=\theta/n$. These are exactly (19.3)–(19.4).
+
+At $\delta=\delta_+$ the available weight is $1-\rho=1$. The second certificate permits only singleton omissions in $N$ and arbitrary pair omissions. Again their total masses are $\theta$ and $\delta$. The total omission probability on $N$ is $n(1-V)=\theta$, already exhausted by its singleton masses. Thus every pair incident to $N$ has mass zero. The remaining pair degrees and singleton masses are precisely (19.3)–(19.4). This explicitly removes the additional zero-residual atoms at the second endpoint. At the first endpoint the preceding high-omission count removes its additional singleton atoms. No positivity of individual edge masses was used.
+
+The strict marginal gap proves the count $\binom{s}{m}$ and disjointness of the recovered patterns. The displayed coordinate inverse proves the affine bijection and compactness. The classical intermediate polytope here is Roger E. Behrend's $\mathcal P(K_C,b)$ with $b_i=t>0$, in *Fractional Perfect b-Matching Polytopes. I: General Theory*, definition (2), [arXiv:1301.7356v1](https://arxiv.org/html/1301.7356v1), DOI [10.1016/j.laa.2013.10.001](https://doi.org/10.1016/j.laa.2013.10.001). Its Corollary 19 applies because $K_C$ is finite, connected and nonbipartite and the constant edge array above is strictly positive. It gives dimension $|E|-|C|$, proving (19.23). Strict positive feasibility also identifies the relative interior and boundary as stated: a positive array has a small relative neighborhood remaining positive, while each zero coordinate lies on a proper supporting coordinate hyperplane.
+
+Behrend's Theorem 22 says that a feasible array is a vertex exactly when each positive-support component is acyclic or has exactly one cycle, of odd length. Here no label is isolated because $t>0$. A leaf in a tree component forces its incident edge to have mass $t$, exhausting the degree of its neighbor; positivity then forces that component to be just that edge. The same argument rules out attached trees at a unicyclic component. Thus the remaining components are bare odd cycles, whose degree equations uniquely give edge mass $t/2$. Conversely any partition into single edges and odd cycles with these masses is feasible and satisfies Behrend's criterion. These attributed facts describe the fibre geometry, rather than supply the all-law nonlinear minimum proved above.
+
+It remains to prove necessity of the interval by actual-law descents. Fix any saturated law, including one with zero internal edges. If $0<\delta<\delta_-$, choose $i\in C$ and $h\in N$ and move mass $\varepsilon>0$ from the singleton omission $\{h\}$ to the singleton omission $\{i\}$. All pairs stay fixed. For sufficiently small $\varepsilon$, this is a dense actual law of the same mean, since $\theta/n>0$, and its changed marginals are $U-\varepsilon$ at $i$ and $V+\varepsilon$ at $h$. Using (19.24), its energy derivative at zero is
+
+$$
+\left(-\frac{r^2}{U^2}+\frac{2M_C}{U^3}\right)
+ +\left(\frac{r^2}{V^2}-\frac{2M_N}{V^3}\right)
+=-\left(f'(U)+\frac c{U^2}\right)+g'(V)
+=-E_0<0.
+\tag{19.26}
+$$
+
+If $\delta_+<\delta\le1$, choose $h\in N$. Replace every old internal edge mass by $(1-\varepsilon/\delta)z_{ij}$ and add pair-omission mass $\varepsilon/m$ at each $\{i,h\}$, $i\in C$. Leave all singleton masses fixed. For sufficiently small $0<\varepsilon<\delta$ this is a nonnegative actual law, still with pair mass $\delta$, singleton mass $\theta$ and mean $q$. Its high pair degrees decrease by $\varepsilon/m$ each, and the pair degree at $h$ increases by $\varepsilon$. Thus the changed marginals are $U+\varepsilon/m$ on $C$ and $V-\varepsilon$ at $h$; they remain dense. The moment derivatives are $a^2/m$ at each high label and $-a^2$ at $h$. Its energy derivative is therefore
+
+$$
+\left(\frac{a^2}{U^2}-\frac{2M_C}{U^3}\right)
+ -\left(\frac{a^2}{V^2}-\frac{2M_N}{V^3}\right)
+=f'(U)-g'(V)+\frac c{V^2}
+=E_1<0.
+\tag{19.27}
+$$
+
+The sign follows from Lemma 19.2 even beyond $\delta_{\rm eq}$. The construction still works at $\delta=1$, when the singleton masses vanish. These two directions preserve all actual mass and mean constraints and apply to every feasible edge array. Differentiability and the strict negative derivatives yield smaller energies for sufficiently small positive $\varepsilon$. This proves necessity throughout $0<\delta\le1$. ∎
+
+**Proposition 19.5 (Threshold widths, collision equations and scope).** For fixed $m$, as $a\to\infty$, the thresholds in Lemma 19.2 satisfy
+
+$$
+\begin{aligned}
+\delta_j&=\frac{m}{2a}+\frac{m(m-8)}{4a^2}
+ +\frac{m(m^2-8m+60+16j)}{8a^3}+O_m(a^{-4}),
+ \qquad j=0,1,\\
+\delta_+-\delta_-&=\frac{2m}{a^3}+O_m(a^{-4}).
+\end{aligned}
+\tag{19.28}
+$$
+
+The lower endpoint is the high/intermediate collision of the algebraic stationarity equations (18.23) for $k=m-1$:
+
+$$
+u=w=U,\quad v=V,\quad
+2\delta-k(1-u)=t,\quad 1-w-t=0,\quad E_0=0.
+\tag{19.29}
+$$
+
+The upper endpoint is their intermediate/low collision for $k=m$:
+
+$$
+u=U,\quad w=v=V,\quad
+2\delta-k(1-u)=0,\quad E_1=0.
+\tag{19.30}
+$$
+
+In (19.29) the lower multiplicity is $n$; in (19.30) it is $n-1$, in addition to the displayed intermediate label. These are collision relations and exact endpoint laws, without a classification of the adjacent open branches.
+
+**Proof.** Put $h=1/a$. After cancellation, $hP_j$ under each substitution below is a rational function of $h$ with denominator nonzero near $h=0$ for fixed $m$. In particular
+
+$$
+V=1-\frac{h(1-\delta)}{1+(2-m)h}.
+$$
+
+First substitute $\delta=(m/2)h+b h^2$ into $hP_j$. Taylor expansion gives
+
+$$
+hP_j=\left(m-8-\frac{4b}{m}\right)h+O_{m,b}(h^2).
+\tag{19.31}
+$$
+
+With $b=m(m-8)/4$, substitute $\delta=(m/2)h+b h^2+d h^3$ instead. The next coefficient is
+
+$$
+hP_j=\left(\frac{m^2-8m+60+16j}{2}
+             -\frac{4d}{m}\right)h^2+O_{m,d}(h^3).
+\tag{19.32}
+$$
+
+These expansions follow by inserting (19.1) into (19.5) and collecting powers; their remainders are Taylor remainders of the indicated rational functions, bounded on a fixed sufficiently small $h$-interval for each fixed $m,b,d$. Choose $d=m(m^2-8m+60+16j)/8$ and denote the resulting trial value by $\widehat\delta_j$. Equations (19.31)–(19.32) give $P_j(\widehat\delta_j)=O_m(h^2)$ and hence $E_j(\widehat\delta_j)=O_m(h^2)$, since $U,V\to1$. For all sufficiently small positive $h$ the trial value lies in the coalescence range: indeed
+
+$$
+\delta_{\rm eq}=\frac m2h+\frac{m(m-4)}4h^2+O_m(h^3),
+\qquad \delta_{\rm eq}-\widehat\delta_j=m h^2+O_m(h^3)>0.
+$$
+
+The derivative estimate (19.7) and the mean value theorem now give
+
+$$
+|\widehat\delta_j-\delta_j|
+\le\frac{m}{2a^2}|E_j(\widehat\delta_j)|=O_m(h^4).
+\tag{19.33}
+$$
+
+This proves the remainder and both expansions in (19.28), rather than only their formal coefficients.
+
+For (19.29), take $k=m-1$ in the algebraic formula (18.3). At $u=w=U$ its intermediate pair degree is $2\delta-(m-1)t=t$, and its intermediate singleton mass is $1-U-t=0$. The high and intermediate derivatives both equal $f'(U)+c/U^2$, so their equality with the lower derivative is exactly $E_0=0$. For (19.30), take $k=m$. At $u=U$, the intermediate degree is zero, and at $w=v=V$ the intermediate derivative already equals $g'(V)$; the remaining stationarity equation is $E_1=0$. Every denominator is positive. At the lower collision the choice of which of the $m$ high labels is called intermediate is redundant; at the upper collision the choice among the $n$ low labels is redundant. Neither choice adds a labeled pattern to the $\binom{s}{m}$ in Theorem 19.4.
+
+The new conclusions here are the two finite thresholds, their strict order and width, the all-cardinality supporting bounds across the collision, and the exhaustive actual-law minimum on their closed interval, with genuine descents outside it. The finite Jensen, supporting-plane and fractional perfect matching geometry are used only in the attributed intermediate roles in Lemma 19.3 and Theorem 19.4. The result asserts no classification of all neighboring open phases, no growing-$m$ asymptotic regime, no least sufficient $A(m)$, no small-$a$ classification, no comparison with the unrestricted rare minimum and no realization by a finite graph with prescribed budgets. The full technical overlap with Zhao–Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), remains unassessed; that full text is not an input to these deductions. No worldwide priority claim is made. ∎
+
+## 追加锚（第18节之后为增补区）
+
+## 20. Complete neighboring inter-saturation phases
+
+**Definition 20.1 (Neighboring blocks and the original domain).** Fix an integer $m\ge4$ and an integer $a\ge2^{16}m^2$. Put $M=m+1$, $r=a+1$, $s=a+2$, $c=2a+1$, and retain $q=r-\delta$, $\theta=1-\delta$, $\gamma=c\delta$ and $\tau=3(2a+3)\delta/r^2$. The domain is exactly Definition 11.1: one actual probability law on every nonempty $T\subseteq[s]$, with actual mean $q$ and actual marginals at least $\tau$. The energy, dense infimum and subtractand are $H$, $\mathscr D_a(\delta)$ and $B$ from Definitions 1.1 and 11.1. No restriction of cardinality or positive support is imposed. Write $\bar x_J=x_{[s]\setminus J}$ for proper omission sets.
+
+For $p\in\{m-1,m,m+1\}$ define
+
+$$
+\begin{gathered}
+n_p=s-p,\quad U_p=1-2\delta/p,\quad
+V_p=1-(1-\delta)/n_p,\quad \xi_p=1-2/p,\quad
+\Delta_p=\frac{p}{2a+4-p},\\
+f(z)=a^2/z+c\theta/z^2,\qquad g(z)=r^2/z-c\delta/z^2,\\
+E_{0,p}=f'(U_p)+c/U_p^2-g'(V_p),\qquad
+E_{1,p}=f'(U_p)+c/V_p^2-g'(V_p),\\
+P_{j,p}=(r^2+jc)U_pV_p(U_p^2-V_p^2)
+ -2c\delta(U_p^3-\xi_pV_p^3)\quad(j=0,1).
+\end{gathered}
+\tag{20.1}
+$$
+
+The primes on $f,g$ denote differentiation in their argument. The roots specified below define $\delta_{-,p}$ and $\delta_{+,p}$. In particular $\delta_{\pm,m}$ are exactly the thresholds of §19. For $k\in\{m-1,m\}$ set
+
+$$
+\alpha_k=\delta_{+,k},\qquad \beta_k=\delta_{-,k+1},\qquad
+n=s-k-1,
+\tag{20.2}
+$$
+
+and use the algebraic functions $\mathcal G_{P,h}$ and $F_k(u,w)$ of (18.3), with $|P|=k$, $h\notin P$ and $N=[s]\setminus(P\cup\{h\})$. Here these functions are defined without the fixed-$\eta$ assumptions of (18.1).
+
+**Lemma 20.2 (The three exact neighboring threshold pairs).** For each $p$ in Definition 20.1, $E_{j,p}$ has exactly one zero on $[0,1]$, and
+
+$$
+0<\delta_{-,p}<\delta_{+,p}<\Delta_p<p/a\le M/a.
+\tag{20.3}
+$$
+
+The respective roots are equivalently the unique roots of $P_{0,p}$ and $P_{1,p}$ in $(0,\Delta_p)$. Moreover $E_{0,p}\le0\le E_{1,p}$ holds exactly on $[\delta_{-,p},\delta_{+,p}]$.
+
+**Proof.** This includes $p=3$ when $m=4$. The original bound on $a$ implies $a\ge600p$, $n_p\ge a/2$, $c\le3a$, $U_p\ge1/3$ and $V_p\ge1-2/a$ on $[0,1]$. Write
+
+$$
+A=V_p^{-2}-U_p^{-2},\quad C=V_p^{-3}-\xi_pU_p^{-3},\quad R_j=r^2+jc.
+$$
+
+The identity $U_p-\theta=\xi_p\delta$ gives $E_{j,p}=R_jA-2c\delta C=P_{j,p}/(U_p^3V_p^3)$. Its derivative satisfies
+
+$$
+\begin{aligned}
+A'&=-2/(n_pV_p^3)-4/(pU_p^3)\le-4/p,\\
+C'&=-3/(n_pV_p^4)-6\xi_p/(pU_p^4),\\
+E_{j,p}'&\le-4a^2/p+54c+12c/n_p+972c/p\\
+&\le-4a^2/p+1134a+72
+ \le-4a^2/p+1200a\le-2a^2/p<0.
+\end{aligned}
+\tag{20.4}
+$$
+
+Here $V_p^{-3},V_p^{-4}<2$, $U_p^{-3}\le27$, $U_p^{-4}\le81$ and $0\le\xi_p\le1$ justify the bounds. At zero $E_{j,p}=R_j(V_p^{-2}-1)>0$. At $\Delta_p$, $U_p=V_p$ and $E_{j,p}=-2c\Delta_p(1-\xi_p)/U_p^3<0$. In $(0,\Delta_p)$ one has $U_p>V_p$ and $E_{1,p}-E_{0,p}=c(V_p^{-2}-U_p^{-2})>0$. Strict decrease proves every assertion. Thus neither $p=3$ nor $p=m+1$ requires an enlarged bound on $a$. ∎
+
+**Lemma 20.3 (A legal branch on the whole gap).** For each $k\in\{m-1,m\}$ one has $\alpha_k<\beta_k$. On the entire interval $\alpha_k<\delta<\beta_k$, there is exactly one triple satisfying
+
+$$
+ku+w+nv=q,\qquad \tau<v<w<u<1
+\tag{20.5}
+$$
+
+and the two algebraic equations (18.18). It is the unique minimum of $\mathcal G_{P,h}$ on $\mathcal B_q=\{y\in[9/10,1]^s:\sum_i y_i=q\}$, with coordinates $u$ on $P$, $w$ at $h$ and $v$ on $N$. Put
+
+$$
+t=1-u,\qquad d=2\delta-kt,\qquad e=t-d.
+\tag{20.6}
+$$
+
+Throughout that open interval,
+
+$$
+0<d<t,\qquad 1-w-d=e+u-w>0.
+\tag{20.7}
+$$
+
+The triple extends continuously to both endpoints, with exact values
+
+$$
+\begin{array}{c|ccc|cc}
+\delta&u&w&v&d&e\\ \hline
+\alpha_k&U_k&V_k&V_k&0&1-U_k\\
+\beta_k&U_{k+1}&U_{k+1}&V_{k+1}&1-U_{k+1}&0
+\end{array}
+\tag{20.8}
+$$
+
+where each entry on a row is evaluated at that row's $\delta$.
+
+**Proof.** Work first on the larger auxiliary parameter interval $I=[0,M/a]$, without assuming marginal ordering or actual-law realizability. For either $k$, $n\ge a/2$, $0\le\delta<1/2$ and $\gamma\le3M$. The only off-diagonal Hessian entries of $\mathcal G=\mathcal G_{P,h}$ are $\mathcal G_{ih}=-2c/y_h^3$ for $i\in P$; these are nonpositive, of absolute value at most $9a$. As in the direct differentiation in (18.19), the diagonal lower bounds on the whole box are
+
+$$
+2a^2\quad(i\in P),\qquad
+2a^2-4ka\quad(i=h),\qquad
+2a^2-36M\quad(i\in N).
+\tag{20.9}
+$$
+
+Indeed $D_y=\sum_{i\in P}y_i+\delta-k\ge-k/10$, $z^{-3}<3/2$ and $z^{-4}<2$ on $[9/10,1]$. Subtracting the absolute off-diagonal row sums leaves at least $a^2$. The inequality $2|z_iz_h|\le z_i^2+z_h^2$ therefore proves $\nabla^2\mathcal G\succeq a^2I_s$. These estimates also hold for $k=p-1,p$ for any of the three $p$ in Definition 20.1: then $k\le M$ and the same original bound on $a$ still dominates every displayed error term. This observation will supply the saturated endpoint certificates.
+
+For the present $k\in\{m-1,m\}$ the compact convex slice contains $\mu\mathbf1$, $\mu=q/s$, so it has a unique minimizer $y^*$. Set $h_0=1-\mu=(1+\delta)/s$ and $d_0=2\delta-kh_0$. On $I$,
+
+$$
+\frac1{a+2}\le h_0\le\frac2a,\qquad |d_0|\le\frac{4M}{a},\qquad \mu^{-3}<2.
+\tag{20.10}
+$$
+
+Subtracting $g'(\mu)$ from each entry of $\nabla\mathcal G(\mu\mathbf1)$ gives entries $-2ch_0/\mu^3$ on $P$, $-2cd_0/\mu^3$ at $h$, and zero on $N$. Their Euclidean norm is at most $24\sqrt k+48M\le72M$. Strong convexity and the minimizing inequality yield
+
+$$
+\frac{a^2}{2}\|y^*-\mu\mathbf1\|^2
+ \le72M\|y^*-\mu\mathbf1\|,
+\qquad \|y^*-\mu\mathbf1\|\le\frac{144M}{a^2}.
+\tag{20.11}
+$$
+
+Since $a>576M$, this places every coordinate strictly between $9/10$ and $1$. Uniqueness and invariance under permutations of $P$ and of $N$ give coordinates $u,w,v$, with no ordering asserted yet. The stationarity equations are exactly
+
+$$
+f'(u)+c/w^2=-r^2/w^2-2c(ku+\delta-k)/w^3=g'(v).
+\tag{20.12}
+$$
+
+We need a uniform variation bound, including the transition layers. Write $Q=\nabla^2\mathcal G(y^*)$. Besides (20.9), every diagonal entry is at most $4a^2$: the top entries are at most $3a^2+36a$, the middle one at most $3r^2+36M$ since $D_y\le\delta$, and the lower ones at most $3r^2$. Consequently
+
+$$
+Q_{ij}\le0\ (i\ne j),\qquad
+ a^2\mathbf1\le Q\mathbf1\le5a^2\mathbf1.
+\tag{20.13}
+$$
+
+The bordered stationary system is nonsingular. Indeed $Qz=\ell\mathbf1$, $\mathbf1^Tz=0$ implies $z^TQz=0$, hence $z=0$ and $\ell=0$. The implicit function theorem and uniqueness make $y^*(\delta)$ continuously differentiable on $I$, with one-sided derivatives at its ends.
+
+For clarity the inverse estimate used next follows directly from (20.13). If $Qz\ge0$ and a smallest coordinate $z_i$ were negative, then
+
+$$
+(Qz)_i=(Q\mathbf1)_iz_i+
+ \sum_{j\ne i}Q_{ij}(z_j-z_i)<0,
+$$
+
+a contradiction. Thus $Q^{-1}$ is entrywise nonnegative, and
+
+$$
+(5a^2)^{-1}\mathbf1\le Q^{-1}\mathbf1\le a^{-2}\mathbf1.
+\tag{20.14}
+$$
+
+At fixed $y$, the $\delta$ derivative $b=\partial_\delta\nabla\mathcal G$ has entries $2c/y_i^3$ on $P\cup N$ and $-2c/y_h^3$ at $h$. Hence $\|b\|_\infty\le12a$. Differentiating stationarity and the mean gives
+
+$$
+Q(y^*)'+b=\ell'\mathbf1,\quad \mathbf1^T(y^*)'=-1,\quad
+\ell'=\frac{\mathbf1^TQ^{-1}b-1}{\mathbf1^TQ^{-1}\mathbf1}.
+\tag{20.15}
+$$
+
+Nonnegativity of $Q^{-1}$ bounds the weighted average of $b$ in this quotient by $12a$ in absolute value. Its remaining term is at most $5a^2/s<5a$. Equations (20.14)–(20.15) imply
+
+$$
+\|(y^*)'\|_\infty\le29/a,\qquad
+ d'=2+ku'>1,\qquad e'=-(k+1)u'-2<-1.
+\tag{20.16}
+$$
+
+All three estimates hold on the whole $I$, not just near an endpoint.
+
+At $\delta=\alpha_k$, the vector $(u,w,v)=(U_k,V_k,V_k)$ is inside the box and satisfies the mean and (20.12): its middle derivative equals $g'(V_k)$ because $d=0$, and the remaining equation is $E_{1,k}=0$. At $\delta=\beta_k$, $(u,w,v)=(U_{k+1},U_{k+1},V_{k+1})$ is similarly stationary; now $d=t$ and the remaining equation is $E_{0,k+1}=0$. Strong convexity identifies both with $y^*$, proving (20.8) independently of their order. Since $d(\alpha_k)=0$, $d(\beta_k)=1-U_{k+1}>0$ and $d'>1$ on $I$, it follows that $\alpha_k<\beta_k$. Strict monotonicity then gives $d>0$ and $e>0$ throughout their open gap.
+
+To convert these capacity signs into strict marginal ordering, (20.12) gives the exact identities
+
+$$
+\begin{aligned}
+g'(w)-g'(v)&=2cd/w^3,\\
+f'(u)-f'(w)-2c(u-w)/w^3&=2ce/w^3.
+\end{aligned}
+\tag{20.17}
+$$
+
+On the box, $g''>0$ by (20.9). Also $f''\ge2a^2$ and $2c/w^3\le9a<2a^2$. Writing $f'(u)-f'(w)=(u-w)\int_0^1f''(w+t(u-w))\,dt$ shows that $u-w$ has the sign of $e$. The first identity shows that $w-v$ has the sign of $d$. Thus $u>w>v$, $d<t$ and $1-w-d=e+u-w>0$. Furthermore $\tau\le9M/a^2<9/10<v$.
+
+Clearing the positive denominators in (20.12) gives precisely (18.18). Conversely any triple satisfying (20.5) and those equations has $v\ge1-(1+\delta)/n\ge1-3/a>9/10$. It is therefore an interior stationary vector on the same slice, and strict convexity makes it $y^*$. This proves uniqueness in the entire legal region. The convex supporting and finite averaging inequalities used here and below are the classical results in Boyd and Vandenberghe, *Convex Optimization*, §§3.1.3 and 3.1.8, pp.69–70 and 77–78, [author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf); the quantitative variation estimate (20.16) follows from the displayed Hessian computation. ∎
+
+**Theorem 20.4 (The two full open phases and every actual minimizing law).** Under Definition 20.1, both intervals
+
+$$
+(\delta_{+,m-1},\delta_{-,m}),\qquad
+(\delta_{+,m},\delta_{-,m+1})
+\tag{20.18}
+$$
+
+are nonempty. On either, use its corresponding $k=m-1$ or $k=m$, the unique triple of Lemma 20.3, and $t,d$ from (20.6). The exact original-domain global minimum is
+
+$$
+\boxed{\ \mathscr D_a(\delta)=F_k(u,w)
+ =k f(u)+\frac{r^2}{w}+\frac{c(d-\delta)}{w^2}+n g(v).\ }
+\tag{20.19}
+$$
+
+The dense minimum of $d(x)$ is this value minus $B$. Precisely all attaining actual laws are (18.28)–(18.29), for every choice of $P,h$ and every nonnegative edge array in that closed degree polytope. Every feasible zero edge is included. The $\binom sk(s-k)$ marginal patterns are distinct. For each pattern the array-to-law map is an affine bijection, with inverse $z_{ij}=\bar x_{\{i,j\}}$, and dimension $(k+1)(k-2)/2$.
+
+For each support $E\subseteq\binom{P\cup\{h\}}2$ admitting a feasible array positive exactly on $E$, the corresponding closed face has dimension $|E|-(k+1)+B(E)$, with $B(E)$ the number of bipartite components of the spanning support graph. Its relative interior consists of the arrays positive exactly on $E$. These are all faces. In particular the full fibre's relative boundary consists exactly of its arrays with at least one zero edge. The vertex laws have positive pair-support components that are trees or have just one cycle of odd length. Label equivalence is exactly permutation of $P$ fixing $h$, after identifying the recovered marginal groups, as in §18.
+
+**Proof.** First reestablish the all-cardinality bound without invoking a fixed-$\eta$ hypothesis. Sort the marginals of an arbitrary original dense law, take its first $k$ labels as $P$ and its next as $h$, and put $\omega=y_h^{-2}$, $\alpha_i=y_i^{-2}$ and $b_i=c(\omega-\alpha_i)_+$. The ordered mean implies
+
+$$
+y_h\ge1-(1+\delta)/(s-k)\ge1-3/a,\qquad
+1\le\omega<16/15,\qquad \alpha_i\ge1.
+\tag{20.20}
+$$
+
+For $R_y(T)$ defined by (18.5), the singleton- and pair-omission residuals are respectively $b_i$ and $c\sum_{i\notin T}(\alpha_i-\omega)_+$. The full-set residual is $2\sum_i\alpha_i+2c\omega>0$. For every other nonempty cardinality, put $e_J=s-|T|\in[3,s-1]$. The bracket multiplying $r-|T|$ in (18.5) is bounded below by
+
+$$
+3se_J-2s-e_J-e_J^2-2c\omega
+ \ge7s-12-2c\omega>(41a-2)/15>0.
+\tag{20.21}
+$$
+
+The quadratic is concave and has endpoint values $7s-12$ and $2s(s-2)$. Thus the residual is nonnegative over every allowed cardinality and has exactly the zero set (18.6). Taking expectation gives the algebraic same-law identity (18.7) with the present $k,\delta$.
+
+Both $f$ and $g$ are strictly convex on the entire original dense interval $[\tau,1]$: their second derivatives are (18.14), and $r^2\tau-3c\delta=6\delta>0$. Average on $P$ and on $N$, leaving $h$ fixed. Finite Jensen gives $H(x)\ge\mathcal G_{P,h}(z)$ for the grouped vector $z$. Its lower coordinate is at least $1-(1+\delta)/n\ge1-3/a$; ordering bounds every other grouped coordinate below by this one. Hence $z\in\mathcal B_q$, even if an original individual marginal lies outside the box. Lemma 20.3 now gives $H(x)\ge F_k(u,w)$.
+
+For attainment and exhaustive reconstruction, (20.7) supplies a strictly positive array of the degree polytope:
+
+$$
+z_{ih}^{\circ}=d/k\quad(i\in P),\qquad
+z_{ij}^{\circ}=(t-d/k)/(k-1)\quad(i,j\in P,\ i\ne j).
+\tag{20.22}
+$$
+
+Every nonnegative array with those same degrees has total pair mass $(kt+d)/2=\delta$. Its singleton masses in (18.29) sum to $1-\delta$, since the mean equation gives
+
+$$
+kt+(1-w)+n(1-v)=1+\delta.
+\tag{20.23}
+$$
+
+They are strictly positive by (20.7) and $v<1$. Thus (18.29) is an actual probability law of mean $a\delta+r(1-\delta)=q$, whose actual marginals are exactly $u,w,v>\tau$. For every such array, including its entire boundary, direct incidence counting gives (18.36); division by the squared actual marginals gives (20.19).
+
+If an actual law attains this bound, strict convexity fixes its grouped vector to $y^*$, and strict Jensen fixes every individual marginal in each group. The strict inequalities $u>w>v$ recover $P,h,N$ uniquely. The zero residuals permit only singleton omissions outside $P$ and pair omissions within $S=P\cup\{h\}$. Their total pair mass is forced to be $\delta$ by the mean. Each $i\in P$ has pair degree $1-u=t$, the degree at $h$ is consequently $2\delta-kt=d$, and its singleton mass must be $1-w-d$. Every $j\in N$ has singleton mass $1-v$. This is exactly the entire closed fibre (18.28)–(18.29), with no exclusion of any zero coordinates.
+
+For the geometric assertions use the classical intermediate results of Behrend, *Fractional Perfect b-Matching Polytopes. I: General Theory*, [arXiv:1301.7356v1](https://arxiv.org/html/1301.7356v1), definition (2), Corollary 19 and Theorem 22, DOI [10.1016/j.laa.2013.10.001](https://doi.org/10.1016/j.laa.2013.10.001). The fibre is $\mathcal P(K_S,b)$ with degrees $t$ on $P$ and $d$ at $h$. These are positive, and (20.22) is strictly positive, so Corollary 19 applies on the connected nonbipartite $K_{k+1}$, including $k=3$. The same corollary applies to each stated support graph because its strictly positive element is part of the support hypothesis. It gives exactly the dimensions above. Coordinate nonnegativity makes positive arrays the relative interior; blending with a positive array shows that each stated closed support face is the closure of its relative interior. Every face is obtained by setting its relative interior point's zero coordinates to zero, by the segment argument in the proof of Theorem 18.4. Theorem 22 gives exactly the vertex criterion. These are attributed matching-polytope facts used to describe the reconstructed actual-law fibres. Finally the recovered strict groups give both the pattern count and the label equivalence. ∎
+
+**Theorem 20.5 (All endpoint fibres and their limits).** For every $p\in\{m-1,m,m+1\}$, on the entire closed saturated interval $[\delta_{-,p},\delta_{+,p}]$ one has
+
+$$
+\mathscr D_a(\delta)=p f(U_p)+(s-p)g(V_p).
+\tag{20.24}
+$$
+
+Every minimizing actual law is exactly (19.3)–(19.4) with $m$ replaced by $p$: choose a $p$-element block $C$, all nonnegative internal edge arrays of degree $t_p=2\delta/p$, singleton mass $(1-\delta)/(s-p)$ at every label outside $C$, and zero on every other omission set. This includes both thresholds and all zero-edge arrays. The high block is uniquely recovered, giving $\binom sp$ marginal patterns. Each fibre has dimension $p(p-3)/2$, relative interior given by positive internal edges, and relative boundary given by at least one zero internal edge. Its vertices partition $C$ into single edges of mass $t_p$ and odd cycles of edge mass $t_p/2$. For $p=3$ the fibre is a single triangle with edge mass $t_p/2$, dimension zero and empty relative boundary.
+
+Consequently each closed interval $[\alpha_k,\beta_k]$ consists of the open phase of Theorem 20.4 and precisely the saturated endpoint classes just stated. At $\alpha_k$, $h$ is any one of the $s-k$ low labels and adds no marginal pattern. At $\beta_k$, $h$ is any one of the $k+1$ high labels, again adding no marginal pattern. The minimum (20.19) tends to (20.24) at both ends. Every endpoint minimizing actual law is a limit, in its full vector of atom masses, of interior minimizing laws. Conversely every convergent sequence of interior minimizers approaching an endpoint has one of exactly these saturated endpoint limits.
+
+**Proof.** The threshold argument of Lemma 20.2 applies under the original bound on $a$. On $0<\delta<\Delta_p$, the bounds needed for the two saturated certificates are
+
+$$
+n_p-1\ge a/2,\quad \gamma<3p,\quad \tau<9p/a^2<9/10,
+\quad U_p,V_p>1-2/a>9/10.
+\tag{20.25}
+$$
+
+For the pivots with $k=p-1$ and $k=p$, the ordered-mean and grouped-mean bounds (20.20) and the all-cardinality residual calculation (20.21) hold unchanged. The Hessian estimate (20.9) applies to these pivots, as explicitly checked there for $k\le M$. Thus the algebraic identities (19.19), followed by strict Jensen and the supporting inequality, give for every original dense actual law both bounds
+
+$$
+H(x)\ge S_p+E_{0,p}D_C,\qquad
+H(x)\ge S_p+E_{1,p}D_C,\quad
+S_p=p f(U_p)+n_p g(V_p),\quad
+D_C=\sum_{i\in C}y_i-pU_p,
+\tag{20.26}
+$$
+
+where $C$ is its first $p$ labels. Equality in either fixes all individual marginals to $U_p$ on $C$ and $V_p$ outside. This uses exactly the strict Hessian supporting term and strict Jensen, not a hypothesis $p\ge4$ or $a\ge2^{16}p^2$.
+
+On $[\delta_{-,p},\delta_{+,p}]$, combine the bounds with weights $\rho=E_{1,p}/(E_{1,p}-E_{0,p})$ and $1-\rho$. They are nonnegative, sum to one, and cancel the $D_C$ term. Every saturated law in the statement is feasible and has energy $S_p$: its pair mass is $pt_p/2=\delta$, singleton mass is $\theta$, and its actual marginals and second moments are the algebraic formulas (19.24) with $p$ in place of $m$. This proves (20.24).
+
+For equality, at least one supporting weight is positive, fixing all individual marginals; $U_p>V_p$ recovers $C$. When $\rho>0$, the first residual permits singleton omissions anywhere and pair omissions only inside $C$. The pair mass is $\delta$, already accounting for the entire omission probability $p(1-U_p)=2\delta$ on $C$. Thus singleton omissions on $C$ have zero mass. When $\rho=0$, namely at $\delta_{+,p}$, the second residual permits singleton omissions only outside $C$ and arbitrary pairs. Their total singleton mass $\theta$ already exhausts the omission probability $n_p(1-V_p)=\theta$ outside $C$, so every pair incident outside $C$ has zero mass. Both cases give exactly the displayed saturated fibres, without a positivity assumption on any edge.
+
+The constant internal edge array $t_p/(p-1)$ is strictly positive. Behrend's Corollary 19 therefore gives dimension $\binom p2-p$, and the coordinate argument gives its relative interior and boundary. By Theorem 22 each positive-support component at a vertex is a tree or is odd unicyclic. A leaf forces its incident edge to have mass $t_p$, exhausting the neighbor's degree, so a tree component must be a single edge and an odd unicyclic component has no attached trees. Its cycle edges have mass $t_p/2$. This proves the geometry, including the triangle case and all closed boundary arrays.
+
+At $\alpha_k$, (20.8) has $d=0$, so nonnegativity forces all edges incident to $h$ to vanish; its singleton mass is $1-V_k$, like every other low label. The fibre is exactly the saturated $k$-block on $P$. At $\beta_k$, $d=t$ and $u=w$, so $1-w-d=0$ and the degree array is precisely the regular array on the $(k+1)$-block $S$. Thus choosing an intermediate label at either tied level is redundant in exactly the ways stated. Substitution in $F_k$ proves the endpoint values, since its algebraic expression agrees with $S_p$ at the two collision vectors.
+
+To verify that every boundary law actually occurs as a limit, fix any nonnegative endpoint array $z^0$, and let $t_0$ be its positive common degree. At the left endpoint extend its array on $P$ to $S=P\cup\{h\}$ by
+
+$$
+z_{ij}(\delta)=\frac{t-d/k}{t_0}z^0_{ij}\quad(i,j\in P),\qquad
+z_{ih}(\delta)=d/k\quad(i\in P).
+\tag{20.27}
+$$
+
+This is nonnegative, has degrees $t$ on $P$ and $d$ at $h$, and tends to the prescribed array with zero hub edges. At the right endpoint, for any choice $h\in S$ and $P=S\setminus\{h\}$, put
+
+$$
+z_{ih}(\delta)=\frac d{t_0}z^0_{ih},\qquad
+z_{ij}(\delta)=\frac d{t_0}z^0_{ij}+\frac{t-d}{k-1}
+ \quad(i,j\in P).
+\tag{20.28}
+$$
+
+Its degrees on $P$ are $d+(t-d)=t$ and its degree at $h$ is $d$. It is nonnegative and tends to $z^0$. The singleton formulas (18.29) converge to the stated endpoint masses as well. Thus both constructions give interior minimizing actual laws tending to every endpoint law, including every zero-edge law. Conversely there are finitely many choices of $P,h$; on any fixed-pattern subsequence, nonnegative arrays and their degree equations pass to the limit. Formula (20.8) then forces exactly the saturated class above. Every convergent sequence has such a subsequence with the same limit, proving the converse.
+
+The full-gap legality, all-cardinality optimum and exhaustive continuation of the actual-law fibres in Lemma 20.3 and Theorems 20.4–20.5 are repo-derived conclusions. The convex inequalities and matching-polytope geometry are used only in the attributed intermediate roles above. The scope remains the original sufficient bound $a\ge2^{16}m^2$ and these two neighboring gaps and saturated endpoints; no least sufficient bound, small-$a$ classification, unrestricted rare/dense competition, growing-$m$ asymptotic theorem or prescribed finite-graph realization follows. The full text of Zhao–Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not a premise; technical overlap with it remains undetermined, and no worldwide priority is asserted. ∎
+
+## 追加锚（第18节之后为增补区）

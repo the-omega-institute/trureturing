@@ -1,0 +1,37 @@
+#### 定理 13.1（Schrödinger 驻作用）
+
+有限维 Hermitian $H$ 下，在全部复向量路径上考虑固定端点的实作用
+
+$$
+\mathcal S[\psi]=\int_0^T\left[
+\frac{i\hbar}{2}(\langle\psi,\dot\psi\rangle-
+\langle\dot\psi,\psi\rangle)-\langle\psi,H\psi\rangle\right]du
+$$
+
+对所有内部变分驻定，当且仅当 $i\hbar\dot\psi=H\psi$。
+
+**证明。**
+
+对共轭分量与原分量变分并分部积分，端点项为零，得到
+$\delta\mathcal S=2\operatorname{Re}\int\langle\delta\psi,(i\hbar\partial_u-H)\psi\rangle du$。任意紧支撑变分的基本引理给方程，反向直接代入。
+
+∎
+
+驻定一般不是极小。取 $H=0$、单位正交 $b,v$、端点为零的实光滑 $f$，令
+
+$$
+\psi_\epsilon(u)=\sqrt{1-\epsilon^2f(u)^2}\,b
++\epsilon f(u)e^{i\omega u}v.
+$$
+
+这里驻值定理先使用不限制逐点范数的内部变分；若逐点限制归一化，方程可多出可吸收到整体相位的实乘子。对足够小 $\epsilon$，上述反例路径归一且端点仍为 $b$，但直接代入给
+
+$$
+\mathcal S[\psi_\epsilon]-\mathcal S[b]
+=-\hbar\epsilon^2\omega\int_0^Tf^2du.
+$$
+
+取正、负 $\omega$ 得两种符号，故常值 Schrödinger 解是鞍型驻点。
+
+<a id="statement-13-2"></a>
+

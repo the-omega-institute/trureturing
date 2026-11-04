@@ -1,0 +1,15 @@
+#### 定义 6.1（内部记录得分与 Fisher 信息）
+
+对深度 $n$ 的完整记录 $H_n$，置
+
+$$
+S_n(h)=\partial_\lambda\log p_\lambda(h),\qquad
+ \mathcal I_n(\lambda)=\mathbb{E}_\lambda S_n^2.
+$$
+
+若下一层的条件核为 $k_\lambda(o\mid h)$，
+则 $p_\lambda(ho)=p_\lambda(h)k_\lambda(o\mid h)$。
+允许该核依赖全部已保留记录，不要求独立同分布。
+
+<a id="statement-6-2"></a>
+

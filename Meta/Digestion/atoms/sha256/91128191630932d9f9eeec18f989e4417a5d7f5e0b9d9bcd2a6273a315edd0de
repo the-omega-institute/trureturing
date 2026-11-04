@@ -1,0 +1,34 @@
+**Definition 15.1 (All adjacent-core branches).** Retain exactly
+Definition 1.1. For $1\le j\le h$ put
+
+$$
+\begin{gathered}
+m=a+j,\quad r=m-1,\quad n=h+1-j,\quad d=2m-1,\\
+\ell_j=\frac{j-1}{m-2},\quad u_j=\frac jr,\qquad
+I_1=(0,1/a],\quad I_j=[\ell_j,u_j]\ (j\ge2),\\
+b_j(p)=d((m-2)p-(j-1)),\\
+F_j(p)=\frac{n^2}{p}+\frac{r^2m^2}{a-p}
+                    +\frac{m^3b_j(p)}{(a-p)^2},\qquad
+\mu_j=\min_{p\in I_j}F_j(p),\\
+S_j=F_j(u_j)=\frac{m^3r}{a-1}+\frac{n^2r}{j}.
+\end{gathered}
+\tag{15.1}
+$$
+
+Here $F_j$ denotes the finite-parameter function in (15.1), rather
+than the leading-value function with the same letter in Section 7.
+Write $p_j$ for the constrained minimizer. Thus $\mu_1=m_1$ and
+$\mu_2=m_2$ in Definition 14.1; a missing second branch has value
+$+\infty$. On a partition $C\dot\cup D=[s]$ of sizes $m,n$, let
+$x^{j,p}$ be the law
+
+$$
+x^{j,p}_{\{k\}}=p/n\ (k\in D),\quad
+x^{j,p}_C=1-j+(m-2)p,\quad
+x^{j,p}_{C\setminus\{i\}}=\frac{j-rp}{m}\ (i\in C),
+\tag{15.2}
+$$
+
+with all other masses zero. These are comparison laws, not a
+restriction of the original domain.
+

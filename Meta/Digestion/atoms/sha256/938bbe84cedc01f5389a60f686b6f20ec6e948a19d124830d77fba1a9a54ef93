@@ -1,0 +1,23 @@
+**命题 39.2（忠实单态校准仍不能识别同一过程）。** 存在正、幺且固定全部活动参考的联合箭头，对一份忠实参考态校准得到正幺但非完全正的系统映射；它不满足 C102 的全取值系统绑定。
+
+证明。取 $\mathcal A=\mathcal B=M_d$、$d\ge2$，活动参考 $\mathcal R=\mathbb C\oplus M_2$，并取
+
+$$
+\Psi=T_d\oplus(\operatorname{id}_d\otimes\operatorname{id}_2),
+\qquad
+\tau(r_0\oplus r_1)=w r_0+(1-w)\operatorname{tr}_2(r_1),
+\quad0<w<1.
+\tag{39.5}
+$$
+
+这里 $T_d$ 为矩阵转置，$\operatorname{tr}_2$ 是归一迹。第一中心块上参考只是标量，第二块的映射为恒等，所以 $\Psi$ 正幺且固定全部参考。$\tau$ 在两个块上均忠实。单态切片却为
+
+$$
+\Phi_\tau(b)=(\operatorname{id}\otimes\tau)\Psi(b\otimes1)
+=wT_d(b)+(1-w)b.
+$$
+
+记 $F_d$ 为交换算子、$\Omega_d=\sum_i e_i\otimes e_i$。其 Choi 矩阵为 $wF_d+(1-w)|\Omega_d\rangle\langle\Omega_d|$，在任意单位反对称向量上取值 $-w$，故非完全正。系统在两个参考中心块分别执行转置和恒等，没有被绑成同一个 $\Phi_\tau$。
+
+也能在完全正映射内部展示单态资料的不可识别性。把转置换为 $\operatorname{Ad}_Z$、取 $d=2,w=1/2$，其中 $Z=\operatorname{diag}(1,-1)$。中央控制 $\Psi$ 与 $\overline\Phi\otimes\operatorname{id}_{\mathcal R}$ 均完全正、参考全固定，并有相同单态切片 $\overline\Phi=(\operatorname{Ad}_Z+\operatorname{id})/2$；前者按参考标签选择操作，后者不选择。它们在 $b=X$ 及第一中心块上的值分别为 $-X$ 和零，所以是两个实际不同的联合映射。相同校准资料不能恢复原资料已合并的联合区别。∎
+

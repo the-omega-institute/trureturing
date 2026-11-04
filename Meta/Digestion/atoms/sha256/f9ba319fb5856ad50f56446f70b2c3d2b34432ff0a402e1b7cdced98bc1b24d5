@@ -1,0 +1,27 @@
+### 定理 13.4（复张量积与任意有限维系统）
+
+<a id="thm-c117-tensor"></a>
+
+两个满足上述条件的矩阵系统的联合代数恰为 $M_d(\mathbb C)\otimes_\mathbb C M_m(\mathbb C)\cong M_{dm}(\mathbb C)$。从二元原子及非零角代数生成全部 $M_d(\mathbb C)$。
+
+**证明。**
+共享 $J$ 使乘法映射 $a\otimes b\mapsto\iota_A(a)\iota_B(b)$ 对复标量平衡，交换性使它为 $*$-同态，生成性使它满射。源矩阵代数为单代数：任意非零理想可经左右乘矩阵单位取得所有矩阵单位。因此保单位同态的核只能为零，映射同构。
+
+$N$ 个二元原子给 $M_{2^N}(\mathbb C)$。对任意 $d\le2^N$，取秩 $d$ 的投影 $p$，其角代数 $pM_{2^N}(\mathbb C)p$ 同构于 $M_d(\mathbb C)$，单位是 $p$。这种系统闭包不等于观察者窗口间的保单位嵌入；后者必须另行使用共同的窗口单位。
+
+中心对齐确有内容。若只作实张量积，
+
+$$
+M_2(\mathbb C)\otimes_\mathbb R M_2(\mathbb C)\cong M_4(\mathbb C)\oplus M_4(\mathbb C),
+$$
+
+显式映射为 $a\otimes b\mapsto(a\otimes_\mathbb C b,a\otimes_\mathbb C\bar b)$。令 $Z=-J_AJ_B$，其像是 $(I,-I)$；$(I\pm Z)/2$ 分开两个扇区，维数相等证明映射同构。要求 $J_A=J_B$ 正好选择 $Z=1$ 的扇区。两个扇区的归一化迹在所有局部自伴乘积上相同，却在 $Z$ 上分别给 $1,-1$，所以局部量子球本身并不排除额外整体扇区。
+
+联合态的局部状态唯一由 $\operatorname{Tr}_B\rho_{AB}$ 表示，因为
+
+$$
+\operatorname{Tr}[\rho_{AB}(E\otimes I)]=\operatorname{Tr}[(\operatorname{Tr}_B\rho_{AB})E]
+$$
+
+对全部效果成立。Bell 向量 $(\lvert 00\rangle+\lvert 11\rangle)/\sqrt2$ 是非乘积纯态，两边约化态均为 $I/2$，故给出纠缠。保留全部结果时，局部保迹通道不改变另一侧边缘：代入 $\sum_jK_j^*K_j=I$ 计算即可；选择某个结果后的条件边缘可以改变，但其选择记录不能被省略。
+

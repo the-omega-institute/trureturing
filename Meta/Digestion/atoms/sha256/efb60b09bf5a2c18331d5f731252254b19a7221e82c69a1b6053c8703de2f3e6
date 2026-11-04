@@ -1,0 +1,50 @@
+**定理 9.1（双无限、正规化的静态历史）。**
+
+<a id="thm-bilateral"></a>
+
+取同一整体内部的一组坐标
+$\ell^2(\mathbb Z)\otimes\mathcal H$，
+任意双向酉 $U_n$，以及 $W_0=I$、
+$W_{n+1}=U_nW_n$（负指标用逆）。
+选 $\alpha_n>0$，$\sum_{n\in\mathbb Z}\alpha_n^2=1$，定义
+
+$$
+Jv=\sum_{n\in\mathbb Z}\alpha_n\lvert n \rangle\otimes W_nv,
+$$
+
+<a id="eq-bilateral"></a>
+
+$$
+L_n=\alpha_n(\langle n+1 \rvert\otimes I)
+-\alpha_{n+1}(\langle n \rvert\otimes U_n),
+\qquad \mathsf K=\sum_{n\in\mathbb Z}L_n^*L_n.
+\tag{7}
+$$
+
+则 $J$ 等距，$\mathsf K$ 的级数在算子范数中收敛，
+且
+
+$$
+\ker\mathsf K=\operatorname{ran} J.
+$$
+
+对单位 $v$，固定整体向量 $\Omega=Jv$ 的时钟标签概率分布为 $\alpha_n^2$，
+条件读出为 $W_nv$；标签没有第一个或最后一个。
+
+**证明。**
+
+正交时钟坐标及酉性给
+$\|Jv\|^2=\sum_n\alpha_n^2\|v\|^2=\|v\|^2$。
+又
+$L_nL_n^*=(\alpha_n^2+\alpha_{n+1}^2)I$，
+故 $\sum_n\|L_n^*L_n\|=2$，给范数收敛及正性。
+显然 $L_nJ=0$。
+若 $\mathsf K\Psi=0$，其正二次型是各 $\|L_n\Psi\|^2$ 之和，
+故每个分量都为零。
+写 $\Psi=\sum_n\lvert n \rangle\psi_n$，除以正 $\alpha_n$ 得
+$\psi_{n+1}/\alpha_{n+1}=U_n\psi_n/\alpha_n$，
+于是 $\psi_n=\alpha_nW_nv$，其中 $v=\psi_0/\alpha_0$。
+故 $\Psi=Jv$。正交投影到第 $n$ 个坐标给剩余结论。
+
+□
+

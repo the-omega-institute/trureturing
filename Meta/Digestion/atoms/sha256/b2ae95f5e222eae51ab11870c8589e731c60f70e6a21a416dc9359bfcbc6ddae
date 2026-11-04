@@ -1,0 +1,14 @@
+**定理 327.2（接口模拟的反身性与传递性）。** 恒等动作翻译和恒等输出映射给出 \(M\preceq_{0,1}M\)。若
+\[
+A\preceq_{\varepsilon_1,\lambda_1}B,
+\qquad
+B\preceq_{\varepsilon_2,\lambda_2}C,
+\]
+且翻译和忘却映射可以复合，则
+\[
+\boxed{
+A\preceq_{\varepsilon_1+\varepsilon_2,\lambda_1\lambda_2}C.
+}
+\tag{327.3}
+\]
+

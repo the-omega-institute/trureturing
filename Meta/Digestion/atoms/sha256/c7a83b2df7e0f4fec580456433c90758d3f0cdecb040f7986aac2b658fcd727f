@@ -1,0 +1,25 @@
+### 4.3 七维：不保留顺序闭合，就会误认更高维叉积
+
+在七维范数叉积中写 $D_ab=a\times b$，令 $\mathcal D=\{D_a\}$。对 $A=D_x,K=D_k$，
+
+$$
+Kx+Ay=D_x(y-k).
+$$
+
+因 $D_x^2y=\langle x,y\rangle x-\|x\|^2y$，有 $\ker D_x=\mathbb R x$，故裸算子族的关系就是 $[y]=[k]$，完全通过一阶互定。
+
+但 $\mathcal D$ 不是 Lie 代数。明确采用三形式
+
+$$
+\varphi=e^{123}+e^{145}+e^{167}+e^{246}
+-e^{257}-e^{347}-e^{356},
+$$
+
+由 $\langle D_ab,c\rangle=\varphi(a,b,c)$ 定义叉积。直接作用于基向量可得
+
+$$
+C=[D_1,D_2]-D_3,\qquad Ce_1=Ce_2=0,\quad Ce_4=3e_7.
+$$
+
+在*同一个*基点 $x=e_1,A=D_1$，$C\notin\mathbb R A$，但 $Cx=0$。完整顺序闭包因此新增 $([C],0)\ne(0,0)$，唯一补偿立即失败。无需先分类整个七维 Lie 闭包。
+

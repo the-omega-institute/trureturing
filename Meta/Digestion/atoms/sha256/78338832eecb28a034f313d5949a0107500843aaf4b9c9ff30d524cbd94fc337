@@ -1,0 +1,12 @@
+**Lemma 3.2 (Sector compressions of clock powers and their power sums).** Let $h$ be an integer and $\theta_j=2\pi hj/d$. For $V=E_d$ the matrix of $\Pi_VZ^h\Pi_V$ on $V$ in the basis of Convention 2.1 is diagonal with entries $1$ and $\cos\theta_j$ for $1\le j\le(d-1)/2$; for $V=O_d$ it is diagonal with entries $\cos\theta_j$ for $1\le j\le (d-1)/2$. Let $p_m^V(h)$ be the sum of the $m$-th powers of these entries. If $h\not\equiv0\pmod d$ and $n=d/\gcd(h,d)$, then with $\varepsilon=\varepsilon_V$
+
+$$
+p_1^V=\frac{\varepsilon}2,\qquad p_2^V=\frac{d+2\varepsilon}4,\qquad p_3^V=\begin{cases}\dfrac{\varepsilon}2,& n\neq3,\\ \dfrac{d+4\varepsilon}8,& n=3,\end{cases}\qquad p_4^V=\frac{3d+8\varepsilon}{16}.
+$$
+
+Stance: repo-derived.
+
+**Proof.** $Z^h$ is diagonal in the computational basis. For distinct $1\le i,j\le(d-1)/2$ the supports $\{i,-i\}$, $\{j,-j\}$ and $\{0\}$ are pairwise disjoint (since $2\le i+j\le d-1$), so all off-diagonal entries within each sector vanish, while $\langle e_j^\pm|Z^h|e_j^\pm\rangle=(\omega^{hj}+\omega^{-hj})/2=\cos\theta_j$ and $\langle e_0|Z^h|e_0\rangle=1$.
+
+Let $T_m=\sum_{j\in\mathbb Z_d}\cos^m\theta_j$. Since $\cos\theta_{-j}=\cos\theta_j$ and $\theta_0=0$, $T_m=1+2H_m$ with $H_m=\sum_{j=1}^{(d-1)/2}\cos^m\theta_j$, so $p_m^{E_d}=1+H_m=(T_m+1)/2$ and $p_m^{O_d}=H_m=(T_m-1)/2$, that is, $p_m^V=(T_m+\varepsilon)/2$. Expanding $\cos^m\theta=2^{-m}\sum_{r=0}^m\binom mr e^{i(m-2r)\theta}$ and using $\sum_{j\in\mathbb Z_d}\omega^{shj}=d$ if $d\mid sh$ and $0$ otherwise, write $g=\gcd(h,d)$: $d\mid sh$ holds iff $n\mid s(h/g)$ iff $n\mid s$, because $\gcd(h/g,n)=1$. For $|s|\le4$ and odd $n\ge3$, $n\mid s$ holds exactly for $s=0$, and in addition for $s=\pm3$ when $n=3$. The exponents $s=m-2r$ give $T_1=0$, $T_2=\frac d4\binom21=\frac d2$, $T_3=0$ for $n\ne3$ and $T_3=\frac d8\big(\binom30+\binom33\big)=\frac d4$ for $n=3$, and $T_4=\frac d{16}\binom42=\frac{3d}8$. Substituting into $p_m^V=(T_m+\varepsilon)/2$ gives the stated values. ∎
+

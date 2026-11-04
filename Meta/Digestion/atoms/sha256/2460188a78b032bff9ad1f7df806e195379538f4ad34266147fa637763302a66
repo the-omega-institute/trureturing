@@ -1,0 +1,52 @@
+### 命题 4.1（一个 $Z$ 读口的完整判别）
+
+<a id="prop-c123-z-modular-core"></a>
+
+取完全退相位读口
+
+$$
+N=\Delta_Z,\qquad
+ \Delta_Z(A)=P_0AP_0+P_1AP_1,\quad P_i=\lvert i\rangle\langle i\rvert.
+$$
+
+它的双元噪声积生成对角代数，因而
+$\mathfrak A_N=\operatorname{span}\{I,Z\}$。其模相容核为
+
+$$
+\mathfrak F_\sigma=
+ \begin{cases}
+   \operatorname{span}\{I,Z\},&[\sigma,Z]=0,\\
+   \mathbb C I,&[\sigma,Z]\ne0.
+ \end{cases}
+$$
+
+**证明。**
+若 $[\sigma,Z]=0$，整个对角代数在模流下逐点不变。否则
+$\boldsymbol n\times\boldsymbol e_z\ne0$。任何
+$A=\alpha I+\beta Z$ 若属于模相容核，模流的零点导数也必须留在
+$\operatorname{span}\{I,Z\}$。由式~[(30)](#eq-c123-bloch-modular-generator)，
+$L_\sigma(A)$ 的无迹部分沿垂直于 $\boldsymbol e_z$ 的方向；故只能
+$\beta=0$。这已在有限降链算法的第一步给出 $\mathbb C I$，无需扫描全部模参数。
+
+若参照轴不平行于读口轴，定义
+
+$$
+\boldsymbol u=\boldsymbol n-(\boldsymbol n\cdot\boldsymbol e_z)\boldsymbol e_z,
+ \qquad \boldsymbol v=\boldsymbol e_z\times\boldsymbol n.
+$$
+
+三向量 $\boldsymbol e_z,\boldsymbol u,\boldsymbol v$ 彼此正交，Gram 矩阵为
+$\operatorname{diag}(1,|\boldsymbol u|^2,|\boldsymbol u|^2)$。模生成元首先产生
+$L_\sigma(Z)=2b\boldsymbol v\cdot\boldsymbol s$，再由
+
+$$
+[Z,\boldsymbol v\cdot\boldsymbol s]
+       =-2i\boldsymbol u\cdot\boldsymbol s
+$$
+
+得到第三个方向。故噪声积及其模旋转生成的含幺 $*$ 代数成为整个 $M_2$，
+它的交换子只剩标量。
+这正是一个有限的“关系再与关系组合”：二元 Kraus 噪声积确定读口代数，
+第三份已供应的参照用 $[\log\sigma,\,\cdot\,]$ 检查它能否保持闭合。
+这里利用了已继承的 Pauli 乘法；这个计算本身没有从无结构关系中再次证明复数域或三维物理空间。
+

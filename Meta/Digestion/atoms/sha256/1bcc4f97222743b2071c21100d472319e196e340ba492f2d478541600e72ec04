@@ -1,0 +1,22 @@
+### 6.1 同类参照的三元接续
+
+主定理把参照等价类写成
+
+$$
+H=\bigoplus_\alpha H^L_\alpha\otimes H^R_\alpha,
+ \qquad \rho=\bigoplus_\alpha R_\alpha\otimes\omega_\alpha.
+$$
+
+$R_\alpha>0$，$\sum_\alpha\operatorname{Tr} R_\alpha=1$，而所有 $\omega_\alpha$ 固定、满秩且迹为一。
+因此等价类是一个有限维凸状态族的相对内部，实维数为
+
+<a id="eq-c123-class-dimension"></a>
+
+$$
+\dim_{\mathbb R}[\sigma]_{\mathcal N}
+ =\sum_\alpha(\dim H^L_\alpha)^2-1.
+\tag{36}
+$$
+
+这里的闭包可以包含非满秩态；把闭包中的态重新用作全支持参照时，必须重新处理支持，不能自动延用满秩等价定理。
+

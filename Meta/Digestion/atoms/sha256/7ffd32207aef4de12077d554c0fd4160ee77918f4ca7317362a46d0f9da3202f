@@ -1,0 +1,36 @@
+## 八、量子版本：预测状态仍可闭合，但相位、取得和精度都留在模型中
+
+以上预测表示可以直接推广到量子仪器。
+
+给定完全正分支映射
+
+$$
+\mathcal E_{a,y},
+$$
+
+其对同一动作的分支和保迹。定义未来效果空间
+
+$$
+V_Q=
+\operatorname{span}_{\mathbb R}
+\{\mathcal E_w^*(I):w\text{ 有限}\}
+\subseteq\operatorname{Herm}(d).
+$$
+
+选基
+
+$$
+E_1=I,E_2,\ldots,E_r,
+\qquad
+z_j=\operatorname{tr}(\rho E_j).
+$$
+
+若
+
+$$
+\mathcal E_{a,y}^*(E_j)
+=
+\sum_i(C_{a,y})_{ij}E_i,
+$$
+
+> 

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:89cc04b5446c28d351c67bf7a79383e9a96450c0b781579a1c21ce903b600c08
+  normalized_sha256: sha256:89cc04b5446c28d351c67bf7a79383e9a96450c0b781579a1c21ce903b600c08
+cas_ref: sha256:89cc04b5446c28d351c67bf7a79383e9a96450c0b781579a1c21ce903b600c08
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/ScalarAngleNonLipschitz.scalarPathAngle_gap_not_parameter_lipschitz
+    target_statement_id: sha256:fe482e84f31eb5e3fbb4dd526170d153e9921f77efe923594b9d4d95a446bd5a
+receipts:
+  unresolved_subitems: []

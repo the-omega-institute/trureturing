@@ -5,7 +5,7 @@ doi: 10.48550/arXiv.2505.08090
 url: https://arxiv.org/abs/2505.08090v5
 triage: theorem
 motivation_gids:
-  - D5/S0/Certificates/Groups/TaGoodInvolutionBoundRefutation.result
+  - D5/S3/FiniteGroups/Quandles/TaGoodInvolutionBoundRefutation.result
 ---
 
 # Ta Problem 11.7: the good-involution bound need not be strict
@@ -56,7 +56,7 @@ the certified values. Each condition is checked in the Lean proof.
 
 ## Evidence
 
-`D5/S0/Certificates/Groups/TaGoodInvolutionBoundRefutation.result` is a
+`D5/S3/FiniteGroups/Quandles/TaGoodInvolutionBoundRefutation.result` is a
 kernel-checked theorem of type `¬ claim`. The claim quantifies over finite
 groups, finite subsets, closure proofs, and the two lower-bound hypotheses; the
 finite witness therefore refutes the unrestricted question as formalized. The
@@ -73,7 +73,7 @@ make a claim about infinite cardinal arithmetic.
 - The two hypotheses `|Z(H)| >= 2` and `k(X) >= 2` do not force strictness
   of the minimum bound, even for finite groups. This is the universal assertion
   negated by the settling result.
-  [proved: D5/S0/Certificates/Groups/TaGoodInvolutionBoundRefutation.result]
+  [proved: D5/S3/FiniteGroups/Quandles/TaGoodInvolutionBoundRefutation.result]
 
 - For `X = {±i, ±j}`, conjugation fixes the conjugator's own pair and swaps
   the other pair. Multiplication by `-1` on either pair separately therefore

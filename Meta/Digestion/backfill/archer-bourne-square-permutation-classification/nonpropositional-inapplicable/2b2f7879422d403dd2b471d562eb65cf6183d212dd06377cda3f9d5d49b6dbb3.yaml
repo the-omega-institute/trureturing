@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b2f7879422d403dd2b471d562eb65cf6183d212dd06377cda3f9d5d49b6dbb3
+  normalized_sha256: sha256:2b2f7879422d403dd2b471d562eb65cf6183d212dd06377cda3f9d5d49b6dbb3
+cas_ref: sha256:2b2f7879422d403dd2b471d562eb65cf6183d212dd06377cda3f9d5d49b6dbb3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Open problem note recalling Archer and Bourne's further direction on chains (312, k...21 : sigma) for sigma in S_3 and k >= 5, noting resolution here for k = 5 and sigma = 132, and posing the open classification of indecomposable members for sigma = 132 and k >= 6; asserts no theorem."
+    previous_atom_id: 9da7cb2a126e2e86e3d232daf7bc9d42f81ea2058360d5aaea6ce31ed9347234
+    next_atom_id: b7d6e7d540f6e0f20aad413d54f1679cbd655cd367ef92787a53f35cf38426cb

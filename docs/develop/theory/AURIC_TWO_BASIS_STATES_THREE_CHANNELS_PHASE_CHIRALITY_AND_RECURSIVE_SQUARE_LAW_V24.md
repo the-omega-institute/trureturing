@@ -1414,3 +1414,686 @@ The two-eigenvalue problem and density of Jones representation of braid groups.
 **[v23]** [相对门历史、观察商与递归闭合 v22](https://github.com/the-omega-institute/trureturing/blob/88a98cb974735eba23c7ece731a40ba9b48c19f5/docs/develop/theory/AURIC_RELATIVE_GATE_HISTORIES_OBSERVATION_QUOTIENTS_AND_RECURSIVE_CLOSURE_V22.md)；
 以及本对话 v23《非周期单原型瓦片与 AURIC：高维酉投影、三角心及递归变分》。
 前稿的自由振幅 Schur 消元在本稿补上全局单位约束与有效边界度量，不把两种问题混同。
+## 追加锚（本行以下为增补区）
+
+## 10. 未知三端口响应到整个 Bloch 族的定量距离
+
+<a id="def:trine-residual"></a>
+
+**定义 10.1（归一测度、响应类别与距离）。** 在 $S^2$ 上用面积除以 $4\pi$ 得到概率测度 $\sigma$；在 $SO(3)$ 上用总质量为一的 Haar 测度 $\mu$，两者均取完备化。固定
+
+$$
+n_j=(\cos(2\pi j/3),\sin(2\pi j/3),0),\qquad j=0,1,2.
+$$
+
+响应类别为可测函数 $F:S^2\to[0,1]$，按几乎处处相等识别。令
+
+$$
+\begin{aligned}
+(TF)(O)&=\sum_{j=0}^2F(On_j),\qquad
+\varepsilon(F)=\|TF-1\|_{L^2(\mu)},\\
+B_r(n)&=(1+r\cdot n)/3,\qquad |r|\le1,\\
+\mathcal B&=\{B_r:|r|\le1\},\qquad
+\operatorname{dist}_2(F,\mathcal B)=\inf_{|r|\le1}\|F-B_r\|_{L^2(\sigma)}.
+\end{aligned}
+\tag{10.1}
+$$
+
+$O\mapsto On_j$ 将 $\mu$ 推送为 $\sigma$，所以 $T$ 在这些等价类上良定义。方向相同的效果必须在不同朝向和不同端口位置使用同一个 $F$。这是响应类别的一部分，不由各三端口分别归一化推出。这里的两个 $L^2$ 都是均方根范数，不是未归一的面积积分，也不是对有限朝向取最大值。
+
+连续响应取其逐点代表；涉及实际方向点值时也须固定所供应的可测代表。$\mathcal B$ 是本卷定理 6.4／CFMR 已有的连续精确解族；定理 14.1 在对每个旋转精确成立的关系下给出可测代表的逐点识别。以下定量问题是未知 $F$ 在非零残差时离整个族多远，区别于 [V25 定理 7.3](AURIC_QUANTUM_TILINGS_PENTAGON_COHERENCE_GOLDEN_GATES_AND_GLOBAL_OBSERVATION_V25.md#statement-7-3) 中已经给定 Born 族之后的态参数层析。
+
+<a id="thm:trine-stability"></a>
+
+**定理 10.2（显式全轨道稳定性）。** 对每个定义 10.1 的 $F$，令
+
+$$
+b=3\int_{S^2}nF(n)\,d\sigma(n),\quad a=|b|,\quad
+r_* =\begin{cases}3b,&a\le1/3,\\ b/a,&a>1/3.\end{cases}
+\tag{10.2}
+$$
+
+在 $a=0$ 时使用第一支。对任意 $\varepsilon\ge\varepsilon(F)$，置
+
+$$
+d=\frac8{\sqrt{15}}\varepsilon,\qquad
+\mathfrak b(\varepsilon)=
+\min\left\{\frac23,
+\left[d^2+\frac13\left(\frac92d^2\right)^{2/3}\right]^{1/2}\right\}.
+\tag{10.3}
+$$
+
+则 $r_*$ 是唯一最小距离参数，并且
+
+$$
+\boxed{\operatorname{dist}_2(F,\mathcal B)=\|F-B_{r_*}\|_2
+\le\mathfrak b(\varepsilon).}
+\tag{10.4}
+$$
+
+所有 $\varepsilon\ge0$ 都在量词内，$\mathfrak b(0)=0$。特别地，当 $0\le\varepsilon\le1$ 时，
+
+$$
+\operatorname{dist}_2(F,\mathcal B)\le C_0\varepsilon^{2/3},\qquad
+C_0=\left[\frac{64}{15}+
+\frac13\left(\frac92\right)^{2/3}\left(\frac8{\sqrt{15}}\right)^{4/3}\right]^{1/2}.
+\tag{10.5}
+$$
+
+该常数只求明确有效，不宣称最小。
+
+证明。先作线性误差估计。由 Cauchy–Schwarz 和三个推送测度，$\|Tf\|_2\le3\|f\|_2$。令 $\mathcal Y_l$ 为次数 $l$ 的球面调和空间，采用与 $\sigma$ 正交归一的复基 $Y_{lm}$。标准加法定理在此归一化下为
+
+$$
+\sum_{m=-l}^l\overline{Y_{lm}(n)}Y_{lm}(n')=(2l+1)P_l(n\cdot n'),
+\qquad P_l(1)=1.
+\tag{10.6}
+$$
+
+球谐的正交性与加法定理参见 [NIST DLMF 14.30.8–9](https://dlmf.nist.gov/14.30#E9)；这里的基是该文未归一面积基的 $\sqrt{4\pi}$ 倍。$T$ 交织球面旋转和群上的左平移，故 $T^*T$ 在每个不可约 $\mathcal Y_l$ 上为标量，不同 $l$ 之间的交叉项为零。该标量可由迹算出：
+
+$$
+\begin{aligned}
+(2l+1)\lambda_l
+&=\int_{SO(3)}\sum_m\left|\sum_jY_{lm}(On_j)\right|^2d\mu(O)\\
+&=(2l+1)\sum_{i,j}P_l(n_i\cdot n_j),\\
+\lambda_l&=3+6P_l(-1/2).
+\end{aligned}
+\tag{10.7}
+$$
+
+此处的不可约分解及旋转交织与 [CFMR §IV.A](https://arxiv.org/html/quant-ph/0306179v1#S4.SS1) 相同；(10.7) 计算非零残差需要的模长，而不是再次把其精确零空间算作新刻画。对一般 $L^2$ 函数，先对有限球谐和成立，再用球谐完备性与 $T$ 的有界性取极限。
+
+下面给不依赖 $l$ 的显式下界。[DLMF 18.10.5](https://dlmf.nist.gov/18.10#E5) 的 Laplace 积分给
+
+$$
+P_l(-1/2)=\frac1\pi\int_0^\pi
+\left(-\frac12+i\frac{\sqrt3}{2}\cos\phi\right)^l d\phi.
+$$
+
+当 $l\ge4$ 时，被积项模长的 $l$ 次方至多为其四次方，因此
+
+$$
+\begin{aligned}
+|P_l(-1/2)|
+&\le\frac1\pi\int_0^\pi
+(1-\tfrac34\sin^2\phi)^2d\phi\\
+&=1-\frac34+\frac{27}{128}=\frac{59}{128},\\
+\lambda_l&\ge3-6\frac{59}{128}=\frac{15}{64}.
+\end{aligned}
+\tag{10.8}
+$$
+
+其余次数直接为
+$\lambda_0=9,\lambda_1=0,\lambda_2=9/4,\lambda_3=45/8$，因为
+$P_2(-1/2)=-1/8,P_3(-1/2)=7/16$。于是对所有 $l\ne1$ 有 $\lambda_l\ge15/64$。
+
+由于 $\int nn^{\mathsf T}d\sigma=I/3$，$b\cdot n$ 是 $F-1/3$ 的一次球谐正交投影。置
+
+$$
+h(n)=F(n)-\frac13-b\cdot n.
+$$
+
+它包含可能非零的常数偏差而不含一次分量，且 $Th=TF-1$。由 (10.7)–(10.8) 得
+
+$$
+\|h\|_2^2\le\frac{64}{15}\|TF-1\|_2^2\le d^2.
+\tag{10.9}
+$$
+
+还须把仿射参数压回合法球，这一步不能由线性估计省去。若 $a>1/3$，令 $t=a-1/3$，并沿 $b$ 取坐标 $z\in[-1,1]$。$z$ 的边缘测度为 $dz/2$。仿射函数 $q=1/3+az$ 的负部满足
+
+$$
+\|q_-\|_2^2=\frac12\int_{-1}^{-1/(3a)}(1/3+az)^2dz
+=\frac{t^3}{6a}.
+\tag{10.10}
+$$
+
+因 $F\ge0$，负帽上 $|h|=|F-q|\ge q_-$。另一方面，由 $F\le1$ 及 $F\ge0$，
+
+$$
+a=3\int F(n)z\,d\sigma(n)
+\le3\int_{z>0}z\,d\sigma=\frac34.
+$$
+
+所以 $t^3\le6a d^2\le(9/2)d^2$。若 $a\le1/3$，则直接取 $t=0$。
+
+对任意 $|r|\le1$，正交性给精确式
+
+$$
+\|F-B_r\|_2^2=\|h\|_2^2+\frac13|b-r/3|^2.
+\tag{10.11}
+$$
+
+欧氏球的唯一最近点给 (10.2)，相应右端为 $\|h\|_2^2+t^2/3$。代入上界得 (10.3) 的第二支。另取 $r=0$，由 $0\le F\le1$ 得距离至多 $2/3$，故可取两支之小。最后当 $\varepsilon\le1$ 时 $\varepsilon^2\le\varepsilon^{4/3}$，得到 (10.5)。∎
+
+<a id="thm:trine-sharp-exponent"></a>
+
+**定理 10.3（声明类别中的最优小误差指数）。** 在 (10.1) 的响应类别中，不存在 $\alpha>2/3$、有限常数 $C$ 和 $\varepsilon_0>0$，使所有 $\varepsilon(F)\le\varepsilon_0$ 的 $F$ 都满足
+
+$$
+\operatorname{dist}_2(F,\mathcal B)\le C\varepsilon(F)^\alpha.
+\tag{10.12}
+$$
+
+即使把类别限制为连续且相对于弦距统一 $1/2$-Lipschitz 的 $F$，这个不可能性仍成立。因此结合 (10.5)，从群上 $L^2$ 残差到球面上 $L^2$ 距离的最优统一幂指数恰为 $2/3$；这不是对一致残差范数或其它加强类别的最优性断言。
+
+证明。固定单位轴 $e$，令 $z=e\cdot n$。对 $0<t\le1/6$ 置
+
+$$
+a_t=1/3+t,\qquad q_t(n)=1/3+a_tz,\qquad
+F_t(n)=\max\{0,q_t(n)\},\qquad e_t=F_t-q_t.
+\tag{10.13}
+$$
+
+$0\le F_t\le2/3+t\le5/6$；取正部是实线上的 $1$-Lipschitz 映射，所以各 $F_t$ 都连续且弦距 Lipschitz 常数至多 $a_t\le1/2$。其差 $e_t=(q_t)_-$ 位于 (10.10) 的负帽，故
+
+$$
+\|e_t\|_2^2=\frac{t^3}{6a_t}\le\frac{t^3}{2},\qquad
+Tq_t=1,\qquad
+\varepsilon_t:=\varepsilon(F_t)=\|Te_t\|_2
+\le\frac3{\sqrt2}t^{3/2}.
+\tag{10.14}
+$$
+
+这些残差非零：$e_t\ge0$ 且球面均值为 $t^2/(4a_t)>0$，所以 $Te_t$ 的群均值为 $3t^2/(4a_t)>0$。仿射函数 $q_t$ 的参数超出合法球半径 $t$，由 (10.11) 或直接积分得
+
+$$
+\operatorname{dist}_2(q_t,\mathcal B)=\frac{t}{\sqrt3}.
+$$
+
+到非空集合的距离是 $1$-Lipschitz 的，因而
+
+$$
+\begin{aligned}
+\operatorname{dist}_2(F_t,\mathcal B)
+&\ge\frac{t}{\sqrt3}-\|e_t\|_2\\
+&\ge\frac{t}{2\sqrt3},\qquad 0<t\le1/6.
+\end{aligned}
+\tag{10.15}
+$$
+
+最后一步使用 $t^{3/2}/\sqrt2\le t/(2\sqrt3)$。若 (10.12) 成立，充分小的 $t$ 给
+
+$$
+\frac1{2\sqrt3}\le C(3/\sqrt2)^\alpha t^{3\alpha/2-1},
+$$
+
+但当 $\alpha>2/3$ 时右端趋零，矛盾。∎
+
+(10.13) 是近似 frame-response 函数的尖锐性例子。它没有逐朝向严格归一化，未声称是某个原生装置、某种实际读者或真实物理概率族；其用途恰为否定声明函数类别中的更高统一指数。
+
+<a id="cor:trine-pointwise"></a>
+
+**推论 10.4（共同连续模下的逐点界）。** 设 $F$ 连续，且对某个非减函数 $\omega:[0,2]\to[0,1]$ 有 $\omega(0)=0$、$\omega(s)\to0$ 当 $s\downarrow0$，以及
+
+$$
+|F(n)-F(n')|\le\omega(|n-n'|).
+\tag{10.16}
+$$
+
+若 $\varepsilon(F)\le\varepsilon$，定义
+
+$$
+\mathfrak u(\varepsilon,\omega)=
+\min\left\{1,\inf_{0<s\le2}
+\left[\omega(s)+\frac{s}{3}+\frac{2\mathfrak b(\varepsilon)}{s}\right]\right\}.
+\tag{10.17}
+$$
+
+则 $\|F-B_{r_*}\|_\infty\le\mathfrak u(\varepsilon,\omega)$。特别地，$\varepsilon=0$ 时连续代表逐点等于唯一的 $B_{r_*}$。
+
+证明。弦距半径 $s\le2$ 的球帽在 $\sigma$ 下质量为 $s^2/4$，因为沿帽中心轴的坐标至少为 $1-s^2/2$。$B_{r_*}$ 的 Lipschitz 常数至多 $1/3$。置 $H=F-B_{r_*}$，对帽内每点 $n'$ 有
+$|H(n)|\le|H(n')|+\omega(s)+s/3$。取帽上平均，再用 Cauchy–Schwarz 和 (10.4)，得 $|H(n)|\le2\mathfrak b(\varepsilon)/s+\omega(s)+s/3$。另有 $|H|\le1$，故 (10.17) 成立。零残差时令 $s\downarrow0$。∎
+
+## 11. 同一十三维七地址载体中的真正三端口目标
+
+<a id="def:native-trine-target"></a>
+
+**定义 11.1（固定码、三个旧单标签事件及补集）。** 采用 [V37 §§8.1–8.2、14](AURIC_BINARY_RELATIONS_UNITARY_REPRESENTATION_AND_GOLDEN_GATE_UNIVERSALITY_V37.md#section-8-1) 的同一个十站点载体
+
+$$
+H_{13}=\operatorname{span}\{e_\beta=|10\,\beta\,010\rangle:
+|\beta|=5,\ \beta\text{ 无相邻 }11\},\qquad
+\iota|0\rangle=e_{00100}=v,\quad\iota|1\rangle=e_{10100}.
+\tag{11.1}
+$$
+
+ready 仍只有 $v$，可调用门仍只有地址 $0,\ldots,6$ 的原 $K_j$，实际字为有限正向字。完整旧终端空间仍是 $\Omega=\{0,1\}^{10}$，旧记录字及其调用档案不作商。固定三个互斥单标签事件
+
+$$
+\begin{array}{c|ccc}
+j&0&1&2\\ \hline
+\beta^{(j)}&10000&01000&00100\\
+\ell_j=10\beta^{(j)}010&1010000010&1001000010&1000100010
+\end{array}
+\qquad A_j=\{\ell_j\},\quad
+C=\Omega\setminus(A_0\cup A_1\cup A_2).
+\tag{11.2}
+$$
+
+$C$ 有 $1021$ 个旧标签；其中十条是 $H_{13}$ 中其余合法路径，另外 $1011$ 条不在 $H_{13}$。令 $Q_j$ 为 $H_{13}$ 上相应单标签投影，$Q_C=I-\sum_jQ_j$。令 $\zeta_3=e^{2\pi i/3}$，定义真正的三端口目标等距
+
+$$
+\mathcal V_3\binom\alpha\beta
+=\frac1{\sqrt3}\sum_{j=0}^2(\alpha+\zeta_3^{-j}\beta)e_{\beta^{(j)}}.
+\tag{11.3}
+$$
+
+这是本卷 §5 的 trine Fourier 编码在该旧载体的嵌入，不是 V37 的五效果信息完备码 $LJ$，也不将其三个占据事件替代为 trine。
+
+<a id="thm:native-trine-compilation"></a>
+
+**定理 11.2（几何目标与七地址有限字的对应）。** 有
+
+$$
+\mathcal V_3^*Q_j\mathcal V_3=\frac{I+n_j\cdot\sigma}{3}=E_j,
+\qquad \mathcal V_3^*Q_C\mathcal V_3=0.
+\tag{11.4}
+$$
+
+对每个 $O\in SO(3)$ 选择 $U_O\in SU(2)$ 使
+$U_O^*(n_j\cdot\sigma)U_O=(On_j)\cdot\sigma$。则对每个 $\beta>0$，存在同一七地址的有限正向字 $w_{O,\beta}$，使
+
+$$
+\|K_{w_{O,\beta}}\iota-\mathcal V_3U_O\|_{\rm op}<\beta.
+\tag{11.5}
+$$
+
+于是三个单标签事件及补集满足
+
+$$
+\begin{aligned}
+\left\|\iota^*K_w^*Q_jK_w\iota-
+\frac{I+(On_j)\cdot\sigma}{3}\right\|_{\rm op}&\le2\beta,\\
+\|Q_CK_w\iota\|_{\rm op}&<\beta.
+\end{aligned}
+\tag{11.6}
+$$
+
+这些是同一数学载体上的等距与效果比较；(11.5)–(11.6) 本身没有实际概率结论。
+
+证明。$\sum_j\zeta_3^j=0$ 给 (11.3) 两列正交归一。第 $j$ 行外积为
+$\frac13\left(\begin{smallmatrix}1&\zeta_3^{-j}\\\zeta_3^j&1\end{smallmatrix}\right)$，即 (11.4)。补集在三列输出基之外，故压缩为零。$SU(2)$ 的伴随作用覆盖 $SO(3)$，选择满足所列约定的一个提升即可；不要求这些提升随 $O$ 有全局连续选择。
+
+把 $\iota$ 与 $\mathcal V_3$ 的像基分别补成 $H_{13}$ 的正交基，得到酉 $S$ 满足 $S\iota=\mathcal V_3$；在输入码的十一维正交补中调整一条基向量的相位，使 $\det S=1$。对任意 $U\in U(2)$，取固定 $\eta\perp\operatorname{ran}\iota$，用 V37 定理 8.3 的同一相位平衡构造
+
+$$
+\mathcal D_U=\iota U\iota^*+\det(U)^{-1}|\eta\rangle\langle\eta|
++(I-\iota\iota^*-|\eta\rangle\langle\eta|).
+\tag{11.7}
+$$
+
+三个正交块分别为 $U,\det(U)^{-1},I$，所以 $\mathcal D_U\in SU(13)$ 且 $S\mathcal D_U\iota=\mathcal V_3U$。复用 V37 引理 8.1、定理 8.2 证明中已经取得的七地址闭包包含 $SU(13)$，对整个 $S\mathcal D_{U_O}$ 作算符范数逼近。所有逆字母以 $K_j^9$ 代换，得到 (11.5) 的正向字，没有额外可调用矩阵。对两个等距 $A,B$，$\|A-B\|<\beta$ 给
+$\|A^*QA-B^*QB\|\le2\beta\|Q\|$；又 $Q_C\mathcal V_3U_O=0$，故得 (11.6)。∎
+
+<a id="cor:native-trine-budget"></a>
+
+**推论 11.3（ready、已知制备及条件概率预算）。** 若某个固定合法制备前字 $p$ 满足
+
+$$
+\|K_pv-\iota\psi\|\le\alpha,\qquad \|\psi\|=1,
+\tag{11.8}
+$$
+
+则接续 (11.5) 的同一 $w$ 后，
+
+$$
+\|K_wK_pv-\mathcal V_3U_O\psi\|<\alpha+\beta.
+\tag{11.9}
+$$
+
+$p$ 为空字时可取 $\psi=|0\rangle,\alpha=0$。对任意已知纯 $\psi$ 和任意 $\alpha>0$，七地址的同一 $SU(13)$ 密度供应一个满足 (11.8) 的有限制备字；这不供应任意未知输入或随机混态。
+
+若另外明确采用 Born 终端规则，则理想 (11.3) 的完整旧终端律为
+
+$$
+P^{\rm id}_{r,O}(\ell_j)=B_r(On_j),\qquad
+P^{\rm id}_{r,O}(w)=0\ (w\in C),
+\tag{11.10}
+$$
+
+其中纯输入时 $r$ 是 $\psi$ 的 Bloch 向量；数学上对给定逻辑密度态同样定义此律。精确执行有限字的 Born 终端律与 (11.10) 的 TV 至多 $\alpha+\beta$，补集质量至多 $(\alpha+\beta)^2$。若真实完整律相对该精确有限字 Born 律另有 TV 偏差 $\eta$，则完整 TV 至多 $\alpha+\beta+\eta$，补集及失败总质量至多 $(\alpha+\beta)^2+\eta$。
+
+证明。(11.9) 是酉性和三角不等式。制备存在性用一个把 $v$ 送至 $\iota\psi$ 的 $SU(13)$ 目标及上述密度。对归一向量 $x,y$，纯态半迹距离至多 $\|x-y\|$；终端测量收缩该距离。补集投影在理想向量上为零，故概率至多向量误差平方。最后用 TV 的三角不等式及其对事件概率的控制。真实失败坐标在理想律中补零，而非按成功重新归一化。∎
+
+(11.8) 不对任意离码的 $K_pv$ 自动成立，也不允许在终端测量后免费继续使用一个逻辑输入。全部程序仍为同一 ready 源、有限前字、有限接续、原完整终端；没有新增三结果 Lüders 仪器、中途反馈、可删失败或辅助载体。若两字长为 $\ell(p),\ell(w)$，一次程序花费 $\ell(p)+\ell(w)$ 次原门调用，档案保留两字及顺序。逐目标逐精度的字存在性不给统一字长、实际控制精度或置信预算。条件 Born 比较和未知实际响应的合同在下节分列。
+
+## 12. 实际方向匹配、有限查询及可取得的结论
+
+<a id="ass:actual-trine-matching"></a>
+
+**假设 12.1（同一来源与同一响应的实际匹配合同）。** 固定原七地址 ready 来源及一个供应域 $\mathscr H$。域中每个 $h$ 是原合同允许的制备／历史及其全部档案，且从该处接续三端口字再读完整终端是合法程序。空前字 ready 属于可考虑的域；其它 $h$ 是否属于域须单独供应，尤其不把离码历史、未知输入或新增仪器纳入其中。已有全部理想、有限、失败与档案合同保持原量词。
+
+对每个 $h\in\mathscr H$ 固定一个与朝向、端口位置和逼近指标无关的可测 $F_h:S^2\to[0,1]$。对每个被供应的 $O,k$，实际字 $w_{O,k}$ 取自 (11.5)，精度 $\beta_{O,k}$ 与字档案照实保留；供应该合法程序的完整无条件概率律 $P_{h,O,k}$。若 $h$ 本身是随机分支，此处仅指已供应且正概率分支上的条件接续律，不确定到达 $h$ 的概率。
+
+$A_j$ 在实际档案空间中指具有 (11.2) 旧标签的所有细记录；记
+
+$$
+\begin{aligned}
+p_{h,j,k}(O)&=P_{h,O,k}(A_j),\\
+L_{h,k}(O)&=1-\sum_jp_{h,j,k}(O),\\
+e_{h,j,k}(O)&=p_{h,j,k}(O)-F_h(On_j).
+\end{aligned}
+\tag{12.1}
+$$
+
+$L$ 包括 $C$ 的全部旧标签，以及一切失败、拒绝、停止、读取告警和未得到旧标签的输出；它们在原细档案中分别保留。绝不丢弃后按成功质量条件化。各函数须关于 $O$ 可测，并另供实际预算
+
+$$
+\|e_{h,j,k}\|_{L^2(\mu)}\le\delta_{h,j,k},\qquad
+\|L_{h,k}\|_{L^2(\mu)}\le\lambda_{h,k}.
+\tag{12.2}
+$$
+
+若只供应有限多个朝向，改用假设 12.4。相同方向跨程序的共同响应及 (12.2) 是实质统计关系；它们不以 $B_r$、迹公式或复正态定义 $F_h$，也不由 (11.6) 的矩阵误差推出。对每个程序，预算必须包括相应 ready／准备、完整控制累计误差、读取及所有失败质量；可用字长增加时这些预算仍然有效，是额外的可靠供应要求。
+
+<a id="thm:actual-trine-consequences"></a>
+
+**定理 12.2（实际合同的非零容差后果与精确极限）。** 对每个满足假设 12.1 的 $h,k$，令
+
+$$
+\varepsilon_{h,k}=\lambda_{h,k}+\sum_j\delta_{h,j,k}.
+\tag{12.3}
+$$
+
+则存在由 $F_h$ 唯一拟合的 $r_h\in\overline B^3$，不依赖 $k$，满足
+
+$$
+\|F_h-B_{r_h}\|_2\le\mathfrak b(\varepsilon_{h,k}).
+\tag{12.4}
+$$
+
+将无旧标签的失败输出记为额外坐标 $\bot$，但保留全部 $1024$ 个旧标签，令 $P^{\rm tag}_{h,O,k}$ 为此标签边缘律。则
+
+$$
+\int_{SO(3)}\operatorname{TV}
+(P^{\rm tag}_{h,O,k},P^{\rm id}_{r_h,O})d\mu(O)
+\le\min\left\{1,\frac{\varepsilon_{h,k}+3\mathfrak b(\varepsilon_{h,k})}{2}\right\}.
+\tag{12.5}
+$$
+
+理想律在 $\bot$ 上置零。若 (12.2) 换成逐点统一界 $|e_j(O)|\le\delta_j$、$L(O)\le\lambda$，且 $F_h$ 有共同模 $\omega_h$，则每个实际被供应朝向均有
+
+$$
+\operatorname{TV}(P^{\rm tag}_{h,O,k},P^{\rm id}_{r_h,O})
+\le\min\left\{1,\frac{\lambda+\sum_j\delta_j+
+3\mathfrak u(\lambda+\sum_j\delta_j,\omega_h)}2\right\}.
+\tag{12.6}
+$$
+
+若固定同一个 $F_h$，且存在被供应指标列使 $\varepsilon_{h,k}\to0$，则 $F_h=B_{r_h}$ 几乎处处；若所供应的代表 $F_h$ 连续（或满足推论 10.4 的共同模），则逐点成立。另有一个无需连续性前提的精确分支：若某个指标 $k$ 对每个 $O\in SO(3)$ 都供应 (12.1) 的实际程序律，并且所有 $e_{h,j,k}(O)=0$、$L_{h,k}(O)=0$ 对每个 $O$ 成立，则 $F_h=B_{r_h}$ 对每个方向成立，该指标的完整未条件化标签律在每个 $O$ 都精确等于 (11.10)。此分支使用定理 14.1 的全旋转可测代表刚性；仅有积分预算为零、或仅在某个朝向子集上精确，均不代替其全旋转假设。
+
+证明。实际概率在每个程序内完整归一化，故恒有
+
+$$
+TF_h(O)-1=-L_{h,k}(O)-\sum_je_{h,j,k}(O).
+\tag{12.7}
+$$
+
+Minkowski 不等式给残差至多 (12.3)，定理 10.2 给 (12.4) 与同一个拟合参数。在全旋转逐点零误差分支，(12.7) 对每个 $O$ 给出 $TF_h(O)=1$，定理 14.1 将几乎处处识别升级为每个方向的等式。三个 $A_j$ 是旧单标签，理想律在其余旧标签及失败坐标全为零，因此有精确等式
+
+$$
+\operatorname{TV}(P^{\rm tag}_{h,O,k},P^{\rm id}_{r_h,O})
+=\frac12\left[\sum_j|p_{h,j,k}(O)-B_{r_h}(On_j)|+L_{h,k}(O)\right].
+\tag{12.8}
+$$
+
+这里能恢复完整标签 TV，是因为补集每项都非负且理想质量为零，不是从三个一般粗事件的误差推出完整 TV。对 (12.8) 积分，用各 $On_j$ 的推送测度及 $L^1\le L^2$，得到 (12.5)。用推论 10.4 的一致界则得 (12.6)。令 $k$ 沿给定列趋于极限，(12.4) 右端趋零，故只凭此极限先得到几乎处处相等；若另有连续／共同模，推论 10.4 给出每个方向的等式。在全旋转逐点零误差分支，定理 14.1 已给出 $F_h=B_{r_h}$ 的逐点结论；再由 (12.1) 得 $p_{h,j,k}(O)=B_{r_h}(On_j)$ 及零补集，对每个 $O$ 成立。推论 14.2 给出这一实际合同应用的完整量词。∎
+
+(12.5) 不给每个朝向的同一个界，也不给完整历史档案的 TV。相同标签内的细档案分布、到达随机 $h$ 的概率、不同 $h$ 的联合律均未被 (12.8) 比较。若将 $A_j$ 改成含多个旧标签的一般粗事件，(12.8) 通常只剩粗粒化 TV 的等式，不能声称完整标签上界。
+
+<a id="cor:trine-calibration"></a>
+
+**推论 12.3（拟合参数与准备态须另行校准）。** 在定理 12.2 的连续情形，设 $u$ 是 $\|F_h-B_{r_h}\|_\infty$ 的有效上界。若独立校准对某个声明的目标 $s\in\overline B^3$ 以及三个正交方向 $e_i$ 给
+
+$$
+\left|F_h(e_i)-\frac{1+s_i}{3}\right|\le c_i,
+\qquad i=1,2,3,
+\tag{12.9}
+$$
+
+则
+
+$$
+|r_h-s|\le3\left(\sum_{i=1}^3(c_i+u)^2\right)^{1/2}.
+\tag{12.10}
+$$
+
+证明。逐坐标用三角不等式得 $|(r_h)_i-s_i|\le3(c_i+u)$，平方相加。特别地，$c_i=u=0$ 时，由这三项校准可确定 $r_h=s$。∎
+
+所以“接近某个合法 Bloch 族成员”与“接近给定准备态的 Born 概率”是不同结论。后者可由推论 11.3 的已给 Born 接口，或 (12.9) 的独立实际校准支持；不能仅给拟合参数取准备态的名字。
+
+<a id="ass:trine-finite-queries"></a>
+
+**假设 12.4（有限朝向、共同模及可靠查询）。** 固定一个 $h$，供应连续的同一个 $F_h$ 及 (10.16) 的共同模 $\omega_h$。以
+
+$$
+d(O,O')=\|O-O'\|_{\rm op}
+$$
+
+度量朝向，给一个覆盖整个 $SO(3)$ 的有限 $\eta$-网 $O_1,\ldots,O_N$，$0<\eta\le1$。每个网点只调用相应有限正向字及完整旧终端，实际真概率为 $p_{aj}$。另供跨上下文方向匹配的确定界
+
+$$
+|p_{aj}-F_h(O_an_j)|\le\delta_{aj}.
+\tag{12.11}
+$$
+
+可靠查询合同供应读数 $\widehat p_{aj}$、半径 $s_{aj}$ 及一个共同置信事件 $\mathcal C$，使在 $\mathcal C$ 上所有 $a,j$ 同时满足
+
+$$
+|\widehat p_{aj}-p_{aj}|\le s_{aj}.
+\tag{12.12}
+$$
+
+共同事件的概率和取得成本按实际供应声明；不由单次 ready／终端或矩阵编译推得。若读数来自完整样本频率，必须保留所有失败试次，因而 $\sum_j\widehat p_{aj}=1-\widehat L_a$，而不是将成功样本内三项之和改成一。这里有限查询的对象是实际真概率，不将精确概率查询当免费原语。
+
+<a id="thm:trine-finite-decision"></a>
+
+**定理 12.5（有限数据下的确定性误差判据）。** 在假设 12.4 的共同事件上，令
+
+$$
+v_a=\left|\sum_j\widehat p_{aj}-1\right|
++\sum_j(\delta_{aj}+s_{aj}),\qquad
+\varepsilon_{\rm net}=\max_av_a+3\omega_h(\eta).
+\tag{12.13}
+$$
+
+则
+
+$$
+\|TF_h-1\|_\infty\le\varepsilon_{\rm net},\qquad
+\operatorname{dist}_2(F_h,\mathcal B)\le\mathfrak b(\varepsilon_{\rm net}),\qquad
+\|F_h-B_{r_h}\|_\infty\le\mathfrak u(\varepsilon_{\rm net},\omega_h).
+\tag{12.14}
+$$
+
+对实际查询过的每个网点，标签律满足
+
+$$
+\begin{aligned}
+\operatorname{TV}(P^{\rm tag}_{h,a},P^{\rm id}_{r_h,O_a})
+&\le\min\left\{1,\frac12\left[
+\sum_j\delta_{aj}+3\mathfrak u(\varepsilon_{\rm net},\omega_h)
++\overline L_a\right]\right\},\\
+\overline L_a&=\min\{1,\max\{0,1-\sum_j\widehat p_{aj}+\sum_js_{aj}\}\}.
+\end{aligned}
+\tag{12.15}
+$$
+
+该有限判据是条件性的：可作出响应精度 $\tau$ 的断言，须实际给出使 $\mathfrak b(\varepsilon_{\rm net})\le\tau$ 的全部预算及共同事件。它不给未查询朝向的实际程序律安装 (12.11)；若要在那里使用 (12.6)，仍须供应该朝向的方向匹配及失败界。
+
+证明。在网点逐项用 (12.11)–(12.12) 及三角不等式，得 $|TF_h(O_a)-1|\le v_a$。对任意 $O$ 取 $d(O,O_a)\le\eta$，三个方向分别相距至多 $\eta$，由共同模得
+$|TF_h(O)-TF_h(O_a)|\le3\omega_h(\eta)$。这给第一界；$\mu$ 归一化后 $L^2$ 不超过一致范数，定理 10.2 及推论 10.4 给余下两界。实际补集质量为 $L_a=1-\sum_jp_{aj}\in[0,1]$，在共同事件上至多 $\overline L_a$。再用 (12.8)、(12.11) 及一致响应界即得 (12.15)。∎
+
+**命题 12.6（朝向数量与原生查询成本）。** 可取
+
+$$
+N\le(\lceil6\pi/\eta\rceil+1)^3.
+\tag{12.16}
+$$
+
+若 $h$ 是固定、无中途随机分支的制备前字，一个已供应的统计方案对每个设置使用 $m_a$ 次合法 ready／制备／接续／终端试次，且每次前字和接续长分别为 $\ell(h),\ell(w_a)$，则这些网点合计需要
+
+$$
+\sum_am_a\text{ 次 ready 与完整终端},\qquad
+\sum_am_a[\ell(h)+\ell(w_a)]\text{ 次原门调用}.
+\tag{12.17}
+$$
+
+若可靠查询按单事件接口计费，至多需要 $3N$ 个事件估计；完整标签样本可在一个设置上同时估计三项，不必增设三次物理读口。若 $h$ 是随机历史，取得这些条件试次的全部到达尝试、未到达分支及成本须另行供应，不能将 (12.17) 当作其无条件成本。该结论没有供应 $m_a$、置信半径、独立重复制备、重置或统一字长上界。
+
+证明。任意旋转有 $R_z(\alpha)R_y(\theta)R_z(\gamma)$ 表示，$\alpha,\gamma\in[0,2\pi],\theta\in[0,\pi]$。令 $m=\lceil6\pi/\eta\rceil$，分别取分成 $m$ 段的端点网格。每个角的误差至多 $2\pi/m\le\eta/3$，单轴旋转的算符距离至多角差；乘积相减的三角不等式使总误差至多 $\eta$，网格三元组至多 $(m+1)^3$ 个。它们只是编译目标参数，不是增加可调用的连续旋转。式 (12.17) 按每次真实调用逐项相加；失败试次同样占用成本及档案。∎
+
+## 13. 三端口定量桥的前提、来源与起源边界
+
+**数学引文 13.1（承重对应及证据范围）。** (10.4)–(10.5)、(10.13)–(10.15)、定理 14.1 中消费的两层 trine 展开，以及它们在 (11.1)–(12.17)、推论 14.2 的源特定连接作为 `repo-derived` 的纸面推导使用，不主张全球文献优先权，也不宣称 Lean 内核认证。其先例和参数对应如下。
+
+| 已有来源 | 本文实际消费及不承担的结论 |
+| --- | --- |
+| [CFMR，quant-ph/0306179v1，§IV.A、IV.B.1](https://arxiv.org/html/quant-ph/0306179v1#S4.SS2.SSS1)；本卷定理 6.4 | `literature-attested` 的连续全旋转 trine 精确响应族与球谐旋转方法。$N=3$、方向为 $On_j$、框架函数为 $F$；CFMR §IV.A 在球谐展开处显式假定连续性。定理 14.1 先消费本卷定理 10.2 的可测几乎处处识别，再用其证明内给出的绝对连续推送排除零测异常值；不将该代表步骤归给 CFMR，也不把已有连续精确刻画重新计为定量成果。 |
+| [NIST DLMF 14.30.8–9](https://dlmf.nist.gov/14.30#E8)、[18.10.5](https://dlmf.nist.gov/18.10#E5) | `literature-attested` 的球谐正交／加法定理和 Legendre 积分；基缩放为 $\sqrt{4\pi}$ 倍，积分取 $\cos\theta=-1/2$。它们承担 (10.6)–(10.8) 的中间恒等式，不直接宣称 (10.4) 或指数最优性。 |
+| 本卷 §§5.1–5.3；[V25 §7](AURIC_QUANTUM_TILINGS_PENTAGON_COHERENCE_GOLDEN_GATES_AND_GLOBAL_OBSERVATION_V25.md#statement-7-3) | 已有 Fourier trine 编码、概率圆盘及给定 Born 族内部的层析。它们不控制未知响应中的高阶分量或超球参数。 |
+| [V37 §§8.1–8.2、14](AURIC_BINARY_RELATIONS_UNITARY_REPRESENTATION_AND_GOLDEN_GATE_UNIVERSALITY_V37.md#section-8-1) | 相同 $H_{13}$、$\iota=R$、ready $v$、七地址、$SU(13)$ 密度、相位平衡正向有限字及全部旧标签。这里只换目标等距为 (11.3)，不把原五效果码当三端口，不重做密度证明。 |
+| [量子重建续卷 II §§121–125、136–137](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) | 已有全效果实际匹配、完整记录反例、可靠查询与共同模边界。本节只在 (11.2) 的三端口轨道上给 (12.3)–(12.15) 的定量后果，不宣称推翻已有反例或由有限查询取消共同模。尤其该卷全效果覆盖的十一地址／八十九维载体不是这里七地址／十三维的免费权限。 |
+
+**命题 13.2（非循环性、减少的自由度与保留的前提）。** 假设 12.1／12.4 没有通过迹公式定义实际概率；在其声明供应域内，定理 10.2 排除离整个 Bloch 族超过 (10.3) 的共同响应，定理 10.3 排除仅凭该函数类别取得更好的统一 $L^2$ 幂指数。全旋转逐点精确分支由定理 14.1 推出连续性，无需将其另列为前提；这个减少只涉及该分支的正则性。但是这些结论不减少本卷定理 6.4 已要求的独立概率来源前提，不推出实际相位、非交换或组合规则的起源，也不确定完整历史律。
+
+证明。推导的输入分为三类：第一类是复线性载体、Pauli 方向、原门矩阵与编译密度，第二类是各实际程序自身的完整非负归一律，第三类是这些律跨程序／端口的共同方向响应、误差预算，以及非零容差逐点界或有限网判据所用的连续模。第二、三类只在 (12.1)–(12.2)、(12.11)–(12.12) 进入，未由第一类计算；证明中第一次引入 Bloch 拟合是 (10.2)，不是对实际律的定义。因而作为条件推导没有用结论定义前提。
+
+该类非空：在明确另加 Born 终端接口、固定实际逻辑输入及合格准备／控制／读取预算时，取对应 $F_h=B_s$；推论 11.3 给相应有限误差的相容实例。这个实例使用明列的 Born 前提，仅证明合同相容，不是该前提的取得。对未知实际读者，$2\beta$ 的几何效果界仍不蕴含任何 $\delta$ 或 $\lambda$。假设 12.1 没有给出 (12.9)，故拟合参数不自动等于实际准备态；没有可靠查询合同，(12.13) 也没有实际可用的置信意义。
+
+即使终端标签完全具有 (11.10)，程序与历史档案仍未作商：相同终端标签可有不同到达历史及不同后续合法操作。若 $h$ 为随机记录，只给每个 $P(\cdot\mid h)$ 不给 $P(h)$，联合律 $P(h,\cdot)=P(h)P(\cdot\mid h)$ 尚未确定。三端口终端也没有规定多次读取的状态更新、任意输入、参考接入或复合系统。复相位及非交换关系已经存在于 (11.3)、$SU(2)$ 和原门中，没有从概率拟合反向产生；谱的作用是分解已给响应并约束其高阶自由度，不是证明该谱结构的物理来源。故完整量子起源问题仍保留实际匹配、相位、组合、历史与认证这些具体缺口。∎
+
+## 追加锚（本行以下为增补区）
+
+## 14. 全旋转精确关系对可测代表的逐点刚性
+
+<a id="prop:trine-measurable-exact-bridge"></a>
+
+**定理 14.1（全旋转 trine 关系消除零测异常值）。** 固定任意有序等边 trine $n_0,n_1,n_2\in S^2$，即 $n_0+n_1+n_2=0$。对每个关于完备化归一球面测度 $\sigma$ 可测的函数 $F:S^2\to[0,1]$，若
+
+$$
+\sum_{j=0}^2F(On_j)=1\qquad\text{对每个 }O\in SO(3),
+\tag{14.1}
+$$
+
+则存在唯一 $r\in\mathbb R^3$、$|r|\le1$，使
+
+$$
+F(n)=\frac{1+r\cdot n}{3}=B_r(n)
+\qquad\text{对每个 }n\in S^2.
+\tag{14.2}
+$$
+
+因此连续性在此精确分支是结论，不是附加假设。(14.1) 的量词是每个旋转，不能换成几乎每个旋转，也不能只写 $\varepsilon(F)=0$。
+
+**证明。** 任意两个有序等边 trine 经一个固定旋转相连；由旋转参数的重取，(14.1) 对定义 10.1 的标准 trine 也逐旋转成立。因此 $\varepsilon(F)=0$，定理 10.2 给出唯一拟合参数 $r$，$|r|\le1$，使 $F=B_r$ 几乎处处。以下只证明这个已知等价类内的代表没有异常点。令 $g=F-B_r$，取 Borel 集 $Z\subseteq S^2$，使
+
+$$
+\{n:g(n)\ne0\}\subseteq Z,\qquad \sigma(Z)=0.
+\tag{14.3}
+$$
+
+这样的 $Z$ 存在，因为测度取完备化。任意有序单位三元组 $a,b,c$ 若满足 $a+b+c=0$，则两两内积均为 $-1/2$，并是固定有序 trine 的 $SO(3)$ 像：把前两向量生成的正交标架及其叉积映过去即可构造所需保向旋转。又因 $B_r(a)+B_r(b)+B_r(c)=1$，所以
+
+$$
+g(a)+g(b)+g(c)=0
+\quad\text{对每个这样的三元组成立。}
+\tag{14.4}
+$$
+
+固定任意 $x\in S^2$，取 $x^\perp$ 中的标准正交基 $e_1,e_2$。对 $\theta\in[0,2\pi)$ 及 $s\in\{-1,1\}$，定义
+
+$$
+\begin{aligned}
+v_\theta&=\cos\theta\,e_1+\sin\theta\,e_2,&
+w_\theta&=-\sin\theta\,e_1+\cos\theta\,e_2,\\
+y_s(\theta)&=-\frac12x+s\frac{\sqrt3}{2}v_\theta,&
+a_s(\theta)&=\frac{\sqrt3}{2}x+s\frac12v_\theta.
+\end{aligned}
+\tag{14.5}
+$$
+
+$y_s,a_s,w_\theta$ 是两两正交的单位向量，且 $x+y_++y_-=0$。再对 $\varphi\in[0,2\pi)$、$t\in\{-1,1\}$ 定义
+
+$$
+z_{s,t}(\theta,\varphi)
+=-\frac12y_s(\theta)
++t\frac{\sqrt3}{2}
+\bigl(\cos\varphi\,a_s(\theta)+\sin\varphi\,w_\theta\bigr).
+\tag{14.6}
+$$
+
+这些向量都在 $S^2$ 上，且对每个 $s$ 有 $y_s+z_{s,+}+z_{s,-}=0$。将 (14.4) 用于第一层 $(x,y_+,y_-)$ 及第二层的两个 trine，得到对每个参数对都成立的恒等式
+
+$$
+g(x)=\sum_{s,t\in\{-1,1\}}g\bigl(z_{s,t}(\theta,\varphi)\bigr).
+\tag{14.7}
+$$
+
+下面证明这四个末端方向可以同时避开 $Z$。仅在数学证明的参数空间上，令 $\theta,\varphi$ 关于归一 Lebesgue 测度独立均匀；这不是对实际装置增加随机调用权限。对每个固定 $s,t$，有
+
+$$
+u=x\cdot z_{s,t}(\theta,\varphi)
+=\frac14+t\frac34\cos\varphi.
+\tag{14.8}
+$$
+
+由一维换元，$u$ 在 $(-1/2,1)$ 上有密度
+
+$$
+q(u)=\frac{1}{\pi\sqrt{(3/4)^2-(u-1/4)^2}}
+=\frac{1}{\pi\sqrt{(1-u)(u+1/2)}}.
+\tag{14.9}
+$$
+
+两个端点没有原子，且 $\int_{-1/2}^1q(u)\,du=1$。固定除去零测端点的 $\varphi$ 时，改变 $\theta$ 正是绕 $x$ 轴旋转 $z_{s,t}$；其经度因而均匀，而轴坐标 $u$ 不变。于是对每个 $s,t$，$z_{s,t}$ 的推送律 $\nu_{s,t}$ 关于 $\sigma$ 绝对连续，密度为
+
+$$
+\frac{d\nu_{s,t}}{d\sigma}(n)=
+\begin{cases}
+\displaystyle\frac{2}{\pi\sqrt{(1-x\cdot n)(x\cdot n+1/2)}},
+&-1/2<x\cdot n<1,\\
+0,&\text{其它方向，除去任意赋值的零测边界。}
+\end{cases}
+\tag{14.10}
+$$
+
+这里因 $\sigma$ 的轴坐标／经度形式为 $(du/2)(d\lambda/2\pi)$，密度是 $2q$；只用到绝对连续性，不要求这个密度有界。各 $z_{s,t}$ 连续，$Z$ 是 Borel 零集，故 $z_{s,t}^{-1}(Z)$ 是参数环面上的可测零集。四个逆像的并仍为零集，因此可选一对 $\theta,\varphi$ 使四个 $z_{s,t}$ 同时不在 $Z$ 中。(14.3)、(14.7) 便给出 $g(x)=0$。
+
+$x$ 任意，且上述参数选择允许依赖 $x$，所以 $g$ 在整个 $S^2$ 上为零；这里没有对不可数个 $x$ 取共同满测度事件。证明也没有把 $g$ 限制到单条纬圈后积分，因而不要求完备球面可测函数在任意零测纬圈上的限制仍然可测。最后，若 $B_r=B_{r'}$ 对每个方向成立，则 $(r-r')\cdot n=0$ 对每个单位 $n$ 成立，故 $r=r'$。∎
+
+<a id="cor:actual-trine-pointwise-exact"></a>
+
+**推论 14.2（实际合同的精确分支与均方极限分列）。** 固定假设 12.1 的同一个 $h$ 和所供应的同一个可测代表 $F_h$，保留全部旧标签、失败坐标与细档案。
+
+若仅存在被供应指标列使 $\varepsilon_{h,k}\to0$，则定理 12.2 给出的唯一 $r_h$ 满足 $F_h=B_{r_h}$ 几乎处处；另有连续／共同模时，这一极限结论升级为每个方向的等式。仅有这些均方预算，不保证任意指定方向的点值。
+
+若另有某个指标 $k_0$，对每个 $O\in SO(3)$ 都供应实际完整律 $P_{h,O,k_0}$，并且
+
+$$
+e_{h,j,k_0}(O)=0\quad(j=0,1,2),\qquad
+L_{h,k_0}(O)=0
+\quad\text{对每个 }O\in SO(3),
+\tag{14.11}
+$$
+
+则无需连续性假设，$F_h(n)=B_{r_h}(n)$ 对每个 $n$ 成立，且
+
+$$
+\begin{aligned}
+P_{h,O,k_0}(A_j)&=B_{r_h}(On_j)\quad(j=0,1,2),\\
+P_{h,O,k_0}(\text{其余旧标签及全部失败输出})&=0
+\end{aligned}
+\quad\text{对每个 }O\in SO(3).
+\tag{14.12}
+$$
+
+即 $P^{\rm tag}_{h,O,k_0}=P^{\rm id}_{r_h,O}$ 在全部 $1024$ 个旧标签及失败坐标上对每个朝向精确成立，不按成功重新归一化；同标签内的细档案分布和到达 $h$ 的概率仍未确定。若 $h$ 是已供应的正概率随机分支，以上各律仍只是该 $h$ 上的条件接续律。
+
+**证明。** 指标列分支由 (12.4) 的右端趋零得到；连续／共同模的附加结论由推论 10.4 得到。对 (14.11) 的分支，实际完整概率律逐程序归一化，(12.7) 因而给出 $TF_h(O)=1$ 对每个 $O$ 成立。应用定理 14.1 得逐点等式；该参数由定理 10.2 的唯一性与原 $r_h$ 相同。(12.1) 再给出三项实际标签概率及零补集质量。三个 $A_j$ 各对应一个旧单标签，其余标签和失败项均非负，零补集迫使每项为零，得到 (14.12)。全程保留原细档案，没有对它们作商或确定其内部条件分布。∎
+
+定理 14.1 的两层展开仅消费定理 10.2 已有的几乎处处识别和 (14.1) 的逐点全旋转关系；密度 (14.9)–(14.10) 是其证明内的球面坐标换元，不作为独立新重建结果。推论 14.2 去掉的是精确分支的额外连续性前提，并未从有限正向字的矩阵逼近供应 (14.11)，也未从均方预算趋零供应逐点全旋转恒等式。七地址／十三维载体、同一 ready 源、准备及控制误差、完整标签／失败／档案、调用成本、可靠查询和有限网的全部合同仍按 §§11–12 的原量词；完整量子起源的实际统计、相位、组合与历史缺口仍由命题 13.2 界定。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,32 @@
+**引理 76.1（共同中心角的连续上界）。** 有
+
+$$\boxed{\cosh\ell_{12}<
+1+\frac{2\sin^2\theta}{(\cos\theta+\cos u)(\cos\theta+\cos v)}.} \tag{76.1}$$
+
+两个分母因子均正。与目标相对的角只需要 $g>0$ 及整个角向量真正。
+
+**证明。** 置
+
+$$p=\tan(\theta/2),\quad q=\tan(u/2),\quad r=\tan(v/2),$$
+$$\xi=\tan((a-b)/2),\qquad\eta=\tan((d-c)/2).$$
+
+有 $pq,pr<1$、$|\xi|<q$、$|\eta|<r$。对第 70.1 式作半角代换得到精确恒等式
+
+$$\cosh\ell_{12}=
+\frac{(1+p^2)(1+p^2qr\xi\eta)
++p^2\sqrt{(1+q^2)(1+r^2)(1+\xi^2)(1+\eta^2)}\cos g}
+{\sqrt{(1-p^2q^2)(1-p^2r^2)(1-p^2\xi^2)(1-p^2\eta^2)}}. \tag{76.2}$$
+
+这可直接从
+
+$$\cos a+\cos b=2\cos(u/2)\cos((a-b)/2),$$
+$$\cos a-\cos b=-2\sin(u/2)\sin((a-b)/2),$$
+
+以及 $D_1=(\cos\theta+\cos u)(\cos\theta+\cos(a-b))$ 得到；第二端用 $(d,c)$ 的同式，两个根号相乘即为所列分母。
+
+先把 $\cos g$ 严格增到一。再以 $|\xi\eta|$ 替换 $\xi\eta$，所得分子为正，并随 $|\xi|,|\eta|$ 单调不减；分母随二者单调不增且保持正值。因此用 $|\xi|=q,|\eta|=r$ 取界合法。该端点对应计算用的极限角 $a=u,b=0,d=v,c=0,g=0$，并没有假定此极限属于真正角域。在端点，分母为 $(z+\cos u)(z+\cos v)$，分子为
+
+$$\sin^2\theta+1+\cos u\cos v+z(\cos u+\cos v).$$
+
+分子减分母恰为 $2\sin^2\theta$，得到 (76.1)。全过程保留同一个 $\theta$；即使 $\theta>\pi/2$，$pq,pr<1$ 仍保证所有分母为正。
+

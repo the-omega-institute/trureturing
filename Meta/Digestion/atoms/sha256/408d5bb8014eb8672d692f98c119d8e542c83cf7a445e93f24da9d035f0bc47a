@@ -1,0 +1,14 @@
+**Proposition 3.2 (Nonloop contraction and its inverse).** Let $e:u\longrightarrow v$ be a nonloop central edge between non-anchor
+trivalent vertices. Contract it to form $C$ and let $D$ delete its chain
+coordinate. Then
+
+$$
+\partial_C D=\pi_\#\partial_G,
+ \qquad T_G:Z_{G,A}\xrightarrow{\sim}Z_{C,A},\quad z\longmapsto Dz.
+$$
+
+**Proof.** The inverse on surviving coordinates $y$ is
+
+<a id="eq-cycleinverse"></a>
+<a id="eq:cycleinverse"></a>
+

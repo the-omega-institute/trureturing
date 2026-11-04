@@ -1,0 +1,38 @@
+**Proposition 32.1 (per-run accounting for the transformations and decoders).** The constructions of §§29–31 have finite per-run action, read, encoding, enumeration, exact-computation, controller-memory, probe-memory and output costs under their stated promises. They imply no common budget, efficiency optimum, service implementation bound or equality of resource vectors between the compared controllers.
+
+Proof. Fix one promised terminating all-integer stationary run used in Theorem 29.2. Let its successive requested scales and true reports be $m_t,K_t$ for $1\le t\le R$. The forward simulation makes exactly
+
+$$
+J=\sum_{t=1}^{R}(K_t+1)
+\tag{32.1}
+$$
+
+actual floor reads. For comparison $i$, let $D_i$ be the enumerated scale chosen, $Q_i$ the actual report, $p_i/q_i$ the image of its original threshold under the current known matrix, and $\ell_i$ the length of its constructed continuation. The number of actual actions is exactly $H=\sum_{i=1}^{J}\ell_i$. All these integers are finite; a run with no virtual reads has $J=H=0$.
+
+For each comparison the menu search executes finitely many entire stages up to its first success. Charge their actual computation steps and peak work space, including construction and scanning of their finite output lists. These costs cannot be bounded merely by the successful scale: an arbitrary public enumerator can delay a name or use large temporary data. The search is ordinary serial computation on the one supplied enumerator, not a free parallel enumerating thread. It can restart that computation from stage zero for each comparison; this resets no source. The modular searches have at most $p_i$ and $C_i$ trials. Euclid computes $g_i$ finitely. The row-descent has at most $A_i+B_i+C_i+F_i-2$ steps. In the displayed construction all four entries are at most $D_i$, so in particular
+
+$$
+\ell_i\le4D_i-2.
+\tag{32.2}
+$$
+
+Store the peeled finite label list, then execute it in reverse and discard it. Charge each actual action and each local matrix update. Retaining four integer entries for the actual prefix is sufficient; no full unknown history or copy of the original source is stored.
+
+Use $\operatorname{bits}(n)=1+\lceil\log_2(n+1)\rceil$ as a conservative finite integer encoding length, together with finite delimiters. Charge at least the actual scale-name and report payload totals
+
+$$
+\sum_{i=1}^{J}\operatorname{bits}(D_i),\qquad
+\sum_{i=1}^{J}\operatorname{bits}(Q_i),
+\tag{32.3}
+$$
+
+and charge the encodings scanned during enumeration separately. Exact arithmetic is charged by bit operations, not by treating unbounded integers as unit-cost reals. After $h$ actual actions, every entry of the prefix matrix is at most $2^h$, since a generator only replaces one row by its sum with the other. For a reduced original threshold $a/b$, its computed image integers satisfy $p,q\le2^h(a+b)$. The known image threshold therefore has operand width bounded in terms of $h$ and $\operatorname{bits}(a+b)$, and the modular and descent operands have widths bounded in terms of these quantities and $\operatorname{bits}(D_i)$. The grid integer $k_i=g_i(A_ip_i+B_iq_i)$ is computed with these same finite product widths. The accumulated matrix after executing the new word has entries at most $2^{h+\ell_i}$.
+
+For a bound on actual report width, write the fixed original mathematically as $r/s$ in reduced positive form. Its attained positive numerator and denominator after $h$ actions are at most $2^h\max(r,s)$. Hence at comparison $i$ the returned integer is at most $D_i2^{h+\ell_i}\max(r,s)$. This is an analysis of a run's payload size, not exact $r/s$ supplied to its controller. Thus all report and comparison operands have finite explicit width bounds once the run's parameters are fixed. If $W_i$ is the maximum width of these operands, ordinary schoolbook integer addition, multiplication, division, remainder and comparison take finite bit work, with multiplication and division bounded by a constant times $W_i^2$ per operation. Euclid has finitely many such operations. The number of modular trials, row steps and matrix updates above therefore gives finite arithmetic work; the original simulated controller's computation and encoding work are charged as well.
+
+Probe storage can be bounded by a constant times $\ell_i+W_i$ bits for the pending label list, prefix and working matrices, rational threshold, counters, grid integer and current report, using elementary arithmetic with linear working space. Add the simulated controller's actual peak state, the enumerator's actual peak state and the finite output buffer. A chosen implementation can discard each completed report after the controller consumes it; retaining a complete actual action/report archive instead incurs its additional $H$ action symbols and the payloads in (32.3), with delimiters. Neither choice includes an archive of the unknown pre-probe word. These bounds also charge the threshold loop index and scale arithmetic in (29.4).
+
+For the stationary transformation in Theorem 30.1, each simulated read uses one actual read, zero source actions, a finite enumerator search for $F$, its encoded scale and complete report, and finite division by $F/D$. Charge that search's actual steps and work space exactly as above; an arbitrarily large listed multiple can enlarge both payload and memory. The reverse transformation used in (30.4) has the already declared cost of computing $\Lambda_D$, its scale and stationary report, the known simulated prefix and the exact rational arithmetic of (24.4). No equality of these costs is needed by the class inclusions.
+
+Finally the stationary endpoint-prior decoder makes one read at $c$, and $1+n-b$ reads at $x_n$. Each later comparison threshold has a reduced denominator dividing $b(j+1)$, so its scale and numerator are finitely computed from $b,j$. Once a rational $r/s$ has been recovered, the subtractive original-word decoder has at most $r+s-2$ steps, with ancestor coordinates bounded by $r+s$. The recovered word, path and prefix table all have finite encodings. A literal table of all word prefixes uses $N(N+1)/2$ action symbols for a word of length $N$, in addition to its indices and any explicitly emitted boundary coordinates. Charge the entire selected finite output, rather than only its last rational entry. Composing this decoder with the forward transformation incurs its charged comparison costs before this output computation. Finite service completion is an interface premise; the service's internal physical time and memory have no quantitative law here. The acquisition proof uses neither their timing nor a promised bound on them. $\square$
+

@@ -18,6 +18,22 @@ internal sealed class ActualPriceRecordPrimeStructureDocument : IScribeDocumentD
                 + "goldenResourceObjective(lambda,n) with goldenResourceObjective(lambda,m) "
                 + "for every natural n with 0<n<m. In particular, one and two remain rivals.")),
             Describe.Lean(
+                DescribeId.Create("finite-theta-abel-upper"),
+                DeclarationHandle.Create(Prefix + "finite_theta_abel_upper"),
+                H("Finite prime-square tail from two-sided theta control"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For all real y,z,rho with 1<y, y<=z and 0<=rho, if "
+                    + "(1-rho)*t<=theta(t)<= (1+rho)*t for every real t in [y,z], "
+                    + "the sum of 1/p^2 over the prime filter of "
+                    + "Finset.Ioc(floorNat(y),floorNat(z)) is at most "
+                    + "(1+3*rho)/(y*log(y)). The lower cutoff is strict. "
+                    + "Abel summation controls the log-weighted sum, and "
+                    + "log(y)<=log(p) removes the weight. This is the original "
+                    + "finite supplier also used by the actual-record Euler-tail bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("positive-price-record-same-integer-prime-structure"),
                 DeclarationHandle.Create(Prefix + "price_record_prime_structure"),
                 H("Antitone valuations and initial prime support at every positive price"),

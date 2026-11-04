@@ -1,0 +1,57 @@
+**Definition 1.1 (the common native source).** AA denotes
+[Atomic generation and acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md),
+and AAII denotes its
+[second volume](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md).
+Use exactly AA Definitions 17.1–17.3's known-alpha LAB:
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle,\qquad
+P_p:\alpha\longmapsto\beta,\qquad
+S_p:\beta\longmapsto\langle\beta,\alpha\rangle.
+\tag{IV.1}
+$$
+
+The split's beta child is on the left. The logical root address is
+$\varepsilon$, and other logical addresses are words in $L,R$. An address
+is born beta precisely when it ends in $L$; the root and right-born
+addresses are born alpha. Let $\mathcal D$ be the reachable finite terms,
+equivalently those with no alpha leaf at an $L$-ending address. Let
+$\mathcal H(t)$ be the **complete** fibre of all finite legal successful
+addressed-event histories from the known alpha to $t$, including every
+legal interleaving. Write
+
+$$
+F(t)=|\mathcal H(t)|,\qquad
+N(t)=a(t)+2c(t)-1,\qquad
+g(t)=\lfloor\log_2 F(t)\rfloor,
+\tag{IV.2}
+$$
+
+where $a,c$ count logical alpha and beta leaves. Here $N(t)$ is the length
+of every member of $\mathcal H(t)$, by AA Proposition 22.1. Successful
+generation chronology excludes queries, refusals, ingress, maintenance,
+printing, waiting and return. In particular $\mathcal H(\alpha)$ is the
+singleton empty history and $F(\alpha)=1$.
+
+Use AAII Definition 99.1's full **labelled** predecessor set
+$\operatorname{Pred}(t)$. A beta leaf at a root or right-born address $p$
+can be replaced by alpha, giving the incoming edge labelled $P_p$.
+An exact subtree $\langle\beta,\alpha\rangle$ at any logical address $p$
+can be replaced by beta, giving the edge labelled $S_p$. These are all
+incoming edges. An $L$-born beta leaf is not a promotion predecessor.
+Distinct edge labels remain distinct even when their unlabelled data
+would coincide. For noninitial $t$, AAII Proposition 99.2 supplies the
+actual last-event partition
+
+$$
+\mathcal H(t)=\bigsqcup_{e:u\to t}
+ \{he:h\in\mathcal H(u)\},\qquad
+F(t)=\sum_{e:u\to t}F(u),\qquad N(u)=N(t)-1.
+\tag{IV.3}
+$$
+
+Every predecessor is reachable and its displayed forward edit is enabled.
+AA Theorems 17.2 and 19.2 supply finiteness, positivity, the labelled
+causal-order interpretation and the equivalent product of local shuffle
+counts. These are source suppliers, not additional claims of this volume.
+

@@ -1,0 +1,11 @@
+**Proposition 3.3 (Deficit ratios).** For $\alpha>0$ and physical $t<1$,
+the ratio $D/\alpha$ is $(1+t)/2$ on the first piece and
+$t+t/(2\alpha)$ on the second. It depends only on $\alpha$ and
+$\beta,|s_x|,|s_y|,|s_z|$, and is independent of the equatorial
+direction at fixed $\alpha$. For $s=(7,4,2)/10$, $\beta=t=3/20$,
+the breakpoint is $3/17$, the first ratio is $23/40$, and the ratio at
+$r=(1,1,0)/\sqrt2$ is $3(2+\sqrt2)/20$.
+
+Proof. Divide the two pieces by $\alpha$ and substitute the given
+rational values and $\alpha=(\sqrt2-1)/2$. $\square$
+
