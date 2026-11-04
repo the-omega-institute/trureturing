@@ -151,11 +151,14 @@ private theorem dependence : ObservationalDependence signature actual := by
   change eventMass ((.leaf ()) : NativeTree Unit) (fun _ _ => false) ≠
     eventMass ((.leaf ()) : NativeTree Unit) (fun _ _ => true)
   simp [eventMass, mass, operator, omega0]
+  apply ne_of_lt
+  exact_mod_cast (Finset.card_pos.mpr (Finset.univ_nonempty :
+    (Finset.univ : Finset (Path ((.leaf ()) : NativeTree Unit))).Nonempty))
 
 def family : Registration arena (type_of% (@original_event_arithmetic)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨original_event_arithmetic,rejected,rejected_law⟩
+  variation := ⟨fun _ T e => original_event_arithmetic T e,rejected,rejected_law⟩
   sensitivity := by
     constructor
     · intro i

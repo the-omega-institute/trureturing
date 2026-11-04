@@ -27,7 +27,7 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_event_arithmetic"),
                 H("Integral raw event masses exclude both reference-comparison values"),
                 StatementSource.FromAuthor(ArithmeticStatement()),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumChannels/chiribella2009networks")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/stewarttall2025algebraic")),
                 Blocks(
                     Paragraph(Text("For every type L of terminal labels, every finite full-menu native tree T and every Boolean event e on its complete terminal path and terminal sixteen-bit word, the raw mass p=eventMass(T,e) is an algebraic integer over the ordinary integers. All fourteen actual gate addresses, deterministic feedback, complete diagonal zero-one measurements, zero outcomes, stops and expanded inverse calls are included. The input is the same fixed computational root Omega; no arbitrary input vector or external probability weights occur.")),
                     Paragraph(Text("The scalars t, beta and zeta of the actual matrices are algebraic integers: rational-angle exponential and cosine integrality give zeta and t, and beta squared equals t. Every number projection and bit flip has integer entries. Finite matrix addition, multiplication and powers therefore preserve entrywise integrality. Induction through the actual tree gives integral branch-matrix entries. Applying the fixed root, multiplying each amplitude by its physical complex conjugate and summing the selected raw events preserve integrality. The real event mass is reflected from its injective complex embedding. No success normalization is performed.")),
@@ -52,8 +52,8 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
     {
         Formula L = F.Id("L"), T = F.Id("T"), e = F.Id("e");
         Formula p = Call("eventMass", T, e);
-        Formula q = Frac(Seq(D(13), Minus, D(5), Sqrt(D(5))), D(22));
-        Formula w = Frac(Seq(D(9), Sqrt(D(5)), Minus, D(19)), D(22));
+        Formula q = Seq(Frac, Grp(D(13), Minus, D(5), Sqrt, Grp(D(5))), Grp(D(22)));
+        Formula w = Seq(Frac, Grp(D(9), Sqrt, Grp(D(5)), Minus, D(19)), Grp(D(22)));
         Formula neq(Formula a, Formula b) =>
             new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
         return Disp(All("L", Call("Type"), All("T", Call("Tree", L),
