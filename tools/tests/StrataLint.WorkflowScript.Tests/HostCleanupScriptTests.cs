@@ -7,6 +7,32 @@ namespace StrataLint.WorkflowScript.Tests;
 public sealed class HostCleanupScriptTests
 {
     [Theory]
+    [InlineData("bytes_and_stdin")]
+    [InlineData("partial_progress")]
+    [InlineData("status_and_launch_failures")]
+    [InlineData("termination")]
+    [InlineData("handled_signal")]
+    [InlineData("shared_routing_and_correlation")]
+    [InlineData("deleted_worktree")]
+    [InlineData("lock_lifetime")]
+    [InlineData("protocol_exec")]
+    [InlineData("script_guards")]
+    [InlineData("host_cleanup_outcomes")]
+    public void MaintenanceLoggingPreservesCommandBehavior(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/maintenance_log_tests.py"),
+                root, "MaintenanceLogTests.test_" + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("Ran 1 test", Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
     [InlineData("runlocal_stable_source")]
     [InlineData("runlocal_self_source")]
     [InlineData("runlocal_inventory_failure")]
