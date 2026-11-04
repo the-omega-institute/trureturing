@@ -333,6 +333,7 @@ end Resources
 
 
 namespace EmptyPetz
+open scoped ComplexOrder MatrixOrder
 open _root_.D5.S3.Quantum.Dynamics.NativeProtocolGraft.Actual
 local instance : NormedAddCommGroup Qubit := Matrix.instL2OpNormedAddCommGroup
 local instance : NormedSpace ℂ Qubit := Matrix.instL2OpNormedSpace
@@ -367,7 +368,7 @@ abbrev arena : Arena where
     (∀ j : Fin 2, (projector (readBit 2) j).mulVec omega0 =
       if j = 0 then omega0 else 0) ∧
     petz (reduced omega0) 1 1 = ((emptyTarget : ℝ) : ℂ) ∧
-    (∀ C : Fin 2 → Tree Stop,
+    (∀ C : Fin 2 → NativeTree Stop,
       let T := extensionAt .active C
       (r.readout () () C).1 ≠ (petz (reduced omega0) 1 1).re ∧
       1/(11*(Coeff.kappa^(2*(r.readout () () C).2)+(13+5*Real.sqrt 5)/22)) ≤
@@ -393,7 +394,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   have hx : maxCalls (extensionAt .active x) = 0 := by
     simp [maxCalls, extensionAt, x, calls]
   have hy : maxCalls (extensionAt .active y) = 9 := by
-    simp [maxCalls, extensionAt, y, calls, callCost]
+    simp only [maxCalls, extensionAt, y, calls, callCost, add_zero]
+    exact Finset.sup_const Finset.univ_nonempty 9
   rw [hx,hy] at hh
   norm_num at hh
 
