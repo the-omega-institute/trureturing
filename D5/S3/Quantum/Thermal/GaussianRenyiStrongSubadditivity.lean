@@ -45,12 +45,6 @@ def reducedCovariance {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) �
   V.submatrix (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
     (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
 
-def reducedForm {n : ℕ} (Ω : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
-    (X : Finset (Fin n)) :
-      Matrix {p : Fin n × Fin 2 // p.1 ∈ X} {p : Fin n × Fin 2 // p.1 ∈ X} ℝ :=
-  Ω.submatrix (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
-    (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
-
 def symplecticOperator {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) : Matrix ι ι ℂ :=
   CFC.sqrt (V.map Complex.ofReal) * (Complex.I • Ω.map Complex.ofReal) *
@@ -69,24 +63,18 @@ def claim : Prop :=
       Disjoint A B → Disjoint A C → Disjoint B C → ∀ α : ℝ,
         0 < α → α ≤ 2 → α ≠ 1 →
           gaussianRenyiEntropy α (reducedCovariance V (A ∪ B))
-              (reducedForm (symplecticForm n) (A ∪ B)) +
+              (reducedCovariance (symplecticForm n) (A ∪ B)) +
             gaussianRenyiEntropy α (reducedCovariance V (B ∪ C))
-              (reducedForm (symplecticForm n) (B ∪ C)) ≥
+              (reducedCovariance (symplecticForm n) (B ∪ C)) ≥
           gaussianRenyiEntropy α (reducedCovariance V (A ∪ B ∪ C))
-              (reducedForm (symplecticForm n) (A ∪ B ∪ C)) +
+              (reducedCovariance (symplecticForm n) (A ∪ B ∪ C)) +
             gaussianRenyiEntropy α (reducedCovariance V B)
-              (reducedForm (symplecticForm n) B)
-
-private def reducedIndexEquiv {n : ℕ} (X : Finset (Fin n)) :
-    {p : Fin n × Fin 2 // p.1 ∈ X} ≃ (↥X × Fin 2) where
-  toFun p := (⟨p.1.1, p.2⟩, p.1.2)
-  invFun p := ⟨(p.1.1, p.2), p.1.2⟩
-  left_inv _ := rfl
-  right_inv _ := rfl
+              (reducedCovariance (symplecticForm n) B)
 
 private lemma reduced_square {n : ℕ} (X : Finset (Fin n)) :
-    reducedForm (symplecticForm n) X * reducedForm (symplecticForm n) X = -1 := by
-  let e := (reducedIndexEquiv X).symm
+    reducedCovariance (symplecticForm n) X * reducedCovariance (symplecticForm n) X = -1 := by
+  let e := (Equiv.prodSubtypeFstEquivSubtypeProd (p := fun i => i ∈ X)
+    (β := Fin 2)).symm
   apply Matrix.submatrix_injective e.surjective e.surjective
   dsimp only
   rw [Matrix.submatrix_mul _ _ e e e e.bijective]
@@ -105,7 +93,8 @@ private lemma reduced_square {n : ℕ} (X : Finset (Fin n)) :
 
 private lemma reduced_card {n : ℕ} (X : Finset (Fin n)) :
     Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} = 2 * X.card := by
-  rw [Fintype.card_congr (reducedIndexEquiv X), Fintype.card_prod]
+  rw [Fintype.card_congr (Equiv.prodSubtypeFstEquivSubtypeProd
+    (p := fun i => i ∈ X) (β := Fin 2)), Fintype.card_prod]
   simp [Nat.mul_comm]
 
 private lemma physical_skew {ι : Type*} [Fintype ι] [DecidableEq ι]
@@ -190,7 +179,7 @@ private lemma physical_posDef {n : ℕ}
 private lemma reduced_physical {n : ℕ}
     (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (hV : physicalCovariance V)
     (X : Finset (Fin n)) :
-    physicalOn (reducedCovariance V X) (reducedForm (symplecticForm n) X) := by
+    physicalOn (reducedCovariance V X) (reducedCovariance (symplecticForm n) X) := by
   rcases hV with ⟨hs, hp⟩
   constructor
   · exact hs.submatrix (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
@@ -358,8 +347,7 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
       _ = (J * S * S).charpoly := Matrix.charpoly_mul_comm S (J * S)
       _ = _ := by rw [mul_assoc, hSS]
   have hscalar (t : ℝ) : Matrix.scalar ι (t : ℂ) = (t : ℂ) • (1 : Matrix ι ι ℂ) := by
-    ext i j
-    by_cases hij : i = j <;> simp [Matrix.scalar, Matrix.diagonal, hij]
+    exact (Matrix.smul_one_eq_diagonal _).symm
   have hd (t : ℝ) : (∏ i, ((t - hH.eigenvalues i : ℝ) : ℂ)) =
       (-J).det * (H (-t)).det := by
     rw [← D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Spectral.det_pencil hH t]
@@ -669,12 +657,12 @@ private lemma mode_interpolation_det {n : ℕ}
     (((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).submatrix
       (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val).det =
       (((reducedCovariance V X).map Complex.ofReal) + (x : ℂ) •
-        (Complex.I • (reducedForm Ω X).map Complex.ofReal)).det := by
+        (Complex.I • (reducedCovariance Ω X).map Complex.ofReal)).det := by
   let e : ↥Y ≃ {p : Fin n × Fin 2 // p.1 ∈ X} :=
     Equiv.subtypeEquivRight hYX
   rw [principal_block_identity]
   have heq : ((reducedCovariance V X).map Complex.ofReal + (x : ℂ) •
-      (Complex.I • (reducedForm Ω X).map Complex.ofReal)).submatrix e e =
+      (Complex.I • (reducedCovariance Ω X).map Complex.ofReal)).submatrix e e =
       (V.submatrix (Subtype.val : ↥Y → Fin n × Fin 2)
         Subtype.val).map Complex.ofReal + (x : ℂ) •
           (Complex.I • (Ω.submatrix Subtype.val Subtype.val).map Complex.ofReal) := by
@@ -690,10 +678,10 @@ private lemma settlement_main : claim := by
   have hpr (X : Finset (Fin n)) : ((reducedCovariance V X).map Complex.ofReal).PosDef :=
     hp.submatrix Subtype.val_injective
   have hH (X : Finset (Fin n)) := symplecticOperator_hermitian
-    (reducedCovariance V X) (reducedForm (symplecticForm n) X) (hr X) (hpr X)
+    (reducedCovariance V X) (reducedCovariance (symplecticForm n) X) (hr X) (hpr X)
   let L := fun (X : Finset (Fin n)) (x : ℝ) =>
     Real.log (((reducedCovariance V X).map Complex.ofReal + (x : ℂ) •
-      (Complex.I • (reducedForm (symplecticForm n) X).map Complex.ofReal)).det.re)
+      (Complex.I • (reducedCovariance (symplecticForm n) X).map Complex.ofReal)).det.re)
   have hk (x : ℝ) (hx0 : 0 ≤ x) (hx1 : x < 1) :
       L (A ∪ B ∪ C) x + L B x ≤ L (A ∪ B) x + L (B ∪ C) x := by
     have h := log_koteljanskii
@@ -718,10 +706,10 @@ private lemma settlement_main : claim := by
   rcases lt_or_eq_of_le ha2 with ha2 | ha2
   · have hm (X : Finset (Fin n)) :
         IntegrableOn (fun x => renyiWeight α x * L X x) (Set.Ioo (0 : ℝ) 1) ∧
-        gaussianRenyiEntropy α (reducedCovariance V X) (reducedForm (symplecticForm n) X) =
+        gaussianRenyiEntropy α (reducedCovariance V X) (reducedCovariance (symplecticForm n) X) =
           (X.card : ℝ) * renyiConstant α +
             ∫ x in Set.Ioo (0 : ℝ) 1, renyiWeight α x * L X x := by
-      have h := entropy_mixture (reducedCovariance V X) (reducedForm (symplecticForm n) X)
+      have h := entropy_mixture (reducedCovariance V X) (reducedCovariance (symplecticForm n) X)
         (hr X) (hpr X) (reduced_square X) (hH X) ha0 ha2 ha1
       have hc : (Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} : ℝ) / 2 = (X.card : ℝ) := by
         rw [reduced_card]
@@ -752,12 +740,12 @@ private lemma settlement_main : claim := by
     linarith only [hi, hconst]
   · subst α
     have ht (X : Finset (Fin n)) :
-        gaussianRenyiEntropy 2 (reducedCovariance V X) (reducedForm (symplecticForm n) X) =
+        gaussianRenyiEntropy 2 (reducedCovariance V X) (reducedCovariance (symplecticForm n) X) =
           (1 / 2 : ℝ) * L X 0 := by
       rw [alpha_two_entropy _ _ (hr X) (hpr X) (reduced_square X)]
       change (1 / 2 : ℝ) * Real.log (reducedCovariance V X).det =
         (1 / 2 : ℝ) * Real.log (((reducedCovariance V X).map Complex.ofReal +
-          (0 : ℂ) • (Complex.I • (reducedForm (symplecticForm n) X).map Complex.ofReal)).det.re)
+          (0 : ℂ) • (Complex.I • (reducedCovariance (symplecticForm n) X).map Complex.ofReal)).det.re)
       rw [zero_smul, add_zero]
       congr 2
       exact congrArg Complex.re (Complex.ofRealHom.map_det (reducedCovariance V X))
