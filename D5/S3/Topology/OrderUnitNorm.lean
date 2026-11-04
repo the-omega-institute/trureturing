@@ -180,7 +180,7 @@ private lemma seminorm_eq (v : E) : A.seminorm v = A.orderNorm v :=
   (A.norm_eq_gauge v).symm
 
 /-- A copy of the original vector space carrying its proved order-unit norm. -/
-@[reducible] def Space (_A : Data E) := E
+def Space (_A : Data E) := E
 
 instance : AddCommGroup A.Space := inferInstanceAs (AddCommGroup E)
 instance : Module ℝ A.Space := inferInstanceAs (Module ℝ E)
@@ -321,18 +321,21 @@ def originalFlow [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t : ℝ) : E �
 private lemma flow_inverse [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t : ℝ) (v : E) :
     originalFlow H (-t) (originalFlow H t v) = v := by
   letI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  letI : NormedAlgebra ℚ (E →L[ℝ] E) := .restrictScalars ℚ ℝ _
   let B : E →L[ℝ] E := t • LinearMap.toContinuousLinearMap H
   have h : NormedSpace.exp (-B) * NormedSpace.exp B = 1 := by
     rw [← NormedSpace.exp_add_of_commute (Commute.refl B).neg_left,
       neg_add_cancel, NormedSpace.exp_zero]
   have hv := congrArg (fun L : E →L[ℝ] E => L v) h
-  simpa only [originalFlow, neg_smul, ContinuousLinearMap.mul_apply,
-    ContinuousLinearMap.one_apply] using hv
+  simpa only [originalFlow, neg_smul, ContinuousLinearMap.mul_apply_eq_comp,
+    ContinuousLinearMap.one_apply_eq_self] using hv
 
 private lemma flow_transport [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t : ℝ) (v : E) :
     NormedSpace.exp (t • A.operator H) (A.wrap v) =
       A.wrap (originalFlow H t v) := by
   letI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  letI : NormedAlgebra ℚ (E →L[ℝ] E) := .restrictScalars ℚ ℝ _
+  letI : NormedAlgebra ℚ (A.Space →L[ℝ] A.Space) := .restrictScalars ℚ ℝ _
   let J := A.bridge.conjContinuousAlgEquiv
   have hmap : J (t • LinearMap.toContinuousLinearMap H) = t • A.operator H := by
     ext w
@@ -340,8 +343,9 @@ private lemma flow_transport [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t 
   have h := NormedSpace.map_exp J J.continuous (t • LinearMap.toContinuousLinearMap H)
   rw [hmap] at h
   have hv := congrArg (fun L : A.Space →L[ℝ] A.Space => L (A.wrap v)) h
-  simpa only [J, ContinuousLinearEquiv.conjContinuousAlgEquiv_apply_apply,
-    bridge, ContinuousLinearEquiv.coe_mk', LinearEquiv.symm_apply_apply, originalFlow] using hv.symm
+  change A.bridge (originalFlow H t (A.bridge.symm (A.wrap v))) =
+    NormedSpace.exp (t • A.operator H) (A.wrap v) at hv
+  exact hv.symm
 
 private lemma flow_isometry [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
     (hflow : ∀ t : ℝ,
@@ -352,7 +356,10 @@ private lemma flow_isometry [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
     { (originalFlow H t).toLinearMap with
       invFun := originalFlow H (-t)
       left_inv := flow_inverse H t
-      right_inv := by intro w; simpa only [neg_neg] using flow_inverse H (-t) w }
+      right_inv := by
+        intro w
+        change originalFlow H t (originalFlow H (-t) w) = w
+        simpa only [neg_neg] using flow_inverse H (-t) w }
   exact A.positive_inverse_isometry T (hflow t).1 (hflow (-t)).1 (hflow t).2 v
 
 private lemma centered_orbit_bound [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
