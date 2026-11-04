@@ -63,7 +63,7 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
             Paragraph(Text("The arithmetic inequalities do not identify q or w as the ideal probabilities of the actual chi/Petz experiments. Their empty-prefix and five-call source-history realization, preservation of original records and failure zeros, graft resource identities and total-variation comparison still require the specified original-object consumers. The cut determinant and spectral clauses of V88 theorem 24.1 remain outside this event result."))),
         DescribeRole.Theorem);
 
-    private static Formula Power(Formula a, Formula b) => Seq(a, Caret, Grp(b));
+    private static Formula Power(Formula a, Formula b) => Seq(Grp(Parenthesized(a)), Caret, Grp(b));
     private static Formula Leq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula CoordinateStatement()
@@ -87,12 +87,12 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
         Formula cq=Seq(Frac,Grp(D(1,3),Plus,D(5),Sqrt,Grp(D(5))),Grp(D(2,2)));
         Formula cw=Seq(Frac,Grp(D(1,9),Plus,D(9),Sqrt,Grp(D(5))),Grp(D(2,2)));
         Formula lower(Formula a,Formula c)=>Leq(Seq(Frac,Grp(D(1)),
-            Grp(D(1,1),Star,Grp(K,Plus,c))),Call("abs",Seq(p,Minus,a)));
+            Grp(D(1,1),Star,Parenthesized(Seq(K,Plus,c)))),Call("abs",Seq(p,Minus,a)));
         Formula positive=new Formula.Logic(
             new Formula.Relation(D(0),FormulaRelationOperator.LessThan,p),
             FormulaLogicOperator.Implies,Leq(Power(K,Seq(Minus,D(1))),p));
         return Disp(All("L",Call("Type"),All("T",Call("Tree",L),All("e",Call("Events",T),
-            And(positive,lower(q,cq),lower(w,cw))))));
+            And(Parenthesized(positive),lower(q,cq),lower(w,cw))))));
     }
 
     private static Formula Call(string name, params Formula[] args) =>

@@ -50,10 +50,54 @@ The scalars t, beta and zeta of the actual matrices are algebraic integers: rati
 
 Set q=(13-5 sqrt(5))/22 and w=(9 sqrt(5)-19)/22. In the existing quadratic golden field with generator phi, these are the images of coordinate pairs (9/11,-5/11) and (-14/11,9/11). Their field norms are respectively 1/11 and -1/11. Integrality would force an integer field norm; both rational values fail that condition. Consequently p differs from both q and w. This argument only needs absolute algebraic integrality of p and does not assert that p lies in the quadratic field.
 
-These exclusions apply directly to any original-record event formed by the stop-aware graft above. They do not establish that the actual chi preparation and its faithful-support Petz pullback have ideal masses q and w. That realization bridge, the quadratic-field membership of general native events, the whole-tree nonphysical-conjugate estimate and the factor-eleven resource and total-variation bounds require further results. Total Born-mass normalization and the equality of the ninth gate power with its inverse are not used or proved here.
+These exclusions apply directly to any original-record event formed by the stop-aware graft above. They do not establish that the actual chi preparation and its faithful-support Petz pullback have ideal masses q and w. Quadratic integer coordinates, the whole-tree nonphysical-conjugate estimate and the arithmetic factor-eleven bounds are supplied below. The actual reference-state realization, original-record comparison and total-variation consumers remain separate obligations. Total Born-mass normalization and the equality of the ninth gate power with its inverse are not used or proved here.
+
+**Theorem 1.3 (Computed integer coordinates and the whole-tree signed conjugate bound).**
+
+$$(\forall L: \operatorname{Type}\left(\right), (\forall T: \operatorname{Tree}\left(L\right), (\forall e: \operatorname{Events}\left(T\right), (((\operatorname{eventMass}\left(T, e\right) = \operatorname{realPhysical}\left(\operatorname{coordinates}\left(T, e\right)\right)) \land (\operatorname{realConjugate}\left(\operatorname{coordinates}\left(T, e\right)\right) = \sum_{p \in \operatorname{Path}\left(T\right)} \sum_{z \in \operatorname{Basis}\left(\right)} \operatorname{if} \operatorname{Apply}\left(e, p, z\right) \operatorname{then} {{-1}}^{\operatorname{exponent}\left(z\right)}*\operatorname{normSq}\left(\operatorname{conjugateAmplitude}\left(\operatorname{branch}\left(T, p, \operatorname{initial}\left(\right)\right), z\right)\right) \operatorname{else} 0)) \land \operatorname{abs}\left(\operatorname{realConjugate}\left(\operatorname{coordinates}\left(T, e\right)\right)\right) \le {\operatorname{kappa}\left(\right)}^{2*\operatorname{maxCalls}\left(T\right)}))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_event_coordinates_and_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Ian Stewart and David Tall (2025). *Algebraic Number Theory and Fermat's Last Theorem*. DOI: [10.1201/9781003462002](https://doi.org/10.1201/9781003462002).
+
+*Commentary.*
+
+For every terminal-label type L, original native tree T and Boolean terminal event e, coordinates(T,e) is an explicitly computed integer pair A,B in the inverse-golden basis. The physical evaluation is A+B t, with t=phi inverse; its other real evaluation is A-B phi. The displayed theorem identifies the first value with the actually computed raw eventMass, identifies the second value with a signed sum over the same terminal paths and basis words, and bounds its absolute value using L(T)=Tree.maxCalls(T) and kappa=1+2 phi cubed.
+
+The coefficient ring O consists of integer pairs with generator tau satisfying tau squared equals one minus tau. S consists of two O coordinates with generator eta satisfying eta squared equals minus one minus tau eta. These are Mathlib quadratic algebras; their multiplication and both evaluation homomorphisms are proved from the displayed equations. At each full basis word z the coefficient vector h represents the actual amplitude as beta to exponent(z) times physical(h(z)). The exponent is zero or one according to the Hamming parity relative to the actual root at shifted positions 0,4,8. A center-bit flip changes that parity.
+
+The forward update is diagStep(j,z) h(z) plus offStep(j,z) tau to (one minus exponent(z)) h(flip(j,z)). Here diagStep is eta times one plus (eta minus one) times the actual diagonal of P; offStep is tau eta (eta minus one) on the 00 neighboring-control block and zero elsewhere. The proof expands the original number projections and bit flip on all sixteen-bit words and all fourteen addresses. Branch transport follows the original chronological operator product, with nine updates for inverse syntax. A report multiplies each coefficient by its original selector indicator, and all report outcomes remain in the tree.
+
+For H=a+b eta, its quadratic norm in S is a squared minus tau a b plus b squared. The event coordinates sum tau to exponent(z) times this norm only on the selected original terminal coordinates. Under the physical evaluation this is exactly the original squared amplitude. Under tau mapped to minus phi, eta mapped to exp(pi i/5), and beta mapped to i sqrt(phi), it equals minus one to exponent(z) times the embedded squared amplitude. This sign is essential: the second evaluation is not a positive Born mass. No field-membership certificate or assumed event law is present.
+
+The embedded active block has squared operator bound phi to the sixth, obtained by two-coordinate Cauchy-Schwarz and reindexing by the same center-bit involution. The remaining control blocks are zero or identity. The gate norm is therefore at most kappa. Induction on the complete tree sums all measurement energies before comparing the child maxima with the original maximum; selector completeness gives exact energy conservation even for non-surjective selectors. This proves a whole-tree bound with no leaf, report or branch-count factor. Zero-mass deep branches and nine-cost calls retain their syntactic resource cost.
+
+This event theorem does not identify an original cut reduction or prove its determinant or spectral lower bounds. It does not construct the actual chi state, Petz comparison, full record-law bridge or Born normalization, and it does not prove that the ninth gate power is the semantic inverse.
+
+**Theorem 1.4 (Positive-event and factor-eleven arithmetic resource bounds).**
+
+$$(\forall L: \operatorname{Type}\left(\right), (\forall T: \operatorname{Tree}\left(L\right), (\forall e: \operatorname{Events}\left(T\right), ((0 < \operatorname{eventMass}\left(T, e\right) \Rightarrow {{\operatorname{kappa}\left(\right)}^{2*\operatorname{maxCalls}\left(T\right)}}^{-1} \le \operatorname{eventMass}\left(T, e\right) \land \frac{1}{11*{{\operatorname{kappa}\left(\right)}^{2*\operatorname{maxCalls}\left(T\right)}+\frac{13+5\sqrt{5}}{22}}} \le \operatorname{abs}\left(\operatorname{eventMass}\left(T, e\right)-\operatorname{emptyTarget}\left(\right)\right)) \land \frac{1}{11*{{\operatorname{kappa}\left(\right)}^{2*\operatorname{maxCalls}\left(T\right)}+\frac{19+9\sqrt{5}}{22}}} \le \operatorname{abs}\left(\operatorname{eventMass}\left(T, e\right)-\operatorname{referenceTarget}\left(\right)\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_event_resource_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Ian Stewart and David Tall (2025). *Algebraic Number Theory and Fermat's Last Theorem*. DOI: [10.1201/9781003462002](https://doi.org/10.1201/9781003462002).
+
+*Commentary.*
+
+The bounds apply to every actually computed eventMass of the same original tree T. K denotes kappa to twice Tree.maxCalls(T). Every positive raw event mass is at least one divided by K. For q=emptyTarget=(13-5 sqrt(5))/22 and w=referenceTarget=(9 sqrt(5)-19)/22, the two displayed discrepancy bounds use exactly the source constants and the same K. These are arithmetic bounds for raw masses, without conditioning or a probability-normalization premise.
+
+For x=A+B tau the integer norm is A squared minus A B minus B squared, and the product of its two real evaluations equals that norm. Its nonvanishing is reused from the existing golden-integer norm theorem through the coordinate correspondence (A-B,B). For u=11q=(4,-5) and u=11w=(-5,9), the norms are 11 and minus 11. Direct expansion proves that the norm of 11x-u is divisible by 11. The existing original_event_arithmetic theorem supplies non-equality with q and w. Thus the nonzero norm has absolute value at least 11. The whole-tree conjugate bound and the triangle inequality give the stated denominators.
+
+The arithmetic inequalities do not identify q or w as the ideal probabilities of the actual chi/Petz experiments. Their empty-prefix and five-call source-history realization, preservation of original records and failure zeros, graft resource identities and total-variation comparison still require the specified original-object consumers. The cut determinant and spectral clauses of V88 theorem 24.1 remain outside this event result.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_event_arithmetic`
+- Truth anchor: `D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_event_coordinates_and_bound`
+- Truth anchor: `D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_event_resource_bounds`
 - Truth anchor: `D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_native_projection`
 - Dependency: [D5/S3/Arith/Lattices/GoldenIntegerRing](../../Arith/Lattices/GoldenIntegerRing.md)
