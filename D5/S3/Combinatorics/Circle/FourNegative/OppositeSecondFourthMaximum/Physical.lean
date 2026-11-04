@@ -224,19 +224,22 @@ private theorem physical_joint (a s c m n : ℕ) (rev : Bool)
   have ns0 : ((Pn 0).map g).sum+g (T 0)=newSeams (2^a) (2^s) (2^c) m n rev 0 := by
     cases rev <;> simp only [Pn,P,T,newSeams,if_true,if_false,Bool.false_eq_true,
       Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
-      List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hear]
+      Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,
+      List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hear,AA]
     all_goals nlinarith only [mn0,mn2,nt0.2.1,nt2.2.1]
   have ns1 : ((Pn 0).map g).sum+g (T 0)+((Pn 1).map g).sum+g (T 1)=
       newSeams (2^a) (2^s) (2^c) m n rev 1 := by
     cases rev <;> simp only [Pn,P,T,newSeams,if_true,if_false,Bool.false_eq_true,
       Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
-      List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hear]
+      Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,
+      List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hear,AA]
     all_goals nlinarith only [mn0,mn1,mn2,mn3,nt0.2.1,nt1.2.1,nt2.2.1,nt3.2.1]
   have ns2 : ((Pn 0).map g).sum+g (T 0)+((Pn 1).map g).sum+g (T 1)+
       ((Pn 2).map g).sum+g (T 2)=newSeams (2^a) (2^s) (2^c) m n rev 2 := by
     cases rev <;> simp only [Pn,P,T,newSeams,if_true,if_false,Bool.false_eq_true,
       Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
-      List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hear]
+      Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,
+      List.map_append,List.sum_append,List.map_singleton,List.sum_singleton,hear,AA]
     all_goals nlinarith only [mn0,mn1,mn2,mn3,nt0.2.1,nt1.2.1,nt2.2.1,nt3.2.1]
   have w0 := hw 0
   have w1 := hw 1
