@@ -81,7 +81,7 @@ def beta {M : Type*} [MulOneClass M] (c : M → M → ℝ) (a : M) : V c :=
   (radical c).mkQ (e a)
 
 private theorem beta_one {M : Type*} [MulOneClass M] (c : M → M → ℝ) : beta c 1 = 0 := by
-  simp [beta, e]
+  simp [beta, e_one]
 
 private theorem radical_left {M : Type*} [MulOneClass M] (c : M → M → ℝ)
     {x : E M} (hx : x ∈ radical c) : ∀ y, anchoredForm c x y = 0 := by
@@ -162,6 +162,99 @@ private theorem form_single_single {M : Type*} [MulOneClass M]
   simp [anchoredForm, Finsupp.linearCombination_apply, kernel]
   ring_nf
 
+/-- The source's anchored free carrier, inside the full finite-support carrier. -/
+def anchoredSpan (M : Type*) [MulOneClass M] : Submodule ℝ (E M) :=
+  Submodule.span ℝ (Set.range (e : M → E M))
+
+private theorem single_one_radical {M : Type*} [MulOneClass M]
+    (c : M → M → ℝ) (h11 : c 1 1 = 0) :
+    Finsupp.single (1 : M) (1 : ℝ) ∈ radical c := by
+  constructor
+  · intro y
+    induction y using Finsupp.induction with
+    | zero => simp
+    | @single_add a b y ha hb ih =>
+        rw [map_add, ih, add_zero, form_single_single]
+        simp [kernel, q, r, h11]
+  · intro x
+    induction x using Finsupp.induction with
+    | zero => simp
+    | @single_add a b x ha hb ih =>
+        rw [map_add, LinearMap.add_apply, ih, add_zero, form_single_single]
+        simp [kernel, q, r, h11]
+
+private theorem mkQ_single {M : Type*} [MulOneClass M]
+    (c : M → M → ℝ) (h11 : c 1 1 = 0) (a : M) (t : ℝ) :
+    (radical c).mkQ (Finsupp.single a t) = t • beta c a := by
+  have hz : (radical c).mkQ (Finsupp.single (1 : M) (1 : ℝ)) = 0 :=
+    (Submodule.Quotient.mk_eq_zero _).2 (single_one_radical c h11)
+  have he : Finsupp.single a t = t • e a + t • Finsupp.single (1 : M) (1 : ℝ) := by
+    simp [e, smul_sub]
+  rw [he, map_add, map_smul, map_smul, hz, smul_zero, add_zero]
+  rfl
+
+private theorem beta_induction {M : Type*} [MulOneClass M]
+    (c : M → M → ℝ) (h11 : c 1 1 = 0) {P : V c → Prop}
+    (hz : P 0) (hb : ∀ a, P (beta c a))
+    (ha : ∀ x y, P x → P y → P (x + y))
+    (hs : ∀ (t : ℝ) x, P x → P (t • x)) (x : V c) : P x := by
+  obtain ⟨x, rfl⟩ := (radical c).mkQ_surjective x
+  induction x using Finsupp.induction with
+  | zero => simpa using hz
+  | @single_add a t x ha' ht ih =>
+      rw [map_add, mkQ_single c h11]
+      exact ha _ _ (hs t _ (hb a)) ih
+
+private theorem beta_span {M : Type*} [MulOneClass M]
+    (c : M → M → ℝ) (h11 : c 1 1 = 0) :
+    Submodule.span ℝ (Set.range (beta c)) = ⊤ := by
+  apply top_unique
+  intro x _
+  exact beta_induction c h11 (Submodule.zero_mem _)
+    (fun a => Submodule.subset_span (Set.mem_range_self a))
+    (fun _ _ hx hy => Submodule.add_mem _ hx hy)
+    (fun t _ hx => Submodule.smul_mem _ t hx) x
+
+private theorem anchoredSpan_quotient {M : Type*} [MulOneClass M]
+    (c : M → M → ℝ) (h11 : c 1 1 = 0) :
+    Submodule.map (radical c).mkQ (anchoredSpan M) = ⊤ := by
+  calc
+    _ = Submodule.span ℝ (Set.range (beta c)) := by
+      rw [anchoredSpan, Submodule.map_span]
+      congr 1
+      ext z
+      constructor
+      · rintro ⟨x, ⟨a, rfl⟩, rfl⟩
+        exact ⟨a, rfl⟩
+      · rintro ⟨a, rfl⟩
+        exact ⟨e a, Set.mem_range_self a, rfl⟩
+    _ = ⊤ := beta_span c h11
+
+private theorem quotient_joint_nondegenerate {M : Type*} [MulOneClass M]
+    (c : M → M → ℝ) (h11 : c 1 1 = 0) (z : V c)
+    (hl : ∀ a, quotientForm c z (beta c a) = 0)
+    (hr : ∀ a, quotientForm c (beta c a) z = 0) : z = 0 := by
+  have hleft (y : V c) : quotientForm c z y = 0 := by
+    exact beta_induction c h11 (P := fun y => quotientForm c z y = 0) (by simp) hl
+      (by intro x y hx hy; simp [map_add, hx, hy])
+      (by intro t x hx; simp [map_smul, hx]) y
+  have hright (x : V c) : quotientForm c x z = 0 := by
+    exact beta_induction c h11 (P := fun x => quotientForm c x z = 0) (by simp) hr
+      (by intro x y hx hy; simp [map_add, hx, hy])
+      (by intro t x hx; simp [map_smul, hx]) x
+  obtain ⟨x, rfl⟩ := (radical c).mkQ_surjective z
+  apply (Submodule.Quotient.mk_eq_zero _).2
+  exact ⟨fun y => hleft ((radical c).mkQ y), fun y => hright ((radical c).mkQ y)⟩
+
+private theorem beta_ext {M F : Type*} [MulOneClass M] [AddCommGroup F] [Module ℝ F]
+    (c : M → M → ℝ) (h11 : c 1 1 = 0) (f g : V c →ₗ[ℝ] F)
+    (hb : ∀ a, f (beta c a) = g (beta c a)) : f = g := by
+  apply LinearMap.ext
+  intro x
+  exact beta_induction c h11 (P := fun x => f x = g x) (by simp) hb
+    (by intro x y hx hy; simp [map_add, hx, hy])
+    (by intro t x hx; simp [map_smul, hx]) x
+
 private theorem form_right_single_of_kernel {M : Type*} [MulOneClass M]
     (c : M → M → ℝ) (f : M → M)
     (hk : ∀ a b, kernel c a (f b) = kernel c a b)
@@ -226,15 +319,6 @@ private theorem form_left_map_of_kernel {M : Type*} [MulOneClass M]
       rw [haddL, haddR, LinearMap.add_apply, ih', Finsupp.mapDomain_single]
       exact congrArg (fun t => t + anchoredForm c x y)
         (form_left_single_of_kernel c f hk y a b)
-
-private theorem marker_beta_transport {M : Type*} [MulOneClass M]
-    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a : M) :
-    beta c (U a) = (radical c).mkQ (markerLinear U (e a)) := by
-  change (radical c).mkQ (e (U a)) = (radical c).mkQ (markerLinear U (e a))
-  congr 1
-  simp only [markerLinear, e, Finsupp.lmapDomain_apply, Finsupp.mapDomain_sub,
-    Finsupp.mapDomain_single]
-  rw [h.marker_one]
 
 private theorem kernel_marker_period_three_left {M : Type*} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b : M) :
@@ -365,6 +449,139 @@ private theorem quotientForm_marker_beta_invariant {M : Type*} [MulOneClass M]
     quotientForm_beta c h11, quotientForm_beta c h11,
     kernel_marker_invariant U c h]
 
+private theorem markerQuotient_three {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x : V c) :
+    markerQuotient U c h (markerQuotient U c h (markerQuotient U c h x)) = x := by
+  have he : (markerQuotient U c h).comp
+      ((markerQuotient U c h).comp (markerQuotient U c h)) = LinearMap.id := by
+    apply beta_ext c (h.diagonal 1)
+    intro a
+    exact markerQuotient_three_beta U c h a
+  exact LinearMap.congr_fun he x
+
+private theorem quotientForm_marker_invariant {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x y : V c) :
+    quotientForm c (markerQuotient U c h x) (markerQuotient U c h y) =
+      quotientForm c x y := by
+  apply beta_induction c (h.diagonal 1) (P := fun x => ∀ y,
+    quotientForm c (markerQuotient U c h x) (markerQuotient U c h y) = quotientForm c x y)
+    (by simp) ?_ ?_ ?_ x y
+  · intro a y
+    exact beta_induction c (h.diagonal 1) (P := fun y =>
+      quotientForm c (markerQuotient U c h (beta c a)) (markerQuotient U c h y) =
+        quotientForm c (beta c a) y) (by simp)
+      (fun b => quotientForm_marker_beta_invariant U c h a b (h.diagonal 1))
+      (by intro x y hx hy; simp [map_add, hx, hy])
+      (by intro t x hx; simp [map_smul, hx]) y
+  · intro x y hx hy z
+    simp [map_add, hx z, hy z]
+  · intro t x hx y
+    simp [map_smul, hx y]
+
+private theorem q_average {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a u : M) :
+    q c (a * u) + q c (a * U u) + q c (a * U (U u)) =
+      3 * q c a + 3 * q c u := by
+  simpa [q, h.marker_one] using h.balance a 1 u 1
+
+private theorem r_average {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (b v : M) :
+    r c (b * v) + r c (b * U v) + r c (b * U (U v)) =
+      3 * r c b + 3 * r c v := by
+  simpa [r, h.marker_one] using h.balance 1 b 1 v
+
+private theorem quotient_bilinear_balance {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b u v : M) :
+    quotientForm c (beta c (a * u)) (beta c (b * v)) +
+      quotientForm c (beta c (a * U u)) (beta c (b * U v)) +
+      quotientForm c (beta c (a * U (U u))) (beta c (b * U (U v))) =
+      3 * quotientForm c (beta c a) (beta c b) +
+      3 * quotientForm c (beta c u) (beta c v) := by
+  simp only [quotientForm_beta c (h.diagonal 1), kernel]
+  have hq := q_average U c h a u
+  have hr := r_average U c h b v
+  have hc := h.balance a b u v
+  linarith
+
+private theorem difference_diagonal {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b : M) :
+    quotientForm c (beta c a - beta c b) (beta c a - beta c b) =
+      (c a b + c b a) / 2 := by
+  simp only [map_sub, LinearMap.sub_apply, quotientForm_beta c (h.diagonal 1),
+    kernel, h.diagonal]
+  ring
+
+private theorem unweighted_sum {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a u : M) :
+    beta c (a * u) + beta c (a * U u) + beta c (a * U (U u)) =
+      (3 : ℝ) • beta c a := by
+  apply sub_eq_zero.mp
+  apply quotient_joint_nondegenerate c (h.diagonal 1)
+  · intro b
+    have hb := quotient_bilinear_balance U c h a b u 1
+    simp only [h.marker_one, mul_one, beta_one, map_zero, mul_zero, add_zero] at hb
+    simp only [map_sub, map_add, map_smul, LinearMap.sub_apply,
+      LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
+    linarith
+  · intro b
+    have hb := quotient_bilinear_balance U c h b a 1 u
+    simp only [h.marker_one, mul_one, beta_one, map_zero, LinearMap.zero_apply,
+      mul_zero, add_zero] at hb
+    simp only [map_sub, map_add, map_smul, smul_eq_mul]
+    linarith
+
+private theorem marker_cyclotomic {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x : V c) :
+    x + markerQuotient U c h x +
+      markerQuotient U c h (markerQuotient U c h x) = 0 := by
+  have he : LinearMap.id + markerQuotient U c h +
+      (markerQuotient U c h).comp (markerQuotient U c h) = 0 := by
+    apply beta_ext c (h.diagonal 1)
+    intro a
+    simpa [LinearMap.add_apply, LinearMap.comp_apply, markerQuotient_beta,
+      beta_one] using unweighted_sum U c h 1 a
+  exact LinearMap.congr_fun he x
+
+private theorem form_move_marker_left {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x y : V c) :
+    quotientForm c (markerQuotient U c h x) y =
+      quotientForm c x (markerQuotient U c h (markerQuotient U c h y)) := by
+  simpa only [markerQuotient_three] using
+    quotientForm_marker_invariant U c h x (markerQuotient U c h
+      (markerQuotient U c h y))
+
+private theorem form_move_marker_right {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x y : V c) :
+    quotientForm c x (markerQuotient U c h y) =
+      quotientForm c (markerQuotient U c h (markerQuotient U c h x)) y := by
+  simpa only [markerQuotient_three] using
+    quotientForm_marker_invariant U c h (markerQuotient U c h
+      (markerQuotient U c h x)) y
+
+private theorem inverse_weighted_sum {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a u : M) :
+    beta c (a * u) +
+      markerQuotient U c h (markerQuotient U c h (beta c (a * U u))) +
+      markerQuotient U c h (beta c (a * U (U u))) = (3 : ℝ) • beta c u := by
+  apply sub_eq_zero.mp
+  apply quotient_joint_nondegenerate c (h.diagonal 1)
+  · intro v
+    have hb := quotient_bilinear_balance U c h a 1 u v
+    simp only [one_mul, beta_one, map_zero, mul_zero, zero_add] at hb
+    simp only [map_sub, map_add, map_smul, LinearMap.sub_apply,
+      LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
+    simp only [← markerQuotient_beta U c h] at hb
+    rw [form_move_marker_right, ← form_move_marker_left] at hb
+    linarith
+  · intro v
+    have hb := quotient_bilinear_balance U c h 1 a v u
+    simp only [one_mul, beta_one, map_zero, LinearMap.zero_apply,
+      mul_zero, zero_add] at hb
+    simp only [map_sub, map_add, map_smul, smul_eq_mul]
+    simp only [← markerQuotient_beta U c h] at hb
+    rw [form_move_marker_left, ← form_move_marker_right] at hb
+    linarith
+
 def defect {M : Type*} [MulOneClass M] (c : M → M → ℝ) (a u : M) : V c :=
   beta c (a * u) - beta c a - beta c u
 
@@ -375,6 +592,213 @@ private theorem defect_one_left {M : Type*} [MulOneClass M] (c : M → M → ℝ
 private theorem defect_one_right {M : Type*} [MulOneClass M] (c : M → M → ℝ) (a : M) :
     defect c a 1 = 0 := by
   simp [defect, beta_one]
+
+private theorem three_character_elimination {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (d₀ d₁ d₂ : V c)
+    (hs : d₀ + d₁ + d₂ = 0)
+    (hw : d₀ + markerQuotient U c h (markerQuotient U c h d₁) +
+      markerQuotient U c h d₂ = 0) :
+    d₁ = markerQuotient U c h (markerQuotient U c h d₀) ∧
+      d₂ = markerQuotient U c h d₀ := by
+  let R := markerQuotient U c h
+  have hz : (3 : ℝ) • (d₁ - R (R d₀)) = 0 := by
+    calc
+      _ = R (d₀ + R (R d₁) + R d₂) -
+          R (R (d₀ + R (R d₁) + R d₂)) - R (R (d₀ + d₁ + d₂)) +
+          (d₀ + d₁ + d₂) - (d₀ + R d₀ + R (R d₀)) +
+          (d₁ + R d₁ + R (R d₁)) := by
+            simp only [map_add, map_sub, markerQuotient_three, R]
+            module
+      _ = 0 := by
+        rw [hw, hs, marker_cyclotomic U c h, marker_cyclotomic U c h]
+        simp
+  have hd₁ : d₁ = R (R d₀) :=
+    sub_eq_zero.mp ((smul_eq_zero.mp hz).resolve_left (by norm_num))
+  refine ⟨hd₁, ?_⟩
+  have hc : d₀ + R (R d₀) + R d₀ = 0 := by
+    simpa only [add_assoc, add_comm, add_left_comm] using marker_cyclotomic U c h d₀
+  rw [hd₁] at hs
+  exact add_left_cancel (hs.trans hc.symm)
+
+private theorem defect_character_constraints {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a u : M) :
+    (defect c a u + defect c a (U u) + defect c a (U (U u)) = 0) ∧
+    (defect c a u +
+      markerQuotient U c h (markerQuotient U c h (defect c a (U u))) +
+      markerQuotient U c h (defect c a (U (U u))) = 0) := by
+  let R := markerQuotient U c h
+  constructor
+  · calc
+      _ = (beta c (a * u) + beta c (a * U u) + beta c (a * U (U u))) -
+          (3 : ℝ) • beta c a - (beta c u + R (beta c u) + R (R (beta c u))) := by
+            simp only [defect, markerQuotient_beta, R]
+            module
+      _ = 0 := by rw [unweighted_sum U c h, marker_cyclotomic U c h]; simp
+  · calc
+      _ = (beta c (a * u) + R (R (beta c (a * U u))) +
+          R (beta c (a * U (U u)))) - (3 : ℝ) • beta c u -
+          (beta c a + R (beta c a) + R (R (beta c a))) := by
+            simp only [defect, map_sub, markerQuotient_beta, markerQuotient_three, R]
+            module
+      _ = 0 := by rw [inverse_weighted_sum U c h, marker_cyclotomic U c h]; simp
+
+private theorem defect_phases {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a u : M) :
+    defect c a (U u) =
+        markerQuotient U c h (markerQuotient U c h (defect c a u)) ∧
+      defect c a (U (U u)) = markerQuotient U c h (defect c a u) := by
+  have hc := defect_character_constraints U c h a u
+  exact three_character_elimination U c h _ _ _ hc.1 hc.2
+
+private theorem phase_children {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a u : M) :
+    beta c (a * U u) = beta c a + markerQuotient U c h (beta c u) +
+        markerQuotient U c h (markerQuotient U c h (defect c a u)) ∧
+      beta c (a * U (U u)) = beta c a +
+        markerQuotient U c h (markerQuotient U c h (beta c u)) +
+        markerQuotient U c h (defect c a u) := by
+  have hc := defect_phases U c h a u
+  constructor
+  · calc
+      _ = beta c a + beta c (U u) + defect c a (U u) := by unfold defect; abel
+      _ = _ := by rw [hc.1, markerQuotient_beta]
+  · calc
+      _ = beta c a + beta c (U (U u)) + defect c a (U (U u)) := by
+        unfold defect; abel
+      _ = _ := by rw [hc.2, markerQuotient_beta, markerQuotient_beta]
+
+private theorem bilinear_fourier_average {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (a b u v d f : V c) :
+    quotientForm c (a + u + d) (b + v + f) +
+      quotientForm c
+        (a + markerQuotient U c h u + markerQuotient U c h (markerQuotient U c h d))
+        (b + markerQuotient U c h v + markerQuotient U c h (markerQuotient U c h f)) +
+      quotientForm c
+        (a + markerQuotient U c h (markerQuotient U c h u) + markerQuotient U c h d)
+        (b + markerQuotient U c h (markerQuotient U c h v) + markerQuotient U c h f) =
+      3 * quotientForm c a b + 3 * quotientForm c u v + 3 * quotientForm c d f := by
+  have hz (x y : V c) : quotientForm c x y +
+      quotientForm c x (markerQuotient U c h y) +
+      quotientForm c x (markerQuotient U c h (markerQuotient U c h y)) = 0 := by
+    rw [← map_add, ← map_add, marker_cyclotomic U c h, map_zero]
+  have hab := hz a v
+  have haf := hz a f
+  have hub := hz u b
+  have huf := hz u f
+  have hdb := hz d b
+  have hdv := hz d v
+  simp only [map_add, LinearMap.add_apply, form_move_marker_left,
+    markerQuotient_three]
+  linarith
+
+private theorem cross_defect_isotropic {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b u v : M) :
+    quotientForm c (defect c a u) (defect c b v) = 0 := by
+  have hb := quotient_bilinear_balance U c h a b u v
+  have hp := phase_children U c h a u
+  have hq := phase_children U c h b v
+  rw [hp.1, hp.2, hq.1, hq.2] at hb
+  have h₀ (a u : M) : beta c (a * u) = beta c a + beta c u + defect c a u := by
+    unfold defect
+    abel
+  rw [h₀ a u, h₀ b v] at hb
+  rw [bilinear_fourier_average U c h] at hb
+  linarith
+
+/-- The span of defects of the original, bracketed binary products. -/
+def W {M : Type*} [MulOneClass M] (c : M → M → ℝ) : Submodule ℝ (V c) :=
+  Submodule.span ℝ (Set.range (fun p : M × M => defect c p.1 p.2))
+
+private theorem defect_mem_W {M : Type*} [MulOneClass M]
+    (c : M → M → ℝ) (a u : M) : defect c a u ∈ W c :=
+  Submodule.subset_span (Set.mem_range_self (a, u))
+
+private theorem W_isotropic {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (x y : V c) (hx : x ∈ W c) (hy : y ∈ W c) : quotientForm c x y = 0 := by
+  induction hx using Submodule.span_induction with
+  | mem x hx =>
+    rcases hx with ⟨⟨a, u⟩, rfl⟩
+    induction hy using Submodule.span_induction with
+    | mem y hy =>
+      rcases hy with ⟨⟨b, v⟩, rfl⟩
+      exact cross_defect_isotropic U c h a b u v
+    | zero => simp
+    | add x y _ _ hx hy => simp [map_add, hx, hy]
+    | smul t x _ hx => simp [map_smul, hx]
+  | zero => simp
+  | add x y _ _ hx hy => simp [map_add, hx, hy]
+  | smul t x _ hx => simp [map_smul, hx]
+
+private theorem W_marker_stable {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    {x : V c} (hx : x ∈ W c) : markerQuotient U c h x ∈ W c := by
+  induction hx using Submodule.span_induction with
+  | mem x hx =>
+    rcases hx with ⟨⟨a, u⟩, rfl⟩
+    rw [← (defect_phases U c h a u).2]
+    exact defect_mem_W c a (U (U u))
+  | zero => simp
+  | add x y _ _ hx hy => simpa only [map_add] using (W c).add_mem hx hy
+  | smul t x _ hx => simpa only [map_smul] using (W c).smul_mem t hx
+
+private theorem W_marker_image {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
+    Submodule.map (markerQuotient U c h) (W c) = W c := by
+  apply le_antisymm
+  · rintro _ ⟨x, hx, rfl⟩
+    exact W_marker_stable U c h hx
+  · intro x hx
+    exact ⟨markerQuotient U c h (markerQuotient U c h x),
+      W_marker_stable U c h (W_marker_stable U c h hx), markerQuotient_three U c h x⟩
+
+abbrev GammaSpace {M : Type*} [MulOneClass M] (c : M → M → ℝ) := V c ⧸ W c
+
+/-- The additive image is constructed from the same original labels. -/
+def gamma {M : Type*} [MulOneClass M] (c : M → M → ℝ) (a : M) : GammaSpace c :=
+  (W c).mkQ (beta c a)
+
+def rho {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
+    GammaSpace c →ₗ[ℝ] GammaSpace c :=
+  (W c).mapQ (W c) (markerQuotient U c h) (by
+    intro x hx
+    exact W_marker_stable U c h hx)
+
+private theorem gamma_one {M : Type*} [MulOneClass M] (c : M → M → ℝ) :
+    gamma c 1 = 0 := by simp [gamma, beta_one]
+
+private theorem gamma_mul {M : Type*} [MulOneClass M]
+    (c : M → M → ℝ) (a u : M) : gamma c (a * u) = gamma c a + gamma c u := by
+  have hz : (W c).mkQ (defect c a u) = 0 :=
+    (Submodule.Quotient.mk_eq_zero _).2 (defect_mem_W c a u)
+  apply sub_eq_zero.mp
+  simpa only [defect, map_sub, gamma, sub_sub] using hz
+
+private theorem gamma_marker {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a : M) :
+    gamma c (U a) = rho U c h (gamma c a) := by
+  change (W c).mkQ (beta c (U a)) = (W c).mkQ (markerQuotient U c h (beta c a))
+  rw [markerQuotient_beta]
+
+private theorem gamma_phase_product {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a u : M) (k : ℕ) :
+    gamma c (a * U^[k] u) = gamma c a + (rho U c h)^[k] (gamma c u) := by
+  rw [gamma_mul]
+  congr 1
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+      rw [Function.iterate_succ_apply', Function.iterate_succ_apply', gamma_marker, ih]
+
+private theorem gamma_fibre_zero_comparison {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b : M)
+    (hab : gamma c a = gamma c b) : c a b = 0 ∧ c b a = 0 := by
+  have hw : beta c a - beta c b ∈ W c := (Submodule.Quotient.eq _).1 hab
+  have hz := W_isotropic U c h _ _ hw hw
+  rw [difference_diagonal U c h a b] at hz
+  constructor <;> linarith [h.nonneg a b, h.nonneg b a]
 
 theorem raw_anchored_radical_descent {M : Type*} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
