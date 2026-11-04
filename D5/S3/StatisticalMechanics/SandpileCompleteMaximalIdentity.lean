@@ -8,7 +8,7 @@
 
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import D5.S3.Combinatorics.SpectralGraph.TwinFreeThetaRecurrence
-import D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap
+import D5.S3.Combinatorics.Graph.Domination.LeeLiuThreeRowIntegerDomination
 
 /-! The complete maximal identity property for Cartesian products of cliques and paths. -/
 
@@ -61,12 +61,12 @@ private lemma path_neighbors (j : ℕ) (t : Fin j) :
 private lemma path_degree (j : ℕ) (t : Fin j) :
     ((SimpleGraph.pathGraph j).degree t : ℤ) =
       (if 0 < t.val then 1 else 0) + (if t.val + 1 < j then 1 else 0) := by
-  obtain ⟨n, rfl⟩ := Nat.exists_eq_add_of_le' (Fin.pos t)
   have h :=
-    D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.path_neighbor_card n t
-  have h' : (SimpleGraph.pathGraph (n + 1)).degree t =
-      (if 0 < t.val then 1 else 0) + (if t.val + 1 < n + 1 then 1 else 0) := by
-    simpa only [SimpleGraph.degree, Nat.add_lt_add_iff_right, add_comm] using h
+    D5.S3.Combinatorics.Graph.Domination.LeeLiuThreeRowIntegerDomination.path_neighbor_sum
+      (fun _ => 1) t
+  have h' : (SimpleGraph.pathGraph j).degree t =
+      (if 0 < t.val then 1 else 0) + (if t.val + 1 < j then 1 else 0) := by
+    simpa only [SimpleGraph.degree, Finset.card_eq_sum_ones, dite_eq_ite] using h
   exact_mod_cast h'
 
 private lemma path_row (j : ℕ) (f : Fin j → ℤ) (t : Fin j) :
@@ -84,11 +84,14 @@ private lemma total_mass (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j) :
         (i : ℤ) * ((i : ℤ) * j - 2) := by
   have hp : ∑ t : Fin j, ((SimpleGraph.pathGraph j).degree t : ℤ) = 2 * ((j : ℤ) - 1) := by
     obtain ⟨n, rfl⟩ := Nat.exists_eq_add_of_le' (by omega : 1 ≤ j)
-    have h :=
-      D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.sum_path_neighbor_card
-        n
-    simpa only [SimpleGraph.degree, Nat.cast_add, Nat.cast_one, add_sub_cancel_right,
-      Nat.cast_mul, Nat.cast_ofNat, Nat.cast_sum] using congrArg (fun a : ℕ => (a : ℤ)) h
+    have hl : ∑ t : Fin (n + 1), (if 0 < t.val then 1 else 0 : ℤ) = n := by
+      rw [Fin.sum_univ_succ]
+      simp
+    have hr : ∑ t : Fin (n + 1), (if t.val + 1 < n + 1 then 1 else 0 : ℤ) = n := by
+      rw [Fin.sum_univ_castSucc]
+      simp
+    simp only [path_degree, Finset.sum_add_distrib, hl, hr, Nat.cast_add, Nat.cast_one]
+    ring
   simp only [Fintype.sum_prod_type, SimpleGraph.degree_boxProd,
     SimpleGraph.IsRegularOfDegree.top.degree_eq, Fintype.card_fin,
     Nat.cast_add, Nat.cast_sub (by omega : 1 ≤ i), Nat.cast_one,
