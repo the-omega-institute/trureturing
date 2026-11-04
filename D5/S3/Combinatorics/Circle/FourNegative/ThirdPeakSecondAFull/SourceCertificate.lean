@@ -85,16 +85,19 @@ private theorem physical_order (a b c d : ℕ)
     ring
   have holdval : (fun i => centered (modulus (size a b c d))
       ((2:ℤ)^i*((1+2^a+2^(a+b)+2^(a+b+c) : ℕ) : ℤ)))=oldValue a b c d := by
+    funext i
     simp only [hmod,hseed,oldValue]
   have hnewval : (fun i => centered (modulus (size a b c d+1))
       ((2:ℤ)^i*((2*(1+2^a+2^(a+b)+2^(a+b+c)) : ℕ) : ℤ)))=newValue a b c d := by
+    funext i
     simp only [Nat.cast_mul,Nat.cast_ofNat,hmodnew,hseed,newValue]
   have ho : OriginalOrder (size a b c d)
       (1+2^a+2^(a+b)+2^(a+b+c))
       ((bankWord a b c d).map (label (size a b c d) hk)) := by
     apply lift_order (size a b c d)
       (1+2^a+2^(a+b)+2^(a+b+c)) hk (bankWord a b c d) hp
-    · simpa only [holdval,hmod] using old_strip a b c d hb hba hac hd hda
+    · rw [holdval,hmod]
+      exact old_strip a b c d hb hba hac hd hda
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero _ _ (by dsimp [size]; omega)
   have half : modulus (size a b c d+1)/2=sourceMod a b c d := by
     dsimp [modulus,size,sourceMod]
@@ -127,7 +130,8 @@ private theorem physical_order (a b c d : ℕ)
     · have he : insertAt (size a b c d) (bankWord a b c d)
           (freshCut a b c d) = pre++size a b c d::post := by
         simp [insertAt,pre,post,List.take_append_drop]
-      simpa only [hnewval,half,he] using new_strip a b c d hb hba hac hd hda
+      rw [hnewval,half]
+      simpa only [he] using new_strip a b c d hb hba hac hd hda
     · exact ThreeNegativeEqualOuterSourceBridge.source_zero _ _ (by dsimp [size]; omega)
   refine ⟨(bankWord a b c d).map (label (size a b c d) hk),
     freshCut a b c d,rfl,(cut_bounds a b c d hb hba hac hd hda).2,ho,?_⟩
