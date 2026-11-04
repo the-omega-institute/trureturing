@@ -1,0 +1,51 @@
+### 引理 28.1（实际四前缀的可逆仿射插值）
+
+在 §18 明定的局部比较作用与初方向下，四个实际合法正字
+
+$$
+ a_0=\epsilon,\qquad a_1=5,\qquad
+ a_2=54,\qquad a_3=544
+ \tag{28.1}
+$$
+
+给出可逆仿射评价矩阵
+
+$$
+ M=\begin{pmatrix}
+ 1&n_{a_0}^{\mathsf T}\\
+ 1&n_{a_1}^{\mathsf T}\\
+ 1&n_{a_2}^{\mathsf T}\\
+ 1&n_{a_3}^{\mathsf T}
+ \end{pmatrix}.
+$$
+
+具体地，令 $p=2x\sqrt x$、$q=2x-1$、$c=\cos\theta=-x/2$、$s_\theta=\sin\theta>0$、$\theta=3\pi/5$。若 $v=A_5e_z=(X,Y,Z)$，则
+
+$$
+ \begin{aligned}
+ (X,Y,Z)&=(pq(1-c),\ p s_\theta,\ c+(1-c)q^2),\\
+ Z&=-q,\qquad X^2+Y^2=1-q^2>0,\\
+ n_{a_0}&=e_z,\quad n_{a_1}=v,\quad
+ n_{a_2}=A_4v,\quad n_{a_3}=A_4^2v,
+ \end{aligned}
+$$
+
+并且
+
+$$
+ \det M=2s_\theta(1-c)(X^2+Y^2)(Z-1)\ne0.
+ \tag{28.2}
+$$
+
+对任意四个实数 $y_0,\ldots,y_3$，因此存在唯一仿射函数 $a+\langle b,n\rangle$ 在四个实际前缀取值 $y_\ell$，其全部系数为
+
+$$
+ \begin{pmatrix}a\\b\end{pmatrix}
+ =M^{-1}\begin{pmatrix}y_0\\y_1\\y_2\\y_3\end{pmatrix}.
+ \tag{28.3}
+$$
+
+**证明。** $A_5=R_{(p,0,q)}(-\theta)$，Rodrigues 公式直接给所列 $X,Y,Z$。恒等式 $x^2+x=1$ 化简给 $Z=-(2x-1)$；轴为单位向量及旋转保范数再给 $X^2+Y^2=1-q^2>0$。$A_4$ 绕 $e_z$ 旋转 $\theta$，所以后三点在高度 $Z$ 的同一水平圆上，依次相差 $\theta$。其平面行列式为 $2s_\theta(1-c)(X^2+Y^2)$。从后三行减去第一行，垂直差均为 $Z-1$，得到 (28.2)。$-1<q<1$，所以 $Z\ne1$，其余因子也非零。线性代数即给 (28.3)。这只使用四个实际字，没有使用任意准备或闭包控制。∎
+
+可逆插值并不使任意四个概率值的插值都非负，也不证明未知原生概率对方向充分。原生使用这些方向仍受定义 18.2 的对应合同约束。
+

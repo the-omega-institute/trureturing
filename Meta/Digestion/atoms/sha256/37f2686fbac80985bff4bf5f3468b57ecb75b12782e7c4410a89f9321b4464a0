@@ -1,0 +1,84 @@
+### 命题 28.2（同一实际父记录的斜率与四点分数证书）
+
+假设来源实际给出一个有限共同父请求 $J_0$，完整标签集为 $\Gamma$，以及有限多个实际二标签请求 $R_r$ 和原确定性记录映射
+
+$$
+ s_r:\Gamma\to\{-1,+1\}.
+$$
+
+这些边都属于同一个 $\mathcal D$，不能用不同的父请求替换。给定 $v_r\in W$，定义
+
+$$
+ C(v)=\frac12\max_{\lambda\in\Gamma}
+ \left\|\sum_rs_r(\lambda)v_r\right\|,
+ \qquad V=\sum_r\|v_r\|.
+ \tag{28.4}
+$$
+
+任何共同正仿射族都满足
+
+$$
+ \sum_r v_r\cdot b_{r,+}\le C(v).
+ \tag{28.5}
+$$
+
+因此 $V>0$ 时，对投影族有
+
+$$
+ \tau_{\mathcal D}(PF)
+ \ge\frac{[\sum_r v_r\cdot\beta_{r,+}-C(v)]_+}{V}.
+ \tag{28.6}
+$$
+
+再取引理 28.1 的四个实际前缀。令
+
+$$
+ z_r^{\mathsf T}=(0,v_r^{\mathsf T})M^{-1},\qquad
+ S=\sum_{r,\ell}z_{r,\ell}\,p(a_\ell;R_r,+),\qquad
+ L=\sum_{r,\ell}|z_{r,\ell}|.
+ \tag{28.7}
+$$
+
+若 $L>0$，则
+
+$$
+ d_{\mathcal D}(F)\ge\frac{[S-C(v)]_+}{L},\qquad
+ \tau_{\mathcal D}(PF)
+ \ge\left[\frac{[S-C(v)]_+}{L}-\delta\right]_+.
+ \tag{28.8}
+$$
+
+若表项为区间数据，中心值分数记为 $S_{\rm obs}$、对应半宽为 $u_{r,\ell}$，则在 (28.8) 中将 $S$ 换成
+
+$$
+ S_{\rm obs}-\sum_{r,\ell}|z_{r,\ell}|u_{r,\ell}
+$$
+
+仍得到有效下界。
+
+**证明。** 共同父族的系数满足
+
+$$
+ \sum_\lambda a_\lambda=1,\qquad
+ \sum_\lambda b_\lambda=0,\qquad
+ \|b_\lambda\|\le a_\lambda.
+$$
+
+记录边给 $b_{r,+}=\sum_{s_r(\lambda)=+1}b_\lambda
+=\tfrac12\sum_\lambda s_r(\lambda)b_\lambda$。所以
+
+$$
+ \begin{aligned}
+ \sum_rv_r\cdot b_{r,+}
+ &=\frac12\sum_\lambda
+    \left(\sum_rs_r(\lambda)v_r\right)\cdot b_\lambda\\
+ &\le C(v)\sum_\lambda a_\lambda=C(v).
+ \end{aligned}
+$$
+
+若某合法族到投影族的逐标签误差为 $e$，(22.5) 给 $\|b_{r,+}-\beta_{r,+}\|\le e$，分数变化至多 $eV$；取下确界得 (28.6)。这个论证不假设原始响应已经仿射。
+
+对任一仿射 $G$，(28.3) 把 $v_r\cdot b_{r,+}$ 恰写成 $\sum_\ell z_{r,\ell}G_{R_r,+}(n_{a_\ell})$，故其四点分数受 (28.5) 限制。若 $G$ 到 $F$ 的统一原标签误差为 $e$，四点分数误差至多 $eL$，于是 $eL\ge S-C(v)$，得到第一个下界。对投影表，(25.2) 给每项误差至多 $\delta$，其分数至少为 $S-\delta L$，同理得第二个下界；也可直接消费 (22.3)。区间版本由逐项误差乘 $|z_{r,\ell}|$ 的三角不等式得到。所有项使用同一个父族和同一个共同修复。∎
+
+尚未供应 (28.8) 的正原生分数。所缺的原生字段是共同父请求 $J_0$ 的名称和完整标签集；各实际二标签请求的名称、映射 $s_r$ 和从同一父请求来的边；这些请求在四个实际正字上的原始概率或来源证明的响应律；以及对同一范围的全未来方向充分性。裸终端 $1024$ 标签的存在不使其数学事件和自动成为另行可调用的原子请求。若实际边成立，比较 Born 族本身满足 (28.5)，不能把它的表值当作正原生障碍。旧式 (16.23) 的 $\epsilon,1,5,15$ 回返表针对不同目标并含非局部前缀，不能代替 (28.7)。
+
