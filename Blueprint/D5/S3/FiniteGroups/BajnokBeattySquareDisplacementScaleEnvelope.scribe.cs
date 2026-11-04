@@ -48,9 +48,7 @@ internal sealed class BajnokBeattySquareDisplacementScaleEnvelopeDocument
                     Paragraph(Text(
                         "Finally A/B=exp(s)*exp(dx) and D/B=exp(-nu*s)*exp(-dy). Their quadratic polynomials in eps combine exactly into G+H/P^2+K/P^4. The positive remainder is of order P^-6*N^-3, which agrees with the natural (p*q)^-6 scale as q grows; the other remainder is a polynomial in nu times exp(-2*nu/3). A q-independent positive error constant cannot express this vanishing remainder when p is fixed and q grows. A fixed-p threshold limit and a signed sixth-order asymptotic require separate formalization and are not asserted here.")),
                     Paragraph(Text(
-                        "The Bajnok-Beatty setting and the quotient-count classification, centered finite products, AP moment identities, logarithmic truncations, and global negative cubic estimate are attributed to the repository priors. This statement is finite and uniform over the given odd domain. It makes no literature novelty, interpolation, equality-at-threshold, or signed residual claim.")),
-                    Paragraph(Text(
-                        "Prepared UNCOMPILED: these are submitted source terms awaiting the canonical Lean kernel check and C# compilation."))),
+                        "The Bajnok-Beatty setting and the quotient-count classification, centered finite products, AP moment identities, logarithmic truncations, and global negative cubic estimate are attributed to the repository priors. This statement is finite and uniform over the given odd domain. It makes no literature novelty, interpolation, equality-at-threshold, or signed residual claim."))),
                 DescribeRole.Theorem)
         )));
 }
