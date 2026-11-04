@@ -739,7 +739,7 @@ c_e(a,b)=\|F_e(a)-F_e(b)\|^2,
 c_*(a,b)=\sum_{e\in E}c_e(a,b).
 $$
 
-假设这些表示来自同一个锚定或未锚定的 C133 合同；其定义与正性桥沿用 [C133 续篇 IV](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_IV.md) 和 [C133 续篇 II](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_II.md)。未锚定时各分支允许自己的仿射平移，但使用同一个标记和相位。这个共同 C133 假设是本定理的来源接口；下面的直和论证本身只使用已经给出的 Hilbert 表示。令
+假设这些表示来自同一个锚定或未锚定的 C133 合同；其基本定义见 [C133 母卷](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY.md)，定义与正性桥沿用 [C133 续篇 IV](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_IV.md) 和 [C133 续篇 II](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_II.md)。未锚定时各分支允许自己的仿射平移，但使用同一个标记和相位。这个共同 C133 假设是本定理的来源接口；下面的直和论证本身只使用已经给出的 Hilbert 表示。令
 
 $$
 \widehat H=\bigoplus_{e\in E}H_e,\qquad
