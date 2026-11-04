@@ -1086,3 +1086,603 @@ reset, dynamics or physical realization. These are paper proofs and
 algebraic certificates; no Lean, kernel or digestion status is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 51. Positive-prefix population cost, recovery gain and complete pure equality
+
+The objects are those of Definitions 1.1, 11.1 and 23.1 in the
+[source volume](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND.md).
+The scalar selector is Theorem 37.5 of
+[Continuation I](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_I.md).
+The transport, triangle and gain statements numbered 42, 46, 47 and 50 are in
+[Continuation II](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md).
+Theorem 48.5 is in
+[Continuation III](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_III.md).
+Throughout, $\xi_*$ is exactly the unique selected determinant zero of
+Theorem 49.1, and $V(\xi)$ is the selected positive geometric value, rather
+than a definition of the unrestricted minimum.
+
+### 51.1. Original objects and the full-prefix statement
+
+**Definition 51.1 (positive row on the original level).** Put
+
+$$
+h=1/\sqrt2,\quad c=\cos(\pi/8),\quad s=\sin(\pi/8),\quad
+k=c-h,\quad d=2(h+c),\quad e=2(h+s).
+\tag{51.1}
+$$
+
+The matrix $T=(b_+\ b_-)$ is the fixed certificate basis of the source,
+and not a new optimizer. Every normalized pure original effect has the form
+
+$$
+\beta=\begin{pmatrix}\sqrt{1-q}\\e^{i\phi}\sqrt q\end{pmatrix},\qquad
+E=(T\beta\beta^\dagger T^\dagger)^{\mathsf T},\qquad 0\le q\le1.
+\tag{51.2}
+$$
+
+The superscript $\mathsf T$ is ordinary transpose. For the one actual
+$U\in U(4)$ define $w=\operatorname{diag}(UU_+^\dagger)$ and
+
+$$
+\begin{aligned}
+A&=\left|\sum_{j=1}^4w_j\right|,
+&B&=|w_1-w_2+i(w_3-w_4)|,\\
+P&=h(w_1+w_2)+c(w_3+w_4),
+&Q&=h(w_1-w_2)+is(w_3-w_4).
+\end{aligned}
+\tag{51.3}
+$$
+
+These are the same-feedback quantities in (23.2), (23.9)--(23.12):
+
+$$
+\begin{aligned}
+\rho_+&=8+2q-2A,&\rho_-&=10-2q-2B,&
+\rho&=\min\{\rho_+,\rho_-\},\\
+g(E,U)&=d^2(1-q)+e^2q
+ -|\sqrt{1-q}P+e^{i\phi}\sqrt q Q|^2.
+\end{aligned}
+\tag{51.4}
+$$
+
+The ambient domain remains $\operatorname{Dens}_2\times U(4)$.
+A scalar representative always acts on the entire feedback; there is
+no separate column scalar or independently attainable recovery optimum.
+For $\rho_+=\rho=\xi$, the feasible population interval is
+$0\le q\le\min\{1,\xi/2\}$. Write $q_\xi$ for the unique interior
+positive geometric selector of Theorem 37.5 and put
+
+$$
+\begin{gathered}
+x=1-\xi/4+q/2,\quad y=\sqrt{1-x^2},\quad L=1+x,\quad
+R=hx+c,\quad u=\sqrt{1-q},\quad v=\sqrt q,\\
+\Gamma_0=uR+hvy,\qquad
+C_\xi(q)=d^2(1-q)+e^2q-4\Gamma_0^2.
+\end{gathered}
+\tag{51.5}
+$$
+
+Thus $V(\xi)=C_\xi(q_\xi)$ and $C'_\xi(q_\xi)=0$.
+For $x<1$ define exactly the positive row of (46.13), (47.1) and (50.3):
+
+$$
+\begin{aligned}
+\mu&=\tfrac12\left(\frac{hku}{R}+\frac{hv}{y}\right),&
+\nu&=\tfrac12\left(ku+\frac{(x/2-s^2)v}{hy}\right),\\
+Z&=\frac{s^2qL}{x^2},&
+\omega&=\nu-\frac Z{4\mu}
+ =\frac{L\mathfrak D_+(x,q)}{4\mu x^2},\\
+\eta&=\max\{0,-\omega\},&
+K&=\frac{k^2u}{8R}+\frac{2svL}{3\sqrt3\,x},\qquad
+J=\frac{\eta^2}{4K}.
+\end{aligned}
+\tag{51.6}
+$$
+
+Here $K=C_{\mathrm{gain},+}$; it is distinct from $C_\xi$, the trace
+modulus $B$, and the ambient domain. On this nonsingular domain
+$x,\mu,K$ are positive, including at $q=0,1$. Write
+$\Omega(\xi,q)=\omega(1-\xi/4+q/2,q)$ and use $K(\xi,q)$ for the
+same substitution in $K$.
+
+**Theorem 51.2 (full positive-prefix cost and original-pair comparison).**
+For every $0<\xi\le\xi_*$ and every feasible population with $x<1$,
+
+$$
+\eta(\xi,q)^2\le K(\xi,q)(q-q_\xi)^2.
+\tag{51.7}
+$$
+
+This is the full-domain population-cost/gain relation T. For every
+normalized pure original $E$ and every single original $U\in U(4)$
+with $\rho_+(E,U)=\rho(E,U)=\xi$,
+
+$$
+g(E,U)-V(\xi)\ge\frac{23}{300}(q-q_\xi)^2.
+\tag{51.8}
+$$
+
+Both population endpoints, every effect phase, arbitrary original
+unitaries and the level $\xi=\xi_*$ are included. Equality $g=V$ holds
+exactly at the following two geometric orientations and all their common
+scalar representatives:
+
+$$
+\begin{gathered}
+x_\xi=1-\xi/4+q_\xi/2,\qquad y_\xi=\sqrt{1-x_\xi^2},\\
+\beta_\tau=\begin{pmatrix}\sqrt{1-q_\xi}\\-\tau i\sqrt{q_\xi}\end{pmatrix},
+\qquad E_\tau=(T\beta_\tau\beta_\tau^\dagger T^\dagger)^{\mathsf T},\\
+U_{\tau,\lambda}=\lambda\operatorname{diag}
+ (x_\xi+\tau iy_\xi,x_\xi-\tau iy_\xi,1,1)U_+,
+\qquad \tau\in\{-1,1\},\quad |\lambda|=1.
+\end{gathered}
+\tag{51.9}
+$$
+
+The two orientations are distinct modulo the one common scalar. The
+selected root also satisfies the refined rational isolation
+
+$$
+                 \frac{59}{25}<\xi_*<\frac{239}{100}.
+\tag{51.10}
+$$
+
+### 51.2. Continuous rational inequalities and their cover
+
+The inequalities used below are over complete closed rectangles in the
+coordinates $(\xi,q)$. A singleton argument denotes a degenerate interval.
+The expression $C'$ is the derivative of $C_\xi$ in $q$ at fixed $\xi$,
+and $\Omega_q$ likewise differentiates at fixed $\xi$, not along the
+selected curve.
+
+| Certificate | Expression | Closed $\xi$ interval | Closed $q$ interval | Continuous inequality | $n_{96}$ | $n_{128}$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| P1 | $C'_\xi(q)$ | $\{239/100\}$ | $\{489/1000\}$ | $C'_\xi(q)\le -1/100$ | 1 | 1 |
+| P2 | $C'_\xi(q)$ | $\{239/100\}$ | $\{491/1000\}$ | $C'_\xi(q)\ge 1/50$ | 1 | 1 |
+| P3 | $\Omega(\xi,q)$ | $\{239/100\}$ | $[489/1000,491/1000]$ | $\Omega(\xi,q)\le -1/2000$ | 9 | 9 |
+| P4 | $C'_\xi(q)$ | $\{21/10\}$ | $\{2/5\}$ | $C'_\xi(q)\le -1$ | 1 | 1 |
+| P5 | $C'_\xi(q)$ | $\{9/4\}$ | $\{47/100\}$ | $C'_\xi(q)\ge 2/25$ | 1 | 1 |
+| P6 | $\Omega(\xi,q)$ | $\{21/10\}$ | $[0,13/20]$ | $\Omega(\xi,q)\ge 1/1000$ | 36 | 36 |
+| P7 | $\Omega(\xi,q)$ | $\{239/100\}$ | $[0,1/20]$ | $\Omega(\xi,q)\ge 1/100$ | 5 | 5 |
+| P8 | $\Omega(\xi,q)$ | $\{239/100\}$ | $[1/2,159/200]$ | $\Omega(\xi,q)\ge 1/1000$ | 11 | 11 |
+| P9 | $\Omega(\xi,q)$ | $\{239/100\}$ | $[1/20,1/4]$ | $\Omega(\xi,q)\ge -11/200$ | 31 | 31 |
+| P10 | $K(\xi,q)$ | $[21/10,239/100]$ | $[1/20,1/5]$ | $K(\xi,q)\ge 1/10$ | 11 | 11 |
+| P11 | $K(\xi,q)$ | $[21/10,239/100]$ | $[1/5,1/4]$ | $K(\xi,q)\ge 17/100$ | 2 | 2 |
+| P12 | $K(\xi,q)$ | $[21/10,239/100]$ | $[1/4,1/2]$ | $K(\xi,q)\ge 19/100$ | 12 | 12 |
+| P13 | $\Omega_q(\xi,q)$ | $[21/10,9/4]$ | $[1/4,47/100]$ | $0\le \Omega_q(\xi,q)\le 43/100$ | 197 | 409 |
+| P14 | $\Omega_q(\xi,q)$ | $[9/4,239/100]$ | $[1/4,1/2]$ | $0\le \Omega_q(\xi,q)\le 43/100$ | 312 | 705 |
+
+The columns $n_{96},n_{128}$ describe finite closed covers for two
+interval evaluations of the same inequalities. Their totals are $630$
+and $1235$. Exact rational endpoints, partition leaves and enclosure
+numerators are specified in the private
+[certificate source](https://github.com/the-omega-institute/trureturing-experiments/tree/d44a8f1bffeb02403b8fc596168c755ea1a017e5/experiments/auric/four-path/positive-prefix-population-gain-6aeb0aa2fba56a3ea8c3ca9c).
+The correspondence is, in table order, `root_selector_left`,
+`root_selector_right`, `root_determinant_negative`, `selector_lower`,
+`selector_upper_low_slab`, `early_nonnegative`,
+`small_population_nonnegative`, `upper_population_nonnegative`,
+`negative_part_bound`, `gain_small`, `gain_middle`, `gain_large`,
+`slope_low_slab`, `slope_high_slab`.
+
+Here is the exact arithmetic specification of these finite certificates.
+For the first evaluation let $S=2^{96}$ and enclose every rational
+endpoint between its outward-rounded multiples of $1/S$. Addition and
+negation are exact on this grid. For a product, form the four endpoint
+products and round the least downward and greatest upward. For a
+zero-excluding interval $[a,b]$, enclose its reciprocal using $[1/b,1/a]$
+with outward rounding. For a square, the lower endpoint is zero when
+the argument contains zero, and otherwise the lesser squared endpoint;
+the upper is the greater squared endpoint. For a square root with
+lower radicand $a/S$, the lower root is
+$\lfloor\sqrt{aS}\rfloor/S$; the upper endpoint is the corresponding
+integer root at the upper radicand, increased by one grid step unless
+its square is exact. Radicands are nonnegative and every inverted
+interval excludes zero. Start with
+
+$$
+h=\sqrt{1/2},\qquad c=\sqrt{(1+h)/2},\qquad
+s^2=(1-h)/2,\qquad s=\sqrt{s^2}.
+\tag{51.11}
+$$
+
+Evaluate (51.5)--(51.6), using $h^2=1/2$ as $x/2$ in $\nu$ and the
+literal expression $s^2qL/x^2$ in $Z$. Each elementary interval
+operation preserves inclusion. Consequently the image of each closed
+leaf encloses the expression on that whole leaf, rather than at sample
+points.
+
+For precision about the cover, start with the exact rational rectangle
+of each row. At a bisection choose the coordinate with greatest current
+width divided by its initial width, ignore zero-width coordinates and
+break ties by choosing $\xi$ first. Bisect at its rational midpoint.
+The two closed halves meet at the cut and cover the parent. Each leaf
+can therefore be described by a finite binary word, with 0 and 1
+selecting the lower and upper half, respectively; `e` denotes an unsplit
+rectangle. The listed leaves lie in their original rectangle, have
+disjoint relative interiors, and have total exact relative volume equal
+to the rectangle. These properties also justify cover without trusting
+the generation tree: a nonempty complement of their finite closed union
+would contain a relatively open set of positive relative volume, a
+contradiction. Degenerate point domains have exactly one leaf. Thus all
+boundaries and shared faces belong to the cover.
+
+For the second evaluation, all arithmetic between square roots is exact
+rational arithmetic, with square roots enclosed outward on the
+$2^{-128}$ grid. First-order interval jets applied to the original
+expression in (51.6) give $\Omega_q$. This derivative construction is
+independent of the hand derivative formulas below. Each original leaf
+is either accepted at its threshold or bisected by the same coordinate
+rule until its subleaves satisfy the threshold; bisection preserves the
+closed cover. The second count in the table includes these refinements.
+All decisions are integer or rational inequalities.
+
+For explicit expression correspondence, the hand derivative identities
+used for the first evaluation are
+
+$$
+\begin{gathered}
+x_q=1/2,\quad y_q=-x/(2y),\quad u_q=-1/(2u),\quad
+v_q=1/(2v),\quad R_q=h/2,\\
+\mu_q=\frac12\left\{
+ hk\left[-\frac1{2uR}-\frac{hu}{2R^2}\right]
+ +h\left[\frac1{2vy}+\frac{vx}{2y^3}\right]\right\},\\
+\nu_q=\frac12\left\{-\frac k{2u}
+ +\frac{v/4+(x/2-s^2)/(2v)}{hy}
+ +\frac{(x/2-s^2)vx}{2hy^3}\right\},\\
+Z_q=s^2\left[\frac L{x^2}+\frac q{2x^2}-\frac{qL}{x^3}\right],\qquad
+\Omega_q=\nu_q-\frac{Z_q}{4\mu}+\frac{Z\mu_q}{4\mu^2},\\
+C'_\xi=-(4h+8s)-4\Gamma_0
+ \left[hu-\frac Ru+\frac{hy}{v}-\frac{hxv}{y}\right].
+\end{gathered}
+\tag{51.12}
+$$
+
+Only $0<q<1$ and $y>0$ are used in these derivative rows. The
+nonderivative rows may include $q=0$; no derivative containing $1/v$
+is evaluated there. The table's lower and upper rational bounds,
+together with the inclusion rules and complete covers, give the
+continuous inequalities required in the proof.
+
+### 51.3. Analytic screens and the selected root refinement
+
+*Proof of Theorem 51.2.* First reuse the fixed-$q$ calculation (50.14).
+For $q>0$ and $0<x<1$ it gives
+
+$$
+\nu_x=\frac{v(h^2-s^2x)}{2hy^3}>0,\qquad
+\frac{\mu_x}{\mu}\ge-\frac hR,\qquad
+\partial_x\log(Z/\mu)
+ \le\frac1L-\frac2x+\frac hR
+ <\frac1L-\frac1x<0.
+\tag{51.13}
+$$
+
+Thus $\omega_x>0$. At $q=0$, instead use
+$\omega=k/2>0$ directly, with no logarithm of zero. At fixed $q$,
+decreasing $\xi$ increases $x$; consequently each one-level lower
+bound for $\Omega$ propagates to smaller levels wherever $x<1$.
+
+The screen from Theorem 36.5 and Corollary 46.7 is
+
+$$
+          \mathfrak D_+(x,q)>0\qquad(4/5\le x<1,\ 0\le q\le1).
+\tag{51.14}
+$$
+
+To state its algebraic correspondence explicitly, for $q<1$ put
+$r=\sqrt{q/(1-q)}$ and
+
+$$
+a_0=\frac{hkx^2}{LR},\qquad a_1=\frac{hx^2}{Ly},\qquad
+b_1=\frac{h^2x-s^2}{hy}.
+$$
+
+Then $\mathfrak D_+/(1-q)=(a_0+a_1r)(k+b_1r)-s^2r^2$.
+For $x\ge4/5$ its constant and linear coefficients are positive,
+and its quadratic coefficient is $n(x)/(Ly^2)$, where
+
+$$
+n(x)=(h^2+s^2)x^3-s^2(1+x),\qquad
+n(4/5)=\frac{32-161s^2}{125}>0.
+$$
+
+Here $s^2<3/20$ and $n'(x)>0$ on $[4/5,1)$.
+The same quadratic coefficient gives positivity at $q=1$ directly.
+This computation never evaluates a $y$ denominator at $x=1$.
+
+Rows P1--P2 and the strict scalar convexity of Theorem 37.5 put
+$q_{239/100}$ strictly between $489/1000$ and $491/1000$.
+Row P3 therefore gives $\Omega(239/100,q_{239/100})<0$.
+The multiplier between $\omega$ and $\mathfrak D_+$ in (51.6)
+is positive, so $D_{\mathrm{sel}}(239/100)<0$.
+The unique zero and sign pattern in Theorem 49.1 now imply
+$\xi_*<239/100$. Its lower bound $59/25$ is unchanged, proving
+(51.10). This refines the existing unique root without selecting a
+new root or changing its algebraic definition.
+
+Rows P4--P5, selector uniqueness and the strict increase of $q_\xi$
+in (49.11) give
+
+$$
+\begin{aligned}
+q_\xi&>2/5&& (\xi\ge21/10),\\
+q_\xi&<47/100&& (\xi\le9/4).
+\end{aligned}
+\tag{51.15}
+$$
+
+Also $q_{\xi_*}<1/2$ by (49.18)--(49.19), so $q_\xi<1/2$
+through the whole prefix. Theorem 49.1 and (51.6) give
+
+$$
+                  \Omega(\xi,q_\xi)\ge0\qquad(0<\xi\le\xi_*).
+\tag{51.16}
+$$
+
+Use P6 and (51.13) for $q\le13/20$, $\xi\le21/10$.
+For the remaining $q\ge13/20$ at those levels,
+$x\ge1-(21/10)/4+(13/20)/2=4/5$, so (51.14) applies.
+Hence $\eta=0$ at every feasible nonsingular slice with
+$\xi\le21/10$. Similarly P7 gives $\eta=0$ for $q\le1/20$
+through the prefix. Row P8 covers $1/2\le q\le159/200$;
+for larger $q$, (51.10) gives
+$x>1-(239/100)/4+(159/200)/2=4/5$.
+Thus $\eta=0$ for every $q\ge1/2$ in the prefix as well.
+In the lower level slab $\xi\le9/4$, the existing C2 bound in
+Section 50 gives $\Omega(9/4,q)\ge1/10000$ for $q\ge3/8$;
+with (51.13) it in particular screens every $q\ge47/100$.
+Each sign propagation uses monotonicity on the same population,
+rather than assuming that a sign at one level holds elsewhere.
+
+### 51.4. The complete population-cost/gain relation T
+
+The preceding screens prove (51.7) whenever $\xi\le21/10$,
+$q\le1/20$, or $q\ge1/2$, because $\eta=0$.
+Consider $21/10\le\xi\le\xi_*$ and $1/20\le q\le1/4$.
+Rows P9 and (51.13) give $\eta\le11/200$.
+For $1/20\le q\le1/5$, (51.15) gives $q_\xi-q>1/5$,
+and P10 gives
+
+$$
+\eta^2\le\frac{121}{40000}<\frac1{250}
+             <K(q-q_\xi)^2.
+\tag{51.17}
+$$
+
+For $1/5\le q\le1/4$, one has $q_\xi-q>3/20$, and P11 gives
+
+$$
+\eta^2\le\frac{121}{40000}<\frac{153}{40000}
+             <K(q-q_\xi)^2.
+\tag{51.18}
+$$
+
+At any shared boundary these strict estimates can be weakened to
+nonstrict ones without changing the conclusion.
+
+It remains to treat $q\ge1/4$. In the slab $[21/10,9/4]$,
+$q\ge47/100$ has already been screened; in the slab
+$[9/4,\xi_*]$, $q\ge1/2$ has already been screened.
+The selected population is strictly inside the corresponding upper
+population boundary by (51.15) and $q_\xi<1/2$.
+Rows P13--P14 give, on both remaining closed rectangles,
+
+$$
+                       0\le\Omega_q\le43/100.
+\tag{51.19}
+$$
+
+If $q\ge q_\xi$, (51.16) and (51.19) imply $\Omega(\xi,q)\ge0$,
+so $\eta=0$. If $q<q_\xi$ and $\Omega(\xi,q)<0$, integration on
+the fixed-$\xi$ segment from $q$ to $q_\xi$ gives
+
+$$
+\eta=-\Omega(\xi,q)
+ \le\Omega(\xi,q_\xi)-\Omega(\xi,q)
+ \le\frac{43}{100}(q_\xi-q).
+\tag{51.20}
+$$
+
+Row P12 now yields
+
+$$
+\eta^2\le\frac{1849}{10000}(q-q_\xi)^2
+ \le K(q-q_\xi)^2,
+\qquad K\ge\frac{19}{100}=\frac{1900}{10000}.
+\tag{51.21}
+$$
+
+If $\Omega(\xi,q)\ge0$, the same conclusion is immediate.
+These regions cover the entire feasible nonsingular domain with all
+shared boundaries. At $q=q_\xi$, both sides of (51.7) vanish,
+including $\xi=\xi_*$. This proves T without a local-neighborhood
+restriction or a sampling argument.
+
+### 51.5. Curvature and the same-original-pair consumer
+
+For the numerical constant in (51.8), use the scalar expression itself,
+rather than only the weaker curvature constant 4 in (50.11). Put
+
+$$
+F_0=4(1-q)R^2,\qquad F_1=4qh^2y^2.
+\tag{51.22}
+$$
+
+On the same fixed-$\xi$ feasible population interval they are nonnegative
+and concave, since
+
+$$
+F_0''=(1-q)-8hR<0,\qquad F_1''=-4x-q<0.
+\tag{51.23}
+$$
+
+The nonnegative geometric mean is concave and nondecreasing in both
+arguments. Its concave-composition rule therefore makes
+$\sqrt{F_0F_1}$ concave on this interval; endpoint zeros are included
+by continuity. This is the standard composition statement in
+Boyd and Vandenberghe, *Convex Optimization*, Section 3.2.4,
+Example 3.14, applied to these two functions of the same population.
+As $4\Gamma_0^2=F_0+F_1+2\sqrt{F_0F_1}$, in the population interior
+
+$$
+\begin{aligned}
+C_\xi''&\ge-F_0''-F_1''
+ =8hc+8x+2q-1\\
+ &=8hc+7-2\xi+6q>\frac{183}{25}.
+\end{aligned}
+\tag{51.24}
+$$
+
+Here $hc>13/20$ and the existing bound $\xi_*<61/25$ suffice;
+the sharper (51.10) is not needed for this constant. The elementary
+radical comparison $hc>13/20$ follows by squaring
+$(hc)^2=(1+h)/4$ with $h>7/10$.
+Integration from the interior stationary selector and continuity at
+all population endpoints give
+
+$$
+C_\xi(q)-V(\xi)\ge\frac{183}{50}(q-q_\xi)^2.
+\tag{51.25}
+$$
+
+The gain/transport consumer (47.9)--(47.13), applied to the given
+original pair, gives
+
+$$
+g(E,U)\ge C_\xi(q)-8\Gamma_0J-4J^2.
+\tag{51.26}
+$$
+
+It includes every effect phase and arbitrary actual $U$. Its two
+recovery amplitudes come from the same attained triangle and the same
+whole feedback. More explicitly, the same-effect, same-complex-trace
+transport of Theorem 42.3 preserves $q,x,\xi$ and the active sign in
+every positive-weight phase replacement; (42.16) adds a nonnegative
+recovery variance to their weighted defects. It therefore strengthens,
+rather than weakens, (51.26) for the original $U$. No estimate from
+separate recovery optima or from different objects is substituted.
+
+Cauchy--Schwarz yields
+
+$$
+\Gamma_0^2\le R^2+h^2y^2=h^2+c^2+2hcx
+ \le(h+c)^2<(5/3)^2.
+\tag{51.27}
+$$
+
+For the last elementary inequality, $h<71/100$ and $c<93/100$
+give $h+c<41/25<5/3$. Put $\Delta q=q-q_\xi$.
+By T, $J\le(\Delta q)^2/4$. Since $q,q_\xi\in[0,1]$,
+$4J^2\le(\Delta q)^4/4\le(\Delta q)^2/4$.
+Combining (51.25)--(51.27) therefore gives
+
+$$
+g(E,U)-V(\xi)
+ \ge\left[\frac{183}{50}-\frac{10}{3}-\frac14\right](\Delta q)^2
+ =\frac{23}{300}(\Delta q)^2.
+\tag{51.28}
+$$
+
+For $x=1$, use the direct original endpoint (47.11):
+
+$$
+U=\lambda U_+,\qquad \rho=\rho_+=2q=\xi,\qquad
+\rho_-=8+2(1-q)>\xi,\qquad
+g=e^2q=C_\xi(q).
+\tag{51.29}
+$$
+
+Thus (51.25) alone gives the stronger coefficient $183/50$ at this
+endpoint. No $y$ denominator from (51.6) is evaluated. This includes
+$\xi=2,q=1$; the other $q=0,1$ cases lie in the already treated
+nonsingular domain. Hence all required population and trace endpoints
+are included, with the full open lower level boundary $0<\xi$ preserved.
+
+### 51.6. Equality on the original positive-active pure branch
+
+If $g=V$, the strictly positive coefficient in (51.8) forces
+$q=q_\xi$. At that population $D_{\mathrm{sel}}\ge0$, including its
+zero at $\xi_*$. The selector has $0<q_\xi<1$ and
+$0<x_\xi,y_\xi<1$. Theorem 46.4 and Corollary 46.5 therefore apply
+and give exactly (51.9). In detail, the same-effect,
+same-complex-trace positive-weight transport must attain equality
+termwise and have zero recovery variance. The nonzero effect
+coordinates select one orientation; the nonzero active complex trace
+fixes the same scalar in every replacement. The averaged diagonal
+then has four entries of modulus one, and the row norms of the
+actual unitary force all off-diagonal entries to vanish. Thus no
+additional nonphase original lifts occur.
+
+The equality assertion of Theorem 46.4 is unchanged when the determinant
+is zero, so no enlarged equality family appears at $\xi_*$.
+The $q=0$ block-lift alternative of Corollary 46.5 cannot occur because
+$q_\xi$ is interior. Conversely, Theorem 37.5 and its actual-distance
+identity (37.23) show that every pair in (51.9) has
+$\rho_+=\rho=\xi$ and $g=V$. This proves both directions and completes
+the proof of Theorem 51.2. $\square$
+
+### 51.7. Source correspondence and the remaining global comparison
+
+The new deduction relative to the fixed suppliers is the entire
+positive-prefix relation T, its same-original-pair quantitative consumer,
+the complete positive-active pure equality through the selected zero,
+and the refinement (51.10). The source correspondences are:
+
+| Supplier | Mathematical role |
+| --- | --- |
+| Original Definitions 1.1, 11.1, 23.1 and (23.2), (23.9)--(23.12) | Original domain, ordinary transpose, one-feedback $P,Q$, both distance branches and one common scalar |
+| I Theorem 37.5 and (37.20)--(37.23) | Unique positive geometric selector, stationarity, attained $V$ and true-distance scalar equality |
+| II Theorem 42.3 and (42.15)--(42.20) | Same-effect, same-complex-trace transport, true sign separation and nonnegative variance |
+| II Definition 46.1, Theorem 46.4, Corollaries 46.5 and 46.7 | Joint attainable triangle, determinant identity, complete actual nonnegative-slice equality and $x\ge4/5$ screen |
+| II (47.1), (47.9)--(47.13) | Recovery-gain envelope, original pure-input consumer and direct $x=1$ endpoint |
+| II (50.3), (50.6), (50.14)--(50.15) and C2 | Positive-row parameters, scalar derivative, fixed-population monotonicity and existing upper-population screen |
+| III Theorem 48.5 | Global-minimizer purity and phase rigidity through $13/4$ |
+| IV Theorem 49.1, (49.11)--(49.19) | Unique selected zero and its sign, increasing selector and $q_{\xi_*}<1/2$ |
+
+The ordinary mathematical suppliers are pinned by the published source
+snapshot `6b6539921bf3fde0f84f85fdda6c284b5891ae98`.
+The original and Continuations I--III agree with their corresponding
+suppliers at `2c54932b6f9a7eb9a838e5be71e91d97e10027be`;
+Section 49 agrees with its source at
+`e6854b4057168ac0ffbbbc0b3e4e1468203de0f1`.
+The results above are repo-derived ordinary mathematics with exact
+rational interval certificates; no literature-wide priority or physical
+realization claim follows.
+
+For the standard composition premise see
+[Boyd--Vandenberghe, *Convex Optimization*, Section 3.2.4, Example 3.14](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+Other mature optimization results have different hypotheses:
+[Bandeira--Boumal--Singer, arXiv:1411.3272v3, Lemma 4.3](https://arxiv.org/html/1411.3272v3)
+requires a feasible unit-diagonal positive semidefinite $X$, a Hermitian
+positive semidefinite slack $S$ annihilating $X$, and $S+C$ real diagonal;
+its uniqueness criterion uses $\operatorname{rank}S=n-1$.
+No such dual certificate is constructed here for the coupled trace and
+population family.
+[Soltanalian--Stoica, arXiv:1303.0152v1, Theorem 2](https://arxiv.org/html/1303.0152v1)
+requires an actual unimodular vector in the top eigenspace of the unchanged
+Hermitian objective, and supplies no joint prescribed-trace/effect/population
+conclusion for these objects.
+[Nie, arXiv:1206.0319v2, Theorem 1.1](https://arxiv.org/html/1206.0319v2)
+requires an archimedean polynomial model and constraint qualification,
+strict complementarity and second-order sufficiency at every global
+minimizer. Those global hypotheses are not established here, and the
+selected degenerate zero does not justify assuming an ordinary strict
+second-order certificate. These three results are therefore not proof
+premises of Theorem 51.2.
+
+There is no earlier separated pure contact in the positive-active branch
+on $0<\xi\le\xi_*$. A negative-active pure phase pair could still have
+smaller value or an additional equality at the same original level.
+The negative canonical and interior comparison, both-sign assembly,
+global equality, earliest global contact, $\alpha,\beta$, their possible
+coincidence, endpoint inclusion for the global first-loss statement and
+immediate right-side global classification remain unresolved here.
+Theorem 48.5 is used only for its existing global-minimizer reduction;
+a pointwise estimate for arbitrary mixed inputs does not follow.
+No extension beyond $\xi_*$ or beyond that theorem's $13/4$ range is
+asserted. Section 49's local quartic and right-side branch results retain
+their own local scope. No native resources, complete AURIC reconstruction,
+or Lean/kernel validation are asserted by this ordinary mathematical
+positive-branch theorem.
+
+## 追加锚（本行以下为增补区）
