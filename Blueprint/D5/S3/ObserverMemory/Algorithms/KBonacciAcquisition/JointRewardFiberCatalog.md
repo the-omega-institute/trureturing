@@ -270,7 +270,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/JointReward
 
 *Commentary.*
 
-For every L, stop and full score y, completeSupport is the supremum of scheduleReward over every original empty, singleton and distinct ordered pair schedule and every cell-label table. This finite range is exactly the maximization over all cell maxima and schedules in Definition 213.1. The empty cells added for short and stopped tables contribute zero.
+For every L, stop and full score y, completeSupport is the supremum of fullReward over every whole output function in the original Catalog stop L. The exact Catalog range and cell-sum identities equate it to the supremum of scheduleReward over every empty, singleton and distinct ordered pair schedule with unrestricted cell labels. This finite range is exactly the maximization over all cell maxima and schedules in Definition 213.1. The empty cells added for short and stopped tables contribute zero.
 
 **Definition 1.23 (The original head-pair anchor).**
 
