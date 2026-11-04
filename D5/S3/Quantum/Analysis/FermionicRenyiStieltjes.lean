@@ -321,7 +321,7 @@ theorem stieltjes_representation {α σ : ℝ} (ha0 : 0 < α) (ha1 : α < 1)
         Real.log_one, mul_zero] using hi
     · simpa (config := { congrConsts := false }) only [fermionicRenyiFunction,
         D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity.h,
-        if_neg (ne_of_lt ha1), add_zero,
+        ite_eq_right (ne_of_lt ha1), add_zero,
         zero_pow (by norm_num : 2 ≠ 0), mul_zero, sub_zero, Real.log_one,
         integral_zero] using
         (D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity.h_half ha0)
