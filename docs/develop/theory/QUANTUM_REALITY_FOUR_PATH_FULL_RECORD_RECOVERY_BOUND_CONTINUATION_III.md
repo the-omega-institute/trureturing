@@ -1013,3 +1013,559 @@ contributes to the original minimizing set. No physical-acquisition or
 whole-POVM conclusion is drawn.
 
 ## 追加锚（本行以下为增补区）
+
+## 53. Positive-trace localization and global uniqueness of the ordered lengths
+
+**Definition 53.1 (full original parameter domain and objective).**
+Retain the fixed labels of Definition 46.1 and Definition 51.1. Fix
+
+$$
+ \sigma\in\{+,-\},\qquad 0<\xi\le\frac{13}{4},\qquad
+ 0<q<\min\{1,\xi/2\},\qquad p=1-q,
+\tag{53.1}
+$$
+
+and put
+
+$$
+ x=1-\frac\xi4+\frac q2,\qquad y=\sqrt{1-x^2},\qquad L=1+x,
+ \qquad h=\frac1{\sqrt2},\quad c=\cos(\pi/8),\quad s=\sin(\pi/8).
+\tag{53.2}
+$$
+
+Thus $3/16<x<1$ and $p,q,y>0$, including when $\xi=13/4$.
+Use exactly the two rows
+
+$$
+\begin{array}{c|c|c|c}
+ \sigma&J&K&(a,b,\ell,m)\\ \hline
+ +&(1,2)&(3,4)&(h,c,h,s)\\
+ -&(3,4)&(1,2)&(s,h,c,h).
+\end{array}
+\tag{53.3}
+$$
+
+Here $0<a<b$, $\ell>m>0$ and $k=b-a>0$. The complete domain is
+
+$$
+ \mathcal T_x=\{(X,Y)\in[0,1]^2:\sqrt X+\sqrt Y\ge L\}.
+\tag{53.4}
+$$
+
+On this whole domain, with nonnegative square roots, retain
+
+$$
+\begin{aligned}
+ Z&=\frac{L^2-X-Y}{2\sqrt{XY}},\\
+ F&=\sqrt{(1-X)(1-Y)}\sqrt{1-Z^2},\\
+ R&=\sqrt{a^2X+b^2Y+ab(L^2-X-Y)},\\
+ C&=\sqrt{\ell^2(1-X)+m^2(1-Y)+2\ell mF},\\
+ \Gamma_\sigma(x,q;X,Y)&=\sqrt p\,R+\sqrt q\,C.
+\end{aligned}
+\tag{53.5}
+$$
+
+Lemma 46.2 gives $X,Y\ge x^2>0$, $XY\ge x^2$ and $|Z|\le1$
+throughout $\mathcal T_x$. These are therefore the original continuous
+functions on the entire compact triangle, including its curved and
+straight boundaries and both endpoint fibres. Finally set
+
+$$
+\begin{aligned}
+ R_0&=ax+b,\\
+ \mu&=\frac12\left(\frac{ak\sqrt p}{R_0}
+                              +\frac{\ell\sqrt q}{y}\right),\\
+ \nu&=\frac12\left(k\sqrt p+
+                 \frac{(\ell^2x-m^2)\sqrt q}{\ell y}\right),\\
+ D_\sigma(x,q)&=\frac{4\mu\nu x^2}{1+x}-m^2q.
+\end{aligned}
+\tag{53.6}
+$$
+
+These are the quantities of (46.13) and (51.11); $\mu>0$, and no
+hypothesis on the sign of $\nu$ is imposed.
+
+**Lemma 53.2 (positive-trace-cosine localization of every global maximum).**
+For every tuple in Definition 53.1 with $D_\sigma(x,q)<0$, every
+global maximizer of $\Gamma_\sigma$ on $\mathcal T_x$ satisfies
+
+$$
+ x^2<X<Y<1,\qquad \sqrt X+\sqrt Y>L,\qquad X+Y<L^2.
+\tag{53.7}
+$$
+
+In particular every such maximizer lies in the open convex set
+
+$$
+ \mathcal D_A=\{(X,Y):0<X<1,\ 0<Y<1,\ X+Y<A,
+                           \ \sqrt X+\sqrt Y>\sqrt A\},
+ \qquad A=L^2>1.
+\tag{53.8}
+$$
+
+**Proof.** Definition 47.1 gives compact attainment on the entire
+$\mathcal T_x$. Proposition 51.2 places every global maximizer in
+$\Omega_x$ of (51.13), giving all but the last inequality of (53.7).
+That proposition excludes the complete curved arc, both straight
+edges, all three corners, the diagonal and the reversed ordering.
+Its exclusion of the canonical corner uses the same-slice strict
+competitor (46.29)--(46.31), valid for $D_\sigma<0$ without $\nu>0$.
+
+Suppress the fixed parameters. At an interior point with $X,Y<1$
+and $\sqrt X+\sqrt Y>L$, one has $|Z|<1$, $R,C>0$ and
+
+$$
+ Z_X=-\frac{A+X-Y}{4X^{3/2}\sqrt Y}<0.
+\tag{53.9}
+$$
+
+Indeed $A>1$, $Y\le1$ and $X>0$. If $Z\le0$, putting
+$u=1-X>0$ and $v=1-Y>0$ gives
+
+$$
+ F_X=-\frac12\sqrt{\frac vu}\sqrt{1-Z^2}
+       -\frac{\sqrt{uv}\,Z Z_X}{\sqrt{1-Z^2}}<0.
+\tag{53.10}
+$$
+
+The second term is nonpositive, while the first is strictly negative.
+Moreover
+
+$$
+ R_X=-\frac{ak}{2R}<0,\qquad
+ C_X=\frac{-\ell^2+2\ell mF_X}{2C}<0.
+\tag{53.11}
+$$
+
+Thus $\Gamma_X<0$ wherever $Z\le0$ in this interior. A global
+maximizer in $\Omega_x$ is an interior point of the original domain,
+so its first derivatives vanish. It must have $Z>0$, equivalently
+$X+Y<A$, proving (53.7).
+
+The square restrictions and the half-plane $X+Y<A$ are convex.
+The strict superlevel set of the concave function
+$\sqrt X+\sqrt Y$ is convex as well; hence $\mathcal D_A$ is convex.
+On this set $0<Z<1$. $\square$
+
+**Lemma 53.3 (strict joint curvature of the original coherent factor).**
+For any fixed scalar $A>0$, define $\mathcal D_A$ by the inequalities
+in (53.8). The function
+
+$$
+ F_A(X,Y)=\sqrt{(1-X)(1-Y)}
+       \sqrt{1-\frac{(A-X-Y)^2}{4XY}}
+\tag{53.12}
+$$
+
+has negative definite Hessian at every point of $\mathcal D_A$ and
+is strictly concave there.
+
+**Proof.** On $\mathcal D_A$ put
+
+$$
+ S=X+Y,\qquad B=A-S>0,\qquad
+ \theta=\frac{B^2}{4XY}\in(0,1),\qquad u=1-X>0,\quad v=1-Y>0.
+\tag{53.13}
+$$
+
+All quantities in the following differentiation are smooth there.
+For $H=4\theta=B^2/(XY)$, the Hessian is
+
+$$
+ \nabla^2H=
+ \begin{pmatrix}
+ \dfrac{2(A-Y)^2}{X^3Y}&
+ \dfrac{A^2-X^2-Y^2}{X^2Y^2}\\[4pt]
+ \dfrac{A^2-X^2-Y^2}{X^2Y^2}&
+ \dfrac{2(A-X)^2}{XY^3}
+ \end{pmatrix},
+\tag{53.14}
+$$
+
+and
+
+$$
+ \det(\nabla^2H)=
+ \frac{(A-X-Y)^2\bigl(3A^2-2A(X+Y)-(X-Y)^2\bigr)}{X^4Y^4}.
+\tag{53.15}
+$$
+
+The full numerator factorization is
+
+$$
+\begin{aligned}
+ &4(A-X)^2(A-Y)^2-(A^2-X^2-Y^2)^2\\
+ &\quad=\bigl[2(A-X)(A-Y)-(A^2-X^2-Y^2)\bigr]
+          \bigl[2(A-X)(A-Y)+(A^2-X^2-Y^2)\bigr]\\
+ &\quad=(A-S)^2\bigl(3A^2-2AS-(X-Y)^2\bigr).
+\end{aligned}
+\tag{53.16}
+$$
+
+Since $A>S$, the last factor satisfies
+
+$$
+ 3A^2-2AS-(X-Y)^2>S^2-(X-Y)^2=4XY>0.
+\tag{53.17}
+$$
+
+The diagonal entries of (53.14) are positive. Thus $\nabla^2\theta$
+is positive definite, although positive semidefiniteness will suffice.
+Also
+
+$$
+ \theta_X=-\frac{B(A+X-Y)}{4X^2Y}<0,\qquad
+ \theta_Y=-\frac{B(A-X+Y)}{4XY^2}<0.
+\tag{53.18}
+$$
+
+Define column vectors
+
+$$
+ e=\begin{pmatrix}1/u\\1/v\end{pmatrix},\qquad
+ d=\begin{pmatrix}1/u\\-1/v\end{pmatrix},\qquad
+ r=-\frac{\nabla\theta}{2(1-\theta)}.
+\tag{53.19}
+$$
+
+Here $d,e$ are auxiliary vectors, distinct from the optimizer constants
+in (51.3), and both components $r_1,r_2$ are positive. Factor
+$F_A=wg$, where $w=\sqrt{uv}$ and $g=\sqrt{1-\theta}$. Then
+
+$$
+\begin{aligned}
+ \frac{\nabla w}{w}&=-\frac e2,&
+ \frac{\nabla^2w}{w}&=-\frac14dd^{\mathsf T},&
+ \frac{\nabla g}{g}&=r,\\
+ \frac{\nabla^2g}{g}
+ &=-\frac{\nabla^2\theta}{2(1-\theta)}-rr^{\mathsf T}.
+\end{aligned}
+\tag{53.20}
+$$
+
+The product rule gives the exact joint identity
+
+$$
+ -\frac{\nabla^2F_A}{F_A}
+ =\frac{\nabla^2\theta}{2(1-\theta)}
+   +\frac14dd^{\mathsf T}+rr^{\mathsf T}
+   +\frac12\bigl(er^{\mathsf T}+re^{\mathsf T}\bigr).
+\tag{53.21}
+$$
+
+The mixed term carries a plus sign because $w$ decreases and $g$
+increases in both coordinates. This mixed term alone need not be
+positive semidefinite. To control it together with the other terms,
+write uniquely
+
+$$
+ r=\alpha e+\beta d,\qquad
+ \alpha=\frac{ur_1+vr_2}{2},\qquad
+ \beta=\frac{ur_1-vr_2}{2}.
+\tag{53.22}
+$$
+
+These auxiliary coefficients obey
+
+$$
+ \alpha>0,\qquad \alpha^2-\beta^2=uvr_1r_2>0.
+\tag{53.23}
+$$
+
+For a column direction $h_0$, put $t=e^{\mathsf T}h_0$ and
+$z=d^{\mathsf T}h_0$. The quadratic form of the last three
+summands of (53.21) is exactly
+
+$$
+\begin{aligned}
+ \frac14z^2+(\alpha t+\beta z)^2+t(\alpha t+\beta z)
+   &=(\alpha^2+\alpha)t^2
+       +\beta(2\alpha+1)tz+(\beta^2+1/4)z^2.
+\end{aligned}
+\tag{53.24}
+$$
+
+Its symmetric coefficient matrix has positive first diagonal entry,
+and its determinant is
+
+$$
+ (\alpha^2+\alpha)(\beta^2+1/4)
+       -\beta^2(\alpha+1/2)^2
+   =\frac{\alpha+\alpha^2-\beta^2}{4}>0.
+\tag{53.25}
+$$
+
+It is therefore positive definite. The vectors $e,d$ are linearly
+independent, so a nonzero $h_0$ cannot give $t=z=0$.
+The first summand of (53.21) is positive semidefinite by
+(53.14)--(53.17). Hence the full right side is positive definite.
+Since $F_A>0$, its Hessian is negative definite. Restricting to any
+nonconstant line segment in the convex set $\mathcal D_A$ gives a
+strictly negative second directional derivative and proves strict
+concavity. $\square$
+
+**Theorem 53.4 (unique global maximizing ordered length pair on the entire triangle).**
+For every tuple in Definition 53.1 with $D_\sigma(x,q)<0$, there
+exists exactly one ordered pair $(X_*,Y_*)\in\mathcal T_x$ such that
+
+$$
+ \Gamma_\sigma(x,q;X,Y)\le\Gamma_\sigma(x,q;X_*,Y_*)
+ \qquad\text{for every }(X,Y)\in\mathcal T_x.
+\tag{53.26}
+$$
+
+This pair satisfies all the strict inequalities (53.7). The assertion
+holds for both original signs, including $\xi=13/4$, with arbitrary
+sign of $\nu$.
+
+**Proof.** Compact attainment gives at least one global maximizer
+on the entire $\mathcal T_x$. Lemma 53.2 puts every global maximizer
+in $\mathcal D_A$, where $A=L^2$. Lemma 53.3 applies there to the
+original $F$. The squared main recovery is the positive affine function
+
+$$
+ R^2=abA-akX+bkY.
+\tag{53.27}
+$$
+
+The squared crossed recovery
+$Q_C=C^2=\ell^2(1-X)+m^2(1-Y)+2\ell mF$ is positive and has
+Hessian $2\ell m\nabla^2F$. The square-root derivative identities give
+
+$$
+\begin{aligned}
+ \nabla^2C&=\frac{\ell m}{C}\nabla^2F
+       -\frac{\nabla Q_C(\nabla Q_C)^{\mathsf T}}{4C^3},\\
+ \nabla^2R&=-\frac{\nabla(R^2)\nabla(R^2)^{\mathsf T}}{4R^3}.
+\end{aligned}
+\tag{53.28}
+$$
+
+The first Hessian is negative definite and the second is negative
+semidefinite. Since $p,q>0$, the Hessian of the original
+$\Gamma=\sqrt pR+\sqrt qC$ is negative definite on $\mathcal D_A$;
+thus $\Gamma$ is strictly concave on that convex set.
+
+If there were two distinct global maximizing pairs on
+$\mathcal T_x$, both would belong to $\mathcal D_A$. Their midpoint
+would lie in the same convex set and hence in $\mathcal T_x$.
+Strict concavity would make its value strictly larger than the common
+global maximum, a contradiction. This proves uniqueness against
+every competitor in the original compact domain; existence was already
+established. Lemma 53.2 gives (53.7). No concavity outside
+$\mathcal D_A$ is needed: all boundary points, both endpoint fibres
+and every point outside the localization set remain in the original
+compact comparison. $\square$
+
+**Proposition 53.5 (original realization, slice value and distance correspondence).**
+For every tuple in Definition 53.1 with $D_\sigma<0$, let
+$G_*:=\Gamma_\sigma(x,q;X_*,Y_*)$. In the original
+$\operatorname{Dens}_2\times U(4)$ problem, the fixed-sign,
+fixed-population, fixed-trace phase-slice minimum is exactly
+
+$$
+ \mathsf E_\sigma(q)-4G_*^2,\qquad
+ \mathsf E_\sigma(q)=K_\sigma^2p+K_{-\sigma}^2q,\qquad
+ K_+=2(h+c),\quad K_-=2(h+s).
+\tag{53.29}
+$$
+
+Every triangle competitor has a simultaneous realization of its main
+and maximal crossed recoveries on one whole feedback and an aligning
+normalized pure effect, at the true original distance $\xi$.
+The scalar identification is the single common scalar of the whole
+feedback.
+
+**Proof.** The source correspondence is Definition 23.1 and
+(23.9)--(23.13) in the
+[original volume](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND.md),
+and (42.17)--(42.20), Definition 46.1 and Lemma 46.2 in
+[Continuation II](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md).
+In the original coordinate order the recoveries remain
+
+$$
+\begin{aligned}
+ M_+(v)&=h(v_1+v_2)+c(v_3+v_4),&
+ N_+(v)&=h(v_1-v_2)+is(v_3-v_4),\\
+ M_-(v)&=h(v_1+v_2)+s(v_3+v_4),&
+ N_-(v)&=h(v_1-v_2)-ic(v_3-v_4).
+\end{aligned}
+\tag{53.30}
+$$
+
+For every $(X,Y)\in\mathcal T_x$, Lemma 46.2 gives
+$U=\operatorname{diag}(v)U_\sigma$ with
+
+$$
+\begin{aligned}
+ (v_j)_{j\in J}&=e^{i\alpha_0}
+   \bigl(\sqrt X+i\varepsilon_J\sqrt{1-X},
+         \sqrt X-i\varepsilon_J\sqrt{1-X}\bigr),\\
+ (v_j)_{j\in K}&=e^{i\beta_0}
+   \bigl(\sqrt Y+i\varepsilon_K\sqrt{1-Y},
+         \sqrt Y-i\varepsilon_K\sqrt{1-Y}\bigr),\\
+ \cos(\alpha_0-\beta_0)&=Z,\qquad
+ \left|\operatorname{Tr}(UU_\sigma^\dagger)\right|=2L.
+\end{aligned}
+\tag{53.31}
+$$
+
+The signs $\varepsilon_J,\varepsilon_K$ take values in $\{\pm1\}$.
+Choose their product with the sign of $\sin(\alpha_0-\beta_0)$;
+when that sine vanishes either product is allowed. This yields,
+simultaneously on the same whole feedback,
+$|M_\sigma|=2R$ and $|N_\sigma|=2C$, the latter being the largest
+crossed modulus compatible with these lengths and trace.
+There remains one arbitrary common unit scalar multiplying all four
+entries. The ordered pairs $J,K$ are precisely (53.3), without
+interchanging their labels. The reconstruction includes all triangle
+boundaries and does not discard their phase representatives.
+
+The normalized effects retain the ordinary transpose:
+
+$$
+\begin{aligned}
+ \psi_+^\phi&=(\sqrt p,e^{i\phi}\sqrt q)^{\mathsf T},&
+ \psi_-^\phi&=(e^{i\phi}\sqrt q,\sqrt p)^{\mathsf T},\\
+ E&=(T\psi_\sigma^\phi(\psi_\sigma^\phi)^\dagger
+                                  T^\dagger)^{\mathsf T},&
+ T&=(b_+\ b_-).
+\end{aligned}
+\tag{53.32}
+$$
+
+Thus $p$ is the population on $b_+$ in the positive row and on $b_-$
+in the negative row; $q$ is the population away from that active
+optimizer. The free coherence phase aligns the two actual recoveries
+in the same-feedback identity
+
+$$
+ g(E,U)=\mathsf E_\sigma(q)-|\chi|^2,\qquad
+ |\chi|=\sqrt p\,|M_\sigma|+\sqrt q\,|N_\sigma|=2\Gamma_\sigma.
+\tag{53.33}
+$$
+
+If a weighted recovery vanishes its alignment condition is void.
+The original joint squared Frobenius distance is
+
+$$
+ \rho(E,U)=\min_{\tau\in\{+,-\}}\ \min_{|\zeta|=1}
+ \left(\|E-E_\tau\|_{\mathrm F}^2
+                    +\|U-\zeta U_\tau\|_{\mathrm F}^2\right).
+\tag{53.34}
+$$
+
+For the active branch, (53.31)--(53.32) give
+
+$$
+ 2q+8-4L=4(1-x)+2q=\xi.
+\tag{53.35}
+$$
+
+The two-sign budget (42.17)--(42.20) makes the other branch strictly
+larger throughout $0<\xi\le13/4$. Hence this is the true original
+distance, including at its upper endpoint. The sign choice in
+(53.34) is joint and $\zeta$ multiplies the entire feedback.
+For arbitrary phases the same-source recovery estimate is
+$|\chi|\le2\Gamma_\sigma$; the construction above attains equality
+for every triangle point. Maximizing over the whole triangle and
+using Theorem 53.4 proves (53.29). $\square$
+
+**Corollary 53.6 (the scalar uniqueness question and the actual endpoint consumer).**
+For every tuple in Definition 53.1 with $D_\sigma<0$, retain the
+full profile and both endpoint fibres from Proposition 51.4:
+
+$$
+ M(Y)=\max_{(L-\sqrt Y)^2\le X\le1}\Gamma_\sigma(x,q;X,Y),
+ \qquad x^2\le Y\le1.
+\tag{53.36}
+$$
+
+It has exactly one global maximizing argument $Y_*$, with
+$X_*=\widehat X(Y_*)$. Thus the right side of (52.1) holds uniformly
+over all the parameters (53.1) with $D_\sigma<0$.
+
+Retain the actual aligning endpoint set $\mathcal E_\xi(a_\xi)$
+of (45.20), where $a_\xi=m(\xi)+\kappa\xi$. If an actual endpoint
+$(E,U)\in\mathcal E_\xi(a_\xi)$ has active sign and population
+satisfying these hypotheses, its ordered lengths are exactly
+$(X_*,Y_*)$ and
+
+$$
+ a_\xi=\mathsf E_\sigma(q)-4G_*^2.
+\tag{53.37}
+$$
+
+Its literal endpoint coherence conditions remain
+
+$$
+ |z_{\rm coh}|^2=t_\sigma(1-t_\sigma),\qquad
+ \operatorname{Re}(Pz_{\rm coh}\overline Q)
+                       =|P||Q||z_{\rm coh}|.
+\tag{53.38}
+$$
+
+Every modulus-compatible phase remains allowed when the product on
+the right is zero.
+
+**Proof.** Proposition 51.4 gives the exact argmax identity (51.23),
+including both endpoint fibres and their unique fibre maximizers.
+Theorem 53.4 makes its left side the singleton $\{(X_*,Y_*)\}$.
+Its right side therefore has exactly one argument $Y_*$, and
+$X_*=\widehat X(Y_*)$. This answers the uniform scalar uniqueness
+question isolated in Definition 52.2. Separate concavity in the two
+coordinates did not control the mixed derivative in (51.24).
+Here (53.21)--(53.25) control the full mixed term on a convex set,
+and Lemma 53.2 places every possible original global maximizer in
+that set. Global concavity of $M$ on its entire interval is not a
+premise of this conclusion.
+
+For the actual endpoint, Theorems 45.7 and 48.5 and Corollary 51.5
+force its lengths to maximize the entire original triangle.
+Indeed, (51.28) compares it with every same-slice competitor,
+and Proposition 53.5 retains their actual simultaneous realization
+and the same true original distance. Equality forced by original
+global minimality makes its lengths a global maximizing pair.
+Theorem 53.4 fixes that pair to $(X_*,Y_*)$; substituting into
+(51.27) gives (53.37). The coherence conditions in (53.38) are those
+of the original endpoint set. This implication is conditional on an
+endpoint from the slice actually belonging to
+$\mathcal E_\xi(a_\xi)$; it proves no existence of a contributing
+negative-determinant slice. $\square$
+
+**Definition 53.7 (source dependencies and remaining mathematical boundaries).**
+Lemma 46.2 and Definition 47.1 supply exact realization and compact
+attainment. Proposition 51.2 supplies full boundary and ordering
+exclusion, using the strict canonical competitor of Theorem 46.4.
+Theorem 51.3 and Proposition 51.4 supply fibre uniqueness and the
+profile correspondence; Corollary 51.5 supplies the conditional
+endpoint restriction. The added deductions are the localization
+(53.9)--(53.11), the specific Hessian-square calculation
+(53.14)--(53.18), the complete mixed-term positivity
+(53.21)--(53.25), and their use to establish the full-domain
+uniqueness (53.26). The square-root composition and the fact that
+strict concavity on a convex set excludes two maximizing points are
+elementary steps within these proofs, not separate new results.
+No literature-wide originality assertion is made.
+
+Theorem 53.4 and Corollary 53.6 settle the scalar question in (52.1)
+on exactly (53.1) with $D_\sigma<0$. They impose no sign restriction
+on $\nu$ and include $\xi=13/4$. They do not compute $G_*$, choose
+a winning sign or population, evaluate $a_\xi$, identify a
+contributing slice, or establish uniqueness of a whole feedback,
+effect or phase representative. They do not classify all aligning
+phase preimages, the full first-transition ordering, or the exact
+$\alpha,\beta$ of the original optimization. The auxiliary
+coefficients in (53.22) are unrelated to those optimization quantities.
+No physical-acquisition or whole-POVM conclusion follows from ordered
+length uniqueness.
+
+The cases $q=0$, $q=1$, $\xi=0$ and $x=1$ are outside (53.1) and
+receive no new classification here. The separate canonical result
+of Theorem 46.4 for $D_\sigma\ge0$, including determinant zero and
+its original phase-equality conditions, is unchanged. No larger
+distance interval is claimed. The synchronization and semidefinite
+certificate-existence conditions discussed in Definition 52.1 are
+neither used nor established by this curvature argument.
+
+## 追加锚（本行以下为增补区）
