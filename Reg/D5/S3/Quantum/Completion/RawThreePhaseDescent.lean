@@ -24,10 +24,8 @@ def arena : Arena where
   Law R := ∀ {M : Type u} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ), RawBalance U c →
     (∀ u v, R.readout () () (c (U u) (U v)) (c u v)) ∧
-    (∀ a b u v, R.readout () ()
-      (c (a * U (U (U u))) (b * U (U (U v)))) (c (a * u) (b * v))) ∧
-    (∀ u z, R.readout () () (c (U (U (U u))) z) (c u z) ∧
-      R.readout () () (c z (U (U (U u)))) (c z u))
+    (∀ a b u v, c (a * U (U (U u))) (b * U (U (U v))) = c (a * u) (b * v)) ∧
+    (∀ u z, c (U (U (U u))) z = c u z ∧ c z (U (U (U u))) = c z u)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -47,7 +45,8 @@ def source_registration : Registration arena.{u} (type_of% @raw_marker_readouts.
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@raw_marker_readouts.{u}, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity :=
+    Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def registration :
@@ -74,22 +73,8 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "arg", "arg", "body", "body", "fn", "arg", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "arg", "arg", "body", "body", "arg", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "fn", "arg",
+        "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
