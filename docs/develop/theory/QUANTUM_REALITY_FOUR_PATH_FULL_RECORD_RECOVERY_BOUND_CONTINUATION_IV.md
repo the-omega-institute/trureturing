@@ -492,8 +492,8 @@ $$
 For every normalized positive effect, the same identities give
 $\rho_-=8-2B+2[(1-r)^2+|z_E|^2]\ge8-2B>\xi$, since $t_-<0$.
 Thus no effect can have negative branch equal to this prescribed $\xi$.
-Every original effect with $\rho(E,U)=\xi=2t$ therefore has strictly
-positive minimizing sign and satisfies exactly
+Every original effect with $\rho(E,U)=\xi=2t$ therefore has the
+positive sign as its unique minimizing sign and satisfies exactly
 
 $$
 q=t-\delta=r-\epsilon(E)/2=r^2+|z_E|^2,\qquad
@@ -951,8 +951,8 @@ $$
 For example the root bounds make the expression in parentheses larger
 than $1+24/25+32/25-8/5>0$. By continuity it stays positive for
 the nearby pure constructions. Throughout the chosen neighborhood,
-(49.22) and $t_-<0$ give strictly positive minimizing sign for every
-effect at the prescribed level, hence the actual branch statements
+(49.22) and $t_-<0$ make the positive sign uniquely minimizing for
+every effect at the prescribed level, hence the actual branch statements
 used in (49.21)--(49.23). Both original distance branches, not just
 a formal positive-branch constraint, are accounted for.
 
