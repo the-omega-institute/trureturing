@@ -1,0 +1,25 @@
+**图 2。**单位球的正交投影。闭环为 $e_3\to e_1\to e_2\to e_3$，有向立体角为 $\pi/2$。
+
+该例也可完全代数核对。令
+
+$$
+U_1=e^{-i\pi\sigma_y/4},\quad
+U_2=e^{-i\pi\sigma_z/4},\quad
+U_3=e^{-i\pi\sigma_x/4}.
+$$
+
+沿各弧它们均为水平搬运，并且
+
+$$
+U_3U_2U_1=e^{-i\pi\sigma_z/4},\qquad
+U_3U_2U_1\lvert0\rangle =e^{-i\pi/4}\lvert0\rangle .
+$$
+
+整个酉矩阵不是全局标量；显示的是所选纯态射线的相位。对一般 $h_0,\alpha$，闭路总相位还包含
+
+$$
+-\int\left(\frac{h_0}{\hbar}+\frac\alpha2\right)dt.
+$$
+
+因此几何相位、稳定子相位与中心相位都有明确的位置。
+
