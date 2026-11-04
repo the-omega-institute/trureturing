@@ -329,12 +329,10 @@ private lemma rectangle_shell_card_pos (c e : ℤ) (d : ℕ) (hd : 0 < d) :
     (rectangleShell c e d).card = 2 * (c.natAbs + e.natAbs) + 4 * d := by
   have hdis : (↑(Finset.range (d + 1)) : Set ℕ).PairwiseDisjoint
       (fun t => (intervalShell c t) ×ˢ (intervalShell e (d - t))) := by
-    intro t ht u hu htu
-    apply Finset.disjoint_left.mpr
-    intro p hp hq
-    have hp' := (interval_shell_mem c p.1 t).mp (Finset.mem_product.mp hp).1
-    have hq' := (interval_shell_mem c p.1 u).mp (Finset.mem_product.mp hq).1
-    exact htu (hp'.symm.trans hq')
+    rw [← Finset.pairwiseDisjoint_coe]
+    exact (Set.pairwiseDisjoint_fiber (fun p : ℤ × ℤ => gap c p.1)
+      (↑(Finset.range (d + 1)) : Set ℕ)).mono
+      (fun t p hp => (interval_shell_mem c p.1 t).mp (Finset.mem_product.mp hp).1)
   change ((Finset.range (d + 1)).biUnion _).card = _
   rw [Finset.card_biUnion hdis]
   simp only [Finset.card_product, interval_shell_card]
@@ -391,21 +389,18 @@ private lemma layer_sum (n : ℕ) :
   change Set.ncard _ = _
   rw [hs, Set.ncard_coe_finset]
   have hdis : (↑(Finset.Icc (-(n : ℤ)) n) : Set ℤ).PairwiseDisjoint f := by
-    intro k hk l hl hkl
-    apply Finset.disjoint_left.mpr
-    intro v hv hw
-    obtain ⟨p, hp, heq⟩ := Finset.mem_image.mp hv
-    obtain ⟨q, hq, heq'⟩ := Finset.mem_image.mp hw
-    apply hkl
-    exact congrArg (fun v : ℤ × ℤ × ℤ => v.2.2) (heq.trans heq'.symm)
+    rw [← Finset.pairwiseDisjoint_coe]
+    apply (Set.pairwiseDisjoint_fiber (fun v : ℤ × ℤ × ℤ => v.2.2)
+      (↑(Finset.Icc (-(n : ℤ)) n) : Set ℤ)).mono
+    intro k v hv
+    obtain ⟨p, _, rfl⟩ := Finset.mem_image.mp hv
+    rfl
   change ((Finset.Icc (-(n : ℤ)) n).biUnion f).card = _
   rw [Finset.card_biUnion hdis]
   apply Finset.sum_congr rfl
   intro k hk
-  apply Finset.card_image_iff.mpr
-  intro p hp q hq heq
-  exact Prod.ext (congrArg (fun v : ℤ × ℤ × ℤ => v.1) heq)
-    (congrArg (fun v : ℤ × ℤ × ℤ => v.2.1) heq)
+  exact Finset.card_image_of_injective _
+    (Function.injective_id.prodMap (Prod.mk_left_injective k))
 
 private lemma stack_sum (n : ℕ) (hn : 0 < n) :
     shell n + 2 * n = 6 * n ^ 2 +
