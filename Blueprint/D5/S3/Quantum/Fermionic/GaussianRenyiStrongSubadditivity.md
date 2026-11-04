@@ -48,6 +48,10 @@ $$\forall (n: \mathbb{N}), (\forall (G: \operatorname{Matrix}\left((\operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/GaussianRenyiStrongSubadditivity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/camilo-landi-eliens-2019-fermionic-gaussian-renyi-strong-subadditivity` (proved) by `D5/S3/Quantum/Fermionic/GaussianRenyiStrongSubadditivity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"camilo-landi-eliens-2019-fermionic-gaussian-renyi-strong-subadditivity","declaration_gid":"D5/S3/Quantum/Fermionic/GaussianRenyiStrongSubadditivity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Giancarlo Camilo, Gabriel T. Landi, Sebas Eliëns (2019). *Strong subadditivity of the Rényi entropies for bosonic and fermionic Gaussian states*. DOI: [10.1103/PhysRevB.99.045155](https://doi.org/10.1103/PhysRevB.99.045155). URL: <https://arxiv.org/abs/1810.07070v2>.
