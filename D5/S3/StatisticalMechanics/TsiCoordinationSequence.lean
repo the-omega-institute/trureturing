@@ -81,9 +81,14 @@ private lemma potential_slab (i j k a b : ℤ)
     (potential (i, j, k) ≤ potential (a, b, k + 1) + 1) ∧
     (potential (a, b, k + 1) ≤ potential (i, j, k) + 1) := by
   rcases Int.even_or_odd k with he | ho
-  · obtain ⟨t, ht⟩ := he
-    have hx : (k + 1 + 1) / 2 = (k + 1) / 2 + 1 := by omega
-    have hy : (k + 1) / 2 = k / 2 := by omega
+  · have hy : (k + 1) / 2 = k / 2 := by
+      simpa only [Int.ediv_eq_zero_of_lt (by decide : (0 : ℤ) ≤ 1)
+        (by decide : (1 : ℤ) < 2), add_zero] using
+        (@Int.add_ediv_of_dvd_left k 1 2 (even_iff_two_dvd.mp he))
+    have hx : (k + 1 + 1) / 2 = (k + 1) / 2 + 1 := by
+      simpa only [add_assoc, one_add_one_eq_two,
+        Int.ediv_self (by decide : (2 : ℤ) ≠ 0), hy] using
+        (@Int.add_ediv_of_dvd_right k 2 2 (dvd_refl 2))
     rw [potential_split, potential_split]
     dsimp only
     rw [hx]
@@ -97,11 +102,17 @@ private lemma potential_slab (i j k a b : ℤ)
       have hg := gap_slab ((k + 1) / 2) i 1 (Or.inr rfl)
       rw [hy] at hg ⊢
       omega
-    · obtain ⟨u, hu⟩ := ho
-      omega
-  · obtain ⟨t, ht⟩ := ho
-    have hx : (k + 1 + 1) / 2 = (k + 1) / 2 := by omega
-    have hy : (k + 1) / 2 = k / 2 + 1 := by omega
+    · exact ((Int.not_odd_iff_even.mpr he) ho).elim
+  · have hx : (k + 1 + 1) / 2 = (k + 1) / 2 := by
+      simpa only [Int.ediv_eq_zero_of_lt (by decide : (0 : ℤ) ≤ 1)
+        (by decide : (1 : ℤ) < 2), add_zero] using
+        (@Int.add_ediv_of_dvd_left (k + 1) 1 2
+          (even_iff_two_dvd.mp (Int.even_add_one.mpr (Int.not_even_iff_odd.mpr ho))))
+    have hy : (k + 1) / 2 = k / 2 + 1 := by
+      rw [← hx]
+      simpa only [add_assoc, one_add_one_eq_two,
+        Int.ediv_self (by decide : (2 : ℤ) ≠ 0)] using
+        (@Int.add_ediv_of_dvd_right k 2 2 (dvd_refl 2))
     rw [potential_split, potential_split]
     dsimp only
     rw [hx]
@@ -111,8 +122,7 @@ private lemma potential_slab (i j k a b : ℤ)
       simp only [add_zero] at hg
       rw [hy]
       omega
-    · obtain ⟨u, hu⟩ := he
-      omega
+    · exact ((Int.not_odd_iff_even.mpr he) ho).elim
     · subst a; subst b
       have hg := gap_slab (k / 2) j 1 (Or.inr rfl)
       rw [hy]
@@ -478,8 +488,11 @@ private lemma even_formula (n : ℕ) (hn : 0 < n) (he : Even n) :
     2 * shell n = 13 * n ^ 2 + 4 := by
   obtain ⟨t, ht⟩ := he
   have hs := stack_sum n hn
-  have ha : n / 2 = t := by omega
-  have hb : (n + 1) / 2 = t := by omega
+  have ha : n / 2 = t := by
+    simpa only [ht, two_mul] using Nat.mul_div_cancel_left t (by decide : 0 < 2)
+  have hb : (n + 1) / 2 = t := by
+    rw [ht, ← two_mul, Nat.mul_add_div (by decide : 0 < 2)]
+    rfl
   rw [ha, hb] at hs
   nlinarith
 
@@ -487,8 +500,12 @@ private lemma odd_formula (n : ℕ) (ho : Odd n) :
     2 * shell n = 13 * n ^ 2 + 3 := by
   obtain ⟨t, ht⟩ := ho
   have hs := stack_sum n (by omega)
-  have ha : n / 2 = t := by omega
-  have hb : (n + 1) / 2 = t + 1 := by omega
+  have ha : n / 2 = t := by
+    rw [ht, Nat.mul_add_div (by decide : 0 < 2)]
+    rfl
+  have hb : (n + 1) / 2 = t + 1 := by
+    rw [ht, add_assoc, one_add_one_eq_two, Nat.mul_add_div (by decide : 0 < 2)]
+    rfl
   rw [ha, hb] at hs
   nlinarith
 
