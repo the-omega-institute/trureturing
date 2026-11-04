@@ -65,43 +65,6 @@ def claim : Prop :=
   ∀ n m : ℕ, 3 ≤ n → 1 ≤ m →
     percolationNumber (dirProd (SimpleGraph.cycleGraph n) (SimpleGraph.pathGraph m)) 2 = n
 
-theorem path_neighbor_card (l : ℕ) : ∀ b : Fin (l + 1),
-    ((SimpleGraph.pathGraph (l + 1)).neighborFinset b).card =
-      (if b.val < l then 1 else 0) + (if 0 < b.val then 1 else 0) := by
-  classical
-  intro b
-  have hsplitP : (SimpleGraph.pathGraph (l + 1)).neighborFinset b =
-      univ.filter (fun c : Fin (l + 1) => b.val + 1 = c.val) ∪
-        univ.filter (fun c : Fin (l + 1) => c.val + 1 = b.val) := by
-    ext c
-    simp [SimpleGraph.mem_neighborFinset, SimpleGraph.pathGraph_adj]
-  rw [hsplitP, card_union_of_disjoint (disjoint_filter.2 fun c _ h1 h2 => by omega)]
-  congr 1
-  · split_ifs with h
-    · rw [card_eq_one]
-      exact ⟨⟨b.val + 1, by omega⟩, by ext c; simp [Fin.ext_iff, eq_comm]⟩
-    · rw [card_eq_zero, filter_eq_empty_iff]
-      intro c _ hc
-      omega
-  · split_ifs with h
-    · rw [card_eq_one]
-      exact ⟨⟨b.val - 1, by omega⟩, by ext c; simp [Fin.ext_iff]; omega⟩
-    · rw [card_eq_zero, filter_eq_empty_iff]
-      intro c _ hc
-      omega
-
-theorem sum_path_neighbor_card (l : ℕ) :
-    ∑ b : Fin (l + 1), ((SimpleGraph.pathGraph (l + 1)).neighborFinset b).card = 2 * l := by
-  classical
-  simp only [path_neighbor_card, sum_add_distrib]
-  rw [Fin.sum_univ_eq_sum_range (fun i => if i < l then 1 else 0),
-    Fin.sum_univ_eq_sum_range (fun i => if 0 < i then 1 else 0), sum_range_succ,
-    sum_range_succ']
-  simp only [lt_irrefl, ite_false, add_zero, Nat.succ_pos, ite_true]
-  simp only [sum_boole, Nat.cast_id, sum_const, card_range, smul_eq_mul, mul_one, two_mul,
-    Nat.add_right_cancel_iff]
-  rw [filter_true_of_mem fun x hx => mem_range.1 hx, card_range]
-
 theorem result : claim := by
   intro n m hn hm
   classical
@@ -178,12 +141,43 @@ theorem result : claim := by
     rw [mem_product, SimpleGraph.mem_neighborFinset, SimpleGraph.mem_neighborFinset,
       SimpleGraph.mem_neighborFinset]
     rfl
+  have degP : ∀ b : Fin (l + 1), (P.neighborFinset b).card =
+      (if b.val < l then 1 else 0) + (if 0 < b.val then 1 else 0) := by
+    intro b
+    have hsplitP : P.neighborFinset b =
+        univ.filter (fun c : Fin (l + 1) => b.val + 1 = c.val) ∪
+          univ.filter (fun c : Fin (l + 1) => c.val + 1 = b.val) := by
+      ext c
+      simp [SimpleGraph.mem_neighborFinset, P, SimpleGraph.pathGraph_adj]
+    rw [hsplitP, card_union_of_disjoint (disjoint_filter.2 fun c _ h1 h2 => by omega)]
+    congr 1
+    · split_ifs with h
+      · rw [card_eq_one]
+        exact ⟨⟨b.val + 1, by omega⟩, by ext c; simp [Fin.ext_iff, eq_comm]⟩
+      · rw [card_eq_zero, filter_eq_empty_iff]
+        intro c _ hc
+        omega
+    · split_ifs with h
+      · rw [card_eq_one]
+        exact ⟨⟨b.val - 1, by omega⟩, by ext c; simp [Fin.ext_iff]; omega⟩
+      · rw [card_eq_zero, filter_eq_empty_iff]
+        intro c _ hc
+        omega
+  have sumP : ∑ b : Fin (l + 1), (P.neighborFinset b).card = 2 * l := by
+    simp only [degP, sum_add_distrib]
+    rw [Fin.sum_univ_eq_sum_range (fun i => if i < l then 1 else 0),
+      Fin.sum_univ_eq_sum_range (fun i => if 0 < i then 1 else 0), sum_range_succ,
+      sum_range_succ']
+    simp only [lt_irrefl, if_false, add_zero, Nat.succ_pos, if_true]
+    simp only [sum_boole, Nat.cast_id, sum_const, card_range, smul_eq_mul, mul_one, two_mul,
+      Nat.add_right_cancel_iff]
+    rw [filter_true_of_mem fun x hx => mem_range.1 hx, card_range]
   have Duniv : D univ = 4 * ((k + 3 : ℕ) : ℤ) * l := by
     simp only [D, inter_univ, nbr, card_product, degC]
     simp only [Nat.cast_mul, Nat.cast_ofNat]
     rw [← univ_product_univ, sum_product]
     have hP : ∑ b : Fin (l + 1), ((P.neighborFinset b).card : ℤ) = 2 * l := by
-      exact_mod_cast sum_path_neighbor_card l
+      exact_mod_cast sumP
     simp only [← mul_sum, hP, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
     push_cast
     ring
