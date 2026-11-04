@@ -98,11 +98,12 @@ internal sealed class IndependentConvolutionL1MinimumDocument : IScribeDocumentD
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula PoissonDenominatorStatement() => Disp(Seq(
-        Forall, Sp, F.Id("r"), Comma, Sp, F.Id("theta"), Colon, Sp,
+        Forall, Sp, F.Id("r"), Sp, Theta, Colon, Sp,
         Mathbb, Grp(F.Id("R")), Comma, Sp,
-        D(0), Lt, Sp, Operatorname, Grp(F.Id("sin")), Parenthesized(F.Id("theta")),
-        Rightarrow, Sp, D(0), Lt, Sp, D(1), Minus, D(2), F.Id("r"), Sp,
-        Operatorname, Grp(F.Id("cos")), Parenthesized(F.Id("theta")), Plus,
+        Parenthesized(Seq(D(0), Sp, Lt, Sp, Operatorname, Grp(F.Id("Real"), Dot, F.Id("sin")),
+            Parenthesized(Theta))), Sp,
+        Rightarrow, Sp, D(0), Sp, Lt, Sp, D(1), Minus, D(2), F.Id("r"), Sp,
+        Operatorname, Grp(F.Id("Real"), Dot, F.Id("cos")), Parenthesized(Theta), Plus,
         F.Id("r"), Caret, Grp(D(2))));
 
     private static Formula OrdinaryConvolutionStatement() => Disp(Seq(
