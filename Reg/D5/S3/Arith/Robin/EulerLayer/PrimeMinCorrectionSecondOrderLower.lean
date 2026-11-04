@@ -68,7 +68,7 @@ def family : Registration arena scope where
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@uniform_min_tail_robin_second_order_lower) (Realization signature) Type Unit where
   unitName := `D5.S3.Arith.Robin.PrimeMinCorrectionSecondOrderLower.uniform_min_tail_robin_second_order_lower.audit
-  realizationName := `Reg.D5.S3.Arith.Robin.PrimeMinCorrectionSecondOrderLower.family
+  realizationName := `Reg.D5.S3.Arith.Robin.EulerLayer.PrimeMinCorrectionSecondOrderLower.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -84,7 +84,7 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.Robin.PrimeMinCorrectionSecondOrderLower
+    owner := `D5.S3.Arith.Robin.EulerLayer.PrimeMinCorrectionSecondOrderLower
     definition := none
     coordinates := #[]
     readouts := #[{
