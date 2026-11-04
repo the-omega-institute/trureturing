@@ -94,9 +94,13 @@ private lemma reduced_square {n : ℕ} (X : Finset (Fin n)) :
     {p : Fin n × Fin 2 // p.1 ∈ X} ℝ).submatrix e e)
   rw [Matrix.submatrix_one_equiv]
   ext ⟨i, a⟩ ⟨j, b⟩
+  change (∑ k : ↥X × Fin 2,
+    symplecticForm n (i.1, a) (k.1.1, k.2) *
+      symplecticForm n (k.1.1, k.2) (j.1, b)) =
+    -((1 : Matrix (↥X × Fin 2) (↥X × Fin 2) ℝ) (i, a) (j, b))
+  delta symplecticForm
   fin_cases a <;> fin_cases b <;>
-    simp [Matrix.mul_apply, Fintype.sum_prod_type, reducedForm, symplecticForm,
-      e, reducedIndexEquiv, Matrix.one_apply, Prod.ext_iff]
+    simp [Fintype.sum_prod_type, Matrix.one_apply, Prod.ext_iff]
   split_ifs <;> norm_num
 
 private lemma reduced_card {n : ℕ} (X : Finset (Fin n)) :
@@ -159,9 +163,12 @@ private lemma canonical_square (n : ℕ) : symplecticForm n * symplecticForm n =
   ext i j
   rcases i with ⟨i, a⟩
   rcases j with ⟨j, b⟩
+  change (∑ k : Fin n × Fin 2,
+    symplecticForm n (i, a) (k.1, k.2) * symplecticForm n (k.1, k.2) (j, b)) =
+    -((1 : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (i, a) (j, b))
+  delta symplecticForm
   fin_cases a <;> fin_cases b <;>
-    simp [Matrix.mul_apply, Fintype.sum_prod_type, symplecticForm,
-      Matrix.one_apply, Prod.ext_iff]
+    simp [Fintype.sum_prod_type, Matrix.one_apply, Prod.ext_iff]
   split_ifs <;> norm_num
 
 private lemma physical_posDef {n : ℕ}
@@ -473,7 +480,7 @@ private lemma alpha_two_entropy {ι : Type*} [Fintype ι] [DecidableEq ι]
   simp_rw [hlog] at hd
   rw [← Finset.mul_sum] at hd
   rw [gaussianRenyiEntropy, dite_eq_left hH]
-  simp_rw [hs]
+  simp_rw (config := { congrConsts := false }) [hs]
   linarith only [hd]
 
 private theorem det_mono {α : Type*} [Fintype α] [DecidableEq α]
@@ -628,16 +635,6 @@ private theorem principal_product {ι : Type*} [DecidableEq ι]
   rw [hU, Finset.union_comm B A] at hm
   exact hm
 
-/-- Koteljanskii's inequality, with determinants read as positive real numbers. -/
-private theorem koteljanskii {ι : Type*} [DecidableEq ι]
-    (H : Matrix ι ι ℂ) (hH : H.PosDef) (A B C : Finset ι)
-    (hAB : Disjoint A B) (hAC : Disjoint A C) (hBC : Disjoint B C) :
-    (H.submatrix (Subtype.val : ↥(A ∪ B ∪ C) → ι) Subtype.val).det.re *
-        (H.submatrix (Subtype.val : ↥B → ι) Subtype.val).det.re ≤
-      (H.submatrix (Subtype.val : ↥(A ∪ B) → ι) Subtype.val).det.re *
-        (H.submatrix (Subtype.val : ↥(B ∪ C) → ι) Subtype.val).det.re := by
-  exact principal_product H hH A B C hAB hAC hBC
-
 /-- The logarithmic principal-block inequality, including empty blocks. -/
 private theorem log_koteljanskii {ι : Type*} [DecidableEq ι]
     (H : Matrix ι ι ℂ) (hH : H.PosDef) (A B C : Finset ι)
@@ -646,22 +643,13 @@ private theorem log_koteljanskii {ι : Type*} [DecidableEq ι]
         Real.log (H.submatrix (Subtype.val : ↥B → ι) Subtype.val).det.re ≤
       Real.log (H.submatrix (Subtype.val : ↥(A ∪ B) → ι) Subtype.val).det.re +
         Real.log (H.submatrix (Subtype.val : ↥(B ∪ C) → ι) Subtype.val).det.re := by
-  have h := koteljanskii H hH A B C hAB hAC hBC
+  have h := principal_product H hH A B C hAB hAC hBC
   have hp (X : Finset ι) :
       0 < (H.submatrix (Subtype.val : ↥X → ι) Subtype.val).det.re :=
     (hH.submatrix Subtype.val_injective).det_pos.1
   have hl := Real.log_le_log (mul_pos (hp (A ∪ B ∪ C)) (hp B)) h
   simpa only [Real.log_mul (hp (A ∪ B ∪ C)).ne' (hp B).ne',
     Real.log_mul (hp (A ∪ B)).ne' (hp (B ∪ C)).ne'] using hl
-
-private lemma koteljanskii_log_step {ι : Type*} [DecidableEq ι]
-    (H : Matrix ι ι ℂ) (hH : H.PosDef) (A B C : Finset ι)
-    (hAB : Disjoint A B) (hAC : Disjoint A C) (hBC : Disjoint B C) :
-    Real.log (H.submatrix (Subtype.val : ↥(A ∪ B ∪ C) → ι) Subtype.val).det.re +
-        Real.log (H.submatrix (Subtype.val : ↥B → ι) Subtype.val).det.re ≤
-      Real.log (H.submatrix (Subtype.val : ↥(A ∪ B) → ι) Subtype.val).det.re +
-        Real.log (H.submatrix (Subtype.val : ↥(B ∪ C) → ι) Subtype.val).det.re := by
-  exact log_koteljanskii H hH A B C hAB hAC hBC
 
 private lemma mode_interpolation_det {n : ℕ}
     (V Ω : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
@@ -697,7 +685,7 @@ private lemma settlement_main : claim := by
       (Complex.I • (reducedForm (symplecticForm n) X).map Complex.ofReal)).det.re)
   have hk (x : ℝ) (hx0 : 0 ≤ x) (hx1 : x < 1) :
       L (A ∪ B ∪ C) x + L B x ≤ L (A ∪ B) x + L (B ∪ C) x := by
-    have h := koteljanskii_log_step
+    have h := log_koteljanskii
       (V.map Complex.ofReal + (x : ℂ) • (Complex.I • (symplecticForm n).map Complex.ofReal))
       (shifted_posDef V (symplecticForm n) hV hp hx0 hx1)
       (A ×ˢ (Finset.univ : Finset (Fin 2))) (B ×ˢ Finset.univ) (C ×ˢ Finset.univ)
