@@ -7,6 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Palindromes;
 internal sealed class ThueMorseAttainmentDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/Palindromes/ThueMorseAttainment.";
+    private static readonly LibraryNoteRef Akmp = LibraryNoteRef.Create("D5/L/Words/ambrozetal2019palindromiclength");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An explicit unbounded family of literal Thue-Morse prefixes has equal ordinary and mixed palindromic costs.",
         H("Attaining Thue-Morse Prefixes"), Blocks(
@@ -15,17 +16,20 @@ internal sealed class ThueMorseAttainmentDocument : IScribeDocumentDefinition
                 Eqn(Call("attainingLength", D(0)), D(1)), All("m", N(),
                 Eqn(Call("attainingLength", Add(V("m"), D(1))),
                     Call("natSub", Mul(D(4), Call("attainingLength", V("m"))), D(1))))))),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Index zero denotes n_1=1. Every next positive length is four times its predecessor minus one. NatSub is truncated natural subtraction. The signed expansion is the least-significant-first list obtained from [1] by prepending [-1,0] at each step; the existing nonadjacent signed-digit minimality theorem gives its weight m+1. No finite table is used as proof."))), DescribeRole.Definition),
+            AssessedProvenance.FromRepo(Akmp), Blocks(Paragraph(Text("Index zero denotes n_1=1. Every next positive length is four times its predecessor minus one. NatSub is truncated natural subtraction. The signed expansion is the least-significant-first list obtained from [1] by prepending [-1,0] at each step; the existing nonadjacent signed-digit minimality theorem gives its weight m+1. No finite table is used as proof."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("tm-family-attains"), DeclarationHandle.Create(Prefix + "family_attains"),
             H("Exact attainment on the same literal family"), StatementSource.FromAuthor(Disp(All("m", N(), And(
                 Eqn(Call("signedWeight", Call("int", Len(V("m")))), Add(V("m"), D(1))),
                 And(Eqn(Cost(Len(V("m"))), Add(V("m"), D(1))), Eqn(Pl(Len(V("m"))), Add(V("m"), D(1)))))))),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The substitution tau sends b to [b,not b,not b,b]. Reversing a substituted word commutes with substitution, so images of nonempty palindrome factors remain nonempty palindromes. Applying it to every factor gives PL(tau(w)) <= PL(w). The original even/odd Thue-Morse recurrences identify tau(t[0:n)) with t[0:4n). The existing ordinary-PL one-letter Lipschitz theorem then gives PL(t[0:4n-1)) <= PL(t[0:n))+1. Induction gives the ordinary upper bound on this exact family. The universal literal-cut lower bound sandwiches the actual mixed minimum between signed weight m+1 and ordinary PL m+1. The new combinatorial bridge is the substitution transport of an actual factorization; the signed-digit and deletion suppliers are reused. These are StageA mathematical source candidates; independent admission and source-binding review remain separate."))), DescribeRole.Theorem),
+            AssessedProvenance.FromRepo(Akmp), Blocks(Paragraph(Text("The substitution tau sends b to [b,not b,not b,b]. Reversing a substituted word commutes with substitution, so images of nonempty palindrome factors remain nonempty palindromes. Applying it to every factor gives PL(tau(w)) <= PL(w). The original even/odd Thue-Morse recurrences identify tau(t[0:n)) with t[0:4n). The existing ordinary-PL one-letter Lipschitz theorem then gives PL(t[0:4n-1)) <= PL(t[0:n))+1. Induction gives the ordinary upper bound on this exact family. The universal literal-cut lower bound sandwiches the actual mixed minimum between signed weight m+1 and ordinary PL m+1. The new combinatorial bridge is the substitution transport of an actual factorization; the signed-digit and deletion suppliers are reused."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("tm-unbounded-equal-cost"), DeclarationHandle.Create(Prefix + "unbounded_equal_cost"),
             H("The whole quantified Section 6 assertion"), StatementSource.FromAuthor(Disp(All("K", N(),
                 Imp(Le(D(1), V("K")), Exists("n", N(), And(Le(D(1), V("n")),
                     And(Eqn(Cost(V("n")), Pl(V("n"))), Le(V("K"), Pl(V("n")))))))))),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("AKMP Section 6 final paragraph and Table 2 motivate this exact quantified assertion. Choose n=attainingLength(K); both minima equal K+1. The word is Complexity.factor(n,0), with false=a and true=b. Ordinary PL minimizes nonempty palindrome factors; combinedLength minimizes nonempty factors that are palindromes or exchange-reversal antipalindromes. No derivative cost, parity proxy, empty factor or restricted window replaces these definitions. The argument is repository-derived, rather than attributed to the article. Worldwide openness and external originality have not been verified. The pre-existing signed-cut binding exceptions are disclosed at issue 26539; this source does not certify freezing, independent admission, or publication."))), DescribeRole.Theorem))));
+            AssessedProvenance.FromRepo(Akmp), Blocks(Paragraph(Text("The final paragraph of Section 6 and Table 2 motivate this exact quantified assertion. Choose n=attainingLength(K); both minima equal K+1. The word is Complexity.factor(n,0), with false=a and true=b. Ordinary PL minimizes nonempty palindrome factors; combinedLength minimizes nonempty factors that are palindromes or exchange-reversal antipalindromes. No derivative cost, parity proxy, empty factor or restricted window replaces these definitions. The argument is repository-derived, while the source supplies the motivating question."))), DescribeRole.Theorem,
+            openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("ambroz-kadlec-masakova-pelantova-2019-thue-morse-equal-cost"),
+                ResolutionKind.Proved)))));
 
     private static Formula V(string x) => F.Id(x);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
