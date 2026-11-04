@@ -1,0 +1,167 @@
+### 49.4. Exact algebraic root and rational isolation
+
+Set
+
+$$
+\omega=c/h=\sqrt{1+h},\quad v_0=s^2/h^2=1-h,\quad
+k=\omega-1,\quad \ell=1-x^2,\quad z=\sqrt{q/p}/y,\quad
+\mathsf H=h+4s.
+$$
+
+Thus $q=z^2\ell/(1+z^2\ell)$ and $p=1/(1+z^2\ell)$.
+Define the two polynomials
+
+$$
+\begin{aligned}
+\mathcal F(x,z)={}&x+\omega
+ +[\mathsf H+\omega+(1-2\omega)x-2x^2]z\\
+ &+[1-2x^2-\omega x]z^2
+ +\ell[\mathsf H-(1+2\omega)x-2x^2]z^3
+ -(x+\omega)\ell^2z^4,\\
+\mathcal P(x,z)={}&k^2x^2+kx^2(2x+\omega-v_0)z\\
+ &+(x+\omega)[(1+v_0)x^3-v_0(1+x)]z^2.
+\end{aligned}
+\tag{49.14}
+$$
+
+Substitution in (49.7) and (49.4) gives the exact unsquared identities
+
+$$
+\mathcal F=\frac{z(1+z^2\ell)}{4h^2}
+    (\mathscr L_\delta-\mathscr L_q),\qquad
+\mathcal P=\frac{(1+x)(x+\omega)}{h^2p}D.
+\tag{49.15}
+$$
+
+Every multiplier is positive for $0<x<1,z>0$. In the first identity
+$D_0/(4h^2)=\mathsf H+h=\mathsf H+\omega^2-1$.
+There is no squaring or unspecified radical branch.
+
+Here is a rational certificate on
+$\mathcal R=[16/25,13/20]\times[32/25,13/10]$.
+Positive square comparisons using (49.2) give
+
+$$
+\begin{gathered}
+7071/10000<h<7072/10000,\qquad
+1913/5000<s<3827/10000,\\
+\omega_-:=2613/2000<\omega<6533/5000=:\omega_+,\\
+\mathsf H_-:=179/80<\mathsf H<1119/500=:\mathsf H_+,\\
+v_-:=183/625<v_0<2929/10000=:v_+.
+\end{gathered}
+\tag{49.16}
+$$
+
+On $\mathcal R$, $\mathcal F_{\mathsf H}=z+\ell z^3>0$, whereas
+$\mathcal F_\omega=1+(1-2x)z-xz^2-2x\ell z^3-\ell^2z^4<0$:
+indeed $x>1/2$ and $xz^2>1$.
+Writing $\mathcal F=x+\omega+\sum_{i=1}^4B_i z^i$, direct bounds are
+
+| Coefficient derivative | Rational upper bound on $\mathcal R$ |
+| --- | --- |
+| $B_1'=1-2\omega-4x$ | $-4173/1000<-4$ |
+| $B_2'=-4x-\omega$ | $-7733/2000<-19/5$ |
+| $B_3'=-2\mathsf Hx+3(1+2\omega)x^2-(1+2\omega)-4x+8x^3$ | $-2345219/1000000<-2$ |
+| $B_4'=\ell(5x^2+4\omega x-1)$ | $52086573/20000000<3$ |
+
+For the third bound, $B_3'$ increases in $x,\omega$ and decreases in
+$\mathsf H$ on this box: its $x$ derivative is
+$-2\mathsf H+6(1+2\omega)x-4+24x^2>0$.
+For the fourth, the $x$ derivative is
+$-20x^3-12\omega x^2+12x+4\omega>0$ there, and the
+$\omega$ derivative is positive. Endpoints give the displayed values.
+Consequently
+
+$$
+\mathcal F_x<1-4(32/25)-(19/5)(32/25)^2
+ -2(32/25)^3+3(13/10)^4=-1492981/250000<0.
+$$
+
+The following exact substitutions therefore bound the two horizontal
+edges, uniformly in $x$:
+
+$$
+\begin{aligned}
+\mathcal F(13/20,32/25;\mathsf H_-,\omega_+)
+ &=\frac{27078966727}{1220703125000}>1/50,\\
+\mathcal F(16/25,13/10;\mathsf H_+,\omega_-)
+ &=-\frac{445536333653}{7812500000000}<-1/20.
+\end{aligned}
+\tag{49.17}
+$$
+
+Thus for every $x$ in the box there is a root in its $z$ interval.
+Any such root is an actual selected point: define
+$\delta=2(1-x)$, $q=z^2\ell/(1+z^2\ell)$ and $t=\delta+q$.
+Then $0<t<2$, $\delta\in\operatorname{int}J(t)$ and (49.15)
+is the original stationarity equation. Strict scalar convexity from
+Theorem 37.5 identifies it with the selected minimum. There cannot be
+two such $z$ at one $x$, since $x(t)$ is strictly decreasing by (49.11).
+Equivalently the continuous strictly monotone selected $x(t)$ has a
+continuous inverse throughout this $x$ interval.
+
+To certify a determinant sign at each vertical edge, write
+$E_v(x)=(1+v)x^3-v(1+x)$ and
+
+$$
+\begin{aligned}
+\mathcal P^+&=(\omega_+-1)^2x^2
+ +(\omega_+-1)x^2(2x+\omega_+-v_-)z
+ +(x+\omega_-)E_{v_-}(x)z^2,\\
+\mathcal P^-&=(\omega_--1)^2x^2
+ +(\omega_--1)x^2(2x+\omega_--v_+)z
+ +(x+\omega_+)E_{v_+}(x)z^2.
+\end{aligned}
+$$
+
+Here $E_v<0$ on the box and decreases with $v$.
+It follows term by term that $\mathcal P^-\le\mathcal P\le\mathcal P^+$.
+The exact endpoint values are
+
+$$
+\mathcal P^+(16/25,32/25)
+ =-\frac{33093929164}{762939453125}<-1/25,\qquad
+\mathcal P^-(13/20,13/10)
+ =\frac{207479065651}{40000000000000}>1/200.
+$$
+
+Each of these downward quadratics has positive constant and linear
+terms, so its sign changes once on the positive $z$ axis. The first
+value makes the determinant negative at the selected left edge for
+all $z\ge32/25$; the second makes it positive at the selected right
+edge for all $z\le13/10$. Continuity and the at-most-one-zero result
+prove that
+
+$$
+\boxed{\mathcal F(x_*,z_*)=\mathcal P(x_*,z_*)=0,\quad
+ 16/25<x_*<13/20,\quad32/25<z_*<13/10}
+\tag{49.18}
+$$
+
+has exactly one solution. Its level is exactly
+
+$$
+\xi_*=4(1-x_*)+
+ \frac{2z_*^2(1-x_*^2)}{1+z_*^2(1-x_*^2)}.
+\tag{49.19}
+$$
+
+One can also specify a single positive radical branch: on the $x$
+interval in (49.18), set
+$A=k^2x^2$, $B=kx^2(2x+\omega-v_0)$,
+$C=-(x+\omega)E_{v_0}(x)>0$. Then
+$z_D(x)=(B+\sqrt{B^2+4AC})/(2C)$, and $x_*$ is the unique
+root of $\mathcal F(x,z_D(x))=0$ in that interval.
+
+Finally the box gives
+
+$$
+\frac{14784}{15625}<z_*^2(1-x_*^2)<\frac{62361}{62500}<1,
+\quad 12/25<q_*<1/2,\quad 7/10<\delta_*<18/25.
+$$
+
+The leftmost fraction exceeds $12/13$. Thus
+$59/25<2(\delta_*+q_*)<61/25$, as claimed. This certificate
+proves firstness, root correspondence and a strict crossing jointly;
+an isolated numerical zero alone would establish none of those facts.
+

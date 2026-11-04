@@ -30,7 +30,21 @@ $$(\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinusKurtosisUpperB
 
 The first clause quantifies over every natural n ≥ 2 and every k : Fin n → ℝ with all coordinates strictly positive. Repeated rates retain their multiplicity. Both skewness and kurtosis use this same k. The second clause is IsLUB for exactly the values from those actual rate vectors, with no bound on n. It does not replace realizable vectors by abstract moment triples. No extremal-topology assumption, rational-rate restriction or finite dimension cutoff is imposed.
 
-**Theorem 1.3 (The universal upper bound and sharpness).**
+**Theorem 1.3 (The common normalized difference).**
+
+$$\forall (n: \mathbb{N}), (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness}\left(k\right)) - (\operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis}\left(k\right)) = (((-(12: \mathbb{R})) \cdot ((\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.p}\left(k\right))^{(2: \mathbb{N})})) + (((18: \mathbb{R})) \cdot (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.q}\left(k\right)))) - (\frac{((6: \mathbb{R})) \cdot (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.r}\left(k\right))}{\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.p}\left(k\right)})))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinusKurtosisUpperBound.normalized_difference` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
+
+*Commentary.*
+
+For every finite real rate vector, S − K equals −12p² + 18q − 6r/p, where p, q and r are the second, third and fourth power sums of the same normalized inverse-rate vector. The identity uses total real division; positivity is required by the extremal bounds, not by this identity.
+
+**Theorem 1.4 (The universal upper bound and sharpness).**
 
 $$(\forall (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \to (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \to ((\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness}\left(k\right)) - (\operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis}\left(k\right)) \le \operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinusKurtosisUpperBound.upperBound}))))) \land (\operatorname{IsLUB}\left(\{(s: \mathbb{R}) \mid \exists (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \land (\exists (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \land (s = (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness}\left(k\right)) - (\operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis}\left(k\right))))))\}, \operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinusKurtosisUpperBound.upperBound}\right))$$
 
@@ -59,6 +73,7 @@ For n = 2 the physical interpretation uses two successive oriented phase stages 
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinusKurtosisUpperBound.claim`
+- Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinusKurtosisUpperBound.normalized_difference`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinusKurtosisUpperBound.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinusKurtosisUpperBound.upperBound`
 - Dependency: [D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound](UnicyclicSkewnessPlusKurtosisLowerBound.md)

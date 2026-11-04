@@ -1,0 +1,25 @@
+### 定义 35.1（准确相位目标与完整原矩阵实现）
+
+<a id="c117-c132-algebraic-word-scope"></a>
+
+这里的目标来自 [AURIC C132：黄金回返二元量子关系](AURIC_C132_GOLDEN_RETURN_BINARY_QUANTUM_RELATIONS.md) **定义 3.1**：$\phi=(1+\sqrt5)/2$、$z=\exp(2\pi i/\phi)$，配方系数为 $\mathbb N[z]$。C132 定理 3.5 在其共轭线性合计语义及全部 Fibonacci 两侧回返比较下给出全有限 Hermitian 正核；§7.1 已明确区分该数学条件与原过程的实际供应。这个文件不同于 C133 §6.1 所称、以 $I+\lambda U+U^2=0$ 为前件的同名编号来源，不能仅凭“C132”推断二者对应。
+
+指定的原实现严格沿用 (16.20)–(16.22)、定义 26.1 与[相干重建续卷 II](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 定义 77.1、假设 78.1：整个 $H$、唯一初态、全部七地址和全部 $1024$ 标签为
+
+$$
+ \begin{aligned}
+ H&=\operatorname{span}_{\mathbb C}\{|10\,\beta\,010\rangle:
+       \beta\in\{0,1\}^5,\ \beta_i\beta_{i+1}=0\},\quad\dim H=13,\\
+ v_0&=e_{00100},\quad j\in\{0,\ldots,6\},\quad
+ \Gamma=\{0,1\}^{10},\\
+ x&=\phi^{-1},\quad y=\sqrt x,\quad\zeta=e^{3\pi i/5},\quad
+ Q=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix},\\
+ K_j&=\zeta[I+(\zeta-1)\mathcal P_j],\quad
+ \mathcal P_j=n_{j-1}n_{j+1}+(1-n_{j-1})(1-n_{j+1})Q_j,\\
+ K_{j_1\cdots j_\ell}&=K_{j_\ell}\cdots K_{j_1},\qquad K_\epsilon=I.
+ \end{aligned}
+ \tag{35.1}
+$$
+
+不以局部 $L$ 替换整个 $H$，不删除零标签或失败。$\zeta$ 与目标 $z$ 不同；这里的矩阵实现只确定实际字的算子，不给未知终端响应偷加 Born 律。假设 78.1 的连续、相位不变及指定终端的射线充分性仍是其明示前件，不抹去条件索引中的原程序记录。
+
