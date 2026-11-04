@@ -48,6 +48,10 @@ $$\forall (n: \mathbb{N}), ((0 < n) \to (((\operatorname{Nat.mod}\left(n, 4\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/TeaCoordinationSequence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/barker-2018-oeis-a299285-tea-coordination-sequence` (proved) by `D5/S3/StatisticalMechanics/TeaCoordinationSequence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barker-2018-oeis-a299285-tea-coordination-sequence","declaration_gid":"D5/S3/StatisticalMechanics/TeaCoordinationSequence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. J. A. Sloane, Colin Barker, Stefano Spezia (2018). *OEIS A299285, coordination sequence for the tea 3D uniform tiling*. URL: <https://oeis.org/A299285>.
@@ -84,5 +88,6 @@ Finally split n into its four remainders modulo four and use the integer quotien
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.shell`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.teaGraph`
+- Dependency: [D5/S1/Recurrence/Bilateral/HannaThetaFourModFour](../../S1/Recurrence/Bilateral/HannaThetaFourModFour.md)
 - Dependency: [D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation](../Combinatorics/PositionSets/VertexPositionRatioRefutation.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum](../VertexAlgebra/LatticeHalfFockVirasoroSpectrum.md)

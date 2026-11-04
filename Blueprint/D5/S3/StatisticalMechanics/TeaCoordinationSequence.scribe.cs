@@ -148,7 +148,10 @@ internal sealed class TeaCoordinationSequenceDocument : IScribeDocumentDefinitio
                             + "equalities back to natural numbers proves the four implications. "
                             + "Replacing the layer sum by shell n proves their conjunction for "
                             + "every positive n."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("barker-2018-oeis-a299285-tea-coordination-sequence"),
+                    ResolutionKind.Proved)))));
 
     private static Formula GraphFormula()
     {
