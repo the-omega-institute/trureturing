@@ -207,7 +207,7 @@ private lemma path_reduction (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j)
     simp only [z, dite_eq_right (by omega : ¬ 0 < 0), zero_add,
       dite_eq_left (by omega : 1 < j), ite_true] at ht
     simp only [x, dite_eq_left (by omega : j - 1 < j), dite_eq_left (by omega : j - 2 < j),
-      Nat.sub_self, show j - 1 - (j - 2) = 1 by omega]
+      Nat.sub_self, show j - 1 - (j - 2) = 1 from tsub_tsub_tsub_cancel_left hj]
     change (i + 1 : ℤ) * d z - d ⟨1, by omega⟩ = _
     linear_combination ht
 
