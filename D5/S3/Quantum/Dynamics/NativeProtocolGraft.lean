@@ -1448,6 +1448,7 @@ theorem original_event_resource_bounds {L : Type} (T : Tree L)
 #print axioms original_event_resource_bounds
 
 namespace Actual
+open scoped ComplexOrder MatrixOrder
 
 /-- A computational vector on the complete original carrier. -/
 def ket (b : Basis) : Basis → ℂ := fun z => if z = b then 1 else 0
@@ -1455,8 +1456,7 @@ def ket (b : Basis) : Basis → ℂ := fun z => if z = b then 1 else 0
 private theorem flip_ne (i : Fin 16) (b : Basis) : flip i b ≠ b := by
   intro h
   have hi := congrFun h i
-  simp only [flip, Function.update_same] at hi
-  cases b i <;> simp_all
+  cases hb : b i <;> simpa [flip, hb] using hi
 
 private theorem flip_eq (i : Fin 16) (z b : Basis) :
     flip i z = b ↔ z = flip i b := by
@@ -1474,7 +1474,7 @@ private theorem gate_ket (j : Address) (b : Basis) :
     Pi.smul_apply, Pi.add_apply, smul_eq_mul, Coeff.p_action, ket]
   by_cases hz : z = b
   · subst z
-    simp [Ne.symm (flip_ne (center j) b)]
+    simp [flip_ne, Ne.symm (flip_ne (center j) b)]
     ring
   · by_cases hf : z = flip (center j) b
     · subst z
@@ -1482,7 +1482,7 @@ private theorem gate_ket (j : Address) (b : Basis) :
         mul_one, zero_add, Coeff.active_flip]
       split_ifs <;> ring
     · have hfb : flip (center j) z ≠ b := by
-        simpa only [flip_eq] using hf
+        exact fun h => hf ((flip_eq (center j) z b).mp h)
       simp [hz, hf, hfb]
 
 /-- Source sites b1,b2,b3 are shifted positions 2,3,4; all other bits
@@ -1510,7 +1510,8 @@ def fiveTermVector : Basis → ℂ :=
 
 private theorem source_start : omega0 = ket (sourceWord false false true) := by
   have h : rootWord = sourceWord false false true := by decide
-  simp only [omega0, ket, h]
+  change ket rootWord = ket (sourceWord false false true)
+  exact congrArg ket h
 
 private theorem source_steps :
     sourceVector = fiveTermVector := by
@@ -1575,26 +1576,31 @@ theorem original_source_vector :
     (operator sourceTree ()).mulVec omega0 = fiveTermVector ∧
     calls sourceTree () = 3 := by
   constructor
-  · simpa [sourceTree, operator, callMatrix, sourceVector, Matrix.mulVec_mulVec] using source_steps
+  · simpa [sourceTree, operator, callMatrix, sourceVector, Matrix.mulVec_mulVec, Matrix.mul_assoc] using source_steps
   · rfl
 
 
 /-- The original complement contains all fifteen other native bits. -/
 abbrev Rest := {i : Fin 16 // i ≠ 2} → Bool
-def cut : Basis ≃ Bool × Rest := Equiv.funSplitAt 2 Bool
-abbrev Qubit := Matrix Bool Bool ℂ
+def cut : Basis ≃ Fin 2 × Rest :=
+  (Equiv.funSplitAt 2 Bool).trans (Equiv.prodCongr finTwoEquiv.symm (Equiv.refl Rest))
+abbrev Qubit := Matrix (Fin 2) (Fin 2) ℂ
 
 /-- Mathematical reduction at original site b1. Original records remain
 outside this operation; it asserts no physical deletion or fresh preparation. -/
-def reduced (v : Basis → ℂ) : Qubit :=
+def cross (v w : Basis → ℂ) : Qubit :=
   D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight
-    (Matrix.vecMulVec (v ∘ cut.symm) (star (v ∘ cut.symm)))
+    (Matrix.vecMulVec (v ∘ cut.symm) (star (w ∘ cut.symm)))
 
-private theorem ket_cut (x : Basis) (i : Bool) (e : Rest) :
+def reduced (v : Basis → ℂ) : Qubit := cross v v
+
+private theorem ket_cut (x : Basis) (i : Fin 2) (e : Rest) :
     ket x (cut.symm (i,e)) =
-      if i = x 2 then if e = (cut x).2 then 1 else 0 else 0 := by
-  simp only [ket, Equiv.symm_apply_eq, Prod.mk.injEq]
-  rfl
+      if i = (cut x).1 then if e = (cut x).2 then 1 else 0 else 0 := by
+  have h : cut.symm (i,e) = x ↔ i = (cut x).1 ∧ e = (cut x).2 := by
+    rw [Equiv.symm_apply_eq, Prod.ext_iff]
+  simp only [ket, h]
+  split_ifs <;> simp_all
 
 private theorem source_rest (x y z x' y' z' : Bool) :
     (cut (sourceWord x y z)).2 = (cut (sourceWord x' y' z')).2 ↔
@@ -1609,6 +1615,157 @@ private theorem source_bit (x y z : Bool) : sourceWord x y z 2 = x := by
 private theorem reduced_positive (v : Basis → ℂ) : (reduced v).PosSemidef :=
   D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight_posSemidef
     (Matrix.posSemidef_vecMulVec_self_star (v ∘ cut.symm))
+
+
+private theorem cut_source_bit (x y z : Bool) :
+    (cut (sourceWord x y z)).1 = if x then 1 else 0 := by
+  cases x <;> rfl
+
+open D5.S3.Quantum.Information.PartialTraceMutualInformation
+
+private theorem cross_add_left (u v w : Basis → ℂ) :
+    cross (u+v) w = cross u w + cross v w := by
+  unfold cross
+  change partialTraceRight
+    (Matrix.vecMulVec ((u ∘ cut.symm)+(v ∘ cut.symm)) (star (w ∘ cut.symm))) = _
+  rw [Matrix.add_vecMulVec, partialTraceRight_add]
+
+private theorem cross_add_right (u v w : Basis → ℂ) :
+    cross u (v+w) = cross u v + cross u w := by
+  unfold cross
+  change partialTraceRight
+    (Matrix.vecMulVec (u ∘ cut.symm) (star ((v ∘ cut.symm)+(w ∘ cut.symm)))) = _
+  rw [star_add, Matrix.vecMulVec_add, partialTraceRight_add]
+
+private theorem cross_ket_smul (a b : ℂ) (x y : Basis) (i j : Fin 2) :
+    cross (a • ket x) (b • ket y) i j =
+      if i = (cut x).1 ∧ j = (cut y).1 ∧ (cut x).2 = (cut y).2
+      then a * star b else 0 := by
+  classical
+  simp only [cross, partialTraceRight, Matrix.vecMulVec_apply,
+    Function.comp_apply, Pi.star_apply, Pi.smul_apply, smul_eq_mul, map_mul, ket_cut]
+  by_cases hi : i = (cut x).1 <;> by_cases hj : j = (cut y).1 <;>
+    simp [hi, hj, mul_ite, ite_mul]
+
+def sourceLocal : Fin 2 → ℂ := ![a,b]
+def p0 : Qubit := !![1,0;0,0]
+def sourceMixture : Qubit :=
+  (a * star a * b * star b + c * star c) •
+    Matrix.vecMulVec sourceLocal (star sourceLocal) +
+  (b * star b)^2 • p0
+
+private theorem source_reduction : reduced sourceVector = sourceMixture := by
+  change cross sourceVector sourceVector = _
+  rw [source_steps]
+  simp only [fiveTermVector, cross_add_left, cross_add_right]
+  ext i j
+  simp only [Matrix.add_apply, cross_ket_smul, cut_source_bit, source_rest]
+  fin_cases i <;> fin_cases j <;>
+    norm_num [sourceMixture, sourceLocal, p0, Matrix.vecMulVec_apply,
+      Pi.star_apply, Matrix.smul_apply, smul_eq_mul, map_mul, map_pow]
+  · linear_combination
+      (a * star a * c * star c + b^2 * (star b)^2) * Coeff.zeta_norm
+  · linear_combination (a * star b * c * star c) * Coeff.zeta_norm
+  · linear_combination (b * star a * c * star c) * Coeff.zeta_norm
+  · linear_combination (b * star b * c * star c) * Coeff.zeta_norm
+
+private theorem zeta_cube : zeta^3 = t-t*zeta := by
+  calc
+    zeta^3 = zeta*zeta^2 := by ring
+    _ = zeta*(-1-t*zeta) := by rw [Coeff.zeta_sq]
+    _ = -zeta-t*zeta^2 := by ring
+    _ = -zeta-t*(-1-t*zeta) := by rw [Coeff.zeta_sq]
+    _ = t+(t^2-1)*zeta := by ring
+    _ = t-t*zeta := by rw [Coeff.t_sq]; ring
+
+private theorem zeta_four : zeta^4 = t+zeta := by
+  calc
+    zeta^4 = zeta^3*zeta := by ring
+    _ = (t-t*zeta)*zeta := by rw [zeta_cube]
+    _ = t*zeta-t*zeta^2 := by ring
+    _ = t*zeta-t*(-1-t*zeta) := by rw [Coeff.zeta_sq]
+    _ = t+(t+t^2)*zeta := by ring
+    _ = t+zeta := by rw [Coeff.t_sq]; ring
+
+private theorem a_value : a = -t := by
+  unfold a
+  calc
+    _ = zeta+(zeta^2-zeta)*t := by ring
+    _ = zeta+(-1-t*zeta-zeta)*t := by rw [Coeff.zeta_sq]
+    _ = -t := by linear_combination -zeta * Coeff.t_sq
+
+private theorem b_value : b = -beta*zeta^4 := by
+  have hb : beta^3 = beta*t := by rw [pow_succ, Coeff.beta_sq]; ring
+  unfold b
+  rw [hb, zeta_four]
+  calc
+    _ = (zeta^2-zeta)*beta*t := by ring
+    _ = (-1-t*zeta-zeta)*beta*t := by rw [Coeff.zeta_sq]
+    _ = -beta*(t+zeta) := by linear_combination -(beta*zeta) * Coeff.t_sq
+
+private theorem c_value : c = -t*zeta^3 := by
+  unfold c
+  rw [Coeff.t_sq, zeta_cube]
+  calc
+    _ = zeta^2-(zeta+(zeta^2-zeta)*t)+zeta := by ring
+    _ = -1-t*zeta-(-t)+zeta := by
+      rw [show zeta+(zeta^2-zeta)*t = a by unfold a; ring,
+        a_value, Coeff.zeta_sq]
+    _ = -t*(t-t*zeta) := by linear_combination Coeff.t_sq
+
+private theorem star_t : star t = t := by simp [t]
+private theorem star_beta : star beta = beta := by simp [beta]
+private theorem phase_norm (n : ℕ) : zeta^n * star (zeta^n) = 1 := by
+  rw [map_pow, ← mul_pow, Coeff.zeta_norm, one_pow]
+
+private theorem a_norm : a * star a = t^2 := by
+  rw [a_value, star_neg, star_t]; ring
+private theorem b_norm : b * star b = t := by
+  rw [b_value, star_mul, star_neg, star_beta]
+  calc
+    (-beta*zeta^4) * (-beta*star (zeta^4)) =
+        beta^2 * (zeta^4*star (zeta^4)) := by ring
+    _ = t := by rw [phase_norm, Coeff.beta_sq, mul_one]
+private theorem c_norm : c * star c = t^2 := by
+  rw [c_value, star_mul, star_neg, star_t]
+  calc
+    (-t*zeta^3) * (-t*star (zeta^3)) = t^2*(zeta^3*star (zeta^3)) := by ring
+    _ = t^2 := by rw [phase_norm, mul_one]
+
+def gamma : ℂ := t^2 * beta * star (zeta^4)
+def chi : Qubit := !![t,gamma;star gamma,t^2]
+
+private theorem mixture_chi : sourceMixture = chi := by
+  have hw : a * star a * b * star b + c * star c = t := by
+    rw [show a * star a * b * star b = (a*star a)*(b*star b) by ring,
+      a_norm, b_norm, c_norm]
+    linear_combination (t+1) * Coeff.t_sq
+  rw [sourceMixture, hw, b_norm]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [sourceLocal, p0, chi, Matrix.vecMulVec_apply,
+      Pi.star_apply, Matrix.smul_apply, smul_eq_mul]
+  · rw [show t*a*star a = t*(a*star a) by ring, a_norm]
+    linear_combination (t+1)*Coeff.t_sq
+  · rw [a_value, b_value, star_mul, star_neg, star_beta]
+    unfold gamma
+    ring
+  · rw [a_value, b_value, star_neg, star_t]
+    simp only [gamma, star_mul, star_pow, star_t, star_beta, star_star]
+    ring
+  · rw [show t*b*star b = t*(b*star b) by ring, b_norm]
+    ring
+
+/-- The full-carrier source calls give exactly the same native marginal chi. -/
+theorem original_source_calibration :
+    reduced ((operator sourceTree ()).mulVec omega0) = chi ∧ chi.PosSemidef := by
+  have hv := original_source_vector.1
+  have hc : reduced ((operator sourceTree ()).mulVec omega0) = chi := by
+    rw [hv, ← source_steps, source_reduction, mixture_chi]
+  exact ⟨hc, hc ▸ reduced_positive _⟩
+
+#print axioms original_source_vector
+#print axioms original_source_calibration
 
 end Actual
 
