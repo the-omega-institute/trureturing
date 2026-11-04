@@ -206,5 +206,116 @@ theorem actual_competitor_gluing (A B : Fin 2 → Bond) (r : ℕ)
     ∃ Z : Bond, competitorSlice B b = gamma A 4 Z := by
   exact (rank_locus_parent_intersection A r hr 0 (competitorSlice B b)).mp ⟨hleft, hright⟩
 
+/-- Native three-site amplitude columns, before forming the raw Gram matrix. -/
+def threeColumns (A : Fin 2 → Bond) (r : ℕ) : Matrix (Word 3) (Word (r + 1)) ℂ :=
+  fun w b => gamma A 3 (wordMatrix A b) w
+
+/-- The unnormalized three-site reduced density matrix on a ring of length r+4. -/
+def rawThree (A : Fin 2 → Bond) (r : ℕ) : Matrix (Word 3) (Word 3) ℂ :=
+  threeColumns A r * (threeColumns A r).conjTranspose
+
+private lemma gram_range {ι κ : Type} [Fintype ι] [Fintype κ]
+    (M : Matrix ι κ ℂ) :
+    LinearMap.range (M * M.conjTranspose).mulVecLin = LinearMap.range M.mulVecLin := by
+  classical
+  open scoped ComplexOrder in
+    exact Submodule.eq_of_le_of_finrank_eq
+      (by
+        rw [Matrix.mulVecLin_mul, LinearMap.range_comp]
+        exact Submodule.map_le_range)
+      (Matrix.rank_self_mul_conjTranspose M)
+
+private lemma raw_to_parent (A B : Fin 2 → Bond) (r : ℕ)
+    (hraw : rawThree B r = rawThree A r) :
+    ∀ b : Word (r + 1), ∃ X : Bond,
+      gamma B 3 (wordMatrix B b) = gamma A 3 X := by
+  classical
+  let L : Bond →ₗ[ℂ] (Word 3 → ℂ) :=
+    { toFun := gamma A 3
+      map_add' := by intros; ext w; simp [gamma, add_mul, Matrix.trace_add]
+      map_smul' := by intros; ext w; simp [gamma, smul_mul_assoc, Matrix.trace_smul] }
+  have hle : LinearMap.range (threeColumns A r).mulVecLin ≤ LinearMap.range L := by
+    rw [Matrix.range_mulVecLin]
+    apply Submodule.span_le.mpr
+    rintro _ ⟨b, rfl⟩
+    exact ⟨wordMatrix A b, rfl⟩
+  intro b
+  have hb : (threeColumns B r).col b ∈ LinearMap.range (threeColumns B r).mulVecLin := by
+    rw [Matrix.range_mulVecLin]
+    exact Submodule.subset_span ⟨b, rfl⟩
+  rw [← gram_range (threeColumns B r), ← rawThree, hraw, rawThree,
+    gram_range (threeColumns A r)] at hb
+  obtain ⟨X, hX⟩ := hle hb
+  exact ⟨X, hX.symm⟩
+
+private theorem propagate (A B : Fin 2 → Bond) (hA : TwoSiteSpanning A) (m : ℕ) :
+    ∀ r : ℕ,
+      (∀ b : Word (m + r), ∃ X : Bond,
+        gamma B 3 (wordMatrix B b) = gamma A 3 X) →
+      ∀ b : Word r, ∃ X : Bond,
+        gamma B (m + 3) (wordMatrix B b) = gamma A (m + 3) X := by
+  induction m with
+  | zero => simpa using fun r h => h
+  | succ m ih =>
+    intro r h b
+    have hp := ih (r + 1) (by simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using h)
+    apply (parent_intersection A hA m (gamma B (m + 4) (wordMatrix B b))).mp
+    constructor
+    · choose X hX using fun j : Fin 2 => hp (Fin.cons j b)
+      refine ⟨X, ?_⟩
+      intro w j
+      rw [← congrFun (hX j) w]
+      simp only [gamma, wordMatrix_cons, wordMatrix_snoc]
+      exact Matrix.trace_mul_cycle (wordMatrix B b) (wordMatrix B w) (B j)
+    · choose Y hY using fun i : Fin 2 => hp (Fin.snoc b i)
+      refine ⟨Y, ?_⟩
+      intro i w
+      rw [← congrFun (hY i) w]
+      simp only [gamma, wordMatrix_cons, wordMatrix_snoc, Matrix.mul_assoc]
+
+private lemma scalar_of_commuting (A : Fin 2 → Bond) (hA : TwoSiteSpanning A)
+    (X : Bond) (hX : ∀ i, X * A i = A i * X) : ∃ c : ℂ, X = c • (1 : Bond) := by
+  classical
+  have hcomm (Y : Bond) : X * Y = Y * X := by
+    have hY : Y ∈ Submodule.span ℂ
+        (Set.range fun p : Fin 2 × Fin 2 => A p.1 * A p.2) := by rw [hA]; trivial
+    obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).mp hY
+    rw [← hc]
+    simp only [Finset.mul_sum, Finset.sum_mul, Matrix.mul_smul, smul_mul_assoc]
+    congr 1
+    funext p
+    rw [← Matrix.mul_assoc, hX, Matrix.mul_assoc, hX, ← Matrix.mul_assoc]
+  refine ⟨X 0 0, ?_⟩
+  have h0 := hcomm (!![1, 0; 0, 0])
+  have h1 := hcomm (!![0, 1; 0, 0])
+  have h01 : X 0 1 = 0 := by
+    simpa [Matrix.mul_apply, Fin.sum_univ_two] using (congrFun (congrFun h0 0) 1).symm
+  have h10 : X 1 0 = 0 := by
+    simpa [Matrix.mul_apply, Fin.sum_univ_two] using congrFun (congrFun h0 1) 0
+  have h11 : X 1 1 = X 0 0 := by
+    simpa [Matrix.mul_apply, Fin.sum_univ_two] using (congrFun (congrFun h1 0) 1).symm
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.smul_apply, h01, h10, h11]
+
+private theorem cyclic_boundary_scalar (A B : Fin 2 → Bond) (hA : TwoSiteSpanning A)
+    (r : ℕ) (X : Bond)
+    (he : gamma B (r + 4) 1 = gamma A (r + 4) X) :
+    ∃ c : ℂ, gamma B (r + 4) 1 = c • gamma A (r + 4) 1 := by
+  have hc (i : Fin 2) : X * A i = A i * X := by
+    apply trace_separates A hA (r + 1)
+    intro w
+    have hl := congrFun he (Fin.cons i w)
+    have hr := congrFun he (Fin.snoc w i)
+    simp only [gamma, wordMatrix_cons, wordMatrix_snoc, one_mul] at hl hr
+    change (X * A i * wordMatrix A w).trace = (A i * X * wordMatrix A w).trace
+    rw [Matrix.mul_assoc, ← hl,
+      Matrix.trace_mul_comm (B i) (wordMatrix B w), hr]
+    exact (Matrix.trace_mul_cycle X (wordMatrix A w) (A i)).symm
+  obtain ⟨c, rfl⟩ := scalar_of_commuting A hA X hc
+  refine ⟨c, he.trans ?_⟩
+  ext w
+  simp [gamma, smul_mul_assoc, Matrix.trace_smul]
+
 end
 end D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection
