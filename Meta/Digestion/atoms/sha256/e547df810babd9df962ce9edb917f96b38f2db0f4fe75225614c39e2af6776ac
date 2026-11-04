@@ -1,0 +1,13 @@
+**定理 33.4（I 的局部删除诊断及其限制）。** 在一个局部复矩阵 Jordan 对象上，II 和同一形式的非中心原子 S 不蕴含 I。以下例子只证明局部诊断，不证明 I 相对于完整原 X/R/F 背景独立。
+
+**证明。** 取 $E=H_n(\mathbb C)$、$n\ge2$、普通迹 $q$、$L_a(b)=(ab+ba)/2$，并取原子效果 $d=e_{11}$ 及其迹一配对。选固定非零实数 $c$，给原双线性关系
+
+$$
+D_ab=\delta_ab+c\operatorname{Tr}(a)b.
+\tag{33.6}
+$$
+
+对 $K\in\mathfrak k=\operatorname{ad}\mathfrak{su}(n)$，有 $\operatorname{Tr}(Ka)=0$、$[K,\operatorname{Id}_E]=0$，故 $[K,D_a]=\delta_{Ka}=D_{Ka}$，II 成立。$d_0=d-I/n$ 无迹，$D_{d_0}=\delta_{d_0}$，所以 S 成立。但 $D_u=cn\operatorname{Id}_E$ 不属于消去单位的 $\mathfrak k$，导子律也失败，故 I 不成立。
+
+如果把同一局部公式机械地放到普通张量联合对象，$D_{u_{AB}}u_{AB}\ne0$ 会直接违反原 X 的交叉零（两个局部单位都有同一个联合像）。因此本例没有给出完整保留背景的删除模型，也不把补齐 X/R/F 留作已完成事项。定理 33.2、33.3 有完整过程模型的资格与本条的局部资格分开；I 在完整原背景中的独立性仍未由此证明。∎
+

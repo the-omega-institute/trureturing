@@ -1,0 +1,123 @@
+**定理 28.3（三阶合同迫使逐原细支在来源记忆支撑上因子化）。** 在定义 28.1 与设计条件 (28.4) 下，(28.5) 当且仅当对每个原 $j\in\mathsf C$ 存在 CP 映射 $\Psi_j:\mathcal B(M_0)\to\mathcal B(M)$，使
+
+$$
+\boxed{\quad V_{j,0}=\operatorname{id}_H\otimes\Psi_j.\quad}
+\tag{28.6}
+$$
+
+等式对 $\mathcal B(H\otimes M_0)$ 的全部算子成立，保留完整返回记忆；对每个有限维惰性参考 $R$ 及每个 $Y\in\mathcal B(H\otimes M_0\otimes R)$，还成立
+
+$$
+(V_{j,0}\otimes\operatorname{id}_R)(Y)
+=(\operatorname{id}_H\otimes\Psi_j\otimes\operatorname{id}_R)(Y).
+\tag{28.7}
+$$
+
+其记忆效果满足
+
+$$
+G_j:=\Psi_j^{\dagger}(I_M)\ge0,\qquad
+\sum_{j\in\mathsf C}G_j\le I_0.
+\tag{28.8}
+$$
+
+若 $\mathsf C=\mathsf J$，最后一个不等式为等式。$\Psi_j$ 的输出可离开 $M_0$。结论不要求纯来源、联合满秩、已知最小本征值、满 steering 张成、乘积准备或效果独立；它也不约束未选失败支的动作，不把 (25.3)–(25.5) 的定量前件删除。
+
+**证明。** 在输入支撑上取任意有限正分解
+
+$$
+\rho=\sum_a|v_a\rangle\langle v_a|,\qquad
+v_a=\sum_{b=1}^de_b\otimes m_{ab},\qquad
+\rho_M=\sum_{a,b}|m_{ab}\rangle\langle m_{ab}|.
+\tag{28.9}
+$$
+
+谱权已经吸入 $v_a$；因此 $\operatorname{span}_{\mathbb C}\{m_{ab}\}=M_0$，但不要求任意一个 $v_a$ 有满 Schmidt 秩。
+
+固定原 $j$ 的一个 Kraus 表示 $V_j(Z)=\sum_\alpha K_{j\alpha}ZK_{j\alpha}^{\dagger}$。对每个 $a,\alpha$ 及秩一 $p$ 置
+
+$$
+f_{j\alpha a}(p)
+=\|((I_H-p)\otimes I_M)K_{j\alpha}(p\otimes I_M)v_a\|^2\ge0.
+\tag{28.10}
+$$
+
+各项之和是 (28.5) 中对应 $j$ 的泄漏。由于 $p^2=p$，(28.10) 等于
+
+$$
+\begin{aligned}
+&\langle v_a|(p\otimes I_M)K_{j\alpha}^{\dagger}K_{j\alpha}
+       (p\otimes I_M)|v_a\rangle\\
+&\quad-\langle v_a|(p\otimes I_M)K_{j\alpha}^{\dagger}
+       (p\otimes I_M)K_{j\alpha}(p\otimes I_M)|v_a\rangle.
+\end{aligned}
+\tag{28.11}
+$$
+
+第一项是 $p$ 矩阵元的二次多项式，第二项为三次；所以三阶及其低阶矩已准确积分它，不需要四阶。由 (28.5) 的逐项非负性，$\sum_sw_sf_{j\alpha a}(p_s)=0$。用 (28.4) 得 $\int f_{j\alpha a}\,d\mu=0$。连续性及 Haar 测度的满支撑使 $f_{j\alpha a}(p)=0$ 对每个秩一 $p$ 成立：若某点严格正，则其一个开邻域有正积分，矛盾。
+
+现在固定 $K=K_{j\alpha}$ 和 $a$，并写系统矩阵块
+
+$$
+K_{ri}=(\langle e_r|\otimes I_M)K(|e_i\rangle\otimes I_M).
+$$
+
+对任意非零 $z\in\mathbb C^d$，上述零式表示
+
+$$
+K\left(z\otimes\sum_b\overline z_bm_{ab}\right)\in z\otimes M.
+\tag{28.12}
+$$
+
+单位向量的结论由齐次性推广到全部非零 $z$。令其第 $r$ 个输出记忆分量为
+$F_r(z,\overline z)=\sum_{i,b}z_i\overline z_bK_{ri}m_{ab}$。
+平行于 $z$ 给出全部向量值多项式恒等式
+
+$$
+z_tF_r(z,\overline z)-z_rF_t(z,\overline z)=0
+\qquad(r,t=1,\ldots,d).
+\tag{28.13}
+$$
+
+这些式在 $z=0$ 也为零。$z_i=x_i+iy_i$、$\overline z_i=x_i-iy_i$ 是 $2d$ 个多项式变量间的可逆复线性变换；在全部实 $(x,y)$ 上为零的复多项式系数全为零。因此可以把 $z,\overline z$ 当作独立变量，逐个提取 $\overline z_b$ 的系数，得到
+
+$$
+z_t\sum_iz_iK_{ri}m_{ab}
+-z_r\sum_iz_iK_{ti}m_{ab}=0
+\qquad\text{对全部 }z,r,t,b.
+\tag{28.14}
+$$
+
+特别地，对每个 $a,b$，复线性映射
+$L_{ab}:H\to H\otimes M$、$L_{ab}z=K(z\otimes m_{ab})$
+满足 $L_{ab}z\in z\otimes M$。取 $z=e_i$ 得
+$L_{ab}e_i=e_i\otimes n_i$；再取 $e_i+e_k$ 得 $n_i=n_k$。
+故存在 $n_{ab}$ 使 $L_{ab}=I_H\otimes n_{ab}$。$d=1$ 时同一结论直接成立。
+
+由此对每个 $m_{ab}$，全部非对角块 $K_{ri}m_{ab}$ 为零，全部对角块 $K_{ii}m_{ab}$ 相同。令 $B=K_{11}|_{M_0}:M_0\to M$；(28.9) 的张成性给
+
+$$
+K\iota=I_H\otimes B\quad\text{于整个 }H\otimes M_0.
+\tag{28.15}
+$$
+
+这一步将同一来源中 $z$ 与 $\overline z$ 的关系提升为全部记忆列的约束，没有预设 $\{\sigma_p\}$ 张成所有记忆算子。对每个原 $j,\alpha$ 作此构造，定义
+
+$$
+\Psi_j(Z)=\sum_\alpha B_{j\alpha}ZB_{j\alpha}^{\dagger}.
+\tag{28.16}
+$$
+
+它 CP；(28.15) 给 (28.6)，作为线性映射等式再张量恒等即给 (28.7)，不对参考与输入相关性加限制。原完整性给
+
+$$
+I_H\otimes\sum_{j\in\mathsf C,\alpha}B_{j\alpha}^{\dagger}B_{j\alpha}
+=\iota^{\dagger}\left(\sum_{j\in\mathsf C,\alpha}
+ K_{j\alpha}^{\dagger}K_{j\alpha}\right)\iota
+\le I_H\otimes I_0,
+\tag{28.17}
+$$
+
+从而得 (28.8)；选择全部原标签时用原完整性得等号。未选标签只在这个正补效果中出现，未被替换成另一份完成映射。反向由
+$V_j(X_p)=p\otimes\Psi_j(\sigma_p)$ 直接使全部泄漏为零，包括 $\eta_p=0$ 的节点。$\square$
+
