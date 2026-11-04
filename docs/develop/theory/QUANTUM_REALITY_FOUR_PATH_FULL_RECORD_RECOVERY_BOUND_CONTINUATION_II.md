@@ -4258,9 +4258,10 @@ $$
 \tag{47.6}
 $$
 
-Then there is an actual phase pair $(E,U')$ with the same $E$, active sign,
-complex active trace, and true original level $\xi$, such that
-$g(E,U')<g(E,U)$. In particular, for a positive-definite $F$ every
+Then there is an actual phase pair $(E,U')$ with the same effect $E$, the
+same active sign $\sigma$, the same complex active trace
+$\operatorname{Tr}V_\sigma$, and the same true original level $\xi$; it
+satisfies $g(E,U')<g(E,U)$. In particular, for a positive-definite $F$ every
 nonphase input has such a strict phase improvement.
 
 **Proof.** Spectrally write
@@ -4288,9 +4289,19 @@ $$
 \tag{47.7}
 $$
 
-Every $U_\Pi$ is one actual whole unitary. It has the same complex trace
-$\sum_k\zeta_k$ as $U$, and, with $E$ unchanged, the same active distance;
-(42.19)--(42.20) then make that distance the true original distance.
+Every $U_\Pi$ is one actual whole unitary. It has the same complex active
+trace $\operatorname{Tr}(U_\Pi U_\sigma^\dagger)=\sum_k\zeta_k$ as $U$.
+The exact active-distance identity therefore gives
+$\rho_\sigma(E,U_\Pi)=\rho_\sigma(E,U)=\xi$. The effect is unchanged, so
+the same $\epsilon=2\det F$ applies. Since (42.19) gives
+$\xi+\epsilon<9-L$, (42.20) gives
+$$
+\rho_{-\sigma}(E,U_\Pi)
+ \ge 2(9-L-\epsilon)-\xi>\xi.
+$$
+Thus the active distance is the true original distance for every
+permutation pair. This is the exact source42 opposite-sign transport
+premise, rather than a consequence of injectivity alone.
 If $b^\pm$ denote the two convex averages of the $b_\Pi$ from the two
 Birkhoff decompositions, linearity gives
 
@@ -4316,7 +4327,11 @@ actual same-effect, same-trace comparison. It does not assert that either
 perturbed matrix is itself a diagonal law of a prescribed normal orbit.
 If $F$ is positive definite, right multiplication by $F^{1/2}$ is injective,
 so the distinct rows in (47.1) give $L_i^\sigma\ne L_j^\sigma$ for every
-$i\ne j$; a nonphase $V_\sigma$ has a nonzero off-diagonal entry. $\square$
+$i\ne j$; a nonphase $V_\sigma$ has a nonzero off-diagonal entry. Together
+with the preceding exact-level and opposite-sign transport calculation,
+this proves the stated positive-definite mixed conclusion. No pointwise
+claim for singular mixed effects is obtained from this injectivity step.
+$\square$
 
 **Theorem 47.3 (strict coupled collision descent).** Let
 $F=\psi\psi^\dagger$ be pure, $0<\rho(E,U)=\xi\le R_\star$, and let
@@ -4476,7 +4491,8 @@ sign. The equality representatives are exactly those in the explicit set
 $\mathcal E_\xi(a_\xi)$ of (45.20), with all common scalar representatives
 retained.
 
-**Proof.** The supplied Theorem 45.5 gives global purity and
+**Proof.** The supplied Theorem 45.5 gives global purity. Theorem 45.7,
+specifically (45.21), gives
 $a_\xi\le V(\xi)<e^2/4-3/16<e^2$. If a global minimizer were nonphase,
 Theorem 47.4 would give a strict same-level decrease of $g$ and hence of
 $f$, a contradiction. Thus every global minimizer is phase. The attained
