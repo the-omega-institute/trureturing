@@ -183,18 +183,10 @@ private lemma admissible_translate (L : ℕ) [NeZero L] (B : Finset (Fin L)) (a 
     Admissible L (B.image (fun b => b + a)) ↔ Admissible L B := by
   classical
   rw [admissible_sub_iff, admissible_sub_iff]
-  constructor
-  · intro h b hb c hc hne
-    have ht := h (b + a) (Finset.mem_image.mpr ⟨b, hb, rfl⟩)
-      (c + a) (Finset.mem_image.mpr ⟨c, hc, rfl⟩) (fun he => hne (add_right_cancel he))
-    simpa only [add_sub_add_right_eq_sub] using ht
-  · intro h b hb c hc hne
-    obtain ⟨d, hd, hdb⟩ := Finset.mem_image.mp hb
-    obtain ⟨e, he, hec⟩ := Finset.mem_image.mp hc
-    subst b
-    subst c
-    have ht := h d hd e he (fun he => hne (congrArg (fun x => x + a) he))
-    simpa only [add_sub_add_right_eq_sub] using ht
+  change (↑(B.image (fun b => b + a)) : Set (Fin L)).Pairwise _ ↔
+    (B : Set (Fin L)).Pairwise _
+  rw [Finset.coe_image, (add_left_injective a).injOn.pairwise_image]
+  simp only [Set.Pairwise, Function.onFun, add_sub_add_right_eq_sub]
 
 private def rootedEmbedding (L n : ℕ) (hbound : 5 * n ≤ L)
     (f : PositiveLengths (L - 4 * n) n) : Fin n ↪o Fin L := by
