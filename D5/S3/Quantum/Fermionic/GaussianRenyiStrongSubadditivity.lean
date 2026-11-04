@@ -54,10 +54,14 @@ private lemma skew_hermitian {ι : Type*}
     (Complex.I • G.map Complex.ofReal).IsHermitian := by
   apply Matrix.isHermitian_iff_isSelfAdjoint.mpr
   apply isSelfAdjoint_smul_of_mem_skewAdjoint
-  · simp only [skewAdjoint.mem_iff, Complex.star_def, Complex.conj_I]
+  · simp (config := { congrConsts := false }) only
+      [skewAdjoint.mem_iff, Complex.star_def, Complex.conj_I]
   · rw [skewAdjoint.mem_iff, Matrix.star_eq_conjTranspose,
       ← Matrix.conjTranspose_map Complex.ofReal
-        (by intro x; simp only [star_trivial, Complex.star_def, Complex.conj_ofReal]),
+        (by
+          intro x
+          simp (config := { congrConsts := false }) only
+            [star_trivial, Complex.star_def, Complex.conj_ofReal]),
       Matrix.conjTranspose_eq_transpose_of_trivial,
       hG, Matrix.map_neg _ Complex.ofReal_neg]
 
@@ -70,7 +74,7 @@ private lemma interpolation_diagonal {ι : Type*} [Fintype ι] [DecidableEq ι]
     rw [← Matrix.diagonal_one, ← Matrix.diagonal_smul, Matrix.diagonal_add]
     congr 1
     funext i
-    simp only [Pi.smul_apply, Function.comp_apply, smul_eq_mul,
+    simp (config := { congrConsts := false }) only [Pi.smul_apply, Function.comp_apply, smul_eq_mul,
       Complex.ofReal_add, Complex.ofReal_one, Complex.ofReal_mul,
       RCLike.ofReal_eq_complex_ofReal]
   rw [hd, map_add, map_one, map_smul, ← h.spectral_theorem]
@@ -101,15 +105,20 @@ private lemma interpolation_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
       (1 : Matrix ι ι ℝ) G := by
     refine ⟨Matrix.isSymm_one, ?_⟩
     rw [Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one]
-    simpa only [interpolation, Complex.ofReal_one, one_smul] using
+    simpa (config := { congrConsts := false }) only
+      [interpolation, Complex.ofReal_one, one_smul] using
       (interpolation_nonneg_iff G h 1).mpr (fun i => by
         have hi := (abs_le.mp (hb i)).1
-        simpa only [one_mul] using (show 0 ≤ 1 + h.eigenvalues i by linarith))
-  simpa only [interpolation, Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
+        simpa (config := { congrConsts := false }) only [one_mul] using
+          (show 0 ≤ 1 + h.eigenvalues i by linarith))
+  simpa (config := { congrConsts := false }) only
+    [interpolation, Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
     D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.shifted_posDef
       (1 : Matrix ι ι ℝ) G hfull
-      (by simpa only [Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
-        (Matrix.PosDef.one : (1 : Matrix ι ι ℂ).PosDef)) hu0 hu1
+      (by
+        simpa (config := { congrConsts := false }) only
+          [Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
+          (Matrix.PosDef.one : (1 : Matrix ι ι ℂ).PosDef)) hu0 hu1
 
 private lemma reduced_physical {n : ℕ}
     (G : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (hG : physicalCovariance G)
@@ -167,14 +176,13 @@ private lemma determinant_log_identity {ι : Type*} [Fintype ι] [DecidableEq ι
         apply Finset.prod_congr rfl
         intro i hi
         push_cast
-        ring
+        simpa (config := { congrConsts := false }) only
+          [one_pow, mul_pow, neg_mul, sub_eq_add_neg] using
+          sq_sub_sq (1 : ℂ) ((u : ℂ) * (h.eigenvalues i : ℂ))
       _ = _ := by rw [← hd u, ← hd (-u), hdt, pow_two]
   have hpos := interpolation_posDef G h hb hu0 hu1
   have hdr : ((interpolation G u).det.re : ℂ) = (interpolation G u).det := by
-    apply Complex.ext
-    · rfl
-    · simpa (config := { congrConsts := false }) only
-        [Complex.ofReal_im, Complex.zero_im] using hpos.det_pos.2
+    exact Complex.conj_eq_iff_re.mp (Complex.conj_eq_iff_im.mpr hpos.det_pos.2.symm)
   rw [← hdr, ← Complex.ofReal_pow, ← Complex.ofReal_prod] at hp
   have hr := Complex.ofReal_injective hp
   have hterms (i : ι) : 0 < 1 - u ^ 2 * h.eigenvalues i ^ 2 := by
@@ -182,7 +190,7 @@ private lemma determinant_log_identity {ι : Type*} [Fintype ι] [DecidableEq ι
       (sq_lt_one_iff_abs_lt_one _).mpr (by
         rw [abs_mul, abs_of_nonneg hu0]
         exact lt_of_le_of_lt (mul_le_of_le_one_right hu0 (hb i)) hu1)
-    simpa only [mul_pow] using sub_pos.mpr hsq
+    simpa (config := { congrConsts := false }) only [mul_pow] using sub_pos.mpr hsq
   have hl := congrArg Real.log hr
   rw [Real.log_prod (fun i _ => (hterms i).ne'), Real.log_pow] at hl
   generalize hx : Real.log (interpolation G u).det.re = x at hl ⊢
@@ -239,7 +247,7 @@ private lemma mode_interpolation_det {n : ℕ}
     ((interpolation G u).submatrix
       (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val).det =
       (interpolation (reducedCovariance G X) u).det := by
-  simpa only [interpolation, reducedCovariance,
+  simpa (config := { congrConsts := false }) only [interpolation, reducedCovariance,
     Matrix.submatrix_one _ Subtype.val_injective,
     Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
     D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.mode_interpolation_det
@@ -293,7 +301,8 @@ private lemma settlement_main : claim := by
   rw [integral_add (hm (A ∪ B ∪ C)).1 (hm B).1,
     integral_add (hm (A ∪ B)).1 (hm (B ∪ C)).1] at hi
   have hc : (A ∪ B).card + (B ∪ C).card = (A ∪ B ∪ C).card + B.card := by
-    simpa only [Finset.inter_union_distrib_left, Finset.union_inter_distrib_right,
+    simpa (config := { congrConsts := false }) only
+      [Finset.inter_union_distrib_left, Finset.union_inter_distrib_right,
       Finset.disjoint_iff_inter_eq_empty.mp hAB,
       Finset.disjoint_iff_inter_eq_empty.mp hAC,
       Finset.disjoint_iff_inter_eq_empty.mp hBC,
