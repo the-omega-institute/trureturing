@@ -10,7 +10,7 @@ For 0<alpha<1 define V(d,a,mu,alpha)=d/(1-alpha)+a/(1-alpha)^2 +mu*(1/alpha+1/al
 
 **Theorem 1.1 (Integrability of the low logarithmic moment).**
 
-$$\forall b \in \mathbb{R},\; 0 < b \Rightarrow \operatorname{IntegrableOn}\left((y: \mathbb{R} \mapsto -\operatorname{log}\left(y\right) \cdot y^{b-1}), \operatorname{Ioc}\left(0, 1\right), \operatorname{volume}\left(\right)\right)$$
+$$\forall (b: \mathbb{R}), (0 < b) \Rightarrow \operatorname{MeasureTheory.IntegrableOn}\left((y: \mathbb{R} \mapsto -\operatorname{Real.log}\left(y\right) \cdot y^{b-1}), \operatorname{Set.Ioc}\left(0, 1\right), \operatorname{MeasureTheory.volume}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/LogarithmicMellinReserve.low_log_integrable` (`✓ std3`). ∎
 

@@ -6,7 +6,7 @@ The full L1 deviation of independent finite convolution from uniform has an atta
 
 **Theorem 1.1 (Positive Poisson denominator).**
 
-$$\forall r, theta: \mathbb{R}, 0< \operatorname{sin}(theta)\Rightarrow 0< 1-2r \operatorname{cos}(theta)+r^{2}$$
+$$\forall r \theta: \mathbb{R}, (0 < \operatorname{Real.sin}(\theta)) \Rightarrow 0 < 1-2r \operatorname{Real.cos}(\theta)+r^{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/IndependentConvolutionL1Minimum.poisson_denominator_pos_of_sin_pos` (`✓ std3`). ∎
 

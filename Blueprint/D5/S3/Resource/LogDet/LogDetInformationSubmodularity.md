@@ -30,7 +30,7 @@ The selected operator's real log-determinant is normalized by the regularization
 
 **Theorem 1.3 (Log-determinant monotonicity for positive matrices).**
 
-$$\forall Index \in \operatorname{Type}(), P \in \operatorname{Matrix}(Index, Index, \mathbb{C}), Q \in \operatorname{Matrix}(Index, Index, \mathbb{C}),\; \left(\operatorname{Fintype}(Index) \land \left(\operatorname{DecidableEq}(Index) \land \left(\operatorname{Nonempty}(Index) \land \left(\operatorname{PosDef}(P) \land \left(\operatorname{PosDef}(Q) \land P \leq Q\right)\right)\right)\right)\right) \Rightarrow \operatorname{log}(\operatorname{re}(\operatorname{det}(P))) \leq \operatorname{log}(\operatorname{re}(\operatorname{det}(Q)))$$
+$$\forall (Index: \operatorname{Type}), [\operatorname{Fintype}\left(Index\right)] [\operatorname{DecidableEq}\left(Index\right)] [\operatorname{Nonempty}\left(Index\right)] \forall (left right: \operatorname{Matrix}\left(Index, Index, \mathbb{C}\right)), (\operatorname{Matrix.PosDef}\left(left\right)) \Rightarrow ((\operatorname{Matrix.PosDef}\left(right\right)) \Rightarrow ((left \leq right) \Rightarrow (\operatorname{Real.log}\left(\operatorname{Complex.re}\left(\operatorname{Matrix.det}\left(left\right)\right)\right) \leq \operatorname{Real.log}\left(\operatorname{Complex.re}\left(\operatorname{Matrix.det}\left(right\right)\right)\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Resource/LogDet/LogDetInformationSubmodularity.log_det_mono` (`✓ std3`). ∎
 
