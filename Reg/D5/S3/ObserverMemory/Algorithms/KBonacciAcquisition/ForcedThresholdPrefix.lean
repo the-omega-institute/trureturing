@@ -6,6 +6,7 @@ open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition
 open D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
 open D5.S0.Tower.DBonacci.Names
 open LiteralModel EndpointCells OriginalNarrowCost OriginalExecutionBridge WindowChargeInverse
+open OriginalAcquiredTrace
 open ForcedThresholdPrefix
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -141,7 +142,7 @@ namespace CommonArchive
       NarrowWindowCost.output (Q*m) (by nlinarith) w = some v →
       ∃ budget c, NarrowWindowCost.execute (Q*m) (by nlinarith) π budget w (some v) [] =
         some (R.readout () ⟨Y,Q,m,a,labels,outside,rejected,bottom⟩
-          (OriginalRecord (Q*m) (by nlinarith) w),c)) :
+          (OriginalRecord (Q*m) (by nlinarith) w),c)),
     (∀ t, t < Q → π (some v) (zeroArchive π v t) = .inr (zeroWord π v t)) ∧
     (∀ t j, t < Q → 0 < j.val → j.val < a →
       wordIncrement (Q*m) (-j + ((t*m : ℕ) : ZMod (Q*m+1))) (zeroWord π v t) = 0) ∧
@@ -204,7 +205,7 @@ def evidence : Registration arena.{u}
       ⟨false⟩,⟨true⟩,⟨false⟩⟩,none,some ⟨0,0,5⟩,?_⟩
     decide
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.ForcedThresholdPrefix.first_tour_common_archive.{u})
     (type_of% (realize signature.{u} actual.{u}.readout actual.{u}.anchor))
     (ℕ → Type) Unit := {

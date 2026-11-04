@@ -4,11 +4,11 @@
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: []
    utility: none
-   digest: Arbitrary INITIAL tail thresholds force the literal root first-zero position. -/
+   digest: Arbitrary blind bands share one actual adaptive zero archive through the first tour. -/
 
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels
 
-/-! Literal root necessity for arbitrary immutable INITIAL tail thresholds. -/
+/-! Forced roots and coherent actual first-tour archives for immutable INITIAL labels. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
