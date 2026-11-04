@@ -340,3 +340,15 @@ it is not a local combinatorial correspondence between the two classes.
 
 ## 追加锚（本行以下为增补区）
 
+## Scope correction for Problem 10
+
+The map in Corollary 7 is a valid length-preserving injection obtained from
+the cardinality inequality in Corollary 6.  It is an order-theoretic rank
+construction, however, and gives no local combinatorial correspondence
+between the two classes.  In the original source, Problem 10 is introduced
+by asking for a combinatorial explanation of that inequality before asking
+for the injection.  Thus the rank map does not supply the requested
+combinatorial explanation, and Problem 10 remains open in that intended
+structural sense.  Corollary 7, its proof, the count comparison, and all
+other results above remain valid.
+
