@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Fourier.Asymptotics;
@@ -9,6 +10,22 @@ internal sealed class GaussianComplexMomentsDocument : IScribeDocumentDefinition
         "Explicit complex moments of an arbitrary real Gaussian density are obtained from its entire moment generating function.",
         H("Complex Moments of a Real Gaussian Density"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("gaussian-complex-variance"),
+                DeclarationHandle.Create("D5/S3/Fourier/Asymptotics/GaussianComplexMoments.variance"),
+                H("The nonnegative variance parameter"),
+                StatementSource.FromAuthor(VarianceFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A positive real variance is packaged as the corresponding nonnegative real number."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("gaussian-density-pdf-identity"),
+                DeclarationHandle.Create("D5/S3/Fourier/Asymptotics/GaussianComplexMoments.gaussianDensity_eq_pdf"),
+                H("The Gaussian density equals the Mathlib PDF"),
+                StatementSource.FromAuthor(GaussianDensityEqPdfFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The literal real Gaussian density agrees pointwise with Mathlib's Gaussian PDF after packaging its positive variance as a nonnegative real."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("gaussian-complex-monomial-integrability"),
                 DeclarationHandle.Create("D5/S3/Fourier/Asymptotics/GaussianComplexMoments.density_monomial_integrable"),
@@ -49,6 +66,32 @@ internal sealed class GaussianComplexMomentsDocument : IScribeDocumentDefinition
     private static Formula All(string name, Formula type, Formula body) => new Formula.BindMany(FormulaQuantifier.ForAll, [new Formula.BoundVariable(FormulaIdentifier.Create(name), type)], body);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula VarianceFormula()
+    {
+        var v = F.Id("v");
+        var hv = F.Id("hv");
+        return F.Disp(Seq(
+            Forall, Sp, Parenthesized(Seq(v, Colon, Sp, R)), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(hv, Colon, Sp, Seq(F.D(0), Lt, Sp, v))), Comma, Sp,
+            Seq(Call("variance", v, hv), Sp, Colon, Sp, F.Id("NNReal"))));
+    }
+
+    private static Formula GaussianDensityEqPdfFormula()
+    {
+        var mu = F.Id("mu");
+        var v = F.Id("v");
+        var hv = F.Id("hv");
+        var y = F.Id("y");
+        return F.Disp(Seq(
+            Forall, Sp, Parenthesized(Seq(mu, Colon, Sp, R)), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(v, Colon, Sp, R)), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(hv, Colon, Sp, Seq(F.D(0), Lt, Sp, v))), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(y, Colon, Sp, R)), Comma, Sp,
+            Eq(Call("gaussianDensity", mu, v, y),
+                Call("gaussianPDFReal", mu, Call("variance", v, hv), y))));
+    }
 
     private static Formula IntegrabilityFormula()
     {
