@@ -97,19 +97,6 @@ class MaintenanceLog:
         return dict(os.environ if environment is None else environment, **{ENV_RUN_ID: self.run_id})
 
 
-def scope_fds() -> tuple[int, ...]:
-    descriptors = set()
-    for raw in os.environ.get("WORKTREE_SCOPE_FDS", "").split(","):
-        if raw.isdigit():
-            descriptor = int(raw)
-            try:
-                if os.get_inheritable(descriptor):
-                    descriptors.add(descriptor)
-            except OSError:
-                pass
-    return tuple(sorted(descriptors))
-
-
 def run(options: argparse.Namespace) -> int:
     command = list(options.argv)
     if command[:1] == ["--"]:
@@ -138,7 +125,9 @@ def run(options: argparse.Namespace) -> int:
             signal.signal(signum, forward)
     try:
         try:
-            process = subprocess.Popen(command, pass_fds=scope_fds(), env=log.child_environment())
+            # Match exec's inheritance of every deliberately inheritable handle,
+            # including cooperative scopes and caller-owned cache locks.
+            process = subprocess.Popen(command, close_fds=False, env=log.child_environment())
         except OSError as error:
             exit_code = 127 if isinstance(error, FileNotFoundError) else 126
             print(f"maintenance-log: {command[0]}: {error.strerror}", file=sys.stderr)
