@@ -34,6 +34,6 @@ If both input fields are covariant under the same endomorphism T, every signed i
 
 - Truth anchor: `D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality.residue_locality`
 - Truth anchor: `D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality.residue_translation`
-- Dependency: [D5/S3/VertexAlgebra/BinomialKernelDelta](BinomialKernelDelta.md)
-- Dependency: [D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality](SignedFields/SignedFieldNormalProductLocality.md)
-- Dependency: [D5/S3/VertexAlgebra/StateFieldResidueReconstruction](StateFieldResidueReconstruction.md)
+- Dependency: [D5/S3/VertexAlgebra/BinomialKernelDelta](../BinomialKernelDelta.md)
+- Dependency: [D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality](SignedFieldNormalProductLocality.md)
+- Dependency: [D5/S3/VertexAlgebra/StateFieldResidueReconstruction](../StateFieldResidueReconstruction.md)

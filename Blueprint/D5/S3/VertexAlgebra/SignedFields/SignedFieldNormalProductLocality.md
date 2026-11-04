@@ -34,4 +34,4 @@ The degree d divided derivative of A has locality order N+d against B, with the 
 
 - Truth anchor: `D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality.signedDerivative_locality`
 - Truth anchor: `D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality.signedNormal_locality`
-- Dependency: [D5/S3/VertexAlgebra/FieldNormalProductLocality](FieldNormalProductLocality.md)
+- Dependency: [D5/S3/VertexAlgebra/FieldNormalProductLocality](../FieldNormalProductLocality.md)
