@@ -1,0 +1,4 @@
+## 1. Scope
+
+The replica partition functions of the fully symmetric pure Gaussian states of Camargo and Nishida reduce to a replica-level determinant built from a weighted average $Q$ of twist permutations. This volume computes that determinant exactly. The Gram defect $I-Q^\top Q$ is the Laplacian of a weighted Schreier multigraph on the replicas, so the determinant is a spanning-forest polynomial; for the cyclic twists of the multi-entropy its spectrum is given by characters. Consequences: a closed form of the residual constant $D_R(0)$ of every bipartite term, a factorization of the $\mathtt q$-party determinant into its bipartite subdeterminants and a remainder, an exact replica-order-two identity for every $\mathtt q$, an exact finite-squeezing formula for the tripartite genuine multi-entropy for all $n$ and all party sizes, and the closed form of its large-squeezing constant.
+
