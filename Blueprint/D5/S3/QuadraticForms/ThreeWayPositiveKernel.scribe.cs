@@ -17,7 +17,7 @@ internal sealed class ThreeWayPositiveKernelDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("A is an arbitrary additive commutative group, U an arbitrary additive endomorphism, and q an arbitrary finite real-valued nonnegative function. The balance law is universal in both original labels. There is no topology, rational or real scalar action, divisibility, faithfulness, invertibility, finite dimension or bounded iteration depth on A.")),
-                Paragraph(Text("Rep(U,q) denotes HilbertRepresentation U q: it packages a complex inner-product space H with a normed additive group and completeness, an additive label map iota:A to H, and exactly the following conditions. The carrier universe is arbitrary in the uniqueness clause; the constructed carrier has the original label universe. A linear isometry equivalence over the complex numbers is the unitary appearing in the statement.")),
+                Paragraph(Text("Rep(U,q) denotes HilbertRepresentation U q: it packages a complex inner-product space H with a normed additive group and completeness, an additive label map iota:A to H, and exactly the following conditions. The converse accepts any carrier universe, and the two carrier universes in uniqueness are independent; the constructed carrier has the original label universe. A linear isometry equivalence over the complex numbers is the unitary appearing in the statement.")),
                 new DocumentBlock.DisplayFormula(ModelConditions()),
                 Paragraph(Text("The phase is omega=-1/2+i sqrt(3)/2. ThreeWayBalance.three_way_quadratic_structure is applied directly to the original A to obtain an integer quadratic map Q. Half its existing polar bilinear companion is the symmetric pairing b(x,y)=(q(x+y)-q(x-y))/4, with b(x,x)=q(x). The original U-invariance and invisible orbit sums imply b(Ux,Uy)=b(x,y) and b(Ux,y)+b(x,Uy)=-b(x,y).")),
                 Paragraph(Text("Nonnegative integer Gram sums are values of b on actual finite integer sums in A. IsLocalization.exist_integer_multiples_of_finite clears rational coefficients; DenseRange.piMap applied to Rat.denseRange_cast and closedness of a finite polynomial inequality then supplies arbitrary real coefficients. Continuity belongs only to the numerical coefficient vector, not to A.")),
@@ -40,12 +40,13 @@ internal sealed class ThreeWayPositiveKernelDocument : IScribeDocumentDefinition
             Add(Multiply(D(3),Q(x)),Multiply(D(3),Q(y))))));
         var existence=Call("Nonempty",Call("HilbertRepresentation",u,q));
         var iff=Seq(Paren(balance),Sp,Iff,Sp,existence);
+        var converse=All("R",Rep(),balance);
         var eq=All("x",a,Equal(Call("e",Call("label",V("R"),x)),Call("label",V("S"),x)));
         var unique=All("R",Rep(),All("S",Rep(),Seq(Exists,Bang,Sp,V("e"),Sp,Colon,Sp,
             Call("LinearIsometryEquiv",Complex,Call("H",V("R")),Call("H",V("S"))),Comma,Sp,eq)));
         return All("A",Call("Type"),Seq(OpenBracket,Call("AddCommGroup",a),CloseBracket,Comma,Sp,
             All("U",Call("AddMonoidHom",a,a),All("q",Paren(Seq(a,Sp,To,Sp,Real)),
-                Seq(Paren(nonneg),Sp,Rightarrow,Sp,And(iff,unique))))));
+                Seq(Paren(nonneg),Sp,Rightarrow,Sp,And(iff,converse,unique))))));
     }
 
     private static Formula ModelConditions()

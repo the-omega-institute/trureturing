@@ -34,6 +34,8 @@ abbrev arena : Arena where
     ((∀ x y, q (x + y) + q (x + U y) + q (x + U (U y)) =
       3 * q x + 3 * q y) ↔
       Nonempty (HilbertRepresentation.{u, u} U (fun x => R.readout () ⟨A, q⟩ x))) ∧
+    (∀ M : HilbertRepresentation.{u, v} U q, ∀ x y,
+      q (x + y) + q (x + U y) + q (x + U (U y)) = 3 * q x + 3 * q y) ∧
     (∀ (M : HilbertRepresentation.{u, v} U q) (N : HilbertRepresentation.{u, w} U q),
       ∃! e : M.carrier ≃ₗᵢ[ℂ] N.carrier, ∀ x, e (M.label x) = N.label x)
 

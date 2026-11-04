@@ -491,17 +491,25 @@ private theorem norm_three_way {H : Type*} [NormedAddCommGroup H] [InnerProductS
   norm_num at h
   exact h
 
+private theorem representation_balance {A : Type u} [AddCommGroup A]
+    {U : A →+ A} {q : A → ℝ} (R : HilbertRepresentation.{u, v} U q) :
+    ∀ x y, q (x + y) + q (x + U y) + q (x + U (U y)) =
+      3 * q x + 3 * q y := by
+  intro x y
+  simp only [R.normSq, map_add, R.phase, smul_smul]
+  simpa only [pow_two] using norm_three_way (R.label x) (R.label y)
+
 /-- Full additive-group characterization, including complete minimal representation,
 its converse, and the unique complex-linear label-preserving unitary between any two models. -/
 theorem three_way_hilbert_characterization {A : Type u} [AddCommGroup A]
     (U : A →+ A) (q : A → ℝ) (hq : ∀ x, 0 ≤ q x) :
     ((∀ x y, q (x + y) + q (x + U y) + q (x + U (U y)) =
       3 * q x + 3 * q y) ↔ Nonempty (HilbertRepresentation.{u, u} U q)) ∧
+    (∀ R : HilbertRepresentation.{u, v} U q, ∀ x y,
+      q (x + y) + q (x + U y) + q (x + U (U y)) = 3 * q x + 3 * q y) ∧
     (∀ (R : HilbertRepresentation.{u, v} U q) (S : HilbertRepresentation.{u, w} U q),
       ∃! e : R.carrier ≃ₗᵢ[ℂ] S.carrier, ∀ x, e (R.label x) = S.label x) := by
-  refine ⟨⟨exists_representation U q hq, ?_⟩, fun R S => models_unique R S⟩
-  rintro ⟨R⟩ x y
-  simp only [R.normSq, map_add, R.phase, smul_smul]
-  simpa only [pow_two] using norm_three_way (R.label x) (R.label y)
+  exact ⟨⟨exists_representation U q hq, fun ⟨R⟩ => representation_balance R⟩,
+    fun R => representation_balance R, fun R S => models_unique R S⟩
 
 end D5.S3.QuadraticForms.ThreeWayPositiveKernel
