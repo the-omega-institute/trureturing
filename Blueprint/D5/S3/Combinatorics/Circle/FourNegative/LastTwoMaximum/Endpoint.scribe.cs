@@ -1,0 +1,17 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.FourNegative.LastTwoMaximum;
+internal sealed class EndpointDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The entire tied-last-two maximum face", H("Original gaps and one literal ear"),
+        Blocks(Describe.Lean(DescribeId.Create("last-two-maximum"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/LastTwoMaximum/Endpoint.actualSource_last_two_maximum_joint_lift"),
+            H("All independent parameters on the original face"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("For every natural a,b,s with 2<=a, 2<=b and max(a,b)<=s, put k=a+b+s+s and A=1+2^a+2^(a+b)+2^(a+b+s). The public theorem constructs one permutation sigma of every original Fin(k) label and one j<=k. It proves OriginalOrder(k,A,sigma) and OriginalOrder(k+1,2A,earWord(k,sigma,j)), both repeated-prefix strips for every natural repetition count m and take length n, and separately both zero totals for every m. Empty repetitions, empty takes and overlong takes are included. The exact public telescope has only a,b,s and their three parameter hypotheses.")),
+                Paragraph(Text("The partition is literal. At a=s use EqualOuterThree(s,b); at a=b use FourNegativeAdjacentPairsJointLift(a,s). Otherwise a<s and a differs from b. For b<a use the hybrid-borrow construction. For a<b<=s use the singleton-W-tail construction, except the exact corner b=s=a+1, which uses BalancedGaps(a,b,s,s). The overlap index and exponent equalities are explicit. No seed change, rotation, reflection, parameter cutoff or source-feasibility assumption appears.")),
+                Paragraph(Text("Write x=2^a,y=2^b,z=2^s,v=2^(b-2). The original physical U,V,W,X chains have lengths s,s,b,a, starts 0,s,2s,2s+b, and terminals s-1,2s-1,2s+b-1,k-1. After swapping the actual U/V bits below b-2, the remaining hybrid mask t has old mass F(t)=tB-(t mod v)(B-A) and new mass 2F(t)-(t-t mod v). Both bank constructions use the canonical decoded masks and their XOR complements, retaining physical multiplicity. In the borrow sector u is a proved bit-submask of t, not merely a smaller number.")),
+                Paragraph(Text("In the borrow sector the new ear is before the final X terminal when s=a+1. Otherwise it is before V when Rp<0, before W when Rp>=0 and Gp<0, and before X otherwise. The W window accounts for an earlier fresh at V. In the singleton sector the ear is before V when Rp<0 and before X otherwise; both possible W windows are proved universally. Native chain masses and the four terminal heads give the positive-bank peaks and post-terminal seams in both rows. withEar_split returns the actual old prefix and the fresh label k; canonical actual_nat_joint_iff converts the same physical word and literal insertion to the two orders.")),
+                Paragraph(Text("The old scalar total is zero. The new total over old labels is -A; the actual fresh value A makes the new total zero. Canonical zero_period_transport extends the two complete orders to all finite repeated prefixes and both repeated zero totals. The construction follows the caller's corrected ordinary proofs. The unrestricted whole Circle assertion remains OPEN."))), DescribeRole.Theorem)), []));
+}
