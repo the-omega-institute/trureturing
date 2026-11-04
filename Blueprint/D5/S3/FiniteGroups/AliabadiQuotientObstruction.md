@@ -10,6 +10,10 @@ $$\forall G \in Typeu,\; \forall group \in \operatorname{Group}\left(G\right),\;
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/AliabadiQuotientObstruction.exists_obstructed_multiset` (`✓ std3`). ∎
 
+*Resolves.* `Problems/aliabadi-2605-16478v2-problem-7-6` (proved) by `D5/S3/FiniteGroups/AliabadiQuotientObstruction.exists_obstructed_multiset`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"aliabadi-2605-16478v2-problem-7-6","declaration_gid":"D5/S3/FiniteGroups/AliabadiQuotientObstruction.exists_obstructed_multiset","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mohsen Aliabadi (2026). *A nonabelian twist on differences of bijections*. DOI: [10.61091/um128-18](https://doi.org/10.61091/um128-18). URL: <https://arxiv.org/html/2605.16478v2>.

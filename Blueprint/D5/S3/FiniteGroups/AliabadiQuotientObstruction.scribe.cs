@@ -22,7 +22,10 @@ internal sealed class AliabadiQuotientObstructionDocument : IScribeDocumentDefin
                     Paragraph(Text("The commutator subgroup is nontrivial, since commutator_eq_bot_iff identifies its triviality with commutativity. Subgroup.nontrivial_iff_exists_ne_one supplies a nonidentity element a in it. Abelianization.ker_of proves pi(a)=1. Take A to contain a once and the identity n-1 times. A group is nonempty, so n is positive and the multiset has cardinality n. All entries have pi-image one, so their multiplicity-counted product in the abelian quotient is one.")),
                     Paragraph(Text("Suppose b and c realize A. Regard both bijections as equivalences and form the permutation tau=c inverse composed with b on Fin n. Then tau(i) differs from i exactly when b(i) times the inverse of c(i) differs from one. Filter the asserted multiset equality by being different from the identity. The left side has cardinality one. Multiset.filter_map and Multiset.card_map identify the right side with the cardinality of tau.support. Equiv.Perm.card_support_ne_one rules out this value. The permutation and multiset bridge is proved within the argument, with no additional realization assumption.")),
                     Paragraph(Text("Repeated identity entries are allowed. The construction imposes no solvability, parity, group-family or identity-free condition. Every ordering of A in G has product a, which differs from one; the product used in the theorem is exclusively in the abelianization. Thus the statement answers the literal Problem 7.6 and leaves the stronger product-one-ordering variant separate. The argument applies existing general results about commutators, multiset operations and permutation support; it does not assert a new general method or literature priority."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("aliabadi-2605-16478v2-problem-7-6"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
