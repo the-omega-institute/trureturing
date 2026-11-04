@@ -9,7 +9,7 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
     private const string Owner = "D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality";
     private static readonly LibraryNoteRef Paper = LibraryNoteRef.Create("D5/L/QuantumBounds/zhanguptahillery2024detectorsensor");
     private static Formula V(string name) => F.Id(name);
-    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(V(owner)), Dot, Operatorname, Grp(V(name)));
     private static Formula Call(Formula name, params Formula[] args) => new Formula.Apply(name, [.. args]);
     private static Formula Call(string name, params Formula[] args) => Call(V(name), args);
@@ -127,8 +127,10 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
     private static Formula ConstantProjectionSquareFormula()
     {
         var ones = Call(Q("Matrix", "of"),
-            LambdaOf("i", FinN, LambdaOf("j", FinN, Cast(D(1), Complex))));
-        var projection = Call(Q("HSMul", "hSMul"), Call(Q("Inv", "inv"), Cast(N, Real)), ones);
+            Call(Q("Function", "const"), FinN,
+                Call(Q("Function", "const"), FinN, Cast(D(1), Complex))));
+        var projection = Call(Q("HSMul", "hSMul"),
+            Call(Q("Inv", "inv"), Cast(Call(Q("Nat", "cast"), N), Real)), ones);
         return All("n", Nat, Impl(Seq(D(0), Sp, Lt, Sp, N),
             Eqn(Mul(Parenthesized(projection), Parenthesized(projection)), projection)));
     }
