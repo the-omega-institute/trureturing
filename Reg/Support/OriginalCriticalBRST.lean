@@ -18,7 +18,7 @@ structure Input where
 abbrev Space (x : Input) :=
   LatticeBRSTCohomologyField.Cohomology x.D x.H x.h26 x.hHG x.hGH
 
-def diagonal : LatticeData where
+abbrev diagonal : LatticeData where
   rank := 26
   G := (2 : ℤ) • (1 : Matrix (Fin 26) (Fin 26) ℤ)
   symmetric := by intro i j; simp [Matrix.one_apply, eq_comm]
@@ -27,7 +27,9 @@ def diagonal : LatticeData where
 private theorem diagonal_gram : LatticeSugawaraCurrents.gramComplex diagonal =
     (2 : ℂ) • (1 : Matrix (Fin 26) (Fin 26) ℂ) := by
   ext i j
-  by_cases h : i = j <;> simp [LatticeSugawaraCurrents.gramComplex, diagonal, Matrix.one_apply, h]
+  change ((((2 : ℤ) • (1 : Matrix (Fin 26) (Fin 26) ℤ)) i j : ℤ) : ℂ) =
+    ((2 : ℂ) • (1 : Matrix (Fin 26) (Fin 26) ℂ)) i j
+  by_cases h : i = j <;> simp [Matrix.one_apply, h]
 
 private theorem diagonal_inverse_left :
     ((2 : ℂ)⁻¹ • (1 : Matrix (Fin 26) (Fin 26) ℂ)) *
