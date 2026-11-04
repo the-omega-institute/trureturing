@@ -1,0 +1,81 @@
+using StrataLint.Scribe;
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition;
+
+internal sealed class HighTerminalChainDocument : IScribeDocumentDefinition
+{
+    private const string Owner =
+        "D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/HighTerminalChain.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Arbitrary full-score placements satisfy the optimized chain supplier's high-terminal lower bound.",
+        H("Arbitrary-input lower bound for the high-terminal chain"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("high-terminal-reward"),
+                DeclarationHandle.Create(Owner + "reward"), H("Original label rewards"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural L, native FullScore y, Boolean word b and label r in Fin (L+1), reward uses the original baseline at zero and the original numerical reward at label i+1. Every original label is retained."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-score"),
+                DeclarationHandle.Create(Owner + "score"), H("Whole-table weighted score"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L, FullScore y and output function f on the entire Boolean cube, score sums reward y b (f b) over every word b. The coefficients are arbitrary nonnegative real proof weights, with no probability normalization."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-support"),
+                DeclarationHandle.Create(Owner + "support"), H("Complete catalog support"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L, stop flag and FullScore y, support is the finite maximum of score over the original Catalog stop L. The stopped catalog uses increasing schedules; the nonstopped catalog includes reversed and repeated requests. Empty and singleton schedules and all output labels are present."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-gamma"),
+                DeclarationHandle.Create(Owner + "gamma"), H("Correct class totals"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L, FullScore y and address i in Fin L, gamma y i sums C over the original FirstZero b i class. Address i denotes source numerical label i+1."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-pairmass"),
+                DeclarationHandle.Create(Owner + "pairMass"), H("Pair class totals"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L, FullScore y and address i, pairMass sums P over the same original first-zero class."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-earlypair"),
+                DeclarationHandle.Create(Owner + "EarlyPair"), H("Early pair support"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L and FullScore y, EarlyPair means P vanishes at every word with a first-zero address at least two. The first two classes are unrestricted, including words whose first two bits are both zero."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-pairtotal"),
+                DeclarationHandle.Create(Owner + "pairTotal"), H("Full pair total"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L and FullScore y, pairTotal is the sum of P over the entire Boolean cube."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-early"),
+                DeclarationHandle.Create(Owner + "early"), H("Early correct total"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L at least three and FullScore y, early is gamma at zero plus gamma at one, namely the original gamma_1+gamma_2."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-inputanchor"),
+                DeclarationHandle.Create(Owner + "inputAnchor"), H("The input-family anchor"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L at least three and FullScore y, inputAnchor equals E+S+t, where E=early, S=pairTotal and t=T. This is the source anchor on the A=0 early-pair family. For other full scores it is only this specified reference value."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-delta"),
+                DeclarationHandle.Create(Owner + "delta"), H("Complete excess at the input anchor"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L at least three, stop flag and FullScore y, delta is support stop y minus inputAnchor. For A=0 early-pair inputs it is the original complete excess in the selected catalog."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-latepeak"),
+                DeclarationHandle.Create(Owner + "latePeak"), H("Largest late total"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L and FullScore y, latePeak is the maximum of zero and all gamma y i with i.val at least two. No address is relabeled or sorted."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-twolate"),
+                DeclarationHandle.Create(Owner + "twoLate"), H("Two distinct late totals"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L and FullScore y, twoLate is the maximum sum of gamma over subsets of late addresses of cardinality at most two. The empty set and every singleton are included, so this is the source M2 with zero padding and without an ordering assumption."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-earlycapacity"),
+                DeclarationHandle.Create(Owner + "earlyCapacity"), H("The smaller early capacity"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L at least three and FullScore y, earlyCapacity is min((E+S)/2, S+min(gamma_1,gamma_2)). It bounds the smaller of the two actual early C+P totals for every nonnegative allocation of P."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-highlower"),
+                DeclarationHandle.Create(Owner + "highLower"), H("The high-terminal lower bound"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every L at least three and FullScore y, highLower is max(0, M2-E-S, mu-c0), with mu=latePeak and c0=earlyCapacity. All three quantities use the same original score."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("high-terminal-arbitrary-lower"),
+                DeclarationHandle.Create(Owner + "arbitrary_input_lower_bound"),
+                H("Lower bound for every actual input placement"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every natural L at least three and every native FullScore y satisfying EarlyPair, highLower hL y is at most delta hL true y. Thus every source input with A=0, arbitrary C and T, and P supported on the first two first-zero classes satisfies dH <= DeltaO(y). The theorem even permits nonzero A when the reference E+S+t is retained. No equality of reward fibers, fixed support, probability normalization, sorted late profile or high-terminal inequality is a premise.")),
+                    Paragraph(Text("For any set of at most two distinct first-zero classes, a legal stopped table collects their correct totals together with T. For two ordered addresses i<j, the original table uses outputs i+1, j+1 and zero. The first-zero property places every word of either selected class into its correct stopped cell, and the all-positive word receives zero. All other rewards are nonnegative. Empty and singleton sets use the corresponding shorter tables. This proves the M2 term for arbitrary joint placements.")),
+                    Paragraph(Text("The stopped head table collects E+S+t, because the two early first-zero classes partition all P. For each late address j, the two legal tables collecting j and one early address give gamma_j-min(Y1,Y2) <= delta, where Ya is the actual early C+P total. Their common P total is S. Nonnegativity gives min(Y1,Y2) <= (E+S)/2 and min(Y1,Y2) <= S+min(gamma_1,gamma_2). Taking the largest late total gives the mu-c0 term. Taking the maximum of the three simultaneous lower bounds proves the statement.")),
+                    Paragraph(Text("Zero coefficients, ties, unsorted late totals, a single late address at L=3, and arbitrary early-00 P all remain in the quantified domain. The lower bound holds for every T, so in particular it includes t=mu. This result does not construct the chain representative, prove its exact N/O excess, prove quotient or anchor conservation for such a representative, or prove the complementary threshold relocation, certificate and zero-cost quotient equality of Theorem 213.11. Those conclusions require their separate mathematical arguments. This is a consequence of the complete source event geometry, with no literature novelty claim."))),
+                DescribeRole.Theorem))));
+}
