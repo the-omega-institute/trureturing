@@ -6,7 +6,7 @@ The entire original first-order relation forces dimension three on the same comp
 
 **Definition 1.1 (The actual matrix tangent Lie algebra).**
 
-$$\operatorname{Lie}\left(G\right)=\{K:\ \exists c:R \Rightarrow G,\ \operatorname{c}\left(0\right)=1 \land \operatorname{HasDerivAt}\left(\operatorname{originalOperatorCurve}\left(c\right), K, 0\right)\}$$
+$$\operatorname{Lie}\left(G\right)=\{K:\ \exists c:R \to G,\ \operatorname{c}\left(0\right)=1 \land \operatorname{HasDerivAt}\left(\operatorname{originalOperatorCurve}\left(c\right), K, 0\right)\}$$
 
 *Formalization.* `D5/S3/Quantum/Algebra/OriginalCompactReciprocity.curveLieAlgebra` (`✓ std3`).
 
@@ -14,7 +14,7 @@ $$\operatorname{Lie}\left(G\right)=\{K:\ \exists c:R \Rightarrow G,\ \operatorna
 
 *Commentary.*
 
-Fix any finite-dimensional real inner product space W and an actual subgroup G of the units of its continuous endomorphism algebra. The initially chosen inner product is auxiliary; invariance is derived from compactness. The underlying submodule of curveLieAlgebra G consists exactly of all ambient operator derivatives at zero of actual G-valued curves c with c(0)=1. No abstract algebra, chosen smaller representation, rank or dimension is supplied instead.
+Fix any finite-dimensional real inner product space W and an actual subgroup G of the units of its continuous endomorphism algebra. The initially chosen inner product is auxiliary; invariance is derived from compactness. The underlying submodule of curveLieAlgebra G consists exactly of all ambient operator derivatives at zero of actual G-valued curves c with c(0)=1. The curves require the displayed ambient derivative at zero; global regularity is not part of this definition. No abstract algebra, chosen smaller representation, rank or dimension is supplied instead.
 
 Products of original curves prove addition of velocities, scalar reparametrization proves scalar closure, and constant conjugation preserves velocities. Differentiate the conjugation of a velocity L by a curve with velocity K. Mathlib's derivative of inversion in a normed algebra gives derivative KL-LK. Difference quotients stay in the actual velocity subspace, which is closed because it is finite dimensional. Thus the original matrix commutator closes on exactly this tangent carrier. Compactness is not needed for this construction.
 
