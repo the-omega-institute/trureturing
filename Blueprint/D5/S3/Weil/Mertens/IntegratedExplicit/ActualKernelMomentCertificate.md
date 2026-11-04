@@ -80,4 +80,4 @@ Since alpha>0, exp(-alpha(D/4)^(1/10)) and exp(-D/4) tend to zero. The standard 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_signed_expression_compensation`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.q_scalar_bounds`
 - Dependency: [D5/S3/Arith/GoldenResource/RobinRationalBasis](../../../Arith/GoldenResource/RobinRationalBasis.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentPayments](ActualKernelMomentPayments.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelSmallWindowBounds](ActualKernelSmallWindowBounds.md)

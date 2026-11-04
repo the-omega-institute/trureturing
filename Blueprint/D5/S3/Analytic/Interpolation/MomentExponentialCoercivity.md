@@ -123,5 +123,5 @@ The owner right-FTC ramp identity identifies the actual integral primitive at ev
 - Truth anchor: `D5/S3/Analytic/Interpolation/MomentExponentialCoercivity.exponential_prefix_kernel_nonneg`
 - Truth anchor: `D5/S3/Analytic/Interpolation/MomentExponentialCoercivity.growing_primitive_identity`
 - Truth anchor: `D5/S3/Analytic/Interpolation/MomentExponentialCoercivity.moment_exponential_prefix_coercivity`
-- Dependency: [D5/S3/Analytic/Interpolation/AtomicPrefixEnergy](AtomicPrefixEnergy.md)
+- Dependency: [D5/S3/Analytic/Interpolation/CausalExponentialPrimitive](CausalExponentialPrimitive.md)
 - Dependency: [D5/S3/Analytic/MomentOrthogonalPrimitiveGap](../MomentOrthogonalPrimitiveGap.md)
