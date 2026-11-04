@@ -514,4 +514,6 @@ theorem finrank_eq_one_or_three (B : InnerProductSpace.Core ℝ K)
   simpa using hh
 
 
+end
+
 end D5.S3.Quantum.Algebra.RankOneInvariantMetric
