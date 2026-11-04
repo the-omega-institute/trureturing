@@ -34,7 +34,7 @@ internal sealed class ForcedThresholdPrefixDocument : IScribeDocumentDefinition
                     All("v",scalar,All("phase",Call("ZMod",Add(k,D(1))),All("s",nat,
                         Equal(Call("initialLabel",k,a,labels,outside,rejected,bottom,Rec(v,phase,s)),
                             If(Le(Subtract(k,a),s),rejected,
-                                If(And(Lt(D(0),j),Lt(j,a)),new Formula.Apply(labels,[new Formula.Negate(phase)]),outside)))))))))))));
+                                If(And(Lt(D(0),j),Lt(j,a)),new Formula.Apply(labels,[new Formula.Negate(phase)]),outside))))))))))))));
         var total=Multiply(q,m); var pi=F.Id("pi"); var alphabet=F.Id("alphabet");
         var B=F.Id("B"); var rest=F.Id("rest"); var history=F.Id("history");
         var w=Call("flattenHistory",history); var c=F.Id("c"); var budget=F.Id("budget");
@@ -46,7 +46,7 @@ internal sealed class ForcedThresholdPrefixDocument : IScribeDocumentDefinition
         var cut=Equal(Call("ofFn",B),Call("append",Call("replicate",a,F.Id("true")),Call("cons",F.Id("false"),rest)));
         var execution=All("phase",Call("ZMod",Add(total,D(1))),All("s",nat,Imp(Lt(s,total),
             Equal(Call("runBits",total,B,Rec(v,phase,s)),If(Lt(s,Subtract(total,a)),
-                Rec(Add(v,Call("wordIncrement",total,phase,B)),Add(phase,m),Call("tailAfter",D(0),B)),F.Id("none")))));
+                Rec(Add(v,Call("wordIncrement",total,phase,B)),Add(phase,m),Call("tailAfter",D(0),B)),F.Id("none"))))));
         var result=Ex("B",Arrow(Call("Fin",m),boolType),Ex("rest",Call("List",boolType),And(
             Equal(Call("applySelector",pi,Call("some",v),F.Id("nil")),Call("inr",B)),cut,execution)));
         var theorem=All("Y",F.Id("Type"),All("Q",nat,All("m",nat,All("a",nat,
