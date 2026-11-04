@@ -3,6 +3,7 @@ bibkey: retractive2026reviewed
 authors: Supplied independent mathematical source and reviewer
 year: 2026
 title: Evolving continuous attachments and persistent compact range reservoirs
+doi: null
 url: https://github.com/the-omega-institute/trureturing
 claim: Classical arbitrary-set retractive attachment topology, finite clopen defects, exact sequence criterion, and compact natural-range persistence.
 strata_touched:
