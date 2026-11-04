@@ -1,0 +1,24 @@
+### 定理 17.3（完整关系保持给出酉演化）
+
+设同一完整操作将生成态族 $\psi_x$ 送到 $\phi_x$，保持全部复内积，且两族均张成同一有限载体。则存在唯一酉 $U$ 满足 $U\psi_x=\phi_x$。若相干提升 $U(t)$ 对内部钟为 $C^1$，则
+
+$$
+H(t)=i\hbar\dot U(t)U(t)^\dagger=H(t)^\dagger,qquad
+ i\hbar\dot\psi(t)=H(t)\psi(t).
+$$
+
+**证明。**令 $U(\sum c_x\psi_x)=\sum c_x\phi_x$。相同 Gram 保证每个零线性关系仍映成零，故映射良定义且保持内积；输出张成使其满射，输入张成给唯一性。微分 $UU^\dagger=I$ 得 $\dot UU^\dagger$ 反自伴，故 $H$ 自伴，作用于初态即得运动方程。
+
+只保射线转移概率没有固定共同相干相位；实际相位提升与时间标尺仍由继承接口给出。产品关系及声明张成给出张量积与纠缠的复合载体；记录等距 $V\psi=\sum_eM_e\psi\otimes|e\rangle$ 给 $\sum_eM_e^\dagger M_e=I$，取分支或偏迹得到仪器和完全正保迹通道。最后，$u=(A-\langle A\rangle)\sqrt\rho$、$v=(B-\langle B\rangle)\sqrt\rho$ 的二阶 Gram 行列式非负，给
+
+$$
+\operatorname{Var}_\rho(A)\operatorname{Var}_\rho(B)
+\ge\left|\operatorname{tr}(\rho\,\delta A\,\delta B)\right|^2,
+$$
+
+拆开实部与虚部即得 Robertson–Schrödinger 约束。
+
+**白话图景。**量子的规则可以接成一条完整的关系链：先有共同可比较的内容，才有态空间；共同变化保住全部关系，才有酉运动；内部结果怎样分份，给出概率和记录。本轮继续约束的是怎样看粗、怎样看细，以及这种分辨率能否与实际参照相容。
+
+<a id="section-18"></a>
+

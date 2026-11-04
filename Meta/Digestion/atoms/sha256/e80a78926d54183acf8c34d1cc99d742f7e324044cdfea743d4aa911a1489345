@@ -1,0 +1,13 @@
+### 定理 5.4（效果评价与纯态）
+
+该评价唯一为 $p(E)=\operatorname{Tr}(\rho E)$，其中 $\rho\ge0,\operatorname{Tr}\rho=1$。
+密度态的极点恰是秩一态；对归一纯态与秩一投影有 $p=|\langle\varphi,\psi\rangle|^2$。
+
+**证明。**
+可加性给有理齐次性，非负性给单调性，有理夹逼给实齐次性。对 $B\ge0$，以 $s>0,s\ge\|B\|$ 定义 $f(B)=s\,p(B/s)$，它与 $s$ 无关且在正锥可加。由正负分解延伸为 Hermitian 空间上的实线性泛函；有限迹配对给唯一 Hermitian $\rho$，正性与归一分别给 $\rho\ge0$ 和迹一。
+秩至少二时可反向微调两个正谱权，得非平凡凸分解；秩一态的正分解只能支持同一射线，故它是极点。对两个秩一矩阵直接相乘取迹，即得 Born 平方律。相同纯态的归一向量只差整体相位。
+
+该全效果版本包括二维 [9](#ref-busch2003)。候选未自动供应全部物理效果。
+原支有 $p_j=\operatorname{Tr}(\rho E_j)$；仅当 $p_j>0$ 时定义 $\rho_j=\mathcal T_j(\rho)/p_j$。
+若同空间支效果为投影 $P$，且保持 $\operatorname{Ran} P$ 内每条纯射线，则得到 Lüders 更新：$P=0$ 时所有 Kraus 项为零；$P\ne0$ 时效果先给 $A_\alpha(I-P)=0$，射线保持使每个 $A_\alpha v$ 与 $v$ 共线。对基向量及两两和应用，得 $A_\alpha=c_\alpha P$。效果给 $\sum|c_\alpha|^2=1$，故 $\mathcal T(\rho)=P\rho P$。仅有结果可重复性不排除结果子空间内的旋转。
+

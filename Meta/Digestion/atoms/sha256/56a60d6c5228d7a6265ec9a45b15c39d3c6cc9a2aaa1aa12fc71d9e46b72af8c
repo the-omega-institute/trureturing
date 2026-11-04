@@ -1,0 +1,39 @@
+### 定理 3.3（完整内部记录与量子通道）
+
+<a id="thm-c117-record"></a>
+
+选 $R$ 的正交基 $\{\lvert j\rangle\}$，写
+
+$$
+V\psi=\sum_jK_j\psi\otimes\lvert j\rangle.
+$$
+
+则 $\sum_jK_j^*K_j=I$，忽略记录得到
+
+$$
+\Phi(\rho)=\operatorname{Tr}_R(V\rho V^*)=\sum_jK_j\rho K_j^*.
+$$
+
+该映射在任意有限内部参考下完全正且保迹。反之，每个有限维完全正保迹映射都有这样的完整记录实现。
+
+**证明。**
+定义 $K_j=(I\otimes\langle j\rvert)V$，由记录基完备性有
+$\sum_jK_j^*K_j=V^*V=I$；按该基计算部分迹便得公式。若还保留参考 $Q$，则
+
+$$
+(\Phi\otimes\operatorname{id}_Q)(X)
+ =\operatorname{Tr}_R\bigl[(V\otimes I_Q)X(V^*\otimes I_Q)\bigr]\ge0
+ \qquad(X\ge0).
+$$
+
+正性来自合同变换与部分迹保正；后者可逐个向量检验为
+$\langle x,\operatorname{Tr}_R(Y)x\rangle=\sum_j\langle x\otimes j,Y(x\otimes j)\rangle\ge0$。迹由 $V^*V=I$ 保持。
+
+反向可直接使用有限 Choi 构造。对输入维数 $d$，令
+$\lvert \Gamma_d\rangle=\sum_i\lvert i,i\rangle$。完全正性使
+$(\Phi\otimes\operatorname{id}_d)(\lvert \Gamma_d\rangle\langle \Gamma_d\rvert)$ 为正；将其谱向量按输出、输入指标重排为矩阵 $K_j$，逐个比较矩阵单位得到 $\Phi(X)=\sum_jK_jXK_j^*$。保迹给 $\sum_jK_j^*K_j=I$，故所列 $V$ 等距。
+
+这把 C116 的任意参考正性改写成一个完整记录接口；在所述有限模型上两种描述等价，不声称数学约束因此严格变弱。若模型供应全部此类等距接口，就得到全部相应通道；一个较小菜单是否已覆盖全部通道，仍须另证，不能仅凭表示定理自动扩大。
+
+正交记录可以按可见结果分组。若一组结果对应若干标签 $j$，该分支是相应 Kraus 项之和。一个可见结果不必只有一个 Kraus 算子：未读的细记录仍属于 $\Omega$，也仍可携带量子相干与参考关系。
+

@@ -1,0 +1,36 @@
+**定理 34.1（C101 认证全部三类实际张量关系）。** C101 下每条实际边都是通常有限复 $C^*$ 张量关系。其三种情况为
+
+$$
+\begin{array}{c|c|c}
+(D_A,D_B)&M&\Gamma\text{ 的类型}\\\hline
+D_A\ne0, D_B\ne0&S_A\otimes S_B-\lambda B_A\otimes B_B&\text{活动，共同 }\lambda\\
+\text{恰有一方非零}&S_A\otimes S_B&\text{活动，沿用活动方 }\lambda\\
+D_A=D_B=0&S_A\otimes S_B&\text{静态，无内在 }\lambda
+\end{array}\tag{34.1}
+$$
+
+变化在三种情形均由 (33.1) 给出。相应复代数分别为通常矩阵直和的张量积、经典标签下的量子块直和，以及 $\mathbb C^{r_Ar_B}$。这些是同一候选的三个端点，不另设经典乘法公理。
+
+证明。实际输出 $AB$ 本身属于 $\Omega$，所以定理 33.3 也适用于这个同一对象。若 $\Gamma\ne0$，原实际 $M$ 为复 $C^*$ 自伴比较；若 $\Gamma=0$，原实际 $M$ 为交换结合比较。两种情形都使 $M$ 为 Jordan。
+
+若双方活动，定理 27.3 先给两方相同的 $\lambda$，定理 30.1 的中心幂等证明再给第一行。该证明只需要实际输出为 Jordan，其所用局部正比较和全部二元身份仍在此处成立。
+
+若 $A$ 静态，取其完整经典幂等基 $e_i$。模块身份给 $p_i=e_i\otimes1$ 的实际左乘
+
+$$
+\mathbb L_{p_i}=P_i\otimes I,
+\qquad \mathbb L_{p_i}^2=\mathbb L_{p_i},
+\qquad p_i^2=p_i.
+$$
+
+Jordan 一次线性化 (23.3) 在零、一本征空间分别作用，给 $\mathbb L_{p_i}$ 与全部实际左乘对易，并给 $\mathbb L_{p_ix}=\mathbb L_{p_i}\mathbb L_x$。取 $x=1\otimes b$，遂有
+
+$$
+\mathbb L_{e_i\otimes b}
+=(P_i\otimes I)(I\otimes L_b)=P_i\otimes L_b.
+$$
+
+各 $e_i\otimes b$ 张成全部联合空间，故 $M=S_A\otimes S_B$。另一方静态同理，得到后两行。至少一方活动时，输出的曲率律限制到该方单位嵌入，与其非零 $D_{B(a,c)}$ 比较，证明输出标尺等于该活动方标尺；双方静态时不作这种除法。
+
+在活动情形，按对应标尺合并实部和虚部；在经典情形直接复化。三行均得到 $m_{AB}=m_A\otimes_{\mathbb C}m_B$。∎
+

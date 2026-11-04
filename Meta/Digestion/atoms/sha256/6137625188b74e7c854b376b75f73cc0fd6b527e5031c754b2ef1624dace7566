@@ -1,0 +1,77 @@
+### 命题 30.4（近极值行的精确总变差界）
+
+保留定理 30.3 的同源完整标签/正效果/边际前件（或明示的受限域抽象正细化前件），但允许 $\lambda_+>0$ 和 $\lambda_-\ge0$。令 $P_v$ 是最大本征值方向的任一投影；在 $\lambda_+=\lambda_->0$ 的标量情形可任意选取方向；$\lambda_+=0$ 的零效果情形不在本命题内。定义
+
+$$
+c_{q,w}:=\frac{\operatorname{Tr}(P_vG_{j,q,w})}{\lambda_+}.
+\tag{30.8}
+$$
+
+对任一原状态 $\rho_a$，记 $m=m_j(a)>0$。则对每个保留的 $q$，有
+
+$$
+\frac12\sum_w\left|P_j(a;q,w)-m\,c_{q,w}\right|
+\le \sqrt{\lambda_-\,s_a\,m}
+\le \sqrt{\lambda_-\,m},\qquad
+s_a:=1-\langle v,\rho_av\rangle.
+\tag{30.9}
+$$
+
+因此题设的目标界确实成立，但 (30.9) 的第一项是可由同一 $2\times2$ 状态进一步保留的更强界。除以实际原始成功质量得到条件形式
+
+$$
+\frac12\sum_w\left|\frac{P_j(a;q,w)}{m_j(a)}-c_{q,w}\right|
+\le\sqrt{\frac{\lambda_-s_a}{m_j(a)}}
+\le\sqrt{\frac{\lambda_-}{m_j(a)}}.
+\tag{30.10}
+$$
+
+对两个实际正质量锚点 $a,a'$，同一保留行 $q$ 的条件未来律 $\mu_a^q(w)=P_j(a;q,w)/m_j(a)$ 满足
+
+$$
+\frac12\sum_w|\mu_a^q(w)-\mu_{a'}^q(w)|
+\le\min\!\left\{1,\sqrt{\frac{\lambda_-}{m_j(a)}}+\sqrt{\frac{\lambda_-}{m_j(a')}}\right\}.
+\tag{30.11}
+$$
+
+带 $s_a,s_{a'}$ 的版本由 (30.10) 直接替换得到。若某个原始质量为零，条件律不定义，不能把 (30.10) 或 (30.11) 延伸到该点。
+
+**证明。** 在 $v,v^\perp$ 基中写
+
+$$
+\rho_a=\begin{pmatrix}r&z\\\bar z&s\end{pmatrix},\qquad
+r+s=1,\qquad |z|^2\le rs,
+$$
+
+且 $E_j=\operatorname{diag}(\lambda_+,\lambda_-)$. 置
+
+$$
+A=E_j^{1/2}\rho_aE_j^{1/2},\qquad
+M_w=E_j^{-1/2}G_{j,q,w}E_j^{-1/2},
+$$
+
+其中逆只在 $\operatorname{supp}E_j$ 上取；若 $\lambda_-=0$，按支撑限制理解。则 $M_w\ge0$、$\sum_wM_w=I_{\operatorname{supp}E_j}$（满支撑时就是 $I$），并且
+
+$$
+P_j(a;q,w)=\operatorname{Tr}(AM_w),\qquad
+c_{q,w}=\operatorname{Tr}(P_vM_w),\qquad m=\operatorname{Tr}A.
+$$
+
+令 $X=A-mP_v$。任何 POVM 的标量读出都满足
+
+$$
+\frac12\sum_w|\operatorname{Tr}(XM_w)|\le\frac12\|X\|_1.
+$$
+
+这里 $X$ 为迹零 Hermitian 矩阵，直接计算给出
+
+$$
+\frac12\|X\|_1
+=\sqrt{(\lambda_-s)^2+\lambda_+\lambda_-|z|^2}
+\le\sqrt{\lambda_-s(\lambda_-s+\lambda_+r)}
+=\sqrt{\lambda_-sm}.
+\tag{30.12}
+$$
+
+最后使用 $s\le1$ 得到 (30.9)，除以 $m$ 得到 (30.10)，再对共同锚律 $c_q$ 使用三角不等式并利用总变差至多为一，得到 (30.11)。证毕。
+

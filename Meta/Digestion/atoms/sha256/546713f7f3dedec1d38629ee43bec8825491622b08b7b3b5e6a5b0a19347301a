@@ -1,0 +1,61 @@
+**Theorem 14.1 (rounded depth is paid at every selected cut).** Every
+recorder on the full native domain satisfying (IV.14)–(IV.15), whether
+computable or not, obeys
+
+$$
+M_J(t_r)\ge M_J(\beta)+
+ \sum_{i=1}^r\lceil\log_2d_i\rceil
+\ge\sum_{i=1}^r\lceil\log_2d_i\rceil.
+\tag{IV.31}
+$$
+
+No common word length at a source, per-event code, block delimiter or
+prefix freedom across different sources is assumed.
+
+Proof. At $t_{i-1}$ put $p=L^{q_{i-1}}$. Its current subtree at $p$
+is beta. The new splits are
+$S_p,S_{pL},\ldots,S_{pL^{d_i-1}}$, in that forced order, and its new
+promotion is $Q_i=P_{pR}$. The first split creates the actual right
+alpha on which $Q_i$ acts. For each $k\in\{1,\ldots,d_i\}$ the suffix
+
+$$
+v_{i,k}=
+ \left(\prod_{j=0}^{k-1}S_{pL^j}\right)
+ P_{pR}
+ \left(\prod_{j=k}^{d_i-1}S_{pL^j}\right)
+\tag{IV.32}
+$$
+
+is legal, with products denoting concatenation in increasing $j$ and
+an empty product denoting the empty word. The first split uses the
+current beta at $p$; each subsequent split uses the beta born to the
+left of the preceding split. $Q_i$ leaves those operands unchanged.
+All $d_i$ suffixes have $d_i+1$ events and end at
+$t_i$. Every $h\in\mathcal H(t_{i-1})$ admits every one of them:
+all events of its current source are complete, independently of their
+earlier serial order. These are distinct actual extensions, and are
+exactly the extensions from this cut to $t_i$ because they contain
+precisely the difference of the two endpoint event sets. Their use
+does not exclude other histories in $\mathcal H(t_i)$.
+
+The finite nonempty fibre at $t_{i-1}$ has a history $h_*$ attaining
+$M_J(t_{i-1})$. Literal prefix preservation at each enabled edit makes
+$x=J(h_*)$ a prefix of all $J(h_*v_{i,k})$. Those $d_i$ words are
+distinct and prefix-free in the full fibre at $t_i$. Apply the mature
+binary-cylinder bound (IV.22), with $L=M_J(t_i)$. After stripping $x$,
+their depth-$L-|x|$ cylinders are disjoint and nonempty, so
+
+$$
+d_i\le2^{M_J(t_i)-M_J(t_{i-1})},\qquad
+M_J(t_i)\ge M_J(t_{i-1})+\lceil\log_2d_i\rceil.
+\tag{IV.33}
+$$
+
+This includes $d_i=1$ and an empty residual word. Summing these
+inequalities and using $M_J(\beta)\ge0$ proves (IV.31). The maximizing
+history may depend on $J$ and on the cut. No nested choice of maximizing
+histories is needed, since every history at each cut admits the displayed
+suffixes. The old bits may have been delayed or encoded jointly in any
+way; only their literal preservation and terminal fibrewise prefix
+freedom were used. $\square$
+

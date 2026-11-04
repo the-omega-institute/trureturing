@@ -1,0 +1,29 @@
+### 命题 19.4（由可恢复生成关系到酉运动方程）
+
+设同维 CPTP 过程 $\mathcal N_t$ 对某个生成 $M_d$ 的二态保持 C90。
+则每个 $t$ 有酉表示 $\mathcal N_t(\rho)=U(t)\rho U(t)^\dagger$。
+若已给定可微的内部时间及可微酉相位提升，令
+
+$$
+H(t)=i\hbar\dot U(t)U(t)^\dagger.
+$$
+
+则 $H(t)=H(t)^\dagger$，且
+
+$$
+i\hbar\dot\psi(t)=H(t)\psi(t),\qquad
+ i\hbar\dot\rho(t)=[H(t),\rho(t)].
+$$
+
+**证明。**
+前文生成代数推论给同一个全输入 CPTP 左逆；同维 Kraus 证明给酉性。
+对 $UU^\dagger=I$ 微分，得到
+$\dot U U^\dagger+U\dot U^\dagger=0$，故 $H$ 自伴。
+对 $\psi(t)=U(t)\psi(0)$ 及 $\rho(t)=U(t)\rho(0)U(t)^\dagger$ 微分即得两式。
+
+若另有自治的时间平移组合，并选择相容的单参数酉提升，有限维群结构给
+$U(t)=e^{-itH/\hbar}$，$H$ 不随 $t$ 变。
+改变相位 $U\mapsto e^{i\alpha(t)}U$ 会把
+$H$ 改为 $H-\hbar\dot\alpha I$；密度态运动不受这一标量平移影响。
+时间参数、作用量单位 $\hbar$ 及具体 $H$ 的谱，不由 C90 的零损失资格确定。
+

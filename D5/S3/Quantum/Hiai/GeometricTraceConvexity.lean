@@ -346,7 +346,7 @@ private lemma inverse_shift_split {A : Matrix d d ℂ} (hA : A.PosSemidef)
   intro x hx
   by_cases h : x = 0 <;> simp [h]
 
-private lemma tendsto_positive_rpow {ι : Type*} {l : Filter ι}
+lemma tendsto_positive_rpow {ι : Type*} {l : Filter ι}
     {F : ι → Matrix d d ℂ} {M : Matrix d d ℂ} {q : ℝ}
     (hq : 0 < q) (hM : M.PosSemidef) (hF : ∀ᶠ i in l, (F i).PosSemidef)
     (hlim : Tendsto F l (𝓝 M)) :
@@ -596,7 +596,7 @@ private lemma mean_posSemidef (X Y : Matrix d d ℂ) (α : ℝ) : (geometricMean
   rw [hs] at h
   exact h
 
-private lemma tendsto_tracePower {ι : Type*} {l : Filter ι}
+lemma tendsto_tracePower {ι : Type*} {l : Filter ι}
     {F : ι → Matrix d d ℂ} {M : Matrix d d ℂ} {q : ℝ}
     (hq : 0 < q) (hM : M.PosSemidef) (hF : ∀ᶠ i in l, (F i).PosSemidef)
     (hlim : Tendsto F l (𝓝 M)) :

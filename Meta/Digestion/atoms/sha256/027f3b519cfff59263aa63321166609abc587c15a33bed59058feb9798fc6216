@@ -1,0 +1,6 @@
+## 4. 显式反向的几何：加权收缩、三维读口与稳定关系
+
+<a id="sec-c122-weighted-geometry"></a>
+
+本节固定一个已给定的内部参考态 $\sigma>0$、一个 CPTP 过程 $N$，并记 $\tau=N(\sigma)$。输出空间始终限制到 $\operatorname{supp}\tau$，故 $\tau>0$。这个限制保留整个前向过程：每个 $X\ge0$ 都满足 $X\le c\sigma$，因而 $0\le N(X)\le c\tau$；再由正矩阵线性生成全部矩阵，得到所有输出都在该支持内。参考态限定了比较的权重，不承担读取全部 $\Omega$ 的任务。
+

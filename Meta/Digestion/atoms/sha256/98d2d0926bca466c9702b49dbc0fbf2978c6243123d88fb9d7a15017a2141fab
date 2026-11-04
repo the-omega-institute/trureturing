@@ -1,0 +1,26 @@
+**定义 1.2（实联合关系及候选 C96）。** 对两个定义 1.1 的系统 $A,B$，取实代数张量空间 $J_{AB}=J_A\otimes_{\mathbb R}J_B$，使用乘积内积，给实参数 $\lambda$。在简单张量上规定
+
+$$
+\begin{aligned}
+M_\lambda(a\otimes b,c\otimes d)
+&=S_A(a,c)\otimes S_B(b,d)-\lambda B_A(a,c)\otimes B_B(b,d),\\
+T(a\otimes b,c\otimes d)
+&=B_A(a,c)\otimes S_B(b,d)+S_A(a,c)\otimes B_B(b,d),
+\end{aligned}\tag{1.1}
+$$
+
+并双线性延拓。$M_\lambda$ 对称，$T$ 交替，$1_A\otimes1_B$ 是前者的单位并被后者消去。定义残差
+
+$$
+R_\lambda(H,X,Y)=T(H,M_\lambda(X,Y))
+-M_\lambda(T(H,X),Y)-M_\lambda(X,T(H,Y)).\tag{1.2}
+$$
+
+唯一新增的候选相容条件为
+
+$$
+\boxed{R_\lambda(H,X,Y)=0\quad\text{对所有 }H,X,Y\in J_{AB}.}\tag{C96}
+$$
+
+其含义是：一个内部元 $H$ 引起的变化，作用于一对元的联合比较，等于先分别改变这两个元再比较的一阶总变化。它约束二元比较关系与二元变化关系的相互作用；第三元 $H$ 检查这两种关系是否保留同一联合记录。此处没有预设复合 Jordan 恒等式、复合 Jacobi 律或复 Hilbert 张量正锥。式 (1.1) 的联合模板及完整实张量空间仍是独立的组合前件。
+

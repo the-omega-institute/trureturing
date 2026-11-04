@@ -1,0 +1,49 @@
+**Definition 33.1 (independent observations and declared continuation
+task).** Fix $C$, its installation, live binding/authority roles and the
+MarkedReady domain of §32. The task $Q_C$ permits the seven request kinds
+of Definition 32.2 with their complete literal replies, actual source
+operations and settled successors for further such requests. All policy
+inputs are the acquired old event, current source, current request and
+specified pending fields for NextSelected, and old $q$ plus the actual
+new event for $C$. No omitted archive, scratch history or outside selector
+is an admitted input. Task behavior compares the same finite future
+request sequences, their legality and full replies at each step. It
+exposes neither raw fresh-name spellings nor obsolete workspace, complete
+controller chronology, primitive time, current capacity or allocation
+order. Those exclusions define this semantic task, not an assertion
+that the joint process has no such work or material.
+
+The following observations select different relations of this one process.
+
+- $S_C$ exposes the actual oriented source-edge support $S_0$, with the
+  local membership bits at logical positions, selected side words at
+  branches, and current selection state $q$ as explicit annotations.
+- $B_C$ exposes the actual terminal source antichain $B_0$, with those
+  same source-indexed annotations and $q$. Their indices are positions
+  in its prefix closure; record cells are not extra source-boundary leaves.
+- $T_C$ exposes the labelled causal creation/lifecycle order $T_c$, the
+  actual selected serial chain of literal event identities, and current
+  selection state $q$. It retains causal precedence and chosen-event
+  precedence, not durations or the unselected serial extension.
+- $M_C$ exposes the actually retained source/mark/selected-tape/control
+  fields, their real source bindings and readable backing, and the
+  callable installed entry under its current rights. It excludes unused
+  reservations, inactive auxiliary fields and obsolete scratch. Record
+  list order is source preorder and each tape is a null-ended linked word.
+
+Support and boundary use the material unary $\beta$ marker of Definition
+17.3; omitting it would lose the independent $\alpha/\beta$ meaning.
+The annotations are expressly acquired relations, not a claim that bare
+geometry encodes selected membership. Each $q$ is an admitted future
+selection input, not the entire program counter. These views omit input,
+printing and maintenance chronology; none receives an unrestricted copy
+of that history. On (AA.100), even their selected serial component has
+only $n$ events out of $6n+1$. Other selectors can select more, including
+all events, without giving a general compression guarantee.
+
+Equality of memory descriptions means equality of the specified rooted
+oriented contents and binding relations modulo spelling of fresh record
+names, with the fixed actual source and authority roles retained. It is
+not equality of unrelated roots or an identification of different grants.
+Recovering such a description does not construct an accessible object.
+

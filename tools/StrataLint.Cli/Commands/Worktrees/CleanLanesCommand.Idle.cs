@@ -6,11 +6,14 @@ internal static partial class CleanLanesCommand
 {
     private static IReadOnlySet<string> InspectIdlePool(string root, string? dev, bool force,
         IReadOnlyList<RegisteredWorktree> inventory,
-        ICollection<CleanLaneEvent> events, IWorktreeProcessRunner runner,
+        ICollection<CleanLaneEvent> events, IWorktreeProcessRunner runner, DateTimeOffset now,
         Action<RegisteredWorktree, LaneRemovalResult> completeRemoval,
         Action<RegisteredWorktree> protectObservedWorktree)
     {
         var idle = inventory.Where(item => WorktreePoolCommand.IsIdleBranch(item.Branch)).ToArray();
+        var expired = idle.Where(item => ReadLastUpdate(item, runner) is { } updated
+            && UpdateAgeBlockReason(updated, now) is null).Select(item => item.Path).ToHashSet(StringComparer.Ordinal);
+        idle = idle.Where(item => !expired.Contains(item.Path)).ToArray();
         var handled = idle.Select(item => item.Path).ToHashSet(StringComparer.Ordinal);
         if (idle.Length == 0) return handled;
         void PoolFailure(string reason)
@@ -31,6 +34,11 @@ internal static partial class CleanLanesCommand
         try
         {
             var arguments = new List<string> { "pool", "--dev", dev };
+            foreach (var path in expired.Order(StringComparer.Ordinal))
+            {
+                arguments.Add("--exclude-path");
+                arguments.Add(path);
+            }
             if (force) arguments.Add("--force");
             var result = WorktreeProtocolCommand.Run(root, arguments, runner, Timeout.InfiniteTimeSpan);
             if (result.Output.Length == 0)
@@ -71,11 +79,6 @@ internal static partial class CleanLanesCommand
                     nativeLocks = locks.Clone();
                 else if (row.TryGetProperty("native_locks", out var failedLocks))
                     nativeLocks = failedLocks.Clone();
-                if (row.TryGetProperty("recovery_roots", out var roots))
-                    foreach (var reference in roots.EnumerateArray())
-                        protectObservedWorktree(item with { Branch = reference.GetString()!["refs/heads/".Length..] });
-                if (recovery is not null)
-                    protectObservedWorktree(item with { Branch = recovery["refs/heads/".Length..] });
                 var removal = new LaneRemovalResult(outcome switch
                 {
                     "removed" or "would_remove" => LaneRemovalOutcome.Removed,
@@ -91,12 +94,14 @@ internal static partial class CleanLanesCommand
                     recovery, ReadOptional("recovery_branch_candidate"), NativeLocks: nativeLocks,
                     Diagnostic: diagnostic.Length == 0 ? null : diagnostic);
                 reportedFailure |= removal.Outcome is LaneRemovalOutcome.QualificationFailed or LaneRemovalOutcome.CheckpointFailed
-                    or LaneRemovalOutcome.WorktreeRemoveFailed or LaneRemovalOutcome.PoolSweepFailed;
+                    or LaneRemovalOutcome.WorktreeRemoveFailed or LaneRemovalOutcome.PoolSweepFailed
+                    || outcome == "retained" && reason != "idle_pool";
                 var removalEvent = RemovalEvent(item, removal);
                 events.Add(removalEvent with
                 {
                     Kind = "idle_worktree",
                     Action = outcome == "would_remove" ? "would_remove" : removalEvent.Action,
+                    SelectedForRemoval = ReadOptional("stage") is "remove" or "revalidate",
                 });
                 if (outcome != "retained" || reason != "idle_pool") completeRemoval(item, removal);
             }

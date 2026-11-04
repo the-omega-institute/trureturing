@@ -127,12 +127,12 @@ theorem word_false_length_lt_true {n : ℕ} (hn : 0 < n) :
       simp only [word_length_succ, Bool.false_eq_true, reduceIte, one_mul]
       nlinarith
 
-private theorem prefix_repeatWord {α : Type*} (w : List α) {k : ℕ} (hk : 0 < k) :
+theorem prefix_repeatWord {α : Type*} (w : List α) {k : ℕ} (hk : 0 < k) :
     w <+: repeatWord w k := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hk)
   simp
 
-private theorem suffix_repeatWord {α : Type*} (w : List α) {k : ℕ} (hk : 0 < k) :
+theorem suffix_repeatWord {α : Type*} (w : List α) {k : ℕ} (hk : 0 < k) :
     w <:+ repeatWord w k := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hk)
   change w <:+ repeatWord w (k + 1)
@@ -152,13 +152,13 @@ theorem word_block_infix (n : ℕ) (a b : Bool) : word n b <:+: word (n + 1) a :
   · exact (word_prefix_false n a).isInfix
   · exact (word_suffix_true n a).isInfix
 
-private theorem repeatWord_pair_prefix {α : Type*} (w : List α) {k : ℕ}
+theorem repeatWord_pair_prefix {α : Type*} (w : List α) {k : ℕ}
     (hk : 2 ≤ k) : w ++ w <+: repeatWord w k := by
   have he : k = 2 + (k - 2) := by omega
   rw [he, repeatWord_add]
   simp
 
-private theorem suffix_prefix_infix {α : Type*} {u v U V : List α}
+theorem suffix_prefix_infix {α : Type*} {u v U V : List α}
     (hu : u <:+ U) (hv : v <+: V) : u ++ v <:+: U ++ V := by
   obtain ⟨p, rfl⟩ := hu
   obtain ⟨s, rfl⟩ := hv
@@ -218,7 +218,7 @@ theorem wordHolonomy_repeat {G : Type*} [Monoid G] (π : Bool → G)
   | zero => simp
   | succ k ih => simp [wordHolonomy_append, ih, pow_succ]
 
-private theorem finite_group_pow_factorial {G : Type*} [Group G] [Finite G]
+theorem finite_group_pow_factorial {G : Type*} [Group G] [Finite G]
     (g : G) {n : ℕ} (hn : Nat.card G ≤ n) : g ^ n.factorial = 1 := by
   obtain ⟨k, hk⟩ := Nat.dvd_factorial (Nat.card_pos (α := G)) hn
   rw [hk, pow_mul, pow_card_eq_one', one_pow]

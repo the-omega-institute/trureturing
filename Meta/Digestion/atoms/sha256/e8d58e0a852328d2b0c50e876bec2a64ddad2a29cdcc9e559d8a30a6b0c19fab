@@ -1,0 +1,165 @@
+**命题 7.1（固定九维联合载体上的全报告反例族）。** 存在每个 $t>0$ 都满足 (5.1) 以及全部局部活动、正性、含幺、Frobenius 和导子前件的实际实现，其联合维数恒为 $9$，且
+
+$$
+\epsilon_t^2=48t^6\longrightarrow0,\qquad
+\sup_{\|a\|=1}\|D^J_aa\|=\tfrac12
+\quad(J=A,B).
+\tag{7.1}
+$$
+
+这里 $E_t$ 是完整实际 (5.2)，不是四通道报告的子族。每个 $t>0$ 的 $E_t$ 非零。这一族排除不带任何额外尺度或条件控制、只由完整 $\epsilon$ 给出且趋于零的局部交替界。
+
+证明。两方均取同一个欧氏空间 $J=\mathbb R\oplus\mathbb R^2$，正交单位基为 $e_0,x,y$。先定义
+
+$$
+\begin{aligned}
+S_0((\alpha,u),(\beta,v))
+   &=(\alpha\beta+\langle u,v\rangle,\alpha v+\beta u),\\
+Ke_0&=0,\qquad Kx=y,\qquad Ky=-x,\\
+D_{(\alpha,u)}&=\alpha K.
+\end{aligned}
+\tag{7.2}
+$$
+
+$S_0$ 交换、单位为 $e_0$；其欧氏三次型
+$\alpha\beta\gamma+\gamma\langle u,v\rangle+
+\alpha\langle v,w\rangle+\beta\langle u,w\rangle$
+全对称，故为正 Frobenius 比较。$K$ 在空间部分斜伴，$\langle Ku,v\rangle+\langle u,Kv\rangle=0$，直接代入 (7.2) 给
+$KS_0(a,c)=S_0(Ka,c)+S_0(a,Kc)$。
+因此每个 $D_a$ 是导子，指派实线性且 $D_{e_0}=K\ne0$。
+
+对 $t>0$ 定义实际局部产品和单位
+
+$$
+S_t=tS_0,\qquad 1_t=t^{-1}e_0,
+\tag{7.3}
+$$
+
+保持原欧氏内积和 $D$ 不变。导子律、交换性及 Frobenius 性随产品同次缩放保持，单位由 (7.3) 直接给出。局部自缺陷为
+
+$$
+D_aa=(0,\alpha Ku),\qquad
+\|D_aa\|=|\alpha|\|u\|
+ \le\tfrac12(\alpha^2+\|u\|^2).
+\tag{7.4}
+$$
+
+$a=(e_0+x)/\sqrt2$ 取等号，所以 (7.1) 的第二项成立。$D_{1_t}=t^{-1}K$ 并不为零；这里没有暗加单位标签生成元为零。
+
+在同一个实际 $V=J\otimes J$ 上取欧氏乘积内积，令 $L^0_a=S_0(a,\,\cdot\,)$，并给出完整联合运算
+
+$$
+\begin{aligned}
+M_0(a\otimes b,c\otimes d)&=S_0(a,c)\otimes S_0(b,d),\\
+Q^0_{a\otimes b}&=D_a\otimes L^0_b+L^0_a\otimes D_b,\\
+M_t&=t^2M_0,\qquad \Gamma^t_H=tQ^0_H .
+\end{aligned}
+\tag{7.5}
+$$
+
+线性延拓定义全部 $H$ 上的 $\Gamma^t$。$M_t$ 交换、对乘积正内积 Frobenius，单位恰为 $1_t\otimes1_t$。对简单张量逐项有
+
+$$
+\begin{aligned}
+M_t(a\otimes1_t,c\otimes d)&=S_t(a,c)\otimes d,\\
+M_t(1_t\otimes b,c\otimes d)&=c\otimes S_t(b,d),\\
+\Gamma^t_{a\otimes b}(c\otimes1_t)
+ &=t\bigl(D_ac\otimes L^0_b(t^{-1}e_0)
+          +L^0_ac\otimes D_b(t^{-1}e_0)\bigr)
+   =D_ac\otimes b,\\
+\Gamma^t_{a\otimes b}(1_t\otimes d)&=a\otimes D_bd.
+\end{aligned}
+\tag{7.6}
+$$
+
+其中 $D_be_0=0$；所有身份由多线性覆盖全部要求的输入。这检查了保留的两类模作用和两类保值条件作用。实际联合残差由 (7.5) 在三项中同次给出
+
+$$
+E_t=t^3E_0,
+\tag{7.7}
+$$
+
+其中 $E_0$ 使用 $M_0,Q^0$。一个具体完整基标签已给出非零见证：
+
+$$
+E_t(e_0\otimes x,\ e_0\otimes y,\ x\otimes y)
+      =t^3y\otimes x.
+\tag{7.8}
+$$
+
+事实上 $M_0(e_0\otimes y,x\otimes y)=x\otimes e_0$，$Q^0_{e_0\otimes x}=K\otimes L^0_x$ 将它送到 $y\otimes x$，而此 $Q^0$ 对两个原输入的像均为零。
+
+为取得完整而非抽样的平方和，固定第一输入 $H$，对另外两个完整基槽求和。$H$ 的两个因子都在 $\{x,y\}$ 时 $Q^0_H=0$；$H=e_0\otimes e_0$ 时 $Q^0_H=K\otimes I+I\otimes K$ 是 $M_0$ 的导子。这五个标签的残差全为零。对其余四个标签，可按下列有限张量计数计算。设
+
+$$
+\begin{aligned}
+P(c,e)&=S_0(Kc,e),& Q(c,e)&=S_0(c,Ke),\\
+U_b(d,f)&=L^0_bS_0(d,f)-S_0(L^0_bd,f),&
+V_b(d,f)&=L^0_bS_0(d,f)-S_0(d,L^0_bf).
+\end{aligned}
+\tag{7.9}
+$$
+
+当 $b=x$ 或 $y$ 时，局部导子律给
+
+$$
+E_0(e_0\otimes b,c\otimes d,e\otimes f)
+ =P(c,e)\otimes U_b(d,f)+Q(c,e)\otimes V_b(d,f).
+\tag{7.10}
+$$
+
+这些双线性张量均使用固定三维正交单位基。由 (7.2) 的乘法表
+$e_0a=a$、$x^2=y^2=e_0$、$xy=0$ 取得
+
+$$
+\begin{aligned}
+\|P\|_{\rm HS}^2=\|Q\|_{\rm HS}^2&=4,
+ &\langle P,Q\rangle_{\rm HS}&=-2,\\
+\|U_b\|_{\rm HS}^2=\|V_b\|_{\rm HS}^2&=2,
+ &\langle U_b,V_b\rangle_{\rm HS}&=1.
+\end{aligned}
+\tag{7.11}
+$$
+
+例如 $P$ 的四个非零输入是 $(x,e_0),(x,y),(y,e_0),(y,x)$，输出分别为 $y,e_0,-x,-e_0$；$Q(c,e)=P(e,c)$。$V_x$ 仅在 $(y,x),(y,y)$ 非零，输出为 $-y,x$，$U_x(d,f)=V_x(f,d)$。将 $x,y$ 同时旋转给 $b=y$ 的相同内积读数。(7.10) 的平方和因而为 $4\cdot2+4\cdot2+2(-2)\cdot1=12$。翻转双方给另外两个标签的同样数值。因此
+
+$$
+\begin{array}{c|c|c}
+H\text{ 的类型}&\text{标签数}&
+ \displaystyle\sum_{\nu,\lambda}
+ \|E_0(H,v_\nu,v_\lambda)\|^2\\ \hline
+e_0\otimes x,\ e_0\otimes y,\ x\otimes e_0,\ y\otimes e_0
+ &4&12\text{（每个标签）}\\
+e_0\otimes e_0,\ \{x,y\}\otimes\{x,y\}
+ &5&0
+\end{array}
+\tag{7.12}
+$$
+
+九个第一输入和全部 $9^2$ 个其余输入已被计入，得到 $\epsilon_0^2=48$，由 (7.7) 得 (7.1)。
+
+同一模型的实际参数也可明确对应到证书：
+
+$$
+n_A=n_B=3,\quad N=9,\quad
+u_A=u_B=t^{-1},\quad
+d_A=d_B=1,\quad
+\ell_A=\ell_B=\sqrt2\,t,\quad
+k_A=k_B=t^2.
+\tag{7.13}
+$$
+
+$d=1$ 由 $D_ac=\alpha Kv$ 达到。对单位 $a=(\alpha,u),c=(\beta,v)$，令 $r=\|u\|,s=\|v\|$，则
+$\|S_0(a,c)\|^2\le(|\alpha\beta|+rs)^2+(|\alpha|s+|\beta|r)^2
+=1+4|\alpha\beta|rs\le2$，
+同向取 $a=c=(e_0+x)/\sqrt2$ 达到上界。完整曲率表中仅空间基向量对可能非零，$[L^0_x,L^0_y]y=x$、$[L^0_x,L^0_y]x=-y$，故 $k=t^2$。因此
+
+$$
+c_A=c_B=\frac{1+2\sqrt2}{t},\qquad
+\frac{\epsilon_t c_A}{k_A}
+ =4\sqrt3(1+2\sqrt2),
+\tag{7.14}
+$$
+
+另一侧同样。残差虽趋零，证书的条件比值并不趋零；(6.2) 的平凡截顶也仍可使用。这里的活动始终非零，但单位长度发散、曲率读数趋零。$t=0$ 时产品不再含幺，故不是合同内的精确零残差端点；这与推论 6.2 没有矛盾。反例断言的是必须排除某种实际退化或添加额外观察，不断言 (6.18) 的每一项分别必要，也不排除其他充分证书。∎
+

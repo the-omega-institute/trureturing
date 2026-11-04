@@ -1,0 +1,118 @@
+**命题 29.2（Confinement beyond every published Section 26 domain）。**
+The graphs $X_r$ form an infinite family of connected interacting
+simple graphs of even order $m=2r+4$ and belong to
+$\mathcal C_{\mathrm{mp}}$. For every $r\geq2$, $S\geq1$,
+all conclusions (28.2) and (28.6) hold on their entire original
+complex carrier with $N=2(2r+4)S$, $k=(2r+4)S$.
+For every even scale $s=2S$,
+
+$$
+X_r\notin\mathcal U_s^{\rm diamond}
+ =\mathcal M\cup\mathcal B\cup\mathcal C
+       \cup\mathcal L_S\cup\mathcal F_s\cup\mathcal C_{\diamond},
+\tag{29.1}
+$$
+
+with exactly the domains and both alternatives for $\mathcal F_s$
+in Definition 26.1.
+
+Proof. The core is connected, and both added vertices are leaves
+at $a$. The order is $2r+4$ and the edge count is $r^2+4r+3$;
+the $r^2$ edges between $A$ and $B$ belong to the same connected
+core as all the other edges. Different $r$ give different orders.
+Thus this family adds interacting core vertices rather than
+disjoint spectator factors. Its complete induced neighborhoods
+are
+
+$$
+\begin{aligned}
+X_r[N(a)]&=K_{r,1,1}[B,\{u\},\{v\}]
+                      \sqcup\{\ell_1\}\sqcup\{\ell_2\},\\
+X_r[N(x)]&=K_{r,1,1}[B,\{u\},\{v\}]
+                                      &&(x\in A\setminus\{a\}),\\
+X_r[N(y)]&=K_{r,1,1}[A,\{u\},\{v\}]
+                                      &&(y\in B),\\
+X_r[N(u)]&=K_{r,r,1}[A,B,\{v\}],&
+X_r[N(v)]&=K_{r,r,1}[A,B,\{u\}],\\
+X_r[N(\ell_i)]&=\{a\} &&(i=1,2).
+\end{aligned}
+\tag{29.2}
+$$
+
+All displayed components are actual components, and the list
+includes every edge of every neighborhood. The leaves are
+isolated within $N(a)$ because their only neighbor is $a$.
+All non-singleton entries are connected complete multipartite
+graphs. This proves membership in Definition 28.1 and the stated
+original-model conclusions.
+
+At $u$ the sole neighborhood component is $K_{r,r,1}$. It contains
+a triangle, has $2r+1\geq5$ vertices, and its singleton-part
+vertex has degree $2r\geq4$. Hence it is not bipartite, not a
+simple odd cycle and not a diamond. It has no other component.
+This excludes $\mathcal C$ and $\mathcal C_{\diamond}$.
+It also has no flat least adjacency mode, as follows. The
+subspaces summing to zero inside either size-$r$ part have
+eigenvalue zero. On constant-on-parts vectors the antisymmetric
+choice $(c,-c,0)$ has eigenvalue $-r$. The symmetric choices
+$(c,c,d)$ have the two eigenvalues of
+
+$$
+\begin{pmatrix}r&1\\2r&0\end{pmatrix},\qquad
+\lambda_\pm=\frac{r\pm\sqrt{r^2+8r}}2.
+\tag{29.3}
+$$
+
+These subspaces exhaust the $2r+1$ dimensions. Since $r>1$,
+$\sqrt{r^2+8r}<3r$, so $\lambda_->-r$. Thus the least
+eigenvalue is the simple $-r$; every vector in its complex
+eigenspace vanishes at the singleton-part vertex. It cannot
+have modulus one at every coordinate. The whole-neighborhood
+condition $\mathcal L$ therefore fails at $u$. This excludes
+$\mathcal L_S$ for every $S\geq2$; $\mathcal L_1$ is empty
+by its definition.
+
+The global flat least-mode hypothesis also fails independently
+of scale. Put $+1$ on $A$, $-1$ on $B$, and zero elsewhere.
+Its adjacency quadratic form is $-2r^2$, its squared norm is
+$2r$, and all edges with a zero endpoint contribute zero. Thus
+
+$$
+\lambda_{\min}(A(X_r))\leq-r\leq-2.
+\tag{29.4}
+$$
+
+A modulus-one eigenvector $z$ for this least eigenvalue would,
+at a leaf, satisfy $\lambda_{\min}z_{\ell_i}=z_a$.
+Taking absolute values would force $|\lambda_{\min}|=1$,
+contradicting (29.4). Since global flatness is required before
+either positive-gap alternative defining $\mathcal F_s$ can
+apply, $X_r\notin\mathcal F_s$ for every even $s$, including
+both the $s\geq s_H$ alternative and the direct strictly
+positive finite-scale expression (26.2).
+
+The graph is not complete multipartite. A leaf is nonadjacent
+to $b\in B$ and to $u$, while $bu$ is an edge. In a complete
+multipartite graph distinct nonadjacent vertices belong to the
+same independent part, so these three relations are impossible.
+This excludes all of $\mathcal M$, with its balanced and
+dominant-part regimes and all part-number endpoints.
+
+The core $K_{r,r,1,1}$ is a maximal two-connected nonclique block.
+Deleting any one core vertex leaves a connected complete
+multipartite graph with at least three nonempty parts. A leaf
+cannot belong to a two-connected enlargement. Two distinct
+vertices of $A$ are nonadjacent, so this maximal block is not
+a clique. Therefore $X_r\notin\mathcal B$.
+
+These exclusions prove (29.1). Proposition 26.2 identifies the
+exact old domains, including all their specific consumers, and
+Definition 26.1 includes the diamond addition. Consequently the
+family is outside every one of those sufficient graph/scale
+domains, rather than outside only a particular asymptotic bound.
+The six-vertex graph of §25 has different order from every
+$X_r$, whose order is at least eight; the earlier consumers lie
+in the excluded union. The assertion here concerns the original
+interacting graphs $X_r$ and their actual $E_s$, not separate
+minimization of the regions in (29.2). $\square$
+

@@ -1,0 +1,58 @@
+**Mathematical source correspondence 43.7.** The complete chart uses
+the actual phase variation (36.47) and its exact trace and amplitude
+identities, now with its trace coordinate allowed to vary. Its reduced
+scalar block uses the unique interior selector and strict scalar
+convexity of Theorem 37.5. The transverse block is exactly the
+expansion (36.52)--(36.54). The unchanged-effect comparison and its
+uniform impurity coefficient are Theorem 40.4. These inputs do not
+require the selected pair to be globally minimizing. The additional
+fixed-record deductions are complete local phase coverage, the full
+reduced Hessian isolation, the simple reduced null mode, and their
+attained-contact and original-minimizer separation consequences.
+The implicit function theorem and Taylor's integral formula enter
+only with the analytic domains and invertible or positive Hessians
+specified in (43.7)--(43.15).
+
+The boundary arguments use Theorems 39.5--39.6 and the exact
+same-effect phase value and minimizing preimage in Theorems 42.3--42.4.
+The only convex decomposition used in (43.23) is the spectral/Birkhoff
+decomposition of the given actual $U$. Its matrix
+$|Z_{ik}|^2$ is doubly stochastic, as required by the finite
+Birkhoff--von Neumann theorem cited in Section 42.7. No converse
+statement about the convexity of a specified normal-unitary orbit
+is needed. The reduced null mode is a second-derivative conclusion;
+no parameter transversality or higher-order bifurcation condition
+has been established by that calculation.
+
+For comparison with a global certificate,
+[Bandeira--Boumal--Singer, *Tightness of the maximum likelihood
+semidefinite relaxation for angular synchronization*,
+arXiv:1411.3272v3, Lemmas 4.3--4.4 and Section 4.3](https://arxiv.org/html/1411.3272v3),
+consider a Hermitian objective matrix $C$ and the feasible matrices
+$X\succeq0$ with $\operatorname{diag}X=\mathbf1$. Their certificate
+requires a Hermitian slack $S\succeq0$, $SX=0$, and $S+C$ real
+diagonal; rank $n-1$ of the slack yields uniqueness. Their Section
+4.3 distinguishes this full positivity from positivity only on the
+phase tangent space. The prescribed original distance and variable
+effect of (42.31) are additional constraints and parameters. No such
+uniform slack or equality kernel for them is supplied by (43.14).
+
+Likewise [Boumal, *Nonconvex phase synchronization*,
+arXiv:1601.06114v3, Theorem 4](https://arxiv.org/html/1601.06114v3)
+proves global sufficiency of second-order conditions for its
+unconstrained torus quadratic problem with $C=zz^*+\Delta$,
+unit-modulus $z$, $\operatorname{diag}C\ge0$, and the bounds
+
+$$
+ \|\Delta\|_{\mathrm{op}}\le\frac{n^{2/3}}{14},\qquad
+ \|\Delta z\|_\infty\le\frac{n^{2/3}\sqrt{\log n}}{14}.
+\tag{43.25}
+$$
+
+An exact correspondence of its feasible set and these hypotheses
+to the prescribed-distance, all-effect problem is absent here.
+Its global conclusion therefore is not an implication of the local
+Hessian calculation. These cited standard tools are intermediate
+comparisons; Theorems 43.2--43.6 are repo-derived fixed-record
+deductions, with no literature-priority assertion.
+

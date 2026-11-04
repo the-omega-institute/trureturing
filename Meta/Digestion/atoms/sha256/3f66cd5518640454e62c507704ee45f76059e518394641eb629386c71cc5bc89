@@ -1,0 +1,21 @@
+**Definition 19.1 (ancestral routing tapes).** For an actual word $w$ ending
+at $t$, and each branch $v$, retain the word $W_v(w)$ obtained by taking
+all events strictly below $v$ in their actual order and writing their first
+side $L$ or $R$ below $v$. Events outside that subtree and events at $v$
+itself contribute nothing to $W_v$. These are auxiliary acquired records,
+not part of bare $S_0$ or $B_0$. Write $\mathcal W(w)=(W_v(w))_{v\in I(t)}$.
+
+For a reachable subtree $u$ born with type $b$, having $a$ current
+$\alpha$ leaves and $c$ current $\beta$ leaves, its event count is
+
+$$
+e_b(u)=a+2c-1-\mathbf1_{\{b=\beta\}}.
+\tag{AA.73}
+$$
+
+Indeed splits increase total leaves by one; promotions increase the number
+of $\beta$ leaves by one, while splits leave that number unchanged.
+Thus its split count is $a+c-1$ and its promotion count is
+$c-\mathbf1_{\{b=\beta\}}$. Set
+$x_v=e_\beta(t_{vL})$, $y_v=e_\alpha(t_{vR})$.
+

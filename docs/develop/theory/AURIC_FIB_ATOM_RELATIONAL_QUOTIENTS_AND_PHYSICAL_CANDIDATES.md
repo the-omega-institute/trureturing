@@ -70,7 +70,7 @@ $$
 | [ActualCoarseReadoutHistory.lean](../../../D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutHistory.lean)、[ActualCoarseReadoutCompletion.lean](../../../D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.lean) | 实际取得的共同历史和补充读数；不把存在可分读口当作已经取得读数 |
 | [PathStableSetPolytope.lean](../../../D5/S1/Words/AdmissibleWords/PathStableSetPolytope.lean) | 既有路径占位凸体对象；不替代第一部一般商代数同构的全部义务 |
 
-经典中间原料的文献表态为 `literature-attested`，精确使用范围由既有 Library 条目限定：[Stanley，*Two Poset Polytopes*（1986），定义 2.1、定理 2.2、例 4.3](../../../Library/Words/stanley1986posetpolytopes.md) 对应路径／fence 占位凸体；[Drton–Sullivant，*Algebraic Statistical Models*，math/0703609v1，例 16](../../../Library/Estimation/drtonsullivant2007algebraic.md) 对应正质量条件纤维的交叉乘积方程；[Wainwright–Jordan，*Graphical Models, Exponential Families, and Variational Inference*（2008），式 (2.12)、命题 2.1](../../../Library/Estimation/wainwrightjordan2008graphical.md) 对应另行选择的 separator 因子化补全，不识别所有具有同样边缘的原始联合律。本卷不另造重复文献条目，也不把这些原料归作新定理。
+经典中间原料的文献表态为 `literature-attested`，精确使用范围由既有 Library 条目限定：[Stanley，*Two Poset Polytopes*（1986），定义 2.1、定理 2.2、例 4.3](../../../Library/Geometry/stanley1986posetpolytopes.md) 对应路径／fence 占位凸体；[Drton–Sullivant，*Algebraic Statistical Models*，math/0703609v1，例 16](../../../Library/Estimation/drtonsullivant2007algebraic.md) 对应正质量条件纤维的交叉乘积方程；[Wainwright–Jordan，*Graphical Models, Exponential Families, and Variational Inference*（2008），式 (2.12)、命题 2.1](../../../Library/Estimation/wainwrightjordan2008graphical.md) 对应另行选择的 separator 因子化补全，不识别所有具有同样边缘的原始联合律。本卷不另造重复文献条目，也不把这些原料归作新定理。
 
 未证桥梁保留为 `open`：源商代数表述的完整形式化、所有未来的实际更新闭包实例、树级来源的完整纤维分类，以及从合法转移到场权重、钟、传播与守恒的物理实现。第一部、第二部中的定理称谓是来源编号；不存在将它们整体认作已核验新数学的主张。
 

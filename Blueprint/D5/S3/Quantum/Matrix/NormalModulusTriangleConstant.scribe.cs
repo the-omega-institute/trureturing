@@ -57,7 +57,7 @@ internal sealed class NormalModulusTriangleConstantDocument : IScribeDocumentDef
             Paragraph(Text(
                 "The normal spectral diagonalization Matrix.exists_mem_unitaryGroup_star_mul_mul_eq_diagonal "
                 + "and rank of a diagonal matrix give A=αP and B=βQ, with α,β≠0 and rank-one orthogonal "
-                + "projections P,Q. Set a=|α|, b=|β|, ξ=a/α and ω=ξβ/b. Then a,b>0, |ξ|=|ω|=1, "
+                + "projections P,Q. Set a=|α|, b=|β|, ξ=conjugate(α)/a and ω=ξβ/b. Then a,b>0, |ξ|=|ω|=1, "
                 + "ξA=aP and ξB=bωQ. The single multiplier ξ preserves each right modulus, including that of "
                 + "A+B, since (ξX)*(ξX)=X*X. The positive-square-root uniqueness CFC.sqrt_unique applied to "
                 + "(αP)*(αP)=a²P gives |A|=aP and likewise |B|=bQ, hence D=aP+bQ. "
@@ -65,7 +65,7 @@ internal sealed class NormalModulusTriangleConstantDocument : IScribeDocumentDef
             Paragraph(Text(
                 "For a rank-one projection P=uu* with u*u=1, PureStateHandshake.pure_state_handshake "
                 + "gives PXP=tr(PX)P. Applying this to Q, and to the positive projections Q and I−Q, "
-                + "shows 0≤tr(PQ)≤1. Thus r=sqrt(tr(PQ)) is real with 0≤r≤1. If r=0, the identity "
+                + "shows tr(PQ)=t for the real number t=Re tr(PQ), with 0≤t≤1. Thus r=sqrt(t) has 0≤r≤1. If r=0, the identity "
                 + "tr((QP)*(QP))=tr(PQ)=0 gives QP=PQ=0. Consequently the right squared modulus of "
                 + "aP+bωQ is a²P+b²Q=D², and |A+B|=D. If r=1, the trace of "
                 + "(P−Q)*(P−Q) is 2−2tr(PQ)=0, so P=Q and |A+B|=|a+bω|P≤(a+b)P=D. "
@@ -94,16 +94,42 @@ internal sealed class NormalModulusTriangleConstantDocument : IScribeDocumentDef
                 + "Thus every such U forces k≤cL; when L>0 and k>0, every c<k/L fails. "
                 + "No invariance of the joint range under U is needed for this implication.")),
             Paragraph(Text(
+                "In the interior case let S be the range of R and put δ=ab(1−r²)>0. The projections "
+                + "P,Q and their adjoints vanish on S-perp. In an orthonormal basis of S, P=diag(1,0) "
+                + "and Q has rows (r²,r sqrt(1−r²)) and (r sqrt(1−r²),1−r²). For the same normalized "
+                + "sum N=aP+bωQ, its right square is M=N*N=a²P+b²Q+ab(ωPQ+conjugate(ω)QP). "
+                + "On S, tr(D)=s, det(D)=δ, and the eigenvalues of D are L=s(1+x)/2 and l=s(1−x)/2>0. "
+                + "Also det(M)=δ² and tr(M)=s²y²−2δ. Cayley-Hamilton gives "
+                + "(M+δI_S)²=s²y²M. Since M+δI_S is positive and sy>0, CFC.sqrt_unique identifies "
+                + "the actual right modulus T=|N| on S as (M+δI_S)/(sy), with zero action on S-perp. "
+                + "Thus tr(T)=sy and det(T)=δ. Cyclicity of trace applied to this same M gives "
+                + "tr(DM)=s tr(M)−sδ and tr(DT)=s²y−2δ/y. Consequently K=T−D has "
+                + "tr(K)=−s(1−y) and det(K)=−2δ(1−y)/y<0 on S. Its two eigenvalues satisfy "
+                + "κ₊>0>κ₋, and κ₊=(s/2)(sqrt((1−y)²+2(1−x²)(1−y)/y)−(1−y)).")),
+            Paragraph(Text(
+                "The ambient spectral bound D≤LI and a unit eigenvector of K for κ₊ give κ₊≤cL "
+                + "for every feasible c and every ambient unitary, by the preceding order argument. "
+                + "For attainment, choose orthonormal eigenvectors d₊,d₋ of D on S for L,l and "
+                + "e₊,e₋ of K on S for κ₊,κ₋. The map Ud₊=e₊, Ud₋=e₋, extended by the identity "
+                + "on S-perp, is an ambient unitary. At c=κ₊/L, the matrix cUDU*−K has eigenvalues "
+                + "0 and cl−κ₋>0 on S and is zero on S-perp, so it is positive semidefinite. "
+                + "Increasing c preserves this inequality because UDU* is positive semidefinite. "
+                + "Therefore S(A,B)=[κ₊/L,infinity), its infimum is the attained value κ₊/L, and "
+                + "every ambient unitary fails below it. Substituting the displayed κ₊ and L gives "
+                + "the coefficient C below. Since C>0 in the interior and the boundary clauses above "
+                + "are feasible at zero, inf S(A,B)=0 holds exactly when r=0 or r=1 or ω=1, "
+                + "including every intersection of those clauses.")),
+            Paragraph(Text(
                 "For real parameters 0≤x<1 and 0<y<1, put "
                 + "C=(sqrt((1−y)²+2(1−x²)(1−y)/y)−(1−y))/(1+x). "
                 + "The radicand is strictly greater than (1−y)², so C>0. Squaring the defining equality "
                 + "(1+x)C+(1−y)=sqrt((1−y)²+2(1−x²)(1−y)/y) gives "
                 + "((1+x)/2)C²+(1−y)C−(1−x)(1−y)/y=0. If another positive d satisfies this equation, "
                 + "subtracting the two equations factors as (d−C)(((1+x)/2)(d+C)+1−y)=0. "
-                + "The second factor is positive, so d=C. This scalar identity requires a native spectral "
-                + "identification before it can specify the optimum of S(A,B). The remaining interior obligations "
-                + "are the right-modulus spectrum for this same pair, its positive defect eigenvalue, the attaining "
-                + "ambient unitary, and the resulting exact coefficient and reverse zero-set implication.")))));
+                + "The second factor is positive, so d=C. Applied to the original pair through the spectral "
+                + "identification above, this proves that inf S(A,B)=C is the unique positive root of that "
+                + "quadratic in the nondegenerate domain. The formula and its divisions are used only there; "
+                + "the three boundary clauses retain their separate zero-coefficient arguments.")))));
 
     private static DocumentBlock SourceQuotation() => Paragraph(Text(
         "Bourin and Lee, Triangle inequalities for the operator symmetric modulus, arXiv:2602.19607v1, "

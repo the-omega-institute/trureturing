@@ -1,0 +1,37 @@
+**Editorial note — completion and coercivity scope.** The displayed Fourier estimate is retained as supplied. Its conclusion is conditional on the completed energy space, Fourier normalization, and the precise bounded self-adjoint realization of the truncated remainder $R_D$ on the full detail space $Z=\ker C$. The bound $M_D=\|R_D''\|_{\mathrm{TV}}$ alone is not a cited operator-norm computation; any missing realization or constant is `ASSUMED-UNVERIFIED`. Later finite node spaces must be nested, must contain the fixed coarse grid, and must be dense in that same completed $Z$. Those requirements are not replaced by the statement that a node set merely becomes dense.
+
+取一个足够细的固定粗网格
+
+$$
+0=x_0<x_1<\cdots<x_N=D,
+$$
+
+记 $\varphi_i$ 为对应的分段线性帽函数，并定义粗读出
+
+$$
+C_i\mu=\int\varphi_i\,d\mu.
+$$
+
+令
+
+$$
+Z=\ker C.
+$$
+
+对于 $\mu=F'\in Z$，有
+
+$$
+\int_{x_{i-1}}^{x_i}F(t)\,dt=0
+\qquad(1\leq i\leq N).
+$$
+<a id="eq-3"></a>
+<div class="equation-caption">Equation (3).</div>
+
+把 $K-P$ 在所需差值范围外作光滑截断，记截断后的函数为 $R_D$，并令
+
+$$
+M_D=\|R_D''\|_{\mathrm{TV}}<\infty.
+$$
+
+有限性来自：除原点外的光滑背景项和有限个实际素数幂导数跳跃，都已经保留在这里。
+

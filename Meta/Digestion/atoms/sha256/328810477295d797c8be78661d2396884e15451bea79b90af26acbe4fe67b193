@@ -1,0 +1,28 @@
+### 引理 4.1（两个端点的范数收缩）
+
+<a id="lem-c90-endpoints"></a>
+
+UCP 映射在算符范数下收缩，CPTP 映射在迹范数下收缩；
+两者都对任意复矩阵成立。
+
+**证明。**
+若 $\Psi(X)=\sum_jL_j^\dagger XL_j$ 且 $\sum_jL_j^\dagger L_j=I$，
+令 $V\xi=\sum_jL_j\xi\otimes\lvert j\rangle$。于是 $V^\dagger V=I$，
+且 $\Psi(X)=V^\dagger(X\otimes I)V$，故
+$\left\lVert \Psi(X)\right\rVert_\infty\le\left\lVert X\right\rVert_\infty$。
+对 CPTP 的 $\mathcal N$，其普通迹伴随 $\mathcal N^*$ 为 UCP。
+奇异值分解给出迹范数对偶性，因此
+
+$$
+\begin{aligned}
+ \left\lVert \mathcal N(X)\right\rVert_1
+ &=\sup_{\left\lVert Y\right\rVert_\infty\le1}
+     |\operatorname{Tr}(Y^\dagger\mathcal N(X))|\\
+ &=\sup_{\left\lVert Y\right\rVert_\infty\le1}
+     |\operatorname{Tr}((\mathcal N^*Y)^\dagger X)|
+ \le\left\lVert X\right\rVert_1.
+ \end{aligned}
+$$
+
+这里没有将输入限于 Hermitian 矩阵。
+

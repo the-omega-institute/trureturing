@@ -1,0 +1,5 @@
+**引理 B-44.4（六元非端点向上族的层差）。** 设 $|J|=6$，$\mathscr C\subseteq2^J$ 向上闭合，$\varnothing\notin\mathscr C$，且
+$\mathscr C\ne\varnothing,\{J\},2^J\setminus\{\varnothing\}$。记 $q_r=|\{R\in\mathscr C:|R|=r\}|$，则 $q_5-q_1\ge1$。
+
+证明。$q_1=0$ 时，$\mathscr C\ne\{J\}$ 供应一个真子集，向上性给至少一个五元集。$q_1=1$ 时，该单点强制五个五元集，故差至少四。$2\le q_1\le5$ 时，每个五元集至少含一个入选单点，故 $q_5=6$，差至少一。$q_1=6$ 会由向上性给出所排除的全部非空子集族。∎
+

@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis
-import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 namespace Reg.D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis
 open _root_.D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis
@@ -180,6 +180,128 @@ def radiusAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, 
   options := #[]
 
 #print axioms radiusAudit
+
+
+/-- Full real-function state and output for the binomial stencil identities. -/
+abbrev shiftSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => ℝ → ℝ) (fun _ => ℝ → ℝ)
+
+def shiftActual : Realization shiftSignature :=
+  realize shiftSignature (fun _ _ g => g) (fun e => nomatch e)
+
+def shiftRejected : Realization shiftSignature :=
+  realize shiftSignature (fun _ _ _ => fun _ => 0) (fun e => nomatch e)
+
+def shiftArena : Arena where
+  signature := shiftSignature
+  Law R := ∀ (k : ℕ) (g : ℝ → ℝ) (x : ℝ),
+    ∑ j ∈ range (k + 1), weight k j * g (x + j) =
+      (-1 : ℝ) ^ k * (fwdDiff (1 : ℝ))^[k] (R.readout () () g) x
+
+def doubleShiftArena : Arena where
+  signature := shiftSignature
+  Law R := ∀ (k : ℕ) (g : ℝ → ℝ),
+    ∑ i ∈ range (k + 1), ∑ j ∈ range (k + 1),
+      weight k i * weight k j * g ((i : ℝ) - j) =
+      (-1 : ℝ) ^ k * (fwdDiff (1 : ℝ))^[2 * k] (R.readout () () g) (-(k : ℝ))
+
+private theorem shiftRejectedLaw : ¬ shiftArena.Law shiftRejected := by
+  intro h
+  have hzero := h 0 (fun _ => 1) 0
+  norm_num [shiftRejected, realize, weight] at hzero
+
+private theorem doubleShiftRejectedLaw : ¬ doubleShiftArena.Law shiftRejected := by
+  intro h
+  have hzero := h 0 (fun _ => 1)
+  norm_num [shiftRejected, realize, weight] at hzero
+
+private theorem shiftDependence : ObservationalDependence shiftSignature shiftActual := by
+  intro i
+  refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
+  intro h
+  have hzero := congrFun h 0
+  norm_num [shiftActual, realize] at hzero
+
+def shiftArenaSource : Registration shiftArena (type_of% @weighted_shift) where
+  actual := shiftActual
+  bridge := Iff.rfl
+  variation := ⟨weighted_shift, shiftRejected, shiftRejectedLaw⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    shiftArena.Law shiftActual shiftRejected shiftRejectedLaw
+  dependence := shiftDependence
+
+def doubleShiftArenaSource : Registration doubleShiftArena (type_of% @double_weighted_shift) where
+  actual := shiftActual
+  bridge := Iff.rfl
+  variation := ⟨double_weighted_shift, shiftRejected, doubleShiftRejectedLaw⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    doubleShiftArena.Law shiftActual shiftRejected doubleShiftRejectedLaw
+  dependence := shiftDependence
+
+def shiftAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@weighted_shift) (Realization shiftSignature) Unit Unit where
+  unitName := `D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis.weighted_shift.__information_unit
+  realizationName := `Reg.D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis.shiftArenaSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨shiftArena⟩
+  objectArena := .source ⟨shiftArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source shiftArena ⟨shiftArenaSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize shiftSignature (fun _ _ g => g) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def doubleShiftAudit : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@double_weighted_shift) (Realization shiftSignature) Unit Unit where
+  unitName := `D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis.double_weighted_shift.__information_unit
+  realizationName := `Reg.D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis.doubleShiftArenaSource
+  realizationSource := none
+  generated := false
+  arena := .source ⟨doubleShiftArena⟩
+  objectArena := .source ⟨doubleShiftArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source doubleShiftArena ⟨doubleShiftArenaSource⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize shiftSignature (fun _ _ g => g) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
 end
 end Reg.D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis

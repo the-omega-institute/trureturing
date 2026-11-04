@@ -1,0 +1,50 @@
+### 19.1 由完整分支、正读出到标准有限理论
+
+设前序条件已给实际等距
+$V:H\to\bigoplus_e H_e$，记各结果分支为 $M_e=P_eV$。
+于是
+
+<a id="eq-c92-reconstruction-effects"></a>
+
+$$
+\sum_eM_e^\dagger M_e=V^\dagger V=I,\qquad
+ E_e=M_e^\dagger M_e\ge0.
+\tag{19.1}
+$$
+
+这同时给出完整效果菜单。
+若分支输出已声明为 $H_e=K_e\otimes R_e$，而 $R_e$ 是未读出的细记录，
+取其正交基 $\{\lvert \alpha\rangle\}$，定义
+$M_{e\alpha}=(I_{K_e}\otimes\langle \alpha\rvert)M_e$，即得
+
+$$
+\mathcal I_e(\rho)=\sum_\alpha
+       M_{e\alpha}\rho M_{e\alpha}^\dagger,\qquad
+ p_e=\operatorname{Tr}\mathcal I_e(\rho)=\operatorname{Tr}(\rho E_e).
+$$
+
+当 $p_e>0$，条件态为 $\mathcal I_e(\rho)/p_e$；
+保留结果标签时，总输出为 $\bigoplus_e\mathcal I_e(\rho)$；
+若各 $K_e$ 已识别为同一个输出空间且丢弃标签，才写为
+$\sum_e\mathcal I_e(\rho)$。
+这里的测后态由已声明的实际分支决定，不能只凭一组效果反推出唯一仪器。
+
+在有限完整效果空间上，非负、单位归一、合法细分可加且与菜单表达无关的响应，
+延拓为 Hermitian 空间上的实线性泛函，再由迹对偶写成 $\operatorname{Tr}(\rho\,\cdot)$；
+秩一正测试与单位测试分别给 $\rho\ge0$、$\operatorname{Tr}\rho=1$。
+纯态是密度态集合的秩一极点：
+秩大于一时可对两个正本征值作相反小扰动分解成两态；
+秩一时任何正凸分解的支撑都被锁在同一条射线上，故无法非平凡分解。
+因此纯态、锐投影情形给出熟悉的平方律
+
+$$
+p_\phi(\psi)=
+ \operatorname{Tr}(\lvert \psi\rangle\langle \psi\rvert\lvert \phi\rangle\langle \phi\rvert)
+ =|\langle\phi,\psi\rangle|^2
+ \quad(\|\phi\|=\|\psi\|=1).
+$$
+
+在本轮从一般 Hermitian 局部资料出发时，
+C92 自己给出局部正性、归一与共同密度态，随后全部局部概率由同一迹配对承接。
+但线性响应的载体和共同复结构仍是明确的继承前件。
+
