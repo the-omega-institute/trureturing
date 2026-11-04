@@ -13,6 +13,7 @@ import math
 import os
 from pathlib import Path
 import re
+import select
 import shlex
 import shutil
 import stat
@@ -584,8 +585,189 @@ def rollout_group_files(path, codex):
         return None
 
 
-def linux_observation_unavailable(process, boundary, error):
+def observation_error(error):
+    return dict(error=type(error).__name__, errno=getattr(error, "errno", None), detail=str(error))
+
+
+class LinuxProcessObserver:
+    """Diagnostic descriptors only; no observation here grants activity admission."""
+    def __init__(self, process):
+        self.process, self.proc_fd, self.pidfd = process, None, None
+        self.binding = dict(identity="unknown")
+        try:
+            if os.uname().sysname != "Linux" or process.parent != Path("/proc"):
+                self.binding["unavailable"] = "not_native_linux_proc"
+                return
+            self.proc_fd = os.open(process, os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC)
+            before = self.identity(self.proc_fd)
+            self.binding["anchor"] = before
+            if not hasattr(os, "pidfd_open"):
+                self.binding["unavailable"] = "pidfd_open_unsupported"
+                return
+            self.pidfd = os.pidfd_open(int(process.name), 0)
+            self.binding["pidfd_pid"] = self.pidfd_pid()
+            # Compare the current numeric path with the retained proc inode and
+            # starttime, on both sides of pidfd binding. A vanished/reused PID
+            # or an unobservable identity never becomes terminal evidence.
+            current = os.open(process, os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC)
+            try:
+                after = self.identity(current)
+            finally:
+                os.close(current)
+            self.binding["current"] = after
+            if (before == after == self.identity(self.proc_fd)
+                    and self.binding["pidfd_pid"] == self.pidfd_pid() == int(process.name)
+                    and before["pid"] == int(process.name)):
+                self.binding["identity"] = "matched"
+        except (OSError, ValueError, AttributeError, KeyError, IndexError) as error:
+            self.binding["failure"] = observation_error(error)
+
+    @staticmethod
+    def read(fd, name):
+        descriptor = os.open(name, os.O_RDONLY | os.O_CLOEXEC, dir_fd=fd)
+        with os.fdopen(descriptor) as source:
+            return source.read()
+
+    @classmethod
+    def identity(cls, fd):
+        info = os.fstat(fd)
+        raw = cls.read(fd, "stat")
+        fields = raw[raw.rindex(")") + 2:].split()
+        return dict(device=info.st_dev, inode=info.st_ino,
+                    pid=int(raw.split(" ", 1)[0]), starttime=int(fields[19]))
+
+    def pidfd_pid(self):
+        # fdinfo describes our own retained descriptor, not a numeric target PID.
+        fields = dict(line.split(":", 1) for line in
+                      Path("/proc/self/fdinfo", str(self.pidfd)).read_text().splitlines() if ":" in line)
+        return int(fields["Pid"].strip())
+
+    def sample(self, *, check_current=False):
+        result = dict(wall_time_ns=time.time_ns(), monotonic_ns=time.monotonic_ns(),
+                      identity=self.binding["identity"], group_exit="unknown")
+        if self.pidfd is None:
+            result["unavailable"] = self.binding
+            return result
+        try:
+            poller = select.poll()
+            poller.register(self.pidfd, select.POLLIN)
+            result["revents"] = sum(events for _, events in poller.poll(0))
+            result["poll_finished_monotonic_ns"] = time.monotonic_ns()
+            if check_current:
+                current = os.open(self.process, os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC)
+                try:
+                    identity = self.identity(current)
+                finally:
+                    os.close(current)
+                result["current"] = identity
+                if identity != self.binding.get("anchor"):
+                    result["identity"] = "unknown"
+                    result["unavailable"] = "boundary_proc_identity_changed"
+            if result["identity"] == "matched":
+                if result["revents"] & (select.POLLERR | select.POLLNVAL):
+                    pass
+                elif result["revents"] & select.POLLIN:
+                    result["group_exit"] = "observed"
+                elif result["revents"] == 0:
+                    result["group_exit"] = "not_observed"
+        except (OSError, ValueError, AttributeError, KeyError, IndexError) as error:
+            result["identity"] = "unknown"
+            result["failure"] = observation_error(error)
+        return result
+
+    def wait_for_group_exit(self, timeout_ms):
+        """Wait for the retained process identity to become fully terminal.
+
+        This is a synchronization aid for a complete re-inventory after an
+        observed incomplete proc transition.  The pidfd event is never activity
+        evidence: callers must perform a fresh active_paths scan after this
+        method returns True.
+        """
+        if self.pidfd is None or self.binding.get("identity") != "matched":
+            return False
+        try:
+            current = self.sample(check_current=True)
+            if (current.get("identity") != "matched"
+                    or current.get("current") != self.binding.get("anchor")):
+                return False
+            if (current.get("revents", 0) & select.POLLIN
+                    and not current.get("revents", 0) & (select.POLLERR | select.POLLNVAL)):
+                return True
+            poller = select.poll()
+            poller.register(self.pidfd, select.POLLIN)
+            return any(fd == self.pidfd and events & select.POLLIN
+                       and not events & (select.POLLERR | select.POLLNVAL)
+                       for fd, events in poller.poll(timeout_ms))
+        except (OSError, ValueError, AttributeError, KeyError, IndexError):
+            return False
+
+    @staticmethod
+    def capture(operation):
+        try:
+            return dict(value=operation())
+        except (OSError, ValueError) as error:
+            return observation_error(error)
+
+    @staticmethod
+    def metadata(info):
+        return dict(uid=info.st_uid, gid=info.st_gid, mode=oct(stat.S_IMODE(info.st_mode)))
+
+    def resources(self, fd):
+        def status():
+            return {key: value.strip() for line in self.read(fd, "status").splitlines()
+                    for key, separator, value in [line.partition(":")]
+                    if separator and key in ("State", "Threads", "Pid", "Tgid", "PPid", "Uid", "Gid", "NSpid")}
+        result = dict(status=self.capture(status),
+                      cwd=self.capture(lambda: os.readlink("cwd", dir_fd=fd)),
+                      proc=self.capture(lambda: self.metadata(os.fstat(fd))),
+                      fd_directory=self.capture(lambda: self.metadata(os.stat("fd", dir_fd=fd))))
+        def inventory():
+            directory = os.open("fd", os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC, dir_fd=fd)
+            try:
+                return {name: self.capture(lambda: os.readlink(name, dir_fd=directory))
+                        for name in os.listdir(directory)}
+            finally:
+                os.close(directory)
+        result["fds"] = self.capture(inventory)
+        return result
+
+    def fault(self, boundary, error):
+        return dict(fault=self.sample(check_current=True), binding=self.binding, boundary=boundary,
+                      original_error=observation_error(error),
+                      kernel=dict(zip(("sysname", "nodename", "release", "version", "machine"), os.uname())))
+
+    def details(self, result):
+        result.update(task_inventory="partial_non_atomic", tasks={}, inventory_started=self.sample())
+        if self.proc_fd is not None:
+            result["leader"] = self.resources(self.proc_fd)
+            def tasks():
+                directory = os.open("task", os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC,
+                                    dir_fd=self.proc_fd)
+                try:
+                    for name in os.listdir(directory):
+                        def task():
+                            fd = os.open(name, os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC,
+                                         dir_fd=directory)
+                            try:
+                                return self.resources(fd)
+                            finally:
+                                os.close(fd)
+                        result["tasks"][name] = self.capture(task)
+                finally:
+                    os.close(directory)
+            result["task_listing"] = self.capture(tasks)
+
+    def close(self):
+        for name in ("pidfd", "proc_fd"):
+            fd = getattr(self, name)
+            if fd is not None:
+                os.close(fd)
+                setattr(self, name, None)
+
+
+def linux_observation_unavailable(process, boundary, error, observer=None):
     """Only a completely observed terminal thread group has no active handles."""
+    diagnostic = observer.fault(boundary, error) if observer is not None else None
     try:
         process.stat()
     except (FileNotFoundError, ProcessLookupError):
@@ -611,8 +793,76 @@ def linux_observation_unavailable(process, boundary, error):
             process.stat()
         except (FileNotFoundError, ProcessLookupError):
             return
+    if diagnostic is not None:
+        diagnostic["refusal"] = observer.sample(check_current=True)
+        diagnostic["inventory"] = observer.capture(lambda: observer.details(diagnostic))
     raise OSError("linux_activity_unavailable " + json.dumps(dict(
-        process=str(process), boundary=boundary, status=status, error=str(error)))) from error
+        process=str(process), boundary=boundary, status=status, error=str(error),
+        diagnostic=diagnostic))) from error
+
+
+def wait_for_linux_activity_transition(error, timeout_ms=1000):
+    """Synchronize one captured proc teardown before a complete re-inventory.
+
+    The returned boolean only authorizes the caller to run active_paths again.
+    It never supplies paths or grants activity admission.  A retry is limited
+    to the diagnostic shape produced by linux_observation_unavailable when a
+    matched process identity was still live, its non-atomic inventory was
+    incomplete, and its flags=0 pidfd had not observed group exit.  Persistent
+    or identity-ambiguous failures return False and remain refusals.
+    """
+    prefix = "linux_activity_unavailable "
+    text = str(error)
+    if not text.startswith(prefix):
+        return False
+    try:
+        payload = json.loads(text[len(prefix):])
+        diagnostic = payload["diagnostic"]
+        binding = diagnostic["binding"]
+        anchor = binding["anchor"]
+        if (payload.get("boundary") != "fd_inventory"
+                or diagnostic.get("task_inventory") != "partial_non_atomic"
+                or binding.get("identity") != "matched"
+                or binding.get("current") != anchor
+                or binding.get("pidfd_pid") != anchor["pid"]):
+            return False
+        for name in ("fault", "refusal"):
+            sample = diagnostic[name]
+            if (sample.get("identity") != "matched"
+                    or sample.get("group_exit") != "not_observed"
+                    or sample.get("revents") != 0
+                    or sample.get("current") != anchor):
+                return False
+        # This sample was captured without check_current, so it must not be
+        # treated as an identity observation at all.
+        inventory_started = diagnostic["inventory_started"]
+        if (inventory_started.get("identity") != "matched"
+                or inventory_started.get("group_exit") != "not_observed"
+                or inventory_started.get("revents") != 0
+                or "current" in inventory_started):
+            return False
+        process = Path(payload["process"])
+        try:
+            process.stat()
+        except (FileNotFoundError, ProcessLookupError):
+            # The next active_paths scan will observe this disappearance
+            # directly; no diagnostic state is used as admission evidence.
+            return True
+        except OSError:
+            return False
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+        return False
+
+    observer = LinuxProcessObserver(process)
+    try:
+        if (observer.binding.get("identity") != "matched"
+                or observer.binding.get("anchor") != anchor
+                or observer.binding.get("current") != anchor
+                or observer.binding.get("pidfd_pid") != anchor["pid"]):
+            return False
+        return observer.wait_for_group_exit(timeout_ms)
+    finally:
+        observer.close()
 
 
 def active_paths(codex, scopes=(), *, include_sampler_argv=False):
@@ -640,33 +890,37 @@ def active_paths(codex, scopes=(), *, include_sampler_argv=False):
         for process in Path("/proc").iterdir():
             if not process.name.isdigit():
                 continue
+            observer = LinuxProcessObserver(process)
             try:
-                if process.stat().st_uid != os.getuid():
-                    continue
-            except (FileNotFoundError, ProcessLookupError):
-                continue
-            try:
-                descriptors = list((process / "fd").iterdir())
-            except (FileNotFoundError, ProcessLookupError, PermissionError) as error:
-                linux_observation_unavailable(process, "fd_inventory", error)
-                continue
-            cwd = process / "cwd"
-            missing_cwd = None
-            for link in [cwd, *descriptors]:
                 try:
-                    target = os.readlink(link).removesuffix(" (deleted)")
-                except PermissionError as error:
-                    linux_observation_unavailable(process, "cwd" if link == cwd else "fd", error)
-                    break
-                except (FileNotFoundError, ProcessLookupError) as error:
-                    # Closing one handle must not hide the remaining handles.
-                    if link == cwd:
-                        missing_cwd = error
+                    if process.stat().st_uid != os.getuid():
+                        continue
+                except (FileNotFoundError, ProcessLookupError):
                     continue
-                if target.startswith("/"):
-                    open_path(target)
-            if missing_cwd is not None:
-                linux_observation_unavailable(process, "cwd", missing_cwd)
+                try:
+                    descriptors = list((process / "fd").iterdir())
+                except (FileNotFoundError, ProcessLookupError, PermissionError) as error:
+                    linux_observation_unavailable(process, "fd_inventory", error, observer)
+                    continue
+                cwd = process / "cwd"
+                missing_cwd = None
+                for link in [cwd, *descriptors]:
+                    try:
+                        target = os.readlink(link).removesuffix(" (deleted)")
+                    except PermissionError as error:
+                        linux_observation_unavailable(process, "cwd" if link == cwd else "fd", error, observer)
+                        break
+                    except (FileNotFoundError, ProcessLookupError) as error:
+                        # Closing one handle must not hide the remaining handles.
+                        if link == cwd:
+                            missing_cwd = error
+                        continue
+                    if target.startswith("/"):
+                        open_path(target)
+                if missing_cwd is not None:
+                    linux_observation_unavailable(process, "cwd", missing_cwd, observer)
+            finally:
+                observer.close()
     elif sys.platform == "darwin":
         for path in macos_active_paths():
             open_path(str(path))
