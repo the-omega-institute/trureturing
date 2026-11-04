@@ -78,7 +78,7 @@ Problem 2.4, page 5: "Is the ratio vp(G)/vp⁻(G) bounded for connected graphs?"
 
 **Theorem 1.7 (A graph potential is bounded by distance).**
 
-$$\forall (V:\operatorname{Type}), \forall (G:\operatorname{SimpleGraph}(V)), \forall (f:(V) \to (\mathbb{N})), (\forall (u:V), \forall (v:V), (f(u) \le f(v) + 1) \longrightarrow (G.\operatorname{Adj}(u, v))) \longrightarrow (\forall (u:V), \forall (v:V), (G.\operatorname{Reachable}(u, v)) \longrightarrow (f(u) \le f(v) + G.\operatorname{dist}(u, v)))$$
+$$\forall (V:\operatorname{Type}), \forall (G:\operatorname{SimpleGraph}(V)), \forall (f:(V) \to (\mathbb{N})), (\forall (u:V), \forall (v:V), (G.\operatorname{Adj}(u, v)) \longrightarrow (f(u) \le f(v) + 1)) \longrightarrow (\forall (u:V), \forall (v:V), (G.\operatorname{Reachable}(u, v)) \longrightarrow (f(u) \le f(v) + G.\operatorname{dist}(u, v)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist` (`✓ std3`). ∎
 
@@ -88,7 +88,7 @@ $$\forall (V:\operatorname{Type}), \forall (G:\operatorname{SimpleGraph}(V)), \f
 
 *Commentary.*
 
-If a natural-valued potential increases by at most one across every edge, then its value at the start of a reachable pair is at most its value at the endpoint plus the graph distance. The statement is the reusable metric estimate used by the family construction.
+If a natural-valued potential increases by at most one across every edge, then its value at the start of a reachable pair is at most its value at the endpoint plus the graph distance. Summing the edge inequalities along a shortest walk gives the bound.
 
 **Theorem 1.8 (A family refutes the proposed boundedness).**
 
