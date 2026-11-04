@@ -16,9 +16,11 @@ open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
 open _root_.D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail
 noncomputable section
 
-private def arity (p : ℕ×ℕ×ℕ×ℕ) : ℕ := p.1+p.2.1+p.2.2.1+p.2.2.2
+abbrev Params := Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℕ, ℕ
+
+private def arity (p : Params) : ℕ := p.1+p.2.1+p.2.2.1+p.2.2.2
 abbrev signature : Signature where
-  Params := ℕ×ℕ×ℕ×ℕ
+  Params := Params
   State _ := ℕ
   Role := Bool
   finiteRole := inferInstance
@@ -47,8 +49,8 @@ abbrev arena : Arena where
   Law R := ∀ (a b c d : ℕ) (ha : 2≤a) (had : a≤d) (hdb : d<b) (hbc : b<c),
     ∃ sigma : List (Fin (a+b+c+d)), ∃ j : ℕ,
       j=(if d=a ∧ b=d+1 then b else a+b+1) ∧ j<a+b+c+d ∧
-      R.readout false (a,b,c,d) (1+2^a+2^(a+b)+2^(a+b+c)) sigma ∧
-      R.readout true (a,b,c,d) (2*(1+2^a+2^(a+b)+2^(a+b+c)))
+      R.readout false ⟨a,b,c,d⟩ (1+2^a+2^(a+b)+2^(a+b+c)) sigma ∧
+      R.readout true ⟨a,b,c,d⟩ (2*(1+2^a+2^(a+b)+2^(a+b+c)))
         (earWord (a+b+c+d) sigma j) ∧
       (∀ m n : ℕ, ((((List.replicate m sigma).flatten).take n).map
         (actualSource (a+b+c+d) (1+2^a+2^(a+b)+2^(a+b+c)))).sum ∈
@@ -106,12 +108,12 @@ private theorem bad_new : ¬ OriginalOrder 12 2 (List.finRange 12) := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side
   cases side
-  · refine ⟨(2,3,4,2),0,2,?_⟩
+  · refine ⟨⟨2,3,4,2⟩,0,2,?_⟩
     intro he
     have hp := congrFun he (List.finRange 11)
     change OriginalOrder 11 0 (List.finRange 11)=OriginalOrder 11 2 (List.finRange 11) at hp
     exact bad_old (hp.mp zero_old)
-  · refine ⟨(2,3,4,2),0,2,?_⟩
+  · refine ⟨⟨2,3,4,2⟩,0,2,?_⟩
     intro he
     have hp := congrFun he (List.finRange 12)
     change OriginalOrder 12 0 (List.finRange 12)=OriginalOrder 12 2 (List.finRange 12) at hp
