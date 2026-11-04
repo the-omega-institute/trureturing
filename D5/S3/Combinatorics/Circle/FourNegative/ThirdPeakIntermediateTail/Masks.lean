@@ -79,7 +79,9 @@ private theorem v_inventory (mode : Fin 4) (b c : ℕ) (hb : 2≤b) (hbc : b<c) 
     rw [←low]
     exact List.perm_append_comm
   have adjacent : (bitRange g (c-1)++[g-1]++bitRange 0 (g-1)).Perm
-      (List.range (c-1)) := (lower.append_left (bitRange g (c-1))).trans ordered
+      (List.range (c-1)) := by
+    simpa only [List.append_assoc] using
+      (lower.append_left (bitRange g (c-1))).trans ordered
   fin_cases mode
   · simpa [vbits,g] using ordered
   · simpa [vbits,g] using ordered
@@ -94,11 +96,10 @@ private theorem w_inventory (mode : Fin 4) (a b d : ℕ) (ha : 2≤a)
   let be:=b-d
   have hal : al+a=d := by dsimp [al]; omega
   have hbe : be+d=b := by dsimp [be]; omega
-  fin_cases mode <;> simp only [branch] at hm
+  fin_cases mode <;> simp [branch,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq] at hm
   · have hb : 2≤be ∧ be≤b-1 := by dsimp [be]; omega
     have full : (bitRange 0 (be-2)++[be-2]++[be-1])++bitRange be (b-1)=
         List.range (b-1) := by
-      simp only [←List.append_assoc]
       rw [←bitRange_one (be-2),show be-2+1=be-1 by omega,
         bitRange_join 0 (be-2) (be-1) (by omega) (by omega),
         ←bitRange_one (be-1),show be-1+1=be by omega,
@@ -106,14 +107,12 @@ private theorem w_inventory (mode : Fin 4) (a b d : ℕ) (ha : 2≤a)
         bitRange_join 0 be (b-1) (by omega) (by omega),bitRange_zero]
     apply Multiset.coe_eq_coe.mp
     rw [←full]
-    norm_num only [wbits,Fin.reduceEq,ite_false,ite_true,List.append_nil]
-    simp only [←Multiset.coe_add,Multiset.coe_singleton]
+    norm_num [wbits,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq,Matrix.vecHead,Matrix.vecTail,Fin.reduceEq,ite_false,ite_true,List.append_nil]
     dsimp only [be]
     ac_rfl
   · have hb : 2≤be ∧ be≤al+be-1 ∧ al+be-1≤b-1 := by dsimp [al,be]; omega
     have full : (bitRange 0 (be-2)++[be-2]++[be-1])++
         bitRange be (al+be-1)++bitRange (al+be-1) (b-1)=List.range (b-1) := by
-      simp only [←List.append_assoc]
       rw [←bitRange_one (be-2),show be-2+1=be-1 by omega,
         bitRange_join 0 (be-2) (be-1) (by omega) (by omega),
         ←bitRange_one (be-1),show be-1+1=be by omega,
@@ -122,28 +121,23 @@ private theorem w_inventory (mode : Fin 4) (a b d : ℕ) (ha : 2≤a)
         bitRange_join 0 (al+be-1) (b-1) (by omega) (by omega),bitRange_zero]
     apply Multiset.coe_eq_coe.mp
     rw [←full]
-    norm_num only [wbits,Fin.reduceEq,ite_false,ite_true]
-    simp only [←Multiset.coe_add,Multiset.coe_singleton]
+    norm_num [wbits,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq,Matrix.vecHead,Matrix.vecTail,Fin.reduceEq,ite_false,ite_true]
     dsimp only [al,be]
     ac_rfl
   · have hal' : 1≤al ∧ al≤b-1 := by dsimp [al]; omega
     have full : [0]++bitRange 1 al++bitRange al (b-1)=List.range (b-1) := by
-      simp only [←List.append_assoc]
       rw [←bitRange_one 0,bitRange_join 0 1 al (by omega) (by omega),
         bitRange_join 0 al (b-1) (by omega) (by omega),bitRange_zero]
     apply Multiset.coe_eq_coe.mp
     rw [←full]
-    norm_num only [wbits,Fin.reduceEq,ite_false,ite_true]
-    simp only [←Multiset.coe_add,Multiset.coe_singleton]
+    norm_num [wbits,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq,Matrix.vecHead,Matrix.vecTail,Fin.reduceEq,ite_false,ite_true]
     dsimp only [al]
     ac_rfl
   · have full : [0]++bitRange 1 (b-1)=List.range (b-1) := by
       rw [←bitRange_one 0,bitRange_join 0 1 (b-1) (by omega) (by omega),bitRange_zero]
     apply Multiset.coe_eq_coe.mp
     rw [←full]
-    norm_num only [wbits,Fin.reduceEq,ite_false,ite_true,List.append_nil]
-    simp only [←Multiset.coe_add,Multiset.coe_singleton]
-    ac_rfl
+    norm_num [wbits,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq,Matrix.vecHead,Matrix.vecTail,Fin.reduceEq,ite_false,ite_true,List.append_nil]
 
 private def maskOf (l : List ℕ) : ℕ := (l.map (fun e => 2^e)).sum
 private def popcount (m : ℕ) : ℕ := m.bitIndices.toFinset.card
@@ -160,6 +154,8 @@ private theorem maskOf_range (n : ℕ) : maskOf (List.range n)+1=2^n := by
 private theorem native_bits (l : List ℕ) (hn : l.Nodup) :
     (maskOf l).bitIndices.toFinset=l.toFinset := by
   apply Finset.geomSum_injective (by decide : 2≤(2:ℕ))
+  change (∑ e ∈ (maskOf l).bitIndices.toFinset, (2:ℕ)^e) =
+    ∑ e ∈ l.toFinset, (2:ℕ)^e
   rw [Finset.sum_toFinset_bitIndices_two_pow]
   exact (List.sum_toFinset (fun e : ℕ => 2^e) hn).symm
 
@@ -201,20 +197,29 @@ private theorem native_partition (len : ℕ) (l0 l1 l2 : List ℕ)
       apply Finset.disjoint_left.mpr
       intro e he hr
       exact List.disjoint_left.mp h (List.mem_toFinset.mp he) (List.mem_toFinset.mp hr)
-    simp only [List.disjoint_append_left,List.disjoint_append_right] at hn
-    exact ⟨dd l0 l1 (by tauto),dd l0 l2 (by tauto),dd l1 l2 (by tauto)⟩
+    exact ⟨dd l0 l1 (by
+        intro e he0 he1
+        exact hn.1.2.2 e he0 e he1 rfl),
+      dd l0 l2 (by
+        intro e he0 he2
+        exact hn.2.2 e (by simp [he0]) e he2 rfl),
+      dd l1 l2 (by
+        intro e he1 he2
+        exact hn.2.2 e (by simp [he1]) e he2 rfl)⟩
   · rw [b0,b1,b2]
     have he : (l0++l1++l2).toFinset=(List.range len).toFinset := List.toFinset_eq_of_perm _ _ hp
     simpa only [List.toFinset_append,List.toFinset_range,Finset.union_assoc] using he
-  · simp only [popcount,b0,b1,b2,List.toFinset_card_of_nodup hn0,
+  · simp [popcount,b0,b1,b2,List.toFinset_card_of_nodup hn0,
       List.toFinset_card_of_nodup hn1,List.toFinset_card_of_nodup hn2]
   · have hn12 : (l1++l2).Nodup := by
-      simp only [List.nodup_append,List.disjoint_append_left,List.disjoint_append_right] at hn ⊢
-      tauto
+      apply List.nodup_append.mpr
+      refine ⟨hn1,hn2,?_⟩
+      intro e he1 f hf
+      exact hn.2.2 e (by simp [he1]) f hf
     have bb:=native_bits (l1++l2) hn12
     have hdis : List.Disjoint l1 l2 := by
-      simp only [List.disjoint_append_left,List.disjoint_append_right] at hn
-      tauto
+      intro e he1 he2
+      exact hn.2.2 e (by simp [he1]) e he2 rfl
     have hx : (maskOf (l1++l2) ^^^ maskOf l2).bitIndices.toFinset=l1.toFinset := by
       ext e
       have hu : (maskOf (l1++l2)).testBit e=true ↔ e∈l1.toFinset ∪ l2.toFinset := by
@@ -281,7 +286,9 @@ private theorem banks_inventory (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
   have hw':=Multiset.coe_eq_coe.mpr hw
   have full':=(canonical_inventory a b c d ha (by omega) (by omega) (by omega))
   simp only [stock,full,chamberLabels_full,chainLength,chainStart,
-    Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at full'
+    Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
+    Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,Function.comp_apply,
+    Matrix.cons_val_zero',Matrix.cons_val_succ'] at full'
   simp only [←List.range_eq_range'] at full'
   apply Multiset.coe_eq_coe.mp
   dsimp only [size]
@@ -290,7 +297,7 @@ private theorem banks_inventory (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
   simp only [shift] at *
   simp only [←Multiset.coe_add,Multiset.coe_singleton] at hv' hw' ⊢
   rw [←hv',←hw']
-  dsimp [word,banks,terminals]
+  dsimp [word,banks,terminals,shift]
   simp only [←Multiset.coe_add,Multiset.coe_singleton]
   ac_rfl
 
@@ -304,19 +311,19 @@ private theorem banks_good (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
     apply List.mem_range.mp
     apply hv.mem_iff.mp
     fin_cases j
-    · simp only [List.mem_append]; exact Or.inl ht
+    · simp only [List.mem_append]; exact Or.inl (Or.inl (by simpa using ht))
     · simpa [vbits] using ht
-    · simp only [List.mem_append]; exact Or.inr (Or.inl ht)
-    · simp only [List.mem_append]; exact Or.inr (Or.inr ht)
+    · simp only [List.mem_append]; exact Or.inl (Or.inr (by simpa using ht))
+    · simp only [List.mem_append]; exact Or.inr (by simpa using ht)
   have wfit (j : Fin 4) (t : ℕ) (ht : t∈wbits mode a b d j) : t<b-1 := by
     have hw:=native.2.physical
     apply List.mem_range.mp
     apply hw.mem_iff.mp
     fin_cases j
     · fin_cases mode <;> simpa [wbits] using ht
-    · simp only [List.mem_append]; exact Or.inl ht
-    · simp only [List.mem_append]; exact Or.inr (Or.inl ht)
-    · simp only [List.mem_append]; exact Or.inr (Or.inr ht)
+    · simp only [List.mem_append]; exact Or.inl (Or.inl (by simpa using ht))
+    · simp only [List.mem_append]; exact Or.inl (Or.inr (by simpa using ht))
+    · simp only [List.mem_append]; exact Or.inr (by simpa using ht)
   have sv (j : Fin 4) (he : e∈shift d (vbits mode b c j)) :
       e<size a b c d ∧ e∉negatives a b c d := by
     obtain ⟨t,ht,rfl⟩:=List.mem_map.mp he
@@ -338,16 +345,17 @@ private theorem banks_good (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
     obtain ⟨t,ht,rfl⟩:=List.mem_range'.mp he
     simp only [size,negatives,List.mem_cons,List.mem_nil_iff,or_false]
     omega
-  fin_cases i <;> dsimp only [banks] at he
+  fin_cases i <;> simp only [banks,Matrix.cons_val_zero,Matrix.cons_val_one,
+    Matrix.cons_val_two,Matrix.cons_val_three,Matrix.cons_val_zero',Matrix.cons_val_succ'] at he
   · exact sv 0 he
   · exact sw 1 he
   · simp only [List.mem_append] at he
-    rcases he with h | h | h
+    rcases he with (h | h) | h
     · exact sv 2 h
     · exact sw 2 h
     · exact sx h
   · simp only [List.mem_append] at he
-    rcases he with h | h | h
+    rcases he with (h | h) | h
     · exact su h
     · exact sv 3 h
     · exact sw 3 h
@@ -362,13 +370,30 @@ private theorem native_popcounts (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
         if mode=0 ∨ mode=3 then 0 else if mode=1 then d-a else d-a-1,
         if mode=0 ∨ mode=1 then b-d-1 else 1] := by
   have native:=native_inventories mode a b c d ha had hdb hbc hm
-  have vp:=native.1.counts
-  have wp:=native.2.counts
-  constructor <;> funext i <;> fin_cases i
-  all_goals simp only [vp.1,vp.2.1,vp.2.2,wp.1,wp.2.1,wp.2.2]
-  all_goals fin_cases mode <;> simp only [branch] at hm
-  all_goals norm_num [vbits,wbits,bitRange,popcount,maskOf,List.length_append]
-  all_goals omega
+  constructor
+  · funext i
+    fin_cases i
+    · refine native.1.counts.1.trans ?_
+      simp [vbits,bitRange,Matrix.cons_val_zero',Matrix.cons_val_succ']
+      omega
+    · simp [vbits,Matrix.cons_val_zero',Matrix.cons_val_succ',popcount,maskOf]
+    · refine native.1.counts.2.1.trans ?_
+      simp [vbits,bitRange,Matrix.cons_val_zero',Matrix.cons_val_succ']
+      split_ifs <;> simp_all
+    · refine native.1.counts.2.2.trans ?_
+      simp [vbits,bitRange,Matrix.cons_val_zero',Matrix.cons_val_succ']
+  · funext i
+    fin_cases i
+    · fin_cases mode <;> simp [wbits,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq,popcount,maskOf]
+    · refine native.2.counts.1.trans ?_
+      fin_cases mode <;> simp [branch,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq] at hm
+      all_goals simp [wbits,bitRange,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq] <;> omega
+    · refine native.2.counts.2.1.trans ?_
+      fin_cases mode <;> simp [branch,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq] at hm
+      all_goals simp [wbits,bitRange,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq] <;> omega
+    · refine native.2.counts.2.2.trans ?_
+      fin_cases mode <;> simp [branch,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq] at hm
+      all_goals simp [wbits,bitRange,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq] <;> omega
 
 private theorem bank_lengths (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
     (had : a≤d) (hdb : d<b) (hbc : b<c) (hm : branch a b d mode) :
@@ -395,9 +420,11 @@ private theorem bank_lengths (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
     · exact native.2.counts.2.2.symm.trans (congrFun counts.2 3)
   funext i
   fin_cases i <;> simp only [banks,shift,List.length_map,List.length_append,
-    List.length_range,List.length_range',vl,wl]
-  all_goals fin_cases mode <;> simp only [branch] at hm
-  all_goals norm_num only [Fin.reduceEq,ite_true,ite_false]
+    List.length_range,List.length_range',vl,wl,Matrix.cons_val_zero,Matrix.cons_val_one,
+    Matrix.cons_val_two,Matrix.cons_val_three,Matrix.cons_val_zero',Matrix.cons_val_succ']
+  all_goals fin_cases mode <;> simp [branch,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq] at hm
+  all_goals norm_num [Fin.reduceEq,ite_true,ite_false,Matrix.cons_val_zero,
+    Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq,Matrix.vecHead,Matrix.vecTail,Function.comp_apply]
   all_goals omega
 
 private theorem literal_cut (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
@@ -412,9 +439,10 @@ private theorem literal_cut (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
   have hsplit : word mode a b c d=before mode a b c d++after mode a b c d := by
     fin_cases mode <;> simp [word,before,after,List.append_assoc]
   have hlen : (before mode a b c d).length=freshCut a b d := by
-    fin_cases mode <;> simp only [branch] at hm
-    all_goals norm_num only [before,Fin.reduceEq,ite_true,ite_false,List.length_append,
-      List.length_singleton] at *
+    fin_cases mode <;> simp [branch,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq] at hm
+    all_goals simp [Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq,
+      Matrix.vecHead,Matrix.vecTail,Function.comp_apply] at h0 h1
+    all_goals simp [before,Fin.mk.injEq,List.length_append]
     all_goals dsimp only [freshCut]
     all_goals split_ifs <;> omega
   refine ⟨hlen,by dsimp [freshCut,size]; split_ifs <;> omega,hsplit,?_⟩

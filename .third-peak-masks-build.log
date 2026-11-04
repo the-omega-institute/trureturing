@@ -1,0 +1,1549 @@
+LEAN_CACHE {"status":"present","worktree":"/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103","donor":null,"method":"none","reason":null,"stamp_miss":null,"pin_sha256":"sha256:6e263543ee0c576b796667fc05a69ec232d3f1236a2ab6a8be8e3e1976459fb8","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":0,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"linked worktree: release archive disabled","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
+✖ [3584/3584] Building D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail.Masks (31s)
+trace: .> LEAN_PATH=/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/packages/Cli/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/packages/batteries/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/packages/Qq/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/packages/aesop/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/packages/importGraph/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/packages/plausible/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/packages/mathlib/.lake/build/lib/lean:/Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/build/lib/lean /Users/macstudio/.elan/toolchains/leanprover--lean4---v4.35.0/bin/lean -j1 /Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean -o /Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/build/lib/lean/D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.olean -i /Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/build/lib/lean/D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.ilean -c /Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/build/ir/D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.c --setup /Users/macstudio/omega/trureturing-01a1577a-circle-equal-tail-tmp-20261103/.lake/build/ir/D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.setup.json --json
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:31:48: missing space in the source
+
+This part of the code
+  'a≤d) (hdb'
+should be written as
+  'a ≤ d)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:31:60: missing space in the source
+
+This part of the code
+  'd<b) :'
+should be written as
+  'd < b)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:42:50: missing space in the source
+
+This part of the code
+  'l≤m) (hmn'
+should be written as
+  'l ≤ m)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:42:62: missing space in the source
+
+This part of the code
+  'm≤n) :'
+should be written as
+  'm ≤ n)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:65:60: missing space in the source
+
+This part of the code
+  '2≤b) (hbc'
+should be written as
+  '2 ≤ b)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:65:72: missing space in the source
+
+This part of the code
+  'b<c) :'
+should be written as
+  'b < c)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:101:46: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  e ≥ 0
+  c ≥ 0
+  c - e ≥ 3
+  c ≥ 1
+where
+ c := ↑b
+ e := ↑(d - a)
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:115:4: Tactic `rfl` failed: equality lhs
+  ↑((if ⟨0, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+        else
+          if ⟨0, ⋯⟩ = 1 then
+            ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+              bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨0, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+            else ![[], bitRange 1 (b - 1), [], [0]])
+        1) +
+    ↑((if ⟨0, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+        else
+          if ⟨0, ⋯⟩ = 1 then
+            ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+              bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨0, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+            else ![[], bitRange 1 (b - 1), [], [0]])
+        3)
+is not definitionally equal to rhs
+  ↑(bitRange 0 (b - d - 2)) + (↑(bitRange (b - d) (b - 1)) + ({b - d - 1} + {b - d - 2}))
+
+case «0»
+a b d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+al : ℕ := d - a
+be : ℕ := b - d
+hal : al + a = d
+hbe : be + d = b
+hm : ![d = a ∧ d + 2 ≤ b, a < d ∧ d + 2 ≤ b, a < d ∧ b = d + 1, d = a ∧ b = d + 1] ⟨0, ⋯⟩
+hb : 2 ≤ be ∧ be ≤ b - 1
+full : bitRange 0 (be - 2) ++ [be - 2] ++ [be - 1] ++ bitRange be (b - 1) = List.range (b - 1)
+⊢ ↑((if ⟨0, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨0, ⋯⟩ = 1 then
+              ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨0, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+              else ![[], bitRange 1 (b - 1), [], [0]])
+          1) +
+      ↑((if ⟨0, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨0, ⋯⟩ = 1 then
+              ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨0, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+              else ![[], bitRange 1 (b - 1), [], [0]])
+          3) =
+    ↑(bitRange 0 (b - d - 2)) + (↑(bitRange (b - d) (b - 1)) + ({b - d - 1} + {b - d - 2}))
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:116:67: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  e ≥ 0
+  c ≥ 0
+  c - e ≥ 3
+  c ≥ 1
+where
+ c := ↑b
+ e := ↑(d - a)
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:131:4: Tactic `rfl` failed: equality lhs
+  ↑((if ⟨1, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+        else
+          if ⟨1, ⋯⟩ = 1 then
+            ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+              bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨1, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+            else ![[], bitRange 1 (b - 1), [], [0]])
+        1) +
+    (↑((if ⟨1, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨1, ⋯⟩ = 1 then
+              ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          error: build failed
+  else
+              if ⟨1, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+              else ![[], bitRange 1 (b - 1), [], [0]])
+          2) +
+      ↑((if ⟨1, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨1, ⋯⟩ = 1 then
+              ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨1, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+              else ![[], bitRange 1 (b - 1), [], [0]])
+          3))
+is not definitionally equal to rhs
+  ↑(bitRange 0 (b - d - 2)) +
+    (↑(bitRange (b - d) (b - d + (d - a) - 1)) +
+      (↑(bitRange (b - d + (d - a) - 1) (b - 1)) + ({b - d - 1} + {b - d - 2})))
+
+case «1»
+a b d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+al : ℕ := d - a
+be : ℕ := b - d
+hal : al + a = d
+hbe : be + d = b
+hm : ![d = a ∧ d + 2 ≤ b, a < d ∧ d + 2 ≤ b, a < d ∧ b = d + 1, d = a ∧ b = d + 1] ⟨1, ⋯⟩
+hb : 2 ≤ be ∧ be ≤ al + be - 1 ∧ al + be - 1 ≤ b - 1
+full :
+  bitRange 0 (be - 2) ++ [be - 2] ++ [be - 1] ++ bitRange be (al + be - 1) ++ bitRange (al + be - 1) (b - 1) =
+    List.range (b - 1)
+⊢ ↑((if ⟨1, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨1, ⋯⟩ = 1 then
+              ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨1, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+              else ![[], bitRange 1 (b - 1), [], [0]])
+          1) +
+      (↑((if ⟨1, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨1, ⋯⟩ = 1 then
+                ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                  bitRange 0 (b - d - 2) ++ [b - d - 1]]
+              else
+                if ⟨1, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+                else ![[], bitRange 1 (b - 1), [], [0]])
+            2) +
+        ↑((if ⟨1, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨1, ⋯⟩ = 1 then
+                ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                  bitRange 0 (b - d - 2) ++ [b - d - 1]]
+              else
+                if ⟨1, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+                else ![[], bitRange 1 (b - 1), [], [0]])
+            3)) =
+    ↑(bitRange 0 (b - d - 2)) +
+      (↑(bitRange (b - d) (b - d + (d - a) - 1)) +
+        (↑(bitRange (b - d + (d - a) - 1) (b - 1)) + ({b - d - 1} + {b - d - 2})))
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:132:48: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  e ≥ 1
+  c ≥ 0
+  c - e ≥ 2
+where
+ c := ↑b
+ e := ↑(b - d)
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:142:4: Tactic `rfl` failed: equality lhs
+  ↑((if ⟨2, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+        else
+          if ⟨2, ⋯⟩ = 1 then
+            ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+              bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨2, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+            else ![[], bitRange 1 (b - 1), [], [0]])
+        1) +
+    (↑((if ⟨2, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨2, ⋯⟩ = 1 then
+              ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨2, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+              else ![[], bitRange 1 (b - 1), [], [0]])
+          2) +
+      ↑((if ⟨2, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨2, ⋯⟩ = 1 then
+              ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨2, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+              else ![[], bitRange 1 (b - 1), [], [0]])
+          3))
+is not definitionally equal to rhs
+  ↑(bitRange 1 (d - a)) + (↑(bitRange (d - a) (b - 1)) + {0})
+
+case «2»
+a b d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+al : ℕ := d - a
+be : ℕ := b - d
+hal : al + a = d
+hbe : be + d = b
+hm : ![d = a ∧ d + 2 ≤ b, a < d ∧ d + 2 ≤ b, a < d ∧ b = d + 1, d = a ∧ b = d + 1] ⟨2, ⋯⟩
+hal' : 1 ≤ al ∧ al ≤ b - 1
+full : [0] ++ bitRange 1 al ++ bitRange al (b - 1) = List.range (b - 1)
+⊢ ↑((if ⟨2, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if ⟨2, ⋯⟩ = 1 then
+              ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨2, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+              else ![[], bitRange 1 (b - 1), [], [0]])
+          1) +
+      (↑((if ⟨2, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨2, ⋯⟩ = 1 then
+                ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                  bitRange 0 (b - d - 2) ++ [b - d - 1]]
+              else
+                if ⟨2, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+                else ![[], bitRange 1 (b - 1), [], [0]])
+            2) +
+        ↑((if ⟨2, ⋯⟩ = 0 then ![[], [b - d - 2] ++ bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if ⟨2, ⋯⟩ = 1 then
+                ![[], bitRange (b - d + (d - a) - 1) (b - 1), [b - d - 2] ++ bitRange (b - d) (b - d + (d - a) - 1),
+                  bitRange 0 (b - d - 2) ++ [b - d - 1]]
+              else
+                if ⟨2, ⋯⟩ = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+                else ![[], bitRange 1 (b - 1), [], [0]])
+            3)) =
+    ↑(bitRange 1 (d - a)) + (↑(bitRange (d - a) (b - 1)) + {0})
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:99:40: This simp argument is unused:
+  Matrix.cons_val_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:99:62: This simp argument is unused:
+  Matrix.cons_val_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_zero, Matrix.cons_val_two, Matrix.cons_val_three] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:100:4: This simp argument is unused:
+  Matrix.cons_val_two
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_three] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:100:25: This simp argument is unused:
+  Matrix.cons_val_three
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:210:20: Application type mismatch: The argument
+  hn.left.right.right
+has type
+  ∀ a ∈ l0, ∀ b ∈ l1, a ≠ b
+but is expected to have type
+  l0.Disjoint l1
+in the application
+  dd l0 l1 hn.left.right.right
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:213:8: Type mismatch
+  hn.right.right e
+    (of_eq_true
+      (Eq.trans List.mem_append._simp_1 (Eq.trans (congrFun' (congrArg Or (eq_true he0)) (e ∈ l1)) (true_or (e ∈ l1)))))
+    e he2
+has type
+  e ≠ e
+but is expected to have type
+  False
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:216:8: Type mismatch
+  hn.right.right e
+    (of_eq_true (Eq.trans List.mem_append._simp_1 (Eq.trans (congrArg (Or (e ∈ l0)) (eq_true he1)) (or_true (e ∈ l0)))))
+    e he2
+has type
+  e ≠ e
+but is expected to have type
+  False
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:226:39: Application type mismatch: The argument
+  he2
+has type
+  ℕ
+of sort `Type` but is expected to have type
+  e ∈ l2
+of sort `Prop` in the application
+  hn.right.right e ?m.342 e he2
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:230:6: Type mismatch
+  hn.right.right e
+    (of_eq_true (Eq.trans List.mem_append._simp_1 (Eq.trans (congrArg (Or (e ∈ l0)) (eq_true he1)) (or_true (e ∈ l0)))))
+    e he2
+has type
+  e ≠ e
+but is expected to have type
+  False
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:249:71: missing space in the source
+
+This part of the code
+  '2≤a)
+ '
+should be written as
+  '2 ≤ a)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:250:12: missing space in the source
+
+This part of the code
+  'a≤d) (hdb'
+should be written as
+  'a ≤ d)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:250:24: missing space in the source
+
+This part of the code
+  'd<b) (hbc'
+should be written as
+  'd < b)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:250:36: missing space in the source
+
+This part of the code
+  'b<c) (hm'
+should be written as
+  'b < c)'
+
+
+Note: This linter can be disabled with `set_option linter.style.whitespace false`
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:310:2: Tactic `rfl` failed: equality lhs
+  ↑(List.range (d - 1)) +
+    (↑(shift d (vbits mode b c 0)) +
+      (↑(shift d (vbits mode b c 2)) +
+        (↑(shift d (vbits mode b c 3)) +
+          (↑(shift (c + d) (wbits mode a b d 1)) +
+            (↑(shift (c + d) (wbits mode a b d 2)) +
+              (↑(shift (c + d) (wbits mode a b d 3)) +
+                (↑(List.range' (b + (c + d)) (a - 1)) +
+                  ({d - 1} + ({a + (b + (c + d)) - 1} + ({b + (c + d) - 1} + {c + d - 1}))))))))))
+is not definitionally equal to rhs
+  ↑(List.range (d - 1)) +
+    (↑(List.range' (b + (c + d)) (a - 1)) +
+      (↑(List.map (fun x ↦ c + (d + x)) (wbits mode a b d 1)) +
+        (↑(List.map (fun x ↦ c + (d + x)) (wbits mode a b d 2)) +
+          (↑(List.map (fun x ↦ c + (d + x)) (wbits mode a b d 3)) +
+            (↑(List.map (fun x ↦ d + x) (vbits mode b c 0)) +
+              (↑(List.map (fun x ↦ d + x) (vbits mode b c 2)) +
+                (↑(List.map (fun x ↦ d + x) (vbits mode b c 3)) +
+                  ({d - 1} + ({a + (b + (c + d)) - 1} + ({b + (c + d) - 1} + {c + d - 1}))))))))))
+
+mode : Fin 4
+a b c d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+hbc : b < c
+hm : branch a b d mode
+native :
+  NativePartition (c - 1) (vbits mode b c 0) (vbits mode b c 2) (vbits mode b c 3) ∧
+    NativePartition (b - 1) (wbits mode a b d 1) (wbits mode a b d 2) (wbits mode a b d 3)
+hv :
+  (List.map (fun x ↦ d + x) (vbits mode b c 0) ++ List.map (fun x ↦ d + x) (vbits mode b c 2) ++
+        List.map (fun x ↦ d + x) (vbits mode b c 3)).Perm
+    (List.map (fun x ↦ d + x) (List.range (c - 1)))
+hw :
+  (List.map (fun x ↦ d + c + x) (wbits mode a b d 1) ++ List.map (fun x ↦ d + c + x) (wbits mode a b d 2) ++
+        List.map (fun x ↦ d + c + x) (wbits mode a b d 3)).Perm
+    (List.map (fun x ↦ d + c + x) (List.range (b - 1)))
+hv' :
+  ↑(List.map (fun x ↦ d + x) (vbits mode b c 0)) + ↑(List.map (fun x ↦ d + x) (vbits mode b c 2)) +
+      ↑(List.map (fun x ↦ d + x) (vbits mode b c 3)) =
+    ↑(List.map (fun x ↦ d + x) (List.range (c - 1)))
+hw' :
+  ↑(List.map (fun x ↦ d + c + x) (wbits mode a b d 1)) + ↑(List.map (fun x ↦ d + c + x) (wbits mode a b d 2)) +
+      ↑(List.map (fun x ↦ d + c + x) (wbits mode a b d 3)) =
+    ↑(List.map (fun x ↦ d + c + x) (List.range (b - 1)))
+full' :
+  List.range (d - 1) ++ [d - 1] ++ List.range' d (c - 1) ++ [d + c - 1] ++ List.range' (d + c) (b - 1) ++
+          [d + c + b - 1] ++
+        List.range' (d + c + b) (a - 1) ++
+      [a + b + c + d - 1] =
+    List.range (a + b + c + d)
+⊢ ↑(List.range (d - 1)) +
+      (↑(shift d (vbits mode b c 0)) +
+        (↑(shift d (vbits mode b c 2)) +
+          (↑(shift d (vbits mode b c 3)) +
+            (↑(shift (c + d) (wbits mode a b d 1)) +
+              (↑(shift (c + d) (wbits mode a b d 2)) +
+                (↑(shift (c + d) (wbits mode a b d 3)) +
+                  (↑(List.range' (b + (c + d)) (a - 1)) +
+                    ({d - 1} + ({a + (b + (c + d)) - 1} + ({b + (c + d) - 1} + {c + d - 1})))))))))) =
+    ↑(List.range (d - 1)) +
+      (↑(List.range' (b + (c + d)) (a - 1)) +
+        (↑(List.map (fun x ↦ c + (d + x)) (wbits mode a b d 1)) +
+          (↑(List.map (fun x ↦ c + (d + x)) (wbits mode a b d 2)) +
+            (↑(List.map (fun x ↦ c + (d + x)) (wbits mode a b d 3)) +
+              (↑(List.map (fun x ↦ d + x) (vbits mode b c 0)) +
+                (↑(List.map (fun x ↦ d + x) (vbits mode b c 2)) +
+                  (↑(List.map (fun x ↦ d + x) (vbits mode b c 3)) +
+                    ({d - 1} + ({a + (b + (c + d)) - 1} + ({b + (c + d) - 1} + {c + d - 1}))))))))))
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:299:4: This simp argument is unused:
+  Matrix.cons_val_zero'
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [stock, full, chamberLabels_full, chainLength, chainStart, Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ, Matrix.vecHead,
+    Matrix.vecTail, Function.comp_apply, Matrix.cons_val_succ'] at full'
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:299:26: This simp argument is unused:
+  Matrix.cons_val_succ'
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [stock, full, chamberLabels_full, chainLength, chainStart, Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_succ, Matrix.vecHead,
+    Matrix.vecTail, Function.comp_apply, Matrix.cons_val_zero'] at full'
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:322:52: Type mismatch: After simplification, term
+  ht
+ has type
+  t ∈ vbits mode b c 0
+but is expected to have type
+  t ∈ vbits mode b c 0 ∨ t ∈ vbits mode b c 2
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:323:6: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [vbits] at ht
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:324:48: Application type mismatch: The argument
+  Or.inl ?m.552
+has type
+  ?m.550 ∨ ?m.551
+but is expected to have type
+  t ∈ vbits mode b c 3
+in the application
+  Or.inr (Or.inl ?m.552)
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:325:48: Application type mismatch: The argument
+  Or.inr ?m.564
+has type
+  ?m.562 ∨ ?m.563
+but is expected to have type
+  t ∈ vbits mode b c 3
+in the application
+  Or.inr (Or.inr ?m.564)
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:331:25: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [wbits] at ht
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:331:25: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [wbits] at ht
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:331:25: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [wbits] at ht
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:331:25: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [wbits] at ht
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:332:52: Type mismatch: After simplification, term
+  ht
+ has type
+  t ∈ wbits mode a b d 1
+but is expected to have type
+  t ∈ wbits mode a b d 1 ∨ t ∈ wbits mode a b d 2
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:333:48: Application type mismatch: The argument
+  Or.inl ?m.1578
+has type
+  ?m.1576 ∨ ?m.1577
+but is expected to have type
+  t ∈ wbits mode a b d 3
+in the application
+  Or.inr (Or.inl ?m.1578)
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:334:48: Application type mismatch: The argument
+  Or.inr ?m.1590
+has type
+  ?m.1588 ∨ ?m.1589
+but is expected to have type
+  t ∈ wbits mode a b d 3
+in the application
+  Or.inr (Or.inr ?m.1590)
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:360:4: `simp` made no progress
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:365:4: `simp` made no progress
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:356:35: This simp argument is unused:
+  Matrix.cons_val_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three] at he
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:356:56: This simp argument is unused:
+  Matrix.cons_val_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, Matrix.cons_val_zero, Matrix.cons_val_two, Matrix.cons_val_three] at he
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:357:4: This simp argument is unused:
+  Matrix.cons_val_two
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_three] at he
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:357:24: This simp argument is unused:
+  Matrix.cons_val_three
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two] at he
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:384:37: unsolved goals
+mode : Fin 4
+a b c d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+hbc : b < c
+hm : branch a b d mode
+native :
+  NativePartition (c - 1) (vbits mode b c 0) (vbits mode b c 2) (vbits mode b c 3) ∧
+    NativePartition (b - 1) (wbits mode a b d 1) (wbits mode a b d 2) (wbits mode a b d 3)
+⊢ c - 1 - (c - b) = b - 1
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:385:4: unsolved goals
+case left.«1»
+mode : Fin 4
+a b c d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+hbc : b < c
+hm : branch a b d mode
+native :
+  NativePartition (c - 1) (vbits mode b c 0) (vbits mode b c 2) (vbits mode b c 3) ∧
+    NativePartition (b - 1) (wbits mode a b d 1) (wbits mode a b d 2) (wbits mode a b d 3)
+⊢ popcount (maskOf []) = 0
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:386:39: unsolved goals
+mode : Fin 4
+a b c d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+hbc : b < c
+hm : branch a b d mode
+native :
+  NativePartition (c - 1) (vbits mode b c 0) (vbits mode b c 2) (vbits mode b c 3) ∧
+    NativePartition (b - 1) (wbits mode a b d 1) (wbits mode a b d 2) (wbits mode a b d 3)
+⊢ (if mode = 0 ∨ mode = 1 then [] else [c - b - 1]).length = if mode = 0 ∨ mode = 1 then 0 else 1
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:390:4: unsolved goals
+case right.«0»
+mode : Fin 4
+a b c d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+hbc : b < c
+hm : branch a b d mode
+native :
+  NativePartition (c - 1) (vbits mode b c 0) (vbits mode b c 2) (vbits mode b c 3) ∧
+    NativePartition (b - 1) (wbits mode a b d 1) (wbits mode a b d 2) (wbits mode a b d 3)
+⊢ popcount
+      (maskOf
+        ((if mode = 0 then ![[], (b - d - 2) :: bitRange (b - d) (b - 1), [], bitRange 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if mode = 1 then
+              ![[], bitRange (d - a + (b - d) - 1) (b - 1), (b - d - 2) :: bitRange (b - d) (d - a + (b - d) - 1),
+                bitRange 0 (b - d - 2) ++ [b - d - 1]]
+            else
+              if mode = 2 then ![[], bitRange (d - a) (b - 1), bitRange 1 (d - a), [0]]
+              else ![[], bitRange 1 (b - 1), [], [0]])
+          0)) =
+    0
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:391:37: unsolved goals
+mode : Fin 4
+a b c d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+hbc : b < c
+hm : branch a b d mode
+native :
+  NativePartition (c - 1) (vbits mode b c 0) (vbits mode b c 2) (vbits mode b c 3) ∧
+    NativePartition (b - 1) (wbits mode a b d 1) (wbits mode a b d 2) (wbits mode a b d 3)
+⊢ ((if mode = 0 then
+          ![[], (b - d - 2) :: List.range' (b - d) (b - 1 - (b - d)), [], List.range' 0 (b - d - 2) ++ [b - d - 1]]
+        else
+          if mode = 1 then
+            ![[], List.range' (d - a + (b - d) - 1) (b - 1 - (d - a + (b - d) - 1)),
+              (b - d - 2) :: List.range' (b - d) (d - a + (b - d) - 1 - (b - d)),
+              List.range' 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if mode = 2 then ![[], List.range' (d - a) (b - 1 - (d - a)), List.range' 1 (d - a - 1), [0]]
+            else ![[], List.range' 1 (b - 1 - 1), [], [0]])
+        1).length =
+    if mode = 3 then a - 1 else a
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:392:39: unsolved goals
+mode : Fin 4
+a b c d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+hbc : b < c
+hm : branch a b d mode
+native :
+  NativePartition (c - 1) (vbits mode b c 0) (vbits mode b c 2) (vbits mode b c 3) ∧
+    NativePartition (b - 1) (wbits mode a b d 1) (wbits mode a b d 2) (wbits mode a b d 3)
+⊢ ((if mode = 0 then
+          ![[], (b - d - 2) :: List.range' (b - d) (b - 1 - (b - d)), [], List.range' 0 (b - d - 2) ++ [b - d - 1]]
+        else
+          if mode = 1 then
+            ![[], List.range' (d - a + (b - d) - 1) (b - 1 - (d - a + (b - d) - 1)),
+              (b - d - 2) :: List.range' (b - d) (d - a + (b - d) - 1 - (b - d)),
+              List.range' 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if mode = 2 then ![[], List.range' (d - a) (b - 1 - (d - a)), List.range' 1 (d - a - 1), [0]]
+            else ![[], List.range' 1 (b - 1 - 1), [], [0]])
+        2).length =
+    if mode = 0 ∨ mode = 3 then 0 else if mode = 1 then d - a else d - a - 1
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:393:39: unsolved goals
+mode : Fin 4
+a b c d : ℕ
+ha : 2 ≤ a
+had : a ≤ d
+hdb : d < b
+hbc : b < c
+hm : branch a b d mode
+native :
+  NativePartition (c - 1) (vbits mode b c 0) (vbits mode b c 2) (vbits mode b c 3) ∧
+    NativePartition (b - 1) (wbits mode a b d 1) (wbits mode a b d 2) (wbits mode a b d 3)
+⊢ ((if mode = 0 then
+          ![[], (b - d - 2) :: List.range' (b - d) (b - 1 - (b - d)), [], List.range' 0 (b - d - 2) ++ [b - d - 1]]
+        else
+          if mode = 1 then
+            ![[], List.range' (d - a + (b - d) - 1) (b - 1 - (d - a + (b - d) - 1)),
+              (b - d - 2) :: List.range' (b - d) (d - a + (b - d) - 1 - (b - d)),
+              List.range' 0 (b - d - 2) ++ [b - d - 1]]
+          else
+            if mode = 2 then ![[], List.range' (d - a) (b - 1 - (d - a)), List.range' 1 (d - a - 1), [0]]
+            else ![[], List.range' 1 (b - 1 - 1), [], [0]])
+        3).length =
+    if mode = 0 ∨ mode = 1 then b - d - 1 else 1
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨0, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 3)]
+      ⟨0, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨0, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 3)]
+      ⟨0, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨0, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 3)]
+      ⟨0, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨0, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 3)]
+      ⟨0, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨1, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 3)]
+      ⟨1, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨1, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 3)]
+      ⟨1, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨1, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 3)]
+      ⟨1, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨1, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 3)]
+      ⟨1, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨2, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 3)]
+      ⟨2, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨2, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 3)]
+      ⟨2, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨2, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 3)]
+      ⟨2, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨2, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 3)]
+      ⟨2, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨3, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨0, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨0, ⋯⟩ a b d 3)]
+      ⟨3, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨3, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨1, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨1, ⋯⟩ a b d 3)]
+      ⟨3, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨3, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨2, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨2, ⋯⟩ a b d 3)]
+      ⟨3, ⋯⟩).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:426:12: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 2
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) ⟨3, ⋯⟩)
+ j := ↑(![List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 0), List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 1),
+        List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 2) ++ List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 2) ++
+          List.range' (d + c + b) (a - 1),
+        List.range (d - 1) ++ List.map (fun x ↦ d + x) (vbits ⟨3, ⋯⟩ b c 3) ++
+          List.map (fun x ↦ d + c + x) (wbits ⟨3, ⋯⟩ a b d 3)]
+      ⟨3, ⋯⟩).length
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:419:41: This simp argument is unused:
+  List.length_map
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, shift, List.length_append, List.length_range, List.length_range', vl, wl,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:419:57: This simp argument is unused:
+  List.length_append
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, shift, List.length_map, List.length_range, List.length_range', vl, wl, Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:420:4: This simp argument is unused:
+  List.length_range
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, shift, List.length_map, List.length_append, List.length_range', vl, wl,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:420:22: This simp argument is unused:
+  List.length_range'
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, shift, List.length_map, List.length_append, List.length_range, vl, wl, Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:420:41: This simp argument is unused:
+  vl
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, shift, List.length_map, List.length_append, List.length_range, List.length_range', wl,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:420:44: This simp argument is unused:
+  wl
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, shift, List.length_map, List.length_append, List.length_range, List.length_range', vl,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:420:47: This simp argument is unused:
+  Matrix.cons_val_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, shift, List.length_map, List.length_append, List.length_range, List.length_range', vl, wl,
+    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:420:68: This simp argument is unused:
+  Matrix.cons_val_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, shift, List.length_map, List.length_append, List.length_range, List.length_range', vl, wl,
+    Matrix.cons_val_zero, Matrix.cons_val_two, Matrix.cons_val_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:421:4: This simp argument is unused:
+  Matrix.cons_val_two
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, shift, List.length_map, List.length_append, List.length_range, List.length_range', vl, wl,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_three]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:421:24: This simp argument is unused:
+  Matrix.cons_val_three
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [banks, shift, List.length_map, List.length_append, List.length_range, List.length_range', vl, wl,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:422:49: This simp argument is unused:
+  Matrix.cons_val_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:422:70: This simp argument is unused:
+  Matrix.cons_val_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_zero, Matrix.cons_val_two, Matrix.cons_val_three] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:423:4: This simp argument is unused:
+  Matrix.cons_val_two
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_three] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:423:24: This simp argument is unused:
+  Matrix.cons_val_three
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  i ≥ 0
+  h ≥ 1
+  g ≥ 1
+  f ≥ 0
+  e ≥ 3
+  e - f ≤ -1
+  e - i ≥ 1
+where
+ e := ↑b
+ f := ↑c
+ g := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ h := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ i := ↑(shift d (vbits ⟨0, ⋯⟩ b c 0) ++ [terminals a b c d 0]).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  k ≥ 0
+  j ≥ 1
+  i ≥ 1
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ -1
+  e + g - k ≥ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ j := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ k := ↑(shift d (vbits ⟨0, ⋯⟩ b c 0) ++ [terminals a b c d 0]).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  0 ≤ j ≤ 2
+  i ≥ 0
+  h ≥ 1
+  g ≥ 1
+  f ≥ 0
+  e ≥ 3
+  e - f ≤ -1
+  e - i ≥ 1
+where
+ e := ↑b
+ f := ↑c
+ g := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ h := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ i := ↑(shift d (vbits ⟨0, ⋯⟩ b c 0) ++ [terminals a b c d 0] ++ shift (d + c) (wbits ⟨0, ⋯⟩ a b d 1) ++
+      [terminals a b c d 1]).length
+ j := ↑↑⟨0, ⋯⟩
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  0 ≤ l ≤ 2
+  k ≥ 0
+  j ≥ 1
+  i ≥ 1
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ -1
+  e + g - k ≥ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ j := ↑((if (fun i ↦ i) ⟨0, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ k := ↑(shift d (vbits ⟨0, ⋯⟩ b c 0) ++ [terminals a b c d 0] ++ shift (d + c) (wbits ⟨0, ⋯⟩ a b d 1) ++
+      [terminals a b c d 1]).length
+ l := ↑↑⟨0, ⋯⟩
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  i ≥ 0
+  h ≥ 1
+  g ≥ 1
+  f ≥ 0
+  e ≥ 3
+  e - f ≤ -1
+  e - i ≥ 1
+where
+ e := ↑b
+ f := ↑c
+ g := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ h := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ i := ↑(shift d (vbits ⟨1, ⋯⟩ b c 0) ++ [terminals a b c d 0]).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  k ≥ 0
+  j ≥ 1
+  i ≥ 1
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ -1
+  e + g - k ≥ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ j := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ k := ↑(shift d (vbits ⟨1, ⋯⟩ b c 0) ++ [terminals a b c d 0]).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  0 ≤ j ≤ 2
+  i ≥ 0
+  h ≥ 1
+  g ≥ 1
+  f ≥ 0
+  e ≥ 3
+  e - f ≤ -1
+  e - i ≥ 1
+where
+ e := ↑b
+ f := ↑c
+ g := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ h := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ i := ↑(shift d (vbits ⟨1, ⋯⟩ b c 0) ++ [terminals a b c d 0] ++ shift (d + c) (wbits ⟨1, ⋯⟩ a b d 1) ++
+      [terminals a b c d 1]).length
+ j := ↑↑⟨1, ⋯⟩
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  0 ≤ l ≤ 2
+  k ≥ 0
+  j ≥ 1
+  i ≥ 1
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ -1
+  e + g - k ≥ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ j := ↑((if (fun i ↦ i) ⟨1, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ k := ↑(shift d (vbits ⟨1, ⋯⟩ b c 0) ++ [terminals a b c d 0] ++ shift (d + c) (wbits ⟨1, ⋯⟩ a b d 1) ++
+      [terminals a b c d 1]).length
+ l := ↑↑⟨1, ⋯⟩
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  i ≥ 0
+  h ≥ 1
+  g ≥ 1
+  f ≥ 0
+  e ≥ 3
+  e - f ≤ -1
+  e - i ≥ 1
+where
+ e := ↑b
+ f := ↑c
+ g := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ h := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ i := ↑(shift d (vbits ⟨2, ⋯⟩ b c 0) ++ [terminals a b c d 0]).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  k ≥ 0
+  j ≥ 1
+  i ≥ 1
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ -1
+  e + g - k ≥ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ j := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ k := ↑(shift d (vbits ⟨2, ⋯⟩ b c 0) ++ [terminals a b c d 0]).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  0 ≤ j ≤ 2
+  i ≥ 0
+  h ≥ 1
+  g ≥ 1
+  f ≥ 0
+  e ≥ 3
+  e - f ≤ -1
+  e - i ≥ 1
+where
+ e := ↑b
+ f := ↑c
+ g := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ h := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ i := ↑(shift d (vbits ⟨2, ⋯⟩ b c 0) ++ [terminals a b c d 0] ++ shift (d + c) (wbits ⟨2, ⋯⟩ a b d 1) ++
+      [terminals a b c d 1]).length
+ j := ↑↑⟨2, ⋯⟩
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  0 ≤ l ≤ 2
+  k ≥ 0
+  j ≥ 1
+  i ≥ 1
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ -1
+  e + g - k ≥ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ j := ↑((if (fun i ↦ i) ⟨2, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ k := ↑(shift d (vbits ⟨2, ⋯⟩ b c 0) ++ [terminals a b c d 0] ++ shift (d + c) (wbits ⟨2, ⋯⟩ a b d 1) ++
+      [terminals a b c d 1]).length
+ l := ↑↑⟨2, ⋯⟩
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  i ≥ 0
+  h ≥ 1
+  g ≥ 1
+  f ≥ 0
+  e ≥ 3
+  e - f ≤ -1
+  e - i ≥ 1
+where
+ e := ↑b
+ f := ↑c
+ g := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ h := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ i := ↑(shift d (vbits ⟨3, ⋯⟩ b c 0) ++ [terminals a b c d 0]).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  k ≥ 0
+  j ≥ 1
+  i ≥ 1
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ -1
+  e + g - k ≥ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ j := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ k := ↑(shift d (vbits ⟨3, ⋯⟩ b c 0) ++ [terminals a b c d 0]).length
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  0 ≤ j ≤ 2
+  i ≥ 0
+  h ≥ 1
+  g ≥ 1
+  f ≥ 0
+  e ≥ 3
+  e - f ≤ -1
+  e - i ≥ 1
+where
+ e := ↑b
+ f := ↑c
+ g := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ h := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ i := ↑(shift d (vbits ⟨3, ⋯⟩ b c 0) ++ [terminals a b c d 0] ++ shift (d + c) (wbits ⟨3, ⋯⟩ a b d 1) ++
+      [terminals a b c d 1]).length
+ j := ↑↑⟨3, ⋯⟩
+error: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:447:28: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  0 ≤ l ≤ 2
+  k ≥ 0
+  j ≥ 1
+  i ≥ 1
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  f - g ≤ -1
+  e ≥ 2
+  e - f ≤ -1
+  e + g - k ≥ 0
+where
+ e := ↑a
+ f := ↑d
+ g := ↑b
+ h := ↑c
+ i := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 0)
+ j := ↑((if (fun i ↦ i) ⟨3, ⋯⟩ = 3 then ![b, a, a + 1, c - 1] else ![b, a + 1, d, c - 1]) 1)
+ k := ↑(shift d (vbits ⟨3, ⋯⟩ b c 0) ++ [terminals a b c d 0] ++ shift (d + c) (wbits ⟨3, ⋯⟩ a b d 1) ++
+      [terminals a b c d 1]).length
+ l := ↑↑⟨3, ⋯⟩
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:440:41: This simp argument is unused:
+  Matrix.cons_val_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:440:62: This simp argument is unused:
+  Matrix.cons_val_one
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_zero, Matrix.cons_val_two, Matrix.cons_val_three] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:441:6: This simp argument is unused:
+  Matrix.cons_val_two
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_three] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Masks.lean:441:26: This simp argument is unused:
+  Matrix.cons_val_three
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [branch, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two] at hm
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Some required targets logged failures:
+- D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail.Masks
+make: *** [lean] Error 1
