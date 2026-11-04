@@ -8,6 +8,8 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.PalindromicArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.LowBits
 
+/-! Bounded ceilings and nested actual W masks, with the OR cost paid. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter

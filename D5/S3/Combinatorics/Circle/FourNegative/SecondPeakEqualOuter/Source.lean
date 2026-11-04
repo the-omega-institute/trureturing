@@ -10,7 +10,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.EqualFirstTwoLast.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree.Endpoint
 
-/-! Source candidate only. No compilation or acceptance is asserted. -/
+/-! Exact d=a physical dictionary and literal insertion bridge. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

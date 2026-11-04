@@ -7,6 +7,8 @@
    digest: Twenty-two universal lower-sector polynomial certificates. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Source
 
+/-! Twenty-two universal lower-sector polynomial certificates. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter

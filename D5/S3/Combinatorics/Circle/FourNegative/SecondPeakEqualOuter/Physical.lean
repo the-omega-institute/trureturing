@@ -7,6 +7,8 @@
    digest: Physical packet decoder with the actual front or preterminal fresh cut. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Source
 
+/-! Physical packet decoder with the actual front or preterminal fresh cut. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter

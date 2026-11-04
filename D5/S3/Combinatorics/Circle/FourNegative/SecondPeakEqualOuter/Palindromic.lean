@@ -8,6 +8,8 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.PalindromicMasks
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Physical
 
+/-! Nested palindromic W masks and one literal U0/X0 transposition. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter
@@ -87,7 +89,7 @@ private theorem palindromic_lift (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
       have hh2:=Multiset.coe_eq_coe.mpr hw2
       simp only [←Multiset.coe_add] at hh1 hh2 ⊢
       calc
-        _ = ↑(W (full a b b a 2 ^^^ M2))+(↑(W (M2 ^^^ M1))+↑(W M1)) := by ac_rfl
+        _ = (↑(W (full a b b a 2 ^^^ M2)) : Multiset ℕ)+(↑(W (M2 ^^^ M1))+↑(W M1)) := by ac_rfl
         _ = _ := by rw [hh1,hh2]
     have hu:=Multiset.coe_eq_coe.mpr (full_split a b b a 0 1)
     have hx':=Multiset.coe_eq_coe.mpr (full_split a b b a 3 1)
@@ -95,7 +97,7 @@ private theorem palindromic_lift (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     apply Multiset.coe_eq_coe.mp
     rw [←chain_inventory a b b a ha hb hb ha]
     simp only [←Multiset.coe_add,Multiset.coe_singleton] at hu hx' hw' ⊢
-    dsimp [bs,blocksWord,P0,P1,P2,P3,PX,PU,U,V,W,X,n]
+    dsimp [bs,blocksWord,P0,P1,P2,P3,PX,PU,U,V,W,X,n] at *
     split_ifs
     all_goals simp only [←Multiset.coe_add,Multiset.coe_nil,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton,zero_add,add_zero]
     · rw [←hu,←hx',←hw']; ac_rfl

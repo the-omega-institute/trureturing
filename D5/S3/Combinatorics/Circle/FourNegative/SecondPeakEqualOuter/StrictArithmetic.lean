@@ -8,6 +8,8 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Source
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.LowBits
 
+/-! W-X-U-V windows with all five strict payment branches. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter

@@ -9,6 +9,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.LowerArithme
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Physical
 import D5.S3.Combinatorics.Circle.FourNegative.UpperGap.Rounding
 
+/-! Paid U/W masks in W-U-X-V order with literal cut zero. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter

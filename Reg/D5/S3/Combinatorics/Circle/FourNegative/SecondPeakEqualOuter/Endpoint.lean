@@ -2,7 +2,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Endpoint
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/-! Uncompiled source: exact six-binder family, both original observations,
+/-! Exact six-binder family and both original observations:
 all natural repeated prefixes and scalar totals are retained in the law. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

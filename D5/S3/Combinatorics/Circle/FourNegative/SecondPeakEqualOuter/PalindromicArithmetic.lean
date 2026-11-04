@@ -7,6 +7,8 @@
    digest: Corrected palindromic W identities and the paid X window. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Source
 
+/-! Corrected palindromic W identities and the paid X window. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter

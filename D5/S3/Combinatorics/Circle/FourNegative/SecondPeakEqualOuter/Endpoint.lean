@@ -9,7 +9,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Lower
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Strict
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Palindromic
 
-/-! Uncompiled source candidate. Unrestricted J/C3.1 and Circle remain open. -/
+/-! Complete second-peak equal-outer physical face with all finite repetitions. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter

@@ -8,6 +8,8 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.StrictArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Physical
 
+/-! All five strict W-X-U-V physical branches at the original seed. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter
