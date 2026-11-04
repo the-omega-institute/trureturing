@@ -1,0 +1,96 @@
+**Theorem 47.2 (global quadratic gain envelope in both signs).** For both
+rows of (46.2), every $0<x<1$, every $q\in[0,1]$, and every point of the
+complete attained triangle, including its boundary,
+
+$$
+\begin{aligned}
+ \Gamma-\Gamma_0
+   &\le\eta_\sigma B_c-C_{\mathrm{gain},\sigma}B_c^2
+    \le J_\sigma,\\
+ 0&\le I_\sigma(x,q)\le J_\sigma(x,q).
+\end{aligned}
+\tag{47.2}
+$$
+
+In particular the possible improvement is at most quadratic in the
+negative part of the normalized determinant in (47.1). No sign assumption
+on $\nu$ or $\mathfrak D_\sigma$ is imposed.
+
+*Proof.* Abbreviate $A=A_c$, $B=B_c$, $H=H_c$ and
+$K=K_c=\sqrt L\,y/x$ only within this proof. Theorem 46.3 gives
+$A=H+xB\ge0$, $B,H\ge0$ and
+$\Delta=4LH-(H+LB)^2\ge0$. Its main-recovery identity yields
+
+$$
+ R_0^2-R^2=k(aH+R_0B),\qquad
+ 0\le R\le R_0,\qquad
+ R_0-R=\frac{k(aH+R_0B)}{R_0+R}\ge\frac{kB}{2}.
+\tag{47.3}
+$$
+
+Consequently the fourth term of (46.19) is at least
+$\sqrt p\,k^2B^2/(8R_0)$.
+
+For the coherent term, if $B>0$ then $H>0$. Put
+$u=(H+LB)^2/(4LH)\in[0,1]$. The exact formula for $F^2$ and the
+inequalities $1-X\le y^2$, $XY\ge x^2$ give
+
+$$
+ F\le K\sqrt{BH}\sqrt{1-u},\qquad
+ K\sqrt{BH}-F
+ \ge\frac{K(H+LB)^2\sqrt B}{8L\sqrt H}.
+\tag{47.4}
+$$
+
+The last step uses $1-\sqrt{1-u}\ge u/2$, valid also at $u=0,1$.
+For $z>0$, differentiation gives
+
+$$
+ \frac{d}{dz}\frac{(z+L)^2}{\sqrt z}
+   =\frac{(z+L)(3z-L)}{2z^{3/2}},\qquad
+ \frac{(z+L)^2}{\sqrt z}
+   \ge\frac{16L^{3/2}}{3\sqrt3}.
+\tag{47.5}
+$$
+
+Apply (47.5) with $z=H/B$. Equation (47.4) becomes the uniform estimate
+
+$$
+ K_c\sqrt{B_cH_c}-F
+       \ge\frac{2Ly}{3\sqrt3\,x}B_c^2.
+\tag{47.6}
+$$
+
+When $B_c=0$, both sides of (47.6) vanish, so this includes that boundary
+without division by $B_c$ or $H_c$. Multiplying by
+$\sqrt q\,\ell m/C_0=m\sqrt q/y$ gives the second summand of
+$C_{\mathrm{gain},\sigma}B_c^2$. Drop only the other nonnegative
+squares in the exact remainder (46.19). With
+$\delta_\sigma=L\mathfrak D_\sigma/(4\mu x^2)$, this proves
+
+$$
+ \Gamma_0-\Gamma
+   \ge\delta_\sigma B_c+C_{\mathrm{gain},\sigma}B_c^2.
+\tag{47.7}
+$$
+
+Since $-\delta_\sigma\le\eta_\sigma$, completing the remaining scalar
+square gives
+
+$$
+ \eta_\sigma B_c-C_{\mathrm{gain},\sigma}B_c^2
+ =\frac{\eta_\sigma^2}{4C_{\mathrm{gain},\sigma}}
+   -C_{\mathrm{gain},\sigma}
+       \left(B_c-\frac{\eta_\sigma}{2C_{\mathrm{gain},\sigma}}\right)^2.
+\tag{47.8}
+$$
+
+Taking the maximum and using the canonical corner proves (47.2).
+All denominators are positive fixed-slice quantities. The proof uses no
+division by $p$, $q$, $R$, $C$ or a determinant. At $q=0$ the coefficient
+$\nu=k/2>0$ and $\mathfrak D_\sigma>0$, so $J_\sigma=I_\sigma=0$;
+at $q=1$ the coherent summand keeps $C_{\mathrm{gain},\sigma}>0$ and
+the displayed proof applies unchanged. In the nonnegative-determinant
+slices $J_\sigma=0$, consistently with the already established
+Theorem 46.4; no new equality classification is asserted. $\square$
+

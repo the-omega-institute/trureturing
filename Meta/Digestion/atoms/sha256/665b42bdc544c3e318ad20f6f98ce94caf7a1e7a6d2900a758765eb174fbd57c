@@ -1,0 +1,40 @@
+### 证明第五步：负频 Hankel 算子的秩也是同一维数
+
+对 $h\in H^2$，
+
+$$
+\boxed{
+H_gh=\bar J\,P_{K_J}(Ih).
+}
+
+$$
+
+<a id="eq-4-9"></a>
+
+(4.9)
+
+如果 $u\in K_J$ 垂直于全部 $P_{K_J}(Ih)$，则它垂直于 $IH^2$，所以
+
+$$
+u\in K_I\cap K_J=\{0\}.
+$$
+
+故 $P_{K_J}(IH^2)$ 在 $K_J$ 中稠密。乘以 $\bar J$ 保持范数，因此
+
+$$
+\overline{\operatorname{ran}H_g}
+=
+\bar J K_J,
+$$
+
+得到
+
+$$
+\operatorname{rank}H_g=\dim K_J.
+$$
+
+所有等式合并，定理成立。证毕。
+
+<!-- editorial-note: n21 begin -->
+<a id="n21"></a>
+

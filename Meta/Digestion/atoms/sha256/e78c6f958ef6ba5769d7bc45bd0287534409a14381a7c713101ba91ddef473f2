@@ -1,0 +1,14 @@
+## 51. Positive-prefix population cost, recovery gain and complete pure equality
+
+The objects are those of Definitions 1.1, 11.1 and 23.1 in the
+[source volume](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND.md).
+The scalar selector is Theorem 37.5 of
+[Continuation I](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_I.md).
+The transport, triangle and gain statements numbered 42, 46, 47 and 50 are in
+[Continuation II](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md).
+Theorem 48.5 is in
+[Continuation III](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_III.md).
+Throughout, $\xi_*$ is exactly the unique selected determinant zero of
+Theorem 49.1, and $V(\xi)$ is the selected positive geometric value, rather
+than a definition of the unrestricted minimum.
+

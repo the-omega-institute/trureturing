@@ -409,3 +409,100 @@ def registration_complete : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end
 end Reg.D5.S3.Combinatorics.SpectralGraph.ScalarCycleRowError
+
+namespace Reg.D5.S3.Combinatorics.SpectralGraph.ScalarCycleRowError.Forest
+open _root_.D5.S3.Combinatorics.SpectralGraph.ScalarCycleRowError
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+noncomputable section
+universe u
+
+structure Parameters where
+  V : Type u
+  finiteV : Finite V
+  nonemptyV : Nonempty V
+  G : SimpleGraph V
+  acyclic : G.IsAcyclic
+
+attribute [instance] Parameters.finiteV Parameters.nonemptyV
+
+abbrev signature : Signature where
+  Params := Parameters.{u}
+  State p := p.V × p.V
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ p e => p.G.Adj e.1 e.2) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => True) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ p : Parameters.{u}, ¬ ∀ x : p.V, ∃ y z : p.V,
+    R.readout () p (x,y) ∧ R.readout () p (x,z) ∧ y ≠ z
+
+private theorem bridge : (type_of% (@forest_not_two_neighbors.{u})) ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h p
+    exact @h p.V p.finiteV p.nonemptyV p.G p.acyclic
+  · intro h V fv nv G hG
+    exact h ⟨V, fv, nv, G, hG⟩
+
+private abbrev testParameters : Parameters.{u} where
+  V := ULift.{u} Bool
+  finiteV := inferInstance
+  nonemptyV := inferInstance
+  G := ⊤
+  acyclic := SimpleGraph.IsAcyclic.of_card_le_two (by simp)
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  apply h testParameters
+  intro x
+  exact ⟨⟨false⟩, ⟨true⟩, trivial, trivial, by simp⟩
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  refine ⟨testParameters, (⟨false⟩, ⟨false⟩), (⟨false⟩, ⟨true⟩), ?_⟩
+  simp [actual, realize, testParameters]
+
+def family : Registration arena.{u} (type_of% (@forest_not_two_neighbors.{u})) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp (@forest_not_two_neighbors.{u}), rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@forest_not_two_neighbors.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.SpectralGraph.ScalarCycleRowError.Forest.unit
+  realizationName := `Reg.D5.S3.Combinatorics.SpectralGraph.ScalarCycleRowError.Forest.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p e => p.G.Adj e.1 e.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+end
+end Reg.D5.S3.Combinatorics.SpectralGraph.ScalarCycleRowError.Forest

@@ -1,0 +1,16 @@
+**定义 106.2（候选 C112：返回、可拆与同向读数下界）。** C112 是上述同一实际族满足原精确返回 R、半程拼接 H 及下式的关系体：
+
+$$
+\begin{aligned}
+\mathrm R:\quad&T_{E^\vee,F}T_{E,F}(X)=q_EX
+   &&(X\in P_E\mathcal AP_E),\\
+\mathrm H:\quad&T_{E,F}=T_{\sqrt E,F}^{\,2},\\
+\mathrm A:\quad&4\tau\bigl(pT_{E,F}(p)\bigr)
+                 >\tau(p\sqrt E)^2
+   &&(p\in\mathcal P_E).
+\end{aligned}
+\tag{106.2}
+$$
+
+R、A 对全部非零效果及其原框架施加，H 对全部效果施加。R 比较原滤波及原实际倒数补偿；H 比较一条整程及两个相同半程；A 比较同一原方向上的联合读数与半程成功数。A 是点态严格不等式，不要求存在对全部效果、方向、对象共同有效的正余量。没有假设完整互易 S、连续性、谱射线不动或中心块不动。
+

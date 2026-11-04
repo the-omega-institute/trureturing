@@ -44,7 +44,7 @@ def claim : Prop :=
 def simplexFunctional {n : ℕ} (x : Fin n → ℝ) : ℝ :=
   3 * powerSum n 2 x ^ 2 - 2 * powerSum n 3 x
 
-private lemma normalized_simplex {n : ℕ} (hn : 0 < n) (k : Fin n → ℝ)
+lemma normalized_simplex {n : ℕ} (hn : 0 < n) (k : Fin n → ℝ)
     (hk : ∀ i, 0 < k i) :
     (fun i => (k i)⁻¹ / powerSum n 1 (fun j => (k j)⁻¹)) ∈ stdSimplex ℝ (Fin n) := by
   have : Nonempty (Fin n) := Fin.pos_iff_nonempty.mp hn

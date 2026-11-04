@@ -1,0 +1,8 @@
+**Source comparison.** Andrew Critch, *Binary hidden Markov models and varieties*, J. Algebraic Statistics **4** (2013), 1–30, [arXiv:1206.0500v3](https://arxiv.org/abs/1206.0500v3), Birational Parameter Theorem 4.1 and marginal diagram Theorem 5.11, gives the prior analogue for normalized five-dimensional binary HMM varieties. The free boundary vectors in
+(1) require the two-sided correction in (3); a
+stochastic normalization is not assumed here. Adam Czapliński, Mateusz Michałek and Tim Seynnaeve, *Uniform matrix product states from an algebraic geometer's point of view*, [arXiv:1904.07563v1](https://arxiv.org/abs/1904.07563v1), §3.4, Theorem 3.30, settle the separate periodic trace-parametrization Conjecture 12 for $N\ge5$. That proof was posted on 16 April 2019 and published in Advances in Applied Mathematics **142** (2023), 102417, [doi:10.1016/j.aam.2022.102417](https://doi.org/10.1016/j.aam.2022.102417); these are versions of one proof.
+More general boundary-matrix canonical forms are developed
+in M. Florido-Llinàs, Á. M. Alhambra, D. Pérez-García and J. I. Cirac, *Uniform matrix product states with a boundary*, [arXiv:2512.11968v1](https://arxiv.org/abs/2512.11968v1) (2025), §§3–5; the argument here concerns the particular
+three-site map in (2). For periodic linear equations and
+their invariant-theoretic structure, see C. De Lazzari, H. J. Motwani and T. Seynnaeve, *The linear span of uniform matrix product states*, SIGMA **18** (2022), 099, [doi:10.3842/SIGMA.2022.099](https://doi.org/10.3842/SIGMA.2022.099). These comparisons concern distinct models and maps.
+
