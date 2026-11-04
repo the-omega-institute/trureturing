@@ -4,13 +4,15 @@
    mirror-E: none(waiver:unbounded-original-domain-descent)
    anchors: []
    utility: none
-   digest: The raw C133-V balance yields the anchored free comparison form, its two-sided radical quotient, and the exact marker transport identities.
--/
+   digest: Raw balance yields the actual Fourier defect quotient and additive marker descent. -/
 
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.LinearAlgebra.Quotient.Bilinear
 import Mathlib.Tactic
 import D5.S3.Quantum.Completion.RawThreePhaseDescent
+
+/-! Anchored comparison forms, ordered Fourier constraints and the actual defect quotient.
+The construction retains the original unital magma and both pairing orders. -/
 
 noncomputable section
 
@@ -44,8 +46,7 @@ private theorem e_one {M : Type*} [MulOneClass M] : e (1 : M) = 0 := by
 private theorem anchoredForm_e {M : Type*} [MulOneClass M] (c : M → M → ℝ)
     (h11 : c 1 1 = 0) (a b : M) :
     anchoredForm c (e a) (e b) = kernel c a b := by
-  simp [anchoredForm, e, kernel, q, r, sub_eq_add_neg, add_assoc, add_left_comm,
-    add_comm, h11]
+  simp [anchoredForm, e, kernel, q, r, sub_eq_add_neg, add_comm, h11]
 
 def leftRadical {M : Type*} [MulOneClass M] (c : M → M → ℝ) : Submodule ℝ (E M) :=
   { carrier := {x | ∀ y, anchoredForm c x y = 0}
@@ -150,7 +151,7 @@ private theorem markerForm_invariant {M : Type*} [MulOneClass M]
         (Finsupp.linearCombination ℝ (fun a : M => I (U a)) x)
           (markerLinear U y) := by rw [← ho]; rfl
     _ = (Finsupp.linearCombination ℝ (fun a : M => (I (U a)).comp (markerLinear U)) x) y := by
-      simp [Finsupp.linearCombination_apply, Finsupp.sum, LinearMap.comp_apply]
+      simp [Finsupp.linearCombination_apply, Finsupp.sum]
     _ = (Finsupp.linearCombination ℝ (fun a : M => I a) x) y := by
       simp_rw [hi]
     _ = anchoredForm c x y := by rfl
@@ -585,14 +586,6 @@ private theorem inverse_weighted_sum {M : Type*} [MulOneClass M]
 def defect {M : Type*} [MulOneClass M] (c : M → M → ℝ) (a u : M) : V c :=
   beta c (a * u) - beta c a - beta c u
 
-private theorem defect_one_left {M : Type*} [MulOneClass M] (c : M → M → ℝ) (u : M) :
-    defect c 1 u = 0 := by
-  simp [defect, beta_one]
-
-private theorem defect_one_right {M : Type*} [MulOneClass M] (c : M → M → ℝ) (a : M) :
-    defect c a 1 = 0 := by
-  simp [defect, beta_one]
-
 private theorem three_character_elimination {M : Type*} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (d₀ d₁ d₂ : V c)
     (hs : d₀ + d₁ + d₂ = 0)
@@ -607,7 +600,7 @@ private theorem three_character_elimination {M : Type*} [MulOneClass M]
           R (R (d₀ + R (R d₁) + R d₂)) - R (R (d₀ + d₁ + d₂)) +
           (d₀ + d₁ + d₂) - (d₀ + R d₀ + R (R d₀)) +
           (d₁ + R d₁ + R (R d₁)) := by
-            simp only [map_add, map_sub, markerQuotient_three, R]
+            simp only [map_add, markerQuotient_three, R]
             module
       _ = 0 := by
         rw [hw, hs, marker_cyclotomic U c h, marker_cyclotomic U c h]
@@ -638,7 +631,7 @@ private theorem defect_character_constraints {M : Type*} [MulOneClass M]
       _ = (beta c (a * u) + R (R (beta c (a * U u))) +
           R (beta c (a * U (U u)))) - (3 : ℝ) • beta c u -
           (beta c a + R (beta c a) + R (R (beta c a))) := by
-            simp only [defect, map_sub, markerQuotient_beta, markerQuotient_three, R]
+            simp only [defect, map_sub, markerQuotient_beta, marker_period_three_on_beta U c h, R]
             module
       _ = 0 := by rw [inverse_weighted_sum U c h, marker_cyclotomic U c h]; simp
 
@@ -774,7 +767,7 @@ private theorem gamma_mul {M : Type*} [MulOneClass M]
   have hz : (W c).mkQ (defect c a u) = 0 :=
     (Submodule.Quotient.mk_eq_zero _).2 (defect_mem_W c a u)
   apply sub_eq_zero.mp
-  simpa only [defect, map_sub, gamma, sub_sub] using hz
+  simpa only [defect, map_sub, gamma, sub_sub, map_add] using hz
 
 private theorem gamma_marker {M : Type*} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a : M) :
@@ -800,26 +793,72 @@ private theorem gamma_fibre_zero_comparison {M : Type*} [MulOneClass M]
   rw [difference_diagonal U c h a b] at hz
   constructor <;> linarith [h.nonneg a b, h.nonneg b a]
 
+/-- The original raw law constructs the anchored Fourier defect quotient. -/
 theorem raw_anchored_radical_descent {M : Type*} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
     c 1 1 = 0 ∧
-      beta c 1 = 0 ∧
-      (∀ a b, quotientForm c (beta c a) (beta c b) = kernel c a b) ∧
-      (∀ x y, anchoredForm c (markerLinear U x) (markerLinear U y) =
-        anchoredForm c x y) ∧
-      (∀ a, beta c (U (U (U a))) = beta c a) ∧
-      (∀ x, x ∈ radical c → markerLinear U x ∈ radical c) ∧
-      (∀ a, markerQuotient U c h (beta c a) = beta c (U a)) ∧
-      (∀ a, markerQuotient U c h
-        (markerQuotient U c h (markerQuotient U c h (beta c a))) = beta c a) ∧
-      (∀ a, defect c 1 a = 0) ∧
-      (∀ a, defect c a 1 = 0) := by
+    beta c 1 = 0 ∧
+    (∀ a b, quotientForm c (beta c a) (beta c b) = kernel c a b) ∧
+    (∀ x y, anchoredForm c (markerLinear U x) (markerLinear U y) =
+      anchoredForm c x y) ∧
+    (∀ a, beta c (U (U (U a))) = beta c a) ∧
+    (∀ x, x ∈ radical c → markerLinear U x ∈ radical c) ∧
+    (∀ a, markerQuotient U c h (beta c a) = beta c (U a)) ∧
+    (∀ a, markerQuotient U c h
+      (markerQuotient U c h (markerQuotient U c h (beta c a))) = beta c a) ∧
+    (∀ a, defect c 1 a = 0) ∧
+    (∀ a, defect c a 1 = 0) ∧
+    Submodule.map (radical c).mkQ (anchoredSpan M) = ⊤ ∧
+    Submodule.span ℝ (Set.range (beta c)) = ⊤ ∧
+    (∀ z, (∀ a, quotientForm c z (beta c a) = 0) →
+      (∀ a, quotientForm c (beta c a) z = 0) → z = 0) ∧
+    (∀ x, markerQuotient U c h (markerQuotient U c h (markerQuotient U c h x)) = x) ∧
+    (∀ x y, quotientForm c (markerQuotient U c h x) (markerQuotient U c h y) =
+      quotientForm c x y) ∧
+    (∀ a b, quotientForm c (beta c a - beta c b) (beta c a - beta c b) =
+      (c a b + c b a) / 2) ∧
+    (∀ a u, q c (a * u) + q c (a * U u) + q c (a * U (U u)) =
+      3 * q c a + 3 * q c u) ∧
+    (∀ b v, r c (b * v) + r c (b * U v) + r c (b * U (U v)) =
+      3 * r c b + 3 * r c v) ∧
+    (∀ a b u v, quotientForm c (beta c (a * u)) (beta c (b * v)) +
+      quotientForm c (beta c (a * U u)) (beta c (b * U v)) +
+      quotientForm c (beta c (a * U (U u))) (beta c (b * U (U v))) =
+      3 * quotientForm c (beta c a) (beta c b) +
+      3 * quotientForm c (beta c u) (beta c v)) ∧
+    (∀ a u, beta c (a * u) + beta c (a * U u) + beta c (a * U (U u)) =
+      (3 : ℝ) • beta c a) ∧
+    (∀ a u, beta c (a * u) +
+      markerQuotient U c h (markerQuotient U c h (beta c (a * U u))) +
+      markerQuotient U c h (beta c (a * U (U u))) = (3 : ℝ) • beta c u) ∧
+    (∀ x, x + markerQuotient U c h x +
+      markerQuotient U c h (markerQuotient U c h x) = 0) ∧
+    (∀ a u, beta c (a * U u) = beta c a + markerQuotient U c h (beta c u) +
+      markerQuotient U c h (markerQuotient U c h (defect c a u)) ∧
+      beta c (a * U (U u)) = beta c a +
+      markerQuotient U c h (markerQuotient U c h (beta c u)) +
+      markerQuotient U c h (defect c a u)) ∧
+    (∀ a b u v, quotientForm c (defect c a u) (defect c b v) = 0) ∧
+    (∀ x y, x ∈ W c → y ∈ W c → quotientForm c x y = 0) ∧
+    Submodule.map (markerQuotient U c h) (W c) = W c ∧
+    gamma c 1 = 0 ∧
+    (∀ a u, gamma c (a * u) = gamma c a + gamma c u) ∧
+    (∀ a, gamma c (U a) = rho U c h (gamma c a)) ∧
+    (∀ a u k, gamma c (a * U^[k] u) =
+      gamma c a + (rho U c h)^[k] (gamma c u)) ∧
+    (∀ a b, gamma c a = gamma c b → c a b = 0 ∧ c b a = 0) := by
   refine ⟨h.diagonal 1, beta_one c, ?_, markerForm_invariant U c h,
-    marker_period_three_on_beta U c h, (fun x hx => marker_radical_stable U c h hx),
-    ?_, ?_, defect_one_left c, defect_one_right c⟩
-  · intro a b
-    exact quotientForm_beta c (h.diagonal 1) a b
-  · exact markerQuotient_beta U c h
-  · exact markerQuotient_three_beta U c h
+    marker_period_three_on_beta U c h, (fun _ hx => marker_radical_stable U c h hx),
+    markerQuotient_beta U c h, markerQuotient_three_beta U c h,
+    (fun a => by simp [defect, beta_one]), (fun a => by simp [defect, beta_one]),
+    anchoredSpan_quotient c (h.diagonal 1), beta_span c (h.diagonal 1),
+    quotient_joint_nondegenerate c (h.diagonal 1), markerQuotient_three U c h,
+    quotientForm_marker_invariant U c h, difference_diagonal U c h,
+    q_average U c h, r_average U c h, quotient_bilinear_balance U c h,
+    unweighted_sum U c h, inverse_weighted_sum U c h, marker_cyclotomic U c h,
+    phase_children U c h, cross_defect_isotropic U c h, W_isotropic U c h,
+    W_marker_image U c h, gamma_one c, gamma_mul c, gamma_marker U c h,
+    gamma_phase_product U c h, gamma_fibre_zero_comparison U c h⟩
+  exact quotientForm_beta c (h.diagonal 1)
 
 end D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
