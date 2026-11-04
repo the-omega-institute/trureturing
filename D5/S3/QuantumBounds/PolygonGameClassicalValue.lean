@@ -154,7 +154,7 @@ private lemma varying_middle_half (P : ℕ) (hP : 3 ≤ P)
     (s := (Finset.univ : Finset (Fin P → Bool))) (wins P s)
   simp only [Finset.card_univ, Fintype.card_fun, Fintype.card_bool, Fintype.card_fin] at htotal
   have hp : 2 ^ P = 2 * 2 ^ (P - 1) := by
-    conv_lhs => rw [show P = (P - 1) + 1 by omega]
+    conv_lhs => rw [(Nat.sub_add_cancel (by omega : 1 ≤ P)).symm]
     rw [pow_succ, Nat.mul_comm]
   omega
 
@@ -242,7 +242,7 @@ private lemma affine_matching_rule (P : ℕ) (s : Fin P → Bool → Bool × Boo
       ((∑ i ∈ M, ((s i true).1.toNat + (s (finRotate P i) true).2.2.toNat : ZMod 2)) +
         ∑ i ∈ U, a i) + M.card := by
     ring_nf
-    simp only [show (2 : ZMod 2) = 0 by decide, mul_zero, add_zero, zero_add]
+    simp only [CharTwo.two_eq_zero, mul_zero, add_zero, zero_add]
   rw [hn, CharTwo.add_eq_zero]
 
 open Classical in
@@ -258,7 +258,7 @@ private lemma marked_edge (P : ℕ) (hodd : Odd P)
       Equiv.sum_comp (finRotate P) (fun i => ((s i false).2.1.toNat : ZMod 2)),
       heven, hodd.natCast_zmod_two]
     ring_nf
-    simp only [show (2 : ZMod 2) = 0 by decide, mul_zero, add_zero]
+    simp only [CharTwo.two_eq_zero, mul_zero, add_zero]
   obtain ⟨i, _, hi⟩ := Finset.exists_ne_zero_of_sum_ne_zero (by rw [hsum]; exact one_ne_zero)
   exact ⟨i, Fin.eq_one_of_ne_zero (edgeCharge P s i) hi⟩
 
@@ -346,7 +346,7 @@ open Classical in
 private lemma avoiding_count (P : ℕ) (hP : 3 ≤ P) (j : Fin P) :
     (avoiding P j).card = Nat.fib (P - 1) := by
   classical
-  obtain ⟨n, rfl⟩ : ∃ n, P = n + 3 := ⟨P - 3, by omega⟩
+  obtain ⟨n, rfl⟩ : ∃ n, P = n + 3 := Nat.exists_eq_add_of_le' hP
   let e : Fin n → Fin (n + 3) := fun k => j + ⟨k.val + 2, by omega⟩
   have einj : Function.Injective e := by
     intro k l hh
@@ -571,7 +571,7 @@ private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
     baseline P (attainingStrategy P) = 0 ∧
     ∃ j : Fin P, ∀ i, edgeCharge P (attainingStrategy P) i = if i = j then 1 else 0 := by
   classical
-  obtain ⟨n, rfl⟩ : ∃ n, P = n + 3 := ⟨P - 3, by omega⟩
+  obtain ⟨n, rfl⟩ : ∃ n, P = n + 3 := Nat.exists_eq_add_of_le' hP
   let j : Fin (n + 3) := Fin.last (n + 2)
   have hlt (i : Fin (n + 3)) : i.val + 1 < n + 3 ↔ i ≠ j := by
     simpa only [j, Fin.lt_def, Fin.val_last, Nat.lt_succ_iff, Nat.succ_le_iff] using
@@ -591,7 +591,7 @@ private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
     split_ifs <;> rfl
   have hnum : ((n + 2 : ℕ) : ZMod 2) = 0 := by
     have hh := hodd.natCast_zmod_two
-    rw [show n + 3 = (n + 2) + 1 by omega, Nat.cast_add, Nat.cast_one] at hh
+    rw [show n + 3 = (n + 2) + 1 from rfl, Nat.cast_add, Nat.cast_one] at hh
     exact add_right_cancel (hh.trans (zero_add (1 : ZMod 2)).symm)
   have hbase : baseline (n + 3) (attainingStrategy (n + 3)) = 0 := by
     change (∑ i, ((attainingStrategy (n + 3) i false).1.toNat : ZMod 2)) = 0
