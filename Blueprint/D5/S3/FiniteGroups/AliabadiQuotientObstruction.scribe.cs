@@ -14,7 +14,7 @@ internal sealed class AliabadiQuotientObstructionDocument : IScribeDocumentDefin
                 DescribeId.Create("aliabadi-full-quotient-obstruction"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/AliabadiQuotientObstruction.exists_obstructed_multiset"),
                 H("A single nonidentity commutator suffices"),
-                StatementSource.FromLean(), AssessedProvenance.FromLiterature(Source),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("Let G be any finite group with noncommutative multiplication, and put n=|G|. The canonical map pi is Abelianization.of from G to G/[G,G]. There exists a genuine multiset A of cardinality n, counted with multiplicity, for which the product of the pi-images is one, while no two bijective functions b,c from Fin n to G have A equal to the multiset of b(i) times the inverse of c(i). Fin n consists of 0 through n-1; adding one identifies this index set with 1 through n. A Fintype structure presents an arbitrary finite group and adds no group-theoretic assumption.")),
                     Paragraph(Text("The commutator subgroup is nontrivial, since commutator_eq_bot_iff identifies its triviality with commutativity. Subgroup.nontrivial_iff_exists_ne_one supplies a nonidentity element a in it. Abelianization.ker_of proves pi(a)=1. Take A to contain a once and the identity n-1 times. A group is nonempty, so n is positive and the multiset has cardinality n. All entries have pi-image one, so their multiplicity-counted product in the abelian quotient is one.")),
