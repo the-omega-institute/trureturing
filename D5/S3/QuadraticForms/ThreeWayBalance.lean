@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Nonnegative three-way balance forces an integer quadratic map and invisible orbit sums. -/
+   digest: Three-way balance forces quadratic structure on an abelian group. -/
 
 module
 
@@ -207,7 +207,8 @@ private theorem parallelogram_of_invisible (U : A →+ A) (q : A → ℝ)
         3 * q (x + y) + 3 * q (x - y) := by
     have h := hT (x + y) (x - y)
     have h₁ : q ((x + y) + (x - y)) = 4 * q x := by
-      convert hf x using 1
+      rw [show (x + y) + (x - y) = x + x by abel]
+      exact hf x
     have h₂ : q ((x + y) + U (x - y)) = q (x - L y) := by
       calc
         q ((x + y) + U (x - y)) = q (U ((x + y) + U (x - y))) :=
