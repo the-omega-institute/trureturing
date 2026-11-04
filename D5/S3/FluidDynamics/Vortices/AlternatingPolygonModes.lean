@@ -6,9 +6,13 @@
    utility: none
    digest: Folded Fourier modes and collision multiplicities of the actual polygon Jacobian. -/
 
+
 import D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum
 import Mathlib.LinearAlgebra.Eigenspace.Zero
 import Mathlib.LinearAlgebra.Eigenspace.Matrix
+
+/-! Folded Fourier multiplicities and two-dimensional restrictions. -/
+
 
 noncomputable section
 open scoped BigOperators
@@ -114,7 +118,7 @@ private theorem fold_neg (m : ℕ) [NeZero (2 * m)] (q : ZMod (2 * m)) :
     fold m (-q) = fold m q := by
   by_cases hq : q = 0
   · simp [hq]
-  · rw [fold, ZMod.neg_val, if_neg hq]
+  · rw [fold, ZMod.neg_val, ite_eq_right hq]
     have hv := ZMod.val_lt q
     have hpos : 0 < q.val := by
       by_contra h
@@ -146,7 +150,7 @@ theorem fold_fibre_card (m : ℕ) [NeZero (2 * m)] {r : ℕ} (hr : r ≤ m) :
           have := ZMod.val_lt q
           omega
         · apply ZMod.val_injective _
-          rw [ZMod.neg_val, if_neg (by
+          rw [ZMod.neg_val, ite_eq_right (by
             intro he
             have := congrArg ZMod.val he
             simp [hv] at this
@@ -160,15 +164,17 @@ theorem fold_fibre_card (m : ℕ) [NeZero (2 * m)] {r : ℕ} (hr : r ≤ m) :
   have heq : (r : ZMod (2 * m)) = -(r : ZMod (2 * m)) ↔ r = 0 ∨ r = m := by
     by_cases hr0 : r = 0
     · simp [hr0]
-    · rw [← (ZMod.val_injective (2 * m)).eq_iff, ZMod.neg_val, if_neg (by
+    · rw [← (ZMod.val_injective (2 * m)).eq_iff, ZMod.neg_val, ite_eq_right (by
         intro he
         have := congrArg ZMod.val he
         simp [hv] at this
         exact hr0 this), hv]
       omega
   by_cases h : r = 0 ∨ r = m
-  · simp [heq.mpr h, h]
-  · simp [h, heq.not.mpr h]
+  · rw [ite_eq_left h, ← heq.mpr h]
+    simp only [Finset.insert_eq_of_mem (Finset.mem_singleton_self _), Finset.card_singleton]
+  · rw [ite_eq_right h]
+    exact Finset.card_pair (heq.not.mpr h)
 
 private theorem prod_fold {A : Type*} [CommMonoid A] (m : ℕ) [NeZero (2 * m)]
     (g : ℕ → A) :
@@ -212,7 +218,11 @@ theorem charpoly_folded (m : ℕ) (hm : 1 ≤ m) :
     rw [show (m : ℝ) ^ 2 * -2 / 4 = -((m : ℝ) ^ 2 / 2) by ring, map_neg,
       sub_neg_eq_add]
   have hm' : g m = X ^ 2 := by simp [g]
-  simp only [true_or, ite_true, pow_one, h0, hm']
+  simp only [or_true, true_or, ite_true, pow_one, h0, hm']
+  change (X ^ 2 + C ((m : ℝ) ^ 2 / 2)) *
+      (∏ r ∈ Finset.Ico 1 m, g r ^ 2) * X ^ 2 =
+    X ^ 2 * (X ^ 2 + C ((m : ℝ) ^ 2 / 2)) *
+      (∏ r ∈ Finset.Ico 1 m, g r ^ 2)
   ring
 
 /-- The complete normalized polynomial at every m >= 3. -/
@@ -224,7 +234,7 @@ theorem charpoly_factored (m : ℕ) (hm : 3 ≤ m) :
             (X ^ 2 - C (((m : ℝ) - r) ^ 2 * ((r : ℝ) ^ 2 - 2) / 4)) ^ 2 := by
   rw [charpoly_folded m (by omega),
     Finset.prod_eq_prod_Ico_succ_bot (by omega : 1 < m)]
-  norm_num only [Nat.cast_one, one_pow, one_sub, show 1 + 1 = 2 from rfl]
+  norm_num only [Nat.cast_one, one_pow, show 1 + 1 = 2 from rfl]
   rw [show ((m : ℝ) - 1) ^ 2 * -1 / 4 = -(((m : ℝ) - 1) ^ 2 / 4) by ring,
     map_neg, sub_neg_eq_add]
   ring
@@ -260,62 +270,63 @@ def pairedOperator {Q : Type*} (α β : Q → ℂ) : Module.End ℂ (Q → ℂ �
   map_smul' c v := by
     ext q <;> simp [mul_left_comm]
 
-private lemma paired_kernel_square {Q : Type*} (α β : Q → ℂ) {λ : ℂ} (hλ : λ ≠ 0)
+private lemma paired_kernel_square {Q : Type*} (α β : Q → ℂ) {μ : ℂ} (hμ : μ ≠ 0)
     (v : Q → ℂ × ℂ)
-    (h : (pairedOperator α β - λ • 1)
-      ((pairedOperator α β - λ • 1) v) = 0) :
-    (pairedOperator α β - λ • 1) v = 0 := by
+    (h : (pairedOperator α β - μ • (1 : Module.End ℂ (Q → ℂ × ℂ)))
+      ((pairedOperator α β - μ • (1 : Module.End ℂ (Q → ℂ × ℂ))) v) = 0) :
+    (pairedOperator α β - μ • (1 : Module.End ℂ (Q → ℂ × ℂ))) v = 0 := by
   funext q
   have h₁ := congrArg (fun w : Q → ℂ × ℂ => (w q).1) h
   have h₂ := congrArg (fun w : Q → ℂ × ℂ => (w q).2) h
-  change α q * (β q * (v q).1 - λ * (v q).2) -
-    λ * (α q * (v q).2 - λ * (v q).1) = 0 at h₁
-  change β q * (α q * (v q).2 - λ * (v q).1) -
-    λ * (β q * (v q).1 - λ * (v q).2) = 0 at h₂
-  change (α q * (v q).2 - λ * (v q).1,
-    β q * (v q).1 - λ * (v q).2) = (0, 0)
-  by_cases hγ : α q * β q = λ ^ 2
+  change α q * (β q * (v q).1 - μ * (v q).2) -
+    μ * (α q * (v q).2 - μ * (v q).1) = 0 at h₁
+  change β q * (α q * (v q).2 - μ * (v q).1) -
+    μ * (β q * (v q).1 - μ * (v q).2) = 0 at h₂
+  change (α q * (v q).2 - μ * (v q).1,
+    β q * (v q).1 - μ * (v q).2) = (0, 0)
+  by_cases hγ : α q * β q = μ ^ 2
   · apply Prod.ext
-    · apply (mul_eq_zero.mp (show (2 * λ) *
-        (α q * (v q).2 - λ * (v q).1) = 0 by
+    · apply (mul_eq_zero.mp (show (2 * μ) *
+        (α q * (v q).2 - μ * (v q).1) = 0 by
           linear_combination -h₁ + (v q).1 * hγ)).resolve_left
-      exact mul_ne_zero (by norm_num) hλ
-    · apply (mul_eq_zero.mp (show (2 * λ) *
-        (β q * (v q).1 - λ * (v q).2) = 0 by
+      exact mul_ne_zero (by norm_num) hμ
+    · apply (mul_eq_zero.mp (show (2 * μ) *
+        (β q * (v q).1 - μ * (v q).2) = 0 by
           linear_combination -h₂ + (v q).2 * hγ)).resolve_left
-      exact mul_ne_zero (by norm_num) hλ
-  · have hγ' : α q * β q - λ ^ 2 ≠ 0 := sub_ne_zero.mpr hγ
+      exact mul_ne_zero (by norm_num) hμ
+  · have hγ' : α q * β q - μ ^ 2 ≠ 0 := sub_ne_zero.mpr hγ
     apply Prod.ext
-    · apply (mul_eq_zero.mp (show (α q * β q - λ ^ 2) *
-        (α q * (v q).2 - λ * (v q).1) = 0 by
-          linear_combination α q * h₂ + λ * h₁)).resolve_left hγ'
-    · apply (mul_eq_zero.mp (show (α q * β q - λ ^ 2) *
-        (β q * (v q).1 - λ * (v q).2) = 0 by
-          linear_combination β q * h₁ + λ * h₂)).resolve_left hγ'
+    · apply (mul_eq_zero.mp (show (α q * β q - μ ^ 2) *
+        (α q * (v q).2 - μ * (v q).1) = 0 by
+          linear_combination α q * h₂ + μ * h₁)).resolve_left hγ'
+    · apply (mul_eq_zero.mp (show (α q * β q - μ ^ 2) *
+        (β q * (v q).1 - μ * (v q).2) = 0 by
+          linear_combination β q * h₁ + μ * h₂)).resolve_left hγ'
 
 /-- No two-dimensional off-diagonal restriction has a nontrivial nonzero
 Jordan chain. This controls generalized eigenspaces, not just polynomial roots. -/
-theorem paired_nonzero_semisimple {Q : Type*} (α β : Q → ℂ) {λ : ℂ} (hλ : λ ≠ 0) :
-    (pairedOperator α β).maxGenEigenspace λ =
-      (pairedOperator α β).eigenspace λ := by
+theorem paired_nonzero_semisimple {Q : Type*} (α β : Q → ℂ) {μ : ℂ} (hμ : μ ≠ 0) :
+    (pairedOperator α β).maxGenEigenspace μ =
+      (pairedOperator α β).eigenspace μ := by
   apply le_antisymm
   · intro v hv
     obtain ⟨n, hn⟩ := (Module.End.mem_maxGenEigenspace _ _ _).mp hv
     rw [Module.End.mem_eigenspace_iff]
-    suffices (pairedOperator α β - λ • 1) v = 0 by
+    suffices (pairedOperator α β - μ • (1 : Module.End ℂ (Q → ℂ × ℂ))) v = 0 by
       simpa only [LinearMap.sub_apply, LinearMap.smul_apply,
         Module.End.one_apply, sub_eq_zero] using this
     have hpow : ∀ n : ℕ, ∀ v : Q → ℂ × ℂ,
-        ((pairedOperator α β - λ • 1) ^ n) v = 0 →
-        (pairedOperator α β - λ • 1) v = 0 := by
+        ((pairedOperator α β - μ • (1 : Module.End ℂ (Q → ℂ × ℂ))) ^ n) v = 0 →
+        (pairedOperator α β - μ • (1 : Module.End ℂ (Q → ℂ × ℂ))) v = 0 := by
       intro n
       induction n with
       | zero =>
         intro v hv
-        simpa using congrArg (pairedOperator α β - λ • 1) hv
+        have hv : v = 0 := by simpa only [pow_zero, Module.End.one_apply] using hv
+        rw [hv, map_zero]
       | succ n ih =>
         intro v hv
-        apply paired_kernel_square α β hλ v
+        apply paired_kernel_square α β hμ v
         apply ih
         simpa only [pow_succ, Module.End.mul_apply] using hv
     exact hpow n v hn

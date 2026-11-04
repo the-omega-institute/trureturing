@@ -6,8 +6,12 @@
    utility: none
    digest: Collision-free Cartesian vortex fields, positive-parameter similarity and polygon boundary. -/
 
+
 import D5.S3.FluidDynamics.Vortices.AlternatingPolygonSpectrum
 import Mathlib.Analysis.Calculus.FDeriv.Pi
+
+/-! The collision-free Cartesian field, physical scaling and equilibrium boundary. -/
+
 
 noncomputable section
 open scoped BigOperators
@@ -48,26 +52,33 @@ theorem field_differentiable_at {N : ℕ} (b Ω : ℝ) {z : Configuration N}
   classical
   apply differentiableAt_pi.mpr
   intro p
-  have hc (q : Fin N ⊕ Fin N) := differentiableAt_apply q z
+  have hc (q : Fin N ⊕ Fin N) :
+      DifferentiableAt ℝ (fun w : Configuration N => w q) z := differentiableAt_apply q z
   have hi (j : Fin N) (r : Fin N → Fin N ⊕ Fin N) :
       DifferentiableAt ℝ (fun z : Configuration N =>
         ∑ k : Fin N, if k = j then 0 else
           charge N k * (z (r j) - z (r k)) /
             ((z (.inl j) - z (.inl k)) ^ 2 +
               (z (.inr j) - z (.inr k)) ^ 2)) z := by
-    apply DifferentiableAt.sum
+    apply DifferentiableAt.fun_sum
     intro k _
     by_cases hk : k = j
     · simp only [hk, ite_true]
       exact differentiableAt_const _
     · simp only [hk, ite_false]
-      exact (((hc (r j)).sub (hc (r k))).const_mul (charge N k)).div
-        ((((hc (.inl j)).sub (hc (.inl k))).pow 2).add
-          (((hc (.inr j)).sub (hc (.inr k))).pow 2)) (hz j k hk.symm)
+      have hnum : DifferentiableAt ℝ (fun w : Configuration N =>
+          charge N k * (w (r j) - w (r k))) z := by fun_prop
+      have hden : DifferentiableAt ℝ (fun w : Configuration N =>
+          (w (.inl j) - w (.inl k)) ^ 2 +
+            (w (.inr j) - w (.inr k)) ^ 2) z := by fun_prop
+      have hinv := (differentiableAt_inv (hz j k (Ne.symm hk))).comp z hden
+      simpa only [div_eq_mul_inv] using hnum.mul hinv
   cases p with
-  | inl j => exact ((hc (.inr j)).const_mul (-charge N j * Ω)).sub
+  | inl j =>
+    exact ((hc (.inr j)).const_mul (-charge N j * Ω)).sub
       ((hi j Sum.inr).const_mul (b / 2))
-  | inr j => exact ((hc (.inl j)).const_mul (charge N j * Ω)).add
+  | inr j =>
+    exact ((hc (.inl j)).const_mul (charge N j * Ω)).add
       ((hi j Sum.inl).const_mul (b / 2))
 
 theorem collision_free_smul {N : ℕ} {z : Configuration N} {R : ℝ}
@@ -169,20 +180,22 @@ theorem jacobian_scaling (N : ℕ) {b Ω R : ℝ} (hR : R ≠ 0)
   ext p q
   let v : Configuration N := Pi.single q 1
   let g : ℝ → ℝ := fun t => AlternatingPolygonSpectrum.field N (polygon N + t • v) p
-  have hp : DifferentiableAt ℝ (fun t : ℝ => polygon N + t • v) 0 :=
-    differentiableAt_const.add (differentiableAt_id.smul differentiableAt_const)
-  have hnorm : DifferentiableAt ℝ
-      (fun t : ℝ => AlternatingPolygonSpectrum.field N (polygon N + t • v)) 0 := by
-    apply DifferentiableAt.comp
-    · simpa using normalized_differentiable N
-    · exact hp
-  have hg : DifferentiableAt ℝ g 0 :=
-    (differentiableAt_apply p _).comp 0 hnorm
+  have hp : DifferentiableAt ℝ (fun t : ℝ => polygon N + t • v) 0 := by
+    have h := ((hasDerivAt_id (0 : ℝ)).smul_const v).const_add (polygon N)
+    exact h.differentiableAt
+  have houter : DifferentiableAt ℝ (AlternatingPolygonSpectrum.field N)
+      (polygon N + (0 : ℝ) • v) := by simpa using normalized_differentiable N
+  have hnorm := houter.comp (0 : ℝ) hp
+  have heval : DifferentiableAt ℝ (fun w : Configuration N => w p)
+      (AlternatingPolygonSpectrum.field N (polygon N + (0 : ℝ) • v)) :=
+    differentiableAt_apply p _
+  have hg : DifferentiableAt ℝ g 0 := by
+    simpa only [g, Function.comp_def] using heval.comp (0 : ℝ) hnorm
   have hg' : HasDerivAt g (AlternatingPolygonSpectrum.jacobian N p q) 0 :=
     hg.hasDerivAt
   have ht : HasDerivAt (fun t : ℝ => t / R) (1 / R) 0 :=
     (hasDerivAt_id 0).div_const R
-  have hder := (hg'.comp 0 (by simpa using ht)).const_mul (2 * Ω * R)
+  have hder := (hg'.comp_of_eq (0 : ℝ) ht (by simp)).const_mul (2 * Ω * R)
   have heq : (fun t : ℝ => field N b Ω (R • polygon N + t • v) p) =
       fun t : ℝ => (2 * Ω * R) * g (t / R) := by
     funext t
@@ -191,7 +204,9 @@ theorem jacobian_scaling (N : ℕ) {b Ω R : ℝ} (hR : R ≠ 0)
     rw [hz, field_scaling_algebraic N hR hb]
     rfl
   change deriv (fun t : ℝ => field N b Ω (R • polygon N + t • v) p) 0 = _
-  rw [heq, hder.deriv]
+  rw [heq]
+  simp only [Function.comp_def] at hder
+  rw [hder.deriv]
   change (2 * Ω * R) * (AlternatingPolygonSpectrum.jacobian N p q * (1 / R)) =
     (2 * Ω) * AlternatingPolygonSpectrum.jacobian N p q
   field_simp [hR]
@@ -265,7 +280,9 @@ theorem field_rotation {N : ℕ} (b Ω θ : ℝ) (z : Configuration N) :
     intro k _
     by_cases hk : k = j
     · simp [hk]
-    · simp only [hk, ite_false, rotate_distance, rotate]
+    · simp only [hk, ite_false]
+      rw [rotate_distance]
+      dsimp only [rotate]
       ring
   have hj (j : Fin N) :
       (∑ k : Fin N, if k = j then 0 else charge N k *
@@ -283,7 +300,9 @@ theorem field_rotation {N : ℕ} (b Ω θ : ℝ) (z : Configuration N) :
     intro k _
     by_cases hk : k = j
     · simp [hk]
-    · simp only [hk, ite_false, rotate_distance, rotate]
+    · simp only [hk, ite_false]
+      rw [rotate_distance]
+      dsimp only [rotate]
       ring
   ext p
   cases p with
@@ -347,10 +366,13 @@ theorem angular_readout {N : ℕ} (b Ω ρ : ℝ) {z : Configuration N}
     have he : (∑ k : Fin N, if k = j then 0 else charge N k) =
         (∑ k : Fin N, charge N k) - charge N j := by
       rw [← Finset.sum_erase_eq_sub (Finset.mem_univ j)]
-      rw [← Finset.sum_filter]
-      congr 1
-      ext k
-      simp [eq_comm]
+      have hset : Finset.univ.erase j = Finset.univ.filter (fun k : Fin N => k ≠ j) := by
+        ext k
+        simp [ne_comm]
+      rw [hset, Finset.sum_filter]
+      apply Finset.sum_congr rfl
+      intro k _
+      by_cases hk : k = j <;> simp [hk]
     rw [← he, Finset.sum_div]
     apply Finset.sum_congr rfl
     intro k _
@@ -376,9 +398,9 @@ theorem odd_nonstationary {N : ℕ} (hN : 0 < N) (hodd : ¬ Even N)
   intro hf
   let j : Fin N := ⟨0, hN⟩
   have h := angular_readout b Ω ρ hz hn j
-  rw [hf, total_charge, if_neg hodd] at h
+  rw [hf, total_charge, ite_eq_right hodd] at h
   simp [charge, j] at h
-  nlinarith [sq_pos_of_pos hρ]
+  exact h.elim (ne_of_gt hΩ) (ne_of_gt hρ)
 
 /-- Sharp actual-field boundary for the specified cyclic charge pattern. -/
 theorem regular_equilibrium_iff {N : ℕ} (hN : 3 ≤ N) {b Ω ρ : ℝ}
@@ -394,13 +416,14 @@ theorem regular_equilibrium_iff {N : ℕ} (hN : 3 ≤ N) {b Ω ρ : ℝ}
     let j : Fin N := ⟨0, by omega⟩
     have ha := angular_readout b Ω ρ (regular_collision_free N hρ θ)
       (regular_norm N ρ θ) j
-    rw [hf, total_charge, if_pos heven] at ha
+    rw [hf, total_charge, ite_eq_left heven] at ha
     simp [charge, j] at ha
     apply (eq_div_iff (by positivity : 4 * Ω ≠ 0)).mpr
     nlinarith
-  · rintro ⟨⟨m, hm⟩, hrad⟩
+  · rintro ⟨heven, hrad⟩
+    obtain ⟨m, hm⟩ := heven
     have hNm : N = 2 * m := by omega
-    subst N
+    rw [hNm]
     have hscale : b = 4 * Ω * ρ ^ 2 := by
       rw [hrad]
       field_simp
