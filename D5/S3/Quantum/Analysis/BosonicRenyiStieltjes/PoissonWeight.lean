@@ -153,25 +153,33 @@ private def complexTransform (α : ℝ) (z : ℂ) : ℂ :=
   (1 / (1 - z) - (α : ℂ) * z ^ (α : ℂ) / (z * (1 - z ^ (α : ℂ)))) /
     ((α - 1 : ℝ) : ℂ)
 
-private lemma power_eq_one {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) {z : ℂ}
-    (hz0 : z ≠ 0) (hz : z ^ (α : ℂ) = 1) : z = 1 := by
-  rw [Complex.cpow_def_of_ne_zero hz0] at hz
-  obtain ⟨n, hn⟩ := Complex.exp_eq_one_iff.mp hz
+private lemma exp_eq_one_strip {w : ℂ} (hlo : -(2 * Real.pi) < w.im)
+    (hhi : w.im < 2 * Real.pi) (he : Complex.exp w = 1) : w = 0 := by
+  obtain ⟨n, hn⟩ := Complex.exp_eq_one_iff.mp he
   have hi := congrArg Complex.im hn
-  norm_num [Complex.mul_im, Complex.mul_re, Complex.log_im] at hi
-  have hlo : -(2 * Real.pi) < Complex.arg z * α := by
-    nlinarith [mul_lt_mul_of_pos_right (Complex.neg_pi_lt_arg z) ha0, Real.pi_pos]
-  have hhi : Complex.arg z * α < 2 * Real.pi := by
-    nlinarith [mul_le_mul_of_nonneg_right (Complex.arg_le_pi z) ha0.le, Real.pi_pos]
+  norm_num [Complex.mul_im, Complex.mul_re] at hi
   have hnlo : (-1 : ℝ) < n := by nlinarith [Real.pi_pos]
   have hnhi : (n : ℝ) < 1 := by nlinarith [Real.pi_pos]
   have hn0 : n = 0 := by
     have hlo' : (-1 : ℤ) < n := by exact_mod_cast hnlo
     have hhi' : n < (1 : ℤ) := by exact_mod_cast hnhi
     omega
-  simp only [hn0, Int.cast_zero, zero_mul] at hn
+  simpa [hn0] using hn
+
+
+private lemma power_eq_one {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) {z : ℂ}
+    (hz0 : z ≠ 0) (hz : z ^ (α : ℂ) = 1) : z = 1 := by
+  rw [Complex.cpow_def_of_ne_zero hz0] at hz
+  have him : (Complex.log z * (α : ℂ)).im = Complex.arg z * α := by
+    simp only [Complex.mul_im, Complex.ofReal_im, Complex.ofReal_re,
+      Complex.log_im, mul_zero, zero_add]
+  have hzero : Complex.log z * (α : ℂ) = 0 := exp_eq_one_strip
+    (by rw [him]; nlinarith [mul_lt_mul_of_pos_right (Complex.neg_pi_lt_arg z) ha0,
+      Real.pi_pos])
+    (by rw [him]; nlinarith [mul_le_mul_of_nonneg_right (Complex.arg_le_pi z) ha0.le,
+      Real.pi_pos]) hz
   have hlog : Complex.log z = 0 :=
-    (mul_eq_zero.mp hn).resolve_right (Complex.ofReal_ne_zero.mpr ha0.ne')
+    (mul_eq_zero.mp hzero).resolve_right (Complex.ofReal_ne_zero.mpr ha0.ne')
   simpa [hlog] using (Complex.exp_log hz0).symm
 
 private def powerSlope (α : ℝ) : ℂ → ℂ := dslope (fun z => z ^ (α : ℂ)) 1
@@ -226,18 +234,6 @@ private lemma regularTransform_eq {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) {z : 
     exact sub_ne_zero.mpr hpow | exact Complex.ofReal_ne_zero.mpr ha0.ne')
   ring
 
-private lemma exp_eq_one_strip {w : ℂ} (hlo : -(2 * Real.pi) < w.im)
-    (hhi : w.im < 2 * Real.pi) (he : Complex.exp w = 1) : w = 0 := by
-  obtain ⟨n, hn⟩ := Complex.exp_eq_one_iff.mp he
-  have hi := congrArg Complex.im hn
-  norm_num [Complex.mul_im, Complex.mul_re] at hi
-  have hnlo : (-1 : ℝ) < n := by nlinarith [Real.pi_pos]
-  have hnhi : (n : ℝ) < 1 := by nlinarith [Real.pi_pos]
-  have hn0 : n = 0 := by
-    have hlo' : (-1 : ℤ) < n := by exact_mod_cast hnlo
-    have hhi' : n < (1 : ℤ) := by exact_mod_cast hnhi
-    omega
-  simpa [hn0] using hn
 
 private def logTransform (α : ℝ) (w : ℂ) : ℂ :=
   if w = 0 then regularTransform α 1 else
