@@ -1880,7 +1880,7 @@ private theorem native_delta (v : Basis → ℂ) :
       delta (reduced v) := by
   rw [Fin.sum_univ_two, reduced_projector, reduced_projector]
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [delta]
+  fin_cases i <;> fin_cases j <;> simp [delta, Pi.add_apply]
 
 private theorem read_empty (j : Fin 2) :
     (projector (readBit 2) j).mulVec omega0 =
@@ -1891,7 +1891,7 @@ private theorem read_empty (j : Fin 2) :
   by_cases hz : z = rootWord
   · subst z
     fin_cases j <;> norm_num [omega0, readBit, rootWord]
-  · simp [omega0, hz]
+  · by_cases hj : j = 0 <;> simp [omega0, hz, hj]
 
 def inverseRoot : Qubit := Matrix.diagonal ![beta⁻¹,t⁻¹]
 
