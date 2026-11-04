@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Probability.EfronStein
 import Reg.Support.DependentFamily
 
+/-! The full Efron–Stein telescope is observed through real comparison. -/
+
 namespace Reg.D5.S3.Analytic.Probability.EfronStein
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open MeasureTheory ProbabilityTheory
@@ -40,7 +42,7 @@ theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   have hbad := h (ι := ULift.{u} (Fin 0)) (Ω := fun _ => ULift.{v} Unit)
     (fun _ => Measure.dirac (ULift.up ())) (F := fun _ => (0 : ℝ)) measurable_const
     (M := 0) (fun _ => by simp)
-  simpa [rejected, realize] using hbad
+  simpa [rejected, realize, variance_eq_integral measurable_const.aemeasurable] using hbad
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -49,7 +51,8 @@ theorem dependence : ObservationalDependence signature actual := by
   have hfalse : (1 : ℝ) ≤ 0 := (congrFun h 0).mp le_rfl
   exact (not_le_of_gt zero_lt_one) hfalse
 
-def source_registration : Registration arena.{u,v} (type_of% @Homogenization.efronStein_pi.{u,v}) where
+def source_registration :
+    Registration arena.{u,v} (type_of% @Homogenization.efronStein_pi.{u,v}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@Homogenization.efronStein_pi.{u,v}, rejected, rejected_law⟩
@@ -83,7 +86,8 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

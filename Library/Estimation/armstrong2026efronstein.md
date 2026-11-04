@@ -7,7 +7,7 @@ claim: The bounded finite-product Efron-Stein inequality is supplied by the thre
 doi: null
 strata_touched: [S3]
 license: Apache-2.0
-triage: literature-attested
+triage: anchor
 url: https://github.com/scottnarmstrong/CoarseGraining/tree/310d1a6bab3ba2d398cdaffec32f3c9d4b5a24be/Homogenization/Probability/EfronStein
 ---
 
