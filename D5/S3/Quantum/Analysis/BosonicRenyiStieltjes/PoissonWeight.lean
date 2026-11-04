@@ -7,9 +7,7 @@
    digest: Positive-axis Stieltjes transform of the power Poisson density. -/
 
 import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
-import Mathlib.MeasureTheory.Function.JacobianOneDim
 import Mathlib.Analysis.Complex.RemovableSingularity
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 
 /-! The positive-axis transform used by the logarithmic Renyi representation. -/
@@ -45,10 +43,7 @@ theorem cosine_lt_one {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) 
     exact lt_irrefl 0 hs
   refine lt_of_le_of_ne (Real.cos_le_one _) ?_
   intro he
-  have hsq := Real.sin_sq_add_cos_sq (Real.pi * α)
-  rw [he] at hsq
-  have hz : Real.sin (Real.pi * α) = 0 := by nlinarith
-  exact hsin hz
+  exact hsin (Real.sin_eq_zero_iff_cos_eq.mpr (Or.inl he))
 
 /-- The power Poisson density after the substitution `p = q ^ α`. -/
 def density (α q : ℝ) : ℝ :=

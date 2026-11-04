@@ -263,8 +263,8 @@ private lemma reduced_physical {n : ℕ}
         Complex.ofReal).submatrix f f =
         (V.submatrix f f).map Complex.ofReal +
           Complex.I • ((symplecticForm n).submatrix f f).map Complex.ofReal := by
-      ext i j
-      rfl
+      simp only [Matrix.submatrix_add, Matrix.submatrix_smul, Pi.add_apply, Pi.smul_apply,
+        Matrix.submatrix_map]
     change (((V.submatrix f f).map Complex.ofReal) +
       Complex.I • ((symplecticForm n).submatrix f f).map Complex.ofReal).PosSemidef
     rw [← heq]
@@ -385,8 +385,8 @@ private lemma principal_block_identity {ι : Type*}
         (x : ℂ) • (Complex.I •
           (Ω.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
             Complex.ofReal) := by
-  ext i j
-  rfl
+  simp only [Matrix.submatrix_add, Matrix.submatrix_smul, Pi.add_apply, Pi.smul_apply,
+    Matrix.submatrix_map]
 
 private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
