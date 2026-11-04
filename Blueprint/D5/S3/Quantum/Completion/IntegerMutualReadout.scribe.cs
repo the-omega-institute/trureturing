@@ -17,11 +17,11 @@ internal sealed class IntegerMutualReadoutDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, x, Colon, Sp, t, Comma, Sp, b);
     private static Formula Arrow(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
-    private static Formula Iff(Formula a, Formula b) => Seq(a, Sp, Leftrightarrow, Sp, b);
+    private static Formula Iff(Formula a, Formula b) => Seq(Open, a, Sp, Leftrightarrow, Sp, b, Close);
     private static Formula And(Formula a, Formula b) => Seq(a, Sp, Land, Sp, b);
     private static Formula Star(Formula a) => Seq(a, Caret, Grp(F.Star));
     private static Formula Mul(Formula a, Formula b) => Seq(a, Sp, b);
-    private static Formula Apply(Formula f, Formula x) => Seq(f, OpenParen, x, CloseParen);
+    private static Formula Apply(Formula f, Formula x) => Seq(f, Open, x, Close);
     private static Formula SumOver(Formula i, Formula s, Formula b) =>
         Seq(Sum, Underscore, Grp(i, Sp, InMacro, Sp, s), Sp, b);
     private static Formula Recipe => Call("Finsupp", X, R);
@@ -36,7 +36,7 @@ internal sealed class IntegerMutualReadoutDocument : IScribeDocumentDefinition
         Blocks(
             Entry("mutual-kernel-readout", "readout", "The original finite comparison",
                 ReadoutFormula(),
-                "For any label type X, coefficient type R with zero, embedding e into the complex numbers and raw kernel K, readout is the finite double sum over the supports of f and g. The first coefficient is conjugated and the second is linear. No topology, norm, state, normalization or Hermitian condition on K is present.",
+                "For any label type X, coefficient type R with zero, embedding e into the complex numbers and raw kernel K, readout is the finite double sum over the supports of f and g. The summand conjugates the first embedded coefficient and multiplies by the second without conjugation. No topology, norm, state, normalization or Hermitian condition on K is present.",
                 DescribeRole.Definition),
             Entry("mutual-universal-budget", "Budget", "The unrestricted finite-recipe budget",
                 BudgetFormula(),
@@ -51,17 +51,17 @@ internal sealed class IntegerMutualReadoutDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Entry("mutual-budget-positive-type", "mutual_budget_iff_positive_type",
                 "All four conditions on the same raw kernel are equivalent",
-                Frame(And(Iff(Budget(Call("GaussianInt.toComplex")), Call("PosSemidef", K)),
+                Frame(And(Iff(Budget(F.Id("toComplex")), Call("PosSemidef", K)),
                     And(Iff(Budget(F.Id("rationalComplex")), Call("PosSemidef", K)),
                         Iff(Budget(F.Id("id")), Call("PosSemidef", K))))),
-                "This is C130 Theorem 2.3. X is arbitrary, including infinite and empty types, and K is any complex-valued table. Matrix.PosSemidef at this arbitrary index type asserts actual Hermitian symmetry of K and nonnegativity of every finitely supported complex quadratic form. Its existing submatrix theorem gives every finite indexed table, with arbitrary repeated labels and singular directions. The equivalences each identify one of the integer, rational-coordinate and complex budgets with that same condition; no Hermitian premise is assumed.",
+                "This is C130 Theorem 2.3. X is arbitrary, including infinite and empty types, and K is any complex-valued table. Matrix.PosSemidef at this arbitrary index type asserts actual Hermitian symmetry of K and nonnegativity of every finitely supported complex quadratic form. Its existing submatrix theorem gives every finite indexed table, with arbitrary repeated labels and singular directions. Conversely, positivity of all finite tables recovers symmetry from two labels and each quadratic form from its finite support. Here toComplex denotes GaussianInt.toComplex. The equivalences each identify one of the integer, rational-coordinate and complex budgets with that same condition; no Hermitian premise is assumed.",
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "For each fixed finite subset of labels, Matrix.den and Matrix.num_div_den clear all rational real and imaginary denominators of both recipes at once. The positive square of that nonzero denominator cancels in the budget. Rat.denseRange_cast, DenseRange.piMap and closedness of the finite polynomial inequality extend the budget to all complex coefficients on that finite subset. This continuity is a theorem about coefficient space, with no topology on X and no physical-control assumption.")),
             Paragraph(Text(
                 "The structural step uses the extended budget on t f and (t+i) f. Its difference is Re Q(f)+2t Im Q(f), for every real t. A nonzero imaginary part would allow an explicitly chosen t with negative difference. Thus self-comparisons are real; Mathlib's LinearMap.isSymmetric_iff_inner_map_self_real and Matrix.isSymmetric_toEuclideanLin_iff recover the original matrix's Hermitian symmetry. The zero-recipe test gives its nonnegative quadratic form. Conversely, Hermitian positive type makes the budget difference the nonnegative quadratic form of f-g. Restriction supplies both smaller coefficient domains.")),
             Paragraph(Text(
-                "The raw readout is compared with finite subset tables through Finsupp.sum_of_support_subset, Finsupp.sum_embDomain and Finsupp.sum_fintype. The finite-subset argument retains the original entries of K throughout. Zero kernels, empty supports and null vectors require no division by a quadratic value or invertible Gram matrix. Formal recipe operations and coefficient approximation supply no physical copying, amplification, coherent preparation, measurement interface or physical continuity. The result is an in-repository derivation; no literature novelty is asserted.")))));
+                "The raw readout is compared with finite subset tables through Finsupp.sum_of_support_subset, Finsupp.sum_embDomain and Finsupp.sum_fintype. The finite-subset argument retains the original entries of K throughout. Zero kernels, empty supports and null vectors require no division by a quadratic value or invertible Gram matrix. Formal recipe operations and coefficient approximation supply no physical copying, amplification, coherent preparation, measurement interface or physical continuity.")))));
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         Formula formula, string narrative, DescribeRole role) => Describe.Lean(
