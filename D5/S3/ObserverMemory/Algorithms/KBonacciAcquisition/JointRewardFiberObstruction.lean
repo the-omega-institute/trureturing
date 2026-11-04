@@ -378,6 +378,7 @@ private theorem witness_numerical {L : ℕ} (n j k l : Fin L)
     (singleton_firstZero n j k l k hnj hjk hkl (hnj.trans hjk)) b
   have hl := mask_point (singletonWord n j k l l) n i t
     (singleton_firstZero n j k l l hnj hjk hkl (hnj.trans (hjk.trans hkl))) b
+  simp only [numerical,witnessScore,add_zero]
   change (if FirstZero b i then threePoints n j k l t b else 0) =
     (if i = n then threePoints n j k l t else fun _ => 0) b
   have hd : (if FirstZero b i then threePoints n j k l t b else 0) =
@@ -387,26 +388,6 @@ private theorem witness_numerical {L : ℕ} (n j k l : Fin L)
     by_cases h : FirstZero b i <;> simp [h,threePoints]
   rw [hd,hj,hk,hl]
   by_cases hin : i = n <;> simp [hin,threePoints]
-
-/-- Proposition 213.10's universal coefficient obstruction, for arbitrary late
-class n and arbitrary real nonnegative full competitors in its complete fiber. -/
-theorem proposition21310_rigidity {L : ℕ} (n j k l : Fin L)
-    (hnj : n < j) (hjk : j < k) (hkl : k < l) (t : ℝ) (ht : 0 < t)
-    (y : FullScore L)
-    (hy : SameFiber y (witnessScore n j k l hnj hjk hkl t ht.le)) :
-    (∀ b, y.P b = 0) ∧ y.T = 0 ∧ y.A (baseWord n j k l) = t ∧
-      coefficientMass y = 4 * t ∧ ¬(∀ b, y.A b = 0) := by
-  have hu : SameReadings (baseline y) (point (baseWord n j k l) t) := by
-    simpa only [witness_baseline] using hy.2.1
-  have hv : ∀ i, SameReadings (numerical y i)
-      (if i = n then threePoints n j k l t else fun _ => 0) := by
-    intro i
-    simpa only [witness_numerical] using hy.2.2 i
-  obtain ⟨hp,hT,hA,hK⟩ := full_score_rigidity y n j k l t hnj hjk hkl hu hv
-  refine ⟨hp,hT,hA,hK,?_⟩
-  intro h
-  have := h (baseWord n j k l)
-  linarith
 
 private theorem untouched_cell {L : ℕ} (n j k l : Fin L)
     (hjk : j < k) (hkl : k < l) (s : Schedule L) :
@@ -427,12 +408,21 @@ private theorem untouched_cell {L : ℕ} (n j k l : Fin L)
     | inr a =>
       have hchoose : (a.val.1 ≠ j ∧ a.val.2 ≠ j) ∨
           (a.val.1 ≠ k ∧ a.val.2 ≠ k) ∨ (a.val.1 ≠ l ∧ a.val.2 ≠ l) := by
-        by_contra h
-        push Not at h
-        have hjk' : j ≠ k := ne_of_lt hjk
-        have hkl' : k ≠ l := ne_of_lt hkl
-        have hjl' : j ≠ l := ne_of_lt (hjk.trans hkl)
-        aesop
+        by_cases hj : a.val.1 = j
+        · by_cases hk : a.val.2 = k
+          · right; right
+            exact ⟨by simpa [hj] using ne_of_lt (hjk.trans hkl),
+              by simpa [hk] using ne_of_lt hkl⟩
+          · right; left
+            exact ⟨by simpa [hj] using ne_of_lt hjk,hk⟩
+        · by_cases hbj : a.val.2 = j
+          · by_cases hk : a.val.1 = k
+            · right; right
+              exact ⟨by simpa [hk] using ne_of_lt hkl,
+                by simpa [hbj] using ne_of_lt (hjk.trans hkl)⟩
+            · right; left
+              exact ⟨hk,by simpa [hbj] using ne_of_lt hjk⟩
+          · left; exact ⟨hj,hbj⟩
       rcases hchoose with h | h | h
       · left; simp [cell,singletonWord,h.1,h.2]
       · right; left; simp [cell,singletonWord,h.1,h.2]
@@ -440,7 +430,7 @@ private theorem untouched_cell {L : ℕ} (n j k l : Fin L)
 
 /-- Cellwise numerical dominance is compatible with a global obstruction to
 removing A. The rewards are the actual complete stopped cells before maximization. -/
-theorem witness_cell_dominance {L : ℕ} (n j k l : Fin L)
+private theorem witness_cell_dominance {L : ℕ} (n j k l : Fin L)
     (hjk : j < k) (hkl : k < l) (t : ℝ) (ht : 0 ≤ t)
     (s : Schedule L) (c : Fin 3) :
     reading (point (baseWord n j k l) t) s c ≤ reading (threePoints n j k l t) s c := by
@@ -464,5 +454,31 @@ theorem witness_cell_dominance {L : ℕ} (n j k l : Fin L)
       simp only [h,hb,ite_true] <;> split_ifs <;> linarith
   · rw [ite_eq_right hb]
     split_ifs <;> linarith
+
+/-- Proposition 213.10's universal coefficient obstruction, for arbitrary late
+class n and arbitrary real nonnegative full competitors in its complete fiber. -/
+theorem proposition21310_rigidity {L : ℕ} (n j k l : Fin L)
+    (hnj : n < j) (hjk : j < k) (hkl : k < l) (t : ℝ) (ht : 0 < t)
+    (y : FullScore L)
+    (hy : SameFiber y (witnessScore n j k l hnj hjk hkl t ht.le)) :
+    (∀ b, y.P b = 0) ∧ y.T = 0 ∧ y.A (baseWord n j k l) = t ∧
+      coefficientMass y = 4 * t ∧ ¬(∀ b, y.A b = 0) ∧
+      ∀ (s : Schedule L) (c : Fin 3),
+        reading (baseline (witnessScore n j k l hnj hjk hkl t ht.le)) s c ≤
+          reading (numerical (witnessScore n j k l hnj hjk hkl t ht.le) n) s c := by
+  have hu : SameReadings (baseline y) (point (baseWord n j k l) t) := by
+    simpa only [witness_baseline] using hy.2.1
+  have hv : ∀ i, SameReadings (numerical y i)
+      (if i = n then threePoints n j k l t else fun _ => 0) := by
+    intro i
+    simpa only [witness_numerical] using hy.2.2 i
+  obtain ⟨hp,hT,hA,hK⟩ := full_score_rigidity y n j k l t hnj hjk hkl hu hv
+  refine ⟨hp,hT,hA,hK,?_,?_⟩
+  · intro h
+    have := h (baseWord n j k l)
+    linarith
+  · intro s c
+    simpa only [witness_baseline,witness_numerical,ite_true] using
+      witness_cell_dominance n j k l hjk hkl t ht.le s c
 
 end D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
