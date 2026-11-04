@@ -186,7 +186,7 @@ private theorem windows_I_one (x s q : ℚ)
   cases side <;> fin_cases i <;> constructor
   all_goals first
     | (norm_num [rowSeams]; done)
-    | linarith only [E0,E1,E2,F0,F1,F2,old0,old1,old2,old3,new0,new1,new2,new3]
+    | (norm_num [rowSeams,rowHeads,rowBase,reserve,A,B,L,K,SU,SV,SW] at * <;> linarith)
 
 set_option maxHeartbeats 2400000 in
 private theorem windows_I_many (x r s q : ℚ)
@@ -476,7 +476,7 @@ private theorem windows_I_many (x r s q : ℚ)
   cases side <;> fin_cases i <;> constructor
   all_goals first
     | (norm_num [rowSeams]; done)
-    | linarith only [E0,E1,E2,F0,F1,F2,old0,old1,old2,old3,new0,new1,new2,new3]
+    | (norm_num [rowSeams,rowHeads,rowBase,reserve,A,B,L,K,SU,SV,SW] at * <;> linarith)
 
 set_option maxHeartbeats 2400000 in
 private theorem windows_II (x r q : ℚ)
@@ -625,7 +625,7 @@ private theorem windows_II (x r q : ℚ)
   cases side <;> fin_cases i <;> constructor
   all_goals first
     | (norm_num [rowSeams]; done)
-    | linarith only [E0,E1,E2,F0,F1,F2,old0,old1,old2,old3,new0,new1,new2,new3]
+    | (norm_num [rowSeams,rowHeads,rowBase,reserve,A,B,L,K,SU,SV,SW] at * <;> linarith)
 
 set_option maxHeartbeats 2400000 in
 private theorem windows_III (x q : ℚ)
@@ -729,6 +729,6 @@ private theorem windows_III (x q : ℚ)
   cases side <;> fin_cases i <;> constructor
   all_goals first
     | (norm_num [rowSeams]; done)
-    | linarith only [E0,E1,E2,F0,F1,F2,old0,old1,old2,old3,new0,new1,new2,new3]
+    | (norm_num [rowSeams,rowHeads,rowBase,reserve,A,B,L,K,SU,SV,SW] at * <;> linarith)
 
 end D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail
