@@ -224,6 +224,107 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
 
 end ReducedCard
 
+namespace ShiftedPosDef
+
+open scoped ComplexOrder
+
+#print _root_.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.shifted_posDef
+
+universe u
+
+abbrev signature : Signature :=
+  Reg.Support.UniverseSingleReadout.signature
+    (Σ ι : Type u, Σ _ : Fintype ι, DecidableEq ι)
+    (fun p => Matrix (Sigma.fst p) (Sigma.fst p) ℝ)
+    (fun p => Matrix (Sigma.fst p) (Sigma.fst p) ℂ)
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ V => V.map Complex.ofReal) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
+    (V ω : Matrix ι ι ℝ) (_hV : physicalOn V ω)
+    (_hpos : (V.map Complex.ofReal).PosDef) {x : ℝ}
+    (_hx0 : 0 ≤ x) (_hx1 : x < 1),
+    ((R.readout () ⟨ι, inferInstance, inferInstance⟩ V) +
+      (x : ℂ) • (Complex.I • ω.map Complex.ofReal)).PosDef
+
+theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
+  intro h
+  let ι := ULift.{u} Unit
+  have hm : (1 : Matrix ι ι ℝ).map Complex.ofReal = 1 :=
+    Matrix.map_one Complex.ofReal rfl rfl
+  have hz : (0 : Matrix ι ι ℝ).map Complex.ofReal = 0 := by ext; simp
+  have hV : physicalOn (1 : Matrix ι ι ℝ) 0 := by
+    exact ⟨Matrix.isSymm_one, by simpa [hm, hz] using
+      (Matrix.PosSemidef.one : (1 : Matrix ι ι ℂ).PosSemidef)⟩
+  have hp : ((1 : Matrix ι ι ℝ).map Complex.ofReal).PosDef := by
+    simpa [hm] using (Matrix.PosDef.one : (1 : Matrix ι ι ℂ).PosDef)
+  have hh := @h ι inferInstance inferInstance 1 0 hV hp 0 (by norm_num) (by norm_num)
+  have hh' : (0 : Matrix ι ι ℂ).PosDef := by simpa [rejected, realize] using hh
+  have hdet := hh'.det_pos.1
+  norm_num at hdet
+
+lemma dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  let ι := ULift.{u} Unit
+  refine ⟨⟨ι, inferInstance, inferInstance⟩, 0, 1, ?_⟩
+  intro h
+  have hh := congrArg (fun M : Matrix ι ι ℂ => M ⟨()⟩ ⟨()⟩) h
+  simp only [actual, realize, Matrix.map_apply] at hh
+  exact zero_ne_one hh
+
+def source_registration : Registration arena.{u} (type_of% @shifted_posDef.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@shifted_posDef, rejected, rejected_law⟩
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@shifted_posDef) (Realization signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.ShiftedPosDef.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.ShiftedPosDef.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ _ V => V.map Complex.ofReal)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
+    definition := none
+    coordinates := #[0, 1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end ShiftedPosDef
 
 end
 end Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
