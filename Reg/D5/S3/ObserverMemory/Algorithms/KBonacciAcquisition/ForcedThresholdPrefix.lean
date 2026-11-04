@@ -38,15 +38,15 @@ def rejected : Realization signature.{u} := realize signature
   Law R := ∀  {Y : Type u} (Q m a : ℕ) (hQ : 2 ≤ Q)
     (ha : 3 ≤ a) (ham : a < m) (alphabet : Bool)
     (labels : ZMod (Q * m + 1) → Y) (outside rejected bottom : Y)
-    (different : outside ≠ rejected) (v : ZMod 2) (d : ℕ)
+    (different : outside ≠ rejected) (v : ZMod 2)
     (π : NarrowWindowCost.Selector m Y)
     (correct : ∀ history : List (AllowedBlock (Q * m) m alphabet),
       let w := history.flatMap (fun action => List.ofFn action.val)
       NarrowWindowCost.output (Q * m) (by nlinarith) w = some v →
-      ∃ c ≤ d, NarrowWindowCost.execute (Q * m) (by nlinarith) π d w (some v) [] =
+      ∃ budget c, NarrowWindowCost.execute (Q * m) (by nlinarith) π budget w (some v) [] =
         some (R.readout () ⟨Y, Q, m, a, labels, outside, rejected, bottom⟩
-          (OriginalRecord (Q * m) (by nlinarith) w), c)) :
-    ∃ b B rest, d = b + 1 ∧ π (some v) [] = .inr B ∧
+          (OriginalRecord (Q * m) (by nlinarith) w), c)),
+    ∃ B rest, π (some v) [] = .inr B ∧
       List.ofFn B = List.replicate a true ++ false :: rest ∧
       ∀ phase s, s < Q * m →
         runBits (Q * m) B (some ⟨v, phase, s⟩) =
@@ -65,14 +65,15 @@ private theorem negative : ¬ arena.{u}.Law rejected := by
   have correct : ∀ history : List (AllowedBlock 8 4 false),
       let w := history.flatMap (fun action => List.ofFn action.val)
       NarrowWindowCost.output 8 (by decide) w = some 0 →
-      ∃ c ≤ 0, NarrowWindowCost.execute 8 (by decide) π 0 w (some 0) [] =
+      ∃ budget c, NarrowWindowCost.execute 8 (by decide) π budget w (some 0) [] =
         some (rejected.readout () ⟨ULift.{u} Bool, 2, 4, 3, (fun _ => lo), lo, hi, lo⟩
           (OriginalRecord 8 (by decide) w), c) := by
     intro history free
-    exact ⟨0, le_rfl, rfl⟩
-  obtain ⟨b, B, rest, impossible, _⟩ := law 2 4 3 (by decide) (by decide)
-    (by decide) false (fun _ => lo) lo hi lo (by decide) 0 0 π correct
-  omega
+    exact ⟨0, 0, rfl⟩
+  obtain ⟨B, rest, impossible, _⟩ := law 2 4 3 (by decide) (by decide)
+    (by decide) false (fun _ => lo) lo hi lo (by decide) 0 π correct
+  change (Sum.inl lo : ULift.{u} Bool ⊕ (Fin 4 → Bool)) = Sum.inr B at impossible
+  cases impossible
 
 def evidence : Registration arena.{u}
     (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.ForcedThresholdPrefix.forced_threshold_root.{u})) where
@@ -112,7 +113,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     definition := none,
     coordinates := #[0, 1, 2, 3, 8, 9, 10, 11],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "domain", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "domain", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn"],
       stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,

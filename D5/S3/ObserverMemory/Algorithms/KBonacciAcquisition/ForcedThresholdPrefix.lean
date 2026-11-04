@@ -19,9 +19,11 @@ namespace D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.ForcedThresholdPre
 
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition
 open D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
+open D5.S3.ObserverMemory.Algorithms.KBonacciIrreversibleAcquisition
 open D5.S0.Tower.DBonacci.Names
 open LiteralModel EndpointCells OriginalNarrowCost OriginalExecutionBridge
 open WindowChargeInverse TwoAdjacentLowTailLabels
+open OriginalAcquiredTrace
 
 /-- The threshold and band are evaluated on the INITIAL record. The band map
 may repeat labels, and its image may contain the outside label. -/
@@ -60,7 +62,7 @@ private theorem wrong_root_merge (k m a : ℕ) (ha : 0 < a) (ham : a < m)
     · rw [ite_eq_left (by omega), ite_eq_left (by omega)]
     · rw [ite_eq_right (by omega), ite_eq_right (by omega)]
 
-/-- Every selector correct on all actual histories in either free-value fibre
+/-- Every eventually terminating selector correct on all actual histories in either free-value fibre
 must issue a root beginning with exactly `a` ones and then zero. Its complete
 root rejects precisely the high INITIAL tails; every low INITIAL tail clears
 to a common current tail. Only the necessary outside/rejection inequality is
@@ -68,15 +70,15 @@ used for this root clause; no band injectivity or logarithmic guard is needed. -
 theorem forced_threshold_root {Y : Type u} (Q m a : ℕ) (hQ : 2 ≤ Q)
     (ha : 3 ≤ a) (ham : a < m) (alphabet : Bool)
     (labels : ZMod (Q * m + 1) → Y) (outside rejected bottom : Y)
-    (different : outside ≠ rejected) (v : ZMod 2) (d : ℕ)
+    (different : outside ≠ rejected) (v : ZMod 2)
     (π : NarrowWindowCost.Selector m Y)
     (correct : ∀ history : List (AllowedBlock (Q * m) m alphabet),
       let w := history.flatMap (fun action => List.ofFn action.val)
       NarrowWindowCost.output (Q * m) (by nlinarith) w = some v →
-      ∃ c ≤ d, NarrowWindowCost.execute (Q * m) (by nlinarith) π d w (some v) [] =
+      ∃ budget c, NarrowWindowCost.execute (Q * m) (by nlinarith) π budget w (some v) [] =
         some (initialLabel (Q * m) a labels outside rejected bottom
           (OriginalRecord (Q * m) (by nlinarith) w), c)) :
-    ∃ b B rest, d = b + 1 ∧ π (some v) [] = .inr B ∧
+    ∃ B rest, π (some v) [] = .inr B ∧
       List.ofFn B = List.replicate a true ++ false :: rest ∧
       ∀ phase s, s < Q * m →
         runBits (Q * m) B (some ⟨v, phase, s⟩) =
@@ -85,16 +87,41 @@ theorem forced_threshold_root {Y : Type u} (Q m a : ℕ) (hQ : 2 ≤ Q)
               phase + (m : ℕ), tailAfter 0 B⟩ else none := by
   have short : m < Q * m := by nlinarith
   have hk : 2 ≤ Q * m := by omega
-  have native (s : ℕ) (hs : s < Q * m) : ∃ c,
-      NativeExecute (k := Q * m) π d (some ⟨v, 0, s⟩) (some v) [] =
+  have native (s : ℕ) (hs : s < Q * m) : ∃ budget c,
+      NativeExecute (k := Q * m) π budget (some ⟨v, 0, s⟩) (some v) [] =
         some (initialLabel (Q * m) a labels outside rejected bottom
           (some ⟨v, 0, s⟩), c) := by
-    obtain ⟨c, _, success⟩ := OwnPathCharges.native_fiber (Q * m) m hk
-      (by omega) alphabet (initialLabel (Q * m) a labels outside rejected bottom)
-      v d π correct 0 s hs (dvd_zero _)
-    exact ⟨c, success⟩
-  obtain ⟨c, low⟩ := native (Q * m - a - 1) (by omega)
-  obtain ⟨e, high⟩ := native (Q * m - a) (by omega)
+    obtain ⟨history, actual⟩ :=
+      ((whole_first_zero_acquisition (Q * m) m hk (by omega) alphabet (fun _ => ())).1
+        (some ⟨v, 0, s⟩)).mp ⟨hs, dvd_zero _⟩
+    have record : OriginalRecord (Q * m) (by omega)
+        (history.flatMap (fun action => List.ofFn action.val)) = some ⟨v, 0, s⟩ :=
+      (OriginalExecutionBridge.record_history (Q * m) m hk alphabet history).trans actual
+    have observed : NarrowWindowCost.output (Q * m) (by omega)
+        (history.flatMap (fun action => List.ofFn action.val)) = some v := by
+      rw [OriginalExecutionBridge.output_record]
+      change endpointReading (OriginalRecord (Q * m) (by omega) _) = some v
+      rw [record]
+      rfl
+    obtain ⟨budget, c, success⟩ := correct history observed
+    rw [OriginalExecutionBridge.execute_same (Q * m) m hk] at success
+    change NativeExecute π budget (OriginalRecord (Q * m) (by omega) _)
+      (some v) [] = some (initialLabel (Q * m) a labels outside rejected bottom
+        (OriginalRecord (Q * m) (by omega) _), c) at success
+    rw [record] at success
+    exact ⟨budget, c, success⟩
+  obtain ⟨lowBudget, c, low⟩ := native (Q * m - a - 1) (by omega)
+  obtain ⟨highBudget, e, high⟩ := native (Q * m - a) (by omega)
+  let d := max lowBudget highBudget
+  have enlarge (budget c : ℕ) (q : Option (LiveRecord (Q * m))) (y : Y)
+      (success : NativeExecute π budget q (some v) [] = some (y, c))
+      (bound : budget ≤ d) : NativeExecute π d q (some v) [] = some (y, c) := by
+    obtain ⟨issued, trace, count, bounded⟩ :=
+      (native_execute_paid_trace (Q * m) m π budget q (some v) [] y c).mp success
+    exact (native_execute_paid_trace (Q * m) m π d q (some v) [] y c).mpr
+      ⟨issued, trace, count, bounded.trans bound⟩
+  have low := enlarge lowBudget c _ _ low (le_max_left _ _)
+  have high := enlarge highBudget e _ _ high (le_max_right _ _)
   have lowLabel : initialLabel (Q * m) a labels outside rejected bottom
       (some ⟨v, 0, Q * m - a - 1⟩) = outside := by
     simp [initialLabel, show ¬ Q * m - a ≤ Q * m - a - 1 by omega]
@@ -127,7 +154,7 @@ theorem forced_threshold_root {Y : Type u} (Q m a : ℕ) (hQ : 2 ≤ Q)
         rw [low, high] at same
         exact different (congrArg Prod.fst (Option.some.inj same))
       obtain ⟨rest, cut⟩ := cut
-      refine ⟨b, B, rest, rfl, rfl, cut, ?_⟩
+      refine ⟨B, rest, rfl, cut, ?_⟩
       intro phase s hs
       rw [first_zero_block_exact (Q * m) hk m a B rest cut
         (short_legal (Q * m) m hk short B) v phase s hs]
