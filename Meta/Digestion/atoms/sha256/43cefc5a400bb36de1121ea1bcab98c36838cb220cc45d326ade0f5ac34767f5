@@ -1,0 +1,41 @@
+### 引理 2.4（准确可恢复代数的共同输出表示）
+
+<a id="lem-c123-output-representation"></a>
+
+设 $\mathcal Q:\mathcal B(K_0)\to\mathcal B(H)$ 为通道，且某含幺
+$*$-子代数 $\mathcal A$ 满足
+$\mathcal N^*\mathcal Q^*(A)=A$ 对所有 $A\in\mathcal A$ 成立。
+则 $\beta=\mathcal Q^*|_{\mathcal A}$ 是忠实含幺 $*$-表示，且
+
+<a id="eq-c123-intertwiners"></a>
+
+$$
+\beta(A)E_i=E_iA,\qquad
+ AM_j=M_j\beta(A),
+\tag{13}
+$$
+
+其中 $M_j$ 为 $\mathcal Q$ 的任一组 Kraus 算子。
+特别地
+
+<a id="eq-c123-bimodule"></a>
+
+$$
+\mathcal N(AXB)=\beta(A)\mathcal N(X)\beta(B),\qquad
+ \mathcal N^*\beta(A)=A\quad(A,B\in\mathcal A).
+\tag{14}
+$$
+
+**证明。**
+置 $Y=\mathcal Q^*(A)$。两次 Schwarz 不等式形成夹链
+
+$$
+A^*A\le\mathcal N^*(Y^*Y)
+ \le\mathcal N^*\mathcal Q^*(A^*A)=A^*A.
+$$
+
+因此两次取等号。第二次的正缺陷在 $\mathcal N^*$ 下为零；若 $D\ge0$ 且 $\mathcal N^*(D)=0$，则
+$\operatorname{Tr}\tau D=\operatorname{Tr}\sigma\mathcal N^*(D)=0$，$\tau>0$ 强制 $D=0$。
+故 $\mathcal Q^*$ 在 $A$ 及 $A^*$ 处都满足 Schwarz 等号，限制到 $\mathcal A$ 成为 $*$-同态。其左逆 $\mathcal N^*$ 保证忠实性。
+把引理~[2.1](#lem-c123-schwarz) 分别用于两条通道的 Kraus 等距表示，即得 [(13)](#eq-c123-intertwiners)；代入 Kraus 求和给出双模等式。
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:cd20fefa580f0693fb3b0dc2fbf09df1dbe08d241f7f26b525e6544ce7e2e517
+  normalized_sha256: sha256:cd20fefa580f0693fb3b0dc2fbf09df1dbe08d241f7f26b525e6544ce7e2e517
+cas_ref: sha256:cd20fefa580f0693fb3b0dc2fbf09df1dbe08d241f7f26b525e6544ce7e2e517
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/JointRewardFiberCatalog.proposition21310_rigidity
+    target_statement_id: sha256:cbc57edafbd4b18f71ffee07e299d0ce49b6eaaaca6e31f750be83c508b35ad5
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/JointRewardFiberObstruction.proposition21310_cone_minimum
+    target_statement_id: sha256:d19cc87ee5aff682d94ccff8a0a946d11ccdc60d3d472216d3b3eb1aa393e8c0
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/JointRewardFiberObstruction.proposition21310_costs
+    target_statement_id: sha256:bbc17e83f90f1519245b405d05a97c08690b88cc84923034c8f1f036f1f268e2
+receipts:
+  unresolved_subitems: []
