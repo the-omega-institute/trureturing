@@ -13,6 +13,10 @@ triage: anchor
 
 # Positive maps and extendibility hierarchies from copositive matrices
 
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.2509.15201.
+
 The versioned source is [arXiv:2509.15201v4, Question 8.20](https://arxiv.org/html/2509.15201v4#S8.Thmtheorem20).
 Its literal question reads:
 

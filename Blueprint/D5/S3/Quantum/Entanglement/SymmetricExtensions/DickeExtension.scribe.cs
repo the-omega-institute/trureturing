@@ -108,12 +108,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "contained in the root-times-symmetric-leaves subspace, and complete edges include all "
                 + "star edges. The argument includes zero coefficients, singular witnesses, n=1 and r=2. "
                 + "The resolution target is exactly Gulati-Nechita-Park, arXiv:2509.15201v4, Question 8.20; "
-                + "current journal question wording and worldwide absence of a prior solution are unverified. "
-                + "The proof shape is bind-only after inlining the consumed helpers, with no escape witness; "
-                + "the admission basis is the preregistered external open-problem resolution. "
-                + "The source-bound Reg audit remains declared_unresolved with IE-C050, "
-                + "source.dictionary_or_proof_coordinate; its missing accepted source-readout binding "
-                + "classification is disclosed at https://github.com/the-omega-institute/trureturing/issues/26251#issuecomment-6618255978.",
+                + "current journal question wording and worldwide absence of a prior solution are unverified.",
                 DescribeRole.Theorem, false,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("gnp-2025-v4-question-8-20-dicke-extensions"),
