@@ -28,12 +28,17 @@ internal sealed class FinitePathIndependenceDocument : IScribeDocumentDefinition
                         + "All three quantifiers include k=0. In particular X(1) is contractible "
                         + "and both X(2) and X(3) have the homotopy type of the zero-sphere.")),
                     Paragraph(Text(
-                        "In the path with n+3 vertices, choose the end leaf u=n+2 and its "
-                        + "neighbor v=n+1. Adjacency means that the two natural-number labels "
-                        + "differ by one. A vertex i lies outside the closed neighborhood of v "
-                        + "exactly when its original value is less than n. Sending i to the "
-                        + "element of Fin(n) with that same value gives a bijection, with inverse "
-                        + "the inclusion of the original label. The adjacency formula proves "
+                        "In the path with n+3 vertices, a vertex i of Fin(n+3) has original "
+                        + "printed label i.val+1. Choose the last leaf, with Fin value n+2 and "
+                        + "printed label n+3, and its neighbor, with Fin value n+1 and printed "
+                        + "label n+2. In the one-based theory notation, the last three printed "
+                        + "labels are v=n+1, u=n+2, w=n+3, so the last leaf is w. Adjacency "
+                        + "means that the two Fin values (equivalently, their printed labels) "
+                        + "differ by one. A vertex i lies outside the closed neighborhood of "
+                        + "that neighbor exactly when i.val<n. Sending i to the element of "
+                        + "Fin(n) with the same Fin value gives a bijection preserving the "
+                        + "original printed label i.val+1, with inverse the inclusion at the "
+                        + "same value. The adjacency formula proves "
                         + "that this is an isomorphism of the induced residual graph with the "
                         + "path on n vertices.")),
                     Paragraph(Text(
