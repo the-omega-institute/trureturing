@@ -104,8 +104,7 @@ theorem result : ¬ D5.S3.Arith.Factorization.OeisA343881KageyPowerProducts.clai
   let P : ℕ → Prop := fun m => 12 < m ∧ Works p 12 m
   have he := defined_at_twelve p hp
   have hmin : @Nat.find P (Classical.decPred P) he = Nat.find he := by
-    exact congrArg (fun d : DecidablePred P => @Nat.find P d he)
-      (Subsingleton.elim _ _)
+    exact Nat.find.congr_simp rfl he
   have ht : firstSuccess P = 72 := by
     rw [firstSuccess_eq_find he, hmin]
     have h := (hN p hp hNp).trans ha
