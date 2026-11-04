@@ -71,6 +71,7 @@ result: proof_shape: content; escape_witness: none; consumers: external settleme
 import D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport
 import D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
 import Mathlib.LinearAlgebra.SModEq.Pow
+import Mathlib.RingTheory.PowerSeries.PiTopology
 import D5.S1.Recurrence.Witt.PrimitiveEulerLedger
 import D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity
 
@@ -282,10 +283,10 @@ private theorem coeff_finite_ghost (b : ℕ → ℤ) (N k : ℕ) (hk : k ≤ N) 
   · intro i hi
     simp
 
-private def eulerSeries (b : ℕ → ℤ) : PowerSeries ℤ :=
+def eulerSeries (b : ℕ → ℤ) : PowerSeries ℤ :=
   mk fun n => coeff n (ledgerProduct b n)
 
-private theorem euler_series_represents (b : ℕ → ℤ) : Represents (eulerSeries b) b := by
+theorem euler_series_represents (b : ℕ → ℤ) : Represents (eulerSeries b) b := by
   intro N k hk
   change coeff k (ledgerProduct b N) = coeff k (mk fun n => coeff n (ledgerProduct b n))
   rw [coeff_mk]
@@ -301,6 +302,45 @@ private theorem euler_series_represents (b : ℕ → ℤ) : Represents (eulerSer
     · have hkN : k = N + 1 := by omega
       subst k
       rfl
+
+open scoped PowerSeries.WithPiTopology
+open Filter
+
+/-- The coefficientwise stabilized product is an actual infinite Euler product. -/
+theorem hasProd_eulerSeries (b : ℕ → ℤ) :
+    HasProd (fun i => eulerFactor (i + 1) (b i)) (eulerSeries b) := by
+  classical
+  have hm : Multipliable (fun i => eulerFactor (i + 1) (b i)) := by
+    have h := PowerSeries.WithPiTopology.multipliable_one_add_of_tendsto_order_atTop_nhds_top
+      (f := fun i => eulerFactor (i + 1) (b i) - 1) (by
+        apply ENat.tendsto_nhds_top_iff_natCast_lt.mpr
+        intro k
+        apply Filter.eventually_atTop.mpr
+        refine ⟨k, fun i hi => ?_⟩
+        have hord : (i + 1 : ℕ∞) ≤ (eulerFactor (i + 1) (b i) - 1).order := by
+          apply PowerSeries.le_order_iff.mpr
+          intro j hj
+          have hjlt : j < i + 1 := by exact_mod_cast hj
+          by_cases hj0 : j = 0
+          · subst j
+            simp [coeff_zero_eq_constantCoeff]
+          · rw [map_sub, coeff_eulerFactor_of_pos_of_lt _ _ _
+              (Nat.pos_of_ne_zero hj0) hjlt]
+            simp [coeff_one, hj0]
+        exact lt_of_lt_of_le (by exact_mod_cast (by omega : k < i + 1)) hord)
+    simpa only [add_sub_cancel] using h
+  have he : (∏' i, eulerFactor (i + 1) (b i)) = eulerSeries b := by
+    ext k
+    have hlim : Filter.Tendsto (fun N => coeff k (ledgerProduct b N))
+        Filter.atTop (nhds (coeff k (∏' i, eulerFactor (i + 1) (b i)))) := by
+      simpa only [ledgerProduct] using
+        ((PowerSeries.WithPiTopology.continuous_coeff ℤ k).tendsto _).comp
+          hm.hasProd.tendsto_prod_nat
+    have hconst : Filter.Tendsto (fun N => coeff k (ledgerProduct b N))
+        Filter.atTop (nhds (coeff k (eulerSeries b))) :=
+      tendsto_atTop_of_eventually_const (fun N hN => euler_series_represents b N k hN)
+    exact tendsto_nhds_unique hlim hconst
+  simpa only [he] using hm.hasProd
 
 private theorem euler_series_differential (b : ℕ → ℤ) :
     X * derivative (R := ℤ) (eulerSeries b) = ghostSeries b * eulerSeries b := by
@@ -478,7 +518,7 @@ private theorem input_x_derivative {K : Type*} [Field K] [CharZero K] (a : ℕ �
     rw [coeff_succ_X_mul, coeff_derivative]
     simp [logarithmicInput, Nat.cast_add_one_ne_zero]
 
-private theorem exponential_sum_constant {K : Type*} [Field K] [CharZero K] (a : ℕ → K) :
+theorem exponential_sum_constant {K : Type*} [Field K] [CharZero K] (a : ℕ → K) :
     constantCoeff (exponentialSum a) = 1 := by
   change MvPowerSeries.constantCoeff ((exp K).subst (logarithmicInput a)) = 1
   rw [constantCoeff_subst_of_constantCoeff_zero]
@@ -486,7 +526,7 @@ private theorem exponential_sum_constant {K : Type*} [Field K] [CharZero K] (a :
   · change constantCoeff (logarithmicInput a) = 0
     simp [logarithmicInput, ← coeff_zero_eq_constantCoeff_apply]
 
-private theorem exponential_sum_equation {K : Type*} [Field K] [CharZero K] (a : ℕ → K) :
+theorem exponential_sum_equation {K : Type*} [Field K] [CharZero K] (a : ℕ → K) :
     X * derivative (R := K) (exponentialSum a) = (D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity.step a 0) * exponentialSum a := by
   have hh : HasSubst (logarithmicInput a) := HasSubst.of_constantCoeff_zero
     (by
@@ -579,44 +619,53 @@ theorem integral_input_ledger {K : Type*} [Field K] [CharZero K]
     coeff n ((X * derivative (R := K) 0) * 0 * invOfUnit (1 - C (n : K) * 0) 1)) = _ at h
   simpa [hn.ne', coeff_map, ghostSeries, divisorGhost] using h
 
-private theorem gauss_exponential_integral {K : Type*} [Field K] [CharZero K]
-    (a : ℕ → ℤ) (ha : GaussCondition a) :
-    IntegralSeries (exponentialSum (fun n => (a n : K))) := by
-  classical
-  obtain ⟨b, hb⟩ := gauss_has_ledger a ha
-  let c : ℕ → ℤ := fun n => b (n + 1)
-  let f : PowerSeries K := (eulerSeries c).map (Int.castRingHom K)
-  have hghost : (ghostSeries c).map (Int.castRingHom K) =
-      (D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity.step (fun n => (a n : K)) 0) := by
-    change (ghostSeries c).map (Int.castRingHom K) =
-      mk (fun n => if n = 0 then 0 else (a n : K) -
+/-- The existing integer Euler product is the actual rational/characteristic-zero
+formal exponential whenever the positive-index ghosts agree. -/
+theorem euler_series_exponential {K : Type*} [Field K] [CharZero K]
+    (b : ℕ → ℤ) (a : ℕ → K)
+    (ha : ∀ n, 0 < n → a n = (divisorGhost (fun d => b (d - 1)) n : K)) :
+    (eulerSeries b).map (Int.castRingHom K) = exponentialSum a := by
+  let f : PowerSeries K := (eulerSeries b).map (Int.castRingHom K)
+  have hghost : (ghostSeries b).map (Int.castRingHom K) =
+      D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity.step a 0 := by
+    change (ghostSeries b).map (Int.castRingHom K) =
+      mk (fun n => if n = 0 then 0 else a n -
         coeff n ((X * derivative (R := K) 0) * 0 * invOfUnit (1 - C (n : K) * 0) 1))
     simp only [mul_zero, zero_mul, map_zero, sub_zero]
     ext n
     by_cases hn : n = 0
     · subst n
       simp [ghostSeries, divisorGhost]
-    · have hs : (∑ d ∈ n.divisors, (d : ℤ) * c (d - 1)) = a n := by
-        change (∑ d ∈ n.divisors, (d : ℤ) * b (d - 1 + 1)) = a n
-        rw [← hb n (Nat.pos_of_ne_zero hn)]
-        unfold divisorGhost
-        apply sum_congr rfl
-        intro d hd
-        rw [Nat.sub_add_cancel (Nat.pos_of_mem_divisors hd)]
-      simpa [ghostSeries, divisorGhost, hn, coeff_map] using
-        congrArg (Int.castRingHom K) hs
-  have hf : X * derivative (R := K) f = (D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity.step (fun n => (a n : K)) 0) * f := by
-    have h := congrArg (PowerSeries.map (Int.castRingHom K)) (euler_series_differential c)
-    simpa only [map_mul, map_X, D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport.derivative_map, hghost] using h
+    · simpa [ghostSeries, hn, coeff_map] using (ha n (Nat.pos_of_ne_zero hn)).symm
+  have hf : X * derivative (R := K) f =
+      D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity.step a 0 * f := by
+    have h := congrArg (PowerSeries.map (Int.castRingHom K)) (euler_series_differential b)
+    simpa only [map_mul, map_X,
+      D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport.derivative_map, hghost] using h
   have hf0 : constantCoeff f = 1 := by
     simp [f, eulerSeries, ← coeff_zero_eq_constantCoeff_apply, ledgerProduct]
-  have he : f = exponentialSum (fun n => (a n : K)) := by
-    apply x_differential_unique ((D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity.step (fun n => (a n : K)) 0)) f
-      (exponentialSum (fun n => (a n : K)))
-    · simp [D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity.step, ← coeff_zero_eq_constantCoeff_apply]
-    · rw [hf0, exponential_sum_constant]
-    · exact hf
-    · exact exponential_sum_equation _
+  apply x_differential_unique
+    (D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity.step a 0) f (exponentialSum a)
+  · simp [D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity.step,
+      ← coeff_zero_eq_constantCoeff_apply]
+  · rw [hf0, exponential_sum_constant]
+  · exact hf
+  · exact exponential_sum_equation _
+
+theorem gauss_exponential_integral {K : Type*} [Field K] [CharZero K]
+    (a : ℕ → ℤ) (ha : GaussCondition a) :
+    IntegralSeries (exponentialSum (fun n => (a n : K))) := by
+  classical
+  obtain ⟨b, hb⟩ := gauss_has_ledger a ha
+  let c : ℕ → ℤ := fun n => b (n + 1)
+  have he := euler_series_exponential c (fun n => (a n : K)) (by
+    intro n hn
+    have hbc : divisorGhost (fun d => c (d - 1)) n = divisorGhost b n := by
+      unfold divisorGhost
+      apply sum_congr rfl
+      intro d hd
+      simp only [c, Nat.sub_add_cancel (Nat.pos_of_mem_divisors hd)]
+    rw [hbc, hb n hn])
   intro n
   refine ⟨coeff n (eulerSeries c), ?_⟩
   rw [← he]

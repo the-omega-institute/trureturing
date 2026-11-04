@@ -90,12 +90,14 @@ private theorem prime_power_difference (a c : ℕ → ℤ)
   rw [hc _ (pow_ne_zero _ hp.ne_zero), hc _ (pow_ne_zero _ hp.ne_zero)]
   simpa only [one_mul, divisorGhost] using (divisor_ghost_gauss c p hp k 1 Nat.one_pos)
 
-private theorem bounded_prime_powers (a : ℕ → ℤ)
+/-- The bounded prime-power induction works for every power at least two.
+The original square theorem below consumes this shared proof. -/
+theorem bounded_power_corrections (s : ℕ) (hs : 2 ≤ s) (a : ℕ → ℤ)
     (ha : ∀ m : ℕ, 1 ≤ m → 0 ≤ a m ∧ a m < (m : ℤ))
     (hd : ∀ (p : ℕ), p.Prime → ∀ k : ℕ,
       (p : ℤ) ^ (k + 1) ∣
-        ((p ^ (k + 1) : ℕ) : ℤ) ^ 2 - a (p ^ (k + 1)) -
-        (((p ^ k : ℕ) : ℤ) ^ 2 - a (p ^ k))) :
+        ((p ^ (k + 1) : ℕ) : ℤ) ^ s - a (p ^ (k + 1)) -
+        (((p ^ k : ℕ) : ℤ) ^ s - a (p ^ k))) :
     ∀ (p r : ℕ), p.Prime → 1 ≤ r → a (p ^ r) = (p : ℤ) - 1 := by
   intro p r hp hr
   have h1 : a 1 = 0 := by
@@ -110,7 +112,7 @@ private theorem bounded_prime_powers (a : ℕ → ℤ)
       have h := hd p hp 0
       simp only [Nat.zero_add, pow_one, pow_zero, Nat.cast_one, one_pow, h1, sub_zero] at h
       have hz : (p : ℤ) ∣ a p - ((p : ℤ) - 1) := by
-        have hsq : (p : ℤ) ∣ (p : ℤ) ^ 2 := dvd_pow_self _ (by omega)
+        have hsq : (p : ℤ) ∣ (p : ℤ) ^ s := dvd_pow_self _ (by omega)
         convert (hsq.sub h).sub (dvd_refl (p : ℤ)) using 1; ring
       have hb := ha p hp.pos
       have hm := (Int.modEq_iff_dvd.mpr hz).symm.eq
@@ -120,11 +122,11 @@ private theorem bounded_prime_powers (a : ℕ → ℤ)
     | succ k ih =>
       have h := hd p hp (k + 1)
       simp only [Nat.add_assoc, show 1 + 1 = 2 from Nat.one_add 1] at h
-      have hbig : (p : ℤ) ^ (k + 2) ∣ ((p : ℤ) ^ (k + 2)) ^ 2 := by
+      have hbig : (p : ℤ) ^ (k + 2) ∣ ((p : ℤ) ^ (k + 2)) ^ s := by
         exact dvd_pow_self _ (by omega)
-      have hsmall : (p : ℤ) ^ (k + 2) ∣ ((p : ℤ) ^ (k + 1)) ^ 2 := by
+      have hsmall : (p : ℤ) ^ (k + 2) ∣ ((p : ℤ) ^ (k + 1)) ^ s := by
         rw [← pow_mul]
-        exact pow_dvd_pow (p : ℤ) (by omega : k + 2 ≤ (k + 1) * 2)
+        exact pow_dvd_pow (p : ℤ) (by nlinarith : k + 2 ≤ (k + 1) * s)
       have hz : (p : ℤ) ^ (k + 2) ∣ a (p ^ (k + 2)) - a (p ^ (k + 1)) := by
         push_cast at h
         convert (hbig.sub hsmall).sub h using 1; ring
@@ -140,6 +142,15 @@ private theorem bounded_prime_powers (a : ℕ → ℤ)
       simpa [Nat.add_assoc] using hm
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : r ≠ 0)
   exact hall k
+
+private theorem bounded_prime_powers (a : ℕ → ℤ)
+    (ha : ∀ m : ℕ, 1 ≤ m → 0 ≤ a m ∧ a m < (m : ℤ))
+    (hd : ∀ (p : ℕ), p.Prime → ∀ k : ℕ,
+      (p : ℤ) ^ (k + 1) ∣
+        ((p ^ (k + 1) : ℕ) : ℤ) ^ 2 - a (p ^ (k + 1)) -
+        (((p ^ k : ℕ) : ℤ) ^ 2 - a (p ^ k))) :
+    ∀ (p r : ℕ), p.Prime → 1 ≤ r → a (p ^ r) = (p : ℤ) - 1 := by
+  exact bounded_power_corrections 2 (by omega) a ha hd
 
 theorem result : claim := by
   intro a ha
