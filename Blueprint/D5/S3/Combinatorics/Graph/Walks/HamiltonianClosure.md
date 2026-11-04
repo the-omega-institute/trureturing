@@ -12,7 +12,7 @@ $$\forall V \in \mathrm{Type},\; \operatorname{Finite}\left(V\right) \Rightarrow
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/HamiltonianClosure.exists_hamiltonian_cycle_of_path` (`✓ std3`). ∎
 
-*Citation.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic, finite chordal elimination and finite Menger certificates: Lean sources*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ $$\forall V \in \mathrm{Type},\; \operatorname{Finite}\left(V\right) \Rightarrow
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/HamiltonianClosure.isHamiltonian_sup_edge_iff` (`✓ std3`). ∎
 
-*Citation.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic, finite chordal elimination and finite Menger certificates: Lean sources*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 
@@ -40,7 +40,7 @@ $$\forall V \in \mathrm{Type},\; \operatorname{Finite}\left(V\right) \Rightarrow
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/HamiltonianClosure.ore` (`✓ std3`). ∎
 
-*Citation.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic, finite chordal elimination and finite Menger certificates: Lean sources*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 
