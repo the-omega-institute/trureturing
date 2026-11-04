@@ -7,7 +7,6 @@
    digest: Stopped tables collect arbitrary first-zero classes with terminal mass. -/
 
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
-import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PreselectedResidualBound
 
 /-! Weighted rewards on the original full Boolean carrier and complete catalogs. -/
 
@@ -17,8 +16,7 @@ open scoped BigOperators
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
-open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PreselectedResidualBound
-open private firstZero_unique firstZero_exists firstZero_not_terminal from
+open private firstZero_unique firstZero_exists from
   D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
 namespace D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.HighTerminalChain
 
@@ -318,7 +316,8 @@ private theorem late_le_capacity_add_delta {L : ℕ} (hL : 3 ≤ L)
 /-- The bound applies to every arbitrary legal placement on the original cube.
 No same-fiber, normalization, sorted-profile or chain-support premise is used. -/
 theorem arbitrary_input_lower_bound {L : ℕ} (hL : 3 ≤ L)
-    (y : FullScore L) (hy : EarlyPair y) : highLower hL y ≤ delta hL true y := by
+    (y : FullScore L) (hy : EarlyPair y) :
+    highLower hL y ≤ support true y - inputAnchor hL y := by
   have ha := anchor_le_support hL y hy
   have hd : 0 ≤ delta hL true y := by unfold delta; linarith
   have h2 : twoLate y - early hL y - pairTotal y ≤ delta hL true y := by
