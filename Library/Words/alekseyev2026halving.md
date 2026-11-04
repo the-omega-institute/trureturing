@@ -36,3 +36,8 @@ constituent sequences or invertible matrices.
 The source supplies the definition and question. The dyadic list classification,
 cardinality formula and recurrence obstruction are repository proofs, rather
 than assertions attributed to the paper.
+
+## Verified locator
+
+- URL: https://arxiv.org/abs/2611.01243v1
+- Version and location: arXiv:2611.01243v1, Definition 1 on PDF page 1 and the regularity question in Section 6 on PDF page 18.
