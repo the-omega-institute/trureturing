@@ -374,7 +374,8 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
           6 * (L x ^ 2 / P x ^ (1 / 6 : ℝ)) := by
         rw [hpower]
         dsimp [K]
-        field_simp [(Real.sqrt_pos.mpr hp).ne', (Real.rpow_pos_of_pos hp _).ne']
+        field_simp [hp.ne', (Real.sqrt_pos.mpr hp).ne',
+          (Real.rpow_pos_of_pos hp _).ne']
         <;> ring
       have hh := mul_le_mul_of_nonneg_left
         (record_tail_square_error (hm x) (hlambda x) (hrecord x)).2 (hK0 x)
@@ -456,7 +457,7 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
           K x * secondEndpoint (P x) +
           L x * (Real.sqrt (P x) * L x * secondEndpoint (Q x) - k) +
           k * (2 + c / 2)) l (𝓝 0) := by
-    simpa only [zero_add, zero_sub, neg_add_cancel] using htotal
+    simpa using htotal
   apply htotal'.congr'
   exact Eventually.of_forall fun x => by dsimp [K, P, L, k, c]; ring
 
