@@ -52,12 +52,12 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     intro he
     cases congrArg ULift.down he
   let p : G.Walk a b := Walk.cons hab Walk.nil
-  have hp : p.IsPath := Walk.IsPath.cons Walk.IsPath.nil (by simp [a, b])
+  have hp : p.IsPath := Walk.IsPath.cons Walk.IsPath.nil (by simpa using hab.ne)
   have hbad : G.IsEdgeReachable 2 a b := (h G 2 a b).2
     ⟨fun _ => p, fun _ => hp, fun _ _ _ => by simp [rejected, realize]⟩
   have hbot : G.deleteEdges {s(a, b)} = ⊥ := by
     ext x y
-    change (x ≠ y ∧ s(x, y) ∉ ({s(a, b)} : Set (Sym2 V))) ↔ False
+    simp only [deleteEdges_adj, G, completeGraph_eq_top, top_adj, bot_adj]
     rcases x with ⟨x⟩
     rcases y with ⟨y⟩
     cases x <;> cases y <;> simp [a, b, Sym2.eq_swap]
@@ -98,7 +98,8 @@ def family : Registration arena.{u} (type_of% (@isEdgeReachable_iff.{u})) where
 noncomputable def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}
       (@isEdgeReachable_iff.{u}) (Realization signature.{u}) Type Unit where
-  unitName := `D5.S3.Combinatorics.Graph.Walks.EdgeMengerCertificates.isEdgeReachable_iff.__information_unit
+  unitName :=
+    `D5.S3.Combinatorics.Graph.Walks.EdgeMengerCertificates.isEdgeReachable_iff.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Walks.EdgeMengerCertificates.family
   realizationSource := none
   generated := false
