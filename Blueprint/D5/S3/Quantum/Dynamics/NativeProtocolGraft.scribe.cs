@@ -55,7 +55,7 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
         Formula bound = Rel(Call("L", G), Eq,
             Seq(Operatorname, Grp(F.Id("sup")), Underscore,
                 Grp(p, Sp, InMacro, Sp, path), Sp,
-                Rel(Call("c", T, p), Plus, Call("L", Ep)))));
+                Rel(Call("c", T, p), Plus, Call("L", Ep))));
         Formula law = And(Rel(Call("projectedMass", T, C, pi, e), Eq, sum), bound,
             All("p", path, Call("CutLaw", Call("label", T, p), Call("Apply", C, p))), semantics);
         return Disp(All("T", Call("Tree", Call("Cut")),
