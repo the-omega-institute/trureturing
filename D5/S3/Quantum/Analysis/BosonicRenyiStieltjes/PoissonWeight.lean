@@ -63,6 +63,19 @@ theorem density_reflection {α q : ℝ} (hq : 0 < q)
     nlinarith [hD])
   ring
 
+/-- Reciprocal reflection of the density with the resolvent Jacobian. -/
+theorem density_resolvent_reflection {α r q : ℝ} (hr : 0 < r) (hq : 0 < q)
+    (ha1 : α ≠ 1) (hc : Real.cos (Real.pi * α) < 1) :
+    |-(q ^ 2)⁻¹| • (density α q⁻¹ / (r + q⁻¹)) =
+      density α q * q / (1 + r * q) := by
+  rw [abs_neg, abs_of_nonneg (inv_nonneg.mpr (sq_nonneg q)), smul_eq_mul]
+  calc
+    _ = (density α q⁻¹ / q ^ 2) / (r + q⁻¹) := by ring
+    _ = density α q / (r + q⁻¹) := by rw [density_reflection hq ha1 hc]
+    _ = _ := by
+      field_simp (disch := positivity)
+      ring
+
 private lemma density_integrable_unit {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) : IntegrableOn (density α) (Ioo 0 1) := by
   let f := fun q : ℝ => α * (-Real.sin (Real.pi * α)) /
@@ -127,18 +140,8 @@ private lemma density_resolvent_integrable {α r : ℝ} (ha0 : 0 < α) (ha2 : α
       measurableSet_Ioo hd hinj g).mpr
     apply hreflect.congr_fun _ measurableSet_Ioo
     intro q hq
-    have hq0 := hq.1
-    dsimp only
-    rw [abs_neg, abs_of_nonneg (inv_nonneg.mpr (sq_nonneg q)), smul_eq_mul]
-    dsimp only [g]
-    symm
-    calc
-      _ = (density α q⁻¹ / q ^ 2) / (r + q⁻¹) := by ring
-      _ = density α q / (r + q⁻¹) := by
-        rw [density_reflection hq.1 ha1 (cosine_lt_one ha0 ha2 ha1)]
-      _ = _ := by
-        field_simp (disch := positivity)
-        ring
+    exact (density_resolvent_reflection hr0 hq.1 ha1
+      (cosine_lt_one ha0 ha2 ha1)).symm
   have hsets : Ioo (0 : ℝ) 1 ∪ Ici 1 = Ioi 0 :=
     Ioo_union_Ici_eq_Ioi zero_lt_one
   have hu := hhead.union ((integrableOn_Ici_iff_integrableOn_Ioi).mpr htail)

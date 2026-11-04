@@ -534,16 +534,8 @@ private lemma mellin_stieltjes_integral {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 
     fun q hq => (hasDerivAt_inv hq.1.ne').hasDerivWithinAt
   have hpoint (q : ℝ) (hq : q ∈ Ioo (0 : ℝ) 1) :
       |-(q ^ 2)⁻¹| • g q⁻¹ = PoissonWeight.density α q * q / (1 + r * q) := by
-    have hq0 := hq.1
-    rw [abs_neg, abs_of_nonneg (inv_nonneg.mpr (sq_nonneg q)), smul_eq_mul]
-    dsimp only [g]
-    calc
-      _ = (PoissonWeight.density α q⁻¹ / q ^ 2) / (r + q⁻¹) := by ring
-      _ = PoissonWeight.density α q / (r + q⁻¹) := by
-        rw [PoissonWeight.density_reflection hq.1 ha1 (cosine_lt_one ha0 ha2 ha1)]
-      _ = _ := by
-        field_simp (disch := positivity)
-        ring
+    exact PoissonWeight.density_resolvent_reflection hr0 hq.1 ha1
+      (cosine_lt_one ha0 ha2 ha1)
   have ht := integral_image_eq_integral_abs_deriv_smul measurableSet_Ioo hd hinj g
   rw [him] at ht
   have htail : (∫ q in Ioi (1 : ℝ), g q) =
