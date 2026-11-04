@@ -1,0 +1,8 @@
+### 例 7.2（完整二元互易仍不等于所有内容可恢复）
+
+令 $\mathcal N(X)=\operatorname{Tr}(X)\tau$，其中 $\tau$ 忠实。
+对任意忠实 $\sigma$，Petz 回推为
+$\mathcal N^\sharp_\sigma(X)=\operatorname{Tr}(X)\sigma$。
+它完全满足本轮互易和参考恢复，却把所有输入都送成同一个状态。
+这说明互易规定的是相容反查；全源恢复还必须有保留内容的证据。
+

@@ -1,0 +1,50 @@
+**Corollary 51.5 (conditional restriction of the actual aligning endpoint set).**
+Retain $a_\xi=m(\xi)+\kappa\xi$ and the literal aligning endpoint set
+$\mathcal E_\xi(a_\xi)$ of (45.20), with all its actual common scalar
+representatives. Its definition retains
+$|z|^2=t_\sigma(1-t_\sigma)$ and
+$\operatorname{Re}(Pz\overline Q)=|P||Q||z|$; when this product is zero
+every phase satisfying the modulus condition remains allowed.
+Suppose an actual endpoint $(E,U)\in\mathcal E_\xi(a_\xi)$ has an
+active sign and population satisfying (51.2) and $D_\sigma(x,q)<0$.
+Then its ordered lengths obey
+
+$$
+ (X,Y)\in\Omega_x,\qquad
+ X=\widehat X(Y),\qquad
+ Y\in\operatorname{argmax}_{[x^2,1]}M,
+ \qquad
+ a_\xi=\mathsf E_\sigma(q)-4M(Y)^2.
+\tag{51.27}
+$$
+
+**Proof.** Theorem 45.7 and Theorem 48.5 identify this actual endpoint
+with a full original minimizer, under their original hypotheses
+$0<\xi\le13/4$. It must therefore minimize its own fixed sign,
+population and trace-modulus slice. Indeed, Definition 51.1 provides,
+for every competing point in the whole $\mathcal T_x$, one actual
+whole feedback and an aligning pure effect with those same slice
+parameters and the same true original distance. For the actual
+endpoint and its lengths, the same-source recovery estimate gives
+
+$$
+\begin{aligned}
+ g(E,U)
+ &\ge\mathsf E_\sigma(q)-4\Gamma(X,Y)^2\\
+ &\ge\mathsf E_\sigma(q)
+                   -4\bigl(\max_{\mathcal T_x}\Gamma\bigr)^2.
+\end{aligned}
+\tag{51.28}
+$$
+
+The last value is attained inside the same actual slice.
+Global minimality forces equality in both comparisons. Since
+$\Gamma>0$, its lengths must maximize $\Gamma$. Proposition 51.2
+and (51.23) now give all of (51.27).
+
+This implication is conditional on an endpoint from this slice actually
+belonging to $\mathcal E_\xi(a_\xi)$; it asserts no contribution by any
+negative-determinant slice. Even a unique maximizing length pair within
+such a slice would not determine the winning sign or population,
+$a_\xi$, or all aligning phase preimages. $\square$
+

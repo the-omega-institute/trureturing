@@ -89,8 +89,6 @@ import D5.S3.Arith.AbsoluteValues.Heights.Duality
 
 namespace D5.S3.Combinatorics.BinomialBases.KurkovStirlingMinorVandermondeSum
 
-open private Matrix.enumEquiv Matrix.det_submatrix_inl_eq_mul from
-  D5.S3.Arith.AbsoluteValues.Heights.Duality
 open private chainNodes chainEquiv sign_rev from
   D5.S1.Recurrence.Algebraic.KurkovNestedStirlingIdentity
 open private D5.S1.Recurrence.Interpolation.CullinanYoungKrawtchouk.weight from

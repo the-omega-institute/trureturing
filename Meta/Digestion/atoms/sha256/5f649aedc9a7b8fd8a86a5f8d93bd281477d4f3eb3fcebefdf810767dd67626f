@@ -1,0 +1,64 @@
+### 51.4. The complete population-cost/gain relation T
+
+The preceding screens prove (51.7) whenever $\xi\le21/10$,
+$q\le1/20$, or $q\ge1/2$, because $\eta=0$.
+Consider $21/10\le\xi\le\xi_*$ and $1/20\le q\le1/4$.
+Rows P9 and (51.13) give $\eta\le11/200$.
+For $1/20\le q\le1/5$, (51.15) gives $q_\xi-q>1/5$,
+and P10 gives
+
+$$
+\eta^2\le\frac{121}{40000}<\frac1{250}
+             <K(q-q_\xi)^2.
+\tag{51.17}
+$$
+
+For $1/5\le q\le1/4$, one has $q_\xi-q>3/20$, and P11 gives
+
+$$
+\eta^2\le\frac{121}{40000}<\frac{153}{40000}
+             <K(q-q_\xi)^2.
+\tag{51.18}
+$$
+
+At any shared boundary these strict estimates can be weakened to
+nonstrict ones without changing the conclusion.
+
+It remains to treat $q\ge1/4$. In the slab $[21/10,9/4]$,
+$q\ge47/100$ has already been screened; in the slab
+$[9/4,\xi_*]$, $q\ge1/2$ has already been screened.
+The selected population is strictly inside the corresponding upper
+population boundary by (51.15) and $q_\xi<1/2$.
+Rows P13--P14 give, on both remaining closed rectangles,
+
+$$
+                       0\le\Omega_q\le43/100.
+\tag{51.19}
+$$
+
+If $q\ge q_\xi$, (51.16) and (51.19) imply $\Omega(\xi,q)\ge0$,
+so $\eta=0$. If $q<q_\xi$ and $\Omega(\xi,q)<0$, integration on
+the fixed-$\xi$ segment from $q$ to $q_\xi$ gives
+
+$$
+\eta=-\Omega(\xi,q)
+ \le\Omega(\xi,q_\xi)-\Omega(\xi,q)
+ \le\frac{43}{100}(q_\xi-q).
+\tag{51.20}
+$$
+
+Row P12 now yields
+
+$$
+\eta^2\le\frac{1849}{10000}(q-q_\xi)^2
+ \le K(q-q_\xi)^2,
+\qquad K\ge\frac{19}{100}=\frac{1900}{10000}.
+\tag{51.21}
+$$
+
+If $\Omega(\xi,q)\ge0$, the same conclusion is immediate.
+These regions cover the entire feasible nonsingular domain with all
+shared boundaries. At $q=q_\xi$, both sides of (51.7) vanish,
+including $\xi=\xi_*$. This proves T without a local-neighborhood
+restriction or a sampling argument.
+

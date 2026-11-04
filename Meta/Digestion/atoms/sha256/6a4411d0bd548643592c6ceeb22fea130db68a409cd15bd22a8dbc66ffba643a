@@ -1,0 +1,45 @@
+**Theorem 45.5 (all original and phase global minimizers are pure).**
+For every $0<\xi\le R$,
+
+$$
+\begin{aligned}
+ m(\xi)&=m_{\mathrm p}(\xi)=m_{\mathrm{ph}}(\xi)
+                                      =m_{\mathrm{ph,p}}(\xi),\\
+ \mathcal A_\xi&=\mathcal A_{\mathrm p,\xi}
+                                      \subset\mathcal K_{\mathrm p},\\
+ \mathcal A_{\mathrm{ph},\xi}
+   &=\mathcal A_{\mathrm{ph,p},\xi}
+     =\mathcal A_\xi\cap\mathcal P_\xi.
+\end{aligned}
+\tag{45.17}
+$$
+
+These are equalities of attained values and of the minimizing sets in
+their stated domains, not a classification of those pure sets.
+
+*Proof.* Reuse the delivered geometric comparison in the proof of
+Theorem 44.3, namely (44.19) together with its stated consequence
+throughout this interval:
+
+$$
+ m(\xi)+\kappa\xi\le V(\xi)<c_0-\frac3{16},\qquad
+ m_{\mathrm{ph}}(\xi)+\kappa\xi\le V(\xi)<c_0-\frac3{16}.
+\tag{45.18}
+$$
+
+The first inequalities use $\mathcal G_\xi$ as actual feasible pairs
+in both domains. The comparison concerns the selected value $V$;
+no assumption $m=N$ or $\xi<\beta$ enters it.
+Original minima are attained by Theorem 35.2. A mixed original global
+minimizer would have $g<c_0$ by (45.18), and Theorem 45.4 would strictly
+improve it at exactly the same original level. This is impossible.
+The phase level is compact and nonempty by Definition 42.1. A mixed
+phase global minimizer has the same contradiction, because Theorem
+45.4 never changes its phase feedback $U$.
+
+Restriction to the pure subsets can consequently remove no minimizer.
+Set inclusion gives the equal values and equal minimizing sets in
+each domain. The cross-domain value equality and intersection identity
+are exactly (42.24). This proves (45.17) without using prefix purity.
+$\square$
+

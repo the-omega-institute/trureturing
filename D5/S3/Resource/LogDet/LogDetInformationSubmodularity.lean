@@ -91,7 +91,7 @@ private theorem real_trace_mono
   rw [Matrix.trace_sub, Complex.sub_re] at realNonnegative
   linarith
 
-private theorem log_det_mono
+theorem log_det_mono
     {Index : Type*} [Fintype Index] [DecidableEq Index] [Nonempty Index]
     {left right : Matrix Index Index ℂ}
     (leftPositive : left.PosDef) (rightPositive : right.PosDef)

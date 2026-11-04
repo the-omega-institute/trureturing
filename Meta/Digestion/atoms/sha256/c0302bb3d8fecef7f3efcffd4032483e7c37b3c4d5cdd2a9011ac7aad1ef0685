@@ -1,0 +1,22 @@
+**Theorem 4.1 (Character spectrum).** Let $R=A$ be a finite abelian group and $g_k(r)=r+t_k$ for $t_1,\dots,t_{\mathtt q}\in A$. For $\chi\in\widehat A$ put
+
+$$
+\lambda_\chi=\sum_kx_k\chi(t_k),\qquad \mu_\chi=\sum_{k<l}x_kx_l\,|\chi(t_k)-\chi(t_l)|^2 .
+$$
+
+Then $\mu_\chi=1-|\lambda_\chi|^2$, the eigenvalues of $L_\Gamma$ are the $\mu_\chi$, those of $Q^\top Q$ are the $|\lambda_\chi|^2$, and
+
+$$
+\Delta(\varepsilon)=\prod_{\chi\in\widehat A}\big(\varepsilon+c(\varepsilon)\mu_\chi\big).
+$$
+
+Moreover $\mu_\chi=0$ exactly when $\chi$ is trivial on the difference subgroup $A_0=\langle t_k-t_l\rangle$, and $\gamma=[A:A_0]$. Stance: suspected-novel as a statement about replica determinants; it uses the literature-attested fact that the characters of a finite abelian group form a basis of $\mathbb C^A$ (§9).
+
+**Proof.** Here $\pi_{kl}(r)=r+d_{kl}$ with $d_{kl}=t_k-t_l$. For a character $\chi$, $(M_\pi^\top\chi)(r)=\sum_s[s=r+d]\chi(s)=\chi(d)\chi(r)$ and $(M_\pi\chi)(r)=\chi(r-d)=\overline{\chi(d)}\chi(r)$. By the second display in the proof of Theorem 3.3, $L_\Gamma\chi=\sum_{k<l}x_kx_l(2-\chi(d_{kl})-\overline{\chi(d_{kl})})\chi$, and $2-z-\bar z=|1-z|^2$ for $|z|=1$, while $|1-\chi(t_k-t_l)|=|\chi(t_l)-\chi(t_k)|$. So $L_\Gamma\chi=\mu_\chi\chi$. The characters form a basis, so $\varepsilon I+cL_\Gamma$ is diagonalized by them and Theorem 3.4 gives the product. For unit complex numbers $z_k$ and $\sum x_k=1$,
+
+$$
+1-\Big|\sum_kx_kz_k\Big|^2=\sum_{k,l}x_kx_l\big(1-\mathrm{Re}\,z_k\bar z_l\big)=\tfrac12\sum_{k,l}x_kx_l|z_k-z_l|^2=\sum_{k<l}x_kx_l|z_k-z_l|^2 ,
+$$
+
+which with $z_k=\chi(t_k)$ gives $\mu_\chi=1-|\lambda_\chi|^2$ and hence the spectrum of $Q^\top Q=I-L_\Gamma$. Since all $x_kx_l>0$, $\mu_\chi=0$ iff $\chi(t_k)=\chi(t_l)$ for all $k,l$, iff $\chi$ is trivial on $A_0$. The number of such characters is $|\widehat{A/A_0}|=[A:A_0]$, which equals $\dim\ker L_\Gamma$; since all weights are positive, $\ker L_\Gamma$ consists of the functions constant on components (from $v^\top L_\Gamma v=\sum_ew_e(v_{u_e}-v_{v_e})^2$), so this is the number of components. ∎
+

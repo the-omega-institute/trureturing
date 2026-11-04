@@ -1,0 +1,19 @@
+**定义 21.1（固定选择与全部原数据）。** 始终使用定义 1.1 的同一个原签名 $\Omega$，保留全部原对象、实际联合对象、准备、比较、装置、失败输出、细记录及其可访问性、原概率和每个合法有限历史。对每个所需原对象，先只用 P、G，按定理 3.1 的 (3.3)–(3.4) 及 BW 应用，固定一份单位适配的 $q$ 和原 $L_a$；然后才检查原给定的 $d(a,b)=D_ab$。本附录所有存在性、等价性和唯一性均相对于这份固定选择。不同容许 $q/L$ 选择之间的独立性不是以下结论。
+
+令
+
+$$
+\begin{aligned}
+Z&=\{z\in E:[L_z,L_a]=0\ \text{对所有 }a\in E\},
+&z&:E\longrightarrow Z\quad\text{为 }q\text{ 正交投影},\\
+E_0&=Z^{\perp_q},&a_0&=a-z(a),\\
+\mathfrak p_0&=\{L_{a_0}:a\in E\},
+&\mathfrak k&=\operatorname{span}_{\mathbb R}\{[L_a,L_b]:a,b\in E\},\\
+\mathfrak h&=\mathfrak k\oplus\mathfrak p_0\subset\operatorname{End}_{\mathbb R}(E),
+&\theta X&=-X^{\dagger_q}.
+\end{aligned}
+\tag{21.1}
+$$
+
+$z$ 是投影算子，$Z$ 是子空间，两者不混用。每个 $L_{a_0}$、$\mathfrak k$ 和 $\mathfrak h$ 的元素都作用于**全部原 $E$**。$E_0$ 只索引去中心的比较算子；既不以 $E_0$ 替换响应载体，也不压缩任何原状态、效果或过程。尤其 $L_{a_0}$ 一般不消去 $Z$：中心方向仍能被非中心比较搬到其他原响应方向。
+

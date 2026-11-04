@@ -47,8 +47,10 @@ public sealed partial class CleanLanesCommandTests
         var parent = fixture.AddGitlessJudgeSnapshot("trureturing-parent");
         var nested = fixture.AddNestedWorktree(parent);
         var registered = fixture.AddDetachedJudge("trureturing-registered");
-        CleanLanesFixture.Git(nested, "commit", "--allow-empty", "-m", "nested work");
-        CleanLanesFixture.Git(registered, "commit", "--allow-empty", "-m", "detached work");
+        CleanLanesFixture.GitAt(nested, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+            "commit", "--allow-empty", "-m", "nested work");
+        CleanLanesFixture.GitAt(registered, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+            "commit", "--allow-empty", "-m", "detached work");
         fixture.AddGitlessJudgeSnapshot("trureturing-registered");
         var alias = Path.Combine(Path.GetDirectoryName(parent)!, "trureturing-alias");
         Directory.CreateSymbolicLink(alias, foreign);
@@ -66,7 +68,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("not_judge_tree", ReasonFor(result.Output, reports));
         Assert.Equal("nested_worktree", ReasonFor(result.Output, parent));
         Assert.Equal("symlink", ReasonFor(result.Output, alias));
-        Assert.Equal("not_far_behind", ReasonFor(result.Output, registered));
+        Assert.Equal("recently_updated", ReasonFor(result.Output, registered));
         Assert.Equal("main_worktree", ReasonFor(result.Output, fixture.RepositoryRoot));
     }
 
