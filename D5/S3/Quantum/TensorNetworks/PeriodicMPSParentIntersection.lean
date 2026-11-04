@@ -14,6 +14,7 @@ import Mathlib.Data.List.OfFn
 import Mathlib.Tactic
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Analysis.Complex.Basic
+import Mathlib.Data.Matrix.Basis
 import D5.S3.Quantum.TensorNetworks.UniformMPSExpectedDimensionRefutation
 
 /-! The length-two spanning hypothesis is the source's actual injectivity condition.
@@ -264,11 +265,14 @@ private theorem propagate (A B : Fin 2 → Bond) (hA : TwoSiteSpanning A) (m : �
   induction m with
   | zero =>
     intro r h
-    simpa only [Nat.zero_add] using h
+    rw [Nat.zero_add] at h
+    exact h
   | succ m ih =>
     intro r h b
     have hp := ih (r + 1) (by
-      simpa only [Nat.add_assoc, Nat.add_left_comm 1 r, Nat.add_comm 1 r] using h)
+      have hn : m + 1 + r = m + (r + 1) := by omega
+      rw [hn] at h
+      exact h)
     apply (parent_intersection A hA m (gamma B (m + 4) (wordMatrix B b))).mp
     constructor
     · choose X hX using fun j : Fin 2 => hp (Fin.cons j b)
@@ -296,18 +300,13 @@ private lemma scalar_of_commuting (A : Fin 2 → Bond) (hA : TwoSiteSpanning A)
     congr 1
     funext p
     rw [← Matrix.mul_assoc, hX, Matrix.mul_assoc, hX, ← Matrix.mul_assoc]
-  refine ⟨X 0 0, ?_⟩
-  have h0 := hcomm (!![1, 0; 0, 0])
-  have h1 := hcomm (!![0, 1; 0, 0])
-  have h01 : X 0 1 = 0 := by
-    simpa [Matrix.mul_apply, Fin.sum_univ_two] using (congrFun (congrFun h0 0) 1).symm
-  have h10 : X 1 0 = 0 := by
-    simpa [Matrix.mul_apply, Fin.sum_univ_two] using congrFun (congrFun h0 1) 0
-  have h11 : X 1 1 = X 0 0 := by
-    simpa [Matrix.mul_apply, Fin.sum_univ_two] using (congrFun (congrFun h1 0) 1).symm
+  obtain ⟨c, hc⟩ := Matrix.mem_range_scalar_iff_commute_single'.mpr
+    (fun i j => (hcomm (Matrix.single i j 1)).symm)
+  refine ⟨c, hc.symm.trans ?_⟩
   ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [Matrix.smul_apply, h01, h10, h11]
+  by_cases hij : i = j <;>
+    simp [Matrix.scalar_apply, Matrix.diagonal_apply, Matrix.smul_apply,
+      Matrix.one_apply, hij]
 
 private theorem cyclic_boundary_scalar (A B : Fin 2 → Bond) (hA : TwoSiteSpanning A)
     (r : ℕ) (X : Bond)
@@ -333,7 +332,9 @@ private lemma columns_of_state_eq (A B : Fin 2 → Bond) (r : ℕ) (c : ℂ)
     (he : gamma B (r + 4) 1 = c • gamma A (r + 4) 1) :
     threeColumns B r = c • threeColumns A r := by
   have he' : gamma B (3 + (r + 1)) 1 = c • gamma A (3 + (r + 1)) 1 := by
-    simpa [Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using he
+    have hn : r + 4 = 3 + (r + 1) := by omega
+    rw [hn] at he
+    exact he
   ext w b
   have h := congrFun he' (Fin.append w b)
   simpa only [gamma, wordMatrix_append, one_mul, Pi.smul_apply, smul_eq_mul,
@@ -359,7 +360,8 @@ private lemma raw_ne_zero (A : Fin 2 → Bond) (r : ℕ)
       rw [Matrix.range_mulVecLin]
       exact Submodule.subset_span ⟨b, rfl⟩
     rw [← hrange] at hb
-    exact congrFun (Submodule.mem_bot.mp hb) w
+    have hb' : (threeColumns A r).col b = 0 := by simpa using hb
+    exact congrFun hb' w
   have hf : twoFlattening A r = 0 := by
     ext p b
     have hb := congrFun (congrFun hcolumns ![p.1, p.2, b 0]) (Fin.tail b)
@@ -369,9 +371,12 @@ private lemma raw_ne_zero (A : Fin 2 → Bond) (r : ℕ)
     change ((List.ofFn fun i => A (Fin.append ![p.1, p.2] b i)).prod).trace = 0
     rw [List.ofFn_comp' (Fin.append ![p.1, p.2] b) A,
       List.ofFn_fin_append, List.map_append, List.prod_append]
-    simp only [List.map_ofFn, ← wordMatrix, hw]
+    simp only [List.map_ofFn]
+    change (wordMatrix A ![p.1, p.2] * wordMatrix A b).trace = 0
+    rw [hw]
     rw [Matrix.trace_mul_comm] at hb
-    simpa [wordMatrix, List.ofFn_succ, Matrix.mul_assoc] using hb
+    simpa only [wordMatrix, List.ofFn_succ, Fin.cons_zero, Fin.cons_succ,
+      List.prod_cons, List.prod_nil, mul_one, Matrix.mul_assoc] using hb
   rw [hf, Matrix.rank_zero] at hr
   norm_num at hr
 
@@ -392,12 +397,14 @@ private theorem phase_recovery (A B : Fin 2 → Bond) (r : ℕ)
     have hn : c * star c = 1 := (smul_left_injective ℂ (raw_ne_zero A r hr)) hs
     have hnorm : ‖c‖ ^ 2 = 1 := by
       have hre := congrArg Complex.re hn
-      simpa [Complex.mul_conj', ← Complex.normSq_eq_norm_sq] using hre
+      simpa [Complex.mul_conj', ← Complex.ofReal_pow] using hre
     exact ⟨c, by nlinarith [norm_nonneg c], hc⟩
   · rintro ⟨c, hc, he⟩
     rw [raw_of_state_eq A B r c he]
     have hn : c * star c = 1 := by
-      simpa only [starRingEnd_apply, Complex.mul_conj', hc, one_pow, Complex.ofReal_one]
+      change c * (starRingEnd ℂ) c = 1
+      rw [Complex.mul_conj', hc]
+      norm_num
     rw [hn, one_smul]
 
 private lemma rank_of_spanning (A : Fin 2 → Bond) (hA : TwoSiteSpanning A) (r : ℕ) :
