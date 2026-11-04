@@ -1,0 +1,33 @@
+### 命题 3.7（全部忠实参照共同保护的内容）
+
+<a id="prop-c123-all-reference-intersection"></a>
+
+若数学上允许 $\sigma$ 遍历全部忠实状态，则
+
+<a id="eq-c123-unrestricted-reference-intersection"></a>
+
+$$
+\bigcap_{\sigma>0,\,\operatorname{Tr}\sigma=1}\mathfrak F_\sigma
+ =\begin{cases}
+   \mathcal B(H),&\mathfrak A_{\mathcal N}=\mathcal B(H),\\
+   \mathbb C I,&\mathfrak A_{\mathcal N}\ne\mathcal B(H).
+  \end{cases}
+\tag{29}
+$$
+
+**证明。**
+每个酉矩阵可写成 $U=e^{iD}$，$D=D^*$；取
+$\sigma=e^D/\operatorname{Tr} e^D$，则 $\operatorname{Ad}_{\sigma^i}=\operatorname{Ad}_U$。
+因此左侧等于 $\bigcap_U U\mathfrak A_{\mathcal N}U^*$。
+这是在所有酉共轭下不变的含幺子代数 $\mathcal C$。
+若 $\mathcal C$ 含非标量自伴元素，先将其对角化，再交换两个不同本征值；
+两者相减给非零倍数的 $E_{ii}-E_{jj}$。
+置换共轭与单位矩阵进一步给各 $E_{ii}$；任意酉共轭遂给所有秩一投影，
+其复线性包是整个 $\mathcal B(H)$。
+所以 $\mathcal C$ 只能为标量或全矩阵代数，而后者仅可能在
+$\mathfrak A_{\mathcal N}=\mathcal B(H)$ 时发生。
+
+这里的全称量词是数学比较，不声称一个有限观察者实际能准备全部忠实态。
+命题的作用是排除过强的“所有起点都等价”：对一个真正有损的过程，它会把共同保护内容压到标量。
+本轮候选采用的范围恰是可完整回接的内部参照类；在类内允许变化，在类间明确记录余量或回推规则的改变。
+

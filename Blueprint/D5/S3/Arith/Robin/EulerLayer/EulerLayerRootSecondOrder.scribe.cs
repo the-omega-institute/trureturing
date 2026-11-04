@@ -42,5 +42,21 @@ internal sealed class EulerLayerRootSecondOrderDocument : IScribeDocumentDefinit
                         + "third-and-higher actual inventory are retained in the remainder at "
                         + "the smaller sqrt(t)/log(t) scale. No RH, JY, signed-tail, Robin, "
                         + "or attainment assertion is included."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("consumed-second-cutoff-strict-monotonicity"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/EulerLayer/EulerLayerRootSecondOrder.second_cutoff_strictMono"),
+                H("The consumed strict real cutoff comparison"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Strict monotonicity of x^2*log(x) on x>1 is exposed with its original proof. The new finite prime-min consumer applies it only to rho<p, retaining the strict lower endpoint of the tail."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("consumed-second-cutoff-root-specification"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/EulerLayer/EulerLayerRootSecondOrder.second_cutoff_root_spec"),
+                H("The consumed canonical root and its brackets"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The canonical root definition and this exact specification are exposed unchanged. The new consumer keeps the Classical.choose root opaque and uses the equation and square-root brackets to obtain a quantitative normalized root error. The qualitative limits in this module are not substituted for that error."))),
                 DescribeRole.Theorem))));
 }

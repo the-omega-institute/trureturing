@@ -1,0 +1,47 @@
+### 定义 30.2（原完整未来中的联合正效果与边际证明）
+
+在 C117 定理 17.4 与推论 17.5 已供应的局部 qubit 表示中，写 $\rho_a=(I+n_a\cdot\sigma)/2$。若事件 $j$ 的原始成功边际已经作为一个原有完整标签的效果供应，或已由来源供应为该标签接口上的精确边际，则写
+
+$$
+E_j=\alpha I+\beta\cdot\sigma,\qquad
+m_j(a)=\operatorname{Tr}(\rho_aE_j)=\alpha+\beta\cdot n_a,
+\tag{30.2}
+$$
+
+并令
+
+$$
+\lambda_+=\alpha+\|\beta\|,\qquad
+\lambda_-=\alpha-\|\beta\|,\qquad
+0\le\lambda_-\le\lambda_+\le1.
+\tag{30.3}
+$$
+
+对每一个实际合法的 $Q_q\in\mathcal F$，§17.4–17.5 直接作用于它的每一个**完整**标签，给出正效果族
+
+$$
+p(a;Q_q,u)=\operatorname{Tr}(\rho_aG_{Q_q,u}),\qquad G_{Q_q,u}\ge0.
+$$
+
+因此在 $j$ 事件切片上定义 $G_{j,q,w}:=G_{Q_q,(j,w)}$，便得到
+
+$$
+P_j(a;q,w)=\operatorname{Tr}(\rho_aG_{j,q,w}),\qquad G_{j,q,w}\ge0.
+\tag{30.4}
+$$
+
+这一步只消费 C117 已给的完整请求、完整标签和正效果接口，不增加 CP instrument 或“完整量子实现”前件。由来源供应的原始标量因果边际 (30.1)，以及已由 §17.2–17.4 的稠密旋转轨道得到的 separating 原前缀状态，算子边际可被证明：令
+
+$$
+D_{j,q}:=\sum_{w:(j,w)\in\Gamma_{Q_q}}G_{j,q,w}-E_j.
+$$
+
+则对所有原合法 $a$，$\operatorname{Tr}(\rho_aD_{j,q})=0$。该迹是 $n_a$ 上的连续仿射函数；原状态方向稠密且 §17.4 的完整行接口分离 Hermitian 效果，所以它在整个球面为零，进而
+
+$$
+\sum_{w:(j,w)\in\Gamma_{Q_q}}G_{j,q,w}=E_j.
+\tag{30.5}
+$$
+
+若 $Q_q$ 的实际成员资格、全部标签/记录或原始边际没有供应，或者状态表不分离 Hermitian 效果，则 (30.4)–(30.5) 只能作为该受限域的**抽象正细化前提**显式保留；不能以仅有的标量因果关系补出它们，也不能把这种正效果族称为 CP 仪器。无论哪一种路线，都不由终端效果推出输出态、输出类型、purity、repeatability 或跨扩张输入的完全正性。
+

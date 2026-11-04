@@ -2523,3 +2523,629 @@ Equivalently, replace each occurrence of $\mathbf1_{D_B}$ by $1-\mathbf1_{D_0}-\
 The known finite linear subdivision theorem of A. Dvoretzky, A. Wald and J. Wolfowitz, *Relations among certain ranges of vector measures*, Pacific Journal of Mathematics **1** (1951), 59–74, [doi:10.2140/pjm.1951.1.59](https://doi.org/10.2140/pjm.1951.1.59), Theorem 4 and Lemma 2, pp. 66–67, supplies the linear results already used in §§135 and 142–143. It is not used to identify the quadratic common fiber (150.6) with a linear vector-measure range. The three-pair result retains exactly the full original suppliers; it adds no joint-feasibility, compactness of the partition class or deterministic-limit premise. It asserts no new third-order equation, full $F_{64}$ attainment, source realization or physical correspondence. The original endpoint, source, measure, clock and state space are unchanged throughout.
 
 ## 追加锚（本行以下为增补区）
+
+## 151. A common refinement paying the complete two-B layer
+
+**Theorem 151.1 (source-specific B8 refinement with all two-B coefficients).** Retain precisely the original suppliers and quantifiers of Definitions 134.1, 135.1 and 147.1, including the complete endpoint, source and analytic telescope of Appendix II §§115–117, 123–125 and 133. Thus $a,\eta,d>0$ are arbitrary finite original parameters, and $b$ is any permitted everywhere Borel representative of $g_d$ satisfying $0<b\le M$. Keep the original product on $G=H^1\times\mathbb R$, raw Haar measure $\mu$, source $e$, unit-source field $L\Gamma=\delta_e$, coefficient-one $w_*$, positive normalized $h=w_*/\|w_*\|_{L^2(\mu)}$, actual full self-adjoint endpoint with selector $A_{\rm src}=\rho C_{\rm src}$, and $m=h^2\mu$. The full conservative $K$ retains its source coordinate and form domain $\mathscr V=\mathscr V_0\dotplus\mathbb C1$. Use $T_s=e^{-sK}$, $P=T_d$, the original source-start densities with $g_{s+r}=T_rg_s$, $g=g_{2d}$, and the original epochs $2d,3d,4d$. Put
+
+$$
+\begin{gathered}
+M=1+\|g_d\|_\infty,\quad c=(4M)^{-1},\quad
+p=f_B=\tfrac14,\quad r=f_3=cb,\\
+f_S=f_0+f_1=\tfrac34-r,\qquad f_0=f_1=f_S/2,\qquad
+\mathcal C(u,v,w)=\int_G guP(vPw)\,dm.
+\end{gathered}
+$$
+
+The prescribed stochastic comparison uses this same $f$ at all three epochs, with fresh read noises conditionally independent given the original path. For every such $\theta=(a,\eta,d,b)$ there exists one pointwise Borel partition $D=(D_0,D_1,D_3,D_B)$ of the whole original $G$ such that $D\in\mathscr D_{12}(\theta)$, $D_B$ is an exact B8 witness in the sense of Theorem 148.1, and
+
+$$
+\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+=\mathcal C(f_y,f_z,f_w)
+\quad\left(y,z,w\in\{0,1,3,B\},
+\#\{j\in\{1,2,3\}:(y,z,w)_j=B\}\ge2\right).
+$$
+
+The quantifier order is $\forall\theta\ \exists D$, with the same $D$ for B8, all twelve source marginals and all ten displayed coefficients. Every terminal is its own actual $P\mathbf1_{D_w}$. The remaining 24 one-$B$ and 26 zero-$B$ equations of Proposition 149.1 remain unresolved. This partition need not be the partition of Theorem 150.2.
+
+*Proof.* Work first with $m$-classes. Replace $r=cb$ by its rotation-invariant heat-density representative $r^0$, with $0<r^0\le1/4$ after a Borel null repair. This changes no target integral. Write $g_j=P^jg$ for $j=0,1,2$, $L(z)=(\langle g_0,z\rangle_m,\langle g_1,z\rangle_m,\langle g_2,z\rangle_m)$, and $t=L(r^0)$. For prospective $B$- and $3$-cell functions $s,z$, set
+
+$$
+H(s,z)=(\mathcal C(z,s,s),\mathcal C(s,z,s),\mathcal C(s,s,z)).
+$$
+
+The first two entries have actual terminal $Ps$, and the third has actual terminal $Pz$. For $s=p+\lambda v$, self-adjointness and $P1=1$ give
+
+$$
+H_i(s,z)=p^2\langle g_{i-1},z\rangle_m
++p\lambda\langle A_iv,z\rangle_m
++\lambda^2\langle J_i(v),z\rangle_m\quad(i=1,2,3),
+\tag{151.1}
+$$
+
+where
+
+$$
+\begin{array}{lll}
+A_1v=g(Pv+P^2v),&A_2v=(Pg)Pv+P(gv),&A_3v=P((Pg)v)+P^2(gv),\\
+J_1(v)=gP(vPv),&J_2(v)=(Pv)P(gv),&J_3(v)=P(vP(gv)).
+\end{array}
+$$
+
+Choose $v_0,L_0,h_*$ from Lemma 147.4 and odd $N>3L_0$. On the space $V_N$ of Lemma 147.3,
+
+$$
+\langle v,(\alpha_1A_1+\alpha_2A_2+\alpha_3A_3)v\rangle_m
+=(\alpha_1+\alpha_2)q_1(v)+(\alpha_1+\alpha_3)q_2(v)
+ +(\alpha_2+\alpha_3)q_3(v).
+\tag{151.2}
+$$
+
+The coefficient map is invertible. By the all-pencil infinite-negative-index argument of Lemma 147.3, every nonzero pencil on the right has infinite-rank polar form. Hence no nonzero combination of the bounded-function operators $A_i:V_N\to V_N$ has finite rank: finite rank of such an operator would give finite rank of its symmetric pairing. Meshulam–Šemrl, Theorem 2.2, therefore supplies $x_A\in V_N$ for which the three $A_ix_A$ are independent. Lemma 147.3 also supplies $x_B\in V_N$ for which the three functionals $B_i(x_B,\cdot)$ are independent. Both independence requirements can be imposed on the same $x$: choose fixed dual test triples at $x_A$ and $x_B$, respectively, and evaluate their two determinants along $x(u)=(1-u)x_A+ux_B$. Each determinant is a polynomial in $u$, nonzero at its respective endpoint. Avoiding their finitely many roots gives $x$ satisfying both requirements. Choose $h_k\in V_N$ with $B_i(x,h_k)=\delta_{ik}$.
+
+Choose odd dual tests for $A_ix$, truncate them by the invariant set $E_\varepsilon=\{r^0\ge\varepsilon\}$, and take $\varepsilon>0$ small enough to retain invertibility. Since $r^0>0$ almost everywhere and Lemma 147.2 gives a positive-definite full Gram matrix, take this $\varepsilon$ small enough also that $(\langle g_i,\mathbf1_{E_\varepsilon}g_j\rangle_m)_{0\le i,j\le2}$ is positive definite. Multiplying the truncated test triple by the inverse pairing matrix gives bounded odd $\eta_k\in V_N$, supported in $E_\varepsilon$, with $\langle A_ix,\eta_k\rangle_m=\delta_{ik}$. Impose on $z\in V_N$ the finite constraints
+
+$$
+B_i(x,z)=B_i(z,h_k)=\langle A_iz,\eta_k\rangle_m=0
+\quad(1\le i,k\le3).
+\tag{151.3}
+$$
+
+The finite-codimensional surjectivity (147.6) supplies such a $z$ with $q(z)=-q(v_0)-q(x)$. Frequency separation gives $B_i(v_0,x+z)=0$ for $i=1,2,3$. Thus $v=v_0+x+z$ satisfies $q(v)=0$, $B_i(v,h_k)=\delta_{ik}$, and $\langle A_iv,\eta_k\rangle_m=\delta_{ik}$. The latter uses both (151.3) and the separation of the frequencies of $A_iv_0$ from $V_N$. Lemma 147.4 gives $\langle h_*,H_v\rangle_m\ne0$. The proof of Theorem 147.5 now gives the regular binary zero $s_*=p+\lambda v$ for small $\lambda>0$, with the same seven binary directions.
+
+Set $\omega=-p^{-1}\sum_i\langle J_i(v),r^0\rangle_m\eta_i$. It is odd, supported in $E_\varepsilon$, and $L(\omega)=0$. Equation (151.1), parity and the dual identities give, for $z_*=r^0+\lambda\omega$,
+
+$$
+L(z_*)=t,\qquad H(s_*,z_*)=p^2t.
+\tag{151.4}
+$$
+
+The only possibly nonzero new order-$\lambda^2$ terms cancel as $p\langle A_iv,\omega\rangle_m+\langle J_i(v),r^0\rangle_m=0$; all other new terms vanish by parity. Shrink $\lambda$ so $s_*,z_*,1-s_*-z_*$ are nonnegative, with uniform slack wherever their respective directions are supported.
+
+Put $\chi=\mathbf1_{E_\varepsilon}$ and $\rho_j=\chi g_j$, $j=0,1,2$. Use these and the $\eta_k$ as six $z$-directions. The derivative of $(L(z),H(s,z))$ in those directions has diagonal blocks $G_\chi=(\langle g_i,\chi g_j\rangle_m)$ and $p\lambda I_3$: the odd $\eta_k$ have zero $L$-pairing, and $J_i(v)$ is even. Together with the seven binary directions this makes the differential of the thirteen-coordinate map
+
+$$
+(s,z)\longmapsto(\mathcal F(s),L(z)-t,H(s,z)-p^2t)
+\tag{151.5}
+$$
+
+invertible at $(s_*,z_*)$. Here invertibility means restriction to these thirteen directions; no differential on an infinite-dimensional space is inverted.
+
+Take a small closed ball in these directions on which $s,z,1-s-z\in[0,1]$. As in Theorem 148.1, use increasing finite Borel partitions and, on each cell $E$, the original $x$-coordinate quantiles to choose a nested family $E(a)$ of mass $a$. Put $a=\int_Es\,dm$ and $b_E=\int_Ez\,dm$, select the $B$-slice $E(a)$ and the disjoint $3$-slice $E(a+b_E)\setminus E(a)$, and assign the remainder to $S$. These three-cell families match all cell masses and are continuous in symmetric difference; for the $3$-slice its change is bounded by $2|a-a'|+|b_E-b_E'|$. The actual joint density $W(x_1,x_2,x_3)=g(x_1)p_d(x_1,x_2)p_d(x_2,x_3)$ lies in $L^1(m^{\otimes3})$. Its conditional expectations on the product partitions converge in $L^1$, so the rectangular-tensor argument of (148.7) gives uniform convergence of all thirteen actual coordinates to (151.5). Their continuity follows from the bounded original source marginals as in (148.8). The same finite-dimensional Brouwer argument as (148.3)–(148.10), using the invertible thirteen-dimensional differential, therefore produces one actual common Borel partition $(S,C,B)$ satisfying
+
+$$
+\mathcal F(\mathbf1_B)=0,\qquad
+L(\mathbf1_C)=t,\qquad H(\mathbf1_B,\mathbf1_C)=p^2t.
+\tag{151.6}
+$$
+
+Thus $B$ is B8, and $C$ has all three prescribed source marginals and all three ordered two-$B$ coefficients. The same remainder $S=G\setminus(B\cup C)$ has source masses $L(\mathbf1_S)=(1-p)\mathbf1-t$, where $\mathbf1=(1,1,1)$.
+
+Finally split this same $S$ by Dvoretzky–Wald–Wolfowitz Theorem 4 with constant selector $1/2$, simultaneously for the six finite atomless measures, restricted to $S$, whose densities are
+
+$$
+g_0,g_1,g_2,\qquad
+\ell_1=gP(\mathbf1_BP\mathbf1_B),\quad
+\ell_2=P(g\mathbf1_B)P\mathbf1_B,\quad
+\ell_3=P(\mathbf1_BP(g\mathbf1_B)).
+$$
+
+The last three densities represent the three linear functionals $z\mapsto H_i(\mathbf1_B,z)$, with their actual terminals retained. The two Borel pieces $D_0,D_1$ each receive half of all six measures. Set $D_3=C$ and $D_B=B$. Since $f_0=f_1=f_S/2$, all twelve source marginals are exact. B8 and (151.6) give
+
+$$
+H(\mathbf1_B,\mathbf1_S)=p^2((1-p)\mathbf1-t),\qquad
+H(\mathbf1_B,\mathbf1_{D_0})
+=H(\mathbf1_B,\mathbf1_{D_1})
+=\tfrac12p^2((1-p)\mathbf1-t).
+\tag{151.7}
+$$
+
+These are exactly the six target coefficients with label $0$ or $1$ and two $B$'s. The three label-$3$ coefficients are (151.6), and $BBB$ is B8. A common Borel null repair completes the pointwise partition without changing any coefficient, because all three positive-time marginals are absolutely continuous with respect to $m$. $\square$
+
+**Proposition 151.2 (attribution and remaining refinement boundary).** Theorem 151.1 is a conditional source-specific composition of the inherited telescope with Meshulam–Šemrl, Brouwer and Dvoretzky–Wald–Wolfowitz. Its composition is `repo-derived`; no priority claim is attached to the mature intermediates. The precise local-dependence input is R. Meshulam and P. Šemrl, *Locally linearly dependent operators*, Pacific Journal of Mathematics **203** (2002), 441–459, [doi:10.2140/pjm.2002.203.441](https://doi.org/10.2140/pjm.2002.203.441), Theorem 2.2, with the real-field $n=3,c=1$ application already used in Lemma 147.3. The fixed-point input is L. E. J. Brouwer, *Über Abbildung von Mannigfaltigkeiten*, Mathematische Annalen **71** (1911), 97–115, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), Satz 4. The common six-measure half split uses A. Dvoretzky, A. Wald and J. Wolfowitz, *Relations among certain ranges of vector measures*, Pacific Journal of Mathematics **1** (1951), 59–74, [doi:10.2140/pjm.1951.1.59](https://doi.org/10.2140/pjm.1951.1.59), Theorem 4 and Lemma 2, pp. 66–67.
+
+The theorem constructs some B8 witness and its refinement in the same $\mathscr D_{12}(\theta)$; it does not assert that every B8 witness refines. In the anchor bookkeeping of Proposition 149.1, the six newly paid equations have labels $1$ or $3$ and two $B$'s. Together with the three label-$0$ anchor consequences and $BBB$, they are exactly the ten coefficients containing at least two $B$'s. The 24 one-$B$ and 26 zero-$B$ equations remain obligations on this same partition, so the original $F_{64}$ quantifier and target are unchanged. No identification with the separate witness of Theorem 150.2 is supplied. There is no exact-rank-two assertion for $A^D$, no full $F_{64}$ conclusion, and no new kernel, physical-realization or nonattainment assertion. The construction uses only the original $G$, endpoint, source, measure and clock, with no extra state, seed, controller, postselection or separate slot partitions.
+
+## 追加锚（本行以下为增补区）
+
+## 152. One original common partition for the pair laws and the ordered 013 coefficient
+
+**Definition 152.1 (the retained source and the thirty-seven coordinates).** Retain the complete endpoint, source and analytic telescope of Appendix II §§115–117, 123–125 and 133, including their inherited suppliers, and Definitions 134.1 and 135.1. In particular, for arbitrary original finite $a,\eta,d>0$, the carrier, product, raw Haar measure and source are
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\qquad
+(x,y,z,\zeta)(x',y',z',\zeta')
+ =(x+x',y+y',z+z',\zeta+\zeta'+xy'),\\
+d\mu=dx\,dy\,dz\,d\zeta,\qquad e=(0,0,0,0),\\
+X_1=\partial_x,\quad X_2=\partial_y+x\partial_\zeta,
+\quad X_3=\partial_z,\quad L=-\sum_{i=1}^3X_i^2,
+\quad D_\zeta=-i\partial_\zeta,\quad L\Gamma=\delta_e.
+\end{gathered}
+\tag{152.1}
+$$
+
+The positive degree-$-3$ unit-source field $\Gamma$, central units, coefficient-one zero vector $w_*$, source coefficients and actual full self-adjoint endpoint are precisely the original ones:
+
+$$
+\begin{gathered}
+S=(aL+\eta D_\zeta^2-16\sqrt{a\eta}\,\Gamma)
+       |_{C_c^\infty(G\setminus\{e\};\mathbb C)},\\
+C_{\rm src}(w_*)=1,\qquad h=w_*/\|w_*\|_{L^2(\mu)},
+\qquad C_{\rm src}(h)>0,\qquad
+\rho=A_{\rm src}(h)/C_{\rm src}(h),\\
+D(H_{\rm end})=
+ \{v\in D(S^*):A_{\rm src}(v)=\rho C_{\rm src}(v)\},
+\qquad H_{\rm end}v=S^*v,\\
+m=h^2\mu,\quad m(G)=1,\quad U_hv=hv,
+\quad K=U_h^{-1}H_{\rm end}U_h\ge0,\quad T_s=e^{-sK}.
+\end{gathered}
+\tag{152.2}
+$$
+
+Here $h$ is real and strictly positive off the source. The full conservative form, with its source coordinate, remains
+
+$$
+\begin{gathered}
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,\qquad
+\mathscr V_0=\overline{C_c^\infty(G\setminus\{e\})}^{\,(115.14)},\\
+\mathscr E[v]=\int_{G\setminus\{e\}}
+ \left(a\sum_{i=1}^3|X_iv|^2+\eta|\partial_\zeta v|^2\right)dm.
+\end{gathered}
+\tag{152.3}
+$$
+
+The original conservative diffusion starts at $e$ at time zero. Its original source-start densities satisfy
+
+$$
+\mathbb P_e(Z_s\in dx)=g_s(x)m(dx),\quad
+ g_s>0\ \ m\text{-a.e.},\quad \int g_s\,dm=1,
+\quad g_s\in L^2(m),\quad g_{s+r}=T_rg_s
+\quad(s>0,\ r\ge0).
+\tag{152.4}
+$$
+
+Keep the original epochs $2d,3d,4d$, and set
+
+$$
+\begin{gathered}
+P=T_d,\quad g=g_{2d},\quad g_j=P^jg=g_{(2+j)d}\quad(j=0,1,2),\\
+M=1+\|g_d\|_\infty<\infty,\quad c=(4M)^{-1},\quad
+\mathcal L=\{0,1,3,B\},\quad I=\{0,1,3\}.
+\end{gathered}
+\tag{152.5}
+$$
+
+For every permitted everywhere Borel representative $b$ of $g_d$ with $0<b\le M$, the prescribed common readout is
+
+$$
+f_3=cb,\qquad f_B=\tfrac14,\qquad
+f_0=f_1=(\tfrac34-cb)/2.
+\tag{152.6}
+$$
+
+It is used at all three epochs, with fresh read noises conditionally independent given the original path. For bounded real Borel classes retain
+
+$$
+\begin{aligned}
+\mathcal C(u,v,w)&=\int_GguP(vPw)\,dm,\\
+Q_{12}(u,v)&=\int_GguPv\,dm,\\
+Q_{13}(u,v)&=\int_GguP^2v\,dm,\\
+Q_{23}(u,v)&=\int_G(Pg)uPv\,dm,\\
+L_j(u)&=\langle g_j,u\rangle_m\quad(j=0,1,2).
+\end{aligned}
+\tag{152.7}
+$$
+
+Thus the operator in $Q_{13}$ is $M_gP^2$, and the operator in $Q_{23}$ is $M_{Pg}P$, as in (150.2). Write $\mathcal R=\{12,13,23\}$ and $q_r(v)=Q_r(v,v)$, with symmetric polar forms $B_r$. For a simplex tuple $u$, whose fourth component is $u_B=1-u_0-u_1-u_3$, define
+
+$$
+\mathcal H(u)=
+ \left((L_j(u_a))_{j=0,1,2;\ a\in I},
+       (Q_r(u_a,u_b))_{r\in\mathcal R;\ a,b\in I},
+       \mathcal C(u_0,u_1,u_3)\right)\in\mathbb R^{37}.
+\tag{152.8}
+$$
+
+These are nine source marginals, twenty-seven ordered pair coordinates and the individual ordered $013$ coefficient. No other moment coordinates are included.
+
+**Theorem 152.2 (conditional simultaneous pair laws and the original 013 coefficient).** Under exactly the complete retained suppliers of Definition 152.1, for every original $\theta=(a,\eta,d,b)\in\Theta$ there exists one pointwise Borel partition $D=(D_0,D_1,D_3,D_B)$ of the whole original $G$ such that
+
+$$
+\begin{gathered}
+D\in\mathscr D_{12}(\theta),\\
+Q_r(\mathbf1_{D_y},\mathbf1_{D_z})=Q_r(f_y,f_z)
+ \quad(r\in\mathcal R,\ y,z\in\mathcal L),\\
+\mathcal C(\mathbf1_{D_0},\mathbf1_{D_1},\mathbf1_{D_3})
+ =\mathcal C(f_0,f_1,f_3).
+\end{gathered}
+\tag{152.9}
+$$
+
+The quantifier order is $\forall\theta\ \exists D$, with this same $D$ in all equations. In every triple coefficient its terminal is its own actual $P\mathbf1_{D_w}$.
+
+*Proof.* All intermediate function spaces are spaces of real bounded Borel $m$-classes, except where a complex angular character or a Hilbert completion is explicitly used.
+
+### 152.A. The original invariant slack set and sector localization
+
+Use the symmetric coordinates $(r,\vartheta,z,\xi)$ of (120.4) on the connected full-measure set $\Omega=\{r>0\}$. The rotations act on $\vartheta$, and
+
+$$
+dm=rh^2\,dr\,d\vartheta\,dz\,d\xi
+\tag{152.10}
+$$
+
+has a positive smooth rotation-invariant density there. The retained heat analyticity (122.11) and rotation invariance give an analytic invariant representative $\beta$ of $g_d$ on $\Omega$. It is positive almost everywhere and bounded there by $\|g_d\|_\infty$: the essential bound extends pointwise by continuity and full support. Choose $\tau>0$ such that
+
+$$
+E=\{x\in\Omega:\beta(x)\ge\tau\},\qquad m(E)>0.
+\tag{152.11}
+$$
+
+Such a $\tau$ exists since $\beta>0$ almost everywhere. Choose an everywhere positive invariant bounded Borel representative $b^0$ of $g_d$, agreeing with $\beta$ wherever $\beta>0$ in $\Omega$, by an invariant null repair on its zero set and on $G\setminus\Omega$. Use $b^0$ in (152.6) during the proof. This leaves every target integral unchanged for the originally given $b$. On $E$ it gives $f_3\ge c\tau$, while $f_0,f_1\ge1/4$ and $f_B=1/4$ on all of $G$.
+
+For a positive angular frequency $\ell$, let $H_\ell$ be the complex character sector and $V_{E,\ell}$ its bounded Borel vectors supported in $E$. Let $V_{E,\ell}^{\mathbb R}$ denote the bounded real cosine-sine sector with frequencies $\pm\ell$. For a real pencil
+
+$$
+q_\lambda=\lambda_{12}q_{12}+\lambda_{13}q_{13}+\lambda_{23}q_{23},
+\qquad \varphi=\lambda_{12}g+\lambda_{23}Pg,\qquad A_d=T_{d/2},
+\tag{152.12}
+$$
+
+use the feature map from (127.6), restricted to the sector,
+
+$$
+Z(v)=(A_dv,A_d(\varphi v),Pv,P(gv)).
+\tag{152.13}
+$$
+
+The bounded symmetric matrix $J$ in (127.6), with $\gamma=\lambda_{13}$, represents $q_\lambda$ by $\langle JZ(v),Z(v)\rangle$ on real vectors. All its operators are bounded on $L^2(m)$ by §133.
+
+We prove the sectorwise closure equality needed on this particular $E$. If $z\in H_\ell^4$ is orthogonal to $Z(V_{E,\ell})$, then the adjoint pairing is represented by
+
+$$
+F_z=A_dz_1+\varphi A_dz_2+Pz_3+gPz_4.
+\tag{152.14}
+$$
+
+Every summand has an analytic representative on $\Omega$ by (122.11). It lies in the same character, so $F_z=e^{i\ell\vartheta}F_{z,\ell}(r,z,\xi)$ with an analytic quotient amplitude. Rotation invariance makes $E$ a quotient set times the circle, with quotient of positive Lebesgue measure by (152.10). Testing against every bounded amplitude supported in that quotient makes $F_{z,\ell}$ zero almost everywhere there. Mityagin's analytic zero-set theorem, Proposition 0, applied to its real and imaginary parts on the connected quotient $(0,\infty)\times\mathbb R^2$, makes this amplitude identically zero. Thus $z$ is orthogonal to $Z(V_{G,\ell})$. The opposite orthogonal-complement inclusion follows from $V_{E,\ell}\subset V_{G,\ell}$, proving
+
+$$
+\overline{Z(V_{E,\ell})}=\overline{Z(V_{G,\ell})}.
+\tag{152.15}
+$$
+
+The same pairing calculation on real cosine-sine amplitudes proves (152.15) for $V_{E,\ell}^{\mathbb R}$ and $V_{G,\ell}^{\mathbb R}$. Equivalently, conjugate the character calculation and take its real fixed subspace. On the common closure the form defined by $J$ has the same negative index on either dense image: approximate a basis of any finite strictly negative subspace, and its Gram matrix remains strictly negative for sufficiently close approximants. Passing through $Z$ preserves the index, since $Z$ is injective on a strictly negative subspace and a basis in its image can be lifted. This proves sectorwise equality of the real negative indices.
+
+Corollary 133.3 now supplies a negative vector in $V_{E,\ell}^{\mathbb R}$ for every positive $\ell$ and every nonzero $\lambda$. When $(\lambda_{12},\lambda_{23})\ne(0,0)$, use its source time $2d$, gap $d$ and coefficients $(\lambda_{12},\lambda_{23},\lambda_{13})$. When only $\lambda_{13}\ne0$, use the same supplier with gap $2d$ and coefficients $(\lambda_{13},0,0)$, then the same sectorwise closure argument with $P$ replaced by $P^2$. This is a statement about $q_{13}$ for the original operator; the observation epochs remain (152.5).
+
+For any infinite set $S$ of positive odd frequencies put
+
+$$
+X_{E,S}=\bigoplus_{\ell\in S}V_{E,\ell}^{\mathbb R},
+\tag{152.16}
+$$
+
+where the sum is algebraic, so every vector is bounded, Borel, odd and has finitely many angular frequencies. Distinct positive sectors have zero ordered $Q_r$ cross-pairings, because $P$ and each multiplier in (152.7) preserve sectors. Taking one negative vector in each of arbitrarily many sectors proves infinite negative index of every nonzero $q_\lambda$ on $X_{E,S}$. Intersecting an $N$-dimensional negative subspace with the kernels of $k$ homogeneous linear constraints loses at most $k$ dimensions. Consequently every nonzero pencil still has infinite negative index after any finite list of homogeneous constraints on this space. No sector localization for a non-invariant $E$ has been used.
+
+### 152.B. The six ordered functionals and their rank obstruction
+
+For $r\in\mathcal R$ let $A_r$ be the operator satisfying $Q_r(u,v)=\langle u,A_rv\rangle_m$ on real vectors. In the exact source order these operators and their adjoints are
+
+$$
+(A_{12},A_{12}^*,A_{13},A_{13}^*,A_{23},A_{23}^*)
+ =(M_gP,PM_g,M_gP^2,P^2M_g,M_{Pg}P,PM_{Pg}).
+\tag{152.17}
+$$
+
+On $X_{E,S}$ no nonzero coefficient combination of their pairings has finite rank. To see this, form the bounded operator
+
+$$
+R=\alpha_1M_gP+\alpha_2PM_g
+ +\beta_1M_gP^2+\beta_2P^2M_g
+ +\gamma_1M_{Pg}P+\gamma_2PM_{Pg}.
+\tag{152.18}
+$$
+
+Let $\chi=\mathbf1_E$. The algebraic space $X_{E,S}$ is dense in the Hilbert direct sum of the $E$-supported real sectors in $S$: truncate quotient amplitudes and then the angular sum. If the pairing map $x\mapsto\langle\cdot,Rx\rangle$ on $X_{E,S}$ had rank at most $k$, every $(k+1)$-by-$(k+1)$ evaluation determinant would vanish. Density and continuity extend these identities to the Hilbert completion, so the compression $\chi R\chi$ has rank at most $k$ there.
+
+This compression is block diagonal. A finite-rank block diagonal operator can have only finitely many nonzero blocks, since outputs in distinct blocks are independent. Choose $\ell\in S$ for which its entire real $\pm\ell$ block is zero, and complexify to the character $\ell$. For every $E$-supported input $v$ in this character, $Rv$ is analytic on $\Omega$: in (152.18) each heat factor acts at a positive time, and the outside multipliers $g,Pg$ are analytic and invariant. The compression says that $Rv$ vanishes almost everywhere on $E$. The quotient uniqueness argument from 152.A gives $Rv=0$ on all of $\Omega$, hence in $H_\ell$. For an arbitrary $u\in H_\ell$, duality then gives $\chi R^*u=0$. The outputs of $R^*$ are analytic for the same reason, so a second quotient continuation gives $R^*u=0$. Thus
+
+$$
+R|_{H_\ell}=0.
+\tag{152.19}
+$$
+
+This proves the required continuation in both input and output variables, even though $E$ need not have interior. It suffices to continue a zero block; no unproved finite-rank continuation is needed.
+
+The symmetric part of (152.19), on the real cosine-sine sector, has quadratic form
+
+$$
+(\alpha_1+\alpha_2)q_{12}
+ +(\beta_1+\beta_2)q_{13}
+ +(\gamma_1+\gamma_2)q_{23}.
+\tag{152.20}
+$$
+
+The negative tests of 152.A, or their global suppliers before localization, force all three displayed coefficient sums to vanish. The remaining relation on $H_\ell$ is
+
+$$
+[M_\phi,P]+\kappa[M_g,P^2]=0,
+\qquad \phi=\alpha g+\gamma Pg,
+\quad \alpha=\alpha_1,\ \gamma=\gamma_1,\ \kappa=\beta_1.
+\tag{152.21}
+$$
+
+Define the bounded self-adjoint operator on that sector
+
+$$
+C_0=M_\phi+\kappa(M_gP+PM_g).
+\tag{152.22}
+$$
+
+The exact ordered identity $[M_gP+PM_g,P]=[M_g,P^2]$ gives $[C_0,P]=0$. Hence $C_0$ commutes with every spectral projection of $P$. Since $P=e^{-dK}$ is injective and $\lambda\mapsto e^{-d\lambda}$ is one-to-one on $[0,\infty)$, the spectral projections of $K$ are Borel functions of $P$. Therefore $C_0$ preserves $D(K_\ell)$ and commutes with $K_\ell$ there. This conclusion concerns the actual full self-adjoint restriction, rather than a formal inversion of $P$ on all vectors.
+
+For bounded self-adjoint $A$ and $u\in D(K_\ell)$ set
+
+$$
+\mathcal D_A(u)=\langle Ku,Au\rangle_m-\langle Au,Ku\rangle_m.
+\tag{152.23}
+$$
+
+Use the genuine compact punctured core vectors of (129.11), written with a quotient covector $\omega\ne0$,
+
+$$
+u_N=e^{i\ell\vartheta}\chi_0(r,z,\xi)
+                 e^{iN\omega\cdot(r,z,\xi)},
+\qquad \chi_0\in C_c^\infty((0,\infty)\times\mathbb R^2;\mathbb R).
+\tag{152.24}
+$$
+
+Their norms are independent of $N$ and $\|Ku_N\|=O(N^2)$. The retained local smoothing and duality estimate (129.12) gives $\|Pu_N\|+\|PKu_N\|=O(N^{-j})$ for every $j$. With $H_g=M_gP+PM_g$, self-adjointness gives the form estimate
+
+$$
+|\mathcal D_{H_g}(u_N)|
+ \le2\|g\|_\infty
+       \bigl(\|Ku_N\|\|Pu_N\|+\|PKu_N\|\|u_N\|\bigr)=o(1).
+\tag{152.25}
+$$
+
+There is no assumption that an arbitrary bounded multiplier preserves $D(K)$. Only $u_N$ and $\phi u_N$ are used as compact core vectors, which they are by local smoothness. The proved commutation of $C_0$ gives $\mathcal D_{C_0}(u_N)=0$, so (152.22)–(152.25) imply $\mathcal D_{M_\phi}(u_N)=o(1)$. The exact local divergence calculation (129.15) for this invariant analytic multiplier is
+
+$$
+\mathcal D_{M_\phi}(u_N)=
+ -2iN\int|\chi_0|^2
+ \left[a\phi_r\omega_r+a\phi_z\omega_z+
+        (\eta+ar^2/4)\phi_\xi\omega_\xi\right]dm+O(1).
+\tag{152.26}
+$$
+
+Varying $\chi_0$ and $\omega$, positivity of the density and $a,\eta>0$ force $\phi_r=\phi_z=\phi_\xi=0$. Rotation invariance gives its remaining derivative zero, so connectedness makes $\phi$ constant. The source-start nonconstancy result of Corollary 126.2 now forces $\alpha=\gamma=0$. If $\kappa\ne0$, (152.21) would give $[M_g,P^2]=0$; the same injective spectral calculus and local calculation would make $g$ constant, contradicting that same source-start result. Thus $\kappa=0$, and every coefficient in (152.18) is zero. This establishes the no-finite-rank assertion, including its antisymmetric part.
+
+For $X=X_{E,S}$ apply this assertion to the six operators into the algebraic dual $X^*$,
+
+$$
+x\longmapsto\bigl[h\longmapsto Q_r(h,x)\bigr],\qquad
+x\longmapsto\bigl[h\longmapsto Q_r(x,h)\bigr]
+\quad(r\in\mathcal R).
+\tag{152.27}
+$$
+
+Their span has dimension six and no nonzero finite-rank member. The contrapositive of Meshulam–Šemrl, Theorem 2.2, over $\mathbb R$ with $n=6,c=1$, supplies an $x\in X$ for which these six functionals are independent. Indeed, local dependence would supply a nonzero operator of rank at most five. This application allows arbitrary vector spaces and the algebraic dual.
+
+### 152.C. Exact bounded corrections retaining the six functionals
+
+Choose pairwise disjoint infinite sets of positive odd frequencies, for example
+
+$$
+S_0=\{16k+1:k\ge0\},\quad
+S_1=\{16k+3:k\ge0\},\quad
+S_3=\{16k+5:k\ge0\}.
+\tag{152.28}
+$$
+
+On each $X_{E,S_a}$ the finite-dimensional sphere argument (147.6)–(147.8) applies after every finite homogeneous constraint, because 152.A supplies its exact all-pencil hypothesis. More explicitly, for each unit coefficient vector choose a five-dimensional negative subspace in the constrained space. A finite cover of the coefficient sphere supplies a finite-dimensional sum $F$ on which every unit pencil has at least five eigenvalues at most $-\delta$, for one $\delta>0$. For a target $v\in\mathbb R^3$, minimize $\|q(x)-v\|^2$ on the radius-$R$ sphere in $F$, with $R^2>\|v\|/\delta$. If $\lambda=q(x)-v\ne0$, its five-dimensional negative spectral space contains a nonzero $w$ satisfying $B_r(x,w)=0$ for all three $r$ and $(x,w)_F=0$. Along the normalized curve $R(x+sw)/\|x+sw\|$, the second derivative is
+
+$$
+4\left(q_\lambda(w)
+   -\frac{\lambda\cdot q(x)}{R^2}\|w\|^2\right)
+ \le4\|\lambda\|\|w\|^2
+           \left(-\delta+\frac{\|v\|}{R^2}\right)<0.
+\tag{152.29}
+$$
+
+Here $\lambda\cdot q(x)=\|\lambda\|^2+\lambda\cdot v\ge-\|\lambda\|\|v\|$. This contradicts minimality. Thus $q(W)=\mathbb R^3$ for each such constrained subspace $W$. This invocation of the existing correction argument finds an actual vector in a finite-dimensional space.
+
+For each $a\in I$, choose $x\in X_{E,S_a}$ from (152.27) and dual tests $h_1,\ldots,h_6$ for its six functionals, with evaluation matrix the identity. Denote these functionals, as functions of their base vector, by $\ell_i(x)(h)$, $i=1,\ldots,6$. Impose on $z\in X_{E,S_a}$ precisely the finite constraints
+
+$$
+\ell_i(z)(h_k)=0\quad(1\le i,k\le6),\qquad
+B_r(x,z)=0\quad(r\in\mathcal R).
+\tag{152.30}
+$$
+
+The preceding surjectivity gives a $z$ satisfying these constraints and $q(z)=-q(x)$. Set $x_a=x+z$. Then
+
+$$
+q_r(x_a)=0\quad(r\in\mathcal R),\qquad
+\ell_i(x_a)(h_k)=\delta_{ik}.
+\tag{152.31}
+$$
+
+Thus each $x_a$ is bounded, Borel, supported in $E$, odd, has finitely many angular frequencies in $S_a$, and has six independent ordered functionals. These are internal evaluation and polar constraints, not additional moments in (152.8). Distinct $a$ have zero ordered pair cross-pairings by (152.28).
+
+### 152.D. An exact stochastic point in the prescribed fiber
+
+For sufficiently small $t>0$ put
+
+$$
+u_a^*=f_a+t x_a\quad(a\in I),\qquad
+u_B^*=f_B-t(x_0+x_1+x_3).
+\tag{152.32}
+$$
+
+The four functions sum to one. On $E$ all four original components have a fixed positive lower bound, and outside $E$ they are unchanged. Choose $t$ so that all four components retain positive slack on $E$. All source marginals are unchanged by oddness. In each ordered pair, its two first-order terms vanish because the $f_a$ and weights are invariant; the second-order term vanishes by (152.31) for equal labels and by disjoint sectors for distinct labels.
+
+Expand $\mathcal C(u_0^*,u_1^*,u_3^*)$. Each term with one $x_a$ vanishes by oddness. Each term with two distinct $x_a$ vanishes by angular separation: the third factor is invariant, and multiplication by invariant functions and application of $P$ preserve every character. The term with three $x_a$ is odd under the half-turn and also vanishes. Hence
+
+$$
+\mathcal H(u^*)=\mathcal H(f).
+\tag{152.33}
+$$
+
+This identity is exact; no small-residual argument is used to obtain it.
+
+### 152.E. The thirty-six lower-order rows and the surviving 013 row
+
+Use independent variations of the three components $u_a$, $a\in I$, always compensating their sum in $u_B$. The nine invariant directions $\mathbf1_Eg_j$ in the respective components have marginal differential consisting of three copies of
+
+$$
+G_E=(\langle g_i,\mathbf1_Eg_j\rangle_m)_{0\le i,j\le2}.
+\tag{152.34}
+$$
+
+This matrix is positive definite. If its quadratic form vanished, the corresponding analytic invariant combination of $g,Pg,P^2g$ would vanish almost everywhere on $E$. Quotient uniqueness would make it vanish globally, contradicting Lemma 147.2. The functions are bounded by §133, so these are admissible bounded directions supported in $E$.
+
+For an odd direction $h$ varying component $a$, the pair differential is exactly
+
+$$
+D Q_r(u_i,u_j)[\delta u_a=h]
+ =t\bigl(\mathbf1_{i=a}Q_r(h,x_j)
+              +\mathbf1_{j=a}Q_r(x_i,h)\bigr),
+\qquad i,j\in I.
+\tag{152.35}
+$$
+
+The invariant $f$ terms have vanished by parity. For each diagonal pair $(a,a)$, the three functionals $Q_r(h,x_a)+Q_r(x_a,h)$ are independent on $X_{E,S_a}$: a dependence would be a dependence of the six functionals in (152.31). Choose three dual directions there varying component $a$. They affect precisely its three diagonal pair rows; every other pair row vanishes by frequency separation.
+
+For each unordered distinct pair $\{a,b\}$, choose six directions $h\in X_{E,S_b}$ varying component $a$. By (152.31) for $x_b$, their six rows
+
+$$
+\bigl(Q_r(h,x_b),Q_r(x_b,h)\bigr)_{r\in\mathcal R}
+\tag{152.36}
+$$
+
+can be made an invertible evaluation matrix. They affect precisely the six ordered rows $(a,b),(b,a)$; in particular the $(a,a)$ rows pair their $S_b$ frequencies with $S_a$ and vanish. Every remaining pair row either has no varied component or pairs with a third disjoint sector. These twenty-seven odd directions have zero marginal differential and an invertible pair differential. Together with the nine invariant directions, whose pair entries need not vanish, the lower-order thirty-six-row differential is block triangular with invertible diagonal blocks.
+
+To obtain one more row define the bounded real function
+
+$$
+\psi=gP(x_1Px_3).
+\tag{152.37}
+$$
+
+It is even and has no zero angular frequency. Indeed $x_1$ and $Px_3$ have finite angular spectra in the disjoint positive sets $S_1,S_3$ and their negatives; none of their sums is zero. Multiplication by $g$ and application of $P$ preserve the absence of the zero mode. Also $\psi\ne0$ in $L^2(m)$. The vector $x_3$ is nonzero by its independent functionals, so $Px_3$ is a nonzero analytic function on $\Omega$ by injectivity of $P$ and (122.11). Its zero set is null by analytic uniqueness. Since $x_1\ne0$, the bounded product $x_1Px_3$ is nonzero; injectivity of $P$ and $g>0$ almost everywhere then prove the assertion.
+
+Vary only $u_0$ by $\psi$, and $u_B$ by $-\psi$. All marginal derivatives vanish by its zero angular mean. Its pair derivatives vanish as well: its pairing with the invariant part of each $u_j^*$ has zero angular mean, and its pairing with the odd part is odd. Its triple derivative is
+
+$$
+\begin{aligned}
+D\mathcal C(u_0,u_1,u_3)[(\psi,0,0)]\big|_{u=u^*}
+ &=\mathcal C(\psi,u_1^*,u_3^*)\\
+ &=t^2\mathcal C(\psi,x_1,x_3)
+ =t^2\int_G\psi^2\,dm>0.
+\end{aligned}
+\tag{152.38}
+$$
+
+The constant term vanishes by zero angular mean and the two linear terms by parity. This proves that the full thirty-seven-row differential is onto. Restricting to the thirty-six directions above and this last one makes it an isomorphism.
+
+All directions involving component $3$ are supported in $E$, where that component has uniform slack. The same is true of the other earlier directions. The only new direction outside $E$ varies components $0$ and $B$, which have uniform positive slack on all of $G$. Thus bounded Borel representatives can be chosen, with one common null repair, so that a small closed ball in these thirty-seven directions consists of pointwise simplex tuples on the whole $G$. This pays the domain condition without assuming a global positive lower bound for $f_3$.
+
+### 152.F. Attainment by one finite Borel partition
+
+Write the selected directions as $e_1,\ldots,e_{37}$, including their compensating $B$ components, and put
+
+$$
+u(s)=u^*+\sum_{j=1}^{37}s_je_j,\qquad
+F(s)=\mathcal H(u(s))-\mathcal H(f),\qquad A=DF(0).
+\tag{152.39}
+$$
+
+The map is polynomial of degree at most three, $F(0)=0$ and $A$ is invertible. Choose a radius $\varepsilon>0$ so that the closed parameter ball consists of pointwise simplex tuples as just proved and
+
+$$
+\sup_{\|s\|\le\varepsilon}\|s-A^{-1}F(s)\|<\varepsilon/3.
+\tag{152.40}
+$$
+
+This follows from $F(s)=As+O(\|s\|^2)$.
+
+Use increasing finite Borel partitions $\mathcal P_n$ generated by the first $n$ members of a countable coordinate basis of the original $G$. On each positive-mass cell $A_0$ choose a nested family $A_0(v)$, $0\le v\le m(A_0)$, of Borel subsets of mass $v$, with empty and full endpoints. This is the original-coordinate construction of §148: $m\ll\mu$ makes every level set of the first original coordinate $x$ null, so $q\mapsto m(A_0\cap\{x\le q\})$ is continuous from zero to $m(A_0)$, and quantile thresholds give all intermediate masses.
+
+In the fixed label order $(0,1,3,B)$, take consecutive slices of this same nested family with masses $\int_{A_0}u_y(s)\,dm$. Do this on all cells, assigning every zero-mass cell to $B$, and call the resulting pointwise whole-$G$ Borel partition $D_n(s)$. All four cell masses agree with those of $u(s)$. If $v_k(s)=\sum_{j=1}^k\int_{A_0}u_{y_j}(s)\,dm$, the symmetric difference of the $k$th slice at $s,s'$ has mass at most
+
+$$
+|v_k(s)-v_k(s')|+|v_{k-1}(s)-v_{k-1}(s')|.
+\tag{152.41}
+$$
+
+Summing over cells and labels bounds the sum of the four symmetric-difference masses by $6\sum_y\|u_y(s)-u_y(s')\|_1$. Thus $D_n(s)$ is continuous in that metric. The quantile coordinate only chooses subsets of the original $G$.
+
+The actual three-time density is exactly
+
+$$
+W(x_1,x_2,x_3)=g(x_1)p_d(x_1,x_2)p_d(x_2,x_3)
+ \in L^1(m^{\otimes3}),\qquad W\ge0,\qquad\int W\,dm^{\otimes3}=1.
+\tag{152.42}
+$$
+
+Let $W_n$ be its conditional expectation on $\mathcal P_n^{\otimes3}$. The product partitions generate the product Borel sigma-algebra, so density of their simple functions and contractivity give $\|W-W_n\|_1\to0$. Every coordinate in (152.8) is an integral against $W$ of a product of at most three selected slot factors: the $L_j$ use slot $j+1$, the three pairs use their indicated slots, and $013$ uses all three. With $W_n$ the product-cell integrals factor, so cell-mass agreement makes all thirty-seven coordinates exactly equal for $u(s)$ and $\mathbf1_{D_n(s)}$. All factors lie in $[0,1]$, whence, with
+
+$$
+F_n(s)=\mathcal H(\mathbf1_{D_n(s)})-\mathcal H(f),
+\qquad
+\sup_{\|s\|\le\varepsilon}\|F_n(s)-F(s)\|
+ \le2\sqrt{37}\,\|W-W_n\|_1\longrightarrow0.
+\tag{152.43}
+$$
+
+Each $F_n$ is continuous for the actual density $W$, not just $W_n$. Telescoping a product bounds each coordinate difference by the sum of at most three slot differences integrated against the corresponding source marginals. These marginals are the bounded $g_0,g_1,g_2$ by §133. Consequently (152.41) makes every coordinate continuous on the parameter ball.
+
+Choose one finite $n$ so large that $\|A^{-1}\|\sup\|F_n-F\|<\varepsilon/3$. By (152.40)–(152.43), the continuous map
+
+$$
+s\longmapsto s-A^{-1}F_n(s)
+\tag{152.44}
+$$
+
+sends the closed radius-$\varepsilon$ ball into its radius-$2\varepsilon/3$ ball. Brouwer's finite-dimensional fixed-point theorem gives $s_n$ with $F_n(s_n)=0$. Thus $D=D_n(s_n)$ is one actual pointwise Borel partition with $\mathcal H(\mathbf1_D)=\mathcal H(f)$. This is attainment at one finite partition and one parameter, rather than a claim that a weak limit of indicators is an indicator.
+
+### 152.G. Recovery of the fourth label and the precise residual boundary
+
+For any bounded $v$, the original propagation and self-adjointness give the row and column sums
+
+$$
+\begin{array}{c|cc}
+ r&Q_r(v,1)&Q_r(1,v)\\ \hline
+12&L_0(v)&L_1(v)\\
+13&L_0(v)&L_2(v)\\
+23&L_1(v)&L_2(v).
+\end{array}
+\tag{152.45}
+$$
+
+Write these left and right marginal functionals as $L_r^{\rm left},L_r^{\rm right}$. For either tuple $v=\mathbf1_D$ or $v=f$, the pointwise complement identity gives
+
+$$
+\begin{aligned}
+Q_r(v_a,v_B)&=L_r^{\rm left}(v_a)-\sum_{b\in I}Q_r(v_a,v_b),\\
+Q_r(v_B,v_a)&=L_r^{\rm right}(v_a)-\sum_{b\in I}Q_r(v_b,v_a),\\
+Q_r(v_B,v_B)&=1-\sum_{a\in I}
+  \bigl(L_r^{\rm left}(v_a)+L_r^{\rm right}(v_a)\bigr)
+  +\sum_{a,b\in I}Q_r(v_a,v_b).
+\end{aligned}
+\tag{152.46}
+$$
+
+Every term on the right is already fixed by (152.8). This proves all ordered pair coordinates with label $B$. Likewise $L_j(v_B)=1-\sum_{a\in I}L_j(v_a)$ gives the fourth marginal at each epoch, proving $D\in\mathscr D_{12}(\theta)$ by (152.4)–(152.5). The $013$ equation is the last coordinate of (152.8). Restoring the originally prescribed representative $b$ changes none of these target integrals. All intermediate null repairs are harmless because all three positive-time source marginals are absolutely continuous with respect to $m$. This proves (152.9). $\square$
+
+The source-specific composition in Theorem 152.2 is `repo-derived`: the invariant-slack sector continuation and the six ordered functionals feed the same original-source thirty-seven-coordinate attainment argument. Heat analyticity, local smoothing, the principal-symbol calculation, source-start nonconstancy and the global sector negative tests are the supplied results (122.11), Corollary 126.2, §§129.C–D and Corollary 133.3. The marginal independence and the finite-dimensional correction and quantile templates are Lemmas 147.2–147.3 and Theorem 148.1. They are used within this proof, not asserted as new standalone results.
+
+The known analytic uniqueness input is B. S. Mityagin, *The zero set of a real analytic function*, [arXiv:1512.07276v1](https://arxiv.org/abs/1512.07276v1), Proposition 0; its connected-open-domain and positive-measure-zero-set hypotheses are paid in 152.A. The known local-dependence input is R. Meshulam and P. Šemrl, *Locally linearly dependent operators*, [doi:10.2140/pjm.2002.203.441](https://doi.org/10.2140/pjm.2002.203.441), Theorem 2.2, pp. 444–445; (152.27) uses its contrapositive for real vector spaces and $n=6,c=1$. The fixed-point input is Brouwer's theorem, *Über Abbildung von Mannigfaltigkeiten*, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), in its finite-dimensional closed-ball form, as used in §148. No priority claim is attached to these intermediates or to their source-specific composition.
+
+For this partition define the actual residual $\Delta_{yzw}=\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})-\mathcal C(f_y,f_z,f_w)$. All its pair sums vanish. By Proposition 150.3 it lies in $H_0^{\otimes3}$, where $H_0=\{v\in\mathbb R^{\mathcal L}:\sum_yv_y=0\}$, and its twenty-seven ambient coordinates are $\Delta_{ijk}$, $i,j,k\in I$. Theorem 152.2 pays precisely $\Delta_{013}=0$ among these. The other twenty-six equations remain obligations for the same $D$; this ambient linear count asserts neither independence nor feasibility of their nonlinear restrictions to partitions. The unchanged original objective is still $\forall\theta\ \exists D:\Phi_3(\mathbf1_D)=\Phi_3(f)$ in all sixty-four ordered coordinates. Every residual uses its actual terminal $P\mathbf1_{D_w}$, with no substitution by $Pf_w$.
+
+The all-pair witness of §150 and the B8/two-$B$ refinement witness of §151 remain separate witnesses. Theorem 152.2 imposes no arbitrary extra $L^1$ moment list, B8 condition, two-$B$ compatibility or rank-two law for $A_D[y,z]=\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_3})$. It does not settle the half-time negative-space lift, the nonsymmetric finite-index continuation or an every-overlap criterion. All its assertions retain the original full endpoint, source, measure, clock, state space and common readout. They introduce no extra seed, controller, postselection or slot-dependent partition, and supply no physical-realization assertion or counterexample to the original $F_{64}$ statement.
+
+## 追加锚（本行以下为增补区）

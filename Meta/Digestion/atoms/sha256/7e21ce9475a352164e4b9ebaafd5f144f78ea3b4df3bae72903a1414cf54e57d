@@ -1,0 +1,40 @@
+**Corollary 48.6 (new two-sign global exclusion of the q=0 endpoint).**
+For every $0<\xi\le R_\star$, no global minimizer has $q_\sigma=0$, for either
+active sign. Hence every minimizing pure phase representative has
+
+$$
+ 0<q_\sigma<\min\{1,\xi/2\}.
+\tag{48.20}
+$$
+
+**Proof.** Suppose a global minimizer had $q_\sigma=0$. By (48.19) it has a
+phase representative with the same effect and level. The pure active-level
+identity gives $x=1-\xi/4\in[3/16,1)$ and $y=\sqrt{1-x^2}>0$. In the notation
+of Section 46, $k=b-a>0$, $R_0=ax+b>0$ and, at $q=0$,
+
+$$
+ \mu=\frac{ak}{2R_0}>0,\qquad \nu=\frac{k}{2}>0,\qquad t_c=0,\qquad
+ \mathfrak D_\sigma(x,0)=\frac{4\mu\nu x^2}{1+x}>0.
+\tag{48.21}
+$$
+
+Theorem 46.4 says that the canonical corner is the unique equality case in
+this fixed $(\sigma,x,q)$ slice. Since a global minimizer cannot be improved
+inside that same slice, it must be one of the canonical pairs (46.28). On
+that pair the two feedback phases on the active pair $J$ are
+$x+iy$ and $x-iy$, hence are different. On the active optimizer effect the
+corresponding labels in (48.1) are equal: they are $h,h$ for
+$\sigma=+$ and $s,s$ for $\sigma=-$. Theorem 48.3 gives a strict actual
+same-level phase competitor, contradicting global minimality.
+
+This is a full-level conclusion. The nonphase matrices
+$U U_\sigma^\dagger=\lambda(W_2\oplus I_2)$ (with the block placed according
+to $\sigma$) and $\operatorname{Tr}W_2=2x$ from Corollary 46.5 remain genuine
+fixed-slice equality representatives. The coupled descent changes the effect
+and the trace together, so it does not alter that fixed-slice theorem; it
+shows only that none of those nonphase representatives can minimize after
+population and level are allowed to vary jointly. The exclusions at $q=1$ and
+at the scalar endpoint $x=1$ are the supplied results of Lemma 45.2,
+Theorem 45.5, Theorem 46.6 and Theorem 37.5, respectively, and are not
+claimed as new here. Thus (48.20) follows. $\square$
+

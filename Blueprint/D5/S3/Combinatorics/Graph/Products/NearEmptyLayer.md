@@ -12,7 +12,7 @@ $$\forall V \in \mathrm{Type},\; [\operatorname{Fintype}\left(V\right)] \forall 
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic: finite subcubic four-clique-free graph coloring*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
+*Acknowledgement.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic, finite chordal elimination and set-form Menger: Lean sources*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
 
 *Commentary.*
 

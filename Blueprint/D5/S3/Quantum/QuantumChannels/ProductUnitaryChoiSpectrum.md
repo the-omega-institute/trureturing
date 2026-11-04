@@ -96,7 +96,21 @@ $$\forall n: \mathbb{N}, \operatorname{dmat}\left(n\right) = \frac{1}{\operatorn
 
 I/n on pairs of indices: the Choi matrix of depol(n).
 
-**Definition 1.8 (The Choi matrix of the complementary projection).**
+**Theorem 1.8 (Matrix-unit entries of the trace-to-identity map).**
+
+$$\forall n \in \mathbb{N},\; \forall i \in \operatorname{Fin}\left(n\right),\; \forall j \in \operatorname{Fin}\left(n\right),\; \forall a \in \operatorname{Fin}\left(n\right),\; \forall b \in \operatorname{Fin}\left(n\right),\; \operatorname{depol}\left(n\right)\left(\operatorname{Matrix}.\operatorname{single}\left(i, j, 1\right), a, b\right) = \operatorname{dmat}\left(n\right)\left((i, a), (j, b)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.depol_single_eq_dmat` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* A. García-Velo, A. Ibort (2026). *Schwarz maps with symmetry*. DOI: [10.48550/arXiv.2601.02282](https://doi.org/10.48550/arXiv.2601.02282). URL: <https://arxiv.org/abs/2601.02282v1>.
+
+*Commentary.*
+
+For every natural dimension n and all i, j, a and b in Fin n, depol n applied to Matrix.single i j 1 has entry dmat n (i, a) (j, b).
+
+**Definition 1.9 (The Choi matrix of the complementary projection).**
 
 $$\forall n: \mathbb{N}, \operatorname{qmat}\left(n\right) = \operatorname{kmat}\left(n\right) - \operatorname{dmat}\left(n\right)$$
 
@@ -110,7 +124,7 @@ $$\forall n: \mathbb{N}, \operatorname{qmat}\left(n\right) = \operatorname{kmat}
 
 K − I/n: the Choi matrix of compl(n).
 
-**Theorem 1.9 (The Choi matrix grouped by factor).**
+**Theorem 1.10 (The Choi matrix grouped by factor).**
 
 $$\forall n_1, n_2: \mathbb{N}, \forall \lambda_{01}, \lambda_{10}, \lambda_{11}: \mathbb{C}, \operatorname{reindex}\left(prodProdProdComm, prodProdProdComm, \sum_{p,q} \operatorname{kron}\left(\operatorname{single}\left(p, q, 1\right), \operatorname{phi}\left(n_1, n_2, \lambda_{01}, \lambda_{10}, \lambda_{11}\right)(\operatorname{single}\left(p, q, 1\right))\right)\right) = \operatorname{kron}\left(\operatorname{dmat}\left(n_1\right), \operatorname{dmat}\left(n_2\right)\right) + \lambda_{01} \operatorname{kron}\left(\operatorname{dmat}\left(n_1\right), \operatorname{qmat}\left(n_2\right)\right) + \lambda_{10} \operatorname{kron}\left(\operatorname{qmat}\left(n_1\right), \operatorname{dmat}\left(n_2\right)\right) + \lambda_{11} \operatorname{kron}\left(\operatorname{qmat}\left(n_1\right), \operatorname{qmat}\left(n_2\right)\right)$$
 
@@ -122,7 +136,7 @@ $$\forall n_1, n_2: \mathbb{N}, \forall \lambda_{01}, \lambda_{10}, \lambda_{11}
 
 The Choi matrix C_Φ = Σ_{p,q} E_pq ⊗ Φ(E_pq) is indexed by pairs ((p₁, p₂), (r₁, r₂)) of an input and an output index. Reindexing both sides by the regrouping prodProdProdComm, which sends ((p₁, p₂), (r₁, r₂)) to ((p₁, r₁), (p₂, r₂)), turns C_Φ into the weighted sum of Kronecker products of the single-factor Choi matrices dmat and qmat, with the weights of phi. Here kron is the Kronecker product of matrices. In the basis of I, I ⊗ K, K ⊗ I and K ⊗ K this is the Choi matrix a I + b (I ⊗ K₂) + c (K₁ ⊗ I) + d (K₁ ⊗ K₂) displayed in the source, with a = (1 − λ₀₁ − λ₁₀ + λ₁₁)/(n₁n₂), b = (λ₀₁ − λ₁₁)/n₁, c = (λ₁₀ − λ₁₁)/n₂ and d = λ₁₁.
 
-**Definition 1.10 (The conjectured Choi spectrum).**
+**Definition 1.11 (The conjectured Choi spectrum).**
 
 $$claim \Leftrightarrow (\forall n_1, n_2: \mathbb{N}, 1 \leq n_1, 1 \leq n_2 \Rightarrow \forall \lambda_{01}, \lambda_{10}, \lambda_{11}: \mathbb{C}, \operatorname{charpoly}\left(\sum_{p,q} \operatorname{kron}\left(\operatorname{single}\left(p, q, 1\right), \operatorname{phi}\left(n_1, n_2, \lambda_{01}, \lambda_{10}, \lambda_{11}\right)(\operatorname{single}\left(p, q, 1\right))\right)\right) = (X - \frac{1 + (\operatorname{cast}\left(n_2\right)^{2}-1)\lambda_{01} + (\operatorname{cast}\left(n_1\right)^{2}-1)\lambda_{10} + (\operatorname{cast}\left(n_1\right)^{2}-1)(\operatorname{cast}\left(n_2\right)^{2}-1)\lambda_{11}}{\operatorname{cast}\left(n_1\right) \operatorname{cast}\left(n_2\right)}) (X - \frac{1 + (\operatorname{cast}\left(n_2\right)^{2}-1)\lambda_{01} - \lambda_{10} - (\operatorname{cast}\left(n_2\right)^{2}-1)\lambda_{11}}{\operatorname{cast}\left(n_1\right) \operatorname{cast}\left(n_2\right)})^{n_1^{2}-1} (X - \frac{1 - \lambda_{01} + (\operatorname{cast}\left(n_1\right)^{2}-1)\lambda_{10} - (\operatorname{cast}\left(n_1\right)^{2}-1)\lambda_{11}}{\operatorname{cast}\left(n_1\right) \operatorname{cast}\left(n_2\right)})^{n_2^{2}-1} (X - \frac{1 - \lambda_{01} - \lambda_{10} + \lambda_{11}}{\operatorname{cast}\left(n_1\right) \operatorname{cast}\left(n_2\right)})^{(n_1^{2}-1)(n_2^{2}-1)})$$
 
@@ -134,7 +148,7 @@ $$claim \Leftrightarrow (\forall n_1, n_2: \mathbb{N}, 1 \leq n_1, 1 \leq n_2 \R
 
 The conjecture of Remark V.2 of arXiv:2601.02282v1: for every n₁ and n₂, the eigenvalues of the Choi matrix C_Φ = Σ_{p,q} E_pq ⊗ Φ(E_pq) are the four values of Lemma V.8, with multiplicities 1, n₁² − 1, n₂² − 1 and (n₁² − 1)(n₂² − 1). The characteristic polynomial records the eigenvalues with their algebraic multiplicities; when two of the four values coincide their multiplicities add. The source states the formulas for n₁, n₂ ∈ {2, 3} and real weights; here n₁, n₂ ≥ 1 and the weights are complex. In the four roots the dimensions are cast to ℂ; the multiplicity exponents n₁² − 1, n₂² − 1 and (n₁² − 1)(n₂² − 1) are natural numbers.
 
-**Theorem 1.11 (The Choi spectrum in every dimension).**
+**Theorem 1.12 (The Choi spectrum in every dimension).**
 
 $$claim$$
 
@@ -158,6 +172,7 @@ Write ω for the vector of ℂ^n ⊗ ℂ^n with entry 1 at the pairs (i, i) and 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.claim`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.compl`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.depol`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.depol_single_eq_dmat`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.dmat`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.kmat`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.omega`

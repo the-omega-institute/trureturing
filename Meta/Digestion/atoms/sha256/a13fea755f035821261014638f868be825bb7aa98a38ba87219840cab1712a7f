@@ -1,0 +1,33 @@
+## 来源与版本关系
+
+<a id="ref-atlas"></a>
+
+1. trureturing，[*Quantum Origin: Endogenous Cut Atlas and Discrete Reconstruction Boundaries III*](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md)，固定提交 `c63ab162315f`，尤其 §§1、4、11、16、34–35。普通保迹期望、有限分块、GNS、连续正规化子及可见／隐藏预算为既有结果。
+<a id="ref-static"></a>
+
+2. trureturing，[*Omega Static Compatibility Fiber Theory*](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)，同一固定提交，§12 的相容局部态、闭包与 GNS 构造。
+<a id="ref-foundations"></a>
+
+3. trureturing，[*Contextual Spacetime Quantum: Foundations and Records*](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/ContextualSpacetimeQuantum/001_016_FOUNDATIONS_AND_RECORDS.md)，同一固定提交，§4 的有限后续观察闭包和维数终止界。
+<a id="ref-v78"></a>
+
+4. trureturing，[*Endogenous Closure, Finite Root Certificates and Outcome Kernel Recursion, V78 Continuation*](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_ENDOGENOUS_CLOSURE_FINITE_ROOT_CERTIFICATES_AND_OUTCOME_KERNEL_RECURSION_V78_CONTINUATION.md)，同一固定提交，尤其 §9 的结果核递归、粗化与记录接口；另参见 [*Unified Relational Axioms, V78 Synthesis*](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_ENDOGENOUS_RELATIONAL_QUANTUM_THEORY_UNIFIED_RELATIONAL_AXIOMS_V78_SYNTHESIS.md)，§17.2 的历史初始切向、恒曲率圆族及椭圆读出边界。
+<a id="ref-v79"></a>
+
+5. trureturing，[*Binary Reversal Compatibility, Finite Phase Certificates and Quantum Readout Reconstruction, V79*](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_BINARY_REVERSAL_COMPATIBILITY_FINITE_PHASE_CERTIFICATES_AND_QUANTUM_READOUT_RECONSTRUCTION_V79.md)，同一固定提交，尤其 §7 的二元关系球、尺度与父子合成。
+<a id="ref-n2"></a>
+
+6. trureturing，[*Shared History Sufficiency, Minimal Internal Completion and Dimension Budget, N2 V78*](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_SHARED_HISTORY_SUFFICIENCY_MINIMAL_INTERNAL_COMPLETION_AND_DIMENSION_BUDGET_N2_V78_CONTINUATION.md)，同一固定提交，§7 的有效维数、遗漏尺度和归一化边界。
+<a id="ref-sahiner"></a>
+
+7. B. Sahiner，*Direction curves of tangent indicatrix of a curve*，https://arxiv.org/abs/1808.02245 (2018)，§2 的切向像与 Frenet 背景。本文球面递归及逆向条件均在正文解析展开。
+<a id="ref-takesaki"></a>
+
+8. M. Takesaki，*Conditional expectations in von Neumann algebras*，Journal of Functional Analysis **9**(3), 306–321 (1972)，https://doi.org/10.1016/0022-1236(72)90004-3。保态条件期望与模不变性的原始来源；本文另给有限矩阵的完整证明。
+<a id="ref-bardet"></a>
+
+9. I. Bardet, A. Capel, C. Rouzé，*Approximate Tensorization of the Relative Entropy for Noncommuting Conditional Expectations*，https://arxiv.org/abs/2001.07981，§2.3。该文同时使用 KMS 内积；本文定义采用 $\operatorname{tr}(\rho x^\dagger y)$ 的 GNS 内积，两者不在定义层面混同。
+<a id="ref-previous"></a>
+
+10. 本对话连续研究稿 v84–v87，尤其 v86 的跨输入共同场相容，以及 v87 的相对锚、完整伙伴反作用、整体圆／局部椭圆和补向诱导曲率。这些是本轮连续性前件，不宣称已经合入上述固定仓库提交。
+

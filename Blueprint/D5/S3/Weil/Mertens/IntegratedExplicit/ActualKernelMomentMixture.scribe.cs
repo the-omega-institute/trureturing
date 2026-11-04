@@ -5,6 +5,11 @@ internal sealed class ActualKernelMomentMixtureDocument : IScribeDocumentDefinit
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The complete actual-K moment certificate.",
         H("Original full-kernel certificate source"), Blocks(
+            Describe.Lean(DescribeId.Create("complete-positive-mixture-head-gamma"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture.complete_positive_mixture_head_gamma"),
+                H("Finite Gamma head below the complete mixture"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For D>0, q>=1, m>=1 and delta_q<=1/m, the first M terms give Re Q_P >= E sum_{n<M} c_n 2lambda_n/(1+lambda_n^2/m), with the literal positive mixture coefficients and rates. Each term consumes the division-free Gamma gap certificate; positive energy permits cancellation inside that branch, while E=0 follows from the nonnegative exponential form. The existing complete-tail theorem keeps every omitted term nonnegative. The small-window endpoints consume M=20 with m=138 and m=1600."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("complete-positive-mixture-logarithmic"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture.complete_positive_mixture_logarithmic"),
                 H("complete positive mixture logarithmic"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

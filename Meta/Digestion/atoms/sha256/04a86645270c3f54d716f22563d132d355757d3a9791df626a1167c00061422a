@@ -1,0 +1,61 @@
+### 49.10. Suppliers, consumer and remaining original boundary
+
+The load-bearing suppliers are the original normalized-effect and
+same-feedback identities (23.9)--(23.12), the attained selector and
+strict convexity of Theorem 37.5, the selected inequalities (41.4),
+the exact phase chart and Hessian (43.2)--(43.14), the strict
+same-feedback all-effect neighborhood of Theorem 40.4, and the coherent
+triangle identity and five-term remainder (46.18)--(46.24).
+The selector is always the positive geometric one. No assertion that
+$V$ or $N$ is globally minimizing is used as a premise. The present
+root system, monotonicity argument, rational certificates and relaxed
+quartic calculation are explicit finite-dimensional deductions from
+those suppliers. The analytic steps apply the ordinary real analytic
+implicit function theorem with the positive invertible stable block
+displayed in (49.34), followed by Taylor's theorem. No additional
+literature theorem about synchronization or bifurcation is a premise,
+and no literature-exhaustiveness or priority claim is made.
+
+The original-domain consumer is (49.41)--(49.46): all normalized positive
+effects at nearby **phase** feedbacks are included on the exact original
+level; the zero remains locally isolated, and immediate right levels
+have strict original competitors in both selected orientations. On the
+left, Theorem 43.3 and the now proved firstness give phase local
+isolation at every selected level $0<\xi<\xi_*$. The quartic result
+adds the endpoint, so phase local isolation holds through $\xi_*$.
+For $\xi_*<\xi<4$, the negative determinant and Theorem 36.5 supply
+strict original competitors at each selected level. This last statement
+does not require these competitors to be global minimizers.
+
+The full first-loss/equality problem remains unresolved. In particular
+the phase local result does not exclude a separated phase contact at an
+earlier level, locate $\alpha$ or $\beta$, prove their equality, or
+establish a global geometric-equality prefix ending at $\xi_*$. Global
+purity alone from Theorem 45.5 does not fill these gaps.
+
+For global minimizers, Theorem 48.5 of Continuation III supplies the
+stronger statement
+$\mathcal A_\xi=\mathcal A_{\mathrm{ph,p},\xi}=\mathcal E_\xi(a_\xi)$
+for $0<\xi\le13/4$: every actual global minimizer is pure phase, with
+all common scalar representatives retained. By (49.5),
+$\xi_*<61/25<13/4$, so this result applies at the selected zero and
+throughout a sufficiently small two-sided level neighborhood of it.
+Thus no additional nonphase global-minimizing lift classification or
+variance-zero lift condition remains to be proved on this interval.
+The phase endpoint value $a_\xi$ and the set
+$\mathcal E_\xi(a_\xi)$ remain unevaluated. Their full-level ordering
+against the selected $V(\xi)$, including both signs, every population
+and all attained phase configurations, is still required; neither
+$N(\xi)$ nor $V(\xi)$ is assumed globally optimal.
+
+Global phase rigidity does not classify arbitrary $U(4)$ local minima,
+and no extension of that global theorem beyond $13/4$ is used. In
+particular it does not exclude earlier separated phase contact or
+settle the first-loss and equality questions above. The local minima
+proved here remain minima on the phase feedback part of the original
+level, including all effects there. This article makes no unrestricted
+unitary local-minimum classification, no global equality completion,
+and no claim about an empirical quantum origin, state preparation,
+reset, dynamics or physical realization. These are paper proofs and
+algebraic certificates; no Lean, kernel or digestion status is asserted.
+

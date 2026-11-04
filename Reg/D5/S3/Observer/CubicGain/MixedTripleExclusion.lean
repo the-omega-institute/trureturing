@@ -30,7 +30,7 @@ abbrev arena : Arena where
     (_hreads : ∀ W ∈ T, readAt W [] 0 = a₀ ∧ readAt W [true] 1 = j ∧
       readAt W [false] 1 = m ∧ readAt W v 2 = b), ¬ R.readout () v T = true
 
-private def legalWorld (x r : ℝ) (hx : 0 < x) (hr : 0 < r)
+def legalWorld (x r : ℝ) (hx : 0 < x) (hr : 0 < r)
     (c : Coeff 3) (hc : c ≠ 0) (d : ℝ) : World3 :=
   ⟨sourceChart x r, source_chart_legal x r hx hr, c, hc, d⟩
 

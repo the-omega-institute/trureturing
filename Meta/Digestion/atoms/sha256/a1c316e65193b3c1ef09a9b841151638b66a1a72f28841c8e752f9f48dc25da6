@@ -1,0 +1,32 @@
+### 命题 3.2（候选的有限矩阵证书）
+
+<a id="prop-rank"></a>
+
+设 $n=\dim W$、$m=\dim\mathfrak g$，并定义
+
+$$
+E_x:\mathfrak g\to W,\qquad E_x(K)=Kx.
+$$
+
+在紧作用背景下，给定非零停住对满足 $Q8$，当且仅当
+
+$$
+\boxed{m=n,\qquad\operatorname{rank} A=n-1,\qquad\operatorname{rank} E_x=n-1.}
+\tag{Q8.1}
+$$
+
+**证明。**
+若 $Ay=0$，则 $(0,[y])\in\mathcal T_{A,x}$。单值性迫使 $[y]=0$，故 $\ker A=\mathbb R x$。同理 $Kx=0$ 迫使 $K\in\mathbb R A$，故 $\ker E_x=\mathbb R A$。两个商空间同构给 $m-1=n-1$，得到所列秩。
+
+反向，紧性给正定 $G$-不变内积 $B_0$，使每个 $K\in\mathfrak g$ 斜对称。因此 $\operatorname{im}A$ 与 $\operatorname{im}E_x$ 都包含于 $x^\perp$。所列维数迫使两个像都恰为 $x^\perp$，两个核分别为 $\mathbb R x,\mathbb R A$。于是
+
+$$
+[y]\longmapsto Ay,\qquad[K]\longmapsto-Kx
+$$
+
+分别是到同一个 $x^\perp$ 的同构；复合其中一个的逆就给所需双射图。
+
+这个证书是在已经识别的完整原 $W,\mathfrak g$ 中有限地计算。一个基点并不意味着只看一条概率或有限抽样就已排除全部未知未来方向。
+
+<a id="section-4"></a>
+

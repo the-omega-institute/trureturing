@@ -1,0 +1,19 @@
+### 3.2 C129 的奇异续写成为推论
+
+取旧有限列表与一条新历史，其正表写成
+$\left(\begin{smallmatrix}G&b\\b^*&q\end{smallmatrix}\right)$。若 $u\in\operatorname{ker} G$，对应旧组合自比较为零，根空间结论迫使 $u^*b=0$；故 $b\in\operatorname{Ran} G$。
+此时才引入数学计算用的 $c=G^+b$。在 $(-c,1)$ 上评价得到
+$s=q-b^*G^+b\ge0$，选 $r$ 满足 $|r|^2=s$，恢复
+
+<a id="eq-c130-recovers-c129"></a>
+
+$$
+G_{L+h}=\begin{pmatrix}G&Gc\\c^*G&c^*Gc+|r|^2\end{pmatrix}.
+\tag{5}
+$$
+
+若 $G=0$，结论先强制 $b=0$，再有 $q=|r|^2$；所有奇异边界均保留。伪逆和新余量是定理中的计算坐标，未回到本轮候选的输入。
+
+反向，从空表反复使用这一块式，可写成
+$T^*\operatorname{diag}(G,|r|^2)T$，其中 $T=\left(\begin{smallmatrix}I&c\\0&1\end{smallmatrix}\right)$；归纳得到每张有限表正，再由定理 [2.3](#thm-c130-psd) 恢复本轮互读界。因此两种表达选择相同的核类，追加次序不是正性的额外来源。
+

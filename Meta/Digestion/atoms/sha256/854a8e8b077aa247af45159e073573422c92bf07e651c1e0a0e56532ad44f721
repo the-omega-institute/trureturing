@@ -1,0 +1,46 @@
+## 七、这对 AURIC 的递归证明意味着什么？
+
+现在可以将你的构想写成以下严格结构：
+
+$$
+\boxed{
+\text{完整边界酉算子}
+\;\longrightarrow\;
+\text{两个正交读出}
+\;\longrightarrow\;
+\text{实际误差空间}
+\;\longrightarrow\;
+\text{有限矩阵中的负见证}.
+}
+$$
+
+其中每一项都有明确对象：
+
+$$
+M_g,\qquad
+(T_g,H_g),\qquad
+K_J,\qquad
+\mathcal L(p^2).
+$$
+
+而且归一化始终保持：
+
+$$
+T_g^*T_g+H_g^*H_g=I,
+$$
+
+$$
+\varepsilon=\|H_g1\|^2\in[0,1].
+$$
+
+这说明误差完全可以被归一化、可以被三轴表示、可以递归展开，也可以保持稳定。
+
+但它同时具有一个不能靠换坐标消除的维数：
+
+$$
+\operatorname{rank}H_g=2M.
+$$
+
+<!-- editorial-note: n32 begin -->
+<a id="n32"></a>
+

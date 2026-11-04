@@ -2,7 +2,7 @@
 bibkey: traversogianini2026brooks
 authors: Juan Pablo Traverso Gianini
 year: 2026
-title: "BrooksSubcubic and finite chordal elimination: Lean source"
+title: "BrooksSubcubic, finite chordal elimination and finite Menger certificates: Lean sources"
 doi: null
 url: https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic
 claim: "Subcubic four-clique-free graphs are three-colorable; finite chordal graphs are exactly those admitting perfect elimination rankings."
@@ -14,6 +14,8 @@ strata_touched:
   - D5/S3/Combinatorics/Graph/Chordal/Dirac
   - D5/S3/Combinatorics/Graph/Chordal/EliminationForest
   - D5/S3/Combinatorics/Graph/Chordal/Characterization
+  - D5/S3/Combinatorics/Graph/Walks/MengerCertificates
+  - D5/S3/Combinatorics/Graph/Walks/EdgeMengerCertificates
 license: Apache-2.0
 triage: anchor
 ---
@@ -172,3 +174,74 @@ and migrate affected consumers and frozen records. Upstream acceptance alone
 does not retire the transplant. This selection asserts no graph algorithm,
 finite enumeration bound, maximal-clique classification or interval-graph
 characterization.
+
+
+## Finite set-form Menger certificates
+
+Juan Pablo Traverso Gianini, *Menger's theorem*, immutable source
+[jtraverso/menger-hamiltonian@35c5f684f9bfbd244bd0999ce725623ab571adb6](https://github.com/jtraverso/menger-hamiltonian/tree/35c5f684f9bfbd244bd0999ce725623ab571adb6).
+The proof follows the second proof of Diestel, *Graph Theory*, Theorem 3.3.1
+(Böhme, Göring, Harant), as stated by the source. This is known mathematics,
+received as attributed proof source rather than an originality claim.
+
+For every finite vertex type V, simple undirected G and arbitrary finite terminal
+sets A and B, a finite vertex separator X meets the support of every A-to-B walk,
+and there are exactly |X| paths from A to B with pairwise disjoint vertex supports.
+Every family of m pairwise vertex-disjoint A-to-B walks satisfies m ≤ |Y| for every
+separator Y. Empty V, empty terminal sets and A intersect B are included. Supports
+include endpoints; separators may contain endpoints; zero-length paths are allowed.
+The weak-duality clause imposes no IsPath premise. Directed, infinite-vertex,
+edge-disjoint and two-terminal variants are outside this result.
+
+The received live source slice is MengerHamilton/MengerCore.lean through
+fam_of_le and the set-form Separates, card_le_of_separates and
+exists_separator_and_paths proofs in MengerHamilton/Menger.lean. The internal Fam
+invariant additionally requires each path to meet A only at its start and B only
+at its end; splicing consumes this invariant. The public theorem projects away
+these internal cleanliness clauses without restricting its inputs. One canonical
+Separates predicate carries the full walk-support semantics.
+
+The source pins Lean v4.35.0-rc3 and Mathlib
+c55e6e786f49471c72fbddbec5415808896aec1e; the receiver pins Lean v4.35.0 and
+Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. This mismatch excludes dependency
+form. The A17.2 port preserves source proof attribution and the full license in
+docs/reports/licenses/menger-hamiltonian-LICENSE.txt. Copyright (c) 2026 Juan Pablo
+Traverso Gianini. The immutable recursive source tree has 31 entries and contains
+no NOTICE path. The received source bytes have SHA-256:
+
+- Menger.lean: e297798fc564b1922e22b840a925b1c58b41e31246228afd8ade5dff43c0020e.
+- MengerCore.lean: 2222b03a08e2c238d415133b30ea337086d1e4c6c87b4eca29010885ded80700.
+- LICENSE: c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4.
+
+Retire the port when this repository's own pinned Mathlib contains an equivalent
+entire finite set-form certificate and arbitrary-walk duality, after migrating
+consumers lawfully to direct applications. An upstream acceptance event alone is
+not the retirement predicate.
+
+
+## Finite edge-Menger certificates
+
+The same immutable Menger source supplies the finite edge theorem:
+for every finite vertex type V, simple undirected graph G, natural k and vertices
+u,v, G.IsEdgeReachable k u v if and only if there are k paths from u to v whose
+unordered edge lists are pairwise disjoint. The native predicate quantifies over
+every S : Set(Sym2 V) with S.encard < (k : ENat), including nonedges, and requires
+reachability in G.deleteEdges S. The statement includes k=0, u=v, empty V,
+edge-free graphs, adjacency and nil paths. For u=v a constant nil family works
+for every k; internal vertices may be shared by different paths.
+
+The exact received slice at commit 35c5f684f9bfbd244bd0999ce725623ab571adb6 is
+MengerHamilton/MengerCore.lean lines 422–470 (lift_to_lineGraph, walk_in_edge,
+lower_from_lineGraph) and MengerHamilton/Menger.lean lines 179–235
+(isEdgeReachable_iff). The receiver directly consumes the first conjunct of its
+public MengerCertificates.exists_separator_paths_and_weak_duality on the line
+graph and local incident-edge terminal sets. It lowers walks before bypassing
+them to paths, retaining edge containment. The global IsEdgeConnected wrapper
+and the vertex induction are outside this selection.
+
+The source pins, file hashes, complete Apache license, copyright, no-NOTICE
+reading and source-stated Diestel Theorem 3.3.1 (Böhme, Göring, Harant)
+attribution above also apply to this slice. The original Diestel text is not a
+checked source here. No novelty is claimed. Retire this edge port only when the
+receiver's own adopted Mathlib pin supplies the equivalent entire finite edge
+theorem and affected consumers and records have migrated lawfully.
