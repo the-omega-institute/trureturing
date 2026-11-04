@@ -506,7 +506,7 @@ private abbrev GoldenField :=
 private def goldenEmbedding : GoldenField →ₐ[ℚ] ℝ :=
   QuadraticAlgebra.lift ⟨Real.goldenRatio, by
     simpa only [Rat.smul_def, Rat.cast_one, one_mul, smul_eq_mul, mul_one,
-      ← pow_two] using Real.goldenRatio_sq⟩
+      ← pow_two, one_pow, add_comm] using Real.goldenRatio_sq⟩
 
 private theorem target_nonintegral :
     ¬ IsIntegral ℤ emptyTarget ∧ ¬ IsIntegral ℤ referenceTarget := by
@@ -515,23 +515,40 @@ private theorem target_nonintegral :
       ¬ IsIntegral ℤ (goldenEmbedding a) := by
     intro h
     have ha : IsIntegral ℤ a :=
-      (isIntegral_algHom_iff goldenEmbedding goldenEmbedding.injective).mp h
+      (isIntegral_algHom_iff (goldenEmbedding.restrictScalars ℤ)
+        goldenEmbedding.injective).mp h
     exact hni (hn ▸ Algebra.isIntegral_norm ℚ ha)
   have he : goldenEmbedding (⟨9/11,-5/11⟩ : GoldenField) = emptyTarget := by
-    simp [goldenEmbedding, QuadraticAlgebra.lift, emptyTarget, Real.goldenRatio]
+    simp [goldenEmbedding, QuadraticAlgebra.lift, emptyTarget, Real.goldenRatio, Rat.smul_def]
     ring
   have hr : goldenEmbedding (⟨-14/11,9/11⟩ : GoldenField) = referenceTarget := by
-    simp [goldenEmbedding, QuadraticAlgebra.lift, referenceTarget, Real.goldenRatio]
+    simp [goldenEmbedding, QuadraticAlgebra.lift, referenceTarget, Real.goldenRatio, Rat.smul_def]
     ring
   constructor
   · rw [← he]
     apply norm_obstruction _ (1/11)
-    · norm_num [Algebra.norm_apply, QuadraticAlgebra.norm]
-    · norm_num [Rat.isIntegral_iff]
+    · change (DistribSMul.toLinearMap ℚ GoldenField
+        (⟨9/11,-5/11⟩ : GoldenField)).det = 1/11
+      rw [QuadraticAlgebra.det_toLinearMap_eq_norm]
+      norm_num [QuadraticAlgebra.norm]
+    · intro h
+      obtain ⟨z,hz⟩ := (IsIntegrallyClosed.isIntegral_iff (R := ℤ)).mp h
+      change (z : ℚ) = 1 / 11 at hz
+      have hh : (11 : ℚ) * (z : ℚ) = 1 := by rw [hz]; norm_num
+      have hh' : 11 * z = 1 := by exact_mod_cast hh
+      omega
   · rw [← hr]
     apply norm_obstruction _ (-1/11)
-    · norm_num [Algebra.norm_apply, QuadraticAlgebra.norm]
-    · norm_num [Rat.isIntegral_iff]
+    · change (DistribSMul.toLinearMap ℚ GoldenField
+        (⟨-14/11,9/11⟩ : GoldenField)).det = -1/11
+      rw [QuadraticAlgebra.det_toLinearMap_eq_norm]
+      norm_num [QuadraticAlgebra.norm]
+    · intro h
+      obtain ⟨z,hz⟩ := (IsIntegrallyClosed.isIntegral_iff (R := ℤ)).mp h
+      change (z : ℚ) = -1 / 11 at hz
+      have hh : (11 : ℚ) * (z : ℚ) = -1 := by rw [hz]; norm_num
+      have hh' : 11 * z = -1 := by exact_mod_cast hh
+      omega
 
 /-- Raw events in any original native tree are algebraic integers and hence
 cannot equal either of the two nonintegral reference-comparison masses. -/

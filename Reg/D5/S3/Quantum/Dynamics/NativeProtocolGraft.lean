@@ -111,6 +111,91 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
+
+namespace Arithmetic
+
+structure Event (L : Type) where
+  tree : NativeTree L
+  event : Path tree → Basis → Bool
+
+abbrev signature : Signature where
+  Params := Type
+  State := Event
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => eventMass x.tree x.event) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => emptyTarget) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (L : Type) (T : NativeTree L) (e : Path T → Basis → Bool),
+    IsIntegral ℤ (r.readout () L ⟨T,e⟩) ∧
+      r.readout () L ⟨T,e⟩ ≠ emptyTarget ∧
+      r.readout () L ⟨T,e⟩ ≠ referenceTarget
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact (h Unit (.leaf ()) (fun _ _ => false)).2.1 rfl
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  refine ⟨Unit,⟨.leaf (),fun _ _ => false⟩,⟨.leaf (),fun _ _ => true⟩,?_⟩
+  change eventMass ((.leaf ()) : NativeTree Unit) (fun _ _ => false) ≠
+    eventMass ((.leaf ()) : NativeTree Unit) (fun _ _ => true)
+  simp [eventMass, mass, operator, omega0]
+
+def family : Registration arena (type_of% (@original_event_arithmetic)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨original_event_arithmetic,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected,?_,?_,rejected_law⟩
+      · intro j h
+        exact (h (Subsingleton.elim _ _)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@original_event_arithmetic) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Dynamics.NativeProtocolGraft.original_event_arithmetic.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Dynamics.NativeProtocolGraft.Arithmetic.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => eventMass x.tree x.event)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms registration
+end Arithmetic
+
 #print axioms family
 #print axioms registration
 end Reg.D5.S3.Quantum.Dynamics.NativeProtocolGraft
