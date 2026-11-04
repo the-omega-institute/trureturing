@@ -44,7 +44,7 @@ theorem exists_integer_negative_family {ι : Type*} {k : ℕ} (z w : ι → ℂ)
   let N := Finset.univ.sup (fun j => (p j).natDegree)
   let A : Fin k → Fin (N + 1) → ℝ := fun j a => (p j).coeff a
   have hdegree (j : Fin k) : (p j).natDegree < N + 1 :=
-    Nat.lt_succ_of_le (Finset.le_sup (Finset.mem_univ j))
+    Nat.lt_succ_of_le (Finset.le_sup (f := fun j => (p j).natDegree) (Finset.mem_univ j))
   have heval (j : Fin k) (x : ℂ) : (p j).eval₂ Complex.ofRealHom x =
       ∑ a : Fin (N + 1), (A j a : ℂ) * x ^ (a : ℕ) := by
     rw [Polynomial.eval₂_eq_sum_range' Complex.ofRealHom (hdegree j)]
