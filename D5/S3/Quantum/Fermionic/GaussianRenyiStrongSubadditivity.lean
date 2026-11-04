@@ -45,7 +45,7 @@ def claim : Prop :=
           fermionicGaussianRenyiEntropy α (reducedCovariance G (A ∪ B ∪ C)) +
             fermionicGaussianRenyiEntropy α (reducedCovariance G B)
 
-private def interpolation {ι : Type*} [Fintype ι] [DecidableEq ι]
+private noncomputable def interpolation {ι : Type*} [Fintype ι] [DecidableEq ι]
     (G : Matrix ι ι ℝ) (u : ℝ) : Matrix ι ι ℂ :=
   1 + (u : ℂ) • (Complex.I • G.map Complex.ofReal)
 
@@ -106,13 +106,15 @@ private lemma interpolation_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
     refine ⟨Matrix.isSymm_one, ?_⟩
     rw [Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one]
     simpa (config := { congrConsts := false }) only
-      [interpolation, Complex.ofReal_one, one_smul] using
-      (interpolation_nonneg_iff G h 1).mpr (fun i => by
-        have hi := (abs_le.mp (hb i)).1
-        simpa (config := { congrConsts := false }) only [one_mul] using
-          (show 0 ≤ 1 + h.eigenvalues i by linarith))
+      [Complex.ofReal_one, one_smul] using
+      (show (1 + ((1 : ℝ) : ℂ) • (Complex.I • G.map Complex.ofReal)).PosSemidef from
+        (interpolation_nonneg_iff G h 1).mpr (fun i => by
+          have hi := (abs_le.mp (hb i)).1
+          simpa (config := { congrConsts := false }) only [one_mul] using
+            (show 0 ≤ 1 + h.eigenvalues i by linarith)))
+  change (1 + (u : ℂ) • (Complex.I • G.map Complex.ofReal)).PosDef
   simpa (config := { congrConsts := false }) only
-    [interpolation, Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
+    [Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
     D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.shifted_posDef
       (1 : Matrix ι ι ℝ) G hfull
       (by
@@ -247,11 +249,20 @@ private lemma mode_interpolation_det {n : ℕ}
     ((interpolation G u).submatrix
       (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val).det =
       (interpolation (reducedCovariance G X) u).det := by
-  simpa (config := { congrConsts := false }) only [interpolation, reducedCovariance,
-    Matrix.submatrix_one _ Subtype.val_injective,
-    Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
-    D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.mode_interpolation_det
-      (1 : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) G Y X hYX u
+  have hd := D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.mode_interpolation_det
+    (1 : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) G Y X hYX u
+  change (((1 : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ).map Complex.ofReal +
+      (u : ℂ) • (Complex.I • G.map Complex.ofReal)).submatrix
+      (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val).det =
+    (((1 : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ).submatrix
+      (Subtype.val : {p : Fin n × Fin 2 // p.1 ∈ X} → Fin n × Fin 2)
+      Subtype.val).map Complex.ofReal +
+      (u : ℂ) • (Complex.I • (G.submatrix Subtype.val Subtype.val).map Complex.ofReal)).det at hd
+  simp (config := { congrConsts := false }) only [
+    Matrix.submatrix_one (α := ℝ)
+      (Subtype.val : {p : Fin n × Fin 2 // p.1 ∈ X} → Fin n × Fin 2) Subtype.val_injective,
+    Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] at hd
+  exact hd
 
 private lemma settlement_main : claim := by
   intro n G hG A B C hAB hAC hBC α ha0 ha1
