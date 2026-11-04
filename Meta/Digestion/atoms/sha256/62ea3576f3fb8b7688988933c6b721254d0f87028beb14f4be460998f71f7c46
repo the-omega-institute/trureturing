@@ -1,0 +1,21 @@
+### 定理 3.2（给定目标的正交残差）
+
+<a id="thm-c129-window-limit"></a>
+
+若闭子空间满足 $\mathcal H_n\subseteq\mathcal H_{n+1}$，$P_n$ 为对应正交投影，且 $\mathcal H_\infty=\overline{\bigcup_n\mathcal H_n}$，则对每个固定 $v\in\mathcal H$，
+
+$$
+P_nv\longrightarrow P_\infty v,\qquad
+ \|v-P_nv\|^2=\|v-P_mv\|^2+\|(P_m-P_n)v\|^2\quad(m\ge n).
+$$
+
+两个观察者的窗口极限对该 $v$ 相同，当且仅当 $P_\infty^Av=P_\infty^Bv$；两者均恢复 $v$，当且仅当 $v\in\mathcal H_\infty^A\cap\mathcal H_\infty^B$。
+
+**证明。**
+两残差项正交，故有平方恒等式。令 $w=P_\infty v$；对任意误差，选足够大窗口中的 $w_N$ 逼近 $w$，则 $n\ge N$ 时
+$\|w-P_nw\|\le\|w-w_N\|$。又 $P_n(v-w)=0$，故得强收敛。两个观察者的结论直接由各自极限及投影的固定点空间得到。
+
+前提是同一核、已给的相容窗口及固定目标。它不自动给出未知交集、唯一整体态 $\omega$、归一后条件态收敛或实际门序列收敛。无限维中即使每个固定向量都收敛，也可始终有 $\|I-P_n\|=1$，所以不存在相同的全目标有限误差保证。
+
+这些比较投影也不是已证明的物理 CP 过程。例如 $M_2$ 的 Hilbert–Schmidt 正交投影 $\Pi(X)=(X+X^T)/2$，其 Choi 表在反对称单位向量上取值 $-1/2$，故不 CP：恒等通道的 Choi 项在该向量上为零，转置的交换算符项为 $-1$。从窗口几何进入实际量子仪器，仍须过程接口。
+
