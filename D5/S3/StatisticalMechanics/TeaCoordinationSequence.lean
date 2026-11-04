@@ -7,8 +7,6 @@
    digest: Barker's coordination sequence formula for the tea uniform tiling. -/
 
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
-import Mathlib.Data.Int.Interval
-import Mathlib.Data.Set.Card
 import Mathlib.Algebra.BigOperators.Group.Finset.Interval
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.BigOperators.Intervals
