@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/PrimeMinCorrectionSecondOrderLower
+/- GID: D5/S3/Arith/Robin/EulerLayer/PrimeMinCorrectionSecondOrderLower
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/PrimeMinCorrectionSecondOrderLower
+   mirror-B: D5/B/S3/Arith/Robin/EulerLayer/PrimeMinCorrectionSecondOrderLower
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none

@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.EulerLayer;
 
 internal sealed class PrimeMinCorrectionSecondOrderLowerDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class PrimeMinCorrectionSecondOrderLowerDocument : IScribeDocume
         H("The universal second-order prime-min correction"),
         Blocks(Describe.Lean(
             DescribeId.Create("uniform-prime-minimum-tail-robin-second-order-lower"),
-            DeclarationHandle.Create("D5/S3/Arith/Robin/PrimeMinCorrectionSecondOrderLower.uniform_min_tail_robin_second_order_lower"),
+            DeclarationHandle.Create("D5/S3/Arith/Robin/EulerLayer/PrimeMinCorrectionSecondOrderLower.uniform_min_tail_robin_second_order_lower"),
             H("One threshold before every initial-support integer"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),

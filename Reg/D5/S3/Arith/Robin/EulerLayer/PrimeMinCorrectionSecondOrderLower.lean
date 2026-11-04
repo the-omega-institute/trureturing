@@ -1,10 +1,10 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.Robin.PrimeMinCorrectionSecondOrderLower
+import D5.S3.Arith.Robin.EulerLayer.PrimeMinCorrectionSecondOrderLower
 import Reg.Support.DependentFamily
 
 set_option autoImplicit false
 
-namespace Reg.D5.S3.Arith.Robin.PrimeMinCorrectionSecondOrderLower
+namespace Reg.D5.S3.Arith.Robin.EulerLayer.PrimeMinCorrectionSecondOrderLower
 
 open _root_.D5.S3.Arith.Robin.PrimeMinCorrectionSecondOrderLower
 open _root_.D5.S3.Arith.Robin
@@ -101,4 +101,4 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 
 end
-end Reg.D5.S3.Arith.Robin.PrimeMinCorrectionSecondOrderLower
+end Reg.D5.S3.Arith.Robin.EulerLayer.PrimeMinCorrectionSecondOrderLower
