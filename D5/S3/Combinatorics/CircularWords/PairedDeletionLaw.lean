@@ -7,6 +7,7 @@
    digest: Law identification from two overlapping paired deletion channels. -/
 
 import D5.S3.Combinatorics.CircularWords.PairedDeletionFiber
+import D5.S3.Combinatorics.CircularWords.ThreeSpecifiedDeletions
 import Mathlib.Data.Real.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.List.Permutation
@@ -17,6 +18,7 @@ open D5.S3.Combinatorics.CircularWords.CircularDeletionTransport
 open D5.S3.Combinatorics.CircularWords.CyclicInsertionGap
 open D5.S3.Combinatorics.CircularWords.DeletionReadoutReconstruction
 open D5.S3.Combinatorics.CircularWords.PairedDeletionFiber
+open D5.S3.Combinatorics.CircularWords.ThreeSpecifiedDeletions
 open scoped BigOperators
 
 universe u v
