@@ -9,10 +9,6 @@
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.RingTheory.Polynomial.Chebyshev
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
 
 /-! The complete maximal identity property for Cartesian products of cliques and paths. -/
 
@@ -199,7 +195,7 @@ private lemma path_reduction (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j)
       have he' := congrArg Fin.val he
       change j - 1 = 0 at he'
       omega
-    simp only [Fin.val_mk, dite_eq_left (by omega : 0 < j - 1),
+    simp only [dite_eq_left (by omega : 0 < j - 1),
       dite_eq_right (by omega : ¬ j - 1 + 1 < j), add_zero, ite_eq_right hn] at ht
     simp only [x, dite_eq_left (by omega : 1 < j), dite_eq_left (by omega : 0 < j), Nat.sub_zero]
     linear_combination -ht
@@ -211,7 +207,7 @@ private lemma path_reduction (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j)
       have he' := congrArg Fin.val he
       change j - 2 - k = 0 at he'
       omega
-    simp only [Fin.val_mk, dite_eq_left (by omega : 0 < j - 2 - k),
+    simp only [dite_eq_left (by omega : 0 < j - 2 - k),
       dite_eq_left (by omega : j - 2 - k + 1 < j), ite_eq_right hn] at ht
     simp only [x, dite_eq_left hk, dite_eq_left (by omega : k + 1 < j),
       dite_eq_left (by omega : k < j),
@@ -221,8 +217,8 @@ private lemma path_reduction (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j)
     linear_combination -ht
   · have ht := hd z
     rw [path_row] at ht
-    simp only [z, Fin.val_mk, dite_eq_right (by omega : ¬ 0 < 0), zero_add,
-      dite_eq_left (by omega : 1 < j), ite_eq_left rfl, ite_true] at ht
+    simp only [z, dite_eq_right (by omega : ¬ 0 < 0), zero_add,
+      dite_eq_left (by omega : 1 < j), ite_true] at ht
     simp only [x, dite_eq_left (by omega : j - 1 < j), dite_eq_left (by omega : j - 2 < j),
       Nat.sub_self, show j - 1 - (j - 2) = 1 by omega]
     change (i + 1 : ℤ) * d z - d ⟨1, by omega⟩ = _
