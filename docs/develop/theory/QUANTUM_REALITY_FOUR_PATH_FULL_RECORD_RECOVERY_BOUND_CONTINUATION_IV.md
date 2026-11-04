@@ -6,8 +6,12 @@ Use the original normalized effects, ordinary transpose and shared feedback of
 the [source volume](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND.md),
 Definitions 1.1, 11.1 and 23.1. Section numbers 24--39 refer to
 [Continuation I](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_I.md);
-40--46 refer to
+40--47 refer to
 [Continuation II](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md).
+The global minimizing-set result cited as Theorem 48.5 is in
+[Continuation III](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_III.md).
+The numbered statements and identities 49 in this volume are distinct
+from the source-correspondence Section 49 of Continuation III.
 The domain is still
 $\mathcal K=\operatorname{Dens}_2\times U(4)$, with
 $f=g-\kappa\rho$ and
@@ -1053,12 +1057,29 @@ The full first-loss/equality problem remains unresolved. In particular
 the phase local result does not exclude a separated phase contact at an
 earlier level, locate $\alpha$ or $\beta$, prove their equality, or
 establish a global geometric-equality prefix ending at $\xi_*$. Global
-purity from Theorem 45.5 does not fill these gaps. An actual arbitrary
-$U(4)$ minimizing lift still requires the global phase comparison and
-the variance-zero condition in (42.25): for every positive-weight
-transport component, $(E,U_j)\in\mathcal A_{\mathrm{ph},\xi}$ and
-$(a_j-a)F_E^{1/2}=0$. A local phase neighborhood supplies neither
-condition for all competitors. This article makes no unrestricted
+purity alone from Theorem 45.5 does not fill these gaps.
+
+For global minimizers, Theorem 48.5 of Continuation III supplies the
+stronger statement
+$\mathcal A_\xi=\mathcal A_{\mathrm{ph,p},\xi}=\mathcal E_\xi(a_\xi)$
+for $0<\xi\le13/4$: every actual global minimizer is pure phase, with
+all common scalar representatives retained. By (49.5),
+$\xi_*<61/25<13/4$, so this result applies at the selected zero and
+throughout a sufficiently small two-sided level neighborhood of it.
+Thus no additional nonphase global-minimizing lift classification or
+variance-zero lift condition remains to be proved on this interval.
+The phase endpoint value $a_\xi$ and the set
+$\mathcal E_\xi(a_\xi)$ remain unevaluated. Their full-level ordering
+against the selected $V(\xi)$, including both signs, every population
+and all attained phase configurations, is still required; neither
+$N(\xi)$ nor $V(\xi)$ is assumed globally optimal.
+
+Global phase rigidity does not classify arbitrary $U(4)$ local minima,
+and no extension of that global theorem beyond $13/4$ is used. In
+particular it does not exclude earlier separated phase contact or
+settle the first-loss and equality questions above. The local minima
+proved here remain minima on the phase feedback part of the original
+level, including all effects there. This article makes no unrestricted
 unitary local-minimum classification, no global equality completion,
 and no claim about an empirical quantum origin, state preparation,
 reset, dynamics or physical realization. These are paper proofs and
