@@ -94,6 +94,20 @@ internal sealed class BosonicRenyiStieltjesDocument : IScribeDocumentDefinition
                     Pow(Div(X("a"), X("b")), D(2)))))))));
     private static Formula WeightMass() => All("α", OrderRange(
         Equal(Integral("x", Ioo01, Local("renyiWeight", Alpha, X("x"))), Div(D(1), D(2)))));
+    private static Formula EntropyDifferencePositive() => All("α", All("ν",
+        Imp(LT(D(0), Alpha), Imp(LE(D(1), Nu), LT(D(0),
+            Sub(Pow(Div(Add(Nu, D(1)), D(2)), Alpha),
+                Pow(Div(Sub(Nu, D(1)), D(2)), Alpha)))))));
+    private static Formula NormalizedLogIntegrable() => All("α", All("ν", OrderRange(
+        Imp(LT(D(1), Nu), Integrable(LambdaOf("x",
+            Mul(Local("renyiWeight", Alpha, X("x")),
+                LogOf(Sub(D(1), Pow(Div(X("x"), Nu), D(2)))))), Ioo01)))));
+    private static Formula NormalizedIntegralEquality() => All("α", All("ν", OrderRange(
+        Imp(LT(D(1), Nu), Equal(
+            Integral("x", Ioo01, Mul(Local("renyiWeight", Alpha, X("x")),
+                LogOf(Sub(D(1), Pow(Div(X("x"), Nu), D(2)))))),
+            Sub(Integral("x", Ioo01, Mul(Local("renyiWeight", Alpha, X("x")),
+                LogOf(Sub(Pow(Nu, D(2)), Pow(X("x"), D(2)))))), LogOf(Nu)))))));
     private static Formula Representation()
     {
         Formula integrand = Mul(Local("renyiWeight", Alpha, X("x")), LogOf(Sub(Pow(Nu, D(2)), Pow(X("x"), D(2)))));
@@ -147,6 +161,21 @@ internal sealed class BosonicRenyiStieltjesDocument : IScribeDocumentDefinition
                 H("Mass one half"), StatementSource.FromAuthor(Disp(WeightMass())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The same arctangent primitive evaluates the integral as the difference of its values at one and zero. The sine and cosine identities on each side of α=1 make this difference one half."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("entropy-difference-positive"), DeclarationHandle.Create(Module + ".entropy_difference_pos"),
+                H("Positivity of the entropy power difference"), StatementSource.FromAuthor(Disp(EntropyDifferencePositive())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For positive α and ν at least one, the two bases are nonnegative and (ν+1)/2 is strictly larger than (ν−1)/2. Strict monotonicity of positive real powers makes their difference positive, including at ν=1."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("normalized-log-integrable"), DeclarationHandle.Create(Module + ".normalized_log_integrable"),
+                H("Integrability of the normalized logarithm"), StatementSource.FromAuthor(Disp(NormalizedLogIntegrable())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For ν>1, log(1−(x/ν)²) equals log(ν²−x²)−2 log ν. Subtracting the constant multiple of the integrable density from the integrable unnormalized logarithmic kernel proves the asserted integrability."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("normalized-integral-eq"), DeclarationHandle.Create(Module + ".normalized_integral_eq"),
+                H("Normalization of the logarithmic integral"), StatementSource.FromAuthor(Disp(NormalizedIntegralEquality())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Integrate the identity log(1−(x/ν)²)=log(ν²−x²)−2 log ν. Both terms are integrable. The density has mass one half, so the constant contribution is log ν, giving the displayed difference of integrals."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("stieltjes-representation"), DeclarationHandle.Create(Module + ".stieltjes_representation"),
                 H("The positive logarithmic representation"), StatementSource.FromAuthor(Disp(Representation())),
