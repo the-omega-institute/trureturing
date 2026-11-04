@@ -1,0 +1,5 @@
+source_id = "contingent-zero-forcing-fixed-cycle-rank"
+path = "docs/develop/theory/CONTINGENT_ZERO_FORCING_FIXED_CYCLE_RANK.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
