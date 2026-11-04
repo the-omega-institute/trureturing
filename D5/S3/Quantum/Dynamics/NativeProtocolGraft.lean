@@ -12,6 +12,9 @@ import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Order.CompleteLattice.Finset
+import Mathlib.NumberTheory.Niven
+import Mathlib.NumberTheory.Real.GoldenRatio
+import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
 
 /-! Native protocol composition on the full sixteen-bit carrier. -/
 
@@ -367,6 +370,126 @@ theorem original_native_projection (T : Tree Cut) (C : Path T → Fin 2 → Tree
   · intro p q
     obtain ⟨ho,ha,hc⟩ := Tree.native_graft_semantics T (extension T C) p q
     exact ⟨ho,ha,hc,Tree.label_attach T (extension T C) p q⟩
+
+
+/-- The inverse golden ratio is an algebraic integer before any conditioning. -/
+private theorem t_integral : IsIntegral ℤ t := by
+  have hcos : 2 * Real.cos ((2 / 5 : ℚ) * Real.pi) = phi⁻¹ := by
+    rw [show ((2 / 5 : ℚ) : ℝ) * Real.pi = 2 * (Real.pi / 5) by norm_num; ring,
+      Real.cos_two_mul, Real.cos_pi_div_five]
+    change _ = Real.goldenRatio⁻¹
+    rw [Real.inv_goldenRatio]
+    dsimp [Real.goldenConj]
+    nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)]
+  have ht : IsIntegral ℤ (phi⁻¹ : ℝ) :=
+    hcos ▸ Real.isIntegral_two_mul_cos_rat_mul_pi (2 / 5)
+  exact ht.map (Complex.ofRealHom : ℝ →+* ℂ)
+
+private theorem beta_integral : IsIntegral ℤ beta := by
+  apply IsIntegral.of_pow (n := 2) (by norm_num)
+  have hb : beta ^ 2 = t := by
+    dsimp [beta, t]
+    rw [← Complex.ofReal_pow, Real.sq_sqrt]
+    exact inv_nonneg.mpr (by dsimp [phi]; positivity)
+  rw [hb]
+  exact t_integral
+
+private theorem zeta_integral : IsIntegral ℤ zeta := by
+  convert Complex.isIntegral_exp_rat_mul_pi_mul_I (3 / 5) using 1 <;>
+    push_cast <;> congr 1 <;> ring
+
+private theorem number_integral (i : Fin 16) (b c : Basis) :
+    IsIntegral ℤ (number i b c) := by
+  classical
+  simp only [number, Matrix.diagonal_apply]
+  split_ifs <;> first | exact isIntegral_one | exact isIntegral_zero
+
+private theorem gate_integral (j : Address) (b c : Basis) :
+    IsIntegral ℤ (gate j b c) := by
+  classical
+  have hid (b c : Basis) : IsIntegral ℤ ((1 : Mat) b c) := by
+    simp only [Matrix.one_apply]
+    split_ifs <;> first | exact isIntegral_one | exact isIntegral_zero
+  have hx (b c : Basis) : IsIntegral ℤ (bitX (center j) b c) := by
+    simp only [bitX]
+    split_ifs <;> first | exact isIntegral_one | exact isIntegral_zero
+  have hq (b c : Basis) : IsIntegral ℤ (goldenQ j b c) := by
+    exact ((t_integral.mul ((hid b c).sub (number_integral _ b c))).add
+      ((t_integral.pow 2).mul (number_integral _ b c))).add
+      ((beta_integral.pow 3).mul (hx b c))
+  have hmul (A B : Mat) (hA : ∀ b c, IsIntegral ℤ (A b c))
+      (hB : ∀ b c, IsIntegral ℤ (B b c)) (b c : Basis) : IsIntegral ℤ ((A * B) b c) := by
+    exact IsIntegral.sum _ (fun k _ => (hA b k).mul (hB k c))
+  have hp : IsIntegral ℤ (goldenP j b c) := by
+    apply IsIntegral.add
+    · exact hmul _ _ (number_integral _) (number_integral _) b c
+    · exact hmul _ _ (fun b c => hmul _ _
+        (fun b c => (hid b c).sub (number_integral _ b c))
+        (fun b c => (hid b c).sub (number_integral _ b c)) b c) hq b c
+  exact zeta_integral.mul ((hid b c).add ((zeta_integral.sub isIntegral_one).mul hp))
+
+private theorem call_integral (j : Address) (d : Direction) (b c : Basis) :
+    IsIntegral ℤ (callMatrix j d b c) := by
+  classical
+  have hp (n : ℕ) : ∀ b c, IsIntegral ℤ ((gate j ^ n) b c) := by
+    induction n with
+    | zero =>
+      intro b c
+      simp only [pow_zero, Matrix.one_apply]
+      split_ifs <;> first | exact isIntegral_one | exact isIntegral_zero
+    | succ n ih =>
+      intro b c
+      rw [pow_succ, Matrix.mul_apply]
+      exact IsIntegral.sum _ (fun k _ => (ih b k).mul (gate_integral j k c))
+  cases d
+  · exact gate_integral j b c
+  · exact hp 9 b c
+
+private theorem projector_integral {n : ℕ} (select : Basis → Fin n) (o : Fin n)
+    (b c : Basis) : IsIntegral ℤ (projector select o b c) := by
+  classical
+  simp only [projector, Matrix.diagonal_apply]
+  split_ifs <;> first | exact isIntegral_one | exact isIntegral_zero
+
+private theorem operator_integral {L : Type} (T : Tree L) (p : Path T) (b c : Basis) :
+    IsIntegral ℤ (operator T p b c) := by
+  classical
+  induction T with
+  | leaf l =>
+    simp only [operator, Matrix.one_apply]
+    split_ifs <;> first | exact isIntegral_one | exact isIntegral_zero
+  | call j d U ih =>
+    exact IsIntegral.sum _ (fun k _ => (ih p b k).mul (call_integral j d k c))
+  | measure n select U ih =>
+    exact IsIntegral.sum _ (fun k _ =>
+      (ih p.1 p.2 b k).mul (projector_integral select p.1 k c))
+
+/-- Every raw finite event of the original full-menu tree is an algebraic
+integer. The statement includes all terminal records, with arbitrary feedback,
+inverse calls expanded to nine forward calls and the original fixed root. -/
+theorem original_event_integral {L : Type} (T : Tree L)
+    (event : Path T → Basis → Bool) : IsIntegral ℤ (eventMass T event) := by
+  classical
+  have hv (p : Path T) (z : Basis) :
+      IsIntegral ℤ ((operator T p).mulVec omega0 z) := by
+    exact IsIntegral.sum _ (fun b _ => (operator_integral T p z b).mul
+      (by simp only [omega0]; split_ifs <;>
+        first | exact isIntegral_one | exact isIntegral_zero))
+  have hm (p : Path T) (z : Basis) : IsIntegral ℤ (mass T p z) := by
+    apply (isIntegral_algebraMap_iff (B := ℂ)).mp
+    change IsIntegral ℤ ((Complex.normSq ((operator T p).mulVec omega0 z) : ℝ) : ℂ)
+    rw [Complex.normSq_eq_conj_mul_self]
+    exact ((hv p z).map (starRingEnd ℂ)).mul (hv p z)
+  unfold eventMass
+  apply IsIntegral.sum
+  intro p _
+  apply IsIntegral.sum
+  intro z _
+  split_ifs
+  · exact hm p z
+  · exact isIntegral_zero
+
+#print axioms original_event_integral
 
 #print axioms original_native_projection
 end D5.S3.Quantum.Dynamics.NativeProtocolGraft
