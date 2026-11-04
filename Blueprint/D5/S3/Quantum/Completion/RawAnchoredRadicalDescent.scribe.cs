@@ -48,6 +48,13 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
     private static Formula Iterate(string map, Formula n, Formula a) =>
         Seq(F.Id(map), Caret, Grp(n), Open, a, Close);
 
+    private static Formula Original(Formula body) => Seq(
+        Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
+        OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
+        F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
+        F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp,
+        Arrow(Call("RawBalance", F.Id("U"), F.Id("c")), body));
+
     private static Formula Result() => Conjunction(
         Eqn(Read(D(1), D(1)), D(0)),
         Eqn(BetaOf(D(1)), D(0)),
@@ -142,9 +149,8 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                 DescribeId.Create("raw-gamma-fibre-collapse"),
                 DeclarationHandle.Create(Gid + "raw_gamma_fibre_collapse"),
                 H("The original gamma fibre determines beta"),
-                StatementSource.FromAuthor(Disp(AllM(A, AllM(B,
-                    Arrow(Call("RawBalance", F.Id("U"), F.Id("c")),
-                        Arrow(Eqn(GammaOf(A), GammaOf(B)), Eqn(BetaOf(A), BetaOf(B)))))))),
+                StatementSource.FromAuthor(Disp(Original(AllM(A, AllM(B,
+                    Arrow(Eqn(GammaOf(A), GammaOf(B)), Eqn(BetaOf(A), BetaOf(B)))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For a fixed ordered functional, take the supremum of its absolute beta difference over the same actual K. The original label d=U(a)*U(U(a)) has gamma(d)=-gamma(a), so a*d and b*d lie in N; d itself need not. The unweighted identity makes the k=0 child zero and bounds the other two children by that same supremum. Its 2/3 contraction forces zero. Apply this argument in both pairing orders."))),
                 DescribeRole.Theorem),
@@ -152,13 +158,12 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                 DescribeId.Create("raw-directed-comparison-descent"),
                 DeclarationHandle.Create(Gid + "raw_directed_comparison_descent"),
                 H("All directed readouts descend along the actual fibres"),
-                StatementSource.FromAuthor(Disp(AllM(A, AllM(B,
-                    Arrow(Call("RawBalance", F.Id("U"), F.Id("c")),
-                        Arrow(Eqn(GammaOf(A), GammaOf(B)), Conjunction(
-                            Eqn(Call("q", A), Call("q", B)),
-                            Eqn(Call("r", A), Call("r", B)),
-                            AllM(Z, Eqn(Read(A, Z), Read(B, Z))),
-                            AllM(Z, Eqn(Read(Z, A), Read(Z, B)))))))))),
+                StatementSource.FromAuthor(Disp(Original(AllM(A, AllM(B,
+                    Arrow(Eqn(GammaOf(A), GammaOf(B)), Conjunction(
+                        Eqn(Call("q", A), Call("q", B)),
+                        Eqn(Call("r", A), Call("r", B)),
+                        AllM(Z, Eqn(Read(A, Z), Read(B, Z))),
+                        AllM(Z, Eqn(Read(Z, A), Read(Z, B))))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Equality of beta and the vanishing cross comparisons give equality of q and r. Substitution in the original ordered kernel then gives both complete rows and columns."))),
                 DescribeRole.Theorem),

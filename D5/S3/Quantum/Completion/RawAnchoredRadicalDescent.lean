@@ -1219,4 +1219,129 @@ theorem raw_directed_comparison_descent {M : Type*} [MulOneClass M]
     simp only [quotientForm_beta c (h.diagonal 1), kernel] at hz
     linarith
 
+/-- The actual gamma image, closed under addition and the original inverse label. -/
+def visibleGroup {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) : AddSubgroup (GammaSpace c) where
+  carrier := Set.range (gamma c)
+  zero_mem' := ⟨1, gamma_one c⟩
+  add_mem' := by
+    rintro _ _ ⟨a, rfl⟩ ⟨b, rfl⟩
+    exact ⟨a * b, gamma_mul c a b⟩
+  neg_mem' := by
+    rintro _ ⟨a, rfl⟩
+    exact ⟨U a * U (U a), gamma_inverse_label U c h a⟩
+
+def visibleLabel {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a : M) : visibleGroup U c h :=
+  ⟨gamma c a, ⟨a, rfl⟩⟩
+
+private theorem visibleLabel_surjective {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
+    Function.Surjective (visibleLabel U c h) := by
+  rintro ⟨x, a, rfl⟩
+  exact ⟨a, rfl⟩
+
+private theorem visibleLabel_mul {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b : M) :
+    visibleLabel U c h (a * b) = visibleLabel U c h a + visibleLabel U c h b :=
+  Subtype.ext (gamma_mul c a b)
+
+def visibleMarker {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
+    visibleGroup U c h →+ visibleGroup U c h where
+  toFun x := ⟨rho U c h x.val, by
+    obtain ⟨a, ha⟩ := x.property
+    exact ⟨U a, (gamma_marker U c h a).trans (congrArg (rho U c h) ha)⟩⟩
+  map_zero' := Subtype.ext (map_zero _)
+  map_add' x y := Subtype.ext (map_add _ _ _)
+
+private theorem visibleLabel_marker {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a : M) :
+    visibleLabel U c h (U a) = visibleMarker U c h (visibleLabel U c h a) :=
+  Subtype.ext (gamma_marker U c h a)
+
+private def originalLabel {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x : visibleGroup U c h) : M :=
+  Classical.choose x.property
+
+private theorem originalLabel_spec {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x : visibleGroup U c h) :
+    gamma c (originalLabel U c h x) = x.val := Classical.choose_spec x.property
+
+/-- The full directed comparison on the actual additive image. -/
+def visibleComparison {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (x y : visibleGroup U c h) : ℝ := c (originalLabel U c h x) (originalLabel U c h y)
+
+private theorem visibleComparison_label {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b : M) :
+    visibleComparison U c h (visibleLabel U c h a) (visibleLabel U c h b) = c a b := by
+  have ha := raw_directed_comparison_descent U c h _ a
+    (originalLabel_spec U c h (visibleLabel U c h a))
+  have hb := raw_directed_comparison_descent U c h _ b
+    (originalLabel_spec U c h (visibleLabel U c h b))
+  exact (ha.2.2.1 _).trans (hb.2.2.2 _)
+
+private theorem visibleComparison_nonneg {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x y : visibleGroup U c h) :
+    0 ≤ visibleComparison U c h x y := h.nonneg _ _
+
+private theorem visibleComparison_diagonal {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x : visibleGroup U c h) :
+    visibleComparison U c h x x = 0 := h.diagonal _
+
+private theorem visibleComparison_balance {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x y u v : visibleGroup U c h) :
+    visibleComparison U c h (x + u) (y + v) +
+      visibleComparison U c h (x + visibleMarker U c h u) (y + visibleMarker U c h v) +
+      visibleComparison U c h (x + visibleMarker U c h (visibleMarker U c h u))
+        (y + visibleMarker U c h (visibleMarker U c h v)) =
+      3 * visibleComparison U c h x y + 3 * visibleComparison U c h u v := by
+  obtain ⟨a, rfl⟩ := visibleLabel_surjective U c h x
+  obtain ⟨b, rfl⟩ := visibleLabel_surjective U c h y
+  obtain ⟨d, rfl⟩ := visibleLabel_surjective U c h u
+  obtain ⟨e, rfl⟩ := visibleLabel_surjective U c h v
+  have hb :
+      visibleComparison U c h (visibleLabel U c h (a * d)) (visibleLabel U c h (b * e)) +
+      visibleComparison U c h (visibleLabel U c h (a * U d)) (visibleLabel U c h (b * U e)) +
+      visibleComparison U c h (visibleLabel U c h (a * U (U d)))
+        (visibleLabel U c h (b * U (U e))) =
+      3 * visibleComparison U c h (visibleLabel U c h a) (visibleLabel U c h b) +
+      3 * visibleComparison U c h (visibleLabel U c h d) (visibleLabel U c h e) := by
+    simpa only [visibleComparison_label] using h.balance a b d e
+  simpa only [visibleLabel_mul, visibleLabel_marker] using hb
+
+/-- The original directed comparison on the constructed image is translation invariant. -/
+theorem raw_visible_translation_invariant {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (x y z : visibleGroup U c h) :
+    visibleComparison U c h (x + z) (y + z) = visibleComparison U c h x y := by
+  let f : visibleGroup U c h → ℝ := fun t => visibleComparison U c h (x + t) (y + t)
+  let S : Set ℝ := Set.range f
+  have hne : S.Nonempty := ⟨f 0, ⟨0, rfl⟩⟩
+  have hbd : BddBelow S := by
+    refine ⟨0, ?_⟩
+    rintro _ ⟨t, rfl⟩
+    exact visibleComparison_nonneg U c h _ _
+  have hm (t : visibleGroup U c h) : sInf S ≤ f t := csInf_le hbd ⟨t, rfl⟩
+  have hstep (t w : visibleGroup U c h) : f (t + w) ≤ 3 * f t - 2 * sInf S := by
+    have hb := visibleComparison_balance U c h (x + t) (y + t) w w
+    rw [visibleComparison_diagonal] at hb
+    simp only [add_assoc] at hb
+    change f (t + w) + f (t + visibleMarker U c h w) +
+      f (t + visibleMarker U c h (visibleMarker U c h w)) = 3 * f t + 3 * 0 at hb
+    linarith [hm (t + visibleMarker U c h w),
+      hm (t + visibleMarker U c h (visibleMarker U c h w))]
+  have heq (s : visibleGroup U c h) : f s = sInf S := by
+    have hlow : (f s + 2 * sInf S) / 3 ≤ sInf S := by
+      apply le_csInf hne
+      rintro _ ⟨t, rfl⟩
+      have ht := hstep t (s - t)
+      have he : t + (s - t) = s := by abel
+      rw [he] at ht
+      linarith
+    exact le_antisymm (by linarith) (hm s)
+  have hz := (heq z).trans (heq 0).symm
+  simpa only [f, add_zero] using hz
+
 end D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
