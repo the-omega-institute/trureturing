@@ -7,8 +7,7 @@
    digest: Constructive paired available grids and exact equal-maximum seam inequalities. -/
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 
-/-! Source candidate, not compiled. All declarations in this implementation module
-are private and are consumed by the original-label construction. -/
+/-! Constructive integer selectors for the original-label construction. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
@@ -272,7 +271,7 @@ private theorem high (x t z J : ℤ) (hx : 4≤x) (ht : 2*x≤t)
   have margin : 0<A x z-1-4*B x t z-z*(z+1) := by
     have hid : A x z-1-4*B x t z-z*(z+1)≥
         (x-4)*(z^2+z+1)+z^2-z+4 := by dsimp [A]; nlinarith only [hb2]
-    have h0:=mul_nonneg (show 0≤x-4 by omega) (show 0≤z^2+z+1 by positivity)
+    have h0:=mul_nonneg (show 0≤x-4 by omega) (show 0≤z^2+z+1 by have hz0 : 0≤z := by omega; positivity)
     have h1:=mul_nonneg (show 0≤z by omega) (show 0≤z-1 by omega)
     nlinarith only [hid,h0,h1]
   refine ⟨H,e,p,hH0,hHJ,he,hp,by omega,hold.1,?_⟩
@@ -341,7 +340,7 @@ private theorem selector_data (a s d : ℕ) (ha : 2≤a) (had : a<d) (hds : d<s)
   have te : t%2=0 := pow_even d (by omega)
   have ze : z%2=0 := pow_even s (by omega)
   have hodd : (K t z-B x t z)%2=0 := by
-    simp [K,B,Int.add_emod,Int.sub_emod,Int.mul_emod,Int.pow_emod,xe,te,ze]
+    norm_num [K,B,pow_two,Int.add_emod,Int.sub_emod,Int.mul_emod,xe,te,ze]
   by_cases hboundary : s=d+1
   · have zt : z=2*t := by dsimp [z,t]; rw [hboundary,pow_succ]; ring
     let r : ℤ:=2^(d-a)
@@ -406,7 +405,7 @@ private theorem selector_data (a s d : ℕ) (ha : 2≤a) (had : a<d) (hds : d<s)
           have rel : t=(x+1)*(x*q)+x*v := by rw [trx,←rq]; ring
           refine ⟨1,q,0,v,le_rfl,by omega,by norm_num,q0,cap,Or.inl rfl,v0,hv,?_⟩
           simpa only [zt,add_zero,one_mul] using
-            regular_boundary x t 1 (x*q) v hx ht le_rfl (by omega) hh v0 hv rel
+            regular_boundary x t 1 (x*q) v hx ht le_rfl (by omega) hh v0 hv (by simpa only [one_mul] using rel)
         · have vv : v=x := by omega
           let q3 := 3*r/(x+1)
           have q30 : 0≤q3 := Int.ediv_nonneg (by omega) (by omega)

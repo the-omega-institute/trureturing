@@ -8,8 +8,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondThirdMaximum.Physical
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
-/-! Intended full-face source proof. This flight does not compile or validate it.
-The unchanged whole Circle J/C3.1 four-negative objective remains OPEN. -/
+/-! The unrestricted Circle J/C3.1 four-negative objective remains open. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondThirdMaximum
