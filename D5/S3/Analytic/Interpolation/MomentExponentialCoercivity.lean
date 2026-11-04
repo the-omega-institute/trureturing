@@ -6,10 +6,11 @@
    utility: none
    digest: Finite causal squares control exponential atomic energy by actual primitive moments. -/
 
-import D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
+import D5.S3.Analytic.Interpolation.CausalExponentialPrimitive
 import D5.S3.Analytic.MomentOrthogonalPrimitiveGap
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Algebra.QuadraticDiscriminant
 
 /-!
 The genuinely new bridge is finite and causal. Write A for the actual inclusive
@@ -28,8 +29,9 @@ actual prefix correlation. The newly merged complex L2 primitive gap is then
 consumed for the exact quantitative endpoint. Atomic moments 0,...,q give
 prefix moments 0,...,q-1, with no off-by-one change in q.
 
-All helpers are private and occur on the final theorem's proof path. Finite
-sum algebra never sorts or separates nodes and never divides by an energy.
+The causal primitive helpers are shared with CausalExponentialPrimitive and
+occur on the theorem proof paths. Finite sum algebra never sorts or separates
+nodes and never divides by an energy.
 -/
 
 set_option autoImplicit false
@@ -43,288 +45,6 @@ open D5.S3.Analytic.Interpolation.AtomicPrefixEnergy
 namespace D5.S3.Analytic.Interpolation.MomentExponentialCoercivity
 
 variable {I : Type u} [Fintype I]
-
-private def ramp (x : I → ℝ) (a : I → ℂ) (t : ℝ) : ℂ :=
-  ∑ i, a i * (max (t - x i) 0 : ℝ)
-
-private def resolvent (lam : ℝ) (x : I → ℝ) (a : I → ℂ) (t : ℝ) : ℂ :=
-  ∑ i, a i * (((1 - Real.exp (-lam * max (t - x i) 0)) / lam : ℝ) : ℂ)
-
-private def secondResolvent (lam : ℝ) (x : I → ℝ) (a : I → ℂ) (t : ℝ) : ℂ :=
-  (ramp x a t - resolvent lam x a t) / (lam : ℂ)
-
-private def response (lam : ℝ) (x : I → ℝ) (a : I → ℂ) (t : ℝ) : ℂ :=
-  ∑ i, if x i ≤ t then a i * (Real.exp (-lam * (t - x i)) : ℂ) else 0
-
-private lemma prefix_below (x : I → ℝ) (a : I → ℂ) (t : ℝ)
-    (ht : ∀ i, t < x i) : «prefix» x a t = 0 := by
-  classical
-  simp [«prefix», fun i => not_le.mpr (ht i)]
-
-private lemma prefix_above (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0)
-    (t : ℝ) (ht : ∀ i, x i ≤ t) : «prefix» x a t = 0 := by
-  classical
-  simp [«prefix», ht, ha]
-
-private lemma prefix_energy_window (x : I → ℝ) (a : I → ℂ)
-    (D : ℝ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D) (ha : ∑ i, a i = 0) :
-    (∫ t : ℝ, ‖«prefix» x a t‖ ^ 2) =
-      ∫ t in Icc 0 D, ‖«prefix» x a t‖ ^ 2 := by
-  symm
-  apply setIntegral_eq_integral_of_forall_compl_eq_zero
-  intro t ht
-  rcases lt_or_ge t 0 with ht0 | ht0
-  · rw [prefix_below x a t (fun i => ht0.trans_le (hx i).1)]
-    simp
-  · have htD : D < t := lt_of_not_ge (fun h => ht ⟨ht0, h⟩)
-    rw [prefix_above x a ha t (fun i => (hx i).2.trans htD.le)]
-    simp
-
-/-- A continuous multiplier of the actual prefix is integrable on a compact
-window. This supplies every mixed term in the right-FTC energy calculation. -/
-private lemma prefix_mul_integrable (x : I → ℝ) (a : I → ℂ) (D : ℝ)
-    (f : ℝ → ℂ) (hf : Continuous f) :
-    IntegrableOn (fun t => «prefix» x a t * f t) (Icc 0 D) := by
-  classical
-  have he : (fun t => «prefix» x a t * f t) =
-      fun t => ∑ i, (Ici (x i)).indicator (fun t => a i * f t) t := by
-    ext t
-    simp only [«prefix», Finset.sum_mul]
-    apply Finset.sum_congr rfl
-    intro i _
-    by_cases hi : x i ≤ t <;> simp [Set.indicator, hi]
-  rw [he]
-  exact integrable_finsetSum _ (fun i _ =>
-    ((continuous_const.mul hf).integrableOn_Icc).indicator measurableSet_Ici)
-
-private lemma prefix_memLp (x : I → ℝ) (a : I → ℂ) (D : ℝ)
-    (ha : ∑ i, a i = 0) :
-    MemLp («prefix» x a) 2 (volume.restrict (Icc 0 D)) := by
-  have hi : IntegrableOn («prefix» x a) (Icc 0 D) := by
-    simpa only [mul_one] using prefix_mul_integrable x a D (fun _ => 1) continuous_const
-  exact (memLp_two_iff_integrable_sq_norm hi.aestronglyMeasurable).mpr
-    (shifted_hinge_prefix_energy x a ha 0).2.1.integrableOn
-
-/-- Exact integration of a prefix against a continuous multiplier. The upper
-cutoff is retained; this is valid without zero mass. -/
-private lemma prefix_mul_integral (x : I → ℝ) (a : I → ℂ) (D : ℝ)
-    (hx : ∀ i, x i ∈ Icc (0 : ℝ) D) (f : ℝ → ℂ) (hf : Continuous f) :
-    (∫ t in Icc 0 D, «prefix» x a t * f t) =
-      ∑ i, a i * (∫ t in Icc (x i) D, f t) := by
-  classical
-  have he (t : ℝ) : «prefix» x a t * f t =
-      ∑ i, (Ici (x i)).indicator (fun t => a i * f t) t := by
-    simp only [«prefix», Finset.sum_mul]
-    apply Finset.sum_congr rfl
-    intro i _
-    by_cases hi : x i ≤ t <;> simp [Set.indicator, hi]
-  simp_rw [he]
-  rw [integral_finsetSum (f := fun i t =>
-    (Ici (x i)).indicator (fun t => a i * f t) t) Finset.univ (fun i _ =>
-    ((continuous_const.mul hf).integrableOn_Icc).indicator measurableSet_Ici)]
-  apply Finset.sum_congr rfl
-  intro i _
-  rw [setIntegral_indicator measurableSet_Ici]
-  have hs : Icc (0 : ℝ) D ∩ Ici (x i) = Icc (x i) D := by
-    ext t
-    simp only [mem_inter_iff, mem_Icc, mem_Ici]
-    exact ⟨fun h => ⟨h.2, h.1.2⟩, fun h => ⟨⟨(hx i).1.trans h.1, h.2⟩, h.1⟩⟩
-  rw [hs, integral_const_mul]
-
-private lemma prefix_moments (x : I → ℝ) (a : I → ℂ) (D : ℝ)
-    (hx : ∀ i, x i ∈ Icc (0 : ℝ) D) (q : ℕ)
-    (hm : ∀ r : ℕ, r ≤ q → ∑ i, a i * (x i : ℂ) ^ r = 0) :
-    ∀ r : ℕ, r < q → ∫ t in Icc 0 D, (t : ℂ) ^ r * «prefix» x a t = 0 := by
-  intro r hr
-  have hpow (l : ℝ) (hl : l ≤ D) :
-      (∫ t in Icc l D, (t : ℂ) ^ r) =
-        (((D : ℂ) ^ (r + 1) - (l : ℂ) ^ (r + 1)) / ((r + 1 : ℕ) : ℂ)) := by
-    rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hl]
-    calc
-      _ = ((∫ t in l..D, t ^ r : ℝ) : ℂ) := by
-        simp only [← Complex.ofReal_pow, intervalIntegral.integral_ofReal]
-      _ = _ := by rw [integral_pow]; push_cast; rfl
-  calc
-    _ = ∫ t in Icc 0 D, «prefix» x a t * (t : ℂ) ^ r := by
-      apply integral_congr_ae
-      exact ae_of_all _ (fun t => mul_comm _ _)
-    _ = ∑ i, a i *
-        (((D : ℂ) ^ (r + 1) - (x i : ℂ) ^ (r + 1)) / ((r + 1 : ℕ) : ℂ)) := by
-      rw [prefix_mul_integral x a D hx _ (by fun_prop)]
-      apply Finset.sum_congr rfl
-      intro i _
-      rw [hpow (x i) (hx i).2]
-    _ = ((∑ i, a i) * (D : ℂ) ^ (r + 1) -
-        (∑ i, a i * (x i : ℂ) ^ (r + 1))) / ((r + 1 : ℕ) : ℂ) := by
-      simp only [div_eq_mul_inv, sub_mul, mul_sub, Finset.sum_sub_distrib,
-        Finset.sum_mul, mul_assoc]
-    _ = 0 := by
-      have ha : ∑ i, a i = 0 := by simpa using hm 0 (Nat.zero_le q)
-      rw [ha, hm (r + 1) (by omega)]
-      simp
-
-private lemma ramp_continuous (x : I → ℝ) (a : I → ℂ) : Continuous (ramp x a) := by
-  unfold ramp
-  fun_prop
-
-private lemma resolvent_continuous (lam : ℝ) (x : I → ℝ) (a : I → ℂ) :
-    Continuous (resolvent lam x a) := by
-  unfold resolvent
-  fun_prop
-
-private lemma second_continuous (lam : ℝ) (x : I → ℝ) (a : I → ℂ) :
-    Continuous (secondResolvent lam x a) :=
-  ((ramp_continuous x a).sub (resolvent_continuous lam x a)).div_const _
-
-private lemma response_eq (lam : ℝ) (hlam : lam ≠ 0)
-    (x : I → ℝ) (a : I → ℂ) (t : ℝ) :
-    response lam x a t = «prefix» x a t - (lam : ℂ) * resolvent lam x a t := by
-  classical
-  have hlc : (lam : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hlam
-  simp only [response, «prefix», resolvent, Finset.mul_sum, ← Finset.sum_sub_distrib]
-  apply Finset.sum_congr rfl
-  intro i _
-  by_cases hi : x i ≤ t
-  · rw [ite_eq_left hi, ite_eq_left hi, max_eq_left (sub_nonneg.mpr hi)]
-    push_cast
-    field_simp [hlam, hlc]
-    <;> ring
-  · rw [ite_eq_right hi, ite_eq_right hi, max_eq_right (by linarith : t - x i ≤ 0)]
-    simp
-
-/-- Right derivatives include atoms at the evaluation point, matching the
-inclusive prefix exactly, rather than only almost everywhere. -/
-private lemma ramp_right (x : I → ℝ) (a : I → ℂ) (t : ℝ) :
-    HasDerivWithinAt (ramp x a) («prefix» x a t) (Ioi t) t := by
-  classical
-  unfold ramp «prefix»
-  apply HasDerivWithinAt.fun_sum
-  intro i _
-  by_cases hi : x i ≤ t
-  · have hd : HasDerivWithinAt (fun y : ℝ => a i * ((y - x i : ℝ) : ℂ))
-        (a i) (Ioi t) t := by
-      simpa using (((hasDerivAt_id t).sub_const (x i)).ofReal_comp.const_mul (a i)).hasDerivWithinAt
-        (s := Ioi t)
-    have ht : max (t - x i) 0 = t - x i := max_eq_left (sub_nonneg.mpr hi)
-    simpa only [ite_eq_left hi, mul_one] using hd.congr
-      (fun y hy => by rw [max_eq_left (by linarith [show t < y from hy] : 0 ≤ y - x i)])
-      (by rw [ht])
-  · have hit : t < x i := lt_of_not_ge hi
-    have hd : HasDerivWithinAt (fun _ : ℝ => (0 : ℂ)) 0 (Ioi t) t :=
-      (hasDerivAt_const t (0 : ℂ)).hasDerivWithinAt
-    simp only [ite_eq_right hi]
-    apply hd.congr_of_eventuallyEq
-    · filter_upwards [mem_nhdsWithin_of_mem_nhds (Iio_mem_nhds hit)] with y hy
-      rw [max_eq_right (by linarith [show y < x i from hy] : y - x i ≤ 0)]
-      simp
-    · rw [max_eq_right (by linarith : t - x i ≤ 0)]
-      simp
-
-private lemma resolvent_right (lam : ℝ) (hlam : lam ≠ 0)
-    (x : I → ℝ) (a : I → ℂ) (t : ℝ) :
-    HasDerivWithinAt (resolvent lam x a) (response lam x a t) (Ioi t) t := by
-  classical
-  unfold resolvent response
-  apply HasDerivWithinAt.fun_sum
-  intro i _
-  by_cases hi : x i ≤ t
-  · have hd := (((hasDerivAt_const t (1 : ℝ)).sub
-        ((((hasDerivAt_id t).sub_const (x i)).const_mul (-lam)).exp)).div_const lam).ofReal_comp.const_mul (a i)
-    have hd' : HasDerivWithinAt
-        (fun y : ℝ => a i * (((1 - Real.exp (-lam * (y - x i))) / lam : ℝ) : ℂ))
-        (a i * (Real.exp (-lam * (t - x i)) : ℂ)) (Ioi t) t := by
-      have he : (0 - Real.exp (-lam * (t - x i)) * (-lam * 1)) / lam =
-          Real.exp (-lam * (t - x i)) := by field_simp; ring
-      simpa only [Pi.sub_apply, id_eq, he] using hd.hasDerivWithinAt (s := Ioi t)
-    simp only [ite_eq_left hi]
-    exact hd'.congr
-      (fun y hy => by rw [max_eq_left (by linarith [show t < y from hy] : 0 ≤ y - x i)])
-      (by rw [max_eq_left (sub_nonneg.mpr hi)])
-  · have hit : t < x i := lt_of_not_ge hi
-    simp only [ite_eq_right hi]
-    apply ((hasDerivAt_const t (0 : ℂ)).hasDerivWithinAt).congr_of_eventuallyEq
-    · filter_upwards [mem_nhdsWithin_of_mem_nhds (Iio_mem_nhds hit)] with y hy
-      rw [max_eq_right (by linarith [show y < x i from hy] : y - x i ≤ 0)]
-      simp
-    · rw [max_eq_right (by linarith : t - x i ≤ 0)]
-      simp
-
-private lemma second_right (lam : ℝ) (hlam : lam ≠ 0)
-    (x : I → ℝ) (a : I → ℂ) (t : ℝ) :
-    HasDerivWithinAt (secondResolvent lam x a) (resolvent lam x a t) (Ioi t) t := by
-  have hlc : (lam : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hlam
-  have hd := ((ramp_right x a t).sub (resolvent_right lam hlam x a t)).div_const (lam : ℂ)
-  change HasDerivWithinAt (fun y => (ramp x a y - resolvent lam x a y) / (lam : ℂ))
-    (resolvent lam x a t) (Ioi t) t
-  apply hd.congr_deriv
-  rw [response_eq lam hlam]
-  field_simp [hlc]
-  <;> ring
-
-private lemma initial_values (lam : ℝ) (x : I → ℝ) (a : I → ℂ)
-    (hx : ∀ i, 0 ≤ x i) :
-    ramp x a 0 = 0 ∧ resolvent lam x a 0 = 0 ∧ secondResolvent lam x a 0 = 0 := by
-  have hz (i : I) : max (-x i) 0 = 0 := max_eq_right (by linarith [hx i])
-  simp [ramp, resolvent, secondResolvent, hz]
-
-private lemma ramp_is_primitive (x : I → ℝ) (a : I → ℂ) (D : ℝ)
-    (hx : ∀ i, 0 ≤ x i) (hD : 0 ≤ D) :
-    ramp x a D = ∫ t in (0 : ℝ)..D, «prefix» x a t := by
-  have hf := (prefix_mul_integrable x a D (fun _ => 1) continuous_const)
-  simp only [mul_one] at hf
-  have hi := (intervalIntegrable_iff_integrableOn_Icc_of_le hD).mpr hf
-  have h := intervalIntegral.integral_eq_sub_of_hasDeriv_right_of_le hD
-    (ramp_continuous x a).continuousOn (fun t _ => ramp_right x a t) hi
-  rw [(initial_values 1 x a hx).1, sub_zero] at h
-  exact h.symm
-
-private lemma ramp_terminal (x : I → ℝ) (a : I → ℂ) (D : ℝ)
-    (hx : ∀ i, x i ≤ D) (ha : ∑ i, a i = 0)
-    (hfirst : ∑ i, a i * (x i : ℂ) = 0) : ramp x a D = 0 := by
-  have he (i : I) : max (D - x i) 0 = D - x i := max_eq_left (sub_nonneg.mpr (hx i))
-  simp only [ramp, he, Complex.ofReal_sub,
-    mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul, ha, hfirst]
-  ring
-
-private lemma square_right {f : ℝ → ℂ} {v : ℂ} {t : ℝ}
-    (hd : HasDerivWithinAt f v (Ioi t) t) :
-    HasDerivWithinAt (fun y => ‖f y‖ ^ 2)
-      (2 * (star (f t) * v).re) (Ioi t) t := by
-  have hre : HasDerivWithinAt (fun y => (f y).re) v.re (Ioi t) t := by
-    simpa only [Function.comp_def, Complex.reCLM_apply] using!
-      Complex.reCLM.hasFDerivAt.comp_hasDerivWithinAt t hd
-  have him : HasDerivWithinAt (fun y => (f y).im) v.im (Ioi t) t := by
-    simpa only [Function.comp_def, Complex.imCLM_apply] using!
-      Complex.imCLM.hasFDerivAt.comp_hasDerivWithinAt t hd
-  have hs := (hre.pow 2).add (him.pow 2)
-  convert hs using 1
-  · ext y
-    change ‖f y‖ ^ 2 = (f y).re ^ 2 + (f y).im ^ 2
-    rw [← Complex.normSq_eq_norm_sq, Complex.normSq_apply]
-    ring
-  · simp only [Complex.mul_re, Complex.star_def, Complex.conj_re, Complex.conj_im]
-    ring
-
-private lemma square_FTC (D : ℝ) (hD : 0 ≤ D) (f v : ℝ → ℂ)
-    (hf : Continuous f) (hd : ∀ t, HasDerivWithinAt f (v t) (Ioi t) t)
-    (hi : IntegrableOn (fun t => (star (f t) * v t).re) (Icc 0 D)) :
-    ‖f D‖ ^ 2 - ‖f 0‖ ^ 2 =
-      2 * (∫ t in Icc 0 D, (star (f t) * v t).re) := by
-  have h := intervalIntegral.integral_eq_sub_of_hasDeriv_right_of_le hD
-    (hf.norm.pow 2).continuousOn (fun t _ => square_right (hd t))
-    ((intervalIntegrable_iff_integrableOn_Icc_of_le hD).mpr (hi.const_mul 2))
-  rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_of_le hD,
-    ← integral_Icc_eq_integral_Ioc] at h
-  exact h.symm
-
-private lemma square_sub (z w : ℂ) (r : ℝ) :
-    ‖z - (r : ℂ) * w‖ ^ 2 = ‖z‖ ^ 2 -
-      2 * r * (star w * z).re + r ^ 2 * ‖w‖ ^ 2 := by
-  simp only [← Complex.normSq_eq_norm_sq, Complex.normSq_apply,
-    Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im,
-    Complex.ofReal_re, Complex.ofReal_im, Complex.star_def, Complex.conj_re,
-    Complex.conj_im]
-  ring
 
 /-- Pair overlap of the finite causal exponentials, by actual integration
 including the finite upper boundary term. The identity requires only a
@@ -372,11 +92,11 @@ private lemma causal_pair (lam D l r : ℝ) (hlam : lam ≠ 0)
     · rw [abs_of_nonpos (sub_nonpos.mpr h)]
       dsimp [m]
       rw [max_eq_right h]
-      ring
+      ring_nf
     · rw [abs_of_nonneg (sub_nonneg.mpr h)]
       dsimp [m]
       rw [max_eq_left h]
-      ring
+      ring_nf
   have hFm : F m = Real.exp (-lam * |l - r|) := by
     dsimp [F]
     rw [← Real.exp_add, ← hmax]
@@ -727,11 +447,393 @@ theorem actual_prefix_primitive_gap (D : ℝ) (hD : 0 < D) (q : ℕ) (hq : 1 ≤
   change ‖ramp x a t‖ ^ 2 = ‖∫ u in (0 : ℝ)..t, «prefix» x a u‖ ^ 2
   rw [ramp_is_primitive x a t (fun i => (hx i).1) ht.1]
 
+/-! A division-free finite Gamma certificate.  The proof keeps the causal
+boundary square supplied by `causal_gram`; the only new inequality is the
+ordinary quadratic nonnegativity of `‖response - r * (prefix-lam*ramp)‖²`.
+-/
+
+theorem exponential_prefix_gamma_coercivity (D : ℝ) (hD : 0 ≤ D)
+    (lam : ℝ) (hlam : 0 < lam) (x : I → ℝ) (a : I → ℂ)
+    (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
+    (ha : ∑ i, a i = 0) (hfirst : ∑ i, a i * (x i : ℂ) = 0) :
+    ((∫ t : ℝ, ‖«prefix» x a t‖ ^ 2) + lam ^ 2 *
+        (∫ t in Icc (0 : ℝ) D, ‖ramp x a t‖ ^ 2)) *
+        (∑ i, ∑ j, star (a i) * a j *
+          (Real.exp (-lam * |x i - x j|) : ℂ)).re ≥
+      2 * lam * (∫ t : ℝ, ‖«prefix» x a t‖ ^ 2) ^ 2 := by
+  let A : ℝ → ℂ := «prefix» x a
+  let G : ℝ → ℂ := ramp x a
+  let Y : ℝ → ℂ := resolvent lam x a
+  let R : ℝ → ℂ := response lam x a
+  let U : ℝ → ℂ := fun t => A t - (lam : ℂ) * G t
+  let E : ℝ := ∫ t : ℝ, ‖A t‖ ^ 2
+  let EG : ℝ := ∫ t in Icc (0 : ℝ) D, ‖G t‖ ^ 2
+  let H : ℝ := ∫ t in Icc (0 : ℝ) D, ‖R t‖ ^ 2
+  let C : ℝ := E + lam ^ 2 * EG
+  let Q : ℝ := (∑ i, ∑ j, star (a i) * a j *
+      (Real.exp (-lam * |x i - x j|) : ℂ)).re
+  change C * Q ≥ 2 * lam * E ^ 2
+  have hAc : Continuous (ramp x a) := ramp_continuous x a
+  have hYc : Continuous (resolvent lam x a) := resolvent_continuous lam x a
+  have hA : IntegrableOn A (Icc (0 : ℝ) D) := by
+    have h := prefix_mul_integrable x a D (fun _ : ℝ => (1 : ℂ)) continuous_const
+    simpa [A] using h
+  have hG : IntegrableOn G (Icc (0 : ℝ) D) := by
+    simpa [G] using hAc.integrableOn_Icc
+  have hY : IntegrableOn Y (Icc (0 : ℝ) D) := by
+    simpa [Y] using hYc.integrableOn_Icc
+  have hR : IntegrableOn R (Icc (0 : ℝ) D) := by
+    have hresp : R = fun t => A t - (lam : ℂ) * Y t := by
+      funext t
+      exact response_eq lam hlam.ne' x a t
+    rw [hresp]
+    exact hA.sub (hY.const_mul (lam : ℂ))
+  have hA2 : IntegrableOn (fun t => ‖A t‖ ^ 2) (Icc (0 : ℝ) D) := by
+    simpa [A] using (shifted_hinge_prefix_energy x a ha 0).2.1.integrableOn
+  have hG2 : IntegrableOn (fun t => ‖G t‖ ^ 2) (Icc (0 : ℝ) D) := by
+    change IntegrableOn (fun t => ‖ramp x a t‖ ^ 2) (Icc (0 : ℝ) D)
+    exact (hAc.norm.pow 2).integrableOn_Icc
+  have hR2 : IntegrableOn (fun t => ‖R t‖ ^ 2) (Icc (0 : ℝ) D) := by
+    simpa [R] using (causal_gram lam D hlam.ne' x a hx).1
+  have hYA : IntegrableOn (fun t => (star (Y t) * A t).re) (Icc (0 : ℝ) D) := by
+    have h := prefix_mul_integrable x a D (fun t => star (Y t)) hYc.star
+    simpa only [RCLike.re_to_complex, A, mul_comm] using h.re
+  have hGA : IntegrableOn (fun t => (star (G t) * A t).re) (Icc (0 : ℝ) D) := by
+    have h := prefix_mul_integrable x a D (fun t => star (G t)) hAc.star
+    simpa only [RCLike.re_to_complex, A, G, mul_comm] using h.re
+  have hYG : IntegrableOn (fun t => (star (Y t) * G t).re) (Icc (0 : ℝ) D) :=
+    (Complex.continuous_re.comp (hYc.star.mul hAc)).integrableOn_Icc
+  have hGY : IntegrableOn (fun t => (star (G t) * Y t).re) (Icc (0 : ℝ) D) :=
+    (Complex.continuous_re.comp (hAc.star.mul hYc)).integrableOn_Icc
+  have hAA : IntegrableOn (fun t => ‖A t‖ ^ 2) (Icc (0 : ℝ) D) := hA2
+  have hEwindow : (∫ t in Icc (0 : ℝ) D, ‖A t‖ ^ 2) = E := by
+    dsimp [E, A]
+    exact (prefix_energy_window x a D hx ha).symm
+  have hG0 : G 0 = 0 := (initial_values lam x a (fun i => (hx i).1)).1
+  have hGD : G D = 0 := ramp_terminal x a D (fun i => (hx i).2) ha hfirst
+  have hGA_zero : (∫ t in Icc (0 : ℝ) D, (star (G t) * A t).re) = 0 := by
+    have hFTC := square_FTC D hD G A hAc (ramp_right x a)
+      hGA
+    simp only [hG0, hGD, norm_zero, zero_pow (by decide : 2 ≠ 0),
+      sub_zero] at hFTC
+    nlinarith only [hFTC]
+  have hGR : IntegrableOn (fun t => (star (G t) * R t).re) (Icc (0 : ℝ) D) := by
+    have h := hGA.sub (hGY.const_mul lam)
+    apply h.congr
+    filter_upwards [] with t
+    rw [show R t = A t - (lam : ℂ) * Y t from response_eq lam hlam.ne' x a t]
+    simp only [star_sub, Complex.star_def, Complex.mul_re, Complex.mul_im,
+      Complex.sub_re, Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im,
+      Complex.conj_re, Complex.conj_im]
+    simp only [Pi.sub_apply]
+    change ((star (G t) * A t).re - lam * (star (G t) * Y t).re) = _
+    simp only [Complex.star_def, Complex.mul_re, Complex.mul_im,
+      Complex.conj_re, Complex.conj_im]
+    ring_nf
+  have hcross_integrable : IntegrableOn
+      (fun t => (star (R t) * U t).re) (Icc (0 : ℝ) D) := by
+    have he (t : ℝ) : (star (R t) * U t).re =
+        ‖A t‖ ^ 2 - lam * (star (Y t) * A t).re -
+          lam * (star (G t) * R t).re := by
+      rw [show R t = A t - (lam : ℂ) * Y t from response_eq lam hlam.ne' x a t]
+      simp only [U, ← Complex.normSq_eq_norm_sq, Complex.normSq_apply,
+        Complex.star_def, Complex.sub_re, Complex.sub_im, Complex.mul_re,
+        Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, Complex.conj_re,
+        Complex.conj_im]
+      ring_nf
+    have hGR : IntegrableOn (fun t => (star (G t) * R t).re) (Icc 0 D) := by
+      have h := hGA.sub (hGY.const_mul lam)
+      apply h.congr
+      filter_upwards [] with t
+      rw [show R t = A t - (lam : ℂ) * Y t from response_eq lam hlam.ne' x a t]
+      simp only [star_sub, star_mul, Complex.star_def, Complex.conj_ofReal,
+        Complex.mul_re, Complex.mul_im, Complex.sub_re, Complex.sub_im,
+        Complex.ofReal_re, Complex.ofReal_im, Complex.conj_re, Complex.conj_im]
+      simp only [Pi.sub_apply]
+      change ((star (G t) * A t).re - lam * (star (G t) * Y t).re) = _
+      simp only [Complex.star_def, Complex.mul_re, Complex.mul_im,
+        Complex.conj_re, Complex.conj_im]
+      ring_nf
+    apply (hAA.sub (hYA.const_mul lam)).sub (hGR.const_mul lam) |>.congr
+    filter_upwards [] with t
+    exact (he t).symm
+  have hU2 : IntegrableOn (fun t => ‖U t‖ ^ 2) (Icc (0 : ℝ) D) := by
+    have he (t : ℝ) : ‖U t‖ ^ 2 = ‖A t‖ ^ 2 -
+        2 * lam * (star (A t) * G t).re + lam ^ 2 * ‖G t‖ ^ 2 := by
+      change ‖A t - (lam : ℂ) * G t‖ ^ 2 = _
+      rw [square_sub]
+      have hstar : (star (G t) * A t).re = (star (A t) * G t).re := by
+        simp only [Complex.star_def, Complex.conj_re, Complex.conj_im,
+          Complex.mul_re, Complex.mul_im]
+        ring
+      rw [hstar]
+    have hAG : IntegrableOn (fun t => (star (A t) * G t).re) (Icc 0 D) := by
+      exact hGA.congr (ae_of_all _ (fun t => by
+        simp only [Complex.star_def, Complex.conj_re, Complex.conj_im,
+          Complex.mul_re, Complex.mul_im]
+        ring))
+    apply ((hAA.sub (hAG.const_mul (2 * lam))).add (hG2.const_mul (lam ^ 2))).congr
+    filter_upwards [] with t
+    exact (he t).symm
+  have hmix_integral :
+      (∫ t in Icc (0 : ℝ) D, (star (Y t) * A t).re) +
+        ∫ t in Icc (0 : ℝ) D, (star (G t) * R t).re = 0 := by
+    have hplus : IntegrableOn
+        (fun t => (star (Y t + G t) * (R t + A t)).re) (Icc 0 D) := by
+      exact (IntegrableOn.continuousOn_mul
+        ((hYc.add hAc).star.continuousOn) (hR.add hA) isCompact_Icc).re
+    have hminus : IntegrableOn
+        (fun t => (star (Y t - G t) * (R t - A t)).re) (Icc 0 D) := by
+      exact (IntegrableOn.continuousOn_mul
+        ((hYc.sub hAc).star.continuousOn) (hR.sub hA) isCompact_Icc).re
+    have hdplus (t : ℝ) : HasDerivWithinAt (fun s => Y s + G s)
+        (R t + A t) (Ioi t) t := by
+      exact (resolvent_right lam hlam.ne' x a t).add (ramp_right x a t)
+    have hdminus (t : ℝ) : HasDerivWithinAt (fun s => Y s - G s)
+        (R t - A t) (Ioi t) t := by
+      exact (resolvent_right lam hlam.ne' x a t).sub (ramp_right x a t)
+    have hp := square_FTC D hD (fun t => Y t + G t) (fun t => R t + A t)
+      (hYc.add hAc) hdplus hplus
+    have hm := square_FTC D hD (fun t => Y t - G t) (fun t => R t - A t)
+      (hYc.sub hAc) hdminus hminus
+    have hY0 : Y 0 = 0 := (initial_values lam x a (fun i => (hx i).1)).2.1
+    have hdiff : (∫ t in Icc (0 : ℝ) D,
+        (star (Y t + G t) * (R t + A t)).re) -
+        ∫ t in Icc (0 : ℝ) D, (star (Y t - G t) * (R t - A t)).re =
+        2 * (∫ t in Icc (0 : ℝ) D, (star (Y t) * A t).re) +
+          2 * ∫ t in Icc (0 : ℝ) D, (star (G t) * R t).re := by
+      calc
+        _ = ∫ t in Icc (0 : ℝ) D,
+            ((star (Y t + G t) * (R t + A t)).re -
+              (star (Y t - G t) * (R t - A t)).re) :=
+          (integral_sub hplus hminus).symm
+        _ = ∫ t in Icc (0 : ℝ) D,
+            (2 * (star (Y t) * A t).re +
+              2 * (star (G t) * R t).re) := by
+          apply integral_congr_ae
+          filter_upwards [] with t
+          simp only [star_add, star_sub, add_mul, sub_mul, mul_add, mul_sub,
+            Complex.add_re, Complex.sub_re]
+          ring
+        _ = _ := by
+          rw [integral_add (hYA.const_mul 2) (hGR.const_mul 2),
+            integral_const_mul, integral_const_mul]
+    simp only [hY0, hG0, hGD, zero_add, add_zero, zero_sub, sub_zero] at hp hm
+    have hz : (∫ t in Icc (0 : ℝ) D,
+        (star (Y t + G t) * (R t + A t)).re) -
+        ∫ t in Icc (0 : ℝ) D,
+          (star (Y t - G t) * (R t - A t)).re = 0 := by
+      nlinarith only [hp, hm]
+    nlinarith only [hdiff, hz]
+  have hCU :
+      (∫ t in Icc (0 : ℝ) D, (star (R t) * U t).re) = E := by
+    have he (t : ℝ) : (star (R t) * U t).re =
+        ‖A t‖ ^ 2 - lam * (star (Y t) * A t).re -
+          lam * (star (G t) * R t).re := by
+      rw [show R t = A t - (lam : ℂ) * Y t from response_eq lam hlam.ne' x a t]
+      simp only [U, ← Complex.normSq_eq_norm_sq, Complex.normSq_apply,
+        Complex.star_def, Complex.sub_re, Complex.sub_im, Complex.mul_re,
+        Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, Complex.conj_re,
+        Complex.conj_im]
+      ring
+    calc
+      _ = ∫ t in Icc (0 : ℝ) D,
+          ‖A t‖ ^ 2 - lam * (star (Y t) * A t).re -
+            lam * (star (G t) * R t).re :=
+        integral_congr_ae (ae_of_all _ (fun t => he t))
+      _ = (∫ t in Icc (0 : ℝ) D,
+          ‖A t‖ ^ 2 - lam * (star (Y t) * A t).re) -
+            ∫ t in Icc (0 : ℝ) D, lam * (star (G t) * R t).re := by
+        simpa only [Pi.sub_apply] using
+          (integral_sub (hAA.sub (hYA.const_mul lam))
+            (hGR.const_mul lam))
+      _ = E - lam * (∫ t in Icc (0 : ℝ) D,
+          (star (Y t) * A t).re) - lam *
+            (∫ t in Icc (0 : ℝ) D, (star (G t) * R t).re) := by
+        rw [integral_sub hAA (hYA.const_mul lam), integral_const_mul,
+          integral_const_mul, hEwindow]
+      _ = E := by
+        calc
+          _ = E - lam * ((∫ t in Icc (0 : ℝ) D,
+              (star (Y t) * A t).re) +
+              ∫ t in Icc (0 : ℝ) D, (star (G t) * R t).re) := by ring
+          _ = E := by rw [hmix_integral, mul_zero, sub_zero]
+  have hquad (r : ℝ) : 0 ≤ H - 2 * r * E + r ^ 2 * C := by
+    have hUR : IntegrableOn (fun t => (star (U t) * R t).re) (Icc 0 D) := by
+      apply hcross_integrable.congr
+      filter_upwards [] with t
+      simp only [Complex.star_def, Complex.conj_re, Complex.conj_im,
+        Complex.mul_re, Complex.mul_im]
+      ring
+    have hi : IntegrableOn (fun t => ‖R t - (r : ℂ) * U t‖ ^ 2)
+        (Icc (0 : ℝ) D) := by
+      have he (t : ℝ) : ‖R t - (r : ℂ) * U t‖ ^ 2 =
+          ‖R t‖ ^ 2 - 2 * r * (star (U t) * R t).re + r ^ 2 * ‖U t‖ ^ 2 := by
+        rw [square_sub]
+      apply (hR2.sub (hUR.const_mul (2 * r))).add (hU2.const_mul (r ^ 2)) |>.congr
+      filter_upwards [] with t
+      exact (he t).symm
+    have hn : 0 ≤ ∫ t in Icc (0 : ℝ) D,
+        ‖R t - (r : ℂ) * U t‖ ^ 2 :=
+      integral_nonneg (fun _ => sq_nonneg _)
+    have hcross' : (∫ t in Icc (0 : ℝ) D, (star (U t) * R t).re) = E := by
+      have heq (t : ℝ) : (star (U t) * R t).re = (star (R t) * U t).re := by
+        simp only [Complex.star_def, Complex.conj_re, Complex.conj_im,
+          Complex.mul_re, Complex.mul_im]
+        ring
+      rw [integral_congr_ae (ae_of_all _ heq)]
+      exact hCU
+    have hUIntegral : (∫ t in Icc (0 : ℝ) D, ‖U t‖ ^ 2) = C := by
+      have hAG : IntegrableOn (fun t => (star (A t) * G t).re)
+          (Icc (0 : ℝ) D) := by
+        exact hGA.congr (ae_of_all _ (fun t => by
+          simp only [Complex.star_def, Complex.conj_re, Complex.conj_im,
+            Complex.mul_re, Complex.mul_im]
+          ring))
+      have hsym : (∫ t in Icc (0 : ℝ) D,
+          (star (A t) * G t).re) =
+          ∫ t in Icc (0 : ℝ) D, (star (G t) * A t).re := by
+        apply integral_congr_ae
+        filter_upwards [] with t
+        simp only [Complex.star_def, Complex.conj_re, Complex.conj_im,
+          Complex.mul_re, Complex.mul_im]
+        ring
+      calc
+        _ = ∫ t in Icc (0 : ℝ) D,
+            ‖A t‖ ^ 2 - 2 * lam * (star (A t) * G t).re +
+              lam ^ 2 * ‖G t‖ ^ 2 := by
+          apply integral_congr_ae
+          filter_upwards [] with t
+          change ‖A t - (lam : ℂ) * G t‖ ^ 2 = _
+          rw [square_sub]
+          have hstar : (star (G t) * A t).re = (star (A t) * G t).re := by
+            simp only [Complex.star_def, Complex.conj_re, Complex.conj_im,
+              Complex.mul_re, Complex.mul_im]
+            ring
+          rw [hstar]
+        _ = (∫ t in Icc (0 : ℝ) D, ‖A t‖ ^ 2) +
+            lam ^ 2 * (∫ t in Icc (0 : ℝ) D, ‖G t‖ ^ 2) := by
+          change (∫ t in Icc (0 : ℝ) D,
+            ((‖A t‖ ^ 2 - 2 * lam * (star (A t) * G t).re) +
+              lam ^ 2 * ‖G t‖ ^ 2)) = _
+          calc
+            _ = (∫ t in Icc (0 : ℝ) D,
+                ‖A t‖ ^ 2 - 2 * lam * (star (A t) * G t).re) +
+                ∫ t in Icc (0 : ℝ) D, lam ^ 2 * ‖G t‖ ^ 2 := by
+              have hi := integral_add (hAA.sub (hAG.const_mul (2 * lam)))
+                (hG2.const_mul (lam ^ 2))
+              change (∫ t in Icc (0 : ℝ) D,
+                ((fun t => ‖A t‖ ^ 2 - 2 * lam * (star (A t) * G t).re) t +
+                  (fun t => lam ^ 2 * ‖G t‖ ^ 2) t)) = _
+              exact hi
+            _ = _ := by
+              rw [integral_sub hAA (hAG.const_mul (2 * lam)),
+                integral_const_mul, integral_const_mul, hsym, hGA_zero]
+              ring
+        _ = C := by rw [hEwindow]
+    have hquad_integral :
+        (∫ t in Icc (0 : ℝ) D, ‖R t‖ ^ 2 -
+          2 * r * (star (U t) * R t).re + r ^ 2 * ‖U t‖ ^ 2) =
+          H - 2 * r * E + r ^ 2 * C := by
+      calc
+        _ = (∫ t in Icc (0 : ℝ) D, ‖R t‖ ^ 2) -
+            2 * r * (∫ t in Icc (0 : ℝ) D, (star (U t) * R t).re) +
+            r ^ 2 * (∫ t in Icc (0 : ℝ) D, ‖U t‖ ^ 2) := by
+          change (∫ t in Icc (0 : ℝ) D,
+            ((‖R t‖ ^ 2 - 2 * r * (star (U t) * R t).re) +
+              r ^ 2 * ‖U t‖ ^ 2)) = _
+          calc
+            _ = (∫ t in Icc (0 : ℝ) D,
+                ‖R t‖ ^ 2 - 2 * r * (star (U t) * R t).re) +
+                ∫ t in Icc (0 : ℝ) D, r ^ 2 * ‖U t‖ ^ 2 := by
+              have hi := integral_add (hR2.sub (hUR.const_mul (2 * r)))
+                (hU2.const_mul (r ^ 2))
+              change (∫ t in Icc (0 : ℝ) D,
+                ((fun t => ‖R t‖ ^ 2 - 2 * r * (star (U t) * R t).re) t +
+                  (fun t => r ^ 2 * ‖U t‖ ^ 2) t)) = _
+              exact hi
+            _ = _ := by
+              rw [integral_sub hR2 (hUR.const_mul (2 * r)),
+                integral_const_mul, integral_const_mul]
+        _ = _ := by rw [hcross', hUIntegral]
+    calc
+      0 ≤ ∫ t in Icc (0 : ℝ) D,
+          ‖R t‖ ^ 2 - 2 * r * (star (U t) * R t).re +
+            r ^ 2 * ‖U t‖ ^ 2 := by
+        have hnorm :
+            (∫ t in Icc (0 : ℝ) D, ‖R t - (r : ℂ) * U t‖ ^ 2) =
+              ∫ t in Icc (0 : ℝ) D,
+                ‖R t‖ ^ 2 - 2 * r * (star (U t) * R t).re +
+                  r ^ 2 * ‖U t‖ ^ 2 := by
+          apply integral_congr_ae
+          filter_upwards [] with t
+          have he (t : ℝ) : ‖R t - (r : ℂ) * U t‖ ^ 2 =
+              ‖R t‖ ^ 2 - 2 * r * (star (U t) * R t).re +
+                r ^ 2 * ‖U t‖ ^ 2 := by
+            rw [square_sub]
+          exact he t
+        rw [← hnorm]
+        exact hn
+      _ = H - 2 * r * E + r ^ 2 * C := hquad_integral
+  have hdisc : E ^ 2 ≤ C * H := by
+    have hpoly : ∀ r : ℝ, 0 ≤ C * (r * r) + (-2 * E) * r + H := by
+      intro r
+      have hr := hquad r
+      nlinarith only [hr]
+    have hd := discrim_le_zero (a := C) (b := -2 * E) (c := H) hpoly
+    dsimp [discrim] at hd
+    nlinarith only [hd]
+  have hgram := (causal_gram lam D hlam.ne' x a hx).2
+  have hCQ : C * Q ≥ 2 * lam * E ^ 2 := by
+    have hQ : Q = 2 * lam * H + ‖R D‖ ^ 2 := by
+      dsimp [Q, H, R]
+      exact hgram
+    rw [hQ]
+    have hmul := mul_le_mul_of_nonneg_left hdisc (by positivity : 0 ≤ 2 * lam)
+    have hC : 0 ≤ C := by
+      dsimp [C, E, EG]
+      positivity
+    have hb : 0 ≤ C * ‖R D‖ ^ 2 := mul_nonneg hC (sq_nonneg _)
+    nlinarith only [hmul, hb]
+  exact hCQ
+
 
 /-- The literal growing-kernel primitive identity, in causal triangular
 form. Both endpoint cancellations are paid by the mass and first atomic
 moment. The generalized finite Gram identity is used at lambda=-1/2;
 no positivity of the growing exponential is asserted. -/
+theorem exponential_prefix_kernel_nonneg (D : ℝ) (hD : 0 ≤ D)
+    (lam : ℝ) (hlam : 0 < lam) (x : I → ℝ) (a : I → ℂ)
+    (hx : ∀ i, x i ∈ Icc (0 : ℝ) D) :
+    0 ≤ (∑ i, ∑ j, star (a i) * a j *
+      (Real.exp (-lam * |x i - x j|) : ℂ)).re := by
+  have h := causal_gram lam D hlam.ne' x a hx
+  rw [h.2]
+  positivity
+
+theorem exponential_prefix_gamma_gap_coercivity
+    (D : ℝ) (hD : 0 < D) (q : ℕ) (hq : 1 ≤ q)
+    (lam : ℝ) (hlam : 0 < lam) (x : I → ℝ) (a : I → ℂ)
+    (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
+    (hm : ∀ r : ℕ, r ≤ q → ∑ i, a i * (x i : ℂ) ^ r = 0) :
+    ((1 + lam ^ 2 * (D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1)))) *
+        (∫ t : ℝ, ‖«prefix» x a t‖ ^ 2)) *
+        (∑ i, ∑ j, star (a i) * a j *
+          (Real.exp (-lam * |x i - x j|) : ℂ)).re ≥
+      2 * lam * (∫ t : ℝ, ‖«prefix» x a t‖ ^ 2) ^ 2 := by
+  have ha : ∑ i, a i = 0 := by simpa using hm 0 (Nat.zero_le q)
+  have hfirst : ∑ i, a i * (x i : ℂ) = 0 := by simpa using hm 1 hq
+  have hγ := exponential_prefix_gamma_coercivity D hD.le lam hlam x a hx ha hfirst
+  have hgap := actual_prefix_primitive_gap D hD q hq x a hx hm
+  have hq0 := exponential_prefix_kernel_nonneg D hD.le lam hlam x a hx
+  have hE : 0 ≤ ∫ t : ℝ, ‖«prefix» x a t‖ ^ 2 := integral_nonneg (fun _ => sq_nonneg _)
+  have hC : (∫ t : ℝ, ‖«prefix» x a t‖ ^ 2) + lam ^ 2 *
+      (∫ t in Icc (0 : ℝ) D, ‖ramp x a t‖ ^ 2) ≤
+      (1 + lam ^ 2 * (D ^ 2 / (4 * (q : ℝ) * ((q : ℝ) + 1)))) *
+        (∫ t : ℝ, ‖«prefix» x a t‖ ^ 2) := by
+    nlinarith
+  exact hγ.trans (mul_le_mul_of_nonneg_right hC hq0)
+
 theorem growing_primitive_identity (D : ℝ) (hD : 0 ≤ D)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
     (ha : ∑ i, a i = 0) (hfirst : ∑ i, a i * (x i : ℂ) = 0) :
