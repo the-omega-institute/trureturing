@@ -4,7 +4,19 @@
 
 Exact supported perspective transformer for positive finite matrix maps.
 
-**Theorem 1.1 (Positive maps contract the supported perspective).**
+**Theorem 1.1 (The actual roots multiply to their support).**
+
+Lean statement: `D5/S3/Quantum/Lieb/SupportPerspectiveTransformer.spectral_sqrt_inverse_products`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Lieb/SupportPerspectiveTransformer.spectral_sqrt_inverse_products` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite decidable coordinate type n and PSD matrix Q, set R=sqrt(Q), W=spectralInverseSqrt(Q), and P=spectralSupport(Q). Then R W=P, W R=P, P W=W and W P=W. The inverse root is zero on the kernel; the zero matrix and empty carrier are included.
+
+**Theorem 1.2 (Positive maps contract the supported perspective).**
 
 $$\forall u: \operatorname{Level}(),\ n: \operatorname{Type}(u),\ [\operatorname{Fintype}(n)], [\operatorname{DecidableEq}(n)], m: \operatorname{Type}(u),\ [\operatorname{Fintype}(m)], [\operatorname{DecidableEq}(m)], f: \mathbb{R} \to \mathbb{R},\ Phi: \operatorname{PositiveLinearMap}(\mathbb{C}, \operatorname{Matrix}(n, n, \mathbb{C}), \operatorname{Matrix}(m, m, \mathbb{C})),\ A: \operatorname{Matrix}(n, n, \mathbb{C}),\ B: \operatorname{Matrix}(n, n, \mathbb{C}),\ \operatorname{OperatorConvexOnAll}(u, \operatorname{Ici}(0), f), \operatorname{ContinuousOn}(f, \operatorname{Ici}(0)), \operatorname{PSD}(A), \operatorname{PSD}(B), \operatorname{ker}(B)\subseteq \operatorname{ker}(A) \implies \operatorname{persp}(f, \operatorname{Phi}(A), \operatorname{Phi}(B))\le\operatorname{Phi}(\operatorname{persp}(f, A, B))$$
 
@@ -26,5 +38,6 @@ For the concrete entropy application let a,b be arbitrary finite decidable types
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Lieb/SupportPerspectiveTransformer.spectral_sqrt_inverse_products`
 - Truth anchor: `D5/S3/Quantum/Lieb/SupportPerspectiveTransformer.supportedPerspective_transformer`
 - Dependency: [D5/S3/Quantum/Lieb/SupportPerspectiveTransport](SupportPerspectiveTransport.md)
