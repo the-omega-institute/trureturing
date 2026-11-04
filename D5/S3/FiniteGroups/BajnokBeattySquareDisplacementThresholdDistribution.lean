@@ -206,7 +206,7 @@ private theorem fiber_count_interval (a b : ℕ) (j : ℤ) :
       ⟨Finset.mem_range.mpr (by omega), Finset.mem_range.mpr (by omega)⟩,
       by omega⟩
 
-private theorem fiber_count_formula (a b : ℕ) (j : ℤ) :
+theorem fiber_count_formula (a b : ℕ) (j : ℤ) :
     (((Finset.product (Finset.range a) (Finset.range b)).filter (fun uv =>
       (uv.2 : ℤ) - uv.1 = j)).card : ℤ) =
       max 0 (min (a : ℤ) ((b : ℤ) - j) - max 0 (-j)) := by
@@ -654,7 +654,7 @@ private theorem scaled_log_irrational (c : ℤ) (hc : c ≠ 0)
   rw [← he]
   exact (log_two_irrational.intCast_div hc).div_natCast hn
 
-private theorem positive_gcd_coordinates (p r : ℤ) (hp : 0 < p) (hr : 0 < r) :
+theorem positive_gcd_coordinates (p r : ℤ) (hp : 0 < p) (hr : 0 < r) :
     ∃ a b : ℕ, 0 < a ∧ 0 < b ∧ Nat.Coprime a b ∧
       p = (Int.gcd p r : ℤ) * a ∧ r = (Int.gcd p r : ℤ) * b := by
   have hdN : 0 < Int.gcd p r := Int.gcd_pos_of_ne_zero_left r (ne_of_gt hp)
