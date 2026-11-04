@@ -61,7 +61,7 @@ private lemma path_neighbors (j : ℕ) (t : Fin j) :
 private lemma path_degree (j : ℕ) (t : Fin j) :
     ((SimpleGraph.pathGraph j).degree t : ℤ) =
       (if 0 < t.val then 1 else 0) + (if t.val + 1 < j then 1 else 0) := by
-  obtain ⟨n, rfl⟩ : ∃ n : ℕ, j = n + 1 := ⟨j - 1, (Nat.sub_add_cancel (Fin.pos t)).symm⟩
+  obtain ⟨n, rfl⟩ := Nat.exists_eq_add_of_le' (Fin.pos t)
   have h :=
     D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.path_neighbor_card n t
   have h' : (SimpleGraph.pathGraph (n + 1)).degree t =
@@ -83,7 +83,7 @@ private lemma total_mass (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j) :
       ((((⊤ : SimpleGraph (Fin i)).boxProd (SimpleGraph.pathGraph j)).degree v : ℤ) - 1) =
         (i : ℤ) * ((i : ℤ) * j - 2) := by
   have hp : ∑ t : Fin j, ((SimpleGraph.pathGraph j).degree t : ℤ) = 2 * ((j : ℤ) - 1) := by
-    obtain ⟨n, rfl⟩ : ∃ n : ℕ, j = n + 1 := ⟨j - 1, by omega⟩
+    obtain ⟨n, rfl⟩ := Nat.exists_eq_add_of_le' (by omega : 1 ≤ j)
     have h :=
       D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.sum_path_neighbor_card
         n
@@ -235,17 +235,18 @@ private lemma path_elimination (i j : ℕ) (hj : 2 ≤ j) (x : ℕ → ℤ)
     have h0' : (x 1 : ℝ) = (i + 1 : ℝ) * (x 0 : ℝ) := by exact_mod_cast h0
     have ht := congrArg (Polynomial.eval (i + 2 : ℝ)) (S_add_one ℝ ((k : ℤ) - 1))
     simp only [eval_sub, eval_mul, eval_X, sub_add_cancel,
-      show (k : ℤ) - 1 - 1 = (k : ℤ) - 2 by ring] at ht
+      show (k : ℤ) - 1 - 1 = (k : ℤ) - 2 from sub_sub (k : ℤ) 1 1] at ht
     rw [h0'] at he
     linear_combination he - (x 0 : ℝ) * ht
-  obtain ⟨n, rfl⟩ : ∃ n : ℕ, j = n + 2 := ⟨j - 2, by omega⟩
-  rw [show n + 2 - 1 = n + 1 by omega, show n + 2 - 2 = n by omega,
+  obtain ⟨n, rfl⟩ := Nat.exists_eq_add_of_le' hj
+  rw [show n + 2 - 1 = n + 1 from Nat.add_sub_assoc (by decide : 1 ≤ 2) n,
+    show n + 2 - 2 = n from Nat.add_sub_cancel n 2,
     hf (n + 1) (by omega), hf n (by omega)]
   have ht := congrArg (Polynomial.eval (i + 2 : ℤ)) (S_add_one ℤ (n : ℤ))
   simp only [eval_sub, eval_mul, eval_X] at ht
   push_cast
-  rw [show (n : ℤ) + 1 - 1 = (n : ℤ) by ring,
-    show (n : ℤ) + 2 - 1 = (n : ℤ) + 1 by ring]
+  rw [show (n : ℤ) + 1 - 1 = (n : ℤ) from add_sub_cancel_right (n : ℤ) 1,
+    show (n : ℤ) + 2 - 1 = (n : ℤ) + 1 from add_sub_assoc (n : ℤ) 2 1]
   linear_combination x 0 * ht
 
 private lemma identity_divisibility (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j)
@@ -271,9 +272,9 @@ private lemma continuant_growth (i j : ℕ) (hi : 2 ≤ i) (hj : 3 ≤ j) :
       have hs := congrArg (Polynomial.eval (i + 2 : ℤ)) (S_add_two ℤ (n : ℤ))
       simp only [eval_sub, eval_mul, eval_X] at hs
       push_cast
-      rw [show (n : ℤ) + 1 + 1 = (n : ℤ) + 2 by ring]
+      rw [show (n : ℤ) + 1 + 1 = (n : ℤ) + 2 from add_assoc (n : ℤ) 1 1]
       constructor <;> nlinarith [hn.1, hn.2]
-  obtain ⟨n, rfl⟩ : ∃ n : ℕ, j = n + 3 := ⟨j - 3, by omega⟩
+  obtain ⟨n, rfl⟩ := Nat.exists_eq_add_of_le' hj
   clear hj
   induction n with
   | zero =>
@@ -283,7 +284,7 @@ private lemma continuant_growth (i j : ℕ) (hi : 2 ≤ i) (hj : 3 ≤ j) :
     have hs := (hg (n + 2)).2
     push_cast at hn hs ⊢
     rw [show (n : ℤ) + 1 + 3 - 1 = (n : ℤ) + 2 + 1 by ring]
-    rw [show (n : ℤ) + 3 - 1 = (n : ℤ) + 2 by ring] at hn
+    rw [show (n : ℤ) + 3 - 1 = (n : ℤ) + 2 from add_sub_assoc (n : ℤ) 3 1] at hn
     nlinarith
 
 private lemma divisibility_classification (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j)
