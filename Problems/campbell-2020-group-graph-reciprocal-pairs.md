@@ -19,7 +19,7 @@ Kirsty Campbell, *Group-Graph Reciprocal Pairs*, arXiv:2005.13566v1, Conjecture 
 > 2. Γ is a 4-cycle and G ≅ Aut(Γ).
 > 3. Γ is a k-star and G is defined in Theorem 1.
 
-The source definitions and locators are in [Campbell’s Library note](../Library/GraphInvariants/campbell2020reciprocal.md). [Cameron–Semeraro](../Library/GraphInvariants/cameronsemeraro2018cycle.md), *The cycle polynomial of a permutation group*, DOI 10.37236/7299, supplies the literature background. The quantified conventions and external Tier-1 settlement are preregistered in [#16260](https://github.com/the-omega-institute/trureturing/issues/16260).
+The source definitions and locators are in [Campbell’s Library note](../Library/GraphInvariants/campbell2020reciprocal.md). [Cameron–Semeraro](../Library/FiniteGroups/cameronsemeraro2018cycle.md), *The cycle polynomial of a permutation group*, DOI 10.37236/7299, supplies the literature background. The quantified conventions and external Tier-1 settlement are preregistered in [#16260](https://github.com/the-omega-institute/trureturing/issues/16260).
 
 ### Statement echo
 
