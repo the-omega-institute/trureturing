@@ -1,0 +1,38 @@
+**Definition 44.1 (the fixed original spectral data).** Retain the original
+$\operatorname{Dens}_2\times U(4)$ domain, ordinary transpose, both original
+optimizer signs, one actual shared feedback $U$, and the single common
+scalar quotient from Definitions 11.1 and 23.1. For the actual pair
+$(E,U)$ write
+
+$$
+F=T^\dagger E^{\mathsf T}T
+ =\begin{pmatrix}p&z\\\bar z&1-p\end{pmatrix},
+\qquad
+0\le p\le1,\qquad |z|^2\le p(1-p),
+$$
+
+and put
+
+$$
+H=\operatorname{diag}(d^2,e^2),\qquad
+D(p)=d^2p+e^2(1-p),\qquad
+\epsilon=2\det F=2\bigl(p(1-p)-|z|^2\bigr).
+\tag{44.1}
+$$
+
+Thus $\epsilon=1-\operatorname{Tr}(E^2)$ is the original impurity of the
+same effect. Define
+
+$$
+ k=\frac{e^2}{d^2},\qquad
+ L(p,\epsilon)=
+ \frac{D(p)-\sqrt{D(p)^2-2d^2e^2\epsilon}}{2},
+\qquad
+ \theta(p)=\frac p2+k\left(\frac38-\frac p2\right).
+\tag{44.2}
+$$
+
+The square root in (44.2) is the smaller-eigenvalue expression for the
+positive matrix introduced in the proof below; its reality is part of
+that proof and does not impose a new restriction on the original domain.
+

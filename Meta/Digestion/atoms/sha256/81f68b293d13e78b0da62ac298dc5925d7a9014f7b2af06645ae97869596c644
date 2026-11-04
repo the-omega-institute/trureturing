@@ -1,0 +1,26 @@
+### 9.3 振幅平行搬运、曲率与路径记忆
+
+在已经构造的复二维振幅中，令 $P=(I+n\cdot\sigma)/2$。对应的水平 Hamiltonian 为
+
+$$
+\boxed{H_{\mathrm{hor}}=i\hbar[\dot P,P]
+=\frac\hbar2(n\times\dot n)\cdot\sigma.}
+\tag{9.4}
+$$
+
+Pauli 乘法直接给这个等式。更一般地，
+
+$$
+H=h_0 I+\frac\hbar2(n\times\dot n+\alpha n)\cdot\sigma
+$$
+
+仍给同一条 Bloch 内容路径，因为
+$\dot P=-i[H,P]/\hbar$。对满足 $P=\psi\psi^\dagger$ 及 $i\hbar\dot\psi=H\psi$ 的归一振幅 $\psi$，
+
+$$
+\psi^\dagger\dot\psi
+=-i\left(\frac{h_0}{\hbar}+\frac\alpha2\right).
+$$
+
+因此水平条件是 $h_0/\hbar+\alpha/2=0$；取无迹代表 $h_0=0$ 时，等价于 $\alpha=0$。这里 $\alpha R_n$ 是原 $\mathfrak g$ 中的稳定子方向，$h_0I$ 则是复完成中的标量中心自由度。原内容轨迹不决定它们的数值，也不能据此将它们删除。
+

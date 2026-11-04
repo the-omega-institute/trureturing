@@ -3533,3 +3533,455 @@ The construction uses only one supplied table at one scale. The constants in (53
 The new deduction is the combination of the cofactor congruence (53.7), the transverse extraction (53.10)--(53.12), and the strict determinant increase (53.18)--(53.28). The original rank-one and trace-group estimates of Part I and the failure implication of Theorem 52.2 are reused with their stated hypotheses. The ordinary Hermite bound is credited above; the balanced reduction and large-minimum representation theorem of Beli--Chan--Icaza--Liu, [*On a Waring's problem for integral quadratic and hermitian forms*, Proposition 5.3](https://arxiv.org/html/1702.08854v1), enter through Theorems 50.2 and 52.2. This is a repo-derived ordinary mathematical conclusion, with no global literature-priority assertion. It establishes the upper-margin atom estimate with $A=A_0\ge A_\dagger$, including the entire residual class, and does not assert an unrestricted estimate for the complementary boundary band. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 54. Original-grid face relations and tomography coordinates
+
+**定义 54.1（One grid, its free symbols and its legal rows）。** Fix $m\ge1$, $N=2^m$, and $R=\mathbb Z[i]$. In $\mathbb C^4$ let
+
+$$
+ K_{4,N}=\{E\in\operatorname{Herm}_4(N^{-1}R):0\le E\le I_4\},
+ \qquad W_{4,N}=\bigoplus_{E\in K_{4,N}}\mathbb R\delta_E.
+\tag{54.1}
+$$
+
+A legal row is
+
+$$
+ r(A,B,X)=\delta_{A+X}+\delta_B-\delta_A-\delta_{B+X}
+\tag{54.2}
+$$
+
+when $X\in\operatorname{Herm}_4(N^{-1}R)$ and all five matrices $A,B,A+X,B+X,C=I_4-A-B-X$ belong to $K_{4,N}$. The increment $X$ may have either sign. Write $\mathcal R_{4,N}$ for this finite set of rows. Let $\mathcal B_4$ be precisely the basis of [Part I, Definition 16.1](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md):
+
+$$
+ D_i=e_ie_i^*,\qquad
+ R_{ij}=(D_i+D_j+S_{ij})/2,\qquad
+ J_{ij}=(D_i+D_j+T_{ij})/2,
+\tag{54.3}
+$$
+
+where $S_{ij}$ has entries $1,1$ in positions $(i,j),(j,i)$ and $T_{ij}$ has entries $i,-i$ there. The actual anchor set is
+
+$$
+ \mathcal A_N=\mathcal B_4\ \cup\
+ \{F\in K_{4,N}:\|F\|_{\rm op}\le1/52\}.
+\tag{54.4}
+$$
+
+All equalities of symbols below are in the free real vector space (54.1). In particular, matrix addition is not imposed as a relation between symbols.
+
+**定义 54.2（A coordinate face and its own identity）。** For a three-element subset $J\subset\{1,2,3,4\}$ put $S=\sum_{j\in J}D_j$ and
+
+$$
+ K_{S,N}=\{E\in\operatorname{Herm}_4(N^{-1}R):E=SES,\ 0\le E\le S\},
+ \qquad W_{S,N}=\bigoplus_{E\in K_{S,N}}\mathbb R\delta_E.
+\tag{54.5}
+$$
+
+The space $S\mathbb C^4$ is identified with $\mathbb C^3$ by its ordered coordinate basis; its identity is $S$, with $\operatorname{Tr}S=3$. Define $\mathcal R_{S,N}$ by (54.2), with every matrix supported on $S$ and complement $C_3=S-A-B-X$ required to lie in $K_{S,N}$. Let
+
+$$
+ \mathcal B_S=\{D_j:j\in J\}\cup\{R_{jk},J_{jk}:j<k,\ j,k\in J\}.
+\tag{54.6}
+$$
+
+Thus $\mathcal B_S\subset\mathcal B_4$ consists of nine original-grid rank-one projections, all of trace one. The sets $K_{S,N}$ and $\mathcal R_{S,N}$ are finite: an effect has bounded entries on a discrete grid, and a row is determined by its finitely many endpoints.
+
+**定义 54.3（The original real coefficients）。** For $E\in K_{S,N}$ write $E_{jk}=x_{jk}+iy_{jk}$ for $j<k$ in $J$. The coefficients $\alpha_Q(E)$ are exactly those of Part I, (16.6):
+
+$$
+ \begin{aligned}
+ E&=\sum_{j\in J}a_jD_j+
+       \sum_{\substack{j<k\\j,k\in J}}(2x_{jk}R_{jk}+2y_{jk}J_{jk})
+       =\sum_{Q\in\mathcal B_S}\alpha_Q(E)Q,\\
+ a_j&=E_{jj}-\sum_{\substack{k<j\\k\in J}}(x_{kj}+y_{kj})
+                  -\sum_{\substack{k>j\\k\in J}}(x_{jk}+y_{jk}).
+ \end{aligned}
+\tag{54.7}
+$$
+
+Taking traces and using the first coefficient inequality of Part I, (16.7), with $d=3$, gives
+
+$$
+ \sum_Q\alpha_Q(E)=\operatorname{Tr}E,\qquad
+ \sum_Q|\alpha_Q(E)|\le27\|E\|_{\rm op}\le27,\qquad
+ |1-\operatorname{Tr}E|\le2.
+\tag{54.8}
+$$
+
+The coefficient inequality is valid for every effect; its use here does not require the local-ball condition $27\|E\|\le1$ used later in Part I's local proof.
+
+## 55. Perturbing an arbitrary functional and obtaining exact finite coefficients
+
+**定理 55.1（Fine-scale finite-dual face supplier）。** Suppose $N=2^m\ge1024$. For every coordinate face $S$ of Definition 54.2 and every $E\in K_{S,N}$ there are a finite list $r_1,\ldots,r_k\in\mathcal R_{S,N}$ and real coefficients $\lambda_1,\ldots,\lambda_k$ such that
+
+$$
+ \begin{aligned}
+ \delta_E&=R_E+\sum_{Q\in\mathcal B_S}\alpha_Q(E)\delta_Q
+                 +(1-\operatorname{Tr}E)\delta_0,\\
+ R_E&=\sum_{j=1}^k\lambda_jr_j,\qquad
+ \sum_{j=1}^k|\lambda_j|\le664016.
+ \end{aligned}
+\tag{55.1}
+$$
+
+The coefficients $\alpha_Q(E)$ are fixed by (54.7); the row coefficients need not be unique. Counting rows, tomography symbols and the zero symbol together gives total absolute coefficient sum at most $664045$.
+
+Proof. Let $f:K_{S,N}\to\mathbb R$ be arbitrary, and use the same letter for its linear extension to $W_{S,N}$. Set
+
+$$
+ \rho=\max_{r\in\mathcal R_{S,N}}|f(r)|,\qquad
+ g(E)=f(E)-f(0),\qquad
+ h(E)=g(E)-\frac{\operatorname{Tr}E}{3}g(S).
+\tag{55.2}
+$$
+
+For $A,B\ge0$ on the original grid with $A+B\le S$, the row $r(0,B,A)$ has endpoints $0,B,A,A+B$ and complement $S-A-B$. Thus it is legal, and
+
+$$
+ |g(A)+g(B)-g(A+B)|\le\rho.
+\tag{55.3}
+$$
+
+The trace correction is additive. Consequently (55.3) holds with $h$ in place of $g$, and $h(0)=h(S)=0$. For every labelled two-entry menu $E_1+E_2=S$ it follows that
+
+$$
+ |h(E_1)+h(E_2)|\le\rho.
+\tag{55.4}
+$$
+
+For every labelled three-entry menu $E_1+E_2+E_3=S$, the partial sum $E_1+E_2$ is an original-grid effect. Two applications of (55.3) give
+
+$$
+ |h(E_1)+h(E_2)+h(E_3)|\le2\rho.
+\tag{55.5}
+$$
+
+These arguments include every zero entry and every repetition.
+
+There are positive finite endpoint margins. Indeed, positivity implies $\operatorname{Tr}E=0$ only at $E=0$, and positivity of $S-E$ implies $\operatorname{Tr}E=3$ only at $E=S$. Hence, writing $q(E)=\operatorname{Tr}E/3$,
+
+$$
+ \eta=\min_{E\in K_{S,N}\setminus\{0,S\}}
+                  \min\{q(E),1-q(E)\}>0,
+ \qquad M=\max_{E\in K_{S,N}}|h(E)|<\infty.
+\tag{55.6}
+$$
+
+The set defining $\eta$ is nonempty, since it contains the coordinate rank-one projections. Choose, for example,
+
+$$
+ 0<t\le\min\left\{\frac{\eta}{2(1+M)},\frac1{20(1+\rho)}\right\},
+ \qquad p_t(E)=q(E)+t h(E),\qquad \epsilon=2t\rho.
+\tag{55.7}
+$$
+
+At $0,S$ the values are exactly $0,1$. At every other effect, $|t h(E)|\le\eta/2$, so $0\le p_t(E)\le1$. Equations (55.4)--(55.5), together with $\sum_jq(E_j)=1$, verify every two- and three-entry menu condition with defect at most $\epsilon\le1/10$. If $\rho=0$, this choice has $\epsilon=0$. No bound on $f$, and no endpoint margin uniform in $N$, is required.
+
+Apply the fine clause of Part I, Theorem 33.1, namely its bound (33.20), to this complete table on its own three-dimensional identity $S$. Its threshold $N\ge648$ holds here. For any real table $u$ on this face let $H_u$ be the unique Hermitian operator on $S\mathbb C^4$ with $\operatorname{Tr}(H_uQ)=u(Q)$ for every $Q\in\mathcal B_S$. This is a linear function of $u$, and $H_q=S/3$. Therefore
+
+$$
+ \begin{aligned}
+ |p_t(E)-\operatorname{Tr}(H_{p_t}E)|
+   &=t|h(E)-\operatorname{Tr}(H_hE)|\\
+   &\le332008\epsilon=664016t\rho.
+ \end{aligned}
+\tag{55.8}
+$$
+
+Division by $t>0$ is legitimate also when $\rho=0$. By (54.7), $\operatorname{Tr}(H_hE)=\sum_Q\alpha_Q(E)h(Q)$. Since every $Q$ has trace one and $\sum_Q\alpha_Q(E)=\operatorname{Tr}E$, direct substitution from (55.2) cancels the trace correction and gives
+
+$$
+ \begin{aligned}
+ h(E)-\sum_Q\alpha_Q(E)h(Q)
+   &=f(E)-\sum_Q\alpha_Q(E)f(Q)
+                         -(1-\operatorname{Tr}E)f(0),\\
+ v_E&=\delta_E-\sum_Q\alpha_Q(E)\delta_Q
+                         -(1-\operatorname{Tr}E)\delta_0,\\
+ |f(v_E)|&\le664016\max_{r\in\mathcal R_{S,N}}|f(r)|.
+ \end{aligned}
+\tag{55.9}
+$$
+
+This inequality has been established for every real linear functional on the free space, without assuming positivity or normalization of that functional.
+
+Now use the standard finite-dimensional separating-hyperplane theorem, as in R. T. Rockafellar, *Convex Analysis*, §11. This is an intermediate convex-geometric fact. The set
+
+$$
+ C=\operatorname{conv}\bigl(\{0\}\cup
+                    \{r,-r:r\in\mathcal R_{S,N}\}\bigr)
+\tag{55.10}
+$$
+
+is compact, convex and symmetric in the finite-dimensional space $W_{S,N}$. If $v_E\notin664016C$, strict separation from this compact convex set would give a linear functional $f$ with
+
+$$
+ f(v_E)>664016\sup_{c\in C}f(c)
+       =664016\max_{r\in\mathcal R_{S,N}}|f(r)|,
+\tag{55.11}
+$$
+
+contrary to (55.9). Thus $v_E\in664016C$. A finite convex combination in (55.10), with signs absorbed into the coefficients, supplies $v_E=\sum_j\lambda_jr_j$ and $\sum_j|\lambda_j|\le664016$. This is exact equality of free symbols, not equality modulo unspecified relations. Finally (54.8) gives $664016+27+2=664045$. $\square$
+
+## 56. Embedding each five-effect row into the original four-dimensional grid
+
+**定理 56.1（Same-grid face embedding with actual anchors）。** Every row in $\mathcal R_{S,N}$ embeds as a legal row in $\mathcal R_{4,N}$. Every tomography symbol and the zero symbol in (55.1) is an actual anchor in $\mathcal A_N$.
+
+Proof. The four face endpoints embed by zero on the missing coordinate, retain their entries in $N^{-1}R$, and satisfy $0\le E\le S\le I_4$. The signed increment remains an original-grid Hermitian matrix. If the fifth face effect is $C_3=S-A-B-X$, then its four-dimensional complement is
+
+$$
+ C_4=I_4-A-B-X=(I_4-S)+C_3.
+\tag{56.1}
+$$
+
+The two summands have orthogonal supports, with $0\le C_3\le S$. Hence $0\le C_4\le I_4$, and $C_4$ also belongs to the original grid. This checks all five required effects. The embedding $W_{S,N}\to W_{4,N}$ sends distinct effect symbols to distinct effect symbols, so it preserves (55.1) as an exact equality. By (54.6), each $Q\in\mathcal B_S$ is literally a member of $\mathcal B_4$. Also $0\in K_{4,N}$ and $\|0\|=0\le1/52$. Thus all delivered anchors are in $\mathcal B_4\cup\{0\}$; the proof uses no positive-radius small effect as an anchor. $\square$
+
+## 57. A direct certificate for the complementary-column projection family
+
+**定理 57.1（Uniform finite certificate on all dyadic scales at least 1024）。** Let $m\ge10$, $N=2^m$, and let $a,b\in\mathbb Z[i]$ satisfy $|a|^2+|b|^2=N-1$. With the same matrices as Part I, Proposition 19.1, put
+
+$$
+ U=\begin{pmatrix}a&b\\-\overline b&\overline a\end{pmatrix},\qquad
+ V=\begin{pmatrix}I_2\\U\end{pmatrix},\qquad P=VV^*/N.
+\tag{57.1}
+$$
+
+There are finite lists of original legal rows $r_j\in\mathcal R_{4,N}$, actual anchors $F_\ell\in\mathcal B_4\cup\{0\}\subset\mathcal A_N$, and real coefficients with
+
+$$
+ \delta_P=\sum_j\lambda_jr_j+\sum_\ell\beta_\ell\delta_{F_\ell},
+ \qquad \sum_j|\lambda_j|\le1328033,\qquad
+ \sum_\ell|\beta_\ell|\le56.
+\tag{57.2}
+$$
+
+In particular the total coefficient cost is at most $1328089$, independently of $m,a,b$ in this domain. Every symbol uses the one original grid with denominator $N$.
+
+Proof. Reuse the complementary-column identities of Part I, Proposition 19.1. Set
+
+$$
+ W=\begin{pmatrix}-U^*\\I_2\end{pmatrix},\qquad
+ w_j=We_j,\qquad Q_j=w_jw_j^*/N\quad(j=1,2).
+\tag{57.3}
+$$
+
+Here $e_j$ in (57.3) is the $j$th coordinate vector of $\mathbb C^2$. Since $U^*U=UU^*=(N-1)I_2$,
+
+$$
+ W^*W=NI_2,\qquad VV^*+WW^*=NI_4,\qquad
+ Q_1Q_2=0,\qquad Q_1+Q_2=I_4-P.
+\tag{57.4}
+$$
+
+Each $Q_j$ is a rank-one projection with Gaussian-integer numerator and denominator $N$. Explicitly,
+
+$$
+ w_1=(-\overline a,-\overline b,1,0)^{\mathsf T},\qquad
+ w_2=(b,-a,0,1)^{\mathsf T}.
+\tag{57.5}
+$$
+
+Thus $Q_1$ is supported on the coordinate face $\{1,2,3\}$, while $D_3Q_2=0$. Define
+
+$$
+ E=I_4-Q_2-D_3.
+\tag{57.6}
+$$
+
+The orthogonality of $Q_2,D_3$ makes $E$ a rank-two original-grid projection, and $E$ is supported on $\{1,2,4\}$. Put
+
+$$
+ A=D_3,\qquad B=Q_1,\qquad X=P-D_3.
+\tag{57.7}
+$$
+
+Then $X$ is a signed Hermitian matrix on the original grid, and the five effects required for legality are exactly
+
+$$
+ A=D_3,\quad B=Q_1,\quad A+X=P,\quad
+ B+X=P+Q_1-D_3=E,\quad
+ I_4-A-B-X=Q_2.
+\tag{57.8}
+$$
+
+All five are projections in $K_{4,N}$. Hence the original row
+
+$$
+ r=\delta_P+\delta_{Q_1}-\delta_{D_3}-\delta_E
+\tag{57.9}
+$$
+
+is legal, and $\delta_P=r+\delta_{D_3}+\delta_E-\delta_{Q_1}$.
+
+Apply Theorem 55.1 to $E$ on $S_{124}=D_1+D_2+D_4$ and to $Q_1$ on $S_{123}=D_1+D_2+D_3$. Theorem 56.1 embeds their finite row combinations $R_E,R_{Q_1}$ legally into $W_{4,N}$. Their traces are $2,1$, respectively, so substitution gives the exact certificate
+
+$$
+ \begin{aligned}
+ \delta_P={}&r+R_E-R_{Q_1}+\delta_{D_3}-\delta_0\\
+ &+\sum_{Q\in\mathcal B_{S_{124}}}\alpha_Q(E)\delta_Q
+   -\sum_{Q\in\mathcal B_{S_{123}}}\alpha_Q(Q_1)\delta_Q.
+ \end{aligned}
+\tag{57.10}
+$$
+
+There is no residual effect symbol in (57.10). The row cost is at most $1+2\cdot664016=1328033$. The anchor cost is at most $1+1+27+27=56$, where the two unit terms are $D_3$ and $0$. Combining repeated symbols can only decrease the resulting absolute coefficient sum. Altogether,
+
+$$
+ 1+1+2\cdot664016+27+27+1=1328089.
+\tag{57.11}
+$$
+
+Both face lists are finite by the finite convex-combination step in Theorem 55.1, and the direct row adds one further row. $\square$
+
+**定义 57.2（The remaining scale domain）。** The dyadic scales outside Theorem 57.1 are exactly
+
+$$
+ N\in\{2,4,8,16,32,64,128,256,512\}.
+\tag{57.12}
+$$
+
+For every pair $a,b$ with $|a|^2+|b|^2=N-1$ at each of these nine scales, this argument supplies no certificate and claims no finite exact coefficient cost. The term proportional to $N^{-1}$ in the coarse clause of Part I, Theorem 33.1, does not give the homogeneous functional inequality (55.9) by division by arbitrarily small $t$. A finite number of remaining grids alone establishes neither row-and-anchor span nor a finite certificate cost. The assertion of one uniform cost for every $m\ge1$ therefore remains unresolved by these theorems, as does any implication to the parent approximate-density existence question. The fine-scale family result concerns the original-Hermitian error relations of Part I, Definition 18.1, before positivity repair.
+
+## 58. Mathematical sources of the finite-dual application
+
+**文献 58.1（Reused ingredients and precise scope）。** [Part I](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md), Definition 16.1 and (16.6)--(16.7), supply the original basis, its sign convention and its coefficient bound. Theorem 33.1, specifically the fine estimate (33.20), supplies the inequality $332008\epsilon$ for a complete table normalized on its own three-dimensional identity when $N\ge648$. Proposition 19.1 supplies the complementary-column projections used in (57.3)--(57.4). R. T. Rockafellar, *Convex Analysis*, Princeton University Press, §11, supplies the standard finite-dimensional separation principle used between (55.9) and (55.11). The perturbation (55.2)--(55.9) and the subsequent exact finite-coefficient conclusion are the interface asserted here; the final direct row reuses the existing projections. The conclusions are ordinary mathematical deductions in the stated finite-grid setting, with no global literature-priority assertion.
+
+## 追加锚（本行以下为增补区）
+
+## 59. Exact integer-norm descent on a three-coordinate face
+
+**定理 59.1（Costed rank-one descent on every original dyadic grid）。** Fix any coordinate face $S$ of Definition 54.2, any $N=2^m$ with $m\ge1$, and any nonzero $v\in\mathbb Z[i]^3$ with $s=\|v\|^2\le N$. Write
+
+$$
+ q_N(v)=\delta_{vv^*/N}-\delta_0,\qquad [E]=\delta_E-\delta_0.
+\tag{59.1}
+$$
+
+Then $q_N(v)$ is a finite real combination of rows in $\mathcal R_{S,N}$ and anchors in $\mathcal B_S\cup\{0\}$ with total absolute coefficient sum at most $100\cdot4^s$. No values of a function on different grids are identified.
+
+Proof. All symbols in this proof have denominator $N$. We first specify the exact row identities and the initial cases, and then give a strict descent. For positive grid matrices with $A+B=C+D\le S$, the identity
+
+$$
+ [A]+[B]-[C]-[D]=r(C,B,A-C)
+\tag{59.2}
+$$
+
+uses a single legal row: its four endpoints are $C,B,A,D$, and its fifth effect is $S-A-B$. In particular $[A]+[B]-[A+B]=r(0,B,A)$. Repeatedly using this last identity gives, whenever $LT\le S$ for a positive integer $L$,
+
+$$
+ [LT]=L[T]-\sum_{k=1}^{L-1}r(0,kT,T).
+\tag{59.3}
+$$
+
+Every complement in (59.3) is $S-(k+1)T\ge0$.
+
+If $s=1$, the matrix $vv^*/N$ is $D_j/N$. Apply (59.3) with $L=N$ to express its centered symbol with cost at most $2/N+(N-1)/N\le3$. For $s=2$, either $vv^*/N=2D_j/N$, or $v$ has two unit coordinates. In the latter case $T=vv^*/2$ is one of the four two-coordinate unit-phase projections. Two are $R_{jk},J_{jk}$ in (54.3); each of the other two is the orthogonal complement of one of these inside $D_j+D_k$. Formula (59.2), comparing the two orthogonal projections with $D_j,D_k$, expresses its centered symbol with cost at most five. Applying (59.3) with $L=N/2$ consequently expresses $q_N(v)$ with cost at most six. The single-coordinate case follows by the same scaling from $D_j$. Thus the bound eleven is valid for every $s\le2$.
+
+For $s=3$, necessarily $N\ge4$. If there are two nonzero coordinates, their squared norms are two and one. Let $w$ vanish on the norm-two coordinate and equal $i$ times the norm-one coordinate of $v$. Then $w\equiv v\pmod{1+i}$, $\|w\|^2=1$, and $\operatorname{Re}(v^*w)=0$. The largest eigenvalue of $vv^*+ww^*$ is $2+\sqrt2<4$. The integral vectors
+
+$$
+ u=(v+w)/(1+i),\qquad z=(v-w)/(1+i)
+\tag{59.4}
+$$
+
+both have squared norm two. Equation (59.2) applied to $vv^*/N+ww^*/N=uu^*/N+zz^*/N\le S$ gives a certificate of cost at most $1+3\cdot11=34$.
+
+In the remaining case write $v_0=(a,b,c)$ with $a,b,c$ units and put $v_1=(-a,b,c)$, $v_2=(a,-b,c)$. For each of the three pairs, $v_i\equiv v_j\pmod{1+i}$ and $|v_i^*v_j|=1$. Hence the largest eigenvalue of $v_iv_i^*+v_jv_j^*$ is four, and (59.4) produces one vector of squared norm two and another of squared norm four. The latter outer product is twice the outer product of a vector of squared norm two. Its centered symbol has cost at most $2\cdot11+1=23$ by (59.3). Thus each equation for $q_N(v_i)+q_N(v_j)$ has right-hand certificate cost at most $1+11+23=35$. Half the sum of the equations for pairs $(0,1),(0,2)$ minus the equation for $(1,2)$ expresses $q_N(v_0)$ with cost at most $105/2<100$. This proves a common initial bound of one hundred for $s\le3$, including all coordinate phases.
+
+Now use strong induction on the positive integer $s\ge4$. Put $\pi=1+i$. If every coordinate of $v$ is divisible by $\pi$, then $v=\pi u$ and $vv^*=2uu^*$. Equation (59.3) with $L=2$ reduces the certificate to two copies at squared norm $s/2<s$, and one row.
+
+Otherwise let $r\in\{1,2,3\}$ be the number of coordinates not divisible by $\pi$. For such a coordinate $v_j=x+iy$, the integers $x,y$ have opposite parity. Choose a unit $w_j$ so that
+
+$$
+ |\operatorname{Re}(\overline{v_j}w_j)|=\min(|x|,|y|)
+ \le (|v_j|^2-1)/4;
+\tag{59.5}
+$$
+
+set the other $w_j$ equal to zero. To check the inequality, put $t=\min(|x|,|y|)$. Opposite parity gives $|v_j|^2\ge t^2+(t+1)^2\ge4t+1$, also when $t=0$. Thus
+
+$$
+ w\equiv v\pmod\pi,\qquad \|w\|^2=r,\qquad
+ |\operatorname{Re}(v^*w)|\le(s-r)/4.
+\tag{59.6}
+$$
+
+First suppose $s<N$ and put $k=N-s$. If $r\le k$, then $vv^*+ww^*\le(s+r)S\le NS$. The vectors (59.4) are integral and satisfy
+
+$$
+ \max(\|u\|^2,\|z\|^2)
+ =\frac{s+r+2|\operatorname{Re}(v^*w)|}{2}
+ \le\frac{3s+r}{4}<s.
+\tag{59.7}
+$$
+
+Also $r<s$. Equation (59.2) therefore expresses $q_N(v)$ using three smaller squared norms and one row.
+
+The congruence $r\equiv s\equiv k\pmod2$ shows that the only omitted possibility is $k=1,r=3$. For $N\ge16$, use the unit choice in Part I, (33.11)--(33.12), which gives $\|w\|^2=3$, $w\equiv v\pmod\pi$ and
+
+$$
+ vv^*+ww^*\le NS,\qquad |v^*w|^2\le N-3.
+\tag{59.8}
+$$
+
+Here $\sqrt{N-3}<(N-4)/2$, because $N^2-12N+28>0$ for $N\ge16$. Consequently the norms in (59.4) are at most $(N+2)/2+\sqrt{N-3}<N-1=s$. This again gives strict descent.
+
+At $N=8$, the omitted vector has squared coordinate norms $5,1,1$. On the norm-five coordinate choose a unit $w_j$ with $\overline{v_j}w_j=1+2i$ or $1-2i$; every Gaussian integer of norm five permits one of these choices. On the other coordinates put $w_j=-v_j$. Then $v^*w=-1\pm2i$, $\|w\|^2=3$ and $w\equiv v\pmod\pi$. The Gram matrix of the two columns $v,w$ has diagonal $7,3$ and off-diagonal squared modulus five. Its complement in $8I_2$ has diagonal $1,5$ and determinant zero, so $vv^*+ww^*\le8S$. The two transformed vectors have squared norms four and six, both below seven. At $N=4$ this exceptional case has $s=3$, already proved; at $N=2$ it is an initial case. These are all dyadic possibilities.
+
+Finally suppose $s=N$. Since $N$ is even, $r=2$. Permute notation so $v=(a,b,c)$ with $a,b$ not divisible by $\pi$ and $c$ divisible by $\pi$. Each of $|a|^2,|b|^2$ is one modulo four. As $s\ge4$ is divisible by four, $|c|^2\equiv2\pmod4$, so $c\ne0$. Put
+
+$$
+ w=(-\overline b,\overline a,0),\qquad r'=\|w\|^2=N-|c|^2<N.
+\tag{59.9}
+$$
+
+Then $v^*w=0$, $w\equiv v\pmod\pi$, and $vv^*+ww^*\le NS$. The two transformed vectors have squared norm $(N+r')/2<N$. This is again a reduction to three smaller positive squared norms and one row. These are the orthogonal parity identities of Part I, (33.16), used here without its large-$N$ estimates.
+
+In every induction step the certificate cost is at most $1+3\cdot100\cdot4^{s-1}\le100\cdot4^s$; the divisible case uses only two smaller terms. All row endpoints and their complements were checked before the induction was applied. Each step lowers a positive integer, so the resulting lists are finite. The initial cases and this induction prove the assertion. $\square$
+
+## 60. Coarse face certificates and the original complementary-column target
+
+**定理 60.1（Exact costed face supply and all-scale original target）。** For every coordinate face $S$ and every dyadic $N\ge2$, each $E\in K_{S,N}$ has a centered certificate using $\mathcal R_{S,N}$ and $\mathcal B_S\cup\{0\}$ with cost at most
+
+$$
+ M_N=3N(100\cdot4^N+1).
+\tag{60.1}
+$$
+
+For every $m\ge1$, $N=2^m$, and every $a,b\in\mathbb Z[i]$ with $|a|^2+|b|^2=N-1$, the projection $P$ of (57.1) has a finite certificate in the original space $W_{4,N}$, using only original legal rows and anchors in $\mathcal B_4\cup\{0\}$, with total absolute coefficient sum at most the single finite real constant
+
+$$
+ L=3072(100\cdot4^{512}+1)+4.
+\tag{60.2}
+$$
+
+Proof. Reuse the integral positive-semidefinite three-dimensional decomposition proved in Part I, (33.5)--(33.8). It applies to $NE$ for every $N$; the large-scale assumption there is needed for the later error estimates, not for this integral decomposition. Thus
+
+$$
+ NE=\sum_{j=1}^{\ell}v_jv_j^*,\qquad
+ v_j\in\mathbb Z[i]^3\setminus\{0\},\qquad \ell\le\operatorname{Tr}(NE)\le3N.
+\tag{60.3}
+$$
+
+Each summand and every partial sum, divided by $N$, lies between zero and $E\le S$. In particular $\|v_j\|^2\le N$. Successive additive rows give
+
+$$
+ [E]=\sum_{j=1}^{\ell}q_N(v_j)
+ -\sum_{j=2}^{\ell}r\left(0,\sum_{h<j}v_hv_h^*/N,v_jv_j^*/N\right).
+\tag{60.4}
+$$
+
+Theorem 59.1 bounds the cost by $\ell\,100\cdot4^N+\ell-1\le M_N$. For $E=0$ the empty certificate suffices.
+
+For the original target use precisely the legal row $r$ in (57.7)--(57.9), with $Q_1,E$ on the two specified coordinate faces. Its identity, in centered symbols, is
+
+$$
+ \delta_P=r+[D_3]+[E]-[Q_1]+\delta_0.
+\tag{60.5}
+$$
+
+Theorem 56.1 embeds each face row with all five legality effects on the original four-dimensional grid. The symbols in $[D_3]$ and $\delta_0$ are actual anchors. Applying (60.1) twice therefore gives total cost at most $1+2+2M_N+1=2M_N+4$ for every original Gaussian pair, with no parameter reduction or covariance assumption. For $N\le512$, monotonicity of the displayed numerical bound gives $2M_N+4\le L$. For $N\ge1024$, reuse Theorem 57.1, whose cost $1328089$ is less than (60.2). These two domains exhaust all $N=2^m$, $m\ge1$. All coefficients are real, all lists are finite, and all equalities used are identities of free symbols generated by the original rows. $\square$
+
+**定义 60.2（Scope and mathematical attribution）。** Theorem 60.1 concerns the exact original-Hermitian relation for the specific family (57.1). It does not assert the parent's approximate-density existence conclusion or a physical realization. The integral decomposition, orthogonal parity exchange and exceptional-margin unit choice are reused from Part I, Theorem 33.1; its cited Hermite bounds and Gaussian module facts retain their original attributions. The new deduction is the strict squared-norm descent (59.5)--(59.9), its complete small-norm initialization and the exact norm-seven exchange, which supply finite coefficient bounds at the formerly omitted scales. The fine constant and the final complementary-column row are reused from Theorem 57.1.
+
+## 追加锚（本行以下为增补区）

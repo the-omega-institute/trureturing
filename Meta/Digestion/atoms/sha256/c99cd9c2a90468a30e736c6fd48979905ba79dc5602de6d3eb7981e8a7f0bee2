@@ -1,0 +1,9 @@
+**定义 1.1（原卷与同一实际报告域）。** 称[《复合比较的有限变化见证、共同标定与量子生成》V96](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md)为原卷。本卷续接其 C98 实际报告的定量问题；无“原卷”限定的编号属于本卷。两个局部场、实际运算及有限报告均取同一个实现，具体对应为：
+
+| 本卷使用的对象或标签 | 原卷定义与对应 |
+| --- | --- |
+| $J_A,J_B,S_J,g_J,1_J,D^J,B_J$ | [原卷定义 8.1](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#8-一般正比较场与不含外部标尺的候选)：有限非零实空间、交换含幺正 Frobenius 比较及非零实线性比较导子指派，$B_J(a,c)=D^J_ac$；不预设交替、Jacobi 或 $D_1=0$。 |
+| $M,T,\kappa,\beta$ 与报告范数 | [原卷定义 14.1、原卷命题 14.2 及式 (14.1)–(14.3)](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#14-从局部关系通道到实际联合运算)：同一实际四通道运算、两个单位嵌入及其唯一实际系数；联合内积明确取 $g_A\otimes g_B$。 |
+| $e_i,\mathcal P_J,(b,d),\Pi_J^{\rm self},\Pi_J^{\rm mix}$ | [原卷定义 8.3 与式 (8.2)](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#8-一般正比较场与不含外部标尺的候选)：原完整有序正交单位基、基向量与归一两两和、固定有序活动参照 $B(b,d)\ne0$，自身标签交换参照槽，混合标签为 $i<j,k$。 |
+| $R,S_p,R_{ijk},\Theta$ | [原卷定义 16.2、原卷引理 16.3 及式 (16.2)–(16.4)](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#16-实际有限残差选择联合模板)：$S_p,R_{ijk}$ 分别是上列原自身、混合标签处的实际 $R$；$\Theta$ 按 $\Pi_A\sqcup\Pi_B$ 的全部标签出现次数求平方和，第二方仅作张量翻转，保留同一 $M,T,\kappa,\beta$。 |
+| 自身收缩与已交替估计的区别 | [原卷式 (16.6)](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#16-实际有限残差选择联合模板)及[原卷定理 17.2–17.3](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#17-局部盲核联合诊断与条件误差界)：复用前者的精确收缩及原卷定理 17.2 的逐点界；原卷定理 17.3 的双方已交替前件不属于本卷输入。 |

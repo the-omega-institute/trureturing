@@ -56,7 +56,7 @@ private def coefficientMap {G : Type*} [AddCommGroup G] (a b : G) : Plane →+ G
 
 /-- A finite noncyclic quotient of the integral plane forces a nontrivial common
 coordinate divisor of its actual kernel. The Smith bases need not be ordered. -/
-private theorem kernel_common_divisor {G : Type*} [AddCommGroup G] [Finite G]
+theorem kernel_common_divisor {G : Type*} [AddCommGroup G] [Finite G]
     (hnoncyclic : ¬ IsAddCyclic G) (f : Plane →+ G)
     (hf : Function.Surjective f) :
     ∃ c : ℕ, 2 ≤ c ∧

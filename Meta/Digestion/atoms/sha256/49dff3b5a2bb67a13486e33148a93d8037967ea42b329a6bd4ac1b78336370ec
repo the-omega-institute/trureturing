@@ -1,0 +1,57 @@
+### 定理 12.3（内生半径的正延拓与精确下界）
+
+<a id="thm-c92-internal-radius"></a>
+
+在以上前件下，
+
+<a id="eq-c92-alpha-primal"></a>
+
+$$
+\alpha
+ =\max\{t\in\mathbb R:\ \exists X=X^\dagger,
+             \ A(X)=(\rho_C)_C,\ X\ge t\tau\}.
+\tag{12.3}
+$$
+
+右侧最大值达到。进一步：
+
+1. $\alpha<0$ 当且仅当局部资料没有共同密度态；
+
+2. $\alpha=0$ 当且仅当资料兼容，但所有共同密度态补全均奇异；
+
+3. $\alpha>0$ 当且仅当存在忠实共同密度态补全。
+
+**证明。**
+若 $X\ge t\tau$ 且满足给定边际，则对每个 $W\in\mathcal B_\tau$ 有
+$\ell(W)=\operatorname{Tr}(XW)\ge t$。所以右侧不超过 $\alpha$。
+
+若 $\alpha<1$，对每个非零 $W\in\mathcal S_+$ 按 $\operatorname{Tr}(\tau W)$ 归一，
+得到 $\ell(W)\ge\alpha\operatorname{Tr}(\tau W)$。因此
+
+$$
+f(W)=\frac{\ell(W)-\alpha\operatorname{Tr}(\tau W)}{1-\alpha}
+$$
+
+是 $\mathcal S$ 上的正归一泛函。
+前文的正延拓定理 [4.1](#thm-c92-extension) 给出某个密度态 $\sigma$，
+使 $f(W)=\operatorname{Tr}(\sigma W)$。令
+
+$$
+X=\alpha\tau+(1-\alpha)\sigma.
+$$
+
+它满足原资料，且 $X\ge\alpha\tau$，证明达到。
+这里 $\alpha<0$ 时 $X$ 只是迹一 Hermitian 延拓，不被称为密度态。
+
+若 $\alpha=1$，则 $g=\ell-\operatorname{Tr}(\tau\,\cdot)$ 是正泛函，且 $g(I)=0$。
+对任意自伴 $W\in\mathcal S$，由
+$-\left\lVert W\right\rVert I\le W\le\left\lVert W\right\rVert I$，得到 $g(W)=0$。
+故 $\ell=\operatorname{Tr}(\tau\,\cdot)$，取 $X=\tau$ 即得达到。
+
+由 C92 正延拓等价，兼容当且仅当 $\ell$ 在 $\mathcal S_+$ 上非负，
+也就是 $\alpha\ge0$。
+若 $\alpha>0$，刚才达到的 $X\ge\alpha\tau>0$ 就是忠实补全。
+反过来，任何忠实补全 $X>0$ 都有 $X\ge c\tau$ 对某个 $c>0$ 成立，
+于是 $\alpha\ge c>0$。
+剩下 $\alpha=0$ 的情形由这两个等价关系给出。
+

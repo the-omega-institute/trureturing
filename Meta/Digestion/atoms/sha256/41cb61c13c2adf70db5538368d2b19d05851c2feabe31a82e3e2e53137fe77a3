@@ -1,0 +1,44 @@
+### 命题 13.1（后选择可逆不蕴含确定性全态可逆）
+
+取 $0<p<q<1$，定义两个成功滤波算子
+
+$$
+F=\operatorname{diag}(\sqrt p,\sqrt q),\qquad
+ G=\sqrt p\,F^{-1}=\operatorname{diag}(1,\sqrt{p/q}).
+$$
+
+二者均为收缩，且对任意态 $\omega$，
+
+$$
+GF\omega F^\dagger G^\dagger=p\omega.
+$$
+
+故两次都成功时，归一后的内容完全返回，联合成功概率为 $p$。
+但第一个滤波包含成功与失败的带标记通道并无全态 CPTP 左逆。
+
+**证明。**
+前半由 $GF=\sqrt pI$ 直接得到。
+令 $F_f=(I-F^\dagger F)^{1/2}$，把失败也保留，确定性通道为
+
+$$
+\widehat N(\omega)=
+ \lvert s\rangle\langle s\rvert\otimes F\omega F^\dagger
+ +\lvert f\rangle\langle f\rvert\otimes F_f\omega F_f^\dagger.
+$$
+
+若它有全态 CPTP 左逆，前述复合 Kraus 论证的必要条件要求
+每个 Kraus 算子的 $K_i^\dagger K_i$ 都为标量倍 $I$。
+成功 Kraus 算子却满足
+$K_s^\dagger K_s=F^\dagger F=\operatorname{diag}(p,q)$，矛盾。
+
+成功后的条件输出为
+$F\omega F^\dagger/\operatorname{Tr}(F\omega F^\dagger)$，
+其分母随输入改变；对两个态分别归一后再取平均，
+通常不等于先取中点再通过同一个线性通道。
+若要沿用 C90，就应声明检查的是哪个确定性接口、哪些成功与失败记录，
+并在该完整接口上重新核验候选。
+这与项目把分支记录和保留端口纳入共同内容的约定相接
+ [5](#ref-omega)、[6](#ref-record)。
+这里的标记按经典记录保留；若改为保留仪器的全部相干环境，
+讨论对象就是另一个更大的通道。
+

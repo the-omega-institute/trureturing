@@ -1,0 +1,49 @@
+**定理 39.1（参考不变的全部中央控制自由及其锁定）。** 在 C101 重构的有限代数中，写
+
+$$
+\mathcal R=\bigoplus_j M_{r_j}(\mathbb C).
+$$
+
+全部正线性 $\Psi:\mathcal B\otimes\mathcal R\to\mathcal A\otimes\mathcal R$ 若固定参考 $\Psi(1\otimes r)=1\otimes r$，恰具有
+
+$$
+\boxed{\Psi=\bigoplus_j(\Phi_j\otimes\operatorname{id}_{r_j}),
+\qquad \Phi_j(1)=1,\quad\Phi_j\text{ 为 }r_j\text{ 正映射}.}
+\tag{39.1}
+$$
+
+这里 $k$ 正指 $\Phi_j\otimes\operatorname{id}_{M_k}$ 正。给定原箭头 $\Phi$ 后，C102 的系统嵌入条件恰等价于全部 $\Phi_j=\Phi$。因此每条 C102 实际联合箭头唯一地满足
+
+$$
+\boxed{\Psi=\Phi\otimes\operatorname{id}_{\mathcal R}.}
+\tag{39.2}
+$$
+
+而且 $\Psi(1)=1$、$\Phi(1)=1$，无需另加独立归一公理。
+
+证明。只用有限正锥的投影支撑。对 $b\ge0$ 及参考中任意投影 $p$，置 $P=1\otimes p$。参考固定与正性给
+
+$$
+0\le\Psi(b\otimes p)\le\|b\|P.
+\tag{39.3}
+$$
+
+若 $0\le Z\le cP$，对 $v\in\ker P$ 有 $\langle v,Zv\rangle=0$，故 $Z^{1/2}v=0$，所以 $Z=PZP$。补投影的像同样支持在 $1-P$ 角。两项相加为 $Y_b=\Psi(b\otimes1)$，于是
+
+$$
+[Y_b,1\otimes p]=0,
+\qquad \Psi(b\otimes p)=Y_b(1\otimes p).
+\tag{39.4}
+$$
+
+全部参考投影张成其自伴部分，正元张成 $\mathcal B$ 的自伴部分；谱分解与复线性延伸遂给
+
+$$
+Y_b\in\mathcal A\otimes Z(\mathcal R),
+\qquad\Psi(b\otimes r)=Y_b(1\otimes r).
+$$
+
+参考最小中心块唯一确定 $\Phi_j$，使 $Y_b=\bigoplus_j\Phi_j(b)\otimes1_{r_j}$。固定参考单位给每个 $\Phi_j$ 幺，逐块正性恰为 $r_j$ 正性。反向，每个所列正放大的有限直和确实正且固定全部参考，证明分类无遗漏。
+
+系统嵌入条件逐中心块恰给 $\Phi_j(b)=\Phi(b)$，得到 (39.2)。最后在参考固定式取 $r=1$，再在系统式取 $b=1$，依次取得两项归一。因此不能把“只删除联合归一而保留全部参考固定”当成一个独立放宽。有限投影支撑是成熟中间工具；本条识别的是当前实际过程合同所留下的完整中心自由及其消除条件。∎
+

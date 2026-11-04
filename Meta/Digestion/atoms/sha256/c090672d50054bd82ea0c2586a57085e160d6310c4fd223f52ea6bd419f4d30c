@@ -1,0 +1,24 @@
+**定义 66.1（全族误差及其标定分层）。** 对 $M\in\mathscr C$ 定义
+
+$$
+\begin{aligned}
+\mathfrak D(M)&=\sup_{\mathcal A,E,F}
+\|T^M_{E,F}-\mathcal L_E\|_\diamond,
+\qquad\mathcal L_E(\rho)=\sqrt E\,\rho\,\sqrt E,\\
+\mathfrak Q_{\mathscr C}(\varepsilon)
+&=\sup\!\left(\{\mathfrak D(M):M\in\mathscr C,
+\ \Delta_M\le\varepsilon\}\cup\{0\}\right).
+\end{aligned}
+\tag{66.1}
+$$
+
+第一个上确界只取该关系体已有有限对象及全部指定效果、框架，diamond 范数未除二，其约定为
+
+$$
+\|\Phi\|_\diamond=
+\sup_{m\ge1}\ \sup_{0\ne X\in\mathcal A\otimes M_m(\mathbb C)}
+\frac{\|(\Phi\otimes\operatorname{id}_m)(X)\|_1}{\|X\|_1}.
+$$
+
+这里 $X$ 可为任意矩阵输入，不限于正算子或归一态；迹范数按各中心块通常迹求和。因此 $0\le\mathfrak D,\mathfrak Q\le2$。$\mathcal L_E$ 在这里是数学参照，尚未据此供应新过程。
+

@@ -135,7 +135,7 @@ theorem finite_history_factorization (base : (c : Coord V) → Value G c) (u : V
     · exact he.1
     · exact he.2
 
-private theorem decode_measurable (base : (c : Coord V) → Value G c) (u : V) (N : ℕ) :
+theorem decode_measurable (base : (c : Coord V) → Value G c) (u : V) (N : ℕ) :
     Measurable (decode base u N) := by
   classical
   exact measurable_of_finite _

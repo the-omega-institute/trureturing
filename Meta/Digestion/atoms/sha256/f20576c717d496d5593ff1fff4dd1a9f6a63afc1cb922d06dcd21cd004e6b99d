@@ -1,0 +1,48 @@
+**Theorem 44.7 (current consumer and exact remaining boundary).** On the
+existing all-effect phase certificate (42.31), retain
+
+$$
+p_+(r)=1-r,\qquad p_-(r)=r,\qquad
+\epsilon=2(r-t_\sigma)
+\tag{44.25}
+$$
+
+on each already defined admissible effect arc. Every point satisfying
+
+$$
+2(r-t_\sigma)\ge\theta\bigl(p_\sigma(r)\bigr)
+\tag{44.26}
+$$
+
+now has the strict raw-defect conclusion
+
+$$
+f(E,U)-N_{\mathrm{geo}}(\xi)>\frac3{16}
+$$
+
+through $\xi\le13/4$, whenever that point is realized by the original
+same-$U$ arc. Thus (44.26) removes this entire screened subset from the
+possible equality or strict-loss search. The complementary arc, including
+all zero-amplitude, zero-coherence, singular, population-boundary and
+both-sign cases, remains in the exact source certificate.
+
+The universal bound (44.3) and its saturation set (44.4) do not determine
+the constrained value envelope on a fixed distance level: equality in
+$g=L$ can be incompatible with a prescribed $\rho$, and a constrained
+minimum can lie strictly above $L$. The exact alpha and beta, phase
+equality sets, exhaustive equality, first globally ordered or exhausted
+branches, higher-order determinant-zero alternatives, and all inherited
+full-global obligations therefore remain open.
+
+**Proof.** Substitute (44.25) into (44.12), then apply Theorem 44.3 to
+every original arc point with $\xi\le13/4$. The retained phase formula
+and all endpoint conventions are those of (42.31); no new minimization or
+lifting assumption is introduced. The last paragraph follows directly
+from the distinction between a universal lower bound and a constrained
+level problem, together with the unresolved obligations in (43.8).
+
+The source results used here include singular and mixed effects and the
+actual common scalar quotient. The proof never chooses separate
+feedbacks for spectral components and never changes the original metric.
+$\square$
+

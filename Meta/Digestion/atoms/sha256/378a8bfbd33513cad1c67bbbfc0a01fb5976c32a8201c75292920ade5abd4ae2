@@ -1,0 +1,43 @@
+**定义 70.2（实际标定预算及候选 C107）。** 保留定义 50.2 中同一校准对象、同一 $E_*$ 成功分支及已有 $Q_{12},Q_{13}$ 准备—读出路径。令
+
+$$
+\begin{aligned}
+q_j^*&=\frac{(1+1/\sqrt j)^2}{4},\\
+\delta_M&=\max_{j=2,3}
+ 2\sqrt j\left|\operatorname{Tr}[Q_{1j}T_{E_*,F_*}(Q_{1j})]-q_j^*\right|,\\
+\eta_M&=\max\{\lambda_M,\delta_M\}.
+\end{aligned}
+\tag{70.3}
+$$
+
+此时尚无射线合同，实际读数可以超过 $q_j^*$，所以这里取绝对差，不能预先把它叫作非负饱和亏损。沿定义 64.1 已有的同一 $Q=Q_{12}$ 和 $H_h=1-(1-e^{-h})P_2$，仍取
+
+$$
+p_M(h)=\operatorname{Tr}[Q T_{H_h,F_*}(Q)],\qquad
+\kappa_M(h)=p_M(0)-p_M(h),\qquad h\ge0.
+\tag{70.4}
+$$
+
+一般 $\kappa_M$ 可以为负。对指定的比较类 $\mathscr C$，定义
+
+$$
+\chi_{\mathscr C}(r,\varepsilon)=
+\sup\left(\{[\kappa_M(h)]_+:M\in\mathscr C,
+ \eta_M\le\varepsilon,\ 0\le h\le r\}\cup\{0\}\right),
+\quad [t]_+=\max(t,0).
+\tag{70.5}
+$$
+
+候选 C107 是定义 70.1 的合同连同以下联合边界关系：
+
+$$
+\boxed{\quad
+\forall\tau>0\ \exists r_0,\varepsilon_0>0\quad
+\forall M\in\mathscr C\ \forall h\in[0,r_0]:\quad
+\eta_M\le\varepsilon_0\ \Longrightarrow\
+ [p_M(0)-p_M(h)]_+\le\tau .\quad}
+\tag{70.6}
+$$
+
+$\lambda$、$\delta$ 与 $\kappa$ 都属于同一关系体；不能把不同实现中分别可达的最小预算拼在一起。候选不预设任何成员逐点连续，也不预给连续包络。切口预算本身仍是全族关系，两个局部标定读数不自动给出它。比较类应另给非空及趋近零预算的实现，命题 74.1 将给完整满足族。
+

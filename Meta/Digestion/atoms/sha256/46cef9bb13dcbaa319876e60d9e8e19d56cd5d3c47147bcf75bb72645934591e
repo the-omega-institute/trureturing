@@ -1,0 +1,166 @@
+**定理 28.2（Every original ground vector at every even scale）。**
+For every $H\in\mathcal C_{\mathrm{mp}}$ and every integer
+$S\geq1$,
+
+$$
+\ker(K_s-E_sI)\subseteq\operatorname{ran}P_s.
+\tag{28.2}
+$$
+
+This includes every local-spin sector, every multiplicity copy,
+every feasible weight, and arbitrary complex superpositions and
+entanglement on (28.1).
+
+Proof. The representation, actual-component transfer and
+spin-one cone results consumed here are the complete
+Theorems 19.2 and 20.1. The supplier versions are Git
+`6e666c2d731da9f46b20322bc85fee74063d9b97`: §§1–26 here,
+the [owning volume](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md),
+the [collective-oscillator volume](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md),
+and the three source/Scribe pairs specified below. The new
+component inference uses (27.4) and the exact endpoint (27.5),
+rather than any strictness assumption on the spin comparison.
+
+The complete orthogonal Boolean representation is
+
+$$
+\begin{aligned}
+\mathcal H_{mS}&\cong
+ \bigoplus_{\substack{0\leq t_i\leq S\\
+                      1\leq a_i\leq r_{2S}(t_i)}}
+ \left(\bigotimes_i V_{S-t_i}\right)_{\sum_i x_i=0},\\
+r_{2S}(t)&=\binom{2S}{t}-\binom{2S}{t-1},\quad\binom{2S}{-1}=0,\\
+J_i&=S-t_i,\qquad -J_i\leq x_i\leq J_i,\qquad n_i=S+x_i.
+\end{aligned}
+\tag{28.3}
+$$
+
+Every $a_i$ is a separate orthogonal copy. The original adjacency
+on it is exactly the sum of ladders in (19.5), with the endpoint
+zeros retained, and $P_s$ selects exactly all $t_i=0$.
+The primary map to Srinivasan,
+[Theorem 1.2 and its representation derivation](https://arxiv.org/pdf/1001.0280v2),
+is Boolean rank $n=2S$, starting rank $t_i$, layer $u=S+x_i$,
+and up operator $L_i^\ast$. Its normalized coefficient is
+$\sqrt{(u+1-t_i)(2S-t_i-u)}$.
+Feinsilver,
+[§§3–4, (8)–(10), Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2),
+has $T=L_i^\ast$, $T^\ast=L_i$, principal number $2J_i$,
+chain index $J_i+x_i$ and grading $-2Z_i$. These give both
+the multiplicities in (28.3) and the full orthogonality, including
+spin zero. The owning volume's (6.6)–(6.12) supplies their
+explicit whole-Boolean construction; its use does not require a
+flat eigenvector of $A(H)$.
+
+The full word-cardinality and Gram identities
+`sector_words_card_multinomial` and `sector_gram`, with their
+private head-removal and factorial recurrences in
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs),
+use two-letter occupation counts $(2S-n_i,n_i)$ and length $2S$.
+They give the normalized symmetric weight vectors, including
+$n_i=0,2S$. The collective-oscillator algebra has parameters
+$d=m$, $N=2S$, $g=0$, $e=1$, $B=A(H)$,
+$a_i=L_i/\sqrt{2S}$ and $H_{2S}=\hbar K_s/(2S)$ on the
+two-state code. Its symmetric-code statement is used only with
+this map; a fixed-excitation oscillator approximation is not a
+statement on the growing half-filled carrier.
+
+The actual singleton-difference move is the definition `tokenGraph`
+in [TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs).
+The private and proof-local `Test.move`, `Test.adj_mem`,
+`Test.move_injective`, `Test.toNbr_bij` and `Test.token_energy`
+in [CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and the full [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs)
+identify the same coefficient-one adjacency with the ordered
+lowering/raising sum. Their `counting_identity`, `W_move`,
+`phi40_norm`, `phi40_energy` and `choose_ratio40` give the
+phase-count support consumed in the older odd-cycle domains;
+their fixed parameters are $200$ vertices, $100$ tokens and
+fibre size $40$, not an assumption here. The present argument
+requires none of their cut or Laplacian refutation conclusions.
+Their private real/complex Rayleigh identities use the same
+Hermitian complex inner product as (27.3).
+The primary convention is Apte–Parekh–Sud,
+[v3, Definition 1, §3.2 and Fact 2](https://arxiv.org/pdf/2506.03441v3),
+with $N=2mS$, $k=mS$ and unit edge weights. In their notation
+this is $A(F_k(G_s))$ itself, while $W(G_s)I/2-K_s$ is their
+shifted XY block. Here $1\leq k<N$ at every endpoint in scope.
+
+The nonstrict primary comparison is Ghassemi
+Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+Its maximal local spin is $s_i=S$, variable spin $t_i=J_i$,
+fixed magnetization $M=0$, and bilinear coupling
+$D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$,
+$a=A(H)$. Only existence of a maximal-spin minimizing choice
+is taken from that result. In the fixed-weight argument the
+triplet has weight zero, and the upper-spin projection has
+squared norm $((j+1)^2-x^2)/((j+1)(2j+1))>0$ for every
+$-j\leq x\leq j$, including $j=0$ and both endpoints.
+As in (19.6), distinct weights have orthogonal projected images,
+so the step also applies to entangled vectors. It does not assert
+that every original ground vector has maximal spin.
+
+Suppose now that a summand of (28.3), deficient at $p$, attains
+this actual $E_s$. Theorem 19.2 supplies a minimizing realization
+with all other spins $S$. For every actual connected component
+$C$ of $H[N_H(p)]$ it forces
+
+$$
+\mathcal G_C(0)\subseteq\mathcal S_C.
+\tag{28.4}
+$$
+
+Its proof first releases one original singlet pair at $p$ into
+its zero-weight triplet. Equality at the actual whole-space
+minimum makes the released vector a ground eigenvector; its two
+orthogonal pair weights force the neighborhood ladders to vanish.
+The actual-component weight projections then force zero weight
+on each component, and their commutators with the total ladders
+force separate singlets. The replacement by any local ground
+vector, with the same actual outside density, gives the universal
+inclusion (28.4). Thus this step is about the whole nonzero local
+ground space, not only a chosen vector in one marginal. It uses
+actual components, whose weights are conserved by the neighborhood
+operator. It imposes no independent regional filling on the
+initial original state and requires no condition on other components
+or on crossing attachments.
+
+Choose the component allowed by Definition 28.1. A singleton has
+$K_C=0$ and zero-weight vector $|S,0\rangle$; it is not a
+singlet because $\|J^+|S,0\rangle\|^2=S(S+1)>0$.
+This contradicts (28.4). For a complete multipartite component,
+(27.4) contradicts it unless $C=K_3$, $S=1$.
+At that exception (27.5) says precisely $e_C(0)=-4$ and that its
+whole ground space is the one-dimensional singlet. Use Theorem
+20.1 at this same deficient vertex. Since $S=1$, deficiency
+means $J_p=0$, and it forces
+$\varepsilon_{\{p\}\cup C}(0)=e_C(0)=-4$ on the entire actual
+Boolean zero-weight cone. The cone is $K_4$. On its four actual
+spin-one fibres take the product of two normalized pair singlets
+
+$$
+d_1=\frac{|1,-1\rangle-|0,0\rangle+|-1,1\rangle}{\sqrt3}.
+\tag{28.5}
+$$
+
+Each pair has isotropic edge expectation $-2$ and therefore XY
+expectation $-8/3$; every cross-pair edge has expectation zero
+because each one-site spin expectation vanishes. This actual
+cone vector has total weight zero and energy $-16/3$.
+It is the supplied pair-singlet trial (21.10), also used
+in §24, with no change of the cone's original fibres. Thus
+$\varepsilon_{\{p\}\cup C}(0)\leq-16/3<-4$, the required
+contradiction. The whole-fibre cone assertion is used only at
+$S=1$; no such removal is assumed at larger spins.
+
+Every deficient summand is now excluded from the actual minimum.
+Each summand reduces $K_s$. The projection of an arbitrary complex
+$E_s$ eigenvector onto one is zero or another $E_s$ eigenvector.
+All deficient projections vanish; the remaining summands are
+exactly $\operatorname{ran}P_s$. This proves (28.2) for all
+copies and their superpositions. $\square$
+

@@ -1,0 +1,35 @@
+#### 命题 7.1（共享加项保存的是带尺度差分）
+
+写 $\mathbf r=(X,Y,Z)$，则
+
+$$
+\boxed{\left\lVert x-y\right\rVert ^2=s(1-X).}
+$$
+
+给两端共同加入 $c$，归一球坐标和 $s$ 一般都会改变，
+但 $s(1-X)$ 不变。v81 迫使实际输出也保存这个共同加项轨道不变量。
+
+**证明。**
+
+展开范数平方给首式。
+共同加入以后，
+
+$$
+\begin{aligned}
+s'&=s+2\operatorname{Re} \langle x+y,c\rangle +2\left\lVert c\right\rVert ^2,\\
+\operatorname{Re}  z'&=\operatorname{Re}  z+\operatorname{Re} \langle x+y,c\rangle +\left\lVert c\right\rVert ^2.
+\end{aligned}
+$$
+
+所以 $s'-2\operatorname{Re}  z'=s-2\operatorname{Re}  z$。
+实际输出部分由主定理或式[(5.2)](#eq-translation)得到。
+
+□
+
+若共同平移后两端同时为零，$s'=0$，不定义归一球点；
+此时直接用未归一式 $s'-2\operatorname{Re}  z'=0$。其余情形才写 $s'(1-X')$。
+因此不能把“共享内容相容”误画成所有共同平移后归一球点都不动。
+本轮先锁定差分不变量，再由全部二元比较锁定同一复核。
+
+<a id="figure-1"></a>
+

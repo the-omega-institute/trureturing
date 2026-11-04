@@ -68,7 +68,7 @@ private lemma continuousOn_lowPrimitive {b : ℝ} (hb : 0 < b) :
     exact Icc_subset_Ici_self
   · exact (hasDerivAt_lowPrimitive hb (lt_of_le_of_ne hy.1 (Ne.symm hy0))).continuousAt.continuousWithinAt
 
-private lemma low_log_integrable {b : ℝ} (hb : 0 < b) :
+lemma low_log_integrable {b : ℝ} (hb : 0 < b) :
     IntegrableOn (fun y : ℝ => -Real.log y * y ^ (b - 1)) (Ioc 0 1) := by
   apply intervalIntegral.integrableOn_deriv_of_nonneg (continuousOn_lowPrimitive hb)
     (fun y hy => hasDerivAt_lowPrimitive hb hy.1)
