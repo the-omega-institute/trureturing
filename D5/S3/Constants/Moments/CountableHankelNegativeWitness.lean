@@ -14,6 +14,8 @@ import Mathlib.LinearAlgebra.Matrix.Integer
 import Mathlib.Topology.Algebra.Order.Archimedean
 import Mathlib.Data.Fintype.EquivFin
 
+/-! Complete head isolation and a quantitative bound on the full infinite tail. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -64,7 +66,8 @@ private theorem pair_polynomial {ι : Type*} (z : ι → ℂ)
       exact ⟨E.equivFin ⟨i, hi⟩, by simp [roots]⟩
   have hclosed (x : ℂ) : x ∈ E.image z ↔ conj x ∈ E.image z := by
     constructor
-    · rintro ⟨i, hi, rfl⟩
+    · intro hx
+      obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hx
       exact Finset.mem_image.mpr ⟨c i, (hE i).mp hi, hc i⟩
     · intro hx
       obtain ⟨i, hi, hiz⟩ := Finset.mem_image.mp hx
@@ -76,7 +79,7 @@ private theorem pair_polynomial {ι : Type*} (z : ι → ℂ)
       (by simpa only [himage] using hclosed)
   refine ⟨∑ j : Fin E.card, Polynomial.monomial (j : ℕ) (a j), ?_⟩
   intro i hi
-  simpa [Polynomial.eval₂_finset_sum, Polynomial.eval₂_monomial,
+  simpa [Polynomial.eval₂_finsetSum, Polynomial.eval₂_monomial,
     D5.S3.Constants.NewtonHankelRealRootCriterion.vectorPolynomialValue] using
     ha (z i) (by rw [himage]; exact Finset.mem_image.mpr ⟨i, hi, rfl⟩)
 
@@ -87,7 +90,7 @@ private theorem peak_at (p : ℝ[X]) (z₀ b : ℂ) (hz₀ : z₀ ≠ 0)
     (hp : p.eval₂ Complex.ofRealHom z₀ = Complex.I) (m : ℕ) :
     (peak p z₀ b m).eval₂ Complex.ofRealHom z₀ = b := by
   simp only [peak, Polynomial.eval₂_mul, Polynomial.eval₂_pow, Polynomial.eval₂_X,
-    Polynomial.eval₂_add, Polynomial.eval₂_C, Complex.ofRealHom_apply, hp]
+    Polynomial.eval₂_add, Polynomial.eval₂_C, Complex.ofRealHom_eq_coe, Complex.ofReal_neg, hp]
   have hv : (-((b / z₀ ^ m).re) : ℂ) * Complex.I ^ 2 +
       ((b / z₀ ^ m).im : ℂ) * Complex.I = b / z₀ ^ m := by
     apply Complex.ext <;> simp <;> ring
@@ -119,7 +122,7 @@ private theorem peak_bound (p : ℝ[X]) (z₀ b z : ℂ) (hz₀ : z₀ ≠ 0)
     _ = ‖z‖ ^ m * ‖(-(v.re) : ℂ) * (p.eval₂ Complex.ofRealHom z) ^ 2 +
         (v.im : ℂ) * p.eval₂ Complex.ofRealHom z‖ := by
       simp only [peak, Polynomial.eval₂_mul, Polynomial.eval₂_pow, Polynomial.eval₂_X,
-        Polynomial.eval₂_add, Polynomial.eval₂_C, Complex.ofRealHom_apply, norm_mul,
+        Polynomial.eval₂_add, Polynomial.eval₂_C, Complex.ofRealHom_eq_coe, Complex.ofReal_neg, norm_mul,
         norm_pow, v]
     _ ≤ ‖z‖ ^ m * (‖v‖ * (C ^ 2 + C)) :=
       mul_le_mul_of_nonneg_left hinner (by positivity)
@@ -144,7 +147,7 @@ theorem exists_real_negative {ι : Type*} (z w : ι → ℂ)
   have hr : 0 < ‖z i₀‖ / 4 := by positivity
   let E := (hfinite (‖z i₀‖ / 4) hr).toFinset
   have hE (i : ι) : i ∈ E ↔ ‖z i₀‖ / 4 ≤ ‖z i‖ := by simp [E]
-  have hEc (i : ι) : i ∈ E ↔ c i ∈ E := by rw [hE, hE, hzc, norm_conj]
+  have hEc (i : ι) : i ∈ E ↔ c i ∈ E := by rw [hE, hE, hzc, Complex.norm_conj]
   have hi₀ : i₀ ∈ E := (hE i₀).mpr (by linarith [norm_nonneg (z i₀)])
   obtain ⟨p, hp⟩ := pair_polynomial z c hzc E hEc i₀ hi₀ hni
   obtain ⟨b, hb⟩ := IsAlgClosed.exists_pow_nat_eq (-1 / w i₀) (by omega : 0 < (2 : ℕ))
@@ -177,7 +180,7 @@ theorem exists_real_negative {ι : Type*} (z w : ι → ℂ)
           intro h; apply hnot; rw [← hzc] at h; simp [hzi h]
         have hzero : p.eval₂ Complex.ofRealHom (z i) = 0 := by
           simpa [hiz, hic] using hp i hi
-        simp [peak, hzero]
+        simp [peak, Polynomial.eval₂_pow, hzero]
       _ = -2 := by
         rw [Finset.sum_pair (Ne.symm hci), hconj, hpeak, hwc]
         have hcb : conj (w i₀) * (conj b) ^ 2 = -1 := by
@@ -224,7 +227,7 @@ theorem exists_real_negative {ι : Type*} (z w : ι → ℂ)
   have hnorm := (htail_sum m).trans_lt hm
   have hre := Complex.re_le_norm (∑' i : {i // i ∉ E},
     w i * ((peak p (z i₀) b m).eval₂ Complex.ofRealHom (z i)) ^ 2)
-  norm_num only [Complex.neg_re, Complex.ofNat_re] at *
+  norm_num at *
   linarith
 
 /-- Strict negativity of a finite real quadratic form survives rational
@@ -238,7 +241,7 @@ theorem exists_integer_negative_quadratic {d : ℕ} (M : Fin d → Fin d → ℝ
     fun_prop
   have hd : DenseRange (fun r : Fin d → ℚ => fun a => (r a : ℝ)) :=
     DenseRange.piMap (fun _ => Rat.denseRange_cast)
-  obtain ⟨x, ⟨r, rfl⟩, hr⟩ := hd.exists_mem_open
+  obtain ⟨r, hr⟩ := hd.exists_mem_open
     (isOpen_lt hQ continuous_const) ⟨u, hu⟩
   let A : Matrix (Fin d) Unit ℚ := fun a _ => r a
   have hD : (A.den : ℝ) ≠ 0 := by exact_mod_cast A.den_ne_zero
