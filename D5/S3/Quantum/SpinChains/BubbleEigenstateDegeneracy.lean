@@ -159,7 +159,8 @@ private lemma composition_gap_prefix (L n : ℕ) (hbound : 5 * n ≤ L)
       (∀ i : Fin n, gapPrefix f.val i.val + 5 ≤ gapPrefix f.val (i.val + 1)) ∧
       StrictMono (fun i : Fin (n + 1) => gapPrefix f.val i.val) := by
   have hz : gapPrefix f.val 0 = 0 := by
-    simp only [gapPrefix, Nat.not_lt_zero, Finset.filter_false, Finset.sum_empty]
+    rw [gapPrefix.eq_1]
+    simp only [Nat.not_lt_zero, Finset.filter_false, Finset.sum_empty]
   have ht : gapPrefix f.val n = L := by
     rw [gap_prefix_top, f.property.2]
     omega
@@ -479,8 +480,9 @@ private lemma sum_by_size (L : ℕ) (hL : 5 ≤ L) (E : ℤ) :
     have hb := packing_bound L hL B (Finset.mem_filter.mp hB).2
     exact Finset.mem_Icc.mpr ⟨Nat.zero_le _, by omega⟩
   have hp (n : ℕ) : S.filter (fun B => B.card = n) = placements L n := by
+    rw [placements.eq_1]
     ext B
-    simp only [S, placements, Finset.mem_filter, Finset.mem_univ, true_and]
+    simp only [S, Finset.mem_filter, Finset.mem_univ, true_and]
   have hs : bubbleCount L E =
       ∑ n ∈ Finset.Icc 0 (L / 5), ∑ B ∈ placements L n, f B := by
     change (∑ B ∈ S, f B) = _
