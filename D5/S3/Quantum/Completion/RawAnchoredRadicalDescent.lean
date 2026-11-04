@@ -1364,6 +1364,7 @@ private theorem visible_marker_two (x : A) : T (T x) = -x - T x := by
       T (T (visibleLabel U c h a)) = 0 := by
     simp only [← visibleLabel_marker]
     apply Subtype.ext
+    change gamma c a + gamma c (U a) + gamma c (U (U a)) = 0
     simpa only [map_add, map_zero, markerQuotient_beta, gamma] using hc
   calc
     _ = (visibleLabel U c h a + T (visibleLabel U c h a) +
@@ -1399,7 +1400,8 @@ private theorem energy_double_relation (x : A) : f (x + x) + 2 * f (-x) = 6 * f 
   have hb := energy_balance U c h x x
   have he₁ : x + T x = -T (T x) := by rw [visible_marker_two]; abel
   have he₂ : x + T (T x) = -T x := by rw [visible_marker_two]; abel
-  rw [he₁, he₂, energy_neg_marker, energy_neg_marker, energy_neg_marker] at hb
+  rw [he₁, he₂] at hb
+  simp only [energy_neg_marker] at hb
   linarith
 
 private theorem energy_four_relation (x : A) :
@@ -1440,7 +1442,7 @@ private theorem energy_double (x : A) : f (x + x) = 4 * f x := by
   rw [energy_even] at hd
   linarith
 
-private def visibleL : A →+ A := T - T.comp T
+private def visibleL : A →+ A := T - (T).comp T
 
 private theorem energy_L (x : A) : f (visibleL U c h x) = 3 * f x := by
   have hb := energy_balance U c h (-x) x
@@ -1452,8 +1454,8 @@ private theorem energy_L (x : A) : f (visibleL U c h x) = 3 * f x := by
     simp only [visibleL, AddMonoidHom.sub_apply, AddMonoidHom.comp_apply,
       map_sub, map_neg, visible_marker_two]
     abel
-  rw [neg_add_cancel, energy_zero, he₁, he₂, energy_even,
-    energy_marker, energy_marker, energy_marker, energy_even] at hb
+  rw [neg_add_cancel, he₁, he₂] at hb
+  simp only [energy_zero, energy_even, energy_marker] at hb
   linarith
 
 private def parallelogramDefect (x y : A) : ℝ :=
@@ -1481,8 +1483,8 @@ private theorem parallelogramDefect_L (x y : A) :
     simp only [visibleL, AddMonoidHom.sub_apply, AddMonoidHom.comp_apply,
       map_sub, map_add, map_neg, visible_marker_two]
     abel
-  rw [he₀, he₁, he₂, energy_double, energy_even, energy_marker,
-    energy_marker, energy_even, energy_marker] at hb
+  rw [he₀, he₁, he₂] at hb
+  simp only [energy_double, energy_even, energy_marker] at hb
   dsimp [parallelogramDefect]
   rw [energy_L]
   linarith
@@ -1509,9 +1511,12 @@ theorem raw_visible_quadratic :
     intro a b hab
     simp only [two_nsmul] at hab
     linarith
-  exact ⟨TauCeti.QuadraticMap.ofParallelogram ht (fun x y => by
-    simpa only [two_nsmul] using visible_parallelogram U c h x y),
-    (fun _ => rfl), comparison_energy U c h⟩
+  have hp : ∀ x y : A, f (x + y) + f (x - y) = 2 • f x + 2 • f y := by
+    intro x y
+    simpa only [two_nsmul, two_mul] using visible_parallelogram U c h x y
+  let Q : QuadraticMap ℤ A ℝ :=
+    TauCeti.QuadraticMap.ofParallelogram ht hp
+  exact ⟨Q, (fun _ => rfl), comparison_energy U c h⟩
 end SquaredGeometry
 
 end D5.S3.Quantum.Completion.RawAnchoredRadicalDescent

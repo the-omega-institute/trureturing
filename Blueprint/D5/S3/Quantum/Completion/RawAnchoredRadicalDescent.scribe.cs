@@ -178,5 +178,19 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For fixed x,y put f(t)=C(x+t,y+t) and m=inf(range f). Nonnegativity bounds m below. The full balance with equal last operands gives f(t+w)<=3f(t)-2m. Taking w=s-t yields (f(s)+2m)/3<=f(t) for every t; the infimum property forces f(s)=m. In particular f(z)=f(0). This uses the constructed actual image and comparison."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("The full Hilbert representation criterion remains open. Evenness, scaling, the parallelogram law and Hilbert realization remain to be supplied on the actual image. The minimal unitary uniqueness, zero-comparison congruence and torsion-free Eisenstein conclusions are not asserted here.")))));
+            Paragraph(Text("Put f(x)=C(x,0). Translation invariance gives C(x,y)=f(x-y). The actual restricted marker tau satisfies tau^2=-I-tau and f(tau(x))=f(x); the original balance gives the three-phase equation for f. To prove evenness, use the existing nonnegative_recurrence_constant on s(n)=f((-2)^n*x)/4^n. The three-phase equation gives f(4x)+4f(-2x)=32f(x), hence s(n+1)+s(n+2)=2s(n); the existing result gives f(-2x)=4f(x), and then f(-x)=f(x). Therefore f(2x)=4f(x).")),
+            Describe.Lean(
+                DescribeId.Create("raw-visible-quadratic"),
+                DeclarationHandle.Create(Gid + "raw_visible_quadratic"),
+                H("The actual comparison is an integer quadratic distance"),
+                StatementSource.FromAuthor(Disp(Original(Seq(
+                    Exists, Sp, F.Id("Q"), Colon, Sp,
+                    Call("QuadraticMap", Seq(Mathbb, Grp(F.Id("Z"))), F.Id("A"), Real), Comma, Sp,
+                    Both(All(X, F.Id("A"), Eqn(Call("Q", X), Call("f", X))),
+                        All(X, F.Id("A"), All(Y, F.Id("A"),
+                            Eqn(Call("C", X, Y), Call("Q", Minus2(X, Y)))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let L=tau-tau^2 and P(x,y)=f(x+y)+f(x-y)-2f(x)-2f(y). The phase equation gives f(Ly)=3f(y) and P(x,Ly)=3P(x,y). Evenness makes P symmetric, so P(Lx,Ly)=9P(x,y); direct use of f(Lz)=3f(z) also gives P(Lx,Ly)=3P(x,y). Thus P=0 on this actual A. Apply TauCeti.QuadraticMap.ofParallelogram directly with domain A, codomain the reals and injective doubling. Its function is this same f and C(x,y)=Q(x-y). This supplies an integer quadratic map, not a Hilbert completion or arbitrary complex scalar closure."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("The full Hilbert representation criterion remains open. Positive Gram realization, completion, a compatible complex structure and the full Hilbert equivalence remain to be supplied. The minimal unitary uniqueness, zero-comparison congruence and torsion-free Eisenstein conclusions are not asserted here.")))));
 }
