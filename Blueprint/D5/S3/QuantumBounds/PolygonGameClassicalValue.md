@@ -72,6 +72,10 @@ $$\forall (P: \mathbb{N}), ((\operatorname{Odd}\left(P\right)) \Rightarrow ((3 \
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/PolygonGameClassicalValue.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bulchandani-burnell-sondhi-2023-polygon-game-classical-value` (proved) by `D5/S3/QuantumBounds/PolygonGameClassicalValue.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bulchandani-burnell-sondhi-2023-polygon-game-classical-value","declaration_gid":"D5/S3/QuantumBounds/PolygonGameClassicalValue.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Vir B. Bulchandani, Fiona J. Burnell, S. L. Sondhi (2023). *Playing nonlocal games with phases of quantum matter*. DOI: [10.1103/PhysRevB.107.045412](https://doi.org/10.1103/PhysRevB.107.045412). URL: <https://arxiv.org/abs/2206.11252v2>.

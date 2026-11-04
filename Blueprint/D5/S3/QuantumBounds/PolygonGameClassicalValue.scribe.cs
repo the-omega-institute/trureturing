@@ -137,7 +137,10 @@ internal sealed class PolygonGameClassicalValueDocument : IScribeDocumentDefinit
                         + "Combining this upper bound with the deterministic strategy just described proves both parts of the proposition. "
                         + "The conclusion concerns uniform inputs and every odd P at least three; it makes no assertion about the quantum value, "
                         + "even polygons, or polygons inscribed in a larger game."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bulchandani-burnell-sondhi-2023-polygon-game-classical-value"),
+                    ResolutionKind.Proved)))));
 
     private static Formula IsMatchingFormula() => All("P", Naturals(), All("M", EdgeSets(),
         IffOf(LocalCall("IsMatching", X("P"), X("M")),
