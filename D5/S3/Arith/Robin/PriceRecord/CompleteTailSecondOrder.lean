@@ -376,7 +376,10 @@ private theorem record_complete_tail_limit {α : Type*} {l : Filter α}
         dsimp [K]
         field_simp [hp.ne', (Real.sqrt_pos.mpr hp).ne',
           (Real.rpow_pos_of_pos hp _).ne']
-        <;> ring
+        calc
+          _ = (Real.sqrt (P x) * (Real.sqrt (P x))⁻¹) *
+              (L x ^ 2 * (P x ^ (1 / 6 : ℝ))⁻¹) := by ring
+          _ = _ := by rw [mul_inv_cancel₀ (Real.sqrt_pos.mpr hp).ne']; ring
       have hh := mul_le_mul_of_nonneg_left
         (record_tail_square_error (hm x) (hlambda x) (hrecord x)).2 (hK0 x)
       change K x * (tail (m x) - squareSum (m x)) ≤
