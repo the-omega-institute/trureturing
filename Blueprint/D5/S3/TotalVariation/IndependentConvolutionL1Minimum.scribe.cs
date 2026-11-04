@@ -16,6 +16,16 @@ internal sealed class IndependentConvolutionL1MinimumDocument : IScribeDocumentD
         H("Independent finite convolution: the exact L1 minimum"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("poisson-denominator-positive"),
+                DeclarationHandle.Create(
+                    "D5/S3/TotalVariation/IndependentConvolutionL1Minimum.poisson_denominator_pos_of_sin_pos"),
+                H("Positive Poisson denominator"),
+                StatementSource.FromAuthor(PoissonDenominatorStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For real radius and angle, a positive sine makes the Poisson quadratic strictly positive."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("ordinary-natural-index-convolution"),
                 DeclarationHandle.Create(
                     "D5/S3/TotalVariation/IndependentConvolutionL1Minimum.ordinaryConvolution"),
@@ -85,6 +95,16 @@ internal sealed class IndependentConvolutionL1MinimumDocument : IScribeDocumentD
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("metya-mukherjee-independent-convolution-l1"),
                     ResolutionKind.Proved)))));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula PoissonDenominatorStatement() => Disp(Seq(
+        Forall, Sp, F.Id("r"), Comma, Sp, F.Id("theta"), Colon, Sp,
+        Mathbb, Grp(F.Id("R")), Comma, Sp,
+        D(0), Lt, Sp, Operatorname, Grp(F.Id("sin")), Parenthesized(F.Id("theta")),
+        Rightarrow, Sp, D(0), Lt, Sp, D(1), Minus, D(2), F.Id("r"), Sp,
+        Operatorname, Grp(F.Id("cos")), Parenthesized(F.Id("theta")), Plus,
+        F.Id("r"), Caret, Grp(D(2))));
+
     private static Formula OrdinaryConvolutionStatement() => Disp(Seq(
         Begin, Grp(F.Id("gathered")),
         Forall, Sp, F.Id("n"), Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,

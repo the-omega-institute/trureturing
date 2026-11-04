@@ -9,6 +9,7 @@
 import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
 import Mathlib.Analysis.Complex.RemovableSingularity
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import D5.S3.TotalVariation.IndependentConvolutionL1Minimum
 
 /-! The positive-axis transform used by the logarithmic Renyi representation. -/
 
@@ -44,6 +45,22 @@ theorem cosine_lt_one {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) 
   refine lt_of_le_of_ne (Real.cos_le_one _) ?_
   intro he
   exact hsin (Real.sin_eq_zero_iff_cos_eq.mpr (Or.inl he))
+
+private lemma power_denominator_pos {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) : 0 < 1 - 2 * r * Real.cos (Real.pi * α) + r ^ 2 := by
+  rcases lt_or_gt_of_ne ha1 with ha | ha
+  · exact D5.S3.TotalVariation.IndependentConvolutionL1Minimum.poisson_denominator_pos_of_sin_pos
+      (Real.sin_pos_of_pos_of_lt_pi (mul_pos Real.pi_pos ha0)
+        (by nlinarith [Real.pi_pos]))
+  · have hs : 0 < Real.sin (-(Real.pi * α)) := by
+      rw [Real.sin_neg]
+      have h := Real.sin_pos_of_pos_of_lt_pi
+        (by nlinarith [Real.pi_pos] : 0 < Real.pi * α - Real.pi)
+        (by nlinarith [Real.pi_pos] : Real.pi * α - Real.pi < Real.pi)
+      rwa [Real.sin_sub_pi] at h
+    simpa only [Real.cos_neg] using
+      (D5.S3.TotalVariation.IndependentConvolutionL1Minimum.poisson_denominator_pos_of_sin_pos
+        (r := r) hs)
 
 /-- The power Poisson density after the substitution `p = q ^ α`. -/
 def density (α q : ℝ) : ℝ :=
@@ -82,14 +99,7 @@ private lemma density_integrable_unit {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (Real.pi * (α - 1) * (1 - 2 * q ^ α * Real.cos (Real.pi * α) + (q ^ α) ^ 2))
   have hc : ContinuousOn f (Icc 0 1) := by
     intro q hq
-    have hp := Real.rpow_nonneg hq.1 α
-    have hcos := cosine_lt_one ha0 ha2 ha1
-    have hD : 0 < 1 - 2 * q ^ α * Real.cos (Real.pi * α) + (q ^ α) ^ 2 := by
-      by_cases hz : q ^ α = 0
-      · rw [hz]
-        norm_num
-      · have hpos := lt_of_le_of_ne hp (Ne.symm hz)
-        nlinarith [mul_pos hpos (sub_pos.mpr hcos), sq_nonneg (q ^ α - 1)]
+    have hD := power_denominator_pos (r := q ^ α) ha0 ha2 ha1
     have hpow : ContinuousAt (fun y : ℝ => y ^ α) q :=
       (Real.continuous_rpow_const ha0.le).continuousAt
     have hden : ContinuousAt (fun y : ℝ =>
@@ -359,10 +369,7 @@ private lemma contour_rectangle {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (T : 
 private lemma transform_boundary {α q : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hq : 0 < q) :
     -(complexTransform α (-(q : ℂ))).im / Real.pi = density α q := by
-  have hp := Real.rpow_pos_of_pos hq α
-  have hc := cosine_lt_one ha0 ha2 ha1
-  have hD : 0 < 1 - 2 * q ^ α * Real.cos (Real.pi * α) + (q ^ α) ^ 2 := by
-    nlinarith [mul_pos hp (sub_pos.mpr hc), sq_nonneg (q ^ α - 1)]
+  have hD := power_denominator_pos (r := q ^ α) ha0 ha2 ha1
   have hpow := Complex.cpow_ofReal (-(q : ℂ)) α
   have harg := Complex.arg_ofReal_of_neg (neg_neg_of_pos hq)
   rw [Complex.ofReal_neg] at harg
