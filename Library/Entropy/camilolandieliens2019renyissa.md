@@ -10,6 +10,8 @@ strata_touched:
   - D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity
   - D5/S3/Quantum/Analysis/BosonicRenyiStieltjes
   - D5/S3/Quantum/Analysis/BosonicRenyiStieltjes/PoissonWeight
+  - D5/S3/Quantum/Fermionic/GaussianRenyiStrongSubadditivity
+  - D5/S3/Quantum/Analysis/FermionicRenyiStieltjes
 license: citation-only
 triage: anchor
 ---
@@ -36,4 +38,4 @@ and for fermions: "Again, we lack a formal proof for SSA to hold for $\alpha \in
 
 ## Encoding and boundary
 
-The repository defines the bosonic Gaussian Rényi entropy of a physical covariance matrix through the eigenvalues of $V^{1/2}(i\Omega)V^{1/2}$ (the symplectic eigenvalues with both signs) and proves strong subadditivity over pairwise disjoint mode sets for every order $0<\alpha\le2$, $\alpha\ne1$. The proof writes the entropy as a positive mixture $n c_\alpha+\int_0^1w_\alpha(x)\ln\det(V+ix\Omega)\,dx$ and applies Koteljanskii's classical determinant inequality to the Hermitian positive definite matrices $V+ix\Omega$. Order one (von Neumann strong subadditivity, Lieb–Ruskai), order zero, the violation half for $\alpha>2$, the fermionic conjecture and non-Gaussian states are outside this conclusion.
+The repository defines the bosonic Gaussian Rényi entropy of a physical covariance matrix through the eigenvalues of $V^{1/2}(i\Omega)V^{1/2}$ (the symplectic eigenvalues with both signs) and proves strong subadditivity over pairwise disjoint mode sets for every order $0<\alpha\le2$, $\alpha\ne1$. The proof writes the entropy as a positive mixture $n c_\alpha+\int_0^1w_\alpha(x)\ln\det(V+ix\Omega)\,dx$ and applies Koteljanskii's classical determinant inequality to the Hermitian positive definite matrices $V+ix\Omega$. For fermions the repository defines the Rényi entropy of a real antisymmetric covariance matrix $\Gamma$ whose Hermitian matrix $i\Gamma$ has spectrum in $[-1,1]$ as half the sum, over all eigenvalues $\lambda$ of $i\Gamma$, of $\frac1{1-\alpha}\ln\big[(\frac{1+\lambda}2)^\alpha+(\frac{1-\lambda}2)^\alpha\big]$ (Eq. `renyi_fermionic_1`), and proves strong subadditivity over pairwise disjoint mode sets for every order $0<\alpha<1$, the conjectured fermionic range without its endpoints. The proof writes the entropy as $n\ln2+\int_0^1v_\alpha(u)\ln\det(I+iu\Gamma)\,du$ with a positive weight $v_\alpha$ and applies the same Koteljanskii inequality to $I+iu\Gamma$. Order one (von Neumann strong subadditivity, Lieb–Ruskai), order zero, the violation halves (bosons above order two, fermions above about $1.3$), fermionic orders in $[1,1.3]$ and non-Gaussian states are outside these conclusions.
