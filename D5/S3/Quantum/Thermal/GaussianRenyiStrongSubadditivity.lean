@@ -75,10 +75,80 @@ def claim : Prop :=
             gaussianRenyiEntropy α (reducedCovariance V B)
               (reducedForm (symplecticForm n) B)
 
+private lemma physical_skew {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω) : Ωᵀ = -Ω := by
+  ext i j
+  have h := congrArg (fun M : Matrix ι ι ℂ => (M i j).im) hV.2.isHermitian.eq
+  have hh : -Ω j i = Ω i j := by
+    simpa [Matrix.conjTranspose_apply, Matrix.add_apply, Matrix.smul_apply,
+      smul_eq_mul, Complex.mul_re, Complex.mul_im] using h
+  exact neg_eq_iff_eq_neg.mp hh
+
+private lemma uncertainty_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (hΩ : IsUnit (Ω.map Complex.ofReal)) : (V.map Complex.ofReal).PosDef := by
+  let P := V.map Complex.ofReal + Complex.I • Ω.map Complex.ofReal
+  let Q := V.map Complex.ofReal - Complex.I • Ω.map Complex.ofReal
+  have hP : P.PosSemidef := hV.2
+  have hQ : Q.PosSemidef := by
+    have heq : Pᵀ = Q := by
+      ext i j
+      have hs := congrArg (fun M : Matrix ι ι ℝ => M i j) (physical_skew V Ω hV)
+      have hv := congrArg (fun M : Matrix ι ι ℝ => M i j) hV.1
+      change Ω j i = -Ω i j at hs
+      change V j i = V i j at hv
+      simp [P, Q, hs, hv, sub_eq_add_neg]
+    exact heq ▸ hP.transpose
+  have hsum : P + Q = (2 : ℝ) • V.map Complex.ofReal := by
+    ext i j
+    simp only [P, Q, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, two_smul]
+    abel
+  have hps : (V.map Complex.ofReal).PosSemidef := by
+    have h := (hP.add hQ).smul (show (0 : ℝ) ≤ 1 / 2 by norm_num)
+    rw [hsum, smul_smul] at h
+    norm_num at h
+    exact h
+  apply hps.posDef_iff_mulVec_injective.mpr
+  intro u v huv
+  let z := u - v
+  have hz : V.map Complex.ofReal *ᵥ z = 0 := by
+    rw [mulVec_sub, huv, sub_self]
+  suffices z = 0 by exact sub_eq_zero.mp this
+  have heq : star z ⬝ᵥ P *ᵥ z + star z ⬝ᵥ Q *ᵥ z = 0 := by
+    rw [← dotProduct_add, ← add_mulVec, hsum, smul_mulVec, hz, smul_zero, dotProduct_zero]
+  have hzero : star z ⬝ᵥ P *ᵥ z = 0 :=
+    le_antisymm ((le_of_eq (eq_neg_of_add_eq_zero_left heq)).trans
+      (neg_nonpos.mpr (hQ.dotProduct_mulVec_nonneg z))) (hP.dotProduct_mulVec_nonneg z)
+  have hpz := hP.dotProduct_mulVec_zero_iff.mp hzero
+  have hoz : Ω.map Complex.ofReal *ᵥ z = 0 := by
+    have h : Complex.I • (Ω.map Complex.ofReal *ᵥ z) = 0 := by
+      simpa only [P, add_mulVec, hz, zero_add, smul_mulVec] using hpz
+    exact (smul_eq_zero.mp h).resolve_left Complex.I_ne_zero
+  exact (Matrix.mulVec_injective_iff_isUnit.mpr hΩ) (hoz.trans (mulVec_zero _).symm)
+
+private lemma canonical_square (n : ℕ) : symplecticForm n * symplecticForm n = -1 := by
+  ext i j
+  rcases i with ⟨i, a⟩
+  rcases j with ⟨j, b⟩
+  fin_cases a <;> fin_cases b <;>
+    simp [Matrix.mul_apply, Fintype.sum_prod_type, symplecticForm,
+      Matrix.one_apply, Prod.ext_iff] <;> split_ifs <;> norm_num
+
 private lemma physical_posDef {n : ℕ}
     (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
     (hV : physicalCovariance V) : (V.map Complex.ofReal).PosDef := by
-  sorry
+  apply uncertainty_posDef V (symplecticForm n) hV
+  have h : (symplecticForm n).map Complex.ofReal *
+      (symplecticForm n).map Complex.ofReal = -1 := by
+    calc
+      _ = (symplecticForm n * symplecticForm n).map Complex.ofReal :=
+        (Matrix.map_mul (f := Complex.ofRealHom)).symm
+      _ = -1 := by
+        rw [canonical_square]
+        ext i j
+        by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+  exact IsUnit.of_mul_eq_one (-(symplecticForm n).map Complex.ofReal)
+    (by rw [mul_neg, h, neg_neg])
 
 private lemma reduced_physical {n : ℕ}
     (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (hV : physicalCovariance V)
@@ -99,19 +169,111 @@ private lemma reduced_physical {n : ℕ}
     rw [← heq]
     exact hp.submatrix f
 
+private lemma symplecticOperator_hermitian {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (hpos : (V.map Complex.ofReal).PosDef) : (symplecticOperator V Ω).IsHermitian := by
+  have hJ : (Complex.I • Ω.map Complex.ofReal).IsHermitian := by
+    simpa only [add_sub_cancel_left] using hV.2.isHermitian.sub hpos.isHermitian
+  have hS := (CFC.sqrt_nonneg (V.map Complex.ofReal)).posSemidef.isHermitian.eq
+  change (CFC.sqrt (V.map Complex.ofReal) * (Complex.I • Ω.map Complex.ofReal) *
+    CFC.sqrt (V.map Complex.ofReal)).IsHermitian
+  simpa only [hS] using
+    isHermitian_conjTranspose_mul_mul (CFC.sqrt (V.map Complex.ofReal)) hJ
+
 private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
     (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
     (hH : (symplecticOperator V Ω).IsHermitian) :
     ∀ i, 1 ≤ |hH.eigenvalues i| := by
-  sorry
+  let S := CFC.sqrt (V.map Complex.ofReal)
+  let J := Complex.I • Ω.map Complex.ofReal
+  let M := symplecticOperator V Ω
+  have hSS : S * S = V.map Complex.ofReal := CFC.sqrt_mul_sqrt_self _ hpos.posSemidef.nonneg
+  have hS : Sᴴ = S := (CFC.sqrt_nonneg _).posSemidef.isHermitian.eq
+  have hJ : Jᴴ = J := by
+    have h := hV.2.isHermitian.sub hpos.isHermitian
+    simpa only [add_sub_cancel_left] using h.eq
+  have hΩC : Ω.map Complex.ofReal * Ω.map Complex.ofReal = -1 := by
+    calc
+      _ = (Ω * Ω).map Complex.ofReal := (Matrix.map_mul (f := Complex.ofRealHom)).symm
+      _ = -1 := by
+        rw [hΩ]
+        ext i j
+        by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+  have hJJ : J * J = 1 := by
+    dsimp only [J]
+    rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Complex.I_mul_I, hΩC]
+    simp
+  have hunitS : IsUnit S := (CFC.isUnit_sqrt_iff _ hpos.posSemidef.nonneg).mpr hpos.isUnit
+  have hunitM : IsUnit M := (hunitS.mul (IsUnit.of_mul_eq_one J hJJ)).mul hunitS
+  have hminus : (V.map Complex.ofReal - J).PosSemidef := by
+    have heq : (V.map Complex.ofReal + J)ᵀ = V.map Complex.ofReal - J := by
+      ext i j
+      have hs := congrArg (fun N : Matrix ι ι ℝ => N i j) (physical_skew V Ω hV)
+      have hv := congrArg (fun N : Matrix ι ι ℝ => N i j) hV.1
+      change Ω j i = -Ω i j at hs
+      change V j i = V i j at hv
+      simp [J, hs, hv, sub_eq_add_neg]
+    exact heq ▸ hV.2.transpose
+  have hp : (M * M + M).PosSemidef := by
+    have h := hV.2.conjTranspose_mul_mul_same (J * S)
+    have heq : (J * S)ᴴ * (V.map Complex.ofReal + J) * (J * S) = M * M + M := by
+      rw [conjTranspose_mul, hS, hJ, ← hSS]
+      change S * J * (S * S + J) * (J * S) = (S * J * S) * (S * J * S) + S * J * S
+      noncomm_ring [hJJ]
+    exact heq ▸ h
+  have hm : (M * M - M).PosSemidef := by
+    have h := hminus.conjTranspose_mul_mul_same (J * S)
+    have heq : (J * S)ᴴ * (V.map Complex.ofReal - J) * (J * S) = M * M - M := by
+      rw [conjTranspose_mul, hS, hJ, ← hSS]
+      change S * J * (S * S - J) * (J * S) = (S * J * S) * (S * J * S) - S * J * S
+      noncomm_ring [hJJ]
+    exact heq ▸ h
+  intro i
+  let z : ι → ℂ := ⇑(hH.eigenvectorBasis i)
+  have hz1 : star z ⬝ᵥ z = (1 : ℂ) := by
+    rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct,
+      inner_self_eq_norm_sq_to_K, hH.eigenvectorBasis.orthonormal.1 i]
+    norm_num
+  have he : M *ᵥ z = hH.eigenvalues i • z := hH.mulVec_eigenvectorBasis i
+  have hne : hH.eigenvalues i ≠ 0 := by
+    intro hzero
+    have hmz : M *ᵥ z = 0 := by simpa only [hzero, zero_smul] using he
+    have hz : z = 0 := (Matrix.mulVec_injective_iff_isUnit.mpr hunitM)
+      (hmz.trans (mulVec_zero M).symm)
+    simpa only [hz, star_zero, dotProduct_zero, zero_ne_one] using hz1
+  have hpv : 0 ≤ (star z ⬝ᵥ (M * M + M) *ᵥ z).re := hp.re_dotProduct_nonneg z
+  have hmv : 0 ≤ (star z ⬝ᵥ (M * M - M) *ᵥ z).re := hm.re_dotProduct_nonneg z
+  have hpq : (star z ⬝ᵥ (M * M + M) *ᵥ z).re = hH.eigenvalues i ^ 2 + hH.eigenvalues i := by
+    simp only [add_mulVec, ← mulVec_mulVec, he, mulVec_smul, dotProduct_add,
+      dotProduct_smul, hz1, smul_eq_mul, mul_one, Complex.real_smul, Complex.add_re,
+      Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
+    ring
+  have hmq : (star z ⬝ᵥ (M * M - M) *ᵥ z).re = hH.eigenvalues i ^ 2 - hH.eigenvalues i := by
+    simp only [sub_mulVec, ← mulVec_mulVec, he, mulVec_smul, dotProduct_sub,
+      dotProduct_smul, hz1, smul_eq_mul, mul_one, Complex.real_smul, Complex.sub_re,
+      Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
+    ring
+  rw [hpq] at hpv
+  rw [hmq] at hmv
+  rcases lt_or_gt_of_ne hne with hn | hn
+  · rw [abs_of_neg hn]
+    nlinarith
+  · rw [abs_of_pos hn]
+    nlinarith
 
 private lemma shifted_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
     (hpos : (V.map Complex.ofReal).PosDef) {x : ℝ}
     (hx0 : 0 ≤ x) (hx1 : x < 1) :
     ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).PosDef := by
-  sorry
+  have hp := (hpos.smul (sub_pos.mpr hx1)).add_posSemidef
+    (hV.2.smul hx0)
+  convert hp using 1
+  ext i j
+  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,
+    Complex.real_smul, Complex.ofReal_sub, Complex.ofReal_one]
+  ring
 
 private lemma principal_block_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (X : Finset ι) (x : ℝ) :
