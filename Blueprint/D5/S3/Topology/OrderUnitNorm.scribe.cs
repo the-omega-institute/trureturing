@@ -32,7 +32,7 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
                     Paragraph(Text("The square H_u squared acts on j(v) as j(H(H(v))). Its operator norm is exactly the infimum of all nonnegative c satisfying n(H(H(v))) at most c n(v) for every original v. This infimum is attained. Neither an ambient operator bound nor the square of the norm of H is substituted for this number.")),
                     Paragraph(Text("A positive unital linear map contracts n. A linear equivalence whose inverse is also positive is an isometry; positivity and unitality alone do not imply isometry. Applying this conclusion to exp(tH) uses both the assumed positivity at t and at -t. Conjugation by j carries the actual exponential to exp(tH_u).")),
                     Paragraph(Text("Assume that every original exp(tH) is positive and fixes u. Its order norm is then preserved for every real t. If the separately supplied condition H(u)=0 also holds, an effect x in C with u-x in C has centered vector z=x-u/2 of order norm at most one half, and H(H(x))=H(H(z)). Positive-functional domination and the exact square-operator bound give the displayed all-time centered-orbit estimate.")),
-                    Paragraph(Text("These are norm and orbit estimates. The identification of this orbit with a second derivative, the scalar Taylor estimate, the positive-generator criterion and the same-constant closure argument are separate implications. No full quantitative generator equivalence or optimality of the coefficient is asserted here.")),
+                    Paragraph(Text("The actual scalar orbit f(t)=beta(exp(tH)x) is twice continuously differentiable, with first derivative beta(exp(tH)Hx) and second derivative beta(exp(tH)H(Hx)). Taylor's theorem on the unoriented interval from 0 to any real s gives f(s) at most f(0)+s f'(0)+M s squared divided by two, where M=beta(u)K/2. Positivity makes this quadratic nonnegative on the entire real line. The existing quadratic discriminant theorem then gives f'(0) squared at most 2M f(0), including M=0. This proves the reverse certificate with exactly K=the operator norm of H_u squared, without division by mass or curvature. The positive-generator criterion and the same-constant closure argument remain separate; no full quantitative generator equivalence or optimality of K is asserted here.")),
                     Paragraph(Text("Order-unit norm and positive-functional mass facts are classical; the present concrete interface retains the original cone, unit, functional and linear action in one construction. It asserts no literature priority or physical realization of the mathematical exponential.")))))));
 
     private static Formula CoreStatement()
@@ -74,12 +74,15 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
             Eq(K,Call("inf",bounds)),Call("IsLeast",bounds,K));
         var transport=All("t",Id("R"),All("v",Id("E"),
             Eq(Apply(Call("exp",Scale(t,Hu)),Apply(j,v)),Apply(j,Orbit(v)))));
+        var centered = All("beta",Id("PositiveDual"),All("x",Id("Effects"),
+            All("t",Id("R"),Le(Call("abs",Apply(beta,Orbit(Apply(H,Apply(H,x))))),
+                new Formula.Fraction(Mul(Apply(beta,u),K),F.D(2))))));
+        var reverse = All("beta",Id("PositiveDual"),All("x",Id("Effects"),
+            Le(Call("square",Call("abs",Apply(beta,Apply(H,x)))),
+                Mul(Mul(K,Apply(beta,x)),Apply(beta,u)))));
         var group=Implies(Call("PositiveUnitalAtEveryRealTime",H,C,u),And(
             All("t",Id("R"),All("v",Id("E"),Eq(N(Orbit(v)),N(v)))),
-            Implies(Eq(Apply(H,u),F.D(0)),
-                All("beta",Id("PositiveDual"),All("x",Id("Effects"),
-                    All("t",Id("R"),Le(Call("abs",Apply(beta,Orbit(Apply(H,Apply(H,x))))),
-                        new Formula.Fraction(Mul(Apply(beta,u),K),F.D(2)))))))));
+            Implies(Eq(Apply(H,u),F.D(0)),And(centered,reverse))));
         return All("E", Id("Types"),
             Implies(Call("FiniteDimensionalRealNormedSpace", Id("E")),
                 All("A", Call("ConeUnitData", Id("E")), And(
