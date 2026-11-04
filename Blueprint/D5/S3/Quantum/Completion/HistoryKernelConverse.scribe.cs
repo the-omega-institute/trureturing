@@ -18,8 +18,8 @@ internal sealed class HistoryKernelConverseDocument : IScribeDocumentDefinition
     private static Formula C => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Arrow(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
     private static Formula Fin(Formula n) => Call("Fin", n);
-    private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
-    private static Formula And(Formula a, Formula b) => Seq(a, Sp, Land, Sp, b);
+    private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, Open, b, Close);
+    private static Formula And(Formula a, Formula b) => Seq(Open, a, Close, Sp, Land, Sp, Open, b, Close);
     private static Formula Imp(Formula a, Formula b) => Seq(a, Sp, Rightarrow, Sp, b);
     private static Formula Iff(Formula a, Formula b) => Seq(a, Sp, Leftrightarrow, Sp, b);
     private static Formula Law => Call("KernelExtensionLaw", K);
