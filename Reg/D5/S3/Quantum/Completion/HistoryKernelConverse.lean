@@ -45,9 +45,11 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   refine ⟨ULift.{u} Unit, (fun _ _ => (0 : ℂ)), (fun _ _ => (-1 : ℂ)), ?_⟩
   intro h
-  exact negative_not_law (h ▸ zero_law (ULift.{u} Unit))
+  change KernelExtensionLaw (fun _ _ : ULift.{u} Unit => (0 : ℂ)) =
+    KernelExtensionLaw (fun _ _ : ULift.{u} Unit => (-1 : ℂ)) at h
+  exact negative_not_law (Eq.mp h (zero_law (ULift.{u} Unit)))
 
-private theorem sensitivity.{u} (law : Realization signature.{u} → Prop) (hbad : ¬ law rejected.{u}) :
+private theorem sensitivity (law : Realization signature.{u} → Prop) (hbad : ¬ law rejected.{u}) :
     Sensitivity ⟨signature.{u}, law⟩ actual := by
   constructor
   · intro i
