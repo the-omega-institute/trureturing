@@ -13,12 +13,11 @@ internal sealed class BoundedEulerCorrectionDocument : IScribeDocumentDefinition
             Node("correction_equation", "correction equation", "Euclidean quotient and remainder give the exact divisor-sum ghost equation. This is a derived identity for the constructed account.", DescribeRole.Theorem),
             Node("correction_integral", "correction integral", "The constructed account satisfies the existing divisor-ghost Gauss congruences. The canonical integrality theorem identifies the actual exponential with an integer Euler series.", DescribeRole.Theorem),
             Node("correction_unique", "correction unique", "For a competing bounded correction, the existing integral-input ledger theorem supplies integer exponents. Strong induction on proper divisors makes both the residue and quotient rigid. No equality at index zero is claimed.", DescribeRole.Theorem),
-            Node("correction_ledger_unique", "correction ledger unique", "The same induction fixes the positive-index integer account of a competing correction whenever its actual divisor ghosts agree.", DescribeRole.Theorem),
             Node("moebiusTransform", "moebiusTransform", "The finite integer sum is the uncorrected Mobius transform of the arbitrary weight.", DescribeRole.Definition),
             Node("moebius_identity", "moebius identity", "Mobius inversion applies to the exact constructed ghost equation, producing the correction term with mu(n/d).", DescribeRole.Theorem),
             Node("logarithmic_error", "logarithmic error", "The absolute Mobius value is at most one and each positive-index correction is less than its index. Complementary divisors convert the normalized divisor sum into reciprocal divisors, bounded by the harmonic sum and one plus the natural logarithm. No positivity assumption on the original weights is used.", DescribeRole.Theorem))));
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("boundedeulercorrection-" + name.ToLowerInvariant().Replace("_", "-")),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 }

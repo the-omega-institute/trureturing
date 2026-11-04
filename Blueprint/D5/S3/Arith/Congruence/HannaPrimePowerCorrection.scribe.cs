@@ -39,7 +39,7 @@ internal sealed class HannaPrimePowerCorrectionDocument : IScribeDocumentDefinit
 
             Describe.Lean(DescribeId.Create("h3-bounded-power-corrections"),
                 DeclarationHandle.Create("D5/S3/Arith/Congruence/HannaPrimePowerCorrection.bounded_power_corrections"), H("The shared induction for every power weight at least two"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The original square induction is generalized in place to a natural exponent s>=2. It uses positive-index correction bounds and prime-power divisibility of the corrected ghosts. Both the original square theorem and the complete integer-weight family consume this shared induction. The known square result is due to Su, Theorem 7.1, in the 29 October 2026 preprint cited in the updated Hanna source note. No new official-open-problem status or all-s novelty is inferred."))), DescribeRole.Theorem),
             Node("result", "All positive prime powers", Disp(ClaimBody()),
                 "An integer Euler ledger gives m^2-a(m) as the sum of d times the ledger "

@@ -10,6 +10,6 @@ internal sealed class ProperDivisorPowerBudgetDocument : IScribeDocumentDefiniti
             Node("power_budget", "power budget", "Each d^s is at most n^(s-2) times d squared. Since n^(s-2) is at least one, the quadratic additive margin remains at least n. The inequality is over integers and holds at n=1 too.", DescribeRole.Theorem))));
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("properdivisorpowerbudget-" + name.ToLowerInvariant().Replace("_", "-")),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 }

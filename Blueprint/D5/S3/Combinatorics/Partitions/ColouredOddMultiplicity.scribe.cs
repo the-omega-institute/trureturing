@@ -12,7 +12,7 @@ internal sealed class ColouredOddMultiplicityDocument : IScribeDocumentDefinitio
 
             Describe.Lean(DescribeId.Create("h3-local-factor-of-coeff"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/ColouredOddMultiplicity.local_factor_of_coeff"), H("Shared positive-multiplicity factor reconstruction"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For any commutative topological ring with separated topology, the prescribed divisibility-filtered coefficients reconstruct the local factor 1+sum over positive multiplicities. This extracts the original complex-factor proof in its owner; both the original odd-multiplicity product and the integer coloured Euler ledger now consume it."))), DescribeRole.Theorem),
  Describe.Lean(DescribeId.Create("ones-partition"), DeclarationHandle.Create("D5/S3/Combinatorics/Partitions/ColouredOddMultiplicity.onesPartition"),
  H("The partition into ones"), StatementSource.FromAuthor(Disp(new Formula.Bind(

@@ -11,6 +11,6 @@ internal sealed class EulerExponentialCoefficientsDocument : IScribeDocumentDefi
             Node("coefficient_monotone", "coefficient monotone", "Compare the convolution equations at n and n+1. Their difference is controlled by g(1)-1 and the adjacent positive-index ghost differences, multiplied by already positive coefficients. This proves monotonicity on all natural degrees.", DescribeRole.Theorem))));
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("eulerexponentialcoefficients-" + name.ToLowerInvariant().Replace("_", "-")),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 }
