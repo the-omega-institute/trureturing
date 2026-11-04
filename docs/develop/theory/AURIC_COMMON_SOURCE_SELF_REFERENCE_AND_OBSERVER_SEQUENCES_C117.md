@@ -2997,9 +2997,9 @@ $$
 
 $$
 \begin{aligned}
-M&=cI+K,\
-c&=2+2u^2=6u,\
-K&=-(4u+2u^2)C_\theta+4uC_{2\theta}-2C_{3\theta},\
+M&=cI+K,\\
+c&=2+2u^2=6u,\\
+K&=-(4u+2u^2)C_\theta+4uC_{2\theta}-2C_{3\theta},\\
 \|K\|_{\infty\to\infty}&\le14u.
 \end{aligned}
 \tag{21.10}
