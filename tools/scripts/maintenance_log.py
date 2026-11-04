@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Append small, structured maintenance outcomes outside the worktree.
+"""Best-effort maintenance outcomes in the Git common directory (or an override).
 
-The default destination is the repository's Git common directory.  Linked
-worktrees therefore share one history without adding generated files to the
-checkout.  The log contains outcomes and timings, never command transcripts.
+Commands inherit IO directly. Logs retain run identity, outcomes and timings,
+without intercepting output or saving command arguments or transcripts.
 """
 
 from __future__ import annotations
@@ -14,97 +13,97 @@ import fcntl
 import json
 import os
 from pathlib import Path
+import signal
 import subprocess
 import sys
-import threading
 import time
-
+import uuid
 
 ENV_LOG_DIR = "TRURETURING_MAINTENANCE_LOG_DIR"
 ENV_LOG_DIAGNOSTICS = "TRURETURING_MAINTENANCE_LOG_DIAGNOSTICS"
-EVENTS = {"worktree_disk"}
+ENV_RUN_ID = "TRURETURING_MAINTENANCE_RUN_ID"
 
 
-def _repository(path: Path | None = None) -> Path:
-    value = path or Path.cwd()
-    result = subprocess.run(
-        ["git", "-C", str(value), "rev-parse", "--path-format=absolute", "--git-common-dir"],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-    common = Path(result.stdout.strip()).resolve()
-    if not common.is_absolute() or not common.exists() or not common.is_dir():
-        raise OSError("git common directory is unavailable")
-    return common
-
-
-def log_directory(repository: Path | None = None) -> Path:
+def log_directory(repository: Path) -> Path:
     configured = os.environ.get(ENV_LOG_DIR)
-    directory = Path(configured).expanduser() if configured else _repository(repository) / "maintenance-logs"
-    directory = directory.absolute()
-    if directory.exists() and directory.is_symlink():
-        raise OSError("maintenance log directory must not be a symlink")
+    if configured:
+        directory = Path(configured).expanduser().absolute()
+    else:
+        result = subprocess.run(
+            ["git", "-C", str(repository), "rev-parse", "--path-format=absolute", "--git-common-dir"],
+            check=True, capture_output=True, text=True,
+        )
+        directory = Path(result.stdout.strip()) / "maintenance-logs"
+        if not directory.is_absolute():
+            raise OSError("git common directory is unavailable")
     directory.mkdir(mode=0o700, parents=True, exist_ok=True)
-    if not directory.is_dir():
-        raise OSError("maintenance log path is not a directory")
     return directory
 
 
-def _safe_name(script: str) -> str:
-    if not script or any(character not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-" for character in script):
-        raise ValueError("invalid maintenance script name")
-    return script
-
-
-def append(script: str, event: str, *, repository: Path | None = None, **fields: object) -> Path:
-    """Append one outcome record and return its path."""
-    script = _safe_name(script)
-    row = {
-        "schema": 1,
-        "time": datetime.now(timezone.utc).isoformat(timespec="milliseconds"),
-        "script": script,
-        "event": event,
-        **fields,
-    }
-    path = log_directory(repository) / f"{script}.jsonl"
-    with path.open("a", encoding="utf-8") as stream:
-        os.chmod(path, 0o600)
-        fcntl.flock(stream.fileno(), fcntl.LOCK_EX)
+def _warning(event: str, error: Exception) -> None:
+    if os.environ.get(ENV_LOG_DIAGNOSTICS) == "1":
         try:
-            stream.write(json.dumps(row, ensure_ascii=True, sort_keys=True, separators=(",", ":")) + "\n")
-            stream.flush()
-        finally:
-            fcntl.flock(stream.fileno(), fcntl.LOCK_UN)
-    return path
+            print(f"MAINTENANCE_LOG_WARNING event={event} error_type={type(error).__name__}",
+                  file=sys.stderr, flush=True)
+        except OSError:
+            pass
 
 
-def safe_append(script: str, event: str, *, repository: Path | None = None, **fields: object) -> bool:
-    """Best-effort logging: maintenance behavior never depends on the logger."""
-    try:
-        append(script, event, repository=repository, **fields)
-        return True
-    except (OSError, ValueError, subprocess.SubprocessError) as error:
-        if os.environ.get(ENV_LOG_DIAGNOSTICS) == "1":
-            print(f"MAINTENANCE_LOG_WARNING event={event} error={error}", file=sys.stderr, flush=True)
-        return False
+class MaintenanceLog:
+    """Resolve once, before actions may dispose of the source or current tree."""
 
-
-def _forward(stream, target, script: str, repository: Path | None, started: float) -> None:
-    for line in iter(stream.readline, ""):
-        target.write(line)
-        target.flush()
+    def __init__(self, script: str, repository: Path | None = None):
+        self.started = time.monotonic()
+        self.run_id = uuid.uuid4().hex
+        self.path = None
+        self.context = dict(run_id=self.run_id, parent_run_id=os.environ.get(ENV_RUN_ID),
+                            pid=os.getpid(), parent_pid=os.getppid())
         try:
-            row = json.loads(line)
-        except (json.JSONDecodeError, TypeError):
-            continue
-        if not isinstance(row, dict):
-            continue
-        event = row.get("event")
-        if isinstance(event, str) and (event.endswith("_summary") or event.endswith("_warning") or event in EVENTS):
-            fields = dict(row)
-            fields.pop("event", None)
-            safe_append(script, event, repository=repository, **fields)
+            if not script or any(character not in
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-" for character in script):
+                raise ValueError("invalid maintenance script name")
+            repository = (repository or Path.cwd()).absolute()
+            self.context.update(script=script, repository=str(repository))
+            self.path = log_directory(repository) / (script + ".jsonl")
+        except (OSError, ValueError, subprocess.SubprocessError) as error:
+            _warning("initialize", error)
+
+    def emit(self, event: str, **fields: object) -> bool:
+        if self.path is None:
+            return False
+        try:
+            row = dict(fields, **self.context,
+                       schema=1, time=datetime.now(timezone.utc).isoformat(timespec="milliseconds"), event=event)
+            # O_APPEND and flock keep interleaved runs' rows intact; the handle
+            # closes after each write and never extends a command's lifetime.
+            with self.path.open("a", encoding="utf-8") as stream:
+                os.chmod(self.path, 0o600)
+                fcntl.flock(stream.fileno(), fcntl.LOCK_EX)
+                stream.write(json.dumps(row, ensure_ascii=True, sort_keys=True, separators=(",", ":")) + "\n")
+            return True
+        except (OSError, TypeError, ValueError) as error:
+            _warning(event, error)
+            return False
+
+    def finish(self, exit_code: int, **fields: object) -> None:
+        self.emit("run_finished", exit_code=exit_code,
+                  duration_seconds=round(time.monotonic() - self.started, 3), **fields)
+
+    def child_environment(self, environment=None):
+        return dict(os.environ if environment is None else environment, **{ENV_RUN_ID: self.run_id})
+
+
+def scope_fds() -> tuple[int, ...]:
+    descriptors = set()
+    for raw in os.environ.get("WORKTREE_SCOPE_FDS", "").split(","):
+        if raw.isdigit():
+            descriptor = int(raw)
+            try:
+                if os.get_inheritable(descriptor):
+                    descriptors.add(descriptor)
+            except OSError:
+                pass
+    return tuple(sorted(descriptors))
 
 
 def run(options: argparse.Namespace) -> int:
@@ -114,36 +113,58 @@ def run(options: argparse.Namespace) -> int:
     if not command:
         print("maintenance-log: run requires a command", file=sys.stderr)
         return 64
-    repository = Path(options.repository).absolute() if options.repository else None
-    started = time.monotonic()
-    safe_append(options.script, "run_started", repository=repository)
-    process = subprocess.Popen(command, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1)
-    threads = [
-        threading.Thread(target=_forward, args=(process.stdout, sys.stdout, options.script, repository, started), daemon=True),
-        threading.Thread(target=_forward, args=(process.stderr, sys.stderr, options.script, repository, started), daemon=True),
-    ]
-    for thread in threads:
-        thread.start()
-    return_code = process.wait()
-    for thread in threads:
-        thread.join()
-    exit_code = return_code if return_code >= 0 else 128 - return_code
-    safe_append(options.script, "run_finished", repository=repository, exit_code=exit_code,
-                duration_seconds=round(time.monotonic() - started, 3))
-    return exit_code
+    log = MaintenanceLog(options.script, options.repository)
+    log.emit("run_started")
+    process = None
+    pending = []
+    previous = {}
+
+    def forward(signum, _frame):
+        if process is None:
+            pending.append(signum)
+        else:
+            process.send_signal(signum)
+
+    # Keep the caller's process group, terminal and inherited ignored signals.
+    # A handled signal may let the command continue; wait for its actual result.
+    for signum in (signal.SIGTERM, signal.SIGHUP, signal.SIGINT, signal.SIGQUIT):
+        handler = signal.getsignal(signum)
+        if handler != signal.SIG_IGN:
+            previous[signum] = handler
+            signal.signal(signum, forward)
+    try:
+        try:
+            process = subprocess.Popen(command, pass_fds=scope_fds(), env=log.child_environment())
+        except OSError as error:
+            exit_code = 127 if isinstance(error, FileNotFoundError) else 126
+            print(f"maintenance-log: {command[0]}: {error.strerror}", file=sys.stderr)
+            log.finish(exit_code, error_type=type(error).__name__, errno=error.errno)
+            return exit_code
+        for signum in pending:
+            process.send_signal(signum)
+        return_code = process.wait()
+        log.finish(return_code if return_code >= 0 else 128 - return_code,
+                   signal=-return_code if return_code < 0 else None)
+    finally:
+        for signum, handler in previous.items():
+            signal.signal(signum, handler)
+    if return_code < 0:
+        # Preserve native signal termination, including shell $? and Popen's
+        # negative return code, after the command has been reaped and logged.
+        signal.signal(-return_code, signal.SIG_DFL)
+        os.kill(os.getpid(), -return_code)
+    return return_code
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="subcommand", required=True)
-    runner = commands.add_parser("run", help="run a maintenance command and retain outcome events")
+    runner = commands.add_parser("run", help="run a maintenance command and retain its outcome")
     runner.add_argument("--script", required=True)
     runner.add_argument("--repository", type=Path)
     runner.add_argument("argv", nargs=argparse.REMAINDER)
     options = parser.parse_args(argv)
-    if options.subcommand == "run":
-        return run(options)
-    return 64
+    return run(options)
 
 
 if __name__ == "__main__":

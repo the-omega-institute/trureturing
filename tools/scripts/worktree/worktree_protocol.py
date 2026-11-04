@@ -21,18 +21,18 @@ import time
 from urllib.parse import unquote, urlsplit
 
 try:
-    from maintenance_log import safe_append
+    from maintenance_log import MaintenanceLog
 except ImportError:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     try:
-        from maintenance_log import safe_append
+        from maintenance_log import MaintenanceLog
     except ImportError:
-        def safe_append(script, event, *, repository=None, **fields):
-            return False
+        MaintenanceLog = None
 
 if __name__ == "__main__":
     sys.modules["worktree_protocol"] = sys.modules[__name__]
 
+LOG = None
 OPEN_SCOPES = []
 GIT_TERMINATION_GRACE_SECONDS = 30
 # An empty core.fsmonitor disables it both where Git reads a boolean and where
@@ -430,7 +430,11 @@ def with_command(options):
         # while a descendant still owns a copy of an open file description.
         os.environ["WORKTREE_SCOPE_FDS"] = ",".join(map(str, scope_fds()))
         os.chdir(path)
-        os.execvpe(options.argv[0], options.argv, git_environment())
+        environment = git_environment()
+        if LOG is not None:
+            LOG.emit("exec_started", action="with")
+            environment = LOG.child_environment(environment)
+        os.execvpe(options.argv[0], options.argv, environment)
 
 
 def reuse(options, allow_recovered_base=False):
@@ -541,6 +545,10 @@ def _main(argv=None):
         publication.add_argument("--commit", default="HEAD")
         publication.add_argument("--writers-joined", action="store_true")
     options = parser.parse_args(argv)
+    global LOG
+    LOG = MaintenanceLog("worktree-protocol", options.source) if MaintenanceLog else None
+    if LOG is not None:
+        LOG.emit("run_started", action=options.action)
     try:
         if options.action == "with":
             if options.argv[:1] == ["--"]:
@@ -609,19 +617,17 @@ def _main(argv=None):
 
 
 def main(argv=None):
-    requested = list(sys.argv[1:] if argv is None else argv)
-    log_repository = Path.cwd()
-    started = time.monotonic()
+    global LOG
+    LOG = None
     try:
         exit_code = _main(argv)
     except BaseException as error:
-        safe_append("worktree-protocol", "run_finished", repository=log_repository,
-                    action=requested[0] if requested else "", exit_code=1,
-                    duration_seconds=round(time.monotonic() - started, 3), error_type=type(error).__name__)
+        if LOG is not None:
+            code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 1
+            LOG.finish(code, error_type=type(error).__name__)
         raise
-    safe_append("worktree-protocol", "run_finished", repository=log_repository,
-                action=requested[0] if requested else "", exit_code=exit_code,
-                duration_seconds=round(time.monotonic() - started, 3))
+    if LOG is not None:
+        LOG.finish(exit_code)
     return exit_code
 
 

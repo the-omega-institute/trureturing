@@ -2,11 +2,11 @@
 set -u -o pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
-if [[ "${TRURETURING_MAINTENANCE_LOG_ACTIVE:-0}" != 1 && -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
-  export TRURETURING_MAINTENANCE_LOG_ACTIVE=1
+if [[ "${TRURETURING_MAINTENANCE_LOG_WARM_DONOR:-0}" != 1 && -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
+  export TRURETURING_MAINTENANCE_LOG_WARM_DONOR=1
   exec python3 -B "$ROOT/tools/scripts/maintenance_log.py" run \
     --repository "$ROOT" --script warm-donor -- \
-    "$ROOT/tools/scripts/worktree/warm-donor.sh" "$@"
+    /bin/bash "$ROOT/tools/scripts/worktree/warm-donor.sh" "$@"
 fi
 cd "$ROOT"
 
