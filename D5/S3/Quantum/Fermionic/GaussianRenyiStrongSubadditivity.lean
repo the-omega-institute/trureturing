@@ -52,11 +52,14 @@ private def interpolation {ι : Type*} [Fintype ι] [DecidableEq ι]
 private lemma skew_hermitian {ι : Type*}
     (G : Matrix ι ι ℝ) (hG : Gᵀ = -G) :
     (Complex.I • G.map Complex.ofReal).IsHermitian := by
-  apply Matrix.IsHermitian.ext
-  intro i j
-  have hs := congrArg (fun M : Matrix ι ι ℝ => M i j) hG
-  simp (config := { congrConsts := false }) only [Matrix.transpose_apply, Matrix.neg_apply] at hs
-  simp (config := { congrConsts := false }) [Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, hs]
+  apply Matrix.isHermitian_iff_isSelfAdjoint.mpr
+  apply isSelfAdjoint_smul_of_mem_skewAdjoint
+  · simp only [skewAdjoint.mem_iff, Complex.star_def, Complex.conj_I]
+  · rw [skewAdjoint.mem_iff, Matrix.star_eq_conjTranspose,
+      ← Matrix.conjTranspose_map Complex.ofReal
+        (by intro x; simp only [star_trivial, Complex.star_def, Complex.conj_ofReal]),
+      Matrix.conjTranspose_eq_transpose_of_trivial,
+      hG, Matrix.map_neg _ Complex.ofReal_neg]
 
 private lemma interpolation_diagonal {ι : Type*} [Fintype ι] [DecidableEq ι]
     (G : Matrix ι ι ℝ) (h : (Complex.I • G.map Complex.ofReal).IsHermitian) (u : ℝ) :
@@ -175,11 +178,11 @@ private lemma determinant_log_identity {ι : Type*} [Fintype ι] [DecidableEq ι
   rw [← hdr, ← Complex.ofReal_pow, ← Complex.ofReal_prod] at hp
   have hr := Complex.ofReal_injective hp
   have hterms (i : ι) : 0 < 1 - u ^ 2 * h.eigenvalues i ^ 2 := by
-    have hi := abs_le.mp (hb i)
-    have hs : h.eigenvalues i ^ 2 ≤ 1 := by nlinarith only [hi.1, hi.2]
-    nlinarith only [hu0, hu1, sq_nonneg u,
-      mul_nonneg hu0 (sub_pos.mpr hu1).le,
-      mul_nonneg (sq_nonneg u) (sub_nonneg.mpr hs)]
+    have hsq : (u * h.eigenvalues i) ^ 2 < 1 :=
+      (sq_lt_one_iff_abs_lt_one _).mpr (by
+        rw [abs_mul, abs_of_nonneg hu0]
+        exact lt_of_le_of_lt (mul_le_of_le_one_right hu0 (hb i)) hu1)
+    simpa only [mul_pow] using sub_pos.mpr hsq
   have hl := congrArg Real.log hr
   rw [Real.log_prod (fun i _ => (hterms i).ne'), Real.log_pow] at hl
   generalize hx : Real.log (interpolation G u).det.re = x at hl ⊢
@@ -289,11 +292,14 @@ private lemma settlement_main : claim := by
   simp (config := { congrConsts := false }) only [Pi.add_apply] at hi
   rw [integral_add (hm (A ∪ B ∪ C)).1 (hm B).1,
     integral_add (hm (A ∪ B)).1 (hm (B ∪ C)).1] at hi
-  have hUC : Disjoint (A ∪ B) C := Finset.disjoint_union_left.mpr ⟨hAC, hBC⟩
   have hc : (A ∪ B).card + (B ∪ C).card = (A ∪ B ∪ C).card + B.card := by
-    rw [Finset.card_union_of_disjoint hAB, Finset.card_union_of_disjoint hBC,
-      Finset.card_union_of_disjoint hUC, Finset.card_union_of_disjoint hAB]
-    omega
+    simpa only [Finset.inter_union_distrib_left, Finset.union_inter_distrib_right,
+      Finset.disjoint_iff_inter_eq_empty.mp hAB,
+      Finset.disjoint_iff_inter_eq_empty.mp hAC,
+      Finset.disjoint_iff_inter_eq_empty.mp hBC,
+      Finset.inter_self, Finset.empty_union, Finset.union_empty,
+      Finset.union_assoc, Finset.union_left_idem] using
+        (Finset.card_union_add_card_inter (A ∪ B) (B ∪ C)).symm
   have hcr : ((A ∪ B).card : ℝ) + (B ∪ C).card = (A ∪ B ∪ C).card + B.card := by
     exact_mod_cast hc
   have hconst := congrArg (fun t : ℝ => t * Real.log 2) hcr
