@@ -85,7 +85,8 @@ private lemma total_mass (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j) :
   have hp : ∑ t : Fin j, ((SimpleGraph.pathGraph j).degree t : ℤ) = 2 * ((j : ℤ) - 1) := by
     obtain ⟨n, rfl⟩ : ∃ n : ℕ, j = n + 1 := ⟨j - 1, by omega⟩
     have h :=
-      D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.sum_path_neighbor_card n
+      D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.sum_path_neighbor_card
+        n
     simpa only [SimpleGraph.degree, Nat.cast_add, Nat.cast_one, add_sub_cancel_right,
       Nat.cast_mul, Nat.cast_ofNat, Nat.cast_sum] using congrArg (fun a : ℕ => (a : ℤ)) h
   simp only [Fintype.sum_prod_type, SimpleGraph.degree_boxProd,
