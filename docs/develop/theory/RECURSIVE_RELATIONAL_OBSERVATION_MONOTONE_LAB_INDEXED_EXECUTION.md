@@ -3737,3 +3737,152 @@ change, minimality claim, hardware claim, quantum frontend, or actual
 serial-history recovery is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 26. Trace-preserving host realization
+
+The class-wide loader calculation leaves a specific prerequisite between the conditional LAB correspondence and a future execution: a host representation must carry the same finite objects, aliases, grants, pending cuts, and control fields without allowing a host dictionary, integer, or answer fixture to choose a source successor. This section gives that representation and the refinement obligations. It is a host realization of the existing model, not a replacement for the model and not an evaluator result.
+
+### 26.1. The packed state and its decode
+
+**Definition 26.1 (typed packed arena).** A packed arena is a finite tuple
+
+$$
+ H=(U,\;\mathsf{slot},\;\mathsf{owner},\;\mathsf{width},\;\mathsf{free},\;\mathsf{grant},\;\mathsf{phase},\;\mathsf{latch}),
+$$
+
+where $U$ is a finite set of host slots. Each slot has a shape tag
+$\sigma=(r,b)$, an owner tag, $r$ reference fields, and $b$ bit fields. A reference field contains either the null code or a pair $(o,i)$ naming one slot in the session's owner-tagged slot union; a bit field contains $0$ or $1$. The slot's grant bit, shape tag, and owner tag are stored separately from its fields. A slot remains present after cleanup and is moved to the owner's free list; cleanup never changes its identity or grant. The reference width $w$ is stored in the arena header and is the width used for every modeled reference transport in that owner.
+
+The fixed shape table is the source table
+
+$$
+ (4,8),\ (4,21),\ (1,0),\ (0,1),\ (0,32768),\ (2,0),
+$$
+
+for LAB cells, code cells, native bit cells, one-bit cells, image pages, and routing pairs. A source-specific arena may additionally use a finite schema table whose rows assign a literal field number to every source field name (`parent`, `left`, `right`, `header`, `next`, `head`, `tail`, `bit`, and the source/provider fields). A schema tag is part of the packed slot, so an absent field is distinct from a present null field. No host map from a computed integer to a successor is part of a transition.
+
+**Definition 26.2 (controller header).** A controller header is a retained packed record containing the current and old program references, operand references, the destination reference, the bit latches, the finite phase and selector index, and the waiting, ended, acknowledged, occupied, and refusal flags. The installation header additionally contains the source cursor, target cursor, source and target buffers, pending target, entry descriptor, bit-kernel cursor, and the four cumulative installer counters. The LAB header contains old/new head, arm, program counter, mark and frontier references, growth parent/child/header, and return continuation. The service header contains the receive latch, phase guards, original occurrence counter, indexed receipt links, cache mask/value cells, and the returned active header. Every header field is a slot or a fixed-width bit field in the corresponding owner; a Python scalar is only a serialization boundary.
+
+**Definition 26.3 (session packing).** A host session is a tuple of owner-separated arenas for installation, source/provider, connection, and evaluator/LAB work, plus a receipt table. A receipt row is
+
+$$
+ (k,\ i,\ w,\ r,\ \mathsf{mask},\mathsf{value}),
+$$
+
+where $k$ is occurrence order, $i$ is the original source index, $w$ is the exact operand word, and $(r,\mathsf{mask},\mathsf{value})$ are references to the returned record and indexed cache cells. Rows with equal words are not merged. An absent reply has a row with its actual index and an empty reply cell. The cache table has exactly the original $15N$ index positions; an index outside prior support is represented by its own row rather than by an implicit default. The table is a retained object and is charged at the same cut as the source and connection arenas.
+
+**Definition 26.4 (decode relation).** Let $S$ be a valid original state and $H$ a packed state. Write $H\mathrel{\mathcal R}S$ when there is a bijection
+
+$$
+ \iota_H:U_{\mathrm{retained}}\longrightarrow O_S
+$$
+
+from every retained, pending, or free-pool host slot to every corresponding source object, with the following clauses.
+
+1. Shape, owner, grant, and width agree. A slot with shape $(r,b)$ decodes to an object with exactly $r$ reference positions and $b$ bit positions, and its grant bit agrees with the source grant. Installation source descriptors, target descriptors, initializer nodes, code pages, LAB cells, route headers, input cells, receipts, cache cells, and connection latches all have their declared owner.
+2. For each reference position, null decodes to null and a host pair $(o,i)$ decodes to $\iota_H(o,i)$. Thus equal host references decode to equal source identities and unequal host references remain unequal, including two equal-valued observations at different original indices.
+3. Every bit position, marked value, operation tag, encoded opcode, selector, literal, and width flag decodes to the source bit at the same literal position. A schema tag never changes the source-visible field name.
+4. The controller headers decode to the source controller state. In particular, `pc`, `old.pc`, the operand latches, destination, phase, selector index, waiting flags, output flags, source cursor, pending target, LAB head/arm/frontier, growth continuation, and returned active header are equal after decoding.
+5. The receipt table decodes occurrence-for-occurrence. Its order, original indices, operand words, returned headers, cache masks and cache values agree, including repeats, partial slots, informative absences, and arrays outside the earlier support.
+6. The host charge accumulator is not part of the source state. Its event prefix records the same owner, operation, field, grant, pending status, free-pool status, and old/new width as the source event ledger of Definition 25.6.
+
+The relation is intentionally existential in $\iota_H$: renumbering packed slots is allowed, but changing an alias, dropping a retained object, or reusing a grant without a source cleanup event is not.
+
+**Lemma 26.5 (decode is total on valid packed states).** Every packed state satisfying the six clauses of Definition 26.4 decodes to a unique source state up to identity renaming. The decoded state retains all free-pool and pending objects, and its source-visible graph is independent of the order of the host arrays.
+
+*Proof.* The owner and slot tables give a finite disjoint union of identities. Following each reference field through $\iota_H$ produces a finite source graph; a reference cycle is allowed exactly when the packed fields contain the corresponding cycle. The fixed shape and schema rows provide every source field, including a present null. Bijection makes aliases and identity unequal precisely when they are unequal in the packed state. Header and receipt clauses supply the remaining registers and history. A different array order only composes $\iota_H$ with a permutation, so the decoded graph is unique up to that renaming. $\square$
+
+### 26.2. Literal host operations
+
+**Definition 26.6 (host primitive).** A host primitive is one of `alloc`, `grant`, `read-ref`, `write-ref`, `read-bit`, `write-bit`, `shape`, `null`, `equal`, `test`, `bind`, `goto`, `indirect`, `wait`, `emit`, `end`, `ack`, `return`, `page`, `source-call`, `source-ack`, and `fault`. Its instruction row contains a literal operation tag, literal field selector, literal operand slots, and literal zero/one successor references. A primitive may read the packed array only through the current header's actual reference or bit latch. It may fail only on the source guard: absent grant, wrong shape, invalid field, occupied latch, illegal phase, or exhausted finite supply. It does not inspect the host array index to select a semantic successor.
+
+A compiled host row is therefore a serialization of the `Native`/`Code` row already used by the source path. The host index used to fetch that row is an implementation address; the decoded `pc` is the retained code identity. The distinction matters when code rows are relocated or when two rows have equal bytes but different successor identities.
+
+**Lemma 26.7 (primitive step).** Suppose $H\mathrel{\mathcal R}S$ and a host primitive is enabled. After one host primitive, either the host refuses for the same guard reason as the source primitive, or there is a source successor $S'$ with $H'\mathrel{\mathcal R}S'$. The event delta has the same owner, operation, field selector, grant, pending flag, and width.
+
+*Proof.* `read-ref` and `read-bit` copy the field at the decoded literal position into the corresponding retained latch, so the source read and its latch write agree. `write-ref` and `write-bit` update one decoded field and leave all other slots and aliases unchanged. `null`, `equal`, `test`, and `shape` inspect only the decoded latch or shape, hence take the same branch. `alloc` consumes the next granted free slot and records it as pending before linking; the new slot is included in both states. `bind`, `goto`, and `indirect` assign the literal continuation identity, not an answer or array lookup. The I/O primitives preserve the occupied and acknowledgement guards. Every other operation is a source refusal. The inverse mapping extends by the fresh slot in the allocation case and is unchanged otherwise. $\square$
+
+**Definition 26.8 (micro-cut refinement).** Let $H\Rightarrow H'$ be one host microstep, including a phase or selector-index update. Its abstract observation is the decoded state at the start and end of the microstep. A microstep is a stutter if it changes only the controller's finite phase/index or a read/write latch that the source primitive keeps pending; it is a commit if it advances the source control reference or completes one source primitive. The relation permits stutters only inside the corresponding pending source operation. A pending source operation stores its old control reference, destination, operand references, field selector, grant and refusal guard until commit or refusal.
+
+**Theorem 26.9 (all internal prefixes).** For every valid finite source state, every enabled or refused primitive, and every finite host prefix, the decoded host prefix is a source prefix with the same completed commits and the same pending operation. This includes an immediate halt, a waiting receive, an occupied output latch, an End/Ack/Return boundary, a refused call, and a prefix of a nonhalting B run.
+
+*Proof.* Induct on the host microstep. Lemma 26.7 handles a completed primitive and its refusal. A phase/index transition is a stutter by Definition 26.8 and retains the old control reference and all latches needed by the source operation. The commit transition applies the source successor selected by the encoded zero/one reference. A halt is a literal `wait`/halt row and therefore remains a valid pending boundary; no induction hypothesis requires a future commit. The same argument applies to an unbounded nonhalting run because each finite prefix contains only finitely many host steps. $\square$
+
+### 26.3. Installation, LAB, and the returned-head boundary
+
+**Definition 26.10 (two-pass host installation).** The host installer has a source descriptor chain and a target descriptor chain. For each source descriptor it executes, in order, shape dispatch, fresh target allocation, grant delivery, target-field clearing, bit initialization through the literal bit-kernel vertices, source-reference reads, forward-reference reads, target-reference writes, directory linking, and the entry forward read. Source descriptors, pending targets, initializer nodes, source/target buffers, and the bit-kernel cursor remain retained throughout. The target is not a bulk clone: every copied reference is obtained from the source field and then translated through the source descriptor's actual forward link.
+
+**Theorem 26.11 (installation refinement).** If the source descriptor chain is valid and has sufficient finite grants, every installation prefix has a packed realization related by $\mathcal R$ to the corresponding ML-I installation prefix. At completion, the returned `pc` is exactly the forward image of the supplied entry descriptor. A malformed shape, missing forward link, absent grant, or exhausted target pool refuses at the same source guard.
+
+*Proof.* Apply Lemma 26.7 to the literal installer rows. The source cursor follows `Source.next`; it is not recomputed from a host index. An allocated target is pending before it is linked, so the target and its grant are present at every intermediate cut. Bit initialization reads one source bit and writes one target bit through the three-vertex wire chain; the bit-kernel counters are the corresponding source operation events. Reference relocation reads the source field, reads its forward link, and writes the translated target field, preserving nulls and aliases. The final entry read and control write establish the returned head. Induction over the two passes proves the claim. $\square$
+
+**Definition 26.12 (host LAB state).** A packed LAB state stores each source cell as a $(4,8)$ slot, each route header as a $(2,0)$ slot, each route cell as a declared source shape, and every growth operation's `pending`, `fresh`, `cursor`, and `kind` in the LAB header. A P extension stores its marker before linking the target's left field. An S extension stores marker, right child and route header before linking either child, then appends one route cell for each proper ancestor in source order. The old head, new head, arm, mark and program references remain in the header until the commit row.
+
+**Theorem 26.13 (LAB host refinement).** The packed LAB driver realizes exactly the source P/S growth and B transition for every finite bilateral non-erasing B program, finite input, and finite internal prefix. The theorem includes frontier extension, ancestor routing, a pending growth cut, crossing, branch/mark/halt, immediate halt, and nonhalting prefixes.
+
+*Proof.* The host driver reads the decoded program and head fields through the literal field rows. The P/S guard is the source arity test. Fresh cells are allocated and granted before they are linked; the S route header and each ancestor append are represented by distinct slots. During a pending growth, the old head and program counter remain in the header, so the host prefix decodes to a source pending state rather than an extra B transition. At commit, the decoded left/stay/right successor and the arm/frontier state match the source transition. Theorem 26.11 supplies the initial image and its returned control identity. $\square$
+
+**Definition 26.14 (returned-head decoder).** The decoder begins from the returned active header stored in the service header, follows its actual data-head reference, checks each marked pair and separator through literal bit fields, and appends decoded values to a fresh output buffer. The printer reads that output buffer, transfers each bit through the actual output latch, then executes End, Ack, and Return in that order. The output sink is not a code or answer source.
+
+**Theorem 26.15 (session and decoder refinement).** For every finite received frame accepted by the existing framing guards, the packed converter/copier/B/LAB path, original-port call, returned-head decoder, and Print/End/Ack/Return path has the same source-visible output and receipt/cache history as the existing model. `Predict` produces no source call. Continued `Read` calls use the same original port and retain all prior receipts and cache rows.
+
+*Proof.* The receive and converter headers decode to the existing input and converted chains. Theorem 26.13 gives the same B/LAB returned active header. Definition 26.14 follows that header rather than a computed retired-copy count, so the pair and separator guards are the source guards. A `source-call` transfers the actual operand latch to the original port; its returned two-bit latch is written into the connection slot and its indexed receipt/cache cells. The receipt row stores the original occurrence and index even when the word repeats. `Predict` has no source-call successor. End, Ack, Return and subsequent Reads are the same guarded rows, so a missing latch, premature phase, or altered index is a state failure. $\square$
+
+### 26.4. Census, host storage, and paid continuation
+
+**Definition 26.16 (modeled census of a packed state).** For each owner $o$, let $O_o$ be the retained object count, $R_o$ the number of reference slots (including owner registers and headers), $B_o$ the number of bit fields, and $w_o$ its current reference width. Define
+
+$$
+ Q(H)=\sum_o\bigl(O_o+R_o w_o+B_o\bigr).
+$$
+
+The sum includes source descriptors, target descriptors, code and image material, grants, free-pool cells, old jobs and roots, pending objects, source/provider and connection material, receipts, indexed cache cells, output buffers, decoder scratch, and the old/new images during widening. A common cut uses one timestamp for all owners; independent peaks are not added.
+
+**Definition 26.17 (packed host storage).** Let $n$ be the total number of retained host slots, $I=\lceil\log_2(n+1)\rceil\vee1$, and $A=\lceil\log_2(k+1)\rceil\vee1$ for the $k$ owner tags. A reference is stored as a null bit or an $(A+I)$-bit owner/local-index pair. If $N_{o,\sigma}$ slots of owner $o$ have shape $\sigma=(r_\sigma,b_\sigma)$, and $G_o$ is the number of header bits and schema/grant tags for that owner, the logical packed host storage is
+
+$$
+ B_{\mathrm{pack}}(H)=\sum_o\left(G_o+\sum_\sigma N_{o,\sigma}
+       \bigl(1+\mathsf{tag}(\sigma,o)+r_\sigma(A+I)+b_\sigma\bigr)\right).
+$$
+
+This is a host-storage bound, not a reduction of $Q(H)$ or of the source tariff. Struct or allocator padding, page alignment, observer maps, and the host runtime are additional host bytes and must be measured separately. A packed pointer is a representation of a source identity only through $\iota_H$; it is not an uncharged modeled reference.
+
+**Theorem 26.18 (census preservation and host/model separation).** If $H\mathrel{\mathcal R}S$, then $Q(H)$ equals the direct source census at the same cut. A host implementation may have $B_{\mathrm{pack}}(H)<Q(H)$ in its own storage units, but it has not reduced any modeled object, reference field, bit field, grant, installation step, source operation, widening overlap, decoder charge, or cleanup charge.
+
+*Proof.* The bijection in Definition 26.4 is one-to-one over all retained slots, so object and grant counts agree. Shape and schema preservation gives the same reference and bit-field counts. The owner width is stored in the header and is not replaced by a global host width. Each source reference field therefore contributes exactly $w_o$ modeled bits, including a null field. At widening, both old and new images occur in the event prefix and the larger width is used for the overlap interval. Summing only after the timestamp is fixed gives the common-cut equality. The formula for $B_{\mathrm{pack}}$ counts the host encoding separately and contains no source charge. $\square$
+
+**Proposition 26.19 (finite paid continuation plan).** For a chosen finite C run, a sufficient host/material plan is obtained by a source-faithful dry run that records the maximum tuple
+
+$$
+ U=(O_o,R_o,B_o,w_o,\mathsf{steps}_o,\mathsf{widenings}_o,
+       \mathsf{overlap}_o,\mathsf{decoder}_o,\mathsf{cleanup}_o)_o
+$$
+
+at every common cut, including installation and source/connection material. The run may start only after each owner has a paid finite supply dominating its measured maximum, the installation source and target are backed, and the host reservation dominates $B_{\mathrm{pack}}(H)$ plus measured runtime overhead. No exhausted-pool recovery or hot refill is inferred. A new run must recompute $U$ for its actual received input and history; the class-wide quadratic loader bound remains in force.
+
+*Proof.* Every allocation, field materialization, widening, decoder append and cleanup is an event in the source ledger. A finite event prefix has finite maxima, and the direct/incremental census theorem gives the same tuple to the packed implementation. Dominating the tuple prevents a source refusal due only to unavailable paid material. The argument supplies feasibility for that selected finite run, not one reserve for all finite inputs and not termination of an arbitrary B program. $\square$
+
+### 26.5. Bounded constructor evidence and limits
+
+The following finite checks are the acceptance tests for this constructor, rather than a substitute for C. They are source-level falsifiers for the relation $\mathcal R$.
+
+1. **Identity and alias test.** Construct every fixed shape, two equal-valued observations, a shared reference, a cycle, a pending target, and a free-pool cell. Encode, decode, and compare all fields and alias classes. Mutating one reference ID must change the decoded successor or fail the alias check.
+2. **Primitive and phase test.** Exercise every host primitive and every zero/one branch on null, non-null, bit-zero, bit-one, occupied, acknowledged, wrong-shape, absent-grant, and exhausted states. Compare each decoded commit and refusal with the source operation. A mutation that skips a code-bit read, selector read, latch write, or successor read must fail the event census.
+3. **Installer test.** Exercise shapes $(4,8)$, $(4,21)$, $(1,0)$, $(0,1)$, $(0,32768)$ and $(2,0)$ with a pending target at each allocation and each bit/ref relocation. Compare source and target aliases, grants, widths, and the final returned entry. Removing one source bit read or one forward read must fail before completion.
+4. **LAB-prefix test.** Use all B directions, marks, branches, crossings, frontiers, immediate halt, and bounded nonhalting prefixes. Compare the decoded old/new head, arm, program reference, mark, route cells, and pending growth at every commit and one internal cut between every pair of commits.
+5. **Session test.** Use the four actual Read replies, informative absence, repeats, distinct equal words, old-index rereads, partial-to-complete slots, long operands, both once-shared full injections, an outside-support array, and a zero-normalizer frame. Compare occurrence order, original indices, receipt links, cache masks/values, returned-head decoding, and continued Reads on the same original port. Mutating an index or cache write must change the decoded history.
+6. **Census and resource test.** At every source-call boundary compare direct and incremental owner censuses, retain pending End/Ack/Return cuts, free-pool cleanup, width overlap, old jobs and roots, decoder/cleanup material, and the common-cut sum. Omit any one grant, widening overlap, decoder bit, or cleanup event and require a mismatch. Measure host bytes and wall time for the bounded constructor; do not extrapolate them to the complete evaluator.
+
+A bounded constructor probe exercised all six fixed shapes, fifteen owner-tagged slots, cross-owner references, an alias, a cycle, a pending target, a retained free-pool slot, literal bit/reference operations, and a three-slot forward relocation. It detected an intentional alias mutation, preserved owner widths $(4,8,12)$, and reported $33{,}309$ logical packed bits, $26{,}230{,}784$ bytes of process high-water RSS, and $0.010382500$ seconds on the bounded probe. This probe is representation evidence only: it does not execute the full source service, does not measure a C run, and does not convert logical packed bits into modeled savings.
+
+The existing finite native and service checks provide source bindings for these falsifiers at the pinned private experiment tree. `rro-lab-execution/packed_constructor.py` and `packed_constructor_checks.py` execute the bounded representation checks above; they do not yet consume the complete original service. The prior object-identity implementation and the bounded packed probe therefore do not certify the packed constructor as a complete evaluator backend. Until packed consumer integration and a run-specific $U$ are available, `ML-N-evaluator-execution` and `ML-Cost-full-evaluator-session` remain open, C remains unreleased, and D remains unreleased.
+
+**Theorem 26.20 (scope of the prerequisite).** Definitions 26.1--26.17 and Theorems 26.9, 26.11, 26.13, 26.15 and 26.18 provide a faithful host-realization prerequisite for the unchanged finite LAB/ML-I/source path when their finite packed implementation and checks satisfy the stated premises. They do not provide a full evaluator run, a universal reserve, a new routing algorithm, a source reset, a reroot, a resampling, an answer injection, or a complete simultaneous ML.16 vector.
+
+*Proof.* The decode relation, primitive simulation, installer induction, LAB induction, session/decoder induction, and common-cut census compose on one finite supplied run. Each theorem preserves the original objects, fields, chronology, and tariffs. Proposition 26.19 supplies only a run-specific paid continuation condition. The listed omissions are outside the premises and therefore remain obligations of the original C acceptance. $\square$
+
+**Source boundary.** The construction is mapped to `rro-lab-execution/field_graph.py` (`Cell`, `Node`, `Engine`), `primitive_engine.py` (`CPU`, `PrimitiveEngine`), `native_engine.py` (`Native`, `NativeEngine`), `native_install.py` (`Block`, `Source`, `Installer`, `BitKernel`), `field_io.py` (conversion and returned-head scan), `field_decoder.py` (literal page selector), `field_service.py` and `service_native.py` (received session and original-port connection), `lab.py` (`Arena`, `Buffer`, and LAB growth), and `integration_checks.py` (common-cut author checks). The source remains the pinned private experiment snapshot supplied for the preceding B correspondence. The finite checks are ordinary executable evidence, not Lean verification or a claim of world-level originality.
+
+**Continuation boundary.** The next execution may use this representation only after a fresh packed implementation has passed the alias, primitive, installer, LAB-prefix, session, and census falsifiers and after its measured $U$ supplies each owner at a common cut. It must still execute the unchanged fixed table/compiler/adapter/copier/B/LAB path on acquired positive N4, partial/cylinder, and authentic null N9 inputs, perform Arithmetic Print/End/Ack/Return, continue Reads on the same original port, and record the complete simultaneous ML.16 vector. Loading completion, a component output, a host-memory saving, or the existence of a finite $U$ is not C completion.
+
+## 追加锚（本行以下为增补区）
