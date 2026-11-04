@@ -94,9 +94,10 @@ private lemma local_violation_half (P : ℕ)
     (s : Fin P → Bool → Bool × Bool × Bool) (h : ¬ locallyLegal P s) :
     2 ^ (P - 1) ≤ (Finset.univ.filter (fun x => ¬ wins P s x)).card := by
   classical
+  rw [locallyLegal.eq_1] at h
   obtain ⟨i, b, hbad⟩ : ∃ i b,
       ((s i b).1.toNat + (s i b).2.1.toNat + (s i b).2.2.toNat : ZMod 2) ≠ 0 := by
-    simpa only [locallyLegal, not_forall] using h
+    simpa only [not_forall] using h
   calc
     2 ^ (P - 1) = (Finset.univ.filter (fun x : Fin P → Bool => x i = b)).card := by
       simpa only [Fintype.piFinset_univ, Finset.card_univ, Fintype.card_bool,
@@ -113,8 +114,9 @@ private lemma varying_middle_half (P : ℕ) (hP : 3 ≤ P)
     (s : Fin P → Bool → Bool × Bool × Bool) (h : ¬ fixedMiddle P s) :
     2 ^ (P - 1) ≤ (Finset.univ.filter (fun x => ¬ wins P s x)).card := by
   classical
+  rw [fixedMiddle.eq_1] at h
   obtain ⟨i, hi⟩ : ∃ i, (s i false).2.1 ≠ (s i true).2.1 := by
-    simpa only [fixedMiddle, not_forall] using h
+    simpa only [not_forall] using h
   let flip : (Fin P → Bool) → (Fin P → Bool) :=
     fun x => Function.update x i (!(x i))
   have hinv (x : Fin P → Bool) : flip (flip x) = x := by
@@ -355,7 +357,8 @@ private lemma insert_avoiding (P : ℕ) (hP : 3 ≤ P) (j : Fin P)
       intro heq
       have hieq : i = (finRotate P).symm j := (Equiv.eq_symm_apply (finRotate P)).2 heq
       exact hprev (hieq ▸ hi)
-  · simp only [matchingInput, decide_eq_false_iff_not, not_or]
+  · rw [matchingInput.eq_1]
+    simp only [decide_eq_false_iff_not, not_or]
     exact ⟨hj, hprev⟩
   · simp only [matchingInput, Finset.mem_insert_self, true_or, decide_true]
 
@@ -610,7 +613,8 @@ private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
       omega
   have hzero (i : Fin (n + 3)) : attainingStrategy (n + 3) i false =
       if i = j then (false, false, false) else (true, true, false) := by
-    simp only [attainingStrategy, hlt]
+    rw [attainingStrategy.eq_1]
+    simp only [hlt]
     by_cases hi : i = j <;> simp [hi]
   have hone (i : Fin (n + 3)) : attainingStrategy (n + 3) i true =
       if i = j then (true, false, true) else (true, true, false) := by
@@ -654,7 +658,8 @@ private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
         have hv := congrArg Fin.val hh
         simp only [Fin.val_zero, j, Fin.val_last] at hv
         omega
-      simp only [edgeCharge, hzero, hone, hr, ite_true, ite_eq_right hz,
+      rw [edgeCharge.eq_1]
+      simp only [hzero, hone, hr, ite_true, ite_eq_right hz,
         Bool.toNat_true, Bool.toNat_false, Nat.cast_one, Nat.cast_zero, add_zero]
       decide
     · by_cases hn : finRotate (n + 3) i = j <;>
@@ -743,7 +748,8 @@ private lemma mixture_bound (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
   calc
     winProbability P μ = ∑ s, μ s *
         (((Finset.univ.filter (wins P s)).card : ℝ) / 2 ^ P) := by
-      simp only [winProbability, mul_div_assoc]
+      rw [winProbability.eq_1]
+      simp only [mul_div_assoc]
     _ ≤ ∑ s, μ s * (1 - (Nat.fib (P - 1) : ℝ) / 2 ^ P) :=
       Finset.sum_le_sum (fun s _ => mul_le_mul_of_nonneg_left (hbound s) (hpos s))
     _ = 1 - (Nat.fib (P - 1) : ℝ) / 2 ^ P := by rw [← Finset.sum_mul, hnorm, one_mul]
