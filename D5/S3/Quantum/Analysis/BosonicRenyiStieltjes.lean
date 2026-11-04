@@ -6,6 +6,7 @@
    utility: none
    digest: Positive Stieltjes representation for the bosonic Gaussian Renyi function. -/
 
+import D5.S3.Arith.Robin.LogarithmicMellinReserve
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
@@ -288,10 +289,95 @@ theorem weight_mass {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) :
   rw [← integral_Ioc_eq_integral_Ioo, ← intervalIntegral.integral_of_le (by norm_num)]
   exact (intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le (by norm_num) hc hd hint).trans he
 
+private def weightFactor (α x : ℝ) : ℝ :=
+  (-2 * α * Real.sin (Real.pi * α) * (1 + x) ^ (α - 1)) /
+    (Real.pi * (α - 1) * ((1 + x) ^ (2 * α) + (1 - x) ^ (2 * α) -
+      2 * (1 - x ^ 2) ^ α * Real.cos (Real.pi * α)))
+
+private lemma weight_factorization {α x : ℝ} (hx : x ∈ Ioo 0 1) :
+    renyiWeight α x = weightFactor α x * (1 - x) ^ (α - 1) := by
+  have hp : 0 < 1 + x := by linarith [hx.1]
+  have hm : 0 < 1 - x := by linarith [hx.2]
+  have hr : 1 - x ^ 2 = (1 + x) * (1 - x) := by ring
+  dsimp only [renyiWeight, weightFactor]
+  rw [hr, Real.mul_rpow hp.le hm.le]
+  ring
+
+private lemma weightFactor_continuousOn {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) : ContinuousOn (weightFactor α) (Icc 0 1) := by
+  intro x hx
+  have hp : 0 < 1 + x := by linarith [hx.1]
+  have hden : (1 + x) ^ (2 * α) + (1 - x) ^ (2 * α) -
+      2 * (1 - x ^ 2) ^ α * Real.cos (Real.pi * α) ≠ 0 := by
+    rcases eq_or_lt_of_le hx.2 with hx1 | hx1
+    · subst x
+      norm_num [Real.zero_rpow (by linarith : 2 * α ≠ 0), Real.zero_rpow ha0.ne']
+      positivity
+    · exact (weight_denominator_pos ha0 ha2 ha1 hx.1 hx1).ne'
+  have hpow : ContinuousAt (fun y : ℝ => (1 + y) ^ (α - 1)) x :=
+    (continuousAt_const.add continuousAt_id).rpow_const (Or.inl hp.ne')
+  have hA : ContinuousAt (fun y : ℝ => (1 + y) ^ (2 * α)) x :=
+    (continuousAt_const.add continuousAt_id).rpow_const (Or.inr (by linarith))
+  have hB : ContinuousAt (fun y : ℝ => (1 - y) ^ (2 * α)) x :=
+    (continuousAt_const.sub continuousAt_id).rpow_const (Or.inr (by linarith))
+  have hC : ContinuousAt (fun y : ℝ => (1 - y ^ 2) ^ α) x :=
+    (continuousAt_const.sub (continuousAt_id.pow 2)).rpow_const (Or.inr ha0.le)
+  have hc := (hA.add hB).sub ((hC.const_mul 2).mul_const
+    (Real.cos (Real.pi * α)))
+  exact ((hpow.const_mul (-2 * α * Real.sin (Real.pi * α))).div
+    (hc.const_mul (Real.pi * (α - 1))) (mul_ne_zero (mul_ne_zero Real.pi_ne_zero
+      (sub_ne_zero.mpr ha1)) hden)).continuousWithinAt
+
+private lemma logarithmic_integrable_at_one {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) :
+    IntegrableOn (fun x => renyiWeight α x * Real.log (1 - x ^ 2)) (Ioo 0 1) := by
+  have hlow := D5.S3.Arith.Robin.LogarithmicMellinReserve.low_log_integrable ha0
+  have hlowI := (intervalIntegrable_iff_integrableOn_Ioc_of_le
+    (by norm_num : (0 : ℝ) ≤ 1)).mpr hlow
+  have hreflect := (hlowI.comp_sub_left 1).symm
+  have hreflect' : IntegrableOn
+      (fun x : ℝ => -Real.log (1 - x) * (1 - x) ^ (α - 1)) (Ioo 0 1) := by
+    apply (intervalIntegrable_iff_integrableOn_Ioo_of_le (by norm_num)).mp
+    simpa only [sub_zero, sub_self] using hreflect
+  have hc := weightFactor_continuousOn ha0 ha2 ha1
+  have hlog : IntegrableOn (fun x : ℝ => renyiWeight α x * Real.log (1 - x))
+      (Ioo 0 1) := by
+    have hi := hreflect'.neg.mul_continuousOn_of_subset hc measurableSet_Ioo
+      isCompact_Icc Ioo_subset_Icc_self
+    apply hi.congr_fun _ measurableSet_Ioo
+    intro x hx
+    change -(-Real.log (1 - x) * (1 - x) ^ (α - 1)) * weightFactor α x =
+      renyiWeight α x * Real.log (1 - x)
+    rw [weight_factorization hx]
+    ring
+  have hcplus : ContinuousOn (fun x : ℝ => Real.log (1 + x)) (Icc 0 1) := by
+    intro x hx
+    exact ((continuousAt_const.add continuousAt_id).log
+      (ne_of_gt (by linarith [hx.1] : 0 < 1 + x))).continuousWithinAt
+  have hi := hlog.add ((weight_integrable ha0 ha2 ha1).mul_continuousOn_of_subset
+    hcplus measurableSet_Ioo isCompact_Icc Ioo_subset_Icc_self)
+  apply hi.congr_fun _ measurableSet_Ioo
+  intro x hx
+  have hp : 0 < 1 + x := by linarith [hx.1]
+  have hm : 0 < 1 - x := by linarith [hx.2]
+  change renyiWeight α x * Real.log (1 - x) + renyiWeight α x * Real.log (1 + x) =
+    renyiWeight α x * Real.log (1 - x ^ 2)
+  rw [show 1 - x ^ 2 = (1 - x) * (1 + x) by ring,
+    Real.log_mul hm.ne' hp.ne']
+  ring
+
 private lemma logarithmic_integrable {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 ≤ ν) :
     IntegrableOn (fun x => renyiWeight α x * Real.log (ν ^ 2 - x ^ 2)) (Ioo 0 1) := by
-  sorry
+  rcases eq_or_lt_of_le hv with hv | hv
+  · subst ν
+    simpa only [one_pow] using logarithmic_integrable_at_one ha0 ha2 ha1
+  · have hc : ContinuousOn (fun x : ℝ => Real.log (ν ^ 2 - x ^ 2)) (Icc 0 1) := by
+      intro x hx
+      have hp : 0 < ν ^ 2 - x ^ 2 := by nlinarith [sq_nonneg x, hx.1, hx.2]
+      exact ((continuousAt_const.sub (continuousAt_id.pow 2)).log hp.ne').continuousWithinAt
+    exact (weight_integrable ha0 ha2 ha1).mul_continuousOn_of_subset hc
+      measurableSet_Ioo isCompact_Icc Ioo_subset_Icc_self
 
 private lemma logarithmic_derivative {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 < ν) :
