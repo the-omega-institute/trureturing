@@ -1,0 +1,10 @@
+### [6]
+
+C. H. Bennett, “Logical reversibility of computation”,
+*IBM Journal of Research and Development* **17**(6), 525–532 (1973).
+[原始论文扫描件](https://worrydream.com/refs/Bennett_1973_-_Logical_Reversibility_of_Computation.pdf)；
+[doi:10.1147/rd.176.0525](https://doi.org/10.1147/rd.176.0525)。
+原文的逆序回算清理中间历史、保留输入与输出，支持局部日志缩减不等于全局区别消失。本文的两比特例由 CNOT 定义直接验证。
+
+<a id="ref-bargmann1999"></a>
+
