@@ -1,0 +1,11 @@
+**定义 21.2（原锚定的几何条件 C）。** 在 (21.1) 上，C 是存在实线性映射 $J:\mathfrak h\to\mathfrak h$ 满足
+
+$$
+J^2=-\operatorname{Id}_{\mathfrak h},\qquad
+J[X,Y]=[X,JY]\quad(X,Y\in\mathfrak h),\qquad
+\boxed{D_a=J L_{a-z(a)}\quad(a\in E)}.
+\tag{21.2}
+$$
+
+最后一式是原算子在全部原响应上的等式，不是对 $D$ 的新定义；原 $d$ 不合式时 C 就不成立。第一、二式使 $J$ 成为 Lie 代数质心中的复结构。另一个质心等式和 $J\theta=-\theta J$ 将从 P/G 及前两式证明，不额外假设。这两个冗余等式不进入 C 的定义；此处不作公理数、校准量或资源成本的比较。
+

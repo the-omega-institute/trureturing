@@ -1,0 +1,12 @@
+### [7]
+
+H. K. Ng and P. Mandayam,
+“A simple approach to approximate quantum error correction based on the transpose channel”,
+*Physical Review A* **81**, 062342 (2010).
+[arXiv:0909.0931v2](https://arxiv.org/pdf/0909.0931v2)；
+[doi:10.1103/PhysRevA.81.062342](https://doi.org/10.1103/PhysRevA.81.062342)。
+本文引用 Theorem 3/Corollary 4 的误差指标时明确采用其最坏纯态平方保真度损失，
+不把该指标替换为 diamond 距离。
+
+<a id="ref-petz1996"></a>
+

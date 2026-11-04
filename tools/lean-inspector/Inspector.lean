@@ -450,13 +450,12 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
     try IO.FS.removeFile reportOutput catch _ => pure ()
     throw error
 
--- No target store, assessment, expression cache or report row escapes this frame.
-@[noinline] private unsafe def produceTarget (base : RawArtifacts.Store)
-    (state : IO.Ref RawArtifacts.Store) (statementOnly profiling : Bool)
+-- Both extraction and a split batch's compatibility pass use this exact load
+-- and check path. The caller releases the target regions, including on failure.
+@[noinline] private unsafe def loadTarget (base : RawArtifacts.Store)
+    (state : IO.Ref RawArtifacts.Store) (statementOnly : Bool)
     (input : ModuleInput) (utilities : Array UtilityInput)
-    (generated : IO.Ref (Std.HashMap Name String))
-    (seen : IO.Ref (NameMap Name))
-    (writer : MaterialWriter) (out : IO.FS.Handle) (counter : IO.Ref Nat) : IO Unit := do
+    (seen : IO.Ref (NameMap Name)) : IO RawArtifacts.Store := do
   state.set base.fork
   let target := input.moduleName.toName
   RawArtifacts.loadModule target state
@@ -468,6 +467,17 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment state
   let store ← state.get
   RawArtifacts.checkBatchConstants base store seen
+  return store
+
+-- No target store, assessment, expression cache or report row escapes this frame.
+@[noinline] private unsafe def produceTarget (base : RawArtifacts.Store)
+    (state : IO.Ref RawArtifacts.Store) (statementOnly profiling : Bool)
+    (input : ModuleInput) (utilities : Array UtilityInput)
+    (generated : IO.Ref (Std.HashMap String String))
+    (seen : IO.Ref (NameMap Name))
+    (writer : MaterialWriter) (out : IO.FS.Handle) (counter : IO.Ref Nat) : IO Unit := do
+  let store ← loadTarget base state statementOnly input utilities seen
+  let target := input.moduleName.toName
   if profiling then
     let slots := store.moduleOrder.foldl (fun count owner =>
       if base.modules.contains owner then count else
@@ -488,10 +498,10 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
           | throw <| IO.userError s!"incomplete_closure:dtr.generated_missing:{name}"
         let identity := Sha256.hex (reprStr (info.levelParams, info.type,
           info.value? (allowOpaque := true), info.isTheorem)).toUTF8
-        if let some previous := (← generated.get)[RawArtifacts.ownName name]? then
+        if let some previous := (← generated.get)[encodeName name]? then
           unless previous == identity do
             throw <| IO.userError s!"incomplete_closure:dtr.generated_target:{name}"
-        else generated.modify (·.insert (RawArtifacts.ownName name) identity)
+        else generated.modify (·.insert (encodeName name) identity)
       if profiling then
         let own := assessment.records.filter (·.occurrence.key.registrationModule == target)
         let validated := own.filter (fun record => record.result matches .declaredValidated _)
@@ -505,7 +515,7 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
     (closedNegation (fun name => current.modules.find? name.toName)
       (current.constants.find?) input)
     cache writer counter utilities generatedNames binding input
-  let fib ← if hasFib then
+  let fib ← if !statementOnly && data.constants.any FibApplications.isInput then
     FibApplications.extract target data.constants current (digestBytes writer)
     else pure Json.null
   let row := { row with
@@ -515,11 +525,18 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
   out.flush
 
 private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath)
-    (statementOnly : Bool) (inputs : Array ModuleInput) (utilities : Array UtilityInput) : IO Unit := do
+    (statementOnly checkConstantsOnly : Bool)
+    (generatedIndex : Option System.FilePath)
+    (inputs : Array ModuleInput) (utilities : Array UtilityInput) : IO Unit := do
   let start ← IO.monoNanosNow
   let targets := inputs.map fun input => (input.moduleName.toName,
     utilities.filter (·.modulePath == input.sourcePath) |>.map (·.claimModule.toName))
-  let shared ← RawArtifacts.sharedModules targets statementOnly
+  -- Compatibility needs the union's duplicate relation, not its resident terms.
+  -- With an empty base checkBatchConstants visits every owner in each complete
+  -- target closure. Same-owner repeats are ignored and cross-owner constants
+  -- use the unchanged symmetric subsumes comparison. Only detached names survive
+  -- the finally-release boundary; even cap=1 never builds a 100-target base here.
+  let shared ← if checkConstantsOnly then pure {} else RawArtifacts.sharedModules targets statementOnly
   let state ← IO.mkRef ({} : RawArtifacts.Store)
   for name in sortedUnique (inputs.map (·.moduleName) ++ utilities.map (·.claimModule)) do
     if shared.contains name.toName then RawArtifacts.loadModule name.toName state
@@ -529,9 +546,29 @@ private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath
   if profiling then
     (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE raw_read_ns={(← IO.monoNanosNow) - start} raw_modules={base.modules.toList.length} raw_constants={RawArtifacts.mapSize base.constants} shared_regions={base.regions.size} shared_bytes={base.regions.foldl (fun n r => n + r.size.toNat) 0}"
   let counter ← IO.mkRef 0
-  let generated ← IO.mkRef ({} : Std.HashMap Name String)
+  let generated ← IO.mkRef ({} : Std.HashMap String String)
+  if let some path := generatedIndex then
+    let pairs ← IO.ofExcept (Json.parse (← IO.FS.readFile path) >>=
+      fromJson? (α := Array (String × String)))
+    for (name, identity) in pairs do
+      if let some previous := (← generated.get)[name]? then
+        unless previous == identity do throw <| IO.userError "invalid generated index"
+      generated.modify (·.insert name identity)
   let seen ← IO.mkRef ({} : NameMap Name)
   let targetState ← IO.mkRef ({} : RawArtifacts.Store)
+  if checkConstantsOnly then
+    for input in inputs do
+      let selected := utilities.filter (·.modulePath == input.sourcePath)
+      try
+        discard <| loadTarget base targetState statementOnly input selected seen
+      finally
+        RawArtifacts.release targetState
+      if profiling then
+        let resident ← IO.Process.output {
+          cmd := "ps", args := #["-o", "rss=", "-p", toString (← IO.Process.getPID)] }
+        unless resident.exitCode == 0 do throw <| IO.userError "raw.profile_rss_failed"
+        (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_COMPATIBILITY_RELEASE module={input.moduleName} rss_kib={resident.stdout.trimAscii.toString}"
+    return
   withReportWriter reportOutput materialSpool statementOnly fun writer out => do
     for h : index in [:inputs.size] do
       let input := inputs[index]
@@ -548,6 +585,8 @@ private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath
         unless resident.exitCode == 0 do
           throw <| IO.userError "raw.profile_rss_failed"
         (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_TARGET_RELEASE completed={index + 1} module={input.moduleName} target_constants={RawArtifacts.mapSize released.constants} target_modules={released.modules.toList.length} target_regions={released.regions.size} target_metadata={released.metadata.axioms.toList.length} rss_kib={resident.stdout.trimAscii.toString}"
+  if let some path := generatedIndex then
+    IO.FS.writeFile path (toJson (← generated.get).toArray).compress
 
 unsafe def main (args : List String) : IO Unit := do
   let args ← match args with
@@ -558,10 +597,15 @@ unsafe def main (args : List String) : IO Unit := do
   -- the declared-template admission consumer. It serves standalone encoders.
   let statementOnly := args.head? == some "--statements-only"
   let args := if statementOnly then args.drop 1 else args
+  let checkConstantsOnly := args.head? == some "--check-batch-constants"
+  let args := if checkConstantsOnly then args.drop 1 else args
+  let (generatedIndex, args) := match args with
+    | "--generated-index" :: path :: rest => (some (System.FilePath.mk path), rest)
+    | _ => (none, args)
   let (reportOutput, materialSpool, utilityInput, inputs) ← match parseArguments args with
     | .ok parsed => pure parsed
     | .error message => throw <| IO.userError message
-  IO.FS.createDirAll materialSpool
+  if !checkConstantsOnly then IO.FS.createDirAll materialSpool
   initSearchPath (← findSysroot)
   let utilities : Array UtilityInput ← match utilityInput with
     | none => pure #[]
@@ -572,7 +616,7 @@ unsafe def main (args : List String) : IO Unit := do
       | .error message => throw <| IO.userError s!"invalid utility input: {message}"
   let selectedUtilities := utilities.filter fun utility =>
     inputs.any (·.sourcePath == utility.modulePath)
-  produceCompiled reportOutput materialSpool statementOnly inputs selectedUtilities
+  produceCompiled reportOutput materialSpool statementOnly checkConstantsOnly generatedIndex inputs selectedUtilities
 
 end LeanInformationAudit.InspectorProducer
 

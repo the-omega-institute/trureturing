@@ -1,0 +1,18 @@
+### 5.3 可观测量、不确定界与独立复合
+
+有限锐测量由正交投影 $\sum_iP_i=I$ 和实结果 $a_i$ 给自伴算符 $A=\sum_i a_iP_i$，反向由有限谱分解得到。其期望为 $\operatorname{Tr}(\rho A)$。
+对自伴 $A,B$ 中心化为 $A_0,B_0$，在算符历史上用
+$\Gamma_\rho(X,Y)=\operatorname{Tr}(\rho X^*Y)$。二元 Gram 行列式非负给
+
+$$
+\operatorname{Var}_\rho(A)\operatorname{Var}_\rho(B)
+ \ge |\operatorname{Tr}(\rho A_0B_0)|^2
+ \ge\tfrac14|\operatorname{Tr}(\rho[A,B])|^2.
+$$
+
+第二步保留复数的虚部。具体位置、动量及交换常数并非核续写选出。
+
+若 $M_d,M_m$ 保单位保星地嵌入同一非零联合代数，两像交换并共同生成，则
+$a\otimes b\mapsto\iota_A(a)\iota_B(b)$ 是满的保单位星同态。定义域 $M_d\otimes M_m\cong M_{dm}$ 简单：非零理想经矩阵单位左右相乘即含全部矩阵单位。故核为零，给张量联合。
+CP 串接与并接的 Kraus 族分别为 $B_\beta A_\alpha$ 与 $A_\alpha\otimes B_\beta$。完整局部保迹过程不改变另一侧边缘，因为其伴随把 $I\otimes E$ 送回 $I\otimes E$。条件于特定结果时，边缘可变，所选标签的信息不能丢去。
+

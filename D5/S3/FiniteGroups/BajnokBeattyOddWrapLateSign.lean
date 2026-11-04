@@ -64,14 +64,14 @@ open BajnokBeattyOddWrapReturnCounts
 
 private abbrev c (n k : ℕ) : ℤ := Nat.choose n k
 
-private theorem choose_step_noninc (n k : ℕ) (hk : k ≤ n)
+theorem choose_step_noninc (n k : ℕ) (hk : k ≤ n)
     (hhalf : n ≤ 2*k+1) : Nat.choose n (k+1) ≤ Nat.choose n k := by
   have hfactor : n-k ≤ k+1 := by omega
   have h := Nat.mul_le_mul_left (Nat.choose n k) hfactor
   rw [← Nat.choose_succ_right_eq] at h
   exact Nat.le_of_mul_le_mul_right h (by omega)
 
-private theorem choose_right_le (n u v : ℕ) (hhalf : n ≤ 2*u+1)
+theorem choose_right_le (n u v : ℕ) (hhalf : n ≤ 2*u+1)
     (huv : u ≤ v) (hv : v ≤ n) : Nat.choose n v ≤ Nat.choose n u := by
   have hshift : ∀ r : ℕ, u+r ≤ n → Nat.choose n (u+r) ≤ Nat.choose n u := by
     intro r
@@ -85,7 +85,7 @@ private theorem choose_right_le (n u v : ℕ) (hhalf : n ≤ 2*u+1)
   obtain ⟨r, rfl⟩ := Nat.exists_eq_add_of_le huv
   exact hshift r hv
 
-private theorem choose_drop_identity (n k : ℕ) (hk : k ≤ n) :
+theorem choose_drop_identity (n k : ℕ) (hk : k ≤ n) :
     (c n k-c n (k+1))*((k : ℤ)+1) =
       c n k*(2*(k : ℤ)+1-(n : ℤ)) := by
   have hnat := Nat.choose_succ_right_eq n k
@@ -95,7 +95,7 @@ private theorem choose_drop_identity (n k : ℕ) (hk : k ≤ n) :
   dsimp only [c]
   nlinarith only [hcast]
 
-private theorem sum_drops (f : ℕ → ℤ) (a r : ℕ) :
+theorem sum_drops (f : ℕ → ℤ) (a r : ℕ) :
     (∑ i ∈ Finset.range r, (f (a+i)-f (a+i+1))) = f a-f (a+r) := by
   induction r with
   | zero => simp
@@ -104,7 +104,7 @@ private theorem sum_drops (f : ℕ → ℤ) (a r : ℕ) :
     rw [show a+(r+1) = a+r+1 by omega]
     ring
 
-private theorem sum_linear_numerators (b r : ℕ) :
+theorem sum_linear_numerators (b r : ℕ) :
     (∑ i ∈ Finset.range r, ((b : ℤ)+2*(i : ℤ)+1)) =
       (r : ℤ)*b+(r : ℤ)^2 := by
   induction r with

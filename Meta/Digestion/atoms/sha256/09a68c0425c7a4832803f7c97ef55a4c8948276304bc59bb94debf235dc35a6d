@@ -1,0 +1,28 @@
+### 3.4 一个相位平面怎样扩大为量子比特几何
+
+上图三条可见向量属于同一复线，只有一复维，尚不是量子比特。在非退化可见空间中记实内积为 $g$。给非零 $u$ 与另一方向 $v$，令
+$p=g(u,u)$、$q=g(v,v)$、$x=g(u,v)$、$y=g(Ju,v)$，则
+
+$$
+G_{\mathbb R}(u,Ju,v)=
+ \begin{pmatrix}p&0&x\\0&p&y\\x&y&q\end{pmatrix}\succeq0.
+$$
+
+令 $w=v-(x/p)u-(y/p)Ju$。若 $w=0$，仍只有一复维；若 $w\ne0$，由 $J^*=-J$、$J^*J=I$ 得
+$Jw\perp u,Ju,w$ 且 $\|Jw\|=\|w\|$。所以三实方向窗口须再补第四方向，最小闭合为
+$\operatorname{span}_{\mathbb R}\{u,Ju,w,Jw\}\cong\mathbb C^2$。它描述关系方向，不指定物理空间维数。
+
+在这个两复维窗口中，二阶 Hermitian 正锥的迹一截面为
+
+$$
+\rho=\frac12
+ \begin{pmatrix}1+Z&X-iY\\X+iY&1-Z\end{pmatrix},
+ \qquad \rho\succeq0\iff X^2+Y^2+Z^2\le1.
+$$
+
+本征值为 $(1\pm\sqrt{X^2+Y^2+Z^2})/2$，故球面是秩一，内部是秩二；零表仍是不可归一的原锥顶 [11](#ref-arrighi2002)。
+单位二分量 $(\xi,\eta)$ 的球面坐标为
+$(2\Re(\bar\xi\eta),\,2\Im(\bar\xi\eta),\,|\xi|^2-|\eta|^2)$。
+这些坐标固定两模与相对相位，包含两极在内只剩公共相位圆的纤维，因此给出
+$S^3/U(1)=S^2$ [10](#ref-mosseri2001)。这里是几何分类；物理读数的接口由后文另行核验。
+

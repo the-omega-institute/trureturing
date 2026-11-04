@@ -1,0 +1,21 @@
+### 定理 10.3（参考保正与 Kraus 表示）
+
+设同一原分支在自伴部分实线性，作唯一复线性延拓 $\mathcal E:M_d\to M_n$。若有实际完整矩阵参考 $M_r$、$r\ge d$，使 $\mathcal E\otimes\operatorname{id}_r$ 在完整联合标准正锥上保正，则
+
+$$
+\mathcal E(\rho)=\sum_\mu K_\mu\rho K_\mu^*.
+$$
+
+在全部归一态上迹不增，等价于 $\sum_\mu K_\mu^*K_\mu\le I$。完整仪器归一，等价于
+
+$$
+\sum_{k,\mu}K_{k\mu}^*K_{k\mu}=I.
+$$
+
+**证明。**
+在参考中取 $d$ 维子空间，并取 $\lvert\Gamma\rangle =\sum_i\lverti\rangle \otimes\lverti\rangle$。联合保正使 Choi 矩阵
+$C_{\mathcal E}=(\mathcal E\otimes\operatorname{id})(\lvert\Gamma\rangle \langle\Gamma\rvert )$
+为正。将其谱分解向量重排为矩阵 $K_\mu$，比较矩阵单位即得表示。反向的共轭和在任意参考上保正。迹配对给所列不等式与等式。
+
+这是标准有限维 Choi–Kraus 等价关系，参见 Watrous 定理 2.22。原参考条件必须覆盖全部联合正锥，单有经典参考、乘积态或线性分离不足。原标签 $k$ 与数学 Kraus 索引 $\mu$ 也不能自动合并为可访问的细记录。 [7](#ref-watrous)
+

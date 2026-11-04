@@ -1,0 +1,119 @@
+**定理 127.2（原半程缺陷的算子范数对易界）。** 设原同一指定族满足 $\bar H\le h$，其中 $h\ge0$。固定非零 $E,F$，置
+
+$$
+M=\|E\|,\qquad e=E/M,\qquad \mathcal T=T_{E,F}/M.
+$$
+
+在 $\mathscr H=\bigoplus_\alpha\mathbb C^{d_\alpha}$ 上，把每条输入中心块到输出中心块的矩形 Kraus 算子填零，写成
+
+$$
+\mathcal T(X)=\sum_jV_jXV_j^\dagger,
+\qquad \sum_jV_j^\dagger V_j=e.
+$$
+
+则
+
+$$
+\left\|\sum_j[e,V_j]^\dagger[e,V_j]\right\|
+\le\kappa(h):=\sqrt{\frac{7h}{2}}+2h.
+\tag{127.4}
+$$
+
+对一条 $\alpha\to\beta$ 的矩形箭头，$[e,V_j]$ 的非零块正是 $e_\beta V_j-V_je_\alpha$。因此本式保留中心之间的转移，不要求中心逐一不动。估计不使用互易、返回、双随机性、最小正谱值下界或近似正常形。$\mathcal T$ 只是原分支的数学归一；没有使用未经证明的共同调暗关系 $T_{E/M}=T_E/M$。
+
+证明。对保自伴映射，正负谱分解给
+
+$$
+\nu(N)=\|N\|_{1,\mathrm{sa}\to1,\mathrm{sa}}
+=\|N^\dagger\|_{\infty,\mathrm{sa}\to\infty,\mathrm{sa}}.
+\tag{127.5}
+$$
+
+这里第二个等号是自伴实空间上的有限迹对偶。特别地，这些范数对可接续的保自伴映射次乘；对完全正 $N$，$\nu(N)=\|N^\dagger(I)\|$。
+
+在原同框架效果 $E^2,E^4$ 处应用半程缺陷，得到
+
+$$
+\nu(T_{E^2}-T_E^2)\le hM^2,
+\qquad
+\nu(T_{E^4}-T_{E^2}^{\,2})\le hM^4.
+$$
+
+原成功效果给 $\nu(T_E)=M$、$\nu(T_{E^2})=M^2$，且 $\nu(T_E^2)\le M^2$。恒等式
+
+$$
+T_{E^2}^{\,2}-T_E^4
+=(T_{E^2}-T_E^2)T_{E^2}
++T_E^2(T_{E^2}-T_E^2)
+$$
+
+于是给出 $\nu(T_{E^4}-T_E^4)\le3hM^4$。置 $A=\mathcal T^\dagger$。它完全正，$A(I)=e$，且在自伴算子范数上收缩。成功效果和 (127.5) 给
+
+$$
+\|A^2(I)-e^2\|\le h,
+\qquad
+\|A^4(I)-e^4\|\le3h.
+\tag{127.6}
+$$
+
+以下在这个同一代数上计算。记
+
+$$
+B=A^2(I)-e^2,\qquad Z=A^4(I)-e^4,
+\qquad C=A(e^2)-e^3,
+$$
+
+并暂设 $\|B\|\le u$、$\|Z\|\le v$。对任意完全正自映射 $F$ 和自伴 $x$，Kraus 平方和给
+
+$$
+Q_F(x):=F(x^2)-F(x)x-xF(x)+xF(I)x\ge0.
+\tag{127.7}
+$$
+
+确实，若 $F(Y)=\sum_jR_j^\dagger YR_j$，则右端等于 $\sum_j(xR_j-R_jx)^\dagger(xR_j-R_jx)$。矩形箭头填零后同样成立；所用的 $x$ 和各次乘积都在原代数中。
+
+因 $A(e)=e^2+B$，式 (127.7) 首先给
+
+$$
+Q_A(e)=C-Be-eB\ge0.
+\tag{127.8}
+$$
+
+又有
+
+$$
+A^2(e)=e^3+C+A(B),\qquad
+A^2(e^2)=e^4+Z-A^2(B),\qquad A^2(I)=e^2+B.
+$$
+
+把这三式代入 $Q_{A^2}(e)\ge0$，可得
+
+$$
+Ce+eC
+\le Z-A^2(B)-A(B)e-eA(B)+eBe
+\le(v+4u)I.
+\tag{127.9}
+$$
+
+最后一个序不等式逐项使用 $A$ 的自伴收缩性及 $0\le e\le I$，不要求右端各项分别为正。
+
+由 $0\le A(e^2)\le A(I)=e$，有 $C\le e-e^3\le e$。若 $C$ 的最大特征值 $\lambda$ 非负，取其单位特征向量 $z$，则 $\lambda\le\langle z,ez\rangle$，从而
+
+$$
+2\lambda^2
+\le2\lambda\langle z,ez\rangle
+=\langle z,(Ce+eC)z\rangle
+\le v+4u.
+$$
+
+若最大特征值为负，以下上界也直接成立。因此
+
+$$
+C\le\sqrt{(v+4u)/2}\,I,
+\qquad
+0\le Q_A(e)\le\bigl(\sqrt{(v+4u)/2}+2u\bigr)I.
+\tag{127.10}
+$$
+
+取 $u=h,v=3h$。由于 $A(Y)=\sum_jV_j^\dagger YV_j$，$Q_A(e)$ 就是 (127.4) 中的平方和，结论成立。证明没有取归一化迹，也没有使用逆矩阵。∎
+

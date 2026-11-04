@@ -1,0 +1,52 @@
+**推论 128.1（有间隔谱角的完整参考界）。** 在定理 127.2 的范围内，取 $0\le a<b\le1$，并令
+
+$$
+P=\mathbf1_{[b,1]}(e),\qquad Q=\mathbf1_{[0,a]}(e).
+$$
+
+同一原分支的数学输入、输出压缩满足
+
+$$
+\left\|X\longmapsto Q\,\frac{T_E(PXP)}{M}\,Q\right\|_\diamond
+\le\frac{\kappa(h)}{(b-a)^2}.
+\tag{128.1}
+$$
+
+这里没有改用另行指定的 $T_{PEP}$，也没有要求这些谱压缩是实际供应的操作。
+
+证明。对定理 127.2 的同一矩形 Kraus 家族，定义
+
+$$
+Wz=\sum_jV_jz\otimes|j\rangle,
+\qquad Y_0=(e\otimes I)W-We.
+$$
+
+则 $Y_0^\dagger Y_0=\sum_j[e,V_j]^\dagger[e,V_j]$，故 $\|Y_0\|\le\sqrt{\kappa(h)}$。若 $P$ 或 $Q$ 为零，结论直接成立。否则令 $Z_0=(Q\otimes I)WP$，并在其值域及定义域上分别记
+
+$$
+A_0=(e|_{Q\mathscr H})\otimes I,\qquad B_0=e|_{P\mathscr H}.
+$$
+
+它们自伴且 $A_0\le aI$、$B_0\ge bI$。有
+
+$$
+A_0Z_0-Z_0B_0=(Q\otimes I)Y_0P=:Y.
+$$
+
+成熟的 Sylvester 分离估计在此可直接由积分验证：$e^{tA_0}Z_0e^{-tB_0}\to0$，对其求导并从零积分到无穷，得到
+
+$$
+Z_0=-\int_0^\infty e^{tA_0}Ye^{-tB_0}\,dt,
+\qquad
+\|Z_0\|\le\frac{\|Y\|}{b-a}
+\le\frac{\sqrt{\kappa(h)}}{b-a}.
+$$
+
+原压缩映射完全正，其成功效果是
+
+$$
+P\left(\sum_jV_j^\dagger QV_j\right)P=Z_0^\dagger Z_0\in\mathcal A.
+$$
+
+完全正映射的完整 diamond 范数等于伴随作用于单位后的算子范数，故该范数为 $\|Z_0\|^2$，即得 (128.1)。中心箭头始终留在同一个 $W$ 中。∎
+
