@@ -259,18 +259,8 @@ private lemma marked_edge (P : ℕ) (hodd : Odd P)
       heven, hodd.natCast_zmod_two]
     ring_nf
     simp only [show (2 : ZMod 2) = 0 by decide, mul_zero, add_zero]
-  by_contra h
-  have hz : ∀ i, edgeCharge P s i = 0 := by
-    intro i
-    have hn : edgeCharge P s i ≠ 1 := fun hi => h ⟨i, hi⟩
-    have hv := (edgeCharge P s i).val_lt
-    have hvzero : (edgeCharge P s i).val = 0 := by
-      by_contra hh
-      have hone : (edgeCharge P s i).val = 1 := by omega
-      exact hn (ZMod.val_injective 2 (by simpa only [ZMod.val_one_eq_one_mod] using hone))
-    exact ZMod.val_injective 2 (by simpa using hvzero)
-  simp only [hz, Finset.sum_const_zero] at hsum
-  exact zero_ne_one hsum
+  obtain ⟨i, _, hi⟩ := Finset.exists_ne_zero_of_sum_ne_zero (by rw [hsum]; exact one_ne_zero)
+  exact ⟨i, Fin.eq_one_of_ne_zero (edgeCharge P s i) hi⟩
 
 open Classical in
 private lemma matching_input_injective (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
@@ -289,10 +279,15 @@ private lemma matching_input_injective (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
     have hn : ¬ (i ∈ N ∧ (finRotate (n + 1)).symm i ∈ N) := by
       rintro ⟨hi, hp⟩
       exact hN _ hp (by simpa only [Equiv.apply_symm_apply] using hi)
-    have hb := congrFun hinput i
-    by_cases hmzero : i ∈ M <;> by_cases hmone : (finRotate (n + 1)).symm i ∈ M <;>
-      by_cases hnzero : i ∈ N <;> by_cases hnone : (finRotate (n + 1)).symm i ∈ N <;>
-        simp_all [matchingInput]
+    have hm' := Set.indicator_union_of_notMem_inter
+      (s := {k | k ∈ M}) (t := {k | (finRotate (n + 1)).symm k ∈ M})
+      (a := i) hm (fun _ => (1 : ℤ))
+    have hn' := Set.indicator_union_of_notMem_inter
+      (s := {k | k ∈ N}) (t := {k | (finRotate (n + 1)).symm k ∈ N})
+      (a := i) hn (fun _ => (1 : ℤ))
+    simp only [Set.indicator_apply, Set.mem_union, Set.mem_ofPred_eq] at hm' hn'
+    rw [← hm', ← hn']
+    exact if_congr (decide_eq_decide.1 (congrFun hinput i)) rfl rfl
   have hstep (i : Fin (n + 1)) : z (finRotate (n + 1) i) = -z i := by
     have hh := hinc (finRotate (n + 1) i)
     simp only [Equiv.symm_apply_apply] at hh
@@ -543,9 +538,12 @@ private lemma deterministic_losses (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
         rw [← avoiding_count P hP j]
         exact pairing_losses P hodd hP s hlegal hfixed j hj
       · rw [odd_middle_all P s hfixed heven]
-        exact (D5.S3.Arith.Robin.FibonacciRankEulerTail.fibonacci_lt_two_pow (P - 1)).le.trans (Nat.pow_le_pow_right (by decide) (by omega))
-    · exact (D5.S3.Arith.Robin.FibonacciRankEulerTail.fibonacci_lt_two_pow (P - 1)).le.trans (varying_middle_half P hP s hfixed)
-  · exact (D5.S3.Arith.Robin.FibonacciRankEulerTail.fibonacci_lt_two_pow (P - 1)).le.trans (local_violation_half P s hlegal)
+        exact (D5.S3.Arith.Robin.FibonacciRankEulerTail.fibonacci_lt_two_pow (P - 1)).le.trans
+          (Nat.pow_le_pow_right (by decide) (by omega))
+    · exact (D5.S3.Arith.Robin.FibonacciRankEulerTail.fibonacci_lt_two_pow (P - 1)).le.trans
+        (varying_middle_half P hP s hfixed)
+  · exact (D5.S3.Arith.Robin.FibonacciRankEulerTail.fibonacci_lt_two_pow (P - 1)).le.trans
+      (local_violation_half P s hlegal)
 
 open Classical in
 private lemma deterministic_bound (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
@@ -620,11 +618,7 @@ private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
     by_cases hi : i = j
     · subst i
       have hr : finRotate (n + 3) j = 0 := finRotate_last
-      have hz : (0 : Fin (n + 3)) ≠ j := by
-        intro hh
-        have hv := congrArg Fin.val hh
-        simp only [Fin.val_zero, j, Fin.val_last] at hv
-        omega
+      have hz : (0 : Fin (n + 3)) ≠ j := Fin.ne_of_lt (Fin.last_pos' (n := n + 2))
       rw [edgeCharge.eq_1]
       simp only [hzero, hone, hr, ite_true, ite_eq_right hz,
         Bool.toNat_true, Bool.toNat_false, Nat.cast_one, Nat.cast_zero, add_zero]
