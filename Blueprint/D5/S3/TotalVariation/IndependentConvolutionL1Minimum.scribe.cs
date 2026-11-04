@@ -26,16 +26,6 @@ internal sealed class IndependentConvolutionL1MinimumDocument : IScribeDocumentD
                     "For real radius and angle, a positive sine makes the Poisson quadratic strictly positive."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("power-poisson-denominator-positive"),
-                DeclarationHandle.Create(
-                    "D5/S3/TotalVariation/IndependentConvolutionL1Minimum.power_poisson_denominator_pos"),
-                H("Positive denominator on the Renyi order range"),
-                StatementSource.FromAuthor(PowerPoissonDenominatorStatement()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For order strictly between zero and two and different from one, the Poisson quadratic is positive for every real radius."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("ordinary-natural-index-convolution"),
                 DeclarationHandle.Create(
                     "D5/S3/TotalVariation/IndependentConvolutionL1Minimum.ordinaryConvolution"),
@@ -113,17 +103,6 @@ internal sealed class IndependentConvolutionL1MinimumDocument : IScribeDocumentD
         D(0), Lt, Sp, Operatorname, Grp(F.Id("sin")), Parenthesized(F.Id("theta")),
         Rightarrow, Sp, D(0), Lt, Sp, D(1), Minus, D(2), F.Id("r"), Sp,
         Operatorname, Grp(F.Id("cos")), Parenthesized(F.Id("theta")), Plus,
-        F.Id("r"), Caret, Grp(D(2))));
-
-    private static Formula PowerPoissonDenominatorStatement() => Disp(Seq(
-        Forall, Sp, F.Id("alpha"), Comma, Sp, F.Id("r"), Colon, Sp,
-        Mathbb, Grp(F.Id("R")), Comma, Sp,
-        D(0), Lt, Sp, F.Id("alpha"), Rightarrow, Sp,
-        F.Id("alpha"), Lt, D(2), Rightarrow, Sp,
-        F.Id("alpha"), Neq, D(1), Rightarrow, Sp,
-        D(0), Lt, Sp, D(1), Minus, D(2), F.Id("r"), Sp,
-        Operatorname, Grp(F.Id("cos")),
-        Parenthesized(Seq(Pi, Sp, F.Id("alpha"))), Plus,
         F.Id("r"), Caret, Grp(D(2))));
 
     private static Formula OrdinaryConvolutionStatement() => Disp(Seq(

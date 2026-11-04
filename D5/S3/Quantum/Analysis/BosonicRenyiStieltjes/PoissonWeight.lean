@@ -20,6 +20,23 @@ open scoped Topology ComplexConjugate
 
 noncomputable section
 
+/-- Positivity throughout the nonintegral Renyi order range. -/
+theorem power_poisson_denominator_pos {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) : 0 < 1 - 2 * r * Real.cos (Real.pi * α) + r ^ 2 := by
+  rcases lt_or_gt_of_ne ha1 with ha | ha
+  · exact D5.S3.TotalVariation.IndependentConvolutionL1Minimum.poisson_denominator_pos_of_sin_pos
+      (Real.sin_pos_of_pos_of_lt_pi (mul_pos Real.pi_pos ha0)
+        (by nlinarith [Real.pi_pos]))
+  · have hs : 0 < Real.sin (-(Real.pi * α)) := by
+      rw [Real.sin_neg]
+      have h := Real.sin_pos_of_pos_of_lt_pi
+        (by nlinarith [Real.pi_pos] : 0 < Real.pi * α - Real.pi)
+        (by nlinarith [Real.pi_pos] : Real.pi * α - Real.pi < Real.pi)
+      rwa [Real.sin_sub_pi] at h
+    simpa only [Real.cos_neg] using
+      (D5.S3.TotalVariation.IndependentConvolutionL1Minimum.poisson_denominator_pos_of_sin_pos
+        (r := r) hs)
+
 /-- Positivity of the signed trigonometric factor on the required order range. -/
 theorem sine_factor_pos {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) :
     0 < -Real.sin (Real.pi * α) / (α - 1) := by
@@ -84,7 +101,7 @@ private lemma density_integrable_unit {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   have hc : ContinuousOn f (Icc 0 1) := by
     intro q hq
     have hD :=
-      D5.S3.TotalVariation.IndependentConvolutionL1Minimum.power_poisson_denominator_pos
+      power_poisson_denominator_pos
         (r := q ^ α) ha0 ha2 ha1
     have hpow : ContinuousAt (fun y : ℝ => y ^ α) q :=
       (Real.continuous_rpow_const ha0.le).continuousAt
@@ -356,7 +373,7 @@ private lemma transform_boundary {α q : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hq : 0 < q) :
     -(complexTransform α (-(q : ℂ))).im / Real.pi = density α q := by
   have hD :=
-    D5.S3.TotalVariation.IndependentConvolutionL1Minimum.power_poisson_denominator_pos
+    power_poisson_denominator_pos
       (r := q ^ α) ha0 ha2 ha1
   have hpow := Complex.cpow_ofReal (-(q : ℂ)) α
   have harg := Complex.arg_ofReal_of_neg (neg_neg_of_pos hq)

@@ -60,7 +60,7 @@ private lemma weight_denominator_pos {α x : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   change 0 < a ^ 2 + b ^ 2 - 2 * (a * b) * Real.cos (Real.pi * α)
   rw [heq]
   exact mul_pos (sq_pos_of_pos hb)
-    (D5.S3.TotalVariation.IndependentConvolutionL1Minimum.power_poisson_denominator_pos
+    (PoissonWeight.power_poisson_denominator_pos
       ha0 ha2 ha1)
 
 /-- The Stieltjes density is strictly positive throughout `[0, 1)`. -/
@@ -208,7 +208,7 @@ private lemma poissonAngle_hasDerivAt {α p : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     ((hasDerivAt_const p (1 : ℝ)).sub
       ((hasDerivAt_id p).mul_const (Real.cos (Real.pi * α)))) hden.ne'
   have hk :=
-    D5.S3.TotalVariation.IndependentConvolutionL1Minimum.power_poisson_denominator_pos
+    PoissonWeight.power_poisson_denominator_pos
       (r := p) ha0 ha2 ha1
   unfold poissonAngle
   convert! hd.arctan using 1
