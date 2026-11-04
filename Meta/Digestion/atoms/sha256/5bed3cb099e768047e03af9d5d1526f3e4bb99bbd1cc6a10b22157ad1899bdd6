@@ -1,0 +1,96 @@
+**证明定理 1.3，第一部分。**以下每个原始二元乘积都只作一次指定运算，不重括号。固定 $u,v$，令 $s_n=c(U^nu,U^nv)$。(R) 在背景 $(1,1)$ 给 $s_{n+1}+s_{n+2}=2s_n$。通解 $s_n=A+B(-2)^n$ 对全部非负整数 $n$ 非负，故 $B=0$。于是
+
+$$
+c(Uu,Uv)=c(u,v).
+\tag{2.1}
+$$
+
+将 (R) 的增量对换成 $(Uu,Uv)$ 后相减，得到
+
+$$
+c(a\cdot U^3u,b\cdot U^3v)=c(a\cdot u,b\cdot v).
+\tag{2.2}
+$$
+
+置一侧增量为 $1$、另一侧背景为 $1$，知 $U^3u$ 与 $u$ 的完整行、列读数相等。非负性同时给
+
+$$
+c(a\cdot u,b\cdot v)\le3\bigl(c(a,b)+c(u,v)\bigr).
+\tag{2.3}
+$$
+
+记 $q(a)=c(a,1)$、$r(a)=c(1,a)$。在有限支撑自由实空间 $E=\operatorname{span}_{\mathbb R}\{e_a=\delta_a-\delta_1\}$ 上定义双线性型
+
+$$
+B(e_a,e_b)=\frac{q(a)+r(b)-c(a,b)}2.
+\tag{2.4}
+$$
+
+此时 $B$ 可以非对称且非正定。只已知
+
+$$
+B(e_a-e_b,e_a-e_b)=\frac{c(a,b)+c(b,a)}2\ge0.
+\tag{2.5}
+$$
+
+令 $\mathcal R=\{z:B(z,E)=B(E,z)=0\}$，$V=E/\mathcal R$，$\beta(a)=[e_a]$。商上的 $B$ 在两个配对次序共同非退化：若 $B(z,\beta(a))=B(\beta(a),z)=0$ 对全部 $a$ 成立，则 $z=0$。
+
+原映射 $S:e_a\mapsto e_{Ua}$ 保持 $B$；由 (2.2)，$S^3e_a-e_a\in\mathcal R$。它也保持 $\mathcal R$：对 $z\in\mathcal R$，用 $e_b-S^3e_b\in\mathcal R$ 得
+
+$$
+B(Sz,e_b)=B(Sz,S^3e_b)=B(z,S^2e_b)=0,
+$$
+
+反向配对同理。因此 $S$ 下降为可逆线性算子 $R$，满足
+
+$$
+\beta(Ua)=R\beta(a),\quad B(Rx,Ry)=B(x,y),\quad R^3=I.
+\tag{2.6}
+$$
+
+这里没有要求原始 $U$ 满射或保持乘积。
+
+将 (2.4) 代入 (R)，利用分别取另一端为单位所得的 $q,r$ 平均式，得
+
+$$
+\sum_k B(\beta(a\cdot U^ku),\beta(b\cdot U^kv))
+=3B(\beta(a),\beta(b))+3B(\beta(u),\beta(v)).
+\tag{2.7}
+$$
+
+在 (2.7) 置 $v=1$，再对换两端以取反向配对，由共同非退化性得
+
+$$
+\sum_k\beta(a\cdot U^ku)=3\beta(a).
+\tag{2.8}
+$$
+
+置 $a=1$ 得 $I+R+R^2=0$。在 (2.7) 置 $b=1$，用 $B(x,R^ky)=B(R^{-k}x,y)$，再作反向配对，得到
+
+$$
+\sum_kR^{-k}\beta(a\cdot U^ku)=3\beta(u).
+\tag{2.9}
+$$
+
+定义全部原始乘法缺陷
+
+$$
+T(a,u)=\beta(a\cdot u)-\beta(a)-\beta(u).
+$$
+
+由 (2.8)–(2.9) 解三字符系统：令 $D_k=\beta(a\cdot U^ku)-\beta(a)-R^k\beta(u)$，则 $\sum D_k=0$、$D_0+R^2D_1+RD_2=0$。因 $(R^2-R)^2=-3I$，有 $D_1=R^2D_0,D_2=RD_0$。故
+
+$$
+\beta(a\cdot U^ku)=\beta(a)+R^k\beta(u)+R^{-k}T(a,u).
+\tag{2.10}
+$$
+
+将此式代回 (2.7)，$R$-不变性及 $I+R+R^2=0$ 消去不同字符的混合项，得到 $B(T(a,u),T(b,v))=0$。令 $W=\operatorname{span}_{\mathbb R}\{T(a,u)\}$，则
+
+$$
+B(W,W)=0,\qquad RW=W.
+\tag{2.11}
+$$
+
+后一式也直接由 $T(a,Uu)=R^2T(a,u)$ 得出。此处不能从 $B(W,W)=0$ 就断言 $W$ 是根空间；它还可能与其他方向有非零配对。
+

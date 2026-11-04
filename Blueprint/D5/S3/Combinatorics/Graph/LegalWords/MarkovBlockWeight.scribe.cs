@@ -35,7 +35,7 @@ internal sealed class MarkovBlockWeightDocument : IScribeDocumentDefinition
                 H("Boundary factor and activity at every positive length"),
                 StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/GraphInvariants/mukhamedovsuhov2026hardcore")),
+                    LibraryNoteRef.Create("D5/L/StatisticalMechanics/mukhamedovsuhov2026hardcore")),
                 Blocks(
                     Paragraph(Text(
                         "For every real p strictly between zero and one, every n at least "
@@ -71,7 +71,7 @@ internal sealed class MarkovBlockWeightDocument : IScribeDocumentDefinition
                 H("Positive explicit minor of normalized legal Markov mixtures"),
                 StatementSource.FromAuthor(MinorFormula()),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/GraphInvariants/mukhamedovsuhov2026hardcore")),
+                    LibraryNoteRef.Create("D5/L/StatisticalMechanics/mukhamedovsuhov2026hardcore")),
                 Blocks(
                     Paragraph(Text(
                         "For every natural N, choose N+1 component parameters p in (0,1) "

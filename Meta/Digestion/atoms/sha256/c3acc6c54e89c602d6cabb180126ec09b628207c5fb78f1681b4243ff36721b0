@@ -1,0 +1,46 @@
+**命题 25.1（原生事件供给命题 20.2 的谱条件）。** 固定 $(\mathcal T,t_*,I,\mathcal E)\in\mathfrak F$，令 $\rho=\Xi/p$，并给定含同一单位的 $*$-子代数 $A\subseteq M_d$。$E=E_{\rho,A}$ 必须仍是定义 6.2 的实际左 GNS 投影，不加正性或 CP 前件。$P_A$ 为定义 20.1 的普通迹条件期望，置
+
+$$
+h=P_A(\rho),\quad \lambda=\lambda_{\min}(h),\quad
+\mu=\lambda_{\min}(P_A(\Xi))=p\lambda,\quad
+\Lambda_{L,d}=\kappa^{-2Ld}.
+\tag{25.1}
+$$
+
+缺陷完整保留原式 (20.1) 的全部复输入量词：
+
+$$
+\begin{aligned}
+\epsilon&=\sup_{\substack{x\in M_d,\ \|x\|_{\rm op}\le1\\
+a\in A,\ \|a\|_{\rm op}\le1}}
+ |\operatorname{Tr}(\rho(E(x)a-xa))|,\\
+\delta_{\rm raw}&=\sup_{\substack{x\in M_d,\ \|x\|_{\rm op}\le1\\
+a\in A,\ \|a\|_{\rm op}\le1}}
+ |\operatorname{Tr}(\Xi(E(x)a-xa))|=p\epsilon.
+\end{aligned}
+\tag{25.2}
+$$
+
+原命题 20.2 所定义的同一 $\sigma,F$ 满足
+
+$$
+\begin{aligned}
+\mu&\ge\Lambda_{L,d},&
+\lambda&\ge\Lambda_{L,d}/p,\\
+\|E-F\|_{\rm cb}
+&\le\frac\epsilon\lambda
+ =\frac{p\epsilon}{\mu}
+ =\frac{\delta_{\rm raw}}\mu
+ \le\kappa^{2Ld}\delta_{\rm raw},\\
+\|\rho-\sigma\|_1&\le\epsilon=\delta_{\rm raw}/p,&
+p\|\rho-\sigma\|_1&\le\delta_{\rm raw}.
+\end{aligned}
+\tag{25.3}
+$$
+
+例如原始量纲的充分条件 $\delta_{\rm raw}\le\eta_0\Lambda_{L,d}$ 保证 $\|E-F\|_{\rm cb}\le\eta_0$。若只有 $\delta_{\rm raw}$ 而不知实际 $p$，式 (24.1) 另给态界 $\|\rho-\sigma\|_1\le\kappa^{2L}\delta_{\rm raw}$；这一态界不再作为映射界的额外乘子。
+
+证明。由定理 24.1，$\Xi\ge\Lambda_{L,d}I$。$P_A$ 正且保单位元，故 $P_A(\Xi)\ge\Lambda_{L,d}I$；线性和 $p>0$ 给 $\mu=p\lambda$。在同一 $\rho,A,E$ 上直接应用命题 20.2 得余式。以 $\Xi$ 定义左内积只将原内积整体乘以 $p$，不会改变正交投影 $E$，所以式 (25.2) 没有暗换代表。归一化因子在 $\epsilon=\delta_{\rm raw}/p$ 和 $\lambda=\mu/p$ 中精确抵消；若在此之外再乘一个独立的 $p^{-1}$，便不是式 (25.3) 的推导。证毕。
+
+由同一命题 20.2 及推论 22.2，$P_A(\sigma)=P_A(\rho)$，$F$ 是到恰好 $A$ 的 UCP 回缩并有 CPTP 对偶；原 $E$ 在 $\epsilon>0$ 时仍未被证明为正。对所有 $a,b\in A$，$\operatorname{Tr}(\rho a^\dagger b)=\operatorname{Tr}(\sigma a^\dagger b)$，所以原保强度的二元 Gram／Finite3 几何不变。式 (25.3) 仅给这些既有结论补上实际原生族的谱参数，不重证量子表示或重建原则，也不把有限门菜单升级为完整复比较球的认证菜单。
+

@@ -1,0 +1,120 @@
+**定理 57.2（原乘积准备强制全对象内协变）。** 在定义 41.1 的同一非 $D$ 背景中，Z 与 SC 推出
+
+$$
+\mathcal C_A(K;a,b)=0
+\quad
+(K\in\mathfrak k_A,\ a,b\in E_A)
+\tag{57.1}
+$$
+
+对每个所需原对象及实际联合对象成立。此推导不消费 S 的迹标定，也不添加独立动力同态、伴随相容、实际 $M_2$ 或高秩指针因子。其联合步骤只消费含幺 Jordan 嵌入、原 $F$ 的保持及原乘积准备的正性与边缘关系。
+
+证明。引理 41.2、41.3 已从 Z、SC 给出每个完整有限 EJA 上的原交替双导子。以下先限制其协变缺陷的支撑，再用原联合排除该支撑。
+
+设 $E=\bigoplus_\ell E_\ell$ 是简单理想分解。每个 Jordan 导子消去各理想的单位，且保持各理想。若 $a\in E_\ell$、$b\in E_m$、$\ell\ne m$，导子律与交替性分别给 $F(a,b)\in E_m$ 和 $F(a,b)\in E_\ell$，故
+
+$$
+F(a,b)=0,
+\qquad F=\bigoplus_\ell F_\ell.
+\tag{57.2}
+$$
+
+内导子和协变缺陷也按此分解。秩一简单理想是 $\mathbb R$，其导子及 $F$ 为零。
+
+对 Jordan 秩至少三的简单 EJA $H$，采用标准 Jordan 迹型 $\langle x,y\rangle=\operatorname{tr}(x\circ y)$，令 $V=u_H^\perp$、$\mathfrak h=\operatorname{Der}(H)|_V$。导子消去单位且对迹型斜对称，故
+
+$$
+T(x,y,z)=\langle F(x,y),z\rangle
+\in\Lambda^3V^*,
+\qquad \iota_xT\in\mathfrak h.
+\tag{57.3}
+$$
+
+这里的 $T$ 由原 $F$ 定义。简单 EJA 的连通自同构群在有序 Jordan 标架上传递；其在无迹部分的表示忠实且不可约。具体地，任何非零不变子空间中的无迹谱向量都有两个不同特征值；交换对应标架元并作差，得到 $p_i-p_j$。标架传递性给所有原始幂等元的差，谱分解遂张成整个 $V$。导子在单位上为零，故无迹表示也忠实。这些是 [Barnum–Hilgert, arXiv:1904.03753v1, §4、Theorem 4.2、Table 1、Appendix C.3](https://arxiv.org/html/1904.03753v1) 中的经典 EJA 结构工具。
+
+该表示是 $\mathfrak{so}(V)$ 的真子表示：$\operatorname{tr}(x^3)$ 对自同构不变，而取三个正交原始幂等元，有
+
+$$
+x=p_1+p_2-2p_3\in V,
+\qquad \operatorname{tr}(x^3)=-6.
+\tag{57.4}
+$$
+
+若 $\mathfrak h=\mathfrak{so}(V)$，旋转能将 $x$ 送到 $-x$，与非零的奇次不变量矛盾。
+
+现在仅把 [Nagy, arXiv:0712.1398v2, Theorem 1.1](https://arxiv.org/html/0712.1398v2) 作为中间工具：忠实不可约的正交 Lie 表示，若其代数是整个正交代数的真子代数，则其斜延拓 $\{T\in\Lambda^3V^*: \iota_xT\in\mathfrak h\}$ 为零，或该表示是紧单 Lie 代数的伴随表示且延拓由不变 Cartan 三形式生成。因此 (57.3) 的原 $T$ 对全部 $K\in\mathfrak h$ 不变，给
+
+$$
+\begin{aligned}
+\langle\mathcal C_H(K;x,y),z\rangle
+&=-T(x,y,Kz)-T(Kx,y,z)-T(x,Ky,z)\\
+&=0.
+\end{aligned}
+\tag{57.5}
+$$
+
+含单位的输入由 $F(u_H,\cdot)=0$ 补齐。故任意 EJA 的协变缺陷只能支撑在秩二简单理想上。
+
+固定原对象 $A$，记 $E=E_A$；取其实际 $J=AP^{\otimes k}$ 及原嵌入 $i,j$。原准备正锥张成与原 X 给任意数学归一态 $\alpha\in\mathsf S(E)$、$\beta\in\mathsf S(P)$ 一份联合正态 $\gamma\in\mathsf S(J)$，满足
+
+$$
+\gamma(i(a))=\alpha(a),
+\qquad \gamma(j(b))=\beta(b).
+\tag{57.6}
+$$
+
+这是证明中的正泛函存在性：把 $\alpha,\beta$ 写成原实际准备的有限非负组合，对每一对调用已有乘积准备，再取同系数的正泛函和。其在原 Jordan 乘积上等于 $\alpha(a)\beta(b)$，在单位上为一，故有 (57.6)。若需经过 $P^{\otimes k}$，其余因子使用原 AC 的同一质量一准备；(30.2) 的计算给第一个 $P$ 因子的正确边缘。此数学线性组合没有命名新随机化装置，也未改写原准备或原成功系数。
+
+将联合分解为有限个简单理想 $J=\bigoplus_{\mu=1}^N J_\mu$，分量投影记为 $\pi_\mu$。声称每个非经典简单局部理想 $E_\ell$ 都有某个秩至少三的联合分量满足
+
+$$
+\pi_\mu i|_{E_\ell}\ne0.
+\tag{57.7}
+$$
+
+反设所有这样的高秩分量都为零。非零 Jordan 同态在简单 $E_\ell$ 上必为单射，秩一分量不能容纳非经典理想。若 $E_\ell$ 秩至少三，其 Jordan 标架也不能单射到秩二分量，已矛盾。所以只需考虑秩二的简单 $E_\ell=\operatorname{Spin}(W)$。
+
+每个非零的 $\pi_\mu i|_{E_\ell}$ 此时进入秩二简单 $J_\mu=\operatorname{Spin}(V_\mu)$。$E_\ell$ 的两个正交非零标架元之像仍非零正交，故其单位之像是满秩幂等元，恰为 $u_{J_\mu}$；其他局部理想在此分量为零。这个映射在向量部分是等距线性嵌入：由 $x^2=\|x\|^2u$、单位保持及单射，向量不能映为标量，其标量分量必为零，随后极化给等距。
+
+固定一个支撑在 $E_\ell$ 上的纯数学态 $\alpha$，其自旋向量为单位 $v\in W$。若一个 $J_\mu$ 归一态限制为 $\alpha$，其 Bloch 向量 $z\in V_\mu$ 满足 $\|z\|\le1$ 且正交投影等于 $v$。所以
+
+$$
+\|z\|^2=1+\|z-v\|^2\le1,
+\qquad z=v.
+\tag{57.8}
+$$
+
+每个这样的秩二分量至多有唯一归一延拓 $\rho_\mu^\alpha$，从而给唯一指针边缘
+
+$$
+\beta_\mu=\rho_\mu^\alpha\circ\pi_\mu j.
+\tag{57.9}
+$$
+
+原 AC 的非中心效果保证 $P$ 非经典；有限 EJA 的非经典简单理想具有无限多个原始幂等元，因而 $\mathsf S(P)$ 有无限多个纯态。取任意一个纯 $\beta$，用 (57.6) 取得联合 $\gamma$，并按 $J_\mu$ 分解为权重 $t_\mu$ 和归一分量态 $\gamma_\mu$。每个 $\gamma_\mu\pi_\mu i$ 都是 $E$ 的归一态。$\alpha$ 的极端性迫使每个正权分量的局部边缘均等于 $\alpha$；这也排除所有杀掉 $E_\ell$ 的分量。剩下的分量由 (57.8) 唯一确定。又因
+
+$$
+\beta=\sum_\mu t_\mu\beta_\mu
+\tag{57.10}
+$$
+
+且 $\beta$ 纯，每个正权项均等于 $\beta$。于是每个纯 $\beta$ 必属于有限集合 $\{\beta_\mu\}$，矛盾。(57.7) 得证。
+
+最后令 $K=\sum_t[L_{x_t},L_{y_t}]$，在同一个实际联合中只作数学内导子提升
+
+$$
+\widetilde K=\sum_t[L_{i(x_t)},L_{i(y_t)}],
+\qquad \widetilde K i=iK.
+\tag{57.11}
+$$
+
+Jordan 嵌入与原 $F$ 的保持给
+
+$$
+i\mathcal C_E(K;a,b)
+=\mathcal C_J(\widetilde K;i(a),i(b)).
+\tag{57.12}
+$$
+
+对同一 $E_\ell$ 中的 $a,b$，缺陷属于 $E_\ell$。若该理想经典，缺陷为零；否则选 (57.7) 的高秩分量，(57.5) 使 (57.12) 的该分量为零，而 $\pi_\mu i|_{E_\ell}$ 因单性单射，故局部缺陷为零。跨理想输入由 (57.2) 给零。对每个原 $A$ 重复此论证，得到完整 (57.1)。$\widetilde K$ 是证明中的导子，不因此成为新实际联合器件。∎
+
