@@ -34,6 +34,10 @@ $$\forall k \in \mathbb{N},\; \forall n \in \mathbb{N},\; 3 \le k \Rightarrow \l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/PrimeRemainders/OeisA222759Growth.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/noe-2013-a222759-prime-cube-growth` (proved) by `D5/S3/Arith/PrimeRemainders/OeisA222759Growth.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"noe-2013-a222759-prime-cube-growth","declaration_gid":"D5/S3/Arith/PrimeRemainders/OeisA222759Growth.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* T. D. Noe (2013). *OEIS A222759: first growth assertion for literal binomial remainders*. URL: <https://oeis.org/A222759>.
