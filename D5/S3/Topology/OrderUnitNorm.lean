@@ -12,6 +12,7 @@ public import Mathlib.Analysis.Convex.Gauge
 public import Mathlib.Geometry.Convex.Cone.Basic
 public import Mathlib.Topology.Algebra.Module.FiniteDimension
 public import Mathlib.Analysis.Normed.Operator.Basic
+public import Mathlib.Analysis.Normed.Algebra.Exponential
 public import Mathlib.Topology.Order.Monotone
 public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.Linarith
@@ -185,7 +186,7 @@ instance : AddCommGroup A.Space := inferInstanceAs (AddCommGroup E)
 instance : Module ℝ A.Space := inferInstanceAs (Module ℝ E)
 instance : Norm A.Space := ⟨fun v => A.orderNorm v⟩
 
-private theorem normCore : NormedSpace.Core ℝ A.Space where
+theorem norm_core : NormedSpace.Core ℝ A.Space where
   norm_nonneg := A.norm_nonneg
   norm_smul r v := by
     change A.orderNorm (r • v) = ‖r‖ * A.orderNorm v
@@ -198,8 +199,8 @@ private theorem normCore : NormedSpace.Core ℝ A.Space where
     exact map_add_le_add A.seminorm (v : E) (w : E)
   norm_eq_zero_iff := A.norm_zero_iff
 
-instance : NormedAddCommGroup A.Space := NormedAddCommGroup.ofCore (normCore A)
-instance : NormedSpace ℝ A.Space := NormedSpace.ofCore (normCore A)
+instance : NormedAddCommGroup A.Space := NormedAddCommGroup.ofCore (norm_core A)
+instance : NormedSpace ℝ A.Space := NormedSpace.ofCore (norm_core A)
 
 /-- The canonical wrapping map changes no vector or algebraic operation. -/
 def wrap : E ≃ₗ[ℝ] A.Space := LinearEquiv.refl ℝ E
@@ -253,9 +254,11 @@ private lemma positive_norm [FiniteDimensional ℝ E] (β : E →ₗ[ℝ] ℝ)
     intro v
     change |β (A.wrap.symm v)| ≤ β A.unit * A.orderNorm (A.wrap.symm v)
     exact A.positive_bound β hβ _
-  · have hu : ‖A.wrap A.unit‖ ≤ 1 :=
-      (A.unit_ball A.unit).mpr (by simpa [interval] using
-        And.intro A.zero_mem (A.cone.add_mem A.unit_mem A.unit_mem))
+  · have hu : ‖A.wrap A.unit‖ ≤ 1 := by
+      apply (A.unit_ball A.unit).mpr
+      constructor
+      · simpa using A.zero_mem
+      · exact A.cone.add_mem A.unit_mem A.unit_mem
     have hb := (A.functional β).le_opNorm_of_le hu
     simpa only [functional, LinearMap.coe_toContinuousLinearMap', LinearMap.comp_apply,
       LinearEquiv.symm_apply_apply, Real.norm_eq_abs, abs_of_nonneg hm, mul_one] using hb
@@ -309,6 +312,72 @@ private lemma centered_bound (x : E) (hx : x ∈ A.cone) (hux : A.unit - x ∈ A
   · have he : (1 / 2 : ℝ) • A.unit + (x - (1 / 2 : ℝ) • A.unit) = x := by module
     rw [he]
     exact hx
+
+
+/-- The exponential of the given original operator in the original finite-dimensional space. -/
+def originalFlow [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t : ℝ) : E →L[ℝ] E :=
+  NormedSpace.exp (t • LinearMap.toContinuousLinearMap H)
+
+private lemma flow_inverse [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t : ℝ) (v : E) :
+    originalFlow H (-t) (originalFlow H t v) = v := by
+  letI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  let B : E →L[ℝ] E := t • LinearMap.toContinuousLinearMap H
+  have h : NormedSpace.exp (-B) * NormedSpace.exp B = 1 := by
+    rw [← NormedSpace.exp_add_of_commute (Commute.refl B).neg_left,
+      neg_add_cancel, NormedSpace.exp_zero]
+  have hv := congrArg (fun L : E →L[ℝ] E => L v) h
+  simpa only [originalFlow, neg_smul, ContinuousLinearMap.mul_apply,
+    ContinuousLinearMap.one_apply] using hv
+
+private lemma flow_transport [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t : ℝ) (v : E) :
+    NormedSpace.exp (t • A.operator H) (A.wrap v) =
+      A.wrap (originalFlow H t v) := by
+  letI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  let J := A.bridge.conjContinuousAlgEquiv
+  have hmap : J (t • LinearMap.toContinuousLinearMap H) = t • A.operator H := by
+    ext w
+    rfl
+  have h := NormedSpace.map_exp J J.continuous (t • LinearMap.toContinuousLinearMap H)
+  rw [hmap] at h
+  have hv := congrArg (fun L : A.Space →L[ℝ] A.Space => L (A.wrap v)) h
+  simpa only [J, ContinuousLinearEquiv.conjContinuousAlgEquiv_apply_apply,
+    bridge, ContinuousLinearEquiv.coe_mk', LinearEquiv.symm_apply_apply, originalFlow] using hv.symm
+
+private lemma flow_isometry [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
+    (hflow : ∀ t : ℝ,
+      (∀ v ∈ A.cone, originalFlow H t v ∈ A.cone) ∧ originalFlow H t A.unit = A.unit)
+    (t : ℝ) (v : E) :
+    A.orderNorm (originalFlow H t v) = A.orderNorm v := by
+  let T : E ≃ₗ[ℝ] E :=
+    { (originalFlow H t).toLinearMap with
+      invFun := originalFlow H (-t)
+      left_inv := flow_inverse H t
+      right_inv := by intro w; simpa only [neg_neg] using flow_inverse H (-t) w }
+  exact A.positive_inverse_isometry T (hflow t).1 (hflow (-t)).1 (hflow t).2 v
+
+private lemma centered_orbit_bound [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
+    (hu : H A.unit = 0)
+    (hflow : ∀ t : ℝ,
+      (∀ v ∈ A.cone, originalFlow H t v ∈ A.cone) ∧ originalFlow H t A.unit = A.unit)
+    (β : E →ₗ[ℝ] ℝ) (hβ : ∀ v ∈ A.cone, 0 ≤ β v)
+    (x : E) (hx : x ∈ A.cone) (hux : A.unit - x ∈ A.cone) (t : ℝ) :
+    |β (originalFlow H t (H (H x)))| ≤
+      β A.unit * ‖A.operator H * A.operator H‖ / 2 := by
+  let z := x - (1 / 2 : ℝ) • A.unit
+  have hz : A.orderNorm z ≤ 1 / 2 := A.centered_bound x hx hux
+  have hH : H (H x) = H (H z) := by
+    simp only [z, map_sub, map_smul, hu, smul_zero, sub_zero]
+  have hm : 0 ≤ β A.unit := hβ _ A.unit_mem
+  calc
+    |β (originalFlow H t (H (H x)))|
+        ≤ β A.unit * A.orderNorm (originalFlow H t (H (H x))) :=
+      A.positive_bound β hβ _
+    _ = β A.unit * A.orderNorm (H (H z)) := by rw [A.flow_isometry H hflow, hH]
+    _ ≤ β A.unit * (‖A.operator H * A.operator H‖ * A.orderNorm z) :=
+      mul_le_mul_of_nonneg_left (A.square_bound H z) hm
+    _ ≤ β A.unit * (‖A.operator H * A.operator H‖ * (1 / 2)) := by
+      gcongr
+    _ = β A.unit * ‖A.operator H * A.operator H‖ / 2 := by ring
 
 end Data
 end D5.S3.Topology.OrderUnitNorm
