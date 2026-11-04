@@ -1,0 +1,15 @@
+**Proposition 3.3 (Affine invariance and integer annihilator; source facts).** Every $T_n$ is invariant under $\theta\mapsto\theta+\delta$ for $\delta\in\Gamma_K$. Moreover
+
+$$
+\{\delta\in\mathbb T^K:z\cdot\delta=0\text{ for all }z\in L_K\}=\Gamma_K.
+\tag{3.5}
+$$
+
+Consequently nonconstancy may equally be considered on $\mathbb T^K/\Gamma_K$. If $|K|\le2$, the integer lattice is zero and the affine image is the entire phase torus.
+
+**Proof.** The all-history calculation in Proposition 4.1 shows that every entry character belongs to $L_K$. An affine difference contributes $a\sum z_k+b\sum kz_k=0$, proving invariance.
+
+For the reverse annihilator inclusion, when $|K|\ge2$ write $k_0=\min K$, list the other labels as $k_i$, and put $d_i=k_i-k_0$ and $g=\gcd_i d_i>0$. Choose integers $t_i$ with $\sum_i t_i d_i=g$. Given a phase difference annihilating $L_K$, put $\eta_i=\delta_{k_i}-\delta_{k_0}$ and $\beta=\sum_i t_i\eta_i\in\mathbb T$. Every integer vector $v$ with $\sum_i d_i v_i=0$ extends to an element of $L_K$ by setting its $k_0$ coordinate to $-\sum_i v_i$. Apply this to $v=\mathbf e_i-(d_i/g)t$; annihilation gives $\eta_i=(d_i/g)\beta$. Choose $b\in\mathbb T$ with $gb=\beta$, possible because multiplication by a positive integer on a circle is onto. With $a=\delta_{k_0}-bk_0$, this gives $\delta_k=a+bk$ on all of $K$. For one label take $a=\delta_H,b=0$. The forward inclusion follows directly from the two integer equations.
+
+With one label the count equation forces $z=0$. With two distinct labels the count and weighted-count equations together force $z=0$. Equation (3.5) then gives the asserted affine image. This is the direct compact-circle proof of source (25.21); replacing it by real spanning would not justify the conclusion. $\square$
+

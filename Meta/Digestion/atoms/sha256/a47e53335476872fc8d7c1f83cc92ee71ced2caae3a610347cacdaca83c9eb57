@@ -1,0 +1,72 @@
+**Theorem 46.1 (polynomial certificate accounting).** With $p,r,L,F,V$ as above, put
+
+$$
+ B_0=\binom Fp,\qquad T_0=\binom V{r+1},\qquad
+ \mathcal B=2B_0T_0.
+ \tag{46.1}
+$$
+
+There are at most $2B_0$ reduced basis labels and at most $\mathcal B$ complete certificate labels over both charts. The latter includes every additional raw-witness simplex selection; singular constant simplices and identically singular bases can be omitted. No other reconstruction enumeration is needed. For fixed $k$,
+
+$$
+ \mathcal B=O_k\!\left((d+1)^{(r-1)(p+r+1)}\right)
+           =O_k\!\left((d+1)^{12k^2+30k+18}\right).
+ \tag{46.2}
+$$
+
+These are counts of candidate certificates, not runtime, arithmetic or bit complexity bounds, and not optimality assertions. The displayed binomial expressions are explicit bounds for every $k,d\ge0$, not just asymptotic bounds.
+
+All source-dependent scalar data needed for the complete predicates have total degree at most $D_0=2p=2(k+1)$ in $\alpha,\beta$. More precisely:
+
+| Scalar data | Source degree bound |
+|---|---:|
+| Entries of $C_\nu$ and $A_\nu$ | $2$ |
+| $\lambda_\ell$, entries of $E_T$, and $c_T$ | $0$ |
+| $\Delta_{\nu,I}$ and $S_{\nu,I,\ell}$ | $2p$ |
+| Gain numerator $N_{\nu,I,j}$ | $2(p-1)$ |
+| Components of $u_{\nu,I}$ and witness numerators $M_{\nu,I,T,a}$ | $2p$ |
+
+Each reconstructed error and each coefficient of $D$ admits denominator $c_T\Delta$ and a numerator of degree at most $2p$. Each coefficient of $H$ admits denominator $\Delta$ and numerator of degree at most $2p-1$. The source uses just the original numerator matrix $X_\nu$ and positive denominator $\alpha+\beta$.
+
+Here are explicit bounds on the data feeding §39. Count polynomial occurrences conservatively, even when different labels give identical polynomials, and set
+
+$$
+ \begin{aligned}
+ \mathcal N&=2B_0\bigl[1+p+F+(r+1)T_0\bigr]+2,\\
+ h_0&=D_0\mathcal N,\\
+ P_0&=\mathcal N+(D_0+2)h_0+\binom{h_0}{2},\\
+ E_0&=2D_0^2,\qquad S_0=2D_0h_0+1.
+ \end{aligned}
+ \tag{46.3}
+$$
+
+The following counts suffice:
+
+| Count | Meaning and upper bound |
+|---|---|
+| Bivariate sign data | $\mathcal N$ members: all $\Delta,N,S,M$ and the two boundaries after $\alpha=x,\beta=s-x$ |
+| Distinct primitive positive-$x$ factors | at most $h_0$ |
+| Univariate projection data | at most $P_0$ polynomials of degree at most $E_0$ |
+| Positive projection roots, counted with repetition over polynomials | at most $E_0P_0$ |
+| Interior roots at the one scale $s_*$ | at most $D_0h_0$ |
+| Root and intervening-sector samples | at most $S_0$ |
+| Evaluations of original bivariate polynomial signs | at most $\mathcal N S_0$ |
+| Complete-label/sample pairs, if all predicates are evaluated | at most $\mathcal B S_0$ |
+
+The signs of nonzero constants $c_T$ can be fixed once for at most $T_0$ labels, shared between the charts. They do not require source-dependent sign samples. The disjunction over nonzero gain coordinates in (45.3) uses the already counted $p$ numerators; choosing the first nonzero one adds no witness enumeration. Each reconstructed target has $4+p+(d+1)$ scalar entries or coefficients, and the construction explicitly returns its $L$ raw errors, together with $r+1$ auxiliary weights. None is a new measurement. Every count in (46.1) and (46.3) is polynomial in $d$ for fixed $k$.
+
+**Proof.** There are $F$ signed rows of length $p$, so the reduced basis count is $\binom Fp$ per chart. The entire vertex list is (44.10), and every raw lift in the proof of Theorem 45.2 uses one of at most $\binom V{r+1}$ constant matrices, in canonical vertex order. In particular there are no uncounted $2^L$ signs of active raw inequalities, no selected drift interpolation nodes, and no further coefficient bases behind the reconstruction. Since $F,V=O_k(L^{r-1})$, the two choices have exponents $p(r-1)$ and $(r+1)(r-1)$, giving (46.2); $L=d+3k+5\le(3k+5)(d+1)$.
+
+Each column of $C_\nu$ is a fixed weighted sum of the quadratic polynomials $B_{\nu,i}$. Thus all $p$ columns of $A_\nu$ are quadratic and the right-hand side is source-independent. Multilinearity of determinants gives degree $2p$ for $\Delta$ and $S$, and degree $2(p-1)$ for $N_j$, since one quadratic column is replaced by a constant. Hence $\Delta b-C_\nu N$ has degree at most $2p$. The matrix $E_T$ is constant and only its replaced column depends on source parameters, so every $M_a$ has that same bound. Formula (45.7) gives a common numerator for the residual values
+
+$$
+ c_T\Delta y_i
+   -c_T B_{\nu,i}\sum_{j<p}N_j i^j
+   -\sum_{a=0}^r M_a\sigma_i^{t_a}.
+ \tag{46.4}
+$$
+
+Its degree is at most $2p$. Fixed-node interpolation is linear in these values, giving the asserted degree for the drift coefficients. Multiplying $N_j$ by $\alpha+\beta$ gives the gain bound. No degree grows with $d$.
+
+For the sign count, each of the $2B_0$ bases uses one $\Delta$, $p$ gain numerators, $F$ bordered slacks and at most $(r+1)T_0$ lift numerators. Add the two boundaries. Substitution $\alpha=x,\beta=s-x$ does not increase total degree. Factor the nonzero polynomials exactly as in (39.2), retaining zero members as fixed zero signs. There are at most $D_0\mathcal N=h_0$ distinct positive-$x$ factors, each of total degree at most $D_0$. There is at most one vertical content per original polynomial, at most $D_0+1$ nonzero coefficient polynomials per factor, one self-resultant per factor, and one resultant per unordered pair of factors. This gives $P_0$. All contents and coefficients have degree at most $D_0$; a Sylvester matrix here has at most $2D_0$ rows with entries of degree at most $D_0$, giving the conservative uniform bound $E_0$. Nonzero constant polynomials and roots at zero add no positive roots. At the selected positive scale each factor has at most $D_0$ roots, so there are at most $D_0h_0$ interior roots and $2D_0h_0+1$ section/sector samples. Counting signs and label/sample pairs proves the table. These deliberately coarse bounds require no factorization or evaluation cost hypothesis. $\square$
+

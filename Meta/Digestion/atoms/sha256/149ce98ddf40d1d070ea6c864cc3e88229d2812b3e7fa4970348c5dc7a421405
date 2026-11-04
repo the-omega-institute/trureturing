@@ -1,0 +1,33 @@
+**定理 6.6（局部操作免费时的五次关系下界）。**
+
+<a id="thm-fivecost"></a>
+
+另换成本模型：任意 $h\in H$ 都免费，仅计算关系脉冲 $e^{tX}$。
+若 $X\in\mathfrak k\setminus\mathfrak h$，Haar 几乎处处的 E8 目标至少需要五次关系脉冲；
+同时存在依赖 $X$ 的统一有限调用上界。五次不在此被证明为充分或最优。
+
+**证明。**
+
+使用至多 $r$ 次关系脉冲的目标包含在下列光滑映射的像中：
+
+$$
+H^{r+1}\times\mathbb R^r\longrightarrow G,\qquad
+(h_0,\ldots,h_r,t_1,\ldots,t_r)
+\longmapsto h_0e^{t_1X}h_1\cdots e^{t_rX}h_r.
+$$
+
+其源维数为 $48(r+1)+r=49r+48$。
+当 $r\le4$ 时至多为 $244<248$，像为零测；
+取有限并得下界。取 $\mathfrak h$ 的有限基加 $X$，
+由定理 [6.1](#thm-controlclosure) 和 [6.3](#thm-uniform)
+得到有限全词长上界，也就得到关系调用的统一上界。证毕。
+ □
+
+定理 [6.1](#thm-controlclosure) 计算新增**方向数**，
+定理 [6.6](#thm-fivecost) 计算实际**调用数**，
+定理 [6.5](#thm-248) 又在另一个计费模型中计算全部可调调用。
+这些数量没有可互换的含义。若进一步要求数字参数、误差容限与有界时间，
+必须另立计算模型。
+
+<a id="section-7"></a>
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ef9cf486d55f6c6d32ff891798a33e29594a9d13766dc8ea783d3579ef32e1ea
+  normalized_sha256: sha256:ef9cf486d55f6c6d32ff891798a33e29594a9d13766dc8ea783d3579ef32e1ea
+cas_ref: sha256:ef9cf486d55f6c6d32ff891798a33e29594a9d13766dc8ea783d3579ef32e1ea
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaObservation/ParityPolarizationPoleOrders.parity_polarization_holomorphy_and_pole_orders
+    target_statement_id: sha256:dfaf63d8e318d2f217dcc70dd8cb78a10eac12f5deda9841778f9e847c099fd4
+receipts:
+  unresolved_subitems: []

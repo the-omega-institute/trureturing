@@ -1,0 +1,25 @@
+**Theorem 40.1 (finite signs are equivalent to actual source escape).** Use Definitions 38.1 and 39.1 for the actual $y,\delta,k,d$ on (26.2). Then:
+
+1. The $P_{12}$ projection of $\mathcal W_\delta(y)$ is unbounded if and only if $\mathsf{Pass}_{12}(y,\delta)$ is true. The corresponding equivalence holds for $P_{21}$ and $\mathsf{Pass}_{21}$.
+2. The source projection is unbounded if and only if at least one of the two finite tests passes. A passing test constructs whole legal worlds at every $0<s<\varepsilon$, with the selected escaping entry exactly $1/s$, by the fixed-basis formulas (38.5).
+3. If the $12$ test fails, every compatible world has $P_{12}\le1/\varepsilon$. If the $21$ test fails, every compatible world has $P_{21}\le1/\varepsilon$. If both fail, all compatible complete targets satisfy
+
+$$
+ \begin{aligned}
+ \|P\|_{\max}&\le\max\{1,\varepsilon^{-1}\},\\
+ \|\operatorname{coeff}_kH\|_\infty
+                    &\le\|\widehat h\|_\infty+a\delta,\\
+ \|\operatorname{coeff}_dD\|_\infty
+                    &\le\|\widehat a\|_\infty+a\delta,
+ \end{aligned}
+ \tag{40.1}
+$$
+
+where $a,\widehat h,\widehat a$ are the unchanged original-clock prefix quantities of (26.4). Empty compatibility sets satisfy these bounds vacuously.
+
+**Proof.** Suppose the $12$ test passes. Lemma 39.2 supplies positive $\alpha(s)=x(s)$, $\beta(s)=s-x(s)$ and one basis whose complete sign predicate holds for every $0<s<\varepsilon$. Theorem 38.2 then gives the single source and the two whole polynomials in (38.5), together with all $L$ legal raw errors, at each such $s$. Every $H$ is genuinely nonzero, since at least one of its gain Cramer numerators is nonzero at that positive scale. The source has $P_{12}=1/s$, so its projection is unbounded. In the other direction, from compatible worlds with $P_{12}\to\infty$ use their exact first-chart coordinates from Lemma 37.2. Then $s=1/P_{12}\to0$. Necessity in Theorem 38.2 gives $\Phi_{12}$ at these points, so Lemma 39.2 makes the finite test pass. The proof for $21$ is identical with the second chart.
+
+All diagonal entries lie strictly between zero and one. Thus an unbounded set of allowed sources has an unbounded off-diagonal coordinate, and a subsequence in one of the two directions proves assertion 2. If a failed test admitted a compatible $P_{12}>1/\varepsilon$, its chart would have $0<s<\varepsilon$ and a true $\Phi_{12}$, contradicting Lemma 39.2. This proves the directional bounds, and both together give the first line of (40.1). Finally (26.9) is valid for every whole world with this same received prefix and raw radius; its $H,D$ bounds give the remaining lines. No gain lower bound is needed for boundedness of these two coefficient blocks. $\square$
+
+This is a source-specific necessary-and-sufficient acquired-record criterion at the original radius, with all gain and drift coefficients eliminated before the two-variable sign problem. Its inputs are precisely the finite raw vector, the declared degrees, and the declared radius. Passing evidence is a whole-world formula, not independent prefix and tail feasibility. Negative evidence in both directions gives a finite source bound and the existing prefix bounds give complete-target boundedness. The finite test makes no claim that a failed record has a positive gain floor, a small recovery radius, or boundedness after any radius inflation.
+

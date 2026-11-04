@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb2736ac3b3c00ea90eafc107d3717e5d0d00a26bf091ace574a03be22572854
+  normalized_sha256: sha256:bb2736ac3b3c00ea90eafc107d3717e5d0d00a26bf091ace574a03be22572854
+cas_ref: sha256:bb2736ac3b3c00ea90eafc107d3717e5d0d00a26bf091ace574a03be22572854
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 引入观察、干预、反事实协议族的包含关系作为假设，并开始枚举族名称，不在此 atom 推出核层级。'
+    previous_atom_id: 3cacb8112b54ebca588948b18e74dc5e3fa079fc99b5c64005b1cb542a0861ed
+    next_atom_id: d09a5bbf5d26d7629f41233ca03273339b8445b1b582743e8791e849270d4975

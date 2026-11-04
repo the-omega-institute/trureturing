@@ -1,0 +1,62 @@
+**Theorem 73.3 (finite continued-use account).** Suppose a completed
+continuation contains $r$ addressed outer frames and $z$ unsupported
+frames, with $k_P,k_S$ successful represented promotions/splits. Let
+$J_{\rm all}$ be the sum of depths of all its addressed frames, and
+$J_P,J_S$ the depth sums over its successful represented promotions/splits.
+On this continuation the outer payloads are
+
+$$
+I_{\rm out}=2J_{\rm all}+4r+3z,\qquad
+O_{\rm out}=5r+2(J_P+J_S)+3z.
+$$
+
+The real inner payloads and source changes are
+
+$$
+\begin{aligned}
+I_{\rm in}&=4J_P+8k_P+2J_S+6k_S,\\
+O_{\rm in}&=4J_P+10k_P+2J_S+7k_S,\\
+\text{inner completion cycles}&=2k_P+k_S,\\
+\text{added source vertices}&=3k_P+2k_S,\\
+\text{source structural assignments}&=12k_P+8k_S.
+\end{aligned}
+$$
+
+There are additionally $r+z$ outer completion cycles. At its final Ready
+cut the represented leaf count is $L+k_S$, its beta count is $b+k_P$,
+the source has $N+2b+3k_P+2k_S$ vertices, and its live word contains
+$4(L+k_S)-2$ bits.
+
+Proof. At represented depth $d$, a promotion uses two real calls at depth
+$d$. Their total request/reply payload is $8d+18$, split as $4d+8$ input
+and $4d+10$ output. They add one plus two vertices and four plus eight
+structural assignments. A represented split uses one real call at depth
+$d+1$, with $2d+6$ input and $2d+7$ output bits, two vertices and eight
+assignments. Source-navigation descents and ascents for these two cases
+are respectively $2d$ and $d+1$ in each direction. Outer successes have
+request/reply total $4d+9$ in addition to that inner traffic. Outer
+refusals have $2d+4$ input and five output bits and no inner call;
+unsupported frames have three plus three. Summing proves every traffic
+and work coordinate. A represented promotion raises beta count by one
+and preserves leaf count; a represented split raises leaf count by one
+and preserves beta count. The full-binary node formula then gives the
+live-word count and, using the real vertex additions, the material count.
+$\square$
+
+For an explicit finite local implementation, parse each received frame
+and scan the valid current preorder word to locate its logical target.
+A stack of pending subtree slots permits skipping a nonselected subtree.
+For a current $n_i$-node word and depth $d_i$, at most $O(n_i+d_i+1)$
+constructor/address decisions suffice. On a success, copy to proposed
+word backing while replacing the selected leaf symbol; this uses
+$O(n_i+1)$ symbol writes. Retain old and proposed words until the real
+macro completes; their constructor payloads are $2n_i+2n_{i+1}$ bits,
+not their maximum alone. All stack/counter operations, their growing
+widths, references, frame copies, reservations and sealed answers are
+paid too. These are constructive operation counts for this layout, not
+a unit-cost bound for arbitrary-width references or a polynomial bound
+in the size of a succinct source description. Proper pending prefixes
+pay their received bits and work even before a completion cycle exists.
+Any retained outer transcript, old entry archive or exported view adds
+its own actual material, construction, transmission and later use.
+

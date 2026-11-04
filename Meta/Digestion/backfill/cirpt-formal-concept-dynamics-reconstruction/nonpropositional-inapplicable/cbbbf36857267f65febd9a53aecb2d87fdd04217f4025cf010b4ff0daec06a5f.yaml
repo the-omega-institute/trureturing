@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cbbbf36857267f65febd9a53aecb2d87fdd04217f4025cf010b4ff0daec06a5f
+  normalized_sha256: sha256:cbbbf36857267f65febd9a53aecb2d87fdd04217f4025cf010b4ff0daec06a5f
+cas_ref: sha256:cbbbf36857267f65febd9a53aecb2d87fdd04217f4025cf010b4ff0daec06a5f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: REMAINDER 命名角色与后续定义引言，不含分解等价式。
+    previous_atom_id: 79fed82ee32a5b8fc7f9d67df456e4ae40fa729cc4d50f5c32dc246d3509edc0
+    next_atom_id: 51446ba8f040bab3663b6c00cf9772f7b785980c5bc10a45f6ddc00611fba9fa

@@ -1,0 +1,32 @@
+**Definition 62.1 (a paid exact rational draw).** For $q=k/d\in(0,1)$
+in reduced form, use the classical binary-digit/geometric-index
+Bernoulli construction. Start with $r_0=k$. At each iteration compute
+
+$$
+e_j=\left\lfloor\frac{2r_{j-1}}d\right\rfloor,
+\qquad r_j=2r_{j-1}-de_j,
+\tag{AAII.25}
+$$
+
+then request one fair bit. If that bit is one, return the current digit
+$e_j$; otherwise repeat with $r_j$. The displayed index labels the
+mathematical iterations; the implementation needs no growing index
+counter. Remainder zero continues to produce zero digits. If $q=1/2$,
+use a single fair bit directly instead. This sampler is a classical
+supplier, not a new Bernoulli result: Lumbroso, *Optimal Discrete Uniform
+Generation from Coin Flips, and Applications*, Appendix B,
+[version 1](https://arxiv.org/abs/1304.1916v1).
+
+Indeed $0\le r_j<d$, and repeated division gives
+$q=\sum_{i=1}^j e_i2^{-i}+r_j/(d2^j)$. The remainder term tends to zero.
+If $J$ is the first one in the fair-bit sequence, then
+$\Pr(J=j)=2^{-j}$, $\Pr(J=\infty)=0$, and
+$\mathbb E J=\sum_{j\ge1}\Pr(J\ge j)=2$.
+Consequently the returned digit is one with probability
+$\sum_{j\ge1}e_j2^{-j}=q$. Doubling, comparison and subtraction use
+finite arithmetic on $O(\log d)$ bits of remainder storage, with a
+fixed paid denominator. They take finitely many steps per iteration.
+The direct half-probability draw uses exactly one bit. These facts
+establish exact sampling, almost-sure termination and the stated mean
+bit bills, without any general bit-optimality claim.
+

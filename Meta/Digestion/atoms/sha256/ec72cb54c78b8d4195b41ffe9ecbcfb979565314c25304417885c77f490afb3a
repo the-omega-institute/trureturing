@@ -1,0 +1,6 @@
+For every sequence of simple connected graphs $G_n\in\mathcal G(n,\ell_n)$, the following four conditions are equivalent:
+
+1. $E(G_n)-\mathfrak E_r(n,\ell_n)=o(1/n)$;
+2. $nE(G_n)\to F_r(1+\alpha)$;
+3. eventually $G_n$ is two-layer with exactly $r$ actual degree-oriented sinks, and, for its actual counts with $N=n-r$ and $q_r=(n-1+\ell_n)/N$,
+

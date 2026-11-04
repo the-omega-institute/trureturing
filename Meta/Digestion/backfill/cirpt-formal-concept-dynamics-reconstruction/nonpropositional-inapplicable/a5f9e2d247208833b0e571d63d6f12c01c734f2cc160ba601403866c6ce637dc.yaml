@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a5f9e2d247208833b0e571d63d6f12c01c734f2cc160ba601403866c6ce637dc
+  normalized_sha256: sha256:a5f9e2d247208833b0e571d63d6f12c01c734f2cc160ba601403866c6ce637dc
+cas_ref: sha256:a5f9e2d247208833b0e571d63d6f12c01c734f2cc160ba601403866c6ce637dc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: anchorAdmissible 字段释义与避免重复接口的工程建议。
+    previous_atom_id: f8a37bef22367c4fa44b64355374fca185e363775370f13015e7d87b3e31aea1
+    next_atom_id: 15d9fe59e2accefbb4b8bb24a4190a3dd7dc6ea28615584cce9522367441a0d4

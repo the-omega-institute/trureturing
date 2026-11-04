@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db0547e4f7d172c284f25a377dafe7b4102cfefc4291f6769a6ea302f1b55830
+  normalized_sha256: sha256:db0547e4f7d172c284f25a377dafe7b4102cfefc4291f6769a6ea302f1b55830
+cas_ref: sha256:db0547e4f7d172c284f25a377dafe7b4102cfefc4291f6769a6ea302f1b55830
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 两者当前没有 kernel 依赖是源码依赖状态描述，不是 O-5/O-6 逻辑独立性命题。
+    previous_atom_id: c487742ab8c24d8449e7c123b78053dad7718517e2ee77ecbecca110965316b4
+    next_atom_id: c35cbfaa1ad5f68c2888b134820b5347b032f090c0643cc1dc42e6784409be13

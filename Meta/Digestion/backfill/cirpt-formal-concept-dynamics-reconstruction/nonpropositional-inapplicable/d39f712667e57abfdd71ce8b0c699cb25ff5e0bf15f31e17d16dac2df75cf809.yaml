@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d39f712667e57abfdd71ce8b0c699cb25ff5e0bf15f31e17d16dac2df75cf809
+  normalized_sha256: sha256:d39f712667e57abfdd71ce8b0c699cb25ff5e0bf15f31e17d16dac2df75cf809
+cas_ref: sha256:d39f712667e57abfdd71ce8b0c699cb25ff5e0bf15f31e17d16dac2df75cf809
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 研究状态差异清单中的反例路径一项，没有具体反例存在性断言。
+    previous_atom_id: 23acb48fba6e4c0c08d8dea0e2cbd50e78e13466102957a5195e4b44959045b3
+    next_atom_id: 9837ee9be14fb2a703ef1d244b1203a2413642cd14b2193b20e03642e3fc6aee

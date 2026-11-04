@@ -1,0 +1,47 @@
+# Signed short mass for the complete three-LARGE exchange
+
+## Abstract
+
+Construct an actual signed short-reserve return and consume it in the shared three-LARGE physical exchange.
+
+The source is the actual centered doubling source on physical Fin k labels. This result is conditional on an actual signed short reserve after x; it does not assert universal reserve availability, transport across earlier gates, deeper suffix completion or full C3.1.
+
+The normalized two-pool exclusion also gives separate sign budgets throughout the original Y>P minimum setting. Here k>=3, t is natural, x=hit(k,2,p), n=hit(k,1,p), and the actual word is W=A++[x]++T0++[y]++T1++[zpen]++T2++[z]++E. The hypotheses are s(p)>0, Q<=|s(n)|, N<3|s(p)|, Legal W, p and n unused in all W, every label of T0++T1++T2++E SMALL, Q<=-s(zpen), Q<=-s(z), s(p)<-s(y), and J(W)<=J(V) for every Legal V. Put P=s(p), alpha=P-Q, delta=-s(y)-P, B=C-P and beta=B+1. Let U be the normalized early pool, Pool=U++E, and g=f on physical U membership and -f on E. Take the COMPLETE g-positive and g-negative short filters, with masses Mplus and Mminus. The actual gate supply and the previously proved short-mass bound provide a physical positive high SMALL aStar in U; put a=f(aStar)>beta. Singleton exclusion forces a>=delta+beta, so L=a-delta-B>0. If Mminus>=L, first_crossing on the complete negative-short filter with weights -g and width B selects magnitude M in [L,L+B]=[a-delta-B,a-delta]. Its selected physical labels have g<0 and are therefore distinct from the actual g-positive aStar. The actual union of these labels with [aStar] has signed g mass a-M in [delta,delta+B], contradicting the same two-pool exchange. Hence Mminus<a-delta-B. A first crossing directly on the complete g-positive short filter similarly proves Mplus<delta. All selected batches, complements and U/E splits are constructed physically; repeated equal values remain separately counted.
+
+The actual native source sharpens every positive SMALL value to at most Q-2. A putative value Q-1 would generate the complete cyclic orbit Q-1,C-1,-3,-6,...,-3*2^(k-3); for Q>=4 neither positive value can be the native P satisfying N<3P and N-2P>=Q, while Q=2 already admits no such P. Applying this actual-source cap to aStar yields delta<=alpha-2 and Mminus<alpha-delta-1. Every actual negative short source label outside A is used by the minimum append argument, and the normalization places it in the early pool U. The complete Fin-k negative short filter outside A is a physical Subperm of the complete g-negative short filter; -g=-f on this sublist, and the complementary -g mass is nonnegative. Hence Nout<=Mminus<alpha-delta-1, or equivalently Nout<=alpha-delta-2. The existing full-source/normalized-pool short-filter permutation identifies their absolute masses, giving the stronger full-source bound sum_{i : Fin k, i not in A, 0<abs(f(i))<=beta} abs(f(i))<alpha-2, equivalently at most alpha-3. A still allows arbitrary signed SMALL and LARGE occurrences; no divisibility, Y<r, source injectivity or supplied usedness condition is added.
+
+**Theorem 1.1 (Constructive signed short-reserve selector).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/SignedShortLargeExchange.signed_short_reserve_select`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/SignedShortLargeExchange.signed_short_reserve_select` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a Nodup physical list T, P0 is a physical subpermutation of the entries with 0<f<=B+1 and N0 is a physical subpermutation of the entries with 0<-f<=B+1. Every positive entry of T is at most M, low>0 is supplied by the total positive mass, and the reserve resource is M-B-1 <= mass(P0)+mass(-f,N0).
+
+Remove P0 from the actual positive list and first-cross the remainder at low-Sp. If it undershoots, first-cross P0 at the deficit. If it lands in [low,low+B], retain it. If it overshoots, first-cross N0 with weights -f at u-low-B and append that negative correction. The resulting R is physical, has mass in [low,low+B], and K is the explicit complement with (R++K).Perm T.
+
+The selector uses only the existing PositiveSmallReturnExchange.first_crossing three times. Equal numerical values remain distinct occurrences; no subset-sum oracle or assumed return list is an input.
+
+**Theorem 1.2 (Signed selector consumed by the complete physical exchange).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/SignedShortLargeExchange.actualSource_threeLarge_signed_short_exchange_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/SignedShortLargeExchange.actualSource_threeLarge_signed_short_exchange_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the original actual-source gates, positive and negative short reserve subpermutations P0 and N0, a positive bound M for every actual positive SMALL entry, and M-(C-s(q))-1 <= mass(P0)+mass(-s,N0), the signed selector supplies a physical R with mass in [low,low+C-s(q)] for every demanded positive low covered by the positive mass.
+
+Nodup of the SMALL word is derived from its physical sublist inclusion in the original Legal word. The single tagged physical engine in ThreeLargePacketExchange is consumed with tag True; the existing positive return theorem consumes that same engine with tag R.Subperm(Pos). It returns the literal V=A++[p,n]++L++[z,q] and [x,y,zpen]++R, preserving the complete Inventory, every natural take bound, exact G/U/H balances, strict H and J descent, and endpoint in [s(q),C]. Negative labels in R are permitted. The theorem is conditional on these actual reserves and makes no universal availability, transport, deeper-tail, minimizer, or full C3.1 claim.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Circle/SignedShortLargeExchange.actualSource_threeLarge_signed_short_exchange_full`
+- Truth anchor: `D5/S3/Combinatorics/Circle/SignedShortLargeExchange.signed_short_reserve_select`
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeLargePacketExchange](ThreeLargePacketExchange.md)

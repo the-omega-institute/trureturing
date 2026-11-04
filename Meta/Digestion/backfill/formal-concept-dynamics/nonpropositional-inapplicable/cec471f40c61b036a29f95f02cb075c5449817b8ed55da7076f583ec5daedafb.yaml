@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cec471f40c61b036a29f95f02cb075c5449817b8ed55da7076f583ec5daedafb
+  normalized_sha256: sha256:cec471f40c61b036a29f95f02cb075c5449817b8ed55da7076f583ec5daedafb
+cas_ref: sha256:cec471f40c61b036a29f95f02cb075c5449817b8ed55da7076f583ec5daedafb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅假设有最小元的偏序及保持递增 ω-链上确界的算子，显示等式属于连续性假设，未给出固定点结论。
+    previous_atom_id: fde4b5170e2456ffdb78e973624d91d43edabe06786b3640c43c95ff7b8abfcb
+    next_atom_id: c361822582aeade3b6009278af970be04844d193ffb5f29ff63d2a61d417e615

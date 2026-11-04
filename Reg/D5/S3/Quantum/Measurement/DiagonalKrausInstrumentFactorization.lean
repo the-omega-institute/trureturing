@@ -2,6 +2,11 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization
 import Reg.Support.DependentFamily
 
+/-! Source-bound registrations for diagonal Kraus instrument coordinates. -/
+
+set_option linter.style.longLine false
+set_option linter.checkUnivs false
+
 noncomputable section
 open scoped BigOperators
 open LeanInformationAudit
@@ -53,6 +58,8 @@ abbrev arena : Arena where
           (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix rho)) =
           ∑ b, MatrixMap.of_kraus (K a b) (K a b) rho)
 
+-- The scalar normal form is used by the subsequent `change`.
+set_option linter.flexible false in
 private theorem rejected_law : ¬ arena.{u_1,u_2,u_3,u_4,u_5}.Law rejected := by
   intro h
   let K : ULift.{u_3} Unit → ULift.{u_4} Unit → ULift.{u_5} Unit →
@@ -127,4 +134,101 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 #print axioms family
 #print axioms registration
 
+end Reg.D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization
+
+set_option pp.proofs false in
+#print D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization.diagonal_entry_expansion
+
+namespace Reg.D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization
+noncomputable section
+namespace DiagonalEntryExpansion
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => (starRingEnd ℂ) x) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena.{u, v, w} : Arena where
+  signature := signature
+  Law L := ∀ {I : Type u} {O : Type v} {R : Type w}
+    [Fintype I] [DecidableEq I] [Fintype R]
+    (K : R → Matrix O I ℂ) (p : I → ℂ) (o o' : O),
+    MatrixMap.of_kraus K K (Matrix.diagonal p) o o' =
+      ∑ i, (∑ r, K r o i * L.readout () () (K r o' i)) * p i
+
+set_option backward.isDefEq.respectTransparency false in
+private theorem rejected_law.{u, v, w} : ¬ arena.{u, v, w}.Law rejected := by
+  intro h
+  have hb := @h (ULift.{u} Unit) (ULift.{v} Unit) (ULift.{w} Unit)
+    inferInstance inferInstance inferInstance (fun _ _ _ => 1) (fun _ => 1) ⟨()⟩ ⟨()⟩
+  rw [diagonal_entry_expansion] at hb
+  norm_num [rejected, realize] at hb
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change (starRingEnd ℂ) 0 ≠ (starRingEnd ℂ) 1
+  simp
+
+def source_registration.{u, v, w} : Registration arena (type_of% (@_root_.D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization.diagonal_entry_expansion.{u, v, w})) where
+  actual := realize signature (fun _ _ x => (starRingEnd ℂ) x) (fun e => nomatch e)
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization.diagonal_entry_expansion.{u, v, w}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration.{u, v, w} :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization.diagonal_entry_expansion.{u, v, w}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization.diagonal_entry_expansion.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization.DiagonalEntryExpansion.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => (starRingEnd ℂ) x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "body", "fn", "arg", "arg", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms source_registration
+#print axioms registration
+
+end DiagonalEntryExpansion
+
+end
 end Reg.D5.S3.Quantum.Measurement.DiagonalKrausInstrumentFactorization

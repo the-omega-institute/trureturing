@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:3b2b2cce1078a4fc9af5631f76a69ac2cf05feec426a8c4d524c1d8c907f959f
+  normalized_sha256: sha256:3b2b2cce1078a4fc9af5631f76a69ac2cf05feec426a8c4d524c1d8c907f959f
+cas_ref: sha256:3b2b2cce1078a4fc9af5631f76a69ac2cf05feec426a8c4d524c1d8c907f959f
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroSum.truncatedZeroSum_tendsto
+    target_statement_id: sha256:c75b514b2dc6986b515e57c283cc498b11b5a9ecd47fe3caf440a5339589d6df
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.paperFT_eq_fourierLaplace
+    target_statement_id: sha256:af77ba1a47eea4dfb97f117586a2cbe4bc4ff59ce4d9890b0eb9e63d41a2df3c
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.tendsto_symmetricIndices
+    target_statement_id: sha256:a26065bd9575e0cd422a02a5259b11327079d29e3b53fc4f56b09a728ad02bc6
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.weil_explicit_formula
+    target_statement_id: sha256:d0ab27a1af6591536c6381fffd1c6808499c0426820445c6d7c3eae0f07825b1
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:44a78b74b5663e08d2db421edfcf4964dd859eddf42a6915297b44cfa9c7b426
+  normalized_sha256: sha256:44a78b74b5663e08d2db421edfcf4964dd859eddf42a6915297b44cfa9c7b426
+cas_ref: sha256:44a78b74b5663e08d2db421edfcf4964dd859eddf42a6915297b44cfa9c7b426
+coverage_gids:
+  - gid: D5/S1/FixedPoints/FiniteContractingStability.finite_contracting_updates_stabilize
+    target_statement_id: sha256:5b20f5ded515e22520d0cddbf6861d3ccf6d89c70a471c7dcb878d79b531a06b
+receipts:
+  unresolved_subitems: []

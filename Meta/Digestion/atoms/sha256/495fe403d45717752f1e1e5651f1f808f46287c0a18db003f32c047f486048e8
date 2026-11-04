@@ -1,0 +1,20 @@
+**Lemma 2.2 (Two resets fix the middle posterior).** Under Lemma 2.1's hypotheses, for $n\ge5$ and $3\le i\le n-2$ put
+
+$$
+E_i=\{W_{i-2}=W_{i+2}=1\}.
+\tag{2.1}
+$$
+
+There is a number $c_i(r)$ such that $r_i(W_{-i})=c_i(r)$ on every legal complement in $E_i$.
+
+Proof. Legality forces $W_{i-1}=W_{i+1}=0$. Write a completion as $\ell\,10x01\,t$, where $x\in\{0,1\}$ and the outer strings are compatible with the two displayed ones. Both choices of $x$ are legal for exactly the same outer strings and have positive masses.
+
+Apply the row proportionality from Lemma 2.1 at $i-2$: changing $\ell$ multiplies the masses of every suffix after that one by a factor $A(\ell)>0$, independent of $x,t$. Apply it at $i+2$: the normalized suffix law after the second one is independent of the prefix, hence contributes a common factor $B(t)>0$, independent of $\ell,x$. Fixing one legal outer string on each side thus gives positive constants $H_0,H_1$ with
+
+$$
+r(\ell\,10x01\,t)=A(\ell)H_xB(t).
+\tag{2.2}
+$$
+
+If a reset is an endpoint, its empty outer string has factor one. Consequently the posterior is $H_1/(H_0+H_1)$, independently of the entire distant complement. This uses two cuts of one $r$, not independently specified block kernels. $\square$
+

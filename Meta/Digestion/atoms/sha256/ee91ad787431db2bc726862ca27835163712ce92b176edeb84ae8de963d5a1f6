@@ -1,0 +1,25 @@
+**图 1：** 同一边界数据的两条重组路径。节点是括号树，边是带类型的酉换基；不是把五个 AURIC 模式直接认作欧氏正五边形。
+
+**原始图与 TikZ（逐字保留；Markdown 不执行此源码）。**
+
+```latex
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth, every node/.style={font=\small}]
+\node (a) at (-2.1,1.3) {$(((ab)c)d)$};
+\node (b) at (-3.1,-0.7) {$((a(bc))d)$};
+\node (c) at (0,-2) {$(a((bc)d))$};
+\node (d) at (3.1,-0.7) {$(a(b(cd)))$};
+\node (e) at (2.1,1.3) {$((ab)(cd))$};
+\draw[->,thick,blue!65!black] (a)--node[left] {$\mathsf F$}(b);
+\draw[->,thick,blue!65!black] (b)--node[below] {$\mathsf F$}(c);
+\draw[->,thick,blue!65!black] (c)--node[below] {$\mathsf F$}(d);
+\draw[->,thick,orange!75!black] (a)--node[above] {$\mathsf F$}(e);
+\draw[->,thick,orange!75!black] (e)--node[right] {$\mathsf F$}(d);
+\end{tikzpicture}
+\caption{同一边界数据的两条重组路径。节点是括号树，边是带类型的酉换基；不是把五个 AURIC 模式直接认作欧氏正五边形。}
+\end{figure}
+```
+
+<a id="sec-2-2"></a>
+

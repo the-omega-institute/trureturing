@@ -1,0 +1,18 @@
+**Corollary 22.7 (binary $D$ and its limited minimum).** The fixed test
+
+$$
+h(z)=
+\begin{cases}
++1,&\sin z\geq0,\\
+-1,&\sin z<0
+\end{cases}
+\tag{22.14}
+$$
+
+satisfies (22.13), since its reflection-collision set is contained in
+$\{0,\pi\}$. It therefore supplies the signed calibration and full lifted
+prefix with one binary reply on every unresolved paired branch. A constant
+sensor fails. Thus two is the least response-alphabet cardinality in this
+fixed-endpoint comparison. This is not a minimum installation, arithmetic,
+archive, clock, physical, or total-cost resource.
+

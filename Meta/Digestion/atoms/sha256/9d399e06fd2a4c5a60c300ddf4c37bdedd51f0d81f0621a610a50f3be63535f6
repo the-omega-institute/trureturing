@@ -1,0 +1,31 @@
+**Assumption 103.1 (cylinder-mean service).** Public parameters are rationals
+$E\ge0$ and $\varepsilon>0$. When $E>0$ and $\varepsilon^2<\varphi E$, set
+
+$$
+t=\frac{\varepsilon^2}{2\varphi E},\quad
+h=\min\{j\in\mathbb N_0:2^{-j}\le\varepsilon/2\},\quad q=2^{-h},\quad
+R=\sqrt{\frac{\varphi E}{bt}},\quad K=\lceil R/q\rceil+1 .
+\tag{103.1}
+$$
+
+Here $0<t<1/2$. The extra service admits finite request sequences
+at addresses $p\in A_t$.
+On the single supplied input $F\in\mathcal B_E$, a request terminates
+and delivers only a finite word representing an integer in
+
+$$
+\Gamma_p(F)=\{n\in\mathbb Z:|n|\le K,\ |qn-\mu_p(F)|\le q\}.
+\tag{103.2}
+$$
+
+The service preserves $F$ and the availability of subsequent admitted
+requests. Preservation, legality and finite delivery are producer obligations,
+not consequences of the spectral theorem. There is no source copy, reset,
+archive, full-input oracle, or access to an exact mean before quantization.
+All accessible input-dependent data are the integer words; latency and
+other hidden state supply no observations. The response/error model
+permits every choice in (103.2) after every admitted finite request history;
+the guarantee must hold for all these choices, even when they depend on
+preceding replies. All its means concern this same unchanged $F$;
+responses from different inputs or histories may not be spliced together.
+

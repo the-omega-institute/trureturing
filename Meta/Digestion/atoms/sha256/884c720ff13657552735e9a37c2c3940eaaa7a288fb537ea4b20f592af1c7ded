@@ -1,0 +1,31 @@
+**Definition 1.1 (a common faithful weight).** Let $n\ge2$ be an integer,
+$H=\mathbb C^n$ with its usual inner product, and $\rho$ a positive definite
+Hermitian operator with $\operatorname{Tr}\rho=1$. For every linear subspace
+$X\subseteq H$, let $P_X$ be its ordinary orthogonal projection and put
+
+$$
+\mu(X)=\operatorname{Tr}(\rho P_X),\qquad f_c(X)=c+\mu(X),\qquad 0\le c<\infty.
+\tag{1.1}
+$$
+
+The meet is $X\cap Z$ and the join is the actual vector-space sum $X+Z$.
+For $f_c(X+Z)>0$ define
+
+$$
+d_c(X,Z)=1-\frac{f_c(X\cap Z)}{f_c(X+Z)},\qquad
+\Delta_c(X,Y,Z)=d_c(X,Z)-d_c(X,Y)-d_c(Y,Z).
+\tag{1.2}
+$$
+
+Set $d_0(0,0)=0$. Faithfulness makes this the only pair with zero
+denominator. All weights, projections and lattice operations in a triple
+use this one $\rho$ on this one $H$.
+
+For $X\subseteq Z$, $P_Z-P_X$ is the orthogonal projection onto
+$Z\cap X^\perp$, so $\mu(Z)-\mu(X)\ge0$, strictly if $X\ne Z$.
+Indeed, in an orthonormal basis of a nonzero subspace $U$,
+$\operatorname{Tr}(\rho P_U)$ is a sum of strictly positive quadratic forms.
+Thus $0\le d_c\le1$, the distance is symmetric, and $d_c(X,X)=0$.
+These elementary trace facts agree with the forward trace-weight construction
+in [R2]; they do not require a representation theorem for arbitrary measures.
+

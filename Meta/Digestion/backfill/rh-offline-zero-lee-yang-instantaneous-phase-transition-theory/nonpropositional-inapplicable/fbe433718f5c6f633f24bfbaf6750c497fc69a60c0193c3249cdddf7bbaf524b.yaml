@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fbe433718f5c6f633f24bfbaf6750c497fc69a60c0193c3249cdddf7bbaf524b
+  normalized_sha256: sha256:fbe433718f5c6f633f24bfbaf6750c497fc69a60c0193c3249cdddf7bbaf524b
+cas_ref: sha256:fbe433718f5c6f633f24bfbaf6750c497fc69a60c0193c3249cdddf7bbaf524b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：O0 至 O5 仅给六类 readout 命名，后文为要求证明 canonical morphism 的研究安排；此 atom 不断言这些恢复映射已经存在。
+    previous_atom_id: c538557e4bc62811772d5ce9cf7c80ffb7712a27797cbce1d1907fdda7bf05fb
+    next_atom_id: 9d799079d1c39d9091d4d2e79b46538a54f3a6662e8025fdf4d031c230237712

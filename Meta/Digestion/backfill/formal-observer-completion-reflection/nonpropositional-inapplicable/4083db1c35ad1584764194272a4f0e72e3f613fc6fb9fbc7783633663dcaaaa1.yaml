@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4083db1c35ad1584764194272a4f0e72e3f613fc6fb9fbc7783633663dcaaaa1
+  normalized_sha256: sha256:4083db1c35ad1584764194272a4f0e72e3f613fc6fb9fbc7783633663dcaaaa1
+cas_ref: sha256:4083db1c35ad1584764194272a4f0e72e3f613fc6fb9fbc7783633663dcaaaa1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 在给定未实现行为的研究场景下列扩大模型或加强 admissibility 两种修复方向，没有声称任意场景下修复必然可行。'
+    previous_atom_id: 2b004fb71836df14bd6f450d29e4cfc3ad9148214134cd0566b71f506a78d61d
+    next_atom_id: 263033466508c4e769c19fa9addef25580db44f1d4fea461937cc6ccf5cdf0c4

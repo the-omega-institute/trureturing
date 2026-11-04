@@ -1,0 +1,74 @@
+**Theorem 3.1 (exact local clock classification and finite witnesses).**
+Fix one aligned periodic core $y$ with least positive period $p$ and any
+presented period $u$. For two local trials with this same core, complete
+local forward behaviour agrees if and only if
+
+$$
+ A_1\equiv A'_1\pmod p,\qquad A_2\equiv A'_2\pmod p.
+ \tag{PCR.4}
+$$
+
+Here complete behaviour can be taken to mean all finite labelled local
+states, all cut-indexed supports, or all future presence answers on
+relative words at their indexed cuts. The same equivalence holds for
+equality of the single support $S_T$ whenever
+
+$$
+ s\ge1,\quad F_s\ge r,\quad T\ge s+2,
+ \qquad r=\deg g_y,
+ \tag{PCR.5}
+$$
+
+where $g_y$ is the core's least monic annihilator and $r>0$. A sufficient
+bound requiring only a presented period is $F_s\ge u,T\ge s+2$, because
+$r\le p\le u$. These bounds are sufficient, without an optimality claim.
+For zero and both constants, $p=1$ and there is one clock behaviour;
+within a fixed constant core no maturity condition is necessary.
+
+Proof. First record the recurrence facts used here. On periodic streams,
+forward shift is invertible. A nonzero periodic stream's least monic
+annihilator has constant term one: otherwise dividing its annihilator
+by $E$ would give a smaller annihilator, since shift is injective on
+periodic streams. Its recurrence determines all entries from any $r$
+consecutive entries, both forwards and backwards. For the backwards
+step, solve the recurrence for the earliest entry using its nonzero
+constant term. Thus two shifts of $y$ agreeing on $r$ consecutive
+entries agree as integer-indexed periodic sequences. An integer shift
+preserves $y$ exactly when it is divisible by $p$: divide any positive
+period by $p$ and use periodic extension to show that its remainder is
+a period unless zero. Negative shifts reduce to positive ones. In
+particular $p\mid u$. Finally $E^p-1$ annihilates $y$, proving $r\le p$.
+These are classical recurrence and periodicity facts, used here inside
+the source correspondence rather than claimed as new theorems.
+
+If (PCR.4) holds, the Fibonacci recurrence preserves equality of every
+$I_k$ modulo $p$. Equation (PCR.2) gives identical batch words, and
+forward replacement gives identical labelled states and supports. This
+is the sufficient direction of ACR Lemma 33.2, now reduced to least
+period rather than a possibly redundant presented period.
+
+For the converse at (PCR.5), Theorem 2.1 recovers equal batches $s$ and
+$s+1$, since both are at most $T-1$. Each has at least $r$ entries.
+Their equality and the recurrence fact just proved imply that each
+start-index difference $I_s-I'_s$ and $I_{s+1}-I'_{s+1}$ is zero modulo
+$p$. The clock transition
+
+$$
+ \begin{pmatrix}I_{k+1}\\I_{k+2}\end{pmatrix}
+ =\begin{pmatrix}0&1\\1&1\end{pmatrix}
+  \begin{pmatrix}I_k\\I_{k+1}\end{pmatrix},\qquad
+ \begin{pmatrix}I_k\\I_{k+1}\end{pmatrix}
+ =\begin{pmatrix}-1&1\\1&0\end{pmatrix}
+  \begin{pmatrix}I_{k+1}\\I_{k+2}\end{pmatrix}
+ \tag{PCR.6}
+$$
+
+is invertible modulo every positive $p$, including composite periods.
+Iterate backwards to the seeds to obtain (PCR.4). Agreement of the
+entire support family includes a cut satisfying (PCR.5), so it has the
+same converse. All labelled histories determine all supports; equality
+of all supports gives the seeds and therefore all labelled histories.
+A difference of finite supports supplies a relative literal presence
+separator at that cut. For $p=1$ every pair is congruent, and fixed
+constant orientations directly prove the remaining assertion. $\square$
+

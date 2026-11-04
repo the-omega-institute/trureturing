@@ -1,0 +1,40 @@
+**应用 27.1（相容内部描述到共同相干比较的缺项）。** 取两个有限描述集的内部复 Gram 核 $A\succeq0,B\succeq0$，大小分别为 $r,s$。
+本卷 §§6、15 的正核表示若要包含两个描述集，尚须一个 $r\times s$ 的交叉块 $C$，使
+
+$$
+K=\begin{pmatrix}A&C\\C^\dagger&B\end{pmatrix}\succeq0.
+$$
+
+这里消费标准奇异块收缩分解：[Watrous，arXiv:1207.5726v2，Lemma 2](https://arxiv.org/abs/1207.5726v2) 给同大小正块版本，不要求正定；不同大小可补零到共同大小。
+其精确参数对应为该引理的 $P=A,Q=B,X=C$（补零时同时补交叉块）。结论是
+
+$$
+C=A^{1/2}TB^{1/2},\qquad T:\mathbb C^s\to\mathbb C^r,\quad\|T\|\le1. \tag{27.1}
+$$
+
+为保留奇异边界，若 $u\in\ker A$，对全部 $z\in\mathbb C,v$ 取 $(zu,v)$ 的二次型；没有 $|z|^2$ 项使线性交叉项必须为零，故 $u^\dagger Cv=0$。
+同理 $C$ 消去 $\ker B$。在两个支撑空间用逆平方根合同，得到 $\left(\begin{smallmatrix}I&T\\T^\dagger&I\end{smallmatrix}\right)\succeq0$。
+取 $(-Ty,y)$ 得 $\|Ty\|\le\|y\|$，在核上补零得到 (27.1)；反之收缩性给
+$\|x\|^2+2\operatorname{Re}\langle x,Ty\rangle+\|y\|^2\ge(\|x\|-\|y\|)^2\ge0$，再合同即得 $K\succeq0$。
+所以两个内部核一般没有决定它们的共同表示；缺的是收缩交叉关系，而非各自再作一次 GNS。
+
+例如 $A=B=[1]$ 时 $C=[z]$ 可取整个 $|z|\le1$ 圆盘，且 $z$ 可由同一 Hilbert 空间单位向量 $v_0,v_1$ 的内积实现。
+若额外供应共同参考和实际控制准备
+
+$$
+|\Psi\rangle=(|0\rangle v_0+|1\rangle v_1)/\sqrt2,
+\qquad\langle v_0,v_1\rangle=z,
+$$
+
+再另供路径效果 $|+_\phi\rangle\langle+_\phi|$、$|+_\phi\rangle=(|0\rangle+e^{i\phi}|1\rangle)/\sqrt2$，则
+
+$$
+p(+_\phi)=\|(v_0+e^{-i\phi}v_1)/2\|^2
+ =\tfrac12[1+\operatorname{Re}(e^{-i\phi}z)]. \tag{27.2}
+$$
+
+这个推导区分三个资源：数学上允许的共同核、能制备该相干控制态的接口、能读取相位的效果。
+相容候选的存在不提供后两者，也不提供先验权重；$1/\sqrt2$ 是此处另供的平衡准备，不由候选数推出。
+若改给经典权重 $p,1-p$，它们也是额外选择，并不自动给 (27.2) 的交叉项。
+故“概念也在谱中”的可用含义是将概念编码、交叉关系、实际比较及权重分别纳入共同模型；不能以多个自洽解释替代相干性。∎
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:545298f0ab0051aab615228507fe84ca5e2ab2e830305093fbfffdd5ff1e8408
+  normalized_sha256: sha256:545298f0ab0051aab615228507fe84ca5e2ab2e830305093fbfffdd5ff1e8408
+cas_ref: sha256:545298f0ab0051aab615228507fe84ca5e2ab2e830305093fbfffdd5ff1e8408
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/OrderedTimeSimplexSecondMagnusAverage.ordered_time_simplex_kernel_average_zero_gap
+    target_statement_id: sha256:57a2c5cf238e282687cd2a9850890f435a88975096ac3b1326e3cd456cd514e6
+receipts:
+  unresolved_subitems: []

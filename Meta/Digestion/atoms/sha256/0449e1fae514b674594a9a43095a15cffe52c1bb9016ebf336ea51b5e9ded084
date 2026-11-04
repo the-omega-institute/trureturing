@@ -1,0 +1,11 @@
+**Proposition 15.3 (one coexisting layout).** A single attained layout can keep all the following on every tape. Numerical words have their actual widths bounded by $W_\rho$; an archive's framing and any separate copy are additional material.
+
+| Coexisting component | Sufficient charge |
+| --- | --- |
+| Actual specimen | $N$ cells, $N-1$ links, true $B$-bit coefficients, and two state buffers of $O(NW_\rho)$ bits. |
+| Complete actual startup record | Every command, transmitted pulse, scalar return and acknowledgement, including rejected attempts: $O(m^2W_\rho)$ numerical bits plus actual framing/indexing. No failed branch is erased from this record. |
+| Randomness material | The $K_m$ consumed bits if retained, the current amplitude/cursor, actual $G_{\rm live}$, randomness access/independence assurance and backing. A separate retained bit copy is charged separately. |
+| Detector and candidate arrays | A constant number of at most $(m+1)$-row rational arrays, including elimination/pivot scratch, free/impulse windows, observability/control matrices: $O(m^2W_\rho)$ bits. |
+| Law, predictor and preparation | Candidate/native coefficients, $q,\mu,F$, a constant number of native/predictive vectors, the computed pulse list and progress: $O(m^2W_\rho)$ bits suffices concurrently with the arrays. |
+| Four exported views | Their actual separate encodings. At acceptance their prescribed numerical data take $O(mW_\rho)$ bits; Time has $2d+1$ actual entries. Extra export, delivery or future Time-list copies are added. |
+| Program, counters and access | The actual finite program, $b$ and expanding stage/call counters, serialization buffers, root/source reference, Read/Tick/Hold/signed-Add rights, exclusive control, class/fixedness assurance and all storage/control backing. |

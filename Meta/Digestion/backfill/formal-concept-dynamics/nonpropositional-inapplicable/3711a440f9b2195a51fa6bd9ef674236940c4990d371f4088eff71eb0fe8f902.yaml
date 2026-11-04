@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3711a440f9b2195a51fa6bd9ef674236940c4990d371f4088eff71eb0fe8f902
+  normalized_sha256: sha256:3711a440f9b2195a51fa6bd9ef674236940c4990d371f4088eff71eb0fe8f902
+cas_ref: sha256:3711a440f9b2195a51fa6bd9ef674236940c4990d371f4088eff71eb0fe8f902
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第五层统一这一章节的导言，没有单独陈述某个因子化关系。
+    previous_atom_id: 01ea1833d0a3d62109cc59d5acf4e515f98206db56f77cdcc5530d3f9486192c
+    next_atom_id: e30610290b6605f269543d2c1169a8b3052963e79c479b05d4b64925ecb9c769

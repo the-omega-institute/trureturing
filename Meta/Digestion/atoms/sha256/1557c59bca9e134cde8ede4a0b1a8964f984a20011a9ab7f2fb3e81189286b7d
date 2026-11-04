@@ -1,0 +1,45 @@
+**Theorem 5.4 (all routes, round trips and current-task kernel in A).** On
+the entire image of Definition 5.3 each view recovers the other three and
+the unique $h$. The following are finite explicit routes.
+
+From Time, evaluate the actual recurrence in Definition 3.2 locally from
+$1$, then (5.1), (5.3), (5.4) and the terminal prefix rule. From Boundary,
+parse $t$ from $B_0$, construct $D_I$, compute $D_IY$, and use Theorem
+4.1. From Space, parse $t$ and compute $T_t^{-I}x_{\rm now}$ before
+Theorem 4.1. From Memory, compute $D_Im_{\rm now}=x_{\rm now}$ and use
+the Space route. Each round trip is the identity on its stated image,
+and a route through any intermediate view equals the direct route.
+
+Within the fixed context of Assumption 2.3, unrestricted finite complete
+current service in A has kernel exactly equality of $(t,x_{\rm now})$.
+Consequently all four views on this image have that same kernel, and it
+distinguishes all different $h\in\mathcal H_A$.
+
+**Proof.** The terminal prefix rule and the supplied $D_IO_I=\operatorname{Id}$
+give the stated Boundary and Memory calculations. Invertibility gives
+$T_t^{-I}T_t^Ix_h=x_h$. Theorem 4.1 then returns exactly the original
+$h$, and its replay identity reconstructs the same historical pair and
+the same acquired/current blocks. This proves every direction, rather
+than presupposing an inverse to define a view.
+
+For explicit composition, write $E_i(h)$ for the independent content in
+row $i$ and $R_i$ for its displayed decoder. We proved
+$R_iE_i(h)=h$ for every legal finite $h$. The route $i\to j$ is the
+already specified calculation $E_jR_i$. Thus on the joint image
+$E_kR_jE_jR_i=E_kR_i$, and $E_iR_i$ is identity on row $i$'s image.
+These equations recover the literal ordered $Y$, but do not manufacture
+a second physical measurement or any extra intervening journal.
+
+For the service kernel, §7 proves that equal current $(t,x)$ has equal
+complete outputs and matched successors for every common finite backed
+adaptive continuation. Conversely two distinct addressed terms have a
+first differing logical constructor. A $P$ request there separates
+alpha/beta/branch by Growth, wrong-type refusal or branch refusal.
+If the terms agree and fields differ, (5.1) has zero kernel, so some
+terminal Read after $r\le I$ actual Ticks separates the two fields.
+These are legal complete finite continuations. Finally, for fixed $t$,
+$T_t^I$ is injective and Theorem 4.1 distinguishes the historical pairs.
+Transferring through the established routes proves the last assertion.
+Outside this image different pasts can have identical current service,
+as (4.2) and Reset demonstrate. $\square$
+

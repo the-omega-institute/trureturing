@@ -40,9 +40,22 @@ $$\forall z \in C,\; \left(z^{3} = z^{2} + z + 1 \land z \ne t\right) \Rightarro
 
 Removing the Perron factor leaves a real quadratic. Its negative discriminant forces each secondary root to be nonreal, while its real and imaginary equations give squared modulus t inverse, which is strictly below one.
 
+**Theorem 1.4 (Secondary-root embedding relations).**
+
+Lean statement: `D5/S0/Tower/Tribonacci/Binet.tribonacci_secondary_root_relations`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Tower/Tribonacci/Binet.tribonacci_secondary_root_relations` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing residual-quadratic computation also gives the sum of a secondary root and its conjugate equal to 1 - beta, their product equal to beta squared - beta - 1, and beta times the squared root norm equal to one. These identities are consumed by the resultant separation and positive-area packing in the proof of nonempty Rauzy interior.
+
 ## References
 
 - Truth anchor: `D5/S0/Tower/Tribonacci/Binet.abs_lt_one_of_tribonacci_root_ne_perron`
 - Truth anchor: `D5/S0/Tower/Tribonacci/Binet.tribonacciBinetCoefficient`
 - Truth anchor: `D5/S0/Tower/Tribonacci/Binet.tribonacci_binet_tendsto_zero`
+- Truth anchor: `D5/S0/Tower/Tribonacci/Binet.tribonacci_secondary_root_relations`
 - Dependency: [D5/S0/Tower/Tribonacci/PerronRoot](PerronRoot.md)

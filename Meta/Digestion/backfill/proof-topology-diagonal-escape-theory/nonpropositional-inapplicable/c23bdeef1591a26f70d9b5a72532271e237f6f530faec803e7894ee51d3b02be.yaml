@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c23bdeef1591a26f70d9b5a72532271e237f6f530faec803e7894ee51d3b02be
+  normalized_sha256: sha256:c23bdeef1591a26f70d9b5a72532271e237f6f530faec803e7894ee51d3b02be
+cas_ref: sha256:c23bdeef1591a26f70d9b5a72532271e237f6f530faec803e7894ee51d3b02be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯节标题 PC.2 前缀极值与运行正规形；仅标识以下条目的主题，不包含量化命题、等式结论或证明断言。
+    previous_atom_id: 52cc651bbb5f46f27fc25e242e89ef8df57e6435d558163f28d375dc09fdd4f1
+    next_atom_id: 7fcc89c01c55679036f62c0d262eb4c75787030979be6ad0eb35631dc0b7ea78

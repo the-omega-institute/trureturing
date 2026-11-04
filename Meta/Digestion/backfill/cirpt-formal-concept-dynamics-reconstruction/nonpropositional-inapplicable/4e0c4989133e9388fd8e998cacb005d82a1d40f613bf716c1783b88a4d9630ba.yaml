@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e0c4989133e9388fd8e998cacb005d82a1d40f613bf716c1783b88a4d9630ba
+  normalized_sha256: sha256:4e0c4989133e9388fd8e998cacb005d82a1d40f613bf716c1783b88a4d9630ba
+cas_ref: sha256:4e0c4989133e9388fd8e998cacb005d82a1d40f613bf716c1783b88a4d9630ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非零曲率机制候选列表中的 ANCHOR 或历史更新项。
+    previous_atom_id: 917e6e103f4e73f9b49cca76d663cc79a9b4062fc5fbf877d9944894957538f9
+    next_atom_id: b7596a8f2a8ba55598e244739a1591e38b3093bfd0f31867bd96ba3f788deff8

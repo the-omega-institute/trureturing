@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7dcf93513310470ae0665e9af8d0c9b4455a19d51700986e9e6f868f9b77869e
+  normalized_sha256: sha256:7dcf93513310470ae0665e9af8d0c9b4455a19d51700986e9e6f868f9b77869e
+cas_ref: sha256:7dcf93513310470ae0665e9af8d0c9b4455a19d51700986e9e6f868f9b77869e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/CounterfactualRepairSeparation.counterfactual_success_not_imply_allowed_repair
+    target_statement_id: sha256:d4e34b63224d1528c465b8dd10c597aacd35cf96e379f5337dc0932533f09dc0
+receipts:
+  unresolved_subitems: []

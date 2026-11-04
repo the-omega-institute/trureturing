@@ -1,0 +1,133 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons.PolygonConditionedFanFormula;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Polygons;
+
+internal sealed class PolygonConditionedFanDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Geometry/Polygons/PolygonConditionedFan.";
+    private static Formula Fan => C("fan", X("P"), X("h"));
+    private static Formula Card(string s) => C("card", X(s));
+    private static Formula Ear(Formula i) => C("ear", i);
+    private static Formula Or(Formula a, Formula b) => R(a, Lor, b);
+    private static Formula Less(Formula a, Formula b) => R(a, Lt, b);
+    private static Formula Ne(Formula a, Formula b) => Not(EqF(a,b));
+    private static Formula Pairset(Formula a, Formula b) => Insert(a, Insert(b, Emptyset));
+    private static Formula Noncrossing(Formula s) => All("i", Vertex, All("j", Vertex,
+        Imp(InF(X("i"), s), Imp(InF(X("j"), s), Imp(Ne(X("i"), X("j")),
+            Not(C("Cross", Ear(X("i")), Ear(X("j")))))))));
+    private static Formula Two(Formula t) => ExistsF("e", Chord, AndF(InF(X("e"), t),
+        ExistsF("f", Chord, AndF(InF(X("f"), t), AndF(Ne(X("e"),X("f")),
+            AndF(C("IsDiagonal",X("e")),AndF(C("IsDiagonal",X("f")),
+                AndF(C("Cross",X("e"),Ear(X("h"))),C("Cross",X("f"),Ear(X("h")))))))))));
+    private static Formula Cases() => Or(AndF(EqF(Card("P"),N(2)),EqF(Card("Q"),N(2))),
+        Or(AndF(EqF(Card("P"),N(3)),EqF(Card("Q"),N(3))),
+            Or(AndF(EqF(Card("P"),N(2)),EqF(Card("Q"),N(4))),
+                AndF(EqF(Card("P"),N(4)),EqF(Card("Q"),N(2))))));
+    private static Formula SourceResult() => AndF(C("Nonempty", Fibre(Emptyset,Emptyset)),
+        AndF(Less(N(0),C("Natcard",Fibre(Emptyset,Emptyset))),
+            AndF(ExistsF("h",Vertex,AndF(Not(InF(X("h"),X("P"))),
+                ExistsF("T",Fibre(Emptyset,Emptyset),EqF(C("val",X("T")),Fan)))),
+                All("H",Sets,Imp(SubF(X("H"),C("EK",Union(X("P"),X("Q")))),
+                    Imp(Noncrossing(X("H")),All("h",Vertex,Imp(InF(X("h"),X("H")),
+                        ExistsF("T",Fibre(X("H"),Emptyset),
+                            AndF(EqF(C("val",X("T")),Fan),Two(C("val",X("T")))))))))))));
+
+    private static DocumentBlock Node(string name, string title, Formula f, string prose,
+        DescribeRole role = DescribeRole.Theorem) => Describe.Lean(
+        DescribeId.Create("polygon-conditioned-fan-" + name.Replace("_","-").ToLowerInvariant()),
+        DeclarationHandle.Create(Prefix + name), H(title),
+        StatementSource.FromAuthor(Disp(f)), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(prose))), role);
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Literal forced-ear fans and original conditioned polygon completions",
+        H("Original cyclic vertices and internal diagonals"), Blocks(
+            Node("Independent","Cyclic independence",Scope(All("P",Sets,
+                IffF(C("Independent",X("P")),All("i",Vertex,Imp(InF(X("i"),X("P")),
+                    Not(InF(AddF(X("i"),N(1)),X("P")))))))),
+                "Independence forbids consecutive centres in ZMod n, including across the cyclic seam.",
+                DescribeRole.Definition),
+            Node("fan","Literal forced-ear fan",Scope(All("P",Sets,All("h",Vertex,All("e",Chord,
+                IffF(InF(X("e"),Fan),Or(
+                    ExistsF("i",Vertex,AndF(InF(X("i"),X("P")),EqF(Ear(X("i")),X("e")))),
+                    ExistsF("j",Vertex,AndF(Not(InF(X("j"),X("P"))),
+                        AndF(C("IsDiagonal",Pair(X("h"),X("j"))),
+                            EqF(Pair(X("h"),X("j")),X("e"))))))))))),
+                "The fan is the union of every forced original ear and every original internal root spoke whose other endpoint is outside P. Both parts are finite sets: coincident forced ears and spokes occur once. Vertices retain their original labels.",
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("polygon-conditioned-fan-fan-triangulation"),
+                DeclarationHandle.Create(Prefix + "fan_triangulation"),
+                H("A complete actual triangulation and its ears"),
+                StatementSource.FromAuthor(Disp(
+                    Scope(All("P",Sets,All("h",Vertex,Imp(Lower(6),
+                    Imp(C("Independent",X("P")),Imp(Not(InF(X("h"),X("P"))),
+                        AndF(Tri(Fan),AndF(SubF(X("P"),Ears(Fan)),
+                            SubF(Ears(Fan),Union(X("P"),
+                                Pairset(Sub(X("h"),N(1)),AddF(X("h"),N(1))))))))))))))),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every n at least 6, an independent P and a root outside P give an actual triangulation of the full original polygon. No restriction excludes empty P or forces the root neighbours to survive outside P. Internalness and strict cyclic noncrossing hold for every member. For maximality, an omitted internal chord with a forced endpoint crosses that forced ear. Otherwise, in coordinates relative to the root, let its endpoints be a<b. A surviving centre a+1 supplies a crossing spoke. If a+1 is forced, independence makes a+2 survive; the sole exceptional gap b=a+2 is already the forced ear at a+1. The ear bounds follow from injectivity of original ears and the endpoints of root spokes.")),
+                    Paragraph(Text("Application to an active matching core. Identify each original ear chord with its centre in ZMod n, and write Ear(T) for the full EarCenters of an actual triangulation T. For n at least 6, let D be cyclically independent, let P and M be disjoint subsets of D with M nonempty, and let U be any actual triangulation with Ear(U) intersect D = M. Define Gamma_D(P) to consist of every original actual triangulation T with Ear(T) intersect D = P. Thus Gamma_D(P) is the underlying chord-set version of ConditionFiber empty empty D P: all outside-D ears and every actual completion are retained. Neither the trace condition on U nor membership in Gamma_D(P) fixes a full ear set.")),
+                    Paragraph(Text("Choose h in M. The exact trace of U gives h in Ear(U), while disjointness gives h outside P. Independence of D passes to P, so PolygonConditionedFan.fan_triangulation applies to T = fan P h. It supplies an actual triangulation with P contained in Ear(T) and Ear(T) contained in P union {h-1,h+1}. All vertex arithmetic is cyclic on the original polygon. Since h belongs to D, independence of D excludes both neighbours from D. Intersecting the two ear bounds with D therefore gives the exact trace Ear(T) intersect D = P, so T belongs to the complete Gamma_D(P).")),
+                    Paragraph(Text("The disjointness concerns full ears. PolygonCompressionTrace.earCenters_independent applied to the actual U excludes h-1 and h+1 from Ear(U), because h is an ear of U. No centre of P can lie in Ear(U): it would belong to Ear(U) intersect D = M, contradicting disjointness of P and M. The upper ear bound for T now excludes every possible common ear, including outside D. Hence Ear(T) and Ear(U) are disjoint. They are distinct triangulations: equality would place the known ear h of U in both full ear sets. This argument uses only the fan ear bounds; it does not require Ear(T) = P.")),
+                    Paragraph(Text("Full-core confinement in the original family. Let n be at least 14 and let D consist of six distinct compatible actual ears labelled by the opposite-edge matchings of K4. Fix any four prescribed complete-star witnesses in one finite family F of actual triangulations, and require intersecting full ear sets only for distinct members of F. The star-cover argument gives a nonempty D-trace for every member T, including when T is itself a prescribed witness. Fix a matching M whose entire fibre Gamma_D(M) is contained in this same F. If the complete Ear(T) avoided M, choose h in Ear(T) intersect D and apply the preceding fan construction with forced set M and original triangulation T. It gives an actual U with exact D-trace M and with its complete ears disjoint from Ear(T). The known ear h of T proves U differs from T. Full-fibre containment puts U in F, contradicting the distinct-member intersection condition. Consequently every member of F has a complete ear in M. The proof uses PolygonConditionedFan.fan_triangulation, PolygonCompressionTrace.earCenters_independent and independent_iff_noncrossing, together with the four-star covering relation. The fan ear bounds suffice throughout: all outside-D ears and every triangulation completion remain in Gamma_D(M), and no full ear-set equality with M is required. Compatibility permits shared endpoints and excludes interior crossings; this is the native cyclic chord-set interpretation, without a coordinate-level equivalence claim.")),
+                    Paragraph(Text("For the original domain, take n at least 14 and a six-element D whose distinct original ear chords are pairwise noncrossing. PolygonCompressionTrace.independent_iff_noncrossing converts that geometric compatibility to the independence used above; the equal-centre case is noncrossing automatically. Let P be a three-ear path trace and M a disjoint two-ear matching trace, both subsets of this D. The argument covers arbitrary compatible placements and every such disjoint path/matching pair, with no additional incidence condition. Let F be one finite family of actual triangulations such that every two distinct members have intersecting full ear sets. An active matching means that some U in this same F has exact D-trace M; its full ear set may be larger than M. The resulting T in Gamma_D(P) cannot belong to F, since T differs from U and their full ear sets are disjoint. Thus Gamma_D(P) is not contained in F, and F intersect Gamma_D(P) is a proper subset of Gamma_D(P). Finset.card_lt_card gives |F intersect Gamma_D(P)| < |Gamma_D(P)|, hence |F intersect Gamma_D(P)| <= |Gamma_D(P)| - 1 both with natural-number subtraction and after converting the cardinalities to signed integers. This includes nonempty selected sides and the case F intersect Gamma_D(P) = empty: the constructed T still makes Gamma_D(P) nonempty. No self-intersection assumption on a single member of F is used.")),
+                    Paragraph(Text("The original-domain correspondence is the path-fibre non-saturation step in B-37.7 of AURIC_FIB_ATOM_INTRINSIC_CLASSIFICATION_AND_POLYGON_GEOMETRY: its Gamma(P) is Gamma_D(P), a path P = M_i union {x} disjoint from M_j is the selected trace, and a_j > 0 supplies U from the same F with matching trace M = M_j. The source obtains non-saturation using the stronger realization with full ear set exactly P; the existing fan theorem suffices for the implication above. All original completions remain in the fibres. The implication requires no fibre saturation, A > W, protected ears or placement symmetry, and makes no change to the family F.")),
+                    Paragraph(Text("Complementary four-ear loss application. For every n at least 14 in the full original domain, let D be six distinct compatible original ears labelled by E(K4), with arbitrary injective labelling f : {0,1,2} x {0,1} -> ZMod n whose image is D (write f_ka = f(k,a)), and let F be the one finite family of actual triangulations carrying the four prescribed complete-star witnesses and all three active matching cores. The only family condition used for its members is that distinct members have intersecting full ear sets. For each k in {0,1,2}, let M_k = {f_k0,f_k1} be the corresponding two-ear matching and Q_k = D minus M_k. Distinctness gives |M_k| = 2 and |Q_k| = 4, with Q_k a subset of D, M_k a subset of D, Q_k disjoint from M_k, and Q_k union M_k = D. Thus all three selected matching cases are handled simultaneously in this same F, for arbitrary compatible ear placements and every actual completion outside D.")),
+                    Paragraph(Text("Write Gamma_k = Gamma_D(Q_k), b_k = |F intersect Gamma_k|, and r_k = w4(n) minus b_k. The exact count transport through the whole-fibre correspondence and conditional_card identifies |Gamma_k| with Nat.card(WholeFiber(Q_k,M_k)) and gives |Gamma_k| = w4(n), while its integer cast is Npq(n,4,2). In particular Nat.card(WholeFiber(Q_k,M_k)) = w4(n), (w4(n) : Int) = Npq(n,4,2), and |Gamma_k| has the same integer value. Applying source_conditioned_witnesses in its ordered (4,2) case supplies 0 < w4(n) and 0 < Npq(n,4,2). The finite count normalization supplies (w4(n) : Int) = Catalan(n-6) - 2 Catalan(n-7) + Catalan(n-8). These are counts of the complete Gamma_k and WholeFiber, with all original completions retained.")),
+                    Paragraph(Text("For each k, the active matching hypothesis supplies U_k in this same F with Ear(U_k) intersect D = M_k. The generic fan omission with arbitrary P = Q_k and M = M_k then supplies an actual T_k in Gamma_k, outside F, with full Ear(T_k) disjoint from full Ear(U_k) and T_k distinct from U_k. Therefore F intersect Gamma_k is a proper subset of Gamma_k and Gamma_k is not contained in F. Cardinal monotonicity gives b_k < w4(n), b_k <= w4(n) - 1, and 1 <= r_k in Nat. After casting to Int it gives (b_k : Int) < (w4(n) : Int), (b_k : Int) <= (w4(n) : Int) - 1, and 1 <= (w4(n) : Int) - (b_k : Int); substituting the Catalan expression gives the corresponding strict, minus-one, and positive-loss inequalities with Catalan(n-6) - 2 Catalan(n-7) + Catalan(n-8). If the selected side F intersect Gamma_k is empty, then b_k = 0, 1 <= w4(n) in Nat, and 1 <= (w4(n) : Int) - (b_k : Int) still hold.")),
+                    Paragraph(Text("The concrete n = 14 inhabitant uses D = {0,2,4,6,8,10} and (f00,f01,f10,f11,f20,f21) = (0,8,2,6,10,4). Its four complete-star witnesses are the actual fans fan({0,2,10},1), fan({0,4,6},5), fan({2,4,8},3), and fan({6,8,10},7); their full ear sets are exactly {0,2,10}, {0,4,6}, {2,4,8}, and {6,8,10}, respectively. Its three active matching-core witnesses are fan({0,8,12},2), fan({2,6,12},0), and fan({4,10,12},0), with exact D-traces {0,8}, {2,6}, and {4,10}, respectively, and the common outside-D ear 12. All seven displayed members are distinct actual triangulations and every two have intersecting full ear sets, so the four complete stars and all three active cores coexist in this one F. For every k, F intersect Gamma_k is empty, w4(14) = 704, b_k = 0, and r_k = 704, in both the natural and integer readings. The prior path losses ell_k >= 2 hold in this same F. This records a finite inhabitant of the full original domain; it makes no full B-37.7 partition, eta or deficit identity, equality, maximum, n = 24, K_res, novelty, or sharpness claim. The construction uses no A > W, saturation, parity, symmetry, protected-carrier, or exact-ear-core assumption.")),
+                    Paragraph(Text("A local example has n = 14, D = {0,2,4,6,8,10}, P = {0,2,4} and M = {8,10}. Label these six centres f12=0, f34=2, f13=4, f24=6, f14=8 and f23=10. Then P is the path 2-1-3-4 and M is the disjoint matching {f14,f23}. The two distinct actual triangulations U = fan M 11 and V = fan P 13 form a full-ear-intersecting family F = {U,V}: both have the outside-D ear at centre 12. Their exact D-traces are M and P respectively, so the matching core and the selected path side are both nonempty. The application still supplies an omitted member of the full Gamma_D(P). This two-member example makes no assertion that it contains all four prescribed star witnesses of the original problem.")),
+                    Paragraph(Text("The generic omission argument illustrated by the two-member local example establishes only omission and non-saturation with the finite minus-one consequence. By itself it does not supply the complementary path-pair strict/count substitutions or the ell_i >= 2 step. This limitation concerns that argument alone: the complementary four-ear count and loss application above and the referenced prior path result retain their stated conclusions. These applications do not establish all of B-37.7, a partition or deficit identity, a global maximum, an equality classification or a K_res conclusion. They apply the cited existing declarations, with no claim of new mathematics."))), DescribeRole.Theorem),
+            Node("fan_two_crossings","Two distinct original diagonals cross the root ear",
+                Scope(All("P",Sets,All("h",Vertex,Imp(Lower(6),
+                    Imp(Less(AddF(Card("P"),N(4)),X("n")),Two(Fan)))))),
+                "This stronger statement needs only n at least 6 and |P|+4<n. The complement of P union {h,h-1,h+1} has more than one vertex. Two distinct targets give distinct symmetric-square spokes, each an original internal diagonal crossing ear(h). No count of all triangulation diagonals is used."),
+            Node("source_conditioned_witnesses","Positive complete fibres and terminal empty traces",
+                Scope(All("P",Sets,All("Q",Sets,Imp(Lower(14),
+                    Imp(C("Disjoint",X("P"),X("Q")),Imp(Noncrossing(Union(X("P"),X("Q"))),
+                        Imp(Cases(),SourceResult()))))))),
+                "P,Q are disjoint and their union consists of pairwise noncrossing original ears. All four cases (2,2),(3,3),(2,4),(4,2) are included. Independence of P is derived from these geometric conditions. To obtain an actual conditioned completion, choose h outside P union (Q-1) union (Q+1), a set of size at most |P|+2|Q|<n. The root may belong to Q. The literal fan forces P and avoids Q, giving a member of the full ConditionFiber P Q empty empty and positive Nat.card. For every terminal pairwise noncrossing H contained in EK(P union Q) and every h in H, that same fan at h avoids Q union H and has two distinct original internal diagonals crossing ear(h). Thus its exact H trace is empty. ConditionFiber retains every original actual triangulation satisfying its conditions. Exchanging P,Q supplies the opposite direction separately. These are the geometric existence inputs for B-37.2 and the fan paragraph following (37.10), also used in B-34.4. Neither a Catalan count, a flip-image theorem, nor a normalized strict comparison is asserted. EK denotes E_K, Natcard denotes Nat.card, and val is the underlying original chord set.")
+        ), []));
+}
+
+
+internal static class PolygonConditionedFanFormula
+{
+    internal static Formula X(string name) => StrataLint.Scribe.FormulaDsl.Id(name);
+    internal static Formula N(int n) => n == 14 ? D(1,4) : D((byte)n);
+    internal static Formula C(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(X(name))), [.. args]);
+    internal static Formula Vertex => C("ZMod", X("n"));
+    internal static Formula Chord =>
+        new Formula.Apply(Seq(Operatorname, Grp(X("Sym"), D(2))), [Vertex]);
+    internal static Formula Sets => C("Finset", Vertex);
+    internal static Formula All(string v, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(v), domain, body);
+    internal static Formula ExistsF(string v, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(v), domain, body);
+    internal static Formula Scope(Formula body) => All("n",X("Nat"),
+        Seq(OpenBracket,C("NeZero",X("n")),CloseBracket,Comma,Sp,body));
+    private static Formula Operand(Formula f) => f is Formula.Bind ? Seq(Open,f,Close) : f;
+    internal static Formula R(Formula a, Formula op, Formula b) =>
+        Seq(Open,Operand(a),Sp,op,Sp,Operand(b),Close);
+    internal static Formula EqF(Formula a, Formula b) => R(a,Eq,b);
+    internal static Formula IffF(Formula a, Formula b) => R(a,Iff,b);
+    internal static Formula AndF(Formula a, Formula b) => R(a,Land,b);
+    internal static Formula Imp(Formula a, Formula b) => R(a,Implies,b);
+    internal static Formula Not(Formula a) => Seq(Neg,Sp,Open,a,Close);
+    internal static Formula InF(Formula a, Formula b) => R(a,InMacro,b);
+    internal static Formula SubF(Formula a, Formula b) => R(a,Subseteq,b);
+    internal static Formula AddF(Formula a, Formula b) => R(a,Plus,b);
+    internal static Formula Sub(Formula a, Formula b) => R(a,Minus,b);
+    internal static Formula Union(Formula a, Formula b) => R(a,Cup,b);
+    internal static Formula Insert(Formula a, Formula b) => C("insert",a,b);
+    internal static Formula Pair(Formula a, Formula b) => C("symPair",a,b);
+    internal static Formula Ears(Formula t) => C("EarCenters",t);
+    internal static Formula Tri(Formula t) => C("IsTriangulation",t);
+    internal static Formula Fibre(Formula j, Formula r) =>
+        C("ConditionFiber",X("P"),X("Q"),j,r);
+    internal static Formula Lower(int n) => R(N(n),Leq,X("n"));
+}

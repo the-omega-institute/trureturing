@@ -1,0 +1,44 @@
+**Definition 4.1 (rows and signed guards).** An address is a finite word
+in $\{L,R\}^*$, with root $\varepsilon$. The reply $r_u(p)$ is
+$\alpha,\beta,\mathsf{branch}$ or $\mathsf{absent}$. A subtree $u|_p$
+exists exactly at reached addresses. For a finite prefix-free original
+cut $A$, the complete row $R_A(u)$ has three fields: the ordered reached
+set $I_A(u)=A\cap\operatorname{Pos}(u)$, the concrete ordered exterior
+$C_A(u)$ with numbered holes at those addresses, and the full equality
+partition of their entire native subtrees. Empty cuts, the root cut and
+absent cut addresses are included.
+
+Its native mask is $M_A(u)=C_A(u)[\alpha,\ldots,\alpha]$. The reached set
+and mask recover the exact exterior by replacing the subtrees at those
+known reached addresses by the corresponding numbered holes. This is
+[ABC, Theorem 4.2][ABC]; no equality partition is inferred from a mask.
+
+For a signed record $e=(a,p,b,q,\bowtie)$, $\bowtie\in\{=,\ne\}$, define
+
+$$
+\operatorname{Rel}_e(u)
+\Longleftrightarrow
+p\in\operatorname{Pos}(\rho^a u)\ \land\
+q\in\operatorname{Pos}(\rho^b u)\ \land\
+(\rho^a u)|_p\ \bowtie\ (\rho^b u)|_q.
+\tag{NIC.16}
+$$
+
+Either sign requires both guards. In particular an absent endpoint does
+not satisfy a negative record. A literal $(a,p,c)$ imposes
+$r_{\rho^a u}(p)=c$. The entire source fiber for a fixed old row $R$,
+finite literal list $H_0$ and finite signed list $H_{\rm rel}$ is
+
+$$
+D=\{u\in\mathcal T:
+R_P(u)=R,\ H_0(u),\ \bigwedge_{e\in H_{\rm rel}}\operatorname{Rel}_e(u)\}.
+\tag{NIC.17}
+$$
+
+All lists retain repetitions, all constraints refer to the same original
+$u$, and no old class or inequality is restricted to the new task $Q$.
+If old holes $i,j$ have one class, their entire subtrees must agree;
+if they have different classes, their entire subtrees must differ,
+including classes outside the new cut. The old concrete exterior and
+old absent addresses are also part of (NIC.17).
+

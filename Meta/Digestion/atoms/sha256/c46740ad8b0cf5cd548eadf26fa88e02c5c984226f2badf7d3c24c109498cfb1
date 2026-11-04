@@ -1,0 +1,75 @@
+**Proposition 13.1 (an actual periodic producer in the posterior band).** Order the states as
+
+$$
+A=(0,0),\quad B=(0,1),\quad C=(1,0),\quad D=(1,1),
+$$
+
+where $H_i=(S_i,X_{i-1})$ records a phase and the previous emitted bit. Set
+
+$$
+M_0=\begin{pmatrix}
+0&0&3/4&0\\
+0&0&1&0\\
+2/3&0&0&0\\
+1&0&0&0
+\end{pmatrix},\qquad
+M_1=\begin{pmatrix}
+0&0&0&1/4\\
+0&0&0&0\\
+0&1/3&0&0\\
+0&0&0&0
+\end{pmatrix},\qquad
+\lambda=\frac1{22}(8,3,9,2).
+\tag{13.1}
+$$
+
+This is a stationary legal irreducible producer in $\Theta_4$, of period exactly two. Either infinite observed half-line determines $S_0$ almost surely. Its full-exterior posterior is
+
+$$
+q_0=\begin{cases}
+1/3,&X_{-1}=X_1=0,\ S_0=0,\\
+2/5,&X_{-1}=X_1=0,\ S_0=1,\\
+0,&\{X_{-1}=X_1=0\}^{c}.
+\end{cases}
+\tag{13.2}
+$$
+
+In particular its visible law satisfies the original band $\mathsf B(P)$.
+
+**Proof.** Every row of $A=M_0+M_1$ sums to one, and multiplication gives
+
+$$
+\lambda A=\frac1{22}(9\cdot2/3+2,\ 9/3,\ 8\cdot3/4+3,\ 8/4)
+=\frac1{22}(8,3,9,2).
+$$
+
+Also $M_1^2=0$. The cycle $A\to D\to A$ and the paths $A\to C\to B\to C\to A$ connect all states. Every transition changes phase, so every return length is even; the two-step return at $A$ makes the period exactly two. These are properties of the original labeled edge law (2.2).
+
+Write $a_0=1/4$, $a_1=1/3$, and $t_s=1-a_s$. Given phase $s$ and previous bit zero, the next emitted bit is one with probability $a_s$; after a one the next bit is zero with probability one. Every transition satisfies $S_{i+1}=1-S_i$ and gives the endpoint previous bit $X_i$. The phase-conditioned stationary distributions of $H_i$ are $(8,3)/11$ on $\{A,B\}$ and $(9,2)/11$ on $\{C,D\}$. The two-step transition matrices on these classes are, respectively,
+
+$$
+\begin{pmatrix}3/4&1/4\\2/3&1/3\end{pmatrix},\qquad
+\begin{pmatrix}5/6&1/6\\3/4&1/4\end{pmatrix}.
+$$
+
+Both have strictly positive entries. The classical finite-chain occupation theorem, applied to these two-step chains, yields the emitted-one frequencies
+
+$$
+r_0=\mathbb P(X_i=1\mid S_i=0)=\frac8{11}\frac14=\frac2{11},
+\qquad
+r_1=\mathbb P(X_i=1\mid S_i=1)=\frac9{11}\frac13=\frac3{11}.
+\tag{13.3}
+$$
+
+For example, conditional on $S_0=s$, the empirical averages of $X_{2n}$ and $X_{2n-1}$, $1\le n\le k$, converge as $k\to\infty$ to $r_s$ and $r_{1-s}$. One can obtain this directly from the second coordinate of $H_{2n+1}$ and $H_{2n}$, respectively. For the left half-line the averages of $X_{-2n}$ and $X_{-(2n-1)}$ have the same two limits, by the occupation theorem for the stationary reversed two-step chains. Since $r_0\ne r_1$, either half-line determines $S_0$. This is an infinite-frequency assertion: every finite legal word has positive probability under each possible phase at its start, by starting with previous bit zero, so no such finite word identifies the phase.
+
+Conditional on the phase, the visible process has the alternating one-step transition rule just stated. On $F_0=\{X_{-1}=X_1=0\}$, the two possible center paths have respective weights
+
+$$
+X_0=0:\ t_st_{1-s}=\frac12,
+\qquad
+X_0=1:\ a_s\cdot1.
+$$
+
+All remaining factors cancel in finite exterior windows conditional on $S_0=s$. Passing to the full exterior by bounded conditional-expectation convergence gives $q_0=a_s/(1/2+a_s)$. The exterior already determines the phase by (13.3), so no phase averaging remains in this ratio. Off $F_0$, legality forces $q_0=0$. This proves (13.2); stationarity gives the same assertion at every translated site. Both nonzero values lie in $[1/4,1/2]$. $\square$
+

@@ -1,0 +1,4 @@
+**推论 33.2（联合尺度的两端）。** 固定 $t$，令 $\delta_k$ 位于上述穿孔区间、$r_k\ge1$ 为整数。若 $r_k\delta_k^2\to\infty$，则 $e_{r_k}(t,\delta_k)\to0$ 且 $E_{r_k}(P_{t,t+\delta_k})\to0$。若 $r_k\delta_k^2\to0$，则 $E_{r_k}(P_{t,t+\delta_k})\to V(t)$，且 $\liminf_k e_{r_k}(t,\delta_k)\ge V(t)$。
+
+**证明。** 第一项直接由（29.5）的固定 $a_t,B_t$ 及非负性得到。第二项将定理 18.1 的误差项写为 $\sqrt{C_t r_k\delta_k^2/2}$，令其趋于零，再用（32.8）。这没有将二值分类误差与最优平方风险视为相等。$\square$
+

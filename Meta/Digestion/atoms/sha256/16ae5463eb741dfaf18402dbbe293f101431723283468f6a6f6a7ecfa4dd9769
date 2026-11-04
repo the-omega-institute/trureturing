@@ -1,0 +1,34 @@
+**Proposition 8.2 (the full common-history fiber).** For every $b>0$, $\mathcal F_b$ contains infinitely many actual sources. For fixed $H,D$, all of them have the same entire pure-$M$ history, including every sampled gain root. In particular, neither the calibrated data nor additional pure-$M$ reads distinguish them.
+
+**Proof.** Every positive rank-one trace-one matrix can be written uniquely as
+
+$$
+P(r,q)=\frac1{1+rq}
+\begin{pmatrix}1&q\\r&rq\end{pmatrix},\qquad r,q>0.
+\tag{8.3}
+$$
+
+Indeed the row ratio is $r=P_{21}/P_{11}$, the column ratio is $q=P_{12}/P_{11}$, and rank one and trace one give the displayed formula. Its $M$ trace is $b$ exactly when
+
+$$
+r+q+rq=b(1+rq).
+\tag{8.4}
+$$
+
+For all sufficiently small $r>0$, set
+
+$$
+q=\frac{b-r}{1-(b-1)r}>0.
+\tag{8.5}
+$$
+
+This gives (8.4), and different $r$ give different sources. Finally $M^2=M+I$ implies
+
+$$
+\operatorname{tr}(M^iP)=f_i+F_i b\quad(i\ge0),
+\qquad f_0=1,\quad f_i=F_{i-1}\ (i\ge1).
+\tag{8.6}
+$$
+
+The two initial values are $1,b$, and both sides obey the same recurrence. Substitution into (8.1) proves equality of every pure-$M$ observation, without dividing by any gain. Conversely every source compatible with the known $b$ satisfies (8.2), so no other source information is implicit in this history. $\square$
+

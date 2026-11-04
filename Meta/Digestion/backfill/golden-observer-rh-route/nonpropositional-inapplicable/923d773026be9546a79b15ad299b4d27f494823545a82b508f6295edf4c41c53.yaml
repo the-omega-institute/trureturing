@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:923d773026be9546a79b15ad299b4d27f494823545a82b508f6295edf4c41c53
+  normalized_sha256: sha256:923d773026be9546a79b15ad299b4d27f494823545a82b508f6295edf4c41c53
+cas_ref: sha256:923d773026be9546a79b15ad299b4d27f494823545a82b508f6295edf4c41c53
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 约定 q_temp 读取所列等式是否成立；不声称等式对任一点成立。
+    previous_atom_id: aa828c7bccb1d3f8d20baa0595175a5486ec22b12072de852c8d70af093dc09c
+    next_atom_id: 8991dd3d662d23d1e927e96b11e85d52422643d054f3f0228b6ba74799621743

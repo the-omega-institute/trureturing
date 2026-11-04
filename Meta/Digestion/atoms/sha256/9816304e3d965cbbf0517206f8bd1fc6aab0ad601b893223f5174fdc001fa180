@@ -1,0 +1,19 @@
+**Proposition 3.4 (noncanonical codes and interpreted feedback).** The
+soundness in Theorem 3.2 does not justify using ambient shape or code
+inequality as a negative test. Its branch occurs checks do not reject
+all interpreted native feedback equations.
+
+Proof. The different ambient codes $F([1],[0])$ and $[2]$ expand to the
+same actual tree $\langle\beta,\alpha\rangle=T_2$. Thus their ambient
+inequality is not a native disequality, exactly why (NIC.13) is imposed
+after expansion.
+
+The native equation $\rho x=\langle x,\alpha\rangle$ has the finite
+witness $x=\beta$. Its actual code definitions choose the collapse with
+$X=[1]$, the other argument $[0]$ and output $[2]$; their erased shapes
+are all $c$, so this positive branch is not rejected by a free occurs
+check. More generally (NIC.6) makes
+$\rho^2(T_j)=\langle\rho(T_j),T_j\rangle$ true for every $j\ge0$.
+These are actual finite interpreted solutions. The proof of Theorem
+3.2 preserves them through their genuine branches. $\square$
+

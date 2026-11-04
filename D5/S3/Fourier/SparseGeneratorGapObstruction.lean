@@ -281,7 +281,7 @@ private lemma angle_edge {N : ℕ} [NeZero N] (hN : familyDomain N)
       mul_le_mul_of_nonneg_left (hm.trans hdiv) (by positivity)
     _ = _ := by ring
 
-private lemma phase_chord (a b : ℝ) :
+lemma phase_chord (a b : ℝ) :
     ‖Complex.exp (Complex.I * (a : ℂ)) - Complex.exp (Complex.I * (b : ℂ))‖ ≤ |a - b| := by
   have he : Complex.exp (Complex.I * (a : ℂ)) - Complex.exp (Complex.I * (b : ℂ)) =
       (Complex.exp (Complex.I * ((a - b : ℝ) : ℂ)) - 1) *

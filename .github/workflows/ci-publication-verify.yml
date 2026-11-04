@@ -84,10 +84,16 @@ jobs:
         env:
           HIT: ${{ steps.entry.outputs.hit }}
         run: case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        if: steps.entry.outputs.hit == 'true'
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - if: steps.entry.outputs.hit == 'true'
         uses: actions/setup-dotnet@v5
         with:
-          global-json-file: global.json
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
       - if: steps.entry.outputs.hit == 'true'
         run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - if: steps.entry.outputs.hit == 'true'
@@ -186,10 +192,16 @@ jobs:
         env:
           HIT: ${{ steps.entry.outputs.hit }}
         run: case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        if: steps.entry.outputs.hit == 'true'
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - if: steps.entry.outputs.hit == 'true'
         uses: actions/setup-dotnet@v5
         with:
-          global-json-file: global.json
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
       - if: steps.entry.outputs.hit == 'true'
         name: Publish an isolated verification resource pack
         env:

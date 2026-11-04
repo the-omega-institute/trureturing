@@ -1,0 +1,40 @@
+**引理 2.1（判别群和最短代表）。**
+
+<a id="lem-discriminant"></a>
+
+有 $Q^*/Q\simeq\mathbb F_5$，以 $[\omega_1]$ 为生成元，且
+$[\omega_k]=k[\omega_1]$。在此标记下，
+
+$$
+\overline B(a,a')=\frac{4aa'}5\pmod{\mathbb Z}.
+$$
+
+类 $k\in\{1,2,3,4\}$ 的最小平方范数为 $k(5-k)/5$，
+达到最小值的向量恰有 $\binom5k$ 个。$Q$ 中平方范数为 $2$ 的向量有 $20$ 个。
+
+**证明。**
+
+$Q$ 由 $e_i-e_{i+1}$ 生成，故 $x\in Q^*$ 当且仅当 $x_i-x_j\in\mathbb Z$。
+结合 $\sum_i x_i=0$，所有坐标具有共同的五分之一小数部分，商群阶为 $5$。
+$\omega_k-k\omega_1$ 是坐标和为零的整数向量，故有相应类等式。
+又 $\omega_1^2=4/5$，得到判别配对。
+
+类 $k$ 的向量可且只能写成
+$m-(k/5)\mathbf1$，其中 $m\in\mathbb Z^5$、$\sum_i m_i=k$。于是
+
+$$
+\left\lVert m-(k/5)\mathbf1\right\rVert^2=\sum_i m_i^2-\frac{k^2}{5}
+\ge k-\frac{k^2}{5},
+$$
+
+因为任意整数 $m_i$ 都满足 $m_i^2\ge m_i$。
+等号恰在每个 $m_i\in\{0,1\}$ 时成立，即恰选 $k$ 个位置。
+在零类中，平方范数为 $2$ 且坐标和为零只可能是 $e_i-e_j$，$i\ne j$，
+共有 $5\cdot4=20$ 个。
+最后，以 $e_i-e_{i+1}$ 为基，Gram 矩阵的主对角元为 $2$、相邻元为 $-1$；
+其 $n$ 阶行列式满足 $D_n=2D_{n-1}-D_{n-2}$、$D_0=1,D_1=2$，
+故 $D_n=n+1$，特别地 $\det Q=5$。证毕。
+ □
+
+<a id="statement-2-2"></a>
+

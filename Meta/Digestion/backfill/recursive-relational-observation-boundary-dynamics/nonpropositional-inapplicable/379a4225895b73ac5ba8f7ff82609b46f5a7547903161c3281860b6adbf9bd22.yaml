@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:379a4225895b73ac5ba8f7ff82609b46f5a7547903161c3281860b6adbf9bd22
+  normalized_sha256: sha256:379a4225895b73ac5ba8f7ff82609b46f5a7547903161c3281860b6adbf9bd22
+cas_ref: sha256:379a4225895b73ac5ba8f7ff82609b46f5a7547903161c3281860b6adbf9bd22
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 37 title and navigation listing the different completion objects to be distinguished.
+    previous_atom_id: e56d4c4e49f716158d880ab0abf935cdec313b5ac650795d8faa378d7f6bbd2e
+    next_atom_id: b7ee78220dd0b87bd2fbf629baf53f0f42c6241527d58a3e1a04c8e73631b8be
+  chain_atoms:
+    - 71da32d82b9e286d67ad06d3f61ef4074bd5ec283a69dcc2319a70a0c8103964
+    - 87741fc6196992dd66b1ac893d70ca8ba71e1a9111030d370d6942717ae88503

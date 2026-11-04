@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:952c6467a2a8f7d37479b432696ad925a402b58fa0977a7bf9d88c1141c13587
+  normalized_sha256: sha256:952c6467a2a8f7d37479b432696ad925a402b58fa0977a7bf9d88c1141c13587
+cas_ref: sha256:952c6467a2a8f7d37479b432696ad925a402b58fa0977a7bf9d88c1141c13587
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只列举 Weil 支撑作为证书资源名称，没有支撑大小或证书存在的断言。
+    previous_atom_id: 37ed3edfd38732ebadb0b153641520a13a7acc6c73a733a5040a816bedeb5070
+    next_atom_id: 35cc64e52812f1999f42d268aaf7c2a76603fa2038e5dcfeed12a140ac879406

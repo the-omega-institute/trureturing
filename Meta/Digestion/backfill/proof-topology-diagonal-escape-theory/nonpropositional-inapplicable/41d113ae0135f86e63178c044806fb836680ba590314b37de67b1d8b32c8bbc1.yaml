@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:41d113ae0135f86e63178c044806fb836680ba590314b37de67b1d8b32c8bbc1
+  normalized_sha256: sha256:41d113ae0135f86e63178c044806fb836680ba590314b37de67b1d8b32c8bbc1
+cas_ref: sha256:41d113ae0135f86e63178c044806fb836680ba590314b37de67b1d8b32c8bbc1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在已假设的分块表示中命名被测矩阵元 s_{λab}(t)，没有断言它们足以恢复记忆。
+    previous_atom_id: 20ad0517c57aa14a8ad48a3d2189e448c079a38c1d43e82a7f5dc94789373b5c
+    next_atom_id: 7168b7def7bec997e551f16a49d88b29ac10c97af57910df5dd36647dbe10d89

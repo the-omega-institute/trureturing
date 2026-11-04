@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:28e064a2d3fba136cd6a0748c6f549c1e3128963c389e189d38e974a24ccf321
+  normalized_sha256: sha256:28e064a2d3fba136cd6a0748c6f549c1e3128963c389e189d38e974a24ccf321
+cas_ref: sha256:28e064a2d3fba136cd6a0748c6f549c1e3128963c389e189d38e974a24ccf321
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 比较两条路线所需的全局零点控制工作，属于方法论评注，不给出控制界、可达性或定理。
+    previous_atom_id: ee6c6a50884001c969397b1591576328ee044ad53275c7ed8c40c6ff1bd784ee
+    next_atom_id: 4e83f6c423cef37e5130317452547bccea28cc9a504d86b1eb877fb1269af351

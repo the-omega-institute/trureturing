@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/SpinChains/ComplexHoppingCoherenceDampingRefutation.claim; result=D5/S3/Quantum/SpinChains/ComplexHoppingCoherenceDampingRefutation.result; claim=D5/S3/Quantum/SpinChains/ComplexHoppingCoherenceDampingRefutation.claim
    digest: Complex hopping can increase parity-twisted ground-state coherences. -/
 
+import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 import D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation

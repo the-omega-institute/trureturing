@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac030b428d67486b8accb3832b2495b3368cc3611f97259ceee3bdaed1ed20c2
+  normalized_sha256: sha256:ac030b428d67486b8accb3832b2495b3368cc3611f97259ceee3bdaed1ed20c2
+cas_ref: sha256:ac030b428d67486b8accb3832b2495b3368cc3611f97259ceee3bdaed1ed20c2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 明确把保持读数、平移、端点的双向字典作为假设，未主张该字典已经构造或证明存在。
+    previous_atom_id: 9c770585aef0edc522e4f5e4e82099f2f7a59aee1f2f6c04f62e828fa9d5a6ed
+    next_atom_id: 48fa7e3de1afb520fe7128195d7af35f952ac53fad5256f94b38ebb3dfc14aad

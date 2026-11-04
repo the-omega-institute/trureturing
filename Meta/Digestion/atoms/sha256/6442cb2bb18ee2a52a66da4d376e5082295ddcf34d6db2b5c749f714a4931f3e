@@ -1,0 +1,21 @@
+#### 推论 7.3（回根门的完整形式）
+
+若 $U\omega_0=x$，则所有把 $x$ 送回 $\omega_0$ 的酉门为
+
+$$
+\boxed{G=SU^*,\qquad S\in\operatorname{Stab} (\omega_0).}
+$$
+
+只有其中 $S=I$ 给出所要求的整个算子逆 $`G=U^*`$。
+
+**证明。**
+
+$GU\omega_0=\omega_0$ 等价于 $GU\in\operatorname{Stab} (\omega_0)$。
+
+□
+
+这把「回到 $\Omega$」中的未定作用精确落在稳定子上。
+它是端点关系之上仍须保留的一层关系，而不是额外的外部东西。
+
+<a id="statement-7-4"></a>
+

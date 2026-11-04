@@ -1,0 +1,17 @@
+**约定 1.3（风险与拓扑）。** 置 $\mathcal E_0=\sigma(X_j:j\ne0)$，$\mathcal F_r=\sigma(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r)$。供应接口为
+
+$$
+D_r(P)=\sum_{\substack{u,v\in B_r\\u_r=v_1=0}}h(P([u0v]),P([u1v])),\qquad
+d(P)=\lim_{n\to\infty}\frac{\Phi_n(P_n)}n
+=\inf_rD_r(P)=\mathbb E_P[(X_0-q_P)^2]\le c_\star,
+\tag{1.1}
+$$
+
+其中 $q_P=\mathbb E_P[X_0\mid\mathcal E_0]$。双点纤维质量为 $s,t$ 时，其风险是 $s(t/(s+t))^2+t(s/(s+t))^2=h(s,t)$；强制零单点风险为零；零总质量纤维任选后验而加权项为零。条件投影收敛给 $D_r\downarrow d$，每个 $D_r$ 是连续柱函数，故 $d$ 上半连续。有限词内部的风险至多 $D_r$，两端共 $2r$ 项各至多 $1/4$，故
+
+$$
+d(P)\le\Phi_n(P_n)/n\le((n-2r)D_r(P)+r/2)/n\quad(n\ge2r+1).
+$$
+
+这说明使用的是原全词目标，全部长度及 $n=3N$ 的密度相同。$X$ 为紧可度量空间，$\mathcal S$ 是其概率空间的闭子集，因而紧。全局最大值 $c_\star$ 由供应达到律取到。
+

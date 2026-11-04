@@ -1,0 +1,68 @@
+## 七、把这个容差直接接到 Robin 不等式
+
+> **Editorial note — inherited Robin bridges remain open.** The author text preserves the same-$n$ decomposition (28), the assertion $\mathcal D(n)\ge0$, and the complete budget term $\mathcal B(T)$. The merged predecessor <code style="overflow-wrap:anywhere">AURIC_FIXED_VARIATIONAL_CORES_SUMMABLE_SCHUR_RECURSION_AND_FINITE_WINDOW_ROBIN_TRANSFER.md</code>, at exact commit <code style="overflow-wrap:anywhere">3919f1b0fbb64e472f77a130b5c422b7d242a56d</code>, records these as `ASSUMED-UNVERIFIED`: the strict optimizer/equality-layer convention, the inactive 5040 boundary, identification of the strict inventory with the same original integer, the full definition of $\mathcal B$, and the weighted insertion of the root correction into the integral are not supplied by `EulerLayerRootCorrection` alone. The exact same-$n$ identity, its sign, and the weighted error needed for (32) must therefore be supplied before (30)–(34) can be read as unconditional Robin conclusions. The PNT-tail estimate and the rational margin calculation are separate conditional components.
+
+> **Editorial note — transfer and tail applicability.** Equations (29)–(34) are restricted to the same original integer $n$ sufficiently large, with $T=\log n>1$, $L=\log T>0$, and $D\ge L$. This restriction applies to Theorem 5 as well as to its asymptotic use: without it, the displayed integral can cross $u=1$ and diverge. Fix positive constants $c,C$ and a cutoff $u_0>1$ for which the cited unconditional PNT estimate holds for every $u\ge u_0$. The bound (31) additionally requires $e^D\ge u_0$; an extension below that cutoff would require separate evidence and is not supplied here. In the choice $D=A(\log T)^2$, fix $A>1/(4c^2)$ independently of $n$, and take the original $n$ sufficiently large that all these domain and cutoff conditions hold. These conditions do not discharge the inherited same-$n$ identity or weighted budget (32); the Robin conclusions (30)–(34) remain conditional on those `ASSUMED-UNVERIFIED` bridges.
+
+保持原整数 $n$，令
+
+$$
+T=\log n,\qquad L=\log T,
+$$
+
+$$
+R(n)=\frac{\sigma(n)}{e^\gamma n\log\log n}.
+$$
+
+沿用已建立的实际分解
+
+$$
+-\log R(n)
+=
+\mathcal D(n)+I_\psi(T)+\mathcal B(T),
+$$
+<a id="eq-28"></a>
+<div class="equation-caption">Equation (28).</div>
+
+其中 $\mathcal D(n)\geq0$ 是原整数的实际 Euler 层偏离量，$\mathcal B(T)\geq0$ 是完整库存修正，全部素数指数层仍保留。
+
+其有符号部分为
+
+$$
+I_\psi(T)
+=
+\int_T^\infty
+\frac{\log u+1}{u^2\log^2u}
+(\psi(u)-u)\,du.
+$$
+
+记
+
+$$
+Q(T)=\sqrt T\log T\,I_\psi(T).
+$$
+
+前面证明的精确传输公式为
+
+$$
+\begin{aligned}
+Q(T)
+={}&-\left(1+\frac1L\right)K(L)\\
+&+
+L\int_0^\infty
+e^{-v/2}
+\frac{L+v+2}{(L+v)^3}
+K(L+v)\,dv
++E_{\mathrm{arch}}(T),
+\end{aligned}
+$$
+<a id="eq-29"></a>
+<div class="equation-caption">Equation (29).</div>
+
+且
+
+$$
+E_{\mathrm{arch}}(T)\geq
+-\frac{\log(2\pi)}{\sqrt T}.
+$$
+

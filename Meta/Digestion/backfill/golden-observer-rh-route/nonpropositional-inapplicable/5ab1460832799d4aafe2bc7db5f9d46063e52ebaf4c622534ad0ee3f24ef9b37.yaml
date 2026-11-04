@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5ab1460832799d4aafe2bc7db5f9d46063e52ebaf4c622534ad0ee3f24ef9b37
+  normalized_sha256: sha256:5ab1460832799d4aafe2bc7db5f9d46063e52ebaf4c622534ad0ee3f24ef9b37
+cas_ref: sha256:5ab1460832799d4aafe2bc7db5f9d46063e52ebaf4c622534ad0ee3f24ef9b37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: source digest 和追加 import receipt 的要求属于版本身份与历史保护规则。
+    previous_atom_id: 60c13b954170ea13293658b42300a6f636380cb4e4408774fdc68d7ad1eddbb5
+    next_atom_id: 7be77a29b219f2e75d1e1cdf0a6762688279d05651024515a24afefe0b9e2b9b

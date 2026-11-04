@@ -329,7 +329,7 @@ private theorem realCertificate : (K = Real.pi • κ ∧
     exact he
   exact ⟨hK, hκ_zero, hκ_nonneg, hcomm, hPPc⟩
 
-private theorem expIdempotent : (∀ {n : Type} [Fintype n] [DecidableEq n]
+theorem expIdempotent : (∀ {n : Type} [Fintype n] [DecidableEq n]
       (Q : Matrix n n ℂ), Q * Q = Q → ∀ t : ℂ,
       NormedSpace.exp (t • Q) = 1 + (NormedSpace.exp t - 1) • Q) := by
   intro n _ _ Q hQ t

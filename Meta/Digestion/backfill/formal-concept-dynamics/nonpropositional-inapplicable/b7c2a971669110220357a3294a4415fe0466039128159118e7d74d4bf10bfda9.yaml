@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7c2a971669110220357a3294a4415fe0466039128159118e7d74d4bf10bfda9
+  normalized_sha256: sha256:b7c2a971669110220357a3294a4415fe0466039128159118e7d74d4bf10bfda9
+cas_ref: sha256:b7c2a971669110220357a3294a4415fe0466039128159118e7d74d4bf10bfda9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 修复披露要求的开头，仅要求说明新增区别，没有给出区别数量的数学断言。
+    previous_atom_id: 181bcb17fc9725ee66b8035e15ec067673bc7982c55d888f0baf359ca8d0cf5f
+    next_atom_id: 796527a6021ff8218f7c7cb755e0337077d1100bacd8d3ffdf331db6578bb0fb

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:293d9f061612d29d5307305dfd0e7ca011dc5adcd26d597611ae893a4f002d2b
+  normalized_sha256: sha256:293d9f061612d29d5307305dfd0e7ca011dc5adcd26d597611ae893a4f002d2b
+cas_ref: sha256:293d9f061612d29d5307305dfd0e7ca011dc5adcd26d597611ae893a4f002d2b
+coverage_gids:
+  - gid: D5/S3/Factorization/Embeddings/RationalPadicProductFormula.rational_padic_norm_hasFiniteMulSupport
+    target_statement_id: sha256:6972d1bc1b12eddef4e0cee505520dbb3671332cd29401fd06afa8cb79cb55cd
+  - gid: D5/S3/Factorization/Embeddings/RationalPadicProductFormula.rational_padic_product_formula
+    target_statement_id: sha256:0430a8da799b67fb3fd1a146297ab742a2284d4de87f2b830be228ad147ad4c8
+receipts:
+  unresolved_subitems: []

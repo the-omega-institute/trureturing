@@ -1,0 +1,55 @@
+**Proposition 23.2 (quotient prediction, views and the actual bill).**
+From the acquired record of Theorem 23.1 and the actually counted $e$
+subsequent completed updates one can compute
+$[\rho^{2k+e}u]$. This predictor agrees with the unordered labelled
+current register at every attained finite cut. It predicts neither
+arbitrary physical-address replies nor a missing original semantic
+adapter.
+
+Proof. A local exchange at an old branch remains an unordered
+isomorphism after $\rho$, and corresponding leaf replacements are
+unordered-isomorphic. Thus substitution defines a function on these
+unordered classes. Apply it $2k+e$ times to $[U]$. The entrance
+relation and one-step compatibility prove agreement by induction on
+the actual updates. Finite tree evaluation and canonicalization are
+ordinary local computations on retained data; they create no source
+sensor or second mutable root. $\square$
+
+Here space is the actual current physical rooted incidence
+$S_X=\{w:P_X(w)=1\}$; boundary is its terminal physical-address
+antichain $\partial_X$; time is the authentic substitution count
+$2k$; memory is the acquired $(U,k,n)$ with readable backing, the
+same binding and surviving rights. Prefix closure and maximality give
+$\partial_X\leftrightarrow S_X$. Their two parsing routes return
+the same $U,k,n$ and hence count $2k$. Memory recovers the unordered
+labelled current tree and its unordered terminal geometry, and tracks
+them as just proved. These routes are on one actual realization.
+Memory alone does not recover its current physical layout: for
+$u=\alpha,k=2$, the two unequal root-child shapes of $T_4$ may
+occupy opposite physical ports while $U,k,n$ stay fixed. Time alone
+also fails to determine $U$, since alpha and beta originals with
+$n=1$ and the same $k$ have equal advice and time but different labels.
+
+If $X$ has $\Lambda$ leaves, $N=2\Lambda-1$ nodes and height $H$,
+the actual stationary scan has exactly
+
+$$
+ Q=N,\qquad W=\sum_{p\in S_X}(|p|+1),\qquad
+ M_{\rm addr}=H+1,\qquad U_{\rm updates}=0.
+ \tag{GPO.66}
+$$
+
+Every leaf's failed child query is included. Root/edge-following service
+adds at most $W+Q$ traversals. These are one protocol's prices, not
+optima. All stack manipulation, parser passes, counting, comparisons,
+canonicalization, literal construction, allocation, copying and retained
+writes contribute actual finite local work; there is no asserted
+uniform local-time or workspace bound. A preorder $U$ uses $3n-1$
+shape/label bits, with binary $k,n$, framing, capabilities and advice
+additional. The acquired expanded shape and scratch can coexist with
+that output. Every future predictor evaluation, actual update, output
+and lifetime of backing has its own price. Selecting a semantic original
+from the fiber would require at least $2^{a(U)}$ supplementary values;
+none is acquired here. Enlarging storage or re-encoding acquired bits
+cannot supply that distinction.
+

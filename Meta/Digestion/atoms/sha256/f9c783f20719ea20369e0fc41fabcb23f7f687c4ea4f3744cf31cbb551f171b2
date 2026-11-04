@@ -1,0 +1,10 @@
+**Proposition 47.2 (complete past emissions reveal the inputs).** For every $H$, including $H\ge a$, retaining both scalar replies of each original pulse permits exact recovery of every input by
+
+$$
+u_i=y_i-\tau_i.
+$$
+
+In particular the histories in Theorem 47.1 do not have identical complete past emissions. On its $2^m$-element equal-endpoint family, any fixed-width binary archive that, together with the common present data, recovers the word must contain at least $m$ variable data bits.
+
+Proof. The root has $b^{\mathsf T}b=1$. Add$(u_i)$ changes its value by exactly $u_i$, with no intervening Tick, giving the identity. At the first differing pulse of two words, the prior fields and intermediate Tick replies agree, whereas the final Read replies differ by the nonzero input difference. Thus equality of complete past emissions would imply equality of every pulse input. Finally $m$ independent block choices require at least $2^m$ distinct archive values; a fixed-width binary store of $r$ bits has at most $2^r$ values. $\square$
+

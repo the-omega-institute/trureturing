@@ -1,0 +1,36 @@
+**Theorem 26.1 (attained binary profile).** For a separating table $B$, count the normalization and every operation of Definition 24.2, including its last rearming. Let $\mathcal L(t)$ be all entry logical positions, including branches, and set
+
+$$
+D=\sum_{p\in\mathcal L(t)}|p|,\qquad
+D_\alpha=\sum_{i:\eta_i=\alpha}|p_i|,\qquad
+W_B=\sum_{i=1}^{L}\left(k_i|p_i|+\frac{k_i(k_i-1)}2\right),
+\qquad M=n+K.
+\tag{NLBAII.26}
+$$
+
+On this single run the source and menu counts are
+
+$$
+\begin{aligned}
+N_0&=2L+c-1,&N_{\nu}&=3L-1,&N_B&=3L+2K-1,\\
+P\text{ calls}&=n,&P\text{ successes}&=a,&S\text{ calls/successes}&=K,\\
+\text{refusals}&=L-1+c,&\text{fresh vertices}&=a+2K,&\text{final terminals}&=L+K,\\
+\mathrm{Reset}&=2,&\mathrm{Add}&=L+K,&\mathrm{Read}&=Lq,\\
+\mathrm{Tick}&=0,&\mathrm{Hold}&=q+2.&
+\end{aligned}
+\tag{NLBAII.27}
+$$
+
+All acquisition Add scalars and scalar field replies are zero or one. Raw labels, addresses and counters retain their actual widths. Addressed request and reply payloads, in §17's framing, are respectively
+
+$$
+2(D+W_B)+4M,\qquad 2(D_\alpha+W_B)+5M.
+\tag{NLBAII.28}
+$$
+
+There are $L+K+q+4$ fixed field acknowledgements, $Lq$ scalar replies and $M$ complete addressed replies. Each call additionally incurs its actual framing, transmission, End, acknowledgement where required, return and cleanup. Direct source structural assignments are $4a+8K$; fresh active-field zero writes and changed raw-binding assignments are each $a+2K$, with $K$ roster-length increments. The two source Reset sweeps write $N_{\nu}+N_B$ cells. These coordinates do not include the separately paid receiver copies and record construction.
+
+Proof. Normalization retains $L$ logical leaves, all $\beta$, so its material order is $n+L=3L-1$. Each later split adds two material vertices and one terminal. It is successful by Theorem 25.1; normalization has $L-1$ branch and $c$ wrong-type refusals. Initial arming uses $L$ Adds, and the $K$ selected incidences give exactly $K$ scanned zeros and hence $K$ rearming Adds. There is one initial Hold, one per round, and one final Hold. Reset, Add and Hold give $2+(L+K)+(q+2)$ fixed acknowledgements. No scalar return from a Tick has been charged: this installation's Tick returns a fixed acknowledgement, and no acquisition Tick is issued.
+
+The $s$th split of cone $i$ has depth $|p_i|+s-1$. Summing gives $W_B$. Each request has $2|p|+4$ bits, each success reply $2|p|+5$, and each refusal five. Successful promotions have depth sum $D_\alpha$, proving (NLBAII.28). The four/eight structural assignments, one/two fresh field cells and one/two changed bindings per promotion/split are the original templates of §§17 and 21. Since the first Reset occurs after normalization, its size is $N_{\nu}$, not $N_0$. This proves every displayed coordinate together. $\square$
+

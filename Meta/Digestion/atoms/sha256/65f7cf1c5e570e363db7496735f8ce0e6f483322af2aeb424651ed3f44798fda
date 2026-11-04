@@ -1,0 +1,105 @@
+**引理 125.1（三次可微的条件秩一修正）。** 在引理 123.2 的高组 Gaussian 实现中置
+
+$$
+\mathcal D_G=\sum_{j\in H}(X_j+e_j),\qquad
+\lambda_y^G=\frac{((\sum_HX_j^2-V)/\sqrt\delta-y)^2}{2\sigma^2},
+\quad S_G=\frac12\sum_{j\in H}(X_j+e_j)^2/v_j.
+$$
+
+以 Lebesgue 测度定义
+
+$$
+\mathcal J_\eta(\alpha,y)=
+ \int_{\mathbb R^H}e^{-\alpha(S_G+\lambda_y^G+\eta\mathcal D_G^2)}\,dX,
+\qquad \mathcal J_0=\mathcal J_\eta\big|_{\eta=0}.
+\tag{125.1}
+$$
+
+取固定于纤维的 $\eta$ 如 (124.1)，则
+
+$$
+\left\|\log\frac{\mathcal J_\eta}{\mathcal J_0}\right\|_{3,R}
+ \le C\eta\le C\delta^5.
+\tag{125.2}
+$$
+
+**证明。** 把原输出权重写成高能量加独立能量噪声
+$N(0,\delta\sigma^2/\alpha)$ 等于 $h_y=V+\sqrt\delta y$。
+在同一个完整 $t_\alpha$ 处倾斜不改变该条件分布。
+在其标准化 Fourier 积分中置 $u=\xi/\sqrt{W_H}$。
+频率 $u$ 下，高坐标的复协方差、均值为
+
+$$
+\widehat w_j=\frac{w_j}{1-2iu w_j},\qquad
+\widehat m_j=\frac{m_j}{1-2iu w_j}.
+\tag{125.3}
+$$
+
+总偏差 $\mathcal D_G$ 的复均值、协方差分别为
+
+$$
+M_\alpha(\xi)=\sum_{j\in H}(\widehat m_j+e_j),\qquad
+S_\alpha(\xi)=\sum_{j\in H}\widehat w_j.
+\tag{125.4}
+$$
+
+注意这里 $S_\alpha(\xi)$ 是标量协方差，不是潜在支持。
+$\operatorname{Re}S_\alpha\ge0$。
+对 $0\le k\le3$，式 (123.3) 给 $|u^{(k)}|\le C|u|$。
+反复商法则及 $|u w_j|/|1-2iu w_j|\le1/2$ 给
+
+$$
+|\partial_\alpha^k S_\alpha(\xi)|\le C\sum_Hw_j\le C,\qquad
+|\partial_\alpha^k M_\alpha(\xi)|\le C\sum_H|e_j|
+ \le C\sqrt{m_Q}\|e\|_2\le C\delta^3.
+\tag{125.5}
+$$
+
+$k=0$ 包括原来的 $e_j$。这些界对所有实频率一致。
+
+复 Gaussian 积分给精确插入因子
+
+$$
+\mathcal R_\alpha(\xi)
+ =(1+2\alpha\eta S_\alpha)^{-1/2}
+ \exp\left[-\frac{\alpha\eta M_\alpha^2}
+                   {1+2\alpha\eta S_\alpha}\right].
+\tag{125.6}
+$$
+
+平方根取在 $\eta=0$ 连续等于一的分支。
+这个经典 Gaussian 二次积分可由配方得到：在复均值 $M$、协方差 $S$ 的
+Gaussian 积分中插入 $e^{-a z^2}$，完成平方后，行列式因子为
+$(1+2aS)^{-1/2}$，剩余常数为 $e^{-aM^2/(1+2aS)}$。
+此处原 Fourier 精度的实部正定，$a=\alpha\eta\ge0$，
+且 $\operatorname{Re}(1+2aS_\alpha)\ge1$，所以该积分及连续分支均合法。
+不需要把输出条件后的高坐标声明为独立。
+
+由 (125.5)、分母的实部下界及逐次微分 (125.6)，有
+
+$$
+|\mathcal R_\alpha-1|+
+ \sum_{k=1}^3|\partial_\alpha^k\mathcal R_\alpha|
+ \le C\eta.
+\tag{125.7}
+$$
+
+例如 $|\log\mathcal R_\alpha|\le C\eta(1+|M_\alpha|^2)$；
+其前三次导数也满足相同界，指数乘法法则给 (125.7)。
+
+令 $q_\alpha$ 如引理 123.2。公共撤倾斜因子抵消后，精确比值为
+
+$$
+\frac{\mathcal J_\eta}{\mathcal J_0}
+ =1+\frac{(2\pi)^{-1}\int_{\mathbb R}
+ e^{-i\xi z_y}\psi_\alpha(\xi)
+ [\mathcal R_\alpha(\xi)-1],d\xi}{q_\alpha(z_y)}.
+\tag{125.8}
+$$
+
+$z_y$ 的前三次导数有界，$q_\alpha(z_y)\ge c_R$，其前三次导数也有界。
+对分子求导三次，(123.11)、(125.7) 将每项由
+$C\eta(1+|\xi|^9)E_Q(\xi)$ 控制，其积分为 $O(\eta)$。
+故比值与一之差及前三次导数均为 $O(\eta)$；再次取对数给 (125.2)。
+这里直接控制的是同一条件积分的三次导数，维数 $m_Q$ 没有以未中心化三阶惊讶矩的形式出现。∎
+

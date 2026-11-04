@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3121a017fd53214961c4d1880b98c07909dbdf888175d14f3b3840694fc1f3cf
+  normalized_sha256: sha256:3121a017fd53214961c4d1880b98c07909dbdf888175d14f3b3840694fc1f3cf
+cas_ref: sha256:3121a017fd53214961c4d1880b98c07909dbdf888175d14f3b3840694fc1f3cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 解释负证书检测与算术强制这两个研究目标的职责，不断言任一桥已经证明。
+    previous_atom_id: caae9c3dddbe92ddbf4a76432520f100d47e8f2c9e671298f8ca576c1aecc662
+    next_atom_id: 9cc9fe6c051f05ec2908be28c413e4eb554290891bd3e0e0a66c7b7154de6555

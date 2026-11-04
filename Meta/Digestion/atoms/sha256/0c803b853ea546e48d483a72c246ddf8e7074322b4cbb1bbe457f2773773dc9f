@@ -1,0 +1,131 @@
+**Theorem 11.2 (the exact fiber and polarity for the full endpoint form).**
+For every parameter and preparation of Definition 11.1, the complete
+preparation-output fiber on $\mathcal S$ is
+
+$$
+\begin{gathered}
+\mathfrak F=\Phi^{-1}\{v_0\}
+ =\bigcup_{j,n\in\mathbb Z}
+   \{(0,4\pi j,z,4\pi r c_0j-2\pi rn):z\in\mathbb R\},\\
+c_0=\tfrac12-k_0/r,\qquad
+\mathfrak F_{\rm false}=\mathfrak F\setminus\{e\},\qquad
+\operatorname{Cap}_1(\mathfrak F_{\rm false})=0
+ <\operatorname{Cap}_1(\{e\}).
+\end{gathered}
+\tag{11.3}
+$$
+
+Capacity is for the entire form $(\mathscr E,\mathscr V)$, not for
+an off-source replacement process. There is one properly exceptional
+set $N$ for the full diffusion, containing $\mathfrak F_{\rm false}$,
+with $e\notin N$, such that for every $p\in G\setminus N$,
+
+$$
+\mathbb P_p\{\mathbf Z_t\in G\setminus N
+                  \hbox{ for every }t\ge0\}=1.
+\tag{11.4}
+$$
+
+The full lifetime, source regularity, contact and zero-residence
+statements of [S, Theorems 116.3--116.4] hold with this same $N$.
+In particular, for any $I$ as above and $p\in D_I\setminus N$,
+
+$$
+\mathbb P_p\{\,O_t^I=v_0
+       \ \Longleftrightarrow\ (t<\theta_I\hbox{ and }\mathbf Z_t=e)
+                       \hbox{ for every }t\ge0\,\}=1.
+\tag{11.5}
+$$
+
+**Proof.** From the actual second pair of (7.8),
+
+$$
+k=\frac{|Y_{02}|^2}{4Z}.
+\tag{11.6}
+$$
+
+Thus equality of the ten outputs first forces $k=k_0$; the symmetry
+$k\leftrightarrow H_{\rm n}-k$ of the bottom amplitude creates no
+second height in this fiber. At this height the positive amplitudes
+$2\sqrt{k_0(H_{\rm n}-k_0)}$ and $2\sqrt{Zk_0}$ make equality
+of $Y_{01}$ and $Y_{02}$ equivalent to
+$[\alpha]=[\alpha_0]$ and $[\beta]=[\beta_0]$ respectively.
+The fixed rotations cancel in each comparison, without being set
+equal to one another. The other three pairs then agree as well.
+Substitute (7.3). Its first two conditions are $x=0$ and $y=4\pi j$.
+Its last is $c_0y-w/r=2\pi n$, giving exactly (11.3).
+The coordinate $z$ is unrestricted. This includes the entire line
+$\{(0,0,z,0):z\in\mathbb R\}$ through $e$, not just the discrete
+central orbit used in §§7--9.
+
+Here is a local capacity estimate for all of this false fiber.
+Exhaust each line in (11.3), with $e$ omitted, by countably many
+compact segments having positive distance from $e$. For the line
+through $e$, use separate positive and negative $z$ segments bounded
+away from zero. Fix one segment $C$ on the line with constants
+$y_j=4\pi j$ and $w_{jn}=4\pi r c_0j-2\pi rn$. Choose a smooth
+compact $z$ cutoff $\chi$ equal to one near its $z$ interval and a
+smooth compact cutoff $\xi$ on $\mathbb R^3$ equal to one near zero.
+For sufficiently small $\epsilon>0$ put
+
+$$
+u_\epsilon(x,y,z,w)
+ =\chi(z)\xi\bigl((x,y-y_j,w-w_{jn})/\epsilon\bigr).
+\tag{11.7}
+$$
+
+Choose these cutoffs with support in one fixed compact subset of
+$G\setminus\{e\}$. In the line-through-$e$ case this is possible
+because the $z$ support avoids zero. In all other cases the fixed
+normal displacement from that line to $e$ is nonzero. Then
+$u_\epsilon\in C_c^\infty(G\setminus\{e\};\mathbb R)
+\subset\mathscr V_0\subset\mathscr V$ and is one near $C$.
+Smooth positivity of $h$ on this compact set and boundedness of the
+principal matrix (10.1) give a constant $C_1$, independent of small
+$\epsilon$, for which
+
+$$
+\|u_\epsilon\|_{L^2(m)}^2\le C_1\epsilon^3,\qquad
+\mathscr E[u_\epsilon]\le C_1(\epsilon+\epsilon^3).
+\tag{11.8}
+$$
+
+Indeed there are three normal coordinates of volume order
+$\epsilon^3$; each normal derivative has size at most
+$C/\epsilon$, and the $z$ derivative is bounded. The local energy
+is bounded above by a constant times the ordinary Euclidean gradient
+integral. This uses the full integral form [S, (115.15)] on these
+punctured tests. It does not split any singular kinetic or potential
+energy at $e$. The variational definition of outer capacity gives
+$\operatorname{Cap}_1(C)=0$. Countable subadditivity over the stated
+segments proves the zero capacity of $\mathfrak F_{\rm false}$.
+The last strict inequality in (11.3) is exactly
+[S, (116.4)], with discount one; it is reused here.
+
+For a regular symmetric Dirichlet form, a Borel set of zero shifted
+capacity is contained in a properly exceptional set. Its complement
+is invariant for the associated process, so avoidance holds for all
+times from every start in that complement. These are the standard
+capacity/exceptional-set facts of Fukushima--Oshima--Takeda,
+*Dirichlet Forms and Symmetric Markov Processes*, second edition,
+[Chapters 2 and 4](https://doi.org/10.1515/9783110218091).
+The capacity and exceptional-set conventions are also stated in
+Chen--Fukushima--Ying,
+[*Traces of symmetric Markov processes and their characterizations*,
+arXiv:math/0606784v1, §2 and Appendix](https://arxiv.org/pdf/math/0606784v1).
+Apply them to the full regular form supplied in [S, Theorem 115.3].
+Take such an envelope together with the properly exceptional set in
+[S, Theorems 116.3--116.4]. A countable union of properly exceptional
+sets is properly exceptional. None can contain the nonpolar $e$.
+Conservation gives (11.4) with all $t\ge0$, including the source start.
+In particular this is one pathwise avoidance statement, rather than
+separate almost-everywhere assertions for each deterministic time.
+
+Before $\theta_I$, equality of the outputs is equivalent to membership
+in $\mathfrak F$, whose only attainable point on these paths is $e$.
+If $\theta_I<\infty$, path continuity makes its height either $l$ or
+$u$. Formula (11.6) distinguishes either from $k_0$, also for the
+subsequent held path. This proves (11.5). The set $N$ does not depend
+on $I$; the same avoidance event proves the assertion for each such
+observation restriction. $\square$
+

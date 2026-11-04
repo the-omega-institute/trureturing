@@ -1,0 +1,91 @@
+**Proposition 15.3 (Exact algebraic prescription without spurious roots).**
+For $a\ge A_\times(L)$, let $d$ and $z$ be real variables and define
+
+$$
+q_d=r-d,
+\qquad
+\varepsilon(d,z)=\frac{a q_d(1-z)}{s(2+az)}.
+\tag{15.19}
+$$
+
+Let $\mathcal R_a$ be the legal region
+
+$$
+\mathcal R_a=\left\{(d,z):
+0<d<\frac1{2a},\quad \frac12<z<1,\quad
+0<\varepsilon(d,z)<\frac{1-rd}{s}\right\}.
+\tag{15.20}
+$$
+
+There is exactly one pair $(d,z)\in\mathcal R_a$ satisfying the two
+integer-coefficient equations
+
+$$
+\begin{aligned}
+ r^2(r-d)z(1-z^2)-2C d(2+az)&=0,\\
+ 2a(r-d)z(a-d+r^3d)
+ -r^2d(a-d)(2+az)(az^2+4z+a)&=0.
+\end{aligned}
+\tag{15.21}
+$$
+
+Its first coordinate is $d=\delta_c(a)$. The optimizer is recovered exactly by
+
+$$
+ u=\frac{r-d}{2+az},
+ \qquad v=zu,
+ \qquad \varepsilon_*=u-\frac{r-d}{s}
+ =\varepsilon(d,z).
+\tag{15.22}
+$$
+
+**Proof.** At the crossing put $z=v_*/u_*$. The bounds in (15.10) and the
+strict positivity of $\varepsilon_*$ give $(\delta_c,z)\in\mathcal R_a$. Since
+$2u_*+av_*=q$, (15.22) follows. The stationary equation (14.8), after division
+by the positive factor $u_*^2$ and substitution of (15.22), is exactly the
+first equation in (15.21).
+
+Conversely, take any $(d,z)\in\mathcal R_a$ satisfying (15.21), and define
+$u,v,\varepsilon$ by (15.22). The first equation is equivalent, after
+multiplication only by the positive factor $2+az$, to
+
+$$
+ r^2v(u^2-v^2)=2Cd\,u^2,
+\tag{15.23}
+$$
+
+which is the stationary equation for the scalar dense energy. Strict convexity
+in (15.11) and the legal inequalities in (15.20) therefore force
+$\varepsilon=\varepsilon_*(d)$.
+
+Using the first equation to replace $Cd$ in the scalar energy gives
+
+$$
+M_a(d)=
+\frac{r^2(2+az)(az^2+4z+a)}{2z(r-d)}.
+\tag{15.24}
+$$
+
+All factors in $2z(r-d)d(a-d)$ are positive on $\mathcal R_a$, and direct
+clearing of these denominators shows that the second equation in (15.21) is
+exactly
+
+$$
+R_a(d)-M_a(d)=0.
+\tag{15.25}
+$$
+
+Thus every legal solution gives $F_a(d)=0$, hence $d=\delta_c(a)$ by (15.8).
+The crossing pair already constructed supplies existence, so the legal solution
+is unique. The positivity restrictions in (15.20) are retained throughout the
+clearing step; roots outside them are not admissible and are not counted. ∎
+
+The finite crossing uses the exact full-law results of Theorems 9.1 and 14.3.
+The envelope calculation is proved directly from the displayed scalar function;
+Milgrom and Segal, *Envelope Theorems for Arbitrary Choice Sets*,
+Econometrica 70 (2002), 583–601, provides the classical envelope background but
+is not used to supply the moving-domain regularity or the slope bound here.
+The endpoint identity (15.17) is a rational identity, and the dense estimate
+(15.18) is Theorem 8.1; no asymptotic expansion, numerical grid or convexity of
+$H$ as a function of the law is used.
+

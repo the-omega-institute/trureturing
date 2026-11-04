@@ -1,0 +1,27 @@
+#### 定义 2.1（模式、均值与隐藏完成）
+
+按顺序取
+
+$$
+\Sigma=(0,1,2,3,13)=(000,100,010,001,101).
+$$
+
+位串按左、中、右排列；可见均值按左、右、中记为
+
+$$
+X=p_1+p_{13},\quad  Y=p_3+p_{13},\quad  Z=p_2,\quad
+R=1-Z,\quad  \kappa=p_{13}.
+$$
+
+全部可行完成为
+
+$$
+p_\kappa=(R-X-Y+\kappa, X-\kappa, Z, Y-\kappa, \kappa),
+\quad
+\max(0,X+Y-R)\le\kappa\le\min(X,Y).
+$$
+
+该纤维的方向为 $h=(1,-1,0,-1,1)$。
+
+<a id="thm-logcharge"></a>
+

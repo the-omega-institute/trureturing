@@ -1,0 +1,79 @@
+**Correspondence 108.1 (what is reused and what is proved here).** The
+native grammar, guards, original field/source, zero-appending templates,
+raw-label lifecycle and complete interface are Definition 75.1 and
+NLBAII §§17–20,34,64. AA §17 supplies the exact birth-typed class and
+constructor causal order. NLBA §§2–3 and Convention 75.2 supply the
+full unit metric/root and all-leaf forcing inverses. NLBAII Construction
+62.3 supplies the paid arbitrary-current entrance; §§64–65 supply
+retained complete service and literal resource accounting. Sections
+89–90 already distinguish entrance-image injectivity from ambient
+injectivity and supply the acquired shear. Their fresh-only leaf
+replacement is not repeated as an ambient completion theorem.
+
+Sections 94–102 supply the fixed-graph serial observation comparison.
+Their $A$ is the original unit adjacency, with samples at the actual
+phases $Ln+r$ and endpoint $A^{LN}x$. Theorem 95.2 already uses
+the determinant/perfect-matching criterion on its combs; Lemma 103.2
+uses that same classical criterion for every completed tree, rather
+than claiming a new determinant theorem. Sections 95–96 exhibit an
+invertible odd-comb family for which the natural serial period loses
+half the current dimensions, and repair that schedule by an extra
+Tick per cycle. Ambient invertibility therefore does not replace
+an observation proof. Here the different schedule is the selected
+set of actual terminal/epoch rows of $OE$ in (105.2)–(105.3).
+
+Sections 97–98 already give an acquired predictor, feedback and four
+expressions on a fixed-phase image. Their primer replaces $x$ by
+$z=Ax\in V_+=\operatorname{im}A$ and their completed feedback map
+$A(I+e_se_s^{\mathsf T})$ is bijective on $V_+$; it need not recover
+the pre-primer $x$. In §§105–106 the earned completion instead gives
+the ambient-invertible $B$ and the literal old-cell inclusion $E$.
+The acquired entry is every original $x\in\mathbb Q^N$, and its
+current image is $WB^HE\mathbb Q^N$, with the explicitly displayed
+left inverse. The measured Time journal, computed Boundary germ,
+phase context and separate full-service invariant reuse those public
+meanings. No serial-period minimum, arbitrary-phase inverse or
+joint-resource minimum is transferred between these different runs.
+
+The source-specific additions here are the complete guarded repair
+normal form, the exact frontiers (104.1), their lower bounds over
+arbitrary deeper refinements, the all-$h$ consequence (104.5), and the
+paid use of **these ambient-invertible completions** with the measured
+assay and fixed-script inverses. They do not claim novelty for the
+tree determinant, matching DP principle, observability, exact
+elimination, donor shear or four-view transport through an injective
+map. A literature-search non-hit is not evidence of originality.
+
+The declaration
+`D5.S3.ObserverMemory.Dynamics.FiniteTimeTomographySaturation.all_future_kernel_eq_finrank_kernel`
+and its owning Blueprint supply finite-dimensional autonomous
+kernel stabilization. Here the autonomous space, if that supplier is
+used, is $\mathbb Q^M$ with $B,C'$, **before** precomposing by $E$;
+$\operatorname{im}E$ need not be invariant. The shorter degree $I'$
+window used in (105.2) is the actual tree forcing supplier, not an
+application of an unjustified restricted autonomous operator. The
+owning `FiniteObservabilityEquivalence` exposition gives the real
+inner-product observability interpretation; the rational left inverses
+here follow from the explicit integer identity (75.1) or rational
+nonzero minors. No real-only hypothesis is silently transferred.
+
+The graph theorem `NoEvenCycleRank.rank_eq_twice_maximum_matching` is
+formulated with characteristic-two hypotheses and is not a supplier
+for a rational determinant. Lemma 103.2 supplies the required rational
+proof directly.
+Pinned mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`
+provides `SimpleGraph.Matching` perfect-matching vocabulary and
+`Matrix.NonsingularInverse` adjugate/nonsingular-inverse identities;
+these upstream results do not assert the guarded native completion
+recurrence. These ordinary proofs do not constitute a Lean application
+or kernel verification of §§103–108.
+
+The zero-forcing literature is a sufficient observation supplier, not
+a general necessity principle: Burgarth, D'Alessandro, Hogben, Severini
+and Young, *Zero forcing, linear and quantum controllability for
+systems evolving on networks*,
+[arXiv:1111.1475v1](https://arxiv.org/html/1111.1475v1), Theorem 4.1,
+Corollary 4.2 and Example 4.3. Our matching lower bound concerns ambient
+unit adjacency and successful original growth; it is not inferred from
+necessity of zero forcing or generic nonzero edge weights.
+

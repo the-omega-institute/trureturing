@@ -1,0 +1,38 @@
+#### 定理 6.2（酉递归成立，但组合律不同）
+
+两种提升均为酉算符，且对整数 $m$ 有
+
+$$
+
+\mathcal C_P(W)^m=\mathcal C_P(W^m),\qquad
+\mathcal L_P(W)^m=\mathcal L_P(W^m).
+
+$$
+
+若 $W^{10}=I$，两者均为十周期或十周期的约数。另有
+
+$$
+
+\mathcal C_P(UV)=\mathcal C_P(U)\mathcal C_P(V)
+
+$$
+
+对任意酉 $U,V$ 成立；当 $P\ne0$ 时，
+
+$$
+
+\mathcal L_P(UV)=\mathcal L_P(U)\mathcal L_P(V)
+\quad\Longleftrightarrow\quad UV=VU.
+
+$$
+
+**证明。** 
+$P$ 与 $I-P$ 为互相正交的控制扇区；分别在两扇区检查即得酉性与幂公式。$\mathcal C$ 的两个扇区分别乘出 $I$ 与 $UV$。$\mathcal L$ 在 $I-P$ 扇区没有差异，在非零 $P$ 扇区则要求 $(UV)^2=U^2V^2$；左乘 $U^{-1}$、右乘 $V^{-1}$ 后等价于 $VU=UV$。
+ ∎
+
+这就是“相位也可以是一段门过程”的一个严格版本。它作用在更大的张量空间；下一层自由度没有凭空消失。即使子门是确定的，父系统与子系统也可因控制扇区的相干叠加而纠缠。
+
+<a id="statement-6-3"></a>
+
+<a id="thm-phase-reference"></a>
+

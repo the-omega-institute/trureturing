@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09268cf047bf0565976877ff10f4aafc79537c2f2a9b7553b24f712b02dffe97
+  normalized_sha256: sha256:09268cf047bf0565976877ff10f4aafc79537c2f2a9b7553b24f712b02dffe97
+cas_ref: sha256:09268cf047bf0565976877ff10f4aafc79537c2f2a9b7553b24f712b02dffe97
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项仅是对色散、时间和记忆的解释性校准标题及三层结构引导，没有数学命题。
+    previous_atom_id: 3ab5c186c5480e2d42150f7fe824833de241624a6e3beaaf3858de08b7d37000
+    next_atom_id: ff0c70193262730897e3a7ae4274b887fb4ae004ea5e7e1038c46994b5abeb69

@@ -1,0 +1,21 @@
+## 16. 补齐一个逻辑三轴，与保留全部重叠边际，要求不同
+
+<a id="sec-c94-logical-versus-full-marginals"></a>
+
+沿用 v91 的
+
+$$
+K=X_AX_BI_C,\quad L=I_AZ_BZ_C,\quad M=iKL=X_AY_BZ_C.
+$$
+
+它们是两两反对易的自伴对合，故
+
+$$
+\operatorname{Alg}^*(I,K,L)
+ =\operatorname{span}_\mathbb C\{I,K,L,M\}\simeq M_2\otimes I_4.
+$$
+
+因此只给逻辑菜单 $I,K,L$ 时，补读一个 $M$ 就得到这个逻辑量子位的完整代数。
+v93 已证明一个 $M$ 足以闭合指定的未来 $K$ 读出轨道 [7](#ref-v91)、[8](#ref-v93)。
+它不能被推广为“一个 $M$ 决定全部三体内容”。
+

@@ -1,0 +1,65 @@
+**Lemma 2.2 (signed infection, with its exact data requirements).** On
+a known finite material tree with $n$ vertices and all $k$ terminals
+observed, nonzero signed rational links and arbitrary diagonal,
+terminal moments through $2n-1$ and free returns through $n-1$ determine
+the law and field exactly up to terminal-fixing diagonal signs.
+Equality of these finite data is equivalent to such a sign relation;
+it also implies equality of all the infinite data. No nonzero-field,
+invertibility or simple-spectrum assumption is needed.
+
+Proof. Reuse the moment pairing and tree-forcing argument of [NLBA,
+Lemma 3.2 and Theorem 3.3][NLBA], retaining the sign left undetermined
+by normalization. For completeness its signed inferential step is as
+follows. For vector polynomials $p=\sum z^r p_r$, put
+$\mathcal E_A(p)=\sum A^r Bp_r$. Moments compute
+
+$$
+ [p,q]=\sum_{r,s}p_r^{\mathsf T} C A^{r+s}Bq_s
+       =\mathcal E_A(p)^{\mathsf T}\mathcal E_A(q),
+ \qquad [p,zq]=\mathcal E_A(p)^{\mathsf T}A\mathcal E_A(q).
+\tag{SC.5}
+$$
+
+Initialize $q_\ell=e_\ell$ at every terminal by constant polynomials.
+Suppose the already represented orthonormal vectors are
+$q_v=d_v e_v$, $d_v\in\{1,-1\}$. Choose the first represented $v$
+having exactly one unrepresented neighbor $w$ in the known tree.
+Subtract from $Aq_v$ its projections on all represented vectors,
+including its diagonal projection. The realized residual is exactly
+$d_v A_{wv}e_w$. Its squared norm, computed by (SC.5), is
+$A_{wv}^2>0$. Divide its polynomial by the positive rational square
+root $|A_{wv}|$ and obtain a represented $q_w=d_w e_w$.
+That root is effectively obtainable: the numerator and denominator
+of the reduced positive square are integer squares, whose positive
+integer roots can be found and checked. This operation does not
+assert that the old link was positive.
+
+All leaves force a finite tree: if any unmarked vertices remain but
+no force is possible, keep them and their marked neighbors, retaining
+exactly the edges incident to an unmarked vertex. Every unmarked
+vertex has degree at least two, since no leaf is unmarked; each retained
+marked neighbor has at least two unmarked neighbors by the assumed
+failure to force. The resulting nonempty finite forest would have
+minimum degree at least two, a contradiction. Thus $n-k$ steps
+represent every coordinate. After $s$ steps degrees are at most $s$;
+the residual norm needs moments at most $2s+2$, final matrix pairings
+at most $2(n-k)+1\le2n-1$, and free pairings at most
+$n-k\le n-1$.
+
+The computed matrix entries $[p_v,zp_w]$ are $(DAD)_{vw}$ and the
+free pairings are $(Dz)_v$. All selections and positive roots are
+deterministic functions of the same finite data and known addresses.
+Two realizations with equal data therefore give the same reconstructed
+pair, and composing their diagonal signs gives a terminal-fixing sign
+conjugacy. Conversely $DB=B$, $CD=C$ and $D^2=1$ show that this
+conjugacy preserves every moment and free return. This proves both
+inverse directions, including equality of the infinite sequences.
+$\square$
+
+This is the mature infection normalization, rather than a new general
+inverse-tree theorem. The positive-sign version is already in NLBA;
+[Burgarth–Maruyama, §II, Lemma and equations (1)–(3)][BM] use its
+known-topology residual and prescribed coupling sign with different
+Hamiltonian/spectral ports. Here moments implement the pairings and
+the unprescribed sign is explicitly retained.
+

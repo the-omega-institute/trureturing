@@ -1,0 +1,35 @@
+**定理 5.2（全态平均守恒的等价刻画）。**
+
+<a id="thm:commutation"></a>
+
+下列三项等价：
+
+<a id="eq:equiv"></a>
+
+$$
+\Phi^*(P)=P;\qquad
+ [K_{y\alpha},P]=0\ \text{对每个 }y,\alpha;\qquad
+ QV=VP.
+ \tag{13}
+$$
+
+第一项量化全部输入态的平均指针权重守恒。
+
+**证明。**
+
+若 $\Phi^*(P)=P$，对 $u\in\operatorname{ran}E$ 有
+
+$$
+0=\langle u,\Phi^*(P)u\rangle
+ =\sum_{y,\alpha}\|PK_{y\alpha}u\|^2.
+$$
+
+每项非负，故 $PK_{y\alpha}E=0$。
+通道完备性又给 $\Phi^*(E)=E$，同理 $EK_{y\alpha}P=0$。
+所以每个 Kraus 算符分块对角并与 $P$ 对易。
+逆向利用对易性和完备性，
+$\sum K^*PK=P\sum K^*K=P$。
+最后，等距式按正交记录基展开，逐系数等价于 $PK_{y\alpha}=K_{y\alpha}P$。
+
+□
+

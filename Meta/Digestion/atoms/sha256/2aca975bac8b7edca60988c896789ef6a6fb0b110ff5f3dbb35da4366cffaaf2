@@ -1,0 +1,61 @@
+**Specification 6.1 (what this result establishes).** The square-root
+encoding has the following precise status.
+
+1. The exact classical pair $(\nu_u,W(u))$ remains an injective attained-image
+   representation and can be evaluated after the original paid acquisition of
+   $u$ described in Proposition 113.9.  The evaluation retains the complete
+   INITIAL row, all four replies, guards, Apply statuses, chronological
+   records and absorbing Stop.
+2. On the supplied finite-specimen cut, the authentic family (2.2) has the
+   exact nonzero overlaps (3.3).  Even the unrestricted joint POVM has the
+   finite-copy error (4.1), and the fixed-$m$ error is nonuniform over this
+   source family.  Therefore finite bare specimens cannot provide the exact
+   native Read on that promise, with its original zero-error event and bill.
+3. Exact complete reading on an entire fixed-composition fiber with
+   $K_{a,b}>1$ requires a source-dependent orthogonal side record of
+   dimension at least (5.2).  The bound is vacuous on exactly the four
+   cardinality-one fibers listed in Corollary 5.3: the two $\ell=1$ fibers
+   have leaf-root services, while the pure $\ell=2$ fibers are branch entries
+   with reached $L/R$ holes.  Supplying such a record changes the input cut;
+   the vacuous bound by itself does not prove that a bare boundary marginal
+   supplies the corresponding service, nor that it is insufficient for every
+   possible quantum model.
+4. A coherent quantum instrument, a purification carrying the source, an
+   exact equality register, or a full-history dilation must be stated as an
+   additional source-bearing resource.  None is silently identified with the
+   vector (1.1).  Born's rule, complex Hilbert structure, CPTP control and
+   quantum preparation remain hypotheses.
+
+The result is a boundary-access theorem for the original IV112--113 source
+contract.  It neither derives quantum principles from substitution nor
+completes the quantum-origin objective.  Binary promise discrimination,
+complete equality recovery on the whole source domain, and recovery after an
+orthogonal side-record installation are three different obligations.
+
+### 6.1 Reused suppliers and bounded literature correspondence
+
+The all-occurrence counting boundary, exact scale reconstruction, source-step
+action and INITIAL/service contract are reused from Continuation IV,
+Definitions 112.1--112.10 and 113.1--113.10.  The ordered-fiber count is the
+existing D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean result;
+the four-valued readout and paid traversal are owned by
+D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean.  The exact
+support implication is aligned with the existing pure-state effect result in
+D5/S3/Quantum/PureState/PerfectEffectDiscriminationOrthogonality.lean; no
+new Lean declaration is asserted here.  Barnett--Croke,
+[arXiv:0810.1970v1, §3.1, equation (12)](https://arxiv.org/html/0810.1970v1),
+is used only for the unrestricted two-state POVM benchmark.  The existing
+Watrous library entries supply the standard density-operator/CPTP background.
+None of these sources supplies a native specimen preparation, a free source
+oracle, or the original physical permission and charge.
+
+The positivity argument uses the actual finite terminal-cylinder density of
+IV113, so it does not assume a uniform source family or replace the original
+domain by the witnesses.  The finite-copy law is an exact conditional
+benchmark, not a claim about a physical optimum.  Preparation, storage,
+joint control, coherent phase reference, source-bearing purification, native
+clock, actuator and all unpriced physical resources remain open premises.
+The theorem also leaves open quantum models whose input includes additional
+orthogonal source information; it only classifies the stated bare-boundary
+cut and the explicitly bounded side-record extension.
+

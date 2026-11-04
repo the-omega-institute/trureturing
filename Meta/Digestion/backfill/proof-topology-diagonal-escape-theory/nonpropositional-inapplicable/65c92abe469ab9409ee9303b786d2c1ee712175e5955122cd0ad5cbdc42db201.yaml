@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:65c92abe469ab9409ee9303b786d2c1ee712175e5955122cd0ad5cbdc42db201
+  normalized_sha256: sha256:65c92abe469ab9409ee9303b786d2c1ee712175e5955122cd0ad5cbdc42db201
+cas_ref: sha256:65c92abe469ab9409ee9303b786d2c1ee712175e5955122cd0ad5cbdc42db201
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅定义在固定维数正收缩约束上最小化有限响应残差的估计程序，没有声称最小解存在或具备误差保证。
+    previous_atom_id: d66f82fa07e7489111240beff2b4dfda2c1ae58aa9753ccaf2667b1e8bf51c27
+    next_atom_id: 7e999380c08066b0b4a84e7678fe1d5b58b15e249dbd000ea5652d1d1d021d34

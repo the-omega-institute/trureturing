@@ -1,0 +1,49 @@
+**Theorem 3.1 (finite source-derived computation and inverse).** A fixed
+finite program, given a finite reachable source term $t$, computes the
+entire finite table $(h,J(h))_{h\in\mathcal H(t)}$ of Theorem 2.1.
+Given $(t,j)$ with the entire current end of $j$ observable, it decides
+whether $j$ belongs to that table and, on the table's image, returns the
+unique complete addressed history $h$. For an actual enabled edge
+$e:t\to u$ and an on-image $(t,J(h))$, it computes the exact suffix $s$
+satisfying $J(he)=J(h)s$. No persistent advice, future horizon or separately
+remembered event boundaries are needed.
+
+Proof. Parse the finite term and enumerate precisely Definition 1.1's
+incoming labelled edges. A predecessor replacement is a syntactic
+calculation on work data, not an edit of the live source. Its grade
+is one smaller. Recursive enumeration therefore terminates at alpha;
+finite branching and finite depth make the entire recursion finite.
+Appending each full last label to each enumerated predecessor history
+gives exactly (IV.3), including all shuffles. Counts can be obtained
+from these finite lists, or from AA Theorem 19.2's source-derived product.
+An independent source count does not select a smaller history domain.
+
+Recursively compute the predecessor tables and the lower bounds in
+(IV.10). Sort by Convention 1.3. Loads, integer divisions, finite sets,
+word comparisons and descent through at most $g(t)$ bits are finite
+operations. The argument of Theorem 2.1 guarantees a choice for every
+token. This computes the unique table specified by that convention.
+Shared recursion may be recomputed instead of memoized; any temporary
+memoization is ordinary finite work backing, cleared before a returned
+service cut. Neither choice places a source-dependent table in the
+fixed program or retained history record.
+
+Compare the **entire** observed $j$, including its end, with every computed
+entry. Injection gives at most one match, and on-image membership gives
+one. Return its full literal kind/address sequence. Equality of complete
+words handles empty records and prefix-related entries: for example,
+reading $0$ does not match an entry $\varepsilon$. The source-derived
+$N(t)$ is also the exact length of the recovered event list. Rejection
+of off-image data is a mathematical image test; it is not an additional
+reply case of the original maintained service.
+
+For encoding an enabled edge, use the current table to recover $h$,
+form the prospective term $u$ in scratch by the actual beta-left rule,
+and compute its table. Lookup of the label $he$ gives $J(he)$. Theorem
+2.1 proves that removing its initial $|J(h)|$ bits leaves exactly a suffix
+$s$ and never requires an old data-bit change. No prospective source is
+queried as if it already existed. All histories, tables, integer counts,
+syntax copies and suffix calculations are charged finite scratch, not
+persistent advice. There is no efficiency bound in this conclusion.
+$\square$
+

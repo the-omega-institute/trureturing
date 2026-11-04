@@ -1,0 +1,37 @@
+**Definition 82.1 (the original quaternary joint task).** Use Definition
+75.1's original material, rational field, complete framing and six-operation
+service, without Reset. Fix the actual seven-cell term
+$u=\langle\beta,\langle\beta,\alpha\rangle\rangle$, the coordinate order
+$(LL,L,\varepsilon,R,RL,RLL,RR)$, its unit adjacency $A$, and $e=e_{LL}$.
+Its edges form $LL-L-\varepsilon-R-RL-RLL$ and $R-RR$.
+The unit seed is actually established on the known-zero material. A producer
+then executes each whole Next$(d)$ of (76.4), now with
+$d\in\{0,1,2,3\}$. For every finite word $w=d_0\cdots d_{m-1}$ the
+late field is therefore
+
+$$
+x_w=F_w(A)e,\qquad
+F_w(z)=z^m+\sum_{i=0}^{m-1}d_i z^{m-1-i},\qquad F_\emptyset=1.
+\tag{82.1}
+$$
+
+The receiver has the earned graph and exhaustive raw correspondence,
+genuine original-root reference, current/fresh rights, known law and this
+family promise. It has neither $w$ nor $m$, old scalar replies, dependent
+predictors, accessible producer records, or field-dependent timing,
+allocation or capacity advice. The producer's input and all dependent
+copies are actually erased or isolated before attachment. Isolated storage
+remains paid. Each finite actual run has sufficient exact backing; there is
+no uniform backing bound. Calls are exclusive, completed and serialized,
+and held local computation has no autonomous source evolution.
+
+A deterministic causal receiver may adaptively choose original legal growth,
+rational Add, Tick, Hold and literal terminal Read, and may encounter all
+complete identity refusals of Definition 75.1. Its addresses, operands,
+frames and stopping decisions depend only on public context and replies
+already received. It must terminate on each admitted finite word and report
+that exact word and length and install complete current service at its actual
+endpoint. No fixed horizon is assumed. A pending incomplete frame is not a
+completed numerical observation. All source-dependent accessible information
+is excluded except the specified literal Reads.
+

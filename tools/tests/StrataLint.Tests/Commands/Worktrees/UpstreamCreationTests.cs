@@ -286,15 +286,7 @@ public sealed partial class WorktreeCommandTests
             if (!failed && add && failure is "add-rejected" or "policy-changed")
             {
                 failed = true;
-                var hook = WorktreeHookFixture.Install(workingDirectory, "reference-transaction", """
-                    common=$(git rev-parse --git-common-dir)
-                    if [ "$1" = prepared ] && [ -f "$common/worktrees/upstream-target/commondir" ]; then
-                        echo 'simulated upstream registration rejection' >&2
-                        exit 1
-                    fi
-                    """ + "\n");
-                try { return inner.Run(fileName, arguments, workingDirectory, timeout); }
-                finally { File.Delete(hook); }
+                return new ProcessOutput(1, [], Encoding.UTF8.GetBytes("simulated upstream registration rejection"));
             }
             if (!failed && fileName == "git" && arguments.Take(4).SequenceEqual(["hook", "run", "--ignore-missing", "post-checkout"])
                 && failure == "post-checkout")

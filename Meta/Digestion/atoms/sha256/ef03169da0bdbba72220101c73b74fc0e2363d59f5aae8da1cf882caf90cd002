@@ -1,0 +1,15 @@
+**Definition 10.1 (the randomized uncapped task).** Fix one finite specimen $(N,T,x^{\rm in})$ satisfying (UFS.1), with arbitrary signed $x^{\rm in}\in\mathbb Q^N$, before any random bits are drawn. Retain Assumption 1.2's exact Read, returning Tick, Hold and signed rational Add service, common root binding, class/fixedness assurance, exclusive serial access and paid storage/control backing, but remove the cap and its assurance. The public numerical input is an integer $b\ge1$. No $N$, coefficient, entry-field, energy or word-length bound is supplied. Reset, cloning and additional specimen ports remain absent.
+
+The controller additionally has a paid source of independent fair bits, independent of the fixed specimen and of all preceding draws. This is an explicit randomness resource and independence premise; it is not inferred from the endpoint observations or replaced by a finite deterministic seed. Only finitely many bits are requested on each run. The generator, its current material, access right, output framing and actual work/backing are charged separately from the specimen. The controller is one finite effective program with growing finite stores, in the sense of §1.
+
+The correctness contract is now
+
+$$
+\forall (N,T,x^{\rm in})\ \forall b\ge1,\qquad
+\mathbb P_\omega\!\left[\mathcal C(N,T,x^{\rm in},b,\omega)\right]
+\ge1-2^{-b},
+\tag{UFS.25}
+$$
+
+where $\mathcal C$ is one joint assertion: the exported native law and current field are exact, the retained predictor is correct for every legal finite adaptive continuation, a unit field has actually been prepared, and a subsequent actual passive segment has reached P Definition 39.1's domain with its original four meanings. Termination is required on every tape. A rejected local candidate is not an error certificate about the specimen. An exported result is confidence-qualified: on exceptional tapes its model, preparation assertion and view interpretation may be wrong without a warning. There is no claim of an exact hidden-order certificate or of one tape correct for every specimen.
+

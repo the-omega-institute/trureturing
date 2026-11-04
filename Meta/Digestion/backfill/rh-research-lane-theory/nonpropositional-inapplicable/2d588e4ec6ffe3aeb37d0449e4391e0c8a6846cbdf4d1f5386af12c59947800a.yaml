@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d588e4ec6ffe3aeb37d0449e4391e0c8a6846cbdf4d1f5386af12c59947800a
+  normalized_sha256: sha256:2d588e4ec6ffe3aeb37d0449e4391e0c8a6846cbdf4d1f5386af12c59947800a
+cas_ref: sha256:2d588e4ec6ffe3aeb37d0449e4391e0c8a6846cbdf4d1f5386af12c59947800a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只给 SecondMagnusSwapCurvature 候选地址、变量改名与准入状态，未断言新的数学性质。
+    previous_atom_id: cca96a7ed091278f8658047e43eb0b64a28f29048029085c90448c40db60af4b
+    next_atom_id: e081dec88e1015864f45897345aa1246e42b4d761f3afa845bcd363aa624a3b4

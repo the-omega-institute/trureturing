@@ -62,6 +62,10 @@ internal sealed class PetrovScottAltQCharlierPositivityDocument : IScribeDocumen
                 ClaimQuote + " (Conjecture 6.3, p. 31). The specialization is xAQC and yAQC above. "
                 + "Both existential parameters range over Real, and positivity quantifies over every Fibonacci word.",
                 AssessedProvenance.FromLiterature(Source)),
+            Node("det_pos_of_dominant", "Positive determinant from diagonal dominance",
+                DominantDeterminantFormula(),
+                "A real matrix with positive diagonal entries and strict row diagonal dominance "
+                + "has positive determinant.", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
             Node("result", "Positivity at rho = q = one quarter", Disp(ClaimBody()),
                 "Take rho=q=1/4. A positive diagonal rescaling turns the tridiagonal determinants "
                 + "into strictly diagonally dominant matrices. The normalized sequence is nonnegative, "
@@ -78,9 +82,24 @@ internal sealed class PetrovScottAltQCharlierPositivityDocument : IScribeDocumen
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
         OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-            DescribeId.Create("petrov-scott-qcharlier-" + name.ToLowerInvariant()),
+            DescribeId.Create("petrov-scott-qcharlier-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role, resolution);
+
+    private static Formula DominantDeterminantFormula()
+    {
+        Formula index = Iota, matrix = F.Id("M"), i = F.Id("i"), j = F.Id("j");
+        Formula diagonal = All([B("i", index)], Lt(D(0), App(matrix, i, i)));
+        Formula offDiagonal = App(Q("Finset", "sum"),
+            App(Q("Finset", "erase"), Q("Finset", "univ"), i),
+            Lambda("j", index, Seq(Vert, Sp, App(matrix, i, j), Sp, Vert)));
+        Formula dominance = All([B("i", index)], Lt(offDiagonal, App(matrix, i, i)));
+        Formula body = All([B("M", Call("Matrix", index, index, Real()))],
+            Implies(diagonal, Implies(dominance, Lt(D(0), App(Q("Matrix", "det"), matrix)))));
+        body = Seq(OpenBracket, Call("Fintype", index), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", index), CloseBracket, Sp, body);
+        return Disp(Seq(Forall, Sp, Cast(index, F.Id("Type")), Comma, Sp, body));
+    }
 
     private static Formula DeterminantFormula(bool second)
     {

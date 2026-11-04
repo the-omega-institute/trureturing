@@ -1,0 +1,51 @@
+### 命题 8.1（已认证共同来源的三角关系）
+
+<a id="prop-c122-observer-transport"></a>
+
+设已经在内部认证同一有限源 $H$、同一参考 $\sigma$，
+以及各观察者的 CPTP 编码 $N_j:H\to K_j$（$j=A,B,C$）。
+对 $j=A,B$，取指定的 Petz 回推 $P_j=P_{\sigma,N_j}$，并设
+$\|P_jN_j-\operatorname{id}_H\|_\diamond\le e_j$。
+统一定义 $T_{ji}=N_jP_i$（$i=A,B$，$j=A,B,C$），则
+
+$$
+\begin{aligned}
+\|T_{BA}N_A-N_B\|_\diamond&\le e_A,
+\end{aligned}
+\tag{40}
+$$
+
+$$
+\begin{aligned}
+\|T_{CB}T_{BA}-T_{CA}\|_\diamond&\le e_B,
+\end{aligned}
+\tag{41}
+$$
+
+$$
+\begin{aligned}
+\|T_{AB}T_{BA}N_A-N_A\|_\diamond&\le\min\{2,e_A+e_B\}.
+\end{aligned}
+\tag{42}
+$$
+
+映射在各自可达支持上定义，或统一采用全空间 CPTP 补全。
+
+**证明。**
+前两个差分别展开为
+
+$$
+N_B(P_AN_A-\operatorname{id}),\qquad
+ N_C(P_BN_B-\operatorname{id})P_A.
+$$
+
+第三式在 $N_AP_BN_BP_AN_A$ 中依次把
+$P_BN_B$、$P_AN_A$ 换成恒等。
+CPTP 前后复合收缩 diamond 距离，故三角不等式给出全部结论。
+
+这里的三元结构与三维 Gram 提升不同：
+它比较三位观察者之间两条转换路径，路径差由中间观察者的恢复误差控制。
+在精确源内容上形成交换三角形，而不是宣称观察者空间中每一份私人记录都被覆盖。
+通常 $T_{AA}\ne\operatorname{id}_{K_A}$；可保证的是
+$T_{AA}N_A=N_A$ 的精确或近似版本。
+

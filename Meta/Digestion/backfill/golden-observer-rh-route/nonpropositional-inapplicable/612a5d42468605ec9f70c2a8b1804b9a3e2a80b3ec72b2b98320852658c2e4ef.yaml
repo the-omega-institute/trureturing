@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:612a5d42468605ec9f70c2a8b1804b9a3e2a80b3ec72b2b98320852658c2e4ef
+  normalized_sha256: sha256:612a5d42468605ec9f70c2a8b1804b9a3e2a80b3ec72b2b98320852658c2e4ef
+cas_ref: sha256:612a5d42468605ec9f70c2a8b1804b9a3e2a80b3ec72b2b98320852658c2e4ef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 真实 Hilbert 空间是 Hilbert–Pólya 待建立对象，未宣告该空间已实现。
+    previous_atom_id: ebe7d2bb8be68d3ee89535885ca1a2e87549e965a23a643139e679a9cf102637
+    next_atom_id: 76f5131aee211d87370613079ad53d08c4775258aa51b835473f2b61bcc21852

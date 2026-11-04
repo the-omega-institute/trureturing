@@ -1,0 +1,49 @@
+**定义 20.1（不受限 JMJ 父纤维与源坐标）。** Retain the complete-target domain $\mathcal W_3$, original clocks and immediate atomic readings of Definition 1.1. With the same $H_2$ as in Definition 16.1, put
+
+$$
+\begin{gathered}
+H_z=(H_2,J,z)=(0,J,24,M,48,J,z),\qquad
+\mathcal G_z=\mathcal F(H_z),\qquad z\in\mathbb R,\\
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\qquad
+N=JL=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+\end{gathered}                                                     \tag{20.1}
+$$
+
+Here $H_z$ ends at original clock three. Write the normalized source and its three trace coordinates as
+
+$$
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad c=\frac{r(1-r)}b>0,\qquad
+j=b+c,\quad \ell=1+b,\quad T=r+j.                              \tag{20.2}
+$$
+
+These coordinates cover every strictly positive rank-one trace-one source, without symmetry. Given $(r,b,d)$ with these strict inequalities and arbitrary $d\in\mathbb R$, let $g$ be the unique polynomial of degree at most three with
+
+$$
+(g(0),g(1),g(2),g(3))=
+\left(-d,\frac{24-d}j,\frac{48-d}\ell,\frac{z-d}T\right).
+                                                                  \tag{20.3}
+$$
+
+This is a bijective parametrization of $\mathcal G_z$: its source and drift recover $(r,b,d)$, and interpolation gives exactly the four original readings. The polynomial is nonzero because those readings are not all equal. Thus arbitrary signs, lower degrees, sampled zeros, repeated roots and drifts remain in this chart.
+
+The following table records actual cumulative matrices and traces; each fifth row is conditional on its indicated fourth action:
+
+$$
+\begin{array}{c|c|c}
+\text{clock and actions}&A_i&\operatorname{tr}(A_iP)\\ \hline
+0&I&1\\
+1:J&J&j\\
+2:JM&L&\ell\\
+3:JMJ&N&T\\
+4:JMJJ&L&\ell\\
+4:JMJM&L^2=2L-I&2\ell-1\\
+5:JMJJJ&N&T\\
+5:JMJJM&ML=J+L&j+\ell\\
+5:JMJMJ&JL^2&2T-j\\
+5:JMJMM&ML^2&T+2\ell-1.
+\end{array}                                                       \tag{20.4}
+$$
+
+These are alternative response functions of one fixed complete target. Only the chosen action and its immediate reading are acquired.
+

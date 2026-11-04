@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9b7a59be29cd51e833b88903b0e7ccdd13fa6916043e78b7e1bd60deb218fe0e
+  normalized_sha256: sha256:9b7a59be29cd51e833b88903b0e7ccdd13fa6916043e78b7e1bd60deb218fe0e
+cas_ref: sha256:9b7a59be29cd51e833b88903b0e7ccdd13fa6916043e78b7e1bd60deb218fe0e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: B15.4 猜想分解清单中的 mod-5 Weyl/Frobenius projection 只是需要供应的接口名称，没有宣称该接口已构造。
+    previous_atom_id: 5046430f98f5dd4925715255faf4d87f9f42ce7c1f7c24a3fb42089b497f5d12
+    next_atom_id: 0ea0f16584d0e83d80ab438f3f782d72f3a874bb26f9781fd9aec5b1e21b14b3

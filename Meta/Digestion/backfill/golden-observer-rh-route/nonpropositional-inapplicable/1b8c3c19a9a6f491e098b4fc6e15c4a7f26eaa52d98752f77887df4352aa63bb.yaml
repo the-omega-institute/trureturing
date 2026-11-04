@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b8c3c19a9a6f491e098b4fc6e15c4a7f26eaa52d98752f77887df4352aa63bb
+  normalized_sha256: sha256:1b8c3c19a9a6f491e098b4fc6e15c4a7f26eaa52d98752f77887df4352aa63bb
+cas_ref: sha256:1b8c3c19a9a6f491e098b4fc6e15c4a7f26eaa52d98752f77887df4352aa63bb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: zeta-23-lean project self-report and version-pinning advice, without theorem constants.
+    previous_atom_id: 7a3421245f6299efcc868ecbd395089b4df8440708756af64c1ed0f625418d0b
+    next_atom_id: 2989e54ada98b156c78c5e8de4e2be22c186a35b7c41b4ca54150a8f4b12e6d2

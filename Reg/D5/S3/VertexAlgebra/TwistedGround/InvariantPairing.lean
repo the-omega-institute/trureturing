@@ -150,4 +150,51 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 
 end
 
+
+namespace ExposedHelpers
+
+noncomputable section
+
+theorem central_character_source :
+    (type_of% (@central_character)) ↔
+      (∀ (D : LatticeData) (hu : IsUnit D.G.det) (s : F₂),
+        (groundRepresentation D hu).character
+          ((quotientEquiv D).symm (⟨s, 0⟩ : ReducedExtension D)) =
+            complexSign s * (Module.finrank ℂ (ActualGround D hu) : ℂ)) := by rfl
+
+theorem average_trace_source :
+    (type_of% (@average_trace)) ↔
+      (∀ (D : LatticeData) (hu : IsUnit D.G.det),
+        LinearMap.trace ℂ (LinearMap.BilinForm ℂ (ActualGround D hu))
+          (formAverage D hu) = 1) := by rfl
+
+theorem averaged_invariant_source :
+    (type_of% (@averaged_invariant)) ↔
+      (∀ (D : LatticeData) (hu : IsUnit D.G.det)
+        (B : LinearMap.BilinForm ℂ (ActualGround D hu))
+        (g : Extension D ⧸ K D) (u v : ActualGround D hu),
+        formAverage D hu B (groundRepresentation D hu g u) (groundRepresentation D hu g v) =
+          formAverage D hu B u v) := by rfl
+
+theorem invariant_nondegenerate_source :
+    (type_of% (@invariant_nondegenerate)) ↔
+      (∀ (D : LatticeData) (hu : IsUnit D.G.det)
+        (B : LinearMap.BilinForm ℂ (ActualGround D hu)), B ≠ 0 →
+        (∀ (g : Extension D ⧸ K D) (u v : ActualGround D hu),
+          B (groundRepresentation D hu g u) (groundRepresentation D hu g v) = B u v) →
+        B.Nondegenerate) := by rfl
+
+theorem ground_signed_adjoint_source :
+    (type_of% (@ground_signed_adjoint)) ↔
+      (∀ (D : LatticeData) (hu : IsUnit D.G.det)
+        (B : LinearMap.BilinForm ℂ (ActualGround D hu)),
+        (∀ (g : Extension D ⧸ K D) (u v : ActualGround D hu),
+          B (groundRepresentation D hu g u) (groundRepresentation D hu g v) = B u v) →
+        ∀ (a : Charge D) (u v : ActualGround D hu),
+          B (groundAction D hu a u) v = paritySign (bilinear D a a / 2) *
+            B u (groundAction D hu a v)) := by rfl
+
+end
+end ExposedHelpers
+
 end Reg.D5.S3.VertexAlgebra.TwistedGround.InvariantPairing

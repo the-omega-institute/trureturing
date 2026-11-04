@@ -1,0 +1,92 @@
+**Lemma 7.5.1 (Two rational signs).** Set
+
+$$
+h_L=0.0029244590442435,\qquad h_U=0.0029244590442437.
+\tag{7.5.1}
+$$
+
+For each $t=h_L^2,h_U^2$, use the tight-box prescription of Lemma 7.4.1, starting at $c_i$ with $i=\lfloor8000000t\rfloor$. The boxes are strictly contained in their $X_i$. Their respective upper bounds for $q+\beta$ are
+
+$$
+\frac{11716015439}{250000000000000000}<10^{-7},\qquad
+\frac{44016049399}{10^{18}}<10^{-7}.
+\tag{7.5.2}
+$$
+
+The exact graph values satisfy
+
+$$
+\begin{aligned}
+120/10^{18}&<b_+(h_L)-1/8<121/10^{18},\\
+-124/10^{18}&<b_+(h_U)-1/8<-123/10^{18}.
+\end{aligned}
+\tag{7.5.3}
+$$
+
+Proof. The parameter values in this prescription are the exact squares of the rationals (7.5.1). With the same singleton-parameter weighted sums as (7.4.2), the enclosure prescription gives (7.5.2). Direct substitution of the resulting tight B and k intervals into $B+kh-1/8$ gives the respective enclosing intervals
+
+$$
+\begin{aligned}
+&\left[\frac{120287721883177}{10^{30}},
+        \frac{60143860941589}{5\cdot10^{29}}\right],\\
+&\left[-\frac{61880183664779}{5\cdot10^{29}},
+        -\frac{123760367329557}{10^{30}}\right].
+\end{aligned}
+\tag{7.5.4}
+$$
+
+Each is strictly within its interval in (7.5.3). The tight-box containments and contraction identify these roots with the same full-interval graph, so these are signs at exact graph points. ∎
+
+Proof of the crossing and continuation clauses of Theorem 7.3.1. By (7.3.8) and the uniform k bound,
+
+$$
+\begin{aligned}
+\frac{db_+}{dh}
+ &=k+2hB_t+2h^2k_t\\
+ &<-1.2188+2(1/250)(5/2)+2(1/250)^2(25)\\
+ &=-599/500<0.
+\end{aligned}
+\tag{7.5.5}
+$$
+
+Meanwhile $b_-=B-kh>B>0.1285>1/8$ for $h>0$. Equations (7.5.3), continuity and strict monotonicity give exactly one $h_*$ in (7.3.3) with $b_+(h_*)=1/8$. Since $e_\pm>6$ and $B_{\mathrm{coef},\pm}>0$, the two parent equations give
+
+$$
+\operatorname{sign}\Lambda_\pm
+=-\operatorname{sign}(b_\pm-1/8).
+\tag{7.5.6}
+$$
+
+Thus this is exactly the sole selected $\Lambda=0$ event. At the event, differentiation of the undivided equation gives
+
+$$
+e_+(h_*)\frac{d\Lambda_+}{dh}(h_*)
+=-\frac{24}{5}B_{\mathrm{coef},+}(h_*)
+  \frac{db_+}{dh}(h_*)>0.
+\tag{7.5.7}
+$$
+
+This proves transversality and the direction of the crossing. No division by a vanishing parent coefficient appears.
+
+At width $1/8$ the existing singular identity is
+
+$$
+960jn\Lambda=\Phi(r),\qquad
+\Phi(r)=438272r^4-931328r^3+540800r^2-50728r-853.
+\tag{7.5.8}
+$$
+
+Support X, (13.6)–(13.7), classifies exactly two strict roots. Its $\varrho_-$ lies in $(0.1348,0.1349)$, while its $\varrho_+$ lies in the rational interval
+
+$$
+\left[
+\frac{902449681772056265377872651296542856186276499}{10^{45}},
+\frac{902449681772056265377872651296542856186276500}{10^{45}}
+\right].
+\tag{7.5.9}
+$$
+
+The graph source satisfies $0.8955<r_+(h_*)<0.9036$. It is a strict root of (7.5.8), so the existing classification excludes $\varrho_-$ and identifies it exactly with $\varrho_+$. This identity uses the quartic equation and the separated root classification, not closeness of a numerical event source to a printed root.
+
+The Jacobian $D_yG$ is invertible on the same graph at this event by (7.3.7)–(7.3.8). The five-equation circuit itself has no singularity there. Consequently the local analytic graph and its own entire gains extend through the event; the finite tubes already continue it all the way to $h=1/250$. Since $h_U<3/1000$, every $h\in[3/1000,1/250]$ lies strictly after the crossing, with $\Lambda_+>0$ and $\Lambda_-<0$ and with the legal full-world bounds already proved. ∎
+

@@ -1,0 +1,59 @@
+fingerprints:
+  raw_sha256: sha256:9f3abd6e343b4af4bba299154736a511f27c5821c1b31275ef03ac53373f44e6
+  normalized_sha256: sha256:9f3abd6e343b4af4bba299154736a511f27c5821c1b31275ef03ac53373f44e6
+cas_ref: sha256:9f3abd6e343b4af4bba299154736a511f27c5821c1b31275ef03ac53373f44e6
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ObservationOrder/PosteriorMixtureKernelRealization.posterior_mixture_kernel_realization
+    target_statement_id: sha256:37543b9b997b8d965f0111da1e3c922fbf6d6be8d1a6ef2b8684a09d0a39741d
+  - gid: D5/S3/Divergence/ChainRule.conditional
+    target_statement_id: sha256:05f9ec6edaaa722c03442bc8ffd84ff32b305223c05adaa1a8f01e1f8ea5128a
+  - gid: D5/S3/Divergence/ChainRule.marginal
+    target_statement_id: sha256:dceda59c3d0878b0c3f2523a44ebc1eac8e993b60b5337d514272974eafd9e18
+  - gid: D5/S3/Entropy/ConditionalEntropy.conditionalEntropy
+    target_statement_id: sha256:e0005d06a2e929dc23f3a6025e7723e5ba3dda49b706e5d67277891b10344a3d
+  - gid: D5/S3/Entropy/ConditionalEntropy.entropy_chain_rule
+    target_statement_id: sha256:a3d61c1341ad61a0a89ed8a2f7e31289b122796e238d295a5890dd610b630452
+  - gid: D5/S3/Entropy/Forgetting/CapacityMonotone.pushforward
+    target_statement_id: sha256:cad2df6e983d5d173955b5b13a616de5ba6ba0334e17112c93d7f2ed629ffbca
+  - gid: D5/S3/Entropy/Forgetting/ConditionalInformationForgetting.pushforward_nonnegative
+    target_statement_id: sha256:fbc66562f7763acb519108415dbaa91c968ce5204463a32bcef0c57d5a33fa1e
+  - gid: D5/S3/Entropy/Forgetting/PushforwardComposition.pushforward_comp
+    target_statement_id: sha256:656edd11d1bd5231d848d38234fab4d88b8c20381d0741996e70d41b01e756d6
+  - gid: D5/S3/Entropy/Forgetting/PushforwardComposition.sum_indicator_comp
+    target_statement_id: sha256:397223f2b9c520527a137ae6149d7b22c8f484de9a17195f974c9d5b9b0a2206
+  - gid: D5/S3/Entropy/MaxEntropy.shannonEntropy
+    target_statement_id: sha256:0b9b0250c925b41ffab4b8ab0b198871ccb0bb46dd401760ec0158c98ad42e87
+  - gid: D5/S3/Entropy/MutualInformation.mutualInformation
+    target_statement_id: sha256:f23c55736018ea5fe356eea838c35e001592a5f37f3ecfdbd0ccf944b45bf7fb
+  - gid: D5/S3/Entropy/MutualInformationEntropy.mutual_information_eq_entropy_sub
+    target_statement_id: sha256:98ab32347056de7fdcca6963b5de51deedc923c1a62a59098952f17fb0f946a5
+  - gid: D5/S3/Entropy/Observation/MultiTargetInformationChain.marginal_pushforward_pair
+    target_statement_id: sha256:9e730756b3d566a76007798f0a459585083efa4ef7dff728b70e719b5454e43f
+  - gid: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h
+    target_statement_id: sha256:284a16083fa547c8718507bae385b0542ebd97fc49aabbbf330bb0e75b8e75dc
+  - gid: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv
+    target_statement_id: sha256:fb70e873439c6eceb2ae437f09d7e70aebb758bc79aaf0b20ccc815ee81d6812
+  - gid: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv_h
+    target_statement_id: sha256:d5aff0666b4aaed97a04309960a4fd6d7fc87f5999865a4ca46ebe22ea955788
+  - gid: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv_spec
+    target_statement_id: sha256:13b635cf64b2894f9bbea6b8e0708b87ff5cc7ade198c124223757b4c804797d
+  - gid: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h_eq
+    target_statement_id: sha256:983f3adc4d31b64a459c5e04c33a9f3dfb9668ccaec315ccb48aca480a340ce6
+  - gid: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h_image
+    target_statement_id: sha256:4df91e283e65dc679976e0f47d159af73616a3b9aa45c225a9bfb01b385b3675
+  - gid: D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h_strictMonoOn
+    target_statement_id: sha256:84b1b7d77951f04f6d29fda44740c4106ce70e3de9f84ba5499a90b5c410305d
+  - gid: D5/S3/Estimation/FanoSharp.fano_inequality_sharp
+    target_statement_id: sha256:e5ce5e6db8dddef10ad18b08c0963afc8e9e8fd859c6eca488aa773a748199c8
+  - gid: D5/S3/Quantum/CloningMachine.binaryEntropyBits
+    target_statement_id: sha256:688128ab90010a81f7deda9f09bce484b31dd0c87b4be4eba0ee15f631995292
+  - gid: D5/S3/Quantum/Entanglement/GraphDensity/FormationBounds.h_concave
+    target_statement_id: sha256:565f9c3a73902a08d67068d6cf7968e9f1fdc435466e8e5e309dc1794d64da39
+  - gid: D5/S3/Quantum/Entanglement/GraphDensity/FormationBounds.h_le_one
+    target_statement_id: sha256:a469f80c404f854156999e35bf42bad72442d3124d61fa29a569db169dbc42b6
+  - gid: D5/S3/Quantum/Entanglement/GraphDensity/FormationBounds.h_nonneg
+    target_statement_id: sha256:8f8326463cb73f93b2bbc9ed26d3c672b0a9104f43b0158dd54c6e1530eed78c
+  - gid: D5/S3/Quantum/Entanglement/GraphDensity/FormationBounds.h_strictMonoOn
+    target_statement_id: sha256:80811eb85ff2ee7199184c46920ac5be82d1173a6dc3d7a50c33d04b28d30db9
+receipts:
+  unresolved_subitems: []

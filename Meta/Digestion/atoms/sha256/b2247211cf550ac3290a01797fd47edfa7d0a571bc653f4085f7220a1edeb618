@@ -1,0 +1,15 @@
+**Definition 12.1 (Exact local rectangle).** Retain every world and
+response in Definitions 1.1–1.2. Set $h=10^{-34}$ and
+
+$$
+\begin{aligned}
+p_c&=1.8057126623901333037270156505198680057908325822025720781026746024314,\\
+v_c&=172.2471680963226343182328451692107608678057809948093894185154845004338,\\
+\mathcal U&=[p_c-h,p_c+h]\times[v_c-h,v_c+h].
+\end{aligned}
+$$
+
+Every terminating decimal in Sections 12–18 denotes its exact rational
+value. In particular this definition specifies a closed rectangle,
+not a rounded algebraic base.
+

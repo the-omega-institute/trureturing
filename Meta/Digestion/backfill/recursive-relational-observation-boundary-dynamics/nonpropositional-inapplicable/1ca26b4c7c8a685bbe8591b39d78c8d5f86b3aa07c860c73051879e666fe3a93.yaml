@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ca26b4c7c8a685bbe8591b39d78c8d5f86b3aa07c860c73051879e666fe3a93
+  normalized_sha256: sha256:1ca26b4c7c8a685bbe8591b39d78c8d5f86b3aa07c860c73051879e666fe3a93
+cas_ref: sha256:1ca26b4c7c8a685bbe8591b39d78c8d5f86b3aa07c860c73051879e666fe3a93
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅约定动作词树模型中空间一词的局部载体含义，不断言任何空间恢复结果。
+    previous_atom_id: a026b54c3c29dcf9120ec57a3eca2428b5312aefd6cfd333ce30b78ec66761a0
+    next_atom_id: bb05e2526e1723c8e458862146577d36083714f7a4c428e3211db793c9af199b

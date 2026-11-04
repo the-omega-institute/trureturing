@@ -1,0 +1,189 @@
+**Theorem 4.1 (attained family risk on a nontrivial closed band).** For
+every $c>0$,
+
+$$
+\frac c3\le E\le\frac{1+c}{2},\qquad 0\le p\le1,
+\tag{4.1}
+$$
+
+the family of Definition 3.1 has exact worst-world risk
+
+$$
+\boxed{
+\mathcal R(\Gamma_p)=
+\frac{G+(P-G)\max(p,1-p)}2.
+}
+\tag{4.2}
+$$
+
+In particular its fair member has
+
+$$
+\boxed{\mathcal R(\Gamma_{1/2})=\frac{P+G}{4}.}
+\tag{4.3}
+$$
+
+Two complete worlds specified below attain the maximum in (4.2).
+If $E>c/3$, the fair probability uniquely minimizes risk within
+this particular family. This assertion is not an optimality claim
+over all private strategies.
+
+**Proof.** The relevant comparisons, with positive denominators,
+are
+
+$$
+\begin{aligned}
+E-P&=\frac{3E-c}{3+2c}\ge0,
+&E-G&=\frac{3E-c}{3+c}\ge0,\\
+G-c/3&=\frac{c(3E-c)}{3(3+c)}\ge0,
+&P-G&=\frac{c(3E-c)}{(3+2c)(3+c)}\ge0,\\
+G-Q&=\frac{c(1+c-2E)}{(3+c)(1+c)}\ge0.
+\end{aligned}
+\tag{4.4}
+$$
+
+Hence $F=P$, $H=G$ on (4.1), without an active $2E$
+truncation. The uniform same-world upper bound in (4.2) follows
+from Theorem 3.2. It remains to exhibit simultaneous attainment,
+rather than combine two separate worst-world suprema.
+
+Let $b=z+E$ and define the single complete world
+
+$$
+W_b=\bigl(b,m,-\varepsilon-mb^2,
+                  (\varepsilon,-\varepsilon,-\varepsilon,-\varepsilon)\bigr).
+\tag{4.5}
+$$
+
+Its complete reports are
+
+$$
+(y_0,y_1,y_2,y_3)(W_b)
+ =\bigl(0,\ m(2E-2-c),\ m(4E-2-c),\ m(6E-c)\bigr).
+\tag{4.6}
+$$
+
+Every component of its error vector has magnitude $\varepsilon$;
+the gain is $m$, its origin is the prior endpoint, and its offset
+is finite. This world is fixed before the coin for every $p$.
+
+For its $013$ reports put
+
+$$
+\begin{gathered}
+s_P=b-P,\qquad M_P=m(1+2c/3),\\
+W_P=\bigl(s_P,M_P,\varepsilon-M_Ps_P^2,
+                 (-\varepsilon,\varepsilon,0,\varepsilon)\bigr).
+\end{gathered}
+\tag{4.7}
+$$
+
+The first identity in (4.4) gives $s_P\ge z\ge a$.
+The gain is finite and at least $m$, the offset is finite, and
+all four specified errors are legal. If $p_P(i),p_b(i)$ denote
+the two noiseless reports, direct substitution of $P$ gives
+
+$$
+M_Ps_P-mb=-\frac{4mc}{3},\qquad
+p_P(i)-p_b(i)=mc+\frac{2mc}{3}(i^2-4i).
+\tag{4.8}
+$$
+
+At $i=0,1,3$ the latter differences are $mc,-mc,-mc$;
+the listed original errors cancel them exactly. Thus $W_P$ and
+$W_b$ have the same acquired $013$ history. This is the finite
+right-near separation witness of Three-Index Design, Theorem 2.1,
+with its unread coordinate explicitly completed.
+
+Since $C_{13}(y(W_b))$ contains $b$ and $b-P$ and its full-prior
+diameter is at most $F=P$, its exact endpoints are $b-P,b$.
+For $E>c/3$ this whole interval is strictly to the right of $z$,
+so $\rho_{13}$ is the constant $P/2$ on it. Formula (2.2)
+then gives $d_{13}=b-P/2$. At $E=c/3$, the interval may touch
+$z$, but $F=H=P=G=E$, so the same formula still holds.
+Therefore in $W_b$ the $013$ loss is exactly $P/2$.
+
+For the very same world's $023$ reports put
+
+$$
+\begin{gathered}
+s_G=b-G,\qquad M_G=m(1+c/3),\\
+W_G=\bigl(s_G,M_G,\varepsilon-M_Gs_G^2,
+                    (-\varepsilon,0,\varepsilon,\varepsilon)\bigr).
+\end{gathered}
+\tag{4.9}
+$$
+
+Again (4.4) gives $s_G\ge z$, and every parameter and all four
+errors are legal. The original-coordinate identities are
+
+$$
+M_Gs_G-mb=-\frac{5mc}{6},\qquad
+p_G(i)-p_b(i)=mc+\frac{mc}{3}(i^2-5i).
+\tag{4.10}
+$$
+
+At $i=0,2,3$ these differences are $mc,-mc,-mc$, exactly
+canceled by the displayed errors. The supplier's near-branch
+condition here is
+
+$$
+0\le s_G-z=E-G=\frac{3E-c}{3+c}\le\frac12,
+\tag{4.11}
+$$
+
+whose upper endpoint is precisely $E=(1+c)/2$; (4.10) also
+verifies the common history directly, including that endpoint.
+
+To identify the entire $023$ interval, first use its global
+diameter bound $F=P$ and its member $b$ to conclude that it is
+contained in $[b-P,b]\subseteq[z,b]$. Thus every point of this
+fiber is in the favorable half, and (2.5) after reflection bounds
+its diameter by $H=G$. Since it contains $b-G$ and $b$, its
+endpoints are exactly $b-G,b$. Its radius is constantly $G/2$,
+so $d_{23}=b-G/2$. The $023$ loss in $W_b$ is exactly $G/2$.
+Consequently
+
+$$
+\mathbb E_{\Gamma_p,W_b}|T-b|
+                  =\frac{pP+(1-p)G}{2}.
+\tag{4.12}
+$$
+
+For the other origin endpoint take the single complete world
+
+$$
+W_a=\mathfrak s(W_b)
+ =\bigl(a,m,-\varepsilon-mb^2,
+                 (-\varepsilon,-\varepsilon,-\varepsilon,\varepsilon)\bigr).
+\tag{4.13}
+$$
+
+This is legal by (2.7). The reflection of the compatible sets and
+$\rho_{23}(t)=\rho_{13}(-3-t)$ imply
+
+$$
+d_{13}(y(\mathfrak s(W)))=-3-d_{23}(y(W)),\qquad
+d_{23}(y(\mathfrak s(W)))=-3-d_{13}(y(W)),
+\tag{4.14}
+$$
+
+where each side uses only its indicated triple. For example the
+reflection of (2.2) sends its lower endpoint to $-3$ minus the
+old upper endpoint, and conversely. Empty histories have the same
+identity since $z=-3-z$. Thus the two branch losses in $W_a$
+are $G/2,P/2$, respectively, and
+
+$$
+\mathbb E_{\Gamma_p,W_a}|T-a|
+                  =\frac{pG+(1-p)P}{2}.
+\tag{4.15}
+$$
+
+The maximum of (4.12) and (4.15) equals the upper bound (4.2).
+Both worlds are complete and independent of the seed; for each
+fixed $p$, choose the worse of these two fixed expected losses.
+There is no seed-dependent selection of a worst world. If
+$P>G$, $\max(p,1-p)$ has its unique minimum at $p=1/2$;
+if $P=G$, all probabilities have the same risk. $\square$
+

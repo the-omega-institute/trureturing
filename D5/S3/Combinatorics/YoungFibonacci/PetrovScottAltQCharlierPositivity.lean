@@ -102,7 +102,7 @@ end D5.S3.Combinatorics.YoungFibonacci.PetrovScottAltQCharlierPositivity
 
 namespace D5.S3.Combinatorics.YoungFibonacci.PetrovScottAltQCharlierPositivity
 
-private theorem det_pos_of_dominant {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem det_pos_of_dominant {ι : Type*} [Fintype ι] [DecidableEq ι]
     (M : Matrix ι ι ℝ) (hd : ∀ i, 0 < M i i)
     (h : ∀ i, ∑ j ∈ Finset.univ.erase i, ‖M i j‖ < M i i) : 0 < M.det := by
   let H (t : ℝ) : Matrix ι ι ℝ := fun i j => if i = j then M i i else t * M i j

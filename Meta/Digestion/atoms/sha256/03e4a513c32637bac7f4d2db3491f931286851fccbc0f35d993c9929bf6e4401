@@ -1,0 +1,13 @@
+**Definition 17.1 (the positive-history entrance class).** Let $N\ge1$ be arbitrary and unknown, and let $T$ be any rational native rooted Jacobi matrix satisfying (UFS.1). On this same fixed specimen an actual producer starts with every cell zero. It executes a finite serial word of Tick and Add commands, with every producer input a nonnegative rational. Read and Hold may be interspersed. There are no other field inputs or uncommanded Ticks. If the word contains $J_{\rm p}$ Ticks, and its $A_{\rm p}$ Adds have inputs $c_l\ge0$ at Tick epochs $s_l\le J_{\rm p}$, its actual handover field is
+
+$$
+x^{\rm in}=p(T)e_0,\qquad
+p(z)=\sum_{l=1}^{A_{\rm p}}c_lz^{J_{\rm p}-s_l}
+\in\mathbb Q_{\ge0}[z].
+\tag{UFS.39}
+$$
+
+Here $\mathbb Q_{\ge0}[z]$ means polynomials whose coefficients are nonnegative rationals, including the zero polynomial. Several Adds at one epoch contribute separate actual operations and may combine in $p$. The producer's zero initialization is an actual preparation with its own work and backing. It is not a Reset port available to the receiving observer. Every producer Tick emits the updated root scalar; every producer Read emits its root scalar; Add and Hold emit their fixed acknowledgements. All are real outputs to the producer, whether or not their archive survives handover. An archive, when retained, is separate material.
+
+Formula (UFS.39) follows by induction from the actual zero field: an Add appends $c_le_0$, and a later Tick multiplies every extant term by $T$. Read and Hold change neither field nor exponent. The formula describes the endpoint of the executed word, not a list supplied to the receiver.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aef085b631ac0adc670ad16b196928bb817dba9bdfb571e189083c3107f8265f
+  normalized_sha256: sha256:aef085b631ac0adc670ad16b196928bb817dba9bdfb571e189083c3107f8265f
+cas_ref: sha256:aef085b631ac0adc670ad16b196928bb817dba9bdfb571e189083c3107f8265f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Heading and local-domain preamble for the subsequent divisor expansion; this fragment states no expansion itself.
+    previous_atom_id: bcafa0fcae037b21c07564ece1abb8489f2029549f6a613d24f39135c18c04b6
+    next_atom_id: 83d73cf354a1db489b132e6f697725c74c4425d0e6de4c9b45f44ee232c2656a

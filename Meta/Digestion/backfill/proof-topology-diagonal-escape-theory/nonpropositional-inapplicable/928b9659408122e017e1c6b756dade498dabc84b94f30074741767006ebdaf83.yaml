@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:928b9659408122e017e1c6b756dade498dabc84b94f30074741767006ebdaf83
+  normalized_sha256: sha256:928b9659408122e017e1c6b756dade498dabc84b94f30074741767006ebdaf83
+cas_ref: sha256:928b9659408122e017e1c6b756dade498dabc84b94f30074741767006ebdaf83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯节标题 PB.5 双向视野的预算递减；仅标识以下条目的主题，不包含量化命题、等式结论或证明断言。
+    previous_atom_id: c878d497345f562c8b361cf69b08965b740b391e8723ba56566faac7cb536c8c
+    next_atom_id: 77e58e0704a330a519f7c04b85b731dc6c182e4a02c82ed18d3d73769b5853a6

@@ -5,9 +5,11 @@ year: 2024
 title: Linear Algebra Done Right, fourth edition
 doi: null
 url: https://linear.axler.net/
-claim: Cauchy-Schwarz for inner product spaces yields the covariance entry bound; uniform variances and a finite row-support bound then give the sparse covariance sum by direct summation.
+claim: Cauchy-Schwarz for inner product spaces yields the covariance entry bound; uniform variances and a finite row-support bound then give the sparse covariance sum by direct summation. For complex coordinate vectors on a finite index set it gives the squared bound for their conjugate dot product.
 strata_touched:
   - D5/S3/Quantum/Information/CovarianceSumBound
+  - D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays
+  - D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH
 license: citation-only
 triage: anchor
 ---
@@ -56,6 +58,17 @@ corollary written out here, not a separately named theorem attributed to the
 book. The support size is a hypothesis; no locality or preparation-time law is
 derived. The spectral version adds the input recorded in
 `D5/L/Quantum/sharma2010variance`.
+
+For `cs_sq`, take $\mathbb C^J$ for a finite index set $J$ with the standard inner
+product $\langle d,x\rangle=\sum_j \overline{d_j}\,x_j$. Cauchy-Schwarz gives
+
+    |⟨d,x⟩|² ≤ (Σ_j |d_j|²) (Σ_j |x_j|²),
+
+which is the statement of `cs_sq`.
+
+For `unit_dot_le`, take $\mathbb R^3$ with the standard inner product. For a unit
+vector $a$ and any $x$, Cauchy-Schwarz gives $|a\cdot x|\le\|a\|\,\|x\|=\|x\|$,
+which is the statement of `unit_dot_le`.
 
 ## What this note does and does not attest
 

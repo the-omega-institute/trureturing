@@ -47,8 +47,10 @@ public sealed partial class CleanLanesCommandTests
         var parent = fixture.AddGitlessJudgeSnapshot("trureturing-parent");
         var nested = fixture.AddNestedWorktree(parent);
         var registered = fixture.AddDetachedJudge("trureturing-registered");
-        CleanLanesFixture.Git(nested, "commit", "--allow-empty", "-m", "nested work");
-        CleanLanesFixture.Git(registered, "commit", "--allow-empty", "-m", "detached work");
+        CleanLanesFixture.GitAt(nested, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+            "commit", "--allow-empty", "-m", "nested work");
+        CleanLanesFixture.GitAt(registered, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+            "commit", "--allow-empty", "-m", "detached work");
         fixture.AddGitlessJudgeSnapshot("trureturing-registered");
         var alias = Path.Combine(Path.GetDirectoryName(parent)!, "trureturing-alias");
         Directory.CreateSymbolicLink(alias, foreign);
@@ -60,12 +62,13 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(result.Success, result.Error);
         foreach (var path in new[] { foreign, reports, parent, nested, registered, alias, pointer, fixture.RepositoryRoot })
             Assert.True(Directory.Exists(path), path);
+        Assert.Empty(ReadEvents(result.Error, "clean_lanes_warning"));
         Assert.Equal("foreign_git_directory", ReasonFor(result.Output, foreign));
         Assert.Equal("foreign_git_directory", ReasonFor(result.Output, pointer));
         Assert.Equal("not_judge_tree", ReasonFor(result.Output, reports));
         Assert.Equal("nested_worktree", ReasonFor(result.Output, parent));
         Assert.Equal("symlink", ReasonFor(result.Output, alias));
-        Assert.Equal("not_far_behind", ReasonFor(result.Output, registered));
+        Assert.Equal("recently_updated", ReasonFor(result.Output, registered));
         Assert.Equal("main_worktree", ReasonFor(result.Output, fixture.RepositoryRoot));
     }
 
@@ -83,14 +86,20 @@ public sealed partial class CleanLanesCommandTests
         try
         {
             var result = fixture.RunWithProductionProbes(new ProductionWorktreeProcessRunner(), "--force");
-            Assert.False(result.Success);
-            Assert.Equal("CLEAN_LANES_PARTIAL_FAILURE count=1\n", result.Error);
+            Assert.True(result.Success, result.Error);
+            var warning = Assert.Single(ReadEvents(result.Error, "clean_lanes_warning"));
+            Assert.Equal(denied, warning.GetProperty("path").GetString());
+            Assert.Equal("partially_removed", warning.GetProperty("action").GetString());
+            Assert.Equal("temporary_directory_partial_or_indeterminate", warning.GetProperty("reason").GetString());
+            Assert.Contains("Exception:", warning.GetProperty("diagnostic").GetString());
             Assert.True(Directory.Exists(denied));
             Assert.False(Directory.Exists(healthy));
             Assert.Equal("temporary_directory_partial_or_indeterminate", ReasonFor(result.Output, denied));
             Assert.Equal("unregistered_same_repository", ReasonFor(result.Output, healthy));
             Assert.Equal(1, ReadSummary(result.Output).GetProperty("partial_count").GetInt32());
             Assert.Equal(1, ReadSummary(result.Output).GetProperty("removed_count").GetInt32());
+            Assert.Equal("succeeded", ReadSummary(result.Output).GetProperty("status").GetString());
+            Assert.Equal("completed", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
         }
         finally
         {

@@ -5,7 +5,7 @@ year: 2013
 title: On Fourier transforms of radial functions and distributions
 doi: 10.1007/s00041-012-9242-5
 url: https://arxiv.org/abs/1112.5469v4
-claim: The published radial Fourier dimension recurrence and distribution carrier realize the actual matched-source Laplace reciprocity as a nine-dimensional Fourier anti-eigenrelation. The original sixth moment suffices for this tempered-distribution realization, without an unweighted Hankel norm. Analytic uniqueness excludes every positive square-root-exponential source moment for a nonzero reciprocal source.
+claim: The published radial Fourier dimension recurrence and distribution carrier realize the actual matched-source Laplace reciprocity as a nine-dimensional Fourier anti-eigenrelation. The original sixth moment suffices for this tempered-distribution realization, without an unweighted Hankel norm. Analytic uniqueness excludes every positive square-root-exponential source moment for a nonzero reciprocal source. For the selected matched global-null source, the owned Sobolev estimate and the published weighted Hankel theorem additionally supply every original physical moment below nine and the ordinary radial/Hankel L2 domain.
 strata_touched: []
 license: bibliographic-reference-only
 triage: anchor
@@ -137,3 +137,198 @@ principle. The [common-gap source adaptation](../Weil/burnol2002sonine.md#nonzer
 shows RF3 has nonzero actual sources. Their complete Weil energy sign
 and the exclusion of the selected matched negative branch remain
 undetermined. No RH or all-integer Robin proof follows from RF3.
+
+
+## The matched actual null enters the ordinary Hankel domain
+
+This `repo-derived` application combines the
+[owned MR11, JC13/JC23 and LR3/RF3 interfaces](../Weil/hernandezsantamaria2025optimal.md)
+with [Airapetyan--Witt's weighted Hankel theorem](airapetyanwitt2001hankel.md),
+Theorem 1(a),(d), and standard Sobolev localization and interpolation.
+It keeps one original global-null source throughout. The published
+mapping theorem is used directly; the additional work is its actual
+source and Fourier-distribution correspondence. These are paper
+estimates, without Lean/kernel certification or a literature-priority claim.
+
+Suppose on the actual complex domain $\mathcal V$ that
+
+$$
+ Q_\lambda=\mathfrak E+\lambda(M_6-H)\ge0,
+ \qquad Q_\lambda(F)=0,\qquad\lambda>0.                 \tag{HI1}
+$$
+
+The complete energy and every actual theta dilation and debit are
+those of MR/JC/LR. For every fixed $0<s<3/2$, this SAME source satisfies
+
+$$
+ \boxed{M_{6+2s}(F)<\infty.}                            \tag{HI2}
+$$
+
+In particular $M_{17/2}(F)<\infty$, and all original physical moments
+$M_k(F)$ with $k<9$ are finite. The following domain and parameter
+checks supply the application; no weighted replacement is assumed null.
+
+### Enter the published input space with the actual boundary factor
+
+Write $T_F(z)=\tau_F(|z|)$ for RF3's original radial density and set
+
+$$
+ \begin{aligned}
+ \varphi(\rho)&=\rho^{7/2}\tau_F(\rho),\qquad y=\log\rho,\quad t=2y,\\
+ \tau_F(\rho)&=(\pi\rho^2)^{-7/2}(\rho^{12}-1)F(\pi\rho^2)
+                  \mathbf1_{\rho>1}.
+ \end{aligned}
+$$
+
+Keep JC's ORIGINAL full-line coordinate $X$, with
+$X(t)=\pi^{9/4}e^{7t/2}F(\pi e^t)$ for $t\ge0$.
+The exact input transport is
+
+$$
+ e^{-3y/2}\varphi(e^y)
+ =\pi^{-23/4}(1-e^{-12y})\mathbf1_{y>0}X(2y).
+                                                               \tag{HI3}
+$$
+
+JC23 gives $X\in H^s(\mathbb R)$ for every fixed $s<3/2$.
+Multiplication by $(1-e^{-12y})\mathbf1_{y>0}$ is bounded on these
+spaces by the existing JC13 metric-multiplier estimate and a fixed
+change of scale. Its linear vanishing at zero pays the extension;
+no zero trace of $X$ or $F$ is inserted. The supplier's equation (38)
+therefore gives
+
+$$
+ \varphi\in\mathcal H^{s,2},\qquad
+ \|\varphi\|_{\mathcal H^{s,2}}\le C_s\|X\|_{H^s}.
+                                                               \tag{HI4}
+$$
+
+### Identify the continuous Hankel extension before using reciprocity
+
+For the Fourier convention $e^{-2\pi iz\cdot\xi}$, the radial formula
+in the inspected Grafakos--Teschl Section 2 is
+
+$$
+ \rho^{7/2}\widehat T_F(\rho)
+ =2\pi(\mathsf H_{7/2}\varphi)(2\pi\rho).              \tag{HI5}
+$$
+
+Its continuous extension is identified without assuming ordinary
+unweighted $L^2$. Indeed $\mathcal H^{s,2}\subset L^2(\rho^{-4}d\rho)$
+for $s>0$, and the map from $\varphi$ to its radial density
+$|z|^{-7/2}\varphi(|z|)$ is continuous into $\mathcal S'(\mathbb R^9)$.
+After radial averaging of a Schwartz test, its pairing is a fixed
+constant times
+
+$$
+ \int_0^\infty
+ (\rho^{-2}\varphi(\rho))
+ (\rho^{13/2}\psi_{\rm av}(\rho))\,d\rho.
+$$
+
+The second factor is in $L^2(d\rho)$ at both endpoints. Approximate
+$\varphi$ by compact smooth inputs in $\mathcal H^{s,2}$ and use
+Theorem 1's continuous mapping to pass HI5 to radial tests supported
+away from radius zero. On the output side convergence in
+$\mathcal H^{s-5/2,-3}$ implies distributional convergence on
+$(0,\infty)$. No restriction of an arbitrary distribution to a ray,
+unweighted Hankel inversion or pointwise oscillatory integral is used.
+
+RF3's SAME-source equality $\widehat T_F=-T_F$ now gives
+
+$$
+ (\mathsf H_{7/2}\varphi)(\sigma)
+ =-\frac1{2\pi}\varphi\!\left(\frac\sigma{2\pi}\right)
+ \quad\text{in }\mathcal D'((0,\infty)).                \tag{HI6}
+$$
+
+The supplier parameters are $\nu=7/2$, $\delta=5/2$, within
+$|\delta|<1+\nu=9/2$. Fixed positive dilation preserves each Mellin
+Sobolev space. Applying Theorem 1(a) to HI4 and then HI6 yields
+
+$$
+ \varphi\in\mathcal H^{s-5/2,-3},\qquad
+ \|\varphi\|_{\mathcal H^{s-5/2,-3}}
+ \le C_s\|X\|_{H^s}.                                  \tag{HI7}
+$$
+
+### Combine the two norms of this same function
+
+In logarithmic coordinates put
+
+$$
+ f(y)=e^{-3y/2}\varphi(e^y),\qquad
+ g(y)=e^{7y/2}\varphi(e^y)=e^{5y}f(y).
+$$
+
+HI4 and HI7 say $f\in H^s$ and $g\in H^{s-5/2}$.
+Use standard smooth localization on unit intervals $y\approx j$;
+local multiplication by $e^{5(y-j)}$ has uniformly bounded derivatives
+and inverse derivatives. Sobolev interpolation with $\theta=2s/5$
+has order $(1-\theta)s+\theta(s-5/2)=0$. Hölder in the interval index,
+with the usual square-sum localization of both positive and negative
+Sobolev orders, gives on these ACTUAL profiles
+
+$$
+ \|e^{2sy}f\|_2
+ \le C_s\|f\|_{H^s}^{1-2s/5}
+          \|g\|_{H^{s-5/2}}^{2s/5}
+ \le C_s\|X\|_{H^s}.                                  \tag{HI8}
+$$
+
+Thus $\varphi\in\mathcal H^{0,2-2s}$. The precise original-source
+weight is
+
+$$
+ \begin{aligned}
+ \|\varphi\|_{\mathcal H^{0,2-2s}}^2
+ &=\int_0^\infty\rho^{3+4s}|\tau_F(\rho)|^2d\rho\\
+ &=\frac1{2\pi^8}\int_\pi^\infty
+       (x/\pi)^{6+2s}[1-(\pi/x)^6]^2|F(x)|^2dx.
+ \end{aligned}                                                \tag{HI9}
+$$
+
+On $x\ge2\pi$ the bracket is bounded below by $1-2^{-6}$.
+On $[\pi,2\pi]$ the existing $M_6$ pays the entire compact part.
+Consequently
+
+$$
+ M_{6+2s}(F)\le C_s[M_6(F)+\|X\|_{H^s}^2].             \tag{HI10}
+$$
+
+For the $H$-normalized selected representative, JC23 retains the cost
+
+$$
+ M_{6+2s}(F)\le C_{s,\eta}K_F
+ \left[1+\lambda^{-1}\Lambda_\lambda
+                   e^{C_{s,\eta}\Lambda_\lambda}\right].       \tag{HI11}
+$$
+
+Its actual $K_F$ is finite and parameter dependent. No cap-four
+substitution or uniform small-$\lambda$ estimate is made.
+
+### Consume order five-fourths in the ordinary radial domain
+
+At $s=5/4$, HI8 gives
+$\varphi\in\mathcal H^{0,-1/2}=L^2(\rho\,d\rho)$.
+Equivalently, with $u(x)=x^{-7/4}w(x)F(x)$,
+
+$$
+ u\in L^2(dx),\qquad
+ \|T_F\|_{L^2(\mathbb R^9)}^2
+ =\Gamma(9/2)^{-1}\|u\|_2^2<\infty.                    \tag{HI12}
+$$
+
+RF3 therefore belongs to the ordinary unitary Fourier domain, or the
+normalized unitary Hankel domain of order $7/2$. The stronger moments
+HI2 are compatible with LR5's exclusion of every positive
+square-root-exponential moment. The endpoint $M_9$ is not supplied:
+this input route stops at $s<3/2$, where the boundary multiplier's
+derivative may have a jump. No boundary cancellation is asserted.
+
+The joint improvement uses JC regularity and LR reciprocity of one
+selected source. Reapplying VHN to its weighted replacement would
+require a new null equation and is unnecessary here. The complete
+Weil energy sign, exclusion of the matched negative branch, uniform
+vanishing allowance, RH and strict Robin for every integer above
+5040 remain unresolved.

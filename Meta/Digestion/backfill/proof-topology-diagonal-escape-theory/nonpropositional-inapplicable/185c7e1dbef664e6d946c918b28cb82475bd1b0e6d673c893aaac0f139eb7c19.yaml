@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:185c7e1dbef664e6d946c918b28cb82475bd1b0e6d673c893aaac0f139eb7c19
+  normalized_sha256: sha256:185c7e1dbef664e6d946c918b28cb82475bd1b0e6d673c893aaac0f139eb7c19
+cas_ref: sha256:185c7e1dbef664e6d946c918b28cb82475bd1b0e6d673c893aaac0f139eb7c19
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯章节标题“FM.7 Bala 的 $3n+1$ 整性定理”，不包含定义、量词或数学断言。
+    previous_atom_id: 046c5a78feaf5fa335f5919d9696b131669a700443ce0ed5aecfbb3c90d1d8ac
+    next_atom_id: dfc2ba5d4536bc72ad69da144960432c7dec8b0b0b090fa5338c275eba92661c

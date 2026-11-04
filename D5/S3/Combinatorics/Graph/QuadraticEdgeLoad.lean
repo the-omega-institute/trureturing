@@ -42,15 +42,15 @@ noncomputable def kappa : ℝ :=
   sInf (maxLoad G '' {a | Feasible G a})
 
 omit [Fintype V] [DecidableRel G.Adj] [Nonempty V] in
-private theorem half_feasible : Feasible G (fun _ _ => 1 / 2) := by
+theorem half_feasible : Feasible G (fun _ _ => 1 / 2) := by
   constructor
   · intro b c; norm_num
   · intro b c h; norm_num
 
-private theorem load_le_maxLoad (a : V → V → ℝ) (b : V) :
+theorem load_le_maxLoad (a : V → V → ℝ) (b : V) :
     load G a b ≤ maxLoad G a := le_sup' _ (mem_univ b)
 
-private theorem kappa_le (a : V → V → ℝ) (ha : Feasible G a) :
+theorem kappa_le (a : V → V → ℝ) (ha : Feasible G a) :
     kappa G ≤ maxLoad G a := by
   apply csInf_le
   · refine ⟨0, ?_⟩

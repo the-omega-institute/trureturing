@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac6a35a42ac4b4898bea68405279673c33f6f9e5e2c263f7888899d9d24c19f0
+  normalized_sha256: sha256:ac6a35a42ac4b4898bea68405279673c33f6f9e5e2c263f7888899d9d24c19f0
+cas_ref: sha256:ac6a35a42ac4b4898bea68405279673c33f6f9e5e2c263f7888899d9d24c19f0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: M6 的首个待办项要求建立 completed ξ 导数/Taylor API，未陈述其性质。
+    previous_atom_id: 230092e06ecc5338ece1b98efaf04a2d0a82f29552f3202732f3daafea723177
+    next_atom_id: d398b8d2d432f0eb967897bab34cbfe437e11f1cfba262b3638ddd5637c9e606

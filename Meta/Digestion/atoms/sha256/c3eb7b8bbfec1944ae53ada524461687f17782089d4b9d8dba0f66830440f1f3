@@ -1,0 +1,32 @@
+**Definition 11.1 (Common size-column data).** Let $s$ be a positive integer. A common incidence datum consists of real numbers $p_k,z_{ik}$, for $1\le k\le s$ and $1\le i\le s$, satisfying
+
+$$
+p_k\ge0,\qquad \sum_{k=1}^sp_k=1,\qquad
+0\le z_{ik}\le p_k,\qquad \sum_{i=1}^sz_{ik}=kp_k.
+$$
+
+Put
+
+$$
+y_i=\sum_kz_{ik}>0,\qquad
+q=\sum_kkp_k=\sum_i y_i,\qquad
+w_i=\sum_kk^2z_{ik},\qquad
+2\mathcal J_s(p,z)=\sum_i\frac{w_i}{y_i^2}.
+$$
+
+Every profile of Definition 1.1 supplies one such datum by
+
+$$
+p_k=\sum_{|T|=k}x_T,\qquad
+z_{ik}=\sum_{\substack{|T|=k\\i\in T}}x_T.
+$$
+
+The resulting $y_i,w_i,q$ agree with Definition 1.1 and $\mathcal J_s(p,z)=J_s(x)$. In particular the column caps and all the denominators come from the same profile. No converse representation is needed below. For integers $r\ge2$, extend the notation of Definition 1.2 by
+
+$$
+a=r-1,\qquad D=3a^2+3a+1,\qquad C=ar(2a+1),
+\qquad F_r(q)=\frac{r^2(Dq-C)}{2q^2}\quad(q>0).
+$$
+
+For $r\ge5$ these are precisely the earlier quantities.
+

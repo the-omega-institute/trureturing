@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e9b74da6fb00af8e95fb0fe61cda93697f7b762418f0366e3c0f72283827541
+  normalized_sha256: sha256:2e9b74da6fb00af8e95fb0fe61cda93697f7b762418f0366e3c0f72283827541
+cas_ref: sha256:2e9b74da6fb00af8e95fb0fe61cda93697f7b762418f0366e3c0f72283827541
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条定义带类型残余集合，并规定总状态数按类型不交并计数，不断言有限性或最小性。
+    previous_atom_id: ea24c030ee92fa8e656bdb2ef2b067b6de565ecbf51e35aaa6747ce96246db94
+    next_atom_id: 0586db0aa232701d4a440b78f6f51a2e3d8b01231812fb859b8c653f1879fe31

@@ -1,0 +1,57 @@
+### 命题 12.1（三维中不对易二态仍不足以认证全部输入）
+
+在 $\mathbb C^3$ 中取
+
+$$
+\begin{gathered}
+ P=\operatorname{diag}(1,1,0),\quad Q=I-P,
+ \qquad N(X)=PXP+QXQ,\\
+ \sigma=\operatorname{diag}(1/2,1/3,1/6),\qquad
+ d=\frac{E_{12}+E_{21}}6,\\
+ \rho_0=\sigma+d,\quad\rho_1=\sigma-d.
+ \end{gathered}
+$$
+
+两态均忠实且不对易，C90 成立，但 $N$ 不存在全态恢复通道。
+
+**证明。**
+两态左上 $2\times2$ 块的行列式为 $5/36>0$，
+第三个对角元为 $1/6$，故均正定。
+而 $[\rho_0,\rho_1]=-(E_{12}-E_{21})/18\ne0$。
+通道固定 $\rho_0,\rho_1,\sigma$，所以输入输出的 $J$ 相同。
+由于 $P,Q$ 与 $\sigma$ 对易，直接代入 Petz 公式还得到 $R_{\sigma,N}=N$。
+然而 $\lvert \psi_\pm\rangle=(\lvert 1\rangle\pm\lvert 3\rangle)/\sqrt2$ 的两个纯态
+经 $N$ 得到同一输出，故无法共同恢复全部态。
+
+**白话图景。**二维里没有藏身处的遗漏，到三维就能躲在另一个块之间。
+眼前两态及其不对易关系可以都保住，第一维与第三维之间的相干却被删去。
+二态关系能够画进有限三维图，不代表整个高维输入都已通过检查。
+
+旁参考也必须明确包含在哪个声明里。
+若 $E(\rho_i)=\rho_i$，则 $E\otimes\operatorname{id}_R$ 自动恢复
+
+$$
+\sum_i p_i\rho_i\otimes\lvert i\rangle\langle i\rvert,
+$$
+
+但不自动恢复所有与旁端口 $R$ 纠缠的状态。
+例如 $E_z$ 固定 $P_0,P_1$，中点为 $I/2$，这对态满足 C90；
+记 $\lvert \Phi^+\rangle=(\lvert 00\rangle+\lvert 11\rangle)/\sqrt2$，它对 Bell 态却给出
+
+$$
+(E_z\otimes\operatorname{id})(\lvert \Phi^+\rangle\langle \Phi^+\rvert)
+ =\frac{P_0\otimes P_0+P_1\otimes P_1}{2}.
+$$
+
+任何恢复该二态的 $S$ 都必须固定 $P_0,P_1$，
+因此 $S\otimes\operatorname{id}$ 仍固定右侧的混合态，不能还原 Bell 态。
+只有已经证明 $RN=\operatorname{id}_{M_d}$ 时，
+才由线性自动得到对任意旁参考的完整恢复。
+
+**白话图景。**旁参考可以是 $\Omega$ 内另一个保留端口。
+“这两个内容能回来”与“它们和整个旁端口之间的一切联系都能回来”
+是两种范围不同的声明。完全正性保证把旁端口接上后操作仍合法；
+它本身不保证被删掉的关联已经恢复。
+
+<a id="section-13"></a>
+

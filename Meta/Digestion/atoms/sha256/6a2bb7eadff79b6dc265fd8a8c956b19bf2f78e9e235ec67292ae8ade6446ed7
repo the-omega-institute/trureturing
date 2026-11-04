@@ -1,0 +1,41 @@
+**Proposition 123.2 (continuity, compact fibers, and common-partition approximation).** Let $\mathcal S$ be the product of four copies of the weak-star compact order interval $[0,1]\subset L^\infty(m)$, cut out by the a.e. equation $\sum_yf_y=1$. Define
+
+$$
+\Phi _3:\mathcal S\longrightarrow\mathbb R^{64},\qquad
+\Phi _3(f)=\bigl(\mathcal C(f_y,f_z,f_w)\bigr)_{y,z,w\in L}.
+\tag{123.4}
+$$
+
+Then $\Phi _3$ is continuous, its image is compact, and every nonempty fiber is compact. If $\mathcal D$ denotes the indicator tuples of pointwise Borel partitions of $G$, then
+
+$$
+\Phi _3(\mathcal S)=\overline{\Phi _3(\mathcal D)}.
+\tag{123.5}
+$$
+
+The closure is in all 64 coordinates, equivalently in total variation on $L^3$.
+
+**Proof.** Since $m$ is a finite Borel measure on $\mathbb R^4$, $L^1(m)$ is separable, and the weak-star compactness of the order interval makes $\mathcal S$ compact and metrizable. Suppose $f_n\to f$ coordinatewise weak-star. For fixed $y,z,w$, set $b=Rf_w$. The exact difference is
+
+$$
+\begin{aligned}
+&\mathcal C(f_{n,y},f_{n,z},f_{n,w})-\mathcal C(f_y,f_z,f_w)\\
+={}&\int g f_{n,y}P\bigl(f_{n,z}R(f_{n,w}-f_w)\bigr)\,dm\\
+&+\int g f_{n,y}P\bigl((f_{n,z}-f_z)b\bigr)\,dm\\
+&+\int g(f_{n,y}-f_y)P(f_zb)\,dm.
+\end{aligned}
+\tag{123.6}
+$$
+
+Use precisely (119.6): weak-star convergence in $[0,1]$ implies strong $L^2(m)$ convergence after $T_s$, for every $s>0$. This is compactness on that order interval, not on the whole $L^2$ unit ball. The first term tends to zero by this bounded order-interval compactness $R(f_{n,w}-f_w)\to0$ in $L^2(m)$, the $L^2$ contraction of $P$, $0\leq f_{n,z}\leq1$, and Cauchy–Schwarz. For every $\psi\in L^1(m)$, $\psi b\in L^1(m)$, so $f_{n,z}b\to f_zb$ weak-star and the same compactness statement makes the second term tend to zero. The last term tends to zero against the fixed $L^1$ function $gP(f_zb)$. Thus every one of the 64 coordinates is continuous; no product of two unprocessed weak-star limits is taken.
+
+Weak-star classes have Borel representatives. Combine the null sets on which their bounds or sum constraint fail and assign one fixed label there. The three positive-time laws are absolutely continuous with respect to $m$, so this common repair leaves (123.2) unchanged. Compactness of the image and its fibers follows.
+
+For the reverse approximation, let $(\mathcal P_n)$ be increasing finite Borel partitions generating the Borel sigma algebra. In a cell $A\in\mathcal P_n$, split its $m$-mass into four Borel pieces of masses $\int_Af_y\,dm$. Such a split exists because $m\ll\mu$: the distribution $s\mapsto m(B\cap\{x\leq s\})$ is continuous for every Borel remainder $B$. The resulting partition $(E_{n,y})_y$ satisfies
+
+$$
+\int\psi(\mathbf1_{E_{n,y}}-f_y)\,dm=0
+$$
+
+for every $\mathcal P_n$-simple $\psi$. Density of these simple functions in $L^1(m)$ and the uniform bound by $1$ give $\mathbf1_{E_{n,y}}\to f_y$ weak-star. Continuity of $\Phi _3$ yields (123.5). In particular every continuous objective of the complete three-time law attains its stochastic optimum, and its deterministic infimum equals that optimum; (123.5) gives approximation, not deterministic attainment. $\square$
+

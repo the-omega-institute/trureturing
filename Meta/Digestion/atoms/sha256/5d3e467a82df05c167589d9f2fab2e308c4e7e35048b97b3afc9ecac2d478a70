@@ -1,0 +1,25 @@
+**定义 1.2（失败与平移）。** 对实际历史 $H$，令 $\mathcal F(H)$ 为实现该历史全部动作和读数的完整目标集合。若 $K\subseteq\mathcal F(H)$，定义
+
+$$
+\begin{aligned}
+L_0(K,H)&\Longleftrightarrow |K|\ge2,\\
+L_s(K,H)&\Longleftrightarrow L_0(K,H)\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z\in\mathbb R:
+L_{s-1}\bigl(K\cap\mathcal F(H,E,z),(H,E,z)\bigr).
+\end{aligned}
+\tag{1.4}
+$$
+
+$s$ 不超过剩余原时钟预算。该递归同时保留两个动作、实际响应子纤维和提前停止；它对兼容目标集合的包含关系向上单调。每个未选动作的响应只是固定世界的数学预测，不是额外取得的读数。
+
+任意实际初读 $a_0$ 满足 $a_0=g(0)+\delta$。映射
+
+$$
+(P,g,\delta)\longmapsto(P,g,\delta-a_0)
+\tag{1.5}
+$$
+
+将整个初读 $a_0$ 的纤维双射到初读零域 $\mathcal I_0$，并在每条动作词上将全部读数减去 $a_0$。逆映射给漂移加回 $a_0$；源、增益、动作、响应分割和原时钟均被保留。因此初读零是可逆坐标选择，不是初始增益为零或漂移为零的承诺。初读零域上的完整策略可通过实际取得的 $a_0$ 平移到全域。
+
+本卷复用 [IV 定义 1.1–1.2、定理 9.3、定义 13.1–13.2、定理 13.3 与第 14 节](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md) 的原根系统。完整问题仍是：是否不存在覆盖全部 $\mathcal W_3$ 的至多八读确定性协议，从而需要至少九读；或者是否存在这样的至多八读协议。这里的至少九读只表示下界，不附带九读上界。
+

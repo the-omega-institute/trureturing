@@ -1,0 +1,13 @@
+## 9. Optimizer-channel uniqueness and qualitative stability
+
+Keep the exact record $R_0,C_0$ of (1.1), the branch convention (1.4), and the unhalved, reference-inclusive diamond norm (1.6). Throughout this section, put
+
+$$
+c=\cos(\pi/8),\qquad q=1-c,
+\qquad
+\Phi_* (X)=PXP+QXQ+c(PXQ+QXP),
+\tag{9.1}
+$$
+
+where $P,Q$ are the fixed projections (6.13). Thus $\Phi_*$ is exactly the channel of Theorem 6.2, with no optimization over its choice. Theorems 3.1 and 6.2 supply the lower bound $q$ and its finite attainment. The equality characterization of Theorem 8.2 will supply the additional rigidity needed here; its proof is not repeated.
+

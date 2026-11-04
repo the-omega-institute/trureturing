@@ -75,7 +75,7 @@ private theorem quadratic_turan_coeff_nonneg
   simp only [coeff_add, coeff_C_mul_X_pow]
   split_ifs <;> positivity
 
-private theorem pochhammer_turan_nonneg (n : Nat) (mu alpha beta : Real)
+theorem pochhammer_turan_nonneg (n : Nat) (mu alpha beta : Real)
     (hmu : 0 < mu) (ha : 0 <= alpha) (hb : 0 <= beta) :
     0 <= (ascPochhammer Real n).eval (mu + alpha) *
       (ascPochhammer Real n).eval (mu + beta) -

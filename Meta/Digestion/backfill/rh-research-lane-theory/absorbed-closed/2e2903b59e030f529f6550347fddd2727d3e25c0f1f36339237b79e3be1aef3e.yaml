@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:2e2903b59e030f529f6550347fddd2727d3e25c0f1f36339237b79e3be1aef3e
+  normalized_sha256: sha256:2e2903b59e030f529f6550347fddd2727d3e25c0f1f36339237b79e3be1aef3e
+cas_ref: sha256:2e2903b59e030f529f6550347fddd2727d3e25c0f1f36339237b79e3be1aef3e
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataProvider.canonicalZeroData
+    target_statement_id: sha256:9af0d313f3c886f3a979616c6fc26e29d94dede62998c33b630f4146d4c4dc16
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataProvider.canonicalZeroData_conjugation
+    target_statement_id: sha256:bab1cb466ea5fecf7542b02213c09547713fd72eeb54907c6260a0a9aa7dfdc9
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataProvider.canonicalZeroData_exhaustiveUnique
+    target_statement_id: sha256:085723878277a36cb6cb47562b49b7618687003d10b089add319aabdaeb2dd66
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataProvider.canonicalZeroData_isNontrivial
+    target_statement_id: sha256:ac9557b7e6ea52f5f9f56df250d8765257ed0435c216b3715bce959e86c8a175
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataProvider.canonicalZeroData_locallyFinite
+    target_statement_id: sha256:037b5536f04ca408e3a16f079d881fc31af00a95bc8ec91ae1c3fdea521bef58
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataProvider.canonicalZeroData_multiplicity_conjugation
+    target_statement_id: sha256:1b8c700ffc7064f7c6d2ed9f803ab21b2f00ef1f7a21f542aa00e0009ce8de59
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataProvider.canonicalZeroData_multiplicity_pos
+    target_statement_id: sha256:31b9d9edaebd8d03e3501bfc8a1ac37f5f300651e32cbd5ba183b41c15a7b3d0
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataProvider.canonicalZeroData_multiplicity_reflection
+    target_statement_id: sha256:2dc5d3a7824beae0b98a4681589688900686bddba88d2b7387fdc4491900e485
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataProvider.canonicalZeroData_reflection
+    target_statement_id: sha256:413730283b50977573ff9c5eaae2082fe592b95970f6054c1bbc92450c67ca39
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,6 @@
+## 116. A cyclotomic counterfamily to the degree-uniform square-root bound
+
+The degree-uniform alternative in [Boundary Dynamics](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md) §114 has a negative answer in its original paid-source experiment. There are initialized finite complete passive selectors with $D_{\rm read}=D=2$ and $D_{\rm blind}/(D\sqrt n)\to\infty$. The construction below keeps every acquired seed and the original total canonical decoder. Its lower bound uses positive common continuations on which the complete allowed inputs, including the completed selection events, agree. It does not identify a large response image with a memory minimum; §115's distinction remains in force.
+
+The original experiment and its suppliers are taken at the fixed revision `c5e5c2c0f50f73bd6f75b3ecf2ea4e31b6d29226`. The continuation through §115 and the separate later comparison are taken at `ead132fb284340a8b3a70b957a974196f85fecc3`. The theorem concerns the former experiment; the latter revision does not change its source, interface or correctness domain.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e59a2e084ce3339f4e705b18b4d805822ea12a7d96f81bbcb9d1d23bdc96b3a
+  normalized_sha256: sha256:2e59a2e084ce3339f4e705b18b4d805822ea12a7d96f81bbcb9d1d23bdc96b3a
+cas_ref: sha256:2e59a2e084ce3339f4e705b18b4d805822ea12a7d96f81bbcb9d1d23bdc96b3a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ANCHOR 节的参数声明与依赖余纤维定义引言。
+    previous_atom_id: c0fd995bdc7fb266da68b480e2e34fbe3b021081b66a8457f84beb7b60a66876
+    next_atom_id: b457486a7464106b62abae71127680702f34f0cc1a269104475a3ed05d554fd1

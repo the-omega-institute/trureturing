@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:f0cd575fb743712f46e92ca91c5af169732b7b0cc1016f504072527753b94cd8
+  normalized_sha256: sha256:f0cd575fb743712f46e92ca91c5af169732b7b0cc1016f504072527753b94cd8
+cas_ref: sha256:f0cd575fb743712f46e92ca91c5af169732b7b0cc1016f504072527753b94cd8
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/AnalyticLogarithmicContinuation.local_logarithmic_equation_zero_free
+    target_statement_id: sha256:7405bf2f26689230622f3b47e75a114cacb8ebdabeaa9e72877a12620e7e2056
+  - gid: D5/S3/Weil/Probability/AnalyticLogarithmicContinuation.quadratic_coefficients_summable
+    target_statement_id: sha256:6cc328ed556aa3afa755d1f1626f798d6d04706382af14b588d1182474f17054
+  - gid: D5/S3/Weil/Probability/AnalyticLogarithmicContinuation.scalar_series_analytic_unit_disk
+    target_statement_id: sha256:b70286111a28572335f344d538a433f3758e380c43e0b03920f11ca293b776a2
+  - gid: D5/S3/Weil/Probability/CanonicalLiGrowthZeroFree.canonical_li_summable_disk_zero_free
+    target_statement_id: sha256:bc9ea920a3ef00cc7559167f7a77d6a01b0f27f88f2674b2ff24f7c37dea54b1
+  - gid: D5/S3/Weil/Probability/CanonicalLiGrowthZeroFree.canonical_xi_disk_analytic
+    target_statement_id: sha256:d79a7eff9f3d58cca2abb49fa004a2b45275ea10646bd806996b686c94197c31
+  - gid: D5/S3/Weil/Probability/CanonicalLiGrowthZeroFree.canonical_xi_disk_local_equation
+    target_statement_id: sha256:14ad46179806f713665c316cb8bb32aa8ad65bbf7aebe3691f98155cda254e09
+receipts:
+  unresolved_subitems: []

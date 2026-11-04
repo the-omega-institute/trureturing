@@ -1,0 +1,44 @@
+**Proposition 5.4 (the existing service consequence, with unchanged
+charges).** Under Assumptions 4.2 and 4.4, with $D\ne\varnothing$, a
+uniform finite-new-read legal service exists exactly when every
+row-piece pair has a finite exclusion depth in (NIC.24). A persistent
+pair supplies finite original counterpairs to every purported such
+service. No new minimum of (NIC.18) follows.
+
+Proof. [ARH, §2, (ARH.2.3) and its proof][ARH] gives, on exactly the
+complete common-state and authentic-epoch premises of Assumption 4.2,
+equivalence between a uniform finite-new-read serial service, such a
+static service and an original determining prefix depth. Its
+serial-to-prefix direction considers every deterministic effective
+source-total controller with arbitrary finite-word reads and variable
+absorbing halt, and uses a finite reply tree under a common read bound.
+Original-prefix locality applies also to born and absent addresses.
+Thus a claimed bounded service entails some finite $h$. A persistent
+pair at that $h$, reconstructed by Theorem 5.2, contradicts its claimed
+complete output.
+
+Conversely, finite exclusion depths give their maximum determining
+$h$. ARH's positive direction uses actual reads at the authentic static
+epoch $N$ to recover this inclusive original prefix, then a finite-source
+enumeration which terminates on each actual conditioned source fiber
+and outputs its common full row. Its correctness uses membership in
+the entire (NIC.17), not an image parameter observed at runtime. This
+reuses the supplied legal service construction and paid interface.
+The existence equivalence does not identify optimal read, update or
+length coordinates and does not replace a same-run weighted supremum
+by a sum of coordinate suprema. $\square$
+
+**Open problem 5.5 (terminating signed joint finite approximability).**
+For every piece-pair (NIC.22) arising from the complete acquired
+construction, find a terminating choice between a finite $H$ proving
+$\neg J_{ib,jc}(H)$ and a finite proof-bearing description producing
+actual finite parameter witnesses for $J_{ib,jc}(h)$ for every $h$.
+The latter must retain both entire signed predicates and both exact
+finite-source row labels jointly. Theorems 3.2–5.2 do not supply this
+choice. A limit partition, a residual-support section from URR, or a
+supplied-context minimum-depth certificate is not assumed to preserve
+the required joint prefixes. This is the original unrestricted stopping
+obligation of [NLC, Open problem 9.2][NLC] and [NFO, Open problem 8.4][NFO].
+The actual arbitrary-word action and resource optimization questions
+remain separate; no new optimum is asserted here.
+

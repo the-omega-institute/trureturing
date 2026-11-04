@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0163cedb7375a17cd9806d189b3409a83f7130f441361ed05de74b4627c797ba
+  normalized_sha256: sha256:0163cedb7375a17cd9806d189b3409a83f7130f441361ed05de74b4627c797ba
+cas_ref: sha256:0163cedb7375a17cd9806d189b3409a83f7130f441361ed05de74b4627c797ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅有“精确 kernel 强度”节标题与“沿用冻结对象”引导语，公式在后续 atom，本文未断言新的数学关系。
+    previous_atom_id: 5e40ea96ae16d6aeac2f70651bc0eabce4399852203aa03a4e08a90a93651aad
+    next_atom_id: 443ea2ae594b022cfc8edf107fa77dcb0caa23f0ac35a972c198d2c4ea45d79d

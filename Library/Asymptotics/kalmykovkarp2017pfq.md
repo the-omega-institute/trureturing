@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Analytic/HypergeometricShiftTuran/Defs
   - D5/S3/Analytic/HypergeometricShiftTuran/Result
   - D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockResult
+  - D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult
 license: citation-only
 triage: anchor
 ---
@@ -92,7 +93,7 @@ Conjecture 2 on page 6 of arXiv:1611.06724v1 states verbatim:
 
 > Conjecture 2. Suppose p1 ≤ q1 , p2 ≤ q2 and conditions (13) hold for a1 , b1 and a2 , b2 . Then the function µ → f (µ; x) defined in (3) is log-concave on [1, ∞) and the corresponding generalized Turánian ∆f (α, β; x) has nonnegative coefficients at all powers of x.
 
-The standing assumption on page 2 states verbatim:
+Section 2, page 3, states verbatim:
 
 > We will always assume that a2 is not empty (i.e. p2 ≥ 1), while all other subvectors are allowed to be empty.
 
@@ -132,3 +133,28 @@ The shared half-integer Gamma values in `Defs` follow from Mathlib's
 $640/567<32/(9\pi)$ supply both coefficient calculations. The two-block
 family, correspondence and bounded literature scope are stated in
 `Problems/kalmykov-karp-pfq-conjecture-two-coefficients.md`.
+
+## Function clause of Conjecture 1
+
+Theorem 3, page 5 of arXiv:1611.06724v1, states verbatim (line breaks joined):
+
+> Theorem 3. If p ≤ q and conditions (13) are satisfied, then ∆f (α, β; x) ≥ 0 for x ≥ 0, µ, β ≥ 0 and α ∈ N, where ∆f (α, β; x) is defined in (9) with f from (10). Moreover, if α ≤ β + 1, then δm ≥ 0 for all m ∈ N0.
+> If p ≥ q and conditions (12) are satisfied, then ∆f (α, β; x) ≤ 0 for x ≥ 0, β ≥ 0 and α ∈ N. Moreover, if α ≤ β + 1, then δm ≤ 0 for all m ∈ N0.
+
+Conjecture 1, page 6, states verbatim:
+
+> Conjecture 1. All conclusions of Theorem 3 hold for all α, β ≥ 0 if µ ≥ 1.
+
+`FunctionResult.fval` is the real infinite sum in equation (10), using the
+frozen Gamma ratio `Defs.coeff`. `FunctionResult.turanian` is equation (9).
+`FunctionResult.claim` imposes $1\le p\le q$ and the remaining function
+hypotheses, without the extra restriction needed only for coefficients.
+The nonempty-$a_2$ sentence in Section 2 is followed by “In this section we
+will consider log-convexity of the function f (µ; x) defined in (3) under these
+assumptions.” Its scope in Section 3 need not be decided: the claim with
+$1\le p$ is refuted by a witness valid under both the standing and
+section-local readings. `FunctionResult.result` uses $p=1$, $a=(1)$,
+$q=12$, $b_j=1/2$, $\mu=1$, $\alpha=\beta=1/2$, $x=2000$. The proof establishes convergence
+and estimates the infinite sums; it does not infer a function sign from a
+negative Taylor coefficient. Its exact scope is recorded in
+`Problems/kalmykov-karp-pfq-conjecture-one-function.md`.

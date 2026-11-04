@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eee7687cf19fe65a53917990c45c6dacf9ca9207293574214dec89b5922c6ecb
+  normalized_sha256: sha256:eee7687cf19fe65a53917990c45c6dacf9ca9207293574214dec89b5922c6ecb
+cas_ref: sha256:eee7687cf19fe65a53917990c45c6dacf9ca9207293574214dec89b5922c6ecb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: W-B2 定义义务与重测工单的职责划分；没有关于二阶变分值的主张。
+    previous_atom_id: 156a482612a3fb8bb8df7f7ded877af2304a4b74e7c876aaff42b62a52ab4dfb
+    next_atom_id: null

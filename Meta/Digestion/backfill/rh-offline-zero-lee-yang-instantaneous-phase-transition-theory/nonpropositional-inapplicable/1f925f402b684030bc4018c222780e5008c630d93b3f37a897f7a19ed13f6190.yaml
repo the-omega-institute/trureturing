@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f925f402b684030bc4018c222780e5008c630d93b3f37a897f7a19ed13f6190
+  normalized_sha256: sha256:1f925f402b684030bc4018c222780e5008c630d93b3f37a897f7a19ed13f6190
+cas_ref: sha256:1f925f402b684030bc4018c222780e5008c630d93b3f37a897f7a19ed13f6190
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: C0.2 开放桥清单只提出 determinant 与 Xi 相差无零 analytic unit 的待证要求，不宣称该等式已经成立。
+    previous_atom_id: 2f1c7b0d8c25ac265da5debd11ad694861bc334ce2769c106c57c0aa0e58dd88
+    next_atom_id: dfc9c462bdb783040719144cc4e90f7f28eefab355c7767b0cc78a13f7d36a1e

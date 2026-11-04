@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9bde040a6d7f79c2115281e83ef86348c379200c0acd54b3e939f380015cddd5
+  normalized_sha256: sha256:9bde040a6d7f79c2115281e83ef86348c379200c0acd54b3e939f380015cddd5
+cas_ref: sha256:9bde040a6d7f79c2115281e83ef86348c379200c0acd54b3e939f380015cddd5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 自动机行为等价状态是前文统一模型的应用名称，没有陈述自动机的存在或最小化定理。'
+    previous_atom_id: d9973eda920b7580e0e56ab6a2c0fb11ab9bde5bea323f88fef809c5c900aba4
+    next_atom_id: 8dd560092fa26157014b8f39be8bfdbaa89b6da542cd12a7897efa7d2d7005ad

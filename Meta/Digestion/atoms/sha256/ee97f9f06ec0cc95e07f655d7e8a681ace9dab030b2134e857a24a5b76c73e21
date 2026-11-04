@@ -1,0 +1,43 @@
+### 17.5. A nonzero mixed difference with no remote loss terms
+
+Assume for contradiction that this interior law attains $d(P_\theta)=c_\star$. Correction 16.1 applies to this same $\theta\in\Theta_{2m}$ and supplies $A_{P_\theta}(0)<\infty$, including both zero-offset erasures. The supplied [Attainment, Theorem 1.5][ClockAttainment] therefore gives a shift-invariant saturated conull set $\Omega_0$ on which the original losses $\ell_i(x)=(x_i-q_i(x))^2$ satisfy
+
+$$
+\Delta_{P_\theta}(x,z)=\sum_{i\in\mathbb Z}(\ell_i(x)-\ell_i(z))=0
+\tag{17.18}
+$$
+
+for every legal finite modification, with absolute convergence. The band needed by that supplier is a consequence of the hypothetical attainment, by [Universal, Theorem 3.1][ClockUniversal]. Root summability and this strong-zero implication retain their supplier ownership.
+
+Choose $x\in\Omega_0\cap\Omega_{\rm ag}$. For $u,v\in\{0,1\}$, replace its block $[-2,2]$ by
+
+$$
+x^{uv}_{[-2,2]}=(0,u,0,v,0),\qquad
+x^{uv}_{[-2,2]^c}=x_{[-2,2]^c}.
+\tag{17.19}
+$$
+
+Endpoint zeros protect both open seams, so all four configurations are legal, regardless of $x_{-3}$ and $x_3$. Saturation puts all four in the same domain. The entire coefficient field $(b_i)_i$ is identical across them by finite-modification invariance. Thus their original losses outside $[-2,2]$ agree: their local triples and their coefficients both agree there. For $i=-2,-1$ the loss depends on at most $u$, and for $i=1,2$ it depends on at most $v$. Consequently every noncentral term cancels in the finite mixed sum
+
+$$
+\begin{aligned}
+\mathscr M(x)
+ &=\sum_{i\in\mathbb Z}
+  \left[\ell_i(x^{11})-\ell_i(x^{10})-\ell_i(x^{01})+\ell_i(x^{00})\right]\\
+ &=b_0(x)^2>0.
+\end{aligned}
+\tag{17.20}
+$$
+
+At the center, the observed bit is zero in all four completions. Its losses in the order $11,10,01,00$ are $0,0,0,b_0(x)^2$, since either neighboring one forces the posterior to zero. On the other hand, using the same original-$P_\theta$ losses, (17.18) gives
+
+$$
+\mathscr M(x)
+=\Delta_{P_\theta}(x^{11},x^{00})
+ -\Delta_{P_\theta}(x^{10},x^{00})
+ -\Delta_{P_\theta}(x^{01},x^{00})=0,
+\tag{17.21}
+$$
+
+contradicting (17.20). The cancellation uses neither a finite visible window for $b_i$ nor a bound on its observation range. It uses the exact invariance of that field on this finite-modification class. In particular, there is no residual sum of far-away posterior changes. This is the mixed-endpoint mechanism of [Finite visible memory, Proposition 4.1][ClockVisible], applied on a saturated tail class rather than to a globally local loss.
+

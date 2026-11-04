@@ -42,6 +42,26 @@ public sealed class WorktreeMakeWorkflowTests
         var pathFlag = Array.IndexOf(arguments, "--path");
         Assert.True(pathFlag >= 0, "worktree adapter must pass --path");
         Assert.Equal(target, arguments[pathFlag + 1]);
+        Assert.DoesNotContain("--prefer-idle", arguments);
+    }
+
+    [Fact]
+    public void MakePrefersIdleWhenDestinationIsOmitted()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var marker = PrepareFixture(fixture.Path);
+
+        var result = RunMake(fixture.Path, marker, "worktree", "KIND=math", "NAME=implicit", "BASE=HEAD");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.True(File.Exists(marker));
+        var arguments = System.Text.Encoding.UTF8.GetString(result.StandardOutput)
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        Assert.Contains("--prefer-idle", arguments);
+        var pathFlag = Array.IndexOf(arguments, "--path");
+        Assert.True(pathFlag >= 0, "worktree adapter must pass --path");
+        Assert.False(Directory.Exists(arguments[pathFlag + 1]));
     }
 
     [Fact]
@@ -62,6 +82,54 @@ public sealed class WorktreeMakeWorkflowTests
             "canonical failure\n",
             System.Text.Encoding.UTF8.GetString(result.StandardError));
         Assert.True(File.Exists(marker));
+    }
+
+    [Theory]
+    [InlineData("", "", "Host must join")]
+    [InlineData("42", "", "Host must join")]
+    public void ReturnRejectsMissingInputsBeforeStartingCli(string pr, string joined, string error)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var marker = PrepareFixture(fixture.Path);
+
+        var result = RunMake(fixture.Path, marker, "worktree-return", "PR=" + pr,
+            "WRITERS_JOINED=" + joined);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(error, System.Text.Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+        Assert.False(File.Exists(marker));
+    }
+
+    [Fact]
+    public void ReturnPassesMergedPrAndJoinAssertionToCanonicalCli()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var marker = PrepareFixture(fixture.Path);
+
+        var result = RunMake(fixture.Path, marker, "worktree-return", "PR=42", "WRITERS_JOINED=1");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.True(File.Exists(marker));
+        Assert.Contains("worktree\nreturn\n--pr\n42\n--writers-joined\n",
+            System.Text.Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReturnWithoutPrPassesJoinAssertionToCanonicalCli()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var marker = PrepareFixture(fixture.Path);
+
+        var result = RunMake(fixture.Path, marker, "worktree-return", "WRITERS_JOINED=1");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.True(File.Exists(marker));
+        var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.Contains("worktree\nreturn\n--writers-joined\n", output, StringComparison.Ordinal);
+        Assert.DoesNotContain("--pr", output.Split('\n', StringSplitOptions.RemoveEmptyEntries));
     }
 
     private static string PrepareFixture(string fixtureRoot)

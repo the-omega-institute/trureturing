@@ -1,0 +1,390 @@
+**Theorem 78.2 (full-height-path preserving critical attainment).** For
+every fixed choice in Definition 78.1 there is one horizon-independent
+law $\mathsf V^{\mathsf Q_K}_\star\in
+\mathcal C^{\mathsf Q_K}_{\mathrm{crit},r}$ such that
+
+$$
+\begin{gathered}
+D((\mathsf V^{\mathsf Q_K}_\star)_T\Vert\mathbb P_T)
+ \le\lambda T+\nu\log(1+T)+O(1),\qquad T>0,\\
+\lim_{T\to\infty}
+\frac{D((\mathsf V^{\mathsf Q_K}_\star)_T\Vert\mathbb P_T)-\lambda T}
+     {\log(1+T)}=\nu(m,r).
+\end{gathered}
+\tag{78.2}
+$$
+
+The bounded term depends only on the fixed data and the choice of
+$p\in(1/2,1)$ in the construction, not on $T$. In particular its entire
+infinite height marginal is the unconditioned $\mathsf Q_K$.
+This full-height-preserving deduction is `repo-derived`; it is ordinary
+conditional mathematics under the inherited native premises.
+
+Proof. Fix $p\in(1/2,1)$ and put $g_p(t)=(1+t)^p-1$.
+The proof has four parts: an integrable height envelope, a scalar
+likelihood bound with explicit envelope dependence, a normalized
+infinite-path kernel, and full native reconstruction with entropy
+transport.
+
+### Integrable height envelope in Theorem 78.2
+
+For $f=a^2-m$, use the bounded corrector $u$ in Q Theorem 74.1.
+Under the deterministic-start $\mathsf Q_K$ law,
+
+$$
+N_t=u(K_t)-u(K_0)+\int_0^t f(K_s)ds,
+\qquad b=2\|u\|_\infty+\|f\|_\infty
+\tag{78.3}
+$$
+
+is a martingale starting at zero, with integer increments bounded by
+$b$. Its general-threshold Azuma bound from that proof gives, for
+$b>0$,
+
+$$
+\mathsf Q_K(|N_n|>z)\le2\exp\{-z^2/(2nb^2)\}
+\quad(n\ge1,\ z>0).
+\tag{78.4}
+$$
+
+This use of the supplier does not assume a stationary initial height.
+Set $S=\sup_{n\ge1}|N_n|/n^p$ and $\delta=2p-1>0$.
+A countable union bound gives
+$\mathsf Q_K(S>x)\le2\sum_{n\ge1}
+\exp\{-x^2 n^\delta/(2b^2)\}$.
+Integrate for $x\ge1$ and use $x^2\ge x$ there. Tonelli's theorem
+then yields
+
+$$
+\mathbb E_{\mathsf Q_K}S
+\le1+4b^2\sum_{n\ge1}n^{-\delta}
+                  e^{-n^\delta/(2b^2)}<\infty.
+\tag{78.5}
+$$
+
+The series converges because its stretched-exponential factor dominates
+any inverse power of $n$. If $b=0$, the bounded integer increments
+and $N_0=0$ give $N_n=0$ for all integers, so $S=0$ and its
+integrability holds directly.
+
+On height-path space define the initially extended-valued function
+
+$$
+R(K)=\max\left(0,\sup_{t>0}
+              \frac{V_K(t)-2mt}{g_p(t)}\right).
+\tag{78.6}
+$$
+
+The ratio is continuous for $t>0$, so the supremum equals the supremum
+over positive rationals and is measurable. Let $d_p=p2^{p-1}>0$.
+The integral of $g_p'(t)=p(1+t)^{p-1}$ gives
+$g_p(t)\ge d_pt$ for $0<t\le1$. For $t\ge1$, it gives
+$g_p(t)\ge pt(1+t)^{p-1}\ge d_pt^p$.
+For $0<t\le1$ the numerator in (78.6) has absolute value at most
+$2\|f\|_\infty t$. For $n\le t\le n+1$, $n\ge1$, (78.3) gives
+
+$$
+V_K(t)-2mt
+\le2|N_n|+4\|u\|_\infty+2\|f\|_\infty.
+\tag{78.7}
+$$
+
+Consequently $R\le c_0+c_1S$ for deterministic finite constants;
+for example one may take
+$c_0=(4\|u\|_\infty+2\|f\|_\infty)/d_p$ and $c_1=2/d_p$.
+Thus $R$ is finite almost surely and $\mathbb E R<\infty$.
+On this full-measure set put $C(K)=\max(1,\lceil R(K)\rceil)$,
+and put $C(K)=1$ on its null complement. This defines a measurable
+positive-integer function, with $C\le1+R$ almost surely, such that
+
+$$
+\begin{gathered}
+\mathbb E_{\mathsf Q_K}C<\infty,\qquad
+v_c(t)=2mt+c((1+t)^p-1),\\
+V_K(t)\le v_{C(K)}(t)\quad\text{for every real }t\ge0
+\quad\mathsf Q_K\text{-almost surely}.
+\end{gathered}
+\tag{78.8}
+$$
+
+No height event of positive mass is removed or reweighted.
+
+### Scalar supplier and uniform constants in Theorem 78.2
+
+For each positive integer $c$, put
+
+$$
+\tau_c=v_c^{-1},\qquad
+\rho_c(u)=\sqrt{1+\tau_c(u)},\qquad
+s_c(u)=\int_0^u\frac{dw}{2m\rho_c(w)^2}.
+\tag{78.9}
+$$
+
+Use exactly the infinite scalar law of (76.9)--(76.15), with its
+constant $C$ replaced by the deterministic $c$. In particular, $Y$
+is the OU ground-state conditioned law, started at zero in $(-r,r)$,
+and $\mu_c$ is the law of the whole path
+$B^{(c)}_u=\rho_c(u)Y_{s_c(u)}$.
+The scalar construction is valid for every deterministic $c>0$;
+its definition and normalization do not use the height event $G$ of
+(76.2) or its probability. It supplies
+
+$$
+\begin{gathered}
+\mu_c\{|B_u|<r\sqrt{1+\tau_c(u)}
+                    \text{ for every real }u\ge0\}=1,\\
+(\mu_c)_U\ll\mathsf W_U,\qquad
+\frac{d(\mu_c)_U}{d\mathsf W_U}
+       \le C_0(c)e^{\nu s_c(U)}\quad(U\ge0),
+\end{gathered}
+\tag{78.10}
+$$
+
+where $\mathsf W_U$ is standard Wiener measure on the full scalar
+prefix. The same infinite law is used for all $U$.
+
+We extract the dependence of $C_0(c)$ rather than averaging its
+exponential. Write $\eta_c$ for (76.12) at this value of $c$.
+It lies in $[-1/2,0]$ and increases to zero. Equation (76.13) and
+monotonicity give
+
+$$
+L_c:=\int_0^\infty|\eta_c|ds=\frac{cp}{4m(1-p)},\qquad
+\int_0^\infty\eta_c^2ds\le\tfrac12L_c,\qquad
+\int_0^\infty|\eta_c'|ds\le\tfrac12.
+\tag{78.11}
+$$
+
+For every surviving path $|z|<r$, the four terms on the second line
+of (76.14) therefore obey
+
+$$
+|J_S|\le\frac{r^2}{4m}
+       +\left(\frac12+\frac{3r^2}{8m}\right)L_c
+       =j_0+j_1c,
+\quad
+j_0=\frac{r^2}{4m},\quad
+j_1=\left(\frac12+\frac{3r^2}{8m}\right)
+                       \frac{p}{4m(1-p)}.
+\tag{78.12}
+$$
+
+Indeed the endpoint term and the $\eta_c'$ term are each at most
+$r^2/(8m)$ in absolute value; the integral without $z^2$ is at most
+$L_c/2$; and the remaining integral is at most $3r^2L_c/(8m)$.
+With the positive OU eigenfunction $\psi$ of (76.9), which is
+independent of $c$, (76.15) thus permits
+$C_0(c)=e^{j_0+j_1c}\|\psi\|_\infty/\psi(0)$.
+Moreover (76.8) gives exactly
+
+$$
+s_c(v_c(t))=\log(1+t)+\frac{cp}{2m(1-p)}
+                        (1-(1+t)^{p-1}).
+\tag{78.13}
+$$
+
+Since $v_c(t)\ge2mt$, substitute $t=\tau_c(U)\le U/(2m)$
+in (78.13). It follows that constants independent of both $c$ and $U$
+can be chosen as
+$B_0=j_0+\log(\|\psi\|_\infty/\psi(0))\ge0$ and
+$B_1=j_1+\nu p/[2m(1-p)]\ge0$, giving
+
+$$
+\log\left\|\frac{d(\mu_c)_U}{d\mathsf W_U}\right\|_\infty
+\le B_0+B_1c+\nu\log(1+U/(2m)).
+\tag{78.14}
+$$
+
+All density bounds concern full scalar prefixes. The constant-radius
+OU path is an intermediate supplier for the moving operational-time
+tube in (78.10).
+
+### Normalized infinite kernel in Theorem 78.2
+
+On the product of the infinite height space, the infinite operational
+scalar path space and an auxiliary infinite original-time Brownian
+path space, define once and for all
+
+$$
+\widetilde{\mathsf V}(dK,dB,dH)
+ =\mathsf Q_K(dK)\,\mu_{C(K)}(dB)\,\mathsf W(dH),
+\qquad
+\widetilde{\mathsf Q}=\mathsf Q_K\otimes\mathsf W\otimes\mathsf W.
+\tag{78.15}
+$$
+
+Here $H$ denotes the auxiliary path, distinct from the fixed scalar
+$H=(1-Z)/2$. Because $C$ is countably valued, $K\mapsto\mu_{C(K)}$
+is a measurable probability kernel: for every Borel set $D$ of scalar
+paths, $\mu_{C(K)}(D)=\sum_{c\ge1}\mathbf1_{\{C(K)=c\}}\mu_c(D)$.
+It integrates to one for every $K$. Thus (78.15) is a probability
+measure whose height marginal on the entire infinite path sigma-field
+is exactly $\mathsf Q_K$.
+
+Choose measurable versions $f_{c,U}=d(\mu_c)_U/d\mathsf W_U$.
+For
+$\mathcal G_{U,T}=\sigma(K_{[0,\infty)},B_{[0,U]},H_{[0,T]})$,
+the density relative to $\widetilde{\mathsf Q}$ is
+
+$$
+F_U(K,B)=\sum_{c\ge1}\mathbf1_{\{C(K)=c\}}f_{c,U}(B),
+\qquad
+\int F_U(K,B)\,\mathsf W_U(dB)=1.
+\tag{78.16}
+$$
+
+This identity follows first on product cylinders by integration and
+then on $\mathcal G_{U,T}$ by the monotone-class theorem. In particular
+it includes the entire height path, even when $C$ uses its full future.
+For each $c$, (78.14) bounds $\int f_{c,U}\log^+f_{c,U}\,d\mathsf W_U$
+by $B_0+B_1c+\nu\log(1+U/(2m))$, since $\int f_{c,U}=1$.
+The negative part is at most $1/e$ in integral, by
+$x\log x\ge-1/e$. Integrating first over $B$ and then over $K$
+therefore proves
+
+$$
+\begin{aligned}
+D(\widetilde{\mathsf V}|_{\mathcal G_{U,T}}\Vert
+  \widetilde{\mathsf Q}|_{\mathcal G_{U,T}})
+ &=\sum_{c\ge1}\mathsf Q_K(C=c)
+                       D((\mu_c)_U\Vert\mathsf W_U)\\
+ &\le B_0+B_1\mathbb E_{\mathsf Q_K}C
+                       +\nu\log(1+U/(2m))<\infty.
+\end{aligned}
+\tag{78.17}
+$$
+
+Only the first moment of $C$ is used. No exponential moment of $C$
+is asserted or required; in particular no integral of $C_0(C)$ is
+used. There is no height-conditioning entropy charge, because the
+conditional densities (78.16) have mean one and retain every height
+level with its original $\mathsf Q_K$ probability.
+
+### Full reconstruction and entropy transport in Theorem 78.2
+
+Apply the common measurable full-vector reconstruction maps
+(76.16)--(76.18), with the unchanged actual clock $V_K$:
+
+$$
+\begin{aligned}
+W_t&=\int_0^t\frac{\mathbf1_{\{a(K_s)\ne0\}}}{\sqrt2a(K_s)}
+                           \,d[B_{V_K(s)}]
+       +\int_0^t\mathbf1_{\{a(K_s)=0\}}\,dH_s,\\
+q_t&=q_0+\sqrt2\int_0^t c_\kappa(K_s)\,dW_s.
+\end{aligned}
+\tag{78.18}
+$$
+
+Under the reference input $\widetilde{\mathsf Q}$ these maps give
+exactly the full native $\mathbb Q$ law, including all three phases,
+and $X_t=B_{V_K(t)}$. As in (76.17), the first integrand is zero on
+$\{a(K_s)=0\}$ and its conditional variance is
+
+$$
+\int_0^t\frac{\mathbf1_{\{a(K_s)\ne0\}}}{2a(K_s)^2}\,dV_K(s)
+ =\int_0^t\mathbf1_{\{a(K_s)\ne0\}}ds\le t.
+\tag{78.19}
+$$
+
+The independent $H$ term fills exactly the complementary times.
+Conditional on $K$, $W$ is standard Brownian under the reference,
+with a law independent of $K$. The identity
+$\sqrt2\int_0^t a(K_s)dW_s=B_{V_K(t)}$ holds because the zero set
+has zero $dV_K$ mass. Thus neither division by zero nor a positive
+lower bound on $a^2$ is needed, including on clock plateaus.
+
+The common measurable versions in §76 are obtained by truncation,
+simple approximations and a common subsequence on integer intervals.
+Their restriction through $T$ is measurable with respect to
+$\mathcal G_{2AT,T}$, since $V_K(t)\le2At$. Equation (78.16) gives
+absolute continuity on exactly this sigma-field. Every reference null
+set used for their finite-interval definition, continuity and integral
+identities therefore remains null under $\widetilde{\mathsf V}$.
+Intersecting the resulting probability-one sets over integer horizons
+makes the same infinite reconstruction well-defined, with continuous
+versions and $X_t=B_{V_K(t)}$ simultaneously for every real $t\ge0$.
+This is transport of the existing measurable maps; it does not assume
+that the changed inputs solve an adapted stochastic equation in an
+enlarged filtration.
+
+Let $\mathsf V^{\mathsf Q_K}_\star$ be their one infinite output law,
+using the original canonical cemetery convention. It retains $K$
+unchanged and hence $K_\#\mathsf V^{\mathsf Q_K}_\star=\mathsf Q_K$
+on the full infinite height sigma-field. Height never dies and the
+initial state is the prescribed deterministic state. For each $c$,
+(78.10) has $\mu_c$ probability one; countability and (78.15) make its
+assertion with $c=C(K)$ simultaneous with (78.8). On this set,
+for every real $t\ge0$,
+
+$$
+|X_t|=|B_{V_K(t)}|
+ <r\sqrt{1+\tau_{C(K)}(V_K(t))}\le r\sqrt{1+t}.
+\tag{78.20}
+$$
+
+The second inequality uses the increasing inverse of $v_{C(K)}$.
+Strictness is inherited at every operational time, so it is retained
+at every original time, including a plateau. Neither the clock nor the
+tube event has been changed. All choices in (78.15) and (78.18) were
+made on the infinite spaces, independently of a terminal horizon.
+
+Relative entropy decreases under a measurable pushforward, by
+conditional Jensen applied to its density. Apply this to the full
+native prefix map from $\mathcal G_{2AT,T}$. Its reference output is
+exactly $\mathbb Q_T$, so (78.17) gives
+
+$$
+\begin{gathered}
+(\mathsf V^{\mathsf Q_K}_\star)_T\ll\mathbb Q_T,\\
+D((\mathsf V^{\mathsf Q_K}_\star)_T\Vert\mathbb Q_T)
+ \le B_0+B_1\mathbb E_{\mathsf Q_K}C
+                     +\nu\log(1+(A/m)T)<\infty.
+\end{gathered}
+\tag{78.21}
+$$
+
+On the original full cemetery-inclusive prefix, (76.22) gives
+
+$$
+\frac{d\mathbb Q_T}{d\mathbb P_T}
+ =\mathbf1_{\{\zeta>T\}}e^{\lambda T}
+                      \frac{\phi(K_T)}{\phi(k_0)}
+ \le M_T:=e^{\lambda T}\frac{\|\phi\|_\infty}{\phi(k_0)}<\infty.
+\tag{78.22}
+$$
+
+For probabilities $V,Q,P$ with $V\ll Q\le MP$ and finite
+$D(V\Vert Q)$, the variational entropy formula gives
+$D(V\Vert P)\le D(V\Vert Q)+\log M$. Indeed, for every bounded
+measurable $g$,
+
+$$
+\mathbb E_Vg-\log\mathbb E_Pe^g
+ \le\mathbb E_Vg-\log\mathbb E_Qe^g+\log M
+ \le D(V\Vert Q)+\log M;
+\tag{78.23}
+$$
+
+taking the supremum proves the inequality, with $V\ll P$ also
+following by transitivity. This argument needs no separate
+integrability assertion for $\log\phi(K_T)$ under $V$.
+Equations (78.21)--(78.23) yield
+
+$$
+\begin{aligned}
+D((\mathsf V^{\mathsf Q_K}_\star)_T\Vert\mathbb P_T)
+\le{}&\lambda T+\nu\log(1+(A/m)T)\\
+ &+B_0+B_1\mathbb E_{\mathsf Q_K}C
+          +\log\frac{\|\phi\|_\infty}{\phi(k_0)}<\infty.
+\end{aligned}
+\tag{78.24}
+$$
+
+Since $A/m\ge1$ is fixed,
+$0\le\log(1+(A/m)T)-\log(1+T)\le\log(A/m)$.
+This proves the upper estimate of (78.2), with a fixed finite error.
+Together with (78.20), it establishes every membership condition in
+Definition 78.1. Q Corollary 74.2, specifically (74.11), now applies
+to this very law and supplies the matching liminf. The upper estimate
+gives the matching limsup, proving the limit in (78.2). $\square$
+

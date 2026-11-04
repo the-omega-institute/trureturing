@@ -1,0 +1,161 @@
+**Lemma 12.3 (Weighted singleton residual and joint certificates).** Let $a\ge7$, $x\in\mathcal X_a$, and choose any label $e$ whose marginal is smallest. Put
+
+$$
+\begin{gathered}
+t=y_e=\min_i y_i,\qquad C=[s]\setminus\{e\},\qquad
+I=\mathbf1_{\{e\in T\}},\qquad
+I_i=\mathbf1_{\{i\in T\}}\ (i\in C),\\
+L=|T\cap C|=K-I,\qquad
+m^2=\mathbb E[K^2\mid I=1],\qquad
+\alpha=\mathbb P(T=\{e\}\mid I=1),\qquad \beta=1-\alpha.
+\end{gathered}
+$$
+
+Here $m\ge1$, $0<t\le a/(a+2)<1$, $y_i\in[t,1]$ on $C$, and $\mathbb E L=a-t$. Define, for $i\in C$,
+
+$$
+\begin{aligned}
+R_i&=\mathbb E[L^2I_i]-a^2y_i+(2a+1)t,\\
+S_i&=R_i-a(2a+1)\alpha t,\\
+D_i&=\mathbb E[I(2L+1)I_i],\\
+u&=m^2-1-3\beta,\qquad
+c=(2a+1)t(a\alpha-1),\qquad
+f_c(y)=\frac{a^2}{y}+\frac c{y^2}.
+\end{aligned}
+$$
+
+Let $\bar y=(a-t)/r$ and let the Jensen difference be
+
+$$
+\mathcal G=\sum_{i\in C}f_c(y_i)-r f_c(\bar y).
+$$
+
+Then $S_i,D_i,u,\mathcal G\ge0$, and there is the exact identity
+
+$$
+H(x)-h_a(t)-\beta\lambda_a(t)
+=\frac ut+\mathcal G
+ +\sum_{i\in C}\frac{S_i+D_i}{y_i^2}.
+\tag{12.6}
+$$
+
+Moreover, writing
+
+$$
+\begin{gathered}
+P_a(k)=(a+2-k)(a+1-k)(2a+k),\\
+C_a=a(a+1)(2a+1),\qquad D_a=3a^2+3a+1,\\
+\mathcal A_a(t)=\frac{r^2(a^2+3a+1+at)}{(a-t)^2},
+\end{gathered}
+$$
+
+one has
+
+$$
+\begin{aligned}
+d(x)
+&\ge\frac{m^2}{t}
+ +t\bigl(\mathbb E[P_a(K)\mid I=1]-\mathcal A_a(t)\bigr)\\
+&\ge\frac{m^2}{t}
+ +t\bigl(C_a-D_a(m-1)-\mathcal A_a(t)\bigr).
+\end{aligned}\tag{12.7}
+$$
+
+For all allowed integer values of $K$, $P_a(K)\ge0$, and $\mathcal A_a(t)=O(a^2)$ uniformly over $a\ge7$, $0<t<1$.
+
+**Proof.** The equality $\mathbb E(a-L)=t$ gives the pointwise residual representation
+
+$$
+\begin{aligned}
+R_i&=\mathbb E\rho_i,\\
+\rho_i
+&=(1-I_i)(2a+1)(a-L)
+  +I_i(r-L)(r-L-1).
+\end{aligned}\tag{12.8}
+$$
+
+Indeed the integrand expands as
+$L^2I_i-a^2I_i+(2a+1)(a-L)$.
+When $I_i=0$, one has $L\le r-1=a$; when $I_i=1$, $r-L$ is a nonnegative integer. Thus $\rho_i\ge0$ in both cases, including $L=0$. On $T=\{e\}$, every $\rho_i$ equals $a(2a+1)$. Since that event has mass $\alpha t$, it follows that
+
+$$
+S_i=\mathbb E\bigl[\rho_i\mathbf1_{\{T\ne\{e\}\}}\bigr]\ge0.
+\tag{12.9}
+$$
+
+Also $D_i\ge0$. Conditionally on $I=1$, the integer $K$ is at least one; on $K\ge2$ its square is at least four. Consequently $m^2\ge1+3\beta$ and $u\ge0$.
+
+The contribution of $e$ to $H$ is $m^2/t$. Using $K^2=L^2+I(2L+1)$ on every core incidence yields the exact equality
+
+$$
+H=\frac{m^2}{t}
+ +\sum_{i\in C}\left(\frac{a^2}{y_i}+\frac c{y_i^2}\right)
+ +\sum_{i\in C}\frac{S_i+D_i}{y_i^2}.
+\tag{12.10}
+$$
+
+No core type has been removed in this equality. Although $c$ can be negative, on the actual interval $y\ge t$ one has
+
+$$
+f_c''(y)
+=\frac{2(a^2y+3c)}{y^4}
+\ge\frac{2[a^2y-3(2a+1)t]}{y^4}>0.
+\tag{12.11}
+$$
+
+The last sign follows from $a^2-6a-3>0$ for $a\ge7$. Jensen's inequality applied to the actual $r$ numbers $y_i$ therefore gives $\mathcal G\ge0$, with equality exactly when every $y_i=\bar y$. Here only the scalar function is convex; no convexity or averaging of the array functional $H$ is assumed. Substitute $\alpha=1-\beta$ and $m^2=1+3\beta+u$ into (12.10). The terms with $\beta=0=u$ and $y_i=\bar y$ equal $h_a(t)$, and the coefficient of $\beta$ equals $\lambda_a(t)$. This proves (12.6).
+
+For (12.7), sum (12.8) over $C$. Since $\sum_{i\in C}I_i=L$, the exact sum is
+
+$$
+\sum_{i\in C}R_i=\mathbb E Q_a(L),\qquad
+Q_a(l)=(r-l)(a-l)(2a+1+l).
+\tag{12.12}
+$$
+
+For every integer $0\le l\le r$, $Q_a(l)\ge0$. On $I=1$ one has $L=K-1$ and $Q_a(L)=P_a(K)$, so
+
+$$
+\sum_{i\in C}R_i
+\ge t\,\mathbb E[P_a(K)\mid I=1].
+$$
+
+Before removing the singleton contribution, the core contribution in (12.10) can instead be written as
+
+$$
+\sum_{i\in C}
+ \left(\frac{a^2}{y_i}-\frac{(2a+1)t}{y_i^2}
+                  +\frac{R_i+D_i}{y_i^2}\right).
+$$
+
+Drop $D_i\ge0$ and use $R_i/y_i^2\ge R_i$, since $0<y_i\le1$. The function
+$f_-(y)=a^2/y-(2a+1)t/y^2$
+is strictly convex for $y\ge t$ by (12.11) with $c=-(2a+1)t$. Hence
+
+$$
+\begin{aligned}
+\sum_{i\in C}f_-(y_i)
+&\ge\frac{a^2r^2}{a-t}
+  -\frac{(2a+1)tr^3}{(a-t)^2}\\
+&=B_0-t\mathcal A_a(t).
+\end{aligned}
+$$
+
+This proves the first inequality of (12.7). The polynomial identity
+
+$$
+P_a(k)=C_a-D_a(k-1)+(k-1)^3
+\tag{12.13}
+$$
+
+and $\mathbb E[K\mid I=1]\le m$ imply the second one, because $K-1\ge0$ under that conditional law. The two consecutive factors $a+2-k,a+1-k$ have nonnegative product for every integer $1\le k\le a+2$, proving $P_a(K)\ge0$. Finally,
+
+$$
+0<\mathcal A_a(t)
+\le\left(\frac{a+1}{a-1}\right)^2(a^2+4a+1)=O(a^2)
+$$
+
+for $0<t<1$ and $a\ge7$. This bound is independent of the array.
+
+The use of Jensen here is the finite convex-combination inequality of S. Boyd and L. Vandenberghe, *Convex Optimization*, Cambridge University Press, §3.1.8, pp. 77–78 ([author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)). Its strict equality condition follows from (12.11). The residuals in (12.8)–(12.10), rather than a symmetrization assumption, supply the link to the common array. ∎
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b37b50187934dc402be371a71bde65d2a886446064bcb596fa5c138420ab77d0
+  normalized_sha256: sha256:b37b50187934dc402be371a71bde65d2a886446064bcb596fa5c138420ab77d0
+cas_ref: sha256:b37b50187934dc402be371a71bde65d2a886446064bcb596fa5c138420ab77d0
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometry/ArithmeticHorizon.torusNorm
+    target_statement_id: sha256:baf19431b298057974391a450a0b898fba3274c8e446cf763e057e8f6fd99544
+  - gid: D5/S3/Observer/MetricGeometry/AutonomousPredictionEntropy.autonomousStateCount
+    target_statement_id: sha256:59c8412073361bb05d1ef1dd44125310cce2303d003d051020b7c2e547198b8c
+  - gid: D5/S3/Observer/MetricGeometry/AutonomousPredictionEntropy.autonomous_prediction_entropy
+    target_statement_id: sha256:e6bda2faf8a161c3f8cf5d4aba20458f22817a65db512cf42086694c27d0f636
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,26 @@
+**Definition 26.1 (source-relative content).** Lemma 24.2 contributes
+the small-entry compensation: one weak first link changes every finite
+forced impulse response by $\epsilon^2$ while the triangular observation
+solve needs only an $O(\epsilon)$ signed entry. Its constants and the
+chosen positive link depend on the whole finite reference transcript;
+its spectral enclosure does not. Since the witness has
+$\|z\|_1<\rho$, the same obstruction also applies when a positive open
+or closed $\ell^1$ or $\ell^\infty$ entry ball replaces (UFS.53), using
+$\|z\|_\infty\le\|z\|_2\le\|z\|_1$. No norm equivalence with a hidden
+dimension-dependent constant is needed.
+
+The existing §7 supplies arbitrary-field finite-transcript
+indistinguishability and actual-final-cut separation. Formula (UFS.3)
+supplies the exact free/forced ages, and the present proof preserves
+every returning Tick. Finite-prefix cylinders give the elementary
+fair-bit consequence; no new general probability principle is claimed.
+Native inversion and retained use at the zero endpoint belong to
+[P §§37,40–41][P]. The classical moment/Jacobi supplier is
+[Teschl, §2.5][Teschl], equations (2.109)–(2.118) and the finite-support
+paragraph on printed p.44. That paragraph, rather than Theorem 2.13's
+nonfinite-support hypothesis, is the finite-chain correspondence.
+The `repo-derived` delta is the consolidated positive-radius signed-entry
+obstruction, its specified zero-error consequence and its contrast with
+the credited closed-zero endpoint. This is a source-relative claim,
+without a worldwide novelty or new Lean-certification claim.
+

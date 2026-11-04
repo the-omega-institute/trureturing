@@ -1,0 +1,52 @@
+**Proposition 47.1 (marginally widened contrasts accept an impossible source).** Use exactly the five original-clock reads (29.1), with $k=d=0$. The record
+
+$$
+ y=(1,5/4,9/4,11/4,11/4),\qquad\delta=1/4
+ \tag{47.1}
+$$
+
+has a legal noiseless producing world. Nevertheless the candidate source
+
+$$
+ P^{\rm c}=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}
+ \tag{47.2}
+$$
+
+has no compatible whole constant gain and drift, even though every adjacent first-difference contrast passes its independently widened error interval at the same nonzero candidate gain $h=1/2$.
+
+**Proof.** The legal producing world is
+
+$$
+ P^{\rm a}=\begin{pmatrix}3/4&1/4\\3/4&1/4\end{pmatrix},
+              \qquad H=1,\qquad D=0,\qquad\xi=0.
+ \tag{47.3}
+$$
+
+Its source is strictly positive, trace one and rank one. Formula (29.5) gives precisely (47.1). The candidate source (47.2) has trace vector
+
+$$
+ a=(1,3/2,5/2,5/2,7/2).
+ \tag{47.4}
+$$
+
+At $h=1/2$ the four residual first differences are
+
+$$
+ (y_{i+1}-y_i)-\tfrac12(a_{i+1}-a_i)
+                  =(0,1/2,1/2,-1/2),\qquad 0\le i<4.
+ \tag{47.5}
+$$
+
+Every one lies in the individually valid interval $[-2\delta,2\delta]=[-1/2,1/2]$; the drift cancels from these contrasts. But these four bounds are not a sufficient description of the image of the five-dimensional raw box. At this candidate gain, for example, the middle two contrasts would require $\xi_3-\xi_1=1$, whereas $|\xi_i|\le1/4$ permits magnitude at most $1/2$.
+
+There is also an obstruction independent of the candidate gain value. The vector with coefficients $(1,-2,1)$ at clocks $(1,3,4)$ annihilates both the constant drift and the candidate trace vector (47.4). Hence every possible whole $h,D$ at this source would require
+
+$$
+ |y_1-2y_3+y_4|
+       =|\xi_1-2\xi_3+\xi_4|
+       \le(1+2+1)\delta=1.
+ \tag{47.6}
+$$
+
+The left side is $3/2$, a contradiction. Thus this candidate source is impossible even though the original compatibility set is nonempty and the independent contrast intervals accept it. This is the elementary dual-norm lower bound for norm approximation, credited to Boyd–Vandenberghe, Example 5.6, specialized to these actual trace columns. Theorems 44.2 and 45.2 instead test membership in the full joint image $Z_\delta$ and reject this source. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c38b67393cf34b020a1e77dd393bb07083a30c71ccdfe068d575416fc30e1841
+  normalized_sha256: sha256:c38b67393cf34b020a1e77dd393bb07083a30c71ccdfe068d575416fc30e1841
+cas_ref: sha256:c38b67393cf34b020a1e77dd393bb07083a30c71ccdfe068d575416fc30e1841
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 属于“没有证明”清单，未断言负二阶谱值已产生 Weil/Pick/Toeplitz 负方向。
+    previous_atom_id: c613f1374dcc34e6bbb6696b79c2b353dfc653faad8731fa1ad0ac62ca3334c8
+    next_atom_id: 3a750cd9fdedcb30a56377ec4ccba1bbe4fdabaa94a9bd82c6532f953f3a256f

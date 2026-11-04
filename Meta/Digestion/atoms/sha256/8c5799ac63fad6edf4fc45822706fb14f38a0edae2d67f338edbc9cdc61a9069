@@ -1,0 +1,42 @@
+**Proposition 104.1 (general preparation and the marker alternative).**
+For each source of Definition 103.1, Construction 62.3 supplies the
+original general preparation of (103.1): build $u$ from one allocated
+known-zero alpha, receive the owned target, use the terminal-control
+right inverse, Hold and clear/isolate dependent records. With $I=N-b$,
+its vector $(P,S,\mathrm{Read},\mathrm{Add},\mathrm{Tick},\mathrm{Hold})$ is
+
+$$
+\bigl(c,b-1,0,b(I+1),I,1\bigr).
+\tag{104.1}
+$$
+
+There is also a different preparation on this same chosen family:
+after constructing the zero field on $u$, actually Add $\theta_i$ at
+the original beta marker $p_iL$ and $-\theta_i$ at $q_iL$, for each
+$i$ including zero operands, then execute one old-graph Tick and Hold.
+Receive and subsequently clear/isolate the owned input with the same
+custody requirements. This marker preparation has vector
+
+$$
+\bigl(c,b-1,0,2k,1,1\bigr).
+\tag{104.2}
+$$
+
+Both create $N-1$ cells beyond the initial alpha. Formula (104.2) is
+the marker preparation, valid on both families below. It does not
+change the vector or meaning of the original general preparation.
+The alternative may receive exactly the same owned $N$-coordinate
+target $x_\theta$ and extract $\theta_i=(x_\theta)_{p_i}$; its input
+reception, target backing and extraction are paid too. It needs no
+extra parameter oracle or changed receiver entrance.
+
+**Proof of the alternative.** Before growth each beta marker has exactly
+one neighbor, its owner. The source is still zero before the displayed
+Adds, so its actual pre-Tick field is
+$\sum_i\theta_i(e_{p_iL}-e_{q_iL})$. Applying the actual old adjacency
+$A$ gives precisely (103.1), with all other coordinates zero. No
+interior Add, hidden nonzero seed, inverse Tick or numerical assay was
+used. Construction and complete binding updates are the existing
+birth supplier; the owned-input reception and real removal of its
+accessible copies are additional paid work. $\square$
+

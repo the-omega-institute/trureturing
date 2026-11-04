@@ -47,6 +47,21 @@ the resulting symbolic arrays; coherent simultaneous-face lifts are the
 obstacle. This is a sufficient construction route to Question 5.1, not a
 separate solved problem.
 
+The repository now formalizes one finite retained-cone step in
+`D5/S1/Dynamics/Shadowing/BufferedConeExtension`. For a fixed finite old
+graph and finite enlargement, its mixed-buffer graph uses explicit graph-of-
+`f` edge witnesses, retains every complete old vertex path through time zero,
+and gives one outer-buffer orbit tracer for each complete new path. This
+finite result does not provide the global uniform follower bounds or settle
+Question 5.1.
+
+The four-slot Reg audit of
+`D5.S1.Dynamics.Shadowing.buffered_whole_path_extension` remains unfinished:
+the existing dependent-family owner recipe does not supply its typed exact
+bridge, variation, sensitivity, observational dependence or source-selection
+evidence. [Issue #25272](https://github.com/the-omega-institute/trureturing/issues/25272)
+identifies the missing evidence. No validated registration is claimed.
+
 The formal inverse-limit shadowing bridge is
 `D5/S1/Dynamics/Shadowing/MittagLefflerInverseLimit`. It assumes a genuine
 coherent ML diagram and therefore does not settle the construction question.

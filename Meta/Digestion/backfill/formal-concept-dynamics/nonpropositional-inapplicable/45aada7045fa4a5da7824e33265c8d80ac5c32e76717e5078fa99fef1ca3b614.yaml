@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:45aada7045fa4a5da7824e33265c8d80ac5c32e76717e5078fa99fef1ca3b614
+  normalized_sha256: sha256:45aada7045fa4a5da7824e33265c8d80ac5c32e76717e5078fa99fef1ca3b614
+cas_ref: sha256:45aada7045fa4a5da7824e33265c8d80ac5c32e76717e5078fa99fef1ca3b614
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Only declares the review-result readout J_w(x); no equality, success condition or existence theorem is present.'
+    previous_atom_id: e02dd37fd632d524ff47f950d5a494ccb391b168c71b9bbbd5b21c64adbc3b9f
+    next_atom_id: bab9582e0bf6d820c0db4ac37ca57e62c81ff216cab1025b43fbd32936372343

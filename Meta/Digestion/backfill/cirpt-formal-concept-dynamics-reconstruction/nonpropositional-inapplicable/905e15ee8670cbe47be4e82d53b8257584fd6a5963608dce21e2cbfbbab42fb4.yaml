@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:905e15ee8670cbe47be4e82d53b8257584fd6a5963608dce21e2cbfbbab42fb4
+  normalized_sha256: sha256:905e15ee8670cbe47be4e82d53b8257584fd6a5963608dce21e2cbfbbab42fb4
+cas_ref: sha256:905e15ee8670cbe47be4e82d53b8257584fd6a5963608dce21e2cbfbbab42fb4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 禁止重定义 Concept 的工程约束，不是有关 Concept 的数学结论。
+    previous_atom_id: 0320f5358547801fb934379a64730117b6fdf8fb2906abfecf1da77e943c23b9
+    next_atom_id: 752d19224345a5e89c7ff0ef5f405c34756521b89e92fa44c262a43065bd376a

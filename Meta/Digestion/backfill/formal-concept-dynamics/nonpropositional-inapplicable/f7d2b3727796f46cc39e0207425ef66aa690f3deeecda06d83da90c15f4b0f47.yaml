@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f7d2b3727796f46cc39e0207425ef66aa690f3deeecda06d83da90c15f4b0f47
+  normalized_sha256: sha256:f7d2b3727796f46cc39e0207425ef66aa690f3deeecda06d83da90c15f4b0f47
+cas_ref: sha256:f7d2b3727796f46cc39e0207425ef66aa690f3deeecda06d83da90c15f4b0f47
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只是战略响应这一机制的列表项，没有独立数学断言。
+    previous_atom_id: b87da0218febeb5b5910ccc6638a97610977d24c1963541ff82f54a73d76cb0a
+    next_atom_id: 158e806b04a30fa1b67603295f014eb76fd8fafcb0eef2a29f7d382c09776f30

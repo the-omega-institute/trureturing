@@ -1,0 +1,78 @@
+### 证明
+
+当 $0<t<\log2$ 时，式 (1) 中的素数幂和为空。因此
+
+$$
+\mathscr K(t)=N(t)+P(t),
+$$
+
+其中
+
+$$
+N(t)=(1+\gamma-t)e^{t/2}
+-\log(2\pi)e^{-t/2},
+$$
+
+$$
+P(t)=
+\sum_{k\ge1}c_k e^{-\lambda_k t},
+\qquad
+c_k=\frac1{2k(2k+1)},
+\quad
+\lambda_k=2k+\frac12.
+$$
+
+关键是两个精确系数恒等式：
+
+$$
+c_k\lambda_k
+=
+\frac1{2k}-\frac1{4k(2k+1)},
+$$
+
+$$
+c_k\lambda_k^2
+=
+1+\frac1{8k(2k+1)}.
+$$
+
+所以
+
+$$
+P'(t)
+=
+\frac{e^{-t/2}}2\log(1-e^{-2t})
++
+\frac{e^{-t/2}}4
+\sum_{k\ge1}\frac{e^{-2kt}}{k(2k+1)},
+$$
+
+以及
+
+$$
+P''(t)
+=
+e^{-t/2}
+\left[
+\frac1{e^{2t}-1}
++
+\sum_{k\ge1}
+\frac{e^{-2kt}}{8k(2k+1)}
+\right].
+$$
+
+后一式的第二项有界，而
+
+$$
+\frac1{e^{2t}-1}=\frac1{2t}+O(1).
+$$
+
+加上在原点附近光滑的 $N$，便得到前两条渐近式；继续积分得到第三条。
+
+最后，由 $S>0$、$\mathscr K'(t)\to-\infty$ 和 $t\mathscr K''(t)\to\frac12$，可选取满足式 (6) 的 $\delta$。证毕。
+
+**这里已经出现递归正性的来源：新节点靠近旧节点时，核值的下降量具有 $t\log(1/t)$ 的正主项。**
+
+---
+
+<a id="section-3"></a>

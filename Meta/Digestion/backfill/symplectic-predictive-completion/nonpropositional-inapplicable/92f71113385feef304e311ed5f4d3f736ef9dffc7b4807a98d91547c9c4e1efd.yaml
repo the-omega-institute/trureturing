@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92f71113385feef304e311ed5f4d3f736ef9dffc7b4807a98d91547c9c4e1efd
+  normalized_sha256: sha256:92f71113385feef304e311ed5f4d3f736ef9dffc7b4807a98d91547c9c4e1efd
+cas_ref: sha256:92f71113385feef304e311ed5f4d3f736ef9dffc7b4807a98d91547c9c4e1efd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第9章来源和未完成事项的导航问题，属于文档组织说明。
+    previous_atom_id: 3c9fe7f6628c3fb447cebca7de01197330eb32b3e2941e98645145a1a8acb1ee
+    next_atom_id: 6b13532d35b7955c97bda9c8e8373c288b7a125be44e03adea24130064bb969e

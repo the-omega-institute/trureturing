@@ -4,9 +4,33 @@
 
 Full original integer maximality is equivalent to all legal pure packet comparisons.
 
+**Theorem 1.1 (Every legal integer has clock greater than one).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalMaximumPurePackets.legal_clock`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalMaximumPurePackets.legal_clock` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive natural p and n>=1 with 5040*p dividing n, 1<log(n). The complete mandatory floor alone proves this statement. OriginalPrimeSourceOrder uses it at the legal opposite-class exchange competitors.
+
+**Theorem 1.2 (Strict log-log curvature on a balanced rectangle).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalMaximumPurePackets.strict_loglog_rectangle`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalMaximumPurePackets.strict_loglog_rectangle` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real a,b,c,d with 1<a, a<b, a<c and a+d=b+c, log(log(a))+log(log(d))<log(log(b))+log(log(c)). The balance also places d in the positive-log domain. The legal two-prime exchange in OriginalPrimeSourceOrder consumes this existing strict rectangle.
+
 The finite Euler min/max identity is AVB10 in the repository's Library/ArithSums/nicolas2025comparison.md. The pure-packet reduction follows LR7-LR15 of legal-replacement-main-upper-proof.md, using exact Euler modularity and strict logarithmic curvature.
 
-**Theorem 1.1 (All pure packets suffice for literal full-domain maximality).**
+**Theorem 1.3 (All pure packets suffice for literal full-domain maximality).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalMaximumPurePackets.original_maximizes_iff_pure_packets`
 
@@ -34,6 +58,8 @@ This finite reduction does not establish the pure comparison families themselves
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/OriginalMaximumPurePackets.legal_clock`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalMaximumPurePackets.original_maximizes_iff_pure_packets`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalMaximumPurePackets.strict_loglog_rectangle`
 - Dependency: [D5/S3/Arith/GoldenResourceObjectiveFactorization](../GoldenResourceObjectiveFactorization.md)
 - Dependency: [D5/S3/Arith/Robin/OriginalFirstClockTransport](OriginalFirstClockTransport.md)

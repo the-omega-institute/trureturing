@@ -1,0 +1,124 @@
+**Theorem 22.2 (complete finite-source-information correspondence).**
+For every fixed $I,T$ and parameters above, Definition 22.1 is a
+Borel map from the normalized finite source list to a finite lawful
+original native history. At every prefix it satisfies
+
+$$
+ l\le k_0+a(t)\le u,\qquad
+ 0<k_0+\min a\le k_0+\max a<H_{\rm n}.
+\tag{22.3}
+$$
+
+Its entire original command domain is still
+$(-\min a,H_{\rm n}-\max a)$, with the original concatenation
+and refusal guards. If the polygon has an observation exit by $T$,
+the command's own first observation exit is exactly that same time;
+otherwise it has no observation exit on the horizon. Its real
+chronological triple agrees with (22.1) at every connector endpoint,
+and satisfies
+
+$$
+ \|a-A\|_\infty\le3\rho,\qquad
+ \|b-B\|_\infty\le4\rho,\qquad
+ \|J-W\|_\infty\le4K_I\rho+4\rho^2.
+\tag{22.4}
+$$
+
+If $R_0$ is the number of linear cells before $\widehat S$, then
+$R_0\le\mathsf N(M_\delta+2)+1$. Writing $V_A,V_B,V_W$ for
+the three finite variations on $[0,\widehat S]$, the number of
+linear native legs, including a possible final hold, is bounded by
+
+$$
+ 6\left(R_0+\frac{V_A+V_B}{\rho}
+                  +\frac{V_W+K_IV_B}{\rho^2}\right)+1.
+\tag{22.5}
+$$
+
+All executed velocities are finite pathwise. No uniform speed or
+energy bound is asserted.
+
+Let $\mathcal O^{\epsilon,\delta,\Lambda,\rho}$ be the complete ten
+held outputs of this actual command. For every deterministic
+$\Lambda_n\uparrow\infty$ and
+$\epsilon_n,\delta_n,\rho_n\downarrow0$ in the stated ranges,
+there is a proof coupling such that
+
+$$
+ \|\mathcal O^{\epsilon_n,\delta_n,\Lambda_n,\rho_n}
+                              -O^I\|_{[0,T]}\longrightarrow0,
+ \qquad
+ \widehat S_n\longrightarrow T\wedge\theta_I
+                      \quad\hbox{almost surely}.
+\tag{22.6}
+$$
+
+Thus their probability laws converge to the original
+$\nu_{I,T}$ in the uniform ten-output held-path topology (13.1).
+The probabilities, phases of period $2\pi$, signed pairs, factors
+two and every fixed preparation rotation are precisely (7.3),
+(7.5) and (7.8). This is a conditional correspondence for the added
+finite source interface; it is not bare-native acquisition.
+
+**Proof.** The finite source polygon starts at $e$, so
+$\widehat S>0$. All its heights before $\widehat S$ are interior,
+and its height at $\widehat S$ is in $I$. Its finitely many vertices
+and its own first height exit are Borel functions of the list;
+a linear segment's first boundary intersection is found by a
+comparison and a linear ratio, with the constant-segment case
+handled separately.
+
+On every subdivision in (22.2), linearity gives
+$|X|,|Y|\le\rho$, and, since $|A_s|\le K_I$,
+$|C|\le\rho^2$. At an intermediate time $v$ in the same cell,
+$W_v-W_s-A_s(B_v-B_s)$ is linear in $v$ and has absolute value
+at most $\rho^2$. Thus the finite-data partition satisfies exactly
+the oscillation inequalities used in Theorem 17.2, now for this
+known polygon, without asking the original source for a modulus.
+Apply the already proved connector geometry [GL, Lemma 17.1] and
+the deterministic prefix/integral argument of Theorem 17.2.
+They give (22.3)--(22.4), the endpoint identities, and equality
+of the command's observation exit with the polygon's own exit.
+The observation walls are strictly inside the original slab, so
+arrival and holding there obey the strict original guard.
+The relative rectangle executes $dq=C$, with its real sign;
+translation retains the cross term $A_sY$. Hence at a join its
+new global integral is $W_s+A_sY+C=W_t$. No central reset or
+new primitive is used.
+
+There are at most $M_\delta+1$ polygon cells per retained mark
+and $\mathsf N+1$ intervening holds. Clipping at $T$ and then at
+the first observation exit does not increase this count, giving
+the bound for $R_0$. For each original cell the maximum of the
+three ceilings and one in (22.2) is at most one plus the sum of
+their nonnegative arguments. Summing gives (22.5). Every resulting
+cell has positive length and finite vertices, so all six assigned
+durations are positive and all slopes finite. Ceilings, orientations,
+finite sums and the connector formulas are Borel on the countable
+disjoint union of finite-list spaces. This establishes an actual
+finite-input pushforward law on the command space of Definition
+17.1, with no unspecified control-selection kernel.
+
+Under the common proof coupling, Theorem 21.2 gives uniform source
+convergence and Lemma 21.3 gives the censored exits and stopped
+triples' convergence. Equation (22.4) then gives convergence of
+the actual chronological triples to
+$(x,y,w)(\mathsf Z_{\,\cdot\wedge S})$. Apply the supplied native
+lift continuity [GL, Theorem 3.1]. In particular the real phases
+are exactly
+
+$$
+ \alpha(t)=\alpha_0+b(t)/2,\qquad
+ \beta(t)=\beta_0+c_0b(t)-J(t)/r.
+\tag{22.7}
+$$
+
+Only then reduce modulo $2\pi$ and apply (7.8). That map is
+uniformly continuous on $I\times\mathbb T^2$, and retains all
+five ordered signed pairs and their fixed rotations. Its limiting
+held path is exactly (17.1), whose law is $\nu_{I,T}$ by §16.
+This proves (22.6) and weak convergence. The six legs consume the
+same original time cell; the scalar totals in (20.6) preserve all
+hidden durations. Neither step changes the original clock.
+$\square$
+

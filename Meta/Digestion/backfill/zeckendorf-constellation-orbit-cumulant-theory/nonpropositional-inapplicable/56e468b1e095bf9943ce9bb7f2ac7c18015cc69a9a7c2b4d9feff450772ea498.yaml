@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:56e468b1e095bf9943ce9bb7f2ac7c18015cc69a9a7c2b4d9feff450772ea498
+  normalized_sha256: sha256:56e468b1e095bf9943ce9bb7f2ac7c18015cc69a9a7c2b4d9feff450772ea498
+cas_ref: sha256:56e468b1e095bf9943ce9bb7f2ac7c18015cc69a9a7c2b4d9feff450772ea498
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本片声明奇偶观察系统的元组符号并说明 X 是内部状态空间，尚未出现派生关系或存在性断言。
+    previous_atom_id: 4bef9dc52662d2c39ce60cd3ab10dcddb4c063cf344a91fbff4c97fecedcc8e3
+    next_atom_id: f27979911f47db60250c62e35f672e9ffde9c890d16c4175ad8953c2b648d1d7

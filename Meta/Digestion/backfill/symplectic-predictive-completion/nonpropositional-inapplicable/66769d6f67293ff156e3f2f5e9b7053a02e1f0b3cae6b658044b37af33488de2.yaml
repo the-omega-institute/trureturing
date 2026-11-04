@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66769d6f67293ff156e3f2f5e9b7053a02e1f0b3cae6b658044b37af33488de2
+  normalized_sha256: sha256:66769d6f67293ff156e3f2f5e9b7053a02e1f0b3cae6b658044b37af33488de2
+cas_ref: sha256:66769d6f67293ff156e3f2f5e9b7053a02e1f0b3cae6b658044b37af33488de2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第8899号来源第5至6节到第3.3至3.5节的文档对应项。
+    previous_atom_id: 9da59f841b4a4081f6e969f83f4eda155d181e5685e2f9a677d25131c660ac02
+    next_atom_id: 120043ea21be76ce9f145ee769bfb5b1f2d17dac0ee84c2762b8788dfa90781a

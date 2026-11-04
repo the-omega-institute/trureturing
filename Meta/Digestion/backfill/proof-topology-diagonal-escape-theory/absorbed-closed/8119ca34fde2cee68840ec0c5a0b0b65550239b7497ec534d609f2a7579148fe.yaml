@@ -1,0 +1,32 @@
+fingerprints:
+  raw_sha256: sha256:8119ca34fde2cee68840ec0c5a0b0b65550239b7497ec534d609f2a7579148fe
+  normalized_sha256: sha256:8119ca34fde2cee68840ec0c5a0b0b65550239b7497ec534d609f2a7579148fe
+cas_ref: sha256:8119ca34fde2cee68840ec0c5a0b0b65550239b7497ec534d609f2a7579148fe
+coverage_gids:
+  - gid: D5/S1/Descent/FiniteSelfMapConjugacy.finite_self_map_conjugacy
+    target_statement_id: sha256:47de3f64966e50c6d5f834e4c69c23e9aea0bbf75bb0bfbc3a813f154acb0739
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.admissibleWord_card_eq_fib
+    target_statement_id: sha256:705c7bcc0099280c8ed68bf461eca8cd390b7cba0709b2017097cd718d7e6bba
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.wcount_succ_succ
+    target_statement_id: sha256:41ce30e71dfd9ca99ac6756e0f1bd46988605014c44974a0b28234f40fa7908e
+  - gid: D5/S1/Words/Mechanical/MechanicalFactorComplexity.lower_mechanical_factor_complexity
+    target_statement_id: sha256:af6611f6a34c732f8503f0af532c210ec99b957011dfeeb60469ef9f31c601d4
+  - gid: D5/S3/ConceptDynamics/Experiment/FiniteIdentificationCapacityBound.finite_identification_capacity_bound
+    target_statement_id: sha256:ad0a8f2796b88e225ea9fd63645a037514dbffbcbb0310e582620742b420957a
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - fc1da9d181a25246324b029260a43749b41329a2e1eef29bdc8e2624cfb71586
+    - c061130d90f4a7363ac66875b06aaefc049e95aed8388e5e5248fa2601db13c6
+    - 507e2af1fa905b341b9e0ccf11c7e9d7c2611aefd468218fbb9e4fabbc7133a8
+    - 538cddedbcedefb16ef3d9f5241fe1ce2cb342d8c2d86c1550392a77e80ab0d6
+    - ba64286ca380d6cf8936ad459ba6a72fb6cb316b3b42c0e9944b12e0e8a8b10e
+    - b39c5c2e9886eee8f0deca78fb38b98b9c39fee01dd495c94a5ccc1c6b073402
+    - 815b5cf027dd1de9d6c4afaaf812920ed353b09e38509043375b488fcabce4b1
+    - 012fdf6b875276bfb757f0de39c8d752f7e9d4ccae27b0bd618bfef7daf30ad5
+    - 952288fe743e8adde84a8bef4220e7131d5c057e027425227917ca252db587ba
+    - 9b2edc4dd3186d62c80fc92710aa341ab932678b5c2b0d7ead4d52c2704f9c7d
+    - 2dec8e371d3d0c60979363dbb6abb9c70add85c4a08065cb7da7e8fea3be6a61
+    - 9196ad1bcc99d89b45f31a20c5198564b525e052aaf60626394ca079a70c45c9
+    - ec866e3edc098e37119404fbe3ed14060521c6c3622f77764f9bfe0fcefe887a
+    - 43186d1dd8c184533115e546c59d95d1cbc85443c34473cbd3870ed055653b76

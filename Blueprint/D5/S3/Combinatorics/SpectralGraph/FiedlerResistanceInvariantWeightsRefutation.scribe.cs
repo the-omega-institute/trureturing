@@ -32,6 +32,23 @@ internal sealed class FiedlerResistanceInvariantWeightsRefutationDocument : IScr
                 "Feasible weights are strictly positive on edges and have the same total resistance as the unweighted graph. Values on nonedges are unrestricted; edgewise equality suffices to preserve both lambda2 and totalRes."),
             Node("invariant", "Automorphism invariance", "AutInvariant", InvariantFormula(),
                 "An automorphism-invariant weight function has the same value on each edge and its image under every graph automorphism. This condition constrains edges only."),
+            Node("complete-bipartite", "The labelled complete bipartite graph", "K23", K23Formula(),
+                "The inverse of finSumFinEquiv labels the two hubs by 0 and 1 and the three leaves by 2, 3 and 4.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("complete-bipartite-decidable", "Decidable adjacency", "K23_dec",
+                Call("DecidableRel", QCall("SimpleGraph", "Adj", Call("K23"))),
+                "Adjacency in the labelled complete bipartite graph is decidable.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("complete-bipartite-connected", "Connectivity of the complete bipartite graph", "K23_connected",
+                QCall("SimpleGraph", "Connected", Call("K23")),
+                "Every vertex is reachable from vertex 2 by a path of length at most two.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Node("rayleigh-certificate", "A sharp Rayleigh certificate", "lambda2_eq_of_rayleigh", RayleighCertificateFormula(),
+                "A uniform mean-zero Rayleigh lower bound and a nonzero mean-zero eigenvector certify the original infimum. The theorem applies to every finite graph and every real weight function under its stated hypotheses.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Node("nonedge-invariance", "Edge restriction determines both invariants", "invariants_congr", InvariantsCongrFormula(),
+                "Agreement on edges preserves the ordinary Laplacian, its Rayleigh infimum and the harmonic-current unordered-pair total. No condition is imposed on nonedge values.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("claim", "The Section 5 conjecture", "claim", ClaimFormula(),
                 "Section 5, page 7, states verbatim: “We conjecture that – in the same fashion of what happens with the absolute algebraic connectivity – the maximal value of (3) is attained always for weight distributions that are invariant under automorphisms of the graph.” Equation (3) defines ă(G) = max {λ2(G;ω) | R(G;ω)=R(G)}. The encoding quantifies over connected finite simple graphs of order at least three and asserts an invariant feasible assignment dominating every feasible assignment; it does not assume existence of a maximum separately."),
             Node("result", "Refutation on K23", "result", new Formula.Not(Call("claim")),
@@ -94,6 +111,11 @@ internal sealed class FiedlerResistanceInvariantWeightsRefutationDocument : IScr
                 CloseBracket, Sp, body) : body));
     private static Formula WeightedBinders(Formula body) => GraphBinders(All("w", Weights(), body));
     private static Formula Endpoints(Formula body) => All("i", FinN(), All("j", FinN(), body));
+
+    private static Formula K23Formula() => Eqn(Call("K23"),
+        QCall("SimpleGraph", "comap",
+            QCall("Equiv", "symm", Call("finSumFinEquiv", D(2), D(3))),
+            Call("completeBipartiteGraph", Call("Fin", D(2)), Call("Fin", D(3)))));
 
     private static Formula LapFormula()
     {
@@ -163,4 +185,23 @@ internal sealed class FiedlerResistanceInvariantWeightsRefutationDocument : IScr
         return Eqn(Call("claim"), GraphBinders(Imp(QCall("SimpleGraph", "Connected", V("G")),
             Imp(Leq(D(3), V("n")), assignment))));
     }
+    private static Formula RayleighCertificateFormula()
+    {
+        Formula lower = All("x", Vector(), Imp(Eqn(SumOver("i", FinN(), App(V("x"), V("i"))), D(0)),
+            Leq(Seq(V("r"), Sp, Cdot, Sp, DotProduct(V("x"), V("x"))), DotProduct(V("x"), LapVector(V("x"))))));
+        Formula eigen = Eqn(LapVector(V("v")), Seq(V("r"), Sp, Cdot, Sp, V("v")));
+        return WeightedBinders(All("r", Real(), Imp(lower, All("v", Vector(), Imp(Ne(V("v"), D(0)),
+            Imp(Eqn(SumOver("i", FinN(), App(V("v"), V("i"))), D(0)),
+                Imp(eigen, Eqn(Call("lambda2", V("G"), V("w")), V("r")))))))));
+    }
+
+    private static Formula InvariantsCongrFormula()
+    {
+        Formula agreement = All("e", Call("Sym2", FinN()),
+            Imp(Member(V("e"), QCall("SimpleGraph", "edgeSet", V("G"))), Eqn(App(V("w"), V("e")), App(V("z"), V("e")))));
+        return GraphBinders(All("w", Weights(), All("z", Weights(), Imp(agreement,
+            And(Eqn(Call("lambda2", V("G"), V("w")), Call("lambda2", V("G"), V("z"))),
+                Eqn(Call("totalRes", V("G"), V("w")), Call("totalRes", V("G"), V("z"))))))));
+    }
+
 }

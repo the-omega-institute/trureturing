@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b624b3ebb5eb5d07e13517fdd6e08f19569373c93382b088e29beee78bf9a12b
+  normalized_sha256: sha256:b624b3ebb5eb5d07e13517fdd6e08f19569373c93382b088e29beee78bf9a12b
+cas_ref: sha256:b624b3ebb5eb5d07e13517fdd6e08f19569373c93382b088e29beee78bf9a12b
+coverage_gids:
+  - gid: D5/S3/Analytic/EulerGerm/LocalFactorCriticalLineNonvanishing.germLocalFactor_critical_line_nonzero_of_five_le
+    target_statement_id: sha256:d14c1d68d03ad6d86a7c3b74c2df15a6a6b737ebe1ddc680576a3579b2bec1d5
+receipts:
+  unresolved_subitems: []

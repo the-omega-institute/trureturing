@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:cb23c3723967d0e892c8c5dc61eb95e194c6dfd876d9818c6831b05084d68544
+  normalized_sha256: sha256:cb23c3723967d0e892c8c5dc61eb95e194c6dfd876d9818c6831b05084d68544
+cas_ref: sha256:cb23c3723967d0e892c8c5dc61eb95e194c6dfd876d9818c6831b05084d68544
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData_closed_chain
+    target_statement_id: sha256:2bd7d30b3747269892f3debd1ee0d19a7621571969cebe6ddccc8bb1598755ae
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData_conjugation
+    target_statement_id: sha256:7f5f9b4ccd5ff705a4916078671a5b9924b3503cd92d474e6a2d006854c838e4
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData_multiplicity_conjugation
+    target_statement_id: sha256:b8ecbc56ad0a59567674ae706223fa461ae851d44e7519088a4e0d8fcd66d053
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData_multiplicity_pos
+    target_statement_id: sha256:b5682434b2fb380c113648671f65fdb2e2646f2cf576d31c134ef13aea155716
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData_multiplicity_reflection
+    target_statement_id: sha256:23d20e35ba45aaed972b7e49fb82b6fc21beee1a792abc5cd0d344d17b9756f1
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData_reflection
+    target_statement_id: sha256:4aa9930f3ed802b238d0fbde415cc66139599e57259953148362147bb43fcd44
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData_representation_iff
+    target_statement_id: sha256:fd571b8bd191c87d6bbe6d93ee4e3737521ddf50b0d60ddf978e5d69caaa7dfe
+receipts:
+  unresolved_subitems: []

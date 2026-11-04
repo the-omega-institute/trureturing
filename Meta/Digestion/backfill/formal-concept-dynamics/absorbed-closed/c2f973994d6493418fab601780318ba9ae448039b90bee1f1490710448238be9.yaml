@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c2f973994d6493418fab601780318ba9ae448039b90bee1f1490710448238be9
+  normalized_sha256: sha256:c2f973994d6493418fab601780318ba9ae448039b90bee1f1490710448238be9
+cas_ref: sha256:c2f973994d6493418fab601780318ba9ae448039b90bee1f1490710448238be9
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Knowledge/RelationalPreconditionAdjunction.relational_adjunction_and_may_not_guarantee
+    target_statement_id: sha256:ee13be7cf48663f8c2928c245c938f8229a37199c89de392a1cf7ce902f9fd09
+receipts:
+  unresolved_subitems: []

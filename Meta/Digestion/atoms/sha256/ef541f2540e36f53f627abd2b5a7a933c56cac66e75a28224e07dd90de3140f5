@@ -1,0 +1,15 @@
+**Definition 1.2 (the supplied behavior code).** For $p^h\parallel H$, write $\nu_{p,h}(x)$ for the exponent of $p$ in $\gcd(x,p^h)$; thus the zero residue has depth $h$. For $0\le e\le h$, put $M=p^{h-e}$ and use the disjoint labels
+
+$$
+\eta_{p,h,e}(x)=
+\begin{cases}
+S(r,u),&r=\nu_{p,h}(x)<e,\quad u=(x/p^r)\bmod M,\\
+D(z),&r\ge e,\quad z=(x/p^e)\bmod M.
+\end{cases}
+\tag{AQBR.3}
+$$
+
+The quotients are formed only in their indicated divisible cases. For $M=1$ the coordinate set, including its unit group, is a singleton. For $d\mid H$, let $\eta_{H,d}$ be the tuple of (AQBR.3) with $e=v_p(d)$, and abbreviate $\eta_o=\eta_{H,d_o}$ and $\eta_n=\eta_{H,d_n}$. In modular calculations $F_H$ denotes the periodic formula $H/\gcd(x,H)$ on integer representatives, including $F_H(0)=1$; this does not introduce an actual zero source.
+
+These are the codes of [FARG, Theorems 100.2–100.6](FIBONACCI_ATOMIC_RELATION_GENERATION.md), which supply their representative independence, exact classification of all finite legal futures, positive-word realization and updates. In particular, equality of $\eta_n$ is exactly equality of every future $F_H$ under the original list $\mathcal A$ and all positive multipliers. The corresponding actual-library declaration is [`global_encoding_complete`](../../../D5/S3/Factorization/PrimePowers/GlobalAffineGcdBehavior.lean), with its [owning Scribe](../../../Blueprint/D5/S3/Factorization/PrimePowers/GlobalAffineGcdBehavior.scribe.cs). Its parameters are this $H$, this list $\mathcal A$ and these same positive sources; the local depths are the exponents of the actual gcd. [`affine_word_translation` and `affine_action_realization`](../../../D5/S3/Factorization/PrimePowers/AffineGcdBehavior.lean) supply the positive affine word correspondence. None of these declarations supplies the current port or an acquisition-and-return procedure. The results below are ordinary prose mathematics, without a new Lean certification.
+

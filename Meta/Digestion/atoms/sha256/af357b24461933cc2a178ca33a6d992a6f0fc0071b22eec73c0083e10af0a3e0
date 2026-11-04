@@ -1,0 +1,23 @@
+**定义 12.1（原单槽路径映射与两个词族）。** Retain the legal source domain, original clocks and complete $B,G,D$ of Definitions 2.1–2.2. For a seven-action chronological word $w$, write
+
+$$
+T_w(P):\mathbb R^4\longrightarrow\mathbb R^7,\qquad
+(T_w(P)x)_i=\ell_{w_{\le i}}(P)x\quad(1\le i\le7).
+\tag{12.1}
+$$
+
+
+This is exactly $R_w(P)$ of Definition 3.2. Put
+
+$$
+\begin{aligned}
+\mathcal W_{JJJ}&=\{JJJz:z\in\{J,M\}^4,\ z\ne JJJJ\},\\
+\mathcal W_{\mathrm{new}}&=\{JJJMJMJ,JJJMJMM,JJJMMJM,JJJMMMJ,JJJMMMM\},\\
+\mathcal W_{\mathrm{old}}&=
+\{J^4z:z\in\{J,M\}^3,\ z\ne JJJ\}
+\cup\{JJJMJJJ,JJJMJJM,JJJMMJJ\}.
+\end{aligned}
+\tag{12.2}
+$$
+
+

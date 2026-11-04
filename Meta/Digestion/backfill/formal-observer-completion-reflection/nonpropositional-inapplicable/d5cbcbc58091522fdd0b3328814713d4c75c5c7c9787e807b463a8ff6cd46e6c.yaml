@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d5cbcbc58091522fdd0b3328814713d4c75c5c7c9787e807b463a8ff6cd46e6c
+  normalized_sha256: sha256:d5cbcbc58091522fdd0b3328814713d4c75c5c7c9787e807b463a8ff6cd46e6c
+cas_ref: sha256:d5cbcbc58091522fdd0b3328814713d4c75c5c7c9787e807b463a8ff6cd46e6c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 仅枚举量子测量上下文，不主张某一具体量子协议的实现或相容性。'
+    previous_atom_id: 2314648fae12d229c59043d9190bec50db4b07b6bdf4563102aa589ea8c32abf
+    next_atom_id: 10d0619310950992d0a1550957f530d5d0856e03a712a5d563b03de1068811c4

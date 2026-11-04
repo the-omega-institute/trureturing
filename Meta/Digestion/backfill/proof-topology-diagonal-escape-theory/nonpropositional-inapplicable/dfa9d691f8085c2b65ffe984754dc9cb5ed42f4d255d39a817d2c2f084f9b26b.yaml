@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dfa9d691f8085c2b65ffe984754dc9cb5ed42f4d255d39a817d2c2f084f9b26b
+  normalized_sha256: sha256:dfa9d691f8085c2b65ffe984754dc9cb5ed42f4d255d39a817d2c2f084f9b26b
+cas_ref: sha256:dfa9d691f8085c2b65ffe984754dc9cb5ed42f4d255d39a817d2c2f084f9b26b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅比较 Fan-Li 文献的运输距离恢复研究与 AT3 的目标，没有陈述可复用的数学定理。
+    previous_atom_id: 9ae25401c7bd184afa6cc94b69372ee8e6564f2a6e704605d6dde0dc35cdb938
+    next_atom_id: ef3a59563339d77d3c901444d33013d74b56621499c3cd0c3dcdaf782b76780f

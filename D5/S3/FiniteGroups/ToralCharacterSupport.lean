@@ -41,21 +41,21 @@ def Supports (G : Type*) [Group G] : Prop :=
 
 abbrev Source (a b m : ℕ) := Cyclic (2 ^ a) × Cyclic (2 ^ b * m)
 
-private def twist {G : Type*} [Group G] (e : G →* ℂˣ) (X : Triple G) : Triple G :=
+def twist {G : Type*} [Group G] (e : G →* ℂˣ) (X : Triple G) : Triple G :=
   fun i => e * X i
 
 @[simp] private theorem twist_one {G : Type*} [Group G] (X : Triple G) : twist 1 X = X := by
   funext i
   exact one_mul (X i)
 
-private def reindex {G : Type*} [Group G] (p : Equiv.Perm (Fin 3))
+def reindex {G : Type*} [Group G] (p : Equiv.Perm (Fin 3))
     (X : Triple G) : Triple G := fun i => X (p i)
 
 private theorem faithful_twist {G : Type*} [Group G] (e : G →* ℂˣ) (X : Triple G) :
     ProjectivelyFaithful (twist e X) ↔ ProjectivelyFaithful X := by
   simp only [ProjectivelyFaithful, twist, MonoidHom.mul_apply, mul_left_cancel_iff]
 
-private theorem global_twist {G : Type*} [Group G] (e f : G →* ℂˣ)
+theorem global_twist {G : Type*} [Group G] (e f : G →* ℂˣ)
     (X Y : Triple G) :
     GloballyMatched (twist e X) (twist f Y) ↔ GloballyMatched X Y := by
   constructor
@@ -73,7 +73,7 @@ private theorem global_twist {G : Type*} [Group G] (e f : G →* ℂˣ)
     rw [hd i]
     group
 
-private theorem pointwise_twist {G : Type*} [Group G] (e f : G →* ℂˣ)
+theorem pointwise_twist {G : Type*} [Group G] (e f : G →* ℂˣ)
     {X Y : Triple G} (h : PointwiseMatched X Y) :
     PointwiseMatched (twist e X) (twist f Y) := by
   intro g
@@ -83,7 +83,7 @@ private theorem pointwise_twist {G : Type*} [Group G] (e f : G →* ℂˣ)
   rw [hp i]
   simp [div_eq_mul_inv, mul_assoc]
 
-private theorem global_reindex {G : Type*} [Group G] (p : Equiv.Perm (Fin 3))
+theorem global_reindex {G : Type*} [Group G] (p : Equiv.Perm (Fin 3))
     {X Y : Triple G} (h : GloballyMatched X (reindex p Y)) : GloballyMatched X Y := by
   obtain ⟨e, q, hq⟩ := h
   exact ⟨e, p.symm.trans q, fun i => by simpa [reindex] using hq (p.symm i)⟩
@@ -229,10 +229,10 @@ private theorem faithful_characters_injective {G : Type*} [Group G] [Finite G]
   intro i j hij
   fin_cases i <;> fin_cases j <;> simp_all
 
-private def leftTriple {P O : Type*} [Group P] [Group O]
+def leftTriple {P O : Type*} [Group P] [Group O]
     (X : Triple (P × O)) : Triple P := fun i => (X i).comp (MonoidHom.inl P O)
 
-private theorem faithful_left {P O : Type*} [Group P] [Group O]
+theorem faithful_left {P O : Type*} [Group P] [Group O]
     {X : Triple (P × O)} (h : ProjectivelyFaithful X) :
     ProjectivelyFaithful (leftTriple X) := by
   intro p hp
@@ -244,7 +244,7 @@ private theorem split_apply {P O : Type*} [Group P] [Group O]
   rw [← map_mul]
   simp
 
-private theorem normalize_left {P O : Type*} [Group P] [Group O] [Finite P]
+theorem normalize_left {P O : Type*} [Group P] [Group O] [Finite P]
     {n : ℕ} (hn : 1 < n) (hn3 : Nat.Coprime 3 n)
     (hexp : ∀ p : P, p ^ n = 1) (hnc : ¬ IsCyclic P)
     {X Y : Triple (P × O)} (hY : ProjectivelyFaithful Y)
@@ -281,7 +281,7 @@ private theorem normalize_left {P O : Type*} [Group P] [Group O] [Finite P]
   refine ⟨e⁻¹, t.symm, fun i => ?_⟩
   simpa [leftTriple, Y', twist, reindex] using ht (t.symm i)
 
-private theorem mixed_match_primary {P O : Type*} [Group P] [Group O]
+theorem mixed_match_primary {P O : Type*} [Group P] [Group O]
     {n m : ℕ} (hn3 : n.Coprime 3) (hnm : n.Coprime m)
     (hP : ∀ p : P, p ^ n = 1) (hO : ∀ o : O, o ^ m = 1)
     {X Y : Triple (P × O)} (heq : ∀ i p, Y i (p, 1) = X i (p, 1))
@@ -333,7 +333,7 @@ private theorem mixed_match_primary {P O : Type*} [Group P] [Group O]
   · simp only [div_pow, hPm, div_self']
   · rw [div_pow, hi, div_self']
 
-private theorem aligned_regular_global {P O : Type*} [Group P] [Group O]
+theorem aligned_regular_global {P O : Type*} [Group P] [Group O]
     {n m : ℕ} (hn3 : n.Coprime 3) (hnm : n.Coprime m)
     (hP : ∀ p : P, p ^ n = 1) (hO : ∀ o : O, o ^ m = 1)
     {X Y : Triple (P × O)} (heq : ∀ i p, Y i (p, 1) = X i (p, 1))
@@ -426,7 +426,7 @@ private theorem regular_of_nonsquare {G : Type*} [Group G]
       simpa only [map_mul, map_pow, ← he, mul_left_cancel_iff] using hh
   exact ⟨g, hag, hbg, he⟩
 
-private theorem faithful_regular {G : Type*} [Group G] [Finite G]
+theorem faithful_regular {G : Type*} [Group G] [Finite G]
     (hn : ¬ IsCyclic G) {X : Triple G} (hX : ProjectivelyFaithful X)
     (g : G) (hg : g ^ 2 ≠ 1) : ∃ p, Function.Injective (fun i => X i p) := by
   have hi := faithful_characters_injective hn hX
@@ -474,7 +474,7 @@ private theorem faithful_regular {G : Type*} [Group G] [Finite G]
   have hr' : X 1 p ≠ X 2 p := by simpa [a, b, div_left_inj] using hr
   fin_cases i <;> fin_cases j <;> simp_all
 
-private theorem pointwise_reindex {G : Type*} [Group G] (p : Equiv.Perm (Fin 3))
+theorem pointwise_reindex {G : Type*} [Group G] (p : Equiv.Perm (Fin 3))
     {X Y : Triple G} (h : PointwiseMatched X Y) :
     PointwiseMatched X (reindex p Y) := by
   intro g
@@ -504,11 +504,11 @@ private theorem supports_of_equiv {G H : Type*} [Group G] [Group H] (e : G ≃* 
     intro g
     simpa [X', Y', MonoidHom.comp_apply] using DFunLike.congr_fun (hp i) (e.symm g)
 
-private theorem cyclic_exponent (n : ℕ) (x : Cyclic n) : x ^ n = 1 := by
+theorem cyclic_exponent (n : ℕ) (x : Cyclic n) : x ^ n = 1 := by
   change n • x.toAdd = 0
   simp [nsmul_eq_mul]
 
-private theorem primary_noncyclic {a b : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b) :
+theorem primary_noncyclic {a b : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b) :
     ¬ IsCyclic (Cyclic (2 ^ a) × Cyclic (2 ^ b)) := by
   intro hc
   let := hc
@@ -519,7 +519,7 @@ private theorem primary_noncyclic {a b : ℕ} (ha : 1 ≤ a) (hb : 1 ≤ b) :
   rw [h.gcd_eq_one] at htwo
   norm_num at htwo
 
-private theorem primary_exponent {a b : ℕ} (hab : a ≤ b)
+theorem primary_exponent {a b : ℕ} (hab : a ≤ b)
     (x : Cyclic (2 ^ a) × Cyclic (2 ^ b)) : x ^ (2 ^ b) = 1 := by
   apply Prod.ext
   · change x.1 ^ (2 ^ b) = 1
@@ -529,7 +529,7 @@ private theorem primary_exponent {a b : ℕ} (hab : a ≤ b)
       _ = 1 := by rw [pow_mul, cyclic_exponent, one_pow]
   · exact cyclic_exponent _ x.2
 
-private theorem primary_nonsquare {a b : ℕ} (hb : 2 ≤ b) :
+theorem primary_nonsquare {a b : ℕ} (hb : 2 ≤ b) :
     ∃ x : Cyclic (2 ^ a) × Cyclic (2 ^ b), x ^ 2 ≠ 1 := by
   obtain ⟨g, hg⟩ := IsCyclic.exists_generator (α := Cyclic (2 ^ b))
   refine ⟨(1, g), fun h => ?_⟩
@@ -804,7 +804,7 @@ private noncomputable def primaryDecomposition (a b m : ℕ) (hm : Odd m) :
   exact (MulEquiv.prodCongr (MulEquiv.refl (Cyclic (2 ^ a))) c).trans
     MulEquiv.prodAssoc.symm
 
-private theorem faithful_of_pointwise {G : Type*} [Group G] {X Y : Triple G}
+theorem faithful_of_pointwise {G : Type*} [Group G] {X Y : Triple G}
     (hX : ProjectivelyFaithful X) (h : PointwiseMatched X Y) : ProjectivelyFaithful Y := by
   intro g hg
   obtain ⟨l, p, hp⟩ := h g

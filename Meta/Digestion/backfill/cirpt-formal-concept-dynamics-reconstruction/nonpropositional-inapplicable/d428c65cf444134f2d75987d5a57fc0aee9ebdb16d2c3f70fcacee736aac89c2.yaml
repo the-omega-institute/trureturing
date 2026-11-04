@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d428c65cf444134f2d75987d5a57fc0aee9ebdb16d2c3f70fcacee736aac89c2
+  normalized_sha256: sha256:d428c65cf444134f2d75987d5a57fc0aee9ebdb16d2c3f70fcacee736aac89c2
+cas_ref: sha256:d428c65cf444134f2d75987d5a57fc0aee9ebdb16d2c3f70fcacee736aac89c2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: CUT 曲率分量的新符号定义，右侧为两种次序的核的对称差；没有断言该集合为空或非空。
+    previous_atom_id: ec691c236705df2837eb9c8c3457bc92a767ac717cbc63dc1abef03e735e980c
+    next_atom_id: 5bb3739bf6fb95c93ff5ab011122c09547996f328714aeee7418ccba90d22e42

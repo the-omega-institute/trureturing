@@ -1,0 +1,42 @@
+**Theorem 3.4 (Uniform relative error of order $1/a$).** There are absolute constants $A,C>0$ such that for every integer $a\ge A$ and every $\delta\in[0,1]$,
+
+$$
+\boxed{\quad
+(1-C/a)W_a(\delta)\le D_a(\delta)\le(1+C/a)W_a(\delta).
+\quad}\tag{3.9}
+$$
+
+In particular $D_a(\delta)/W_a(\delta)\to1$ uniformly on the entire closed interval of $\delta$.
+
+**Proof.** The dense family gives
+$d\le(1+C/a)2a^2$ by (1.3). For $\delta>0$, choose (1.4) with
+
+$$
+t=\min\left\{\frac\delta a,\frac1{\sqrt2\,a^{3/2}}\right\}.
+$$
+
+By (1.5), its gap is at most $(1+C/a)S_a(\delta)$: the error $Ca^2t$ is at most $C/(2a)$ times $2a^3t$. Taking the better of the two actual laws proves the upper bound, including $\delta=0$ via the first law.
+
+For the lower bound consider any admissible law. If $d>2W_a(\delta)$, the desired lower bound already holds. Otherwise fix $M=2$ in Lemma 3.3. If $t\ge t_{\rm conv}$, (3.2) and (1.3) give
+
+$$
+d\ge2a^2-Ca\ge(1-C'/a)W_a(\delta).
+$$
+
+If $t<t_{\rm conv}$, Lemma 3.3 supplies a single absolute $C_1$ such that, for $\rho=1-C_1/a>0$,
+
+$$
+d\ge\frac1t+2\rho a^3t,\qquad
+\delta\ge a\rho t.
+$$
+
+The same $\rho$ can be used by increasing $C_1$ to cover both inequalities. Set $u=\rho t$. Then $0<u\le\delta/a$ and
+
+$$
+d\ge\frac\rho u+2a^3u
+\ge\rho\left(\frac1u+2a^3u\right)
+\ge\rho S_a(\delta)\ge\rho W_a(\delta).
+$$
+
+This proves a pointwise lower bound for every law; taking its infimum proves (3.9). No independently optimized marginal or conditional law is combined with another realization. ∎
+

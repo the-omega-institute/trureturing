@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:28a73ffae8c28f7cb97c6c0774f6117d7302ce5188d24d5000223204fe77c8c9
+  normalized_sha256: sha256:28a73ffae8c28f7cb97c6c0774f6117d7302ce5188d24d5000223204fe77c8c9
+cas_ref: sha256:28a73ffae8c28f7cb97c6c0774f6117d7302ce5188d24d5000223204fe77c8c9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只排除已经构造全局 signed normal spectral measure 的交付承诺。
+    previous_atom_id: dddc5b1f4edf94c2e3fd593191fcc1f75b6780e8f5ed56a73fde26133abd0e7a
+    next_atom_id: c58af0dd74f7fe57321718efa87b5047cbf68b7a1b5475d6b342d5d895c20634

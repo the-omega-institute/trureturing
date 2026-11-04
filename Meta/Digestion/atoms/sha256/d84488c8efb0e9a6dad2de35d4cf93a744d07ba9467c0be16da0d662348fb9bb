@@ -1,0 +1,132 @@
+**Definition 134.1 (the original model and a fixed equal-gap readout).** Retain the complete original hypotheses, definitions and suppliers of [Appendix II §115](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#115-positivity-and-the-full-ground-state-form-of-the-actual-endpoint), [§117](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#117-deterministic-time-entrance-from-the-original-source-and-a-forbidden-passive-record), [§123](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#123-the-three-time-coefficient-image-and-its-compact-fibers), [§124](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#124-obstructions-to-common-factorization), [§125](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#125-the-common-readout-coefficient-boundary) and [§133](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#133-global-boundedness-of-the-original-source-density-and-the-equal-gap-marginal-pencil), including their inherited original endpoint and source assumptions. More explicitly, fix arbitrary original finite $a,\eta,d>0$. Write the central coordinate as $\zeta$, so that the unchanged group, raw Haar measure, source and differential operators are
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\qquad
+(x,y,z,\zeta)(x',y',z',\zeta')
+=(x+x',y+y',z+z',\zeta+\zeta'+xy'),\\
+e=(0,0,0,0),\qquad d\mu=dx\,dy\,dz\,d\zeta,\\
+X_1=\partial_x,\qquad X_2=\partial_y+x\partial_\zeta,
+\qquad X_3=\partial_z,\qquad L=-\sum_{r=1}^3X_r^2,\\
+L\Gamma=\delta_e,\qquad g_c=16\sqrt{a\eta},\qquad
+S=(aL+\eta D_\zeta^2-g_c\Gamma)|_{\mathcal D_0},\qquad
+\mathcal D_0=C_c^\infty(G\setminus\{e\};\mathbb C).
+\end{gathered}
+\tag{134.1}
+$$
+
+Here $\Gamma$ is the original positive homogeneous degree-$-3$ unit-source Green field, and the central derivative and units are those of §115. Let $w_*$ be the original coefficient-one zero vector, and retain the actual endpoint selector and its coefficient-positive normalized state:
+
+$$
+\begin{gathered}
+C_{\rm src}(w_*)=1,\qquad h=w_*/\|w_*\|_{L^2(\mu)},
+\qquad C_{\rm src}(h)>0,\\
+\rho=A_{\rm src}(h)/C_{\rm src}(h),\qquad
+H=H_{\rm end},\\
+D(H)=\{u\in D(S^*):A_{\rm src}(u)=\rho C_{\rm src}(u)\},
+\qquad Hu=S^*u,\\
+m=h^2\mu,\qquad m(G)=1,\qquad U_hv=hv,\qquad
+K=U_h^{-1}HU_h\ge0,\qquad T_s=e^{-sK}.
+\end{gathered}
+\tag{134.2}
+$$
+
+The source coefficients $A_{\rm src},C_{\rm src}$ are precisely those of (112.2)–(112.5), as retained in §§115 and 133. The state $h$ is real and strictly positive off the source, and $m$ is a nonatomic Borel probability with $m(\{e\})=0$. The operator $K$ is the full conservative self-adjoint operator on $L^2(G,m)$. Its entire form domain and energy remain
+
+$$
+\begin{gathered}
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,\qquad
+\mathscr V_0=\overline{C_c^\infty(G\setminus\{e\})}^{\,(115.14)},\\
+\mathscr E[v]=\int_{G\setminus\{e\}}
+\left(a\sum_{r=1}^3|X_rv|^2+\eta|\partial_\zeta v|^2\right)dm,
+\qquad v\in\mathscr V.
+\end{gathered}
+\tag{134.3}
+$$
+
+Thus the source coordinate is retained. No punctured or killed domain, alternate selector, clock rescaling or invariant initial law is introduced. The conservative diffusion $Z$ starts at the actual source $e$ at time zero. For every $s>0$, its density is the original $g_s$ of Theorem 117.2:
+
+$$
+\mathbb P_e(Z_s\in dx)=g_s(x)m(dx),\qquad
+ g_s>0\quad m\text{-a.e.},\qquad
+ g_s\in L^2(m),\qquad \int_Gg_s\,dm=1,
+\qquad g_{s+r}=T_rg_s\quad(r\ge0).
+\tag{134.4}
+$$
+
+Use the original time $t=2d$ and both gaps $\Delta_1=\Delta_2=d$. In particular, the observation epochs are $2d,3d,4d$. Put
+
+$$
+P=T_d,\qquad g=g_{2d},\qquad
+M=1+\|g_d\|_{L^\infty(m)},\qquad c=\frac1{4M}.
+\tag{134.5}
+$$
+
+Theorem 133.2 makes $M$ finite. Since $m(G)=1$ and $g_d$ has mass one, $M\ge2$. Choose a real Borel representative of $g_d$ and replace its values by $1$ on the Borel $m$-null set where it is not in $(0,M]$. Denote the repaired function by $b$. Then
+
+$$
+0<b(x)\le M\quad(x\in G),\qquad [b]=g_d.
+\tag{134.6}
+$$
+
+With label set $\mathcal L=\{0,1,3,B\}$, define the single pointwise Borel readout used at all three epochs by
+
+$$
+f_3=cb,\qquad f_B=\frac14,\qquad
+f_0=f_1=\frac{3/4-f_3}{2}.
+\tag{134.7}
+$$
+
+These four functions sum to $1$ everywhere and satisfy
+
+$$
+0<f_3\le\frac14,\qquad f_B=\frac14,\qquad
+\frac14\le f_0=f_1<\frac38.
+\tag{134.8}
+$$
+
+For the two-label perturbation of Definition 125.1, choose $i=0$, $j=1$ and $\kappa=1/4$. Its prescribed overlap and signs are exactly
+
+$$
+E=\{f_0\ge\kappa,\ f_1\ge\kappa\}=G,\qquad
+\sigma_0=1,\quad \sigma_1=-1,\quad \sigma_3=\sigma_B=0.
+\tag{134.9}
+$$
+
+For real bounded classes use the original trilinear form, now with the equal gaps,
+
+$$
+\mathcal C(u,v,w)=\int_Gg\,u\,P(vPw)\,dm.
+\tag{134.10}
+$$
+
+The fresh reads are conditionally independent given the three states, so the common-readout law is $\nu_f^{(3)}(y,z,w)=\mathcal C(f_y,f_z,f_w)$. Keep all the actual linear and quadratic coefficients of (125.2):
+
+$$
+\begin{aligned}
+\ell_{yzw}(v)={}&\sigma_y\mathcal C(v,f_z,f_w)
++\sigma_z\mathcal C(f_y,v,f_w)
++\sigma_w\mathcal C(f_y,f_z,v),\\
+q_{yzw}(v)={}&\sigma_y\sigma_z\mathcal C(v,v,f_w)
++\sigma_y\sigma_w\mathcal C(v,f_z,v)
++\sigma_z\sigma_w\mathcal C(f_y,v,v),
+\qquad (y,z,w)\in\mathcal L^3.
+\end{aligned}
+\tag{134.11}
+$$
+
+Define the full linear constraint map, its exact kernel and the restricted quadratic span by
+
+$$
+\begin{gathered}
+\Lambda:L^\infty(G,m;\mathbb R)\longrightarrow\mathbb R^{64},
+\qquad \Lambda(v)=(\ell_{yzw}(v))_{(y,z,w)\in\mathcal L^3},\\
+V=\ker\Lambda,\qquad
+\mathcal Q_E=\operatorname{span}_{\mathbb R}
+\{q_{yzw}|_V:(y,z,w)\in\mathcal L^3\}.
+\end{gathered}
+\tag{134.12}
+$$
+
+Here $E=G$, so support in $E$ imposes no additional restriction. All spaces and coefficients are real in (134.10)–(134.12), and functions are identified modulo $m$-null sets.
+

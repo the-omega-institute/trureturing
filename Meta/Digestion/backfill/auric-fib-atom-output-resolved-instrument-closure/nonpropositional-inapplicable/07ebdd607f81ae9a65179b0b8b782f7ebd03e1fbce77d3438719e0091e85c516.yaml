@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:07ebdd607f81ae9a65179b0b8b782f7ebd03e1fbce77d3438719e0091e85c516
+  normalized_sha256: sha256:07ebdd607f81ae9a65179b0b8b782f7ebd03e1fbce77d3438719e0091e85c516
+cas_ref: sha256:07ebdd607f81ae9a65179b0b8b782f7ebd03e1fbce77d3438719e0091e85c516
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only application of pinned Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 to the source five independent sets of P3 in order empty,{1},{2},{3},{1,3}. The objects x,y,z, B=span{1,x,y,z}, d=(1,-1,0,-1,1), and p_kappa=(1-X-Y-Z+kappa,X-kappa,Z,Y-kappa,kappa) are the displayed finite model data. Fintype.linearIndependent_iff and finrank_span_eq_card supply dim B=4 by finite coordinate normalization. Submodule.mem_orthogonalBilin_span, dotProductBilin and Submodule.mem_span_singleton supply the ordinary unweighted complement B-perp=span{d}. Fin.sum_univ_five, add_dotProduct and smul_dotProduct supply E_(p_(kappa+t))[f]=E_(p_kappa)[f]+t*J(f) for every real response and all real affine parameters, hence for every admissible shift of the same normalized nonnegative law on its closed fiber. Submodule.mem_span_range_iff_exists_fun supplies ker J=B by the same five-coordinate normalization, with J(f)=f13-f1-f3+fempty. All zero masses, endpoints and singleton fibers remain included; J(f) nonzero makes no feasible nonzero-shift promise. The project visible, hiddenDirection, probability and direction definitions only name this data; the positive Fisher-chart and interior transport theorems are not this full unweighted closed-law statement. No available frozen project GID states the full four-clause application. This upstream-only receipt adds no Lean declaration and no GID coverage.
+    previous_atom_id: 86ea384f236747fd94eea7ba988391bcda00bb7d76d892bd29e94077c296350a
+    next_atom_id: 5094b706460769959b498f3b5f1e449b20c9de8f6004f51760833c80adef7f15

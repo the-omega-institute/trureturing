@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a46a1385daff35da79ae3c940d78f9bac01b244cb96d0a79ea4a579726ccae92
+  normalized_sha256: sha256:a46a1385daff35da79ae3c940d78f9bac01b244cb96d0a79ea4a579726ccae92
+cas_ref: sha256:a46a1385daff35da79ae3c940d78f9bac01b244cb96d0a79ea4a579726ccae92
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是条件句的开头“若某方向很容易被控制产生”；本 atom 只有假设片段，没有关于奇异值的结论。
+    previous_atom_id: ab5bdfb93efb563863a7f11c52a06ab31fafa20844c6ccd3d6416a36bb02acf6
+    next_atom_id: fcd9837414ab743fecc3f8a458f1d215a1ff14a39e5c188a23e66b1d340ed122

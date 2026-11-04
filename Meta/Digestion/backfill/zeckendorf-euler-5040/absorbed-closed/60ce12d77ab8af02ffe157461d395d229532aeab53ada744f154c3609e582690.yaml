@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:60ce12d77ab8af02ffe157461d395d229532aeab53ada744f154c3609e582690
+  normalized_sha256: sha256:60ce12d77ab8af02ffe157461d395d229532aeab53ada744f154c3609e582690
+cas_ref: sha256:60ce12d77ab8af02ffe157461d395d229532aeab53ada744f154c3609e582690
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource5040PriceInterval.target_exponent_eq_factorization_5040
+    target_statement_id: sha256:2602a5620f796e04972eb3e6ee2c00ddbb4f4d0a5d220ad82b2b953a362b16f1
+receipts:
+  unresolved_subitems: []

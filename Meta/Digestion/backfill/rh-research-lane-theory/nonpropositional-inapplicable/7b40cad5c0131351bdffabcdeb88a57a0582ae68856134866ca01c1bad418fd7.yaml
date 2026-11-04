@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7b40cad5c0131351bdffabcdeb88a57a0582ae68856134866ca01c1bad418fd7
+  normalized_sha256: sha256:7b40cad5c0131351bdffabcdeb88a57a0582ae68856134866ca01c1bad418fd7
+cas_ref: sha256:7b40cad5c0131351bdffabcdeb88a57a0582ae68856134866ca01c1bad418fd7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里只引入 chronology word 的列表记号并引出标量摘要定义；不声明该词的作用或摘要恒等式。
+    previous_atom_id: a53f89e6c293c85c11671afb8a8fe7f29c8e0d87b4bc77911aa6e48d11b9090c
+    next_atom_id: 8927a6a93175ea223b81a4ae300c4c39354864f4e63b553079078747e7a77708

@@ -1,0 +1,22 @@
+**Definition 41.4 (a simultaneous storage layout).** One admissible implementation keeps all the following at the acquisition/installation cut. Its bound adds the stores; it does not select the cheapest component from incompatible implementations.
+
+| Store or actual resource | Attained size or separate charge |
+| --- | --- |
+| Native source | $N$ cells, $N-1$ links, coefficient bits $B$ |
+| Two source state buffers through acquisition | $O(N^2B+N)$ bits in total |
+| Acquired $2N+1$-value transcript | $O(N^2B+N)$ bits |
+| Elimination and polynomial scratch | $O(N^2)$ words, each at most $O(U)$ bits |
+| Retained native law, recurrence, $\mu,w$ and optional redundant $\widehat x$ | $O(B+NU+N^2B+N)$ bits |
+| Counters, parser, generic program and framing | their actual allocated bits, including $O(\log(N+1))$-bit indices |
+| Class/calibration/root/initialization assurance and source-control installation | their actual preparation and backing resources |
+| Handle, Read/Tick/Hold rights and optional Add right | their actual retained representation and backing resources |
+| Output serialization buffers and any separately retained output copy | their actual simultaneous length $L_{\rm out}$ |
+
+In particular the acquired transcript, scratch and installed record can coexist with both source buffers, the source coefficients and the rights. The bit contribution of these explicitly bounded numerical stores is at most
+
+$$
+O\bigl(B+N^2B+N^2B+N^2U+(B+NU+N^2B)+L_{\rm out}\bigr),
+$$
+
+plus the separately named program, assurance, rights and backing stores. If outputs are copied to another retained log, that copy is added. A shared backing may be counted once only when it is in fact shared. There is no universal numeric price assigned to an unimplemented physical calibration or assurance mechanism by this digital model.
+

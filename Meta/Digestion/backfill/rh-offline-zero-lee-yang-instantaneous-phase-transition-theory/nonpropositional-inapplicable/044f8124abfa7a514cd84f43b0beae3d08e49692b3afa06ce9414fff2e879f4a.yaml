@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:044f8124abfa7a514cd84f43b0beae3d08e49692b3afa06ce9414fff2e879f4a
+  normalized_sha256: sha256:044f8124abfa7a514cd84f43b0beae3d08e49692b3afa06ce9414fff2e879f4a
+cas_ref: sha256:044f8124abfa7a514cd84f43b0beae3d08e49692b3afa06ce9414fff2e879f4a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题仅由钉版上游及显式前件闭合。对任意偶且共轭协变 F，按负号和共轭展开，再用 Complex.norm_conj。 上游声明：map_neg, map_add, Complex.conj_ofReal, Complex.conj_I, Complex.norm_conj. 检索范围：本仓 D5/**/*.lean（包含 private；按反射/共轭/模长/平方/绝对值及通用 checker 数学形状检索），Golden/Frozen/state；钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679（v4.35.0）。未找到在所选完整推导中供应该断言子目标的冻结声明。
+    previous_atom_id: 79caf9c1288641e61c4194ecda2237f58afe65d867c3f6aeb68b1ca23d39e253
+    next_atom_id: 26d64e7fb52f3d1bba2e079a490e8ae3fda7c148ccbf7d6f4f5297a20be18f58

@@ -1,0 +1,222 @@
+**Theorem 10.1 (Cardinality and singleton reciprocal stability).** Fix
+$I=[\rho_-,\rho_+]\subset(0,\infty)$. There are finite constants $A_I,C_I$,
+depending only on $I$, with the following property. For every pair of integers
+$a\ge A_I$, $h\ge1$ such that $\rho_a=h/a^{3/2}\in I$, put $s=a+1+h$ and
+$t=t(\rho_a)>1$, where
+
+$$
+\rho_a=2(t-1)t^{3/2}.
+$$
+
+For every actual law $x\in\mathcal X(a,h)$ of Definition 1.1 and every
+$\epsilon\in[0,1]$, if
+
+$$
+H(x)\le M(a,h)+\epsilon a^3,
+\tag{10.1}
+$$
+
+then all three estimates hold simultaneously:
+
+$$
+\mathbb E_x\left[\left(\frac Ka-t\right)^2
+                   \mathbf1_{\{K\ge2\}}\right]
+\le C_I\left(\epsilon+\frac1a\right),
+\tag{10.2}
+$$
+
+$$
+\left|\mathbb P_x(K=1)-\left(1-\frac1t\right)\right|
+\le C_I\sqrt{\epsilon+\frac1a},
+\tag{10.3}
+$$
+
+$$
+\mathbb E_x\left[\left(\frac{U_T}{a^{3/2}}-2t^{5/2}\right)^2
+                   \mathbf1_{\{K=1\}}\right]
+\le C_I\left(\epsilon+\frac1a\right).
+\tag{10.4}
+$$
+
+Here $K=|T|$, $\mathbb E_xK=a$, and $U_T=\sum_{i\in T}y_i^{-1}$ uses the
+actual positive marginals of that same law. The assertions allow arbitrary
+nonempty-subset support, zero type masses, arbitrarily small positive
+marginals and disconnected support. They require neither a symmetry
+assumption nor attainment of $M(a,h)$.
+
+**Proof.** Retain $b(c),L_c,N_c,W_c$ from (8.8) and put
+$k_0(c)=(b(c)/2)^{1/3}$. We first strengthen the nonnegativity calculation
+in the proof of Theorem 8.4. There is an absolute finite $c_*\ge2$ such that,
+for every real $c\ge c_*$ and all real $k\ge2$, $v\ge k^2$,
+
+$$
+W_c(k,v)\ge\frac12c^3(k-c)^2.
+\tag{10.5}
+$$
+
+At the singleton contact there is also the exact identity
+
+$$
+W_c(1,v)=\left(v-\frac{b(c)}2\right)^2
+\qquad(v\in\mathbb R).
+\tag{10.6}
+$$
+
+To prove these claims, write $b=b(c)$ and $k_0=k_0(c)$. The identity
+$Q_c(1)=0$ from the proof of Theorem 8.4 is
+$N_c-L_c=b^2/4$, which gives (10.6). From the explicit formula (8.8),
+
+$$
+\frac{b(c)}{c^{5/2}}\longrightarrow4,\qquad
+\frac{k_0(c)}c\longrightarrow0
+\qquad(c\longrightarrow\infty).
+$$
+
+Choose $c_*$ large enough that, for all $c\ge c_*$,
+
+$$
+b(c)^2\ge8c^5,\qquad k_0(c)\le\frac c{10}.
+\tag{10.7}
+$$
+
+Also $0<L_c\le5c^4$, as follows from $0<b(c)\le2c^3$ and (8.8).
+If $k\ge k_0$, then $2kv-b\ge2k^3-b\ge0$ on $v\ge k^2$.
+By the factorization (8.9) and $b\le2c^3$,
+
+$$
+\begin{aligned}
+W_c(k,v)&\ge W_c(k,k^2)\\
+&=(k-c)^2\bigl(k^3+2ck^2+3c^2k+4c^3-b\bigr)\\
+&\ge2c^3(k-c)^2.
+\end{aligned}
+\tag{10.8}
+$$
+
+For $2\le k\le k_0$, completing the square, using
+$N_c=L_c+b^2/4$, and then (10.7) gives
+
+$$
+\begin{aligned}
+W_c(k,v)
+&\ge N_c-L_ck-\frac{b^2}{4k}\\
+&=\frac{b^2}{4}\left(1-\frac1k\right)-L_c(k-1)\\
+&\ge\frac{b^2}{8}-5c^4k_0
+\ge\frac12c^5.
+\end{aligned}
+\tag{10.9}
+$$
+
+In this range $0\le k\le c$, so $(k-c)^2\le c^2$. Thus (10.9) proves
+(10.5) here, while (10.8) proves it on the rest of the range. In particular,
+no intermediate integer cardinality between $2$ and the bulk contact is
+omitted. The distinction between $k=1$ and $k\ge2$ is essential to this
+uniform bound.
+
+Now fix $I$ and the parameters in the theorem. Definition 8.3 gives
+$t\in[t_-,t_+]$ with $1<t_-\le t_+<\infty$ depending only on $I$.
+Set $c=at$ and enlarge $A_I\ge4$ so that $c\ge c_*$ and the uniform estimates
+of Theorem 8.4 apply. For this actual law the identities (2.3) give
+
+$$
+\mathbb E_xK=a,\qquad \mathbb E_xU_T=s,\qquad aU_T\ge K^2.
+\tag{10.10}
+$$
+
+The residual identity (8.11), with $\mathcal D(x)\ge0$, gives
+
+$$
+0\le\frac{\mathbb E_xW_{at}(K,aU_T)}{a^2}
+\le H(x)-G_{at}(a,s).
+\tag{10.11}
+$$
+
+Theorem 8.4 and (8.15) have the same uniform leading term and the same
+$a^{-1/2}$ correction. Consequently, for some finite $B_I$ depending
+only on $I$,
+
+$$
+0\le M(a,h)-G_{at}(a,s)\le B_Ia^2.
+\tag{10.12}
+$$
+
+The first inequality follows because $G_{at}$ bounds every original law
+from below, and hence bounds their infimum; it does not require a
+minimizing law. Combining (10.1), (10.11) and (10.12), and writing
+$\eta=\epsilon+a^{-1}$ and $D_I=\max\{1,B_I\}$, yields
+
+$$
+\frac{\mathbb E_xW_{at}(K,aU_T)}{a^5}
+\le\epsilon+\frac{B_I}{a}\le D_I\eta.
+\tag{10.13}
+$$
+
+By (10.5), (10.6), and the fact that $K$ is a positive integer, the stronger
+pointwise estimate on all realized types is
+
+$$
+\begin{aligned}
+W_{at}(K,aU_T)\ge{}&
+\left(aU_T-\frac{b(at)}2\right)^2\mathbf1_{\{K=1\}}\\
+&+\frac12(at)^3(K-at)^2\mathbf1_{\{K\ge2\}}.
+\end{aligned}
+\tag{10.14}
+$$
+
+After division by $a^5$ and expectation, (10.13) gives
+
+$$
+S:=\mathbb E_x\left[\left(\frac Ka-t\right)^2
+                       \mathbf1_{\{K\ge2\}}\right]
+\le\frac{2D_I}{t^3}\eta\le2D_I\eta
+\tag{10.15}
+$$
+
+and
+
+$$
+\mathbb E_x\left[\left(\frac{U_T}{a^{3/2}}-
+                         \frac{b(at)}{2a^{5/2}}\right)^2
+                       \mathbf1_{\{K=1\}}\right]
+\le D_I\eta.
+\tag{10.16}
+$$
+
+Formula (8.14), uniformly for $t\in[t_-,t_+]$, implies
+
+$$
+\frac{b(at)}{2a^{5/2}}
+=2t^{5/2}-\frac{t^2}{\sqrt a}+O_I(a^{-1}),
+\qquad
+\left|\frac{b(at)}{2a^{5/2}}-2t^{5/2}\right|^2
+\le\frac{E_I}{a}
+\tag{10.17}
+$$
+
+for a finite $E_I$. Applying $(u+v)^2\le2u^2+2v^2$ to (10.16) and
+(10.17) proves (10.4) with constant $2D_I+2E_I$.
+
+It remains to determine the singleton mass from the same exact mean, rather
+than from a putative mixture. Write $q=\mathbb P_x(K=1)$, $p=1-q$, and
+
+$$
+e=\mathbb E_x\left[\left(\frac Ka-t\right)
+                       \mathbf1_{\{K\ge2\}}\right].
+$$
+
+Cauchy--Schwarz gives $|e|\le\sqrt{pS}\le\sqrt S$. Equation (10.10) gives
+$1=q/a+tp+e$, whence
+
+$$
+\left|q-\left(1-\frac1t\right)\right|
+=\left|\frac{q}{at}+\frac et\right|
+\le\frac1{at}+\frac{\sqrt S}{t}
+\le\bigl(1+\sqrt{2D_I}\bigr)\sqrt\eta.
+\tag{10.18}
+$$
+
+Here $t>1$, $q\le1$, and $a^{-1}\le\sqrt\eta$ were used. Enlarging a
+single $C_I$ to cover (10.15), (10.17)--(10.18) proves all three assertions.
+Every expectation is finite for each law because $[s]$ is finite and each
+actual marginal is positive. No constant in this argument depends on the
+least marginal, the positive-mass types, or their incidence components. ∎
+

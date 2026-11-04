@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0ef49e541034702bd848c829188d83916dc2ed6b07059674face6ba46c4c6147
+  normalized_sha256: sha256:0ef49e541034702bd848c829188d83916dc2ed6b07059674face6ba46c4c6147
+cas_ref: sha256:0ef49e541034702bd848c829188d83916dc2ed6b07059674face6ba46c4c6147
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Adjunction/BestSafeAbstraction.best_safe_abstraction
+    target_statement_id: sha256:a4383ae370656daa80ac868a8787c26c33c9bc7e6c5faea2e1c05cfeb52dbeae
+receipts:
+  unresolved_subitems: []

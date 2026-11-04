@@ -119,6 +119,15 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
                 "The speed is the CFC square root of the response. Response positivity proves root positivity and invertibility."),
             Theorem("positive_clock_special_roots", "Exact special positive roots", Roots(),
                 "Positivity and the exact squares identify the candidates uniquely with the positive functional-calculus roots."),
+            Describe.Lean(DescribeId.Create("sigma-pos-def"),
+                DeclarationHandle.Create(Owner + "sigma_posDef"),
+                H("Strict positivity of the mixed state"),
+                StatementSource.FromAuthor(Disp(new Formula.Apply(QualifiedName("Matrix.PosDef"),
+                    [QualifiedName("D5.S3.Quantum.Dynamics.PositivePauliClockOrder.sigma")]))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(DefinitionDsl.Text(
+                    "The maximally mixed qubit matrix sigma is positive definite."))),
+                DescribeRole.Theorem),
             Theorem("mixed_state_full_support", "Canonical maximally mixed state",
                 And(Equal(Call("matrix",Call("mixedState")),SigmaLower),Call("Surjective",Call("mulVec",SigmaLower))),
                 "mixedState inhabits the current Foundation density carrier, with positivity and trace one proved. Its matrix has full range, so the standing support is the identity."),
@@ -168,6 +177,10 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
                 Equal(Call("zminus",LambdaLower),Call("exp",Mul(Seq(Minus,Imag),W,Tm,Call("nminus",LambdaLower)))),
                 Equal(Call("c",LambdaLower),Mul(StarOf(Mul(Call("zplus",LambdaLower),Call("zminus",LambdaLower))),
                     Call("zminus",LambdaLower),Call("zplus",LambdaLower)))))),
+            Theorem("phase_unit", "Unit modulus of a scalar phase",
+                ForReal(T, Equal(Mul(Seq(Parenthesized(Call("exp", Mul(Seq(Minus, Imag), OfReal(T)))),
+                    Caret, Grp(Star)), Call("exp", Mul(Seq(Minus, Imag), OfReal(T)))), D(1))),
+                "The conjugate of exp minus i theta times the same phase is one for every real theta."),
             Theorem("fixed_scalar_clock_order", "Fixed-label scalar order", ScalarOrder(),
                 "These scalar phases commute and have unit modulus. The relative coefficient is one, so it cannot be minus one."),
             Theorem("averaged_fixed_scalar_clock_order", "Arbitrary probability averaging", Average(),
@@ -185,6 +198,8 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
                 + "The response coefficients are clock-response operators, not a claimed complete quantum spacetime metric.")))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula OfReal(Formula value) => new Formula.Apply(
+        Seq(Operatorname, Grp(F.Id("Complex"), Dot, F.Id("ofReal"))), [value]);
     private static Formula QualifiedName(string name)
     {
         var items = new List<Formula>();

@@ -74,7 +74,7 @@ private def mode {M : ℕ} (l : Fin M → ℝ) : FullOperator M :=
   ∑ j, (l j : ℂ) • fullC j
 private def dGamma {M : ℕ} (h : Matrix (Fin M) (Fin M) ℝ) : FullOperator M :=
   ∑ i, ∑ j, (h i j : ℂ) • ((fullC i)ᴴ * fullC j)
-private theorem fullC_mixed (M : ℕ) (i j : Fin M) :
+theorem fullC_mixed (M : ℕ) (i j : Fin M) :
     fullC i * (fullC j)ᴴ + (fullC j)ᴴ * fullC i =
       if i = j then (1 : FullOperator M) else 0 := by
   classical

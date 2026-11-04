@@ -1,0 +1,22 @@
+**Definition 11.1 (The mixed comparison class).**
+Let $\rho\succeq0$ be a $5\times5$ matrix of trace one in the mode order
+$(0,1,2,3,13)$. Write $p_i=\rho_{ii}$ and retain the orientation
+
+$$
+C_{ij}=\langle j|\rho|i\rangle=\rho_{ji}.
+$$
+
+For $\rho=|\psi\rangle\langle\psi|$ this is
+$C_{ij}=\overline{\psi_i}\psi_j$. The reported pairs remain
+$(2\operatorname{Re}C_{ij},2\operatorname{Im}C_{ij})$.
+Fix the means $X=p_1+p_{13}$, $Y=p_3+p_{13}$ and $Z=p_2>0$.
+With $r=1-Z$ and $\kappa=p_{13}$ the diagonals are necessarily
+
+$$
+p=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa).
+$$
+
+The comparison class consists of all PSD trace-one matrices with these
+means. It is larger than the calibrated pure source, and no nonlinear
+transport law on this entire mixed class is assumed.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fdf562c72b57d323e080a6a92742783c9d9f48671a39e1d64ba3aba68310858b
+  normalized_sha256: sha256:fdf562c72b57d323e080a6a92742783c9d9f48671a39e1d64ba3aba68310858b
+cas_ref: sha256:fdf562c72b57d323e080a6a92742783c9d9f48671a39e1d64ba3aba68310858b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 保留旧心脏是文件/命题历史保护指令。
+    previous_atom_id: efee76e8b5fc592a1921ac4dac975fe79d3d04b9faed0f48708523750c9d11f3
+    next_atom_id: e80f162580b1320296b4e9c92de853e4ecb47de1f26214b62a3b924d71fc14c7

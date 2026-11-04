@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea333006214b5ab5651338b8aae64c2b01a3bf98c4d2aae61b6c0d55d1a7439a
+  normalized_sha256: sha256:ea333006214b5ab5651338b8aae64c2b01a3bf98c4d2aae61b6c0d55d1a7439a
+cas_ref: sha256:ea333006214b5ab5651338b8aae64c2b01a3bf98c4d2aae61b6c0d55d1a7439a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对命名与解释的哲学区分，以及相似性空间这一说明项目；没有关于类型化对象的数学等式或推论。
+    previous_atom_id: 0d2c01088aebe7e9e968b5e0adbd9fd4fba63b69019d899d58e5767773756d62
+    next_atom_id: 00aa0ae509c1341ee5c5a357bb2a3899445f7697d01a5079a095611e95999358

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db01d6aedc5d5470d546dc41f35fb518e6b318affce1b4fc575b3bd4c926d0aa
+  normalized_sha256: sha256:db01d6aedc5d5470d546dc41f35fb518e6b318affce1b4fc575b3bd4c926d0aa
+cas_ref: sha256:db01d6aedc5d5470d546dc41f35fb518e6b318affce1b4fc575b3bd4c926d0aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: DynRes 的集合构造定义被更新拆开的kernel对，没有断言存在这样的状态对。'
+    previous_atom_id: ceb48f9367157b3e927fe9b02637f0f492c9a95b2d49cd05e8575d0b043e0df6
+    next_atom_id: 35948d99667cbf919c28660b6aaaae62c91a82d927ed679188fee47088fa735c

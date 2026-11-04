@@ -1,0 +1,59 @@
+**Theorem 5.2 (current orbit, exact inverse directions and task kernel).**
+Let $\mathcal S^\#(A,w)$ be Literal Space modulo only $G_K$, and let
+$\mathcal M^\#$ be the numerical current predictor modulo that same
+transport, with context fixed. On the actual all-owner-split image:
+
+1. Literal Space evaluates Boundary and determines its current orbit.
+   Boundary recovers exactly $\mathcal S^\#$, and
+   $\mathcal S^\#$ and $\mathcal M^\#$ recover one another.
+2. These current numerical kernels equal the complete continuation
+   service kernel. Distinct literal branch-polarity partners are not
+   identified as literal spatial reconstructions.
+3. Time recovers the entrance orbit $(T,x)/G_K$ and the actual current
+   orbit by (SC.10). Conversely that entrance orbit determines all
+   mathematical values of the fixed performed Time window. Neither
+   direction manufactures provenance or an old preparation journal.
+
+The current claims remain valid at each settled cut after any finite
+native continuation, using the then-current $n,k$, moments through
+$2n-1$ and free germ through $n-1$ and the maintained birth provenance.
+The claim about Time retains the fixed startup-window domain.
+
+Proof. Boundary is invariant under $G_K$. Lemma 2.2 reconstructs a
+terminal-fixing signed representative from its finite data, and
+Lemma 3.2 forces its remaining sign freedom to be precisely $G_K$.
+Conversely evaluate powers of any representative to produce exactly
+the same Boundary. Thus, denoting this evaluation by $\beta$ and
+reconstruction by $\delta$,
+
+$$
+ \delta\beta=\mathrm{id}\text{ on current orbits},\qquad
+ \beta\delta=\mathrm{id}\text{ on the actual Boundary image}.
+\tag{SC.13}
+$$
+
+The stored numerical predictor represents that same orbit by Theorem
+4.3. Extra scratch arrays, redundant records and allocation identities
+are not part of this numerical iff. A desired deterministic exported
+representative can be obtained by the moment reconstruction followed
+by known-edge normalization, or by selecting the least rational
+coefficient array in its finite $G_K$ orbit under a fixed address order;
+that choice depends on the law, not the field.
+
+For service necessity at a later cut, equal full service implies equal
+finite data without assuming a response oracle. At known dimension
+$n$, perform the free/persistent-pulse scan of Section 4 with cap $n$
+and the current terminals, omitting initial growth. Its responses
+recover the current free sequence and terminal impulse matrix.
+Lemma 3.2 then gives exactly $G_K$. Sufficiency is Theorem 4.3's
+complete-call induction. This also proves there is no larger
+unobservable current-field ambiguity even for a singular law.
+
+Time's actual returns supply (SC.12), the entrance inverse in Theorem
+4.2 and its actual endpoint formula. Conversely the fixed schedule,
+raw lifecycle and any representative of the entrance orbit calculate
+every numeric return and fixed frame; all such representatives have
+the same returns by Theorem 3.1. These two maps are inverse on the
+entrance-orbit/Time numerical image. Retaining actual execution and
+reference context remains a premise. $\square$
+

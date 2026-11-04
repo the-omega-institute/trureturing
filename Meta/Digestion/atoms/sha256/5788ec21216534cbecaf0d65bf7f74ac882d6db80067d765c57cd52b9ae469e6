@@ -1,0 +1,75 @@
+**Proposition 10.2 (The five-mode graph ambiguity and its reference).**
+The five-edge menu admits a normalized pure-state ambiguity when no
+positive reference probability is supplied, but the known middle probability
+removes it. To establish this in the source at hand, use the following
+classical edge-propagation calculation as an intermediate. Let $G=(V,E)$
+be any connected graph with at least two vertices, and let two normalized
+full-support pure vectors $\psi,\phi$ have the same oriented coherences
+on every edge; their diagonals need not agree. Put $q_i=\phi_i/\psi_i$. Then every edge satisfies
+
+$$
+\overline{q_i}q_j=1,
+\qquad q_j=\frac1{\overline{q_i}}.
+\tag{10.2}
+$$
+
+If $G$ contains an odd cycle, all $|q_i|=1$ and $q_i=e^{i\alpha}$ is a
+single common ray phase. If $G$ is bipartite with parts $L,R$, then
+
+$$
+\phi_i=e^{i\alpha}\sqrt t\,\psi_i\ (i\in L),\qquad
+\phi_j=e^{i\alpha}t^{-1/2}\psi_j\ (j\in R),
+\tag{10.3}
+$$
+
+for some $t>0$. If $P_L=\sum_{i\in L}p_i$ and
+$P_R=\sum_{j\in R}p_j$, normalization gives
+
+$$
+(t-1)(P_Lt-P_R)=0.
+\tag{10.4}
+$$
+
+Thus a known positive probability at one vertex removes the nontrivial
+bipartite branch. This is the connected-graph calculation used here; it is
+not promoted to a separate general tomography theorem.
+
+Proof. Equality on an edge is (10.2). Taking moduli gives
+$|q_j|=|q_i|^{-1}$. Along an odd cycle the alternating modulus returns with
+an odd number of inversions, so it equals its reciprocal and is one.
+The phases then propagate as the same common phase. Along a bipartition the
+modulus can alternate between $\sqrt t$ and $1/\sqrt t$, and connectedness
+propagates the two values. Substitution into the norm gives
+$tP_L+t^{-1}P_R=1$; the original norm gives $P_L+P_R=1$, and subtraction
+factors as (10.4). A known positive vertex forces $t=1$, since its probability is multiplied
+by either $t$ or $t^{-1}$. If $P_L=P_R$, the two roots in (10.4) already
+coincide; the formula asserts at most two rays, not always two.
+
+The graph-theoretic precedent is Singer–Cucuringu,
+[*Uniqueness of Low-Rank Matrix Completion by Rigidity Theory*,
+Proposition 9][GR10]: in the real one-dimensional Gram problem, the
+minimal locally completable components are trees with one odd cycle.
+Its real generic local-completion statement is not itself a theorem about
+normalized complex pure rays. Equations (10.2)–(10.4) supply precisely the
+complex phase propagation, normalization and positive-reference adaptation
+needed for this five-mode application.
+
+For the FIB graph, $L=\{0,13\}$ and $R=\{1,2,3\}$. Uniform fifths and
+
+$$
+p'=(3/10,2/15,2/15,2/15,3/10)
+$$
+
+with zero phases have all five native edge coherences equal to $1/5$,
+yet are distinct normalized pure rays. They do not lie in the same
+calibrated mean fiber: the ambiguity is a graph ambiguity, not the affine
+mean direction $d$. The alternating log-amplitude kernel is
+$(1,-1,-1,-1,1)$, whose middle entry differs from that of $d$.
+Indeed, writing $x_i=\log|q_i|$, each observed edge gives $x_i+x_j=0$.
+Connectivity leaves exactly this alternating direction for the displayed
+bipartition. For the two examples, $P_L=2/5$, $P_R=3/5$ and $t=3/2$,
+so every edge product is multiplied by $\sqrt t/\sqrt t=1$.
+But $Z$ changes from $1/5$ to $2/15$ (and the other means also change);
+this pair cannot contradict reconstruction at fixed calibrated means.
+$\square$
+

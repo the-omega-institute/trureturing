@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b5a3732cfc65fc1005351a8a3f30f60ad96e066968a55650a9937f19c0d6f318
+  normalized_sha256: sha256:b5a3732cfc65fc1005351a8a3f30f60ad96e066968a55650a9937f19c0d6f318
+cas_ref: sha256:b5a3732cfc65fc1005351a8a3f30f60ad96e066968a55650a9937f19c0d6f318
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/FrobeniusQuantumPostprocessingKernel.frobenius_quantum_postprocessing_kernel
+    target_statement_id: sha256:ca394de3e2fbd238d548e63def510f7c2f47158829a8538c4565f704ee925012
+receipts:
+  unresolved_subitems: []

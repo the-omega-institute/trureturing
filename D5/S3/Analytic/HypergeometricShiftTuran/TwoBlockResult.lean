@@ -11,7 +11,9 @@
 
 admission_basis: open-problem-resolution (#20945; Refuted)
 escape_witness: none
-Direct frozen dependencies: none.
+Direct frozen dependency of half_parameter_cond13 (esymm_const inlined):
+  D5/S3/Analytic/HypergeometricShiftTuran/Defs.esymm;
+    statement_id=sha256:4d8858460f0aad49d26a6547cf056cdd7fa4c7ed94938e4abfb0b427d2150a59.
 
 Per-declaration proof_shape:
 * pochRatio: bind-only definition; consumer: seriesCoeff.
@@ -23,12 +25,14 @@ Per-declaration proof_shape:
 * first_coefficient_eq: bind-only; consumers: half_parameter_family_neg,
   Reg.D5.S3.Analytic.HypergeometricShiftTuran.TwoBlockResult.first_readout_pos.
 * half_parameter_family_neg: bind-only; consumers: result.
-* half_parameter_cond13: bind-only; consumers: result.
+* half_parameter_cond13: bind-only; consumers: result;
+  shared same-delivery helper: Defs.esymm_const.
 * result: bind-only; external conjecture settlement #20945.
 Each row has escape_witness: none. These classifications use unfolding,
 Mathlib instantiation and normalization; no escape-witness basis is asserted.
 Direct D5 reuse: Defs.coeff, Defs.turanCoeff, Defs.esymm and Defs.cond13.
 Shared bind-only helpers and their consumers:
+* Defs.esymm_const: half_parameter_cond13, FunctionResult.witness_cond13.
 * Defs.gamma_three_halves: Defs.gamma_three_seven_halves_inv_pow_mul.
 * Defs.gamma_five_halves: Defs.gamma_five_halves_inv_pow_mul, first_coefficient_eq.
 * Defs.gamma_seven_halves: Defs.gamma_three_seven_halves_inv_pow_mul, first_coefficient_eq.
@@ -40,11 +44,11 @@ Shared bind-only helpers and their consumers:
 * Defs.gamma_two_three_inv_pow_mul: Result.first_coefficient_eq, TwoBlockResult.first_coefficient_eq.
 * Defs.base_pow_mul_half_pow: Result.half_parameter_family_neg,
   TwoBlockResult.half_parameter_family_neg.
-All nine shared helpers have proof_shape: bind-only and escape_witness: none.
+All ten shared helpers have proof_shape: bind-only and escape_witness: none.
 Escape audit unfinished for the public helpers: https://github.com/the-omega-institute/trureturing/issues/20966
 The decisive Mathlib facts are Real.Gamma_two (through Defs), Real.Gamma_nat_eq_factorial,
 Real.pi_lt_d2, pow_le_pow_left₀,
-pow_le_pow_right₀ and Finset.esymm_map_val.
+pow_le_pow_right₀ and Finset.esymm_map_val (through Defs.esymm_const).
 The module certifies a parameter instance refuting TwoBlockResult.claim, so
 the utility kind is certified-instance with basis refutes.
 -/
@@ -164,20 +168,10 @@ theorem half_parameter_family_neg (q : ℕ) (hq : 7 ≤ q) :
 
 private lemma half_parameter_cond13 :
     Defs.cond13 (fun _ : Fin 1 => (1 : ℝ)) (fun _ : Fin 7 => (1 / 2 : ℝ)) := by
-  have he (n k : ℕ) (x : ℝ) :
-      Defs.esymm (fun _ : Fin n => x) k = (n.choose k : ℝ) * x ^ k := by
-    rw [Defs.esymm, Finset.esymm_map_val]
-    calc
-      ∑ t ∈ (Finset.univ : Finset (Fin n)).powersetCard k, ∏ _i ∈ t, x =
-          ∑ _t ∈ (Finset.univ : Finset (Fin n)).powersetCard k, x ^ k := by
-        apply Finset.sum_congr rfl
-        intro t ht
-        rw [Finset.prod_const, (Finset.mem_powersetCard.mp ht).2]
-      _ = (n.choose k : ℝ) * x ^ k := by simp
   intro j hj
-  have hj0 : j = 0 := by omega
+  have hj0 : j = 0 := Nat.lt_one_iff.mp hj
   subst j
-  norm_num [he]
+  norm_num [Defs.esymm_const]
 
 /-- The coefficient nonnegativity clause of Conjecture 2 is false. -/
 theorem result : ¬ TwoBlockResult.claim := by

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5726947d526a22d933069bb1aceb0661cac37ffe623969347895b24b23465e6c
+  normalized_sha256: sha256:5726947d526a22d933069bb1aceb0661cac37ffe623969347895b24b23465e6c
+cas_ref: sha256:5726947d526a22d933069bb1aceb0661cac37ffe623969347895b24b23465e6c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Lists pair orbit as an illustrative category of even quantities.
+    previous_atom_id: 9b1684b920df788e45c8f919300ae3b923fc3b2474f78873fcef1588e4648602
+    next_atom_id: 4112ffc8aff4326561efdb12e396f68107fea2d6ca9bd86c543aa9e4259d42d7

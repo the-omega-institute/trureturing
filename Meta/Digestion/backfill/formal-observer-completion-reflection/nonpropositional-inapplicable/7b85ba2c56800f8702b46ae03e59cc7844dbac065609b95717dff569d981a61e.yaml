@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7b85ba2c56800f8702b46ae03e59cc7844dbac065609b95717dff569d981a61e
+  normalized_sha256: sha256:7b85ba2c56800f8702b46ae03e59cc7844dbac065609b95717dff569d981a61e
+cas_ref: sha256:7b85ba2c56800f8702b46ae03e59cc7844dbac065609b95717dff569d981a61e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：只指定可共同执行的上下文族 C。
+    previous_atom_id: ddaf0ded52999d58b01cc4f2f43c12836530f700b6debca3c47c32cad55a2676
+    next_atom_id: a8380893012e2e217d5634386e8575a43b5ad126bb943f5dedffd0bf326279e6

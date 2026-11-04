@@ -99,11 +99,14 @@ proof_shape: result: content; escape_witness: real_minimizers_separated; consume
 
 import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 import D5.S3.Quantum.NormCompression.UpperBranchReduction
+import D5.S3.Quantum.NormCompression.SchattenContinuity
 import D5.S3.Resource.LogDet.PathSpectralClassical
 import Mathlib.Analysis.CStarAlgebra.Matrix
 
 noncomputable section
 namespace D5.S3.Quantum.NormCompression.StrictSpectralPolyaRefutation
+
+open D5.S3.Quantum.NormCompression.SchattenContinuity
 
 open Polynomial
 open D5.S3.Quantum.NormCompression.UpperBranchReduction
@@ -327,28 +330,6 @@ private theorem strict_approximant : IsStrictSpectralApproximant M 1 (Matrix.dia
 open scoped BigOperators Matrix MatrixOrder ComplexOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.NormCompression.UpperBranchReduction
 
-private theorem schattenPow_trace {n : ℕ} {p : ℝ} (hp : 0 < p) (A : Matrix (Fin n) (Fin n) ℂ) :
-    schattenPow p A = (cfc (fun x : ℝ => x ^ (p / 2)) (Aᴴ * A)).trace.re := by
-  rw [schattenPow_eq_columnGram p hp A, D5.S3.Resource.LogDet.PathSpectralClassical.trace_cfc_eq_sum _ (Matrix.isHermitian_conjTranspose_mul_self A)]
-
-private theorem continuous_schattenPow {n : ℕ} {p : ℝ} (hp : 0 < p) :
-    Continuous (schattenPow p : Matrix (Fin n) (Fin n) ℂ → ℝ) := by
-  have hfun : Continuous (fun x : ℝ => x ^ (p / 2)) :=
-    continuous_id.rpow_const (fun _ => Or.inr (by positivity))
-  have hgram : Continuous (fun A : Matrix (Fin n) (Fin n) ℂ => Aᴴ * A) := by fun_prop
-  have hcont : Continuous (fun A : Matrix (Fin n) (Fin n) ℂ =>
-      cfc (fun x : ℝ => x ^ (p / 2)) (Aᴴ * A)) := by
-    exact hgram.cfc_of_mem_nhdsSet (fun x : ℝ => x ^ (p / 2))
-      (s := Set.univ) (by simp) (fun A => (Matrix.isHermitian_conjTranspose_mul_self A).isSelfAdjoint)
-      hfun.continuousOn
-  have htrace : Continuous (fun A : Matrix (Fin n) (Fin n) ℂ =>
-      (cfc (fun x : ℝ => x ^ (p / 2)) (Aᴴ * A)).trace.re) := by
-    unfold Matrix.trace
-    fun_prop
-  convert htrace using 1
-  funext A
-  exact schattenPow_trace hp A
-
 private theorem sv0_pow_le {m n : ℕ} {p : ℝ} (hp : 0 < p) (A : Matrix (Fin m) (Fin n) ℂ) :
     (Matrix.toEuclideanLin A).singularValues 0 ^ p ≤ schattenPow p A := by
   let T := Matrix.toEuclideanLin A
@@ -435,7 +416,7 @@ private theorem schattenPow_roots {n : ℕ} {p : ℝ} (hp : 0 < p) (A : Matrix (
     (Matrix.isHermitian_conjTranspose_mul_self A).roots_charpoly_eq_eigenvalues]
   simp [Multiset.map_map, Function.comp_def, RCLike.ofReal_eq_complex_ofReal, List.sum_ofFn]
 
-private theorem rpow_square_half (a p : ℝ) : (a ^ 2) ^ (p / 2) = |a| ^ p := by
+theorem rpow_square_half (a p : ℝ) : (a ^ 2) ^ (p / 2) = |a| ^ p := by
   rw [Real.rpow_div_two_eq_sqrt _ (sq_nonneg a), Real.sqrt_sq_eq_abs]
 
 private theorem block_schattenPow {p : ℝ} (hp : 0 < p) (d h s t a b : ℝ)

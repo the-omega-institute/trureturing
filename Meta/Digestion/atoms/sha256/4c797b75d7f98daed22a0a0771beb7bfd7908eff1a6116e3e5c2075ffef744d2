@@ -1,0 +1,8 @@
+**Theorem 66.2 (Entire-child inventory and J separation).** One has $(p_*,v_*)\in\mathcal B_*$. For every $(p,v)\in\mathcal B_*$, the entire original child $C(p,v)$ has at most two worlds, and its actual terminal-J response is injective. At the exact M-pair base,
+
+$$
+\boxed{C(p_*,v_*)=\{W_2,W_3\}.} \tag{66.2}
+$$
+
+Consequently the independently selected J pair required in Section 8 does not exist at this particular M-pair base. This conclusion concerns the whole original domain over $\mathcal B_*$, with no fixed terminal-M value and no restriction on gain degree, gain samples, drift, singular sources, exceptional sources or source width. It makes no exclusion outside this rectangle.
+

@@ -1,0 +1,50 @@
+#### 定理 8.2（单位边权黄金三角的精确谱隙）
+
+在三个几何顶点上取输运 $I,I,K$，定义
+
+$$
+\mathcal E_\triangle
+ =\left\lVert \psi_1-\psi_0\right\rVert ^2+\left\lVert \psi_2-\psi_1\right\rVert ^2
+  +\left\lVert \psi_0-K\psi_2\right\rVert ^2.
+$$
+
+在总归一化 $\sum_{j=0}^2\left\lVert \psi_j\right\rVert ^2=1$ 下，
+
+$$
+\boxed{\min\mathcal E_\triangle=2-\varphi=\varphi^{-2}.}
+$$
+
+全部极小截面恰为
+
+$$
+\psi_j=\frac{e^{-ij\pi/5}}{\sqrt3}u,\qquad
+ u\in\ker P,\quad \left\lVert u\right\rVert =1.
+$$
+
+最低本征空间的复维数为三。
+
+**证明。**
+
+在 $H_A^{\oplus3}$ 上定义
+$T(\psi_0,\psi_1,\psi_2)=(K\psi_2,\psi_0,\psi_1)$。
+它酉，$T^3=\operatorname{diag}(K,K,K)$，而能量对应 $L_\triangle=2I-T-T^\dagger$。
+若 $Ku=e^{i\theta}u$，取
+$\zeta_m=e^{i(\theta+2\pi m)/3}$，$m=0,1,2$，则
+
+$$
+\frac1{\sqrt3}(u,\zeta_m^{-1}u,\zeta_m^{-2}u)
+$$
+
+是 $T$ 的本征向量，本征值为 $\zeta_m$；这三向量正交，遍历 $K$ 的本征基后给完整基。因此
+$L_\triangle$ 对应本征值为 $2-2\cos((\theta+2\pi m)/3)$。
+
+在 $\ker P$ 上主角 $\theta=3\pi/5$，最近于一的立方根唯一为 $e^{i\pi/5}$，给 $2-2\cos(\pi/5)=2-\varphi$。
+在 $\operatorname{im} P$ 上取主角 $\theta=-4\pi/5$，最近根角的绝对值为 $4\pi/15>\pi/5$，其最小值严格更大。
+在该正交本征基展开总单位截面，能量是各本征值的非负加权平均，得到最小值及全部等号情形。最后 $\dim\ker P=5-2=3$。
+
+∎
+
+这里的“三”来自该具体五模式投影的秩，并不证明物理空间必须三维。该能隙不使用非周期性，同样可出现在周期底图上；所有边权为一及全局而非逐顶点归一化均是前件。
+
+<a id="statement-8-3"></a>
+

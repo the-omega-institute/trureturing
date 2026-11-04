@@ -1,0 +1,25 @@
+## 54. All-width reconstruction and the exact parent correspondence
+
+Retain the entire child and complete worlds of Definitions 1.1–1.2.
+The chronological acquired word is literally $J,M,J,M,M,M$, with
+readings $(0,24,147/5,24,18,p,v)$ at clocks $0,\ldots,6$.
+The alternative terminal actions $J$ and $M$ both occur at clock seven.
+Each world has its own fixed source $P(r,b)$, one fixed real drift $d$
+and one whole nonzero real polynomial $g$ of degree at most three.
+There is no restriction to a regular source chart or a particular
+component of the entire child.
+
+Fix real $p\ne24,v,w$. The variable $w$ prescribes the terminal-M
+answer, so the object to reconstruct is
+
+$$
+\{W\in C(p,v):m(W)=w\}.
+\tag{54.1}
+$$
+
+The width $b>0$ is allowed to vary over all positive real numbers.
+Widths, $r,j,n$, gain coefficients and drift coordinates are defined
+source parameters, not additional acquired observations. In particular
+prescribing $w$ selects a terminal-response fiber; it does not add a
+source port to the acquired experiment.
+

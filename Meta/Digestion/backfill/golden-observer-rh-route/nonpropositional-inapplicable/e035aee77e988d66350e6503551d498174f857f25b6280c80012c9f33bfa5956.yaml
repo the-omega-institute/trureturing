@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e035aee77e988d66350e6503551d498174f857f25b6280c80012c9f33bfa5956
+  normalized_sha256: sha256:e035aee77e988d66350e6503551d498174f857f25b6280c80012c9f33bfa5956
+cas_ref: sha256:e035aee77e988d66350e6503551d498174f857f25b6280c80012c9f33bfa5956
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: W-B 只处理索引证书、不主张黄金 twist 或 O-5 分解的范围限制。
+    previous_atom_id: d8e418b85e5c72c1c6a4aa40a47a7be246c71259047d4e9686eb4585c1d649ab
+    next_atom_id: eec722454ffd166fd5919a75be64c72fe15c985b78ad0bcf61b414856cf3ee42

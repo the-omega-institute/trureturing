@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1b693e20b82b77dbeb7d0dd9a38d116fd99ab4db2628c158425efa3608106ec0
+  normalized_sha256: sha256:1b693e20b82b77dbeb7d0dd9a38d116fd99ab4db2628c158425efa3608106ec0
+cas_ref: sha256:1b693e20b82b77dbeb7d0dd9a38d116fd99ab4db2628c158425efa3608106ec0
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ExperimentOptimization/MinimumCostTargetCover.minimum_cost_target_sufficient_design_iff_pair_cover
+    target_statement_id: sha256:06da493cc6fabadba8dad3059d3775e2849e5b70e559a8869ddeb608e5e15af4
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d118259c01cbaba029f751c0011a8ff19ec82493f74228aaaf45ee50e3b84d49
+  normalized_sha256: sha256:d118259c01cbaba029f751c0011a8ff19ec82493f74228aaaf45ee50e3b84d49
+cas_ref: sha256:d118259c01cbaba029f751c0011a8ff19ec82493f74228aaaf45ee50e3b84d49
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅记录 dev、tree、blob 与 PR head 的历史读取快照及读取方式。
+    previous_atom_id: d9bae0fa4d94e9a08a365b0fd1b9647e73ce1630a95b649388db3e7ef8be90c5
+    next_atom_id: 0d2b70f57507cc8cbc543d9283f6a6139d48c766ed445c2923a42ef6d84e4ac0

@@ -1,0 +1,39 @@
+**Theorem 48.5 (global phase rigidity and the attained minimizing set).** For
+$0<\xi\le R_\star$, the actual minimizing sets satisfy
+
+$$
+ \boxed{\quad
+ \mathcal A_\xi=\mathcal A_{\mathrm{ph,p},\xi}
+                  =\mathcal E_\xi(a_\xi).
+ \quad}
+\tag{48.19}
+$$
+
+Every global minimizer obeys (48.11). In particular, the complete actual
+nonphase lift ambiguity in the pure minimizer problem is absent throughout
+this interval, including selected determinant-zero levels and either active
+sign. The equality representatives are exactly those in the explicit set
+$\mathcal E_\xi(a_\xi)$ of (45.20), with all common scalar representatives
+retained.
+
+**Proof.** The supplied Theorem 45.5 gives global purity. Theorem 45.7,
+specifically (45.21), gives
+$a_\xi\le V(\xi)<e^2/4-3/16<e^2$. If a global minimizer were nonphase,
+Theorem 48.4 would give a strict same-level decrease of $g$ and hence of
+$f$, a contradiction. Thus every global minimizer is phase. The attained
+phase value and its complete phase representatives are exactly
+Theorem 45.7, namely
+$\mathcal A_{\mathrm{ph,p},\xi}=\mathcal E_\xi(a_\xi)$; inclusion in the
+original domain and the equality of attained values then give (48.19).
+The collision-locking relation follows from Theorem 48.3 because every
+global minimizer has $g=a_\xi<e^2$ and hence nonzero scalar recovery.
+
+For completeness, a zero total scalar recovery is not silently removed:
+if $\chi_\sigma=0$, then $g=\psi^\dagger H_0\psi\ge e^2>a_\xi$, so it cannot
+be a global minimizer in this interval. Individual recovery coordinates may
+vanish, and zero coherence, singular effects, repeated eigenvalues and
+repeated spectral entries remain allowed. The argument uses neither a
+population, coherence, $P$, $Q$, effect eigenvalue, eigenvalue gap, nor a
+selected determinant as a divisor. The only inversion is the explicitly
+nonzero trace derivative in (48.15). $\square$
+

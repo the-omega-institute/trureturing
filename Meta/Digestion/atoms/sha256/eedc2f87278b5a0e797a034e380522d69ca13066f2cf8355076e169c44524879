@@ -1,0 +1,27 @@
+**Definition 10.1 (one original source and a rectangular reading contract).** Keep exactly the root, chronological pair process, name-only event labels and exact response $B$ of Definition 6.1. One unknown finite original word $w$ has already been executed, with original response $x=B(w)$. Every subsequent action acts on that same source and epoch. If the controller has subsequently executed the chronological probe word $u$, its present state is $\operatorname{enc}(wu)$ and its exact current response is
+
+$$
+f_u(x)=\frac{ax+b}{cx+d},\qquad
+G_u=W(\operatorname{reverse}u)=
+\begin{pmatrix}a&b\\c&d\end{pmatrix}.
+$$
+
+Here $ad-bc=1$, all entries are nonnegative integers and $d\ge1$. These are the generators and multiplication convention of Definition 6.3. In particular $f_L(x)=x/(1+x)$, $f_R(x)=x+1$ and $f_{uv}=f_v\circ f_u$. The set of original candidates under a supplied promise $|w|\le n$ is
+
+$$
+H_{\le n}=\{w\in\{L,R\}^*:|w|\le n\},\qquad
+Q_n=\{B(w):w\in H_{\le n}\}.
+$$
+
+The integer $n$ is side information promised before acquisition. It is neither a cutoff learned from the reports nor a restriction on legal future actions: $wu$ may have length greater than $n$. For $n=0$ the original word is the known singleton $\varepsilon$, needing no read. Unless stated otherwise below, $n\ge1$.
+
+At a read, the controller requests a finite nonnegative rational radius $\epsilon_i$ and receives a finite rational report $y_i$, with the closed certificate
+
+$$
+|y_i-f_{u_i}(x)|\le\epsilon_i.
+$$
+
+A read leaves the source state unchanged. Conditional on the entire previous transcript, **every** rational report satisfying this inequality is admissible, independently of which admissible reports occurred earlier. This is a rectangular adversarial joint channel, a support condition rather than a stochastic independence assumption. It imposes no shared bias, averaging law or hidden consistency constraint between errors. Reports may lie outside $\mathbb Q_{>0}$; only the certified absolute bound is required.
+
+The deterministic controller uses its actual transcript, including its own actions, reports and requested radii, to choose the next forward $L/R$ action, read, precision request or stop. Apart from the stated promise, that transcript is its entire source-dependent input. Computation on the given finite rational strings is allowed. There is no reset, copy, inverse source action, exact-equality oracle or accessible archive of the unknown original word. Both actions remain total and their labels give only their names. An acquisition policy must stop after finitely many actions, reads and computation steps and return the correct **original** word for every permitted original source and every admissible report sequence. Recovering the subsequent word $wu$ without identifying its original cut is a different target.
+

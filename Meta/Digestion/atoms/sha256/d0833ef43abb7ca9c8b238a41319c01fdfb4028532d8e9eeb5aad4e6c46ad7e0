@@ -1,0 +1,31 @@
+**Proposition 27.5 (local records and a periodic core do not determine
+these queries).** Even the complete mature local record at the same
+literal safe cone, with the same exact normalization origin and both
+integer clocks, need not determine $U_s$ or $Q_s$ on the original root.
+A periodic-core record alone is insufficient even when the core is
+zero.
+
+Proof. Reuse Proposition 23.1's sources in the common class
+$\mathscr R_3$: $s=(10)^\infty$ and $s'=001010\cdots$. Their same
+literal $aa$ has $(e,A,B)=(4,5,8)$ and identical complete normalized
+future. All the mature local records stipulated there agree. Yet the
+root consumes one in the first source and zero in the second. The
+unique parent in batch three is respectively $a$ and $b$, so
+
+$$
+ U_s(2)=a,\quad U_{s'}(2)=b,\qquad
+ Q_s(a)=2,\quad Q_{s'}(a)=3.
+\tag{PCR.77}
+$$
+
+The core has least polynomial $(X+1)^2$, so this example also retains
+the permitted repeated factor and the one-bit singular transient.
+For the second assertion compare the zero source and the impulse
+$1000\cdots$ in $\mathscr R_1$. Both have zero periodic core; their
+least all-index annihilators are respectively $1$ and $X$. The same
+root-bit calculation gives $U_0(2)=b$ and $U_{\rm impulse}(2)=a$.
+Thus replacing the actual root by a beta-normalized periodic core
+erases information necessary for the query. Complete $(d,P)$
+distinguishes both pairs, as required by the sufficient interface.
+At $d=0$ the sole admitted source is zero, not the impulse. $\square$
+

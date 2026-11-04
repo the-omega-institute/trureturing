@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e7ca75d70a539ed0bc490e6423485b34d2c842dad330458e1a18a9e49421784d
+  normalized_sha256: sha256:e7ca75d70a539ed0bc490e6423485b34d2c842dad330458e1a18a9e49421784d
+cas_ref: sha256:e7ca75d70a539ed0bc490e6423485b34d2c842dad330458e1a18a9e49421784d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：假定有限维非空闭凸行为像并定义支持函数，没有在本 atom 断言距离对偶或最优值取得。
+    previous_atom_id: 3c6edec276015204c08664ca35a5f3ca141a074cbfc1643c585641f0bd2df05f
+    next_atom_id: 80f1105f356dfdaf42e8c36ed773008de72223ebf6470ec18773c79ea4b97f0f

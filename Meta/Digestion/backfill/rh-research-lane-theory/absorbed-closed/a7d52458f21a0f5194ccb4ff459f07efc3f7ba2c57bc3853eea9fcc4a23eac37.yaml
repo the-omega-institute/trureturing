@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:a7d52458f21a0f5194ccb4ff459f07efc3f7ba2c57bc3853eea9fcc4a23eac37
+  normalized_sha256: sha256:a7d52458f21a0f5194ccb4ff459f07efc3f7ba2c57bc3853eea9fcc4a23eac37
+cas_ref: sha256:a7d52458f21a0f5194ccb4ff459f07efc3f7ba2c57bc3853eea9fcc4a23eac37
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.critical_displacement_functional_reflection
+    target_statement_id: sha256:08db111764ac96a5a9ee0cfc6d7886906d1fcf5519a8500142a116b2ab07e6b4
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.functional_reflection_im
+    target_statement_id: sha256:af29283a687dd04af686c46c17b90edf74f4219ce9994fe8d025ffae5a452a7d
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.normalized_zero_generator_functional_reflection
+    target_statement_id: sha256:47e7e7183234f9c772489282b86cb6743a03dd272d7bcf3f121a699cd1ea8376
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.zero_mode_functional_reflection_time_reversal
+    target_statement_id: sha256:3683ba074638eebd7dddf9ac47284893443a980b98731e48ea90f19b56c4e548
+receipts:
+  unresolved_subitems: []

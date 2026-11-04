@@ -1,0 +1,32 @@
+**定义 9.1（零初读的完整多项式坐标）。** For
+
+$$
+\theta=(u,b,c,\delta,\beta_1,\beta_2,\beta_3)\in\mathbb R^7
+$$
+
+impose
+
+$$
+0<u<1,\quad b>0,\quad c>0,\quad bc=u(1-u),\qquad
+\delta^2+\beta_1^2+\beta_2^2+\beta_3^2>0.
+\tag{9.1}
+$$
+
+Set
+
+$$
+P_\theta=\begin{pmatrix}u&b\\c&1-u\end{pmatrix},\qquad
+g_\theta(t)=-\delta+\beta_1t+\beta_2t^2+\beta_3t^3.
+\tag{9.2}
+$$
+
+This is a bijection onto the entire initial-read-zero domain, denoted $\mathcal I_0$. In particular, initial read zero is not a zero-drift promise. For an integer matrix $A$, the original-clock response is the explicit degree-at-most-two polynomial
+
+$$
+O_i(A;\theta)=(-\delta+\beta_1i+\beta_2i^2+\beta_3i^3)
+[A_{11}u+A_{12}c+A_{21}b+A_{22}(1-u)]+\delta.
+\tag{9.3}
+$$
+
+For two slots define $\Delta(\theta,\theta')=\sum_{k=1}^7(\theta_k-\theta'_k)^2$. Its positivity means their complete targets differ.
+

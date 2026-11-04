@@ -1,0 +1,99 @@
+**Theorem 44.3 (strict prescribed-level exclusion through $13/4$).** Let
+$0<\rho(E,U)=\xi\le13/4$ and suppose
+
+$$
+\epsilon(E)\ge\theta(p).
+\tag{44.12}
+$$
+
+Then
+
+$$
+\boxed{\qquad
+ f(E,U)>N_{\mathrm{geo}}(\xi)+\frac3{16}.
+\qquad}
+\tag{44.13}
+$$
+
+Consequently this sector contains neither a prescribed-level tie nor a
+strict-loss witness for the existing geometric envelope.
+
+**Proof.** Put $c_0=e^2/4$. Since $D(p)\ge e^2$, the matrix
+$C-c_0I$ has strictly positive trace. Its determinant is
+
+$$
+\det(C-c_0I)
+ =\frac{d^2e^2\epsilon}{2}-\frac{e^2D(p)}4+\frac{e^4}{16}.
+\tag{44.14}
+$$
+
+The condition (44.12) is exactly the condition that (44.14) be nonnegative:
+after division by the positive $d^2e^2$, it reads
+$\epsilon\ge D(p)/(2d^2)-e^2/(8d^2)=\theta(p)$.
+A Hermitian two-by-two matrix with positive trace and nonnegative determinant
+is positive semidefinite. Hence $L(p,\epsilon)\ge c_0$, and Theorem 44.2
+gives $g(E,U)\ge c_0$.
+
+For the strict numerical margin, reuse the actual rank-one geometric
+comparison at level $13/4$. Take $x=1/2$, $y=\sqrt3/2$ and
+$\tau\in\{+1,-1\}$, and use
+
+$$
+w_\tau=(x+\tau iy,x-\tau iy,1,1),\qquad
+\psi_\tau=\sqrt{\frac38}\,b_+-\tau i\sqrt{\frac58}\,b_-,
+$$
+
+$$
+E_\tau=\overline{\psi_\tau}\,
+       \overline{\psi_\tau}^{\dagger},\qquad
+U_\tau=\operatorname{diag}(w_\tau)U_+.
+\tag{44.15}
+$$
+
+This is one actual shared feedback and one original pure effect. Its two
+original sign distances are
+
+$$
+\rho_+(E_\tau,U_\tau)=\frac{13}{4},\qquad
+\rho_-(E_\tau,U_\tau)=\frac{35}{4}-2\sqrt3>\frac{13}{4}.
+\tag{44.16}
+$$
+
+Writing
+
+$$
+J_R=h+2c+h\sqrt5,\qquad
+G_R=\frac{3d^2+5e^2-3J_R^2}{8},
+\tag{44.17}
+$$
+
+the same-feedback formula (23.12) gives $g(E_\tau,U_\tau)=G_R$.
+Theorem 37.5's actual rank-one level ordering gives
+$V(13/4)=N_{\mathrm{geo}}(13/4)+\kappa(13/4)\le G_R$.
+The source half-angle identities and strict rational bounds give
+
+$$
+J_R>\frac{101}{25}>4,\qquad
+d^2+e^2=8+8c<\frac{31}{2}.
+\tag{44.18}
+$$
+
+Indeed the first inequality uses $h>7/10$, $c>9/10$ and
+$\sqrt5>11/5$; the second uses $c<15/16$.
+Consequently
+
+$$
+c_0-G_R=\frac38\bigl(J_R^2-d^2-e^2\bigr)>\frac3{16}.
+\tag{44.19}
+$$
+
+Theorem 41.2 says that $V$ is strictly increasing on $(0,4]$, so
+$V(\xi)\le V(13/4)<c_0-3/16$. Since
+$f(E,U)=g(E,U)-\kappa\xi$ and
+$V(\xi)=N_{\mathrm{geo}}(\xi)+\kappa\xi$, (44.13) follows.
+
+The witness is used only to bound the already selected geometric value; it
+does not assert a new globally minimizing branch. Both signs, the common
+scalar quotient, and the original joint distance remain those of
+(23.11)--(23.12). $\square$
+

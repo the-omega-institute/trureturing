@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a64bb4d8bae1e750fb97f83fb51c31df7de2dd185084913cd4192420576120dc
+  normalized_sha256: sha256:a64bb4d8bae1e750fb97f83fb51c31df7de2dd185084913cd4192420576120dc
+cas_ref: sha256:a64bb4d8bae1e750fb97f83fb51c31df7de2dd185084913cd4192420576120dc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有限群、特征零表示及 K 与群作用交换均为 SM.2 后续结论的假设，不是无条件存在或交换定理。
+    previous_atom_id: 0d9a71b07f2003404f72f96fa1dc73e68da4580939123dccd6a754f13d94082e
+    next_atom_id: 0cff3039a015721bd67a8e6109946ec2447eb6079acc1ac7044f2317c295e7bf

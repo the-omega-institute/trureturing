@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:62a3d32aef0ac1eba37838dccc61905a4fbff1ce52a359e8061cb865712072bc
+  normalized_sha256: sha256:62a3d32aef0ac1eba37838dccc61905a4fbff1ce52a359e8061cb865712072bc
+cas_ref: sha256:62a3d32aef0ac1eba37838dccc61905a4fbff1ce52a359e8061cb865712072bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 资源与访问权限合同：要求共同初态、随机性、参考等保留原联合关系，并禁止从条件表解释自动授予干预端口或隐藏读数；这是许可规则，不是数学命题。
+    previous_atom_id: 76ce28546321c2ce340b887631a0713f3ad4b15e30b20fa6dd657142e027307a
+    next_atom_id: b10d79b3ac50964c86e09d991a0fbf626e6474f8679a0ab70ef082b47ad0b6f1

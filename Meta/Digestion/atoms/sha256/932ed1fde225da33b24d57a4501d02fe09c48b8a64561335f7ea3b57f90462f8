@@ -1,0 +1,154 @@
+**Definition 31.1 (unchanged original source, form and natural domains).**
+Use precisely Definition 18.1 of
+[Same-source native attractive boundary response](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md),
+with its analytic suppliers and normalizations at revision
+[d6d829c43b0ed4f127a09666bc40088b6f440b94](https://github.com/the-omega-institute/trureturing/blob/d6d829c43b0ed4f127a09666bc40088b6f440b94/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE.md).
+The conditional interfaces from Sections 24, 26 and 30 of
+[the complete Green marginal continuation](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GREEN_TAIL.md)
+are used as stated at revision
+[0564383e90de0a8b3a12e6e7628d9aef9218a848](https://github.com/the-omega-institute/trureturing/blob/0564383e90de0a8b3a12e6e7628d9aef9218a848/docs/develop/theory/FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GREEN_TAIL.md).
+In particular, the analytic hypotheses are the original-field heat
+formulas and locally uniform off-pole convergence of Theorem 10.2,
+the full complex polar identity (12.12)--(12.13), the closed natural
+angular form and compact embedding supplied by V, Theorem 10.2,
+the natural-core approximation (13.6)--(13.8), the complete-field
+scaling (14.9), and the original closed form, compact smooth core
+and local estimates (15.9)--(15.12). Suppliers C and V have exactly
+the statements fixed in original Definition 1.1 at revision
+5cec4fa83ae7bbb4e787c42606525db4cd11ed48. No additional analytic
+hypothesis is imposed below.
+
+For clarity, the complete source and parent generator are
+
+$$
+\begin{aligned}
+U_k&=\partial_{x_k}-\tfrac12y_k\partial_z,
+&V_k&=\partial_{y_k}+\tfrac12x_k\partial_z,
+&Z&=\partial_z,\\
+L_{n,\epsilon}&=-\sum_{k=1}^n(U_k^2+V_k^2)-\epsilon^2Z^2,\\
+M_{n,\epsilon}(x,y,z)
+ &=\int_0^\infty\int_{\mathbb R^{2n-2}}
+       (e^{-tL_{n,\epsilon}}\delta_0)(x,y,W,z)\,dW\,dt.
+\end{aligned}
+\tag{31.1}
+$$
+
+The heat column is the original compact-smooth Friedrichs heat
+column with identity unit source, raw Lebesgue measures, horizontal
+covariance $2$ and central covariance $2\epsilon^2$. Both integrals
+in (31.1) are complete and unweighted. Fix $\epsilon=1$, retaining
+the original fields and units. On retained $\mathbb R^3$ put
+
+$$
+\begin{aligned}
+P&=M_{n,1},&d\xi&=dx\,dy\,dz,\\
+U&=\partial_x-\tfrac y2\partial_z,
+&V&=\partial_y+\tfrac x2\partial_z,
+&\mathcal X&=\{U,V,Z\},\\
+\mathcal H_1
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^{\,\|\cdot\|_{\rm free}},
+&\|u\|_{\rm free}^2
+ &=\|u\|_2^2+\sum_{X\in\mathcal X}\|Xu\|_2^2,\\
+q(u,v)&=\sum_{X\in\mathcal X}\langle Xu,Xv\rangle
+                   -g\int_{\mathbb R^3}Pu\overline v\,d\xi,
+&D(q)&=\mathcal H_1,\qquad \mathscr A=A_{n,1,g}.
+\end{aligned}
+\tag{31.2}
+$$
+
+All inner products are linear in the first argument. The operator
+$\mathscr A$ is the full complex Friedrichs realization of $q$,
+including the original pole. In particular its domain is
+
+$$
+D(\mathscr A)=\{u\in\mathcal H_1:
+ \text{there is }a\in L^2(d\xi)\text{ with }
+ q(u,v)=\langle a,v\rangle\text{ for every }v\in\mathcal H_1\},
+\qquad \mathscr Au=a.
+\tag{31.3}
+$$
+
+Original (15.11)--(15.12) give an infinitesimal form bound, so a
+sufficiently shifted $q$ norm is equivalent to the free norm and
+$C_c^\infty(\mathbb R^3;\mathbb C)$ remains a form core. The space
+$\mathcal H_1$ is not replaced by a global isotropic Sobolev space.
+
+Use the actual gauge coordinates
+
+$$
+\begin{aligned}
+R&=((x^2+y^2)^2+16z^2)^{1/4},&\ell&=\log R,
+&\delta_r(x,y,z)&=(rx,ry,r^2z),\\
+\omega(a,\varphi)&=(\sqrt{\cos a}\cos\varphi,
+ \sqrt{\cos a}\sin\varphi,\sin a/4),
+&d\xi&=\tfrac14e^{4\ell}\,d\ell\,da\,d\varphi,\\
+J&=(-\pi/2,\pi/2),&c(a)&=\cos a,\\
+\mathcal H_c&=\{v\in L^2(J,da):v\in AC_{\rm loc}(J),
+                                  \ \sqrt c\,v'\in L^2(J,da)\},\\
+A[v]&=\int_J(4c|v'|^2+c|v|^2)\,da,
+&C[v]&=\int_Jc|v|^2\,da,
+&\|v\|_{\mathcal H_c}^2&=A[v]+\|v\|_{L^2(da)}^2.
+\end{aligned}
+\tag{31.4}
+$$
+
+There are no imposed angular endpoint values. Explicitly the original
+angular coefficients and threshold are
+
+$$
+\begin{aligned}
+I_n&=\int_0^{\pi/2}\sin^{n-2}t\,dt,
+&q_n(a)&=\frac1{I_n}\int_0^1
+             \frac{v^{n-2}}{\sqrt{1-v^2\sin^2a}}\,dv,\\
+Q_n[v]&=\int_Jq_n|v|^2\,da,
+&\mu_n&=\inf_{0\ne v\in\mathcal H_c}\frac{A[v]}{Q_n[v]},
+&\lambda_n&=2\pi\mu_n.
+\end{aligned}
+$$
+
+The original natural pencil $H_{n,g}(\sigma,m)$ is the operator
+on complex $L^2(J,da)$ associated with
+
+$$
+h_{n,g}(\sigma,m)[v]
+ =A[v]+\int_J c(a)(\sigma+m\tan a)^2|v|^2\,da
+                                  -\frac{g}{2\pi}Q_n[v],
+\qquad \sigma\in\mathbb R,\quad m\in\mathbb Z.
+$$
+
+The coefficient is the original all-integer-mode phase integral
+
+$$
+L=L_{n,g}=\frac1{4\pi}\sum_{m\in\mathbb Z}
+ \int_{\mathbb R}\dim_{\mathbb C}\operatorname{Ran}
+ \mathbf1_{(-\infty,0)}(H_{n,g}(\sigma,m))\,d\sigma.
+\tag{31.5}
+$$
+
+Its domains remain $D_0=\mathcal H_c$ and
+$D_m=\mathcal H_c\cap L^2(J,\sin^2a/c\,da)$ for $m\ne0$.
+For an axisymmetric $f$ use the actual gauge
+
+$$
+w_f(\ell,a)=\sqrt{2\pi}\,e^\ell
+             f(\delta_{e^\ell}\omega(a,\varphi)),\qquad
+4\|f\|_2^2=\int e^{2\ell}\|w_f(\ell)\|_{L^2(J,da)}^2\,d\ell.
+\tag{31.6}
+$$
+
+The same identity holds on gauge strips. Its angular mass is
+unweighted $da$, not the auxiliary $c\,da$ mass. Original (14.9),
+(15.7), and (25.2), (26.6) of the continuation give, throughout a
+sufficiently remote exterior,
+
+$$
+P(\delta_{e^\ell}\omega(a,\varphi))
+ =e^{-2\ell}\left(\frac{q_n(a)}{2\pi}+B_n(\ell,a)\right),
+\qquad \|B_n(\ell,\cdot)\|_\infty\le C e^{-2\ell},
+\qquad |P|\le C e^{-2\ell}.
+\tag{31.7}
+$$
+
+The bounds include the entire angular interval and the complete
+source, including the central contribution.
+

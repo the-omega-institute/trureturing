@@ -1,0 +1,12 @@
+**Proposition 7.2 (credited all-slope rank and zero-slope uniqueness).** For every prefix in $\mathscr G$ and every legal final word, $\operatorname{rank}\mathsf T_k\ge3$ for all real $k$, $\mathsf T_{-1/4}$ is invertible, and each actual fibre has at most one target at the common slope $k=0$.
+
+**Proof.** Use the invertible coordinates $f_i=\operatorname{tr}(A_iX)$, $0\le i\le3$, of Lemma 3.1. The first three rows are $(1+ik)f_i-f_0$, $i=1,2,3$. At most one of their three gains vanishes. If none does, the separate $f_i$ coefficients prove independence. If one does, its row is $-f_0$, independent of the other two rows with separate nonzero $f_i$ coefficients. At $k=-1/4$, the last row is also exactly $-f_0$, whereas the first three gains are $3/4,1/2,1/4$. A kernel vector must have all four $f_i=0$, proving invertibility.
+
+At zero slope, an invertible $\mathsf B$ gives linear uniqueness. If it is singular, its kernel is $\mathbb RN$, since the first three rows have rank three. Any other auxiliary solution through an actual $S$ is $S+vN$. Since $\det S=\det N=0$, equation (1.5) gives
+$$
+\det(S+vN)=v\mathfrak b(S,N).
+$$
+The coefficient is strictly positive, so rank-one solutions require $v=0$. The initial equation then fixes $D$. This is common-slope-zero uniqueness only. ∎
+
+In particular, the identity branch of Theorem 6.1 does not obtain a collision merely from singular $\mathsf B$, and the nonidentity branch does not obtain recovery merely from invertible $\mathsf B$. Cross-slope positive intersections in (7.2) remain a separate question.
+

@@ -1,0 +1,8 @@
+### 镜像稳定有不同含义
+
+本小节的迹距离记为
+$D_{\rm tr}(\rho,\sigma)=\tfrac12\left\lVert \rho-\sigma\right\rVert_1$，
+与前文被动相位矩阵 $D$ 区分。
+
+<a id="thm:contraction"></a>
+

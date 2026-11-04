@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ceb9b4a31cc881512dca4759fb62075f510c92bb1b140f7fd04e505e4f26877
+  normalized_sha256: sha256:2ceb9b4a31cc881512dca4759fb62075f510c92bb1b140f7fd04e505e4f26877
+cas_ref: sha256:2ceb9b4a31cc881512dca4759fb62075f510c92bb1b140f7fd04e505e4f26877
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 6219 提交身份、共享 canonical 来源和优先权说明；具体数学在后续条目。
+    previous_atom_id: 189bef9175177614f01183a58aedab6f5968c6b30de733c7e2a41ab76ba3a2eb
+    next_atom_id: 623e0866456812ed63d8e9244a38080f7d4e48374b6aa8e01608b5905bb0f328

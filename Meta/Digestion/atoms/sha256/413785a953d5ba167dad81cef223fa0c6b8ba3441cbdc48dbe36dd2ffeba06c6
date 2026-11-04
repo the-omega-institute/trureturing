@@ -1,0 +1,12 @@
+**Correspondence 43.2 (the acquired-input bridge).** The proof uses the following single-source chain, with no hidden oracle substitution:
+
+$$
+\text{prepared actual }(T,e_0)
+\ \xrightarrow{\ 2N\ \text{actual Ticks}\ }
+(m_0,\ldots,m_{2N})
+\ \xrightarrow{\ \text{exact local decoding}\ }
+(N,T,q,\mu,T^{2N}e_0,w).
+$$
+
+The first arrow is a real chronological experiment in Definition 36.1 and Theorem 37.2. The second is arithmetic on earned data. Its native correspondence is $p_j(T)e_0=\beta_j e_j$, not equality of a symbol name or arbitrary choice of realization. The separately retained source installation and the invariant in Theorem 40.2 then justify future actual calls. Four-view recovery is restricted to authentic passive cuts; control transport is justified by its own invariant for arbitrary current vectors.
+

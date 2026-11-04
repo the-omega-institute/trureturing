@@ -1,0 +1,119 @@
+**Theorem 21.1 (whole-fiber canonical stability and its two sharp boundaries).** Fix $S\ge2$ and write
+
+$$
+ c=F_S,\qquad \rho=F_{S-1}/F_S,\qquad
+ b_t=1/\rho,\qquad b_c=1+\rho,\qquad
+ \lambda_S(P)=\operatorname{tr}(JM^SP).
+ \tag{21.1}
+$$
+
+The two numbers $b_t,b_c$ are distinct and are the endpoints of $I_S$. On the entire $\mathcal F_b$ the following classification holds.
+
+* For $b$ strictly outside the closed interval with endpoints $b_t,b_c$, $\lambda_S$ has a global Lipschitz inverse.
+* At $b=b_t$, it has a global Hölder inverse of exponent $1/2$, and no finite global Hölder bound of any exponent greater than $1/2$. For the single noisy scalar and arbitrary ambient estimates, its minimax risk is $\Theta(\sqrt\varepsilon)$ as $\varepsilon\downarrow0$.
+* At $b=b_c$, it is exactly injective, but
+
+$$
+ \Omega_{JM^S,b_c}(0)=0,\qquad
+ \Omega_{JM^S,b_c}(\tau)=b_c\quad(\tau>0).
+ \tag{21.2}
+$$
+
+For every $\varepsilon>0$, its single-scalar minimax risk over arbitrary ambient estimates is exactly $b_c/2$.
+
+* In $I_S$ it is not injective, as in Theorem 9.1.
+
+The geometric assertions also hold for $\ell_\theta(P)=v-\theta t$ with any positive rational $\theta$, with endpoints $1/\theta,1+\theta$. For this version (21.2) uses $\ell_\theta$ in (20.3). Nonzero scalar scaling and an additive known constant affect finite stability coefficients, but not the classification or the positive-error radius at the collapsed endpoint.
+
+**Proof.** Use the already established canonical trace formula (9.4):
+
+$$
+ \lambda_S(P)=c+F_{S-1}b+c(v-\rho t).
+ \tag{21.3}
+$$
+
+It suffices to analyze $\ell_\theta=v-\theta t$. Put $C=\theta^2+\theta-1\ne0$, since $\theta$ is positive rational. The positive-source collision calculation (9.5)–(9.10) applies with $\theta$ in place of $\rho$. It already proves exact injectivity outside the open endpoint interval and positive-source collisions inside it. We examine the actual closure from Proposition 20.2, rather than inferring stability from injectivity on an open set.
+
+First classify possible equal-trace pairs on that closure. If $Q\ne P$ and $\ell_\theta(Q)=\ell_\theta(P)$, interchange the two so that
+
+$$
+ Q-P=h\begin{pmatrix}-1&-(1+\theta)\\\theta&1\end{pmatrix},\qquad h>0.
+ \tag{21.4}
+$$
+
+Then $P_{11}\ge h>0$. If $Q_{11}>0$, the row-ratio derivation of (9.6) remains valid with $0\le x<y<\infty$. Its common $b$ is (9.7), a weighted average of $1/\theta$, $1+\theta$, and $(2+\theta)/(1+\theta)$ with weights $\theta$, $x+y$, and $(1+\theta)xy$. The first two weights are positive. The third value is strictly between the first two by (9.9), so $b$ is strictly between the endpoints. If $Q_{11}=0$, (21.4) gives $Q_{21}>0$; determinant zero then gives $Q_{12}=0$, $Q_{22}=1$. Writing $p=P_{11}=h\in(0,1]$ gives
+
+$$
+ P_{12}=p(1+\theta),\quad P_{21}=\frac{1-p}{1+\theta},\quad
+ b=\frac{2+\theta}{1+\theta}
+            +p\left(\theta-\frac1{1+\theta}\right).
+ \tag{21.5}
+$$
+
+For $p<1$ this is strictly between the endpoints; for $p=1$ it equals $1+\theta$. Thus on either closed exterior sector the only possible distinct closure pair is, at $b=1+\theta$,
+
+$$
+ A=\begin{pmatrix}1&1+\theta\\0&0\end{pmatrix},\qquad
+ Z=\begin{pmatrix}0&0\\\theta&1\end{pmatrix}.
+ \tag{21.6}
+$$
+
+Both are actual closure points, since $b>1$. In particular the closure is still injective at $b=1/\theta$ and strictly outside the closed interval.
+
+We also need tangent directions, since absence of distinct closure collisions alone does not prove a Lipschitz inverse. Away from $b=\phi$ the conic (20.5) is nonsingular: solving both zero partial derivatives and $F_b=0$ forces $b^2-b-1=0$. All exterior and endpoint values under consideration differ from $\phi$. A tangent annihilated by $\ell_\theta$ has direction (21.4). At a point with $P_{11}>0$, write its row ratio as $x\ge0$. The first derivative of the determinant in that direction vanishes exactly when
+
+$$
+ \frac{P_{12}}{P_{11}}=
+       \frac{1+(1+\theta)x}{x+\theta}.
+$$
+
+Trace normalization therefore gives the tangent's fiber value
+
+$$
+ b(x)=\frac{(2+\theta)x^2+2(1+\theta)x+1}
+                 {(1+\theta)x^2+2x+\theta}.
+ \tag{21.7}
+$$
+
+For $x>0$ this is a strict weighted average of the same three values. At $x=0$ it equals $1/\theta$, at the source $A_t=\left(\begin{smallmatrix}1&1/\theta\\0&0\end{smallmatrix}\right)$. At a point with $P_{11}=0$, the endpoint with $P_{21}=0$ has nonzero determinant derivative $-1-\theta(b-1)$; the other endpoint has zero derivative only when $b=(2+\theta)/(1+\theta)$, strictly inside the interval. This also accounts for the limit $x\to\infty$ in (21.7). Hence strictly outside the closed interval there are neither closure collisions nor annihilated tangents; at $b=1/\theta$ the only annihilated tangent is at $A_t$.
+
+For completeness, these geometric facts give global estimates as follows. On a regular local parametrization of the compact actual closure, a nonzero scalar derivative bounds matrix distance by a constant times scalar distance for two sufficiently nearby points in that chart. A finite collection of such charts covers the closure in the strictly exterior case. Pairs outside these local neighborhoods form a compact set disjoint from the diagonal; injectivity on the closure makes their scalar separation have a positive minimum. Its finite diameter then supplies the remaining Lipschitz bound. This uses the actual $\mathcal K_b$, including the removal at $b=1$.
+
+At $b=1/\theta$, solve (20.5) for $v$ near $A_t$ using $t$ as parameter. Direct coefficient comparison gives
+
+$$
+ v(t)=\theta t+\theta C t^2+O(t^3),\qquad
+ \ell_\theta(P(t))=\theta C t^2+O(t^3),\qquad t\ge0.
+ \tag{21.8}
+$$
+
+These are actual positive sources for all sufficiently small $t>0$. Analyticity gives a neighborhood and constants $a,L>0$ in which
+
+$$
+ |\ell_\theta(P(t))-\ell_\theta(P(s))|
+       \ge a|t^2-s^2|\ge a|t-s|^2,\qquad
+ \|P(t)-P(s)\|_{\max}\le L|t-s|.
+ \tag{21.9}
+$$
+
+Indeed the derivative of the second expression in (21.8) has the fixed sign of $C$ and absolute value at least a positive constant times $t$; integration proves (21.9). The other charts have the previous Lipschitz bound. Combining this chart with those charts and the compact separated-pair set yields a finite global Hölder $1/2$ bound. The two positive sources $P(t),P(2t)$ have distance at least $t$ and scalar separation $O(t^2)$. Their ratios for every exponent greater than $1/2$ diverge, proving sharpness on the original positive domain.
+
+Here is also an attained noise bound with the declared ambient-estimator domain. Project the noisy scalar to the compact realized scalar set of $\mathcal K_b$ and apply its unique inverse, using the least scalar in case of a tie. The selected scalar differs from the true one by at most $2\varepsilon$. The exterior or tangent estimate just proved gives error at most $2L_b\varepsilon$ or $C_b\sqrt{2\varepsilon}$, respectively. Boundary outputs are allowed ambient estimates. For the canonical scalar, obtain that closure point using the existing quadratic (9.11) of Corollary 9.2, with membership in the actual $\mathcal K_b$ as the admissibility condition; the preceding geometry proves uniqueness. Conversely any two positive sources with scalar separation at most $2\varepsilon$ admit the same midpoint observation, and the triangle inequality forces error at least half their distance for one of them, regardless of the estimate's domain. Taking $P(t),P(2t)$ with $t$ a sufficiently small fixed multiple of $\sqrt\varepsilon$ gives the matching square-root lower bound.
+
+Finally at $b=1+\theta$, (21.6) has equal $\ell_\theta$ values and distance $b$. To exhibit strictly positive worlds, use (8.3)–(8.5) at this fixed $b$: put
+
+$$
+ q(r)=\frac{b-r}{1-(b-1)r},\qquad
+ P_r=P(r,q(r)),\qquad Q_r=P(r^{-1},q(r^{-1})).
+ \tag{21.10}
+$$
+
+For every sufficiently small positive $r$, both arguments $q(r),q(r^{-1})$ are positive, so both matrices are actual sources in the same $\mathcal F_b$. They tend to $A,Z$, respectively. Their scalar difference tends to zero and their matrix distance tends to $b$. Every source has diagonal entries in $(0,1)$ and off-diagonal entries in $(0,b)$, so its whole-fiber diameter is at most $b$ and (21.10) attains this supremum at every positive scalar tolerance. Exact injectivity gives the zero-tolerance statement. The midpoint-observation lower bound therefore gives minimax risk at least $b/2$ for every positive error. The constant ambient estimate
+
+$$
+ \widehat P_0=\begin{pmatrix}1/2&b/2\\b/2&1/2\end{pmatrix}
+ \tag{21.11}
+$$
+
+has error at most $b/2$ for all sources, proving equality. Known translation and nonzero scaling of the scalar preserve this argument for every positive error. Formula (21.3) completes all canonical assertions. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:01ea1833d0a3d62109cc59d5acf4e515f98206db56f77cdcc5530d3f9486192c
+  normalized_sha256: sha256:01ea1833d0a3d62109cc59d5acf4e515f98206db56f77cdcc5530d3f9486192c
+cas_ref: sha256:01ea1833d0a3d62109cc59d5acf4e515f98206db56f77cdcc5530d3f9486192c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分形式固定点与现实实现并概括严谨性要求；加号连接规范词项，不是数值或类型化对象运算。
+    previous_atom_id: 9f8d59dcc2704a1186994772cdc2844cbc93c582902dd4b70d5c946a7cc4ff26
+    next_atom_id: 3711a440f9b2195a51fa6bd9ef674236940c4990d371f4088eff71eb0fe8f902

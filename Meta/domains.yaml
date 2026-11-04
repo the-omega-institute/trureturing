@@ -35,6 +35,9 @@ domains:
   Certificates:
     stratum: S0
     definition: Kernel-checkable refutation and infeasibility certificates such as LRAT propositional proofs and rational Farkas dual weights.
+  CharacterSums:
+    stratum: S3
+    definition: Multiplicative characters and Gauss and Jacobi sums over finite fields, including affine and projective point counts and character-sum bounds.
   Combinatorics:
     stratum: S3
     definition: Graph families and their invariants, including the hypercube, extremal subgraph counts, perfect matchings and matching components on arbitrary vertex types.
@@ -116,6 +119,9 @@ domains:
   Hamming:
     stratum: S3
     definition: Mixed-alphabet Hamming graph partitions, coordinate-line cliques, and their maximality and direction-completeness.
+  HilbertOperators:
+    stratum: S3
+    definition: Approximation numbers, min-max bounds, finite-dimensional attainment and finite Ky Fan gauge inequalities for bounded rectangular maps between arbitrary real or complex Hilbert spaces with independent source and target universes.
   History:
     stratum: S0
     definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.

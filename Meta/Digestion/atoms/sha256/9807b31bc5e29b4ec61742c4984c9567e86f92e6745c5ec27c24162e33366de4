@@ -1,0 +1,13 @@
+**Lemma 6.1.** A mixed word with three-dimensional cumulative span is precisely of the form
+
+$$
+M^aJ^bM^c,\qquad a,c\ge0,\quad a+c>0,\quad b>0,
+\tag{6.1}
+$$
+
+with $b$ even when both $a,c>0$.
+
+**Proof.** If a word starts with $J^b$ and then takes $M$, its span becomes $\operatorname{span}\{I,J,M\}$ for even $b$ and $\operatorname{span}\{I,J,MJ\}$ for odd $b$. Further $M$ actions remain there, by (2.3). A later $J$ after $k\ge1$ such $M$ actions adds $JM^k$ or $JM^kJ$. In the even case $JM^k=F_{k-1}J+F_kJM$ is outside $\operatorname{span}\{I,J,M\}$. In the odd case $JM^kJ=F_{k-1}I+F_kJMJ$ is outside $\operatorname{span}\{I,J,MJ\}$, using (2.2) and the independent basis. Thus there is no later $J$.
+
+If the word starts with $M^a$, $a\ge1$, its first $J$ adds $JM^a$ to $\operatorname{span}\{I,M\}$. Consecutive $J$ actions toggle $JM^a$ and $M^a$. An $M$ after an odd number of them gives $MJM^a$, outside the current span: right multiplication by $M^{-a}$ reduces this to the independence of $I,M,J,MJ$. After an even number of $J$ actions, $M$ actions return to the pure-$M$ algebra. A later $J$ at a larger exponent would add $JM^{a+k}$, $k\ge1$. Right multiplication by $M^{-a}$ reduces the fourth-direction claim to independence of $J$ and $JM^k$ modulo $\operatorname{span}\{I,M\}$, which follows from $F_k>0$ and the basis $I,M,J,JM$. Thus there is at most one $J$ block, and an interior block must have even length. Conversely all forms in (6.1) with this parity condition stay in the indicated three-plane and are mixed, so have span three. $\square$
+

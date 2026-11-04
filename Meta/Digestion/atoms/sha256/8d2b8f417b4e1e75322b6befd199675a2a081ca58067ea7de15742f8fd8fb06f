@@ -1,0 +1,21 @@
+**假设 25.1（同一来源、校准与合法路径）。** 精确采用
+[三轴卷定义 27.1、定理 27.2](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md#27-prepared-source-calibration-and-three-evolving-task-coordinates)
+的来源族、全来源归属、原时钟、原半空间 guard、控制及费用。固定
+$\lambda=(\alpha,\gamma,c)$，令
+$P_\lambda(x)=\alpha\cos x-\gamma\sin x$。该定理给出的实际累计命令
+或同一个许可 Brownian 增量 $U$ 下的原任务坐标为
+
+$$
+F_{t,U}^\lambda(q)=
+(q_1+U_1,\ q_2+ct+U_2+P_\lambda(q_1)-P_\lambda(q_1+U_1),\ q_3+U_3),
+\qquad
+F_{s,V}^\lambda\circ F_{t,U}^\lambda=F_{t+s,U+V}^\lambda.
+\tag{52}
+$$
+
+这是原定理的精确调用：相同固定校准使中间 $P_\lambda$ 项抵消；生存要
+检查每段连续第三坐标前缀，cemetery 吸收，不能用一个正终点代替整个前缀。
+Brownian 拼接保留同一许可 $Q$，随机取得时保留非预见条件与实际供应的新
+增量。原隐藏 $h,k$ 的轨道仍用于原服务计费；(52) 不是免费重设时钟、
+遗忘费用或改变原始度量的权限，也不声称有限精度记录已精确取得校准。
+

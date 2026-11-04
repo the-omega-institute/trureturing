@@ -1,0 +1,62 @@
+**命题 90.1（实际 whole-CPTP center maps 的统一 upper bounds）。** 在定义 88.1 的合同下，对每个 center $\alpha$ 使用命题 86.3 的既有 map
+
+$$
+\begin{aligned}
+Z_\alpha&=\operatorname{diag}(1,e^{i\alpha},1),\\
+B_\alpha&=U_0Z_\alpha(\mathsf P_0\oplus d)Z_\alpha^\dagger U_0^\dagger,\\
+\mathcal D_\alpha(X)&=\operatorname{Tr}(B_\alpha X)E_\alpha
+ +\operatorname{Tr}((I_3-B_\alpha)X)|f\rangle\langle f|.
+\end{aligned}
+\tag{90.1}
+$$
+
+对 $u=\varphi-\alpha$、$r(u)=|1-e^{iu}|$，它满足整个 circle 上的 bound
+
+$$
+0\le L_{\mathcal D_\alpha}(\varphi)-\eta
+ \le\min\{r(u)^2,\ 2\sqrt q\,r(u)\}.
+\tag{90.2}
+$$
+
+**证明。** 这里的 $\mathsf P_0,d,E_\alpha,f,U_0$ 与命题 86.3 完全相同：$B_\alpha$ 是 effect，(90.1) 是其已证明的 input-independent measure-and-prepare whole-qutrit CPTP realization，不是一个仅对单 effect 的形式选择。复用该命题的 actual identities
+
+$$
+\begin{gathered}
+a(u)=\operatorname{Tr}(E_\varphi E_\alpha)=1-h^2r(u)^2,\qquad
+\mathcal D_\alpha^\dagger(E_\varphi)=a(u)B_\alpha,\\
+\mathcal N^\dagger(B_\alpha)=Z_\alpha C_0Z_\alpha^\dagger,\qquad
+C_0=\begin{pmatrix}
+1-y&w/2&0\\w/2&(y+3d)/4&0\\0&0&\eta
+\end{pmatrix},\quad 0\le C_0\le I_3,\\
+L_{\mathcal D_\alpha}(\varphi)=\|a(u)C_0-E_u\|,\qquad
+\|C_0-E_0\|=\eta.
+\end{gathered}
+\tag{90.3}
+$$
+
+这些是明确 images 的 conjugation，不假设实际 channel $F$ phase covariant。原 quadratic proof (86.7) 在全部 $u$ 上给
+
+$$
+L_{\mathcal D_\alpha}(\varphi)-\eta\le B_qr(u)^2,
+\qquad B_q=\frac{h^2}{\eta+d}+\frac h2+h^2.
+$$
+
+它使用原 real center residual $[-\eta Q_\vartheta+d(I_2-Q_\vartheta)]\oplus\eta$ 的 imaginary Pauli perturbation；该 upper construction 不限制 lower bound 中的 complex competitors。现在 (88.4) 与 $\sqrt q\le1/20$ 给出绝对 bound
+
+$$
+B_q\le\frac12+\frac1{40}+\frac1{1000}
+ =\frac{263}{500}<1.
+$$
+
+另由 (90.3) 的三角不等式、$\|E_u-E_0\|=hr(u)$，
+
+$$
+\begin{aligned}
+L_{\mathcal D_\alpha}(\varphi)-\eta
+ &\le hr(u)+h^2r(u)^2\\
+ &\le(\sqrt q+2q)r(u)\le2\sqrt q\,r(u),
+\end{aligned}
+$$
+
+其中用了 $r(u)\le2$ 和 $2\sqrt q\le1$。两种 estimates 作用于同一个 actual map，给 (90.2)；非负性仍是 individual optimum。∎
+

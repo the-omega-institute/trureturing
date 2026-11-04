@@ -96,7 +96,7 @@ noncomputable def inverseMeasurePairing
     (nu : Measure Real) (phi : WeilTestFunction) : Complex :=
   ∫ xi : Real, fourierLaplace phi xi ∂nu
 
-private theorem cayley_circle_ne_one {a xi : Real} (ha : 0 < a) :
+theorem cayley_circle_ne_one {a xi : Real} (ha : 0 < a) :
     cayleyCircle a ha xi ≠ 1 := by
   intro h
   have hcomplex : cayleyCharacter a xi = (1 : Complex) := congrArg Subtype.val h

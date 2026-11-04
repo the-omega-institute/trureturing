@@ -40,7 +40,19 @@ $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\;
 
 Remark 1 of On Dynamical Measures of Quantum Information conjectures subadditivity on quantum states over time. Both dimensions are positive. The input is positive semidefinite with trace one, and the arbitrary finite Kraus family satisfies the completeness equation. ofKraus(K,K) is FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus, whose action is the sum of K_k X K_k adjoint. Thus the hypothesis gives a completely positive trace-preserving map. The bound uses ChenKatoBrandaoCMIRefutation.entropy: on Hermitian matrices it is PartialTraceMutualInformation.spectralEntropy, the sum of -lambda log |lambda| over the eigenvalues with multiplicity, including zero contributions at zero; its value on other matrices is zero. The bound compares this signed entropy of the two-time matrix with the entropies of the input and output states. Fullwood and Yang, arXiv:2608.28946v1, Section 6, also state the higher-dimensional question as open.
 
-**Theorem 1.4 (A five-level Werner–Holevo counterexample).**
+**Theorem 1.4 (Functional calculus of an affine projection).**
+
+$$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall Q \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; (\operatorname{IsHermitian}\left(Q\right)) \Rightarrow ((Q \cdot Q = Q) \Rightarrow (\forall f \in \mathbb{R} \to \mathbb{R},\; \forall a \in \mathbb{R},\; \forall b \in \mathbb{R},\; \operatorname{cfc}\left(f, \operatorname{smul}\left(a, (1:\operatorname{Matrix}\left(n, n, \mathbb{C}\right))\right) + \operatorname{smul}\left(b, Q\right)\right) = \operatorname{smul}\left(f\left(a\right), (1:\operatorname{Matrix}\left(n, n, \mathbb{C}\right))\right) + \operatorname{smul}\left(f\left(a + b\right) - f\left(a\right), Q\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.projection_cfc` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a Hermitian idempotent Q, the continuous functional calculus of a I + b Q is determined by f(a) on the complementary range and f(a+b) on the range of Q.
+
+**Theorem 1.5 (A five-level Werner–Holevo counterexample).**
 
 $$\neg claim$$
 
@@ -63,6 +75,7 @@ Let rho be the identity divided by five and use the ten Kraus operators (E_ij - 
 - Truth anchor: `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.claim`
 - Truth anchor: `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.jamio`
 - Truth anchor: `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.pdm`
+- Truth anchor: `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.projection_cfc`
 - Truth anchor: `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.result`
 - Dependency: [D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation](ChenKatoBrandaoCMIRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum](../QuantumChannels/ProductUnitaryChoiSpectrum.md)

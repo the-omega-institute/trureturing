@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92455c4f4301df9c49af0b022f52efa7069850d764cc88241937e3fcc1b24af4
+  normalized_sha256: sha256:92455c4f4301df9c49af0b022f52efa7069850d764cc88241937e3fcc1b24af4
+cas_ref: sha256:92455c4f4301df9c49af0b022f52efa7069850d764cc88241937e3fcc1b24af4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：以双商评价定义 E 操作并说明其删除重复标签的目的。
+    previous_atom_id: 5c2b33c6ea28c482861d1af315c537416ae48bf9e01ea3d4b56b3be405f0081f
+    next_atom_id: 1680c90a336294af50b83e669fa67857e060ee4e655580385c5cd353f5fe40d2

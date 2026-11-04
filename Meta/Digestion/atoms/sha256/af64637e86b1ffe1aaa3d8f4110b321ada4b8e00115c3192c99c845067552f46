@@ -1,0 +1,17 @@
+**Proposition 6.3 (continued-use and staged costs).** For a supplied subsequent word, each occurrence of an original source operation is still paid as such. The installed updater requires no additional ReadF calls. It can process a scalar parameter of binary length $B_m$ by reading all its bits and reducing it modulo $H$, with $O(B_mb^2+b^4)$ conservative local bit work. Each indexed addition update and current output can be computed in $O(b^4+\lambda)$ local bit work. Parameter delivery to the actual source, its arithmetic, and retention of the parameter or historical word are additional accounts.
+
+For the staged procedure of Theorem 5.3 the acquisition counts are, for its actual successful stages,
+
+$$
+\sum_j L_j\text{ paid reads},\qquad
+\sum_j L_j\ell_j\text{ original additions},\qquad
+0\text{ acquisition multiplications}.
+\tag{AQBR.28}
+$$
+
+Add the actual intervening source operations, their inputs, all local setup/update work and retained archives. No bound uniform in the number of stages, future word length or scalar input lengths follows from the finite public controller.
+
+**Proof.** Binary streaming modular reduction reads the entire supplied scalar. Use its residue in (AQBR.17)–(AQBR.19); extracting the necessary truncated factors and reducing the finite coordinates is bounded by the same school-arithmetic estimates as Theorem 6.2. The addition and output formulas use only known parameters and the acquired current label. Summing the actual counts from Theorem 3.1 over the finite stages gives (AQBR.28); no stage starts with a reset or another source. Historical tapes and arbitrarily many actual input parameters can grow without bound even though each fixed-$H$ procedure has finite code and bounded residue counters.
+
+The return construction requires no new source generator: it uses original additions and the declared paid port, while the scalar operations remain available for subsequent tasks. If $\eta_n$ is nonconstant on a shared-initialization $E$, at least one paid source read is necessary for entry identification in this interface. Without a read, every local computation and choice has the same accessible input on all entries of $E$, so its terminating output is constant. This proves that the nonconstant acquisition cannot be charged as mere public setup; it does not make the sweep's larger read or work bound optimal. $\square$
+

@@ -6,11 +6,11 @@
    utility: none
    digest: Short canonical words realize every coefficient pair on all rows and legal prefixes. -/
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Analytic.GoldenEulerBetaZeckendorf
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S1.Digit.GoldenZeckendorfLanguage
 import D5.S1.Digit.GoldenBase4TwentyStatePrefixBarrier
-import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 import Mathlib.Analysis.SpecialFunctions.Log.Base
 import Mathlib.Data.Nat.Log
 import Mathlib.Algebra.Order.Round
@@ -361,7 +361,7 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     rw [hr] at hbnd
     let x : IndependentWord (r + 1) := ⟨
       fun i => decide (i.val + 1 ∈ Nat.zeckendorf n), by
-        apply (D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true
+        apply (D5.S1.Words.AdmissibleWords.AdmissibleCount.adm_iff_no_adjacent_true
           _ _).mpr
         intro i j hij
         by_cases hmem : i.val + 1 ∈ Nat.zeckendorf n

@@ -1,0 +1,50 @@
+**Lemma 9.3 (full-world completions of short pure-$J$ histories).** Fix any countable collection $\mathscr C$ of word-matrix pairs $(w,C)$, each with at most $2m$ reads and at least one $M$. For each $1\le n\le m$ there is a set $E_n\subset\mathbb R^n$, a countable union of zero sets of nonzero real polynomials, with the following property. For every $y\notin E_n$ there is a whole world $\omega\in\mathcal W_d$ whose first $n$ reads on the pure-$J$ word are exactly $y$, and at which no pair in $\mathscr C$ succeeds on its own word.
+
+**Proof.** Use the full source chart (2.2) and world domain $\Omega_d$ in (2.3). By Theorems 3.1 and 4.3, no word in $\mathscr C$ admits a nonzero universal identity (2.1). For each pair successful at some world, Lemma 2.2 and the polynomial argument in Lemma 2.3 therefore supply a nonzero polynomial
+
+$$
+p_{w,C}(x,r,\beta,\delta)
+\tag{9.6}
+$$
+
+whose zero set contains all of that pair's successful worlds in $\Omega_d$. Pairs successful nowhere can be discarded. Let $B\subset\Omega_d$ be the union of these zero sets. Every success of a remaining pair lies in $B$; the collection defining $B$ is countable.
+
+For a pure-$J$ prefix, write
+
+$$
+a_i(x,r)=\operatorname{tr}(J^iP(x,r))
+=\begin{cases}
+1,&i\text{ even},\\
+(x+r)/(1+xr),&i\text{ odd}.
+\end{cases}
+\tag{9.7}
+$$
+
+These numbers are strictly positive for $x,r>0$. Let $L_0,\ldots,L_{n-1}$ be the Lagrange polynomials at the distinct original clocks $0,\ldots,n-1$, and let $q_n(t)=\prod_{i=0}^{n-1}(t-i)$. All full-domain gains compatible with a prescribed prefix $y=(y_0,\ldots,y_{n-1})$ have the unique form
+
+$$
+g(t)=\sum_{i=0}^{n-1}\frac{y_i-\delta}{a_i(x,r)}L_i(t)+q_n(t)h(t),
+\qquad \deg h\le m-n-1.
+\tag{9.8}
+$$
+
+For $n=m$ the final summand is absent and there are no $h$ coordinates. For $n<m$, $h$ has $m-n$ arbitrary real coefficients, including the zero choice. Formula (9.8) follows by subtracting the interpolant and dividing a polynomial vanishing at all $n$ nodes by $q_n$. Conversely every such formula has degree at most $m-1$ and produces exactly $y$ after multiplying by the factors (9.7) and adding the drift.
+
+Thus $(y,x,r,\delta,h)$ are rational coordinates for the full world domain, subject only to $x,r>0$ and the nonzero-polynomial condition $g\ne0$. For each fixed $y$, the permitted fiber coordinates $(x,r,\delta,h)$ form a nonempty open subset $D_y$ of Euclidean space. Openness follows from $g\ne0$. For nonemptiness, take $x=r=1$, take $h=0$, and choose $\delta\ne y_0$; then (9.8) is nonzero. These coordinates include all compatible worlds, rather than imposing a gain-degree, root, sign, or drift promise.
+
+Substitute (9.8) into each polynomial (9.6) and clear the positive source denominators. The result is a polynomial
+
+$$
+Q_{w,C}(y,x,r,\delta,h).
+\tag{9.9}
+$$
+
+It is nonzero: (9.8) parametrizes all of the nonempty open domain $\Omega_d$, so an identically zero result would force (9.6) to vanish on $\Omega_d$, contradicting its being a nonzero polynomial. Expand (9.9) in the fiber variables $(x,r,\delta,h)$ and select any nonzero coefficient polynomial $q_{w,C}(y)$. Define
+
+$$
+E_n=\bigcup_{(w,C)}\{y:q_{w,C}(y)=0\}.
+\tag{9.10}
+$$
+
+If $y\notin E_n$, every polynomial $Q_{w,C}(y,\cdot)$ is nonzero. Its zero set is nowhere dense in the nonempty open set $D_y$. By the Euclidean Baire principle used in Lemma 2.3, their countable union cannot cover $D_y$. A point outside that union gives a legal whole world with the stated prefix and outside $B$, proving the claim. No set defined by a protocol's decisions is assumed measurable or to have any other regularity. $\square$
+

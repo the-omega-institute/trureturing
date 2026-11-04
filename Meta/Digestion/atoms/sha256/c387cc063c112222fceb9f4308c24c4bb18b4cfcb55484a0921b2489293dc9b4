@@ -1,0 +1,80 @@
+**Equation 2.5 (`eq:lambda`).**
+
+$$
+\Lambda_G(D)=\epsilon(D)\prod_j X_{e(j),c(j)}.
+$$
+
+The sign compares each insertion cycle with [(2.1)](#eq-positive) and each
+retained trivalent cycle, via the rigidification, with $G$'s chosen cycle.
+These comparisons are literal three-cycle comparisons.
+
+We check *all* its local relations. AS is built into $\epsilon$.
+For CL on retained paths the two monomials and their signs agree. For CL
+in deleted trees the two sides still have a branching ordinary tree and
+both images are zero. For IHX, contraction and pruning supply an exhaustive
+classification, as follows.
+
+The contracted vertex has degree four before pruning, is not an anchor,
+and therefore, if retained, has degree $2,3$, or $4$. Every flag removed
+there leads into a tree containing no anchor and meeting the retained
+part only at that vertex. No such branch can return via another flag:
+that return would be a surviving cycle or path. Inserting the two-vertex
+resolution commutes with pruning away from this little tree. In
+particular this classification is invariant across the three resolutions,
+and is not inferred from the original resolution alone.
+
+If the contracted vertex disappears, the neighborhood is itself in a
+deleted rooted tree. Of its four exits at most one leads toward the
+surviving hull. At least three exits thus lead to ordinary leaves, through
+possibly larger rooted trees. Every resolution still contains branching
+ordinary leaves. Its three images are zero. This also covers a central
+edge wholly inside an already discarded tree.
+
+If $r=2$, there are two retained path directions and two deleted rooted
+branches. If either deleted branch has more than one ordinary leaf, it
+remains a branching attached tree in every resolution, so all images
+vanish. Otherwise the two branches are single ordinary legs. Two
+resolutions are the two successive insertions along that same retained
+path and the third is a cherry. Equation [(2.2)](#eq-cherry) shows that
+their images cancel. The retained directions can be paired to each
+other outside the neighborhood; this is the circle case and the same
+cycle comparison applies.
+
+If $r=3$, there is one discarded rooted branch. Again a branch with
+several leaves makes all three terms zero. A single leaf instead gives
+the three ways to move it past a retained core vertex. The cycles and
+signs are exactly [(2.4)](#eq-move); the image is a monomial multiple of
+$r_{v,c}$, with an immaterial overall sign.
+
+If $r=4$, all four directions survive. Both central endpoints in each
+resolution are retained trivalent vertices. This is a global skeleton
+IHX and no claim is made that its image belongs to the local ideal.
+These four cases exhaust the possibilities; arbitrary permutations of
+the port names preserve the calculation by the alternating-relator
+check following [(1.1)](#eq-ihx). Remote branches and insertions are common
+to the three terms and multiply their images by a common signed
+monomial, or make all three zero. This proves that $\Lambda_G$ is
+well-defined on the actual local quotient, without inventing relations.
+
+The composite $\Lambda_GN_G$ fixes every monomial class. Conversely a
+nonbranching diagram equals its normalized insertion graph by AS and CL,
+so $N_G\Lambda_G$ is the identity on it. On a branching diagram it is
+also the identity, since [(2.2)](#eq-cherry) has already made that diagram
+zero. These are the two inverse equations.
+
+For completeness the last algebra identification has an explicit
+description, rather than an extra graph assumption. Put
+
+$$
+H^1(G,A)=\mathbb{Q}^E/\delta\{f\in\mathbb{Q}^V:f|_A=0\},\qquad
+ (\delta f)_e=f(t(e))-f(s(e)).
+$$
+
+The quotient-polynomial map sends $X_{e,c}$ to the degree-one class of
+the edge cochain in the $c$th symmetric algebra. Its inverse sends a
+cochain class $[a]$ to $[\sum_e a_eX_{e,c}]$. Restricted coboundaries
+map to the specified vertex relations, so both maps are well-defined
+and their composites fix the generators. This proves the algebra
+identification in every multidegree, including zero degrees.
+$\square$
+

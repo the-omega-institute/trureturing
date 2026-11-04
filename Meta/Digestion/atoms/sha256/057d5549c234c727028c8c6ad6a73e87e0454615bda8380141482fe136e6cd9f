@@ -1,0 +1,74 @@
+## 3. The first interval and normalization
+
+For $k=1$, use the supplied dimension-four diagonal quadruple after adding
+the identity to every member:
+
+$$
+\begin{aligned}
+A_0=B_0&=\operatorname{diag}(1,2,2,3),\\
+A_1&=\operatorname{diag}(2,1,2,3),\\
+B_1&=\operatorname{diag}(1,2,3,2).
+\end{aligned}
+\tag{3.1}
+$$
+
+The unshifted quadruple is the diagonal witness
+$\operatorname{diag}(0,1,1,2)$,
+$\operatorname{diag}(1,0,1,2)$,
+$\operatorname{diag}(0,1,2,1)$, with $B_0=A_0$; adding $I$ to all four
+matrices preserves every word inequality by expanding each shifted word into
+words of the unshifted quadruple.  It also makes all entries positive.
+The individual spectra remain equal, and the sum spectra are
+
+$$
+\{3,3,4,6\}\quad\text{and}\quad\{2,4,5,5\}.
+$$
+
+Their power-sum difference is
+
+$$
+2\cdot3^p+6^p-2^p-2\cdot5^p
+=\Delta^2(x\mapsto x^p)(4)-\Delta^2(x\mapsto x^p)(2).
+\tag{3.2}
+$$
+
+The second derivative of $x^p$ is strictly decreasing for $1<p<2$; the
+double-integral formula for $\Delta^2$ makes (3.2) strictly negative on that
+whole interval.  At $p=1,2$ it is zero.  Thus (3.1) supplies the required
+$k=1$ instance, including equality at orders $1$ and $2$.
+
+The quadruples in (3.1) and (2.1) have a common trace on all four members.
+For (3.1) that trace is $8$.  For (2.1),
+
+$$
+\operatorname{tr}A_1=\operatorname{tr}B_1=(c+\tfrac12)N,
+$$
+
+and
+
+$$
+\operatorname{tr}A_0=\tau N+\frac r2N-cN-\frac12N
+=(c+\tfrac12)N,
+$$
+
+with the same value for $B_0$.  Multiplying all four matrices by the common
+positive scalar
+
+$$
+\gamma=\frac1{\operatorname{tr}A_0}
+$$
+
+makes every trace equal to one.  A word of length $\ell$ is multiplied by
+$\gamma^\ell$, so all word inequalities and spectral equalities survive;
+each sum is multiplied by $\gamma$, so the strict reversal (2.6) survives as
+well.  This proves the normalized form of every instance.
+
+The parity split in (2.3), the diagonal Schatten identity, and the scalar
+finite-difference argument are the reusable parity, diagonal, calculus, and
+word interfaces already represented by the repository's
+`ParityConditionedMoments`, `NonintegerForwardDifferenceSignal`,
+`DiagonalSingularValues`, `Holder`, and `WordHankelRealization` sources.  The
+dimension-four line (3.1) is the shifted supplied witness; the new content is
+the jointly realized family (2.1) for all higher intervals and the resulting
+exact boundary in Theorem 1.1.
+

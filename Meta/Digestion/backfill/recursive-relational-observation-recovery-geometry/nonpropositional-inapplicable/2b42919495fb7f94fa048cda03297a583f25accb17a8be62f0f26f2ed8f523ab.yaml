@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b42919495fb7f94fa048cda03297a583f25accb17a8be62f0f26f2ed8f523ab
+  normalized_sha256: sha256:2b42919495fb7f94fa048cda03297a583f25accb17a8be62f0f26f2ed8f523ab
+cas_ref: sha256:2b42919495fb7f94fa048cda03297a583f25accb17a8be62f0f26f2ed8f523ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定有限共同来源、历史、合法动作、响应纤维、终端费用及零费停止动作；全部是执行接口的模型条件，没有推出策略最优性或费用界。
+    previous_atom_id: 00f4ca757af3d109c7d16e5eca6f05a5e64804566713257b472c1f367e7f6a7b
+    next_atom_id: 679ceada8d655f86de115b2c991d68228aea99dc62fb65e7cb136efa153c1853

@@ -1,0 +1,67 @@
+**编者注 n08（Hadamard 配对的适用范围）。** 使用的标准 Hadamard 形式是：非零、阶至多一且在零处不为零的整函数可写成一次指数乘属一的典范乘积，零点按重数计，且平方倒数绝对可和；一般有限阶版本见 [Cobler–Lapidus §5.5，定理 30](https://arxiv.org/pdf/1705.06222v4)，这里只引用该节复分析定理，不使用其其他算子构造。Suzuki §2.2 用此形式处理实际 $\xi$。对这里的实整函数 $E$，共轭零点的重数相等。竖条界给出 $|\Re(1/\lambda)|\le A/|\lambda|^2$，故属一指数可在共轭对内收集为收敛的一次指数；实零点在紧区间 $[-A,A]$ 内仅有限个，且无零点 $0$。这给出（2.8）的正规收敛和实数 $d$，并非从“一阶”直接推得未配对的属零乘积。
+
+<!-- editorial-note: n08 end -->
+
+由 $E$ 的阶不超过一，
+
+$$
+\sum_{\lambda:E(\lambda)=0}|\lambda|^{-2}<\infty.
+$$
+
+又因零点实部有界，
+
+$$
+\sum_{\Im\lambda>0}
+\left|\Re\frac1\lambda\right|<\infty.
+$$
+
+所以 Hadamard 乘积可以按共轭零点配对，写成
+
+$$
+E(z)
+=
+E(0)e^{dz}
+\prod_{\lambda\in\mathbb R}
+\left(1-\frac z\lambda\right)
+\prod_{\Im\lambda>0}
+\left(1-\frac z\lambda\right)
+\left(1-\frac z{\bar\lambda}\right),
+
+$$
+
+<a id="eq-2-8"></a>
+
+(2.8)
+
+其中 $d\in\mathbb R$，实零点只有有限个。
+
+配对后的正规收敛来自
+
+$$
+\left(1-\frac z\lambda\right)
+\left(1-\frac z{\bar\lambda}\right)-1
+=
+-2z\Re\frac1\lambda+\frac{z^2}{|\lambda|^2}.
+$$
+
+在 $E(-z)/E(z)$ 中：
+
+- 虚轴上的共轭因子自动相消；
+- 左右镜像共有的因子相消；
+- 剩余左半平面零点给分子 Blaschke 因子；
+- 剩余右半平面零点给分母 Blaschke 因子。
+
+因此先得到
+
+$$
+C(z)=e^{-2dz}\frac{B_+(z)}{B_-(z)}.
+
+$$
+
+<a id="eq-2-9"></a>
+
+(2.9)
+
+<!-- editorial-note: n09 begin -->
+<a id="n09"></a>
+

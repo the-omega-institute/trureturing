@@ -1,0 +1,91 @@
+**Theorem 23.1 (acquired physical ancestor and exact semantic fiber).**
+In Definition 22.1's arbitrary-original domain, let $U$ be the authentic
+original written in its actual physical branch order. One common
+effective presence-only procedure acquires and retains $(U,k,n)$ with
+zero updates. For a fixed complete current physical presence service
+and the same authentic interval, the entire semantic target fiber is
+
+$$
+ \{(v,k,n):[v]=[U]\}.
+ \tag{GPO.64}
+$$
+
+Define the unordered-invariant integer $a$ by
+
+$$
+ a(\alpha)=a(\beta)=0,\qquad
+ a(\langle s,t\rangle)=a(s)+a(t)+\mathbf1_{[s]\ne[t]}.
+ \tag{GPO.65}
+$$
+
+There are exactly $2^{a(U)}$ different semantic originals in (GPO.64).
+The fiber is a singleton exactly for perfect monochromatic originals,
+including either single labelled leaf. On every nonsingleton fiber,
+uniform recovery of the original semantic Read/applyRho task from this
+service fails even with arbitrarily many adaptive forward updates.
+The positive acquisition and the negative semantic conclusion concern
+the same full realization class.
+
+Proof. First acquire the finite current physical shape $X$ by a stack
+traversal. Its root is known present. At each confirmed node $p$, pay
+Read$(pa)$; this bit classifies branch versus leaf in a full binary
+tree. Schedule $pa,pb$ only on a branch. Each actual node is visited
+once and stack exhaustion terminates without a size or height oracle.
+Now apply $D_{\rm loc}$, erase the decoded labels, and repeat until
+the first decoded leaf count is at most $B$.
+
+For decoding stage $j\le k$, Theorem 22.2 gives precisely the actual
+physical version of $\rho^{2(k-j)}u$. Its leaf count is at least
+$2^{k-j}n$, using ABT39.1's two-step growth. At every $j<k$ it is
+at least $2n\ge2A>B$, whereas at $j=k$ it is $n\le B$.
+Even the initial count exceeds $B$. Thus the first crossing is exactly
+$k$, no parse past the authentic original is attempted, and the
+returned labels and physical branch order are exactly $U$. All parsing,
+counting and comparisons use finite acquired strings and public advice.
+Actual retained writes make $(U,k,n)$ readable on this same run.
+
+Any alternative realization with the same complete physical presence
+service gives the same $X$, and this deterministic decoding/crossing
+gives the same $U,k,n$. Its semantic original is therefore in $[U]$.
+Conversely, fix any ordered $v$ with $[v]=[U]$. A rooted
+label-preserving unordered isomorphism assigns local frames at its old
+branches so its physical original is exactly $U$. Follow corresponding
+leaves through each actual update: matched alpha leaves become matched
+beta leaves; matched beta leaves create corresponding beta/alpha
+children. Choose their local birth frames to match the physical
+placements of the original realization. Old branches keep their
+frames. Induction realizes the same complete labelled physical tree
+at entrance, not just the same marginal shape, with semantic original
+$v$ and the same authentic $k,n$. This proves both directions of
+(GPO.64).
+
+Let $E(W)$ count ordered labelled representatives of an unordered
+class $W$. A leaf has $E=1$. A branch with distinct child classes
+$X,Y$ has $E=2E(X)E(Y)$, because their two physical positions are
+distinct choices. With equal child classes it has $E=E(X)^2$:
+every ordered pair of representatives occurs, and there is no
+additional exchange factor. Induction proves $E([U])=2^{a(U)}$.
+For $a(U)=0$, every branch has isomorphic children and both have
+zero $a$. Inductively they are perfect monochromatic trees of the
+same height and colour. This proves precisely the singleton
+classification, with its converse immediate from (GPO.65).
+
+For persistence of ambiguity, take any two different ordered originals
+in (GPO.64) with the matched labelled physical entrance trees just
+constructed, and common accessible initialization. After entrance choose
+the same physical rule, for example beta always placed at $a$, at every
+matched new birth in both realizations. This is a legal actual choice
+sequence; it needs no changing adversary or future oracle. Equal
+physical labelled trees then give equal physical presence replies and
+equal labelled successors under each update. Induction on the full
+accessible actions gives identical requests, acquired records, local
+control, acknowledgements, stopping and outputs for every finite
+adaptive controller. Even granting full future physical labels would
+leave this pair indistinguishable. The different semantic originals
+have different four-valued replies at some original semantic address,
+by the finite-tree distinction in Proposition 6.3. Hence no uniformly
+correct acquired adapter can serve all those original continuations.
+This is fiberwise identifiability; it does not deny that a constant
+program can name one source on a separately promised singleton input.
+$\square$
+

@@ -1,0 +1,12 @@
+**Definition 71.1 (four data meanings and their exact domains).** Fix the
+actual opaque root binding, orientation, current authority and the
+source/adapter contract. At a synchronized outer Ready cut with physical
+term $u=J(v)\in\mathcal I$, define the following data using the original
+source meanings of AA §17:
+
+| View | Independently specified content |
+| --- | --- |
+| Space | Actual material address support $S_0(C(u))$, with source edges only |
+| Boundary | Actual terminal-material address antichain $B_0(C(u))$, including beta markers |
+| Time | Actual labelled successful-source causal lifecycle order $E(u)$ of AA Definition 17.1 |
+| Memory | The acquired live canonical word $v$ at the retained callable entry |

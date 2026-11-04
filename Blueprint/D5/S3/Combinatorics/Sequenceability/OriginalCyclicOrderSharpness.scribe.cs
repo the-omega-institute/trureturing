@@ -1,0 +1,22 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Sequenceability;
+
+internal sealed class OriginalCyclicOrderSharpnessDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite cyclic labels attain the original all-support component bound at every finite order.",
+        H("Cyclic sharpness of the finite-order component bound"), Blocks(
+            Describe.Lean(
+                DescribeId.Create("cyclic-order-sharpness"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/OriginalCyclicOrderSharpness.sharpness"),
+                H("A cyclic extremal family for every order"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural m at least two, set L = 2^m and G = ZMod(m*L). This label group is finite and cyclic. Reuse exactly the original coordinates J = Fin(m-1), Coordinate = Option J summed with Option J, q = inl none, p = inr none, a_j = inl (some j), and b_j = inr (some j); Y contains all original coordinates. Assign q the label L, p the label 2^(m-1), a_j the label 2^j, and b_j the label -2^j-L, all interpreted in G. The labeling is injective and nonzero, q belongs to Y, and its label has additive order exactly m.")),
+                    Paragraph(Text("Reduction modulo L proves injectivity without a sign assumption: the natural residues are zero for q, 2^(m-1) for p, 2^j for a_j, and L-2^j for b_j. The a residues lie strictly between zero and L/2, and the b residues lie strictly between L/2 and L. Strict monotonicity of powers of two separates indices in each class. The order formula for a natural element of ZMod gives order m for q, which also proves its nonzero label; all other labels have positive residues below L.")),
+                    Paragraph(Text("To classify a coefficient-one zero support C, let epsilon be the membership bit of q, k the number of selected b indices, A the binary sum of the selected a indices together with the top bit m-1 when p is selected, and B the binary sum of the selected b indices. The actual zero equation gives A + epsilon*L = B + k*L in G. Both A and B are less than L. Reduction modulo L therefore gives A = B as natural numbers. Mathlib's injectivity theorem for binary subset sums identifies the digit sets: p is absent, and a_j belongs to C exactly when b_j does. Canceling the equal digit sums in the original equation gives epsilon*L = k*L in G. Since epsilon and k are both less than m, their multiples of L are below m*L and have equal natural representatives, so k = epsilon. Nonemptiness forces k = epsilon = 1. Thus every nonempty zero support is exactly one triple {q,a_j,b_j}, and every such triple has zero sum.")),
+                    Paragraph(Text("Let E consist of all proper original inclusion-minimal nonempty zero supports in Y. The complete zero-support equivalence identifies E with the entire support family from OriginalFiniteOrderSharpness, rather than with a selected subfamily. Consequently E has m-1 elements, each contains q, and different punctures after deleting q are disjoint. The original sentinel p keeps each triple proper, including the boundary m = 2. The argument applies equally to composite m; no primality hypothesis occurs.")),
+                    Paragraph(Text("Count the image of the canonical supportIntersectionGraph E q connected-component map on all q-containing vertices. Equality of the complete support families transports the existing lower bound m-1. The theorem OriginalFiniteOrderComponentBound.q_containing_component_card_lt applies directly to these cyclic labels and this full family, because m annihilates the label of q, and gives a count strictly less than m. Hence the actual count is exactly m-1. This strengthens attainment in finite abelian groups to attainment in explicit finite cyclic groups while preserving the original coordinates, injectivity, nonzero labels, and the all-support convention.")),
+                    Paragraph(Text("The proof reuses OriginalFiniteOrderSharpness for the original coordinate definitions and support-graph lower bound. Binary subset-sum uniqueness is supplied by Mathlib.Combinatorics.Colex. No literature novelty, good-ordering, or infinite-order conclusion is asserted.")))))));
+}

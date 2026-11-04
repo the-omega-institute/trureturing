@@ -1,0 +1,62 @@
+**Theorem 8.2 (Exact two-moment relaxation at $r=9$).** Consider probability laws on pairs $(K,U)$ with integer $1\le K\le10$, real $U\ge K$, and
+
+$$
+\mathbb E K=8,\qquad \mathbb E U=10.
+$$
+
+The exact infimum, attained by such a law, is
+
+$$
+\min\mathbb E(KU^2)=516+16\sqrt{63}<648=2F_9(8).\tag{8.3}
+$$
+
+An attaining law, with $h=4\sqrt{63}$, is
+
+$$
+\begin{array}{c|ccc}
+(K,U)&(1,1+h)&(8,8)&(9,9)\\ \hline
+\mathbb P&2/h&1-16/h&14/h.
+\end{array}\tag{8.4}
+$$
+
+There is also a wholly rational feasible law
+
+$$
+\begin{array}{c|ccc}
+(K,U)&(1,33)&(8,8)&(9,9)\\ \hline
+\mathbb P&1/16&1/2&7/16
+\end{array}
+$$
+
+with objective $643<648$. Neither law is induced by a genuine profile on $[10]$ through Definition 1.1.
+
+**Proof.** Here $a=8$, $D=217$, $C=1224$, $f_9(8)=512$ and $\kappa_9=2+8\sqrt{63}=2+2h$. The pointwise scalar inequality (2.1), which was proved for all integer $k\ge1$ and all $u\ge k$, integrates over any law in this relaxed problem to give
+
+$$
+\mathbb E(KU^2)\ge(217-\kappa_9)8+\kappa_9\,10-1224
+=516+16\sqrt{63}.
+$$
+
+This is weak duality proved simply by integrating a pointwise inequality; it invokes no strong-duality or joint-realizability theorem.
+
+Since $h>16$, all three probabilities in (8.4) are positive and sum to one. Direct summation gives $\mathbb E K=8$ and $\mathbb E U=10$. Equality holds in the scalar support inequality at each atom: at $K=1$, $U=\kappa_9/2=1+h$, while $K=8,9$ are the two integer zeros with $U=K$. Its objective is therefore the lower bound, proving attainment. It is strictly less than $648$ because $16\sqrt{63}<132$, equivalently $63<(33/4)^2$. The rational law has means
+
+$$
+\frac{1+64+63}{16}=8,\qquad
+\frac{33+64+63}{16}=10,
+$$
+
+and objective
+
+$$
+\frac{1089}{16}+\frac{512}{2}+\frac{7\cdot729}{16}=643.
+$$
+
+For nonrealizability, either law assigns positive mass to $(K,U)=(8,8)$. If induced by a genuine finite array, some positive-mass eight-element type $T$ would satisfy
+
+$$
+8=U_T=\sum_{i\in T}y_i^{-1},\qquad y_i^{-1}\ge1.
+$$
+
+Every one of these eight marginals would equal one. Every positive-mass type would then contain all these eight elements, forcing $K\ge8$ almost surely. This contradicts the positive mass at $K=1$. The positive mass at $(K,U)=(9,9)$ also violates (2.2), since $q=8$ requires $U\ge81/8>9$ on every nine-element type of any actual array. Thus both laws exhibit the insufficiency of the relaxed moment constraints. They provide no genuine-array counterexample, and the exact relaxed optimum (8.3) coexists with the strictly larger actual-array bound of Theorem 2.3. ∎
+

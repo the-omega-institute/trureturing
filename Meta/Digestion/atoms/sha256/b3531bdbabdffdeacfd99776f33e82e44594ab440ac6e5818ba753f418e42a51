@@ -1,0 +1,52 @@
+**Theorem 5.2 (scope of the lower arguments and of the finite-state comparison).**
+The deterministic actual-prefix certificates of Uniform Report
+Designs, Lemma 31.3, do not give a lower bound $P/2$ for all
+private strategies in (4.16). The randomized value in
+Recursive Relational Observation Affine Finite Reply Recovery,
+Theorem 19.2, is not an instance of (1.5): both its observation
+port and its retained-state restriction differ.
+
+**Proof.** Lemma 31.3 supplies finitely many complete worlds and
+selects a pair according to a deterministic strategy's branch.
+After fixing a seed, the same conclusion may be applied, but its
+selected pair can depend on that seed. If $L_k(\omega)$ denote
+the losses on that finite set of worlds, the resulting assertion
+has the form
+
+$$
+\forall\omega\quad \max_k L_k(\omega)\ge P/2.
+\tag{5.4}
+$$
+
+Integration gives a bound on $\mathbb E\max_k L_k$, whereas
+the required fixed-world assertion concerns $\max_k\mathbb E L_k$.
+The inequality between these quantities goes in the other direction:
+$\max_k\mathbb E L_k\le\mathbb E\max_k L_k$.
+Theorem 4.2 moreover exhibits an admissible private strategy with
+worst-world expected risk strictly below $P/2$, so the proposed
+universal lower bound itself is false on (4.16). This does not
+invalidate the original deterministic certificates. In contrast,
+the full-grid pair in (3.5) is the same pair for every seed and
+gives a pointwise sum inequality on its two fixed worlds, which
+can be integrated as (3.6).
+
+For the other comparison, see
+[Recursive Relational Observation Affine Finite Reply Recovery, Definitions 19.1 and 19.3 and Theorem 19.2](RECURSIVE_RELATIONAL_OBSERVATION_AFFINE_FINITE_REPLY_RECOVERY.md).
+Its source includes discrete deliveries $k_i$ satisfying
+$|k_i/256-y_i|\le1/256$; the receiver acquires canonical finite
+frames with those integer payloads, not exact-real $y_i$ ports.
+It also has, for each receiver, a fixed finite complete usable
+state space $Q$ at all handoffs. All future-usable records,
+control, past random information and final operands factor
+through $Q$; its final kernel depends on the last state and
+public operands rather than an accessible full transcript.
+Neither restriction is present in Definition 1.2. An arbitrary
+private seed and every acquired exact-real history may remain
+accessible here. Changing only memory would still leave the
+quantized-port discrepancy, and changing only ports would still
+leave the complete-finite-state discrepancy. The value $5/2$
+from that different experiment therefore supplies no value for
+(1.5). None of the proofs above invokes its finite-state lower
+argument, a general Yao principle, or an unverified minimax
+exchange. $\square$
+

@@ -1,0 +1,30 @@
+**Definition 43.1 (selected determinant and feedback displacement).**
+Retain the original domain $\mathcal K=\operatorname{Dens}_2\times U(4)$,
+ordinary transpose, joint distance (39.1), both optimizer signs, and
+one common scalar feedback phase. The phase domain is exactly
+$\mathcal K_{\mathrm{ph}}$ of Definition 42.1, with arbitrary normalized
+positive effects. All of $w,A,B,P,Q,u,v$ refer to the same actual
+$w=\operatorname{diag}(UU_+^\dagger)$.
+For $0<\xi<4$ put
+
+$$
+\begin{aligned}
+ t&=\xi/2,& \delta_\xi&=\delta_\circ(t),&
+ x_\xi&=1-\delta_\xi/2,&y_\xi&=\sqrt{1-x_\xi^2},\\
+ q_\xi&=t-\delta_\xi,&p_\xi&=1-q_\xi,&
+ D_{\mathrm{sel}}(\xi)&=\mathscr D(x_\xi,p_\xi),\\
+ \mathscr U_\xi&=\{U:(E,U)\in\mathcal G_\xi\},&
+ d_U(U,\xi)&=\operatorname{dist}_{\mathrm F}(U,\mathscr U_\xi).
+\end{aligned}
+\tag{43.1}
+$$
+
+Here $\mathscr D$ is precisely (36.43); its second argument specifies
+$p$, with $q=1-p$. The scalar selector, $N$, $V=N+\kappa\xi$ and
+$\mathcal G_\xi$ are unchanged. Theorem 37.5 gives
+$0<x_\xi,y_\xi,p_\xi,q_\xi<1$. The auxiliary displacement $d_U$
+measures proximity to both full selected scalar orbits. It does not
+replace any summand or minimization in the original distance $\rho$.
+In particular the phase orientation $\tau$ below is not the optimizer
+sign $\sigma$ in that distance.
+

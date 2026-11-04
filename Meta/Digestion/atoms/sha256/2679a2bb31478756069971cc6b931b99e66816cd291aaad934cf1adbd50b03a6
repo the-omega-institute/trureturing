@@ -1,0 +1,9 @@
+**Open question 10.4 (Exact pointwise analytic error).** For each admissible $a,b$ and each fixed $x\in[-1,1]$, determine
+
+$$
+\sup_{g\in\mathscr E_2(\mathbb D)}
+\left|g'(x)-\frac{g(a+ib)-g(a-ib)}{2ib}\right|,
+$$
+
+and hence the exact analytic Kallioniemi set of that pair. Theorem 9.5 determines the supremum of this quantity over the interval and supplies a quadratic attaining it at a far endpoint, but does not determine every pointwise value. In particular the exact pointwise supremum at $x=1$ on the grids $W_d$ is not identified by the quartic lower bound of Section 8.
+

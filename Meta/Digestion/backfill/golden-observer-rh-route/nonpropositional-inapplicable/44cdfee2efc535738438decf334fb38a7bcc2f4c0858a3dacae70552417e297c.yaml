@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:44cdfee2efc535738438decf334fb38a7bcc2f4c0858a3dacae70552417e297c
+  normalized_sha256: sha256:44cdfee2efc535738438decf334fb38a7bcc2f4c0858a3dacae70552417e297c
+cas_ref: sha256:44cdfee2efc535738438decf334fb38a7bcc2f4c0858a3dacae70552417e297c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 每个 theorem 独立模块是组织规则，未声称某模块定理成立。
+    previous_atom_id: 7be77a29b219f2e75d1e1cdf0a6762688279d05651024515a24afefe0b9e2b9b
+    next_atom_id: b0b8b44a8b855bfbeeefa438a1cefccd8deabb3b9dff125b01634c3e76d274cc

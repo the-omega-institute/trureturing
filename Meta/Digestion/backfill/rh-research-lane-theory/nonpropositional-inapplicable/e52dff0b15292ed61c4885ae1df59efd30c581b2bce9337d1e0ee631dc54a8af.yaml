@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e52dff0b15292ed61c4885ae1df59efd30c581b2bce9337d1e0ee631dc54a8af
+  normalized_sha256: sha256:e52dff0b15292ed61c4885ae1df59efd30c581b2bce9337d1e0ee631dc54a8af
+cas_ref: sha256:e52dff0b15292ed61c4885ae1df59efd30c581b2bce9337d1e0ee631dc54a8af
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: GenuineModelDualTransport 的脚本、诊断计数与未执行内核检查的范围说明。
+    previous_atom_id: 183241d32d97c81f32bb1c9a88bcb392b33e9c936a4db9310159d9fc1ae382f7
+    next_atom_id: 45da4e6e5891fcda108921b95e7fe2a70c58e0beafe8ea9d77522f4fd42ce92a

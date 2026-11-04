@@ -1,0 +1,4 @@
+**命题 79.2（一个 transverse algebraic intersection 不产生双 collision）。** supplier Theorem 2.2 的 actual acquired off-$24$ base $(p^*,v^*)$ 有 transverse、locally isolated common regular terminal-index zero，却不在 $D_J\cap D_M$。其原完整 child 有恰好三个 legal worlds，两个 terminal maps 各自 injective。
+
+**证明。** 直接使用该定理的 complete three-world enumeration 与 strict-real lifting。构成 common index zero 的共同代数 label 违反 $b>0,0<r<1$；它不是实际 world。定理对整个 child（包括其 zero-safe branches）的穷尽性与两响应的 injectivity，排除了另一组合法 collision pairs。无需重现其 rational boxes、resultants 或 interval certificates。∎
+

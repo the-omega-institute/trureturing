@@ -10,6 +10,20 @@ internal sealed class OriginalMaximumPurePacketsDocument : IScribeDocumentDefini
         "Full original integer maximality is equivalent to all legal pure packet comparisons.",
         H("Original Maximum: Complete Pure Packets"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("original-legal-integer-clock"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalMaximumPurePackets.legal_clock"),
+                H("Every legal integer has clock greater than one"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive natural p and n>=1 with 5040*p dividing n, 1<log(n). The complete mandatory floor alone proves this statement. OriginalPrimeSourceOrder uses it at the legal opposite-class exchange competitors."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-strict-loglog-rectangle"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalMaximumPurePackets.strict_loglog_rectangle"),
+                H("Strict log-log curvature on a balanced rectangle"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For real a,b,c,d with 1<a, a<b, a<c and a+d=b+c, log(log(a))+log(log(d))<log(log(b))+log(log(c)). The balance also places d in the positive-log domain. The legal two-prime exchange in OriginalPrimeSourceOrder consumes this existing strict rectangle."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The finite Euler min/max identity is AVB10 in the repository's "
                 + "Library/ArithSums/nicolas2025comparison.md. The pure-packet "

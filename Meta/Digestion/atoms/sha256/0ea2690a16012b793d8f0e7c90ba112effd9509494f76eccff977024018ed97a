@@ -1,0 +1,11 @@
+**Corollary 6.3 (Exact mean number of completed gaps).** For each $i=0,1$,
+
+$$
+\mathbb E_{i,q}N
+=\frac Ld(1-2e_i)
+=\frac{2L}{\Delta(q)}(1-2e_i).
+\tag{6.12}
+$$
+
+Proof. The coordinate in (6.5) is bounded by $L$ in absolute value and converges almost surely to $V_N$. Bounded convergence on its left side and monotone convergence on its right side give $\mathbb E_iV_N=d\mathbb E_iN$. Under either proof sign, the correct label has $V_N=L$ and the wrong label has $V_N=-L$. Hence $\mathbb E_iV_N=L(1-2e_i)$, proving (6.12). Finite mean was established before taking this limit. Positivity also follows since $e_i\le\alpha<1/2$. No independence of $N$ from gaps or marks is used. $\square$
+

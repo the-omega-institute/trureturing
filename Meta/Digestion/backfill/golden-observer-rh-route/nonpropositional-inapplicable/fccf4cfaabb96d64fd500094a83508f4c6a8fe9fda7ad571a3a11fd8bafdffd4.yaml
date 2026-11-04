@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fccf4cfaabb96d64fd500094a83508f4c6a8fe9fda7ad571a3a11fd8bafdffd4
+  normalized_sha256: sha256:fccf4cfaabb96d64fd500094a83508f4c6a8fe9fda7ad571a3a11fd8bafdffd4
+cas_ref: sha256:fccf4cfaabb96d64fd500094a83508f4c6a8fe9fda7ad571a3a11fd8bafdffd4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Recommended construction and acceptance order; imperatives do not assert the listed targets as proved.
+    previous_atom_id: 029ffe9f3a74a6301893fa146c9a01df70d84dbe993d72daa1700a51c7fa7b5c
+    next_atom_id: b299b0ad5625c5c10bd8db01dcf8cb522240f14306a6723844a4bf59cdfcf72f

@@ -1,0 +1,74 @@
+**Proposition 41.1.** On exactly (29.1), let $k=d=0$ and
+
+$$
+               y^{\rm E}=(0,5/2,3/2,1/2,3/2),\qquad\delta=1.
+ \tag{41.1}
+$$
+
+Then $\mathcal W_1(y^{\rm E})$ is nonempty,
+
+$$
+ \operatorname{dist}_\infty(y^{\rm E},\mathcal E_{12})=1,\qquad
+ \operatorname{dist}_\infty(y^{\rm E},\mathcal E_{21})=9/8.
+ \tag{41.2}
+$$
+
+Every approximant in $\mathcal E_{12}$ within radius one has
+
+$$
+                F\in[1/2,1],\qquad Q=3/2-F\in[1/2,1].
+ \tag{41.3}
+$$
+
+Nevertheless every actual compatible source is bounded. More explicitly, for all compatible whole worlds,
+
+$$
+ b\le5/6,\qquad \|P\|_{\max}\le1,\qquad
+                  -3\le h\le-1/2,\qquad -1/2\le D\le4.
+ \tag{41.4}
+$$
+
+Both finite tests of Theorem 40.1 therefore fail.
+
+**Proof.** Nonemptiness is witnessed by
+
+$$
+ P=\begin{pmatrix}99/100&9/100\\11/100&1/100\end{pmatrix},
+                  \qquad H=-1,\qquad D=2.
+ \tag{41.5}
+$$
+
+The source is strictly positive, trace one and determinant zero. Using the same triple at all five original clocks, (29.5) gives the noiseless vector
+
+$$
+                  z=(1,179/100,79/100,69/100,69/100).
+$$
+
+The errors $y^{\rm E}-z=(-1,71/100,71/100,-19/100,81/100)$ all have magnitude at most one.
+
+For $\mathcal E_{12}$, coordinates $1$ and $3$ of every approximant are equal. Their received difference is two, proving the lower bound one. At radius one their common value must be $3/2$, hence $F+Q=3/2$. The clock-$0$ constraint gives $F\in[-1,1]$, and the clock-$4$ constraint gives $3-F\in[1/2,5/2]$. These are exactly $F\in[1/2,1]$; the clock-$2$ constraint is then automatic. This proves attainability and the entire nonzero contact-gain interval (41.3).
+
+For $\mathcal E_{21}$ every approximant $w$ satisfies $2w_1-w_0-w_3=0$. Its value on $y^{\rm E}$ is $9/2$, and the sum of the absolute coefficients of this functional is four, giving distance at least $9/8$. The choice $F=9/8,Q=1/4$ has residual
+
+$$
+ y^{\rm E}-(F+VQ)=(-9/8,9/8,1/8,-9/8,1/8),
+$$
+
+and attains the bound.
+
+For actual compatibility, use $P$ as in (30.5) and one whole $h\ne0,D$. The constraints give $z_3\le3/2\le z_1$. But the exact same-source contrast in (29.5) is
+
+$$
+                 z_3-z_1=h(1+v-t).
+ \tag{41.6}
+$$
+
+Its factor is strictly positive, so $h<0$. Also $z_1-z_0\ge1/2$, whence
+
+$$
+                (-h)(1-b)=h(b-1)=z_1-z_0\ge1/2.
+ \tag{41.7}
+$$
+
+Since $b>0$ and $h=z_2-z_1\ge(1/2)-(7/2)=-3$, it follows that $-h\ge1/2$ and $1-b\ge1/6$. This proves the stated gain and $b$ bounds. The diagonal entries are below one and both off-diagonal entries are below $b$, giving the source bound. Finally $D=z_0-h$, $z_0\in[-1,1]$, gives its interval in (41.4). This nonempty bounded contact does not rely on an auxiliary contact gain vanishing. $\square$
+

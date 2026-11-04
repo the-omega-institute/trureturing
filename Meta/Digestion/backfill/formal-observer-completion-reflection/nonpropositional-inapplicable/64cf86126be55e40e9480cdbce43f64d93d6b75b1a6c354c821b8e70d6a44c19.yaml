@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:64cf86126be55e40e9480cdbce43f64d93d6b75b1a6c354c821b8e70d6a44c19
+  normalized_sha256: sha256:64cf86126be55e40e9480cdbce43f64d93d6b75b1a6c354c821b8e70d6a44c19
+cas_ref: sha256:64cf86126be55e40e9480cdbce43f64d93d6b75b1a6c354c821b8e70d6a44c19
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：设定共同参数空间上的两个概率实验及输出分布记号。
+    previous_atom_id: d21d898f7e6870ff58762ac180c008e77612d821a2a6ab7177f3571d0555d16a
+    next_atom_id: b7b219a6b3afe2a8b2113f8d742114a5fc39cdd39e9b4913c23c9dffcda4971b

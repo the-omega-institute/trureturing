@@ -1,0 +1,40 @@
+**推论 19.2（固定全点对电阻的唯一原始等号向量）。** 对每个 $R_0>0$，
+
+$$
+\max_{\substack{c_i>0\\ R(c)=R_0}}\lambda_2(L(c))
+=\frac{35}{2R_0},
+\tag{19.3}
+$$
+
+且唯一的带标号最大向量为
+
+$$
+c_0=c_1=c_2=c_3=c_4=c_5=\frac{35}{2R_0}.
+\tag{19.4}
+$$
+
+对每条满足 $R(c[k])=R_0$ 的有限严格正原始电导序列，
+$\lambda_2(L(c[k]))\to35/(2R_0)$ 当且仅当
+$c[k]\to(35/(2R_0))(1,1,1,1,1,1)$。
+
+**证明。** 由 (18.6) 及 $R(c)=R_0$，有
+$\lambda_2(L(c))\le35/(2R_0)$。令每条边电导为
+$35/(2R_0)$；由 $R(\mathbf1)=35/2$ 及缩放律，其总电阻为 $R_0$，
+并取到右端。等号时 (18.7) 给出唯一性，且保留原始标签。
+
+对任意 $R(c[k])=R_0$ 的有限严格正原始电导序列，置
+$\gamma=35/(2R_0)$，则
+
+$$
+\lambda_2(L(c[k]))\longrightarrow\gamma
+\quad\Longleftrightarrow\quad
+c[k]\longrightarrow\gamma(1,1,1,1,1,1).
+\tag{19.5}
+$$
+
+左向右时，$\lambda_kR(c[k])\to35/2$，定理 19.1 给出
+$c[k]/\lambda_k\to\mathbf1$；乘以 $\lambda_k\to\gamma$ 即得右式。
+右向左时，Laplacian 特征值的连续性及
+$\lambda_2(L(\gamma\mathbf1))=\gamma$ 给出左式。
+这是每条可行序列的充要条件，不另加有界性或尺度假设。证毕。
+

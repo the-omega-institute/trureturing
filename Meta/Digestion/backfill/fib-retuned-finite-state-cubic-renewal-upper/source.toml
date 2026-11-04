@@ -1,0 +1,5 @@
+source_id = "fib-retuned-finite-state-cubic-renewal-upper"
+path = "docs/develop/theory/FIB_RETUNED_FINITE_STATE_CUBIC_RENEWAL_UPPER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

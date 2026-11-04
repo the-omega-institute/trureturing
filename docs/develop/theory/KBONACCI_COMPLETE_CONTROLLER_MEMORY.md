@@ -534,3 +534,51 @@ Definition 40.1 supplies the complete finite-controller convention, total initia
 The mature identification and compatibility methods are those cited in Section 40. E. F. Moore, [*Gedanken-Experiments on Sequential Machines*, printed pp. 129–131](https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf), treats identification of an unknown beginning state and destructive failure. Petra van den Bos and Frits Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, Section 4, Definition 11 and Figure 3](https://arxiv.org/html/1907.11034v2), provide adaptive completed-trace and irreversible-merger semantics. A. Larrauri and R. Bloem, [arXiv:2105.10292v2, Section 5, Theorem 4](https://arxiv.org/html/2105.10292v2), supply closed compatible covers with initial coverage and successor closure for a given observation machine. Here compatibility requires both the fixed literal action and its absolute-response-to-Halt rows to agree. The lower proof first forces these requirements for every permitted controller, so it is stronger than minimizing a preselected tree. These named sources are `literature-attested` background methods, rather than a source of formula (41.9). The complete-memory equality and its label consumer are `repo-derived` source-specific ordinary mathematical deductions without a global literature-priority assertion.
 
 ## 追加锚（本行以下为增补区）
+
+## 42. Exact complete-controller memory at fee at most two for full INITIAL even supports
+
+**定义 42.1（Two-block complete-controller minimum）。** Retain all parameters, sources, literal bit operations, targets, observations and complete-controller conditions of Definition 41.1. Define
+
+$$
+M_{\mathrm{fee}\le2}(f)=
+\min\bigl\{|K|:(K,c,u,\Delta)\text{ satisfies Definition 41.1, stops correctly on every }q\in Q,
+\text{ and emits at most two complete blocks on every execution}\bigr\}.
+\tag{42.1}
+$$
+
+Thus $|K|$ includes all running states and persistent literal Halt states. The target is the immutable INITIAL target (41.5), each emitted word is paid in full, and $L,n,\epsilon$ remain exactly (41.8).
+
+**定理 42.2（Exact fee-two full-INITIAL even-support minimum）。** For every integer $m\ge5$, put $k=2m-2$, $T=2m-1$, $P=\mathbb Z/T\mathbb Z$ and $U=\{2,\ldots,m-1\}$ as in Definition 41.1. For every set $Y$, every $A_0,B_0,A_1,B_1,y_\bot\in Y$ with $A_v\ne B_v$ for each $v\in\{0,1\}$, and every pair of even subsets $H_0,H_1\subseteq U$, including empty subsets, let $f$ be (41.5) on the entire actual joint source $Q$ of (41.4). Under exactly Definition 41.1 and Definition 42.1, separately for either original alphabet,
+
+$$
+\boxed{M_{\mathrm{fee}\le2}(f)=L+n-\epsilon.}
+\tag{42.2}
+$$
+
+Proof. The total controller attaining Theorem 41.2 has $L+n-\epsilon$ states and emits at most one complete block on every source in $Q$. It is therefore admissible in (42.1), proving the upper bound. Its total initialization, persistent literal outputs and all response rows, including bottom rows, are those of Section 41.3.
+
+For the lower bound, take an arbitrary successful controller admitted by (42.1). Each $a\in Y_{\rm act}$ is required by an actual INITIAL source: $A_v$ occurs outside $U$, an active $B_v$ occurs on $H_v$, and $y_\bot$ occurs at initial bottom. These are sources in the actual joint set (41.4), with the simultaneous full-history witnesses (41.10) and its bottom witness. Finite correct stopping requires a state with literal instruction $\operatorname{Halt}(a)$. Distinct labels require distinct states, so at least $L$ persistent literal Halt states are necessary. They are disjoint from every running state. This counts only actual labels, so a stipulated $B_v$ with $H_v=\varnothing$ adds no state unless it is otherwise actual, and all cross-fibre and bottom-label coincidences are retained.
+
+If $H_v\ne\varnothing$, the actual live phases in $H_v$ and outside $U$ require the different immutable labels $B_v$ and $A_v$, but have the same free initial observation $v$. Their common initialization state $c(v)$ cannot be a literal Halt, and hence must run. Thus the lower bound is $L$ when $n=0$, and is at least $L+1$ whenever $n-\epsilon=1$. These cases include exactly one active fibre and the two-active-fibre case with $\epsilon=1$.
+
+It remains to prove $L+2$ when $n=2$ and $\epsilon=0$. Suppose, to the contrary, that $|K|<L+2$. The $L$ mandatory Halt states leave at most one running state. Both active initialization states must therefore be the same running state $R$, whose fixed instruction is $\operatorname{Emit}(X)$ for one literal word $X=X_0\cdots X_{m-1}$. Every other state is a Halt state. No restriction on sharing or cycles has been imposed in making this count.
+
+First $X_0=0$. Indeed, if $X_0=1$, fix either active value $v$, choose $j\in H_v$ and put $j_*=m+1$. Since $m\ge5$, $m<j_*<T$ and $j_*\notin U$. The actual sources $(v,-j,k-1)$ and $(v,-j_*,k-1)$ require $B_v$ and $A_v$ respectively. They both initialize to $R$ and reject at the first bit. After the entire paid word, including its remainder after rejection, both have the same absorbing device record $\bot$ and controller successor $\Delta(R,\bot)$. All later deterministic evolution is identical, contradicting their unequal immutable labels. This uses the maximal inherited tail in the full joint source, rather than a selected tail marginal.
+
+Because $X_0=0$, its first bit clears every inherited legal tail from every live current record. The remaining $m-1<k$ bits cannot create $k$ consecutive ones. Thus $X$ is safe from every live current record, including a record reached after any repetition of $X$. Every execution starting live and continuing at $R$ consequently remains live and observes only $0$ or $1$ after each complete block.
+
+We now prove that both binary successors of $R$ are Halt states; the one-block deadline is not assumed. If one of $\Delta(R,0)$ and $\Delta(R,1)$ were $R$, the other would be either $R$ or a single Halt state $h$, since $R$ is the sole running state. If both were $R$, no live execution starting at $R$ could stop. Otherwise every finitely stopping live execution starting at $R$ would have to exit through that same $h$ and return its one fixed literal label. The bottom successor cannot provide another exit, by the safety just proved. Both alternatives contradict finite correct stopping on the two different labels within an active INITIAL fibre. Hence $\Delta(R,0)$ and $\Delta(R,1)$ are both Halt states. In particular every source in either active live fibre stops after its first emission. This reduction uses the existing repeated-safe-row/single-useful-Halt method of [*Fee-three deadline-four memory price*, Proof convention 3.2](KBONACCI_FEE_THREE_DEADLINE_FOUR_MEMORY_PRICE.md#3-facts-used-in-the-four-row-exhaustion), with the actual-support and safety arguments accompanying its Lemma 3.1.
+
+The hypotheses for the rigidity argument (41.15)–(41.18) now hold on both full live INITIAL fibres. Explicitly, (41.12) gives $q_X(j_*)=0$ at $j_*=m+1$, so the response-$v$ Halt must return $A_v$. Every phase in $H_v$ must therefore reach response $1-v$ and the Halt labelled $B_v$. Conversely, a phase outside $H_v$ cannot reach that latter Halt, because $A_v\ne B_v$. Thus, for every phase $j\in P$ and every inherited tail,
+
+$$
+q_X(j)=\mathbf1_{H_v}(j),\qquad X=\mathcal B_0(H_v),
+$$
+
+by the literal inverse (41.13)–(41.14). This is exactly the source-specific root rigidity (41.17), now justified after the sole-running-state reduction. Since $R$ has one fixed word, both active fibres force $H_0=H_1\ne\varnothing$. Its fixed absolute-response-zero Halt must return both $A_0$ and $B_1$, and its fixed absolute-response-one Halt must return both $B_0$ and $A_1$. Therefore $A_0=B_1$ and $B_0=A_1$, as in (41.18). These are precisely the conditions $\epsilon=1$, contradicting $\epsilon=0$.
+
+At least two running states are consequently necessary in the remaining case, in addition to the $L$ persistent literal Halts. Together with the preceding cases and the reused attainment, this proves (42.2). All arguments use the actual full source, including initial bottom and every legal inherited tail; they retain arbitrary competitor sharing and cycles until the deficient-state case itself excludes a live running cycle. The proof uses only absolute completed-block observations and fixed literal instructions. Each block, including any rejection remainder, is paid in full. Both original alphabets supply exactly the same literal length-$m$ words here because $m<k$, so the argument applies separately to each.
+
+Applying (42.2) to the unchanged crossed and aligned targets of Proposition 41.3 gives respectively $3$ and $4$ states at fee at most two, from their respective $(L,n,\epsilon)=(2,2,1)$ and $(2,2,0)$. Thus that proposition's distinction persists under the two-block bound. The attainment, joint-source, inverse and root-sharing ingredients are those of Theorem 41.2, Sections 41.1–41.3 and Mathematical citation 41.7; [*Three-class root-zero compatibility price*, Section 5](KBONACCI_THREE_CLASS_ROOT_ZERO_COMPATIBILITY_PRICE.md#5-complete-stationary-memory-at-the-adaptive-deadline) supplies further complete-controller counting background. $\square$
+
+## 追加锚（本行以下为增补区）

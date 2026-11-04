@@ -1,0 +1,53 @@
+**Proposition 2.1 (based path recovery and exact domain).** For every
+preparation above, on the actual stopped path image the records
+
+$$
+(U,R,(O_{s\wedge R}^I)_{s\ge0})
+\quad\hbox{and}\quad
+(U,R,(v_{s\wedge R})_{s\ge0})
+\tag{2.1}
+$$
+
+have causal Borel inverse maps whenever $R\le\theta_I$. In particular
+the corresponding stopping rules and completed stopped sigma-fields
+agree on this domain. At a finite exit the inverse includes its endpoint.
+For unrestricted observation time, $O^I$ recovers precisely the stopped
+visible path $v_{\cdot\wedge\theta_I}$ by this construction.
+
+Proof. Recover the height by $k=|Y_{02}|^2/(4p)$. Both relevant
+amplitudes in (1.4) are positive on all of $I$, including $l,u$. The
+based circle paths
+
+$$
+\xi_1=e^{-i(\delta_{01}+\alpha_0)}
+             \frac{Y_{01}}{2\sqrt{k(H_{\rm n}-k)}},\qquad
+\xi_2=e^{-i(\delta_{02}+\beta_0)}
+             \frac{Y_{02}}{2\sqrt{pk}}
+\tag{2.2}
+$$
+
+equal $e^{iy/2}$ and $e^{i(c_0y-w/r)}$, respectively. Let $a,b$ be
+their unique continuous real argument lifts with $a(0)=b(0)=0$.
+The actual source coordinates furnish these lifts, so uniqueness gives
+
+$$
+x=k-k_0,\qquad y=2a,\qquad w=r(2c_0a-b).
+\tag{2.3}
+$$
+
+Restricting a based path to an earlier prefix restricts its unique lift;
+thus the inverse is causal and commutes with stopping. It is Borel:
+on each compact time interval, sufficiently close based circle paths
+have their pointwise ratio in one fixed arc about one; the continuous
+principal argument of that ratio is exactly the difference of their
+lifts. This proves continuity in the compact-open topology locally at
+each based path. Countably many compact intervals give Borel
+measurability. Conversely (1.3)–(1.4) calculate all ten outputs from
+the same visible path. Substitution in both orders gives identity on
+the actual image, proving route agreement. This is the application of
+the original formulas and standard covering-path lifting, not a new
+general lifting theorem. A current wrapped output alone, an unknown
+initial lift or a finite sample list does not satisfy this argument.
+After holding, it gives no continuation of the source visible path.
+$\square$
+

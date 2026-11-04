@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:062e3bb199ed18d3bfe7b3dd397a110886697366eb4e846eb3dc3a701b1534f3
+  normalized_sha256: sha256:062e3bb199ed18d3bfe7b3dd397a110886697366eb4e846eb3dc3a701b1534f3
+cas_ref: sha256:062e3bb199ed18d3bfe7b3dd397a110886697366eb4e846eb3dc3a701b1534f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将Y、eta的范围与窗口长度阈值12.16作为前提，并未声称误差结论已成立。
+    previous_atom_id: 00580e489c43936832324ca128cf575f7be22e620b79fb3ac0590f76791f1e3a
+    next_atom_id: 907a976014a88ac277d378dc3d77e3b04f05f045fc0f49509359923234d8f579

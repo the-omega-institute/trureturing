@@ -1,0 +1,38 @@
+#### 定理 4.2（内生共同基底保持严格兼容）
+
+无论 $B$ 处于确定标签、相干叠加，还是与数据已纠缠，都有
+
+$$
+[\widetilde N_i,\widetilde N_j]=0.
+$$
+
+因此三个指定 Lüders 读出的全部记录与排列无关。令
+
+$$
+E_s=W(I_B\otimes\Pi_s)W^\dagger,\qquad
+V_{\mathrm{read}}=\sum_s E_s\otimes\lvert s\rangle _R,
+$$
+
+则 $V_{\mathrm{read}}^\dagger V_{\mathrm{read}}=I$。若前一层预测以等距映射 $T$ 生成程序与数据，$V_{\mathrm{read}}T$ 仍是等距映射。
+
+**证明。**
+
+共同酉共轭保持乘法，故
+
+$$
+[\widetilde N_i,\widetilde N_j]
+=W(I_B\otimes[N_i,N_j])W^\dagger=0.
+$$
+
+定理 [3.2](#thm-order) 不依赖输入态，故也适用于纠缠输入。$\{E_s\}$ 是完备正交投影族，因而
+$V_{\mathrm{read}}^\dagger V_{\mathrm{read}}=\sum_sE_s^\dagger E_s=I$。
+再乘以 $T^\dagger,T$ 即得复合映射的等距性。
+
+∎
+
+这是“预测产生基底，基底成为下一层门控制”的直接实现。操作上可以先用 $W^\dagger$ 转到共同参考模式，复制该模式，再用 $W$ 转回。这里给定已知 $U_b$ 及共同受控实现；没有假定任意未知黑箱酉都可免费加控制，也没有把归一化后验更新当作无条件的非线性量子门。
+
+<a id="statement-4-3"></a>
+
+<a id="cor-approx"></a>
+

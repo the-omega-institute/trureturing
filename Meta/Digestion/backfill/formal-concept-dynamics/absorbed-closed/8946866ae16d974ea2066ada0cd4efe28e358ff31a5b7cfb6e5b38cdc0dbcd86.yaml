@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8946866ae16d974ea2066ada0cd4efe28e358ff31a5b7cfb6e5b38cdc0dbcd86
+  normalized_sha256: sha256:8946866ae16d974ea2066ada0cd4efe28e358ff31a5b7cfb6e5b38cdc0dbcd86
+cas_ref: sha256:8946866ae16d974ea2066ada0cd4efe28e358ff31a5b7cfb6e5b38cdc0dbcd86
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/ControlQuotientUniversalMinimality.controlProfile
+    target_statement_id: sha256:3be03e7ef1a0ae8f35b44abe2a438fe698de4cd2e83feadf7f35511ea113be9f
+  - gid: D5/S3/ConceptDynamics/Identity/ConceptRelativeIdentity.ConceptIdentity
+    target_statement_id: sha256:9693fa80f0f323078b998b40bf8eccd659fcd33739e3df19477b711d43e76069
+receipts:
+  unresolved_subitems: []

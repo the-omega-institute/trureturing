@@ -18,6 +18,12 @@ internal sealed class UniqueBasisFormationRefutationDocument : IScribeDocumentDe
             Def("Psi", PsiFormula(), "Eq. (3), arXiv v3 p. 2: |Ψ₁⟩ = |1⟩⊗|r₁⟩ + |2⟩⊗|r₄⟩ + |3⟩⊗|r₇⟩, |Ψ₂⟩ = |1⟩⊗|r₂⟩ + |2⟩⊗|r₅⟩ + |3⟩⊗|r₈⟩, |Ψ₃⟩ = |1⟩⊗|r₃⟩ + |2⟩⊗|r₆⟩ + |3⟩⊗|r₉⟩, where |r_i⟩ is the i-th column vector of G. Thus Psi k (a,b) is the b-entry of column 3a+k; Fin.mk forms its column index and its omitted proof verifies that it is below 9.", AssessedProvenance.FromLiterature(Source)),
             Def("spanPsi", SpanFormula(), "The subspace S is the complex span of Ψ₁, Ψ₂ and Ψ₃. Set.range Psi includes exactly the three zero-based choices of k.", AssessedProvenance.FromLiterature(Source)),
             Def("claim", ClaimFormula(), "Song–Chen–Djokovic, arXiv v3 p. 3: Further, by calculation one can see that every state in the span of the three states has entanglement more than 1.52 ebits. Hence, the entanglement of formation (EOF) of every mixed state whose range is contained in the span is also more than 1.52 ebits [19]. We don't know whether this EOF is exactly equal to that of the pure state |Ψ₁⟩. The matrix rho ranges over all density operators on Fin 3 × Fin 9; positivity, trace one and range inclusion express the source's mixed-state domain. Its comparison state is rankOneDensity(Psi 0).", AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(DescribeId.Create("positive-phase"), DeclarationHandle.Create(Module + "positive_phase"),
+                H("Positive-weight components of a pure state differ only by phase"),
+                StatementSource.FromAuthor(Disp(PositivePhaseFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For arbitrary natural dimensions p and q, let v be a unit vector and e a finite ensemble whose average is rankOneDensity v. Every component e.psi i with strictly positive weight is z times v for a complex scalar z of norm one. The ensemble's kernel constraints force all two-coordinate minors of v and e.psi i to vanish, so the vectors are proportional; their unit norms fix the modulus of the scalar."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Module + "result"),
                 H("The equality fails"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
@@ -91,5 +97,26 @@ internal sealed class UniqueBasisFormationRefutationDocument : IScribeDocumentDe
         Formula range=new Formula.Relation(Apply(Qualified("LinearMap","range"),Apply(Seq(Qualified("Matrix","toLin"), Apos),rho)),FormulaRelationOperator.LessThanOrEqual,F.Id("spanPsi"));
         Formula eq=Equal(Formation(rho),Formation(Call("rankOneDensity",Call("Psi",D(0)))));
         return Equal(F.Id("claim"),All("rho",MatrixType,Implies(psd,Implies(trace,Implies(range,eq)))));
+    }
+
+    private static Formula PositivePhaseFormula()
+    {
+        Formula p = F.Id("p"), q = F.Id("q"), v = F.Id("v"), e = F.Id("e");
+        Formula i = F.Id("i"), x = F.Id("x"), z = F.Id("z");
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula ambient = Seq(Parenthesized(Call("Fin", p)), Times, Sp, Parenthesized(Call("Fin", q)));
+        Formula vectors = Seq(Parenthesized(ambient), To, Sp, ComplexType);
+        Formula norm(Formula value) => Seq(Vert, Sp, value, Sp, Vert);
+        Formula sum = Seq(Sum, Underscore, Grp(Seq(x, Colon, ambient)), Sp,
+            norm(Apply(v, x)), Caret, D(2));
+        Formula weight = Apply(Seq(e, Dot, Operatorname, Grp(F.Id("weight"))), i);
+        Formula component = Apply(Seq(e, Dot, Operatorname, Grp(F.Id("psi"))), i);
+        Formula phase = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("z"),
+            ComplexType, And(Equal(norm(z), D(1)), Equal(component, Seq(z, Cdot, Sp, v))));
+        Formula positive = new Formula.Relation(D(0), FormulaRelationOperator.LessThan, weight);
+        return All("p", naturals, All("q", naturals, All("v", vectors,
+            Implies(Equal(sum, D(1)), All("e", Call("Ensemble", Call("rankOneDensity", v)),
+                All("i", Call("Fin", Seq(e, Dot, Operatorname, Grp(F.Id("N")))),
+                    Implies(positive, phase)))))));
     }
 }

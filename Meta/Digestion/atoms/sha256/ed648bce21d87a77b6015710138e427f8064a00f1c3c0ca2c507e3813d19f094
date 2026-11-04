@@ -1,0 +1,55 @@
+**Definition 4.1 (Past-visible finite-context class).** Let $N\ge1$ and let $\theta=(\lambda,M_0,M_1)$ range over the entire domain
+
+$$
+\lambda\ge0,\quad\lambda\mathbf1=1,\quad M_0,M_1\ge0,\quad
+A=M_0+M_1,\quad A\mathbf1=\mathbf1,\quad\lambda A=\lambda,\quad
+\lambda M_1^2\mathbf1=0.
+\tag{4.1}
+$$
+
+Use the actual stationary joint law of [R, Definition 8.1][R], with hidden states $H_i$ immediately before emission at $i$:
+
+$$
+J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1}).
+\tag{4.2}
+$$
+
+Write $P=P_\theta$ for its visible marginal. Structural zeros, zero stationary hidden masses, reducibility, periodicity and redundant states are allowed. The last condition in (4.1) is scalar; it does not impose $M_1^2=0$ on the whole matrix. Require $\iota=P(X_0=1)>0$, occupied anchors unbounded in both spatial directions, and a finite nonempty context set $C$. At every occupied anchor $t$, let
+
+$$
+C_t=D^-((X_{t-j})_{j\ge1})
+\tag{4.3}
+$$
+
+for one fixed measurable strict-left decoder. These marks extend (4.2) to a stationary marked law $J$. In its actual Palm law $Q=J(\,\cdot\mid X_0=1)$ enumerate anchors by $T_0=0$, $T_k<T_{k+1}$, and set $G_k=T_{k+1}-T_k\ge2$, $C_k=C_{T_k}$. Require
+
+$$
+0<\mu=\mathbb E_QG_0<\infty,\qquad
+C_{k+1}=\tau_{G_k}(C_k),\qquad
+\mathcal L_Q(H_{T_k+1}\mid\mathcal H_k)=r_{C_k},
+\quad
+\mathcal H_k=\sigma(C_j:j\le k;G_j:j<k),
+\tag{4.4}
+$$
+
+for every $k\in\mathbb Z$, where $\tau_g:C\to C$ are arbitrary maps and $r_c$ are probability rows on the original hidden state set. Conditions on a context of zero Palm mass are void. No strict-right context decoder is assumed. This class is defined by (4.1)–(4.4), separately from Definition 1.1.
+
+The objective remains the original one: for legal words $B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\}$, let $\Gamma_n$ have all legal Hamming-one edges with open endpoints, $h(s,t)=st/(s+t)$ for $s+t>0$ and $h(0,0)=0$, and
+
+$$
+\Phi_n(\pi)=\sum_{\{u,v\}\in E(\Gamma_n)}h(\pi_u,\pi_v),\qquad
+\kappa_n=\max_{\pi\in\mathcal P(B_n)}\Phi_n(\pi),\qquad
+c_\star=\lim_n\kappa_n/n.
+\tag{4.5}
+$$
+
+For the entire exterior $\mathcal E_i=\sigma(X_j:j\ne i)$ choose a Borel version $q_0=\mathbb E_P[X_0\mid\mathcal E_0]\in[0,1]$, and put $q_i=q_0\circ T^i$ for $(Tx)_j=x_{j+1}$. The actual risk is
+
+$$
+d(P)=\mathbb E_P(X_0-q_0)^2\le c_\star.
+\tag{4.6}
+$$
+
+These are [R, §1][R] and [U, §1][U]'s same open-path objective and full-exterior risk, including zero masses and forced fibers.
+

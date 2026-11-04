@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a7ab7da6e53517f54c955e23e6a242ca3f8d275d095d8281d9800f585fb1aa9
+  normalized_sha256: sha256:2a7ab7da6e53517f54c955e23e6a242ca3f8d275d095d8281d9800f585fb1aa9
+cas_ref: sha256:2a7ab7da6e53517f54c955e23e6a242ca3f8d275d095d8281d9800f585fb1aa9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 仅在理想行为示例中列无限精度局部记录，没有声称这类记录必然新增或可实现。'
+    previous_atom_id: d14370de8c6d7e3e3ea93cc947ccf1d99d72870c858216d38bf6e29a481758e7
+    next_atom_id: 186d6a2124e38823780c920f861f2262fa9743a5d6e35bd04c6d23033b82269e

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:57386ce67bbff60019c1289aa3e2f7cdb1fb35373ef41c9fd698a1e562df4f7d
+  normalized_sha256: sha256:57386ce67bbff60019c1289aa3e2f7cdb1fb35373ef41c9fd698a1e562df4f7d
+cas_ref: sha256:57386ce67bbff60019c1289aa3e2f7cdb1fb35373ef41c9fd698a1e562df4f7d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条拒绝把表示桥称作 RH 证明；它不是新的数学定理或 RH 反命题。
+    previous_atom_id: 95cf4dfa031e89bb90396dbc79a5f0a9343236a67fdb49a2340281d25a6b0ce6
+    next_atom_id: c7bfbcaecd8e3edadc7bc34acb7f52b6a792810e1f274b222658c4a4fe18fd05

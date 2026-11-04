@@ -1,0 +1,37 @@
+**Definition 28.3 (provisional stages and the sole acceptance rule).**
+Run stages $R=0,1,\ldots,d$, overwriting failed-stage data. In a
+stage call the height procedure at the root and propose
+$\nu=1+\widehat{\operatorname{height}}(\varepsilon)$.
+Reject unless $n_0\le\nu\le H$. Initialize a provisional prefix
+$A=\varnothing$. For $j=1,\ldots,2d$, compute the chronological
+batch
+
+$$
+ \tau_j=\min\{t\ge2:j\le F_{t+1}-1\}.
+ \tag{ACR.120}
+$$
+
+Construct the old labelled tree at $\tau_j-1$ using the already
+proposed $B_{\tau_j-1}<j$ bits, and select its
+$(j-B_{\tau_j-1})$th beta leaf in physical order as $p_j(A)$.
+This is the finite early-parent construction of Definitions 13.1
+and 22.1. Reject if $\nu-\tau_j<1$, if a required child is absent,
+or if any full literal would exceed $H$. Obtain heights at both
+$p_j(A)a$ and $p_j(A)b$. Reject unless their difference has absolute
+value one. Append bit one when the first is larger and bit zero
+when the second is larger. In particular a tie is a rejection,
+not an inferred orientation.
+
+No root value, proposed parent, bit or recombined height in this
+stage is yet an authenticated global datum. After all $2d$ bits
+are proposed, form the order-$d$ Hankel system $H(A)c=y(A)$ of
+Definition 21.1. Reject an inconsistent system. Otherwise choose
+one solution by deterministic Gaussian elimination, putting free
+variables zero, and form the explicit order-$d$ all-index candidate
+with coefficient row $c$ and seed $A[0:d]$. At $d=0$ this is the
+single empty zero descriptor. Run Corollary 22.3 on that candidate
+and cut $\nu$, constructing its witnesses by the forward GPO
+evaluator and executing the actual paid tests. Accept and return
+$(P,n)=(A,\nu)$ only if this proper-candidate verifier passes.
+Its row $c$ is auxiliary; it is not the required $K_d(A)$ row.
+

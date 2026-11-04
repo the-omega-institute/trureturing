@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ce5f28e57b2b789d141bdaff0595c78bd88f1b734cd6eb5f28d8e6a321ca0c64
+  normalized_sha256: sha256:ce5f28e57b2b789d141bdaff0595c78bd88f1b734cd6eb5f28d8e6a321ca0c64
+cas_ref: sha256:ce5f28e57b2b789d141bdaff0595c78bd88f1b734cd6eb5f28d8e6a321ca0c64
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯章节标题“FM.3 非交换因果恢复的有限时间误差”，不包含定义、量词或数学断言。
+    previous_atom_id: e04b4289731b3e76a87ef73bbf6accd01282c081edfa783542ca47e07716beaa
+    next_atom_id: b63cddaddafe692ffc56231aaaf0ccd1d5ce7ccb992c68d924ff9d568e44d165

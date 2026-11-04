@@ -1,0 +1,21 @@
+**Remark 3.1 (Rank, degree, and root cases).** Rank strictly below $N$
+still supplies (2.3); the argument does not require exact rank $N$.
+Rank zero forces all entries of $H_m$ to be zero, and every prefix
+coordinate occurs in that matrix, so it already contradicts (1.4).
+Neither an invertible leading block nor a nonzero end coefficient of
+(2.3) is required. No recurrence is solved forward or backward.
+
+If $Q$ is constant, its factorization has an empty product and every
+$t$ is good. If $P$ is constant, it contributes no roots. The case
+$P=0$ is excluded in §2.6 before numerator factorization. All roots
+may be complex, repeated, zero, or common to both polynomials. The
+argument uses only their moduli and multiplicities, with no separation
+condition between different roots.
+
+In particular $N=1$ is included. Then
+$Q(z)=c_0z+c_1$, $P(z)=c_1b_0$, and (2.3) is
+$c_0b_p+c_1b_{p+1}=0$. Since every available $b_j$ is positive,
+neither $c_0$ nor $c_1$ can vanish. Thus $P$ is a nonzero constant,
+$Q$ has degree one, and $D_{\mathrm{deg}}=1$. The same estimates
+apply with $K=14+\lceil\log_2C\rceil$ and $J=8K$.
+

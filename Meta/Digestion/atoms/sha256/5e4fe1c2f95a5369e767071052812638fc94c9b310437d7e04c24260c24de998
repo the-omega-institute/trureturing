@@ -1,0 +1,52 @@
+**Corollary 22.3 (finite-stage accuracy under the declared interface).**
+There is a finite constant $C_I$ such that the map from real triples
+to the ten outputs in (7.3), (7.8), restricted to heights in $I$,
+is $C_I$-Lipschitz for the maximum norm. Set
+$d_\rho=\max(4\rho,4K_I\rho+4\rho^2)$.
+For every $a_*,b,c>0$ and $\lambda>0$, under the proof coupling,
+
+$$
+\begin{aligned}
+ &\mathbb P\left(
+ \|\mathcal O^{\epsilon,\delta,\Lambda,\rho}-O^I\|_{[0,T]}
+                      >C_I(d_\rho+a_*+c)\right)\\
+ &\quad\le\min(1,e^{\lambda T-\Lambda\varphi(\lambda)})
+       +\mathbb P(\Omega_{T+1}(\mathsf Z;
+                                 \epsilon\vee\delta)>a_*)\\
+ &\qquad\quad+\mathbb P(D(b)\le a_*)
+       +\mathbb P(\Omega_T(\mathsf Z;b)>c).
+\end{aligned}
+\tag{22.8}
+$$
+
+The same right side without the last term bounds
+$\mathbb P(|\widehat S-S|>b)$.
+For every desired output error $e_*>0$ and failure probability
+$p_*>0$, deterministic finite choices of
+$\Lambda,\epsilon,\delta,\rho$ make the left probability at
+threshold $e_*$ smaller than $p_*$. They use finitely many exact
+sampling entries in expectation by (20.8), and finitely many actual
+native legs pathwise by (22.5). No target-path queries are added by
+this assertion. A numerical effective rate for choosing the
+parameters from $(e_*,p_*)$ is not asserted.
+
+**Proof.** The square-root amplitudes in (7.8) have bounded derivatives
+on $I$; the phase derivatives in (22.7) are constant and sine and
+cosine are globally Lipschitz. This gives the claimed $C_I$, including
+the Euclidean norm on the ten outputs after enlarging the constant.
+Outside the four exceptional events in (22.8), (21.3) and (21.9)
+bound the stopped triple error by $a_*+c$ and its censored exit
+error by $b$. Add (22.4) and apply that Lipschitz map. The union
+bound proves (22.8) and the lifetime version.
+
+For the existence assertion, first make $d_\rho$ and $c$ small
+enough for the required output threshold, then choose $b>0$ with
+the last probability small, using continuity. For this fixed $b$,
+$D(b)>0$ almost surely, so choose $a_*>0$ small enough for both
+the threshold and the third probability. Choose $\epsilon,\delta$
+small enough for the second probability by continuity, and finally
+choose finite $\Lambda$ large enough for the first by
+$\varphi(\lambda)>0$. These are deterministic law-dependent choices;
+none is a measurement of a sampled target path. The finite primitive
+and command bounds are already established. $\square$
+

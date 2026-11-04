@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b6782b5673a756a67805b96a7642d68ae59281bf70cc12f79f895c62af65effc
+  normalized_sha256: sha256:b6782b5673a756a67805b96a7642d68ae59281bf70cc12f79f895c62af65effc
+cas_ref: sha256:b6782b5673a756a67805b96a7642d68ae59281bf70cc12f79f895c62af65effc
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Prediction/ItineraryCompletion.itineraryToLimit
+    target_statement_id: sha256:b84c62ddf6c3bf806ae51bab651d891dc55564a6f4480bfb7666475d3911d620
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,37 @@
+Ready has root cursor, empty request and pending-output fields, no unfinished
+source edit or tape append, and current source/record/input/output rights.
+The following phases are a finite control graph whose loops operate on
+actual finite lists and links.
+
+1. Receive obtains one bit in an occupied pending latch. It writes that bit
+   into the request backing before clearing the latch and enabling the next
+   input. Address-length marks or index marks are really constructed. The
+   parser retains its tag, subphase and remaining-length marks. A proper
+   frame prefix waits for its unsupplied suffix and produces no answer.
+2. Navigate follows the actual root links for acquired address bits, testing
+   logical arity before each child. It retains the root binding, current
+   cursor and remaining path; a unary marker cannot be followed as a logical
+   child. Guard tests the actual target and current authority. A query reads
+   the same source/tapes; it does not consult a prospective endpoint.
+3. For an enabled growth, Reserve obtains its finite required fresh source,
+   header and tape material before editing. Pending retains the actual
+   kind, target reference/address and ancestor-maintenance cursor. For $P$,
+   attach one new terminal left marker. For $S$, reuse the old unary marker
+   as the new left logical $\beta$ root: attach its new left marker, attach
+   the new right $\alpha$ root to the old root, and bind the empty tape
+   header there. Parent fields are initialized to these actual parents.
+   This implements (AA.65) with no source vertex deletion.
+4. Maintain starts from the actual edited target and walks its parent chain.
+   At each proper logical ancestor, compare the traversed child's reference
+   with that ancestor's two child fields, read its bound tape header and
+   append the corresponding side. The pending cursor records exactly which
+   ancestors remain. A new cell is initialized and linked before the header's
+   tail is advanced; pending append references/subphases remain explicit.
+   No input or query is admitted during Reserve, editing or maintenance.
+5. BuildAnswer constructs and seals a finite tagged reply. Print traverses
+   that backing and emits precisely its bits, followed by End. The supplied
+   local acknowledgement then enables Return. Return reaches the same root,
+   clears/reuses the request, index, traversal, append and output scratch,
+   and only then reenters Ready. No external acknowledgement arrival is
+   presumed; the local acknowledgement edge is part of Assumption 20.1.
+

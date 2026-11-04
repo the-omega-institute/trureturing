@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:76f6d2c58f5f0be47478d625c41a474fccaeb5313fe7795cd79f2a5bca63e13a
+  normalized_sha256: sha256:76f6d2c58f5f0be47478d625c41a474fccaeb5313fe7795cd79f2a5bca63e13a
+cas_ref: sha256:76f6d2c58f5f0be47478d625c41a474fccaeb5313fe7795cd79f2a5bca63e13a
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroInfinitude/CosinePacket.packetTransform_ge_half_near_zero
+    target_statement_id: sha256:7ad6efac536aea338eac28babbea73b37d7848942375d61e1a14995f267a1946
+  - gid: D5/S3/Weil/ZeroInfinitude/CosinePacket.packetTransform_integrable
+    target_statement_id: sha256:dc92345caa88ce3f3fcaa921fd3acecda742c40eebe5c3932f3562325d020446
+  - gid: D5/S3/Weil/ZeroInfinitude/CosinePacket.packetTransform_real_nonneg
+    target_statement_id: sha256:aaa25c568fe43ec8976af4beabbb062a4cb84af68d52ef7dcd4c4c156d51343f
+  - gid: D5/S3/Weil/ZeroInfinitude/CosinePacket.packetTransform_zero
+    target_statement_id: sha256:7460af7994fcbc36eaf9ce1aacf908ed21d4fc91f1cfbe5559cf26aa3a909ecd
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 26f08c0c23d43f49eff0ad491dc542b366202c452d2493d0e35fd895060d2b8d
+    - 8221d453d609ea17b7adad0a04124eca6dd9f577989a272c0a8931365e7b8aeb
+    - f03b657eb7518f4bdc059c414e1841a9e087a5270089b8cac9f025ad74a7de07
+    - f336fcf20e0010eea18ebbbaf02e378daefd8049aec91bd36c6a33cbf1d5c5e0

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2babdb4c14859175677a9a28d15d8f8f45c14dc53f753e82239739195e57eafc
+  normalized_sha256: sha256:2babdb4c14859175677a9a28d15d8f8f45c14dc53f753e82239739195e57eafc
+cas_ref: sha256:2babdb4c14859175677a9a28d15d8f8f45c14dc53f753e82239739195e57eafc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项寄存器及字母解释是模型前提，唯一独立算术断言由钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的 Nat.pow_dvd_pow_iff_le_right 实例化 Nat.Prime.one_lt 直接闭合。已搜索全 D5 含 private 的 prime power 与 divisibility 形状，重点检查 ExactPrimeDivisionNoDFAO、PrimePowers、AffineGcdBehavior 及通用 checker；幂整除判据仅见于这些消费者的局部证明，未找到可直接复用的冻结判据 GID。
+    previous_atom_id: 4043186ace9043176139e01b5bafaf251ce3cbfa8995d155a9406ad5fadac807
+    next_atom_id: 411c69a8c772473128b84396531d077138f5ce0ccdb3d1031eb1e099c362d569

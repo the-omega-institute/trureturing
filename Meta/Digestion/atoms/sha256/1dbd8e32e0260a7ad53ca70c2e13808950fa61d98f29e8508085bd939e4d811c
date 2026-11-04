@@ -1,0 +1,27 @@
+**定义 19.3（有限共享变量的 pp 语义）。** 一个有限实例给出有限变量集
+$V$、自由变量集 $X\subseteq V$、辅助变量 $Y=V\setminus X$，以及有限约束
+
+$$
+(s_j,R_j),\qquad s_j=(v_{j1},\ldots,v_{jk_j})\in V^{k_j},
+\quad R_j\subseteq\{0,1\}^{k_j}.
+$$
+
+它在自由赋值 $u\in\{0,1\}^{X}$ 上的关系是
+
+$$
+\operatorname{Sol}_{\mathcal I}(u)\;\Longleftrightarrow\;
+\exists\alpha:V\to\{0,1\},
+\bigl(\alpha|_X=u\;\land\;\forall j,\ (\alpha(v_{j1}),\ldots,\alpha(v_{jk_j}))\in R_j\bigr).
+$$
+
+量词只遍历这一个有限的 $Y$；同一个变量名在不同约束、同一约束的
+不同端口出现时都读取同一个 $\alpha(v)$。这就是共享端口和有限存在辅助
+变量的语义，不能把局部见证拼成同名变量的不同取值。
+
+若把基关系 $R$ 删除一行 $t$，得到的是新的模板族
+$\operatorname{CSP}(R\setminus\{t\})$。通常它改变实例族，因为一个约束
+可能恰好需要 $t$。对某个已固定实例，若没有任何满足赋值在该约束位置
+使用 $t$，则该删除在此实例上不可达，解集不变；若该位置从未出现或该行
+由其它声明约束排除，则是冗余删除，也只保证这个实例的行为不变。实例级
+不可达/冗余不等于模板族等价。
+

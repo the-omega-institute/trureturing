@@ -1,0 +1,35 @@
+fingerprints:
+  raw_sha256: sha256:e95034bd83b09d8116408ed4a7961df5366b35314a3f3d3da95c1d3de60cf69e
+  normalized_sha256: sha256:e95034bd83b09d8116408ed4a7961df5366b35314a3f3d3da95c1d3de60cf69e
+cas_ref: sha256:e95034bd83b09d8116408ed4a7961df5366b35314a3f3d3da95c1d3de60cf69e
+coverage_gids:
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.aligned_regular_global
+    target_statement_id: sha256:00fd43dfb8a26477edadbe53d5a3e5c2fb39c1a370be9f7d6e81301a7172f757
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.cyclic_exponent
+    target_statement_id: sha256:f127bf53c9f6a354ed7be26aebcbde9ae070192e147c3188659de81c1e4480c8
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.faithful_left
+    target_statement_id: sha256:b9c73cc6a68e0efd68665c40bb386c805ad88bf17dd4e39d5425239fe4714ef2
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.faithful_of_pointwise
+    target_statement_id: sha256:893b2a70a77c18b801fb410c58c5ac96622451a7a4029c7136c94729d6df0d8c
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.faithful_regular
+    target_statement_id: sha256:e13af02534af109bb4e48db65280584a175159b7ef475f3f884465b6a757f366
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.global_reindex
+    target_statement_id: sha256:643e9a34f4393853f08ba6304f37b0e13f1911b9acf9fedd1cd164708d81a038
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.global_twist
+    target_statement_id: sha256:b54c596c2f1ecb8bcbf30dd60a45f6a00fbd708a0c2671a951c7722ebf32b7dc
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.mixed_match_primary
+    target_statement_id: sha256:43402995bca55f5521866eeb0ee5511eb2286692e05f580c53d6db9a8d411839
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.normalize_left
+    target_statement_id: sha256:09d539aae34cc9886eea887368ca21b49e90c49b341b848dd9122a0822300d9d
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.pointwise_reindex
+    target_statement_id: sha256:909d6403571d80428c9b95d7a0e2969584d470de674bd5396962c3b97308bb98
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.pointwise_twist
+    target_statement_id: sha256:2bd4b5c6e4b6f659791ccd6a85f63efa52332fe4b7d7759e8f64654fb59c2c1a
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.primary_exponent
+    target_statement_id: sha256:5d3d41e4c5d08514394dd7c5e511c708d53b2831c8ac6e8fe0c6ecdd8a57b598
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.primary_noncyclic
+    target_statement_id: sha256:5bc79013050b71b5251f57f74621e26ed081c084e51be05986e6c62ec9139b8d
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.primary_nonsquare
+    target_statement_id: sha256:60b6c437412ebd8ef086b7e7c5ebcf60aeddd32ca0fa6612330856384aefaab5
+receipts:
+  unresolved_subitems: []

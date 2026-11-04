@@ -1,0 +1,37 @@
+fingerprints:
+  raw_sha256: sha256:eab879a50068a3ac9cafe289e699a4d33c6bb1da3345945a43876f204bf112c2
+  normalized_sha256: sha256:eab879a50068a3ac9cafe289e699a4d33c6bb1da3345945a43876f204bf112c2
+cas_ref: sha256:eab879a50068a3ac9cafe289e699a4d33c6bb1da3345945a43876f204bf112c2
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.PauliLabel
+    target_statement_id: sha256:aa35739f535f4c10334a8d6601213ac79d8646e34e3e3db8e81eab0353d79359
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.QubitIndex
+    target_statement_id: sha256:f5c70195bd7ecb03168d78789d657b6d8635c875a0cb15fffb0a80c0f4611509
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.QubitMap
+    target_statement_id: sha256:4414665104ecad598b5448654b72720bcbcab8b63bcedc6741c5151c4466d7e4
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.complexPauliTwirl
+    target_statement_id: sha256:18c8127827e096158012ea095cee3a977847954156b3c5a38cb3c3141abde66a
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.hammingWeight
+    target_statement_id: sha256:cea20dddfb54c142fab7dd4818702d9221bb3aade42f8c9f81b17fe2bdf4c16a
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauli1
+    target_statement_id: sha256:d7da465fbbea589e6d0262a731cd4238e23bfe7c4ec5e0962a2e35730cad8539
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliChannel
+    target_statement_id: sha256:e2b6e89293b6130e87c7312db8007d57d326df932f78b4b77e4be364570130dc
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliN
+    target_statement_id: sha256:d42bb3a86cb39fdfbd1b62bccc99dd6dae3ebd3fe9149e942b9bac20588f0d07
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliTwirlWeight
+    target_statement_id: sha256:5c89bab326479fe776d0f3c2dc4e084e4e8cd9390e01d8df305ee2ad4236e6c6
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauliWeightSum
+    target_statement_id: sha256:85c3658758e09546599d7737868f147e5ac16055f0bcdc69211822c50b27de69
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.pauli_process_matrix_and_fidelity_characterization
+    target_statement_id: sha256:40cb8dae686be2e11075b2f774230b2db0834564ee6ac3fa4b7c52202608d5ca
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.processMatrix
+    target_statement_id: sha256:bc78227d505643956d35347d582b52ac079d502c512077ea5d0ea03de9038f4b
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realProcessFidelity
+    target_statement_id: sha256:40872761a3c2942f4175f839e148515bcce0d5d971b33aadd7a62ae1227de369
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realTwirlWeight
+    target_statement_id: sha256:e2830c7d372d412112671309bc1f3df2b80b1ed63454aae5e40ea1392aa84979
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realWeightSum
+    target_statement_id: sha256:df284fe0fbc5d0ffe6bd37f5605c1ababc7ccb4148e8d91028e31b5dc252fd2d
+receipts:
+  unresolved_subitems: []

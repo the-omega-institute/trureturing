@@ -114,7 +114,7 @@ private abbrev insert (D : LatticeData) (hu : IsUnit D.G.det)
     (index : Index D) (field : NativeField D hu) : NativeField D hu :=
   wordField D hu field [index]
 
-private theorem jet_successor (order : ℕ) (mode : ℤ) :
+theorem jet_successor (order : ℕ) (mode : ℤ) :
     (order + 1 : ℂ) * jetScalar (order + 1) mode =
       (-(mode : ℂ) - 3 / 2 - (order : ℂ)) * jetScalar order mode := by
   have factorial : (order.factorial : ℂ) ≠ 0 := by
@@ -802,3 +802,47 @@ theorem correctedField_negative_current_insertion
 
 end D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField
 end
+
+
+namespace D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField
+open LatticeAllStateField
+
+/- The existing empty-correction charged readout is moved here from its
+residue consumer so original covariance can consume it without reversing the
+dependency order. Its statement and proof body are unchanged. -/
+theorem corrected_singleton_coeff_charged (D : LatticeData)
+    (hu : IsUnit D.G.det) (charge : Charge D) (e : ℤ) (x : ActualTensor D hu) :
+    (correctedField D hu (Finsupp.single charge (1 : Oscillator D))).coeff e x =
+      (chargedField D hu charge).coeff e x := by
+  have emptyEnumeration : ([] : List (Index D)).Perm
+      (LatticeAllStateField.occurrences D (0 : Index D →₀ ℕ)) := by
+    simp [LatticeAllStateField.occurrences]
+  have correction := Corr_monomial_enumeration D charge 0 [] emptyEnumeration
+  have corrOne : Corr D charge (1 : Oscillator D) =
+      Finsupp.single 0 (1 : Oscillator D) := by
+    calc
+      _ = shiftCoefficients D (1 : Polynomial (Oscillator D)) := by
+        simpa only [show (MvPolynomial.monomial 0 (1 : ℂ) : Oscillator D) = 1 by simp,
+          correctionWord, map_one] using correction
+      _ = _ := by
+        apply Finsupp.ext
+        intro n
+        change (1 : Polynomial (Oscillator D)).coeff n = (Finsupp.single 0 1) n
+        simp [Polynomial.coeff_one, Finsupp.single_apply, eq_comm]
+  rw [correctedField, Finsupp.lsum_single, correctedPolynomial, LinearMap.comp_apply,
+    corrOne, correctedSum, Finsupp.lsum_single, LinearMap.comp_apply]
+  rw [shiftField_coefficient_public]
+  simp only [Nat.cast_zero, mul_zero, add_zero]
+  rw [show (1 : Oscillator D) = MvPolynomial.monomial 0 (1 : ℂ) by simp,
+    polynomialField_monomial_public]
+  have emptyOccurrences : LatticeHalfFockFockNormalField.occurrences D
+      (0 : Index D →₀ ℕ) = [] := by
+    simp [LatticeHalfFockFockNormalField.occurrences]
+  rw [emptyOccurrences]
+  rw [wordField_coefficient]
+  change (∑ᶠ _ : Unit, (chargedField D hu charge).coeff e x) = _
+  rw [finsum_eq_single _ () (by
+    intro modes distinct
+    exact (distinct (Subsingleton.elim _ _)).elim)]
+
+end D5.S3.VertexAlgebra.LatticeHalfFockCorrectedField

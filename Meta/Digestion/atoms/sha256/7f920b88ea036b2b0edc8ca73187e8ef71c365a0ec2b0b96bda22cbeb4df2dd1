@@ -1,0 +1,11 @@
+**Corollary 5.4 (polynomial bit encoding).** For $r=1$ use $M=300(s+2)$ and for $r=2$ use $M=1200(s+2)$. Put $w=\lceil\log_2(M+1)\rceil$. Certificates can be encoded in at most
+
+$$
+(M+32)(2+2w)+4s+512
+\tag{POC.17}
+$$
+
+bits, hence $O(s\log(s+2))$ bits.
+
+Proof. Encode the active node count in $w$ bits and provide $M$ slots, each with a two-bit alpha/beta/pair/reserved tag and two $w$-bit fields. Leaves have zero fields; pair fields are nonzero indices strictly smaller than their own index. Inactive slots have the reserved tag and zero fields. Include eight active root indices per origin, the claimed vectors in two bits per reply when required, and each complete target in a fixed 128-bit padded row field. Such a row field suffices: at most fifteen exterior nodes need two-bit tags; at most eight holes need three-bit addresses; a four-bit reached-hole count and eight three-bit names use fewer than 128 bits in total. The parse is prefix ordered, so brackets and blocking leaves are retained exactly. For $r\le2$ the vectors use at most $4s$ bits, rows at most 256, and header/root/padding overhead fits the displayed slack. These are certificate fields, not installed states or runtime memory. $\square$
+

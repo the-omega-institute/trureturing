@@ -1,0 +1,11 @@
+**Corollary 15.1 (Four-letter existence and the retained lower-bound question).** The original $u_7$ admits a nonerasing morphism onto exactly four actual letters whose image is infinite rich and has ordinary critical exponent $e_3$. In the notation of Definition 3.3,
+
+$$
+RT(\mathcal C_4)\le e_3.
+\tag{60}
+$$
+
+The minimum $H=30$ and the equality classification of Theorem 14.1 concern the literal class $\mathcal L_3$ with a nonempty marker. They impose no such minimum or classification on arbitrary nonliteral morphisms. The unrestricted reverse inequality $RT(\mathcal C_4)\ge e_3$, the analogous exact small-alphabet existence for every $r\ge4$, and existence of a nonconstant family of rich original-source images with exponents strictly above and tending to $e_3$ remain separate questions.
+
+*Proof.* Apply Theorems 12.2 and 13.1 to (43). This is also an arbitrary-nonerasing-morphism existence witness, since that larger class contains the literal class. Taking the infimum over all infinite rich four-letter words proves (60). Theorem 14.1 uses the literal marker conditions in its size and word arguments; there is no implication giving them for an arbitrary morphism. Inequality (60) is an upper bound supplied by one actual word and supplies no lower bound for all words in $\mathcal C_4$. The construction fixes $r=3$ and gives one exact exponent, so it supplies neither the higher-parameter constructions nor a family with strictly positive exponent excess. $\square$
+

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:709e1b9219e444fe22c3375c40513364ddcb4c15cb90e045ef8f4583edff1021
+  normalized_sha256: sha256:709e1b9219e444fe22c3375c40513364ddcb4c15cb90e045ef8f4583edff1021
+cas_ref: sha256:709e1b9219e444fe22c3375c40513364ddcb4c15cb90e045ef8f4583edff1021
+coverage_gids:
+  - gid: D5/S3/Combinatorics/SpectralGraph/CyclicTridiagonalTransferTrace.cycleDiag_det_transfer
+    target_statement_id: sha256:0d87cae32524a17353860643eae98a987b266e4b242f783674583c896447cbb6
+  - gid: D5/S3/Combinatorics/SpectralGraph/CyclicTridiagonalTransferTrace.evolution
+    target_statement_id: sha256:1a37e7c598ec6dde5839df3386645f11056d547a72f421e61cce3dc536f11f4e
+  - gid: D5/S3/Combinatorics/SpectralGraph/CyclicTridiagonalTransferTrace.tailTransfer_entries
+    target_statement_id: sha256:dc5d727dc25d4f07838e53bd7c29f9a27924088f2a698923361590ef713f12e8
+  - gid: D5/S3/Combinatorics/SpectralGraph/CyclicTridiagonalTransferTrace.tailTransfer_full
+    target_statement_id: sha256:5d406afd390f231cd7d2d0521c6b516dc7fad00dd35a01eb9d4a84cc9483b1db
+  - gid: D5/S3/Combinatorics/SpectralGraph/CyclicTridiagonalTransferTrace.transfer
+    target_statement_id: sha256:9c75926175b4e0e95c8a5df62503e74ba85b035e570897bfdc462d1888d30f30
+receipts:
+  unresolved_subitems: []

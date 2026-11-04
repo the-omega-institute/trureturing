@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa4fb2b2dfbc7f5cdd9323f004c380e642f1b2fc429feca85105f925da0f917a
+  normalized_sha256: sha256:fa4fb2b2dfbc7f5cdd9323f004c380e642f1b2fc429feca85105f925da0f917a
+cas_ref: sha256:fa4fb2b2dfbc7f5cdd9323f004c380e642f1b2fc429feca85105f925da0f917a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 只列新素数局部数据这一语言扩展种类，没有数学性质或有限停止结论。'
+    previous_atom_id: 97b6ea1d5c0986c582434d2ae51eee78b11ab904a575bb60cf8802fae2722c83
+    next_atom_id: 30f4133ff28d93c8f770b7630bda9e73eec89e912216386f3bd66142b8415990

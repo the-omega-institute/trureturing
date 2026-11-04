@@ -1,0 +1,11 @@
+**Construction 83.1 (actual original-frontier traversal).** At the held
+entrance, keep a stack initially containing the original root address.
+At each visited original logical address $p$, issue real $P_p$ and consume
+its full reply. A branch refusal records a branch and schedules its two
+original children in left-first order. A successful P records an original
+alpha and ends that visit. A wrong-type reply records an original beta;
+actually perform $S_p$, consume its success, and end that visit. Neither
+leaf case schedules new descendants. An absent reply is an off-premise
+failure, not a successful parse. There is no numeric Read, Add, Tick or
+Reset anywhere in this prefix, and no arming or terminal-value replacement.
+

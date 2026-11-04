@@ -1,0 +1,37 @@
+**引理 2.1（四个迹坐标）。** 对任意二阶实矩阵 $X$，四个数
+
+$$
+\alpha=\operatorname{tr}X,\quad
+\beta=\operatorname{tr}(MX),\quad
+\gamma=\operatorname{tr}(BX),\quad
+\eta=\operatorname{tr}(DX)
+$$
+
+唯一决定 $X$，其逆为
+
+$$
+\Psi(\alpha,\beta,\gamma,\eta)=
+\begin{pmatrix}
+-\alpha-3\beta+\gamma+\eta&-3\alpha-4\beta+\gamma+2\eta\\
+\alpha+2\beta-\eta&2\alpha+3\beta-\gamma-\eta
+\end{pmatrix}.
+\tag{2.1}
+$$
+
+证明。写 $X=(\begin{smallmatrix}x&y\\z&w\end{smallmatrix})$。迹配对的展开为
+
+$$
+\operatorname{tr}\left(
+\begin{pmatrix}r&s\\u&v\end{pmatrix}X\right)
+=rx+sz+uy+vw.
+\tag{2.2}
+$$
+
+因此四个坐标分别是
+
+$$
+x+w,\qquad y+z+w,\qquad x+y+2z+w,\qquad x+2y+z+3w.
+$$
+
+将这四式代入式 (2.1)，四项依次化为 $x,y,z,w$，故每个 $X$ 都被恢复。反向把式 (2.1) 的四项代回上述迹表达式，依次得到 $\alpha,\beta,\gamma,\eta$，故任意实坐标也都被实现。∎
+

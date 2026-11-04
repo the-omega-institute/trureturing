@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f0716308ac8e61ec527c30baf25c68b136d12a64da89b88f84e8840715635784
+  normalized_sha256: sha256:f0716308ac8e61ec527c30baf25c68b136d12a64da89b88f84e8840715635784
+cas_ref: sha256:f0716308ac8e61ec527c30baf25c68b136d12a64da89b88f84e8840715635784
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: '仅由钉版上游闭合的命题（不是非命题）：对任意 z、lambda : Complex，展开 q_z(lambda,1) 即 -lambda^2+lambda+z；Mathlib 的 Matrix.mulVec、dotProduct、Fin.sum_univ_two、Fin.forall_fin_two 及交换环正规化给出 null 方程 iff 特征方程，并给出向量 (lambda,1) 是 T(z) 的 lambda 本征向量 iff 同一方程。已用 make lean 的临时 example 接受完整两个 iff。 Mathlib pin 56a005855ea17e0b0958f73ec801ae140b0a1679（lake-manifest.json）。仓内先检索 D5/**/*.lean 全部公开与 private 声明，按 two-channel/zero-balance/log(norm)/lambda、null direction/eigenvector slope/quadratic-form 数学形状检索并查近邻；检查 Observer/HyperbolicTransport、AgencyHolonomy、FibonacciEigen、Weil/ZetaLinear/CriticalDampingPartition 及 generic RationalIntervalExpression.checked_expression_encloses、FiveModePredictiveLawGeometry.Core.cutoff_first_nonstrict。未得到在保留任意复参数和全部子句的推导中实际供应子目标的冻结 GID。前者限实有界表达式区间证书，后者限几何 minority 截止，均不供应本 atom 的关系。'
+    previous_atom_id: e7200a51841500fb6fb7d36f2f3d06a5c91ff009106cfae90139189f8b8b9057
+    next_atom_id: cd48abd00b4ce2a2b02e68f6f4e35d9510b803e98b58b8da5ae19462aa5ca9c2

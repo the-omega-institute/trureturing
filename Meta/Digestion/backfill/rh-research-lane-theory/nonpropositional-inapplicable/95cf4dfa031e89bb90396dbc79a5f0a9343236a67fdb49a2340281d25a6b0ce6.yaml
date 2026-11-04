@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:95cf4dfa031e89bb90396dbc79a5f0a9343236a67fdb49a2340281d25a6b0ce6
+  normalized_sha256: sha256:95cf4dfa031e89bb90396dbc79a5f0a9343236a67fdb49a2340281d25a6b0ce6
+cas_ref: sha256:95cf4dfa031e89bb90396dbc79a5f0a9343236a67fdb49a2340281d25a6b0ce6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此处仅声明形式化范围不含任意离线零点的有限测试函数隔离，没有断言不存在隔离函数。
+    previous_atom_id: a56049f5e190bd015cc7cb9e1935d4c66ab804fce612cbc21519af13c44dd234
+    next_atom_id: 57386ce67bbff60019c1289aa3e2f7cdb1fb35373ef41c9fd698a1e562df4f7d

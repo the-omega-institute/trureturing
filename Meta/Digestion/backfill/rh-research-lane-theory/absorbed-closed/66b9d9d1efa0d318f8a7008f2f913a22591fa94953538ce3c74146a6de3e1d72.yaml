@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:66b9d9d1efa0d318f8a7008f2f913a22591fa94953538ce3c74146a6de3e1d72
+  normalized_sha256: sha256:66b9d9d1efa0d318f8a7008f2f913a22591fa94953538ce3c74146a6de3e1d72
+cas_ref: sha256:66b9d9d1efa0d318f8a7008f2f913a22591fa94953538ce3c74146a6de3e1d72
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/GeometricLiNegativeType.integerGeometric_add
+    target_statement_id: sha256:f06f8abcdeffbe3cc07459b39e8aa877c38e429544e4f85f3378ac3110be1adc
+  - gid: D5/S3/Weil/Probability/GeometricLiNegativeType.integerGeometric_continuous
+    target_statement_id: sha256:2fdac5240c1743e2e084dcda6bf5967b6de66dc82304f3309d335cbb39d4b006
+  - gid: D5/S3/Weil/Probability/GeometricLiNegativeType.integerGeometric_distance
+    target_statement_id: sha256:51b60712464818d02b81d7729bed9b5925de145e4d09f712c198361745bff0f7
+  - gid: D5/S3/Weil/Probability/GeometricLiNegativeType.integerGeometric_nat
+    target_statement_id: sha256:f0656b488ac4a29a204ea76f2446012bb817e05cc82cdab691446992c2fd8632
+  - gid: D5/S3/Weil/Probability/GeometricLiNegativeType.integerGeometric_neg
+    target_statement_id: sha256:fdd37d47497492786261358a4f533993ada876c8a7f35ba7f652a1173f17e3ed
+receipts:
+  unresolved_subitems: []

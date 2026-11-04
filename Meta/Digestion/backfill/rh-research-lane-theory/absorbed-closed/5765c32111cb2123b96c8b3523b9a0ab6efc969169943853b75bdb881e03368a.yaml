@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5765c32111cb2123b96c8b3523b9a0ab6efc969169943853b75bdb881e03368a
+  normalized_sha256: sha256:5765c32111cb2123b96c8b3523b9a0ab6efc969169943853b75bdb881e03368a
+cas_ref: sha256:5765c32111cb2123b96c8b3523b9a0ab6efc969169943853b75bdb881e03368a
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataNonvacuityAssembly.canonical_zeroData_closed_chain
+    target_statement_id: sha256:f482abea48fd07b719eea4649beb67075b836fbc7c40c39a7deb7290a3e0d5a7
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataNonvacuityAssembly.certificate_representation_iff
+    target_statement_id: sha256:5786e1980bb1aa3660c717179a823931f1ba19ba5313c5caeabc7949ec8cf47b
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataNonvacuityAssembly.exists_faithful_zeroData_of_riemannVonMangoldt
+    target_statement_id: sha256:6cfc3ff80d56311296ca9054833d9d0084824cd40216d9bc28f5332b8df9f571
+receipts:
+  unresolved_subitems: []

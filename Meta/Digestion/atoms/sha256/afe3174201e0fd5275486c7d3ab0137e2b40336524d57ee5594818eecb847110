@@ -1,0 +1,17 @@
+**Lemma 60.1 (induced growth protects the previous adjacency image).** Let $A\in\mathbb Q^{n\times n}$ and $B\in\mathbb Q^{n'\times n'}$ be symmetric, and let $E$ be the coordinate inclusion of retained old vertices, with
+
+$$
+E^{\mathsf T}BE=A.
+\tag{60.1}
+$$
+
+Then $BE$ is injective on $\operatorname{im}A$. Also $\operatorname{rank}(BE)\ge\operatorname{rank}A$.
+
+**Proof.** If $z=Ay$ and $BEz=0$, compression gives $Az=0$, whence
+
+$$
+z^{\mathsf T}z=(Ay)^{\mathsf T}z=y^{\mathsf T}Az=0.
+$$
+
+A sum of rational squares vanishes only when every coordinate is zero. Thus $z=0$. For the rank inequality, (60.1) factors $A$ through $BE$, and rank cannot increase under postcomposition. $\square$
+

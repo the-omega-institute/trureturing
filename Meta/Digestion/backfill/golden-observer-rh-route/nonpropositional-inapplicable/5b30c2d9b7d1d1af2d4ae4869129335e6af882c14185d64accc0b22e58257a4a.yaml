@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5b30c2d9b7d1d1af2d4ae4869129335e6af882c14185d64accc0b22e58257a4a
+  normalized_sha256: sha256:5b30c2d9b7d1d1af2d4ae4869129335e6af882c14185d64accc0b22e58257a4a
+cas_ref: sha256:5b30c2d9b7d1d1af2d4ae4869129335e6af882c14185d64accc0b22e58257a4a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: M1-b 不占席位及空类型诊断的工作边界；未断言零点集为空。
+    previous_atom_id: 7bd33142027bd076ca89e35a7aa81d2a8fdcf828e422c13eb4cbf0fad1dd764a
+    next_atom_id: 5ab65f560ace945915cd8e81de84d44c2ce3c792035a1fef22d24af261cccdd9

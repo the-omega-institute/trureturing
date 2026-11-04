@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca71ced11c348ba6b04cc47bd5dd6b84b2e17f3b338544585ab4900f7c03a96d
+  normalized_sha256: sha256:ca71ced11c348ba6b04cc47bd5dd6b84b2e17f3b338544585ab4900f7c03a96d
+cas_ref: sha256:ca71ced11c348ba6b04cc47bd5dd6b84b2e17f3b338544585ab4900f7c03a96d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Requirement to supply a realized range and a proof or counterexample for semantic exactness; exactness is not asserted.
+    previous_atom_id: 2a004f820889c80ad27225c00f853b674dc576c54b2febc788dfc885871a67e5
+    next_atom_id: 76ebbbd52d2131928f72758880518ef0b089d89bdcb1c569bad70ede72188171

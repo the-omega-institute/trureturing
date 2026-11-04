@@ -1,0 +1,18 @@
+### 定理 2.4（从二元核构造内积与最小表示）
+
+<a id="thm-c129-kernel-hilbert"></a>
+
+满足 C129 的核具有表示 $\iota:X\to\mathcal H$，使
+$K(h,k)=\langle\iota(h),\iota(k)\rangle$，且 $\operatorname{span}\iota(X)$ 稠密。这样的最小表示在保持每个历史标签的意义下酉等价。
+
+**证明。**
+先*构造*自由复线性包络 $\mathcal F=\mathbb C^{(X)}$，其元素只有有限支撑。在其中定义
+
+$$
+\Gamma(f,g)=\sum_{h,k}\overline{f(h)}K(h,k)g(k).
+$$
+
+每次求和落在一张有限正表中，所以 $Q(f)=\Gamma(f,f)\ge0$，而半双线性由有限和的定义成立。若 $Q(f)=0$，对 $f+tg$ 的正性选相位与任意小的 $t$，便得 $\Gamma(f,g)=0$；故零集合 $\mathcal N$ 恰为根空间，商 $\mathcal F/\mathcal N$ 的内积良定义且正定。取完成并令 $\iota(h)=[\delta_h]$，即得表示。
+
+两个最小表示间，将 $\sum_h a_h\iota_1(h)$ 送到 $\sum_h a_h\iota_2(h)$。两边的平方范数均由同一 $K$ 给出，故映射良定义且等距；稠密性使其唯一延伸为酉算符。零核给零空间，也包含在内。
+

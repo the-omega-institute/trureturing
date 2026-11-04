@@ -1,0 +1,70 @@
+**Lemma 14.1 (necessary directions for an injective scalar).** Fix $1<b<2$ and a real matrix
+
+$$
+A=\begin{pmatrix}\alpha&\beta\\\gamma&\delta\end{pmatrix},\qquad
+ e=\beta-\gamma,\qquad f=\delta-\alpha-\gamma.
+$$
+
+If $P\mapsto\operatorname{tr}(AP)$ is injective on the entire $\mathcal F_b$, then $e\ne0$ and, with $\rho=-f/e$, at least one of
+
+$$
+\rho\in K_b,\qquad -1-\rho\in K_b
+\tag{14.1}
+$$
+
+holds. Every collision used to prove this necessity consists of two distinct strictly positive rank-one trace-one matrices with the same prescribed $b$.
+
+**Proof.** Write $P=\left(\begin{smallmatrix}1-t&u\\v&t\end{smallmatrix}\right)$. On $\mathcal F_b$, $u+v+t=b$, and hence
+
+$$
+\operatorname{tr}(AP)=\alpha+\gamma b+ft+ev.
+\tag{14.2}
+$$
+
+If $e=0$, a nonsymmetric $P$ and its transpose have equal (14.2). Such sources exist for every $b>0$: in (8.3)–(8.5) take $r>0$ sufficiently small, so $q\to b>0$ while $r\to0$. Then $P\ne P^{\mathsf T}$ and both belong to $\mathcal F_b$. This proves noninjectivity when $e=0$.
+
+Suppose $e\ne0$. Equal responses are equivalent to equal values of $v-\rho t$. Reuse the algebraic pair (9.6): for a real $\rho$ and $0<x<y$, put
+
+$$
+\Delta=(1+\rho)xy+x+y+\rho,
+$$
+
+$$
+\begin{aligned}
+P_{x,y}&=\frac1\Delta
+\begin{pmatrix}y+\rho&(1+\rho)y+1\\x(y+\rho)&x((1+\rho)y+1)\end{pmatrix},\\
+Q_{x,y}&=\frac1\Delta
+\begin{pmatrix}x+\rho&(1+\rho)x+1\\y(x+\rho)&y((1+\rho)x+1)\end{pmatrix}.
+\end{aligned}
+\tag{14.3}
+$$
+
+Whenever all the displayed entries are positive, these are rank-one trace-one sources, and
+
+$$
+Q_{x,y}-P_{x,y}=\frac{y-x}{\Delta}
+\begin{pmatrix}-1&-(1+\rho)\\\rho&1\end{pmatrix}.
+\tag{14.4}
+$$
+
+Their common $M$ trace is the quotient (9.7). Requiring this quotient to equal $b$ gives exactly
+
+$$
+y(x)=\frac{1-b\rho+(1+\rho-b)x}
+{b-1-\rho+\bigl(b(1+\rho)-(2+\rho)\bigr)x}.
+\tag{14.5}
+$$
+
+For $\rho>0$ outside $K_b$, $b$ lies strictly between $1+\rho$ and $1/\rho$. Consequently $1-b\rho$ and $b-1-\rho$ are nonzero with the same sign, so $y(0)>0$. Take $x>0$ sufficiently small that (14.5) is defined and $y(x)>x$. All entries and $\Delta$ in (14.3) are then strictly positive. Equations (14.4)–(14.5) give two distinct actual sources in $\mathcal F_b$ with equal response. This is precisely the positive-direction collision construction underlying Theorem 9.1, with its parameter left free.
+
+For $-1\le\rho\le0$, set $x_0=-\rho$ and $y_0=1/(b-1)>1\ge x_0$. Let $c_\rho=1-\rho-\rho^2>0$. The denominator in (14.5) at $x_0$ is $(b-1)c_\rho>0$, and $y(x_0)=y_0$. Also $\Delta(x_0,y_0)=c_\rho y_0>0$. Take $x>x_0$ sufficiently close to $x_0$. Then $0<x<y(x)$, $x+\rho>0$, $y(x)+\rho>0$, and both $(1+\rho)x+1$ and $(1+\rho)y(x)+1$ are positive. Thus (14.3) again supplies a strictly positive distinct colliding pair with exactly this $b$. The limiting zero entry at $x=x_0$ is not used as a source; the chosen $x>x_0$ is essential.
+
+Finally transposition preserves $\mathcal F_b$ and sends the direction $\rho$ to $\rho'=-1-\rho$, since
+
+$$
+(v-\rho t)(P^{\mathsf T})=u-\rho t
+=b-\bigl(v-\rho't\bigr)(P).
+$$
+
+If $\rho<-1$, then $\rho'>0$, and the positive-direction construction applies unless $\rho'\in K_b$. These cases exhaust all real $\rho$ and establish (14.1). The lemma asserts a necessary condition, which is all that the word lower bound needs. $\square$
+

@@ -8,6 +8,7 @@ public sealed class InspectorNativeModuleCacheTests(InspectorCompilerFixture com
     [InlineData("test_native.NativeTests.test_imported_comment_warm_report_equals_fresh")]
     [InlineData("test_native.NativeTests.test_native_format_preimage")]
     [InlineData("test_native.NativeTests.test_native_report_format_invalidates_every_module")]
+    [InlineData("test_native.NativeTests.test_report_format_finishes_before_module_callbacks")]
     public void ModuleCacheValidation(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
 
     [Fact]

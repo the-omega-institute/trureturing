@@ -1,0 +1,72 @@
+**Proposition 52.1 (fixed certificate counts do not bound numerical source size).** Use the original five-read history (29.1), $k=d=0$, and the fixed rational record
+
+$$
+             y^{\rm U}=(1,7/10,17/10,19/10,21/10).
+ \tag{52.1}
+$$
+
+For every rational $x\ge4$ put
+
+$$
+ \delta_x=\frac35-\frac1{10x},\qquad
+ P_x=\begin{pmatrix}1/2&x\\1/(4x)&1/2\end{pmatrix},\qquad
+ H_x=\frac9{10x},\qquad D_x=\frac25-\frac4{5x}.
+ \tag{52.2}
+$$
+
+Then $\mathcal W_{\delta_x}(y^{\rm U})$ is nonempty and both escape directions fail. Nevertheless it contains this whole world with $P_{12}=x$. In particular, for $x=2^n$, $n\ge2$, the total rational input length is $O(n)$, both directional bounds are finite, and every valid $12$ bound is at least $2^n$. The label and projection count bounds depending only on $k,d$ are constant throughout this family. At the limiting rational radius $3/5$ the $12$ direction passes. Consequently a classifier receiving only a radius interval of prescribed positive width cannot always determine $12$ escape correctly, even when the exact record is supplied and every promised exact radius is rational with a nonempty compatibility class.
+
+**Proof.** Strict source legality and nonzero constant gain follow directly from (52.2). This uses the source and gain in (35.3), but increases its single whole drift by $1/(10x)$. Thus its residual $z-y^{\rm U}$ at the five original clocks is exactly
+
+$$
+ \begin{aligned}
+ r_0&=-\frac35+\frac1{10x}=-\delta_x,\\
+ r_1&=\frac35-\frac7{20x}+\frac9{40x^2},\\
+ r_2&=-\frac25+\frac{11}{20x}+\frac9{40x^2},\\
+ r_3&=-\frac35+\frac1{10x}+\frac9{20x^2},\\
+ r_4&=\frac1{10}+\frac1x+\frac9{40x^2}.
+ \end{aligned}
+ \tag{52.3}
+$$
+
+For $x\ge4$, $r_1>0$ and
+
+$$
+ \delta_x-r_1=\frac1{4x}-\frac9{40x^2}>0.
+ \tag{52.4}
+$$
+
+For the middle coordinate,
+
+$$
+ r_2+\delta_x=\frac15+\frac9{20x}+\frac9{40x^2}>0,
+ \qquad
+ \delta_x-r_2=1-\frac{13}{20x}-\frac9{40x^2}>0.
+ \tag{52.5}
+$$
+
+Also $r_3=-\delta_x+9/(20x^2)$, with $0<9/(20x^2)<2\delta_x$, and $r_4>0$ with
+
+$$
+             \delta_x-r_4=
+                \frac12-\frac{11}{10x}-\frac9{40x^2}>0.
+ \tag{52.6}
+$$
+
+The final strict inequality follows by evaluating the two decreasing positive subtracted terms at $x=4$. Taking all five original errors to be $\xi_i=-r_i$ proves compatibility, including exact contact at clock zero. The only change from the supplied family is the one common drift; no per-read gain or independently chosen residual is used.
+
+The supplier Proposition 35.1 gives
+
+$$
+ \operatorname{dist}_\infty(y^{\rm U},\mathcal E_{12})=3/5,
+ \qquad
+ \operatorname{dist}_\infty(y^{\rm U},\mathcal E_{21})=7/10.
+ \tag{52.7}
+$$
+
+Since $\delta_x<3/5$, the existing finite-record limit theorem, Theorem 30.2, excludes an unbounded source subsequence in either direction: such a subsequence would give a point of the corresponding $\mathcal E_\nu$ inside this very closed radius-$\delta_x$ box, contradicting (52.7). Thus both directions fail, while the displayed world forces every valid $12$ bound to be at least $x$. For $x=2^n$ the reduced numerator and denominator of $\delta_x=(6\cdot2^n-1)/(10\cdot2^n)$ have $O(n)$ bits, and the other input data are fixed. Any nonnegative rational upper bound at least $2^n$ has a numerator with at least $n+1$ binary bits. This proves the encoding and numerical-height assertion. At radius $3/5$ the original family (35.3) proves actual $12$ escape, as already used in (40.3).
+
+For the interval assertion, given any $\epsilon>0$, choose $n\ge2$ with $1/(10\cdot2^n)<\epsilon$. Both $\delta_{2^n}$ and $3/5$ lie in the interval $[3/5-\epsilon,3/5]$. The preceding proof gives nonemptiness and a failed $12$ direction at the former rational input, and a passing $12$ direction at the latter. The same radius interval and exact received record therefore admit two different correct Boolean answers. A rule using only that interval must be wrong on one of them. Exact finite-bit rational input distinguishes them by their encoded denominators, and Theorems 50.2–51.1 charge this height and the necessary algebraic operations. This is an information obstruction for the interval-only replacement, not a lower bound on optimal Turing running time.
+
+The new content of this consumer is the inward-radius whole-world family (52.2), together with its finite but necessarily growing directional bounds. Its inputs are the existing same-history contact example and limit-space exclusions, not a new general root-separation theorem. It shows why the height parameters and binary output lengths in §§49–51 carry mathematical information absent from a count of certificate labels. $\square$
+

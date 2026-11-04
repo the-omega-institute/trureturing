@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e97c5ae2daed0a587b66df658ac037f03273262b820271f6f1eb2b82020457cd
+  normalized_sha256: sha256:e97c5ae2daed0a587b66df658ac037f03273262b820271f6f1eb2b82020457cd
+cas_ref: sha256:e97c5ae2daed0a587b66df658ac037f03273262b820271f6f1eb2b82020457cd
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.finiteHolonomyEnergy
+    target_statement_id: sha256:bfd0a7643938493b5b5a33d6782ab08a68a79198afac6a4f22bfb988e962b00c
+  - gid: D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.finite_stable_holonomy_energy_bound
+    target_statement_id: sha256:dd50740d2add307d2849875b614c680cc6adf384efbe2a7b5081a412fc8dde99
+  - gid: D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.stableResidualHolonomyEnergy
+    target_statement_id: sha256:cd1959c135f531ee407ab7553ea3c36d15dbc99b6b11bc6d66036d2a2cfbbec1
+receipts:
+  unresolved_subitems: []

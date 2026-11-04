@@ -1,0 +1,54 @@
+**Theorem 105.2 (selected actual samples after zero completion).** Under
+Definition 105.1 execute its completion before any receiver Tick or Add.
+Let $M=N+p+2s$, $b'=b+s$, $I'=M-b'$, $E$ be its actual old-cell inclusion,
+and $B=A_v$. There is a geometry-only choice of exactly $N$ terminal/epoch
+pairs with largest epoch $0\le H\le I'$ such that the following real-call
+protocol recovers the whole original $x$ and installs a synchronized
+whole-current predictor at the actual endpoint
+
+$$
+w=B^HEx.
+\tag{105.1}
+$$
+
+It uses $N$ scalar Reads, $H$ Tick and $H+1$ Hold in the receiver assay,
+with no Add, Reset, clone or repeated unknown preparation. Each selected
+scalar is actually read at its stated epoch on this specimen.
+
+**Proof.** The completion is the enabled zero-appending word already
+proved; it takes the actual field to $Ex$ without sampling or changing
+old values. On its earned final tree let $J'$ inject the $b'$ current
+canonical terminals and put $C'=J'^{\mathsf T}$. The all-leaf forcing
+supplier (75.1), now on this same $v$, gives full column rank $M$ to
+
+$$
+O=\begin{bmatrix}C'\\C'B\\\vdots\\C'B^{I'}\end{bmatrix}.
+\tag{105.2}
+$$
+
+Thus $OE$ has rank $N$: $OEz=0$ implies $Ez=0$ by the forcing left
+inverse, and then $z=0$ by (103.1). Enumerate its rows by increasing
+epoch and then canonical terminal, keep a row exactly when it increases
+rank, and stop at $N$. Exact finite elimination yields an invertible
+$N$-square matrix $R_e$ and the selected pairs $(k_i,j_i)$; their largest
+epoch is $H\le I'$. This is a paid geometry calculation independent of
+$x$, not an additional observation channel.
+
+Actually Hold and take selected epoch-zero Reads; for epochs
+$1,\ldots,H$ actually Tick, Hold, and take exactly that epoch's selected
+Reads. Each raw selector is obtained from the earned current binding,
+and each whole reply/End/acknowledgement/Return is consumed. Since Read
+and Hold leave the field unchanged, the measured vector satisfies
+
+$$
+y_i=e_{\ell_{j_i}}^{\mathsf T}B^{k_i}Ex,\qquad
+y=R_ex,\qquad x=R_e^{-1}y.
+\tag{105.3}
+$$
+
+The actual source has advanced exactly $H$ Ticks, so calculate and
+install $B^HEx$, not the original $x$ advertised as current. All local
+work takes place under Hold. Finite exact arithmetic and the stipulated
+backing give termination. Nothing here uses a numerical Tick ACK.
+$\square$
+

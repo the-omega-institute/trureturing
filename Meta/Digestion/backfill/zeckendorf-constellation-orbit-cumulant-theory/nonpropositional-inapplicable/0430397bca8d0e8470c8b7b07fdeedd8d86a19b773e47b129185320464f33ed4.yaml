@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0430397bca8d0e8470c8b7b07fdeedd8d86a19b773e47b129185320464f33ed4
+  normalized_sha256: sha256:0430397bca8d0e8470c8b7b07fdeedd8d86a19b773e47b129185320464f33ed4
+cas_ref: sha256:0430397bca8d0e8470c8b7b07fdeedd8d86a19b773e47b129185320464f33ed4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只是对直觉作修正的标题和过渡句，不包含数学断言。
+    previous_atom_id: c83b9ca0abfb2d4fd9c2bb23b63e2e02d6c9d60de7fdfd6cc513a204d81116fd
+    next_atom_id: bbaac93b190b670a2a1f68f81a597cc657fc1304e396dd4d591c393b84e4e7c7

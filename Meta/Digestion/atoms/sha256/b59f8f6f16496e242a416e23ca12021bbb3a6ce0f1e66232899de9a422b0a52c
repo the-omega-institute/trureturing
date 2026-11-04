@@ -1,0 +1,70 @@
+**Lemma 12.2 (A uniformly separated core on the cap sublevel).** For every
+fixed $W>0$ there are $A_W,b_0,c_0>0$ such that all pairs (12.1) with
+$a\ge A_W$ and all $x\in\mathcal X(a,h)$ satisfying
+
+$$
+H(x)\le S_{a,h}
+\tag{12.3}
+$$
+
+have exactly $r$ marginals at least $b_0/a$. Each of these is at least
+$c_0$, and the other $h$ marginals are less than $b_0/a$. These define a
+unique partition $[r+h]=C\mathbin{\dot\cup}D$, with $|C|=r$ and $|D|=h$,
+into the largest and smallest marginals. Moreover
+
+$$
+S_{a,h}-B_0=2\sqrt2\,h a^{3/2}+O_W(a).
+\tag{12.4}
+$$
+
+**Proof.** Write $\zeta=h^2-2a$, so $|\zeta|\le W$. The exact cap value
+in (12.2) gives
+
+$$
+S_{a,h}-B_0
+=\frac{2ar^2}{a-1}+ah^2
+=4a^2+(\zeta+6)a+8+\frac8{a-1}.
+\tag{12.5}
+$$
+
+Taylor's formula for $\sqrt{1+\zeta/(2a)}$, with a remainder bounded
+uniformly for $|\zeta|\le W$ and sufficiently large $a$, gives
+
+$$
+2\sqrt2\,h a^{3/2}
+=4a^2\sqrt{1+\frac{\zeta}{2a}}
+=4a^2+\zeta a+O_W(1).
+$$
+
+This proves (12.4). In particular, taking $C_*=10$ and sufficiently large $a$ depending only
+on $W$, (12.3) implies $H\le a^3+C_*a^2$ and
+$1\le h/\sqrt a\le2$.
+
+Apply Lemma 7.1 with $(C,L,R)=(C_*,1,2)$. Use its partition, constructed
+in its proof by the threshold $b_0/a$, where $b_0=4C_*$. That proof gives
+the uniform floor $c_0=(8C_*+1)^{-1}$ on the threshold core. If its core
+has $a+j$ labels, its tail has $n=h+1-j$ labels, and with
+$v=a\mathbb P(T\text{ meets that tail})$ one has
+
+$$
+1\le j\le4C_*,\qquad v\ge\frac1{8C_*},\qquad
+\frac d{a^2}\ge\frac{(h+1-j)^2}{av}+2v+2j-2-O_W(a^{-1/2}).
+\tag{12.6}
+$$
+
+All of these are within the compact positive-ratio hypotheses of that
+lemma. In particular $n>0$ eventually. Arithmetic–geometric mean on the
+first two terms of its last bound gives
+
+$$
+\frac d{a^2}
+\ge\frac{2\sqrt2 h}{\sqrt a}+2j-2-O_W(a^{-1/2}),
+$$
+
+because $j$ is uniformly bounded and $n=h+1-j$. Equations (12.3)–(12.4)
+give the opposite upper bound $d/a^2\le2\sqrt2 h/\sqrt a+O_W(a^{-1})$.
+The integer $j$ must therefore equal one once $a$ is sufficiently large.
+Thus the threshold core has $r$ labels and its complement has $h$.
+Increasing the threshold so that $b_0/a<c_0$ proves the strict gap and
+uniqueness of the partition. ∎
+

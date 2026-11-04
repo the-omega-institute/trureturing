@@ -1,0 +1,36 @@
+**定理 B-42.6（同族亏额的覆盖数消费）。** 对同一个三核均活跃的原族，
+
+$$
+\begin{aligned}
+J_{\rm loss}
+&\ge h+2\eta+2\sum_i\ell_i-2\delta(\tau-1)\\
+&\ge h+12-2\delta(\tau-1).
+\end{aligned}
+\tag{42.9}
+$$
+
+因此 $\tau\le7$ 时 $J_{\rm loss}>h$ 且 $|\mathcal F|\le L-1$。任何三核均活跃且 $|\mathcal F|\ge L$ 的合法原族必有 $\tau\ge8$、$\nu\ge4$。
+
+证明。写 $B=\sum_i b_i$、$E=\sum_i\ell_i$、$T=\sum_i t_i=6w_3-E$。同族归一化界(37.14)给 $B\le3w_4-(w_4/W)A$，三个 $z$ 的定义给
+
+$$
+\begin{aligned}
+\sum_{i<j}d_{ij}
+ &=3s-2(A+B)-T\\
+ &\ge3W-3w_4-2\delta A+E
+ =h+E-2\delta e.
+\end{aligned}
+\tag{42.10}
+$$
+
+因此 $J_{\rm loss}\ge h+2\eta+2E-2\delta e$。由(42.8)，$e\le\tau-1$；$\delta>0$ 保证代入负系数项的方向正确。又由(37.21)，$\eta\ge0$、$E\ge6$，得到(42.9)。这里每个量均属于原 $\mathcal F$，没有组合分别达到的边缘极值。
+
+若 $\tau\le7$，则(42.9)相对 $h$ 的余量至少为 $12-12\delta=12w_4/W>0$，包括端点 $\tau=7$。同族准确恒等式(37.23)为
+
+$$
+2(|\mathcal F|-L)=h-J_{\rm loss}.
+\tag{42.11}
+$$
+
+故 $|\mathcal F|<L$，整数性给 $L-1$。反过来，$|\mathcal F|\ge L$ 时必须 $\tau\ge8$，再由 $\tau\le2\nu$ 得 $\nu\ge4$。∎
+

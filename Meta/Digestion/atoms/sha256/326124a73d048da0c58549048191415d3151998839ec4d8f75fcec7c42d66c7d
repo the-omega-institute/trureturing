@@ -1,0 +1,45 @@
+### 命题 12.2（Petz 恢复在该结构中成为同一规范截面）
+
+<a id="prop-c94-petz-section"></a>
+
+定义
+
+<a id="eq-c94-petz-map"></a>
+
+$$
+\mathcal P_{\tau,C}(b)
+ =\tau^{1/2}C^*\!\left(
+ C(\tau)^{-1/2}bC(\tau)^{-1/2}
+ \right)\tau^{1/2}.
+\tag{12.3}
+$$
+
+则
+
+<a id="eq-c94-petz-section"></a>
+
+$$
+\mathcal P_{\tau,C}(b)=\bigoplus_kb_k\otimes\tau_{R,k},\qquad
+ C\mathcal P_{\tau,C}=\operatorname{id}_{\mathcal D},\qquad
+ R_{\mathcal A,\tau}=\mathcal P_{\tau,C}C.
+\tag{12.4}
+$$
+
+其中 $\mathcal P_{\tau,C}:\mathcal D\to B(H)$ 是 CPTP。
+
+**证明。**
+各 $q_k\tau_{L,k}$ 忠实，因此逆平方根良好定义。
+在第 $k$ 块中代入
+$\tau^{1/2}=\sqrt{q_k}\tau_{L,k}^{1/2}\otimes\tau_{R,k}^{1/2}$，
+左右的可见因子与其逆平方根相消，得到
+$b_k\otimes\tau_{R,k}$。
+其余恒等式随部分迹与迹一性直接成立。
+张量固定正态及直和保持完全正性，并保持总迹。
+
+式 [(12.3)](#eq-c94-petz-map) 是已有 Petz 恢复接口 [10](#ref-petz1986)。
+这里 $\mathcal P_{\tau,C}$ 从可见资料空间返回完整空间，
+而 $R=\mathcal P_{\tau,C}C$ 从完整空间回到同一完整空间，二者的类型不同。
+对一般非模相容参照，Petz 公式仍可定义并固定参照的压缩与恢复，
+但不能因此宣称 $C\mathcal P_{\tau,C}=\operatorname{id}$ 对全部可见资料成立。
+本轮的模相容与块结构正好保证这个全域右逆条件。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:25be48cdf4230187a7f67afd68ef8e6a1c82d5800a6003b3719b7dcf08594c7e
+  normalized_sha256: sha256:25be48cdf4230187a7f67afd68ef8e6a1c82d5800a6003b3719b7dcf08594c7e
+cas_ref: sha256:25be48cdf4230187a7f67afd68ef8e6a1c82d5800a6003b3719b7dcf08594c7e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Comparison-table heading and column schema naming C, Theta and Delta; the numeric 5040 and 10080 claims occur in separate row atoms.
+    previous_atom_id: 6960dfeb4ac8cb4176b621c78482c17883c97925ecfe6e90b356b72e8522a620
+    next_atom_id: be5541da888de6cb19453362d2879bd582dfebb9ae12affbe83e7ffd4a0034ff

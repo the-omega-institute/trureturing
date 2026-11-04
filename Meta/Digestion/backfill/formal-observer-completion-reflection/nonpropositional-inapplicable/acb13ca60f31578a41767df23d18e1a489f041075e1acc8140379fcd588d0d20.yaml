@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:acb13ca60f31578a41767df23d18e1a489f041075e1acc8140379fcd588d0d20
+  normalized_sha256: sha256:acb13ca60f31578a41767df23d18e1a489f041075e1acc8140379fcd588d0d20
+cas_ref: sha256:acb13ca60f31578a41767df23d18e1a489f041075e1acc8140379fcd588d0d20
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：将 L 操作定义为行为像的拓扑闭包，理想行为只是命名。
+    previous_atom_id: 742c5ef8c74bd7863778e1da227ca7681cd7e3620aba52913f1cab790201cffd
+    next_atom_id: 3c96e95566e8554421829dcb57cbccc4be7ced2994c0a39c5b8fecd5d0349c90

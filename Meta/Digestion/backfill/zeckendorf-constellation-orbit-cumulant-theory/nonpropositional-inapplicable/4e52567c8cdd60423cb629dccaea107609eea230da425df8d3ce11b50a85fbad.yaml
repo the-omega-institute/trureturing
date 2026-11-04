@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e52567c8cdd60423cb629dccaea107609eea230da425df8d3ce11b50a85fbad
+  normalized_sha256: sha256:4e52567c8cdd60423cb629dccaea107609eea230da425df8d3ce11b50a85fbad
+cas_ref: sha256:4e52567c8cdd60423cb629dccaea107609eea230da425df8d3ce11b50a85fbad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Lists moment determinacy as a condition still required, without asserting determinacy.
+    previous_atom_id: 5f44b4a3e6dbb5bc3673a716c4d2fcbcdcbabd043d10f38f1cbbfa76bc98eb8b
+    next_atom_id: 9e6cb2351d83733a96f883cfae973ac04795a34a045a36a41d58d68ac5745023

@@ -1,0 +1,12 @@
+# 11 两个门的切向关系给出不确定性
+
+设 A,B 为自伴读口，ψ 归一。记
+
+```math
+a=\langle\psi,A\psi\rangle,\qquad
+b=\langle\psi,B\psi\rangle,\qquad
+u=(A-aI)\psi,\quad w=(B-bI)\psi.
+```
+
+它们与对应门的水平切向只差 −i/ℏ 及各自的参数标定。
+

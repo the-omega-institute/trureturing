@@ -1,0 +1,50 @@
+**定理 8.4（窗口产生非周期 Delone 集）。**
+
+<a id="thm-delone"></a>
+
+若 $W$ 有界且内部非空，则 $\Lambda(W)$ 均匀离散、相对稠密、
+具有有限局部复杂性，且没有非零平移周期。
+这些结论不要求窗口闭性或边界测度为零。
+其中非周期性只需 $W$ 有界且 $\Lambda(W)\ne\varnothing$。
+
+**证明。**
+
+**均匀离散。**
+由定理 [8.1](#thm-window)，内部非空也保证 $D>0$。
+
+**相对稠密。**
+联合像 $L=S(\Gamma_d)$ 是 $\mathbb R^{2d}$ 中的满秩格。
+取其紧基本平行多面体 $F$，并取非空开集 $U\subset W$。
+紧集 $K=-\pi_-(F)$ 被开集族
+$U-P_-\gamma$、$\gamma\in\Gamma_d$ 覆盖；
+这是因为内部投影稠密。选有限子覆盖对应 $\gamma_1,\ldots,\gamma_m$。
+对任意 $t\in\mathbb R^d$，写 $(t,0)=\ell+f$，$\ell\in L,f\in F$。
+则 $\ell_-\in K$，故可选 $i$ 使 $\ell_-+P_-\gamma_i\in U$。
+所以 $\lambda=\ell_++P_+\gamma_i\in\Lambda(W)$，并有
+
+$$
+\left\lVert \lambda-t\right\rVert_\infty
+\le\sup_{f\in F}\left\lVert \pi_+f\right\rVert_\infty+
+\max_i\left\lVert P_+\gamma_i\right\rVert_\infty.
+$$
+
+这是与 $t$ 无关的有限常数。此处紧性来自基本域，而不是未经假设的窗口紧性。
+
+**非周期。**
+设 $\Lambda(W)+t=\Lambda(W)$，取 $P_+v\in\Lambda(W)$。
+存在唯一 $u\in\Gamma_d$ 使 $t=P_+u$。
+周期性和 $P_+$ 单射性迫使 $v+nu\in\Gamma(W)$，对所有 $n\in\mathbb Z$ 成立。
+于是 $P_-v+nP_-u$ 全在有界 $W$ 中，故 $P_-u=0$。
+$P_-$ 在整数域单射，给出 $u=0$、$t=0$。
+非空性必要：空点集的每个向量都是周期。
+
+**有限局部复杂性。**
+若一个差向量的可见部分位于有界集 $B_0$，
+内部部分必在有界集 $W-W$ 中。联合格与有界集
+$B_0\times(W-W)$ 的交只有有限点，故有界可见范围内只有有限种差向量。
+每个以点为中心的固定半径图样都是这一有限集合的子集，
+从而图样种类有限。证毕。
+ □
+
+<a id="statement-8-5"></a>
+

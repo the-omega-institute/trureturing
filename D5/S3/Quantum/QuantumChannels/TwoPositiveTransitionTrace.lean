@@ -153,7 +153,7 @@ lemma pair_extraction {d : ℕ} (Φ : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Ma
     Complex.neg_re] at hqr
   simp [amplification_apply, block_plus] at hqr
   linarith
-private theorem trace_standard {d : ℕ} (Φ : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)) :
+theorem trace_standard {d : ℕ} (Φ : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)) :
     LinearMap.trace ℂ ((Matrix (Fin d) (Fin d) ℂ)) Φ =
       ∑ i : Fin d, ∑ j : Fin d, Φ (Matrix.single i j 1) i j := by
   rw [LinearMap.trace_eq_matrix_trace ℂ (Matrix.stdBasis ℂ (Fin d) (Fin d))]

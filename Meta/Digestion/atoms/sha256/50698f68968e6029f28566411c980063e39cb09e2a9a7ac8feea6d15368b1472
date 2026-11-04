@@ -1,0 +1,38 @@
+**Proposition 82.3 (a performed reversible use, and the later-Tick boundary).**
+At either handoff choose distinct genuine terminals $a_0,v_0$ in fixed
+canonical order. From the acquired predictor compute $q_{\rm use}=w_{a_0}$,
+actually Add$(v_0,q_{\rm use})$, Hold, and Read$(v_0)$, consuming every
+completion. The real successor and literal reply are
+
+$$
+ Gw,\qquad w_{v_0}+w_{a_0},\qquad
+ G=I+e_{v_0}e_{a_0}^{\mathsf T},\quad
+ G^{-1}=I-e_{v_0}e_{a_0}^{\mathsf T}.             \tag{82.1}
+$$
+
+Replace $w$ by $w_{\rm p}$ for that alternative. On this specifically phased
+post-use image the four inverse identities still hold and every conversion
+commutes with this actual use. Complete prediction continues through every
+sufficiently backed finite later native continuation. Historical recovery
+through arbitrary later Ticks does not follow.
+
+Proof. Distinctness gives $(e_{v_0}e_{a_0}^{\mathsf T})^2=0$, proving the
+inverse formula. The source and predictor execute the same earned operand;
+the subsequent Read returns the displayed sum. Space/Memory and the new
+computed present germ recover $Gw$, undo $G$, then use Theorem 82.2.
+Time keeps its old samples at their original epochs and appends these actual
+calls and reply. Re-encoding the triple computes this same successor, proving
+the action squares. No physical inverse is executed. The synchronized predictor
+invariant, rather than membership in the handoff image, supplies general
+later service including growth, refusals, malformed and pending input.
+
+For an explicit failure of a stronger historical claim, suppose $d>0$ in
+the affine run. Since $F$ is invertible, its attained current family is all
+$\mathbb Q^N$. Choose $0\ne\eta\in\ker T$ and any attained $w$. Both $w$
+and $w+\eta$ are actual handoffs from distinct entries and distinct U4
+records, but one subsequent raw Tick sends them to the same $Tw$.
+Current prediction survives; the historical inverse from that new current
+does not. Even before that Tick, bare $Cw$ is insufficient: $b<N$ and the
+full affine image contains pairs differing in $\ker C$. These paired
+realizations explain both the phase restriction and the paid germ. $\square$
+

@@ -1,0 +1,83 @@
+**Definition 8.1 (Path and guard-recoverable restrictions).** In the
+prescribed-path contract, require in addition one fixed affine update
+for every prescribed finite native path, exact on its full lawful
+source domain. For prescribed velocities $a_c=\dot k$ and
+$b_c=\dot\chi$ on $[0,T]$ in the source regularity class, put
+
+$$
+\rho_{\mathrm{path}}(\tau)=\int_0^\tau a_c(v)\,dv,\qquad
+\Delta_k=\rho_{\mathrm{path}}(T),\qquad
+L_\chi=\int_0^T b_c(\tau)\,d\tau,
+$$
+
+$$
+C_{\mathrm{path}}=\int_0^T
+\rho_{\mathrm{path}}(\tau)b_c(\tau)\,d\tau.
+\tag{8.1}
+$$
+
+The continuous function $\rho_{\mathrm{path}}$ is bounded on this
+compact interval, and $b_c$ is absolutely integrable, so the mixed
+integral exists. The source guard is
+
+$$
+0<k+\rho_{\mathrm{path}}(\tau)<H
+\quad\hbox{for every }\tau\in[0,T],
+\tag{8.2}
+$$
+
+equivalently
+$k+\min_{[0,T]}\rho_{\mathrm{path}}>0$ and
+$k+\max_{[0,T]}\rho_{\mathrm{path}}<H$. The extrema are attained,
+which justifies these strict inequalities. Lawful endpoints alone do
+not imply (8.2).
+
+The endpoint formulas from [F], §9.1, are
+
+$$
+k'=k+\Delta_k,\qquad
+\alpha'=\alpha+L_\chi/2,\qquad
+\beta'=\beta+
+\left(\frac12-\frac kr\right)L_\chi-\frac{C_{\mathrm{path}}}{r}.
+\tag{8.3}
+$$
+
+The beta increment is the integral of
+$(1/2-(k+\rho_{\mathrm{path}}(\tau))/r)b_c(\tau)$, giving the
+negative mixed term in (8.3). Concatenating two relative path triples
+gives
+
+$$
+(\Delta_1+\Delta_2,\ L_1+L_2,\
+C_1+C_2+\Delta_1L_2).
+\tag{8.4}
+$$
+
+These formulas describe the actual native source; they do not assume
+that simultaneous paths split into finitely many straight commands.
+
+Separately, call a model guard-recoverable when the encoded point and
+the specified command determine whether that command's actual source
+guard holds. Equivalently, for every command its domain indicator is
+constant on each encoder fiber. For the straight contract this concerns
+(4.6)–(4.7); for the path contract it also concerns (8.2). No such
+condition is inserted into Definition 5.1.
+
+Use superscripts $\mathrm{path}$, $\mathrm g$, and
+$\mathrm{path,g}$ on $\mathfrak F_{\le n}$ and on its capacity to
+denote these restrictions. Their inclusions are
+
+$$
+\mathfrak F_{\le n}^{\mathrm{path,g}}
+\subseteq\mathfrak F_{\le n}^{\mathrm{path}}
+\subseteq\mathfrak F_{\le n},\qquad
+\mathfrak F_{\le n}^{\mathrm{path,g}}
+\subseteq\mathfrak F_{\le n}^{\mathrm g}
+\subseteq\mathfrak F_{\le n}.
+\tag{8.5}
+$$
+
+Every lower bound in Theorem 7.2 therefore applies within each of
+these restricted classes. For an empty class the convention
+$\inf\varnothing=+\infty$ remains in force.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:63a7cf3395ec7de7ecbdd107b6420a8fa5dffce6cdaec515330505cf63f62530
+  normalized_sha256: sha256:63a7cf3395ec7de7ecbdd107b6420a8fa5dffce6cdaec515330505cf63f62530
+cas_ref: sha256:63a7cf3395ec7de7ecbdd107b6420a8fa5dffce6cdaec515330505cf63f62530
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Research-priority and claim-strength rule requiring the two-point bridge before claiming a general-k theory.
+    previous_atom_id: eb97507b1792e1a0791c875c32c41126f871f56203718d36445872f2a8f2c7c4
+    next_atom_id: 2b791b5033f664348e4b458ecab534d869ee16e965558f1a5507a7a98700cdf9

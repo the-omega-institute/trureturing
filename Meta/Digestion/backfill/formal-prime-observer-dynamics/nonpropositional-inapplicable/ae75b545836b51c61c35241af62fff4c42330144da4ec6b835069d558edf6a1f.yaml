@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ae75b545836b51c61c35241af62fff4c42330144da4ec6b835069d558edf6a1f
+  normalized_sha256: sha256:ae75b545836b51c61c35241af62fff4c42330144da4ec6b835069d558edf6a1f
+cas_ref: sha256:ae75b545836b51c61c35241af62fff4c42330144da4ec6b835069d558edf6a1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: '每个正权重分量绝对连续于同一可数加权混合 measure。 Reuse pinned mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679: MeasureTheory.Measure.absolutelyContinuous_smul, MeasureTheory.Measure.absolutelyContinuous_sum_right, MeasureTheory.Measure.AbsolutelyContinuous.trans. D5 search (including private): D5/**/*.lean including private; absolutelyContinuous_sum_right, absolutelyContinuous.*sum, absolutely_continuous.*mixture, dominating.*mixture; CountableSingularPartition internal have is not a reusable declaration; CompactCommonReference is operator-valued. No reusable frozen D5 declaration supplies this assertion in its full scope.'
+    previous_atom_id: eff7b81559e56ea6c919803551a2bf48d699445c737e0a915345c5ab6f0608da
+    next_atom_id: 7d7031178f5cd73cf35b3e55e5b1bcadba1ebbc9bf82452ac7c56e1b9090437e

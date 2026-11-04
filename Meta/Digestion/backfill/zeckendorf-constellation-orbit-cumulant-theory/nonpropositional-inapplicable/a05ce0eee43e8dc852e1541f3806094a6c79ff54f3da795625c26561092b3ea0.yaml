@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a05ce0eee43e8dc852e1541f3806094a6c79ff54f3da795625c26561092b3ea0
+  normalized_sha256: sha256:a05ce0eee43e8dc852e1541f3806094a6c79ff54f3da795625c26561092b3ea0
+cas_ref: sha256:a05ce0eee43e8dc852e1541f3806094a6c79ff54f3da795625c26561092b3ea0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Heading and the word Definition introducing the separately atomized residue-charge formula.
+    previous_atom_id: 83d73cf354a1db489b132e6f697725c74c4425d0e6de4c9b45f44ee232c2656a
+    next_atom_id: ad1c62f173cbc9d5c27f6b1de807a4457618c6aa51078a4d60db6ec087e996d5

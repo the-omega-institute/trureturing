@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7fc91994ca6481a0cc5c6d01671a133b0f8e94843b4fcfa15aa990f396fb6b31
+  normalized_sha256: sha256:7fc91994ca6481a0cc5c6d01671a133b0f8e94843b4fcfa15aa990f396fb6b31
+cas_ref: sha256:7fc91994ca6481a0cc5c6d01671a133b0f8e94843b4fcfa15aa990f396fb6b31
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: irreducible risk 与 price of refinement 的 vs 图式解释决策比较，没有等式、数值界或最优策略存在性断言。
+    previous_atom_id: 23af2af520b3bbf7699ff18a99325ca782901a21271fcac05ca766f3e5b22a87
+    next_atom_id: e8263cc8b268851c5ca606d59a89b107a9c45e0908a5308ca153bfebe70253db

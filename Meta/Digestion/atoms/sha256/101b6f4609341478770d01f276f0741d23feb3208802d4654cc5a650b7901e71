@@ -1,0 +1,24 @@
+**Proposition 124.3 (finite conditional decompositions).** Let $\mathcal A_1,\mathcal A_2,\mathcal A_3\subset\mathcal F$ and suppose $\mathcal F$ is nowhere equivalent to $\mathcal A_2$ under $m$. The density $W$ cannot have a representation
+
+$$
+W=\sum_{j=1}^{N}A_j(x_1,x_2,x_3)\alpha_j(x_1)\beta_j(x_2)\gamma_j(x_3),
+\tag{124.2}
+$$
+
+where every $A_j$ is $\mathcal A_1\otimes\mathcal A_2\otimes\mathcal A_3$-measurable, the single-coordinate factors are nonnegative and integrable, and every individual product term in (124.2) is absolutely integrable on $G^3$.
+
+**Proof.** Put $b=1+\sum_j\beta_j$, $B=\int b\,dm$, and $d\mu _0=(b/B)\,dm$. This reference probability is equivalent to $m$, so the nowhere-equivalence hypothesis is preserved; it does not replace the process law. For every nonzero $\beta_j$, let $d\mu_j=\beta_jdm/\int\beta_j\,dm$; its density relative to $\mu _0$ is bounded by $B/\int\beta_j\,dm$. Zero factors are omitted. The conditional splitting lemma of He–Sun–Sun–Zeng, *Characterization of equilibrium existence and purification in general Bayesian games*, arXiv:2106.08563v1, Lemma 4(2), pp. 28–29, applied with $\mathcal A=\mathcal A_2$ and the constant fair distribution on the compact discrete action space $\{-1,1\}$ (with zero payoff), gives a measurable $v\in\{-1,1\}$ satisfying
+
+$$
+\int_D\beta_jv\,dm=0\qquad(D\in\mathcal A_2,\ j=1,\ldots,N).
+\tag{124.3}
+$$
+
+For almost every fixed $(x_1,x_3)$, the section $A_j(x_1,\cdot,x_3)$ is $\mathcal A_2$-measurable. Equation (124.3), first for bounded simple sections and then by truncation, makes each term in (124.2) integrate to zero against $v(x_2)\,dm(dx_2)$; the asserted absolute integrability permits Fubini. Hence
+
+$$
+\int W(x_1,x_2,x_3)v(x_2)\,m(dx_2)m(dx_3)=0
+$$
+
+for almost every $x_1$. By (123.3) and conservation this is $g(x_1)Pv(x_1)$. Positivity of $g$ and injectivity of $P$ force $v=0$, contradicting $|v|=1$. The absolute-integrability hypothesis is used exactly in this Fubini step. $\square$
+

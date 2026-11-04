@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:73c9f75cbf0cca6926baefa66f917cbd3e32025058fb93ca76b468d34d3eda47
+  normalized_sha256: sha256:73c9f75cbf0cca6926baefa66f917cbd3e32025058fb93ca76b468d34d3eda47
+cas_ref: sha256:73c9f75cbf0cca6926baefa66f917cbd3e32025058fb93ca76b468d34d3eda47
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroSum.existsUnique_zero
+    target_statement_id: sha256:6636032c30cf64ce3e8878a58b9b0d68e434cea86fd9c0b02ce13378ebe83984
+receipts:
+  unresolved_subitems: []

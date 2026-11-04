@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6da9e868bb65762bec6dbf9e30256775f5cda9eb817fcafa6cf0acf9fcde747
+  normalized_sha256: sha256:a6da9e868bb65762bec6dbf9e30256775f5cda9eb817fcafa6cf0acf9fcde747
+cas_ref: sha256:a6da9e868bb65762bec6dbf9e30256775f5cda9eb817fcafa6cf0acf9fcde747
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条定义精确任务表示谓词及其只在实际像上的义务，不断言表示存在。
+    previous_atom_id: 45812813a6e5d26c0a83e65e6ca2535ef0eb519743552535d21a4bbc5fcad125
+    next_atom_id: 1ee795dc8861d42f5a21232d12a40b58b7ac9241e18f194b7ffd644b63bf2df7

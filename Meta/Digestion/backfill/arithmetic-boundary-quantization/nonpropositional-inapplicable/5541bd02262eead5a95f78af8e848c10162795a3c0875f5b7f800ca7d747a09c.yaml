@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:5541bd02262eead5a95f78af8e848c10162795a3c0875f5b7f800ca7d747a09c
+  normalized_sha256: sha256:5541bd02262eead5a95f78af8e848c10162795a3c0875f5b7f800ca7d747a09c
+cas_ref: sha256:5541bd02262eead5a95f78af8e848c10162795a3c0875f5b7f800ca7d747a09c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Complete section 5 is upstream-only bind-only; no project GID is available in this reuse basis. At Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679 (leanprover/lean4:v4.35.0), Matrix.diagonal_mem_unitary, Matrix.diagonal_mul_diagonal, Matrix.mulVec_diagonal, map_zpow, map_zpow₀, zpow_sub₀, Real.sq_sqrt, sq_eq_sq₀, Circle.exp_nsmul, Circle.exp_zsmul, Circle.exp_two_pi, Circle.coe_inv_eq_conj, Complex.exp_mul_I, Real.cos_arccos, Real.cos_two_mul, Real.cos_sub, Real.cos_pi_sub and Real.cos_pi_div_three supply the specified five-dimensional U, nonnegative real unit vector and its exact real even returns for every integer k. Matrix.gram_apply, Matrix.posSemidef_gram and Matrix.PosSemidef.smul supply the history Gram decomposition T=(1-eta)C+eta I with eta=h/12. pow_le_one₀ and sq_nonneg supply the h-squared bounds; algebraic normalization gives both source gap formulas, rational bounds and strict cells. Int.floor_eq_iff supplies actual rounding on all nine entries and the unit diagonal; Matrix.det_fin_three and finite-sum normalization give determinant -h^2 and quadratic values -2h and 1. For b>0 the simultaneously scaled rule is s -> b Q_m(s/b), with diagonal b and negative quadratic -2bh. Matrix.posSemidef_gram and Matrix.PosSemidef.dotProduct_mulVec_nonneg rule out a Gram or common unitary-history realization of the fixed rounded block in any complex Hilbert space. Only instantiation, projection/reassembly and normalization are used. The heading, qualifier and evidence-status label are prose; m>=1 excludes h=0, inputs depend on m, and no fixed-input/all-resolution, actual-xi/RH, all-observable, resource or global novelty conclusion is asserted. This receipt records the original full scope and upstream reuse, not a new Lean theorem or kernel freeze.
+    previous_atom_id: c59e97b9e869558730b365cd247a18d16e9333ceb1ccb0e0bab4eab2f93b32d1
+    next_atom_id: 397d24a64d30a322afd923931fd59884c3f3942af26f2b8c5ac945629777dc21
+  chain_atoms:
+    - 267f855a71ab1eaf12fda4b022d72ef7eb007cc066adefc458de7dd86df944be
+    - 89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2
+    - 4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0
+    - a801f84b3efa71b82d61d4d5babf9180365738319a1f4a2038a21c67c1e1e3cb
+    - 2f980abc4ed83ce3de50d5d3106d3c5226576092eb20a0d8234ec1a8a448cb9c
+    - bc94a07dd32f1f2245e1a4ea1d07a230af52bc720ea5d6e5fa20b7c2a0bdcc61

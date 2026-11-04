@@ -26,7 +26,7 @@ public sealed partial class CleanLanesCommandTests
         private Action disposeTemp;
         private DateTimeOffset now;
 
-        internal CleanLanesFixture(TestScratchRoot? scratchRoot = null)
+        internal CleanLanesFixture(TestScratchRoot? scratchRoot = null, bool recentCommit = false)
         {
             var root = scratchRoot ?? TestScratchRoot.Current;
             repository = new TemporaryDirectory(root);
@@ -36,6 +36,8 @@ public sealed partial class CleanLanesCommandTests
             disposeWorktrees = worktrees.Dispose;
             disposeTemp = temp.Dispose;
             CopyDirectory(TemplateRepositoryPath, repository.Path);
+            if (recentCommit) GitAt(repository.Path, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+                "commit", "--allow-empty", "-m", "recent pool commit");
             var remote = Path.Combine(temp.Path, "remote.git");
             Git(temp.Path, "init", "--bare", remote);
             Git(repository.Path, "remote", "add", "origin", remote);
@@ -46,7 +48,7 @@ public sealed partial class CleanLanesCommandTests
         private static string CreateTemplateRepository()
         {
             var path = TestScratchRoot.Current.CreateDirectory();
-            Git(path, "init", "--initial-branch=dev");
+            Git(path, "init", "--object-format=sha1", "--initial-branch=dev");
             Git(path, "config", "user.email", "stratalint@example.invalid");
             Git(path, "config", "user.name", "StrataLint Tests");
             File.WriteAllText(

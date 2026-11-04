@@ -1,5 +1,5 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
 import hashlib
 import json
 import os
@@ -184,16 +184,24 @@ class NativePublicationConsumerTests:
     def test_coordinates_reuse_warm_tree_memo(self):
         self.ensure()
         self.write('.gitignore', '.lake/\nutility-calls\nactivity.jsonl\nhash-paths\n')
-        helper = self.root / 'tools/scripts/worktree/lean-cache-input.sh'
-        helper.write_text(helper.read_text().replace('  hash_files_batch "$live_paths"',
-            '  cat "$live_paths" >> "$FIXTURE_HASH_PATHS"\n  hash_files_batch "$live_paths"'))
+        # Observe the actual common hasher used in this process. The fixture
+        # programs remain byte-identical; no test-only read hook enters them.
+        hashes = self.root / 'hash-paths'
+        read = open
+        def observed_read(path, *args, **kwargs):
+            if args == ('rb',):
+                with hashes.open('ab') as log:
+                    log.write(os.fsencode(path) + b'\0')
+            return read(path, *args, **kwargs)
+        self.assertIn('open', publication.selection.input_coordinates.__code__.co_names)
         for args in [('add', '.'), ('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
                 '-c', 'commit.gpgsign=false', 'commit', '--quiet', '-m', 'private memo fixture')]:
             subprocess.run(['git', *args], cwd=self.root, env=self.env,
                 check=True, capture_output=True, timeout=120)
         hashes = self.root / 'hash-paths'
         environment = dict(self.env, FIXTURE_HASH_PATHS=str(hashes))
-        with patch.dict(os.environ, environment):
+        with patch.dict(os.environ, environment), \
+                patch.object(publication.selection, 'open', side_effect=observed_read, create=True):
             expected = publication.coordinates(self.root)
             self.assertTrue(hashes.read_bytes())
             memo = self.root / '.lake/lean-input-memo/memo.v1'
@@ -469,6 +477,20 @@ class NativePublicationConsumerTests:
         self.assertEqual(before, self.stamps())
 
 
+    def test_compiler_stage_covers_native_readers_without_warming_projects(self):
+        for package in (self.root, self.root / 'Reg'):
+            self.assertFalse((package / '.lake/build').exists())
+        self.assertFalse((self.root / 'public.json').exists())
+        built = self.build()
+        output = built.stdout + built.stderr
+        self.assertNotIn('Built LeanInformationAudit.Contract.InputDiscovery (', output,
+                         '[FAIL] compiler_stage_must_restore_input_discovery_module')
+        self.assertNotIn('Built inputDiscovery:exe (', output,
+                         '[FAIL] compiler_stage_must_restore_input_discovery_executable')
+        for program in ('reportInspector', 'inputDiscovery'):
+            self.assertTrue((self.root / '.lake/build/lean-inspector/producer/bin' / program).is_file())
+
+
 class NativeArtifactConsumerTests:
     """Consumers of a valid report; subsequent mutations stay private."""
 
@@ -661,35 +683,48 @@ class NativeColdPublicationTests:
         temporary = self.root / 'coordinate temporary files'
         temporary.mkdir()
         environment = dict(self.env, TMPDIR=str(temporary))
-        check_output = subprocess.check_output
+        input_coordinates = publication.selection.input_coordinates
+        manifest = self.root / 'lean-report-inputs.json'
+        manifest_bytes = manifest.read_bytes()
         observed = []
         for fault in ['none', 'none', 'address-error', 'address-malformed',
                       'coordinates-error', 'coordinates-malformed']:
             with self.subTest(fault=fault):
-                def invoke(argv, **kwargs):
-                    if argv[1] == 'address':
-                        memo = Path(kwargs['env']['STRATALINT_LEAN_INPUT_MEMO_ROOT'])
-                        self.assertEqual(memo.parent, temporary)
-                        self.assertTrue(memo.is_dir())
-                        self.assertEqual(memo.stat().st_mode & 0o777, 0o700)
-                        observed.append(memo)
-                    result = check_output(argv, **kwargs)
-                    if fault == argv[1] + '-error':
-                        raise subprocess.CalledProcessError(2, argv)
-                    if fault == argv[1] + '-malformed':
-                        return 'malformed\n'
-                    return result
-                with patch.dict(os.environ, environment), patch.object(
-                        publication.subprocess, 'check_output', side_effect=invoke):
-                    if fault == 'none':
-                        result = publication.coordinates(self.root)
-                        self.assertEqual(set(result), {'repository', 'producer', 'sources', 'config', 'input'})
-                    else:
-                        error = subprocess.CalledProcessError if fault.endswith('-error') else ValueError
-                        with self.assertRaises(error):
-                            publication.coordinates(self.root)
+                def invoke(repository, *, memo_root):
+                    memo = Path(memo_root)
+                    self.assertEqual(memo.parent, temporary)
+                    self.assertTrue(memo.is_dir())
+                    self.assertEqual(memo.stat().st_mode & 0o777, 0o700)
+                    observed.append(memo)
+                    return input_coordinates(repository, memo_root=memo)
+                try:
+                    with patch.dict(os.environ, environment), patch.object(
+                            publication.selection, 'input_coordinates', side_effect=invoke), ExitStack() as faults:
+                        # These failures now belong to the in-process input reader,
+                        # rather than the removed shell address/coordinates calls.
+                        if fault == 'address-error':
+                            faults.enter_context(patch.object(publication.selection.Selection,
+                                'validate', side_effect=OSError('fixture address read failed')))
+                        elif fault == 'address-malformed':
+                            manifest.write_text('{')
+                        elif fault == 'coordinates-error':
+                            faults.enter_context(patch.object(publication.selection,
+                                'coordinate_hashes', side_effect=OSError('fixture coordinate computation failed')))
+                        elif fault == 'coordinates-malformed':
+                            faults.enter_context(patch.object(publication.selection.Selection,
+                                'compatibility', return_value='malformed'))
+                        if fault == 'none':
+                            result = publication.coordinates(self.root)
+                            self.assertEqual(set(result), {'repository', 'producer', 'sources', 'config', 'input'})
+                        else:
+                            error = OSError if fault.endswith('-error') else ValueError
+                            with self.assertRaises(error):
+                                publication.coordinates(self.root)
+                finally:
+                    manifest.write_bytes(manifest_bytes)
                 self.assertFalse((self.root / '.lake').exists())
                 self.assertEqual(list(temporary.iterdir()), [])
+        self.assertEqual(len(observed), 6, 'every invocation must exercise the input reader')
         self.assertEqual(len(set(observed)), len(observed), 'each invocation must own its memo')
         with patch.dict(os.environ, dict(environment, TMPDIR=str(temporary / 'absent'))):
             with self.assertRaises(FileNotFoundError):
@@ -711,6 +746,24 @@ class NativeColdPublicationTests:
         # Unstage admits only compiler artifacts; each fixture still creates
         # its own producer build, reports, utility inputs, and ensure stamp.
         self.assertFalse((self.root / '.lake/build/lean-inspector').exists())
+        # Both compiler tools must restore through Lake without compilation.
+        # Restoring compiler outputs must leave all project/report work cold.
+        self.run_lake('--no-build', '-d', 'tools/lean-inspector', 'build',
+                      'reportInspector', 'inputDiscovery')
+        # The compiler library shares the root Lean directory. Its exact
+        # inventory must be restored, with no project-owned modules mixed in.
+        library = self.root / '.lake/build/lib/lean'
+        self.assertEqual({str(path.relative_to(library)) for path in library.rglob('*.olean')}, {
+            'Inspector.olean', 'LeanInformationAudit/RawArtifacts.olean',
+            'LeanInformationAudit/CompiledMetadata.olean', 'LeanInformationAudit/CompiledAxioms.olean',
+            'LeanInformationAudit/Contract/SourceAudit.olean', 'LeanInformationAudit/Contract/InputDiscovery.olean'})
+        self.assertEqual({path.name for path in library.parent.iterdir()}, {'lean'})
+        self.assertFalse((self.root / '.lake/build/ir').exists())
+        self.assertEqual({path.name for path in (self.root / '.lake/build/lean-inspector').iterdir()}, {'producer'})
+        self.assertFalse((self.root / '.lake/build/reg').exists())
+        self.assertFalse((self.root / 'Reg/.lake/build').exists())
+        self.assertFalse((self.root / '.lake/build/lean-inspector/modules').exists())
+        self.assertFalse((self.root / '.lake/build/lean-inspector/report.zip').exists())
         for name in before:
             if name == 'outputs.jsonl':
                 continue

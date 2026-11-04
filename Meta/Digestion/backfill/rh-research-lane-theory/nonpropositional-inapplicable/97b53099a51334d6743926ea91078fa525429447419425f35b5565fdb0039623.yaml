@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:97b53099a51334d6743926ea91078fa525429447419425f35b5565fdb0039623
+  normalized_sha256: sha256:97b53099a51334d6743926ea91078fa525429447419425f35b5565fdb0039623
+cas_ref: sha256:97b53099a51334d6743926ea91078fa525429447419425f35b5565fdb0039623
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: P4 只说明需要控制采样、截断和维数增长时的负指标逃逸，没有量化稳定性断言。
+    previous_atom_id: 31053f554151626621986263d8ab2518d60a53c9e70d380215bfbbe82972c78e
+    next_atom_id: 2b93824ca0bb7b8e5aeaf1e07029255aa32360d4819d2f0f5ed390c347a02fe0

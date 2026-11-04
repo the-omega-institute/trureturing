@@ -1,0 +1,56 @@
+**定义 26.1（Sufficient domains at a fixed even scale）。** Work only
+in the common domain of finite connected simple unit-weight
+$H$ of even order $m\geq2$. Let $\mathcal M$ consist of complete
+multipartite graphs with at least two nonempty parts, and let
+$\mathcal B$ consist of block graphs. Let $\mathcal L$ be the
+whole-neighborhood class in the owning volume's Definition
+15.1(b): each actual neighborhood is bipartite or has a flat
+least mode for its entire adjacency. Let $\mathcal C$ retain
+exactly Definition 21.1.
+
+For even $s=2S\geq2$, define $\mathcal F_s$ by the global
+flat-least-mode hypothesis (3.1) of the owning volume, together
+with a positive-gap regime of its Theorem 6.2. Explicitly, write
+$\ell=-\lambda_{\min}(A(H))$, $\Delta=\max_i\deg_H(i)$,
+$T=m+2$ and
+
+$$
+ s_H=2\left\lceil2^{18}(\Delta/\ell)^2T^3\right\rceil.
+\tag{26.1}
+$$
+
+Require either $s\geq s_H$, or
+
+$$
+s\geq4T,\qquad
+\ell s-64\Delta T^{3/2}\sqrt{s/2}-64\Delta T^2>0.
+\tag{26.2}
+$$
+
+The second alternative includes the immediate strict-positive
+application of that theorem's (6.3), without replacing the exact
+finite-scale bound by its asymptotic size. Define
+$\mathcal L_S=\mathcal L$ for $S\geq2$ and
+$\mathcal L_1=\varnothing$, and put
+
+$$
+\mathcal U_s^{\rm old}
+ =\mathcal M\cup\mathcal B\cup\mathcal C
+       \cup\mathcal L_S\cup\mathcal F_s,
+\qquad
+\mathcal U_s^{\rm diamond}
+ =\mathcal U_s^{\rm old}\cup\mathcal C_{\diamond}.
+\tag{26.3}
+$$
+
+All sets here are restricted to the stated common domain. The
+remaining original-model question at scale $s$ is every-ground
+confinement for $H\notin\mathcal U_s^{\rm diamond}$. Its
+simultaneous all-even version asks for every integer $S\geq1$,
+retaining the separate union (26.3) at each scale. The component
+inclusions (19.4) and the $S=1$ whole-cone equalities (20.2)
+remain necessary conditions, not an if-and-only-if criterion.
+No arbitrary-$H$ conclusion or actual original-$E_s$
+nonsymmetric-ground counterexample is specified outside this
+union.
+

@@ -64,7 +64,19 @@ $$claim \Leftrightarrow (\forall H \in \operatorname{Matrix}\left(\operatorname{
 
 The third conjecture of the paper for N = 10 with l = 5, read for the most restrictive notion of solution: every real symmetric coupling matrix with nonnegative off-diagonal entries and connected coupling graph whose propagator exp(-i H) gives F10 after input and output phase shifters has at least 25 edges. The propagator is the frozen hamiltonianPropagator at time 1, applied to the complex matrix map(H, ofReal) obtained by casting each real entry of H to a complex number.
 
-**Theorem 1.6 (The bound fails).**
+**Theorem 1.6 (Exponential of an idempotent).**
+
+$$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)], \forall Q \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; Q \cdot Q = Q \Rightarrow (\forall t \in \mathbb{C},\; \operatorname{exp}\left(t \cdot Q\right) = 1 + (\operatorname{exp}\left(t\right) - 1) \cdot Q)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.expIdempotent` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite matrix over the complex numbers with Q squared equal to Q, the exponential of t times Q is the identity plus (exp(t) minus one) times Q.
+
+**Theorem 1.7 (The bound fails).**
 
 $$\neg claim$$
 
@@ -88,6 +100,7 @@ Let s = sqrt 5 and let C0 be the symmetric circulant on Z_5 with a = pi (35 - 13
 - Truth anchor: `D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.IsUnimodularDiagonal`
 - Truth anchor: `D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.claim`
 - Truth anchor: `D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.edgeCount`
+- Truth anchor: `D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.expIdempotent`
 - Truth anchor: `D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.supportGraph`
 - Dependency: [D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow](ProjectionProbabilityFlow.md)

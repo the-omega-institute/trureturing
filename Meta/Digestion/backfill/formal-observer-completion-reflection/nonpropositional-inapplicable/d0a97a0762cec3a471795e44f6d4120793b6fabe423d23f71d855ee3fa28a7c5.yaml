@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0a97a0762cec3a471795e44f6d4120793b6fabe423d23f71d855ee3fa28a7c5
+  normalized_sha256: sha256:d0a97a0762cec3a471795e44f6d4120793b6fabe423d23f71d855ee3fa28a7c5
+cas_ref: sha256:d0a97a0762cec3a471795e44f6d4120793b6fabe423d23f71d855ee3fa28a7c5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 指定语义载体 Λ 并定义评价的行函数和列函数，没有关于不同状态或协议相等性的结论。'
+    previous_atom_id: 9fa1b03ace603c059e809dc6fba20c127b725484e469d969740b2c9b001fb2bc
+    next_atom_id: ede0c7e417b6ad8cdf1b67b4674d3575f42c6e765712b938d96a7f70e99b0fe9

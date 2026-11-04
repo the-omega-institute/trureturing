@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d97c459140990feb364fb092c3a64386b0e9b0aa56da1c498a245f34478fbe4d
+  normalized_sha256: sha256:d97c459140990feb364fb092c3a64386b0e9b0aa56da1c498a245f34478fbe4d
+cas_ref: sha256:d97c459140990feb364fb092c3a64386b0e9b0aa56da1c498a245f34478fbe4d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Budget residual以给定资源内不能消除的区分作术语定义，没有资源下界。'
+    previous_atom_id: d01cfd75d89131a3efcc9533b7e5f64ab2352f1f5e437c9951c1555e478a1c59
+    next_atom_id: 6a8f0887060bbe3c1e659b78152d9aeef22e54f93e8359b4d042c89e2c2e7517

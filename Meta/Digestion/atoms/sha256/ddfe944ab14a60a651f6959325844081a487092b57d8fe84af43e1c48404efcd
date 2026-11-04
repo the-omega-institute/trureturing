@@ -1,0 +1,64 @@
+**Proposition 17.3 (Original scores on a realizable finite carrier).** Fix $G\ge2$, the three finite guards and the fixed boundary connections, with every gap in these data at most $G$. Consider all compatible original guarded patterns whose consecutive gaps, including the gap preceding the first scored anchor, the gap following the terminal scored anchor and the path through the third guard, are at most $G$. Their full-exterior original scores admit a finite exact representation as follows.
+
+Use $\Gamma=\{2,\ldots,G\}$ and include the predictive pairs
+
+$$
+\left(\tau_{l+r}(c),\tau_r(\tau_l(c))\right)
+\quad(c\in D,\ 2\le l,r\le G)
+\tag{17.6}
+$$
+
+as seeds, then take their forward closure under $\Gamma$. These include the seeds for occupied-anchor deletions and every legal zero-site subgap split. Retain the original scalar values $f_c(g)$ through $g=2G$ for the merged deletion gaps. For a suffix vector $\mathbf R$ define
+
+$$
+\vartheta(c,l,r;\mathbf R)
+=\frac{f_c(l)f_{\tau_l(c)}(r)
+R_{(\tau_{l+r}(c),\tau_r(\tau_l(c)))}}
+{f_c(l+r)+f_c(l)f_{\tau_l(c)}(r)
+R_{(\tau_{l+r}(c),\tau_r(\tau_l(c)))}}.
+\tag{17.7}
+$$
+
+If $h,g$ are consecutive gaps, $s_0$ is the predictive state at the anchor preceding them and $s=\tau_h(s_0)$, the original half-open gap score is
+
+$$
+H(s_0,h,g,\mathbf R)
+=(1-\vartheta(s_0,h,g;\mathbf R))^2
++\sum_{j=2}^{g-2}\vartheta(s,j,g-j;\mathbf R)^2,
+\tag{17.8}
+$$
+
+where the suffix vector is taken after the next anchor and an empty sum is zero. In particular, for $A_\ast=T_0<T_1<\cdots<T_n=B_\ast$,
+
+$$
+S_P[A_\ast,B_\ast]=\sum_{k=0}^{n-1}H_k+\ell_{T_n}.
+\tag{17.9}
+$$
+
+The final occupied-anchor loss uses its actual preceding gap, next gap and the suffix through the third guard. It is not absorbed by omitting an endpoint term.
+
+The representation retains the actual forward context, the preceding gap, fixed boundary data and the finite joint suffix vector of Proposition 17.2. Only trajectories arising from a single common original gap word and its fixed terminal guard are admissible. Equivalently the suffix vectors obey (17.3) backwards, with terminal vector $\mathbf1$ at $R$, and are matched to the forward trajectory of that same word.
+
+Proof. Deleting an occupied anchor merges precisely its preceding and following gaps, each at most $G$. Its merged gap can have length $2G$, which explains the retained scalar values. Comparing its occupied and deleted completions gives exactly (5.9), with the seed in (17.6) and the suffix after the next anchor. The original posterior is (17.7), so its occupied loss is $(1-\vartheta)^2$.
+
+At a zero site strictly inside a gap $g$, a legal insertion splits that gap into $j,g-j\ge2$. Its two future states give the corresponding seed from (17.6), and the same actual suffix gives its posterior (17.7). The actual zero loss is $\vartheta^2$. Immediate neighbors of occupied anchors are forced and have zero loss. These account for every site in the half-open interval from one anchor up to, but excluding, the next. This proves (17.8), including $g=2,3$ when there are no nonforced zero sites, and summation gives (17.9).
+
+Every scored comparison ends through the intact third guard. It therefore computes the full-exterior original posterior, even if deleting a scored boundary anchor breaks one of the earlier guards. The comparison words need not have all gaps at most $G$: a deletion is evaluated with its original merged-gap probability through $2G$. Thus no bounded-gap conditional law replaces $P$.
+
+There are finitely many forward contexts, preceding gaps and required scalar values, and Proposition 17.2 gives finitely many suffix vectors. Hence the local data and their scores have finite range. To impose realizability explicitly, write the common word from an unchanged left anchor through $R$ as $g_1\cdots g_m$. At its $k$th anchor let
+
+$$
+ c_k=\tau_{g_k}\cdots\tau_{g_1}(c_0),\qquad
+ \mathbf R_k=\mathbf R(g_{k+1}\cdots g_m),\qquad
+ \mathbf R_m=\mathbf1.
+\tag{17.10}
+$$
+
+Equation (17.3) is the backward relation between successive $\mathbf R_k$, while the first relation is the forward one. Retaining only these paired trajectories, with the fixed guards and boundary connections, yields the claimed finite carrier. Arbitrary coordinate combinations from the product of ratio ranges are not used.
+
+Every particular fibre in Proposition 15.3 fits some finite $G$: it has finitely many sites and fillings, and all its fixed connections and guards are finite. This observation gives no bound for that $G$ in terms of the period in Proposition 14.1. The period reduces the split-future tests, whereas Proposition 15.2 supplies an equal-length posterior witness and the present construction represents all original scores of a chosen bounded pattern family. None of these statements bounds the nonlinear scaffold response $D_F$.
+
+In particular pair-likelihood cycle multipliers equal to $1$ do not establish a score identity of the form $H(e)=\kappa g(e)+V(\operatorname{head}e)-V(\operatorname{tail}e)$. Any such identity needs its own proof on the realizable combined forward/backward carrier. A score-cycle comparison must be reachable from the common left boundary and extendible through the common third guard, with the terminal loss in (17.9) and all deletion charges retained. Unequal likelihoods can occur on transient pair paths even though every pair cycle has multiplier $1$.
+
+The unresolved original implication is whether the unchanged actual finite-reset hypotheses force every split-future defect to vanish, or supply a nonzero original-score contrast despite all frozen responses. The specific sufficient route (16.7) still requires a witness with response covariance below $2\operatorname{Var}(a)$, or a rigorously realizable weighted contrast accounting for every terminal and deletion charge. Equations (16.6) and (17.3) do not prove that requirement. No strict matrix positivity, right context decoder, original-row semigroup, inverse of $Z$, modified loss or replacement stationary or Palm law is assumed. Structural zeros and null contexts retain the scope of Definition 4.1. These are consequences and representations for the stated actual-law interfaces, with the cited algebraic and graph ingredients reused in their specified scopes; no literature-novelty assertion is made for the connection. $\square$
+

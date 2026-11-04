@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:2134691dc50488265d2297337d409fd668614a5ec37aac131c60688af19b26a6
+  normalized_sha256: sha256:2134691dc50488265d2297337d409fd668614a5ec37aac131c60688af19b26a6
+cas_ref: sha256:2134691dc50488265d2297337d409fd668614a5ec37aac131c60688af19b26a6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 12 heading plus navigation; both child entries describe document organization without mathematical assertions.
+    previous_atom_id: ee3fc73705f7dbea8aedb5fb5fe9be8bef5f93b804ddc56c913a3639abc4e426
+    next_atom_id: b5145351ab1c75f111cd04ec80238c4205f32d3b8b8cd38944fb1703c6a6f132
+  chain_atoms:
+    - 3816398ef433165b55dbe7135c94f5f2fad121a9b51d5fc24120e3785b38975a
+    - 4a18791d69cc79e156bb52b84ad0deadc8c9321dabd34d4582b18ad8450e10ce

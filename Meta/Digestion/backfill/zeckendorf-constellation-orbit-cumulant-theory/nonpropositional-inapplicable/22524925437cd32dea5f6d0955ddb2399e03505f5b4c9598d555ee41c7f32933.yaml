@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:22524925437cd32dea5f6d0955ddb2399e03505f5b4c9598d555ee41c7f32933
+  normalized_sha256: sha256:22524925437cd32dea5f6d0955ddb2399e03505f5b4c9598d555ee41c7f32933
+cas_ref: sha256:22524925437cd32dea5f6d0955ddb2399e03505f5b4c9598d555ee41c7f32933
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只声明观察映射 O 的定义域 X 和陪域 Y，不声称 O 线性、单射或与 involution 交换。
+    previous_atom_id: 669738b970a43ca6d932a16381c2082e8120770aaee59a52fab2042a2f195fe9
+    next_atom_id: 7d22237012bdf22da1804eb0572074ae86b710f83ae70f1aad7ee004e04a2463

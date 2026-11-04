@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f94a713b8d250940c97324ec76e9d853e025169371d5f91be4c7067cc1d15c8
+  normalized_sha256: sha256:6f94a713b8d250940c97324ec76e9d853e025169371d5f91be4c7067cc1d15c8
+cas_ref: sha256:6f94a713b8d250940c97324ec76e9d853e025169371d5f91be4c7067cc1d15c8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本句仅指明可选择周期分类，没有宣称某分类具有特定周期或任何分类定理。
+    previous_atom_id: 9008524a4a1c5c0ffbc2cdfe71c71a7c88a0de892cc10a7c40ed8a463b071c43
+    next_atom_id: 8ea12575d5f85bcda3fca0543d6aec11640df7eaa834a7e6f1d68194e10ecc6b

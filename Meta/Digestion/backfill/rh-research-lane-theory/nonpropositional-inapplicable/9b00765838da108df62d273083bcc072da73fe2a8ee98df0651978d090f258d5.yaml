@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9b00765838da108df62d273083bcc072da73fe2a8ee98df0651978d090f258d5
+  normalized_sha256: sha256:9b00765838da108df62d273083bcc072da73fe2a8ee98df0651978d090f258d5
+cas_ref: sha256:9b00765838da108df62d273083bcc072da73fe2a8ee98df0651978d090f258d5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只记录开放 PR 筛选数量、读取范围与历史 head 的元数据，不是数学定理。
+    previous_atom_id: 154919abe680d58942b6c74d231bf07bb6a55d9a8fcda05836ac7c461bddb53c
+    next_atom_id: 4cc794ba766c30e61b498762c738d2e3beba54715f2dbb758cee539cca57db4b

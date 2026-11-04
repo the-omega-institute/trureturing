@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c93f6184cc2b747fe56981a5c657e983eef20f576e194044d9d3e2d9b3ecac1b
+  normalized_sha256: sha256:c93f6184cc2b747fe56981a5c657e983eef20f576e194044d9d3e2d9b3ecac1b
+cas_ref: sha256:c93f6184cc2b747fe56981a5c657e983eef20f576e194044d9d3e2d9b3ecac1b
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/RefinementClosure/BehaviorUpdateWordAction.behavior_update_well_defined
+    target_statement_id: sha256:4fca1dce4ca77bd6aad029658dfbfb8f36b97afc3f4daf7ac5e564449b9c485d
+receipts:
+  unresolved_subitems: []

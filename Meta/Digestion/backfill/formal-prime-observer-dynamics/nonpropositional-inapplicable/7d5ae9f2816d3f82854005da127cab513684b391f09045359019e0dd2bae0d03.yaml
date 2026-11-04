@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7d5ae9f2816d3f82854005da127cab513684b391f09045359019e0dd2bae0d03
+  normalized_sha256: sha256:7d5ae9f2816d3f82854005da127cab513684b391f09045359019e0dd2bae0d03
+cas_ref: sha256:7d5ae9f2816d3f82854005da127cab513684b391f09045359019e0dd2bae0d03
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 外部经典基础的书目目录及来源用途说明，没有新增待证明的数学结论。'
+    previous_atom_id: afd6f230b4487f2a995d69fdc3ed2ea1862af0e67070c535e411b94a62868890
+    next_atom_id: 4c32997350cd64a1114a3859135ae8f8c47b603e003ecfe5798a27a3955643d6

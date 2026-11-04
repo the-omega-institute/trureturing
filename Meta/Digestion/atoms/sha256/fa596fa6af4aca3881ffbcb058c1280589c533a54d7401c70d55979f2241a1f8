@@ -1,0 +1,8 @@
+**Remark 4.4 (Position of the necessary region).** Let $\mathcal S_d$ be the set of $(\lambda,q)$ for which $\Phi_{\lambda,q}$ is Schwarz and $\mathcal T_d$ the set for which it is completely positive. In the coordinates of Convention 2.1, cited fact (a)(ii) reads $0\le q\le1/(d-1)$ and $-p/(d-1)\le\lambda\le p$. By cited fact (c), $\mathcal T_d\subseteq\mathcal S_d$, and by Theorem 4.1, $\mathcal S_d\subseteq K_d$. The set $\mathcal S_d$ is convex as well: for maps $\Phi_1,\Phi_2$ and $0\le\theta\le1$,
+
+$$
+\big(\theta\Phi_1(X)+(1-\theta)\Phi_2(X)\big)^\ast\big(\theta\Phi_1(X)+(1-\theta)\Phi_2(X)\big)=\theta\,\Phi_1(X)^\ast\Phi_1(X)+(1-\theta)\,\Phi_2(X)^\ast\Phi_2(X)-\theta(1-\theta)\,Z^\ast Z ,
+$$
+
+with $Z=\Phi_1(X)-\Phi_2(X)$, which is the operator convexity of $X\mapsto X^\ast X$; and $\Phi_{\lambda,q}$ depends affinely on $(\lambda,q)$. None of the four conditions of Theorem 4.1 is implied by the other three: $(\lambda,q)=(0,-1/100)$ violates only (i), for every $d\ge3$; for $d=3$, $(\lambda,q)=(1/5,1/2)$ violates only (ii) and $(\lambda,q)=(2/3,1/4)$ violates only (iii); and $(\lambda,q)=(-1,0)$ violates only (iv), for every $d\ge3$. The upper bound in (i) is implied by (ii).
+

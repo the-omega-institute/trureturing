@@ -1,0 +1,25 @@
+**Definition 59.1 (scalar specialization and a later held cut).** Specialize Definitions 36.1–36.3 to the actual one-cell source $N=1$. Its unknown law is multiplication by a reduced rational
+
+$$
+\lambda=\frac rs,\qquad r,s\in\mathbb Z,\quad 1\le r<s,\quad \gcd(r,s)=1.
+\tag{59.1}
+$$
+
+Theorem 37.2's actual experiment earns this law and leaves the cell at $\lambda^2$. Keep the original root-bound callable reference, exact rational ports, Read/Tick/Add/Hold rights, complete replies, serialization and sufficient finite backing. At a later settled cut, an actual Read followed by Hold earns the current reduced scalar
+
+$$
+v=\frac pq,\qquad p\in\mathbb Z,\quad q\ge1,\quad \gcd(|p|,q)=1.
+\tag{59.2}
+$$
+
+For $v=0$ take $p=0,q=1$. The scalar is an observed actual origin for the subsequent experiment. The law alone does not assert this preparation. One explicit paid entrance, for any prescribed rational $v$, is to execute Add$(v-\lambda^2)$; Read; Hold after the original acquisition. The returned Read must equal $v$ by the actual Add law. An already reached later origin can instead be used after its own paid preparation and Read/Hold; its preceding costs remain attached to that run.
+
+For a finite signed word $u=(u_0,\ldots,u_{L-1})\in\mathbb Z^L$, execute literally Tick; Add$(u_i)$; Read for each symbol, including zero. If $x_i$ is the state before symbol $i$, its first scalar reply is $\lambda x_i$, its Add reply is the installed fixed acknowledgement (with the updated scalar too if that version declares it), its final Read is $x_{i+1}=\lambda x_i+u_i$, and its successor is that actual scalar. Thus
+
+$$
+X_v(u)=\lambda^L v+\sum_{i=0}^{L-1}u_i\lambda^{L-1-i},\qquad X_v(\varnothing)=v.
+\tag{59.3}
+$$
+
+The formula follows by induction on the actual actions. No tick, Add, reply or change of origin is implicit in this notation. The erased-past recovery input consists of $r,s,v$ and the current exact endpoint, with the fixed installed context; it contains neither $L$, $u$ nor their earlier reply archive.
+

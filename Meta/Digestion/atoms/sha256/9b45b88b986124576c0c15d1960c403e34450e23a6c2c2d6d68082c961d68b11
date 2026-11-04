@@ -1,0 +1,21 @@
+**Consequence 102.3 (the original sharp bound and its exact scope).**
+The necessity in Theorem 82.3 follows on its entire original receiver class:
+an everywhere-correct receiver cannot use at most three successful late
+Reads on every word. Hence each such receiver has an admitted input using
+at least four. The fixed assay (82.4) attains four, with the actual endpoint
+$A^4F_w(A)e$, by the all-degree sampling argument of NLBAII §76.
+The minimum worst-case Read count for the original joint word/current-service
+task is therefore four. This is not a per-word lower bound.
+
+The positive assay, its acquired-image inverses and its paid selected use
+in Propositions 82.4--82.5 retain their original schedules and resource
+vectors. The lower bound concerns recovery of the concealed quaternary
+history, even when the receiver may grow the specimen; it neither asserts
+that the colliding endpoints are equal nor rules out acquiring only current
+service with a different task. The serial-clock arbitrary-current entrance
+of §§94--101 has its own kernel, retained phase, image and consumer and
+is not substituted for this history entrance. These arguments use the
+original source, isolation, rights, exact arithmetic and finite backing
+premises; they provide no new physical-conformance or Lean certification,
+uniform lifetime bound, common apparatus or universal alpha/beta minimum.
+

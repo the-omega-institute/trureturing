@@ -1,0 +1,39 @@
+**Definition 24.1 (Local domains, coordinates and norms).** Put
+
+$$
+\begin{gathered}
+\mathcal V=q_c+(-2h,2h)^2,\qquad t_x=10^{-30},\\
+z_1=(0.4,\;0.04078295904882838405264306362514449405106),\\
+z_2=(0.6375033978214738667594335994587431421677,\;
+0.04091698421060610059422739287384503573542),\qquad
+B_i=z_i+[-t_x,t_x]^2.
+\end{gathered}
+\tag{24.1}
+$$
+
+Every terminating decimal in Sections 19 onward denotes an exact
+rational. Vector norms are unweighted infinity norms. Matrix infinity
+norms are induced norms, the largest absolute row sum. Scalar derivative
+row norms are absolute coefficient sums; maximum-entry bounds are
+identified separately. Use Definition 2.1's circuit, and put
+$u_i=\widehat C_i/\widehat D$ for $0\le i\le3$. Its monomial gain
+coefficients and complete state are
+
+$$
+\begin{aligned}
+\alpha_0&=u_0,&\alpha_1&=(-11u_0+18u_1-9u_2+2u_3)/6,\\
+\alpha_2&=(2u_0-5u_1+4u_2-u_3)/2,&
+\alpha_3&=(-u_0+3u_1-3u_2+u_3)/6,\\
+g(s)&=\sum_{k=0}^3\alpha_ks^k,&
+\Theta&=(r,b,c_{\rm src},d,\alpha_0,\alpha_1,\alpha_2,\alpha_3).
+\end{aligned}
+\tag{24.2}
+$$
+
+These are coefficients of the same cardinal interpolant of Lemma 2.2.
+The state norm uses all eight displayed coordinates without weights.
+Only $p,v$ vary; all five earlier rows, literal clocks and actions
+remain exact. The open $\mathcal V$ supplies analytic neighborhoods;
+entire-child and error statements below use the closed $\mathcal U$
+unless explicitly given a different domain.
+

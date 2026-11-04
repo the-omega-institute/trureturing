@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36d69fd3956ad003fbd5984d979e4d334e3b06ce219f0b958f7f82d4f0acf9ca
+  normalized_sha256: sha256:36d69fd3956ad003fbd5984d979e4d334e3b06ce219f0b958f7f82d4f0acf9ca
+cas_ref: sha256:36d69fd3956ad003fbd5984d979e4d334e3b06ce219f0b958f7f82d4f0acf9ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录席位、模块、依赖次序与结账安排；未提出需要证明的数学断言。文本定位：## 三 预算与结算 一席位轮(同模块三条公开定理,codex-cli,独立 worktree;deposit 绑 M3-f-5 atom;M3-f-3/4 走 PR-1b 收据后 PR-2 cover);该 lane 须在增订十三的闭带衰减模块合入后开工,以绑定而非重证。 后续增订继续严格追加于本
+    previous_atom_id: 99d2e12c36710d63c0e925f435b38f8173663a851389189a79a05ad875ff7f2f
+    next_atom_id: null

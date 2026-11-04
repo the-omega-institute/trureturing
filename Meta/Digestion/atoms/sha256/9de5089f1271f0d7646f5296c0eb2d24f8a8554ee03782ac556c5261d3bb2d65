@@ -1,0 +1,19 @@
+**(B10) Theorem 7.3 (full finite bursts).** At fixed $t_0>0$, for every $\varepsilon<1$ and every one fixed partition $P$,
+
+$$
+\sup_{n\geq2,\ k\geq1}
+\operatorname{TV}(L_P^{t_0,t_0+1/k,\ldots,t_0+(n-1)/k},
+L_{f^\varepsilon}^{t_0,t_0+1/k,\ldots,t_0+(n-1)/k})=1.
+\tag{7.3}
+$$
+
+The infimum over $P$ of this supremum is one. At $\varepsilon=1$, the quadrant partition reproduces the full law exactly.
+
+**Proof.** Consider the event that all $n$ labels are equal. For a fixed $P$, strong continuity and the finite-word Markov formula imply that as $k\to\infty$ its probability tends to one. For the noisy quadrant detector, conditional independence leaves the limit
+
+$$
+ c^n+3d^n,\qquad c=\frac{1+3\varepsilon}{4},\quad d=\frac{1-\varepsilon}{4}.
+$$
+
+For $\varepsilon<1$, this tends to zero as $n\to\infty$. Taking first $k$ large and then $n$ large makes the event gap arbitrarily close to one; total variation is at most one. At $\varepsilon=1$ the detector is the quadrant partition itself. ∎
+

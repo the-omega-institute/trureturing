@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c324e7c2820778a9a3ded847fea329dd168a1dec277ee4e247fbe8322efa1841
+  normalized_sha256: sha256:c324e7c2820778a9a3ded847fea329dd168a1dec277ee4e247fbe8322efa1841
+cas_ref: sha256:c324e7c2820778a9a3ded847fea329dd168a1dec277ee4e247fbe8322efa1841
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Q03 指定余数向量研究对象并要求补齐投影系数的权重与量词，没有给出当前已成立的极限命题。'
+    previous_atom_id: fdc706e018d13b79013207378df7cca87e2562a0b85efbd4e2c8f40fa9b38acf
+    next_atom_id: 83b420bfd683997e3d8d43a4cf1cf82f7591f421fad73df59b3ffbb2b4224553

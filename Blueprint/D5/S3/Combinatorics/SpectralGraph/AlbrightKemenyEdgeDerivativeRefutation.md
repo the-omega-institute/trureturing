@@ -42,7 +42,43 @@ $$\forall n \in \mathrm{Nat},\; \forall A \in \operatorname{Matrix}\left(\operat
 
 Section 1, page 3, states: “Kemeny’s constant can be computed as” K(G) = Σ_{λT ≠ 1} 1/(1 − λT) = Σ_{λL ≠ 0} 1/λL, “where each λL is an eigenvalue of L.” The encoding filters the multiset of real characteristic roots by nonzeroness, maps inversion, and sums. For the real symmetric normalized Laplacians in the proof, these roots are the eigenvalues with multiplicity.
 
-**Definition 1.4 (Conjecture 3.5: minimality).**
+**Definition 1.4 (Reciprocal nonzero characteristic roots).**
+
+$$\forall I \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] \forall L \in \operatorname{Matrix}\left(I, I, \mathrm{Real}\right),\; \operatorname{reciprocalRoots}\left(L\right) = \operatorname{Multiset}.\operatorname{sum}\left(\operatorname{Multiset}.\operatorname{map}\left(\operatorname{fun} x : \mathrm{Real} \mapsto x^{-1}, \operatorname{Multiset}.\operatorname{filter}\left(\operatorname{fun} x : \mathrm{Real} \mapsto x \ne 0, \operatorname{Polynomial}.\operatorname{roots}\left(\operatorname{Matrix}.\operatorname{charpoly}\left(L\right)\right)\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.reciprocalRoots` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite index type, the characteristic-root multiset is filtered by nonzeroness, inverted and summed. Real inversion at zero is zero.
+
+**Theorem 1.5 (The spectral reciprocal sum).**
+
+$$\forall I \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] \forall L \in \operatorname{Matrix}\left(I, I, \mathrm{Real}\right),\; \forall hL \in \operatorname{Matrix}.\operatorname{IsHermitian}\left(L\right),\; \operatorname{reciprocalRoots}\left(L\right) = \sum_{i : I} \operatorname{hL}.\operatorname{eigenvalues}\left(i\right)^{-1}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.reciprocalRoots_eq_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a real Hermitian matrix, the characteristic-root multiset agrees with its real eigenvalues counted with multiplicity.
+
+**Theorem 1.6 (A generalized inverse trace).**
+
+$$\forall I \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] \forall L \in \operatorname{Matrix}\left(I, I, \mathrm{Real}\right),\; \forall P \in \operatorname{Matrix}\left(I, I, \mathrm{Real}\right),\; \forall T \in \operatorname{Matrix}\left(I, I, \mathrm{Real}\right),\; (\operatorname{Matrix}.\operatorname{IsHermitian}\left(L\right)) \Rightarrow (((L) \cdot (T) = 1 - P) \Rightarrow (((L) \cdot (P) = 0) \Rightarrow (((P) \cdot (T) = 0) \Rightarrow (\operatorname{reciprocalRoots}\left(L\right) = \operatorname{Matrix}.\operatorname{trace}\left(T\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.reciprocalRoots_eq_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The three displayed matrix equations identify the reciprocal sum with the trace of T. This statement concerns arbitrary real Hermitian matrices and does not assume a normalized Laplacian.
+
+**Definition 1.7 (Conjecture 3.5: minimality).**
 
 $$\operatorname{claim} = (\forall n \in \mathrm{Nat},\; (2 \le n) \Rightarrow (\forall G \in \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right),\; [\operatorname{DecidableRel}\left(\operatorname{SimpleGraph}.\operatorname{Adj}\left(G\right)\right)] \forall a \in \operatorname{Fin}\left(n\right),\; \forall b \in \operatorname{Fin}\left(n\right),\; \forall dG \in \mathrm{Real},\; \forall dP \in \mathrm{Real},\; (\operatorname{SimpleGraph}.\operatorname{Connected}\left(G\right)) \Rightarrow ((a \ne b) \Rightarrow ((\operatorname{HasDerivAt}\left(\operatorname{fun} t : \mathrm{Real} \mapsto \operatorname{kemeny}\left(\operatorname{paramAdj}\left(G, a, b, t\right)\right), dG, 0\right)) \Rightarrow ((\operatorname{HasDerivAt}\left(\operatorname{fun} t : \mathrm{Real} \mapsto \operatorname{kemeny}\left(\operatorname{paramAdj}\left(\operatorname{SimpleGraph}.\operatorname{pathGraph}\left(n\right), \langle0\rangle, \langle n - 1\rangle, t\right)\right), dP, 0\right)) \Rightarrow (dP \le dG))))))$$
 
@@ -54,7 +90,7 @@ $$\operatorname{claim} = (\forall n \in \mathrm{Nat},\; (2 \le n) \Rightarrow (\
 
 Conjecture 3.5, page 19, states verbatim: “For a given n, the derivative of Kemeny’s constant on simple graphs of order n is smallest on the path on n vertices with respect to the non-edge connecting the ends of the path. The value of this derivative is O(n³).” The proposition expresses the first sentence for connected graphs on Fin n with n ≥ 2 and a ≠ b. Both derivatives must exist at zero. The path endpoints are the elements of Fin n with values 0 and n − 1; the inequality n ≥ 2 supplies their bounds. The second sentence concerns growth of the path value and is outside this proposition.
 
-**Theorem 1.5 (A strict counterexample at order 23).**
+**Theorem 1.8 (A strict counterexample at order 23).**
 
 $$\neg (\forall n \in \mathrm{Nat},\; (2 \le n) \Rightarrow (\forall G \in \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right),\; [\operatorname{DecidableRel}\left(\operatorname{SimpleGraph}.\operatorname{Adj}\left(G\right)\right)] \forall a \in \operatorname{Fin}\left(n\right),\; \forall b \in \operatorname{Fin}\left(n\right),\; \forall dG \in \mathrm{Real},\; \forall dP \in \mathrm{Real},\; (\operatorname{SimpleGraph}.\operatorname{Connected}\left(G\right)) \Rightarrow ((a \ne b) \Rightarrow ((\operatorname{HasDerivAt}\left(\operatorname{fun} t : \mathrm{Real} \mapsto \operatorname{kemeny}\left(\operatorname{paramAdj}\left(G, a, b, t\right)\right), dG, 0\right)) \Rightarrow ((\operatorname{HasDerivAt}\left(\operatorname{fun} t : \mathrm{Real} \mapsto \operatorname{kemeny}\left(\operatorname{paramAdj}\left(\operatorname{SimpleGraph}.\operatorname{pathGraph}\left(n\right), \langle0\rangle, \langle n - 1\rangle, t\right)\right), dP, 0\right)) \Rightarrow (dP \le dG))))))$$
 
@@ -78,4 +114,7 @@ Take cliques on {0,…,7} and {8,…,15}, joined by the path 0,16,17,18,19,20,21
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.kemeny`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.normLap`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.paramAdj`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.reciprocalRoots`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.reciprocalRoots_eq_sum`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.reciprocalRoots_eq_trace`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/AlbrightKemenyEdgeDerivativeRefutation.result`

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d5d1d8b40cf1bae7f75fa1c92854cf0fdd0a7a00a454fedf07210656bd22efe2
+  normalized_sha256: sha256:d5d1d8b40cf1bae7f75fa1c92854cf0fdd0a7a00a454fedf07210656bd22efe2
+cas_ref: sha256:d5d1d8b40cf1bae7f75fa1c92854cf0fdd0a7a00a454fedf07210656bd22efe2
+coverage_gids:
+  - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
+    target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
+  - gid: D5/S3/Observer/MetricGeometry/ContractingDigitMemory.contracting_digit_memory_exact
+    target_statement_id: sha256:707206a77d9765e89abf7c412a9d47c942048fac459cabadf11ef71472374be8
+  - gid: D5/S3/Observer/MetricGeometry/ContractingDigitMemory.prefixPoint_separated
+    target_statement_id: sha256:66bff95d954d2bb1b55524b4112b41a2f1272ce894b66da896eb8a293795d5b9
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 6eb7b50d61433c5c92da3233ee2874d27aba9ac9c0cd483c85025559d6903145
+    - c475f0ebe02d994161d2089a650c6a150d16aea2a65e99d8f06c87c8cc5eb030

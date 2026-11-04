@@ -147,6 +147,111 @@ internal sealed class ReadoutInstrumentDocument : IScribeDocumentDefinition
                 + "dilation, or supply a native or physical implementation, LOCC protocol, "
                 + "yield bound or quantum field theory.")),
             Paragraph(Text(
+                "The same-K comparison fixes three distinct carriers. Put K_b = K () b (), "
+                + "Phi(X) = sum_b K_b X K_b*, and Psi(X) = sum_b (K_b X K_b*) tensor |b><b|. "
+                + "Here the output-first product coordinates are (o,b) in Fin 4 times Fin 8; "
+                + "Psi retains the complete classical outcome, including parity. To use the "
+                + "C-Q supplier on Fin 32, swap to (b,o) and flatten by 4b+o. The five output "
+                + "states are sigma_i = P_s(i) for Phi (n=5,d=4), and tau_i = P_(4f(i)+s(i)) "
+                + "for the reindexed Psi (n=5,d=32). The latter coordinates are "
+                + "(0,15,21,26,31). Every state is positive semidefinite with trace one. "
+                + "For every complex input X, both maps depend only on X_ii: their outputs "
+                + "are sum_i X_ii sigma_i and sum_i X_ii tau_i. Consequently their action on "
+                + "|u><u| is exactly channelOutput with coefficients |u_i| squared.")),
+            Paragraph(Text(
+                "For 2 <= k <= 5, use the supplier's orthonormality condition "
+                + "sum_i conjugate(u_r(i)) u_t(i) = delta_rt and its averageOutputOverlap: "
+                + "sum over ordered unequal pairs (r,t), divided by k(k-1), of the real "
+                + "trace of the product of their output states. The sharp minima over all "
+                + "such unit-vector families, in order k=2,3,4,5, are (0,0,0,1/10) for Phi "
+                + "and (0,0,0,0) for Psi. Indeed Tr(sigma_i sigma_j) = [s(i)=s(j)] and "
+                + "Tr(tau_i tau_j) = [i=j]. The only distinct-source collision is {1,4}. "
+                + "Prefixes of the common source order (0,2,3,1,4) give orthonormal source "
+                + "basis families attaining both minima. Up to size four their outputs are "
+                + "distinct; size five has exactly two ordered colliding pairs for Phi, "
+                + "giving 2/20, and none for Psi.")),
+            Paragraph(Text(
+                "The basis computation alone is not a bound on arbitrary orthonormal "
+                + "families. The missing quantifier is supplied by "),
+                Ref("D5/S3/Quantum/QuantumChannels/HuttonMehtaVukovicOutputOverlap"),
+                Text(" result, applied separately to these two density-state families. "
+                + "Its minDistinctOverlap is the infimum over injective Fin k to Fin 5 maps. "
+                + "Every basis score is nonnegative; for k=5 each injection is a permutation "
+                + "and the Phi score is 1/10. The displayed common families attain these "
+                + "bounds, so the supplier proves exactly the claimed minima for all "
+                + "orthonormal inputs. Hutton, Mehta and Vukovic, arXiv:2508.10664v1, "
+                + "Definition 1.3 and Conjecture 1.5 (pp. 2-3), supply the C-Q setting and "
+                + "question; the proved general-k lower bound here is the repository result, "
+                + "not a theorem attributed to that paper. This is a finite application of "
+                + "that result, not a new general overlap theorem.")),
+            Paragraph(Text(
+                "Fixing these actual Kraus matrices also selects one coherent lift: "
+                + "V|i> = |s(i)> tensor |f(i)>, with V_(o,b),i = (K_b)_o,i and V*V = I_5. "
+                + "Write L(X)=VXV*. For every complex X its (o,b),(p,c) entry is "
+                + "sum_(i,j) [o=s(i), b=f(i), p=s(j), c=f(j)] X_ij. Tracing the record "
+                + "gives Phi(X); dephasing the record basis gives Psi(X). Tracing the output "
+                + "instead gives the fixed complementary channel Gamma(X), with "
+                + "Gamma(X)_(f(i),f(j)) = [s(i)=s(j)] X_ij and zero unused rows/columns. "
+                + "Its only off-diagonal block is on environment coordinates (3,7), where "
+                + "the block is [[X_11,X_14],[X_41,X_44]]. The other active entries are "
+                + "Gamma_00=X_00, Gamma_55=X_22, Gamma_66=X_33. Thus, on its active "
+                + "support, the retained environment has the concrete block algebra "
+                + "C^3 direct-sum M_2; it discards coherences between different s-fibers.")),
+            Paragraph(Text(
+                "This is one same-K realization of the standard Kraus/Stinespring "
+                + "correspondence, with the complete representation locators in "
+                + "Library/Quantum/watrous2018theory.md (Theorem 2.22, Theorem 2.26 and "
+                + "Corollary 2.27). The environment-record mechanism already appears in "),
+                Ref("D5/S3/Quantum/EnvironmentRecords"),
+                Text("; the branch-versus-cross-block distinction is also stated in "
+                + "AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION, "
+                + "Proposition 6.5. Branch maps alone do not choose this lift or its relative "
+                + "record phases. With access to the intact joint image, V*L(X)V=X for "
+                + "every X. This is information preservation on the stipulated joint "
+                + "carrier, with an algebraic left inverse on that image; it does not "
+                + "supply a native inverse operation or physical control.")),
+            Paragraph(Text(
+                "The complement of the already recorded Psi is different. A dilation is "
+                + "W|i> = |s(i),f(i)>_(output,record) tensor |f(i)>_E'. Its system marginal "
+                + "is Psi and its complementary output is sum_i X_ii |f(i)><f(i)|, "
+                + "which is diagonal because f is injective. Equivalently, copying the "
+                + "record of V into E' and discarding E' dephases that record. After this "
+                + "step, tracing the output of Psi gives the diagonal of Gamma, not Gamma "
+                + "itself. The copied classical record and an undisturbed collision-phase "
+                + "block are therefore not supplied simultaneously. W still preserves "
+                + "information on its full coherent joint image if every factor is actually "
+                + "retained; losing that carrier changes the available predictions.")),
+            Paragraph(Text(
+                "For a concrete phase test take source rays z_+ = (e_1 + i e_4)/sqrt(2) "
+                + "and z_- = (e_1 - i e_4)/sqrt(2), with density matrices rho_+ and rho_-. "
+                + "Both give Phi(rho)=P_3 and Psi(rho)=(P_(3,3)+P_(3,7))/2. Gamma instead "
+                + "gives the orthogonal projectors onto (e_3 + i e_7)/sqrt(2) and "
+                + "(e_3 - i e_7)/sqrt(2). The non-diagonal environment effect onto the "
+                + "plus ray has probabilities one and zero. Its implementation requires "
+                + "coherent preparation, access to the unmeasured environment, and a "
+                + "calibrated phase reference for that effect. It is not classical feedback. "
+                + "Since Phi and Psi identify these two distinct inputs, no map using "
+                + "only either of those outputs can recover every unknown input state.")),
+            Paragraph(Text(
+                "The existing "), Ref("D5/S3/Quantum/Fibers/FiveModePhaseLift"),
+                Text(" certificate uses source coordinates (2,4), whose successors are "
+                + "1 and 3. That coherence survives in the joint L entries connecting "
+                + "(1,5) and (3,7), but both marginal traces kill it; Gamma alone cannot "
+                + "recover that certificate. The collision test above uses (1,4) precisely "
+                + "because both successors are 3. These are two different phase locations, "
+                + "not interchangeable witnesses.")),
+            Paragraph(Text(
+                "For the quantum-origin question, this application identifies which "
+                + "predictions are merged by a chosen readout and where a stipulated "
+                + "coherent realization carries the missing distinctions. It does not "
+                + "derive the complex-state model or Born probabilities from the native "
+                + "reader. A common native realization of coherent preparation and joint "
+                + "dynamics, phase-referenced noncommuting effects and their legal controls, "
+                + "an operation-preserving source map to full FIB histories, and a physical "
+                + "probability/Born bridge remain unsupplied. Fin 5 labels only the five "
+                + "initialized windows above; it is neither the full infinite FIB source "
+                + "nor NativeContinuation.Source(3).")),
+            Paragraph(Text(
                 "The generic diagonal Kraus theorem supplies completeness, nonnegative weights, "
                 + "the channel obtained by summing branches, and the factorization criterion. "
                 + "This FIB application consumes those results at one actual continuation and stops "

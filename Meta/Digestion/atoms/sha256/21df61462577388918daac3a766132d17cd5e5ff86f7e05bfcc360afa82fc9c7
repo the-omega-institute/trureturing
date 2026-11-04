@@ -1,0 +1,30 @@
+**Corollary 30.2 (zero-tail acquisition and an exponential full-rank family).**
+All $2^d$ streams with arbitrary $z_1,\ldots,z_d$ and $z_j=0$ for
+$j>d$ have polynomial every-execution acquisition by the same
+controller. For $d\ge1$, the $2^{d-1}$ such streams with $z_d=1$
+also have polynomial total local cost for the exact original output:
+their unique order-$d$ coefficient row is zero and their authentic
+seed is $(z_1,\ldots,z_d)$. The empty $d=0$ source has the same
+conclusion with the empty row/seed.
+
+Proof. $E^d$ annihilates every such stream, so $r=0$ and the
+acquisition bound is polynomial. If $z_d=1$, its last nonzero value
+is $s_{d-1}=1$. No smaller power of $E$ annihilates it; its least
+annihilator is $E^d$, so $a=d$ and Corollary 30.1 applies. Explicitly,
+reverse the columns of $H(P)$: entry $(i,j)$ becomes
+$s_{i+d-1-j}$. Entries with $i>j$ are zero, and diagonal entries
+are one. The matrix is triangular with determinant one. The zero
+row passes because every $s_{i+d}$ is zero, and is the unique
+passing row, regardless of the original enumeration. The seed is
+still copied from the actual first $d$ values. This counts
+$2^{d-1}$ distinct streams, not presentations.
+
+For zero-tail streams whose last nonzero position precedes $d$, the
+Hankel rank is deficient. Their polynomial acquisition does not
+bound the original first-passing enumeration. Even the all-zero
+stream at positive $d$ retains canonical descriptor
+$(\rho_d(0),0^d)$, as in Theorem 26.1; it is not assigned a zero
+row by convenience. The all-input efficient computation of the
+unspecified original enumeration remains a separate obligation.
+$\square$
+

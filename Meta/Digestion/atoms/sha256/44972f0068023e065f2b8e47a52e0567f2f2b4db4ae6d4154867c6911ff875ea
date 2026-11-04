@@ -1,0 +1,20 @@
+## 29. The entire full-height terminal M graph
+
+On $\mathcal V$ write $f(p,v)=m_2(p,v)-m_1(p,v)$.
+The terminal interval rows in Section 25 give
+
+$$
+\begin{aligned}
+f_p&\in[-206652558,-206652556]/10^{12}
+\subset(-.000206653,-.000206652),\\
+f_v&\in[986337,986339]/10^{12}
+\subset(.0000009863,.0000009864),\\
+\|Df\|_\infty&<.000208,\qquad
+.00477<-f_v/f_p<.00478.
+\end{aligned}
+$$
+
+Here the derivative norm is the induced norm of a row. Both worlds
+are evaluated at the same record. Uniform enclosures can be subtracted
+without any claim that unrelated extreme values occur simultaneously.
+

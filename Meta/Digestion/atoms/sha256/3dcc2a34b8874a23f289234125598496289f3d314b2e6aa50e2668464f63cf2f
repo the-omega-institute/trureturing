@@ -1,0 +1,22 @@
+### 定义 3.1（平方纠缠保真度）
+
+令 $\Psi_\rho=\lvert \psi_\rho\rangle\langle \psi_\rho\rvert$ 为 $\rho$ 的任一纯化。
+对源到自身的通道 $\mathcal T$，定义
+
+<a id="eq-c122-squared-fe"></a>
+
+$$
+F_e(\rho,\mathcal T)
+ =\langle\psi_\rho|(\mathcal T\otimes\operatorname{id})(\Psi_\rho)|\psi_\rho\rangle
+ =\sum_a|\operatorname{Tr}(\rho K_a)|^2,
+\tag{10}
+$$
+
+其中 $K_a$ 为 $\mathcal T$ 的任一 Kraus 表示。
+它是 C121 所用根保真度的*平方*，取值在 $[0,1]$。
+diamond 距离仍采用不除二的约定，最大为 $2$。
+
+式~[(10)](#eq-c122-squared-fe) 的第二个等号只需展开 Kraus 作用，并使用
+$\langle\psi_\rho|(K_a\otimes I)|\psi_\rho\rangle=\operatorname{Tr}(\rho K_a)$。
+下面的定理固定*已声明的参考态* $\sigma$，并未把未知输入偷换为恢复器的参数。
+

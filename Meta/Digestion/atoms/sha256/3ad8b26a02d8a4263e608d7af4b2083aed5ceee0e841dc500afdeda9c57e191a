@@ -1,0 +1,13 @@
+**Lemma 2.2 (universal collinearity).** Suppose that, for a fixed word and matrix $C$, $CZ_w$ is collinear with $\beta$ for every world, permitting the zero vector in this hypothesis. Then
+
+$$
+C\mathbf1=0,\qquad
+C\operatorname{diag}(a(S))V=\ell(S)I_m
+\quad\text{for all }S\in\operatorname{Mat}_2(\mathbb R),
+\tag{2.1}
+$$
+
+for a linear functional $\ell$. If $C$ succeeds at even one world, then $\ell\ne0$.
+
+**Proof.** Vary $\delta$ while fixing a nonzero $\beta$. The difference of the two outputs shows that $C\mathbf1$ belongs to $\operatorname{span}\{\beta\}$. As $m\ge2$, the intersection of these lines over all nonzero $\beta$ is zero. For fixed $P$, the linear map $C\operatorname{diag}(a(P))V$ sends every vector into its own line. Its action on basis vectors is diagonal, and its action on each sum of two basis vectors makes every diagonal entry equal. Thus it is a scalar matrix. One of its diagonal entries defines a linear functional $\ell(S)$ on all matrices. The identity on legal $P$ extends to every auxiliary $S$ by Lemma 2.1. Auxiliary matrices used in this linear extension need not be physical sources. At a successful world the scalar $\ell(P)$ is nonzero. $\square$
+

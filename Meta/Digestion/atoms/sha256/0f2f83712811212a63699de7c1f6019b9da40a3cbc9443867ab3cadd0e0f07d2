@@ -1,0 +1,77 @@
+## 51. Pair identities and distinctions forced by actual worlds
+
+Suppose (47.1) holds. Subtracting (49.3) at the common width gives
+
+$$
+L_{\rm w}(b)\delta=0,\qquad
+\delta=
+\begin{pmatrix}
+n_1-n_2\\
+\epsilon_1n_1-\epsilon_2n_2\\
+\epsilon_1-\epsilon_2\\
+\epsilon_1/n_1-\epsilon_2/n_2
+\end{pmatrix}.
+\tag{51.1}
+$$
+
+First $\delta\ne0$. Otherwise $n_1=n_2$ and
+$\epsilon_1=\epsilon_2=\epsilon\ne0$ by Lemma 48.2. Equation (49.4)
+then gives the same $\epsilon/j$ in both worlds, hence the same $j$.
+Thus $r=n-j$ is also the same. The fixed width, source and drift
+coincide, and (48.3) fixes the same entire gain, contradicting
+$W_1\ne W_2$. The use of $\epsilon\ne0$ here is justified by
+$p\ne24$; it is not required for the affine lift.
+
+Lemma 50.1 now gives a real $t\ne0$ such that
+
+$$
+\delta=tK_{\rm w}(b).
+\tag{51.2}
+$$
+
+Its third coordinate is nonzero because $T,U,H_2$ are positive.
+Consequently $\epsilon_1\ne\epsilon_2$, or $d_1\ne d_2$.
+Comparing its first and third coordinates yields (47.4).
+For (47.3) use the exact algebraic identity
+
+$$
+(\epsilon_1n_1-\epsilon_2n_2)
++n_1n_2(\epsilon_1/n_1-\epsilon_2/n_2)
+=(n_1+n_2)(\epsilon_1-\epsilon_2).
+\tag{51.3}
+$$
+
+Substitute (51.2) and cancel the known nonzero scalar $3t$ to obtain
+
+$$
+UH_1+H_3n_1n_2+TUH_2(n_1+n_2)=0.
+\tag{51.4}
+$$
+
+No gain value, root difference, drift or $\Lambda$ is cancelled in
+this step.
+
+The distinction $n_1\ne n_2$ follows from the actual-world hypotheses
+as well. For $0<b\le3$ one has
+
+$$
+H_0(b)=(50b-1137)b^3-842b^2-1442b-1262<0.
+\tag{51.5}
+$$
+
+If $n_1=n_2$, equation (47.4) and $d_1\ne d_2$ would force
+$H_0(b)=0$, so $b>3$. At a fixed such width the function
+
+$$
+n(r)=b+\frac{(b+1)r-r^2}{b},\qquad
+\frac{dn}{dr}=\frac{b+1-2r}{b}>0\quad(0<r<1)
+\tag{51.6}
+$$
+
+is strictly increasing. Hence equal $n$ forces equal $r$, and both
+worlds have the same source. Since $b>3$, $D_{\rm par}\ne0$;
+(48.2) therefore forces $\Lambda\ne0$ at that source.
+Subtracting their two parent equations gives
+$(\epsilon_1-\epsilon_2)\Lambda=0$, contradicting their different
+drifts. This proves both assertions of (47.5) without assuming them.
+

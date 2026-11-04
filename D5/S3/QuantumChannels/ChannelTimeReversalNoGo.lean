@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: No randomisation-consistent channel symmetry reverses every unitary. -/
-/- proof_shape: result: bind-only; consumers: none (settling result)
+/- Owner publication escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25799. proof_shape: result: bind-only; consumers: none (settling result)
    escape_witness: none
    admission_basis: open-problem-resolution (#16378; Proved)
    Selected frozen dependencies (declaration statement_id, base e4cd4993c1aed7cf4dcbf1c93079e5ed0a892b37):
@@ -79,6 +79,13 @@ import D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation
 import D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Fibers.RankOneFeedbackProtocol
+import D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
+import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
+import D5.S3.Quantum.FiniteDimensional
+import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+import D5.S3.Quantum.Magic.WignerDistanceMinimum
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsCPTP)
@@ -171,7 +178,7 @@ private lemma finite_randomisation {d : ℕ} {S : MatrixMap (Fin d) (Fin d) ℂ 
   have hpair : (∑ i ∈ s, p i • (Phi i, S (Phi i))) = (∑ i ∈ s, (p i : ℂ) • Phi i, ∑ i ∈ s, (p i : ℂ) • S (Phi i)) := by
     exact (prod_mk_sum s (fun i => (p i : ℂ) • Phi i) (fun i => (p i : ℂ) • S (Phi i))).symm
   rw [hpair] at hmem; exact hmem.2.symm
-private lemma unitaryChannel_cptp {d : ℕ} {U : Matrix (Fin d) (Fin d) ℂ} (hU : U ∈ Matrix.unitaryGroup (Fin d) ℂ) : IsCPTP (unitaryChannel U) := by
+lemma unitaryChannel_cptp {d : ℕ} {U : Matrix (Fin d) (Fin d) ℂ} (hU : U ∈ Matrix.unitaryGroup (Fin d) ℂ) : IsCPTP (unitaryChannel U) := by
   constructor
   · let K : Fin 1 → Matrix (Fin d) (Fin d) ℂ := fun _ => U
     have heq : unitaryChannel U = MatrixMap.of_kraus K K := by
@@ -460,7 +467,7 @@ private lemma Delta_fixed {S : MatrixMap (Fin 2) (Fin 2) ℂ → MatrixMap (Fin 
   have hmix : (∑ i : Fin 4, ((1/4 : ℝ) : ℂ) • unitaryChannel (U i)) = (D5.S3.Quantum.QuantumChannels.ProductUnitaryChoiSpectrum.depol 2) := by
     rw [Delta_pauli]; simp [unitaryChannel, U, Fin.sum_univ_succ, Finset.smul_sum, add_assoc]
   simpa only [hmix] using h
-private lemma pauli_expansion (X : QubitMatrix) : X = (Matrix.trace X / 2) • (1 : QubitMatrix) + ∑ b : Fin 3, (Matrix.trace (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli b * X) / 2) • D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli b := by
+lemma pauli_expansion (X : QubitMatrix) : X = (Matrix.trace X / 2) • (1 : QubitMatrix) + ∑ b : Fin 3, (Matrix.trace (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli b * X) / 2) • D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli b := by
   let Y : Matrix (Fin 1 → Fin 2) (Fin 1 → Fin 2) ℂ := fun i j => X (i 0) (j 0)
   have ht (p : Pauli) : Matrix.trace (wordOp (fun _ : Fin 1 => p) * Y) = Matrix.trace (pauliMatrix p * X) := by
     simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply,
@@ -510,8 +517,8 @@ open Qubit
 namespace QubitUnital
 set_option maxRecDepth 4096
 set_option maxHeartbeats 2000000
-private def J : MatrixMap (Fin 2) (Fin 2) ℂ := unitaryChannel (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli 1) ∘ₗ ((Matrix.transposeLinearEquiv _ _ ℂ ℂ).toLinearMap)
-private lemma J_apply (X : QubitMatrix) : J X = Matrix.trace X • (1 : QubitMatrix) - X := by
+def J : MatrixMap (Fin 2) (Fin 2) ℂ := unitaryChannel (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli 1) ∘ₗ ((Matrix.transposeLinearEquiv _ _ ℂ ℂ).toLinearMap)
+lemma J_apply (X : QubitMatrix) : J X = Matrix.trace X • (1 : QubitMatrix) - X := by
   ext i j
   fin_cases i <;> fin_cases j <;> simp [unitaryChannel, J, Matrix.transposeLinearEquiv, LinearMap.comp_apply, LinearMap.mulRight_apply, LinearMap.mulLeft_apply, D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli, pauliMatrix, qubitX, qubitZ, Matrix.transpose, Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.vecMul, Matrix.vecHead, Matrix.vecTail, dotProduct, Matrix.conjTranspose_apply, Matrix.star_eq_conjTranspose, Fin.sum_univ_two] <;> try ring_nf <;> norm_num [Complex.I_sq] <;> ring
 private lemma spinflip_double (Phi : MatrixMap (Fin 2) (Fin 2) ℂ) : J ∘ₗ Phi ∘ₗ J = unitaryChannel (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli 1) ∘ₗ (fun {d : ℕ} (Phi : MatrixMap (Fin d) (Fin d) ℂ) => ((Matrix.transposeLinearEquiv _ _ ℂ ℂ).toLinearMap) ∘ₗ Phi ∘ₗ ((Matrix.transposeLinearEquiv _ _ ℂ ℂ).toLinearMap)) Phi ∘ₗ unitaryChannel (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli 1) := by
@@ -554,7 +561,7 @@ lemma density_psd (a : Fin 3) (e : Bool) : ((fun (a : Fin 3) (e : Bool) => D5.S3
   have hp : (![Pauli.X, Pauli.Y, Pauli.Z] a) ≠ Pauli.I := by fin_cases a <;> decide
   obtain ⟨_, U, _, _, _, _, _, hEq⟩ := D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral_stabilizer (![Pauli.X, Pauli.Y, Pauli.Z] a) (if e then 1 else 0) hp
   dsimp only; rw [hEq]; exact Matrix.posSemidef_vecMulVec_self_star _
-private lemma sigma_trace (a : Fin 3) : Matrix.trace (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli a) = 0 := by
+lemma sigma_trace (a : Fin 3) : Matrix.trace (D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli a) = 0 := by
   have h := D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_trace_pair (![Pauli.X, Pauli.Y, Pauli.Z] a) Pauli.I
   fin_cases a <;> simpa [D5.S3.Quantum.Entanglement.SteeringEllipsoidFullyEntangledFraction.pauli, pauliMatrix] using h
 lemma density_trace (a : Fin 3) (e : Bool) : Matrix.trace ((fun (a : Fin 3) (e : Bool) => D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (![Pauli.X, Pauli.Y, Pauli.Z] a) (if e then 1 else 0)) a e) = 1 := by

@@ -1,0 +1,72 @@
+**Corollary 38.2 (same-source four-view recovery at the attained corner).**
+For the attaining preparation in Theorem 38.1, at its completed return
+and every later synchronized completed cut under Theorem 34.3's
+continued service and retention premises, the four mathematical views
+
+$$
+ S_n,\qquad \partial S_n,\qquad
+ \mathcal T_n^{\rm birth},\qquad M_n^{\rm earned}
+ \tag{GPO.92}
+$$
+
+have exactly the mutual recovery and update compatibility of Theorem
+34.2, and give the current labelled tree and all finite future behavior
+of this same actual source. Real retained binding and grants make the
+continued calls of Theorem 34.3 available. No further paid Read is
+needed to learn the law; requested real Reads still count.
+For $d>0$ this begins at $n=N(2d)$ with $Q=2d$ and
+$U=N(2d)$; for $d=0$ it begins at $n=2$ with $(Q,U)=(0,2)$.
+
+Proof. At $d>0$ the attained first $2d$ bits select the very
+canonical generator and synchronized counters of Definition 34.1,
+with all its genuine retention relations. Theorem 34.2 applies because
+$v_n\ge2d$. At $d=0$ its singleton clause applies with empty
+earned prefix and the canonical zero generator. Each recovered view is
+the view of that same initialized stream, public birth order and actual
+cut, so the existing route and round-trip identities apply on their
+stated data images. No full-incidence scan is an extra prerequisite:
+the acquisition of Theorem 33.2 already constructs each requested
+birth parent from earlier earned bits. Theorem 34.3 preserves the
+actual tree, phase, binding and completed-call invariant for every
+finite actual continuation, and provides each local hypothetical
+evaluation without further law-learning Reads. $\square$
+
+All simultaneous prices of §§34–35 remain attached to this attaining
+run. In particular for $d>0$ its literal traffic and longest address
+are still the actual sum and maximum in (GPO.82), with
+$W\le2d(N(2d)-1)$ and $M_{\rm addr}\le N(2d)-1$.
+Its source has actually generated $B_{N(2d)}$ birth bits, including
+unread bits, and has the nodes and links of (GPO.86). Generator work,
+local synthesis, reconstruction, backing, hidden writer, capabilities,
+installation and continued lifetime retain the charges of Definition
+35.2. Finite continued use adds the coordinates of Proposition 35.3.
+The new Read lower bound does not minimize any of those other
+coordinates. In particular (GPO.91) is neither a total-price minimum
+nor a full-resource Pareto frontier.
+
+The scope of Theorems 37.2 and 38.1 is full-future readiness and the
+joint task on the original all-index $\mathscr R_d$. They assert
+no standalone paid Read lower bound for the current-label or
+$\mathcal Q_1$ task alone, no minimum for $\mathscr M_K$, no
+private-parameter recovery, and no deferred-learning replacement for
+readiness. Expected costs, richer sensors, empirical authenticity and
+physical duration remain outside their claims. The time view in
+(GPO.92) is the actual marked birth chronology of §28, and the
+memory view is the selected earned data of §34; neither is an
+unrestricted observer journal or an entire material installation.
+The authentic source law, bound, actual chronology, binding and
+synchronization remain premises throughout, with the finite-prefix
+authentication limitation of Theorem 32.2 unchanged.
+
+The classical count in (GPO.88) and binary decision capacity are
+reused intermediate suppliers inside Theorem 37.2. The new native
+consumer is the distinct-behavior return-leaf argument under this
+specific presence-only source contract, joined to the existing paid
+attainment. This is source-relative `repo-derived` theory with ordinary
+proofs and the stated literature attribution, without a worldwide
+novelty or Lean-certification claim. The semantic four-valued control
+and replay declarations in `NativeSerialMachine.lean` and
+`NativeFullSourceProducer.lean`, with the owning Scribes and parameter
+boundaries of Definition 36.1, remain documentary suppliers. They are
+not an actual compiled binary-presence specialization of this theorem.
+

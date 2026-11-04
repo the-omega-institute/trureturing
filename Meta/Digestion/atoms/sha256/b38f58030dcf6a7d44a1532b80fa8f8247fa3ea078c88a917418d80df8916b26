@@ -1,0 +1,66 @@
+#### 定理 8.3（全局单位约束与有效边界度量）
+
+设有限维 Hermitian 算符 $L$ 按边界与内部划分：
+
+$$
+
+L=\begin{pmatrix}L_{BB}&L_{BI}\\L_{IB}&L_{II}\end{pmatrix}.
+
+$$
+
+对实 $\lambda\notin\operatorname{spec} L_{II}$，记
+
+$$
+
+R_\lambda=(L_{II}-\lambda I)^{-1},
+ K_{\rm eff}(\lambda)=L_{BB}-L_{BI}R_\lambda L_{IB}.
+
+$$
+
+完整本征问题 $L(g,x)^T=\lambda(g,x)^T$ 等价于
+
+$$
+
+K_{\rm eff}(\lambda)g=\lambda g,
+ x=-R_\lambda L_{IB}g.
+
+$$
+
+完整归一化在边界上成为
+
+$$
+
+\boxed{
+ \|g\|^2+\|x\|^2=g^\dagger G(\lambda)g,
+ G(\lambda)=I+L_{BI}R_\lambda^2L_{IB}
+ =I-K_{\rm eff}'(\lambda)>0.
+ }
+
+$$
+
+全局单位态上的最小能量 $\psi^\dagger L\psi$ 为 $\lambda_{\min}(L)$。上述消元只适用于相应 $\lambda$ 满足所列可逆条件的本征态。
+
+
+**证明。**
+
+第二个分块方程解出 $x$，代入第一块得边界本征方程。由于 $R_\lambda$ 自伴，
+$\|x\|^2=g^\dagger L_{BI}R_\lambda^2L_{IB}g$，故 $G\ge I$。
+微分恒等式
+$\frac{d}{d\lambda}(L_{II}-\lambda I)^{-1}=R_\lambda^2$
+给 $K_{\rm eff}'=-L_{BI}R_\lambda^2L_{IB}$。
+最后在 $L$ 的正交本征基展开单位向量，能量是各本征值的非负归一权重平均，故最小值及等号态如述。
+
+**证明完。** ∎
+
+
+这把“尺子也参与预测”写成精确式子：内部振幅消去后，正确边界约束一般为
+
+$$
+
+\boxed{g^\dagger G(\lambda)g=1,}
+
+$$
+
+而不是随意把 $\|g\|$ 重新设为一。被隐藏的分量通过一个正的有效度量返回边界。
+
+

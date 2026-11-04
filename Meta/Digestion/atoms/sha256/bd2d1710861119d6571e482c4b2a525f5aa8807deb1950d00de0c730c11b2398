@@ -1,0 +1,42 @@
+**定理 9.2（全停止策略的源内最小代表与等待信息地板）。** 对任意合法、几乎必然作出决定的控制器 $\rho$，沿全零回答回放得到一个可测容量选择器 $\sigma_\rho$。若回放在有限步主动停止，选择器记录相应的 $\mathsf A/\mathsf B$ 类型；若它永不主动停止，则取 $\sigma_\rho=\infty$。存在同一原种子、同一 $Q,X_0$ 和同一两臂来源上的合法替换 $\rho^\star$，满足：
+
+1. 每个可测 $\sigma:U\to\mathsf S$ 都能由这样的替换实现；
+2. $\rho^\star$ 与 $\rho$ 的完整联合状态实验由与参数无关的可测双射相连，且
+   $$
+   \mathbb E T_{\rho^\star}=\int k(\sigma_\rho(u))\,\nu(du)\le \mathbb E T_\rho;
+   \tag{RRO.36}
+   $$
+3. 在允许任意可测确定或随机决策核时，给定选择器的最小先验风险恰为
+   $$
+   \inf_\delta\mathbb E L(Q,X_0,\delta(H_{\rho^\star}))
+   =\int\mathcal R_L(c(\sigma(u)))\,\nu(du)\\
+   =w_L+\int\Gamma_L(c(\sigma(u)))\,\nu(du),
+   \tag{RRO.37}
+   $$
+   其中
+   $$
+   \Gamma_L(c)=t_L(c)-\sum_{x=0}^1\sum_{j\ge c_x}r_{xj}.
+   \tag{RRO.38}
+   $$
+
+特别地，$w_L$ 是等待到标记的任务特定信息地板，任何合法控制器的最小风险都不小于它；$\Gamma_L$ 是只因截断而产生的精确尾部遗憾。对每个容量，
+
+$$
+0\le\Gamma_L(c)\le\Delta_L\,\kappa(c).
+\tag{RRO.39}
+$$
+
+证明。有限全零回放的长度和终端类型由有限历史截面逐步决定，故给出可测 $\sigma_\rho$。在每个有限的 $(h,c)$ 种子片上，复用 [Terminal Event Experiment 定理 6.1](RECURSIVE_RELATIONAL_OBSERVATION_TERMINAL_EVENT_EXPERIMENT.md) 的形状实现，保持 $U$、长度和容量，并按其可测双射运输完整档案。无限片上使用同卷定理 3.1(a) 的等待实验双射，并取 Mean 定理 4.1 的无限端点；PG27 的标记几乎必然到达，所以这包括全零无限回放。按可数片拼接不会抽取新的随机量，也不改变原始来源。
+
+给定容量 $c$，有限标记叶 $(x,j)$ 的未归一化联合质量为
+$p_x(1-q)q^j\mu(dq)$，截断叶的联合质量为
+$p_xq^{c_x}\mu(dq)$；这正是 TEE 定理 5.3 的式 (TEE.20)。逐叶取动作下确界得到 $\mathcal R_L(c)$。把等待地板的标记和按 $j<c_x$ 与 $j\ge c_x$ 拆开，即得 (RRO.37)--(RRO.38)。因为下确界的和不小于各项下确界之和，$\Gamma_L\ge0$。任取一个固定动作 $d_0$，有
+
+$$
+\Gamma_L(c)\le \sum_{x=0}^1\sum_{j\ge c_x}
+\left[p_x\int(1-q)q^jL(q,x,d_0)\,d\mu-r_{xj}\right]
+\le\Delta_L\kappa(c),
+$$
+
+给出 (RRO.39)。无限容量时尾质量为零，故 $\Gamma_L=0$。这只证明任务风险的实验等价和均值替换；它不把等待地板解释成已恢复 $Q$、未获源或所有实际空间位置。证毕。
+

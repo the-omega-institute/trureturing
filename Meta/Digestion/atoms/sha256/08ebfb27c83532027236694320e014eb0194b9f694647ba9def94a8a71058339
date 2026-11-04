@@ -1,0 +1,140 @@
+**Theorem 30.2 (the bounded rational difference and effective passive
+horizon).** Under (30.1), for every $v\in\mathbb Q^N$,
+
+$$
+\sup_{k\ge0}\|CA^k v\|_\infty<\infty
+\quad\Longleftrightarrow\quad A(A^2-\operatorname{Id})v=0.
+\tag{30.3}
+$$
+
+Consequently the following are equivalent:
+
+1. $A$ has no eigenvalue $0,1,-1$.
+2. For every $D\ge1$ and rational $h>0$, a finite effectively
+   computable $H\ge I$, depending only on $A,C,K,D,h$, makes $R_H$
+   injective on all of $\Lambda_D$.
+
+In case 1, the record has a terminating exact decoder, whose number
+of initial candidates is at most
+
+$$
+\bigl(\lfloor D\kappa h\rfloor+2\bigr)^N.
+\tag{30.4}
+$$
+
+The horizon is independent of the unknown entry height. This is a
+passive entrance theorem at every scale; it is not a characterization
+of active acquisition or of current-only recovery after erased modes.
+
+Proof. For each $k$ the supplied inverse gives
+
+$$
+A^k v=K\begin{pmatrix}CA^k v\\CA^{k+1}v\\\vdots\\CA^{k+I}v\end{pmatrix}.
+\tag{30.5}
+$$
+
+If the boundary sequence is bounded, the state sequence is bounded.
+Choose a common positive denominator $d$ for $v$. Integer $A$ places
+every $A^k v$ in $d^{-1}\mathbb Z^N$. A bounded box contains only
+finitely many such points, so $A^r v=A^s v$ for some $0\le r<s$.
+Use the ordinary real spectral decomposition of the symmetric matrix
+$A$. Every nonzero spectral component of $v$ has real eigenvalue
+$\lambda$ satisfying $\lambda^r(\lambda^{s-r}-1)=0$.
+The only possibilities are $0,1,-1$. Hence
+$A(A^2-\operatorname{Id})v=0$. Conversely this identity implies
+$A^{k+2}v=A^k v$ for all $k\ge1$, so the boundary orbit has only its
+initial value and two subsequent periodic values. This proves (30.3).
+Rationality, integrality and symmetry are all used: a bounded real
+contracting eigenvector alone would not give the lattice repetition.
+
+Assume case 1. Equal initial records $R_I(x)=R_I(x')$ imply that
+corresponding coordinates of $O_Ix,O_Ix'$ lie in one half-open $h$-cell.
+Thus
+
+$$
+\|x-x'\|_\infty
+ \le\kappa\|O_I(x-x')\|_\infty<\kappa h.
+\tag{30.6}
+$$
+
+Effectively enumerate the finite set
+
+$$
+\mathcal V=\{v\in\Lambda_D:0<\|v\|_\infty\le\kappa h\}.
+\tag{30.7}
+$$
+
+For each $v\in\mathcal V$, iterate exact rational powers until an
+epoch $k(v)$ with $\|CA^{k(v)}v\|_\infty>h$ is found. Equation
+(30.3) and case 1 prove that every one of these finite searches
+terminates. Set
+
+$$
+H=\max\bigl(\{I\}\cup\{k(v):v\in\mathcal V\}\bigr).
+\tag{30.8}
+$$
+
+If $\mathcal V$ is empty take $H=I$. For two distinct lattice entries
+with equal $R_H$, (30.6) puts their difference in $\mathcal V$.
+At its witness epoch two corresponding outputs differ in absolute
+value by more than $h$, which is impossible inside one common $h$-cell.
+This proves injectivity on the whole unbounded lattice, without
+sampling the entry in the precomputation.
+
+For decoding, let $q$ be the actual first $I+1$ blocks and form the
+coordinatewise bin centers $r=h(q+\tfrac12\mathbf1)$ and $z=Kr$.
+Then
+
+$$
+\|x-z\|_\infty\le\kappa h/2.
+\tag{30.9}
+$$
+
+Enumerate all $\Lambda_D$ points in the closed box of (30.9), using
+integer ceilings and floors for each coordinate. Each coordinate
+interval has length $\kappa h$, so its number of lattice points is
+at most $\lfloor D\kappa h\rfloor+2$, a conservative bound also
+covering endpoints. Test these candidates against the entire actual
+$R_H$ by rational arithmetic and floor. The true entry is present,
+and injectivity makes it the unique survivor. Enumeration and each
+finite test terminate, proving (30.4) and the decoder assertion.
+
+For the converse suppose $A(A^2-\operatorname{Id})$ is singular.
+Its integer matrix has a nonzero rational kernel vector, hence after
+clearing denominators a nonzero $v\in\mathbb Z^N$. By (30.3) the
+number
+
+$$
+M=\max_{k=0,1,2}\|CA^k v\|_\infty
+\tag{30.10}
+$$
+
+bounds its whole boundary orbit. Choose rational $h>2M$, with $h>0$.
+For each output coordinate at each epoch, its values at entrances
+$v$ and $2v$ have the same sign. Both positive values are in $[0,h)$,
+both negative values in $(-h,0)$, and zeros agree. Their floors are
+therefore equal, respectively $0,-1,0$, forever. These two distinct
+integer entries belong to every $\Lambda_D$. No finite horizon can
+separate them at that scale. Symmetry identifies nonsingularity of
+this polynomial in $A$ with absence of the three stated eigenvalues,
+completing the equivalence. $\square$
+
+The converse chooses a scale; it does not claim failure at every fixed
+$h$. A zero mode may be erased before a current-only task. Nonintegral
+or nonsymmetric systems have not been substituted into
+(30.3). In case 1 the infinite word also separates all rational
+entries: their nonzero rational difference has unbounded boundary
+orbit. Theorem 28.2 nevertheless prohibits a pointwise finite stopping
+rule over dense rational entrances. The authentic lattice earns the
+finite difference set (30.7); infinite-word separation alone does not.
+
+The proof uses mature spectral decomposition, finite lattice repetition,
+ordinary observability and floor inequalities inside this acquisition
+consumer. [FiniteObservabilityEquivalence](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean)
+identifies finite kernel/rank/Gram conditions; its real inner-product
+statement does not by itself provide the rational inverse or the
+assured entrance here. The rational $K$ in (30.1) is computed from
+nonzero rational minors; in the native case it is already supplied by
+forcing. [FiniteTimeTomographySaturation](../../../D5/S3/ObserverMemory/Dynamics/FiniteTimeTomographySaturation.lean)
+concerns exact linear kernels, not a finite floor-code stopping horizon.
+

@@ -1,0 +1,66 @@
+**Proposition 23.1 (same literal $aa$ cone, different global image).** Let
+$y_i=1$ for even $i$ and $y_i=0$ for odd $i$. Use the two permitted
+sources
+
+$$
+ s=y,\qquad s'_0=0,\quad s'_i=y_i\ (i\ge1).
+\tag{PCR.58}
+$$
+
+Both lie in the common public class $\mathscr R_3$. The first is purely
+periodic; the second has the one-bit singular transient of Proposition
+20.1. In both actual sources the literal physical cone with address $aa$
+has exactly
+
+$$
+ e_{aa}=4,\qquad (A_{aa},B_{aa})=(5,8),\qquad
+s_{A_{aa}-1}=s'_{A_{aa}-1}=1.
+\tag{PCR.59}
+$$
+
+Consequently every complete normalized future of this $aa$ cone is equal
+in the two sources. At any common mature age $T\ge8$ its complete support,
+its exact local integer clocks and origin, and the predictive boundary
+$(aa,T;g,(y_i)_{i<2},Q_1,Q_2)$ of (PCR.24) agree. The public binding token,
+permissions and evaluation instructions can be held fixed in this
+comparison; they are capabilities, not a hidden source prefix.
+
+Nevertheless, their global authentic images satisfy
+
+$$
+ |R_s|=2,\qquad |R_{s'}|=4.
+\tag{PCR.60}
+$$
+
+Proof. For $s$, the root consumes one, so (PCR.39) gives
+$(A_a,B_a,e_a)=(2,3,2)$; its first bit is $s_1=0$, and the same table gives
+$(A_{aa},B_{aa},e_{aa})=(5,8,4)$. For $s'$, the root consumes zero, giving
+$(A_a,B_a,e_a)=(3,5,3)$; the next bit is $s'_2=1$, and the one-bit branch
+of (PCR.39) again gives $(5,8,4)$. The two literal words are therefore
+the same actual physical address, with the same integer boundaries and
+normalization origin, rather than merely isomorphic abstract trees.
+
+The transient of $s'$ ends at index one. Every birth in $aa$ starts at
+$A_{aa}=5$, hence consumes source entries with indices at least four; the
+two streams in (PCR.58) coincide there. Theorem 17.2 and induction
+therefore identify every later child, bit and positive delay. The least
+core polynomial is $X^2+1$ and has the repeated factor $(X+1)^2$ over
+$\mathbb F_2$, so $F_5=5\ge4$ and the maturity condition (PCR.5) holds
+for $T\ge5+3=8$. Theorem 3.1 then turns the identical future stream and
+clock pair into identical complete supports and identical operator
+boundaries. The full-root acquisition of the literal $aa$ pays the same
+presence query in both comparison worlds; it does not reveal the source
+bits before that cone.
+
+The global image counts are the explicit calculations (PCR.49)--(PCR.51):
+the pure source has only the two off-diagonal residues, while the transient
+source has diagonal seed residues and reaches the whole four-state square.
+The missing datum is the global seed/defect ancestry $C_s$ and its integer
+seed triples, equivalently the transient-bearing prefix outside the local
+cone. The local descriptor contains no field from which that seed set can
+be reconstructed. The complete original $(d,P)$ does contain it: its
+canonical generator supplies the finite defect scan (PCR.40)--(PCR.42),
+after which (PCR.54) computes the image. This is an information boundary
+for a local predictive record, not a failure of PSA's original full-root
+acquisition protocol. $\square$
+

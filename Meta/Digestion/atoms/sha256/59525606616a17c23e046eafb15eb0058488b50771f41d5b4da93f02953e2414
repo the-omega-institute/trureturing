@@ -1,0 +1,4 @@
+**Theorem 54.2 (termination and uniqueness on the actual image).** Definition 54.1 terminates on every promised input and returns exactly its actual pulse word and length. It uses no further source call and can run while the original source is held.
+
+Proof. Write the actual word as $u$ and its mathematical length as $L$. Each stratum below $L$ is finite, and Theorem 52.3 excludes every candidate there. The finite stratum at $L$ contains $u$; its simulation is (52.1), so a match is reached. Theorem 53.1 excludes any other matching word. At $L=0$ the first candidate succeeds. Finite exact rational arithmetic and comparisons implement every step, without an a priori bound on $L$ or its operand widths. On vectors outside the promised image the search need not halt; a total image-recognition algorithm is not asserted. $\square$
+

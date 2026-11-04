@@ -52,7 +52,8 @@ class DetachedRecoveryCases:
         for blocker in (metadata / "index.lock", self.main / ".git/hooks/pre-commit"):
             blocker.write_text("#!/bin/sh\nexit 1\n")
             blocker.chmod(0o755)
-            result = json.loads(self.remove(74).stdout)["items"][0]
+            with blocker.open("rb"):
+                result = json.loads(self.remove(74).stdout.splitlines()[-1])["items"][0]
             self.assertEqual("checkpoint_failed", result["outcome"])
             self.assertIsNone(result["recovery_branch"])
             self.assertTrue(self.tree.exists())

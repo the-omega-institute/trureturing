@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:07abbe37ffb7555672da768b51b31df997f03fb18b56719f7d92eee2f41de1b5
+  normalized_sha256: sha256:07abbe37ffb7555672da768b51b31df997f03fb18b56719f7d92eee2f41de1b5
+cas_ref: sha256:07abbe37ffb7555672da768b51b31df997f03fb18b56719f7d92eee2f41de1b5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 候选 Ising coupling 的角色说明及尚未建立经典 xi 联合分布桥的限制；没有声称实际耦合已实现。
+    previous_atom_id: afcdf94781092301b603c886ce01c7e56ebb2ad2ec71708d4513b662d480e7f9
+    next_atom_id: 229d1130a8052931ba83bc6949bb30493213cf989bcab44e5026e9999c061799

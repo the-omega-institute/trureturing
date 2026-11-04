@@ -1,0 +1,110 @@
+ It has
+infinitely many eigenvalues because $\mathscr G_0$ is infinite-dimensional
+and $W$ in (1.3) is unitary. Equation (1.3) makes
+$\lambda_j=\mu_j^{-1}$, including multiplicities. It also gives
+
+$$
+(H+I)^{-1}
+ =P_{\mathbf1}+W\Sigma_{\mathscr K}
+                   (I_{\mathscr K}+\Sigma_{\mathscr K})^{-1}W^*
+\quad\text{on }\mathbb R\mathbf1\oplus\mathscr G_0,
+\tag{2.3}
+$$
+
+where the $W$ term acts on $\mathscr G_0$ and is zero on constants.
+The first term has rank one and the second is compact, proving compact
+resolvent and exhaustion of the spectrum. The inherited zero-energy
+statement gives the simple zero mode. From (2.2), $\mu_j\le\varphi$,
+proving the first line of (2.1).
+
+For $0<t<1$, let $A_t$ be the first mass crossing along each ray:
+
+$$
+A_t=\{p\ne\varnothing:m(p)\le t<m(p^-)\},\qquad k_t=|A_t|.
+\tag{2.4}
+$$
+
+Equality $m(p)=t$ is a stopping event. Since $m(p)\le a^{|p|}$, all
+rays stop by a common finite depth. Thus $A_t$ is a finite prefix-free
+set, its cylinders partition $\Omega$, and every one of its masses
+obeys
+
+$$
+bt<m(p)\le t,\qquad
+\sum_{p\in A_t}m(p)=1,\qquad
+\frac1t\le k_t<\frac1{bt}.
+\tag{2.5}
+$$
+
+Indeed a child mass is either $a$ or $b$ times its parent mass, and
+$a\ge b>0$. The strict lower inequality follows from $m(p^-)>t$.
+This uses the actual masses $a,b$, not masses $1/2,1/2$.
+
+Let $V_t\subset\mathscr G$ be the $k_t$-dimensional space of functions
+constant on each $[p]$, $p\in A_t$, and let $Q_t:\mathscr G\to V_t$
+be its orthogonal projection:
+
+$$
+(Q_tF)|_{[p]}=\frac1{m(p)}\int_{[p]}F\,dM.
+\tag{2.6}
+$$
+
+It fixes constants and commutes with $\Pi$. Consequently
+$Q_t|_{\mathscr G_0}$ has range $V_t\cap\mathscr G_0$, of dimension
+$k_t-1$.
+For $z\in\mathscr H$, let $z^p\in\mathscr H$ have coordinates
+$(z^p)_u=z_{pu}$ for nonempty suffixes $u$. This retains only strict
+descendants of $p$. Under the conditional law on $[p]$, the suffix
+has exactly law $M$. For finite increments, the path-sum identity is
+
+$$
+(Jz)(p\omega)=\sum_{\varnothing\ne u\preceq p}z_u+(Jz^p)(\omega).
+\tag{2.7}
+$$
+
+For general $z$, approximate by finite increments. Restriction to the
+fixed cylinder $[p]$ is bounded from $\mathscr G$ to its conditional
+$L^2$ space, with norm at most $m(p)^{-1/2}$; the suffix-coordinate
+map is a contraction on $\mathscr H$. Boundedness of $J$ therefore
+extends (2.7) in conditional $L^2$. Subtracting the conditional mean
+cancels both its prefix constant and the global centering constant.
+Thus, on the conditional suffix space,
+
+$$
+\begin{aligned}
+((I-Q_t)Cz)(p\omega)&=(Cz^p)(\omega),\\
+\|(I-Q_t)Cz\|_{\mathscr G}^2
+ &=\sum_{p\in A_t}m(p)\|Cz^p\|_{\mathscr G_0}^2\\
+ &=\sum_{p\in A_t}m(p)\langle z^p,\Sigma z^p\rangle
+ \le\varphi t\sum_{p\in A_t}\|z^p\|^2
+ \le\varphi t\|z\|^2.
+\end{aligned}
+\tag{2.8}
+$$
+
+The strict-descendant coordinate sets are pairwise disjoint. Edges at
+or above the stopping vertices contribute nothing to these restrictions,
+which justifies the final inequality without assigning them a new energy.
+In (2.8), $Cz$ is included in $\mathscr G$ before applying $I-Q_t$;
+$Cz^p$ lies in the copy of $\mathscr G_0$ on suffixes. The displayed
+identification is composition with $\omega\mapsto p\omega$, not an
+identification of the conditional and unconditioned measures.
+
+Suppose $\lambda\ge\varphi^{-1}$ and take $t=(2\varphi\lambda)^{-1}$,
+so $0<t\le1/2$. The eigenspace of $\Sigma_{\mathscr K}$ for
+$\mu\ge1/\lambda$ has dimension $N_H^+(\lambda)$. If this exceeded
+$k_t-1$, the map $Q_tC$ on that space would have a nonzero kernel
+vector $z$. The spectral theorem and (2.8) would then give
+
+$$
+\frac1\lambda\|z\|^2\le\langle z,\Sigma z\rangle
+ =\|Cz\|^2=\|(I-Q_t)Cz\|^2
+ \le\frac1{2\lambda}\|z\|^2,
+\tag{2.9}
+$$
+
+a contradiction. Hence
+$N_H^+(\lambda)\le k_t-1<(bt)^{-1}=B\lambda$.
+Together with the gap below $\varphi^{-1}$ this proves the global
+upper bound, including all eigenvalues at the threshold.
+

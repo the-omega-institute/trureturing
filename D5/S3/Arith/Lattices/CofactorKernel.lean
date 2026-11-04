@@ -155,7 +155,7 @@ private theorem kernel_pair_cross {d : ℕ}
       ring
     _ = (augment M).det * ((∑ j, x j) * a i) := by ring
 
-private theorem primitive_kernel_span {d : ℕ}
+theorem primitive_kernel_span {d : ℕ}
     (M : Matrix (Fin d) (Fin (d+1)) ℤ)
     (hdet : (augment M).det ≠ 0)
     (a : Fin (d+1) → ℤ) (ha : M *ᵥ a = 0)

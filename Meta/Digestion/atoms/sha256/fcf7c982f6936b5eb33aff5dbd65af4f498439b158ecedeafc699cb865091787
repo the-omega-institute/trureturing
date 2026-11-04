@@ -1,0 +1,24 @@
+#### 命题 5.4（用完整输入探针比较两门）
+
+额外供应校准的最大纠缠探针
+$\lvert \Phi_d\rangle =d^{-1/2}\sum_j\lvert j\rangle \lvert j\rangle$，定义
+$\lvert U\rangle \!\rangle=(U\otimes I)\lvert \Phi_d\rangle$。则
+
+$$
+\langle\!\langle V\rvert  U\rangle\!\rangle=\frac{\operatorname{Tr} (V^\dagger U)}d,
+\qquad
+\min_{\theta}\frac{\left\lVert U-e^{i\theta}V\right\rVert _{\mathrm{HS}}^2}{2d}
+=1-\frac{|\operatorname{Tr} (V^\dagger U)|}{d}.
+$$
+
+**证明。**
+
+第一式展开 $\Phi_d$，得到 $d^{-1}\sum_j\langle j\rvert V^\dagger U\lvert j\rangle$。第二式展开范数平方为
+$2d-2\Re(e^{-i\theta}\operatorname{Tr} (V^\dagger U))$；选择相位使该实部为迹的模。
+
+∎
+
+这种门比较与纠缠保真度的标准方法相联系 [[11](#ref-nielsen)]，但它增添了辅助载体、校准探针与相干接口。它通过对所有输入方向编码得到迹，没有证明任意未知本体种子都能直接约去。
+
+<a id="sec-6"></a>
+

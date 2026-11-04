@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:31628a91d8a9b93f338e939f90d96a2f888aca89076126ded7aa43c90ea3bc04
+  normalized_sha256: sha256:31628a91d8a9b93f338e939f90d96a2f888aca89076126ded7aa43c90ea3bc04
+cas_ref: sha256:31628a91d8a9b93f338e939f90d96a2f888aca89076126ded7aa43c90ea3bc04
+coverage_gids:
+  - gid: D5/S3/Estimation/BhattacharyyaExponent.bhattacharyya_iidPower_multiplicative
+    target_statement_id: sha256:830a8e04656332f089d5f0b73d6611fc4acdb3e094f60fbeece4e7f48212e760
+  - gid: D5/S3/Estimation/BhattacharyyaExponent.bhattacharyya_sample_complexity_log
+    target_statement_id: sha256:7f9ad38b13b29e1bcd4eebc342ffbb04d3b8764b73ee85814de996a634b8d0bb
+  - gid: D5/S3/Estimation/BhattacharyyaExponent.iid_testing_error_bhattacharyya
+    target_statement_id: sha256:dd940cece583e5c83f7f5adae9f4060e447e9187febcc3651773f170af970e97
+receipts:
+  unresolved_subitems: []

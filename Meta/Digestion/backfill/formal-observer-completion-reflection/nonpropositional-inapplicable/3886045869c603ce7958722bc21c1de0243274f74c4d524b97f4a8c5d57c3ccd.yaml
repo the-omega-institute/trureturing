@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3886045869c603ce7958722bc21c1de0243274f74c4d524b97f4a8c5d57c3ccd
+  normalized_sha256: sha256:3886045869c603ce7958722bc21c1de0243274f74c4d524b97f4a8c5d57c3ccd
+cas_ref: sha256:3886045869c603ce7958722bc21c1de0243274f74c4d524b97f4a8c5d57c3ccd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 量子系统操作等价态是统一商的应用名称，没有附加态空间或Born律断言。'
+    previous_atom_id: 8dd560092fa26157014b8f39be8bfdbaa89b6da542cd12a7897efa7d2d7005ad
+    next_atom_id: 46a14e3af5d6c69c507ce40d8b746b8eb7e4ce7fb8f9ad63d563062130826aae

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2314648fae12d229c59043d9190bec50db4b07b6bdf4563102aa589ea8c32abf
+  normalized_sha256: sha256:2314648fae12d229c59043d9190bec50db4b07b6bdf4563102aa589ea8c32abf
+cas_ref: sha256:2314648fae12d229c59043d9190bec50db4b07b6bdf4563102aa589ea8c32abf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 仅列举有限干预家族这一观察上下文种类，不断言因果识别性。'
+    previous_atom_id: d2a92689fb075c84e7337c8388aab768f89c36fcf7d6c4a9841acac4b5e11026
+    next_atom_id: d5cbcbc58091522fdd0b3328814713d4c75c5c7c9787e807b463a8ff6cd46e6c

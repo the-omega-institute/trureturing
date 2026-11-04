@@ -1,0 +1,22 @@
+**Definition 25.1 (all-read contract and original-clock loss).** In §§25–29 fix known integers $k,d\ge0$, and retain the strictly entrywise positive rank-one trace-one source $P$, the atoms $M,J$, left multiplication, and mandatory consecutive original-clock reads of Definition 8.1. A world has one fixed $P$, one whole $0\ne H\in\Pi_k$, and one whole $D\in\Pi_d$. Its received reports are
+
+$$
+ \widetilde z_i=H(i)\operatorname{tr}(A_iP)+D(i)+\xi_i,
+ \qquad |\xi_i|\le\delta,
+ \qquad \delta\ge0.
+ \tag{25.1}
+$$
+
+The bound applies to every paid read, including the initial read, all calibration reads, and every gain root. Errors are arbitrary deterministic numbers. No $H,D,b=\operatorname{tr}(MP)$, root pattern, source bound, or sampled-gain lower bound is supplied. An ambient answer $(\widehat P,\widehat H,\widehat D)$ has complete-target loss
+
+$$
+ \mathcal L=\max\{\|\widehat P-P\|_{\max},
+       \|\operatorname{coeff}_k(\widehat H-H)\|_\infty,
+       \|\operatorname{coeff}_d(\widehat D-D)\|_\infty\}.
+ \tag{25.2}
+$$
+
+Here $\operatorname{coeff}_r$ means the padded monomial vector at the original variable $t$, through degree $r$. It is not a coefficient vector after translating or rescaling the clock, nor a uniform norm over all real times. Each competitor can depend arbitrarily on $\delta$ and its entire received history, including its actions, stopping, and answer. A finite worst-case total cap counts the initial read and every subsequent atomic action/read. There are no empty actions, resets, copies, inverse acquisitions, skipped reads, unread composites, second trajectories, or side sensors.
+
+For a source class and fixed cap, source minimax risk is the infimum over such deterministic protocols of the supremum of $\|\widehat P-P\|_{\max}$ over the declared whole worlds and all allowed errors. Complete-target risk uses (25.2). Uniform consistency means that risk tends to zero as $\delta\downarrow0$; a uniform linear-error guarantee means a bound $C\delta$ for all sufficiently small $\delta$, with one finite class-wide $C$. Different protocols may be used at different error levels. This contract differs from Definition 20.1: no calibration quantity or prefix read is exact when $\delta>0$.
+

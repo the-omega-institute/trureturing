@@ -1,0 +1,12 @@
+**Definition 3.5 (joint attained behavior).** For arbitrary $A$, successful or otherwise, put
+
+$$
+\mathcal J(A,T)=\left\{
+\left((r_{t_u}(a_A(q)))_{q\in Q_A},
+      (r_{t_u}(a_T(q)))_{q\in Q_T},F(u)\right):u\in\mathcal U_*
+\right\}.
+\tag{POC.9}
+$$
+
+Vectors are in installed state order and include every duplicate and unused Read. Paths, generated bit and both possible serving behaviors are deterministic consequences of this one joint element. No response vector or target certificate is available to either apparatus at runtime. With one apparatus absent, use its empty observation menu in the mathematical statements.
+

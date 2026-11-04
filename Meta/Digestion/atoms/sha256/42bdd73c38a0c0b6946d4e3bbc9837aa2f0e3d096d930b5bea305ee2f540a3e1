@@ -1,0 +1,44 @@
+**Definition 15.1 (Crossing threshold and branch values).** Fix
+
+$$
+\frac12<L<1,
+\qquad
+A_\times(L)=\left\lceil
+\max\left\{10^4,\frac{64}{1-L},\frac{8L}{2L-1}\right\}
+\right\rceil.
+\tag{15.1}
+$$
+
+For an integer $a\ge A_\times(L)$ and $0<\delta\le L/a$, retain
+$r=a+1$, $s=a+2$, $q=r-\delta$, $C=2r-1$, and
+$
+\gamma=C\delta,
+\mu=q/s,
+\tau=3(2r+1)\delta/r^2.
+$
+Define the scalar energy
+
+$$
+h(\varepsilon,\delta)
+=\frac{2r^2}{\mu+\varepsilon}
+ +a\left[\frac{r^2}{\mu-2\varepsilon/a}
+ -\frac{C\delta}{(\mu-2\varepsilon/a)^2}\right].
+$$
+Let $\varepsilon_*(\delta)$ be the unique point supplied by Theorem 14.3, and put
+
+$$
+\begin{aligned}
+ u_*(\delta)&=\mu+\varepsilon_*(\delta),
+ &v_*(\delta)&=\mu-\frac{2\varepsilon_*(\delta)}a,\\
+ M_a(\delta)&=\frac{2r^2}{u_*(\delta)}
+ +a\left(\frac{r^2}{v_*(\delta)}-
+ \frac{C\delta}{v_*(\delta)^2}\right),\\
+ R_a(\delta)&=\frac a\delta+
+ \frac{r^3}{1-\delta/a}.
+\end{aligned}
+\tag{15.2}
+$$
+
+Thus $M_a=\mathscr D_a$ is the exact dense value from Theorem 14.3, while
+$R_a=H_r$ is the exact rare value from Theorem 9.1.
+

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:f0b43d6a36e8b458f2e615709b08ee84f728725a74d5c1e903ceeda9f2ce23df
+  normalized_sha256: sha256:f0b43d6a36e8b458f2e615709b08ee84f728725a74d5c1e903ceeda9f2ce23df
+cas_ref: sha256:f0b43d6a36e8b458f2e615709b08ee84f728725a74d5c1e903ceeda9f2ce23df
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.greatest
+    target_statement_id: sha256:bd008bb85ea58c689278267dfb7934c3173170082f6d1740237e7687e183ff55
+  - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.refinesLeft
+    target_statement_id: sha256:4b8ffff9ac5439adbc47e7f211af3a4e982183111106f709239a85acf9d21826
+  - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.refinesRight
+    target_statement_id: sha256:54a38e5a6c1c42bf6105676f60e9d310760504cccee7183220408f8f656c3c46
+  - gid: D5/S3/ConceptDynamics/Interventions/CommonCoreForgettingObstruction.common_core_obstructs_complete_forgetting
+    target_statement_id: sha256:86721fb922814ff442757524d908957f15ad2be01139e6fbc6f44a2f2642784d
+  - gid: D5/S3/ConceptDynamics/Refinement/RefinementTransitivity.refinement_transitive
+    target_statement_id: sha256:a851c4cbdc52e06c14902a5202a50cd9519ba53465dedd9fec2c093dfbf6a050
+receipts:
+  unresolved_subitems: []

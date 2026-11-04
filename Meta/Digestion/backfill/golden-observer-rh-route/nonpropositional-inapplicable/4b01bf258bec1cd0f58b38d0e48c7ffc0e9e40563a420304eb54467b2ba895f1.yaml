@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b01bf258bec1cd0f58b38d0e48c7ffc0e9e40563a420304eb54467b2ba895f1
+  normalized_sha256: sha256:4b01bf258bec1cd0f58b38d0e48c7ffc0e9e40563a420304eb54467b2ba895f1
+cas_ref: sha256:4b01bf258bec1cd0f58b38d0e48c7ffc0e9e40563a420304eb54467b2ba895f1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This scope paragraph explicitly withholds zeta separation and prime-local universal nonvanishing claims. It limits the intended conclusion without asserting additional zero or nonzero results.
+    previous_atom_id: b10e566e7cb497c4fffd76030a72f15bf1c24aa01a8946cfd23579e7b98462bc
+    next_atom_id: d34e85929e8901555a6c4e2b8b10509ad2263fe7bb961500c33db24f84316688

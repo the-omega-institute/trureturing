@@ -1,0 +1,32 @@
+### 2.1 Finite dependence and coefficient normalization
+
+Set $b_j=u_{j+1}$ for $0\le j\le2m$; the unsubscripted $b$ still
+denotes $1+\rho$. Since $m\ge N$, the first $N+1$ columns of
+$H_m(u)$ exist and are dependent. Choose real coefficients, not all
+zero, with
+
+$$
+\sum_{k=0}^N c_k b_{p+k}=0
+\quad(0\le p\le m),\qquad
+\sum_{k=0}^N|c_k|=1.
+\tag{2.3}
+$$
+
+The second equality is obtained by dividing one nonzero dependence
+vector by its positive absolute coefficient sum. No individual
+coefficient is divided by. Either end coefficient and any intermediate
+coefficient may vanish. This normalization concerns only an auxiliary
+homogeneous relation; it places no bound on any recurrence or native
+model parameter.
+
+Define finite polynomials
+
+$$
+S(z)=\sum_{j=0}^{2m}b_jz^j,\qquad
+Q(z)=\sum_{k=0}^Nc_kz^{N-k}.
+\tag{2.4}
+$$
+
+Then $Q\ne0$, $\deg Q\le N$, and the coefficient absolute sum
+$\|Q\|_{\mathrm{coeff},1}$ is one.
+

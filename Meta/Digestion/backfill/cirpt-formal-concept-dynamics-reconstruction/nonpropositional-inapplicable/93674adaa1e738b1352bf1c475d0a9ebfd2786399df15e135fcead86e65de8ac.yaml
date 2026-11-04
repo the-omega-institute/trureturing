@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:93674adaa1e738b1352bf1c475d0a9ebfd2786399df15e135fcead86e65de8ac
+  normalized_sha256: sha256:93674adaa1e738b1352bf1c475d0a9ebfd2786399df15e135fcead86e65de8ac
+cas_ref: sha256:93674adaa1e738b1352bf1c475d0a9ebfd2786399df15e135fcead86e65de8ac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 四重缺陷向量章节标题及定义引言。
+    previous_atom_id: 20d63a270ff5319906e4611205c28e73047cf069b3a2fd2236271e3b27e2fce8
+    next_atom_id: f3d3f0fa00ffb3c91fb4e80b3c16788db1a4e13caf307fbf68d4056d79e71545

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7078178a3a5a9531eb6a92045b8859e9c64233581dc8f2166662132032649da
+  normalized_sha256: sha256:b7078178a3a5a9531eb6a92045b8859e9c64233581dc8f2166662132032649da
+cas_ref: sha256:b7078178a3a5a9531eb6a92045b8859e9c64233581dc8f2166662132032649da
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本段为World、Protocol、Memory、Self等术语的最终字典；等号统一用来指定词义，没有另行断言最小商存在或策略截面存在。'
+    previous_atom_id: a3f436666ec188dbf40eb07e7919228823fdb131efa141dc1da291db266537ac
+    next_atom_id: 29a24c9ba0433817df26a2cbeb067601a6b7c872c00b8929ed1c2ede0d7f34b6

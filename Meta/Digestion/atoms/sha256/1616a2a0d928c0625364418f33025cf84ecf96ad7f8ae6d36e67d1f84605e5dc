@@ -1,0 +1,16 @@
+**Definition 1.2 (Bipartition and support projection).** For a bipartite graph with nonempty parts $X,Y$, put $p=|X|$, $q=|Y|$, and write
+
+$$
+A=\begin{pmatrix}0&B\\ B^{\mathsf T}&0\end{pmatrix},
+\qquad
+J=\begin{pmatrix}I_p&0\\0&-I_q\end{pmatrix},
+\qquad
+r=\operatorname{rank}B,
+\qquad
+S=I-E_0,
+\qquad s_v=S_{vv}.
+\tag{1.2}
+$$
+
+The matrix $B$ is the binary biadjacency matrix. The projection $S$ is onto $\operatorname{im}A$. For a connected graph of order at least two, $B$ has no zero row or zero column and $r\ge1$. All ranks are over $\mathbb R$.
+

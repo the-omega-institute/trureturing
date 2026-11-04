@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5290e1e5791f7f8086495f80bba30cdfe06288974ca817a5f67786de82f3ed1c
+  normalized_sha256: sha256:5290e1e5791f7f8086495f80bba30cdfe06288974ca817a5f67786de82f3ed1c
+cas_ref: sha256:5290e1e5791f7f8086495f80bba30cdfe06288974ca817a5f67786de82f3ed1c
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/FiniteFourierMagnusCommutator.finiteFourierAlgebraGenerator
+    target_statement_id: sha256:21691ac69021462cc60044b8beb8cf9c84bb51eb3e0acde7b2840728f43cb01b
+receipts:
+  unresolved_subitems: []

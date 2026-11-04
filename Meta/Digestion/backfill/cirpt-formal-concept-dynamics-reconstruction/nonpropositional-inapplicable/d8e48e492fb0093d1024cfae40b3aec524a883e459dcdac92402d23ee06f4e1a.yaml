@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d8e48e492fb0093d1024cfae40b3aec524a883e459dcdac92402d23ee06f4e1a
+  normalized_sha256: sha256:d8e48e492fb0093d1024cfae40b3aec524a883e459dcdac92402d23ee06f4e1a
+cas_ref: sha256:d8e48e492fb0093d1024cfae40b3aec524a883e459dcdac92402d23ee06f4e1a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列建议复用的文献与源码路径，不声称路径中的定理自动覆盖本卷。
+    previous_atom_id: 5a94c20e15f90a87e31c72c75be7812d0be55556babd2cadc682779415982e22
+    next_atom_id: e314ff884e819a1fd3d5de891a1e41fd08f114c574b240c0ab672a3accf8102b

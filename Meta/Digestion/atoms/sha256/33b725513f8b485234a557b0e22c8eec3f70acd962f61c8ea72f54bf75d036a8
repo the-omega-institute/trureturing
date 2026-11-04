@@ -1,0 +1,49 @@
+**Lemma 7.1 (same-prefix collision at every legal endpoint).** For every finite cumulative $M/J$ word matrix $C$, there are an $x>0$ and distinct $u_-,u_+\in(0,x)$ such that the strictly positive rank-one sources
+
+$$
+R_x(u)=\begin{pmatrix}x-u&u(x-u)\\1&u\end{pmatrix}
+=\begin{pmatrix}x-u\\1\end{pmatrix}(1,u)
+$$
+
+have equal signals at $I$, at every $U^\ell$ for $\ell\ge0$, and at $C$. They have equal trace $x$ but different normalized matrices $R_x(u)/x$.
+
+Proof. For $0<u<x$ all displayed entries and factors are strictly positive, the determinant is $(x-u)u-u(x-u)=0$, and the trace is $x$. Lemma 1.2 gives
+
+$$
+\operatorname{tr}(U^\ell R_x(u))=x+\ell,
+$$
+
+independently of $u$. Write $C=(\begin{smallmatrix}\alpha&\beta\\\gamma&\delta\end{smallmatrix})$. Its signal is
+
+$$
+f_C(u)=\alpha x+\beta+(\delta-\alpha)u+\gamma u(x-u).
+$$
+
+If $\gamma=0$, Lemma 1.2 gives $\det C=\alpha\delta\in\{1,-1\}$. Nonnegativity excludes $-1$, and nonnegative integer factors with product one force $\alpha=\delta=1$. Thus $f_C(u)=x+\beta$ is constant. Choose $x=2$, $u_-=2/3$, $u_+=4/3$.
+
+If $\gamma>0$, put
+
+$$
+\Delta=\delta-\alpha,\qquad
+x=1+\frac{|\Delta|}{\gamma},\qquad
+u_* =\frac{x+\Delta/\gamma}{2}.
+$$
+
+The strict inequality $x>|\Delta|/\gamma$ gives $0<u_*<x$. Define
+
+$$
+\varepsilon=\frac12\min(u_*,x-u_*)>0,\qquad
+u_-=u_*-\varepsilon,\qquad u_+=u_*+\varepsilon.
+$$
+
+These are distinct points of $(0,x)$. Direct subtraction gives, for any $u,v$,
+
+$$
+f_C(v)-f_C(u)
+=(v-u)\bigl[\Delta+\gamma(x-u-v)\bigr].
+$$
+
+At the chosen pair $u_-+u_+=x+\Delta/\gamma$, so the bracket is zero. The endpoint signals therefore agree. Both cases cover every legal $C$, including triangular matrices, repeated endpoints, and arbitrarily long finite words.
+
+The sources differ in their lower-right entries while both traces equal $x>0$, so their trace-normalized matrices differ. Their explicit factorizations give one fixed positive row per run, and Lemma 1.2 preserves positivity throughout every intervening word. ∎
+

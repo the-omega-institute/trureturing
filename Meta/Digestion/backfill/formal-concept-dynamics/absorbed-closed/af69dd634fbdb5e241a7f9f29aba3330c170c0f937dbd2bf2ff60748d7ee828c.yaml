@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:af69dd634fbdb5e241a7f9f29aba3330c170c0f937dbd2bf2ff60748d7ee828c
+  normalized_sha256: sha256:af69dd634fbdb5e241a7f9f29aba3330c170c0f937dbd2bf2ff60748d7ee828c
+cas_ref: sha256:af69dd634fbdb5e241a7f9f29aba3330c170c0f937dbd2bf2ff60748d7ee828c
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Audits/CountermodelRepairUnderdetermination.countermodel_diagnosis_is_underdetermined
+    target_statement_id: sha256:0b37dbc1658900d16c880a1a73454ff551dcde96ee4f0fff812662c5fdfc64c2
+receipts:
+  unresolved_subitems: []

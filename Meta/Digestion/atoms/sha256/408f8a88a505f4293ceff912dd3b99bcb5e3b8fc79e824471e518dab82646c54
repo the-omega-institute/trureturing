@@ -1,0 +1,22 @@
+### Definition 60.2 (finite acquisition layers)
+
+Let \(\mathfrak B\) be the nonempty subsets of \(Z\times S\). Define
+
+$$
+\mathcal W_0=\{B\in\mathfrak B:|\operatorname{pr}_Z B|=1\},
+$$
+
+and recursively
+
+$$
+\mathcal W_{n+1}=\mathcal W_n\cup
+\left\{B:
+\begin{array}{l}
+\text{some action is jointly legal on }B,\\
+\text{and every nonempty }B_{a,r}\text{ belongs to }\mathcal W_n
+\end{array}
+\right\}.
+$$
+
+Write \(\mathcal W_{\mathrm{fin}}=\bigcup_n\mathcal W_n\).
+

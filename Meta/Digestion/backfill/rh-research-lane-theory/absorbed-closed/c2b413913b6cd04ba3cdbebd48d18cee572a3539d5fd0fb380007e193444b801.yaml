@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:c2b413913b6cd04ba3cdbebd48d18cee572a3539d5fd0fb380007e193444b801
+  normalized_sha256: sha256:c2b413913b6cd04ba3cdbebd48d18cee572a3539d5fd0fb380007e193444b801
+cas_ref: sha256:c2b413913b6cd04ba3cdbebd48d18cee572a3539d5fd0fb380007e193444b801
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataFromRiemannVonMangoldt.nonempty_zeroData_of_riemannVonMangoldt
+    target_statement_id: sha256:762a6c5edf49b8c62281129d179863cd4ad7e5df8769976ef8fa31c759f406e6
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataFromRiemannVonMangoldt.nontrivial_zeta_zero_set_infinite_of_riemannVonMangoldt
+    target_statement_id: sha256:2ba8880721a2fd1c7f3c288f872032616ef168ef2b2c50bc2857df65503ffeb2
+  - gid: D5/S3/Weil/ZeroData/CanonicalZeroDataFromRiemannVonMangoldt.zeroConfig_carrier_infinite_of_dyadic_count_tendsto
+    target_statement_id: sha256:fc9ba11e36d6330348d582695112030bf25d40c7aadbdc4c26ee6aeb314b60b7
+  - gid: D5/S3/Weil/ZeroData/RiemannVonMangoldtCountGrowth.dyadic_zero_count_tendsto_atTop
+    target_statement_id: sha256:5b1ef8e282b3e48fa8ba20e805f4c2c96989f9052ff210882989051150d78625
+  - gid: D5/S3/Weil/ZetaBridge/ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite
+    target_statement_id: sha256:8320f27a30cb2650a2ec01def85ef608c92d14ce3eeed887b3e5731d6d8721d2
+receipts:
+  unresolved_subitems: []

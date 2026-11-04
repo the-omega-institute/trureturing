@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a1740bc98cab90e8b54ed86f2b672e31a4228fc1b812531e26ec84ef83c84c5d
+  normalized_sha256: sha256:a1740bc98cab90e8b54ed86f2b672e31a4228fc1b812531e26ec84ef83c84c5d
+cas_ref: sha256:a1740bc98cab90e8b54ed86f2b672e31a4228fc1b812531e26ec84ef83c84c5d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只列举指数大小作为预算维度，没有指数估计或最优性断言。
+    previous_atom_id: 6e72939d6c9a1be2c776d1227e1392cbc0932f2660c4348d3a6c6d2f076fbf86
+    next_atom_id: bb53b02c60c82aa9f7034291d6a0415a5956492ab4f0d380d5b1a202cfe74171

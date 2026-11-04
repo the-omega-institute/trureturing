@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:565b7c0b61050f7a7de4e11848f94d4b41bd0fac71407afa44a5a1c2278d4815
+  normalized_sha256: sha256:565b7c0b61050f7a7de4e11848f94d4b41bd0fac71407afa44a5a1c2278d4815
+cas_ref: sha256:565b7c0b61050f7a7de4e11848f94d4b41bd0fac71407afa44a5a1c2278d4815
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.PassiveProtocol
+    target_statement_id: sha256:25ca41c54fdbbc19ec460aabb22e2880c55034ddc3d247adc21eb1930871f08a
+receipts:
+  unresolved_subitems: []

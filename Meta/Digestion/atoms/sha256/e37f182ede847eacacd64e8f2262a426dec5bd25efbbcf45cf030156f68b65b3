@@ -1,0 +1,9 @@
+**定理 311.2（任务相对合并的充要性）。** 记录合并 $g$ 对 $\mathcal T$ 安全，当且仅当对任意 $s,t\in S$，
+
+$$
+g(r(s))=g(r(t))
+\quad\Longrightarrow\quad
+O_\phi(s)=O_\phi(t)
+\qquad\forall\phi\in\mathcal T.
+$$
+

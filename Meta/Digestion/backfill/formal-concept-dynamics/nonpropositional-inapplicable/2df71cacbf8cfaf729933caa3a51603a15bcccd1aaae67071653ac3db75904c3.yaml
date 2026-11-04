@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2df71cacbf8cfaf729933caa3a51603a15bcccd1aaae67071653ac3db75904c3
+  normalized_sha256: sha256:2df71cacbf8cfaf729933caa3a51603a15bcccd1aaae67071653ac3db75904c3
+cas_ref: sha256:2df71cacbf8cfaf729933caa3a51603a15bcccd1aaae67071653ac3db75904c3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本体实在论的立场介绍与新实验列表开头，不主张经验纤维中的区别一定可被某个实验识别。
+    previous_atom_id: 0ac4974f8c0a18aae6acc2f0d503aee2779c2b856919ad2fac2107ca1671e2e5
+    next_atom_id: 0385d66af5acf424ccdf1aab916c4411669a7725b31eba907bc22fc5a7ae0185

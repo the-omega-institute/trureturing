@@ -1,0 +1,2 @@
+**Definition 27.1 (unit-input age schedule).** Use the same actual normalization of Definition 24.1, then Reset, Add$(j,1)$ for every original label $j\le L$, and Hold. For $i=1,\ldots,L-1$, split once at the earned logical address $p_i$, then Add$(j,1)$ for all original $j\le L$, and Hold. Do not act on $p_L$, scan between stages, arm appended labels, or issue Tick. After all stages Read each original label once, decode as below, then Reset and Hold. All unit inputs and the larger integer values are actual field operations and literal replies, not an unobserved clock.
+

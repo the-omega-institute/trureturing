@@ -1,0 +1,34 @@
+**Lemma 2.1 (Fixed-seed cylinder sections).** Fix an auxiliary value $u$.
+If a finite ordered address/reply record $r$ agrees with the successive
+next-event choices, its source section is the cylinder
+
+$$
+C(r)=\{X_{t_i}=x_i:1\le i\le n\}.
+\tag{2.1}
+$$
+
+If the choices disagree, the section is empty. When the rule returns
+after this record, its output is fixed on that section. The same
+assertion applies to a reachable prefix before a return.
+
+Proof. The empty record imposes no condition. At a fixed seed and
+prefix, the rule's next action and its internal delay are fixed. If it
+requests $t$, adjoining reply $x$ intersects the previous cylinder with
+$\{X_t=x\}$. A finite return adds no source restriction, and indefinite
+internal continuation is the same behavior on that entire prefix
+section. Induction on the number of calls proves the assertion, also
+for adaptive choices. Contradictory repeated replies give empty
+cylinders. This is the finite-section interface of Original, Theorems
+9.2–10.1, proved here directly from Definition 1.2. $\square$
+
+For a source event $C$ define its best possible correct-state mass by
+
+$$
+m(C)=\max_{h\in\mathcal A}J_p(C,H_j=h).
+\tag{2.2}
+$$
+
+This is a maximum of four ordinary joint masses. On a terminal section,
+every specified output has correct mass at most $m(C)$. We never sum
+the best state in each phase as if both could be output on one leaf.
+

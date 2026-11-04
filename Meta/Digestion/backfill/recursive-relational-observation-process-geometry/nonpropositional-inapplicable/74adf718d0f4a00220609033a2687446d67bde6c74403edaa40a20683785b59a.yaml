@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:74adf718d0f4a00220609033a2687446d67bde6c74403edaa40a20683785b59a
+  normalized_sha256: sha256:74adf718d0f4a00220609033a2687446d67bde6c74403edaa40a20683785b59a
+cas_ref: sha256:74adf718d0f4a00220609033a2687446d67bde6c74403edaa40a20683785b59a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条设定相干驱动递推及旋转坐标和参数，不断言后续几何和公式或收敛结论。
+    previous_atom_id: 3fcb26f47ed60cdaf383d4de67c980101e8a9b60530bcb48be8e3b11668ae86c
+    next_atom_id: 98edd839583399a69f4b75ac30d159f395c098c9e1434d1ad45eeb48117bcfb2

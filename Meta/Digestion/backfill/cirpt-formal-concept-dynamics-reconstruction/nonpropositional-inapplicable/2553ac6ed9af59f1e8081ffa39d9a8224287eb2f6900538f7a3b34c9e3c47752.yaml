@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2553ac6ed9af59f1e8081ffa39d9a8224287eb2f6900538f7a3b34c9e3c47752
+  normalized_sha256: sha256:2553ac6ed9af59f1e8081ffa39d9a8224287eb2f6900538f7a3b34c9e3c47752
+cas_ref: sha256:2553ac6ed9af59f1e8081ffa39d9a8224287eb2f6900538f7a3b34c9e3c47752
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 路径依赖机制列表中的反射扩张项。
+    previous_atom_id: 6480746fdf45152d08bfe9438c04ef179335fd363762a7e3c8fa5c0d2c74d2e5
+    next_atom_id: a13f4c5107f24b67420359702fe540779defb21df40d534238e9a3e786a478d3

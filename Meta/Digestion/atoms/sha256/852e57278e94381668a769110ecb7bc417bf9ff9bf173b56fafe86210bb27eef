@@ -1,0 +1,26 @@
+**Lemma 57.2 (a variable leaf has no indirect guard read).** Fix
+$p\in V_K$ and two entries differing only at $p$. Under the same
+deterministic controller, their complete reply and local-control traces
+coincide up to the first request directly targeting $p$. Before that
+request, every completed request also leaves their current logical
+terms differing only at the still unedited leaf $p$. Thus an exact
+competitor must target every $p\in V_K$ on every terminating run.
+
+Proof. A strict ancestor of $p$ is an original branch and always refuses
+either growth kind there. No operation elsewhere can replace that branch.
+A strict logical descendant of $p$ is absent in both variants, since
+alpha and beta are both logical leaves. In particular a request to $pL$
+does not read the material marker present in just one variant. A target
+in an incomparable cone has identical logical content in the two runs;
+its reply and any source edit agree there. Unsupported frames have the
+same fixed reply. These cases exhaust requests not directly at $p$,
+and preserve the asserted relation between current terms. Hidden
+allocation counts, work duration and private fields give no extra output
+by Assumption 53.2. Determinism and induction therefore give the same
+local choices and complete replies before the first direct target.
+
+If a run returned without directly targeting $p$, the flipped entry
+would have the same finite transcript, the same stopping computation
+and the same returned entry code. The two correct entry codes differ
+at $p$, a contradiction. $\square$
+

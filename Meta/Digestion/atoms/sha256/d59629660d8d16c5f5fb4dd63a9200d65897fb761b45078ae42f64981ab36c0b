@@ -1,0 +1,10 @@
+**Proposition 9.5 (exact finite supplement cost for the native source of Proposition 8.4).** For the actual source and native durations displayed in Proposition 8.4, every \(0<\epsilon<1/2\) has static minimum \(2\) and complete online-state minimum \(2\).
+
+Proof. At endpoint \(z\), the two legal families have native times
+\[
+2+n,\qquad \tfrac52+m\sqrt2,\qquad n,m\in\mathbb N_0.
+\]
+The irrational-rotation argument already used in Proposition 8.4 gives pairs from these two families with arbitrarily small positive time gap. A one-label static supplement therefore violates Lemma 9.2. A one-state online register is a one-label static supplement, so both minima are at least \(2\).
+
+For the upper bound, use two labels \(A,B\). Give every word on the \(a,x,c\) branch label \(A\), every word on the \(b,w,e\) branch label \(B\), and give the empty root word either label because its endpoint is \(r\). Within each branch, two different words with the same endpoint differ by at least one native unit of time. Since \(2\epsilon<1\), Lemma 9.2 applies; the labels separate the two \(z\)-families. The same partition is online: initialize at \(A\), set \(U(\,\cdot\,,a)=A\), \(U(\,\cdot\,,b)=B\), preserve \(A\) on \(x,c\), and preserve \(B\) on \(w,e\). These are names-only updates, and all legal executions follow the displayed branch. Hence two states suffice. The result uses the actual source acquisition and native \(d\), not a redesigned weighting. \(\square\)
+

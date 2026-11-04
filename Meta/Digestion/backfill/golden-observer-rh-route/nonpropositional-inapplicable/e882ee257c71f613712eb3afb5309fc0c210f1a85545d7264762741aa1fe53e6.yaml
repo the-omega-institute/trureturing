@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e882ee257c71f613712eb3afb5309fc0c210f1a85545d7264762741aa1fe53e6
+  normalized_sha256: sha256:e882ee257c71f613712eb3afb5309fc0c210f1a85545d7264762741aa1fe53e6
+cas_ref: sha256:e882ee257c71f613712eb3afb5309fc0c210f1a85545d7264762741aa1fe53e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: G-b 的构建验收及最大模 API 不足时的处理规则。
+    previous_atom_id: 5d41f0bc89a83c85d48a01fa43e4ac68c3ed223f07913c5708a3e6e6530b7c6a
+    next_atom_id: 1de0abc9ea8ac3946e16b7910c5aeadbf6cb4132c453671a16b5ccc60116067f

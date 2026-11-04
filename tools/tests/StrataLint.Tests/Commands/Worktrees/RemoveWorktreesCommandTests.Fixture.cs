@@ -52,7 +52,8 @@ public sealed partial class RemoveWorktreesCommandTests
                         error = path == FailedRemovalPath ? RemovalError : null,
                     }).ToArray();
                 return new ProcessOutput(entries.Any(entry => entry.error is not null) ? 74 : 0,
-                    Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new { items = entries })), []);
+                    Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new { @event = "worktree_removal",
+                        status = entries.Any(entry => entry.error is not null) ? "failed" : "succeeded", items = entries })), []);
             }
             if (IsRemoval(call))
             {

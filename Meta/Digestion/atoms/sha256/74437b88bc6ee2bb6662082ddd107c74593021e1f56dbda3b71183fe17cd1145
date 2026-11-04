@@ -1,0 +1,23 @@
+**Definition 2.2 (Exactly the additional coherent access).** After the actual tick, apply successively the same stable, accessible isometry
+
+$$
+V_\theta\psi=S\psi\otimes|0\rangle+J_\theta\psi\otimes|1\rangle.
+\tag{2.2}
+$$
+
+Retain all output flags in chronological order, coherently and accessibly. The branch representatives and their phases are stable across these uses. No inaccessible system retains a record distinguishing the coherent histories. There is no intermediate intervention or measurement during this run, and no final memory measurement. All terminal flag POVMs whose effects commute with total tick count are available, including arbitrary effects inside each fixed-count subspace. No access to effects mixing different counts is supplied.
+
+For a chronological word $w=b_1\cdots b_n$, set $K_0=S$, $K_1=J_\theta$ and $K_w=K_{b_n}\cdots K_{b_1}$. Inner products are conjugate-linear in the first entry. The complete terminal datum is
+
+$$
+\begin{aligned}
+|\Psi_n(\theta)\rangle&=\sum_{w\in\{0,1\}^n}K_wx_\theta\otimes|w\rangle,\\
+\Omega_n(\theta)&=\operatorname{Tr}_{\rm mem}|\Psi_n(\theta)\rangle\langle\Psi_n(\theta)|,\\
+Q_n|w\rangle&=|w|_1|w\rangle,\\
+T_n(\theta)&=\sum_{m=0}^n P_m^{(n)}\Omega_n(\theta)P_m^{(n)},\qquad T_0=1,
+\end{aligned}
+\tag{2.3}
+$$
+
+where $P_m^{(n)}$ projects onto words with $m$ ticks. This is precisely the count twirl of source (25.3), not a state enlarged by a memory readout or a different reference frame.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:59ad0d57a62d2edb9bc2aba1cb013ef159bf13e3b673a8255225322f4ede9d99
+  normalized_sha256: sha256:59ad0d57a62d2edb9bc2aba1cb013ef159bf13e3b673a8255225322f4ede9d99
+cas_ref: sha256:59ad0d57a62d2edb9bc2aba1cb013ef159bf13e3b673a8255225322f4ede9d99
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Definitions and upstream-only conventions: H, phi, D and the actual induced residual are the frozen SimpleGraph.harmonicIndex and D5.S3.Combinatorics.Graph.AdjacentSupportPayment.degreeDefect, harmonicDefect and residual. Both sums range over unordered edgeFinset elements, so isolated vertices supply no summands; coefficients and subtraction are rational. For every actual edge, positivity of both endpoint degrees is supplied by SimpleGraph.Adj.degree_pos_left and SimpleGraph.Adj.degree_pos_right in pinned Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679, Mathlib/Combinatorics/SimpleGraph/Finite.lean. The residual is G.induce on the full retained subtype, including isolates, and uses that graph's degree. No new mathematical assertion, certificate or independent numerical identity remains in this definition atom."
+    previous_atom_id: null
+    next_atom_id: edefbb852061ab1419e7ce8ada58cc2de5a211b1650253784302439ca7966de0

@@ -1,0 +1,13 @@
+**(B5) Theorem 5.2 (complete-law criterion).** The following are equivalent:
+
+1. one partition matches $C_f(k)$ for every $k\geq1$;
+2. one partition matches every finite word law at times $t+n\Delta$;
+3. $J=0$;
+4. $f$ is vertex-valued $m$-almost everywhere.
+
+The deterministic complete-law class is therefore the zero-deficit subset of the stochastic class.
+
+**Proof.** For a partition, $\sum_i1_{P_i}^2=1$, so its collision limit is one. If all positive-lag collisions agree, Theorem 5.1 forces $R=1$ and hence $J=0$. Full word equality implies collision equality by projection. If $J=0$, repair $f$ on one Borel null set; the countably many positive sampling states avoid it almost surely, so every word law agrees. Uniform $f$ has $C_f(k)=1/4$, $J=3/4$, and gives a concrete failure. The partition supplied by the fixed-pair theorem may depend on $k$; it does not contradict the common-partition criterion. ∎
+
+For every deterministic partition and every $J>0$ detector, some finite positive lag witnesses a discrepancy, but the witness may depend on the partition and detector. No uniform finite witness horizon or positive margin follows.
+

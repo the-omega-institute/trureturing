@@ -1,0 +1,41 @@
+**Definition 31.3 (all-level phase alignment and the glued vectors).**
+Fix any arguments $\theta_b,\theta_\beta\in\mathbb R$ with
+$b=|b|e^{i\theta_b}$ and $\beta=e^{i\theta_\beta}$. For integers $j$ put
+
+$$
+\begin{aligned}
+T_j&=\frac{\theta_\beta-\theta_b+\pi j}{s},
+&E_j&=e^{-2T_j}=D_{\rm align}e^{-j/L},\\
+D_{\rm align}&=\exp\left(-\frac{2(\theta_\beta-\theta_b)}s\right)>0,
+&c_j&=(-1)^j|b|.
+\end{aligned}
+\tag{31.11}
+$$
+
+Thus $T_j\to\infty$ and $E_j<E_0$ for every sufficiently large
+integer $j$. Fix any real $\chi\in C^\infty(\mathbb R)$ with
+$0\le\chi\le1$, $\chi(t)=1$ for $t\le0$ and $\chi(t)=0$ for
+$t\ge1$. For any real sequence $M_j$ satisfying
+
+$$
+M_j\longrightarrow\infty,\qquad T_j-M_j\longrightarrow\infty,
+\tag{31.12}
+$$
+
+define $\chi_j(\xi)=\chi(\ell(\xi)-M_j)$ away from the pole and
+continue it as $1$ near the pole. On the exterior overlap put
+
+$$
+\begin{aligned}
+d_j&=f_0-c_jF_{E_j},\\
+h_j&=\chi_jf_0+(1-\chi_j)c_jF_{E_j},\\
+\Delta_j&=\sup_{M_j-1\le\ell\le M_j+2}
+              \|w_0(\ell)-c_jw_{E_j}(\ell)\|_{L^2(J,da)}.
+\end{aligned}
+\tag{31.13}
+$$
+
+The outer summand in $h_j$ is extended by zero inward; it is
+well-defined for every sufficiently large $j$. The constant
+$D_{\rm align}$ specifies equality of leading-wave phases only.
+

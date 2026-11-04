@@ -1,0 +1,129 @@
+**Theorem 12.6 (Subleading value and controlled expansion).** As $a\to\infty$ through integers, the exact minimum of Theorem 12.5 satisfies
+
+$$
+g_a=\sqrt2\,a^{3/2}+\frac3{\sqrt2}a^{1/2}
+ -\frac1{4\sqrt2}a^{-1/2}
+ +\frac1a+O(a^{-3/2}),
+\tag{12.27}
+$$
+
+and its parameter satisfies
+
+$$
+\epsilon_a
+=\frac1{\sqrt2\,a^{3/2}}
+ \left(1-\frac3{2a}+O(a^{-2})\right).
+\tag{12.28}
+$$
+
+**Proof.** Define
+
+$$
+\begin{aligned}
+b_a&=\frac{r^2M_a}{a^2}
+ =2a^3+6a^2+4a-3-\frac4a-\frac1{a^2},\\
+t_b&=b_a^{-1/2},\\
+W_a(t)&=
+\frac{r^2t^2(2aM_a-a^3-M_at)}{a^2(a-t)^2}.
+\end{aligned}
+$$
+
+An exact rearrangement of (12.4) is
+
+$$
+h_a(t)-B_0=\frac1t+b_at+W_a(t).
+\tag{12.29}
+$$
+
+The stationary equation (12.2) is equivalently the clean positive-factor identity
+
+$$
+\epsilon_a^{-2}
+=b_a\left(1+\frac{N_a}{M_a}\frac{\epsilon_a}{a}\right)
+       \left(1-\frac{\epsilon_a}{a}\right)^{-3}.
+\tag{12.30}
+$$
+
+Since both factors on the right after $b_a$ are at least one, $\epsilon_a\le t_b$. In particular $\epsilon_a/a=O(a^{-5/2})$, while $0<N_a/M_a<1$. For $0\le z\le1/2$, the derivative of $(1-z)^{-3}$ is bounded by an absolute constant. Applying this to (12.30) gives
+
+$$
+\epsilon_a^{-2}=b_a\bigl(1+O(a^{-5/2})\bigr),\qquad
+\epsilon_a=t_b+O(a^{-4}).
+\tag{12.31}
+$$
+
+These bounds also show $\epsilon_a\asymp t_b\asymp a^{-3/2}$.
+
+For completeness, an explicit uniform remainder for $W_a$ follows from its rational expression. Put
+
+$$
+c_{2,a}=r^2\left(\frac{2M_a}{a^3}-\frac1a\right)
+=4a^2+11a+6-\frac7a-\frac8{a^2}-\frac2{a^3}.
+$$
+
+Writing $A=2aM_a-a^3$, one has
+
+$$
+W_a(t)=\frac{r^2t^2}{a^4}(A-M_at)(1-t/a)^{-2}.
+$$
+
+On any interval $0<t\le Ca^{-3/2}$ with $C$ fixed, the bound
+$|(1-z)^{-2}-1|\le C' z$ for $0\le z\le1/2$ gives
+
+$$
+W_a(t)=c_{2,a}t^2+O_C(at^3).
+\tag{12.32}
+$$
+
+Indeed $r^2/a^4=O(a^{-2})$, $A=O(a^4)$ and $M_a=O(a^3)$, so both remaining terms are bounded by a constant times $at^3$. Thus this error estimate is uniform on an interval containing both $\epsilon_a$ and $t_b$ for all sufficiently large $a$.
+
+There is also the exact scalar identity
+
+$$
+\frac1{\epsilon_a}+b_a\epsilon_a-2\sqrt{b_a}
+=\frac{b_a(\epsilon_a-t_b)^2}{\epsilon_a}.
+$$
+
+By (12.31) its right side is $O(a^{-7/2})$. Since
+$c_{2,a}=O(a^2)$, (12.31)–(12.32) similarly imply
+
+$$
+\begin{aligned}
+W_a(\epsilon_a)
+&=\frac{c_{2,a}}{b_a}+O(a^{-7/2}),\\
+g_a
+&=\sqrt{b_a}+\frac{c_{2,a}}{2b_a}+O(a^{-7/2})
+ =\sqrt{b_a}+\frac1a+O(a^{-2}).
+\end{aligned}\tag{12.33}
+$$
+
+For the first line, the replacement of $\epsilon_a^2$ by $t_b^2$ costs
+$O(a^2\cdot a^{-3/2}\cdot a^{-4})=O(a^{-7/2})$;
+the remainder $a\epsilon_a^3$ has the same order. For the last line,
+$c_{2,a}=4a^2+O(a)$ and $b_a=2a^3+O(a^2)$ give
+$c_{2,a}/(2b_a)=1/a+O(a^{-2})$.
+
+Finally
+
+$$
+\frac{b_a}{2a^3}
+=1+\frac3a+\frac2{a^2}+O(a^{-3}).
+$$
+
+The Taylor formulas for $(1+z)^{1/2}$ through degree two and for $(1+z)^{-1/2}$ through degree one have uniformly bounded next derivatives on $|z|\le1/2$. They therefore give, with controlled remainders,
+
+$$
+\begin{aligned}
+\sqrt{b_a}
+&=\sqrt2\,a^{3/2}
+ \left(1+\frac3{2a}-\frac1{8a^2}+O(a^{-3})\right),\\
+t_b
+&=\frac1{\sqrt2\,a^{3/2}}
+ \left(1-\frac3{2a}+O(a^{-2})\right).
+\end{aligned}
+$$
+
+Substitution into (12.31) and (12.33) proves (12.27)–(12.28). In (12.28) the additional $O(a^{-4})$ is smaller than the displayed absolute remainder $O(a^{-7/2})$. ∎
+
+Theorem 10.1 is the source of the upper family and its exact energy; Jensen and Cauchy–Schwarz are classical intermediate inequalities. The weighted residual, uniform sublevel comparison, equality classification and expansion above are repo-derived mathematical deductions in the domain of Definition 12.1. Their relation to K. Zhao and X. Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is undetermined without that paper's full text; no literature-priority assertion is made. The threshold's least value and the minimum for the remaining finite range $4\le a<a_0$ are not determined here. The array theorem supplies no exact realization or optimality assertion at a prescribed finite graph budget.
+

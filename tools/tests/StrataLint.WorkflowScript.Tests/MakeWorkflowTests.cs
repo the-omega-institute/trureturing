@@ -77,6 +77,7 @@ public sealed partial class MakeWorkflowTests
         "worktree-checkpoint",
         "worktree-publish",
         "worktree-finalize",
+        "worktree-return",
         "pr",
         "pr-open",
         "pr-watch",

@@ -1,0 +1,52 @@
+**定理 97.1（接近恒等的实际混合控制无统一调用上限）。** 作为数学比较域，允许每个节点按过去标签选择 $\mathsf J$、同一个 $\mathsf N$ 或调用一次原终端并停止；每棵树有限、完整，每条路径至多调用 $B\in\mathbb N$ 次 $N$，原生仪器调用数可为任意有限数，终端接受系数为 (95.3) 的 $[0,1]$ 系数。此域比定义 95.1 大，不将标签依赖的动作选择或随机接受安装为本源权限。对每个这种树／系数 $\pi$，
+
+$$
+\|F_{N,\pi}-P_\xi\|_\infty
+ \ge\frac25-2B\|N-I_3\|_\infty.
+\tag{97.1}
+$$
+
+同一界也适用于这些效果的数学凸包及算子范数闭包。于是对任一固定 $0\le\varepsilon_0<2/5$，不存在一个有限 $N$ 调用上限，在全部允许安装 $[N,P_\xi]\ne0$ 上以这些完整效果逼近 $P_\xi$ 到误差 $\varepsilon_0$，即使各安装可选择各自的模型依赖有限策略。
+
+证明。固定给定 $N$ 下已选好的整棵树和接受表，以 $I_3$ 替换每个 $N$，只作比较，不重新选择树。公平标签使叶集、$\alpha_\ell$ 及接受系数均不变。原 $U,W$ 固定 $\xi$，故每个原生 $V_j$ 与 $P_\xi$ 对易；$|\xi^\dagger q|^2=1/2$。所以替换后的每个终端投影 $R_\ell^I$ 都满足 $\operatorname{Tr}(P_\xi R_\ell^I)=1/2$。置
+
+$$
+Z=4P_\xi-I_3,\qquad
+\operatorname{Tr}(ZP_\xi)=3,\quad \|Z\|_1=5,\quad
+\operatorname{Tr}(ZR_\ell^I)=1,\quad
+\operatorname{Tr}[Z(I_3-R_\ell^I)]=0.
+\tag{97.2}
+$$
+
+由完整叶质量之和为一，
+
+$$
+\operatorname{Tr}(ZF_{I,\pi})
+ =\sum_\ell\alpha_\ell a(\ell,1)\le1,
+\qquad
+\|P_\xi-F_{I,\pi}\|_\infty\ge(3-1)/5=2/5.
+\tag{97.3}
+$$
+
+逐叶酉乘积的望远镜差给
+
+$$
+\|U_\ell^N-U_\ell^I\|_\infty\le B\|N-I_3\|_\infty,
+\qquad
+\|R_\ell^N-R_\ell^I\|_\infty\le2B\|N-I_3\|_\infty.
+\tag{97.4}
+$$
+
+同一叶接受项的差为 $(a(\ell,1)-a(\ell,0))(R_\ell^N-R_\ell^I)$，系数绝对值至多一。乘原 $\alpha_\ell$ 求和得到 $\|F_{N,\pi}-F_{I,\pi}\|_\infty\le2B\|N-I_3\|_\infty$，与 (97.3) 合并即为 (97.1)。对数学凸组合也同时组合对应的 $F_{I,\pi}$；(97.3) 的线性见证仍成立，扰动界仍相同。再取范数极限，得到所述闭包结论。不能仅因范数下界而不经此见证步骤就宣称凸化保界。
+
+实际反例族取
+
+$$
+H=\xi e^\dagger+e\xi^\dagger,\qquad
+N_t=\exp(\mathrm i tH),\quad 0<t<\pi/2,\qquad
+\|N_t-I_3\|_\infty=2\sin(t/2).
+\tag{97.5}
+$$
+
+$N_t\xi=\cos t\,\xi+\mathrm i\sin t\,e$，故每个成员都满足 $[N_t,P_\xi]\ne0$。对任何有限 $B>0$，取 $t$ 使 $4B\sin(t/2)<2/5-\varepsilon_0$，(97.1) 即排除全部相应策略；$B=0$ 已由 (97.3) 排除。$N=I_3$ 从未作为允许安装，只是比较极限。结论只涉及调用计数，不给经过时间、最优资源或编译代价。定理 96.1 允许终点依赖已安装 $N$，故不受反例族的统一上限阻碍。∎
+

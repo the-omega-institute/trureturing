@@ -1,0 +1,27 @@
+#### 引理 9.3：均匀纯态的二阶矩
+
+令  $\rho_ \psi=\lvert \psi\rangle\langle \psi\rvert$ ， $\psi$  均匀分布于  $\mathbb C^d$  的单位球面，则
+
+<a id="eq-eq:haar"></a>
+
+```math
+\mathbb E(\rho_\psi\otimes\rho_\psi)=\frac{I+F}{d(d+1)}.\tag{27}
+```
+
+
+**证明。**
+
+各坐标独立相位旋转不改变分布，因此四阶矩非零时，正负相位指标必须配对。
+坐标置换不变性留下两个数
+ $a=\mathbb E|\psi_ 1|^4$ 、 $b=\mathbb E|\psi_ 1|^2|\psi_ 2|^2$ 。
+用  $(\psi_ 1+\psi_ 2)/\sqrt2$  替换第一坐标并对相位平均，得到
+ $a=(2a+4b)/4$ ，所以  $a=2b$ 。
+再用  $(\sum_ j|\psi_ j|^2)^2=1$ ，
+有  $da+d(d-1)b=1$ ，故  $b=1/[d(d+1)]$ 。
+逐矩阵元代入正好给式 [(27)](#eq-eq:haar)。
+
+**证毕。**
+
+
+<a id="stmt-9-4"></a>
+

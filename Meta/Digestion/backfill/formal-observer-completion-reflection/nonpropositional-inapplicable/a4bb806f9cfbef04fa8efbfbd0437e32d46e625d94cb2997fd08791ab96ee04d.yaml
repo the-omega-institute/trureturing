@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a4bb806f9cfbef04fa8efbfbd0437e32d46e625d94cb2997fd08791ab96ee04d
+  normalized_sha256: sha256:a4bb806f9cfbef04fa8efbfbd0437e32d46e625d94cb2997fd08791ab96ee04d
+cas_ref: sha256:a4bb806f9cfbef04fa8efbfbd0437e32d46e625d94cb2997fd08791ab96ee04d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 集合层 T^*f 被定义为 f 复合 T；没有附带自然性或闭包定理。'
+    previous_atom_id: 372f8b6f5ef3a329c58ca3acff4b80d8e7c45e1500406866b045153b0c7085d8
+    next_atom_id: 2c7e52d485043c15c560e39c35fd24fb9f8ca0a3481914bf4041432a59c47443

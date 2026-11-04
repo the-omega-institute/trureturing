@@ -1,0 +1,34 @@
+**定理 21.1（同父条件等价、支持下界与三目标必要性）。** For every $z\in\mathcal I_{JMJ}$ and every family
+
+$$
+\mathcal B_z\subseteq K\subseteq\mathcal G_z
+$$
+
+of arbitrary cardinality,
+
+$$
+\begin{aligned}
+L_4(K,H_z)\quad\Longleftrightarrow\quad
+\exists v\in\mathbb R:\quad
+L_3\bigl(K\cap\mathcal F((H_z,M,v)),(H_z,M,v)\bigr).
+\end{aligned}                                                     \tag{21.1}
+$$
+
+In particular this is an equivalence for the whole unrestricted $\mathcal G_z$. Every fourth-$M$ $L_3$ child, for any real $z$, contains at least three distinct targets. An $L_4$ family containing $\mathcal B_z$ has at least four distinct targets. For any real $z$ and any $K\subseteq\mathcal G_z$ with $|K|\le3$,
+
+$$
+L_4(K,H_z)\ \Longrightarrow\
+|K|=3\text{ and both fourth response functions are constant on }K.
+                                                                  \tag{21.2}
+$$
+
+Any deterministic decoder succeeding on the whole $\mathcal G_z$ by clock seven, for $z\in\mathcal I_{JMJ}$, must choose fourth $M$ at this reached history.
+
+Proof. The forward implication in (21.1) is the fourth-$M$ clause of (1.1). The fourth-$J$ response-$144/5$ child contains the same fixed $\mathcal B_z$ with $L_3$, by Theorem 20.2. Lemma 9.3 therefore supplies the fourth-$J$ clause for $K$, so the displayed fourth-$M$ clause also suffices. Equivalently, any fixed $\mathcal D\subseteq\mathcal F((H_z,M,v))$ with $L_3$ can be joined to $\mathcal B_z$ at this same $z$ to give $L_4$; this does not assert the existence of such a $\mathcal D$.
+
+A losing fourth-$M$ child cannot be a singleton by (1.1), or a pair by Theorem 20.2. Its cardinality is therefore at least three. The two members of $\mathcal B_z$ have different fourth-$M$ predictions $144/5+24B_\pm$. Such a child contains at most one of them, and its union with $\mathcal B_z$ contains at least four distinct targets. This proves the support lower bound, including for infinite $K$.
+
+If $|K|\le3$ and $L_4$ holds, its losing fourth-$M$ child must be all three targets, so that response is constant. A losing fourth-$J$ child of size two would have to be $\mathcal B_z$ by Theorem 20.2, contradicting constancy of fourth $M$. Therefore its fourth-$J$ losing child also contains all three, proving (21.2). This argument makes no assertion that an arbitrary larger losing family has a losing pair.
+
+Finally a decoder cannot stop on a parent containing the two distinct worlds $\mathcal B_z$, and choosing fourth $J$ leaves their $L_3$ response child with only three reads left. Thus any successful whole-parent decoder must choose fourth $M$. Existence of that decoder is not proved by this necessary action. ∎
+

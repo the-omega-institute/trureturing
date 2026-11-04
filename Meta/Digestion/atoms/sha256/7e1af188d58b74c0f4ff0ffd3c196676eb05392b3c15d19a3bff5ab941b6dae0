@@ -1,0 +1,19 @@
+### 13.4 理想测后态需要一个明确的选择定义
+
+同一效果 $E$ 允许 $\sqrt E\rho\sqrt E$，也允许 $U\sqrt E\rho\sqrt E U^*$；概率相同，后态可不同。定义有限纯态组 $P_s$、正权重 $w_s$ 满足
+
+$$
+\sum_sw_sP_s\otimes P_s=\frac{I+F}{d(d+1)},\qquad\sum_sw_s=1,
+$$
+
+其中 $F$ 交换两因子。对固定输入输出系统和效果 $E$，把最大化
+
+$$
+R(T)=\sum_sw_s\operatorname{Tr}[P_sT(P_s)],\qquad
+ T(X)=\sum_aK_aXK_a^*,\quad\sum_aK_a^*K_a=E
+$$
+
+的分支定义为理想实现。
+
+所需有限比较组确实存在：标准基总权重取 $1/(d+1)$，全部向量 $(z_1,\ldots,z_d)/\sqrt d$、$z_i\in\{1,i,-1,-i\}$ 总权重取 $d/(d+1)$，各组内均匀。记 $D_0=\sum_i\lvert ii\rangle\langle ii\rvert$，两组二阶矩分别为 $D_0/d$ 与 $(I+F-D_0)/d^2$，所列权重恰好消掉 $D_0$。
+

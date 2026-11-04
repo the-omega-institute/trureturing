@@ -1,0 +1,8 @@
+**Assumption 1.2 (installed resources and complete service).** The following operations act serially on this same field and matrix.
+
+| Command | Actual successor | Complete declared output |
+| --- | --- | --- |
+| Read | $x$ | $e_0^{\mathsf T}x\in\mathbb Q$ |
+| Tick | $Tx$ | $e_0^{\mathsf T}Tx\in\mathbb Q$, after the update |
+| Hold | $x$ throughout the held processing interval | a fixed acknowledgement |
+| Add$(u)$ | $x+u e_0$ for the supplied $u\in\mathbb Q$ | a fixed acknowledgement |

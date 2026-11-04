@@ -1,0 +1,11 @@
+### 3.4 无限模参数可以由有限线性步骤消去
+
+令
+
+$$
+\delta_\sigma(X)=i[\log\sigma,X],\qquad
+ \alpha_t^\sigma=e^{t\delta_\sigma}.
+$$
+
+模核并不要求实际扫描全部实参数。下面两种算法均只使用有限矩阵数据。
+

@@ -1,0 +1,50 @@
+**Proposition 80.3 (finite backed coexistence).** Every transaction in
+Theorem 76.4 has a finite implementation by the specified scalar binary
+routines and actual linked traversals. Numerical scratch requires only
+a fixed number of buffers of $O(G^++N^++1)$ bit positions, in addition
+to their real object/reference overhead, acquired request/address/output
+storage, traversal references and retained capacity. This numerical
+bound is not a bound on total peak material. In particular the live old
+record, reserved increment and replacement buffers coexist.
+
+Proof. A current source has at most $N+1$ logical leaves and at most
+$N$ branches, and its material vertex count is at most $2N+1$. Every
+logical child event count is at most $N^+$. Definition 48.1's coefficient
+recurrence has at most $N^+$ iterations, coefficient at most $2^{N^+}$
+and predivision numerator at most $2^{N^+}(N^++1)$. The product $F^+$
+has at most $G^++1$ bits. Partial products have no larger value. The old
+$Z$ and its quotients have at most $G$ bits. In (AAII.39), $T\le F^+$,
+$A<T$, and the next $A+r^+T$ is below the next partial product, at most
+$F^+$. Rank and count operands have at most $N^++1$ bits, apart from
+counting their finite lengths. Schoolbook addition, multiplication and
+Euclidean division use a fixed number of input, output and temporary
+binary strings of a fixed constant multiple of these widths. Loop
+indices need no larger width. Padding/bit extraction can retain a
+backed power of two no larger than $2^{G^+}$. These facts give the stated
+sufficient numerical bound with one fixed program, rather than an
+unbounded-register primitive.
+
+Logical DFS uses parent links, a previous/current pair and a designated
+subtree root. Pending target/root, outer navigation cursor and pass
+state are a fixed number of further reference slots. Proper-ancestor
+tests repeat a finite parent walk instead of retaining an address table.
+The consumer's accumulated address and a sealed reply are separately
+backed finite strings. Thus preflight can reserve a finite sufficient
+arena from its acquired sizes, before the edit. Any earlier capacity
+used to compute those sizes was already acquired while the source was
+unchanged and remains charged if retained.
+
+More precisely, pre-edit cuts can contain the old source, its $G$ live
+cells/header, the reserved one or two vertices, the $G^+-G$ new cells
+and possible new header, preflight products/counters, input, target and
+pending state. Post-edit computation cuts contain the actual advanced
+source, the still-unmodified old code, the reserved increment, old-number
+quotient $Q$, accumulator $A$, product $T$, coefficient/division scratch
+and all retained request/continuation data. Rewrite cuts contain the
+partly rewritten extended list and the still-backed full $A$, plus
+pending bit/link cursors. Output cuts contain the complete new record,
+sealed full reply and Print/return state, together with any not-yet-cleared
+scratch and its capacity. No statement discards those simultaneous
+coordinates. The source's old vertices remain; no uncharged old-source
+clone or reversible erasure is assumed. $\square$
+

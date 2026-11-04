@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fe5dad3fdb5c58ecde617aee5372954142c3f93503541a2a9e94250e89829740
+  normalized_sha256: sha256:fe5dad3fdb5c58ecde617aee5372954142c3f93503541a2a9e94250e89829740
+cas_ref: sha256:fe5dad3fdb5c58ecde617aee5372954142c3f93503541a2a9e94250e89829740
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: An interrogative about credentials, permissions and accountability; it asserts no uniqueness, permission or recovery relation.
+    previous_atom_id: bcb6595ea1d803df54056d967d392c225736f502d165da41d85bd4cb799cc1c4
+    next_atom_id: 34aff8406234dc1decfd1b5f6a4cbf0d4180c86bf36fe28e8b87781304b7757f

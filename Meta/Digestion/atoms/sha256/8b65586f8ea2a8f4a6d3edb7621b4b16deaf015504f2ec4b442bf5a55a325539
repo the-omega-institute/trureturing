@@ -1,0 +1,59 @@
+**Definition 14.1 (The two finite scalar branches).** Retain exactly
+Definition 1.1. Write $m_1(a,h)=m_{a,h}$ for the constrained scalar
+value in (13.18), whose definition is valid for every $a\ge4$, $h\ge1$.
+For $h\ge2$ put $m=a+2$, $n=h-1$ and
+
+$$
+\begin{aligned}
+G_2(p)&=\frac{n^2}{p}+\frac{(m-1)^2m^2}{a-p}
+ +\frac{(2m-1)m^3(ap-1)}{(a-p)^2},\\
+m_2(a,h)&=\min_{1/a\le p\le2/(a+1)}G_2(p).
+\end{aligned}
+\tag{14.1}
+$$
+
+Set $m_2(a,1)=+\infty$. For unified notation, when $j\in\{1,2\}$
+and $h\ge j$, define
+
+$$
+\begin{gathered}
+m=a+j,\quad r=m-1,\quad n=h+1-j,\quad d=2m-1,\\
+\ell_j=\frac{j-1}{m-2},\qquad u_c=\frac jr,\qquad
+b_j(u)=d\bigl((m-2)u-(j-1)\bigr),\\
+F_j(u)=\frac{n^2}{u}+\frac{r^2m^2}{a-u}
+                    +\frac{m^3b_j(u)}{(a-u)^2}.
+\end{gathered}
+\tag{14.2}
+$$
+
+The scalar interval is $(0,u_c]$ for $j=1$ and $[\ell_2,u_c]$
+for $j=2$. Thus $F_1=\Phi_{a,h}$, $F_2=G_2$ and their minima are
+$m_j(a,h)$. Denote their minimizing parameters by $p_j$.
+The second family is the portion $1\le v\le2$ of Proposition 3.2:
+the substitution $u=v/(a+v-1)$ gives, on a partition $C\dot\cup D$
+of sizes $m,n$,
+
+$$
+\begin{gathered}
+x_{\{k\}}=u/n\quad(k\in D),\qquad
+x_C=1-j+(m-2)u,\\
+x_{C\setminus\{i\}}=\frac{j-ru}{m}\quad(i\in C),
+\qquad x_T=0\quad\hbox{otherwise}.
+\end{gathered}
+\tag{14.3}
+$$
+
+For $j=1$ these are exactly the published laws (13.19), with an
+arbitrary legal scalar parameter. The cap member has energy
+
+$$
+S_j=\frac{m^3r}{a-1}+\frac{n^2r}{j}.
+\tag{14.4}
+$$
+
+All these are comparison laws, without any support restriction on
+$\mathcal X(a,h)$. In the compact range $5/2\le q=h/\sqrt a\le R$,
+put $U=\min\{S_1,S_2\}$. Every constant and threshold indexed by $R$
+below is independent of the actual law, the integer pair and the
+labeling. Here $2\sqrt2<R<2\sqrt6$ is fixed.
+

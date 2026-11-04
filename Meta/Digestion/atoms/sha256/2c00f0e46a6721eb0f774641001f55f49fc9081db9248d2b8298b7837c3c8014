@@ -1,0 +1,13 @@
+**Theorem 60.2 (source-induced surviving rank).** Fix any finite original six-operation schedule, with actual native growth and no Reset, on an entry graph with adjacency $A_0$ and $N_0$ vertices. Freeze its Add operands and all structural/control choices. Write the final field as $Px+q$, an affine function of the entry $x$. If no Tick occurs, $\operatorname{rank}P=N_0$. If at least one Tick occurs,
+
+$$
+\operatorname{rank}P\ge r_0:=\operatorname{rank}_{\mathbb Q}A_0.
+\tag{60.2}
+$$
+
+**Proof.** The literal native edits add fresh vertices and edges but never change an old-old edge. Every composite growth inclusion therefore satisfies (60.1) between its old and new adjacency matrices. Before the first Tick the homogeneous map is just such an inclusion $E_0$. If $B$ is the then-current adjacency, the first Tick has map $BE_0$, of rank at least $r_0$ by compression. Its differences now lie in $\operatorname{im}B$.
+
+Between consecutive Ticks let $E$ be the composite actual growth inclusion. Adds are common translations and cancel in differences; Holds, Reads, refusals and parser identities do not change them. The next Tick sends a difference $z\in\operatorname{im}B$ to $B' Ez$. Lemma 60.1 says this map is injective on the whole previous image, hence on the surviving difference subspace. Its new differences lie in $\operatorname{im}B'$. Induction proves that no later Tick loses any more of that rank. Final growth inclusions are injective as well. With no Tick the whole homogeneous map is the inclusion of all original coordinates, of rank $N_0$. This proves both cases on the actual schedule, without assuming a fixed final tree. $\square$
+
+The old-old compression identity is a property of the actual $P/S$ material edits, not a generic consequence of calling an operation growth. Symmetry and the ordered rational field supply the sum-of-squares step. For example the nonsymmetric matrix $\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)$ has rank one but square zero: two Ticks erase every field without a Read. Reset also erases rank. Neither counterexample meets the theorem's original-law domain.
+

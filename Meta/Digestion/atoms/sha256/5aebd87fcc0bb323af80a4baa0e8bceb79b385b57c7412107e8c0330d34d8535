@@ -1,0 +1,50 @@
+**Definition 33.1 (chronological indices and well-formed witnesses).**
+Let $F_0=0$, $F_1=1$, $F_{i+2}=F_{i+1}+F_i$, and
+
+$$
+B_t=F_{t+1}-1\quad(t\ge1),\qquad v_n=B_{n-1}\quad(n\ge2).
+$$
+
+For the one-based raw stream $z_j=s_{j-1}$, birth $j\ge1$ belongs to
+
+$$
+\tau(j)=\min\{t\ge2:j\le B_t\},\qquad
+R(j)=j-B_{\tau(j)-1}.
+$$
+
+A normalized update index is $i=t-1\ge1$ for an update containing births.
+Its last-birth sample is
+
+$$
+b_i=z_{B_{i+1}}=s_{B_{i+1}-1}\quad(i\ge1).
+$$
+
+There is no $b_0$: $B_1=0$, whereas $z_0$ is undefined. In particular,
+$b_1=z_1=s_0$. These batch-end samples need not satisfy the original
+recurrence in their $i$ index. Their consumer below uses the actual birth
+$j=B_{i+1}$, update $\tau(j)=i+1$ and suffix length $n-i-1$.
+
+For a proposed cut $\nu\ge2$, a root rank certificate consists of supplied
+physical words $x,y$ with $|x|=\nu-1$ and
+
+$$
+\begin{array}{c|c|c}
+\nu&|y|&\text{required replies}\\
+2k+1&k&\operatorname{Read}(ya)=0\\
+2k&k-1&\operatorname{Read}(yaa)=\operatorname{Read}(yba)=0,
+\end{array}
+$$
+
+in addition to $\operatorname{Read}(x)=1$. Malformed lengths are rejected.
+Every Read is at the same stationary physical root; no separate presence
+premise for $y$ is assumed. Write $C_n(\nu;x,y)$ for acceptance on the
+actual support $S_n$.
+
+After acceptance, a proposed prefix $A=(a_1,\ldots,a_m)$ is checked in
+increasing birth order, with $m\le B_{\nu-1}$. Reconstruct the old tree
+at cut $\tau(j)-1$ from the first $B_{\tau(j)-1}<j$ proposed bits and
+let $p_j(A)$ be its $R(j)$th beta leaf in physical lexicographic order.
+Set $c_j=a$ for $a_j=1$, $c_j=b$ for $a_j=0$, and
+$t_j=\nu-\tau(j)\ge1$. In ACR's full-law application $m=2d$ and
+$\nu\ge n_0$, where $n_0$ is exactly ACR (ACR.23).
+

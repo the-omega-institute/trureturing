@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d8fef2c5fdba22034930b235d735f28953ef192b4130f14a8c53cd58031dfad
+  normalized_sha256: sha256:2d8fef2c5fdba22034930b235d735f28953ef192b4130f14a8c53cd58031dfad
+cas_ref: sha256:2d8fef2c5fdba22034930b235d735f28953ef192b4130f14a8c53cd58031dfad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为既有源码依赖表的节标题与列标题，没有定理断言。
+    previous_atom_id: 652ff7b6c8a879dbfedd52fd53022b1a6ca66774fa7dc7ffac9865cd70e6c401
+    next_atom_id: 00f755740922092a94d716dac832fc1231da7d17a28a3799e8b952804986b5bb

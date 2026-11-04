@@ -1,0 +1,70 @@
+## 95. Positive slack, static names and remaining boundaries
+
+For finite $n\ge2$ define $M_{q,n}(\delta)$ to be the least number of
+supplied fixed whole-qutrit CPTP maps whose labels cover the phase circle
+with loss at most $\eta_{(q,n)}+\delta$. Corollary 92.6 gives, for every
+$\delta>0$,
+
+$$
+M_{q,n}(\delta)\le
+\max\left\{1,\left\lceil\frac{2\pi\sqrt{q(1-q)}}{\delta}\right\rceil\right\}.
+\tag{95.1}
+$$
+
+If labels are independent fixed-length binary data words of length $\ell$,
+with no adjacent $11$, a preceding seam fixed to $0$ outside the data and
+no extra end condition, then the existing word-count supplier gives the
+exact static capacity condition
+
+$$
+F_{\ell+2}\ge M_{q,n}(\delta),\qquad F_0=0,\quad F_1=1.
+\tag{95.2}
+$$
+
+The proof is the same finite assignment used by the existing naming
+result: a successful naming uses at most $F_{\ell+2}$ fixed maps, while
+any dictionary of that cardinality can be assigned distinct legal names.
+Combining (95.1) and (95.2) gives a concrete sufficient static length by
+choosing the least $\ell$ with
+
+$$
+F_{\ell+2}\ge
+\max\left\{1,\left\lceil\frac{2\pi\sqrt{q(1-q)}}{\delta}\right\rceil\right\}.
+\tag{95.3}
+$$
+
+This is a positive-slack upper certificate. It does not assert a sharp
+multi-label rate, a uniform lower bound, or a finite zero-slack dictionary
+for $n\ge3$. At $s=0$, and also at $n=0,1$ for this phase family, one
+static name suffices even at zero excess by Theorem 93.3 and the owning
+first-horizon proposition. For $n=2$ the existing zero-slack obstruction
+remains; for $n\ge3$ the question whether a finite zero-excess dictionary
+exists is unresolved by the present theorem.
+
+A name in (95.2) selects a pre-supplied fixed whole CPTP map. The count
+therefore measures only the declared independent static data words. It
+does not provide phase acquisition, an online controller, a program
+counter, quantum storage, a paid port, or a physical-cost minimum. The
+same actual-channel contract continues to quantify over all complex
+qutrit density inputs and one common map per selected label.
+
+The finite phase-circle theorem leaves the individual optima
+$\eta_{(q,n)}$ generally unevaluated for $n\ge3$, the finite no-reference
+full-state minima and minimizers unresolved, and all sharp multi-label
+rates beyond the displayed upper certificate open. The endpoint result
+also leaves other task directions, finite-to-limit interchange and
+whole-channel recovery outside its scope. The standing unbounded
+subexponential, cutoff, entropy, strict-real joint-incidence,
+ancestor-lifting, dynamic-controller and physical-resource programmes
+remain unchanged.
+
+The arguments use only the actual channel and first-horizon suppliers,
+finite-dimensional Choi compactness, Haar symmetry, complete positivity,
+convexity and unital operator-norm contraction. These are mature
+intermediates; the model-specific constants and endpoint certificates are
+proved above. The results make no worldwide novelty claim. The two supplier pins used for the correspondence are the actual-channel
+and first-horizon source at revision 37142002ed7d67cdfc47940a899f4dc818f42cf3
+(§§93 and 103--104) and the no-reference and stabilized full-state source
+at revision 88e708c6e499168a6bf79cabb6bd08d4e62fb6fb (§§105--111, including
+the exact stabilized values).
+

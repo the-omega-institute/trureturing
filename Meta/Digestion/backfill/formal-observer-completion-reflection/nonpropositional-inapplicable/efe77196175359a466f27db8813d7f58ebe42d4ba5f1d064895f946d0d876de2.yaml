@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:efe77196175359a466f27db8813d7f58ebe42d4ba5f1d064895f946d0d876de2
+  normalized_sha256: sha256:efe77196175359a466f27db8813d7f58ebe42d4ba5f1d064895f946d0d876de2
+cas_ref: sha256:efe77196175359a466f27db8813d7f58ebe42d4ba5f1d064895f946d0d876de2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: S_img 冒号后的像等式是实现完备字段的定义，不断言观察签名满射。'
+    previous_atom_id: 55c94d3aa022a000dfd8540fe87a846832fc52c22f8247e4f7ab41b2bf588d76
+    next_atom_id: 0c0aa348f8bd478e3b9d7b9e5606787d0c7a2bcdcc0438f07fc8737014e29e66

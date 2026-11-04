@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:248761ee850d5fa8d26def827b739e59b3f25ff6d4755a7b5a20942a5928290a
+  normalized_sha256: sha256:248761ee850d5fa8d26def827b739e59b3f25ff6d4755a7b5a20942a5928290a
+cas_ref: sha256:248761ee850d5fa8d26def827b739e59b3f25ff6d4755a7b5a20942a5928290a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 提出对因果模型查询画像进行四类审计的方法，没有断言某个模型存在缺陷。'
+    previous_atom_id: 525d64c6d6c14bf2c057dd7815f3f21fd42bb4388f0d9eea818fd5329489c5c5
+    next_atom_id: d7ff254ba78f800dfb4318d00d162560a4922dc28378a887cec0bf23bb73cfe6

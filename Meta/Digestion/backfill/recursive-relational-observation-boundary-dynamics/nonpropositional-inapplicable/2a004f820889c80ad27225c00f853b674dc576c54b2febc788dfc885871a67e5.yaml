@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a004f820889c80ad27225c00f853b674dc576c54b2febc788dfc885871a67e5
+  normalized_sha256: sha256:2a004f820889c80ad27225c00f853b674dc576c54b2febc788dfc885871a67e5
+cas_ref: sha256:2a004f820889c80ad27225c00f853b674dc576c54b2febc788dfc885871a67e5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Opening of the Section 39.6 evidence checklist requiring a declared task-kernel scope.
+    previous_atom_id: 537eac66f8b2ab0cde494a5ff90957af259129038b930d33ba98e1c9495425db
+    next_atom_id: ca71ced11c348ba6b04cc47bd5dd6b84b2e17f3b338544585ab4900f7c03a96d

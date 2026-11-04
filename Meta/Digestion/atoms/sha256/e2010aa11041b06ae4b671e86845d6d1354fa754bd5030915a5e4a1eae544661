@@ -1,0 +1,23 @@
+**Definition 9.2 (targets, independently meaningful fields and resource coordinates).** Write $A_H=\mathbb Z/H\mathbb Z$, including the singleton ring at $H=1$, and let $\bar u$ denote coordinatewise reduction of an actual source. Entry identification outputs the immutable label $e=\bar v_0$. Reached-state acquisition installs a separate mutable label $c=\bar u_*$ for the actual endpoint $u_*$. Callable use requires retention of its actual binding and lawful rights, together with installed local output, prediction and synchronized update procedures. It does not require the endpoint behavior to equal the entry behavior or the actual source to return to $v_0$.
+
+At a fixed actual source cut, the spatial arithmetic field is $\mathcal S_H(u)=\bar u$: the two occurrence counts modulo $H$, retaining the distinction between atom types and forgetting order and brackets. Its prospective replacement-time field is the independently specified quantity progression
+
+$$
+\mathcal T_H(u)(k)=qM^ku\bmod H\quad(k\in\mathbb N).
+\tag{AQBRP.3}
+$$
+
+This progression describes what repeated replacement does to quantity; it is not an input oracle or a clock. Actual temporal data instead consist of the chronological action/read events of the acquisition, their actual replies, and separately their service work. Service work can be an external mathematical account even when unobservable to the controller. Neither that chronology nor elapsed physical time is identified with (AQBRP.3).
+
+The arithmetic boundary field is the complete controlled continuation behavior
+
+$$
+\mathcal B_H(u)(W)=\gcd\bigl(q\,W(u),H\bigr)
+\quad\bigl(W\in\{R,G\}^{<\omega}\bigr),
+\tag{AQBRP.4}
+$$
+
+with the empty word allowed and with successors given by prefixing an actual next action. Words here and below are written in chronological order. Each prefix is a possible current observation, but (AQBRP.4) does not supply its replies without calls. This full boundary has a different meaning from one current gcd answer. Memory is the actual acquired action/reply tape, acquired indices and branch records, immutable entry register, mutable current register, public code/control, and retained callable binding and rights. It contains no unobserved pre-entry history.
+
+The primitive resource vector is $(N_{\rm read},N_G,N_R)$ on this same run. Physical source letters count individual occurrences of $R$ and $G$, even in a displayed power. Installed code, binding/rights, local computation, record reads/writes, parameter and acknowledgement handling, output/installation, backing, source services and source retention are additional coordinates. There is no unit-cost assumption for a global replacement.
+

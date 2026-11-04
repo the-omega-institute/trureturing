@@ -1,0 +1,104 @@
+**Theorem 9.2 (A rational obstruction throughout $r\ge17$).** For every integer $a\ge16$, put $r=a+1$, $q=a$, $s=a+2$, and $M=5a^2-a+1$. The following law is feasible in Definition 9.1:
+
+$$
+\begin{array}{c|ccc}
+K&1&a&a+1\\ \hline
+\mathbb P&1/(5a)&4/5&(a-1)/(5a)\\
+U&(41a^4+13a^2+1)/(aM)&5a^3/M&(a+1)^2/a.
+\end{array}\tag{9.1}
+$$
+
+Its objective satisfies
+
+$$
+V-a(a+1)^2=-\frac{P(a)}{5a^2M^2}<0,\tag{9.2}
+$$
+
+where
+
+$$
+P(a)=110a^8-1697a^7+58a^6-949a^5+56a^4-211a^3+24a^2-18a+2.
+$$
+
+No actual array on $[s]$ with all marginals positive induces this law. In particular minimizing the scalar surrogate under Definition 9.1 cannot alone give the lower bound $2F_r(a)=a(a+1)^2$ for all $r$.
+
+**Proof.** All three probabilities are positive and sum to one. Their means are
+
+$$
+\frac1{5a}+\frac{4a}{5}+\frac{(a+1)(a-1)}{5a}=a,
+$$
+
+$$
+\begin{aligned}
+\mathbb E U
+&=\frac{41a^4+13a^2+1}{5a^2M}
+ +\frac{4a^3}{M}+\frac{(a-1)(a+1)^2}{5a^2}\\
+&=a+2=s.
+\end{aligned}
+$$
+
+The same $K$ law gives, at all cardinalities that carry mass,
+
+$$
+m_1=1,\qquad
+m_a=\frac1{5a}+a\left(\frac45+\frac{a-1}{5a}\right)
+=a-\frac{a-1}{5a}=\frac{M}{5a},\qquad
+m_{a+1}=a.
+$$
+
+Writing $U_k$ for the value of $U$ at cardinality $k$ in (9.1), one has $U_a=a^2/m_a$ and $U_{a+1}=(a+1)^2/m_{a+1}$. Since $m_a\le a$ and $m_{a+1}\le a+1$, these two values also satisfy $U\ge K$. For the singleton atom,
+
+$$
+U_1-1=\frac{41a^4-5a^3+14a^2-a+1}{aM}>0.
+$$
+
+Its numerator is $a^3(41a-5)+a(14a-1)+1>0$ for $a\ge1$, so both constraints hold there as well. Also $1\le K\le a+1<s$. This proves all of the relaxed feasibility conditions simultaneously.
+
+Direct substitution into $V$ gives
+
+$$
+V=\frac{(41a^4+13a^2+1)^2}{5a^3M^2}
++\frac{20a^7}{M^2}+\frac{(a-1)(a+1)^5}{5a^3}.
+$$
+
+Subtracting $a(a+1)^2$ and collecting terms gives (9.2). To prove its strict sign for every $a\ge16$, group the polynomial as
+
+$$
+\begin{aligned}
+P(a)&=a^7(110a-1697)+a^5(58a-949)\\
+&\quad+a^3(56a-211)+(24a^2-18a+2).
+\end{aligned}
+$$
+
+The first two terms together are at least
+
+$$
+63a^7-21a^5=21a^5(3a^2-1)>0,
+$$
+
+and the other two grouped terms are positive. Thus $P(a)>0$ for the entire unbounded range.
+
+For nonrealizability, suppose an actual array with $s=a+2$ and positive marginals induced (9.1). Every positive-mass type of size $a+1$ would then have $U_T=(a+1)^2/a$. Such types have positive total mass. Each omits one of the $s$ hubs, whose marginal is positive; consequently
+
+$$
+b_T=\sum_{i\in T}y_i<\sum_{i=1}^s y_i=q=a.
+$$
+
+The within-type inequality in (2.2) forces
+
+$$
+U_T\ge\frac{(a+1)^2}{b_T}>\frac{(a+1)^2}{a},
+$$
+
+a contradiction. The obstruction is a failure of common-array realization, even though $m_k$ is self-consistent with the one displayed $K$ law. It is a counterexample to the sufficiency of this relaxation for the desired bound, not to the original array or graph comparison.
+
+For example, at $a=16$ the probabilities in (9.1) are $1/80,4/5,3/16$, its $U$ values are $538061/4048,4096/253,289/16$, and its corresponding $m_K$ values are $1,253/16,16$. Formula (9.2) gives
+
+$$
+V=\frac{37817565947}{8193152},\qquad
+2F_{17}(16)=4624,\qquad
+V-2F_{17}(16)=-\frac{67568901}{8193152}.
+$$
+
+These follow by substituting $a=16$ in the proved formulas. ∎
+

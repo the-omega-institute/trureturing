@@ -1,0 +1,46 @@
+### 定义 6.1（内部信息性读口和实际完整误差）
+
+在有限维内部代码$\mathcal{H}$上取非平凡投影$P$，令$P_0=I-P$。
+固定有限结果集$Y$及
+
+$$
+M_y=\alpha_yP_0+\beta_yP,
+ \quad\sum_y|\alpha_y|^2=\sum_y|\beta_y|^2=1,
+ \quad\mathcal I_y^0(\rho)=M_y\rho M_y^*.
+$$
+
+记$\ell_0(y)=|\alpha_y|^2$、$\ell_1(y)=|\beta_y|^2$，假设两似然向量不同。
+从固定初始条件态$\rho_0$开始，实际第$n+1$层的仪器可随过去记录$h_n$自适应变化；
+各$\mathcal I_{y|h_n}$完全正，其和保持迹。
+这里$\mathcal{H}$是本节闭合的量子预测接口，不是整个宇宙。
+若未来还需访问额外量子记忆，须将它计入接口或先证明所用 CP 约化成立。
+令实际条件状态为$\rho_n$，并要求
+
+$$
+d_n(h_n):=\frac12\sum_{y\in Y}
+ \|\mathcal I_{y|h_n}(\rho_n)-\mathcal I_y^0(\rho_n)\|_1
+ \le\epsilon_{n+1},
+ \qquad E_*:=\sum_{n\ge1}\epsilon_n<\infty.
+ \tag{7}
+$$
+
+比较的是结果旗标与全部保留后继的联合态。
+若有失败标签，须纳入共同结果集；若有泄漏空间，须纳入共同载体。
+此时$\mathcal{H},P$和理想比较仪器均须在该共同载体上定义。
+不得先删除失败或后选择回码，再声称满足本式。
+
+定义指针权重、杂质及已观察记录过滤为
+
+$$
+q_n=\operatorname{Tr}(P\rho_n),\qquad V(q)=q(1-q),\qquad
+ \mathcal F_n=\sigma(h_n).
+$$
+
+零概率历史不参与条件论断。
+
+式 [式 eq:instrumenterror](#eq:instrumenterror) 只须对实际可达条件态成立，
+对全部状态的统一半 diamond 界是更强的充分条件。
+反过来，只在理想 ready 输入上取得的一次向量误差，
+不自动控制被扰动后的所有实际状态。
+
+<a id="eq:gain"></a><a id="eq:general-gain"></a>

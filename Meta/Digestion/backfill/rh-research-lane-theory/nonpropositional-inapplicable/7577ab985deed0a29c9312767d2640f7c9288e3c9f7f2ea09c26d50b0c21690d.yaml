@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7577ab985deed0a29c9312767d2640f7c9288e3c9f7f2ea09c26d50b0c21690d
+  normalized_sha256: sha256:7577ab985deed0a29c9312767d2640f7c9288e3c9f7f2ea09c26d50b0c21690d
+cas_ref: sha256:7577ab985deed0a29c9312767d2640f7c9288e3c9f7f2ea09c26d50b0c21690d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Fourier 对偶时间小节在此只有标题与“相位”引导；具体字符公式和加法律位于后续 atom。
+    previous_atom_id: ffe163c4b569c10654abd349674fb03b7d6a936da42ead811496295090e4fcec
+    next_atom_id: c61b119288a36ee29746b4e3c3feaa63f741f1b72dec2643d50e2c3359b4ce22

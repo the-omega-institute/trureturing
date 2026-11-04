@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:29ce67bf83594b1002ec3254eb4d0b41cbba4bcb42c86bbd85f19976410128d4
+  normalized_sha256: sha256:29ce67bf83594b1002ec3254eb4d0b41cbba4bcb42c86bbd85f19976410128d4
+cas_ref: sha256:29ce67bf83594b1002ec3254eb4d0b41cbba4bcb42c86bbd85f19976410128d4
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Epistemic/FiberInteriorEquivalence.fiber_interior_equivalence
+    target_statement_id: sha256:07483271775ed0112947356143bac6b3953344ada6fde5a1183193b71a34f7a3
+  - gid: D5/S3/ConceptDynamics/Epistemic/PartitionAndGeneralNegativeIntrospectionContrast.partition_and_general_negative_introspection_contrast
+    target_statement_id: sha256:3aeede211a5f63507d35ab1ffd609fa05bf94a7b7ea03a26725a0a3927f4345c
+  - gid: D5/S3/ConceptDynamics/Epistemic/TopologicalKnowledgeOperator.topological_knowledge_operator_laws
+    target_statement_id: sha256:6f7a679f5be79acb545f5fe94992dc0260c7512a78ccd5ff049807061b0d0bc9
+  - gid: D5/S3/ConceptDynamics/EpistemicOperators/FiberModalOperatorLaws.fiber_knowledge_and_possibility_operator_laws
+    target_statement_id: sha256:c7179c09eee25f593229f05e70000a162f22a59d82ad2b4fd59b9735f2c84f97
+receipts:
+  unresolved_subitems: []

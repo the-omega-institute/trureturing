@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0f9ef67462d62e2f00e308d89b71851791802bafdc4fa0959ce0fd38f12678e6
+  normalized_sha256: sha256:0f9ef67462d62e2f00e308d89b71851791802bafdc4fa0959ce0fd38f12678e6
+cas_ref: sha256:0f9ef67462d62e2f00e308d89b71851791802bafdc4fa0959ce0fd38f12678e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅定义序列移位算子及 T_q(theta)、C_q(theta) 记号，没有递推恒等式、尾界或最优性断言。
+    previous_atom_id: 68cde32d30606a27de36ad7c56b5da643555a015206ded777c8a6936647ac80f
+    next_atom_id: 01e6c48ec503167c630f4c3840babd0913506d4724c7f1303697c925dae1e15b

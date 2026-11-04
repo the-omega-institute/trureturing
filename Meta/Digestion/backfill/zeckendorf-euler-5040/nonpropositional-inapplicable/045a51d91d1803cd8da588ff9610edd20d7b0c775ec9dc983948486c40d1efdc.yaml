@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:045a51d91d1803cd8da588ff9610edd20d7b0c775ec9dc983948486c40d1efdc
+  normalized_sha256: sha256:045a51d91d1803cd8da588ff9610edd20d7b0c775ec9dc983948486c40d1efdc
+cas_ref: sha256:045a51d91d1803cd8da588ff9610edd20d7b0c775ec9dc983948486c40d1efdc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Methodological caution to choose the objective before comparing action, partition functions and coding costs; no claim about a specified minimizer is asserted.
+    previous_atom_id: 2634a1f14bb137709687c69cfbf75e2e122f4b3c5f2ce8afaa2250655379302a
+    next_atom_id: fddd56b963aca72e387c136ee9a732dc9465b213e0551523cb322d9d0c90ab32

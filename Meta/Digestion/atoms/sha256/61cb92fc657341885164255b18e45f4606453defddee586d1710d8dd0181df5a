@@ -1,0 +1,9 @@
+# Recursive relational observation: stopped mean cost and spatial risk on one source
+
+This companion fixes one PG27 source and relates two quantities measured on the
+same realization: fresh-edge queries actually paid before a marker or a
+voluntary stop, and prior-average root error on the connected interval that was
+actually exposed. The hidden parameter is integrated before decoding. The
+observer keeps the original independent seed and never receives a parameter
+port, a reset, a copied arm, or a survival-conditioned seed law.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:639aa231eb66b770e1ea5f499e28cab8a9b74b5696a5da667e303496521e6f95
+  normalized_sha256: sha256:639aa231eb66b770e1ea5f499e28cab8a9b74b5696a5da667e303496521e6f95
+cas_ref: sha256:639aa231eb66b770e1ea5f499e28cab8a9b74b5696a5da667e303496521e6f95
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 要求 coupling 非唯一时补充跨世界假设、界或结构，是补充信息的建议。'
+    previous_atom_id: 23bdc1297f6e91dfb5397a71e8ddde0efe683c0fd0898c4a4486887ddd81203c
+    next_atom_id: d80e240221cd8d23ca4efa61b50ff259fa9565b16d9299f206ab3a82aca5818b

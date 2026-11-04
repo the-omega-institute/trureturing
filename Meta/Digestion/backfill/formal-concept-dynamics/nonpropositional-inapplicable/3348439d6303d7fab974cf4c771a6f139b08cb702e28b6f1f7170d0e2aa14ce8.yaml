@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3348439d6303d7fab974cf4c771a6f139b08cb702e28b6f1f7170d0e2aa14ce8
+  normalized_sha256: sha256:3348439d6303d7fab974cf4c771a6f139b08cb702e28b6f1f7170d0e2aa14ce8
+cas_ref: sha256:3348439d6303d7fab974cf4c771a6f139b08cb702e28b6f1f7170d0e2aa14ce8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: A caveat listing outcome correctness among properties not entailed by the preceding result; it does not claim a correct result or state a new implication.'
+    previous_atom_id: b54c35eea3f1397c94c0707f278759230267e39f62a59f2a0e3bdd8fffc81661
+    next_atom_id: 3c2f236549e6135162d80e63ff577699905b22c9a0f757bc0c71eff866bebbd8

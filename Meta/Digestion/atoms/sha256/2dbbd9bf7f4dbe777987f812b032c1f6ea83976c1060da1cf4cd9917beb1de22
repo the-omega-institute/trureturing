@@ -1,0 +1,40 @@
+## 26. 指数风险界、地板效应与小半径
+
+当 $n\ge1$ 时，前两节覆盖了所有可能的解码错误（缺锚、计数失败或集中失败），故
+$$
+P_{t,q}(f_r(Y_r)\ne X_0)
+\le2e^{2\vartheta}e^{-\vartheta r/2}
+ +2e^{-\vartheta r/4}
+ +4e^{-n\delta^2/8}.
+\tag{26.1}
+$$
+该事件只依赖可见过程，故在联合律 $J$ 和可见律 $P$ 下概率相同。因为 $n\ge\beta r-1$ 且 $\delta^2<d^2$，
+$$
+4e^{-n\delta^2/8}
+\le4e^{d^2/8}e^{-\beta r\delta^2/8}.
+$$
+由 $\gamma\le\vartheta/(4d^2)$ 和 $\gamma\le\beta/8$，右侧三项分别不超过
+$$
+2e^{2\vartheta}e^{-\gamma r\delta^2},\qquad
+2e^{-\gamma r\delta^2},\qquad
+4e^{d^2/8}e^{-\gamma r\delta^2}.
+$$
+
+若 $n=0$，则 $\beta r<1$，解码错误概率至多为一；又有 $r\delta^2<d^2/\beta$，所以
+$$
+1\le e^{\gamma d^2/\beta}e^{-\gamma r\delta^2}.
+\tag{26.2}
+$$
+合并（26.1）和（26.2）得到第二个不等式（20.2），并覆盖 $r=1$、空内区间、所有地板效应以及任意小的正 $r\delta^2$。
+
+最后，$f_r$ 是同一 $P_{t,q}$ 下的 $\mathcal F_r$ 可测二值估计器。条件期望的正交性给出
+$$
+\begin{aligned}
+P_{t,q}(f_r(Y_r)\ne X_0)
+&=\mathbb E_{P_{t,q}}[(X_0-f_r)^2]\\
+&=E_r(P_{t,q})+\mathbb E_{P_{t,q}}[(\eta_r-f_r)^2]
+\ge E_r(P_{t,q}),
+\end{aligned}
+$$
+完成（20.2）的左侧。这里没有把条件期望后验误认为二值分类器。
+

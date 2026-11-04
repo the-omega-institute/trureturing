@@ -1,0 +1,28 @@
+#### 定理 5.4（四项非负分解）
+
+令 $u=X/R$、$v=Y/R$，把 $q\in\mathcal E$ 参数化为顶点质量 $Z'$、底面端点概率 $u',v'$。则
+
+$$
+\boxed{ D\!\left(p\middle\Vert q\right) =R I_0(p)+d(Z\Vert Z')
+ +R d(u\Vert u')+R d(v\Vert v').}
+$$
+
+特别地，$D\!\left(p\middle\Vert p^*\right) =R I_0(p)=H(p^*)-H(p)$。
+
+<a id="proof-5-4"></a>
+
+**证明。** 
+先按 $z$ 拆分 KL：顶点与底面质量贡献 $d(Z\Vert Z')$，顶点条件层只有一个状态。底面令 $r_{ij}=p_{ij}/R$，其边缘为 $a_i,b_j$，目标乘积边缘为 $a_i',b_j'$。分解
+
+$$
+\log\frac{r_{ij}}{a_i'b_j'}
+=\log\frac{r_{ij}}{a_ib_j}+\log\frac{a_i}{a_i'}+\log\frac{b_j}{b_j'}.
+$$
+
+按 $r$ 求和即得互信息与两个边缘 KL，乘回 $R$。在 $q=p^*$ 时三个可见项皆零。熵差式由定理 [5.3](#statement-5-3) 的证明得到。
+ ∎
+
+此处标准条件互信息 $I_p(x;y\mid z)$ 已等于 $R I_0(p)$；若使用该记号，不可再乘一次 $R$。当 $R=0$ 时，三个底面项定义为零，公式退为顶点二元 KL。
+
+<a id="statement-5-5"></a>
+

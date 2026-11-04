@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ffae18bd146e52560309e5cef17d1276a7bec769b8a1e949184bcec17cd8d936
+  normalized_sha256: sha256:ffae18bd146e52560309e5cef17d1276a7bec769b8a1e949184bcec17cd8d936
+cas_ref: sha256:ffae18bd146e52560309e5cef17d1276a7bec769b8a1e949184bcec17cd8d936
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅列举 infinite Jacobi operator 作为研究路线候选，不断言已构造这样的算子。
+    previous_atom_id: 70baf56fdf2293b85b88c53c44c6393b64133962fcff2d98606d0c01afad68c4
+    next_atom_id: 626ec22d55813b167e3ce0ccc1d1a1ecdcb28b3a7942b6b83a9e1fd6a2d173a1

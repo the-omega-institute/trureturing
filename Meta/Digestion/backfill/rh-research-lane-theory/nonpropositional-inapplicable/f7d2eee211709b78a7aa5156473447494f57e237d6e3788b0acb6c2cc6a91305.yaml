@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f7d2eee211709b78a7aa5156473447494f57e237d6e3788b0acb6c2cc6a91305
+  normalized_sha256: sha256:f7d2eee211709b78a7aa5156473447494f57e237d6e3788b0acb6c2cc6a91305
+cas_ref: sha256:f7d2eee211709b78a7aa5156473447494f57e237d6e3788b0acb6c2cc6a91305
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: F03 分类标题及空表头；未断言概率测度或半群存在。
+    previous_atom_id: 4563c76c328b8da5f2e09d93dfaafcefab0fce98ea560df99b86638eb0b9e109
+    next_atom_id: 3cd98caa2689dc001ad821ab275146c83e13bc7f831a3feaf994afcdbb9f8bbd

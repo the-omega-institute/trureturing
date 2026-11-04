@@ -97,6 +97,48 @@ internal sealed class LinearDoilyNegativeLineParityDocument : IScribeDocumentDef
         All(U, Subspace, Imp(Call("IsLinearDoily", U),
             Call("Odd", Call(Qualified("Finset", "card"), Call("negativeLines", U)))))));
 
+    private static Formula Quaternary => Call("ZMod", D(4));
+    private static Formula NatToQuaternary(Formula value) =>
+        Typed(Call(Qualified("Nat", "cast"), Typed(value, Naturals)), Quaternary);
+    private static Formula LabelVal(Formula value, byte coordinate) =>
+        Call(Qualified("ZMod", "val"), Projection(value, D(coordinate)));
+    private static Formula LabelProduct(Formula value) =>
+        Mul(LabelVal(value, 1), LabelVal(value, 2));
+    private static Formula LocalExponentDefinition => All(LowerU, Label, All(V, Label,
+        Eq(Typed(Call("localExponent", LowerU, V), Quaternary),
+            Add(new Formula.Binary(
+                    Parenthesized(Add(NatToQuaternary(LabelProduct(LowerU)),
+                        NatToQuaternary(LabelProduct(V)))),
+                    FormulaBinaryOperator.Subtract,
+                    Parenthesized(NatToQuaternary(LabelProduct(Add(LowerU, V))))),
+                Mul(Typed(D(2), Quaternary),
+                    NatToQuaternary(Mul(LabelVal(LowerU, 2), LabelVal(V, 1))))))));
+
+    private static Formula ImaginaryFourthPower => Seq(Operatorname, Grp(Seq(
+        F.Id("Complex"), Dot,
+        new Formula.Subscript(F.Id("I"), Seq(F.Id("pow"), Esc, F.Id("four"))))));
+    private static Formula PhaseDefinition => AllN(All(LowerU, Vector, All(V, Vector,
+        Eq(Typed(Call("phase", LowerU, V), Complexes),
+            Seq(new Formula.Subscript(Prod, Typed(F.Id("j"), Call("Fin", N))), Sp,
+                Parenthesized(App(Call(Qualified("DFunLike", "coe"),
+                        Call(Qualified("AddChar", "zmodChar"), Typed(D(4), Naturals), ImaginaryFourthPower)),
+                    Call("localExponent", App(LowerU, F.Id("j")), App(V, F.Id("j"))))))))));
+
+    private static Formula FormSymmetry => AllN(All(LowerU, Vector, All(V, Vector,
+        Eq(Call("B", LowerU, V), Call("B", V, LowerU)))));
+    private static Formula FormAddRight => AllN(All(LowerU, Vector, All(V, Vector, All(W, Vector,
+        Eq(Call("B", LowerU, Add(V, W)), Add(Call("B", LowerU, V), Call("B", LowerU, W)))))));
+    private static Formula FormSelf => AllN(All(LowerU, Vector,
+        Eq(Call("B", LowerU, LowerU), ZeroBinary)));
+    private static Formula TripleProduct => AllN(All(LowerU, Vector, All(V, Vector,
+        Imp(Ne(LowerU, ZeroVector), Imp(Ne(V, ZeroVector), Imp(Ne(LowerU, V),
+            Imp(Eq(Call("B", LowerU, V), ZeroBinary),
+                Eq(Call("lineProduct", Call(Qualified("Finset", "insert"), LowerU,
+                        Call(Qualified("Finset", "insert"), V,
+                            Call(Qualified("Singleton", "singleton"), Add(LowerU, V))))),
+                    Seq(Parenthesized(Typed(Call("phase", LowerU, V), Complexes)), Sp, Cdot, Sp,
+                        Parenthesized(MatrixOne))))))))));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every linear N-qubit doily has an odd number of negative lines.",
         H("Odd negative-line parity in linear doilies"),
@@ -162,6 +204,39 @@ internal sealed class LinearDoilyNegativeLineParityDocument : IScribeDocumentDef
                 + "The source states this conjecture in xiv-MSGDH2.tex, lines 2255–2260. "
                 + "Cardinalities and the dimension in these formulas are natural numbers; "
                 + "neither is cast to an integer or a complex number."),
+            Definition("local-exponent", "The single-qubit multiplication exponent", "localExponent",
+                LocalExponentDefinition, AssessedProvenance.FromRepo(Source),
+                "For binary labels u and v, take the natural representatives of their coordinates. "
+                + "Cast each natural coordinate product into ZMod 4 before adding and subtracting. "
+                + "The exponent is the product of the coordinates of u plus that of v, minus that "
+                + "of their binary sum, plus twice the second coordinate of u times the first of v. "
+                + "Thus subtraction takes place modulo four, rather than in the natural numbers."),
+            Definition("phase", "The multiplication phase for Pauli words", "phase",
+                PhaseDefinition, AssessedProvenance.FromRepo(Source),
+                "Multiply the fourth roots of unity supplied by the single-qubit exponents over "
+                + "all j in Fin N. The additive character sends a residue a modulo four to i "
+                + "raised to its natural representative. DFunLike.coe denotes evaluation of "
+                + "this character as a function; Complex.I_pow_four supplies the identity i to "
+                + "the fourth power equals one. At N equal to zero the empty product is one."),
+            PublishedTheorem("form-symmetry", "Symmetry of the binary form", "B_comm", FormSymmetry,
+                "The form is symmetric: swapping u and v interchanges the two cross terms "
+                + "in every coordinate, and commutativity of binary multiplication and addition "
+                + "preserves their sum."),
+            PublishedTheorem("form-add-right", "Additivity in the second argument", "B_add_right", FormAddRight,
+                "The pairing of u with v + w is the sum of its pairings with v and w. "
+                + "Symmetry reduces this to additivity in the first argument, where coordinate "
+                + "distributivity and the finite-sum addition identity give the equality."),
+            PublishedTheorem("form-self", "The form is alternating", "B_self", FormSelf,
+                "In every coordinate the self-pairing is the sum of two equal binary products. "
+                + "Their sum is zero in characteristic two, so the full self-pairing vanishes."),
+            PublishedTheorem("line-product-triple", "The product of an isotropic triple", "lineProduct_triple",
+                TripleProduct,
+                "For distinct nonzero orthogonal labels u and v, the vectors u, v and u + v "
+                + "are distinct. Their pairings vanish by symmetry, additivity and alternation, "
+                + "so their observables commute. Reorder the finite-set product as the ordered "
+                + "product of these three observables. Multiplication of the first two gives "
+                + "phase u v times the observable of u + v. The latter squares to the identity, "
+                + "giving the stated complex scalar times the matrix identity."),
             Describe.Lean(
                 DescribeId.Create("result"), DeclarationHandle.Create(Module + ".result"),
                 H("Every linear doily has odd negative-line parity"),
@@ -252,6 +327,12 @@ internal sealed class LinearDoilyNegativeLineParityDocument : IScribeDocumentDef
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("muller-saniga-giorgetti-de-boutray-holweck-2022-linear-doily-odd-negative-lines"),
                     ResolutionKind.Proved)))));
+
+    private static DocumentBlock PublishedTheorem(string id, string title, string declaration,
+        Formula formula, string prose) => Describe.Lean(
+            DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static DocumentBlock Definition(string id, string title, string declaration,
         Formula formula, AssessedProvenance provenance, string prose) => Describe.Lean(

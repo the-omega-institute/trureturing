@@ -1,0 +1,5 @@
+source_id = "fib-uncalibrated-quadratic-clock-private-randomization"
+path = "docs/develop/theory/FIB_UNCALIBRATED_QUADRATIC_CLOCK_PRIVATE_RANDOMIZATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

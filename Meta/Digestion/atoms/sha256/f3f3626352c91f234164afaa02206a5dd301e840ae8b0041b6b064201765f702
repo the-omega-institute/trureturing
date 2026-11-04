@@ -1,0 +1,25 @@
+**命题 78.3（非空制备域的平稳边界）。** 在 $d=2/7$、$\theta=\pi/4$ 时，存在合法的非空制备域 $\mathcal D_{\rm st}\subseteq\mathcal K_{2/7}$，其全部有限终点的完整联合记录由同一个一状态比较器精确实现，且对每个整数 $H\ge0$、每个 $\varepsilon\ge0$ 均有 $k_{\mathcal D_{\rm st}}(H,\varepsilon)=1$。
+
+证明。取 $d=2/7$、$\theta=\pi/4$，其 (76.1) 的整数数据为 $(u,v,a,b,C)=(2,7,0,-1,1)$。置
+
+$$
+\rho_{\rm st}=\frac{\xi\xi^\dagger+3ee^\dagger+3ff^\dagger}{7}
+=\frac37 I_3-\frac27\xi\xi^\dagger.
+$$
+
+其本征值为 $1/7,3/7,3/7$。取 $A=\rho_{\rm st}$、$D=0$，则 $A,D\succeq0$、$D\ell=0$、$\operatorname{Tr}\rho_{\rm st}=1$。由 (54.1) 的 $a=Uq$、$U\xi=\xi$ 和 $q=(\xi+e)/\sqrt2$，有
+
+$$
+a^\dagger Aa=\operatorname{Tr}(C\rho_{\rm st})
+=\operatorname{Tr}(E\rho_{\rm st})=\frac27=e_{2/7}.
+$$
+
+故 $\rho_{\rm st}$ 属于完整原集合 $\mathcal K_{2/7}$，并由第一卷定理 35.4 具有原五维通道提升。又 $U\xi=W\xi=\xi$，所以 $\rho_{\rm st}$ 与 $U,W$ 对易，$V_j\rho_{\rm st}V_j^\dagger=\rho_{\rm st}$，继而每个时间词均保持此态。原始联合概率于是恰为
+
+$$
+p_{\rho_{\rm st}}(h,1)=2^{-|h|}\frac27,\qquad
+p_{\rho_{\rm st}}(h,0)=2^{-|h|}\frac57.
+$$
+
+合法的一状态比较器 $T_0=T_1=[1/2]$、$f_{\rm cl}=[2/7]$、$p(\rho_{\rm st})=[1]$ 精确实现全部历史和两种终端结果。因此单点域 $\mathcal D_{\rm st}=\{\rho_{\rm st}\}$ 对每个 $H\ge0$、$\varepsilon\ge0$ 都有 $k_{\mathcal D_{\rm st}}(H,\varepsilon)=1$。此域不包含 (73.1) 的双世界；非空性本身不足以支持 (78.3) 或定理 78.2 的状态下界。∎
+

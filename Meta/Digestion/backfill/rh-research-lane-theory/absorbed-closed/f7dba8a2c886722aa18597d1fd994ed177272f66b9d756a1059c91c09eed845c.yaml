@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:f7dba8a2c886722aa18597d1fd994ed177272f66b9d756a1059c91c09eed845c
+  normalized_sha256: sha256:f7dba8a2c886722aa18597d1fd994ed177272f66b9d756a1059c91c09eed845c
+cas_ref: sha256:f7dba8a2c886722aa18597d1fd994ed177272f66b9d756a1059c91c09eed845c
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.common_zero_phase_norm_one
+    target_statement_id: sha256:a08f21a3da5ffcd328af406333178fc6287174cfab2104cff9d6f80bbdaa0a96
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.normalized_zero_generator_skew_iff_critical_line
+    target_statement_id: sha256:1c2028fe7f3c1b7c97a499cc8b6484770b1e2a086340cfbb21ca024a41c32a47
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.normalized_zero_mode_factorization
+    target_statement_id: sha256:4cd60f4e4a0f64b5ea452250761bdb930b0e05af89dcb582171a84537530343c
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.phase_flattened_critical_line_mirror_reciprocal
+    target_statement_id: sha256:d7252e647a6270a2a9fbb7281227b2677eeaa93bcde88e6fc9bd3221478e824b
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.phase_flattened_zero_mode_eq_radial
+    target_statement_id: sha256:babccf90ea034858b98a9a2ac4f51c384de46acaab4a1472cca6ad3d4bbadfff
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.shifted_normalized_generator_eq
+    target_statement_id: sha256:a6a58c28c8ebabcc79b4565e6a1f0e6060629906b6500304bc7a399834802c7c
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.zeroData_reflection_conjugation_commute
+    target_statement_id: sha256:98b25318462a23d54cf347308841834d49455f7ef1c3e823abd28535ee9560cf
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.zero_mode_conjugation
+    target_statement_id: sha256:ce6f9cb59a5f1c7476bd1780d2e0edb226b4e48d9762102880fbd6b413bdd7ed
+  - gid: D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.zero_mode_functional_reflection_time_reversal
+    target_statement_id: sha256:3683ba074638eebd7dddf9ac47284893443a980b98731e48ea90f19b56c4e548
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,43 @@
+**推论 90.3（同一 static naming contract 下的 uniform FIB 长度）。** 仍对每个 $0<q\le1/1000$、$\delta>0$，仅允许 §87.1 的独立 fixed-length binary data names：长度 $\ell\ge0$，word 内禁止相邻 $11$，preceding seam 为固定 $0$ 且不计入这 $\ell$ 位，无额外末端约束。每个 name 只索引一个已供应的 fixed whole complex qutrit CPTP map，不附带 phase access 或未计入的 continuous program。令 $\ell_q(\delta)$ 为达到定义 88.1 全 circle 阈值的最短该类长度。则 exact capacity condition 仍为
+
+$$
+F_{\ell+2}\ge M_q(\delta),
+\tag{90.5}
+$$
+
+并有
+
+$$
+\ell_q(\delta)
+ =\frac{\log(1+x(q,\delta))}{\log\phi}+O(1),
+\qquad \phi=\frac{1+\sqrt5}{2},
+\tag{90.6}
+$$
+
+其中 remainder 的绝对 bound 独立于 $q,\delta$。更具体，
+
+$$
+-\frac{\log514}{\log\phi}
+ \le \ell_q(\delta)-\frac{\log(1+x(q,\delta))}{\log\phi}
+ \le1+\frac{\log(2\pi)}{\log\phi}.
+\tag{90.7}
+$$
+
+**证明。** (90.5) 直接应用推论 87.1 的同一 word count 与 naming equivalence；没有另设 counting 或 classical coding theorem。令 $M=M_q(\delta)$。既有 Fibonacci formula 给粗界
+$\phi^\ell\le F_{\ell+2}\le2\phi^\ell$，$\ell\ge0$，因而
+
+$$
+\frac{\log M-\log2}{\log\phi}
+ \le\ell_q(\delta)
+ \le\left\lceil\frac{\log M}{\log\phi}\right\rceil.
+$$
+
+下界来自必要容量，上界来自选取显示的整数长度。将 (90.4) 的
+
+$$
+\log(1+x)-\log257\le\log M
+ \le\log(1+x)+\log(2\pi)
+$$
+
+代入即得 (90.7)，故 (90.6) 的 $O(1)$ 绝对一致。$M=1$ 时 empty data word 合法，最短长度就是 $0$，同样包含在这些 bounds 中。∎
+

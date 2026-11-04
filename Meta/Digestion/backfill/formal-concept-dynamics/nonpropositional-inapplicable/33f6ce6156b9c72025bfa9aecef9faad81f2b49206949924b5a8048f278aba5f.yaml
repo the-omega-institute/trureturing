@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:33f6ce6156b9c72025bfa9aecef9faad81f2b49206949924b5a8048f278aba5f
+  normalized_sha256: sha256:33f6ce6156b9c72025bfa9aecef9faad81f2b49206949924b5a8048f278aba5f
+cas_ref: sha256:33f6ce6156b9c72025bfa9aecef9faad81f2b49206949924b5a8048f278aba5f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅引入后续排名默认规则的列表，具体规则各有独立 atom，本条没有完整规则公式。
+    previous_atom_id: 1008056bd0e1cfc5840889f810da0eb154a06d88b0df747e15cf474d44d58796
+    next_atom_id: c1c2b676b8a328b85a407b9efe699035d55567e59bdf6cd7bd19aa2bb89aa9b7

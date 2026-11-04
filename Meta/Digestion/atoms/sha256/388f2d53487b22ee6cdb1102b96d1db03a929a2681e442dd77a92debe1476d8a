@@ -1,0 +1,53 @@
+**Definition 130.1 (the original family and its source coordinates).** Retain the original group, source $e$, raw Haar measure $d\mu=dx\,dy\,dz\,dw$, positive unit-source Green field $L\Gamma=\delta_e$, horizontal generator, central units and clock of §§115–117. Fix any original $a,\eta>0$, with $g_c=16\sqrt{a\eta}$ and $\kappa=\sqrt{\eta/a}$. The full complex punctured form, maximal operator and actual endpoint selector are exactly [(109.8), (112.1)–(112.5)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md#109-one-source-coefficient-for-the-entire-original-maximal-zero-space). In particular use the same global vector and normalization
+
+$$
+\begin{aligned}
+C(w_*)&=1,\qquad h=\frac{w_*}{\|w_*\|_2},\qquad
+c_h=C(h)=\frac1{\|w_*\|_2}>0,\\
+\ker S^*&=\mathbb Ch,\qquad
+D(H_{\rm end})=\{v\in D(S^*):A(v)=\rho C(v)\},\qquad
+\rho=\frac{A(h)}{C(h)}.
+\end{aligned}
+\tag{130.1}
+$$
+
+Here $C$ is the coefficient map of (112.2), equal to $B_{\rm src}$ on $\ker S^*$. Theorem 115.2 supplies the real smooth strictly positive representative of $h$ on $G\setminus\{e\}$. Write $\xi=(x,y,z)$ and use exactly the unitary chart (109.1)–(109.2):
+
+$$
+\begin{aligned}
+\mathcal G(\xi,s)&=\Gamma(x,y,z,s+xy/2),\\
+f_v(\xi,t)&=\kappa^{1/2}v(x,y,z,\kappa t+xy/2),\qquad
+R=|(\xi,t)|,\\
+H_v(\tau,\omega)&=R f_v(R\omega),\qquad
+\tau=-\log R,\qquad \omega\in S^3.
+\end{aligned}
+\tag{130.2}
+$$
+
+The Jacobian of $(\xi,t)\mapsto(\xi,w)$ is $\kappa$, so $v\mapsto f_v$ preserves the original $L^2$ norm and the source. For $0<r\le1$ put
+
+$$
+\begin{aligned}
+W_r(X,u)&=r^2\mathcal G(rX,\kappa ru)\\
+ &=r^2\Gamma\!\left(rX_1,rX_2,rX_3,
+                  \kappa ru+\tfrac12r^2X_1X_2\right),\\
+F_r(X,u)&=r f_h(rX,ru),\qquad X\in\mathbb R^3,\quad u\in\mathbb R.
+\end{aligned}
+\tag{130.3}
+$$
+
+The full map from $(X,u)$ to the original group coordinates has Jacobian $\kappa r^4$. These are spatial coordinates for the same field and state; all evolution times remain those of the original clock. Retain the finite positive $B_\Gamma$ of (102.1)–(102.2). The exact marginal and homogeneous estimate of (106.8), equivalently (109.9), are
+
+$$
+\begin{aligned}
+\int_{\mathbb R}W_r(X,u)\,du
+ &=\frac1{4\pi\kappa|X|}\qquad(X\ne0),\\
+0\le W_r(X,u)
+ &\le B_\Gamma r^{1/2}
+       \bigl(r^2|X|^4+\kappa^2u^2\bigr)^{-3/4}.
+\end{aligned}
+\tag{130.4}
+$$
+
+All Euclidean balls and spheres below refer to these four spatial coordinates, and $L^2(S^3)$ uses ordinary surface measure.
+

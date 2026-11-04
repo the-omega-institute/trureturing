@@ -1,0 +1,5 @@
+Equivalently take the maximal subgraph $K(D)$ in
+which every non-anchor vertex has degree at least two and every anchor
+is retained. The terminal result is independent of deletion order:
+any subgraph with these properties survives every deletion, and the
+terminal result has the properties. 

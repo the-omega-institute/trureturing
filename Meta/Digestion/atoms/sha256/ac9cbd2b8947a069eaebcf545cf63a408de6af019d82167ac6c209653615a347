@@ -1,0 +1,31 @@
+**Definition 17.1 (the closed clock subclass and the unchanged objective).** Fix an integer $m\ge1$ and parameters $a=(a_s)_{s\in\mathbb Z/m\mathbb Z}\in[0,1]^m$. On the $2m$ states $(s,b)\in\mathbb Z/m\mathbb Z\times\{0,1\}$ put
+
+$$
+\begin{aligned}
+K_s(1\mid0)&=a_s,& K_s(0\mid0)&=1-a_s,\\
+K_s(0\mid1)&=1,& K_s(1\mid1)&=0,\\
+M_x((s,b),(t,c))&=\mathbf1_{\{t=s+1,\ c=x\}}K_s(x\mid b),
+& A(a)&=M_0+M_1.
+\end{aligned}
+\tag{17.1}
+$$
+
+All phase indices are modulo $m$. Let $\mathcal C_m$ consist of every triple $\theta=(\lambda,M_0,M_1)$ obtained from (17.1) and **every** stationary probability row $\lambda A(a)=\lambda$. No state or stationary component is removed. The phase advances once at every emitted bit, including each zero and each forced zero. It does not advance only at occupied events.
+
+The objective is exactly [Universal, Definition 1.1 and (1.3), (1.5)][ClockUniversal]: $B_n$ contains all no11 words of length $n$, with all legal Hamming-one edges and open endpoint convention $w_0=w_{n+1}=0$. On its entire probability simplex,
+
+$$
+\Phi_n(\mu)=\sum_{\{u,v\}\in E(\Gamma_n)}h(\mu_u,\mu_v),\qquad
+h(s,t)=\frac{st}{s+t}\ (s+t>0),\qquad h(0,0)=0,
+$$
+
+$$
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_{n\to\infty}\frac{\kappa_n}{n},\qquad
+ d(P)=\mathbb E_P\left(X_0-\mathbb E_P[X_0\mid\mathcal E_0]\right)^2,
+\quad \mathcal E_i=\sigma(X_j:j\ne i).
+\tag{17.2}
+$$
+
+The supplied risk identity is $d(P)=\lim_n\Phi_n(P_n)/n\le c_\star$ for every stationary legal $P$. The notation $D_r(P)$ retains the finite-radius exterior risk of the same source. All risks count original bits, and every seam uses the actual ordered matrix product.
+

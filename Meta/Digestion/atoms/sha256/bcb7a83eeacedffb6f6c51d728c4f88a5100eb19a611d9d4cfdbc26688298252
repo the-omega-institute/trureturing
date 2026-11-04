@@ -1,0 +1,47 @@
+### 定义 26.1（保留原十站点及完整标签的比较响应）
+
+沿用[相干重建续卷 II](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 定义 77.1、假设 78.1 与定义 80.1。站点顺序为 $b_{-1},b_0,\ldots,b_8$，七个地址为 $0,\ldots,6$，
+
+$$
+ x=\frac{\sqrt5-1}{2},\quad \zeta=e^{3\pi i/5},\quad
+ Q=\begin{pmatrix}x&x\sqrt x\\x\sqrt x&x^2\end{pmatrix},\quad
+ K=\zeta[I+(\zeta-1)\mathcal P],\quad
+ \mathcal P=n_Ln_R+(1-n_L)(1-n_R)Q_C.
+$$
+
+$K_j$ 的中心为 $b_j$。原十三维共同不变扇区是
+
+$$
+ H=\operatorname{span}_{\mathbb C}
+ \{e_\beta=|10\,\beta\,010\rangle:
+ \beta\in\{0,1\}^5,\ \beta_i\beta_{i+1}=0\},
+$$
+
+唯一初态为 $v_0=e_{00100}$。全部原标签为 $\Omega_{10}=\{0,1\}^{10}$，不是只留扇区中可能非零的十三个标签。记
+
+$$
+ \begin{array}{c|c}
+ \text{向量}&\text{原始十位标签}\\ \hline
+ v_0=e_{00100}&1000100010\\
+ v_1=e_{00101}&1000101010\\
+ u_0=e_{00000}&1000000010\\
+ u_1=e_{00001}&1000001010
+ \end{array}
+$$
+
+源中的 $u,v$ 分别是这里的 $u_0,v_0$。对 $0<\lambda<1$，使用源式 (80.1) 的同一响应
+
+$$
+ \begin{aligned}
+ P^\lambda_{u_0}&=q_{u_0}+\lambda q_{u_0}q_{v_0},\\
+ P^\lambda_{v_0}&=q_{v_0}-\lambda q_{u_0}q_{v_0},\\
+ P^\lambda_w&=q_w\qquad(w\ne u_0,v_0),
+ \qquad q_w(\psi)=|\psi_w|^2.
+ \end{aligned}
+ \tag{26.1}
+$$
+
+向量下标在概率中表示表中的原始标签；其余全部标签保留不变。$q_w$ 是比较多项式，(26.1) 是已定义的比较律，均不等同于尚未知的实际原生律。
+
+原七地址字集为 $\mathsf W_7=\{0,\ldots,6\}^{<\infty}$，含空字。字按调用先后书写，故 $K_{j_1\cdots j_\ell}=K_{j_\ell}\cdots K_{j_1}$。本节的终端子图含每个 $f\in\mathsf W_7$ 后接完整十位读出的请求 $(f,w)$，其前面仍允许全部局部正字 $a\in\{4,5\}^{<\infty}$。没有字长截断或中间读口。
+

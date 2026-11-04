@@ -1,0 +1,4 @@
+**Corollary 4.3 (Largest admissible disk).** Let $0<\rho\le1$. The inequality $\lvert Q_{t,2,1}(z_1+1,z_2+1)\rvert\le1$ holds for every $t\ge2$ and every self-conjugate grid $z\in\{\lvert\zeta\rvert\le\rho\}^2$ with $z\ne(-1,-1)$ if and only if $\rho\le\sqrt3/2$. Stance: suspected-novel (see Section 7).
+
+**Proof.** By Convention 2.1 these grids are $z=(-w,-\overline{w})$ with $\lvert w\rvert\le\rho$, $w\ne1$. For $\lvert w\rvert\le1$ one has $a\le1$, so condition 3 of Theorem 4.1 reads $\sqrt3\,a+\lvert b\rvert\le\sqrt3$. If $\rho\le\sqrt3/2$, the Cauchy–Schwarz inequality gives $\sqrt3\,a+\lvert b\rvert\le2\lvert w\rvert\le\sqrt3$, and Theorem 4.1 applies. If $\rho>\sqrt3/2$, the point $w=\rho e^{i\pi/6}$ satisfies $\lvert w\rvert=\rho\le1$, $w\ne1$ and $\sqrt3\,a+b=2\rho>\sqrt3$, so by Theorem 4.1 the inequality fails at $t=3$. $\square$
+

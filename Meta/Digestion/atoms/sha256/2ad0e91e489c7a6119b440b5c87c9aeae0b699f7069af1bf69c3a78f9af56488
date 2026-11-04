@@ -1,0 +1,22 @@
+**Definition 104.2 (scope of the bridge).** The deduction pairs the biased
+energy-class obstruction with a finite-output, same-source consumer of the
+inherited suffix estimate. Projection, ellipsoid arguments and finite-word
+coding are established methods. Header, program, addresses, reply bits and
+scalar reads are separate resources; (104.1) is a sufficient record size,
+not a universal bit or minimum-controller bound. Nonlinear source queries
+and input-dependent side information are outside the lower bound.
+
+Assumption 103.1 is an additional semantic contract. Native realization
+still requires legal cylinder access, the precision guarantee, same-source
+preservation, finite-word delivery, permissions, storage and control;
+their native action counts, physical costs and elapsed time remain unsupplied.
+The spectral premises also allow a comparison observer contract with no
+source-dependent replies and radius $r_0(E)$, whereas the stipulated service
+has Theorem 103.2. These are observer contracts on the same input class,
+not exhibited native worlds. No physical dimension or native readout
+follows from the spectral exponent.
+
+[BA101]: https://github.com/the-omega-institute/trureturing/blob/753b783b0352dc4275abb69fd1f84bc1bc764737/docs/develop/theory/FIB_ATOM_BIASED_BOUNDARY_SPECTRAL_COUNTING.md "Biased Boundary, Definition 1.1 and Theorem 2.1"
+[IV101]: https://github.com/the-omega-institute/trureturing/blob/753b783b0352dc4275abb69fd1f84bc1bc764737/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md "Boundary Geometry IV, retained named paper premises"
+[PW101]: https://doi.org/10.1007/978-3-642-69894-1_4 "Allan Pinkus, n-Widths in Hilbert Spaces"
+

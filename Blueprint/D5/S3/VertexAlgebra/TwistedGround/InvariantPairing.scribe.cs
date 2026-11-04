@@ -39,12 +39,50 @@ internal sealed class InvariantPairingDocument : IScribeDocumentDefinition
                         + "B(R_alpha u,v)=(-1)^(G(alpha,alpha)/2) B(u,R_alpha v). The same charge occurs on both sides. "
                         + "This is a bilinear adjointness law and does not replace transpose by Hermitian conjugation; "
                         + "the actual matrices may contain fourth-root phases.")),
-                    Paragraph(Text("The construction includes rank zero, where the sole ground coordinate is the empty function "
-                        + "and the quotient still has its two signs. The theorem asserts no symmetry of B. "
-                        + "To obtain a symmetric form by symmetrizing the average, one still needs the positive quadratic Gauss sign "
-                        + "sum_a (-1)^q(a)=2^(rank(D)/2) from integer even unimodularity. That arithmetic assertion, "
-                        + "the oscillator Wick extension, all-source opposite covariance and the two-twisted-input intertwiner "
-                        + "are separate mathematical obligations. No VOA extension, fusion rule, Monster action, string construction "
-                        + "or AdS/CFT bridge follows from the finite pairing alone."))),
+                    Paragraph(Text("The construction includes rank zero. This theorem asserts the invariant bilinear pairing; "
+                        + "SymmetricPairing constructs a symmetric pairing using the positive quadratic Gauss sum and flip-average trace. "
+                        + "The oscillator Wick extension, all-source opposite covariance and two-twisted-input intertwiner "
+                        + "remain separate mathematical obligations. The finite pairing alone gives no VOA extension, fusion rule, "
+                        + "Monster action, string construction or AdS/CFT bridge."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("central-character"),
+                DeclarationHandle.Create(Prefix + "central_character"),
+                H("The Central Ground Character"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At a reduced central sign s, the character of the selected representation is complexSign(s) times the complex dimension of ActualGround. The selected negative central element acts as minus the identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("average-trace"),
+                DeclarationHandle.Create(Prefix + "average_trace"),
+                H("The Invariant-Average Trace"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The contragredient finite average on bilinear forms has trace one. Only zero mod-two charge contributes to the squared ground character sum, and the quotient order is twice the square of the selected ground dimension."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("averaged-invariant"),
+                DeclarationHandle.Create(Prefix + "averaged_invariant"),
+                H("Invariance of the Averaged Form"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every finite averaged bilinear form is unchanged when both arguments are acted on by the same quotient group element. This is the invariant-image property of the averaging projection."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("invariant-nondegenerate"),
+                DeclarationHandle.Create(Prefix + "invariant_nondegenerate"),
+                H("Nonzero Invariant Forms are Nondegenerate"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every nonzero invariant bilinear form on the selected irreducible ground is nondegenerate. Its left radical is a subrepresentation, and irreducibility excludes a proper nonzero radical."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("ground-signed-adjoint"),
+                DeclarationHandle.Create(Prefix + "ground_signed_adjoint"),
+                H("Same-Charge Signed Adjointness"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every invariant bilinear form satisfies the original same-charge adjointness law. The charge operator squares to the sign given by half the integral quadratic norm. Invariance transfers the operator between the two arguments with this sign."))),
                 DescribeRole.Theorem))));
 }

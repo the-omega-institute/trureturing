@@ -1,0 +1,18 @@
+**Lemma 18.2 (exact finite extension optimum).** Every completion in Definition 18.1 has maximum length at least $L^*(b)$. A completion with maximum length exactly $L^*(b)$ exists. It is obtained by processing tokens in decreasing $|b_i|$, breaking ties by a fixed lexicographic order of their labels, and assigning to each token the lexicographically first unused length-$L^*(b)$ word extending its lower word. Thus $L^*(b)$ is the exact inherited-prefix optimum, not merely a Kraft upper bound.
+
+**Proof.** Put $L=L^*(b)$ and first consider any completion with maximum length at most $K$. For a prefix $q$ with $D_b(q)>0$, at least one completed word extends $q$, so any maximum length $K$ first satisfies $K\ge |q|$. The $D_b(q)$ completed words extending $q$ are distinct and prefix-free. Extend each of them, only for counting, to an arbitrary descendant of length $K$. Their depth-$K$ cylinders below $q$ are disjoint, and there are only $2^{K-|q|}$ such descendants. Hence
+
+$$
+D_b(q)\le 2^{K-|q|},\qquad
+K\ge |q|+\left\lceil\log_2D_b(q)\right\rceil.
+\tag{IV.41}
+$$
+Taking the maximum gives $K\ge L^*(b)$. This padding is a counting device; it does not alter the completed words.
+
+For sufficiency, assign all words at the common depth $L$. Equation (IV.40) implies $|b_i|\le L$. Suppose the greedy rule fails for the current token $i$. Every one of the $2^{L-|b_i|}$ leaves below $b_i$ is already occupied by an earlier token $j$. Since earlier lower words have $|b_j|\ge|b_i|$ and $b_j\preceq x_j$ while $b_i\preceq x_j$, one has $b_i\preceq b_j$. Therefore
+
+$$
+D_b(b_i)\ge 1+2^{L-|b_i|},
+$$
+contradicting (IV.40) at $q=b_i$. The assignment never fails. Equal-length distinct words are prefix-free, and each extends its own lower word. The prescribed order makes the construction a single finite deterministic algorithm. $\square$
+

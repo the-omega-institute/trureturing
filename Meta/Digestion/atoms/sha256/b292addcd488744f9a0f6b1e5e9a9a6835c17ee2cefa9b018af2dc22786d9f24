@@ -1,0 +1,28 @@
+**命题 5.4（有限联合状态任务的叶值与可达风险）。** 固定已知先验 $\mu$，记 $M_j=\int q^j\mu(dq)$、$z_j=\int(1-q)q^j\mu(dq)$。对同一个非空可测决策空间 $D$ 和有界联合可测实损失 $L(q,x,d)$，允许确定决策或从完整档案到 $D$ 的概率决策核；核的期望表示再对动作积分，统计决策比较不为源控制器新增随机带。对容量 $c=(c_0,c_1)$ 定义
+
+$$
+\begin{aligned}
+\mathcal R_L(c)={}&
+ \sum_{x=0}^1\sum_{j=0}^{c_x-1}
+ \inf_{d\in D}\ p_x\!\int(1-q)q^j L(q,x,d)\,\mu(dq)\\
+ &+\inf_{d\in D}\sum_{x=0}^1 p_x\!\int q^{c_x}L(q,x,d)\,\mu(dq).
+\end{aligned}
+\tag{TEE.21}
+$$
+
+空和取零。策略 $\rho$ 的最优先验风险下确界恰为
+
+$$
+\inf_\delta \mathbb E L(Q,X_0,\delta(H_\rho))
+=\int \mathcal R_L(c(u))\,\lambda(du).
+\tag{TEE.22}
+$$
+
+左右都允许随机决策时仍是此值。若两个策略在同一原种子空间上逐种子有相同容量，则 $G_\sigma F_\rho$ 是档案可测双射，对每个固定 $(q,x)$ 运输实验律；因此它们在同一个 $D,L$ 下的全部可达逐参数风险集合相同，最优规则的存在性也相同。此等价不要求两个策略的实际支付数或所获边相同。
+
+证明。式（TEE.20）给每个标记叶的未归一化状态质量 $p_x(1-q)q^j\mu(dq)$，及唯一截断叶的两根质量 $p_xq^{c_x}\mu(dq)$。对每个叶，任何确定动作或动作分布的平均损失均不低于式（TEE.21）的对应下确界。对有限可测容量分割积分，得到式（TEE.22）的下界。反向，在每个容量片及每个允许叶上选一个动作，使其**归一化**条件损失距下确界不超过 $\varepsilon$。叶质量均正、片及符号数有限；这些选择给出一个可测有限值决策，累计误差至多 $\varepsilon$。故两类规则的下确界相同，不需要在任意 $D$ 上作可测选择。
+
+此处没有假设动作最小值存在。若每个正质量叶的条件动作最小值存在，有限选取给达到值的规则；若某个正质量容量片上的一个叶没有动作最小值，任何动作分布在该叶的平均都严格高于下确界，故整体不能达到式（TEE.22）。例如 $D=(0,1)$、$L(q,x,d)=d$ 有零下确界而无最优确定或随机规则。
+
+同容量时，两种正规形的合法像相同，式（TEE.20）也相同，故显式双射运输每个 $(q,x)$ 下的律。把一个决策核与逆双射复合即可得到逐参数同风险规则，反向亦然。这只复用经典决策核复合，见定理3.1(a)所引 Pollard 第1节，以及仓内 [GarblingIncreasesBayesRisk](../../../D5/S3/Estimation/DecisionRisk/GarblingIncreasesBayesRisk.lean) 的 `blackwellDominates_map`、`blackwellDominates_trans`。有限模拟误差的一般比较另见 [BoundedRiskSimulatorTransport](../../../D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport.lean)；此处使用的是误差为零的显式源内映射，并不从有限状态结果推出连续参数逆定理。证毕。
+

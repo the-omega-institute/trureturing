@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a28c7d63f934158da26b9f066d45957c727595f6933678de112feeec6c98bae7
+  normalized_sha256: sha256:a28c7d63f934158da26b9f066d45957c727595f6933678de112feeec6c98bae7
+cas_ref: sha256:a28c7d63f934158da26b9f066d45957c727595f6933678de112feeec6c98bae7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为 Feshbach–Schur 方法论文的书目信息与链接。
+    previous_atom_id: 776210d097e5dc9be0a29ce061663021c9282747d5dde045dd8c74c7d07861dc
+    next_atom_id: 87e3fafd3aef06e7b1c2577a7f4296186135a264ccb5b207c188bc48928bef90

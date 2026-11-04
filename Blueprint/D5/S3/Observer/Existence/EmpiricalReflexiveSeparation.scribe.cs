@@ -27,6 +27,14 @@ internal sealed class EmpiricalReflexiveSeparationDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("The real square root of two, embedded in Complex, has square two. This identity normalizes the rank-one qubit projectors."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("empirical-normalized-rank-one-density"),
+                DeclarationHandle.Create("D5/S3/Observer/Existence/EmpiricalReflexiveSeparation.rankOneDensity_isNormalized"),
+                H("Normalized rank-one densities are projections"),
+                StatementSource.FromAuthor(NormalizedProjectionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The density matrix of a unit vector is a normalized rank-one projection."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("empirical-completeness-does-not-imply-reflexive-completeness"),
                 DeclarationHandle.Create(Declaration),
                 H("Empirical completeness coexists with reflexive incompleteness"),
@@ -48,6 +56,15 @@ internal sealed class EmpiricalReflexiveSeparationDocument : IScribeDocumentDefi
                             + "The proof then applies the repository's complete-context tomography "
                             + "and fixed-point-free Lawvere escape theorems."))),
                 DescribeRole.Theorem))));
+
+    private static Formula NormalizedProjectionFormula() => Disp(new Formula.BindMany(
+        FormulaQuantifier.ForAll,
+        [Bound("v", Arrow(Call("Fin", D(2)), F.Id("Complex")))],
+        new Formula.Logic(
+            new Formula.Relation(Call("dotProduct", Call("star", F.Id("v")), F.Id("v")),
+                FormulaRelationOperator.Equal, D(1)),
+            FormulaLogicOperator.Implies,
+            Call("IsNormalizedRankOneProjection", Call("rankOneDensity", F.Id("v"))))));
 
     private static Formula TheoremFormula()
     {

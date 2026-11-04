@@ -1,0 +1,24 @@
+**Proposition 86.2 (finite computation does not mean bounded storage).**
+For $M$ cells the observation and controllability stacks, pivot selections,
+inverses and solves above admit a conservative $O(M^4)$ rational-operation
+construction with $O(M^3)$ rational slots. Indeed form the at most $M$
+powers and the $O(M^2)$ observation rows, each of length at most $M$,
+then perform dense exact elimination; the transpose stack provides the
+control columns. Store the inverses and perform the indicated solves and
+matrix applications. This is an upper bound for specified arithmetic
+routines, not bit complexity or an optimality claim. Arbitrary rational
+inputs have no dimension-only width bound.
+
+A direct original native Tick on a tree of $M$ cells initializes $M$
+output slots and performs $2(M-1)$ directed neighbour additions. The
+$g=3$ current run pays its first Tick at old size $N$ and every later
+Tick at size $N+2$; entry/restore Ticks are all at their actual repaired
+size. Local predictor work is additional. Literal traffic uses §§65,81's
+native codec with $\operatorname{bitlen}(0)=1$, summing the actual
+addresses, rational numerators and denominators and all lifecycle frames.
+It is not the digital codec of AGAIII Definition 13.2. All accessible
+records, source vectors, provider buffers behind isolation, parser/pending
+state, maps, references, rights, pivots, output and retained predictor
+copies count simultaneously where retained. Neither this polynomial
+rational-operation bound nor finite control gives a lifetime capacity bound.
+

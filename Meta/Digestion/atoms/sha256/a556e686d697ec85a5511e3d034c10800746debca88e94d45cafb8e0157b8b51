@@ -1,0 +1,60 @@
+**定理 4.5（从局部复角到统一五模复代数）。**
+在定义 [4.4](#def:matrixunits) 下，置
+
+$$
+F_{st}=E_{s0}\jmath E_{0t},\qquad
+J=\sum_sF_{ss}.
+$$
+
+由 $E_{st}$ 和 $\jmath$ 生成的实 $*$-子代数 $\mathfrak B$ 满足
+
+$$
+\boxed{\mathfrak B\cong M_5(\mathbb C),\quad
+J^2=-1,\quad J^\dagger=-J,\quad
+Z(\mathfrak B)=\operatorname{span}_{\mathbb R}\{1,J\}.}
+$$
+
+因此五个角共享一个兼容的复数乘法。
+
+证明。
+矩阵单位关系直接给
+
+$$
+\begin{aligned}
+E_{st}F_{uv}&=\delta_{tu}F_{sv},&
+F_{st}E_{uv}&=\delta_{tu}F_{sv},\\
+F_{st}F_{uv}&=-\delta_{tu}E_{sv},&
+F_{st}^\dagger&=-F_{ts}.
+\end{aligned}
+$$
+
+故这些五十个实元素的张成是含所有生成元的 $*$-代数。
+如果
+$\sum_{st}(a_{st}E_{st}+b_{st}F_{st})=0$，
+左右乘 $E_{0s},E_{t0}$ 得
+$a_{st}P_0+b_{st}\jmath=0$。
+若 $b_{st}\ne0$，$\jmath$ 是 $P_0$ 的实数倍，
+平方不可能等于 $-P_0$；于是 $a_{st}=b_{st}=0$。
+所以这些元素独立。
+映射 $E_{st}\mapsto e_{st}$、$F_{st}\mapsto\mathrm{i} e_{st}$
+因此是到 $M_5(\mathbb C)$ 的实 $*$-同构。
+$J$ 对应 $\mathrm{i} I$；中心公式由矩阵单位的交换条件立即得到。
+证毕。
+
+这个矩阵单位应用给出本篇使用的运输桥：
+局部复结构要成为所有模式共同的相位语言，
+需要保持它的跨模式运输。
+生成代数给出最小不可约复表示 $\mathbb C^5$；
+更大系统可以有表示重数或额外不可见自由度，
+不能从该代数识别排除它们。
+
+这里运输的是指定角 $p\,\mathrm{Cl}_{3,0}\,p$ 中的 $\jmath$，
+并非把全部三轴算符同时放入每个模式角。
+如果每个模式角还完整保留一份 $M_2(\mathbb C)$，
+矩阵单位连同这些角自由度生成的是
+$M_5(M_2(\mathbb C))\cong M_{10}(\mathbb C)$。
+只保留复标量结构是在选择子代数或指定角，
+不能称为把整个简单代数 $M_2(\mathbb C)$ 商成 $\mathbb C$。
+
+<a id="prop:transport"></a>
+

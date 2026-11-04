@@ -24,6 +24,18 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
                     + "Its Kronecker products give the two positive blocks in blk_psd. "
                     + "The channel time-reversal argument also uses the basis projector at index zero."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("renyi-three-unitary-diagonal-cfc"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/RenyiInformationCombiningOrderThree.cfc_unitary_diagonal"),
+                H("Functional calculus of a unitarily conjugated real diagonal matrix"),
+                StatementSource.FromAuthor(UnitaryDiagonalFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Real continuous functional calculus commutes with unitary conjugation "
+                    + "and applies the scalar function to each real diagonal entry. No continuity "
+                    + "assumption on f is needed because the matrix spectrum is finite. Its internal "
+                    + "kronecker_rpow consumer lies on the xor_sandwiches proof path. The "
+                    + "dependent-family escape audit remains unfinished; "
+                    + "the result audit remains unfinished."))),
+                DescribeRole.Theorem),
             Node("conditional-entropy", "condRenyiDown", "Sandwiched conditional Renyi entropy",
                 CondFormula(),
                 "Section IV, p. 4, defines the sandwiched conditional Renyi entropy by the "
@@ -72,7 +84,7 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
                     + "positive semidefinite complex matrix of trace one.",
                 DescribeRole.Definition),
             Node("equality", "result", "Both order-three branches hold",
-                Disp(Seq(Operatorname, Grp(F.Id("claim")))),
+                Disp(ClaimBody()),
                 "At order three the sandwich exponent is -1/3. Write the two sandwiched "
                     + "blocks as A and B, and set S = A + B and D = A - B. Their cubic "
                     + "trace equals (1 + 3 trace(S D D))/4. The XOR moment factorizes as "
@@ -142,6 +154,23 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
         Operatorname, Grp(F.Id("let")), Sp, F.Id(name), Sp, Colon, Sp, type, Sp,
         Eq, Sp, value, Semi, Sp, body);
 
+    private static Formula FunctionBody(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(F.Id("fun"), Sp, Typed(F.Id(name), type), Sp, Mapsto, Sp, body));
+
+    private static Formula UnitaryDiagonalFormula()
+    {
+        Formula n = F.Id("n"), u = F.Id("U"), d = F.Id("d"), f = F.Id("f"), i = F.Id("i");
+        Formula matrix = Typed(u, Mat(n));
+        Formula diagonal = App(Q("Matrix", "diagonal"),
+            FunctionBody("i", n, Typed(App(d, i), ComplexType())));
+        Formula mapped = App(Q("Matrix", "diagonal"),
+            FunctionBody("i", n, Typed(App(f, App(d, i)), ComplexType())));
+        return Disp(Finite("n", All("U", App(Q("Matrix", "unitaryGroup"), n, ComplexType()),
+            All("d", Arrow(n, RealType()), All("f", Arrow(RealType(), RealType()),
+                Eqn(Call("cfc", f, Times2(Times2(matrix, diagonal), Call("star", matrix))),
+                    Times2(Times2(matrix, mapped), Call("star", matrix))))))));
+    }
+
     private static Formula CondFormula()
     {
         Formula a = F.Id("a"), b = F.Id("b"), rho = F.Id("rho"), alpha = F.Id("alpha");
@@ -200,7 +229,10 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
     private static Formula Density(Formula s) => All("x", Fin(Num(2)),
         App(Q("SLDSpectralEnergy", "IsDensity"), App(s, F.Id("x"))));
 
-    private static Formula ClaimFormula()
+    private static Formula ClaimFormula() =>
+        Disp(Iff2(Seq(Operatorname, Grp(F.Id("claim"))), ClaimBody()));
+
+    private static Formula ClaimBody()
     {
         Formula n1 = F.Id("n1"), n2 = F.Id("n2"), s1 = F.Id("s1"), s2 = F.Id("s2");
         Formula h1 = F.Id("H1"), h2 = F.Id("H2"), hout = F.Id("Hout");
@@ -222,6 +254,6 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
             All("s1", Arrow(Fin(Num(2)), Mat(Fin(n1))),
             All("s2", Arrow(Fin(Num(2)), Mat(Fin(n2))),
                 Imp(Density(s1), Imp(Density(s2), quantities))))));
-        return Disp(Iff2(Seq(Operatorname, Grp(F.Id("claim"))), statement));
+        return statement;
     }
 }

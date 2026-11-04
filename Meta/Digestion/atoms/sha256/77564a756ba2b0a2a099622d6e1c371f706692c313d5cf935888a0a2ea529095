@@ -1,0 +1,80 @@
+**定理 3.3（Complete obstruction for a specified source basis）。**
+For every pair $M,N$ satisfying Definition 1.3 and
+$|A|=|B|=m$, and for every specified $S\in\mathcal B(M)$,
+$S$ fails to match $N$ if and only if $r\ge2$, $m\ge r+1$, and
+there exist $a,d\in G$, $d\ne0$, and an integer $0\le j\le m-r$
+with all the following properties:
+
+$$
+\begin{aligned}
+A&=\{a+td:0\le t<m\},\\
+S&=\{a+(j+t)d:0\le t<r\},\\
+U&=\{td:-j\le t\le m-r-j,\ t\ne0\}\subseteq B,\\
+H&=B\setminus U\text{ is a circuit-hyperplane of }N.
+\end{aligned}
+$$
+
+All indices here are integers. In every such obstruction,
+$U=U_S$, $H=C_S$, $|U|=m-r$, $|H|=r$ and $\rho_N(H)=r-1$.
+
+Proof. Suppose $S$ fails. Lemma 3.1 gives $r\ge2$, $m\ge r+1$,
+$|U_S|=m-r$ and
+
+$$
+|S+(U_S\cup\{0\})|=|S|+|U_S\cup\{0\}|-1=m.
+$$
+
+Both summands have at least two elements. Here we need the classical
+equality rigidity for the ordered sumset bound, with its full argument.
+For nonempty finite $X,Y$ of sizes $p,q\ge2$, use a compatible order
+on their finitely generated subgroup as in Theorem 2.1, and list
+$x_0<\cdots<x_{p-1}$ and $y_0<\cdots<y_{q-1}$.
+If $|X+Y|=p+q-1$, every increasing lattice path from $(0,0)$ to
+$(p-1,q-1)$ lists the whole sumset in increasing order. Fix
+$0\le i<p-1$ and $0\le k<q-1$. Choose two paths with the same
+initial part ending at $(i,k)$ and the same final part starting at
+$(i+1,k+1)$, one passing through $(i+1,k)$ and the other through
+$(i,k+1)$. The intermediate sums occupy the same position in the
+increasing list of the entire sumset. Hence
+
+$$
+x_{i+1}+y_k=x_i+y_{k+1},\qquad
+x_{i+1}-x_i=y_{k+1}-y_k.
+$$
+
+All consecutive gaps in both lists equal a common positive $d\ne0$.
+Thus $X=x_0+[0,p-1]_{\mathbb Z}d$ and
+$Y=y_0+[0,q-1]_{\mathbb Z}d$ in $G$ itself. Conversely two such
+progressions have sumset
+$x_0+y_0+[0,p+q-2]_{\mathbb Z}d$: every index in this interval is
+a sum of indices in the two shorter intervals, and torsion-freeness
+makes its $p+q-1$ elements distinct. This proves both directions of
+the classical equality case as an intermediate step.
+
+Applying it to $S$ and $U_S\cup\{0\}$ gives
+$s_0,v_0,d\in G$, $d\ne0$, such that
+
+$$
+S=s_0+[0,r-1]_{\mathbb Z}d,\qquad
+U_S\cup\{0\}=v_0+[0,m-r]_{\mathbb Z}d.
+$$
+
+Since the second progression contains $0$, there is a unique
+$j\in[0,m-r]_{\mathbb Z}$ with $v_0=-jd$.
+Set $a=s_0-jd$. Adding the two progressions gives
+$A=a+[0,m-1]_{\mathbb Z}d$, and
+$S=a+[j,j+r-1]_{\mathbb Z}d$.
+Removing $0$ from the second progression gives the stated $U=U_S$.
+Its complement $H=C_S$ is the circuit-hyperplane of Lemma 3.1.
+This proves every required condition without an assumption on signs
+or the rest of the bases of $M$.
+
+Conversely suppose the displayed conditions hold. Lemma 3.2 identifies
+the full blocking-translation set as $W_j=U\cup\{0\}$.
+Because $U\subseteq B$ and $0\notin B$, intersection with $B$ gives
+$U_S=U$ and hence $C_S=H$.
+The circuit-hyperplane $H$ has rank $r-1$ in the specified $N$.
+Criterion (R) rules out an independent system of $r$ representatives,
+so no bijection to any target basis exists. This also proves the
+additional identities claimed in the theorem.
+

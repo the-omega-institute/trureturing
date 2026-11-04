@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:11293d393b8ef651668d0262638ddfa8f7054c78a4d5a88bcb20e133e0230105
+  normalized_sha256: sha256:11293d393b8ef651668d0262638ddfa8f7054c78a4d5a88bcb20e133e0230105
+cas_ref: sha256:11293d393b8ef651668d0262638ddfa8f7054c78a4d5a88bcb20e133e0230105
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Specifies the Pisano-period position as an automaton state coordinate only.
+    previous_atom_id: 8191e46a24f7a3743fe5733efb8c3914fa31208db95617268cec50146cababac
+    next_atom_id: f9639e42537101c0c2c83d75ba2c7be473498ee9498d5c334b57efbd04215f04

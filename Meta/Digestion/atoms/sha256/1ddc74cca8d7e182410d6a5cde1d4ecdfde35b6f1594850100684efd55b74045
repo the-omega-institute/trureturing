@@ -1,0 +1,23 @@
+No relative phase waveform is recovered from the height estimate.
+Recovering it would need additional same-input phase-sensitive data at
+intermediate cuts and a declared real-lift anchor. A finite noisy version
+would additionally need certified sampling, clock/reference alignment and
+an anti-alias condition, such as a known bound keeping real phase increments
+between consecutive reads strictly within a selected unwrapping interval,
+with noise slack. Those data and their acquisition are absent here; no
+approximate phase-unwrapping theorem is asserted. Unknown past $\beta,m$
+remain unknown and are never passed to a controller.
+
+The common future original menu, when separately permitted, consists of
+prescribed original controls at the same base and matching current height,
+of any finite duration including zero, with both regularity alternatives
+and all signed winding sectors. `concatenate_original` supplies the literal
+prefix and the relatively translated real-phase tail. It supplies no
+post-failure positive-carrier restart. A common legal downstream quantum
+protocol on the retained joint output cannot increase its trace distance;
+such a protocol must use the same acquired-record policy, references,
+permissions and external inputs in both experiments. This observation does
+not allow access to omitted old programme fields, different legality guards
+or earlier quantum cuts. An acquisition service or complete internal
+observer still needs its own joint legality, failure and update proof.
+

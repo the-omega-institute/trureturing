@@ -1,0 +1,6 @@
+# FIB：高阶调度兼容性、连接树拼接与白盒超图障碍
+
+> 本卷接续 [FIB 调度兼容关系、异步逃逸过滤与协调半径](https://github.com/the-omega-institute/trureturing/pull/19715)，把二组件的词对关系推广到 $m\ge3$ 个组件。新增的核心问题是：所有两两调度投影都可实现时，是否已经足以保证一个全局词元组可实现？答案是否定的；全局调度关系可能有不可见的高阶奇偶约束。
+>
+> 本卷的“超图”指调度见证的作用域与连接关系，不是 [FIB 失败证书横截数卷](https://github.com/the-omega-institute/trureturing/pull/19616) 中由失败观察构成的超图。全文只在有限、确定性、精确的协议合同中推导；不把结论自动外推到随机训练、连续参数或任意神经网络，也不修改 `FIBONACCI_ATOMIC_RELATION_GENERATION.md`。
+

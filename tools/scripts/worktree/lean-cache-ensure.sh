@@ -3,6 +3,13 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 
+restore=()
+case "${LEAN_CACHE_RESTORE_DEPENDENCIES:-0}" in
+  0) ;;
+  1) restore=(--restore-dependencies) ;;
+  *) echo "lean-cache-ensure: RESTORE_DEPENDENCIES must be 0 or 1" >&2; exit 2 ;;
+esac
+
 cd "$ROOT"
 # Common stages supply a validated DLL; standalone calls refresh it through MSBuild.
 if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
@@ -20,4 +27,4 @@ fi
 # producer receives it only as an explicit argument, never from the environment.
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
-exec "${cli[@]}" ensure-cache ${donor[@]+"${donor[@]}"}
+exec "${cli[@]}" ensure-cache ${donor[@]+"${donor[@]}"} ${restore[@]+"${restore[@]}"}

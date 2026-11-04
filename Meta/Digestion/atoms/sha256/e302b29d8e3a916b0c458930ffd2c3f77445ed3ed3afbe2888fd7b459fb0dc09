@@ -1,0 +1,70 @@
+**Definition 96.2 (Exact parameters and attainment premise).** Let
+
+$$
+\theta_*=(a,b,c,\eta,L,p_e,p_i,x_i,\alpha,\beta,\tau)
+\tag{96.4}
+$$
+
+be exactly the unique real zero of the eleven rational polynomials
+in Terminal (119.4), in the rational box specified by its table and
+(119.7). This source specification defines all eleven parameters;
+the printed rational centre is not substituted for the zero.
+The symbols $a,b,c$ here are decoder parameters, distinct from the
+channel-population notation in Terminal §93. Its Theorem 118.2,
+Lemma 120.1 and (120.12) supply
+
+$$
+\begin{gathered}
+\min_{\mathcal R\ {\rm CPTP}}e(\mathcal R)=L=L_*,
+\qquad e(\mathcal R_*)=L,\qquad 0.606<L<0.607,\\
+0<a,b,c,\eta<1,\qquad \eta=\sqrt{ab},\qquad
+\alpha,\beta,\tau>0,\\
+0<p_e<1,\qquad p_i,x_i>0,\qquad p_i+x_i<1.
+\end{gathered}
+\tag{96.5}
+$$
+
+The exact value is approximately $0.60644699139906989$; all formulas
+use the isolated coordinate $L$. The attaining CPTP map $\mathcal R_*$
+is precisely Terminal (121.1), and $D_*=\mathcal R_*\circ
+\operatorname{Ad}_{U_0^\dagger}$. Thus the second-horizon
+no-reference minimum is supplied exactly by that source. The older
+finite-minimum boundary in §§94–95 is not an unresolved interval
+for this particular $n=2$ problem.
+
+For an explicit coefficient recipe for the fixed certificate, put
+$r\in\{e,i\}$ and define
+
+$$
+\begin{aligned}
+(p_r,x_r,y_r)&=
+\begin{cases}(p_e,0,1-p_e),&r=e,\\
+(p_i,x_i,1-p_i-x_i),&r=i,\end{cases}\\
+v_{0r}&=p_r,\qquad v_{1r}=(x_r+3y_r)/4,\qquad
+v_{2r}=(3x_r+y_r)/4,\\
+h_{0r}&=ap_r,\qquad h_{1r}=bv_{1r}+cv_{2r},\qquad
+h_{2r}=1-h_{0r}-h_{1r},\\
+d_{0r}&=L+h_{0r}-p_r,\qquad d_{1r}=L+h_{1r}-x_r,\qquad
+d_{2r}=L+h_{2r}-y_r,\qquad \kappa=1-\eta/2,\\
+m_{0r}&=d_{1r}d_{2r}-x_ry_r,\qquad
+m_{1r}=d_{0r}d_{2r}-p_ry_r,\\
+m_{2r}&=d_{0r}d_{1r}-\kappa^2p_rx_r,\qquad
+M_{ij}=\sum_{r=e,i}\zeta_r m_{ir}v_{jr},\qquad
+\zeta_e=\alpha,\quad\zeta_i=\beta .
+\end{aligned}
+\tag{96.6}
+$$
+
+These are Terminal (119.2), (123.2) and (124.3), evaluated at
+$\theta_*$. In particular the contact label $r$ is not a decoder
+index. Define
+
+$$
+\begin{aligned}
+Y&=\operatorname{diag}(M_{20},M_{21},M_{22}),\\
+s_{10}&=M_{20}-M_{10},\qquad
+s_{01}=M_{21}-M_{01},\qquad s_{02}=M_{22}-M_{02}.
+\end{aligned}
+\tag{96.7}
+$$
+

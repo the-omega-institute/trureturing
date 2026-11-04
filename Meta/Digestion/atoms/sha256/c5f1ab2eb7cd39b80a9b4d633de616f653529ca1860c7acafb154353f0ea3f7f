@@ -1,0 +1,35 @@
+**Definition 54.1 (normalization and probe controller).** Define
+
+$$
+\nu(\alpha)=\beta,\qquad \nu(\beta)=\beta,\qquad
+\nu(\langle v,w\rangle)=\langle\nu(v),\nu(w)\rangle.
+\tag{AAII.13}
+$$
+
+The following controller uses only actual $P$ calls. Begin with the
+empty logical address and an empty traversal stack. At a scheduled
+address $p$, transmit the complete $P_p$ frame and consume its complete
+returned answer. Growth$(P,p)$ appends an $\alpha$ constructor to the
+entry code and a $\beta$ constructor to the current code; this visit is
+finished. Refusal(wrong type) appends $\beta$ to both codes and finishes
+the visit. Refusal(branch) appends a branch constructor to both codes,
+schedules the left child, and retains the pending right-child continuation.
+After the left visit it visits that right child. It stops when the root
+visit and every retained continuation have finished. No $S$ is issued.
+
+The codes are ordinary preorder words: alpha is $00$, beta is $01$,
+and branch is $10$, followed by its left and right code words. The
+unused symbol $11$ is invalid. Decoding starts with one pending subtree
+slot; a leaf fills one slot and a branch replaces one slot by two ordered
+slots. The first point with no pending slot ends the word. Structural
+induction gives a unique parsed term and the code/parse round trips.
+This is the existing constructor-word method, with explicit leaf labels.
+The controller retains
+one mutable address and one finite left/right continuation flag per
+active ancestor. Appending or deleting an address letter and switching
+a pending right continuation are paid finite list operations. A recursive
+description of a visit supplies no runtime subtree, height, size or fuel:
+the only constructor information used to schedule work is the reply just
+acquired. The absent case is outside the promised runs; it is not silently
+interpreted as a leaf.
+

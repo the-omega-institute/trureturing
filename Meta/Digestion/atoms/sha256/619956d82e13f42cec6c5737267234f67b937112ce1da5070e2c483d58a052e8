@@ -1,0 +1,51 @@
+**Definition 2.2 (pushforward measure, conditional projection and averages).**
+For every coefficient pair in Definition 2.1, define
+
+$$
+\begin{aligned}
+m(k,\alpha)&=\int_0^{2\pi}\rho(k,\alpha,\beta)\,d\beta,
+&d\nu&=m\,dk\,d\alpha=\pi_*\mu,\\
+A_{\rm av}(k,\alpha)&=\frac1m\int_0^{2\pi}\rho A\,d\beta,
+&D&=\operatorname{diag}(1,1/2),\qquad C_{\rm av}=DA_{\rm av}D.
+\end{aligned}
+\tag{2.7}
+$$
+
+All these base coefficients are smooth on the closed cylinder and
+uniformly positive in the appropriate sense. The pullback and its Hilbert
+space adjoint are
+
+$$
+Uf=f\circ\pi,\qquad
+(K_\rho F)(k,\alpha)=\frac1m\int_0^{2\pi}\rho F\,d\beta,
+\qquad U^*=K_\rho.
+\tag{2.8}
+$$
+
+Thus $U:L^2(\nu)\to L^2(\mu)$ is an isometry,
+$K_\rho U=1$, $\mathcal H=\operatorname{ran}U$ is closed, and
+$\Pi=UK_\rho$ is its orthogonal projection. A function in $\mathcal H$
+is called basic; for a smooth function this means independence of $\beta$.
+
+There is always the base form
+
+$$
+\begin{aligned}
+\mathcal E_{\rm av}(f,g)
+&=\int_B (\nabla f)^{\mathsf T}C_{\rm av}\overline{\nabla g}\,d\nu,\\
+\mathcal V&=H^1_0(B)
+:=\overline{C_c^\infty(B)}^{H^1(B)},\\
+D(\mathcal L_{\rm av})
+&=\{f\in\mathcal V:\ \exists v\in L^2(\nu),\
+\mathcal E_{\rm av}(f,g)=\langle v,g\rangle_\nu\ \text{for all }g\in\mathcal V\},\\
+\mathcal L_{\rm av}f&=v,\qquad S_t^{\rm av}=e^{-t\mathcal L_{\rm av}}.
+\end{aligned}
+\tag{2.9}
+$$
+
+Here $H^1_0(B)$ imposes zero trace at the two height faces and periodicity
+in $\alpha$, not a cut or Dirichlet condition on the circle.
+Uniform ellipticity makes the form norm equivalent to this Sobolev norm.
+Equation (2.9) specifies the actual completed operator domain without
+replacing it by its differential expression.
+

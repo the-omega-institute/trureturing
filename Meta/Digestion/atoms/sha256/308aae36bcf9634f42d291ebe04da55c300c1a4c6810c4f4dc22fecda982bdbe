@@ -1,0 +1,24 @@
+**Proposition 116.8 (actual identical-input conflicts).** Every legal initialized blind supplemental encoder for this instance and $\mathscr D_{\pi_k}$ has an entire alphabet of size at least $W$.
+
+Proof. Fix one actual finite seed-acquisition transcript giving $R=\theta$, with no discarded equal pair: use $\alpha\beta$ or $\beta\alpha$ for each bit in the public representation of $\theta$. At each fixed source depth this transcript has probability $[r_h(1-r_h)]^d>0$. Use this same transcript for all histories considered below. The blind register begins at the same 0 before it, and the selector begins at its specified fixed initialization; there is no free seed or history-dependent initialization.
+
+For every $u\in\mathcal A$, append the zero-return raw payload realization of its midpoint prefix, interpreting 0 as $\alpha$ and 1 as $\beta\beta$. All these histories reach $b_*$ with no previous selection and with the same original generic completed-marker phase and continue event. Denote the register value there by $z_u$. They are actual extendable histories of the unchanged source. All have midpoint integer weight $3a/2$; no unaccounted phase or elapsed-source-time distinction is supplied to the blind register.
+
+Take any distinct $u,u'\in\mathcal A$. Their vertices share an edge in exactly one matching. Choose a suffix $y\in\mathcal F_{b_*}$ whose key maps to this matching. Both $uy$ and $u'y$ are balanced zero-return accepted words. With the fixed seed transcript their complete raw histories have, for example, the strictly positive common-depth mass
+
+$$
+[r_h(1-r_h)]^d r_h^\ell(1-r_h)^{2\ell}
+$$
+
+at a fixed depth, or the positive sum of these expressions against the one common prior $\mu$. This is an ordinary positive event of the paid source, not a request to sample conditional on acceptance.
+
+Suppose $z_u=z_{u'}$. Continue these two histories using the same actual zero-return realization of $y$. Their old midpoint bare fields agree. Identical appended markers give identical subsequent old and new bare fields by the original update equations, and their acquired seeds and public parameters are the same. The complete raw continuations are identical, so generic parser stages, current marker transactions and all non-marker events agree as well.
+
+Before the scheduled edge position, both selections continue. During key acquisition no member of either history freezes. After the key, the chosen matching assigns both endpoints to the same edge index $g$; neither endpoint belongs to an earlier edge. Consequently the completed decision event is continue for both until $c=\ell+a+g$, when it is first-freeze for both. These are the actual events of the original selector, not events computed or read from hypothetical future controls. At no intervening transaction do the two histories supply different permissible phases, events, current markers, references or old/new bare fields. Their inaccessible selector controls may differ, but neither control nor its address is an allowed blind input.
+
+The blind transition is a deterministic function of those complete allowed inputs and its one current register value. Induction over the actual event sequence therefore preserves equality of the two values, including the triggering marker's write before the common latch. The same argument covers any separately paid transient calculation, since no additional persistent value or private phase may carry information between transactions. After first-freeze the held register values remain equal.
+
+At reception, the two frozen bare tuples, frozen codes, remaining actual suffixes and actual original Stop values are identical. Their selected pasts are different because their midpoint prefixes were different. A single function $\mathscr D_{\pi_k}$ cannot return both distinct pasts on this one input. This contradicts correctness on both positive accepted histories. Hence $z_u\ne z_{u'}$ for every pair, so at least $W$ different values of the same retained alphabet are actually attained at this midpoint.
+
+The choice of common continuation may depend on the pair. It is only a proof witness within the actual source support and is never supplied to an encoder. The proof uses equality of the completed decision events up to the same freeze; different response functions or a fiber cardinality alone would not justify this induction. $\square$
+

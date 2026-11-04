@@ -1,0 +1,11 @@
+**Definition 17.3 (uniformity and the two responses).** A receiver is one finite effective program independent of the hidden source and producer, with finite growing stores on each completed run. This does not mean a finite-state controller or bounded lifetime memory. Put
+
+$$
+C=I+p(T),\qquad b=x^{\rm in}+e_0=Ce_0,\qquad
+y_j=e_0^{\mathsf T}T^jb,\qquad
+m_j=e_0^{\mathsf T}T^je_0.
+\tag{UFS.40}
+$$
+
+The $y_j$ become actual paid observations after a first receiver Add$(1)$. The $m_j$ are the native impulse moments; they are initially mathematical quantities. Neither is an initially supplied array. The letter $C$ denotes a matrix used in the proof; it is not given to, computed by, or queried by the receiver.
+

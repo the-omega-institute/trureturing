@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ed8eee3ede8bf3ddb41c78e8b1f826ca8e13891b6ddcdbdf4f8aa75b9a90d0d4
+  normalized_sha256: sha256:ed8eee3ede8bf3ddb41c78e8b1f826ca8e13891b6ddcdbdf4f8aa75b9a90d0d4
+cas_ref: sha256:ed8eee3ede8bf3ddb41c78e8b1f826ca8e13891b6ddcdbdf4f8aa75b9a90d0d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only proposition: Pinned Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679: WellFoundedGT.monotone_chain_condition (Mathlib/Order/OrderIsoNat.lean) gives eventual constancy of every monotone Nat chain in an ACC partial order; wellFoundedGT_iff_monotone_chain_condition identifies the ACC premise. Finite height supplies ACC, and adjoining protocols is the refinement-monotone chain in the governing section. D5 full-tree including private search: noetherian|monotone_chain_condition|wellFoundedGT|ascending.chain|finite.height; ResponsePhasePartition is a finite phase-partition implementation and PositiveBranchReachableResponse is a fixed quantum subspace chain, neither is the arbitrary partial-order assertion. No applicable frozen GID identified for this generic statement.'
+    previous_atom_id: fd6c11d4094406e23de60013e758e3ca3de12b74723ad055b991d40f9006fb17
+    next_atom_id: fae2b1691e28152f5a58aa12c73064930a176c86a764b98c84b3ecd0d579d47b

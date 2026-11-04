@@ -1,0 +1,44 @@
+## 18. Mathematical sources and the remaining independent-pair question
+
+Sections 12–17 are ordinary model-specific repository-derived
+mathematics (`repo-derived`). They add the full-rectangle source
+inventory, its entire-child J injectivity, and the exhaustion of the
+small M arc. The algebraic seed and its analytic motion are reused
+from Sections 2–10. The real analytic family agrees with
+[AURIC–Langlands Context and Spectral Reconstruction](AURIC_LANGLANDS_CONTEXT_AND_SPECTRAL_RECONSTRUCTION_THEORY.md),
+Section 7; the present conclusion uses only its local branch.
+
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorem 12.3, supplies zero-safe fixed-source uniqueness; Sections
+20–21 supply the ordered elimination identity, linear minors and
+exceptional remainder identities; Definition 24.1 supplies the exact
+668-term polynomial; Theorems 4.2 and 29.2 supply the exhaustive
+singular branch. The response circuit is Definition 2.1 here, with
+the same original-world interpretation established in Lemma 2.2.
+
+Descartes' sign rule, the Bernstein change of basis, Sturm's root
+count, the adjugate identity, the geometric-series inverse estimate,
+and the intermediate and mean value theorems are classical tools.
+For the univariate algebraic methods, see Basu, Pollack and Roy,
+*Algorithms in Real Algebraic Geometry*; for ordinary resultant and
+subresultant elimination, see Cox, Little and O'Shea, *Ideals,
+Varieties, and Algorithms*, Chapter 3. Their use here is the stated
+finite rational specialization, not an additional general principle.
+
+The independent J obligation at the particular seed and on this
+small arc has a negative answer by Corollary 17.2. The original
+existence question remains Definition 1.2 over arbitrary
+$p\ne24,v$: the two distinct equal-J worlds and the two distinct
+equal-M worlds are independently selected in one entire child,
+may overlap, and may have unrelated common terminal values. Each
+world retains its own constant real drift and one nonzero whole
+real polynomial gain of degree at most three, with acquired clocks
+$0,\ldots,6$ and terminal clock $7$.
+
+Any joint witness on a further continuation of this M branch must
+have base outside $\mathcal U$. No continuation to such a base is
+established here. Neither existence of an unrestricted joint witness
+nor its exclusion outside this rectangle follows from this local
+absence theorem. No sufficiency of a polynomial necessary cover is
+used.
+

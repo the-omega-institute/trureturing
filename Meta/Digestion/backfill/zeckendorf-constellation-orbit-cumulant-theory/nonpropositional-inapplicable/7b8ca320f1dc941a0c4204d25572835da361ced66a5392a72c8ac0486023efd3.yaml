@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7b8ca320f1dc941a0c4204d25572835da361ced66a5392a72c8ac0486023efd3
+  normalized_sha256: sha256:7b8ca320f1dc941a0c4204d25572835da361ced66a5392a72c8ac0486023efd3
+cas_ref: sha256:7b8ca320f1dc941a0c4204d25572835da361ced66a5392a72c8ac0486023efd3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Records that tensor factors are additional unspecified model data, not an assertion about an already constructed tensor product.
+    previous_atom_id: f4150e7e84a6607b478dc3579c6b8832a5447ce7e34d62700334a369f8a8baed
+    next_atom_id: 069e9da79445848d646c8492cefdc0810a6fdd7e5db4f7096096b639c177fb43

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:33ad9d954dd3d3356fe1de5688b3df2ed92bf2291a76311737bdbc22168175a5
+  normalized_sha256: sha256:33ad9d954dd3d3356fe1de5688b3df2ed92bf2291a76311737bdbc22168175a5
+cas_ref: sha256:33ad9d954dd3d3356fe1de5688b3df2ed92bf2291a76311737bdbc22168175a5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: G-d/G-e 同模块、轮次、收据与具名目标预算安排。
+    previous_atom_id: 1520941cde931269a3a5905eb322253ed17400007025006560590f77520a4792
+    next_atom_id: null

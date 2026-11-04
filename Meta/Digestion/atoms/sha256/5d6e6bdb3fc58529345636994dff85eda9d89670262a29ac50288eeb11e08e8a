@@ -1,0 +1,43 @@
+**约定 B-20.5（数学引文及拥有范围）。** 下列引文为前述条目使用的中间定义、经典工具或项目接口；来源编号仅是本卷引文缩写，不是重新命名的成果。文献没有承担未供应的 FIB 控制、采样、相干制备或物理权限。两个项目修订分别保持自己的不可变来源；本卷不将修订先后当作数学证明。
+
+| 引文 | 实际使用的位置与来源范围 |
+| --- | --- |
+| [B-S1]《FIB 关系延拓几何》 | §§1–3自由有序来源与纤维下降；§7.1即时高到低整数读器 |
+| [B-S2]《二阶关系完成》 | §39五函数基；§42配置补；§43数量中心化；§47非空事件纤维；§§49–52内积、Gram/Heron、菱形与固定外半径；§53平均棱锥；§§101–103、107–109具体相位、记录与共同正性 |
+| [B-S3]《金字塔关联纤维与原生接续》 | §§3–4单窗目标与纤维；定义8.1同源原生读器及跨窗守卫 |
+| [B-S4]《行列式、条件拼接与原生守卫接续》 | §8底面翻转；定义10.4、命题10.5–10.6已取得奇偶档案后的后缀及取得边界 |
+| [B-S5]《局部选择几何》 | §9.1–9.2实际像、部分动作、菜单与失败标签的下降判据；不调用其另供探针合同 |
+| [B-S6]《金字塔基础公式与关系》 | §§10–11完整输入、原生档案及取得范围，与 [B-S4] 的后缀接口一致 |
+| [B-S7]《历史、记录与时间箭头》 | §§160–162端点面积估值与内部替换修正；§165逐叶取得；§175共同参照与曲线积分范围 |
+| [B-S8]《观察者内部三轴几何与预测接口》 | 定义2.1、假设2.2的共同内部标架与关系标定背景；不据此供应任意几何仪器 |
+| [B-L1] Prodinger–Tichy (1982) | *Fibonacci Numbers of Graphs*，路径独立集计数；文献初值 $`F_0=F_1=1`$ 与本卷标准 Fib 索引差一 |
+| [B-L2] Eppstein–Frishberg (2023) | *Improved Mixing for the Convex Polygon Triangulation Flip Walk*，ICALP 56；只使用无着色凸多边形翻转结构，不使用其混合时间作采样许可 |
+| [B-L3] Baur–Bergerova–Voon–Xu (2024) | *Flip graphs of coloured triangulations of convex polygons*，arXiv:2402.06546；着色翻转的限制不属于本卷无着色菜单 |
+| [B-L4] McGill 两耳说明 | 简单多边形的合法耳及内对角线背景；正文仅在已给合法剖分上使用边消去 |
+| [B-L5] Nelson–Picken (2018) | *Quantum Holonomies and the Heisenberg Group*，arXiv:1808.08812v1，§3式(13)、§4；仅消费经典拼接与有向面积 |
+| [B-L6] Bogosel (2023) | *A Geometric proof for the Polygonal Isoperimetric Inequality*，arXiv:2309.05802v1，简单 $`N`$ 边形、固定面积/周长的等价预算；不作素数优势推断 |
+| [B-L7] Keith Conrad | *Cyclotomic extensions*，§1单位根，§5尤其 Theorem 5.3 的 Eisenstein；已有仓内 [Library note][B-LN7]，无需新建同义条目 |
+| [B-L8] Qiskit 2.2.0 原始源码 | `state_fidelity` 的平方约定及纯态特例；不把保真度 API 当作实际实验合同 |
+| [B-L9] Hatcher | *Algebraic Topology*，§2.1，印刷页105–106，单纯形边界与 $`\partial^2=0`$；同一有向链分解的中间符号工具 |
+| [B-L10] DeMaio–Jacobson (2014) | *Fibonacci number of the tadpole graph*，EJGTA 2(2)，129–138，页129–130的路径、环独立集计数；只消费路径与四环背景，不引入蝌蚪图任务 |
+
+[B-S1]: https://github.com/the-omega-institute/trureturing/blob/62990f66eb1ee1d956e0dd389e9fb759f2d3635c/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md
+[B-S2]: https://github.com/the-omega-institute/trureturing/blob/62990f66eb1ee1d956e0dd389e9fb759f2d3635c/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md
+[B-S3]: https://github.com/the-omega-institute/trureturing/blob/62990f66eb1ee1d956e0dd389e9fb759f2d3635c/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md
+[B-S4]: https://github.com/the-omega-institute/trureturing/blob/62990f66eb1ee1d956e0dd389e9fb759f2d3635c/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md
+[B-S5]: https://github.com/the-omega-institute/trureturing/blob/62990f66eb1ee1d956e0dd389e9fb759f2d3635c/docs/develop/theory/FIB_ATOM_LOCAL_CHOICE_GEOMETRY.md
+[B-S6]: https://github.com/the-omega-institute/trureturing/blob/62990f66eb1ee1d956e0dd389e9fb759f2d3635c/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md
+[B-S7]: https://github.com/the-omega-institute/trureturing/blob/8a5a8fda7635926e57a21ac526391ccb66238592/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md
+[B-S8]: https://github.com/the-omega-institute/trureturing/blob/8a5a8fda7635926e57a21ac526391ccb66238592/docs/develop/theory/AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md
+[B-L1]: https://www.fq.math.ca/Scanned/20-1/prodinger.pdf
+[B-L2]: https://doi.org/10.4230/LIPIcs.ICALP.2023.56
+[B-L3]: https://arxiv.org/abs/2402.06546v1
+[B-L4]: https://cgm.cs.mcgill.ca/~godfried/teaching/cg-projects/97/Ian/twoears.html
+[B-L5]: https://arxiv.org/abs/1808.08812v1
+[B-L6]: https://arxiv.org/html/2309.05802v1
+[B-L7]: https://kconrad.math.uconn.edu/blurbs/galoistheory/cyclotomic.pdf
+[B-L8]: https://github.com/Qiskit/qiskit/blob/c3e4977ee262a9770e27394cb6897e396b84138c/qiskit/quantum_info/states/measures.py
+[B-L9]: https://pi.math.cornell.edu/~hatcher/AT/ATch2.pdf
+[B-L10]: https://doi.org/10.5614/ejgta.2014.2.2.5
+[B-LN7]: https://github.com/the-omega-institute/trureturing/blob/b432abd6e992f82a8c80127c720b45ff69064835/Library/Factorization/conrad2025cyclotomicextensions.md
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:57ea1de6482e1331b0e60ca5e30e2dbddd501fb9db22779e632e765baa162925
+  normalized_sha256: sha256:57ea1de6482e1331b0e60ca5e30e2dbddd501fb9db22779e632e765baa162925
+cas_ref: sha256:57ea1de6482e1331b0e60ca5e30e2dbddd501fb9db22779e632e765baa162925
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录席位、模块、依赖次序与结账安排；未提出需要证明的数学断言。文本定位：## 四 预算与结算 一席位轮(codex-cli,独立 worktree,三条同模块,`Separator/` 第四个模块;同 PR deposit(绑 W-7 atom)+ 三条 cover)。预计 ≤ 60 分钟。
+    previous_atom_id: 50efe63faadc8d63ac20917b713e0f057a8924d12d7a213aa81e88f2a06eb4d0
+    next_atom_id: af73ef4009c9d99f453360cab2b9a5ffdcc032b0b402121e79b95ee31bc7612f

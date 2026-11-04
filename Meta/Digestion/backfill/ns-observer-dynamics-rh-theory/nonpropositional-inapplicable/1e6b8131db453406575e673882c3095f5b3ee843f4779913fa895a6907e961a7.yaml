@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1e6b8131db453406575e673882c3095f5b3ee843f4779913fa895a6907e961a7
+  normalized_sha256: sha256:1e6b8131db453406575e673882c3095f5b3ee843f4779913fa895a6907e961a7
+cas_ref: sha256:1e6b8131db453406575e673882c3095f5b3ee843f4779913fa895a6907e961a7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定外力、残差误差界和幅度微分方程为后续条件，不断言其解存在或满足吸引估计。
+    previous_atom_id: 6f84e1d892fc20f332e42dbfee9e1a35eca0861d1a61160379059058f811e1a6
+    next_atom_id: 76476cf644975a1b73d3839750191a572a772e4dc25e5d330e9f39e56375d88b

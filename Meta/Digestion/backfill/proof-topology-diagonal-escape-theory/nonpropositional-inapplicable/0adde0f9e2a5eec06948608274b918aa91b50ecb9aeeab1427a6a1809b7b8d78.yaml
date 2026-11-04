@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0adde0f9e2a5eec06948608274b918aa91b50ecb9aeeab1427a6a1809b7b8d78
+  normalized_sha256: sha256:0adde0f9e2a5eec06948608274b918aa91b50ecb9aeeab1427a6a1809b7b8d78
+cas_ref: sha256:0adde0f9e2a5eec06948608274b918aa91b50ecb9aeeab1427a6a1809b7b8d78
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有 PM.4 章节标题，没有反馈质量不等式。
+    previous_atom_id: 31b09d12d1abacd0373eb75c838582503d00a11a9c250dbc56ddacd950e126d9
+    next_atom_id: cc581f8ff651a24044505d6c957710dee47cfc57e1f1d0c32e3858524d8dc1ae

@@ -1,0 +1,16 @@
+### 命题 5.5（共同内部参照限制单侧复反射）
+
+在已给二比特联合接口中，矩阵转置 $\Theta(X)=X^T$ 不能作为保持全部内部参照正性的局部过程。
+
+**证明。**
+取 $\lvert \Omega_2\rangle =(\lvert 00\rangle +\lvert 11\rangle )/\sqrt2$。直接展开得
+
+$$
+(\operatorname{id}\otimes\Theta)(\lvert \Omega_2\rangle \langle \Omega_2\rvert )=\tfrac12F,
+ \qquad F\lvert ij\rangle =\lvert ji\rangle .
+$$
+
+它在反对称单位向量 $(\lvert 01\rangle -\lvert 10\rangle )/\sqrt2$ 上的自比较为 $-1/2$，所以违反正性和核续写。
+
+在 qubit 坐标中，转置使 Bloch 的 $y$ 分量反号。因而在同一联合与参照接口下，这种单侧反射不能作为对全部联合输入有效的局部过程；被动换坐标并同步改写比较约定不受此结论排除。这不否定整个关系模型 $K\mapsto\bar K$ 的相容性，也不证明整体共轭是一个可执行量子门，更没有把 Bloch 反射直接认作物理空间宇称。
+

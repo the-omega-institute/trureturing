@@ -1,0 +1,95 @@
+**Theorem 117.2 (the actual source has a strictly positive deterministic-time entrance density).** For every $t>0$ there is a unique real nonnegative $g_t\in L^2(G,m)$ such that, for every bounded complex Borel function $f$ on $G$,
+
+$$
+\begin{gathered}
+\mathbb E_e[f(Z_t)]
+ =\operatorname{tr}(T_t[f])
+ =\langle g_t,[f]\rangle_m
+ =\int_G g_t f\,dm,\\
+\mathbb P_e(Z_t\in dy)=g_t(y)m(dy),\qquad
+\int_Gg_t\,dm=1,\qquad g_t>0\quad m\text{-a.e.}
+\end{gathered}
+\tag{117.2}
+$$
+
+Here $[f]$ is the $L^2(m)$ class of the given Borel function. The density is unique as an $L^2$ class; strict positivity is asserted almost everywhere for each fixed $t>0$. For every $r>0$ the complex-linear functional $\ell_t(v)=\operatorname{tr}(T_tv)$ on the full complex space satisfies
+
+$$
+\begin{gathered}
+|\ell_t(v)|^2
+ \le \frac{\sup_{\lambda\ge0}(\lambda+r)e^{-2t\lambda}}
+              {r d_r}\,\|v\|_{L^2(m)}^2,\qquad
+\|g_t\|_{L^2(m)}^2
+ \le \frac{\sup_{\lambda\ge0}(\lambda+r)e^{-2t\lambda}}
+              {r d_r},\\
+g_{t+s}=T_sg_t\quad(t>0,\ s\ge0).
+\end{gathered}
+\tag{117.3}
+$$
+
+The expectation identity extends to every Borel representative of a complex $L^2(m)$ vector, with absolute integrability at each positive time. In particular it is insensitive to all Borel $m$-null modifications at such a time, including modifications at the nonpolar source itself. No density is asserted at time zero, when the actual law is $\delta_e$.
+
+**Proof.** Spectral smoothing gives $T_tv\in D(K^{1/2})=\mathscr V$ for $t>0$ and every complex $v\in L^2(m)$. If $E_K$ is the spectral resolution of $K$, then the original trace bound (116.4) gives
+
+$$
+\begin{aligned}
+|\operatorname{tr}(T_tv)|^2
+ &\le\frac{\mathscr E_r[T_tv]}{r d_r}\\
+ &=\frac1{r d_r}\int_{[0,\infty)}
+       (\lambda+r)e^{-2t\lambda}\,d\langle v,E_K(\lambda)v\rangle_m\\
+ &\le\frac{\sup_{\lambda\ge0}(\lambda+r)e^{-2t\lambda}}
+              {r d_r}\,\|v\|_2^2.
+\end{aligned}
+\tag{117.4}
+$$
+
+The supremum is finite, for example it is at most $r+(2\mathrm e t)^{-1}$, and $r d_r>0$ by (116.4). The complex Hilbert-space Riesz theorem therefore supplies a unique vector $g_t$ with $\ell_t(v)=\langle g_t,v\rangle_m$. The order of the pairing follows from its antilinear first slot and the linearity of $\ell_t$; no restriction to a real subspace is made in this construction. The operator-norm bound for the functional is exactly the bound for $\|g_t\|_2$ in (117.3).
+
+For real $v\ge0$ almost everywhere, the Markov property gives $T_tv\ge0$ almost everywhere. Its quasi-continuous form representative is nonnegative quasi-everywhere: its negative part is the zero form vector and thus has quasi-continuous version zero. Since $e$ is nonpolar, (116.3) implies $\operatorname{tr}(T_tv)\ge0$. Real inputs also have real trace. Testing the Riesz identity on all real vectors first makes $g_t$ real, and testing on its negative part gives
+$0\le\ell_t((g_t)_-)=-\|(g_t)_-\|_2^2$. Hence $g_t\ge0$. Conservation and the unchanged source trace give
+$\int g_t\,dm=\ell_t(1)=\operatorname{tr}1=1$. This proves positivity and mass without assigning a value to an arbitrary $L^2$ representative at $e$.
+
+We next identify the functional with the actual deterministic-time process law. Proper association is used in its semigroup sense: for each $t>0$ and each bounded real Borel $f$, the function
+$x\mapsto\mathbb E_x[f(Z_t)]$, on the complement of the properly exceptional set of the process, is a quasi-continuous version of $T_t[f]$. Two quasi-continuous versions of this form vector agree quasi-everywhere. Both that exceptional set and the set on which the versions could differ have zero capacity; neither can contain the positive-capacity singleton $\{e\}$. Consequently, for this very $t$ and this given Borel representative,
+
+$$
+\mathbb E_e[f(Z_t)]
+ =\widetilde{T_t[f]}(e)
+ =\operatorname{tr}(T_t[f])
+ =\langle g_t,[f]\rangle_m.
+\tag{117.5}
+$$
+
+This is an evaluation of the properly associated transition function, rather than an inference from equality of Laplace transforms or equality for almost every time. The argument applies separately to every fixed $t>0$ and every bounded Borel $f$, and never requires an uncountable union of exceptional sets to avoid $e$: no individual polar set can contain $e$. Real and imaginary parts prove the bounded complex identity. In particular, applying it to $f=\mathbf1_A$ for an arbitrary Borel $m$-null set $A$ proves $\mathbb P_e(Z_t\in A)=0$. Thus even null sets of positive capacity cause no representative ambiguity in the positive-time law. Applying bounded truncations to the absolute value of a Borel $L^2$ representative and using
+$\int g_t|v|\,dm\le\|g_t\|_2\|v\|_2$ proves absolute integrability and extends (117.5) to that representative. Uniqueness of the density also follows from these bounded Borel tests.
+
+For every complex $v\in L^2(m)$, the semigroup identity and self-adjointness give
+
+$$
+\langle g_{t+s},v\rangle_m
+ =\operatorname{tr}(T_tT_sv)
+ =\langle g_t,T_sv\rangle_m
+ =\langle T_sg_t,v\rangle_m.
+\tag{117.6}
+$$
+
+Riesz uniqueness proves the last line of (117.3). To obtain strict positivity, use precisely the irreducibility argument of Theorem 116.3: a semigroup-invariant indicator is a zero-energy vector, and the full integral energy forces such a vector to be constant on connected $M$. Hence there is no invariant set with both it and its complement of positive $m$-measure. The standard equivalence between this irreducibility and positivity improvement is [Lenz–Stollmann–Veselić, *The Allegretto–Piepenbrink Theorem for Strongly local forms*, arXiv:0811.2135v1, §1, Theorem 1.1](https://arxiv.org/html/0811.2135v1#S1.Thmtheorem1). Its form $\mathfrak h$ is here the densely defined closed nonnegative $\mathscr E$ on $L^2(G,m)$, its operator is $K$, and its positivity-preserving semigroup is the actual $T_t$. These are the hypotheses of that equivalence; no Harnack principle, pointwise heat-kernel regularity or spectral gap is required. It gives $T_su>0$ almost everywhere whenever $s>0$ and $u\ge0$ is nonzero. Since $g_{t/2}$ has mass one,
+
+$$
+g_t=T_{t/2}g_{t/2}>0\quad m\text{-a.e.}
+\tag{117.7}
+$$
+
+This proves (117.2) for the source-start process itself.
+
+There is also an exact consistency check with the original source resolvent. For bounded complex Borel $f$, (117.2) and (116.14) imply
+
+$$
+\int_0^\infty e^{-rt}\left(\int_Gg_t f\,dm\right)dt
+ =\mathbb E_e\int_0^\infty e^{-rt}f(Z_t)\,dt
+ =\frac1{r d_r}\int_Gb_r f\,dm.
+\tag{117.8}
+$$
+
+Both iterated expectation integrals are justified by the absolute bound $\|f\|_\infty/r$ and conservation. The left integrand is measurable by its equality with the actual transition expectation; no jointly pointwise choice of the $L^2$ densities is needed. Thus (116.14) is the Laplace-time average of the deterministic-time laws already identified in (117.5), with the same discount and clock. It is not substituted for those laws. $\square$
+

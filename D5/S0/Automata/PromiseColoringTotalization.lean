@@ -45,13 +45,16 @@ structure Coloring (D : Set (List Alphabet)) (f : D → Output)
     color left = color right →
       color ⟨left.val ++ [symbol], hl⟩ = color ⟨right.val ++ [symbol], hr⟩
 
-private def terminal {D : Set (List Alphabet)} (word : D) : Prefixes D :=
+/-- A legal word is itself a prefix, with the empty continuation. -/
+def terminal {D : Set (List Alphabet)} (word : D) : Prefixes D :=
   ⟨word.val, ⟨[], by simpa only [List.append_nil] using word.property⟩⟩
 
-private def root {D : Set (List Alphabet)} (seed : D) : Prefixes D :=
+/-- A legal seed witnesses that the empty word is a prefix. -/
+def root {D : Set (List Alphabet)} (seed : D) : Prefixes D :=
   ⟨[], ⟨seed.val, by simpa only [List.nil_append] using seed.property⟩⟩
 
-private theorem terminal_eq {D : Set (List Alphabet)} {f : D → Output}
+/-- Properness under the empty continuation makes each terminal color's output unique. -/
+theorem terminal_eq {D : Set (List Alphabet)} {f : D → Output}
     {Color : Type w} (c : Coloring D f Color) (left right : D)
     (same : c.color (terminal left) = c.color (terminal right)) :
     f left = f right := by
@@ -95,7 +98,8 @@ noncomputable def complete {D : Set (List Alphabet)} {f : D → Output}
   accept := ∅
   output := completedOutput c seed
 
-private theorem completedStep_eq {D : Set (List Alphabet)} {f : D → Output}
+/-- The totalized transition agrees with every observed legal prefix successor. -/
+theorem completedStep_eq {D : Set (List Alphabet)} {f : D → Output}
     {Color : Type w} (c : Coloring D f Color) (seed : D)
     (p : Prefixes D) (symbol : Alphabet)
     (hp : p.val ++ [symbol] ∈ Prefixes D) :
@@ -107,7 +111,8 @@ private theorem completedStep_eq {D : Set (List Alphabet)} {f : D → Output}
   exact c.consistent (Classical.choose existsSource) p symbol
     (Classical.choose_spec existsSource).2 hp (Classical.choose_spec existsSource).1
 
-private theorem completedOutput_eq {D : Set (List Alphabet)} {f : D → Output}
+/-- The totalized output agrees with the prescribed output of every legal word. -/
+theorem completedOutput_eq {D : Set (List Alphabet)} {f : D → Output}
     {Color : Type w} (c : Coloring D f Color) (seed word : D) :
     completedOutput c seed (c.color (terminal word)) = f word := by
   classical
@@ -117,7 +122,8 @@ private theorem completedOutput_eq {D : Set (List Alphabet)} {f : D → Output}
   exact terminal_eq c (Classical.choose existsLabel) word
     (Classical.choose_spec existsLabel)
 
-private theorem complete_reaches {D : Set (List Alphabet)} {f : D → Output}
+/-- Evaluation of the completed machine reaches the color of each legal prefix. -/
+theorem complete_reaches {D : Set (List Alphabet)} {f : D → Output}
     {Color : Type w} (c : Coloring D f Color) (seed : D)
     (word : List Alphabet) (legal : word ∈ Prefixes D) :
     (complete c seed).toDFA.eval word = c.color ⟨word, legal⟩ := by
@@ -132,7 +138,8 @@ private theorem complete_reaches {D : Set (List Alphabet)} {f : D → Output}
       rw [DFA.eval_append_singleton, ih parent]
       exact completedStep_eq c seed ⟨word, parent⟩ symbol legal
 
-private theorem complete_correct {D : Set (List Alphabet)} {f : D → Output}
+/-- The completed total machine is correct on the entire promise domain. -/
+theorem complete_correct {D : Set (List Alphabet)} {f : D → Output}
     {Color : Type w} (c : Coloring D f Color) (seed : D) :
     CorrectOnFamily (complete c seed) Subtype.val f := by
   intro word

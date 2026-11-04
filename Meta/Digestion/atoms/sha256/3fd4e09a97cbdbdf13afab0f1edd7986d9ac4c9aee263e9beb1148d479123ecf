@@ -1,0 +1,57 @@
+### 命题 21.1（支撑转置混合与完全正上限的失效）
+
+固定定义 15.1 的同一设计、原输出 $K$ 与指定 $J$。设 $P$ 为输入上秩 $r\ge2$ 的正交投影，$0<a\le1$，$E=a^2P$。在 $PH$ 的固定正交基中取转置 $\mathsf T_P$，转置后的算子仍按零延拓视为 $H$ 上算子。对 $0<\varepsilon\le1$ 定义
+
+$$
+T_\varepsilon(X)
+=a^2J\bigl((1-\varepsilon)PXP+\varepsilon\mathsf T_P(PXP)\bigr)J^\dagger.
+\tag{21.1}
+$$
+
+这是具有同一效果 $E$ 的正复线性分支，满足 $\lambda=\ell_0=0$，并且
+
+$$
+Q=\frac{a^2r(r+1)}{d(d+1)},\qquad
+D=a^2\varepsilon r(r-1),\qquad
+\delta=\frac{a^2\varepsilon r(r-1)}{d(d+1)}\longrightarrow0.
+\tag{21.2}
+$$
+
+每个 $\varepsilon>0$ 的 $T_\varepsilon$ 均非完全正。若 $r\ge3$，另有
+
+$$
+\|T_1-L\|_\diamond
+\ge a^2\left(r+1-\frac2r\right)>2M,\qquad M=a^2.
+\tag{21.3}
+$$
+
+因此正分支的任意小正缺陷不推出精确完全正性，定理 6.1 的 CP 上限 $2M$ 不能移用于全部正分支。
+
+**证明。** 压缩与转置都保正，后接指定等距也保正；转置保迹，所以 $T_\varepsilon^\dagger(I_K)=a^2P$。全部输出落在 $JPH$，故两种泄漏均为零。写 $\Omega_{P,J}=\sum_{i\le r}e_i\otimes Je_i$，并把 $PH\otimes JPH$ 上的交换算子记为 $\mathsf S_{P,J}$，即 $\mathsf S_{P,J}(e_i\otimes Je_j)=e_j\otimes Je_i$。Choi 矩阵为
+
+$$
+C_{T_\varepsilon}
+=a^2\bigl((1-\varepsilon)|\Omega_{P,J}\rangle\langle\Omega_{P,J}|
+          +\varepsilon\mathsf S_{P,J}\bigr),
+\tag{21.4}
+$$
+
+在该空间外为零。于是 $s=ar$、$t=a^2r$、
+
+$$
+z=a^2\bigl((1-\varepsilon)r^2+\varepsilon r\bigr).
+$$
+
+代入 (16.8) 与 (20.8) 即得 (21.2)，原有限设计没有被替换。反对称向量 $e_i\otimes Je_j-e_j\otimes Je_i$ 与 $\Omega_{P,J}$ 正交，是 (21.4) 本征值 $-a^2\varepsilon$ 的向量。因此 Choi 矩阵非正半定。完全正映射必有正半定 Choi 矩阵，故这些分支均非完全正。
+
+对 $\varepsilon=1$，取参考维数 $r$ 的归一化最大纠缠投影作为数学范数测试输入。误差输出等距于
+
+$$
+\frac{a^2}{r}
+ \bigl(\mathsf S_{P,J}-|\Omega_{P,J}\rangle\langle\Omega_{P,J}|\bigr).
+$$
+
+括号内沿 $\Omega_{P,J}$ 的本征值为 $1-r$，对称正交补上的本征值为一，反对称子空间上的本征值为负一；后二者维数分别为 $r(r+1)/2-1$ 和 $r(r-1)/2$。故其迹范数乘 $a^2/r$ 后为 $a^2(r+1-2/r)$，得到 (21.3)。这是 diamond 范数下界的数学证书，未声明原菜单实际供应了该参考输入。$\square$
+
+此处转置的 Choi 非正性与全支撑模型沿用标准边界；(21.1) 保留奇异效果与指定 $J$。平方根误差阶、维数依赖及稀有成功的下界直接复用本卷命题 6.2 及其后条件化例，不再作为新下界另行重述。其 CP 子类已包含于定理 20.2 的正分支类，故这些原有障碍仍适用；它们不确定 (20.5) 的最优常数或最优秩依赖。
+

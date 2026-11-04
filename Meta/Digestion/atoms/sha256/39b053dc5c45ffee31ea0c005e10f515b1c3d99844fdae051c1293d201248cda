@@ -1,0 +1,14 @@
+### 2.3 三方向的有向体积成为内部复数
+
+用实数对构造 $\mathbb C_J=\{s+Jt\}$，其中 $J^2=-1$。在 $\mathbb C_J\oplus\mathbb C_J^3$ 上定义
+
+<a id="eq-c117-product"></a>
+
+$$
+(\alpha,a)(\beta,b)
+ =(\alpha\beta+a\cdot b,\alpha b+\beta a+J(a\times b)).
+\tag{6}
+$$
+
+这里的点积、叉积作复双线性延伸。
+

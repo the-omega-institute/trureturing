@@ -1,0 +1,29 @@
+## 6. Mathematical sources, correspondence, and remaining questions
+
+The independent-representative theorem, ordered additive growth,
+equality rigidity, and elementary sparse paving structure are classical
+ingredients. The substantive inference here is their composition in
+Theorem 2.1 and the necessary-and-sufficient original-domain
+classification in Theorem 3.3 and Corollary 3.4. In particular the
+necessity direction classifies every failing specified source basis
+for every allowed target, rather than merely producing an interval
+counterexample. The supplied one-deleted-base construction and
+punctured-interval family are intermediate examples, not new results
+of this volume. These distinctions make no assertion of worldwide
+originality, priority, or exhaustive literature coverage.
+
+| Mathematical source | Exact use and parameter correspondence |
+| --- | --- |
+| [AZ] M. Aliabadi and S. Zerbib, *Matchings in matroids over abelian groups*, [arXiv:2202.07719v3](https://arxiv.org/pdf/2202.07719v3), [DOI](https://doi.org/10.1007/s10801-024-01308-z) | Definition 1.3, p. 2, supplies the matching convention: its rank $n$ is $r$, its ground sets are $A,B$, and exclusion is from $A$. Question 2.7, p. 5, has the one-element-gap and equality disjunction. Theorem 3.3, p. 8, gives sparse paving structure; Theorem 3.6, p. 9, states Rado's criterion; Theorem 3.8, p. 10, states orderability. Lemma 3.14, p. 12, has the exact defect in Proposition 5.1 and supplies no inference here. Corollary 2.5 requires $|A|<|B|-1$; Theorem 2.1 includes the missing one-element gap. |
+| [Rado] R. Rado, *A theorem on independence relations*, [DOI](https://doi.org/10.1093/qmath/os-13.1.83); the finite matroid statement is reproduced in [AZ, Theorem 3.6] | The proof of Theorem 2.1 uses this classical criterion, with the index set $S$, the representative sets $C_s$, and matroid $N$. Its proof includes contraction and all finite induction cases. No linear-representability assumption is introduced. |
+| [Bonin] J. E. Bonin, *Sparse paving matroids, basis-exchange properties, and cyclic flats*, [arXiv:1011.1010v1](https://arxiv.org/pdf/1011.1010v1), Introduction and Lemma 2.1 | The Introduction states equivalence of dual paving with the rank-sized basis-or-circuit-hyperplane characterization; Lemma 2.1 gives the one-exchange property. The proof of Theorem 2.1 derives the rank facts used here directly from the dual rank identity and paving. The cardinality of a hyperplane, not a choice of linear realization, is decisive. |
+| [Family] [AliabadiZerbibMatroidMatching](../../../D5/S3/Combinatorics/Matroids/AliabadiZerbibMatroidMatching.lean) | The supplied predicates give the same paving and matching conventions. The supplied `allowed_exchange`, `extend_avoiding`, `punctured`, dual-basis and small-independence arguments give the one-deleted-base construction; `family_sparse_paving` and `family_not_matched` supply the all-parameter interval family. Its $n,s$ correspond to $r,m-r$; its initial basis has $a=d=1$, $j=0$. Section 4 recovers that supplied family. Theorems 2.1 and 3.3 are additional prose deductions, not additional assertions about the supplied declarations. |
+| [AWY] M. Aliabadi, Y. Wu and S. Yermolenko, *Matchings in matroids over abelian groups, II*, [arXiv:2412.04516v4](https://arxiv.org/html/2412.04516v4), Theorem 3.2 | That sufficient result assumes positive ground sets, cardinality $n+1$, and $\max E(M)\preceq n\min E(N)$. Those hypotheses are not imposed here. The cited theorem is not a supplier for either main proof. |
+| [AK] M. Aliabadi and E. Krop, *Matchings in Matroids over Abelian Groups, III*, [arXiv:2509.14339v2](https://arxiv.org/html/2509.14339v2), Lemma 2.8 and Claim 3.3 | Propositions 5.1 and 5.2 address these exact statement/condition pairs. Neither lemma nor claim supplies a main proof step. Theorem 3.9(1), and Theorem 3.10(1) at hyperplane-nullity parameter $t=1$, retain $|A|<|B|-1$. No inference about unrelated results is made from those defects. |
+
+The target in Theorems 2.1 and 3.3 is the independently specified
+matroid of Definition 1.3 with all of its actual bases. The results
+settle the stated torsion-free strict-gap problem and classify the
+stated equal-size failures. They do not claim that the unrestricted
+disjunctive Question 2.7 is affirmative.
+

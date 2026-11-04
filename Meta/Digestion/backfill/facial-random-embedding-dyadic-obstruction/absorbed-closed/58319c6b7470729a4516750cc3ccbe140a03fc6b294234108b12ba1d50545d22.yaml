@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:58319c6b7470729a4516750cc3ccbe140a03fc6b294234108b12ba1d50545d22
+  normalized_sha256: sha256:58319c6b7470729a4516750cc3ccbe140a03fc6b294234108b12ba1d50545d22
+cas_ref: sha256:58319c6b7470729a4516750cc3ccbe140a03fc6b294234108b12ba1d50545d22
+coverage_gids:
+  - gid: D5/S3/Combinatorics/PerfectMatchings/SerialEndpointPairing.serial_endpoint_pairing
+    target_statement_id: sha256:c75e0df2a74d92c4dd3edb7690d7ec8e2fd6d15a6e4358fb402420a0aa845ef0
+receipts:
+  unresolved_subitems: []

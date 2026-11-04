@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c31a9816d66685d45bc7ef19dd1dd865ee555cc74947b2621f77a102db899210
+  normalized_sha256: sha256:c31a9816d66685d45bc7ef19dd1dd865ee555cc74947b2621f77a102db899210
+cas_ref: sha256:c31a9816d66685d45bc7ef19dd1dd865ee555cc74947b2621f77a102db899210
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节任务与适用范围说明：指定需要保持的未来物理读出，排除消息、费用、档案和时钟任务；不提供容量公式、等价关系或独立数学断言。
+    previous_atom_id: 15b1246609d5dba4aa4620d63e03d9f8def4ca3e0a95efc30a19a4977dbffe4a
+    next_atom_id: 5f134a6e2206f8618a9e1599404281c9f000c52321516b6fe66c36e11fb87a91

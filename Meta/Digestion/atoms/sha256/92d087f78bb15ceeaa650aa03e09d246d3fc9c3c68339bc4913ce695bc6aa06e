@@ -1,0 +1,4 @@
+**(C3) Theorem 3.2 (arrival recovery).** At every actual arrival $R_i$, the disclosed point satisfies $P_i=Z_{R_i}$ and is acquired exactly at that stopping time. This does not contradict Theorem 3.1: a random release time is not a fixed deterministic cut.
+
+**Proof.** Equality is part of the causal service contract. Countably many indexed releases share one probability-one event. Lemma 2.2 says each fixed deterministic time misses all arrivals almost surely, while a genuine indexed arrival discloses its current point. A later arrival supplies a later point, not the point at an earlier deterministic cut. ∎
+

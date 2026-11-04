@@ -1,0 +1,11 @@
+**Proposition 32.2 (both arithmetic restrictions matter).** Keeping the actual $R_p$ producer while dropping the coefficient restriction can invalidate the same stopping certificate. Keeping the coefficient restriction while permitting arbitrary rational producer pulses can also invalidate it.
+
+Proof. For the first assertion take $p=3$,
+
+$$
+T=\begin{pmatrix}5/12&1/12\\1/12&5/12\end{pmatrix},
+\tag{UFS.80}
+$$
+
+whose eigenvalues are $1/2,1/3$. The actual producer Add$(-1)$; Tick starts from zero and uses only $R_3$ inputs. Its handover field is $-Te_0$. Add$(1/3)$ then leaves $(-1/12,-1/12)^{\mathsf T}$, an eigenvector of eigenvalue $1/2$. The observed response has nonzero $y_0$ and singular $Y_1$, despite order two. The coefficients of (UFS.80) are not in $R_3$, so reduction of $h(T)$ was unavailable. For the second assertion, on any allowed coefficient matrix, the arbitrary rational producer Add$(-1/p)$ leaves $-e_0/p$ and the marker cancels it completely. All $y_j$ vanish. That pulse lies outside $R_p$. Neither example is an obstruction to all other acquisition strategies. $\square$
+

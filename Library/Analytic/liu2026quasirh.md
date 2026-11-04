@@ -2649,3 +2649,333 @@ its full smooth moments agree with the retained earlier baseline. These
 finite outputs give no uniform power estimate or local Lean certification.
 The upper bound required in (C20), full inverse-fourth improvement,
 signed Robin restoration and RH remain unproved.
+
+## The actual radial column mean with both Type-II coefficients
+
+Consider the corefree, $e=1$, common-column-gcd $1$ branch of the
+Gauss interface in [J29](../Fourier/liu2026quasirhdual.md). Its
+untwisted radial component has column coefficient
+$c_s^{\rm rad}=\mathbf1_{s\ {\rm sf}}\sum_{uv=s}
+b_U(u)b_U(v)V_1(q_u/D)V_2(q_v/D)$ after the fixed component scalars
+are separated. This section estimates that component's column mean;
+the other phases of $c_s$ retain their original definitions.
+Here $K=\mathbb Q(\sqrt{-3})$, $q_d=Nd$, and ideals, equivalently their
+chosen primary representatives, are counted once. Keep the original
+fixed bad-prime set $S$, $D=U^{1/2}$ and $A=U^{1/12}=D^{1/6}$.
+Reuse (C37), on the original squarefree inverse annulus, as
+$b_U(d)=\lambda_{\mathrm{II},b}(d)=\mu(d)+K_A(d)$, with the same
+$W=1$ on $[0,1]$, $W=0$ on $[2,\infty)$.
+
+Let $V_1,V_2$ be fixed smooth compact annular profiles within that
+annulus, and let $\Phi$ be smooth on their product annulus. Write
+$\Psi(x,y)=V_1(x)V_2(y)\Phi(xy)$ and, for squarefree good $P$ with
+$q_P\le U^{1/6}=A^2$, define
+
+$$
+\begin{aligned}
+M(P;\Phi)&=\sum_{\substack{uv\ {\rm sf}\\(uv,SP)=1}}
+ b_U(u)b_U(v)\Psi(q_u/D,q_v/D)
+ =\sum_{\substack{s\ {\rm sf}\\(s,SP)=1}}c_s^{\rm rad}\Phi(q_s/U),\\
+I_\Phi&=\int_0^\infty\!\int_0^\infty
+ V_1(x)V_2(y)\Phi(xy)\,dx\,dy.
+\end{aligned}
+\tag{C41}
+$$
+
+The condition $uv$ squarefree includes $(u,v)=1$. There is no
+replacement of either $b_U$ by a smooth weight. With
+$\kappa=\operatorname*{Res}_{s=1}\zeta_K(s)$, put
+
+$$
+\begin{aligned}
+C_P&=\kappa^2\prod_{p\in S}(1-q_p^{-1})^2
+ \prod_{p\notin S}(1+2q_p^{-1})(1-q_p^{-1})^2
+ \prod_{p\mid P}(1+2q_p^{-1})^{-1},\\
+\Theta_A(P)&=\sum_{\substack{e,f\ {\rm sf}\\(e,f)=1\\(ef,SP)=1}}
+ \frac{\mu(e)\mu(f)2^{\omega(e)+\omega(f)}
+ W(q_e/A)W(q_f/A)}{\prod_{p\mid ef}(q_p+2)}.
+\end{aligned}
+\tag{C42}
+$$
+
+This is a coupled truncated inverse: primes cannot occur in both $e$
+and $f$. In particular it is not the square of an independent sum.
+The product defining $C_P$ converges absolutely, and $0<C_P\ll1$.
+
+**Absolute-error expansion.** Unconditionally, for every $\varepsilon>0$
+there are $c,c'>0$ and a finite $J$ such that, uniformly in this $P$,
+
+$$
+\boxed{\begin{aligned}
+M(P;\Phi)&=U C_P I_\Phi\Theta_A(P)
+ +O_\varepsilon\!\left(\mathcal N_J
+ [Ue^{-c\sqrt{\log U}}+U^{19/24+\varepsilon}]\right),\\
+|\Theta_A(P)|&\ll e^{-c'\sqrt{\log A}}.
+\end{aligned}}
+\tag{C43}
+$$
+
+Here $\mathcal N_J=\max_{0\le i,j\le J}\|\partial_x^i
+\partial_y^j\Psi\|_\infty$ on a fixed rectangle containing the support;
+constants depend on $K,S,W$, the supports and $\varepsilon$.
+The statement also holds for any smooth $\Psi$ on that rectangle, with
+$I_\Phi$ replaced by $\iint\Psi$. Fixed or polylogarithmic seminorm
+costs remain explicit. This is neither a relative asymptotic nor a
+lower bound for the actual $\Theta_A(P)$.
+
+**The $K_AK_A$ term.** Expand the two divisor sums and fix $e\mid u$,
+$f\mid v$. Only squarefree coprime $e,f$ outside $SP$ survive. For
+$\Re s,\Re t>1$ their pair Dirichlet series is
+$\zeta_K(s)\zeta_K(t)G_{e,f,P}(s,t)$. With $x=q_p^{-s}$,
+$y=q_p^{-t}$, the local factors of $G$ are
+
+$$
+\begin{array}{c|c}
+p\notin SefP&(1+x+y)(1-x)(1-y)\\
+p\mid e&x(1-x)(1-y)\\
+p\mid f&y(1-x)(1-y)\\
+p\mid SP&(1-x)(1-y).
+\end{array}
+$$
+
+The unforced factor has no linear terms. Thus this literal product is
+normally convergent for $\Re s,\Re t>1/2$. No division by
+$1+x+y$, which can vanish off the real axes, is used to continue it.
+On fixed closed substrips it satisfies
+$G_{e,f,P}(s,t)\ll_\eta(q_eq_fq_P)^\eta
+q_e^{-\Re s}q_f^{-\Re t}$ for every $\eta>0$.
+At $s=t=1$, forcing $p$ into $u$ changes its base factor by
+$q_p^{-1}/(1+2q_p^{-1})=(q_p+2)^{-1}$; the same holds for $v$.
+Excluding $p\mid P$ changes it by $(1+2q_p^{-1})^{-1}$.
+These are exactly the factors in (C42).
+
+Apply double smooth Mellin inversion, with
+$\widehat\Psi(s,t)=\iint\Psi(x,y)x^{s-1}y^{t-1}\,dx\,dy$.
+Shift each line from $1+\delta$ to $\sigma=1/2+\delta$.
+The double residue is $U C_P I_\Phi/\prod_{p\mid ef}(q_p+2)$.
+The two single-residue integrals and the double shifted integral have
+combined error
+
+$$
+\begin{aligned}
+E_{e,f}&\ll\mathcal N_J(q_eq_fq_P)^\eta
+ \left[D^{1+\sigma}(q_e^{-\sigma}q_f^{-1}
+                 +q_e^{-1}q_f^{-\sigma})
+       +D^{2\sigma}(q_eq_f)^{-\sigma}\right],\\
+E_{KK}&\ll_\varepsilon\mathcal N_J U^\varepsilon
+ (D^{3/2}A^{1/2}+DA)
+ \ll_\varepsilon\mathcal N_J U^{19/24+\varepsilon}.
+\end{aligned}
+\tag{C44}
+$$
+
+Indeed $q_e,q_f\le2A$, $|\mu(e)|2^{\omega(e)}\le\tau(e)$,
+$\sum_{q_e\le2A}\tau(e)q_e^{-\sigma}\ll
+A^{1-\sigma}\log(2A)$ and
+$\sum_{q_e\le2A}\tau(e)/q_e\ll\log^2(2A)$.
+Choose $\delta,\eta$ small in terms of $\varepsilon$ and use the
+fixed-field polynomial vertical growth of $\zeta_K$ and rapid Mellin
+decay. Horizontal integrals vanish. The precise scale arithmetic is
+$D^{3/2}A^{1/2}=U^{3/4+1/24}=U^{19/24}$ and $DA=U^{7/12}$.
+Both mixed contours are needed for the first exponent.
+
+**All three terms containing $\mu$.** The mature analytic inputs here
+are the classical fixed-field de la Vallée Poussin zero-free theorem,
+its prime-ideal theorem, and smooth Mellin inversion (for the latter
+see [DLMF §2.5](https://dlmf.nist.gov/2.5)). In this field
+$\zeta_K(s)=\zeta(s)L(s,\chi_{-3})$. Precisely, one may fix $c_0,B_0>0$
+so that its reciprocal is holomorphic, taking value $0$ at $1$, in
+$\Re s\ge1-c_0/\log(3+|\Im s|)$ and is bounded there by a fixed
+power of $\log(3+|\Im s|)$ after narrowing $c_0$.
+The fixed conductor allows any fixed exceptional-zero issue to be
+absorbed in $c_0$; there is no moving-conductor assertion. The associated
+PNT gives the prime-ideal reciprocal sum bound used below. Ordinary
+ideal counting gives $\#\{d:q_d\le X\}\ll_K X$.
+
+For any fixed $C$ and smooth annular $F$, these inputs imply the uniform
+deleted-factor Möbius bound
+
+$$
+\begin{aligned}
+S_r(D;F)&:=\sum_{(d,r)=1}\mu(d)F(q_d/D)
+ \ll_C\|F\|_{C^J}D e^{-c_C\sqrt{\log D}},\qquad q_r\le D^C,\\
+\sum_{(d,r)=1}\frac{\mu(d)}{q_d^s}
+ &=\zeta_K(s)^{-1}\prod_{p\mid r}(1-q_p^{-s})^{-1}.
+\end{aligned}
+\tag{C45}
+$$
+
+To see the uniformity, truncate smooth Mellin inversion at
+$T=\exp(a\sqrt{\log D})$ and shift to
+$\Re s=1-c_0/(2\log(3+T))$. On this rectangle the deleted product
+costs only a power of $\log D$: split its primes at $(\log D)^2$.
+For small primes, $q_p^{1-\Re s}=1+o(1)$ uniformly and
+$\sum_{q_p\le X}q_p^{-1}\ll\log\log(3X)$ by the fixed-field PNT;
+for the others use $\sum_{p\mid r}\log q_p\le C\log D$.
+The large-prime contribution is $O(1)$.
+Rapid decay pays the tails and horizontal joins for a sufficiently
+large fixed $J$ and a suitable $a>0$. This proves (C45), with polynomial
+$q_r$ costing polylogarithms rather than a power loss.
+
+In the $\mu K_A$ term fix $v$ and take $r=\operatorname{rad}(SvP)$.
+The inner profile $F_v(x)=V_1(x)\Phi(xq_v/D)$ has uniformly bounded
+derivatives; $q_r\ll Dq_P\le D^{4/3}$.
+The divisor expansion and ideal counting give
+$\sum_v|K_A(v)V_2(q_v/D)|\ll D\log^2(2A)$.
+Thus the complete four-term accounting is
+
+$$
+\begin{aligned}
+M_{KK}&=U C_P I_\Phi\Theta_A(P)
+       +O_\varepsilon(\mathcal N_J U^{19/24+\varepsilon}),\\
+|M_{\mu K}|+|M_{K\mu}|+|M_{\mu\mu}|
+ &\ll\mathcal N_J U e^{-c\sqrt{\log U}},\qquad
+M=M_{KK}+M_{\mu K}+M_{K\mu}+M_{\mu\mu}.
+\end{aligned}
+\tag{C46}
+$$
+
+For $K\mu$ interchange the variables; for $\mu\mu$ the outer absolute
+mass is $O(D)$. No Möbius-containing term has been discarded.
+
+For completeness the subpower bound in (C43) follows from the same
+classical contour. Fix $f$ in (C42), set $r=\operatorname{rad}(SPf)$,
+and Mellin-invert its inner $e$ sum. Its Dirichlet series is
+$\zeta_K(1+z)^{-2}h_r(z)$, where the good local factor of $h_r$ is
+$[1-2q_p^{-z}/(q_p+2)]/(1-q_p^{-1-z})^2$ and the factor at
+$p\mid r$ is $(1-q_p^{-1-z})^{-2}$.
+This correction is normally convergent for $\Re z>-1/2$.
+The simple pole of $\widehat W(z)$ at $0$ is canceled by the double
+zero of $\zeta_K(1+z)^{-2}$. Shift to
+$\Re z=-c_0/(2\log(3+T))$, now with
+$T=\exp(a\sqrt{\log A})$. Since $q_r\ll A^3$, its deleted factors
+again cost polylogarithms. The inner sum is
+$O(e^{-c\sqrt{\log A}})$ uniformly in $f$; its outer absolute mass
+is $O(\log^2(2A))$, absorbed by decreasing $c$. This proves (C43).
+It supplies no unconditional fixed-power decay or nonzero main term.
+This is a paper-level `repo-derived` application of classical inputs
+to the actual coefficients, not a new zero-free theorem or a
+literature-priority claim.
+
+## The coupled Euler product under an explicit reciprocal strip
+
+The two-variable series behind the actual $\Theta_A(P)$ in (C42) is,
+initially for $\Re z,\Re w>0$,
+
+$$
+\begin{aligned}
+F_P(z,w)&=\prod_{p\notin SP}
+ \left(1-\frac{2(q_p^{-z}+q_p^{-w})}{q_p+2}\right)
+ =\zeta_K(1+z)^{-2}\zeta_K(1+w)^{-2}H_P(z,w),\\
+(H_P)_p&=\begin{cases}
+\displaystyle\frac{1-2(q_p^{-z}+q_p^{-w})/(q_p+2)}
+ {(1-q_p^{-1-z})^2(1-q_p^{-1-w})^2},&p\notin SP,\\[4pt]
+\displaystyle\frac1{(1-q_p^{-1-z})^2(1-q_p^{-1-w})^2},&p\mid SP.
+\end{cases}
+\end{aligned}
+\tag{C47}
+$$
+
+The correction $H_P$ is holomorphic for $\Re z,\Re w>-1/2$, by
+normal convergence. On compact real substrips its unexcluded local
+factor minus $1$ is bounded by a constant times
+$q_p^{-2-\Re z}+q_p^{-2-\Re w}+q_p^{-2-2\Re z}
++q_p^{-2-2\Re w}+q_p^{-2-\Re z-\Re w}$.
+Every exponent exceeds $1$ in that domain. The displayed denominators
+cannot vanish there; there is no mixed polar divisor, and no division
+by the possibly vanishing numerator is used. Uniformly in the imaginary
+parts on such substrips, $H_P\ll_\eta q_P^\eta$ for every $\eta>0$.
+
+**Reciprocal hypothesis.** For $1/2\le\beta<1$, let $R_\beta$ mean
+that $\zeta_K$ has no zeros in $\Re s>\beta$ and, for every
+$\delta>0$, there are finite $B_\delta,C_\delta$ such that
+
+$$
+\left|\zeta_K(\sigma+it)^{-1}\right|
+ \le C_\delta(1+|t|)^{B_\delta}
+ \quad(\sigma\ge\beta+\delta),
+\qquad \zeta_K(1)^{-1}:=0.
+\tag{C48}
+$$
+
+This is a hypothesis about the principal Dedekind zeta function itself.
+It is stronger than the classical shrinking zero-free region used in
+(C43); a nonprincipal Hecke bound does not replace it.
+
+Under $R_\beta$, double Mellin inversion gives
+$\Theta_A(P)=(2\pi i)^{-2}\iint
+\widehat W(z)\widehat W(w)A^{z+w}F_P(z,w)\,dz\,dw$.
+Move both lines to $\beta-1+\delta>-1/2$.
+Each simple pole of $\widehat W$ at $0$ is canceled by the corresponding
+double reciprocal-zeta zero, so neither shift produces a residue.
+The fixed strip margin, (C48), normal convergence of $H_P$ and rapid
+decay of $\widehat W$ pay both vertical integrals and horizontal joins.
+This gives $\Theta_A(P)\ll A^{-2(1-\beta)+2\delta}q_P^\eta$.
+Allocate $\delta,\eta$ to $\varepsilon$ using $q_P\le A^2$.
+For reciprocal growth exponent $B_\delta$, derivative order
+$J>2B_\delta+10$, enlarged for the ordinary zeta bounds in (C44),
+suffices for these Mellin steps.
+
+The same hypothesis moves the line in (C45) to $\beta+\delta$ and
+gives $S_r(D;F)\ll\|F\|_{C^J}D^{\beta+\delta}q_r^\eta$.
+Indeed the deleted product costs $q_r^\eta$ on each fixed positive
+real substrip. Keep $q_r\ll D^{4/3}$ and repeat the three outer-mass
+estimates in (C46); each Möbius-containing term is
+$O_\varepsilon(\mathcal N_J U^{(1+\beta)/2+\varepsilon})$.
+The $KK$ error is unchanged. Consequently
+
+$$
+\boxed{\begin{aligned}
+M(P;\Phi)&=U C_P I_\Phi\Theta_A(P)
+ +O_\varepsilon\!\left(\mathcal N_J
+ [U^{(1+\beta)/2+\varepsilon}+U^{19/24+\varepsilon}]\right),\\
+\Theta_A(P)&\ll_\varepsilon U^{-(1-\beta)/6+\varepsilon},\\
+M(P;\Phi)&\ll_\varepsilon\mathcal N_J
+ U^{1-(1-\beta)/6+\varepsilon}.
+\end{aligned}}
+\tag{C49}
+$$
+
+In particular, under $R_{7/8}$ the four exponents are explicit:
+
+$$
+\begin{aligned}
+\Theta_A(P)&\ll_\varepsilon U^{-1/48+\varepsilon},\qquad
+M(P;\Phi)\ll_\varepsilon\mathcal N_J U^{47/48+\varepsilon},\\
+\frac{M(P;\Phi)}U
+ &=C_P I_\Phi\Theta_A(P)
+ +O_\varepsilon\!\left(\mathcal N_J
+ [U^{-1/16+\varepsilon}+U^{-5/24+\varepsilon}]\right).
+\end{aligned}
+\tag{C50}
+$$
+
+The two unnormalized errors are $U^{15/16+\varepsilon}$ and
+$U^{19/24+\varepsilon}$; also $M/D\ll_\varepsilon
+\mathcal N_J U^{23/48+\varepsilon}$.
+The [pinned primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex)
+states the $7/8$ region in `thm:main`; `lem:logarithmic-control`
+includes the principal regularizer and conditional reciprocal bound.
+This numerical use is **source-conditional** on $R_{7/8}$, not a
+classical unconditional zero-free theorem or certification of that
+source's major proof.
+
+Equations (C41)–(C50) supply the actual radial density input missing
+from a direct use of [Xu–Sang v2, (3.9)](https://arxiv.org/html/2610.17675v2).
+They do not give a full weighted Gram formula or a positive actual
+theta main term. For a ray group of order $h$, two class indicators
+give this trivial-trivial Fourier component coefficient $h^{-2}$;
+general finite weights give their own trivial-trivial coefficient.
+The remaining ray modes, unit and angular factors, common-$e$ signed
+detector, all cores and column gcds, nonexceptional frequencies, bad
+duals and their joint profile costs still require estimates on the
+same original $\beta$ rows. No moving-$U$ replacement of $b_U$ is used.
+The complete J29/J40 contraction, signed Robin restoration and RH
+remain open; there is no Lean certification or priority claim here.
+
+## Four-factor exceptional continuation
+
+The four-factor exceptional, cutoff and interface results C51–C68,
+and their exact frequency-residue continuation C69–C76, are in the
+[Fourier note](../Fourier/liu2026quasirhdual.md#four-inverse-factors-on-the-same-coprime-realization).
+They reuse C21–C50 here with their original hypotheses and scopes.

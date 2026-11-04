@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aaa8b666bc93eb96491b6a681d655d950dec3e7a7a9abecf339ee5f9ca2a1ff8
+  normalized_sha256: sha256:aaa8b666bc93eb96491b6a681d655d950dec3e7a7a9abecf339ee5f9ca2a1ff8
+cas_ref: sha256:aaa8b666bc93eb96491b6a681d655d950dec3e7a7a9abecf339ee5f9ca2a1ff8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “prime-frequency 相位失配”仅是曲率来源清单中的概念名词，本条没有独立方程或断言。
+    previous_atom_id: 27ee2194a33625623140c30ae8487a698781223797c7e3957637291768a9ea46
+    next_atom_id: 0af8b913664be9e183df0d5b17b2ca8bbd2e1f432ecb1bca21e373e32cb8a110

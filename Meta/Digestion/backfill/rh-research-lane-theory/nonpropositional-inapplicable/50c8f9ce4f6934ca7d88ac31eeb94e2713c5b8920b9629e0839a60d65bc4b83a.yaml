@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:50c8f9ce4f6934ca7d88ac31eeb94e2713c5b8920b9629e0839a60d65bc4b83a
+  normalized_sha256: sha256:50c8f9ce4f6934ca7d88ac31eeb94e2713c5b8920b9629e0839a60d65bc4b83a
+cas_ref: sha256:50c8f9ce4f6934ca7d88ac31eeb94e2713c5b8920b9629e0839a60d65bc4b83a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 标题、源码及结果文件索引和方法范围说明；本条未给出独立数值界。
+    previous_atom_id: 1fec971cf43faa1a089578c6c8f2500e01a2ccb7d39d6b1f031df245dc32ece1
+    next_atom_id: 24f290fc4d5de93bf02d3854af8f5638cdc50814ffcc8be73101ecdfdcc3d9b6

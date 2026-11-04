@@ -1,0 +1,84 @@
+**Theorem 15.4.2 (Both-directions original-domain correspondence).**
+There is a bijection
+
+$$
+\begin{aligned}
+\mathfrak A_M&\longleftrightarrow
+\{(W,W'): \exists p\ne24,v,\ W,W'\in C(p,v),\quad
+                   W\ne W',\ m(W)=m(W')\},\\
+Z&\longmapsto
+\left((\mathscr P(s),\sum_{j=0}^3a_jt^j,-a_0),
+      (\mathscr P(s'),-\sum_{j=0}^3e_jt^j,e_0)\right),\\
+(W,W')&\longmapsto X(W)-X(W').
+\end{aligned}
+\tag{15.29}
+$$
+
+The recovered base is exactly $(p_Z,v_Z)$ and the common terminal $M$
+read is $\mu_Z$. The order passing (15.28) is unique. Negating $Z$
+exchanges the two worlds, so quotienting by $Z\sim-Z$ gives unordered
+actual pairs. There is no quotient by arbitrary nonzero scaling of $Z$.
+
+Proof. Start with an actual ordered pair. By O, Theorem 12.3, its
+sources differ, so their normalized vectors $s,s'$ are linearly
+independent. By O, Theorem 3.2, their whole gain rows are linearly
+independent: its only nonsingleton direction is the saturated family
+$K_{1/8}$, which has $p=24$ by O, Theorem 2.2 and $h(5)=0$.
+Consequently
+
+$$
+Z=X-X'=[s\ s']\begin{bmatrix}\gamma^{\mathsf T}\\-\gamma'^{\mathsf T}\end{bmatrix}
+\quad\text{has rank }2,\qquad U_Z=\operatorname{span}(s,s').
+\tag{15.30}
+$$
+
+Equal reads put $Z\in\mathcal K_M$. Theorem 15.3.1 and the mixed
+determinant polarization, with $q(s)=q(s')=0$, give
+
+$$
+q(\lambda s+\eta s')=\lambda\eta\det(P-P'),\qquad
+\det(P-P')\ne0.
+\tag{15.31}
+$$
+
+Thus the restriction is a nondegenerate split binary quadratic, with
+exactly the two actual source directions as its real zeros. In
+particular it is not an identically zero restriction or a repeated
+root. This necessary fact, rather than an additional exclusion
+assumption, supplies Definition 15.4.1's root condition. The actual
+pair gives (15.26) with $a=\gamma$, $e=-\gamma'$, so it passes every
+absolute equation in (15.28).
+
+Conversely take $Z\in\mathfrak A_M$. Its two normalized source roots
+are strictly legal by definition. Since $Z$ has rank two and $[s\ s']$
+has rank two, its coefficient matrix with rows $a^{\mathsf T}$ and
+$e^{\mathsf T}$ has rank two. Thus both recovered polynomials are
+nonzero, including when their leading coefficients vanish. The offsets
+in (15.29) enforce their acquired zero reads exactly. The sources are
+different, so the complete worlds are different. The equality
+$\mathcal L_M(Z)=0$ gives
+
+$$
+L_i(X)=L_i(X')\quad(i=1,\ldots,6,7M).
+\tag{15.32}
+$$
+
+In conjunction with all of (15.28), both worlds therefore realize the
+whole original history, the same off-24 $(p_Z,v_Z)$, and the same actual
+$M$ read $\mu_Z$. In particular neither the source roots nor the seven
+kernel equations alone would have supplied the absolute history.
+The reconstructed gains are single coefficient rows used at every
+clock; no late sample has been independently fitted.
+
+For uniqueness and orientation, interchanging $s,s'$ in (15.26) changes
+$(X,X')$ to $(-X',-X)$. By (15.32) their common read vector is the
+negative of the former common vector. The nonzero first absolute read
+$24$ allows at most one of these orders to pass (15.28).
+Definition 15.4.1 ensures that one passes. Within that order the
+coefficient rows and offsets are unique by (15.27). The actual-pair
+construction and this reconstruction are inverse. For $-Z$ the passing
+order yields $(X',X)$, so its reconstructed pair is $(W',W)$.
+Every extra root or kernel guard in Definition 15.4.1 has thus been
+proved necessary for an actual pair, and every listed guard has been
+used in the converse; no unproved additional guard remains. ∎
+

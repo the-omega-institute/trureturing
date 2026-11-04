@@ -1,0 +1,77 @@
+**Corollary 134.1 (An exact actual-history family and its full tangent LP; repo-derived).**
+Suppose the same installed $N$ of an allowed source satisfies
+$N^p=\lambda I_3$ for an integer $p\ge1$ and $|\lambda|=1$.
+Let $K=K_{\mathfrak s}$ and define the finite set of actual words
+
+$$
+\begin{gathered}
+\mathscr W_{K,p}
+ =\{N^{n_0}\epsilon_1N^{n_1}\cdots\epsilon_kN^{n_k}:
+       0\le k\le K,\ \epsilon\in\{0,1\}^k,
+                     \ 0\le n_l\le p-1\},\\
+B_{\mathfrak s,p}=K+(K+1)(p-1).
+\end{gathered}
+\tag{134.1}
+$$
+
+For every paired hypothesis in the full closed domain,
+
+$$
+\begin{aligned}
+\Delta_{\rm all}(x,x')
+ &=\max_{\substack{1\le i\le9,\ w\in\mathscr W_{K,p},\\
+                                      \beta\in\{0,1\}}}
+          |p_{\gamma,h}(u_i,w,\beta)-p_{\gamma',h'}(u_i,w,\beta)|\\
+ &=\Delta_{B_{\mathfrak s,p}}(x,x').
+\end{aligned}
+\tag{134.2}
+$$
+
+This is a finite norming family of actual existing rows for the
+full paired-law error; it is distinct in definition from the
+original decoder $P_{\mathfrak s}$. No equality of those two
+vectors or their error norms is presumed. With the literal
+coefficients of (125.4) and
+$\mathscr H=\{(i,w):1\le i\le9,w\in\mathscr W_{K,p}\}$,
+the full tangent coefficients are exactly the finite linear programs
+
+$$
+\begin{aligned}
+m_a&=\min_{x\in\mathbb R^6,\ y\in\mathbb R^2,\ v\in\mathbb R}v
+ &&\text{subject to }-v\le\beta_\rho+U_\rho\cdot x+V_\rho\cdot y
+                                 \le v\quad(\rho\in\mathscr H),\\
+n_a&=\min_{x\in\mathbb R^6,\ v\in\mathbb R}v
+ &&\text{subject to }-v\le\beta_\rho+U_\rho\cdot x
+                                 \le v\quad(\rho\in\mathscr H).
+\end{aligned}
+\tag{134.3}
+$$
+
+Both optima are attained. No periodicity of $V_0$ or $V_1$ is required.
+
+*Proof.* For each exponent in (130.8), write $n_l=pq_l+r_l$ with
+$0\le r_l<p$. Replacing $N^{n_l}$ by $N^{r_l}$ multiplies the
+unitary product only by the scalar $\lambda^{q_l}$, even with
+arbitrary intervening native labels. Their product phase cancels
+from $\Phi_Q$ and $E_{\gamma,h}(Q)$. The number $k$ and therefore
+the actual weight $2^{-k}/2$ are unchanged. Thus both raw
+probability values of the original word equal those of the reduced
+actual word, at the same prefix, for every hypothesis. The reduced
+word has length at most $k+(k+1)(p-1)\le B_{\mathfrak s,p}$.
+Theorem 129.2 now proves the first equality of (134.2).
+The reduced family is contained in all words of length at most
+$B_{\mathfrak s,p}$, which are contained in all histories; the two
+inclusions prove its second equality.
+
+The identical phase cancellation holds for the literal affine
+rows in (125.3). Corollary 129.4 therefore gives
+$\mathcal F_a(z,g)=\max_{\rho\in\mathscr H}|\ell_\rho(z,g)|$.
+Substitute the eight real columns (125.4) and take its epigraph;
+restriction to $g=0$ is exactly $y=0$. This proves (134.3), and
+Theorem 126.1 supplies attained minima. This uses only the
+finite epigraph identity already credited to Boyd–Vandenberghe
+in §128. Physically different original and reduced clocks or
+records remain different events; equality of their row functionals
+here is a mathematical equality, not a merger or a new control.
+$\square$
+

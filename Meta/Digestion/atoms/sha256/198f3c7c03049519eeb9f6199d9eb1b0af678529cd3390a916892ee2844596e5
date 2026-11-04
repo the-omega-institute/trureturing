@@ -1,0 +1,31 @@
+**Definition 27.1 (current-only recorder and event grade).** Retain
+Definition 23.1's known-alpha native domain, its actual addressed guards
+$P_p:\alpha\to\beta$ and
+$S_p:\beta\to\langle\beta,\alpha\rangle$, and all finite legal histories.
+Write $t(h)$ for the endpoint and $U(t)=[t]$ for the rooted coloured
+incidence tree with sibling order erased. A recorder assigns a finite
+binary word $J(h)$ to every such history, with
+
+$$
+J(\varepsilon)=\varepsilon,\qquad
+J(h)\preceq J(he),\qquad
+\operatorname{Dec}(U(t(h)),J(h))=t(h),
+\tag{IV.70}
+$$
+
+where $e$ is any actual enabled event and $\preceq$ is literal word
+prefix. The complete present word and its end are visible. The decoder
+has only these two inputs; no varying retained controller, archive,
+address roster, cut markers or advice is available outside $J$. Fixed
+code is common to all histories. There is no prefix-free requirement,
+no full-history injectivity requirement, and no old-cut recovery task.
+For a lower bound, $J$ and the decoder may even be arbitrary semantic
+functions satisfying (IV.70); effective attainment will separately
+require computable decoding and update from $(U,J,e)$ on the actual image.
+
+Use the successful-event grade
+$N(t)=a(t)+2c(t)-1=|h|$, where $a,c$ count alpha and beta leaves, by
+(IV.62) and AA19.1. This is not elapsed time, traffic, or an additional
+retained event counter. Supplying $U$ in (IV.70) is a mathematical input
+contract, not a physical observation port.
+

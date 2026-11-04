@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ef7bdbd0fc2f3346be1c5b1d500ea5016d495d14827235fd5b400b99af279ac
+  normalized_sha256: sha256:4ef7bdbd0fc2f3346be1c5b1d500ea5016d495d14827235fd5b400b99af279ac
+cas_ref: sha256:4ef7bdbd0fc2f3346be1c5b1d500ea5016d495d14827235fd5b400b99af279ac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节过渡和统一视角的编辑性提纲，没有指定量词、等式、包含或可验证的数学断言；具体摘要分别由其后 atom 承担。
+    previous_atom_id: d04a285711e632d159916a95c7b822035ac7e98fff2ed94be7c2f76ca19b933f
+    next_atom_id: a02bcc7bc2b3ba7548fdbc7035574e9b869c86f9b26b93ceb7739816e940239b

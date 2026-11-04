@@ -1,0 +1,50 @@
+**Definition 91.1 (all subsets of a fixed repair family).** For $k\ge1$
+put
+
+$$
+C_0=\langle\beta,\beta\rangle,\qquad
+G_0=\langle\beta,C_0\rangle,\qquad
+U_0=\alpha,\qquad U_j=\langle G_0,U_{j-1}\rangle.
+\tag{91.1}
+$$
+
+Take $u=U_k$ with the earned installation of Definition 87.1 and
+arbitrary $x\in\mathbb Q^N$. For $1\le i\le k$ name actual
+addresses
+
+$$
+\begin{aligned}
+q_i&=R^{i-1},&h_i&=q_iL,&g_i&=h_iL,&c_i&=h_iR,\\
+\ell_i&=c_iL,&r_i&=c_iR,&m_i&=\ell_iL,&n_i&=r_iL,
+\qquad z=R^k.
+\end{aligned}
+\tag{91.2}
+$$
+
+Here $g_i$ is a guard beta owner with readable marker $g_iL$;
+$c_i$ is a cherry branch with two beta owners $\ell_i,r_i$.
+Mask exactly the $2k$ inherited labels at $m_i,n_i$. The tail
+$z$ and every guard marker are readable, as are all newly created
+labels. The domain is birth-legal: every left logical leaf is beta,
+and the only alpha is the right tail. There are $3k$ beta leaves,
+$3k+1$ total terminals and $N=9k+1$ cells.
+
+For each $J\subseteq\{1,\ldots,k\}$, actually split $\ell_i$
+once for every $i\in J$, in increasing order, before any Tick.
+Let $E_J$ be the old-cell inclusion, $B_J$ the resulting adjacency,
+and $C_J$ restriction to all allowed current terminals. A repaired
+cherry has fresh readable $f_i=\ell_iR$ and fresh inherited masked
+endpoint $e_i=\ell_iLL$; old $m_i=\ell_iL$ is now internal.
+Its new edges are $\ell_i-f_i$ and $m_i-e_i$. Thus
+
+$$
+M_J=N+2|J|,\qquad
+W_J=\bigcap_{t\ge0}\ker(C_JB_J^t),\qquad
+O_J=\begin{bmatrix}C_J\\C_JB_J\\\vdots\\C_JB_J^{M_J-1}\end{bmatrix}.
+\tag{91.3}
+$$
+
+The kernel is defined on the whole grown space, allowing arbitrary
+fresh values in this algebraic question. Its restriction by $E_J$
+will separately describe the actually zero-extended entrance.
+

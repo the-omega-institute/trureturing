@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db5d7259b99083c60ec45254e2af9f541fbbe60227b6c2ff0caada1787e03650
+  normalized_sha256: sha256:db5d7259b99083c60ec45254e2af9f541fbbe60227b6c2ff0caada1787e03650
+cas_ref: sha256:db5d7259b99083c60ec45254e2af9f541fbbe60227b6c2ff0caada1787e03650
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: “哪些行动存在”是主权控制事项的列举项，不是关于某行动存在性的量化断言。'
+    previous_atom_id: fe389f332d65cd29c5f10fe0f64ffb1c7c87a8d1071f41286210b59c62a95ddb
+    next_atom_id: 1a7f02348a693346aad8efc5f1b0b9701c5f326b25283b5abb4083aae276ee37

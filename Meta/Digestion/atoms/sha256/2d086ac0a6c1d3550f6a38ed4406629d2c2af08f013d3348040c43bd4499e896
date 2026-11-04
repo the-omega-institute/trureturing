@@ -1,0 +1,43 @@
+**定义 31.1（原历史权重与支持内接续合同）。** 一段实际原历史 $h$ 的发生概率为 $p_h>0$。在这段历史上应用定义 28.1 的校准关系，要求其标签选择以前的实际条件联合态就是同一 $\rho$，原被调用仪器就是同一 $\{V_j\}$；不以一个新初始化、复位或替换端口实现这一身份。设实际标签概率为 $\pi_s>0$、$\sum_s\pi_s=1$，原局部准备、读回及接续均已经合法。由 (28.2)、(29.2)，原联合质量为
+
+$$
+\begin{aligned}
+P(h,s,\mathrm{prep\ success},j)
+ &=p_h\pi_s\operatorname{Tr}(G_j\sigma_{p_s})
+ &&(j\in\mathsf C),\\
+P(h,s,\mathrm{prep\ failure})
+ &=p_h\pi_s(1-\eta_{p_s}),\\
+P(h,s,\mathrm{prep\ success},k)
+ &=p_h\pi_s\operatorname{Tr}V_k(X_{p_s})
+ &&(k\in\mathsf J\setminus\mathsf C).
+\end{aligned}
+\tag{31.1}
+$$
+
+原准备的多个失败细记录仍按各自原映射分配第二行的总质量。第三行也保留各个原失败动作；只对它们求和时才可写为
+$p_h\pi_s(\eta_{p_s}-\sum_{j\in\mathsf C}q_{js})$。
+$w_s$ 与 $\pi_s$ 的角色不同；(28.5) 的数学求积不供应按 $w_s$ 实际抽样的权限，也不将 $\eta_s=0$ 的节点变成可条件化准备。这保持 [C119 定理 152.1](AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md#152-原记录准备与有限校准的对应) 的原准备／原标签边界；其 $\pi_s\propto w_s/\eta_s$ 配方只有在每个分母严格正且该抽样原本合法时才适用。
+
+任意后续原调用消费 (28.6) 时，要求其当时实际输入（含活动控制寄存器及惰性参考）支撑于系统输入端与 $M_0$ 的张量积，或另有已经证明的扩展域。一个充分的支持合同是：每个实际继续的已选记忆支满足
+
+$$
+\Psi_j(\mathcal B(M_0))\subseteq\mathcal B(M_0),
+\tag{31.2}
+$$
+
+且全部实际中间动作保持这个输入域；$M_0=M$ 时无需额外记忆支撑闭合。输出允许离开 $M_0$ 的 (28.6) 本身不保证 (31.2)，本卷命题 26.2 的原支持逃逸反例直接适用，不重新计作这里的新反例。
+
+若还要将每个细支解释为对任意相关输入都具有固定细记录率 $t_j$、且保留全部外部边缘的作用，则须有 $G_j=t_jI_0$。具体地，对任意附加活动系统和参考 $A$ 及任意域内算子 $Y$，这个条件恰给
+
+$$
+\operatorname{Tr}_M[(\operatorname{id}_H\otimes\Psi_j\otimes\operatorname{id}_A)(Y)]
+=t_j\operatorname{Tr}_{M_0}Y.
+\tag{31.3}
+$$
+
+迹对偶用任意外部效果 $F$ 配对，两边分别为
+$\operatorname{Tr}[(F\otimes G_j)Y]$ 与
+$\operatorname{Tr}[(F\otimes t_jI_0)Y]$，故 (31.3) 成立；反之取外部态与任意记忆态的乘积即迫使 $G_j=t_jI_0$。在实际分支概率严格正时才将输出归一化；$t_j=0$ 的支没有归一条件输出。定理 29.2 的满 steering 率条件足以给标量效果，命题 30.2 说明真子空间上的同样率条件不足。只知道某个粗效果标量，也只能消费对应粗事件的式 (31.3)。
+
+有限历史的组合直接使用 [Context Geometry §§11–12](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#11-带记忆量子过程的表示历史概率与可访问关系)、[量子历史 §72.1、§72.3](ContextualSpacetimeQuantum/072_098_HISTORY_AND_CAPACITY.md#72-仪器级历史误差参考系统与自适应读出) 及本卷推论 25.3 的共同类型、同控制器和完整记录原则：先逐个核对实际调用域与细支合同，再在已经合法的有限协议内复合。需要继续的原失败支必须另有自己的动作与域合同；所选成功支的零泄漏不认证失败之后的系统作用。只有全部被消费的原支都有相应合同，才能给完整原历史输出作对应比较。既有有限组合结论不因 (28.6) 自动成为无限未来固定装置的保证。
+

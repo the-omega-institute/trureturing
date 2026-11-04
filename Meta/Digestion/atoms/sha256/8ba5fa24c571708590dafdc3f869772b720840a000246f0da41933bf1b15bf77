@@ -1,0 +1,31 @@
+**Theorem 15.2 (exact single-defect deficit).** Let $a,b\in P$ be distinct and let $H$ have no zero column and multiplicities
+
+$$
+y^{a,b}=\mathbf1-e_a+e_b.
+$$
+
+For every integer $t\ge k$,
+
+$$
+R_H(t)=S_t-D_t,
+$$
+
+where
+
+$$
+D_t=\frac1{N^t}\sum_{m=2}^{t}\binom tm
+\left[q^{k-2}E(k-1,t-m)+q^{2(k-2)}C(k-2,t-m)\right](2^m-2)>0.
+$$
+
+The matrix $H$ has rank $k$, and this value is independent of $a,b$, of the label assignment, and of all nonzero representatives.
+
+**Proof.** The rays other than $a$ span $V$: a proper subspace has at most $[k-1]_q$ rays, whereas $N-1>[k-1]_q$. Thus $H$ has rank $k$. Count physical spanning words by first specifying the $m$ positions whose ray is in $\{a,b\}$, and then a word $w$ of length $v=t-m$ over $P\setminus\{a,b\}$. Every other ray occurs at one physical position in both matrices. In the simplex, these $m$ positions have the $2^m$ assignments of $a,b$. In $H$, they have $2^m$ physical assignments, all on ray $b$. Let $L$ be the span of $w$.
+
+For $m=0$ the two word counts agree directly. Assume $m\ge1$ for the following cases. If $L=V$, or if each of $L+a$ and $L+b$ is $V$, the spanning-word counts agree. If $L+a=V$ but $L+b\ne V$, the simplex contributes $2^m-1$ and $H$ contributes zero. Interchanging $a,b$ is an invertible linear transformation preserving the remaining alphabet, so the number of such residual words equals the number with $L+b=V$ but $L+a\ne V$; in the latter case the contributions are $2^m-1$ and $2^m$. Together these two equally numerous classes contribute $(2^m-2)$ times the size of the first class. If neither single ray completes $L$ but both together do, the contributions are $2^m-2$ and zero. If even both together do not complete $L$, both contributions vanish. For $m=1$ the total difference is zero by the same pairing, and only $m\ge2$ remains.
+
+For the first residual class, $L$ is a hyperplane containing $b$ and not $a$. There are exactly $q^{k-2}$ such hyperplanes: in $V/b$, subtract the hyperplanes containing the nonzero image of $a$ from all hyperplanes, giving $[k-1]_q-[k-2]_q=q^{k-2}$. For each such $L$, the residual word must span $L$ and avoid $b$, giving $E(k-1,v)$ words. Hence this class has size $q^{k-2}E(k-1,v)$.
+
+In the class where both rays are necessary, $\dim L=k-2$ and $L\cap(a+b)=0$. Conversely every such complement has precisely the required completion properties. Fixing one complement to $a+b$, all other complements are graphs of linear maps from a $(k-2)$-space to a $2$-space, so there are $q^{2(k-2)}$. Each has $C(k-2,v)$ spanning words and contains neither $a$ nor $b$. This class therefore has size $q^{2(k-2)}C(k-2,v)$. Multiplying by $\binom tm$, summing, and dividing by the unchanged physical word count $N^t$ proves the formula.
+
+For $m=2$, $v=t-2\ge k-2\ge1$. A basis word of $K^{k-2}$ padded by repetitions of a basis ray proves $C(k-2,v)>0$; also $2^2-2>0$. All summands are nonnegative, so $D_t>0$. The count uses only spans and physical fiber sizes, proving all asserted invariances. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e4346592782a6571d7f534a085b219ca7213329eedd8ec8f1b152dbb8b711b2b
+  normalized_sha256: sha256:e4346592782a6571d7f534a085b219ca7213329eedd8ec8f1b152dbb8b711b2b
+cas_ref: sha256:e4346592782a6571d7f534a085b219ca7213329eedd8ec8f1b152dbb8b711b2b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：只开始列举组合界未涵盖的统计误差条件，不断言某模型存在该误差。
+    previous_atom_id: c84f675791b50700e546db50eba6f3a4796462dd6ea34e8bfc405fb3d49dee75
+    next_atom_id: c5831b78f99c411436c26e8f7acf54c82477784a83bf357368ef5b544f1c2b03

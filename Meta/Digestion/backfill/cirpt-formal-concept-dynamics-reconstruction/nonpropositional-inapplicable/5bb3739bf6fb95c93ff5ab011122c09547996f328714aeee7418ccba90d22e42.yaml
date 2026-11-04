@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5bb3739bf6fb95c93ff5ab011122c09547996f328714aeee7418ccba90d22e42
+  normalized_sha256: sha256:5bb3739bf6fb95c93ff5ab011122c09547996f328714aeee7418ccba90d22e42
+cas_ref: sha256:5bb3739bf6fb95c93ff5ab011122c09547996f328714aeee7418ccba90d22e42
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ADMIT 曲率分量的新符号定义及四轴差异的术语说明，末句解释缺陷和曲率的命名，不声称任何更新实际不交换。
+    previous_atom_id: d428c65cf444134f2d75987d5a57fc0aee9ebdb16d2c3f70fcacee736aac89c2
+    next_atom_id: 50aad953e7ee326f09adb62a1e5bdae3278ee9dfb679305e3f3007263cc9d6a9

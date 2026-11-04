@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b955007926a20a2386e7701afd17d03f33a9dbe1fcdb98486b2da2616d2a73d
+  normalized_sha256: sha256:4b955007926a20a2386e7701afd17d03f33a9dbe1fcdb98486b2da2616d2a73d
+cas_ref: sha256:4b955007926a20a2386e7701afd17d03f33a9dbe1fcdb98486b2da2616d2a73d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将 o5_independence 视为旧地址并要求增强时新建 O-5′，是开放命题编辑政策。
+    previous_atom_id: 8cff378532f4a4f360e03aee89fb728bdeb385a949ab3e98dc7033be3b19c0f4
+    next_atom_id: efee76e8b5fc592a1921ac4dac975fe79d3d04b9faed0f48708523750c9d11f3

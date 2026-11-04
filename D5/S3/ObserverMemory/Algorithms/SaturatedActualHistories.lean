@@ -525,7 +525,7 @@ noncomputable def firstFiber (b : Fin p) : Finset Source := by
   letI : NeZero (p * P) := ⟨by positivity⟩
   exact Finset.univ.filter (fun x => digit hp hP x = b)
 
-private theorem fin_equiv_val (m : Nat) [NeZero m] (x : Fin m) :
+theorem fin_equiv_val (m : Nat) [NeZero m] (x : Fin m) :
     (ZMod.finEquiv m x).val = x.val := by
   cases m with
   | zero => exact Fin.elim0 x

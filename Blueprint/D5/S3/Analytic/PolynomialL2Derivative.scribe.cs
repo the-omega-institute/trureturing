@@ -11,6 +11,36 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
         H("Complex Polynomial L2 Derivative Energy"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("complex-shifted-legendre-polynomials"),
+                DeclarationHandle.Create(Prefix + "legendreC"),
+                H("The actual shifted Legendre family"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, legendreC(n) is Mathlib's integer "
+                    + "shifted Legendre polynomial mapped by the integer cast ring homomorphism "
+                    + "to complex coefficients. Both derivative energy and moment-orthogonal "
+                    + "approximation use this same family."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("complex-polynomial-bilinear-moment"),
+                DeclarationHandle.Create(Prefix + "moment"),
+                H("Bilinear polynomial integration"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every pair of complex polynomials p,q, moment(p,q) "
+                    + "is the integral from zero to one of p(x)q(x), with real inputs cast "
+                    + "to the complex numbers. The operation is bilinear; Hermitian pairing "
+                    + "is obtained by explicitly conjugating the second polynomial's coefficients."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("complex-legendre-finite-expansion"),
+                DeclarationHandle.Create(Prefix + "expansion"),
+                H("Finite expansion with an arbitrary coefficient sequence"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural d and every sequence a from the "
+                    + "naturals to the complex numbers, expansion(d,a) is the polynomial "
+                    + "sum_(n<d) C(a_n) legendreC(n). The sequence remains unrestricted "
+                    + "outside the finite sum; at d=0 the expansion is the zero polynomial."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("complex-polynomial-derivative-l2-of-degree"),
                 DeclarationHandle.Create(Prefix + "complex_polynomial_derivative_l2_of_degree"),
                 H("The degree formulation includes the zero-dimensional space"),
@@ -56,9 +86,8 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                     Paragraph(Text("This source combines classical Rodrigues orthogonality, beta "
                         + "normalization, polynomial spanning and Cauchy-Schwarz, reusing the "
                         + "pinned Mathlib shifted-Legendre, integration-by-parts and beta APIs. "
-                        + "No literature originality claim is made. The supporting Legendre "
-                        + "identities and sharper intermediate budget are private proof steps; "
-                        + "the public assertion here is the displayed d^4 inequality."))),
+                        + "No literature originality claim is made. The spanning and mixed "
+                        + "expansion identities also support the finite primitive estimate below."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("complex-polynomial-derivative-l2"),
@@ -99,5 +128,92 @@ internal sealed class PolynomialL2DerivativeDocument : IScribeDocumentDefinition
                         + "verification in the consuming development. This Reg/Scribe component "
                         + "is intended for integration with that actual consumer. No formal "
                         + "Riemann-hypothesis or Robin implication is established here."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-polynomial-expansion"),
+                DeclarationHandle.Create(Prefix + "exists_expansion"),
+                H("Polynomial spanning"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural d and every complex polynomial p "
+                    + "with degree(p)<d, there exists a full complex coefficient sequence a "
+                    + "such that sum_(n<d) a_n L_n=p. This spanning identity is used by "
+                    + "the derivative estimate and corrected polynomial approximation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-eval-continuous"),
+                DeclarationHandle.Create(Prefix + "eval_continuous"),
+                H("Continuity of real polynomial evaluation"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every complex polynomial p, the function from real x to p(x), using the complex embedding, is continuous. The actual primitive flux estimate consumes this continuity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-moment-c-mul-left"),
+                DeclarationHandle.Create(Prefix + "moment_C_mul_left"),
+                H("Left scalar multiplication in a bilinear moment"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every complex scalar a and complex polynomials p,q, moment(C(a)p,q)=a moment(p,q). The mixed expansion uses this existing bilinearity identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-moment-derivative"),
+                DeclarationHandle.Create(Prefix + "moment_derivative"),
+                H("Integration by parts for polynomial moments"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every pair of complex polynomials p,q, moment(p′,q)=p(1)q(1)-p(0)q(0)-moment(p,q′). Polynomial continuity supplies the analytic hypotheses. Weighted Sturm energy consumes this identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-eval-map-conj"),
+                DeclarationHandle.Create(Prefix + "eval_map_conj"),
+                H("Evaluation after coefficient conjugation"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every complex polynomial p and real x, evaluation of the coefficient conjugate of p at x equals conjugate(p(x)). Weighted energy retains this Hermitian pairing."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-coeff-legendrec"),
+                DeclarationHandle.Create(Prefix + "coeff_legendreC"),
+                H("The actual complex shifted Legendre coefficients"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all natural n,k, coefficient k of legendreC(n) is (-1)^k choose(n,k) choose(n+k,n), as a complex number. The finite Sturm recurrence uses this existing coefficient formula, including coefficients outside the degree range."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-moment-sum-left"),
+                DeclarationHandle.Create(Prefix + "moment_sum_left"),
+                H("Finite additivity of polynomial moments"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every finite set s of naturals, polynomial sequence p and complex polynomial q, moment(sum_(i in s) p_i,q)=sum_(i in s) moment(p_i,q). The finite mixed expansion consumes this equality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-expansion-map-conj"),
+                DeclarationHandle.Create(Prefix + "expansion_map_conj"),
+                H("Coefficient conjugation of a finite expansion"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural d and complex sequence a, coefficient conjugation of expansion(d,a) is expansion(d,conjugate(a)). The mixed expansion consumes the full sequence identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-moment-expansion-row"),
+                DeclarationHandle.Create(Prefix + "moment_expansion_row"),
+                H("A row of Legendre orthogonality"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every d,i and complex sequence a with i in range(d), moment(legendreC(i),expansion(d,conjugate(a)))=conjugate(a_i)/(2i+1). The mixed expansion consumes the existing normalization and orthogonality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-weight"),
+                DeclarationHandle.Create(Prefix + "weight"),
+                H("Legendre normalization weights"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each natural k, weight(k)=2k+1 is the positive real normalization denominator. The high-mode coefficient gap consumes these weights."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-coefficientenergy"),
+                DeclarationHandle.Create(Prefix + "coefficientEnergy"),
+                H("Finite coefficient energy"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural d and complex sequence a, coefficientEnergy(d,a)=sum_(i<d) norm(a_i)^2/(2i+1). The inverse Sturm estimate uses the same finite energy as the original Parseval identity."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("legendre-interface-expansion-parseval"),
+                DeclarationHandle.Create(Prefix + "expansion_parseval"),
+                H("Exact complex finite Parseval identity"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural d and complex sequence a, the integral from zero to one of norm(expansion(d,a)(x))^2 equals coefficientEnergy(d,a). The empty expansion is included. The finite primitive estimate consumes this existing equality."))),
                 DescribeRole.Theorem))));
 }

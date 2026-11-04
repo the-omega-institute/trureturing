@@ -1,0 +1,35 @@
+### 定理 4.1（任意维数的显式有限设计）
+
+<a id="thm-design"></a>
+
+选正交基 $e_1,\ldots,e_d$。取 $d$ 个基射线，每个权重 $1/[d(d+1)]$；再取
+
+$$
+\psi_z=\frac{e_1+z_2e_2+\cdots+z_de_d}{\sqrt d},
+\qquad z_j\in\{1,i,-1,-i\},
+$$
+
+每个权重 $d/[(d+1)4^{d-1}]$。这 $d+4^{d-1}$ 个带权射线满足 [(2)](#eq-design)，重复射线可以合并。
+
+**证明。**
+先让全部 $d$ 个相位独立均匀取四次单位根。除去共同相位不改变射线，所得分布等于固定第一个相位为一的上述分布。四阶矩中只有配对项保留，故平幅射线的均值为
+
+$$
+\mathbb E(p_z\otimes p_z)
+=\frac{I+\mathsf S-\sum_j\lvert jj\rangle\langle jj\rvert}{d^2}.
+$$
+
+平幅部分总权重为 $d/(d+1)$，基射线部分总权重为 $1/(d+1)$；两者的 $\lvert jj\rangle\langle jj\rvert$ 修正正好抵消，得到 [(2)](#eq-design)。
+
+对 $d=2$，正好得到六条 Pauli 方向，各权 $1/6$：
+
+$$
+\lvert 0\rangle,\lvert 1\rangle,\quad
+\lvert \pm\rangle=\frac{\lvert 0\rangle\pm\lvert 1\rangle}{\sqrt2},\quad
+\lvert \pm i\rangle=\frac{\lvert 0\rangle\pm i\lvert 1\rangle}{\sqrt2}.
+$$
+
+一般维数的构造只证明有限存在，不主张实验数最优；实际准备和读口仍须包含在模型的内部菜单中。对一个效果的有限刻画，也不等于用有限个效果标签认证整个无限效果族。
+
+<a id="section-5"></a>
+

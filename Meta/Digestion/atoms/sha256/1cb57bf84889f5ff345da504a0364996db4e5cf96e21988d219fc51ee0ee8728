@@ -1,0 +1,24 @@
+#### 命题 7.3（效果与完整输出律的锐化误差界）
+
+<a id="prop:effectbound"></a>
+
+对任意正归一态、酉 $U,V$ 和效果 $0\le E\le I$，
+
+$$
+|\omega(U^*EU)-\omega(V^*EV)|\le\left\lVert U-V\right\rVert.              \tag{27}
+$$
+
+固定完整有限 POVM 的总变差也至多为该门距。
+
+**证明。**
+
+令 $F=E-I/2$，$\left\lVert F\right\rVert\le1/2$，标量项相消。
+展开
+$(U^*-V^*)FU+V^*F(U-V)$ 即得界。
+每个 POVM 输出事件的效果仍在 $[0,I]$，对事件取上确界给总变差。
+附带内部参考坐标时张量恒等不改变范数。
+
+∎
+
+<a id="statement-7-4"></a>
+

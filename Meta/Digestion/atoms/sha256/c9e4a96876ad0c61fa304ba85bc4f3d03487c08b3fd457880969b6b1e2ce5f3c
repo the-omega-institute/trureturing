@@ -1,0 +1,20 @@
+**Definition 11.1 (Exact, approaching and unrestricted targets).** For each $r\ge3$, the exact original-source small-alphabet question asks for a nonerasing morphism $\eta$ for which
+
+$$
+\#\operatorname{Alph}(\eta(u_{2r+1}))=r+1,\qquad
+\eta(u_{2r+1})\text{ is rich},\qquad
+E(\eta(u_{2r+1}))=e_r,
+$$
+
+allowing every positive length row and arbitrary morphisms. The distinct approaching question asks for a family with the same actual alphabet size and richness whose ordinary exponents tend to $e_r$. The unrestricted threshold target remains Definition 3.3:
+
+$$
+RT(\mathcal C_d)=E^*(u_{2d-1})\quad(d\ge2),
+$$
+
+where $\mathcal C_d$ contains all infinite rich words on $d$ actual letters, without a recurrence or morphic restriction. Its lower inequality quantifies over every word in that class. The cone, the excluded family and (38) supply necessary restrictions, leaving these existence and unrestricted lower-bound obligations unresolved here, already for the exact original $u_7$ question on four letters. In particular, (38) is not an impossibility assertion for arbitrary morphisms or a construction at $H=30$.
+
+The representation in Definition 8.1 is narrower than the complete-return formulation in Balková–Pelantová–Starosta, [*Infinite words with finite defect*, arXiv:1009.5105v1, Definition 5.1, Proposition 5.4 and Theorem 5.5](https://arxiv.org/pdf/1009.5105v1), [doi:10.1016/j.aam.2010.11.006](https://doi.org/10.1016/j.aam.2010.11.006). That formulation allows a return word shorter than its marker and uses conjugation and derived words. A literal factorization $\eta(i)=p q_i$ for the same morphism on the same $u$ is an additional condition. Neither the derived-word representation nor conjugacy alone supplies that condition while preserving this length row. The marker and length conclusions (30) and (38) are restricted to Definition 8.1; they impose no condition on the broader overlapping-return class or on arbitrary rich morphisms without such a bridge.
+
+For the source/exponent distinction, Dvořáková–Klouda–Pelantová, [*The asymptotic repetition threshold of sequences rich in palindromes*, arXiv:2409.06849v1, Theorems 24–25 and Corollary 29](https://arxiv.org/pdf/2409.06849v1), [doi:10.1016/j.ejc.2025.104124](https://doi.org/10.1016/j.ejc.2025.104124), supplies a rich binary projection $i\mapsto ab^i$ preserving the asymptotic exponent. This is an asymptotic supplier, not an ordinary-exponent upper bound. Currie–Mol–Peltomäki, [*The repetition threshold for ternary rich words*, EJC 32(2), P2.55, Theorems 1.1–1.2](https://doi.org/10.37236/13499), supplies the ternary ordinary threshold and its transducer construction. Dvořáková–Pelantová, [*Symmetries of rich sequences with minimum critical exponent*, arXiv:2501.15135v1, Proposition 2](https://arxiv.org/pdf/2501.15135v1), supplies its original-source morphic representation on $u_5$. These are exact supplied results in their respective ranges, rather than solutions of the original $u_{2r+1}$ problem for $r\ge3$. A finite rich word, including a long word with a controlled exponent, is also distinct from the infinite-word existence required in Definition 3.3.
+

@@ -4,7 +4,21 @@
 
 Arbitrary finite original controls admit exact chronological concatenation.
 
-**Theorem 1.1 (Exact control and integral composition).**
+**Theorem 1.1 (Absolute continuity of both original control coordinates).**
+
+$$\forall b:\operatorname{Base}\left(\right), T:\mathbb{R}, k,chi:\mathbb{R}\to \mathbb{R}, \operatorname{OriginalControl}\left(b, T, k, chi\right)\Rightarrow (\operatorname{AbsolutelyContinuousOnInterval}\left(k, 0, T\right)\land \operatorname{AbsolutelyContinuousOnInterval}\left(chi, 0, T\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fibers/OriginalControlComposition.original_ac` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every base b, real duration T and real functions k and chi, OriginalControl(b,T,k,chi) implies absolute continuity of both coordinates on the complete interval from zero to T. No ValidBase hypothesis or strict positivity of T is added. The original control predicate itself requires T>=0, continuity of both coordinates, strict membership of k in the open probability fiber, finite variation of chi, and either absolute continuity of both coordinates or a finite piecewise C1 partition with continuous rates on every closed piece.
+
+The absolute-continuity alternative supplies the conclusion directly. In the finite piecewise C1 alternative, each continuous rate is integrable on its closed piece and agrees with the coordinate derivative in the interior. Truncate the partition at an arbitrary x in [0,T], apply the interval fundamental theorem on each truncated nonempty piece, and telescope the increments. Repeated partition times contribute zero. This gives f(x)=f(0)+integral from zero to x of f prime for each of k and chi. The derivative is interval integrable on the complete interval, so its integral primitive is absolutely continuous. Equality on the closed interval transfers this property to the original coordinate. The argument includes T=0.
+
+**Theorem 1.2 (Exact control and integral composition).**
 
 $$\begin{gathered}\forall b:\operatorname{Base}\left(\right), T,S\in \mathbb{R}, k,chi,K,C:\mathbb{R}\to \mathbb{R},\\{}\operatorname{OC}\left(b, T, k, chi\right)\land \operatorname{OC}\left(b, S, K, C\right)\land k(T)=K(0)\Rightarrow\\{}\operatorname{OC}\left(b, T+S, \operatorname{J}\left(T, k, K\right), \operatorname{J}\left(T, chi, C\right)\right)\land \operatorname{EqOn}\left(\operatorname{J}\left(T, k, K\right), k, [0,T]\right)\land \operatorname{EqOn}\left(\operatorname{J}\left(T, chi, C\right), chi, [0,T]\right)\land\\{}(\forall x\in [0,S], \operatorname{J}\left(T, k, K\right)(T+x)=K(x)\land \operatorname{J}\left(T, chi, C\right)(T+x)=chi(T)+C(x)-C(0))\land\\{}\operatorname{J}\left(T, chi, C\right)(T+S)-\operatorname{J}\left(T, chi, C\right)(0)=chi(T)-chi(0)+C(S)-C(0)\land\\{}(\forall F:\mathbb{R}\to \mathbb{R}, \operatorname{ContinuousOn}\left(F, \operatorname{J}\left(b\right)\right)\Rightarrow \operatorname{I}\left(F, \operatorname{J}\left(T, k, K\right), \operatorname{J}\left(T, chi, C\right), T+S\right)=\operatorname{I}\left(F, k, chi, T\right)+\operatorname{I}\left(F, K, C, S\right))\end{gathered}$$
 
@@ -115,4 +129,5 @@ These applications preserve the full original source domain and its unfinished o
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Fibers/OriginalControlComposition.concatenate_original`
+- Truth anchor: `D5/S3/Quantum/Fibers/OriginalControlComposition.original_ac`
 - Dependency: [D5/S3/Quantum/Fibers/FiniteRectangleTransport](FiniteRectangleTransport.md)

@@ -1,0 +1,4 @@
+**Corollary 3.2 (Exact attainment forces cancellation).** For every nonerasing $`\eta:A_r^*\to B^*`$, if $E(\eta(u_{2r+1}))=e_r$, then $hv_\beta=0$.
+
+*Proof.* The strictly positive constant in Theorem 2.1 forces $\min(1,\rho)=0$, hence $\rho=0$. $\square$
+

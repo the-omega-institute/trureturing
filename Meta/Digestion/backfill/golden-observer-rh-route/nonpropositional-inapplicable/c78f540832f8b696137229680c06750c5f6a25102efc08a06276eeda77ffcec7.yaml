@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c78f540832f8b696137229680c06750c5f6a25102efc08a06276eeda77ffcec7
+  normalized_sha256: sha256:c78f540832f8b696137229680c06750c5f6a25102efc08a06276eeda77ffcec7
+cas_ref: sha256:c78f540832f8b696137229680c06750c5f6a25102efc08a06276eeda77ffcec7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: imports 是前视声明必须固定的依赖字段。
+    previous_atom_id: 551ffec8f38149c6787764262fdc3b9126202d054182f85185c0d80be2c9ddb3
+    next_atom_id: 8877ffac40ae50efa4ca9a4f48a9e16b3eec69c56046b1c7596e4132c267a453

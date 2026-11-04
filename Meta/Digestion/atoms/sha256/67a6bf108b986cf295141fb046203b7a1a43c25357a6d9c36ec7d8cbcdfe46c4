@@ -1,0 +1,159 @@
+**定理 4.2（最大赤字系数、两计数约化与实现联盟）。** 对每个整数 $a\ge2$，有
+
+$$
+L_a=\max_{0\le i\le a,\ i\in\mathbb Z}M_a(i/a)>0,
+\qquad
+\operatorname*{arg\,max}_{0\le i\le a,\ i\in\mathbb Z}M_a(i/a)
+\subseteq I_a.
+\tag{4.4}
+$$
+
+对每个整数 $b\ge1$，有显式比较
+
+$$
+\left|\frac{D_{a,b}}{2\sqrt{ab}}-L_a\right|
+\le\sqrt a\,(4b)^{-1/4}+b^{-1/2}+b^{-1}.
+\tag{4.5}
+$$
+
+因此固定 $a$、令 $b$ 沿正整数趋于无穷时，
+
+$$
+\frac{D_{a,b}}{\sqrt b}\longrightarrow2\sqrt a\,L_a>0.
+\tag{4.6}
+$$
+
+具体地，对任一使 $M_a(i/a)$ 最大的整数 $i$，置
+
+$$
+s_i=\min\left\{1,\frac{i/a}{4v_a^2}\right\},\qquad
+j_b=\lfloor bs_i\rfloor.
+\tag{4.7}
+$$
+
+任取 $i$ 名 $A$ 侧玩家与 $j_b$ 名 $B$ 侧玩家组成联盟 $C_b$，均有
+
+$$
+\frac{\Delta(C_b;\phi)}{2\sqrt{ab}}\longrightarrow L_a.
+\tag{4.8}
+$$
+
+式 (4.4) 保留 $I_a$ 中两计数并列的可能；若 $\rho_a$ 为整数，$I_a$ 只有一个计数。式 (4.5) 对所有 $a\ge2,b\ge1$ 成立，不要求 $b\ge a$；(4.6)、(4.8) 的极限均固定 $a$。
+
+**证明。** 首先把所有联盟的赤字写在同一个图的两个计数上。设
+
+$$
+z=i/a,\qquad s=j/b,\qquad U=u_{a,b}.
+$$
+
+由 (2.1)–(2.3) 的联盟能量、同侧对称性和效率，
+
+$$
+\begin{aligned}
+\frac{\Delta(C;\phi)}{2\sqrt{ab}}
+&=\frac{2\sqrt{ij}-ix_{a,b}-jy_{a,b}}{2\sqrt{ab}}\\
+&=\sqrt{zs}-Uz-(1-U)s.
+\end{aligned}
+\tag{4.9}
+$$
+
+每个整数计数对 $0\le i\le a$、$0\le j\le b$ 都由实际联盟实现；计数相同的联盟赤字相同。式 (4.9) 同时包含空联盟、纯侧联盟和全体联盟。
+
+对任意 $z,s\in[0,1]$ 记
+
+$$
+F_a(z,s)=\sqrt{zs}-u_a z-v_a s.
+$$
+
+式 (4.9) 与此函数的差恰为 $(U-u_a)(s-z)$。由 (3.5)，统一有
+
+$$
+\left|\sqrt{zs}-Uz-(1-U)s-F_a(z,s)\right|
+\le\varepsilon_{a,b}.
+\tag{4.10}
+$$
+
+现对固定的 $z$ 在 $s\in[0,1]$ 上最大化 $F_a$。用通常的一元二次配方法，令 $q=\sqrt s\in[0,1]$，则
+
+$$
+F_a(z,q^2)
+=-v_a\left(q-\frac{\sqrt z}{2v_a}\right)^2
++\frac{z}{4v_a}-u_a z.
+$$
+
+因 $v_a>0$，唯一最大点为
+$q=\min\{1,\sqrt z/(2v_a)\}$，亦即
+$s=\min\{1,z/(4v_a^2)\}$，包括 $z=0$ 时的 $s=0$。利用
+$1-4u_av_a=(2u_a-1)^2$，得到
+
+$$
+\max_{0\le s\le1}F_a(z,s)=M_a(z).
+\tag{4.11}
+$$
+
+在分支连接点 $z_0=4v_a^2\in(0,1)$，(4.2) 两式都等于
+$v_a(2u_a-1)^2$，左右导数也都等于
+
+$$
+c_a=\frac{(2u_a-1)^2}{4v_a}>0.
+$$
+
+在 $0<z<z_0$，导数为 $c_a$；在 $z_0<z<1$，导数为
+$1/(2\sqrt z)-u_a$。后者只在
+
+$$
+z_*=(4u_a^2)^{-1}
+$$
+
+为零。因为 $4u_av_a=1-(2u_a-1)^2<1$，有
+$z_0<z_*<1$；同时 $z_*>1/4$。所以 $M_a$ 在 $[0,z_*]$ 上严格递增，在 $[z_*,1]$ 上严格递减。其两端为
+$M_a(0)=M_a(1)=0$，从而对每个 $0<z<1$ 都有 $M_a(z)>0$。
+
+现在只在 $z=i/a$ 上取值。因 $az_*=\rho_a\in(0,a)$，若 $i<\lfloor\rho_a\rfloor$，则向右移一个整数计数使 $M_a(i/a)$ 严格增大；若 $i>\lceil\rho_a\rceil$，则向左移一个整数计数使其严格增大。因此所有最大计数均在 $I_a$ 中。若两邻点的值相等，两者都保留；若 $\rho_a$ 为整数，严格单调性排除其它计数。又因 $a\ge2$，$1/a\in(0,1)$，故
+$L_a\ge M_a(1/a)>0$，证得 (4.4)。
+
+最后比较连续最大值与合法的 $B$ 侧网格。对任意 $z,s,t\in[0,1]$，平方根的基本不等式给出
+
+$$
+\begin{aligned}
+|F_a(z,s)-F_a(z,t)|
+&\le\sqrt z\,|\sqrt s-\sqrt t|+v_a|s-t|\\
+&\le\sqrt{|s-t|}+|s-t|.
+\end{aligned}
+\tag{4.12}
+$$
+
+对每个 $i\in\{0,\ldots,a\}$，令 $s_i$ 如 (4.7)，即使 $i$ 不是最大计数也采用同一公式。由 (4.11)，
+$F_a(i/a,s_i)=M_a(i/a)$。置 $t_{i,b}=\lfloor bs_i\rfloor/b$，则
+
+$$
+0\le\lfloor bs_i\rfloor\le b,\qquad
+0\le s_i-t_{i,b}<b^{-1}.
+$$
+
+所以该取整始终给出实际联盟，包括 $s_i=0,1$ 时精确落在端点的情形。由 (4.10)–(4.12)，任一对应联盟 $C_{i,b}$ 满足
+
+$$
+\left|\frac{\Delta(C_{i,b};\phi)}{2\sqrt{ab}}-M_a(i/a)\right|
+\le\varepsilon_{a,b}+b^{-1/2}+b^{-1}.
+\tag{4.13}
+$$
+
+另一方面，对任意合法计数 $(i,j)$，(4.10)、(4.11)、(4.4) 依次给出
+
+$$
+\frac{\Delta(C;\phi)}{2\sqrt{ab}}
+\le F_a(i/a,j/b)+\varepsilon_{a,b}
+\le M_a(i/a)+\varepsilon_{a,b}
+\le L_a+\varepsilon_{a,b}.
+$$
+
+在全部联盟上取最大值即得同一上界。取任一最大计数 $i$，(4.13) 给出下界
+
+$$
+\frac{D_{a,b}}{2\sqrt{ab}}
+\ge L_a-\varepsilon_{a,b}-b^{-1/2}-b^{-1}.
+$$
+
+合并上下界得到 (4.5)。对固定 $a$，右侧误差趋于零，乘以 $2\sqrt a$ 即得 (4.6)。对每个最大计数直接应用 (4.13)，即得任意标签选择的 (4.8)。这里确定的是极限最大赤字系数及实现其极限的联盟，未给出有限 $b$ 的精确最大联盟或核归属分类，也未推出核归属随 $b$ 的单调性。∎
+

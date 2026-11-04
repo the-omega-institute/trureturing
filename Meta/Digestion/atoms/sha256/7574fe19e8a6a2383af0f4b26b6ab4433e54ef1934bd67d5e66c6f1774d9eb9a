@@ -1,0 +1,6 @@
+**Proposition 54.3 (effective length recovery on the whole signed integer image).** Even without a finite digit menu, the earned law and a promised endpoint of some finite signed integer word effectively determine its length. This does not make the signed word unique.
+
+Proof. At successive integers $r=0,1,2,\ldots$, examine all words of lengths at most $r$ with entries in $\{-r,\ldots,r\}$, simulating (54.1), and stop at a matching endpoint. Each stage is finite. If the actual word has length $L$ and maximum absolute entry $J$ (take $J=0$ for the empty word), stage $r\ge\max(L,J)$ includes it. Thus some match occurs, and Theorem 52.3 makes the length of every match equal to $L$. There can be distinct matching words at that same length; for example the reverse coefficient list of $q$ and the all-zero list, both of length $N+1$, have the same forced endpoint. The proposition returns a length and one witness, not a unique signed history. $\square$
+
+The finite-menu consumer below uses Definition 54.1. The signed search is only a length procedure with its own finite, potentially much larger work; no finite-menu cost bound is assigned to its unbounded-height enumeration.
+

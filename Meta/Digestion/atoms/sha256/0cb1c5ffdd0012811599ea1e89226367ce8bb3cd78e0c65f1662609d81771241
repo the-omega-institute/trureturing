@@ -1,0 +1,7 @@
+**(B5) Theorem 5.2 (complete-law criterion).** The following are equivalent:
+
+1. one partition matches $C_f(k)$ for every $k\geq1$;
+2. one partition matches every finite word law at times $t+n\Delta$;
+3. $J=0$;
+4. $f$ is vertex-valued $m$-almost everywhere.
+

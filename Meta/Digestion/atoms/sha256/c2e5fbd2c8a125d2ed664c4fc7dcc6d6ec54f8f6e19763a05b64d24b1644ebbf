@@ -1,0 +1,30 @@
+**定义 110.1（代数供应及时间约定的对应）。**
+§105 的夹逼使用不变锥的成熟代数方法，主文献为 Fanizza–Lumbreras–Winter，
+[*Quantum theory in finite dimension cannot explain every general process with finite memory*](https://arxiv.org/html/2209.11225v2)，
+§2.1、命题 2–3、式 (5)–(7)。
+其式 (6) 的 $\mathcal C_{\min}$ 是原有限词锥包，并未加闭包；
+命题 2 后的闭包说明容许在闭不变锥中取其闭包。
+其式 (7) 对效果锥取对偶，闭包不改变该对偶。
+
+本源的具体代数对应为
+
+$$
+\mathcal V_{\rm FLW}=Q,\qquad \tau=\rho_0,\qquad
+\pi(X)=\operatorname{Tr}(EX),\qquad
+D^{(w)}=A_{\operatorname{rev}(w)},\qquad \mathcal C=C=S(K).
+\tag{110.1}
+$$
+
+因为 $A_{vw}=A_wA_v$，反转词使
+$D^{(vw)}=D^{(v)}D^{(w)}$，符合该文式 (2) 的半群约定。
+反转遍历全部词，故不改变式 (6)–(7) 的轨道集合。
+这只是文献词约定的转换，实际四表仍按 $p_i a h_m$ 的原时间顺序。
+
+$\tau\in C$、$D^{(w)}C\subseteq C$、$\pi\in C^{*}$
+逐项由 §105 的完整运输得到。
+因此其代数内外包含恰对应 $L_{\rm in}\subseteq C\subseteq O_{\rm out}$；
+按迹配对识别其协向量并取闭包，式 (7) 中的生成锥得到 (105.5) 的 $D$；
+取此闭包不改变外锥，且有 $D\subseteq C^{*}$ 及反向的 $C\subseteq D^{*}$。
+该文可将其载体锥解释为效果、对偶解释为状态；
+这里采用这些代数条件作用于实际运输后的状态锥，不借入该物理解读。
+

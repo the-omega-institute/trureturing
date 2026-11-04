@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fd65ad302c72f9c8c67e057fa11798e90cd54bdd0ec9ca95615d1a4666f54609
+  normalized_sha256: sha256:fd65ad302c72f9c8c67e057fa11798e90cd54bdd0ec9ca95615d1a4666f54609
+cas_ref: sha256:fd65ad302c72f9c8c67e057fa11798e90cd54bdd0ec9ca95615d1a4666f54609
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: cost 与 adversarial blind risk 收尾同一概念性记分草图，没有指定变量域、赋值或数学断言。
+    previous_atom_id: 8d7af2b1a706bd1c091b08bd70e2b938f0fa09af4af8b4f3cd8228015e2fdc67
+    next_atom_id: d045cf08ecb5818dcfb87254f5079fbe700ca2f9b99cb7044c14697ab45e7472

@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:746069bb1b9e834e1692dd66f8bec2892a6778f7e35ba1cf95905a2653339832
+  normalized_sha256: sha256:746069bb1b9e834e1692dd66f8bec2892a6778f7e35ba1cf95905a2653339832
+cas_ref: sha256:746069bb1b9e834e1692dd66f8bec2892a6778f7e35ba1cf95905a2653339832
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Historical source-dependency graph, not mathematical independence.
+    previous_atom_id: feb043a753b72d1f51f6e50b8470fe838169f8429abd522b87c13724ff23c828
+    next_atom_id: ea2745bdae927db5585f87eea6b0d4cda943e4d84e75dd3f4f683774d00b35c5
+  chain_atoms:
+    - 84554212cfc847f01cac90de1d12bc29d19ec8369899d397dfd038c3b557244f
+    - 13a3b8bb002dcb000c483c69c0acee43c25b58fb1ce51a8be7d0c0226900f654
+    - 6e0c754f192c92bc471e6b22a80f6644778ff7e2289472f6dbf672afd1951a13

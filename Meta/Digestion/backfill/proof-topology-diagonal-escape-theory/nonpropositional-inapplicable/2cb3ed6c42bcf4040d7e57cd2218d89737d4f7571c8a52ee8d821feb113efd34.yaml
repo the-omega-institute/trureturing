@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2cb3ed6c42bcf4040d7e57cd2218d89737d4f7571c8a52ee8d821feb113efd34
+  normalized_sha256: sha256:2cb3ed6c42bcf4040d7e57cd2218d89737d4f7571c8a52ee8d821feb113efd34
+cas_ref: sha256:2cb3ed6c42bcf4040d7e57cd2218d89737d4f7571c8a52ee8d821feb113efd34
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 整数时间平移的两组 floor/ceil 自变量相等，仅由减法和加法规范化闭合。 上游全限定声明：sub_sub, sub_add_eq_add_sub, add_assoc, add_comm, add_left_comm；Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679。仓内无可用冻结 GID；检索范围：D5/**/*.lean（包含 private），按 shift/translat/floor/ceil/sub_add/add_sub/集合像的数学形状搜索；核对 MechanicalBalance、RationalIntervalExpression.checked_expression_encloses 与 FiveModePredictiveLawGeometry/Core.cutoff_first_nonstrict，无用于本条完整推导的冻结 GID。
+    previous_atom_id: 92e698c2c8e8cb67087da5a831f1fff7415ecbdc5e28f341711f35fb4d44bd26
+    next_atom_id: 67103b1910a544a18abe498ff159b9818e41b79dcbff11d11fee1853d34e5f0f

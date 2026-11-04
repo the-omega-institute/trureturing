@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1e4d2a5f84d0f1936e64702dc5658ccae66c9d0e7987f99f91fb69cfbf3cfef5
+  normalized_sha256: sha256:1e4d2a5f84d0f1936e64702dc5658ccae66c9d0e7987f99f91fb69cfbf3cfef5
+cas_ref: sha256:1e4d2a5f84d0f1936e64702dc5658ccae66c9d0e7987f99f91fb69cfbf3cfef5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: FLOW 正规形的函数和读数参数声明。
+    previous_atom_id: b8b93fe055af180c222c6394041d5239903d5f8230e65b06b6ce2da797057bee
+    next_atom_id: c2709b57b0058c529e2cdfec46f7dcc013189e48ddab02c1ff5ef4e33007f0fe

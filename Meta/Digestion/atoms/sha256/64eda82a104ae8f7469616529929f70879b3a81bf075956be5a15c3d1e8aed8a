@@ -1,0 +1,50 @@
+**Definition 17.1 (The interior capacity window and its marginal functions).** Fix a real number $0<\eta<1/4$ and put
+
+$$
+A(\eta)=\left\lceil\frac{1024}{\eta}\right\rceil.
+$$
+
+Throughout this section let
+
+$$
+\begin{gathered}
+a\in\mathbb Z,\quad a\ge A(\eta),\quad
+\frac32+\eta\le\lambda\le2-\eta,\quad \delta=\frac\lambda a,\\
+r=a+1,\quad s=a+2,\quad n=a-2,\quad C=2a+1,\\
+q=r-\delta,\quad \mu=\frac qs,\quad
+\tau=\frac{3(2a+3)\delta}{r^2},\quad
+H_d=\frac{\delta a^3+(1-\delta)r^3}{\mu^2}.
+\end{gathered}
+\tag{17.1}
+$$
+
+The domain is exactly that of Definition 1.1 with the additional inequalities $y_i\ge\tau$. Thus the random nonempty subset $T\subseteq[s]$ has arbitrary nonnegative masses of total one, actual marginals $y_i=\mathbb P(i\in T)>0$, mean $\mathbb E|T|=q$, and energy
+
+$$
+H(x)=\mathbb E_x\left[|T|^2\sum_{i\in T}y_i^{-2}\right].
+$$
+
+The dense infimum is still $\mathscr D_a(\delta)$ from (11.1). No constraint on cardinalities, connectedness, symmetry or positive atom masses is added. Write $J=[s]\setminus T$ and $\bar x_J=x_{[s]\setminus J}$ for each proper subset $J\subsetneq[s]$. For $z>0$ define
+
+$$
+\varphi(z)=\frac{a^2}{z}+\frac{C(1-\delta)}{z^2},
+\qquad g(z)=\frac{r^2}{z}-\frac{C\delta}{z^2}.
+\tag{17.2}
+$$
+
+For a three-element label set $P$ and a label $j\notin P$, define on the box $\mathcal B=[9/10,1]^s$
+
+$$
+\begin{aligned}
+F_{P,j}(y)
+={}&\sum_{i\in P}\varphi(y_i)
+ +\frac{r^2}{y_j}
+ +\frac{C(\delta-3+\sum_{i\in P}y_i)}{y_j^2}
+ +\sum_{k\notin P\cup\{j\}}g(y_k),\\
+\mathcal B_q={}&\left\{y\in\mathcal B:\sum_i y_i=q\right\}.
+\end{aligned}
+\tag{17.3}
+$$
+
+These are auxiliary functions of a vector; an arbitrary vector in $\mathcal B_q$ is not assumed to be the marginal vector of a law. Attainment by one actual law will be established separately. The energy normalization is the one in Definition 1.1; its graph convention comes only from Albalahi et al., DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), p.109, where the factor $1/\sqrt2$ is removed in defining CDSO. The results of §§14 and 16 have smaller parameter ranges and do not classify the window (17.1).
+

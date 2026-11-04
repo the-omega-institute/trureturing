@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:12e311cefb17cbd94ede9f40b07af0b3ecb051721babf8c52ba747ae407b7db1
+  normalized_sha256: sha256:12e311cefb17cbd94ede9f40b07af0b3ecb051721babf8c52ba747ae407b7db1
+cas_ref: sha256:12e311cefb17cbd94ede9f40b07af0b3ecb051721babf8c52ba747ae407b7db1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明仓库接口与四角色的对应以及 coverage 的解释，不新增数学命题。
+    previous_atom_id: b649f252f917de4d0bdc1d4259fe833a9a5625414d285089da0d72d7392cd402
+    next_atom_id: 931dabfce1fb1300f081cad214cf447d2ccbd0e63a81e5cb3ac3107507992b04

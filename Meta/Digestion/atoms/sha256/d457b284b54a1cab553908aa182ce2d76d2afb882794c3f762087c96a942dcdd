@@ -1,0 +1,37 @@
+#### 定理 7.2（支撑量词及其加乘相容）
+
+对任意 $\rho\ge0$，
+
+$$
+\boxed{\operatorname{supp}\Phi(\rho)=\mathsf F_\Phi(\operatorname{supp}\rho).}
+$$
+
+因此 $\mathsf F_\Phi$ 不依赖 Kraus 表示，保持子空间并生成，且在相应可加或可复合的类型下有
+
+$$
+\mathsf F_{\Phi+\Psi}=\mathsf F_\Phi\vee\mathsf F_\Psi,
+\qquad
+\mathsf F_{\Phi\circ\Psi}=\mathsf F_\Phi\circ\mathsf F_\Psi.
+$$
+
+固定同一载体时，$\Phi\mapsto\mathsf F_\Phi$ 是从完全正自映射的加法、复合半环到保并生成子空间映射半环的保 $0,1$ 同态。
+
+**证明。**
+
+令 $A_a=K_a\rho^{1/2}$。对任意向量 $v$，
+
+$$
+\left\langle v,\sum_aA_aA_a^\dagger v\right\rangle
+=\sum_a\|A_a^\dagger v\|^2.
+$$
+
+故该和的核为 $\bigcap_a\ker A_a^\dagger$，取正交补得到像空间为 $\operatorname{span}_a\operatorname{ran} A_a$。有限维中 $\operatorname{ran}\rho^{1/2}=\operatorname{supp}\rho$，给首式。
+
+用 $\rho=P_S$ 即知定义只由 $\Phi$ 决定。线性像保持并生成；$\Phi+\Psi$ 可取两个 Kraus 列表的并，复合映射可取所有乘积 $K_aL_b$，分别给两条恒等式。零映射送一切子空间到零，恒等映射保持子空间。这里不声称同态满射。
+
+∎
+
+完全正映射的标准表示背景见（[10](#ref-watrous)，第2章）。概率意义还要求规范初态、适当的迹不增过程及 $0\le E\le I$；全部 CP 映射作为代数载体时不自动满足这些归一化条件。
+
+<a id="thm-quantumexists"></a>
+

@@ -1,0 +1,37 @@
+**定理 2.1（JMMM 的三个固定目标）。** For every $\lambda\ne0$ and $\delta\in\mathbb R$, the unrestricted fiber of
+
+$$
+H_J=(\delta,J,\delta+24\lambda,M,\delta+48\lambda,
+M,\delta+312\lambda/5,M,\delta+252\lambda/5)
+\tag{2.1}
+$$
+
+has $L_3$. A three-target subfamily suffices.
+
+Proof. Use the same $G(t)=\lambda t(t-5)(t-7)$ and drift $\delta$ with
+
+$$
+R_1=\frac1{55}\begin{pmatrix}12&19\\36&57\end{pmatrix},\quad
+R_2=\frac1{55}\begin{pmatrix}18&28\\27&42\end{pmatrix},\quad
+R_3=\frac1{55}\begin{pmatrix}28&35\\20&25\end{pmatrix}.
+\tag{2.2}
+$$
+
+Their determinants vanish by $12\cdot57=19\cdot36$, $18\cdot42=28\cdot27$ and $28\cdot25=35\cdot20$. All entries are positive, and the traces are $69/55,60/55,53/55$. Formula (1.2) therefore gives legal targets. Their left-factor ratios $R_{21}/R_{11}=3,3/2,5/7$ are different, so the targets are distinct.
+
+Put $L=MJ=(\begin{smallmatrix}1&0\\1&1\end{smallmatrix})$. The cumulative matrices through $JMMM$ are
+
+$$
+I,\ J,\ L,\ J+L,\ J+2L.
+$$
+
+Every $R_i$ has $\operatorname{tr}(JR_i)=1$ and $\operatorname{tr}(LR_i)=8/5$. The corresponding gain samples are $\lambda(0,24,30,24,12)$. Thus every world realizes every read in (2.1), including clock zero.
+
+Both fifth actions read $\delta$, since $G(5)=0$. At clock six the complete response table is as follows; the two letters are the chronological fifth and sixth actions.
+
+| Fifth and sixth actions | $(z_6(R_1),z_6(R_2),z_6(R_3))-\delta(1,1,1)$ |
+| --- | --- |
+| $MM$ | $\lambda(-66,-66,-66)$ |
+| $MJ$ | $\lambda(-2034/55,-2034/55,-426/11)$ |
+| $JM$ | $\lambda(-1956/55,-1974/55,-1956/55)$ |
+| $JJ$ | $\lambda(-126/5,-126/5,-126/5)$ |

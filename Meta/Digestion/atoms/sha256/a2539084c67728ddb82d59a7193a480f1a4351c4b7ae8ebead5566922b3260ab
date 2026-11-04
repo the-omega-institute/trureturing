@@ -1,0 +1,22 @@
+**Theorem 38.2 (exact elimination and degree control).** For every $\alpha,\beta>0$, $\Phi_\nu(\alpha,\beta)$ holds if and only if there is a whole legal world in $\mathcal W_\delta(y)$ with source $P_\nu(\alpha,\beta)$. If $\Psi_{\nu,I}$ holds, one such whole world is explicitly
+
+$$
+ \begin{aligned}
+ P&=X_\nu/(\alpha+\beta),\\
+ H(\tau)&=(\alpha+\beta)
+              \sum_{j=0}^k\frac{N_{\nu,I,j}}{\Delta_{\nu,I}}\tau^j,\\
+ D(\tau)&=\sum_{j=0}^d
+              \frac{N_{\nu,I,k+1+j}}{\Delta_{\nu,I}}\tau^j,\qquad
+ \xi_i=y_i-B_{\nu,i}Q(i)-D(i).
+ \end{aligned}
+ \tag{38.5}
+$$
+
+The degrees below are total degrees in the two source parameters:
+
+| Data | Degree bound |
+|---|---:|
+| Gain columns of $R_\nu$ | $2$ |
+| Drift columns and $\lambda$ | $0$ |
+| $\Delta_{\nu,I}$, every $S_{\nu,I,r}$, and every drift numerator $N_{\nu,I,k+1+j}$ | $2(k+1)$ |
+| Every gain-legality numerator $N_{\nu,I,j}$, $0\le j\le k$ | $2k$ |

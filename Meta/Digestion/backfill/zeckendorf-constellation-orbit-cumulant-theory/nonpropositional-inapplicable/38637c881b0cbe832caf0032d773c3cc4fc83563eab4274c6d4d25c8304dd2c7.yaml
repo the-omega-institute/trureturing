@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38637c881b0cbe832caf0032d773c3cc4fc83563eab4274c6d4d25c8304dd2c7
+  normalized_sha256: sha256:38637c881b0cbe832caf0032d773c3cc4fc83563eab4274c6d4d25c8304dd2c7
+cas_ref: sha256:38637c881b0cbe832caf0032d773c3cc4fc83563eab4274c6d4d25c8304dd2c7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：仅列 eta chart 名称，不含 eta 与 zeta 的恒等式或收敛域断言。
+    previous_atom_id: 0f992e3ef04ebb5de18206027773eb3fdc05b5c6bfee9ca160a9990166ce64cb
+    next_atom_id: 66c20bbdc3c91185c22c227d082ab1dbfbb8d17e40f5c7245306e7aa70901496

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99908c2f701dd83650bc36909d08a925d99ad3f6afff550833991d9e67c946b7
+  normalized_sha256: sha256:99908c2f701dd83650bc36909d08a925d99ad3f6afff550833991d9e67c946b7
+cas_ref: sha256:99908c2f701dd83650bc36909d08a925d99ad3f6afff550833991d9e67c946b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在“本节点没有证明”下排除参数 t 已获物理时间解释的主张。
+    previous_atom_id: 7f15ae5fec287518ce4d78c556be70fe528b2008ac3038abe621ee70ed336d4d
+    next_atom_id: 8e48667745131ff5a0525aaf25c4470ca919f2b51e70eb1d793502f43cdec590

@@ -1,0 +1,20 @@
+**推论 9.3（来源子式形式）。** 在合法来源、相等非单位 J7 签名、$\operatorname{rank}B=r$ 及 $\operatorname{rank}[B;E_J]=r$ 下，若
+
+$$
+\operatorname{rank}[B;L_\alpha]=r\quad\text{或}\quad
+\operatorname{rank}[B;L_\Delta]=r,
+\tag{9.5}
+$$
+
+可行性必要求
+
+$$
+\operatorname{rank}[B;G_{j_0}]=r+1,\qquad
+\mu_{r+2}([B;G_{j_0}])=0.
+\tag{9.6}
+$$
+
+**证明。** (2.10) 把 (9.5) 分别等价为对应标量限制恒零；定理 9.1–9.2 给增量一。子式等价同 (8.4)。原 $G$ 严格下界和全部其他守卫仍保留。∎
+
+这里没有给出 $\beta|_U=0$ 平面的一般秩一定理。即使某个向量的 $\alpha,\Delta,\beta$ 为零，也不等于相应限制在整个 $U$ 上恒零；本节前提均为完整映射或增广秩条件。
+

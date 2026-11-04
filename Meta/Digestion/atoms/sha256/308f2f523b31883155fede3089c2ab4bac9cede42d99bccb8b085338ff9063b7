@@ -1,0 +1,14 @@
+**Proposition 14.3 (exact traffic on the stated success event).** On $E$, all stages $n<N$ consist only of their gates; stage $N$ has its gate and the complete true capped branch with $R=N$. The exact totals are
+
+$$
+\begin{aligned}
+J&=N^2+8N-1,& A&=2N+1,\\
+R&=N+3,& H&=5N+2,\\
+J+R&=N^2+9N+2,& A+H&=7N+3,\\
+J+A+R+H&=N^2+16N+5,& K&=K_N.
+\end{aligned}
+\tag{UFS.35}
+$$
+
+Proof. The gates contribute $2\sum_{n=1}^N n=N(N+1)$ Ticks, $N$ Adds, $N$ Reads and $2N$ Holds. The successful candidate contributes $7N-1$ Ticks, $N+1$ Adds, three Reads and $3N+2$ Holds, exactly Proposition 8.2 at $R=N$. Sum these actual disjoint portions. These are new procedure counts, not replacements for any count in §§3–8 or P §§37–41 and 57. $\square$
+

@@ -24,6 +24,18 @@ internal sealed class ZeroSumSubsetsDocument : IScribeDocumentDefinition
             Q(Imp(Call("mem", A, blocks), Eq(sum, Num(0))), ("A", subsets)));
         Formula n = V("n"), m = V("m"), B = V("B"), v = V("v"), i = V("i");
         Formula counts = new Formula.TypeArrow(labels, Nat());
+        Formula c = V("c"), source = V("s"), modulus = V("N");
+        Formula boolLabels = new Formula.TypeArrow(labels, Name("Bool"));
+        Formula integerSource = new Formula.TypeArrow(labels, Name("Int"));
+        Formula pathHypotheses = And(
+            Eq(Call("sum", source), Num(0)),
+            Call("cyclicStep", source, c, modulus),
+            Call("physical", m, c),
+            Call("chargeZero", m, c));
+        Formula pathStatement = Q(
+            Imp(pathHypotheses, Call("neutralCarryPath", k, c, source, modulus, m)),
+            ("k", Nat()), ("c", boolLabels), ("s", integerSource), ("N", Name("Int")),
+            ("m", counts));
         Formula L(Formula x) => Call("L", x);
         Formula E(Formula x) => Call("E", x);
         Formula M(Formula x) => Call("M", x);
@@ -51,6 +63,19 @@ internal sealed class ZeroSumSubsetsDocument : IScribeDocumentDefinition
             "Cyclic natural carrying gives a unique physical binary endpoint and sharp unit-source relation length; binary masks also bound exact zero subsets and independent zero blocks.",
             H("Cyclic carries and zero relations of the physical circle source"),
             Blocks(
+                Describe.Lean(DescribeId.Create("neutral-carry-path"),
+                    DeclarationHandle.Create(Prefix + "neutral_carry_path"),
+                    H("Atomic neutral coefficient paths preserve physical nonnegativity and exact zero"),
+                    StatementSource.FromAuthor(Disp(pathStatement)),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(
+                        Paragraph(Text("Fix k, an arbitrary Boolean labelling c : Fin(k) -> Bool, an arbitrary integer source s : Fin(k) -> Int, and an integer modulus N. Let tau = finRotate(k), pred = tau^{-1}, eps(a) = int(c(a)) - int(c(tau(a))), and q(u,a) = 1 + 2*int(u(a)) - int(u(pred(a))). Assume sum_a s(a) = 0 and 2*s(a) - s(tau(a)) = N*eps(a) for every physical label. For a natural coefficient vector m, assume q(m,a) >= 0 and sum_a int(m(a))*eps(a) = 0.")),
+                        Paragraph(Text("The theorem constructs a finite list P of natural coefficient vectors with head m and last element zero. Its chain relation is inline: an edge removes one available neutral carry at a label with eps = 0, or removes an atomic pair of available carries at labels with eps = +1 and eps = -1. The singleton packet has cardinality one, the opposite packet has cardinality two, the selected labels are distinct, and the coordinate equations are in Nat, so no truncated subtraction is hidden. Each edge records the corresponding decrease of the total coefficient mass.")),
+                        Paragraph(Text("At every vertex u in P, q(u,a) >= 0, the Boolean charge sum Q(u) = sum_a int(u(a))*eps(a) is zero, and the source sum sum_a q(u,a)*s(a) is zero. The source-zero clause is obtained by applying the existing carry_charge ledger to the natural vector q(u).toNat; nonnegativity makes its integer cast exactly q(u). The existing carry_length owner is not reproved or used to assert a geometric order.")),
+                        Paragraph(Text("The selector is the Boolean-partition argument on the live induction path. If no neutral or positive available label exists, summing 2*u(a) <= u(pred(a)) over the true-labelled set forces all true-labelled coefficients to vanish; charge balance then forces the opposite boundary coefficients to vanish, and the global cyclic sum gives u = 0, a contradiction. Complementing c supplies the negative label. The selector itself does not require q >= 0; that hypothesis is used only to preserve q along a packet edge.")),
+                        Paragraph(Text("For the native circle source, take s = actualSource(k,t), N = modulus(k), and c(a) = decide(0 < actualSource(k,t,a)). The source_cycle identity supplies the displayed step equation and the Boolean sign identity supplies eps. A native application also needs the supplied full-baseline m, q(m) >= 0, and charge-zero hypotheses from cyclic_binary_normal_form; the abstract path theorem does not assert those hypotheses for every native zero relation and introduces no forwarding specialization.")),
+                        Paragraph(Text("This is an algebraic coefficient path with physical labels retained. It does not quotient labels by a period, realize a word in the half strip, shorten a geometric cycle, or complete the original Circle C3.1 statement. The k = 5, t = 3 example with packet size at most two records the remaining geometric gap: a size-three packet may be needed for strip realization."))),
+                    DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("cyclic-binary-normal-form"),
                     DeclarationHandle.Create(Prefix + "cyclic_binary_normal_form"),
                     H("Natural cyclic carries and the sharp unit relation length"),

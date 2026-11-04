@@ -1,0 +1,103 @@
+**Convention 18.1 (reused proofs and source-specific content).** The
+joint family, adaptive-update price theorem and common comparator above
+are `repo-derived` ordinary mathematics. Their additional conclusion is
+the authentic even-lag bin's additive joint acquisition price, with one
+fixed realization witnessing all three lower bounds and one zero-update
+comparator attaining the exact minimax binary Read count. The structural,
+counting and search tools are suppliers, with the following precise
+correspondence.
+
+[GenealogicalFiberTransport][GFT] and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.scribe.cs)
+use `Source = FreeMagma Bool`, true for alpha, false for beta, the same
+pair-distributing substitution, and actual ordered shape/leaf-label
+assembly. Its proof-local `no_alpha` serves substitution injectivity,
+not unknown-source acquisition. The algebra and homomorphic extension are
+Kenny Lau's `FreeMagma.of`, `mul`, `liftAux`, `lift` in the pinned
+[Mathlib/Algebra/Free.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Free.lean).
+These do not provide physical order or a source port.
+
+[ActualFibonacciSupportChain](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.lean)
+and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.scribe.cs)
+supply the actual recurrence and support blind radii, including the
+proof-local `recurrence`, `monotone`, `short` and `spine` arguments.
+Lemma 14.2 recalls the all-word present-suffix induction to expose its
+parameter $2k+e_H$; it does not claim that induction as a new theorem.
+The stationary leaf test is precisely ABT12.3, with its actual full-root
+word convention and authentic-domain conditions in ABT33.1–33.3.
+
+[NativeSerialMachine][NSM] and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.scribe.cs)
+supply source-blind control, deterministic reached-prefix replay and one
+actual register's forward chronology. [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)
+and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.scribe.cs)
+supply the literal `Address`, `Reply`, `readout` and leaf occurrence
+conventions. Only those definitions are imported here: that module's
+separate `paid` distinct-address objective is not this volume's
+per-invocation $Q$. [DelayedOriginalReadout][DOR] and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.scribe.cs),
+including private `clock_step`, `clock_at_step`, `label_clock_decode`
+and `guard_clock`, give the known-epoch full-reply clock/guard context.
+Both formal machine suppliers permit four-valued replies. Control here
+explicitly receives their presence projection; no hidden alpha/beta or
+branch distinction is borrowed as an extra bit.
+
+[Native Dynamic Acquisition Frontiers](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DYNAMIC_ACQUISITION_FRONTIERS.md),
+Definitions 2.3–2.5, Lemma 3.2, Theorems 3.3,5.1,5.4, already supply
+single-occurrence dynamic locality, finite binary reply-tree counting
+and one-coordinate first-difference charging. Those methods are credited,
+not new lower-bound principles. Its $G_0/G_1$ bracket gadgets have a
+common all-alpha leaf word, permit the stated one-hole context operations,
+and yield $\sum_i(d_i+1)$; they are not the leaf-labelled originals
+$u_x$ with one shared unknown even lag. Equations (GPO.47)–(GPO.48)
+add the present source's lag-dependent blind radius and account for the
+extra bin information on the very same run as all label charges.
+
+[Acquired Orbit Resource Frontier](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md),
+Definitions 8.1–8.2 and Theorems 8.3,9.1–9.3, solve stationary
+single-orbit interval identification with full four-valued replies,
+including the zero-origin boundary, bounded-query simulation and exact
+call/peak attainment. Its two singleton reply cells affect capacity;
+the presence-only interface here has only two outcomes, additional
+unknown original labels, arbitrary finite scaffolds and adaptive forward
+updates. Its exact lower bounds are not transferred to this different
+contract.
+
+[Native Alpha Task-Lag Realization](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_TASK_LAG_REALIZATION.md),
+Assumption 1.1, Theorem 2.2 and §§4–5, uses an actually acquired early
+encoder, a fixed complete later entry, a visible reference and full-reply
+adjacent ages to transport Boolean coordinate tasks with literal weights.
+Its original age cube, discarded/acquired state and lag target remain
+unchanged. [Literal Query Frontier](RECURSIVE_RELATIONAL_OBSERVATION_LITERAL_QUERY_FRONTIER.md),
+Definitions 1.1–1.2,2.1, likewise uses a complete acquired origin-code
+fiber, stationary full replies and no updates. Their guarded all-word
+navigation and coordinate methods are suppliers, not an acquisition of
+this unknown authentic $(u_x,k)$ from only presence bits.
+[Finite-Menu Minimal Memory](FIB_NATIVE_FINITE_MENU_MINIMAL_MEMORY.md),
+Definitions 2.2–2.4 and §§7–9, instead minimizes complete retained
+state for future menu values with a supplied count, and separately cites
+paid unknown-lag capture. A supplied count, a minimal retained alphabet
+and a bound on acquiring an unknown original/count are distinct contracts.
+No retained-alphabet minimum is deduced from (GPO.48).
+
+For primary comparison, Petra van den Bos and Frits Vaandrager,
+[*State Identification for Labeled Transition Systems with Inputs and
+Outputs*, arXiv:1907.11034v2](https://arxiv.org/abs/1907.11034v2),
+§6, Definition 33, Lemma 34 and Theorem 35 with its full proof (v2 PDF
+numbering, pp. 23–24), treat finite
+suspension automata with finite input/output alphabets. Their injective
+splits preserve the incompatibility of still possible states; the
+completeness theorem assumes every two distinct states incompatible.
+The common concern is preservation of distinctions through actions.
+A finite set of entrance candidates does not identify the unbounded
+forward register/controller state space with that finite automaton.
+No source-, action-, observation- and literal-cost-preserving reduction
+has been supplied here, and neither their synthesis nor its completeness
+is used as a theorem about (GPO.43). The proofs above use the actual
+finite run tree of each terminating competitor instead. This is bounded
+source correspondence, without an exhaustive literature or priority
+claim; absence of a theorem name or local dependency checkout supplies
+no novelty evidence. These ordinary proofs are not new Lean certification.
+

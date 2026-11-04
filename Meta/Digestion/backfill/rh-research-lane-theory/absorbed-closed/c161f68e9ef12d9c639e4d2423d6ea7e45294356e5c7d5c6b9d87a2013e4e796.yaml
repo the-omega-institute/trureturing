@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:c161f68e9ef12d9c639e4d2423d6ea7e45294356e5c7d5c6b9d87a2013e4e796
+  normalized_sha256: sha256:c161f68e9ef12d9c639e4d2423d6ea7e45294356e5c7d5c6b9d87a2013e4e796
+cas_ref: sha256:c161f68e9ef12d9c639e4d2423d6ea7e45294356e5c7d5c6b9d87a2013e4e796
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/CircleProbabilitySemigroup.circleMoment_mconv
+    target_statement_id: sha256:3827c59aee153cd30c515ce9e3ef3c799544971a546d3ded108b91addb3b23e3
+  - gid: D5/S3/Weil/Probability/CircleProbabilitySemigroup.circle_probability_semigroup_of_fourier
+    target_statement_id: sha256:d0ed771b5923724761534681e7aa196bb049055eac6320389210df59fbd7f31c
+  - gid: D5/S3/Weil/Probability/CircleProbabilitySemigroup.exponential_probability_forces_nonnegative
+    target_statement_id: sha256:41b5a5716674148cf0cff7dbfdac7522e40e47ed5698e686b6d3477d1847a769
+  - gid: D5/S3/Weil/Probability/CircleProbabilitySemigroup.exponential_toeplitz_iff_probability_semigroup
+    target_statement_id: sha256:f52576a046d3324c2ededcfbf89b2ef52a13aca0501208b87d4c0ec5500fa876
+receipts:
+  unresolved_subitems: []

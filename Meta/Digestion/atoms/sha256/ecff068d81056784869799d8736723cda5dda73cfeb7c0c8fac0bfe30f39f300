@@ -1,0 +1,35 @@
+**Theorem 80.1 (two separate attained experiments).** Fix the earned context of Definition 79.1, including its omitted pair.
+
+For $g\le2$, an actual acquisition uses exactly $r=\operatorname{rank}_{\mathbb Q}A$ successful scalar Reads, all in $S$, and ends at
+
+$$
+w=A^{H+1}x,\qquad 0\le H\le N-1,
+\tag{80.1}
+$$
+
+with $H+1$ Tick and $H+1$ Hold, no Add, growth or Reset, and an installed complete predictor at this actual $w$. The scalar count attains the already established arbitrary-current lower bound of §§61–62, even against alternatives permitting adaptive original growth.
+
+Separately, when $g=1$, an actual original-entry experiment uses $N$ scalar Reads in $S$, $H_e$ Tick and $H_e+1$ Hold for a graph-only $0\le H_e\le N-1$. It reports $x$ exactly, and ends physically at $A^{H_e}x$ with its current predictor synchronized. It does not restore $x$.
+
+**Proof and actual selection.** Use exact column pivots in fixed material order to choose an $N$-by-$r$ rational matrix $U$ whose columns form a basis of $\operatorname{im}A$. Choose a rational left inverse $U^\dagger$ by exact row pivots, so $U^\dagger U=\mathrm{Id}_r$. Enumerate
+
+$$
+e_s^{\mathsf T}A^kU,
+\qquad 0\le k<N,\quad s\in S,
+\tag{80.2}
+$$
+
+in epoch/terminal order, keeping exactly rank-increasing rows. For $g\le2$, Theorem 79.2 says the full stack is injective on $\operatorname{im}A$. Therefore this selection reaches $r$ rows, forming an invertible $r$-by-$r$ matrix $R$. Let $H$ be its largest epoch.
+
+Actually Tick once; Hold, obtaining $z=Ax=Uc$ for a unique $c$. Read the selected epoch-zero terminals; then for $k=1,\ldots,H$ actually Tick; Hold and Read exactly the selected terminals at that level. The $r$ literal replies satisfy
+
+$$
+y=Rc,\qquad c=R^{-1}y,\qquad
+w=A^HU R^{-1}y=A^{H+1}x.
+\tag{80.3}
+$$
+
+No computation moves the source during Hold. Install this actual endpoint before settled return; consume all literal replies and complete transaction returns. This proves the calls, termination and first attainment. Theorem 61.2 applies to precisely this cleared arbitrary-field entrance and full-current task and supplies the $r$ lower bound. The general bound and row-selector method belong to §§61–62; the new hypothesis making the restricted rows sufficient is (79.3).
+
+For original entry at $g=1$, (79.4) has rank $N$. In a **separate run**, keep $N$ rank-increasing rows $e_s^{\mathsf T}A^k$ in the same order, with maximum epoch $H_e$. Start with an actual Hold at $x$, Read the selected epoch-zero entries, then actually Tick; Hold through $H_e$ with the selected Reads. Its invertible matrix solves for $x$, while the real plant advances to $A^{H_e}x$. Compute and install that endpoint as well. The calls are exactly the stated $N,H_e,H_e+1$. The elementary frozen-affine-transcript argument also requires $N$ Reads for arbitrary original-entry reporting with no advice: fewer rows leave a nonzero rational entry perturbation. This does not combine the two different experiments or their costs. $\square$
+

@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:64283331d04cbb5bbee21104bb9a5c17d0d9678e43b758f63bf7c4d8c6a3c014
+  normalized_sha256: sha256:64283331d04cbb5bbee21104bb9a5c17d0d9678e43b758f63bf7c4d8c6a3c014
+cas_ref: sha256:64283331d04cbb5bbee21104bb9a5c17d0d9678e43b758f63bf7c4d8c6a3c014
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Historical API inventory and interpretation of the route name independence, not logical independence.
+    previous_atom_id: 1d4a16a8d5d971a8f7a5d11b4746591e5706b3af2db786fd1f521084c44e3eda
+    next_atom_id: b7b9bcbc44e0900d5921fe9759cd595a8d7cfa3db6b754ea80db541ffae4658b
+  chain_atoms:
+    - 36b7248ae5010712843760e57ad7b9355c02a470ed354de8452a2b0426862d6a
+    - 7efcaf0b03a7d055c4ef8935432c6fffc3e4f8b754adc6a7804d81772566ae1a
+    - 843b1568f5ee83d6ac9d87e23d66654c1f1f30a493a6f22c73e6c23ab3630283

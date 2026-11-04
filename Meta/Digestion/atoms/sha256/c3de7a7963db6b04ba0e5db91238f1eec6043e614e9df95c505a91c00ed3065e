@@ -1,0 +1,8 @@
+**约定 91.4（交模式的范围与尚缺目标）。** 这个结论不排除较小的 actual common-decoder incompatibility。它只说明来源侧已实现的一个 size-$42$ minimal infeasible edge 不能通过 (91.3) 的固定合同完整迁移；bounded witness size 也不等于 dictionary label 数的统一上界。Scale 定理供应的是实际相容模式，不供应目标 matrices 或 thresholds；上述反证没有建立两个模型等价，也不宣称任意物理实现不可能。若换成 subset-dependent channels、horizons、input codes、task catalogues 或 thresholds，或给每个 task 独立 decoder，就失去此处的同一个 $\Omega_S$，不能把当前反证转用于那些问题。没有从 tree leaves、strategy costs 或兼容复形推出 controller states、online memory、quantum storage、physical ports 或 channel capacity 的数值。
+
+§§88–90 的统一性来自同一个 actual $F^2$ 的 certificate slack、complex quadrature、same-map contraction 与实际 center maps；§91 只组合两个既有 supplier。trace/operator-norm convex support duality、CP/PSD positivity、positive-unital norm contraction、finite Helly 和 circle packing/covering 都是成熟中间工具，沿 §83.4、87.2 的固定文献对应使用。这里保留的是这些工具与原模型参数的具体组合及适用边界，不作 worldwide novelty 或文献优先权主张。
+
+上述静态结果不扩大定理 85.2 只存在正 $q_*$ 的 exact common branch，也不把其 finite fallback interval 变成 exact interval。一般 finite-$q$ common optima、其他 task directions、其他 horizons 以及跨 horizons 的共同 decoder 仍未由 (90.4) 给出。原 whole-current acquisition、chronology supplement 与 actual paid-resource 合同、general quantitative tasks、动态 controller optimum，§78.3 的 actual subexponential pair-energy、finite cutoff、collision entropy 及有条件 causal-memory programme，以及 §79.4、84.5 的 strict-real global joint incidence、same-child lifting 与 ancestor obligations 均保留；fixed-horizon static labels 与一个有限交模式障碍不结算这些无界目标。
+
+[F91SCALE26]: https://github.com/the-omega-institute/trureturing/blob/77e6b52ce93d57d5dc918ac16456e97edc3e1a13/docs/develop/theory/FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数
+

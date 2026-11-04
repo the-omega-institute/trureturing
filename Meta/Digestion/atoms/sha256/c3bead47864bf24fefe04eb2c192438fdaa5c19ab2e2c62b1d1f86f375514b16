@@ -1,0 +1,15 @@
+#### 命题 9.1（非零平行截面不属于顶点直和）
+
+在无限连通图上，若 $\psi_v=U_{vu}\psi_u$ 且运输酉，
+非零截面不属于 $\ell^2(V;\mathbb{C}^d)$。
+
+**证明。**
+
+连通与酉性使所有 $\left\lVert \psi_v\right\rVert$ 等于同一正数 $c$，
+所以 $\sum_v\left\lVert \psi_v\right\rVert^2=\infty$。 ∎
+
+因此局部每块归一化，不能靠“铺满”成为一次全局归一化。
+无限张量系统通常应先描述所有有限窗口的状态。
+
+<a id="statement-9-2"></a>
+

@@ -1,0 +1,21 @@
+# FIB two paid reads: exact almost-sure-return endpoint risk
+
+For the original biased XOR source, the attained minimum four-state
+endpoint classification error with almost-sure finite return and at most
+two actual paid reads is
+
+$$
+1-\frac a2-a^2b(1+a),\qquad
+a=\max(p,1-p),\quad b=\min(p,1-p).
+$$
+
+This volume proves the bound for all original arbitrary-address adaptive
+protocols and gives a deterministic attainer on that same source. The
+new result is the exact slice with return mass $q_2=1$. The source law,
+endpoint identification, finite-record interface, selective count-only
+bounds, zero-record bounds and one-read optimum belong to
+[Original][Original] and [Risk][Risk]. In particular the DEV text of
+Original, §11, already includes zero-record return-budget bounds and the
+exact one-read minimum; the latter is also in Risk, Theorem 4.1. Neither
+is claimed as new here.
+

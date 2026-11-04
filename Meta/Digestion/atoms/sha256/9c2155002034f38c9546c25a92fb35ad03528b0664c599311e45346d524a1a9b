@@ -1,0 +1,120 @@
+### 证明第一步：所需的初等素数计数界
+
+记
+
+
+<a id="display-100"></a>
+
+$$
+\vartheta(x)=\sum_{p\le x}\log p,
+\qquad c=\log2.
+$$
+
+
+我们需要
+
+
+<a id="display-101"></a><a id="eq-31"></a>
+
+$$
+\vartheta(x)\le2cx\qquad(x\ge1),
+$$
+
+<p align="center" data-equation-number="31"><a href="#eq-31">(31)</a></p>
+
+
+以及
+
+
+<a id="display-102"></a><a id="eq-32"></a>
+
+$$
+\vartheta(x)\ge\frac c2x
+\qquad(x\ge2^{10}).
+$$
+
+<p align="center" data-equation-number="32"><a href="#eq-32">(32)</a></p>
+
+
+式 (31) 由中央二项式系数归纳得到：
+
+
+<a id="display-103"></a>
+
+$$
+\vartheta(2m)-\vartheta(m)
+\le\log\binom{2m}{m}\le2mc,
+$$
+
+
+
+<a id="display-104"></a>
+
+$$
+\vartheta(2m+1)-\vartheta(m+1)
+\le\log\binom{2m+1}{m}\le2mc.
+$$
+
+
+对于下界，逐素数估值表明
+
+
+<a id="display-105"></a>
+
+$$
+\binom{m}{k}\mid\operatorname{lcm}(1,\ldots,m).
+$$
+
+
+因为二项式系数之和为 $2^m$，至少一个不小于 $2^m/(m+1)$，故
+
+
+<a id="display-106"></a>
+
+$$
+\psi(x)\ge(x-1)c-\log(x+1).
+$$
+
+
+再由
+
+
+<a id="display-107"></a>
+
+$$
+\psi(x)-\vartheta(x)
+=
+\sum_{j\ge2}\vartheta(x^{1/j})
+\le
+2c\left[\sqrt x+(\log_2x)x^{1/3}\right],
+$$
+
+
+得到
+
+
+<a id="display-108"></a>
+
+$$
+\frac{\vartheta(x)}{cx}
+\ge
+1-\frac{1+\log_2(x+1)}x
+-\frac2{\sqrt x}
+-\frac{2\log_2x}{x^{2/3}}.
+$$
+
+
+对 $x\ge2^{10}$，被减去的总量严格小于
+
+
+<a id="display-109"></a>
+
+$$
+\frac3{256}+\frac1{16}+\frac5{16}
+=
+\frac{99}{256}<\frac12.
+$$
+
+
+这证明了式 (32)。
+

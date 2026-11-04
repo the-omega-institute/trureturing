@@ -1,0 +1,28 @@
+### 推论 19.2（连续自治历史只需稳定隐藏参照）
+
+<a id="cor-c94-continuous-hidden-reference"></a>
+
+若连续酉群从单位出发并保持 $\mathcal A$，则使用 Atlas 的已有生成元形式
+
+$$
+H_0=\bigoplus_\alpha
+ (h_\alpha\otimes I+I\otimes k_\alpha).
+$$
+
+相应 $U_t=e^{-itH_0}$ 与 $R_\tau$ 对全部 $t$ 交换，当且仅当
+
+$$
+[k_\alpha,\eta_\alpha]=0\quad\text{对全部 }\alpha.
+$$
+
+不要求可见 $h_\alpha$ 固定其参照因子。
+
+**证明。**
+连续路径不置换离散中心扇区。
+在每块中 $U_t=e^{-ith_\alpha}\otimes e^{-itk_\alpha}$。
+将块重置式代入两种复合次序，左因子的演化与偏迹相容，
+两式唯一可能的差别是
+$\eta_\alpha$ 与 $e^{-itk_\alpha}\eta_\alpha e^{itk_\alpha}$。
+它们对全部 $t$ 相同当且仅当在零点的导数
+$-i[k_\alpha,\eta_\alpha]$ 为零；反向由对易的指数展开直接成立。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e7f2d19b4174a2a5de580cfab344a9d1c8c8f60915943b73f32c54812e1f6e6a
+  normalized_sha256: sha256:e7f2d19b4174a2a5de580cfab344a9d1c8c8f60915943b73f32c54812e1f6e6a
+cas_ref: sha256:e7f2d19b4174a2a5de580cfab344a9d1c8c8f60915943b73f32c54812e1f6e6a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 受否定证明状态清单统领，未声称任意离线零点已被有限测试函数隔离。
+    previous_atom_id: 8e48667745131ff5a0525aaf25c4470ca919f2b51e70eb1d793502f43cdec590
+    next_atom_id: c613f1374dcc34e6bbb6696b79c2b353dfc653faad8731fa1ad0ac62ca3334c8

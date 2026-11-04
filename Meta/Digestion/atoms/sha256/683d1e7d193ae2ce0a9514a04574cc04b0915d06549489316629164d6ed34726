@@ -1,0 +1,14 @@
+**Definition 15.1 (independent prime restarts).** Fix the following competing strategy solely for this section. On each successive distinct prime request $p_i$, start afresh the exact two-stage fixed-modulus controller used in Theorem 10.2, with the canonical-window directions $K_i,K_i+1$ for that prime. In each scalar stage test digits $0,1,\ldots,p_i-2$ in that order, as in Canonical Window Compiler Geometry, Theorem 1.6. Finish its actual positive closing word after every paid test. Ignore all earlier earned residues when choosing and stopping these tests. There are no interstage external source actions. The current source is nevertheless the actual endpoint of the preceding stage, not a reset or a new entry. This definition fixes a strategy; lower bounds below concern its wasted repeated acquisition.
+
+Write
+
+$$
+D_i=\begin{pmatrix}qM^{K_i}\\qM^{K_i+1}\end{pmatrix},
+\qquad
+Z_i=D_i^{-1}\{-2,-1\}^2\subseteq(\mathbb Z/p_i\mathbb Z)^2
+\quad(p_i\ge3).
+\tag{AQBRO.9}
+$$
+
+The inverse is the existing unimodular consecutive-direction decoder. The four states in $Z_i$ are distinct. Each scalar $-2$ matches the last tested digit $p_i-2$; each scalar $-1$ is the inferred untested digit $p_i-1$. Both cost exactly $p_i-1$ reads under the specified test order. This uses complete gcd answers: the last matching answer is $p_i$, not a clipped failure bit.
+

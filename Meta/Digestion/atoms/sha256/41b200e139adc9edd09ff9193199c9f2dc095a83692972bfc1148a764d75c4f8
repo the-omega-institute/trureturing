@@ -1,0 +1,28 @@
+**Theorem 13.1.** For $d=1$, the sharp fixed mixed-acquisition gain-ray threshold is six reads, even with arbitrary countable fixed-matrix selection.
+
+**Proof of the lower bound.** Theorem 11.1 excludes at most four reads. At five reads, $m=2$, the critical classification excludes every word except the families (6.2). Edge-$J$ words have no identity. Predominantly-$J$ words have no all-input countable palette, by Proposition 8.1.
+
+A $JJ$ word has no nonzero identity at all when $m=2$. Indeed, normalize any possible functional $uI+vM$ by $v\ne0$ and write $L=\rho I+M$, now allowing either sign of $\rho$. The necessity proof of (10.3) applies to this identity without the positive-sign requirement. At the two clocks $a,a+2$, $w$ is the same and nonzero. A polynomial $R$ of degree at most one satisfying $w_iR(i)=1$ therefore has $R(a)=R(a+2)$ and is constant. Hence every $w_i$ has the same nonzero value. The exponents on $T$ include $0,1,2$. Writing $W(k)=F_{k-1}-\rho F_k$ to distinguish exponent from clock, their values obey $W(2)=W(1)+W(0)$ by the Fibonacci recurrence. Three equal nonzero values cannot satisfy this relation. Lemma 3.2 excludes countable palettes on these words. These cases exhaust all critical mixed words.
+
+The fixed mixed upper bound of six reads is the $m=2$ instance of Theorem 14.1 below. Padding earlier outputs with zero columns also covers early stopping on a preassigned mixed word. $\square$
+
+This result does not contradict the five-read pure-$M$ exact gain output. The extra read concerns the requirement that the fixed acquisition word contain both letters.
+
+For the remaining proofs put $p=\rho>0$ and distinguish exponent from original clock by writing
+
+$$
+u_k=F_{k-1}-pF_k,\qquad
+u_0=1,\quad u_1=-p,\quad u_{k+2}=u_{k+1}+u_k.
+\tag{13.1}
+$$
+
+Thus $u_2=1-p$, $u_3=1-2p$, $u_4=2-3p$, $u_5=3-5p$, and $u_6=5-8p$, by successive symbolic substitution. The interpolation part of (10.3) says exactly
+
+$$
+R(k)=1/u_k\quad(0\le k\le a),\qquad
+R(k+2)=1/u_k\quad(a\le k\le2m-2).
+\tag{13.2}
+$$
+
+Every $u_k$ in this range must be nonzero. These are equations at the original clocks in $T$, with the outlier $a+1$ still acquired. In particular $R(a)=R(a+2)=1/u_a$. Translations or scalar multiples of $R$ below are auxiliary polynomial consequences of (13.2), not changes to acquisition clocks.
+

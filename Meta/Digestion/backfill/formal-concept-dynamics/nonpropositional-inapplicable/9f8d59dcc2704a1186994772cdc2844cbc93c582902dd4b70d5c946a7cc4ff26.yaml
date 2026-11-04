@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f8d59dcc2704a1186994772cdc2844cbc93c582902dd4b70d5c946a7cc4ff26
+  normalized_sha256: sha256:9f8d59dcc2704a1186994772cdc2844cbc93c582902dd4b70d5c946a7cc4ff26
+cas_ref: sha256:9f8d59dcc2704a1186994772cdc2844cbc93c582902dd4b70d5c946a7cc4ff26
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有披露新增权力这一清单项，没有能力包含或数量关系。
+    previous_atom_id: 905f5451ddb77d65df9243a6922162b011b4ab0403ae4f19e48718b9b295628b
+    next_atom_id: 01ea1833d0a3d62109cc59d5acf4e515f98206db56f77cdcc5530d3f9486192c

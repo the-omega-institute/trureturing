@@ -1,0 +1,4 @@
+**Definition 16.3 (split order and raw-floor comparison).** Order (16.4) by its numerical coordinate, and put $t^-<t^+$ for a rational coordinate $t$; $0^+$ is the least point. Only rational positive coordinates are split. This is a rationally split unbounded ray, not the compact double-arrow space obtained by splitting every real coordinate. Its interval notation below refers to this order, without an added point at infinity.
+
+For comparison let $\mathscr R_n$ be the raw $s_n$-floor partition and let $\mathscr L^{\mathrm{raw}}_{\mathbf s}$ be its cell-inclusion inverse limit. The raw restriction sends a fine integer report $j$ to $\lfloor j/(s_m/s_n)\rfloor$ when $n\le m$. Call the chain **divisibility-cofinal** if every positive integer divides some $s_n$. This is stronger than being unbounded.
+

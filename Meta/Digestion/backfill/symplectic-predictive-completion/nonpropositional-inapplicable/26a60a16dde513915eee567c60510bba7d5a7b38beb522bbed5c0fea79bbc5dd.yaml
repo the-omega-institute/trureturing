@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26a60a16dde513915eee567c60510bba7d5a7b38beb522bbed5c0fea79bbc5dd
+  normalized_sha256: sha256:26a60a16dde513915eee567c60510bba7d5a7b38beb522bbed5c0fea79bbc5dd
+cas_ref: sha256:26a60a16dde513915eee567c60510bba7d5a7b38beb522bbed5c0fea79bbc5dd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第6章预测、热恢复与计算问题的导航文字，未给充分条件或复杂度结论。
+    previous_atom_id: 4e7ae2d2b574da82846c44f30dd4003147054d818916f5de28fb4ea9c71439af
+    next_atom_id: d50bbbbd20d3ef9d8f865cd7fca55910c2a7ad40fdb72083556435b20b85dabd

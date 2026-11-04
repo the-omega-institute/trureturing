@@ -1,0 +1,22 @@
+**Definition 13.1 (depth from a present physical cone).** Retain the
+entire joint entrance of Definition 9.1. In particular the law, seed,
+cut, phase, current tree and journal are absent at entry; the actual
+alpha origin, all-index promise, same-root binding and grants are
+premises. Stationarity includes local preparation, allocation, every
+intermediate and retained write, and the completed handoff. First earn
+$h,k$ by Proposition 9.2 and put $H=2h+1$. Thus
+
+$$
+ n_0\le n\le H\le2n-1.
+ \tag{ACR.44}
+$$
+
+For a present physical word $p$ and a direction tape
+$u\in\{0,1\}^H$, start at $v=p$. Submit the full literal $va$ to
+the original root. If its reply is zero, stop; otherwise both children
+of $v$ are present, and the next tape bit selects $va$ for zero or
+$vb$ for one. Repeat. Write $D_{s,e,p}(u)$ for the number of edges
+traversed at law $s$ and cut $e$. Tape positions are local indices,
+restarted at one in each cone; they are never source-Read operands.
+The last, absent-child test is part of the procedure.
+

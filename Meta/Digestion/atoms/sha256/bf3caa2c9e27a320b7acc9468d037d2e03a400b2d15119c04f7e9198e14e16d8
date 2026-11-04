@@ -1,0 +1,89 @@
+**定理 14.2（精确联合零点与投影）。** The map $F$ has exactly one zero $x_*$ in $X$. It is defined without a rounded equality by
+
+$$
+x^{(0)}=x_0,\qquad
+x^{(n+1)}=x^{(n)}-CF(x^{(n)}),\qquad
+x_*=\lim_{n\to\infty}x^{(n)}.                                  \tag{14.7}
+$$
+
+All these iterates lie in $X$, and
+
+$$
+\|x_*-x_0\|_\infty<\frac{40}{39}\,10^{-14}<2\cdot10^{-14}.
+                                                                  \tag{14.8}
+$$
+
+For $y_*=Y_1(x_*)$ and $v_*=V_1(x_*)$,
+
+$$
+\frac{29286821}{10^6}<y_*<\frac{29286822}{10^6},\qquad
+-\frac{45328099}{10^6}<v_*<-\frac{45328097}{10^6}.               \tag{14.9}
+$$
+
+Proof. All $\alpha_i,\beta_i$ are strictly positive throughout $X$. Therefore $h_i,j_i,\ell_i,j_i+\ell_i$ and their squared denominators in (14.4) are positive; their interval lower endpoints under (14.3) are positive as well. Product and quotient differentiation of (13.1) gives exactly (14.4), and (14.5) is the product rule for (13.3). Thus $F$ is continuously differentiable on a neighborhood of $X$, and every actual derivative matrix $DF(x)$ is enclosed by $[DF](X)$.
+
+The endpoint operations (14.3) give the following finite comparisons:
+
+$$
+\|CF(x_0)\|_\infty<\frac{37711955}{10^{23}}<10^{-14},            \tag{14.10}
+$$
+
+and, for each row, $m_i<n_i/10^{12}<c_i/10^6$, with all nine entries specified here:
+
+$$
+\begin{array}{c|r|r}
+i&n_i&c_i\\ \hline
+1&2619848233&2620\\
+2&654912347&655\\
+3&1903547437&1904\\
+4&2007031636&2008\\
+5&571807883&572\\
+6&19941425792&19942\\
+7&151118857&152\\
+8&3726043872&3727\\
+9&7932801408&7933
+\end{array}                                                       \tag{14.11}
+$$
+
+These inequalities follow by rational endpoint addition, multiplication, reciprocal and comparison from the integers in (14.1)–(14.2) and formulas (13.1)–(14.6). In particular they concern the whole box $X$. Since $19942/10^6<1/40$, they imply
+
+$$
+\sup_{x\in X}\|I-CDF(x)\|_\infty<\frac1{40}.                   \tag{14.12}
+$$
+
+Put $G(x)=x-CF(x)$. Integration of its derivative along the segment between two points of the convex box $X$ gives Lipschitz constant $1/40$. Also, for every $x\in X$,
+
+$$
+\begin{aligned}
+\|G(x)-x_0\|_\infty
+&\le\|G(x)-G(x_0)\|_\infty+\|CF(x_0)\|_\infty\\
+&<\frac1{40}\,10^{-8}+10^{-14}<10^{-8}.
+\end{aligned}                                                     \tag{14.13}
+$$
+
+Thus $G$ is a self-map and a contraction of the complete closed box $X$. The Banach contraction principle applies: the iterates (14.7) converge to its unique fixed point. The geometric-series error estimate is
+
+$$
+\|x_*-x_0\|_\infty
+\le\sum_{n=0}^\infty(1/40)^n\|CF(x_0)\|_\infty
+<\frac{40}{39}\,10^{-14}.
+$$
+
+At $x_0$, (14.12) makes $CDF(x_0)$ invertible, as is seen from the convergent series for $(I-(I-CDF(x_0)))^{-1}$. Since these are square matrices, $C$ is nonsingular. Hence $CF(x_*)=0$ is equivalent to $F(x_*)=0$. Every zero of $F$ in $X$ is a fixed point of $G$, proving the asserted uniqueness within $X$.
+
+For completeness the projections and terminal separations use the same endpoint rules, on $X'=\{x:\|x-x_0\|_\infty\le2\cdot10^{-14}\}$ or on $X$ as indicated:
+
+$$
+\begin{array}{c|c|c}
+\text{function}&\text{box}&\text{strict containing interval}\\ \hline
+Y_1&X'&(29286821500/10^9,\ 29286821501/10^9)\\
+V_1&X'&(-45328098035/10^9,\ -45328098033/10^9)\\
+R_1,\ R_2&X&(-22,-21)\\
+R_3&X&(-10,-9)\\
+S_1,\ S_3&X&(-41,-40)\\
+S_2&X&(-42,-41).
+\end{array}                                                       \tag{14.14}
+$$
+
+Each entry follows by substituting the coordinate endpoints in (13.1)–(13.3) with (14.3); no equality of responses is inferred from these containing intervals. Estimate (14.8) places $x_*$ in $X'$, so the first two rows imply (14.9). The equalities themselves are the exact equations $F(x_*)=0$. ∎
+

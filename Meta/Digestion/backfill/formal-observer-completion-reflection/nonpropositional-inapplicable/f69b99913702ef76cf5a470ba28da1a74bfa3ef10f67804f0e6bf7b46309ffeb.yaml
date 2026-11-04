@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f69b99913702ef76cf5a470ba28da1a74bfa3ef10f67804f0e6bf7b46309ffeb
+  normalized_sha256: sha256:f69b99913702ef76cf5a470ba28da1a74bfa3ef10f67804f0e6bf7b46309ffeb
+cas_ref: sha256:f69b99913702ef76cf5a470ba28da1a74bfa3ef10f67804f0e6bf7b46309ffeb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 明确限定本文不主张什么，属于认识论与交付状态的范围声明，不把非主张转写为数学反例。'
+    previous_atom_id: ddde674a595e16a984969d4f1b04d7ac5017c91f9ee002f9f2d5095039c3d924
+    next_atom_id: 1a2940699e05ea708d640c23adda0ebd5e0498bb47e914559c50158be064d2df

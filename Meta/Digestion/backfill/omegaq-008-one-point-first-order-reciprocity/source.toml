@@ -1,0 +1,5 @@
+source_id = "omegaq-008-one-point-first-order-reciprocity"
+path = "docs/develop/theory/OMEGAQ_008_ONE_POINT_FIRST_ORDER_RECIPROCITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

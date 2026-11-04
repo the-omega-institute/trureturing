@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:422d853b467ee4249764f5ec2300a495d167f404c533b690725aedeba830e33e
+  normalized_sha256: sha256:422d853b467ee4249764f5ec2300a495d167f404c533b690725aedeba830e33e
+cas_ref: sha256:422d853b467ee4249764f5ec2300a495d167f404c533b690725aedeba830e33e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅以 t(q)=2-1/q 定义记号并引出后续分类；本 atom 没有包含四种相的任何不等式、特征值或分类结论。
+    previous_atom_id: bd8f4fff3a6b7490674286c6ae011da30c55c67b63799bdfba1a0d48da44507e
+    next_atom_id: fb61ccefce6cee812626c1fe1ec5b5d5a8a2fd54d3ad48125eaf40b1741dfee7

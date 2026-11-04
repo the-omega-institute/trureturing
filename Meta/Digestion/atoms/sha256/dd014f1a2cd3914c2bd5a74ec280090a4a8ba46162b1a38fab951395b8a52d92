@@ -1,0 +1,50 @@
+**定理 35.3（终止误差、有限期望半径与对角线障碍）。** 对每个 $0<\epsilon\le1/4$，定义 35.1 的同一规则具有以下性质。若 $0<p,q<1$ 且 $p\ne q$，令
+
+$$
+\Delta=|p-q|,\qquad
+\mathcal A=\log\frac8\epsilon+\log\log(e+1/\Delta),\qquad
+\overline h=1+\frac{p^{-2}+q^{-2}}Z,\qquad Z=2+1/p+1/q.
+\tag{35.8}
+$$
+
+则
+
+$$
+P_{p,q}(\tau_\epsilon<\infty)=1,\qquad
+P_{p,q}(\widehat X_\epsilon\ne X_0)\le\epsilon,
+\tag{35.9}
+$$
+
+$$
+\boxed{\quad
+\mathbb E_{P_{p,q}}\tau_\epsilon
+\le2\overline h+144Z\Delta^{-2}\mathcal A<\infty.
+\quad}
+\tag{35.10}
+$$
+
+在每条有限终止的轨道上，实际取得的不同外部位恰为 $2\tau_\epsilon$ 个；左右半窗口都取得到最终半径，包括较早取得证书的一侧。
+
+特别地，固定 $0<t<1$，若 $p=t$、$q=t+\delta$ 且 $0<|\delta|<\min(t,1-t)/2$，则
+
+$$
+\boxed{\quad
+\mathbb E_{P_{t,t+\delta}}\tau_\epsilon
+\le435\left(2+\frac4t\right)|\delta|^{-2}
+\left[\log\frac1\epsilon+\log\log(e+1/|\delta|)\right].
+\quad}
+\tag{35.11}
+$$
+
+这在所列整个范围成立，不只是渐近式。对角线上，对每个 $0<t<1$，同一规则满足
+
+$$
+P_{t,t}(\tau_\epsilon=\infty)
+\ge P_{t,t}(F)-\epsilon\ge\frac18,
+\qquad
+\mathbb E_{P_{t,t}}\tau_\epsilon=\infty.
+\tag{35.12}
+$$
+
+一般共享确定规则的对角线不终止结论另有严格精度条件，见定理 42.1；（35.12）是本策略在全部所列 $\epsilon$ 范围内的特定性质。下面分别证明原律观察桥、同时置信、配对数与位点成本，再证明对角线结论。
+

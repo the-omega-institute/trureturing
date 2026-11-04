@@ -1,0 +1,48 @@
+**Theorem 4.3 (Exactly which fixed triples reach the ceiling).** For every
+fixed integer triple $2\le a\le b\le c$,
+
+$$
+0<M_{a,b,c}\le U_n,\qquad
+M_{a,b,c}=U_n\ \Longleftrightarrow\ c=a+b.
+\tag{4.8}
+$$
+
+Thus every other fixed triple has $M_{a,b,c}<U_n$. On $c=a+b$, for
+every sequence $(g_j)_{j\ge1}$ of arbitrary independent positive
+original-edge assignments,
+
+$$
+F(g_j)\longrightarrow M_{a,b,c}
+\quad\Longleftrightarrow\quad
+\frac{g_j}{\lambda_2(g_j)}
+\longrightarrow g^\star
+\quad\text{in every original labelled edge coordinate}.
+\tag{4.9}
+$$
+
+No symmetry is required of the sequence. For $c\ne a+b$, (4.8) makes
+no assertion of an exact smaller value, attainment, or equality class.
+
+*Proof.* A positive assignment exists, for example $g_e=1$ for all
+$e\in E$, and it has $F(g)>0$. Theorem 3.2 gives the finite upper
+bound. Theorem 4.1 proves $M=U_n$ when $c=a+b$.
+
+If a fixed triple with $c\ne a+b$ had $M=U_n$, the definition of
+supremum would give a positive sequence with $F(g_j)\to U_n$.
+Lemma 4.2 would give a limit in $\mathcal C_{a,b,c}$ satisfying
+$R=U_n$, contrary to Theorem 3.2. Hence $M<U_n$ for each such
+fixed triple. This argument does not assume that the entire
+normalized domain is compact.
+
+For $c=a+b$, suppose first that the left side of (4.9) holds.
+Lemma 4.2 bounds the normalized sequence. Every convergent
+subsequence has limit $g^\star$ by Theorem 3.2. Therefore the whole
+sequence converges to $g^\star$: otherwise a subsequence would stay
+a positive Euclidean distance from $g^\star$, and boundedness
+would give a further convergent subsequence with a different limit.
+
+Conversely, if $h_j=g_j/\lambda_2(g_j)\to g^\star$, continuity of
+$R$ at the connected assignment $g^\star$ and (1.6) give
+$F(g_j)=R(h_j)\to R(g^\star)=U_n=M$. This proves both directions
+for every positive sequence. ∎
+

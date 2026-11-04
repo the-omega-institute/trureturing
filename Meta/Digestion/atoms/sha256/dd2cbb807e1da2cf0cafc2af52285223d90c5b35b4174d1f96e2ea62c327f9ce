@@ -1,0 +1,14 @@
+## —Task-compatible memory and finite closed-loop certificates
+
+> **Machine contract.** This is a generic-v1 theory reference volume. The
+> definitions and results below are ordinary mathematical prose, not Lean
+> declarations. They make no kernel-verification claim.
+
+Continuation V requires a summary to factor legality, responses, successors,
+resources, and controller updates. This continuation isolates the task layer
+that remains after those requirements have been stated. A summary can preserve
+the current target candidates and still erase the distinction needed to choose
+the next action. The correct object is therefore a family of jointly
+controllable history sets, followed by a finite controller and a termination
+certificate.
+

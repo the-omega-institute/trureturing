@@ -2387,3 +2387,661 @@ it supplies no new preparation, reset, third control, law change,
 attractive sampler or unpriced total-service optimum.
 
 ## 追加锚（本行以下为增补区）
+
+## 60. A fixed finite acquisition and its exact certificate task
+
+**Definition 60.1 (the unchanged joint experiment and finite records).**
+In §§60–65, K, U and N have Definition 50.1's source meanings.
+Use their statements and this volume's §§55–59 at
+`5664567cef22b0cbcd6ab70ab480acf36d5800ff`.
+Retain every datum of Definition 55.1: the actual five-mode ray,
+its arbitrary fixed preparation phases and negative amplitude convention,
+both $2\pi$ periods, $r=1-Z$, $H=r/2$,
+$0<l<k<u<H$, raw $d\mu=dh\,d\alpha\,d\beta$, $T>0$,
+$\lambda=0$ and fixed signed $\nu\ne0$.
+At height $h$ the probabilities in mode order $(0,1,2,3,13)$ are
+$(h,H-h,Z,H-h,h)$. Write the original control fields as
+$P=\partial_h$ and
+$Q_{\rm ctl}=\tfrac12\partial_\alpha+(\tfrac12-h/r)\partial_\beta$;
+$Q_{\rm ctl}$ denotes K's control $Q$, distinct from the report map below.
+The target is precisely (50.1) on the original persistent independent
+covariance-$2$ triple $(W^1,W^2,C)$, held at its first height exit
+$\tau$; $S=T\wedge\tau$. Its live region and faces are
+
+$$
+ \Omega=(l,u)\times\mathbb T^2,\qquad
+ F_f=\{f\}\times\mathbb T^2\quad(f=l,u),\qquad
+ E_0=\Omega\cup F_l\cup F_u.
+\tag{60.1}
+$$
+
+Surface measure on either face means the unnormalized
+$d\sigma_f=d\alpha\,d\beta$, not a conditional exit probability.
+Fix once a finite alphabet $\mathcal A$ and a Borel map
+$Q:E_0\to\mathcal A$. At each paid exact Read only
+$A_i=Q(X_{R_i})$ is accessible. The same $Q$ is used at every call,
+including after target or own death. No raw residue, crossing signal,
+source-dependent timing, refreshed sample or new sensor is supplied.
+Write
+
+$$
+ I_a=Q^{-1}(a)\cap\Omega,\quad B_{f,a}=Q^{-1}(a)\cap F_f,
+ \qquad v_a=\mu(I_a),\quad b_{f,a}=\sigma_f(B_{f,a}).
+\tag{60.2}
+$$
+
+A symbol is boundary-active when $b_{l,a}+b_{u,a}>0$.
+Zero mass and an empty set are different conditions.
+
+Allow any independent initial randomization $U$, with no finite-state
+or finite-entropy restriction. Replace K, (41.1)'s raw replies by $A_i$;
+retain its entire report-predictable positive-gap class.
+Thus the next Read time or cessation of calls is chosen from the
+complete acquired record, seed, clock and known own execution before
+the unseen gap. Gaps are strictly positive but need no common lower
+bound. Read and numerical issuance counts through $T$ are almost surely
+finite; they need no deterministic or expected bound. A decision can be
+made at a Read or at a clock time determined from previous records,
+including between Reads. Null-event completions do not change a
+law-almost-sure claim. Known own execution, all previous declarations,
+interruptions, rejections and failure flags are retained; they are
+functions of this acquired information, not further target observations.
+
+An issuer still uses exactly K, Definitions 2.2, 20.2–20.3 and 41.1's
+numerical $P,Q_{\rm ctl}$ commands, chronological $j_N=\int a_N\,db_N$,
+whole-command domain $D_{a_N,b_N}=(-\min a_N,H-\max a_N)$
+and its extrema guards, and actual own first exit $\tau_N$ from
+$(l,u)$, followed by its hold. Neither a declaration nor an interrupted
+profile is an own exit. All four charges remain the variations $V^a,V^b$,
+Euclidean native length $L$ and unhalved energy
+$E=\int_0^{T\wedge\tau_N}(\dot a_N^2+\dot b_N^2)dt$ of K, (11.4),
+on their actually executed prefixes, including unsuccessful histories.
+Theorems below neither reprice them nor condition them on success.
+
+**Definition 60.2 (certification and a positive horizon margin).**
+A death certificate is a declaration at a permitted acquired-information
+time $D\le T$ such that
+$\mathbb P(D\le T,\tau>D)=0$; $D=\infty$ means no declaration.
+A labelled-face certificate additionally gives $f\in\{l,u\}$ and has
+zero probability of declaring any $f$ other than the actual absorbing
+face $X_\tau\in F_f$. These are zero-error statements under the original
+joint law, including the independent seed. They do not reveal $\tau$.
+Completeness with margin $d\in(0,T)$ means
+
+$$
+ \mathbb P\{\tau\le T-d,\ D>T\}=0.
+\tag{60.3}
+$$
+
+The procedure may depend on $d$, with finite paid acquisition, and must
+have zero error also outside the completeness event. The same definition
+applies without a face label. Certification is an information task;
+it supplies no new native motion or full tracking controller.
+
+## 61. Native support and the maximal finite-record certificates
+
+**Theorem 61.1 (complete-record certificate characterization).**
+For every fixed $Q$ in Definition 60.1, the following holds throughout
+its full positive-gap class. At any permitted decision time $\sigma\le T$
+let $m$ be the finite number of acquired Reads and, if $m>0$, let $a=A_m$.
+Define accessible events
+
+$$
+\begin{aligned}
+ C_0(\sigma)&=\{m>0,\ v_a=0,\ b_{l,a}+b_{u,a}>0\},\\
+ C_f(\sigma)&=\{m>0,\ v_a=0,\ b_{f,a}>0,\ b_{g,a}=0\},
+                    \qquad \{f,g\}=\{l,u\}.
+\end{aligned}
+\tag{61.1}
+$$
+
+For every event $E$ determined by the acquired information at $\sigma$,
+
+$$
+\begin{aligned}
+ \mathbb P(E\cap\{\tau>\sigma\})=0
+ &\quad\Longleftrightarrow\quad
+ \mathbb P(E\setminus C_0(\sigma))=0,\\
+ \mathbb P(E\setminus\{\tau\le\sigma,X_\tau\in F_f\})=0
+ &\quad\Longleftrightarrow\quad
+ \mathbb P(E\setminus C_f(\sigma))=0.
+\end{aligned}
+\tag{61.2}
+$$
+
+Here a decision can include a declaration or the actual own exit between
+Reads. In particular the complete finite history, random schedule,
+arbitrary independent seed and prior own execution cannot enlarge the
+zero-error certificate events beyond (61.1), up to law-null events.
+
+Proof. We first establish the transition and exit correspondence for
+this actual source, rather than postulating full support for an abstract
+observed process. Started from $x=(h,\alpha,\beta)\in\Omega$, use fresh
+covariance-$2$ Brownian increments $B^1,B^2,D$, and set
+$c(h)=1/2-h/r$. Until height exit the native lifts are
+
+$$
+ h_s=h+B^1_s,\qquad
+ \alpha_s=\alpha+B^2_s/2,\qquad
+ \beta_s=\beta+\int_0^s c(h_z)\,dB^2_z-\nu D_s/r.
+\tag{61.3}
+$$
+
+This is (50.1), since $B^1$ and $B^2$ have zero mutual quadratic
+covariation. At a stopping-time restart, splitting the original area
+integral at that time gives exactly (61.3), with the current height and
+wrapped phases. No discarded winding or earlier bridge enters its
+coefficients. Independent initial enlargement preserves the Brownian
+strong Markov property. This use of strong Markov is the classical
+supplier in Mörters–Peres, *Brownian Motion*,
+[Chapter 2, Theorem 2.14](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf),
+rescaled by $\sqrt2$; the larger Brownian filtration is used only in
+this proof. It is not an acquisition input.
+
+For a positive deterministic lag $t$, condition on the whole height
+path. On either survival to $t$ or exit by $t$, put $s=t\wedge\tau_x$,
+where $\tau_x$ is the fresh height exit. Then $s>0$ almost surely.
+The two phase increments in (61.3) are jointly Gaussian. For any real
+$(\xi,\zeta)\ne(0,0)$ their linear combination has conditional variance
+
+$$
+ 2\int_0^s\left\{(\xi/2+\zeta c(h_z))^2
+                         +\zeta^2\nu^2/r^2\right\}dz>0.
+\tag{61.4}
+$$
+
+Its wrapped two-dimensional Gaussian law therefore has a strictly
+positive density with respect to $d\alpha\,d\beta$. This statement
+uses the fixed $\nu\ne0$ and asserts no uniform lower bound as
+$\nu\to0$, $s\to0$ or the start approaches a face.
+
+For the height, killed Brownian transition measure at lag $t$ is
+equivalent to Lebesgue measure on $(l,u)$. One direct justification is
+to condition on its Gaussian endpoint $h'\in(l,u)$. The Brownian bridge
+about the segment from $h$ to $h'$ has positive probability of a uniform
+norm less than the segment's positive distance from the two faces.
+The usual Brownian small-ball fact here can be obtained from the
+independent Gaussian dyadic construction in Mörters–Peres, Chapter 1,
+§1: a sufficiently late independent tail has small uniform norm with
+positive probability, and finitely many earlier coefficients can each
+be restricted to an open interval of positive Gaussian probability.
+This also proves a positive-probability tube about every polygonal path.
+The centered bridge is $B_z-(z/t)B_t$; independence from $B_t$ follows
+from zero Gaussian covariance, and its small-ball event follows from
+$\sup|B_z-(z/t)B_t|\le2\sup|B_z|$.
+Consequently the conditional bridge survives with positive probability
+for every interior endpoint. Either face has positive probability of
+being the first face reached by time $t$: choose a polygonal height
+path that crosses that face before $t$ and stays separated from the
+opposite face, and use its Brownian tube. This last assertion does not
+assume an unobserved crossing is acquired.
+
+Together with (61.4) and Fubini these facts give, for every Borel set,
+the measure equivalences
+
+$$
+\begin{aligned}
+ \mathbb P_x\{t<\tau_x,\ X_t\in\cdot\}&\sim\mu|_\Omega,\\
+ \mathbb P_x\{\tau_x\le t,\ X_{\tau_x}\in\cdot\cap F_f\}
+                                      &\sim\sigma_f,\qquad f=l,u.
+\end{aligned}
+\tag{61.5}
+$$
+
+For example, for an interior set of positive volume its phase section
+has positive area for a positive-measure set of height endpoints;
+conditional wrapped Gaussian positivity and the killed height density
+make its probability positive. Null sections have probability zero.
+For a face set, conditional on any height path exiting at that face,
+the wrapped Gaussian at $s=\tau_x>0$ has the same two implications.
+There is positive height probability of that face exit by $t$.
+These arguments prove both directions of each equivalence, including
+Borel sets with no interior. A target already on a face instead stays
+at its exact point, so all its later reports are the same symbol.
+
+We now pass from positive deterministic lags to the actual admissible
+histories. Freeze a seed value and a finite report word
+$w=(a_1,\ldots,a_m)$. The recursively chosen Read times on that word
+are fixed numbers $0<r_1<\cdots<r_m\le T$; a decision time in the next
+blind gap is likewise fixed by that word and the clock. Discard only
+words on which the policy does not schedule these events.
+At each actual Read time the fresh triple is strong Markov, and its
+next lag is already measurable from the past. Conditional on that past,
+(61.5) applies at that lag, however small it is. It follows successively
+that the native live and face supports on the word are exactly
+
+$$
+\begin{aligned}
+ \mathbb P_x\{w,\ \tau>r_m\}>0
+ &\quad\Longleftrightarrow\quad
+                  v_{a_i}>0\text{ for every }1\le i\le m,\\
+ \mathbb P_x\{w,\ \tau\le r_m,\ X_\tau\in F_f\}>0
+ &\quad\Longleftrightarrow\quad
+ \exists j\in\{1,\ldots,m\}:\quad
+ \begin{cases}
+ v_{a_i}>0 & (i<j),\\
+ a_j=a_{j+1}=\cdots=a_m,\\
+ b_{f,a_j}>0.
+ \end{cases}
+\end{aligned}
+\tag{61.6}
+$$
+
+Here probabilities refer to the policy at that fixed seed and the fixed
+word's schedule. The initial live state is the specified $q_0$; the
+same statement holds from any interior state. The first line follows
+by integrating a positive live transition at each step. For the second,
+partition by the first Read at or after death. Its earlier Reads must
+all be live, that transition must exit at the indicated face with its
+indicated symbol, and every later symbol must repeat. Each transition
+has positive probability by (61.5), so these conditions are also
+sufficient. If all earlier symbols have positive volume, the conditional
+interior law after the earlier prefix is equivalent to $\mu$ restricted
+to its last cell; integrating any of (61.5)'s strictly positive kernels
+preserves positivity. The same integration proves that both face
+possibilities in (61.6) remain positive when both face masses are
+positive. Thus support of a nonempty topological neighborhood has not
+been substituted for support of an arbitrary Borel report cell.
+
+If every $v_{a_i}>0$, there remains positive probability of being live
+also at any scheduled finite decision time $\sigma\ge r_m$: append
+survival for its remaining lag to (61.6). This includes zero remaining
+lag. With no Reads the corresponding probability is simply
+$\mathbb P_{q_0}(\tau>\sigma)>0$. Waiting a finite time or choosing a
+numerical own trajectory cannot remove this live alternative.
+If some $v_{a_j}=0$ on a positive-probability word, let $j$ be its
+first occurrence. The target cannot have been live at $r_j$; its report
+must be boundary-active and it is held thereafter. In particular every
+later symbol equals $a_j$, including $a_m$. At each face with
+$b_{f,a_j}>0$, (61.6) gives positive probability of this same entire
+word, and the held face is unchanged at every later decision time.
+This proves the classification at a fixed seed and word.
+
+To justify its use with arbitrary randomization, no individual exact
+seed or exact timestamp is asserted to have positive probability.
+Use the independent product law for the seed and Brownian triple, and
+integrate the finite-word transition kernels over the seed. For a fixed
+word the kernel for a live alternative is strictly positive at every
+feasible seed whenever all its cell volumes are positive. A measurable
+seed subset supporting a positive-probability declaration on that word
+therefore also gives positive live error probability. If the first
+zero-volume symbol has both face masses positive, the analogous two
+face kernels are both strictly positive on the same feasible seed
+subset; declaring only one face cannot have zero error there.
+Tonelli gives these implications even for a nonatomic or arbitrarily
+rich seed. This is a statement about equivalence of the induced record
+measures, not a comparison of singleton records.
+
+Finally partition by the finite number of arrived Reads, their finite
+word, and, when needed, the finite issuance index. These form countable
+partitions; no deterministic count cap, mean count or fixed minimum gap
+is required. Before the next Read, clock events, whole numerical
+profiles, their joins and their own height hitting times are determined
+by the preceding record and seed. Their outcomes and failure flags
+cannot add a target-dependent condition to that partition.
+This includes an own exit between Reads; a simultaneous Read can be
+included in the acquired word, which only grants more information.
+One may equivalently apply the same argument to any first declaration
+time in the acquired filtration: on a fixed word its time before the
+next Read depends only on the clock and that word. The almost-sure
+finite-count hypothesis covers every actual declaration and own exit;
+completed null events change none of these probabilities.
+
+On $C_0$ the target is already dead, and on $C_f$ it is dead at face
+$f$, proving the reverse implications of (61.2). Outside those events
+the live or opposite-face record measure just constructed is positive
+on any accessible event of positive probability. This proves the
+forward implications and the theorem. $\square$
+
+## 62. Sharp death and labelled-face completeness frontiers
+
+**Theorem 62.1 (the two finite-acquisition criteria).**
+Under Definition 60.1, zero-error death certification complete on deaths
+with every fixed positive horizon margin is possible if and only if
+
+$$
+ b_{l,a}+b_{u,a}>0\quad\Longrightarrow\quad v_a=0
+                  \qquad(a\in\mathcal A).
+\tag{62.1}
+$$
+
+Zero-error labelled-face certification with that completeness is
+possible if and only if
+
+$$
+ b_{l,a}+b_{u,a}>0\quad\Longrightarrow\quad
+            v_a=0\ \text{ and }\ b_{l,a}b_{u,a}=0
+                  \qquad(a\in\mathcal A).
+\tag{62.2}
+$$
+
+Each criterion is necessary already for completeness at any one margin
+$d\in(0,T)$. These are law-almost-sure criteria on positive masses,
+not pointwise all-history claims or algorithms for deciding arbitrary
+Borel masses.
+
+Proof. Suppose (62.1). For a fixed margin $d$, use a deterministic finite
+grid through $T$ of mesh $h<d$. Declare death at the first report with
+$v_a=0$ and $b_{l,a}+b_{u,a}>0$, and never otherwise.
+Theorem 61.1 gives zero error on all outcomes outside its null set.
+The boundary cells of zero surface mass have zero exit probability by
+(61.5); the alphabet is finite. Thus almost every held exit point has
+a boundary-active symbol. For that point (62.1) gives $v_a=0$.
+The first grid Read after death therefore declares by $\tau+h$, whenever
+that time is in the horizon. In particular it declares by $T$ on
+$\{\tau\le T-d\}$. If (62.2) holds, its unique positive face mass
+also supplies the correct face label at the same declaration. These
+are finite paid declarations under the installed Read and fixed $Q$;
+they prescribe no new actuator policy.
+
+For necessity choose a boundary-active symbol $a$ and a face $f$ with
+$b_{f,a}>0$. The exact original-law event
+
+$$
+ H_{f,a,d}=\{\tau\le T-d,\ X_\tau\in B_{f,a}\}
+\tag{62.3}
+$$
+
+has strictly positive probability by (61.5) at the positive lag $T-d$.
+Before death all acquired symbols have positive live volume almost
+surely, by (61.5), conditioning at each positive gap and a countable
+union over Reads. After death all acquired symbols equal $a$.
+If $v_a>0$, the latest symbol at every possible post-death declaration
+still has positive live volume, or there has been no post-death Read.
+Theorem 61.1 precludes every positive-probability zero-error death
+declaration on (62.3). A pre-death declaration is also forbidden by
+zero error. Hence (60.3) is impossible. This proves (62.1)'s necessity
+and the volume part of (62.2).
+If $v_a=0$ but $b_{l,a}b_{u,a}>0$, a post-death record either still
+has only pre-death Reads, or ends in the same face-ambiguous symbol
+$a$. In the former case a live alternative remains; in the latter
+both faces remain possible on that complete record. The face part of
+(61.2) forbids a zero-error face declaration on (62.3). Its probability
+is positive for each face. This proves the remaining necessity.
+All errors and completeness failures are measured on the same original
+joint law; no alternative realization is substituted for it. $\square$
+
+**Theorem 62.2 (null fibres and the stronger pointwise task).**
+For the stronger task of certification on every absorbed continuous
+input path in $E_0$ starting at $q_0$, requiring a finite acquired record
+at each declaration also on paths of native-law probability zero,
+conditions (62.1)–(62.2) become respectively
+
+$$
+\begin{aligned}
+ B_{l,a}\cup B_{u,a}\ne\varnothing
+    &\ \Longrightarrow\ I_a=\varnothing,\\
+ B_{l,a}\cup B_{u,a}\ne\varnothing
+    &\ \Longrightarrow\ I_a=\varnothing
+                   \text{ and at most one }B_{f,a}\ne\varnothing.
+\end{aligned}
+\tag{62.4}
+$$
+
+This pathwise requirement is strictly stronger than the native-law
+requirements. Death alone is also strictly weaker than labelled-face
+certification, even under the native law.
+
+Proof. Empty live fibres and separated nonempty face fibres give direct
+pointwise certificates, and the finite grid argument of Theorem 62.1
+works for every such absorbed path. Conversely take a boundary point
+with symbol $a$ and a continuous path reaching it before $T-d$.
+Pointwise completeness requires a declaration with a finite acquired
+record on that path. If $I_a$ is nonempty,
+a live path can visit an interior point of that cell at every later
+Read. Earlier live report points can be matched. Connect successive
+interior waypoints within the connected $\Omega$ during the strictly
+positive gaps; this preserves the complete acquired record and all
+its scheduled times, commands and declarations. It stays live through
+the proposed declaration. If instead both face fibres are nonempty,
+a path to the opposite face with the same boundary symbol can match
+the live prefix and every later report. The final approach to either
+face fits inside the gap before its first boundary report.
+These finite waypoint constructions include a first boundary report
+coincident with a declaration; no crossing time is itself reported.
+They prove the necessity of (62.4) for pointwise certificates. The
+alternative continuous histories need not have positive native-law
+probability, which is exactly why they cannot prove (62.1)'s converse.
+
+For a strict example modify Definition 55.2's installed $Q_\rho$ at one
+interior point $q_*\ne q_0$ only, assigning to it an existing lower-face
+symbol. Every mass in (60.2) is unchanged. Thus (62.2) still holds,
+whereas that symbol now has a nonempty live fibre and fails (62.4).
+A positive-gap Read hits $q_*$ while live with probability zero by
+(61.5); the countable union over adaptive Reads remains null.
+Pointwise an interior path through $q_*$ gives the alias just described.
+For the distinction between the two law criteria, assign all interior
+points one symbol and both whole faces a second symbol. The second
+symbol has $v_a=0$ and $b_{l,a}=b_{u,a}=4\pi^2$.
+It certifies death completely but can never certify its label with
+zero error and complete coverage. $\square$
+
+## 63. Own-exit and bounded-occupation consequences on the original law
+
+**Theorem 63.1 (no-premature death forces no finite-horizon own death).**
+Suppose that every boundary-active symbol of the fixed $Q$ has positive
+live volume:
+
+$$
+ b_{l,a}+b_{u,a}>0\quad\Longrightarrow\quad v_a>0.
+\tag{63.1}
+$$
+
+Every admissible native issuer in Definition 60.1 satisfying
+$\mathbb P\{\tau_N\le T,\ \tau_N<\tau\}=0$ then satisfies
+
+$$
+ \mathbb P\{\tau_N\le T\}=0,\qquad S_N=T\wedge\tau_N=T
+                                      \quad\text{almost surely}.
+\tag{63.2}
+$$
+
+For every $0\le e<T$, the bounded-delay lifetime requirement
+$0\le S_N-S\le e$ almost surely is impossible in this class.
+For the bounded occupation test $F\equiv1$ its unavoidable loss is
+
+$$
+\begin{aligned}
+ \mathbb E\left|\int_0^{S_N}1\,dt-\int_0^S1\,dt\right|
+ &=\mathbb E(T-S)=\int_0^T\mathbb P(\tau\le t)dt\\
+ &\ge T\Phi\left(-\frac{d_0}{\sqrt T}\right)>0,
+       \qquad d_0=\min(k-l,u-k),
+\end{aligned}
+\tag{63.3}
+$$
+
+where $\Phi$ is the standard normal distribution function. In particular
+this loss cannot tend to zero in any family of such no-premature issuers
+at the fixed original $T$ and source.
+
+Proof. An actual own exit is a permitted acquired-information event:
+the numerical controls and their original chronological path determine
+its height, and before the next Read their hitting time of $l$ or $u$
+is determined by the existing record and clock. Interruptions and new
+issuances are themselves subject to that same information restriction.
+Partition an exit through $T$ by its finite issuance index, finite Read
+count and complete report word, as in Theorem 61.1. No-premature own
+death makes this event a zero-error certificate that the target has
+already died at that time, whether or not the issuer explicitly declares
+anything. Equation (61.2) places it inside $C_0$ up to a null event.
+Under (63.1), $C_0$ has probability zero. This proves (63.2), including
+own exits between Reads, random finite counts, failures and an own exit
+exactly at $T$.
+
+Consequently $S_N-S=T-(T\wedge\tau)$. Its being at most $e<T$
+fails on $\{\tau<T-e\}$, an event of strictly positive probability:
+height Brownian motion can reach either face in every positive time.
+Thus in particular Theorem 56.2's $e=2h<T$ lifetime conclusion cannot
+hold after replacing its face flags by such a $Q$.
+Tonelli proves the first line of (63.3). Reflection for the nearest
+face, with covariance-$2$ height increments, gives
+
+$$
+ \mathbb P(\tau\le T/2)
+       \ge2\Phi(-d_0/\sqrt T).
+\tag{63.4}
+$$
+
+Indeed crossing that single face in the unrestricted Brownian path
+implies an interval exit by then, even if the opposite face was reached
+first. Reflection is Mörters–Peres, Chapter 2, Theorems 2.16 and 2.18,
+with the same $\sqrt2$ rescaling. Integrate the nondecreasing exit
+probability over $[T/2,T]$ to obtain (63.3). Its upper bound is $T$,
+so the positive loss is finite. This is a conclusion for the actual
+joint occupation, not a comparison with a separately sampled lifetime
+or a survival-normalized law. It is independent of the four actuator
+charges; allowing them to be arbitrarily large does not acquire a
+missing zero-error certificate. $\square$
+
+## 64. Wrapped point accuracy can erase the exact death information
+
+**Theorem 64.1 (a boundary-merged variant at the same report order).**
+Let $w=u-l$ and $0<\rho\le\min(1,w/8)$. Use Definition 55.2's
+$m_h=\lceil w/\rho\rceil$ equal interior bins and
+$m_\theta=\lceil2\pi/\rho\rceil$ translated circular phase grids.
+Form $\widetilde Q_\rho$ by merging its lower-face height index into
+the first live-bin index and its upper-face height index into the last
+live-bin index, leaving the phase indices unchanged. If the separate
+$q_0$ calibration symbol is used, leave it separate.
+Decode all ordinary height indices to their live-bin midpoints and
+all phase indices to their old grid points. This fixed Borel
+postprocessing of the installed Read satisfies
+
+$$
+\begin{aligned}
+ d_{\max}(z(\widetilde Q_\rho(q)),q)&\le\rho/2
+                                   \qquad(q\in E_0),\\
+ |\widetilde{\mathcal A}_\rho|
+ &\le m_hm_\theta^2+1\le C_*\rho^{-3},\\
+ C_*&=(w+1)(2\pi+1)^2+1.
+\end{aligned}
+\tag{64.1}
+$$
+
+Yet it satisfies (63.1), and therefore fails even the zero-error death
+completeness contract, before requiring a face label. In contrast the
+installed unmerged $Q_\rho$ satisfies the sufficient labelled-face
+condition (62.2), including its pointwise version (62.4).
+
+Proof. Each height bin has width $\Delta_h=w/m_h\le\rho$.
+A face is at distance $\Delta_h/2$ from its adjacent midpoint;
+ordinary height errors have the same bound. The phase error on each
+actual $2\pi$ circle is at most $\pi/m_\theta\le\rho/2$.
+The calibration point, when separate, has zero error. These are exactly
+K, Definition 13.1's maximum-coordinate errors, proving the first line
+of (64.1), including points on the two faces and circular cuts.
+For $\rho\le1$, $m_h\le(w+1)/\rho$ and
+$m_\theta\le(2\pi+1)/\rho$, proving its declared alphabet constant.
+The map is the old finite quantizer followed by one fixed map of its
+height labels; it installs no extra observation or timing service.
+
+Every angular cell has raw area
+$\Delta_\theta^2=(2\pi/m_\theta)^2>0$, including the cells crossing
+a phase cut. For an ordinary symbol of the first height bin,
+
+$$
+ v_a=\Delta_h\Delta_\theta^2>0,\quad
+ b_{l,a}=\Delta_\theta^2>0,\quad b_{u,a}=0;
+\tag{64.2}
+$$
+
+for a last-bin symbol the two face masses are reversed. Since
+$m_h\ge8$, these bins are distinct. All other ordinary symbols have
+both face masses zero. Removing the possible calibration singleton
+changes none of these volumes, and its own boundary masses are zero.
+Thus every boundary-active symbol has positive live volume; (63.1),
+Theorem 62.1 and Theorem 63.1 apply. The failure is exact certification
+despite the deterministic point-error bound, not a failure of its
+$c\rho^{-3}$ report-size estimate.
+
+For the original $Q_\rho$, a face symbol instead has $v_a=0$,
+$b_{f,a}=\Delta_\theta^2$ and $b_{g,a}=0$ for the opposite face;
+no live point is assigned any face symbol. All its live and calibration
+symbols have zero face masses. This verifies (62.2) and (62.4) directly.
+For precisely that unmerged quantizer the existing numerical issuer,
+terminal connector and failure fallback remain Definition 56.1 and
+Theorem 56.2, with $0\le S_N-S\le2h$ on every history. Its original
+chance tube and unconditional executed-prefix prices are Theorems 57.2
+and 57.3. Theorem 58.1 supplies the bounded occupation estimate for
+that same execution and original joint target; $F=1$ is one of its
+bounded tests. These statements are reused, not rederived for
+$\widetilde Q_\rho$. For general $Q$, (62.2) certifies faces only;
+it supplies neither a wrapped decoder of the needed accuracy nor the
+local acceptance estimates used by the installed tracking controller.
+Thus face certification alone is not a generic tracking theorem.
+$\square$
+
+## 65. Suppliers, exact consumers and the unclosed source bridge
+
+**Definition 65.1 (attribution and applicability).**
+The new native composition in §§60–64 is the complete finite-record
+certificate frontier for (50.1), its actual no-premature-own-exit
+consequence and the original-law bounded-occupation loss, with the
+explicit boundary-merged counterexample. Classical positivity, Gaussian
+conditioning, strong Markov and finite-observation diagnosis reasoning
+are intermediates, not new general support or diagnosis theorems.
+The native positive-volume and face-surface equivalences were derived
+inside Theorem 61.1 with the original phase wrapping, height killing,
+raw measure and signed central coefficient; a theorem for an unrelated
+hidden-state model is not an assumed access or source correspondence.
+The mathematical attribution is repo-derived for this composition,
+with the following literature-attested suppliers and comparisons.
+
+Mörters–Peres, *Brownian Motion*,
+[the linked public draft](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf),
+Chapter 1, §1 supplies the independent Gaussian dyadic construction;
+Chapter 2, Theorems 2.14, 2.16 and 2.18 supply Brownian strong Markov
+and reflection. These concern Brownian motion, not the installed
+finite-report issuer. Equation (61.3), conditioning (61.4), the
+face/live equivalences (61.5), and the acquired-record integration are
+the required native correspondence before using those intermediates.
+
+Polyanskiy–Poor–Verdú, *Feedback in the non-asymptotic regime*,
+[§II, Definitions 1–2](https://people.lids.mit.edu/yp/homepage/data/vbf_journal.pdf),
+distinguish an output-filtration stopping rule for variable-length
+feedback from termination allowed to depend also on the transmitted
+message. The latter includes an additional reliable termination method;
+it is a different information contract. This is a comparison of
+observation rights only. Its channel capacity and coding theorems are
+not used, and neither termination permission is added to (60.1).
+The seed in Definition 60.1 retains its given arbitrary independent
+law; no finite-common-randomness cardinality conclusion from a coding
+model is transferred.
+
+Slassi, *Free knot linear interpolation and the Milstein scheme for
+stochastic differential equations*,
+[§1 and §2, equation (13)](https://arxiv.org/pdf/1306.4457v1),
+allows complete individual-path information for its free knots and
+uses a supremum over an interval to define the next knot. Its
+approximation estimates do not certify an unobserved absorbing event
+in the present positive-gap class. An extra crossing signal or an
+encoder-selected source-dependent termination time would change that
+class, even if its endpoint report alphabet were unchanged.
+
+The direct repository consumers are Definition 55.1's accessible
+reports, Definition 55.2's separated flags, Theorem 56.2's actual
+own-death delay and Theorem 58.1's common-clock occupation. K,
+Definition 41.1 supplies exactly their acquired filtration and numerical
+issuer class. N, Theorem 1.3 supplies the raw-measure killed law and
+Green pairing; no survival-normalized or different-clock law is used
+in (63.3). N, §§21–25's measurable Hilbert chord-distance floors have
+a separate metric contract and select no dimension. An injective
+distorted readout can retain all source information; here the explicit
+$\widetilde Q_\rho$ instead identifies a face with a live positive-volume
+cell, and (61.5)–(61.6) prove the resulting operational ambiguity.
+
+These statements concern a fixed classical finite report of the actual
+source on its original clock. Finite real coordinate count, exact real
+memory values, paid acquisition and a coherent future contract are
+different data. Nothing here changes the source law or operation syntax,
+supplies reset or copies, a physical coarsening/comparison/retention
+price, a new approximation producer or a uniform $\nu\to0$ result.
+No worldwide novelty or Lean certification is asserted.
+A common-source physical spatial or transport realization still needs
+its geometry and preserved law, clock, operations and resource maps;
+actual acquisition, retention and actuation prices and compatible
+recursive spectral gluing remain separate mathematical obligations.
+Neither (62.2) nor a chord-distance equality identifies three physical
+spatial directions.
+
+## 追加锚（本行以下为增补区）

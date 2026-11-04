@@ -1,0 +1,89 @@
+**Theorem 67.2 (exact ternary criterion and graph-only sample data).** For every $u\in\mathcal D$, the map $w\mapsto F_w(A_u)e$ on all finite ternary words is injective if and only if $N=|V(u)|\ge5$. Exactly those terms admit the two additional late Reads of §68, at sites and times depending only on their earned finite graph, with finite exact decoding and complete service at the actually advanced endpoint. The threshold includes $u=\langle\beta,\beta\rangle$, whose material graph is the five-vertex path; it excludes the four-vertex branch $\langle\beta,\alpha\rangle$.
+
+**Proof.** The recurrence $x_{wd}=Ax_w+de$ proves (67.1) with the unchanged original operations. We first construct the decoding weights on the positive domain, then give whole-field collisions on every excluded term.
+
+A branching term has $L$ logical leaves and $c\ge1$ beta leaves, hence $N=2L-1+c$. The two-leaf terms are exactly $\langle\beta,\alpha\rangle$ and $\langle\beta,\beta\rangle$, of sizes four and five. Every other branching term contains an induced five-vertex path. Indeed the first terminal is at distance at least two below the root. If the left child is a branch, that distance is at least three, while the last terminal is at least one below the root in the other child. If the right child is a branch, its last terminal is at least two below the root, while the first remains at least two below the root. If neither child is a branch and the term is not the four-vertex case, both are beta and both distances are two. In all these cases the first-to-last terminal path has at least four edges. Five consecutive vertices on this tree path induce a $P_5$.
+
+Suppose first $N>5$. The ordinary path spectrum gives $\rho(P_5)=2\cos(\pi/6)=\sqrt3$. The induced $P_5$ is a proper principal submatrix of the connected nonnegative adjacency $A$. Strict Perron comparison therefore gives $\rho(A)>\sqrt3$. These are the classical path spectrum and Perron results of Brouwer and Haemers, *Spectra of Graphs*, [§1.4.4 and Theorem 2.2.1(i),(iii),(v)](https://www.win.tue.nl/~aeb/2WF02/spectra.pdf), applied to the actual unit material adjacency, not a positive-diagonal modification.
+
+Use the fixed-seed return moments from (55.2),
+
+$$
+r_j=e^{\mathsf T}A^{2j}e>0.
+$$
+
+Their ratios are nondecreasing by that equation. Moreover $r_{j+1}/r_j\to\rho(A)^2$. To see this last specialization explicitly, use a real orthonormal eigenbasis $v_h$ with eigenvalues $\lambda_h$:
+
+$$
+r_j=\sum_h |\langle e,v_h\rangle|^2\lambda_h^{2j}.
+$$
+
+After division by $\rho(A)^{2j}$ the terms with $|\lambda_h|<\rho(A)$ tend to zero. The remaining coefficient sum is positive because the Perron eigenvector is strictly positive at $e$. Applying the same calculation to $r_{j+1}$ proves the limit. Finite spectral decomposition and the cited Perron assertions are the standard suppliers here.
+
+Consequently the following exact integer search terminates using only $A$ and $e$: find the first $J\ge1$ with $r_{J+1}>3r_J$. Set
+
+$$
+f=e,\qquad K=2J,\qquad a_j=r_{J+j}\quad(j\ge0).
+\tag{67.2}
+$$
+
+The search is by sparse adjacency powers and integer comparisons; it does not require computing a real eigenvalue or consulting the hidden word. Monotonicity of the ratios gives $a_{j+1}>3a_j$ for every $j\ge0$.
+
+For the remaining positive case $N=5$, put $f$ at the other canonical terminal of $\langle\beta,\beta\rangle$. The path order is $LL,L,\varepsilon,R,RL$, so $e=LL$ and $f=RL$ are both authentically earned terminals. In the even bipartition $(LL,\varepsilon,RL)$, the restriction of $A^2$ is
+
+$$
+B=\begin{pmatrix}1&1&0\\1&2&1\\0&1&1\end{pmatrix}.
+$$
+
+It satisfies $B^3=4B^2-3B$. Thus, writing $s_n=f^{\mathsf T}A^{2n}e$, the initial values $s_1=0,s_2=1$ and recurrence $s_{n+2}=4s_{n+1}-3s_n$ for $n\ge1$ give
+
+$$
+s_n=\frac{3^{n-1}-1}{2}\quad(n\ge1).
+$$
+
+Here this identity follows also by substituting the displayed expression in that recurrence and its two initial values. Set
+
+$$
+K=4,\qquad a_j=s_{j+2}=\frac{3^{j+1}-1}{2}\quad(j\ge0).
+\tag{67.3}
+$$
+
+These weights start $1,4,13,40,\ldots$ and satisfy $a_{j+1}=3a_j+1$. This is a calculation at the opposite terminal of the actual $P_5$, not a replacement of that graph or of its read interface.
+
+In both cases $a_0>0$ and $a_{j+1}>3a_j$, so
+
+$$
+a_D>2\sum_{j<D}a_j\quad(D\ge1).
+\tag{67.4}
+$$
+
+For example, bound each earlier weight by $3^{-(D-j)}a_D$ and sum the finite geometric series. Bipartiteness gives, for any finite polynomial $F(z)=\sum_k c_kz^k$ with $c_k\in\{0,1,2\}$,
+
+$$
+\begin{aligned}
+f^{\mathsf T}A^{K-1}F(A)e&=\sum_{j\ge0}c_{2j+1}a_j=:Y_{\rm odd},\\
+f^{\mathsf T}A^KF(A)e&=\sum_{j\ge0}c_{2j}a_j=:Y_{\rm even}.
+\end{aligned}
+\tag{67.5}
+$$
+
+For (67.2) these are seed return exponents $2(J+j)$. For (67.3), $K-1=3$ and an odd exponent $2j+1$ give cross exponent $2(j+2)$, while $K=4$ and an even exponent $2j$ give the same cross exponent. Wrong-parity cross moments vanish because $d(e,f)=4$ is even. This checks both whole-terminal sites and both actual offsets.
+
+Generate the known positive integer weights through the first one exceeding $M=\max(Y_{\rm odd},Y_{\rm even})$. For each total, descend the preceding list. At weight $a_D$, take the quotient of the residual by $a_D$ rounded down, and subtract that quotient times $a_D$. On the promised sums the quotient is the actual digit in $\{0,1,2\}$: (67.4) puts the sum of all lower contributions strictly below $a_D$. Both residuals therefore end at zero. Interleave the two recovered coefficient lists. The highest nonzero coefficient of a genuine $F_w$ is one; its degree gives $m$, and the lower coefficients in descending order give $d_0,\ldots,d_{m-1}$. In particular $F=1$ decodes the empty word and $F=z^m$ decodes the length-$m$ zero word. The weights grow without bound, so generation and decoding terminate without length advice. Equality of the two functionals in (67.5) forces equality of these coefficient lists, proving field injectivity for all $N\ge5$.
+
+The only terms with fewer than five material vertices are alpha, beta and $\langle\beta,\alpha\rangle$. At alpha the empty word and $1$ both give $e$, because $A=0$. At beta the empty word and $00$ both give $e$, because $A^2=\mathrm{Id}$. At the four-vertex path the characteristic polynomial is $q(z)=z^4-3z^2+1$, obtained by the usual path determinant recurrence. Cayley–Hamilton gives $q(A)=0$, and
+
+$$
+(z^2+1)q(z)=z^6-2z^4-2z^2+1.
+\tag{67.6}
+$$
+
+The distinct monic ternary polynomials
+
+$$
+F(z)=z^7+z^6+1,\qquad G(z)=z^7+2z^4+2z^2
+\tag{67.7}
+$$
+
+have this difference. They encode the length-seven words $1000001$ and $0020200$, respectively, and satisfy $F(A)e=G(A)e$. This is equality of the whole field, rather than just one selected scalar. With the same graph, map and late-receiver context, every permitted passive continuation from those equal states has identical whole replies. No passive receiver using any earned terminals, any number of Reads or any adaptive schedule can recover both words. Earlier encoding Read replies are outside this late receiver's input domain. These three collisions establish the required necessity; the actual attainment and continuation from the positive sample data are given next. $\square$
+

@@ -1,0 +1,21 @@
+**Theorem 56.1 (same-specimen no-length recovery and synchronized installation).** After any actual word in Definition 55.1, the original root service acquires its endpoint and recovers its word and length with exactly $N$ new scalar replies and $N-1$ new Ticks, followed by finite local decoding during Hold. At completion the installed predictor represents the actual specimen at its true advanced cut, not the historical pulse endpoint.
+
+Proof. Apply exactly Theorem 46.2's observation protocol: one Read at the pulse endpoint, then $N-1$ actual returning Ticks with no Add, then Hold. The received values satisfy
+
+$$
+z=\mathcal O_Nx_{\rm hist},\qquad
+x_{\rm hist}=X(u),\qquad
+x_{\rm now}=T^{N-1}x_{\rm hist}.
+\tag{56.1}
+$$
+
+Compute $x_{\rm hist}=\mathcal O_N^{-1}z$ and use Theorem 54.2 to recover $u,L$ without any supplied old count. During the held interval initialize and commit
+
+$$
+\widehat x=x_{\rm now}=T^{N-1}x_{\rm hist},\qquad
+w_{\rm now}=\mathcal O_Nx_{\rm now}.
+\tag{56.2}
+$$
+
+No source Tick occurs during these local computations. The actual state is consequently the one in (56.2) when the next call is exposed. For $N=1$ there is no diagnostic Tick and the historical and current fields coincide. This protocol uses the already acquired law and its root binding; it neither rediscovers the law nor obtains a new preparation, port or right. $\square$
+

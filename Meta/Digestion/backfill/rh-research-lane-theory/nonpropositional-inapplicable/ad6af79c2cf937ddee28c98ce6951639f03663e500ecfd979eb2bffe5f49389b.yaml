@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad6af79c2cf937ddee28c98ce6951639f03663e500ecfd979eb2bffe5f49389b
+  normalized_sha256: sha256:ad6af79c2cf937ddee28c98ce6951639f03663e500ecfd979eb2bffe5f49389b
+cas_ref: sha256:ad6af79c2cf937ddee28c98ce6951639f03663e500ecfd979eb2bffe5f49389b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 源码身份引用与标准库诊断执行数量/非独立核验声明，是实验/执行元数据，不作Lean数学证明。'
+    previous_atom_id: f7be99e1d37c828f70be62b885db5a17f395a6b7b21791c6a5f54fc4071a4bb7
+    next_atom_id: 38ead2a84a9d0f38ef70831703e5008bcbd48d3339ec9d0f22107f2ac081c132

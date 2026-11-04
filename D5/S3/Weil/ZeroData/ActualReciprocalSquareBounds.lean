@@ -141,10 +141,12 @@ private theorem firstLiMass_lt_one : firstLiMass < 1 := by
   unfold firstLiMass
   linarith
 
-/-- The exact real sum is obtained from the existing actual xi resolvent. -/
-theorem actual_pairWeight_hasSum :
-    HasSum (fun n : ℕ => (actualData.multiplicity n : ℝ) *
-      pairWeight (actualData.zero n)) firstLiMass := by
+/-- The exact multiplicity-weighted complex mass from the actual xi resolvent.
+This is the shared source for the real mass and the complete occurrence package. -/
+theorem actual_complex_pairWeight_hasSum :
+    HasSum (fun n : ℕ => (actualData.multiplicity n : ℂ) *
+      (1 / (actualData.zero n * (1 - actualData.zero n))))
+      (firstLiMass : ℂ) := by
   have hx1 : xiReading 1 ≠ 0 := by rw [xi_reading_endpoint_values.2]; norm_num
   have h := xi_reading_normalized_resolvent_hasSum actualData 1 hx1
   have href : logDeriv xiReading 0 = -logDeriv xiReading 1 := by
@@ -155,25 +157,26 @@ theorem actual_pairWeight_hasSum :
         Real.log (2 * Real.sqrt Real.pi) : ℝ) : ℂ) := by
     change deriv xiReading 1 / xiReading 1 = _
     exact first_li_coefficient_normalization.1
-  have hcomplex : HasSum
-      (fun n : ℕ => (actualData.multiplicity n : ℂ) *
-        (1 / (actualData.zero n * (1 - actualData.zero n))))
-      (firstLiMass : ℂ) := by
-    convert h using 1
-    · funext n
-      have hs := (actualData.zero_isNontrivial n).2
-      have h0 : actualData.zero n ≠ 0 := by
-        intro he; have := hs.1; simpa only [he, Complex.zero_re, lt_self_iff_false] using this
-      have h1 : actualData.zero n ≠ 1 := by
-        intro he; have := hs.2; simpa only [he, Complex.one_re, lt_self_iff_false] using this
-      field_simp [h0, sub_ne_zero.mpr h1.symm]
-      <;> ring
-    · rw [href, hend]
-      unfold firstLiMass
-      push_cast
-      ring
+  convert h using 1
+  · funext n
+    have hs := (actualData.zero_isNontrivial n).2
+    have h0 : actualData.zero n ≠ 0 := by
+      intro he; have := hs.1; simpa only [he, Complex.zero_re, lt_self_iff_false] using this
+    have h1 : actualData.zero n ≠ 1 := by
+      intro he; have := hs.2; simpa only [he, Complex.one_re, lt_self_iff_false] using this
+    field_simp [h0, sub_ne_zero.mpr h1.symm]
+    <;> ring
+  · rw [href, hend]
+    unfold firstLiMass
+    push_cast
+    ring
+
+/-- The exact real sum is obtained from the existing actual xi resolvent. -/
+theorem actual_pairWeight_hasSum :
+    HasSum (fun n : ℕ => (actualData.multiplicity n : ℝ) *
+      pairWeight (actualData.zero n)) firstLiMass := by
   simpa only [Complex.mul_re, Complex.natCast_re, Complex.natCast_im,
-    zero_mul, sub_zero, Complex.ofReal_re, pairWeight] using Complex.hasSum_re hcomplex
+    zero_mul, sub_zero, Complex.ofReal_re, pairWeight] using Complex.hasSum_re actual_complex_pairWeight_hasSum
 
 private theorem actual_weight_nonneg (n : ℕ) :
     0 ≤ (actualData.multiplicity n : ℝ) * pairWeight (actualData.zero n) := by
@@ -309,10 +312,12 @@ theorem actual_inverse_square_tsum_transport :
 
 All indices below still refer to `actualData`, on the whole open strip.
 No numerical bound or analytic identity is a parameter of the final result.
-The helpers are private because their live consumer is the height argument.
+The numerical helpers are private. The endpoint and mass normalization also
+supply the integrated explicit formula.
 -/
 
-private theorem firstLiMass_split : firstLiMass =
+/-- The first Li mass normalization used by the height and formula arguments. -/
+theorem firstLiMass_split : firstLiMass =
     2 + Real.eulerMascheroniConstant - 2 * Real.log 2 - Real.log Real.pi := by
   rw [firstLiMass, Real.log_mul (by norm_num)
     (Real.sqrt_pos.2 Real.pi_pos).ne', Real.log_sqrt Real.pi_pos.le]
@@ -415,7 +420,8 @@ private theorem xi_six_ne_zero : xiReading (6 : ℂ) ≠ 0 := by
   exact mul_ne_zero (mul_ne_zero (mul_ne_zero (by norm_num) (by norm_num))
     (by norm_num)) (mul_ne_zero hg hz)
 
-private theorem zero_endpoint_logDeriv :
+/-- The zero endpoint used by the reflected resolvents and the formula argument. -/
+theorem zero_endpoint_logDeriv :
     logDeriv xiReading 0 = -(firstLiMass / 2 : ℝ) := by
   have hr := xi_logDeriv_reflection (1 : ℂ)
   have he := first_li_coefficient_normalization.1

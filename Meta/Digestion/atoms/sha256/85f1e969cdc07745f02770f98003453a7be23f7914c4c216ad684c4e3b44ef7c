@@ -1,0 +1,25 @@
+**Definition 8.2 (The twenty common-contraction resolutions).** For a central edge $i:u\to v$, rotate the cycles at $u$ and $v$ to $(i^+,h_1,h_2)$ and $(i^-,h_3,h_4)$. The $H$ resolution has cycles $(i^+,h_1,h_3)$ and $(i^-,h_2,h_4)$; the $X$ resolution has $(i^+,h_1,h_4)$ and $(i^-,h_2,h_3)$. The first and second fibers keep source vertex names $u$ and $v$. Every other fiber and every edge pairing is unchanged. Contracting $i$ in the original, $H$, or $X$ graph gives the same four-flag fiber $\{h_1,h_2,h_3,h_4\}$, and deletes exactly chain coordinate $i$. This specifies the common contracted graph in every row, including when external flags are paired to each other.
+
+| Resolution | First oriented fiber | Second oriented fiber | Target under the signed map |
+| --- | --- | --- | --- |
+| $C1:H$ | $(1^{+},2^{+},3^{-})$ | $(1^{-},6^{+},5^{+})$ | $C$ |
+| $C1:X$ | $(1^{+},2^{+},5^{+})$ | $(1^{-},6^{+},3^{-})$ | $S$ |
+| $C3:H$ | $(3^{+},4^{+},5^{+})$ | $(3^{-},9^{-},1^{-})$ | $S$ |
+| $C3:X$ | $(3^{+},4^{+},1^{-})$ | $(3^{-},9^{-},5^{+})$ | $C$ |
+| $C4:H$ | $(4^{+},9^{-},5^{-})$ | $(4^{-},3^{+},2^{-})$ | $C$ |
+| $C4:X$ | $(4^{+},9^{-},2^{-})$ | $(4^{-},3^{+},5^{-})$ | $S$ |
+| $P2:H$ | $(2^{+},8^{+},3^{+})$ | $(2^{-},1^{-},9^{+})$ | $P$ |
+| $P2:X$ | $(2^{+},8^{+},9^{+})$ | $(2^{-},1^{-},3^{+})$ | $C$ |
+| $P3:H$ | $(3^{+},9^{+},7^{+})$ | $(3^{-},2^{-},1^{+})$ | $C$ |
+| $P3:X$ | $(3^{+},9^{+},1^{+})$ | $(3^{-},2^{-},7^{+})$ | $P$ |
+| $P5:H$ | $(5^{+},8^{-},6^{+})$ | $(5^{-},4^{-},9^{-})$ | $P$ |
+| $P5:X$ | $(5^{+},8^{-},9^{-})$ | $(5^{-},4^{-},6^{+})$ | $C$ |
+| $P6:H$ | $(6^{+},9^{-},7^{-})$ | $(6^{-},5^{-},4^{+})$ | $C$ |
+| $P6:X$ | $(6^{+},9^{-},4^{+})$ | $(6^{-},5^{-},7^{-})$ | $P$ |
+| $C5:H$ | $(5^{+},1^{-},2^{-})$ | $(5^{-},3^{-},4^{-})$ | $R$ |
+| $C5:X$ | $(5^{+},1^{-},4^{-})$ | $(5^{-},3^{-},2^{-})$ | $C$ |
+| $C7:H$ | $(7^{+},8^{+},8^{-})$ | $(7^{-},6^{-},9^{+})$ | $B$ |
+| $C7:X$ | $(7^{+},8^{+},9^{+})$ | $(7^{-},6^{-},8^{-})$ | $C$ |
+| $K1:H$ | $(1^{+},2^{+},4^{-})$ | $(1^{-},3^{+},7^{-})$ | $P$ |
+| $K1:X$ | $(1^{+},2^{+},7^{-})$ | $(1^{-},3^{+},4^{-})$ | $P$ |
+

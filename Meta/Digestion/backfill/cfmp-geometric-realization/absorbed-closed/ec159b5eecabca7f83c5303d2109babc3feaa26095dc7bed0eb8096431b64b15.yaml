@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ec159b5eecabca7f83c5303d2109babc3feaa26095dc7bed0eb8096431b64b15
+  normalized_sha256: sha256:ec159b5eecabca7f83c5303d2109babc3feaa26095dc7bed0eb8096431b64b15
+cas_ref: sha256:ec159b5eecabca7f83c5303d2109babc3feaa26095dc7bed0eb8096431b64b15
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/AngleBudgetCertificates.exact_angle_budget_certificates
+    target_statement_id: sha256:90979449b96d7ec6d817c5fee3a4baea600df232896795a83a348d5fdb2ea462
+receipts:
+  unresolved_subitems: []

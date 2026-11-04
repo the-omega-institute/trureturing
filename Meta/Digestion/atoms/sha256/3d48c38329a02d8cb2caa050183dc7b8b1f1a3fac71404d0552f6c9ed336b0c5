@@ -1,0 +1,24 @@
+**Definition 6.1 (the common-context views).** Fix one Assumption 5.1
+installation, its actual root binding, current rights and returned domain.
+Let $C(t)$, source support $S_0$ and terminal antichain $B_0$ be AA
+Definition 17.3's material tree and views: alpha is terminal, beta has
+one terminal left marker, and a branch has its two ordered logical
+subtrees. Auxiliary record edges are excluded from this source geometry.
+At a returned cut define
+
+$$
+\mathsf{Space}=(S_0,J(h)),\qquad
+\mathsf{Boundary}=(B_0,J(h)),\qquad
+\mathsf{Time}=h,\qquad
+\mathsf{Memory}=M_J.
+\tag{IV.13}
+$$
+
+Each word component includes its observable end. $M_J$ selects the actual
+retained source, root-bound readable word chain, callable fixed driver
+and present authority. It is not a table of hypothetical answers or the
+whole controller's busy state. All four views have the same fixed live
+binding/rights context. Equality of semantic contents disregards raw
+fresh-name spellings and unobserved cleared capacity, as in AA §21;
+it does not identify unrelated roots or different authorities.
+

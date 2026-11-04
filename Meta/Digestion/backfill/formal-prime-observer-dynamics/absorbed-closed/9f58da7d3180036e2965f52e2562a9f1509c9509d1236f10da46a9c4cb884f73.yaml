@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9f58da7d3180036e2965f52e2562a9f1509c9509d1236f10da46a9c4cb884f73
+  normalized_sha256: sha256:9f58da7d3180036e2965f52e2562a9f1509c9509d1236f10da46a9c4cb884f73
+cas_ref: sha256:9f58da7d3180036e2965f52e2562a9f1509c9509d1236f10da46a9c4cb884f73
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimePowers/BoundedIntegerCrtCompleteness.bounded_integer_crt_complete_iff
+    target_statement_id: sha256:e0f98b7f0b574235f42c4b6ec5f27c7ea1d77b76f2b05b88654a16eb0f71a093
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,6 @@
+## 115. A strict finite gap after Boundary Dynamics §114.99
+
+This standalone continuation supplies a fixed finite obstruction to identifying the number of canonical future-response functions with the least supplementary memory. Its new result is the exact gap $D_{\rm read}=D_{\rm blind}=2<H_{\rm resp}=3$, with the original completed-event interface and canonical decoder. It does not replace the response-index upper bound of [Boundary Dynamics](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md) §114.4 or repackage its construction as an optimality theorem.
+
+This is `repo-derived` ordinary mathematical prose with bounded finite computation, not Lean verification or a physical law. Existing supplies are cited below; no external originality claim is made. Only this new volume carries the continuation; existing theory text is unchanged.
+

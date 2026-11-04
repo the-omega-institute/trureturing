@@ -1,0 +1,51 @@
+#### 定理 3.2（黄金相位的编织条件）
+
+设 $P,Q$ 为投影，$PQP=x^2P$、$QPQ=x^2Q$、$P\ne Q$。
+对 $|z|=1$，定义 $T_P(z)=I+(z-1)P$。
+则
+
+<a id="eq-braiddefect"></a>
+
+$$
+T_PT_QT_P-T_QT_PT_Q
+=(z-1)\bigl[z+x^2(z-1)^2\bigr](P-Q).
+\tag{9}
+$$
+
+除 $z=1$ 的平凡情形外，编织关系成立当且仅当
+$z=e^{3\pi i/5}$ 或 $e^{-3\pi i/5}$。
+
+**证明。**
+
+令 $u=z-1$。三次展开后，两边共享 $I$ 和 $u^2(PQ+QP)$；
+差为 $u(1+u+x^2u^2)(P-Q)$，即 [(9)](#eq-braiddefect)。
+非平凡条件除以 $z$ 得
+$1+x^2(z+z^{-1}-2)=0$，即
+$z+z^{-1}=2-x^{-2}=-x$。
+单位圆上恰有所述互为共轭的两个解。 ∎
+
+取 $\zeta=e^{3\pi i/5}$ 和原生门
+
+<a id="eq-Ki"></a>
+
+$$
+K_i=\zeta\bigl[I+(\zeta-1)P_i\bigr].
+\tag{10}
+$$
+
+共同标量不改变编织等式，且谱包含于 $\{\zeta,\zeta^2\}$，所以
+
+<a id="eq-nativerel"></a>
+
+$$
+K_i^{10}=I,\qquad
+K_iK_{i+1}K_i=K_{i+1}K_iK_{i+1},\qquad
+[K_i,K_j]=0\quad(|i-j|\ge2).
+\tag{11}
+$$
+
+这些关系在合法路径扇区成立，不能未经检查扩展到任意不合法位串。
+项目的完整十三维来源已把七个地址及两端边界同时接到 Jones–Wenzl 表示。（[3](#ref-repoborn)、[4](#ref-repov15)、[11](#ref-flw)）
+
+<a id="statement-3-3"></a>
+

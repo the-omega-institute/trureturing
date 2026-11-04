@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6fe7187ebb7c633f19b57782b5e9079c25711d12de01e84d7634dc375ab1b80d
+  normalized_sha256: sha256:6fe7187ebb7c633f19b57782b5e9079c25711d12de01e84d7634dc375ab1b80d
+cas_ref: sha256:6fe7187ebb7c633f19b57782b5e9079c25711d12de01e84d7634dc375ab1b80d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：把在线比较状态存在指定为前件 A8，没有证明该状态存在。
+    previous_atom_id: 376b2b53d33f0e5e1e6969d0bbf7be58b2157ba05dcc5e8fabf3e7989604149f
+    next_atom_id: 208d4ccb5a31dd2f756555a7e7d25515aa7a3139f5709faf3701e3b683439df3

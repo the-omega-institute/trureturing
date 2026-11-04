@@ -1,0 +1,26 @@
+### 命题 6.2（共同可恢复状态上的三角接续）
+
+若 $\rho$ 属于 A、B 都能准确回接的同一状态族，即
+$\mathcal R_A\mathcal N_A(\rho)=\rho$ 且
+$\mathcal R_B\mathcal N_B(\rho)=\rho$，则
+
+$$
+\mathcal T_{CB}\mathcal T_{BA}\mathcal N_A(\rho)
+ =\mathcal T_{CA}\mathcal N_A(\rho)=\mathcal N_C(\rho).
+$$
+
+若在完整声明源部门上有
+$\|\mathcal R_B\mathcal N_B-\operatorname{id}\|_\diamond\le e_B$，则
+
+$$
+\|\mathcal T_{CB}\mathcal T_{BA}-\mathcal T_{CA}\|_\diamond\le e_B.
+$$
+
+**证明。**
+精确式把两个回接依次替换成 $\rho$ 即得。
+近似式的差为
+$\mathcal N_C(\mathcal R_B\mathcal N_B-\operatorname{id})\mathcal R_A$；
+通道的 diamond 范数为一，次乘性给出结论。该误差前件覆盖整个声明源部门，不能仅以单个参照被返回代替。
+
+这是一条条件的共同来源定理。它没有赋予任何单个观察者对全 $\Omega$ 的访问。要在内部使用它，所需来源接口、支持和回接关系必须被该观察者已有的证据覆盖。
+

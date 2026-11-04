@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8cff378532f4a4f360e03aee89fb728bdeb385a949ab3e98dc7033be3b19c0f4
+  normalized_sha256: sha256:8cff378532f4a4f360e03aee89fb728bdeb385a949ab3e98dc7033be3b19c0f4
+cas_ref: sha256:8cff378532f4a4f360e03aee89fb728bdeb385a949ab3e98dc7033be3b19c0f4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 禁止无消费者的易证 wrapper 留在 API，是声明准入政策。
+    previous_atom_id: 73be33bf4c6c1e923a6be01c832cd22dba8a389e658e8c3c627d27498d3e1024
+    next_atom_id: 4b955007926a20a2386e7701afd17d03f33a9dbe1fcdb98486b2da2616d2a73d

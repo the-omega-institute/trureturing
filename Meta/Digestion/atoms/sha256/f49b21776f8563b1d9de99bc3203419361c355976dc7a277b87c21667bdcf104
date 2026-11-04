@@ -1,0 +1,92 @@
+**Proposition 29.1 (explicit all-raw five-read inverse and certificate).** For $k=d=0$, (26.2) is the legal trajectory with actions $(M,M,J,M)$ and cumulative matrices
+
+$$
+ I,\quad M,\quad M^2,\quad
+ JM^2=\begin{pmatrix}1&2\\1&1\end{pmatrix},\quad
+ MJM^2=\begin{pmatrix}1&1\\2&3\end{pmatrix}
+ \tag{29.1}
+$$
+
+at original clocks $0,1,2,3,4$. Write its five received records as $y_0,\ldots,y_4$, its unknown nonzero constant gain as $h$, and its unknown constant drift as $D$. The following explicit ambient decoder is another attainment of the same budget:
+
+$$
+ x=y_2-y_1,\qquad q=y_2-y_0,\qquad
+ \widehat h=x,\qquad \widehat D=y_0+y_1-y_2,
+$$
+
+$$
+ \widehat S=
+ \begin{pmatrix}
+ y_0-y_1-2y_2+y_3+y_4&y_0-4y_2+y_3+2y_4\\
+ -y_0+2y_2-y_4&-y_0+3y_2-y_3-y_4
+ \end{pmatrix},
+ \qquad
+ \widehat P=\frac{x}{x^2+\delta^2}\widehat S.
+ \tag{29.2}
+$$
+
+For every actual world and every $\delta\ge0$ the denominator is positive, and
+
+$$
+ |\widehat h-h|\le2\delta,\qquad
+ |\widehat D-D|\le3\delta,\qquad
+ \|\widehat P-P\|_{\max}\le11\sqrt5\,
+                        \frac{1+b}{|h|}\delta.
+ \tag{29.3}
+$$
+
+A usable simultaneous certificate replaces $\chi$ on the right by
+
+$$
+ \chi_{\rm cert}^{(0)}=
+       \frac1\alpha+\frac{|q|+2\delta}{\alpha^2},
+ \qquad \alpha=|x|-2\delta>0.
+ \tag{29.4}
+$$
+
+Its complete-target radius is $\max\{3,11\sqrt5\chi_{\rm cert}^{(0)}\}\delta$. When $\alpha\le0$ it makes no finite source-radius claim. It eventually succeeds for every fixed $h\ne0$ as $\delta$ decreases. The five-read cap is sharp for both stable tasks on each $\mathcal C_R$ with the prescribed three-read pure-$M$ prefix.
+
+**Proof.** For $P=\left(\begin{smallmatrix}1-t&u\\v&t\end{smallmatrix}\right)$, direct traces of (29.1) are
+
+$$
+ 1,\quad b=t+u+v,\quad 1+b,\quad 1+u+2v,\quad 1+2u+v+2t.
+ \tag{29.5}
+$$
+
+Substitution in the linear expressions in (29.2) gives, for exact records, $x=h$, $q=bh$, $\widehat D=D$, and $\widehat S=hP$. This is elementary fixed linear inversion of the five acquired traces; it is not a new general interpolation theorem. Row sums of absolute coefficients give, with raw error at most $\delta$ at every one of these clocks,
+
+$$
+ |x-h|\le2\delta,\qquad |q-bh|\le2\delta,\qquad
+ |\widehat D-D|\le3\delta,\qquad
+ \|\widehat S-hP\|_{\max}\le8\delta.
+ \tag{29.6}
+$$
+
+In particular $x^2+\delta^2>0$ at every actual record: for $\delta>0$ it is immediate, while for $\delta=0$ one has $x=h\ne0$. Put $r_0=\sqrt{x^2+\delta^2}$. Subtracting $P$ in (29.2) yields
+
+$$
+ \|\widehat P-P\|_{\max}
+ \le\frac{|x|}{x^2+\delta^2}
+            \bigl(8\delta+2\delta\|P\|_{\max}\bigr)
+       +\frac{\delta^2}{x^2+\delta^2}\|P\|_{\max}
+ \le\frac{11(1+b)\delta}{r_0}.
+ \tag{29.7}
+$$
+
+Here $\|P\|_{\max}\le1+b$. Also $|h|\le|x|+2\delta\le\sqrt5r_0$, proving (29.3). If $\alpha>0$, (29.6) gives $|h|\ge\alpha$ and $b|h|\le|q|+2\delta$, which prove the simultaneous certificate (29.4) exactly as in Theorem 27.1. Its margin is positive for every allowed record when $\delta<|h|/4$. Theorem 28.2 with $N=3$ proves sharpness in the declared architecture.
+
+For a concrete whole world take
+
+$$
+ P=\frac15\begin{pmatrix}1&2\\2&4\end{pmatrix},\qquad h=2,\qquad D=1.
+ \tag{29.8}
+$$
+
+Its noiseless reports at these same original clocks are $(3,21/5,31/5,27/5,43/5)$. Formula (29.2) returns $x=2$, $q=16/5$, $\widehat D=1$, and $\widehat S=2P$ before normalization. With noisy records it retains (29.3), and every allowed record has a successful margin when $\delta<1/2$. No read, clock translation, or calibration observation is omitted. $\square$
+
+**Assumptions and source correspondence for §§25–29.** Main Definition 39.1 and Theorem 39.2 supply the fixed pure-$M$ coefficient inverse and its exact paid-tail consumer, with normalized $R_0=P$, the same $H,D$, original integer clocks, arbitrary degree drops and gain roots, and $N=2k+d+3$. Their known-node ingredient is the confluent evaluation matrix and determinant in Batenkov–Yomdin, *On the Accuracy of Solving Confluent Prony Systems*, [§2B, arXiv:1106.1137v3](https://arxiv.org/html/1106.1137v3#S2.SS2). The nodes here are the fixed distinct nonzero $\phi,\psi$, both different from the drift node $1$. No unknown-node Prony stability theorem or nonzero highest modal amplitude is imported. Elementary Lagrange interpolation and induced-norm/singular-value estimates are credited tools; Lemma 3.2 supplies the moving-trace basis, and Theorems 5.1–5.2 supply the entire positive crossing fiber. The all-raw normalization, common-world residual, unrestricted obstructions, acquired certificate, and their joint-class acquisition consequences are the source-specific synthesis here (repo-derived); no external-priority claim is made.
+
+The [trace-corridor theorem in *FIB Self-Calibrating Relation Mathematics IX*, §4](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md#4-固定或有界读数的整个迹走廊) assumes its exact compatible ancestor equations, bounded ancestor vector, and a declared positive finite $J$-trace corridor. It is not an all-raw noisy normalization theorem on the unrestricted domain. The [six-read affine stability results, §§11–15](FIB_AFFINE_SIX_READ_SHARP_RECOVERY.md#11-norms-and-the-exact-six-read-stability-problem) concern their positive-intercept effective target and their recorded-reading clock, including an empty repeat and unread composites, with specified conditioning domains. Their exact-image pair estimates do not supply (26.11) for arbitrary raw perturbations. The polynomial shear volume likewise allows empty reads and unread composites. Its elementary interpolation fact is used in (26.6), but no cheaper acquisition history or clock convention is imported from either volume.
+
+The exact results in §§2–19 and the exact-prefix/post-calibration-noise results in §§20–24 keep their own hypotheses and conclusions. Theorem 25.2 concerns the full original class; Theorem 26.2 gives an instancewise bound on that class; Theorem 27.1 gives a finite acquired certificate conditional on the original model; Theorem 28.2 gives uniform guarantees only on each expressly declared $\mathcal C_R$. No necessity or maximality of that class, source-local noisy-prefix optimum, unrestricted earlier-mixing optimum, optimal finite-noise constants, finite-bit arithmetic, physical realization, literature priority, or Lean certification is asserted.
+

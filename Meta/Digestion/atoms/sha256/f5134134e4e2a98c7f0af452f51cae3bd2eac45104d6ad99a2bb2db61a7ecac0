@@ -1,0 +1,33 @@
+**Proposition 134.2 (A nonempty allowed subclass of projective order two).**
+For every $0<d<1$ and every $\theta$ with $\sin(2\theta)\ne0$,
+choose any complex unit $v\perp\xi$ and put
+
+$$
+u=\frac{\xi+v}{\sqrt2},\qquad N=I_3-2uu^\dagger.
+\tag{134.4}
+$$
+
+This gives a legitimate allowed control with $N^2=I_3$ and
+$[N,P_\xi]\ne0$. The actual eight-plus-one prefix construction
+of V §§92–93 supplies an allowed source for it, so the subclass
+in Corollary 134.1 is nonempty. This statement evaluates neither
+$\delta_j$ nor any of the three endpoint types for that source.
+
+*Proof.* Since $u^\dagger u=1$, the matrix $uu^\dagger$ is an
+orthogonal projection, so $N=N^\dagger$ and $N^2=I_3$.
+Moreover $N\xi=-v$, hence $NP_\xi N^\dagger=vv^\dagger\ne P_\xi$.
+A unitary commuting with $P_\xi$ would preserve that projection
+under conjugation, proving the mixing condition. For these original
+$d,\theta$, V Theorem 92.1 supplies eight actual native prefix
+columns with their original masses. V Theorem 92.2 supplies a ninth
+column by applying this same mixing $N$ to one of them, with no
+new preparation or normalization. They span $\operatorname{Herm}_3$,
+so all clauses of VI Definition 114.1 hold. In this subclass $p=2$
+in (134.1) gives the valid source-dependent bound $2K+1$.
+Neither mixing nor finite projective order compares the two tangent
+optima, so this construction is not a positive-gap example. The
+strict-gap existence question, and the choice between the eventual
+endpoint types for a specified but unevaluated source, remain
+unresolved by these conclusions. No sampling, entire-unitary
+recovery, or external named-problem conclusion follows. $\square$
+

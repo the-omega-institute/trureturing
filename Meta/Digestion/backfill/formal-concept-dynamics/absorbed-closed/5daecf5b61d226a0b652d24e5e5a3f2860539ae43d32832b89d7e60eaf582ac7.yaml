@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5daecf5b61d226a0b652d24e5e5a3f2860539ae43d32832b89d7e60eaf582ac7
+  normalized_sha256: sha256:5daecf5b61d226a0b652d24e5e5a3f2860539ae43d32832b89d7e60eaf582ac7
+cas_ref: sha256:5daecf5b61d226a0b652d24e5e5a3f2860539ae43d32832b89d7e60eaf582ac7
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Audits/LedgerIntegrityVeracitySeparation.ledger_integrity_does_not_imply_input_veracity
+    target_statement_id: sha256:87e436c25359448bc49a8515fa3554b5a97b4f8103f675d2b49c2148df5c298e
+receipts:
+  unresolved_subitems: []

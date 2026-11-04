@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:35948d99667cbf919c28660b6aaaae62c91a82d927ed679188fee47088fa735c
+  normalized_sha256: sha256:35948d99667cbf919c28660b6aaaae62c91a82d927ed679188fee47088fa735c
+cas_ref: sha256:35948d99667cbf919c28660b6aaaae62c91a82d927ed679188fee47088fa735c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: ImageRes 被定义为形式余域减去实际像，没有宣称该差集非空。'
+    previous_atom_id: db01d6aedc5d5470d546dc41f35fb518e6b318affce1b4fc575b3bd4c926d0aa
+    next_atom_id: 2be96d6563c5bf9071fcced49189f7df4cce09cabfeb597d3f3ad6baa90e6984

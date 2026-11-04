@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:686c38e8a0f6966da9b2623a81c69fc93bbb143e293cb659973c86185c586926
+  normalized_sha256: sha256:686c38e8a0f6966da9b2623a81c69fc93bbb143e293cb659973c86185c586926
+cas_ref: sha256:686c38e8a0f6966da9b2623a81c69fc93bbb143e293cb659973c86185c586926
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将 Bridge target 定义为研究目标的标签，不断言该连接定理存在。
+    previous_atom_id: e898b0a731d7f5c147ff9fdf2a6259e9470518233f945a6c3650f37de9fcfd34
+    next_atom_id: b8edeec88e592b1a557c22b3b91a92bec636049ba74f3d20557306de2e565a65

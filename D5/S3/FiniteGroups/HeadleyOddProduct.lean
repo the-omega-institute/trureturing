@@ -586,7 +586,7 @@ def boxRStar (r : RStar X) (ds : List OddRadix) : RStar (X × Box ds) where
 
 end FiniteBase
 
-private def transportRStar {G K : Type*} [AddCommGroup G] [Finite G]
+def transportRStar {G K : Type*} [AddCommGroup G] [Finite G]
     [AddCommGroup K] [Finite K] (e : G ≃+ K) (r : RStar K) : RStar G := by
   letI : Fintype G := Fintype.ofFinite G
   letI : Fintype K := Fintype.ofFinite K

@@ -1,0 +1,9 @@
+**Definition 19.3 (the earned canonical dispatcher).** Enumerate the current logical leaves in left-to-right order using the retained finite $u$. For each leaf, its material terminal is the leaf itself for $\alpha$, and its marker for $\beta$. Let $\tau_u(k)$ be the resulting $k$th material terminal address. For $1\le k\le n$, scan the earned raw table to find the unique label
+
+$$
+\pi_u(k)=\widehat\lambda^{-1}(\tau_u(k)).
+\tag{NLBAII.10}
+$$
+
+The callable ordered entry translates Add$(k,q)$ and Read$(k)$ to actual raw calls with label $\pi_u(k)$, forwards their entire responses, and commits the matching retained updates. It forwards the other valid operations, including original addressed $P/S$, unchanged. An out-of-range ordinal is forwarded unchanged and is out of raw range as well. The same source-independent grammar is used for field ordinals and raw labels; malformed complete frames remain malformed and are forwarded to that branch. Proper incomplete frames are held pending without a completed inner or outer operation. Buffering, parsing, scanning, rewriting, forwarding, output and return are finite paid work of this dispatcher, not a selector primitive.
+

@@ -1,0 +1,8 @@
+**命题 6.2（字面 MJMM 二目标消费者）。** At $\varepsilon=1/12$, $\lambda=1$, $D_0=0$, the two parameters $d=1/2,2/3$ realize the same entire history
+
+$$
+(-21,M,0,J,65/12,M,0,M,-93/2).
+$$
+
+Proof. Their $f_2$ values are both $49/12$, so (6.2) gives the shared fourth read $-93/2$. Their actual fifth-$J$ reads are respectively $-76,-220/3$, which differ. Their sources (6.1) are strictly positive, rank one, trace one, and their common gain is $(t-1)(t-3)(t-7)$. Thus the separation occurs in the actual complementary history, with its original baseline and clocks. ∎
+

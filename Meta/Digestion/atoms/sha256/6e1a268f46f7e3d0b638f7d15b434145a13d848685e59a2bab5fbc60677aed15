@@ -1,0 +1,55 @@
+### 2.7 A long interval separated from every root scale
+
+Let
+
+$$
+D_{\mathrm{deg}}=\deg P+\deg Q\le2N-1.
+\tag{2.22}
+$$
+
+Substitution $z=1-t$ preserves the degree of a nonzero polynomial.
+Exclude the same open band for every nonzero root of both $P(1-t)$
+and $Q(1-t)$. There are at most $D_{\mathrm{deg}}$ intervals in the
+$x$ coordinate. Their union has length at most $2D_{\mathrm{deg}}$.
+Its complement in $[2,J+2]$ has at most $D_{\mathrm{deg}}+1$ closed
+interval components, with singleton components permitted. One way to see
+the component bound is to remove the open intervals one at a time:
+each removal increases the number of components by at most one.
+
+The total complementary length is at least
+
+$$
+J-2D_{\mathrm{deg}}\ge8NK-4N+2>4NK.
+\tag{2.23}
+$$
+
+The last difference is $4N(K-1)+2>0$. If every component had length
+at most $2K$, their total length would be at most
+$2K(D_{\mathrm{deg}}+1)\le4NK$, a contradiction. A component
+therefore has length strictly greater than $2K$.
+
+Translate its endpoints back to $t_\ell<t_h$. Then
+
+$$
+q_*=\frac{t_h}{t_\ell}>2^{2K}.
+\tag{2.24}
+$$
+
+For each root of either polynomial, connectedness and avoidance of its
+open bad band imply that the entire interval is on one side of that
+band. Consequently every root satisfies either
+
+$$
+|\alpha|\le t_\ell/2
+\quad\hbox{or}\quad
+|\alpha|\ge2t_h.
+\tag{2.25}
+$$
+
+Zero roots belong to the first group. Closed endpoints retain the weak
+inequalities in (2.25), so the preceding positive factor bounds still
+hold there. Bands outside the available interval, duplicate bands,
+touching bands, and common roots of $P$ and $Q$ do not increase either
+the length or the component bounds. No cancellation of common roots is
+needed.
+

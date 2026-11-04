@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:67004cd51977c89c45375e4acd0e0ada23cec12c1853af82ad9b7dcb21bf58d6
+  normalized_sha256: sha256:67004cd51977c89c45375e4acd0e0ada23cec12c1853af82ad9b7dcb21bf58d6
+cas_ref: sha256:67004cd51977c89c45375e4acd0e0ada23cec12c1853af82ad9b7dcb21bf58d6
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/FiniteGaussianSchoenberg.entrywise_exp_posSemidef
+    target_statement_id: sha256:6ced0a29365d0747b02d143d72d91eecf2b084db1adc751686fa583df8896006
+  - gid: D5/S3/Weil/Probability/FiniteGaussianSchoenberg.gram_gaussian_posSemidef
+    target_statement_id: sha256:e83ee5619019d4fc81d7390a8b36152737f3dda0b497486e0e5fc9c97d9a1c91
+  - gid: D5/S3/Weil/Probability/FiniteGaussianSchoenberg.ofReal_posSemidef
+    target_statement_id: sha256:e43b63bc2ba962082673f10ac6003f58de8e5074d7a6467d794c4842e8856cd3
+  - gid: D5/S3/Weil/Probability/FiniteGaussianSchoenberg.real_gram_gaussian_posSemidef
+    target_statement_id: sha256:cea39c416b8454330da113b2e192a60fe857330658b75bca98893ca7c407c769
+  - gid: D5/S3/Weil/Probability/GeometricLiNegativeType.reconstructed_li_exponential_posSemidef
+    target_statement_id: sha256:b69a11de83eb5e4bdcca15f5f679e707a88afb0de89b53bc771cb05087c72dd8
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,54 @@
+**定义 13.1（三个固定目标的有理参数）。** Work in the complete-target domain $\mathcal W_3$ and the original-clock history convention of Definitions 1.1 and 9.1. For $\alpha,\beta>0$ and $d\in\mathbb R$, put
+
+$$
+\begin{gathered}
+h=1+\alpha\beta,\qquad
+P(\alpha,\beta)=\frac1h
+\begin{pmatrix}1&\beta\\\alpha&\alpha\beta\end{pmatrix},\\
+a=\frac1h,\qquad j=\frac{\alpha+\beta}{h},\qquad
+\ell=1+\frac\beta h,\qquad
+\tau=(1,j,\ell,j+\ell),\qquad b=(0,24,48,312/5),\\
+q_i=\frac{b_i-d}{\tau_i}\quad(0\le i\le3),\qquad
+f(T)=\sum_{i=0}^3q_i
+\prod_{\substack{0\le m\le3\\m\ne i}}\frac{T-m}{i-m}.
+\end{gathered}                                                     \tag{13.1}
+$$
+
+There is one polynomial $f$ for this target throughout all continuations. Denote its later samples by
+
+$$
+\begin{pmatrix}f_4\\f_5\\f_6\\f_7\end{pmatrix}=
+\begin{pmatrix}
+-1&4&-6&4\\
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}
+\begin{pmatrix}q_0\\q_1\\q_2\\q_3\end{pmatrix}.                 \tag{13.2}
+$$
+
+Define the trace factors and response functions
+
+$$
+\begin{gathered}
+A=1+a+j,\qquad B=j+2\ell-a,\\
+Y=d+f_4A,\qquad Z=d+f_5B,\qquad V=d+f_6(A+B),\\
+R=d+f_7(2A+j),\qquad S=d+f_7(A+2B).
+\end{gathered}                                                     \tag{13.3}
+$$
+
+For $x=(\alpha_1,\beta_1,d_1,\alpha_2,\beta_2,d_2,
+\alpha_3,\beta_3,d_3)$, attach subscript $i$ to these functions evaluated on its $i$th coordinate triple. The jointly constrained map is
+
+$$
+F(x)=
+\begin{pmatrix}
+Z_1\\ Z_2\\ Z_3\\
+Y_1-Y_2\\ Y_1-Y_3\\
+V_1-V_2\\ V_1-V_3\\
+R_1-R_2\\ S_1-S_3
+\end{pmatrix}.                                                    \tag{13.4}
+$$
+
+In particular, the two terminal equalities concern the pairs $\{1,2\}$ and $\{1,3\}$ within the same three targets. All equations in (13.4), including the ancestor equalities, are simultaneous.
+

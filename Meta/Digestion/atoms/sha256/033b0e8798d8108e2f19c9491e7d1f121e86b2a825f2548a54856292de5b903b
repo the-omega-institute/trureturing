@@ -1,0 +1,108 @@
+**Lemma 16.2 (A capacity certificate on the entire subset domain).** Let $x$ be any dense law in Definition 16.1, and relabel its actual marginals so that $y_1\ge\cdots\ge y_s$. Put
+
+$$
+\alpha_i=y_i^{-2},\quad W=\sum_i\alpha_i,\quad
+\omega=\alpha_3,\quad b_i=c(\omega-\alpha_i)_+,
+\quad W_T=\sum_{i\in T}\alpha_i.
+\tag{16.6}
+$$
+
+For every nonempty $T\subseteq[s]$, with $k=|T|$ and $J=[s]\setminus T$, the expression
+
+$$
+\mathcal R_y(T)
+=(r-k)\big[c(W-2\omega)-(r+k)W_T\big]
+ +\sum_{i\in J}b_i
+\tag{16.7}
+$$
+
+is nonnegative. Its entire zero set is
+
+$$
+\mathcal R_y(T)=0
+\quad\Longleftrightarrow\quad
+\begin{cases}
+k=r,\ J=\{i\},\ y_i\le y_3,\quad\text{or}\\
+k=a,\ J=\{i,j\},\ y_i,y_j\ge y_3.
+\end{cases}
+\tag{16.8}
+$$
+
+For the grouped point
+
+$$
+u=\frac{y_1+y_2}{2},\qquad w=y_3,\qquad
+v=\frac1n\sum_{i=4}^s y_i
+\tag{16.9}
+$$
+
+one has $(u,w)\in\Omega$ and $H(x)\ge F(u,w)$. In the inequality $H(x)\ge F_1(u,w)$, equality forces $y_1=y_2=u$ and $y_4=\cdots=y_s=v$ as well as $\mathcal R_y(T)=0$ on every positive-mass atom.
+
+**Proof.** The actual mean and ordering give $q\le2+a y_3$. Thus, with $\ell=1-2/a$,
+
+$$
+y_3\ge\frac{a-1-\delta}{a}\ge\ell,\qquad
+\omega\le\ell^{-2}\le(32/31)^2<16/15,
+\qquad \alpha_i\ge1.
+\tag{16.10}
+$$
+
+For $k=r$, the residual is $b_i$ on the atom omitting $i$, proving the first zero case. For $k=a$, direct substitution gives
+
+$$
+\mathcal R_y(T)
+=c\sum_{i\in J}(\alpha_i-\omega)_+,
+\tag{16.11}
+$$
+
+proving the second case. At $k=s$ it equals $2W+2c\omega>0$.
+
+For the remaining cardinalities $k<a$, put $d=|J|$, so $3\le d\le s-1$. The bracket in (16.7) is
+
+$$
+(d-2)W+(2s-1-d)\sum_{i\in J}\alpha_i-2c\omega
+\ge3sd-2s-d-d^2-2c\omega.
+\tag{16.12}
+$$
+
+The quadratic in $d$ on the right is concave. Its minimum on $[3,s-1]$ is at least $7s-12$: the endpoint values before subtracting $2c\omega$ are $7s-12$ and $2s(s-2)$. Consequently the bracket is at least
+
+$$
+7s-12-\frac{32c}{15}
+=\frac{41a-2}{15}>0.
+\tag{16.13}
+$$
+
+Since $r-k>0$ and $b_i\ge0$, the residual is strictly positive there. This proves nonnegativity and exhausts the zero set over every allowed nonempty subset.
+
+Expanding (16.7) and using $\mathbb E(r-K)=\delta$ and $\mathbb P(i\in J)=1-y_i$ gives the exact identity under the original law
+
+$$
+H(x)=r^2\sum_i\frac1{y_i}
+ -c\delta(W-2\omega)-\sum_i(1-y_i)b_i
+ +\mathbb E_x\mathcal R_y(T).
+\tag{16.14}
+$$
+
+Only $b_1,b_2$ can be nonzero. Its non-residual part therefore equals
+
+$$
+f(y_1)+f(y_2)+\frac{r^2}{y_3}
+ +\frac{c(y_1+y_2+\delta-2)}{y_3^2}
+ +\sum_{i=4}^s g_1(y_i).
+\tag{16.15}
+$$
+
+Here $f''>0$, and
+
+$$
+g_1''(z)=\frac{2(r^2z-3\gamma)}{z^4}>0
+\quad(\tau\le z\le1),\qquad
+r^2\tau-3\gamma=6\delta>0.
+\tag{16.16}
+$$
+
+Apply finite Jensen separately to $f(y_1)+f(y_2)$ and to the last $n$ terms in (16.15). The coupling depends on $y_1,y_2$ only through their sum, and $y_3=w$ is fixed. This gives $H(x)\ge F_1(u,w)$, with exactly the asserted necessary equality conditions. Lemma 14.2, with the two largest marginals as its omitted pair, gives the other inequality $H(x)\ge F_0(u,w)$ by the same grouping, using $g_0$ instead of $f$.
+
+The expectation step is the classical pointwise-certificate form of weak duality; see Bertsimas and Popescu, *Optimal inequalities in probability theory: A convex optimization approach*, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903), Theorem 2.1. Finite Jensen is used in the form of Boyd and Vandenberghe, *Convex Optimization*, §3.1.8, pp.77–78, [author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf). The explicitly proved residual supplies the first principle's hypothesis, and (16.16) supplies the second principle's convexity hypothesis. Both are applied to the same actual law; no convexity of $H$ as a function of $x$ is asserted. ∎
+

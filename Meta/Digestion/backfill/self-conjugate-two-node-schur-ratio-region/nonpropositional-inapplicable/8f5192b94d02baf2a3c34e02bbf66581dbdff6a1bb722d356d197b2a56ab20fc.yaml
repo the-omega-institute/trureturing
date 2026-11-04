@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f5192b94d02baf2a3c34e02bbf66581dbdff6a1bb722d356d197b2a56ab20fc
+  normalized_sha256: sha256:8f5192b94d02baf2a3c34e02bbf66581dbdff6a1bb722d356d197b2a56ab20fc
+cas_ref: sha256:8f5192b94d02baf2a3c34e02bbf66581dbdff6a1bb722d356d197b2a56ab20fc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Convention 2.2 defining auxiliary slack notation F_t and G_t^{+-} (realized as def F and inline real-part norm bounds in SelfConjugateTwoNodeSchurRatioRegion, consumed by first_inequality_iff_F_nonneg, first_inequality_region, and second_inequality_region); nonpropositional notation and inline elementary bound setup.
+    previous_atom_id: 1e0099c0044dbf98d3338bc7dd7e3f96f92d38f326441b22447307b0f93e2a4d
+    next_atom_id: 112ac06cb28a0b92b942da468678e51900ef61395048c08809aa01def5b13636

@@ -1,0 +1,38 @@
+**Mathematical source correspondence 40.6.** The mixed comparison uses
+the original same-object identities (23.9)--(23.12), the exact
+prescribed-level arcs and their equality preimage in Theorem 36.2,
+and the conditional same-feedback construction (36.20).
+Its final scalar ordering and pure equality classification are
+Theorem 37.5; neither the cap profiles nor the scalar selector is
+replaced. The selected-feedback identity (40.17) additionally uses
+scalar stationarity to control the actual mixed effect arc, as shown
+in (40.19). These are fixed-record, joint-distance deductions.
+
+For the primary-literature correspondence,
+Gregoratti--Werner, [*Quantum Lost and Found*, quant-ph/0209025v1,
+Proposition 8 and (16)--(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8),
+optimize correction fidelity for a fixed Kraus decomposition.
+Their intermediate operator is $t_j=\operatorname{diag}(R_0b_j)$
+here, in input dimension four. Their correction bound and equality
+form do not impose this producer's joint distance, compare its
+feedbacks at a prescribed level, or imply same-feedback purification.
+Buscemi--Chiribella--D'Ariano,
+[*Inverting Quantum Decoherence by Classical Feedback from the Environment*,
+quant-ph/0504195v5, (6) and (9)](https://arxiv.org/html/quant-ph/0504195v5),
+supply the four-dimensional rank-two correlation example:
+their Heisenberg matrix is $\overline{R_0R_0^\dagger}$,
+consistent with their Schrödinger transpose.
+This correspondence does not change the ordinary transpose of the
+effects in the present model.
+
+Thompson's prescribed complex-diagonal and singular-value theorem,
+in the formulation of Jasper--Loreaux--Weiss,
+[*Thompson's theorem for compact operators and diagonals of unitary operators*,
+arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3),
+gives exactly $\mathcal W$ when all four singular values are one,
+as applied in source Theorem 23.2. It supplies realizability, not
+any prescribed-level ordering. The paths and diagnostic in this
+section instead have the direct actual unitary realizations displayed
+above. None of these general literature inputs states the geometric
+mixed comparison or the selected-feedback endpoint/value identity.
+

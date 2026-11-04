@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6ac4324a99c199789c8731e0181884408c787573809604c7d33631b49396e20e
+  normalized_sha256: sha256:6ac4324a99c199789c8731e0181884408c787573809604c7d33631b49396e20e
+cas_ref: sha256:6ac4324a99c199789c8731e0181884408c787573809604c7d33631b49396e20e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.mem_semanticClosure_iff_fiber_constant
+    target_statement_id: sha256:a3c533ec8e5e3daa497b13570afd163687e00dc4e161bd198ee1620ff2f2ef42
+receipts:
+  unresolved_subitems: []

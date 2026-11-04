@@ -1,0 +1,33 @@
+**Definition 2.1 (origin-orbit birth descriptors).** For a physical word
+$p$, let $(b_p,\sigma_p)$ be its birth update and initial leaf label in
+the full forward orbit from alpha under $L$. For the root use
+$(b_\varepsilon,\sigma_\varepsilon)=(0,\alpha)$. Put
+
+$$
+ \delta(\alpha)=2,\quad\delta(\beta)=1,\qquad
+ \tau_p=b_p+\delta(\sigma_p).
+ \tag{ACR.5}
+$$
+
+Thus $\tau_p$ is its branch update. The actual chronological index of
+that branch's birth event is computed by GPO (GPO.94)–(GPO.97):
+
+$$
+ \begin{aligned}
+ \lambda_\alpha(e)&=F_e,&\lambda_\beta(e)&=F_{e+1},\\
+ R_{\tau_p}(p)&=1+
+ \sum_{\substack{qc\preceq p\\c=b}}
+ \lambda_{\sigma_{qa}}(\tau_p-1-\tau_q),&
+ j_p&=F_{\tau_p}-1+R_{\tau_p}(p).
+ \end{aligned}
+ \tag{ACR.6}
+$$
+
+The sum is over path edges that skip an earlier physical $a$-sibling.
+For the root the sum is empty and $j_\varepsilon=1$.
+Both children are born at $b_{pa}=b_{pb}=\tau_p$; their initial labels
+are $(\beta,\alpha)$ at $(a,b)$ when $z_{j_p}=1$, and
+$(\alpha,\beta)$ when $z_{j_p}=0$. Formula (ACR.6) includes earlier
+physical sibling cones, so $j_p$ is an actual chronological index,
+not the index of a chosen semantic traversal.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac813d8ae51831ce26cc61807d8809b61c23b22a197853f26c814c40a8229a19
+  normalized_sha256: sha256:ac813d8ae51831ce26cc61807d8809b61c23b22a197853f26c814c40a8229a19
+cas_ref: sha256:ac813d8ae51831ce26cc61807d8809b61c23b22a197853f26c814c40a8229a19
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “signed normal support”只列出观察语言名称，未给支撑范围断言。
+    previous_atom_id: 477295ee7027f4598cd455db27dfee2d7b6f84fb9ecc1383d819a3d04b0c16a1
+    next_atom_id: 23008b2916c06e81f192a2f886558c2eccc914a33664842c7694f50921ef3580

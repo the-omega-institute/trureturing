@@ -1,0 +1,20 @@
+**定义 1.1（有限正比较场）。** 设 $A$ 是非零有限维实向量空间，$1\in A$，$g$ 是正定内积，$\circ:A\times A\to A$ 是对称双线性运算，满足
+
+$$
+1\circ a=a,\qquad g(a\circ b,c)=g(b,a\circ c).
+$$
+
+记 $L_ab=a\circ b$。另给线性映射
+
+$$
+D:A\longrightarrow\operatorname{Der}(A,\circ),\qquad a\longmapsto D_a,
+$$
+
+其中导子条件是
+
+$$
+D_a(b\circ c)=(D_ab)\circ c+b\circ(D_ac).
+$$
+
+$L_a$ 表达 $a$ 与另一个元怎样共同参与对称比较；$D_a$ 表达由同一个元 $a$ 索引的有向变化。两者的参数、被作用对象和结果均留在 $A$ 内。此定义不预设复数、Jordan 恒等式、$D_aa=0$、$D_a$ 的斜伴随性或量子概率公式。有限维、实线性、正定比较以及线性的逐元生成元指派是定义的实质条件。
+

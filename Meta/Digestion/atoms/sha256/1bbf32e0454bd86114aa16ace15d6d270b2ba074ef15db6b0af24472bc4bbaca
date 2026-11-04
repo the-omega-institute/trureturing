@@ -1,0 +1,107 @@
+### 定理 11.1（C93 全资料物理实现的完整判据）
+
+<a id="thm-c94-c93-implementation"></a>
+
+对有限 $\mathcal S$ 与忠实 $\tau$，以下条件等价：
+
+1. $\mathfrak m_{\mathcal S,\tau}$ 在全部密度态上具有同一个 CPTP 实现；
+
+2. 它具有复线性保迹、二值参考保正的实现；
+
+3. $(H,\mathcal S,\tau)$ 满足 C94 的存在性条件；
+
+4. $\mathcal S+i\mathcal S$ 是通常 $C^*$ 子代数，且被 $\tau$ 的模群保持。
+
+此时实现唯一，正是式 [(9.2)](#eq-c94-reset)。
+对每份输入 $\rho$，令 $\sigma=R_{\mathcal A,\tau}(\rho)$，则
+
+<a id="eq-c94-pythagorean"></a>
+
+$$
+\boxed{\quad
+ D(\rho\Vert\tau)
+ =D(\rho\Vert\sigma)+D(\sigma\Vert\tau).
+ \quad}
+\tag{11.1}
+$$
+
+同一恒等式对 $\rho$ 所在纤维的全部状态成立，规范态 $\sigma$ 不变。
+
+**证明。**
+条件 1 给条件 2。
+该选择器自动保读数、同资料同输出、固定 $\tau$，
+所以条件 2 给条件 3。
+前面的分类证明给条件 3 与条件 4 等价。
+只需证明分类所得块重置就是相对熵选择器，即可从条件 4 返回条件 1。
+
+在块坐标中，固定资料 $a_k=a_k(\rho)$。
+记 $P_{L,k}=\operatorname{supp} a_k$；当 $a_k=0$ 时取 $P_{L,k}=0$。
+该纤维全部状态共同允许的最小支撑恰为
+
+<a id="eq-c94-fiber-support"></a>
+
+$$
+P_*^{\rho}=\bigoplus_kP_{L,k}\otimes I_{R,k}.
+\tag{11.2}
+$$
+
+事实上，任何兼容态对正投影
+$P_k-P_{L,k}\otimes I_{R,k}$ 的期望为零，
+故其支撑不能含这些方向。
+另一方面
+$\sigma=\bigoplus_k a_k\otimes\tau_{R,k}$
+具有给定资料，并因 $\tau_{R,k}>0$ 而在式 [(11.2)](#eq-c94-fiber-support) 上忠实，
+所以这个支撑正好是最小共同支撑。
+
+所有对数都限制在相应正支撑上。
+对每个非零 $a_k$，有
+
+$$
+\log\sigma
+ =\log a_k\otimes I+I\otimes\log\tau_{R,k}
+$$
+
+于该块允许支撑。
+与 $P_*^{\rho}\log\tau P_*^{\rho}$ 相减，右因子的对数项相消，留下
+
+<a id="eq-c94-log-difference-visible"></a>
+
+$$
+\begin{split}
+ G_k={}&\bigl(
+ \log a_k-(\log q_k)P_{L,k}
+ -P_{L,k}(\log\tau_{L,k})P_{L,k}
+ \bigr)\otimes I_{R,k}.
+ \end{split}
+\tag{11.3}
+$$
+
+它属于压缩后的可见代数；在支撑外作零延拓后仍属于 $\mathcal A$。
+这里仍按 v93 的规则先取 $\log\tau$ 再压缩，
+没有用 $\log(P\tau P)$ 偷换次序。
+
+令 $G=\bigoplus_kG_k$。
+任意同纤维状态 $\omega$ 与 $\sigma$ 对 $G$ 的响应相同，因此
+
+$$
+\begin{split}
+ D(\omega\Vert\tau)-D(\omega\Vert\sigma)
+ &=\operatorname{Tr}(\omega G)\\
+ &=\operatorname{Tr}(\sigma G)=D(\sigma\Vert\tau).
+ \end{split}
+$$
+
+相对熵非负及其严格等号条件说明，$\sigma$ 是该纤维唯一最小点。
+这既给式 [(11.1)](#eq-c94-pythagorean)，也给全部规范选择器的 CPTP 实现。
+最后，密度态线性张成全部自伴矩阵，再复线性张成 $B(H)$，
+故一个实现若对全部密度态相同，其线性延拓也唯一。
+
+上述证明包括 $a_k$ 奇异或整块为零的资料，不要求每份输入本身忠实。
+忠实的是共同参照及其右因子；具体资料的支撑由
+式 [(11.2)](#eq-c94-fiber-support) 单独确定。
+
+这项实现是一个实际改变未知输入的规范重置。
+若 $\rho\ne R(\rho)$，它会消去当前不可见的关联；
+不能把“可实现规范完成”解释为原实际态本来就没有那些关联。
+这一点保留 v93 对规范推断与实际来源的区分。
+

@@ -1,0 +1,11 @@
+**Boundary 10.3 (the arithmetic property doing the work).** The exact
+extraction uses the known denominator lattice and the added single bit
+of scale in (10.1): noiseless scaled values are even integers, and the
+two possible reports occupy exactly their adjacent integer pair.
+An arbitrary real bounded-error sensor, an unknown rational denominator,
+a different noise alphabet, a persistent hidden sensor or unknown Tick
+gaps does not have this proved property. In particular this upper bound
+does not give finite-noise recovery of A with unknown $Q$, and the
+lower bound is not a lower bound for every bounded-error measurement
+model. The exact rational source still has growing precision internally.
+

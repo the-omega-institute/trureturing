@@ -1,0 +1,34 @@
+**Definition 22.1 (complete source input and charged synthesis).** The input
+is an authentic $(d,P)$ from the original entrance: $d\ge0$ and
+$P=z_1\cdots z_{2d}$ is PSA Definition 1.2's paid full-root prefix. The
+source belongs to the original all-index $\mathscr R_d$ of GPO Definition
+29.1. At $d=0$, $P$ is empty and the law is zero. An equivalent complete
+aligned-source descriptor must determine the same original stream,
+alignment and singular transient. Neither a local predictive boundary nor
+a periodic tail alone is this input. The original cut $n$, root binding and
+$K_d/\rho_d$ firstness retain their acquisition and verification costs.
+
+Here is one deliberately elementary synthesis algorithm. Enumerate monic
+binary forward polynomials in increasing degree $k=0,\ldots,d$, and then
+in fixed coefficient order. Give each candidate the first $k$ displayed
+bits, extend through $2d$, and compare with $P$. Degree zero denotes zero.
+Reject a negative bound, wrong length, nonbinary entry, or absence of a
+passing candidate. On the authentic promise at least one passes, and GPO
+Lemma 29.2 makes every passing extension the same full source. The first
+passing polynomial $h$ is its least annihilator: a smaller annihilator
+would have passed earlier. Two different least monic polynomials cannot
+occur, since their difference would be a smaller annihilator. This computes
+a behavioral law, not the hidden private recurrence presentation or the
+original first-passing object.
+
+Write $h=X^a g$, $g(0)=1$, and use ACR Theorem 27.3's coprime projections
+to compute $s=y+t$. Explicitly, extended polynomial Euclid supplies
+$UX^a+Vg=1$; then $y=U(E)E^as$ and $t=V(E)g(E)s$. Reduce $U$ modulo $g$
+when $g\ne1$. The needed aligned core seed and the first $a$ transient
+bits are obtained by forward recurrence. Minimality of $h$ gives the least
+core polynomial $g$ and $a+\deg g\le d$. At $g=1$ use the zero core.
+All projections use forward shifts of the original one-sided stream;
+there is no backwards extension of its transient. This representation
+check does not certify physical provenance or stationarity: those remain
+the authentic paid-input premises.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a6fcb805174521d6847bc2b9c7242f7b37190a66ec6beceeb4236a761d135084
+  normalized_sha256: sha256:a6fcb805174521d6847bc2b9c7242f7b37190a66ec6beceeb4236a761d135084
+cas_ref: sha256:a6fcb805174521d6847bc2b9c7242f7b37190a66ec6beceeb4236a761d135084
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/SchurConjugateSlope.slope_transport
+    target_statement_id: sha256:01fc43a96e3b1d79f9b3b54b444ce74437f3dbb7bc5c45618b4785329832fd20
+receipts:
+  unresolved_subitems: []

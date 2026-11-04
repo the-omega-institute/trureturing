@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7a49da93bcdb25762ac023ee802cd4b75788b8d07d17f48d10470961320bfd3f
+  normalized_sha256: sha256:7a49da93bcdb25762ac023ee802cd4b75788b8d07d17f48d10470961320bfd3f
+cas_ref: sha256:7a49da93bcdb25762ac023ee802cd4b75788b8d07d17f48d10470961320bfd3f
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Knowledge/WeakestPrecondition.weakestPrecondition
+    target_statement_id: sha256:b67fce649a12bf16f87d4d7ad91c58a19c5d7e29ae42f7bb3f25653c9168e73b
+receipts:
+  unresolved_subitems: []

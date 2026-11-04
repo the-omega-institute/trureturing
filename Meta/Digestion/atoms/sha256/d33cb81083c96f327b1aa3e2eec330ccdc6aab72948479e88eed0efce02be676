@@ -1,0 +1,38 @@
+### 定义 1.3（局部支持与冲突）
+
+对 $x_i,x'_i\in H_{i,\circ}$ 和 $w_i\in E_i^*$，定义
+
+$$
+S_i^{w_i}(x_i,x'_i)
+\;:\Longleftrightarrow\;
+\exists r_i\in R_i\;\bigl[(\delta_{i,w_i}(x_i),r_i),(\delta_{i,w_i}(x'_i),r_i)\in\operatorname{Term}_i\bigr].
+$$
+
+若存在同一个记录 $r_i\in R_i$ 还满足
+
+$$
+(\delta_{i,w_i}(x_i),r_i),
+(\delta_{i,w_i}(x'_i),r_i)\in\operatorname{Term}_i,
+\qquad
+ t_i(\delta_{i,w_i}(x_i),r_i)
+\ne
+ t_i(\delta_{i,w_i}(x'_i),r_i),
+$$
+
+则记 $C_i^{w_i}(x_i,x'_i)$。显然
+
+$$
+C_i^{w_i}(x_i,x'_i)\Longrightarrow S_i^{w_i}(x_i,x'_i).
+$$
+
+支持和冲突都绑定同一个根对、同一个局部词和同一个终端记录；分别从不同见证取记录不能直接形成联合证书。
+
+产品目标保留有序读数
+
+$$
+ t_\otimes(\mathbf h,\mathbf r)
+ =\bigl(t_1(h_1,r_1),\ldots,t_m(h_m,r_m)\bigr).
+$$
+
+产品根冲突图 $G_W^{(m)}$ 的顶点为 $\prod_iH_{i,\circ}$；两个不同产品根之间有边，当且仅当存在一个共同合法调度和一个共同联合终端记录，使有序目标不同。
+

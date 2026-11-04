@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6d8b4dbe00a4ce2c8ddf429101f6447f3311f1f0978759691f78750b527593d3
+  normalized_sha256: sha256:6d8b4dbe00a4ce2c8ddf429101f6447f3311f1f0978759691f78750b527593d3
+cas_ref: sha256:6d8b4dbe00a4ce2c8ddf429101f6447f3311f1f0978759691f78750b527593d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 表行把 Heisenberg finite-horizon 理论定位于89–94并标论文层级，不复述该理论命题。'
+    previous_atom_id: c298404c43f31750975fcab337d20ffecfc09edb2288e7c6b78b9fc374c0ba03
+    next_atom_id: 5ac257eda9a45266db3ab38f2ca3ba64c0d18f24e6d0d472729051f0c1fd1fde

@@ -1,0 +1,19 @@
+**Definition 3.1 (a private two-design family).** For $0\le p\le1$,
+let $\Gamma_p$ have seed space $\Omega=\{13,23\}$ with its full
+power-set sigma-algebra and probabilities $p,1-p$. Set, on all
+real first reports,
+
+$$
+f_{13}(r_0)=1,\qquad f_{23}(r_0)=2,
+\qquad g_j(u,r_0,r_u)=3\quad(j\in\Omega).
+\tag{3.1}
+$$
+
+On every legal terminal pair, including pairs unreachable for that
+seed, define $\Delta_j$ as follows. On pairs $(1,3)$ and $(2,3)$,
+use $d_{13}$ and $d_{23}$ from Theorem 2.1, respectively. On pair
+$(1,2)$, use the midpoint of $C_{12}$ if it is nonempty, and $z$
+otherwise. These terminal rules do not otherwise depend on the seed.
+The parameters $p,m,c,E$ are public operands fixed independently of
+$W$.
+

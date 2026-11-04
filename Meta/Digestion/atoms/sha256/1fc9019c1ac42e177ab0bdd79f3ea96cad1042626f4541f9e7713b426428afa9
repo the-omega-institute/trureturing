@@ -1,0 +1,17 @@
+**命题 27.9（指数尺度、顺序与量子类型的不可替代性）。** 定理 27.3 的界为相对于变量数的亚指数上界，不提供一般多项式保证；显式残余表的顺序障碍也不提供所有算法的下界。有限布尔计数不能替代相干振幅。
+
+证明。置 $t=\log(n+16)$，则 $\rho(n)/n=(\log t)^2/\sqrt t\to0$，而 $\rho(n)/\log n\sim n(\log\log n)^2/(\log n)^{3/2}\to\infty$。所以在该计数供应成立时，固定宽度 3-SAT 有 $2^{o(n)}\operatorname{poly}(L)$ 时间算法，与要求某个正指数率下界的 ETH 相矛盾；这条条件结论不等于 $P=NP$。一个正固定常数 $c$ 下 $2^{c\rho(n)}$ 的表达式超过每个固定 $n^d$，但这是所给上界的尺度，不是算法不可加速的下界；例如 $2^{\sqrt n}=2^{o(n)}$ 亦非多项式尺度。ETH 的标准变量参数和归约边界可对照 [Paturi 的 ETH 讲义](https://www.ias.edu/sites/default/files/video/ams/2009/CSDM/CSDM%20-%20Monday%2C%20October%2012%2C%202009%20-%20Paturi.pdf)。
+
+在完整输入 $N$ 上，已取得的共享枚举 $2^r\operatorname{poly}(N)$ 若 $r=O(\log(N+2))$ 则多项式；[预测谱命题 11.2](AURIC_FIB_OBSERVATION_HIERARCHICAL_PHASES_AND_PREDICTIVE_SPECTRA.md) 的树袋费用则要求 $(w+1)\log a=O(\log(N+2))$，连同分解取得、表示、局部测试、解码均为多项式。定义一个对数宽度辅助结构不证明统一付费编译器存在；条件性 $P=NP$ 后果仍取该卷推论 11.5。相反，(60) 不要求小树宽或少量共享标签。上下界的归约方向分别是目标 $\to$ 3-SAT 与 3-SAT $\to$ 目标；一般多项式归约不保持变量亚指数上界。若 $n'\le Cn$ 则 $\rho(n')=O(\rho(n))$，而 $n'=\Theta(n^2)$ 时 $\rho(n')/n\to\infty$，不能据该代入推出对原 $n$ 的亚指数界。
+
+[Dechter 文献注命题 4](../../../Library/ConceptDynamics/dechter1996bucket.md) 的既有例 $\bigwedge_{i=1}^r(x_i\leftrightarrow y_i)$：先全部 $x$ 后全部 $y$，切口有 $2^r$ 个不同单点后缀要求；交错读取只留当前一对。两种次序下计数都是 $2^r$，且即使分组次序也有简单的复制型选择程序。这只限制指定的单向观察表示，不构成一般 P/NP 下界，也不把固定纯 DAG 的调度顺序误作变量观察顺序。
+
+最后，对本节实际布尔表，
+
+$$
+Z_G=\sum_{x\in\{0,1\}^V}\prod_j\mathbf1_{R_j}(x|_{s_j})
+\tag{73}
+$$
+
+是识别同名指标的有限布尔张量收缩。量子振幅却是 $\mathcal A=\sum_{\rm path}\prod\alpha$，概率为 $|\mathcal A|^2$。对 Hadamard 矩阵 $H_{\rm Had}=2^{-1/2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$，$H_{\rm Had}^2|0\rangle=|0\rangle$ 的通往 $|1\rangle$ 的两条非零路径各有振幅 $1/2,-1/2$，和为零；路径数二不产生正概率。这个矩阵乘法反例已排除从布尔路径数到 Born 概率的替换。本卷 §24 的占位概率、相干相位、实际门及许可读口仍分别收费；引文 27.2 是经典确定性供应。有限局部关系经收缩取得条件预测，再经 (63) 增长出可验证完整记录，是本节的离散链；物理量子实现另需振幅、相位、制备、读出和成本保持桥。∎
+

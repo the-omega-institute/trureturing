@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c628764f30e7669b4c596bd53c90e9622ded901f21957b61d8fabf903ba44f4
+  normalized_sha256: sha256:1c628764f30e7669b4c596bd53c90e9622ded901f21957b61d8fabf903ba44f4
+cas_ref: sha256:1c628764f30e7669b4c596bd53c90e9622ded901f21957b61d8fabf903ba44f4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: M3-a/c 与 M3-b 的派发、PR、收据安排及截断题的后续立项。
+    previous_atom_id: 4d67ce4a66767dfdeda09762348216b9ec06879e23ee50d2df3baa9ce5744db9
+    next_atom_id: fd11b41ef78f96c4820688cd8f6ca4f7affa7144eca4fe14aff5ea16d09836c0

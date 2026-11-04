@@ -1,0 +1,19 @@
+**Theorem 64.1 (computed clock on the entire signed image).** For every source of Definition 63.1, every $L\ge0$ and every actual signed integer pulse word $u\in\mathbb Z^L$, put $x=X(u)$ as in (52.1) and $z=K^{-1}x$. Then
+
+$$
+\min\{n\ge N:z\in\Lambda_n\}=L+2N+1.
+\tag{64.1}
+$$
+
+Starting with $C_N$, Proposition 63.2's successive membership tests therefore recover $L$ without an old length, word or archive, using exactly $L+N+1$ extension steps and $L+N+2$ tests on this promised input. This computes the signed length already known to be unique by Theorem 52.3, with no candidate-word enumeration.
+
+**Proof.** In power coordinates the actual endpoint identity is
+
+$$
+z=v_d+\sum_{j=0}^{L-1}p_jv_j,
+\qquad d=L+2N,\qquad p_j=u_{L-1-j}.
+\tag{64.2}
+$$
+
+The sum belongs to $\Lambda_d$, because every $j<L<d$. Exact order $a\ge2$ gives $v_d\notin\Lambda_d$. Thus $z\notin\Lambda_d$, but $z\in\Lambda_{d+1}$. Since the lattices increase, it belongs to none of the earlier lattices with index at least $N$. This proves (64.1), including $L=0$, when the sum is empty. Testing $N,N+1,\ldots,d+1$ uses $d+2-N=L+N+2$ tests and requires construction of $C_{N+1},\ldots,C_{d+1}$, exactly $d+1-N=L+N+1$ extensions. At each step the predicate is computed by (63.2). The analysis uses the actual $L$ only to count the run; the controller stops at its first successful membership test. $\square$
+

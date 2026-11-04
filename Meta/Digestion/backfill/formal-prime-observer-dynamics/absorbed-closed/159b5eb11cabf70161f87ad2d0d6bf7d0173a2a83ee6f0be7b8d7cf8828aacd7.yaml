@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:159b5eb11cabf70161f87ad2d0d6bf7d0173a2a83ee6f0be7b8d7cf8828aacd7
+  normalized_sha256: sha256:159b5eb11cabf70161f87ad2d0d6bf7d0173a2a83ee6f0be7b8d7cf8828aacd7
+cas_ref: sha256:159b5eb11cabf70161f87ad2d0d6bf7d0173a2a83ee6f0be7b8d7cf8828aacd7
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Information/SharedSourceObservationDependence.shared_source_observations_are_not_independent
+    target_statement_id: sha256:c14405766d6b6738c4a460a38c763cdae93c953b27792e764e4e1048306fccec
+  - gid: D5/S3/Factorization/Galois/IndexDoesNotImplyCausalIndependence.distinct_prime_indices_can_share_exogenous_noise
+    target_statement_id: sha256:73e74e2d0b6e8fe2331e2d1a749235705334e10b125a511fa156ba93b449c185
+receipts:
+  unresolved_subitems: []

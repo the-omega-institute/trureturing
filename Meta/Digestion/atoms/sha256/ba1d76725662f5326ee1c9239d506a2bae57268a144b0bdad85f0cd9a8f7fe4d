@@ -1,0 +1,19 @@
+**Corollary 3.3 (exact count and magnitude as supplied advice).** Theorem
+3.1 also applies with authentic exact original count, using $A=B=n$, or
+with authentic magnitude $s=\lfloor\log_2n\rfloor$, using ABT41.1's
+paid construction $A=2^s,B=2^{s+1}-1$. On every sharp interval,
+
+$$
+ Q=O\bigl(\log(k+n+2)+n\log(n+1)\bigr),\quad
+ M_{\rm addr}=O(k+n),\quad
+ W=O\bigl((k+n)(\log(k+n+2)+n\log(n+1))\bigr).
+ \tag{GPO.14}
+$$
+
+Proof. These substitutions satisfy $n\le B<2A\le2n$, so $B<2n$.
+Apply Theorem 3.1 and the exact existing advice correspondence of
+ABT41.1. Both spine heights are $O(k+n)$, and $d_B=O(\log(n+1))$.
+Magnitude-to-interval arithmetic and advice storage are paid as in that
+supplier, in addition to the orientation stage. No new claim about
+authenticating advice is used. $\square$
+

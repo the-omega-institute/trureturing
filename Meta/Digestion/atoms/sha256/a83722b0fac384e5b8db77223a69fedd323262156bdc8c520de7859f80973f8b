@@ -1,0 +1,11 @@
+**Definition 20.1 (one real unit origin and independent views).** From the held cut of Theorem 19.1, keep the same specimen and use Theorem 5.1's control construction with its newly earned $T,x_*$. Namely compute the rational $u$ from
+
+$$
+[T^{N-1}e_0,\ldots,e_0]u=e_0-T^Nx_*.
+\tag{UFS.49}
+$$
+
+Execute $N$ pairs Tick; Add$(u_j)$ in their specified order, including zero inputs, and retain every Tick scalar and acknowledgement. Issue a Hold after each pair. Call the final held cut $o$. Read its actual root and then execute $k\ge2N$ further actual passive Ticks with no Add. The four views at that segment's endpoint are exactly Definition 6.1's data: Space is $(T,x)$ in native rooted cells; Time is the paid ordered root list from $o$ through these $k$ Ticks; Boundary is $(F_T,x_0)$; Memory is $(q,\mu,a)$ with $a_j=e_0^{\mathsf T}T^jx$ for $j<N$.
+
+These meanings precede the recovery maps. Space exposes current cells and adjacency; Time exposes a specified actual scalar segment and order; Boundary exposes a port law and present endpoint; Memory exposes a least recurrence and present sufficient predictive state. None includes an unrestricted producer or control history. Their numerical data do not include the separately retained reference, rights or source assurance. The actual origin and common-source installation are shared contextual premises.
+

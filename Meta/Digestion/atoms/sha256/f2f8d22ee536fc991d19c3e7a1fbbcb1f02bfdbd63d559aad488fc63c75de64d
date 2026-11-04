@@ -1,0 +1,30 @@
+### 定理 5.3（半径过滤与单调性）
+
+对所有有限 $d$，有
+
+$$
+G_d\subseteq G_{d+1}\subseteq G_\infty,
+$$
+
+且对每个产品根对 $q$，
+
+$$
+\boxed{
+q\in E(G_d)
+\quad\Longleftrightarrow\quad
+\rho(q)\le d.
+}
+$$
+
+若一个根对有任意有限异步冲突见证，则其 $\rho(q)$ 是某个非负整数；若没有任何见证，则 $\rho(q)=\infty$。当根集有限时，每个非空冲突边都有一个达到 $\rho(q)$ 的有限见证。严格增边恰在存在某个根对满足 $\rho(q)=d+1$ 时发生：
+
+$$
+G_d\subsetneq G_{d+1}
+\quad\Longleftrightarrow\quad
+\exists q\;\rho(q)=d+1.
+$$
+
+#### 证明
+
+ $\Lambda_d\subseteq\Lambda_{d+1}\subseteq\Lambda_\infty$，由推论 3.3 得到图包含。由定义 5.2，$q$ 在 $G_d$ 中恰有一个见证，其长度差至多为 $d$，这等价于 $\rho(q)\le d$。若见证集合非空，它是自然数的非空子集，良序性给出最小元；否则约定为 $\infty$。进一步，$q\in E(G_{d+1})\setminus E(G_d)$ 当且仅当 $\rho(q)=d+1$；对所有根对取并即得严格包含的充要条件。$\square$
+

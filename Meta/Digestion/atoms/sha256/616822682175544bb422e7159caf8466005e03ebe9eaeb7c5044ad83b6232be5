@@ -1,0 +1,27 @@
+**Definition 1.1 (original model).** Fix known integers $k,d\ge0$ and known matrices
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+The initial relation $R=c\ell$ has four strictly positive real entries and determinant zero. The object $c$ is a strictly positive column and the instrument $\ell$ a strictly positive row, fixed within its run. Let $G$ be any nonzero real polynomial of degree at most $k$, and let $D$ be any real polynomial of degree at most $d$, including the zero polynomial. The exact reading at cumulative matrix $A_i$ is
+
+$$
+z_i=G(i)\operatorname{tr}(A_iR)+D(i).
+$$
+
+Every recorded read advances the consecutive index $i=0,1,\ldots$ once, including a repeat after an empty word. Unread operations do not advance this clock. Between reads one may execute any finite word in $M,J$, including the empty word, along the same object history. The initial matrix is $I$, its read is counted, and the subsequent word list and final read count are predetermined from $k,d$. An atom $E$ changes the cumulative matrix $A$ to $EA$. Thus the chronological atom list $(E_1,\ldots,E_n)$ has multiplier $E_n\cdots E_1$; in particular $(M,J)$ has multiplier $JM=U$.
+
+The contract permits no reset, copy, inverse acquisition, second source, independent instrument change, extra clock, free counter, or data-dependent acquisition. Selecting two decoding positions after acquisition is an operation on the recorded data, not a change in the acquisition history. Different candidate runs may have different fixed instruments, as the source domain permits.
+
+Put
+
+$$
+a_R=\operatorname{tr}R>0,\qquad
+R_0=\frac{R}{a_R},\qquad H=a_RG.
+$$
+
+The complete recovery target is $(R_0,H,D)$, where $\operatorname{tr}R_0=1$. There is no sign restriction on $G$ and no nonzero-value assumption at any specified index, including index zero. Actual degrees may be below their announced bounds; roots may be repeated or occur anywhere on the real line.
+

@@ -1,0 +1,10 @@
+#### 定义 6.1（路径参考律与变分预测）
+
+在上一节有限 DAG 上，每个非终点给严格正的出边参考概率 $q(w\mid v)$，行和为一。它诱导完整路径律 $Q(h)=\prod_{v\to w\in h}q(w\mid v)$。有限 DAG 与完整终止条件保证 $\sum_hQ(h)=1$。固定 $\tau>0$，定义
+
+$$
+\mathcal F_\tau(P)=\mathbb{E}_P C+\tau D(P\Vert Q).
+$$
+
+<a id="statement-6-2"></a>
+

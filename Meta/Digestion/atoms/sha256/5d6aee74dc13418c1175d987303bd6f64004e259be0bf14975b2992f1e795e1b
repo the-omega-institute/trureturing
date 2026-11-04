@@ -1,0 +1,33 @@
+**Proposition 12.3 (which dynamics commute).** Before the assay, appending
+an actual clocked event obeys (8.2); the fixed-clock inverse therefore
+decodes that endpoint as $wg$. After the assay, the selected step is
+(12.1), while the endpoint of a separately encoded $wg$ followed by
+its own designated assay would be
+
+$$
+T_{t'}^{n+2}\iota_gx_w.
+\tag{12.2}
+$$
+
+These formulas describe different executions. No identity between them
+or closure of the pure sampled image under arbitrary post-assay controls
+is asserted. A's Theorem 6.2 cannot be imported to remove these clocks.
+
+**Proof.** The actual successful C step includes one new-tree Tick,
+giving (8.2) and (12.1) at their respective starting fields. A newly
+encoded $wg$ has field $T_{t'}\iota_gx_w$ and $I(t')=n+1$, so its
+own assay adds $n+1$ Ticks and gives (12.2). The published fixed-clock
+inverse applies at the former pure endpoints, and Theorem 7.2 applies
+at the actual current endpoints. Nothing in these equations identifies
+the two runs. For a concrete inequality take $w=\varepsilon$ and
+$g=P_\varepsilon$: (12.1) is $T_\beta(1,0)^{\mathsf T}=(1/2,1/8)^{\mathsf T}$,
+whereas (12.2) is $T_\beta^2(1,0)^{\mathsf T}=(17/64,1/8)^{\mathsf T}$.
+Thus even this first post-assay growth need not be the separately
+sampled $wg$ state. $\square$
+
+Later Reset or arbitrary Add can likewise leave the historical image.
+Current set-valued service remains valid there for all rational states;
+the pure-word historical theorem is not extended by that fact. No
+old journal, nuisance chronology, entry restoration or busy-cut inverse
+is hidden inside the continued-service claim.
+

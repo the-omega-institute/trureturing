@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a78da6b182e8d7eabca9c015a7c325ab2adfb1f22011ce0dfdf8bf7938e67017
+  normalized_sha256: sha256:a78da6b182e8d7eabca9c015a7c325ab2adfb1f22011ce0dfdf8bf7938e67017
+cas_ref: sha256:a78da6b182e8d7eabca9c015a7c325ab2adfb1f22011ce0dfdf8bf7938e67017
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此条仅列出 zero–zero quantum entanglement 类别名称，不声称存在密度算子或已证量子纠缠。
+    previous_atom_id: 0d36fb1166881236253c362f79dac65cd784310e7edb808837dba126f51ecdde
+    next_atom_id: a98a9bc95bbd45f51dc0edf72aaf7e1f8c2d0eb76f3da5da19e294ba6566e2f8

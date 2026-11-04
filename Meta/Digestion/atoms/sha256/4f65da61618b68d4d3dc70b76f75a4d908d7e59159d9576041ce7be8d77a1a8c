@@ -1,0 +1,14 @@
+**Proposition 84.4 (the sensor-adding recipe has its own guarantee).**
+Promoting an omitted alpha if needed and then splitting its beta owner is
+still a valid uniform recipe with at most two births and a fresh readable
+terminal. At an omitted beta already present it uses one split. Its new
+path contains consecutive attachment numbers three and four when the old
+owner has a nonroot parent. If the owner is a direct root child, the next
+branch is across the degree-two root and has number five, giving three and
+five. Both pairs have gcd one. Hence entry observability follows.
+
+This comparison preserves the recipe's positive guarantee. It does not
+make it the minimum ordinary repair: the $g=2$ one-promotion repair in
+Theorem 83.2 already suffices and adds no terminal label. Requiring a fresh
+sensor and requiring sufficient observability are distinct specifications.
+

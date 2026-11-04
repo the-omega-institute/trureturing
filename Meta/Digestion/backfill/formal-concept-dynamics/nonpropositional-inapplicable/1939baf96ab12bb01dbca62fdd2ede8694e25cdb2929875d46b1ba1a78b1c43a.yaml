@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1939baf96ab12bb01dbca62fdd2ede8694e25cdb2929875d46b1ba1a78b1c43a
+  normalized_sha256: sha256:1939baf96ab12bb01dbca62fdd2ede8694e25cdb2929875d46b1ba1a78b1c43a
+cas_ref: sha256:1939baf96ab12bb01dbca62fdd2ede8694e25cdb2929875d46b1ba1a78b1c43a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Declares the component tuples of two philosophical models. Preservation of these components is introduced later, not asserted here.
+    previous_atom_id: d8b04807866676d3aefe8c795962c3e984af4d387a9c4826a693e1a08df130d1
+    next_atom_id: cc25b398648076d37e8d2a8ddc93880bc9f10dbd096abd02fe7b4cf7014541d7

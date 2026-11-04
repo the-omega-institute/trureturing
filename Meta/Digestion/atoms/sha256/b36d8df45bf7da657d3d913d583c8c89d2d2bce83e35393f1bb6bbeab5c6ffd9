@@ -1,0 +1,21 @@
+**Definition 11.1 (the broad native quadratic boundary class).** Let $N\ge1$ and $1\le b\le N$ be known integers. One actual source has native vertex set $V$, $|V|=N$, distinct authentically ordered ports $\ell_1,\ldots,\ell_b$, and an unknown fixed matrix $T=T^{\mathsf T}\in\mathbb Q^{V\times V}$. Write $B=[e_{\ell_1}\ \cdots\ e_{\ell_b}]$. Assume
+
+$$
+\operatorname{span}_{\mathbb Q}\{T^ke_{\ell_j}:0\le k<N,\ 1\le j\le b\}
+=\mathbb Q^V.
+\tag{CM.1}
+$$
+
+The initial actual field is zero. The commands Reset, Add$(j,u)$ for $u\in\mathbb Q$, Tick, Read$(j)$ and Hold have exactly the numerical actions and complete replies in Definition 1.2, with this $T$ and these ports. There is no interior read. In addition, the provider installs
+
+$$
+\operatorname{Square}:x\longmapsto x\odot x,
+\qquad (x\odot y)_v=x_vy_v,
+\qquad\text{reply a fixed acknowledgement}.
+\tag{CM.2}
+$$
+
+For the graph interpretation, the off-diagonal coefficients are nonnegative and the support $\{\{v,w\}:v\ne w,\ T_{vw}>0\}$ is connected. The diagonal is arbitrary rational. Call this graph class NQB. Its ports need not be leaves or exhaust the leaves. The algebraic acquisition below also holds without the connectedness and sign conditions; those conditions give its stated native weighted-graph meaning.
+
+Call QLAB-Sq the subclass with $N\ge2$, $b\ge3$, and the ports exactly the exhaustive true-leaf set of that positive-support graph, where a leaf has off-diagonal degree one. Thus QLAB-Sq retains a stronger authentic roster promise. Neither class assumes invertibility of $T$, a simple spectrum, contraction, or a cyclic single port. For example, a connected source with every vertex a port belongs to NQB but need not belong to QLAB-Sq. No reconstruction of an unlisted vertex name is required: the native output is modulo permutations carrying each ordered port to its counterpart.
+

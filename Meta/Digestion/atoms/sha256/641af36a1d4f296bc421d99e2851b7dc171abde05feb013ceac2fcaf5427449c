@@ -1,0 +1,59 @@
+**Definition 35.2 (simultaneous accounting).** For the actual acquisition
+and installation run let $J$ count all executed native localSteps,
+$Q$ its actual Reads, $U$ its actual updates, $W$ the sum of
+literal query lengths and $M_{\rm addr}$ their maximum. Use
+(GPO.82), or the zero-order case, for these Read/update coordinates.
+Charge the following additional coordinates on this very run.
+
+- All initialization, authentic bound/law supply, binding and grant
+  acquisition or installation; every source-service traversal, tag change,
+  child/link allocation and actual source-owned law operation. In the
+  declared logical recurrence implementation an order-$r\le d$ source
+  retains its $r$ seed bits and coefficients, emits all $B_N$ bits
+  and performs at most $r$ binary products and $r$ additions for
+  each subsequent recurrence bit. A Moore realization emits $B_N$
+  outputs and makes $B_N$ unary transitions in its declared emission
+  convention. Its table access, state encoding and actual material costs
+  still count. These are ideal logical implementations, not tariffs for
+  every possible hidden presentation or physical apparatus.
+- All accessible local computation: Fibonacci counters, earned-tree
+  traversal, parent sorting or ordered traversal, literal construction,
+  actual reply appends, recurrence or machine enumeration and comparison,
+  generation of unread bits, tree reconstruction, phase changes, request
+  parsing, selector work, copying, output and installation handoff. These
+  operations contribute to $J$ at their actual native granularity and
+  require actual workspace. The recurrence search tests at most $2^d$
+  rows, with finite order-$d$ simulation of $2d$ bits each; the Moore
+  search tests at most $\sum_{r=1}^K r^{r+1}2^r$ presentations,
+  with $2K-1$ generated outputs each. These finite work bounds are
+  deliberately not computational optima.
+- All simultaneous storage: source nodes and private generator, accessible
+  earned bits, the chosen behavioral table, current tree if expanded,
+  stacks, literal buffers, candidates, counters, pending phase, output,
+  handles and real capability material. A chosen recurrence description
+  uses $O(d)$ binary coefficient/seed cells; a chosen labelled Moore
+  table uses $O(K\log(K+1))$ bits. Neither figure includes the growing
+  physical tree, source backing, trace, expanded local tree, request/output
+  storage or the counter widths. Every finite run has finite required
+  backing under the service premise; these bounds do not imply bounded
+  total memory over all continued use.
+- The original hidden writer and its backing. Under Definition 22.1's
+  event convention it appends $J+Q+U$ entries, with each literal word,
+  actual presence reply, local/update event and required epoch fields.
+  Its payload therefore includes all $W$ literal letters as well as
+  event/reply/framing and counter material. This writer is inaccessible,
+  and no claim that its fields were acquired enters the proof. Any backend
+  with finer source-law, allocator or traversal records adds those actual
+  records; they are not erased to reduce the bill.
+- Read traversal and continued lifetime. On the declared root/child
+  implementation the queries use at most $W+Q$ root/edge traversals,
+  besides literal handling. Source storage, owned backing, law-table
+  readability, root binding and surviving grants must remain available
+  throughout acquisition, installation and each later invocation. Their
+  retention and service costs coexist with the preceding coordinates.
+
+A local computation step has only its specified ideal native price;
+no unit-cost arithmetic, physical time or energy conversion is implied.
+The actual source generator's initially unknown seed and coefficients
+are material of that source, not free advice to the observer.
+

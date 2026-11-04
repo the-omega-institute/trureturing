@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fdbdab02b19d910434545cf1a3b2e978c0a1d6777c5f82f621bf26484da71021
+  normalized_sha256: sha256:fdbdab02b19d910434545cf1a3b2e978c0a1d6777c5f82f621bf26484da71021
+cas_ref: sha256:fdbdab02b19d910434545cf1a3b2e978c0a1d6777c5f82f621bf26484da71021
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 讨论未来 RH 独立性文献可能改变定位及当前未提供该结果，是文献边界说明，未断言 RH 独立。
+    previous_atom_id: 6bfad4f2179786f115c1f1d03571b13113b932c00da0facc95a5c97c0ef7f7aa
+    next_atom_id: 57eb1eeadae7e67901d5baa0971d20a55270d608b8fe1c2b373e53b5826e2639

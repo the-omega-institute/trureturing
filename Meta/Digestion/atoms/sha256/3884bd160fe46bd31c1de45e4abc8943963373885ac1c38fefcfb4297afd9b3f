@@ -1,0 +1,25 @@
+**Definition 31.1 (the earned leaf reconstruction coefficients).** Enumerate the $b$ material leaves in canonical order and let $J:\mathbb Q^b\to\mathbb Q^N$ be their coordinate injection. Use the all-leaf forcing of [NLBA, Lemma 3.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION.md): mark all leaves; a marked vertex with exactly one unmarked neighbour forces that neighbour. This colours the whole tree in precisely $I$ individual forces. Indeed, if a nonempty unmarked set $U$ remained at a stalled cut, the forest consisting of $U$, its marked neighbours, and the edges with at least one endpoint in $U$ would have minimum degree at least two. An unmarked vertex was not an initial leaf and has degree at least two; a marked neighbour has at least two neighbours in $U$ by stalling. A nonempty finite forest cannot have that minimum degree.
+
+Attach to the initial leaf $\ell_j$ the constant vector polynomial $p_{\ell_j}(z)=e_j$ in $\mathbb Z[z]^b$. At a force $v\to w$, all other neighbours of $v$ are marked; define
+
+$$
+p_w(z)=z p_v(z)-\sum_{v'\sim v,\ v'\ne w}p_{v'}(z).
+\tag{NLBAII.36}
+$$
+
+For every vertex, write $p_v(z)=\sum_{r=0}^I z^rp_{v,r}$, filling unused degrees with zeros. Induction on the force order, using $Ae_v=\sum_{v'\sim v}e_{v'}$, proves
+
+$$
+\sum_{r=0}^I A^rJp_{v,r}=e_v.
+\tag{NLBAII.37}
+$$
+
+Degree is at most the number of forces so far, hence at most $I$. With block ordering by $r$, let $C$ be the $b(I+1)$ by $N$ matrix whose $v$th column is the stack of $p_{v,r}$, and put
+
+$$
+K=[J,AJ,\ldots,A^IJ].\qquad KC=\operatorname{Id}_N.
+\tag{NLBAII.38}
+$$
+
+This is the known leaf-forcing argument specialized to the already earned unit graph; it is not an additional identification theorem for unknown edge laws. The infection mechanism also occurs in Burgarth and Maruyama, *Indirect Hamiltonian identification through a small gateway*, New J. Phys. 11 (2009) 103019, [arXiv:0903.0612v1, §II](https://arxiv.org/abs/0903.0612v1), where a known graph and a gateway infecting its vertices supply different quantum-identification hypotheses. Only the combinatorial forcing mechanism is used here; no quantum experiment or its permissions are imported.
+

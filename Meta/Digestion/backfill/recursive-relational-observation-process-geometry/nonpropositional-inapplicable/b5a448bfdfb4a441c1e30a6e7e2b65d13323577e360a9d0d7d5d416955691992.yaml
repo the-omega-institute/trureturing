@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b5a448bfdfb4a441c1e30a6e7e2b65d13323577e360a9d0d7d5d416955691992
+  normalized_sha256: sha256:b5a448bfdfb4a441c1e30a6e7e2b65d13323577e360a9d0d7d5d416955691992
+cas_ref: sha256:b5a448bfdfb4a441c1e30a6e7e2b65d13323577e360a9d0d7d5d416955691992
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条按执行方向规定循环矩阵乘积和截面矩阵记号，不断言谱不变性或共轭关系。
+    previous_atom_id: a54786cb256003fddd0a78a63dcdab664f078a8f98b80edcf3f4ad2af50819bc
+    next_atom_id: 0ecba8e6ebf314eebacd6ecf3bd79e458feb89b6d23e30e4f6ff4c142cbb55db

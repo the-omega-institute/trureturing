@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09ae8c8b91bbeb213b1e783c97323eeeed66c88d3bed8e29e9e20f772ff62d9e
+  normalized_sha256: sha256:09ae8c8b91bbeb213b1e783c97323eeeed66c88d3bed8e29e9e20f772ff62d9e
+cas_ref: sha256:09ae8c8b91bbeb213b1e783c97323eeeed66c88d3bed8e29e9e20f772ff62d9e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定 W,a,b,c,d 并定义 P,Q,K_0,K_1，没有包含它们的谱、迹或记忆核结论。
+    previous_atom_id: 93283fd34cdd49fc6ca5144ea91ef77c52a458ec4b4a635f40ecd882783f732e
+    next_atom_id: 2456b98b2ea83431f478460a92a05064aa0dd8e7d589d70a9c5c4ba6f9a50ff3

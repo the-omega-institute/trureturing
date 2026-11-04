@@ -1,0 +1,6 @@
+The two full-loop four-row submatrices AB and CD have rank exactly 3 for every nonzero t,s. Their nullspaces are respectively the w-axis and the z-axis. All other four-row minors are nonzero exactly under (1). Here is a compact determinant classification; row permutations and the signs of chosen legs change overall signs:
+
+* Pair occupancy (2,2,0,0): six minors. AB and CD vanish. AC,AD,BC,BD have determinants of absolute algebraic forms 4,4s,4t,4st.
+* Pair occupancy (2,1,1,0): 48 minors. After removal of nonzero factors that are signed powers of 2 and monomials in t,s, the only potentially vanishing factors are t-1,t+1,s-1,s+1. Each occurs. The other minors reduce to 1.
+* Pair occupancy (1,1,1,1): 16 minors. Up to overall sign these are the four bilinear expressions in (1), each appearing four times.
+

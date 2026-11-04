@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d17c1c9f2b45bd7db4d532a84e28cc70cc8ebebdb2b53fbea17fa76ffd11f8ce
+  normalized_sha256: sha256:d17c1c9f2b45bd7db4d532a84e28cc70cc8ebebdb2b53fbea17fa76ffd11f8ce
+cas_ref: sha256:d17c1c9f2b45bd7db4d532a84e28cc70cc8ebebdb2b53fbea17fa76ffd11f8ce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在反向证明的前置清单中要求 S 的 meromorphic continuation，没有宣称已经构造该延拓。
+    previous_atom_id: bb7709c3eb80d73bfb83961924e74edeb05ac457ef3737bdb286ba45eaaeef98
+    next_atom_id: 63d5dc03a76d7991011279c295c6bb13412a18b5de59cdd12d0526f73ce7f7c7

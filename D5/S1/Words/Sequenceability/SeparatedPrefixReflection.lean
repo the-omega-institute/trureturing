@@ -75,7 +75,7 @@ private theorem interval_eq (w : List G) {i j : ℕ} (hij : i ≤ j) :
   rw [← hs]
   abel
 
-private theorem good_iff (w : List G) :
+theorem good_iff (w : List G) :
     Good w ↔ ∀ i j : ℕ, i < j → j ≤ w.length →
       pref w i = pref w j → i = 0 ∧ j = w.length := by
   constructor
@@ -117,11 +117,11 @@ private theorem reverse_perm (w : List G) {h k : ℕ} (hhk : h ≤ k) :
 private theorem reverse_length (w : List G) {h k : ℕ} (hhk : h ≤ k) :
     (reverseBlock w h k).length = w.length := (reverse_perm w hhk).length_eq
 
-private theorem pref_append_left (L R : List G) {j : ℕ} (hj : j ≤ L.length) :
+theorem pref_append_left (L R : List G) {j : ℕ} (hj : j ≤ L.length) :
     pref (L ++ R) j = pref L j := by
   simp only [pref, List.take_append_of_le_length hj]
 
-private theorem pref_append_right (L R : List G) {j : ℕ} (hj : L.length ≤ j) :
+theorem pref_append_right (L R : List G) {j : ℕ} (hj : L.length ≤ j) :
     pref (L ++ R) j = L.sum + pref R (j - L.length) := by
   simp only [pref, List.take_append, List.take_of_length_le hj, List.sum_append]
 
@@ -192,7 +192,7 @@ private theorem reverse_pref_right (w : List G) {h k j : ℕ}
     pref_append_right _ _ (by omega)]
   simp only [hlen, hlen', List.sum_append, List.sum_reverse]
 
-private theorem mem_inventory {w : List G} {x : G} :
+theorem mem_inventory {w : List G} {x : G} :
     x ∈ inventory w ↔ ∃ j ≤ w.length, pref w j = x := by
   classical
   simp only [inventory, Finset.mem_image, Finset.mem_range]
@@ -438,7 +438,7 @@ private theorem expansion_pref (L R : List G) (a b : G) (j : ℕ) :
       simp only [List.take_succ_cons, List.sum_cons]
       abel
 
-private theorem expansion_good (L R : List G) (a b : G)
+theorem expansion_good (L R : List G) (a b : G)
     (hw : Good (L ++ (a + b) :: R))
     (hn : L.sum + a ∉ inventory (L ++ (a + b) :: R)) :
     Good (L ++ a :: b :: R) := by
@@ -482,7 +482,7 @@ private theorem expansion_at_good (w : List G) (hw : Good w) {t : ℕ}
   · rwa [hs]
   · simpa only [pref, hs] using hn
 
-private theorem expansion_inventory (A : Finset G) (a b : G)
+theorem expansion_inventory (A : Finset G) (a b : G)
     (ha : a ∈ A) (hb : b ∈ A) (hab : a ≠ b) (hr : a + b ∉ A)
     (w : List G) (hw : w.Perm (compressed A a b).toList)
     {t : ℕ} (ht : t < w.length) (he : w[t] = a + b) :

@@ -1,0 +1,56 @@
+**Lemma 38.2 (endpoint replay and incompatible short routes).** In this prior, a correct finitely stopping acquisition of any one of the five targets must, on each endpoint run $c_i$, actually read a dyadic port at an attained dyadic endpoint. Through length three the only prefixes that can supply such a read are $LL,LLR$ for $c_0$, and $RL,RLR$ for $c_1$. In particular no prefix of length at most one suffices for either endpoint, and no single chronological chain of length at most three contains sufficient prefixes for both.
+
+Proof. The finite-branch argument of Lemma 33.2 extends from $1/b$ to every reduced positive rational $r=p/q$. For a chronological $u$ use the actual supplier convention
+
+$$
+A_u=\operatorname{wordMatrix}(\operatorname{reverse}u)
+ =\begin{pmatrix}a&e\\c&d\end{pmatrix},\qquad
+f_u(r)=\frac{P_u}{Q_u},\qquad P_u=ap+eq,\quad Q_u=cp+dq.
+\tag{38.3}
+$$
+
+Its nonnegative entries have $ad-ec=1$ and $d\ge1$. Both transformed coordinates are positive, and the integer identities
+
+$$
+dP_u-eQ_u=p,\qquad aQ_u-cP_u=q
+\tag{38.4}
+$$
+
+show that a common divisor of $P_u,Q_u$ divides the coprime $p,q$. Thus the attained fraction is reduced, and it is dyadic exactly when $Q_u$ is a power of two, including $1$. This is transformed-column reducedness, not the distinct lower-row coprimality statement `word_node_is_reduced`.
+
+Fix the complete finite terminating endpoint branch at $c_i$, with actual reads $(u_j,s_j)$ meaning $q_{2^{s_j}}$ after actual prefix $u_j$. Suppose that none of these executed reads is at a grid point, so that $\theta_j=\{2^{s_j}f_{u_j}(c_i)\}>0$. The determinant identity gives, for positive $y<r$,
+
+$$
+0<f_u(r)-f_u(y)=\frac{r-y}{(cr+d)(cy+d)}\le r-y.
+\tag{38.5}
+$$
+
+Choose one integer $n\ge12$ strictly larger than every $2^{s_j}/\theta_j$. With no reads any $n\ge12$ suffices. Then $y=x_{i,n}>0$ and
+
+$$
+0<2^{s_j}\bigl(f_{u_j}(c_i)-f_{u_j}(x_{i,n})\bigr)
+ \le 2^{s_j}/n<\theta_j.
+\tag{38.6}
+$$
+
+Consequently every complete integer report on that branch is unchanged. Starting from common initialization, determinism replays all local decisions, scale requests, actual actions, report-dependent choices and the final stop and output. Induction at each actual read justifies using that same $u_j$ on the lower original; no incompatible candidate continuations are combined. Action labels reveal only the chosen names and service timing is unavailable. Yet every exact ORIGINAL view distinguishes $c_i$ from $x_{i,n}$, since its finite decoder recovers their unequal original rationals. This is a contradiction. Some executed read therefore has $2^{s_j}f_{u_j}(c_i)$ integral. This implies a dyadic attained endpoint by (38.3)–(38.4); attaining a dyadic rational without executing a sufficiently fine grid read would not alone discharge the replay obstruction. No bound on other runs, scales, read count or local work entered the argument.
+
+Here is the complete short-prefix denominator calculation. Starting separately at the two KNOWN endpoint pairs $(1,6)$ and $(2,3)$ for this arithmetic, extend each chronological prefix using $L:(P,Q)\mapsto(P,P+Q)$ and $R:(P,Q)\mapsto(P+Q,Q)$. These are hypothetical calculations of public thresholds; an acquisition run never receives either unknown pair as input. Reducedness above makes the displayed denominators decisive.
+
+| Chronological prefix $u$ | Reduced denominator at $c_0$ | Reduced denominator at $c_1$ |
+| --- | --- | --- |
+| $\varepsilon$ | $6$ | $3$ |
+| $L$ | $7$ | $5$ |
+| $R$ | $6$ | $3$ |
+| $LL$ | $8$ | $7$ |
+| $LR$ | $7$ | $5$ |
+| $RL$ | $13$ | $8$ |
+| $RR$ | $6$ | $3$ |
+| $LLL$ | $9$ | $9$ |
+| $LLR$ | $8$ | $7$ |
+| $LRL$ | $15$ | $12$ |
+| $LRR$ | $7$ | $5$ |
+| $RLL$ | $20$ | $13$ |
+| $RLR$ | $13$ | $8$ |
+| $RRL$ | $19$ | $11$ |
+| $RRR$ | $6$ | $3$ |

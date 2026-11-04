@@ -1,0 +1,13 @@
+#### 定义 10.1：带仪器的观测模型
+
+一个有限观测模型包含状态  $\rho$ 、每个设置及结果对应的完全正仪器分支  $\mathcal I_ {a|s}$ ，
+以及取得记录后允许的下一设置规则。
+对每个设置， $\sum_ a\mathcal I_ {a|s}$  保迹。
+完整记录  $h=(a_ 1,\ldots,a_ \ell)$  的质量为
+ $\operatorname{Tr}[\mathcal I_ {a_ \ell|s_ \ell}\circ\cdots\circ\mathcal I_ {a_ 1|s_ 1}(\rho)]$ ，
+其中后续  $s_ i$  可以依赖已经取得的记录。
+模型中的有向复合是静态逻辑数据，不要求另加连续外部时钟。
+
+
+<a id="stmt-10-2"></a>
+

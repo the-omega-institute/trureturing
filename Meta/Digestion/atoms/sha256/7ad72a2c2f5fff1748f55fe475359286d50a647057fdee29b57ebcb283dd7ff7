@@ -1,0 +1,136 @@
+**定理 59.1（R1：例外角度的精确实最小维数）。** 令
+
+$$
+d_*=\frac{6(11+2\sqrt2)}{169+66\sqrt2}.
+\tag{59.1}
+$$
+
+对全部固定 $\theta\in(\pi/2)\mathbb Z$ 和 $0<d<1$，
+
+$$
+m_{\min}(\theta,d)=
+\begin{cases}
+2,&0<d\le d_*,\\
+3,&d_*<d<1.
+\end{cases}
+\tag{59.2}
+$$
+
+阈值端点属于二维区间。上区间的二维不可能性适用于任意定义 54.3 的实 CP 实现。
+
+证明。由第一卷 (35.10)，全部相容态均满足
+
+$$
+0\le s\le\eta d,\qquad
+\eta=\frac{3+2\sqrt2}{8}=\frac1{(1+\tau)^2}.
+\tag{59.3}
+$$
+
+这是全复集合的必要界，不是忽略正性后的集合替代。(58.1) 给
+
+$$
+\begin{aligned}
+R(s)^2&=(d+s-\mu)^2+s^2/3,\\
+R(0)^2-\mu^2&=d(3d-2)/4,\\
+R(\eta d)^2-\mu^2
+&=\frac{d[(169+66\sqrt2)d-66-12\sqrt2]}{96}.
+\end{aligned}
+\tag{59.4}
+$$
+
+这是关于 $s$ 的凸二次式。在区间 (59.3) 上，其最大值由两个端点控制。$d_*<2/3$，所以 $d\le d_*$ 时两端均不超过 $\mu^2$。定理 58.1 的仿射二维构造因此覆盖全部复 $\mathcal K_d$，包括 $d=d_*$。
+
+为证明该外界的接触点确实相容，置
+
+$$
+\begin{gathered}
+\kappa=(11-2\sqrt2)/8,\quad M=17/2-2\sqrt2,\quad
+d_{\rm cap}=\frac{6(17-4\sqrt2)}{289-60\sqrt2},\\
+s=\eta d,\quad y=\kappa d,\quad
+H_{\rm cap}=\begin{pmatrix}d+s&-7d/8\\-7d/8&y\end{pmatrix},\\
+b_{\rm cap}=\frac{4s}{\sqrt6}\frac{H_{\rm cap}c_0}{Md},\qquad
+g_{\rm cap}=1-11d/4,\qquad
+\rho_{\rm cap}(d)=\begin{pmatrix}H_{\rm cap}&b_{\rm cap}\\b_{\rm cap}^{\mathsf T}&g_{\rm cap}\end{pmatrix}.
+\end{gathered}
+\tag{59.5}
+$$
+
+矩阵均在 $(a,h_{\rm out},g)$ 基中。代入得到以下精确等式：
+
+$$
+\begin{gathered}
+\det H_{\rm cap}=d^2,\qquad c_0^{\mathsf T}H_{\rm cap}c_0=Md,\\
+\operatorname{Tr}\rho_{\rm cap}=1,\quad
+\operatorname{Tr}(C\rho_{\rm cap})=d,\quad
+\operatorname{Tr}(E\rho_{\rm cap})=e_d,\\
+d(y-\tau^2s)-[y+(1+2\tau)s]^2/4=0,\\
+g_{\rm cap}-b_{\rm cap}^{\mathsf T}H_{\rm cap}^{-1}b_{\rm cap}
+=1-d/d_{\rm cap}.
+\end{gathered}
+\tag{59.6}
+$$
+
+因 $H_{\rm cap}\succ0$，当 $0<d<d_{\rm cap}$ 时 $\rho_{\rm cap}\succ0$，且 $B_d\succeq0$。比较阈值，
+
+$$
+d_{\rm cap}-d_*=\frac{396(407774\sqrt2-511233)}{1514895529}>0;
+\tag{59.7}
+$$
+
+正号可由 $2\cdot407774^2>511233^2$ 得到。因此
+
+$$
+\rho_*=\rho_{\rm cap}(d_*)\in\mathcal K_{d_*},\qquad
+\rho_*\succ0,\quad s_*=eta d_*>0,\quad R(s_*)=\mu_*.
+\tag{59.8}
+$$
+
+此处 $\rho_*$ 专指本节接触态，$\mu_*=(2+d_*)/8$。其 $B_{d_*}$ 可能奇异，但 (54.2) 的分解存在；可在 (55.4) 取 $\alpha=0$。分母仍正，因为 $s_*>0$，故 (55.5) 给实际原域提升。
+
+对每个 $d>d_*$，令
+
+$$
+t=\frac{d-d_*}{1-d_*}\in(0,1),\qquad
+\rho_t=(1-t)\rho_*+t aa^\dagger.
+\tag{59.9}
+$$
+
+这里 $aa^\dagger$ 仅作为参数 $d=1$ 的闭端点数学对象：它满足迹、$C,E$ 矩及分解 $A=aa^\dagger,D=0$。将它与 $\rho_*$ 的 $A,D$ 分解分别取同一凸组合，直接得到 (54.2) 在参数 $d$ 的分解，故 $\rho_t\in\mathcal K_d$。这是跨参数的数学相容性证明，没有跨 $d$ 的物理制备授权。
+
+更具体地，$\rho_t\succ0$、$s_t=(1-t)\eta d_*>0$，并且
+
+$$
+\det B_d(\rho_t)=t(1-t)d_*c_\ell^2>0.
+\tag{59.10}
+$$
+
+为见此等式，$B_{d_*}(\rho_*)$ 是行列式为零的正矩阵；端点块为
+
+$$
+B_1(aa^\dagger)=
+\begin{pmatrix}1&-\tau c_\ell\\-\tau c_\ell&\tau^2c_\ell^2\end{pmatrix}.
+\tag{59.11}
+$$
+
+展开两者凸组合的行列式，交叉项为 $t(1-t)d_*c_\ell^2$，各自的纯二次项为零。因此所有上区间见证都严格满足完整相容条件，(55.4)–(55.5) 也为每个见证给原域提升。
+
+令 $v_*=v(s_*)$，$n_*=v_*/\mu_*$。由 (59.4) 有 $\|n_*\|=1$，并且
+
+$$
+5v_{*,x}>3\mu_*
+\quad\Longleftrightarrow\quad(47+10\sqrt2)d_*>16.
+\tag{59.12}
+$$
+
+后一差的精确值为 $(85646-13716\sqrt2)/19849>0$。在端点 $d=1,s=0$，$v_1=(5/8,0)$、$\mu_1=3/8$，所以 $n_*\cdot v_1>\mu_1$。$v,\mu$ 都对参数 $(d,s)$ 仿射，故对每个 $t>0$，
+
+$$
+n_*\cdot v_t=(1-t)\mu_*+t\,n_*\cdot v_1
+>(1-t)\mu_*+t\mu_1=\mu_t.
+\tag{59.13}
+$$
+
+从而 $R(s_t)>\mu_t$。定理 58.1 排除所有实二维实现，而不仅是 (58.9) 的某种坐标选择。
+
+最后给实三维上界：例外时去掉公共相位后的 $V_j$ 是实正交的 $U$ 或 $UW$，按奇偶交换标签。取制备 $\sigma(\rho)=\Re\rho$，终端效果 $E$，分支 $Y\mapsto V'_jY(V'_j)^{\mathsf T}/2$。对任意实向量 $x$，$x^{\mathsf T}\Re\rho\,x=x^\dagger\rho x\ge0$，故制备为实密度矩阵。所有实际词效果为实，因而此仿射模型保留全部复初始态的两种联合记录。实一维已被排除，得到 (59.2)。∎
+

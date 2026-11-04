@@ -1,0 +1,39 @@
+**Proposition 41.2 (literal communication is not a scalar-count convention).** Let
+
+$$
+\rho(p/q)=2\ell(|p|)+2\ell(q)+3,\qquad q>0,
+\tag{UFS.97}
+$$
+
+for the reduced rational codec in Assumption 34.2. Thus $\rho(0)=\rho(1)=7$. On the fixed bound channels, accepted acquisition has the following exact operation-tag and payload lengths, before End, channel routing, acknowledgement/return machinery and exported report copies:
+
+$$
+\begin{aligned}
+B_{\rm guard,in}&=2n^2+10n+4,\\
+B_{\rm guard,out}&=10n+5,\\
+B_{\rm field,in}&=3(6N+2)+\sum_{j=0}^{N-1}\rho(c_j)+\rho(1),\\
+B_{\rm field,out}&=2(6N+2)+\sum_{j=0}^{N-1}\rho(y_j)+\rho(1).
+\end{aligned}
+\tag{UFS.98}
+$$
+
+In particular the ACKs are counted: there are $5N+1$ field ACK replies, $N+1$ scalar replies and $2n+1$ distinct-reason growth refusals. The complete number of primitive completions in this acquisition is $C=6N+2n+3$.
+
+Proof. A growth request at depth $d$ has $3+(2d+1)=2d+4$ bits. The $S$ depths are $0,\ldots,n$ and the $P$ depths are $1,\ldots,n$. Their sum is $2n^2+10n+4$. All $2n+1$ growth replies have a three-bit tag and two-bit refusal payload, giving $10n+5$. There are $6N+2$ field calls by (UFS.86), each with a three-bit request tag and a two-bit reply tag. The only request payloads are the $N$ coefficients and final unit. The only reply payloads are the $N$ observed $y_j$ and final literal one. Tick, Add and Hold give $5N+1$ ACKs; Read gives $N+1$ scalars. Summing the completed calls gives $C$. $\square$
+
+For the chosen producer alone, its growth request bits total $2n^2+6n$, and its Growth reply bits total $2n^2+8n$: each of the two calls at depth $j<n$ returns $3+1+(2j+1)=2j+5$ bits. Its field operation tags and reply tags total $5(2N+1)$ bits and its control payloads total $\sum_j\rho(b_j)$. Its $2n+2N+1$ completions, the actual initial allocation and every producer-to-receiver transfer have their additional charges. This producer bill is joined to (UFS.98), not replaced by a free arbitrary seed.
+
+For the continuation in (UFS.96), let $C'=4k+r(4N-2)+q$ be its inner field completions. Their tags contribute $5C'$ bits; their actual binary Add payloads contribute $7a$ bits; and their literal Read payloads contribute the sum of $\rho$ over the $k+rN$ actually returned values. Wrapper input tags, the received $k$ bits, wrapper lengths, decoded words/lengths, windows, entry-field reports and any copied scalar tuples are additional literal transmissions. In particular, returning $x^0$ means transmitting its $N$ rational entries, not merely naming its computed vector.
+
+A complete traffic account for any of these finite runs is the sum
+
+$$
+B_{\rm run}=B_{\rm operation\ tags/payloads}
++B_{\rm Ends/routing/local\ acknowledgements/return}
++B_{\rm bindings/grants/setup/input\ capture}
++B_{\rm wrappers/reports/copies}.
+\tag{UFS.99}
+$$
+
+Each term is the sum of the actual encoded lengths moved in that category, with one chosen counting boundary so the same transmission is not counted twice. The second term includes exactly one input End, output End, local completion acknowledgement and Return sequence for each completed primitive, hence $C$ such sequences in (UFS.98), and the corresponding sequences for the producer and $C'$ continuation calls. Add the $k+r+q$ outer wrapper completion sequences; their inner completions do not pay for them. Proper incomplete packets contribute their actual received prefix and parser/backing traffic without a fictitious completion sequence. Disabled calls contribute only the actual input/control activity that occurred. Binding and grant widths, routed reference traffic and actual return-cursor operations are supplied implementation resources, not assumed one-bit or unit-size names. A local edge that carries no transmitted bits still incurs its local operation and retained-state cost. Formula (UFS.99), together with (UFS.98), specifies what must be counted without assigning a fictitious numerical width to an unspecified physical reference. Caller archives and repeated exported copies are charged where actually retained or moved.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa191bfa3cd39739b6141a11ac5a179d6ddfc203bb557d9fb5c4d2c10c86be9f
+  normalized_sha256: sha256:fa191bfa3cd39739b6141a11ac5a179d6ddfc203bb557d9fb5c4d2c10c86be9f
+cas_ref: sha256:fa191bfa3cd39739b6141a11ac5a179d6ddfc203bb557d9fb5c4d2c10c86be9f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Remark 31.5 attributes space-time harmonic transforms to Ticozzi and Pavon arXiv:0811.0929v2 and the finite-horizon Doob construction to Carollo et al.; it explicitly distinguishes their full-rank scope from the local singular-deadline application. This is a source and scope note, not an independent theorem to prove.
+    previous_atom_id: bc8149e783b7d7701a42caafa6d6a7f3c06192c4c741b405867c9b3be151fbe9
+    next_atom_id: 8db5569edb2ece15a28a9cf1e96db7f7409c99c84d656e55c80d0ee9e922137a

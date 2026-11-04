@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:782af7ba9bb897cc01673f088815702409fb4a8db0dcdb1f8f9c259a48ad1469
+  normalized_sha256: sha256:782af7ba9bb897cc01673f088815702409fb4a8db0dcdb1f8f9c259a48ad1469
+cas_ref: sha256:782af7ba9bb897cc01673f088815702409fb4a8db0dcdb1f8f9c259a48ad1469
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: List item naming zero k-level statistics as experiment inputs, with no statistical equality asserted.
+    previous_atom_id: eabad43d704dc591987d1438807ff0367ec1a650f2c7b02c61f469a4689b6b26
+    next_atom_id: 6e1e74c0fc52356a9f27f5ceccfe7c928d64cc295af2037e0a2aa635ad4f9bd8

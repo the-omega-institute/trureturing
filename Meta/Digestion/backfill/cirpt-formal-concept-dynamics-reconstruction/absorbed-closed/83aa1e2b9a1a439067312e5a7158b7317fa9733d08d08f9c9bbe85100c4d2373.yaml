@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:83aa1e2b9a1a439067312e5a7158b7317fa9733d08d08f9c9bbe85100c4d2373
+  normalized_sha256: sha256:83aa1e2b9a1a439067312e5a7158b7317fa9733d08d08f9c9bbe85100c4d2373
+cas_ref: sha256:83aa1e2b9a1a439067312e5a7158b7317fa9733d08d08f9c9bbe85100c4d2373
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Decision/AdmissionDescentCriterion.admission_descent_criterion
+    target_statement_id: sha256:2930ccee804250a8ef26a98358d6b0f5e32def29270765998923df78d754eb39
+  - gid: D5/S3/ConceptDynamics/Fibers/CanonicalDependentFiberEquivalence.whole_dependent_fiber_form
+    target_statement_id: sha256:39116608d902616141140bf04012010fb86913b59b85e6e4e3a304712958eabb
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:79aae0271a6862d99b35b7e1ed7f5aa116335c271f152af386bbdedbd7503bc5
+  normalized_sha256: sha256:79aae0271a6862d99b35b7e1ed7f5aa116335c271f152af386bbdedbd7503bc5
+cas_ref: sha256:79aae0271a6862d99b35b7e1ed7f5aa116335c271f152af386bbdedbd7503bc5
+coverage_gids:
+  - gid: D5/S3/Zeros/Symmetry/FiniteShiftedBlaschkeSymmetry.critical_line_mirror_spec
+    target_statement_id: sha256:7cbfc112a18f16e0e8e4d885f884da428313adcd9892b09a55414b29d4fe9a12
+receipts:
+  unresolved_subitems: []

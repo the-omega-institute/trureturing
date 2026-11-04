@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bd0d0dafc9e35895a48b182fb7581fdbb03c29091569ee040d54697626a5d381
+  normalized_sha256: sha256:bd0d0dafc9e35895a48b182fb7581fdbb03c29091569ee040d54697626a5d381
+cas_ref: sha256:bd0d0dafc9e35895a48b182fb7581fdbb03c29091569ee040d54697626a5d381
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 反证分情况清单中的“负实 q_j”是假设情形标签，没有声称该零点存在、位置受限或产生极点。
+    previous_atom_id: b129d70ccdf718d72b7edc8ac52773e255129c4f926cb684ae1d574734e87d04
+    next_atom_id: 5937648b809d87324f89680bcc6bed7be274fa4471e87b1445b064d601457f57

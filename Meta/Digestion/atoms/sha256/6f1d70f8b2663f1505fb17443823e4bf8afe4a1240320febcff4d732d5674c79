@@ -1,0 +1,61 @@
+**Proposition 20.1 (scope of the analytic obstruction).** For the physical
+observables (ACR.58), the following sufficient route to sign recovery
+has a false uniform polynomial-norm premise. Suppose a distribution
+$\nu$ on length-$H$ tapes has $|\mathbb E_\nu\chi_A|\le\eta$ for every
+nonempty $A$, and $\|p-g_{s,n,j}\|_\infty\le\epsilon$. Then
+
+$$
+ |\mathbb E_\nu g_{s,n,j}-\mathbb E_U g_{s,n,j}|
+ \le2\epsilon+\eta\rho(p).
+ \tag{ACR.73}
+$$
+
+Consequently $\epsilon=1/64$ and $\eta\rho(p)\le1/64$ preserve the
+sign in (ACR.59), with signed mean at least $29/64$. But the premise
+that all these observables have $\rho(p)\le M(d,H)$ for one fixed
+polynomial $M$ is refuted by Theorem 18.2.
+
+Proof. The standard small-bias estimate, in the conventions of
+[Naor--Naor, §2][ACR-NN], follows by expanding $p$ in normalized
+characters. The constant cancels between the two probability laws;
+each nonconstant expectation is bounded by $\eta$, so their total
+contribution is at most $\eta\rho(p)$. The two pointwise approximation
+errors each contribute at most $\epsilon$, proving (ACR.73).
+Combine with (ACR.59). This valid implication supplies no polynomial
+norm bound of its own, and (ACR.62) disproves that universal premise.
+
+For a specified common nonempty multiset $\mathcal A$ of tapes
+constructed from $d,H$ alone, this equal-weight sign consumer instead
+needs only
+
+$$
+ (2z_j-1)\sum_{u\in\mathcal A}g_{s,n,j}(u)>0
+ \quad\text{for every admitted actual }(s,n),\ j\le2d
+ \text{ in its earned bracket }n_0\le n\le H.
+ \tag{ACR.74}
+$$
+
+These are necessary and sufficient inequalities for the signs returned
+by this particular consumer at the authentic early parents. Simultaneous
+validity licenses their inductive choice by Theorem 13.2; it is not a
+minimality claim among all legal acquisition protocols. Equation
+(ACR.70) proves them on the entire $\mathscr R_1$ class using two tapes.
+For those tapes all even-size nonempty parities have bias one when
+$H\ge2$, so this construction is not a small-bias construction.
+No pointwise norm premise is needed for (ACR.74).
+
+Given its displayed target $n-3$, (ACR.64) itself has a direct exact
+evaluator with $O(H)$ counter steps and an $O(\log(H+2))$-bit running
+sum; this supplied-target evaluation is not erased-cut acquisition.
+Its exponential approximate
+Walsh norm is compatible with a short exact evaluator and with the
+lawful acquisition of Theorem 19.1. The obstruction proves no lower
+bound for arbitrary representations, circuits, approximation algorithms,
+samplers or legal acquisition protocols. It neither denies finite
+exact Fourier expansions nor rules out a different successful small-bias
+use. A one-sided minorant requirement, such as
+$\ell\le(2z_j-1)g_{s,n,j}$ with positive uniform mean and small
+$\rho(\ell)$, is a different condition: the two-sided error step in
+(ACR.69) does not follow from that requirement. No existence or
+impossibility result for such minorants is supplied here. $\square$
+

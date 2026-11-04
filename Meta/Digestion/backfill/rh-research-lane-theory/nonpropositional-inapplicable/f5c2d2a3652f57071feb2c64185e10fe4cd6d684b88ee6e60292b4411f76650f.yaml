@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f5c2d2a3652f57071feb2c64185e10fe4cd6d684b88ee6e60292b4411f76650f
+  normalized_sha256: sha256:f5c2d2a3652f57071feb2c64185e10fe4cd6d684b88ee6e60292b4411f76650f
+cas_ref: sha256:f5c2d2a3652f57071feb2c64185e10fe4cd6d684b88ee6e60292b4411f76650f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 尺度流源码交付与重放的节引言；提示组合结果尚需误差桥，没有重述 MF 公式。
+    previous_atom_id: 6dfe6e9819f624d07426417731c5d730dba960ada15463c60b52bbdee230cbaf
+    next_atom_id: 5238a8e5cbd228ddf62609e9938203f9468cf0c1809bd1a1a7a493faf8e769d2

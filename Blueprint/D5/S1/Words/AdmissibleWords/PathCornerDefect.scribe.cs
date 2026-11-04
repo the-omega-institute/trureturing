@@ -6,7 +6,7 @@ internal sealed class PathCornerDefectDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/AdmissibleWords/PathCornerDefect.";
     private static readonly LibraryNoteRef Chvatal =
-        LibraryNoteRef.Create("D5/L/Words/chvatal1975polytopes");
+        LibraryNoteRef.Create("D5/L/Geometry/chvatal1975polytopes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "At the corner given by a word with no adjacent occupied sites, the tight lower bounds and "

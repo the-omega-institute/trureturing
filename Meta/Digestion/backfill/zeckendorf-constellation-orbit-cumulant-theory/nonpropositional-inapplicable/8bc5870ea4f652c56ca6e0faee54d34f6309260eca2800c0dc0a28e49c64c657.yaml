@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8bc5870ea4f652c56ca6e0faee54d34f6309260eca2800c0dc0a28e49c64c657
+  normalized_sha256: sha256:8bc5870ea4f652c56ca6e0faee54d34f6309260eca2800c0dc0a28e49c64c657
+cas_ref: sha256:8bc5870ea4f652c56ca6e0faee54d34f6309260eca2800c0dc0a28e49c64c657
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本节逐项定义 P_±、相对完成、hidden residual、真正重完和 stable broken cycle；所有公式均为这些术语的指定数据或条件，没有推出新的动力学收敛结论。
+    previous_atom_id: 7d22237012bdf22da1804eb0572074ae86b710f83ae70f1aad7ee004e04a2463
+    next_atom_id: b4521e4976735b58d355327b6536dabee0a6387e1d10f6f8c07fada34fdce3af

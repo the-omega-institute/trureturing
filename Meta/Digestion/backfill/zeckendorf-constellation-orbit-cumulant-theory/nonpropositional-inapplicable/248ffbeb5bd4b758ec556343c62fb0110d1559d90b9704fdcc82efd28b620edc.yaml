@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:248ffbeb5bd4b758ec556343c62fb0110d1559d90b9704fdcc82efd28b620edc
+  normalized_sha256: sha256:248ffbeb5bd4b758ec556343c62fb0110d1559d90b9704fdcc82efd28b620edc
+cas_ref: sha256:248ffbeb5bd4b758ec556343c62fb0110d1559d90b9704fdcc82efd28b620edc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Repository reference list only: D5/S1/Words/Powers/GoldenDesubstitutionZeckendorf; these addresses cite sources and state no mathematical assertion.'
+    previous_atom_id: 301cb6a849dd7cd6796c8f967d135f56a3bca906035045806b143083394b2696
+    next_atom_id: 0d2186a831deed285a43e82216948840c9b162e6c9f09ab77d39073a6d7cfd2f

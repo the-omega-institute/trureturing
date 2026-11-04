@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea701d75f6bd56da51256ece7ed7c636e91adfd6b6e04cb2d354b64a9aefc3d3
+  normalized_sha256: sha256:ea701d75f6bd56da51256ece7ed7c636e91adfd6b6e04cb2d354b64a9aefc3d3
+cas_ref: sha256:ea701d75f6bd56da51256ece7ed7c636e91adfd6b6e04cb2d354b64a9aefc3d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 规定运输和嵌套反事实识别应等待底层接口稳定，属于接入顺序建议。'
+    previous_atom_id: cd94afd1dbe218c5ad84c0f630544542b8f843fd12b2eacd974246a805a80b26
+    next_atom_id: a762eb637dee1437ad8686d341ceacebd88e5c9c8d58b813d7824d9c6b262138

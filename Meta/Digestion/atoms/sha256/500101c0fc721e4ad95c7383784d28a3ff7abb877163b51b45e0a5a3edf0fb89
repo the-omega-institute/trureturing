@@ -1,0 +1,34 @@
+**Lemma 4.2 (Compactness of sequences approaching the ceiling).**
+Fix any $2\le a\le b\le c$. If $g_j\in\mathcal P_{a,b,c}$ and
+$F(g_j)\to U_n$, put $h_j=g_j/\lambda_2(g_j)$. Then
+
+$$
+\operatorname{tr}L(h_j)\longrightarrow n,\qquad
+\sum_{e\in E}(h_j)_e\longrightarrow\frac n2.
+\tag{4.6}
+$$
+
+In particular the sequence $(h_j)$ is bounded in every original
+labelled edge coordinate. It has a convergent subsequence, and every
+subsequential limit $h$ lies in $\mathcal C_{a,b,c}$ and satisfies
+$R(h)=U_n$.
+
+*Proof.* For $h_j$ use $S_j,\Delta_j$ from Lemma 2.1 and the proof of
+Theorem 3.2. Equation (3.6) gives
+$\Delta_j=n-1-F(g_j)/n\to1/2$. Since $S_j\ge1$ and
+$\Delta_j\ge S_j/(1+S_j)$, eventually $\Delta_j<1$ and
+
+$$
+1\le S_j\le\frac{\Delta_j}{1-\Delta_j}\longrightarrow1.
+\tag{4.7}
+$$
+
+It follows that $\operatorname{tr}L(h_j)=n-1+S_j\to n$.
+Each original edge contributes twice to that trace, proving (4.6).
+All coordinates of $h_j$ are nonnegative, so their bounded sum bounds
+each coordinate. Finite-dimensional sequential compactness supplies a
+convergent subsequence. At any such limit $h$, nonnegativity and
+continuity of $\lambda_2$ give $\lambda_2(h)=1$. Hence the support is
+connected, and (1.5) is continuous there. Since
+$R(h_j)=F(g_j)$ by scaling, $R(h)=U_n$. ∎
+

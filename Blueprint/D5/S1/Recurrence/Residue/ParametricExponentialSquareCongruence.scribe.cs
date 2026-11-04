@@ -35,6 +35,9 @@ internal sealed class ParametricExponentialSquareCongruenceDocument : IScribeDoc
                     + "here and receives no second problem claim. The new work is strong "
                     + "induction transporting odd parameters modulo two, and endpoint "
                     + "separation of the parameter-two convolution modulo eight.")),
+            Node("linear_ode_unique", "Uniqueness for a formal linear differential equation",
+                LinearOdeUniqueFormula(),
+                "Over the rationals, two series with the same constant coefficient satisfying F'=HF and G'=HG are equal. Strong induction compares the convolution coefficients."),
             Node("b", "The integral normalization", BDefinition(),
                 "The guarded recursion only calls smaller indices; b(q,0)=0 and b(q,1)=1.",
                 DescribeRole.Definition),
@@ -195,4 +198,19 @@ internal sealed class ParametricExponentialSquareCongruenceDocument : IScribeDoc
     private static Formula FamilyFormula() => Disp(And(Seq(Bind("n", Nat()), Parity(D(5), N())),
         And(Seq(Bind("n", Nat()), Parity(D(3), N())), And(Seq(Bind("n", Nat()),
             Iffn(Call("Odd", Call("a1", N())), Support(N()))), ResiduesBody()))));
+
+    private static Formula OdeAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
+    private static Formula OdeImp(Formula premise, Formula conclusion) =>
+        Seq(Parenthesized(premise), Sp, Implies, Sp, Parenthesized(conclusion));
+    private static Formula LinearOdeUniqueFormula()
+    {
+        var f = F.Id("F"); var g = F.Id("G"); var h = F.Id("H");
+        var series = Call("PowerSeries", Seq(Mathbb, Grp(F.Id("Q"))));
+        return OdeAll("F", series, OdeAll("G", series, OdeAll("H", series,
+            OdeImp(Eqn(Call("coeff", D(0), f), Call("coeff", D(0), g)),
+                OdeImp(Eqn(Call("derivative", f), Mul(h, f)),
+                    OdeImp(Eqn(Call("derivative", g), Mul(h, g)), Eqn(f, g)))))));
+    }
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }

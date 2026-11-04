@@ -1,0 +1,1 @@
+{"statement_id":"sha256:04acc4773d0d658e2224bc5e6a25b9677af9fe2bbbd4e7fbbcbfd6266c0ed0b1","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),19:KarpZhangConjecture),6:Result),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),19:KarpZhangConjecture),6:Result),6:result)","kind":"theorem"}]}

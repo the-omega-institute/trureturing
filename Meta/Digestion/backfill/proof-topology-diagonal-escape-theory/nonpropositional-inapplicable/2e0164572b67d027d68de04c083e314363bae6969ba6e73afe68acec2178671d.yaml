@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e0164572b67d027d68de04c083e314363bae6969ba6e73afe68acec2178671d
+  normalized_sha256: sha256:2e0164572b67d027d68de04c083e314363bae6969ba6e73afe68acec2178671d
+cas_ref: sha256:2e0164572b67d027d68de04c083e314363bae6969ba6e73afe68acec2178671d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定参数及测量误差假设，并定义截断读数、ĝ,ẑ 和分支估计 m̂_j，没有陈述误差界。
+    previous_atom_id: 1d6b8456fe04af4fd5ee66a71ca2751b9da0292f22bb506594b17c1cb4919111
+    next_atom_id: b4f8a7fe641d09f0a82fd0926b7b0ae27336e587c782afa4a0029a8b15309110

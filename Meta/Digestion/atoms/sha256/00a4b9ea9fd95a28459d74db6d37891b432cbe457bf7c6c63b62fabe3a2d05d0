@@ -1,0 +1,27 @@
+**Lemma 76.1 (grading through retained-cell inclusions).** For each current native material tree $s$, define the diagonal sign matrix
+
+$$
+D_s e_p=(-1)^{|p|}e_p,
+\tag{76.1}
+$$
+
+where $|p|$ is its original-root material depth. Then $D_sA_s=-A_sD_s$. If $E$ is the fresh-zero inclusion for any original successful growth, then $D_{s'}E=ED_s$.
+
+Freeze a finite acquisition path, including its actual addresses, Add operands and growth choices. Let $H$ be its homogeneous map from the entry field on $u$ to the present field on $s$, and let $T$ be its number of acquisition Ticks. Then
+
+$$
+D_s H=(-1)^T H D_u.
+\tag{76.2}
+$$
+
+At a Read of a current terminal $f$, the homogeneous reply to an entry monomial $A_u^ke_e$ vanishes unless
+
+$$
+k\equiv |f|-|e|-T\pmod 2.
+\tag{76.3}
+$$
+
+**Proof.** Every material edge changes depth by one, proving anticommutation entry by entry. Both growth templates preserve old depths and extend old values by zero, proving the inclusion identity. The homogeneous map initially is the identity. Add contributes only a fixed affine offset. Hold, Read and identity refusals preserve its homogeneous part. Growth composes it with $E$ and preserves (76.2). Tick composes it with the current adjacency and reverses its sign. Induction proves (76.2) along the whole frozen path, including its intermediate Read cuts.
+
+Also $D_u A_u^k e_e=(-1)^{k+|e|}A_u^ke_e$. Applying (76.2), the vector $HA_u^ke_e$ has sign $(-1)^{T+k+|e|}$ under $D_s$. Its coordinate at $f$ is therefore zero unless that sign equals $(-1)^{|f|}$. This gives (76.3). All statements concern actual retained coordinates; no identification of the two different adjacency operators across growth is assumed. $\square$
+

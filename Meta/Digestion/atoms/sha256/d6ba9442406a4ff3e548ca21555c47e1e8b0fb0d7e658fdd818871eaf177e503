@@ -1,0 +1,213 @@
+**定理 25.1（第二 J 的不受限五层失败纤维）。** In the original complete-target domain $\mathcal W_3$ of Definition 1.1, put
+
+$$
+H^{JJ}=(0,J,24,J,192/5).
+                                                                  \tag{25.1}
+$$
+
+There is a finite family $K\subseteq\mathcal F(H^{JJ})$ satisfying
+
+$$
+L_5(K,H^{JJ}),\qquad
+L_5\bigl(\mathcal F(H^{JJ}),H^{JJ}\bigr).
+                                                                  \tag{25.2}
+$$
+
+The five remaining reads are at original clocks $3,4,5,6,7$. The family is specified below by two distinct complete targets at each of the $32$ terminal words beginning $JJ$, with a single simultaneous assignment of all their shared ancestor responses. Repetition of a target at different terminal words is allowed. The ambient fiber retains all sources, gains and drifts of Definition 1.1; the choices made for these witnesses are not promises on a decoder's domain.
+
+Proof. We first specify every complete world, and then compute its entire assigned history. Words are chronological: for $w=E_1\cdots E_7$, the cumulative matrix is $A_w=E_7\cdots E_1$.
+
+For the terminal words beginning $JJJ$, use the two unit-$J$-signature source lines in [positive-trace/singular-source, Theorem 9.2](FIB_ORIGINAL_ROOT_POSITIVE_TRACE_GUARDS_AND_SINGULAR_SOURCES.md). Write
+
+$$
+P_*=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+R_0=\begin{pmatrix}-1&-1\\1&1\end{pmatrix},\qquad
+L_0=\begin{pmatrix}-1&1\\-1&1\end{pmatrix}.
+                                                                  \tag{25.3}
+$$
+
+Both $P_*+uR_0$ and $P_*+uL_0$, for $|u|<1/2$, are strictly positive rank-one trace-one sources with $\operatorname{tr}(JP)=1$. Indeed, the first has equal columns, the second equal rows, and their diagonal entries sum to one. The two lines meet only at $P_*$.
+
+For each such $w$ set
+
+$$
+\alpha_w=\operatorname{tr}(A_wR_0),\qquad
+\beta_w=\operatorname{tr}(A_wL_0),\qquad
+c_w=4(1+|\alpha_w|+|\beta_w|),
+$$
+
+and fix its two sources by
+
+$$
+(Q_{w,0},Q_{w,1})=
+\begin{cases}
+(P_*-R_0/4,\ P_*+R_0/4),&\alpha_w=0,\\
+(P_*-L_0/4,\ P_*+L_0/4),&\alpha_w\ne0,\ \beta_w=0,\\
+(P_*+(\beta_w/c_w)R_0,\ P_*+(\alpha_w/c_w)L_0),
+  &\alpha_w\beta_w\ne0.
+\end{cases}                                                       \tag{25.4}
+$$
+
+These sources are legal and distinct. In the last case both parameters are nonzero and have absolute value less than $1/4$, so the two sources lie away from the sole intersection of their lines. The first two cases use opposite nonzero parameters on one line. Trace linearity gives, in every case,
+
+$$
+\operatorname{tr}(A_wQ_{w,0})=\operatorname{tr}(A_wQ_{w,1}).
+                                                                  \tag{25.5}
+$$
+
+For the last case the two increments from $\operatorname{tr}(A_wP_*)$ are both $\alpha_w\beta_w/c_w$; for the first two cases the relevant increment is zero.
+
+For the other terminal words use two fixed transpose pairs:
+
+$$
+\begin{gathered}
+P_{A,0}=\frac1{768}
+\begin{pmatrix}
+607&372+\sqrt{40657}\\
+372-\sqrt{40657}&161
+\end{pmatrix},
+\qquad P_{A,1}=P_{A,0}^{\mathsf T},\\
+P_{B,0}=
+\begin{pmatrix}
+9/10&(44+\sqrt{1207})/90\\
+(44-\sqrt{1207})/90&1/10
+\end{pmatrix},
+\qquad P_{B,1}=P_{B,0}^{\mathsf T}.
+\end{gathered}                                                     \tag{25.6}
+$$
+
+For the $A$ pair, $372^2-40657=97727=607\cdot161$ and $607+161=768$. For the $B$ pair, $44^2-1207=729$ and $729/90^2=9/100$. Thus all four sources have determinant zero and trace one. The square roots are strictly between zero and their respective off-diagonal centers, so all entries are positive and each transpose pair consists of different sources.
+
+The three entire gains and constant drifts are
+
+$$
+\begin{array}{c|c|c}
+X&h_X(t)&d_X\\ \hline
+C&\dfrac25(t-4)(t-5)(t-6)&48\\
+A&\dfrac{32}{125}(t-5)(t-6)(t-7)&1344/25\\
+B&\dfrac3{10}(t-4)(t-6)(t-7)&252/5.
+\end{array}                                                       \tag{25.7}
+$$
+
+Each gain is a nonzero cubic. For every seven-letter word beginning $JJ$ and $e\in\{0,1\}$, assign the fixed complete world
+
+$$
+W_{w,e}=
+\begin{cases}
+(Q_{w,e},h_C,d_C),&w\text{ begins }JJJ,\\
+(P_{A,e},h_A,d_A),&w\text{ begins }JJMM,\\
+(P_{B,e},h_B,d_B),&w\text{ begins }JJMJ.
+\end{cases}                                                       \tag{25.8}
+$$
+
+These three disjoint cases exhaust all such words: after $JJ$, the third action is $J$, or it is $M$ and the fourth action is $M$ or $J$. There are respectively $32,16,16$ labelled slots, counting $e$. Every slot is a legal complete target, and the two slots at each terminal word have different sources, hence different complete targets. All sources, gains and drifts in (25.8) are fixed before any responses are considered.
+
+The samples of the same gains (25.7), at the original clocks, are
+
+$$
+\begin{array}{c|rrrrrrrr}
+i&0&1&2&3&4&5&6&7\\ \hline
+h_C(i)&-48&-24&-48/5&-12/5&0&0&0&12/5\\
+h_A(i)&-1344/25&-768/25&-384/25&-768/125&-192/125&0&0&0\\
+h_B(i)&-252/5&-27&-12&-18/5&0&3/5&0&0.
+\end{array}                                                       \tag{25.9}
+$$
+
+Every source has initial trace one. At clocks one and two along $JJ$, the cumulative matrices are $J,I$. Their $J$ traces are respectively $1,31/32,44/45$ for the $C,A,B$ sources. Substitution in (25.9) with the corresponding drift gives, for every slot,
+
+$$
+(z_0,z_1,z_2)=(0,24,192/5).
+                                                                  \tag{25.10}
+$$
+
+For a word beginning $JJJ$, the clock-three matrix is $J$, so its response is $48-12/5=228/5$. Clocks four through six read $48$ for every descendant action sequence, because $h_C$ vanishes there. At the terminal word $w$, the two responses are equal by (25.5), with their common value $48+(12/5)\operatorname{tr}(A_wQ_{w,0})$. In particular, the choice of the terminal pair does not change any of its ancestor readings.
+
+For both the $A$ and $B$ pairs the third action is $M$, and the clock-three matrix is $M$, since the first two $J$ actions have returned the cumulative matrix to $I$. Their trace factors are
+
+$$
+\begin{aligned}
+\operatorname{tr}(MP_{A,e})&=\frac{31}{32}+\frac{161}{768}
+                           =\frac{905}{768},\\
+\operatorname{tr}(MP_{B,e})&=\frac{44}{45}+\frac1{10}
+                           =\frac{97}{90}.
+\end{aligned}                                                     \tag{25.11}
+$$
+
+Consequently both pairs give the same third response:
+
+$$
+\frac{1344}{25}-\frac{768}{125}\frac{905}{768}
+=\frac{1163}{25}
+=\frac{252}{5}-\frac{18}{5}\frac{97}{90}.
+                                                                  \tag{25.12}
+$$
+
+This equality joins the two fourth-action arms at their entire common $JJM$ history.
+
+In the $JJMM$ arm the clock-four matrix is $M^2=I+M$, with trace $1673/768$ on both $A$ sources. The fourth response is therefore
+
+$$
+\frac{1344}{25}-\frac{192}{125}\frac{1673}{768}
+=\frac{25207}{500}.
+                                                                  \tag{25.13}
+$$
+
+All three remaining gain samples vanish, so every fifth, sixth and seventh action reads $1344/25$ on this fixed pair.
+
+In the $JJMJ$ arm the clock-four matrix is $JM$, and $h_B(4)=0$, so its response is $252/5$. For fifth $J$ the cumulative matrix is $J(JM)=M$; for fifth $M$ it is
+
+$$
+MJM=\begin{pmatrix}0&1\\1&2\end{pmatrix}.
+$$
+
+Their traces on either $B$ source are $97/90$ and $44/45+2/10=53/45$. Thus the two possible fifth responses are respectively
+
+$$
+\frac{252}{5}+\frac35\frac{97}{90}=\frac{7657}{150},
+\qquad
+\frac{252}{5}+\frac35\frac{53}{45}=\frac{3833}{75}.
+                                                                  \tag{25.14}
+$$
+
+The sixth and seventh responses are $252/5$ for every continuation, since both clocks are roots of $h_B$. These calculations use chronological left multiplication throughout; all zero-gain positions still execute their chosen atom and acquire its immediate reading.
+
+To make the simultaneous ancestor assignment explicit, let $v$ be a chronological prefix of length $k\ge3$ beginning $JJ$. The common response $z_v$ of every slot descending from $v$ is exactly the following:
+
+$$
+\begin{array}{c|c|c}
+k&v&z_v\\ \hline
+3&JJJ&228/5\\
+4,5,6&JJJ\cdots&48\\
+7&w\text{ beginning }JJJ&
+  48+(12/5)\operatorname{tr}(A_wQ_{w,0})\\ \hline
+3&JJM&1163/25\\
+4&JJMM&25207/500\\
+5,6,7&JJMM\cdots&1344/25\\ \hline
+4&JJMJ&252/5\\
+5&JJMJJ&7657/150\\
+5&JJMJM&3833/75\\
+6,7&JJMJ\cdots&252/5.
+\end{array}                                                       \tag{25.15}
+$$
+
+Together with (25.10), this supplies a single literal history $H_v$ for each selected prefix. The table is a consequence of the fixed complete worlds (25.8), including every ancestor equation, rather than a collection of independently fitted terminal collisions.
+
+For each prefix $v$ beginning $JJ$, with $2\le k=|v|\le7$, let
+
+$$
+K_v=\{W_{w,e}:v\text{ is a prefix of }w,\ e\in\{0,1\}\}.
+                                                                  \tag{25.16}
+$$
+
+Then $K_v\subseteq\mathcal F(H_v)$. Every $K_v$ contains a distinct terminal pair, so $|K_v|\ge2$, even if some worlds at different leaves coincide. At a terminal word $w$, (25.5) or the root calculations show that the two distinct worlds realize the entire same $H_w$, giving $L_0(K_w,H_w)$.
+
+Induct backwards from $k=7$. For $k<7$ and either action $E\in\{M,J\}$,
+
+$$
+K_{vE}\subseteq K_v\cap\mathcal F(H_v,E,z_{vE}),
+\qquad H_{vE}=(H_v,E,z_{vE}).
+                                                                  \tag{25.17}
+$$
+
+If $L_{6-k}(K_{vE},H_{vE})$ holds, inclusion monotonicity, Lemma 9.3, gives it on the full indicated response intersection of $K_v$. The two action clauses and $|K_v|\ge2$ give $L_{7-k}(K_v,H_v)$ by (1.1). This proves the induction, including both actions at every remaining node and every early stop. At $v=JJ$ it yields $L_5(K_{JJ},H^{JJ})$. Taking $K=K_{JJ}$ and applying Lemma 9.3 once more proves (25.2) on the entire unrestricted fiber. ∎
+

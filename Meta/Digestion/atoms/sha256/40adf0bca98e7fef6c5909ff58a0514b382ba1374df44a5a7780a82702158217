@@ -1,0 +1,41 @@
+**Theorem 7.3 (D3: no deterministic all-source termination without a cap).** No protocol in Definition 7.1 terminates correctly on every admitted specimen, for either exact native-law identification or a complete correct future predictor. This remains true with arbitrary finite adaptive rational Add pulses, with all Tick returns exposed and with unlimited finite Hold computation.
+
+Proof. Suppose such a protocol exists. Run it on the one-cell specimen $T_0=(1/2)$ with entry field zero. By source-total termination it has a finite complete command history ending at some tick epoch $t$. List every pulse in that history as $(s_l,u_l)$, where $s_l$ is its actual tick epoch. Let $m_j^0=2^{-j}$. Choose the larger fixed path $S$ in Lemma 7.2 and let $\eta_j=e_0^{\mathsf T}S^je_0$. Define rational targets
+
+$$
+g_j=\sum_{l:s_l\le j}u_l\bigl(m^0_{j-s_l}-\eta_{j-s_l}\bigr)
+\quad(0\le j\le t).
+\tag{UFS.20}
+$$
+
+Including all pulses at epoch $j$ causes no anticipatory ambiguity: each has coefficient $m_0^0-\eta_0=1-1=0$. Pulses at later epochs are excluded. Lemma 7.2 supplies one rational field $z$ whose free responses through $t$ are precisely these targets. This fixes a single initial specimen $(S,z)$ before its replay; the field is not adjusted during its run.
+
+At a cut in the reference history with tick epoch $j$, write $P$ for the pulses already executed. Formula (UFS.3) on $(S,z)$ gives
+
+$$
+\begin{aligned}
+e_0^{\mathsf T}x_S
+ &=g_j+\sum_{l\in P}u_l\eta_{j-s_l}\\
+ &=\sum_{l\in P}u_lm^0_{j-s_l}
+ =e_0^{\mathsf T}x_{T_0}.
+\end{aligned}
+\tag{UFS.21}
+$$
+
+All pulses with $s_l<j$ have already occurred, and any excluded pulse with $s_l=j$ contributes zero to the difference in (UFS.20); this proves the middle equality even when many Adds and Reads occur at one epoch. The same equality at the next epoch includes every root returned by a Tick. Fixed Add and Hold acknowledgements also agree. Therefore induction on this complete command history makes the deterministic protocol choose the same commands, rational inputs and termination decision on $(S,z)$. Local duration, source size or a hidden identifier cannot change the decision in the declared interface.
+
+The returned native law cannot be correct for both specimens: one has order one and the other order $t+2\ge2$. Their impulse laws already differ at index two, since
+
+$$
+m_2^0=\frac14,\qquad \eta_2=\frac14+\frac1{64}.
+\tag{UFS.22}
+$$
+
+To cover a predictor-only output, let $a,b$ be the two actual fields at their common stopping cut. Consider the legal future words $W={\rm Tick}^2$ and $W^+={\rm Add}(1)\,{\rm Tick}^2$. In each system, the difference between these words' last scalar outputs is its own second impulse moment, independently of $a$ or $b$. If the two systems agreed on both complete words, these differences would agree, contradicting (UFS.22). Thus at least one legal finite continuation distinguishes their complete future behavior. The controller's identical terminal record and common future program cannot be correct on both. This is a contradiction for either output requirement. $\square$
+
+The two continuations in this argument specify two possible future choices, not an actual cloning operation. A predictor claimed complete for the menu must be correct for each choice from its stated cut. On the pair, one of those choices witnesses failure.
+
+The witness is symmetric, connected, has positive links and is strictly positive contracting. It is not PG17.3's general delayed nilpotent chain. Its arbitrary signed initial field absorbs the finite input-dependent differences through the stopping cut. No fixed norm/energy bound on that field is claimed. The construction selects its field after inspecting a deterministic terminating history to prove existence of a counterexample; it does not let a source change during the experiment.
+
+This theorem makes no randomized, bounded-field, nonnegative-field, noisy, physical or universal impossibility assertion. A random-tape-dependent witness would not prove a fixed-source randomized result. An order cap is one sufficient remedy by Theorem 3.1; neither this obstruction nor that construction proves that a cap is the only possible additional premise.
+

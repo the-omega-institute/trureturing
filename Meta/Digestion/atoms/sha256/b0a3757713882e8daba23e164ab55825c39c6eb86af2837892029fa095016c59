@@ -1,0 +1,4 @@
+# Legal-prefix lattice rigidity and interior normal forms
+
+Legal cumulative $M/J$ histories admit an exact arithmetic description. On the whole fixed-polar-sign rank-one prefix class, their kernel levels are primitive integer lattice lines. When all four entries of the kernel generator are nonzero, the last two prefix transitions have an exhaustive necessary-and-sufficient normal form, subject to explicit first-endpoint and rank filters. In this entire subcase, a final legal multiplier preserves the kernel level exactly when its matrix is the identity. These structural results do not imply positive multiplicity or global recovery.
+

@@ -4962,3 +4962,9 @@ classification above.
   instrument-to-Hecke correspondence is assumed or proved here.
 
 ## 追加锚（本行以下为增补区）
+
+## 等待读出递归续卷
+
+**约定。** 固定来源及逐轮等待读出的边缘、完整历史与资源条件见 [同主题续卷 I 的等待读出递归 1](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY_CONTINUATION_I.md#等待读出递归-1-同一仪器的边缘稳定完整历史与持续变标)。
+
+## 追加锚（本行以下为增补区）

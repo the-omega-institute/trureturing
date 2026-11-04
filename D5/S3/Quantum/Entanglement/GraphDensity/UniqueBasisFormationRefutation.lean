@@ -157,7 +157,7 @@ private theorem positive_minor_zero {p q : ℕ} (v : Fin p × Fin q → ℂ)
     e.psi e.weight e.nonneg z hzero i hi
   simpa only [hd] using hk
 
-private theorem positive_phase {p q : ℕ} (v : Fin p × Fin q → ℂ)
+theorem positive_phase {p q : ℕ} (v : Fin p × Fin q → ℂ)
     (hv : ∑ x, ‖v x‖^2 = 1) (e : Ensemble (rankOneDensity v))
     (i : Fin e.N) (hi : 0 < e.weight i) : ∃ z : ℂ, ‖z‖ = 1 ∧ e.psi i = z • v := by
   classical

@@ -1,0 +1,10 @@
+**约定 8.1（数学来源与适用桥梁）。** 以下一般事实作为背景使用；本卷的具体逆、整数、正泛函、代数来源和固定词碰撞均由前述普通证明承担。
+
+| 来源 | 已有结论及本卷的适用范围 |
+| --- | --- |
+| Yanjun Li、Kiryung Lee、Yoram Bresler，*A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*，[arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1)，Definition 2.7、Theorem 2.8；出版题名为 *Identifiability in Bilinear Inverse Problems With Applications to Subspace or Sparsity-Constrained Blind Gain and Phase Calibration*，[DOI:10.1109/TIT.2016.2637933](https://doi.org/10.1109/TIT.2016.2637933) | `literature-attested`：相容解全部落在指定变换轨道内的可识别性定义，以及先识别一侧轨道、再识别条件纤维的分解。对应的未规范双线性部分是 $(R,(a,b))\mapsto(q_i(a+bi)\operatorname{tr}(A_iR))_i$，其正尺度作用为 $(R,(a,b))\mapsto(sR,(a/s,b/s))$。未知漂移是另一个必须保留的坐标，不能由该尺度作用消去。本文用迹一规范及式 (4.5)–(4.8) 直接证明包含未知漂移的唯一性，不移入一般样本阈值或本文的八读预算。 |
+| Petra van den Bos、Frits Vaandrager，*State Identification for Labeled Transition Systems with Inputs and Outputs*，[arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2)，Definition 11、Theorem 6.1 | `literature-attested`：一个共同测试对象须区分候选集合内全部不相容状态对；Theorem 6.1 的构造结论要求不同状态对均不相容，并在分裂图构造中只作满足其定义的单射分裂。这些悬挂自动机及分裂条件没有在本卷连续矩阵模型中实例化，故不提供本卷的读数界、失败域存在性或自适应下界。这里的整个域策略由推论 6.2 的一个实际固定后缀直接给出。 |
+| 第一卷定义 38.1、定理 38.2，见 [FIB 自校准关系数学](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md) | 处理 $\alpha+\beta t$ 且 $\alpha>0$ 的仿射增益，以 $\alpha R$ 与 $\beta/\alpha$ 为目标坐标；常漂移时零安全方案为八读。其增益域不同于 $\mathcal G\setminus\{0\}$，不直接给出本文的已知因子三次恢复。 |
+| 第一卷定义 39.1、定理 39.2，同上 | 处理任意非零次数至多 $k$ 的增益与次数至多 $d$ 的漂移，在同一逐原子读取合同下给出 $3k+d+5$ 次固定路径充分性。代入 $k=3,d=0$ 得十四读；本文八读依赖额外的已知因子承诺，不替代其完整增益域。 |
+| 第二卷定义 51.1、51.2，见 [FIB 自校准关系数学 II](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md) | 给出完整三次常漂移合同、规范目标及字面 $H_3,H_4,H_5$。本卷式 (5.3)、(6.1) 保留其每个祖先读数与原时钟；本卷不使用其中关于两世界阻碍的结论作为整个承诺纤维恢复的前提。 |
+| [Common polynomial-gain shear calibration and erasure recovery](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md)，Definition 1.1、Definition 3.1、Lemma 3.2、Theorem 4.1 | 允许空词重复读数，并允许 $M,J$ 两原子之间不读，只在复合端点推进记录时钟。其端点数为 $\max(k,d)+2k+4$，并非本文的逐原子读数合同。插入必读中间位置会改变后来增益与漂移的采样时钟，不能只补计次数便视为本文的恢复方案。 |

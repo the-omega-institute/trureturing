@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af73ef4009c9d99f453360cab2b9a5ffdcc032b0b402121e79b95ee31bc7612f
+  normalized_sha256: sha256:af73ef4009c9d99f453360cab2b9a5ffdcc032b0b402121e79b95ee31bc7612f
+cas_ref: sha256:af73ef4009c9d99f453360cab2b9a5ffdcc032b0b402121e79b95ee31bc7612f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录后续追加规则；未提出需要证明的数学断言。文本定位：后续增订继续严格追加于本节之后。 ---
+    previous_atom_id: 258169bec5e9556ff8b96cc090bcb1747ffc30f0b1d4d212445bd2e79f14add5
+    next_atom_id: b0c1e6b52ef340b133945eccf2cd67e1b8daadd4e80bcc7685e97ef4830a4481

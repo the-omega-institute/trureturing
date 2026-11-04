@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:17edc8af34bf6b58ce52bae9be50b24e8100f6011cc270fc390c99f4b585d10d
+  normalized_sha256: sha256:17edc8af34bf6b58ce52bae9be50b24e8100f6011cc270fc390c99f4b585d10d
+cas_ref: sha256:17edc8af34bf6b58ce52bae9be50b24e8100f6011cc270fc390c99f4b585d10d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement
+    target_statement_id: sha256:92ae3b9227b0cef4c30c3ce93685ad76204fdb9279faf8117f959bced5f361e4
+receipts:
+  unresolved_subitems: []

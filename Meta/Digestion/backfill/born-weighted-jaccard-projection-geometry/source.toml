@@ -1,0 +1,5 @@
+source_id = "born-weighted-jaccard-projection-geometry"
+path = "docs/develop/theory/BORN_WEIGHTED_JACCARD_PROJECTION_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

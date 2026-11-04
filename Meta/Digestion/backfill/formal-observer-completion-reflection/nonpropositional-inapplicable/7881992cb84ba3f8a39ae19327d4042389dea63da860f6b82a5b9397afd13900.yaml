@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7881992cb84ba3f8a39ae19327d4042389dea63da860f6b82a5b9397afd13900
+  normalized_sha256: sha256:7881992cb84ba3f8a39ae19327d4042389dea63da860f6b82a5b9397afd13900
+cas_ref: sha256:7881992cb84ba3f8a39ae19327d4042389dea63da860f6b82a5b9397afd13900
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Fisher 信息矩阵是应用清单的一个名称，没有陈述其与特定Gramian相等。'
+    previous_atom_id: 5b831e66f3463e89d57b119594e028c6675c8e4c5932fa728396e020adb06ef0
+    next_atom_id: 6e59d288db816b27ff0bb6c9082506597e8041e988f4b453c61e6d1c53394fd5

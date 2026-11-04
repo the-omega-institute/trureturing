@@ -1,0 +1,43 @@
+fingerprints:
+  raw_sha256: sha256:28b5e63a0b26bb7a044490b5194bd6b70ec0c06d6aea87fd64e0a31f6c4f0e4c
+  normalized_sha256: sha256:28b5e63a0b26bb7a044490b5194bd6b70ec0c06d6aea87fd64e0a31f6c4f0e4c
+cas_ref: sha256:28b5e63a0b26bb7a044490b5194bd6b70ec0c06d6aea87fd64e0a31f6c4f0e4c
+coverage_gids:
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.Monomials
+    target_statement_id: sha256:aa92e3cab79766ef1a7cd8c159a75c6a61e774bc8818e0ace6f4401530108159
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.SumFree
+    target_statement_id: sha256:e4df18fb2d01ae0385d2990632ee9112297b0a1712496faead5d68700fa9353a
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.V
+    target_statement_id: sha256:ef96451316b8a5d261927fd8056a2f7279978c63afa1487675d4db3835f7e32d
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.codeDim
+    target_statement_id: sha256:0375a8bbb729e8228d6ccb248d02788552d6dd327e2f0680095b291ba06be452
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.compactF
+    target_statement_id: sha256:0b7f9b9c3a5bfca979d3c6d6371e1e8fe0ed91cd83db869c9df37e2a1f7c3856
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.compactG
+    target_statement_id: sha256:2849015df42f01ea8d93463ab121dfe1d212de051ac2552b42820da137d68447
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.compact_nullity
+    target_statement_id: sha256:a1af68bb3fe0667b815caa89aec660ef4ba86acbff827bb24f8a4892ad80863b
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.f
+    target_statement_id: sha256:4164373e252038247b76a5afc0466ba670b751261a9b1fc8690057e72a13015b
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.g
+    target_statement_id: sha256:eed7f60eb9ca07e4696e0004de88f4b3fade16a5f5c4e4b149ccb0aa09f000f6
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.ker_eq_compact
+    target_statement_id: sha256:bf9843073fee03004791201712cd04cf802e80ceef76884d6efa9e473ef09ffa
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.parityCheck
+    target_statement_id: sha256:c93c5db5d6df55379164557771588640e8582b46f4f49f7c2c834e53c92f411f
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.parityMatrix
+    target_statement_id: sha256:9de4d3f85c7236fcb23ee4985b8c8f98994fe24fd1a6fdc117956b49542c07d7
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.rightF
+    target_statement_id: sha256:08a1f43748d1c5ea50da4f0fd2727d46b2cca2b8a868d8615e22086834333450
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.rightG
+    target_statement_id: sha256:36bb46187715fdbdc67dddccdd1284701541ffab11985a1099ac98863dd78356
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.witness_dimensions
+    target_statement_id: sha256:aca372ced701b5fe54ded82305c82e2ae829d340722e21d093e7d705dbd114e8
+  - gid: D5/S3/Arith/SumFreeCodeDimensionRefutation.witnesses_sumFree
+    target_statement_id: sha256:d41624330405c75d05564169d3a1d04eae72a3f7fa8479f4a79ee90534caf79e
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - cee5c4f56ec1c4093b9d059c73288ac352244700cf46eefdc6ec64d162eca561
+    - c4fba3be498f51cd90735bcd330088c368520e578933bb27bdc7f4da31e55381
+    - 84a5be2b57b30ff1531dfcae7b4367df7d87f610bd035ac8d8f7027244bee1ee

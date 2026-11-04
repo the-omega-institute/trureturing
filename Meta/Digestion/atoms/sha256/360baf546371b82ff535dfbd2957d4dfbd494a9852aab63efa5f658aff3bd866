@@ -1,0 +1,35 @@
+**Step 2 (Cayley contraction and adjoint factorization).**
+Set
+$$
+ b=\frac{g-1}{g+1}.
+$$
+This is real, bounded by one in absolute value, smooth on $\Omega$, and
+rotation invariant. Because $R\ge0$, its bounded positive square root
+exists. For bounded sector vectors $v$, the exact identity is
+$$
+ 4q_{\mathbb C}(v)
+ =\|R^{1/2}(g+1)v\|_2^2
+  -\|R^{1/2}(g-1)v\|_2^2.
+$$
+Given any bounded sector vector $w$, take $v=w/(g+1)$. This is an
+allowed bounded vector. The identity and assumed nonnegativity imply
+$$
+ \|R^{1/2}M_bw\|_2\le\|R^{1/2}w\|_2.
+ \tag{128.5}
+$$
+Density extends (128.5) to every $w\in\mathcal L_\ell$.
+Define on $\operatorname{Ran}R^{1/2}$
+$$
+ C(R^{1/2}w)=R^{1/2}M_bw.
+$$
+Inequality (128.5) makes this well-defined and contractive. Extend it to the
+closure of this range and set it equal to zero on the orthogonal
+complement. Taking adjoints of
+$CR^{1/2}=R^{1/2}M_b$ gives
+$$
+ M_bR^{1/2}=R^{1/2}C^*.
+ \tag{128.6}
+$$
+No inverse of $R$, and no assertion about its kernel or its low-energy
+range, occurs in this construction.
+

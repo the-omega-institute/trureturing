@@ -1,0 +1,108 @@
+**Theorem 38.2 (actual acquired correspondence and full task preservation).**
+For every supplied presentation of Definition 37.1, the reduced views
+of Definition 38.1 have exactly the complete $Q_C$ behavior kernel on
+actually attained completed cuts. They recover one another by finite
+mathematical maps on those images, with route agreement. There is also
+a source-independent reduced driver, installed from the same known
+seed under Assumption 32.1, which actually acquires
+$\overline{\mathcal R}_C(w)$ for its own word $w$ and serves the unchanged
+seven-request grammar. It preserves all legality, complete replies,
+actual source actions and corresponding reduced successors for every
+finite request sequence. Its persistent selection coordinate need not
+contain $q_C(w)$.
+
+The additional implementation premises are actual readable finite
+presentations and their finite computed antichains, installed evaluation
+and normalization code, backing for its source scans and counters, and
+current rights to the source and mark/tape/control fields. Antichain
+construction and every normalization operation are paid computations.
+They are not a new oracle primitive or a new source readout for $C$.
+
+Proof. At equal source and selected word, normalized labels are equal
+exactly when controls are related by $\equiv_t$. Proposition 36.2
+therefore identifies equality of $\overline K_C$ with behavior equality.
+Theorem 31.2 recovers the unique marks and selected tapes from $(t,\nu)$
+and conversely; the support/boundary and causal-source conversions of
+Theorem 33.2 leave the normalized label untouched. These supplier maps
+thus give both round trips for the reduced descriptions on their actual
+images. All routes reconstruct the same $\overline K_C$. They do not
+recover the original raw $q$ or arbitrary busy-state descriptions.
+
+For the actual reduced installation, compute the finite antichains from
+the supplied tables before the arbitrary schedule is received. This
+preparation depends only on the installed selector, not on a future
+source or hidden history. Allocate and bind the known alpha root and
+initialize empty marks and tapes as in §32. Initialize the retained
+selection label to $r=\rho_\alpha(q_0)$ using the same normalization
+procedure. Throughout a run, use the original fold from $q_0$ only as a
+proof-side definition of $q_C(w)$; that fold is not a retained journal
+or a second run available to the driver.
+
+Maintain the invariant that the actual source and selected records are
+exactly those of its actual word $w$, and
+$r=\rho_t(q_C(w))$. All parsers, source guards, frame backing, pending
+old identity, source navigation and selected decoding remain the actual
+handlers of Definition 32.2. On a successful event $e=(k,p)$, retain
+old $r$ and its actual acquired identity through Evaluate. Scan this
+finite address through the classifier and use the table entry
+
+$$
+C(r,e)=(s,b).
+$$
+
+Since $r\equiv_t q_C(w)$, (AA.111) says that $b$ is precisely the
+original selector's bit and that $s\equiv_{t\cdot e}q_C(we)$. Write that
+actual event's bit and perform exactly the selected ancestor appends of
+§32. After the source edit, obtain $m(t\cdot e)$ by traversing this same
+finite source with the classifier; compute the finite comparisons
+(AA.115) and normalize to
+
+$$
+r'=\rho_{t\cdot e}(s)=\rho_{t\cdot e}(q_C(we)).
+\tag{AA.119}
+$$
+
+The invariant is restored. No reevaluation on $r'$ counts as a new event
+receipt. A split still creates its two actual logical children, zero
+marks and bound empty descriptor, even if that split is unselected.
+The original raw state is never needed to decide this new bit or label.
+Recomputing counts from the source permits them to be temporary rather
+than an additional persistent coordinate.
+
+During normalization the source remains exclusively held, with no
+interleaved request. The actual edited source, unfinished records,
+old label, temporary table result, counters, traversal stack and pending
+reply all have backing. Commit installs $r'$ only after normalization
+and all source/record maintenance finish. Finite tables, stable finite
+antichains and a finite source make this a finite computation on each
+such operation. Print, End, supplied local acknowledgement, root Return
+and scratch clearing/reuse then restore the reduced completed phase.
+The precomputation terminates by Theorem 37.3. Its finite program and
+stored constants are part of installation cost; finite completion is
+conditional on the sufficient material already required by Assumption
+32.1, including this workspace. No uniform bound over all presentations
+or all finite source sizes is claimed.
+
+A query, refusal or BadFrame does not feed $C$ or change $r$. Selected
+fetch decodes the identical acquired word. NextSelected retains the
+same fetched literal identity and uses its actual current address and
+left descent, reaching the same leaf as the original driver on that
+same request history. It executes one actual enabled event, to which
+the preceding argument applies; its complete reply contains the same
+old and new identities, including when their kinds or selection bits
+differ. OutOfRange causes no growth in either driver. Current grants,
+logical-arity tests and completed-phase guards are unchanged, so
+legality is preserved as well as replies. Induction gives the acquired
+invariant, output, return and related successors for every finite
+request sequence. Each lawful addressed generation word remains
+admissible, as in Theorem 32.3. Proper frame prefixes retain their own
+backing and wait; a supplied finite completion suffices.
+
+For comparison of arbitrary attained cuts, the reduced value is obtained
+by finite normalization of their actual raw state and readable records.
+An operational late conversion additionally requires the owner's actual
+permission and binding to install the reduced entry; the mathematical
+map does not grant it. The from-seed construction above supplies actual
+acquisition without that extra late-conversion assumption. No raw-$q$
+reconstruction is used to continue the reduced service. $\square$
+

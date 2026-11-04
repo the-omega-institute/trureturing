@@ -1,0 +1,79 @@
+**Theorem 2.2 (exact terminal distance, quotient and global norm constants).** On all lawful sources,
+
+$$
+\boxed{
+ d_{\mathrm{cons}}(\rho,\sigma)
+ =\max\left\{\tfrac12\|S-T\|_1,
+              \tfrac12\|\Sigma_2(\rho)-\Sigma_2(\sigma)\|_1\right\},
+ \qquad \tfrac15d_\Xi\le d_{\mathrm{cons}}\le5d_\Xi.
+}
+\tag{2.3}
+$$
+
+This is a pseudometric whose zero classes are exactly $\{\rho,\overline\rho\}$. It therefore induces a metric on that quotient; $d_\Xi$ and $\mathfrak d$ are also metrics there. The product comparison is
+
+$$
+\boxed{\frac{dD}{\sqrt2}\le y\le dD.}
+\tag{2.4}
+$$
+
+Moreover $d_\Xi\le\sqrt{3/2}\,\mathfrak d$. The parent observation map $\mathcal O(\rho)=(S,Q_F(A))$, with its Euclidean product norm, satisfies the global inverse estimate
+
+$$
+ d_\Xi(\rho,\sigma)
+ \le(1+K_0)\|\mathcal O(\rho)-\mathcal O(\sigma)\|,
+ \qquad K_0=40310784000.
+\tag{2.5}
+$$
+
+Proof. A real symmetric effect has zero trace pairing with a purely imaginary skew matrix. Single-copy probabilities therefore pair with $S$, and pair probabilities with $\Sigma_2(\rho)$. For a real symmetric trace-zero matrix $H$, any POVM output difference satisfies
+
+$$
+ \tfrac12\sum_z|\operatorname{tr}(M_zH)|
+ \le\tfrac12\operatorname{tr}|H|.
+$$
+
+Indeed $H=H_+-H_-$, positivity gives $|\operatorname{tr}(M_zH)|\le\operatorname{tr}(M_z(H_++H_-))$, and completeness sums this bound to $\operatorname{tr}|H|$. The positive spectral projection $P_+(H)$ is real and gives the binary POVM $\{P_+(H),I-P_+(H)\}$ with equality. This is the finite-dimensional Holevo–Helstrom variational argument, here restricted without loss to real projections; see [Watrous, *The Theory of Quantum Information*, Theorem 3.4](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf), with equal prior $1/2$ and respectively the real states $S,T$ and $\Sigma_2(\rho),\Sigma_2(\sigma)$. Taking the supremum over the two consumer types proves the equality in (2.3). The supremum grants a mathematical comparison, not installation or selection of its optimal measurement from an unknown source.
+
+Write $R_0=\|a\|_2^2$, $R_1=\|b\|_2^2$ and $c=a^Tb$. Direct expansion gives
+
+$$
+\begin{aligned}
+d^2D^2&=(R_0+R_1)^2-4c^2,\\
+y^2&=R_0^2+R_1^2-2c^2,\\
+2y^2-d^2D^2&=(R_0-R_1)^2\ge0,\\
+d^2D^2-y^2&=2(R_0R_1-c^2)\ge0.
+\end{aligned}
+$$
+
+The last inequality is Cauchy–Schwarz, proving (2.4) also when one vector is zero. The linear embedding $a\mapsto A$ has Frobenius scale $\sqrt2$, so its tensor square has scale $2$. Consequently
+
+$$
+ \|A\otimes A-B\otimes B\|_{\mathrm F}=2y,
+ \qquad
+ \|S\otimes S-T\otimes T\|_{\mathrm F}\le2x.
+\tag{2.6}
+$$
+
+For the second bound, telescope the tensor product and use $\|S\|_{\mathrm F},\|T\|_{\mathrm F}\le1$. Put $Z=\Sigma_2(\rho)-\Sigma_2(\sigma)$ and $q=d_{\mathrm{cons}}(\rho,\sigma)$. The first formula in (2.3) gives $x\le2q$ and $\|Z\|_{\mathrm F}\le2q$. From (2.6), $2y\le2x+\|Z\|_{\mathrm F}$, hence $x+y\le2x+q\le5q$. In the other direction, the trace/Frobenius comparisons in dimensions $5$ and $25$ give
+
+$$
+ \tfrac12\|S-T\|_1\le\tfrac{\sqrt5}{2}x,
+ \qquad
+ \tfrac12\|Z\|_1\le\tfrac52\|Z\|_{\mathrm F}
+                         \le5(x+y).
+$$
+
+This proves both constants in (2.3).
+
+Every fixed consumer's total variation is a pseudometric, and taking the supremum preserves its triangle inequality. By (2.3), zero distance is equivalent to $S=T$ and $aa^T=bb^T$. A nonzero rank-one matrix $aa^T$ determines the real vector $a$ up to sign; if $a=0$, the equality forces $b=0$. Thus the zero classes are precisely common conjugation. Conversely conjugation leaves every real terminal law invariant. Distances are independent of the chosen representatives, so the pseudometric descends to a metric. The injection $[\rho]\mapsto\Xi(\rho)$ proves the metric assertion for $d_\Xi$. The isometric two-element conjugation action gives the triangle inequality for $\mathfrak d$: compose the two minimizing signs and apply the Frobenius triangle inequality.
+
+Parent Theorem 17.2 gives $\|a\|_2,\|b\|_2\le1/2$. Hence $D\le\|a\|_2+\|b\|_2\le1$, and (2.4) yields $y\le d$. Therefore $x+y\le x+d\le\sqrt{3/2}\sqrt{x^2+2d^2}$. Finally the exact parent polarization certificate (Theorem 13.4 and (14.2)) is
+
+$$
+ dD\le K_0\|Q_F(A)-Q_F(B)\|_2.
+\tag{2.7}
+$$
+
+It holds for all real skew matrices, including zero and all singular strata. Applying $y\le dD$ and bounding each observation component by the product norm gives (2.5). This is a global Lipschitz inverse into quadratic coordinates; conversion from those coordinates to $a$ can still lose a square root. $\square$
+

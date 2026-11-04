@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f3a36245bba4b3f19d743e0a562180655f1c63d19e62fd49d6dbd9581597516
+  normalized_sha256: sha256:1f3a36245bba4b3f19d743e0a562180655f1c63d19e62fd49d6dbd9581597516
+cas_ref: sha256:1f3a36245bba4b3f19d743e0a562180655f1c63d19e62fd49d6dbd9581597516
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本句仅把 Zeckendorf 分辨率作为观察者选择参数，没有给出该分辨率下的界或检测定理。
+    previous_atom_id: 7d2e819e1311406cfe97b6d9c3408e60b00b4727b618f1dc96c5e13ce28d372e
+    next_atom_id: a8d2206f9150fdbbb44522dd0d3fd7a4bfd4c048c8cbe8b26000b064b39c01e2

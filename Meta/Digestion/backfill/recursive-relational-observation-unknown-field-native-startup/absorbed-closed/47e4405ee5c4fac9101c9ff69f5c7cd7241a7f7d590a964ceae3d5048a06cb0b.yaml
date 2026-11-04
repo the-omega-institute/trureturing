@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:47e4405ee5c4fac9101c9ff69f5c7cd7241a7f7d590a964ceae3d5048a06cb0b
+  normalized_sha256: sha256:47e4405ee5c4fac9101c9ff69f5c7cd7241a7f7d590a964ceae3d5048a06cb0b
+cas_ref: sha256:47e4405ee5c4fac9101c9ff69f5c7cd7241a7f7d590a964ceae3d5048a06cb0b
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/SmallSignedEntryTranscriptCompensation.small_entry_complete_transcript_compensation
+    target_statement_id: sha256:8834e57413ff776223fef7b07a99b05ee8613e7398dcfefdeb92bcae3c59e40e
+receipts:
+  unresolved_subitems: []

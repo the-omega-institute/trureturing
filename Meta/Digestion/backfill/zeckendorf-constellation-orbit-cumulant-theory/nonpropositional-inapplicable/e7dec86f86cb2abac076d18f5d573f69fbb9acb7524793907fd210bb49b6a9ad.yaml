@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e7dec86f86cb2abac076d18f5d573f69fbb9acb7524793907fd210bb49b6a9ad
+  normalized_sha256: sha256:e7dec86f86cb2abac076d18f5d573f69fbb9acb7524793907fd210bb49b6a9ad
+cas_ref: sha256:e7dec86f86cb2abac076d18f5d573f69fbb9acb7524793907fd210bb49b6a9ad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 双重 primitive decomposition 的规范前半段只提出期望乘积并指定 p 标签；没有存在性断言。
+    previous_atom_id: 641cf6ff8f66b4f344d1f2cc487bcc4a369a2859562f5395dd0359e9ecc28489
+    next_atom_id: 81cd60ece59f8a9ba2ed822528f062a436cb1723e55c928aeb462e4b49c6d17f

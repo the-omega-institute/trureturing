@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e314ff884e819a1fd3d5de891a1e41fd08f114c574b240c0ab672a3accf8102b
+  normalized_sha256: sha256:e314ff884e819a1fd3d5de891a1e41fd08f114c574b240c0ab672a3accf8102b
+cas_ref: sha256:e314ff884e819a1fd3d5de891a1e41fd08f114c574b240c0ab672a3accf8102b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 固定学习任务的增补引言只声明模型设置及禁止的干预，不提出可识别性结论。
+    previous_atom_id: d8e48e492fb0093d1024cfae40b3aec524a883e459dcdac92402d23ee06f4e1a
+    next_atom_id: 0df29d30dd96483576b9e02fda4cbd7a46617850d21240cd05314a000c6093f4

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84383fd3252b6732d48521d28b42f2f3d485bae08729890993647b2a30d9cc07
+  normalized_sha256: sha256:84383fd3252b6732d48521d28b42f2f3d485bae08729890993647b2a30d9cc07
+cas_ref: sha256:84383fd3252b6732d48521d28b42f2f3d485bae08729890993647b2a30d9cc07
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原始模型的字段类型和四角色命名方案；不主张这些字段存在或满足新定理。
+    previous_atom_id: 02092587bbe149a3a483a9d24f922c978b2fa7e50f0335537f0ffa4c105b43a7
+    next_atom_id: 73521ee5c6f26c2a157618aec2b0a15f9f2c8216e6516d972f1a687226004bec

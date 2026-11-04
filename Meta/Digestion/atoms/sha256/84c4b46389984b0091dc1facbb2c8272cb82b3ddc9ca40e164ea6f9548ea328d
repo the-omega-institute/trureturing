@@ -1,0 +1,8 @@
+对完整耳交叉相交子族
+$\mathcal C\subseteq\mathcal X(P\mid Q)$、$\mathcal D'\subseteq\mathcal X(Q\mid P)$，有
+
+$$
+\frac{|\mathcal C|}{N_{pq}}+\frac{|\mathcal D'|}{N_{qp}}\le1.
+\tag{37.4}
+$$
+

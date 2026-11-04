@@ -1,0 +1,42 @@
+**Corollary 104.2 (scalar minimum and a definite policy).** Let $f(u)$ and
+$r(u)$ be the minimum successful-call counts in states $F,R$ over all
+finite legal refinements. Then
+
+$$
+\begin{gathered}
+f(\alpha)=1,\quad r(\alpha)=0,\quad
+f(\beta)=0,\quad r(\beta)=2,\\
+f(\langle l,r\rangle)=\min\{r(l)+f(r),f(l)+r(r)\},\qquad
+r(\langle l,r\rangle)=f(l)+f(r).
+\end{gathered}
+\tag{104.3}
+$$
+
+In particular $f(u)=0$ exactly when $C(u)$ already has a perfect matching.
+A minimum is attained with
+
+$$
+p\le b,\quad s\le c,\quad p+s\le a+2c,\quad
+p+2s\le a+3c.
+\tag{104.4}
+$$
+
+**Proof.** Minimize $p+s$ in the attained sets (104.1); the objective is
+additive under Minkowski sum. Each original alpha contributes either
+$(0,0)$ or $(1,0)$, and each beta either $(0,0)$ or $(1,1)$, giving
+(104.4). Zero successful growth is the unchanged graph, so Lemma 103.2
+also proves the zero criterion. $\square$
+
+For a fixed policy one may minimize $p+s$, then $p$, then the binary
+list of repaired original leaves in their address order, and then choose
+the left root edge at any remaining matching tie. Store backpointers
+and execute the chosen local recipes. Scalar dynamic programming uses
+a bounded number of integer comparisons/additions at each logical
+node, plus the actual traversal, output and backing. Computing an entire
+Pareto set uses the finite sums, comparisons and storage in (104.1);
+no linear-size frontier or constant-width arithmetic is asserted.
+For any specified nonnegative weights on promotions and splits, minimizing
+their weighted sum over (104.1) also gives the exact structural optimum.
+None of these optimizations includes acquisition, traffic, precision,
+Tick, local arithmetic, authority or simultaneous storage coordinates.
+
