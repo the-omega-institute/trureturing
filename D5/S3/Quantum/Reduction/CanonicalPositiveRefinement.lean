@@ -86,8 +86,8 @@ theorem canonical_refinement_completely_positive
     (hsum : ∀ X b, ∑ a, S a X b = CFC.sqrt (E b) * X b * CFC.sqrt (E b)) :
     ∀ a (k : ℕ) (Z : ∀ b, Matrix (d b × Fin k) (d b × Fin k) ℂ),
       (∀ b, (Z b).PosSemidef) → ∀ b,
-      (fun (i : d b × Fin k) (j : d b × Fin k) =>
-        S a (fun z => fun r s => Z z (r, i.2) (s, j.2)) b i.1 j.1).PosSemidef := by
+      (show Matrix (d b × Fin k) (d b × Fin k) ℂ from
+        fun i j => S a (fun z => fun r s => Z z (r, i.2) (s, j.2)) b i.1 j.1).PosSemidef := by
   classical
   obtain ⟨c, hc, -, hf⟩ := canonical_refinement_coefficients E hE S hpos hsum
   intro a k Z hZ b

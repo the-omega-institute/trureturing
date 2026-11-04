@@ -52,8 +52,9 @@ private theorem branch_effects (X : Matrix (Fin 2) (Fin 2) ℂ) :
 private theorem coarse_cp : (transpose_half + reduction_half).IsCompletelyPositive := by
   let r : ℝ := Real.sqrt (1 / 2)
   have hr : (r : ℂ) * (r : ℂ) = 1 / 2 := by
-    norm_cast
-    exact Real.mul_self_sqrt (show (0 : ℝ) ≤ 1 / 2 by norm_num)
+    have hrR : r * r = (1 / 2 : ℝ) :=
+      Real.mul_self_sqrt (show (0 : ℝ) ≤ 1 / 2 by norm_num)
+    exact_mod_cast hrR
   have hr2 : (r : ℂ) ^ 2 = 1 / 2 := by simpa only [pow_two] using hr
   let K : Fin 2 × Fin 2 → Matrix (Fin 2) (Fin 2) ℂ :=
     fun ij => (r : ℂ) • Matrix.single ij.1 ij.2 1
