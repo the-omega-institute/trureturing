@@ -6,20 +6,26 @@
    utility: none
    digest: The original closed salient cone and interior unit determine an attained order norm and exact operator bounds. -/
 
-import Mathlib.Analysis.Convex.Gauge
-import Mathlib.Geometry.Convex.Cone.Basic
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.Analysis.Normed.Operator.Basic
-import Mathlib.Topology.Order.Monotone
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.Linarith
+module
 
+public import Mathlib.Analysis.Convex.Gauge
+public import Mathlib.Geometry.Convex.Cone.Basic
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Mathlib.Analysis.Normed.Operator.Basic
+public import Mathlib.Topology.Order.Monotone
+public import Mathlib.Tactic.Module
+public import Mathlib.Tactic.Linarith
+
+/-! The order norm is constructed from the specified cone and unit. -/
+
+@[expose] public section
 noncomputable section
+set_option autoImplicit false
+open scoped Pointwise Topology
 
 namespace D5.S3.Topology.OrderUnitNorm
 
 open Set Filter
-open scoped Pointwise Topology
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
@@ -58,13 +64,13 @@ private lemma interval_closed : IsClosed A.interval := by
 private lemma interval_convex : Convex ℝ A.interval := by
   intro x hx y hy a b ha hb hab
   constructor
-  · convert A.cone.convex hx.1 hy.1 ha hb hab using 1 <;> module
-  · convert A.cone.convex hx.2 hy.2 ha hb hab using 1 <;> module
+  · convert A.cone.convex hx.1 hy.1 ha hb hab using 2 <;> match_scalars <;> linarith
+  · convert A.cone.convex hx.2 hy.2 ha hb hab using 2 <;> match_scalars <;> linarith
 
 private lemma interval_balanced : Balanced ℝ A.interval := by
   apply (balanced_iff_neg_mem A.interval_convex).2
   intro x hx
-  simpa [interval] using And.intro hx.2 hx.1
+  simpa [interval, sub_eq_add_neg] using And.intro hx.2 hx.1
 
 private lemma interval_nhds : A.interval ∈ 𝓝 (0 : E) := by
   have hu := mem_interior_iff_mem_nhds.mp A.interior_unit
@@ -117,8 +123,8 @@ private lemma radii_upward {v : E} {r s : ℝ} (hr : r ∈ A.radii v) (hrs : r �
     s ∈ A.radii v := by
   have hd := A.cone_smul_nonneg (sub_nonneg.mpr hrs) A.unit_mem
   refine ⟨hr.1.trans hrs, ?_, ?_⟩
-  · convert A.cone.add_mem hr.2.1 hd using 1 <;> module
-  · convert A.cone.add_mem hr.2.2 hd using 1 <;> module
+  · convert A.cone.add_mem hr.2.1 hd using 2 <;> match_scalars <;> linarith
+  · convert A.cone.add_mem hr.2.2 hd using 2 <;> match_scalars <;> linarith
 
 private lemma norm_le_iff (v : E) (r : ℝ) :
     A.orderNorm v ≤ r ↔ r ∈ A.radii v := by
@@ -143,6 +149,7 @@ private lemma norm_zero_iff (v : E) : A.orderNorm v = 0 ↔ v = 0 := by
   constructor
   · intro h
     have hv := A.norm_attained v
+    change 0 ≤ A.orderNorm v ∧ A.orderNorm v • A.unit - v ∈ A.cone ∧ A.orderNorm v • A.unit + v ∈ A.cone at hv
     rw [h] at hv
     simp only [zero_smul, zero_sub, zero_add] at hv
     by_contra hn
@@ -158,7 +165,7 @@ private lemma seminorm_eq (v : E) : A.seminorm v = A.orderNorm v :=
   (A.norm_eq_gauge v).symm
 
 /-- A copy of the original vector space carrying its proved order-unit norm. -/
-def Space := E
+def Space (_A : Data E) := E
 
 instance : AddCommGroup A.Space := inferInstanceAs (AddCommGroup E)
 instance : Module ℝ A.Space := inferInstanceAs (Module ℝ E)
