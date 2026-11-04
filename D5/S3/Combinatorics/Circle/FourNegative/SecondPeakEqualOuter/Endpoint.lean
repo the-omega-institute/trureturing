@@ -55,7 +55,9 @@ theorem actualSource_second_peak_equal_outer_joint_lift (a b c : ℕ)
     · by_cases hca : c=a
       · subst c
         have h:=EqualOuterThree.actualSource_equal_outer_three_joint_lift a b ha (by omega)
-        simpa only [show 3*a+b=a+b+a+a by omega,show 2*a+b=a+b+a by omega] using h
+        rw [show 3*a+b=a+b+a+a by omega] at h
+        rw [show 2*a+b=a+b+a by omega] at h
+        exact h
       · by_cases hlt : c<a
         · exact lower_lift a b c hc hlt (by omega)
         · have hac : a<c := by omega

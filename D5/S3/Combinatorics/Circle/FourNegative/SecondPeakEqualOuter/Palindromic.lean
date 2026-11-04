@@ -100,8 +100,12 @@ private theorem palindromic_lift (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     dsimp [bs,blocksWord,P0,P1,P2,P3,PX,PU,U,V,W,X,n] at *
     split_ifs
     all_goals simp only [←Multiset.coe_add,Multiset.coe_nil,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton,zero_add,add_zero]
-    · rw [←hu,←hx',←hw']; ac_rfl
-    · rw [←hw']; ac_rfl
+    · rw [←hu,←hx',←hw']
+      simp only [←Multiset.coe_add]
+      ac_rfl
+    · rw [←hw']
+      simp only [←Multiset.coe_add]
+      ac_rfl
   have hpos : ∀ pkt∈bs, ∀ i∈pkt.1, 0≤oldValue a b b a i ∧ 0≤newValue a b b a i := by
     have pos (r : Fin 4) (m i : ℕ) (hi : i∈mask a b b a r m) :=
       mask_positive a b b a m r ha hb hb ha i hi
