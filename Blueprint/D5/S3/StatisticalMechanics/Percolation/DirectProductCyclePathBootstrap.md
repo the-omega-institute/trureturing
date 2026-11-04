@@ -64,7 +64,35 @@ $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\;
 
 For every n at least 3 and m at least 1, m(C_n x P_m, 2) = n, with C_n the cycle on the vertices 0, ..., n - 1 and P_m the path on the vertices 0, ..., m - 1.
 
-**Theorem 1.6 (Proof).**
+**Theorem 1.6 (The degree of a path vertex).**
+
+$$\forall l \in \mathbb{N},\; \forall b \in \operatorname{Fin}\left(l + 1\right),\; \operatorname{card}\left(\operatorname{neighborFinset}\left(\operatorname{pathGraph}\left(l + 1\right), b\right)\right) = \operatorname{ite}\left(\operatorname{val}\left(b\right) < l, 1, 0\right) + \operatorname{ite}\left(0 < \operatorname{val}\left(b\right), 1, 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.path_neighbor_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Boštjan Brešar, Jaka Hedžet, Rebekah Herrman (2024). *Bootstrap percolation and P_3-hull number in direct products of graphs*. DOI: [10.7151/dmgt.2603](https://doi.org/10.7151/dmgt.2603). URL: <https://arxiv.org/abs/2403.10957v1>.
+
+*Commentary.*
+
+In the path on l + 1 vertices, a vertex has a successor neighbour exactly when its value is less than l and a predecessor neighbour exactly when its value is positive.
+
+**Theorem 1.7 (The sum of path degrees).**
+
+$$\forall l \in \mathbb{N},\; \sum_{b: \operatorname{Fin}\left(l + 1\right)} \operatorname{card}\left(\operatorname{neighborFinset}\left(\operatorname{pathGraph}\left(l + 1\right), b\right)\right) = 2 \cdot l$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.sum_path_neighbor_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Boštjan Brešar, Jaka Hedžet, Rebekah Herrman (2024). *Bootstrap percolation and P_3-hull number in direct products of graphs*. DOI: [10.7151/dmgt.2603](https://doi.org/10.7151/dmgt.2603). URL: <https://arxiv.org/abs/2403.10957v1>.
+
+*Commentary.*
+
+The degrees of the path on l + 1 vertices sum to twice l.
+
+**Theorem 1.8 (Proof).**
 
 $$claim$$
 
@@ -87,6 +115,8 @@ Upper bound (Proposition 3 of the paper): the layer of the path vertex 0 percola
 - Truth anchor: `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.Percolates`
 - Truth anchor: `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.claim`
 - Truth anchor: `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.dirProd`
+- Truth anchor: `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.path_neighbor_card`
 - Truth anchor: `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.percolationNumber`
 - Truth anchor: `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.step`
+- Truth anchor: `D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.sum_path_neighbor_card`
