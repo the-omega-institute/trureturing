@@ -30,9 +30,6 @@ def signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
-  realize signature (fun _ _ p => p.support) (fun e => nomatch e)
-
 def arena : Arena where
   signature := signature.{u}
   Law R := ∀ {V : Type u} [Finite V] (G : SimpleGraph V) (A B : Finset V),
@@ -47,7 +44,7 @@ def arena : Arena where
           (R.readout () ⟨V, G, m, a, b, i⟩ (p i)) x → x ∉ (p j).support) → m ≤ Y.card)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ _ => []) (fun e => nomatch e)
+  realize signature (fun _ _ _ => []) (fun e _ => Empty.elim e)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   classical
@@ -63,7 +60,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   norm_num at hbad
 
 def family : Registration arena.{u} (type_of% (@exists_separator_paths_and_weak_duality.{u})) where
-  actual := actual
+  actual := realize signature (fun _ _ p => p.support) (fun e _ => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@exists_separator_paths_and_weak_duality, rejected, rejected_law⟩
   sensitivity := by
@@ -109,7 +106,7 @@ noncomputable def registration :
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => p.support) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ p => p.support) (fun e _ => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

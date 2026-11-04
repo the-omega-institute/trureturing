@@ -83,7 +83,9 @@ internal sealed class MengerCertificatesDocument : IScribeDocumentDefinition
     }
 
     private static Formula Call(string name, params Formula[] args) =>
-        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+        args.Length == 0
+            ? new Formula.NamedConstant(FormulaIdentifier.Create(name))
+            : new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula All(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
     private static Formula Ex(string name, Formula domain, Formula body) =>
