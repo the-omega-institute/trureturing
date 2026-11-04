@@ -5,7 +5,7 @@ year: 2019
 title: Palindromic length of words and morphisms in class P
 doi: 10.1016/j.tcs.2019.02.024
 url: https://arxiv.org/abs/1812.00711v2
-claim: Section 4 recalls Frid's conjecture on Fibonacci prefixes and the upper bound for their palindromic length.
+claim: Section 4 recalls Frid's Fibonacci prefix conjecture; Section 6 defines mixed pal-antipal length and conjectures unbounded equal-cost Thue-Morse prefixes.
 strata_touched:
   - D5/S1/Words/Palindromes/FridPrefix/FridPrefixPalindromicLength
   - D5/S1/Words/Palindromes/ThueMorseSignedCut
