@@ -612,8 +612,8 @@ $$
 
 Its positive square root is
 $F_c=(\sqrt L\,y/x)\sqrt j\,\varepsilon
-( -\mathcal E)(\sqrt L\,y/x)\sqrt j\,\varepsilon^2
-O(\varepsilon^3)$.
+ -\mathcal E(\sqrt L\,y/x)\sqrt j\,\varepsilon^2
+ +O(\varepsilon^3)$.
 The half-recoveries in (46.21) have
 $R_{\mathrm{var}}-R=r_2\varepsilon+O(\varepsilon^2)$ and
 $C_{\mathrm{var}}-C=c_2\varepsilon+O(\varepsilon^2)$.
