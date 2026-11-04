@@ -16,7 +16,7 @@ import Mathlib.Tactic.Positivity
 
 /-! The complete maximal identity property for Cartesian products of cliques and paths. -/
 
-open scoped BigOperators
+open scoped BigOperators Matrix
 open Polynomial Chebyshev
 
 namespace D5.S3.StatisticalMechanics.SandpileCompleteMaximalIdentity
@@ -36,13 +36,197 @@ def claim : Prop :=
   ∀ i j : ℕ, 2 ≤ i → 2 ≤ j →
     ((∀ s : Fin i × Fin j, maximalIdentityAt i j s) ↔ (i = 4 ∧ j = 2))
 
+open Classical in
+private lemma product_row (i j : ℕ) (f : Fin i × Fin j → ℤ) (a : Fin i) (t : Fin j) :
+    (((⊤ : SimpleGraph (Fin i)).boxProd (SimpleGraph.pathGraph j)).lapMatrix ℤ *ᵥ f) (a, t) =
+      (i : ℤ) * f (a, t) - ∑ b : Fin i, f (b, t) +
+        ((SimpleGraph.pathGraph j).lapMatrix ℤ *ᵥ fun u => f (a, u)) t := by
+  classical
+  have ha := a.isLt
+  rw [SimpleGraph.lapMatrix_mulVec_apply, SimpleGraph.lapMatrix_mulVec_apply,
+    SimpleGraph.degree_boxProd, SimpleGraph.neighborFinset_boxProd]
+  simp only [Finset.sum_disjUnion, Finset.sum_product, Finset.sum_singleton,
+    SimpleGraph.neighborFinset_top, SimpleGraph.IsRegularOfDegree.top.degree_eq,
+    Fintype.card_fin, Nat.cast_add, Nat.cast_sub (by omega : 1 ≤ i), Nat.cast_one]
+  have hs := Finset.sum_compl_add_sum ({a} : Finset (Fin i)) (fun b => f (b, t))
+  simp only [Finset.sum_singleton] at hs
+  linear_combination -hs
+
+private lemma path_neighbors (j : ℕ) (t : Fin j) :
+    (SimpleGraph.pathGraph j).neighborFinset t =
+      (if h : 0 < t.val then {⟨t.val - 1, by omega⟩} else ∅) ∪
+      (if h : t.val + 1 < j then {⟨t.val + 1, h⟩} else ∅) := by
+  ext u
+  have ht := t.isLt
+  have hu := u.isLt
+  simp only [SimpleGraph.mem_neighborFinset, SimpleGraph.pathGraph_adj, Finset.mem_union]
+  split_ifs <;> simp_all [Fin.ext_iff] <;> omega
+
+private lemma path_degree (j : ℕ) (t : Fin j) :
+    ((SimpleGraph.pathGraph j).degree t : ℤ) =
+      (if 0 < t.val then 1 else 0) + (if t.val + 1 < j then 1 else 0) := by
+  rw [SimpleGraph.degree, path_neighbors, Finset.card_union_of_disjoint]
+  · split_ifs <;> simp
+  · split_ifs <;> simp [Fin.ext_iff]
+
+private lemma path_row (j : ℕ) (f : Fin j → ℤ) (t : Fin j) :
+    ((SimpleGraph.pathGraph j).lapMatrix ℤ *ᵥ f) t =
+      (if h : 0 < t.val then f t - f ⟨t.val - 1, by omega⟩ else 0) +
+      (if h : t.val + 1 < j then f t - f ⟨t.val + 1, h⟩ else 0) := by
+  rw [SimpleGraph.lapMatrix_mulVec_apply', path_neighbors, Finset.sum_union]
+  · split_ifs <;> simp
+  · split_ifs <;> simp [Fin.ext_iff]
+
+open Classical in
+private lemma total_mass (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j) :
+    ∑ v : Fin i × Fin j,
+      ((((⊤ : SimpleGraph (Fin i)).boxProd (SimpleGraph.pathGraph j)).degree v : ℤ) - 1) =
+        (i : ℤ) * ((i : ℤ) * j - 2) := by
+  have hs (z : Fin j) : ∑ t : Fin j, (if t ≠ z then (1 : ℤ) else 0) = (j : ℤ) - 1 := by
+    have he (t : Fin j) : (if t ≠ z then (1 : ℤ) else 0) =
+        1 - (if t = z then 1 else 0) := by
+      by_cases h : t = z <;> simp [h]
+    simp_rw [he]
+    simp
+  have hp : ∑ t : Fin j, ((SimpleGraph.pathGraph j).degree t : ℤ) = 2 * ((j : ℤ) - 1) := by
+    have h0 (t : Fin j) : 0 < t.val ↔ t ≠ ⟨0, by omega⟩ := by
+      simp only [ne_eq, Fin.ext_iff]; omega
+    have h1 (t : Fin j) : t.val + 1 < j ↔ t ≠ ⟨j - 1, by omega⟩ := by
+      have ht := t.isLt
+      simp only [ne_eq, Fin.ext_iff]; omega
+    simp_rw [path_degree, h0, h1, Finset.sum_add_distrib, hs]
+    ring
+  simp only [Fintype.sum_prod_type, SimpleGraph.degree_boxProd,
+    SimpleGraph.IsRegularOfDegree.top.degree_eq, Fintype.card_fin,
+    Nat.cast_add, Nat.cast_sub (by omega : 1 ≤ i), Nat.cast_one,
+    Finset.sum_sub_distrib, Finset.sum_add_distrib, Finset.sum_const,
+    Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hp, Fintype.card_prod, Nat.cast_mul]
+  ring
+
+open Classical in
+private lemma lift_equations (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j) (s : Fin i × Fin j)
+    (h : maximalIdentityAt i j s) :
+    ∃ f : Fin i × Fin j → ℤ, ∀ v : Fin i × Fin j,
+      ((((⊤ : SimpleGraph (Fin i)).boxProd (SimpleGraph.pathGraph j)).lapMatrix ℤ) *ᵥ f) v =
+        (((⊤ : SimpleGraph (Fin i)).boxProd (SimpleGraph.pathGraph j)).degree v : ℤ) - 1 -
+          (if v = s then (i : ℤ) * ((i : ℤ) * j - 2) else 0) := by
+  obtain ⟨g, hg⟩ := h
+  let f : Fin i × Fin j → ℤ := fun v => if hv : v = s then 0 else g ⟨v, hv⟩
+  have hf : f s = 0 := by simp [f]
+  let G := (⊤ : SimpleGraph (Fin i)).boxProd (SimpleGraph.pathGraph j)
+  have hr (v : Fin i × Fin j) (hv : v ≠ s) :
+      (G.lapMatrix ℤ *ᵥ f) v = (G.degree v : ℤ) - 1 := by
+    change ∑ w, G.lapMatrix ℤ v w * f w = _
+    rw [Fintype.sum_eq_add_sum_subtype_ne _ s, hf, mul_zero, zero_add]
+    convert hg ⟨v, hv⟩ using 1
+    apply Finset.sum_congr rfl
+    intro w hw
+    simp only [f, dite_eq_right w.property]
+    rfl
+  have hz : ∑ v, (G.lapMatrix ℤ *ᵥ f) v = 0 := by
+    simp only [Matrix.mulVec, dotProduct]
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.sum_mul]
+    apply Finset.sum_eq_zero
+    intro w hw
+    have hc : ∑ v, G.lapMatrix ℤ v w = 0 := by
+      calc
+        _ = ∑ v, G.lapMatrix ℤ w v :=
+          Finset.sum_congr rfl (fun v _ => ((G.isSymm_lapMatrix ℤ).apply v w).symm)
+        _ = 0 := by
+          simpa only [Matrix.mulVec, dotProduct, Pi.one_apply, mul_one, Pi.zero_apply] using
+            congrFun (G.lapMatrix_mulVec_one_eq_zero ℤ) w
+    rw [hc, zero_mul]
+  have hm := total_mass i j hi hj
+  change ∑ v, ((G.degree v : ℤ) - 1) = _ at hm
+  rw [Fintype.sum_eq_add_sum_subtype_ne _ s] at hz hm
+  have ht : ∑ v : {v : Fin i × Fin j // v ≠ s}, (G.lapMatrix ℤ *ᵥ f) v =
+      ∑ v : {v : Fin i × Fin j // v ≠ s}, ((G.degree v : ℤ) - 1) := by
+    apply Finset.sum_congr rfl
+    intro v hv
+    exact hr v v.property
+  rw [ht] at hz
+  refine ⟨f, fun v => ?_⟩
+  by_cases hv : v = s
+  · subst v
+    rw [ite_eq_left rfl]
+    change (G.lapMatrix ℤ *ᵥ f) s = _
+    linarith
+  · rw [ite_eq_right hv, sub_zero]
+    exact hr v hv
+
 private lemma path_reduction (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j)
     (h : maximalIdentityAt i j (⟨0, by omega⟩, ⟨0, by omega⟩)) :
     ∃ x : ℕ → ℤ,
       x 1 = (i + 1 : ℤ) * x 0 ∧
       (∀ k : ℕ, k + 2 < j → x (k + 2) = (i + 2 : ℤ) * x (k + 1) - x k) ∧
       (i + 1 : ℤ) * x (j - 1) - x (j - 2) = -(i : ℤ) * ((i : ℤ) * j - 2) := by
-  sorry
+  classical
+  let a : Fin i := ⟨0, by omega⟩
+  let b : Fin i := ⟨1, by omega⟩
+  let z : Fin j := ⟨0, by omega⟩
+  obtain ⟨f, hf⟩ := lift_equations i j hi hj (a, z) h
+  let d : Fin j → ℤ := fun t => f (a, t) - f (b, t)
+  have hd (t : Fin j) :
+      (i : ℤ) * d t + ((SimpleGraph.pathGraph j).lapMatrix ℤ *ᵥ d) t =
+        if t = z then -(i : ℤ) * ((i : ℤ) * j - 2) else 0 := by
+    have ha := hf (a, t)
+    have hb := hf (b, t)
+    rw [product_row] at ha hb
+    have hba : (b, t) ≠ (a, z) := by
+      intro he
+      have he' := congrArg (fun v : Fin i × Fin j => v.1.val) he
+      norm_num [a, b] at he'
+    have hat : (a, t) = (a, z) ↔ t = z := by simp only [Prod.mk.injEq, true_and]
+    simp only [hba, ite_false, hat, SimpleGraph.degree_boxProd,
+      SimpleGraph.IsRegularOfDegree.top.degree_eq] at ha hb
+    change (i : ℤ) * (f (a, t) - f (b, t)) +
+      ((SimpleGraph.pathGraph j).lapMatrix ℤ *ᵥ
+        ((fun u => f (a, u)) - (fun u => f (b, u)))) t = _
+    rw [Matrix.mulVec_sub]
+    simp only [Pi.sub_apply]
+    by_cases ht : t = z
+    · rw [ite_eq_left ht] at ha ⊢
+      linear_combination ha - hb
+    · rw [ite_eq_right ht] at ha ⊢
+      linear_combination ha - hb
+  let x : ℕ → ℤ := fun k => if hk : k < j then d ⟨j - 1 - k, by omega⟩ else 0
+  refine ⟨x, ?_, ?_, ?_⟩
+  · have ht := hd ⟨j - 1, by omega⟩
+    rw [path_row] at ht
+    have hn : (⟨j - 1, by omega⟩ : Fin j) ≠ z := by
+      intro he
+      have he' := congrArg Fin.val he
+      change j - 1 = 0 at he'
+      omega
+    simp only [Fin.val_mk, dite_eq_left (by omega : 0 < j - 1),
+      dite_eq_right (by omega : ¬ j - 1 + 1 < j), add_zero, ite_eq_right hn] at ht
+    simp only [x, dite_eq_left (by omega : 1 < j), dite_eq_left (by omega : 0 < j), Nat.sub_zero]
+    linear_combination -ht
+  · intro k hk
+    have ht := hd ⟨j - 2 - k, by omega⟩
+    rw [path_row] at ht
+    have hn : (⟨j - 2 - k, by omega⟩ : Fin j) ≠ z := by
+      intro he
+      have he' := congrArg Fin.val he
+      change j - 2 - k = 0 at he'
+      omega
+    simp only [Fin.val_mk, dite_eq_left (by omega : 0 < j - 2 - k),
+      dite_eq_left (by omega : j - 2 - k + 1 < j), ite_eq_right hn] at ht
+    simp only [x, dite_eq_left hk, dite_eq_left (by omega : k + 1 < j),
+      dite_eq_left (by omega : k < j),
+      show j - 1 - (k + 2) = j - 2 - k - 1 by omega,
+      show j - 1 - (k + 1) = j - 2 - k by omega,
+      show j - 1 - k = j - 2 - k + 1 by omega]
+    linear_combination -ht
+  · have ht := hd z
+    rw [path_row] at ht
+    simp only [z, Fin.val_mk, dite_eq_right (by omega : ¬ 0 < 0), zero_add,
+      dite_eq_left (by omega : 1 < j), ite_eq_left rfl, ite_true] at ht
+    simp only [x, dite_eq_left (by omega : j - 1 < j), dite_eq_left (by omega : j - 2 < j),
+      Nat.sub_self, show j - 1 - (j - 2) = 1 by omega]
+    change (i + 1 : ℤ) * d z - d ⟨1, by omega⟩ = _
+    linear_combination ht
 
 private lemma path_elimination (i j : ℕ) (hj : 2 ≤ j) (x : ℕ → ℤ)
     (h0 : x 1 = (i + 1 : ℤ) * x 0)
@@ -55,7 +239,10 @@ private lemma path_elimination (i j : ℕ) (hj : 2 ≤ j) (x : ℕ → ℤ)
     intro k
     induction k using Nat.twoStepInduction with
     | zero => intro hk; simp
-    | one => intro hk; simpa only [Nat.cast_one, S_one, S_zero, sub_self, eval_X, eval_one, show (i + 2 : ℤ) - 1 = i + 1 by ring] using h0
+    | one =>
+      intro hk
+      simpa only [Nat.cast_one, S_one, S_zero, sub_self, eval_X, eval_one,
+        show (i + 2 : ℤ) - 1 = i + 1 by ring] using h0
     | more k ha hb =>
       intro hk
       rw [hr k hk, hb (by omega), ha (by omega)]
@@ -121,7 +308,8 @@ private lemma divisibility_classification (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤
   · subst j
     norm_num at h
     have h6 : (i + 2 : ℤ) ∣ 6 := by
-      convert dvd_sub (dvd_mul_right (i + 2 : ℤ) 2) h using 1 <;> ring
+      convert dvd_sub (dvd_mul_right (i + 2 : ℤ) 2) h using 1
+      ring
     have hb := Int.le_of_dvd (by norm_num : (0 : ℤ) < 6) h6
     have hc : i = 2 ∨ i = 3 ∨ i = 4 := by omega
     rcases hc with rfl | rfl | rfl
@@ -137,7 +325,27 @@ private lemma divisibility_classification (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤
     omega
 
 private lemma exceptional_identity : ∀ s : Fin 4 × Fin 2, maximalIdentityAt 4 2 s := by
-  sorry
+  classical
+  intro s
+  let f : Fin 4 × Fin 2 → ℤ := fun v =>
+    if v = s then 0 else if v.2 = s.2 then 5 else if v.1 = s.1 then 6 else 7
+  refine ⟨fun v => f v, ?_⟩
+  intro v
+  have hf : f s = 0 := by simp only [f, ite_eq_left rfl]
+  have hs := Fintype.sum_eq_add_sum_subtype_ne
+    (fun w => ((⊤ : SimpleGraph (Fin 4)).boxProd (SimpleGraph.pathGraph 2)).lapMatrix ℤ
+      v.1 w * f w) s
+  rw [hf, mul_zero, zero_add] at hs
+  rw [← hs]
+  change ((((⊤ : SimpleGraph (Fin 4)).boxProd (SimpleGraph.pathGraph 2)).lapMatrix ℤ) *ᵥ f) v.1 = _
+  rw [product_row, path_row, SimpleGraph.degree_boxProd, Nat.cast_add, path_degree]
+  rcases s with ⟨a, t⟩
+  rcases v with ⟨⟨b, u⟩, hv⟩
+  fin_cases a <;> fin_cases t <;> fin_cases b <;> fin_cases u <;>
+    first
+    | exact (hv rfl).elim
+    | norm_num [f, Fin.sum_univ_succ, SimpleGraph.IsRegularOfDegree.top.degree_eq]
+
 
 theorem result : claim := by
   intro i j hi hj
