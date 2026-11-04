@@ -22,13 +22,14 @@ internal sealed class HardinA185765RecurrenceDocument : IScribeDocumentDefinitio
             Node("finite_certificate", "The three equalities hold", CertificateBody(),
                 "The literal tables satisfy every transfer step through fourteen, the vector residual at five vanishes, and the scalar residual totals at three and four vanish.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "The recurrence holds for every stated index", ClaimBody(),
-                "Linearity propagates the vanishing vector residual from five onward. The scalar equalities at three and four cover indices thirteen and fourteen. The counting identity then gives the stated recurrence for every n at least thirteen.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                "Linearity propagates the vanishing vector residual from five onward. The scalar equalities at three and four cover indices thirteen and fourteen. The counting identity then gives the stated recurrence for every n at least thirteen.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin185765"), ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hardin-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(F.Id(owner), Dot, F.Id(name)));
     private static Formula App(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);

@@ -64,6 +64,10 @@ $$\forall (n : \mathbb{N}), (13 \le n) \Rightarrow ((\operatorname{a}\left(n\rig
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185765Recurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin185765` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185765Recurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin185765","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185765Recurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2011). *OEIS A185765: six-column binary arrays with unequal neighboring subblock traces*. URL: <https://oeis.org/A185765>.
