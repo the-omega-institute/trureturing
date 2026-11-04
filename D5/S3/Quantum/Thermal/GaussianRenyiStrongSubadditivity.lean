@@ -275,19 +275,23 @@ private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [Decidab
   have he : M *ᵥ z = hH.eigenvalues i • z := hH.mulVec_eigenvectorBasis i
   have hne : hH.eigenvalues i ≠ 0 := by
     intro hzero
-    have hmz : M *ᵥ z = 0 := by simpa only [hzero, zero_smul] using he
+    have hmz : M *ᵥ z = 0 := by simpa only
+      [hzero, zero_smul] using he
     have hz : z = 0 := (Matrix.mulVec_injective_iff_isUnit.mpr hunitM)
       (hmz.trans (mulVec_zero M).symm)
-    simp only [hz, star_zero, dotProduct_zero, zero_ne_one] at hz1
+    simp only
+      [hz, star_zero, dotProduct_zero, zero_ne_one] at hz1
   have hpv : 0 ≤ (star z ⬝ᵥ (M * M + M) *ᵥ z).re := hp.re_dotProduct_nonneg z
   have hmv : 0 ≤ (star z ⬝ᵥ (M * M - M) *ᵥ z).re := hm.re_dotProduct_nonneg z
   have hpq : (star z ⬝ᵥ (M * M + M) *ᵥ z).re = hH.eigenvalues i ^ 2 + hH.eigenvalues i := by
-    simp only [add_mulVec, ← mulVec_mulVec, he, mulVec_smul, dotProduct_add,
+    simp only
+      [add_mulVec, ← mulVec_mulVec, he, mulVec_smul, dotProduct_add,
       dotProduct_smul, hz1, mul_one, Complex.real_smul, Complex.add_re,
       Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
     ring
   have hmq : (star z ⬝ᵥ (M * M - M) *ᵥ z).re = hH.eigenvalues i ^ 2 - hH.eigenvalues i := by
-    simp only [sub_mulVec, ← mulVec_mulVec, he, mulVec_smul, dotProduct_sub,
+    simp only
+      [sub_mulVec, ← mulVec_mulVec, he, mulVec_smul, dotProduct_sub,
       dotProduct_smul, hz1, mul_one, Complex.real_smul, Complex.sub_re,
       Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
     ring
@@ -403,7 +407,7 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
   rw [Real.log_prod (fun i _ => (hterms i).ne'), Real.log_pow] at hl
   change Real.log (H x).det.re = _
   norm_num at hl ⊢
-  linarith only [hl]
+  convert congrArg (fun t : ℝ => (1 / 2 : ℝ) * t) hl.symm using 1 <;> ring
 
 private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
@@ -468,7 +472,8 @@ private lemma alpha_two_entropy {ι : Type*} [Fintype ι] [DecidableEq ι]
     congr 1
     ring
   have hd := determinant_spectral_identity V Ω hV hpos hΩ hH 0 (by norm_num) (by norm_num)
-  simp only [Complex.ofReal_zero, zero_smul, add_zero, zero_pow (by norm_num : 2 ≠ 0),
+  simp only
+      [Complex.ofReal_zero, zero_smul, add_zero, zero_pow (by norm_num : 2 ≠ 0),
     sub_zero] at hd
   have hmap : (V.map Complex.ofReal).det.re = V.det := by
     have h := Complex.ofRealHom.map_det V
@@ -480,8 +485,8 @@ private lemma alpha_two_entropy {ι : Type*} [Fintype ι] [DecidableEq ι]
   simp_rw [hlog] at hd
   rw [← Finset.mul_sum] at hd
   rw [gaussianRenyiEntropy, dite_eq_left hH]
-  simp_rw (config := { congrConsts := false }) [hs]
-  linarith only [hd]
+  simp_rw [hs]
+  convert congrArg (fun t : ℝ => (1 / 2 : ℝ) * t) hd.symm using 1 <;> ring
 
 private theorem det_mono {α : Type*} [Fintype α] [DecidableEq α]
     {P Q : Matrix α α ℂ} (hP : P.PosDef) (hQ : Q.PosDef)
@@ -756,3 +761,60 @@ private lemma settlement_main : claim := by
 theorem result : claim := settlement_main
 
 end D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
+
+
+#print axioms D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.result
+#print axioms D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.claim
+
+run_cmd do
+  let auditArts : Lean.NameMap Lean.ImportArtifacts := ({} : Lean.NameMap Lean.ImportArtifacts).insert
+    `D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
+    (Lean.ImportArtifacts.ofArrays #[#[System.FilePath.mk
+      "/Users/chronoai/trureturing-5adab85e-3bae-4fcf-be83-5b967758cfc8-lds/.lake/lane-math-op-gaussian-renyi-ssa/8012d300171ceefdb3c6589a/audit-imports/D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.olean"]])
+  let auditEnv ← Lean.importModules
+    #[{ module := `D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity }] {}
+    (arts := auditArts)
+  let auditEnv := auditEnv.setExporting false
+  let root := `D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.result
+  let target := `D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.claim
+  let idx := auditEnv.getModuleIdxFor? root
+  if idx.isNone then throwError "The compiled settlement has no module index"
+  let names := (auditEnv.constants.toList.toArray.filter fun p =>
+    auditEnv.getModuleIdxFor? p.1 == idx).map Prod.fst
+  let names := names.qsort (fun a b => a.toString < b.toString)
+  let mut todo := #[root, target]
+  let mut seen : Lean.NameSet := {}
+  while !todo.isEmpty do
+    let n := todo.back!
+    todo := todo.pop
+    if !seen.contains n then
+      seen := seen.insert n
+      if let some info := auditEnv.find? n then
+        todo := todo ++ info.type.getUsedConstants
+        if let some value := info.value? (allowOpaque := true) then
+          todo := todo ++ value.getUsedConstants
+  let used := names.filter seen.contains
+  let difference := names.filter (!seen.contains ·)
+  let mut rows := #[]
+  for n in names do
+    let consumers := names.filter fun p =>
+      if let some info := auditEnv.find? p then
+        info.getUsedConstantsAsSet.contains n
+      else false
+    rows := rows.push (Lean.Json.mkObj [
+      ("name", Lean.toJson n.toString),
+      ("consumers", Lean.toJson (consumers.map Lean.Name.toString))])
+  let axResult ← Lean.collectAxioms root
+  let axClaim ← Lean.collectAxioms target
+  let out := Lean.Json.mkObj [
+    ("module", Lean.toJson "D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity"),
+    ("module_index", Lean.toJson (toString idx)),
+    ("constants", Lean.toJson (names.map Lean.Name.toString)),
+    ("used_local_constants", Lean.toJson (used.map Lean.Name.toString)),
+    ("difference", Lean.toJson (difference.map Lean.Name.toString)),
+    ("closure_size", Lean.toJson seen.size),
+    ("direct_consumers", Lean.Json.arr rows),
+    ("axioms_result", Lean.toJson (axResult.map Lean.Name.toString)),
+    ("axioms_claim", Lean.toJson (axClaim.map Lean.Name.toString))]
+  IO.FS.writeFile "/Users/chronoai/.sshx/8012d300171ceefdb3c6589a/attempt-1/closure-audit.json" out.pretty
+  Lean.logInfo m!"Declaration closure: {names.size} local, {used.size} used, difference {difference}"
