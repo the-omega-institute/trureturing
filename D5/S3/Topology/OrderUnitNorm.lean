@@ -15,6 +15,9 @@ public import Mathlib.Analysis.Normed.Operator.Basic
 public import Mathlib.Analysis.Normed.Algebra.Exponential
 public import Mathlib.Analysis.SpecialFunctions.Exponential
 public import Mathlib.Analysis.Calculus.Taylor
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Geometry.Convex.Cone.Pointed
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 public import Mathlib.Algebra.QuadraticDiscriminant
 public import Mathlib.Topology.Order.Monotone
 public import Mathlib.Tactic.Module
@@ -461,6 +464,94 @@ private lemma reverse_certificate [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E
   rw [sq_abs]
   nlinarith
 
+
+/-- The full original positive dual in its usual finite-dimensional topology. -/
+def positiveDual : Set (E →L[ℝ] ℝ) := {β | ∀ v ∈ A.cone, 0 ≤ β v}
+
+/-- A fixed coefficient on all original mathematical effects. -/
+def Certificate (H : E →ₗ[ℝ] E) (K : ℝ) (β : E →L[ℝ] ℝ) : Prop :=
+  ∀ x : E, x ∈ A.cone → A.unit - x ∈ A.cone →
+    |β (H x)| ^ 2 ≤ K * β x * β A.unit
+
+private lemma cone_certificate (H : E →ₗ[ℝ] E) (P : Set (E →L[ℝ] ℝ))
+    (K : ℝ) (hK : 0 ≤ K) (hP : P ⊆ A.positiveDual)
+    (hcert : ∀ α ∈ P, A.Certificate H K α)
+    (β : E →L[ℝ] ℝ) (hβ : β ∈ PointedCone.hull ℝ P) : A.Certificate H K β := by
+  obtain ⟨c, hsupport, hc, rfl⟩ := PointedCone.mem_hull_set.mp hβ
+  intro x hx hux
+  have hb := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul c.support
+    (r := fun α => c α * α (H x))
+    (f := fun α => c α * α x)
+    (g := fun α => K * c α * α A.unit)
+    (fun α hα => mul_nonneg (hc α) (hP (hsupport hα) x hx))
+    (fun α hα => mul_nonneg (mul_nonneg hK (hc α))
+      (hP (hsupport hα) A.unit A.unit_mem))
+    (by
+      intro α hα
+      have ha := hcert α (hsupport hα) x hx hux
+      rw [sq_abs] at ha
+      have ht := mul_le_mul_of_nonneg_left ha (sq_nonneg (c α))
+      nlinarith only [ht])
+  simp only [Certificate, Finsupp.sum, sum_apply, _root_.smul_apply, smul_eq_mul]
+  rw [sq_abs]
+  simpa only [← Finset.mul_sum] using hb
+
+private lemma closure_certificate (H : E →ₗ[ℝ] E) (P : Set (E →L[ℝ] ℝ))
+    (K : ℝ) (hK : 0 ≤ K) (hP : P ⊆ A.positiveDual)
+    (hcert : ∀ α ∈ P, A.Certificate H K α)
+    (β : E →L[ℝ] ℝ) (hβ : β ∈ closure (PointedCone.hull ℝ P : Set (E →L[ℝ] ℝ))) :
+    A.Certificate H K β := by
+  intro x hx hux
+  have hs : IsClosed {γ : E →L[ℝ] ℝ |
+      |γ (H x)| ^ 2 ≤ K * γ x * γ A.unit} :=
+    isClosed_le (by fun_prop) (by fun_prop)
+  exact closure_minimal
+    (fun γ hγ => A.cone_certificate H P K hK hP hcert γ hγ x hx hux) hs hβ
+
+private lemma scaled_certificate (H : E →ₗ[ℝ] E) (K : ℝ) (β : E →L[ℝ] ℝ)
+    (hcert : A.Certificate H K β) (r : ℝ) (hr : 0 < r) (y : E)
+    (hy : y ∈ A.cone) (hry : r • A.unit - y ∈ A.cone) :
+    |β (H y)| ^ 2 ≤ K * r * β y * β A.unit := by
+  let x := r⁻¹ • y
+  have hx : x ∈ A.cone := A.cone.smul_mem (inv_pos.mpr hr) hy
+  have hux : A.unit - x ∈ A.cone := by
+    simpa [x, smul_sub, smul_smul, hr.ne'] using
+      A.cone.smul_mem (inv_pos.mpr hr) hry
+  have hyx : y = r • x := by simp [x, hr.ne']
+  have h1 : β (H y) = r * β (H x) := by rw [hyx, map_smul, map_smul, smul_eq_mul]
+  have h2 : β y = r * β x := by rw [hyx, map_smul, smul_eq_mul]
+  calc
+    |β (H y)| ^ 2 = r ^ 2 * |β (H x)| ^ 2 := by rw [h1, abs_mul, mul_pow, sq_abs]
+    _ ≤ r ^ 2 * (K * β x * β A.unit) :=
+      mul_le_mul_of_nonneg_left (hcert x hx hux) (sq_nonneg r)
+    _ = K * r * β y * β A.unit := by rw [h2]; ring
+
+private lemma zero_contact (H : E →ₗ[ℝ] E) (K : ℝ) (β : E →L[ℝ] ℝ)
+    (hcert : A.Certificate H K β) (y : E) (hy : y ∈ A.cone) (hzero : β y = 0) :
+    β (H y) = 0 := by
+  let r := A.orderNorm y + 1
+  have hr : 0 < r := by dsimp [r]; linarith [A.norm_nonneg y]
+  have hry : r • A.unit - y ∈ A.cone :=
+    ((A.norm_le_iff y r).mp (by dsimp [r]; linarith)).2.1
+  have h := A.scaled_certificate H K β hcert r hr y hy hry
+  rw [hzero, mul_zero, zero_mul] at h
+  exact abs_eq_zero.mp (sq_eq_zero_iff.mp (le_antisymm h (sq_nonneg _)))
+
+private lemma source_certificate (H : E →ₗ[ℝ] E) (P : Set (E →L[ℝ] ℝ))
+    (K : ℝ) (hK : 0 ≤ K) (hP : P ⊆ A.positiveDual)
+    (hspan : closure (PointedCone.hull ℝ P : Set (E →L[ℝ] ℝ)) = A.positiveDual)
+    (hcert : ∀ α ∈ P, A.Certificate H K α) :
+    (∀ β ∈ A.positiveDual, A.Certificate H K β) ∧
+    (∀ β ∈ A.positiveDual, ∀ r : ℝ, 0 < r → ∀ y : E,
+      y ∈ A.cone → r • A.unit - y ∈ A.cone →
+      |β (H y)| ^ 2 ≤ K * r * β y * β A.unit) ∧
+    (∀ β ∈ A.positiveDual, ∀ y : E, y ∈ A.cone → β y = 0 → β (H y) = 0) := by
+  have hall : ∀ β ∈ A.positiveDual, A.Certificate H K β := by
+    intro β hβ
+    exact A.closure_certificate H P K hK hP hcert β (by rwa [hspan])
+  exact ⟨hall, fun β hβ => A.scaled_certificate H K β (hall β hβ),
+    fun β hβ => A.zero_contact H K β (hall β hβ)⟩
+
 /-- The constructed original norm, its dual mass bound, and the exact original
 operator and exponential interfaces. This is a dependency of the quantitative
 generator criterion, not that criterion itself. -/
@@ -492,10 +583,19 @@ theorem original_order_unit_norm_interface [FiniteDimensional ℝ E] :
           (∀ v ∈ A.cone, 0 ≤ β v) → ∀ x : E,
           x ∈ A.cone → A.unit - x ∈ A.cone →
           |β (H x)| ^ 2 ≤ ‖A.operator H * A.operator H‖ * β x * β A.unit))) ∧
+    (∀ H : E →ₗ[ℝ] E, ∀ P : Set (E →L[ℝ] ℝ), ∀ K : ℝ,
+      0 ≤ K → P ⊆ A.positiveDual →
+      closure (PointedCone.hull ℝ P : Set (E →L[ℝ] ℝ)) = A.positiveDual →
+      (∀ α ∈ P, A.Certificate H K α) →
+      (∀ β ∈ A.positiveDual, A.Certificate H K β) ∧
+      (∀ β ∈ A.positiveDual, ∀ r : ℝ, 0 < r → ∀ y : E,
+        y ∈ A.cone → r • A.unit - y ∈ A.cone →
+        |β (H y)| ^ 2 ≤ K * r * β y * β A.unit) ∧
+      (∀ β ∈ A.positiveDual, ∀ y : E, y ∈ A.cone → β y = 0 → β (H y) = 0)) ∧
     (∀ T : E ≃ₗ[ℝ] E, (∀ v ∈ A.cone, T v ∈ A.cone) →
       (∀ v ∈ A.cone, T.symm v ∈ A.cone) → T A.unit = A.unit →
       ∀ v, A.orderNorm (T v) = A.orderNorm v) := by
-  refine ⟨?_, inferInstance, A.bridge.continuous, A.bridge.symm.continuous, ?_, ?_, ?_⟩
+  refine ⟨?_, inferInstance, A.bridge.continuous, A.bridge.symm.continuous, ?_, ?_, ?_, ?_⟩
   · intro v
     exact ⟨A.norm_eq_gauge v, A.norm_attained v, A.norm_wrap v, A.unit_ball v⟩
   · intro β hβ
@@ -509,6 +609,7 @@ theorem original_order_unit_norm_interface [FiniteDimensional ℝ E] :
       exact ⟨A.flow_isometry H hflow,
         fun hu β hβ x hx hux t => A.centered_orbit_bound H hu hflow β hβ x hx hux t,
         fun hu β hβ x hx hux => A.reverse_certificate H hu hflow β hβ x hx hux⟩
+  · exact A.source_certificate
   · exact A.positive_inverse_isometry
 
 end Data
