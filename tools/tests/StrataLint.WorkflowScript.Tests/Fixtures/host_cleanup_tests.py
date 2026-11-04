@@ -782,10 +782,11 @@ class HostCleanupTests(unittest.TestCase):
 
     @unittest.skipUnless(sys.platform.startswith("linux"), "requires native Linux proc/pidfd")
     def test_native_pidfd_dead_leader_live_worker(self):
-        # A thread pidfd joins actual leader exit; the process pidfd must still
-        # be nonready. PIDFD_THREAD (Linux 6.9+) is O_EXCL in linux/pidfd.h.
-        # Unsupported Linux kernels fail this probe, never silently skip it.
-        # The worker owns cwd/fd until pipe release; no sleeps or signals.
+        # Observe the leader's actual Z state: Linux pidfd_poll() can defer even
+        # PIDFD_THREAD readiness for a group leader with surviving subthreads
+        # (fs/pidfs.c, delay_group_leader()). It cannot synchronize this phase.
+        # The flags=0 process pidfd must remain nonready while the worker owns
+        # cwd/fd until pipe release. Every probe wait is bounded.
         source = r"""
 #define _GNU_SOURCE
 #include <fcntl.h>
@@ -826,27 +827,25 @@ int main(int argc, char **argv) {
         probe = self.root / "thread-group-probe"
         compiled = subprocess.run(["cc", "-std=c11", "-pthread", "-Wall", "-Wextra", "-Werror",
                                    "-x", "c", "-o", str(probe), "-"],
-                                  input=source, capture_output=True, text=True)
+                                  input=source, capture_output=True, text=True, timeout=10)
         self.assertEqual(0, compiled.returncode, compiled.stdout + compiled.stderr)
         release_read, release_write = os.pipe()
         try:
-            with os.fdopen(release_write, "wb", buffering=0) as release, \
-                 subprocess.Popen([str(probe), str(self.root), str(release_read)], stdin=subprocess.PIPE,
-                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-                                  pass_fds=(release_read,)) as child:
-                observer, thread_pidfd = None, None
+            with os.fdopen(release_write, "wb", buffering=0) as release:
+                child = subprocess.Popen([str(probe), str(self.root), str(release_read)],
+                                         stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                         stderr=subprocess.PIPE, text=True, pass_fds=(release_read,))
+                observer = None
                 try:
-                    ready = child.stdout.readline().split()
+                    readable, _, _ = select.select([child.stdout], [], [], 10)
+                    self.assertTrue(readable, "native probe did not announce its worker; kernel=" + str(os.uname()))
+                    ready = os.read(child.stdout.fileno(), 256).decode().split()
+                    self.assertEqual(3, len(ready), ready)
                     self.assertEqual("ready", ready[0], ready)
                     worker, held_fd = map(int, ready[1:])
                     process = Path("/proc") / str(child.pid)
                     observer = cleanup.LinuxProcessObserver(process)
                     self.assertEqual("matched", observer.binding["identity"], observer.binding)
-                    try:
-                        thread_pidfd = os.pidfd_open(child.pid, os.O_EXCL)
-                    except OSError as error:
-                        self.fail("native leader-exit synchronization requires PIDFD_THREAD: "
-                                  + repr(error) + "; kernel=" + str(os.uname()))
                     self.assertEqual(0, observer.sample()["revents"])
                     iterdir = Path.iterdir
                     def only_probe(path):
@@ -857,12 +856,15 @@ int main(int argc, char **argv) {
                     self.assertIn(self.root / "held", active)
                     child.stdin.write("L")
                     child.stdin.flush()
-                    leader_exit = select.poll()
-                    leader_exit.register(thread_pidfd, select.POLLIN)
-                    events = leader_exit.poll()
-                    self.assertTrue(any(flags & select.POLLIN for _, flags in events), events)
-                    status = cleanup.LinuxProcessObserver.read(observer.proc_fd, "status")
-                    fields = dict(line.split(":", 1) for line in status.splitlines() if ":" in line)
+                    deadline = time.monotonic() + 10
+                    while True:
+                        status = cleanup.LinuxProcessObserver.read(observer.proc_fd, "status")
+                        fields = dict(line.split(":", 1) for line in status.splitlines() if ":" in line)
+                        if fields["State"].split()[0] == "Z":
+                            break
+                        if time.monotonic() >= deadline:
+                            self.fail("native leader did not reach Z; kernel=" + str(os.uname()) + "; " + status)
+                        time.sleep(0.001)
                     self.assertEqual("Z", fields["State"].split()[0], status)
                     self.assertEqual("2", fields["Threads"].strip(), status)
                     live = observer.sample()
@@ -899,24 +901,30 @@ int main(int argc, char **argv) {
                     release.write(b"X")
                     release.close()
                     child.stdin.close()
-                    self.assertEqual(0, child.wait(), child.stderr.read())
+                    self.assertEqual(0, child.wait(timeout=10), child.stderr.read())
                     exited = observer.sample()
                     self.assertTrue(exited["revents"] & select.POLLIN, exited)
                     self.assertEqual("observed", exited["group_exit"])
                     print(json.dumps(dict(probe="native_pidfd_dead_leader_live_worker", live=live,
                                           exited=exited, diagnostic=diagnostic,
+                                          kernel=list(os.uname()), leader_state=fields["State"].strip(),
+                                          leader_threads=fields["Threads"].strip(),
                                           original_return_code=original_return_code), sort_keys=True), flush=True)
                 finally:
                     release.close()
                     if not child.stdin.closed:
                         child.stdin.close()  # EOF releases the leader even on assertion failure.
-                    child.wait()
-                    if thread_pidfd is not None:
-                        os.close(thread_pidfd)
-                    if observer is not None:
-                        observer.close()
-                    child.stdout.close()
-                    child.stderr.close()
+                    try:
+                        child.wait(timeout=10)
+                    except subprocess.TimeoutExpired:
+                        child.kill()  # Only this fixture's child, after cooperative EOF failed.
+                        child.wait(timeout=5)
+                        self.fail("native probe did not exit after EOF cleanup; kernel=" + str(os.uname()))
+                    finally:
+                        if observer is not None:
+                            observer.close()
+                        child.stdout.close()
+                        child.stderr.close()
         finally:
             os.close(release_read)
 
