@@ -191,20 +191,29 @@ class MaintenanceLogTests(unittest.TestCase):
         self.assertEqual(0, rows[-1]["exit_code"])
 
     def test_lock_lifetime(self):
-        lock_path, release, done = (self.root / name for name in ("lock", "release", "done"))
-        survivor = ("import os,time; from pathlib import Path; "
+        for scoped in (True, False):
+            with self.subTest(scoped=scoped):
+                self.lock_lifetime_case(scoped)
+
+    def lock_lifetime_case(self, scoped):
+        lock_path, release, done = (self.root / (str(scoped) + name) for name in ("lock", "release", "done"))
+        survivor = ("import os,sys,time; from pathlib import Path; "
                     f"release=Path({str(release)!r}); "
                     "exec('while not release.exists(): time.sleep(0.01)'); "
-                    "[os.close(int(fd)) for fd in os.environ['WORKTREE_SCOPE_FDS'].split(',')]; "
+                    "os.close(int(sys.argv[1])); "
                     f"Path({str(done)!r}).touch()")
         child = ("import os,subprocess,sys; "
-                 "fds=tuple(map(int,os.environ['WORKTREE_SCOPE_FDS'].split(','))); "
-                 f"p=subprocess.Popen([sys.executable,'-c',{survivor!r}],pass_fds=fds,"
+                 "fds=(int(sys.argv[1]),); "
+                 f"p=subprocess.Popen([sys.executable,'-c',{survivor!r},sys.argv[1]],pass_fds=fds,"
                  "stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL); print(p.pid)")
         with lock_path.open("w") as handle:
             fcntl.flock(handle, fcntl.LOCK_EX)
-            self.environment["WORKTREE_SCOPE_FDS"] = str(handle.fileno())
-            result = self.run_command(self.command(sys.executable, "-c", child), pass_fds=(handle.fileno(),))
+            if scoped:
+                self.environment["WORKTREE_SCOPE_FDS"] = str(handle.fileno())
+            else:
+                self.environment.pop("WORKTREE_SCOPE_FDS", None)
+            result = self.run_command(self.command(sys.executable, "-c", child, str(handle.fileno())),
+                                      pass_fds=(handle.fileno(),))
             self.assertEqual(0, result.returncode, result.stderr)
             survivor_pid = int(result.stdout)
         try:
