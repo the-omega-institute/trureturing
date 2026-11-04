@@ -846,3 +846,42 @@ Indeed $p,q>0$ and $u^2-q=x'^2+x'y'+y'^2>0$. Since $q-p=t(1-t)(x-y)^2$, every pr
 **Sources and boundaries.** The order-three statements in this section are from the research note by Haobo Ma then Wenlin Zhang, *An exact balancing law for order-three Gaussian multi-entropy* (4 November 2026, CC BY 4.0). The pair-product cross-difference proof above is an algebraic derivation of its balancing conclusion. The physical family and equal-party observation are due to Camargo and Nishida, arXiv:2609.30754v1 and v2 (v2: 12 October 2026, §5 and Figures 1–2). Classical majorization is credited to Marshall, Olkin and Arnold. Higher-replica balancing, physical replica-one continuation, other Gaussian branches and fixed-squeezing large-$N$ limits remain separate questions. The specialized order-four constants and remainders for $(m,1,1)$ do not restrict the broader order-four product formula. No worldwide priority claim is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Replica three: all-total extrema and the labelled equal-party curve
+
+**Theorem 14.1 (All positive-integer extrema, with equality).** For every integer $N\ge3$, every $a>1$, and every positive integer labelled triple $x+y+z=N$, the actual integral-defined value of Convention 13.1 satisfies
+$$
+V(\kappa,b_0,b_1,b_2)\ \le\
+\mathrm{GM}^{(3)}_3(x:y:z;a)\ \le\
+V(\kappa,N-2,1,1),
+$$
+where $q=\lfloor N/3\rfloor$, $r=N\bmod3$, and
+$(b_0,b_1,b_2)=(q+[r>0],q+[r>1],q)$.
+These are exact extremal values by Theorem 13.2, evaluated at the displayed positive integer representatives; in particular exactly $r$ balanced entries equal $q+1$. The lower equality holds if and only if every pair of party sizes differs by at most one. The upper equality holds if and only if the triple is a permutation of $(N-2,1,1)$. All party labels, permutations and tied entries are retained.
+
+**Proof.** Sort any positive integer triple in descending order, calling its largest and smallest entries $u,w$. The total gives $b_0\le u$, $w\le b_2$, $u\le N-2$, and $1\le w$. These are exactly the first and second descending-prefix inequalities for the balanced triple to be more mixed than the given triple, and for the given triple to be more mixed than $(N-2,1,1)$. Apply Theorem 13.6 with the positive fixed parameter $\kappa$. Its equality is permutation equality. A descending integer triple of total $N$ has maximum minus minimum at most one exactly when it is the displayed balanced representative. Theorem 13.2 identifies the scalar expression with the original integrals. Both representatives have positive entries and total $N$, so both bounds are attained. ∎
+
+**Theorem 14.2 (Small-total coincidence and vacuum).** For $k>0$ and $N\ge3$, the minimum and maximum of Theorem 14.1's scalar expression coincide if and only if $N=3$ or $N=4$. At these totals every positive integer triple is in the common extremal class. For $N\ge5$ the minimum is strictly below the maximum. At physical vacuum $a=1$ every positive integer triple, at every total, has value zero and is both a minimizer and a maximizer.
+
+**Proof.** The extreme representative is balanced exactly when $N-2\le2$, equivalently $N=3$ or $4$. Theorem 14.1's equality classification then gives the coincidence assertion and the strict separation otherwise. The vacuum assertion is Theorem 13.4, and has no nonvacuum strictness attached to it. ∎
+
+**Theorem 14.3 (Exact labelled $B=C$ scalar curve).** Let $k>0$, $N>0$, and $0<b<N/2$. Put $A=N-2b$, $F(b)=V(k,A,b,b)$ and
+$$
+M=1+k(2Nb-3b^2),\qquad L=1+2kb(N-2b),\qquad R=1+kb(N-b).
+$$
+Then
+$$
+F'(b)=
+\frac{k^2b(3b-N)\,[N+k(2A^2b+3Ab^2+2b^3)]}{6LRM}.
+$$
+Thus $F'(b)$ is negative, zero or positive exactly as $b<N/3$, $b=N/3$ or $b>N/3$. The unique continuous minimum is at $b=N/3$. The scalar endpoint values and one-sided limits at $0$ and $N/2$ are zero. At $k=0$ the curve is identically zero.
+
+**Proof.** The labelled expression is $[2\log M-\log L-2\log R]/12$. Differentiate the three logarithms and collect the positive common denominator. On the stated interval $A,b,N,L,R,M$ and the bracket in the numerator are positive; only $3b-N$ changes sign. The mean value theorem gives strict decrease on $(0,N/3]$ and strict increase on $[N/3,N/2)$. Continuity at the two scalar endpoints and direct substitution give the two limits. At $k=0$ each logarithm vanishes. ∎
+
+**Theorem 14.4 (Physical integer curve minimum).** Suppose $N\ge3$ is an integer divisible by three, $a>1$, and $b$ is a positive integer with $2b<N$. The actual integral-defined value $\mathrm{GM}^{(3)}_3(N-2b:b:b;a)$ is the scalar curve of Theorem 14.3 at $k=\kappa(N,a)$, and has its unique minimum at the allowed integer $b=N/3$. Equivalently, at the minimum $B+C=2N/3$.
+
+**Proof.** Theorem 13.2 gives the curve identity, and Theorem 14.3 gives both the inequality and its iff equality. Divisibility ensures that $N/3$ is a positive integer and the equal-party triple is an allowed physical triple of total $N$. ∎
+
+Theorems 14.1–14.4 have the same Haobo Ma then Wenlin Zhang byline and CC BY 4.0 source attribution as §13. Real $b$ in Theorem 14.3 is a scalar interpolation only; its empty-party endpoints are outside the physical positive-integer domain. Totals not divisible by three do not acquire a fractional physical minimizer from the continuous curve. Subsystem size is not an evaporation time variable. The separate fixed-$a$ Page/large-$N$ question remains open. Existing all-replica integral/Fourier and order-four results remain prior work in their actual scopes.
+
+## 追加锚（本行以下为增补区）

@@ -14,7 +14,7 @@ internal sealed class ReplicaThreeExtremaDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text("Scientific source: Haobo Ma then Wenlin Zhang, An exact balancing law for order-three Gaussian multi-entropy, 4 November 2026, CC BY 4.0. Camargo and Nishida supply the physical family; Marshall, Olkin and Arnold supply the classical majorization criterion. The proof reuses the actual integral/Fourier bridge and the strict scalar comparison, retaining their canonical and transplant credits. Higher replicas, physical replica-one continuation, other branches and the separate Page/large-N issue 22644 remain outside this result.")),
             Node("balanced", "The balanced representative", "balanced", "b",
-                "Write N=3q+r with q=N/3 and r=N%3 in {0,1,2}. The descending representative has exactly r entries q+1 and the remaining entries q: (q+[r>0],q+[r>1],q). All permutations represent the same balanced class.", DescribeRole.Definition),
+                "Write N=3q+r with q=N/3 and r=N%3 in {0,1,2}, and put delta_0=[r>0], delta_1=[r>1]. The descending representative has exactly r entries q+1 and the remaining entries q: (q+delta_0,q+delta_1,q). All permutations represent the same balanced class. In the extrema formulas below, b and e abbreviate b(N) and e(N).", DescribeRole.Definition),
             Node("extreme", "The extreme representative", "extreme", "e",
                 "The extreme positive integer representative is (N-2,1,1). Its full permutation class is retained, including the duplicate entries and the fully tied N=3 case.", DescribeRole.Definition),
             Node("is-balanced", "Balanced integer triples", "IsBalanced", "B",
@@ -30,6 +30,24 @@ internal sealed class ReplicaThreeExtremaDocument : IScribeDocumentDefinition
         string symbol, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("gaussian-three-extrema-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(F.Id(symbol))), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(Statement(declaration))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role, null);
+
+    private static Formula Call(string f, string x) => Seq(F.Id(f), Open, F.Id(x), Close);
+    private static Formula V(string x) => Seq(F.Id("V"), Open, F.Id("k"), Comma, F.Id(x), Close);
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "balanced" => Seq(Call("b", "N"), Eq, Open, F.Id("q"), Plus, DeltaLower, Underscore, D(0),
+            Comma, F.Id("q"), Plus, DeltaLower, Underscore, D(1), Comma, F.Id("q"), Close),
+        "extreme" => Seq(Call("e", "N"), Eq, Open, F.Id("N"), Minus, D(2), Comma, D(1), Comma, D(1), Close),
+        "IsBalanced" => Seq(Call("B", "x"), Sp, Iff, Sp, Forall, Sp, F.Id("i"), Comma, F.Id("j"),
+            Comma, F.Id("x"), Underscore, F.Id("i"), Le, Sp, F.Id("x"), Underscore, F.Id("j"), Plus, D(1)),
+        "integer_extrema" => Seq(V("b"), Le, Sp, V("x"), Le, Sp, V("e"), Semi,
+            V("x"), Eq, V("b"), Sp, Iff, Sp, Call("B", "x"), Semi,
+            V("x"), Eq, V("e"), Sp, Iff, Sp, Exists, Sp, SigmaLower, Comma,
+            F.Id("x"), Eq, F.Id("e"), Circ, Sp, SigmaLower),
+        "GM3_three_extrema" => Seq(V("b"), Le, Sp, F.Id("GM"), Underscore, D(3), Open, F.Id("x"), Comma,
+            F.Id("a"), Close, Le, Sp, V("e"), Semi, F.Id("k"), Eq, Kappa, Open, F.Id("N"), Comma, F.Id("a"), Close),
+        _ => Seq(V("b"), Eq, V("e"), Sp, Iff, Sp, F.Id("N"), Eq, D(3), Sp, Lor, Sp, F.Id("N"), Eq, D(4))
+    };
 }

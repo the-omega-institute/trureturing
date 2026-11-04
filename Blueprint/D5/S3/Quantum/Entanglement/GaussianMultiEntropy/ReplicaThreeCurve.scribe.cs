@@ -15,9 +15,9 @@ internal sealed class ReplicaThreeCurveDocument : IScribeDocumentDefinition
             Paragraph(Text("Scientific source: Haobo Ma then Wenlin Zhang, An exact balancing law for order-three Gaussian multi-entropy, 4 November 2026, CC BY 4.0; Camargo and Nishida for the fully symmetric pure Gaussian family and equal-party observation. Size dependence here is not a dynamical evaporation theorem. The source's real scalar interpolation does not assert fractional physical modes.")),
             Node("curve", "The scalar B=C curve", "curve", "F",
                 "F(k,N,b)=V(k,N-2b,b,b). For k>0 and N>0 its positive scalar domain is 0<b<N/2. For actual fixed integer total N>=3 and squeezing a>1, use k=kappa(N,a).", DescribeRole.Definition),
-            Node("coefficient", "The exact derivative coefficient", "curveDerivative", "F'",
+            Node("coefficient", "The exact derivative coefficient", "curveDerivative", "D",
                 "Put A=N-2b, M=1+k(2Nb-3b^2), L=1+2kb(N-2b), R=1+kb(N-b). The exact coefficient is k^2 b(3b-N)[N+k(2A^2 b+3Ab^2+2b^3)]/(6LRM). In the positive scalar domain every factor except 3b-N is strictly positive.", DescribeRole.Definition),
-            Node("derivative", "Derivative and all three signs", "curve_derivative", "F'",
+            Node("derivative", "Derivative and all three signs", "curve_derivative", "D",
                 "For every k>0,N>0 and 0<b<N/2, F is differentiable at b with the exact curveDerivative coefficient. Its derivative is negative if and only if b<N/3, zero if and only if b=N/3, and positive if and only if N/3<b.", DescribeRole.Theorem),
             Node("minimum", "The unique continuous minimum", "curve_minimum", "F",
                 "For k>0,N>0, F is strictly decreasing on (0,N/3] and strictly increasing on [N/3,N/2). At every b in (0,N/2), F(N/3)<=F(b), with equality if and only if b=N/3. The theorem proves both sides of the unique global minimum across the full scalar interval.", DescribeRole.Theorem),
@@ -30,6 +30,30 @@ internal sealed class ReplicaThreeCurveDocument : IScribeDocumentDefinition
         string symbol, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("gaussian-three-curve-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(F.Id(symbol))), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(Statement(declaration))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role, null);
+
+    private static Formula FAt(Formula b) => Seq(F.Id("F"), Open, F.Id("k"), Comma, F.Id("N"), Comma, b, Close);
+    private static Formula Third => Seq(Frac, Grp(F.Id("N")), Grp(D(3)));
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "curve" => Seq(FAt(F.Id("b")), Eq, F.Id("V"), Open, F.Id("k"), Comma,
+            F.Id("N"), Minus, D(2), F.Id("b"), Comma, F.Id("b"), Comma, F.Id("b"), Close),
+        "curveDerivative" => Seq(F.Id("D"), Eq, Frac,
+            Grp(F.Id("k"), Caret, D(2), F.Id("b"), Open, D(3), F.Id("b"), Minus, F.Id("N"), Close,
+                OpenBracket, F.Id("N"), Plus, F.Id("k"), Open, D(2), F.Id("A"), Caret, D(2), F.Id("b"),
+                Plus, D(3), F.Id("A"), F.Id("b"), Caret, D(2), Plus, D(2), F.Id("b"), Caret, D(3), Close, CloseBracket),
+            Grp(D(6), F.Id("L"), F.Id("R"), F.Id("M"))),
+        "curve_derivative" => Seq(F.Id("F"), Apos, Open, F.Id("b"), Close, Eq, F.Id("D"), Semi,
+            F.Id("F"), Apos, Open, F.Id("b"), Close, Lt, D(0), Sp, Iff, Sp, F.Id("b"), Lt, Third, Semi,
+            F.Id("F"), Apos, Open, F.Id("b"), Close, Eq, D(0), Sp, Iff, Sp, F.Id("b"), Eq, Third, Semi,
+            D(0), Lt, F.Id("F"), Apos, Open, F.Id("b"), Close, Sp, Iff, Sp, Third, Lt, F.Id("b")),
+        "curve_minimum" => Seq(FAt(Third), Le, Sp, FAt(F.Id("b")), Semi,
+            FAt(F.Id("b")), Eq, FAt(Third), Sp, Iff, Sp, F.Id("b"), Eq, Third),
+        "curve_boundaries" => Seq(FAt(D(0)), Eq, FAt(Seq(Frac, Grp(F.Id("N")), Grp(D(2)))), Eq, D(0), Semi,
+            F.Id("F"), Open, D(0), Comma, F.Id("N"), Comma, F.Id("b"), Close, Eq, D(0)),
+        _ => Seq(F.Id("GM"), Underscore, D(3), Open, F.Id("N"), Minus, D(2), F.Id("b"), Comma,
+            F.Id("b"), Comma, F.Id("b"), Comma, F.Id("a"), Close, Eq, FAt(F.Id("b")), Semi,
+            F.Id("b"), Eq, Third, Sp, Iff, Sp, F.Id("b"), Plus, F.Id("b"), Eq, D(2), Third)
+    };
 }
