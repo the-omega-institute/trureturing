@@ -119,15 +119,6 @@ private theorem power_links (a b c d : ℕ)
     norm_num at he
     linear_combination 3*he
 
-private theorem branch_complete (a b c d : ℕ)
-    (hb : 2≤b) (hba : b<a) (hac : a<c) (hd : 2≤d) (hda : d<a) :
-    branch a b c d = .a1 ∨ branch a b c d = .a2 ∨
-    branch a b c d = .b0 ∨ branch a b c d = .b1one ∨
-    branch a b c d = .b1quot ∨ branch a b c d = .c ∨
-    branch a b c d = .finite1 ∨ branch a b c d = .finite2 ∨
-    branch a b c d = .finite3 := by
-  cases branch a b c d <;> simp
-
 private theorem cut_bounds (a b c d : ℕ)
     (hb : 2≤b) (hba : b<a) (hac : a<c) (hd : 2≤d) (hda : d<a) :
     0 < freshCut a b c d ∧ freshCut a b c d < size a b c d := by

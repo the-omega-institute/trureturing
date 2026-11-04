@@ -10,6 +10,8 @@ import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
+/-! Native packet masses and physical bit counts certify both literal source strips. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -19,7 +21,7 @@ open private size sourceMod base oldValue newValue chain_values source_signs sou
 open private x y z t AA BB LL KK SU SV SW full stock complement terminal q h H rho fmask jmask
   mmask Rmask deltaMask branch     
        isFinite
-  freshCut cut_bounds cone_powers power_links branch_complete from
+  freshCut cut_bounds cone_powers power_links from
   D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull.Parameters
 open private stock_mass complement_mass bankWord stock_good terminal_good genericBanks finiteBanks inventory word_totals
   chamber_split labels_band_split labels_three_split from
@@ -769,10 +771,7 @@ private theorem new_strip (a b c d : ℕ)
       have mX := sm 3 1 (by change 1<(2:ℕ)^(a-1); simpa using powlt (show 0<a-1 by omega))
       simp only [bi.2.2.2,Nat.cast_one] at mX
       have z := hz
-      simp only [hbr] at z
-      dsimp only [markedBanks,genericBanks] at z
-      simp only [blocksWord,List.map_append,List.sum_append,List.map_cons,List.map_nil,
-        List.sum_cons,List.sum_nil,hear] at z
+      simp [hbr,markedBanks,genericBanks,blocksWord,hear] at z
       rw [hbr]
       dsimp only [markedBanks,genericBanks]
       apply four_packet_strip _ _ (2*sourceMod a b c d+1) _ _ _ _ _ _ _ _ (SV a c d) (SW b c d) (AA a b c) (SU a b d)
@@ -815,10 +814,7 @@ private theorem new_strip (a b c d : ℕ)
       have mX := sm 3 (fmask a d) (by simpa [chainLength] using hfcap)
       simp only [bi.2.2.2] at mX
       have z := hz
-      simp only [hbr] at z
-      dsimp only [markedBanks,genericBanks] at z
-      simp only [blocksWord,List.map_append,List.sum_append,List.map_cons,List.map_nil,
-        List.sum_cons,List.sum_nil,hear] at z
+      simp [hbr,markedBanks,genericBanks,blocksWord,hear] at z
       rw [hbr]
       dsimp only [markedBanks,genericBanks]
       apply four_packet_strip _ _ (2*sourceMod a b c d+1) _ _ _ _ _ _ _ _ (SV a c d) (SW b c d) (AA a b c) (SU a b d)

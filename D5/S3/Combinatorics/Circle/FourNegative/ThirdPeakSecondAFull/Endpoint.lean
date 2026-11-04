@@ -64,7 +64,7 @@ theorem actualSource_third_peak_second_a_full_joint_lift
     (actualSource (a+b+c+d+1)
       (2*(1+2^a+2^(a+b)+2^(a+b+c))))
     (modulus (a+b+c+d))
-    (earWord (a+b+c+d) sigma j) hn.2.1 (by simpa only [half] using hn.2.2)
+    (earWord (a+b+c+d) sigma j) hn.2.1 (by simpa only [size,half] using hn.2.2)
   refine ⟨sigma,j,hjcut,hj,ho,hn,fun m n => ?_,fun m n => ?_,fun m => ?_⟩
   · exact (eo m).2 n
   · exact (en m).2 n

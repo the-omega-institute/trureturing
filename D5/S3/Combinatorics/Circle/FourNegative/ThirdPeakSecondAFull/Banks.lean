@@ -14,7 +14,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull
 open SourceWidth
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 open private full stock complement terminal q h H fmask jmask mmask Rmask deltaMask rho branch      
-      isFinite branch_complete from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull.Parameters
+      isFinite from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull.Parameters
 open private oldValue newValue source_totals size negatives chainLength chainStart from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 
 open private freshCut from
