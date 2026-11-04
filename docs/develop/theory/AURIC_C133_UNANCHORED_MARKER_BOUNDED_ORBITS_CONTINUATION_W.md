@@ -348,3 +348,274 @@ $$
 **对应 8.4（平均结果与表示条件）。**`repo-derived`：第 5–7 节把原始关系的轨道预算用于有限窗口边界、双侧配对及复制历史；有限求和、极化与正平均算子是通常工具，不主张这些工具的文献新意。上述结果尚未推出五点负型、双侧根性或一般仿射表示。三历史强正几何、效果与 Born 读数、最小输入空间上的 Kraus 延拓继续以五点桥梁的表示与实际接口为前件；平均不补充准备、参考、联合或时间操作。
 
 ## 追加锚（本行以下为增补区）
+
+## 9. 精确保留比较矩阵的右梳复制
+
+**定义 9.1（带终端的实际右梳）。**对整数 $N\ge0$，置 $\Sigma_N=\{0,1,2\}^N$。对 $\sigma=(\sigma_1,\ldots,\sigma_N)$，严格按下列括号递推：
+
+$$
+H_0(a;z)=z,\qquad
+H_N^\sigma(a;z)
+=a\cdot U^{\sigma_1}H_{N-1}^{(\sigma_2,\ldots,\sigma_N)}(a;z).
+\tag{9.1}
+$$
+
+每条历史含有 $N$ 个左叶 $a$ 和一个终端 $z$；标记施于整个右子树。记 $s(\sigma)=\sum_i\sigma_i$。
+
+**定理 9.2（右梳的精确费用与真实单位预算）。**在定义 1.1 与 (R) 下，对全部 $a,b,z,w$，
+
+$$
+3^{-N}\sum_{\sigma\in\Sigma_N}
+c(H_N^\sigma(a;z),H_N^\sigma(b;w))
+=N c(a,b)+c(z,w).
+\tag{9.2}
+$$
+
+此外，严格有 $H_N^\sigma(1;z)=U^{s(\sigma)}z$，因而
+
+$$
+q(H_N^\sigma(1;1))+r(H_N^\sigma(1;1))
+\le\Omega(1).
+\tag{9.3}
+$$
+
+**证明。**(9.2) 对 $N=0$ 成立。固定内层的 $N-1$ 个相位，最外层相位的三项平均由 (R) 恰为 $c(a,b)$ 加内层比较；再作有限平均并归纳。单位左叶使每个结点严格成为 $U^{\sigma_i}$ 的作用，指数相加给第二项的对象等式。其终端为 $1$ 时，输出为 $p_{s(\sigma)}$，推论 2.2 给 (9.3)。预算指向真实单位 $1$，且不依赖梳深；没有用一般固定树的深度增长预算取代此处的界。
+
+**定理 9.3（完整关系模型中的核保持复制）。**对 $N\ge1$，令 $M_N=M^{\Sigma_N}$，逐坐标定义乘法和 $U_N$，真实双侧单位为常数组 $\mathbf1$。置
+
+$$
+c_N(f,g)=\frac1{N3^N}\sum_{\sigma\in\Sigma_N}c(f(\sigma),g(\sigma)),
+\qquad
+\Gamma_N(a)(\sigma)=H_N^\sigma(a;1).
+\tag{9.4}
+$$
+
+则 $c_N$ 有限、非负、零对角，且在 $M_N$ 的全部四个数组上满足同一 (R)。对全部 $a,b$，
+
+$$
+c_N(\Gamma_N(a),\Gamma_N(b))=c(a,b).
+\tag{9.5}
+$$
+
+若 $\mathbf p_j$ 表示值为 $p_j$ 的常数组，则
+
+$$
+\begin{aligned}
+c_N(\Gamma_N(1),\mathbf1)+c_N(\mathbf1,\Gamma_N(1))&\le\frac{\Omega(1)}N,\\
+c_N(\mathbf p_j,\mathbf1)+c_N(\mathbf1,\mathbf p_j)&\le\frac{\Omega(1)}N
+\qquad(j\ge0).
+\end{aligned}
+\tag{9.6}
+$$
+
+**证明。**逐坐标的实际 (R) 求有限和并除以 $N3^N$，给复制模型的完整关系。乘法单位与比较的其余性质逐坐标成立。(9.5) 为 (9.2) 的终端 $z=w=1$；(9.6) 分别由 (9.3) 和 $q(p_j)+r(p_j)\le\Omega(1)$ 得到。这里没有断言 $\Gamma_N$ 保持乘法、标记或真实单位，也未把它当作原始配方的同态。
+
+**推论 9.4（小单位漂移下仍可精确保留有限违反量）。**若某个原始 (R) 模型的费用不对称，或某个有限标签配置违反条件负型，则对每个 $\varepsilon>0$，存在满足全部原始前件与 (R) 的模型，其中单位轨道各点到真实单位的双向费用和不超过 $\varepsilon$，同时逐项保留该有限比较矩阵及其违反量。
+
+**证明。**取 $N$ 使 $\Omega(1)/N\le\varepsilon$，使用定理 9.3。对称性之差和任意固定零和系数的负型二次和只依赖比较矩阵，所以由 (9.5) 原值保留。单纯缩放原费用会一并缩小违反量；此处复制保留原矩阵。这是对假定存在的违反量的传递命题，不断言原始 (R) 已有反例。乘法缺陷涉及运算，不能因核保持就断言其同样由 $\Gamma_N$ 传递。
+
+## 10. 外移复制的精确未来测试域
+
+**定理 10.1（共同外移与有限正交域）。**沿用定理 9.3，取整数 $L\ge2N$，定义实际数组
+
+$$
+X_{N,L}(a)(\sigma)=U^{L-s(\sigma)}H_N^\sigma(a;1),
+\qquad Z_L(z)=\mathbf{U^Lz},\qquad o_{N,L}=\mathbf p_L.
+\tag{10.1}
+$$
+
+则 $X_{N,L}(1)=o_{N,L}$，并且
+
+$$
+\begin{aligned}
+c_N(X_{N,L}(a),X_{N,L}(b))&=c(a,b),\\
+c_N(X_{N,L}(a),Z_L(z))&=q(a)+\frac{r(z)}N,\\
+c_N(Z_L(z),X_{N,L}(a))&=r(a)+\frac{q(z)}N.
+\end{aligned}
+\tag{10.2}
+$$
+
+在以 $o=o_{N,L}$ 为展开基点的自由差空间中，置 $\epsilon_x=\delta_x-\delta_o$ 和
+
+$$
+B_N^o(\epsilon_x,\epsilon_y)
+=\frac{c_N(x,o)+c_N(o,y)-c_N(x,y)}2.
+$$
+
+则有精确的双向配对关系
+
+$$
+\begin{aligned}
+B_N^o(\epsilon_{X_{N,L}(a)},\epsilon_{X_{N,L}(b)})&=B(e_a,e_b),\\
+B_N^o(\epsilon_{X_{N,L}(a)},\epsilon_{Z_L(z)})
+&=B_N^o(\epsilon_{Z_L(z)},\epsilon_{X_{N,L}(a)})=0.
+\end{aligned}
+\tag{10.3}
+$$
+
+**证明。**$s(\sigma)\le2N$ 保证全部外移指数非负。两端共同施加同一 $U$ 次数不改比较，故第一式由 (9.5) 得到。再将 (9.2) 的另一棵右梳取为 $H_N^\sigma(1;z)=U^{s(\sigma)}z$；共同外移后它严格变成 $U^Lz$，得到其余两式。取 $a=1$，得
+
+$$
+c_N(o,Z_L(z))=r(z)/N,\qquad c_N(Z_L(z),o)=q(z)/N.
+$$
+
+取 $z=1$，得 $c_N(X_{N,L}(a),o)=q(a)$ 及反向值 $r(a)$。分别代入四点展开，所有交叉项精确抵消，给 (10.3)。换展开基点不把 $o$ 变成乘法单位，也不预设双线性型正定或对称。
+
+**推论 10.2（全部未来常数标记的统一余量）。**若 $r\ge L$，则
+
+$$
+\begin{aligned}
+c_N(X_{N,L}(a),\mathbf p_r)&=q(a)+\frac{r(p_{r-L})}N,\\
+c_N(\mathbf p_r,X_{N,L}(a))&=r(a)+\frac{q(p_{r-L})}N.
+\end{aligned}
+\tag{10.4}
+$$
+
+两个余项之和不超过 $\Omega(1)/N$，对全部 $a$ 及 $r\ge L$ 一致。
+
+**证明。**在 (10.2) 取 $z=p_{r-L}$，再用推论 2.2。
+
+**问题 10.3（小费用到上下文行列的缺桥）。**定理 9.3 和定理 10.1 没有把未来域 $Z_L(M)$ 宣告为全部 $M_N$，也未控制 $c_N(X_{N,L}(a),\mathbf1)$ 及其反向值。即使移动基点到真实单位的费用趋零，仍需另证所需读数的有限性及下列上下文识别：将 $U_N\mathbf1$ 换成 $\mathbf1$ 时，每个相关实际历史与每个探针的双向比较均有相同极限。零费用本身尚不等于完整行列相等或可取商的对象等式。
+
+对任意 $x\in M$，单项界确实给出
+
+$$
+\begin{aligned}
+c(p_jx,x),\ c(xp_j,x)&\le3q(p_j),\\
+c(x,p_jx),\ c(x,xp_j)&\le3r(p_j).
+\end{aligned}
+\tag{10.5}
+$$
+
+但这些成对小费用尚不控制任意第三探针的读数差。原始目标仍是问题 4.2 的全部双侧根性；小单位漂移与精确有限核保持是归约工具，不是额外公理或已完成的去锚分类。
+
+## 11. 缺陷形式的两个非平凡三相通道
+
+**定理 11.1（在自由空间中的缺陷角色）。**在 $E$ 上定义实际左乘的线性延拓
+
+$$
+L_ae_u=e_{a\cdot u}-e_a,\qquad T_a=L_a-I,\qquad
+Se_u=e_{Uu}-e_{p_1}.
+\tag{11.1}
+$$
+
+$e_1=0$ 与左乘定义相容，且 $T_ae_u=D(a,u)$。对全部 $a,b$ 和 $x,y\in E$，
+
+$$
+\sum_{k=0}^2 B(L_aS^kx,L_bS^ky)=3B(x,y),
+\tag{11.2}
+$$
+
+$$
+\begin{aligned}
+\sum_{k=0}^2B(T_aS^kx,S^ky)&=0,\\
+\sum_{k=0}^2B(S^kx,T_aS^ky)&=0,\\
+\sum_{k=0}^2B(T_aS^kx,T_bS^ky)&=0.
+\end{aligned}
+\tag{11.3}
+$$
+
+若对双线性形式置 $(\mathscr C F)(x,y)=F(Sx,Sy)$，则下列三个形式各满足 $(I+\mathscr C+\mathscr C^2)F=0$ 及 $\mathscr C^3F=F$：
+
+$$
+F_a^{\rm L}(x,y)=B(T_ax,y),\quad
+F_a^{\rm R}(x,y)=B(x,T_ay),\quad
+G_{a,b}(x,y)=B(T_ax,T_by).
+\tag{11.4}
+$$
+
+在这些形式生成的复化循环空间上，令
+
+$$
+P_rF=\frac13\sum_{k=0}^2\omega^{-rk}\mathscr C^kF,
+\qquad r=0,1,2,
+$$
+
+则 $P_0F=0$、$F=P_1F+P_2F$，且 $\mathscr C P_rF=\omega^rP_rF$。
+
+**证明。**对 (R) 关于右输入 $u,v$ 分别在单位取交替差，左边成为
+
+$$
+-2\sum_k B(e_{aU^ku}-e_{ap_k},e_{bU^kv}-e_{bp_k}),
+$$
+
+右边为 $-6B(e_u,e_v)$。由 $S^ke_u=e_{U^ku}-e_{p_k}$，得到 (11.2)，再双线性延拓。取 $b=1$ 或 $a=1$ 并减去 $\sum_kB(S^kx,S^ky)=3B(x,y)$，得前两个零和式；四项相减给第三式。由多项式恒等式 $(\mathscr C-I)(I+\mathscr C+\mathscr C^2)=\mathscr C^3-I$，得到三次周期。有限三角色投影的公式随即给最后结论。没有预先使 $S$ 下降到双侧根商；这里的复化只是形式空间上的代数运算。
+
+**命题 11.2（删除非负性后的完整关系与残余缺陷）。**若去掉实际费用非负这一前件，即使保留固定单位标记、三次周期和全部四变量 (R)，也可有非根的乘法缺陷。
+
+**证明。**取 $M=\mathbb C^3$ 为实空间，单位 $1_M=0$，写 $x=(z,w,h)$。定义
+
+$$
+\begin{aligned}
+\beta(x,y)&=\operatorname{Re}(z\overline{w'}+w\overline{z'}+h\overline{h'}),\\
+a\star u&=(z_a+z_u+h_ah_u,\ w_a+w_u,\ h_a+h_u),\\
+U(z,w,h)&=(\omega z,\omega w,\omega^2h),\\
+c_*(a,b)&=\beta(a-b,a-b).
+\end{aligned}
+\tag{11.5}
+$$
+
+$\beta$ 为非退化的不定号对称型；$0$ 为双侧单位，$U0=0$、$U^3=I$，且 $U$ 保持 $\beta$。令 $A=a-b$、$d=u-v$、$v_0=(h_ah_u-h_bh_v,0,0)$，则
+
+$$
+a\star U^ku-b\star U^kv=A+U^kd+\omega^{2k}v_0.
+$$
+
+$v_0$ 的方向各向同性。平方的三个纯项求和给 $3\beta(A,A)+3\beta(d,d)$；含 $A$ 的交叉项按 $\omega^k$ 或 $\omega^{2k}$ 求和为零，$U^kd$ 与 $\omega^{2k}v_0$ 的交叉项也按非平凡三角色求和为零。因此完整 (R) 成立。
+
+自由空间的锚定型满足 $B_*(e_x,e_y)=\beta(x,y)$。取 $a=u=(0,0,1)$、$z=(0,1,0)$，有 $a\star a=(1,0,2)$，故 $B_*(D(a,a),e_z)=1$，缺陷不在根空间。与此同时，实际重复历史 $z^{\star n}=(0,n,0)$ 给
+
+$$
+c_*(a\star a,z^{\star n})=4-2n<0\qquad(n\ge3).
+\tag{11.6}
+$$
+
+所以该模型明确违反原始非负性，不是原始问题的反例。它表明仅有代数三相消去不足；排除其缺陷必须消费实际历史闭包上的非负性。
+
+## 12. 单均值产生的非负势与实际 Poisson 方程
+
+**定理 12.1（单位轨道势的精确递推）。**取 $\ell^\infty(\mathbb N_0)$ 上的正、归一、移位不变实均值 $\Lambda$，置
+
+$$
+f(a)=\Lambda_n c(a,p_n),\qquad g(a)=\Lambda_n c(p_n,a).
+\tag{12.1}
+$$
+
+则 $f,g$ 有限非负，$f\circ U=f$、$g\circ U=g$，且
+
+$$
+\begin{aligned}
+\frac13\sum_{k=0}^2f(a\cdot U^ku)&=q(a)+f(u),\\
+\frac13\sum_{k=0}^2g(a\cdot U^ku)&=r(a)+g(u).
+\end{aligned}
+\tag{12.2}
+$$
+
+**证明。**由 (1.2) 与推论 2.2，$c(a,p_n)\le3(q(a)+\Omega(1))$，反向不超过 $3(r(a)+\Omega(1))$，所以均值有定义。取 (R) 的 $(b,v)=(1,p_n)$ 后对 $n$ 取同一个均值。每个左项的第二标签为 $p_{n+k}$，移位不变性给第一式；对转置核重复给第二式。这里只交换有限求和与一个线性均值，没有交换两个无限均值。
+
+取 $a=1$，两种势沿 $U$ 轨道均满足 $x_{n+1}+x_{n+2}=2x_n$。轨道上界保证其有界，因而通解的 $(-2)^n$ 项为零，得到 $fU=f$、$gU=g$。正移位均值的存在与有限加权复合算子的均值相容性是经典工具；参见 El-hady、Brzdęk，*Banach Limit and Fixed Point Approach in the Ulam Stability of the Quadratic Functional Equation*，DOI 10.3390/axioms14030206，第 3 节及 Remark 1。这里不调用其 Theorem 8 的交换群二次方程结论。
+
+**推论 12.2（有限右梳上的势增长）。**定义实际算子 $(K_ah)(u)=\frac13\sum_{k=0}^2h(a\cdot U^ku)$。则 $K_af=f+q(a)$、$K_ag=g+r(a)$，从而对全部 $n\ge0$，
+
+$$
+3^{-n}\sum_{\sigma\in\Sigma_n}f(H_n^\sigma(a;u))=f(u)+nq(a),
+\quad
+3^{-n}\sum_{\sigma\in\Sigma_n}g(H_n^\sigma(a;u))=g(u)+nr(a).
+\tag{12.3}
+$$
+
+**证明。**反复使用 (12.2)；每次只作有限三分支平均，常数函数被 $K_a$ 保持。右梳递推给其实际括号。
+
+**命题 12.3（减去单位势可破坏非负性）。**非负势 $f$ 不保证 $f-f(1)$ 非负。
+
+**证明。**取合法模型 $M=(\mathbb C,+)$，$Ua=\omega a+t$、$c(a,b)=|a-b|^2$，并令 $m=t/(1-\omega)$。单位为 $0$，其轨道为 $m(1-\omega^n)$，任意移位不变均值在这个三周期序列上均为三项平均。因此
+
+$$
+f(a)=|a-m|^2+|m|^2,\qquad f(1_M)=2|m|^2.
+$$
+
+若 $t\ne0$，实际标签 $a=m$ 给 $f(m)-f(1_M)=-|m|^2<0$。故单位轨道势不能经此减常数就被当成新的非负平方范数。
+
+**对应 12.4（归约结果与未证边界）。**`repo-derived`：右梳复制在另一个满足完整 (R) 的真实单位模型中精确保留原比较矩阵，并把全部单位轨道费用压至任意小；外移复制给精确的未来双向测试域；缺陷形式被定位在两个非平凡三角色；单位轨道势满足实际 Poisson 方程。有限乘积、有限平均、Fourier 投影和移位均值是通常工具，不主张其文献优先权。这些关系仍未给问题 4.2 的双侧根性、五点负型或完整仿射分类；也不供应实际非零准备、参考、全效果、联合或时间接口。未来测试域的回拉、上下文读数对小费用的控制及非平凡缺陷通道的消去仍是证明义务。
+
+## 追加锚（本行以下为增补区）
