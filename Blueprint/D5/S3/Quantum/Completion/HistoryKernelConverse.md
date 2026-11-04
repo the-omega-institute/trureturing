@@ -30,7 +30,7 @@ For an arbitrary label type, Matrix.PosSemidef includes Hermitian symmetry and p
 
 **Definition 1.3 (A certificate starts at the empty table and retains each extension equality).**
 
-$$\forall X: Type, \forall K: X \to X \to \mathbb{C}, \forall L: \operatorname{Fin}\left(0\right) \to X, \operatorname{CertifiedHistory}\left(K, 0, L\right) = \operatorname{True}\left(\right) \land \forall n: \mathbb{N}, \forall L: \operatorname{Fin}\left(n + 1\right) \to X, \operatorname{CertifiedHistory}\left(K, n + 1, L\right) = \operatorname{CertifiedHistory}\left(K, n, \operatorname{tail}\left(L\right)\right) \land \exists c: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Unit}\left(\right), \mathbb{C}\right), \exists r: \mathbb{C}, \operatorname{finiteGram}\left(K, \operatorname{append}\left(\operatorname{tail}\left(L\right), \operatorname{head}\left(L\right)\right)\right) = \operatorname{residualExtension}\left(\operatorname{finiteGram}\left(K, \operatorname{tail}\left(L\right)\right), c, r\right)$$
+$$\forall X: Type, \forall K: X \to X \to \mathbb{C}, (\forall L: \operatorname{Fin}\left(0\right) \to X, \operatorname{CertifiedHistory}\left(K, 0, L\right) = (\operatorname{True}\left(\right))) \land (\forall n: \mathbb{N}, \forall L: \operatorname{Fin}\left(n + 1\right) \to X, \operatorname{CertifiedHistory}\left(K, n + 1, L\right) = ((\operatorname{CertifiedHistory}\left(K, n, \operatorname{tail}\left(L\right)\right)) \land (\exists c: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Unit}\left(\right), \mathbb{C}\right), \exists r: \mathbb{C}, \operatorname{finiteGram}\left(K, \operatorname{append}\left(\operatorname{tail}\left(L\right), \operatorname{head}\left(L\right)\right)\right) = (\operatorname{residualExtension}\left(\operatorname{finiteGram}\left(K, \operatorname{tail}\left(L\right)\right), c, r\right)))))$$
 
 *Formalization.* `D5/S3/Quantum/Completion/HistoryKernelConverse.CertifiedHistory` (`✓ std3`).
 
@@ -42,7 +42,7 @@ The zero-length certificate is True. For a successor list, tail(L)(i) = L(i.succ
 
 **Definition 1.4 (Every finite label set is contained in a certified history).**
 
-$$\forall X: Type, \forall K: X \to X \to \mathbb{C}, \operatorname{CertifiedFiniteCover}\left(K\right) = \forall s: \operatorname{Finset}\left(X\right), \exists n: \mathbb{N}, \exists L: \operatorname{Fin}\left(n\right) \to X, \operatorname{CertifiedHistory}\left(K, n, L\right) \land \forall x: X, x \in s \Rightarrow \exists i: \operatorname{Fin}\left(n\right), \operatorname{L}\left(i\right) = x$$
+$$\forall X: Type, \forall K: X \to X \to \mathbb{C}, \operatorname{CertifiedFiniteCover}\left(K\right) = (\forall s: \operatorname{Finset}\left(X\right), \exists n: \mathbb{N}, \exists L: \operatorname{Fin}\left(n\right) \to X, (\operatorname{CertifiedHistory}\left(K, n, L\right)) \land (\forall x: X, x \in s \Rightarrow \exists i: \operatorname{Fin}\left(n\right), \operatorname{L}\left(i\right) = (x)))$$
 
 *Formalization.* `D5/S3/Quantum/Completion/HistoryKernelConverse.CertifiedFiniteCover` (`✓ std3`).
 
