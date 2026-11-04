@@ -6,18 +6,18 @@
    utility: none
    digest: Actual original matrix-group velocities and the complete first-order relation. -/
 
-module
-
-public import D5.S3.Quantum.Algebra.OriginalCompactActionMetric
-public import D5.S3.Quantum.Algebra.RankOneInvariantMetric
-public import Mathlib.Analysis.Calculus.Deriv.Slope
-public import Mathlib.Analysis.InnerProductSpace.Trace
-public import Mathlib.Algebra.Lie.OfAssociative
-public import Mathlib.LinearAlgebra.Dimension.RankNullity
-
-@[expose] public section
+import D5.S3.Quantum.Algebra.OriginalCompactActionMetric
+import D5.S3.Quantum.Algebra.RankOneInvariantMetric
+import Mathlib.Analysis.Calculus.Deriv.Slope
+import Mathlib.Analysis.InnerProductSpace.Trace
+import Mathlib.Algebra.Lie.OfAssociative
+import Mathlib.LinearAlgebra.Dimension.RankNullity
 
 namespace D5.S3.Quantum.Algebra.OriginalCompactReciprocity
+
+set_option backward.isDefEq.respectTransparency false
+
+attribute [local instance] LieRing.ofAssociativeRing
 
 open OriginalCompactActionMetric Module
 open scoped Topology InnerProductSpace
@@ -34,12 +34,16 @@ def velocitySpace : Submodule ℝ (W →L[ℝ] W) where
   add_mem' := by
     rintro K L ⟨c,hc,hK⟩ ⟨d,hd,hL⟩
     refine ⟨fun t => c t * d t,by simp [hc,hd],?_⟩
-    simpa [hc,hd] using hK.mul hL
+    simpa [hc,hd] using! hK.mul hL
   smul_mem' := by
     rintro r K ⟨c,hc,hK⟩
     refine ⟨fun t => c (r*t),by simpa using hc,?_⟩
-    simpa using hK.scomp 0 ((hasDerivAt_id 0).const_mul r)
+    have hr : HasDerivAt (fun t : ℝ => r*t) r 0 := by simpa using (hasDerivAt_id (0 : ℝ)).const_mul r
+    have hk : HasDerivAt (fun t => (c t).val.val) K (r*0) := by simpa using hK
+    have hh := hk.scomp (0 : ℝ) hr
+    simpa using! hh
 
+omit [FiniteDimensional ℝ W] in
 private theorem conjugate_velocity (g : G) (K : W →L[ℝ] W)
     (hK : K ∈ velocitySpace G) :
     (g.val.val * K * g⁻¹.val.val) ∈ velocitySpace G := by
@@ -52,13 +56,13 @@ private theorem bracket_velocity (K L : W →L[ℝ] W)
     ⁅K,L⁆ ∈ velocitySpace G := by
   obtain ⟨c,hc,hcK⟩ := hK
   have hinv : HasDerivAt (fun t => (c t)⁻¹.val.val) (-K) 0 := by
-    have hh := (hasFDerivAt_ringInverse (𝕜 := ℝ) (1 : (W →L[ℝ] W)ˣ)).comp_hasDerivAt
-      0 (by simpa [hc] using hcK)
-    simpa [Ring.inverse_unit,ContinuousLinearMap.mulLeftRight_apply] using hh
+    have hh := (hasFDerivAt_ringInverse (𝕜 := ℝ) (c 0).val).comp_hasDerivAt
+      (0 : ℝ) hcK
+    simpa [hc,Function.comp_def,Ring.inverse_unit,ContinuousLinearMap.mulLeftRight_apply] using! hh
   have hd := (hcK.mul_const L).mul hinv
   have hh : HasDerivAt (fun t => (c t).val.val * L * (c t)⁻¹.val.val)
       (K*L-L*K) 0 := by
-    simpa [hc,sub_eq_add_neg] using hd
+    simpa [hc,sub_eq_add_neg] using! hd
   have hm : ∀ t : ℝ, (c t).val.val * L * (c t)⁻¹.val.val ∈ velocitySpace G :=
     fun t => conjugate_velocity G (c t) L hL
   have hz := mem_closure_of_tendsto hh.tendsto_slope
@@ -71,6 +75,204 @@ private theorem bracket_velocity (K L : W →L[ℝ] W)
 def curveLieAlgebra : LieSubalgebra ℝ (W →L[ℝ] W) :=
   { velocitySpace G with
     lie_mem' := fun hK hL => bracket_velocity G _ _ hK hL }
+
+abbrev OriginalLie := curveLieAlgebra G
+
+/-- Evaluation uses the same actual matrices and the same full W. -/
+def evaluation (x : W) : OriginalLie G →ₗ[ℝ] W where
+  toFun K := K.val x
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+/-- The full relation is the image of all solutions, with no selected branch. -/
+def fullRelation (A : OriginalLie G) (x : W) :
+    Submodule ℝ ((OriginalLie G ⧸ Submodule.span ℝ {A}) × (W ⧸ Submodule.span ℝ {x})) :=
+  (LinearMap.ker ((evaluation G x).coprod A.val.toLinearMap)).map
+    ((Submodule.span ℝ {A}).mkQ.prodMap (Submodule.span ℝ {x}).mkQ)
+
+/-- The first canonical projection of the entire solution relation. -/
+def firstProjection (A : OriginalLie G) (x : W) :
+    fullRelation G A x →ₗ[ℝ] (OriginalLie G ⧸ Submodule.span ℝ {A}) :=
+  (LinearMap.fst ℝ _ _).comp (fullRelation G A x).subtype
+
+/-- The second canonical projection of the entire solution relation. -/
+def secondProjection (A : OriginalLie G) (x : W) :
+    fullRelation G A x →ₗ[ℝ] (W ⧸ Submodule.span ℝ {x}) :=
+  (LinearMap.snd ℝ _ _).comp (fullRelation G A x).subtype
+
+/-- Both projections of the full relation must be bijective. -/
+def FullReciprocity (A : OriginalLie G) (x : W) : Prop :=
+  Function.Bijective (firstProjection G A x) ∧ Function.Bijective (secondProjection G A x)
+
+private theorem relation_mem (A K : OriginalLie G) (x y : W)
+    (h : K.val x + A.val y = 0) :
+    ((Submodule.span ℝ {A}).mkQ K,(Submodule.span ℝ {x}).mkQ y) ∈ fullRelation G A x :=
+  ⟨(K,y),h,rfl⟩
+
+private theorem kernel_lines (A : OriginalLie G) (x : W)
+    (h : FullReciprocity G A x) :
+    (∀ y : W, A.val y = 0 → y ∈ Submodule.span ℝ {x}) ∧
+    (∀ K : OriginalLie G, K.val x = 0 → K ∈ Submodule.span ℝ {A}) := by
+  constructor
+  · intro y hy
+    let z : fullRelation G A x := ⟨(0,(Submodule.span ℝ {x}).mkQ y),
+      by simpa using relation_mem G A 0 x y (by simpa using hy)⟩
+    have hz : z = 0 := h.1.1 (by rfl)
+    have hq := congrArg (fun q : fullRelation G A x => q.val.2) hz
+    exact (Submodule.Quotient.mk_eq_zero (Submodule.span ℝ {x})).mp hq
+  · intro K hK
+    let z : fullRelation G A x := ⟨((Submodule.span ℝ {A}).mkQ K,0),
+      by simpa using relation_mem G A K x 0 (by simpa using hK)⟩
+    have hz : z = 0 := h.2.1 (by rfl)
+    have hq := congrArg (fun q : fullRelation G A x => q.val.1) hz
+    exact (Submodule.Quotient.mk_eq_zero (Submodule.span ℝ {A})).mp hq
+
+private theorem dimension_transfer (A : OriginalLie G) (x : W)
+    (ha : A ≠ 0) (hx : x ≠ 0) (h : FullReciprocity G A x) :
+    finrank ℝ (OriginalLie G) = finrank ℝ W := by
+  let e := (LinearEquiv.ofBijective (firstProjection G A x) h.1).symm.trans
+    (LinearEquiv.ofBijective (secondProjection G A x) h.2)
+  have hq := e.finrank_eq
+  have hA := (Submodule.span ℝ {A}).finrank_quotient_add_finrank
+  have hx' := (Submodule.span ℝ {x}).finrank_quotient_add_finrank
+  rw [finrank_span_singleton ha] at hA
+  rw [finrank_span_singleton hx] at hx'
+  omega
+
+private theorem centralizer_line (B : InnerProductSpace.Core ℝ W)
+    (hskew : ∀ K : OriginalLie G, ∀ u v : W, B.inner (K.val u) v = -B.inner u (K.val v))
+    (A : OriginalLie G) (x : W) (hx : x ≠ 0) (hAx : A.val x = 0)
+    (h : FullReciprocity G A x) :
+    ∀ K : OriginalLie G, ⁅A,K⁆ = 0 → ∃ c : ℝ, K = c • A := by
+  intro K hcomm
+  have hAK : A.val (K.val x) = 0 := by
+    have hh := congrArg (fun J : OriginalLie G => J.val x) hcomm
+    change A.val (K.val x) - K.val (A.val x) = 0 at hh
+    simpa [hAx] using hh
+  obtain ⟨c,hc⟩ := Submodule.mem_span_singleton.mp ((kernel_lines G A x h).1 _ hAK)
+  have hs := hskew K x x
+  have hb := B.conj_inner_symm x (K.val x)
+  simp only [conj_trivial] at hb
+  have hzero : B.inner (K.val x) x = 0 := by linarith
+  have hxx : B.inner x x ≠ 0 := fun hz => hx (B.definite x hz)
+  have hc0 : c = 0 := by
+    rw [← hc,B.smul_left] at hzero
+    simpa only [conj_trivial] using (mul_eq_zero.mp hzero).resolve_right hxx
+  have hKx : K.val x = 0 := by simpa [hc0] using hc.symm
+  obtain ⟨d,hd⟩ := Submodule.mem_span_singleton.mp ((kernel_lines G A x h).2 K hKx)
+  exact ⟨d,hd.symm⟩
+
+private theorem trace_square_positive {V : Type*} [AddCommGroup V] [Module ℝ V]
+    [FiniteDimensional ℝ V] (B : InnerProductSpace.Core ℝ V)
+    (T : V →ₗ[ℝ] V) (hT : T ≠ 0)
+    (hskew : ∀ u v : V, B.inner (T u) v = -B.inner u (T v)) :
+    0 < -LinearMap.trace ℝ V (T*T) := by
+  classical
+  let : NormedAddCommGroup V := B.toNormedAddCommGroup
+  let : InnerProductSpace ℝ V := InnerProductSpace.ofCore B.toCore
+  let b := stdOrthonormalBasis ℝ V
+  have ht : -LinearMap.trace ℝ V (T*T) = ∑ i, ⟪T (b i),T (b i)⟫_ℝ := by
+    rw [LinearMap.trace_eq_sum_inner (T*T) b,← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro i _
+    exact (hskew (b i) (T (b i))).symm
+  obtain ⟨i,hi⟩ : ∃ i, T (b i) ≠ 0 := by
+    by_contra! hn
+    apply hT
+    apply b.toBasis.ext
+    intro i
+    exact hn i
+  rw [ht]
+  exact Finset.sum_pos' (fun i _ => real_inner_self_nonneg)
+    ⟨i,Finset.mem_univ i,real_inner_self_pos.mpr hi⟩
+
+private def tracePair (K L : OriginalLie G) : ℝ :=
+  -(1/2 : ℝ) * LinearMap.trace ℝ W (K.val.toLinearMap * L.val.toLinearMap)
+
+@[instance_reducible] private def traceCore (B : InnerProductSpace.Core ℝ W)
+    (hskew : ∀ K : OriginalLie G, ∀ u v : W, B.inner (K.val u) v = -B.inner u (K.val v)) :
+    InnerProductSpace.Core ℝ (OriginalLie G) where
+  inner := tracePair G
+  conj_inner_symm K L := by
+    simp only [conj_trivial,tracePair,LinearMap.trace_mul_comm ℝ L.val.toLinearMap]
+  re_inner_nonneg K := by
+    change 0 ≤ tracePair G K K
+    by_cases hK : K = 0
+    · simp [hK,tracePair]
+    · have hn : K.val.toLinearMap ≠ 0 := by
+        intro hz
+        apply hK
+        apply Subtype.ext
+        ext u
+        exact LinearMap.congr_fun hz u
+      have hp := trace_square_positive B K.val.toLinearMap hn (hskew K)
+      dsimp [tracePair]
+      linarith
+  add_left K L J := by
+    change -(1/2 : ℝ) * LinearMap.trace ℝ W
+      ((K.val.toLinearMap+L.val.toLinearMap)*J.val.toLinearMap) = _
+    simp only [add_mul,map_add,tracePair]
+    ring
+  smul_left K L r := by
+    change -(1/2 : ℝ) * LinearMap.trace ℝ W
+      ((r • K.val.toLinearMap)*L.val.toLinearMap) = _
+    simp only [smul_mul_assoc,map_smul,smul_eq_mul,conj_trivial,tracePair]
+    ring
+  definite K hK := by
+    by_contra hn
+    have hT : K.val.toLinearMap ≠ 0 := by
+      intro hz
+      apply hn
+      apply Subtype.ext
+      ext u
+      exact LinearMap.congr_fun hz u
+    have hp := trace_square_positive B K.val.toLinearMap hT (hskew K)
+    change tracePair G K K = 0 at hK
+    dsimp [tracePair] at hK
+    linarith
+
+private theorem trace_invariant (B : InnerProductSpace.Core ℝ W)
+    (hskew : ∀ K : OriginalLie G, ∀ u v : W, B.inner (K.val u) v = -B.inner u (K.val v))
+    (X Y Z : OriginalLie G) :
+    (traceCore G B hskew).inner ⁅X,Y⁆ Z = -(traceCore G B hskew).inner Y ⁅X,Z⁆ := by
+  change -(1/2 : ℝ) * LinearMap.trace ℝ W
+    ((X.val.toLinearMap*Y.val.toLinearMap-Y.val.toLinearMap*X.val.toLinearMap)*Z.val.toLinearMap) =
+    -(-(1/2 : ℝ) * LinearMap.trace ℝ W
+      (Y.val.toLinearMap*(X.val.toLinearMap*Z.val.toLinearMap-Z.val.toLinearMap*X.val.toLinearMap)))
+  simp only [sub_mul,mul_sub,map_sub]
+  have hh := LinearMap.trace_mul_cycle ℝ Y.val.toLinearMap Z.val.toLinearMap X.val.toLinearMap
+  simp only [mul_assoc] at hh ⊢
+  linarith
+
+/-- On the full original W and the actual curve Lie algebra of its compact matrix
+subgroup, both projections of the full relation force dimension three. -/
+theorem finrank_eq_three (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
+    (A : OriginalLie G) (x : W) (ha : A ≠ 0) (hx : x ≠ 0) (hAx : A.val x = 0)
+    (h : FullReciprocity G A x) :
+    finrank ℝ W = 3 ∧ finrank ℝ (OriginalLie G) = 3 := by
+  obtain ⟨B,_hB,hcurves⟩ := compact_action_metric G hG
+  have hskew : ∀ K : OriginalLie G, ∀ u v : W,
+      B.inner (K.val u) v = -B.inner u (K.val v) := by
+    intro K
+    obtain ⟨c,hc,hcK⟩ := K.property
+    exact hcurves c hc K.val hcK
+  have hdim := dimension_transfer G A x ha hx h
+  have hd := RankOneInvariantMetric.finrank_eq_one_or_three (traceCore G B hskew)
+    (trace_invariant G B hskew) A ha (centralizer_line G B hskew A x hx hAx h)
+  have hthree : finrank ℝ (OriginalLie G) = 3 := by
+    rcases hd with hone | hthree
+    · have hW : finrank ℝ W = 1 := hdim.symm.trans hone
+      have hspan : Submodule.span ℝ {x} = ⊤ :=
+        Submodule.eq_top_of_finrank_eq (by rw [finrank_span_singleton hx,hW])
+      have hAz : A.val = 0 := by
+        ext y
+        have hy : y ∈ Submodule.span ℝ {x} := by rw [hspan]; trivial
+        obtain ⟨r,hr⟩ := Submodule.mem_span_singleton.mp hy
+        rw [← hr,map_smul,hAx,smul_zero]
+        rfl
+      exact False.elim (ha (Subtype.ext hAz))
+    · exact hthree
+  exact ⟨hdim.symm.trans hthree,hthree⟩
 
 end
 end D5.S3.Quantum.Algebra.OriginalCompactReciprocity
