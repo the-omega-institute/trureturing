@@ -17,7 +17,7 @@ open scoped BigOperators
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
-open private point_integral firstZero_unique firstZero_exists from
+open private point_integral firstZero_unique firstZero_exists numerical_total from
   D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
 namespace D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.HighTerminalChain
 
@@ -1142,19 +1142,15 @@ theorem balanced_chain_exact {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t :
 private theorem total_gamma {L : ℕ} (y : FullScore L) :
     (∑ i, gamma y i) = ∑ b, y.C b := by
   classical
-  unfold gamma
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro b _
-  by_cases hb : b = (fun _ => true)
-  · subst b
-    simp [FirstZero,y.terminalC]
-  · obtain ⟨i,hi⟩ := firstZero_exists b hb
-    rw [Finset.sum_eq_single i]
-    · simp [hi]
-    · intro j _ hj
-      exact ite_eq_right (fun h => hj (firstZero_unique h hi))
-    · simp
+  let z : FullScore L :=
+    { y with P := fun _ => 0, nonnegP := fun _ => le_rfl, terminalP := rfl }
+  calc
+    (∑ i, gamma y i) = ∑ b, ∑ i, numerical z i b := by
+      simp only [gamma, numerical, z, add_zero]
+      exact Finset.sum_comm
+    _ = ∑ b, y.C b := by
+      simp_rw [numerical_total]
+      simp only [z, add_zero]
 
 /-- The chain gives an actual same-Q, same-anchor comparison on precisely the
 source branch mu <= E + DeltaO; the complementary branch is not asserted here. -/
@@ -1196,4 +1192,3 @@ theorem balanced_chain_comparison {L : ℕ} (hL : 3 ≤ L) (y : FullScore L)
 #print axioms balanced_chain_comparison
 
 end D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.HighTerminalChain
-
