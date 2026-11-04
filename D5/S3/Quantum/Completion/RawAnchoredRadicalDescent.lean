@@ -206,7 +206,8 @@ private theorem anchoredSpan_quotient {M : Type*} [MulOneClass M]
   | @single_add a t x ha ht ih =>
       rw [map_add, mkQ_single c h11]
       exact Submodule.add_mem _
-        (Submodule.smul_mem _ t ⟨e a, Submodule.subset_span (Set.mem_range_self a), rfl⟩) ih
+        (Submodule.smul_mem _ t
+          ⟨e a, Submodule.subset_span (Set.mem_range_self a), rfl⟩) (ih trivial)
 
 private theorem beta_span {M : Type*} [MulOneClass M]
     (c : M → M → ℝ) (h11 : c 1 1 = 0) :
@@ -901,6 +902,7 @@ private theorem directed_fibre_differences {M : Type*} [MulOneClass M]
       rw [he, map_add, map_add, ht, add_zero]
     simp only [map_sub, LinearMap.sub_apply, quotientForm_beta c (h.diagonal 1),
       kernel, hc.1, h.diagonal] at hb
+    simp only [map_sub, LinearMap.sub_apply, quotientForm_beta c (h.diagonal 1), kernel]
     linarith
   · have ht := W_isotropic U c h _ _ (defect_mem_W c b z) hw
     have hb : quotientForm c (beta c (b * z)) (beta c a - beta c b) =
@@ -908,6 +910,7 @@ private theorem directed_fibre_differences {M : Type*} [MulOneClass M]
         quotientForm c (beta c z) (beta c a - beta c b) := by
       rw [he, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, ht, add_zero]
     simp only [map_sub, quotientForm_beta c (h.diagonal 1), kernel, hc.2, h.diagonal] at hb
+    simp only [map_sub, quotientForm_beta c (h.diagonal 1), kernel]
     linarith
 
 private theorem directed_fibre_bounds {M : Type*} [MulOneClass M]
@@ -968,18 +971,31 @@ private def phaseRoot : ℂ := ⟨-1 / 2, Real.sqrt 3 / 2⟩
 
 private theorem phaseRoot_cube : phaseRoot ^ 3 = 1 := by
   have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have hs₃ := congrArg (fun t : ℝ => t * Real.sqrt 3) hs
   apply Complex.ext <;> norm_num [phaseRoot, pow_succ, Complex.mul_re, Complex.mul_im]
   all_goals nlinarith
 
 private def phaseCharacter : AddChar (ZMod 3) ℂ := AddChar.zmodChar 3 phaseRoot_cube
 
+private theorem phase_cases (k : ZMod 3) : k = 0 ∨ k = 1 ∨ k = 2 := by
+  have hk := k.val_lt
+  have hc := (ZMod.natCast_zmod_val k).symm
+  have hv : k.val = 0 ∨ k.val = 1 ∨ k.val = 2 := by omega
+  rcases hv with hv | hv | hv
+  · left; simpa [hv] using hc
+  · right; left; simpa [hv] using hc
+  · right; right; simpa [hv] using hc
+
 private theorem phaseCharacter_injective : Function.Injective phaseCharacter := by
   intro a b hab
   have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hp : 0 < Real.sqrt (3 : ℝ) := Real.sqrt_pos.mpr (by norm_num)
-  fin_cases a <;> fin_cases b <;>
-    norm_num [phaseCharacter, AddChar.zmodChar_apply, phaseRoot, pow_succ,
-      Complex.ext_iff, Complex.mul_re, Complex.mul_im] at hab ⊢
+  rcases phase_cases a with rfl | rfl | rfl
+  all_goals rcases phase_cases b with rfl | rfl | rfl
+  all_goals try rfl
+  all_goals norm_num [phaseCharacter, AddChar.zmodChar_apply, ZMod.val_one, ZMod.val_ofNat,
+      phaseRoot, pow_succ,
+      Complex.ext_iff, Complex.mul_re, Complex.mul_im] at hab
   all_goals nlinarith
 
 private def complexMode {M : Type*} [MulOneClass M]
@@ -1003,7 +1019,7 @@ private theorem complexMode_marker {M : Type*} [MulOneClass M]
   have hr : markerQuotient U c h x =
       (Real.sqrt 3 / 2) • J U c h x - (1 / 2 : ℝ) • x := by
     simp only [J, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.id_apply]
-    match_scalars <;> field_simp
+    match_scalars <;> field_simp <;> ring
   rw [hr, map_sub, map_smul, map_smul, hj]
   apply Complex.ext <;> simp [phaseRoot, Complex.mul_re, Complex.mul_im] <;> ring
 
@@ -1019,6 +1035,7 @@ private theorem complexMode_bound {M : Type*} [MulOneClass M]
   have hj : α (J U c h (beta c n)) =
       (Real.sqrt 3)⁻¹ * (2 * α (beta c (U n)) + α (beta c n)) := by
     simp [J, map_add, map_smul, markerQuotient_beta, smul_eq_mul]
+    ring
   have hsum : |2 * α (beta c (U n)) + α (beta c n)| ≤ 3 * L := by
     rw [abs_le] at h₀ h₁ ⊢
     constructor <;> linarith [h₀.1, h₀.2, h₁.1, h₁.2]
@@ -1048,15 +1065,16 @@ private theorem actual_mode_recursion {M : Type*} [MulOneClass M]
   have h₀ : beta c (a * u) = beta c a + beta c u + defect c a u := by
     unfold defect
     abel
-  fin_cases k
+  rcases phase_cases k with rfl | rfl | rfl
   all_goals norm_num [phaseCharacter, AddChar.zmodChar_apply, AddChar.inv_apply,
+    ZMod.val_one, ZMod.val_ofNat, show -(2 : ZMod 3) = 1 by decide,
     Function.iterate_succ_apply']
   · rw [h₀, map_add, map_add]
   · rw [hp.1, map_add, map_add]
     simp only [complexMode_marker]
     ring
   · rw [hp.2, map_add, map_add]
-    simp only [complexMode_marker]
+    simp only [complexMode_marker, show (-2 : ZMod 3).val = 1 by decide, pow_one]
     ring
 
 /-- Every actual zero-fibre label has zero beta, using both directed history bounds. -/
@@ -1097,5 +1115,108 @@ theorem raw_zero_fibre_vanishes {M : Type*} [MulOneClass M]
       (fun x _ k => actual_mode_recursion U c h α x u k)
     have hre := congrArg Complex.re hv
     simpa [complexMode_re, α] using hre
+
+private theorem gamma_inverse_label {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a : M) :
+    gamma c (U a * U (U a)) = -gamma c a := by
+  have hc := congrArg (W c).mkQ (marker_cyclotomic U c h (beta c a))
+  simp only [map_add, map_zero, markerQuotient_beta] at hc
+  change gamma c a + gamma c (U a) + gamma c (U (U a)) = 0 at hc
+  rw [gamma_mul]
+  apply eq_neg_iff_add_eq_zero.mpr
+  convert hc using 1 <;> abel
+
+private theorem fibre_linear_vanishes {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (α : V c →ₗ[ℝ] ℝ) (L : ℝ)
+    (hb : ∀ a b, (a, b) ∈ K c → |α (beta c a - beta c b)| ≤ L) :
+    ∀ a b, (a, b) ∈ K c → α (beta c a - beta c b) = 0 := by
+  let S : Set ℝ := Set.range (fun p : {p : M × M // p ∈ K c} =>
+    |α (beta c p.val.1 - beta c p.val.2)|)
+  have hne : S.Nonempty := ⟨0, ⟨⟨(1, 1), rfl⟩, by simp⟩⟩
+  have hbd : BddAbove S := by
+    refine ⟨L, ?_⟩
+    rintro t ⟨p, rfl⟩
+    exact hb _ _ p.property
+  have hup (a b : M) (hab : (a, b) ∈ K c) :
+      |α (beta c a - beta c b)| ≤ sSup S :=
+    le_csSup hbd ⟨⟨(a, b), hab⟩, rfl⟩
+  have hcontract (a b : M) (hab : (a, b) ∈ K c) :
+      |α (beta c a - beta c b)| ≤ (2 / 3 : ℝ) * sSup S := by
+    let d := U a * U (U a)
+    have haN : a * d ∈ N c := by
+      change gamma c (a * d) = 0
+      rw [gamma_mul, gamma_inverse_label U c h]
+      exact add_neg_cancel _
+    have hbN : b * d ∈ N c := by
+      change gamma c (b * d) = 0
+      rw [gamma_mul, gamma_inverse_label U c h]
+      change gamma c a = gamma c b at hab
+      rw [hab, add_neg_cancel]
+    have hz : α (beta c (a * d) - beta c (b * d)) = 0 := by
+      rw [raw_zero_fibre_vanishes U c h _ haN, raw_zero_fibre_vanishes U c h _ hbN]
+      simp
+    have hk (t : M) : (a * t, b * t) ∈ K c := by
+      change gamma c (a * t) = gamma c (b * t)
+      rw [gamma_mul, gamma_mul, show gamma c a = gamma c b from hab]
+    have he₁ := congrArg α (unweighted_sum U c h a d)
+    have he₂ := congrArg α (unweighted_sum U c h b d)
+    simp only [map_add, map_smul, smul_eq_mul] at he₁ he₂
+    have he : 3 * α (beta c a - beta c b) =
+        α (beta c (a * U d) - beta c (b * U d)) +
+        α (beta c (a * U (U d)) - beta c (b * U (U d))) := by
+      simp only [map_sub] at hz ⊢
+      linarith
+    have ht : |3 * α (beta c a - beta c b)| ≤ sSup S + sSup S := by
+      rw [he]
+      exact (abs_add_le _ _).trans
+        (add_le_add (hup _ _ (hk (U d))) (hup _ _ (hk (U (U d)))))
+    rw [abs_mul, abs_of_pos (by norm_num : (0 : ℝ) < 3)] at ht
+    linarith
+  have hs : sSup S ≤ (2 / 3 : ℝ) * sSup S := by
+    apply csSup_le hne
+    rintro t ⟨p, rfl⟩
+    exact hcontract _ _ p.property
+  have hs0 : sSup S ≤ 0 := by linarith
+  intro a b hab
+  exact abs_eq_zero.mp (le_antisymm ((hup a b hab).trans hs0) (abs_nonneg _))
+
+/-- The same original gamma fibre has a unique anchored comparison vector. -/
+theorem raw_gamma_fibre_collapse {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b : M)
+    (hab : gamma c a = gamma c b) : beta c a = beta c b := by
+  apply sub_eq_zero.mp
+  apply quotient_joint_nondegenerate c (h.diagonal 1)
+  · intro z
+    exact fibre_linear_vanishes U c h ((quotientForm c).flip (beta c z))
+      ((3 / 2 : ℝ) * r c z) (fun x y hxy => (directed_fibre_bounds U c h x y z hxy).1)
+      a b hab
+  · intro z
+    exact fibre_linear_vanishes U c h (quotientForm c (beta c z))
+      ((3 / 2 : ℝ) * q c z) (fun x y hxy => (directed_fibre_bounds U c h x y z hxy).2)
+      a b hab
+
+/-- Both one-point and both ordered comparison readouts are constant on actual gamma fibres. -/
+theorem raw_directed_comparison_descent {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b : M)
+    (hab : gamma c a = gamma c b) :
+    q c a = q c b ∧ r c a = r c b ∧
+      (∀ z, c a z = c b z) ∧ (∀ z, c z a = c z b) := by
+  have hv := raw_gamma_fibre_collapse U c h a b hab
+  have hc := gamma_fibre_zero_comparison U c h a b hab
+  have h₁ := congrArg (fun x => quotientForm c x (beta c b)) hv
+  have h₂ := congrArg (quotientForm c (beta c a)) hv
+  simp only [quotientForm_beta c (h.diagonal 1), kernel, h.diagonal, hc.1] at h₁ h₂
+  have hq : q c a = q c b := by linarith
+  have hr : r c a = r c b := by linarith
+  refine ⟨hq, hr, ?_, ?_⟩
+  · intro z
+    have hz := congrArg (fun x => quotientForm c x (beta c z)) hv
+    simp only [quotientForm_beta c (h.diagonal 1), kernel] at hz
+    linarith
+  · intro z
+    have hz := congrArg (quotientForm c (beta c z)) hv
+    simp only [quotientForm_beta c (h.diagonal 1), kernel] at hz
+    linarith
 
 end D5.S3.Quantum.Completion.RawAnchoredRadicalDescent

@@ -123,5 +123,44 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("The unit basis vector lies in both radicals, so pi(E0)=V and the beta labels span V. Testing both ordered pairings against these labels gives joint nondegeneracy. The complete raw law supplies the q and r averages and the bilinear balance, hence the unweighted and inverse-weighted constraints. Solving their three-character system gives the two original phase children. Bilinear Fourier cancellation makes the cross-defect pairing zero; linear extension gives B(W,W)=0, while the phase identities give R(W)=W. The same W supplies the actual gamma product and marker identities. Its isotropy, the difference diagonal identity and comparison nonnegativity force both directed comparisons to vanish on each gamma fibre. Isotropy alone does not say that W is a radical."))),
                 DescribeRole.Theorem),
             Paragraph(Text("Only a binary operation with a two-sided unit is imposed on M. RawBalance means U(1)=1, c(a,b)>=0, c(a,a)=0, and the complete four-variable sum of c(a*U^k(u),b*U^k(v)) for k=0,1,2 equals 3c(a,b)+3c(u,v). No associativity, commutativity, cancellation, inverse, marker homomorphism, surjectivity, periodicity, symmetry or positive-semidefinite form is assumed.")),
-            Paragraph(Text("The full Hilbert representation criterion remains open. The bounded histories must still be instantiated in both pairing orders to eliminate beta on the actual zero fibre, followed by contraction on the same gamma-fibre relation, directed comparison descent, the parallelogram law and Hilbert realization. The minimal unitary uniqueness, zero-comparison congruence and torsion-free Eisenstein conclusions are not asserted here.")))));
+            Paragraph(Text("Let N={a:gamma(a)=0} and K={(a,b):gamma(a)=gamma(b)}. The two directed comparison bounds on K are |B(beta(a)-beta(b),beta(z))|<=3r(z)/2 and |B(beta(z),beta(a)-beta(b))|<=3q(z)/2. The algebraic operator J=(2R+I)/sqrt(3) has square -I. For each real functional alpha, ell=alpha-i alpha J intertwines R with the explicit primitive cube root. The complete original children remain in N. The existing bounded_phase_recursion_vanishes is applied separately to both ordered functionals, using all finite history depths and the bound normSq(ell(beta(n)))<=10L^2.")),
+            Describe.Lean(
+                DescribeId.Create("raw-zero-fibre-vanishes"),
+                DeclarationHandle.Create(Gid + "raw_zero_fibre_vanishes"),
+                H("The actual zero fibre has zero anchored vector"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
+                    OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
+                    F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
+                    F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp,
+                    Arrow(Call("RawBalance", F.Id("U"), F.Id("c")),
+                        AllM(U, Arrow(Member(U, "N"), Eqn(BetaOf(U), D(0)))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Both ordered pairings vanish by the two actual history applications. Joint nondegeneracy against the spanning beta labels then gives beta(u)=0."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("raw-gamma-fibre-collapse"),
+                DeclarationHandle.Create(Gid + "raw_gamma_fibre_collapse"),
+                H("The original gamma fibre determines beta"),
+                StatementSource.FromAuthor(Disp(AllM(A, AllM(B,
+                    Arrow(Call("RawBalance", F.Id("U"), F.Id("c")),
+                        Arrow(Eqn(GammaOf(A), GammaOf(B)), Eqn(BetaOf(A), BetaOf(B)))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a fixed ordered functional, take the supremum of its absolute beta difference over the same actual K. The original label d=U(a)*U(U(a)) has gamma(d)=-gamma(a), so a*d and b*d lie in N; d itself need not. The unweighted identity makes the k=0 child zero and bounds the other two children by that same supremum. Its 2/3 contraction forces zero. Apply this argument in both pairing orders."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("raw-directed-comparison-descent"),
+                DeclarationHandle.Create(Gid + "raw_directed_comparison_descent"),
+                H("All directed readouts descend along the actual fibres"),
+                StatementSource.FromAuthor(Disp(AllM(A, AllM(B,
+                    Arrow(Call("RawBalance", F.Id("U"), F.Id("c")),
+                        Arrow(Eqn(GammaOf(A), GammaOf(B)), Conjunction(
+                            Eqn(Call("q", A), Call("q", B)),
+                            Eqn(Call("r", A), Call("r", B)),
+                            AllM(Z, Eqn(Read(A, Z), Read(B, Z))),
+                            AllM(Z, Eqn(Read(Z, A), Read(Z, B)))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Equality of beta and the vanishing cross comparisons give equality of q and r. Substitution in the original ordered kernel then gives both complete rows and columns."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("The full Hilbert representation criterion remains open. The comparison must still be constructed on the actual additive image, with translation invariance, the parallelogram law and Hilbert realization. The minimal unitary uniqueness, zero-comparison congruence and torsion-free Eisenstein conclusions are not asserted here.")))));
 }
