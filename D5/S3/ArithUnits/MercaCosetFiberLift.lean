@@ -241,7 +241,7 @@ private lemma coset_card {N : ℕ} [NeZero N]
   have h := Nat.card_congr (e.trans (Subgroup.leftCosetEquivSubgroup c))
   simpa [Nat.card_eq_fintype_card] using h
 
-private lemma sum_fin_rat (ell : ℕ) (hell : 0 < ell) :
+lemma sum_fin_rat (ell : ℕ) (hell : 0 < ell) :
     (∑ t : Fin ell, (t.val : ℚ)) = (ell : ℚ) * ((ell : ℚ) - 1) / 2 := by
   have hn := Finset.sum_range_id_mul_two ell
   have hq : (∑ t ∈ Finset.range ell, (t : ℚ)) * 2 =
