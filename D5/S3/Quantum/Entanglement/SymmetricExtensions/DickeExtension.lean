@@ -410,7 +410,7 @@ private def columnStabilizer (E : Matrix (I → L) (I → L) ℂ) :
     rw [ht, hs]
   inv_mem' := by
     intro σ hs x y
-    have h := hs (x ∘ σ⁻¹) y
+    have h := hs (x ∘ (σ⁻¹ : Equiv.Perm I)) y
     simpa only [Function.comp_assoc, Equiv.Perm.inv_def,
       Equiv.symm_comp_self, Function.comp_id] using h.symm
 
@@ -455,13 +455,13 @@ theorem support_of_connected_graph (G : SimpleGraph I) (hG : G.Connected)
 /-- Register permutations preserving every connected component, including singleton components. -/
 def componentGroup (G : SimpleGraph I) : Subgroup (Equiv.Perm I) where
   carrier := {σ | ∀ i, G.Reachable i (σ i)}
-  one_mem' := fun i => G.Reachable.refl i
+  one_mem' := fun i => SimpleGraph.Reachable.refl i
   mul_mem' := by
     intro σ τ hσ hτ i
     exact (hτ i).trans (hσ (τ i))
   inv_mem' := by
     intro σ hσ i
-    simpa only [Equiv.Perm.apply_inv_self] using (hσ (σ⁻¹ i)).symm
+    simpa only [Equiv.Perm.inv_def, Equiv.apply_symm_apply] using (hσ (σ⁻¹ i)).symm
 
 private lemma component_swap_mem (G : SimpleGraph I) {a b : I}
     (h : G.Reachable a b) : Equiv.swap a b ∈ componentGroup G := by
@@ -472,7 +472,7 @@ private lemma component_swap_mem (G : SimpleGraph I) {a b : I}
   by_cases hb : i = b
   · subst i
     simpa only [Equiv.swap_apply_right] using h.symm
-  simpa only [Equiv.swap_apply_of_ne_of_ne ha hb] using G.Reachable.refl i
+  simpa only [Equiv.swap_apply_of_ne_of_ne ha hb] using SimpleGraph.Reachable.refl i
 
 private lemma component_group_le_columns (G : SimpleGraph I)
     (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
@@ -486,12 +486,12 @@ private lemma component_group_le_columns (G : SimpleGraph I)
     rintro σ ⟨a,b,hab,_,rfl⟩
     exact ⟨a,b,hab,rfl⟩
   have hcl : Subgroup.closure S ≤ columnStabilizer E := by
-    apply Subgroup.closure_le.mpr
+    apply (Subgroup.closure_le (columnStabilizer E)).mpr
     rintro σ ⟨a,b,_,hr,rfl⟩
     exact columns_fixed_of_reachable G E hE hsupport hr
   intro σ hσ
   apply hcl
-  apply (Subgroup.mem_closure_isSwap hS).mpr
+  apply (mem_closure_isSwap hS).mpr
   refine ⟨Set.toFinite _, fun x => ?_⟩
   by_cases hx : x = σ x
   · rw [← hx]
@@ -557,6 +557,68 @@ theorem component_support_of_edges (G : SimpleGraph I)
 
 #print axioms component_support_of_edges
 
+
+private lemma pair_support_of_column_swap (a b : I) (hab : a ≠ b)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hfix : ∀ x y, E (x ∘ Equiv.swap a b) y = E x y) :
+    pairSymmetricProjector * edgeMarginal a b hab E * pairSymmetricProjector =
+      edgeMarginal a b hab E := by
+  let e := edgeSplit (L := L) a b hab
+  let ρ := edgeMarginal a b hab E
+  have hρ : ρ.IsHermitian :=
+    (partialTraceRight_posSemidef (hE.submatrix e.symm)).isHermitian
+  have hs (x : I → L) : e.symm ((e x).1.swap, (e x).2) = x ∘ Equiv.swap a b :=
+    edge_split_swap a b hab x
+  have hm (u v : L × L) : ρ u.swap v = ρ u v := by
+    change (∑ c, E (e.symm (u.swap,c)) (e.symm (v,c))) =
+      ∑ c, E (e.symm (u,c)) (e.symm (v,c))
+    apply Finset.sum_congr rfl
+    intro c hc
+    have hc' := hs (e.symm (u,c))
+    simp only [e.apply_symm_apply] at hc'
+    rw [hc', hfix]
+  have hf : Equiv.Perm.permMatrix ℂ (Equiv.prodComm L L) * ρ = ρ := by
+    ext u v
+    change (Equiv.Perm.permMatrix ℂ (Equiv.prodComm L L) *ᵥ (fun z => ρ z v)) u = _
+    rw [Matrix.permMatrix_mulVec]
+    exact hm u v
+  have hl : antiPair * ρ = 0 := by
+    simp only [antiPair, smul_mul, sub_mul, one_mul, hf, sub_self, smul_zero]
+  have hr := congrArg Matrix.conjTranspose hl
+  simp only [Matrix.conjTranspose_mul, hρ.eq, antiPair_projection.1,
+    Matrix.conjTranspose_zero] at hr
+  change (1 - antiPair) * ρ * (1 - antiPair) = ρ
+  simp only [sub_mul, one_mul, mul_sub, mul_one, hl, hr,
+    sub_zero]
+
+/-- Exact support characterization for arbitrary graphs. The component projector
+retains isolated singleton registers and allows correlations between components. -/
+theorem edges_iff_component_support (G : SimpleGraph I)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef) :
+    (∀ a b (h : G.Adj a b),
+      pairSymmetricProjector * edgeMarginal a b h.ne E * pairSymmetricProjector =
+        edgeMarginal a b h.ne E) ↔
+      componentProjector G * E * componentProjector G = E := by
+  constructor
+  · exact component_support_of_edges G E hE
+  · intro hsupport a b hab
+    have hg : Equiv.swap a b ∈ componentGroup G := component_swap_mem G hab.reachable
+    have hp := component_projector_fix (L := L) G ⟨Equiv.swap a b,hg⟩
+    have hf : Q (Equiv.swap a b) * E = E := by
+      calc
+        Q (Equiv.swap a b) * E = Q (Equiv.swap a b) *
+            (componentProjector G * E * componentProjector G) := by rw [hsupport]
+        _ = componentProjector G * E * componentProjector G := by
+          rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hp]
+        _ = E := hsupport
+    apply pair_support_of_column_swap a b hab.ne E hE
+    intro x y
+    have hx := congrArg (fun M => M x y) hf
+    have hq := congrFun (Q_mulVec (Equiv.swap a b) (fun z => E z y)) x
+    exact hq.symm.trans hx
+
+#print axioms edges_iff_component_support
+
 /-- Bose-supported root marginals force global Bose support and all ordered marginals.
 No leaf support, normalization, invertibility or partial-transpose premise is used. -/
 theorem support_of_bose_root_marginals (root : I)
@@ -597,7 +659,13 @@ theorem support_of_leaf_invariance (root leaf : I) (hne : root ≠ leaf)
   have hroot : σ root = root := Equiv.swap_apply_of_ne_of_ne hne hi
   have hleaf : σ leaf = i := Equiv.swap_apply_left leaf i
   have h := edge_covariance_of_conjugation E σ root leaf hne (hinv σ hroot)
-  simpa only [σ, Equiv.swap_apply_of_ne_of_ne hne hi, Equiv.swap_apply_left] using h
+  have transport (a b : I) (hab : a ≠ b) (ha : a = root) (hb : b = i)
+      (hh : edgeMarginal a b hab E = edgeMarginal root leaf hne E) :
+      edgeMarginal root i hi E = edgeMarginal root leaf hne E := by
+    subst a
+    subst b
+    exact hh
+  exact transport (σ root) (σ leaf) (σ.injective.ne hne) hroot hleaf h
 
 #print axioms support_of_leaf_invariance
 

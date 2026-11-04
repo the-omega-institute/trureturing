@@ -490,7 +490,10 @@ private lemma rejected_law : ¬ arena.{u,v}.Law rejected := by
     (base.{u,v}).root (base.{u,v}).rho (base.{u,v}).support 0
       Matrix.PosSemidef.zero zero_marginals).1
   have hd := congrArg (fun M => M (fun _ => ⟨0⟩) (fun _ => ⟨0⟩)) hz
-  norm_num [rejected, realize, base, Matrix.one_apply, Matrix.zero_apply] at hd
+  change ((0 : Matrix (base.I → base.L) (base.I → base.L) ℂ) + 1)
+      (fun _ => ⟨0⟩) (fun _ => ⟨0⟩) = 0 at hd
+  simp only [Matrix.add_apply, Matrix.zero_apply, zero_add, Matrix.one_apply_eq] at hd
+  exact one_ne_zero hd
 
 private lemma dependence : ObservationalDependence signature.{u,v} actual := by
   intro i

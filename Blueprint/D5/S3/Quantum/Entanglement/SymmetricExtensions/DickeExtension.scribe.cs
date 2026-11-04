@@ -117,6 +117,39 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "Disconnected components, higher-body hypotheses and conjugation-only leaves require "
                 + "their separate bridges; this theorem does not assert them.",
                 DescribeRole.Theorem, true),
+            Node("componentGroup", "Permutations within connected components",
+                Seq(Call("componentGroup", X("G")), Eq,
+                    Call("ComponentPreservingPermutations", X("G"))),
+                "A permutation belongs to this subgroup exactly when every vertex is reachable from "
+                + "its image in G. Vertices cannot move between components; an isolated vertex is fixed. "
+                + "The definition applies also to the empty graph and the empty register type.",
+                DescribeRole.Definition, false),
+            Node("componentProjector", "The component permutation projector",
+                Seq(Sub(Pi, X("G")), Eq, Call("Average", Call("componentGroup", X("G")), X("Q"))),
+                "This is the uniform average of the actual tensor-register permutation matrices over "
+                + "componentGroup G. The tensor factorization into symmetric projectors on every "
+                + "connected component is proved in BoseComponentProjector.factorization. "
+                + "All singleton components remain present.",
+                DescribeRole.Definition, false),
+            Node("component_support_of_edges", "Support on every graph component",
+                Seq(Call("PSD", X("E")), Land, Call("BoseEdges", X("G"), X("E")), Implies,
+                    Sub(Pi, X("G")), X("E"), Sub(Pi, X("G")), Eq, X("E")),
+                "For any finite simple graph, positive E with Bose-supported edge marginals is "
+                + "supported by the component permutation projector. The proof propagates column "
+                + "invariance along graph walks, generates all component-preserving permutations by "
+                + "reachable transpositions, and uses the existing finite-group averaging theorem. "
+                + "No factor or correlation between distinct components is discarded. The support "
+                + "propagation mechanism is attributed to Hansenne-Xu-Kraft-Guehne.",
+                DescribeRole.Theorem, false),
+            Node("edges_iff_component_support", "Exact component support characterization",
+                Seq(Call("PSD", X("E")), Implies, Open,
+                    Call("BoseEdges", X("G"), X("E")), Iff,
+                    Sub(Pi, X("G")), X("E"), Sub(Pi, X("G")), Eq, X("E"), Close),
+                "The characterization holds for every finite graph and every positive semidefinite E. "
+                + "The reverse direction uses the fact that each graph-edge transposition fixes the "
+                + "component projector, then computes the actual ordered marginal and its symmetric "
+                + "pair-projector sandwich. Connectedness and normalization are not assumed.",
+                DescribeRole.Theorem, false),
             Node("support_of_bose_root_marginals", "Support from arbitrary Bose root marginals",
                 Seq(Call("PSD", X("E")), Land, Call("BosePair", Rho), Land,
                     Open, Forall, X("i"), Neq, X("root"), Comma,
@@ -133,6 +166,17 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "support mechanism is prior work of Hansenne-Xu-Kraft-Guehne, main page 4 and Appendix D "
                 + "Lemma 8 of arXiv:2108.02732v1. This formal generalization is not a priority claim.",
                 DescribeRole.Theorem, true),
+            Node("support_of_leaf_invariance", "Conjugation invariance of leaves suffices",
+                Seq(Call("PSD", X("E")), Land, Call("LeafConjugationInvariant", X("E")), Land,
+                    Call("BosePair", Call("M", X("root"), X("leaf"), X("E"))), Implies,
+                    Call("Bose", X("E")), Land, Call("AllOrderedMarginalsEqual", X("E"))),
+                "Choose distinct root and leaf registers. Assume only that conjugating E by every "
+                + "register permutation fixing the root leaves E invariant, together with positivity "
+                + "and Bose support of that one root-leaf marginal. Relabeling the complement trace "
+                + "gives the same supported marginal at every root edge. The root support theorem then "
+                + "gives full Bose support and every ordered marginal equal to the original one. "
+                + "Leaf-subspace support is not a premise.",
+                DescribeRole.Theorem, false),
             Node("same_matrix_core", "The identical matrices without PPT",
                 Seq(Call("BosePair", Rho), Implies,
                     Open, Call("StarExtensionCore", X("root"), Rho, X("E")), Iff,
