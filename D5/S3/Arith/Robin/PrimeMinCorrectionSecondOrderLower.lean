@@ -554,6 +554,8 @@ private theorem large_clock {X : ℝ} (hX : Real.exp 18 ≤ X) :
 
 
 /-- Both analytic thresholds are selected before the real clock and finite endpoint. -/
+-- The finite endpoint, eighth-power theta and profile budgets are combined before either integer is chosen.
+set_option maxHeartbeats 600000 in
 private theorem uniform_finite_lower :
     ∃ X0 : ℝ, 1 < X0 ∧ Real.exp 18 ≤ X0 ∧ ∀ X : ℝ, X0 ≤ X →
       ∀ P : ℕ, (1 / (2 * Real.log 4)) * X ≤ (P : ℝ) →
@@ -635,7 +637,7 @@ private theorem uniform_finite_lower :
     linarith
   have hcXρ : ρ < c*X := by
     have hs : Real.sqrt (2:ℝ) < 3/2 := by
-      nlinarith [Real.sq_sqrt (by norm_num : (0:ℝ)≤2), Real.sqrt_nonneg (2:ℝ)]
+      nlinarith only [Real.sq_sqrt (by norm_num : (0:ℝ)≤2), Real.sqrt_nonneg (2:ℝ)]
     have hrbig : 4*Real.sqrt 2 < r := by dsimp [r]; linarith
     have hcX : X/4 < c*X := by nlinarith [mul_pos (sub_pos.mpr hc4) hX0]
     have hsr : Real.sqrt 2*r < X/4 := by
@@ -695,15 +697,15 @@ private theorem uniform_finite_lower :
     have hv9 : 9 ≤ v := by dsimp [v]; dsimp [L] at hlogP; linarith
     have ha3 : a3 (P:ℝ) ≤ 2/((P:ℝ)*v) := by
       have hid : a3 (P:ℝ) = (v^2-v+2)/((P:ℝ)*v^3) := by
-        dsimp [a3, v]; field_simp; ring
-      have hid2 : 2/((P:ℝ)*v) = (2*v^2)/((P:ℝ)*v^3) := by field_simp; ring
+        dsimp [a3, v]; field_simp
+      have hid2 : 2/((P:ℝ)*v) = (2*v^2)/((P:ℝ)*v^3) := by field_simp
       rw [hid, hid2]
       apply div_le_div_of_nonneg_right _ (by positivity)
       nlinarith only [hv9, sq_nonneg v]
     have hnorm : r*L*(2/((P:ℝ)*v)) ≤ 4/(c*r) := by
       rw [← mul_div_assoc]
       apply (div_le_div_iff₀ (mul_pos hP0 hv) (mul_pos hc hr)).mpr
-      have hpv := mul_le_mul hP hlogP (by linarith : 0 ≤ L/2) (mul_nonneg hc.le hX0.le)
+      have hpv := mul_le_mul hP hlogP (by linarith only [hL] : 0 ≤ L/2) hP0.le
       have hpv' : c*r^2*L ≤ 2*(P:ℝ)*v := by
         rw [hr2]
         dsimp only [v]
@@ -724,7 +726,7 @@ private theorem uniform_finite_lower :
       linarith
     exact (mul_le_mul_of_nonneg_left ha3 hrL.le).trans (hnorm.trans
       (hscale.trans (mul_le_mul_of_nonneg_right hconst (pow_nonneg hh0 3))))
-  have hprof := root_profile_bound hX2 (by dsimp [L] at hL18; linarith)
+  have hprof := root_profile_bound hX2 (by linarith only [hL18])
   change |x+r*L*a3 ρ -
     (2*Real.sqrt 2-Real.sqrt 2*(2+Real.log 2)/L+
       Real.sqrt 2*(8+4*Real.log 2+3*(Real.log 2)^2/4)/L^2)| ≤ 79/L^3 at hprof
@@ -733,8 +735,8 @@ private theorem uniform_finite_lower :
   change |S-a3 ρ+a3 (P:ℝ)| ≤ 6/(ρ*(Real.log ρ)^4)+5/(ρ*(Real.log ρ)^9) at hA
   have hθ := hT ρ hTρ
   have hslow : a3 ρ-a3 (P:ℝ)-(6/(ρ*(Real.log ρ)^4)+5/(ρ*(Real.log ρ)^9)) ≤ S := by
-    linarith [(abs_le.mp hA).1]
-  have hθlow : ρ-ρ/(Real.log ρ)^8 ≤ θ ρ := by linarith [(abs_le.mp hθ).1]
+    linarith only [(abs_le.mp hA).1]
+  have hθlow : ρ-ρ/(Real.log ρ)^8 ≤ θ ρ := by linarith only [(abs_le.mp hθ).1]
   have hH : x+r*L*a3 ρ-x/(Real.log ρ)^8-
       r*L*(6/(ρ*(Real.log ρ)^4)+5/(ρ*(Real.log ρ)^9))-r*L*a3 (P:ℝ) ≤ r*L*H := by
     have hle := mul_le_mul_of_nonneg_left (add_le_add
@@ -744,9 +746,8 @@ private theorem uniform_finite_lower :
       rw [← hr2]
       field_simp [hr.ne', hL.ne', hρ0.ne', hlogρ.ne']
       <;> ring
-    · rfl
   have hs15 : Real.sqrt (2:ℝ) < 3/2 := by
-    nlinarith [Real.sq_sqrt (by norm_num : (0:ℝ)≤2), Real.sqrt_nonneg (2:ℝ)]
+    nlinarith only [Real.sq_sqrt (by norm_num : (0:ℝ)≤2), Real.sqrt_nonneg (2:ℝ)]
   have hbudget : 79*h^3 + 256*Real.sqrt 2*h^8 + (96*h^3+2560*h^8) +16*h^3 ≤ 3200*h^3 := by
     have hp1 := mul_le_mul_of_nonneg_left hpow (by positivity : 0 ≤ 256*Real.sqrt 2)
     have hp2 := mul_le_mul_of_nonneg_left hpow (by norm_num : (0:ℝ)≤2560)
