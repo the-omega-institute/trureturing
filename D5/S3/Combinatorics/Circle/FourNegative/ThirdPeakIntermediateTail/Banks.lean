@@ -77,9 +77,9 @@ private theorem range_weight (lo hi : ℕ) (h : lo≤hi) :
 private theorem mask_nil : maskOf []=0 := rfl
 private theorem mask_one (e : ℕ) : maskOf [e]=2^e := by simp [maskOf]
 
+set_option maxHeartbeats 2400000 in
 /-- Exact masks in original V/W coordinates, not capacities. In particular W3
 is h=3s/4-1 in I, W2 is p-h, q/2 is a single V bit, and r-2 has no low bit. -/
-set_option maxHeartbeats 2400000 in
 private theorem native_mask_values (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
     (had : a≤d) (hdb : d<b) (hbc : b<c) (hm : branch a b d mode) :
     let x:=xval a
@@ -96,9 +96,9 @@ private theorem native_mask_values (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
         if mode=0 ∨ mode=1 then 3*s/4-1 else 1] : Fin 4→ℚ) i) := by
   dsimp only
   have hp:=power_coordinates a b c d had hdb hbc
-  fin_cases mode <;> simp only [branch] at hm
+  fin_cases mode <;> simp [branch,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,Fin.mk.injEq,Fin.reduceEq] at hm
   all_goals constructor <;> intro i <;> fin_cases i
-  all_goals norm_num only [vbits,wbits,Fin.reduceEq,ite_true,ite_false,
+  all_goals norm_num [vbits,wbits,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,Fin.mk.injEq,Fin.reduceEq,ite_true,ite_false,
     mask_nil,mask_one,maskOf_append,Nat.cast_add,Nat.cast_pow,Nat.cast_ofNat]
   all_goals simp (disch := omega) only [range_weight,half_power,quarter_power,
     pow_add,hp.1,hp.2.1,hp.2.2,reserve,Fin.reduceEq,ite_true,ite_false]
@@ -122,19 +122,19 @@ private theorem original_windows (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
       window (rowSeams mode (xval a) (rval a d) (sval b d) (qval b c) side i)
         (rowHeads (xval a) (rval a d) (sval b d) (qval b c) side i) := by
   have hx : (4:ℚ)≤xval a := by
-    simpa [xval] using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) ha
+    convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) ha using 1 <;> norm_num [xval]
   have hq : (2:ℚ)≤qval b c := by
     simpa [qval] using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 1≤c-b by omega)
-  fin_cases mode <;> simp only [branch] at hm
+  fin_cases mode <;> simp [branch,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,Fin.mk.injEq,Fin.reduceEq] at hm
   · have er : rval a d=1 := by simp [rval,show d-a=0 by omega]
     have hs : (4:ℚ)≤sval b d := by
-      simpa [sval] using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 2≤b-d by omega)
+      convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 2≤b-d by omega) using 1 <;> norm_num [sval]
     rw [er]
     exact windows_I_one _ _ _ hx hs hq
   · have hr : (2:ℚ)≤rval a d := by
       simpa [rval] using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 1≤d-a by omega)
     have hs : (4:ℚ)≤sval b d := by
-      simpa [sval] using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 2≤b-d by omega)
+      convert pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 2≤b-d by omega) using 1 <;> norm_num [sval]
     exact windows_I_many _ _ _ _ hx hr hs hq
   · have hr : (2:ℚ)≤rval a d := by
       simpa [rval] using pow_le_pow_right₀ (by norm_num : (1:ℚ)≤2) (show 1≤d-a by omega)
@@ -172,28 +172,28 @@ private theorem banks_masses (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
   have native:=native_inventories mode a b c d ha had hdb hbc hm
   have vfit (j : Fin 4) (e : ℕ) (he : e∈V j) : e<c-1 := by
     apply List.mem_range.mp
-    apply native.1.physical.mem_iff.mp
+    apply (NativePartition.physical native.1).mem_iff.mp
     fin_cases j
-    · simp only [List.mem_append]; exact Or.inl he
+    · simp only [List.mem_append]; exact Or.inl (Or.inl (by simpa [V,W] using he))
     · simpa [V,vbits] using he
-    · simp only [List.mem_append]; exact Or.inr (Or.inl he)
-    · simp only [List.mem_append]; exact Or.inr (Or.inr he)
+    · simp only [List.mem_append]; exact Or.inl (Or.inr (by simpa [V,W] using he))
+    · simp only [List.mem_append]; exact Or.inr (by simpa [V,W] using he)
   have wfit (j : Fin 4) (e : ℕ) (he : e∈W j) : e<b-1 := by
     apply List.mem_range.mp
-    apply native.2.physical.mem_iff.mp
+    apply (NativePartition.physical native.2).mem_iff.mp
     fin_cases j
     · fin_cases mode <;> simpa [W,wbits] using he
-    · simp only [List.mem_append]; exact Or.inl he
-    · simp only [List.mem_append]; exact Or.inr (Or.inl he)
-    · simp only [List.mem_append]; exact Or.inr (Or.inr he)
+    · simp only [List.mem_append]; exact Or.inl (Or.inl (by simpa [V,W] using he))
+    · simp only [List.mem_append]; exact Or.inl (Or.inr (by simpa [V,W] using he))
+    · simp only [List.mem_append]; exact Or.inr (by simpa [V,W] using he)
   have mv (i : Fin 4) : ((shift d (V i)).map f).sum=(maskOf (V i):ℤ)*F 1 := by
     apply shift_mass
     intro e he
-    simpa only [chainStart,chainLength] using hf 1 e (by simp [chainLength]; exact vfit i e he)
+    simpa [chainStart,chainLength] using hf 1 e (by simp [chainLength]; exact vfit i e he)
   have mw (i : Fin 4) : ((shift (d+c) (W i)).map f).sum=(maskOf (W i):ℤ)*F 2 := by
     apply shift_mass
     intro e he
-    simpa only [chainStart,chainLength] using hf 2 e (by simp [chainLength]; exact wfit i e he)
+    simpa [chainStart,chainLength] using hf 2 e (by simp [chainLength]; exact wfit i e he)
   have mu : ((List.range (d-1)).map f).sum=(maskOf (List.range (d-1)):ℤ)*F 0 := by
     simpa [shift] using shift_mass 0 (List.range (d-1)) f (F 0)
       (fun e he => by simpa [chainStart] using hf 0 e (by simpa [chainLength] using List.mem_range.mp he))
@@ -211,7 +211,7 @@ private theorem banks_masses (mode : Fin 4) (a b c d : ℕ) (ha : 2≤a)
     rw [←bitRange_zero,range_weight 0 (a-1) (by omega),half_power a (by omega)]
     simp [xval]
   intro i
-  fin_cases i <;> dsimp only [banks,bankMasses]
+  fin_cases i <;> dsimp only [banks,bankMasses,Matrix.cons_val_zero',Matrix.cons_val_succ',Matrix.vecHead,Matrix.vecTail,Fin.mk.injEq,Fin.reduceEq]
   all_goals simp only [List.map_append,List.sum_append,mv,mw,mu,mx,Int.cast_add,
     Int.cast_mul,Int.cast_natCast,masks.1,masks.2,uval,xval',V,W]
   all_goals split_ifs <;> ring
