@@ -64,8 +64,16 @@ private lemma interval_closed : IsClosed A.interval := by
 private lemma interval_convex : Convex ℝ A.interval := by
   intro x hx y hy a b ha hb hab
   constructor
-  · convert A.cone.convex hx.1 hy.1 ha hb hab using 2 <;> match_scalars <;> linarith
-  · convert A.cone.convex hx.2 hy.2 ha hb hab using 2 <;> match_scalars <;> linarith
+  · have he : A.unit - (a • x + b • y) =
+        a • (A.unit - x) + b • (A.unit - y) := by
+      match_scalars <;> linarith
+    rw [he]
+    exact A.cone.convex hx.1 hy.1 ha hb hab
+  · have he : A.unit + (a • x + b • y) =
+        a • (A.unit + x) + b • (A.unit + y) := by
+      match_scalars <;> linarith
+    rw [he]
+    exact A.cone.convex hx.2 hy.2 ha hb hab
 
 private lemma interval_balanced : Balanced ℝ A.interval := by
   apply (balanced_iff_neg_mem A.interval_convex).2
@@ -75,9 +83,11 @@ private lemma interval_balanced : Balanced ℝ A.interval := by
 private lemma interval_nhds : A.interval ∈ 𝓝 (0 : E) := by
   have hu := mem_interior_iff_mem_nhds.mp A.interior_unit
   have hm : Tendsto (fun v : E => A.unit - v) (𝓝 0) (𝓝 A.unit) := by
-    simpa using (continuous_const.sub continuous_id).tendsto (0 : E)
+    have h : Continuous (fun v : E => A.unit - v) := by fun_prop
+    simpa only [sub_zero] using h.tendsto (0 : E)
   have hp : Tendsto (fun v : E => A.unit + v) (𝓝 0) (𝓝 A.unit) := by
-    simpa using (continuous_const.add continuous_id).tendsto (0 : E)
+    have h : Continuous (fun v : E => A.unit + v) := by fun_prop
+    simpa only [add_zero] using h.tendsto (0 : E)
   exact inter_mem (hm hu) (hp hu)
 
 private lemma interval_absorbent : Absorbent ℝ A.interval :=
@@ -123,8 +133,12 @@ private lemma radii_upward {v : E} {r s : ℝ} (hr : r ∈ A.radii v) (hrs : r �
     s ∈ A.radii v := by
   have hd := A.cone_smul_nonneg (sub_nonneg.mpr hrs) A.unit_mem
   refine ⟨hr.1.trans hrs, ?_, ?_⟩
-  · convert A.cone.add_mem hr.2.1 hd using 2 <;> match_scalars <;> linarith
-  · convert A.cone.add_mem hr.2.2 hd using 2 <;> match_scalars <;> linarith
+  · have he : s • A.unit - v = (r • A.unit - v) + (s-r) • A.unit := by module
+    rw [he]
+    exact A.cone.add_mem hr.2.1 hd
+  · have he : s • A.unit + v = (r • A.unit + v) + (s-r) • A.unit := by module
+    rw [he]
+    exact A.cone.add_mem hr.2.2 hd
 
 private lemma norm_le_iff (v : E) (r : ℝ) :
     A.orderNorm v ≤ r ↔ r ∈ A.radii v := by
@@ -165,7 +179,7 @@ private lemma seminorm_eq (v : E) : A.seminorm v = A.orderNorm v :=
   (A.norm_eq_gauge v).symm
 
 /-- A copy of the original vector space carrying its proved order-unit norm. -/
-def Space (_A : Data E) := E
+@[reducible] def Space (_A : Data E) := E
 
 instance : AddCommGroup A.Space := inferInstanceAs (AddCommGroup E)
 instance : Module ℝ A.Space := inferInstanceAs (Module ℝ E)
@@ -175,10 +189,13 @@ private def normCore : NormedSpace.Core ℝ A.Space where
   norm_nonneg := A.norm_nonneg
   norm_smul r v := by
     change A.orderNorm (r • v) = ‖r‖ * A.orderNorm v
-    simp only [← A.seminorm_eq, map_smul_eq_mul]
+    rw [← A.seminorm_eq (r • (v : E)), ← A.seminorm_eq (v : E)]
+    exact map_smul_eq_mul A.seminorm r (v : E)
   norm_triangle v w := by
     change A.orderNorm (v + w) ≤ A.orderNorm v + A.orderNorm w
-    simpa only [← A.seminorm_eq] using (map_add_le_add A.seminorm v w)
+    rw [← A.seminorm_eq ((v : E) + (w : E)),
+      ← A.seminorm_eq (v : E), ← A.seminorm_eq (w : E)]
+    exact map_add_le_add A.seminorm (v : E) (w : E)
   norm_eq_zero_iff := A.norm_zero_iff
 
 instance : NormedAddCommGroup A.Space := NormedAddCommGroup.ofCore A.normCore
