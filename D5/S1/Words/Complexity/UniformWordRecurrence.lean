@@ -7,11 +7,12 @@
    digest: Binomial counts and word-factor reconstruction for lacunary marked hierarchies. -/
 
 /-
-Admission classification is incomplete; this unfrozen source is not ready for deposit.
-admission_basis: unverified
-proof_shape: unverified
-escape_witness: none
-Direct frozen dependencies: pending exact compiled dependency extraction.
+admission_basis: escape-witness
+proof_shape: content (`core_first_strict`, `core_recurrent`); supporting lemmas are
+consumed on the live recurrence and strictness paths.
+escape_witness: `strict_one_two_of_return`, the finite-factor strict inequality used by
+`recurrent_nonconstant_strict_one_two` and `core_first_strict`.
+Direct frozen dependencies: extracted from the scoped Lean report.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23567.
 -/
 

@@ -6,11 +6,12 @@
    utility: none
    digest: Binomial counts and word-factor reconstruction for lacunary marked hierarchies. -/
 /-
-Admission classification is incomplete; this unfrozen source is not ready for deposit.
-admission_basis: unverified
-proof_shape: unverified
-escape_witness: none
-Direct frozen dependencies: pending exact compiled dependency extraction.
+admission_basis: escape-witness
+proof_shape: content (`top_profile_injectivity`, `root_power_dvd_of_translated_coeff`);
+supporting lemmas are consumed on the live rigidity paths.
+escape_witness: `RootTransport.root_pullback_square`, the coprime root-order descent
+used by `Rigidity.rootRigid_mu` and `top_profile_injectivity`.
+Direct frozen dependencies: extracted from the scoped Lean report.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23567.
 -/
 import Batteries.Tactic.OpenPrivate
