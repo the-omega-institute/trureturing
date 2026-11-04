@@ -22,7 +22,7 @@ internal sealed class TwinFreeThetaRecurrenceDocument : IScribeDocumentDefinitio
     {
         Formula n = V("N"), t = V("t"), y = V("y"), j = V("j");
         Formula EvalS(Formula index) =>
-            Call("eval", App(Q("Chebyshev", "S"), C("Real"), index), t);
+            App(Q("Polynomial", "eval"), t, App(Q("Chebyshev", "S"), C("Real"), index));
         Formula recurrence = All("j", C("Nat"), Implies(Le(Add(j, D(2)), n),
             Eqn(App(y, Add(j, D(2))), Sub(Mul(t, App(y, Add(j, D(1)))), App(y, j)))));
         Formula endpoint = Eqn(App(y, n),
