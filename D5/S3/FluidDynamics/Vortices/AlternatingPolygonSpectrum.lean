@@ -693,15 +693,18 @@ theorem charpoly_mode_product (m : ℕ) [NeZero (2 * m)] (hm : 1 ≤ m) :
   apply hs.mono
   intro x hx
   have hx : x ≠ 0 := by simpa using hx
+  change Polynomial.eval x (jacobian (2 * m)).charpoly = _
   rw [nonzero_characteristic_value m hm x hx, product_spectrum_all m hm]
-  simp
+  simp only [Polynomial.eval_prod, Polynomial.eval_sub, Polynomial.eval_pow,
+    Polynomial.eval_X, Polynomial.eval_C]
 
 /-- The same identity in the actual complexification of the Cartesian Jacobian. -/
 theorem complex_charpoly_mode_product (m : ℕ) [NeZero (2 * m)] (hm : 1 ≤ m) :
     ((jacobian (2 * m)).map Complex.ofRealHom).charpoly =
       ∏ k : ZMod (2 * m), (X ^ 2 - C (gamma m k : ℂ)) := by
   rw [Matrix.charpoly_map, charpoly_mode_product m hm]
-  simp
+  simp only [Polynomial.map_prod, Polynomial.map_sub, Polynomial.map_pow,
+    Polynomial.map_X, Polynomial.map_C, Complex.ofRealHom_eq_coe]
 
 private lemma nonzero_root_iff (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :
     (jacobian (2 * m)).charpoly.IsRoot x ↔
