@@ -74,8 +74,6 @@ internal sealed class ConjugationSubquandleDocument : IScribeDocumentDefinition
         Seq(OpenBrace, variable, Sp, Colon, Sp, type, Sp, Mid, Sp, Parenthesized(predicate), CloseBrace);
     private static Formula Operation(Formula h, Formula x, Formula y) => Call("s", h, x, y);
     private static Formula Closure(Formula x) => Call("closure", Parenthesized(Seq(x, Sp, Colon, Sp, Call("Set", F.Id("G")))));
-    private static Formula CenterSize(Formula x) => Call("NatCard", Call("center", Closure(x)));
-    private static Formula Count(Formula type) => Call("FintypeCard", type);
 
     private static Formula ClosedFormula()
     {

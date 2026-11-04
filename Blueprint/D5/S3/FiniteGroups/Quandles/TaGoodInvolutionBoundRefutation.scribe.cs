@@ -35,39 +35,13 @@ internal sealed class TaGoodInvolutionBoundRefutationDocument : IScribeDocumentD
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
-    private static Formula App(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
-    private static Formula GroupContext(Formula body)
-    {
-        Formula g = F.Id("G");
-        return Seq(Forall, Sp, Parenthesized(Seq(g, Sp, Colon, Sp, Named("Type"))), Sp,
-            OpenBracket, Call("Group", g), CloseBracket, Sp,
-            OpenBracket, Call("DecidableEq", g), CloseBracket, Comma, Sp,
-            Parenthesized(body));
-    }
-    private static Formula Equal(Formula left, Formula right) =>
-        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
-    private static Formula InSet(Formula left, Formula right) =>
-        new Formula.Relation(left, FormulaRelationOperator.MemberOf, right);
-    private static Formula And(Formula left, Formula right) =>
-        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
     private static Formula Iff(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Iff, Parenthesized(right));
     private static Formula All(Formula variable, Formula domain, Formula body) =>
         Seq(Forall, Sp, variable, Sp, Colon, Sp, domain, Comma, Sp, Parenthesized(body));
-    private static Formula Some(Formula variable, Formula domain, Formula body) =>
-        Seq(Exists, Sp, variable, Sp, Colon, Sp, domain, Comma, Sp, Parenthesized(body));
-    private static Formula LambdaOf(Formula variable, Formula body) =>
-        Parenthesized(Seq(variable, Sp, Mapsto, Sp, body));
-    private static Formula Arrow(Formula left, Formula right) => Seq(left, Sp, To, Sp, right);
-    private static Formula Inverse(Formula value) => new Formula.Power(value, new Formula.Negate(D(1)));
-    private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
-    private static Formula Conjugate(Formula x, Formula y) => Mul(Mul(x, y), Inverse(x));
-    private static Formula Subtype(Formula variable, Formula type, Formula predicate) =>
-        Seq(OpenBrace, variable, Sp, Colon, Sp, type, Sp, Mid, Sp, Parenthesized(predicate), CloseBrace);
-    private static Formula Operation(Formula h, Formula x, Formula y) => Call("s", h, x, y);
     private static Formula Closure(Formula x) => Call("closure", Parenthesized(Seq(x, Sp, Colon, Sp, Call("Set", F.Id("G")))));
     private static Formula CenterSize(Formula x) => Call("NatCard", Call("center", Closure(x)));
     private static Formula Count(Formula type) => Call("FintypeCard", type);
