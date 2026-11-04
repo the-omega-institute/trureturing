@@ -32,12 +32,14 @@ internal sealed class CrimFourPartClassificationDocument : IScribeDocumentDefini
                 + "For three positive parts the auxiliary predicate excludes the column [1,1,1]. "
                 + "There is no upper bound on a, b, c or d. The theorem determines zero versus nonzero, "
                 + "and does not determine the positive Grundy values or classify all positions with five rows.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("crim-question-one-four-parts"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role) =>
+        AssessedProvenance provenance, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("crim-four-" + name), DeclarationHandle.Create(Module + "." + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

@@ -24,6 +24,10 @@ $$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; \forall c \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Games/CrimFourPartClassification.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/crim-question-one-four-parts` (proved) by `D5/S3/Combinatorics/Games/CrimFourPartClassification.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"crim-question-one-four-parts","declaration_gid":"D5/S3/Combinatorics/Games/CrimFourPartClassification.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ina Bašić; Eric Gottlieb; Matjaž Krnc (2026). *CRIM: A Natural Game on Integer Partitions*. DOI: [10.48550/arXiv.2606.16828](https://doi.org/10.48550/arXiv.2606.16828). URL: <https://arxiv.org/abs/2606.16828v1>.
