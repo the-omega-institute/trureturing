@@ -21,6 +21,8 @@ open scoped BigOperators
 
 namespace D5.S3.QuantumBounds.PolygonGameClassicalValue
 
+open D5.S1.Words.AdmissibleWords.AdmissibleCount
+
 /-- Edge `i` joins player `i` to `finRotate P i`. -/
 def IsMatching (P : ℕ) (M : Finset (Fin P)) : Prop :=
   ∀ i ∈ M, finRotate P i ∉ M
@@ -366,7 +368,145 @@ private lemma insert_avoiding (P : ℕ) (hP : 3 ≤ P) (j : Fin P)
 open Classical in
 private lemma avoiding_count (P : ℕ) (hP : 3 ≤ P) (j : Fin P) :
     (avoiding P j).card = Nat.fib (P - 1) := by
-  sorry
+  classical
+  obtain ⟨n, rfl⟩ : ∃ n, P = n + 3 := ⟨P - 3, by omega⟩
+  let e : Fin n → Fin (n + 3) := fun k => j + ⟨k.val + 2, by omega⟩
+  have einj : Function.Injective e := by
+    intro k l hh
+    have he : (⟨k.val + 2, by omega⟩ : Fin (n + 3)) = ⟨l.val + 2, by omega⟩ :=
+      add_left_cancel hh
+    have hv := congrArg Fin.val he
+    exact Fin.ext (by simpa only [Fin.val_mk, Nat.add_right_cancel_iff] using hv)
+  have enext (k l : Fin n) : finRotate (n + 3) (e k) = e l ↔ k.val + 1 = l.val := by
+    rw [finRotate_apply]
+    change (j + (⟨k.val + 2, by omega⟩ : Fin (n + 3))) + 1 =
+      j + ⟨l.val + 2, by omega⟩ ↔ _
+    rw [add_assoc, add_left_cancel_iff, Fin.ext_iff,
+      Fin.val_add_one_of_lt' (by simp only [Fin.val_mk]; omega)]
+    simp only [Fin.val_mk]
+    omega
+  have eavoid (k : Fin n) : e k ≠ (finRotate (n + 3)).symm j ∧
+      e k ≠ j ∧ e k ≠ finRotate (n + 3) j := by
+    refine ⟨?_, ?_, ?_⟩
+    · intro hh
+      rw [finRotate_symm_apply, sub_eq_add_neg] at hh
+      have he : (⟨k.val + 2, by omega⟩ : Fin (n + 3)) = -1 := add_left_cancel hh
+      have hv := congrArg Fin.val he
+      simp only [Fin.val_mk, Fin.coe_neg_one] at hv
+      omega
+    · intro hh
+      have he : (⟨k.val + 2, by omega⟩ : Fin (n + 3)) = 0 :=
+        add_left_cancel (hh.trans (add_zero j).symm)
+      have hv := congrArg Fin.val he
+      simp only [Fin.val_mk, Fin.val_zero] at hv
+      omega
+    · intro hh
+      rw [finRotate_apply] at hh
+      have he : (⟨k.val + 2, by omega⟩ : Fin (n + 3)) = 1 := add_left_cancel hh
+      have hv := congrArg Fin.val he
+      simp only [Fin.val_mk, Fin.val_one] at hv
+      omega
+  have represent (N : Finset (Fin (n + 3))) (hN : N ∈ avoiding (n + 3) j)
+      (i : Fin (n + 3)) (hi : i ∈ N) : ∃ k, e k = i := by
+    obtain ⟨_, hp, hj, hn⟩ := Finset.mem_filter.1 hN |>.2
+    let q := i - j
+    have hzero : q.val ≠ 0 := by
+      intro hh
+      have he : q = 0 := Fin.ext hh
+      exact hj ((sub_eq_zero.1 he) ▸ hi)
+    have hone : q.val ≠ 1 := by
+      intro hh
+      have he : q = 1 := Fin.ext (by simpa only [Fin.val_one] using hh)
+      have heq : i = finRotate (n + 3) j := by
+        rw [finRotate_apply]
+        exact (sub_eq_iff_eq_add).1 he |>.trans (add_comm 1 j)
+      exact hn (heq ▸ hi)
+    have hlast : q.val ≠ n + 2 := by
+      intro hh
+      have he : q = -1 := Fin.ext (by simpa only [Fin.coe_neg_one] using hh)
+      have heq : i = (finRotate (n + 3)).symm j := by
+        rw [finRotate_symm_apply, sub_eq_add_neg]
+        exact (sub_eq_iff_eq_add).1 he |>.trans (add_comm (-1) j)
+      exact hp (heq ▸ hi)
+    have hq := q.isLt
+    let k : Fin n := ⟨q.val - 2, by omega⟩
+    refine ⟨k, ?_⟩
+    have he : (⟨k.val + 2, by omega⟩ : Fin (n + 3)) = q := Fin.ext (by dsimp [k]; omega)
+    change j + (⟨k.val + 2, by omega⟩ : Fin (n + 3)) = i
+    rw [he]
+    dsimp only [q]
+    exact add_sub_cancel _ _
+  have reconstruct (N : Finset (Fin (n + 3))) (hN : N ∈ avoiding (n + 3) j) :
+      N = (Finset.univ.filter (fun k => e k ∈ N)).image e := by
+    ext i
+    constructor
+    · intro hi
+      obtain ⟨k, rfl⟩ := represent N hN i hi
+      exact Finset.mem_image.2 ⟨k, Finset.mem_filter.2 ⟨Finset.mem_univ _, hi⟩, rfl⟩
+    · intro hi
+      obtain ⟨k, hk, rfl⟩ := Finset.mem_image.1 hi
+      exact (Finset.mem_filter.1 hk).2
+  have valid (w : Fin n → Bool) (hw : Adm n w) :
+      (Finset.univ.filter (fun k => w k = true)).image e ∈ avoiding (n + 3) j := by
+    apply Finset.mem_filter.2
+    refine ⟨Finset.mem_univ _, ?_, ?_, ?_, ?_⟩
+    · intro i hi hnext
+      obtain ⟨k, hk, rfl⟩ := Finset.mem_image.1 hi
+      obtain ⟨l, hl, he⟩ := Finset.mem_image.1 hnext
+      have ha := (adm_iff_no_adjacent_true n w).1 hw k l ((enext k l).1 he.symm)
+      have hktrue := (Finset.mem_filter.1 hk).2
+      have hltrue := (Finset.mem_filter.1 hl).2
+      rcases ha with ha | ha
+      · exact Bool.false_ne_true (ha.symm.trans hktrue)
+      · exact Bool.false_ne_true (ha.symm.trans hltrue)
+    · intro hi
+      obtain ⟨k, _, hk⟩ := Finset.mem_image.1 hi
+      exact (eavoid k).1 hk
+    · intro hi
+      obtain ⟨k, _, hk⟩ := Finset.mem_image.1 hi
+      exact (eavoid k).2.1 hk
+    · intro hi
+      obtain ⟨k, _, hk⟩ := Finset.mem_image.1 hi
+      exact (eavoid k).2.2 hk
+  have hcard : (avoiding (n + 3) j).card =
+      (Finset.univ.filter (Adm n)).card := by
+    apply Finset.card_bij (fun N _ => fun k => decide (e k ∈ N))
+    · intro N hN
+      apply Finset.mem_filter.2
+      refine ⟨Finset.mem_univ _, (adm_iff_no_adjacent_true n _).2 ?_⟩
+      intro k l hkl
+      by_cases hk : e k ∈ N
+      · right
+        simp only [decide_eq_false_iff_not]
+        intro hl
+        have hm := (Finset.mem_filter.1 hN).2.1
+        exact hm (e k) hk (((enext k l).2 hkl).symm ▸ hl)
+      · left
+        exact decide_eq_false hk
+    · intro M hM N hN heq
+      rw [reconstruct M hM, reconstruct N hN]
+      congr 1
+      apply Finset.filter_congr
+      intro k _
+      exact decide_eq_decide.1 (congrFun heq k)
+    · intro w hw
+      refine ⟨(Finset.univ.filter (fun k => w k = true)).image e,
+        valid w (Finset.mem_filter.1 hw).2, ?_⟩
+      funext k
+      have hm : e k ∈ (Finset.univ.filter (fun l => w l = true)).image e ↔ w k = true := by
+        rw [Finset.mem_image]
+        constructor
+        · rintro ⟨l, hl, he⟩
+          have hel : l = k := einj he
+          simpa only [hel] using (Finset.mem_filter.1 hl).2
+        · intro hk
+          exact ⟨k, Finset.mem_filter.2 ⟨Finset.mem_univ _, hk⟩, rfl⟩
+      simp only [hm, Bool.decide_coe]
+  calc
+    (avoiding (n + 3) j).card = (Finset.univ.filter (Adm n)).card := hcard
+    _ = Fintype.card {w : Fin n → Bool // Adm n w} := (Fintype.card_subtype _).symm
+    _ = Nat.fib (n + 3 - 1) := by simpa using admissibleWord_card_eq_fib n
+
 
 open Classical in
 private lemma pairing_losses (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
@@ -455,15 +595,129 @@ private lemma attaining_charges (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
     (∑ i, ((attainingStrategy P i false).2.1.toNat : ZMod 2)) = 0 ∧
     baseline P (attainingStrategy P) = 0 ∧
     ∃ j : Fin P, ∀ i, edgeCharge P (attainingStrategy P) i = if i = j then 1 else 0 := by
-  sorry
+  classical
+  obtain ⟨n, rfl⟩ : ∃ n, P = n + 3 := ⟨P - 3, by omega⟩
+  let j : Fin (n + 3) := Fin.last (n + 2)
+  have hlt (i : Fin (n + 3)) : i.val + 1 < n + 3 ↔ i ≠ j := by
+    constructor
+    · intro hh he
+      subst i
+      simp only [j, Fin.val_last] at hh
+      omega
+    · intro hh
+      by_contra hbad
+      apply hh
+      apply Fin.ext
+      dsimp only [j]
+      simp only [Fin.val_last]
+      have hv := i.isLt
+      omega
+  have hzero (i : Fin (n + 3)) : attainingStrategy (n + 3) i false =
+      if i = j then (false, false, false) else (true, true, false) := by
+    simp only [attainingStrategy, hlt]
+    by_cases hi : i = j <;> simp [hi]
+  have hone (i : Fin (n + 3)) : attainingStrategy (n + 3) i true =
+      if i = j then (true, false, true) else (true, true, false) := by
+    simp only [attainingStrategy, hlt]
+    by_cases hi : i = j <;> simp [hi]
+  have hpoint (i : Fin (n + 3)) : ((attainingStrategy (n + 3) i false).1.toNat : ZMod 2) =
+      if i = j then 0 else 1 := by
+    rw [hzero]
+    split_ifs <;> rfl
+  have hnum : ((n + 2 : ℕ) : ZMod 2) = 0 := by
+    have hh := hodd.natCast_zmod_two
+    rw [show n + 3 = (n + 2) + 1 by omega, Nat.cast_add, Nat.cast_one] at hh
+    exact add_right_cancel (hh.trans (zero_add (1 : ZMod 2)).symm)
+  have hbase : baseline (n + 3) (attainingStrategy (n + 3)) = 0 := by
+    change (∑ i, ((attainingStrategy (n + 3) i false).1.toNat : ZMod 2)) = 0
+    simp only [hpoint, Finset.sum_ite, Finset.sum_const_zero, zero_add, Finset.sum_const,
+      nsmul_eq_mul, mul_one, Finset.filter_ne', Finset.card_erase_of_mem (Finset.mem_univ j),
+      Finset.card_univ, Fintype.card_fin]
+    convert hnum using 1 <;> congr 1 <;> omega
+  refine ⟨?_, ?_, ?_, hbase, j, ?_⟩
+  · intro i x
+    cases x
+    · rw [hzero]
+      split_ifs <;> decide
+    · rw [hone]
+      split_ifs <;> decide
+  · intro i
+    rw [hzero, hone]
+    split_ifs <;> rfl
+  · change (∑ i, ((attainingStrategy (n + 3) i false).2.1.toNat : ZMod 2)) = 0
+    convert hbase using 1
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [hzero]
+    split_ifs <;> rfl
+  · intro i
+    by_cases hi : i = j
+    · subst i
+      have hr : finRotate (n + 3) j = 0 := finRotate_last
+      have hz : (0 : Fin (n + 3)) ≠ j := by
+        intro hh
+        have hv := congrArg Fin.val hh
+        simp only [Fin.val_zero, j, Fin.val_last] at hv
+        omega
+      simp only [edgeCharge, hzero, hone, hr, ite_true, if_neg hz, Prod.fst, Prod.snd,
+        Bool.toNat_true, Bool.toNat_false, Nat.cast_one, Nat.cast_zero, add_zero]
+      decide
+    · by_cases hn : finRotate (n + 3) i = j <;>
+        simp only [edgeCharge, hzero, hone, hi, hn, ite_true, ite_false, Prod.fst,
+          Prod.snd, Bool.toNat_true, Bool.toNat_false, Nat.cast_one, Nat.cast_zero,
+          add_zero, zero_add] <;> decide
+
 
 open Classical in
 private lemma attaining_losses (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
     (Finset.univ.filter (fun x => ¬ wins P (attainingStrategy P) x)).card ≤
       Nat.fib (P - 1) := by
   classical
-  have hcharges := attaining_charges P hodd hP
-  sorry
+  obtain ⟨hlegal, hfixed, heven, hbase, j, hcharge⟩ := attaining_charges P hodd hP
+  have hsub : Finset.univ.filter (fun x => ¬ wins P (attainingStrategy P) x) ⊆
+      (avoiding P j).image (fun N => matchingInput P (insert j N)) := by
+    intro x hx
+    have hloss := (Finset.mem_filter.1 hx).2
+    have hmiddle : (∑ i, ((attainingStrategy P i (x i)).2.1.toNat : ZMod 2)) = 0 := by
+      convert heven using 1
+      apply Finset.sum_congr rfl
+      intro i _
+      cases hbit : x i
+      · rfl
+      · exact congrArg (fun b : Bool => (b.toNat : ZMod 2)) (hfixed i).symm
+    have hbad : ∃ M, IsMatching P M ∧ matchingInput P M = x ∧ j ∈ M := by
+      by_contra hnone
+      apply hloss
+      refine ⟨fun i => hlegal i (x i), hmiddle, ?_⟩
+      intro M hM hinput
+      apply (affine_matching_rule P (attainingStrategy P) hlegal hfixed M hM).2
+      rw [hbase, zero_add]
+      have hjnot : j ∉ M := fun hj => hnone ⟨M, hM, hinput, hj⟩
+      apply Finset.sum_eq_zero
+      intro i hi
+      rw [hcharge]
+      exact ite_eq_right (fun hij : i = j => hjnot (hij ▸ hi))
+    obtain ⟨M, hM, hinput, hj⟩ := hbad
+    have hN : M.erase j ∈ avoiding P j := by
+      apply Finset.mem_filter.2
+      refine ⟨Finset.mem_univ _, ?_, ?_, Finset.notMem_erase j M, ?_⟩
+      · intro i hi hnext
+        exact hM i (Finset.mem_of_mem_erase hi) (Finset.mem_of_mem_erase hnext)
+      · intro hp
+        exact hM ((finRotate P).symm j) (Finset.mem_of_mem_erase hp)
+          (by simpa only [Equiv.apply_symm_apply] using hj)
+      · intro hn
+        exact hM j hj (Finset.mem_of_mem_erase hn)
+    apply Finset.mem_image.2
+    refine ⟨M.erase j, hN, ?_⟩
+    rw [Finset.insert_erase hj]
+    exact hinput
+  calc
+    (Finset.univ.filter (fun x => ¬ wins P (attainingStrategy P) x)).card ≤
+        ((avoiding P j).image (fun N => matchingInput P (insert j N))).card :=
+      Finset.card_le_card hsub
+    _ ≤ (avoiding P j).card := Finset.card_image_le
+    _ = Nat.fib (P - 1) := avoiding_count P hP j
 
 open Classical in
 private lemma attainment (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P) :
