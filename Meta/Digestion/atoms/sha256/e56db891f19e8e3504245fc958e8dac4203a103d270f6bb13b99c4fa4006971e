@@ -1,0 +1,21 @@
+**Definition 11.1 (The four-party convention and its primary citation).** For distinct parties $A,B,C,D$, let $\mathcal M$ be the six choices of an unordered pair $XY$ to merge, let $\mathcal P=\{AB{:}CD,AC{:}BD,AD{:}BC\}$, and let $\mathcal C=\{ABC{:}D,ABD{:}C,ACD{:}B,BCD{:}A\}$. For the normalized Rényi multi-entropies and parameters $\alpha,\beta\in\mathbb R$ with $\alpha+\beta=1/3$, the convention of Corollary 7.2 is
+
+$$
+\mathrm{GM}^{(4)}_n=S^{(4)}_n
+-\frac13\sum_{XY\in\mathcal M}S^{(3)}_n(XY{:}Z{:}W)
++\alpha\sum_{P\in\mathcal P}S^{(2)}_n(P)
++\beta\sum_{C\in\mathcal C}S^{(2)}_n(C),
+$$
+
+where $Z,W$ are the complementary two parties. Its primary source is N. Iizuka and M. Nishida, *Genuine multi-entropy and holography*, [arXiv:2502.07995v1, §5, Eqs. (65)–(66)](https://arxiv.org/html/2502.07995v1#S5.E65). Their coefficients $a,b$ are denoted here by $\alpha,\beta$ to distinguish them from the Gaussian squeezing parameter. This citation supersedes the attribution of this $S^{(3)}$-based definition to Eqs. (67)–(68) in the Iizuka–Nishida row of §9. Those latter equations use $\mathrm{GM}^{(3)}$ in place of $S^{(3)}$, with coefficients $\widetilde\alpha+\widetilde\beta=-1/2$.
+
+The two conventions agree for $\widetilde\alpha=\alpha-1/3$, $\widetilde\beta=\beta-1/2$. To see this, expand $\mathrm{GM}^{(3)}_n(XY{:}Z{:}W)$ by its three bipartite subtractions. In the sum over the six merges each pair cut occurs twice and each single cut three times. Thus
+
+$$
+\sum_{XY\in\mathcal M}\mathrm{GM}^{(3)}_n(XY{:}Z{:}W)
+=\sum_{XY\in\mathcal M}S^{(3)}_n(XY{:}Z{:}W)
+-\sum_{P\in\mathcal P}S^{(2)}_n(P)-\frac32\sum_{C\in\mathcal C}S^{(2)}_n(C).
+$$
+
+Substitution proves the shifts and gives $\widetilde\alpha+\widetilde\beta=1/3-1/3-1/2=-1/2$. All cut occurrences are retained even if their entropies agree.
+

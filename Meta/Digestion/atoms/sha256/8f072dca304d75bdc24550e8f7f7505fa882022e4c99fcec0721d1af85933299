@@ -1,0 +1,28 @@
+**Theorem 3 (oddness).** Every $n\in T$ is odd.
+
+**Proof.** Suppose that $n\in T$ is even. Since $T\subset\mathbb Z_{>0}$, $n$ is a positive even integer; write $s(n)=nq$ and $n=2^a u$ with $a\ge1$ and $u$ positive and odd. Corollary 2 gives
+$$
+15(15^n-1)=14n(1+14q).
+$$
+For the valuation calculation used here, factor
+$$
+15^u-1=(15-1)(1+15+\cdots+15^{u-1}).
+$$
+The second factor is a sum of an odd number of odd terms, so $v_2(15^u-1)=1$. Since $15^2\equiv1\pmod {32}$ and $u$ is odd, $15^u\equiv15\pmod {32}$, hence
+$$
+15^u+1\equiv15+1=16\pmod {32}
+$$
+and $v_2(15^{2u}-1)=1+4=5$. For every subsequent step $k\ge1$, the exponent $2^ku$ is even and $15^2\equiv1\pmod 8$, so $15^{2^ku}\equiv1\pmod 8$ and
+$$
+\begin{aligned}
+v_2(15^{2^{k+1}u}-1)
+ &=v_2(15^{2^ku}-1)+v_2(15^{2^ku}+1)\\
+ &=v_2(15^{2^ku}-1)+1.
+\end{aligned}
+$$
+After $a$ doublings this yields
+$$
+v_2(15^n-1)=1+4+(a-1)=a+4=v_2(n)+4.
+$$
+This is Parvardi's Theorem 4 for $x=15$, $y=1$ and even positive exponent $n$: both bases are odd, and $v_2(15-1)=1$, $v_2(15+1)=4$. It is a known intermediate valuation identity; the calculation above supplies the specialization in the present proof. Since $1+14q$ is odd, the right-hand side of Corollary 2 has valuation $1+v_2(n)$, whereas its left-hand side has valuation $v_2(n)+4$ because $15$ is odd. These valuations cannot be equal. Hence no even $n$ belongs to $T$. ∎
+

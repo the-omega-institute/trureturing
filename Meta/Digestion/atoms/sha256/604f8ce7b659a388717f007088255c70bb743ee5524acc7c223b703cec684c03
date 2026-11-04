@@ -1,0 +1,60 @@
+### 定义 1：指数差分读出
+
+对 $h>0$，定义
+
+
+<a id="display-12"></a><a id="eq-3"></a>
+
+$$
+\boxed{
+\Delta_hf(t)
+=
+f(t+h)-2\cosh(h/2)f(t)+f(t-h).
+}
+$$
+
+<p align="center" data-equation-number="3"><a href="#eq-3">(3)</a></p>
+
+
+相应的带符号读出为
+
+
+<a id="display-13"></a>
+
+$$
+\omega_{t,h}
+=
+\delta_{t-h}
+-2\cosh(h/2)\delta_t
++\delta_{t+h}.
+$$
+
+
+它满足两个精确约束：
+
+
+<a id="display-14"></a><a id="eq-4"></a>
+
+$$
+\boxed{
+\int e^{u/2}\,d\omega_{t,h}(u)=0,
+\qquad
+\int e^{-u/2}\,d\omega_{t,h}(u)=0.
+}
+$$
+
+<p align="center" data-equation-number="4"><a href="#eq-4">(4)</a></p>
+
+
+因此
+
+
+<a id="display-15"></a>
+
+$$
+\Delta_he^{t/2}=\Delta_he^{-t/2}=0.
+$$
+
+
+这一步直接使用了对数坐标与乘法尺度之间的关系。
+

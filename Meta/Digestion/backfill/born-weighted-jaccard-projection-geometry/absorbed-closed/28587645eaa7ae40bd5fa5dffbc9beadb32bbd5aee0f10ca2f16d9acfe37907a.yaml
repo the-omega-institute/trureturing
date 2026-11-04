@@ -1,0 +1,27 @@
+fingerprints:
+  raw_sha256: sha256:28587645eaa7ae40bd5fa5dffbc9beadb32bbd5aee0f10ca2f16d9acfe37907a
+  normalized_sha256: sha256:28587645eaa7ae40bd5fa5dffbc9beadb32bbd5aee0f10ca2f16d9acfe37907a
+cas_ref: sha256:28587645eaa7ae40bd5fa5dffbc9beadb32bbd5aee0f10ca2f16d9acfe37907a
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Lattices/BadicaJaccardArbitraryLattices.jaccardDist
+    target_statement_id: sha256:898ee37f053d76ad7cd6d04e92ccfa9bd2fbff0c4a2f67438cdb52d90b6bccab
+  - gid: D5/S3/Combinatorics/Lattices/BadicaJaccardArbitraryLattices.resultSufficiency
+    target_statement_id: sha256:f6cb1c8e4be39602f4642b9d72388204d4cfece4be903cf8f7f0c12836c15511
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.interval_defect
+    target_statement_id: sha256:a7cba864ec458daf4edac2b40e29db5efbf0e111568dfda23dee0271e4fdd245
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.pair_construction
+    target_statement_id: sha256:02f95328b2541c878a18041e90c19235d8d7296330dd53eb474907ca8d6902cf
+  - gid: D5/S3/Quantum/Algebra/BornJaccardFixedOverlap.weight_orthogonal_sup
+    target_statement_id: sha256:d86c29de0de24fd0f333faad0d81a3009b8bab0cc972f902d677075d7c3e0bf2
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.distance_properties
+    target_statement_id: sha256:d759568d967c7b0a91bbc67d8dfbdee8689430e600e6cea72117de6ce2a6ebaa
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.faithful_separation
+    target_statement_id: sha256:6a930f0402b49b54434c964ccd60871fd3cad180c5702def4003bb5e927d397a
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.modular_nonnegative_triangle
+    target_statement_id: sha256:6aba94a1820676bf2464fa38597d3c428f9267bb12a9a592ec67540d06f6719d
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.operator_classification
+    target_statement_id: sha256:7300f6ea21ce061e0ea4ed8e14edf5054177317431633484034534f5944b7365
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.scalar_triangle
+    target_statement_id: sha256:e804515ad44c5be89d9e1cc11fe7c4034be7994a2670fad0c38bd74ff316175d
+receipts:
+  unresolved_subitems: []

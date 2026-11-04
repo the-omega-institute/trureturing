@@ -29,6 +29,14 @@ class NativeRecoveryTests(NativeDependencyTestSupport, NativeRecoveryConsumerTes
                           NativeBatchPartitionTests, unittest.TestCase):
     pass
 
+class NativeBatchCapacityTests(NativeDependencyTestSupport, NativeBatchCapacityConsumerTests,
+                               NativeBatchPartitionTests, unittest.TestCase):
+    pass
+
+class NativeBatchCompatibilityTests(NativeDependencyTestSupport, NativeBatchCompatibilityConsumerTests,
+                                    unittest.TestCase):
+    pass
+
 class NativeSemanticTests(NativeDependencyTestSupport, NativeSemanticConsumerTests, unittest.TestCase):
     pass
 

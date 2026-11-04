@@ -1,0 +1,120 @@
+**Theorem 10.1 (three continuations force an extra bit at the terminal
+source).** Define finite terms by
+
+$$
+\begin{aligned}
+C_0(x)&=x,& C_{r+1}(x)&=\langle C_r(x),\alpha\rangle,\\
+D&=\langle C_2(\beta),\beta\rangle,&
+U&=\langle C_{16}(\beta),\beta\rangle,\\
+T&=\langle C_{16}(D),\beta\rangle.
+\end{aligned}
+\tag{IV.16}
+$$
+
+Every recorder on the **entire** native domain satisfying (IV.14)–(IV.15)
+obeys
+
+$$
+\begin{gathered}
+F(U)=17,\qquad N(U)=19,\qquad F(T)=63,\qquad N(T)=23,\\
+M_J(T)\ge M_J(U)+2\ge7>G(T)=6.
+\end{gathered}
+\tag{IV.17}
+$$
+
+Thus no single such recorder, computable or otherwise, attains the static
+prefix-code maximum $G(t)$ at every source. Codewords at one source need
+not have a common length.
+
+Proof. All addresses in the proof are logical addresses on the actual
+beta-left source. Put
+
+$$
+\rho=P_\varepsilon S_\varepsilon,\qquad
+A_i=S_{L^i}\ (1\le i\le16),\qquad B=P_R.
+\tag{IV.18}
+$$
+
+The known alpha first requires its root promotion and root split. The
+left child is then beta and the right child alpha. Each $A_i$ splits the
+current leftmost beta created by its preceding split; $B$ promotes the
+independent right alpha. The source event reconstruction of AA Theorem
+17.2 gives precisely these events for $U$: after $\rho$ the only order
+constraints are $A_1<\cdots<A_{16}$, with $B$ independent. There are exactly
+17 insertion positions for $B$, hence exactly 17 histories, each with
+$2+16+1=19$ events. There are no extra promotions at left-born positions,
+and no split or promotion elsewhere can disappear from the endpoint.
+This identifies the whole fibre, not a selected family of executions.
+
+The current beta at the tip of $U$ is at $p=L^{17}$. Set
+
+$$
+X=S_p,\qquad Y=S_{pL},\qquad Z=S_{pLL},\qquad Q=P_{pR}.
+\tag{IV.19}
+$$
+
+The split $X$ creates a left beta and a right alpha at these actual
+positions. Split $Y$ creates the beta on which $Z$ acts; $Q$ promotes the
+right alpha created by $X$. Thus the constraints are exactly $X<Y<Z$
+and $X<Q$. Each $h\in\mathcal H(U)$ admits the three distinct suffixes
+
+$$
+XYZQ,\qquad XYQZ,\qquad XQYZ.
+\tag{IV.20}
+$$
+
+Every displayed edit is enabled on its actual operand. In each case the
+subtree at $p$ becomes $\langle C_2(\beta),\beta\rangle=D$, so the endpoint
+is $T$. Conversely these are all continuations from $U$ to $T$: their four
+labelled events are exactly the difference of the reconstructed endpoint
+event sets. This verifies the native direction $\beta\mapsto
+\langle\beta,\alpha\rangle$ at every split, without grafting or exchanging
+its two children.
+
+For the full terminal fibre, AA's same reconstruction gives, after
+$\rho$, the left chain $A_1<\cdots<A_{16}<X$, then an interleaving of
+$Y<Z$ with $Q$, together with the independent outer $B$. There are exactly
+three left orders, each containing 20 events. In each order $B$ has 21
+insertion positions. Every resulting linear extension is an actual legal
+history by AA Theorem 17.2, and its event set has no other members. Hence
+
+$$
+F(T)=3\cdot21=63,\qquad N(T)=2+20+1=23.
+\tag{IV.21}
+$$
+
+Of these histories, precisely those with $B$ before $X$ pass through $U$
+after event 19. There are $3\cdot17=51$ of them, exactly the histories
+$h$ followed by (IV.20). The other $3\cdot4=12$ place $B$ after $X$;
+they belong to the full terminal fibre throughout this argument. The
+three suffixes supply inherited demand inside that full fibre, not a
+replacement of it.
+
+Use the elementary prefix-cylinder count. If $k$ distinct prefix-free
+words extend a word $x$ and have lengths at most $L$, their nonempty sets
+of descendants at depth $L$ are disjoint subsets of the $2^{L-|x|}$ slots
+below $x$. Consequently
+
+$$
+k\le2^{L-|x|}.
+\tag{IV.22}
+$$
+
+This is the mature finite Kraft/cylinder argument, with no native or
+computability hypothesis. Applied at the root to the 17 records at $U$,
+it gives $17\le2^{M_J(U)}$, so $M_J(U)\ge5$. Choose a history $h_*$
+attaining that finite maximum and put $x=J(h_*)$. Literal preservation
+along each of its four-event continuations makes $x$ a prefix of all
+three terminal records. They are distinct and prefix-free by (IV.15)
+on the full $\mathcal H(T)$. Taking $L=M_J(T)$ in (IV.22) yields
+$3\le2^{M_J(T)-M_J(U)}$, hence $M_J(T)\ge M_J(U)+2\ge7$.
+Since $32<63\le64$, $G(T)=6$.
+
+For comparison, at a single fixed source the same root count gives the
+static lower bound $M\ge\lceil\log_2F\rceil$, and assigning distinct
+words of that common length attains it. Such separate static assignments
+impose no extension relation between sources. It is their simultaneous
+native literal-prefix compatibility that (IV.17) rules out. No equality
+of old record lengths, computability, finite horizon, or bound on scratch
+work was used. $\square$
+

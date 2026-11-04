@@ -1,0 +1,47 @@
+### 定理 11.1（qubit 不对易二态的恢复刚性）
+
+设 $N:M_2(\mathbb C)\to M_k(\mathbb C)$ 为 CPTP，
+二态中点 $\sigma>0$、$N(\sigma)>0$，并满足 C90。
+若 $[\rho_0,\rho_1]\ne0$，则 Petz 恢复满足
+
+$$
+R_{\sigma,N}N=\operatorname{id}_{M_2}.
+$$
+
+即同一个恢复通道恢复整个输入矩阵代数。
+
+**证明。**
+令 $E=R_{\sigma,N}N$。
+前述恢复定理给出 $E(\rho_i)=\rho_i$，因而 $E(\sigma)=\sigma$。
+定义
+
+$$
+\Phi(X)=\sigma^{-1/2}
+ E(\sigma^{1/2}X\sigma^{1/2})\sigma^{-1/2}.
+$$
+
+则 $\Phi$ 为 UCP，保持忠实泛函
+$\phi_\sigma(X)=\operatorname{Tr}(\sigma X)$，并固定
+$A=\sigma^{-1/2}\rho_0\sigma^{-1/2}$。
+因为 $[\rho_0,\sigma]=[\rho_0,\rho_1]/2\ne0$，
+$A$ 不是标量。在二维中写
+$A=\alpha P+\beta(I-P)$，其中 $\alpha\ne\beta$，$P$ 为秩一投影。
+由 $\Phi(A)=A$、$\Phi(I)=I$ 得 $\Phi(P)=P$。
+
+固定投影的两个 Schwarz 缺额为零，所以 $P$ 属于乘法域。
+在 $A$ 的本征基中，左右乘法相容迫使
+
+$$
+\begin{aligned}
+ \Phi(E_{00})&=E_{00},&\Phi(E_{11})&=E_{11},\\
+ \Phi(E_{01})&=\lambda E_{01},&
+ \Phi(E_{10})&=\bar\lambda E_{10}.
+ \end{aligned}
+$$
+
+保 $\phi_\sigma$ 给出 $(\lambda-1)\sigma_{10}=0$。
+若 $\sigma_{10}=0$，则 $\sigma$ 与 $A$ 同为对角，
+$\rho_0=\sigma^{1/2}A\sigma^{1/2}$ 也与 $\sigma$ 对易，矛盾。
+故 $\lambda=1$、$\Phi=\operatorname{id}$，最后由可逆的夹乘变换得到
+$E=\operatorname{id}$。
+

@@ -52,7 +52,19 @@ $$\forall (n: \mathbb{N}), (\forall (\psi: ((\operatorname{Fin}\left(n\right)) \
 
 Replace each state amplitude by its nonnegative real norm, included in the complex scalars, and use Matrix.diagonal d with zero c. The resulting squared overlaps specialize the distribution qR of draft.tex line 776 to R equal to the identity. Function.const denotes the zero binary vector in the displayed formula.
 
-**Definition 1.5 (The Shannon lower-bound assertion).**
+**Lemma 1.5 (A sum over the eight binary words).**
+
+$$\forall (A: \operatorname{Type}*), ([\operatorname{AddCommMonoid}\left(A\right)] \forall (f: ((\operatorname{Fin}\left(3\right)) \to (\operatorname{ZMod}\left(2\right))) \to (A)), (\sum_{x: (\operatorname{Fin}\left(3\right)) \to (\operatorname{ZMod}\left(2\right))} (f\left(x\right)) = f\left(![0, 0, 0]\right) + f\left(![0, 0, 1]\right) + f\left(![0, 1, 0]\right) + f\left(![0, 1, 1]\right) + f\left(![1, 0, 0]\right) + f\left(![1, 0, 1]\right) + f\left(![1, 1, 0]\right) + f\left(![1, 1, 1]\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.sum_bits` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any type A in any universe with an additive commutative monoid structure, the sum of f over all functions Fin 3 to ZMod 2 is the displayed eight-term sum. The coordinates are ordered 0, 1, 2, with zero before one in each coordinate.
+
+**Definition 1.6 (The Shannon lower-bound assertion).**
 
 $$(\operatorname{D5.S3.Quantum.Magic.StabilizerAsymmetryShannonBoundRefutation.claim}) \Leftrightarrow (\forall (n: \mathbb{N}), ((1 \le n) \to (\forall (\psi: ((\operatorname{Fin}\left(n\right)) \to (\operatorname{ZMod}\left(2\right))) \to (\mathbb{C})), ((\sum_{x: (\operatorname{Fin}\left(n\right)) \to (\operatorname{ZMod}\left(2\right))} (\operatorname{Complex.normSq}\left(\psi\left(x\right)\right)) = (1: \mathbb{R})) \to (\forall (q: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \operatorname{ZMod}\left(2\right)\right)), (\forall (c: (\operatorname{Fin}\left(n\right)) \to (\operatorname{ZMod}\left(2\right))), ((\operatorname{D5.S3.Quantum.Magic.StabilizerAsymmetryShannonBoundRefutation.IsStrictUpper}\left(q\right)) \to (\operatorname{D5.S3.Entropy.MaxEntropy.shannonEntropy}\left(\operatorname{D5.S3.Quantum.Magic.StabilizerAsymmetryShannonBoundRefutation.absProb}\left(\psi\right)\right) \le \operatorname{D5.S3.Entropy.MaxEntropy.shannonEntropy}\left(\operatorname{D5.S3.Quantum.Magic.StabilizerAsymmetryShannonBoundRefutation.overlapProb}\left(q, c, \psi\right)\right)))))))))$$
 
@@ -66,7 +78,7 @@ $$(\operatorname{D5.S3.Quantum.Magic.StabilizerAsymmetryShannonBoundRefutation.c
 
 For every positive number of qubits and every unit complex amplitude vector, the Shannon entropy of the absolute-amplitude law is asserted to be no greater than the entropy for each strictly upper-triangular q and each binary c. Shannon entropy is the finite sum of −r log r in nats, with the summand zero at r = 0. This is the k = N, R = I specialization of the conjectured Shannon extension of equation (69): draft.tex lines 776–779 give the bound for integer Rényi index greater than one, and line 782 conjectures it for index one. A lower bound on the minimum over q and c requires the same lower bound for every such pair.
 
-**Theorem 1.6 (The three-qubit entropy reversal).**
+**Theorem 1.7 (The three-qubit entropy reversal).**
 
 $$\neg (\operatorname{D5.S3.Quantum.Magic.StabilizerAsymmetryShannonBoundRefutation.claim})$$
 
@@ -100,6 +112,7 @@ The upper bound in TwoDeletionRunEntropyBounds.logb_three_bounds is logb 2 3 < 5
 - Truth anchor: `D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.overlapProb`
 - Truth anchor: `D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.stabAmp`
+- Truth anchor: `D5/S3/Quantum/Magic/StabilizerAsymmetryShannonBoundRefutation.sum_bits`
 - Dependency: [D5/S0/Certificates/Hypergraphs/OrientationEntropyBalance](../../../S0/Certificates/Hypergraphs/OrientationEntropyBalance.md)
 - Dependency: [D5/S3/Entropy/TwoDeletionRunEntropyBounds](../../Entropy/TwoDeletionRunEntropyBounds.md)
 - Dependency: [D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation](../Entanglement/FourMUBBoundEntanglementRefutation.md)

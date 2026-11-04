@@ -76,7 +76,67 @@ $$\forall (n : Type), [\operatorname{Fintype}\left(n\right)], [\operatorname{Dec
 
 For q positive, raising the Schatten norm to q returns its singular-value power sum.
 
-**Definition 1.7 (Singular-value power sum).**
+**Definition 1.7 (Hermitian eigenvalue power sum).**
+
+Lean statement: `D5/S3/Quantum/NormCompression/UpperBranchReduction.eigenPow`
+
+*Formalization.* `D5/S3/Quantum/NormCompression/UpperBranchReduction.eigenPow` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing eigenvalue power sum is public so the actual finite power trace supplier can reuse its exact Schatten and Gram identification.
+
+**Lemma 1.8 (Actual row Gram spectrum).**
+
+Lean statement: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_rowGram`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_rowGram` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive real exponent and arbitrary finite rectangular complex matrix, the Schatten power equals the power sum over the actual row Gram spectrum. This is the existing proof exposed for reuse.
+
+**Lemma 1.9 (Row Gram eigenvalue power sum).**
+
+Lean statement: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_eigenPow_rowGram`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_eigenPow_rowGram` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact existing Schatten power and row Gram eigenvalue identity is exposed without changing its proof.
+
+**Lemma 1.10 (PSD Schatten and eigenvalue powers).**
+
+Lean statement: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_eigenPow`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_eigenPow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a positive semidefinite square matrix and a positive real exponent, the Schatten and eigenvalue power sums agree. The finite power trace continuity proof consumes this exact existing identity.
+
+**Lemma 1.11 (Nonnegative scaling of Schatten powers).**
+
+Lean statement: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_sqrt_smul`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_sqrt_smul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonnegative real w and positive p, multiplying a finite rectangular complex matrix by sqrt(w) multiplies its Schatten power by w^(p/2), including w = 0. The finite power degree one homogeneity proof consumes this existing identity.
+
+**Definition 1.12 (Singular-value power sum).**
 
 $$\forall (m : Type), \forall (n : Type), [\operatorname{Fintype}\left(m\right)], [\operatorname{Fintype}\left(n\right)], [\operatorname{DecidableEq}\left(m\right)], [\operatorname{DecidableEq}\left(n\right)], \forall (p : \mathbb{R}), \forall (A : \operatorname{Matrix}\left(m, n, \mathbb{C}\right)), \operatorname{schattenPow}\left(p, A\right) = \sum_{i \in \operatorname{Finsupp}.\operatorname{support}\left(\operatorname{LinearMap}.\operatorname{singularValues}\left(\operatorname{Matrix}.\operatorname{toEuclideanLin}\left(A\right)\right)\right)} \operatorname{LinearMap}.\operatorname{singularValues}\left(\operatorname{Matrix}.\operatorname{toEuclideanLin}\left(A\right)\right)\left(i\right)^{p}$$
 
@@ -88,7 +148,7 @@ $$\forall (m : Type), \forall (n : Type), [\operatorname{Fintype}\left(m\right)]
 
 Page 2 defines the Schatten norm by ‖A‖_p = (Tr(|A|^p))^(1/p). The finite trace power is the sum of powers of LinearMap.singularValues of Matrix.toEuclideanLin A. Only nonzero singular values occur in its Finsupp.support; at the exponents used below, omitted zero values contribute zero.
 
-**Definition 1.8 (Schatten norm).**
+**Definition 1.13 (Schatten norm).**
 
 $$\forall (m : Type), \forall (n : Type), [\operatorname{Fintype}\left(m\right)], [\operatorname{Fintype}\left(n\right)], [\operatorname{DecidableEq}\left(m\right)], [\operatorname{DecidableEq}\left(n\right)], \forall (p : \mathbb{R}), \forall (A : \operatorname{Matrix}\left(m, n, \mathbb{C}\right)), \operatorname{schattenNorm}\left(p, A\right) = \operatorname{schattenPow}\left(p, A\right)^{\frac{1}{p}}$$
 
@@ -100,7 +160,7 @@ $$\forall (m : Type), \forall (n : Type), [\operatorname{Fintype}\left(m\right)]
 
 Page 2, verbatim: "For a general matrix or operator A, they are defined as" followed by ‖A‖_p = (Tr(|A|^p))^(1/p). Real.rpow is used for both powers, and 1/p is real division. The reduction only uses p >= 2, so neither p = 0 nor the infinite-exponent norm is involved.
 
-**Definition 1.9 (Compatible block-column concatenation).**
+**Definition 1.14 (Compatible block-column concatenation).**
 
 $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), \forall (C : (J \to Type)), \forall (A : \forall (j : J), \operatorname{Matrix}\left(HA, C\left(j\right), \mathbb{C}\right)), \forall (B : \forall (j : J), \operatorname{Matrix}\left(HB, C\left(j\right), \mathbb{C}\right)), \forall (i : \operatorname{Sum}\left(HA, HB\right)), \forall (jk : \operatorname{Sigma}\left(C\right)), \operatorname{assemble}\left(A, B\right)\left(i, jk\right) = \operatorname{Matrix}.\operatorname{fromRows}\left(A\left(\operatorname{Sigma}.\operatorname{fst}\left(jk\right)\right), B\left(\operatorname{Sigma}.\operatorname{fst}\left(jk\right)\right)\right)\left(i, \operatorname{Sigma}.\operatorname{snd}\left(jk\right)\right)$$
 
@@ -112,7 +172,7 @@ $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), \forall (C : (J 
 
 Page 2 writes T as the two block rows (A_1,...,A_N) and (B_1,...,B_N). J indexes the columns, HA and HB index the row spaces, and C j is the column space shared by A j and B j. Sigma C concatenates these column spaces, which may have different finite dimensions. Matrix.fromRows stacks the two blocks.
 
-**Definition 1.10 (Square-root column rescaling).**
+**Definition 1.15 (Square-root column rescaling).**
 
 $$\forall (m : Type), \forall (n : Type), \forall (w : \mathbb{R}), \forall (A : \operatorname{Matrix}\left(m, n, \mathbb{C}\right)), \operatorname{rescale}\left(w, A\right) = (\operatorname{Real}.\operatorname{sqrt}\left(w\right) : \mathbb{C}) \cdot A$$
 
@@ -124,7 +184,7 @@ $$\forall (m : Type), \forall (n : Type), \forall (w : \mathbb{R}), \forall (A :
 
 Both blocks of column j are multiplied by the same nonnegative square root. The displayed coercion casts the real scalar to Complex. In the reduction, w j >= 0, including zero weights.
 
-**Definition 1.11 (The two-row norm compression).**
+**Definition 1.16 (The two-row norm compression).**
 
 $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), [\operatorname{Fintype}\left(HA\right)], [\operatorname{Fintype}\left(HB\right)], [\operatorname{DecidableEq}\left(HA\right)], [\operatorname{DecidableEq}\left(HB\right)], \forall (C : (J \to Type)), [\forall (j : J), \operatorname{Fintype}\left(C\left(j\right)\right)], [\forall (j : J), \operatorname{DecidableEq}\left(C\left(j\right)\right)], \forall (p : \mathbb{R}), \forall (A : \forall (j : J), \operatorname{Matrix}\left(HA, C\left(j\right), \mathbb{C}\right)), \forall (B : \forall (j : J), \operatorname{Matrix}\left(HB, C\left(j\right), \mathbb{C}\right)), \forall (i : \operatorname{Fin}\left(2\right)), \forall (j : J), \operatorname{compression}\left(p, A, B\right)\left(i, j\right) = ((if (i = 0) then \operatorname{schattenNorm}\left(p, A\left(j\right)\right) else \operatorname{schattenNorm}\left(p, B\left(j\right)\right)) : \mathbb{C})$$
 
@@ -136,7 +196,7 @@ $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), [\operatorname{F
 
 Page 2, verbatim: "I denote by 𝒞ₚ(T) its Schatten p-norm compression," followed by the two scalar rows (‖A_1‖_p,...,‖A_N‖_p) and (‖B_1‖_p,...,‖B_N‖_p). Row i = 0 is the A row; the other element of Fin 2 is the B row. Each nonnegative real entry is cast to Complex.
 
-**Definition 1.12 (Compression Gram matrix).**
+**Definition 1.17 (Compression Gram matrix).**
 
 $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), [\operatorname{Fintype}\left(J\right)], [\operatorname{Fintype}\left(HA\right)], [\operatorname{Fintype}\left(HB\right)], [\operatorname{DecidableEq}\left(HA\right)], [\operatorname{DecidableEq}\left(HB\right)], \forall (C : (J \to Type)), [\forall (j : J), \operatorname{Fintype}\left(C\left(j\right)\right)], [\forall (j : J), \operatorname{DecidableEq}\left(C\left(j\right)\right)], \forall (p : \mathbb{R}), \forall (A : \forall (j : J), \operatorname{Matrix}\left(HA, C\left(j\right), \mathbb{C}\right)), \forall (B : \forall (j : J), \operatorname{Matrix}\left(HB, C\left(j\right), \mathbb{C}\right)), \operatorname{compressionGram}\left(p, A, B\right) = \operatorname{compression}\left(p, A, B\right) \cdot \operatorname{Matrix}.\operatorname{conjTranspose}\left(\operatorname{compression}\left(p, A, B\right)\right)$$
 
@@ -148,7 +208,7 @@ $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), [\operatorname{F
 
 The compression Gram matrix uses Matrix.conjTranspose and lives on the fixed row type Fin 2. Its entries are the sums of the squared top norms, squared bottom norms and products of the two norms.
 
-**Theorem 1.13 (Three active weights preserve the compression Gram matrix).**
+**Theorem 1.18 (Three active weights preserve the compression Gram matrix).**
 
 $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), [\operatorname{Fintype}\left(J\right)], [\operatorname{Fintype}\left(HA\right)], [\operatorname{Fintype}\left(HB\right)], [\operatorname{DecidableEq}\left(J\right)], [\operatorname{DecidableEq}\left(HA\right)], [\operatorname{DecidableEq}\left(HB\right)], \forall (C : (J \to Type)), [\forall (j : J), \operatorname{Fintype}\left(C\left(j\right)\right)], [\forall (j : J), \operatorname{DecidableEq}\left(C\left(j\right)\right)], \forall (p : \mathbb{R}), (2 \le p) \Rightarrow (\forall (A : \forall (j : J), \operatorname{Matrix}\left(HA, C\left(j\right), \mathbb{C}\right)), \forall (B : \forall (j : J), \operatorname{Matrix}\left(HB, C\left(j\right), \mathbb{C}\right)), \exists (w : (J \to \mathbb{R})), (\forall (j : J), 0 \le w\left(j\right)) \land ((\operatorname{Finset}.\operatorname{card}\left(\operatorname{Set}.\operatorname{Finite}.\operatorname{toFinset}\left(\operatorname{Set}.\operatorname{toFinite}\left(\operatorname{Function}.\operatorname{support}\left(w\right)\right)\right)\right) \le 3) \land ((\operatorname{compressionGram}\left(p, (fun (j : J) \mapsto \operatorname{rescale}\left(w\left(j\right), A\left(j\right)\right)), (fun (j : J) \mapsto \operatorname{rescale}\left(w\left(j\right), B\left(j\right)\right))\right) = \operatorname{compressionGram}\left(p, A, B\right)) \land (\operatorname{schattenNorm}\left(p, \operatorname{assemble}\left(A, B\right)\right) \le \operatorname{schattenNorm}\left(p, \operatorname{assemble}\left((fun (j : J) \mapsto \operatorname{rescale}\left(w\left(j\right), A\left(j\right)\right)), (fun (j : J) \mapsto \operatorname{rescale}\left(w\left(j\right), B\left(j\right)\right))\right)\right)))))$$
 
@@ -160,7 +220,7 @@ $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), [\operatorname{F
 
 The three real moments are (‖A_j‖_p^2, ‖B_j‖_p^2, ‖A_j‖_p ‖B_j‖_p). A signed dependence among more than three active moment vectors gives two nonnegative boundary weights whose convex combination is the original weight. One boundary has no smaller convex Schatten power. Repeating the face move terminates with at most three active weights. Columns with both blocks zero are discarded before the face moves.
 
-**Theorem 1.14 (At most three actual block columns).**
+**Theorem 1.19 (At most three actual block columns).**
 
 $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), [\operatorname{Fintype}\left(J\right)], [\operatorname{Fintype}\left(HA\right)], [\operatorname{Fintype}\left(HB\right)], [\operatorname{DecidableEq}\left(J\right)], [\operatorname{DecidableEq}\left(HA\right)], [\operatorname{DecidableEq}\left(HB\right)], \forall (C : (J \to Type)), [\forall (j : J), \operatorname{Fintype}\left(C\left(j\right)\right)], [\forall (j : J), \operatorname{DecidableEq}\left(C\left(j\right)\right)], \forall (p : \mathbb{R}), (2 \le p) \Rightarrow (\forall (A : \forall (j : J), \operatorname{Matrix}\left(HA, C\left(j\right), \mathbb{C}\right)), \forall (B : \forall (j : J), \operatorname{Matrix}\left(HB, C\left(j\right), \mathbb{C}\right)), \exists (w : (J \to \mathbb{R})), (\forall (j : J), 0 \le w\left(j\right)) \land ((\operatorname{Fintype}.\operatorname{card}\left(\operatorname{Set}.\operatorname{Finite}.\operatorname{toFinset}\left(\operatorname{Set}.\operatorname{toFinite}\left(\operatorname{Function}.\operatorname{support}\left(w\right)\right)\right)\right) \le 3) \land ((\operatorname{compressionGram}\left(p, (fun (j : \operatorname{Set}.\operatorname{Finite}.\operatorname{toFinset}\left(\operatorname{Set}.\operatorname{toFinite}\left(\operatorname{Function}.\operatorname{support}\left(w\right)\right)\right)) \mapsto \operatorname{rescale}\left(w\left(\operatorname{val}\left(j\right)\right), A\left(\operatorname{val}\left(j\right)\right)\right)), (fun (j : \operatorname{Set}.\operatorname{Finite}.\operatorname{toFinset}\left(\operatorname{Set}.\operatorname{toFinite}\left(\operatorname{Function}.\operatorname{support}\left(w\right)\right)\right)) \mapsto \operatorname{rescale}\left(w\left(\operatorname{val}\left(j\right)\right), B\left(\operatorname{val}\left(j\right)\right)\right))\right) = \operatorname{compressionGram}\left(p, A, B\right)) \land (\operatorname{schattenNorm}\left(p, \operatorname{assemble}\left(A, B\right)\right) \le \operatorname{schattenNorm}\left(p, \operatorname{assemble}\left((fun (j : \operatorname{Set}.\operatorname{Finite}.\operatorname{toFinset}\left(\operatorname{Set}.\operatorname{toFinite}\left(\operatorname{Function}.\operatorname{support}\left(w\right)\right)\right)) \mapsto \operatorname{rescale}\left(w\left(\operatorname{val}\left(j\right)\right), A\left(\operatorname{val}\left(j\right)\right)\right)), (fun (j : \operatorname{Set}.\operatorname{Finite}.\operatorname{toFinset}\left(\operatorname{Set}.\operatorname{toFinite}\left(\operatorname{Function}.\operatorname{support}\left(w\right)\right)\right)) \mapsto \operatorname{rescale}\left(w\left(\operatorname{val}\left(j\right)\right), B\left(\operatorname{val}\left(j\right)\right)\right))\right)\right)))))$$
 
@@ -172,7 +232,7 @@ $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), [\operatorname{F
 
 Restricting to the finite support of w deletes every zero-weight column. The selected index is a subtype member, and val returns its original column index. The compression Gram matrix is exactly the original one, and the Schatten norm of the selected, rescaled block matrix is at least the original norm. The row dimensions and the individual column dimensions are unrestricted finite types.
 
-**Theorem 1.15 (The three-column case implies the upper branch).**
+**Theorem 1.20 (The three-column case implies the upper branch).**
 
 $$\forall (J : Type), \forall (HA : Type), \forall (HB : Type), [\operatorname{Fintype}\left(J\right)], [\operatorname{Fintype}\left(HA\right)], [\operatorname{Fintype}\left(HB\right)], [\operatorname{DecidableEq}\left(J\right)], [\operatorname{DecidableEq}\left(HA\right)], [\operatorname{DecidableEq}\left(HB\right)], \forall (C : (J \to Type)), [\forall (j : J), \operatorname{Fintype}\left(C\left(j\right)\right)], [\forall (j : J), \operatorname{DecidableEq}\left(C\left(j\right)\right)], \forall (p : \mathbb{R}), (2 \le p) \Rightarrow ((\forall (K : Type), [\operatorname{Fintype}\left(K\right)], [\operatorname{DecidableEq}\left(K\right)], \forall (D : (K \to Type)), [\forall (k : K), \operatorname{Fintype}\left(D\left(k\right)\right)], [\forall (k : K), \operatorname{DecidableEq}\left(D\left(k\right)\right)], \forall (Ap : \forall (j : K), \operatorname{Matrix}\left(HA, D\left(j\right), \mathbb{C}\right)), \forall (Bp : \forall (j : K), \operatorname{Matrix}\left(HB, D\left(j\right), \mathbb{C}\right)), (0 < \operatorname{Fintype}.\operatorname{card}\left(K\right)) \Rightarrow ((\operatorname{Fintype}.\operatorname{card}\left(K\right) \le 3) \Rightarrow (\operatorname{schattenNorm}\left(p, \operatorname{assemble}\left(Ap, Bp\right)\right) \le \operatorname{schattenNorm}\left(p, \operatorname{compression}\left(p, Ap, Bp\right)\right)))) \Rightarrow (\forall (A : \forall (j : J), \operatorname{Matrix}\left(HA, C\left(j\right), \mathbb{C}\right)), \forall (B : \forall (j : J), \operatorname{Matrix}\left(HB, C\left(j\right), \mathbb{C}\right)), \operatorname{schattenNorm}\left(p, \operatorname{assemble}\left(A, B\right)\right) \le \operatorname{schattenNorm}\left(p, \operatorname{compression}\left(p, A, B\right)\right)))$$
 
@@ -192,6 +252,7 @@ Conjecture 1, page 2, verbatim: "Let T be a general matrix partitioned in 2 × N
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.compression`
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.compressionGram`
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.diagonal_power_le_eigenvalue_power`
+- Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.eigenPow`
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.expectation_eq_eigenvalue_sum`
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.r1_upper`
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.rescale`
@@ -201,5 +262,9 @@ Conjecture 1, page 2, verbatim: "Let T be a general matrix partitioned in 2 × N
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenNorm_rpow`
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow`
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_columnGram`
+- Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_eigenPow`
+- Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_eigenPow_rowGram`
+- Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_rowGram`
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_nonneg`
+- Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_sqrt_smul`
 - Truth anchor: `D5/S3/Quantum/NormCompression/UpperBranchReduction.upper_three_columns`

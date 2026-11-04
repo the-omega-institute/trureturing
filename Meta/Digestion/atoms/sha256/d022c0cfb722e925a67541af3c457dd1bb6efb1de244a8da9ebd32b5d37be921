@@ -1,0 +1,135 @@
+**命题 22.2（All-scale confinement, actual interaction and structural
+separation）。** The graphs $F_n$, odd $n\geq7$, form an infinite
+family of connected even-order simple unit-weight graphs in
+$\mathcal C$. They satisfy (21.1)–(21.2) on their entire original
+half-filled carriers for every even $s\geq2$. At each such scale,
+the original regional occupancies of both $W$ and $Q$ fail to
+commute with $K_s$. At every such scale this family is outside
+every sufficient whole-graph confinement domain in the owning
+volume through Section 16 and in Sections 17–18 here.
+
+Proof. The wheel and the clique on $p,c_1,c_2,c_3,c_4$ are
+connected and share $p$. Each leaf is attached to this connected
+union. The order is $m=n+9$, even and at least $16$; differing
+$n$ give differing orders. The entire induced neighborhoods are
+
+$$
+\begin{aligned}
+H[N(p)]&=C_n\sqcup K_4,\\
+H[N(v_j)]&=v_{j-1}-p-v_{j+1},\\
+H[N(c_i)]&=K_4[\{p\}\cup\{c_j:j\ne i\}]\sqcup\{\ell_i\},\\
+H[N(\ell_i)]&=\{c_i\}.
+\end{aligned}
+\tag{22.2}
+$$
+
+Here $H=F_n$ in the displayed notation. The absence of an edge
+between $v_{j-1}$ and $v_{j+1}$ follows from $n\geq7$; a leaf
+has no neighbor besides its specified $c_i$. There is no edge
+between any rim vertex and any $c_i$. These observations verify
+both the asserted edges and the absence of extra edges in each
+entire neighborhood. At $p$ the actual cycle component qualifies;
+at each $c_i$ the isolated leaf component qualifies; at a rim
+vertex and a leaf the whole neighborhood is bipartite. Thus
+$F_n\in\mathcal C$, with its $K_4$ components left unrestricted,
+and Theorem 21.2 applies at every asserted scale.
+
+For interaction, fix any $s=2S\geq2$, $k=ms/2$ and actual original
+occupancy operators $M_W=\sum_{i\in W}n_i$ and
+$M_Q=\sum_{i\in Q}n_i$. These regions share the same Boolean
+fibre $B_p$, not two copies of it. Choose $x\in B_p$ and
+$y\in B_{c_1}$. There is a $k$-subset $T$ with $x\in T$ and
+$y\notin T$: choose $k-1$ coordinates from the other $ms-2$,
+which is possible since $1\leq k\leq ms-1$. Put
+$T'=T\setminus\{x\}\cup\{y\}$. The actual edge $pc_1$ gives
+$\langle T'|K_s|T\rangle=1$, while $M_W(T')-M_W(T)=-1$.
+Consequently
+
+$$
+\langle T'|[M_W,K_s]|T\rangle=-1.
+\tag{22.3}
+$$
+
+Choosing instead $y\in B_{v_0}$ uses the actual spoke $pv_0$
+and gives the same nonzero commutator entry for $M_Q$.
+In fact a token can pass from the rim to the clique through $p$:
+choose a $k$-subset containing a coordinate of $B_{v_0}$ and
+omitting specified coordinates of $B_p$ and $B_{c_1}$, and move
+it successively along $v_0p$ and $pc_1$. Such a subset exists
+because $k-1\leq ms-3$ at the present $m\geq16,s\geq2$.
+Both moves have coefficient one in the unchanged original carrier.
+Thus the wheel and clique wing are interacting regions with
+actual occupancy transfer, with no separately fixed regional
+filling or independent regional minimization.
+
+It remains to check the exact sufficient domains. At $p$, the
+neighborhood has the two nonbipartite actual components $C_n$
+and $K_4$. It is not bipartite and has no bipartite component.
+This excludes the wholly bipartite-neighborhood domain of
+Section 7 and the component-bipartite domain of Section 14,
+including their stated consumers. It is neither bipartite nor
+$C_5$, excluding Definition 15.1(a). It is also neither
+bipartite nor one simple odd cycle, excluding Definition 17.1
+and therefore its Section 18 family.
+
+Definition 15.1(b) requires a flat least mode of the entire
+neighborhood when it is nonbipartite. This fails at $p$.
+The least eigenvalue on $C_n$ is $-2\cos(\pi/n)<-1$, whereas
+$A(K_4)=\boldsymbol1\boldsymbol1^{\mathsf T}-I$ has eigenvalues
+$3,-1,-1,-1$. The adjacency of $C_n\sqcup K_4$ is their direct
+sum. Every eigenvector for its least eigenvalue consequently
+vanishes on the $K_4$ coordinates, and cannot have modulus one
+at every coordinate. Thus condition (b) fails structurally at
+all scales, including those $s\geq4$ where its theorem applies.
+This is not a failure of an estimate being used to assert
+noncoverage; it is failure of the stated eigenvector hypothesis.
+
+The wheel $F_n[W]$ is a nonclique maximal two-connected block.
+Deleting its hub leaves its rim cycle; deleting a rim vertex
+leaves a hub joined to the remaining rim path, so deleting any
+one vertex leaves it connected. Its rim vertices have no edges
+to the clique wing or its leaves. A subgraph containing one of
+these rim vertices and a vertex outside $W$ would have $p$ as
+a separating vertex, so cannot enlarge this two-connected block.
+It is not a clique since $v_0$ and $v_2$ are nonadjacent.
+The block-graph domains of Sections 12–13, including their
+all-even conclusion, therefore fail.
+
+The graph is not complete multipartite: $v_0$ is nonadjacent to
+both $v_2$ and $v_3$, but $v_2v_3$ is an edge. Distinct
+nonadjacent vertices in a complete multipartite graph belong to
+the same independent part, so these three relations are
+incompatible with that graph class. This excludes all balanced,
+dominant-part and combined complete-multipartite domains of
+Sections 10–11 at every scale.
+
+The global flat least-mode assumption of Sections 3–6 also fails.
+Extend a least Fourier vector of the induced rim by zero at all
+other vertices. Its adjacency Rayleigh quotient in $F_n$ is
+$-2\cos(\pi/n)<-1$, since all edges with an outside endpoint
+contribute zero. Thus the whole-graph least eigenvalue $\lambda_H$
+satisfies $\lambda_H<-1$. A modulus-one least eigenvector $z$
+would, at a leaf, satisfy
+$\lambda_H z_{\ell_i}=z_{c_i}$. Taking moduli would give
+$|\lambda_H|=1$, a contradiction. In particular the larger-scale
+flat-mode confinement theorem of Section 6 supplies no scale of
+this family. Section 2's general defect certificate is a lower
+bound, not a sufficient every-ground confinement theorem.
+
+The individual-wheel domain of Section 16 has no degree-one
+vertices, whereas $F_n$ has four. The individual wheels in
+Proposition 15.4 are excluded for the same reason. The five-rim
+wheel with rim leaves in Proposition 15.3 has a six-vertex core
+after deleting all degree-one vertices; here that deletion leaves
+$n+5\geq12$ vertices. It cannot be one of those graphs. Likewise
+the two-shared-edge-wheel family of Section 18 has all its
+neighborhoods bipartite or one odd cycle, a condition already
+excluded at $p$ by (22.2). Sections 8–9 concern odd fibre sizes
+and give no conclusion at any of the even scales asserted here.
+The collective-oscillator and three Lean/Scribe suppliers provide
+the stated representations, counting and refutation conclusions;
+they add no sufficient whole-graph confinement domain containing
+this family. These exclusions exhaust the sufficient domains
+of those supplied results, without claiming confinement fails
+outside them. $\square$
+

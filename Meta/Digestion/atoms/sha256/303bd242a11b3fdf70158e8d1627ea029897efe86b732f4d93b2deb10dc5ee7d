@@ -1,0 +1,78 @@
+### 定理 21.1（嵌套分辨率的塔式关系）
+
+<a id="thm-c94-tower"></a>
+
+设 $\mathcal A\subseteq\mathcal B\subseteq B(\mathcal H)$ 为含单位的普通
+$C^*$ 子代数，二者均由同一忠实 $\tau$ 的模流保持。
+分别记 C94 的唯一约化为 $R_{\mathcal A},R_{\mathcal B}$。
+则
+
+<a id="eq-c94-tower"></a>
+
+$$
+\boxed{R_{\mathcal A}R_{\mathcal B}
+=R_{\mathcal A}=R_{\mathcal B}R_{\mathcal A}.}
+\tag{21.1}
+$$
+
+对任意密度态 $\rho$，还有
+
+<a id="eq-c94-three-entropy"></a>
+
+$$
+D(\rho\Vert\tau)
+={}D(\rho\Vert R_{\mathcal B}\rho)
+ +D(R_{\mathcal B}\rho\Vert R_{\mathcal A}\rho)
+ +D(R_{\mathcal A}\rho\Vert\tau),
+\tag{21.2}
+$$
+
+<a id="eq-c94-resolution-loss"></a>
+
+$$
+D(\rho\Vert R_{\mathcal A}\rho)
+={}D(\rho\Vert R_{\mathcal B}\rho)
+ +D(R_{\mathcal B}\rho\Vert R_{\mathcal A}\rho).
+\tag{21.3}
+$$
+
+**证明。**
+令 $E_{\mathcal A}=R_{\mathcal A}^*$、$E_{\mathcal B}=R_{\mathcal B}^*$。
+因为 $E_{\mathcal B}$ 在 $\mathcal B$ 上为恒等，且
+$\operatorname{ran} E_{\mathcal A}=\mathcal A\subseteq\mathcal B$，
+有 $E_{\mathcal B}E_{\mathcal A}=E_{\mathcal A}$。
+另一方面，$E_{\mathcal A}E_{\mathcal B}$ 为 unital CP 映射，值域在
+$\mathcal A$，固定 $\mathcal A$ 并保持 $\tau$。
+两映射的双模性质给出
+
+$$
+E_{\mathcal A}E_{\mathcal B}(a_1xa_2)
+=a_1E_{\mathcal A}E_{\mathcal B}(x)a_2
+\quad(a_1,a_2\in\mathcal A).
+$$
+
+因此它也是保 $\tau$ 的 $\mathcal A$ 条件期望。
+由本轮块形式的唯一性，它等于 $E_{\mathcal A}$。
+取迹伴随即得式 [(21.1)](#eq-c94-tower)。
+
+先对 $\rho$ 使用 $\mathcal B$ 的式 [(11.1)](#eq-c94-pythagorean)，
+再对 $R_{\mathcal B}\rho$ 使用 $\mathcal A$ 的同一恒等式，
+并代入 $R_{\mathcal A}R_{\mathcal B}\rho=R_{\mathcal A}\rho$，
+得到式 [(21.2)](#eq-c94-three-entropy)。
+与直接使用 $\mathcal A$ 的勾股恒等式比较，得到式
+[(21.3)](#eq-c94-resolution-loss)。
+
+这些运算对非满秩输入也成立。
+对任何 C94 块重置和正态 $\sigma$，可见边缘的零方向在原正态中也必为零；
+正块矩阵的跨块项不能越出对角块支撑。
+隐藏参照忠实，故块式给
+$\operatorname{supp}\sigma\subseteq\operatorname{supp} R_{\mathcal C}\sigma$。
+依次应用可得
+
+$$
+\operatorname{supp}\rho\subseteq\operatorname{supp} R_{\mathcal B}\rho
+\subseteq\operatorname{supp} R_{\mathcal A}\rho\subseteq\operatorname{supp}\tau.
+$$
+
+全部相对熵均有限，对数在相应支撑上使用，没有无穷量相减。
+

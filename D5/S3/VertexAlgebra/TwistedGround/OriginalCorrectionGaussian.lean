@@ -58,7 +58,7 @@ theorem sourceVacuum_eq_evaluation (D : LatticeData) (z : ℂ) (p : Oscillator D
   simpa only [evaluateCorrection, optionEquivLeft_elim_eval, eval_zero',
     correctionPolynomial, correctionLift, LinearMap.comp_apply, AlgEquiv.toLinearMap_apply]
 
-private theorem covariance_symm (D : LatticeData) (z : ℂ) (a b : Index D) :
+theorem covariance_symm (D : LatticeData) (z : ℂ) (a b : Index D) :
     covariance D z a b = covariance D z b a := by
   have hs (m n : ℕ) : pairScalar m n = pairScalar n m := by
     unfold pairScalar

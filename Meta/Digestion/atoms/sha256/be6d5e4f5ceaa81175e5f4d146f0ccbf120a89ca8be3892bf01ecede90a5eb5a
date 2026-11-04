@@ -1,0 +1,23 @@
+#### 定理 13.4（投影效果与本征子空间无扰给通常更新）
+
+设同空间结果操作有 Kraus 算符 $A_\alpha$，
+$`\sum_\alpha A_\alpha^*A_\alpha=P`$ 为投影。
+若每个 $\operatorname{ran}  P$ 中的单位纯态被该结果操作固定，则
+$\mathcal I_P(\rho)=P\rho P$。
+
+**证明。**
+
+对 $\ker P$ 中向量，所有 $A_\alpha$ 的范数平方之和为零，
+故 $A_\alpha=A_\alpha P$。
+固定秩一输出迫使每个 $A_\alpha\psi$ 与 $\psi$ 共线；
+比较子空间内向量及其和，得到 $A_\alpha=c_\alpha P$。
+当 $P\ne0$，效果等式给 $\sum|c_\alpha|^2=1$；
+当 $P=0$，全部 Kraus 算符为零。结论均成立。
+
+□
+
+效果 $P$ 单独仍允许范围内附加酉转动。
+非零结果概率时再归一，才得 $P\rho P/\operatorname{Tr} (\rho P)$。
+
+<a id="statement-13-5"></a>
+

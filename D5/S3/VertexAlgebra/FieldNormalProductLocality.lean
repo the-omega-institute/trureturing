@@ -287,6 +287,218 @@ def flipDistribution : Module.End ℂ (ℤ → ℤ → Module.End ℂ V) where
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
+private theorem residueXY (negative positive : Triple V)
+    (negativeFinite : NegativeFinite negative) (positiveFinite : PositiveFinite positive)
+    (second third : ℤ) :
+    residue (shiftXY negative) (shiftXY positive) second third =
+      negative 0 second third - positive 0 second third := by
+  classical
+  let zeroSucc : Option ℕ ≃ ℕ := {
+    toFun value := match value with | none => 0 | some offset => offset + 1
+    invFun value := match value with | 0 => none | offset + 1 => some offset
+    left_inv value := by cases value <;> rfl
+    right_inv value := by cases value <;> rfl }
+  have splitSum (term : ℕ → V) (finite : Function.HasFiniteSupport term) :
+      ∑ᶠ offset : ℕ, term offset = term 0 + ∑ᶠ offset : ℕ, term (offset + 1) := by
+    rw [← finsum_comp_equiv zeroSucc, finsum_option]
+    · rfl
+    · exact finite.fun_comp_of_injective (g := fun offset : ℕ => offset + 1)
+        (fun first second equality => Nat.add_right_cancel equality)
+  have negativeFirst : Function.HasFiniteSupport
+      (fun offset : ℕ => negative (-(offset : ℤ)) (second + offset) third) := by
+    simpa using negativeFinite 0 second third
+  have negativeSecond : Function.HasFiniteSupport
+      (fun offset : ℕ => negative (-(offset : ℤ) - 1) (second + offset + 1) third) := by
+    simpa only [show ∀ offset : ℕ, (-1 : ℤ) - offset = -(offset : ℤ) - 1 by
+      intro offset; omega, add_assoc, add_left_comm, add_comm] using negativeFinite (-1)
+        (second + 1) third
+  have positiveFirst : Function.HasFiniteSupport
+      (fun offset : ℕ => positive ((offset : ℤ) + 1) (second - offset - 1) third) := by
+    simpa only [add_comm, sub_right_comm] using positiveFinite 1 (second - 1) third
+  have positiveSecond : Function.HasFiniteSupport
+      (fun offset : ℕ => positive offset (second - offset) third) := by
+    simpa using positiveFinite 0 second third
+  unfold residue shiftXY
+  simp_rw [show ∀ offset : ℕ, -(offset : ℤ) - 1 + 1 = -(offset : ℤ) by intro offset; omega,
+    show ∀ offset : ℕ, second - offset - 1 + 1 = second - offset by intro offset; omega]
+  rw [finsum_sub_distrib negativeFirst negativeSecond,
+    finsum_sub_distrib positiveFirst positiveSecond,
+    splitSum _ negativeFirst, splitSum _ positiveSecond]
+  have negativeShift : (fun offset : ℕ => negative (-((offset + 1 : ℕ) : ℤ))
+      (second + (offset + 1 : ℕ)) third) =
+      (fun offset : ℕ => negative (-(offset : ℤ) - 1) (second + offset + 1) third) := by
+    funext offset
+    push_cast
+    congr 1 <;> omega
+  have positiveShift : (fun offset : ℕ => positive ((offset + 1 : ℕ) : ℤ)
+      (second - (offset + 1 : ℕ)) third) =
+      (fun offset : ℕ => positive ((offset : ℤ) + 1) (second - offset - 1) third) := by
+    funext offset
+    push_cast
+    congr 1; omega
+  rw [negativeShift, positiveShift]
+  simp only [Nat.cast_zero, neg_zero, add_zero, sub_zero]
+  abel
+private theorem shiftsCommute : Commute (deltaXY (V := V)) deltaYZ := by
+  apply LinearMap.ext
+  intro pair
+  apply Subtype.ext
+  ext <;> simp [deltaXY, deltaYZ, shiftXY, shiftYZ] <;> abel
+private theorem residueYZ (pair : PairSpace V) : res (deltaYZ pair) = delta (res pair) := by
+  funext left right
+  dsimp [res, residue, deltaYZ, shiftYZ, delta]
+  have negativeFinite (left right : ℤ) : Function.HasFiniteSupport
+      (fun offset : ℕ => pair.val.1 (-(offset : ℤ) - 1) (left + offset) right) := by
+    simpa only [show ∀ offset : ℕ, (-1 : ℤ) - offset = -(offset : ℤ) - 1 by
+      intro offset; omega] using pair.property.1 (-1) left right
+  have positiveFinite (left right : ℤ) : Function.HasFiniteSupport
+      (fun offset : ℕ => pair.val.2 offset (left - offset - 1) right) := by
+    simpa only [zero_add, sub_right_comm] using pair.property.2 0 (left - 1) right
+  have forwardIndex (offset : ℕ) : left + (offset : ℤ) + 1 = (left + 1) + offset := by omega
+  have reverseIndex (offset : ℕ) :
+      left - (offset : ℤ) - 1 + 1 = (left + 1) - offset - 1 := by omega
+  simp_rw [forwardIndex, reverseIndex]
+  rw [finsum_sub_distrib (negativeFinite (left + 1) right) (negativeFinite left (right + 1)),
+    finsum_sub_distrib (positiveFinite (left + 1) right) (positiveFinite left (right + 1))]
+  abel
+private theorem discrepancyXY (pair : PairSpace V) :
+    discrepancy (deltaXY pair) = plainXY (discrepancy pair) := by
+  funext left middle right
+  dsimp [discrepancy, deltaXY, plainXY, shiftXY]
+  abel
+private theorem discrepancyYZ (pair : PairSpace V) :
+    discrepancy (deltaYZ pair) = plainYZ (discrepancy pair) := by
+  funext left middle right
+  dsimp [discrepancy, deltaYZ, plainYZ, shiftYZ]
+  abel
+private theorem intertwiningPowers {M W : Type u} [AddCommGroup M] [Module ℂ M]
+    [AddCommGroup W] [Module ℂ W] (first : Module.End ℂ M) (second : Module.End ℂ W)
+    (linear : M →ₗ[ℂ] W) (law : ∀ vector, linear (first vector) = second (linear vector))
+    (order : ℕ) (vector : M) : linear ((first ^ order) vector) =
+      (second ^ order) (linear vector) := by
+  induction order with
+  | zero => simp
+  | succ order inductionHypothesis =>
+    simp only [pow_succ', Module.End.mul_apply]
+    rw [law, inductionHypothesis]
+private theorem cancellationBound (pair : PairSpace V) (firstOrder secondOrder thirdOrder : ℕ)
+    (annihilated : ((((deltaXY : Module.End ℂ (PairSpace V)) + deltaYZ) ^ firstOrder *
+      deltaYZ ^ secondOrder : Module.End ℂ (PairSpace V))) pair = 0)
+    (discrepancyKilled : discrepancy ((deltaXY ^ thirdOrder) pair) = 0) :
+    delta^[firstOrder + secondOrder + thirdOrder] (res pair) = 0 := by
+  let first : Module.End ℂ (PairSpace V) := deltaXY
+  let second : Module.End ℂ (PairSpace V) := deltaYZ
+  let combined := first + second
+  have commuting : Commute first second := shiftsCommute
+  have combinedCommute : Commute combined first := (Commute.refl first).add_left commuting.symm
+  have firstCombined : Commute first combined := combinedCommute.symm
+  have low (degree : ℕ) (large : firstOrder ≤ degree) :
+      (combined ^ degree * second ^ secondOrder) pair = 0 := by
+    obtain ⟨extra, rfl⟩ := Nat.exists_eq_add_of_le large
+    rw [pow_add, (Commute.refl combined).pow_pow _ _ |>.eq]
+    rw [mul_assoc, Module.End.mul_apply, annihilated, map_zero]
+  have high (degree power : ℕ) (large : thirdOrder + 1 ≤ power) :
+      res ((combined ^ degree * first ^ power * second ^ secondOrder) pair) = 0 := by
+    obtain ⟨extra, powerEquality⟩ := Nat.exists_eq_add_of_le large
+    have reorder : combined ^ degree * first ^ power * second ^ secondOrder =
+        first * (combined ^ degree * first ^ extra * second ^ secondOrder) * first ^
+          thirdOrder := by
+      rw [powerEquality]
+      rw [show thirdOrder + 1 + extra = 1 + extra + thirdOrder by omega, pow_add,
+        pow_add, pow_one]
+      calc
+        _ = first * (combined ^ degree * first ^ extra * first ^ thirdOrder) *
+            second ^ secondOrder := by
+              rw [← mul_assoc, ← mul_assoc, ← mul_assoc,
+                (combinedCommute.pow_left degree).eq]
+              simp only [mul_assoc]
+        _ = (first * (combined ^ degree * first ^ extra)) *
+            (first ^ thirdOrder * second ^ secondOrder) := by simp only [mul_assoc]
+        _ = _ := by
+          rw [(commuting.pow_pow thirdOrder secondOrder).eq]
+          simp only [mul_assoc]
+    rw [reorder]
+    let value := (combined ^ degree * first ^ extra * second ^ secondOrder)
+      ((first ^ thirdOrder) pair)
+    change residue (shiftXY value.val.1) (shiftXY value.val.2) = _
+    funext left right
+    rw [residueXY]
+    · have vanished : discrepancy
+          ((combined ^ degree * first ^ extra * second ^ secondOrder)
+            ((first ^ thirdOrder) pair)) = 0 := by
+        simp only [Module.End.mul_apply]
+        have combinedLaw (value : PairSpace V) : discrepancy (combined value) =
+            ((plainXY + plainYZ : Module.End ℂ (Triple V))) (discrepancy value) := by
+          change discrepancy (deltaXY value + deltaYZ value) =
+            plainXY (discrepancy value) + plainYZ (discrepancy value)
+          rw [map_add, discrepancyXY, discrepancyYZ]
+        rw [intertwiningPowers combined (plainXY + plainYZ) discrepancy combinedLaw,
+          intertwiningPowers first plainXY discrepancy discrepancyXY,
+          intertwiningPowers second plainYZ discrepancy discrepancyYZ,
+          discrepancyKilled, map_zero, map_zero, map_zero]
+      have atCoefficient := congrFun (congrFun (congrFun vanished 0) left) right
+      exact atCoefficient
+    · exact ((combined ^ degree * first ^ extra * second ^ secondOrder)
+        ((first ^ thirdOrder) pair)).property.1
+    · exact ((combined ^ degree * first ^ extra * second ^ secondOrder)
+        ((first ^ thirdOrder) pair)).property.2
+  have cancellation : res ((second ^ (firstOrder + thirdOrder) * second ^ secondOrder) pair)
+    = 0 := by
+    have minusCommute : Commute combined (-first) := by
+      apply LinearMap.ext
+      intro value
+      have law := congrArg (fun operator : Module.End ℂ (PairSpace V) => operator value)
+        combinedCommute.eq
+      simpa only [Module.End.mul_apply, LinearMap.neg_apply, map_neg] using congrArg Neg.neg law
+    have expansion := minusCommute.add_pow (firstOrder + thirdOrder)
+    have sumEquality : second ^ (firstOrder + thirdOrder) =
+        ∑ degree ∈ Finset.range (firstOrder + thirdOrder + 1),
+          combined ^ degree * (-first) ^ (firstOrder + thirdOrder - degree) *
+            (firstOrder + thirdOrder).choose degree := by
+      have difference : combined + -first = second := by dsimp [combined]; abel
+      rw [difference] at expansion
+      exact expansion
+    rw [sumEquality, Finset.sum_mul, LinearMap.sum_apply, map_sum]
+    apply Finset.sum_eq_zero
+    intro degree member
+    have bound : degree ≤ firstOrder + thirdOrder := by simpa using Finset.mem_range.mp member
+    have sign (order : ℕ) : (-first) ^ order = ((-1 : ℂ) ^ order) • first ^ order := by
+      induction order with
+      | zero => simp
+      | succ order inductionHypothesis =>
+        rw [pow_succ', inductionHypothesis, pow_succ']
+        apply LinearMap.ext
+        intro value
+        simp only [Module.End.mul_apply, LinearMap.neg_apply, LinearMap.smul_apply,
+          mul_smul, neg_one_smul, map_smul]
+        simp only [pow_succ', Module.End.mul_apply, smul_neg]
+    rw [sign, Algebra.mul_smul_comm, Algebra.smul_mul_assoc, Algebra.smul_mul_assoc,
+      LinearMap.smul_apply, map_smul]
+    simp only [Module.End.mul_apply, Module.End.natCast_apply, map_nsmul]
+    by_cases large : firstOrder ≤ degree
+    · have vanish : (combined ^ degree * first ^ (firstOrder + thirdOrder - degree) *
+          second ^ secondOrder) pair = 0 := by
+        rw [(combinedCommute.pow_pow _ _).eq, mul_assoc, Module.End.mul_apply]
+        rw [low degree large, map_zero]
+      have atCoefficient := congrArg (fun value => res value) vanish
+      simp only [map_zero] at atCoefficient
+      simp only [Module.End.mul_apply] at atCoefficient
+      simp only [atCoefficient, smul_zero]
+    · have vanish := high degree (firstOrder + thirdOrder - degree) (by omega)
+      simp only [Module.End.mul_apply] at vanish
+      simp only [vanish, smul_zero]
+  have residuePowers (order : ℕ) (value : PairSpace V) :
+      res ((second ^ order) value) = delta^[order] (res value) := by
+    induction order with
+    | zero => simp
+    | succ order inductionHypothesis =>
+      rw [pow_succ', Module.End.mul_apply, residueYZ, inductionHypothesis,
+        Function.iterate_succ_apply']
+  rw [← residuePowers]
+  rw [show firstOrder + secondOrder + thirdOrder = firstOrder + thirdOrder + secondOrder by omega,
+    pow_add]
+  exact cancellation
+
 theorem normalMinusOne_locality (first second third : VertexOperator ℂ V)
     (firstOrder secondOrder thirdOrder : ℕ)
     (firstKilled : delta^[firstOrder] (commutator first third) = 0)
@@ -294,217 +506,6 @@ theorem normalMinusOne_locality (first second third : VertexOperator ℂ V)
     (thirdKilled : delta^[thirdOrder] (commutator first second) = 0) :
     delta^[firstOrder + secondOrder + thirdOrder]
       (commutator (normalMinusOne first second).val third) = 0 := by
-  have residueXY (negative positive : Triple V)
-      (negativeFinite : NegativeFinite negative) (positiveFinite : PositiveFinite positive)
-      (second third : ℤ) :
-      residue (shiftXY negative) (shiftXY positive) second third =
-        negative 0 second third - positive 0 second third := by
-    classical
-    let zeroSucc : Option ℕ ≃ ℕ := {
-      toFun value := match value with | none => 0 | some offset => offset + 1
-      invFun value := match value with | 0 => none | offset + 1 => some offset
-      left_inv value := by cases value <;> rfl
-      right_inv value := by cases value <;> rfl }
-    have splitSum (term : ℕ → V) (finite : Function.HasFiniteSupport term) :
-        ∑ᶠ offset : ℕ, term offset = term 0 + ∑ᶠ offset : ℕ, term (offset + 1) := by
-      rw [← finsum_comp_equiv zeroSucc, finsum_option]
-      · rfl
-      · exact finite.fun_comp_of_injective (g := fun offset : ℕ => offset + 1)
-          (fun first second equality => Nat.add_right_cancel equality)
-    have negativeFirst : Function.HasFiniteSupport
-        (fun offset : ℕ => negative (-(offset : ℤ)) (second + offset) third) := by
-      simpa using negativeFinite 0 second third
-    have negativeSecond : Function.HasFiniteSupport
-        (fun offset : ℕ => negative (-(offset : ℤ) - 1) (second + offset + 1) third) := by
-      simpa only [show ∀ offset : ℕ, (-1 : ℤ) - offset = -(offset : ℤ) - 1 by
-        intro offset; omega, add_assoc, add_left_comm, add_comm] using negativeFinite (-1)
-          (second + 1) third
-    have positiveFirst : Function.HasFiniteSupport
-        (fun offset : ℕ => positive ((offset : ℤ) + 1) (second - offset - 1) third) := by
-      simpa only [add_comm, sub_right_comm] using positiveFinite 1 (second - 1) third
-    have positiveSecond : Function.HasFiniteSupport
-        (fun offset : ℕ => positive offset (second - offset) third) := by
-      simpa using positiveFinite 0 second third
-    unfold residue shiftXY
-    simp_rw [show ∀ offset : ℕ, -(offset : ℤ) - 1 + 1 = -(offset : ℤ) by intro offset; omega,
-      show ∀ offset : ℕ, second - offset - 1 + 1 = second - offset by intro offset; omega]
-    rw [finsum_sub_distrib negativeFirst negativeSecond,
-      finsum_sub_distrib positiveFirst positiveSecond,
-      splitSum _ negativeFirst, splitSum _ positiveSecond]
-    have negativeShift : (fun offset : ℕ => negative (-((offset + 1 : ℕ) : ℤ))
-        (second + (offset + 1 : ℕ)) third) =
-        (fun offset : ℕ => negative (-(offset : ℤ) - 1) (second + offset + 1) third) := by
-      funext offset
-      push_cast
-      congr 1 <;> omega
-    have positiveShift : (fun offset : ℕ => positive ((offset + 1 : ℕ) : ℤ)
-        (second - (offset + 1 : ℕ)) third) =
-        (fun offset : ℕ => positive ((offset : ℤ) + 1) (second - offset - 1) third) := by
-      funext offset
-      push_cast
-      congr 1; omega
-    rw [negativeShift, positiveShift]
-    simp only [Nat.cast_zero, neg_zero, add_zero, sub_zero]
-    abel
-  have shiftsCommute : Commute (deltaXY (V := V)) deltaYZ := by
-    apply LinearMap.ext
-    intro pair
-    apply Subtype.ext
-    ext <;> simp [deltaXY, deltaYZ, shiftXY, shiftYZ] <;> abel
-  have residueYZ (pair : PairSpace V) : res (deltaYZ pair) = delta (res pair) := by
-    funext left right
-    dsimp [res, residue, deltaYZ, shiftYZ, delta]
-    have negativeFinite (left right : ℤ) : Function.HasFiniteSupport
-        (fun offset : ℕ => pair.val.1 (-(offset : ℤ) - 1) (left + offset) right) := by
-      simpa only [show ∀ offset : ℕ, (-1 : ℤ) - offset = -(offset : ℤ) - 1 by
-        intro offset; omega] using pair.property.1 (-1) left right
-    have positiveFinite (left right : ℤ) : Function.HasFiniteSupport
-        (fun offset : ℕ => pair.val.2 offset (left - offset - 1) right) := by
-      simpa only [zero_add, sub_right_comm] using pair.property.2 0 (left - 1) right
-    have forwardIndex (offset : ℕ) : left + (offset : ℤ) + 1 = (left + 1) + offset := by omega
-    have reverseIndex (offset : ℕ) :
-        left - (offset : ℤ) - 1 + 1 = (left + 1) - offset - 1 := by omega
-    simp_rw [forwardIndex, reverseIndex]
-    rw [finsum_sub_distrib (negativeFinite (left + 1) right) (negativeFinite left (right + 1)),
-      finsum_sub_distrib (positiveFinite (left + 1) right) (positiveFinite left (right + 1))]
-    abel
-  have discrepancyXY (pair : PairSpace V) :
-      discrepancy (deltaXY pair) = plainXY (discrepancy pair) := by
-    funext left middle right
-    dsimp [discrepancy, deltaXY, plainXY, shiftXY]
-    abel
-  have discrepancyYZ (pair : PairSpace V) :
-      discrepancy (deltaYZ pair) = plainYZ (discrepancy pair) := by
-    funext left middle right
-    dsimp [discrepancy, deltaYZ, plainYZ, shiftYZ]
-    abel
-  have intertwiningPowers {M W : Type u} [AddCommGroup M] [Module ℂ M]
-      [AddCommGroup W] [Module ℂ W] (first : Module.End ℂ M) (second : Module.End ℂ W)
-      (linear : M →ₗ[ℂ] W) (law : ∀ vector, linear (first vector) = second (linear vector))
-      (order : ℕ) (vector : M) : linear ((first ^ order) vector) =
-        (second ^ order) (linear vector) := by
-    induction order with
-    | zero => simp
-    | succ order inductionHypothesis =>
-      simp only [pow_succ', Module.End.mul_apply]
-      rw [law, inductionHypothesis]
-  have cancellationBound (pair : PairSpace V) (firstOrder secondOrder thirdOrder : ℕ)
-      (annihilated : ((((deltaXY : Module.End ℂ (PairSpace V)) + deltaYZ) ^ firstOrder *
-        deltaYZ ^ secondOrder : Module.End ℂ (PairSpace V))) pair = 0)
-      (discrepancyKilled : discrepancy ((deltaXY ^ thirdOrder) pair) = 0) :
-      delta^[firstOrder + secondOrder + thirdOrder] (res pair) = 0 := by
-    let first : Module.End ℂ (PairSpace V) := deltaXY
-    let second : Module.End ℂ (PairSpace V) := deltaYZ
-    let combined := first + second
-    have commuting : Commute first second := shiftsCommute
-    have combinedCommute : Commute combined first := (Commute.refl first).add_left commuting.symm
-    have firstCombined : Commute first combined := combinedCommute.symm
-    have low (degree : ℕ) (large : firstOrder ≤ degree) :
-        (combined ^ degree * second ^ secondOrder) pair = 0 := by
-      obtain ⟨extra, rfl⟩ := Nat.exists_eq_add_of_le large
-      rw [pow_add, (Commute.refl combined).pow_pow _ _ |>.eq]
-      rw [mul_assoc, Module.End.mul_apply, annihilated, map_zero]
-    have high (degree power : ℕ) (large : thirdOrder + 1 ≤ power) :
-        res ((combined ^ degree * first ^ power * second ^ secondOrder) pair) = 0 := by
-      obtain ⟨extra, powerEquality⟩ := Nat.exists_eq_add_of_le large
-      have reorder : combined ^ degree * first ^ power * second ^ secondOrder =
-          first * (combined ^ degree * first ^ extra * second ^ secondOrder) * first ^
-            thirdOrder := by
-        rw [powerEquality]
-        rw [show thirdOrder + 1 + extra = 1 + extra + thirdOrder by omega, pow_add,
-          pow_add, pow_one]
-        calc
-          _ = first * (combined ^ degree * first ^ extra * first ^ thirdOrder) *
-              second ^ secondOrder := by
-                rw [← mul_assoc, ← mul_assoc, ← mul_assoc,
-                  (combinedCommute.pow_left degree).eq]
-                simp only [mul_assoc]
-          _ = (first * (combined ^ degree * first ^ extra)) *
-              (first ^ thirdOrder * second ^ secondOrder) := by simp only [mul_assoc]
-          _ = _ := by
-            rw [(commuting.pow_pow thirdOrder secondOrder).eq]
-            simp only [mul_assoc]
-      rw [reorder]
-      let value := (combined ^ degree * first ^ extra * second ^ secondOrder)
-        ((first ^ thirdOrder) pair)
-      change residue (shiftXY value.val.1) (shiftXY value.val.2) = _
-      funext left right
-      rw [residueXY]
-      · have vanished : discrepancy
-            ((combined ^ degree * first ^ extra * second ^ secondOrder)
-              ((first ^ thirdOrder) pair)) = 0 := by
-          simp only [Module.End.mul_apply]
-          have combinedLaw (value : PairSpace V) : discrepancy (combined value) =
-              ((plainXY + plainYZ : Module.End ℂ (Triple V))) (discrepancy value) := by
-            change discrepancy (deltaXY value + deltaYZ value) =
-              plainXY (discrepancy value) + plainYZ (discrepancy value)
-            rw [map_add, discrepancyXY, discrepancyYZ]
-          rw [intertwiningPowers combined (plainXY + plainYZ) discrepancy combinedLaw,
-            intertwiningPowers first plainXY discrepancy discrepancyXY,
-            intertwiningPowers second plainYZ discrepancy discrepancyYZ,
-            discrepancyKilled, map_zero, map_zero, map_zero]
-        have atCoefficient := congrFun (congrFun (congrFun vanished 0) left) right
-        exact atCoefficient
-      · exact ((combined ^ degree * first ^ extra * second ^ secondOrder)
-          ((first ^ thirdOrder) pair)).property.1
-      · exact ((combined ^ degree * first ^ extra * second ^ secondOrder)
-          ((first ^ thirdOrder) pair)).property.2
-    have cancellation : res ((second ^ (firstOrder + thirdOrder) * second ^ secondOrder) pair)
-      = 0 := by
-      have minusCommute : Commute combined (-first) := by
-        apply LinearMap.ext
-        intro value
-        have law := congrArg (fun operator : Module.End ℂ (PairSpace V) => operator value)
-          combinedCommute.eq
-        simpa only [Module.End.mul_apply, LinearMap.neg_apply, map_neg] using congrArg Neg.neg law
-      have expansion := minusCommute.add_pow (firstOrder + thirdOrder)
-      have sumEquality : second ^ (firstOrder + thirdOrder) =
-          ∑ degree ∈ Finset.range (firstOrder + thirdOrder + 1),
-            combined ^ degree * (-first) ^ (firstOrder + thirdOrder - degree) *
-              (firstOrder + thirdOrder).choose degree := by
-        have difference : combined + -first = second := by dsimp [combined]; abel
-        rw [difference] at expansion
-        exact expansion
-      rw [sumEquality, Finset.sum_mul, LinearMap.sum_apply, map_sum]
-      apply Finset.sum_eq_zero
-      intro degree member
-      have bound : degree ≤ firstOrder + thirdOrder := by simpa using Finset.mem_range.mp member
-      have sign (order : ℕ) : (-first) ^ order = ((-1 : ℂ) ^ order) • first ^ order := by
-        induction order with
-        | zero => simp
-        | succ order inductionHypothesis =>
-          rw [pow_succ', inductionHypothesis, pow_succ']
-          apply LinearMap.ext
-          intro value
-          simp only [Module.End.mul_apply, LinearMap.neg_apply, LinearMap.smul_apply,
-            mul_smul, neg_one_smul, map_smul]
-          simp only [pow_succ', Module.End.mul_apply, smul_neg]
-      rw [sign, Algebra.mul_smul_comm, Algebra.smul_mul_assoc, Algebra.smul_mul_assoc,
-        LinearMap.smul_apply, map_smul]
-      simp only [Module.End.mul_apply, Module.End.natCast_apply, map_nsmul]
-      by_cases large : firstOrder ≤ degree
-      · have vanish : (combined ^ degree * first ^ (firstOrder + thirdOrder - degree) *
-            second ^ secondOrder) pair = 0 := by
-          rw [(combinedCommute.pow_pow _ _).eq, mul_assoc, Module.End.mul_apply]
-          rw [low degree large, map_zero]
-        have atCoefficient := congrArg (fun value => res value) vanish
-        simp only [map_zero] at atCoefficient
-        simp only [Module.End.mul_apply] at atCoefficient
-        simp only [atCoefficient, smul_zero]
-      · have vanish := high degree (firstOrder + thirdOrder - degree) (by omega)
-        simp only [Module.End.mul_apply] at vanish
-        simp only [vanish, smul_zero]
-    have residuePowers (order : ℕ) (value : PairSpace V) :
-        res ((second ^ order) value) = delta^[order] (res value) := by
-      induction order with
-      | zero => simp
-      | succ order inductionHypothesis =>
-        rw [pow_succ', Module.End.mul_apply, residueYZ, inductionHypothesis,
-          Function.iterate_succ_apply']
-    rw [← residuePowers]
-    rw [show firstOrder + secondOrder + thirdOrder = firstOrder + thirdOrder + secondOrder by omega,
-      pow_add]
-    exact cancellation
   have increasingFinite (operator : VertexOperator ℂ V) (start : ℤ) (vector : V) :
       Function.HasFiniteSupport (fun offset : ℕ => (operator [[start + offset]]) vector) := by
     refine BddAbove.finite (bddAbove_def.mpr ?_)

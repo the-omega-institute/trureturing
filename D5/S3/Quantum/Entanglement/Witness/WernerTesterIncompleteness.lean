@@ -6,8 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.claim; result=D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.result; claim=D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.claim
    digest: Entangled Werner states need not be detected by any pair of complex testers. -/
 
+import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
-import D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 
@@ -313,8 +313,8 @@ private theorem flip_facts (d : ℕ) :
     (Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d))).IsHermitian ∧
       Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) *
         Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin d) (Fin d)) = 1 := by
-  exact ⟨D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapHermitian,
-    D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapSquare⟩
+  exact ⟨D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.swapHermitian,
+    D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.swapSquare⟩
 
 private theorem werner_density {d : ℕ} {μ : ℝ} (hd : 1 < d)
     (hμ₀ : 0 ≤ μ) (hμ₁ : μ ≤ 1) :
@@ -332,7 +332,7 @@ private theorem werner_density {d : ℕ} {μ : ℝ} (hd : 1 < d)
     have ha : (d : ℂ) + 1 ≠ 0 := by exact_mod_cast (Nat.succ_ne_zero d)
     have hb : (d : ℂ) - 1 ≠ 0 := sub_ne_zero.mpr (by exact_mod_cast (ne_of_gt hd))
     simp only [werner.eq_1, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub,
-      D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.traceSwap,
+      D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.traceSwap,
       Matrix.trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_mul,
       Complex.real_smul]
     push_cast
@@ -348,7 +348,7 @@ private theorem werner_readout {d : ℕ} (hd : 1 < d) (μ : ℝ) :
       werner d μ).trace = ((2 * μ - 1 : ℝ) : ℂ) := by
     simp only [werner.eq_1, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_sub, Matrix.mul_one,
       (flip_facts d).2, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub,
-      D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.traceSwap,
+      D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.traceSwap,
       Matrix.trace_one, Fintype.card_prod, Fintype.card_fin, Nat.cast_mul,
       Complex.real_smul]
     push_cast

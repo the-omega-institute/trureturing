@@ -76,7 +76,7 @@ $$\forall h: Nat, ((0 < h) \implies (\forall q: \operatorname{Fin}\left(h\right)
 
 *Commentary.*
 
-The complete family construction uses ActualCutPartitionRecovery.prefixTrie and its original prefixTrie_at theorem. NativeDepthPatterns.original_present_transport and the unrestricted append-readout component of ActualLeafHistoryRigidity.actual_address_geometry preserve navigation. DelayedOriginalReadout.right_clock_iterate and right_clock_readout supply the reply clocks and genuine-update witness. NativeSerialDepth.run_unique supplies labeled trace and output uniqueness. Pinned finite-cardinality and Hamming facts normalize the resulting exact counts; admissibility uses AdmissibleCount.Adm and ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true.
+The complete family construction uses ActualCutPartitionRecovery.prefixTrie and its original prefixTrie_at theorem. NativeDepthPatterns.original_present_transport and the unrestricted append-readout component of ActualLeafHistoryRigidity.actual_address_geometry preserve navigation. DelayedOriginalReadout.right_clock_iterate and right_clock_readout supply the reply clocks and genuine-update witness. NativeSerialDepth.run_unique supplies labeled trace and output uniqueness. Pinned finite-cardinality and Hamming facts normalize the resulting exact counts; admissibility uses AdmissibleCount.Adm and AdmissibleCount.adm_iff_no_adjacent_true.
 
 The new inference constructs the source-independent table and its actual native Run, proves both directions of actual Q/U/Z supports, and realizes exactly their installed legal image. Every allowed prefix has a promised completion, including every unary Update position and every fixed full-output halt. The installed union has 3 times 2 to h minus 3 states; one source visits exactly 2h states. Each supported primitive changes exactly one word bit, unsupported replies hold, and the first full Halt immediately follows the final primitive with no local step or intermediate output.
 
@@ -90,6 +90,6 @@ This is conditional mathematical installation under Definition 1.3's initializat
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/InterleavedWordRecovery.original`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/InterleavedWordRecovery.program`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/InterleavedWordRecovery.wordProgram`
+- Dependency: [D5/S1/Words/AdmissibleWords/AdmissibleCount](../../../../../S1/Words/AdmissibleWords/AdmissibleCount.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout](../DelayedOriginalReadout.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialDepth](../NativeSerialDepth.md)
-- Dependency: [D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant](../../../../Quantum/FockSpace/ForbiddenNeighbourDeterminant.md)

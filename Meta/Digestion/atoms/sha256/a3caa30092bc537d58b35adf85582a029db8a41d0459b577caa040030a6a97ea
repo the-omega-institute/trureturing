@@ -1,0 +1,12 @@
+#### 定义 4.2（有限复方向校准 J）
+
+取复正交单位基 $a_1,\ldots,a_d$，保留已有约束
+
+<a id="equation-J"></a>
+
+$$
+F(ia_j)=iF(a_j),\qquad j=1,\ldots,d.\tag{J}
+$$
+
+<a id="statement-4-3"></a>
+

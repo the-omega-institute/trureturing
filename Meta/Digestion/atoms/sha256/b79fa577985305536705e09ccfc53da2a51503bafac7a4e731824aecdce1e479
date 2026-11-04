@@ -1,0 +1,255 @@
+**定理 21.2（Every ground vector and the same-minimum spectral
+consequences at all even scales）。** For every $H\in\mathcal C$
+and every integer $S\geq1$, with exactly the $K_s,P_s,E_s$ of
+(19.1)–(19.2), $s=2S$, one has
+
+$$
+\ker(K_s-E_sI)\subseteq\operatorname{ran}P_s.
+\tag{21.1}
+$$
+
+The original nonsymmetric space $\mathcal N_s=\ker P_s$ is
+nonzero and reduces $K_s$. With this same actual whole-space
+minimum $E_s$,
+
+$$
+\begin{aligned}
+g_s&=\min\operatorname{spec}(K_s|_{\mathcal N_s})-E_s>0,\\
+K_s-E_sI&\succeq g_s(I-P_s),\\
+\|(I-P_s)\phi\|^2
+&\leq\frac{\langle\phi,(K_s-E_sI)\phi\rangle}{g_s}
+\qquad(\phi\in\mathcal H_{mS},\ \|\phi\|=1).
+\end{aligned}
+\tag{21.2}
+$$
+
+In particular energy excess at most $\delta\geq0$ bounds this
+mass by $\delta/g_s$. These statements include all local-spin
+sectors and copies, feasible weights, complex superpositions and
+entanglement. No numerical or scale-uniform gap is asserted.
+
+Proof. Suppose a deficient sector attains $E_s$ and choose a
+deficient site $p$. Theorem 19.2 applies to each actual component
+at this site. Let $C$ be a component satisfying Definition 21.1.
+Its conclusion requires every member of $\mathcal G_C(0)$ to be
+a total singlet.
+
+If $C$ is bipartite, consume the complete local obstruction in the
+[owning volume, (7.6)–(7.10)](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md),
+at the present integer spin $S\geq1$. Its hypotheses are a nonempty
+finite bipartite graph, equal integer spins $S$, positive operator
+$\sum_{\{i,j\}}(J_i^+J_j^-+J_i^-J_j^+)$, and its full total-zero
+space. It provides a zero-weight ground vector which is not a total
+singlet. In the one-vertex case there are no edges and the choice is
+$|S,0\rangle$, with $\|J^+|S,0\rangle\|^2=S(S+1)>0$.
+For a component with an edge, the supplied proof conjugates adjacency
+to its negative by a bipartition sign, uses the connected fixed-token
+configuration graph and Perron–Frobenius to obtain a ground vector
+with all weight coordinates nonzero, and uses the singlet identity
+$T_zv=(e_C(0)/4)v$. The zero configuration and the configuration
+$1,-1$ on an edge give the incompatible diagonal values $0,-1$.
+These are precisely the zero and $\pm1$ weights allowed for all
+integer $S\geq1$, including $S=1$. Thus the cited obstruction has
+no lost endpoint or extra filling assumption. It contradicts (19.4).
+
+Now let $C=C_n$ be a simple odd cycle. For clarity, the relevant
+local estimates of the owning volume can be consumed with their
+exact parameters as follows. Its adjacency has the orthogonal
+Fourier eigenvectors $z^{(j)}_a=e^{2\pi\mathrm i ja/n}$ and
+eigenvalues $2\cos(2\pi j/n)$. Orthogonality follows from the
+finite geometric sum. The least eigenvalue is
+
+$$
+\lambda=-2\cos(\pi/n)<0,
+\qquad z_a=e^{2\pi\mathrm i (n-1)a/(2n)},\qquad |z_a|=1.
+\tag{21.3}
+$$
+
+For any unit total singlet $v$ on these $n$ spin-$S$ sites,
+rotation equates its same-axis pair expectations. Put
+$F_\alpha=\sum_{i\in C}e_i\otimes J_i^\alpha v$ for
+$\alpha=x,y,z$. The spectral quadratic form and the local
+Casimir give exactly
+
+$$
+\begin{aligned}
+\langle v,K_Cv\rangle
+ &=\frac23\sum_\alpha
+  \langle F_\alpha,(A(C_n)\otimes I)F_\alpha\rangle\\
+ &\geq\frac23\lambda\sum_{i,\alpha}\|J_i^\alpha v\|^2
+ =\frac23\lambda nS(S+1).
+\end{aligned}
+\tag{21.4}
+$$
+
+The factor $2/3$ accounts for both orientations in the adjacency
+quadratic form and the two transverse axes in $K_C$.
+For a competing vector on the same uniform-spin-$S$ zero-weight
+space, use
+
+$$
+\Phi(T)=\binom{2nS}{nS}^{-1/2}
+ \prod_{(i,c)\in T}z_i,
+\qquad T\subseteq C\times[2S],\quad |T|=nS.
+\tag{21.5}
+$$
+
+It is normalized and constant within each fibre-occupancy orbit,
+so it belongs to the spin-$S$ tensor space. For an ordered pair of
+distinct Boolean coordinates, exactly $\binom{2nS-2}{nS-1}$
+subsets contain the first and omit the second. Counting both
+orientations of the actual edges therefore yields
+
+$$
+e_C(0)\leq\langle\Phi,K_C\Phi\rangle
+ =\lambda nS^2\frac{2nS}{2nS-1}.
+\tag{21.6}
+$$
+
+These are the supplied intermediates (15.4)–(15.6), not new
+representation or trial theorems. The complete phase-count bodies
+in [CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs),
+including `Test.move`, `Test.toNbr_bij`, `Test.token_energy`,
+`counting_identity`, `W_move`, `phi40_norm`, `phi40_energy` and
+`choose_ratio40`, supply this subset-counting mechanism. Their
+fixed parameters are $N=200,k=100,s=40$; the count used here has
+$N=2nS,k=nS,s=2S$. The real/complex Rayleigh comparison applies
+to arbitrary complex phases. Neither the cut-bound refutation nor
+the Laplacian-radius refutation is a spectral-confinement premise.
+
+For $S\geq2$, the comparison in the owning volume (15.7) is
+
+$$
+S^2\frac{2nS}{2nS-1}-\frac23S(S+1)
+=\frac{2S\{nS(S-2)+S+1\}}{3(2nS-1)}>0.
+\tag{21.7}
+$$
+
+Since $\lambda n<0$, (21.6) is strictly below (21.4).
+Thus no vector in $\mathcal G_C(0)$ is a singlet, contradicting
+Theorem 19.2. The numerator remains positive at $S=2$.
+
+At $S=1,n=5$, the exact supplied value is
+$\lambda=-\varphi$, $\varphi=(1+\sqrt5)/2$. If a singlet were a
+zero-weight ground vector of energy $e_C(0)$, (21.4) and (21.6)
+would give
+
+$$
+-\frac{20\varphi}{3}\leq e_C(0)
+ \leq-\frac{50\varphi}{9},\qquad -12<e_C(0)<-8.
+\tag{21.8}
+$$
+
+The last strict bounds follow from $3/2<\varphi<9/5$.
+Write $T_\alpha=\sum_{\{i,j\}\in E(C_5)}J_i^\alpha J_j^\alpha$.
+Rotate the singlet equation $2(T_x+T_y)v=e_C(0)v$ to obtain
+also the $x,z$ and $y,z$ equations. Adding these latter equations
+and subtracting the former gives $T_zv=(e_C(0)/4)v$.
+In the spin-one weight basis $T_z$ is integer diagonal, so a
+nonzero coordinate forces $e_C(0)\in4\mathbb Z$. This is
+incompatible with (21.8). This is the local five-cycle obstruction
+of (15.8), with no extrapolation to another cycle length.
+
+For the remaining $S=1$ cases use Theorem 20.1 on the actual cone
+$D=\{p\}\cup C$. At $n=3$, every unit total singlet on $C$ has
+
+$$
+0=\left(\sum_{i\in C}\boldsymbol J_i\right)^2
+ =6I+2\sum_{\{i,j\}\in E(C_3)}\boldsymbol J_i\cdot\boldsymbol J_j
+\quad\hbox{on that singlet space}.
+\tag{21.9}
+$$
+
+Rotation equates the same-axis expectations, giving
+$\langle K_C\rangle=-4$. By (19.4) its local ground energy must
+therefore be $e_C(0)=-4$. The actual cone is $K_4$ and has the
+supplied zero-weight trial of (13.13)–(13.14): pair its four
+actual spin-one fibres, and on each pair use
+
+$$
+d=\frac{|1,-1\rangle-|0,0\rangle+|-1,1\rangle}{\sqrt3}.
+\tag{21.10}
+$$
+
+Here each ket entry is the weight of one entire symmetric
+spin-one fibre. The vector is a pair singlet, as follows from
+its ladders or from
+[DLMF (34.3.1)](https://dlmf.nist.gov/34.3.E1) with coupled spins
+$1,1$ and total spin zero. Its one-site spin expectations vanish,
+and its pair edge expectation is $-8/3$. The product of the two
+pair singlets is an actual normalized Boolean zero-weight vector.
+The four interpair edges have zero expectation, so
+$\varepsilon_D(0)\leq-16/3<-4=e_C(0)$, contrary to (20.2).
+
+Finally let $S=1$ and odd $n\geq7$. The supplied singlet estimate
+(16.15)–(16.16) has the following exact coupling map. Couple the
+two spin-one neighbors of a cycle vertex to spin $q=0,1,2$,
+then couple them to that vertex's spin one, with
+$l=|q-1|,\ldots,q+1$. The triangle condition is
+[DLMF (34.2.1)](https://dlmf.nist.gov/34.2.E1); it includes
+the degenerate endpoints. The local operator
+$\boldsymbol J_i\cdot(\boldsymbol J_{i-1}+\boldsymbol J_{i+1})$
+has eigenvalues
+
+$$
+\frac{l(l+1)-2-q(q+1)}2\geq-3.
+\tag{21.11}
+$$
+
+Indeed its minimum is $0,-2,-3$ for $q=0,1,2$ respectively.
+Summing the local operators counts each isotropic cycle edge
+twice, so $H_{\rm iso}=\sum_i\boldsymbol J_i\cdot\boldsymbol J_{i+1}
+\succeq-3nI/2$. On a total singlet,
+$\langle K_C\rangle=(4/3)\langle H_{\rm iso}\rangle\geq-2n$.
+Theorem 19.2 consequently implies $e_C(0)\geq-2n$.
+
+The actual cone is the spin-one wheel of the
+[owning volume, Definition 16.1 and Theorem 16.2](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md).
+That theorem supplies a normalized vector in its original Boolean
+zero-weight carrier, and hence gives a bound for precisely
+$\varepsilon_D(0)$, not a minimum over a proxy sector. Its trial
+has local parameters $N_D=2(n+1)$ and $k_D=n+1$; writing
+$r=(n-1)/2$ and $u_j=e^{2\pi\mathrm i rj/n}$, its phases are
+$w_p=-1$ and $w_j=(u_j+1/10)/(1+u_j/10)$.
+They have modulus one, and its coefficient on a subset $T$ is
+$\binom{2(n+1)}{n+1}^{-1/2}\prod_{(i,c)\in T}w_i$.
+The complete wheel calculation (16.4)–(16.12) proves
+
+$$
+\varepsilon_D(0)
+\leq-\frac{4n(n+1)}{2n+1}
+ \left(\frac{49}{50}\cos\frac\pi n+\frac7{100}\right)
+<-2n\leq e_C(0).
+\tag{21.12}
+$$
+
+The strict inequality holds for every odd $n\geq7$, including
+$n=7$, at these exact parameters. This is a direct consumption
+of that supplied trial and its full estimate. It contradicts the
+necessary equality (20.2). It uses no whole-fibre cone claim
+for $S\geq2$.
+
+Every alternative for the selected component has contradicted
+attainment of $E_s$ by the deficient sector. In (19.5), any
+nonzero component of an arbitrary complex ground vector in a
+reducing summand is itself an $E_s$-ground vector. Hence no
+deficient component can occur, proving (21.1) for every copy,
+weight and superposition.
+
+For the spectral assertions, every original fibre permutation
+commutes with $K_s$, so $P_s$ commutes with $K_s$ and its kernel
+reduces it. This kernel is nonzero even at $m=2,S=1$:
+choose a nonconstant one-particle vector orthogonal to constants
+in one fibre, an occupancy-$(2S-1)$ vector in a second fibre,
+and occupancy-$S$ vectors in every remaining fibre. Their
+nonzero product is killed by $P_s$ and has occupancy
+$1+(2S-1)+(m-2)S=mS$. The finite nonempty spectrum on this kernel
+contains only eigenvalues at least $E_s$, and (21.1) excludes
+equality. Thus its minimum minus this same $E_s$ is $g_s>0$.
+On $\operatorname{ran}P_s$, $K_s-E_sI\succeq0$; on its
+orthogonal complement it is at least $g_sI$. Adding the two
+reducing quadratic forms proves the whole-space operator
+inequality, and its normalized expectation proves the mass
+bound and its $\delta\geq0$ consequence. $\square$
+

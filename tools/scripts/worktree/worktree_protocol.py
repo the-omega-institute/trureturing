@@ -492,6 +492,7 @@ def main(argv=None):
     pool = commands.add_parser("pool")
     pool.add_argument("--dev", required=True)
     pool.add_argument("--force", action="store_true")
+    pool.add_argument("--exclude-path", type=Path, action="append", default=[])
     recovery = commands.add_parser("recover-init")
     recovery.add_argument("--path", type=Path, required=True)
     recovery.add_argument("--branch", required=True)
@@ -510,11 +511,6 @@ def main(argv=None):
     qualification.add_argument("--path", action="append", type=Path, required=True)
     qualification.add_argument("--stream", action="store_true")
     qualification.add_argument("--budget-seconds", type=float)
-    retirement = commands.add_parser("retire-branch")
-    retirement.add_argument("--branch", required=True)
-    retirement.add_argument("--commit", required=True)
-    retirement.add_argument("--preview", action="store_true")
-    retirement.add_argument("--expected-reflog-sha256")
     for action in ("prepare-mirror", "validate-mirror"):
         mirror = commands.add_parser(action)
         mirror.add_argument("--base", required=True)
@@ -545,7 +541,8 @@ def main(argv=None):
         elif options.action in ("return", "claim", "pool"):
             from worktree_pool import return_tree, claim, sweep
             result = (return_tree(options) if options.action == "return" else claim(options)
-                      if options.action == "claim" else sweep(options.source, options.dev, options.force))
+                      if options.action == "claim" else sweep(options.source, options.dev, options.force,
+                                                             options.exclude_path))
             print(json.dumps(result), flush=True)
             return 74 if result.get("pool", result).get("status") == "failed" else 0
         elif options.action == "recover-init":
@@ -573,12 +570,6 @@ def main(argv=None):
             if result["status"] == "refused":
                 return 68 if all(row.get("reason", "").startswith("locked_") for row in result["items"]) else 73
             return 74 if result["status"] == "failed" else 0
-        elif options.action == "retire-branch":
-            from worktree_preservation import retire_branch
-            result = retire_branch(options)
-            print(json.dumps(result), flush=True)
-            if result["status"] == "partial_or_indeterminate":
-                return 74
         elif options.action == "prepare-mirror":
             from worktree_publication import prepare_mirror
             print(json.dumps(prepare_mirror(options)), flush=True)

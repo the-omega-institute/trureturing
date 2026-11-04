@@ -1,0 +1,50 @@
+### 命题 6.1（同类参照的有限接缝）
+
+对同一等价类中的满秩 $\sigma,\rho,\eta$，定义
+
+$$
+C_{\rho,\sigma}=\rho^{1/2}\sigma^{-1/2}.
+$$
+
+这些可逆元属于共同的固定代数 $\mathfrak F$，满足
+
+$$
+\begin{aligned}
+\rho&=C_{\rho,\sigma}\sigma C_{\rho,\sigma}^*,
+\end{aligned}
+\tag{37}
+$$
+
+<a id="eq-c123-reference-cocycle"></a>
+
+$$
+\begin{aligned}
+C_{\eta,\rho}C_{\rho,\sigma}&=C_{\eta,\sigma},
+ & C_{\sigma,\rho}&=C_{\rho,\sigma}^{-1}.
+\end{aligned}
+\tag{38}
+$$
+
+令 $\beta=\mathcal R^*|_{\mathfrak F}$ 为输出端的保星表示，
+$\tau_\sigma=\mathcal N(\sigma)$。则
+
+$$
+\tau_\rho^{1/2}\tau_\sigma^{-1/2}
+ =\beta(C_{\rho,\sigma}),
+$$
+
+故输出接缝也满足同一个三元复合式。
+
+**证明。**
+在上述分块中，$\sigma=\bigoplus S_\alpha\otimes\omega_\alpha$，
+故 $C_{\rho,\sigma}=\bigoplus R_\alpha^{1/2}S_\alpha^{-1/2}\otimes I$，
+属于 $\mathfrak F$。夹乘及三元式由相邻的正平方根与逆相消直接得到。
+参照等价定理证明中的 Kraus 交织给
+$\mathcal N(\rho)^{1/2}=\beta(C_{\rho,\sigma})\mathcal N(\sigma)^{1/2}$，
+右乘逆平方根即得输出式。$\beta$ 保乘法，所以保留三元接续。
+
+式 [(38)](#eq-c123-reference-cocycle) 的形式对于任意满秩矩阵都可写出；本定理的实质是这些接缝*属于同一个可恢复代数，并被同一过程保乘法地运输*。这一额外事实不能由一个形式上的三角相消代替。
+一般 $C_{\rho,\sigma}$ 不是酉矩阵，也未必是收缩。它是参照变化的关系坐标，不是已经免费供应的确定性量子门。要物理执行相应滤片，必须缩放成合法成功分支，并核对实际可用性与成功权重。
+
+**白话。**三份参照如果都只改变同一片可恢复内容，从第一份换到第二份、再换到第三份，与直接换过去给出同一条接缝。这个三角能闭合，是因为三次变化没有改动同一份未读条件结构。写出一个能相消的公式还不够；公式中的变化必须实际落在同一片可恢复关系里。
+

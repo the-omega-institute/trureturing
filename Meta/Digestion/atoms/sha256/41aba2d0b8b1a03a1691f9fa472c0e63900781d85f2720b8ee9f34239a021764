@@ -1,0 +1,68 @@
+**Theorem 41.4 (quantitative comparison on the value-preserving prefix).**
+For every original pair with $0<\rho(E,U)=\xi\le\beta$, put
+
+$$
+ \theta_* =\min\{\epsilon(E),\beta-\xi\},\qquad
+ \eta_* =\xi+\theta_* =\min\{\beta,\xi+\epsilon(E)\}.
+\tag{41.14}
+$$
+
+Then
+
+$$
+\begin{aligned}
+ g(E,U)&\ge V(\eta_*),\\
+ f(E,U)&\ge N_{\mathrm{geo}}(\xi)+V(\eta_*)-V(\xi).
+\end{aligned}
+\tag{41.15}
+$$
+
+For every mixed effect and $0<\xi<\beta$ this is strictly stronger
+than $f(E,U)\ge N_{\mathrm{geo}}(\xi)$. In particular
+
+$$
+ \mathcal A_\xi\subseteq
+    \{(E,U)\in\mathcal K:\operatorname{rank}E=1\},
+                      \qquad 0<\xi<\beta.
+\tag{41.16}
+$$
+
+For any family in Theorem 41.3, equality in (41.15) holds exactly
+when $(E_{\theta_*},U)\in\mathcal A_{\eta_*}$.
+
+*Proof.* Theorem 39.5 supplies the existing identity
+$m(\eta)=N_{\mathrm{geo}}(\eta)$ for every $0<\eta\le\beta$,
+including $\eta=\beta$. Apply Theorem 41.3 at $\theta_*$.
+The resulting actual pair is at the exact original level $\eta_*$
+and has unchanged $g$. Therefore
+
+$$
+\begin{aligned}
+ g(E,U)&=g(E_{\theta_*},U)\\
+       &=f(E_{\theta_*},U)+\kappa\eta_*\\
+       &\ge m(\eta_*)+\kappa\eta_*=V(\eta_*).
+\end{aligned}
+\tag{41.17}
+$$
+
+Subtracting $\kappa\xi$ proves the second line of (41.15).
+The only inequality in (41.17) is equality precisely for a global
+minimizer at $\eta_*$, proving the asserted equality criterion.
+When $\xi<\beta$ and $\epsilon(E)>0$, one has $\theta_*>0$;
+Theorem 41.2 gives $V(\eta_*)-V(\xi)>0$. This excludes every mixed
+equality pair there, regardless of its actual feedback or minimizing sign.
+Since the global value at $\xi$ is the stated geometric value,
+all global minimizers there are pure, proving (41.16).
+
+If $\epsilon=0$, the increment is zero and equality means exactly
+original global minimality at $\xi$. If $\xi=\beta$, the increment
+is again zero and gives no mixed exclusion at that endpoint.
+For a mixed input with $\xi+\epsilon\le\beta$, the comparison point
+is the pure endpoint; equality in (41.15) requires that actual pure
+pair to minimize at $\xi+\epsilon$. If $\xi+\epsilon>\beta$, the
+comparison point is still mixed and lies at $\beta$; equality requires
+that actual mixed endpoint minimizer. These cases include
+$\xi+\epsilon=\beta$ and exhaust the saturation possibilities.
+None of the equality conditions identifies the remaining feedback
+preimages of those global minimizing sets. $\square$
+

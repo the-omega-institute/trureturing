@@ -208,7 +208,7 @@ private lemma jacobi_eigenvector_zero (m : ℕ) (a e : Fin (m + 1) → ℝ)
       (transpose_vecMulVec v v) (by simp) (by simp [vecMulVec_apply, hz])
   exact (vecMulVec_eq_zero.mp hzero).elim id id
 
-private lemma jacobi_simple (m : ℕ) (a e : Fin (m + 1) → ℝ)
+lemma jacobi_simple (m : ℕ) (a e : Fin (m + 1) → ℝ)
     (he : ∀ t : Fin m, e t.castSucc ≠ 0) :
     HasSimpleEigenvalues (jacobiMatrix m a e) := by
   classical

@@ -6,9 +6,9 @@
    utility: none
    digest: Original vector recovery by an interleaved native control tree and its complete legal word image. -/
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth
 import D5.S3.Arith.FibonacciAtomic.Observer.DelayedOriginalReadout
-import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 import Mathlib.Data.List.GetD
 import Mathlib.Data.Nat.Log
 import Mathlib.InformationTheory.Hamming
@@ -420,7 +420,7 @@ private theorem vertex_bounds {h : Nat} (v : Vertex h) : (prefixOf v).length ≤
 
 private theorem encode_legal {h : Nat} (v : Vertex h) :
     D5.S1.Words.AdmissibleWords.AdmissibleCount.Adm (width h) (encode v) := by
-  apply (D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.adm_iff_no_adjacent_true _ _).mpr
+  apply (D5.S1.Words.AdmissibleWords.AdmissibleCount.adm_iff_no_adjacent_true _ _).mpr
   intro i j adjacent
   by_contra no
   have hi : encode v i = true := (not_or.mp no).1 |> Bool.eq_true_of_not_eq_false

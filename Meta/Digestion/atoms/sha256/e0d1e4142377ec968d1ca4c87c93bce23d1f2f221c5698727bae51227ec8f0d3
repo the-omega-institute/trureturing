@@ -1,0 +1,36 @@
+### 定理 1：可靠且收敛的残差下界
+
+有
+
+$$
+\boxed{
+\mathcal S_k-c_D\mathcal E_k
+\preceq
+\mathcal S_D
+\preceq
+\mathcal S_k,
+}
+$$
+<a id="eq-7"></a>
+<div class="equation-caption">Equation (7).</div>
+
+其中明确可取
+
+$$
+\boxed{
+c_D=\frac{1+\beta^{-1}}{1-\theta}.
+}
+$$
+<a id="eq-8"></a>
+<div class="equation-caption">Equation (8).</div>
+
+并且
+
+$$
+\boxed{\mathcal E_k\longrightarrow0.}
+$$
+<a id="eq-9"></a>
+<div class="equation-caption">Equation (9).</div>
+
+这比单纯知道 $\mathcal S_k$ 收敛更强：每一步都有一个能控制真实极限的下界。
+

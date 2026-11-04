@@ -20,7 +20,19 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.sub_sing
 
 If d(j) is nonzero, degree(d-e_j)+1 equals degree(d). Native insertion and the actual correction and elementary contraction inductions use this helper.
 
-**Theorem 1.2 (An occupied mode in a nonzero occupation).**
+**Theorem 1.2 (Factorial weight after removing an occupied occurrence).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.weight_sub_single`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.weight_sub_single` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If d(j) is nonzero, weight(d) equals d(j) times weight(d-e_j). The native Gaussian recurrence and the full neutral three-leg coefficient proof use this exact factorial ratio.
+
+**Theorem 1.3 (An occupied mode in a nonzero occupation).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.occupation_nonzero`
 
@@ -32,7 +44,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.occupati
 
 Every nonzero occupation has an index with nonzero multiplicity. The actual correction and elementary contraction support and uniqueness inductions consume this helper.
 
-**Definition 1.3 (Native factorial Gaussian moment).**
+**Definition 1.4 (Native factorial Gaussian moment).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.nativeMoment`
 
@@ -44,7 +56,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.nativeMo
 
 For any finite complex matrix A and occupation d, nativeMoment(A,d) is weight(d) times gaussianCoefficient(A,d). The coefficient is the native coefficient of Q_A^(degree(d)/2)/(degree(d)/2)!, where Q_A is one half of the sum of A_ij X_i X_j.
 
-**Theorem 1.4 (Exact native Gaussian insertion).**
+**Theorem 1.5 (Exact native Gaussian insertion).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.nativeMoment_step`
 
@@ -64,4 +76,5 @@ OriginalCorrectionGaussian.sourceMoment_eq_nativeMoment uses this recurrence to 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.nativeMoment_step`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.occupation_nonzero`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.sub_single_degree`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/NativeGaussianMoment.weight_sub_single`
 - Dependency: [D5/S3/VertexAlgebra/TwistedGround/FactorialFockQuadraticEstimate](FactorialFockQuadraticEstimate.md)

@@ -9,7 +9,7 @@ internal sealed class NewtonHankelRealRootCriterionDocument : IScribeDocumentDef
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Negative real roots of a positive-coefficient polynomial are equivalent to positivity of its Newton--Hankel matrix.",
         H("Newton--Hankel Real-Root Criterion"),
-        Blocks(EvaluationNode(), Describe.Lean(
+        Blocks(InterpolationNode(), EvaluationNode(), Describe.Lean(
             DescribeId.Create("negative-real-roots-iff-newton-hankel-positive-semidefinite"),
             DeclarationHandle.Create(
                 "D5/S3/Constants/NewtonHankelRealRootCriterion."
@@ -39,6 +39,15 @@ internal sealed class NewtonHankelRealRootCriterionDocument : IScribeDocumentDef
                         + "It does not assert a positive-definite determinant realization or a "
                         + "nonnegative-weight Fibonacci-chain realization."))),
             DescribeRole.Theorem))));
+
+    private static DocumentBlock InterpolationNode() => Describe.Lean(
+        DescribeId.Create("explicit-real-conjugate-pair-interpolation"),
+        DeclarationHandle.Create("D5/S3/Constants/NewtonHankelRealRootCriterion.exists_real_pair_interpolant"),
+        H("Explicit evaluation interface for real interpolation"),
+        StatementSource.WithoutFormula(),
+        AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text("For every natural d, complex root vector on Fin d, and complex z in its finite image with conjugate(z) unequal to z, assume that membership in this finite image is invariant under complex conjugation. There exists a real coefficient vector on Fin d whose vectorPolynomialValue at every w in that image is i when w=z, minus i when w=conjugate(z), and zero otherwise. The original private interpolation construction is reused unchanged. This explicit interface is consumed by complete countable-spectrum head isolation; it is an organizational helper, not a second interpolation proof."))),
+        DescribeRole.Theorem);
 
     private static DocumentBlock EvaluationNode() => Describe.Lean(
         DescribeId.Create("positive-coefficients-positive-evaluation"),

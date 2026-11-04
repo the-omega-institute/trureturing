@@ -1,0 +1,44 @@
+### 定理 5.2（有限来源表的互读界与 CP）
+
+<a id="thm-c130-cp"></a>
+
+固定一来源行 $p$。以下等价：
+
+1. 核 $K_\Phi$ 满足 C130；
+
+2. 对有限列表 $((E_{pi},e_\mu))_{i,\mu}$，其全部高斯整数配方对满足互读界；
+
+3. $\Phi$ 完全正。
+
+成立后 $\Phi$ 自动保伴随，且存在 $d\times m$ 矩阵 $A_\alpha$，使
+
+$$
+\Phi(x)=\sum_\alpha A_\alpha^*xA_\alpha.
+$$
+
+**证明。**
+该列表的比较表第 $((i,\mu),(j,\nu))$ 项为
+$\langle e_\mu,\Phi(E_{ij})e_\nu\rangle$，即 Choi 表 $C_\Phi=[\Phi(E_{ij})]$。
+由互读界与正核的等价，(2) 恰要求 $C_\Phi\succeq0$。
+将其分解为 $\sum_\alpha w_\alpha w_\alpha^*$，写
+$w_\alpha=\sum_i e_i\otimes A_\alpha^*e_i$，比较各块即得 Kraus 式；它的每一级矩阵放大都将正矩阵送到正矩阵，所以给 (3)。
+CP 反向作用于任意正块表 $[a_i^*a_j]$，再用向量族评价，得到
+
+$$
+\sum_{ij}\bar z_i K_\Phi((a_i,u_i),(a_j,u_j))z_j\ge0.
+$$
+
+于是全核正，互读定理给 (1)；(1) 显然给 (2)。
+
+在核商空间上令 $\pi(x)[a,u]=[xa,u]$。它保零差，因为
+$\langle\pi(x)h,k\rangle=\langle h,\pi(x^*)k\rangle$。
+取 $b=(\|x\|^2I-x^*x)^{1/2}$，有
+$\|x\|^2Q(h)-Q(\pi(x)h)=Q(\pi(b)h)\ge0$，故有界。
+核公式也保证 $Vu=[I,u]$ 对 $u$ 线性，直接得到
+
+$$
+\Phi(x)=V^*\pi(x)V.
+$$
+
+这里 $V$ 不必等距；单位效果未归一时不能补出等距结论。零映射使用零比较空间及空 Kraus 和，也满足本轮候选。
+

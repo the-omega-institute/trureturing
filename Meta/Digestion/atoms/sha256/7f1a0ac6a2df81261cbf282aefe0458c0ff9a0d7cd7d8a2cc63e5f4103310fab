@@ -1,0 +1,16 @@
+Take a legal path $p:r\to z$. Strong connectivity supplies paths $A:t(a)\to z$ and $B:t(b)\to z$, which may be empty. The return words
+
+$$
+u=aA,\qquad w=bB
+$$
+
+are nonempty, both start and end at $z$, and have different first named edges. The two words $puw$ and $pwu$ are legal from $r$ and distinct: after the common prefix $p$, their first edges are $a$ and $b$. They both end at $z$, whereas the cocycle gives
+
+$$
+\begin{aligned}
+\tau_r(puw)&=\tau_r(p)+\tau_z(u)+\tau_z(w),\\
+\tau_r(pwu)&=\tau_r(p)+\tau_z(w)+\tau_z(u).
+\end{aligned}
+$$
+
+These numbers are equal by commutativity of real addition. Hence $F(puw)=F(pwu)$ and $F$ is not injective. 

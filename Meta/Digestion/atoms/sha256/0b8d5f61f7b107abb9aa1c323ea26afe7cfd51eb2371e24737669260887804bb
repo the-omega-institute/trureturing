@@ -1,0 +1,27 @@
+### 例 5.1（同一输入、输出参照，仍有不同回推）
+
+<a id="ex-c122-reference-insufficient"></a>
+
+取 $H=K=\mathbb C^2$，$\sigma=I/2$，比较
+$\mathcal N_0=\operatorname{id}$ 与 $\mathcal N_1=\operatorname{Ad}_Z$。
+二者都有 $\tau=I/2$，但对应回推分别是 $\operatorname{id}$ 与 $\operatorname{Ad}_Z$。
+只读取 $\sigma,\tau$ 的规则必须对二者作出同一选择 $\mathcal R$。由于
+
+$$
+\|\operatorname{id}-\operatorname{Ad}_Z\|_\diamond=2,
+ \qquad
+ \|\mathcal R\operatorname{Ad}_Z-\operatorname{id}\|_\diamond
+ =\|\mathcal R-\operatorname{Ad}_Z\|_\diamond,
+$$
+
+三角不等式迫使
+
+$$
+\max_{j=0,1}\|\mathcal R\mathcal N_j-\operatorname{id}\|_\diamond\ge1.
+$$
+
+第一式可用输入 $\lvert +\rangle=(\lvert 0\rangle+\lvert 1\rangle)/\sqrt2$ 验证：两输出正交。
+因此，参照态相同不等于通道已被识别；还需内部标定的交叉读数或完整门资料。
+
+这里的标定不要求外部坐标系。它要求所用准备、效果与门在*同一套内部关系*中有已给定的矩阵表示，且以后实际调用遵守这套表示。知道一个矩阵、供应它的成功滤片、供应该滤片的完整酉实现及逆门，是不同的资源陈述。
+

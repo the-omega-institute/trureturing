@@ -1,0 +1,143 @@
+**定理 37.2（保留全部 II/S/X 与过程数据而失去 I 的完整族）。** 对每个 $\varepsilon\ne0$，定义 37.1 满足完整 C126 的全部非 I 条款，亦即完整 C127 除 Z 以外的全部条款，却不满足 I、Z 或原 D。它对**每个**原对象、每个实际联合对象和所有 $a\in E_A$ 仍有
+
+$$
+(D^{A,\varepsilon}_a)^2=(\delta^A_a)^2,\qquad
+D^{A,\varepsilon}_a u_A=D^{A,\varepsilon}_{u_A}a=0.
+\tag{37.3}
+$$
+
+然而混合三元曲率恰为
+
+$$
+\boxed{\quad
+([L_a,L_b]+[D^{A,\varepsilon}_a,D^{A,\varepsilon}_b])x
+=2\varepsilon\,t_A((\delta^A_ab)\circ x)u_A .
+\quad}
+\tag{37.4}
+$$
+
+右边在原指针的某些三元组上非零。该族没有实际 $M_2$，保留完整中心、各实际张量联合及全部原过程/记录/返回/有限历史；单标签平方数据即使全部精确，也不能替代 Z/I 或混合曲率。
+
+**证明。** 先核对整个原 X，不能只核对一只局部矩阵。普通原张量及其全部中心对满足
+
+$$
+N_{AB}=N_AN_B,\qquad
+t_{AB}(a\otimes b)=t_A(a)t_B(b).
+\tag{37.5}
+$$
+
+这是对 $\bigoplus_{s,t}M_{n_sm_t}$ 全部块求迹的等式，非仅一个块上的等式。原重括号、交换和经典副本按标签运输时同样保持单位和这份迹。故对任意原 $A,B$ 和所有局部响应，
+
+$$
+\begin{aligned}
+\mathsf V_{AB}(a\otimes u_B,a'\otimes u_B)&=\mathsf V_A(a,a'),\\
+\mathsf V_{AB}(a\otimes u_B,u_A\otimes b)&=0,\\
+D^{AB,\varepsilon}_{a\otimes u_B}(a'\otimes u_B)
+&=(D^{A,\varepsilon}_aa')\otimes u_B,\\
+D^{AB,\varepsilon}_{a\otimes u_B}(u_A\otimes b)&=0.
+\end{aligned}
+\tag{37.6}
+$$
+
+交换两因子得到另一组局部保持和交叉零。原 Jordan 嵌入、含幺、乘积张成及每对原准备的实际乘积准备都来自不变的全 tagged CP 模型。于是原 X 在**每个**实际联合上成立，不仅在某个 $AP$ 或乘积态子集上成立。模型自身实际具有其全部普通张量联合，故也覆盖每个 $AP^{\otimes k}$ 及再参考。
+
+对原 $\mathfrak k_A$ 中任意 $K$，它是逐块特殊酉内导子，满足 $Ku_A=0$、$t_A(Ky)=0$ 及 Jordan 导子律。因此
+
+$$
+\mathsf V_A(Ka,x)+\mathsf V_A(a,Kx)=0,
+$$
+
+并由 (37.2) 得
+
+$$
+[K,M^A_a]x=-\varepsilon\mathsf V_A(a,Kx)u_A
+=\varepsilon\mathsf V_A(Ka,x)u_A=M^A_{Ka}x.
+\tag{37.7}
+$$
+
+$\delta$ 的 II 是 Jacobi 恒等式，故原 $D^\varepsilon$ 对完整 $\mathfrak k_A$ 满足 II。这项证明容许 $a$ 有任意中心和跨块分量，未假设 $M_a$ 属于 $\mathfrak k_A$。
+
+现在固定一个完整对象，暂略上标。由迹的循环性，
+
+$$
+M_au=0,\qquad M_u=0,\qquad
+\delta_aM_b=0,\qquad M_aM_b=0,\qquad
+M_a\delta_a=0.
+\tag{37.8}
+$$
+
+例如 $M_a\delta_ax=\varepsilon t(a\circ\delta_ax)u=0$，因为
+$t(\delta_ax)=0$ 且 $t(a\circ\delta_ax)=\tfrac i2t(a[a,x])=0$。
+(37.8) 直接给 (37.3)，不只给平方的迹相等。
+
+原 AC 指针仍取整个 $P=\mathbb C\oplus M_3$，$d=p=0\oplus e_{11}$，其确定性准备密度仍为 $p$，原完整读出及所有失败保持 (13.1)。完整中心投影给
+
+$$
+d_0=0\oplus(e_{11}-I_3/3).
+\tag{37.9}
+$$
+
+用 (37.3) 及原来 (31.4) 的迹恒等式，S 的左边与 $\delta$ 模型完全相同，右边的原 $L_{d_0}$ 也未变，故 S 逐字成立。没有给 S 更换效果、量域或刻度。
+
+为得到混合曲率，循环性还给
+
+$$
+\begin{aligned}
+M_a\delta_bx&=\varepsilon t((\delta_ab)\circ x)u,\\
+M_b\delta_ax&=-\varepsilon t((\delta_ab)\circ x)u.
+\end{aligned}
+\tag{37.10}
+$$
+
+展开 $[D^\varepsilon_a,D^\varepsilon_b]$，用 (37.8) 消去另外两类项，得到
+$[\delta_a,\delta_b]+2\varepsilon t((\delta_ab)\circ\,\cdot\,)u$。
+原矩阵 Jordan 恒等式给 $[\delta_a,\delta_b]=-[L_a,L_b]$，遂得 (37.4)。
+
+在同一整个 $P$ 内取数学响应
+
+$$
+a=0\oplus e_{11},\qquad
+b=0\oplus(e_{12}+e_{21}),\qquad
+v=\delta^P_ab=0\oplus\tfrac i2(e_{12}-e_{21}).
+\tag{37.11}
+$$
+
+这些只是 $E_P$ 的元素，没有附接一个二阶对象。$N_P=4$ 且
+$v^2=0\oplus(e_{11}+e_{22})/4$，所以 $t_P(v^2)=1/8$。(37.4) 取 $x=v$ 给
+
+$$
+([L_a,L_b]+[D^{P,\varepsilon}_a,D^{P,\varepsilon}_b])v
+=\frac{\varepsilon}{4}u_P\ne0.
+\tag{37.12}
+$$
+
+这同时证明真实混合曲率失败，而不是只由“不在 $\mathfrak k$”猜测曲率失败。
+
+还要直接显示 Z 与 I 的失败。保留原菜单中的实际准备 $\beta$，其密度为 $0\oplus e_{22}$。在整个 $P$ 上，
+
+$$
+\beta(p)=0,\qquad
+t_P(p)=t_P(p^2)=\frac14,\qquad
+D^{P,\varepsilon}_pp=\frac{3\varepsilon}{16}u_P,\qquad
+\beta(D^{P,\varepsilon}_pp)=\frac{3\varepsilon}{16}\ne0.
+\tag{37.13}
+$$
+
+故 Z 失败。若 $D_p$ 是 Jordan 导子，$p^2=p$ 必给
+$D_pp=2p\circ D_pp$；(37.13) 则要求 $u_P=2p$，矛盾。所以 I 与导子律也失败；这里给出直接见证，不以 Z/I 等价代替它。
+
+最后核对所有未删背景。完整原对象域和所有实际普通张量从头到尾是 $\mathcal D_3$，其每个简单块大小为 $3^k$，经典块为 $k=0$，因此从未有实际 $M_2$。对每个对象，P/G、原 $g^0$、固定 $q/L$ 和原群保持命题 5.1；每个次归一正密度都由原 CP 准备装置供应，联合对象保留全部纠缠密度，因而 P 的正锥包是完整正对偶。AC、全部指定群的精确 $N$（从而 $N_u$）、每个原事件的同记录实际参考及全联合锥保正、Xs 的原连线和全部输出丢弃均为同一丰富模型的数据，不含 $D$ 的新要求。实际全语境响应商也未变：原密度与效果仍分离同一完整响应空间。
+
+原完整仪器仍是 (5.4) 的全部 tagged CP 仪器，粗记录、已安装单中心 Kraus 细口、零记录、原标签箭头和实际遗忘逐项不动。每条非零原细路径 $K$ 的既有资料仍是
+
+$$
+S_K=\operatorname{Ad}_K,\qquad
+U_K=q_K\operatorname{Ad}_{K^+},\qquad
+0<q_K\le\lambda_{\min}^+(K^*K).
+\tag{37.14}
+$$
+
+它与同数反向资料、原完成的全部失败输出仍满足 (29.5) 的两条支持返回式。该合同只用原 Jordan 结构、迹对偶和过程，不用已失效的 $D^\varepsilon$ 来选复结构。对返回本身及进一步细化和有限合法接续，仍取同一丰富菜单已有的支持资料，故 F 的全称量词不缩小。实际顺序、自适应、并行、输出端口及其合法性谓词也未变；任何原准备、原历史和末端效果的原始概率与 $\varepsilon=0$ 完全相同。这里没有要求原 CP 仪器与 $D^\varepsilon$ 交换，因为原保留背景没有这项自然性假设。
+
+因此这不是 (33.6) 的局部迹扰动：该局部式损坏联合交叉零，而 (37.5)–(37.6) 已对全部原实际联合逐式建立交叉零和局部保持。对角平方、单位消去、II、原 S 及完整过程菜单可以同时保留，而 I/Z 和原三元律仍失效。∎
+

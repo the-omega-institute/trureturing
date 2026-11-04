@@ -1,0 +1,30 @@
+**Definition 47.1 (gain on the same attained triangle).** Use exactly the
+rows, recoveries, pure effects, active complex trace and constants of
+Definition 46.1. In particular $p=1-q$, $k=b-a>0$, $L=1+x$,
+$y=\sqrt{1-x^2}$, $R_0=ax+b$ and $C_0=\ell y$. For either sign,
+$0<x<1$ and $0\le q\le1$, let
+
+$$
+\begin{aligned}
+ \mathcal T_x&=\{(X,Y)\in[0,1]^2:\sqrt X+\sqrt Y\ge1+x\},\\
+ I_\sigma(x,q)&=\max_{(X,Y)\in\mathcal T_x}(\Gamma-\Gamma_0),\\
+ \eta_\sigma(x,q)&=\max\left\{0,
+       -\frac{L\mathfrak D_\sigma(x,q)}{4\mu x^2}\right\},\\
+ C_{\mathrm{gain},\sigma}(x,q)
+   &=\frac{\sqrt p\,k^2}{8R_0}
+       +\frac{2m\sqrt q\,L}{3\sqrt3\,x},\\
+ J_\sigma(x,q)&=\frac{\eta_\sigma(x,q)^2}
+                         {4C_{\mathrm{gain},\sigma}(x,q)}.
+\end{aligned}
+\tag{47.1}
+$$
+
+Here $\mu$ and $\mathfrak D_\sigma$ are exactly (46.13), and
+$\Gamma,\Gamma_0$ are the jointly attainable half-recovery amplitudes
+(46.11), not separately optimized recoveries. The maximum exists:
+$\mathcal T_x$ is compact, $XY\ge x^2>0$, and the expressions in
+(46.11) are continuous there. The canonical corner belongs to this same
+triangle and has $\Gamma=\Gamma_0$. Both summands defining
+$C_{\mathrm{gain},\sigma}$ are nonnegative and at least one is positive,
+including $q=0$ and $q=1$.
+

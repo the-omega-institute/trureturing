@@ -1,0 +1,25 @@
+### 证明第三步：Cayley 变换保留负指数
+
+直接计算：
+
+$$
+\boxed{
+\frac{1-C(z)\overline{C(w)}}{z+\bar w}
+=
+\frac{2S}{
+(S+F(z))(S+\overline{F(w)})
+}
+\mathcal P_F(z,w).
+}
+
+$$
+
+<a id="eq-4-5"></a>
+
+(4.5)
+
+在正则节点上，两个有限矩阵只差一个可逆对角合同，因此负指数相同。转到单位盘同样只增加非零的分离因子，也不改变负指数。
+
+<!-- editorial-note: n19 begin -->
+<a id="n19"></a>
+
