@@ -7,12 +7,9 @@
    digest: Barker's coordination sequence formulas for the alternating prism tiling tsi. -/
 
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
-import Mathlib.Data.Int.Interval
-import Mathlib.Data.Set.Card
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.BigOperators.Group.Finset.Interval
-import Mathlib.Tactic.Ring
 
 /-! The alternating prism graph, its exact metric, and its coordination sequence. -/
 
@@ -165,7 +162,8 @@ private lemma descent_even (i j k : ℤ) (hk : k ≠ 0)
   · by_cases hb : j = k / 2
     · refine ⟨(i, j - 1, k - 1), ?_, ?_⟩
       · exact Or.inr (Or.inr (Or.inl ⟨by (try dsimp only); omega,
-          Or.inr (Or.inr ⟨⟨t - 1, by (try dsimp only); omega⟩, rfl, by (try dsimp only); omega⟩)⟩))
+          Or.inr (Or.inr ⟨⟨t - 1, by dsimp only; omega⟩,
+            rfl, by dsimp only; omega⟩)⟩))
       · rw [inside_potential _ _ _ (by constructor <;> omega) (by constructor <;> omega),
           inside_potential i j k hi hj]
         omega
@@ -225,13 +223,15 @@ private lemma potential_descent (v : ℤ × ℤ × ℤ) (h : 0 < potential v) :
   · refine ⟨(i + 1, j, k), Or.inl ⟨rfl, rfl, Or.inl rfl⟩, ?_⟩
     dsimp only [potential, gap]; omega
   by_cases hi' : max 0 ((k + 1) / 2) < i
-  · refine ⟨(i - 1, j, k), Or.inl ⟨rfl, rfl, Or.inr (by (try dsimp only); omega)⟩, ?_⟩
+  · refine ⟨(i - 1, j, k),
+      Or.inl ⟨rfl, rfl, Or.inr (by dsimp only; omega)⟩, ?_⟩
     dsimp only [potential, gap]; omega
   by_cases hj : j < min 0 (k / 2)
   · refine ⟨(i, j + 1, k), Or.inr (Or.inl ⟨rfl, rfl, Or.inl rfl⟩), ?_⟩
     dsimp only [potential, gap]; omega
   by_cases hj' : max 0 (k / 2) < j
-  · refine ⟨(i, j - 1, k), Or.inr (Or.inl ⟨rfl, rfl, Or.inr (by (try dsimp only); omega)⟩), ?_⟩
+  · refine ⟨(i, j - 1, k),
+      Or.inr (Or.inl ⟨rfl, rfl, Or.inr (by dsimp only; omega)⟩), ?_⟩
     dsimp only [potential, gap]; omega
   have hk : k ≠ 0 := by
     dsimp only [potential, gap] at h
