@@ -112,6 +112,12 @@ stated graph and predicate.
 
 ## Evidence
 
+The general closed-private characterization is reused from
+`TrapezohedralMinimalDomination.minimalDominating_iff_private` and
+`minimalDominating_iff_proper`, with finite subsets transported to sets.
+The local window and all-width counting arguments retain their actual labelled
+subset predicates.
+
 The formal sources are
 `BarkerMinimalGridEncoding`, `BarkerMinimalGridTransfer`,
 `BarkerMinimalGridQuotient`, `BarkerMinimalGridPaths`,

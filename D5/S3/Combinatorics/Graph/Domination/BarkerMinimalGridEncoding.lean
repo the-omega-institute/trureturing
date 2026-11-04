@@ -6,7 +6,7 @@
    utility: none
    digest: Labelled open-grid subsets are encoded by column masks with closed private witnesses. -/
 
-import D5.S3.Combinatorics.Graph.DominatingSetAverageBoundNonstem
+import D5.S3.Combinatorics.Graph.Domination.TrapezohedralMinimalDomination
 import Mathlib.Data.Nat.Dist
 import Mathlib.Data.Fintype.Powerset
 
@@ -17,9 +17,6 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.Domination.BarkerMinimalGridEncoding
 
 open Finset
-open D5.S3.Combinatorics.Graph.DominatingSetAverage
-open D5.S3.Combinatorics.Graph.DominatingSetAverageBoundCounting
-open D5.S3.Combinatorics.Graph.DominatingSetAverageBoundNonstem
 
 /-- Closed domination and inclusion minimality under every proper subset. -/
 def MinimalDominating {V : Type} (G : SimpleGraph V) (S : Finset V) : Prop :=
@@ -33,51 +30,28 @@ def Closed {V : Type} (G : SimpleGraph V) (u v : V) : Prop := u = v ∨ G.Adj u 
 def ClosedPrivate {V : Type} (G : SimpleGraph V) (S : Finset V) (v z : V) : Prop :=
   Closed G z v ∧ ∀ w ∈ S, Closed G z w → w = v
 
-/-- The closed-private-witness form of minimal domination. The existing critical
-vertex and private-neighbour suppliers discharge its two alternatives. This is
-Gangloff--Talon, arXiv:1906.10779v2, Proposition 1, in closed-neighbour notation;
-the domination premise is retained. -/
+/-- The closed-private-witness form of minimal domination, transported from the
+set characterization to finite subsets. The domination premise is retained. -/
 theorem minimal_iff_closed_private {V : Type} [Finite V]
     (G : SimpleGraph V) (S : Finset V) :
     MinimalDominating G S ↔ G.IsDominating (S : Set V) ∧
       ∀ v ∈ S, ∃ z, ClosedPrivate G S v z := by
   classical
-  let := Fintype.ofFinite V
-  constructor
-  · intro h
-    refine ⟨h.1, fun v hv => ?_⟩
-    have hc : v ∈ criticalVertices G S :=
-      mem_filter.mpr ⟨hv, h.2 (S.erase v) (erase_ssubset hv)⟩
-    by_cases he : v ∈ externallyCritical G S
-    · obtain ⟨z, hz, hvz⟩ := (mem_filter.mp he).2
-      have hp := (mem_filter.mp hz).2
-      obtain ⟨a, ha⟩ := card_eq_one.mp hp.2
-      have hva : v = a := by
-        have : v ∈ S.filter (G.Adj z) := mem_filter.mpr ⟨hv, G.adj_symm hvz⟩
-        simpa [ha] using this
-      refine ⟨z, Or.inr (G.adj_symm hvz), ?_⟩
-      intro w hw hwz
-      rcases hwz with rfl | hwz
-      · exact (hp.1 hw).elim
-      · have : w ∈ S.filter (G.Adj z) := mem_filter.mpr ⟨hw, hwz⟩
-        have hwa : w = a := by simpa [ha] using this
-        exact hwa.trans hva.symm
-    · have hs : v ∈ selfCritical G S := mem_sdiff.mpr ⟨hc, he⟩
-      refine ⟨v, Or.inl rfl, ?_⟩
-      intro w hw hwv
-      rcases hwv with heq | hadj
-      · exact heq.symm
-      · exact (selfCritical_no_selected_neighbor G S v h.1 hs w hw hadj).elim
-  · rintro ⟨hd, hp⟩
-    refine ⟨hd, fun T hT hdom => ?_⟩
-    obtain ⟨v, hv, hsub⟩ := ssubset_iff_exists_subset_erase.mp hT
-    obtain ⟨z, hzv, huniq⟩ := hp v hv
-    have hdel := dominating_mono hdom hsub
-    rcases hdel z with hz | ⟨w, hw, hzw⟩
-    · have heq := huniq z (mem_of_mem_erase hz) (Or.inl rfl)
-      exact (mem_erase.mp hz).1 heq
-    · have heq := huniq w (mem_of_mem_erase hw) (Or.inr hzw)
-      exact (mem_erase.mp hw).1 heq
+  have finite_set_bridge : MinimalDominating G S ↔
+      TrapezohedralMinimalDomination.MinimalDominating G (S : Set V) := by
+    rw [TrapezohedralMinimalDomination.minimalDominating_iff_proper]
+    constructor
+    · rintro ⟨hd, hm⟩
+      refine ⟨hd, fun T hT hdom => ?_⟩
+      have hTf : (Set.toFinite T).toFinset ⊂ S :=
+        (Set.Finite.toFinset_ssubset _).mpr hT
+      exact hm _ hTf (by simpa only [Set.Finite.coe_toFinset] using hdom)
+    · rintro ⟨hd, hm⟩
+      exact ⟨hd, fun T hT hdom => hm (T : Set V) (Finset.coe_ssubset.mpr hT) hdom⟩
+  exact finite_set_bridge.trans (by
+    simpa only [TrapezohedralMinimalDomination.ClosedPrivate, ClosedPrivate,
+      Closed, Finset.mem_coe] using
+      TrapezohedralMinimalDomination.minimalDominating_iff_private G (S : Set V))
 
 /-- Row labels and column labels; translating both by one gives the source labels. -/
 abbrev Vertex (n : ℕ) := Fin 3 × Fin n
