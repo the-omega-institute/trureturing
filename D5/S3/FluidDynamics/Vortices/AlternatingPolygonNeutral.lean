@@ -118,8 +118,10 @@ theorem actual_neutral_iff (m : ℕ) [NeZero (2 * m)] (hm : 1 ≤ m) (v : Cartes
     · rintro ⟨n, hn⟩
       exact ⟨n, by rw [← actual_pow_coordinates m hm, hn, map_zero]⟩
     · rintro ⟨n, hn⟩
-      refine ⟨n, (cartesianCoordinates m).injective ?_⟩
-      rw [actual_pow_coordinates m hm, hn, map_zero]
+      refine ⟨n, ?_⟩
+      have hw : cartesianCoordinates m (((actualOperator m) ^ n) v) = 0 := by
+        rwa [actual_pow_coordinates m hm]
+      exact (reconstruct m _).trans ((unique_coefficients m _).mpr hw)
   rw [ht, modeOperator, paired_neutral_iff]
   have hg (q : ZMod (2 * m)) :
       (ell m q : ℂ) * ((ell m (q + m) + 1 : ℝ) : ℂ) ≠ 0 ↔ q ≠ m := by
