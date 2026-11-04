@@ -41,8 +41,10 @@ private theorem hybrid_decomposition (a b s t : ℕ) :
       ((t % vNat b : ℕ) : ℤ) * A a b s +
         ((t - t % vNat b : ℕ) : ℤ) * B a b s := by
   dsimp [hybridOld,D]
-  have h : (t : ℤ) = (t % vNat b : ℕ) + (t - t % vNat b : ℕ) := by omega
+  have h : ((t - t % vNat b : ℕ) : ℤ) = (t : ℤ) - (t % vNat b : ℕ) :=
+    Nat.cast_sub (Nat.mod_le _ _)
   rw [h]
+  push_cast
   ring
 
 private def vEndpoint (a b s t : ℕ) : ℤ :=
