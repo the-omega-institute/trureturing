@@ -4,10 +4,10 @@
    mirror-E: none(waiver:native-jmj-quadratic-root-worlds)
    anchors: [mathlib/module/Mathlib.Algebra.QuadraticDiscriminant]
    utility: none
-   digest: The two canonical quadratic roots give legal complete worlds with the actual JMJJ history and three-step failure. -/
+   digest: Complete native JMJJ losing pairs are exactly the legal quadratic-root pair; every distinct actual JMJM pair fails three-step losing. -/
 import D5.S3.Observer.CubicGain.JMJPairLosing
 import Mathlib.Algebra.QuadraticDiscriminant
-/-! Legal quadratic-root pairs at the actual fourth J child of JMJ. -/
+/-! Complete native pair classification at both actual fourth children of JMJ. -/
 
 set_option autoImplicit false
 noncomputable section
@@ -553,7 +553,7 @@ private theorem m_numeric_impossible (d z x y : ℝ) (hne : x ≠ y)
   have eJ : (x/4+d/14)*(2*(z-d)/(9/10*x+d/7)-(24-d)/(3/4*x-5*d/14)) -
       (y/4+d/14)*(2*(z-d)/(9/10*y+d/7)-(24-d)/(3/4*y-5*d/14)) =
       (x-y)*(-2*(d*(z-d)/(35*((9/10*x+d/7)*(9/10*y+d/7))))+
-        d*(24-d)/(7*((3/4*x-5*d/14)*(3/4*y-5*d/14)))) := by 
+        d*(24-d)/(7*((3/4*x-5*d/14)*(3/4*y-5*d/14)))) := by
     generalize hA : (3/4*x-5*d/14)=A at h1x ⊢
     generalize hB : (3/4*y-5*d/14)=B at h1y ⊢
     generalize hC : (9/10*x+d/7)=C at h3x ⊢
@@ -564,7 +564,7 @@ private theorem m_numeric_impossible (d z x y : ℝ) (hne : x ≠ y)
   have eM : (x/4+d/14)*((z-d)/(9/10*x+d/7)+2*(48-d)/x-1) -
       (y/4+d/14)*((z-d)/(9/10*y+d/7)+2*(48-d)/y-1) =
       (x-y)*(-d*(z-d)/(35*((9/10*x+d/7)*(9/10*y+d/7)))-
-        d*(48-d)/(7*(x*y))-1/4) := by 
+        d*(48-d)/(7*(x*y))-1/4) := by
     generalize hC : (9/10*x+d/7)=C at h3x ⊢
     generalize hD : (9/10*y+d/7)=D at h3y ⊢
     field_simp [hx,hy,h3x,h3y]
