@@ -90,8 +90,5 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[] }
 
-#print axioms source_registration
-#print axioms registration
-
 end
 end Reg.D5.S3.Quantum.Completion.IntegerMutualReadout
