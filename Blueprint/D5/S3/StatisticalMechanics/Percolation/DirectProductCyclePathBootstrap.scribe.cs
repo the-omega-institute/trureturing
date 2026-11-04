@@ -29,6 +29,12 @@ internal sealed class DirectProductCyclePathBootstrapDocument : IScribeDocumentD
             Node("claim", "Problem 5", ClaimFormula(),
                 "For every n at least 3 and m at least 1, m(C_n x P_m, 2) = n, with C_n the cycle on the vertices 0, ..., n - 1 and P_m the path on the vertices 0, ..., m - 1.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("path-degree", "The degree of a path vertex", PathDegreeFormula(),
+                "In the path on l + 1 vertices, a vertex has a successor neighbour exactly when its value is less than l and a predecessor neighbour exactly when its value is positive.",
+                "path_neighbor_card", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("path-degree-sum", "The sum of path degrees", PathDegreeSumFormula(),
+                "The degrees of the path on l + 1 vertices sum to twice l.",
+                "sum_path_neighbor_card", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "Proof", Disp(F.Id("claim")),
                 "Upper bound (Proposition 3 of the paper): the layer of the path vertex 0 percolates, since a vertex (a, b + 1) has the two distinct neighbours (a - 1, b) and (a + 1, b) in the layer b, so t rounds infect the layers 0, ..., t. Lower bound: let D(A) be the sum over v in A of |N(v) ∩ A|, twice the number of edges inside A. One round adds a set B disjoint from A in which every vertex has at least 2 neighbours in A; counting the pairs of adjacent vertices in A and B from both sides gives D(A ∪ B) at least D(A) + 4|B|, so 4|A| - D(A) never increases. On the whole vertex set of C_n x P_m the degree of (a, b) is twice the degree of b in P_m, and the degrees of P_m sum to 2(m - 1), so 4|V| - D(V) = 4nm - 4n(m - 1) = 4n. Hence a percolating set A satisfies 4n at most 4|A| - D(A), which is at most 4|A|, and |A| is at least n.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -67,6 +73,30 @@ internal sealed class DirectProductCyclePathBootstrapDocument : IScribeDocumentD
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(variable), domain, body);
     private static Formula Adj(Formula graph, Formula a, Formula b) => Call("Adj", graph, a, b);
     private static Formula Card(Formula set) => Call("card", set);
+
+    private static Formula PathDegreeFormula()
+    {
+        Formula l = F.Id("l"), b = F.Id("b");
+        Formula size = new Formula.Binary(l, FormulaBinaryOperator.Add, D(1));
+        Formula value = Call("val", b);
+        Formula successor = Call("ite",
+            new Formula.Relation(value, FormulaRelationOperator.LessThan, l), D(1), D(0));
+        Formula predecessor = Call("ite",
+            new Formula.Relation(D(0), FormulaRelationOperator.LessThan, value), D(1), D(0));
+        return Disp(All("l", Naturals(), All("b", Call("Fin", size),
+            Equal(Card(Call("neighborFinset", Call("pathGraph", size), b)),
+                new Formula.Binary(successor, FormulaBinaryOperator.Add, predecessor)))));
+    }
+
+    private static Formula PathDegreeSumFormula()
+    {
+        Formula l = F.Id("l"), b = F.Id("b");
+        Formula size = new Formula.Binary(l, FormulaBinaryOperator.Add, D(1));
+        Formula sum = Seq(new Formula.Subscript(Sum, Seq(b, Colon, Sp, Call("Fin", size))), Sp,
+            Card(Call("neighborFinset", Call("pathGraph", size), b)));
+        return Disp(All("l", Naturals(),
+            Equal(sum, new Formula.Binary(D(2), FormulaBinaryOperator.Multiply, l))));
+    }
 
     private static Formula DirProdFormula()
     {

@@ -8,6 +8,7 @@
 
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import D5.S3.Combinatorics.SpectralGraph.TwinFreeThetaRecurrence
+import D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap
 
 /-! The complete maximal identity property for Cartesian products of cliques and paths. -/
 
@@ -60,9 +61,13 @@ private lemma path_neighbors (j : ℕ) (t : Fin j) :
 private lemma path_degree (j : ℕ) (t : Fin j) :
     ((SimpleGraph.pathGraph j).degree t : ℤ) =
       (if 0 < t.val then 1 else 0) + (if t.val + 1 < j then 1 else 0) := by
-  rw [SimpleGraph.degree, path_neighbors, Finset.card_union_of_disjoint]
-  · split_ifs <;> simp
-  · split_ifs <;> simp [Fin.ext_iff]
+  obtain ⟨n, rfl⟩ : ∃ n : ℕ, j = n + 1 := ⟨j - 1, (Nat.sub_add_cancel (Fin.pos t)).symm⟩
+  have h := D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.path_neighbor_card
+    n t
+  have h' : (SimpleGraph.pathGraph (n + 1)).degree t =
+      (if 0 < t.val then 1 else 0) + (if t.val + 1 < n + 1 then 1 else 0) := by
+    simpa only [SimpleGraph.degree, Nat.add_lt_add_iff_right, add_comm] using h
+  exact_mod_cast h'
 
 private lemma path_row (j : ℕ) (f : Fin j → ℤ) (t : Fin j) :
     ((SimpleGraph.pathGraph j).lapMatrix ℤ *ᵥ f) t =
@@ -77,20 +82,11 @@ private lemma total_mass (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j) :
     ∑ v : Fin i × Fin j,
       ((((⊤ : SimpleGraph (Fin i)).boxProd (SimpleGraph.pathGraph j)).degree v : ℤ) - 1) =
         (i : ℤ) * ((i : ℤ) * j - 2) := by
-  have hs (z : Fin j) : ∑ t : Fin j, (if t ≠ z then (1 : ℤ) else 0) = (j : ℤ) - 1 := by
-    have he (t : Fin j) : (if t ≠ z then (1 : ℤ) else 0) =
-        1 - (if t = z then 1 else 0) := by
-      by_cases h : t = z <;> simp [h]
-    simp_rw [he]
-    simp
   have hp : ∑ t : Fin j, ((SimpleGraph.pathGraph j).degree t : ℤ) = 2 * ((j : ℤ) - 1) := by
-    have h0 (t : Fin j) : 0 < t.val ↔ t ≠ ⟨0, by omega⟩ := by
-      simp only [ne_eq, Fin.ext_iff]; omega
-    have h1 (t : Fin j) : t.val + 1 < j ↔ t ≠ ⟨j - 1, by omega⟩ := by
-      have ht := t.isLt
-      simp only [ne_eq, Fin.ext_iff]; omega
-    simp_rw [path_degree, h0, h1, Finset.sum_add_distrib, hs]
-    ring
+    obtain ⟨n, rfl⟩ : ∃ n : ℕ, j = n + 1 := ⟨j - 1, by omega⟩
+    have h := D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap.sum_path_neighbor_card n
+    simpa only [SimpleGraph.degree, Nat.cast_add, Nat.cast_one, add_sub_cancel_right,
+      Nat.cast_mul, Nat.cast_ofNat, Nat.cast_sum] using congrArg (fun a : ℕ => (a : ℤ)) h
   simp only [Fintype.sum_prod_type, SimpleGraph.degree_boxProd,
     SimpleGraph.IsRegularOfDegree.top.degree_eq, Fintype.card_fin,
     Nat.cast_add, Nat.cast_sub (by omega : 1 ≤ i), Nat.cast_one,
@@ -119,19 +115,9 @@ private lemma lift_equations (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j) (s : Fin 
     simp only [f, dite_eq_right w.property]
     rfl
   have hz : ∑ v, (G.lapMatrix ℤ *ᵥ f) v = 0 := by
-    simp only [Matrix.mulVec, dotProduct]
-    rw [Finset.sum_comm]
-    simp_rw [← Finset.sum_mul]
-    apply Finset.sum_eq_zero
-    intro w hw
-    have hc : ∑ v, G.lapMatrix ℤ v w = 0 := by
-      calc
-        _ = ∑ v, G.lapMatrix ℤ w v :=
-          Finset.sum_congr rfl (fun v _ => ((G.isSymm_lapMatrix ℤ).apply v w).symm)
-        _ = 0 := by
-          simpa only [Matrix.mulVec, dotProduct, Pi.one_apply, mul_one, Pi.zero_apply] using
-            congrFun (G.lapMatrix_mulVec_one_eq_zero ℤ) w
-    rw [hc, zero_mul]
+    have h := Matrix.dotProduct_transpose_mulVec (G.lapMatrix ℤ) f (1 : Fin i × Fin j → ℤ)
+    rw [(G.isSymm_lapMatrix ℤ).eq, G.lapMatrix_mulVec_one_eq_zero ℤ] at h
+    simpa only [dotProduct_zero, one_dotProduct] using h.symm
   have hm := total_mass i j hi hj
   change ∑ v, ((G.degree v : ℤ) - 1) = _ at hm
   rw [Fintype.sum_eq_add_sum_subtype_ne _ s] at hz hm
