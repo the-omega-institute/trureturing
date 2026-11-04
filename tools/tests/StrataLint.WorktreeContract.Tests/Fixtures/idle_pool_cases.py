@@ -568,6 +568,22 @@ class IdlePoolCases:
             with self.assertRaises(PermissionError):
                 pool.task_users((self.tree,))
 
+    def pool_candidate_activity_rechecks_only_after_observed_group_exit(self):
+        import worktree_pool as pool
+        failure = OSError("linux_activity_unavailable captured teardown")
+        with patch.object(pool, "task_users", side_effect=[failure, {self.tree}]) as users, \
+                patch.object(pool.host_cleanup(), "wait_for_linux_activity_transition", return_value=True) as wait:
+            self.assertEqual({self.tree}, pool.candidate_activity((self.tree,)))
+        wait.assert_called_once_with(failure)
+        self.assertEqual(2, users.call_count)
+
+        with patch.object(pool, "task_users", side_effect=[failure]) as users, \
+                patch.object(pool.host_cleanup(), "wait_for_linux_activity_transition", return_value=False) as wait:
+            with self.assertRaisesRegex(pool.Refused, "task_activity_unavailable:linux_activity_unavailable captured teardown"):
+                pool.candidate_activity((self.tree,))
+        wait.assert_called_once_with(failure)
+        self.assertEqual(1, users.call_count)
+
     def pool_claim_mutation_and_other_io_failures_never_fall_back(self):
         import worktree_pool as pool
         self.dormant_task()

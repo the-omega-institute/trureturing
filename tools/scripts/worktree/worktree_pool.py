@@ -398,6 +398,16 @@ def candidate_activity(paths):
     try:
         return task_users(paths)
     except OSError as error:
+        # Linux can expose a matched process identity while a proc inventory
+        # is transitioning.  The diagnostic is never admission evidence:
+        # wait only on the retained pidfd for complete group exit, then repeat
+        # the same full activity inventory.  Persistent or ambiguous failures
+        # remain fail-closed refusals.
+        if host_cleanup().wait_for_linux_activity_transition(error):
+            try:
+                return task_users(paths)
+            except OSError as retry_error:
+                error = retry_error
         raise Refused("task_activity_unavailable:" + str(error)) from error
 
 

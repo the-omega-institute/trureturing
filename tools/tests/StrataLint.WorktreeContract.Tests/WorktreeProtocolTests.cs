@@ -378,6 +378,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_claim_retains_active_process_cwd_file_and_argv")]
     [InlineData("pool_claim_retains_active_idle_tree")]
     [InlineData("pool_claim_unobservable_eligibility_preserves_idle_and_dormant")]
+    [InlineData("pool_candidate_activity_rechecks_only_after_observed_group_exit")]
     [InlineData("pool_claim_mutation_and_other_io_failures_never_fall_back")]
     [InlineData("pool_activity_scope_excludes_unrelated_unobservable_process")]
     [InlineData("pool_claim_retains_recent_checkout_allocation_and_source")]

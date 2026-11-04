@@ -1135,6 +1135,67 @@ int main(int argc, char **argv) {
                      patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "", "")):
                     self.assertIn(target.resolve(), cleanup.active_paths(self.root / "codex"))
 
+    def test_linux_activity_transition_waits_for_matched_group_exit_only(self):
+        process = self.root / "proc/43117"
+        process.mkdir(parents=True)
+        anchor = dict(device=27, inode=235306, pid=43117, starttime=56497)
+        sample = dict(identity="matched", group_exit="not_observed", revents=0, current=anchor)
+        inventory_started = dict(identity="matched", group_exit="not_observed", revents=0)
+        diagnostic = dict(
+            task_inventory="partial_non_atomic",
+            binding=dict(identity="matched", anchor=anchor, current=anchor, pidfd_pid=43117),
+            fault=sample,
+            refusal=sample,
+            inventory_started=inventory_started,
+        )
+        error = OSError("linux_activity_unavailable " + json.dumps(dict(
+            process=str(process), boundary="fd_inventory", diagnostic=diagnostic)))
+        waits = []
+
+        class Observer:
+            def __init__(self, observed):
+                self.binding = dict(identity="matched", anchor=anchor, current=anchor, pidfd_pid=43117)
+
+            def wait_for_group_exit(self, timeout_ms):
+                waits.append(timeout_ms)
+                return True
+
+            def close(self):
+                pass
+
+        with patch.object(cleanup, "LinuxProcessObserver", Observer):
+            self.assertTrue(cleanup.wait_for_linux_activity_transition(error))
+        self.assertEqual([1000], waits)
+
+    def test_linux_activity_transition_keeps_persistent_inaccessible_process_refused(self):
+        process = self.root / "proc/43117"
+        process.mkdir(parents=True)
+        anchor = dict(device=27, inode=235306, pid=43117, starttime=56497)
+        sample = dict(identity="matched", group_exit="not_observed", revents=0, current=anchor)
+        inventory_started = dict(identity="matched", group_exit="not_observed", revents=0)
+        diagnostic = dict(
+            task_inventory="partial_non_atomic",
+            binding=dict(identity="matched", anchor=anchor, current=anchor, pidfd_pid=43117),
+            fault=sample,
+            refusal=sample,
+            inventory_started=inventory_started,
+        )
+        error = OSError("linux_activity_unavailable " + json.dumps(dict(
+            process=str(process), boundary="fd_inventory", diagnostic=diagnostic)))
+
+        class Observer:
+            def __init__(self, observed):
+                self.binding = dict(identity="matched", anchor=anchor, current=anchor, pidfd_pid=43117)
+
+            def wait_for_group_exit(self, timeout_ms):
+                return False
+
+            def close(self):
+                pass
+
+        with patch.object(cleanup, "LinuxProcessObserver", Observer):
+            self.assertFalse(cleanup.wait_for_linux_activity_transition(error))
+
     def test_inventory_failure_reports_already_removed_artifacts(self):
         artifact = self.old_file(self.root / "tmp" / "old-output")
         options = cleanup.argparse.Namespace(

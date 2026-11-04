@@ -675,6 +675,32 @@ class LinuxProcessObserver:
             result["failure"] = observation_error(error)
         return result
 
+    def wait_for_group_exit(self, timeout_ms):
+        """Wait for the retained process identity to become fully terminal.
+
+        This is a synchronization aid for a complete re-inventory after an
+        observed incomplete proc transition.  The pidfd event is never activity
+        evidence: callers must perform a fresh active_paths scan after this
+        method returns True.
+        """
+        if self.pidfd is None or self.binding.get("identity") != "matched":
+            return False
+        try:
+            current = self.sample(check_current=True)
+            if (current.get("identity") != "matched"
+                    or current.get("current") != self.binding.get("anchor")):
+                return False
+            if (current.get("revents", 0) & select.POLLIN
+                    and not current.get("revents", 0) & (select.POLLERR | select.POLLNVAL)):
+                return True
+            poller = select.poll()
+            poller.register(self.pidfd, select.POLLIN)
+            return any(fd == self.pidfd and events & select.POLLIN
+                       and not events & (select.POLLERR | select.POLLNVAL)
+                       for fd, events in poller.poll(timeout_ms))
+        except (OSError, ValueError, AttributeError, KeyError, IndexError):
+            return False
+
     @staticmethod
     def capture(operation):
         try:
@@ -773,6 +799,70 @@ def linux_observation_unavailable(process, boundary, error, observer=None):
     raise OSError("linux_activity_unavailable " + json.dumps(dict(
         process=str(process), boundary=boundary, status=status, error=str(error),
         diagnostic=diagnostic))) from error
+
+
+def wait_for_linux_activity_transition(error, timeout_ms=1000):
+    """Synchronize one captured proc teardown before a complete re-inventory.
+
+    The returned boolean only authorizes the caller to run active_paths again.
+    It never supplies paths or grants activity admission.  A retry is limited
+    to the diagnostic shape produced by linux_observation_unavailable when a
+    matched process identity was still live, its non-atomic inventory was
+    incomplete, and its flags=0 pidfd had not observed group exit.  Persistent
+    or identity-ambiguous failures return False and remain refusals.
+    """
+    prefix = "linux_activity_unavailable "
+    text = str(error)
+    if not text.startswith(prefix):
+        return False
+    try:
+        payload = json.loads(text[len(prefix):])
+        diagnostic = payload["diagnostic"]
+        binding = diagnostic["binding"]
+        anchor = binding["anchor"]
+        if (payload.get("boundary") != "fd_inventory"
+                or diagnostic.get("task_inventory") != "partial_non_atomic"
+                or binding.get("identity") != "matched"
+                or binding.get("current") != anchor
+                or binding.get("pidfd_pid") != anchor["pid"]):
+            return False
+        for name in ("fault", "refusal"):
+            sample = diagnostic[name]
+            if (sample.get("identity") != "matched"
+                    or sample.get("group_exit") != "not_observed"
+                    or sample.get("revents") != 0
+                    or sample.get("current") != anchor):
+                return False
+        # This sample was captured without check_current, so it must not be
+        # treated as an identity observation at all.
+        inventory_started = diagnostic["inventory_started"]
+        if (inventory_started.get("identity") != "matched"
+                or inventory_started.get("group_exit") != "not_observed"
+                or inventory_started.get("revents") != 0
+                or "current" in inventory_started):
+            return False
+        process = Path(payload["process"])
+        try:
+            process.stat()
+        except (FileNotFoundError, ProcessLookupError):
+            # The next active_paths scan will observe this disappearance
+            # directly; no diagnostic state is used as admission evidence.
+            return True
+        except OSError:
+            return False
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+        return False
+
+    observer = LinuxProcessObserver(process)
+    try:
+        if (observer.binding.get("identity") != "matched"
+                or observer.binding.get("anchor") != anchor
+                or observer.binding.get("current") != anchor
+                or observer.binding.get("pidfd_pid") != anchor["pid"]):
+            return False
+        return observer.wait_for_group_exit(timeout_ms)
+    finally:
+        observer.close()
 
 
 def active_paths(codex, scopes=(), *, include_sampler_argv=False):
