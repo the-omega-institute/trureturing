@@ -134,9 +134,7 @@ private theorem character_orthogonality (w : Fin 3 → ZMod 3) :
   · simp (config := { congrConsts := false }) [hw]
   rw [ite_eq_right hw]
   let f : (Fin 3 → ZMod 3) →+ ZMod 3 :=
-    { toFun := fun x => w ⬝ᵥ x
-      map_zero' := dotProduct_zero w
-      map_add' := dotProduct_add w }
+    (dotProductBilin (ZMod 3) (ZMod 3) w).toAddMonoidHom
   let ψ : AddChar (Fin 3 → ZMod 3) ℂ := ZMod.stdAddChar.compAddMonoidHom f
   change ∑ x, ψ x = 0
   apply AddChar.sum_eq_zero_of_ne_one
@@ -166,13 +164,9 @@ private theorem quadratic_energy (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
     Matrix.mulVec_injective_iff_isUnit.mpr
       ((Matrix.isUnit_iff_isUnit_det _).mpr (isUnit_iff_ne_zero.mpr hD))
   have hz (h : Fin 3 → ZMod 3) : (2 : ZMod 3) • M.mulVec h = 0 ↔ h = 0 := by
-    constructor
-    · intro hh
-      apply hi
-      rw [Matrix.mulVec_zero]
-      exact (smul_eq_zero.mp hh).resolve_left (by decide)
-    · rintro rfl
-      simp (config := { congrConsts := false })
+    rw [(isUnit_iff_ne_zero.mpr (by decide : (2 : ZMod 3) ≠ 0)).smul_eq_zero]
+    simpa (config := { congrConsts := false }) only [Matrix.mulVec_zero] using
+      (hi.eq_iff : M.mulVec h = M.mulVec 0 ↔ h = 0)
   have he : (∑ x : Fin 3 → ZMod 3, ZMod.stdAddChar (polynomial M b x)) *
       (∑ y : Fin 3 → ZMod 3, ZMod.stdAddChar (-polynomial M b y)) = (27 : ℂ) := by
     calc
@@ -211,7 +205,8 @@ private theorem quadratic_energy (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
   apply Finset.sum_congr rfl
   intro y _
   exact AddChar.starComp_apply
-    (by norm_num (config := { congrConsts := false }) [ZMod.ringChar_zmod_n] : 0 < ringChar (ZMod 3)) (polynomial M b y)
+    (by norm_num (config := { congrConsts := false }) [ZMod.ringChar_zmod_n] :
+      0 < ringChar (ZMod 3)) (polynomial M b y)
 
 private theorem spread_evaluation (g : Fin 3 → ZMod 3) (hg : g ≠ 0) :
     Function.Bijective (fun i : Fin 27 => (matrices i).mulVec g) := by
@@ -241,18 +236,16 @@ private theorem polynomial_unique (A B : Matrix (Fin 3) (Fin 3) (ZMod 3))
       hB.dotProduct_mulVec_comm (x := y) (y := x)] at hxy
     linear_combination hxy - hx - hy
   have hAB : A = B := by
-    ext i j
-    have he : 2 * (A i j - B i j) = 0 := by
-      simpa (config := { congrConsts := false }) only
-        [single_one_dotProduct, Matrix.mulVec_single_one, Matrix.col,
-        Matrix.transpose_apply] using
-        hp (Pi.single i 1) (Pi.single j 1)
-    exact sub_eq_zero.mp ((mul_eq_zero.mp he).resolve_left ht)
-  refine ⟨hAB, ?_⟩
-  funext i
-  have he := h (Pi.single i 1)
-  simpa (config := { congrConsts := false }) only
-    [polynomial, hAB, dotProduct_single_one, add_left_cancel_iff] using he
+    apply Matrix.mulVec_injective
+    funext y
+    apply dotProduct_eq
+    intro x
+    simpa (config := { congrConsts := false }) only [dotProduct_comm] using
+      sub_eq_zero.mp ((mul_eq_zero.mp (hp x y)).resolve_left ht)
+  refine ⟨hAB, dotProduct_eq b c ?_⟩
+  intro x
+  exact add_left_cancel
+    (by simpa (config := { congrConsts := false }) only [polynomial, hAB] using h x)
 
 private theorem exponent_overlap (i k : Fin 27) (b c : Fin 3 → ZMod 3)
     (h : (i, b) ≠ (k, c)) :
@@ -293,7 +286,8 @@ private theorem quadratic_rectangle (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
     (hM : M.IsSymm) (a₁ a₂ b₁ b₂ : Fin 3 → ZMod 3) (hs : a₁ + a₂ = b₁ + b₂) :
     a₁ ⬝ᵥ M.mulVec a₁ + a₂ ⬝ᵥ M.mulVec a₂ - b₁ ⬝ᵥ M.mulVec b₁ - b₂ ⬝ᵥ M.mulVec b₂ =
       ((2 : ZMod 3) • (a₁ - b₁)) ⬝ᵥ M.mulVec (a₁ - b₂) := by
-  have ha₂ : a₂ = b₁ + b₂ - a₁ := by linear_combination hs
+  have ha₂ : a₂ = b₁ + b₂ - a₁ :=
+    eq_sub_iff_add_eq.mpr ((add_comm a₂ a₁).trans hs)
   rw [ha₂]
   simp (config := { congrConsts := false }) only
     [Matrix.mulVec_add, Matrix.mulVec_sub, dotProduct_add, dotProduct_sub,
@@ -426,7 +420,9 @@ private theorem counterexample_design : design2 counterexample := by
     rw [← map_add phase_map, ← map_sub phase_map, ← map_sub phase_map]
     exact phase_character _
   have hm := exponent_moment (coord a₁) (coord a₂) (coord b₁) (coord b₂)
-  have hc : (counterexample.card : ℂ) = 729 := by rw [counterexample_card]; norm_num (config := { congrConsts := false })
+  have hc : (counterexample.card : ℂ) = 729 := by
+    rw [counterexample_card]
+    norm_num (config := { congrConsts := false })
   constructor
   · intro h
     rw [he, hc]
