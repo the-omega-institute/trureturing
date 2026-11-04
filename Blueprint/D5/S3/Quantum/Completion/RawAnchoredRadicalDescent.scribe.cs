@@ -167,5 +167,16 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Equality of beta and the vanishing cross comparisons give equality of q and r. Substitution in the original ordered kernel then gives both complete rows and columns."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("The full Hilbert representation criterion remains open. The comparison must still be constructed on the actual additive image, with translation invariance, the parallelogram law and Hilbert realization. The minimal unitary uniqueness, zero-comparison congruence and torsion-free Eisenstein conclusions are not asserted here.")))));
+            Paragraph(Text("The actual image A=gamma(M) is an additive subgroup of V/W: the original product supplies sums and U(a)*U(U(a)) supplies negatives. Let tau be rho restricted to A. For x,y in A, choose original labels representing them and put C(x,y)=c(a,b). The complete row and column descent proves that this is independent of both choices and that C(gamma(a),gamma(b))=c(a,b). Nonnegativity, diagonal zero and the full four-variable balance pass to this same C with group addition and tau.")),
+            Describe.Lean(
+                DescribeId.Create("raw-visible-translation-invariant"),
+                DeclarationHandle.Create(Gid + "raw_visible_translation_invariant"),
+                H("The actual directed comparison is translation invariant"),
+                StatementSource.FromAuthor(Disp(Original(
+                    All(X, F.Id("A"), All(Y, F.Id("A"), All(Z, F.Id("A"),
+                        Eqn(Call("C", Plus2(X, Z), Plus2(Y, Z)), Call("C", X, Y)))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For fixed x,y put f(t)=C(x+t,y+t) and m=inf(range f). Nonnegativity bounds m below. The full balance with equal last operands gives f(t+w)<=3f(t)-2m. Taking w=s-t yields (f(s)+2m)/3<=f(t) for every t; the infimum property forces f(s)=m. In particular f(z)=f(0). This uses the constructed actual image and comparison."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("The full Hilbert representation criterion remains open. Evenness, scaling, the parallelogram law and Hilbert realization remain to be supplied on the actual image. The minimal unitary uniqueness, zero-comparison congruence and torsion-free Eisenstein conclusions are not asserted here.")))));
 }

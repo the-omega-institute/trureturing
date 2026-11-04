@@ -11,6 +11,7 @@ import Mathlib.LinearAlgebra.Quotient.Bilinear
 import Mathlib.Tactic
 import D5.S3.Quantum.Completion.RawThreePhaseDescent
 import D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
+import D5.S3.QuadraticForms.ParallelogramConstruction
 
 /-! Anchored comparison forms, ordered Fourier constraints and the actual defect quotient.
 The construction retains the original unital magma and both pairing orders. -/
@@ -1328,8 +1329,8 @@ theorem raw_visible_translation_invariant {M : Type*} [MulOneClass M]
     have hb := visibleComparison_balance U c h (x + t) (y + t) w w
     rw [visibleComparison_diagonal] at hb
     simp only [add_assoc] at hb
-    change f (t + w) + f (t + visibleMarker U c h w) +
-      f (t + visibleMarker U c h (visibleMarker U c h w)) = 3 * f t + 3 * 0 at hb
+    change f (t + w) + (f (t + visibleMarker U c h w) +
+      f (t + visibleMarker U c h (visibleMarker U c h w))) = 3 * f t + 3 * 0 at hb
     linarith [hm (t + visibleMarker U c h w),
       hm (t + visibleMarker U c h (visibleMarker U c h w))]
   have heq (s : visibleGroup U c h) : f s = sInf S := by
@@ -1343,5 +1344,174 @@ theorem raw_visible_translation_invariant {M : Type*} [MulOneClass M]
     exact le_antisymm (by linarith) (hm s)
   have hz := (heq z).trans (heq 0).symm
   simpa only [f, add_zero] using hz
+
+/-- The squared-size candidate on the actual visible group. -/
+def visibleEnergy {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x : visibleGroup U c h) : ℝ :=
+  visibleComparison U c h x 0
+
+section SquaredGeometry
+variable {M : Type*} [MulOneClass M]
+variable (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+local notation "A" => visibleGroup U c h
+local notation "T" => visibleMarker U c h
+local notation "f" => visibleEnergy U c h
+
+private theorem visible_marker_two (x : A) : T (T x) = -x - T x := by
+  obtain ⟨a, rfl⟩ := visibleLabel_surjective U c h x
+  have hc := congrArg (W c).mkQ (marker_cyclotomic U c h (beta c a))
+  have he : visibleLabel U c h a + T (visibleLabel U c h a) +
+      T (T (visibleLabel U c h a)) = 0 := by
+    simp only [← visibleLabel_marker]
+    apply Subtype.ext
+    simpa only [map_add, map_zero, markerQuotient_beta, gamma] using hc
+  calc
+    _ = (visibleLabel U c h a + T (visibleLabel U c h a) +
+      T (T (visibleLabel U c h a))) - visibleLabel U c h a - T (visibleLabel U c h a) := by abel
+    _ = _ := by rw [he]; abel
+
+private theorem energy_zero : f 0 = 0 := visibleComparison_diagonal U c h 0
+private theorem energy_nonneg (x : A) : 0 ≤ f x := visibleComparison_nonneg U c h x 0
+
+private theorem comparison_energy (x y : A) : visibleComparison U c h x y = f (x - y) := by
+  have ht := raw_visible_translation_invariant U c h x y (-y)
+  simpa only [add_neg_cancel, sub_eq_add_neg, visibleEnergy] using ht.symm
+
+private theorem energy_marker (x : A) : f (T x) = f x := by
+  obtain ⟨a, rfl⟩ := visibleLabel_surjective U c h x
+  have hz : visibleLabel U c h (1 : M) = 0 := Subtype.ext (gamma_one c)
+  have hm := (raw_marker_readouts U c h).1 a 1
+  rw [h.marker_one] at hm
+  change visibleComparison U c h (T (visibleLabel U c h a)) 0 =
+    visibleComparison U c h (visibleLabel U c h a) 0
+  rw [← visibleLabel_marker, ← hz, visibleComparison_label, visibleComparison_label]
+  exact hm
+
+private theorem energy_balance (x y : A) :
+    f (x + y) + f (x + T y) + f (x + T (T y)) = 3 * f x + 3 * f y := by
+  have hb := visibleComparison_balance U c h x 0 y 0
+  simpa only [map_zero, add_zero, visibleEnergy] using hb
+
+private theorem energy_neg_marker (x : A) : f (-T x) = f (-x) := by
+  rw [← map_neg, energy_marker]
+
+private theorem energy_double_relation (x : A) : f (x + x) + 2 * f (-x) = 6 * f x := by
+  have hb := energy_balance U c h x x
+  have he₁ : x + T x = -T (T x) := by rw [visible_marker_two]; abel
+  have he₂ : x + T (T x) = -T x := by rw [visible_marker_two]; abel
+  rw [he₁, he₂, energy_neg_marker, energy_neg_marker, energy_neg_marker] at hb
+  linarith
+
+private theorem energy_four_relation (x : A) :
+    f ((4 : ℤ) • x) + 4 * f ((-2 : ℤ) • x) = 32 * f x := by
+  have h₁ := energy_double_relation U c h x
+  have h₂ := energy_double_relation U c h (-x)
+  have h₃ := energy_double_relation U c h (x + x)
+  have he₁ : (4 : ℤ) • x = (x + x) + (x + x) := by module
+  have he₂ : (-2 : ℤ) • x = -x + -x := by module
+  have he₃ : -(x + x) = -x + -x := by abel
+  rw [he₁, he₂]
+  rw [neg_neg] at h₂
+  rw [he₃] at h₃
+  linarith
+
+private theorem energy_even (x : A) : f (-x) = f x := by
+  let s : ℕ → ℝ := fun n => f (((-2 : ℤ) ^ n) • x) / (4 : ℝ) ^ n
+  have hn (n : ℕ) : 0 ≤ s n := div_nonneg (energy_nonneg U c h _) (by positivity)
+  have hr (n : ℕ) : s (n + 1) + s (n + 2) = 2 * s n := by
+    have he₁ : (-2 : ℤ) ^ (n + 1) = (-2) * (-2) ^ n := by rw [pow_succ]; ring
+    have he₂ : (-2 : ℤ) ^ (n + 2) = 4 * (-2) ^ n := by rw [pow_add]; ring
+    have he := energy_four_relation U c h (((-2 : ℤ) ^ n) • x)
+    dsimp [s]
+    rw [he₁, he₂, mul_smul, mul_smul]
+    simp only [pow_succ]
+    field_simp
+    nlinarith
+  have hc := nonnegative_recurrence_constant s hn hr
+  have hd := energy_double_relation U c h (-x)
+  have hm : (-2 : ℤ) • x = -x + -x := by module
+  norm_num only [s, pow_one, pow_zero, one_smul] at hc
+  rw [hm] at hc
+  rw [neg_neg] at hd
+  linarith
+
+private theorem energy_double (x : A) : f (x + x) = 4 * f x := by
+  have hd := energy_double_relation U c h x
+  rw [energy_even] at hd
+  linarith
+
+private def visibleL : A →+ A := T - T.comp T
+
+private theorem energy_L (x : A) : f (visibleL U c h x) = 3 * f x := by
+  have hb := energy_balance U c h (-x) x
+  have he₁ : -x + T x = -T (T (visibleL U c h x)) := by
+    simp only [visibleL, AddMonoidHom.sub_apply, AddMonoidHom.comp_apply,
+      map_sub, map_neg, visible_marker_two]
+    abel
+  have he₂ : -x + T (T x) = T (visibleL U c h x) := by
+    simp only [visibleL, AddMonoidHom.sub_apply, AddMonoidHom.comp_apply,
+      map_sub, map_neg, visible_marker_two]
+    abel
+  rw [neg_add_cancel, energy_zero, he₁, he₂, energy_even,
+    energy_marker, energy_marker, energy_marker, energy_even] at hb
+  linarith
+
+private def parallelogramDefect (x y : A) : ℝ :=
+  f (x + y) + f (x - y) - 2 * f x - 2 * f y
+
+private theorem parallelogramDefect_symm (x y : A) :
+    parallelogramDefect U c h x y = parallelogramDefect U c h y x := by
+  have he : f (x - y) = f (y - x) := by
+    rw [← energy_even U c h (y - x)]
+    congr 1
+    abel
+  simp only [parallelogramDefect, add_comm x y, he]
+  ring
+
+private theorem parallelogramDefect_L (x y : A) :
+    parallelogramDefect U c h x (visibleL U c h y) =
+      3 * parallelogramDefect U c h x y := by
+  have hb := energy_balance U c h (x + y) (x - y)
+  have he₀ : (x + y) + (x - y) = x + x := by abel
+  have he₁ : (x + y) + T (x - y) = -T (T (x - visibleL U c h y)) := by
+    simp only [visibleL, AddMonoidHom.sub_apply, AddMonoidHom.comp_apply,
+      map_sub, map_add, map_neg, visible_marker_two]
+    abel
+  have he₂ : (x + y) + T (T (x - y)) = -T (x + visibleL U c h y) := by
+    simp only [visibleL, AddMonoidHom.sub_apply, AddMonoidHom.comp_apply,
+      map_sub, map_add, map_neg, visible_marker_two]
+    abel
+  rw [he₀, he₁, he₂, energy_double, energy_even, energy_marker,
+    energy_marker, energy_even, energy_marker] at hb
+  dsimp [parallelogramDefect]
+  rw [energy_L]
+  linarith
+
+private theorem visible_parallelogram (x y : A) :
+    f (x + y) + f (x - y) = 2 * f x + 2 * f y := by
+  have h₁ := parallelogramDefect_L U c h (visibleL U c h x) y
+  have h₂ := parallelogramDefect_L U c h y x
+  have h₃ : parallelogramDefect U c h (visibleL U c h x) (visibleL U c h y) =
+      3 * parallelogramDefect U c h x y := by
+    dsimp [parallelogramDefect]
+    rw [← map_add, ← map_sub, energy_L, energy_L, energy_L, energy_L]
+    ring
+  rw [parallelogramDefect_symm U c h (visibleL U c h x) y,
+    h₂, parallelogramDefect_symm U c h y x] at h₁
+  dsimp [parallelogramDefect] at h₁ h₃
+  linarith
+
+/-- The actual visible squared-size function has an integer quadratic-map realization. -/
+theorem raw_visible_quadratic :
+    ∃ Q : QuadraticMap ℤ A ℝ, (∀ x, Q x = f x) ∧
+      ∀ x y, visibleComparison U c h x y = Q (x - y) := by
+  have ht : IsSMulRegular ℝ (2 : ℕ) := by
+    intro a b hab
+    simp only [two_nsmul] at hab
+    linarith
+  exact ⟨TauCeti.QuadraticMap.ofParallelogram ht (fun x y => by
+    simpa only [two_nsmul] using visible_parallelogram U c h x y),
+    (fun _ => rfl), comparison_energy U c h⟩
+end SquaredGeometry
 
 end D5.S3.Quantum.Completion.RawAnchoredRadicalDescent

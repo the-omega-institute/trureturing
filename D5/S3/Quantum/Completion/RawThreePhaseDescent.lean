@@ -59,7 +59,7 @@ private lemma recurrence_first_le (s : ℕ → ℝ) (hn : ∀ n, 0 ≤ s n)
   have hm : s 0 < (n : ℝ) * (s 1 - s 0) := (div_lt_iff₀ hd).mp hn'
   linarith [(hi n).1, hn (2 * n)]
 
-private lemma nonnegative_recurrence_constant (s : ℕ → ℝ) (hn : ∀ n, 0 ≤ s n)
+lemma nonnegative_recurrence_constant (s : ℕ → ℝ) (hn : ∀ n, 0 ≤ s n)
     (hr : ∀ n, s (n + 1) + s (n + 2) = 2 * s n) : s 1 = s 0 := by
   have h₁ := recurrence_first_le s hn hr
   have h₂ := recurrence_first_le (fun n => s (n + 1)) (fun n => hn (n + 1))
