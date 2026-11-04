@@ -24,6 +24,10 @@ $$
 
 The phase is omega=-1/2+i sqrt(3)/2. ThreeWayBalance.three_way_quadratic_structure is applied directly to the original A to obtain an integer quadratic map Q. Half its existing polar bilinear companion is the symmetric pairing b(x,y)=(q(x+y)-q(x-y))/4, with b(x,x)=q(x). The original U-invariance and invisible orbit sums imply b(Ux,Uy)=b(x,y) and b(Ux,y)+b(x,Uy)=-b(x,y).
 
+The structural theorem also gives q(z+Dx)=q(z) for every original z,x, where Dx=x+Ux+U squared x. Its parameters are exactly the same A,U,q and the same universal balance hypothesis as in this representation theorem. This full-background identity concerns readouts; it does not impose Dx=0 on A.
+
+More explicitly, b is the integer bilinear map (1/2) times Q.polarBilin. Linearity of this existing polar companion gives additivity in each slot, symmetry follows by exchanging x,y, and QuadraticMap.polar_self gives b(x,x)=q(x), hence nonnegativity on the diagonal. For any other symmetric biadditive real pairing c with c(x,x)=q(x), expansion of c(x+y,x+y) gives q(x+y)=q(x)+2c(x,y)+q(y). Thus c(x,y)=(q(x+y)-q(x)-q(y))/2, which equals the displayed polarization formula by the parallelogram law. The diagonal q therefore determines this pairing uniquely, including degenerate and zero cases; no division in A is used.
+
 Nonnegative integer Gram sums are values of b on actual finite integer sums in A. IsLocalization.exist_integer_multiples_of_finite clears rational coefficients; DenseRange.piMap applied to Rat.denseRange_cast and closedness of a finite polynomial inequality then supplies arbitrary real coefficients. Continuity belongs only to the numerical coefficient vector, not to A.
 
 $$
