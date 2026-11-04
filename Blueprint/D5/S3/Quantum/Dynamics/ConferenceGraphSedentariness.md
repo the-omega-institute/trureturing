@@ -24,6 +24,10 @@ $$(\forall (m: \mathbb{N}), ((1 \le m) \to (\forall (V: \operatorname{Type}), ([
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/ConferenceGraphSedentariness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/godsil-2017-conference-graph-sedentariness` (proved) by `D5/S3/Quantum/Dynamics/ConferenceGraphSedentariness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"godsil-2017-conference-graph-sedentariness","declaration_gid":"D5/S3/Quantum/Dynamics/ConferenceGraphSedentariness.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chris Godsil (2021). *Sedentary quantum walks*. DOI: [10.1016/j.laa.2020.08.027](https://doi.org/10.1016/j.laa.2020.08.027). URL: <https://arxiv.org/abs/1710.11192v1>.

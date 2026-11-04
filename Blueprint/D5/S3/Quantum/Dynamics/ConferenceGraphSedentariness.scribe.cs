@@ -92,7 +92,10 @@ internal sealed class ConferenceGraphSedentarinessDocument : IScribeDocumentDefi
                         + "For every order n ≥ N, the positive time π/√n has return "
                         + "probability 1/n² < c. This proves the family clause directly "
                         + "from the attained value, for both square and nonsquare orders."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("godsil-2017-conference-graph-sedentariness"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClaimBody()
     {
