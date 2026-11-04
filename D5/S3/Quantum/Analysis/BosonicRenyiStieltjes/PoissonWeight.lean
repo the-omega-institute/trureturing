@@ -6,11 +6,8 @@
    utility: none
    digest: Positive-axis Stieltjes transform of the power Poisson density. -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
 import Mathlib.MeasureTheory.Function.JacobianOneDim
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 /-! The positive-axis transform used by the logarithmic Renyi representation. -/
 
