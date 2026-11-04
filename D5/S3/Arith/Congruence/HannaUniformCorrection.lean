@@ -13,7 +13,7 @@ import D5.S1.Recurrence.Witt.BoundedEulerCorrection
 import D5.S1.Recurrence.Witt.EulerExponentialCoefficients
 import D5.S3.Combinatorics.Partitions.ColouredEulerLedger
 import D5.S3.Arith.Divisors.ProperDivisorPowerBudget
-import D5.S3.Arith.Congruence.HannaPrimePowerCorrection
+import D5.S3.Arith.Congruence.BoundedPowerCorrection
 
 noncomputable section
 

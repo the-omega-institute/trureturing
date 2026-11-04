@@ -1,5 +1,5 @@
 /- GID: D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality
-   generality: I
+   generality: G
    mirror-B: D5/B/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -10,7 +10,8 @@
 Paul D. Hanna's OEIS A156216, second comment (revision #3), concerns ordinary
 formal power series; C(0) is ignored and no convergence or sign condition is imposed.
 The source expressions define logarithmicInput and exponentialSum exactly;
-IntegralSeries is reused from HannaLogarithmicPowerClosure.
+IntegralSeries retains its original qualified name and expression in the shared IntegralPowerSeries dependency.
+Generality rationale: every characteristic-zero field and every input sequence are quantified; the Euler/Gauss machinery and the diagonal-power operator impose no fixed sequence, modulus, finite range or arithmetic-instance hypothesis. This universal closure operation is general machinery. Its import closure uses no instance facts.
 admission_basis: open-problem-resolution (#21407; Proved)
 No escape witness is claimed for admission.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21518
@@ -20,7 +21,7 @@ Published owners retain their original private baseline identities here;
 their current public declaration identities require the canonical scope report.
 The positive-coefficient series in the differential equations is the existing
 HannaDiagonalDerivativeParity.step a 0.
-F1: D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.IntegralSeries; sha256:63e70f464749e368856bfaa91133b0adfeda478327572310319dbf6077b632cb.
+F1: D5/S1/Recurrence/Algebraic/IntegralPowerSeries.IntegralSeries; sha256:63e70f464749e368856bfaa91133b0adfeda478327572310319dbf6077b632cb.
 F2: D5/S1/Recurrence/Witt/PrimitiveEulerLedger.coeff_eulerFactor; sha256:0b3195d40655cd915a6d347f321e500e9f419eb6d1831fdd0bf95ce1a8c6fb8c.
 F3: D5/S1/Recurrence/Witt/PrimitiveEulerLedger.eulerFactor; sha256:3ab1d32218cbc34fe76283777609dc9324e72c639cc6b1685b6a375f17d6be49.
 F4: D5/S1/Recurrence/Witt/PrimitiveEulerLedger.ledgerProduct; sha256:68b89fc02ffe3c3af479529813227d49d2e1dc604fac5bfa8490c8991a2f9e03.
@@ -69,7 +70,7 @@ result: proof_shape: content; escape_witness: none; consumers: external settleme
 -/
 
 import D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport
-import D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
+import D5.S1.Recurrence.Algebraic.IntegralPowerSeries
 import Mathlib.LinearAlgebra.SModEq.Pow
 import Mathlib.RingTheory.PowerSeries.PiTopology
 import D5.S1.Recurrence.Witt.PrimitiveEulerLedger

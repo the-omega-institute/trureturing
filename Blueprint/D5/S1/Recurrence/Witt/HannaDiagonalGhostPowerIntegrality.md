@@ -217,7 +217,7 @@ The integral input series has an integer Euler ledger b. Its formal logarithmic 
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.integral_input_ledger`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.logarithmicInput`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.result`
-- Dependency: [D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure](../Algebraic/HannaLogarithmicPowerClosure.md)
+- Dependency: [D5/S1/Recurrence/Algebraic/IntegralPowerSeries](../Algebraic/IntegralPowerSeries.md)
 - Dependency: [D5/S1/Recurrence/Invariants/HannaDiagonalDerivativeParity](../Invariants/HannaDiagonalDerivativeParity.md)
 - Dependency: [D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport](../LinearRows/LinearExponentDyadicSupport.md)
 - Dependency: [D5/S1/Recurrence/Witt/PrimitiveEulerLedger](PrimitiveEulerLedger.md)

@@ -4,7 +4,7 @@
 
 Every bounded integral square-weight correction equals p minus one at p to any positive power.
 
-The sequence a has integer values and starts at index one; a(0) is unused. All power series have rational coefficients, and every exponential and substitution is formal. IntegralSeries is the predicate from HannaLogarithmicPowerClosure: every ordinary coefficient is the image of an integer. The displayed casts are the canonical embeddings into the indicated carrier. Division in the exponent is rational field division. PowerSeries.subst takes the substituted series first and the series into which it is substituted second. The function ite selects its second argument when its first argument holds and its third argument otherwise.
+The sequence a has integer values and starts at index one; a(0) is unused. All power series have rational coefficients, and every exponential and substitution is formal. IntegralSeries is the shared predicate in IntegralPowerSeries, with its original qualified name: every ordinary coefficient is the image of an integer. The displayed casts are the canonical embeddings into the indicated carrier. Division in the exponent is rational field division. PowerSeries.subst takes the substituted series first and the series into which it is substituted second. The function ite selects its second argument when its first argument holds and its third argument otherwise.
 
 **Definition 1.1 (The defining integral-series condition).**
 
@@ -30,19 +30,7 @@ $$\operatorname{claim}\left(\right) = (\forall a: \mathbb{N} \to \mathbb{Z}, (\o
 
 OEIS A384819, revision 14, sole COMMENTS line (no page number): "Conjecture: a(p^n) = p - 1 when p is prime for n >= 1." The positive source exponent n is renamed r. The assertion holds for every integer sequence satisfying the defining condition, every natural prime p, including two, and every positive natural r.
 
-**Theorem 1.3 (The shared induction for every power weight at least two).**
-
-Lean statement: `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.bounded_power_corrections`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.bounded_power_corrections` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The original square induction is generalized in place to a natural exponent s>=2. It uses positive-index correction bounds and prime-power divisibility of the corrected ghosts. Both the original square theorem and the complete integer-weight family consume this shared induction. The known square result is due to Su, Theorem 7.1, in the 29 October 2026 preprint cited in the updated Hanna source note. No new official-open-problem status or all-s novelty is inferred.
-
-**Theorem 1.4 (All positive prime powers).**
+**Theorem 1.3 (All positive prime powers).**
 
 $$\forall a: \mathbb{N} \to \mathbb{Z}, (\operatorname{IsCorrection}\left(a\right)) \Rightarrow (\forall p: \mathbb{N}, \forall r: \mathbb{N}, (\operatorname{Nat}.\operatorname{Prime}\left(p\right)) \Rightarrow ((1 \le r) \Rightarrow (a\left(p^{r}\right) = (p:\mathbb{Z}) - 1)))$$
 
@@ -63,8 +51,7 @@ An integer Euler ledger gives m^2-a(m) as the sum of d times the ledger entry ov
 ## References
 
 - Truth anchor: `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.IsCorrection`
-- Truth anchor: `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.bounded_power_corrections`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.claim`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.result`
-- Dependency: [D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure](../../../S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.md)
 - Dependency: [D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality](../../../S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.md)
+- Dependency: [D5/S3/Arith/Congruence/BoundedPowerCorrection](BoundedPowerCorrection.md)

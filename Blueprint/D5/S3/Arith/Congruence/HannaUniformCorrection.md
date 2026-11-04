@@ -280,7 +280,7 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.F_boundary`
 
 *Commentary.*
 
-Both actual boundary exponentials equal the inverse of one minus X. Coefficient induction proves exp(sum X^n/n) has every coefficient one; the formal geometric-series identity identifies its inverse. At weight one and prime-square index p^2, the correction is p^2-1, so the constant prime-power formula starts at weight two. The generic Möbius identity and logarithmic estimate are applied to weight(s) directly from their general declarations; no bind-only family wrapper is retained.
+Both actual boundary exponentials equal the inverse of one minus X. Coefficient induction proves exp(sum X^n/n) has every coefficient one; the formal geometric-series identity identifies its inverse. At weight one and prime-square index p^2, the correction is p^2-1, so the constant prime-power formula starts at weight two. For J_s(n)=sum over d dividing n of mu(n/d)*d^s, the generic Mobius identity at weight(s) gives n*c_s(n)=J_s(n)-sum over d dividing n of mu(n/d)*a_s(d). The generic logarithmic estimate at the same weight gives |c_s(n)-J_s(n)/n|<=1+log(n) for every positive n.
 
 ## References
 
@@ -309,6 +309,6 @@ Both actual boundary exponentials equal the inverse of one minus X. Coefficient 
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.weight_cast`
 - Dependency: [D5/S1/Recurrence/Witt/BoundedEulerCorrection](../../../S1/Recurrence/Witt/BoundedEulerCorrection.md)
 - Dependency: [D5/S1/Recurrence/Witt/EulerExponentialCoefficients](../../../S1/Recurrence/Witt/EulerExponentialCoefficients.md)
-- Dependency: [D5/S3/Arith/Congruence/HannaPrimePowerCorrection](HannaPrimePowerCorrection.md)
+- Dependency: [D5/S3/Arith/Congruence/BoundedPowerCorrection](BoundedPowerCorrection.md)
 - Dependency: [D5/S3/Arith/Divisors/ProperDivisorPowerBudget](../Divisors/ProperDivisorPowerBudget.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/ColouredEulerLedger](../../Combinatorics/Partitions/ColouredEulerLedger.md)

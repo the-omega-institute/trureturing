@@ -16,7 +16,7 @@ internal sealed class HannaPrimePowerCorrectionDocument : IScribeDocumentDefinit
         Blocks(
             Paragraph(Text("The sequence a has integer values and starts at index one; a(0) is unused. "
                 + "All power series have rational coefficients, and every exponential and substitution "
-                + "is formal. IntegralSeries is the predicate from HannaLogarithmicPowerClosure: "
+                + "is formal. IntegralSeries is the shared predicate in IntegralPowerSeries, with its original qualified name: "
                 + "every ordinary coefficient is the image of an integer. The displayed casts are "
                 + "the canonical embeddings into the indicated carrier. Division in the exponent "
                 + "is rational field division. PowerSeries.subst takes the substituted series first "
@@ -37,10 +37,6 @@ internal sealed class HannaPrimePowerCorrectionDocument : IScribeDocumentDefinit
                 + "including two, and every positive natural r.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
 
-            Describe.Lean(DescribeId.Create("h3-bounded-power-corrections"),
-                DeclarationHandle.Create("D5/S3/Arith/Congruence/HannaPrimePowerCorrection.bounded_power_corrections"), H("The shared induction for every power weight at least two"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The original square induction is generalized in place to a natural exponent s>=2. It uses positive-index correction bounds and prime-power divisibility of the corrected ghosts. Both the original square theorem and the complete integer-weight family consume this shared induction. The known square result is due to Su, Theorem 7.1, in the 29 October 2026 preprint cited in the updated Hanna source note. No new official-open-problem status or all-s novelty is inferred."))), DescribeRole.Theorem),
             Node("result", "All positive prime powers", Disp(ClaimBody()),
                 "An integer Euler ledger gives m^2-a(m) as the sum of d times the ledger "
                 + "entry over positive divisors d of m. The difference between the divisor "
