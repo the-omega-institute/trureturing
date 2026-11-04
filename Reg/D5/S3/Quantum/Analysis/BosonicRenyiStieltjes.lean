@@ -79,7 +79,7 @@ def registration :
       path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
