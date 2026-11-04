@@ -17,6 +17,7 @@ noncomputable section
 open Matrix MeasureTheory Set
 open scoped ComplexOrder
 open D5.S3.Quantum.Analysis.FermionicRenyiStieltjes
+open D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity (reducedCovariance)
 
 namespace D5.S3.Quantum.Fermionic.GaussianRenyiStrongSubadditivity
 
@@ -25,12 +26,6 @@ def physicalCovariance {n : ℕ}
     (G : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) : Prop :=
   Gᵀ = -G ∧ ∃ h : (Complex.I • G.map Complex.ofReal).IsHermitian,
     ∀ i, |h.eigenvalues i| ≤ 1
-
-/-- Restriction to all Majorana indices belonging to the selected modes. -/
-def reducedCovariance {n : ℕ}
-    (G : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (X : Finset (Fin n)) :
-    Matrix {p : Fin n × Fin 2 // p.1 ∈ X} {p : Fin n × Fin 2 // p.1 ∈ X} ℝ :=
-  G.submatrix Subtype.val Subtype.val
 
 /-- The source entropy: half the sum over the complete Majorana spectrum. -/
 def fermionicGaussianRenyiEntropy {n : ℕ} {X : Finset (Fin n)} (α : ℝ)
