@@ -537,3 +537,94 @@ set_option pp.proofs false in
 
 end
 end Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.GlobalSuccessUpperBound
+
+namespace Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.ProjectionSquare
+open _root_.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+/-- Observe the all-ones matrix scaled by the selected real coefficient. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℝ)
+    (fun n => Matrix (Fin n) (Fin n) ℂ)
+
+def actual : Realization signature :=
+  realize signature
+    (fun _ n r => r • Matrix.of (fun _ _ : Fin n => (1 : ℂ))) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (_hn : 0 < n),
+    ((n : ℝ)⁻¹ • Matrix.of (fun _ _ : Fin n => (1 : ℂ))) *
+      ((n : ℝ)⁻¹ • Matrix.of (fun _ _ : Fin n => (1 : ℂ))) =
+        R.readout () n (n : ℝ)⁻¹
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hz := h 1 (by norm_num)
+  rw [P_sq 1 (by norm_num)] at hz
+  have he := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℂ => M 0 0) hz
+  norm_num [rejected, realize, Matrix.zero_apply] at he
+  exact one_ne_zero he
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 0, 1, ?_⟩
+  intro h
+  have he := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℂ => M 0 0) h
+  norm_num [actual, realize] at he
+
+def source_registration : Registration arena (type_of% @P_sq) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨P_sq, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@P_sq) (Realization signature) Unit Unit where
+  unitName :=
+    `Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.ProjectionSquare.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.ProjectionSquare.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.ProjectionSquare
