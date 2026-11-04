@@ -8,7 +8,7 @@ Fix a finite support A in an arbitrary type with decidable equality. States are 
 
 **Theorem 1.1 (Exactly the Two Cut-Adjacent Slots Collide).**
 
-$$\mathrm{secondGap}\left(j\right) = \mathrm{secondGap}\left(k\right)$$
+$$(\mathrm{secondGap}\left(j\right) = \mathrm{secondGap}\left(k\right)) \Leftrightarrow ((j = k) \lor (((j = 0) \land (k = 1)) \lor ((j = 1) \land (k = 0))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CircularWords/UniformCycleAttainment.rooted_gap_second_law` (`✓ std3`). ∎
 

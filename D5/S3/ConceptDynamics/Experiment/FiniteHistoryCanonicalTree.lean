@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Pointwise finite termination yields an exact canonical tree preserving full histories, labels, singleton zero-error fibers, and rational weighted query counts.
-   -/
+   digest: Pointwise finite termination yields an exact canonical tree preserving full histories, labels, singleton zero-error fibers, and rational weighted query counts. -/
 import D5.S3.Arith.FibonacciAtomic.TerminalGcdAcquisitionCost
 
 set_option autoImplicit false

@@ -11,7 +11,11 @@ internal sealed class UniformCycleAttainmentDocument : IScribeDocumentDefinition
         "Fix a finite support A in an arbitrary type with decidable equality. States are all nodup oriented Cycle rotation classes with exactly support A; reflection is distinct. For at least four labels, actual labelled deletions of the same original give a history-only correct strategy with mean 2+2/(A.card-1).", H("Actual Circular Deletion Ambiguity and Attainment"), Blocks(
             Paragraph(Text("Fix a finite support A in an arbitrary type with decidable equality. States are all nodup oriented Cycle rotation classes with exactly support A; reflection is distinct. For at least four labels, actual labelled deletions of the same original give a history-only correct strategy with mean 2+2/(A.card-1).")),
             Describe.Lean(DescribeId.Create("rooted-gap-second-law"), DeclarationHandle.Create(Prefix + "rooted_gap_second_law"),
-                H("Exactly the Two Cut-Adjacent Slots Collide"), StatementSource.FromAuthor(Disp(Eq(Call("secondGap",F.Id("j")),Call("secondGap",F.Id("k"))))), AssessedProvenance.FromRepo(),
+                H("Exactly the Two Cut-Adjacent Slots Collide"), StatementSource.FromAuthor(Disp(Iff(
+                    Eq(Call("secondGap",F.Id("j")),Call("secondGap",F.Id("k"))),
+                    Or(Eq(F.Id("j"),F.Id("k")),
+                        Or(And(Eq(F.Id("j"),D(0)),Eq(F.Id("k"),D(1))),
+                           And(Eq(F.Id("j"),D(1)),Eq(F.Id("k"),D(0)))))))), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Root a legal first residual at the surviving second label z, writing it z::L, with L nonempty and x fresh. Filtering z from (z::L).rotate j gives L.rotate(j-1), including j=0. Thus the actual second deletion of gapCircle(z::L,x,j) is Cycle(x::L.rotate(j-1)). Anchored injectivity and nodup rotation uniqueness show equality exactly when j=k, or j=0,k=1, or j=1,k=0. The cyclic cut is included; rooting is only a proof aid."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pair-branch-exact"), DeclarationHandle.Create(Prefix + "pair_branch_exact"),
                 H("One Double Fibre and Otherwise Singletons"), StatementSource.FromAuthor(Disp(Eq(Call("NatCard",Call("doublePairLift",F.Id("A"),F.Id("x"),F.Id("z"))),D(2)))), AssessedProvenance.FromRepo(),
@@ -31,6 +35,11 @@ internal sealed class UniformCycleAttainmentDocument : IScribeDocumentDefinition
         ? new Formula.NamedConstant(FormulaIdentifier.Create(n))
         : new Formula.Apply(new Formula.NamedConstant(FormulaIdentifier.Create(n)), [.. xs]);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula And(Formula a, Formula b) => Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Or(Formula a, Formula b) => Logic(a, FormulaLogicOperator.Or, b);
+    private static Formula Iff(Formula a, Formula b) => Logic(a, FormulaLogicOperator.Iff, b);
+    private static Formula Logic(Formula a, FormulaLogicOperator op, Formula b) =>
+        new Formula.Logic(Seq(Open, a, Close), op, Seq(Open, b, Close));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
 }

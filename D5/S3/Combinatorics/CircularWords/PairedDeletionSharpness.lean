@@ -1,10 +1,10 @@
-/-
-Native real-law sharpness for two overlapping paired-deletion channels.
-The construction retains the actual cycle geometry and uses native real
-ProbabilityMeasure values on the finite legal carrier. The theorem at the end
-is the validated lower-bound construction for the 3/2 sum coefficient and the
-3 maximum coefficient.
--/
+/- GID: D5/S3/Combinatorics/CircularWords/PairedDeletionSharpness
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/CircularWords/PairedDeletionSharpness
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Six actual cycles give sharp native real-law paired-deletion inverse coefficients. -/
 
 import D5.S3.Combinatorics.CircularWords.CyclicInsertionGap
 import D5.S3.Estimation.DataProcessing.NativeDeclaredProbabilityPolytope
@@ -12,6 +12,10 @@ import D5.S3.TotalVariation.Metric
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+/-! Six actual rotation classes support two disjoint native real laws.
+The source total variation is one and each paired-deletion variation is one
+third, giving lower bounds for uniform inverse coefficients. -/
 
 noncomputable section
 

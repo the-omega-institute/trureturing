@@ -165,14 +165,7 @@ theorem rooted_gap_second_law {x z : α} {L : List α}
   rw [heq]
   omega
 
-def RootedGapSecondCertificate {A : Finset α} {x z : A}
-    (hA : 4 ≤ A.card) {B : Cycle α}
-    (hB : B.Nodup) (sB : B.toFinset = A.erase x.1) : Prop :=
-  ∃ L : List α, B = (z.1 :: L : Cycle α) ∧ (z.1 :: L).Nodup ∧
-    GapSecondLaw (z.1 :: L) x.1 z.1
-
-/- The distinctness hypothesis belongs on the theorem deriving the old
-certificate. It was absent from the old certificate's parameter list. -/
+/- Root a legal residual at the surviving second label. -/
 theorem legal_residual_root {A : Finset α} (hA : 4 ≤ A.card) (x z : A)
     (hxz : x.1 ≠ z.1) {B : Cycle α} (hB : B.Nodup)
     (sB : B.toFinset = A.erase x.1) :
@@ -194,13 +187,6 @@ theorem legal_residual_root {A : Finset α} (hA : 4 ≤ A.card) (x z : A)
     have hm : x.1 ∈ A.erase x.1 := hs ▸ List.mem_toFinset.mpr h
     exact (Finset.mem_erase.mp hm).1 rfl
   exact ⟨L, hroot, hn, hL0, hx, hs⟩
-
-theorem rooted_gap_second_certificate {A : Finset α} (hA : 4 ≤ A.card) (x z : A)
-    (hxz : x.1 ≠ z.1) {B : Cycle α} (hB : B.Nodup)
-    (sB : B.toFinset = A.erase x.1) :
-    RootedGapSecondCertificate (x := x) (z := z) hA hB sB := by
-  obtain ⟨L, hr, hn, hL0, hx, _⟩ := legal_residual_root hA x z hxz hB sB
-  exact ⟨L, hr, hn, rooted_gap_second_law hn hL0 hx⟩
 
 /- Finite index fibres. No certificate is assumed by the final cycle theorem. -/
 theorem slot_fiber_zero_card {B : List α} {x z : α} (hlen : 2 ≤ B.length)
@@ -226,14 +212,6 @@ theorem slot_fiber_zero_card {B : List α} {x z : α} (hlen : 2 ≤ B.length)
     · left; apply Subtype.ext; apply Fin.ext; exact h
     · left; apply Subtype.ext; apply Fin.ext; exact h.1
     · right; apply Subtype.ext; apply Fin.ext; exact h.1
-
-/- Repair of the old Iff/function projection error; this is merely the
-Fintype version of the actual finite index calculation immediately above. -/
-theorem gap_second_fiber_card {B : List α} {x z : α}
-    (hlen : 2 ≤ B.length) (law : GapSecondLaw B x z) :
-    Fintype.card {j : Fin B.length //
-      secondGap B x z j = secondGap B x z ⟨0, by omega⟩} = 2 := by
-  simpa only [Nat.card_eq_fintype_card] using slot_fiber_zero_card hlen law
 
 theorem slot_fiber_other_card {B : List α} {x z : α} (hlen : 2 ≤ B.length)
     (law : GapSecondLaw B x z) (D : Cycle α)
