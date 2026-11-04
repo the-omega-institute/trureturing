@@ -1,0 +1,2 @@
+**Definition 3.2 (Schreier multigraph of a replica datum).** The Schreier multigraph $\Gamma$ of a replica datum has vertex set $R$, edge set $R\times\{(k,l):1\le k<l\le\mathtt q\}$, the edge $(r,k,l)$ joining $r$ and $g_l^{-1}g_k(r)$, with weight $x_kx_l$. Stance: definition.
+

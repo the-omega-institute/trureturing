@@ -43,6 +43,46 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
             Node("trace-pauli-kronecker-eq-corr", "Pauli expectations equal the correlations", TracePauliKroneckerEqCorrFormula(),
                 "For every Hermitian complex two-qubit operator rho and every pair of Pauli indices i and j in Fin 3, the trace of rho times the corresponding Kronecker product equals its real correlation entry embedded in the complex numbers. Hermiticity makes this trace real.",
                 "trace_pauli_kronecker_eq_corr", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("delta", "The difference of global and marginal purities", DeltaFormula(),
+                "Delta(X) is the real trace of X squared minus the real trace of its Alice marginal squared. The partial trace is over Bob's factor. This real-valued definition applies to every complex two-qubit matrix X.",
+                "delta", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("flip-matrix", "A direction-dependent spin flip", FlipMatrixFormula(),
+                "For a real three-vector n, the conjugating matrix is the tensor product of the second Pauli matrix with spin(n) times that Pauli matrix. No unit-length condition is imposed in this definition.",
+                "flipMatrix", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("flipped", "The flipped matrix", FlippedFormula(),
+                "Transpose X in the product basis and multiply it on the left by flipMatrix(n) and on the right by its adjoint. This construction preserves positive semidefiniteness because transposition and conjugation preserve it.",
+                "flipped", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("flip-purity-identity", "The directional flip identity", FlipPurityIdentityFormula(),
+                "For a Hermitian trace-one matrix and a unit direction n, the real trace pairing with the flipped matrix, the squared Frobenius sum of the correlations, the squared length of Tn and Bob's squared component along n satisfy this identity. Expanding the Pauli matrices gives its homogeneous form; trace one and the unit length of n give the displayed normalization.",
+                "flip_purity_identity", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
+            Node("unit-dot-le", "A unit direction bounds a component", UnitDotLeFormula(),
+                "The absolute component of a real three-vector x along a unit vector a is at most the Euclidean length of x. This is the real inner-product Cauchy-Schwarz inequality.",
+                "unit_dot_le", DescribeRole.Lemma,
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/axler2024innerproduct"))),
+            Node("bob-radius-le", "Bob's Bloch vector lies in the unit ball", BobRadiusLeFormula(),
+                "A positive semidefinite trace-one two-qubit matrix has a positive semidefinite trace-one Bob marginal. The norm of that marginal's Bloch vector is at most its trace, hence at most one.",
+                "bob_radius_le", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
+            Node("delta-le-centre", "Purity difference bounded by the ellipsoid centre", DeltaLeCentreFormula(),
+                "The purity difference is at most (1 - |b| squared)(1/2 - |centre(rho)|). When |b| < 1 an invertible filter makes Bob's marginal maximally mixed; determinant scaling of Delta and the canonical state's eigenvalue bound give the inequality. When |b| = 1, support on Bob's pure marginal makes Delta zero, giving the boundary case.",
+                "delta_le_centre", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
+            Node("bell-trace-real-expansion", "The real correlation form of a CHSH expectation", BellTraceRealExpansionFormula(),
+                "For a Hermitian two-qubit matrix, the CHSH expectation equals the sum of the two real correlation dot products embedded in the complex numbers. Expanding the two Pauli observables and using real Pauli expectations gives the equality for arbitrary directions.",
+                "bell_trace_real_expansion", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
+            Node("tight-vector", "The vector supported on the two equal-bit basis states", TightVectorFormula(),
+                "The vector has amplitudes sqrt(1+s) at (0,0), sqrt((1-t)(1-s)) at (1,1), and zero at the other two product indices. The real amplitudes are explicitly embedded in the complex numbers. The definition permits arbitrary real t and s.",
+                "tightVector", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("tight-state", "A two-term family of matrices", TightStateFormula(),
+                "Take half the outer product of tightVector with its adjoint and add t(1-s)/2 times the projector onto the product basis vector (0,1). The latter vector is the real vector ev embedded coordinatewise in the complex numbers. The formula defines the family for all real parameters.",
+                "tightState", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("tight-psd", "Positivity of the two-term family", TightPsdFormula(),
+                "If t is nonnegative and s is at most one, both coefficients in tightState are nonnegative. Each outer product is positive semidefinite, so their sum is positive semidefinite.",
+                "tight_psd", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
+            Node("tight-readouts", "Trace, Bloch vectors and correlations of the family", TightReadoutsFormula(),
+                "For t <= 1 and 0 <= s <= 1, the matrix has trace one, both Bloch vectors lie on the third axis, and its correlation matrix is diagonal. The first two diagonal entries are opposite and equal in magnitude to sqrt(1+s) sqrt((1-t)(1-s)); the third is 1-t+ts. These equalities follow by evaluating the four product-basis entries and the Pauli traces.",
+                "tight_readouts", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
+            Node("tight-centre", "The centre length of the family", TightCentreFormula(),
+                "For 0 <= t <= 1 and 0 <= s < 1, Bob's Bloch length is s, so the centre denominator, one minus s squared, is nonzero. Substituting the Bloch vectors and diagonal correlations gives Alice's centre (0,0,t), whose length is t.",
+                "tight_centre", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("milne-chsh-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The centre bound holds"), StatementSource.FromAuthor(Disp(ClaimBody())),
@@ -236,5 +276,142 @@ internal sealed class SteeringEllipsoidCHSHDocument : IScribeDocumentDefinition
         var tight = All("t", Real(), Implies(LessThanOrEqual(D(0), t),
             Implies(LessThanOrEqual(t, D(1)), approximation)));
         return And(universal, tight);
+    }
+
+    private static Formula ExactSymbol(string name) => name switch
+    {
+        "ρ" => Rho,
+        "a'" => Seq(F.Id("a"), Apos),
+        "b'" => Seq(F.Id("b"), Apos),
+        _ => F.Id(name),
+    };
+    private static Formula ExactTyped(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
+    private static Formula ExactAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, ExactTyped(ExactSymbol(name), type), Comma, Sp, Parenthesized(body));
+    private static Formula ExactLambda(string name, Formula type, Formula body) =>
+        Seq(LambdaLower, Sp, ExactTyped(ExactSymbol(name), type), Sp, Mapsto, Sp, Parenthesized(body));
+    private static Formula ExactSum(string name, Formula body) =>
+        Seq(new Formula.Subscript(Sum, ExactTyped(ExactSymbol(name), Fin(3))), Sp, Parenthesized(body));
+    private static Formula At(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
+    private static Formula Square(Formula value) => new Formula.Power(Parenthesized(value), D(2));
+    private static Formula RealPart(Formula value) => QCall("Complex", "re", value);
+    private static Formula BlochA(Formula value) => QCall(Companion, "blochA", value);
+    private static Formula BlochB(Formula value) => QCall(Companion, "blochB", value);
+    private static Formula Corr(params Formula[] arguments) => QCall(Companion, "corr", arguments);
+    private static Formula DotProduct(Formula left, Formula right) => Call("dotProduct", left, right);
+    private static Formula MulVec(Formula matrix, Formula vector) => QCall("Matrix", "mulVec", matrix, vector);
+    private static Formula SqrtOf(Formula value) => QCall("Real", "sqrt", value);
+    private static Formula ComplexOfReal(Formula value) => QCall("Complex", "ofReal", value);
+    private static Formula Hermitian(Formula value) => QCall("Matrix", "IsHermitian", value);
+    private static Formula DensityHypotheses(Formula rho, Formula body) =>
+        Implies(Positive(rho), Implies(EqTo(Trace(rho), ExactTyped(D(1), Complex())), body));
+    private static Formula VectorLiteral(params Formula[] entries)
+    {
+        Formula body = entries[0];
+        for (var i = 1; i < entries.Length; i++) body = Seq(body, Comma, Sp, entries[i]);
+        return Seq(Bang, OpenBracket, body, CloseBracket);
+    }
+    private static Formula TightBinders(Formula body) => ExactAll("t", Real(), ExactAll("s", Real(), body));
+
+    private static Formula DeltaFormula()
+    {
+        Formula x = ExactSymbol("X");
+        Formula marginal = QCall("D5.S3.Quantum.Information.PartialTraceMutualInformation", "partialTraceRight", x);
+        return ExactAll("X", TwoQubitType(), EqTo(Call("delta", x),
+            Subtract(RealPart(Trace(Multiply(x, x))), RealPart(Trace(Multiply(marginal, marginal))))));
+    }
+
+    private static Formula FlipMatrixFormula()
+    {
+        Formula n = ExactSymbol("n");
+        Formula pauli = QCall(Companion, "pauli", ExactTyped(D(1), Fin(3)));
+        return ExactAll("n", Direction(), EqTo(Call("flipMatrix", n), Kron(pauli, Multiply(Spin(n), pauli))));
+    }
+
+    private static Formula FlippedFormula()
+    {
+        Formula x = ExactSymbol("X"), n = ExactSymbol("n"), matrix = Call("flipMatrix", n);
+        return ExactAll("X", TwoQubitType(), ExactAll("n", Direction(), EqTo(Call("flipped", x, n),
+            Multiply(Multiply(matrix, QCall("Matrix", "transpose", x)), QCall("Matrix", "conjTranspose", matrix)))));
+    }
+
+    private static Formula FlipPurityIdentityFormula()
+    {
+        Formula rho = Rho, n = ExactSymbol("n");
+        Formula energy = ExactSum("i", ExactSum("j", Square(Corr(rho, ExactSymbol("i"), ExactSymbol("j")))));
+        Formula left = Add(Subtract(Add(Multiply(D(2), RealPart(Trace(Multiply(rho, Call("flipped", rho, n))))),
+            energy), Square(Vlen(MulVec(Corr(rho), n)))), Square(DotProduct(BlochB(rho), n)));
+        return ExactAll("ρ", TwoQubitType(), Implies(Hermitian(rho),
+            Implies(EqTo(Trace(rho), ExactTyped(D(1), Complex())), ExactAll("n", Direction(),
+                Implies(EqTo(Vlen(n), D(1)), EqTo(left, Add(D(1), Multiply(D(2), Call("delta", rho)))))))));
+    }
+
+    private static Formula UnitDotLeFormula() => ExactAll("a", Direction(), ExactAll("x", Direction(),
+        Implies(EqTo(Vlen(ExactSymbol("a")), D(1)), LessThanOrEqual(
+            new Formula.Absolute(DotProduct(ExactSymbol("a"), ExactSymbol("x"))), Vlen(ExactSymbol("x"))))));
+
+    private static Formula BobRadiusLeFormula() => ExactAll("ρ", TwoQubitType(),
+        DensityHypotheses(Rho, LessThanOrEqual(Vlen(BlochB(Rho)), D(1))));
+
+    private static Formula DeltaLeCentreFormula() => ExactAll("ρ", TwoQubitType(), DensityHypotheses(Rho,
+        LessThanOrEqual(Call("delta", Rho), Multiply(Subtract(D(1), Square(Vlen(BlochB(Rho)))),
+            Subtract(new Formula.Fraction(D(1), D(2)), Vlen(Centre(Rho)))))));
+
+    private static Formula BellTraceRealExpansionFormula()
+    {
+        Formula a = ExactSymbol("a"), aPrime = ExactSymbol("a'"), b = ExactSymbol("b"), bPrime = ExactSymbol("b'");
+        Formula realValue = Add(DotProduct(a, MulVec(Corr(Rho), Add(b, bPrime))),
+            DotProduct(aPrime, MulVec(Corr(Rho), Subtract(b, bPrime))));
+        return ExactAll("ρ", TwoQubitType(), Implies(Hermitian(Rho), ExactAll("a", Direction(),
+            ExactAll("a'", Direction(), ExactAll("b", Direction(), ExactAll("b'", Direction(),
+                EqTo(Trace(Multiply(Rho, Bell(a, aPrime, b, bPrime))), ComplexOfReal(realValue))))))));
+    }
+
+    private static Formula TightVectorFormula()
+    {
+        Formula t = ExactSymbol("t"), s = ExactSymbol("s"), k = ExactSymbol("k");
+        Formula entries = VectorLiteral(VectorLiteral(ComplexOfReal(SqrtOf(Add(D(1), s))), ExactTyped(D(0), Complex())),
+            VectorLiteral(ExactTyped(D(0), Complex()), ComplexOfReal(SqrtOf(Multiply(Subtract(D(1), t), Subtract(D(1), s))))));
+        Formula first = QCall("Prod", "fst", k), second = QCall("Prod", "snd", k);
+        Formula body = ExactLambda("k", Pair(Fin(2), Fin(2)), At(entries, first, second));
+        return TightBinders(EqTo(Call("tightVector", t, s), body));
+    }
+
+    private static Formula TightStateFormula()
+    {
+        Formula t = ExactSymbol("t"), s = ExactSymbol("s");
+        Formula vector = Call("tightVector", t, s);
+        Formula ev = ExactLambda("k", Pair(Fin(2), Fin(2)), ComplexOfReal(QCall(Companion, "ev", ExactSymbol("k"))));
+        Formula rankOne = QCall("Matrix", "vecMulVec", vector, QCall("Star", "star", vector));
+        Formula evProjector = QCall("Matrix", "vecMulVec", ev, QCall("Star", "star", ev));
+        Formula half = ExactTyped(new Formula.Fraction(D(1), D(2)), Complex());
+        Formula coefficient = ComplexOfReal(new Formula.Fraction(Multiply(t, Subtract(D(1), s)), D(2)));
+        Formula first = QCall("HSMul", "hSMul", half, rankOne);
+        Formula second = QCall("HSMul", "hSMul", coefficient, evProjector);
+        return TightBinders(EqTo(Call("tightState", t, s), Add(first, second)));
+    }
+
+    private static Formula TightPsdFormula() => TightBinders(Implies(LessThanOrEqual(D(0), ExactSymbol("t")),
+        Implies(LessThanOrEqual(ExactSymbol("s"), D(1)), Positive(Call("tightState", ExactSymbol("t"), ExactSymbol("s"))))));
+
+    private static Formula TightReadoutsFormula()
+    {
+        Formula t = ExactSymbol("t"), s = ExactSymbol("s"), state = Call("tightState", t, s);
+        Formula p = Multiply(SqrtOf(Add(D(1), s)), SqrtOf(Multiply(Subtract(D(1), t), Subtract(D(1), s))));
+        Formula readouts = And(EqTo(Trace(state), ExactTyped(D(1), Complex())),
+            EqTo(BlochA(state), VectorLiteral(D(0), D(0), Add(t, Multiply(Subtract(D(1), t), s)))),
+            EqTo(BlochB(state), VectorLiteral(D(0), D(0), s)),
+            EqTo(Corr(state), QCall("Matrix", "diagonal", VectorLiteral(p, new Formula.Negate(Parenthesized(p)),
+                Add(Subtract(D(1), t), Multiply(t, s))))));
+        return TightBinders(Implies(LessThanOrEqual(t, D(1)), Implies(LessThanOrEqual(D(0), s),
+            Implies(LessThanOrEqual(s, D(1)), readouts))));
+    }
+
+    private static Formula TightCentreFormula()
+    {
+        Formula t = ExactSymbol("t"), s = ExactSymbol("s");
+        return TightBinders(Implies(LessThanOrEqual(D(0), t), Implies(LessThanOrEqual(t, D(1)),
+            Implies(LessThanOrEqual(D(0), s), Implies(LessThan(s, D(1)),
+                EqTo(Vlen(Centre(Call("tightState", t, s))), t))))));
     }
 }

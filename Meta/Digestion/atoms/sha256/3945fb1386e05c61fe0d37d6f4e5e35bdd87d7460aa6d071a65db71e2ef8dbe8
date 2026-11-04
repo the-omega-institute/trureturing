@@ -1,0 +1,45 @@
+**定理 11.1（有限迹缺额与正的最佳比例）。** 在定义 8.1 的单场中，另已得到或明确要求 $B(a,b)=-B(b,a)$，但不要求 Jacobi。记
+
+$$
+K_{ab}=[L_a,L_b],\qquad E_{ab}(\lambda)=K_{ab}+\lambda D_{B(a,b)},
+\qquad q(a,b)=\operatorname{Tr}(L_aL_b).
+$$
+
+则
+
+$$
+\operatorname{Tr}(K_{ab}D_{B(a,b)})=q(B(a,b),B(a,b)).\tag{11.1}
+$$
+
+对完整正交基，定义
+
+$$
+\mathsf a=\sum_{i<j}\|K_{ij}\|_{\rm HS}^2,\quad
+\mathsf h=\sum_{i<j}q(B(e_i,e_j),B(e_i,e_j)),\quad
+\mathsf c=\sum_{i<j}\|D_{B(e_i,e_j)}\|_{\rm HS}^2.
+$$
+
+活动条件给 $\mathsf a,\mathsf h,\mathsf c>0$，并有精确恒等式
+
+$$
+\boxed{\sum_{i<j}\|E_{ij}(\lambda)\|_{\rm HS}^2
+=\mathsf c\left(\lambda-\frac{\mathsf h}{\mathsf c}\right)^2
++\frac{\mathsf a\mathsf c-\mathsf h^2}{\mathsf c}.}\tag{11.2}
+$$
+
+因此最佳局部比例唯一且为正，剩余障碍为非负量 $\mathsf a\mathsf c-\mathsf h^2$。若另一场的括号也已交替，则在固定非零参照 $v$ 下，式 (9.5) 的完整混合残差平方和恰为式 (11.2) 乘 $\|v\|^2$。这里的 $E$ 使用 $D_{B(a,b)}$；在尚未得到 Jacobi 时，不得换成 $[D_a,D_b]$。
+
+证明。令 $z=B(a,b)$，$D_z$ 仍为比较导子。迹循环性、交替性与 $q$ 的导子不变性给
+
+$$
+\begin{aligned}
+\operatorname{Tr}(K_{ab}D_z)
+&=\operatorname{Tr}([D_z,L_a]L_b)\\
+&=q(D_za,b)=q(-D_a^2b,b)=q(z,z).
+\end{aligned}
+$$
+
+这证明 (11.1)，完全没有使用 Jacobi。$K_{ab},D_z$ 均斜伴随，故其 Hilbert–Schmidt 内积为 $-q(z,z)$。逐对展开平方并配方，得到 (11.2)。
+
+至少一个基对有 $z\ne0$，于是 $\mathsf h>0$；(11.1) 同时迫使该对的 $K_{ab},D_z$ 非零，故其余两数为正。把所有 $K_{ij}$ 与 $D_{B(e_i,e_j)}$ 当作有限直和中的两个向量，Cauchy–Schwarz 给 $\mathsf h^2\le\mathsf a\mathsf c$。等号、配合比例 $\lambda=\mathsf h/\mathsf c$，恰使全部 $E_{ij}$ 消失；随后定理 9.1 的循环抵消步骤给出 Jacobi。张量范数乘法则给所述联合残差对应。此处正交投影和 Cauchy–Schwarz 是标准工具，有限缺额针对的是当前未预设 Lie 的关系接口。∎
+

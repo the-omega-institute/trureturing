@@ -1,0 +1,35 @@
+### 定义 2.2（有限二阶均衡校准）
+
+取有限个秩一投影 $p_s=\lvert \psi_s\rangle\langle \psi_s\rvert$ 与正权 $w_s$，$\sum_sw_s=1$，满足
+
+<a id="eq-design"></a>
+
+$$
+\sum_s w_s p_s\otimes p_s=\frac{I+\mathsf S}{d(d+1)},
+\qquad \mathsf S(x\otimes y)=y\otimes x.
+\tag{2}
+$$
+
+这称为加权复射影二阶设计。式 [(2)](#eq-design) 是校准关系的代数描述；实际试验只需逐次准备 $p_s$、通过同一个 $T$、二元读取 $p_s$。公式中的张量写法不要求把未知态复制两份。
+
+定义两种同向读数
+
+<a id="eq-readouts"></a>
+
+$$
+r_E(p)=\operatorname{Tr}[pT(p)],\qquad a_E(p)=\operatorname{Tr}(p\sqrt E),
+\tag{3}
+$$
+
+以及平均值
+
+<a id="eq-means"></a>
+
+$$
+R_{\mathscr D}(T)=\sum_sw_sr_E(p_s),\qquad
+Q_{\mathscr D}(E)=\sum_sw_sa_E(p_s)^2.
+\tag{4}
+$$
+
+$r_E$ 是成功并沿原方向读回的联合概率；$a_E$ 是对半深效果 $\sqrt E$ 的成功评价，其更新方式并未预设。平方 $a_E^2$ 是数的乘积。平均在成功条件化之前进行。
+

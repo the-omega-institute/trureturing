@@ -1,0 +1,13 @@
+**定义 9.2（固定数学输入与文献状态）。** V95 和 C118 的引用内容固定于版本 `8d60c742f1ad8ffa85ab5d190dc921985f5bcc03`；后续文字不成为这些应用的前件。以下成熟内容只作为本卷新连接的中间应用，不另认作新增结构定理。
+
+| 来源 | 精确消费与文献边界 |
+| --- | --- |
+| Barnum–Wilce, *Local tomography and the Jordan structure of quantum theory*, arXiv:1202.4513v2，Theorem 4(a)–(c)、附录 Lemma C、Corollary 1 | `literature-attested`：指定闭连通自伴随内迁群的单位 Jordan/Lie 构造。主证明先用 $hu=a$ 的拉回核对新伴随封闭，再消费 (b)–(c)，不照搬附录所印拉回方向，不由该结构定理推断原可调用供应。 |
+| [V95](https://github.com/the-omega-institute/trureturing/blob/8d60c742f1ad8ffa85ab5d190dc921985f5bcc03/docs/develop/theory/AURIC_COMPARISON_DYNAMICAL_CURVATURE_FINITE_FRAME_QUANTUM_V95.md)，Definition 1.1、Theorem 2.1、§5；其动力对应来源为 Alfsen–Shultz 路线及 Niestegge, arXiv:1402.0158v2 §5 | `repo-derived` 既有同空间结果及 `literature-attested` 动力对应：正 Frobenius 场、原导子与完整三元律的参数逐项在 (3.3)–(3.5) 映射；复选择、有限 $C^*$ 分类、张量及时间接口复用原结论。 |
+| Westerbaan–Westerbaan–van de Wetering, *Pure Maps between Euclidean Jordan Algebras*, arXiv:1805.11496v2，Definition 8、Proposition 9 | `literature-attested`：$Q_a=2L_a^2-L_{a^2}$ 的正性、自伴随、可逆及次幺性质；不归给它 (4.1) 的指数公式或任何实际原供应。 |
+| P. L. Robinson, *Julia operators and Halmos dilations*, arXiv:1803.09329v1，Theorems 0–2 | `literature-attested`：有限收缩的 Julia/Halmos 酉膨胀；(3.14) 另核对该矩阵属于指定原群，$N_u$ 与 Q1/Xs 才给实际完整原词。 |
+| John Watrous, *The Theory of Quantum Information*, [作者电子版](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 2.22 | `literature-attested`：非零有限复矩阵映射的输入维数层正性、CP 与 Kraus 等价；主证明对每个非零原块映射应用，零分量另行处理；不将 Kraus 分解当原记录供应。 |
+| [C118 所在续卷](https://github.com/the-omega-institute/trureturing/blob/8d60c742f1ad8ffa85ab5d190dc921985f5bcc03/docs/develop/theory/AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md)，Definition 140.1、(140.2)–(140.5)、Theorem 122.2、144.1、§§147–149 | `repo-derived` 既有支持与原记录结果：单中心正双返回正常形及矩形伪逆支直接复用。主证明以全事件 R 固定 CP 方向，未导入 C118 的选中滤片供应来推导自身目标。Definition 140.2 的系数一实际读回与可能带 $\eta$ 的准备分开保留。 |
+| Alexeev–Cahill–Mixon, *Full Spark Frames*, arXiv:1110.3548v2，Lemma 2、Theorem 3 后有限 DFT 观察 | `literature-attested`：不同基的有限 Vandermonde full-spark 帧；不供应原丢弃细口、操作闭包、共同原叶或 F 结论。 |
+| 定理 3.1 中 (3.3)–(3.4)、(3.6)–(3.8)、(3.11)–(3.21)，定义 6.1–6.6 与定理 7.1 | `repo-derived`：同一原群到原完整装置的连接，以及固定原细口和全部返回完成上的有限语言分离。此状态说明本卷的综合推导归属，不是文献优先权、全部前件独立、最少公理或物理原签名满足性的声明。 |
+

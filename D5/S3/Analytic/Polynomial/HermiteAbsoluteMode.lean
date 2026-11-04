@@ -22,20 +22,20 @@ namespace D5.S3.Analytic.Polynomial.HermiteAbsoluteMode
 
 open Finset HermiteSignedMode
 
-private def second (j : ℕ) : ℕ := (j + 1) * (j + 2)
-private def rises (n r : ℕ) : Prop := 2 * r ≤ n ∧ 4 * r ≤ second (n - 2 * r)
+def second (j : ℕ) : ℕ := (j + 1) * (j + 2)
+def rises (n r : ℕ) : Prop := 2 * r ≤ n ∧ 4 * r ≤ second (n - 2 * r)
 private instance (n r : ℕ) : Decidable (rises n r) := inferInstanceAs (Decidable (_ ∧ _))
 private def candidates (n : ℕ) := (range (n + 1)).filter (rises n)
 private theorem zero_candidate (n : ℕ) : 0 ∈ candidates n := by
   simp [candidates, rises, second]
-private def mode (n : ℕ) : ℕ := (candidates n).max' ⟨0, zero_candidate n⟩
-private theorem mode_rises (n : ℕ) : rises n (mode n) :=
+def mode (n : ℕ) : ℕ := (candidates n).max' ⟨0, zero_candidate n⟩
+theorem mode_rises (n : ℕ) : rises n (mode n) :=
   (mem_filter.mp (max'_mem _ _)).2
-private theorem le_mode {n r : ℕ} (h : rises n r) : r ≤ mode n := by
+theorem le_mode {n r : ℕ} (h : rises n r) : r ≤ mode n := by
   apply le_max'
   exact mem_filter.mpr ⟨mem_range.mpr (by have := h.1; omega), h⟩
 
-private theorem second_mono : Monotone second := by
+theorem second_mono : Monotone second := by
   intro a b h
   unfold second
   gcongr
@@ -59,15 +59,15 @@ private theorem mode_step (n : ℕ) : mode n ≤ mode (n + 1) ∧ mode (n + 1) �
     omega
 
 /-- The original signed coefficient observed through absolute value. -/
-private def weight (n r : ℕ) : ℚ := |signedCoeff n (n - 2 * r)|
+def weight (n r : ℕ) : ℚ := |signedCoeff n (n - 2 * r)|
 
-private theorem weight_pos (n r : ℕ) (hr : 2 * r ≤ n) : 0 < weight n r := by
+theorem weight_pos (n r : ℕ) (hr : 2 * r ≤ n) : 0 < weight n r := by
   have h : n - 2 * r ≤ n ∧ (n - (n - 2 * r)) % 2 = 0 := by constructor <;> omega
   simp only [weight, signedCoeff, if_pos h, abs_div, abs_mul, abs_pow, abs_neg,
     abs_one, one_pow, one_mul, Nat.abs_cast, abs_of_nonneg (by norm_num : (0 : ℚ) ≤ 2)]
   positivity
 
-private theorem adjacent (n r : ℕ) (h : 2 * (r + 1) ≤ n) :
+theorem adjacent (n r : ℕ) (h : 2 * (r + 1) ≤ n) :
     weight n (r + 1) * (4 * (r + 1)) =
       weight n r * second (n - 2 * (r + 1)) := by
   let j := n - 2 * (r + 1)
@@ -108,7 +108,7 @@ private theorem adjacent_le (n r : ℕ) (h : 2 * (r + 1) ≤ n) :
     have hm := mul_le_mul_of_nonneg_left hh' hw.le
     nlinarith [he]
 
-private theorem weight_le_mode (n r : ℕ) (hr : 2 * r ≤ n) : weight n r ≤ weight n (mode n) := by
+theorem weight_le_mode (n r : ℕ) (hr : 2 * r ≤ n) : weight n r ≤ weight n (mode n) := by
   by_cases h : r ≤ mode n
   · have aux : ∀ k, k ≤ mode n → ∀ i, i ≤ k → weight n i ≤ weight n k := by
       intro k
@@ -146,7 +146,7 @@ private theorem weight_le_mode (n r : ℕ) (hr : 2 * r ≤ n) : weight n r ≤ w
           rw [this]
     exact aux r hr (by omega)
 
-private theorem weight_lt_mode (n r : ℕ) (hr : 2 * r ≤ n) (hm : mode n < r) :
+theorem weight_lt_mode (n r : ℕ) (hr : 2 * r ≤ n) (hm : mode n < r) :
     weight n r < weight n (mode n) := by
   cases r with
   | zero => omega
@@ -156,7 +156,7 @@ private theorem weight_lt_mode (n r : ℕ) (hr : 2 * r ≤ n) (hm : mode n < r) 
       lt_of_not_ge (fun hh => hnot ((adjacent_le n r hr).mp hh))
     exact hlt.trans_le (weight_le_mode n r (by omega))
 
-private theorem coefficient_cases (n j : ℕ) : |signedCoeff n j| = 0 ∨
+theorem coefficient_cases (n j : ℕ) : |signedCoeff n j| = 0 ∨
     ∃ r, 2 * r ≤ n ∧ j = n - 2 * r ∧ |signedCoeff n j| = weight n r := by
   by_cases h : j ≤ n ∧ (n - j) % 2 = 0
   · right

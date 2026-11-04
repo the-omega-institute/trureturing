@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a63097857b5a85308a393e7176e5b017f571a0906a559ab0b2091ff6d9f17b17
+  normalized_sha256: sha256:a63097857b5a85308a393e7176e5b017f571a0906a559ab0b2091ff6d9f17b17
+cas_ref: sha256:a63097857b5a85308a393e7176e5b017f571a0906a559ab0b2091ff6d9f17b17
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/StaticTensorWorld.result
+    target_statement_id: sha256:01aee1750e4272dea8c7db4b918cd9fc118e35107735213ad51d04aa33e37f86
+receipts:
+  unresolved_subitems: []

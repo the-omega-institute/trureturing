@@ -1,0 +1,88 @@
+**定理 18.3（具名原尺度到内迁的准确判据）。** 在定义 18.1–18.2 下，$S$ 是 $C$ 的序自同构，$\chi\ge0$，且
+
+$$
+q e^\chi\le\lambda\le e^{-\chi},\qquad q\le e^{-2\chi}.
+\tag{18.5}
+$$
+
+$\chi=0$ 当且仅当 $Sc\in\mathbb R_+c$，称为中心射线情形；这不要求 $S$ 为标量矩阵。指定群的单位分支准确为
+
+$$
+G=
+\begin{cases}
+K,&\chi=0,\ \alpha\in\mathbb Q,\\
+\mathbb R_{>0}K,&\chi=0,\ \alpha\notin\mathbb Q,\\
+\mathcal L,&\chi>0,\ \alpha\in\mathbb Q,\\
+\mathbb R_{>0}\mathcal L,&\chi>0,\ \alpha\notin\mathbb Q.
+\end{cases}
+\tag{18.6}
+$$
+
+其中正实数表示标量变换。因此 $G$ 在整个 $C^\circ$ 上传递，当且仅当
+
+$$
+Sc\notin\mathbb R_+c\quad\text{且}\quad
+\log\lambda/\log q\notin\mathbb Q.
+\tag{18.7}
+$$
+
+结论允许 $S$ 的 Lorentz 部分反取向；未以 CP、复矩阵或有向三元律作前提。
+
+证明。由 $US=qI$，有限维的 $S$ 可逆且 $S^{-1}=q^{-1}U$ 正，故 $SC=C$。直接复用 C117 引理 2.2 证明中的保锥计算：保持全部零边界的可逆线性变换满足 $S^{\mathsf T}\eta S=\mu\eta$，$\mu>0$。取行列式得 $\mu=\lambda^2$，于是
+
+$$
+S=\lambda L,\qquad L^{\mathsf T}\eta L=\eta,\quad LC=C,
+\qquad U=(q/\lambda)L^{-1}.
+\tag{18.8}
+$$
+
+$Lc\in C^\circ$，故 $Lc=(\cosh\chi,\sinh\chi\,n)$，其中 $\chi>0$ 时 $\|n\|=1$。$L$ 的首行空间分量的范数同为 $\sinh\chi$，而 $L^{-1}$ 的左上元也是 $\cosh\chi$，所以在 $u(x)=1$ 的整个锥截面上，$u(Lx)$ 和 $u(L^{-1}x)$ 的最大值都为 $e^\chi$。因此两条质量不增条件分别等价于 $\lambda e^\chi\le1$ 和 $(q/\lambda)e^\chi\le1$，给 (18.5)。这也证明其量词并非只针对一份输入。
+
+先设 $\chi>0$。令 $B_{\chi,n}$ 是在 $\operatorname{span}(c,n)$ 上矩阵为 $\bigl(\begin{smallmatrix}\cosh\chi&\sinh\chi\\\sinh\chi&\cosh\chi\end{smallmatrix}\bigr)$、在正交空间为恒等的标准 boost。因 $B_{\chi,n}c=Lc$，$B_{\chi,n}^{-1}L$ 固定 $c$，故为 $\operatorname{diag}(1,R)$、$R\in O(3)$；这个 $R$ 即使反取向也正规化 $K$。于是
+
+$$
+S K S^{-1}=B_{\chi,n}K B_{\chi,n}^{-1}.
+\tag{18.9}
+$$
+
+$H$ 是闭矩阵群，可使用 Hall《An Elementary Introduction to Groups and Representations》定理 3.23、推论 3.26 的局部指数和连通群指数生成；这一步只作用于数学 $H$。$K$ 连通且包含恒等，故 $K\subseteq H^0$；$H^0$ 在 $H$ 中正规，(18.9) 的群也包含在 $H^0$。
+
+在空间正交坐标中令 $n=e_3$。取旋转生成元 $J$ 满足 $Je_3=e_1$、$Je_1=-e_3$，其余基向量像为零；取 boost 生成元 $B_1$ 满足 $B_1c=e_1$、$B_1e_1=c$，其余像为零。矩阵相乘给
+
+$$
+\operatorname{Ad}_{B_{\chi,e_3}}J
+=\cosh\chi\,J-\sinh\chi\,B_1.
+\tag{18.10}
+$$
+
+两边的旋转项和左端均属 $\operatorname{Lie}(H^0)$，且 $\sinh\chi\ne0$，故 $B_1$ 属于它。再由 $K$ 共轭取得全部三个 boost 生成元；连同三个旋转生成元，它们张成 $\mathfrak{so}(1,3)$。指数生成给
+
+$$
+\mathcal L\subseteq H^0.
+\tag{18.11}
+$$
+
+这是非中心性补出双曲方向的步骤，没有声称实际调用了 $B_{\chi,n}$、其逆或任意指数。
+
+剩下只判径向尺度。对锥自同构定义连续群同态
+
+$$
+\ell(T)=\tfrac14\log|\det_{\mathbb R}T|.
+\tag{18.12}
+$$
+
+原旋转、$S$、$U$ 的像分别为 $0,a,b-a$，其中 $a=\log\lambda$、$b=\log q\ne0$。所以 $\ell(H)$ 包含于 $\overline{\mathbb Za+\mathbb Zb}$。若 $a/b\in\mathbb Q$，此加法群离散，连续性迫使 $\ell(H^0)=\{0\}$。单位分支还保持取向，故 $H^0\subseteq\mathcal L$；结合 (18.11) 得有理情形。
+
+若 $a/b\notin\mathbb Q$，则 $qI=US\in H$。又 (18.8) 给 $L^2\in\mathcal L\subseteq H^0$，不论 $\det L$ 为正或负，因而
+
+$$
+\lambda^2 I=S^2(L^2)^{-1}\in H.
+\tag{18.13}
+$$
+
+$2a/b$ 仍无理，$\mathbb Z(2a)+\mathbb Zb$ 在 $\mathbb R$ 中稠密。这里使用成熟的一维加法子群事实：不可公度两数的整数线性组合有任意小的非零元素，其整数倍逼近任意实数。闭性使所有 $rI$、$r>0$ 属于 $H$；这条连续径向群也属 $H^0$。由 (18.11)，$\mathbb R_{>0}\mathcal L\subseteq H^0$；反向由锥自同构的单位分支恰为 $\mathbb R_{>0}\mathcal L$ 给出。
+
+若 $\chi=0$，$S=\lambda\operatorname{diag}(1,R)$、$R\in O(3)$，整个 $H$ 都在 $\mathbb R_{>0}\operatorname{diag}(1,O(3))$ 内。有理时同一离散尺度论证使 $H^0=K$；无理时 $R^2\in SO(3)$，用 $S^2\operatorname{diag}(1,R^{-2})=\lambda^2I$ 和 $qI$ 重复上述稠密论证，得 $H^0=\mathbb R_{>0}K$。两者均保持中心射线及 $\|w\|/t$，不能内迁。
+
+最后，$\mathcal L$ 保持 $Q(x)=t^2-\|w\|^2$，不能将 $c$ 搬到 $2c$；它只在每个 $Q=d>0$ 的未来双曲面上传递。加入全部正标量后，先按 $\sqrt{Q(y)/Q(x)}$ 调尺度，再在同一双曲面内移动，便将任意 $x,y\in C^\circ$ 相连。这证明 (18.6)–(18.7)。∎
+

@@ -59,8 +59,124 @@ public sealed partial class WorktreeCommandTests
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DormantTaskClaimUsesEmbeddedHostAndPreservesBranch(bool exact)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        TestGit.Run(repository.Path, "update-ref", "refs/remotes/origin/dev", "HEAD");
+        const string previous = "lane/math/dormant";
+        var target = Path.Combine(repository.Path, "dormant");
+        TestGit.Run(repository.Path, "worktree", "add", "-b", previous, target, "HEAD");
+        File.WriteAllText(Path.Combine(target, "README.md"), "unmerged dormant source\n");
+        const string timestamp = "1700000000";
+        var committed = TestProcessRunner.Run("env",
+            ["GIT_COMMITTER_DATE=@" + timestamp + " +0000", "git", "commit", "-am", "Dormant task"],
+            target, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        Assert.True(committed.ExitCode == 0, Encoding.UTF8.GetString(committed.StandardError));
+        var saved = TestGit.Run(target, "rev-parse", "HEAD").Trim();
+        var log = Path.Combine(GitWorktreeDirectory.Read(target)!, "logs", "HEAD");
+        File.WriteAllLines(log, File.ReadAllLines(log).Select(line =>
+        {
+            var parts = line.Split('\t', 2);
+            var fields = parts[0].Split(' ');
+            fields[^2] = timestamp;
+            return string.Join(' ', fields) + (parts.Length == 2 ? "\t" + parts[1] : "");
+        }));
+        File.WriteAllText(Path.Combine(repository.Path, ".git", "info", "exclude"), ".lake/\n");
+        Directory.CreateDirectory(Path.Combine(target, ".lake"));
+        File.WriteAllText(Path.Combine(target, ".lake", "sentinel"), "cached bytes\n");
+        var fallback = Path.Combine(repository.Path, "fallback");
+        var arguments = new List<string> { "--kind", "math", "--name", "next", "--base", "dev",
+            "--path", exact ? target : fallback, "--skip-restore" };
+        if (!exact) arguments.Add("--prefer-idle");
+
+        var result = WorktreeCommand.Run(repository.Path, arguments, new ActivityIsolatedRunner());
+
+        Assert.True(result.Success, result.Error);
+        using var receipt = JsonDocument.Parse(result.Output);
+        Assert.Equal("claimed", receipt.RootElement.GetProperty("status").GetString());
+        Assert.Equal("refs/heads/" + previous, receipt.RootElement.GetProperty("previous_branch").GetString());
+        Assert.Equal(saved, TestGit.Run(repository.Path, "rev-parse", previous).Trim());
+        Assert.Equal("unmerged dormant source\n", TestGit.Run(repository.Path, "show", previous + ":README.md"));
+        Assert.Equal("lane/math/next", TestGit.Run(target, "branch", "--show-current").Trim());
+        Assert.Equal("cached bytes\n", File.ReadAllText(Path.Combine(target, ".lake", "sentinel")));
+        Assert.False(Directory.Exists(fallback));
+    }
+
     [Fact]
-    public void IdlePoolBypassesAutomaticAgeButAllowsNamedRemoval()
+    public void ImplicitCreationRunsEmbeddedDiskCheckAfterNoReusableTree()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        TestGit.Run(repository.Path, "update-ref", "refs/remotes/origin/dev", "HEAD");
+        var target = Path.Combine(repository.Path, "fallback");
+        var result = TestProcessRunner.Run("env", ["WORKTREE_REQUIRE_DISK_CHECK=1", "dotnet",
+            typeof(WorktreeCommand).Assembly.Location, "worktree", "--source", repository.Path,
+            "--kind", "math", "--name", "disk-check", "--base", "dev", "--path", target,
+            "--prefer-idle", "--skip-restore"], repository.Path,
+            TestBudgets.ProtocolProbeHangGuard, 1024 * 1024);
+        var stdout = Encoding.UTF8.GetString(result.StandardOutput);
+        var stderr = Encoding.UTF8.GetString(result.StandardError);
+        if (result.ExitCode == 0)
+        {
+            using var receipt = JsonDocument.Parse(stdout);
+            Assert.Equal("succeeded", receipt.RootElement.GetProperty("status").GetString());
+            Assert.True(Directory.Exists(target));
+        }
+        else
+        {
+            Assert.Contains("WORKTREE_LOW_DISK", stderr, StringComparison.Ordinal);
+            Assert.False(Directory.Exists(target));
+        }
+    }
+
+    [Fact]
+    public void ExactCreationChecksDiskWhenDeferredTargetIsMissing()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        using var executables = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        TestGit.Run(repository.Path, "update-ref", "refs/remotes/origin/dev", "HEAD");
+        var python = TestProcessRunner.Run("python3", ["-I", "-c", "import sys; print(sys.executable)"],
+            repository.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        Assert.Equal(0, python.ExitCode);
+        var shim = Path.Combine(executables.Path, "python3");
+        File.WriteAllText(shim, """
+            #!/bin/sh
+            for argument do
+              if [ "$argument" = check-disk ]; then
+                printf '%s\n' WORKTREE_LOW_DISK_fixture >&2
+                exit 73
+              fi
+            done
+            exec "$WORKTREE_TEST_PYTHON" "$@"
+            """ + "\n");
+        File.SetUnixFileMode(shim, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var target = Path.Combine(repository.Path, "removed-before-creation");
+
+        var result = TestProcessRunner.Run("env", ["WORKTREE_REQUIRE_DISK_CHECK=1",
+            "WORKTREE_TEST_PYTHON=" + Encoding.UTF8.GetString(python.StandardOutput).Trim(),
+            "PATH=" + executables.Path + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
+            "dotnet", typeof(WorktreeCommand).Assembly.Location, "worktree", "--source", repository.Path,
+            "--kind", "math", "--name", "deferred-disk", "--base", "dev", "--path", target,
+            "--skip-restore"], repository.Path, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024);
+
+        Assert.Equal(73, result.ExitCode);
+        Assert.Contains("WORKTREE_LOW_DISK_fixture", Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.False(Directory.Exists(target));
+        Assert.DoesNotContain("lane/math/deferred-disk", TestGit.Run(repository.Path, "branch", "--list"),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void OldIdleTreeUsesAutomaticCommitAgeRemoval()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -76,10 +192,7 @@ public sealed partial class WorktreeCommandTests
             new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration));
 
         Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(idle));
-        Assert.Contains("idle_pool", result.Output, StringComparison.Ordinal);
-        var removed = WorktreeCommand.Run(repository.Path, ["remove", "--names", "idle"]);
-        Assert.True(removed.Success, removed.Error);
+        Assert.Contains("head_commit_age", result.Output, StringComparison.Ordinal);
         Assert.False(Directory.Exists(idle));
     }
 
@@ -216,7 +329,7 @@ public sealed partial class WorktreeCommandTests
             "--path", exact ? idle : fallback, "--skip-restore" };
         if (!exact) arguments.Add("--prefer-idle");
 
-        var result = WorktreeCommand.Run(repository.Path, arguments);
+        var result = WorktreeCommand.Run(repository.Path, arguments, new ActivityIsolatedRunner());
 
         Assert.True(result.Success, result.Error);
         using var receipt = JsonDocument.Parse(result.Output);
@@ -229,10 +342,25 @@ public sealed partial class WorktreeCommandTests
         Assert.Equal("cached bytes\n", File.ReadAllText(Path.Combine(idle, ".lake", "sentinel")));
         Assert.Equal("lane/math/claimed", WorktreeHookFixture.RunGit(idle, "branch", "--show-current").Trim());
         Assert.Contains("worktree-allocation:", WorktreeHookFixture.RunGit(idle, "reflog", "-1", "--format=%gs"));
-        var repeated = WorktreeCommand.Run(repository.Path, arguments);
+        var repeated = WorktreeCommand.Run(repository.Path, arguments, new ActivityIsolatedRunner());
         Assert.True(repeated.Success, repeated.Error);
         using var reuse = JsonDocument.Parse(repeated.Output);
         Assert.Equal("reused", reuse.RootElement.GetProperty("status").GetString());
         Assert.Equal(registeredPath, reuse.RootElement.GetProperty("path").GetString());
     }
+
+    private sealed class ActivityIsolatedRunner : IWorktreeProcessRunner
+    {
+        private readonly ProductionWorktreeProcessRunner inner = new();
+
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments,
+            string workingDirectory, TimeSpan budget)
+        {
+            if (fileName != "python3") return inner.Run(fileName, arguments, workingDirectory, budget);
+            var fixture = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "tests",
+                "StrataLint.WorktreeContract.Tests", "Fixtures", "activity_fixture.py");
+            return inner.Run(fileName, ["-I", "-B", fixture, "--", .. arguments], workingDirectory, budget);
+        }
+    }
+
 }

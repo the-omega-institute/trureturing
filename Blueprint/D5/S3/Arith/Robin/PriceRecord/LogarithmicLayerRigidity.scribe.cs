@@ -9,6 +9,22 @@ internal sealed class LogarithmicLayerRigidityDocument : IScribeDocumentDefiniti
         H("Logarithmic Layer Rigidity for Actual Predecessor Records"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("theta-error-eight-logarithmic-pnt"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.theta_error_eight"),
+                H("The theta error with eight logarithmic savings"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The difference theta(t)-t is o(t/log(t)^8) as the real variable t tends "
+                    + "to infinity. The medium prime number theorem controls psi(t)-t, "
+                    + "and the established square-root bound for psi(t)-theta(t) transfers "
+                    + "that control to theta. Both error terms vanish at this logarithmic scale. "
+                    + "This existing PNT consequence supplies shrinking prime windows and "
+                    + "the uniform finite logarithmic prime-square refinements. No RH "
+                    + "hypothesis or novelty claim is involved."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("logarithmic-layer-shrinking-prime-windows"),
                 DeclarationHandle.Create(
                     "D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.shrinking_prime_windows"),

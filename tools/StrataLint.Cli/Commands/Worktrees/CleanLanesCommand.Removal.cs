@@ -9,8 +9,6 @@ internal static partial class CleanLanesCommand
     private static LaneRemovalResult RemoveLane(
         string repositoryRoot,
         RegisteredWorktree item,
-        string? baseCommit,
-        string? devCommit,
         ReclaimSelection selection,
         IWorktreeProcessRunner runner,
         DateTimeOffset now,
@@ -87,7 +85,7 @@ internal static partial class CleanLanesCommand
             return new(LaneRemovalOutcome.QualificationFailed, observation.Failure);
         if (!string.Equals(observation.GitDirectory, item.GitDirectory, StringComparison.Ordinal))
             return Refused("race_changed");
-        var refreshedSelection = SelectForReclaim(item, baseCommit, devCommit, runner, now);
+        var refreshedSelection = SelectForReclaim(item, runner, now);
         if (refreshedSelection != selection) return Refused("race_changed");
         var reason = refreshedSelection.BlockReason;
         if (reason is not null) return Refused(reason);

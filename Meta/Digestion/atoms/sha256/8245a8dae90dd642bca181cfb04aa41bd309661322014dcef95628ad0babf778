@@ -1,0 +1,28 @@
+**定义 142.1（同词、同成功率的闭环分数）。** 对任意上述实际平衡闭环 $L=aJ:R\to R$，$a>0$，以及已经固定的 $W_g$，置
+
+$$
+s_g=ab_g>0,\qquad
+r_{gj}(L)=\tau\!\left[p_jW_gL(p_j)\right],\qquad
+\operatorname{score}_g(L)=\frac{\sum_{j=1}^3r_{gj}(L)}{s_g}.
+\tag{142.1}
+$$
+
+$s_g$ 是三个条件制备后的共同成功率，可以依 $g$ 改变。由 C116 的 Pauli 迹公式 (134.1)，
+
+$$
+\operatorname{score}_g(L)=\frac32+\frac12\operatorname{Tr}(R_gO_L).
+\tag{142.2}
+$$
+
+候选的闭环关系为
+
+$$
+\boxed{\quad
+\text{对每个所声明的有限实际返回闭环 }L,
+\quad\max_{g\in\mathcal O_R}\operatorname{score}_g(L)>2.
+\quad}
+\tag{142.3}
+$$
+
+这不是每个 $p_j$ 各选一个 $g$，也不是只检验一批固定长度回路。
+

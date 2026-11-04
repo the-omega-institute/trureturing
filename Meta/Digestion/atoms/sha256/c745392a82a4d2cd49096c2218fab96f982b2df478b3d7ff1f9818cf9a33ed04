@@ -1,0 +1,140 @@
+**定理 9.1（一般正场的有限压缩与内生量子端点）。** 对定义 8.1–8.4 的两个场，下列条件等价：
+
+1. C97 成立；
+2. 存在实数 $\lambda$，使全部联合输入满足 $R_\lambda(H,X,Y)=0$。
+
+成立时，$\lambda=\lambda_*>0$ 唯一，且两边均有
+
+$$
+D_aa=0,\qquad B(a,b)=-B(b,a),\qquad D_1=0,
+$$
+
+以及 Jacobi 律和
+
+$$
+\boxed{[L_a,L_b]+\lambda_*[D_a,D_b]=0.}\tag{9.1}
+$$
+
+各局部复化上
+
+$$
+m(a,b)=S(a,b)-i\sqrt{\lambda_*}B(a,b)
+$$
+
+是具有忠实正 $*$ 表示的复结合乘法；原实场恰为其自伴部分。局部与联合的 Jordan 性、变化的交替性与 Jacobi 性因而都是结论。每方所用探针数为
+
+$$
+\boxed{|\Pi_J|=\frac{n(n+1)}2+\frac{n^2(n-1)}2=\frac{n^3+n}2.}\tag{9.2}
+$$
+
+该数量是一个充分证书，不主张最小性。
+
+证明。首先不使用交替性，直接展开得到
+
+$$
+\boxed{
+R_\lambda(a\otimes b,c\otimes d,e\otimes1)
+=[L_a,L_e]c\otimes D_bd
++\lambda D_cD_ae\otimes D_db.
+}\tag{9.3}
+$$
+
+乘 $S_B(b,d)$ 的项由局部导子律抵消，其他项正是上式。特别地，交换参照槽后
+
+$$
+\boxed{R_\lambda(p\otimes d,p\otimes b,p\otimes1)
+=\lambda D_p^2p\otimes v.}\tag{9.4}
+$$
+
+$P\ne0$。否则混合探针的零参数报告给全部 $[L_{e_i},L_{e_j}]e_k=0$，故所有左乘算子对易。交换性继而给
+
+$$
+S(S(a,b),c)=L_cL_ab=L_aL_cb=S(a,S(b,c)),
+$$
+
+所以 $S$ 结合。全部 $L_a$ 自伴且可同时对角化，$L_a1=a$ 又使表示忠实，因而此有限正交换结合代数为若干个 $\mathbb R$ 的直积。其导子为零：对谱幂等元 $p$，$\delta p=2p\delta p$ 逐坐标强迫 $\delta p=0$。这与定义 8.1 的 $D\ne0$ 矛盾。
+
+若 $\Gamma=0$，则 $P=\lambda_*Q$。$P\ne0$ 自动排除 $Q=0$ 和 $\lambda_*=0$，且全部有限探针在同一个非零参数上消失。由 (9.4) 及斜伴随性，
+
+$$
+0=-g(p,D_p^2p)=\|D_pp\|^2.
+$$
+
+对基向量及归一两两和均如此，极化遂给
+
+$$
+D_{e_i}e_j+D_{e_j}e_i=0,
+$$
+
+并由双线性扩展为全部 $a,b$ 的交替性。再由 $D_a1=0$ 得 $D_1a=0$。两边均先完成这一步，才在 (9.3) 中替换 $D_db=-D_bd$。
+
+因此混合报告成为
+
+$$
+R_\lambda(a\otimes b,c\otimes d,e\otimes1)
+=\bigl([L_a,L_e]+\lambda D_{B(a,e)}\bigr)c\otimes v.\tag{9.5}
+$$
+
+$[L_a,L_e]$ 和 $D_{B(a,e)}$ 对 $a,e$ 都交替；完整的 $i<j,k$ 族足以推出
+
+$$
+[L_a,L_e]= -\lambda_*D_{B(a,e)}
+$$
+
+对全部元成立。交换乘法的恒等式
+
+$$
+[L_a,L_e]c+[L_e,L_c]a+[L_c,L_a]e=0
+$$
+
+逐项抵消成立，因而给
+
+$$
+B(B(a,e),c)+B(B(e,c),a)+B(B(c,a),e)=0.
+$$
+
+这推出 Jacobi，而非预先使用它。于是 $[D_a,D_e]=D_{B(a,e)}$，得到 (9.1)。
+
+为确定符号，定义正定迹比较
+
+$$
+q(a,b)=\operatorname{Tr}(L_aL_b).
+$$
+
+正定性来自 $L_a$ 自伴及 $L_a1=a$。任意比较导子 $\delta$ 满足
+
+$$
+q(\delta a,b)+q(a,\delta b)=\operatorname{Tr}[\delta,L_aL_b]=0.
+$$
+
+选 $v=D_ab\ne0$，记 $K=[L_a,L_b]$、$C=[D_a,D_b]$。由交替性和自守，$Ca=-D_a^2b$，故
+
+$$
+\operatorname{Tr}(CK)
+=\operatorname{Tr}([C,L_a]L_b)
+=q(Ca,b)=q(D_ab,D_ab)>0.
+$$
+
+$K=-\lambda_*C$ 且 $K$ 斜伴随，因此
+
+$$
+\boxed{\|K\|_{\rm HS}^2=\lambda_*q(D_ab,D_ab).}\tag{9.6}
+$$
+
+左侧非负、右侧第二因子正，结合 $\lambda_*\ne0$，给出 $\lambda_*>0$。每个非零变化对同时给出同一内部标尺
+
+$$
+\boxed{\lambda_*
+=\frac{\|[L_a,L_b]\|_{\rm HS}^2}{q(D_ab,D_ab)}.}\tag{9.7}
+$$
+
+复结合重构现在直接复用比较曲率 V95 定理 2.1 的缩放形式。其左正则表示为
+
+$$
+\pi(a)=L_a-i\sqrt{\lambda_*}D_a,\qquad \pi(z)1=z.
+$$
+
+实元的左乘算子自伴，结合性使 $\pi$ 成为忠实含幺 $*$ 表示，有限维像因此为复 $C^*$ 代数。两边结合张量积的乘法恰为 $M_{\lambda_*}-i\sqrt{\lambda_*}T$，故全部联合导子残差消失。有限 $C^*$ 与动力对应的成熟重构在此仅作为有限证书端点的中间工具，出处同定理 2.1；不另认领该标准表示。
+
+反过来，若某个参数上全部联合残差消失，则 $P=\lambda Q$。$P\ne0$ 迫使 $Q\ne0$，正交投影给 $\lambda_*=\lambda$、$\Gamma=0$，也证明该参数唯一。有限计数由两族的指标直接相加，得到 (9.2)。例如两个实自伴维数均为 $4$ 的场使用 $68$ 个带标签报告；逐一检查整个 $16$ 维联合空间上的全部基三元组则有 $16^3=4096$ 项。这里仅比较这两种明确证书，不声称排除了其他压缩方式。∎
+

@@ -17,6 +17,13 @@ internal sealed class HermiteAbsoluteModeDocument : IScribeDocumentDefinition
                 + "signedCoeff supplier are the original HermiteSignedMode declarations. Coefficients are rational, and absolute value is taken "
                 + "before comparing them. No rescaling or restriction to positive coefficients is made. Both exponents are cast to the integers "
                 + "before the subtraction in the transition statement.")),
+            Paragraph(Text("The comparison functions are second(j)=(j+1)(j+2), "
+                + "rises(n,r) meaning 2r at most n and 4r at most second(n-2r), and mode(n), the largest rising index. "
+                + "mode_rises asserts the threshold at mode(n), le_mode bounds every rising index by mode(n), and second_mono "
+                + "states monotonicity of second. The weight is the absolute original signedCoeff at n-2r. "
+                + "weight_pos asserts positivity on 2r at most n, and adjacent gives its successive cross-product identity. "
+                + "weight_le_mode bounds every supported weight by the mode weight; weight_lt_mode makes this bound strict "
+                + "beyond the mode. coefficient_cases says that each original absolute signed coefficient is zero or is a supported weight.")),
             Node("b", "The smallest absolute-coefficient mode", BFormula(),
                 "Let rises(n,r) mean 2r at most n and 4r at most (n-2r+1)(n-2r+2). "
                 + "mode(n) is the largest r in range(n+1) satisfying rises(n,r); zero always belongs. "

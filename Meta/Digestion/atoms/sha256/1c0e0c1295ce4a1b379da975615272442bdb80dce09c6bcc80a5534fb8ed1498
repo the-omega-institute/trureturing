@@ -1,0 +1,25 @@
+**定义 3.1（自洽有向关系球）。** 给定有限维 Euclidean 空间 $V$，维数 $n$，令
+
+$$
+A=\mathbb R1\oplus V,\quad
+(\alpha,u)\circ(\beta,v)
+=(\alpha\beta+\langle u,v\rangle,\alpha v+\beta u).
+$$
+
+比较内积为 $g((\alpha,u),(\beta,v))=\alpha\beta+\langle u,v\rangle$。给定交替双线性括号 $B(u,v)=[u,v]$，满足 Jacobi 律与度量不变性
+
+$$
+\langle[u,v],w\rangle=\langle u,[v,w]\rangle.
+$$
+
+令 $D_{(\alpha,u)}(\beta,v)=(0,[u,v])$。这些 $D$ 是比较运算的斜伴随导子。这里“自洽”精确包含 Jacobi、交替性及度量不变性；下述非零误差结论不将它们弱化成未经控制的近似关系。精确 C95 的这些性质由定理 2.1 推出。
+
+对 $u,v\in V$，定义
+
+$$
+K_{u,v}w=\langle v,w\rangle u-\langle u,w\rangle v,
+\qquad E_{u,v}=\operatorname{ad}_{[u,v]}+K_{u,v}.
+$$
+
+直接计算给 $[L_u,L_v](0,w)=(0,K_{u,v}w)$、$[D_u,D_v]=D_{[u,v]}$，所以 $E_{u,v}w$ 正是第三元上的双曲率偏差。
+

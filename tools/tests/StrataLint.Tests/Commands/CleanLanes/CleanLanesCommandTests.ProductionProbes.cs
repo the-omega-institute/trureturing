@@ -299,7 +299,7 @@ public sealed partial class CleanLanesCommandTests
             damagedHead,
             "worktree_remove_failed_state_indeterminate");
         Assert.Contains(items, item =>
-            ItemMatches(item, removed, "removed", "merged_to_dev"));
+            ItemMatches(item, removed, "removed", "head_commit_age"));
         var summary = ReadSummary(result.Output);
         Assert.Equal(1, summary.GetProperty("partial_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
@@ -389,7 +389,7 @@ public sealed partial class CleanLanesCommandTests
             removedBranch,
             removedHead,
             "removed",
-            "merged_to_dev");
+            "head_commit_age");
         var summary = ReadSummary(result.Output);
         Assert.Equal("clean_lanes_summary", summary.GetProperty("event").GetString());
         Assert.Equal(4, summary.GetProperty("item_count").GetInt32());
@@ -478,7 +478,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.Contains(items, item =>
             ItemMatches(item, retained, failed ? "failed" : "skipped", retainedReason));
         Assert.Contains(items, item =>
-            ItemMatches(item, removed, "removed", "merged_to_dev"));
+            ItemMatches(item, removed, "removed", "head_commit_age"));
         var summary = ReadSummary(result.Output);
         Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());

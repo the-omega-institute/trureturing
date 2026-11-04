@@ -49,8 +49,25 @@ class LocalEntryFixture:
         if initial is None or initial[0] != key:
             initial = key, publication.coordinates(self.root)
             type(self)._initial_seed_coordinates = initial
-        with patch.object(publication, 'coordinates', return_value=dict(initial[1])):
-            self.api = self.fixture.receipt()
+        import reuse
+        captured = reuse.capture(self.root)
+        material = getattr(type(self), '_initial_seed_material', None)
+        if material is None or material[0] != (key, captured):
+            with patch.object(publication, 'coordinates', return_value=dict(initial[1])):
+                self.fixture.receipt()
+            material = (key, captured), tuple((path.name, path.read_bytes(), path.stat().st_mode & 0o777)
+                for path in self.fixture.report.parent.iterdir() if path.is_file())
+            type(self)._initial_seed_material = material
+        else:
+            # This fixture already starts with a synthetic sealed seed. Share
+            # only its immutable construction bytes after checking every
+            # registered input and execution value; each case owns its files.
+            # The entry still exercises the real reuse/publication writer.
+            for name, data, mode in material[1]:
+                target = self.fixture.report.parent / name
+                target.write_bytes(data)
+                target.chmod(mode)
+        self.api = reuse
         self.seed = self.fixture.report
         self.output = self.root / '.lake/build/stratalint' / publication.RAW
         for name in ('Makefile', 'tools/scripts/report/lean-report.sh',
@@ -80,16 +97,39 @@ class LocalEntryFixture:
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.seed), STRATALINT_LEAN_BUILD_TARGETS='[]',
             STRATALINT_LEAN_REPORT_LOG_DIR=str(self.root / 'logs'))
-        subprocess.run(['git', 'init', '-q', str(self.root)], check=True, capture_output=True)
         self.fixture.write('.gitignore', '.lake/\nbin/\nseed/\ndev-seed/\nlogs/\ncalls\n'
                            'producer.dll\nrelease-manifest.json\nreleases/\nlake-manifest.json\ncustom-output/\n'
                            '__pycache__/\nbuild/\n')
-        subprocess.run(['git', '-C', str(self.root), 'add', 'Makefile', 'tools', 'D5',
-                        'Audit.lean', 'Inspector.lean', 'producer.py', 'lean-toolchain',
-                        'lakefile.toml', 'lean-report-inputs.json', '.gitignore'], check=True, capture_output=True)
-        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
-                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
-                        'commit', '-qm', 'local report fixture'], check=True, capture_output=True)
+        tracked = ['Makefile', 'tools', 'D5', 'Audit.lean', 'Inspector.lean', 'producer.py',
+                   'lean-toolchain', 'lakefile.toml', 'lean-report-inputs.json', '.gitignore']
+        files = sorted(path for name in tracked for path in (
+            (self.root / name).rglob('*') if (self.root / name).is_dir() else [self.root / name])
+            if path.is_file())
+        identity = tuple((str(path.relative_to(self.root)), path.stat().st_mode & 0o111,
+                          hashlib.sha256(path.read_bytes()).digest()) for path in files)
+        initial_git = getattr(type(self), '_initial_git_material', None)
+        if initial_git is None or initial_git[0] != identity:
+            # Only repository state is consumed here. Ambient hook templates
+            # add unrelated files to every private fixture and its cleanup.
+            subprocess.run(['git', 'init', '-q', '--template=', str(self.root)],
+                           check=True, capture_output=True)
+            subprocess.run(['git', '-C', str(self.root), 'add', *tracked], check=True, capture_output=True)
+            subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                            '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                            'commit', '-qm', 'local report fixture'], check=True, capture_output=True)
+            initial_git = identity, tuple((path.relative_to(self.root), path.read_bytes(),
+                                          path.stat().st_mode & 0o777)
+                for path in (self.root / '.git').rglob('*') if path.is_file())
+            type(self)._initial_git_material = initial_git
+        else:
+            # Immutable bytes only: every case owns its Git files and subsequent
+            # history. Git refreshes the copied index against these current
+            # private files. No report, .lake or compiler output is staged here.
+            for relative, data, mode in initial_git[1]:
+                target = self.root / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(data)
+                target.chmod(mode)
 
     def linked_checkout(self):
         self.main_checkout = self.root.resolve()
@@ -162,8 +202,17 @@ class LocalEntryFixture:
         command = (['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
                     '--repository', str(self.root), '--output', str(self.output), *options]
                    if direct else ['make', '--no-print-directory', 'lean-report', *options])
-        result = subprocess.run(command, cwd=self.root, env=self.environment,
-                                text=True, capture_output=True, timeout=30)
+        try:
+            result = subprocess.run(command, cwd=self.root, env=self.environment,
+                                    text=True, capture_output=True, timeout=30)
+        except subprocess.TimeoutExpired as error:
+            # Preserve the actual last production phase before fixture cleanup
+            # or the enclosing suite guard can hide the command's evidence.
+            for output in (error.stdout, error.stderr):
+                if output:
+                    print(output.decode('utf-8', 'replace') if isinstance(output, bytes) else output,
+                          file=sys.stderr, flush=True)
+            raise
         self.calls = ((self.root / 'calls').read_text().splitlines()
                       if (self.root / 'calls').exists() else [])
         return result
