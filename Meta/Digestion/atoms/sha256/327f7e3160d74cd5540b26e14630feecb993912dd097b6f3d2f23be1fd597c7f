@@ -1,0 +1,70 @@
+### 2.1 共同支持、二元配对与唯一回推
+
+设 $H\simeq\mathbb C^d$，$\mathcal N:\mathcal B(H)\to\mathcal B(K)$ 为通道，
+
+$$
+\mathcal N(X)=\sum_iE_iXE_i^*,\qquad \sum_iE_i^*E_i=I_H.
+$$
+
+令 $K_0=\operatorname{supp}\mathcal N(I_H)$。由于
+$\mathcal N(I_H)=\sum_iE_iE_i^*$，有
+$K_0=\operatorname{span}_iE_iH$；以下所有输出算子均限制到 $K_0$。
+若 $\sigma>0$，则存在 $a,b>0$ 使 $aI\le\sigma\le bI$，故
+$a\mathcal N(I)\le\mathcal N(\sigma)\le b\mathcal N(I)$。
+因此所有忠实参照共用同一个输出支持，且
+$\tau=\mathcal N(\sigma)>0$ 在 $K_0$ 上可逆。
+
+写 $\Gamma_\sigma(X)=\sigma^{1/2}X\sigma^{1/2}$。
+上节二元配对的互易条件，经迹对偶成为
+$\mathcal R_\sigma\Gamma_\tau=\Gamma_\sigma\mathcal N^*$，因而唯一给出
+
+<a id="eq-c123-petz"></a>
+
+$$
+\boxed{\quad
+ \mathcal R_\sigma(Y)
+ =\sigma^{1/2}\mathcal N^*(\tau^{-1/2}Y\tau^{-1/2})\sigma^{1/2}.
+ \quad}
+\tag{5}
+$$
+
+这一步只用效果的实线性包包含全部自伴算子，以及迹配对非退化。
+令
+
+<a id="eq-c123-petz-kraus"></a>
+
+$$
+L_i=\sigma^{1/2}E_i^*\tau^{-1/2}.
+\tag{6}
+$$
+
+则 $\mathcal R_\sigma(Y)=\sum_iL_iYL_i^*$，并且
+$\sum_iL_i^*L_i=\tau^{-1/2}\mathcal N(\sigma)\tau^{-1/2}=I_{K_0}$。
+故 $\mathcal R_\sigma$ 完全正且保迹，同时
+$\mathcal R_\sigma(\tau)=\sigma$。
+
+定义回接与其 Heisenberg 固定空间
+
+<a id="eq-c123-fixed-definition"></a>
+
+$$
+\mathcal T_\sigma=\mathcal R_\sigma\mathcal N,
+ \qquad
+ \mathfrak F_\sigma=\operatorname{Fix}(\mathcal T_\sigma^*).
+\tag{7}
+$$
+
+直接取迹伴随得到
+
+<a id="eq-c123-weighted-symmetry"></a>
+
+$$
+\mathcal R_\sigma^*=\Gamma_\tau^{-1}\mathcal N\Gamma_\sigma,
+ \qquad
+ \mathcal T_\sigma\Gamma_\sigma
+ =\Gamma_\sigma\mathcal T_\sigma^*.
+\tag{8}
+$$
+
+第二个等式把“固定效果”与“固定状态”联系起来，但尚未说它们在通常乘法下是同一个代数。
+

@@ -1,0 +1,19 @@
+在该分解下，下列条件等价：
+
+1. 存在含幺完全正投影 $\mathcal E:\mathcal B(H)\to\mathcal A$，满足
+    $\operatorname{Tr}\sigma\mathcal E(X)=\operatorname{Tr}\sigma X$。
+
+2. 存在 $S_\alpha>0$ 与忠实密度矩阵 $\omega_\alpha$，使
+
+
+   <a id="eq-c123-reference-blocks"></a>
+
+   $$
+   \sigma=\bigoplus_\alpha S_\alpha\otimes\omega_\alpha,
+     \qquad \sum_\alpha\operatorname{Tr} S_\alpha=1.
+   \tag{10}
+   $$
+
+3. 对所有 $t\in\mathbb R$，
+    $\sigma^{it}\mathcal A\sigma^{-it}=\mathcal A$。
+
