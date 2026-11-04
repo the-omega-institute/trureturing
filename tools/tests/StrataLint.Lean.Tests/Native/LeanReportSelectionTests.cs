@@ -216,7 +216,7 @@ public sealed class LeanReportSelectionTests
             [[ "${1:-}" != -B ]] || shift
             case "$1" in
               */lean-report-selection.py) phase=inputs ;;
-              */native.py) phase=publish ;;
+              */native.py) phase="$2" ;;
               */fib_analysis.py) phase=fib-regressions ;;
               */build_work.py) exit 0 ;;
               */reuse.py) phase="$2" ;;
@@ -279,8 +279,8 @@ public sealed class LeanReportSelectionTests
         Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
             $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}\nstdout:\n{standardOutput}\nstderr:\n{error}");
         var allPhases = buildProducer
-            ? new[] { "inputs", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "fib-regressions", "publish" }
-            : new[] { "inputs", "reuse", "capture", "prepare", "ensure", "report", "fib-regressions", "publish" };
+            ? new[] { "inputs", "batch-size", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "fib-regressions", "publish" }
+            : new[] { "inputs", "batch-size", "reuse", "capture", "prepare", "ensure", "report", "fib-regressions", "publish" };
         var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));
         Assert.Equal(failedPhase.Length == 0, File.Exists(report));
