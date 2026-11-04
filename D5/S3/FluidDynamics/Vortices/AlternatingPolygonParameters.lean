@@ -72,7 +72,7 @@ theorem field_differentiable_at {N : ℕ} (b Ω : ℝ) {z : Configuration N}
           (w (.inl j) - w (.inl k)) ^ 2 +
             (w (.inr j) - w (.inr k)) ^ 2) z := by fun_prop
       have hinv := (differentiableAt_inv (hz j k (Ne.symm hk))).comp z hden
-      simpa only [div_eq_mul_inv] using hnum.mul hinv
+      simpa only [Pi.mul_def, Function.comp_def, div_eq_mul_inv] using hnum.mul hinv
   cases p with
   | inl j =>
     exact ((hc (.inr j)).const_mul (-charge N j * Ω)).sub
@@ -149,7 +149,7 @@ private theorem field_scaling_algebraic (N : ℕ) {b Ω R : ℝ} (hR : R ≠ 0)
     <;> ring
 
 /-- The normalized and parameterized definitions agree at `b = 2`, `Ω = 1/2`. -/
-private theorem normalized_field (N : ℕ) :
+theorem normalized_field (N : ℕ) :
     field N 2 (1 / 2) = AlternatingPolygonSpectrum.field N := by
   funext z p
   cases p <;> simp [field, AlternatingPolygonSpectrum.field]

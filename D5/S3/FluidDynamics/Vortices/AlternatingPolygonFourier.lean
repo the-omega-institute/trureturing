@@ -48,7 +48,8 @@ private theorem dft_circulant (N : ℕ) [NeZero N] (w v : ZMod N → ℂ) (q : Z
   have hs : (Real.sqrt N : ℂ) ≠ 0 := by
     exact_mod_cast (Real.sqrt_ne_zero'.mpr (Nat.cast_pos.mpr (NeZero.pos N)))
   apply (div_left_inj' hs).mp
-  simpa only [mul_div_assoc] using h
+  simpa only [D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.spectralValue,
+    mul_div_assoc] using h
 
 private theorem relabel_mulVec (m : ℕ) [NeZero (2 * m)]
     (A : Matrix (Fin (2 * m)) (Fin (2 * m)) ℂ) (v : Fin (2 * m) → ℂ) :
@@ -100,7 +101,7 @@ private theorem fourier_charge (m : ℕ) [NeZero (2 * m)]
   change ZMod.stdAddChar (-(j * q)) *
     (((chargeMatrix m).map Complex.ofRealHom).mulVec v)
       ((ZMod.finEquiv (2 * m)).symm j) =
-    ZMod.stdAddChar (-(j * (q + m))) * v ((ZMod.finEquiv (2 * m)).symm j)
+    ZMod.stdAddChar (-(j * (q + (m : ZMod (2 * m))))) * v ((ZMod.finEquiv (2 * m)).symm j)
   rw [chargeMatrix_diagonal, Matrix.diagonal_map (map_zero Complex.ofRealHom)]
   simp only [Matrix.mulVec_diagonal, Complex.ofRealHom_eq_coe,
     Complex.ofReal_pow, Complex.ofReal_neg, Complex.ofReal_one]
@@ -116,7 +117,11 @@ private theorem fourier_block (m : ℕ) [NeZero (2 * m)] (c : ℝ)
     fourier m (((((diagonalWeight m + c) • 1 - weights m) * chargeMatrix m).map
       Complex.ofRealHom).mulVec v) q =
       ((ell m q + c : ℝ) : ℂ) * fourier m v (q + m) := by
-  rw [Matrix.map_mul, ← Matrix.mulVec_mulVec, Matrix.map_sub, Matrix.sub_mulVec]
+  have hsub (A B : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ) :
+      (A - B).map Complex.ofRealHom = A.map Complex.ofRealHom - B.map Complex.ofRealHom := by
+    ext i j
+    exact map_sub Complex.ofRealHom (A i j) (B i j)
+  rw [Matrix.map_mul, ← Matrix.mulVec_mulVec, hsub, Matrix.sub_mulVec]
   have hscalar : (((diagonalWeight m + c) •
       (1 : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ)).map Complex.ofRealHom) =
       ((diagonalWeight m + c : ℝ) : ℂ) • 1 := by
@@ -187,15 +192,18 @@ theorem frequency_block (m : ℕ) [NeZero (2 * m)]
         fourier m (fun j => v (.inl j)) (q + m) := by
     intro q
     exact fourier_block m 1 (fun j => v (.inl j)) q
+  have hzero : (0 : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ).map
+      Complex.ofRealHom = 0 := by ext; simp
+  rw [Matrix.fromBlocks_map, hzero, Matrix.fromBlocks_mulVec]
   funext q
   apply Prod.ext
-  · change fourier m (fun j => _) q = _
-    simp only [Matrix.fromBlocks_map, Matrix.map_zero, Matrix.fromBlocks_mulVec,
-      Matrix.zero_mulVec, zero_add, add_zero]
-    exact hb q
-  · change fourier m (fun j => _) (q + m) = _
-    simp only [Matrix.fromBlocks_map, Matrix.map_zero, Matrix.fromBlocks_mulVec,
-      Matrix.zero_mulVec, zero_add, add_zero]
-    simpa only [hshift] using hc (q + m)
+  · change fourier m (0 *ᵥ (v ∘ Sum.inl) +
+        ((blockB m).map Complex.ofRealHom) *ᵥ (v ∘ Sum.inr)) q =
+      (ell m q : ℂ) * fourier m (fun j => v (.inr j)) (q + m)
+    simpa only [Matrix.zero_mulVec, zero_add, Function.comp_def] using hb q
+  · change fourier m (((blockC m).map Complex.ofRealHom) *ᵥ (v ∘ Sum.inl) +
+        0 *ᵥ (v ∘ Sum.inr)) (q + m) =
+      ((ell m (q + m) + 1 : ℝ) : ℂ) * fourier m (fun j => v (.inl j)) q
+    simpa only [Matrix.zero_mulVec, add_zero, Function.comp_def, hshift] using hc (q + m)
 
 end D5.S3.FluidDynamics.Vortices.AlternatingPolygonFourier
