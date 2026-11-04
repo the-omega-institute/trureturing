@@ -6,7 +6,7 @@
    utility: none
    digest: The Choi spectrum of unital product-unitary-equivariant maps in every dimension. -/
 
-/- Judgement:
+/- Judgement: Owner publication escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25799.
    Each declaration below belongs to
    admission_basis: open-problem-resolution (#14200; Proved).
    Definitions have proof_shape: not-applicable; escape_witness: null:
@@ -133,7 +133,7 @@ def dmat (n : ℕ) : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ :=
 /-- The Choi matrix of `compl n`. -/
 def qmat (n : ℕ) : Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ := kmat n - dmat n
 
-private theorem depol_single_eq_dmat (n : ℕ) (i j a b : Fin n) :
+theorem depol_single_eq_dmat (n : ℕ) (i j a b : Fin n) :
     depol n (Matrix.single i j 1) a b = dmat n (i, a) (j, b) := by
   rw [depol_single]
   simp only [dmat, Matrix.smul_apply, Matrix.one_apply, Prod.mk.injEq, smul_eq_mul]

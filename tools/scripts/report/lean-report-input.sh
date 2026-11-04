@@ -8,22 +8,9 @@ if [[ -n "$COMMAND" ]]; then shift; fi
 # The repository (R) and pair provenance (A) are different canonical preimages.
 # Keep their byte definitions here for producers and bundle transport alike.
 input_coordinates() {
-  python3 - "$@" <<'PY'
-import hashlib
-import re
-import sys
-
-fields = sys.argv[1:]
-if len(fields) != 4 or any(not re.fullmatch(r"[0-9a-f]{64}", v) for v in fields):
-    raise SystemExit("lean-report-input: coordinates require producer, resident, sources, config SHA-256")
-producer, resident, sources, config = fields
-common = (f"repository_inspector_sha256={resident}\n"
-          f"lean_sources_sha256={sources}\nlean_config_sha256={config}\n")
-pair = "schema=stratalint-lean-report-input-v1\n" + f"producer_sha256={producer}\n" + common
-repository = "schema=stratalint-lean-report-repository-input-v1\n" + common
-print(hashlib.sha256(pair.encode("ascii")).hexdigest(),
-      hashlib.sha256(repository.encode("ascii")).hexdigest())
-PY
+  local selection
+  selection="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/lean-report-selection.py"
+  python3 -B "$selection" coordinates "$@"
 }
 if [[ "$COMMAND" == "coordinates" ]]; then
   input_coordinates "$@"
@@ -76,36 +63,8 @@ case "$COMMAND" in
     exit $?
     ;;
 esac
-python3 "$SELECTION" snapshot --repository "$REPOSITORY" --output "$TMP_ROOT" || exit 2
-
-registered_input_hash() {
-  local kind="$1" relative
-  local manifest="$TMP_ROOT/$kind.manifest"
-  : > "${manifest}.requests"
-  while IFS= read -r relative; do
-    append_manifest_entry "$manifest" "$relative" || return 2
-  done < "$TMP_ROOT/$kind-paths"
-  materialize_manifest "$manifest" || return 2
-  hash_file "$manifest"
-}
-
-# The legacy producer/resident coordinate fields carry the manual semantic
-# compatibility token, never executable-byte evidence. Source/config inputs
-# remain selected by the single registered manifest.
 repository_address() {
-  local resident_sha256 sources_sha256 config_sha256
-
-  prepare_memo
-  resident_sha256="$(cat "$TMP_ROOT/compatibility")" || return 2
-  sources_sha256="$(registered_input_hash sources)" || return 2
-  config_sha256="$(registered_input_hash config)" || return 2
-
-  local coordinates address_sha256
-  coordinates="$(input_coordinates "$resident_sha256" "$resident_sha256" "$sources_sha256" "$config_sha256")" || return 2
-  address_sha256="${coordinates#* }"
-  store_memo_updates
-  printf '%s %s %s %s\n' \
-    "$address_sha256" "$resident_sha256" "$sources_sha256" "$config_sha256"
+  python3 -B "$SELECTION" address --repository "$REPOSITORY"
 }
 
 verify_report_sha() {
@@ -127,6 +86,7 @@ case "$COMMAND" in
     repository_address
     ;;
   verify)
+    python3 -B "$SELECTION" validate --repository "$REPOSITORY" || exit 2
     verify_report_sha
     [[ -f "${REPORT}.input.attestation" ]] \
       || { echo "lean-report-input: production input attestation is missing; run make lean-report first" >&2; exit 2; }

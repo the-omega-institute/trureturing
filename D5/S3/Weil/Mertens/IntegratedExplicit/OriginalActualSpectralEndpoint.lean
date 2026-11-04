@@ -24,6 +24,7 @@ import D5.S3.Weil.Mertens.IntegratedExplicit.OriginalAngularResolvent
 import D5.S3.Weil.Mertens.IntegratedExplicit.OriginalTestRegularity
 import D5.S3.Weil.Mertens.IntegratedExplicit.OriginalSignedJ
 import Mathlib.MeasureTheory.Integral.Prod
+import Mathlib.MeasureTheory.Group.Prod
 import Mathlib.MeasureTheory.Function.LocallyIntegrable
 import Mathlib.Tactic
 
@@ -299,6 +300,49 @@ lemma spatial_real_integrable {A : ℝ → ℂ} (hAm : Measurable A)
     congr 2
     change t - p.2 + p.1 = t + p.1 - p.2
     ring
+
+/-- The L1 spectral resolvent is the exponential convolution of the literal
+complex correlation. Complex correlation slices are integrable only almost
+everywhere; no L2 hypothesis or symmetry of the Fourier density is needed. -/
+theorem spectral_correlation_convolution {A : ℝ → ℂ} (hAm : Measurable A)
+    (hA : Integrable A) (t : ℝ) :
+    OriginalTestRegularity.spectralS (rho A) t =
+      (1 / 4) * ∫ s : ℝ, Real.exp (-|t - s| / 2) *
+        (∫ u : ℝ, star (A (u + s)) * A u).re := by
+  let T : ℝ × ℝ → ℝ × ℝ := fun p => (p.2, p.2 + p.1)
+  have hT : MeasurePreserving T pairMeasure pairMeasure :=
+    measurePreserving_prod_add_swap volume volume
+  let F : ℝ × ℝ → ℝ := fun p => (coefficient A p).re * decay (t + p.1 - p.2)
+  have hF : Integrable F pairMeasure := spatial_real_integrable hAm hA t
+  have hFT : Integrable (F ∘ T) pairMeasure := hT.integrable_comp_of_integrable hF
+  have hCT : Integrable (coefficient A ∘ T) pairMeasure :=
+    hT.integrable_comp_of_integrable (coefficient_integrable hAm hA)
+  have hmap : (∫ p, F p ∂pairMeasure) = ∫ p, F (T p) ∂pairMeasure := by
+    have hm : AEStronglyMeasurable F (Measure.map T pairMeasure) :=
+      hT.map_eq.symm ▸ hF.aestronglyMeasurable
+    simpa only [hT.map_eq] using integral_map hT.measurable.aemeasurable hm
+  have hslice : ∀ᵐ s : ℝ, Integrable (fun u : ℝ => star (A (u + s)) * A u) := by
+    filter_upwards [hCT.prod_right_ae] with s hs
+    simpa only [Function.comp_def, T, coefficient, mul_comm, Complex.star_def] using hs
+  have hprod := integral_prod (F ∘ T) hFT
+  change (∫ p, F (T p) ∂pairMeasure) = ∫ s : ℝ, ∫ u : ℝ, F (T (s, u)) at hprod
+  rw [spectral_convolution hAm hA t, hmap, hprod]
+  have he : (∫ s : ℝ, ∫ u : ℝ, F (T (s, u))) =
+      ∫ s : ℝ, Real.exp (-|t - s| / 2) *
+        (∫ u : ℝ, star (A (u + s)) * A u).re := by
+    apply integral_congr_ae
+    filter_upwards [hslice] with s hs
+    have hre := Complex.reCLM.integral_comp_comm hs
+    simp only [Complex.reCLM_apply] at hre
+    have hp (u : ℝ) : F (T (s, u)) =
+        Real.exp (-|t - s| / 2) * (star (A (u + s)) * A u).re := by
+      dsimp [F, T, coefficient, decay]
+      rw [show t + u - (u + s) = t - s by ring]
+      simp only [Complex.star_def, mul_comm]
+    simp_rw [hp]
+    rw [integral_const_mul, hre]
+  rw [he]
+  ring
 
 variable {ι : Type*} [Fintype ι]
 

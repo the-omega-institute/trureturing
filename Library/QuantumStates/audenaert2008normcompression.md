@@ -8,6 +8,12 @@ url: https://arxiv.org/abs/math/0702186v2
 claim: "Conjecture 1, upper branch: Schatten norm compression for arbitrary 2×N compatible block matrices at p ≥ 2."
 strata_touched:
   - D5/S3/Quantum/NormCompression/UpperBranchReduction
+  - D5/S3/Quantum/NormCompression/FinitePowerTrace
+  - D5/S3/Quantum/NormCompression/FinitePowerSpectral
+  - D5/S3/Quantum/NormCompression/FinitePowerMetric
+  - D5/S3/Quantum/NormCompression/FinitePowerConcavity
+  - D5/S3/Quantum/NormCompression/FinitePowerKernel
+  - D5/S3/Quantum/NormCompression/LocalOutputGluing
   - D5/S3/Quantum/Matrix/LinGProperty/GeometricMeanBound
 license: citation-only
 triage: anchor
@@ -197,3 +203,57 @@ This application uses existing PSD congruence, trace positivity, square-root
 and Riccati facts together with ordered inverse and trace algebra. It does
 not solve Conjecture 1, supply unrelated-spectrum witnesses, or establish
 the missing joint Schatten comparison for arbitrary compatible blocks.
+
+
+## Finite two-row trace powers and local output budgets
+
+For every finite column type, including the empty type, and every real
+$1<q<2$, let $W$ be entrywise nonnegative, set
+$A_q(W)_{bj}=W_{bj}^{1/(2q)}$, and put
+$F_q(W)=\operatorname{Tr}((A_q(W)A_q(W)^*)^q)$.
+`FinitePowerConcavity.Fq_eq_trace_rpow` identifies this operator expression
+with the actual finite singular-value power sum used by the repository.
+`continuous_Fq` proves continuity on the full cone (in fact on the ambient
+real table space for $q>0$), and `Fq_smul` proves
+$F_q(cW)=cF_q(W)$ for every $c\ge0$ and $q>0$.
+`FinitePowerConcavity.concaveOn_Fq` proves full-cone concavity in the stated
+open interval. Singular Grams, zero entries, axial columns and empty column
+types are included. This is the two-row finite-power functional discussed
+in the paper's final section, at $p=2q\in(2,4)$; the source's two-by-two
+lemma is not substituted for arbitrary finite column count.
+
+The proof differentiates the actual two-eigenvalue trace formula, keeps
+all three symmetric metric coordinates, proves the strict scalar metric
+gap for arbitrary real $q-1\in(0,1)$, and passes to the boundary by two
+independent appended columns. Those root columns are exactly
+$\varepsilon^{1/(2q)}(1,1)^T$ and
+$\varepsilon^{1/(2q)}(1,4^{1/(2q)})^T$.
+The normalized velocity is $z=\dot W/(q x^{2q-1})$, so $\dot x=z/2$;
+both first- and second-derivative coefficients retain this normalization.
+
+`FinitePowerConcavity.radial_hessian_kernel` asserts an exact local statement:
+if the row Gram is positive definite, some column overlaps both rows, and
+$V$ vanishes at every zero coordinate of $W$, then
+$D^2F_q(W)[V,V]=0$ if and only if $V=cW$ for a real scalar $c$.
+Zero columns and axial nonzero columns are retained through their actual
+support tangents. No radial converse is asserted for a rank-one Gram or
+a purely axial table, and no global superadditivity equality classification
+is inferred from this local theorem alone.
+
+For arbitrary finite rectangular complex column maps, the theorem
+`LocalOutputGluing.local_output_compression_budget` genuinely consumes
+this concavity: the sum of the $2q$-th Schatten powers of the component
+compression matrices is at most the $2q$-th Schatten power of the global
+compression matrix, for complete orthogonal resolutions of both local
+outputs. Every local output and original column dimension may be empty.
+The row-piece bound uses the existing full-PSD positive-unital Jensen
+supplier and the attributed Physlib operator-power convexity source.
+The existing Carlen--Lieb fixed invertible congruence theorem has a different
+SPD domain and is not used as a replacement for the finite-power theorem.
+
+These are supplied-calculation and repository proof results, without a
+worldwide priority or solved-status claim. The unrestricted common-majorant
+optimization chain, its full $\kappa_r$ gluing consequence, and the original
+arbitrary complex block norm-compression inequality remain separate
+obligations. Auxiliary four-slot registration is unfinished and disclosed
+in [issue 26283](https://github.com/the-omega-institute/trureturing/issues/26283).

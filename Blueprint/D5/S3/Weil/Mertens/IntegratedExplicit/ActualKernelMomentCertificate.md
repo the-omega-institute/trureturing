@@ -28,7 +28,31 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertifi
 
 This is the original full actual-K source endpoint: arbitrary finite universe-polymorphic I, D>0, nodes in [0,D], arbitrary complex coefficients and atomic moments of EVERY degree 0,...,N(D), inclusive, imply E<=Re Q_ActualKernelLocalPositivity.K. Here B=C(1+10!(2/alpha)^10), d0=gamma-1+log(2pi), beta_D=exp(D/2)(1+C(exp(-alpha(D/4)^(1/10))+exp(-D/4)))+D+B, C_D=((9+4C+2B)exp(D/2)+D+3)/4, and N(D)=ceil(max(1,D sqrt(C_D)/2,(5D/4)exp(beta_D+d0+2))). Global C,alpha are selected from actual unconditional MediumPNT before every family. The complete mixture, actual weighted prime inequality and concrete H/V corrections are all consumed. Nonnegative d0 W is dropped only after proving d0>=0. The unchanged ceiling gives q/D>=8, delta_q C_D<=1/8 and log(q/D)>=beta_D+d0+2+1/5, leaving the original endpoint slack. There is no energy division or nonempty, distinctness or real-coefficient restriction.
 
-**Theorem 1.3 (actual signed expression compensation).**
+**Theorem 1.3 (q6 complete-K small-window endpoint).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_kernel_q6_small_window`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_kernel_q6_small_window` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite complex atomic family, including empty, repeated, cancelling and zero-energy families, with nodes in the inclusive window [0,D], 0<=D<=log 3, and all moments through q vanishing, q>=6 implies (36/575) E <= Re Q_K. The literal K is the complete original kernel K=P+fullR with every inclusive prime power and boundary term. The proof consumes the finite positive first-20 mixture head, the division-free Gamma coercivity, the exact small-window prime translation and V cutoff bounds, and keeps the D=0 branch explicit; it assumes no nonemptiness, distinctness, realness or exponential-null condition.
+
+**Theorem 1.4 (q22 complete-K small-window endpoint).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_kernel_q22_small_window`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_kernel_q22_small_window` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same arbitrary finite complex inclusive-window hypotheses, q>=22 gives (2017/2000) E <= Re Q_K, and therefore E <= Re Q_K. The endpoint retains the literal complete K, inclusive prime powers and boundary term, consumes the original P/fullR decomposition and the finite positive mixture head at the exact 1600 gap, and handles empty, repeated, cancelling, E=0 and D=0 cases without normalization.
+
+**Theorem 1.5 (actual signed expression compensation).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_signed_expression_compensation`
 
@@ -51,6 +75,9 @@ Since alpha>0, exp(-alpha(D/4)^(1/10)) and exp(-D/4) tend to zero. The standard 
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_kernel_explicit_leading_one`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_kernel_q22_small_window`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_kernel_q6_small_window`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.actual_signed_expression_compensation`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentCertificate.q_scalar_bounds`
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentPayments](ActualKernelMomentPayments.md)
+- Dependency: [D5/S3/Arith/GoldenResource/RobinRationalBasis](../../../Arith/GoldenResource/RobinRationalBasis.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelSmallWindowBounds](ActualKernelSmallWindowBounds.md)

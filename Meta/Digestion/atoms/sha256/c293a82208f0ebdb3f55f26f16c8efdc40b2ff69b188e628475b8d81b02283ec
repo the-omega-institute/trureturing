@@ -1,0 +1,148 @@
+### 定理 21.2（黄金四时算子的全连续域一致稳定性）
+
+对每个实连续球面函数 $h$，定义同一个线性投影
+
+$$
+Ph(n)=\alpha(h)+\langle\beta(h),n\rangle,
+\qquad
+\alpha(h)=\int h\,d\sigma,
+\qquad
+\beta(h)=3\int nh(n)\,d\sigma.
+\tag{21.5}
+$$
+
+则
+
+$$
+\|h-Ph\|_\infty\le5r_\infty(h).
+\tag{21.6}
+$$
+
+因此 (21.1) 给出一个作用于整个原图的有符号仿射族 $f_i=PF_i$，满足
+
+$$
+\sup_{i\in\mathcal I}\|F_i-f_i\|_\infty\le\delta,
+\qquad \delta=5\varepsilon.
+\tag{21.7}
+$$
+
+该族准确保留 $\mathcal D$ 的全部恒等式、每个原请求的归一化及恒零标签。结论不含 $q$ 的数量、未来长度、标签数或调和截断参数；但 $f_i$ 未必非负。
+
+**证明。** 消费定理 17.4 所用的球面调和分解及旋转正交性，记 $\mathcal H_\ell$ 的维数为 $d_\ell=2\ell+1$，$P$ 恰为 $\mathcal H_0\oplus\mathcal H_1$ 的正交投影。归一化测度下，任一正交归一调和基满足加法公式 $\sum_{m=-\ell}^{\ell}|Y_{\ell m}(n)|^2=d_\ell$：左侧旋转不变而为常数，积分给该常数。下列估计在连续函数及其 $L^2$ 完成中使用同一投影。
+
+置
+
+$$
+L_B=U_B^{-1}R(U_A)U_B,
+\qquad M=\int_{SO(W)}L_B^*L_B\,dB.
+\tag{21.8}
+$$
+
+Haar 测度归一，星号是 $L^2$ 伴随。所有 $L_B$ 消去 $\mathcal H_0\oplus\mathcal H_1$。令 $v=h-Ph$、$r=r_\infty(h)$；旋转在一致范数下等距，故 $\|L_Bv\|_\infty\le r$。$L_B^*$ 是绝对系数和为 $s$ 的旋转组合，因此
+
+$$
+\|Mv\|_\infty\le sr,
+\qquad
+\langle v,Mv\rangle=\int\|L_Bv\|_2^2\,dB\le r^2.
+\tag{21.9}
+$$
+
+对 $(-1,u,-u,1)$ 自相关，令 $C_\phi$ 为角 $\phi$ 的旋转共轭类平均，得
+
+$$
+\begin{aligned}
+M&=cI+K,\\
+c&=2+2u^2=6u,\\
+K&=-(4u+2u^2)C_\theta+4uC_{2\theta}-2C_{3\theta},\\
+\|K\|_{\infty\to\infty}&\le14u.
+\end{aligned}
+\tag{21.10}
+$$
+
+这里 $u^2=3u-1$，每个共轭类平均的范数至多一。$M$ 含正的恒等原子；$K$ 是有符号算子，未被当作概率转移。
+
+共轭平均使 $M$ 在 $\mathcal H_\ell$ 上为标量 $\lambda_\ell$。取 $\zeta=e^{3\pi i/5}$，旋转权 $m=-\ell,\ldots,\ell$ 给出
+
+$$
+\lambda_\ell=\frac1{2\ell+1}\sum_{m=-\ell}^{\ell}w_m,
+\quad w_m=|R(\zeta^m)|^2,
+\quad
+|R(e^{it})|^2=(2-2\cos t)(2\cos t+x)^2.
+\tag{21.11}
+$$
+
+最后一个等式由 $R(z)=(z-1)(z-\zeta)(z-\bar\zeta)$ 得到。代入十个角，得到十周期表
+
+$$
+(w_0,\ldots,w_9)
+=(0,0,4-u,5u,16u-4,20u,16u-4,5u,4-u,0).
+\tag{21.12}
+$$
+
+为明确无限尾部的控制，置 $k_\ell=\lambda_\ell-c$。由该表，$t_\ell=(2\ell+1)k_\ell$ 的一个十周期为
+
+$$
+(-6u,-18u,8-32u,8-34u,-14u,
+14u,34u-8,32u-8,18u,6u).
+\tag{21.13}
+$$
+
+这也可从 $t_0=-6u$、$t_{\ell+1}-t_\ell=2(w_{\ell+1}-6u)$ 及 $\sum_{m=0}^9w_m=60u$ 逐项核算。各项绝对值至多 $18u$，故
+
+$$
+|k_\ell|\le\frac{18u}{2\ell+1}.
+\tag{21.14}
+$$
+
+此外 $\lambda_0=\lambda_1=0$，而
+
+$$
+\lambda_2=\frac{2(4-u)}5=1+\frac1{\sqrt5}=:\gamma,
+\quad \lambda_3=\frac{8+8u}{7}>\gamma,
+\quad \lambda_\ell\ge4u>\gamma\quad(\ell\ge4).
+\tag{21.15}
+$$
+
+最后一项由 (21.14) 和 $2\ell+1\ge9$ 得到。因此 (21.9) 在 $P v=0$ 上给 $\|v\|_2\le r/\sqrt\gamma$。这只是平均平方界，还不是所求一致界。
+
+为取得一致界，用两次 $K$。加法公式与 Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+\|K^2v\|_\infty
+&\le\left(\sum_{\ell\ge2}d_\ell|k_\ell|^4\right)^{1/2}\|v\|_2\\
+&\le(18u)^2\sqrt{S_3}\,\|v\|_2,
+\qquad S_3=\sum_{\ell\ge2}(2\ell+1)^{-3}.
+\end{aligned}
+\tag{21.16}
+$$
+
+同一可和级数控制调和尾部的一致范数，故该估计适用于任意 $L^2$ 的 $v$，所得连续函数与 $K^2v$ 的 $L^2$ 意义相同。对于这里的连续 $v$，两者处处相同。单用一次 $K$ 会留下不可由 (21.14) 求和的尾项，不能代替此步骤。
+
+记 $g=Mv$。由 (21.10) 有算子恒等式
+
+$$
+v=c^{-1}g-c^{-2}Kg+c^{-2}K^2v.
+\tag{21.17}
+$$
+
+合并以上估计，得到
+
+$$
+\|v\|_\infty
+\le\left[\frac{10(1+u)}{9u}
++9\sqrt{\frac{S_3}{\gamma}}\right]r\le5r.
+\tag{21.18}
+$$
+
+括号严格小于五可用有理界检查：$u>19/50$，$\gamma>36/25$，且单调积分估计给
+
+$$
+S_3\le\frac1{125}+\frac1{343}+\int_3^\infty(2t+1)^{-3}\,dt
+=\frac{2747}{171500}<\frac{361}{22500}.
+$$
+
+故括号小于 $230/57+19/20=5683/1140<5$。没有最优一致常数的主张。
+
+最后，$P$ 线性、固定常数且与全部旋转交换。对 (21.4) 两边应用 $P$ 即准确保留该式。非负连续函数均值为零时处处为零，故原恒零标签也保留。所有平均、伴随、极限与调和投影都是证明工具，没有增加原生混合、准备、逆控制、读口或副本。∎
+

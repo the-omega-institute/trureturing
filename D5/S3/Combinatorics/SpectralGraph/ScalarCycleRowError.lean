@@ -191,7 +191,7 @@ private theorem entry_le_delta (T : TreeData V) (π : V → B) (Q : KilledGenera
     (Finset.mem_univ (x, b))
   simpa [delta, hb, Real.norm_eq_abs] using (NNReal.coe_le_coe.mpr h)
 
-private theorem forest_not_two_neighbors {W : Type*} [Finite W] [Nonempty W]
+theorem forest_not_two_neighbors {W : Type*} [Finite W] [Nonempty W]
     (G : SimpleGraph W) (hG : G.IsAcyclic) :
     ¬ ∀ x, ∃ y z, G.Adj x y ∧ G.Adj x z ∧ y ≠ z := by
   classical

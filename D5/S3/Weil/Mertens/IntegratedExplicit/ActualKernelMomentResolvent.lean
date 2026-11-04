@@ -63,7 +63,7 @@ lemma correlation_continuous (x : I → ℝ) (a : I → ℂ)
 
 /-- Only the REAL correlation is even; no symmetry of an auxiliary spectral
 measure is asserted. This is direct translation of the actual complex prefix. -/
-private lemma correlation_neg (x : I → ℝ) (a : I → ℂ) (s : ℝ) :
+lemma correlation_neg (x : I → ℝ) (a : I → ℂ) (s : ℝ) :
     correlation x a (-s) = correlation x a s := by
   let f : ℝ → ℂ := fun v =>
     star («prefix» x a (v - s)) * «prefix» x a v
@@ -403,7 +403,7 @@ theorem actual_fullR_resolvent_identity (D : ℝ) (hD : 0 ≤ D)
 
 /-- Normalization check against the retained exact exponential prefix
 identity: the present W is E-Re Q_exp(1/2), without any spectral premise. -/
-private lemma W_eq_exponential_deficit (D : ℝ) (hD : 0 ≤ D)
+lemma W_eq_exponential_deficit (D : ℝ) (hD : 0 ≤ D)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
     (ha : ∑ i, a i = 0) :
     W D x a = energy x a -
@@ -544,7 +544,7 @@ private lemma correlation_kernel_integrable (D : ℝ) (hD : 0 ≤ D)
     dsimp only
     rw [correlation_support D hD x a hx ha s h, mul_zero])
 
-private lemma S_global (D : ℝ) (hD : 0 ≤ D)
+lemma S_global (D : ℝ) (hD : 0 ≤ D)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
     (ha : ∑ i, a i = 0) (t : ℝ) :
     S D x a t = (1 / 4) *
@@ -565,11 +565,11 @@ lemma W_nonneg (D : ℝ) (hD : 0 ≤ D)
 kept as a Sum index type; no grouping, ordering or nonempty premise occurs.
 The argument is the real translated Cauchy inequality obtained by expanding
 the squares of the sum and difference of the two causal responses. -/
-private def shiftedNodes (x : I → ℝ) (t : ℝ) : I ⊕ I → ℝ
+def shiftedNodes (x : I → ℝ) (t : ℝ) : I ⊕ I → ℝ
   | .inl i => x i + max t 0
   | .inr i => x i + max (-t) 0
 
-private def shiftedCoeffs (a : I → ℂ) (r : ℝ) : I ⊕ I → ℂ
+def shiftedCoeffs (a : I → ℂ) (r : ℝ) : I ⊕ I → ℂ
   | .inl i => a i
   | .inr i => (r : ℂ) * a i
 
@@ -604,7 +604,7 @@ private lemma real_cross_translation (x : I → ℝ) (a : I → ℂ)
   have hre := integral_re (shifted_hinge_prefix_energy x a ha (l - r)).1
   simpa only [RCLike.re_to_complex, correlation] using hre
 
-private lemma shifted_correlation (x : I → ℝ) (a : I → ℂ)
+lemma shifted_correlation (x : I → ℝ) (a : I → ℂ)
     (ha : ∑ i, a i = 0) (t r s : ℝ) (hr : r ^ 2 = 1) :
     correlation (shiftedNodes x t) (shiftedCoeffs a r) s =
       2 * correlation x a s + r *
@@ -659,7 +659,7 @@ private lemma shifted_correlation (x : I → ℝ) (a : I → ℂ)
   ring
 
 
-private lemma S_even (D : ℝ) (hD : 0 ≤ D)
+lemma S_even (D : ℝ) (hD : 0 ≤ D)
     (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0) (t : ℝ) :
     S D x a (-t) = S D x a t := by
   rw [S_half_window D hD x a ha, S_half_window D hD x a ha]
@@ -671,7 +671,7 @@ private lemma S_even (D : ℝ) (hD : 0 ≤ D)
     abs_neg, abs_neg]
   ring
 
-private lemma shifted_W (D : ℝ) (hD : 0 ≤ D)
+lemma shifted_W (D : ℝ) (hD : 0 ≤ D)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc (0 : ℝ) D)
     (ha : ∑ i, a i = 0) (t r : ℝ) (hr : r ^ 2 = 1) :
     W (D + |t|) (shiftedNodes x t) (shiftedCoeffs a r) =
@@ -747,6 +747,7 @@ lemma S_abs_le_W (D : ℝ) (hD : 0 ≤ D)
   rw [shifted_W D hD x a hx ha t 1 (by norm_num)] at hp
   rw [shifted_W D hD x a hx ha t (-1) (by norm_num)] at hm
   exact abs_le.mpr ⟨by linarith only [hp], by linarith only [hm]⟩
+
 
 /-- Concrete S/Gamma resolvent control. The lower and shift bounds come
 from the actual finite causal squares and their translated polarization;

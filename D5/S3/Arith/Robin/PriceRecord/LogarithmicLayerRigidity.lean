@@ -25,7 +25,7 @@ open D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 open D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure (price_record_prime_structure)
 open scoped Topology BigOperators Chebyshev
 
-private theorem theta_error_eight :
+theorem theta_error_eight :
     (fun x : ℝ => Chebyshev.theta x - x) =o[atTop]
       (fun x : ℝ => x / Real.log x ^ 8) := by
   obtain ⟨c, hc, hpnt⟩ := MediumPNT

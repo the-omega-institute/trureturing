@@ -1,0 +1,164 @@
+**Theorem 42.3 (same-effect phase transport on every level through
+$13/4$).** For every original $X=(E,U)$ with
+$0<\rho(X)=\xi\le R$, its minimizing original sign $\sigma$ is unique.
+There are finitely many probabilities $\theta_j>0$ and actual
+unitaries $U_j$, each of phase-feedback form relative to $U_+$,
+such that
+
+$$
+\begin{aligned}
+ \sum_j\theta_j&=1,&
+ \operatorname{Tr}(U_jU_\sigma^\dagger)
+     &=\operatorname{Tr}(UU_\sigma^\dagger),\\
+ \rho_\sigma(E,U_j)&=\xi=\rho(E,U_j),&
+ \rho_{-\sigma}(E,U_j)&>\xi,\\
+ w&=\sum_j\theta_j w_j,&
+ a(U)&=\sum_j\theta_j a(U_j),&
+ w_j&=\operatorname{diag}(U_jU_+^\dagger).
+\end{aligned}
+\tag{42.15}
+$$
+
+The effect $E$, its ordinary transpose, positivity, trace, impurity
+and rank are all unchanged. With $a=a(U)$ and $a_j=a(U_j)$ one has
+the exact identity
+
+$$
+ \boxed{\quad
+ f(E,U)=\sum_j\theta_j f(E,U_j)
+               +\sum_j\theta_j\|(a_j-a)F^{1/2}\|_2^2 .
+ \quad}
+\tag{42.16}
+$$
+
+In particular at least one actual phase pair with this same effect
+and original distance has no larger value.
+
+*Proof.* First establish the two-sign budget on the original domain.
+For $d_{\mathrm{tr}}=(1,-1,i,-i)$ and any actual diagonal $w$,
+$|w_k|\le1$ and the identity
+$|a_0|+|b_0|=\max_{|\mu|=1}|a_0+\mu b_0|$ give
+
+$$
+\begin{aligned}
+ A(w)+B(w)
+ &\le\max_{\phi\in\mathbb R}
+                 \sum_{k=1}^4|1+e^{i\phi}d_{\mathrm{tr},k}|\\
+ &=\max_{\phi\in\mathbb R}
+        2\left(\sqrt{1+|\sin\phi|}+\sqrt{1+|\cos\phi|}\right)\\
+ &\le4\sqrt{1+h}=4(c+s)=L.
+\end{aligned}
+\tag{42.17}
+$$
+
+Pair the coefficients with $d_{\mathrm{tr},k}=\pm1$ and with
+$d_{\mathrm{tr},k}=\pm i$ to obtain the second line.
+Concavity of the square root and
+$|\sin\phi|+|\cos\phi|\le\sqrt2=2h$ give the last line.
+No condition on independently chosen amplitudes is used.
+
+The half-angle identities and $h<5/7$ imply
+
+$$
+ (c+s)^2=1+h<\frac{12}{7}<\left(\frac{21}{16}\right)^2,
+ \qquad \zeta>\frac{15}{4}.
+\tag{42.18}
+$$
+
+For every normalized positive two-by-two effect, (23.9)--(23.10)
+give $0\le\epsilon=2\det F\le1/2$. Hence throughout the claimed
+interval,
+
+$$
+             \xi+\epsilon\le\frac{13}{4}+\frac12
+                            =\frac{15}{4}<\zeta.
+\tag{42.19}
+$$
+
+For this same $E$ and any actual feedback $U'$,
+(41.3) and (42.17) imply
+
+$$
+ \rho_+(E,U')+\rho_-(E,U')
+      =18-2(A(w')+B(w'))-2\epsilon
+      \ge2(\zeta-\epsilon).
+\tag{42.20}
+$$
+
+If one branch equals $\xi$, (42.19) makes the other strictly larger
+than $\xi$. This proves uniqueness of the input minimizing sign
+and will also prove exact level preservation for each replacement.
+
+Spectrally decompose the actual unitary
+$V_\sigma=UU_\sigma^\dagger$:
+
+$$
+ V_\sigma=Z\operatorname{diag}(\lambda_1,\ldots,\lambda_4)Z^\dagger,
+ \qquad Z\in U(4),\qquad |\lambda_k|=1.
+\tag{42.21}
+$$
+
+The matrix $D_{ik}=|Z_{ik}|^2$ is doubly stochastic, since every row
+and column of $Z$ has squared norm one. Apply the finite
+Birkhoff--von Neumann theorem, in the form stated in
+[Vourdas, arXiv:2203.09468v1, Section II.1, (18)](https://arxiv.org/html/2203.09468v1):
+write $D=\sum_j\theta_j\Pi_j$, with permutation matrices $\Pi_j$
+and probabilities, discarding zero weights. Set
+
+$$
+               U_j=\operatorname{diag}(\Pi_j\lambda)U_\sigma,
+ \qquad \lambda=(\lambda_1,\ldots,\lambda_4)^{\mathsf T}.
+\tag{42.22}
+$$
+
+Every $U_j$ is a whole actual unitary.
+The matrix $C_\sigma=U_\sigma U_+^\dagger$ is diagonal and unitary:
+it is $I_4$ for $\sigma=+$ and
+$\operatorname{diag}(1,-1,-i,i)$ for $\sigma=-$.
+Thus $U_j$ is also of the form $\operatorname{diag}(v_j)U_+$
+with $v_j\in\mathbb T^4$.
+The permutation preserves $\sum_k\lambda_k$, proving the complex
+trace equality in (42.15). By (23.11), with $E$ unchanged, its
+$\sigma$ distance is exactly $\xi$. Equations (42.19)--(42.20)
+prove its other branch is strictly larger, so its true original
+joint distance is $\xi$.
+
+The diagonal of (42.21) is $D\lambda=\sum_j\theta_j\Pi_j\lambda$.
+Multiplication on the right by the fixed diagonal $C_\sigma$
+therefore gives $w=\sum_j\theta_jw_j$. The definitions of $P,Q$
+in (23.2) are complex linear in $w$, so $a=\sum_j\theta_ja_j$.
+This is a forward consequence of the spectral representation of
+the given actual matrix. It asserts no converse that every convex
+combination is a diagonal in a specified normal unitary orbit.
+
+Finally (23.12) gives, on every one of these actual pairs,
+
+$$
+ g(E,U)=d^2p+e^2(1-p)-aFa^\dagger.
+$$
+
+Expansion using $\sum_j\theta_j(a_j-a)=0$ yields
+
+$$
+ \sum_j\theta_j(a_j-a)F(a_j-a)^\dagger
+             =\sum_j\theta_j a_jFa_j^\dagger-aFa^\dagger\ge0.
+\tag{42.23}
+$$
+
+All the pairs have the same original level, so subtracting
+$\kappa\xi$ proves (42.16). A finite weighted average cannot be
+strictly below every one of its terms, proving the last assertion.
+
+The argument divides by no effect eigenvalue, feedback trace,
+amplitude or spectral gap. It includes singular $F$, the
+maximally mixed effect, $P=0$, $Q=0$, zero coherence, zero original
+diagonal entries, repeated unitary eigenvalues and nonunique
+Birkhoff decompositions. A zero active trace and a minimizing-sign
+tie are excluded here by the proved level bound, not by a discarded
+case: nonnegativity of the effect-distance term gives its active
+trace modulus at least $4-\xi/2\ge19/8$, and (42.20) excludes a tie.
+The inactive trace may vanish. The probabilities compare alternative
+whole original pairs, with the same $E$ and one shared $U_j$ per
+pair; they do not give different controls to columns or outcomes.
+$\square$
+

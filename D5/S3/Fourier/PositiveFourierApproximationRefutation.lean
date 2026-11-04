@@ -68,7 +68,7 @@ def claim : Prop := ∀ f : ℝ → ℝ, (∀ x, 0 ≤ x → 0 ≤ f x) → Oper
 open Real
 
 open Polynomial Polynomial.Chebyshev in
-private lemma abs_sin_nat_mul_le (n : ℕ) (u : ℝ) : |sin (n * u)| ≤ (n : ℝ) * |sin u| := by
+lemma abs_sin_nat_mul_le (n : ℕ) (u : ℝ) : |sin (n * u)| ≤ (n : ℝ) * |sin u| := by
   by_cases hn0 : n = 0
   · simp [hn0]
   have hn : (0 : ℝ) < (n : ℝ) := Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn0)

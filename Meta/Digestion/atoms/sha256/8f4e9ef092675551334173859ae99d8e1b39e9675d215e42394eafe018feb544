@@ -1,0 +1,24 @@
+### 10.3 三方向的有向体积成为内部复数
+
+这里把候选中的“由该块生成的结合保星闭包”说精确：它是非零含幺实结合
+$*$-代数 $\mathcal B$，带实线性映射 $\iota:V\to\mathcal B$，满足
+
+$$
+\iota(e)=1,\qquad \iota(x)^*=\iota(x),\qquad
+ \frac{\iota(x)\iota(y)+\iota(y)\iota(x)}2=\iota(x\circ y),
+$$
+
+且 $\iota(V)$ 生成整个 $\mathcal B$。结合性、保星与生成性是这里明确保留的闭包条件；以下证明所有这样的非零闭包都给出同一个代数，不先假设它的维数。
+
+作为实结合闭包的显式构造，用实数对构造 $\mathbb C_\jmath=\{s+\jmath t\}$，其中 $\jmath^2=-1$。记 $\mathcal A=\mathbb C_\jmath\oplus\mathbb C_\jmath^3$，在其上定义
+
+<a id="eq-c122-local-product"></a>
+
+$$
+(\alpha,a)(\beta,b)
+ =(\alpha\beta+a\cdot b,\alpha b+\beta a+\jmath(a\times b)).
+\tag{48}
+$$
+
+这里的点积、叉积作复双线性延伸。
+

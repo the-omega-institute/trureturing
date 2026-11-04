@@ -1,0 +1,65 @@
+**Theorem 4.2 (full-domain correctness, optimality, and finite bit bound).** The procedure in Definition 4.1 terminates on every input in its promised domain and returns exactly $z_k(G)$ and an attaining placement for (1.1). On a deterministic multitape Turing machine with binary work tapes there is an implementation of this procedure with time
+
+$$
+ O\!\left((2q+1)^6\,2^{2q}\,81^{2q}\,(L+2)^{2q+12}\right)
+ \tag{4.1}
+$$
+
+bit operations and work storage
+
+$$
+ O\!\left((2q+1)^2\,3^{2q}\,(L+2)^4\right)
+ \tag{4.2}
+$$
+
+bits, with absolute implied constants independent of $G,k,q,L$. Input reading, integer arithmetic, table access, choice of an actual placement, and output are included. For every fixed $q$, (4.1) is polynomial in the entire input length, even when the binary value $k$ is larger than $m$, $n$, or every polynomial in $n$.
+
+*Proof.* Since $G$ is connected, one can explore it to obtain a spanning tree: begin with vertex $1$, add an edge from the explored set to a new vertex whenever that set is not all of $V$, and retain its first such edge as the parent edge. Connectivity guarantees such an edge; adding a new vertex cannot create a cycle. There are $n-1$ parent edges, so $|J|=m-n+1=q$ and $r\leq2q$. Increasing-neighbor exploration fixes all choices finitely.
+
+For each prefix of the value bits of $k$, saturation at $n$ equals the minimum of that prefix value and $n$, as follows by induction from $\min(n,2\min(n,a)+d)=\min(n,2a+d)$. Hence $K=\min(k,n)$ after the entire value has been read. Every graph degree is at most $n-1$, so the computed $D$ equals $D_k(G)$. If $K=n$, every vertex is mandatory and output $(n,V)$ is exact. If $D=V$ for a smaller $K$, the same argument applies. Otherwise $K=k<n$. Thus every later comparison $L(S)>K$ is exactly the comparison in (2.2); no value of $k$ has been silently truncated in a nontrivial case.
+
+By Theorem 3.3 the evaluation is exact. By Theorem 2.1 at least one $U$ in the enumerated range succeeds. Every feasible placement contains $D$ and some minimum placement has at most $2q$ further vertices. Because cardinalities $j$ are tried in increasing order, the first successful $U$ therefore has minimum possible size. It is stored explicitly as its increasing tuple, so its union with $D$ is the required actual minimizer. Every loop is finite, and some successful candidate is reached, proving termination and correctness.
+
+We give a deliberately generous bit bound, including a sequential simulation of table access. Put $N=L+2$. The explicit edge list and connectivity imply $m\geq n-1$, so $n\leq L+1<N$; also $m\leq L<N$ because every edge occupies at least two bits. All vertex, edge, degree, and subtree indices use $O(\log N)$ bits. Input parsing, reading the whole prefix and value of $k$, saturated binary arithmetic, degree calculation, and construction of an adjacency matrix can be performed by repeated scans in $O(N^4)$ bit steps and $O(N^3)$ bits. For example, store the input on a tape, keep counters of at most $L+1$, and scan edge records to find any requested adjacency or degree; at most a quadratic number of such scans suffices. Alternatively the matrix has at most $n^2$ entries. The unary length prefix is read completely; no operation loops up to the value of $k$. The exploration and the sorting of the resulting child lists, even using repeated minimum selection, fit these same generous bounds.
+
+Fix $S$ and $\sigma$. The number of states of $A_v$ is at most $8\cdot3^r$ and the number of accumulator states is at most $6\cdot3^r$ for fixed $p,b$. For a fixed parent bit and vertex bit, a child table has at most $4\cdot3^r$ entries, since its parent bit is then fixed. Consequently a child update considers at most a constant times $9^r$ pairs, and each pair requires $O(r+1)$ coordinate operations and a bounded number of cost additions and comparisons. There are $n-1$ child updates and four possible $p,b$ pairs. Initialization, (3.7), and the root evaluation use at most a constant times $n(r+1)9^r$ further elementary operations. Computing (3.3) requires at most $O((r+1)(m+1))$ elementary operations. Here an elementary operation reads or writes a record, compares bounded integers, or performs their addition, saturation, or binary counter update.
+
+Every finite partial cost is at most $n$: costs count outside vertices in disjoint processed parts and possibly the current vertex. The final cost has this bound as well. Encode $+\infty$ by a separate flag; do not allow flag arithmetic to produce a finite value. A record, its coordinates, its address, and all numerical operands have at most $O(r+\log N+1)$ bits. In particular table indexing, including an index in $\{0,1,2\}^X$, does not assume constant-size machine words.
+
+All complete subtree tables can be stored simultaneously, together with two accumulators and the input, graph, candidate tuple, and loop counters, in at most
+
+$$
+ M=C_0(r+1)3^rN^3
+ \tag{4.3}
+$$
+
+bits for an absolute $C_0$, enlarged once if necessary. Indeed the tables require $O(n3^r(r+\log N+1))$ bits; all other listed objects require only a polynomial in $N$ of degree at most three. Reuse the same space for every $\sigma$ and candidate. No table for a previous candidate is retained, and the placement algorithm needs no witness backpointers. The list of all candidates or all $\sigma$ is never stored.
+
+To justify a bit cost without a unit-cost random-access assumption, encode records consecutively on work tapes with their addresses and use a full sequential scan for each access. Comparing addresses, copying records, and binary addition or comparison can all be implemented by the usual left-to-right or right-to-left digit scans. With at most $M$ stored bits, even allowing a fresh scan of length $M$ for each compared or copied digit costs $O(M^2)$ bit steps per elementary operation. Arithmetic with at most $M$ operand bits also costs at most $O(M^2)$ using digit-by-digit addition, comparison, and multiplication if needed. Our recurrence needs only addition and comparison; base-three coordinate indices can instead be enumerated as strings. Thus this simulation is a concrete upper bound on access and arithmetic, rather than an assumption of instantaneous table lookup.
+
+For the fixed candidate and $\sigma$, the elementary-operation count above is at most
+
+$$
+ C_1(r+1)^2\,9^rN^3.
+ \tag{4.4}
+$$
+
+Combining (4.3), (4.4), and the scan simulation gives a time bound
+
+$$
+ C_2(r+1)^4\,81^rN^9.
+ \tag{4.5}
+$$
+
+There are at most $2^r$ assignments $\sigma$, including the restrictions imposed by $S$. They can be generated with an $r$-bit counter. For candidate enumeration, use increasing tuples and lexicographic succession. At most
+
+$$
+ \sum_{j=0}^{\min(2q,|V\setminus D|)}\binom{|V\setminus D|}{j}
+ \leq (2q+1)N^{2q}
+ \tag{4.6}
+$$
+
+candidates are visited. Each next tuple, candidate bit vector, and union with $D$ can be formed by bounded scans and binary counters in $O((2q+1)N^3)$ bit steps, using at most $O(N^3)$ bits; a tuple never has more than $n$ entries. These costs and rebuilding the candidate-dependent tables fit the product of (4.5), $2^r$, and (4.6), or the larger bound (4.1), also when $q=0$. Substituting $r\leq2q$ in (4.3), and allowing the same scans and loop counters, gives (4.2). The extra powers of $N$ and $2q+1$ in (4.1)–(4.2) cover all preprocessing and enumeration overhead just described.
+
+Finally, reconstruction of the placement requires only the current tuple $U$ and the stored characteristic vector of $D$, not an exponential search through past table choices. A scan emits the $n$ membership bits and counts them using $O(\log N)$-bit arithmetic. Encoding the resulting cardinality has $O(\log N)$ bits. Both reconstruction and output use $O(N^3)$ time within (4.1). This proves the claimed full-input bit and storage bounds. $\square$
+

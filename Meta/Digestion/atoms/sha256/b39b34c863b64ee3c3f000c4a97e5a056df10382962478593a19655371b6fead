@@ -1,0 +1,42 @@
+### 引理 2.5（模作用与加权配对的交织）
+
+<a id="lem-c123-modular-intertwining"></a>
+
+若 $\mathcal A$ 在 $\sigma$ 的模作用下不变，且表示 $\beta$ 满足
+[(14)](#eq-c123-bimodule)，则对 $A\in\mathcal A$、$z\in\mathbb C$，
+
+<a id="eq-c123-modular-intertwining"></a>
+
+$$
+\begin{aligned}
+\tau^z\beta(A)\tau^{-z}
+ &=\beta(\sigma^zA\sigma^{-z}),
+\end{aligned}
+\tag{15}
+$$
+
+<a id="eq-c123-weighted-intertwining"></a>
+
+$$
+\begin{aligned}
+\mathcal N(\Gamma_\sigma(A))
+ &=\Gamma_\tau(\beta(A)).
+\end{aligned}
+\tag{16}
+$$
+
+**证明。**
+模不变性给 $\operatorname{ad}_{\log\sigma}(\mathcal A)\subseteq\mathcal A$，所以其复参数指数仍保持 $\mathcal A$。
+双模等式对 $\mathcal N(\sigma A)
+=\mathcal N((\sigma A\sigma^{-1})\sigma)$ 的两种计算给出
+$\tau\beta(A)\tau^{-1}=\beta(\sigma A\sigma^{-1})$。
+算子空间上的 $\operatorname{Ad}_\sigma$、$\operatorname{Ad}_\tau$ 可对角化，特征值都是正数。
+在两者的有限特征值集合上，以一个多项式插值 $x\mapsto x^z$，将上述交织逐次迭代后线性组合，即得 [(15)](#eq-c123-modular-intertwining)。
+最后
+
+$$
+\mathcal N(\sigma^{1/2}A\sigma^{1/2})
+ =\beta(\sigma^{1/2}A\sigma^{-1/2})\tau
+ =\tau^{1/2}\beta(A)\tau^{1/2}.\qedhere
+$$
+

@@ -489,7 +489,7 @@ private theorem J_psd (n : ℕ) : ((Matrix.of (fun _ _ : Fin n => (1 : ℂ)))).P
   ext i j
   simp [Matrix.vecMulVec]
 private theorem P_psd (n : ℕ) : (((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))))).PosSemidef := (J_psd n).smul (by positivity)
-private theorem P_sq (n : ℕ) (hn : 0 < n) : ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) * ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) = ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) := by
+theorem P_sq (n : ℕ) (hn : 0 < n) : ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) * ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) = ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) := by
   have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt hn
   ext i j
   simp [Matrix.mul_apply, Complex.real_smul]

@@ -65,7 +65,7 @@ private theorem real_rational_tail {v : ℝ} (hv : 9 ≤ v) :
       mul_nonneg (sub_nonneg.mpr hv) (by linarith only [hv])
     nlinarith only [hproduct]
 
-private theorem real_rational_tail_on_ray {v s : ℝ}
+theorem real_rational_tail_on_ray {v s : ℝ}
     (hv : 9 ≤ v) (hs : (2 / 3 : ℝ) ≤ s) :
     0 < v^2 * Real.exp (-v * s) ∧
       v^2 * Real.exp (-v * s) < 243 / (2 * v * (v + 6)) ∧
@@ -89,7 +89,7 @@ private theorem nu_ge_nine {q : ℕ} (hq : 3 ≤ q) : (9 : ℝ) ≤ nu q := by
   dsimp [nu]
   exact_mod_cast h
 
-private theorem sigma_gt_two_thirds {q : ℕ} (hq : 3 ≤ q) :
+theorem sigma_gt_two_thirds {q : ℕ} (hq : 3 ≤ q) :
     (2 / 3 : ℝ) < sigma q := by
   have hn := order_ge_nine hq
   have hmono : dbonacciPerronRoot 9 ≤ beta q :=
