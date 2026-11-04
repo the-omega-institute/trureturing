@@ -4155,3 +4155,524 @@ source-level proofs; they are not Lean verification or claims of literature
 originality. Existing A/B suppliers retain their stated hypotheses and scope.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 28. Retained copier records after the first indexed mask
+
+**Definition 28.1 (the selected post-loader cut).** Retain the particular
+ML-S-to-four-symbol-to-binary-to-copier-to-B path of §§10–13 and its
+ML-C realization. Let $L$ be the actual accepted arithmetic input length,
+$r=361$ its number of non-input stack registers, and
+$a=2(L+r+1)=2(L+362)$ the length of its initial binary tape window.
+There is one leading separator, $L$ input symbols and $r$ further
+separators in the four-symbol window. Each is encoded by two bits.
+A copier completion means a return to a source binary-state boundary,
+not an individual non-erasing tape step or a B instruction commit.
+All earlier records and all instantiated work positions are retained.
+
+The copier uses eight-bit blocks. A record contains a header, its data
+window and an end block. Record zero has $a$ data blocks. Every completed
+copy adds one blank data block at each end of the represented window.
+The primary NWMG map encodes each non-erasing tape square at two B
+positions. These definitions refer to the particular record layout of
+§4.6 and §13, rather than an arbitrary efficient non-erasing simulation.
+
+**Theorem 28.2 (mandatory post-loader material).** Suppose this selected
+path completes evaluation of an accepted frame with parameter $N\ge4$.
+Put $s=60N$ and
+
+$$
+ Q(a,s)=16(s+1)(a+s+2)-16,\qquad
+ K_*(a,s)=1+\frac{Q(a,s)(Q(a,s)+1)}2.
+\tag{ML.35}
+$$
+
+Before that completion it has at least $s$ copier completions, at least
+$Q(a,s)$ instantiated plus-arm B positions and at least $K_*(a,s)$
+retained routing cells. In the fixed-reserve realization, its initial
+reserve capacity must therefore satisfy $K\ge K_*(a,s)$.
+
+Proof. Readcache consumes the $15N$ actual mask bits before its value
+scan. The bit routine consumes each by a distinct nonhalt stack
+instruction. Each such instruction enters a nonterminal four-symbol
+controller transition. The binary adapter performs four binary
+transitions for every such transition: read the first bit, read and
+write the second, write the first, and complete the selected two-square
+movement. The stay case still performs these four transitions. Therefore
+at least $4(15N)=60N$ source binary steps, and hence copier completions,
+precede the returned result. This argument does not use a measured full
+stack execution count or assume that positive evidence is found.
+
+After $s$ completions, record $j$ has $a+2j$ data blocks, for
+$0\le j\le s$. The complete consecutive records occupy
+
+$$
+ 8\sum_{j=0}^s(a+2j+2)=8(s+1)(a+s+2)
+\tag{ML.36}
+$$
+
+binary tape squares. The NWMG pair encoding doubles this span. Discard
+the final eight-square end block, hence sixteen B positions. Every
+remaining position is in the initialized record span or has been crossed
+while forming the later record. The bilateral head moves one position
+at a time, and ML-C instantiates every encountered blank frontier.
+Thus at least $Q(a,s)$ plus positions are present. In ML.10 their split
+contribution alone is $1+n_+(n_++1)/2$, with $n_+\ge Q(a,s)$.
+Marked-bit appends, minus-arm positions and all other reserve consumers
+are nonnegative. This proves (ML.35), including its direction as a
+necessary capacity bound. $\square$
+
+**Proposition 28.3 (the three received arithmetic words).** For the
+three words of §§25–27, Theorem 28.2 gives the following bounds.
+
+| Word | $N$ | $L$ | $a$ | $s$ | $Q(a,s)$ | $K_*(a,s)$ |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Positive full | 4 | 387 | 1498 | 240 | 6709424 | 22508188560601 |
+| Positive partial | 4 | 386 | 1496 | 240 | 6701712 | 22456475216329 |
+| Null nine distinct left | 9 | 839 | 2402 | 540 | 25483248 | 324697977056377 |
+
+If the concrete host layout of Proposition 27.9 has
+$H_{cell}=1128$ shallow bytes per installed reserve cell, its respective
+host allocation lower bounds are
+$25389236696357928$, $25330904044019112$, and
+$366259318119593256$ bytes. Payload, dictionaries, source preparation,
+control, installation overlap and runtime storage add to these numbers.
+
+Proof. Substitute in (ML.35), then multiply by $H_{cell}$. The
+$1128$ value uses the ordered shallow sizes
+$(h_B,h_D,h_S,h_V,h_R,h_A,h_b)=(96,80,80,56,56,56,56)$ in
+Proposition 27.9. This is a conditional concrete-layout bound; independent
+logical identities do not require one host object each in every possible
+representation. $\square$
+
+## 29. A conditional common-cut census for the selected reserve
+
+**Definition 29.1 (owner censuses).** Write
+$C=(O,R,B,w)$ for retained object bindings, reference slots, payload bit
+slots and actual reference width, with
+$S(C)=O+wR+B$. An initialized nullable buffer bit remains a bit slot
+after it is cleared. A null reference retains its reference slot.
+For the installed owner retain §27.8's exact functions
+
+$$
+\begin{aligned}
+ O_I(K)&=8109329+3K,& R_I(K)&=32574125+13K,\\
+ B_I(K)&=9546573383+16K,&
+ w_I(K)&=\operatorname{bitlength}(O_I(K)+62).
+\end{aligned}
+\tag{ML.37}
+$$
+
+Set $S_I(K)=O_I(K)+w_I(K)R_I(K)+B_I(K)$. All unused reserve cells,
+source descriptors, target cells, literal code and installer material
+in this census are retained. Reserve extraction does not allocate a new
+binding outside this owner.
+
+**Theorem 29.2 (source and provider buffer censuses).** Let $k=15N$ be
+the length of the actual stationary source array. Its original preparer,
+including its inherited routing material and sixteen reference registers,
+has the completed census
+
+$$
+\begin{aligned}
+ D_s&=(5k^2+13k+6)/2,& V_s&=8k+8,& H_s&=3k+3,\\
+ O_s&=V_s+H_s+D_s,& R_s&=16+4V_s+2H_s+D_s,& B_s&=D_s,\\
+ w_s&=\operatorname{bitlength}(O_s).
+\end{aligned}
+\tag{ML.38}
+$$
+
+For the unchanged original connection, let $q$ be its number of completed
+calls, $A$ the sum of their actual operand lengths and $f=\mathbf1_{q>0}$.
+Its retained provider-buffer owner, with eight reference registers, has
+
+$$
+\begin{aligned}
+ O_c&=1+2A+5q+f,&R_c&=10+2A+7q+2f,\\
+ B_c&=2A+3q,&w_c&=\max(1,\operatorname{bitlength}(O_c)).
+\end{aligned}
+\tag{ML.39}
+$$
+
+These counts retain every old request buffer, cleared request cell,
+returned latch and the single free-pool header. The received peer's
+native buffers belong to the installed owner in (ML.37), rather than
+being counted again in (ML.39).
+
+Proof. For source bit position $j<k$, the spine contributes event depths
+$j,j,j+1$, and its value gadget contributes two events at depth $j+2$.
+The terminal marker contributes depths $k,k,k+1,k+2$. Their sum is
+$\sum_{j<k}(5j+5)+4k+3=D_s$. There are $2k+1$ promotions and $3k+3$
+splits, so AA22.1 gives $V_s$ and $H_s$. Field arities and grant slots
+give the remaining source terms. The two value-gadget alternatives
+have equal counts, so no assumption on the source array's prior support
+enters this computation.
+
+A call of length $\ell$ creates a provider request header, $2\ell+1$
+framed request bit cells, a return header and two returned bit cells.
+This adds $2\ell+5$ objects, $2\ell+7$ reference slots and
+$2\ell+3$ bit slots. The connection itself supplies one object and two
+references in addition to its eight registers. First clearing creates
+one pool header with two references; subsequent clearing retains it.
+Summing gives (ML.39). Clearing rewrites contents and next links; it
+does not remove any object or slot. $\square$
+
+**Theorem 29.3 (one dominating pointwise envelope).** Consider the
+sequential selected chronology, including source preparation, installation,
+acquisition, evaluation, output, cleanup and its final same-port Read.
+Assume $K$ suffices for every extraction of that entire chronology,
+including every old job and every unfinished scratch allocation. Assume
+the fixed installed width (ML.37) and the source/provider widening rule
+which temporarily keeps old and new reference arrays while copying
+one owner at a time. With $s,c$ denoting their final censuses,
+every common cut satisfies
+
+$$
+ S_{\mathrm{retained}}(u)\le S_I(K)+S(C_s)+S(C_c)
+                  +\max(w_sR_s,w_cR_c).
+\tag{ML.40}
+$$
+
+This is an upper bound on this modeled census, conditional on sufficient
+$K$. It gives neither a sufficient $K$, an attained peak, a full operation
+vector, a host allocation bound nor an execution-time bound.
+
+Proof. Completed retained object, field and bit-slot counts of the
+source and provider owners are monotone. Their widths are nondecreasing.
+Each ordinary cut is bounded by their respective final censuses. At a
+widening cut, the old array is already in the current census; the
+additional new reference array costs at most the final $wR$ for that
+owner. The sequential allocator completes one migration before enabling
+another, so at most one such extra array is present. Installation has its
+fixed width and its whole paid reserve, and its intermediate retained
+target census is bounded by its completed census. All later native
+allocations extract this retained reserve; the provider's separate
+allocations are precisely (ML.39). These facts hold at the same cut,
+which proves (ML.40), without summing independently attained peaks.
+Host proxies, traversal sets, observer lists and preparation temporaries
+are outside the modeled census and cannot be bounded by this proof.
+$\square$
+
+**Proposition 29.4 (fixed chronological envelopes).** For the original
+calls including the final same-port Read, the triples
+$(q,A,S(C_s)+S(C_c)+\max(w_sR_s,w_cR_c))$ are respectively
+
+$$
+ (74,2176,420577),\quad(73,2115,418648),\quad(149,9676,2092449).
+\tag{ML.41}
+$$
+
+The order is positive full, positive partial, null nine distinct left.
+Thus their pointwise bounds are $S_I(K)$ plus the displayed last
+coordinate, subject to all the premises of Theorem 29.3.
+
+Proof. The acquisition words are the eight fixed initial probes,
+all selected original bit addresses in increasing index order, the five
+fixed final acquisition probes, and the final continued Read. Counting
+their actual lengths gives the first two coordinates. Evaluation makes
+no original-source call. Substitution into (ML.38)–(ML.40) gives the
+third coordinate. This statement prescribes the complete chronology;
+it does not replace evaluation by the acquisition subsequence. $\square$
+
+## 30. A FIFO directory for distinct work-bit allocation
+
+**Definition 30.1 (FS1 work directory).** Use ML-I, with a fresh owned
+root promoted once to $\beta$. A paid queue initially contains its actual
+reference. Queue records have value and next references; their paid
+header has head and tail references. Queue records and all work growth
+are retained after removal from the live queue. Dequeue returns the
+old head value, advances the head, and clears the live tail if the queue
+becomes empty. Enqueue initializes a distinct value/next record, links it
+after the old live tail or into the empty head, then advances the tail.
+These are individual owned-field operations, not a new queue primitive.
+
+To allocate a work bit $b$, dequeue a $\beta$ directory frontier $p$.
+Perform, with complete AA20.2 maintenance after every event,
+
+$$
+ S_p,\quad P_{pR},\quad S_{pR},\quad
+ \text{and, if }b=1,\ P_{pRR}.
+\tag{ML.42}
+$$
+
+Enqueue $pL$ and then $pRL$. Return $pRR$ as the distinct data leaf.
+Only directory frontiers are dequeued. Data leaves are never directory
+frontiers; a zero data leaf may later be marked by its legal P operation.
+No directory root is grafted, reset or reused as a fresh tree.
+
+**Theorem 30.2 (birth legality and logarithmic event depth).** Number
+allocations starting at one. The $i$th dequeued frontier has address
+depth
+
+$$
+ d_i=\lfloor\log_2 i\rfloor+\operatorname{popcount}(i)-1,
+ \qquad \lfloor\log_2 i\rfloor\le d_i
+                      \le2\lfloor\log_2 i\rfloor.
+\tag{ML.43}
+$$
+
+Every prefix of (ML.42) is legal, with precisely its stated busy
+maintenance obligations. After $t$ completed allocations the live queue
+has $t+1$ distinct $\beta$ frontiers, there are $t$ distinct data leaves,
+and $2t+1$ retained queue records.
+
+Proof. At $S_p$, its left child is born $\beta$ and its right child is
+born $\alpha$. The stated P enables $S_{pR}$, whose left child is born
+$\beta$ and whose right child is born $\alpha$. The optional data P has
+exactly its required guard. Neither resulting frontier is a data leaf,
+and no earlier leaf is identified with a fresh one. Maintenance is the
+same proper-ancestor protocol, independent of the directory's shape.
+One dequeue and two enqueues increase live length by one.
+
+FIFO order identifies the two new frontiers with binary heap indices
+$2i$ and $2i+1$. A zero heap digit contributes the path L, and a one
+digit contributes RL. After removing the leading binary one, the path
+therefore has one edge per digit and one extra edge per one digit.
+This gives (ML.43). Counting two initializations per allocation after
+the single initial queue record gives the retained count. This uses the
+standard binary heap indexing as an intermediate counting device;
+no heap-index numeral is an execution pointer. $\square$
+
+**Theorem 30.3 (exact directory material).** Let $b$ of its $t$ data
+leaves be one, including any later first marks. Put
+
+$$
+ D(t)=\sum_{i=1}^t(3d_i+2)
+                +\sum_{i:\,\text{data }i\text{ is one}}(d_i+2).
+\tag{ML.44}
+$$
+
+The work tree has exactly
+
+$$
+ P=1+t+b,\quad S=2t,\quad V=2+5t+b,\quad H=2t,
+\tag{ML.45}
+$$
+
+and $D(t)$ distinct retained routing cells. Its work reference-slot
+count is $4V+2H+D(t)$ and its routing-bit count is $D(t)$.
+
+Proof. The initial P has depth zero. Allocation $i$ contributes events
+at depths $d_i,d_i+1,d_i+1$, and a first data mark contributes depth
+$d_i+2$. Their sum is (ML.44), including all ancestor appends. The
+promotion/split counts give (ML.45) by AA22.1. Repeated marks perform
+no P and add no routing cell. Field arities give the last assertion.
+$\square$
+
+## 31. Persistent stack and bilateral tape consumers of FS1
+
+**Definition 31.1 (macro state and acquired data).** For a finite ML-S
+network with $r+1$ registers, each register is a paid head-reference
+record. A push first allocates a distinct FS1 data leaf for its constant
+bit, then initializes a distinct two-reference frame containing that
+leaf and the old head. Publish the frame only after all growth,
+maintenance and frame initialization complete. Pop selects the actual
+head's empty/zero/one successor and publishes its next reference when
+nonempty. Peek selects the same successor without changing the head.
+Frames are retained after pop. Halt and goto use the supplied finite
+network's control labels. Input register zero is initialized by pushes
+of the actually received finite word in reverse order. Public finite
+input may first be retained in a paid finite buffer for this reversal.
+
+An internal state retains the old committed counter and register heads,
+selected instruction, queue cursor, allocation target, pending fields,
+actual next counter and eventual new head. While a push is busy, the
+old published head remains unchanged. If its final head field has been
+written but control has not committed, the old saved head still defines
+the committed interpretation. No source call or next stack instruction
+is enabled until commit. Missing input remains waiting; a failed
+shape/right/grant check has no invented successful successor.
+
+**Theorem 31.2 (finite-prefix macro correspondence).** Under ML-I's
+individual owned-field operations and its completed growth protocol,
+Definition 31.1 realizes every finite initial segment of every finite
+ML-S network on every finite word. Its committed words and counters
+are precisely the step semantics of `Complexity.StackProgram.step`.
+This includes immediate halt and finite prefixes of nonhalting runs.
+Every internal growth cut has the busy interpretation just specified;
+every completed-macro converse is the unique selected stack step.
+
+For the particular unchanged ML-S evaluator, this gives a macro-level
+consumer of Theorems 10.5 and 11.6 on all their domains: every
+$N\ge4$, finite represented rational prior (including unreduced forms
+and endpoints), original-indexed masks and values, and finite cylinder
+lists. A returned arithmetic word, if the whole input/return realization
+is supplied, is the contents of register zero, including NullEvidence
+and ratios only at positive normalizers. A native installed realization
+and its whole-session resource bound are additional obligations to
+this macro correspondence.
+
+Proof. The frame chain at a published register decodes its word in
+head-to-tail order. Initial reverse pushes produce precisely the
+received word. A fresh fully maintained data leaf and frame add its
+bit at the head. Pop follows exactly one actual next link, with the
+empty chain fixed, and peek follows none. Reading data arity distinguishes
+zero from one. Theorem 30.2 excludes a branch data value. Goto and halt
+are the given control actions. These statements establish a one-step
+invariant; induction on the requested finite number of commits proves
+both directions without a termination premise. Save-before-edit and
+commit-after-maintenance give every busy cut its old state and pending
+successor. The stated evaluator conclusion uses its existing ordinary
+termination/arithmetic correspondence; it introduces no law oracle,
+source-dependent table or new arithmetic operation. $\square$
+
+**Definition 31.3 (bilateral B consumer).** A paid tape record contains
+left, right and data-leaf references. Initialize a finite adjacent chain
+for the supplied input, using one zero cell for an empty input. Retain
+its origin reference and actual head. Moving to a present neighbor
+follows its actual link. At a missing neighbor allocate a zero FS1 leaf
+and new tape record, initialize both neighbor links, then publish the
+new head. M promotes a zero data leaf and leaves a one unchanged.
+J reads that leaf and selects its literal program successor. All
+intermediate edits retain the old head, counter and proposed neighbor.
+No arithmetic coordinate is used as a pointer.
+
+The same local induction as in Theorem 31.2, now using the finite
+adjacent chain and its distinguished origin, gives every finite
+bilateral B prefix of Definition 1.3. Left and right adjacency decode
+the integer coordinate relative to the origin; absent outer cells are
+zero. M has the original non-erasing semantics. The proof covers both
+frontiers, both crossings of the origin, first and repeated marks,
+halt and nonhalting prefixes. It is a different tape representation
+from ML-C, so ML.10's comb tariff is not its tariff.
+
+**Proposition 31.4 (reachable bare-directory ambiguity).** For
+$W=(R,M)$ on input 00, Definition 31.3 has two reachable states with
+identical bare work tree and routing words but different next actions.
+The initial head is the first tape record with next action R; after one
+commit it is the second record with next action M.
+
+Proof. Both cells and their links are initialized before the first
+instruction. R changes only the actual head and counter; it performs
+no work growth or maintenance. The two data references are distinct.
+Thus the work geometry and its routing supplement agree while the
+head/control annotations differ. The AA17.3 support/boundary conversion
+applies to this actual directory tree. To obtain a dynamic sufficient
+view one must additionally retain its queue, frame or tape links,
+heads, program, pending state, rights, original source handle, authentic
+occurrence receipts, original-indexed cache and current inherited resource
+meter. On these actual images,
+PG's response/update factorization and the inherited-meter domain of
+Typed Residual Resource Boundary §§3,6 apply with exactly those
+annotations; the source handle is never reconstructed from a law.
+No minimum memory or actual serial-history recovery is asserted.
+$\square$
+
+## 32. Finite-prefix core bounds and the retained-history obstruction
+
+**Theorem 32.1 (a finite-prefix core bound).** Put
+$G(t)=\sum_{i=1}^t\lfloor\log_2 i\rfloor$. For a completed FS1 stack
+allocation history, count its work, queue, all old frames, one head
+record per stack and $r_0$ reference registers, excluding code,
+installation, input/output and source/service material. Its exact
+core counts are
+
+$$
+\begin{aligned}
+ O_F&=4+10t+b+D(t)+(r+1)+O_0,\\
+ R_F&=12+30t+4b+D(t)+(r+1)+r_0+R_0,\\
+ B_F&=D(t)+B_0.
+\end{aligned}
+\tag{ML.46a}
+$$
+
+Here $O_0,R_0,B_0$ are any separately declared fixed
+pending-state records and fields. In particular the following
+unambiguous bounds hold for the work/queue/frame part alone:
+
+$$
+\begin{aligned}
+ D_-(t)&=3G(t)+2t\le D(t)\le8G(t)+4t=D_+(t),\\
+ 4+10t+D_-(t)&\le O_{\rm core}\le4+11t+D_+(t),\\
+ 12+30t+D_-(t)&\le R_{\rm core}\le12+34t+D_+(t),\\
+ B_{\rm core}&\le D_+(t).
+\end{aligned}
+\tag{ML.46}
+$$
+
+For $T$ committed stack instructions and an unfinished next instruction,
+$t\le L+T+1$ bounds every cut, including input initialization. For the
+B consumer the corresponding bound is $t\le\max(1,L)+T+1$; its
+three-reference tape records add at most $t$ reference slots to the
+frame convention in (ML.46). These are effective finite-prefix core
+bounds with no fixed-width or fixed-reserve ceiling.
+
+Proof. Sum (ML.45), $D(t)$ route objects, one queue header, $2t+1$
+queue records and $t$ frames. References are respectively
+$8+24t+4b+D(t)$, $2$, $4t+2$ and $2t$. Add register and declared
+pending fields. Apply (ML.43) to (ML.44), and $0\le b\le t$, to
+obtain (ML.46). Each stack instruction allocates at most one data leaf;
+each B instruction creates at most one neighbor. All completed
+allocations are retained, and a partial allocation's objects are
+bounded by its completed-allocation extension. Reference width must
+still cover all other owners and code: the core count alone does not
+supply the installation's width or a host upper bound. $\square$
+
+**Proposition 32.2 (the three persistent histories).** Suppose the
+counted ML-S supplier for the three words has respective push counts
+$92333003$, $1606631408$ and $534572126$. In FS1 the allocation totals
+are then respectively
+
+$$
+ t=92333390,\quad1606631794,\quad534572965.
+$$
+
+Even after discarding all marked-bit terms, register/code/source/service
+material, initialization overlap and observers, (ML.46) implies:
+
+| Word | $D_-(t)$ | $O_-$ | $R_-$ | $w_-$ | $O_-+w_-R_-+D_-(t)$ bits |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Positive full | 6984018100 | 7907352004 | 9754019812 | 33 | 336774023900 |
+| Positive partial | 141367674200 | 157433992144 | 189566628032 | 38 | 7502333531560 |
+| Null nine distinct left | 44362662344 | 49708391998 | 60399851306 | 36 | 2268465701358 |
+
+Here $O_-=4+10t+D_-(t)$, $R_-=12+30t+D_-(t)$ and
+$w_-=\operatorname{bitlength}(O_-)$. If a host represents every such
+retained object by a distinct object of at least $h$ shallow bytes,
+its host allocation is at least $hO_-$. This is an obstruction for
+that explicit representation under a reservation smaller than $hO_-$;
+it is not an impossibility theorem for all lossless representations.
+
+Proof. Add each actual input length to the stipulated push count.
+For $e=\lfloor\log_2 t\rfloor$,
+$G(t)=\sum_{j<e}j2^j+e(t-2^e+1)$, so the table follows by finite
+integer arithmetic. Distinct references require an injective naming
+scheme of width at least $w_-$. Each object grant, reference and
+routing bit contributes to the displayed lower bound. A popped frame
+and its data remain present; replacing total pushes by peak live stack
+bits would omit these objects and their ancestor records. The supplier
+counts in the premise are not a native FS1 execution or a native time
+bound. $\square$
+
+**Definition 32.3 (the remaining source-bound realization conditions).**
+For this FS1 consumer, a complete primitive realization consists of an
+actual installed finite graph for Definition 31.1 or 31.3, a relation on
+its initialized and every internal busy/refusal state, and a
+source-respecting ML-F/ML-Q input/output binding. Its evaluator return
+must traverse the computed register-zero word, perform the actual
+Print/End/Ack/Return/Close phases, then enable the unchanged original
+port. Receipts remain by occurrence and slots by original index,
+including old-slot rereads, informative absences and partial reads.
+The binding must work on all of §31.2's domains, including source arrays
+outside the prior support. Law evaluation never supplies an actual reply.
+
+A sufficient resource certificate for a selected chronology must bound,
+on one run, the actual installation, code/control, preparation, every
+old directory and frame, pending scratch, buffer and source material,
+all fields and grants, actual reference widths and migration overlap,
+input/output/acknowledgement/cleanup, observers and host work. The
+core bound (ML.46) leaves these other terms explicit; (ML.40) concerns
+the old installed owner and cannot price an FS1 installation. In
+particular a complete-session use requires a justified stack-step or
+push-count upper bound independent of an unbacked full native run,
+followed by a host reservation exceeding its simultaneous upper bound
+and a host-work bound for its actual primitive path. Neither a
+necessary lower bound nor macro endpoint equality supplies these data.
+
+The particular source transfers in §§28–32 are repo-derived ordinary
+arguments. The existing NWMG simulation, AA growth protocol, ML-S
+arithmetic/UJB correspondence and spatial/dynamic sufficiency suppliers
+retain their original hypotheses. No new universality, Lean verification,
+certificate minimum or literature originality is attached to FS1.
+
+## 追加锚（本行以下为增补区）
