@@ -117,7 +117,7 @@ private theorem complex_gram_nonneg {A ι : Type*} [AddCommGroup A] [Fintype ι]
     ring_nf
     simp only [hsq]
     ring
-  simp only [Complex.re_sum, he, Finset.sum_add_distrib] 
+  simp only [Complex.re_sum, he, Finset.sum_add_distrib]
   simp only [y, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
     Finset.sum_add_distrib] at hp
   convert hp using 1
