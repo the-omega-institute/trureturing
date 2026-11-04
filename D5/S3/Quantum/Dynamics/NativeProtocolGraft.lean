@@ -563,4 +563,133 @@ theorem original_event_arithmetic {L : Type} (T : Tree L)
 #print axioms original_event_arithmetic
 
 #print axioms original_native_projection
+
+namespace Coeff
+
+/-- Integer coordinates in the original inverse-golden basis. -/
+abbrev O := QuadraticAlgebra ℤ 1 (-1)
+def tau : O := QuadraticAlgebra.omega
+/-- The two cyclotomic coordinates, each itself an integer pair. -/
+abbrev S := QuadraticAlgebra O (-1) (-tau)
+def eta : S := QuadraticAlgebra.omega
+def inc : O →+* S := algebraMap O S
+
+private theorem t_sq : t ^ 2 = 1 - t := by
+  have h := Real.goldenRatio_sq
+  have hi := Real.inv_goldenRatio
+  change ((Real.goldenRatio⁻¹ : ℝ) : ℂ) ^ 2 = _
+  rw [hi]
+  have hc := Real.goldenConj_sq
+  push_cast
+  dsimp [Real.goldenConj, Real.goldenRatio] at *
+  apply Complex.ofReal_injective.mp
+  norm_cast
+  nlinarith [Real.sq_sqrt (show (0:ℝ) ≤ 5 by norm_num)]
+
+private theorem beta_sq : beta ^ 2 = t := by
+  dsimp [beta, t]
+  rw [← Complex.ofReal_pow, Real.sq_sqrt]
+  exact inv_nonneg.mpr (by dsimp [phi]; positivity)
+
+private theorem zeta_sum : zeta + star zeta = -t := by
+  have hcos : 2 * Real.cos (3 * Real.pi / 5) = -phi⁻¹ := by
+    rw [show 3 * Real.pi / 5 = Real.pi - 2 * (Real.pi / 5) by ring,
+      Real.cos_pi_sub, Real.cos_two_mul, Real.cos_pi_div_five]
+    change _ = -Real.goldenRatio⁻¹
+    rw [Real.inv_goldenRatio]
+    dsimp [Real.goldenConj]
+    nlinarith [Real.sq_sqrt (show (0:ℝ) ≤ 5 by norm_num)]
+  have hz : zeta.re = Real.cos (3 * Real.pi / 5) := by
+    simp [zeta, Complex.exp_re]
+  apply Complex.ext
+  · simpa [t] using hcos
+  · simp [t]
+
+private theorem zeta_norm : zeta * star zeta = 1 := by
+  rw [Complex.mul_conj]
+  simp [zeta, Complex.normSq_exp]
+
+private theorem zeta_sq : zeta ^ 2 = -1 - t * zeta := by
+  have h := congrArg (fun x : ℂ => zeta * x) zeta_sum
+  rw [mul_add, zeta_norm] at h
+  linear_combination h
+
+/-- Evaluation laws follow from the two defining quadratic equations. -/
+def evalO (u : ℂ) (hu : u ^ 2 = 1-u) : O →+* ℂ where
+  toFun x := (x.re : ℂ) + (x.im : ℂ) * u
+  map_zero' := by simp
+  map_one' := by simp
+  map_add' x y := by simp; ring
+  map_mul' x y := by
+    simp only [QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul]
+    push_cast
+    linear_combination -(x.im : ℂ) * (y.im : ℂ) * hu
+
+def evalS (u v : ℂ) (hu : u ^ 2 = 1-u) (hv : v ^ 2 = -1-u*v) : S →+* ℂ where
+  toFun x := evalO u hu x.re + evalO u hu x.im * v
+  map_zero' := by simp
+  map_one' := by simp
+  map_add' x y := by simp; ring
+  map_mul' x y := by
+    simp only [QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul,
+      map_add, map_mul, map_neg, map_one]
+    change _ + ( _ + _ + -u * _ * _) * v = _
+    linear_combination -(evalO u hu x.im) * (evalO u hu y.im) * hv
+
+def physical : S →+* ℂ := evalS t zeta t_sq zeta_sq
+
+@[simp] private theorem evalO_tau (u : ℂ) (hu : u ^ 2 = 1-u) :
+    evalO u hu tau = u := by simp [evalO, tau, QuadraticAlgebra.omega]
+@[simp] private theorem evalS_inc (u v : ℂ) (hu hv) (x : O) :
+    evalS u v hu hv (inc x) = evalO u hu x := by
+  simp [evalS, inc]
+@[simp] private theorem evalS_eta (u v : ℂ) (hu hv) :
+    evalS u v hu hv eta = v := by simp [evalS, eta, QuadraticAlgebra.omega]
+
+/-- Relative bit parity on the entire sixteen-bit carrier. -/
+def parity (b : Basis) : ZMod 2 :=
+  (∑ i : Fin 16, if b i then 1 else 0) -
+    ∑ i : Fin 16, if rootWord i then 1 else 0
+
+def exponent (b : Basis) : ℕ := if parity b = 0 then 0 else 1
+
+private theorem parity_root : parity rootWord = 0 := by simp [parity]
+private theorem flip_flip (i : Fin 16) (b : Basis) : flip i (flip i b) = b := by
+  funext k
+  by_cases hk : k = i
+  · subst k; simp [flip]
+  · simp [flip, Function.update_of_ne hk, hk]
+
+private theorem flip_ne (i : Fin 16) (b : Basis) : flip i b ≠ b := by
+  intro h
+  have hh := congrFun h i
+  simpa [flip] using hh
+
+private theorem parity_flip (i : Fin 16) (b : Basis) :
+    parity (flip i b) = parity b + 1 := by
+  classical
+  have hsplit (f : Fin 16 → ZMod 2) :
+      ∑ k, f k = (∑ k ∈ Finset.univ.erase i, f k) + f i :=
+    (Finset.sum_erase_add _ _ (Finset.mem_univ i)).symm
+  unfold parity
+  rw [hsplit (fun k => if flip i b k then 1 else 0),
+    hsplit (fun k => if b k then 1 else 0)]
+  have he : (∑ k ∈ Finset.univ.erase i, if flip i b k then (1:ZMod 2) else 0) =
+      ∑ k ∈ Finset.univ.erase i, if b k then 1 else 0 := by
+    apply Finset.sum_congr rfl
+    intro k hk
+    simp [flip, Function.update_of_ne (Finset.mem_erase.mp hk).1]
+  rw [he]
+  cases hb : b i <;> simp [flip, hb] <;> ring_nf
+
+private theorem exponent_flip (i : Fin 16) (b : Basis) :
+    exponent (flip i b) = 1 - exponent b := by
+  have hcases : parity b = 0 ∨ parity b = 1 := by
+    have hv := (parity b).val_lt
+    have hr := ZMod.natCast_zmod_val (parity b)
+    interval_cases (parity b).val <;> simp_all
+  rcases hcases with h | h <;> simp [exponent, parity_flip, h]
+
+end Coeff
+
 end D5.S3.Quantum.Dynamics.NativeProtocolGraft
