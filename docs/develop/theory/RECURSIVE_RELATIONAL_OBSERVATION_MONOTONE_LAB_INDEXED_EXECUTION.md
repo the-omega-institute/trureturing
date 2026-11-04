@@ -1345,253 +1345,6 @@ these additional conclusions.
 
 ## 追加锚（本行以下为增补区）
 
-## 25. Integrated B composition and one chronological source-observer account
-
-**Definition 25.1 (the common service configuration).** Let $I$ denote the
-actual native installation of Sections 18--21, $G$ the received-command
-graph of Sections 22--24, $O$ its observer-side connection arena, and $S$
-the unchanged source arena rooted at the supplied $F_1(z)$ object.  A
-configuration cut is the tuple
-
-$$
- C_t=(I_t,S_t,O_t,Gamma_t,D_t,ho_t,pi_t,chi_t,omega_t),
-$$
-
-where $I_t$ contains the installed code, image pages, native control and
-reserve; $S_t$ contains the original root, its provider fields and all
-retained preparation; $O_t$ contains the service connection, input and
-reply latches, receipts, cache, output buffers and free pool; $Gamma_t$ is
-the ordered receipt chain; $D_t$ is the paired indexed cache; $ho_t$ is
-the native reference/control location; $pi_t$ is the service phase and
-its literal continuation; $chi_t$ is the pending operand/reply state; and
-$omega_t$ is the owner-indexed reference-width vector.  Every cursor,
-counter, selector, pending latch and result in this tuple is an actual
-field or finite-control bit of its owner.  Audit counters and independent
-inspection views are not members of $ho_t$ or $pi_t$.
-
-**Assumption 25.2 (the integrated ML-I boundary).** The supplied native
-primitive graph, current grants and finite reserve are valid at the initial
-cut.  The complete fixed A image and its routing directory are the same
-objects used by the production decoder and driver.  The original port is
-the same bound source/root throughout.  Allocation returns a fresh object
-with its actual grant and fields; a grant may be pending, refused or
-returned, but it is never represented by an integer.  Source calls are
-made only by the installed connection successor and return only the
-reply produced by that port.  No source reset, reroot, resampling,
-hidden-generator answer, law-to-Read substitution or unrepresented real
-decision is available.  A finite reserve is a parameter for the finite
-prefix under consideration; it is not a bound on $N$, a prior, an operand,
-or a run.
-
-**Definition 25.3 (literal driver boundary relation).** A production
-request has the chronological phases
-
-$$
- \mathsf{Receive}\to\mathsf{Seal}\to\mathsf{Convert}\to
- \mathsf{Load}\to\mathsf{Driver}\to\mathsf{Decode}\to
- \mathsf{Print}\to\mathsf{End}\to\mathsf{Ack}\to\mathsf{Return}.
-$$
-
-At `Receive` and `Seal` the complete framed input is held in its linked
-buffer.  `Convert` reads that buffer and writes the owned binary input
-record.  `Load` initializes the actual B root, header, data and end fields.
-At a `Driver` cut the old head, new head, arm, program reference and the
-current image fetch continuation are all backed locations.  A move, mark,
-jump or halt is enabled only after its guard and destination fields have
-been read.  `Decode` follows the returned active header and data-head flag;
-it does not choose a coordinate by a host integer.  `Print`, `End`, `Ack`
-and `Return` consume the returned linked output and preserve their pending
-latches until the guarded successor.  An actual `Read` takes the parallel
-source path in Definition 5.2; its reply is captured before the return
-latch is released, then its receipt is linked before its tail is advanced.
-
-**Lemma 25.4 (boundary preservation).** Every valid intermediate cut of
-Definition 25.3 has one of the displayed phases, a finite literal
-continuation, and the fields needed to resume that phase.  A transition
-that advances a phase either preserves the old material or adds the
-freshly granted object and records it in the owner directory.  A transition
-that would read a missing field, use a wrong arity, consume an unoccupied
-latch, or use an unavailable grant is refused before its effect.  During a
-source call, the pending handle and operand remain present; during reply
-capture the occupied reply remains present until its backed copy exists.
-During receipt linking the new record is reachable before the advertised
-tail is changed.  During output, `End`, `Ack` and `Return` are enabled in
-that order.  Thus every valid cut has a unique next actual successor and
-every completed transition has the stated predecessor cut.
-
-*Proof.*  Induct on the finite transition graph.  Native dispatch reads
-the five opcode bits and the sixteen literal selector bits from the
-installed code vertex, then reads the selected reference fields.  The
-four-reference and eight-bit shape tests reject all other locations.
-The input and reply transitions have occupied bits as guards, while the
-source successor calls the retained `OriginalPort.call`.  The receipt and
-cache successors are the explicit field writes in Definition 23.2, so an
-old record, repeated occurrence, and indexed cell remain reachable at
-every later cut.  The same argument applies to the output cursor and its
-End/Ack/Return chain.  No inspection value is in any successor field.
-The converse follows by reading the phase, guard and continuation fields
-at a completed transition.  The production graph therefore has exactly
-the displayed cut relation. $\square$
-
-**Theorem 25.5 (integrated LAB-driver correspondence).** Fix a valid
-initialized A image, an actual received finite input, and a sufficient
-finite reserve.  For every finite bilateral non-erasing B program, every
-supplied finite binary input, and every finite internal prefix, including
-the immediate-halt prefix and prefixes of a nonhalting run, the production
-driver realizes the corresponding B prefix on the actual LAB root.  Its
-old/new head, arm, program counter, mark, frontier and pending growth are
-the fields in $C_t$; no host selector supplies any of them.  A completed
-driver macro decodes to exactly the B transition of Sections 2--3, and a
-completed B transition has the same driver macro as its converse.  The
-returned active header and data-head flags are then consumed by the actual
-output decoder and framing path.  The source operation is never used to
-choose a driver instruction.
-
-*Proof.* The initial input and image bindings are the actual outputs of
-`Receive`, `Convert`, and the fixed image decoder.  Apply Lemma 25.4 to
-the initial load and then induct on the B prefix.  The guard tests select
-the literal transition row, the move or mark successor changes only the
-new head/mark fields, and a frontier extension allocates and links the
-required LAB cells before the new head is committed.  The ancestor routing
-updates are the guarded P/S operations of Definition 1.1.  The old head
-and program reference remain in their saved locations until the commit
-field, so a busy cut is a valid prefix rather than a second transition.
-The induction is the forward simulation of Theorem 3.3 with the actual
-field graph inserted at every boundary.  Reading the committed fields
-gives the completed-macro converse of Theorem 3.4.  At halt the decoder
-starts at the returned active header and follows its data-head flag, after
-which the framed Print/End/Ack/Return path is Lemma 25.4.  The argument
-uses only finite control and the given reserve, so it is uniform in the
-program, input and prefix. $\square$
-
-**Definition 25.6 (one chronological ownership ledger).** For the actual
-source and observer session, let an event be
-
-$$
- e=(t,owner,phase,operation,object,\Delta_{ref},\Delta_{bit},
-     grant,pending,free,width).
-$$
-
-The owner is one of `installation`, `source`, or `connection`.  The ledger
-keeps all earlier jobs and roots, source routing material, code pages,
-directory links, grants, receipts, cache cells, request/reply buffers,
-pending objects, and returned objects.  A cleanup operation clears the
-fields and moves the cell to the owner free pool; it does not delete the
-object or silently release its grant.  A width migration records the old
-and new widths and the simultaneous copy of every live reference slot.
-The source, observer and installation rows at one timestamp form one
-configuration cut; their peaks are never added when they belong to
-different timestamps.
-
-For a cut $t$, let $A_t$ be the set of all retained owner-tagged objects,
-including a pending object and free-pool cells.  A direct census counts
-$A_t$, its actual reference fields and bit fields, the owner width vector,
-and grant bits.  The incremental census starts at the initial retained
-set and applies the event deltas in order.  Its width-migration charge is
-the actual number of copied reference slots times the new width, with the
-old and new images simultaneously retained during the copy.
-
-**Theorem 25.7 (common-cut census and resource correspondence).** On every
-valid event prefix of Definition 25.6, the incremental census equals the
-direct census of $A_t$.  The equality includes retained old jobs and roots,
-source/provider/connection charges, all grants and returned objects,
-receipt and cache material, free-pool cells, pending End/Ack/Return cuts,
-failed or busy/refused phases, and post-return retained material.  Every
-component uses the same timestamped cut and keeps its actual width; the
-unified total is the sum of component fields at that cut, not a sum of
-independent fixture peaks.  The installation, source and connection
-operation counts therefore charge the same actual session.
-
-*Proof.* Allocation adds one fresh granted object and its literal fields to
-both ledgers.  Linking changes ownership reachability but not membership
-of $A_t$; a pending object is already included before the link.  A field
-write either adds the one field counted by the direct census or changes an
-existing field, and a read changes no membership.  Cleanup moves a cell
-to the free pool while retaining the object, so the object, grant and
-width remain in both counts.  At a widening, the old reference image and
-the new image coexist; the copied-slot event adds exactly the direct
-overlap charge and then changes the owner width.  Refusal and busy events
-advance no prohibited field and hence add no object or receipt.  Induction
-over the event order proves equality at every cut.  Summing the three owner
-rows only after the cut is fixed gives the displayed unified total and
-avoids combining unrelated peaks. $\square$
-
-**Proposition 25.8 (operational falsifiers and cleanup boundaries).** The
-integrated path rejects premature End, Ack, Return or Close, a second
-request while busy, an absent grant, an occupied input/reply latch, a
-wrong field selector, and an exhausted finite reserve.  Omitting an
-operand-bit transfer leaves the actual connection latch unoccupied and
-prevents the original call.  Omitting an indexed cache write leaves the
-receipt but changes the returned cache state.  Removing a source-field
-read, a grant delivery, or a free-pool cleanup event makes the incremental
-census disagree with the direct one.  These are state and census
-failures, not merely result-file comparisons.
-
-*Proof.* Each refusal is the negative branch of the corresponding guard in
-Lemma 25.4.  The two omission cases remove the only actual write that can
-occupy the latch or set the indexed mask/value pair, so the subsequent
-source call or cache invariant fails.  The census claims follow from the
-allocation, field and cleanup cases in the proof of Theorem 25.7. $\square$
-
-**Theorem 25.9 (whole-family composition).** Under Assumptions 1.2 and
-25.2, the preceding correspondences compose for every finite bilateral
-non-erasing B program, every supplied finite input and every finite legal
-internal prefix, including halt and nonhalt prefixes.  They retain every
-source-permitted finite $N\ge4$, every represented rational
-$\theta=a/b\in[0,1]$ with $b>0$ (including endpoints and unreduced forms),
-all $15N$ original-indexed mask/value assignments and finite cylinders,
-all finite operands and histories, repeats, partial slots, old-index
-rereads, distinct indices with equal observations, both once-shared full
-injections, and source arrays outside prior support.  The finite reserve is
-chosen per finite prefix.  The fixed-image 64-bit restriction concerns
-only image addresses and their proved arithmetic.
-
-For every completed `Read`, the exact original invocation tariff is paid,
-including constants, repeats and absences; receipt occurrences retain
-their order and indexed cache identity.  `Predict` performs no source call
-and fabricates no reply.  Null evidence is retained, and a conditional
-ratio is formed only when its normalizer is positive.  The original source,
-control, reference and permission failures remain the same.  The
-composition asserts neither a full evaluator execution nor a completed
-ML.16 full-session account.
-
-*Proof.* The domain clauses are those of Theorems 3.3--3.4, 4.5, 5.3--5.4
-and Proposition 5.5.  Theorem 25.5 supplies their actual LAB driver and
-returned-head boundary.  Theorem 25.7 supplies one resource cut for the
-same source and observer session.  The receipt/cache induction of
-Theorem 5.3 gives occurrence order, original indices and repeated calls;
-The Predict branch has no source successor by Definition 5.2.  The
-arithmetic evaluator of Section 4 is called only on its finite received
-frame, and its zero-normalizer branch emits null evidence rather than a
-ratio.  Thus each clause is preserved by composition.  The final sentence
-is a scope boundary: the two strict executions require the subsequent
-full positive/null evaluator runs and complete same-run census. $\square$
-
-**Definition 25.10 (author evidence and remaining boundary).** The private
-author result `rro-lab-execution/integration-results.json` records the
-actual installed service run: $69$ original calls, $57$ distinct
-operands, $29{,}266{,}611$ native steps, $185{,}513$ field actions and
-$44{,}916{,}792$ installation steps.  Its common cut has installation,
-connection and original-source widths $(21,12,14)$ and direct/incremental
-census equality at all $69$ source-call boundaries.  The same result
-re-runs the finite whole-family author checks: $1{,}722$ B
-program/input instances, $490$ bounded nonhalting boundaries, $511$ V
-words, all $32{,}768$ within-slot masks, and $8{,}248$ original-port
-calls.  Source binding and compatibility checks retain the two operational
-mutant falsifiers `actual_port_transfer_occupied` and `actual_cache_write`.
-
-These results close B-LAB-driver, B-allocation-width-and-common-timeline,
-and B-whole-family-correspondence for the stated conditional ML-I
-construction.  The strict objects `ML-N-evaluator-execution` and
-`ML-Cost-full-evaluator-session` remain not executed.  Therefore this unit
-is B-complete for its assigned outcomes, while C is not released, D is not
-complete, independent acceptance has not occurred, and the long research
-goal remains open.  No Lean declaration, digestion settlement, judge
-change, minimality claim, hardware claim, quantum frontend, or actual
-serial-history recovery is made.
-
-## 追加锚（本行以下为增补区）
-
 
 ## 10. A fixed word-stack evaluator and its scalar representation
 
@@ -3735,5 +3488,252 @@ minimality, physical realization, actual serial-history recovery, FIB or
 quantum frontend claim. The source port and initial primitive-control,
 valid-literal-input and current-rights premises are retained. Input is
 repo-prior-exposed; no context sterility or model diversity is asserted.
+
+## 追加锚（本行以下为增补区）
+
+## 25. Integrated B composition and one chronological source-observer account
+
+**Definition 25.1 (the common service configuration).** Let $I$ denote the
+actual native installation of Sections 18--21, $G$ the received-command
+graph of Sections 22--24, $O$ its observer-side connection arena, and $S$
+the unchanged source arena rooted at the supplied $F_1(z)$ object.  A
+configuration cut is the tuple
+
+$$
+ C_t=(I_t,S_t,O_t,Gamma_t,D_t,ho_t,pi_t,chi_t,omega_t),
+$$
+
+where $I_t$ contains the installed code, image pages, native control and
+reserve; $S_t$ contains the original root, its provider fields and all
+retained preparation; $O_t$ contains the service connection, input and
+reply latches, receipts, cache, output buffers and free pool; $Gamma_t$ is
+the ordered receipt chain; $D_t$ is the paired indexed cache; $ho_t$ is
+the native reference/control location; $pi_t$ is the service phase and
+its literal continuation; $chi_t$ is the pending operand/reply state; and
+$omega_t$ is the owner-indexed reference-width vector.  Every cursor,
+counter, selector, pending latch and result in this tuple is an actual
+field or finite-control bit of its owner.  Audit counters and independent
+inspection views are not members of $ho_t$ or $pi_t$.
+
+**Assumption 25.2 (the integrated ML-I boundary).** The supplied native
+primitive graph, current grants and finite reserve are valid at the initial
+cut.  The complete fixed A image and its routing directory are the same
+objects used by the production decoder and driver.  The original port is
+the same bound source/root throughout.  Allocation returns a fresh object
+with its actual grant and fields; a grant may be pending, refused or
+returned, but it is never represented by an integer.  Source calls are
+made only by the installed connection successor and return only the
+reply produced by that port.  No source reset, reroot, resampling,
+hidden-generator answer, law-to-Read substitution or unrepresented real
+decision is available.  A finite reserve is a parameter for the finite
+prefix under consideration; it is not a bound on $N$, a prior, an operand,
+or a run.
+
+**Definition 25.3 (literal driver boundary relation).** A production
+request has the chronological phases
+
+$$
+ \mathsf{Receive}\to\mathsf{Seal}\to\mathsf{Convert}\to
+ \mathsf{Load}\to\mathsf{Driver}\to\mathsf{Decode}\to
+ \mathsf{Print}\to\mathsf{End}\to\mathsf{Ack}\to\mathsf{Return}.
+$$
+
+At `Receive` and `Seal` the complete framed input is held in its linked
+buffer.  `Convert` reads that buffer and writes the owned binary input
+record.  `Load` initializes the actual B root, header, data and end fields.
+At a `Driver` cut the old head, new head, arm, program reference and the
+current image fetch continuation are all backed locations.  A move, mark,
+jump or halt is enabled only after its guard and destination fields have
+been read.  `Decode` follows the returned active header and data-head flag;
+it does not choose a coordinate by a host integer.  `Print`, `End`, `Ack`
+and `Return` consume the returned linked output and preserve their pending
+latches until the guarded successor.  An actual `Read` takes the parallel
+source path in Definition 5.2; its reply is captured before the return
+latch is released, then its receipt is linked before its tail is advanced.
+
+**Lemma 25.4 (boundary preservation).** Every valid intermediate cut of
+Definition 25.3 has one of the displayed phases, a finite literal
+continuation, and the fields needed to resume that phase.  A transition
+that advances a phase either preserves the old material or adds the
+freshly granted object and records it in the owner directory.  A transition
+that would read a missing field, use a wrong arity, consume an unoccupied
+latch, or use an unavailable grant is refused before its effect.  During a
+source call, the pending handle and operand remain present; during reply
+capture the occupied reply remains present until its backed copy exists.
+During receipt linking the new record is reachable before the advertised
+tail is changed.  During output, `End`, `Ack` and `Return` are enabled in
+that order.  Thus every valid cut has a unique next actual successor and
+every completed transition has the stated predecessor cut.
+
+*Proof.*  Induct on the finite transition graph.  Native dispatch reads
+the five opcode bits and the sixteen literal selector bits from the
+installed code vertex, then reads the selected reference fields.  The
+four-reference and eight-bit shape tests reject all other locations.
+The input and reply transitions have occupied bits as guards, while the
+source successor calls the retained `OriginalPort.call`.  The receipt and
+cache successors are the explicit field writes in Definition 23.2, so an
+old record, repeated occurrence, and indexed cell remain reachable at
+every later cut.  The same argument applies to the output cursor and its
+End/Ack/Return chain.  No inspection value is in any successor field.
+The converse follows by reading the phase, guard and continuation fields
+at a completed transition.  The production graph therefore has exactly
+the displayed cut relation. $\square$
+
+**Theorem 25.5 (integrated LAB-driver correspondence).** Fix a valid
+initialized A image, an actual received finite input, and a sufficient
+finite reserve.  For every finite bilateral non-erasing B program, every
+supplied finite binary input, and every finite internal prefix, including
+the immediate-halt prefix and prefixes of a nonhalting run, the production
+driver realizes the corresponding B prefix on the actual LAB root.  Its
+old/new head, arm, program counter, mark, frontier and pending growth are
+the fields in $C_t$; no host selector supplies any of them.  A completed
+driver macro decodes to exactly the B transition of Sections 2--3, and a
+completed B transition has the same driver macro as its converse.  The
+returned active header and data-head flags are then consumed by the actual
+output decoder and framing path.  The source operation is never used to
+choose a driver instruction.
+
+*Proof.* The initial input and image bindings are the actual outputs of
+`Receive`, `Convert`, and the fixed image decoder.  Apply Lemma 25.4 to
+the initial load and then induct on the B prefix.  The guard tests select
+the literal transition row, the move or mark successor changes only the
+new head/mark fields, and a frontier extension allocates and links the
+required LAB cells before the new head is committed.  The ancestor routing
+updates are the guarded P/S operations of Definition 1.1.  The old head
+and program reference remain in their saved locations until the commit
+field, so a busy cut is a valid prefix rather than a second transition.
+The induction is the forward simulation of Theorem 3.3 with the actual
+field graph inserted at every boundary.  Reading the committed fields
+gives the completed-macro converse of Theorem 3.4.  At halt the decoder
+starts at the returned active header and follows its data-head flag, after
+which the framed Print/End/Ack/Return path is Lemma 25.4.  The argument
+uses only finite control and the given reserve, so it is uniform in the
+program, input and prefix. $\square$
+
+**Definition 25.6 (one chronological ownership ledger).** For the actual
+source and observer session, let an event be
+
+$$
+ e=(t,owner,phase,operation,object,\Delta_{ref},\Delta_{bit},
+     grant,pending,free,width).
+$$
+
+The owner is one of `installation`, `source`, or `connection`.  The ledger
+keeps all earlier jobs and roots, source routing material, code pages,
+directory links, grants, receipts, cache cells, request/reply buffers,
+pending objects, and returned objects.  A cleanup operation clears the
+fields and moves the cell to the owner free pool; it does not delete the
+object or silently release its grant.  A width migration records the old
+and new widths and the simultaneous copy of every live reference slot.
+The source, observer and installation rows at one timestamp form one
+configuration cut; their peaks are never added when they belong to
+different timestamps.
+
+For a cut $t$, let $A_t$ be the set of all retained owner-tagged objects,
+including a pending object and free-pool cells.  A direct census counts
+$A_t$, its actual reference fields and bit fields, the owner width vector,
+and grant bits.  The incremental census starts at the initial retained
+set and applies the event deltas in order.  Its width-migration charge is
+the actual number of copied reference slots times the new width, with the
+old and new images simultaneously retained during the copy.
+
+**Theorem 25.7 (common-cut census and resource correspondence).** On every
+valid event prefix of Definition 25.6, the incremental census equals the
+direct census of $A_t$.  The equality includes retained old jobs and roots,
+source/provider/connection charges, all grants and returned objects,
+receipt and cache material, free-pool cells, pending End/Ack/Return cuts,
+failed or busy/refused phases, and post-return retained material.  Every
+component uses the same timestamped cut and keeps its actual width; the
+unified total is the sum of component fields at that cut, not a sum of
+independent fixture peaks.  The installation, source and connection
+operation counts therefore charge the same actual session.
+
+*Proof.* Allocation adds one fresh granted object and its literal fields to
+both ledgers.  Linking changes ownership reachability but not membership
+of $A_t$; a pending object is already included before the link.  A field
+write either adds the one field counted by the direct census or changes an
+existing field, and a read changes no membership.  Cleanup moves a cell
+to the free pool while retaining the object, so the object, grant and
+width remain in both counts.  At a widening, the old reference image and
+the new image coexist; the copied-slot event adds exactly the direct
+overlap charge and then changes the owner width.  Refusal and busy events
+advance no prohibited field and hence add no object or receipt.  Induction
+over the event order proves equality at every cut.  Summing the three owner
+rows only after the cut is fixed gives the displayed unified total and
+avoids combining unrelated peaks. $\square$
+
+**Proposition 25.8 (operational falsifiers and cleanup boundaries).** The
+integrated path rejects premature End, Ack, Return or Close, a second
+request while busy, an absent grant, an occupied input/reply latch, a
+wrong field selector, and an exhausted finite reserve.  Omitting an
+operand-bit transfer leaves the actual connection latch unoccupied and
+prevents the original call.  Omitting an indexed cache write leaves the
+receipt but changes the returned cache state.  Removing a source-field
+read, a grant delivery, or a free-pool cleanup event makes the incremental
+census disagree with the direct one.  These are state and census
+failures, not merely result-file comparisons.
+
+*Proof.* Each refusal is the negative branch of the corresponding guard in
+Lemma 25.4.  The two omission cases remove the only actual write that can
+occupy the latch or set the indexed mask/value pair, so the subsequent
+source call or cache invariant fails.  The census claims follow from the
+allocation, field and cleanup cases in the proof of Theorem 25.7. $\square$
+
+**Theorem 25.9 (whole-family composition).** Under Assumptions 1.2 and
+25.2, the preceding correspondences compose for every finite bilateral
+non-erasing B program, every supplied finite input and every finite legal
+internal prefix, including halt and nonhalt prefixes.  They retain every
+source-permitted finite $N\ge4$, every represented rational
+$\theta=a/b\in[0,1]$ with $b>0$ (including endpoints and unreduced forms),
+all $15N$ original-indexed mask/value assignments and finite cylinders,
+all finite operands and histories, repeats, partial slots, old-index
+rereads, distinct indices with equal observations, both once-shared full
+injections, and source arrays outside prior support.  The finite reserve is
+chosen per finite prefix.  The fixed-image 64-bit restriction concerns
+only image addresses and their proved arithmetic.
+
+For every completed `Read`, the exact original invocation tariff is paid,
+including constants, repeats and absences; receipt occurrences retain
+their order and indexed cache identity.  `Predict` performs no source call
+and fabricates no reply.  Null evidence is retained, and a conditional
+ratio is formed only when its normalizer is positive.  The original source,
+control, reference and permission failures remain the same.  The
+composition asserts neither a full evaluator execution nor a completed
+ML.16 full-session account.
+
+*Proof.* The domain clauses are those of Theorems 3.3--3.4, 4.5, 5.3--5.4
+and Proposition 5.5.  Theorem 25.5 supplies their actual LAB driver and
+returned-head boundary.  Theorem 25.7 supplies one resource cut for the
+same source and observer session.  The receipt/cache induction of
+Theorem 5.3 gives occurrence order, original indices and repeated calls;
+The Predict branch has no source successor by Definition 5.2.  The
+arithmetic evaluator of Section 4 is called only on its finite received
+frame, and its zero-normalizer branch emits null evidence rather than a
+ratio.  Thus each clause is preserved by composition.  The final sentence
+is a scope boundary: the two strict executions require the subsequent
+full positive/null evaluator runs and complete same-run census. $\square$
+
+**Definition 25.10 (author evidence and remaining boundary).** The private
+author result `rro-lab-execution/integration-results.json` records the
+actual installed service run: $69$ original calls, $57$ distinct
+operands, $29{,}266{,}611$ native steps, $185{,}513$ field actions and
+$44{,}916{,}792$ installation steps.  Its common cut has installation,
+connection and original-source widths $(21,12,14)$ and direct/incremental
+census equality at all $69$ source-call boundaries.  The same result
+re-runs the finite whole-family author checks: $1{,}722$ B
+program/input instances, $490$ bounded nonhalting boundaries, $511$ V
+words, all $32{,}768$ within-slot masks, and $8{,}248$ original-port
+calls.  Source binding and compatibility checks retain the two operational
+mutant falsifiers `actual_port_transfer_occupied` and `actual_cache_write`.
+
+These results close B-LAB-driver, B-allocation-width-and-common-timeline,
+and B-whole-family-correspondence for the stated conditional ML-I
+construction.  The strict objects `ML-N-evaluator-execution` and
+`ML-Cost-full-evaluator-session` remain not executed.  Therefore this unit
+is B-complete for its assigned outcomes, while C is not released, D is not
+complete, independent acceptance has not occurred, and the long research
+goal remains open.  No Lean declaration, digestion settlement, judge
+change, minimality claim, hardware claim, quantum frontend, or actual
+serial-history recovery is made.
 
 ## 追加锚（本行以下为增补区）
