@@ -118,7 +118,8 @@ private lemma conference_projectors {m : ℕ} (hm : 1 ≤ m)
     ext i j
     have h := G.adjMatrix_mulVec_const_apply_of_regular (α := ℂ) (a := 1) (v := i)
       hG.regular
-    simpa [A, J, Matrix.mul_apply, Matrix.mulVec, dotProduct] using h
+    change (G.adjMatrix ℂ *ᵥ Function.const V (1 : ℂ)) i = (2 * (m : ℂ)) * 1
+    simpa only [Nat.cast_mul, Nat.cast_ofNat] using h
   have hJA : J * A = (2 * (m : ℂ)) • J := by
     have h := congrArg Matrix.transpose hAJ
     have hJT : Jᵀ = J := by ext i j; rfl
@@ -419,12 +420,14 @@ private lemma nonsquare_small {m : ℕ} (hm : 1 ≤ m) (hs : ¬ IsSquare (4 * m 
     simpa only [r, n, Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, Nat.cast_one] using
       (irrational_sqrt_natCast_iff.mpr hs)
   have hi' : Irrational ((2 * Real.pi / r) / (2 * Real.pi)) := by
-    convert hi.inv using 1 <;> field_simp
+    convert hi.inv using 1
+    field_simp
   have hdZ : DenseRange (fun j : ℤ => j • ((2 * Real.pi / r : ℝ) : Real.Angle)) :=
     AddCircle.denseRange_zsmul_coe_iff.mpr hi'
   let f : Real.Angle → ℝ := fun z => (1 + 4 * (m : ℝ) * z.cos) ^ 2 / n ^ 2
   have hf : Continuous f := by
-    exact ((continuous_const.add (continuous_const.mul Real.Angle.continuous_cos)).pow 2).div_const _
+    exact ((continuous_const.add
+      (continuous_const.mul Real.Angle.continuous_cos)).pow 2).div_const _
   have hz : f ((Real.arccos (-1 / (4 * (m : ℝ))) : ℝ) : Real.Angle) = 0 := by
     dsimp only [f]
     rw [Real.Angle.cos_coe, Real.cos_arccos]
@@ -454,7 +457,8 @@ private lemma nonsquare_small {m : ℕ} (hm : 1 ≤ m) (hs : ¬ IsSquare (4 * m 
   change ‖Complex.exp ((n * (4 * Real.pi * (j.natAbs : ℝ) / n) / 2 : ℝ) * I) +
       (4 * (m : ℝ) * Real.cos (r * (4 * Real.pi * (j.natAbs : ℝ) / n) / 2) : ℝ)‖ ^ 2 /
         n ^ 2 < ε
-  have hphase : n * (4 * Real.pi * (j.natAbs : ℝ) / n) / 2 = (j.natAbs : ℝ) * (2 * Real.pi) := by
+  have hphase : n * (4 * Real.pi * (j.natAbs : ℝ) / n) / 2 =
+      (j.natAbs : ℝ) * (2 * Real.pi) := by
     field_simp
     ring
   have hangle : r * (4 * Real.pi * (j.natAbs : ℝ) / n) / 2 =
