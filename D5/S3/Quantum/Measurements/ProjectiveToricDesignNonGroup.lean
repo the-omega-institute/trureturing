@@ -158,7 +158,8 @@ private theorem polynomial_shift (M : Matrix (Fin 3) (Fin 3) (ZMod 3))
     (hM : M.IsSymm) (b h y : Fin 3 → ZMod 3) :
     polynomial M b (h + y) - polynomial M b y =
       polynomial M b h + ((2 : ZMod 3) • M.mulVec h) ⬝ᵥ y := by
-  simp only [polynomial, Matrix.mulVec_add, dotProduct_add, add_dotProduct,
+  rw [polynomial, polynomial, polynomial]
+  simp only [Matrix.mulVec_add, dotProduct_add, add_dotProduct,
     smul_dotProduct, smul_eq_mul]
   rw [dotProduct_comm (M.mulVec h) y, hM.dotProduct_mulVec_comm (x := y) (y := h)]
   ring
@@ -282,7 +283,7 @@ private theorem exponent_overlap (i k : Fin 27) (b c : Fin 3 → ZMod 3)
           ZMod.stdAddChar (polynomial (matrices i - matrices k) (b - c) x) := by
       apply Finset.sum_congr rfl
       intro x _
-      congr 1
+      apply congrArg (fun k : ZMod 3 => ZMod.stdAddChar k)
       simp only [polynomial, Matrix.sub_mulVec, dotProduct_sub, sub_dotProduct]
       ring
     rw [he]
@@ -379,7 +380,9 @@ private theorem point_injective : Function.Injective point := by
   have he (x : Fin 3 → ZMod 3) : polynomial (matrices p.1) p.2 x =
       polynomial (matrices q.1) q.2 x := by
     apply phase_injective
-    simpa only [point, Equiv.apply_symm_apply] using congrFun hp (coord.symm x)
+    have hp_at := congrFun hp (coord.symm x)
+    rw [point, point] at hp_at
+    simpa only [Equiv.apply_symm_apply] using hp_at
   have hs : (∑ x : Fin 3 → ZMod 3,
       ZMod.stdAddChar (polynomial (matrices p.1) p.2 x - polynomial (matrices q.1) q.2 x)) =
       27 := by
