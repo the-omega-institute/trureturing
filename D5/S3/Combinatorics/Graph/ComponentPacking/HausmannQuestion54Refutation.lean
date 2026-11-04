@@ -1,9 +1,9 @@
-/- GID: D5/S3/Combinatorics/Graph/HausmannQuestion54Refutation
+/- GID: D5/S3/Combinatorics/Graph/ComponentPacking/HausmannQuestion54Refutation
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Graph/HausmannQuestion54Refutation
+   mirror-B: D5/B/S3/Combinatorics/Graph/ComponentPacking/HausmannQuestion54Refutation
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Clique, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected]
-   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/HausmannQuestion54Refutation.claim; result=D5/S3/Combinatorics/Graph/HausmannQuestion54Refutation.result; claim=D5/S3/Combinatorics/Graph/HausmannQuestion54Refutation.claim
+   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Graph/ComponentPacking/HausmannQuestion54Refutation.claim; result=D5/S3/Combinatorics/Graph/ComponentPacking/HausmannQuestion54Refutation.result; claim=D5/S3/Combinatorics/Graph/ComponentPacking/HausmannQuestion54Refutation.claim
    digest: GP(7,2) refutes the independent-side component-order-three partition assertion. -/
 
 import Mathlib.Combinatorics.SimpleGraph.Clique
@@ -16,7 +16,7 @@ set_option autoImplicit false
 set_option maxRecDepth 10000
 set_option maxHeartbeats 4000000
 
-namespace D5.S3.Combinatorics.Graph.HausmannQuestion54Refutation
+namespace D5.S3.Combinatorics.Graph.ComponentPacking.HausmannQuestion54Refutation
 
 /-- A five-cycle exists and no shorter odd simple cycle exists. -/
 def OddGirthFive {V : Type*} (G : SimpleGraph V) : Prop :=
@@ -220,4 +220,4 @@ theorem result : ¬ claim := by
   obtain ⟨L,R,_,hU,hL,hR⟩ := h (Fin 14) counterGraph legal.1 legal.2
   exact residual_large L R hU hL hR
 
-end D5.S3.Combinatorics.Graph.HausmannQuestion54Refutation
+end D5.S3.Combinatorics.Graph.ComponentPacking.HausmannQuestion54Refutation

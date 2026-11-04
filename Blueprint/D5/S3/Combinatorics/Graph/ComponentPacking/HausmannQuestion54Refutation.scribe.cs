@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.ComponentPacking;
 
 internal sealed class HausmannQuestion54RefutationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/HausmannQuestion54Refutation.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/ComponentPacking/HausmannQuestion54Refutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/hausmann2026weightedmaxcut");
+        LibraryNoteRef.Create("D5/L/Certificates/hausmann2026weightedmaxcut");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The generalized Petersen graph GP(7,2) refutes the full independent-side component-order-three assertion in Hausmann Question 5.4.",
@@ -33,10 +33,7 @@ internal sealed class HausmannQuestion54RefutationDocument : IScribeDocumentDefi
                     Paragraph(Text("For an arbitrary independent subset L, split on membership of the least undecided vertex. In the inclusion branch its neighbours cannot belong to L. In the exclusion branch that vertex lies outside L. Once four certified outside vertices span a connected tree, the branch terminates. The complete proof tree has 93 nodes and 47 leaves; no maximality or cardinality restriction on L is imposed. At every leaf the four labels are distinct, and the second, third and fourth each have an earlier neighbour. All concrete adjacency and distinctness facts are checked by kernel reduction.")),
                     Paragraph(Text("Exhaustiveness of L union R places these four outside vertices in R. The adjacency-to-component lemma puts all four in one connected component of the induced graph. Their distinctness gives an injection from Fin 4 into its support, hence that component has at least four vertices. This contradicts SmallComponents. Thus every possible partition is excluded, and one legal finite graph refutes the universal assertion over all finite graphs.")),
                     Paragraph(Text("This refutes the proposed component-order-three structural route. It makes no claim about the weighted 4/5 conjecture, Questions 5.3 or 5.5, minimality of the witness, or literature priority. The known residual-order-six theorem and sparsity-conditioned order-three results do not imply the assertion refuted here."))),
-                DescribeRole.Theorem,
-                openProblemResolutionClaim: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("hausmann-2026-question-5-4-refutation"),
-                    ResolutionKind.Refuted)))));
+                DescribeRole.Theorem))));
 
     private static Formula Id(string x) => F.Id(x);
     private static Formula Call(string x, params Formula[] args) =>

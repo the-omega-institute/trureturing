@@ -7,14 +7,14 @@ doi: null
 url: https://arxiv.org/html/2611.05178v1
 claim: "Question 5.4 asks for an independent side and residual component order at most three in every subcubic graph of odd girth exactly five."
 strata_touched:
-  - D5/S3/Combinatorics/Graph/HausmannQuestion54Refutation
+  - D5/S3/Combinatorics/Graph/ComponentPacking/HausmannQuestion54Refutation
 license: CC-BY-4.0
 triage: anchor
 ---
 
 # Independent-side partitions at odd girth five
 
-<!-- GID: D5/L/GraphInvariants/hausmann2026weightedmaxcut -->
+<!-- GID: D5/L/Certificates/hausmann2026weightedmaxcut -->
 
 ## Verified locator
 
