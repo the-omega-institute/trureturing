@@ -16,7 +16,7 @@ import Mathlib.Topology.Separation.Hausdorff
 import Mathlib.Topology.Irreducible
 import Mathlib.Topology.Sober
 
-open scoped Function
+open scoped Function BigOperators
 
 namespace D5.S3.Topology.LiLiZhaoFiniteCRT
 
@@ -112,12 +112,12 @@ lemma tailTopology_mono {n m : ℕ} (hnm : n ≤ m) :
   exact TopologicalSpace.generateFrom_anti (tailSubbasis_mono hnm)
 
 lemma isOpen_residue_tail {n i a : ℕ} (hin : n ≤ i) (ha : a < primeSeq i) :
-    IsOpen[tailTopology n] (residue i a) := by
+    @IsOpen ℕ (tailTopology n) (residue i a) := by
   exact TopologicalSpace.isOpen_generateFrom_of_mem ⟨i, hin, a, ha, rfl⟩
 
 lemma finiteCylinder_isOpen {n : ℕ} (s : Finset ℕ) (a : ℕ → ℕ)
     (hs : ∀ i ∈ s, n ≤ i) (ha : ∀ i ∈ s, a i < primeSeq i) :
-    IsOpen[tailTopology n] (finiteCylinder s a) := by
+    @IsOpen ℕ (tailTopology n) (finiteCylinder s a) := by
   simp only [finiteCylinder]
   exact isOpen_biInter_finset fun i hi =>
     isOpen_residue_tail (hs i hi) (ha i hi)
@@ -161,8 +161,8 @@ lemma finiteCylinder_basis_of_generateOpen {n : ℕ} {U : Set ℕ}
       · simp [finiteCylinder]
       · simp [finiteCylinder]
   | @inter U V hU hV ihU ihV =>
-      rcases ihU hx.1 with ⟨s, a, hs, ha, hxs, hsub⟩
-      rcases ihV hx.2 with ⟨t, b, ht, hb, hxt, hsub'⟩
+      rcases ihU x hx.1 with ⟨s, a, hs, ha, hxs, hsub⟩
+      rcases ihV x hx.2 with ⟨t, b, ht, hb, hxt, hsub'⟩
       let u := s ∪ t
       let c : ℕ → ℕ := fun i => if i ∈ s then a i else b i
       have hxs' : ∀ i ∈ s, x ∈ residue i (a i) := by
@@ -220,7 +220,7 @@ lemma finiteCylinder_basis_of_generateOpen {n : ℕ} {U : Set ℕ}
       exact ⟨s, a, hs, ha, hxs, fun z hz => Set.subset_sUnion_of_mem hVS (hsub hz)⟩
 
 lemma finiteCylinder_basis_of_isOpen {n : ℕ} {U : Set ℕ}
-    (hU : IsOpen[tailTopology n] U) (x : ℕ) (hx : x ∈ U) :
+    (hU : @IsOpen ℕ (tailTopology n) U) (x : ℕ) (hx : x ∈ U) :
     ∃ (s : Finset ℕ) (a : ℕ → ℕ),
       (∀ i ∈ s, n ≤ i) ∧ (∀ i ∈ s, a i < primeSeq i) ∧
         x ∈ finiteCylinder s a ∧ finiteCylinder s a ⊆ U :=
@@ -228,7 +228,7 @@ lemma finiteCylinder_basis_of_isOpen {n : ℕ} {U : Set ℕ}
 
 /- Every tail topology separates two points with one sufficiently large prime. -/
 theorem tailTopology_t2 (n : ℕ) : @T2Space ℕ (tailTopology n) := by
-  constructor
+  refine ⟨?_⟩
   intro x y hxy
   let i := max n (x + y + 1)
   have hi : x + y < primeSeq i := by
@@ -252,22 +252,19 @@ theorem tailTopology_t2 (n : ℕ) : @T2Space ℕ (tailTopology n) := by
 def commonTopology : TopologicalSpace ℕ := ⨆ n, tailTopology n
 
 lemma commonTopology_isOpen_iff {U : Set ℕ} :
-    IsOpen[commonTopology] U ↔ ∀ n, IsOpen[tailTopology n] U := by
-  change IsOpen[⨆ n, tailTopology n] U ↔ _
-  simpa only [isOpen_iSup_iff]
+    @IsOpen ℕ commonTopology U ↔ ∀ n, @IsOpen ℕ (tailTopology n) U := by
+  change @IsOpen ℕ (⨆ n, tailTopology n) U ↔ _
+  exact isOpen_iSup_iff
 
 lemma isClosed_singleton_tail (n x : ℕ) :
-    IsClosed[tailTopology n] ({x} : Set ℕ) := by
+    @IsClosed ℕ (tailTopology n) ({x} : Set ℕ) := by
   letI : @T2Space ℕ (tailTopology n) := tailTopology_t2 n
   exact isClosed_singleton
 
 theorem commonTopology_t1 : @T1Space ℕ commonTopology := by
-  constructor
-  intro x
-  change IsClosed[⨆ n, tailTopology n] ({x} : Set ℕ)
-  apply isClosed_iSup_iff.2
-  intro n
-  exact isClosed_singleton_tail n x
+  refine ⟨fun x => ?_⟩
+  change @IsClosed ℕ (⨆ n, tailTopology n) ({x} : Set ℕ)
+  exact isClosed_iSup_iff.2 (fun n => isClosed_singleton_tail n x)
 
 theorem commonTopology_univ_irreducible :
     @IsIrreducible ℕ commonTopology (Set.univ : Set ℕ) := by
@@ -275,7 +272,7 @@ theorem commonTopology_univ_irreducible :
   intro U V hU hV hUn hVn
   rcases hUn with ⟨x, -, hxU⟩
   rcases hVn with ⟨y, -, hyV⟩
-  have hU0 : IsOpen[tailTopology 0] U := (commonTopology_isOpen_iff.mp hU) 0
+  have hU0 : @IsOpen ℕ (tailTopology 0) U := (commonTopology_isOpen_iff.mp hU) 0
   rcases finiteCylinder_basis_of_isOpen hU0 x hxU with
     ⟨s, a, hs, ha, hxs, hsub⟩
   let m := (∑ i in s, i) + 1
@@ -286,7 +283,7 @@ theorem commonTopology_univ_irreducible :
         (fun _ _ => Nat.zero_le _) hi
     dsimp [m]
     omega
-  have hV_m : IsOpen[tailTopology m] V := (commonTopology_isOpen_iff.mp hV) m
+  have hV_m : @IsOpen ℕ (tailTopology m) V := (commonTopology_isOpen_iff.mp hV) m
   rcases finiteCylinder_basis_of_isOpen hV_m y hyV with
     ⟨t, b, ht, hb, hyt, hsub'⟩
   have hdis : Disjoint s t := by
@@ -297,17 +294,18 @@ theorem commonTopology_univ_irreducible :
     exact (Nat.not_lt_of_ge hge) hle
   obtain ⟨z, hzs, hzt⟩ := disjoint_cylinders_nonempty s t hdis a b
   refine ⟨z, ?_⟩
-  exact ⟨by simp, hsub hzs, hsub' hzt⟩
+  exact ⟨by simp, ⟨hsub hzs, hsub' hzt⟩⟩
 
 theorem commonTopology_not_quasiSober :
     ¬ @QuasiSober ℕ commonTopology := by
   intro hqs
   letI : @QuasiSober ℕ commonTopology := hqs
   have hirr := commonTopology_univ_irreducible
-  obtain ⟨x, hgeneric⟩ := QuasiSober.sober hirr isClosed_univ
+  obtain ⟨x, hgeneric⟩ :=
+    QuasiSober.sober (S := (Set.univ : Set ℕ)) hirr (@isClosed_univ ℕ commonTopology)
   have hsingleton : @closure ℕ commonTopology ({x} : Set ℕ) = {x} := by
     letI : @T1Space ℕ commonTopology := commonTopology_t1
-    exact isClosed_singleton.closure_eq
+    exact (@isClosed_singleton ℕ commonTopology x).closure_eq
   have heq : ({x} : Set ℕ) = Set.univ := hsingleton.symm.trans hgeneric.def
   have hne : ({x} : Set ℕ) ≠ Set.univ := by
     intro h
