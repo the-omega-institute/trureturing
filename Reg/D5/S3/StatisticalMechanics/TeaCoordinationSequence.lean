@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.StatisticalMechanics.TeaCoordinationSequence
 import Reg.Support.SingleDependentReadout
 
-/-! Source-bound audit of the tea shell count in the residue-zero coordination formula. -/
+/-! Source-bound audit of the tea shell count in every coordination residue. -/
 
 namespace Reg.D5.S3.StatisticalMechanics.TeaCoordinationSequence
 
@@ -25,9 +25,9 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ n : ℕ, 0 < n →
     (n % 4 = 0 → 8 * R.readout () () n = 63 * n ^ 2 + 16) ∧
-    (n % 4 = 1 → 8 * shell n = 63 * n ^ 2 + 17) ∧
-    (n % 4 = 2 → 8 * shell n = 63 * n ^ 2 + 12) ∧
-    (n % 4 = 3 → 8 * shell n = 63 * n ^ 2 + 17)
+    (n % 4 = 1 → 8 * R.readout () () n = 63 * n ^ 2 + 17) ∧
+    (n % 4 = 2 → 8 * R.readout () () n = 63 * n ^ 2 + 12) ∧
+    (n % 4 = 3 → 8 * R.readout () () n = 63 * n ^ 2 + 17)
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
