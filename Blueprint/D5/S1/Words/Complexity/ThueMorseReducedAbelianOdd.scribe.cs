@@ -410,10 +410,10 @@ internal sealed class ThueMorseReducedAbelianOddDocument : IScribeDocumentDefini
         Call("transition", F.Id("n")), Eq, Call("ite", Seq(Call("thueMorse", F.Id("n")), Eq,
             Call("thueMorse", Seq(F.Id("n"), Plus, D(1)))), D(0), D(1))));
     private static Formula TransitionEven() => Disp(Seq(Forall, Sp, F.Id("n"), InMacro, Naturals(), Comma, Sp,
-        Call("transition", Seq(D(2), Times, F.Id("n"))), Eq, D(1)));
+        Call("transition", Seq(D(2), Times, Sp, F.Id("n"))), Eq, D(1)));
     private static Formula TransitionOdd() => Disp(Seq(Forall, Sp, F.Id("n"), InMacro, Naturals(), Comma, Sp,
-        Call("transition", Seq(D(2), Times, F.Id("n"), Plus, D(1))), Eq,
-        Call("Nat.sub", D(1), Call("transition", F.Id("n")))));
+        Call("transition", Seq(D(2), Times, Sp, F.Id("n"), Plus, D(1))), Eq,
+        Call("natSub", D(1), Call("transition", F.Id("n")))));
 
     private static Formula Call(string name, params Formula[] arguments)
     {

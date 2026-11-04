@@ -53,11 +53,11 @@ internal sealed class ThueMorseSignedCutDocument : IScribeDocumentDefinition
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula S(Formula n) => Call("signedWeight", Call("int", n));
     private static Formula AllowedFormula() => Disp(All("w", L(), Eqn(Call("Allowed", V("w")),
-        Or(Call("Palindrome", V("w")), Eqn(V("w"), Call("map", V("Bool.not"), Call("reverse", V("w"))))))));
+        Or(Call("Palindrome", V("w")), Eqn(V("w"), Call("map", V("not"), Call("reverse", V("w"))))))));
     private static Formula TransitionFormula() => Disp(All("n", N(), Eqn(Call("transition", V("n")),
-        Call("ite", Call("u_pd", V("n")), D(0), D(1)))));
+        Call("ite", new Formula.Apply(new Formula.Subscript(V("u"), Seq(Mathrm, Grp(V("pd")))), [V("n")]), D(0), D(1)))));
     private static Formula CutFormula() => Disp(All("i", N(), All("j", N(), Imp(LtF(V("i"), V("j")),
-        Imp(Call("Allowed", Call("factor", Call("Nat.sub", V("j"), V("i")), V("i"))),
+        Imp(Call("Allowed", Call("factor", Call("natSub", V("j"), V("i")), V("i"))),
             Le(S(V("j")), Add(S(V("i")), D(1))))))));
     private static Formula MixedFormula() => Disp(All("w", L(), All("k", N(), Eqn(Call("MixedFactors", V("w"), V("k")),
         Exists("ps", Call("List", L()), And(Eqn(Call("flatten", V("ps")), V("w")),
