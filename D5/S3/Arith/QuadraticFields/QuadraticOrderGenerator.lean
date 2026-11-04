@@ -13,6 +13,7 @@ import Mathlib.Algebra.Polynomial.Degree.SmallDegree
 namespace D5.S3.Arith.QuadraticFields.QuadraticOrderMaximal
 
 open Polynomial QuadraticAlgebra
+open scoped NumberField
 
 /-- The defining polynomial of the coordinate generator of an integer quadratic algebra. -/
 def orderPolynomial (a b : ℤ) : ℤ[X] := X ^ 2 - C b * X - C a

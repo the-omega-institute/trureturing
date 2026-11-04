@@ -18,6 +18,7 @@ import Lean.Elab.Tactic.Omega
 namespace D5.S3.Arith.QuadraticFields.QuadraticOrderMaximal
 
 open QuadraticAlgebra
+open scoped NumberField
 
 /-- A squarefree integer cannot cancel a nontrivial square denominator. -/
 theorem integer_of_squarefree_mul_sq_integral {d : ℤ} (hd : Squarefree d) (q : ℚ)

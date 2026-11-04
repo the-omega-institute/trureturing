@@ -47,14 +47,11 @@ theorem unitRank : NumberField.Units.rank (Field p) = 0 := by
 /-- The regulator is the determinant in dimension zero, with the Mathlib normalization. -/
 theorem field_regulator : NumberField.Units.regulator (Field p) = 1 := by
   classical
-  have hcard : Fintype.card (InfinitePlace (Field p)) = 1 := by
-    rw [card_eq_nrRealPlaces_add_nrComplexPlaces,
-      NumberField.IsTotallyComplex.nrRealPlaces_eq_zero, complexPlaces]
-    norm_num
-  letI : Subsingleton (InfinitePlace (Field p)) := Fintype.card_le_one_iff.mp (by omega)
-  let w : InfinitePlace (Field p) := NumberField.Units.dirichletUnitTheorem.w₀
-  letI : IsEmpty {v : InfinitePlace (Field p) // v ≠ w} :=
-    ⟨fun v => v.2 (Subsingleton.elim _ _)⟩
+  have hc := Fintype.card_congr (NumberField.Units.equivFinRank (Field p))
+  rw [Fintype.card_fin, unitRank] at hc
+  letI : IsEmpty {v : InfinitePlace (Field p) //
+      v ≠ NumberField.Units.dirichletUnitTheorem.w₀} :=
+    Fintype.card_eq_zero_iff.mp hc.symm
   rw [NumberField.Units.regulator_eq_det' (Field p)]
   simp
 
@@ -64,7 +61,7 @@ theorem field_torsionOrder (hp : 3 < p) : NumberField.Units.torsionOrder (Field 
   letI := Fintype.ofFinite (NumberField.Units.torsion (Field p))
   rw [NumberField.Units.torsionOrder, Nat.card_eq_fintype_card]
   apply Finset.card_eq_two.mpr
-  refine ⟨1, ⟨-1, NumberField.Units.neg_one_mem_torsion⟩,
+  refine ⟨1, ⟨-1, neg_one_mem_torsion⟩,
     by simp [← Subtype.coe_ne_coe], Finset.ext fun x => ⟨fun _ => ?_, fun _ => Finset.mem_univ _⟩⟩
   rw [Finset.mem_insert, Finset.mem_singleton, ← Subtype.val_inj, ← Subtype.val_inj]
   rcases integral_unit_eq_one_or_neg_one p hp x.1 with h | h
