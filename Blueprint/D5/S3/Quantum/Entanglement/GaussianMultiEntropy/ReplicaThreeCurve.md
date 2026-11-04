@@ -44,7 +44,7 @@ For every k>0,N>0 and 0<b<N/2, F is differentiable at b with the exact curveDeri
 
 **Theorem 1.4 (The unique continuous minimum).**
 
-$$F(k,N,\frac{N}{3})\le F(k,N,b);F(k,N,b)=F(k,N,\frac{N}{3}) \iff b=\frac{N}{3}$$
+$$StrictAntiOn(F(k,N),(0,\frac{N}{3}]);StrictMonoOn(F(k,N),[\frac{N}{3},\frac{N}{2}));F(k,N,\frac{N}{3})\le F(k,N,b);F(k,N,b)=F(k,N,\frac{N}{3}) \iff b=\frac{N}{3}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeCurve.curve_minimum` (`✓ std3`). ∎
 
@@ -56,7 +56,7 @@ For k>0,N>0, F is strictly decreasing on (0,N/3] and strictly increasing on [N/3
 
 **Theorem 1.5 (Scalar endpoints and vacuum).**
 
-$$F(k,N,0)=F(k,N,\frac{N}{2})=0;F(0,N,b)=0$$
+$$F(k,N,0)=F(k,N,\frac{N}{2})=0;F(0,N,b)=0;\lim_{b\to 0^{+}}F(k,N,b)=0;\lim_{b\to (\frac{N}{2})^{-}}F(k,N,b)=0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeCurve.curve_boundaries` (`✓ std3`). ∎
 
@@ -68,7 +68,7 @@ For k>=0,N>0, F(k,N,0)=F(k,N,N/2)=0, with right limit zero at 0 and left limit z
 
 **Theorem 1.6 (The divisible-total physical curve).**
 
-$$GM_3(N-2b,b,b,a)=F(k,N,b);b=\frac{N}{3} \iff b+b=2\frac{N}{3}$$
+$$GM_3(N-2b,b,b,a)=F(k,N,b);GM_3(\frac{N}{3},\frac{N}{3},\frac{N}{3},a)\le GM_3(N-2b,b,b,a);GM_3(N-2b,b,b,a)=GM_3(\frac{N}{3},\frac{N}{3},\frac{N}{3},a) \iff b=\frac{N}{3};k=\kappa(N,a);b=\frac{N}{3} \iff b+b=2\frac{N}{3}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeCurve.physical_curve_minimum` (`✓ std3`). ∎
 

@@ -35,6 +35,7 @@ internal sealed class ReplicaThreeExtremaDocument : IScribeDocumentDefinition
 
     private static Formula Call(string f, string x) => Seq(F.Id(f), Open, F.Id(x), Close);
     private static Formula V(string x) => Seq(F.Id("V"), Open, F.Id("k"), Comma, F.Id(x), Close);
+    private static Formula GM => Seq(F.Id("GM"), Underscore, D(3), Open, F.Id("x"), Comma, F.Id("a"), Close);
     private static Formula Statement(string declaration) => declaration switch
     {
         "balanced" => Seq(Call("b", "N"), Eq, Open, F.Id("q"), Plus, DeltaLower, Underscore, D(0),
@@ -47,7 +48,12 @@ internal sealed class ReplicaThreeExtremaDocument : IScribeDocumentDefinition
             V("x"), Eq, V("e"), Sp, Iff, Sp, Exists, Sp, SigmaLower, Comma,
             F.Id("x"), Eq, F.Id("e"), Circ, Sp, SigmaLower),
         "GM3_three_extrema" => Seq(V("b"), Le, Sp, F.Id("GM"), Underscore, D(3), Open, F.Id("x"), Comma,
-            F.Id("a"), Close, Le, Sp, V("e"), Semi, F.Id("k"), Eq, Kappa, Open, F.Id("N"), Comma, F.Id("a"), Close),
-        _ => Seq(V("b"), Eq, V("e"), Sp, Iff, Sp, F.Id("N"), Eq, D(3), Sp, Lor, Sp, F.Id("N"), Eq, D(4))
+            F.Id("a"), Close, Le, Sp, V("e"), Semi,
+            GM, Eq, V("b"), Sp, Iff, Sp, Call("B", "x"), Semi,
+            GM, Eq, V("e"), Sp, Iff, Sp, Exists, Sp, SigmaLower, Comma,
+            F.Id("x"), Eq, F.Id("e"), Circ, Sp, SigmaLower, Semi,
+            F.Id("k"), Eq, Kappa, Open, F.Id("N"), Comma, F.Id("a"), Close),
+        _ => Seq(Call("B", "e"), Sp, Iff, Sp, F.Id("N"), Eq, D(3), Sp, Lor, Sp, F.Id("N"), Eq, D(4), Semi,
+            V("b"), Eq, V("e"), Sp, Iff, Sp, F.Id("N"), Eq, D(3), Sp, Lor, Sp, F.Id("N"), Eq, D(4))
     };
 }

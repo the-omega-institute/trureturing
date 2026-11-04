@@ -8,7 +8,7 @@ The finite balancing law is from Haobo Ma then Wenlin Zhang, An exact balancing 
 
 **Theorem 1.1 (Majorization, strictness and permutation equality).**
 
-$$V(k,x)\le V(k,y)$$
+$$V(k,x)\le V(k,y);V(k,x)=V(k,y) \iff \exists \sigma\in Perm(\{0,1,2\}),x=y\circ \sigma$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeMajorization.schur_comparison` (`✓ std3`). ∎
 

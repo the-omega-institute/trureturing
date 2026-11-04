@@ -20,7 +20,7 @@ kappa(N,a) = 3(a^2 - 1)/(4(N - 1)), three quarters of the library's squeezing pa
 
 **Theorem 1.2 (The integral-defined closed formula).**
 
-$$GM_{3}=\frac{\log\frac{(1+kappas)^2}{D_{x}D_{y}D_{z}}}{12}$$
+$$GM_{3}=\frac{\log\frac{(1+\kappa s)^2}{D_{x}D_{y}D_{z}}}{12}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThree.GM3_three_closed` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ For every positive integer x,y,z and real a >= 1, let N = x + y + z, s = xy + xz
 
 **Theorem 1.3 (Physical vacuum and squeezing).**
 
-$$GM_{3}(1)=0$$
+$$GM_{3}(x,y,z,1)=0;StrictAntiOn(a\mapsto GM_{3}(x,y,z,a),[1,\infty));\forall a>1,GM_{3}(x,y,z,a)<0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThree.GM3_three_behavior` (`✓ std3`). ∎
 

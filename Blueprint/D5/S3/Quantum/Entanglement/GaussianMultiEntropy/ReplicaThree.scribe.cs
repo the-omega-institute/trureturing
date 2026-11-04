@@ -19,12 +19,18 @@ internal sealed class ReplicaThreeDocument : IScribeDocumentDefinition
                 "kappa(N,a) = 3(a^2 - 1)/(4(N - 1)), three quarters of the library's squeezing parameter (a^2 - 1)/(N - 1). For physical mode counts N >= 3 and a >= 1 it is nonnegative, and for a > 1 it is positive.", DescribeRole.Definition),
             Node("closed", "The integral-defined closed formula", "GM3_three_closed",
                 Disp(Seq(F.Id("GM"), Underscore, Grp(D(3)), Eq, Frac, Grp(Log, Frac,
-                    Grp(Open, D(1), Plus, F.Id("kappa"), F.Id("s"), Close, Caret, D(2)),
+                    Grp(Open, D(1), Plus, Kappa, Sp, F.Id("s"), Close, Caret, D(2)),
                     Grp(Seq(F.Id("D"), Underscore, Grp(F.Id("x"))), Seq(F.Id("D"), Underscore, Grp(F.Id("y"))), Seq(F.Id("D"), Underscore, Grp(F.Id("z"))))), Grp(D(1, 2)))),
                 "For every positive integer x,y,z and real a >= 1, let N = x + y + z, s = xy + xz + yz, and D_u = 1 + kappa u(N - u). The actual GaussianMultiEntropyAsymptotic.GM3 3 x y z a equals log((1 + kappa s)^2/(D_x D_y D_z))/12. This is the real eMinus fully symmetric pure bosonic Gaussian family, with the original Lebesgue replica integrals, twists and entropy normalizations. At replica three the nine tripartite weights consist of zero, two occurrences of each labelled cut coefficient multiplied by 3/4, and two occurrences of 3s/4. The existing all-n integral/Fourier bridge and positive products justify the logarithmic reduction. All ties and permutations are in scope. Real party sizes in the scalar supplier are a scalar extension only. Replica-one continuation, higher-replica balancing, other Gaussian branches and large-N/Page asymptotics remain separate; in particular this does not take over issue 22644.", DescribeRole.Theorem),
             Node("behavior", "Physical vacuum and squeezing", "GM3_three_behavior",
-                Disp(Seq(F.Id("GM"), Underscore, Grp(D(3)), Open, D(1), Close, Eq, D(0))),
+                Disp(Seq(GAt(D(1)), Eq, D(0), Semi,
+                    F.Id("StrictAntiOn"), Open, F.Id("a"), Mapsto, Sp, GAt(F.Id("a")),
+                    Comma, OpenBracket, D(1), Comma, Infty, Close, Close, Semi,
+                    Forall, Sp, F.Id("a"), Gt, D(1), Comma, GAt(F.Id("a")), Lt, D(0))),
                 "For every positive integer x,y,z, the actual integral-defined replica-three value is zero at a = 1, strictly decreasing on a >= 1, and strictly negative at every a > 1. The parameter kappa is strictly increasing in a on this physical ray and vanishes at vacuum. Every positive integer triple therefore ties at vacuum. No strictly negative derivative at a = 1 and no extension to fractional physical mode counts is asserted.", DescribeRole.Theorem))));
+
+    private static Formula GAt(Formula a) => Seq(F.Id("GM"), Underscore, Grp(D(3)),
+        Open, F.Id("x"), Comma, F.Id("y"), Comma, F.Id("z"), Comma, a, Close);
 
     private static DocumentBlock Node(string id, string title, string declaration,
         Formula formula, string prose, DescribeRole role) =>

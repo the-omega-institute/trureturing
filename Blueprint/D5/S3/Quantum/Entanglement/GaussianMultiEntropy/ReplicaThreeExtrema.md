@@ -56,7 +56,7 @@ For every k>0, integer N>=3 and positive integer triple x of total N, V(k,balanc
 
 **Theorem 1.5 (Actual integral-defined physical extrema).**
 
-$$V(k,b)\le GM_3(x,a)\le V(k,e);k=\kappa(N,a)$$
+$$V(k,b)\le GM_3(x,a)\le V(k,e);GM_3(x,a)=V(k,b) \iff B(x);GM_3(x,a)=V(k,e) \iff \exists \sigma,x=e\circ \sigma;k=\kappa(N,a)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeExtrema.GM3_three_extrema` (`✓ std3`). ∎
 
@@ -68,7 +68,7 @@ For every integer N>=3, a>1 and positive integer labelled triple x with sum N, t
 
 **Theorem 1.6 (Coincident extrema at totals three and four).**
 
-$$V(k,b)=V(k,e) \iff N=3 \lor N=4$$
+$$B(e) \iff N=3 \lor N=4;V(k,b)=V(k,e) \iff N=3 \lor N=4$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeExtrema.extremal_degeneracy` (`✓ std3`). ∎
 

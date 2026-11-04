@@ -34,6 +34,8 @@ internal sealed class ReplicaThreeCurveDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(prose))), role, null);
 
     private static Formula FAt(Formula b) => Seq(F.Id("F"), Open, F.Id("k"), Comma, F.Id("N"), Comma, b, Close);
+    private static Formula GAt(Formula x, Formula y, Formula z) => Seq(F.Id("GM"), Underscore, D(3),
+        Open, x, Comma, y, Comma, z, Comma, F.Id("a"), Close);
     private static Formula Third => Seq(Frac, Grp(F.Id("N")), Grp(D(3)));
     private static Formula Statement(string declaration) => declaration switch
     {
@@ -48,12 +50,23 @@ internal sealed class ReplicaThreeCurveDocument : IScribeDocumentDefinition
             F.Id("F"), Apos, Open, F.Id("b"), Close, Lt, D(0), Sp, Iff, Sp, F.Id("b"), Lt, Third, Semi,
             F.Id("F"), Apos, Open, F.Id("b"), Close, Eq, D(0), Sp, Iff, Sp, F.Id("b"), Eq, Third, Semi,
             D(0), Lt, F.Id("F"), Apos, Open, F.Id("b"), Close, Sp, Iff, Sp, Third, Lt, F.Id("b")),
-        "curve_minimum" => Seq(FAt(Third), Le, Sp, FAt(F.Id("b")), Semi,
+        "curve_minimum" => Seq(F.Id("StrictAntiOn"), Open, F.Id("F"), Open, F.Id("k"), Comma, F.Id("N"), Close,
+            Comma, Open, D(0), Comma, Third, CloseBracket, Close, Semi,
+            F.Id("StrictMonoOn"), Open, F.Id("F"), Open, F.Id("k"), Comma, F.Id("N"), Close,
+            Comma, OpenBracket, Third, Comma, Frac, Grp(F.Id("N")), Grp(D(2)), Close, Close, Semi,
+            FAt(Third), Le, Sp, FAt(F.Id("b")), Semi,
             FAt(F.Id("b")), Eq, FAt(Third), Sp, Iff, Sp, F.Id("b"), Eq, Third),
         "curve_boundaries" => Seq(FAt(D(0)), Eq, FAt(Seq(Frac, Grp(F.Id("N")), Grp(D(2)))), Eq, D(0), Semi,
-            F.Id("F"), Open, D(0), Comma, F.Id("N"), Comma, F.Id("b"), Close, Eq, D(0)),
+            F.Id("F"), Open, D(0), Comma, F.Id("N"), Comma, F.Id("b"), Close, Eq, D(0), Semi,
+            Lim, Underscore, Grp(F.Id("b"), To, Sp, D(0), Caret, Grp(Plus)), FAt(F.Id("b")), Eq, D(0), Semi,
+            Lim, Underscore, Grp(F.Id("b"), To, Sp, Open, Frac, Grp(F.Id("N")), Grp(D(2)), Close, Caret, Grp(Minus)),
+            FAt(F.Id("b")), Eq, D(0)),
         _ => Seq(F.Id("GM"), Underscore, D(3), Open, F.Id("N"), Minus, D(2), F.Id("b"), Comma,
             F.Id("b"), Comma, F.Id("b"), Comma, F.Id("a"), Close, Eq, FAt(F.Id("b")), Semi,
+            GAt(Third, Third, Third), Le, Sp, GAt(Seq(F.Id("N"), Minus, D(2), F.Id("b")), F.Id("b"), F.Id("b")), Semi,
+            GAt(Seq(F.Id("N"), Minus, D(2), F.Id("b")), F.Id("b"), F.Id("b")), Eq, GAt(Third, Third, Third),
+            Sp, Iff, Sp, F.Id("b"), Eq, Third, Semi,
+            F.Id("k"), Eq, Kappa, Open, F.Id("N"), Comma, F.Id("a"), Close, Semi,
             F.Id("b"), Eq, Third, Sp, Iff, Sp, F.Id("b"), Plus, F.Id("b"), Eq, D(2), Third)
     };
 }

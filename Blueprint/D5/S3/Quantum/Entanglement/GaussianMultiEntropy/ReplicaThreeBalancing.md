@@ -8,7 +8,7 @@ Scientific source: Haobo Ma then Wenlin Zhang, An exact balancing law for order-
 
 **Theorem 1.1 (Pair mixing and its complete equality classification).**
 
-$$V(k,x',y',z)\le V(k,x,y,z)$$
+$$V(k,x',y',z)\le V(k,x,y,z);V(k,x',y',z)=V(k,x,y,z) \iff t=0 \lor t=1 \lor x=y$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeBalancing.pair_mixing` (`✓ std3`). ∎
 

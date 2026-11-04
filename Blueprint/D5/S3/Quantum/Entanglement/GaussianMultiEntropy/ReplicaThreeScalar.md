@@ -44,7 +44,7 @@ V(k,x,y,z) = (2 log(1 + ks) - log D_x - log D_y - log D_z)/12, with natural loga
 
 **Theorem 1.4 (Swap symmetry).**
 
-$$V(k,x,y,z)$$
+$$V(k,x,y,z)=V(k,y,x,z)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeScalar.value_swap` (`✓ std3`). ∎
 
@@ -56,7 +56,7 @@ For all real k,x,y,z, V(k,x,y,z)=V(k,y,x,z). Exchanging the first two party labe
 
 **Theorem 1.5 (Cyclic symmetry).**
 
-$$V(k,x,y,z)$$
+$$V(k,x,y,z)=V(k,y,z,x)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeScalar.value_cycle` (`✓ std3`). ∎
 
@@ -92,7 +92,7 @@ For k > 0 and x,y,z > 0 the value is strictly negative. The denominator minus (1
 
 **Theorem 1.8 (Vacuum and strict squeezing decrease).**
 
-$$V(0,x,y,z)=0$$
+$$V(0,x,y,z)=0;StrictAntiOn(k\mapsto V(k,x,y,z),[0,\infty))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeScalar.parameter_behavior` (`✓ std3`). ∎
 

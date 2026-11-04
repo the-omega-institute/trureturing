@@ -27,9 +27,11 @@ internal sealed class ReplicaThreeScalarDocument : IScribeDocumentDefinition
                 Disp(Seq(V, Eq, Frac, Grp(D(2), Log, Open, D(1), Plus, F.Id("k"), F.Id("s"), Close,
                     Minus, Log, Sp, Seq(F.Id("D"), Underscore, Grp(F.Id("x"))), Minus, Log, Sp, Seq(F.Id("D"), Underscore, Grp(F.Id("y"))), Minus, Log, Sp, Seq(F.Id("D"), Underscore, Grp(F.Id("z")))), Grp(D(1, 2)))),
                 "V(k,x,y,z) = (2 log(1 + ks) - log D_x - log D_y - log D_z)/12, with natural logarithms. For nonnegative coordinates and k >= 0 all four logarithm arguments are positive.", DescribeRole.Definition),
-            Node("swap", "Swap symmetry", "value_swap", Disp(V),
+            Node("swap", "Swap symmetry", "value_swap",
+                Disp(Seq(V, Eq, At(F.Id("k"), F.Id("y"), F.Id("x"), F.Id("z")))),
                 "For all real k,x,y,z, V(k,x,y,z)=V(k,y,x,z). Exchanging the first two party labels preserves all three cut factors with their multiplicities.", DescribeRole.Theorem),
-            Node("cycle", "Cyclic symmetry", "value_cycle", Disp(V),
+            Node("cycle", "Cyclic symmetry", "value_cycle",
+                Disp(Seq(V, Eq, At(F.Id("k"), F.Id("y"), F.Id("z"), F.Id("x")))),
                 "For all real k,x,y,z, V(k,x,y,z)=V(k,y,z,x). The majorization proof consumes this helper to order any three distinct party indices without dropping labelled multiplicities.", DescribeRole.Theorem),
             Node("quotient", "The logarithmic quotient", "value_eq_log_ratio",
                 Disp(Seq(V, Eq, Frac, Grp(Log, Frac, Grp(Open, D(1), Plus, F.Id("k"), F.Id("s"), Close, Caret, D(2)),
@@ -40,8 +42,12 @@ internal sealed class ReplicaThreeScalarDocument : IScribeDocumentDefinition
                 "For k > 0 and x,y,z > 0 the value is strictly negative. The denominator minus (1 + ks)^2 factors as k^2 xyz [N + k(Ns - xyz)], where N = x + y + z. Every factor is positive. Empty-party boundary points and k = 0 are excluded from this strict inequality.", DescribeRole.Theorem),
             Node("squeezing", "Vacuum and strict squeezing decrease", "parameter_behavior",
                 Disp(Seq(F.Id("V"), Open, D(0), Comma, F.Id("x"), Comma, F.Id("y"), Comma, F.Id("z"), Close,
-                    Eq, D(0))),
+                    Eq, D(0), Semi, F.Id("StrictAntiOn"), Open,
+                    F.Id("k"), Mapsto, Sp, V, Comma, OpenBracket, D(0), Comma, Infty, Close, Close)),
                 "For every fixed x,y,z > 0, V(0,x,y,z) = 0 and k -> V(k,x,y,z) is strictly decreasing on the whole ray k >= 0. Indeed the sum of the three cut coefficients is 2s, and every cut coefficient is strictly smaller than s. For k > 0 this makes the squeezing derivative strictly negative. No negative derivative at vacuum is asserted; all triples tie there.", DescribeRole.Theorem))));
+
+    private static Formula At(Formula k, Formula x, Formula y, Formula z) =>
+        Seq(F.Id("V"), Open, k, Comma, x, Comma, y, Comma, z, Close);
 
     private static DocumentBlock Node(string id, string title, string declaration,
         Formula formula, string prose, DescribeRole role) =>
