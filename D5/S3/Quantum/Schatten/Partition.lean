@@ -83,9 +83,13 @@ private lemma rootTrace_tendsto {α : Type*} {l : Filter α}
     Tendsto (fun i => rootTrace q (Zs i) (As i)) l (𝓝 (rootTrace q Z A)) := by
   have hcont {r : ℝ} (hr : 0 < r) :
       ContinuousOn (fun N : Matrix d d ℂ => N ^ r) {N | N.PosSemidef} := by
-    simpa only [CFC.nnrpow_eq_rpow (x := ⟨r, hr.le⟩) hr,
-      Matrix.nonneg_iff_posSemidef] using
-      (CFC.continuousOn_nnrpow (A := Matrix d d ℂ) ⟨r, hr.le⟩)
+    let rn : NNReal := ⟨r, hr.le⟩
+    have hrn : 0 < rn := hr
+    have h := CFC.continuousOn_nnrpow (A := Matrix d d ℂ) rn
+    simp only [Matrix.nonneg_iff_posSemidef] at h
+    convert! h using 1
+    funext N
+    exact (CFC.nnrpow_eq_rpow (a := N) hrn).symm
   have hpow := (hcont hq A hA).tendsto.comp
     (tendsto_nhdsWithin_iff.mpr ⟨hlimA, hAs⟩)
   have hstar : Tendsto (fun i => (Zs i)ᴴ) l (𝓝 Zᴴ) := by
