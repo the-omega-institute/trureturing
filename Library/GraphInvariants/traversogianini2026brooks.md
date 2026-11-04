@@ -228,9 +228,9 @@ or second Menger proof is introduced. The source and receiver pins, author,
 Apache license and retirement condition stated above also apply to this slice.
 The cycle-existence argument from `exists_cycArr_of_conn` is expressed using
 ordinary native walks, the tree edge count and the degree sum identity.
-`exists_maximal_cycle_fans` chooses an attained maximum cycle length and
-uses the existing Brooks cycle-support cardinality theorem. Its induced
-Hamiltonian cycle is on the cycle-support subtype, not on the ambient graph.
+`exists_maximal_cycle_fans` uses the existing Brooks cycle-support cardinality
+theorem to choose an ordinary cycle of maximum length and constructs the
+terminal-clean fans for that same cycle.
 
 The accompanying `CycleDetour` construction uses the cycle-extension argument
 of `MengerHamilton/LongerCycle.lean`, source SHA-256
