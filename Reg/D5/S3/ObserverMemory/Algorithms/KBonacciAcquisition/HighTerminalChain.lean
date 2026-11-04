@@ -124,6 +124,18 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,0
 #print axioms evidence
 #print axioms registration
 
+open private late_peak_nonneg from
+  D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.HighTerminalChain
+
+private theorem zero_peak {L : ℕ} (y : FullScore L) (hg : ∀ i, gamma y i = 0) :
+    latePeak y = 0 := by
+  apply le_antisymm
+  · unfold latePeak
+    apply Finset.sup'_le
+    intro o _
+    cases o <;> simp [hg]
+  · exact late_peak_nonneg y
+
 namespace Balanced
 
 @[reducible] def signature : Signature :=
@@ -159,9 +171,10 @@ open private chain_gamma chain_pair_total from
 private theorem negative : ¬arena.Law rejected := by
   intro h
   let V := balancedChain (L:=3) (by omega) (fun _ => 0) 0 0 (by simp) le_rfl le_rfl
-  have hp : latePeak V = 0 := by simp [latePeak,V,chain_gamma]
+  have hp : latePeak V = 0 := zero_peak V (by intro i; simp [V,chain_gamma])
   have ha : inputAnchor (by omega) V = 0 := by
     simp [inputAnchor,early,V,chain_gamma,chain_pair_total]
+    rfl
   have hx := @h 3 (by omega) (fun _ => 0) 0 0 (by simp) le_rfl le_rfl (by simpa [V] using hp.le)
   have hn : 0 ≤ max (highLower (by omega) V) (latePeak V - early (by omega) V) :=
     ((le_max_left 0 _).trans (le_max_left _ _)).trans (le_max_left _ _)
@@ -217,9 +230,9 @@ private theorem faithful_bridge :
 private theorem negative : ¬arena.Law rejected := by
   intro h
   let y := terminalScore 3 0 le_rfl
-  have hp : latePeak y = 0 := by simp [latePeak,gamma,y,terminalScore]
+  have hp : latePeak y = 0 := zero_peak y (by intro i; simp [gamma,y,terminalScore])
   have he : early (by omega) y = 0 := by simp [early,gamma,y,terminalScore]
-  have ha : inputAnchor (by omega) y = 0 := by simp [inputAnchor,he,pairTotal,y,terminalScore]
+  have ha : inputAnchor (by omega) y = 0 := by simp [inputAnchor,early,gamma,pairTotal,y,terminalScore]
   have hd : delta (by omega) true y = 0 := by rw [delta,terminal_support,ha]; simp
   obtain ⟨V,_,_,_,_,_,hv⟩ := @h 3 (by omega) y (by intro b; rfl)
     (by intro b i hi hlate; rfl) (by simpa [y,terminalScore] using hp.le)
