@@ -101,12 +101,14 @@ private lemma reduced_physical {n : ℕ}
 
 private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
     (hH : (symplecticOperator V Ω).IsHermitian) :
     ∀ i, 1 ≤ |hH.eigenvalues i| := by
   sorry
 
 private lemma shifted_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω) {x : ℝ}
+    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (hpos : (V.map Complex.ofReal).PosDef) {x : ℝ}
     (hx0 : 0 ≤ x) (hx1 : x < 1) :
     ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).PosDef := by
   sorry
@@ -125,6 +127,7 @@ private lemma principal_block_identity {ι : Type*} [Fintype ι] [DecidableEq ι
 
 private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
     (hH : (symplecticOperator V Ω).IsHermitian) :
     ∀ x : ℝ, 0 ≤ x → x < 1 →
       Real.log (((V.map Complex.ofReal) + (x : ℂ) •
@@ -134,6 +137,7 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
 
 private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
     (hH : (symplecticOperator V Ω).IsHermitian) {α : ℝ}
     (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) :
     gaussianRenyiEntropy α V Ω =
@@ -146,7 +150,8 @@ private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
   sorry
 
 private lemma alpha_two_entropy {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω) :
+    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1) :
     gaussianRenyiEntropy 2 V Ω = (1 / 2 : ℝ) * Real.log (V.det) := by
   sorry
 
@@ -345,12 +350,15 @@ private lemma settlement_main
         physicalOn (reducedCovariance V X) (reducedForm (symplecticForm n) X))
     (hspec : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
       (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+      (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
       (hH : (symplecticOperator V Ω).IsHermitian), ∀ i, 1 ≤ |hH.eigenvalues i|)
     (hshift : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
-      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω) {x : ℝ}, 0 ≤ x → x < 1 →
+      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+      (hpos : (V.map Complex.ofReal).PosDef) {x : ℝ}, 0 ≤ x → x < 1 →
       ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).PosDef)
     (hdet : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
       (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+      (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
       (hH : (symplecticOperator V Ω).IsHermitian), ∀ x : ℝ, 0 ≤ x → x < 1 →
       Real.log (((V.map Complex.ofReal) + (x : ℂ) •
         (Complex.I • Ω.map Complex.ofReal)).det.re) =
@@ -366,6 +374,7 @@ private lemma settlement_main
               Complex.ofReal))
     (hmix : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
       (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+      (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
       (hH : (symplecticOperator V Ω).IsHermitian) {α : ℝ},
       0 < α → α < 2 → α ≠ 1 →
       gaussianRenyiEntropy α V Ω =
@@ -383,7 +392,8 @@ private lemma settlement_main
         Real.log (H.submatrix (Subtype.val : ↥(A ∪ B) → ι) Subtype.val).det.re +
           Real.log (H.submatrix (Subtype.val : ↥(B ∪ C) → ι) Subtype.val).det.re)
     (ha2 : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
-      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω),
+      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+      (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1),
       gaussianRenyiEntropy 2 V Ω = (1 / 2 : ℝ) * Real.log (V.det)) : claim := by
   sorry
 
