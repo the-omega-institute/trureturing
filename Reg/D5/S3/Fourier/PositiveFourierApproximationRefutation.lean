@@ -36,8 +36,9 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 0, (Real.pi / 2), ?_⟩
-  simp only [actual, realize]
-  norm_num [Real.sin_pi_div_two]
+  simp only [actual, realize, Nat.cast_one, one_mul, Real.sin_zero,
+    Real.sin_pi_div_two, abs_zero, abs_one]
+  exact zero_ne_one
 
 def source_registration : Registration arena (type_of% @abs_sin_nat_mul_le) where
   actual := actual
@@ -71,7 +72,7 @@ noncomputable def registration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "arg"]
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
