@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/SumInConcatenation/DecimalMultiples
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [lit/hasler2023a359482]
+   anchors: [mathlib/module/Mathlib.Data.Nat.GCD.Basic]
    utility: none
    digest: The original A359482 sequence contains exactly 10 among 10,20,...,90. -/
 import D5.S3.Arith.SumInConcatenation

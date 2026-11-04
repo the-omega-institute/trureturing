@@ -12,6 +12,12 @@ open LeanInformationAudit
 noncomputable section
 attribute [local instance] Classical.propDecidable
 
+/- The source-bound family contract derives the escape origin from the complete
+original theorem through sourceSelection. Its literal open-residual route
+requires escapeFrom = none; a finite-route type operand would reject before
+source reconstruction. The full family proofs and source selectors below
+remain the mathematical and binding obligations. -/
+
 namespace LegalTens
 
 abbrev signature : Signature where
@@ -75,7 +81,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.SumInConcatenation.DecimalMultiples
     definition := none
@@ -153,7 +159,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.SumInConcatenation.DecimalMultiples
     definition := none
@@ -233,7 +239,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.SumInConcatenation.DecimalMultiples
     definition := none

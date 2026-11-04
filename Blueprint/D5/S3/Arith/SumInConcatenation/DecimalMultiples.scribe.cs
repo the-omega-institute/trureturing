@@ -8,7 +8,7 @@ internal sealed class DecimalMultiplesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/SumInConcatenation/DecimalMultiples.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/hasler2023a359482");
+        LibraryNoteRef.Create("D5/L/Digit/hasler2026a359482proof");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "In the original greedy decimal sequence A359482, 10 occurs at index 2 and none of 20,30,...,90 occurs at any index.",

@@ -14,7 +14,7 @@ $$\forall x \in \mathbb{N}, \forall m \in \mathbb{N}, 0 < x \implies (1 \le m \l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/SumInConcatenation/DecimalMultiples.legal_multiple_ten_iff` (`✓ std3`). ∎
 
-*Citation.* M. F. Hasler (2026). *A359482, Proof by MFH*. URL: <https://oeis.org/w/index.php?title=A359482&oldid=1675118>.
+*Citation.* Eric Angelini, Hans Havermann, and M. F. Hasler (2023). *OEIS A359482, its conjectures and Hasler's full proof*. URL: <https://oeis.org/A359482>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ $$\forall n \in \mathbb{N}, \forall m \in \mathbb{N}, (2 \le m \land m < 10) \im
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/SumInConcatenation/DecimalMultiples.sequence_ne_multiple_ten` (`✓ std3`). ∎
 
-*Citation.* M. F. Hasler (2026). *A359482, Proof by MFH*. URL: <https://oeis.org/w/index.php?title=A359482&oldid=1675118>.
+*Citation.* Eric Angelini, Hans Havermann, and M. F. Hasler (2023). *OEIS A359482, its conjectures and Hasler's full proof*. URL: <https://oeis.org/A359482>.
 
 *Commentary.*
 
@@ -38,7 +38,7 @@ $$\operatorname{seq}\left(2\right) = 10 \land (\forall m \in \mathbb{N}, (1 \le 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/SumInConcatenation/DecimalMultiples.sequence_multiple_ten_classification` (`✓ std3`). ∎
 
-*Citation.* M. F. Hasler (2026). *A359482, Proof by MFH*. URL: <https://oeis.org/w/index.php?title=A359482&oldid=1675118>.
+*Citation.* Eric Angelini, Hans Havermann, and M. F. Hasler (2023). *OEIS A359482, its conjectures and Hasler's full proof*. URL: <https://oeis.org/A359482>.
 
 *Commentary.*
 
