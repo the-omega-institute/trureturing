@@ -3893,3 +3893,345 @@ $$
 这里的仓内新增综合是把原 $D$ 的统一近零估计经正和与闭包接到完整正对偶，在一个固定实际联合上以同一原 AC 准备取得有界质量的数学边缘极限，并逐事件先完成全相关锥的连续正延拓；随后才在新的具名背景中接回原协变、零或共同尺度、逐字标定、曲率、几何和过程消费者。原来的精确准备谓词与等价没有被改写。历史优先权不由这组有限来源判断；此处区分已有工具、仓内接口综合与待供原生实例，不作全宇宙或量子起源完成断言。
 
 ## 追加锚（本行以下为增补区）
+
+## 76. 原静态联合合同的完整复运动学消费者
+
+**定义 76.1（同一原范围内的静态前件）。** 固定定义 1.1、29.1、35.1、46.1 的同一个 $\Omega$、原全语境响应商及其原 $D$。对象量词包括每个所需原对象、每个实际联合对象、旧输出、经典标签、失败输出与被消费参考。每个对象只用 P/G 及定理 3.1 的单位适配部分固定的同一份 $E_A,C_A,u_A,q_A,L_A,\circ_A$；完整中心不取商。这里抽取的静态条件如下。
+
+对每个这样的 $A$，P 给非零有限维 $E_A$、闭尖生成锥 $C_A$、内点单位 $u_A$ 和原自对偶正定比较 $g_A^0$；实际准备 $\alpha$ 是原已命名正泛函，$\alpha(u_A)\le1$，其**有限正锥包恰为整个正对偶锥** $C_A^*$。G 是原指定闭连通、$g_A^0$ 伴随封闭、在 $C_A^\circ$ 上传递的 Lie 群。定理 3.1 的 P/G 部分使同一 $E_A,C_A,u_A$ 成为 EJA，并固定 $L_a b=a\circ_A b$；不以原 D 或后来选的交换子构造它。
+
+对每个已声明的实际联合 $J=AB$，静态 X 使用其原含幺 Jordan 嵌入 $i:E_A\to E_J$、$j:E_B\to E_J$，以及原双线性乘积
+
+$$
+m(a,b)=i(a)\circ_J j(b),\qquad
+\operatorname{span}_{\mathbb R}m(E_A,E_B)=E_J.
+\tag{76.1}
+$$
+
+对每对原实际准备 $\alpha,\beta$，有原实际正乘积准备 $\eta_{\alpha,\beta}$，对全部实 $a,b$ 满足
+
+$$
+\eta_{\alpha,\beta}(m(a,b))=\alpha(a)\beta(b).
+\tag{76.2}
+$$
+
+这些是同一原装置、记录与原质量上的条件；联合对象自身也满足 P/G。原 X 的 D 保持及交叉 $D=0$ 仍按原合同保留，但以下推导不消费它们。这里没有加上局部动力群独立提升、伴随自然性或 $q_J=q_A\otimes q_B$。
+
+整个同一原指针 $P$ 具有定义 10.1 的完整 AC：原准备及其完整装置、含全部失败出口的原测试、原效果 $0\ne d=T_m(u_I)\le u_P$，$\mathbb R_{\ge0}d$ 是**整个** $C_P$ 的极射线，原 $\alpha(d)=1$，且有 $h\in E_P$ 使 $[L_d,L_h]\ne0$。$P$ 不是从支持角另造的对象。定义 10.2 的原幂 $P^{\otimes k}$ 对每个有限 $k$ 都已给定，$P^{\otimes0}=I$；其原迭代联合满足上述 P/G、X 和乘积准备条件，特别包括整个 $P$ 的实际自复合 $P^{\otimes2}$。
+
+最后仅取定义 46.2 的原 $R_0$：**对每个所需原对象 $A$，存在某个 $k\ge1$**，具有同设备、同记录的实际身份旁接 $\operatorname{Id}_A\mid P^{\otimes k}$，连同完整装置及原补记录。其实际输入输出联合 $AP^{\otimes k}$ 带上述原 X，且仍在 P/G 的全对象范围内。对不同 $A$ 的 $k$ 不要求相等，不推断每个特定 $k$ 或直接 $AP$ 可用；不增加任意两对象的联合。若由全事件 R 经定理 30.1 得此存在量词，只复用那条供应结论。
+
+原事件、菜单、输出、程序、历史、可访问记录、遗忘、零支、失败、停止、具名返回及原返回系数始终留在同一 $\Omega$ 中。抽取静态前件仅描述下列结论的依赖，不删除完整原合同中的任何其他条件，也不将数学正泛函或数学角命名为实际操作。
+
+**定理 76.2（全对象复直和与每个实际中心对的张量表示）。** 在定义 76.1 的准确量词下，每个所需原对象，包括实际联合、输出、标签和参考，都有保原锥、原单位的 Jordan 同构
+
+$$
+E_A\simeq\bigoplus_s H_{n_s}(\mathbb C),\qquad
+C_A\simeq\bigoplus_s M_{n_s}(\mathbb C)_+,\qquad
+u_A\longmapsto (I_{n_s})_s.
+\tag{76.3}
+$$
+
+这里 $H_n(\mathbb C)=M_n(\mathbb C)_{\rm sa}$；式中 $u_A$ 为原单位。块大小可不等，$n_s=1$ 的全部经典块保留。对于每个原已给实际联合 $J=AB$，(76.1) 诱导实向量空间同构
+
+$$
+M:E_A\otimes_{\mathbb R}E_B\xrightarrow{\cong}E_J,
+\qquad M(a\otimes b)=m(a,b).
+\tag{76.4}
+$$
+
+若 $e_s,f_t$ 是局部最小中心幂等元，则 $p_{st}=m(e_s,f_t)$ 恰为 $J$ 的全部最小中心幂等元，无一个中心对丢失，且
+
+$$
+J_{st}=M(E_{A,s}\otimes_{\mathbb R}E_{B,t})
+\simeq H_{n_sm_t}(\mathbb C),\qquad
+Z_J=\bigoplus_{s,t}\mathbb R p_{st}.
+\tag{76.5}
+$$
+
+固定局部矩阵坐标后，每个中心对可分别选择一个保锥含幺 Jordan 坐标 $\theta_{st}$，使
+
+$$
+\theta_{st}(m(a,b))=a\otimes b^{\mathsf T^{\varepsilon_{st}}},
+\quad a\in E_{A,s},\ b\in E_{B,t},\quad
+\varepsilon_{st}\in\{0,1\}.
+\tag{76.6}
+$$
+
+上标为零表示不转置，为一表示转置。它只给逐扇区普通／相反张量表示；不声称有一套贯穿全部原联合的固定局部取向。若任一局部块为标量，转置无效，该对没有可检测的取向符号。结论不识别原 $D$，也不把 $a\circ b-iD_ab$ 认作这里的矩阵乘法。
+
+证明。以下全部正泛函组合、归一数学状态、平方根、顺序积及角均在给定原响应空间内作数学构造。
+
+由 P/G 取得 EJA 的准确输入已在定理 3.1 核对：对原指定 G 作单位适配，不扩大 G；其对应的成熟结论是 [Barnum–Wilce, arXiv:1202.4513v2, Theorem 4(b)–(c), p.6](https://arxiv.org/pdf/1202.4513v2)。以下不用该文 Proposition 1 的可因子化 HSD 理论或实际量子比特前件。
+
+先固定任一实际 $J=AB$。双线性与张成给 (76.4) 的满射。实际准备的正锥包是完整正对偶锥，而有限维尖生成锥的正对偶锥线性生成整个对偶空间；所以实际准备分别张成 $E_A^*,E_B^*$。若 $M(z)=0$，(76.2) 使每个实际 $\alpha\otimes\beta$ 消去 $z$。这些张量泛函张成整个张量对偶，故 $z=0$，证明双射。
+
+任取数学正泛函 $\varphi\in C_A^*$、$\psi\in C_B^*$，P 给有限表示 $\varphi=\sum_r c_r\alpha_r$、$\psi=\sum_t d_t\beta_t$，其中 $c_r,d_t\ge0$ 且 $\alpha_r,\beta_t$ 是原实际准备。因而
+
+$$
+\Gamma_{\varphi,\psi}
+=\sum_{r,t}c_rd_t\eta_{\alpha_r,\beta_t}\ \ge0,
+\qquad
+\Gamma_{\varphi,\psi}(m(a,b))=\varphi(a)\psi(b).
+\tag{76.7}
+$$
+
+乘积张成使所得泛函与锥分解的选择无关。这是原正泛函的数学有限和，没有供应新的随机化器件或系数一准备。
+
+对 $B$ 上每个数学状态 $\beta\ge0$、$\beta(u_B)=1$，由 (76.4) 定义线性切片
+
+$$
+S_\beta(m(a,b))=\beta(b)a.
+\tag{76.8}
+$$
+
+对 $x\ge0$ 和每个 $\varphi\ge0$，有 $\varphi(S_\beta x)=\Gamma_{\varphi,\beta}(x)\ge0$；正对偶分离给 $S_\beta x\ge0$。又 $S_\beta(u_J)=u_A$、$S_\beta i=\operatorname{Id}_{E_A}$。每个非零正泛函在内点单位上严格正，故归一数学状态张成 $E_B^*$；于是全部 $S_\beta$ 分离 $E_J$。仅有一组选定的分离乘积探针不足以替代 (76.7) 的完整正对偶锥条件。
+
+有限 EJA 配谱范数是含幺 JB 代数，包括例外 EJA。对正幺线性映射 $S_\beta$，直接用 [Niestegge, *Conditional expectations associated with quantum states*, arXiv:1001.3828v1, Proposition 2.2, p.4](https://arxiv.org/pdf/1001.3828v1) 的 JB 平方不等式：$S_\beta(z^2)-(S_\beta z)^2\ge0$。取任意实 $a\in E_A$、$x\in E_J$，在 $z=i(a)+t x$ 处展开；因 $i$ 保平方且 $S_\beta i=\operatorname{Id}$，常数项为零，得到对所有实 $t$ 成立的
+
+$$
+2t\{S_\beta(i(a)\circ x)-a\circ S_\beta x\}
++t^2\{S_\beta(x^2)-(S_\beta x)^2\}\ge0.
+\tag{76.9}
+$$
+
+任取正泛函作用于此式，令 $t$ 从正负两侧趋于零，其线性项必为零；正泛函分离再给大括号内向量为零。在 $x=m(c,b)$ 处代入，并用全部切片分离，遂得两个全实变量模身份
+
+$$
+\begin{aligned}
+i(a)\circ m(c,b)&=m(a\circ c,b),\\
+j(b)\circ m(a,d)&=m(a,b\circ d).
+\end{aligned}
+\tag{76.10}
+$$
+
+第二式由交换两方的切片论证取得。于是通过 $M$，$L_{i(a)}=L_a\otimes\operatorname{Id}$、$L_{j(b)}=\operatorname{Id}\otimes L_b$；特别
+
+$$
+[L_{i(a)},L_{j(b)}]=0\quad\text{于整个 }E_J.
+\tag{76.11}
+$$
+
+这不是独立动力提升，也不只是嵌入局部子空间上的等式。V96 [§20 的 (20.1)、定义 26.3](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#20-保留条件取值的实际关系延伸) 中作为前件的模作用，在这里由原 P/G、准备锥与静态 X 推出；不借入其活动条件作用。
+
+在各完整数学效果区间定义
+
+$$
+Q_x=2L_x^2-L_{x^2},\qquad a\mathbin{\&}b=Q_{\sqrt a}b.
+\tag{76.12}
+$$
+
+[van de Wetering, *Commutativity in Jordan operator algebras*, arXiv:1912.01903v1, Theorems 3.13、4.2, pp.13–14](https://arxiv.org/pdf/1912.01903v1) 说明：operator commuting 元生成相互 operator commuting 的结合 JB 子代数，且 (76.12) 满足顺序效果代数公理。有限维正平方根连续，$Q$ 对其参数为多项式，所以还满足 [*Sequential product spaces are Jordan algebras*, arXiv:1803.11139v3, Definition 2, p.3](https://arxiv.org/pdf/1803.11139v3) 的范数连续性；其余 S1、S3–S7 正是前述顺序公理。由 (76.11)，$i(a)\mathbin{\&}j(b)=m(a,b)$，故局部效果的乘积确为联合效果。模身份又给
+
+$$
+Q_{i(x)}m(c,d)=m(Q_xc,d),\qquad
+Q_{j(y)}m(c,d)=m(c,Q_yd).
+\tag{76.13}
+$$
+
+Jordan 嵌入保正平方根，兼容顺序积的结合律遂给
+
+$$
+\begin{aligned}
+m(a,b)\mathbin{\&}m(c,d)
+ &=i(a)\mathbin{\&}\bigl(j(b)\mathbin{\&}m(c,d)\bigr)\\
+ &=m(a\mathbin{\&}c,b\mathbin{\&}d)
+\qquad(0\le a,c\le u_A,\ 0\le b,d\le u_B).
+\end{aligned}
+\tag{76.14}
+$$
+
+因此 $M$ 下恰满足 1803.11139v3 Definition 4, p.4 的 locally tomographic composite，所有空间均是实向量空间。该文由顺序积恢复的 Jordan 乘法就是原乘法：两者在效果上有同一平方 $a\mathbin{\&}a=a^2$，通过缩放及加单位延至任意实元，再极化即可。没有假设实际可调用 Lüders 更新或全部效果供应。
+
+现在只对**整个原指针及其实际 $P^{\otimes2}$** 应用该文 Theorem 3, p.19。其前件正是刚取得的有限维顺序积空间、自复合实张量及 (76.14)，故
+
+$$
+E_P\simeq\bigoplus_t H_{r_t}(\mathbb C).
+\tag{76.15}
+$$
+
+此成熟分类含全部中心，Propositions 39–40 覆盖实型、四元数型、自旋与例外输入；不要求 $P$ 简单。AC 的 $[L_d,L_h]\ne0$ 使其中至少一块 $r_{t_0}\ge2$。极射线、确定配对及原准备装置保留，但此选块步骤只消费 AC 的非中心性。
+
+为同时处理幂与全中心，回到任意实际 $AB$，暂不假设局部已为复型。令 $e_s,f_t$ 是其 EJA 最小中心幂等元。由 (76.10)，$L_{i(e_s)}$ 在 $M$ 下是 $L_{e_s}\otimes I$，其谱只有 $0,1$，没有 Peirce $1/2$ 部分；故 $i(e_s)$ 是联合中心幂等元。$j(f_t)$ 同理。因此
+
+$$
+p_{st}=m(e_s,f_t),\quad
+L_{p_{st}}=M(L_{e_s}\otimes L_{f_t})M^{-1}
+\tag{76.16}
+$$
+
+是非零正交中心幂等元族，和为原 $u_J$，其理想正是 $M(E_{A,s}\otimes E_{B,t})$。1803.11139v3 Proposition 39, p.18 应用于 (76.14)，使每个这种理想为**一个简单理想**，其秩为局部秩之积，维数为局部维数之积。这也证明它们是全部最小中心幂等元，而非只是一组选定中心投影。
+
+若两方分别为 $H_n(\mathbb C),H_m(\mathbb C)$，则该简单理想的秩为 $N=nm$、维数为 $N^2$。成熟 EJA 类型表在此唯一给 $H_N(\mathbb C)$：秩至少三时矩阵维数依次为 $N(N+1)/2,N^2,N(2N-1)$，秩三例外维数为 $27$ 而非 $9$；秩二、维数四是复量子比特，秩一是 $\mathbb R$。这里仅应用既有分类；自复合的排型和秩维计算亦见[切分图册 §§29–30](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md#29-自复合的秩维缺口与复数域选择)，不另证明一条分类定理。沿原迭代幂应用此结论，每个实际 $P^{\otimes k}$ 都是复 Hermitian 直和，全部块元组保留，特别有大小 $r_{t_0}^k\ge2$ 的块。
+
+任取一个所需原对象 $A$，**只取 $R_0$ 为这个 $A$ 实际供应的某个** $J=AR$、$R=P^{\otimes k}$。在 $R$ 的一个大小至少二的复块内选择数学秩二投影 $e$，其他块取零；记 $r=j(e)$。由 (76.13)，
+
+$$
+Q_r=M(I\otimes Q_e)M^{-1},\qquad
+C=J_1(r)=Q_r(E_J)=M(E_A\otimes R_1(e)).
+\tag{76.17}
+$$
+
+Peirce 角 $C$ 是 EJA，单位为原空间内的 $r$，其正锥是 $C\cap C_J$；对应的成熟结论见 [Westerbaan–Westerbaan–van de Wetering, *Pure Maps between Euclidean Jordan Algebras*, arXiv:1805.11496v2, Proposition 19, p.7](https://arxiv.org/pdf/1805.11496v2)。$R_1(e)\simeq H_2(\mathbb C)$ 以 $e$ 为单位。以上只选择已有载体内的数学子代数，没有实际量子比特、压缩装置或新参考对象。
+
+明确核对角上的两个嵌入。定义 $i_e(a)=m(a,e)$、$j_e(b)=j(b)$，$b\in R_1(e)$。因 $[L_{i(a)},L_r]=0$，$i(a)$ 没有相对于 $r$ 的半 Peirce 分量，故分解为 $J_1(r)$ 与 $J_0(r)$ 两个乘积为零的分量。其前者是 $r\circ i(a)=i_e(a)$，于是
+
+$$
+(i_e(a))^2=Q_r(i(a)^2)=m(a^2,e).
+\tag{76.18}
+$$
+
+极化给 $i_e$ 保 Jordan 乘法；(76.4) 给单射。$j_e$ 为原 Jordan 嵌入的限制，二者以 $u_A,e$ 分别映至同一 $r$。$J_0(r)$ 分量消去整个 $C$，所以 $L_{i_e(a)}|_C=L_{i(a)}|_C$，而 (76.10) 在 $C$ 上恰给
+
+$$
+\begin{aligned}
+i_e(a)\circ m(c,b)&=m(a\circ c,b),\\
+j_e(b)\circ m(a,d)&=m(a,b\circ d),\\
+i_e(a)\circ j_e(b)&=m(a,b).
+\end{aligned}
+\tag{76.19}
+$$
+
+两范围在整个 $C$ 上 operator commute，(76.17) 给实向量空间 $E_A\otimes H_2(\mathbb C)$ 到 $C$ 的双射。
+
+采用 [Barnum–Wilce 1202.4513v2, p.3, 式 (1)](https://arxiv.org/pdf/1202.4513v2) **直接重述的 general-JB Hanche–Olsen 判据**：任一 JB 代数 $E$，若 $E\otimes H_2(\mathbb C)$ 有 Jordan 乘法并满足两个全变量模身份，则 $E$ 是复 $C^*$ 代数的自伴随部。此处 $E$ 是**整个原 $E_A$**，张量 Jordan 代数是 $C$，两个身份就是 (76.19)，单位也已逐项核对。因此整个 $A$ 得 (76.3)，不预设其简单、特殊或非例外。有限维性给有限复矩阵直和及其原平方锥。
+
+[BGW, arXiv:1606.09331v3, Proposition 3.10, p.21](https://arxiv.org/pdf/1606.09331v3) 的有限 EJA 重述也列出局部平方保持、交叉乘积及 operator commuting 条件；本角逐条满足它们。这里对可能例外输入的依据是 BW 明述的 general-JB 版本，不以 Hanche–Olsen 1983 原文 Theorem 5.5 的 JC 前件代替 JB 前件；1985 原章不是这里直接核对的来源。两个重述的使用范围不扩大成 BGW 的独立动力复合定义。
+
+$R_0$ 对全部所需 $A$ 的量词允许上述论证逐对象重复，包括 $A$ 本身为旧联合、输出、标签或参考；各对象的指数始终各用各的。再对每个实际 $AB$ 应用 (76.16) 及复块秩维结论，得到 (76.5)。此步既不要求任意 $A$ 的自复合，也不借用未供应的共同参考指数。
+
+最后固定某个中心对及局部复坐标，令 $N=nm$。在已经证明的 $J_{st}\simeq H_N(\mathbb C)$ 中，(76.11) 使两局部矩阵范围真正交换。确实，对任意 Hermitian $z$ 有 $[L_x,L_y]z=\tfrac14[[x,y],z]$，故 $[x,y]$ 中心；其迹为零，遂为零。
+
+用 BGW §3.3、Table 1, pp.17–19 的成熟 universal representation：对 $n\ge2$，$C^*(H_n(\mathbb C))=M_n(\mathbb C)\oplus M_n(\mathbb C)$，嵌入为 $a\mapsto(a,a^{\mathsf T})$；$n=1$ 时为 $\mathbb C$。两个交换局部范围产生相应 universal associative algebras 的交换表示，因而给其张量积到 $M_N(\mathbb C)$ 的含幺 $*$ 表示。若 $n,m\ge2$，源为四个 $M_N(\mathbb C)$ 的直和；目标 Hilbert 维数正好为 $N$，故恰选一个不可约分量。经目标酉坐标变换，两个嵌入具有
+
+$$
+a\longmapsto a^{\mathsf T^{\alpha}}\otimes I_m,
+\qquad b\longmapsto I_n\otimes b^{\mathsf T^{\beta}},
+\quad \alpha,\beta\in\{0,1\}.
+\tag{76.20}
+$$
+
+目标整体转置同时改变两个符号，可令第一符号为零，留下 $\varepsilon_{st}=\alpha+\beta\pmod2$，即 (76.6)。标量因子时只保留另一方表示，目标整体转置足以消去其符号；没有标量取向位。等价的 universal Jordan tensor 对应为 BGW Proposition 3.9(a)、Table 2, pp.20–21 在 $n,m\ge2$ 时的 $H_n(\mathbb C)\widetilde\otimes H_m(\mathbb C)=H_N(\mathbb C)\oplus H_N(\mathbb C)$，局部层析选其一个分量。这些表示结论均在复型已知后使用，未把例外 EJA 先当成特殊代数。∎
+
+## 77. 原中心对的相对转置与全网取向义务
+
+**定义 77.1（原乘法的逐扇区坐标式）。** 在定理 76.2 的固定局部矩阵坐标中，记
+
+$$
+S_A(a,c)=\frac{ac+ca}{2},\qquad
+\delta_A(a,c)=\frac{i(ac-ca)}2,
+\tag{77.1}
+$$
+
+$B$ 上同理。$\delta_A$ 是坐标交换子记号，**不是给定原 $D^A$ 的定义或识别**。由 (76.6) 直接展开目标矩阵的对称乘积，并转置回原实张量坐标，得到同一原联合乘法的表示
+
+$$
+M^{-1}\bigl(m(a,b)\circ_J m(c,d)\bigr)
+=S_A(a,c)\otimes S_B(b,d)
+-(-1)^{\varepsilon_{st}}\delta_A(a,c)\otimes\delta_B(b,d).
+\tag{77.2}
+$$
+
+此式逐中心对使用，不提供原有向关系的曲率、尺度或跨联合自然性。
+
+**命题 77.2（同一对与全网的准确取向判据）。** 对一个固定二方联合，限制到双方都非经典的块。以 $x_s,y_t\in\mathbb F_2$ 改变局部块取向，使全部相对转置消失，当且仅当
+
+$$
+\varepsilon_{st}=x_s+y_t;
+\quad\text{等价地}\quad
+\varepsilon_{st}+\varepsilon_{st'}+
+\varepsilon_{s't}+\varepsilon_{s't'}=0
+\text{ 对每个非经典矩形成立}.
+\tag{77.3}
+$$
+
+更一般，给每个原非经典简单块选暂定矩阵坐标。对每次它嵌入某个实际联合简单块的 occurrence，记其 (76.20) 的同态／反同态位为 $h_{v\to w}\in\mathbb F_2$；$v$ 是源块，$w$ 是该联合块。将每次 occurrence 保留为一条边，得到可能有重边的关联图。存在每个顶点一位 $o_v$ 使所有这些嵌入同时为普通取向，当且仅当
+
+$$
+h_{v\to w}=o_v+o_w\quad\text{对每条边成立};
+\quad\text{等价地每条有限图闭路的位和为零}.
+\tag{77.4}
+$$
+
+标量源没有同态／反同态的可检测区别，不为它定义 $h$，也不把经过标量块的虚拟符号算成闭路障碍。
+
+证明。局部转置使 $\varepsilon_{st}$ 加上 $x_s+y_t$；矩形四项中的每个局部位出现两次，故必要。反向选非经典基准 $s_0,t_0$，置 $x_s=\varepsilon_{st_0}$、$y_t=\varepsilon_{s_0t}+\varepsilon_{s_0t_0}$，矩形零和即给 (77.3)；若有一方没有非经典块，条件为空。关联图中改变源和目标坐标使边位加上两个端点位。若 (77.4) 成立，任何闭路和中每个顶点位出现偶数次，故为零。反向在每个连通分量取根并沿一棵生成树传播 $o_v$；每条额外边与树路径组成有限闭路，零和恰保证其边式。平行边亦以长度二闭路检查。相对位为两条局部 incidence 位之和，故一致全网取向必满足每个二方非经典矩形的判据。∎
+
+**命题 77.3（单对静态片段的奇矩形）。** 仅考虑一个二方 P/G、Jordan、准备片段。取
+
+$$
+A=H_3(\mathbb C)\oplus H_4(\mathbb C),\quad
+B=H_5(\mathbb C)\oplus H_6(\mathbb C),\quad
+J=\bigoplus_{s,t}H_{n_sm_t}(\mathbb C),
+\quad (n_1,n_2)=(3,4),\ (m_1,m_2)=(5,6),
+\tag{77.5}
+$$
+
+各用通常矩阵正锥及单位，令
+
+$$
+i(a)_{st}=a_s\otimes I_{m_t},\qquad
+j(b)_{st}=I_{n_s}\otimes b_t^{\mathsf T^{\varepsilon_{st}}},
+\qquad (\varepsilon_{st})=\begin{pmatrix}0&0\\0&1\end{pmatrix}.
+\tag{77.6}
+$$
+
+此片段满足静态嵌入、乘积张成、正乘积准备及 P/G，但没有逐局部块选择能同时消去四个相对转置。
+
+证明。两个原型映射都是单射含幺 Jordan 同态，其范围逐目标块交换，故 $m(a,b)_{st}=a_s\otimes b_t^{\mathsf T^{\varepsilon_{st}}}$。每块实张量映射可逆，且
+
+$$
+(3^2+4^2)(5^2+6^2)=25\cdot61
+=15^2+18^2+20^2+24^2=1525,
+\tag{77.7}
+$$
+
+所以全部乘积张成且局部层析成立。将每个对象全部次归一正密度泛函作为其准备族，有限正锥包便是完整正对偶。任取局部密度 $\rho=(\rho_s)\ge0$、$\sigma=(\sigma_t)\ge0$，设
+
+$$
+\omega_{st}=\rho_s\otimes\sigma_t^{\mathsf T^{\varepsilon_{st}}}.
+\tag{77.8}
+$$
+
+它正，且 $\sum_{st}\operatorname{Tr}\omega_{st}=(\sum_s\operatorname{Tr}\rho_s)(\sum_t\operatorname{Tr}\sigma_t)\le1$。转置保迹配对给
+
+$$
+\sum_{st}\operatorname{Tr}\bigl(\omega_{st}m(a,b)_{st}\bigr)
+=\Bigl(\sum_s\operatorname{Tr}(\rho_sa_s)\Bigr)
+ \Bigl(\sum_t\operatorname{Tr}(\sigma_tb_t)\Bigr).
+\tag{77.9}
+$$
+
+零准备、次归一质量和所有实输入均包括。迹内积自对偶，块保持复 congruence 群是闭、连通、伴随封闭且在正定内点上传递的群，给这个片段的 P/G。矩形位和为一，(77.3) 排除全部局部取向同时普通化；目标整体转置同时改变两条嵌入的符号，不改相对位。局部与联合块大小各不相同，置换块也不能消除奇矩形。
+
+此命题的对象仅是这一个二方静态片段。它没有给出整个原对象域、整个非经典指针及其幂、全称 $R_0$、全部原结合接口、实际历史或固定原 D 的扩张；因此不是定理 76.2 全网前件、完整 C128 或量子起源目标的反模型。所有本例块均非经典；不能借标量转置的空符号制造此障碍。∎
+
+**定义 77.4（原结合／参考接口的未决命题）。** 对定义 76.1 的**准确原接口**，仍需判定其实际结合、交换、参考与标签比较是否迫使 (77.4) 的每个必要闭路位和为零。充分的桥须从真正给出的比较推出：同一局部块在不同实际联合中的 occurrence 可通过合法、保标签乘积统计的比较对应，并且这些对应覆盖每条待消去的闭路。不能先假设任意全对联合、直接 $AP$、共同指数，或未供应的 spectator-independent 比较。
+
+对于某份已给有限迭代乘积，只要原比较确实保持全部同标签乘积统计，其唯一性和同端点路径相等直接复用[切分图册命题 30.1](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md#30-产品统计确定的复合相干性与维数条件的边界)；维数本身不供应这些比较。该条件相干性与“所有取向闭路已被原接口覆盖并消去”不是同一断言。$R_0$ 的逐对象存在指数也未单独指定不同对象之间的公共参考比较。这里既没有证明全网可同时取向，也没有证明完整原接口允许奇闭路；命题 77.3 仅限定不得由单对静态片段擅自推全网结论。
+
+## 78. 同一比较、原评价与量子消费者的适用边界
+
+**定义 78.1（保原比较与保原质量的坐标对应）。** 定理 76.2 的表示保原 Jordan 锥和单位，原 $g_A^0$ 不因此被替换为 $q_A$ 或通常迹。以规范 Jordan 迹 $\tau_A=\sum_s\operatorname{Tr}_{n_s}$ 表示原评价时，直接复用 (29.4)、(11.1) 的同一运输：$g_A^0(x,y)=\tau_A((B_Ax)\circ y)$，$B_A$ 是同锥的正自同构；原准备的 $g_A^0$-Riesz 向量 $x_\alpha$ 对应 $\rho_\alpha=B_Ax_\alpha\ge0$，满足
+
+$$
+\alpha(a)=\tau_A(\rho_\alpha a),\qquad
+\tau_A(\rho_\alpha)=\alpha(u_A).
+\tag{78.1}
+$$
+
+此处只是既有运输在 (76.3) 坐标中的调用，没有除以原成功质量。原零概率、零准备和零中心分量保留，数学归一切片不改变任何原准备。
+
+单位适配 $q_A,q_B,q_J$ 的 Frobenius 配对在简单复块上分别是正迹权；全中心权自由按 [V96 §§28–32](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#28-实际联合内积的全部自由只在中心权重) 复用。写为 $q_A(a,c)=\sum_s w_s\operatorname{Tr}(a_sc_s)$、$q_B(b,d)=\sum_t v_t\operatorname{Tr}(b_td_t)$、$q_J(X,Y)=\sum_{st}W_{st}\operatorname{Tr}(X_{st}Y_{st})$ 时，只得 $w_s,v_t,W_{st}>0$，不从本推导得到 $W_{st}=w_sv_t$ 或该数组秩一。逐扇区转置保这些迹配对；也没有 $B_J=B_A\otimes B_B$ 的结论。
+
+**定义 78.2（与原 D 及实际供应的不同结论）。** 定理 76.2 不消费 Z、SC、I、II、S、S2、SJ、原 D 曲率、$O_3$、全事件 R、$R_{\rm suff}$、F 或 $N_u$ 的额外供应；这里保留它们原有的适用域，不删改同一 $\Omega$。因此该静态复型消费者也适用于 §§63–64 共同尺度为零的分支，只要定义 76.1 的完整静态前件成立；原 $F=0$ 本身不反驳静态复型。它回答定义 66.2 所列静态分类问题在这些准确前件下的类型部分，不回答全网方向问题。
+
+原 D 的全域协变、共同 $\kappa$ 及其零／正二分、S2/SJ/S 等价直接由 §§57–66 各自前件给出，不在这里重推。若要取得与原 D 相符的结合乘法，仍须用原 D 的那些消费者，而不能把 (77.1) 的坐标 $\delta$ 充作原 D。即使 (77.4) 全部成立，仍未标定或识别原 D。一般有限正映射在某个坐标中为 CP、以及同一原设备和真实记录具有充分规模参考执行，也仍是不同命题；准确边界及对应供应依 §§46–56，不能由身份参考 $R_0$ 替代全事件条件。
+
+在定理 76.2 中，(76.12) 的数学顺序积不是原实际滤波词；(76.17) 的角不是实际对象；原指针幂中的数学块也不是新供应的独立量子比特。全部数学效果、正泛函或矩阵仪器的存在不增加原菜单中的准备、测量、重置、复制、相干控制、独立仪器组装或合法连线。原质量、细记录、失败与停止、支持返回和同一个原返回系数未被归一化或遗忘。物理时钟、作用量单位、Hamiltonian 选择、实际来源及完整量子起源仍需各自的原接口与证据。
+
+**定义 78.3（来源相对的综合范围）。** 本条件应用的结论是：原完整准备正锥包和静态 X 先给正幺 JB 切片，平方不等式消去模作用缺口，再以**整个原指针的实际自复合**取得非经典复参考块，并在**每个原对象自己实际供应的某个参考联合**内用数学角应用 general-JB 判据，得到全部原对象及全部实际中心对的复 Hermitian 表示。成熟的 JB Schwarz、顺序积空间、EJA 类型表、Peirce 角、Hanche–Olsen 判据与 universal representation 只作为这条完整条件应用的中间步骤，文献对应均附于定理 76.2 的使用处；不将其中任一单独结论或改换记号当作新增分类成果，不据有限检索主张文献原创性。
+
+原响应的另一路条件结果仍按其原合同使用：[C117 续卷 §§38–42](AURIC_COMMON_SOURCE_SELF_REFERENCE_AND_OBSERVER_SEQUENCES_C117_CONTINUATION.md#38-原局部字的正多重集比较合同) 的正五项比较接到同一个原 $P$ 的整体效果，坐标 Born 还需其独立校准；这里没有消费那份振幅源或比较请求来供应实际联合。[C133V 对应 6.3](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md#6-标准量子接口的来源与结论) 的可见加法聚合不等于实际张量联合，故也不用于补足 (76.1)、指针幂或 $R_0$。这些来源相对推论各保留其不同的输入、原身份与实际资源边界。逐扇区复运动学、固定原 D 的动力重构和完整原操作供应是相互衔接而未被此处合并的义务。
+
+## 追加锚（本行以下为增补区）
