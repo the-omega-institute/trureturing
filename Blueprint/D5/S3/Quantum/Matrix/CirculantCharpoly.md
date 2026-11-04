@@ -6,7 +6,7 @@ Fourier modes factor circulant characteristic polynomials.
 
 **Theorem 1.1 (Fourier transform determinant).**
 
-$$\forall (n: \mathbb{N}), ((\operatorname{NeZero}\left(n\right)) \Rightarrow (\operatorname{Matrix.det}\left(\operatorname{D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform}\left(n\right)\right) \ne (0: \mathbb{C})))$$
+$$\forall (n: \mathbb{N}), ([\operatorname{NeZero}\left(n\right)] \operatorname{Matrix.det}\left(\operatorname{D5.S3.Quantum.Dynamics.PolygonalFourierCouplings.transform}\left(n\right)\right) \ne (0: \mathbb{C}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CirculantCharpoly.transform_det_ne_zero` (`✓ std3`). ∎
 
@@ -88,7 +88,7 @@ The real mode is f(0) plus twice the cosine sum from one through m.
 
 **Theorem 1.7 (Opposite character values).**
 
-$$\forall (n: \mathbb{N}), ((\operatorname{NeZero}\left(n\right)) \Rightarrow (\forall (j: \mathbb{N}), (\forall (l: \mathbb{N}), ((l \le n) \Rightarrow (\operatorname{ZMod.stdAddChar}\left(((j: \operatorname{ZMod}\left(n\right))) \cdot ((l: \operatorname{ZMod}\left(n\right)))\right) + \operatorname{ZMod.stdAddChar}\left(((j: \operatorname{ZMod}\left(n\right))) \cdot (((n - l: \mathbb{N}): \operatorname{ZMod}\left(n\right)))\right) = ((((2: \mathbb{R})) \cdot (\operatorname{Real.cos}\left(\frac{((((2: \mathbb{R})) \cdot (\operatorname{Real.pi})) \cdot ((j: \mathbb{R}))) \cdot ((l: \mathbb{R}))}{(n: \mathbb{R})}\right)): \mathbb{R}): \mathbb{C}))))))$$
+$$\forall (n: \mathbb{N}), ([\operatorname{NeZero}\left(n\right)] \forall (j: \mathbb{N}), (\forall (l: \mathbb{N}), ((l \le n) \Rightarrow (\operatorname{ZMod.stdAddChar}\left(((j: \operatorname{ZMod}\left(n\right))) \cdot ((l: \operatorname{ZMod}\left(n\right)))\right) + \operatorname{ZMod.stdAddChar}\left(((j: \operatorname{ZMod}\left(n\right))) \cdot (((n - l: \mathbb{N}): \operatorname{ZMod}\left(n\right)))\right) = ((((2: \mathbb{R})) \cdot (\operatorname{Real.cos}\left(\frac{((((2: \mathbb{R})) \cdot (\operatorname{Real.pi})) \cdot ((j: \mathbb{R}))) \cdot ((l: \mathbb{R}))}{(n: \mathbb{R})}\right)): \mathbb{R}): \mathbb{C})))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CirculantCharpoly.character_pair` (`✓ std3`). ∎
 

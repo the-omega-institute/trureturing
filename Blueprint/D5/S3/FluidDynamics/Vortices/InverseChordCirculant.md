@@ -118,7 +118,7 @@ For positive m, the minimum of the two natural distances is the folded cyclic di
 
 **Theorem 1.9 (The block-product determinant).**
 
-$$\forall (m: \mathbb{N}), ((\operatorname{NeZero}\left((2) \cdot (m)\right)) \Rightarrow ((3 \le m) \Rightarrow (\forall (y: \mathbb{R}), (\operatorname{Matrix.det}\left(((y) \cdot ((1: \operatorname{Matrix}\left(\operatorname{Fin}\left((2) \cdot (m)\right), \operatorname{Fin}\left((2) \cdot (m)\right), \mathbb{R}\right)))) - ((\operatorname{D5.S3.FluidDynamics.Vortices.InverseChordCirculant.blockC}\left(m\right)) \cdot (\operatorname{D5.S3.FluidDynamics.Vortices.InverseChordCirculant.blockB}\left(m\right)))\right) = \prod_{k: \operatorname{ZMod}\left((2) \cdot (m)\right)} ((y) - (\operatorname{D5.S3.FluidDynamics.Vortices.InverseChordCirculant.gamma}\left(m, k\right)))))))$$
+$$\forall (m: \mathbb{N}), ([\operatorname{NeZero}\left((2) \cdot (m)\right)] (3 \le m) \Rightarrow (\forall (y: \mathbb{R}), (\operatorname{Matrix.det}\left(((y) \cdot ((1: \operatorname{Matrix}\left(\operatorname{Fin}\left((2) \cdot (m)\right), \operatorname{Fin}\left((2) \cdot (m)\right), \mathbb{R}\right)))) - ((\operatorname{D5.S3.FluidDynamics.Vortices.InverseChordCirculant.blockC}\left(m\right)) \cdot (\operatorname{D5.S3.FluidDynamics.Vortices.InverseChordCirculant.blockB}\left(m\right)))\right) = \prod_{k: \operatorname{ZMod}\left((2) \cdot (m)\right)} ((y) - (\operatorname{D5.S3.FluidDynamics.Vortices.InverseChordCirculant.gamma}\left(m, k\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/InverseChordCirculant.product_spectrum` (`✓ std3`). ∎
 
