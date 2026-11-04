@@ -198,8 +198,8 @@ private def normCore : NormedSpace.Core ℝ A.Space where
     exact map_add_le_add A.seminorm (v : E) (w : E)
   norm_eq_zero_iff := A.norm_zero_iff
 
-instance : NormedAddCommGroup A.Space := NormedAddCommGroup.ofCore A.normCore
-instance : NormedSpace ℝ A.Space := NormedSpace.ofCore A.normCore
+instance : NormedAddCommGroup A.Space := NormedAddCommGroup.ofCore (normCore A)
+instance : NormedSpace ℝ A.Space := NormedSpace.ofCore (normCore A)
 
 /-- The canonical wrapping map changes no vector or algebraic operation. -/
 def wrap : E ≃ₗ[ℝ] A.Space := LinearEquiv.refl ℝ E
