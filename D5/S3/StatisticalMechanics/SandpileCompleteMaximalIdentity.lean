@@ -9,6 +9,7 @@
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.RingTheory.Polynomial.Chebyshev
+import D5.S3.Combinatorics.SpectralGraph.TwinFreeThetaRecurrence
 
 /-! The complete maximal identity property for Cartesian products of cliques and paths. -/
 
@@ -232,23 +233,25 @@ private lemma path_elimination (i j : ℕ) (hj : 2 ≤ j) (x : ℕ → ℤ)
   have hf : ∀ k : ℕ, k < j → x k =
       ((S ℤ (k : ℤ)).eval (i + 2 : ℤ) -
         (S ℤ ((k : ℤ) - 1)).eval (i + 2 : ℤ)) * x 0 := by
-    intro k
-    induction k using Nat.twoStepInduction with
-    | zero => intro hk; simp
-    | one =>
-      intro hk
-      simpa only [Nat.cast_one, S_one, S_zero, sub_self, eval_X, eval_one,
-        show (i + 2 : ℤ) - 1 = i + 1 by ring] using h0
-    | more k ha hb =>
-      intro hk
-      rw [hr k hk, hb (by omega), ha (by omega)]
-      have hs := congrArg (Polynomial.eval (i + 2 : ℤ)) (S_add_two ℤ (k : ℤ))
-      have ht := congrArg (Polynomial.eval (i + 2 : ℤ)) (S_add_one ℤ (k : ℤ))
-      simp only [eval_sub, eval_mul, eval_X] at hs ht
-      push_cast
-      rw [show (k : ℤ) + 2 - 1 = (k : ℤ) + 1 by ring]
-      rw [show (k : ℤ) + 1 - 1 = (k : ℤ) by ring]
-      linear_combination -x 0 * hs + x 0 * ht
+    intro k hk
+    by_cases hk0 : k = 0
+    · subst k
+      simp
+    have he := D5.S3.Combinatorics.SpectralGraph.TwinFreeThetaRecurrence.bounded_continuant_endpoint
+      k (by omega) (i + 2 : ℝ) (fun n => (x n : ℝ)) (by
+        intro n hn
+        exact_mod_cast hr n (by omega))
+    have hs (n : ℤ) : (((S ℤ n).eval (i + 2 : ℤ) : ℤ) : ℝ) = (S ℝ n).eval (i + 2 : ℝ) := by
+      simpa using (algebraMap_eval_S (R := ℤ) (R' := ℝ) (i + 2 : ℤ) n)
+    apply Int.cast_injective (α := ℝ)
+    push_cast
+    rw [hs, hs]
+    have h0' : (x 1 : ℝ) = (i + 1 : ℝ) * (x 0 : ℝ) := by exact_mod_cast h0
+    have ht := congrArg (Polynomial.eval (i + 2 : ℝ)) (S_add_one ℝ ((k : ℤ) - 1))
+    simp only [eval_sub, eval_mul, eval_X, sub_add_cancel,
+      show (k : ℤ) - 1 - 1 = (k : ℤ) - 2 by ring] at ht
+    rw [h0'] at he
+    linear_combination he - (x 0 : ℝ) * ht
   obtain ⟨n, rfl⟩ : ∃ n : ℕ, j = n + 2 := ⟨j - 2, by omega⟩
   rw [show n + 2 - 1 = n + 1 by omega, show n + 2 - 2 = n by omega,
     hf (n + 1) (by omega), hf n (by omega)]
