@@ -88,8 +88,29 @@ internal sealed class MercaCosetFiberLiftDocument : IScribeDocumentDefinition
                                 Frac, Grp(n, Count(K)), Grp(D(2))))))),
                     "The center uses the cardinality of the subgroup, while the finite set is an explicit argument.",
                     DescribeRole.Definition),
+                Node("finite-sum", "The rational triangular sum", "sum_fin_rat", Provenance,
+                    FiniteSumFormula(),
+                    "The rational sum of the representatives of Fin ell is ell times ell minus one divided by two.",
+                    DescribeRole.Theorem),
                 Node("result", "The complete uniform lift theorem", "result", Provenance,
                     ResultFormula(), ProofText, DescribeRole.Theorem))));
+
+    private static Formula FiniteSumFormula()
+    {
+        Formula ell = F.Id("ell"), t = F.Id("t");
+        Formula representative = new Formula.Apply(Seq(Operatorname, Grp(F.Id("Fin"), Dot, F.Id("val"))), [t]);
+        Formula Cast(Formula value) => Parenthesized(Seq(value, Colon, Sp, Q));
+        Formula sum = Seq(new Formula.Subscript(Sum, Seq(t, Colon, Sp,
+            new Formula.Apply(Seq(Operatorname, Grp(F.Id("Fin"))), [ell]))), Sp, Cast(representative));
+        Formula rhs = new Formula.Fraction(new Formula.Binary(Parenthesized(Cast(ell)), FormulaBinaryOperator.Multiply,
+            Parenthesized(new Formula.Binary(Cast(ell), FormulaBinaryOperator.Subtract, D(1)))), D(2));
+        Formula equality = new Formula.Relation(sum, FormulaRelationOperator.Equal, rhs);
+        Formula hypothesis = new Formula.Relation(D(0), FormulaRelationOperator.LessThan, ell);
+        return Disp(Seq(Forall, Sp, Parenthesized(Seq(ell, Colon, Sp, Nat)), Comma, Sp,
+            new Formula.Logic(Parenthesized(hypothesis), FormulaLogicOperator.Implies, Parenthesized(equality))));
+    }
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula ResultFormula()
     {
