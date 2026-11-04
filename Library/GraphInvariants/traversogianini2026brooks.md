@@ -226,6 +226,25 @@ The receiver's original `MengerCertificates.Fam` and `fam_of_le` supply the
 terminal-clean disjoint certificates directly. No cyclic-array representation
 or second Menger proof is introduced. The source and receiver pins, author,
 Apache license and retirement condition stated above also apply to this slice.
+The cycle-existence argument from `exists_cycArr_of_conn` is expressed using
+ordinary native walks, the tree edge count and the degree sum identity.
+`exists_maximal_cycle_fans` chooses an attained maximum cycle length and
+uses the existing Brooks cycle-support cardinality theorem. Its induced
+Hamiltonian cycle is on the cycle-support subtype, not on the ambient graph.
+
+The accompanying `CycleDetour` construction uses the cycle-extension argument
+of `MengerHamilton/LongerCycle.lean`, source SHA-256
+4ef266555bdeaaed3cf380d1745519d14a74cc98160bc2e154f91cb95a0805f9.
+The receiver uses its existing ordered path cutter and path-ring splicer,
+with an exact inventory on the induced union of the actual supports.
+The `ChvatalErdos` statement follows `chvatal_erdos_aux` rather than the
+source's `IsKConnected` wrapper: k is arbitrary, with no added bound k < |V|.
+The native successor relation is read from rotated cycle darts.
+
+The mathematical source is V. Chvatal and P. Erdos, *A note on Hamiltonian
+circuits*, Discrete Mathematics 2 (1972), 111–113,
+DOI 10.1016/0012-365x(72)90079-9, Theorem 1. The original paper attributes
+the fan theorem to G. A. Dirac, *Généralisations du théorème de Menger*.
 
 Retire the port when this repository's own pinned Mathlib contains an equivalent
 entire finite set-form certificate and arbitrary-walk duality, after migrating

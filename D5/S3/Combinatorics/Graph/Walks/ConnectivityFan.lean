@@ -8,6 +8,8 @@
 import D5.S3.Combinatorics.Graph.Walks.MengerCertificates
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+import D5.S3.Combinatorics.Graph.Brooks.ColoringExtension
+import Mathlib.Combinatorics.SimpleGraph.Acyclic
 
 /-
 Copyright (c) 2026 Juan Pablo Traverso Gianini. All rights reserved.
@@ -28,6 +30,7 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.Walks.ConnectivityFan
 
 open SimpleGraph
+open scoped Classical
 
 universe u
 variable {V : Type u}
@@ -121,5 +124,102 @@ theorem exists_fan [Finite V] {G : SimpleGraph V} {k : ℕ}
     by_contra hne
     exact hdisjoint left right hne _ (family left).2.2.end_mem_support
       (by simpa only [heq] using (family right).2.2.end_mem_support)
+
+private lemma exists_cycle [Fintype V] {G : SimpleGraph V} {k : ℕ}
+    (hn : 3 ≤ Fintype.card V) (hk : 2 ≤ k)
+    (hconn : ∀ S : Set V, S.ncard < k → (G.induce Sᶜ).Connected) :
+    ∃ base, ∃ cycle : G.Walk base base, cycle.IsCycle := by
+  classical
+  by_contra hnone
+  push Not at hnone
+  have hacyclic : G.IsAcyclic := fun base cycle hcycle => hnone base cycle hcycle
+  have hconnected : G.Connected := by
+    have hempty := hconn ∅ (by simp; omega)
+    have : Nonempty V := Fintype.card_pos_iff.1 (by omega)
+    refine ⟨fun left right => ?_⟩
+    obtain ⟨path, _, _⟩ := exists_path_avoiding ∅ hempty
+      (Set.notMem_empty left) (Set.notMem_empty right)
+    exact path.reachable
+  have htree : G.IsTree := ⟨hconnected, hacyclic⟩
+  have hdegree : ∀ vertex, 2 ≤ G.degree vertex := by
+    intro vertex
+    by_contra hsmall
+    have hneighbors : (G.neighborFinset vertex : Set V).ncard < k := by
+      rw [Set.ncard_coe_finset, card_neighborFinset_eq_degree]
+      omega
+    obtain ⟨other, hother⟩ : ∃ other, other ∉ insert vertex (G.neighborFinset vertex) := by
+      by_contra hfull
+      push Not at hfull
+      have hcard := Finset.card_le_card
+        (show Finset.univ ⊆ insert vertex (G.neighborFinset vertex) from fun other _ => hfull other)
+      rw [Finset.card_univ] at hcard
+      have hbound := Finset.card_insert_le vertex (G.neighborFinset vertex)
+      rw [card_neighborFinset_eq_degree] at hbound
+      omega
+    simp only [Finset.mem_insert, not_or] at hother
+    obtain ⟨path, _, havoid⟩ := exists_path_avoiding (G.neighborFinset vertex : Set V)
+      (hconn _ hneighbors) (a := vertex) (b := other) (by simp) (by simpa using hother.2)
+    obtain ⟨first, hfirst, rest, rfl⟩ := Walk.exists_eq_cons_of_ne (Ne.symm hother.1) path
+    exact havoid first (by simp) (by simpa using hfirst)
+  have htreeEdges := htree.card_edgeFinset
+  have hdegrees := G.sum_degrees_eq_twice_card_edges
+  have hlower : ∑ _vertex : V, 2 ≤ ∑ vertex, G.degree vertex :=
+    Finset.sum_le_sum fun vertex _ => hdegree vertex
+  simp only [Finset.sum_const, Finset.card_univ, smul_eq_mul] at hlower
+  omega
+
+private lemma induced_cycle_spans_support {G : SimpleGraph V} {base : V}
+    (cycle : G.Walk base base) (hcycle : cycle.IsCycle) :
+    (cycle.induce {vertex | vertex ∈ cycle.support} (fun _ hmem => hmem)).IsHamiltonianCycle := by
+  classical
+  apply Walk.isHamiltonianCycle_iff_isCycle_and_forall_mem_support.mpr
+  constructor
+  · rw [← Walk.isCycle_map_iff_of_injective
+      (f := (Embedding.induce {vertex | vertex ∈ cycle.support}).toHom) Subtype.val_injective,
+      Walk.map_induce]
+    exact hcycle
+  · intro vertex
+    rw [Walk.support_induce]
+    exact (List.mem_attachWith _ vertex).mpr vertex.property
+
+/-- A longest ordinary cycle, spanning its own support, with a fan from every outside vertex. -/
+theorem exists_maximal_cycle_fans [Finite V] {G : SimpleGraph V} {k : ℕ}
+    (hn : 3 ≤ Nat.card V) (hk : 2 ≤ k)
+    (hconn : ∀ S : Set V, S.ncard < k → (G.induce Sᶜ).Connected) :
+    ∃ base, ∃ cycle : G.Walk base base, cycle.IsCycle ∧
+      (∀ otherBase (other : G.Walk otherBase otherBase),
+        other.IsCycle → other.length ≤ cycle.length) ∧
+      (cycle.induce {vertex | vertex ∈ cycle.support} (fun _ hmem => hmem)).IsHamiltonianCycle ∧
+      ∀ x : V, x ∉ cycle.support →
+        ∃ (endpoint : Fin (min k cycle.length) → V)
+          (paths : ∀ index, G.Walk x (endpoint index)),
+          (∀ index, endpoint index ∈ cycle.support ∧ (paths index).IsPath ∧
+            ∀ y ∈ (paths index).support, y ∈ cycle.support → y = endpoint index) ∧
+          (∀ left right, left ≠ right → ∀ y ∈ (paths left).support,
+            y ∈ (paths right).support → y = x) ∧ Function.Injective endpoint := by
+  classical
+  letI := Fintype.ofFinite V
+  have hn' : 3 ≤ Fintype.card V := by simpa only [Nat.card_eq_fintype_card] using hn
+  obtain ⟨initialBase, initial, hinitial⟩ := exists_cycle hn' hk hconn
+  have hbound : ∀ base (cycle : G.Walk base base), cycle.IsCycle →
+      cycle.length ≤ Fintype.card V := by
+    intro base cycle hcycle
+    rw [← Walk.IsCycle.support_toFinset_card hcycle]
+    exact Finset.card_le_univ _
+  let predicate := fun length => ∃ base, ∃ cycle : G.Walk base base,
+    cycle.IsCycle ∧ cycle.length = length
+  obtain ⟨base, cycle, hcycle, hlength⟩ := Nat.findGreatest_spec (P := predicate)
+    (hbound initialBase initial hinitial) ⟨initialBase, initial, hinitial, rfl⟩
+  refine ⟨base, cycle, hcycle, ?_, induced_cycle_spans_support cycle hcycle, ?_⟩
+  · intro otherBase other hother
+    rw [hlength]
+    exact Nat.le_findGreatest (P := predicate) (hbound otherBase other hother)
+      ⟨otherBase, other, hother, rfl⟩
+  · intro x hx
+    have hfan := exists_fan hconn cycle.support.toFinset (x := x) (by simpa using hx)
+    have hcard : cycle.support.toFinset.card = cycle.length :=
+      Walk.IsCycle.support_toFinset_card hcycle
+    rw [hcard] at hfan
+    simpa only [List.mem_toFinset] using hfan
 
 end D5.S3.Combinatorics.Graph.Walks.ConnectivityFan
