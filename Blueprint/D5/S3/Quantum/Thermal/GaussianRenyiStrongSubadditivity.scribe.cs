@@ -11,7 +11,7 @@ internal sealed class GaussianRenyiStrongSubadditivityDocument : IScribeDocument
 
     private static Formula X(string name) => name switch
     {
-        "α" => Alpha, "ι" => Iota, "Ω" => Omega,
+        "α" => Alpha, "ι" => Iota, "ω" => Omega,
         _ => F.Id(name),
     };
     private static Formula Qualified(params string[] parts)
@@ -44,7 +44,7 @@ internal sealed class GaussianRenyiStrongSubadditivityDocument : IScribeDocument
     private static Formula GenericIndices(Formula body) => All("ι", Qualified("Type"),
         Instance(At(Qualified("Fintype"), Iota), Instance(At(Qualified("DecidableEq"), Iota), body)));
     private static Formula GenericMatrices(Formula body) => GenericIndices(
-        All("V", MatrixOf(Iota, Reals), All("Ω", MatrixOf(Iota, Reals), body)));
+        All("V", MatrixOf(Iota, Reals), All("ω", MatrixOf(Iota, Reals), body)));
     private static Formula Equal(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula Member(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.MemberOf, right);
     private static Formula LT(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
@@ -107,7 +107,7 @@ internal sealed class GaussianRenyiStrongSubadditivityDocument : IScribeDocument
         Formula conditional = At(Qualified("dite"), condition,
             LambdaOf("h", condition, Mul(half, sum)),
             At(Qualified("Function", "const"), new Formula.Not(Parenthesized(condition)), Typed(D(0), Reals)));
-        return GenericIndices(All("α", Reals, All("V", MatrixOf(Iota, Reals), All("Ω", MatrixOf(Iota, Reals),
+        return GenericIndices(All("α", Reals, All("V", MatrixOf(Iota, Reals), All("ω", MatrixOf(Iota, Reals),
             Equal(Typed(Local("gaussianRenyiEntropy", Alpha, X("V"), Omega), Reals), conditional)))));
     }
     private static Formula Union(Formula left, Formula right) => Seq(Parenthesized(left), Sp, Cup, Sp, Parenthesized(right));
@@ -141,7 +141,7 @@ internal sealed class GaussianRenyiStrongSubadditivityDocument : IScribeDocument
                 DescribeId.Create("physical-on"), DeclarationHandle.Create(Module + ".physicalOn"),
                 H("The uncertainty condition on a finite index type"), StatementSource.FromAuthor(Disp(PhysicalOnDefinition())),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("For arbitrary finite indices, V must be real symmetric and V+iΩ must be positive semidefinite. With the canonical symplectic form this is the bosonic uncertainty condition. The source writes V−iΩ in RenyiGaussian_v2.tex, lines 194–198; for real V and Ω, complex conjugation makes the two sign conventions equivalent."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("For arbitrary finite indices, V must be real symmetric and V+iω must be positive semidefinite. With the canonical symplectic form this is the bosonic uncertainty condition. The source writes V−iΩ in RenyiGaussian_v2.tex, lines 194–198, with Ω for the matrix ω here; for real V and ω, complex conjugation makes the two sign conventions equivalent."))), DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("physical-covariance"), DeclarationHandle.Create(Module + ".physicalCovariance"),
                 H("Physical bosonic covariances"), StatementSource.FromAuthor(Disp(CovarianceDefinition())),
@@ -156,7 +156,7 @@ internal sealed class GaussianRenyiStrongSubadditivityDocument : IScribeDocument
                 DescribeId.Create("symplectic-operator"), DeclarationHandle.Create(Module + ".symplecticOperator"),
                 H("The Hermitian representative of the symplectic spectrum"), StatementSource.FromAuthor(Disp(OperatorDefinition())),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("Embed the real matrices into complex matrices and place iΩ between two copies of the positive square root of V. For a physical covariance the resulting matrix is Hermitian and has the spectrum of iΩV. Its eigenvalues have absolute value at least one. This represents the symplectic eigenvalues described in RenyiGaussian_v2.tex, lines 201–205."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("Embed the real matrices into complex matrices and place iω between two copies of the positive square root of V. For a physical covariance the resulting matrix is Hermitian and has the spectrum of iωV. Its eigenvalues have absolute value at least one. This represents the symplectic eigenvalues described in RenyiGaussian_v2.tex, lines 201–205."))), DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("gaussian-renyi-entropy"), DeclarationHandle.Create(Module + ".gaussianRenyiEntropy"),
                 H("Entropy from the symplectic eigenvalues"), StatementSource.FromAuthor(Disp(EntropyDefinition())),
@@ -176,9 +176,9 @@ internal sealed class GaussianRenyiStrongSubadditivityDocument : IScribeDocument
                 StatementSource.FromAuthor(Disp(ClaimFormula())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Paragraph(Text("First identify the canonical uncertainty condition under the quadrature permutation. The symplectic form squares to minus the identity, as does its restriction to any full set of mode quadratures. The two positive semidefinite matrices V+iΩ and V−iΩ have average V. If V has a kernel vector, positivity forces it into the kernel of each uncertainty matrix and hence into the kernel of Ω; invertibility of Ω rules this out. Thus V is positive definite. These facts pass to each reduced covariance, whose index cardinality is twice the number of retained modes.")),
-                    Paragraph(Text("Put J=iΩ, S=V^(1/2) and M=SJS. The matrix M is Hermitian and invertible. Congruencing the two uncertainty matrices by JS gives M²+M and M²−M positive semidefinite. Evaluating their quadratic forms on normalized eigenvectors gives λ²+λ≥0 and λ²−λ≥0. Since λ is nonzero, |λ|≥1. For 0≤x<1, the interpolation H_x=V+ixΩ=x(V+iΩ)+(1−x)V is Hermitian positive definite, and its principal blocks are the corresponding interpolations of the reduced covariances.")),
-                    Paragraph(Text("To compute its determinant, use equality of the characteristic polynomials of SJS and JV, together with −J H_(−t)=tI−JV. Since J²=I and H_x transposed equals H_(−x), multiplication of the characteristic products at x and −x gives det(H_x)² equal to the product of λ²−x² over all eigenvalues λ of M. Every factor and det(H_x) are positive. Taking logarithms gives log(det(H_x)) equal to one half the sum of log(λ²−x²). Apply stieltjes_representation to each |λ| and interchange the finite sum and integrals. The resulting positive Stieltjes mixture is S_α(V)=n c_α+∫₀¹ w_α(x) log(det(V+ixΩ)) dx for 0<α<2, α different from one; its logarithmic integrand is integrable, including when a symplectic eigenvalue equals one.")),
+                    Paragraph(Text("First identify the canonical uncertainty condition under the quadrature permutation. The symplectic form squares to minus the identity, as does its restriction to any full set of mode quadratures. The two positive semidefinite matrices V+iω and V−iω have average V. If V has a kernel vector, positivity forces it into the kernel of each uncertainty matrix and hence into the kernel of ω; invertibility of ω rules this out. Thus V is positive definite. These facts pass to each reduced covariance, whose index cardinality is twice the number of retained modes.")),
+                    Paragraph(Text("Put J=iω, S=V^(1/2) and M=SJS. The matrix M is Hermitian and invertible. Congruencing the two uncertainty matrices by JS gives M²+M and M²−M positive semidefinite. Evaluating their quadratic forms on normalized eigenvectors gives λ²+λ≥0 and λ²−λ≥0. Since λ is nonzero, |λ|≥1. For 0≤x<1, the interpolation H_x=V+ixω=x(V+iω)+(1−x)V is Hermitian positive definite, and its principal blocks are the corresponding interpolations of the reduced covariances.")),
+                    Paragraph(Text("To compute its determinant, use equality of the characteristic polynomials of SJS and JV, together with −J H_(−t)=tI−JV. Since J²=I and H_x transposed equals H_(−x), multiplication of the characteristic products at x and −x gives det(H_x)² equal to the product of λ²−x² over all eigenvalues λ of M. Every factor and det(H_x) are positive. Taking logarithms gives log(det(H_x)) equal to one half the sum of log(λ²−x²). Apply stieltjes_representation to each |λ| and interchange the finite sum and integrals. The resulting positive Stieltjes mixture is S_α(V)=n c_α+∫₀¹ w_α(x) log(det(V+ixω)) dx for 0<α<2, α different from one; its logarithmic integrand is integrable, including when a symplectic eigenvalue equals one.")),
                     Paragraph(Text("At order two, renyiFunction(2,ν)=log(ν). The determinant identity at x=0 therefore gives S_2(V)=one half of log(det(V)). This also applies to every reduced covariance.")),
                     Paragraph(Text("For a positive definite Hermitian block matrix with leading block P, off-diagonal block X and trailing block Q, the Schur complement Q−XᴴP⁻¹X is positive definite and det(H)=det(P) det(Q−XᴴP⁻¹X). The complement is at most Q in the positive semidefinite order; log_det_mono gives determinant monotonicity, and hence the Fischer product bound. Eliminate the common block B of the matrix on B together with A and C, then apply that product bound to the A and C blocks of the remaining Schur complement. Restriction commutes with this complement. The determinant factors give Koteljanskii’s inequality det(H_ABC) det(H_B)≤det(H_AB) det(H_BC). Positivity of all determinants converts it into the corresponding sum of logarithms. Empty blocks have determinant one and are included.")),
                     Paragraph(Text("Apply this logarithmic inequality to H_x on the four blocks AB, BC, ABC and B, using the disjoint quadrature sets associated with A, B and C. For 0<α<2 with α different from one, multiply the pointwise inequality by the positive weight w_α(x), integrate on (0,1), and use the integrability supplied by the Stieltjes mixture. The identity |A∪B|+|B∪C|=|A∪B∪C|+|B| also holds after casting the cardinalities to the real numbers and cancels the additive multiples of c_α. This gives the asserted entropy inequality. At α=2, apply the same logarithmic inequality at x=0 and multiply by one half."))),

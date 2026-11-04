@@ -34,8 +34,8 @@ def symplecticForm (n : ℕ) : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ :=
   (-Matrix.J (Fin n) ℝ).submatrix e e
 
 def physicalOn {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) : Prop :=
-  V.IsSymm ∧ (V.map Complex.ofReal + Complex.I • Ω.map Complex.ofReal).PosSemidef
+    (V ω : Matrix ι ι ℝ) : Prop :=
+  V.IsSymm ∧ (V.map Complex.ofReal + Complex.I • ω.map Complex.ofReal).PosSemidef
 
 def physicalCovariance {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) : Prop :=
   D5.S3.Estimation.GaussianThermometryJointMeasurementRefutation.IsGaussianMeasurementCov
@@ -49,13 +49,13 @@ def reducedCovariance {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) �
     (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
 
 def symplecticOperator {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) : Matrix ι ι ℂ :=
-  CFC.sqrt (V.map Complex.ofReal) * (Complex.I • Ω.map Complex.ofReal) *
+    (V ω : Matrix ι ι ℝ) : Matrix ι ι ℂ :=
+  CFC.sqrt (V.map Complex.ofReal) * (Complex.I • ω.map Complex.ofReal) *
     CFC.sqrt (V.map Complex.ofReal)
 
 def gaussianRenyiEntropy {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (α : ℝ) (V Ω : Matrix ι ι ℝ) : ℝ :=
-  if h : (symplecticOperator V Ω).IsHermitian then
+    (α : ℝ) (V ω : Matrix ι ι ℝ) : ℝ :=
+  if h : (symplecticOperator V ω).IsHermitian then
     (1 / 2 : ℝ) * ∑ i, D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiFunction α
       |h.eigenvalues i|
   else 0
@@ -183,25 +183,25 @@ private lemma reduced_card {n : ℕ} (X : Finset (Fin n)) :
   simp [Nat.mul_comm]
 
 private lemma physical_skew {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω) : Ωᵀ = -Ω := by
+    (V ω : Matrix ι ι ℝ) (hV : physicalOn V ω) : ωᵀ = -ω := by
   ext i j
   have h := congrArg (fun M : Matrix ι ι ℂ => (M i j).im) hV.2.isHermitian.eq
-  have hh : -Ω j i = Ω i j := by
+  have hh : -ω j i = ω i j := by
     simpa [Matrix.conjTranspose_apply, Matrix.add_apply, Matrix.smul_apply,
       smul_eq_mul, Complex.mul_re, Complex.mul_im] using h
   exact neg_eq_iff_eq_neg.mp hh
 
 private lemma uncertainty_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-    (hΩ : IsUnit (Ω.map Complex.ofReal)) : (V.map Complex.ofReal).PosDef := by
-  let P := V.map Complex.ofReal + Complex.I • Ω.map Complex.ofReal
-  let Q := V.map Complex.ofReal - Complex.I • Ω.map Complex.ofReal
+    (V ω : Matrix ι ι ℝ) (hV : physicalOn V ω)
+    (hω : IsUnit (ω.map Complex.ofReal)) : (V.map Complex.ofReal).PosDef := by
+  let P := V.map Complex.ofReal + Complex.I • ω.map Complex.ofReal
+  let Q := V.map Complex.ofReal - Complex.I • ω.map Complex.ofReal
   have hP : P.PosSemidef := hV.2
   have hQ : Q.PosSemidef := by
     have heq : Pᵀ = Q := by
       dsimp only [P, Q]
       rw [Matrix.transpose_add, Matrix.transpose_smul, ← Matrix.transpose_map,
-        ← Matrix.transpose_map, hV.1, physical_skew V Ω hV,
+        ← Matrix.transpose_map, hV.1, physical_skew V ω hV,
         Matrix.map_neg _ Complex.ofReal_neg, smul_neg, sub_eq_add_neg]
     exact heq ▸ hP.transpose
   have hsum : P + Q = (2 : ℝ) • V.map Complex.ofReal := by
@@ -225,11 +225,11 @@ private lemma uncertainty_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
     le_antisymm ((le_of_eq (eq_neg_of_add_eq_zero_left heq)).trans
       (neg_nonpos.mpr (hQ.dotProduct_mulVec_nonneg z))) (hP.dotProduct_mulVec_nonneg z)
   have hpz := hP.dotProduct_mulVec_zero_iff.mp hzero
-  have hoz : Ω.map Complex.ofReal *ᵥ z = 0 := by
-    have h : Complex.I • (Ω.map Complex.ofReal *ᵥ z) = 0 := by
+  have hoz : ω.map Complex.ofReal *ᵥ z = 0 := by
+    have h : Complex.I • (ω.map Complex.ofReal *ᵥ z) = 0 := by
       simpa only [P, add_mulVec, hz, zero_add, smul_mulVec] using hpz
     exact (smul_eq_zero.mp h).resolve_left Complex.I_ne_zero
-  exact (Matrix.mulVec_injective_iff_isUnit.mpr hΩ) (hoz.trans (mulVec_zero _).symm)
+  exact (Matrix.mulVec_injective_iff_isUnit.mpr hω) (hoz.trans (mulVec_zero _).symm)
 
 private lemma canonical_square (n : ℕ) : symplecticForm n * symplecticForm n = -1 := by
   dsimp only [symplecticForm]
@@ -269,35 +269,35 @@ private lemma reduced_physical {n : ℕ}
     exact hp.submatrix f
 
 private lemma symplecticOperator_hermitian {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-    (hpos : (V.map Complex.ofReal).PosDef) : (symplecticOperator V Ω).IsHermitian := by
-  have hJ : (Complex.I • Ω.map Complex.ofReal).IsHermitian := by
+    (V ω : Matrix ι ι ℝ) (hV : physicalOn V ω)
+    (hpos : (V.map Complex.ofReal).PosDef) : (symplecticOperator V ω).IsHermitian := by
+  have hJ : (Complex.I • ω.map Complex.ofReal).IsHermitian := by
     simpa only [add_sub_cancel_left] using hV.2.isHermitian.sub hpos.isHermitian
   have hS := (CFC.sqrt_nonneg (V.map Complex.ofReal)).posSemidef.isHermitian.eq
-  change (CFC.sqrt (V.map Complex.ofReal) * (Complex.I • Ω.map Complex.ofReal) *
+  change (CFC.sqrt (V.map Complex.ofReal) * (Complex.I • ω.map Complex.ofReal) *
     CFC.sqrt (V.map Complex.ofReal)).IsHermitian
   simpa only [hS] using
     isHermitian_conjTranspose_mul_mul (CFC.sqrt (V.map Complex.ofReal)) hJ
 
 private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-    (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
-    (hH : (symplecticOperator V Ω).IsHermitian) :
+    (V ω : Matrix ι ι ℝ) (hV : physicalOn V ω)
+    (hpos : (V.map Complex.ofReal).PosDef) (hω : ω * ω = -1)
+    (hH : (symplecticOperator V ω).IsHermitian) :
     ∀ i, 1 ≤ |hH.eigenvalues i| := by
   let S := CFC.sqrt (V.map Complex.ofReal)
-  let J := Complex.I • Ω.map Complex.ofReal
-  let M := symplecticOperator V Ω
+  let J := Complex.I • ω.map Complex.ofReal
+  let M := symplecticOperator V ω
   have hSS : S * S = V.map Complex.ofReal := CFC.sqrt_mul_sqrt_self _ hpos.posSemidef.nonneg
   have hS : Sᴴ = S := (CFC.sqrt_nonneg _).posSemidef.isHermitian.eq
   have hJ : Jᴴ = J := by
     have h := hV.2.isHermitian.sub hpos.isHermitian
     simpa only [add_sub_cancel_left] using h.eq
-  have hΩC : Ω.map Complex.ofReal * Ω.map Complex.ofReal = -1 := by
-    change Complex.ofRealHom.mapMatrix Ω * Complex.ofRealHom.mapMatrix Ω = -1
-    rw [← map_mul, hΩ, map_neg, map_one]
+  have hωC : ω.map Complex.ofReal * ω.map Complex.ofReal = -1 := by
+    change Complex.ofRealHom.mapMatrix ω * Complex.ofRealHom.mapMatrix ω = -1
+    rw [← map_mul, hω, map_neg, map_one]
   have hJJ : J * J = 1 := by
     dsimp only [J]
-    rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Complex.I_mul_I, hΩC]
+    rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Complex.I_mul_I, hωC]
     simp
   have hunitS : IsUnit S := (CFC.isUnit_sqrt_iff _ hpos.posSemidef.nonneg).mpr hpos.isUnit
   have hunitM : IsUnit M := (hunitS.mul (IsUnit.of_mul_eq_one J hJJ)).mul hunitS
@@ -305,7 +305,7 @@ private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [Decidab
     have heq : (V.map Complex.ofReal + J)ᵀ = V.map Complex.ofReal - J := by
       dsimp only [J]
       rw [Matrix.transpose_add, Matrix.transpose_smul, ← Matrix.transpose_map,
-        ← Matrix.transpose_map, hV.1, physical_skew V Ω hV,
+        ← Matrix.transpose_map, hV.1, physical_skew V ω hV,
         Matrix.map_neg _ Complex.ofReal_neg, smul_neg, sub_eq_add_neg]
     exact heq ▸ hV.2.transpose
   have hp : (M * M + M).PosSemidef := by
@@ -360,10 +360,10 @@ private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [Decidab
     nlinarith
 
 private lemma shifted_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
+    (V ω : Matrix ι ι ℝ) (hV : physicalOn V ω)
     (hpos : (V.map Complex.ofReal).PosDef) {x : ℝ}
     (hx0 : 0 ≤ x) (hx1 : x < 1) :
-    ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).PosDef := by
+    ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • ω.map Complex.ofReal)).PosDef := by
   have hp := (hpos.smul (sub_pos.mpr hx1)).add_posSemidef
     (hV.2.smul hx0)
   convert hp using 1
@@ -373,37 +373,37 @@ private lemma shifted_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
   ring
 
 private lemma principal_block_identity {ι : Type*}
-    (V Ω : Matrix ι ι ℝ) (X : Finset ι) (x : ℝ) :
-    ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).submatrix
+    (V ω : Matrix ι ι ℝ) (X : Finset ι) (x : ℝ) :
+    ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • ω.map Complex.ofReal)).submatrix
         (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1) =
       ((V.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
           Complex.ofReal) +
         (x : ℂ) • (Complex.I •
-          (Ω.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
+          (ω.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
             Complex.ofReal) := by
   simp only [Matrix.submatrix_add, Matrix.submatrix_smul, Pi.add_apply, Pi.smul_apply,
     Matrix.submatrix_map]
 
 private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-    (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
-    (hH : (symplecticOperator V Ω).IsHermitian) :
+    (V ω : Matrix ι ι ℝ) (hV : physicalOn V ω)
+    (hpos : (V.map Complex.ofReal).PosDef) (hω : ω * ω = -1)
+    (hH : (symplecticOperator V ω).IsHermitian) :
     ∀ x : ℝ, 0 ≤ x → x < 1 →
       Real.log (((V.map Complex.ofReal) + (x : ℂ) •
-        (Complex.I • Ω.map Complex.ofReal)).det.re) =
+        (Complex.I • ω.map Complex.ofReal)).det.re) =
         (1 / 2 : ℝ) * ∑ i, Real.log (hH.eigenvalues i ^ 2 - x ^ 2) := by
   let S := CFC.sqrt (V.map Complex.ofReal)
-  let J := Complex.I • Ω.map Complex.ofReal
+  let J := Complex.I • ω.map Complex.ofReal
   let H := fun x : ℝ => V.map Complex.ofReal + (x : ℂ) • J
   have hSS : S * S = V.map Complex.ofReal := CFC.sqrt_mul_sqrt_self _ hpos.posSemidef.nonneg
-  have hΩC : Ω.map Complex.ofReal * Ω.map Complex.ofReal = -1 := by
-    change Complex.ofRealHom.mapMatrix Ω * Complex.ofRealHom.mapMatrix Ω = -1
-    rw [← map_mul, hΩ, map_neg, map_one]
+  have hωC : ω.map Complex.ofReal * ω.map Complex.ofReal = -1 := by
+    change Complex.ofRealHom.mapMatrix ω * Complex.ofRealHom.mapMatrix ω = -1
+    rw [← map_mul, hω, map_neg, map_one]
   have hJJ : J * J = 1 := by
     dsimp only [J]
-    rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Complex.I_mul_I, hΩC]
+    rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Complex.I_mul_I, hωC]
     simp
-  have hc : (symplecticOperator V Ω).charpoly = (J * V.map Complex.ofReal).charpoly := by
+  have hc : (symplecticOperator V ω).charpoly = (J * V.map Complex.ofReal).charpoly := by
     change (S * J * S).charpoly = _
     calc
       _ = (S * (J * S)).charpoly := by rw [mul_assoc]
@@ -414,7 +414,7 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
   have hd (t : ℝ) : (∏ i, ((t - hH.eigenvalues i : ℝ) : ℂ)) =
       (-J).det * (H (-t)).det := by
     rw [← D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Spectral.det_pencil hH t]
-    change ((t : ℂ) • (1 : Matrix ι ι ℂ) - symplecticOperator V Ω).det = _
+    change ((t : ℂ) • (1 : Matrix ι ι ℂ) - symplecticOperator V ω).det = _
     rw [← hscalar, ← Matrix.eval_charpoly, hc, Matrix.eval_charpoly, hscalar]
     have heq : (t : ℂ) • (1 : Matrix ι ι ℂ) - J * V.map Complex.ofReal = -J * H (-t) := by
       dsimp only [H]
@@ -428,7 +428,7 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
   have ht : (H x)ᵀ = H (-x) := by
     dsimp only [H, J]
     rw [Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_smul,
-      ← Matrix.transpose_map, ← Matrix.transpose_map, hV.1, physical_skew V Ω hV,
+      ← Matrix.transpose_map, ← Matrix.transpose_map, hV.1, physical_skew V ω hV,
       Matrix.map_neg _ Complex.ofReal_neg, smul_neg, smul_neg,
       Complex.ofReal_neg, neg_smul]
   have hdt : (H (-x)).det = (H x).det := by rw [← ht, Matrix.det_transpose]
@@ -444,7 +444,7 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
         ring
       _ = (-J).det ^ 2 * (H x).det ^ 2 := by rw [hd x, hd (-x), neg_neg, hdt]; ring
       _ = (H x).det ^ 2 := by rw [hdetJ, one_mul]
-  have hpx : (H x).PosDef := shifted_posDef V Ω hV hpos hx0 hx1
+  have hpx : (H x).PosDef := shifted_posDef V ω hV hpos hx0 hx1
   have hdr : ((H x).det.re : ℂ) = (H x).det := by
     apply Complex.ext
     · rfl
@@ -452,7 +452,7 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
   rw [← hdr, ← Complex.ofReal_pow, ← Complex.ofReal_prod] at hprod
   have hreal := Complex.ofReal_injective hprod
   have hterms (i : ι) : 0 < hH.eigenvalues i ^ 2 - x ^ 2 := by
-    have he := symplectic_spectrum_lower_bound V Ω hV hpos hΩ hH i
+    have he := symplectic_spectrum_lower_bound V ω hV hpos hω hH i
     nlinarith [sq_abs (hH.eigenvalues i)]
   have hl := congrArg Real.log hreal
   rw [Real.log_prod (fun i _ => (hterms i).ne'), Real.log_pow] at hl
@@ -463,30 +463,30 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
     _ = _ := congrArg (fun t : ℝ => (1 / 2 : ℝ) * t) hl.symm
 
 private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-    (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
-    (hH : (symplecticOperator V Ω).IsHermitian) {α : ℝ}
+    (V ω : Matrix ι ι ℝ) (hV : physicalOn V ω)
+    (hpos : (V.map Complex.ofReal).PosDef) (hω : ω * ω = -1)
+    (hH : (symplecticOperator V ω).IsHermitian) {α : ℝ}
     (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) :
     IntegrableOn (fun x : ℝ => renyiWeight α x *
       Real.log (((V.map Complex.ofReal) + (x : ℂ) •
-        (Complex.I • Ω.map Complex.ofReal)).det.re)) (Set.Ioo 0 1) ∧
-    gaussianRenyiEntropy α V Ω =
+        (Complex.I • ω.map Complex.ofReal)).det.re)) (Set.Ioo 0 1) ∧
+    gaussianRenyiEntropy α V ω =
       (Fintype.card ι : ℝ) / 2 *
           D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiConstant α +
         ∫ x in Set.Ioo (0 : ℝ) 1,
           D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiWeight α x *
             Real.log (((V.map Complex.ofReal) + (x : ℂ) •
-              (Complex.I • Ω.map Complex.ofReal)).det.re) := by
+              (Complex.I • ω.map Complex.ofReal)).det.re) := by
   have hs (i : ι) := stieltjes_representation ha0 ha2 ha1
-    (symplectic_spectrum_lower_bound V Ω hV hpos hΩ hH i)
+    (symplectic_spectrum_lower_bound V ω hV hpos hω hH i)
   have hi (i : ι) : IntegrableOn (fun x : ℝ => renyiWeight α x *
       Real.log (hH.eigenvalues i ^ 2 - x ^ 2)) (Set.Ioo 0 1) := by
     simpa (config := { congrConsts := false }) only [sq_abs] using (hs i).1
   have heq (x : ℝ) (hx : x ∈ Set.Ioo (0 : ℝ) 1) :
       renyiWeight α x * Real.log (((V.map Complex.ofReal) + (x : ℂ) •
-          (Complex.I • Ω.map Complex.ofReal)).det.re) =
+          (Complex.I • ω.map Complex.ofReal)).det.re) =
         (1 / 2 : ℝ) * ∑ i, renyiWeight α x * Real.log (hH.eigenvalues i ^ 2 - x ^ 2) := by
-    rw [determinant_spectral_identity V Ω hV hpos hΩ hH x hx.1.le hx.2,
+    rw [determinant_spectral_identity V ω hV hpos hω hH x hx.1.le hx.2,
       ← Finset.mul_sum]
     ring
   have hint := (integrable_finsetSum Finset.univ (fun i _ => hi i)).const_mul (1 / 2 : ℝ)
@@ -494,7 +494,7 @@ private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
   · exact IntegrableOn.congr_fun hint (fun x hx => (heq x hx).symm) measurableSet_Ioo
   · have hInt : (∫ x in Set.Ioo (0 : ℝ) 1, renyiWeight α x *
           Real.log (((V.map Complex.ofReal) + (x : ℂ) •
-            (Complex.I • Ω.map Complex.ofReal)).det.re)) =
+            (Complex.I • ω.map Complex.ofReal)).det.re)) =
         (1 / 2 : ℝ) * ∑ i, ∫ x in Set.Ioo (0 : ℝ) 1,
           renyiWeight α x * Real.log (hH.eigenvalues i ^ 2 - x ^ 2) := by
       rw [setIntegral_congr_fun measurableSet_Ioo heq, integral_const_mul,
@@ -514,17 +514,17 @@ private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
     ring
 
 private lemma alpha_two_entropy {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-    (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1) :
-    gaussianRenyiEntropy 2 V Ω = (1 / 2 : ℝ) * Real.log (V.det) := by
-  have hH := symplecticOperator_hermitian V Ω hV hpos
+    (V ω : Matrix ι ι ℝ) (hV : physicalOn V ω)
+    (hpos : (V.map Complex.ofReal).PosDef) (hω : ω * ω = -1) :
+    gaussianRenyiEntropy 2 V ω = (1 / 2 : ℝ) * Real.log (V.det) := by
+  have hH := symplecticOperator_hermitian V ω hV hpos
   have hs (ν : ℝ) : renyiFunction 2 ν = Real.log ν := by
     dsimp only [renyiFunction]
     rw [Real.rpow_two, Real.rpow_two]
     norm_num
     congr 1
     ring
-  have hd := determinant_spectral_identity V Ω hV hpos hΩ hH 0 (by norm_num) (by norm_num)
+  have hd := determinant_spectral_identity V ω hV hpos hω hH 0 (by norm_num) (by norm_num)
   simp (config := { congrConsts := false }) only
       [Complex.ofReal_zero, zero_smul, add_zero, zero_pow (by norm_num : 2 ≠ 0),
     sub_zero] at hd
@@ -713,21 +713,21 @@ private theorem log_koteljanskii {ι : Type*} [DecidableEq ι]
     Real.log_mul (hp (A ∪ B)).ne' (hp (B ∪ C)).ne'] using hl
 
 private lemma mode_interpolation_det {n : ℕ}
-    (V Ω : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
+    (V ω : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
     (Y : Finset (Fin n × Fin 2)) (X : Finset (Fin n))
     (hYX : ∀ p, p ∈ Y ↔ p.1 ∈ X) (x : ℝ) :
-    (((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).submatrix
+    (((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • ω.map Complex.ofReal)).submatrix
       (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val).det =
       (((reducedCovariance V X).map Complex.ofReal) + (x : ℂ) •
-        (Complex.I • (reducedCovariance Ω X).map Complex.ofReal)).det := by
+        (Complex.I • (reducedCovariance ω X).map Complex.ofReal)).det := by
   let e : ↥Y ≃ {p : Fin n × Fin 2 // p.1 ∈ X} :=
     Equiv.subtypeEquivRight hYX
   rw [principal_block_identity]
   have heq : ((reducedCovariance V X).map Complex.ofReal + (x : ℂ) •
-      (Complex.I • (reducedCovariance Ω X).map Complex.ofReal)).submatrix e e =
+      (Complex.I • (reducedCovariance ω X).map Complex.ofReal)).submatrix e e =
       (V.submatrix (Subtype.val : ↥Y → Fin n × Fin 2)
         Subtype.val).map Complex.ofReal + (x : ℂ) •
-          (Complex.I • (Ω.submatrix Subtype.val Subtype.val).map Complex.ofReal) := by
+          (Complex.I • (ω.submatrix Subtype.val Subtype.val).map Complex.ofReal) := by
     ext i j
     rfl
   rw [← heq]
