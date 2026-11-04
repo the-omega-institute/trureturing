@@ -804,4 +804,430 @@ private theorem route_result : claim :=
 
 theorem result : claim := route_result
 
+
+/-- A finite family of nonzero positive effects summing to the identity. -/
+structure FinitePOVM (d m : ℕ) where
+  effects : Fin m → Matrix (Fin d) (Fin d) ℂ
+  posSemidef : ∀ i, (effects i).PosSemidef
+  nonzero : ∀ i, effects i ≠ 0
+  complete : ∑ i, effects i = 1
+
+namespace FinitePOVM
+
+variable {d m : ℕ}
+
+/-- The Lüders map associated to a finite POVM. -/
+noncomputable def channel [NeZero d] (M : FinitePOVM d m) :
+    Matrix (Fin d) (Fin d) ℂ → Matrix (Fin d) (Fin d) ℂ :=
+  fun x => ∑ i, CFC.sqrt (M.effects i) * x * CFC.sqrt (M.effects i)
+
+theorem channel_posSemidef [NeZero d] (M : FinitePOVM d m)
+    (x : Matrix (Fin d) (Fin d) ℂ) (hx : x.PosSemidef) :
+    (channel M x).PosSemidef := by
+  classical
+  rw [channel]
+  apply Matrix.posSemidef_sum Finset.univ
+  intro i hi
+  have hterm := hx.conjTranspose_mul_mul_same (B := CFC.sqrt (M.effects i))
+  have hs : (CFC.sqrt (M.effects i))ᴴ = CFC.sqrt (M.effects i) := by
+    simpa (config := { congrConsts := false }) [Matrix.star_eq_conjTranspose] using
+      (CFC.sqrt_nonneg (M.effects i)).isSelfAdjoint.star_eq
+  simpa (config := { congrConsts := false }) [hs, Matrix.mul_assoc] using hterm
+
+theorem channel_trace [NeZero d] (M : FinitePOVM d m)
+    (x : Matrix (Fin d) (Fin d) ℂ) :
+    Matrix.trace (channel M x) = Matrix.trace x := by
+  classical
+  rw [channel, Matrix.trace_sum]
+  calc
+    (∑ i, Matrix.trace
+        (CFC.sqrt (M.effects i) * x * CFC.sqrt (M.effects i))) =
+        ∑ i, Matrix.trace (x * M.effects i) := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      rw [Matrix.trace_mul_cycle,
+        CFC.sqrt_mul_sqrt_self (M.effects i) (M.posSemidef i).nonneg]
+      exact Matrix.trace_mul_comm _ _
+    _ = Matrix.trace (x * ∑ i, M.effects i) := by
+      rw [← Matrix.trace_sum, Matrix.mul_sum]
+    _ = Matrix.trace (x * 1) := by rw [M.complete]
+    _ = Matrix.trace x := by simp
+
+/-- Output on a normalized Haar pure state. -/
+noncomputable def state [NeZero d] (M : FinitePOVM d m)
+    (u : Matrix.unitaryGroup (Fin d) ℂ) : DensityState (Fin d) := by
+  refine ⟨CStarMatrix.ofMatrix (channel M (inputProjector u)), ?_, ?_⟩
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    apply Matrix.posSemidef_sum
+    intro i hi
+    have hp := input_projector_psd u
+    have hterm := hp.conjTranspose_mul_mul_same (B := CFC.sqrt (M.effects i))
+    have hs : (CFC.sqrt (M.effects i))ᴴ = CFC.sqrt (M.effects i) := by
+      simpa (config := { congrConsts := false }) [Matrix.star_eq_conjTranspose] using
+        (CFC.sqrt_nonneg (M.effects i)).isSelfAdjoint.star_eq
+    simpa (config := { congrConsts := false }) [hs, Matrix.mul_assoc] using hterm
+  · change Matrix.trace (channel M (inputProjector u)) = 1
+    rw [channel, Matrix.trace_sum]
+    calc
+      (∑ i, Matrix.trace
+          (CFC.sqrt (M.effects i) * inputProjector u * CFC.sqrt (M.effects i))) =
+          ∑ i, Matrix.trace (inputProjector u * M.effects i) := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        rw [Matrix.trace_mul_cycle,
+          CFC.sqrt_mul_sqrt_self (M.effects i) (M.posSemidef i).nonneg]
+        exact Matrix.trace_mul_comm _ _
+      _ = Matrix.trace (inputProjector u * ∑ i, M.effects i) := by
+        rw [← Matrix.trace_sum, Matrix.mul_sum]
+      _ = Matrix.trace (inputProjector u * 1) := by rw [M.complete]
+      _ = 1 := by
+        simpa (config := { congrConsts := false }) [Matrix.mul_one]
+          using input_projector_trace u
+
+/-- The square-root trace sum controlling the exact Haar deficit. -/
+noncomputable def traceSqrtSquare (M : FinitePOVM d m) : ℝ :=
+  ∑ i, (Matrix.trace (CFC.sqrt (M.effects i))).re ^ 2
+
+noncomputable def typicalEntropy [NeZero d] (M : FinitePOVM d m) : ℝ :=
+  ∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+    vonNeumannEntropy (state M u) ∂
+      (Measure.haarMeasure
+        (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))
+
+noncomputable def entropyDeficit [NeZero d] (M : FinitePOVM d m) : ℝ :=
+  Real.log (d + 1) - 2 / (d + 1) * Real.log 2 - typicalEntropy M
+
+end FinitePOVM
+
+/-- The normalized Haar pure-state reference density `sigma_P = (I+P)/(d+1)`. -/
+noncomputable def finiteSigmaState {d : ℕ} [NeZero d]
+    (u : Matrix.unitaryGroup (Fin d) ℂ) : DensityState (Fin d) := sigmaState u
+
+private theorem finite_continuous_state {d m : ℕ} [NeZero d]
+    (M : FinitePOVM d m) :
+    Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => (FinitePOVM.state M u).1) := by
+  have hp : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => inputProjector u) :=
+    (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
+      continuous_subtype_val.matrix_conjTranspose
+  have hl : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      FinitePOVM.channel M (inputProjector u)) := by
+    apply continuous_finsetSum
+    intro i hi
+    exact (continuous_const.matrix_mul hp).matrix_mul continuous_const
+  change Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+    CStarMatrix.ofMatrix (FinitePOVM.channel M (inputProjector u)))
+  exact CStarMatrix.ofMatrixL.continuous.comp hl
+
+private theorem finite_continuous_output_entropy {d m : ℕ} [NeZero d]
+    (M : FinitePOVM d m) :
+    Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      vonNeumannEntropy (FinitePOVM.state M u)) := by
+  have : ContinuousFunctionalCalculus ℝ (CStarMatrix (Fin d) (Fin d) ℂ) IsSelfAdjoint :=
+    IsSelfAdjoint.instIsometricContinuousFunctionalCalculus.toContinuousFunctionalCalculus
+  have hc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      cfc (fun x : ℝ => x * Real.log x) (FinitePOVM.state M u).1) :=
+    Continuous.cfc_of_mem_nhdsSet _ (s := Set.univ) (by simp (config := { congrConsts := false }))
+      (finite_continuous_state M) (fun u => (FinitePOVM.state M u).2.1.isSelfAdjoint)
+      Real.continuous_mul_log.continuousOn
+  have hid (s : DensityState (Fin d)) :
+      vonNeumannEntropy s =
+        -(Matrix.trace (CStarMatrix.ofMatrix.symm
+          (cfc (fun x : ℝ => x * Real.log x) s.1))).re := by
+    rw [D5.S3.Quantum.Information.OrthogonalRecordEntropy.entropy_eq_trace_cfc]
+    change (Matrix.trace (CStarMatrix.ofMatrix.symm (cfc Real.negMulLog s.1))).re = _
+    rw [show Real.negMulLog = fun x : ℝ => -(x * Real.log x) by
+      funext x; simp only [Real.negMulLog, neg_mul],
+      cfc_neg (fun x : ℝ => x * Real.log x) s.1]
+    change (Matrix.trace (-CStarMatrix.ofMatrix.symm
+      (cfc (fun x : ℝ => x * Real.log x) s.1))).re = _
+    rw [Matrix.trace_neg, Complex.neg_re]
+  simp_rw (config := { congrConsts := false }) [hid]
+  exact (Complex.continuous_re.comp
+    (CStarMatrix.ofMatrixL.symm.continuous.comp hc).matrix_trace).neg
+
+private theorem finite_entropy_gap {d m : ℕ} [NeZero d]
+    (M : FinitePOVM d m) (u : Matrix.unitaryGroup (Fin d) ℂ) :
+    Real.log (d + 1) - 2 / (d + 1) * Real.log 2 -
+        vonNeumannEntropy (FinitePOVM.state M u) =
+      quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u) +
+        ((Matrix.trace (inputProjector u * FinitePOVM.channel M (inputProjector u))).re -
+          2 / (d + 1)) * Real.log 2 := by
+  rw [quantum_relative_entropy_eq_neg_entropy_sub_cross, sigma_log]
+  have hr := (FinitePOVM.state M u).2.2
+  change Matrix.trace (CStarMatrix.ofMatrix.symm (FinitePOVM.state M u).1) = 1 at hr
+  change _ = -vonNeumannEntropy (FinitePOVM.state M u) -
+    (Matrix.trace (CStarMatrix.ofMatrix.symm (FinitePOVM.state M u).1 *
+      ((-Real.log (d + 1)) • (1 : Matrix (Fin d) (Fin d) ℂ) +
+        Real.log 2 • inputProjector u))).re + _
+  rw [Matrix.mul_add, Matrix.mul_smul, Matrix.mul_smul, Matrix.mul_one,
+    Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul, hr]
+  simp (config := { congrConsts := false }) only [Complex.add_re, Complex.real_smul, Complex.mul_re,
+    Complex.ofReal_re, Complex.ofReal_im, mul_one]
+  have hv : CStarMatrix.ofMatrix.symm (FinitePOVM.state M u).1 =
+      FinitePOVM.channel M (inputProjector u) := rfl
+  rw [Matrix.trace_mul_comm, hv]
+  ring
+
+private theorem finite_haar_second_moment {d m : ℕ} [NeZero d]
+    (M : FinitePOVM d m) :
+    (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+        (Matrix.trace (inputProjector u * FinitePOVM.channel M (inputProjector u))).re ∂
+          (Measure.haarMeasure
+            (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))) =
+      (FinitePOVM.traceSqrtSquare M + d) / (d * (d + 1)) := by
+  classical
+  let mu := Measure.haarMeasure
+    (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))
+  have hp : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => inputProjector u) :=
+    (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
+      continuous_subtype_val.matrix_conjTranspose
+  have hc (i : Fin m) : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      (inputProjector u * CFC.sqrt (M.effects i) * inputProjector u * CFC.sqrt (M.effects i)).trace) :=
+    (((hp.matrix_mul continuous_const).matrix_mul hp).matrix_mul continuous_const).matrix_trace
+  have hm (i : Fin m) :
+      (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+        (inputProjector u * CFC.sqrt (M.effects i) * inputProjector u * CFC.sqrt (M.effects i)).trace.re ∂mu) =
+        ((CFC.sqrt (M.effects i)).trace.re ^ 2 + (M.effects i).trace.re) / (d * (d + 1)) := by
+    have hi := (hc i).integrable_of_hasCompactSupport (μ := mu) (HasCompactSupport.of_compactSpace _)
+    have ha := Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (M.effects i))
+    have ht : ((CFC.sqrt (M.effects i)).trace.re : ℂ) = (CFC.sqrt (M.effects i)).trace :=
+      ha.isHermitian.re_trace_eq_trace
+    have het : ((M.effects i).trace.re : ℂ) = (M.effects i).trace :=
+      (M.posSemidef i).isHermitian.re_trace_eq_trace
+    have hh := D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.pure_quadratic (CFC.sqrt (M.effects i))
+    change (∫ u, (inputProjector u * CFC.sqrt (M.effects i) * inputProjector u *
+      CFC.sqrt (M.effects i)).trace ∂mu) = _ at hh
+    rw [CFC.sqrt_mul_sqrt_self (M.effects i) (M.posSemidef i).nonneg, ← ht, ← het] at hh
+    have hr : (∫ u, (inputProjector u * CFC.sqrt (M.effects i) * inputProjector u *
+        CFC.sqrt (M.effects i)).trace ∂mu) =
+        ((((CFC.sqrt (M.effects i)).trace.re ^ 2 + (M.effects i).trace.re) /
+          (d * (d + 1) : ℝ) : ℝ) : ℂ) := by
+      rw [hh]
+      push_cast
+      rfl
+    calc
+      _ = Complex.re (∫ u, (inputProjector u * CFC.sqrt (M.effects i) * inputProjector u *
+          CFC.sqrt (M.effects i)).trace ∂mu) := integral_re (hi)
+      _ = _ := congrArg Complex.re hr
+  change (∫ u, _ ∂mu) = _
+  simp (config := { congrConsts := false }) only [FinitePOVM.channel, Matrix.mul_sum, Matrix.trace_sum,
+    Complex.re_sum, ← Matrix.mul_assoc]
+  have hir (i : Fin m) : Integrable (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      (inputProjector u * CFC.sqrt (M.effects i) * inputProjector u * CFC.sqrt (M.effects i)).trace.re) mu :=
+    (Complex.continuous_re.comp (hc i)).integrable_of_hasCompactSupport
+      (μ := mu) (HasCompactSupport.of_compactSpace _)
+  rw [integral_finsetSum Finset.univ (fun i _ => hir i)]
+  simp_rw (config := { congrConsts := false }) [hm]
+  rw [← Finset.sum_div, Finset.sum_add_distrib]
+  have ht : ∑ i, (M.effects i).trace.re = (d : ℝ) := by
+    rw [← Complex.re_sum, ← Matrix.trace_sum, M.complete]
+    simp (config := { congrConsts := false })
+  rw [ht]
+
+/-- Exact arbitrary-finite-POVM Haar entropy-deficit decomposition. -/
+theorem finite_povm_entropy_deficit {d m : ℕ} [NeZero d]
+    (M : FinitePOVM d m) :
+    FinitePOVM.entropyDeficit M =
+      (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+        quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u) ∂
+          (Measure.haarMeasure
+            (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))) +
+      (FinitePOVM.traceSqrtSquare M - d) * Real.log 2 / (d * (d + 1)) := by
+  let mu := Measure.haarMeasure
+    (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))
+  let b := Real.log (d + 1) - 2 / (d + 1) * Real.log 2
+  have hs := finite_continuous_output_entropy M
+  have hp : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => inputProjector u) :=
+    (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
+      continuous_subtype_val.matrix_conjTranspose
+  have hl : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      FinitePOVM.channel M (inputProjector u)) := by
+    apply continuous_finsetSum
+    intro i hi
+    exact (continuous_const.matrix_mul hp).matrix_mul continuous_const
+  have hc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      (Matrix.trace (inputProjector u * FinitePOVM.channel M (inputProjector u))).re) :=
+    Complex.continuous_re.comp (hp.matrix_mul hl).matrix_trace
+  have hdc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u)) := by
+    have hc0 : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+        b - vonNeumannEntropy (FinitePOVM.state M u) -
+          ((Matrix.trace (inputProjector u * FinitePOVM.channel M (inputProjector u))).re -
+            2 / (d + 1)) * Real.log 2) :=
+      (continuous_const.sub hs).sub ((hc.sub continuous_const).mul continuous_const)
+    convert hc0 using 1
+    funext u
+    exact eq_sub_of_add_eq (finite_entropy_gap M u).symm
+  have hsi := hs.integrable_of_hasCompactSupport (μ := mu)
+    (HasCompactSupport.of_compactSpace _)
+  have hci := hc.integrable_of_hasCompactSupport (μ := mu)
+    (HasCompactSupport.of_compactSpace _)
+  have hdi := hdc.integrable_of_hasCompactSupport (μ := mu)
+    (HasCompactSupport.of_compactSpace _)
+  have hid := integral_congr_ae (μ := mu)
+    (Filter.Eventually.of_forall (fun u => finite_entropy_gap M u))
+  have hki : Integrable (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      ((Matrix.trace (inputProjector u * FinitePOVM.channel M (inputProjector u))).re -
+        2 / (d + 1)) * Real.log 2) mu :=
+    (hci.sub (integrable_const (2 / (d + 1 : ℝ)))).mul_const (Real.log 2)
+  rw [integral_sub (integrable_const b) hsi,
+    integral_add hdi hki, integral_mul_const] at hid
+  rw [integral_sub hci (integrable_const (2 / (d + 1 : ℝ)))] at hid
+  simp (config := { congrConsts := false }) only [integral_const, probReal_univ, one_smul] at hid
+  change b - FinitePOVM.typicalEntropy M =
+    (∫ u, quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u) ∂mu) +
+      ((∫ u, (Matrix.trace (inputProjector u * FinitePOVM.channel M (inputProjector u))).re ∂mu) -
+        2 / (d + 1)) * Real.log 2 at hid
+  rw [finite_haar_second_moment M] at hid
+  change FinitePOVM.entropyDeficit M = _
+  rw [hid]
+  dsimp [b]
+  ring
+
+/-- The square-root trace rank defect is nonnegative for every finite POVM. -/
+theorem finite_povm_rank_defect_nonneg {d m : ℕ} [NeZero d]
+    (M : FinitePOVM d m) :
+    0 ≤ FinitePOVM.traceSqrtSquare M - d := by
+  have hsumtrace : ∑ i, (M.effects i).trace.re = (d : ℝ) := by
+    rw [← Complex.re_sum, ← Matrix.trace_sum, M.complete]
+    simp (config := { congrConsts := false })
+  have hterm (i : Fin m) : (M.effects i).trace.re ≤
+      (Matrix.trace (CFC.sqrt (M.effects i))).re ^ 2 := by
+    have h := rank_one_forcing (CFC.sqrt (M.effects i))
+      (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg (M.effects i)))
+    rw [CFC.sqrt_mul_sqrt_self (M.effects i) (M.posSemidef i).nonneg] at h
+    exact h
+  change 0 ≤ (∑ i, (Matrix.trace (CFC.sqrt (M.effects i))).re ^ 2) - d
+  rw [← hsumtrace]
+  exact sub_nonneg.mpr (Finset.sum_le_sum (fun i hi => hterm i))
+
+private theorem finite_relative_entropy_nonneg {d m : ℕ} [NeZero d]
+    (M : FinitePOVM d m) (u : Matrix.unitaryGroup (Fin d) ℂ) :
+    0 ≤ quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u) := by
+  have hpd : (CStarMatrix.ofMatrix.symm (finiteSigmaState u).1).PosDef := by
+    change ((1 / (d + 1 : ℝ)) • (1 + inputProjector u)).PosDef
+    exact (Matrix.PosDef.one.add_posSemidef (input_projector_psd u)).smul
+      (by positivity : (0 : ℝ) < 1 / (d + 1 : ℝ))
+  have hk := relative_entropy_hs_bound (FinitePOVM.state M u) (finiteSigmaState u) hpd
+  have hn := (Complex.nonneg_iff.mp (Matrix.posSemidef_conjTranspose_mul_self
+    (CStarMatrix.ofMatrix.symm (FinitePOVM.state M u).1 -
+      CStarMatrix.ofMatrix.symm (finiteSigmaState u).1)).trace_nonneg).1
+  exact (div_nonneg hn (by norm_num)).trans hk
+
+/-- Exact quantitative rank-defect consequence of the deficit identity. -/
+theorem finite_povm_rank_defect_bound {d m : ℕ} [NeZero d]
+    (M : FinitePOVM d m) :
+    0 ≤ FinitePOVM.traceSqrtSquare M - d ∧
+      FinitePOVM.traceSqrtSquare M - d ≤
+        d * (d + 1) * FinitePOVM.entropyDeficit M / Real.log 2 := by
+  have hnonneg : ∀ u : Matrix.unitaryGroup (Fin d) ℂ,
+      0 ≤ quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u) :=
+    fun u => finite_relative_entropy_nonneg M u
+  let mu := Measure.haarMeasure
+    (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))
+  have hdi : 0 ≤ ∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+      quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u) ∂mu :=
+    integral_nonneg hnonneg
+  have hdef := (finite_povm_entropy_deficit M)
+  have hmain :
+      (FinitePOVM.traceSqrtSquare M - d) * Real.log 2 /
+          ((d : ℝ) * (d + 1)) ≤ FinitePOVM.entropyDeficit M := by
+    rw [hdef]
+    exact le_add_of_nonneg_left hdi
+  constructor
+  · exact finite_povm_rank_defect_nonneg M
+  · have hd : (0 : ℝ) < d := by exact_mod_cast NeZero.pos d
+    have hden : (0 : ℝ) < (d : ℝ) * (d + 1) := by positivity
+    have hlog : (0 : ℝ) < Real.log 2 := Real.log_pos (by norm_num)
+    apply (le_div_iff₀ hlog).2
+    exact (div_le_iff₀ hden).mp hmain
+
+/-- Matrix trace form of the squared Hilbert--Schmidt distance on finite densities. -/
+noncomputable def hilbertSchmidtSquared {d : ℕ}
+    (rho sigma : DensityState (Fin d)) : ℝ :=
+  ((CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1)ᴴ *
+    (CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1)).trace.re
+
+private theorem finite_continuous_sigma_matrix {d : ℕ} [NeZero d] :
+    Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      CStarMatrix.ofMatrix.symm (finiteSigmaState u).1) := by
+  have hp : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => inputProjector u) :=
+    (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
+      continuous_subtype_val.matrix_conjTranspose
+  change Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+    (1 / (d + 1 : ℝ)) • (1 + inputProjector u))
+  exact (continuous_const.add hp).const_smul (1 / (d + 1 : ℝ))
+
+/-- Averaged Hilbert--Schmidt error from the pointwise relative-entropy bound. -/
+theorem finite_povm_hs_error_bound {d m : ℕ} [NeZero d]
+    (M : FinitePOVM d m) :
+    (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+      hilbertSchmidtSquared (FinitePOVM.state M u) (finiteSigmaState u) ∂
+        (Measure.haarMeasure
+          (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ)))) ≤
+      2 * FinitePOVM.entropyDeficit M := by
+  let mu := Measure.haarMeasure
+    (⊤ : PositiveCompacts (Matrix.unitaryGroup (Fin d) ℂ))
+  have hstate := CStarMatrix.ofMatrixL.symm.continuous.comp (finite_continuous_state M)
+  have hsigma := finite_continuous_sigma_matrix (d := d)
+  have hdiff : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      hilbertSchmidtSquared (FinitePOVM.state M u) (finiteSigmaState u)) := by
+    have hsub : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+        CStarMatrix.ofMatrix.symm (FinitePOVM.state M u).1 -
+          CStarMatrix.ofMatrix.symm (finiteSigmaState u).1) := hstate.sub hsigma
+    exact Complex.continuous_re.comp
+      (hsub.matrix_conjTranspose.matrix_mul hsub).matrix_trace
+  have hdi : Integrable (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u)) mu := by
+    have hs := finite_continuous_output_entropy M
+    have hp : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ => inputProjector u) :=
+      (continuous_subtype_val.matrix_mul continuous_const).matrix_mul
+        continuous_subtype_val.matrix_conjTranspose
+    have hl : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+        FinitePOVM.channel M (inputProjector u)) := by
+      apply continuous_finsetSum
+      intro i hi
+      exact (continuous_const.matrix_mul hp).matrix_mul continuous_const
+    have hc : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+        (Matrix.trace (inputProjector u * FinitePOVM.channel M (inputProjector u))).re) :=
+      Complex.continuous_re.comp (hp.matrix_mul hl).matrix_trace
+    have hb : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+        (Real.log (d + 1) - 2 / (d + 1) * Real.log 2) -
+          vonNeumannEntropy (FinitePOVM.state M u) -
+          ((Matrix.trace (inputProjector u * FinitePOVM.channel M (inputProjector u))).re -
+            2 / (d + 1)) * Real.log 2) :=
+      (continuous_const.sub hs).sub ((hc.sub continuous_const).mul continuous_const)
+    have hd : Continuous (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+        quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u)) := by
+      convert hb using 1
+      funext u
+      exact eq_sub_of_add_eq (finite_entropy_gap M u).symm
+    exact hd.integrable_of_hasCompactSupport (μ := mu)
+      (HasCompactSupport.of_compactSpace _)
+  have hhs : Integrable (fun u : Matrix.unitaryGroup (Fin d) ℂ =>
+      hilbertSchmidtSquared (FinitePOVM.state M u) (finiteSigmaState u)) mu :=
+    hdiff.integrable_of_hasCompactSupport (μ := mu)
+      (HasCompactSupport.of_compactSpace _)
+  have hpoint : ∀ u : Matrix.unitaryGroup (Fin d) ℂ,
+      hilbertSchmidtSquared (FinitePOVM.state M u) (finiteSigmaState u) ≤
+        2 * quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u) := by
+    intro u
+    have hk := finite_relative_entropy_nonneg M u
+    have hpd : (CStarMatrix.ofMatrix.symm (finiteSigmaState u).1).PosDef := by
+      change ((1 / (d + 1 : ℝ)) • (1 + inputProjector u)).PosDef
+      exact (Matrix.PosDef.one.add_posSemidef (input_projector_psd u)).smul
+        (by positivity : (0 : ℝ) < 1 / (d + 1 : ℝ))
+    have hb := relative_entropy_hs_bound (FinitePOVM.state M u) (finiteSigmaState u) hpd
+    dsimp [hilbertSchmidtSquared]
+    linarith
+  have hmono : (∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+      hilbertSchmidtSquared (FinitePOVM.state M u) (finiteSigmaState u) ∂mu) ≤
+      ∫ u : Matrix.unitaryGroup (Fin d) ℂ,
+        2 * quantumRelativeEntropy (FinitePOVM.state M u) (finiteSigmaState u) ∂mu :=
+    integral_mono_ae hhs (hdi.const_mul 2) (Filter.Eventually.of_forall hpoint)
+  rw [integral_const_mul] at hmono
+  rw [finite_povm_entropy_deficit M]
+  exact hmono
+
+
 end D5.S3.Quantum.Measurements.LudersEntropySaturationSIC
