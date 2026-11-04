@@ -19,6 +19,7 @@ import D5.S3.Arith.Lattices.GoldenIntegerRing
 import Mathlib.RingTheory.Norm.Transitivity
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 
 /-! Native protocol composition on the full sixteen-bit carrier. -/
 
@@ -1584,6 +1585,10 @@ abbrev Rest := {i : Fin 16 // i ≠ 2} → Bool
 def cut : Basis ≃ Fin 2 × Rest :=
   (Equiv.funSplitAt 2 Bool).trans (Equiv.prodCongr finTwoEquiv.symm (Equiv.refl Rest))
 abbrev Qubit := Matrix (Fin 2) (Fin 2) ℂ
+local instance : NormedAddCommGroup Qubit := Matrix.instL2OpNormedAddCommGroup
+local instance : NormedSpace ℂ Qubit := Matrix.instL2OpNormedSpace
+local instance : NormedRing Qubit := Matrix.instL2OpNormedRing
+local instance : NormedAlgebra ℂ Qubit := Matrix.instL2OpNormedAlgebra
 
 /-- Mathematical reduction at original site b1. Original records remain
 outside this operation; it asserts no physical deletion or fresh preparation. -/
@@ -1644,7 +1649,7 @@ private theorem cross_ket_smul (a b : ℂ) (x y : Basis) (i j : Fin 2) :
   simp only [cross, partialTraceRight, Matrix.vecMulVec_apply,
     Function.comp_apply, Pi.star_apply, Pi.smul_apply, smul_eq_mul, map_mul, ket_cut]
   by_cases hi : i = (cut x).1 <;> by_cases hj : j = (cut y).1 <;>
-    simp [hi, hj, mul_ite, ite_mul, apply_ite (starRingEnd ℂ)]
+    simp [hi, hj, mul_ite, ite_mul, apply_ite (starRingEnd ℂ), eq_comm]
 
 def sourceLocal (i : Fin 2) : ℂ := if i = 0 then a else b
 def p0 : Qubit := fun i j => if i = 0 ∧ j = 0 then 1 else 0
@@ -1660,7 +1665,8 @@ private theorem source_reduction : reduced sourceVector = sourceMixture := by
   simp only [Matrix.add_apply, cross_ket_smul, cut_source_bit, source_rest]
   fin_cases i <;> fin_cases j <;>
     norm_num [sourceMixture, sourceLocal, p0, Matrix.vecMulVec_apply,
-      Pi.star_apply, starRingEnd_apply, star_mul, star_pow]
+      Pi.star_apply]
+  all_goals simp only [starRingEnd_apply, star_mul, star_pow]
   · linear_combination
       (a * star a * c * star c + b^2 * (star b)^2) * Coeff.zeta_norm
   · linear_combination (a * star b * c * star c) * Coeff.zeta_norm
@@ -1740,8 +1746,8 @@ private theorem mixture_chi : sourceMixture = chi := by
   ext i j
   simp only [sourceMixture, hw, b_norm]
   fin_cases i <;> fin_cases j <;>
-    norm_num [sourceLocal, p0, chi, Matrix.vecMulVec_apply,
-      Pi.star_apply, starRingEnd_apply]
+    norm_num [sourceLocal, p0, chi, Matrix.vecMulVec_apply, Pi.star_apply]
+  all_goals simp only [starRingEnd_apply]
   · rw [show t*a*star a = t*(a*star a) by ring, a_norm]
     linear_combination t*Coeff.t_sq
   · rw [a_value, b_value, star_mul, star_neg, star_beta]
@@ -1771,12 +1777,12 @@ private theorem t_nonzero : t ≠ 0 := by
 private theorem gamma_norm : gamma * star gamma = t^5 := by
   simp only [gamma, star_mul, star_pow, star_t, star_beta, star_star]
   calc
-    _ = t^4 * beta^2 * (zeta^4 * star (zeta^4)) := by ring
+    _ = t^4 * beta^2 * (zeta^4 * star (zeta^4)) := by rw [star_pow]; ring
     _ = t^5 := by rw [phase_norm, Coeff.beta_sq]; ring
 
 private theorem chi_det : chi.det = t^4 := by
-  rw [chi, Matrix.det_fin_two]
-  norm_num only [Matrix.cons_val_zero, Matrix.cons_val_one]
+  rw [Matrix.det_fin_two]
+  change t * t^2 - gamma * star gamma = t^4
   rw [gamma_norm]
   linear_combination -(t^3)*Coeff.t_sq
 
@@ -1791,8 +1797,9 @@ private theorem chi_faithful : chi.PosDef :=
 
 private theorem empty_reduction : reduced omega0 = p0 := by
   rw [source_start]
-  change cross (1 • ket (sourceWord false false true))
-    (1 • ket (sourceWord false false true)) = _
+  change cross (ket (sourceWord false false true))
+    (ket (sourceWord false false true)) = _
+  rw [← one_smul ℂ (ket (sourceWord false false true))]
   ext i j
   rw [cross_ket_smul, cut_source_bit]
   fin_cases i <;> fin_cases j <;> norm_num [p0]
@@ -1814,6 +1821,7 @@ private theorem chi_square : chi*chi = chi-t^4 • (1 : Qubit) := by
   fin_cases i <;> fin_cases j <;>
     norm_num [chi, Matrix.mul_apply, Fin.sum_univ_two,
       Pi.smul_apply, smul_eq_mul, star_t, star_pow]
+  all_goals simp only [starRingEnd_apply]
   · rw [gamma_norm]
     linear_combination (t^3+t)*Coeff.t_sq
   · linear_combination gamma*Coeff.t_sq
