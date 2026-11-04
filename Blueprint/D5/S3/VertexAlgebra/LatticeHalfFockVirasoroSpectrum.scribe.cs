@@ -83,7 +83,9 @@ internal sealed class LatticeHalfFockVirasoroSpectrumDocument : IScribeDocumentD
         var x = F.Id("x");
         var integers = Seq(Mathbb, Sp, F.Id("Z"));
         var complexes = Seq(Mathbb, Sp, F.Id("C"));
-        Formula Cast(Formula value) => Parenthesized(Seq(value, Colon, complexes));
+        Formula Cast(Formula value) => Parenthesized(Seq(
+            new Formula.Apply(Seq(Operatorname, Grp(Seq(F.Id("Int"), Dot, F.Id("cast")))), [value]),
+            Colon, Sp, complexes));
         var interval = Seq(Operatorname, Grp(F.Id("Finset")), Dot,
             Operatorname, Grp(F.Id("Ico")), Parenthesized(Seq(a, Comma, Sp, b)));
         var sum = Seq(Sum, Underscore, Grp(Seq(x, InMacro, Sp, interval)), Sp, Cast(x));
