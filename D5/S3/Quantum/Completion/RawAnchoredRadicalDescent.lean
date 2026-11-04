@@ -10,6 +10,7 @@ import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.LinearAlgebra.Quotient.Bilinear
 import Mathlib.Tactic
 import D5.S3.Quantum.Completion.RawThreePhaseDescent
+import D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
 
 /-! Anchored comparison forms, ordered Fourier constraints and the actual defect quotient.
 The construction retains the original unital magma and both pairing orders. -/
@@ -194,42 +195,46 @@ private theorem mkQ_single {M : Type*} [MulOneClass M]
   rw [he, map_add, map_smul, map_smul, hz, smul_zero, add_zero]
   rfl
 
+private theorem anchoredSpan_quotient {M : Type*} [MulOneClass M]
+    (c : M → M → ℝ) (h11 : c 1 1 = 0) :
+    Submodule.map (radical c).mkQ (anchoredSpan M) = ⊤ := by
+  apply top_unique
+  intro z _
+  obtain ⟨x, rfl⟩ := (radical c).mkQ_surjective z
+  induction x using Finsupp.induction with
+  | zero => simp
+  | @single_add a t x ha ht ih =>
+      rw [map_add, mkQ_single c h11]
+      exact Submodule.add_mem _
+        (Submodule.smul_mem _ t ⟨e a, Submodule.subset_span (Set.mem_range_self a), rfl⟩) ih
+
+private theorem beta_span {M : Type*} [MulOneClass M]
+    (c : M → M → ℝ) (h11 : c 1 1 = 0) :
+    Submodule.span ℝ (Set.range (beta c)) = ⊤ := by
+  have he : Submodule.map (radical c).mkQ (anchoredSpan M) =
+      Submodule.span ℝ (Set.range (beta c)) := by
+    rw [anchoredSpan, Submodule.map_span]
+    congr 1
+    ext z
+    constructor
+    · rintro ⟨x, ⟨a, rfl⟩, rfl⟩
+      exact ⟨a, rfl⟩
+    · rintro ⟨a, rfl⟩
+      exact ⟨e a, Set.mem_range_self a, rfl⟩
+  rw [← he]
+  exact anchoredSpan_quotient c h11
+
 private theorem beta_induction {M : Type*} [MulOneClass M]
     (c : M → M → ℝ) (h11 : c 1 1 = 0) {P : V c → Prop}
     (hz : P 0) (hb : ∀ a, P (beta c a))
     (ha : ∀ x y, P x → P y → P (x + y))
     (hs : ∀ (t : ℝ) x, P x → P (t • x)) (x : V c) : P x := by
-  obtain ⟨x, rfl⟩ := (radical c).mkQ_surjective x
-  induction x using Finsupp.induction with
-  | zero => simpa using hz
-  | @single_add a t x ha' ht ih =>
-      rw [map_add, mkQ_single c h11]
-      exact ha _ _ (hs t _ (hb a)) ih
-
-private theorem beta_span {M : Type*} [MulOneClass M]
-    (c : M → M → ℝ) (h11 : c 1 1 = 0) :
-    Submodule.span ℝ (Set.range (beta c)) = ⊤ := by
-  apply top_unique
-  intro x _
-  exact beta_induction c h11 (Submodule.zero_mem _)
-    (fun a => Submodule.subset_span (Set.mem_range_self a))
-    (fun _ _ hx hy => Submodule.add_mem _ hx hy)
-    (fun t _ hx => Submodule.smul_mem _ t hx) x
-
-private theorem anchoredSpan_quotient {M : Type*} [MulOneClass M]
-    (c : M → M → ℝ) (h11 : c 1 1 = 0) :
-    Submodule.map (radical c).mkQ (anchoredSpan M) = ⊤ := by
-  calc
-    _ = Submodule.span ℝ (Set.range (beta c)) := by
-      rw [anchoredSpan, Submodule.map_span]
-      congr 1
-      ext z
-      constructor
-      · rintro ⟨x, ⟨a, rfl⟩, rfl⟩
-        exact ⟨a, rfl⟩
-      · rintro ⟨a, rfl⟩
-        exact ⟨e a, Set.mem_range_self a, rfl⟩
-    _ = ⊤ := beta_span c h11
+  have hx : x ∈ Submodule.span ℝ (Set.range (beta c)) := by rw [beta_span c h11]; trivial
+  induction hx using Submodule.span_induction with
+  | mem y hy => rcases hy with ⟨a, rfl⟩; exact hb a
+  | zero => exact hz
+  | add x y _ _ hx hy => exact ha x y hx hy
+  | smul t x _ hx => exact hs t x hx
 
 private theorem quotient_joint_nondegenerate {M : Type*} [MulOneClass M]
     (c : M → M → ℝ) (h11 : c 1 1 = 0) (z : V c)
@@ -757,7 +762,8 @@ def rho {M : Type*} [MulOneClass M]
     GammaSpace c →ₗ[ℝ] GammaSpace c :=
   (W c).mapQ (W c) (markerQuotient U c h) (by
     intro x hx
-    exact W_marker_stable U c h hx)
+    rw [← W_marker_image U c h]
+    exact ⟨x, hx, rfl⟩)
 
 private theorem gamma_one {M : Type*} [MulOneClass M] (c : M → M → ℝ) :
     gamma c 1 = 0 := by simp [gamma, beta_one]
@@ -860,5 +866,236 @@ theorem raw_anchored_radical_descent {M : Type*} [MulOneClass M]
     W_marker_image U c h, gamma_one c, gamma_mul c, gamma_marker U c h,
     gamma_phase_product U c h, gamma_fibre_zero_comparison U c h⟩
   exact quotientForm_beta c (h.diagonal 1)
+
+/-- The actual zero fibre in the constructed quotient. -/
+def N {M : Type*} [MulOneClass M] (c : M → M → ℝ) : Set M :=
+  {a | gamma c a = 0}
+
+/-- The actual ordered relation of equal gamma labels. -/
+def K {M : Type*} [MulOneClass M] (c : M → M → ℝ) : Set (M × M) :=
+  {p | gamma c p.1 = gamma c p.2}
+
+private theorem comparison_bound {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b u v : M) :
+    c (a * u) (b * v) ≤ 3 * (c a b + c u v) := by
+  have hb := h.balance a b u v
+  linarith [h.nonneg (a * U u) (b * U v), h.nonneg (a * U (U u)) (b * U (U v))]
+
+private theorem directed_fibre_differences {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b z : M)
+    (hab : (a, b) ∈ K c) :
+    c a (b * z) - c b (b * z) =
+        -2 * quotientForm c (beta c a - beta c b) (beta c z) ∧
+      c (b * z) a - c (b * z) b =
+        -2 * quotientForm c (beta c z) (beta c a - beta c b) := by
+  have hw : beta c a - beta c b ∈ W c := (Submodule.Quotient.eq _).1 hab
+  have hc := gamma_fibre_zero_comparison U c h a b hab
+  have he : beta c (b * z) = beta c b + beta c z + defect c b z := by
+    unfold defect
+    abel
+  constructor
+  · have ht := W_isotropic U c h _ _ hw (defect_mem_W c b z)
+    have hb : quotientForm c (beta c a - beta c b) (beta c (b * z)) =
+        quotientForm c (beta c a - beta c b) (beta c b) +
+        quotientForm c (beta c a - beta c b) (beta c z) := by
+      rw [he, map_add, map_add, ht, add_zero]
+    simp only [map_sub, LinearMap.sub_apply, quotientForm_beta c (h.diagonal 1),
+      kernel, hc.1, h.diagonal] at hb
+    linarith
+  · have ht := W_isotropic U c h _ _ (defect_mem_W c b z) hw
+    have hb : quotientForm c (beta c (b * z)) (beta c a - beta c b) =
+        quotientForm c (beta c b) (beta c a - beta c b) +
+        quotientForm c (beta c z) (beta c a - beta c b) := by
+      rw [he, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, ht, add_zero]
+    simp only [map_sub, quotientForm_beta c (h.diagonal 1), kernel, hc.2, h.diagonal] at hb
+    linarith
+
+private theorem directed_fibre_bounds {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b z : M)
+    (hab : (a, b) ∈ K c) :
+    |quotientForm c (beta c a - beta c b) (beta c z)| ≤ (3 / 2 : ℝ) * r c z ∧
+      |quotientForm c (beta c z) (beta c a - beta c b)| ≤ (3 / 2 : ℝ) * q c z := by
+  have hc := gamma_fibre_zero_comparison U c h a b hab
+  have hd := directed_fibre_differences U c h a b z hab
+  have h₁ := comparison_bound U c h a b 1 z
+  have h₂ := comparison_bound U c h b b 1 z
+  have h₃ := comparison_bound U c h b a z 1
+  have h₄ := comparison_bound U c h b b z 1
+  simp only [mul_one, hc.1, hc.2, h.diagonal, zero_add] at h₁ h₂ h₃ h₄
+  dsimp [q, r]
+  constructor <;> rw [abs_le] <;>
+    constructor <;> linarith [hd.1, hd.2, h.nonneg a (b * z), h.nonneg b (b * z),
+      h.nonneg (b * z) a, h.nonneg (b * z) b]
+
+private theorem N_one {M : Type*} [MulOneClass M] (c : M → M → ℝ) : (1 : M) ∈ N c :=
+  gamma_one c
+
+private theorem N_marker {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) {a : M} (ha : a ∈ N c) :
+    U a ∈ N c := by
+  change gamma c (U a) = 0
+  rw [gamma_marker U c h, ha, map_zero]
+
+private theorem N_children {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) {u x : M}
+    (hu : u ∈ N c) (hx : x ∈ N c) (k : ℕ) : x * U^[k] u ∈ N c := by
+  change gamma c (x * U^[k] u) = 0
+  rw [gamma_phase_product U c h, hx, hu, zero_add]
+  induction k with
+  | zero => rfl
+  | succ k ih => simpa only [Function.iterate_succ_apply', ih, map_zero]
+
+/-- The algebraic complex structure before any positivity claim. -/
+def J {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) : V c →ₗ[ℝ] V c :=
+  (Real.sqrt 3)⁻¹ • ((2 : ℝ) • markerQuotient U c h + LinearMap.id)
+
+private theorem J_square {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x : V c) :
+    J U c h (J U c h x) = -x := by
+  have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have hn : Real.sqrt (3 : ℝ) ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
+  have he : J U c h (J U c h x) + x =
+      (4 / 3 : ℝ) • (x + markerQuotient U c h x +
+        markerQuotient U c h (markerQuotient U c h x)) := by
+    simp only [J, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.id_apply,
+      map_add, map_smul]
+    match_scalars <;> field_simp <;> nlinarith
+  rw [marker_cyclotomic U c h, smul_zero] at he
+  exact eq_neg_iff_add_eq_zero.mpr he
+
+private def phaseRoot : ℂ := ⟨-1 / 2, Real.sqrt 3 / 2⟩
+
+private theorem phaseRoot_cube : phaseRoot ^ 3 = 1 := by
+  have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  apply Complex.ext <;> norm_num [phaseRoot, pow_succ, Complex.mul_re, Complex.mul_im]
+  all_goals nlinarith
+
+private def phaseCharacter : AddChar (ZMod 3) ℂ := AddChar.zmodChar 3 phaseRoot_cube
+
+private theorem phaseCharacter_injective : Function.Injective phaseCharacter := by
+  intro a b hab
+  have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have hp : 0 < Real.sqrt (3 : ℝ) := Real.sqrt_pos.mpr (by norm_num)
+  fin_cases a <;> fin_cases b <;>
+    norm_num [phaseCharacter, AddChar.zmodChar_apply, phaseRoot, pow_succ,
+      Complex.ext_iff, Complex.mul_re, Complex.mul_im] at hab ⊢
+  all_goals nlinarith
+
+private def complexMode {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (α : V c →ₗ[ℝ] ℝ) :
+    V c →ₗ[ℝ] ℂ :=
+  (Complex.ofRealLI.toLinearMap.comp α) -
+    Complex.I • (Complex.ofRealLI.toLinearMap.comp (α.comp (J U c h)))
+
+private theorem complexMode_re {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (α : V c →ₗ[ℝ] ℝ) (x : V c) :
+    (complexMode U c h α x).re = α x := by
+  simp [complexMode, Complex.mul_re]
+
+private theorem complexMode_marker {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (α : V c →ₗ[ℝ] ℝ) (x : V c) :
+    complexMode U c h α (markerQuotient U c h x) = phaseRoot * complexMode U c h α x := by
+  have hn : Real.sqrt (3 : ℝ) ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
+  have hj : complexMode U c h α (J U c h x) =
+      Complex.I * complexMode U c h α x := by
+    apply Complex.ext <;> simp [complexMode, J_square U c h, Complex.mul_re, Complex.mul_im]
+  have hr : markerQuotient U c h x =
+      (Real.sqrt 3 / 2) • J U c h x - (1 / 2 : ℝ) • x := by
+    simp only [J, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.id_apply]
+    match_scalars <;> field_simp
+  rw [hr, map_sub, map_smul, map_smul, hj]
+  apply Complex.ext <;> simp [phaseRoot, Complex.mul_re, Complex.mul_im] <;> ring
+
+private theorem complexMode_bound {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (α : V c →ₗ[ℝ] ℝ)
+    (L : ℝ) (hL : 0 ≤ L) (ha : ∀ n ∈ N c, |α (beta c n)| ≤ L)
+    (n : M) (hn : n ∈ N c) :
+    Complex.normSq (complexMode U c h α (beta c n)) ≤ 10 * L ^ 2 := by
+  have hs : 0 < Real.sqrt (3 : ℝ) := Real.sqrt_pos.mpr (by norm_num)
+  have hs₁ : 1 ≤ Real.sqrt (3 : ℝ) := (Real.one_le_sqrt).2 (by norm_num)
+  have h₀ := ha n hn
+  have h₁ := ha (U n) (N_marker U c h hn)
+  have hj : α (J U c h (beta c n)) =
+      (Real.sqrt 3)⁻¹ * (2 * α (beta c (U n)) + α (beta c n)) := by
+    simp [J, map_add, map_smul, markerQuotient_beta, smul_eq_mul]
+  have hsum : |2 * α (beta c (U n)) + α (beta c n)| ≤ 3 * L := by
+    rw [abs_le] at h₀ h₁ ⊢
+    constructor <;> linarith [h₀.1, h₀.2, h₁.1, h₁.2]
+  have hjabs : |α (J U c h (beta c n))| ≤ 3 * L := by
+    rw [hj, abs_mul, abs_inv, abs_of_pos hs]
+    calc
+      _ = |2 * α (beta c (U n)) + α (beta c n)| / Real.sqrt 3 := by ring
+      _ ≤ (3 * L) / Real.sqrt 3 := div_le_div_of_nonneg_right hsum (le_of_lt hs)
+      _ ≤ 3 * L := by
+        apply (div_le_iff₀ hs).2
+        nlinarith [mul_nonneg hL (sub_nonneg.mpr hs₁)]
+  have hsq₀ : α (beta c n) ^ 2 ≤ L ^ 2 := by
+    simpa only [sq_abs] using (sq_le_sq₀ (abs_nonneg _) hL).2 h₀
+  have hsq₁ : α (J U c h (beta c n)) ^ 2 ≤ (3 * L) ^ 2 := by
+    simpa only [sq_abs] using (sq_le_sq₀ (abs_nonneg _) (by positivity : 0 ≤ 3 * L)).2 hjabs
+  simp [Complex.normSq_apply, complexMode, Complex.mul_re, Complex.mul_im]
+  nlinarith
+
+private theorem actual_mode_recursion {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (α : V c →ₗ[ℝ] ℝ)
+    (a u : M) (k : ZMod 3) :
+    complexMode U c h α (beta c (a * U^[k.val] u)) =
+      complexMode U c h α (beta c a) +
+      phaseCharacter k * complexMode U c h α (beta c u) +
+      phaseCharacter⁻¹ k * complexMode U c h α (defect c a u) := by
+  have hp := (raw_anchored_radical_descent U c h).2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.1 a u
+  have h₀ : beta c (a * u) = beta c a + beta c u + defect c a u := by
+    unfold defect
+    abel
+  fin_cases k
+  all_goals norm_num [phaseCharacter, AddChar.zmodChar_apply, AddChar.inv_apply,
+    Function.iterate_succ_apply']
+  · rw [h₀, map_add, map_add]
+  · rw [hp.1, map_add, map_add]
+    simp only [complexMode_marker]
+    ring
+  · rw [hp.2, map_add, map_add]
+    simp only [complexMode_marker]
+    ring
+
+/-- Every actual zero-fibre label has zero beta, using both directed history bounds. -/
+theorem raw_zero_fibre_vanishes {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
+    ∀ u ∈ N c, beta c u = 0 := by
+  intro u hu
+  apply quotient_joint_nondegenerate c (h.diagonal 1)
+  · intro z
+    let α : V c →ₗ[ℝ] ℝ := (quotientForm c).flip (beta c z)
+    let L : ℝ := (3 / 2 : ℝ) * r c z
+    have hL : 0 ≤ L := mul_nonneg (by norm_num) (h.nonneg 1 z)
+    have ha (n : M) (hn : n ∈ N c) : |α (beta c n)| ≤ L := by
+      have hk : (n, 1) ∈ K c := by change gamma c n = gamma c 1; rw [hn, gamma_one]
+      simpa [α, beta_one] using (directed_fibre_bounds U c h n 1 z hk).1
+    have hv := D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity.bounded_phase_recursion_vanishes
+      U u (N c) (N_one c) (fun x hx k => N_children U c h hu hx k.val)
+      phaseCharacter phaseCharacter_injective
+      (fun x => complexMode U c h α (beta c x))
+      (fun x => complexMode U c h α (defect c x u)) (10 * L ^ 2)
+      (fun x hx => complexMode_bound U c h α L hL ha x hx)
+      (fun x _ k => actual_mode_recursion U c h α x u k)
+    have hre := congrArg Complex.re hv
+    simpa [complexMode_re, α] using hre
+  · intro z
+    let α : V c →ₗ[ℝ] ℝ := quotientForm c (beta c z)
+    let L : ℝ := (3 / 2 : ℝ) * q c z
+    have hL : 0 ≤ L := mul_nonneg (by norm_num) (h.nonneg z 1)
+    have ha (n : M) (hn : n ∈ N c) : |α (beta c n)| ≤ L := by
+      have hk : (n, 1) ∈ K c := by change gamma c n = gamma c 1; rw [hn, gamma_one]
+      simpa [α, beta_one] using (directed_fibre_bounds U c h n 1 z hk).2
+    have hv := D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity.bounded_phase_recursion_vanishes
+      U u (N c) (N_one c) (fun x hx k => N_children U c h hu hx k.val)
+      phaseCharacter phaseCharacter_injective
+      (fun x => complexMode U c h α (beta c x))
+      (fun x => complexMode U c h α (defect c x u)) (10 * L ^ 2)
+      (fun x hx => complexMode_bound U c h α L hL ha x hx)
+      (fun x _ k => actual_mode_recursion U c h α x u k)
+    have hre := congrArg Complex.re hv
+    simpa [complexMode_re, α] using hre
 
 end D5.S3.Quantum.Completion.RawAnchoredRadicalDescent

@@ -116,8 +116,8 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
                     OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
-                    F.Id("U"), Colon, Sp, M, To, M, Comma, Sp,
-                    F.Id("c"), Colon, Sp, M, To, M, To, Real, Comma, Sp,
+                    F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
+                    F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp,
                     Arrow(Call("RawBalance", F.Id("U"), F.Id("c")), Result())))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The unit basis vector lies in both radicals, so pi(E0)=V and the beta labels span V. Testing both ordered pairings against these labels gives joint nondegeneracy. The complete raw law supplies the q and r averages and the bilinear balance, hence the unweighted and inverse-weighted constraints. Solving their three-character system gives the two original phase children. Bilinear Fourier cancellation makes the cross-defect pairing zero; linear extension gives B(W,W)=0, while the phase identities give R(W)=W. The same W supplies the actual gamma product and marker identities. Its isotropy, the difference diagonal identity and comparison nonnegativity force both directed comparisons to vanish on each gamma fibre. Isotropy alone does not say that W is a radical."))),
