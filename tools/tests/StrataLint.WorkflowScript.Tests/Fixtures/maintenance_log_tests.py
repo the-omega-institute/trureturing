@@ -136,6 +136,10 @@ class MaintenanceLogTests(unittest.TestCase):
 
     def test_termination(self):
         self.signal_case(False)
+        result = self.run_command(self.command(sys.executable, "-c",
+            "import os,signal; os.kill(os.getpid(),signal.SIGTERM)", script="native-signal"))
+        self.assertEqual(-signal.SIGTERM, result.returncode)
+        self.finished(128 + signal.SIGTERM, "native-signal")
 
     def test_handled_signal(self):
         self.signal_case(True)
@@ -258,12 +262,16 @@ class MaintenanceLogTests(unittest.TestCase):
         (self.main / "tools/scripts/maintenance_log.py").unlink()
         self.assertEqual(2, self.run_command(command).returncode)
 
-    def test_host_cleanup_outcomes(self):
-        tree = self.linked()
+    def load_cleanup(self):
         sys.path.insert(0, str(LOGGER.parent))
         spec = importlib.util.spec_from_file_location("maintenance_cleanup", SOURCE / "tools/scripts/host-cleanup.py")
         cleanup = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(cleanup)
+        return cleanup
+
+    def test_host_cleanup_outcomes(self):
+        tree = self.linked()
+        cleanup = self.load_cleanup()
         environment = dict(self.environment)
         environment.pop(LOG_ENV)
         def remove_source(*args, **kwargs):
@@ -284,6 +292,26 @@ class MaintenanceLogTests(unittest.TestCase):
         self.assertEqual(0, rows[-1]["exit_code"])
         self.assertGreaterEqual(rows[-1]["duration_seconds"], 0)
         self.assertEqual(1, len({row["run_id"] for row in rows}))
+
+
+    def test_host_cleanup_failures(self):
+        cleanup = self.load_cleanup()
+        arguments = ["clean", "--repository", str(self.main)]
+        for error, expected in ((OSError("private failure output"), 1),
+                                (cleanup.LowDiskSpace("private failure output"), 73),
+                                (KeyboardInterrupt(), 130), (SystemExit(4), 4)):
+            with self.subTest(error=type(error).__name__):
+                self.environment[LOG_ENV] = str(self.root / type(error).__name__)
+                with patch.dict(os.environ, self.environment, clear=True), \
+                     patch.object(cleanup, "run_clean", side_effect=error), \
+                     contextlib.redirect_stderr(io.StringIO()):
+                    if isinstance(error, (KeyboardInterrupt, SystemExit)):
+                        with self.assertRaises(type(error)):
+                            cleanup.main(arguments)
+                    else:
+                        self.assertEqual(expected, cleanup.main(arguments))
+                rows = self.finished(expected, "host-cleanup", Path(self.environment[LOG_ENV]))
+                self.assertNotIn("private failure output", json.dumps(rows))
 
 
 if __name__ == "__main__":

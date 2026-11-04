@@ -18,6 +18,7 @@ public sealed class HostCleanupScriptTests
     [InlineData("protocol_exec")]
     [InlineData("script_guards")]
     [InlineData("host_cleanup_outcomes")]
+    [InlineData("host_cleanup_failures")]
     public void MaintenanceLoggingPreservesCommandBehavior(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
