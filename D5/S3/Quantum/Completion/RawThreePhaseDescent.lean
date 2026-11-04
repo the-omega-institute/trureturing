@@ -52,7 +52,7 @@ private lemma recurrence_first_le (s : ℕ → ℝ) (hn : ∀ n, 0 ≤ s n)
         · have hidx : 2 * (n + 1) + 1 = (2 * n + 1) + 2 := by omega
           rw [hidx]
           have ho' : s (2 * n + 2) + s (2 * n + 3) = 2 * s (2 * n + 1) := by
-            convert ho using 1 <;> congr 1 <;> omega
+            convert ho using 1
           push_cast
           nlinarith [ih.1, ih.2]
   obtain ⟨n, hn'⟩ := exists_nat_gt (s 0 / (s 1 - s 0))
@@ -65,7 +65,6 @@ private lemma nonnegative_recurrence_constant (s : ℕ → ℝ) (hn : ∀ n, 0 �
   have h₂ := recurrence_first_le (fun n => s (n + 1)) (fun n => hn (n + 1))
     (fun n => hr (n + 1))
   have h₀ := hr 0
-  dsimp only at h₂
   norm_num only at h₀ h₂
   linarith
 
@@ -76,8 +75,9 @@ private lemma marker_invariant {M : Type*} [MulOneClass M]
   have hr (n : ℕ) : s (n + 1) + s (n + 2) = 2 * s n := by
     have hh := h.balance 1 1 (U^[n] u) (U^[n] v)
     simp only [one_mul, h.diagonal, mul_zero, zero_add] at hh
-    dsimp [s]
-    simp only [Function.iterate_succ_apply', Function.iterate_succ_apply']
+    change c (U^[n + 1] u) (U^[n + 1] v) +
+      c (U^[n + 2] u) (U^[n + 2] v) = 2 * c (U^[n] u) (U^[n] v)
+    simp only [Function.iterate_succ_apply']
     linarith
   exact nonnegative_recurrence_constant s (fun n => h.nonneg _ _) hr
 
