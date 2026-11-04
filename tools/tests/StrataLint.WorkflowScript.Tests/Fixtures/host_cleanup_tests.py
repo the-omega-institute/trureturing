@@ -5,6 +5,7 @@ import contextlib
 import io
 import json
 import os
+import select
 from pathlib import Path
 import shutil
 import stat
@@ -779,6 +780,228 @@ class HostCleanupTests(unittest.TestCase):
              contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             self.assertEqual(1, cleanup.main(["active-paths"]))
 
+    def test_pidfd_current_identity_is_revalidated_and_descriptors_close(self):
+        # Real directory/stat descriptors, with a synthetic /proc endpoint and
+        # ready/nonready pidfd poll. Keeping the inode unchanged isolates pid
+        # and starttime reuse from the simpler directory-replacement case.
+        process = Path("/proc/123")
+        endpoint = self.root / "proc-endpoint"
+        endpoint.mkdir()
+        def write_identity(pid=123, starttime=900):
+            (endpoint / "stat").write_text(str(pid) + " (fixture) " +
+                " ".join(["S"] + ["0"] * 18 + [str(starttime)]) + "\n")
+        real_open, real_close, real_stat = os.open, os.close, os.stat
+        for change in ("pid", "starttime", "unavailable", "malformed", "open-failed", "matched"):
+            for ready in (False, True):
+                with self.subTest(change=change, ready=ready):
+                    write_identity()
+                    opened, closed, live = [], [], set()
+                    def open_fd(name, flags, *args, **kwargs):
+                        fd = real_open(endpoint if name == process else name, flags, *args, **kwargs)
+                        if name == process or str(name) == os.devnull:
+                            opened.append(fd)
+                            self.assertNotIn(fd, live)
+                            live.add(fd)
+                        return fd
+                    def close_fd(fd):
+                        self.assertIn(fd, live)
+                        live.remove(fd)
+                        closed.append(fd)
+                        real_close(fd)
+                    poller = types.SimpleNamespace(register=lambda *a: None,
+                        poll=lambda timeout: [(observer.pidfd, select.POLLIN)] if ready else [])
+                    with patch.object(cleanup.os, "uname", return_value=types.SimpleNamespace(sysname="Linux")), \
+                         patch.object(cleanup.os, "open", side_effect=open_fd), \
+                         patch.object(cleanup.os, "close", side_effect=close_fd), \
+                         patch.object(cleanup.os, "stat", side_effect=lambda name, *a, **kw:
+                                      real_stat(endpoint if name == process else name, *a, **kw)), \
+                         patch.object(cleanup.os, "pidfd_open", create=True,
+                                      side_effect=lambda pid, flags: open_fd(os.devnull, os.O_RDONLY)), \
+                         patch.object(cleanup.LinuxProcessObserver, "pidfd_pid", return_value=123), \
+                         patch.object(cleanup.select, "poll", return_value=poller):
+                        observer = cleanup.LinuxProcessObserver(process)
+                        try:
+                            self.assertEqual("matched", observer.binding["identity"], observer.binding)
+                            anchor = observer.binding["anchor"]
+                            if change == "pid":
+                                write_identity(pid=124)
+                            elif change == "starttime":
+                                write_identity(starttime=901)
+                            elif change == "unavailable":
+                                (endpoint / "stat").unlink()
+                            elif change == "malformed":
+                                (endpoint / "stat").write_text("unreadable proc identity")
+                            elif change == "open-failed":
+                                (endpoint / "stat").unlink()
+                                endpoint.rmdir()
+                            if change in ("pid", "starttime"):
+                                info = endpoint.stat()
+                                self.assertEqual((anchor["device"], anchor["inode"]), (info.st_dev, info.st_ino))
+                            for _ in range(2):
+                                sample = observer.sample(check_current=True)
+                                self.assertIn("wall_time_ns", sample)
+                                self.assertIn("monotonic_ns", sample)
+                                self.assertIn("poll_finished_monotonic_ns", sample)
+                                self.assertEqual("matched" if change == "matched" else "unknown", sample["identity"], sample)
+                                self.assertEqual(("observed" if ready else "not_observed") if change == "matched"
+                                                 else "unknown", sample["group_exit"], sample)
+                                self.assertEqual({observer.proc_fd, observer.pidfd}, live)
+                        finally:
+                            observer.close()
+                            observer.close()  # Closing twice must not close a recycled descriptor.
+                    self.assertFalse(live)
+                    self.assertCountEqual(opened, closed)
+                    if not endpoint.exists():
+                        endpoint.mkdir()
+
+    @unittest.skipUnless(sys.platform.startswith("linux"), "requires native Linux proc/pidfd")
+    def test_native_pidfd_dead_leader_live_worker(self):
+        # Observe the leader's actual Z state: Linux pidfd_poll() can defer even
+        # PIDFD_THREAD readiness for a group leader with surviving subthreads
+        # (fs/pidfs.c, delay_group_leader()). It cannot synchronize this phase.
+        # The flags=0 process pidfd must remain nonready while the worker owns
+        # cwd/fd until pipe release. Every probe wait is bounded.
+        source = r"""
+#define _GNU_SOURCE
+#include <fcntl.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/syscall.h>
+#include <unistd.h>
+static const char *directory;
+static int release_fd;
+static void *worker(void *unused) {
+    (void)unused;
+    if (chdir(directory)) _exit(10);
+    int fd = open("held", O_CREAT | O_RDWR, 0600);
+    if (fd < 0) _exit(11);
+    long tid = syscall(SYS_gettid);
+    if (dprintf(1, "ready %ld %d\n", tid, fd) < 0) _exit(12);
+    char command;
+    ssize_t count = read(release_fd, &command, 1);
+    if (count < 0 || (count == 1 && command != 'X')) _exit(15);
+    if (close(fd)) _exit(16);
+    return NULL;
+}
+int main(int argc, char **argv) {
+    if (argc != 3) return 17;
+    directory = argv[1];
+    release_fd = atoi(argv[2]);
+    pthread_t thread;
+    if (pthread_create(&thread, NULL, worker, NULL)) return 19;
+    char command;
+    ssize_t count = read(0, &command, 1);
+    if (count < 0 || (count == 1 && command != 'L')) return 20;
+    // SYS_exit ends this task only; the worker owns the remaining resources.
+    syscall(SYS_exit, 0);
+    return 21;
+}
+"""
+        probe = self.root / "thread-group-probe"
+        compiled = subprocess.run(["cc", "-std=c11", "-pthread", "-Wall", "-Wextra", "-Werror",
+                                   "-x", "c", "-o", str(probe), "-"],
+                                  input=source, capture_output=True, text=True, timeout=10)
+        self.assertEqual(0, compiled.returncode, compiled.stdout + compiled.stderr)
+        release_read, release_write = os.pipe()
+        try:
+            with os.fdopen(release_write, "wb", buffering=0) as release:
+                child = subprocess.Popen([str(probe), str(self.root), str(release_read)],
+                                         stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                         stderr=subprocess.PIPE, text=True, pass_fds=(release_read,))
+                observer = None
+                try:
+                    readable, _, _ = select.select([child.stdout], [], [], 10)
+                    self.assertTrue(readable, "native probe did not announce its worker; kernel=" + str(os.uname()))
+                    ready = os.read(child.stdout.fileno(), 256).decode().split()
+                    self.assertEqual(3, len(ready), ready)
+                    self.assertEqual("ready", ready[0], ready)
+                    worker, held_fd = map(int, ready[1:])
+                    process = Path("/proc") / str(child.pid)
+                    observer = cleanup.LinuxProcessObserver(process)
+                    self.assertEqual("matched", observer.binding["identity"], observer.binding)
+                    self.assertEqual(0, observer.sample()["revents"])
+                    iterdir = Path.iterdir
+                    def only_probe(path):
+                        return iter([process]) if path == Path("/proc") else iterdir(path)
+                    with patch.object(Path, "iterdir", only_probe):
+                        active = cleanup.active_paths(self.root / "codex", scopes=(self.root,))
+                    self.assertIn(self.root, active)
+                    self.assertIn(self.root / "held", active)
+                    child.stdin.write("L")
+                    child.stdin.flush()
+                    deadline = time.monotonic() + 10
+                    while True:
+                        status = cleanup.LinuxProcessObserver.read(observer.proc_fd, "status")
+                        fields = dict(line.split(":", 1) for line in status.splitlines() if ":" in line)
+                        if fields["State"].split()[0] == "Z":
+                            break
+                        if time.monotonic() >= deadline:
+                            self.fail("native leader did not reach Z; kernel=" + str(os.uname()) + "; " + status)
+                        time.sleep(0.001)
+                    self.assertEqual("Z", fields["State"].split()[0], status)
+                    self.assertEqual("2", fields["Threads"].strip(), status)
+                    live = observer.sample()
+                    self.assertEqual(0, live["revents"], live)
+                    self.assertEqual("not_observed", live["group_exit"])
+                    # A live worker really holds these paths even when the leader's
+                    # inventory is inaccessible. Partial task evidence cannot admit.
+                    task = process / "task" / str(worker)
+                    self.assertEqual(str(self.root), os.readlink(task / "cwd"))
+                    self.assertEqual(str(self.root / "held"), os.readlink(task / "fd" / str(held_fd)))
+                    diagnostic = None
+                    output, errors = io.StringIO(), io.StringIO()
+                    with patch.object(Path, "iterdir", only_probe), \
+                         contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+                        original_return_code = cleanup.main(["active-paths", "--scope", str(self.root)])
+                    if original_return_code == 1:
+                        self.assertEqual("", output.getvalue())
+                        prefix = "HOST_CLEANUP_FAILED linux_activity_unavailable "
+                        self.assertTrue(errors.getvalue().startswith(prefix), errors.getvalue())
+                        refusal = json.loads(errors.getvalue()[len(prefix):])
+                        diagnostic = refusal["diagnostic"]
+                        self.assertIn(diagnostic["original_error"]["errno"],
+                                      (cleanup.errno.EACCES, cleanup.errno.ENOENT, cleanup.errno.ESRCH))
+                        self.assertEqual("partial_non_atomic", diagnostic["task_inventory"])
+                        for moment in ("fault", "refusal"):
+                            self.assertEqual(0, diagnostic[moment]["revents"], diagnostic)
+                            self.assertEqual("not_observed", diagnostic[moment]["group_exit"])
+                        self.assertLessEqual(diagnostic["fault"]["monotonic_ns"],
+                                             diagnostic["refusal"]["monotonic_ns"])
+                    else:
+                        self.assertEqual(0, original_return_code, errors.getvalue())
+                        self.assertIn(str(self.root), json.loads(output.getvalue()))
+                        self.assertIn(str(self.root / "held"), json.loads(output.getvalue()))
+                    release.write(b"X")
+                    release.close()
+                    child.stdin.close()
+                    self.assertEqual(0, child.wait(timeout=10), child.stderr.read())
+                    exited = observer.sample()
+                    self.assertTrue(exited["revents"] & select.POLLIN, exited)
+                    self.assertEqual("observed", exited["group_exit"])
+                    print(json.dumps(dict(probe="native_pidfd_dead_leader_live_worker", live=live,
+                                          exited=exited, diagnostic=diagnostic,
+                                          kernel=list(os.uname()), leader_state=fields["State"].strip(),
+                                          leader_threads=fields["Threads"].strip(),
+                                          original_return_code=original_return_code), sort_keys=True), flush=True)
+                finally:
+                    release.close()
+                    if not child.stdin.closed:
+                        child.stdin.close()  # EOF releases the leader even on assertion failure.
+                    try:
+                        child.wait(timeout=10)
+                    except subprocess.TimeoutExpired:
+                        child.kill()  # Only this fixture's child, after cooperative EOF failed.
+                        child.wait(timeout=5)
+                        self.fail("native probe did not exit after EOF cleanup; kernel=" + str(os.uname()))
+                    finally:
+                        if observer is not None:
+                            observer.close()
+                        child.stdout.close()
+                        child.stderr.close()
+        finally:
+            os.close(release_read)
+
     def test_linux_disappearing_links_preserve_observable_siblings(self):
         process = self.root / "proc/123"
         descriptors = process / "fd"
@@ -911,6 +1134,67 @@ class HostCleanupTests(unittest.TestCase):
                      patch.object(cleanup.os, "readlink", link), \
                      patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "", "")):
                     self.assertIn(target.resolve(), cleanup.active_paths(self.root / "codex"))
+
+    def test_linux_activity_transition_waits_for_matched_group_exit_only(self):
+        process = self.root / "proc/43117"
+        process.mkdir(parents=True)
+        anchor = dict(device=27, inode=235306, pid=43117, starttime=56497)
+        sample = dict(identity="matched", group_exit="not_observed", revents=0, current=anchor)
+        inventory_started = dict(identity="matched", group_exit="not_observed", revents=0)
+        diagnostic = dict(
+            task_inventory="partial_non_atomic",
+            binding=dict(identity="matched", anchor=anchor, current=anchor, pidfd_pid=43117),
+            fault=sample,
+            refusal=sample,
+            inventory_started=inventory_started,
+        )
+        error = OSError("linux_activity_unavailable " + json.dumps(dict(
+            process=str(process), boundary="fd_inventory", diagnostic=diagnostic)))
+        waits = []
+
+        class Observer:
+            def __init__(self, observed):
+                self.binding = dict(identity="matched", anchor=anchor, current=anchor, pidfd_pid=43117)
+
+            def wait_for_group_exit(self, timeout_ms):
+                waits.append(timeout_ms)
+                return True
+
+            def close(self):
+                pass
+
+        with patch.object(cleanup, "LinuxProcessObserver", Observer):
+            self.assertTrue(cleanup.wait_for_linux_activity_transition(error))
+        self.assertEqual([1000], waits)
+
+    def test_linux_activity_transition_keeps_persistent_inaccessible_process_refused(self):
+        process = self.root / "proc/43117"
+        process.mkdir(parents=True)
+        anchor = dict(device=27, inode=235306, pid=43117, starttime=56497)
+        sample = dict(identity="matched", group_exit="not_observed", revents=0, current=anchor)
+        inventory_started = dict(identity="matched", group_exit="not_observed", revents=0)
+        diagnostic = dict(
+            task_inventory="partial_non_atomic",
+            binding=dict(identity="matched", anchor=anchor, current=anchor, pidfd_pid=43117),
+            fault=sample,
+            refusal=sample,
+            inventory_started=inventory_started,
+        )
+        error = OSError("linux_activity_unavailable " + json.dumps(dict(
+            process=str(process), boundary="fd_inventory", diagnostic=diagnostic)))
+
+        class Observer:
+            def __init__(self, observed):
+                self.binding = dict(identity="matched", anchor=anchor, current=anchor, pidfd_pid=43117)
+
+            def wait_for_group_exit(self, timeout_ms):
+                return False
+
+            def close(self):
+                pass
+
+        with patch.object(cleanup, "LinuxProcessObserver", Observer):
+            self.assertFalse(cleanup.wait_for_linux_activity_transition(error))
 
     def test_inventory_failure_reports_already_removed_artifacts(self):
         artifact = self.old_file(self.root / "tmp" / "old-output")
