@@ -3077,11 +3077,11 @@ $$
 $$
 \|v\|_\infty
 \le\left[\frac{10(1+u)}{9u}
-+9\sqrt{\frac{S_3}{\gamma}}\right]r<5r.
++9\sqrt{\frac{S_3}{\gamma}}\right]r\le5r.
 \tag{21.18}
 $$
 
-严格的最后一步可用有理界检查：$u>19/50$，$\gamma>36/25$，且单调积分估计给
+括号严格小于五可用有理界检查：$u>19/50$，$\gamma>36/25$，且单调积分估计给
 
 $$
 S_3\le\frac1{125}+\frac1{343}+\int_3^\infty(2t+1)^{-3}\,dt
