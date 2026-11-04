@@ -76,7 +76,10 @@ private theorem charge_sum (f g : ℕ→ℤ) (xs : List ℕ)
 private theorem twice_full (a b d : ℕ) (r : Fin 4) (hl : 1≤chainLength a b a d r) :
     2*(full a b a d r:ℤ)=(2:ℤ)^(chainLength a b a d r)-2 := by
   have hp : (2:ℤ)^(chainLength a b a d r)=2*(2:ℤ)^(chainLength a b a d r-1) := by
-    rw [show chainLength a b a d r=(chainLength a b a d r-1)+1 by omega,pow_succ]; ring
+    calc
+      (2:ℤ)^(chainLength a b a d r)=(2:ℤ)^((chainLength a b a d r-1)+1) := by
+        congr 1; omega
+      _ = 2*(2:ℤ)^(chainLength a b a d r-1) := by rw [pow_succ]; ring
   have hc : (full a b a d r:ℤ)=(2:ℤ)^(chainLength a b a d r-1)-1 := by
     dsimp [full]
     rw [Nat.cast_sub (by have := Nat.two_pow_pos (chainLength a b a d r-1); omega)]
@@ -228,9 +231,9 @@ private theorem physical_joint (a b d m : ℕ) (early : Bool)
       · linear_combination -o0
       · linear_combination n0+j3.2
       · linear_combination o0+j3.1+o1+j0.1
-      · linear_combination -n0-j3.2-n1-j0.2-n2
+      · linear_combination -n0-j3.2-n1
       · linear_combination o0+j3.1+o1+j0.1+o2+j1.1
-      · linear_combination -n0-j3.2-n1-j0.2-n2-j1.2-n3
+      · linear_combination -n0-j3.2-n1-j0.2-n2
     rw [he]
     exact hwi
   have checks:=complete_checks p q pn qn E N early cp cq ototal ntotal actualMargins
@@ -276,7 +279,7 @@ private theorem physical_joint (a b d m : ℕ) (early : Bool)
     cases early <;> fin_cases r <;> simp [Pn,newBanks,withFresh,pn,P,hear,k,add_comm]
   have newpositive (r : Fin 4) (i : ℕ) (hi : i∈Pn r) : 0≤g i := by
     cases early <;> fin_cases r <;> dsimp [Pn,newBanks] at hi
-    all_goals simp only [List.mem_cons] at hi
+    all_goals try simp only [List.mem_cons] at hi
     all_goals first
       | exact (positive _ i hi).2
       | (rcases hi with rfl|hi
