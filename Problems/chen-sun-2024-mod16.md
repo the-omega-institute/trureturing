@@ -45,8 +45,12 @@ The implementation is in draft PR26314. Native44716 ran
 `make lean LEAN_TARGETS="D5.S3.Arith.CharacterSums.ChenSunOriginal"` and
 exited0 on 4 November2026, compiling the complete all-prime four-branch theorem.
 The source log is native-build-14.log in the persistent research target.
-A scoped axiom/statement report, fresh independent formal review and CI delivery
-remain required; this build alone does not certify those separate obligations. There is no finite-prime cutoff, weakened original, sorry,
+Native24439 completed the scoped statement/axiom report with exit0: 39 project
+modules and 1,009 declarations, with only Classical.choice, Quot.sound and
+propext in the complete project axiom closure. Native84125 emitted and checked
+the fifteen corresponding Scribe pages with exit0, reusing the same scoped
+report. Fresh independent formal review, canonical admission and CI delivery
+remain pending. There is no finite-prime cutoff, weakened original, sorry,
 new axiom or native_decide implementation route.
 
 The sealed full ordinary proof was independently approved. That review does
@@ -65,3 +69,9 @@ Yao Xu/cadamcat attribution through its existing Library note.
 An altered inclusive interval, a missing mod8 branch, a prime cutoff, a
 nonactual h, or an unpaid class-number bridge invalidates this implementation
 as an answer to the original. All four cases must be delivered together.
+
+Four-slot escape registration is unfinished for the newly authored theorem
+family, tracked in https://github.com/the-omega-institute/trureturing/issues/26321.
+The source-specific realization, equivalence, variation, sensitivity and
+observational-dependence proofs are not certified. No declared_validated status
+is claimed. This audit debt is separate from native mathematical proof.

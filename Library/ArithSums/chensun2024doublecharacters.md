@@ -66,3 +66,9 @@ excluded. Completeness of the literature screen, novelty and priority remain
 unverified. Ordinary proof approval is separate from native Lean, independent
 formal review, CI merge, publication and official acceptance. OriginalKPI is0
 until complete reviewed delivery.
+
+Four-slot escape registration is unfinished for the newly authored theorem
+family, tracked in https://github.com/the-omega-institute/trureturing/issues/26321.
+The source-specific realization, equivalence, variation, sensitivity and
+observational-dependence proofs are not certified. No declared_validated status
+is claimed. This audit debt is separate from native mathematical proof.
