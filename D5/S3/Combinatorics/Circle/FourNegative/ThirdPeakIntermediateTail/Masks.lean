@@ -109,7 +109,7 @@ private theorem w_inventory (mode : Fin 4) (a b d : ℕ) (ha : 2≤a)
     rw [←full]
     norm_num [wbits,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq,Matrix.vecHead,Matrix.vecTail,Fin.reduceEq,ite_false,ite_true,List.append_nil]
     apply Multiset.coe_eq_coe.mp
-    simp only [Multiset.coe_cons,←Multiset.coe_add,Multiset.coe_singleton]
+    simp only [←Multiset.cons_coe,←Multiset.singleton_add,←Multiset.coe_add,Multiset.coe_singleton,Multiset.coe_nil,add_zero]
     dsimp only [be]
     ac_rfl
   · have hb : 2≤be ∧ be≤al+be-1 ∧ al+be-1≤b-1 := by dsimp [al,be]; omega
@@ -125,7 +125,7 @@ private theorem w_inventory (mode : Fin 4) (a b d : ℕ) (ha : 2≤a)
     rw [←full]
     norm_num [wbits,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq,Matrix.vecHead,Matrix.vecTail,Fin.reduceEq,ite_false,ite_true]
     apply Multiset.coe_eq_coe.mp
-    simp only [Multiset.coe_cons,←Multiset.coe_add,Multiset.coe_singleton]
+    simp only [←Multiset.cons_coe,←Multiset.singleton_add,←Multiset.coe_add,Multiset.coe_singleton,Multiset.coe_nil,add_zero]
     dsimp only [al,be]
     ac_rfl
   · have hal' : 1≤al ∧ al≤b-1 := by dsimp [al]; omega
@@ -136,7 +136,7 @@ private theorem w_inventory (mode : Fin 4) (a b d : ℕ) (ha : 2≤a)
     rw [←full]
     norm_num [wbits,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq,Matrix.vecHead,Matrix.vecTail,Fin.reduceEq,ite_false,ite_true]
     apply Multiset.coe_eq_coe.mp
-    simp only [Multiset.coe_cons,←Multiset.coe_add,Multiset.coe_singleton]
+    simp only [←Multiset.cons_coe,←Multiset.singleton_add,←Multiset.coe_add,Multiset.coe_singleton,Multiset.coe_nil,add_zero]
     dsimp only [al]
     ac_rfl
   · have full : [0]++bitRange 1 (b-1)=List.range (b-1) := by
