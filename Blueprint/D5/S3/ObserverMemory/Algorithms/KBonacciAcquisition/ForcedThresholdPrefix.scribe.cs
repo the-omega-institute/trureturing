@@ -17,7 +17,7 @@ internal sealed class ForcedThresholdPrefixDocument : IScribeDocumentDefinition
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula Arrow(Formula a, Formula b) => Seq(a,Sp,To,Sp,b);
-    private static Formula Rec(Formula v, Formula p, Formula s) => Call("some", Seq(Langle,v,Comma,p,Comma,s,Rangle));
+    private static Formula Rec(Formula v, Formula p, Formula s) => Call("some", Seq(Langle,Sp,v,Comma,p,Comma,s,Rangle));
     private static Formula Pair(Formula a, Formula b) => Seq(Open,a,Comma,b,Close);
     private static Formula If(Formula c, Formula a, Formula b) => Call("ifThenElse",c,a,b);
 
