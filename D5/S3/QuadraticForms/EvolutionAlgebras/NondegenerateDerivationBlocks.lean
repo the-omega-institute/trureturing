@@ -922,6 +922,156 @@ private theorem diagonalKernel_quotient_abelian :
     Function.Injective.isLieAbelian (f := f.range.incl) Subtype.val_injective hf
   exact f.quotKerEquivRange.injective.isLieAbelian hr
 
+noncomputable def reducedBlockForm (a : α) :=
+  let B : LinearMap.BilinForm k ({i : ι // label i = a} → k) :=
+    Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k)
+  let W := blockW b label w a
+  LinearMap.IsRefl.liftQ₂ (B.restrict (B.orthogonal W))
+    (LinearMap.ker (B.restrict (B.orthogonal W)))
+    (fun x y =>
+      (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _).isRefl
+        x.val y.val) le_rfl
+
+include hn hsq hw hsep in
+private noncomputable def normalizedReducedHom [CharZero k]
+    (hl : Function.Surjective label) : derivations μ →ₗ⁅k⁆
+      ∀ a, skewAdjointLieSubalgebra (reducedBlockForm b label w a) :=
+  { LinearMap.pi (fun a =>
+      ((D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserverQuotientLieHom
+        _ _ (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _)).comp
+        (correctedPreserverHom μ b label w hn hsq hw hsep hl a)).toLinearMap) with
+    map_lie' := by
+      intro D E
+      funext a
+      exact ((D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserverQuotientLieHom
+        _ _ (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _)).comp
+        (correctedPreserverHom μ b label w hn hsq hw hsep hl a)).map_lie D E }
+
+include hn hsq hw hsep in
+private theorem correctedRestrict_eq_of_diagonal_zero [CharZero k]
+    (hl : Function.Surjective label) (D : derivations μ)
+    (hd : ∀ i, b.repr (D.val (b i)) i = 0) (a : α) :
+    correctedRestrict μ b label w hn hsq hw hsep hl a D = restrictBlock b label D.val a := by
+  have hc : classDiagonal μ b label w hn hsq hw hsep hl a D = 0 :=
+    hd (Classical.choose (hl a))
+  change restrictBlock b label D.val a -
+    classDiagonal μ b label w hn hsq hw hsep hl a D • 1 = _
+  rw [hc, zero_smul, sub_zero]
+
+include hn hsq hw hsep in
+private theorem normalizedReducedHom_of_diagonal_zero [CharZero k]
+    (hl : Function.Surjective label) (D : derivations μ)
+    (hd : ∀ i, b.repr (D.val (b i)) i = 0) (a : α) :
+    normalizedReducedHom μ b label w hn hsq hw hsep hl D a =
+      D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom
+        _ _ (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _)
+        ⟨restrictBlock b label D.val a,
+          restrictBlock_mem_stabilizer_of_diagonal_zero μ b label w hn hsq hw hsep hl D hd a⟩ := by
+  let B : LinearMap.BilinForm k ({i : ι // label i = a} → k) :=
+    Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k)
+  let W := blockW b label w a
+  let x : D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer B W :=
+    ⟨restrictBlock b label D.val a,
+      restrictBlock_mem_stabilizer_of_diagonal_zero μ b label w hn hsq hw hsep hl D hd a⟩
+  let y : D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserver B W :=
+    ⟨x.val, x.property.1, fun u hu => by rw [x.property.2 u hu]; exact W.zero_mem⟩
+  have he : correctedPreserverHom μ b label w hn hsq hw hsep hl a D = y :=
+    Subtype.ext (correctedRestrict_eq_of_diagonal_zero μ b label w hn hsq hw hsep hl D hd a)
+  exact congrArg (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserverQuotientLieHom
+    B W (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _)) he
+
+include hn hsq hw hsep in
+private theorem normalizedReducedHom_surjective [CharZero k]
+    (hl : Function.Surjective label) :
+    Function.Surjective (normalizedReducedHom μ b label w hn hsq hw hsep hl) := by
+  classical
+  intro F
+  let B (a : α) : LinearMap.BilinForm k ({i : ι // label i = a} → k) :=
+    Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k)
+  let W (a : α) := blockW b label w a
+  let f (a : α) := Classical.choose
+    (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom_surjective
+      (B a) (W a)
+      (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _) (F a))
+  let D := productToDiagonalKernel μ b label w hn hsq hw hsep f
+  have hd (i : ι) : b.repr (D.val.val (b i)) i = 0 :=
+    congrFun (LieHom.mem_ker.mp D.property) i
+  refine ⟨D.val, ?_⟩
+  funext a
+  rw [normalizedReducedHom_of_diagonal_zero μ b label w hn hsq hw hsep hl D.val hd a]
+  have hrest : restrictBlock b label D.val.val a = (f a).val :=
+    congrFun (restrict_assemble b label (fun c => (f c).val)) a
+  have he : (⟨restrictBlock b label D.val.val a,
+      restrictBlock_mem_stabilizer_of_diagonal_zero μ b label w hn hsq hw hsep hl D.val hd a⟩ :
+      D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer (B a) (W a)) = f a :=
+    Subtype.ext hrest
+  rw [he]
+  exact Classical.choose_spec
+    (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom_surjective
+      (B a) (W a)
+      (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _) (F a))
+
+include hn hsq hw hsep in
+private noncomputable def diagonalReducedKernelBlockHom [CharZero k]
+    (hl : Function.Surjective label) (a : α) :
+    ((diagonalHom μ b label w hn hsq hw hsep).comp
+      (normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl).ker →ₗ⁅k⁆
+    (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom
+      _ _ (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm
+        {i : ι // label i = a})).ker := by
+  let N := ((diagonalHom μ b label w hn hsq hw hsep).comp
+    (normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl).ker
+  have hd (x : N) (i : ι) : b.repr (x.val.val.val (b i)) i = 0 :=
+    congrFun (LieHom.mem_ker.mp x.property) i
+  let f : N →ₗ⁅k⁆ D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer
+      (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+      (blockW b label w a) :=
+    { ((restrictDerivation μ b label w hn hsq hsep a).comp
+        ((normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl.comp N.incl)).toLinearMap.codRestrict _
+        (fun x => restrictBlock_mem_stabilizer_of_diagonal_zero
+          μ b label w hn hsq hw hsep hl x.val.val (hd x) a) with
+      map_lie' := fun {x y} => Subtype.ext
+        (((restrictDerivation μ b label w hn hsq hsep a).comp
+          ((normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl.comp N.incl)).map_lie x y) }
+  refine { f.toLinearMap.codRestrict _ (fun x => ?_) with
+    map_lie' := fun {x y} => Subtype.ext (f.map_lie x y) }
+  rw [LieHom.mem_ker]
+  have hz := congrFun (LieHom.mem_ker.mp x.val.property) a
+  rw [normalizedReducedHom_of_diagonal_zero μ b label w hn hsq hw hsep hl x.val.val (hd x) a] at hz
+  exact hz
+
+include hn hsq hw hsep in
+private theorem normalizedReducedHom_kernel_solvable [CharZero k]
+    (hl : Function.Surjective label) :
+    LieAlgebra.IsSolvable (normalizedReducedHom μ b label w hn hsq hw hsep hl).ker := by
+  let f := normalizedReducedHom μ b label w hn hsq hw hsep hl
+  let g := (diagonalHom μ b label w hn hsq hw hsep).comp f.ker.incl
+  have hi : ∀ x : g.ker,
+      (∀ a, diagonalReducedKernelBlockHom μ b label w hn hsq hw hsep hl a x = 0) → x = 0 := by
+    intro x hx
+    apply Subtype.ext
+    apply Subtype.ext
+    apply Subtype.ext
+    have he := assemble_restrict_of_cross_zero b label x.val.val.val
+      (derivation_cross_zero μ b label w hn hsq hsep x.val.val)
+    rw [← he]
+    have hh : restrictBlock b label x.val.val.val = 0 := by
+      funext a
+      exact congrArg (fun z => z.val.val) (hx a)
+    rw [hh]
+    exact map_zero (assemble b label)
+  haveI : LieRing.IsNilpotent g.ker :=
+    D5.S3.QuadraticForms.LieRadicalTransfer.nilpotent_of_triple_bracket_zero (k := k) (by
+      intro x y z
+      apply hi
+      intro a
+      rw [map_lie, map_lie]
+      exact D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom_kernel_triple_zero
+        _ _ _ (LinearMap.nondegenerate_toLinearMap₂'_of_det_ne_zero' (by simp)) _ _ _)
+  haveI : IsLieAbelian (ι → k) :=
+    ⟨fun x y => by ext i; simp [Ring.lie_def, mul_comm]⟩
+  exact D5.S3.QuadraticForms.LieRadicalTransfer.solvable_of_solvable_kernel g
+
 include hn hsq hw hsep in
 private theorem productToDerivations_surjective [LieAlgebra.IsSemisimple k (derivations μ)]
     (hl : Function.Surjective label) :
@@ -1036,6 +1186,36 @@ theorem nonzero_square_diagonal_kernel_decomposition [CharZero k]
     diagonalKernel_quotient_abelian μ b' label w hn' hsq' hw hsep, ?_⟩
   exact diagonalKernel_equiv_stabilizers μ b' label w hn' hsq' hw hsep
     (Set.rangeFactorization_surjective (f := fun i => k ∙ μ (b i) (b i)))
+
+/-- A full-derivation surjection onto the product of the nondegenerate reduced
+orthogonal blocks. Its kernel is solvable, including all isotropic boundaries.
+Small orthogonal blocks have deliberately not yet been discarded. -/
+theorem nonzero_square_reduced_orthogonal_surjection [CharZero k]
+    (hn : ∀ i j, i ≠ j → μ (b i) (b j) = 0)
+    (hs : ∀ i, μ (b i) (b i) ≠ 0) :
+    ∃ b' : Module.Basis ι k V,
+      (∀ i j, i ≠ j → μ (b' i) (b' j) = 0) ∧
+      ∃ f : derivations μ →ₗ⁅k⁆ ∀ a : Set.range (fun i => k ∙ μ (b i) (b i)),
+        skewAdjointLieSubalgebra (reducedBlockForm b'
+          (Set.rangeFactorization (fun i => k ∙ μ (b i) (b i))) (squareRepresentative μ b) a),
+        Function.Surjective f ∧ LieAlgebra.IsSolvable f.ker := by
+  classical
+  let label := Set.rangeFactorization (fun i => k ∙ μ (b i) (b i))
+  let w := squareRepresentative μ b
+  letI : Fintype (Set.range (fun i => k ∙ μ (b i) (b i))) :=
+    Fintype.ofSurjective label (Set.rangeFactorization_surjective (f := fun i => k ∙ μ (b i) (b i)))
+  obtain ⟨b', hn', hsq'⟩ := exists_class_normalization μ b hn
+  have hw : ∀ a, w a ≠ 0 := representatives_nonzero μ b hs
+  have hsep : ∀ a c, a ≠ c → ∀ s t : k, s • w a + t • w c = 0 → s = 0 ∧ t = 0 := by
+    intro a c hac s t h
+    exact separate_of_distinct_lines (w a) (w c) (hw a) (hw c)
+      (representatives_distinct_lines μ b a c hac) s t h
+  exact ⟨b', hn', normalizedReducedHom μ b' label w hn' hsq' hw hsep
+    (Set.rangeFactorization_surjective (f := fun i => k ∙ μ (b i) (b i))),
+    normalizedReducedHom_surjective μ b' label w hn' hsq' hw hsep
+      (Set.rangeFactorization_surjective (f := fun i => k ∙ μ (b i) (b i))),
+    normalizedReducedHom_kernel_solvable μ b' label w hn' hsq' hw hsep
+      (Set.rangeFactorization_surjective (f := fun i => k ∙ μ (b i) (b i)))⟩
 
 theorem nonzero_square_block_decomposition
     [LieAlgebra.IsSemisimple k (derivations μ)]

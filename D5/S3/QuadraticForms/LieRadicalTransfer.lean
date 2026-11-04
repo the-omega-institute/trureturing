@@ -28,6 +28,7 @@ lawful enrolled readout and variation/sensitivity remain unregistered.
 
 import Mathlib.Algebra.Lie.Semisimple.Basic
 import Mathlib.Algebra.Lie.Quotient
+import Mathlib.Algebra.Lie.Nilpotent
 
 /-!
 Standard solvable-extension and radical arguments use mathlib's actual derived
@@ -46,6 +47,25 @@ open LieAlgebra LieIdeal
 variable {k L M : Type*} [Field k] [LieRing L] [LieAlgebra k L]
 variable [LieRing M] [LieAlgebra k M]
 
+/-- A uniform two-step nilpotence bound, including the zero Lie algebra. -/
+theorem nilpotent_of_triple_bracket_zero {L : Type*} [LieRing L] [LieAlgebra k L]
+    (h : ∀ x y z : L, ⁅x, ⁅y, z⁆⁆ = 0) : LieRing.IsNilpotent L := by
+  apply LieModule.IsNilpotent.mk (R := k) (L := L) (M := L) (k := 2)
+  simp only [LieModule.lowerCentralSeries_succ, LieModule.lowerCentralSeries_zero]
+  apply (LieSubmodule.lie_eq_bot_iff _ _).mpr
+  intro x hx y hy
+  have hy' : y ∈ (⁅(⊤ : LieIdeal k L), (⊤ : LieIdeal k L)⁆ : LieIdeal k L).toSubmodule := hy
+  clear hy
+  rw [LieSubmodule.lieIdeal_oper_eq_linear_span] at hy'
+  induction hy' using Submodule.span_induction with
+  | mem z hz =>
+      obtain ⟨a, b, rfl⟩ := hz
+      exact h x a.val b.val
+  | zero => simp
+  | add a b ha hb ia ib => simp [ia, ib]
+  | smul c a ha ia => simp [ia]
+
+
 theorem solvable_of_solvable_kernel (f : L →ₗ⁅k⁆ M)
     [IsSolvable f.ker] [IsSolvable M] : IsSolvable L := by
   obtain ⟨n, hn⟩ := IsSolvable.solvable k M
@@ -60,6 +80,24 @@ theorem solvable_of_solvable_kernel (f : L →ₗ⁅k⁆ M)
   change derivedSeriesOfIdeal k L (m + n) ⊤ = ⊥
   rw [derivedSeriesOfIdeal_add]
   exact le_antisymm ((derivedSeriesOfIdeal_mono hle m).trans (by rw [hm'])) bot_le
+
+/-- Inverse images of solvable ideals under maps with solvable kernel are
+solvable. No surjectivity is needed. -/
+theorem solvable_comap (f : L →ₗ⁅k⁆ M) [IsSolvable f.ker]
+    (I : LieIdeal k M) [IsSolvable I] : IsSolvable (I.comap f) := by
+  let g : I.comap f →ₗ⁅k⁆ I :=
+    { (f.comp (I.comap f).incl).toLinearMap.codRestrict I.toSubmodule (fun x => x.property) with
+      map_lie' := fun {x y} => Subtype.ext (f.map_lie x.val y.val) }
+  let h : g.ker →ₗ⁅k⁆ f.ker :=
+    { ((I.comap f).incl.toLinearMap.comp g.ker.incl.toLinearMap).codRestrict f.ker.toSubmodule
+        (fun x => by
+          rw [LieHom.mem_ker]
+          exact congrArg Subtype.val (LieHom.mem_ker.mp x.property)) with
+      map_lie' := fun {x y} => rfl }
+  haveI : IsSolvable g.ker :=
+    (show Function.Injective h from fun x y hxy =>
+      Subtype.ext (Subtype.ext (congrArg Subtype.val hxy))).lieAlgebra_isSolvable
+  exact solvable_of_solvable_kernel g
 
 private theorem derivedSeriesOfIdeal_map (f : L →ₗ⁅k⁆ M)
     (hf : Function.Surjective f) (I : LieIdeal k L) (n : ℕ) :
@@ -116,5 +154,60 @@ theorem hasTrivialRadical_of_separating_surjections {α : Type*}
   intro a
   have hh := LieIdeal.mem_map (f := f a) hx
   simpa only [hm a, LieSubmodule.mem_bot] using hh
+
+/-- A simple actual ideal survives every map with solvable kernel faithfully. -/
+theorem injective_on_simple_ideal (f : L →ₗ⁅k⁆ M) [IsSolvable f.ker]
+    (I : LieIdeal k L) [IsSimple k I] : Function.Injective (f.comp I.incl) := by
+  let g := f.comp I.incl
+  let h : g.ker →ₗ⁅k⁆ f.ker :=
+    { (I.incl.toLinearMap.comp g.ker.incl.toLinearMap).codRestrict f.ker.toSubmodule
+        (fun x => x.property) with map_lie' := fun {x y} => rfl }
+  have hh : Function.Injective h := fun x y hxy =>
+    Subtype.ext (Subtype.ext (congrArg Subtype.val hxy))
+  haveI : IsSolvable g.ker := hh.lieAlgebra_isSolvable
+  exact LieHom.ker_eq_bot.mp (HasTrivialRadical.eq_bot_of_isSolvable g.ker)
+
+/-- A nonzero projection of a simple ideal onto a simple quotient factor is a
+proved Lie equivalence. Both ideals and maps here are the actual objects. -/
+noncomputable def simpleIdealEquiv_of_surjection [IsSimple k M]
+    (f : L →ₗ⁅k⁆ M) (hf : Function.Surjective f)
+    (I : LieIdeal k L) [IsSimple k I] (hx : ∃ x : I, f x.val ≠ 0) : I ≃ₗ⁅k⁆ M := by
+  let g := f.comp I.incl
+  have hk : g.ker = ⊥ := by
+    rcases IsSimple.eq_bot_or_eq_top g.ker with h | h
+    · exact h
+    · obtain ⟨x,hx⟩ := hx
+      exact False.elim (hx (LieHom.mem_ker.mp (by rw [h]; exact LieSubmodule.mem_top x)))
+  have hJ : I.map f = ⊤ := by
+    rcases IsSimple.eq_bot_or_eq_top (I.map f) with h | h
+    · obtain ⟨x,hx⟩ := hx
+      have hh := LieIdeal.mem_map (f := f) x.property
+      rw [h, LieSubmodule.mem_bot] at hh
+      exact False.elim (hx hh)
+    · exact h
+  refine LieEquiv.ofBijective g ⟨LieHom.ker_eq_bot.mp hk, ?_⟩
+  intro y
+  have hy : y ∈ I.map f := by rw [hJ]; exact LieSubmodule.mem_top y
+  exact LieIdeal.mem_map_of_surjective hf hy
+
+/-- Transport simplicity across a proved Lie equivalence. -/
+theorem isSimple_of_equiv [IsSimple k L] (e : L ≃ₗ⁅k⁆ M) : IsSimple k M := by
+  constructor
+  · intro I
+    rcases IsSimple.eq_bot_or_eq_top (I.comap e.toLieHom) with h | h
+    · left
+      apply le_antisymm ?_ bot_le
+      intro x hx
+      have hh : e.symm x ∈ I.comap e.toLieHom := by simpa using hx
+      rw [h, LieSubmodule.mem_bot] at hh
+      change x = 0
+      simpa using congrArg e hh
+    · right
+      apply top_unique
+      intro x hx
+      have hh : e.symm x ∈ I.comap e.toLieHom := by rw [h]; exact LieSubmodule.mem_top _
+      simpa using hh
+  · intro h
+    exact IsSimple.non_abelian k (e.injective.isLieAbelian h)
 
 end D5.S3.QuadraticForms.LieRadicalTransfer

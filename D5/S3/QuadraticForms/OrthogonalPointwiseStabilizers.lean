@@ -70,6 +70,8 @@ escape_witness: Stabilizer.quotientLieHom_surjective, Stabilizer.quotientKernel_
     consumers: D5.S3.QuadraticForms.EvolutionAlgebras.SemisimpleDerivationClassification.result
 -/
 
+import D5.S3.QuadraticForms.LieRadicalTransfer
+
 import Mathlib.Algebra.Lie.Nilpotent
 import Mathlib.Algebra.Lie.Semisimple.Basic
 import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
@@ -87,22 +89,6 @@ set_option maxHeartbeats 800000
 namespace D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer
 attribute [local instance 100] LieRing.ofAssociativeRing
 variable {k V : Type*} [Field k] [AddCommGroup V] [Module k V]
-private theorem nilpotent_of_triple_bracket_zero {L : Type*} [LieRing L] [LieAlgebra k L]
-    (h : ∀ x y z : L, ⁅x, ⁅y, z⁆⁆ = 0) : LieRing.IsNilpotent L := by
-  apply LieModule.IsNilpotent.mk (R := k) (L := L) (M := L) (k := 2)
-  simp only [LieModule.lowerCentralSeries_succ, LieModule.lowerCentralSeries_zero]
-  apply (LieSubmodule.lie_eq_bot_iff _ _).mpr
-  intro x hx y hy
-  have hy' : y ∈ (⁅(⊤ : LieIdeal k L), (⊤ : LieIdeal k L)⁆ : LieIdeal k L).toSubmodule := hy
-  clear hy
-  rw [LieSubmodule.lieIdeal_oper_eq_linear_span] at hy'
-  induction hy' using Submodule.span_induction with
-  | mem z hz =>
-      obtain ⟨a, b, rfl⟩ := hz
-      exact h x a.val b.val
-  | zero => simp
-  | add a b ha hb ia ib => simp [ia, ib]
-  | smul c a ha ia => simp [ia]
 
 variable (B : LinearMap.BilinForm k V) (W : Submodule k V)
 def stabilizer : LieSubalgebra k (Module.End k V) where
@@ -291,7 +277,7 @@ private def quotientAction : stabilizer B W →ₗ⁅k⁆
 private theorem quotientAction_skew (f : stabilizer B W) :
     ((LinearMap.IsRefl.liftQ₂ (B.restrict (B.orthogonal W)) (LinearMap.ker (B.restrict (B.orthogonal W))) (fun x y => hB.isRefl x.val y.val) le_rfl)).IsSkewAdjoint (quotientAction B W f) := by
   exact preserverQuotientAction_skew B W hB (stabilizerToPreserver B W f)
-private def quotientLieHom : stabilizer B W →ₗ⁅k⁆
+def quotientLieHom : stabilizer B W →ₗ⁅k⁆
     skewAdjointLieSubalgebra ((LinearMap.IsRefl.liftQ₂ (B.restrict (B.orthogonal W)) (LinearMap.ker (B.restrict (B.orthogonal W))) (fun x y => hB.isRefl x.val y.val) le_rfl)) :=
   { (quotientAction B W).toLinearMap.codRestrict
       (skewAdjointLieSubalgebra ((LinearMap.IsRefl.liftQ₂ (B.restrict (B.orthogonal W)) (LinearMap.ker (B.restrict (B.orthogonal W))) (fun x y => hB.isRefl x.val y.val) le_rfl))).toSubmodule
@@ -310,9 +296,9 @@ private theorem quotientKernel_maps_into_W [FiniteDimensional k V] (hND : B.Nond
   exact hu'.1
 
 include hB in
-private theorem quotientKernel_nilpotent [FiniteDimensional k V] (hND : B.Nondegenerate) :
-    LieRing.IsNilpotent (quotientAction B W).ker := by
-  apply nilpotent_of_triple_bracket_zero (k := k)
+private theorem quotientKernel_triple_bracket_zero [FiniteDimensional k V]
+    (hND : B.Nondegenerate) :
+    ∀ f g h : (quotientAction B W).ker, ⁅f, ⁅g,h⁆⁆ = 0 := by
   have hc (f g h : (quotientAction B W).ker) : f.val.val * g.val.val * h.val.val = 0 :=
     stabilizer_kernel_triple_zero B W f.val g.val h.val
       (fun u hu => quotientKernel_maps_into_W B W hB hND g ⟨u, hu⟩)
@@ -321,6 +307,27 @@ private theorem quotientKernel_nilpotent [FiniteDimensional k V] (hND : B.Nondeg
   apply Subtype.ext
   change ⁅f.val.val, ⁅g.val.val, h.val.val⁆⁆ = 0
   simp only [Ring.lie_def, mul_sub, sub_mul, ← mul_assoc, hc, sub_self]
+
+include hB in
+private theorem quotientKernel_nilpotent [FiniteDimensional k V] (hND : B.Nondegenerate) :
+    LieRing.IsNilpotent (quotientAction B W).ker :=
+  D5.S3.QuadraticForms.LieRadicalTransfer.nilpotent_of_triple_bracket_zero (k := k)
+    (quotientKernel_triple_bracket_zero B W hB hND)
+
+/-- The actual quotient-action kernel has zero triple brackets. This is the
+canonical pointwise-stabilizer nilpotent-kernel proof, with its stronger bound
+made available to the full derivation-kernel argument. -/
+theorem quotientLieHom_kernel_triple_zero [FiniteDimensional k V]
+    (hND : B.Nondegenerate) (f g h : (quotientLieHom B W hB).ker) :
+    ⁅f, ⁅g,h⁆⁆ = 0 := by
+  let lift (x : (quotientLieHom B W hB).ker) : (quotientAction B W).ker :=
+    ⟨x.val, by
+      rw [LieHom.mem_ker]
+      exact congrArg Subtype.val (LieHom.mem_ker.mp x.property)⟩
+  apply Subtype.ext
+  apply Subtype.ext
+  exact congrArg (fun x : (quotientAction B W).ker => x.val.val)
+    (quotientKernel_triple_bracket_zero B W hB hND (lift f) (lift g) (lift h))
 
 include hB in
 private theorem quotientAction_injective [FiniteDimensional k V] (hND : B.Nondegenerate)
@@ -378,7 +385,7 @@ private theorem extendOrthogonal_skew (f : Module.End k E)
       simpa only [LinearMap.neg_apply, LinearMap.compl₁₂_apply, map_neg] using
         congrArg Neg.neg (orthProjection_pairing B i hC v (f (orthProjection B i hC w)))
 end OrthogonalProjection
-private theorem quotientLieHom_surjective [FiniteDimensional k V] :
+theorem quotientLieHom_surjective [FiniteDimensional k V] :
     Function.Surjective (quotientLieHom B W hB) := by
   classical
   intro F
