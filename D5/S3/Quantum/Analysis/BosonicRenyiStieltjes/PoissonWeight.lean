@@ -119,13 +119,8 @@ private lemma density_resolvent_integrable {α r : ℝ} (ha0 : 0 < α) (ha2 : α
     simpa only [mul_div_assoc] using
       hi.mul_continuousOn_of_subset hc measurableSet_Ioo isCompact_Icc Ioo_subset_Icc_self
   have him : (fun q : ℝ => q⁻¹) '' Ioo (0 : ℝ) 1 = Ioi 1 := by
-    ext y
-    constructor
-    · rintro ⟨q, hq, rfl⟩
-      exact (one_lt_inv₀ hq.1).mpr hq.2
-    · intro hy
-      have hy0 : 0 < y := lt_trans zero_lt_one hy
-      exact ⟨y⁻¹, ⟨inv_pos.mpr hy0, (inv_lt_one₀ hy0).mpr hy⟩, inv_inv y⟩
+    simpa only [image_inv_eq_inv, inv_one] using
+      (inv_Ioo_0_left (zero_lt_one : (0 : ℝ) < 1))
   have hinj : InjOn (fun q : ℝ => q⁻¹) (Ioo 0 1) :=
     fun _ _ _ _ h => inv_injective h
   have hd : ∀ q ∈ Ioo (0 : ℝ) 1,
@@ -149,15 +144,8 @@ private lemma density_resolvent_integrable {α r : ℝ} (ha0 : 0 < α) (ha2 : α
       _ = _ := by
         field_simp (disch := positivity)
         ring
-  have hsets : Ioo (0 : ℝ) 1 ∪ Ici 1 = Ioi 0 := by
-    ext q
-    simp only [mem_union, mem_Ioo, mem_Ici, mem_Ioi]
-    constructor
-    · rintro (hq | hq) <;> linarith
-    · intro hq
-      rcases lt_or_ge q 1 with h | h
-      · exact Or.inl ⟨hq, h⟩
-      · exact Or.inr h
+  have hsets : Ioo (0 : ℝ) 1 ∪ Ici 1 = Ioi 0 :=
+    Ioo_union_Ici_eq_Ioi zero_lt_one
   have hu := hhead.union ((integrableOn_Ici_iff_integrableOn_Ioi).mpr htail)
   simpa only [hsets] using hu
 

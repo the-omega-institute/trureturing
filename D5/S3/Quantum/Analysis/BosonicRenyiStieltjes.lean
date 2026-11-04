@@ -525,13 +525,8 @@ private lemma mellin_stieltjes_integral {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 
   obtain ⟨hi, he⟩ := PoissonWeight.stieltjes_integral ha0 ha2 ha1 hr0 hr1
   let g := fun q => PoissonWeight.density α q / (r + q)
   have him : (fun q : ℝ => q⁻¹) '' Ioo (0 : ℝ) 1 = Ioi 1 := by
-    ext y
-    constructor
-    · rintro ⟨q, hq, rfl⟩
-      exact (one_lt_inv₀ hq.1).mpr hq.2
-    · intro hy
-      have hy0 : 0 < y := lt_trans zero_lt_one hy
-      exact ⟨y⁻¹, ⟨inv_pos.mpr hy0, (inv_lt_one₀ hy0).mpr hy⟩, inv_inv y⟩
+    simpa only [image_inv_eq_inv, inv_one] using
+      (inv_Ioo_0_left (zero_lt_one : (0 : ℝ) < 1))
   have hinj : InjOn (fun q : ℝ => q⁻¹) (Ioo 0 1) :=
     fun _ _ _ _ h => inv_injective h
   have hd : ∀ q ∈ Ioo (0 : ℝ) 1,
