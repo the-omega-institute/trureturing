@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Walks;
 
@@ -31,30 +32,30 @@ internal sealed class MengerCertificatesDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem)),
         []));
 
-    private static Formula V => Id("V");
-    private static Formula G => Id("G");
-    private static Formula A => Id("A");
-    private static Formula B => Id("B");
-    private static Formula X => Id("X");
-    private static Formula Y => Id("Y");
-    private static Formula I => Id("i");
-    private static Formula J => Id("j");
-    private static Formula Vertex => Id("x");
+    private static Formula V => F.Id("V");
+    private static Formula G => F.Id("G");
+    private static Formula A => F.Id("A");
+    private static Formula B => F.Id("B");
+    private static Formula X => F.Id("X");
+    private static Formula Y => F.Id("Y");
+    private static Formula I => F.Id("i");
+    private static Formula J => F.Id("j");
+    private static Formula Vertex => F.Id("x");
     private static Formula SetV => Call("Finset", V);
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Card(Formula s) => Call("card", s);
     private static Formula At(string f, Formula i) => Call(f, i);
     private static Formula Supp(Formula i) => Call("support", At("p", i));
-    private static Formula Arrow(Formula a, Formula b) => Seq(Open, a, To, b, Close);
+    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Common(Formula body) => All("V", Call("Type"),
         Imp(Call("Finite", V), All("G", Call("SimpleGraph", V),
             All("A", SetV, All("B", SetV, body)))));
     private static Formula Sep(Formula s) => Call("Separates", G, A, B, s);
-    private static Formula Walks => Call("WalkFamily", G, Id("a"), Id("b"));
+    private static Formula Walks => Call("WalkFamily", G, F.Id("a"), F.Id("b"));
 
     private static Formula SeparatorFormula()
     {
-        var a = Id("a"); var b = Id("b"); var p = Id("p");
+        var a = F.Id("a"); var b = F.Id("b"); var p = F.Id("p");
         var body = All("a", V, Imp(Member(a, A), All("b", V, Imp(Member(b, B),
             All("p", Call("Walk", G, a, b), Ex("x", V,
                 And(Member(Vertex, X), Member(Vertex, Call("support", p)))))))));
@@ -68,7 +69,7 @@ internal sealed class MengerCertificatesDocument : IScribeDocumentDefinition
 
     private static Formula MainFormula()
     {
-        var k = Card(X); var m = Id("m");
+        var k = Card(X); var m = F.Id("m");
         var certificate = Ex("X", SetV, And(Sep(X),
             Ex("a", Arrow(Fin(k), V), Ex("b", Arrow(Fin(k), V), Ex("p", Walks,
                 And(All("i", Fin(k), And(Member(At("a", I), A), Member(At("b", I), B),
