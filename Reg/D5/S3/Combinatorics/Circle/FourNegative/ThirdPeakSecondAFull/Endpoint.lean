@@ -134,8 +134,8 @@ def source_registration : Registration arena
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull.actualSource_third_peak_second_a_full_joint_lift)
     (Realization signature) Nat Unit := {
-  unitName := Lean.Name.mkSimple "D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull.actualSource_third_peak_second_a_full_joint_lift.__information_unit"
-  realizationName := Lean.Name.mkSimple "Reg.D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull.Endpoint.source_registration"
+  unitName := `D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull.actualSource_third_peak_second_a_full_joint_lift.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull.Endpoint.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -151,11 +151,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := Lean.Name.mkSimple "D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull.Endpoint"
+    owner := `D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull.Endpoint
     definition := none
     coordinates := #[0,1,2,3]
     readouts := #[{
-      path := #["body","body","body","body","body","body","body","body","body","arg","body","arg","body","arg","arg","arg","arg","fn","arg","fn"]
+      path := #["body","body","body","body","body","body","body","body","body","arg","body","arg","body","arg","arg","fn","arg","fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

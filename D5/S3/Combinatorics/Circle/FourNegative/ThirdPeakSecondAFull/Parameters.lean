@@ -54,7 +54,7 @@ private def deltaMask (a b c d : ℕ) : ℕ :=
 private def isFinite (a b c d : ℕ) : Prop :=
   (a,b,c,d)=(4,2,5,2) ∨ (a,b,c,d)=(4,2,6,2) ∨ (a,b,c,d)=(5,2,6,2)
 
-private inductive Branch
+inductive Branch
   | a1 | a2 | b0 | b1one | b1quot | c | finite1 | finite2 | finite3
 deriving DecidableEq
 
@@ -137,18 +137,12 @@ private theorem cut_bounds (a b c d : ℕ)
 private theorem bases_identify (a b c d : ℕ) :
     base a b c d 0=AA a b c ∧ base a b c d 1=BB d a b ∧
     base a b c d 2=LL a c d ∧ base a b c d 3=KK b c d := by
-  dsimp [base,AA,BB,LL,KK,x,y,z,t]
-  constructor <;> try ring
-  constructor <;> try ring
-  constructor <;> ring
+  refine ⟨?_,?_,?_,?_⟩ <;> dsimp [base,AA,BB,LL,KK,x,y,z,t] <;> ring
 
 private theorem new_bases_identify (a b c d : ℕ) :
     newBase a b c d 0=2*AA a b c ∧ newBase a b c d 1=SU a b d ∧
     newBase a b c d 2=SV a c d ∧ newBase a b c d 3=SW b c d := by
-  dsimp [newBase,base,charge,SU,SV,SW,AA,BB,LL,KK,x,y,z,t]
-  constructor <;> try ring
-  constructor <;> try ring
-  constructor <;> ring
+  refine ⟨?_,?_,?_,?_⟩ <;> dsimp [newBase,base,charge,SU,SV,SW,AA,BB,LL,KK,x,y,z,t] <;> ring
 
 
 end D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakSecondAFull
