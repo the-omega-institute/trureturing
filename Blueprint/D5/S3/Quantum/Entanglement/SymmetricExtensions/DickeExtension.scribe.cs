@@ -106,15 +106,25 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "sandwich, and relabeling actual complement indices makes all ordered edge marginals equal. "
                 + "Every PPT inequality is retained verbatim. Conversely the full symmetric subspace is "
                 + "contained in the root-times-symmetric-leaves subspace, and complete edges include all "
-                + "star edges. The argument includes zero coefficients, singular witnesses, n=1 and r=2.",
-                DescribeRole.Theorem, false))));
+                + "star edges. The argument includes zero coefficients, singular witnesses, n=1 and r=2. "
+                + "The resolution target is exactly Gulati-Nechita-Park, arXiv:2509.15201v4, Question 8.20; "
+                + "current journal question wording and worldwide absence of a prior solution are unverified. "
+                + "The proof shape is bind-only after inlining the consumed helpers, with no escape witness; "
+                + "the admission basis is the preregistered external open-problem resolution. "
+                + "The source-bound Reg audit remains declared_unresolved with IE-C050, "
+                + "source.dictionary_or_proof_coordinate; its missing accepted source-readout binding "
+                + "classification is disclosed at https://github.com/the-omega-institute/trureturing/issues/26251#issuecomment-6618255978.",
+                DescribeRole.Theorem, false,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gnp-2025-v4-question-8-20-dicke-extensions"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, bool literature) => Describe.Lean(
+        DescribeRole role, bool literature, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("dicke-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Seq(params Formula[] items)
     {
         var spaced = new System.Collections.Generic.List<Formula>();
