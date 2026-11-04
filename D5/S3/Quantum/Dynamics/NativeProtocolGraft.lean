@@ -1474,8 +1474,7 @@ private theorem gate_ket (j : Address) (b : Basis) :
     Pi.smul_apply, Pi.add_apply, smul_eq_mul, Coeff.p_action, ket]
   by_cases hz : z = b
   · subst z
-    simp [flip_ne, Ne.symm (flip_ne (center j) b)]
-    ring
+    simp [flip_ne, Ne.symm (flip_ne (center j) b)] <;> ring
   · by_cases hf : z = flip (center j) b
     · subst z
       simp only [Coeff.flip_flip, if_pos rfl, hz, if_false, mul_zero,
@@ -1645,14 +1644,13 @@ private theorem cross_ket_smul (a b : ℂ) (x y : Basis) (i j : Fin 2) :
   simp only [cross, partialTraceRight, Matrix.vecMulVec_apply,
     Function.comp_apply, Pi.star_apply, Pi.smul_apply, smul_eq_mul, map_mul, ket_cut]
   by_cases hi : i = (cut x).1 <;> by_cases hj : j = (cut y).1 <;>
-    simp [hi, hj, mul_ite, ite_mul]
+    simp [hi, hj, mul_ite, ite_mul, apply_ite (starRingEnd ℂ)]
 
-def sourceLocal : Fin 2 → ℂ := ![a,b]
-def p0 : Qubit := !![1,0;0,0]
-def sourceMixture : Qubit :=
-  (a * star a * b * star b + c * star c) •
-    Matrix.vecMulVec sourceLocal (star sourceLocal) +
-  (b * star b)^2 • p0
+def sourceLocal (i : Fin 2) : ℂ := if i = 0 then a else b
+def p0 : Qubit := fun i j => if i = 0 ∧ j = 0 then 1 else 0
+def sourceMixture : Qubit := fun i j =>
+  (a * star a * b * star b + c * star c) * sourceLocal i * star (sourceLocal j) +
+  (b * star b)^2 * p0 i j
 
 private theorem source_reduction : reduced sourceVector = sourceMixture := by
   change cross sourceVector sourceVector = _
@@ -1662,7 +1660,7 @@ private theorem source_reduction : reduced sourceVector = sourceMixture := by
   simp only [Matrix.add_apply, cross_ket_smul, cut_source_bit, source_rest]
   fin_cases i <;> fin_cases j <;>
     norm_num [sourceMixture, sourceLocal, p0, Matrix.vecMulVec_apply,
-      Pi.star_apply, Matrix.smul_apply, smul_eq_mul, map_mul, map_pow]
+      Pi.star_apply, starRingEnd_apply, star_mul, star_pow]
   · linear_combination
       (a * star a * c * star c + b^2 * (star b)^2) * Coeff.zeta_norm
   · linear_combination (a * star b * c * star c) * Coeff.zeta_norm
@@ -1711,25 +1709,24 @@ private theorem c_value : c = -t*zeta^3 := by
     _ = -1-t*zeta-(-t)+zeta := by
       rw [show zeta+(zeta^2-zeta)*t = a by unfold a; ring,
         a_value, Coeff.zeta_sq]
-    _ = -t*(t-t*zeta) := by linear_combination Coeff.t_sq
+    _ = -t*(t-t*zeta) := by linear_combination (1-zeta)*Coeff.t_sq
 
 private theorem star_t : star t = t := by simp [t]
 private theorem star_beta : star beta = beta := by simp [beta]
 private theorem phase_norm (n : ℕ) : zeta^n * star (zeta^n) = 1 := by
-  rw [map_pow, ← mul_pow, Coeff.zeta_norm, one_pow]
+  rw [star_pow, ← mul_pow, Coeff.zeta_norm, one_pow]
 
 private theorem a_norm : a * star a = t^2 := by
   rw [a_value, star_neg, star_t]; ring
 private theorem b_norm : b * star b = t := by
   rw [b_value, star_mul, star_neg, star_beta]
   calc
-    (-beta*zeta^4) * (-beta*star (zeta^4)) =
-        beta^2 * (zeta^4*star (zeta^4)) := by ring
+    _ = beta^2 * (zeta^4*star (zeta^4)) := by ring
     _ = t := by rw [phase_norm, Coeff.beta_sq, mul_one]
 private theorem c_norm : c * star c = t^2 := by
   rw [c_value, star_mul, star_neg, star_t]
   calc
-    (-t*zeta^3) * (-t*star (zeta^3)) = t^2*(zeta^3*star (zeta^3)) := by ring
+    _ = t^2*(zeta^3*star (zeta^3)) := by ring
     _ = t^2 := by rw [phase_norm, mul_one]
 
 def gamma : ℂ := t^2 * beta * star (zeta^4)
@@ -1739,19 +1736,19 @@ private theorem mixture_chi : sourceMixture = chi := by
   have hw : a * star a * b * star b + c * star c = t := by
     rw [show a * star a * b * star b = (a*star a)*(b*star b) by ring,
       a_norm, b_norm, c_norm]
-    linear_combination (t+1) * Coeff.t_sq
-  rw [sourceMixture, hw, b_norm]
+    linear_combination t * Coeff.t_sq
   ext i j
+  simp only [sourceMixture, hw, b_norm]
   fin_cases i <;> fin_cases j <;>
     norm_num [sourceLocal, p0, chi, Matrix.vecMulVec_apply,
-      Pi.star_apply, Matrix.smul_apply, smul_eq_mul]
+      Pi.star_apply, starRingEnd_apply]
   · rw [show t*a*star a = t*(a*star a) by ring, a_norm]
-    linear_combination (t+1)*Coeff.t_sq
+    linear_combination t*Coeff.t_sq
   · rw [a_value, b_value, star_mul, star_neg, star_beta]
     unfold gamma
     ring
   · rw [a_value, b_value, star_neg, star_t]
-    simp only [gamma, star_mul, star_pow, star_t, star_beta, star_star]
+    simp only [gamma, star_mul, star_pow, star_t, star_beta, star_star, starRingEnd_apply]
     ring
   · rw [show t*b*star b = t*(b*star b) by ring, b_norm]
     ring
@@ -1766,6 +1763,92 @@ theorem original_source_calibration :
 
 #print axioms original_source_vector
 #print axioms original_source_calibration
+
+
+private theorem t_nonzero : t ≠ 0 := by
+  exact Complex.ofReal_ne_zero.mpr (inv_ne_zero Coeff.phi_positive.ne')
+
+private theorem gamma_norm : gamma * star gamma = t^5 := by
+  simp only [gamma, star_mul, star_pow, star_t, star_beta, star_star]
+  calc
+    _ = t^4 * beta^2 * (zeta^4 * star (zeta^4)) := by ring
+    _ = t^5 := by rw [phase_norm, Coeff.beta_sq]; ring
+
+private theorem chi_det : chi.det = t^4 := by
+  rw [chi, Matrix.det_fin_two]
+  norm_num only [Matrix.cons_val_zero, Matrix.cons_val_one]
+  rw [gamma_norm]
+  linear_combination -(t^3)*Coeff.t_sq
+
+private theorem chi_trace : chi.trace = 1 := by
+  simp only [chi, Matrix.trace, Fin.sum_univ_two]
+  norm_num
+  linear_combination Coeff.t_sq
+
+private theorem chi_faithful : chi.PosDef :=
+  original_source_calibration.2.posDef_iff_det_ne_zero.mpr
+    (chi_det ▸ pow_ne_zero 4 t_nonzero)
+
+private theorem empty_reduction : reduced omega0 = p0 := by
+  rw [source_start]
+  change cross (1 • ket (sourceWord false false true))
+    (1 • ket (sourceWord false false true)) = _
+  ext i j
+  rw [cross_ket_smul, cut_source_bit]
+  fin_cases i <;> fin_cases j <;> norm_num [p0]
+
+def rootScale : ℝ := Real.sqrt (1+2*(phi⁻¹)^2)
+def chiRoot : Qubit := (rootScale : ℂ)⁻¹ • (chi + t^2 • (1 : Qubit))
+
+private theorem rootScale_pos : 0 < rootScale := by
+  dsimp [rootScale]
+  positivity
+
+private theorem rootScale_sq : (rootScale : ℂ)^2 = 1+2*t^2 := by
+  dsimp [rootScale, t]
+  norm_cast
+  exact Real.sq_sqrt (by positivity)
+
+private theorem chi_square : chi*chi = chi-t^4 • (1 : Qubit) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [chi, Matrix.mul_apply, Fin.sum_univ_two,
+      Pi.smul_apply, smul_eq_mul, star_t, star_pow]
+  · rw [gamma_norm]
+    linear_combination (t^3+t)*Coeff.t_sq
+  · linear_combination gamma*Coeff.t_sq
+  · linear_combination (star gamma)*Coeff.t_sq
+  · rw [mul_comm (star gamma) gamma, gamma_norm]
+    linear_combination (t^3+t^2)*Coeff.t_sq
+
+private theorem chiRoot_square : chiRoot*chiRoot = chi := by
+  have hn : (rootScale : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr rootScale_pos.ne'
+  have hnum : (chi+t^2 • (1 : Qubit)) * (chi+t^2 • (1 : Qubit)) =
+      (1+2*t^2) • chi := by
+    rw [Matrix.add_mul, Matrix.mul_add, Matrix.mul_add, chi_square]
+    simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.one_mul, Matrix.mul_one,
+      smul_smul]
+    module
+  rw [chiRoot, Matrix.smul_mul, Matrix.mul_smul, smul_smul, hnum, smul_smul]
+  have hc : (rootScale : ℂ)⁻¹*(rootScale : ℂ)⁻¹*(1+2*t^2) = 1 := by
+    rw [← rootScale_sq]
+    field_simp
+  rw [hc, one_smul]
+
+private theorem chiRoot_positive : chiRoot.PosSemidef := by
+  apply Matrix.PosSemidef.smul
+  · exact original_source_calibration.2.add
+      (Matrix.PosSemidef.one.smul (by
+        simp only [t, ← Complex.ofReal_pow, Complex.nonneg_iff, Complex.ofReal_re,
+          Complex.ofReal_im, and_true]
+        positivity))
+  · exact_mod_cast (inv_nonneg.mpr rootScale_pos.le : 0 ≤ rootScale⁻¹)
+
+private theorem chi_sqrt : cfc Real.sqrt chi = chiRoot := by
+  have h : CFC.sqrt chi = chiRoot :=
+    CFC.sqrt_unique chiRoot_square chiRoot_positive.nonneg
+  rwa [CFC.sqrt_eq_real_sqrt _ original_source_calibration.2.nonneg,
+    cfcₙ_eq_cfc] at h
 
 end Actual
 
