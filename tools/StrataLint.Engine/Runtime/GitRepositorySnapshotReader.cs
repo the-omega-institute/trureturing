@@ -10,6 +10,10 @@ namespace StrataLint.Engine;
 internal static class GitRepositorySnapshotReader
 {
     private const int MaximumGitOutputBytes = 64 * 1024 * 1024;
+    // A tree is an unbounded collection of individually bounded NUL records. The
+    // aggregate is deliberately streamed; this bound protects the parser from a
+    // malformed path/record without imposing a repository-wide ceiling.
+    private const int MaximumGitTreeRecordBytes = 64 * 1024;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     // readContents only projects regular bodies, never entries or link bytes.
@@ -300,13 +304,15 @@ internal static class GitRepositorySnapshotReader
         Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
         GitStreamReader<IReadOnlyDictionary<string, GitRepositoryBlob>> runGitStreaming,
         Func<string, bool> readContents,
-        Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
+        Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null,
+        GitStreamReader<IReadOnlyList<GitRepositoryTreeEntry>>? runGitTreeStreaming = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
         ArgumentNullException.ThrowIfNull(readContents);
-        var treeResult = runGit(["ls-tree", "-r", "-l", "-z", revision], MaximumGitOutputBytes, default);
-        EnsureSuccess(treeResult);
-        var tree = ParseTree(treeResult.StandardOutput).OrderBy(static entry => entry.Path, StringComparer.Ordinal).ToArray();
+        var tree = ReadRevisionTree(
+            revision,
+            runGit,
+            runGitTreeStreaming).OrderBy(static entry => entry.Path, StringComparer.Ordinal).ToArray();
         foreach (var entry in tree)
             if (!IsSupportedMode(entry.Mode) || entry.ObjectType != "blob" || entry.Size is null)
                 throw new InvalidOperationException($"protected base has non-regular entry {entry.Path} ({entry.Mode} {entry.ObjectType})");
@@ -409,16 +415,12 @@ internal static class GitRepositorySnapshotReader
     internal static RawRepositorySnapshot ReadRevision(
         string revision,
         Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
-        IReadOnlyList<string>? paths = null)
+        IReadOnlyList<string>? paths = null,
+        GitStreamReader<IReadOnlyList<GitRepositoryTreeEntry>>? runGitStreaming = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
         ArgumentNullException.ThrowIfNull(runGit);
-        var treeResult = runGit(
-            ["ls-tree", "-r", "-l", "-z", revision],
-            MaximumGitOutputBytes,
-            default);
-        EnsureSuccess(treeResult);
-        var all = ParseTree(treeResult.StandardOutput).ToArray();
+        var all = ReadRevisionTree(revision, runGit, runGitStreaming);
         var tree = paths is null ? all : all.Where(entry =>
             paths.Any(selection => MatchesRevisionSelection(entry.Path, selection))).ToArray();
         if (paths is not null && tree.Any(static entry => entry.Mode == "120000"))
@@ -445,6 +447,30 @@ internal static class GitRepositorySnapshotReader
             tree.Where(static entry => entry.Mode == "120000").Select(entry => entry.Path).ToHashSet(StringComparer.Ordinal),
             all.Select(static entry => entry.Path).ToArray());
         return RawRepositorySnapshot.Create(entries);
+    }
+
+    private static GitRepositoryTreeEntry[] ReadRevisionTree(
+        string revision,
+        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        GitStreamReader<IReadOnlyList<GitRepositoryTreeEntry>>? runGitStreaming)
+    {
+        if (runGitStreaming is null)
+        {
+            var treeResult = runGit(
+                ["ls-tree", "-r", "-l", "-z", revision],
+                MaximumGitOutputBytes,
+                default);
+            EnsureSuccess(treeResult);
+            return ParseTree(treeResult.StandardOutput).ToArray();
+        }
+
+        var streamed = runGitStreaming(
+            ["ls-tree", "-r", "-l", "-z", revision],
+            MaximumGitOutputBytes,
+            default,
+            ParseTreeStream);
+        EnsureSuccess(new ProcessOutput(streamed.ExitCode, [], streamed.StandardError));
+        return streamed.StandardOutput.ToArray();
     }
 
     private static RawRepositoryEntry[] ReadRevisionEntries(IReadOnlyList<GitRepositoryTreeEntry> tree,
@@ -708,34 +734,72 @@ internal static class GitRepositorySnapshotReader
     internal static IEnumerable<GitRepositoryTreeEntry> ParseTree(byte[] bytes)
     {
         foreach (var entry in SplitNul(bytes))
+            if (entry.Length > 0)
+                yield return ParseTreeRecord(entry);
+    }
+
+    private static async Task<IReadOnlyList<GitRepositoryTreeEntry>> ParseTreeStream(
+        Stream output,
+        CancellationToken cancellation)
+    {
+        var entries = new List<GitRepositoryTreeEntry>();
+        var record = new List<byte>(256);
+        var buffer = new byte[64 * 1024];
+        while (true)
         {
-            var tab = Array.IndexOf(entry, (byte)'\t');
-            if (tab <= 0) throw new InvalidOperationException("git tree emitted invalid metadata");
-            var metadata = StrictUtf8.GetString(entry.AsSpan(0, tab))
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var path = StrictUtf8.GetString(entry.AsSpan(tab + 1));
-            if (metadata.Length is not (3 or 4) || !RepoPath.TryCreate(path, out _))
+            var count = await output.ReadAsync(buffer.AsMemory(), cancellation).ConfigureAwait(false);
+            if (count == 0) break;
+            for (var index = 0; index < count; index++)
+            {
+                var value = buffer[index];
+                if (value == 0)
+                {
+                    if (record.Count == 0) continue;
+                    entries.Add(ParseTreeRecord(CollectionsMarshal.AsSpan(record)));
+                    record.Clear();
+                    continue;
+                }
+
+                if (record.Count >= MaximumGitTreeRecordBytes)
+                    throw new InvalidOperationException(
+                        $"git tree emitted a record exceeding {MaximumGitTreeRecordBytes} bytes");
+                record.Add(value);
+            }
+        }
+
+        if (record.Count != 0)
+            throw new InvalidOperationException("git tree emitted truncated metadata");
+        return entries;
+    }
+
+    private static GitRepositoryTreeEntry ParseTreeRecord(ReadOnlySpan<byte> entry)
+    {
+        var tab = entry.IndexOf((byte)'\t');
+        if (tab <= 0) throw new InvalidOperationException("git tree emitted invalid metadata");
+        var metadata = StrictUtf8.GetString(entry[..tab])
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var path = StrictUtf8.GetString(entry[(tab + 1)..]);
+        if (metadata.Length is not (3 or 4) || !RepoPath.TryCreate(path, out _))
+        {
+            throw new InvalidOperationException($"git tree emitted invalid entry: {path}");
+        }
+
+        long? size = null;
+        if (metadata.Length == 4 && metadata[3] != "-")
+        {
+            if (!long.TryParse(
+                    metadata[3],
+                    System.Globalization.NumberStyles.None,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out var parsedSize))
             {
                 throw new InvalidOperationException($"git tree emitted invalid entry: {path}");
             }
 
-            long? size = null;
-            if (metadata.Length == 4 && metadata[3] != "-")
-            {
-                if (!long.TryParse(
-                        metadata[3],
-                        System.Globalization.NumberStyles.None,
-                        System.Globalization.CultureInfo.InvariantCulture,
-                        out var parsedSize))
-                {
-                    throw new InvalidOperationException($"git tree emitted invalid entry: {path}");
-                }
-
-                size = parsedSize;
-            }
-
-            yield return new GitRepositoryTreeEntry(metadata[0], metadata[1], metadata[2], path, size);
+            size = parsedSize;
         }
+
+        return new GitRepositoryTreeEntry(metadata[0], metadata[1], metadata[2], path, size);
     }
 
     private static Dictionary<string, string> ParseIndex(byte[] bytes)

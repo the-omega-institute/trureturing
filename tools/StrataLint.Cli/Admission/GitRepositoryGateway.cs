@@ -188,7 +188,9 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
             (arguments, maximumOutputBytes, standardInput) => GitRaw(arguments, false, maximumOutputBytes, standardInput),
             (arguments, maximumErrorBytes, standardInput, readStandardOutput) =>
                 GitStreaming(arguments, maximumErrorBytes, readStandardOutput, standardInput),
-            readContents, observeContentDigest);
+            readContents, observeContentDigest,
+            (arguments, maximumErrorBytes, standardInput, readStandardOutput) =>
+                GitStreaming(arguments, maximumErrorBytes, readStandardOutput, standardInput));
 
     public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths) =>
         GitRepositorySnapshotReader.ReadCurrent(
@@ -242,7 +244,9 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 allowNonzero: false,
                 maximumOutputBytes,
                 standardInput),
-            paths);
+            paths,
+            (arguments, maximumErrorBytes, standardInput, readStandardOutput) =>
+                GitStreaming(arguments, maximumErrorBytes, readStandardOutput, standardInput));
 
     private string GitText(params string[] arguments) => StrictUtf8.GetString(GitBytes(arguments));
 
