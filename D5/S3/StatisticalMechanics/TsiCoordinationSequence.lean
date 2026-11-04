@@ -419,7 +419,7 @@ private lemma stack_sum (n : ℕ) (hn : 0 < n) :
     have hk' := Finset.mem_Icc.mp hk
     have hab : ((k + 1) / 2).natAbs + (k / 2).natAbs = k.natAbs := by omega
     by_cases he : k.natAbs = n
-    · have hz : n - k.natAbs = 0 := by omega
+    · have hz : n - k.natAbs = 0 := Nat.sub_eq_zero_of_le he.ge
       rw [hz, rectangle_shell_card_zero]
       change _ = if k.natAbs = n then (b : ℤ) else _
       rw [ite_eq_left he]
@@ -439,7 +439,8 @@ private lemma stack_sum (n : ℕ) (hn : 0 < n) :
       change _ = if k.natAbs = n then _ else _
       rw [ite_eq_right he]
       rw [hab]
-      have ht : ((n - k.natAbs : ℕ) : ℤ) = (n : ℤ) - k.natAbs := by omega
+      have ht : ((n - k.natAbs : ℕ) : ℤ) = (n : ℤ) - k.natAbs :=
+        Nat.cast_sub (by omega)
       simp only [Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, ht]
       ring
   have hs : (shell n : ℤ) = ∑ k ∈ Finset.Icc (-(n : ℤ)) n, f k := by
@@ -465,12 +466,9 @@ private lemma stack_sum (n : ℕ) (hn : 0 < n) :
     dsimp only [f]
     rw [Int.natAbs_natCast, ite_eq_right (by omega)]
   have hgauss : 2 * (∑ m ∈ Finset.range n, (m : ℤ)) = (n : ℤ) * (n - 1) := by
-    have h := Finset.sum_range_id_mul_two n
-    have h' := congrArg (fun t : ℕ => (t : ℤ)) h
-    simp only [Nat.cast_mul, Nat.cast_sum, Nat.cast_ofNat] at h'
-    have hn' : ((n - 1 : ℕ) : ℤ) = n - 1 := by omega
-    rw [hn'] at h'
-    nlinarith
+    simpa only [Nat.cast_mul, Nat.cast_sum, Nat.cast_ofNat,
+      Nat.cast_sub (Nat.one_le_of_lt hn), Nat.cast_one, mul_comm] using
+      congrArg (fun t : ℕ => (t : ℤ)) (Finset.sum_range_id_mul_two n)
   rw [Finset.sum_range_succ, hfn, hsmall] at hsum
   rw [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range,
     ← Finset.mul_sum] at hsum
