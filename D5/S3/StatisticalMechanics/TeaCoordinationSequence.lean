@@ -576,6 +576,89 @@ private lemma layer_sum (n : ℕ) :
   rw [hs, Set.ncard_coe_finset, Finset.card_image_of_injective t hf]
   exact Finset.card_sigma _ _
 
+private lemma paired_slabs (m : ℕ) :
+    plusSlabs m + minusSlabs m + plusSlabs (-(m : ℤ)) + minusSlabs (-(m : ℤ)) = m := by
+  by_cases hm : m = 0
+  · subst m; rfl
+  · dsimp only [plusSlabs, minusSlabs]
+    simp only [ite_eq_left (Nat.cast_nonneg m),
+      ite_eq_right (show ¬ 0 ≤ -(m : ℤ) by omega)]
+    omega
+
+private lemma weighted_layer_sum (n : ℕ) (hn : 0 < n) :
+    8 * ((∑ k ∈ Finset.Icc (-(n : ℤ)) n,
+      (regionShell (plusSlabs k) (minusSlabs k) (n - k.natAbs)).card : ℕ) : ℤ) =
+      60*(n : ℤ)^2 + 4 *
+        ((plusSlabs n)^2 + 4 * plusSlabs n * minusSlabs n + (minusSlabs n)^2 +
+         (plusSlabs (-(n : ℤ)))^2 +
+         4 * plusSlabs (-(n : ℤ)) * minusSlabs (-(n : ℤ)) +
+         (minusSlabs (-(n : ℤ)))^2) + 16 := by
+  let f : ℤ → ℤ := fun k =>
+    ((regionShell (plusSlabs k) (minusSlabs k) (n - k.natAbs)).card : ℤ)
+  let w : ℕ := ∑ k ∈ Finset.Icc (-(n : ℤ)) n,
+    (regionShell (plusSlabs k) (minusSlabs k) (n - k.natAbs)).card
+  let a := plusSlabs (n : ℤ)
+  let b := minusSlabs (n : ℤ)
+  let c := plusSlabs (-(n : ℤ))
+  let e := minusSlabs (-(n : ℤ))
+  let Q := a^2 + 4*a*b + b^2 + c^2 + 4*c*e + e^2
+  have hs : ∀ m : ℕ, (∑ k ∈ Finset.Icc (-(m : ℤ)) m, f k) + f 0 =
+      ∑ r ∈ Finset.range (m + 1), (f (r : ℤ) + f (-(r : ℤ))) := by
+    intro m
+    induction m with
+    | zero => simp only [Nat.cast_zero, neg_zero, Finset.Icc_self,
+        Finset.sum_singleton, Nat.zero_add, Finset.sum_range_one]
+    | succ m ih =>
+      simp only [Nat.cast_add, Nat.cast_one]
+      rw [Finset.sum_Icc_succ_eq_add_endpoints f, Finset.sum_range_succ, ← ih]
+      simp only [Nat.cast_add, Nat.cast_one]
+      ring
+  have hsmall : ∀ m ∈ Finset.range n, f (m : ℤ) + f (-(m : ℤ)) =
+      12 * (n : ℤ) - 9 * m := by
+    intro m hm
+    have hm' := Finset.mem_range.mp hm
+    have hp := slabs_nonneg (m : ℤ)
+    have hq := slabs_nonneg (-(m : ℤ))
+    dsimp only [f]
+    simp only [Int.natAbs_neg, Int.natAbs_natCast]
+    rw [region_shell_pos _ _ hp.1 hp.2 _ (by omega),
+      region_shell_pos _ _ hq.1 hq.2 _ (by omega)]
+    have hd : ((n - m : ℕ) : ℤ) = (n : ℤ) - m := Nat.cast_sub (by omega)
+    rw [hd]
+    have hsl := paired_slabs m
+    omega
+  have hzero : f 0 = 6 * n := by
+    change ((regionShell 0 0 n).card : ℤ) = 6 * n
+    simpa only [zero_add, mul_zero] using region_shell_pos 0 0 (by omega) (by omega) n hn
+  have hend : 2 * (f (n : ℤ) + f (-(n : ℤ))) = Q + 3 * n + 4 := by
+    have hp := slabs_nonneg (n : ℤ)
+    have hq := slabs_nonneg (-(n : ℤ))
+    have hp' := region_shell_zero _ _ hp.1 hp.2
+    have hq' := region_shell_zero _ _ hq.1 hq.2
+    have hsl := paired_slabs n
+    dsimp only [f, Q, a, b, c, e]
+    simp only [Int.natAbs_neg, Int.natAbs_natCast, Nat.sub_self]
+    nlinarith only [hp', hq', hsl]
+  have hsmallSum : (∑ m ∈ Finset.range n, (f (m : ℤ) + f (-(m : ℤ)))) =
+      ∑ m ∈ Finset.range n, (12 * (n : ℤ) - 9 * m) := Finset.sum_congr rfl hsmall
+  have hsum := hs n
+  rw [Finset.sum_range_succ, hsmallSum, Finset.sum_sub_distrib, Finset.sum_const,
+    ← Finset.mul_sum, hzero] at hsum
+  simp only [Finset.card_range, nsmul_eq_mul] at hsum
+  have hgauss : 2 * (∑ m ∈ Finset.range n, (m : ℤ)) = (n : ℤ) * (n - 1) := by
+    have hg := congrArg (fun t : ℕ => (t : ℤ)) (Finset.sum_range_id_mul_two n)
+    push_cast at hg
+    rw [Nat.cast_sub (by omega), Nat.cast_one] at hg
+    nlinarith only [hg]
+  have hmain : 2 * (∑ k ∈ Finset.Icc (-(n : ℤ)) n, f k) = 15*(n : ℤ)^2 + Q + 4 := by
+    nlinarith only [hsum, hend, hgauss]
+  have hw : 8 * (w : ℤ) = 60*(n : ℤ)^2 + 4*Q + 16 := by
+    dsimp only [w]
+    rw [Nat.cast_sum]
+    change 8 * (∑ k ∈ Finset.Icc (-(n : ℤ)) n, f k) = _
+    nlinarith only [hmain]
+  exact hw
+
 private lemma period_four_sum (n : ℕ) (hn : 0 < n) :
     (n % 4 = 0 →
       8 * (∑ k ∈ Finset.Icc (-(n : ℤ)) n,
@@ -589,7 +672,116 @@ private lemma period_four_sum (n : ℕ) (hn : 0 < n) :
     (n % 4 = 3 →
       8 * (∑ k ∈ Finset.Icc (-(n : ℤ)) n,
         (regionShell (plusSlabs k) (minusSlabs k) (n - k.natAbs)).card) = 63*n^2+17) := by
-  sorry
+  let w : ℕ := ∑ k ∈ Finset.Icc (-(n : ℤ)) n,
+    (regionShell (plusSlabs k) (minusSlabs k) (n - k.natAbs)).card
+  let a := plusSlabs (n : ℤ)
+  let b := minusSlabs (n : ℤ)
+  let c := plusSlabs (-(n : ℤ))
+  let e := minusSlabs (-(n : ℤ))
+  have hw := weighted_layer_sum n hn
+  change 8 * (w : ℤ) = 60*(n : ℤ)^2 +
+    4*(a^2 + 4*a*b + b^2 + c^2 + 4*c*e + e^2) + 16 at hw
+  change (n % 4 = 0 → 8*w = 63*n^2+16) ∧
+    (n % 4 = 1 → 8*w = 63*n^2+17) ∧
+    (n % 4 = 2 → 8*w = 63*n^2+12) ∧
+    (n % 4 = 3 → 8*w = 63*n^2+17)
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro hr
+    have hm : (n : ℤ) % 4 = 0 := by exact_mod_cast hr
+    let t : ℤ := (n : ℤ) / 4
+    have ha : a = t + 0 := by
+      dsimp only [a, t, plusSlabs]
+      rw [ite_eq_left (Nat.cast_nonneg n)]
+      omega
+    have hb : b = t + 0 := by
+      dsimp only [b, t, minusSlabs]
+      rw [ite_eq_left (Nat.cast_nonneg n)]
+      omega
+    have hc : c = t + 0 := by
+      dsimp only [c, t, plusSlabs]
+      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      omega
+    have he : e = t + 0 := by
+      dsimp only [e, t, minusSlabs]
+      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      omega
+    have hn' : (n : ℤ) = 4*t + 0 := by dsimp only [t]; omega
+    rw [ha, hb, hc, he] at hw
+    have hgoal : 8 * (w : ℤ) = 63*(n : ℤ)^2 + 16 := by
+      nlinarith only [hw, congrArg (fun z : ℤ => z^2) hn']
+    exact_mod_cast hgoal
+  · intro hr
+    have hm : (n : ℤ) % 4 = 1 := by exact_mod_cast hr
+    let t : ℤ := (n : ℤ) / 4
+    have ha : a = t + 1 := by
+      dsimp only [a, t, plusSlabs]
+      rw [ite_eq_left (Nat.cast_nonneg n)]
+      omega
+    have hb : b = t + 0 := by
+      dsimp only [b, t, minusSlabs]
+      rw [ite_eq_left (Nat.cast_nonneg n)]
+      omega
+    have hc : c = t + 0 := by
+      dsimp only [c, t, plusSlabs]
+      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      omega
+    have he : e = t + 0 := by
+      dsimp only [e, t, minusSlabs]
+      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      omega
+    have hn' : (n : ℤ) = 4*t + 1 := by dsimp only [t]; omega
+    rw [ha, hb, hc, he] at hw
+    have hgoal : 8 * (w : ℤ) = 63*(n : ℤ)^2 + 17 := by
+      nlinarith only [hw, congrArg (fun z : ℤ => z^2) hn']
+    exact_mod_cast hgoal
+  · intro hr
+    have hm : (n : ℤ) % 4 = 2 := by exact_mod_cast hr
+    let t : ℤ := (n : ℤ) / 4
+    have ha : a = t + 1 := by
+      dsimp only [a, t, plusSlabs]
+      rw [ite_eq_left (Nat.cast_nonneg n)]
+      omega
+    have hb : b = t + 0 := by
+      dsimp only [b, t, minusSlabs]
+      rw [ite_eq_left (Nat.cast_nonneg n)]
+      omega
+    have hc : c = t + 1 := by
+      dsimp only [c, t, plusSlabs]
+      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      omega
+    have he : e = t + 0 := by
+      dsimp only [e, t, minusSlabs]
+      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      omega
+    have hn' : (n : ℤ) = 4*t + 2 := by dsimp only [t]; omega
+    rw [ha, hb, hc, he] at hw
+    have hgoal : 8 * (w : ℤ) = 63*(n : ℤ)^2 + 12 := by
+      nlinarith only [hw, congrArg (fun z : ℤ => z^2) hn']
+    exact_mod_cast hgoal
+  · intro hr
+    have hm : (n : ℤ) % 4 = 3 := by exact_mod_cast hr
+    let t : ℤ := (n : ℤ) / 4
+    have ha : a = t + 1 := by
+      dsimp only [a, t, plusSlabs]
+      rw [ite_eq_left (Nat.cast_nonneg n)]
+      omega
+    have hb : b = t + 1 := by
+      dsimp only [b, t, minusSlabs]
+      rw [ite_eq_left (Nat.cast_nonneg n)]
+      omega
+    have hc : c = t + 1 := by
+      dsimp only [c, t, plusSlabs]
+      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      omega
+    have he : e = t + 0 := by
+      dsimp only [e, t, minusSlabs]
+      rw [ite_eq_right (show ¬ 0 ≤ -(n : ℤ) by omega)]
+      omega
+    have hn' : (n : ℤ) = 4*t + 3 := by dsimp only [t]; omega
+    rw [ha, hb, hc, he] at hw
+    have hgoal : 8 * (w : ℤ) = 63*(n : ℤ)^2 + 17 := by
+      nlinarith only [hw, congrArg (fun z : ℤ => z^2) hn']
+    exact_mod_cast hgoal
 
 theorem result : claim := by
   intro n hn
