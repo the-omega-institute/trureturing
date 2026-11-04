@@ -76,7 +76,21 @@ $$(\operatorname{claim}) \iff (\exists (C:\mathbb R), \forall (V:\operatorname{T
 
 Problem 2.4, page 5: "Is the ratio vp(G)/vp⁻(G) bounded for connected graphs?" The question is encoded as one real constant C valid for every finite nonempty vertex carrier and every connected simple graph on it, with decidable adjacency. The numbers are coerced from naturals to reals. A singleton is an x-position set, so vpMinus is positive on these carriers; multiplication by it faithfully expresses ratio boundedness. No bound on graph order or restriction to a subclass is imposed.
 
-**Theorem 1.7 (A family refutes the proposed boundedness).**
+**Theorem 1.7 (A graph potential is bounded by distance).**
+
+$$\forall (V:\operatorname{Type}), \forall (G:\operatorname{SimpleGraph}(V)), \forall (f:(V) \to (\mathbb{N})), (\forall (u:V), \forall (v:V), (G.\operatorname{Adj}(u, v)) \longrightarrow (f(u) \le f(v) + 1)) \longrightarrow (\forall (u:V), \forall (v:V), (G.\operatorname{Reachable}(u, v)) \longrightarrow (f(u) \le f(v) + G.\operatorname{dist}(u, v)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* M. Thankachy, E. J. Thomas, U. Chandran, J. Tuite, G. Di Stefano, G. Erskine (2024). *On the Vertex Position Number of Graphs*. DOI: [10.7151/dmgt.2491](https://doi.org/10.7151/dmgt.2491). URL: <https://arxiv.org/abs/2209.00359v2>.
+
+*Commentary.*
+
+If a natural-valued potential increases by at most one across every edge, then its value at the start of a reachable pair is at most its value at the endpoint plus the graph distance. Summing the edge inequalities along a shortest walk gives the bound.
+
+**Theorem 1.8 (A family refutes the proposed boundedness).**
 
 $$\neg \operatorname{claim}$$
 
@@ -100,6 +114,7 @@ For each integer m ≥ 2, take one hub y and 2m+1 paths meeting only at y: H of 
 - Truth anchor: `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.OnGeodesic`
 - Truth anchor: `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.claim`
 - Truth anchor: `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.posNum`
+- Truth anchor: `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist`
 - Truth anchor: `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.result`
 - Truth anchor: `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.vp`
 - Truth anchor: `D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.vpMinus`

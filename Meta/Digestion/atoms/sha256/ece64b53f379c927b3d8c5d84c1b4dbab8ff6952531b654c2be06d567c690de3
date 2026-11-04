@@ -1,0 +1,11 @@
+### 4.1 旧方向、投影与新余量
+
+先取一个旧标签 $u$ 与一个新标签 $h$，写
+
+$$
+B=\begin{pmatrix}p&b\\\bar b&q\end{pmatrix},
+ \qquad p=K(u,u),\quad b=K(u,h),\quad q=K(h,h).
+$$
+
+前节的续写律已给 $B\succeq0$；这里不另加几何公理。
+

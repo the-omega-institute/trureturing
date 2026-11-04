@@ -1,0 +1,48 @@
+### 推论 5.7（任何正的二元容差都不能认证准确核维数）
+
+<a id="cor-c123-no-exact-threshold"></a>
+
+即使来源维数准确知道为 $2$，任意小的正二元准备误差，也不能推出所制备参照的模相容核与 $\mathfrak F_\pi$ 相同。
+
+**证明。**
+准备两个纯态
+
+$$
+\rho_\pm=\frac{I+rX\pm aZ}{2},\qquad
+ a=\sqrt{1-r^2},\quad r\ne0.
+$$
+
+同一个 $Z$ 二元效果对它们的两个错误均为
+
+$$
+\varepsilon_r=\frac{1-a}{2}\longrightarrow0,
+ \qquad \frac{\rho_++\rho_-}{2}=\sigma_r.
+$$
+
+但定理 [5.6](#thm-c123-finite-horizon) 已给出每个 $r\ne0$ 的准确核只是 $\mathbb C I$，而均匀参照的核为 $\operatorname{span}\{I,Z\}$。同时
+
+$$
+\|\sigma_r-\pi\|_1=|r|
+ =2\sqrt{\varepsilon_r(1-\varepsilon_r)},
+$$
+
+所以定理 [5.3](#thm-c123-neutral-reference) 的 qubit 误差界在此还取得等号。
+
+固定任意有限 $n$ 时，式 [(34)](#eq-c123-finite-horizon-distance) 随 $r\to0$ 趋零。长期极限却为
+
+$$
+\lim_{n\to\infty}S_r^n=\mathcal S_{\sigma_r}\quad(r\ne0),
+ \qquad \lim_{n\to\infty}S_0^n=\mathcal D_Z.
+$$
+
+因而
+
+$$
+\lim_{r\to0}\lim_{n\to\infty}S_r^n=\mathcal S_\pi
+ \ne\mathcal D_Z
+ =\lim_{n\to\infty}\lim_{r\to0}S_r^n,
+ \qquad \|\mathcal S_\pi-\mathcal D_Z\|_\diamond=1.
+$$
+
+非平凡方向的谱隙是 $1-a=r^2/(1+a)\sim r^2/2$；它可以很小，却在足够多次回接后累积成有限损失。本章的次数 $n$ 是操作次数，不是从这些公式另外推导出的物理时间。
+
