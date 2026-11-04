@@ -35,10 +35,15 @@ abbrev interfaceSourceScope.{u} :=
 structure Inputs.{u} where
   E : Type u
   normed : NormedAddCommGroup E
-  space : @NormedSpace ℝ E _ normed
+  space : @NormedSpace ℝ E _ normed.toSeminormedAddCommGroup
   data : @Data E normed space
 
 abbrev candidate.{u} (P : Inputs.{u}) := P.E → ℝ
+
+abbrev sourceNorm.{u} (P : Inputs.{u}) : candidate P :=
+  letI := P.normed
+  letI := P.space
+  P.data.orderNorm
 
 abbrev signature.{u} : Signature where
   Params := Inputs.{u}
@@ -60,11 +65,13 @@ abbrev coreLaw.{u} (P : Inputs.{u}) (f : candidate P) : Prop :=
 
 abbrev arena.{u} : Arena where
   signature := signature.{u}
-  Law R := ∀ P : Inputs.{u}, coreLaw P (R.readout () P P.data.orderNorm)
+  Law R := ∀ P : Inputs.{u}, coreLaw P (R.readout () P sourceNorm P)
 
 theorem core_source_bridge.{u} : coreSourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
   constructor
   · intro h P
+    letI := P.normed
+    letI := P.space
     exact h P.data
   · intro h E normed space A
     exact h ⟨E, normed, space, A⟩

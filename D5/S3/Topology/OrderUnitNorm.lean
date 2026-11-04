@@ -13,6 +13,9 @@ public import Mathlib.Geometry.Convex.Cone.Basic
 public import Mathlib.Topology.Algebra.Module.FiniteDimension
 public import Mathlib.Analysis.Normed.Operator.Basic
 public import Mathlib.Analysis.Normed.Algebra.Exponential
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Analysis.Calculus.Taylor
+public import Mathlib.Algebra.QuadraticDiscriminant
 public import Mathlib.Topology.Order.Monotone
 public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.Linarith
@@ -389,6 +392,81 @@ private lemma centered_orbit_bound [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] 
     _ = β A.unit * ‖A.operator H * A.operator H‖ / 2 := by ring
 
 
+
+private lemma scalar_square_bound (f : ℝ → ℝ) (hf : ContDiff ℝ 2 f)
+    (hpos : ∀ t, 0 ≤ f t) (M : ℝ)
+    (hsecond : ∀ t, |iteratedDeriv 2 f t| ≤ M) :
+    (deriv f 0) ^ 2 ≤ 2 * M * f 0 := by
+  have hpoly : ∀ s : ℝ, 0 ≤ (M / 2) * (s * s) + deriv f 0 * s + f 0 := by
+    intro s
+    by_cases hs : s = 0
+    · simpa [hs] using hpos 0
+    have hne : (0 : ℝ) ≠ s := Ne.symm hs
+    obtain ⟨c, hc, he⟩ :=
+      taylor_mean_remainder_lagrange_iteratedDeriv (n := 1) hne hf.contDiffOn
+    have hd : derivWithin f (Set.uIcc 0 s) 0 = deriv f 0 :=
+      (hf.differentiable (by norm_num)).differentiableAt.derivWithin
+        ((uniqueDiffOn_uIcc hne) 0 (by simp))
+    have ht : taylorWithinEval f 1 (Set.uIcc 0 s) 0 s = f 0 + s * deriv f 0 := by
+      simp [taylorWithinEval_succ, iteratedDerivWithin_one, hd]
+    rw [ht] at he
+    norm_num at he
+    have hb := (abs_le.mp (hsecond c)).2
+    have hm := mul_le_mul_of_nonneg_right hb (sq_nonneg s)
+    nlinarith [hpos s]
+  have hd := discrim_le_zero hpoly
+  dsimp [discrim] at hd
+  nlinarith
+
+private lemma orbit_hasDerivAt [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
+    (β : E →ₗ[ℝ] ℝ) (x : E) (t : ℝ) :
+    HasDerivAt (fun s : ℝ => β (originalFlow H s x))
+      (β (originalFlow H t (H x))) t := by
+  let : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have hd := (hasDerivAt_exp_smul_const (LinearMap.toContinuousLinearMap H) t).clm_apply
+    (hasDerivAt_const t x)
+  have hb := (LinearMap.toContinuousLinearMap β).hasFDerivAt
+    ((NormedSpace.exp (t • LinearMap.toContinuousLinearMap H)) x)
+  have h := hb.comp_hasDerivAt t hd
+  simpa [Function.comp_def, originalFlow, mul_apply_eq_comp] using h
+
+private lemma orbit_contDiff [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
+    (β : E →ₗ[ℝ] ℝ) (x : E) :
+    ContDiff ℝ 2 (fun s : ℝ => β (originalFlow H s x)) := by
+  let : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have he : ContDiff ℝ 2
+      (fun s : ℝ => NormedSpace.exp (s • LinearMap.toContinuousLinearMap H)) := by
+    apply contDiff_iff_contDiffAt.mpr
+    intro s
+    exact (NormedSpace.exp_analytic (s • LinearMap.toContinuousLinearMap H)).contDiffAt.comp s
+      (contDiff_id.smul contDiff_const).contDiffAt
+  exact (LinearMap.toContinuousLinearMap β).contDiff.comp (he.clm_apply contDiff_const)
+
+private lemma reverse_certificate [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
+    (hu : H A.unit = 0)
+    (hflow : ∀ t : ℝ,
+      (∀ v ∈ A.cone, originalFlow H t v ∈ A.cone) ∧ originalFlow H t A.unit = A.unit)
+    (β : E →ₗ[ℝ] ℝ) (hβ : ∀ v ∈ A.cone, 0 ≤ β v)
+    (x : E) (hx : x ∈ A.cone) (hux : A.unit - x ∈ A.cone) :
+    |β (H x)| ^ 2 ≤ ‖A.operator H * A.operator H‖ * β x * β A.unit := by
+  let f : ℝ → ℝ := fun s => β (originalFlow H s x)
+  have hd : deriv f = fun s => β (originalFlow H s (H x)) := by
+    funext s
+    exact (orbit_hasDerivAt H β x s).deriv
+  have hdd : iteratedDeriv 2 f = fun s => β (originalFlow H s (H (H x))) := by
+    rw [show (2 : ℕ) = 1 + 1 from rfl, iteratedDeriv_succ', iteratedDeriv_one, hd]
+    funext s
+    exact (orbit_hasDerivAt H β (H x) s).deriv
+  have hf0 : f 0 = β x := by simp [f, originalFlow]
+  have hd0 : deriv f 0 = β (H x) := by rw [hd]; simp [originalFlow]
+  have hs := scalar_square_bound f (orbit_contDiff H β x)
+    (fun s => hβ _ ((hflow s).1 x hx))
+    (β A.unit * ‖A.operator H * A.operator H‖ / 2)
+    (by intro t; rw [hdd]; exact A.centered_orbit_bound H hu hflow β hβ x hx hux t)
+  rw [hf0, hd0] at hs
+  rw [sq_abs]
+  nlinarith
+
 /-- The constructed original norm, its dual mass bound, and the exact original
 operator and exponential interfaces. This is a dependency of the quantitative
 generator criterion, not that criterion itself. -/
@@ -415,7 +493,11 @@ theorem original_order_unit_norm_interface [FiniteDimensional ℝ E] :
           (∀ v ∈ A.cone, 0 ≤ β v) → ∀ x : E,
           x ∈ A.cone → A.unit - x ∈ A.cone → ∀ t : ℝ,
           |β (originalFlow H t (H (H x)))| ≤
-            β A.unit * ‖A.operator H * A.operator H‖ / 2))) ∧
+            β A.unit * ‖A.operator H * A.operator H‖ / 2) ∧
+        (H A.unit = 0 → ∀ β : E →ₗ[ℝ] ℝ,
+          (∀ v ∈ A.cone, 0 ≤ β v) → ∀ x : E,
+          x ∈ A.cone → A.unit - x ∈ A.cone →
+          |β (H x)| ^ 2 ≤ ‖A.operator H * A.operator H‖ * β x * β A.unit))) ∧
     (∀ T : E ≃ₗ[ℝ] E, (∀ v ∈ A.cone, T v ∈ A.cone) →
       (∀ v ∈ A.cone, T.symm v ∈ A.cone) → T A.unit = A.unit →
       ∀ v, A.orderNorm (T v) = A.orderNorm v) := by
@@ -430,8 +512,9 @@ theorem original_order_unit_norm_interface [FiniteDimensional ℝ E] :
     · rw [A.operator_square]
       exact (A.operator (H * H)).isLeast_opNorm
     · intro hflow
-      exact ⟨A.flow_isometry H hflow, fun hu β hβ x hx hux t =>
-        A.centered_orbit_bound H hu hflow β hβ x hx hux t⟩
+      exact ⟨A.flow_isometry H hflow,
+        fun hu β hβ x hx hux t => A.centered_orbit_bound H hu hflow β hβ x hx hux t,
+        fun hu β hβ x hx hux => A.reverse_certificate H hu hflow β hβ x hx hux⟩
   · exact A.positive_inverse_isometry
 
 end Data
