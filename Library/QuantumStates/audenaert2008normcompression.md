@@ -9,6 +9,8 @@ claim: "Conjecture 1, upper branch: Schatten norm compression for arbitrary 2×N
 strata_touched:
   - D5/S3/Quantum/NormCompression/UpperBranchReduction
   - D5/S3/Quantum/NormCompression/FinitePowerTrace
+  - D5/S3/Quantum/NormCompression/FinitePowerSpectral
+  - D5/S3/Quantum/NormCompression/FinitePowerMetric
   - D5/S3/Quantum/NormCompression/FinitePowerConcavity
   - D5/S3/Quantum/NormCompression/FinitePowerKernel
   - D5/S3/Quantum/NormCompression/LocalOutputGluing
