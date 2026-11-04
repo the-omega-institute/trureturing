@@ -122,6 +122,10 @@ public sealed partial class WorktreeCommandTests
             using var receipt = JsonDocument.Parse(result.Output);
             Assert.Equal("succeeded", receipt.RootElement.GetProperty("status").GetString());
             Assert.Equal(fresh, receipt.RootElement.GetProperty("path").GetString());
+            var refusal = Assert.Single(receipt.RootElement.GetProperty("idle_claim_refusals").EnumerateArray());
+            Assert.Equal(idle, refusal.GetProperty("path").GetString());
+            Assert.Equal("activity", refusal.GetProperty("stage").GetString());
+            Assert.StartsWith("task_activity_unavailable:", refusal.GetProperty("reason").GetString());
             Assert.NotEqual(GitWorktreeDirectory.Read(idle), GitWorktreeDirectory.Read(fresh));
             Assert.Equal("lane/math/unobservable", TestGit.Run(fresh, "branch", "--show-current").Trim());
         }

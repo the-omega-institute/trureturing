@@ -517,7 +517,13 @@ class IdlePoolCases:
         self.assertTrue(select.select([job.stdout], [], [], 10)[0])
         self.assertEqual("ready\n", job.stdout.readline())
         try:
-            self.assertEqual("no_idle", json.loads(self.dormant_claim().stdout)["status"])
+            result = json.loads(self.dormant_claim().stdout)
+            self.assertEqual("no_idle", result["status"])
+            self.assertEqual([dict(path=str(self.tree), stage="activity",
+                                   reason="task_active_process")], result["candidate_refusals"])
+            self.assertTrue(self.g(self.tree, "symbolic-ref", "HEAD").strip().startswith(
+                "refs/heads/lane/governance/idle-"))
+            self.assertFalse(self.g(self.main, "for-each-ref", "refs/heads/lane/math/next").strip())
         finally:
             job.communicate("joined\n", timeout=10)
         self.assertEqual("claimed", json.loads(self.dormant_claim().stdout)["status"])
@@ -549,7 +555,12 @@ class IdlePoolCases:
                                 with self.assertRaisesRegex(pool.Refused, "task_activity_unavailable:"):
                                     pool.claim(self.dormant_options(path=self.tree))
                             else:
-                                self.assertEqual("no_idle", pool.claim(self.dormant_options())["status"])
+                                result = pool.claim(self.dormant_options())
+                                self.assertEqual("no_idle", result["status"])
+                                self.assertEqual([dict(path=str(self.tree),
+                                    stage="activity" if boundary == 1 else "activity_recheck",
+                                    reason="task_activity_unavailable:" + str(failure))],
+                                    result["candidate_refusals"])
                         checkpoint.assert_not_called()
                         self.assertEqual(before, {file: file.read_bytes() for file in files})
                         self.assertFalse(self.g(self.main, "for-each-ref", "refs/heads/lane/math/next").strip())

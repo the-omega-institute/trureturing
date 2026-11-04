@@ -20,9 +20,10 @@ internal static class WorktreePoolCommand
             : null;
 
     internal static CommandResult? TryClaim(WorktreeOptions options, IWorktreeProcessRunner runner,
-        out string? fallbackReason)
+        out string? fallbackReason, out JsonElement[] candidateRefusals)
     {
         fallbackReason = null;
+        candidateRefusals = [];
         if (!options.PreferIdle)
         {
             if (!Directory.Exists(options.Path)) return null;
@@ -40,6 +41,8 @@ internal static class WorktreePoolCommand
         using var receipt = JsonDocument.Parse(result.Output);
         if (receipt.RootElement.GetProperty("status").GetString() != "no_idle") return result;
         if (receipt.RootElement.TryGetProperty("reason", out var reason)) fallbackReason = reason.GetString();
+        if (receipt.RootElement.TryGetProperty("candidate_refusals", out var refusals))
+            candidateRefusals = refusals.EnumerateArray().Select(row => row.Clone()).ToArray();
         return null;
     }
 }

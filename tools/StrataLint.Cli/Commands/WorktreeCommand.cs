@@ -115,6 +115,7 @@ internal static class WorktreeCommand
         int? failureExitCode = null;
         IDisposable? initializationScope = null;
         string? idleClaimFallback = null;
+        JsonElement[] idleClaimRefusals = [];
         try
         {
             if (runner is ProductionWorktreeProcessRunner production)
@@ -125,7 +126,7 @@ internal static class WorktreeCommand
                 options = options with { Path = attachedPath };
             else
             {
-                var claimed = WorktreePoolCommand.TryClaim(options, runner, out idleClaimFallback);
+                var claimed = WorktreePoolCommand.TryClaim(options, runner, out idleClaimFallback, out idleClaimRefusals);
                 if (claimed is not null) return claimed;
             }
             if (Directory.Exists(options.Path) || RunProcess(runner, "git",
@@ -215,6 +216,7 @@ internal static class WorktreeCommand
                 halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
                 idle_claim_fallback = idleClaimFallback,
+                idle_claim_refusals = idleClaimRefusals,
             }) + "\n";
             return new CommandResult(true, summary, RenderDonorWarning(options, donor));
         }
