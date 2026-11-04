@@ -10,6 +10,12 @@ internal sealed class TwoAdjacentLowTailLabelsDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The threshold-three immutable target has original adaptive and preset price Q+1 at odd width and Q+2 at even width.",
         H("Two adjacent low-tail labels"), Blocks(
+            Describe.Lean(DescribeId.Create("first-zero-form"), DeclarationHandle.Create(Owner+"first_zero_form"),
+                H("The first zero of a literal list"), StatementSource.FromAuthor(Disp(FirstZeroFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Every finite Boolean list is either all ones, or is a run of a leading ones followed by its first zero and a remaining literal suffix. The list can be empty, in which case the all-one alternative holds with length zero."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("response-off"), DeclarationHandle.Create(Owner+"response_off"),
+                H("A first-tour window misses an INITIAL phase"), StatementSource.FromAuthor(Disp(ResponseOffFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For an arbitrary literal m-bit block B, first-tour index t<Q, and INITIAL index j<=Qm, the response is zero if j<tm or (t+1)m<j. The phase expression is evaluated in ZMod(Qm+1). This applies to every controller's own block and requires no assumption about its root, labels or acquired tail."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("initial-label"), DeclarationHandle.Create(Owner+"initialLabel"),
                 H("The immutable initial target"), StatementSource.FromAuthor(Disp(LabelFormula())),
                 AssessedProvenance.FromRepo(), Blocks(
@@ -46,6 +52,24 @@ internal sealed class TwoAdjacentLowTailLabelsDocument : IScribeDocumentDefiniti
                     Paragraph(Text("The root contains zero at position three and leaves tail at most m-4. Every following word contains zero at local position zero or one. The internal-zero execution theorem proves all actual seams legal for k=Qm; absorbing rejection and the exact literal tail are retained. QueryWord and finalWord end in zero. Their trailing zeros are literal paid symbols. There is no unpaid clearing, reset or time displacement.")),
                     Paragraph(Text("For the baseline lower bound the existing original_cost_lower theorem is applied to the three distinct tail-zero labels A, B and C, with gcd(m,Qm+1)=1. Its first-window wait is Q and its binary depth is two, giving Q+1. The even-width actual-policy survivor theorem supplies the extra block. The original script-preset construction supplies the upper bound; preset inclusion and the adaptive lower bound yield both exact global prices. For Q=2,m=4 the literal list is 1110|0101|0100|1000 and fee four. For Q=2,m=5 it is 11101|10101|01000 and fee three."))), DescribeRole.Theorem))));
 
+    private static Formula ResponseOffFormula()
+    {
+        var q=F.Id("Q"); var m=F.Id("m"); var t=F.Id("t"); var j=F.Id("j"); var b=F.Id("B");
+        var left=Rel(j,Lt,Multiply(t,m)); var right=Rel(Multiply(Add(t,D(1)),m),Lt,j);
+        var off=Seq(Open,new Formula.Logic(left,FormulaLogicOperator.Or,right),Close);
+        var phase=Add(Seq(Minus,Call("cast",j)),Call("cast",Multiply(t,m)));
+        return All(q,NatType(),All(m,NatType(),All(t,NatType(),All(j,NatType(),
+            Imp(And(Rel(D(2),Leq,q),And(Rel(D(4),Leq,m),And(Rel(t,Lt,q),And(Rel(j,Leq,Multiply(q,m)),off)))),
+                All(b,Rel(Call("Fin",m),To,Op("Bool")),Equal(Call("wordIncrement",Multiply(q,m),phase,b),D(0))))))));
+    }
+    private static Formula FirstZeroFormula()
+    {
+        var bits=F.Id("bits"); var a=F.Id("a"); var rest=F.Id("rest"); var list=Call("List",Op("Bool"));
+        var cut=Equal(bits,Call("append",Call("replicate",a,Op("true")),Call("cons",Op("false"),rest)));
+        var suffix=new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create("rest"),list,cut);
+        var first=new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create("a"),NatType(),suffix);
+        return All(bits,list,new Formula.Logic(Equal(bits,Call("replicate",Call("length",bits),Op("true"))),FormulaLogicOperator.Or,first));
+    }
     private static Formula LabelFormula()
     {
         var y=F.Id("Y"); var q=F.Id("Q"); var m=F.Id("m"); var l=F.Id("labels"); var b=F.Id("bottom");
