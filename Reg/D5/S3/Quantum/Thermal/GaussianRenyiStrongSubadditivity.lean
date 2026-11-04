@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
 import Reg.Support.SingleDependentReadout
+import Reg.Support.UniverseSingleReadout
 
 /-! Source-bound registration for bosonic Gaussian Rényi strong subadditivity. -/
 
@@ -139,6 +140,90 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   options := #[] }
 
 #print axioms registration
+
+namespace ReducedCard
+
+#print _root_.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.reduced_card
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature
+    ℕ (fun n => Finset (Fin n)) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature
+    (fun _ n X => Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X})
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature
+    (fun _ n X => Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} + 1)
+    (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (X : Finset (Fin n)),
+    R.readout () n X = 2 * X.card
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := @h 0 ∅
+  norm_num [rejected, realize] at hh
+
+lemma dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, ∅, {0}, ?_⟩
+  change Fintype.card {p : Fin 1 × Fin 2 // p.1 ∈ (∅ : Finset (Fin 1))} ≠
+    Fintype.card {p : Fin 1 × Fin 2 // p.1 ∈ ({0} : Finset (Fin 1))}
+  decide
+
+def source_registration : Registration arena (type_of% @reduced_card) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@reduced_card, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@reduced_card) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.ReducedCard.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.ReducedCard.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ n X => Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X})
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end ReducedCard
+
 
 end
 end Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
