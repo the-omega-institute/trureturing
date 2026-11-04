@@ -313,29 +313,6 @@ private lemma divisibility_classification (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤
     have hb := Int.le_of_dvd hp h
     omega
 
-private lemma exceptional_identity : ∀ s : Fin 4 × Fin 2, maximalIdentityAt 4 2 s := by
-  classical
-  intro s
-  let f : Fin 4 × Fin 2 → ℤ := fun v =>
-    if v = s then 0 else if v.2 = s.2 then 5 else if v.1 = s.1 then 6 else 7
-  refine ⟨fun v => f v, ?_⟩
-  intro v
-  have hf : f s = 0 := by simp only [f, ite_eq_left rfl]
-  have hs := Fintype.sum_eq_add_sum_subtype_ne
-    (fun w => ((⊤ : SimpleGraph (Fin 4)).boxProd (SimpleGraph.pathGraph 2)).lapMatrix ℤ
-      v.1 w * f w) s
-  rw [hf, mul_zero, zero_add] at hs
-  rw [← hs]
-  change ((((⊤ : SimpleGraph (Fin 4)).boxProd (SimpleGraph.pathGraph 2)).lapMatrix ℤ) *ᵥ f) v.1 = _
-  rw [product_row, path_row, SimpleGraph.degree_boxProd, Nat.cast_add, path_degree]
-  rcases s with ⟨a, t⟩
-  rcases v with ⟨⟨b, u⟩, hv⟩
-  fin_cases a <;> fin_cases t <;> fin_cases b <;> fin_cases u <;>
-    first
-    | exact (hv rfl).elim
-    | norm_num [f, Fin.sum_univ_succ, SimpleGraph.IsRegularOfDegree.top.degree_eq]
-
-
 theorem result : claim := by
   intro i j hi hj
   constructor
@@ -343,6 +320,26 @@ theorem result : claim := by
     exact divisibility_classification i j hi hj
       (identity_divisibility i j hi hj (h (⟨0, by omega⟩, ⟨0, by omega⟩)))
   · rintro ⟨rfl, rfl⟩
-    exact exceptional_identity
+    classical
+    intro s
+    let f : Fin 4 × Fin 2 → ℤ := fun v =>
+      if v = s then 0 else if v.2 = s.2 then 5 else if v.1 = s.1 then 6 else 7
+    refine ⟨fun v => f v, ?_⟩
+    intro v
+    have hf : f s = 0 := by simp only [f, ite_eq_left rfl]
+    have hs := Fintype.sum_eq_add_sum_subtype_ne
+      (fun w => ((⊤ : SimpleGraph (Fin 4)).boxProd (SimpleGraph.pathGraph 2)).lapMatrix ℤ
+        v.1 w * f w) s
+    rw [hf, mul_zero, zero_add] at hs
+    rw [← hs]
+    change
+      ((((⊤ : SimpleGraph (Fin 4)).boxProd (SimpleGraph.pathGraph 2)).lapMatrix ℤ) *ᵥ f) v.1 = _
+    rw [product_row, path_row, SimpleGraph.degree_boxProd, Nat.cast_add, path_degree]
+    rcases s with ⟨a, t⟩
+    rcases v with ⟨⟨b, u⟩, hv⟩
+    fin_cases a <;> fin_cases t <;> fin_cases b <;> fin_cases u <;>
+      first
+      | exact (hv rfl).elim
+      | norm_num [f, Fin.sum_univ_succ, SimpleGraph.IsRegularOfDegree.top.degree_eq]
 
 end D5.S3.StatisticalMechanics.SandpileCompleteMaximalIdentity
