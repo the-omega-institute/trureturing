@@ -10,8 +10,11 @@ import D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutati
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.Matrix.MonomialDiagonalPreserving
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Measurement.BasisMeasurementProjection
+import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 
-/-! # Amendment of incoherent channels with finite coherence-breaking index -/
+/-! # Amendment of incoherent channels with finite coherence-breaking index. Owner publication escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25799. -/
 
 noncomputable section
 
@@ -145,7 +148,7 @@ private theorem monomial_action {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d 
     mul_zero, apply_ite, star_zero]
   ring
 
-private theorem monomial_unitary {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ)
+theorem monomial_unitary {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ)
     (hω : ∀ c, ω c * star (ω c) = 1) :
     monomial σ.symm (ω ∘ σ.symm) ∈ unitaryGroup (Fin d) ℂ := by
   apply Matrix.mem_unitaryGroup_iff.mpr
@@ -162,7 +165,7 @@ private theorem monomial_unitary {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d
   change monomial σ.symm (ω ∘ σ.symm) * 1 * (monomial σ.symm (ω ∘ σ.symm))ᴴ = 1 at he
   simpa only [Matrix.mul_one, monomial_eq_diagonal_mul] using he
 
-private theorem monomial_projection {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ)
+theorem monomial_projection {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ)
     (X : Matrix (Fin d) (Fin d) ℂ) :
     offDiag (LinearMap.mulLeftRight ℂ
       (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) X) =
