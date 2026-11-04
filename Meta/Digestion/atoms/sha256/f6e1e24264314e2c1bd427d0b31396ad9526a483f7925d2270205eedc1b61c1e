@@ -1,0 +1,64 @@
+### 51.7. Source correspondence and the remaining global comparison
+
+The new deduction relative to the fixed suppliers is the entire
+positive-prefix relation T, its same-original-pair quantitative consumer,
+the complete positive-active pure equality through the selected zero,
+and the refinement (51.10). The source correspondences are:
+
+| Supplier | Mathematical role |
+| --- | --- |
+| Original Definitions 1.1, 11.1, 23.1 and (23.2), (23.9)--(23.12) | Original domain, ordinary transpose, one-feedback $P,Q$, both distance branches and one common scalar |
+| I Theorem 37.5 and (37.20)--(37.23) | Unique positive geometric selector, stationarity, attained $V$ and true-distance scalar equality |
+| II Theorem 42.3 and (42.15)--(42.20) | Same-effect, same-complex-trace transport, true sign separation and nonnegative variance |
+| II Definition 46.1, Theorem 46.4, Corollaries 46.5 and 46.7 | Joint attainable triangle, determinant identity, complete actual nonnegative-slice equality and $x\ge4/5$ screen |
+| II (47.1), (47.9)--(47.13) | Recovery-gain envelope, original pure-input consumer and direct $x=1$ endpoint |
+| II (50.3), (50.6), (50.14)--(50.15) and C2 | Positive-row parameters, scalar derivative, fixed-population monotonicity and existing upper-population screen |
+| III Theorem 48.5 | Global-minimizer purity and phase rigidity through $13/4$ |
+| IV Theorem 49.1, (49.11)--(49.19) | Unique selected zero and its sign, increasing selector and $q_{\xi_*}<1/2$ |
+
+The ordinary mathematical suppliers are pinned by the published source
+snapshot `6b6539921bf3fde0f84f85fdda6c284b5891ae98`.
+The original and Continuations I--III agree with their corresponding
+suppliers at `2c54932b6f9a7eb9a838e5be71e91d97e10027be`;
+Section 49 agrees with its source at
+`e6854b4057168ac0ffbbbc0b3e4e1468203de0f1`.
+The results above are repo-derived ordinary mathematics with exact
+rational interval certificates; no literature-wide priority or physical
+realization claim follows.
+
+For the standard composition premise see
+[Boyd--Vandenberghe, *Convex Optimization*, Section 3.2.4, Example 3.14](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+Other mature optimization results have different hypotheses:
+[Bandeira--Boumal--Singer, arXiv:1411.3272v3, Lemma 4.3](https://arxiv.org/html/1411.3272v3)
+requires a feasible unit-diagonal positive semidefinite $X$, a Hermitian
+positive semidefinite slack $S$ annihilating $X$, and $S+C$ real diagonal;
+its uniqueness criterion uses $\operatorname{rank}S=n-1$.
+No such dual certificate is constructed here for the coupled trace and
+population family.
+[Soltanalian--Stoica, arXiv:1303.0152v1, Theorem 2](https://arxiv.org/html/1303.0152v1)
+requires an actual unimodular vector in the top eigenspace of the unchanged
+Hermitian objective, and supplies no joint prescribed-trace/effect/population
+conclusion for these objects.
+[Nie, arXiv:1206.0319v2, Theorem 1.1](https://arxiv.org/html/1206.0319v2)
+requires an archimedean polynomial model and constraint qualification,
+strict complementarity and second-order sufficiency at every global
+minimizer. Those global hypotheses are not established here, and the
+selected degenerate zero does not justify assuming an ordinary strict
+second-order certificate. These three results are therefore not proof
+premises of Theorem 51.2.
+
+There is no earlier separated pure contact in the positive-active branch
+on $0<\xi\le\xi_*$. A negative-active pure phase pair could still have
+smaller value or an additional equality at the same original level.
+The negative canonical and interior comparison, both-sign assembly,
+global equality, earliest global contact, $\alpha,\beta$, their possible
+coincidence, endpoint inclusion for the global first-loss statement and
+immediate right-side global classification remain unresolved here.
+Theorem 48.5 is used only for its existing global-minimizer reduction;
+a pointwise estimate for arbitrary mixed inputs does not follow.
+No extension beyond $\xi_*$ or beyond that theorem's $13/4$ range is
+asserted. Section 49's local quartic and right-side branch results retain
+their own local scope. No native resources, complete AURIC reconstruction,
+or Lean/kernel validation are asserted by this ordinary mathematical
+positive-branch theorem.
+

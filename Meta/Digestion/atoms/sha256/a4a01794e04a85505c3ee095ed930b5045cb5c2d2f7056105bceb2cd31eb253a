@@ -1,0 +1,325 @@
+**定理 32.2（Strict local separation at every even scale）。**
+If $p$ satisfies Definition 32.1, then, for every integer $S\geq1$,
+
+$$
+\mu_p(S-1)>E_s,\qquad\Delta_p>0.
+\tag{32.2}
+$$
+
+This includes the spin-zero deficiency at $S=1$, all actual
+multiplicity copies and all feasible weights in the defining sector.
+
+Proof. The representation, normalization and comparison inputs
+are those of Theorems 19.2 and 31.3. Their source correspondence
+is retained explicitly. The full Boolean decomposition is
+
+$$
+\mathcal H_{mS}\cong
+\bigoplus_{\substack{0\leq t_i\leq S\\
+ 1\leq a_i\leq\binom{2S}{t_i}-\binom{2S}{t_i-1}}}
+ \left(\bigotimes_i V_{S-t_i}^{(a_i)}\right)_{\sum_iZ_i=0},
+\qquad \binom{2S}{-1}=0.
+\tag{32.3}
+$$
+
+In each summand $J_i=S-t_i$, the original occupancy is $S+x_i$,
+and
+
+$$
+\begin{aligned}
+J_i^\pm|J_i,x_i\rangle
+ &=\sqrt{(J_i\mp x_i)(J_i\pm x_i+1)}
+       |J_i,x_i\pm1\rangle,\qquad |x_i|\leq J_i,\\
+K_{\boldsymbol J}
+ &=\sum_{\{i,h\}\in E(H)}
+       (J_i^+J_h^-+J_i^-J_h^+).
+\end{aligned}
+\tag{32.4}
+$$
+
+The multiplicity count and normalized ladders are the classical
+Boolean-chain facts in Srinivasan,
+[Theorem 1.2 and its representation derivation](https://arxiv.org/html/1001.0280v2),
+and Feinsilver,
+[§3.1, (10), Proposition 4.3 and §4.2.2](https://arxiv.org/html/1102.0368v2),
+consumed through the [owning volume, (6.6)–(6.12)](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md).
+Srinivasan's parameters are Boolean rank $2S$, starting rank
+$t_i$, layer $u=S+x_i$ and up operator $L_i^\ast$; his
+$\sqrt{(u+1-t_i)(2S-t_i-u)}$ is exactly the raising coefficient.
+Feinsilver's $T,T^\ast$ are $L_i^\ast,L_i$, his principal
+number is $2J_i$, his chain index is $J_i+x_i$, and his grading
+operator is $-2Z_i$. The length-one spin-zero chains and the
+endpoint zero ladder coefficients remain in (32.3)–(32.4).
+
+The full head-removal and factorial bodies and
+`sector_words_card_multinomial`, `sector_gram` of
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs)
+give the unit symmetric vectors with two-letter counts
+$(2S-n_i,n_i)$, including zero counts. The exact finite identities
+(O.2), (O.8)–(O.9) of the
+[collective-oscillator volume](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md)
+have $d=m$, $N=2S$, $g=0$, $e=1$, $B=A(H)$,
+$a_i=L_i/\sqrt{2S}$ and $H_{2S}=\hbar K_s/(2S)$ on the
+two-letter code. No oscillator approximation is used at occupancy
+$mS$, and that code calculation does not replace (32.3).
+
+The singleton differences in
+[TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs),
+and the full `Test.move`, `Test.adj_mem`, `Test.move_injective`,
+`Test.toNbr_bij`, `Test.token_energy` bodies in
+[CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs)
+identify exactly one removed and one inserted coordinate in each
+move. Thus the two terms in (32.4) have coefficient one per
+unordered edge. Apte–Parekh–Sud,
+[v3, Definition 1 and Fact 2](https://arxiv.org/html/2506.03441v3),
+have $N=2mS$, $k=mS$ and unit edge weights here; their shifted
+operator $W(G_s)I/2-K_s$ is a different operator.
+The complete `lambdaMin_quad`, `complex_real_energy`,
+`complex_real_norm`, `complex_norm_pos` and
+`real_complex_rayleigh` bodies give the same minimum for real
+and arbitrary complex coordinates. Their fixed cut-bound
+refutation and phase-product trials are not confinement premises.
+These are the supplied sources at Git
+`3ec6f28ef087bcfadf0336a5ca88253bd18ad8ec`.
+
+The nonstrict local-spin comparison is the result of
+Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and the final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+Its maximal spins are $s_i=S$, variable spins $t_i=J_i$,
+magnetization $M=0$ and coupling matrices
+$D_{ih}=\operatorname{diag}(2A(H)_{ih},2A(H)_{ih},0)$.
+As in (19.6), the upper-spin projection has squared norm
+$((J+1)^2-x^2)/((J+1)(2J+1))>0$ for every $|x|\leq J$.
+Only nonincrease of the fixed-weight minimum is consumed;
+strictness in (32.2) is not supplied by that comparison.
+
+All sectors in (32.3) are actual subspaces of (32.1), so
+$\Delta_p\geq0$. Suppose for contradiction that $\Delta_p=0$.
+Write $j=S-1$, $A=N_H(p)$ and
+$R=V(H)\setminus(\{p\}\cup A)$. Theorem 19.2 gives, for
+every actual component $D$ of $H[A]$,
+
+$$
+\mathcal G_D(0)\subseteq\mathcal S_D,\qquad
+ e_A(0)=\sum_D e_D(0).
+\tag{32.5}
+$$
+
+In particular, every vector in each indicated ground space is
+a singlet. For a singleton component this is already impossible:
+its zero-weight ground space is $\mathbb C|S,0\rangle$, while
+$\|J^+|S,0\rangle\|^2=S(S+1)>0$.
+This handles a selected singleton, also when $m=2$.
+We may therefore use a selected component $C$ with at least two
+vertices and its dominating vertex $v$.
+
+Use the exterior notation of Definition 31.2. By (31.6) there
+exists an integer $q$ and a unit vector $w\in W_q$ such that
+
+$$
+|q|\leq S-1,\qquad e_R(q)=\eta,\qquad
+E_s=e_A(0)+\eta.
+\tag{32.6}
+$$
+
+No simplicity of any regional minimum is used. Choose any unit
+$u\in\mathcal G_C(0)$ and any unit
+$u_D\in\mathcal G_D(0)$ for every other component $D$.
+Put $u_{\mathrm{other}}=\bigotimes_{D\ne C}u_D$ and
+$e_{\mathrm{other}}=\sum_{D\ne C}e_D(0)$.
+The empty product is one with energy zero. By (32.5), all these
+vectors are singlets and
+$e_A(0)=e_C(0)+e_{\mathrm{other}}$. Set $e=e_C(0)$.
+Thus
+
+$$
+K_Cu=eu,\qquad B_C^\pm u=Z_Cu=0.
+\tag{32.7}
+$$
+
+The singlet and rotation facts used next are classical
+angular-momentum intermediates; the coupling and phase conventions
+are those of [DLMF §§34.1–34.3](https://dlmf.nist.gov/34.1),
+including [the singlet coefficient (34.3.1)](https://dlmf.nist.gov/34.3.E1).
+Their needed normalization and operator consequences follow directly
+as well. Since $B_C^\pm u=Z_Cu=0$, all simultaneous spin rotations
+of $C$ fix $u$. Its reduced density $\rho_v$ consequently
+commutes with every spin rotation at $v$. Commutation with $Z_v$
+makes $\rho_v$ diagonal in the simple weight basis of $V_S$;
+commutation with $J_v^+$ makes consecutive diagonal entries equal,
+since all its interior raising coefficients are positive.
+Its trace is one, so
+
+$$
+\rho_v=\frac{I_{V_S}}{2S+1},\qquad
+c:=\langle u,Z_v^2u\rangle=\frac{S(S+1)}3>0,
+\qquad
+\langle Z_v\rangle_u=\langle Z_v^3\rangle_u=0.
+\tag{32.8}
+$$
+
+For the second identity the three Cartesian second moments are
+equal by rotations and their sum is the local Casimir $S(S+1)$.
+The odd moments vanish by symmetry of the weights. This argument
+allows arbitrary singlet multiplicity and complex coefficients.
+
+Define two vectors in the actual maximal-spin tensor space on $C$:
+
+$$
+t_0=\frac{Z_vu}{\sqrt c},\qquad
+ t_1=-\frac{J_v^+u}{\sqrt{2c}}.
+\tag{32.9}
+$$
+
+The identity $J_v^-J_v^+=S(S+1)I-Z_v^2-Z_v$ and (32.8)
+give $\|J_v^+u\|^2=2c$. Hence both vectors are unit, with
+$C$ weights zero and one respectively, and are orthogonal.
+Because $v$ is adjacent to every other vertex in $C$, writing
+$D_0=C\setminus\{v\}$ gives the exact operator decomposition
+
+$$
+K_C=K_{D_0}+J_v^+B_{D_0}^-+J_v^-B_{D_0}^+,
+\qquad B_{D_0}^\pm u=-J_v^\pm u.
+\tag{32.10}
+$$
+
+There are no omitted incident edges or weights in this equality.
+The spin commutation relations now give
+
+$$
+\begin{aligned}
+[K_C,Z_v]u
+ &=(-J_v^+B_{D_0}^-+J_v^-B_{D_0}^+)u
+   =2Z_vu,\\
+[K_C,J_v^+]u
+ &=-2Z_vB_{D_0}^+u=2Z_vJ_v^+u.
+\end{aligned}
+\tag{32.11}
+$$
+
+It follows that $K_Ct_0=(e+2)t_0$.
+For the other vector, the scalar marginal (32.8) and cyclicity
+of finite trace give
+
+$$
+\begin{aligned}
+\langle J_v^+u,Z_vJ_v^+u\rangle
+ &=\frac{\operatorname{tr}(J_v^-Z_vJ_v^+)}{2S+1}
+ =\frac{\operatorname{tr}(Z_vJ_v^+J_v^-)}{2S+1}\\
+ &=\frac{\operatorname{tr}
+   (Z_v(S(S+1)I-Z_v^2+Z_v))}{2S+1}=c.
+\end{aligned}
+\tag{32.12}
+$$
+
+Using (32.11) and $\|J_v^+u\|^2=2c$, this proves
+
+$$
+\langle t_0,K_Ct_0\rangle=e+2,\qquad
+ \langle t_1,K_Ct_1\rangle=e+1.
+\tag{32.13}
+$$
+
+Only the second expectation is needed; no eigenvector assertion
+for $t_1$ is being made. The collective ladder relations are
+
+$$
+B_C^+t_0=\sqrt2\,t_1,\qquad
+ B_C^-t_1=\sqrt2\,t_0.
+\tag{32.14}
+$$
+
+Indeed $[B_C^+,Z_v]=-J_v^+$ and
+$[B_C^-,J_v^+]=-2Z_v$, and $B_C^\pm u=0$.
+These are the usual spin-one matrix elements obtained by applying
+a local vector operator to a singlet; (32.8)–(32.14) derive
+exactly the pieces needed here, without a new representation
+assumption or a restriction on the remaining spin copies.
+
+Choose the actual spin-$S$ fibre at $p$ and set
+
+$$
+\begin{aligned}
+f_0&=|S,-q\rangle_p\otimes t_0
+             \otimes u_{\mathrm{other}}\otimes w,\\
+f_1&=|S,-q-1\rangle_p\otimes t_1
+             \otimes u_{\mathrm{other}}\otimes w,\\
+a&=\sqrt{2(S-q)(S+q+1)}.
+\end{aligned}
+\tag{32.15}
+$$
+
+Both magnetic weights at $p$ are feasible because
+$-S+1\leq q\leq S-1$. The vectors are orthonormal and have
+total weight zero. Thus they are actual vectors of (32.1),
+with occupancies $S+x_i$ throughout, including any occurring
+endpoint. In particular the second vector is legal at $S=1$,
+$q=0$: its $p$ weight is $-1$ and its $C$ weight is $1$.
+
+We compute the compression of the whole $K_s$ to their span.
+On the $p,C$ factors the only added interaction is
+$J_p^+B_C^-+J_p^-B_C^+$. Equations (32.4) and (32.14)
+give its off-diagonal entry $a$, with positive sign and no
+factor suppressed. Its diagonal entries vanish by weight.
+The internal $C$ entries are (32.13); the other components
+and $R$ contribute the common scalar
+$e_{\mathrm{other}}+\eta$.
+
+For completeness, all other edges have zero compressed matrix
+elements. No edge joins $C$ to another component of $H[A]$,
+and there are no $p$–$R$ edges. For every $r\in R$,
+$\langle w,J_r^\pm w\rangle=0$ because $w$ has definite
+$R$ weight $q$. Every $A$–$R$ edge therefore has zero
+matrix element between either pair $f_i,f_h$: its exterior
+factor is this same zero expectation, irrespective of the
+matrix element on $C$. Edges from $p$ to the other components
+annihilate their singlets by the summed ladders; their
+individual one-site ladder expectations also vanish.
+This lists every edge of $H$, and uses product vectors only
+as legal variational trials, not as an assumption about an
+original minimizing vector. Consequently
+
+$$
+\left(\langle f_i,K_sf_h\rangle\right)_{i,h=0,1}
+ =E_sI_2+\begin{pmatrix}2&a\\a&1\end{pmatrix}.
+\tag{32.16}
+$$
+
+No regional slice is claimed to reduce the coupled operator.
+In particular leakage of $K_Ct_1$ out of this trial span is
+irrelevant to its Rayleigh quotient.
+
+Since $S-q\geq1$ and $S+q+1\geq2$, one has $a^2\geq4>2$.
+The actual normalized whole-carrier vector
+
+$$
+\Phi=\frac{f_0-af_1}{\sqrt{1+a^2}}
+\tag{32.17}
+$$
+
+therefore satisfies
+
+$$
+\langle\Phi,K_s\Phi\rangle
+ =E_s+\frac{2-a^2}{1+a^2}<E_s.
+\tag{32.18}
+$$
+
+This contradicts the definition of the entire-carrier minimum.
+Thus equality $\Delta_p=0$ is impossible and (32.2) follows.
+If $R=\varnothing$, the only exterior weight in (32.6) is zero,
+$w=1$ and $\eta=0$; the same computation applies. Disconnected
+neighborhoods enter only through their actual component factors.
+Degenerate minima require no chosen basis or real-vector
+restriction. The new inference is the dominating-vertex
+commutator calculation and its insertion at the actual $E_s$
+into the two-vector comparison (32.16)–(32.18); the Boolean
+representation, singlet algebra, nonstrict spin comparison and
+finite-dimensional variational principle are attributed
+intermediates. Neither (19.4) nor (31.7) has been used conversely.
+$\square$
+

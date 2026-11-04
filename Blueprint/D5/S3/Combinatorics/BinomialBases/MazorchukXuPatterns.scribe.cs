@@ -53,7 +53,7 @@ internal static class MazorchukXuPatternsNotation
     internal static Formula Map(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     internal static Formula Ordered(string name, Formula body) =>
         All(name, Ty, Seq(OpenBracket, Fn("LinearOrder", V(name)), CloseBracket, Sp, body));
-    internal static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/mazorchukxu2026cokernel");
+    internal static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/HomologicalAlgebra/mazorchukxu2026cokernel");
     internal static DocumentBlock Node(string module, string name, string title, Formula formula,
         string prose, DescribeRole role, bool literature = false) =>
         Describe.Lean(DescribeId.Create("mazorchuk-xu-" + module.ToLowerInvariant() + "-" + name.ToLowerInvariant().Replace('_', '-')),

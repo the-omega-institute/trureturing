@@ -1,0 +1,28 @@
+### 定义 16.1（同源受控终端域与全部合法未来）
+
+固定唯一来源 $\Omega$ 及其状态 $\omega$。前缀 $a$、后缀 $f$ 均指这个来源内实际允许的有限门词，按先 $a$ 后 $f$ 的调用顺序书写。一般实际域为
+
+$$
+\mathcal D=\{(a,f):a\in\mathsf A,\ f\in\mathsf F(a)\},\qquad
+p(a;f,w)=\omega[af\text{ 后的完整终端标签为 }w],\quad w\in\Gamma.
+\tag{16.1}
+$$
+
+$\Gamma$ 是所选窗口的全部终端标签，含失败标签，且在本节有限。语义概率满足
+
+$$
+p(a;f,w)\ge0,\qquad \sum_{w\in\Gamma}p(a;f,w)=1.
+\tag{16.2}
+$$
+
+它不是采样频率或删除失败后的条件概率。对明确事件 $E\subseteq\Gamma$ 才定义 $p(a;f,E)=\sum_{w\in E}p(a;f,w)$ 及 $m=2p-1$；完整标签事件与 bit-read 事件不互换。
+
+以下分类限定在一个**共同续接域**：实际前缀为含空字的串接闭子菜单 $\mathsf L$；$\mathsf F$ 是这个域中每个前缀后全部合法的终端未来，$\epsilon\in\mathsf F$，且 $g f\in\mathsf F$ 对每个 $g\in\mathsf L,f\in\mathsf F$ 成立。因此 $\mathsf L\times\mathsf F\subseteq\mathcal D$，并有同一完整程序的续接恒等式
+
+$$
+p(ag;f,w)=p(a;gf,w).
+\tag{16.3}
+$$
+
+“全部未来”在这个指定域内全称量化，不是选几个方便读数；若不同前缀的合法未来不同，或者新增档案、记录读口，必须重新核对共同域及下述容量，不能沿用旧预测等价。选择局部窗口不宣称已经覆盖整个 $\Omega$。这里的串接合同不添加任意准备、中间测量、外部 ready/reset、独立副本或随机选词。
+

@@ -23,9 +23,21 @@ internal sealed class GraphStateMonogamyForbiddenSubgraphDocument : IScribeDocum
             Node("claw", "Induced four-star", ClawFormula(),
                 "The vertex c is adjacent to three distinct vertices i, j, k that are pairwise non-adjacent, so c, i, j, k induce the four-vertex star that the paper denotes K_4.",
                 "IsClaw", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("cut", "The binary adjacency block of a cut", CutFormula(),
+                "The rows are vertices in A and the columns are vertices outside A. Restricting the binary adjacency matrix along the two subtype-value functions gives this rectangular matrix over ZMod 2. The vertex type need not be finite.",
+                "cut", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("entropy", "Entanglement entropy of a graph state", EntropyFormula(),
                 "The entropy of a set A of qubits in the graph state of G is the rank of the adjacency block of A: every matrix M over Z_2 with rows indexed by A and columns by the complement of A whose entry at x, y is 1 when x and y are adjacent and 0 otherwise has rank S(G, A).",
                 "entropy", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("entropy-complement", "Entropy of the complement", EntropyComplementFormula(),
+                "The cut matrix of the complement is a reindexing of the transposed cut matrix, so both vertex sets have the same entropy.",
+                "compl_eq", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("entropy-relabel", "Entropy under relabelling", EntropyRelabelFormula(),
+                "Pulling a graph back along a vertex equivalence reindexes its adjacency block and preserves its rank.",
+                "relabel", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("entropy-lc", "Entropy under local complementation", EntropyLcFormula(),
+                "Local complementation acts on a cut matrix by an invertible row operation when its vertex is in the set; complementation gives the remaining case.",
+                "lc_eq", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("mmi", "Violation of MMI", ViolatesFormula(),
                 "The graph state violates an instance of monogamy of mutual information: pairwise disjoint sets I, J, K with S(I ∪ J) + S(I ∪ K) + S(J ∪ K) less than S(I) + S(J) + S(K) + S(I ∪ J ∪ K).",
                 "ViolatesMMI", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -56,7 +68,7 @@ internal sealed class GraphStateMonogamyForbiddenSubgraphDocument : IScribeDocum
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Named(name), [.. arguments]);
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => new Formula.LatexSequence([Open, value, Close]);
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula Less(Formula left, Formula right) =>
@@ -112,6 +124,71 @@ internal sealed class GraphStateMonogamyForbiddenSubgraphDocument : IScribeDocum
         Formula blocks = Call("Matrix", a, outside, Call("ZMod", D(2)));
         return Disp(All("M", blocks, Implies(Parenthesized(All("x", a, All("y", outside, entry))),
             Equal(S(g, a), Call("rank", m)))));
+    }
+
+    private static Formula Qualified(params string[] parts)
+    {
+        var items = new System.Collections.Generic.List<Formula>();
+        foreach (var part in parts)
+        {
+            if (items.Count > 0) items.Add(Dot);
+            items.Add(F.Id(part));
+        }
+        return Seq(Operatorname, Grp(Seq([.. items])));
+    }
+    private static Formula At(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+    private static Formula LocalCall(string name, params Formula[] args) => At(
+        Qualified("D5", "S3", "Quantum", "Entanglement", "GraphStateMonogamyForbiddenSubgraph", name), args);
+    private static Formula Instance(Formula type, Formula body) =>
+        Seq(OpenBracket, type, CloseBracket, Comma, Sp, Parenthesized(body));
+    private static Formula AllTyped(string name, Formula type, Formula body) => Seq(Forall, Sp,
+        Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
+    private static Formula FiniteGraphBinders(Formula body) => AllTyped("V", Qualified("Type"),
+        Instance(At(Qualified("Fintype"), F.Id("V")),
+            Instance(At(Qualified("DecidableEq"), F.Id("V")),
+                AllTyped("G", At(Qualified("SimpleGraph"), F.Id("V")), body))));
+
+    private static Formula CutFormula()
+    {
+        Formula v = F.Id("V"), a = F.Id("A"), x = F.Id("x");
+        Formula Subtype(Formula predicate) => Seq(OpenBrace, x, Colon, Sp, v,
+            Sp, Slash, Slash, Sp, predicate, CloseBrace);
+        Formula member = new Formula.Relation(x, FormulaRelationOperator.MemberOf, a);
+        Formula rows = Subtype(member), columns = Subtype(new Formula.Not(Parenthesized(member)));
+        Formula field = At(Qualified("ZMod"), D(2));
+        Formula matrixType = At(Qualified("Matrix"), rows, columns, field);
+        Formula rhs = At(Qualified("Matrix", "submatrix"),
+            At(Qualified("SimpleGraph", "adjMatrix"), field, F.Id("G")),
+            Qualified("Subtype", "val"), Qualified("Subtype", "val"));
+        Formula equation = Equal(Parenthesized(Seq(LocalCall("cut", F.Id("G"), a), Colon, Sp, matrixType)), rhs);
+        return Disp(AllTyped("V", Qualified("Type"), Instance(At(Qualified("DecidableEq"), v),
+            AllTyped("G", At(Qualified("SimpleGraph"), v), AllTyped("A", At(Qualified("Finset"), v), equation)))));
+    }
+
+    private static Formula EntropyComplementFormula() => Disp(FiniteGraphBinders(
+        AllTyped("A", At(Qualified("Finset"), F.Id("V")),
+            Equal(LocalCall("entropy", F.Id("G"), At(Qualified("Compl", "compl"), F.Id("A"))),
+                LocalCall("entropy", F.Id("G"), F.Id("A"))))));
+
+    private static Formula EntropyLcFormula() => Disp(FiniteGraphBinders(
+        AllTyped("v", F.Id("V"), AllTyped("A", At(Qualified("Finset"), F.Id("V")),
+            Equal(LocalCall("entropy", LocalCall("lc", F.Id("G"), F.Id("v")), F.Id("A")),
+                LocalCall("entropy", F.Id("G"), F.Id("A")))))));
+
+    private static Formula EntropyRelabelFormula()
+    {
+        Formula v = F.Id("V"), w = F.Id("W"), g = F.Id("G"), e = F.Id("e"), a = F.Id("A");
+        Formula body = Equal(LocalCall("entropy",
+                At(Qualified("SimpleGraph", "comap"), At(Qualified("DFunLike", "coe"), e), g), a),
+            LocalCall("entropy", g, At(Qualified("Finset", "map"), At(Qualified("Equiv", "toEmbedding"), e), a)));
+        body = AllTyped("A", At(Qualified("Finset"), w), body);
+        body = AllTyped("e", At(Qualified("Equiv"), w, v), body);
+        body = AllTyped("G", At(Qualified("SimpleGraph"), v), body);
+        body = Instance(At(Qualified("DecidableEq"), w), body);
+        body = Instance(At(Qualified("Fintype"), w), body);
+        body = Instance(At(Qualified("DecidableEq"), v), body);
+        body = Instance(At(Qualified("Fintype"), v), body);
+        return Disp(AllTyped("V", Qualified("Type"), AllTyped("W", Qualified("Type"), body)));
     }
 
     private static Formula ViolatesFormula()

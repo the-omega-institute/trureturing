@@ -1,0 +1,79 @@
+**定理 12.1（C124 的同一原签名供应）。** 在 C124 下，对每个允许原对象 $A$ 的每个数学效果 $0\le e\le u_A$，包括任意不等有限矩阵直和上的奇异效果、零效果和零中心分量，存在同一 $\Omega$ 的一个原完整有限装置 $W_e$，其指定成功事件为
+
+$$
+\Phi_{W_e}(\rho)=\sqrt e\,\rho\sqrt e,
+\qquad
+\Phi_{W_e\mid R}(X)=(\sqrt e\otimes I_R)X(\sqrt e\otimes I_R)
+\tag{12.1}
+$$
+
+对每个被声明的实际相关参考都成立。构造只附接整个原 $P$，不附接新矩阵角；每个原失败端的完整正算子输出、原标签和实际丢弃前后概率都保留。
+
+**证明。** 由定理 11.2，在配对块选择单位向量 $v_0$ 表示 $p=|v_0\rangle\langle v_0|$，再选择同块正交单位向量 $v_1$，记 $p_1=|v_1\rangle\langle v_1|$。这些仅为证明中的数学坐标；$p+p_1$ 不成为原对象。令 $a=\sqrt e$、$b=\sqrt{u_A-e}$、$\theta_s=\arccos a_s$。在整个实际 $AP$ 的每个块上定义有限数学控制：在 $(s,t_0)$ 块的 $H_s\otimes\operatorname{span}\{v_0,v_1\}$ 上取
+
+$$
+U_{e,s}=\begin{pmatrix}a_s&-b_s\\ b_s&a_s\end{pmatrix}
+=\exp\begin{pmatrix}0&-\theta_s\\ \theta_s&0\end{pmatrix},
+\tag{12.2}
+$$
+
+在该块剩余方向取恒等，在所有 $t\ne t_0$ 块也取恒等。这是 (3.13)–(3.14) 的有限 Julia–Halmos 控制嵌入整个 $AP$；直接消费 Robinson 定理 0–2 的数学膨胀，不把其数学存在当供应。指数内在每个整个联合块斜 Hermitian 且无迹，补上的零生成元不改此性质，所以 $U_e$ 逐块属于 $SU(n_sn_t)$。命题 11.3 遂给 $T(y)=U_e^*yU_e\in(G_{AP})_u$。现在才应用 $N_u$，取得这一个确切群元的原完整装置及指定确定性事件 $f_{U_e}$，状态作用为 $\operatorname{Ad}_{U_e}$；全部其他补事件为零响应且保留。
+
+按定义 10.2 的原合法连线接
+
+$$
+A\xrightarrow{\mathrm{id}\otimes\alpha}AP
+\xrightarrow{f_{U_e}}AP
+\xrightarrow{\mathrm{id}\otimes m}A.
+\tag{12.3}
+$$
+
+原准备密度为 $p$，故联合比较后在各原输入中心的输出是 $V_e\rho V_e^*$，其中有限数学等距
+
+$$
+V_e\xi=a\xi\otimes v_0+b\xi\otimes v_1.
+\tag{12.4}
+$$
+
+$m$ 的破坏性状态映射就是 $\sigma\mapsto\tau_P(p\sigma)$，所以 (12.3) 成功为 $a\rho a$。Xs 的同记录乘积律和乘积张成在整个原联合载体成立，不只在乘积态成立；对相关 $X$ 使用 $V_e\otimes I_R$ 即得 (12.1)。联合 Born 运输用 (11.1)，不需要 $B_{AP}$ 因子化。
+
+下面计算整个原完成，而不把一般失败事件改成标量读口。令 $\Psi_\ell=\Phi_{r_\ell}:\mathcal A_P\to\mathcal A_{B_\ell}$，$d_\ell=\Psi_\ell^\dagger(I)$。完整性给
+
+$$
+\sum_\ell d_\ell=I_P-p,\qquad 0\le d_\ell\le I_P-p.
+\tag{12.5}
+$$
+
+CP 和此支持界使每个 Kraus 算子消去 $v_0$，因而 $\Psi_\ell(\sigma)=\Psi_\ell((I_P-p)\sigma(I_P-p))$。这仅消去成功方向；在 $P$ 的其余方向和其他中心上，$\Psi_\ell$ 仍是原来的完整 CP 映射，可能具有多个 Kraus 算子及任意原输出块。特别不能全局宣称 $d_\ell=t_\ell(I_P-p)$ 或将所有 $\Psi_\ell$ 写成一条标量测量后制备。
+
+只对 (12.4) 实际占用的失败方向定义
+
+$$
+\omega_\ell=\Psi_\ell(p_1)\in(\mathcal A_{B_\ell})_+,
+\qquad t_\ell=\tau_{B_\ell}(\omega_\ell)\ge0,
+\qquad \sum_\ell t_\ell=1.
+\tag{12.6}
+$$
+
+于是同一原失败叶的完整输出恰为
+
+$$
+(\mathrm{id}_A\otimes\Psi_\ell)(V_e\rho V_e^*)
+=b\rho b\otimes\omega_\ell\quad\text{于原 }AB_\ell,
+\qquad
+\rho\longmapsto t_\ell b\rho b\quad\text{在实际丢弃 }B_\ell\text{ 后}.
+\tag{12.7}
+$$
+
+这份局部简化来自输入只占用 $v_0,v_1$ 且失败消去 $v_0$，不改变 $\Psi_\ell$ 在其他原输入的作用。$\omega_\ell$ 可以混合、跨多个原输出中心，或为零；全部原输出对象和零标签保留。对相关参考，未丢弃输出为 $(b\otimes I_R)X(b\otimes I_R)\otimes\omega_\ell$，按原交换接口安放端口；丢弃后为其原迹倍。若实际丢弃有原细支 $z_{\ell k}:B_\ell\to I$，则对应原叶的系数是原数 $z_{\ell k}(\omega_\ell)$，其和为 $t_\ell$；没有替换丢弃装置。
+
+准备与比较的非指定补事件均是保留的零支。按原分组合计，
+
+$$
+\tau_A(a\rho a)+\sum_\ell\tau_{AB_\ell}(b\rho b\otimes\omega_\ell)
+=\tau_A(\rho e)+\tau_A(\rho(I-e))=\tau_A(\rho).
+\tag{12.8}
+$$
+
+$e=0$ 时成功零，$e=I$ 时这些失败零；任意奇异谱点都由有限函数演算直接处理，没有实际极限。若只给衰减准备 $\eta p$ 和缩放读口 $\zeta\tau_P(p\,\cdot)$，同一成功词会是 $\eta\zeta a\rho a$，其各自原完成须重新按原装置保留；不能沿用单位端点的全部失败公式或通过条件化除去因素。AC 正是通过原始概率一排除了这个衰减缺口，而不是重标了它。∎
+

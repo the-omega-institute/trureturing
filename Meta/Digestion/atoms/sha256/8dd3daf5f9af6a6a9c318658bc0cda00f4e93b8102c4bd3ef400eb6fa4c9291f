@@ -1,0 +1,9 @@
+ Moreover, the target condition is observable and fibre-saturated:
+
+$$
+\psi\in U_N
+\quad\Longleftrightarrow\quad
+\det\rho_2(\psi)\ne0
+\quad\Longleftrightarrow\quad
+\det\bigl(\operatorname{Tr}_3\rho_3(\psi)\bigr)\ne0.
+$$

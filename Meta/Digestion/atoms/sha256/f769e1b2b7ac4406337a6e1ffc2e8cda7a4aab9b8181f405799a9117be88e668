@@ -1,0 +1,80 @@
+### 命题 18.2（固定忠实参照的三态自治过程仍可不交换）
+
+<a id="prop-c94-classical-noncommutation"></a>
+
+在 $\mathbb C^3$ 上令
+
+$$
+\mathcal A=\operatorname{span}_\mathbb C\{P_1+P_2,P_3\},\qquad \tau=I_3/3,
+$$
+
+并取
+
+$$
+R(\rho)=\operatorname{diag}\left(
+ \frac{\rho_{11}+\rho_{22}}2,
+ \frac{\rho_{11}+\rho_{22}}2,\rho_{33}\right).
+$$
+
+定义测量–准备通道
+
+$$
+\Phi(\rho)=\sum_{i,j}p_{ij}\rho_{ii}P_j,
+ \qquad
+ (p_{ij})=
+ \begin{pmatrix}
+ 1/2&1/4&1/4\\
+ 0&3/4&1/4\\
+ 1/2&0&1/2
+ \end{pmatrix}.
+$$
+
+这里行标输入、列标输出。
+则 $\Phi\tau=\tau$，其 $\mathcal A$ 读数自治，但 $R\Phi\ne\Phi R$。
+
+**证明。**
+Kraus 算符 $\sqrt{p_{ij}}\lvert j\rangle\langle i\rvert$ 给完全正性；
+每行和为一给保迹，每列和为一给 $\Phi(I/3)=I/3$。
+当前资料只需 $c=\rho_{33}$，未来第三方向概率为
+
+$$
+\frac14(\rho_{11}+\rho_{22})+\frac12\rho_{33}
+ =\frac{1+c}{4}.
+$$
+
+故全部可见资料由当前资料决定，即自治成立。
+但在 $P_3$ 处，
+
+$$
+\Phi R(P_3)=\operatorname{diag}(1/2,0,1/2),\qquad
+ R\Phi(P_3)=\operatorname{diag}(1/4,1/4,1/2).
+$$
+
+两者不同，证明不交换。
+它们具有同一可见资料；差为 $\operatorname{diag}(1/4,-1/4,0)$，
+因此迹距离为 $1/4$，并由效果 $P_1$ 的概率差达到。
+
+这对合法状态的差异也可通过等概率正反标签形成二元报告：
+正标签问第一态的 $P_1$，反标签问第二态的 $I-P_1$，得到
+
+$$
+\gamma=\frac12\operatorname{diag}(1+\delta,1-\delta)
+ =\frac12(I+\delta Z),\qquad\delta=\frac14.
+$$
+
+它是球内的动态不交换报告，与前节负概率的球外报告不同。
+更一般地，自治时
+
+$$
+\Phi R-R\Phi=(\operatorname{id}-R)\Phi R.
+$$
+
+右侧准确表达：一个规范输入经过实际过程后，可以产生当前代数看不见的非规范内容。
+
+**白话图景。**未来可见读数可以完全由当前可见读数决定，但实际过程仍可能在看不见的方向写入新内容。
+所以“先整理再变化”与“先变化再整理”未必给同一个完整输出。
+两份输出可以对所有当前仪表一致，却仍由一个新增读口区分。
+要让两种次序真正交换，还要证明实际过程保持整族规范代表。
+
+<a id="section-19"></a>
+

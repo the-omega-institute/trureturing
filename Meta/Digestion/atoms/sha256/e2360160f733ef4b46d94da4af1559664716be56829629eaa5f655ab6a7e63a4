@@ -1,0 +1,59 @@
+**定义 2.1（原报告、单位读出与条件量）。** 保留原卷定义 8.1、8.3、14.1、16.2 的全部前件、实际运算 $M,T$ 和同一个带标签有限族，不要求 C98、局部交替、$D_1=0$ 或 Jacobi。对其中一方 $J$，记 $n=\dim J$，使用原来的完整正交单位基 $e_1,\ldots,e_n$、原来的归一两两和族 $\mathcal P_J$，以及另一方的原有序参照 $(b,d)$。以下量均属于这同一实际实现：
+
+$$
+\begin{aligned}
+v&=B(b,d),& w&=B(d,b),& r&=\|v\|>0,& u&=\|1_J\|>0,\\
+z_{ij}&=B(e_i,e_j),&K_{ij}&=[L_{e_i},L_{e_j}],&
+C_z(c)&=B(c,z)\qquad(i<j).
+\end{aligned}
+\tag{2.1}
+$$
+
+$B$ 在参照槽中属于伙伴场，在 $z_{ij},C_z$ 中属于 $J$。两方的系数始终是原卷命题 14.2 中同一对实际 $\kappa,\beta$。特别地，不把 $w$ 替换成 $-v$，不把 $C_z$ 替换成 $-D_z$。记实际报告及其未平均范数为
+
+$$
+\begin{aligned}
+R_{ijk}&=R(e_i\otimes b,e_k\otimes d,e_j\otimes1),\\
+S_p&=R(p\otimes d,p\otimes b,p\otimes1),\\
+m^2&=\sum_{i<j,k}\|R_{ijk}\|^2,&
+\varepsilon_{\rm self}&=\max_{p\in\mathcal P_J}\|S_p\|,\\
+Z^2&=\sum_{i<j}\|z_{ij}\|^2,&
+A^2&=\sum_{i<j}\|K_{ij}\|_{\rm HS}^2,\\
+h^2&=\sum_{i<j}\|L_{z_{ij}}\|_{\rm HS}^2,&
+Q&=\|w\|\left(\sum_{i<j}\|C_{z_{ij}}\|_{\rm HS}^2\right)^{1/2}.
+\end{aligned}
+\tag{2.2}
+$$
+
+Hilbert–Schmidt 范数使用 $g_J$，报告范数使用原来的乘积内积。$m,Z,A,h,Q$ 均取非负平方根；此处 $Q$ 是标量条件量，不是原卷定义 8.4 的报告向量。$C_z$ 一般不是斜伴算子。单位中间输入的读出定义为
+
+$$
+U_{ij}=\sum_{k=1}^n g_J(1_J,e_k)R_{ijk}
+=R(e_i\otimes b,1_J\otimes d,e_j\otimes1).
+\tag{2.3}
+$$
+
+等号只使用残差的三线性；$U_{ij}$ 是已有混合报告的线性读出，不添加探针，也不改变原有限族。
+
+报告在这里是给定 $M,T$ 的实际残差；其误差大小指这些向量非零。若另给观测向量 $\widehat R_{ijk},\widehat S_p$ 及确定的误差包络
+
+$$
+\|R_{ijk}-\widehat R_{ijk}\|\le\eta_{ijk},\qquad
+\|S_p-\widehat S_p\|\le\xi_p,
+\qquad \eta_{ijk},\xi_p\ge0,
+$$
+
+可使用
+
+$$
+\overline m=
+\left(\sum_{i<j,k}\|\widehat R_{ijk}\|^2\right)^{1/2}
++\left(\sum_{i<j,k}\eta_{ijk}^2\right)^{1/2},
+\qquad
+\overline\varepsilon_{\rm self}
+=\max_{p\in\mathcal P_J}(\|\widehat S_p\|+\xi_p)
+\tag{2.4}
+$$
+
+作为 $m,\varepsilon_{\rm self}$ 的上界。也允许任意其他已证上界；无观测误差时取上界等于实际量。下列式子的 $r,u,Z,A,h,Q$ 仍是 (2.1)–(2.2) 的结构量；若这些量本身也只有区间信息，数值代入须分别使用所需方向的有效界，不能从残差小自动取得结构量的下界。
+

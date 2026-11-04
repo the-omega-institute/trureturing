@@ -1,0 +1,129 @@
+**命题 10.1（正谱非退化的 Pauli 扰动族）。** 存在固定局部及联合产品、固定乘积正内积的同一实现族，使两方均有非零自缺陷和非零 $D_1$，满足全部 (5.1)，且 (9.6) 在一个非空小残差区间上严格改进定理 6.1 的根／截顶。
+
+具体地，两方均取 $J=\mathbb R1\oplus\mathbb R^3$ 的欧氏内积，完整正交单位基为 $(1,x,y,z)$，取 $h=z$，并置
+
+$$
+\begin{aligned}
+S((\alpha,v),(\beta,w))
+  &=(\alpha\beta+v\cdot w,\alpha w+\beta v),\\
+C((\alpha,v),(\beta,w))&=(0,v\times w),\\
+D^t_{(\alpha,v)}(\beta,w)
+  &=(0,(v+t\alpha h)\times w),\qquad t\in\mathbb R.
+\end{aligned}
+\tag{10.1}
+$$
+
+在 $V=J\otimes J$ 上，使用下列固定实际产品及随 $t$ 变化的实线性指派
+
+$$
+\begin{aligned}
+M(a\otimes b,c\otimes d)
+ &=S(a,c)\otimes S(b,d)-C(a,c)\otimes C(b,d),\\
+\Gamma^t_{a\otimes b}
+ &=D^t_a\otimes L_b+L_a\otimes D^t_b.
+\end{aligned}
+\tag{10.2}
+$$
+
+它们线性延拓到全部输入。这里 $M$ 的 $C$ 是 (10.1) 的固定交叉积，不把它换成随 $t$ 变动的 $D^t$。同一完整残差和局部量精确满足
+
+$$
+\begin{gathered}
+n_A=n_B=4,\quad N=16,\quad
+u_A=u_B=1,\quad \ell_A=\ell_B=\sqrt2,\quad
+k_A=k_B=1,\quad d_A=d_B=\sqrt{1+t^2},\\
+\epsilon_t^2=288t^2,\qquad
+\sup_{\|a\|=1}\|D^t_aa\|=|t|/2,\qquad
+\|D^t_1\|_{\rm op}=|t|,\\
+G_t=\operatorname{diag}(0,2+t^2,2+t^2,2),\qquad
+Z_t=\mathbb R1,\quad W_t=\mathbb R^3,\quad\sigma_t=\sqrt2.
+\end{gathered}
+\tag{10.3}
+$$
+
+特别地，$\sigma_t$ 没有在 $t\to0$ 时丢失，而在每个 $t\ne0$，对角映射 $a\mapsto D^t_aa$ 不恒为零，且 $D^t_1\ne0$。标签核另为 $\mathbb R(1-th)$；它在 $t\ne0$ 时不同于 $Z_t$。
+
+证明。$S$ 的 Frobenius 三次型全对称，单位为 $1$。任意 $r\in\mathbb R^3$ 的旋转生成元 $w\mapsto r\times w$ 对 $S$ 是导子：其标量部分由斜伴随性消去，向量部分直接满足 Leibniz 律。因此每个 $D^t_a$ 都是精确局部导子，标签实线性且始终非零，例如 $D^t_xy=z$。这不预设该标签指派交替。事实上
+
+$$
+D^t_aa=(0,t\alpha h\times v),\qquad
+D^t_1(\beta,w)=(0,th\times w).
+\tag{10.4}
+$$
+
+对单位 $a$，$|\alpha|\|v\|\le1/2$，取 $a=(1+x)/\sqrt2$ 达到自缺陷上界。标签向量 $v+t\alpha h$ 的算子范数为 $\sqrt{1+t^2}$，再选单位 $w$ 与之垂直，得到 (10.3) 的精确 $d$。$\ell=\sqrt2$ 与第 7 节相同的二元范数估计成立，且在 $(1+x)/\sqrt2$ 上达到。完整曲率表只有不同空间基方向的交换子可能非零，其作用范数最大值为 $1$，故 $k=1$。
+
+为确定联合产品，使用原卷定理 6.2 的标准 Pauli 表示背景，明确取 $\Phi(\alpha,v)=\alpha I+v\cdot\sigma$。Pauli 恒等式给
+
+$$
+\begin{aligned}
+\Phi(S(a,c))&=\tfrac12\{\Phi(a),\Phi(c)\},\\
+\Phi(C(a,c))&=\tfrac1{2i}[\Phi(a),\Phi(c)].
+\end{aligned}
+\tag{10.5}
+$$
+
+因此 $\Phi\otimes\Phi$ 将固定 $M$ 送到 $\operatorname{Herm}_4(\mathbb C)$ 上的 Jordan 产品，欧氏乘积内积恰为 $\operatorname{Tr}(XY)/4$。这证明 $M$ 交换含幺、正 Frobenius，单位为 $1\otimes1$；并非输入一个关于物理对象供应的结论。由于 $C(a,1)=0$、$D^t_a1=0$、$L_b1=b$，两类模作用和两类保值条件作用直接从 (10.2) 得到，对全部输入都是原样的 (5.1)。
+
+记 $\delta_h(\beta,w)=(0,h\times w)$。在 $t=0$，(10.5) 将 $\Gamma^0_H$ 送到 $[\Phi^{\otimes2}(H),\,\cdot\,]/(2i)$，所以它是同一 $M$ 的导子。一般 $t$ 时
+
+$$
+\Gamma^t=\Gamma^0+tP,\qquad
+P_{a\otimes b}=\alpha\delta_h\otimes L_b
+                    +\beta L_a\otimes\delta_h,
+\qquad E_t=t\,\mathfrak d_M P,
+\tag{10.6}
+$$
+
+其中 $a=(\alpha,v),b=(\beta,w)$，$\mathfrak d_MP$ 指按 (5.2) 的三项对 $P$ 求导子残差。这是实际完整残差的等式，未抽取报告子族。例如
+
+$$
+E_t(1\otimes x,1\otimes y,x\otimes x)
+       =-t\,y\otimes y\ne0\quad(t\ne0).
+\tag{10.7}
+$$
+
+现在计算其完整平方和。对第一槽的完整乘积基，$P_{1\otimes1}=\delta_h\otimes I+I\otimes\delta_h$ 是 $M$ 的导子，九个空间—空间标签的 $P$ 为零。其余六个第一槽标签是 $1\otimes b$ 或 $b\otimes1$，$b=x,y,z$；相应算子为 $\delta_h\otimes L_b$ 或 $L_b\otimes\delta_h$。
+
+只须算 $\delta_z\otimes L_z$ 的一个完整块。局部乘法表为 $1e_i=e_i$、$S(e_i,e_j)=\delta_{ij}1$、$C(e_i,e_j)=\sum_k\varepsilon_{ijk}e_k$，空间指标为 $x,y,z$。对任意 $c,d,e,f$，该块的残差为
+
+$$
+\begin{aligned}
+&S(\delta_zc,e)\otimes\{L_zS(d,f)-S(L_zd,f)\}\\
+&+S(c,\delta_ze)\otimes\{L_zS(d,f)-S(d,L_zf)\}\\
+&-C(\delta_zc,e)\otimes\{L_zC(d,f)-C(L_zd,f)\}\\
+&-C(c,\delta_ze)\otimes\{L_zC(d,f)-C(d,L_zf)\}.
+\end{aligned}
+\tag{10.8}
+$$
+
+这是把 (10.2) 展开后使用旋转对 $S,C$ 的两个导子律；没有对 $L_z$ 使用导子律。逐项代入上面的四元乘法表，第二槽 $X=c\otimes d$ 与全部 $16$ 个第三槽 $Y=e\otimes f$ 的平方和如下：
+
+$$
+\begin{array}{c|c|c}
+(c,d)\text{ 的范围}&X\text{ 的个数}&
+\displaystyle\sum_Y\|\mathfrak d_M(\delta_z\otimes L_z)(X,Y)\|^2\\ \hline
+c,d\in\{1,z\}&4&0\\
+c\in\{1,z\},\ d\in\{x,y\}&4&4\text{（每个 }X\text{）}\\
+c\in\{x,y\},\ d\in\{1,z\}&4&4\text{（每个 }X\text{）}\\
+c,d\in\{x,y\}&4&4\text{（每个 }X\text{）}
+\end{array}
+\tag{10.9}
+$$
+
+每个非零块输出都是一个带符号的乘积基向量，表中后三行各 $X$ 恰有四个非零 $Y$，故这一完整块为 $48$。第二方独立的正交旋转把任一单位空间 $b$ 送到 $z$，保持 $M$ 及完整 Hilbert–Schmidt 平方和；第一方固定 $h=z$。因而三个 $\delta_h\otimes L_b$ 块同为 $48$。翻转两方给另外三个块；剩下十个第一槽的残差均为零。全部 $16\cdot16^2$ 个三元标签已被计入，得到 $\epsilon_t^2=6\cdot48t^2=288t^2$。
+
+最后，三个空间标签的叉乘算子满足 $\sum_{i=x,y,z}(D^0_{e_i})^\dagger D^0_{e_i}=2I$ 于空间部分，单位标签另外贡献 $t^2\delta_h^\dagger\delta_h=t^2(I-hh^{\mathsf T})$。所有算子消去单位，因此得到 (10.3) 的 $G_t$ 及其精确支撑。标签 Gram 则为
+
+$$
+H_t=2\begin{pmatrix}
+t^2&0&0&t\\
+0&1&0&0\\
+0&0&1&0\\
+t&0&0&1
+\end{pmatrix},
+\tag{10.10}
+$$
+
+其核为 $\mathbb R(1-th)$，正谱为 $2,2,2(1+t^2)$；(10.3) 的作用正谱却为 $2,2+t^2,2+t^2$。这也给出错误替换两个核的实际区分。∎
+

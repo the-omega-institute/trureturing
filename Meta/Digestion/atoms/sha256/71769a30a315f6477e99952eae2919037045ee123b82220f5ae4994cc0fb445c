@@ -1,0 +1,43 @@
+**Definition 3.1 (saturation and tree coordinates).** Fix $T,J,X$ from (2.1) and a placement $S$. List $X$ in increasing vertex order. Root $T$ at vertex $1$, and order each list of children increasingly. Let $V_v$ be the vertices of the subtree rooted at $v$. Write
+
+$$
+ [a]_2=\min(2,a)\quad(a\in\mathbb N),\qquad
+ a\oplus b=[a+b]_2.
+ \tag{3.1}
+$$
+
+Vectors with coordinates in $\{0,1,2\}$ are added by $\oplus$ coordinatewise. The digit $2$ means “at least two”, not “exactly two”. For nonnegative integers,
+
+$$
+ [[a]_2+b]_2=[a+b]_2,
+ \qquad a=1\Longleftrightarrow[a]_2=1.
+ \tag{3.2}
+$$
+
+These identities follow by separating $a=0,1$ from $a\geq2$, and justify every saturation below.
+
+Enumerate all functions $\sigma:X\to\{0,1\}$ with $\sigma(x)=0$ for $x\in X\cap S$. A binary assignment $w:V\to\{0,1\}$ represents $W=\{z:w_z=1\}$. Only assignments satisfying $w_z=0$ for $z\in S$ and $w_x=\sigma(x)$ for $x\in X$ are admitted. Define the fixed chord contribution
+
+$$
+ d_\sigma(x)=\left[\sum_{xy\in J}\sigma(y)\right]_2\quad(x\in X).
+ \tag{3.3}
+$$
+
+For each $v$, a parent bit $p\in\{0,1\}$ is the prescribed membership bit of its parent; at the root use $p=0$. The vertex bit is $b\in\{0,1\}$. An internal-neighbor vector $a\in\{0,1,2\}^X$ and a nonemptiness bit $h\in\{0,1\}$ have meanings
+
+$$
+ a_x=\left[\sum_{\substack{xy\in E_T\\x,y\in V_v}}w_y\right]_2,
+ \qquad h=\max_{z\in V_v}w_z.
+ \tag{3.4}
+$$
+
+An empty sum is zero. In particular $a_x=0$ if $x\notin V_v$. The table $A_v(p,b,a,h)$ is the minimum of
+
+$$
+ \sum_{z\in V_v\setminus X}(1-w_z)
+       \mathbf1\!\left\{\sum_{y\in N_T(z)}w_y=1\right\}
+ \tag{3.5}
+$$
+
+over the admitted assignments on $V_v$ with $w_v=b$, vector and bit (3.4). If $z=v$, its possible parent contributes $p$ in (3.5). Every other neighbor occurring in (3.5) is inside $V_v$. For the root the nonexistent parent contributes zero. Set an impossible entry to $+\infty$. A vertex bit is allowed precisely when it respects $S$ and, at vertices of $X$, $\sigma$. Costs at vertices in $X$ are deliberately omitted from (3.5) and will be charged once at the end.
+

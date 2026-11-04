@@ -1,0 +1,30 @@
+**定义 32.1（The class $\mathcal D$ on the original carrier）。**
+Let $H$ be a finite connected simple unit-weight graph of even
+order $m\geq2$. A vertex $p$ satisfies the dominating-component
+condition if an actual connected component $C$ of $H[N_H(p)]$
+contains a vertex $v$ adjacent to every vertex of $C\setminus\{v\}$.
+The component may be a singleton. Let $\mathcal D$ consist of
+exactly the graphs satisfying this condition at every vertex.
+There is no condition on the other neighborhood components or
+on edges from the chosen component to the exterior.
+
+For every integer $S\geq1$, put $s=2S$ and retain
+
+$$
+\begin{aligned}
+\Omega_s&=V(H)\times[2S],&
+\mathcal H_{mS}&=\operatorname{span}_{\mathbb C}
+ \{|T\rangle:T\subseteq\Omega_s,\ |T|=mS\},\\
+K_s&=A(F_{mS}(H[\overline{K_{2S}}])),&
+P_s&=\prod_iP_i,&
+E_s&=\min\operatorname{spec}(K_s|_{\mathcal H_{mS}}).
+\end{aligned}
+\tag{32.1}
+$$
+
+Here $P_i$ is the original fibre-permutation projection.
+The entries for allowed token moves in $K_s$ are positive one.
+Use the actual sector minima $\mu_p(J)$ and
+$\Delta_p=\mu_p(S-1)-E_s$ of Definition 31.1. All of these
+minima refer to the same entire-carrier $E_s$ in (32.1).
+

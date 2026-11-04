@@ -1,0 +1,9 @@
+
+
+**证明。**
+令 $T=\left(\begin{smallmatrix}I&c\\0&1\end{smallmatrix}\right)$。递归等式为
+
+$$
+G_{L+h}=T^*\begin{pmatrix}G_L&0\\0&|r|^2\end{pmatrix}T.
+$$
+

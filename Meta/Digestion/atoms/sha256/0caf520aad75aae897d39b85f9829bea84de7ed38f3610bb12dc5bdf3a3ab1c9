@@ -1,0 +1,14 @@
+### 定义 20.1（已覆盖步骤与本节的源相对增量）
+
+本节不新增 trine、Gleason、紧群或 qubit 分类定理。文献中间工具与仓内已有结论的参数对应如下；“未覆盖”仅指这里列明的既有正文接口，不主张研究史原创或穷尽检索。
+
+| 来源与定位 | 已有且本节直接消费的内容 | 本节区别及未借入的前件 |
+|---|---|---|
+| Caves–Fuchs–Manne–Renes, *Gleason-Type Derivations of the Quantum Probability Rule for Generalized Measurements*, [quant-ph/0306179v1](https://arxiv.org/html/quant-ph/0306179v1)，§IV.1 式 (11)–(20)、§IV.2.1 式 (22) | 连续球面函数的调和分解、$SO(3)$ 不可约模及旋转正交性；原文 trine 权重条件已导出一次仿射性 | 本节把其 $\ell,m$ 模工具用于实际四时多项式 $R$，不是重证 trine 规则，也不假设原生菜单能任取 trine 测量 |
+| [DLMF §14.30](https://dlmf.nist.gov/14.30)，式 14.30.1、14.30.8 | $Y_{\ell m}$ 的方位因子 $e^{im\phi}$ 及正交性；这里每个 $\ell\ge2$ 取 $m=2$ | 不由一次轴旋转的最高权得出全模结论；连续函数的无限展开由有界投影处理 |
+| [V24](AURIC_TWO_BASIS_STATES_THREE_CHANNELS_PHASE_CHIRALITY_AND_RECURSIVE_SQUARE_LAW_V24.md) §6.4、引理 7.2、定理 7.3；[相干重建续卷 II](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) §§85–86 | 已有 trine 刚性、黄金四时系数、多项式筛选及十三维复射影条件 Born 结论 | 原定理先给 $\mathbb P(\mathbb C^{13})$、门矩阵及相应射影作用；本节先给实 $S(W)$ 与可能非线性响应，从实际全未来关系导出共同实容量，没有再发表一个复射影筛选结论 |
+| [V48](AURIC_ISOTROPY_CHIRALITY_AND_CONDITIONAL_QUANTUM_RECONSTRUCTION_V48.md) 定理 6.3、§7.3、命题 7.4、§7.5 | $SU(2)/SO(3)$、仿射球的校准、立方反例、Pauli 状态/效果接口 | 只在定理 17.4 已经导出仿射性后使用 qubit 表示；(19.3) 是此反例接到实际全未来控制域的秩计算 |
+| 本卷 §16，特别是定理 16.4、命题 16.7、定义 16.8–16.9 | 四维载体给定后的有序几何、紧三维群步骤、原局部角与七地址反例、锥饱和及相位边界 | (17.9) 补其容量输入；(18.1)–(18.2) 验证局部旋转密度，未用全局密度顶替局部证明 |
+| [C113](AURIC_INTERNAL_BALANCED_CALIBRATION_AND_FILTER_COMPOSITION_GEOMETRY_C113.md) §§32–35 | 任意小校准缺陷下选定有限表的五维下界 | 不是准确全未来维数五或有限精度证书；它阻止用近似关系冒充 (17.6) 及准确容量四 |
+| Galley–Masanes, *Classification of all alternatives to the Born rule in terms of informational properties*, [1610.04859v3](https://arxiv.org/html/1610.04859v3)，Result 2、附录 A.2 | 对给定复纯态及有限表示的替代概率理论分类背景 | 本节不借入其复射线或有限预测表示前件；非有限展开在 (17.13) 后才被排除 |
+| Freedman–Larsen–Wang, *The two-eigenvalue problem and density of Jones representation of braid groups*, [math/0103200v1](https://arxiv.org/html/math/0103200v1)，Theorem 0.1、§2 | 已有原十三维全局密度的文献工具，归续卷 II 的既有使用 | 不推出原局部两门的实 $SO(3)$ 密度；本节以原地址实旋转及无限阶字单独验证该项 |

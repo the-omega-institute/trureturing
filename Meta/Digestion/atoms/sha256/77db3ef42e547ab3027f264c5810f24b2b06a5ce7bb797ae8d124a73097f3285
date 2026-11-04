@@ -1,0 +1,15 @@
+### 命题 7.1（v88 的精确接回）
+
+令 $E=E_{\rho,\mathcal A}$ 为 v88 已建立的忠实保态条件期望。则对任意 $x$，
+
+$$
+\Delta_E(x)=E\!\left((x-E(x))^\dagger(x-E(x))\right),\qquad
+\phi_\rho(\Delta_E(x))=\|x-E(x)\|_\rho^2.
+$$
+
+从而 $\Delta_E(x)=0\Longleftrightarrow x=E(x)\Longleftrightarrow x\in\mathcal A$。
+
+**证明。**展开右侧，利用 $\mathcal A$-双模性及 $E^2=E$，交叉项合并为 $-E(x)^\dagger E(x)$；保态性给第二式，忠实性将零范数变成 $x=E(x)$。
+
+这解释了为何本轮不能只重复 v88 方差分解：对已经指定的条件期望，平方零缺额只是代数成员资格。本轮的新用途是允许一般非幂等的 $\Phi$，由两个平方等式直接确定整个可延续的生成代数。
+

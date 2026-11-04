@@ -1,0 +1,16 @@
+### 命题 7.1（从关系核构造振幅空间）
+
+设历史标签集合 $S$ 带复核 $K$，满足所有有限矩阵 $[K(s_i,s_j)]\succeq0$。在有限形式和 $\sum c_s[s]$ 上定义
+
+$$
+\left\langle\sum c_s[s],\sum d_t[t]\right\rangle
+ =\sum_{s,t}\overline{c_s}d_tK(s,t).
+$$
+
+商去零范数向量并完备化，得到 Hilbert 空间 $H_K$ 与向量 $v_s$，满足 $\langle v_s,v_t\rangle=K(s,t)$；以这些向量的闭线性包为全部空间时，该实现唯一到一个酉同构。
+
+**证明。**
+有限正性给出非负半内积。对 $u+t v$ 的范数平方使用判别式得到 Cauchy–Schwarz 不等式，所以零范数向量与全部向量正交，商内积良定义。若另一组 $w_s$ 有同一核，映射 $\sum c_sv_s\mapsto\sum c_sw_s$ 保持范数，因而良定义；稠密线性包上的等距延拓给出所述酉映射。
+
+若历史来自有限 $*$-代数 $\mathcal A$，$\omega$ 为正归一化泛函，且 $K(a,b)=\omega(a^*b)$，则商空间还保留左作用 $\pi(a)[b]=[ab]$。在 $C^*$-对象中，$a^*a\le\|a\|^2I$ 保证此作用有界，单位向量 $\xi=[I]$ 满足 $\omega(a)=\langle \xi,\pi(a)\xi\rangle$。这就是有限 GNS 构造的具体形式。它重建某个状态的循环表示，不把 $\Omega$ 宣告为该单个向量，也不把满秩混合态的 $d^2$ 维 GNS 空间误当成 $M_d$ 的 $d$ 维不可约振幅空间。
+

@@ -6,11 +6,14 @@ internal static partial class CleanLanesCommand
 {
     private static IReadOnlySet<string> InspectIdlePool(string root, string? dev, bool force,
         IReadOnlyList<RegisteredWorktree> inventory,
-        ICollection<CleanLaneEvent> events, IWorktreeProcessRunner runner,
+        ICollection<CleanLaneEvent> events, IWorktreeProcessRunner runner, DateTimeOffset now,
         Action<RegisteredWorktree, LaneRemovalResult> completeRemoval,
         Action<RegisteredWorktree> protectObservedWorktree)
     {
         var idle = inventory.Where(item => WorktreePoolCommand.IsIdleBranch(item.Branch)).ToArray();
+        var expired = idle.Where(item => ReadLastUpdate(item, runner) is { } updated
+            && UpdateAgeBlockReason(updated, now) is null).Select(item => item.Path).ToHashSet(StringComparer.Ordinal);
+        idle = idle.Where(item => !expired.Contains(item.Path)).ToArray();
         var handled = idle.Select(item => item.Path).ToHashSet(StringComparer.Ordinal);
         if (idle.Length == 0) return handled;
         void PoolFailure(string reason)
@@ -31,6 +34,11 @@ internal static partial class CleanLanesCommand
         try
         {
             var arguments = new List<string> { "pool", "--dev", dev };
+            foreach (var path in expired.Order(StringComparer.Ordinal))
+            {
+                arguments.Add("--exclude-path");
+                arguments.Add(path);
+            }
             if (force) arguments.Add("--force");
             var result = WorktreeProtocolCommand.Run(root, arguments, runner, Timeout.InfiniteTimeSpan);
             if (result.Output.Length == 0)

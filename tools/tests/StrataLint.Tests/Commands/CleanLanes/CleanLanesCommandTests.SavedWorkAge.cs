@@ -7,6 +7,76 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Theory]
+    [InlineData(-1, false)]
+    [InlineData(10800, false)]
+    [InlineData(86399, false)]
+    [InlineData(86400, true)]
+    [InlineData(86401, true)]
+    public void HeadCommitAgeRequiresAtLeastTwentyFourHours(int seconds, bool reclaim)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/commit-age-boundary", landed: false);
+        var now = fixture.CommitTime(lane).AddSeconds(seconds);
+        var preview = fixture.RunAt(now, "--lanes-only");
+        var force = fixture.RunAt(now, "--force", "--lanes-only");
+        Assert.True(preview.Success, preview.Error);
+        Assert.True(force.Success, force.Error);
+        var reason = reclaim ? "head_commit_age" : seconds < 0 ? "age_unverifiable" : "recently_updated";
+        Assert.Equal(reason, ReasonFor(preview.Output, lane));
+        Assert.Equal(reason, ReasonFor(force.Output, lane));
+        Assert.Equal(!reclaim, Directory.Exists(lane));
+        Assert.True(fixture.BranchExists("harness/commit-age-boundary"));
+    }
+
+    [Theory]
+    [InlineData("tracked")]
+    [InlineData("untracked")]
+    [InlineData("staged")]
+    public void OldUnmergedHeadWithFreshAllocationAndNoBehindCommitsIsCheckpointed(string shape)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/old-head", landed: false);
+        var saved = fixture.CommitTime(lane);
+        var allocated = saved.AddDays(2);
+        const string branch = "harness/fresh-allocation";
+        CleanLanesFixture.GitAt(lane, allocated, "switch", "-c", branch);
+        var file = shape == "tracked" ? "README.md" : "ordinary.txt";
+        File.WriteAllText(Path.Combine(lane, file), "recover this ordinary work\n");
+        if (shape == "staged") CleanLanesFixture.Git(lane, "add", file);
+        Assert.Equal("0", CleanLanesFixture.Git(lane, "rev-list", "--count", "HEAD..dev").Trim());
+        var preview = fixture.RunAt(allocated.AddHours(1), "--lanes-only");
+        Assert.True(preview.Success, preview.Error);
+        Assert.Equal("head_commit_age", ReasonFor(preview.Output, lane));
+        var force = fixture.RunAt(allocated.AddHours(1), "--force", "--lanes-only");
+        Assert.True(force.Success, force.Error);
+        Assert.False(Directory.Exists(lane));
+        Assert.True(fixture.BranchExists("harness/old-head"));
+        Assert.Equal("recover this ordinary work\n", CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory,
+            "show", branch + ":" + file));
+    }
+
+    [Theory]
+    [InlineData("head-missing")]
+    [InlineData("head-invalid")]
+    [InlineData("branch-missing")]
+    [InlineData("future-allocation")]
+    public void AllocationEvidenceDoesNotGateOldCommitSelection(string shape)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/allocation-independent");
+        var now = fixture.CommitTime(lane).AddHours(25);
+        var headLog = Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD");
+        if (shape == "head-missing") File.Delete(headLog);
+        else if (shape == "head-invalid") File.WriteAllText(headLog, "invalid\n");
+        else if (shape == "branch-missing") File.Delete(fixture.BranchLogPath(lane));
+        else fixture.RewriteAllocation(lane, now.AddDays(1));
+        var result = fixture.RunAt(now, "--force", "--lanes-only");
+        Assert.True(result.Success, result.Error);
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, lane));
+        Assert.False(Directory.Exists(lane));
+    }
+
+    [Theory]
     [InlineData("reset")]
     [InlineData("checkout")]
     [InlineData("read")]
@@ -27,48 +97,7 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunAt(saved.AddDays(1).AddHours(1), "--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
-        Assert.False(Directory.Exists(lane));
-    }
-
-    [Theory]
-    [InlineData(false, 10799, "recently_updated")]
-    [InlineData(false, 10800, "merged_to_dev")]
-    [InlineData(true, 86399, "recently_updated")]
-    [InlineData(true, 86400, "stale_behind")]
-    public void FreshTreeAtOldCommitRequiresAllocationGrace(bool dirty, int seconds, string reason)
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddMergedLane("harness/fresh-allocation", dirty);
-        var allocated = fixture.LastUpdate(lane).AddDays(2);
-        fixture.RewriteAllocation(lane, allocated);
-        if (dirty) fixture.AdvanceBase(300);
-
-        var result = fixture.RunAt(allocated.AddSeconds(seconds), "--force", "--lanes-only");
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal(reason, ReasonFor(result.Output, lane));
-        Assert.Equal(reason == "recently_updated", Directory.Exists(lane));
-        if (dirty && reason == "stale_behind")
-            Assert.Equal("untracked\n", CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory,
-                "show", "harness/fresh-allocation:dirty.txt"));
-    }
-
-    [Fact]
-    public void NewBranchClaimOnOldTreeStartsAllocationGrace()
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddWorkedLane("harness/old-allocation");
-        var allocated = fixture.LastUpdate(lane).AddDays(2);
-        CleanLanesFixture.GitAt(lane, allocated, "switch", "-c", "harness/new-allocation");
-
-        var recent = fixture.RunAt(allocated.AddSeconds(10799), "--lanes-only");
-        var elapsed = fixture.RunAt(allocated.AddSeconds(10800), "--force", "--lanes-only");
-
-        Assert.True(recent.Success, recent.Error);
-        Assert.True(elapsed.Success, elapsed.Error);
-        Assert.Equal("recently_updated", ReasonFor(recent.Output, lane));
-        Assert.Equal("merged_to_dev", ReasonFor(elapsed.Output, lane));
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, lane));
         Assert.False(Directory.Exists(lane));
     }
 
@@ -91,7 +120,7 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunAt(now, "--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal(recentAuthor ? "merged_to_dev" : "recently_updated", ReasonFor(result.Output, lane));
+        Assert.Equal(recentAuthor ? "head_commit_age" : "recently_updated", ReasonFor(result.Output, lane));
         Assert.Equal(!recentAuthor, Directory.Exists(lane));
     }
 
@@ -109,7 +138,7 @@ public sealed partial class CleanLanesCommandTests
         fixture.AdvanceBase(300);
         var before = fixture.RunAt(observed.AddHours(1), "--lanes-only");
         Assert.True(before.Success, before.Error);
-        Assert.Equal("stale_behind", ReasonFor(before.Output, lane));
+        Assert.Equal("head_commit_age", ReasonFor(before.Output, lane));
         File.WriteAllText(Path.Combine(lane, "wip.txt"), "recoverable unit\n");
         var message = Path.Combine(fixture.RepositoryWorkingDirectory, "wip-message");
         File.WriteAllText(message, "WIP: save recoverable unit\n");
@@ -126,68 +155,6 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(result.Success, result.Error);
         Assert.Equal("recently_updated", ReasonFor(result.Output, lane));
         Assert.True(Directory.Exists(lane));
-    }
-
-    [Theory]
-    [InlineData("missing", "branch_reflog_missing")]
-    [InlineData("invalid", "branch_reflog_invalid")]
-    [InlineData("mismatch", "branch_reflog_head_mismatch")]
-    public void UnverifiableBranchAllocationRetainsTree(string shape, string detail)
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddWorkedLane("harness/unknown-allocation");
-        var log = fixture.BranchLogPath(lane);
-        if (shape == "missing") File.Delete(log);
-        else if (shape == "invalid") File.WriteAllText(log, "invalid\n");
-        else File.WriteAllLines(log, File.ReadAllLines(log).Take(1).ToArray());
-
-        var result = fixture.Run("--force", "--lanes-only");
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal("update_unknown", ReasonFor(result.Output, lane));
-        AssertItemProperty(ReadItems(result.Output), "path", lane, "selection_detail", detail);
-        Assert.True(Directory.Exists(lane));
-    }
-
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void FutureAllocationIsAgeUnverifiableEvenIfOtherClockIsRecent(bool branch)
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddWorkedLane("harness/future-allocation");
-        var now = fixture.LastUpdate(lane).AddHours(1);
-        fixture.RewriteLogTimes(branch ? fixture.BranchLogPath(lane)
-            : Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD"), now.AddSeconds(1));
-
-        var result = fixture.RunAt(now, "--force", "--lanes-only");
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal("age_unverifiable", ReasonFor(result.Output, lane));
-        Assert.True(Directory.Exists(lane));
-    }
-
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void ReflogExpiryCanOnlyExtendAllocationProtection(bool expire)
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddWorkedLane("harness/expired-allocation");
-        var allocated = fixture.LastUpdate(lane);
-        var later = allocated.AddDays(2);
-        CleanLanesFixture.GitAt(lane, later, "reset", "--hard", "HEAD");
-        if (expire)
-        {
-            foreach (var log in new[] { fixture.BranchLogPath(lane), Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD") })
-                File.WriteAllLines(log, File.ReadAllLines(log).TakeLast(1).ToArray());
-        }
-
-        var result = fixture.RunAt(later.AddHours(1), "--force", "--lanes-only");
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal(expire ? "recently_updated" : "merged_to_dev", ReasonFor(result.Output, lane));
-        Assert.Equal(expire, Directory.Exists(lane));
     }
 
     [Fact]
@@ -207,7 +174,7 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunAt(fixture.LastUpdate(lane).AddDays(2), "--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal("stale_behind", ReasonFor(result.Output, lane));
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, lane));
         Assert.False(Directory.Exists(lane));
         Assert.Equal("recover after abnormal exit\n", CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory,
             "show", "harness/abnormal-worker:unsaved.txt"));
@@ -231,6 +198,9 @@ public sealed partial class CleanLanesCommandTests
 
     private sealed partial class CleanLanesFixture
     {
+        internal DateTimeOffset CommitTime(string path) => DateTimeOffset.FromUnixTimeSeconds(long.Parse(
+            Git(path, "show", "-s", "--format=%ct", "HEAD").Trim(), CultureInfo.InvariantCulture));
+
         internal string BranchLogPath(string path) => Path.Combine(RepositoryRoot, ".git", "logs", "refs", "heads",
             Git(path, "branch", "--show-current").Trim());
 

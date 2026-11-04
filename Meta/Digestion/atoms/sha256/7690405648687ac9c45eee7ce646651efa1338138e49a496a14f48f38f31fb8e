@@ -1,0 +1,69 @@
+**Definition 26.2 (legal handoff and selected requests).** This installation
+uses distinct four-bit request tags for Tag, $P$, $S$, HasPromotion,
+HasSplit, FetchSelected, NextSelected and Handoff; other four-bit tags
+return BadFrame. Address and index payloads are respectively $A(p)$ and
+$U(k)$ of Definition 20.2, with the same null/arity guards and refusal
+reasons. Handoff has no payload and is admitted only in FullReady with
+the installed access list/grants. The other seven services have their
+§20 meanings, using full recall/Next in FullReady and selected recall/Next
+in SelectedReady. Use distinct four-bit reply tags for the eight §20
+reply types and HandoffOK and InsufficientAccess; their ordinary payloads
+are those of Definition 20.2, and the last two have empty payloads.
+End, the supplied local acknowledgement, root return and scratch cleanup
+are required for every completed reply. These interfaces concern this
+installation and do not change Definition 20.2's original three-bit grammar.
+
+Handoff first traverses the locked actual source with a backed finite
+stack, reading arities and tags, to construct its finite term and the
+correspondence between logical addresses and real source references.
+The traversal follows a logical child only at a branch; a unary marker
+is parsed as part of a $\beta$ leaf. Compute $E(t)$, the five counts in
+(AA.81), and $R_\chi(t)$ using the installed program and finite list
+operations. If $R_\chi(t)\nsubseteq A$, return InsufficientAccess without
+changing mode, source or full tapes. This test depends only on the
+source, $\chi$ and the acquired list, so is not an order-bearing answer.
+
+Otherwise read and retain the complete authorized $W_p$ words. Fill
+missing coordinates as in Theorem 24.2, decode the finite representative
+full word, and filter it using the installed $\chi$. Construct fresh empty
+selected descriptors at the actual branch references; for each filtered
+event append its actual side to each proper branch ancestor's new tape.
+Finite source navigation obtains these references. These constructed
+records encode the actual selected word, although the intermediate full
+representative need not be the actual full word. Keep an explicit pending
+conversion phase, source/version binding, input/copy cursors, counters,
+unfinished cells and their attachment subphases. Incomplete backing is
+never served as a completed tape.
+
+After all appends, seal the new version and retain its actual descriptor
+head and callable source binding in the installed entry. Build and really
+print HandoffOK; only after End, local acknowledgement, root return and
+scratch cleanup enter SelectedReady. A reply contains no authority-bearing
+numeral or externally guessed object name. The same owner invokes the
+same actually connected entry. This is a within-installation handoff;
+a cross-owner endpoint connection would require additional actual grants
+and transport.
+
+In selected mode, FetchSelected$(k)$ decodes using the actual source and
+selected tapes: at a subtree handle its selected local prefix, determined
+by birth type, current constructor and $\chi$; at a later index scan the
+actual $V_p$, count that symbol through the requested occurrence, and
+descend to that child. The zero or missing index returns OutOfRange.
+NextSelected$(k)$ makes this internal fetch, keeps its acquired result
+and continuation phase, and then uses the actual left-descent rule of
+Definition 20.4 on the current source. It returns both that old selected
+event and the new actual event, or OutOfRange with no growth.
+
+Every successful source event, whether directly requested or chosen by
+NextSelected, retains its actual kind/address in pending backing. If
+$\chi(e)=1$, append its side at every proper logical ancestor using the
+selected descriptor list. If $\chi(e)=0$, do no selected tape append.
+Every split creates its own empty selected descriptor, whether or not
+the splitting event is selected. Construct/attach its source vertices as
+in §20, initializing any unused old-header slot to null. A new descriptor
+is inserted in source preorder with actual reference links. Reserve,
+source edit, descriptor insertion, selected maintenance, BuildAnswer,
+Print, acknowledgement and Return have separate pending subphases.
+Only a settled completed update reenables requests. A partially received
+frame retains precisely its acquired prefix and waits for missing bits.
+
