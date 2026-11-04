@@ -32,8 +32,68 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
                     Paragraph(Text("For every type L of terminal labels, every finite full-menu native tree T and every Boolean event e on its complete terminal path and terminal sixteen-bit word, the raw mass p=eventMass(T,e) is an algebraic integer over the ordinary integers. All fourteen actual gate addresses, deterministic feedback, complete diagonal zero-one measurements, zero outcomes, stops and expanded inverse calls are included. The input is the same fixed computational root Omega; no arbitrary input vector or external probability weights occur.")),
                     Paragraph(Text("The scalars t, beta and zeta of the actual matrices are algebraic integers: rational-angle exponential and cosine integrality give zeta and t, and beta squared equals t. Every number projection and bit flip has integer entries. Finite matrix addition, multiplication and powers therefore preserve entrywise integrality. Induction through the actual tree gives integral branch-matrix entries. Applying the fixed root, multiplying each amplitude by its physical complex conjugate and summing the selected raw events preserve integrality. The real event mass is reflected from its injective complex embedding. No success normalization is performed.")),
                     Paragraph(Text("Set q=(13-5 sqrt(5))/22 and w=(9 sqrt(5)-19)/22. In the existing quadratic golden field with generator phi, these are the images of coordinate pairs (9/11,-5/11) and (-14/11,9/11). Their field norms are respectively 1/11 and -1/11. Integrality would force an integer field norm; both rational values fail that condition. Consequently p differs from both q and w. This argument only needs absolute algebraic integrality of p and does not assert that p lies in the quadratic field.")),
-                    Paragraph(Text("These exclusions apply directly to any original-record event formed by the stop-aware graft above. They do not establish that the actual chi preparation and its faithful-support Petz pullback have ideal masses q and w. That realization bridge, the quadratic-field membership of general native events, the whole-tree nonphysical-conjugate estimate and the factor-eleven resource and total-variation bounds require further results. Total Born-mass normalization and the equality of the ninth gate power with its inverse are not used or proved here."))),
-                DescribeRole.Theorem))));
+                    Paragraph(Text("These exclusions apply directly to any original-record event formed by the stop-aware graft above. They do not establish that the actual chi preparation and its faithful-support Petz pullback have ideal masses q and w. Quadratic integer coordinates, the whole-tree nonphysical-conjugate estimate and the arithmetic factor-eleven bounds are supplied below. The actual reference-state realization, original-record comparison and total-variation consumers remain separate obligations. Total Born-mass normalization and the equality of the ninth gate power with its inverse are not used or proved here."))),
+                DescribeRole.Theorem), CoordinateNode(), ResourceNode())));
+
+
+    private static DocumentBlock CoordinateNode() => Describe.Lean(
+        DescribeId.Create("original-event-coordinates-and-bound"),
+        DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_event_coordinates_and_bound"),
+        H("Computed integer coordinates and the whole-tree signed conjugate bound"),
+        StatementSource.FromAuthor(CoordinateStatement()),
+        AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/stewarttall2025algebraic")),
+        Blocks(
+            Paragraph(Text("For every terminal-label type L, original native tree T and Boolean terminal event e, coordinates(T,e) is an explicitly computed integer pair A,B in the inverse-golden basis. The physical evaluation is A+B t, with t=phi inverse; its other real evaluation is A-B phi. The displayed theorem identifies the first value with the actually computed raw eventMass, identifies the second value with a signed sum over the same terminal paths and basis words, and bounds its absolute value using L(T)=Tree.maxCalls(T) and kappa=1+2 phi cubed.")),
+            Paragraph(Text("The coefficient ring O consists of integer pairs with generator tau satisfying tau squared equals one minus tau. S consists of two O coordinates with generator eta satisfying eta squared equals minus one minus tau eta. These are Mathlib quadratic algebras; their multiplication and both evaluation homomorphisms are proved from the displayed equations. At each full basis word z the coefficient vector h represents the actual amplitude as beta to exponent(z) times physical(h(z)). The exponent is zero or one according to the Hamming parity relative to the actual root at shifted positions 0,4,8. A center-bit flip changes that parity.")),
+            Paragraph(Text("The forward update is diagStep(j,z) h(z) plus offStep(j,z) tau to (one minus exponent(z)) h(flip(j,z)). Here diagStep is eta times one plus (eta minus one) times the actual diagonal of P; offStep is tau eta (eta minus one) on the 00 neighboring-control block and zero elsewhere. The proof expands the original number projections and bit flip on all sixteen-bit words and all fourteen addresses. Branch transport follows the original chronological operator product, with nine updates for inverse syntax. A report multiplies each coefficient by its original selector indicator, and all report outcomes remain in the tree.")),
+            Paragraph(Text("For H=a+b eta, its quadratic norm in S is a squared minus tau a b plus b squared. The event coordinates sum tau to exponent(z) times this norm only on the selected original terminal coordinates. Under the physical evaluation this is exactly the original squared amplitude. Under tau mapped to minus phi, eta mapped to exp(pi i/5), and beta mapped to i sqrt(phi), it equals minus one to exponent(z) times the embedded squared amplitude. This sign is essential: the second evaluation is not a positive Born mass. No field-membership certificate or assumed event law is present.")),
+            Paragraph(Text("The embedded active block has squared operator bound phi to the sixth, obtained by two-coordinate Cauchy-Schwarz and reindexing by the same center-bit involution. The remaining control blocks are zero or identity. The gate norm is therefore at most kappa. Induction on the complete tree sums all measurement energies before comparing the child maxima with the original maximum; selector completeness gives exact energy conservation even for non-surjective selectors. This proves a whole-tree bound with no leaf, report or branch-count factor. Zero-mass deep branches and nine-cost calls retain their syntactic resource cost.")),
+            Paragraph(Text("This event theorem does not identify an original cut reduction or prove its determinant or spectral lower bounds. It does not construct the actual chi state, Petz comparison, full record-law bridge or Born normalization, and it does not prove that the ninth gate power is the semantic inverse."))),
+        DescribeRole.Theorem);
+
+    private static DocumentBlock ResourceNode() => Describe.Lean(
+        DescribeId.Create("original-event-resource-bounds"),
+        DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_event_resource_bounds"),
+        H("Positive-event and factor-eleven arithmetic resource bounds"),
+        StatementSource.FromAuthor(ResourceStatement()),
+        AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/stewarttall2025algebraic")),
+        Blocks(
+            Paragraph(Text("The bounds apply to every actually computed eventMass of the same original tree T. K denotes kappa to twice Tree.maxCalls(T). Every positive raw event mass is at least one divided by K. For q=emptyTarget=(13-5 sqrt(5))/22 and w=referenceTarget=(9 sqrt(5)-19)/22, the two displayed discrepancy bounds use exactly the source constants and the same K. These are arithmetic bounds for raw masses, without conditioning or a probability-normalization premise.")),
+            Paragraph(Text("For x=A+B tau the integer norm is A squared minus A B minus B squared, and the product of its two real evaluations equals that norm. Its nonvanishing is reused from the existing golden-integer norm theorem through the coordinate correspondence (A-B,B). For u=11q=(4,-5) and u=11w=(-5,9), the norms are 11 and minus 11. Direct expansion proves that the norm of 11x-u is divisible by 11. The existing original_event_arithmetic theorem supplies non-equality with q and w. Thus the nonzero norm has absolute value at least 11. The whole-tree conjugate bound and the triangle inequality give the stated denominators.")),
+            Paragraph(Text("The arithmetic inequalities do not identify q or w as the ideal probabilities of the actual chi/Petz experiments. Their empty-prefix and five-call source-history realization, preservation of original records and failure zeros, graft resource identities and total-variation comparison still require the specified original-object consumers. The cut determinant and spectral clauses of V88 theorem 24.1 remain outside this event result."))),
+        DescribeRole.Theorem);
+
+    private static Formula Power(Formula a, Formula b) => Seq(a, Caret, Grp(b));
+    private static Formula Leq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula CoordinateStatement()
+    {
+        Formula L=F.Id("L"), T=F.Id("T"), e=F.Id("e"), p=F.Id("p"), z=F.Id("z");
+        Formula x=Call("coordinates",T,e), nu=Call("realConjugate",x);
+        Formula signed=Seq(Power(Grp(Minus,D(1)),Call("exponent",z)),Star,
+            Call("normSq",Call("conjugateAmplitude",Call("branch",T,p,Call("initial")),z)));
+        Formula sum=FiniteSum(p,Call("Path",T),FiniteSum(z,Call("Basis"),
+            IfThenElse(Call("Apply",e,p,z),signed,D(0))));
+        Formula K=Power(Call("kappa"),Seq(D(2),Star,Call("maxCalls",T)));
+        return Disp(All("L",Call("Type"),All("T",Call("Tree",L),All("e",Call("Events",T),
+            And(Rel(Call("eventMass",T,e),Eq,Call("realPhysical",x)),
+                Rel(nu,Eq,sum),Leq(Call("abs",nu),K))))));
+    }
+    private static Formula ResourceStatement()
+    {
+        Formula L=F.Id("L"), T=F.Id("T"), e=F.Id("e"), p=Call("eventMass",T,e);
+        Formula K=Power(Call("kappa"),Seq(D(2),Star,Call("maxCalls",T)));
+        Formula q=Call("emptyTarget"), w=Call("referenceTarget");
+        Formula cq=Seq(Frac,Grp(D(1,3),Plus,D(5),Sqrt,Grp(D(5))),Grp(D(2,2)));
+        Formula cw=Seq(Frac,Grp(D(1,9),Plus,D(9),Sqrt,Grp(D(5))),Grp(D(2,2)));
+        Formula lower(Formula a,Formula c)=>Leq(Seq(Frac,Grp(D(1)),
+            Grp(D(1,1),Star,Grp(K,Plus,c))),Call("abs",Seq(p,Minus,a)));
+        Formula positive=new Formula.Logic(
+            new Formula.Relation(D(0),FormulaRelationOperator.LessThan,p),
+            FormulaLogicOperator.Implies,Leq(Power(K,Seq(Minus,D(1))),p));
+        return Disp(All("L",Call("Type"),All("T",Call("Tree",L),All("e",Call("Events",T),
+            And(positive,lower(q,cq),lower(w,cw))))));
+    }
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);

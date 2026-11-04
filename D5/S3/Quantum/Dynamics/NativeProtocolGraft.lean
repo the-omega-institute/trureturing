@@ -670,11 +670,6 @@ private theorem flip_flip (i : Fin 16) (b : Basis) : flip i (flip i b) = b := by
   · subst k; simp [flip]
   · simp [flip, Function.update_of_ne hk, hk]
 
-private theorem flip_ne (i : Fin 16) (b : Basis) : flip i b ≠ b := by
-  intro h
-  have hh := congrFun h i
-  simpa [flip] using hh
-
 private theorem parity_flip (i : Fin 16) (b : Basis) :
     parity (flip i b) = parity b + 1 := by
   classical
@@ -1041,7 +1036,7 @@ private theorem active_row_bound (j : Address) (w : Basis → ℂ) (z : Basis)
       if z (center j) then phi^2 else -phi := by
     unfold active at ha
     simp only [Bool.and_eq_true, Bool.not_eq_true'] at ha
-    simp [diagonal, ha.1, ha.2, realConjugate]
+    cases hz : z (center j) <;> simp [diagonal, ha.1, ha.2, realConjugate, hz]
   have hc := cauchy_two (realConjugate (diagonal j z) : ℂ)
     (conjugateBeta^3) (w z) (w (flip (center j) z))
   simp only [conjugateP, ha, if_true]
@@ -1049,8 +1044,12 @@ private theorem active_row_bound (j : Address) (w : Basis → ℂ) (z : Basis)
   apply mul_le_mul_of_nonneg_right _ (add_nonneg (Complex.normSq_nonneg _) (Complex.normSq_nonneg _))
   rw [hd]
   simp only [map_pow, conjugateBeta_norm, Complex.normSq_ofReal]
-  cases hz : z (center j) <;> simp [rowWeight, hz]
-  all_goals nlinarith [phi_cubic]
+  have hp : phi^2 = phi+1 := Real.goldenRatio_sq
+  apply le_of_eq
+  cases hz : z (center j) <;> simp only [rowWeight, hz, Bool.false_eq_true,
+    ite_false, ite_true, neg_mul_neg, neg_pow, even_two, Even.neg_pow]
+  · linear_combination -phi^2 * hp
+  · linear_combination -phi^3 * hp
 
 private theorem projection_energy (j : Address) (w : Basis → ℂ) :
     energy (conjugateP j w) ≤ (phi^3)^2 * energy w := by
@@ -1061,11 +1060,16 @@ private theorem projection_energy (j : Address) (w : Basis → ℂ) :
   have hpoint (z : Basis) : Complex.normSq (conjugateP j w z) ≤
       phi^3 * rowWeight j z * (a z + a (flip (center j) z)) + b z := by
     by_cases ha : active j z = true
-    · simpa [a, b, ha, active_flip, active] using active_row_bound j w z ha
+    · have hh : z (left j) = false ∧ z (right j) = false := by
+        simpa [active] using ha
+      have hb : b z = 0 := by simp [b, hh.1, hh.2]
+      simpa only [a, ha, active_flip, ite_true, hb, add_zero] using
+        active_row_bound j w z ha
     · have hzero : active j z = false := Bool.eq_false_iff.mpr ha
+      simp only [a, active_flip, hzero, ite_false, add_zero, zero_add, mul_zero]
       cases hl : z (left j) <;> cases hr : z (right j) <;>
-        simp [a, b, conjugateP, diagonal, active, realConjugate, hl, hr,
-          active_flip, hzero] at *
+        simp [active, hl, hr] at ha
+      all_goals simp [b, conjugateP, hzero, diagonal, realConjugate, hl, hr]
   have hreindex :
       (∑ z, rowWeight j z * a (flip (center j) z)) =
         ∑ z, rowWeight j (flip (center j) z) * a z := by
@@ -1078,18 +1082,20 @@ private theorem projection_energy (j : Address) (w : Basis → ℂ) :
     simp_rw [← add_mul, rowWeight_pair]
     rw [Finset.mul_sum]
   have htotal := Finset.sum_le_sum (fun z (_ : z ∈ (Finset.univ : Finset Basis)) => hpoint z)
-  simp only [Finset.sum_add_distrib, ← Finset.mul_sum] at htotal
+  simp only [Finset.sum_add_distrib, mul_assoc, ← Finset.mul_sum] at htotal
   rw [hsum] at htotal
   refine le_trans htotal ?_
-  rw [mul_assoc, ← pow_two]
+  rw [← mul_assoc, ← pow_two]
   have hphi : 1 ≤ (phi^3)^2 := by
     have hp : 1 ≤ phi := by
       change 1 ≤ Real.goldenRatio
-      exact Real.one_le_goldenRatio
+      exact Real.one_lt_goldenRatio.le
     exact one_le_pow₀ (one_le_pow₀ hp)
   have hbn : 0 ≤ ∑ z, b z := by
     apply Finset.sum_nonneg
-    intro z _; dsimp [b]; split_ifs <;> positivity
+    intro z _; dsimp [b]; split_ifs
+    · exact Complex.normSq_nonneg _
+    · norm_num
   have hmass : (∑ z, a z) + (∑ z, b z) ≤ energy w := by
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_le_sum
@@ -1099,6 +1105,344 @@ private theorem projection_energy (j : Address) (w : Basis → ℂ) :
   nlinarith [mul_le_mul_of_nonneg_left hmass (sq_nonneg (phi^3)),
     mul_le_mul_of_nonneg_right hphi hbn]
 
+
+def kappa : ℝ := 1 + 2*phi^3
+
+private theorem kappa_one : 1 ≤ kappa := by
+  have hp := pow_nonneg phi_positive.le 3
+  dsimp [kappa]
+  linarith
+
+private theorem step_energy (j : Address) (h : Basis → S) :
+    energy (conjugateAmplitude (step j h)) ≤
+      kappa^2 * energy (conjugateAmplitude h) := by
+  let w := conjugateAmplitude h
+  have hp : ‖l2 (conjugateP j w)‖ ≤ phi^3 * ‖l2 w‖ := by
+    apply (sq_le_sq₀ (norm_nonneg _) (mul_nonneg (pow_nonneg phi_positive.le _) (norm_nonneg _))).mp
+    have hb := projection_energy j w
+    rw [energy_norm, energy_norm] at hb
+    nlinarith [hb]
+  have hv : l2 (conjugateAmplitude (step j h)) =
+      conjugateZeta • (l2 w + (conjugateZeta-1) • l2 (conjugateP j w)) := by
+    ext z
+    exact conjugate_step j h z
+  have hz : ‖conjugateZeta‖ = 1 := by
+    have hn := conjugateZeta_norm
+    rw [Complex.normSq_eq_norm_sq] at hn
+    nlinarith [norm_nonneg conjugateZeta]
+  have hd : ‖conjugateZeta-1‖ ≤ 2 := by
+    have hn := norm_sub_le conjugateZeta (1 : ℂ)
+    norm_num only [hz, norm_one] at hn
+    exact hn
+  have htri := norm_add_le (l2 w) ((conjugateZeta-1) • l2 (conjugateP j w))
+  rw [norm_smul] at htri
+  have hm := mul_le_mul hd hp (norm_nonneg _) (by norm_num : (0:ℝ) ≤ 2)
+  have hnorm : ‖l2 (conjugateAmplitude (step j h))‖ ≤ kappa * ‖l2 w‖ := by
+    rw [hv, norm_smul, hz, one_mul]
+    dsimp [kappa]
+    nlinarith [hm]
+  rw [energy_norm, energy_norm]
+  have hs := (sq_le_sq₀ (norm_nonneg _)
+    (mul_nonneg (le_trans zero_le_one kappa_one) (norm_nonneg _))).mpr hnorm
+  simpa [mul_pow] using hs
+
+private theorem iterate_energy (j : Address) (n : ℕ) (h : Basis → S) :
+    energy (conjugateAmplitude ((step j)^[n] h)) ≤
+      kappa^(2*n) * energy (conjugateAmplitude h) := by
+  induction n generalizing h with
+  | zero => simp
+  | succ n ih =>
+    rw [Function.iterate_succ_apply]
+    have h1 := ih (step j h)
+    have h2 := mul_le_mul_of_nonneg_left (step_energy j h)
+      (pow_nonneg (le_trans zero_le_one kappa_one) (2*n))
+    refine le_trans h1 (le_trans h2 (le_of_eq ?_))
+    rw [← mul_assoc, ← pow_add]
+    congr 2 <;> omega
+
+def masked {n : ℕ} (select : Basis → Fin n) (o : Fin n) (h : Basis → S) : Basis → S :=
+  fun z => if select z = o then h z else 0
+
+private theorem measurement_energy {n : ℕ} (select : Basis → Fin n) (h : Basis → S) :
+    (∑ o, energy (conjugateAmplitude (masked select o h))) =
+      energy (conjugateAmplitude h) := by
+  classical
+  unfold energy
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro z _
+  simp [masked, conjugateAmplitude, apply_ite]
+
+private theorem call_max {L : Type} (j : Address) (d : Direction) (U : Tree L) :
+    callCost d + maxCalls U ≤ maxCalls (.call j d U) := by
+  classical
+  obtain ⟨p,_,hp⟩ := Finset.exists_mem_eq_sup Finset.univ
+    (Finset.univ_nonempty : (Finset.univ : Finset (Path U)).Nonempty) (calls U)
+  change callCost d + (Finset.univ.sup (calls U)) ≤ _
+  rw [hp]
+  exact Finset.le_sup (f := calls (.call j d U)) (Finset.mem_univ p)
+
+private theorem measure_max {L : Type} {n : ℕ} (select : Basis → Fin n)
+    (U : Fin n → Tree L) (o : Fin n) :
+    maxCalls (U o) ≤ maxCalls (.measure n select U) := by
+  classical
+  apply Finset.sup_le
+  intro p _
+  exact Finset.le_sup (f := calls (.measure n select U)) (Finset.mem_univ (⟨o,p⟩))
+
+/-- Sum over all syntactic paths, without pruning unused outcomes. -/
+def treeEnergy {L : Type} (T : Tree L) (h : Basis → S) : ℝ :=
+  ∑ p : Path T, energy (conjugateAmplitude (branch T p h))
+
+private theorem whole_tree_energy {L : Type} (T : Tree L) (h : Basis → S) :
+    treeEnergy T h ≤ kappa^(2*maxCalls T) * energy (conjugateAmplitude h) := by
+  classical
+  induction T generalizing h with
+  | leaf l =>
+    change (∑ _p : Unit, energy (conjugateAmplitude h)) ≤
+      kappa^(2 * ((Finset.univ : Finset Unit).sup (fun _ => 0))) *
+        energy (conjugateAmplitude h)
+    simp
+  | call j d U ih =>
+    change treeEnergy U ((step j)^[callCost d] h) ≤ _
+    have h1 := ih ((step j)^[callCost d] h)
+    have h2 := mul_le_mul_of_nonneg_left (iterate_energy j (callCost d) h)
+      (pow_nonneg (le_trans zero_le_one kappa_one) (2*maxCalls U))
+    refine le_trans h1 (le_trans h2 ?_)
+    rw [← mul_assoc, ← pow_add]
+    apply mul_le_mul_of_nonneg_right _ (energy_nonneg _)
+    apply pow_le_pow_right₀ kappa_one
+    have hm := call_max j d U
+    omega
+  | measure n select U ih =>
+    change (∑ p : (o : Fin n) × Path (U o),
+      energy (conjugateAmplitude (branch (U p.1) p.2 (masked select p.1 h)))) ≤ _
+    rw [Fintype.sum_sigma]
+    calc
+      _ ≤ ∑ o, kappa^(2*maxCalls (U o)) *
+          energy (conjugateAmplitude (masked select o h)) :=
+        Finset.sum_le_sum (fun o _ => ih o (masked select o h))
+      _ ≤ ∑ o, kappa^(2*maxCalls (.measure n select U)) *
+          energy (conjugateAmplitude (masked select o h)) := by
+        apply Finset.sum_le_sum
+        intro o _
+        apply mul_le_mul_of_nonneg_right _ (energy_nonneg _)
+        exact pow_le_pow_right₀ kappa_one (Nat.mul_le_mul_left 2 (measure_max select U o))
+      _ = _ := by rw [← Finset.mul_sum, measurement_energy]
+
+private theorem initial_energy : energy (conjugateAmplitude initial) = 1 := by
+  classical
+  simp [energy, conjugateAmplitude, initial, exponent, parity_root, apply_ite]
+
+private theorem event_conjugate_bound {L : Type} (T : Tree L)
+    (event : Path T → Basis → Bool) :
+    |realConjugate (coordinates T event)| ≤ kappa^(2*maxCalls T) := by
+  rw [coordinates_conjugate]
+  calc
+    _ ≤ ∑ p : Path T, ∑ z : Basis, |if event p z then
+        (-1 : ℝ)^exponent z * Complex.normSq (conjugateAmplitude (branch T p initial) z)
+        else 0| := le_trans (Finset.abs_sum_le_sum_abs _ _) (Finset.sum_le_sum
+          (fun p _ => Finset.abs_sum_le_sum_abs _ _))
+    _ ≤ treeEnergy T initial := by
+      apply Finset.sum_le_sum
+      intro p _
+      apply Finset.sum_le_sum
+      intro z _
+      split_ifs <;> simp [abs_mul, abs_pow, abs_of_nonneg (Complex.normSq_nonneg _),
+        Complex.normSq_nonneg]
+    _ ≤ _ := by simpa [initial_energy] using whole_tree_energy T initial
+
+
+
 end Coeff
 
+/-- Recursively computed integer coordinates of the actual original event,
+its parity-signed nonphysical evaluation and its whole-tree resource bound. -/
+theorem original_event_coordinates_and_bound {L : Type} (T : Tree L)
+    (event : Path T → Basis → Bool) :
+    eventMass T event = Coeff.realPhysical (Coeff.coordinates T event) ∧
+    Coeff.realConjugate (Coeff.coordinates T event) =
+      (∑ p, ∑ z, if event p z then (-1 : ℝ)^Coeff.exponent z *
+        Complex.normSq (Coeff.conjugateAmplitude (Coeff.branch T p Coeff.initial) z)
+        else 0) ∧
+    |Coeff.realConjugate (Coeff.coordinates T event)| ≤
+      Coeff.kappa^(2*maxCalls T) :=
+  ⟨(Coeff.coordinates_physical T event).symm, Coeff.coordinates_conjugate T event,
+    Coeff.event_conjugate_bound T event⟩
+
+namespace Coeff
+
+
+private theorem norm_product (x : O) :
+    realPhysical x * realConjugate x = ((QuadraticAlgebra.norm x : ℤ) : ℝ) := by
+  have hi : phi⁻¹ = phi-1 := by
+    change Real.goldenRatio⁻¹ = Real.goldenRatio-1
+    rw [Real.inv_goldenRatio]
+    dsimp [Real.goldenConj, Real.goldenRatio]
+    ring
+  have hp : phi^2 = phi+1 := Real.goldenRatio_sq
+  change ((x.re : ℝ)+(x.im : ℝ)*phi⁻¹) *
+    ((x.re : ℝ)+(x.im : ℝ)*(-phi)) = _
+  rw [hi, QuadraticAlgebra.norm_def]
+  push_cast
+  linear_combination -(x.im : ℝ)^2 * hp
+
+private theorem norm_zero (x : O) (hn : QuadraticAlgebra.norm x = 0) : x = 0 := by
+  let g : D5.S0.Carrier.GoldenInt := ⟨x.re-x.im,x.im⟩
+  have hg : D5.S0.Carrier.norm g = 0 := by
+    dsimp [D5.S0.Carrier.norm, g]
+    rw [QuadraticAlgebra.norm_def] at hn
+    nlinarith
+  have hz := (D5.S0.Carrier.norm_eq_zero_iff g).mp hg
+  have ha := congrArg D5.S0.Carrier.GoldenInt.a hz
+  have hb := congrArg D5.S0.Carrier.GoldenInt.b hz
+  dsimp [g] at ha hb
+  ext <;> simp only [QuadraticAlgebra.re_zero, QuadraticAlgebra.im_zero] <;> omega
+
+private theorem int_abs_lower (n : ℤ) (hn : n ≠ 0) : (1 : ℝ) ≤ |(n : ℝ)| := by
+  have hh : (1 : ℤ) ≤ |n| := by
+    by_cases hp : 0 ≤ n
+    · rw [abs_of_nonneg hp]; omega
+    · rw [abs_of_neg (lt_of_not_ge hp)]; omega
+  exact_mod_cast hh
+
+private theorem norm_div11 (x u : O)
+    (hu : QuadraticAlgebra.norm u = 11 ∨ QuadraticAlgebra.norm u = -11) :
+    11 ∣ QuadraticAlgebra.norm (11*x-u) := by
+  let c := 2*x.re*u.re-x.re*u.im-x.im*u.re-2*x.im*u.im
+  have he : QuadraticAlgebra.norm (11*x-u) =
+      121*QuadraticAlgebra.norm x-11*c+QuadraticAlgebra.norm u := by
+    simp only [QuadraticAlgebra.norm_def, QuadraticAlgebra.re_sub,
+      QuadraticAlgebra.im_sub, QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul,
+      QuadraticAlgebra.re_ofNat, QuadraticAlgebra.im_ofNat]
+    dsimp [c]
+    ring
+  rw [he]
+  rcases hu with hu | hu
+  · refine ⟨11*QuadraticAlgebra.norm x-c+1,?_⟩
+    rw [hu]; ring
+  · refine ⟨11*QuadraticAlgebra.norm x-c-1,?_⟩
+    rw [hu]; ring
+
+private theorem discrepancy (x u : O) (a K C : ℝ)
+    (hu : realPhysical u = 11*a)
+    (hc : |realConjugate u| = 11*C)
+    (hn : QuadraticAlgebra.norm u = 11 ∨ QuadraticAlgebra.norm u = -11)
+    (hne : realPhysical x ≠ a) (hK : 1 ≤ K) (hC : 0 ≤ C)
+    (hb : |realConjugate x| ≤ K) :
+    1/(11*(K+C)) ≤ |realPhysical x-a| := by
+  let y : O := 11*x-u
+  have hny : QuadraticAlgebra.norm y ≠ 0 := by
+    intro he
+    have hy := norm_zero y he
+    have hh := congrArg realPhysical hy
+    simp only [y, map_sub, map_mul, map_ofNat, map_zero, hu] at hh
+    apply hne
+    linarith
+  obtain ⟨k,hk⟩ := norm_div11 x u hn
+  have hk0 : k ≠ 0 := by
+    intro he
+    apply hny
+    change QuadraticAlgebra.norm (11*x-u) = 0
+    simp [hk, he]
+  have hlow : (11 : ℝ) ≤ |((QuadraticAlgebra.norm y : ℤ) : ℝ)| := by
+    have hka := int_abs_lower k hk0
+    dsimp [y]
+    rw [hk, Int.cast_mul, Int.cast_ofNat, abs_mul]
+    norm_num only
+    linarith
+  have hpy : realPhysical y = 11*(realPhysical x-a) := by
+    dsimp [y]
+    rw [map_sub, map_mul, map_ofNat, hu]
+    ring
+  have hcy : |realConjugate y| ≤ 11*(K+C) := by
+    dsimp [y]
+    simp only [map_sub, map_mul, map_ofNat]
+    have ht := abs_sub (11*realConjugate x) (realConjugate u)
+    rw [abs_mul, hc] at ht
+    norm_num only at ht
+    nlinarith
+  rw [← norm_product, abs_mul, hpy, abs_mul] at hlow
+  norm_num only at hlow
+  have hh := mul_le_mul_of_nonneg_left hcy (mul_nonneg (by norm_num : (0:ℝ) ≤ 11) (abs_nonneg (realPhysical x-a)))
+  have hden : 0 < 11*(K+C) := by linarith
+  rw [div_le_iff₀ hden]
+  nlinarith [hh, abs_nonneg (realPhysical x-a)]
+
+private theorem positive_lower (x : O) (K : ℝ) (hK : 0 < K)
+    (hp : 0 < realPhysical x) (hb : |realConjugate x| ≤ K) :
+    K⁻¹ ≤ realPhysical x := by
+  have hn : QuadraticAlgebra.norm x ≠ 0 := by
+    intro he
+    have hz := norm_zero x he
+    rw [hz, map_zero] at hp
+    linarith
+  have hlow := int_abs_lower (QuadraticAlgebra.norm x) hn
+  rw [← norm_product, abs_mul, abs_of_pos hp] at hlow
+  rw [inv_le_iff_one_le_mul₀ hK]
+  nlinarith [mul_le_mul_of_nonneg_left hb hp.le]
+
+end Coeff
+
+/-- Arithmetic resource bounds for every computed original raw event. The
+reference-state and record-law realization obligations are separate. -/
+theorem original_event_resource_bounds {L : Type} (T : Tree L)
+    (event : Path T → Basis → Bool) :
+    (0 < eventMass T event →
+      (Coeff.kappa^(2*maxCalls T))⁻¹ ≤ eventMass T event) ∧
+    1/(11*(Coeff.kappa^(2*maxCalls T)+(13+5*Real.sqrt 5)/22)) ≤
+      |eventMass T event-emptyTarget| ∧
+    1/(11*(Coeff.kappa^(2*maxCalls T)+(19+9*Real.sqrt 5)/22)) ≤
+      |eventMass T event-referenceTarget| := by
+  let x := Coeff.coordinates T event
+  have hm := (original_event_coordinates_and_bound T event).1
+  have hb := (original_event_coordinates_and_bound T event).2.2
+  have hK : 1 ≤ Coeff.kappa^(2*maxCalls T) := one_le_pow₀ Coeff.kappa_one
+  have hi : phi⁻¹ = phi-1 := by
+    change Real.goldenRatio⁻¹ = Real.goldenRatio-1
+    rw [Real.inv_goldenRatio]
+    dsimp [Real.goldenConj, Real.goldenRatio]; ring
+  refine ⟨?_,?_,?_⟩
+  · intro hp
+    rw [hm] at hp ⊢
+    exact Coeff.positive_lower x _ (lt_of_lt_of_le zero_lt_one hK) hp hb
+  · rw [hm]
+    apply Coeff.discrepancy x (⟨4,-5⟩ : Coeff.O) emptyTarget _
+      ((13+5*Real.sqrt 5)/22)
+    · simp only [Coeff.realPhysical, Coeff.evalO, RingHom.coe_mk, MonoidHom.coe_mk,
+        OneHom.coe_mk]
+      norm_num only [Int.cast_ofNat, Int.cast_neg]
+      rw [hi]; dsimp [phi, emptyTarget]; ring
+    · simp only [Coeff.realConjugate, Coeff.evalO, RingHom.coe_mk, MonoidHom.coe_mk,
+        OneHom.coe_mk]
+      norm_num only [Int.cast_ofNat, Int.cast_neg]
+      rw [abs_of_nonneg (by have hp := Coeff.phi_positive; nlinarith)]
+      dsimp [phi]; ring
+    · left; norm_num [QuadraticAlgebra.norm_def]
+    · rw [← hm]
+      exact (original_event_arithmetic T event).2.1
+    · exact hK
+    · positivity
+    · exact hb
+  · rw [hm]
+    apply Coeff.discrepancy x (⟨-5,9⟩ : Coeff.O) referenceTarget _
+      ((19+9*Real.sqrt 5)/22)
+    · simp only [Coeff.realPhysical, Coeff.evalO, RingHom.coe_mk, MonoidHom.coe_mk,
+        OneHom.coe_mk]
+      norm_num only [Int.cast_ofNat, Int.cast_neg]
+      rw [hi]; dsimp [phi, referenceTarget]; ring
+    · simp only [Coeff.realConjugate, Coeff.evalO, RingHom.coe_mk, MonoidHom.coe_mk,
+        OneHom.coe_mk]
+      norm_num only [Int.cast_ofNat, Int.cast_neg]
+      rw [abs_of_nonpos (by dsimp [phi]; nlinarith [Real.sqrt_nonneg (5:ℝ)])]
+      dsimp [phi]; ring
+    · right; norm_num [QuadraticAlgebra.norm_def]
+    · rw [← hm]
+      exact (original_event_arithmetic T event).2.2
+    · exact hK
+    · positivity
+    · exact hb
+
+#print axioms original_event_coordinates_and_bound
+#print axioms original_event_resource_bounds
 end D5.S3.Quantum.Dynamics.NativeProtocolGraft
