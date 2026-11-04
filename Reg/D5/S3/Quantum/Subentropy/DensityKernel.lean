@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Subentropy.DensityKernel
 import Reg.Support.DependentFamily
+import Reg.Support.UniverseSingleReadout
 import Mathlib.Analysis.SpecialFunctions.Log.InvLog
 
 /-! Faithful source observations for density-kernel bounds and integrability. -/
@@ -405,5 +406,93 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end SpectralProbability
+
+namespace DetSpectral
+
+#print _root_.D5.S3.Quantum.Subentropy.DensityKernel.det_spectral
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.UniverseSingleReadout.signature
+    (Σ ι : Type u, Σ _ : Fintype ι, Σ _ : DecidableEq ι, Matrix ι ι ℂ)
+    (fun _ => ℝ) (fun _ => ℂ)
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ p s =>
+    letI := Sigma.fst (Sigma.snd p)
+    letI := Sigma.fst (Sigma.snd (Sigma.snd p))
+    (1 + s • Sigma.snd (Sigma.snd (Sigma.snd p))).det) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
+    {A : Matrix ι ι ℂ} (hA : A.IsHermitian) (s : ℝ),
+    R.readout () ⟨ι, inferInstance, inferInstance, A⟩ s =
+      ∏ i, ((1 + s * hA.eigenvalues i : ℝ) : ℂ)
+
+theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := @h (ULift.{u} Unit) inferInstance inferInstance 0
+    Matrix.isHermitian_zero 0
+  norm_num [rejected, realize] at hh
+
+lemma dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  let ι := ULift.{u} Unit
+  refine ⟨⟨ι, inferInstance, inferInstance, 1⟩, 0, 1, ?_⟩
+  change (1 + (0 : ℝ) • (1 : Matrix ι ι ℂ)).det ≠
+    (1 + (1 : ℝ) • (1 : Matrix ι ι ℂ)).det
+  norm_num [Matrix.det_unique, Matrix.add_apply, Matrix.one_apply, Matrix.ofNat_apply]
+
+def source_registration : Registration arena.{u} (type_of% @det_spectral.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@det_spectral.{u}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@det_spectral.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Subentropy.DensityKernel.DetSpectral.unit
+  realizationName := `Reg.D5.S3.Quantum.Subentropy.DensityKernel.DetSpectral.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p s =>
+    letI := Sigma.fst (Sigma.snd p)
+    letI := Sigma.fst (Sigma.snd (Sigma.snd p))
+    (1 + s • Sigma.snd (Sigma.snd (Sigma.snd p))).det) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Subentropy.DensityKernel
+    definition := none
+    coordinates := #[0, 1, 2, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end DetSpectral
+
 
 end Reg.D5.S3.Quantum.Subentropy.DensityKernel
