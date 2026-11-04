@@ -59,7 +59,7 @@ private theorem v_partition (a s d p : ℕ) (has : a<s) :
   have he : heads a d++heads (s-a-1) (d+a)=heads (s-1) d := by
     simp only [heads,chamberLabels_full]
     simpa only [show a+(s-a-1)=s-1 by omega] using
-      (List.range'_append_1 (s:=d) (m:=a) (n:=s-a-1)).symm
+      (List.range'_append_1 (s:=d) (m:=a) (n:=s-a-1))
   exact hp.trans (List.Perm.of_eq he)
 
 private theorem w_partition (a s d H : ℕ) (e : ℤ) (ha : 1≤a) (has : a<s) :
@@ -74,15 +74,15 @@ private theorem w_partition (a s d H : ℕ) (e : ℤ) (ha : 1≤a) (has : a<s) :
     simp only [heads,chamberLabels_full]
     have h0 : [d+s]++List.range' (d+s+1) (a-1)=List.range' (d+s) a := by
       simpa [show 1+(a-1)=a by omega] using
-        (List.range'_append_1 (s:=d+s) (m:=1) (n:=a-1)).symm
+        (List.range'_append_1 (s:=d+s) (m:=1) (n:=a-1))
     rw [h0]
     simpa only [show a+(s-a-1)=s-1 by omega] using
-      (List.range'_append_1 (s:=d+s) (m:=a) (n:=s-a-1)).symm
+      (List.range'_append_1 (s:=d+s) (m:=a) (n:=s-a-1))
   apply Multiset.coe_eq_coe.mp
   rw [←join]
-  simp only [←Multiset.coe_add,Multiset.coe_singleton]
+  simp only [←Multiset.coe_add,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton]
   by_cases he : e=1 <;> simp only [he,ite_true,ite_false,List.nil_append,List.append_nil]
-  all_goals simp only [←Multiset.coe_add,Multiset.coe_singleton,Multiset.coe_nil]
+  all_goals simp only [←Multiset.coe_add,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton,Multiset.coe_nil]
   all_goals rw [←hs]
   all_goals ac_rfl
 
@@ -99,10 +99,10 @@ private theorem inventory (a s d H p w : ℕ) (e : ℤ)
       List.range (a+s+s+d) at hc
   apply Multiset.coe_eq_coe.mp
   rw [←hc]
-  simp only [←Multiset.coe_add,Multiset.coe_singleton]
+  simp only [←Multiset.coe_add,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton]
   rw [←hv,←hw,←hx]
   dsimp [word,bank,terminal]
-  simp only [←Multiset.coe_add,Multiset.coe_singleton]
+  simp only [←Multiset.coe_add,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton]
   ac_rfl
 
 private theorem good (a s d H p w : ℕ) (e : ℤ)
@@ -139,21 +139,24 @@ private theorem good (a s d H p w : ℕ) (e : ℤ)
     omega
   fin_cases r
   · exact gu _ hi
-  · simp only [bank,Matrix.cons_val_one,List.mem_append] at hi
+  · dsimp [bank] at hi
+    simp only [List.mem_append] at hi
     rcases hi with (hi|(hi|hi))|hi
     · exact gv _ hi
     · split_ifs at hi <;> simp only [List.mem_singleton,List.not_mem_nil] at hi
       exact bit hi
     · exact gwh _ hi
     · exact gx _ hi
-  · simp only [bank,Matrix.cons_val_two,List.mem_append] at hi
+  · dsimp [bank] at hi
+    simp only [List.mem_append] at hi
     rcases hi with (hi|(hi|hi))|hi
     · exact gv _ hi
     · split_ifs at hi <;> simp only [List.mem_singleton,List.not_mem_nil] at hi
       exact bit hi
     · exact gwh _ hi
     · exact gx _ hi
-  · simp only [bank,Matrix.cons_val_three,heads,List.mem_append] at hi
+  · dsimp [bank] at hi
+    simp only [heads,List.mem_append] at hi
     rcases hi with hi|hi
     · exact gvh _ hi
     · exact gwl _ hi
@@ -200,14 +203,20 @@ private theorem masses (a s d H p w : ℕ) (e : ℤ)
     simpa [chainStart] using hf 2 0 (by simp [chainLength]; omega)
   have hpow : (2:ℤ)^a*2^(s-a-1)=2^(s-1) := by rw [←pow_add]; congr 1; omega
   have hhalf : 2*(2:ℤ)^(a-1)=2^a := by
-    rw [show a=(a-1)+1 by omega,pow_succ]; ring
+    simpa only [show a-(a-1)=1 by omega,pow_one,mul_comm] using
+      (pow_split a (a-1) (by omega)).symm
   rw [castfull] at u vh wl
   refine ⟨by simpa [bank,heads] using u,?_,?_⟩
   · rcases he with rfl|rfl
-    all_goals simp only [bank,Matrix.cons_val_one,List.map_append,List.sum_append,
-      List.map_cons,List.sum_cons,List.map_nil,List.sum_nil,vp,wh,xw,f0]
-    all_goals simp <;> ring
-  · simp only [bank,heads,Matrix.cons_val_three,List.map_append,List.sum_append,vh,wl]
+    all_goals dsimp [bank]
+    all_goals simp only [List.map_append,List.sum_append,List.map_cons,
+      List.sum_cons,List.map_nil,List.sum_nil,zero_add,add_zero]
+    all_goals rw [vp,wh,xw]
+    all_goals simp only [f0]
+    all_goals ring
+  · dsimp [bank,heads]
+    simp only [List.map_append,List.sum_append]
+    rw [vh,wl]
     nlinarith only [congrArg (fun q : ℤ => q*F 1) hpow,
       congrArg (fun q : ℤ => q*F 2) hhalf]
 
@@ -240,7 +249,10 @@ private theorem physical_joint (a s d : ℕ) (ha : 2≤a) (had : a<d) (hds : d<s
   have wcast : (w.toNat:ℤ)=w := Int.toNat_of_nonneg hw
   have Hcap : H.toNat<2^(s-a-1) := by exact_mod_cast (show (H.toNat:ℤ)<(2:ℤ)^(s-a-1) by simpa only [Hcast] using hHJ)
   have pcap : p.toNat<2^a := by exact_mod_cast (show (p.toNat:ℤ)<(2:ℤ)^a by simpa only [pcast] using hpx)
-  have xhalf : 2*(2:ℤ)^(a-1)=x := by dsimp [x]; rw [show a=(a-1)+1 by omega,pow_succ]; ring
+  have xhalf : 2*(2:ℤ)^(a-1)=x := by
+    dsimp only [x]
+    simpa only [show a-(a-1)=1 by omega,pow_one,mul_comm] using
+      (pow_split a (a-1) (by omega)).symm
   have wcap : w.toNat<2^(a-1) := by
     exact_mod_cast (show (w.toNat:ℤ)<(2:ℤ)^(a-1) by rw [wcast]; nlinarith only [hnw,hn,xhalf])
   have hx : 4≤x := by dsimp [x]; have := pow_le_pow_right₀ (by norm_num : (1:ℤ)≤2) ha; norm_num at this; exact this
@@ -259,10 +271,14 @@ private theorem physical_joint (a s d : ℕ) (ha : 2≤a) (had : a<d) (hds : d<s
   have ww : WW=SW t z := by dsimp [WW,newBase,charge,base,SW,K,t,z]; ring
   have nn : NN=x*t*z^2-1 := by dsimp [NN,sourceMod,x,t,z]; ring
   have cu : 2*C d=t-2 := by
-    have he : (2:ℤ)^d=2*2^(d-1) := by rw [show d=(d-1)+1 by omega,pow_succ]; ring
+    have he : (2:ℤ)^d=2*2^(d-1) := by
+      simpa only [show d-(d-1)=1 by omega,pow_one,mul_comm] using
+        pow_split d (d-1) (by omega)
     dsimp [C,t]; omega
   have cv : 2*C s=z-2 := by
-    have he : (2:ℤ)^s=2*2^(s-1) := by rw [show s=(s-1)+1 by omega,pow_succ]; ring
+    have he : (2:ℤ)^s=2*2^(s-1) := by
+      simpa only [show s-(s-1)=1 by omega,pow_one,mul_comm] using
+        pow_split s (s-1) (by omega)
     dsimp [C,z]; omega
   have recU : t*AA=NN+BB := by dsimp [t,AA,NN,BB,base,sourceMod]; ring
   have recX : x*KK=NN+AA := by dsimp [x,KK,NN,AA,base,sourceMod]; ring
@@ -285,9 +301,16 @@ private theorem physical_joint (a s d : ℕ) (ha : 2≤a) (had : a<d) (hds : d<s
     have hmass:=masses a s d H.toNat p.toNat w.toNat e ha had hds Hcap pcap wcap he
       (if side then g else f) F hf
     have new0 : newBase a s s d 0=2*AA := by dsimp [newBase,charge,AA]; ring
-    cases side <;> simpa only [F,ite_true,ite_false,Bool.false_eq_true,C,Hcast,pcast,wcast,new0] using hmass
+    cases side
+    all_goals
+      simp only [F,ite_true,ite_false,Bool.false_eq_true,C,Hcast,pcast,wcast,new0] at hmass ⊢
+      refine ⟨hmass.1,hmass.2.1,?_⟩
+      calc
+        _ = _ := hmass.2.2
+        _ = _ := by dsimp only [x,BB,LL,UU,VV]; ring
   have mo:=row false
   have mn:=row true
+  simp at mo mn
   have native (r : Fin 4) :
       C ((![d,s,s,a] : Fin 4→ℕ) r) * (base a s s d r)+
         f ((![d-1,d+s-1,d+s+s-1,k-1] : Fin 4→ℕ) r)=
@@ -354,13 +377,14 @@ private theorem physical_joint (a s d : ℕ) (ha : 2≤a) (had : a<d) (hds : d<s
       ((P 2).map f).sum+f (T 2)=x*BB-(x-1)*LL := by
     dsimp [l,word] at fzero
     simp only [List.map_append,List.sum_append,List.map_cons,List.sum_cons,
-      List.map_singleton,List.sum_singleton] at fzero
+      List.map_singleton,List.sum_singleton,List.map_nil,List.sum_nil,add_zero] at fzero
     linarith only [fzero,o3]
   have n2 : ((Pn 0).map g).sum+g (T 0)+((P 1).map g).sum+g (T 1)+
       ((P 2).map g).sum+g (T 2)=x*UU-(x-1)*VV := by
     dsimp [ln] at lnzero
-    simp only [Pn,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,
-      List.map_append,List.sum_append,List.map_cons,List.sum_cons,List.map_singleton,List.sum_singleton,gear] at lnzero
+    simp only [Pn,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three,Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,
+      Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ',
+      List.map_append,List.sum_append,List.map_cons,List.sum_cons,List.map_singleton,List.sum_singleton,List.map_nil,List.sum_nil,add_zero,gear] at lnzero
     rw [←pn0] at lnzero
     linarith only [lnzero,n3]
   have pos (r : Fin 4) (i : ℕ) (hi : i∈P r) : 0≤f i ∧ 0≤g i := by
@@ -415,7 +439,8 @@ private theorem physical_joint (a s d : ℕ) (ha : 2≤a) (had : a<d) (hds : d<s
     · constructor <;> nlinarith only [n2,ntU.2.2.2,un.2.2.2.2.2.2.1,un.2.2.2.2.2.2.2.1]
     · constructor <;> omega
     · simpa only [ln,Pn,Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,
-        Matrix.cons_val_three,zero_add] using lnzero
+        Matrix.cons_val_three,Matrix.cons_val_succ,Matrix.vecHead,Matrix.vecTail,
+      Function.comp_apply,Matrix.cons_val_zero',Matrix.cons_val_succ',zero_add] using lnzero
   apply (actual_nat_joint_iff a s s d ha (by omega) (by omega) (by omega)).mpr
   refine ⟨l,hpword,oldstrip,0,by omega,?_⟩
   simpa [insertAt,size,k,l,word,ln,Pn,List.append_assoc] using newstrip
