@@ -66,7 +66,7 @@ abbrev recoverySignature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output r _ := (Word (r + 4) → ℂ) → Prop
+  Output _ r := (Word (r + 4) → ℂ) → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -84,7 +84,7 @@ def recoveryArena : Arena where
   Law R := ∀ r : ℕ, (∃ A : Fin 2 → Bond, (twoFlattening A r).rank = 4) ∧
     ∀ A B : Fin 2 → Bond, (twoFlattening A r).rank = 4 →
       (rawThree B r = rawThree A r ↔
-        ∃ c : ℂ, ‖c‖ = 1 ∧ R.readout r () (gamma B (r + 4) 1) (c • gamma A (r + 4) 1))
+        ∃ c : ℂ, ‖c‖ = 1 ∧ R.readout () r (gamma B (r + 4) 1) (c • gamma A (r + 4) 1))
 
 theorem recovery_source_equivalence :
     recoveryOriginalStatement ↔ recoveryArena.Law recoveryActual := Iff.rfl
@@ -94,10 +94,10 @@ theorem recovery_actual_law : recoveryArena.Law recoveryActual :=
 
 theorem recovery_observational_dependence :
     ObservationalDependence recoverySignature recoveryActual := by
-  intro r
-  refine ⟨(), (0 : Word (r + 4) → ℂ), 1, ?_⟩
+  intro i
+  refine ⟨0, (0 : Word 4 → ℂ), 1, ?_⟩
   intro he
-  have hbad : (1 : Word (r + 4) → ℂ) = 0 := Eq.mp (congrFun he 0) rfl
+  have hbad : (1 : Word 4 → ℂ) = 0 := Eq.mp (congrFun he 0) rfl
   have hv := congrFun hbad (fun _ => 0)
   norm_num at hv
 
