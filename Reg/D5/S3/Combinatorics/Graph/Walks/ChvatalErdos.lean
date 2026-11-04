@@ -30,7 +30,7 @@ def arena : Arena where
   Law readout := ∀ {V : Type u} [Finite V] (G : SimpleGraph V) (k : ℕ),
     3 ≤ Nat.card V →
     (∀ S : Set V, S.ncard < k → (G.induce Sᶜ).Connected) →
-    (∀ S : Set V, G.IsIndepSet S → (readout.readout () V S : ℕ) ≤ k) →
+    (∀ S : Set V, G.IsIndepSet S → Nat.le (readout.readout () V S) k) →
     letI := Fintype.ofFinite V
     G.IsHamiltonian
 
@@ -47,7 +47,8 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     (by intro S hS; omega) (by intro S hS; exact Nat.zero_le _)
   letI := Fintype.ofFinite V
   exact SimpleGraph.not_isHamiltonian_bot_of_card_ne_one
-    (by rw [← Nat.card_eq_fintype_card]; simp [V]) hHamiltonian
+    (by rw [← Nat.card_eq_fintype_card]; simp only [V, Nat.card_ulift, Nat.card_fin]; omega)
+    hHamiltonian
 
 def family : Registration arena.{u}
     (type_of% (@isHamiltonian_of_connectivity_independence.{u})) where
