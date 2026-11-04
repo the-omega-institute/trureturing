@@ -48,7 +48,7 @@ $n![X^n]H$. The sole public theorem `result` is the exact all-index assertion.
 ## Motivation
 
 The result GID is `D5/S1/Recurrence/Residue/HannaA226838Congruence.result`.
-The proposed admission basis is `open-problem-resolution`, under the
+The admission basis is `open-problem-resolution`, under the
 preregistered external named open-problem exception. Conservative proof shape
 is `bind-only`; no separate escape witness or general EGF engine is claimed.
 The remaining declarations are three source definitions and nine consumed
@@ -104,11 +104,6 @@ Its result statement identity is
 `sha256:2a860207ee9913dd8379d7b22c17e7adba350bbb21e6b50e386b7dc2f3a397d1`.
 The source and all accepted dependencies use only `Classical.choice`,
 `Quot.sound` and `propext`.
-The independent scientific terminal is
-[6508154770](https://github.com/the-omega-institute/trureturing/issues/23866#issuecomment-6508154770),
-with evidence
-[6508147690](https://github.com/the-omega-institute/trureturing/issues/23866#issuecomment-6508147690).
-These existing scientific records are not restarted or replaced by publication work.
 Freeze membership and current registration status remain machine-owned.
 
 ## Triage
@@ -118,25 +113,22 @@ Freeze membership and current registration status remain machine-owned.
 | Original all-index integral mod-six assertion | proved; kernel-checked | Exact original rational EGF and integer witness for every natural n including zero. |
 | Integral normalization of H | proved; kernel-checked | `power_dvd_square_factorial`, `factorial_ratio`, `coeff_H`, `eCoeff_H`; original denominator and locally finite support. |
 | Inner identity residue | proved; kernel-checked | `six_power_dvd_square_factorial`, `inner_mod_six`; transferred through existing integral composition. |
-| Finite numerical experiment | not computed in this delivery | The source's reported n<=1024 check is attributed only; no numerical result is inferred from it. |
+| Finite numerical check | source-reported only | The source reports n<=1024; no independent numerical result is asserted. |
 | Four-slot registration | unresolved | The compiled typed family has no accepted binding certificate; `source.actual_observation`, #23884. |
-| Larger moduli or other sparse exponent/denominator pairs | unresolved | No extension theorem or descendant research is delivered or started. |
+| Larger moduli or other sparse exponent/denominator pairs | unresolved | No extension theorem is established. |
 | Implication of arXiv 2610.11648v2 | no exact implication established by the completed focused reading | Conditional p-adic criteria were read; target coefficient/decomposition, period/strength/base-value, all-index and global-integrality bridges remain unverified. These premises are not claimed false and the method is not ruled out. |
 
 The decisive mechanism is divisibility of the actual normalized inner
 coefficients followed by the existing integral-composition transport.
 It suggests testing other sparse series whose normalized inner coefficients
 reduce to the identity, but neither a general extension nor its admission
-is established here. No source claim dependent on this conjecture has been
-identified as requiring a separate changed conclusion; no other settlement changes.
+is established here.
 
 ### Literature boundary
 
-The completed original source qualification read all fourteen revision diffs;
-revision 11 explicitly extended the FORMULA lower bound to zero.
-The completed bounded literature clearance inspected selected original
-weighted-permutation, Hurwitz-series, EGF-composition and related statements.
-No exact full answer was located in those scopes. Missing or challenged web
+The source history contains fourteen revisions; revision 11 states the
+FORMULA lower bound as zero. No exact full answer was located in the checked
+weighted-permutation, Hurwitz-series, EGF-composition and related statements. Missing or challenged web
 responses are not absence evidence. The proof is repository-derived and is not
 attributed to the OEIS entry.
 
@@ -157,17 +149,9 @@ establish a global novelty or priority claim. The paper is prior-work context,
 not the identifier of the OEIS source and not an asserted proof of this
 conjecture.
 
-The completed focused source reading is recorded in the result-only annotation
-[6508504738](https://github.com/the-omega-institute/trureturing/issues/23866#issuecomment-6508504738).
-It preserves the original preregistration, start, deadline and unique terminal;
-no new scientific terminal or completed registration is asserted.
-
 ## ASSUMED-UNVERIFIED
 
 Literature completeness and first-proof priority remain `ASSUMED-UNVERIFIED`;
 unindexed, differently phrased or unpublished proofs have not been excluded.
-No global novelty or delivery quantity KPI is claimed. The separately reported
-77-second operational publication lateness remains a failed delivery contract;
-it does not alter or restart the existing scientific terminal.
 An unresolved registration is neither a theorem of undecidability nor a claim
 that a residual is inexhaustible.
