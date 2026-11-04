@@ -185,7 +185,7 @@ instance : AddCommGroup A.Space := inferInstanceAs (AddCommGroup E)
 instance : Module ℝ A.Space := inferInstanceAs (Module ℝ E)
 instance : Norm A.Space := ⟨fun v => A.orderNorm v⟩
 
-private def normCore : NormedSpace.Core ℝ A.Space where
+private theorem normCore : NormedSpace.Core ℝ A.Space where
   norm_nonneg := A.norm_nonneg
   norm_smul r v := by
     change A.orderNorm (r • v) = ‖r‖ * A.orderNorm v
@@ -218,6 +218,97 @@ def bridge [FiniteDimensional ℝ E] : E ≃L[ℝ] A.Space :=
 /-- The original linear operator, conjugated solely by the canonical wrapping map. -/
 def operator [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) : A.Space →L[ℝ] A.Space :=
   LinearMap.toContinuousLinearMap (A.wrap.toLinearMap ∘ₗ H ∘ₗ A.wrap.symm.toLinearMap)
+
+private lemma norm_wrap (v : E) : ‖A.wrap v‖ = A.orderNorm v := rfl
+
+private lemma unit_ball (v : E) : ‖A.wrap v‖ ≤ 1 ↔ v ∈ A.interval := by
+  rw [A.norm_wrap, A.norm_le_iff]
+  simp [radii, interval]
+
+private lemma positive_bound (β : E →ₗ[ℝ] ℝ)
+    (hβ : ∀ v ∈ A.cone, 0 ≤ β v) (v : E) :
+    |β v| ≤ β A.unit * A.orderNorm v := by
+  have hv := A.norm_attained v
+  have hl := hβ _ hv.2.2
+  have hu := hβ _ hv.2.1
+  simp only [map_add, map_sub, map_smul, smul_eq_mul] at hl hu
+  exact abs_le.mpr ⟨by linarith, by linarith⟩
+
+private lemma positive_zero_mass (β : E →ₗ[ℝ] ℝ)
+    (hβ : ∀ v ∈ A.cone, 0 ≤ β v) (hm : β A.unit = 0) : β = 0 := by
+  ext v
+  have h := A.positive_bound β hβ v
+  rw [hm, zero_mul] at h
+  exact abs_eq_zero.mp (le_antisymm h (abs_nonneg _))
+
+/-- The original positive or signed functional transported to the order-norm copy. -/
+def functional [FiniteDimensional ℝ E] (β : E →ₗ[ℝ] ℝ) : A.Space →L[ℝ] ℝ :=
+  LinearMap.toContinuousLinearMap (β ∘ₗ A.wrap.symm.toLinearMap)
+
+private lemma positive_norm [FiniteDimensional ℝ E] (β : E →ₗ[ℝ] ℝ)
+    (hβ : ∀ v ∈ A.cone, 0 ≤ β v) : ‖A.functional β‖ = β A.unit := by
+  have hm : 0 ≤ β A.unit := hβ _ A.unit_mem
+  apply le_antisymm
+  · apply ContinuousLinearMap.opNorm_le_bound _ hm
+    intro v
+    change |β (A.wrap.symm v)| ≤ β A.unit * A.orderNorm (A.wrap.symm v)
+    exact A.positive_bound β hβ _
+  · have hu : ‖A.wrap A.unit‖ ≤ 1 :=
+      (A.unit_ball A.unit).mpr (by simpa [interval] using
+        And.intro A.zero_mem (A.cone.add_mem A.unit_mem A.unit_mem))
+    have hb := (A.functional β).le_opNorm_of_le hu
+    simpa only [functional, LinearMap.coe_toContinuousLinearMap', LinearMap.comp_apply,
+      LinearEquiv.symm_apply_apply, Real.norm_eq_abs, abs_of_nonneg hm, mul_one] using hb
+
+private lemma positive_unital_contraction (T : E →ₗ[ℝ] E)
+    (hT : ∀ v ∈ A.cone, T v ∈ A.cone) (hunit : T A.unit = A.unit) (v : E) :
+    A.orderNorm (T v) ≤ A.orderNorm v := by
+  apply (A.norm_le_iff (T v) (A.orderNorm v)).mpr
+  have hv := A.norm_attained v
+  refine ⟨hv.1, ?_, ?_⟩
+  · simpa only [map_sub, map_smul, hunit] using hT _ hv.2.1
+  · simpa only [map_add, map_smul, hunit] using hT _ hv.2.2
+
+private lemma positive_inverse_isometry (T : E ≃ₗ[ℝ] E)
+    (hT : ∀ v ∈ A.cone, T v ∈ A.cone)
+    (hTi : ∀ v ∈ A.cone, T.symm v ∈ A.cone) (hunit : T A.unit = A.unit) (v : E) :
+    A.orderNorm (T v) = A.orderNorm v := by
+  have hiunit : T.symm A.unit = A.unit := by
+    apply T.injective
+    simpa only [LinearEquiv.apply_symm_apply] using hunit.symm
+  apply le_antisymm (A.positive_unital_contraction T.toLinearMap hT hunit v)
+  simpa only [LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply] using
+    A.positive_unital_contraction T.symm.toLinearMap hTi hiunit (T v)
+
+/-- The exact nonnegative global-bound set in the original order norm. -/
+def operatorBounds (H : E →ₗ[ℝ] E) : Set ℝ :=
+  {c | 0 ≤ c ∧ ∀ v : E, A.orderNorm (H v) ≤ c * A.orderNorm v}
+
+private lemma operator_norm [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) :
+    ‖A.operator H‖ = sInf (A.operatorBounds H) := by
+  rw [ContinuousLinearMap.norm_def]
+  rfl
+
+private lemma operator_square [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) :
+    A.operator H * A.operator H = A.operator (H * H) := by
+  ext v
+  rfl
+
+private lemma square_bound [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (v : E) :
+    A.orderNorm (H (H v)) ≤ ‖A.operator H * A.operator H‖ * A.orderNorm v := by
+  exact (A.operator H * A.operator H).le_opNorm (A.wrap v)
+
+private lemma centered_bound (x : E) (hx : x ∈ A.cone) (hux : A.unit - x ∈ A.cone) :
+    A.orderNorm (x - (1 / 2 : ℝ) • A.unit) ≤ 1 / 2 := by
+  apply (A.norm_le_iff _ _).mpr
+  refine ⟨by norm_num, ?_, ?_⟩
+  · have he : (1 / 2 : ℝ) • A.unit - (x - (1 / 2 : ℝ) • A.unit) =
+        A.unit - x := by module
+    rw [he]
+    exact hux
+  · have he : (1 / 2 : ℝ) • A.unit + (x - (1 / 2 : ℝ) • A.unit) = x := by module
+    rw [he]
+    exact hx
 
 end Data
 end D5.S3.Topology.OrderUnitNorm
