@@ -35,8 +35,6 @@ open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostFock (b c)
 open D5.S3.VertexAlgebra.LatticeQuartetContraction
 
-open private M_eq_number chargeProject_diagonal from
-  D5.S3.VertexAlgebra.Lattice.LatticeQuartetContraction
 
 noncomputable section
 
@@ -398,9 +396,6 @@ open LatticeRelativeMassShell MvPolynomial
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostFock
 open scoped BigOperators TensorProduct
-open private actualBasis_apply M_eq_number spectral_projection_inverse
-  transverseVariable_injective groundMap_apply groundMap_sector groundMap_monomial
-  groundMap_identities from D5.S3.VertexAlgebra.Lattice.LatticeQuartetContraction
 
 variable {D : LatticeData}
 

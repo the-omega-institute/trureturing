@@ -36,8 +36,6 @@ open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostFock (b c)
 open D5.S3.VertexAlgebra.LatticeQuartetContraction
 
-open private M_eq_number chargeProject_diagonal from
-  D5.S3.VertexAlgebra.Lattice.LatticeQuartetContraction
 
 noncomputable section
 
@@ -128,9 +126,6 @@ open LatticeRelativeMassShell LatticeBRST LatticeBRSTRelativeZeroMode
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostFock
 open D5.S3.Quantum.Fermionic.BcGhostCharge
-open private sector_smul_right actualBasis_apply totalCount_zero_iff ghost_sector
-  b0_coefficients groundMap_apply P0_basis from
-  D5.S3.VertexAlgebra.Lattice.LatticeQuartetContraction
 
 abbrev State (D : LatticeData) := LatticeMatterGhostCoupling.State D
 
