@@ -32,9 +32,10 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
                 "At alpha = 1 the definition uses Real.binEntropy in natural-log units; otherwise both variable powers use Real.rpow. On the probability branch [0,1/2], for every alpha > 0, "
                 + "the power sum is positive and h is continuous and strictly increasing, with values zero at zero and log 2 at one half. "
                 + "The displayed total real definition also exists outside the parameter and probability domain of the theorem."),
-            Node("h_half", "Entropy of the fair binary distribution", AllReal("alpha",
-                Imp(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, N("alpha")),
-                    Equal(Call("h", N("alpha"), Half()), Call("log", D(2))))),
+            Node("h_half", "Entropy of the fair binary distribution", Seq(Forall, Sp,
+                Parenthesized(Seq(Alpha, Colon, Sp, RealType())), Comma, Sp,
+                Imp(new Formula.Relation(D(0), FormulaRelationOperator.LessThan, Alpha),
+                    Equal(Call("h", Alpha, Half()), Call("log", D(2))))),
                 DescribeRole.Theorem,
                 "Every positive real order assigns natural-log entropy log 2 to the fair binary distribution."),
             Node("hInv", "The specified inverse branch", AllReal("alpha", AllReal("x",
@@ -96,6 +97,7 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
             (name == "result" || name == "convexOn_G_of_le_one" || name == "h_half") ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula N(string value) => F.Id(value);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula RealType() => Seq(Mathbb, Grp(N("R")));
     private static Formula Par(Formula value) => Seq(Open, value, Close);
     private static Formula Half() => new Formula.Fraction(D(1), D(2));
