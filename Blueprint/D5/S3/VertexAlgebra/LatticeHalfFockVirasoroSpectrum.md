@@ -16,7 +16,7 @@ Creation multiplication at variable (i,k) raises L0 energy by k+1/2. Power induc
 
 **Theorem 1.1 (The linear sum over a signed integer interval).**
 
-$$\forall (a:\mathbb Z), \forall (b:\mathbb Z), a \le b \longrightarrow \sum_{x\in \operatorname{Finset}.\operatorname{Ico}(a, b)} (x:\mathbb C) = \frac{((a:\mathbb C)+(b:\mathbb C)-1) \cdot ((b:\mathbb C)-(a:\mathbb C))}{2}$$
+$$\forall (a:\mathbb Z), \forall (b:\mathbb Z), a \le b \longrightarrow \sum_{x\in \operatorname{Finset}.\operatorname{Ico}(a, b)} (\operatorname{Int.cast}\left(x\right): \mathbb C) = \frac{((\operatorname{Int.cast}\left(a\right): \mathbb C)+(\operatorname{Int.cast}\left(b\right): \mathbb C)-1) \cdot ((\operatorname{Int.cast}\left(b\right): \mathbb C)-(\operatorname{Int.cast}\left(a\right): \mathbb C))}{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.sum_Ico_id` (`✓ std3`). ∎
 
