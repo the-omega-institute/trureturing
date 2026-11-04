@@ -1,0 +1,86 @@
+**Theorem 30.2 (balanced promotion forces cumulative actual edits).**
+For every admissible deterministic recorder $R$, every integer $d\ge0$,
+$m=2^d$, and every legal prefix $h_0$ ending at $Q_d(0)$, some legal
+continuation $v$ of exactly $m$ actual promotions ends at $Q_d(m)$ and
+satisfies
+
+$$
+T_R(h_0v)-T_R(h_0)\ge \Lambda_d,
+\qquad \Lambda_d=\frac{dm}{2}-m+1.
+\tag{IV.84}
+$$
+
+Here $\Lambda_0=\Lambda_1=0$; strict growth is an asymptotic conclusion, not a claim
+at those two depths. For every $R$ and every integer $N\ge63$, there is
+a legal history of **exactly** $N$ events with
+
+$$
+T_R(h)\ge\frac{N+1}{32}\log_2\frac{N+1}{8}.
+\tag{IV.85}
+$$
+
+Thus $T_R^{\max}(N)=\Omega(N\log N)$ uniformly over recorders, even
+though a paid POP can shorten the retained word.
+
+**Proof.** The graph of finite binary words, with an edge from $x$ to
+$x0$ and $x1$, is a tree of maximum degree three. Its graph distance is
+
+$$
+\delta(x,y)=|x|+|y|-2|\operatorname{lcp}(x,y)|.
+\tag{IV.86}
+$$
+
+Indeed every route must first delete to the longest common prefix and
+then reach the other word; that route attains the displayed length.
+Consequently every actual editing sequence costs at least $\delta$.
+For integer $r\ge0$ a distance ball about any word contains at most
+
+$$
+1+\sum_{i=1}^r3\cdot2^{i-1}=3\cdot2^r-2
+\tag{IV.87}
+$$
+
+words: at most three first edges and at most two forward edges at each
+subsequent shell. This is the usual finite-degree metric counting
+argument; no prefix-free coding premise is involved.
+
+Suppose a selected prefix $h_k$ has quotient $U_{d,k}$, with $k<m$,
+and write $\ell_k=d-\operatorname{pop}(k)$. Theorem 28.2 applies to
+**every** current ordered representative, not only to $Q_d(k)$. It gives
+$2^{\ell_k}$ actual enabled promotions with distinct ordered outputs and
+the same next quotient $U_{d,k+1}$. Their settled record words are
+pairwise distinct by (IV.82). If $\ell_k\ge2$, the ball of radius
+$\ell_k-2$ about the one current word contains at most
+$3\cdot2^{\ell_k-2}-2<2^{\ell_k}$ words. Some successor therefore has
+distance at least $\ell_k-1$, and its actual update costs at least that
+much. If $\ell_k=1$ or $0$, nonnegativity supplies the weaker bound
+$\max(\ell_k-1,0)$. Select a successor satisfying this bound and repeat.
+The uniform outgoing lemma permits all $m$ choices on one nested
+history, with no change of the previously selected prefix.
+
+Only $k=m-1$ has $\ell_k=0$. For $d\ge1$, the popcount sum (IV.78)
+therefore gives
+
+$$
+\sum_{k=0}^{m-1}\max(\ell_k-1,0)
+=\sum_{k=0}^{m-1}\ell_k-(m-1)
+=\frac{dm}{2}-m+1.
+\tag{IV.88}
+$$
+
+For $d=0$ the sum and the displayed expression are both zero. At the
+end Theorem 28.2 forces the common ordered term $Q_d(m)$, whose grade
+is $4m-1$. Additivity of actual edit counts proves (IV.84). It does not
+assert that the final record has length $\Lambda_d$; erasure can remove it.
+
+For a prescribed $N\ge63$, take the largest power of two
+$m=2^d\le(N+1)/4$. Reach $Q_d(0)$ by any legal prefix and then use
+(IV.84). Here $d\ge4$, so $\Lambda_d\ge dm/4$, and
+$m>(N+1)/8$. If $r=N-(4m-1)$ is positive, append the $r$ actual splits
+at $L^{d+1},L^{d+2},\ldots,L^{d+r}$, as in Corollary 29.1. The first
+operand is beta in $Q_d(m)$ and each split creates the next left beta,
+so this is legal padding to exactly $N$. Cumulative cost cannot decrease
+under padding, regardless of subsequent POPs. Comparing the nonnegative
+logarithms yields (IV.85). The selected promotion history may depend on
+$R$; the unpadded terminal term does not. $\square$
+

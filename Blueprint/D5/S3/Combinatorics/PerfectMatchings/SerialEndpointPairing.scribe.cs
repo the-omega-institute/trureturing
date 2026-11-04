@@ -12,6 +12,15 @@ internal sealed class SerialEndpointPairingDocument : IScribeDocumentDefinition
         "Actual first-return pairings of arbitrary finite modules compose in series on the full original carrier.",
         H("Serial Composition of Actual Endpoint Pairings"),
         Blocks(
+            Describe.Lean(DescribeId.Create("two-permutation-forms"),
+                DeclarationHandle.Create(Prefix + "two_forms"),
+                H("The two permutations of two points"),
+                StatementSource.FromAuthor(Disp(All("c", Call("Perm", Fin(Num(2))),
+                    new Formula.Logic(Equal(V("c"), Num(1)), FormulaLogicOperator.Or,
+                        Equal(V("c"), Call("swap", Num(0), Num(1))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every permutation of Fin(2) is either the identity or the swap of 0 and 1."))),
+                DescribeRole.Theorem),
             Paragraph(Text("A cut module consists of a finite carrier X, an involutive corner permutation s "
                 + "with no fixed point, an involutive band permutation r, and an equivalence e from Fin(4) "
                 + "onto the entire fixed set of r. The labels 0 and 1 are the left pair, and 2 and 3 the right pair. "

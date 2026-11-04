@@ -1,0 +1,45 @@
+**定义 1.1（固定实际来源与目标）。** 全章使用 [KBonacci INITIAL 费用卷固定版本](https://github.com/the-omega-institute/trureturing/blob/e271e8c9d490b299979f17661411302360adb4c6/docs/develop/theory/KBONACCI_INITIAL_TARGET_COST_THEORY.md)定义68.1的域，并加 $h\ge2$：
+
+$$
+3\le m<k<2m,\qquad T=k+1,\qquad
+\gcd(m,T)=1,\qquad h=k-m\ge2.
+\tag{AA.1}
+$$
+
+于是 $2\le h\le m-2$，两个原字母表都含全部 $m$ 位块。成功记录为 $(v,\theta,s)$，$v\in\mathbb F_2$、$\theta\in\mathbb Z/T\mathbb Z$、$0\le s<k$。匹配权重与逐位转移为
+
+$$
+c_i=\mathbf1_{\{0,T-1\}}(i\bmod T),\qquad
+\delta_0(v,\theta,s)=(v,\theta+1,0),
+$$
+$$
+\delta_1(v,\theta,s)=
+\begin{cases}
+(v\oplus c_\theta,\theta+1,s+1),&s+1<k,\\
+\bot,&s+1=k,
+\end{cases}
+\qquad \delta_b(\bot)=\bot.
+\tag{AA.2}
+$$
+
+初读免费供应 $v$ 或 $\bot$。以后每次动作恰为一个完整 $m$ 位块，付费一；只在块末读取标量或 $\bot$，中间拒绝时刻不可见，拒绝后的剩余位仍属于这次付费块。INITIAL 指实验开始时的不可变目标记录，不随当前记录更新。控制器只能依自己取得的有序动作／端点回复档案选择动作、停止和输出；没有 reset、copy、外借分支记录、隐含初始时钟或中间位读口。
+
+固定一个初值 $v$，实际付费发出根块 $1^m$，条件化到成功且差值为一的那份档案。其全部 INITIAL 候选用
+
+$$
+Q_v=\{0,m\}\times\{0,\ldots,h-1\}
+\tag{AA.3}
+$$
+
+索引：$(j,s)$ 的 INITIAL 是 $(v,-j,s)$，当前记录为 $(v\oplus1,-j+m,s+m)$。所有候选具有同一已付根档案。目标 $F:Q_v\to Y$ 取 INITIAL 标签，$\Delta_v(F)$ 是在这份档案后取得它的最小额外最坏完整块费；无统一有限正确续接时记为 $+\infty$。可适应选择，也可只要求本档案上的一个预设后缀；下述值在两者下相同。
+
+这里每个候选都来自原共同历史先验。具体地，选
+
+$$
+\ell\equiv0\pmod m,\qquad \ell\equiv-j\pmod T,
+\qquad \ell\ge s+2,\qquad
+d=\bigoplus_{i=\ell-s}^{\ell-1}c_i.
+$$
+
+原合法历史 $(v\oplus d)0^{\ell-s-1}1^s$ 同时实现该 INITIAL 值、相位和尾；再追加同一个根块就实现（AA.3）的已付档案。来源历史长度不作为免费观察。这直接使用原卷式（1.3）的联合见证。
+

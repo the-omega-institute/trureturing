@@ -1,0 +1,24 @@
+ Consequently any complete ear set is an independent set of the cycle C_14. The one long gap allows the cyclic indexing to start at the selected centre immediately following it. The selected centres then become
+
+$$
+D_*=\{0,2,4,6,8,10\}.
+$$
+
+This is a change of coordinates in a proof, not a geometric symmetry assumption. Cyclic order determines crossing and hence all triangulations in every strictly convex realization. The original labelled families and witnesses transport bijectively and preserve complete ears, exact D-traces, and cardinalities. All partitions of D_* into three unlabelled pairs are listed below; there are 5*3*1=15. Permuting the three core names preserves A and the condition that every core is nonempty. Every K4 labelling therefore appears in this list. We do not identify distinct physical completions under this coordinate change.
+
+Identify an ear set with its set of centres, and let $I$ be the independent subsets of $C_{14}$. The notation $\omega(S)$ below counts an exact full ear set, distinct from the earlier exact-$D$-trace weights $w_r$. If S is in I, deleting the ear centres in S and then attaching the fixed ear triangles back is a bijection between triangulations containing S and triangulations of the remaining (14-|S|)-gon. This remains valid when ears share an endpoint: the deleted centres are nonadjacent, so all required endpoints remain. Thus the containing count is
+
+$$
+h(S)=C_{12-|S|},\qquad C_k=\frac1{k+1}\binom{2k}{k}.
+$$
+
+Containing a nonindependent ear set is impossible. Finite inclusion-exclusion on all original ears gives the exact complete-ear-set weight
+
+$$
+\omega(S)=|\{T:\operatorname{Ear}(T)=S\}|
+=\sum_{\substack{U\in I\\S\subseteq U}}(-1)^{|U|-|S|}C_{12-|U|}.
+\tag{40.1}
+$$
+
+Equation (40.1) distinguishes all full ear sets individually. No equality of weights for same-cardinality full ear sets is assumed. For example the computed two-ear weights range from 1 to 252. There are 843 independent masks, of which precisely 828 have positive weight; their weights sum to C_12=208012. The verifier also independently reproduces every weight by enumerating the unique root triangle of every actual triangulation.
+

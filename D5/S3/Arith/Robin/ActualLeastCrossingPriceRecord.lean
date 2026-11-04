@@ -301,6 +301,47 @@ theorem uniform_actual_least_crossing_price_record :
     D5.S3.Arith.ExponentExchange.AbundancyRecord5040.strict_abundancy_record_divisible_5040
       hm0 h30 hAbundancy⟩
 
+/-! A least crossing carries the 5040 divisibility certificate into the
+Euler-tail estimate for its half-endpoint price.  The logarithmic threshold
+`A` is kept explicit because the tail supplier has its own independent
+threshold. -/
+theorem uniform_actual_least_crossing_5040_tail_budget :
+    ∀ epsilon : ℝ, 0 < epsilon →
+      ∃ T0 A : ℝ, 0 < T0 ∧ 0 < A ∧
+        ∀ eta : ℝ, 0 < eta → eta ≤ 1 / 2 →
+          ∀ T : ℝ, T0 ≤ T → ∀ m : ℕ, 3 ≤ m →
+            T ≤ actualHeight eta m →
+            (∀ n : ℕ, 3 ≤ n → n < m → actualHeight eta n < T) →
+            A ≤ Real.log (m : ℝ) →
+            5040 ∣ m ∧
+              Real.sqrt (_root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail.largestPrime m : ℝ) *
+                  Real.log (_root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail.largestPrime m) *
+                  OriginalEndpointPrimeTail.tail m ≤
+                2 * Real.sqrt (79 / 80 : ℝ) + epsilon := by
+  intro epsilon hepsilon
+  obtain ⟨A, hA, htail⟩ :=
+    ActualPriceRecordPrimeStructure.actual_record_tail_upper epsilon hepsilon
+  obtain ⟨T0, hT0, hprice⟩ := uniform_actual_least_crossing_price_record
+  refine ⟨T0, A, hT0, hA, ?_⟩
+  intro eta heta hetaHalf T hT m hm hcross hleast hAm
+  have hrecord := hprice eta heta hetaHalf T hT m hm hcross hleast
+  dsimp only at hrecord
+  rcases hrecord with ⟨_, _, _, hrecord0, _, _, h5040⟩
+  have hrecordTail : ∀ n : ℕ, 0 < n → n < m →
+      goldenResourceObjective
+          ((1 / 40 : ℝ) /
+            (Real.log (m : ℝ) * Real.log (Real.log (m : ℝ)))) n <
+        goldenResourceObjective
+          ((1 / 40 : ℝ) /
+            (Real.log (m : ℝ) * Real.log (Real.log (m : ℝ)))) m := by
+    intro n hn hnm
+    convert hrecord0 n hn hnm using 1 <;> ring_nf
+  have halpha : (1 / 40 : ℝ) ∈ Set.Icc (1 / 40 : ℝ) 1 := by
+    constructor <;> norm_num
+  have htail' := htail (1 / 40 : ℝ) halpha m hm hAm hrecordTail
+  refine ⟨h5040, ?_⟩
+  simpa only [show (1 : ℝ) - (1 / 40 : ℝ) / 2 = 79 / 80 by norm_num] using htail'
+
 #print axioms uniform_actual_least_crossing_price_record
 
 end D5.S3.Arith.Robin.ActualLeastCrossingPriceRecord

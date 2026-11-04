@@ -34,7 +34,7 @@ def basis (n : ℕ) : H := lp.single 2 n 1
 private def rankOne (n m : ℕ) : H →L[ℂ] H :=
   (lp.evalCLM ℂ (fun _ : ℕ => ℂ) 2 m).smulRight (basis n)
 
-private lemma rankOne_norm_le (n m : ℕ) : ‖rankOne n m‖ ≤ 1 := by
+lemma rankOne_norm_le (n m : ℕ) : ‖rankOne n m‖ ≤ 1 := by
   apply ContinuousLinearMap.opNorm_le_bound _ zero_le_one
   intro x
   change ‖x m • basis n‖ ≤ 1 * ‖x‖
@@ -65,10 +65,10 @@ lemma entry_bound (z : ℂ) (s t : ℕ) (hs : 0 < s) (ht : 0 < t) :
           (centralWeight_nonneg t)) (by positivity)) (by positivity)
     _ = _ := by ring
 
-private def term (z : ℂ) (p : ℕ × ℕ) : H →L[ℂ] H :=
+def term (z : ℂ) (p : ℕ × ℕ) : H →L[ℂ] H :=
   matrixEntry z (p.1 + 1) (p.2 + 1) • rankOne p.1 p.2
 
-private lemma term_summable {z : ℂ} (hz : ‖z‖ < 1) :
+lemma term_summable {z : ℂ} (hz : ‖z‖ < 1) :
     Summable (fun p : ℕ × ℕ => ‖term z p‖) := by
   have hg : Summable (fun n : ℕ => ‖z‖ ^ (n + 1)) :=
     (summable_nat_add_iff 1).mpr (summable_geometric_of_lt_one (norm_nonneg z) hz)
@@ -97,7 +97,7 @@ lemma sectionOp_tendsto {z : ℂ} (hz : ‖z‖ < 1) :
   have ht := tendsto_finsetProd_atTop.comp hp
   simpa [sectionOp, operator, Function.comp_def, Finset.sum_product] using h.comp ht
 
-private lemma term_apply (z : ℂ) (i j n : ℕ) (x : H) :
+lemma term_apply (z : ℂ) (i j n : ℕ) (x : H) :
     term z (i, j) x n =
       if i = n then matrixEntry z (n + 1) (j + 1) * x j else 0 := by
   change matrixEntry z (i + 1) (j + 1) *
@@ -511,7 +511,7 @@ private lemma sqrt_frequency_ge_one (n : ℕ) : 1 ≤ Real.sqrt (n + 1 : ℝ) :=
   apply Real.one_le_sqrt.mpr
   norm_num
 
-private lemma sourceValue_bound (r : ℝ) (n : ℕ) :
+lemma sourceValue_bound (r : ℝ) (n : ℕ) :
     ‖sourceValue r n‖ ≤ Real.sqrt r ^ (n + 1) := by
   simp only [sourceValue, norm_div, norm_mul, norm_pow, half_norm,
     Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _)]

@@ -1,0 +1,20 @@
+### 命题 3.1（旧影子唯一，维数只增零或一）
+
+<a id="prop-c129-innovation"></a>
+
+在定理 [2.4](#thm-c129-kernel-hilbert) 的表示中，令
+$\mathcal H_L=\operatorname{span}\{\iota(h_i):1\le i\le n\}$。一次合法追加给
+
+$$
+\iota(h)=\sum_i c_i\iota(h_i)+\eta,
+ \qquad \eta\perp\mathcal H_L,\qquad\|\eta\|^2=|r|^2,
+ \qquad \operatorname{rank} G_{L+h}=\operatorname{rank} G_L+\mathbf1_{r\ne0}.
+$$
+
+旧影子和 $|r|^2$ 唯一；$c$ 可差一个 $\operatorname{ker} G_L$ 元素，$r$ 的相位则不由核决定。
+
+**证明。**
+块式给 $\langle\iota(h_j),\eta\rangle=0$，展开平方范数给 $\|\eta\|^2=|r|^2$。所以旧影子就是正交投影，因而唯一；两个系数解之差由 $G_L$ 消去，所表示的向量为零。正交直和给秩公式，也可由前节可逆合同矩阵 $T$ 直接得到。
+
+追加标签因此不等于每次增加一个独立维数。重复历史可取 $r=0$；即使日志继续增长，所选比较也可能没有新可分辨方向。选择 $r\ge0$ 仅是新坐标的相位规范，不能据此宣布选出了空间手性。
+

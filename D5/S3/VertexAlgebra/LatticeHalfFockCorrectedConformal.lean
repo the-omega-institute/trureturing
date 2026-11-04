@@ -81,7 +81,7 @@ private theorem current_ground_zero_charge (D : LatticeData) (hu : IsUnit D.G.de
     rfl
   rw [groundAction, lift, map_one]
 
-private theorem current_identity_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+theorem current_identity_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
     (exponent : ℤ) (state : ActualTensor D hu) :
     (FieldNormalProduct.identityField (V := ActualTensor D hu)).coeff exponent state =
       if exponent = 0 then state else 0 := by
@@ -90,7 +90,7 @@ private theorem current_identity_coefficient (D : LatticeData) (hu : IsUnit D.G.
   rw [FieldNormalProduct.identityField, VertexOperator.of_coeff_apply_coeff]
   split_ifs <;> rfl
 
-private theorem current_charged_zero_identity (D : LatticeData) (hu : IsUnit D.G.det) :
+theorem current_charged_zero_identity (D : LatticeData) (hu : IsUnit D.G.det) :
     chargedField D hu 0 = FieldNormalProduct.identityField := by
   apply HVertexOperator.coeff_inj
   funext exponent

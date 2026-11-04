@@ -1,0 +1,35 @@
+**命题 B-15.3（数量反号的固定整体及相位实现界限）。** 对 $`j\ge0`$ 令
+
+
+```math
+a_j=F_{3j+3},\quad b_j=F_{3j+4},\quad
+c_j=F_{3j+5}=a_j+b_j,
+```
+
+
+在全部八配置上取 $`V_j(I)=a_j\mathbf{\text{𝟏}}_{1\in I}+b_j\mathbf{\text{𝟏}}_{2\in I}+c_j\mathbf{\text{𝟏}}_{3\in I}`$。则
+
+
+```math
+V_j(C_U(I))=2c_j-V_j(I),\qquad
+\widetilde V_j=V_j-c_j\quad\Longrightarrow\quad
+\widetilde V_j(C_U(I))=-\widetilde V_j(I).
+```
+
+
+零层 $`a_0,b_0,c_0=2,3,5`$，合法补对数量 $`3\leftrightarrow7`$ 关于五对称；位置 $`\{3\}`$ 与非法 $`\{1,2\}`$ 都给五，来源却不同。
+
+证明。全部三位置权重和是 $`2c_j`$，配置与其补不交并为全部位置，得公式，中心化后反号。等数量由 $`c_j=a_j+b_j`$；非法配置有相邻一，不能赋合法事件身份。此中心化复用 [B-S2] §43。
+
+若另选择 [B-S2] §§101–103、107 的具体矩阵代表，取
+
+
+```math
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+a=-i\sigma_x,\quad b=-i\sigma_y,\quad c=ba.
+```
+
+
+直接相乘得 $`a^2=b^2=-I`$、$`ab=-ba`$。单模式代表为 $`I,a,b,c,ca`$，其中 $`ca=ba^2=-b`$，于是选定的联合代表与中间代表相差负号。换成另一有序树代表 $`ac=aba=b`$ 就不同；整体相位也不改变单支密度算子。相对号的取得需实际相干比较和共同环境，不是位置语法给出的 Pauli 或量子许可。叶矩阵乘积对状态先作用右因子，这与左到右叶序分别约定。∎
+

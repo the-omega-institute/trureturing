@@ -1,0 +1,38 @@
+# From actual quotient return words to simple Cayley graph moments
+
+## Abstract
+
+The actual same-group simple Cayley graphs first differ by two oriented closed walks per vertex, giving an exact adjacency-moment defect.
+
+**Theorem 1.1 (Equal moments below the first return defect and an exact trace difference).**
+
+Lean statement: `D5/S3/FiniteGroups/BajnokBeattyCayleyReturnMoments.first_return_moment_defect`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/BajnokBeattyCayleyReturnMoments.first_return_moment_defect` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* B. Bajnok and W. K. Beatty (2024). *On the Diameter of Undirected Cayley Graphs of Finite Abelian Groups*. URL: <https://arxiv.org/abs/2406.04045v1>.
+
+*Commentary.*
+
+Let p and t be integers with p >= 3 odd and t >= 2; p need not be prime. Set m = 6t - 1, D = (m^2 - 9)/2 = (3t+1)(6t-4), H = Z/pZ x Z/(pD)Z, N = p^2D, and n = p(m-3). The two additive coordinate maps on Z^2 are q19(x,y) = (-x+y, -3tx+(3t-1)y), with the two coordinates reduced modulo p and pD, and q33(x,y) = (tx+(1-t)y, -(3t+1)x+(3t-2)y), with the same moduli. Their actual generator images are a19 = q19(1,0), b19 = q19(0,1), a33 = q33(1,0), b33 = q33(0,1). Each graph is the undirected simple Cayley graph on H for the set {a,-a,b,-b}.
+
+The earlier first_return_defect theorem supplies additive equivalences e19 and e33 from the actual lattice quotients to H, satisfying e19(F19(z)) = q19(z) and e33(F33(z)) = q33(z) for every integer endpoint z. Applying these equivalences to a return equation gives an explicit identity-on-words equivalence between the corresponding return subtypes. Consequently the arithmetic return theorem applies to these precise coordinate maps. No graph, return count, short-kernel classification, or ball-cardinality identity is assumed in this passage.
+
+For a simple graph the four letters must be nonzero and pairwise distinct, since loops and repeated edges would otherwise change word multiplicities. Their integer second coordinates, in the parent's alphabet order, are [-3t,3t,3t-1,1-3t] and [-(3t+1),3t+1,3t-2,2-3t]. Each list is nonzero and injective for t >= 2, and every entry lies between -(3t+1) and 3t+1. The factorization gives D >= 8(3t+1) > 6t+2 and pD > D. Equal residues would therefore make a nonzero difference of absolute value at most 6t+2 divisible by pD, which is impossible. Comparing an entry with zero proves nonvanishing by the same divisibility argument. This derives separation from the actual coordinates without exposing private arithmetic lemmas from the parent.
+
+The word alphabet is reused directly from BajnokBeattyFirstReturnDefect.step. For a step map s and vertices x,y, a length-l word has endpoint condition x + sum_i s(w_i) = y. A nonempty word decomposes into its first letter and its tail. A nonempty SimpleGraph.Walk decomposes into its first neighbor and the remaining walk. Distinct nonzero steps give a bijection between the four letters and the neighbors of x. Induction on l then identifies these two decompositions, with the empty word corresponding to the length-zero walk. Thus this is a bijection of actual inductive walks, rather than a numerical recurrence for a postulated walk count.
+
+Translation by h in H acts on vertices by x -> h+x and preserves adjacency. The endpoint condition makes this action transparent: x + sum_i s(w_i) = x is equivalent to sum_i s(w_i) = 0 at every root x. The return-word subtype is therefore equivalent to the length-l closed walks at each root. The parent theorem says that both return counts agree for l<n. At n the second count exceeds the first by exactly two. These two extra words are the constant positive-horizontal and negative-horizontal words; at every root they give the two oriented wrapping walks. The count is rooted and oriented, so the trace contribution is two for each vertex, without dividing by orientation or by length.
+
+Let A19 and A33 be the complex adjacency matrices of these simple graphs. Mathlib's SimpleGraph.adjMatrix_pow_apply_eq_card_walk identifies the (x,y) entry of an adjacency power with the number of actual walks of that length. Hence the diagonal entry at x equals the corresponding return count, independently of x. Summing over H gives trace(A19^k) = |H| W19(k) and trace(A33^k) = |H| W33(k). The residue-group product has finite cardinality |p| |pD| = p^2D = N, since p and D are positive. The theorem consequently states trace(A19^k) = trace(A33^k) for every natural k<n and trace(A33^n) - trace(A19^n) = 2N. It also states the finite order and the rooted closed-walk equalities and defect explicitly.
+
+These are invariants of the unlabelled simple graphs. Any graph isomorphism transports a length-l closed walk at x to one at the image of x, even when it does not preserve the identity vertex, the group operation, or the ordered coordinate generators. Root independence and the two-walk defect therefore separate the graphs themselves. This is stronger than the earlier obstruction only to additive isomorphisms carrying each ordered generator to its counterpart. The Lean statement here records the actual rooted counts and complex trace defect; a separate graph-isomorphism theorem and characteristic-polynomial coefficient consequences are outside this statement.
+
+For p=3,t=2 the parameters are D=56, N=504, n=24 and the first trace defect is 1008. The full statement also includes composite odd p, for example p=9. Bajnok-Beatty arXiv:2406.04045v1 supplies the Cayley-diameter context through the cited repository Library note. The coordinate comparison, return-word transfer, walk bijection and moment consequence are repository derivations using the earlier arithmetic theorem and Mathlib's standard adjacency-walk counting theorem. No literature novelty or priority claim is made.
+
+## References
+
+- Truth anchor: `D5/S3/FiniteGroups/BajnokBeattyCayleyReturnMoments.first_return_moment_defect`
+- Dependency: [D5/S3/FiniteGroups/BajnokBeattyFirstReturnDefect](BajnokBeattyFirstReturnDefect.md)

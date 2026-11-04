@@ -143,7 +143,7 @@ private theorem weight_eq_sum (rho : Module.End ℂ (H n))
   congr 1
   exact X.inner_orthogonalProjectionOnto_eq_of_mem_left (b i) (rho (b i))
 
-private theorem weight_nonneg (rho : Module.End ℂ (H n))
+theorem weight_nonneg (rho : Module.End ℂ (H n))
     (hp : ∀ v : H n, 0 ≤ (inner ℂ v (rho v)).re) (X : Submodule ℂ (H n)) :
     0 ≤ weight rho X := by
   rw [weight_eq_sum rho X (stdOrthonormalBasis ℂ X)]
@@ -240,7 +240,7 @@ private theorem faithful_separation (rho : Module.End ℂ (H n))
 
 
 
-private theorem native_matrix_faithfulness
+theorem native_matrix_faithfulness
     (rho : Matrix (Fin n) (Fin n) ℂ) (hp : rho.PosDef)
     (v : H n) (hv : v ≠ 0) :
     0 < (inner ℂ v (rho.toEuclideanLin v)).re := by
@@ -285,7 +285,7 @@ private theorem distance_properties (rho : Module.End ℂ (H n))
 
 
 
-private theorem trace_mul_rank (rho : Module.End ℂ (H n)) (u v : H n) :
+theorem trace_mul_rank (rho : Module.End ℂ (H n)) (u v : H n) :
     LinearMap.trace ℂ (H n) (rho * (InnerProductSpace.rankOne ℂ u v).toLinearMap) =
       inner ℂ v (rho u) := by
   have heq : rho * (InnerProductSpace.rankOne ℂ u v).toLinearMap =

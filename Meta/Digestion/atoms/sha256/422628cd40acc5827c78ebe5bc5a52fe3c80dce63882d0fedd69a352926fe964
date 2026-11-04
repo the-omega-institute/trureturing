@@ -1,0 +1,46 @@
+**Proposition 3.4 (single charts and an actual pairing-erasure boundary).**
+Either single chart has the same equality law under both sources for
+all $n$. Nevertheless, erasing the matching of the two charts need not
+erase every distinction: at $n=4$, retain only the two occupancy counts
+$k_A=|\{a_1,\ldots,a_4\}|$, $k_T=|\{t_1,\ldots,t_4\}|$. Then
+
+$$
+\Pr_0(k_A=k_T=2)=\frac{10183}{3673320192},\qquad
+\Pr_1(k_A=k_T=2)=\frac{10507}{3673320192}.
+\tag{UJB.7508}
+$$
+
+Proof. Biregularity makes the $a_j$ iid uniform on $72$ points and the
+$t_j$ iid uniform on $243$ points. For either chart on $m$ points, any
+specified exact partition with $k$ blocks has probability $(m)_k/m^n$,
+where $(m)_k=m(m-1)\cdots(m-k+1)$, or zero if $k>m$.
+This proves the single-chart assertion at every horizon.
+
+For the joint occupancy event, the actual used edge support must be
+two disjoint edges, a three-edge path, or a four-edge $K_{2,2}$. The
+numbers of the first two support types are common:
+
+$$
+D=\frac{M(M-34)}2=1856520,\qquad
+P=M\cdot26\cdot7=353808.
+$$
+
+Indeed from one edge remove itself, its $26$ other left-incident edges
+and its seven other right-incident edges to count disjoint pairs, then
+divide by two. A three-edge path has a unique middle edge; choose its
+two extensions in $26$ and seven ways. This counts the chosen support
+even if a fourth, unused edge exists in $G_i$. Each two-edge support
+has $2^4-2=14$ length-four sequences using both edges; each three-edge
+support has $3^4-3\cdot2^4+3=36$ using all three; each four-edge support
+has $4!=24$. By (UJB.7507) there are $Q_i/4$ such $K_{2,2}$ supports
+(the factor four chooses the ordered two left and two right vertices).
+Thus the occupancy numerator is
+
+$$
+14D+36P+6Q_i=
+\begin{cases}39591504&i=0,\\40851216&i=1.\end{cases}
+$$
+
+Division by $1944^4$ proves (UJB.7508). The separate occupancy laws
+agree, but their joint law differs even without index matching. $\square$
+

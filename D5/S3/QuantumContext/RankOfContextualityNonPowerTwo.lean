@@ -281,7 +281,7 @@ set_option maxHeartbeats 10000000
 set_option maxRecDepth 1000000
 open scoped BigOperators Classical
 
-private def idx (x : Fin 6) (i : Fin 3) : Fin 9 :=
+def idx (x : Fin 6) (i : Fin 3) : Fin 9 :=
   match x, i with
   | ⟨0,_⟩, ⟨0,_⟩ => 0 | ⟨0,_⟩, ⟨1,_⟩ => 1 | ⟨0,_⟩, ⟨2,_⟩ => 2
   | ⟨1,_⟩, ⟨0,_⟩ => 3 | ⟨1,_⟩, ⟨1,_⟩ => 4 | ⟨1,_⟩, ⟨2,_⟩ => 5
@@ -289,19 +289,19 @@ private def idx (x : Fin 6) (i : Fin 3) : Fin 9 :=
   | ⟨3,_⟩, ⟨0,_⟩ => 0 | ⟨3,_⟩, ⟨1,_⟩ => 3 | ⟨3,_⟩, ⟨2,_⟩ => 6
   | ⟨4,_⟩, ⟨0,_⟩ => 1 | ⟨4,_⟩, ⟨1,_⟩ => 4 | ⟨4,_⟩, ⟨2,_⟩ => 7
   | ⟨5,_⟩, ⟨0,_⟩ => 2 | ⟨5,_⟩, ⟨1,_⟩ => 5 | ⟨5,_⟩, ⟨2,_⟩ => 8
-@[reducible] private def C : Fin 6 → List (Fin 9) := fun x => [idx x 0, idx x 1, idx x 2]
-private def parity3 (a : Fin 3 → Bool) : Bool := xor (xor (a 0) (a 1)) (a 2)
-private def target (x : Fin 6) : Bool := if x = 5 then true else false
+@[reducible] def C : Fin 6 → List (Fin 9) := fun x => [idx x 0, idx x 1, idx x 2]
+def parity3 (a : Fin 3 → Bool) : Bool := xor (xor (a 0) (a 1)) (a 2)
+def target (x : Fin 6) : Bool := if x = 5 then true else false
 private noncomputable def P (x : Fin 6) (a : Fin 3 → Bool) : ℝ :=
   if parity3 a = target x then 1/4 else 0
 
 private lemma bv_xor (a b : Bool) : Bool.toNat (xor a b) = (Bool.toNat a + Bool.toNat b) % 2 := by cases a <;> cases b <;> rfl
-private lemma bv_parity (a : Fin 3 → Bool) : Bool.toNat (parity3 a) = (Bool.toNat (a 0) + Bool.toNat (a 1) + Bool.toNat (a 2)) % 2 := by
+lemma bv_parity (a : Fin 3 → Bool) : Bool.toNat (parity3 a) = (Bool.toNat (a 0) + Bool.toNat (a 1) + Bool.toNat (a 2)) % 2 := by
   have h0 := Bool.toNat_le (a 0); have h1 := Bool.toNat_le (a 1); have h2 := Bool.toNat_le (a 2)
   simp [parity3, bv_xor, Nat.add_mod]
   omega
 
-private lemma parity_miss (g : Fin 9 → Bool) : ∃ x, parity3 (fun i => g ((C x).get i)) ≠ target x := by
+lemma parity_miss (g : Fin 9 → Bool) : ∃ x, parity3 (fun i => g ((C x).get i)) ≠ target x := by
   by_contra h
   push_neg at h
   let v : Fin 9 → ℕ := fun i => Bool.toNat (g i)
@@ -902,7 +902,7 @@ private lemma context_get2 (x : Fin 36) (i : Fin 3) :
     (C x).get ⟨3+i, by rw [length_C]; omega⟩ = (Fin.natAdd 9) (Square.idx (((finProdFinEquiv : Fin 6 × Fin 6 ≃ Fin (6*6)).symm) x).2 i) := by
   fin_cases i <;> rfl
 
-private lemma pm_get_idx (s : Fin 6) (i : Fin 3) : (Square.C s).get i = Square.idx s i := by
+lemma pm_get_idx (s : Fin 6) (i : Fin 3) : (Square.C s).get i = Square.idx s i := by
   fin_cases i <;> rfl
 
 private lemma O_commute (x : Fin 36) (i j : Fin (C x).length) :

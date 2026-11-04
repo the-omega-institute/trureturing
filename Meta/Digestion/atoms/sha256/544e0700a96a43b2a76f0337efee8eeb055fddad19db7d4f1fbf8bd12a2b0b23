@@ -1,0 +1,28 @@
+**Proposition 3.3 (Moment of one nonzero label).** Let $V\in\{E_d,O_d\}$, let $\mathbf a\in\mathbb Z_d^2$ be nonzero and let $n=d/\gcd(a_1,a_2,d)$ be its order. If $n\ne3$ then
+
+$$
+F_{E_d}(\mathbf a)=F_{O_d}(\mathbf a)=\frac{3}{(d+1)(d+3)} .
+$$
+
+If $n=3$ then
+
+$$
+F_{E_d}(\mathbf a)=\frac{3d+35}{(d+1)(d+5)(d+7)},\qquad F_{O_d}(\mathbf a)=\frac{3d-5}{(d-1)(d+1)(d+5)} .
+$$
+
+Stance: suspected-novel (see §5).
+
+**Proof.** By Lemma 3.1, $F_V(\mathbf a)=F_V((0,h))$ with $\gcd(h,d)=\gcd(a_1,a_2,d)$, so $h\not\equiv0$ and $d/\gcd(h,d)=n$; and $D_{(0,h)}=Z^h$. Let $A$ be the real diagonal matrix of Lemma 3.2 with entries $c_1,\dots,c_k$, $k=k_V$. For a unit vector $\psi\in V$, $\langle\psi|Z^h|\psi\rangle=\langle\psi|A|\psi\rangle=\sum_ic_i|\psi_i|^2$ is real, so $|\langle\psi|Z^h|\psi\rangle|^4=\mathrm{tr}(A^{\otimes4}\psi^{\otimes4})$. By cited facts (c) and (e), applied on $V\cong\mathbb C^k$, and since $24\binom{k+3}4=k(k+1)(k+2)(k+3)$,
+
+$$
+F_V((0,h))=\frac{\sum_{\sigma\in S_4}\prod_{c}\mathrm{tr}(A^{|c|})}{k(k+1)(k+2)(k+3)}=\frac{p_1^4+6p_1^2p_2+3p_2^2+8p_1p_3+6p_4}{k(k+1)(k+2)(k+3)},
+$$
+
+using the cycle types of $S_4$: one identity, six transpositions, three double transpositions, eight $3$-cycles and six $4$-cycles; here $p_m=p_m^V(h)$.
+
+For $V=E_d$, $k=(d+1)/2$ and $k(k+1)(k+2)(k+3)=(d+1)(d+3)(d+5)(d+7)/16$. With the values of Lemma 3.2 for $n\ne3$ the numerator is $\frac1{16}\big(1+6(d+2)+3(d+2)^2+32+6(3d+8)\big)=\frac{3d^2+36d+105}{16}=\frac{3(d+5)(d+7)}{16}$. For $n=3$ the term $8p_1p_3$ increases by $8\cdot\frac12\cdot\frac d8=\frac{8d}{16}$, giving $\frac{3d^2+44d+105}{16}=\frac{(3d+35)(d+3)}{16}$.
+
+For $V=O_d$, $k=(d-1)/2$ and $k(k+1)(k+2)(k+3)=(d-1)(d+1)(d+3)(d+5)/16$. For $n\ne3$ the numerator is $\frac1{16}\big(1+6(d-2)+3(d-2)^2+32+6(3d-8)\big)=\frac{3d^2+12d-15}{16}=\frac{3(d-1)(d+5)}{16}$. For $n=3$ the term $8p_1p_3$ changes by $8\cdot(-\frac12)\cdot\frac d8=-\frac{8d}{16}$, giving $\frac{3d^2+4d-15}{16}=\frac{(3d-5)(d+3)}{16}$.
+
+Dividing by the respective denominators gives the four stated values. The computation is valid for every $k\ge1$, including $O_3$ with $k=1$. ∎
+

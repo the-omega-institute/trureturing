@@ -39,7 +39,7 @@ def calls : Source → List Call
   | .mul l r => (calls l).map (Call.shift [false]) ++
       (calls r).map (Call.shift [true])
 
-private theorem run_append {t u v : Source} {w z : List Call}
+theorem run_append {t u v : Source} {w z : List Call}
     (hw : run t w = some u) (hz : run u z = some v) :
     run t (w ++ z) = some v := by
   induction w generalizing t with

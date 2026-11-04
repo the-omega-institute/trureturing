@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5705c915794e0f3e6af8b361e7cec117deff93fdc8bd52363ce64e2d4847bdb4
+  normalized_sha256: sha256:5705c915794e0f3e6af8b361e7cec117deff93fdc8bd52363ce64e2d4847bdb4
+cas_ref: sha256:5705c915794e0f3e6af8b361e7cec117deff93fdc8bd52363ce64e2d4847bdb4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Exclusion of empirical, learning, stability, complexity, physical-cost and originality claims from the scope of exact read counts; no mathematical proposition is asserted.
+    previous_atom_id: 9730a4dd3e4740cc9d863ac2154c9f2a345abef4034d3176afdfb01815d0e693
+    next_atom_id: 15ff9986819775e98bb5707bb59f6d631a725a04bead81e213abf4d2970d5fa0

@@ -64,7 +64,7 @@ For A378258 the first twelve terms match the entry, all tested coefficients are 
 | The normalized source system has an integral solution with the stated parity | Proved | Kernel-checked `HannaA378258SquareRootParity.result`, every $n\ge1$. |
 | Every integral target $X+4H$ with $X^2\mid H$ has a normalized integral compositional square root congruent to $X$ modulo two | Proved | Kernel-checked private `IntegralSquareRoot.root_spec`, consumed by `square_root_spec`. |
 | Replacing five by $1+4t$, for integral $t$, leads to the target $X+4t(X-K)$ and a candidate general parity family | Open candidate | Algebraic route below; no parameter-family Lean settlement is delivered. |
-| The separate conjecture excluding residues one and five modulo six for $n>1$ | Open | Outside `claim`; neither the parity proof nor the finite experiment entry establishes it. |
+| The separate conjecture excluding residues one and five modulo six for $n>1$ | Separate Lean implementation awaiting independent review | [Modulo-six dossier](oeis-a378258-hanna-mod-six.md); outside this parity `claim`. |
 | The assertion concerning the first negative term | Open | Outside `claim`; no sign theorem is delivered. |
 | Twelve source terms, integrality and dyadic parity through degree forty | Computed | The pinned experiment and exact tested scope above. |
 | Source formula (6) and source consequences | Proved in prose as an identity; parity kernel-checked | The derivation below connects the formula to the integral construction. No further source theorem depending on the conjecture is identified by #18825. |
@@ -79,7 +79,7 @@ For A378258 the first twelve terms match the entry, all tested coefficients are 
 
 **Open candidate.** With $c=1+4t$, the same algebra gives $K-cK^2=X+4t(X-K)$. Since $X^2\mid X-K$, the integral lifting mechanism applies to this target. This identifies a candidate route to a parameter-family parity theorem; its full source-system correspondence and Lean settlement are not additional conclusions of `result`.
 
-**Open.** Parity does not decide the source's separate modulo-six exclusion or the first negative term. Those remain distinct questions. The quoted parity conjecture becomes a theorem under the stated normalization; no additional source dependency is asserted.
+The source's separate modulo-six exclusion has a [separate Lean implementation](oeis-a378258-hanna-mod-six.md) awaiting independent review. The first negative term remains open. These are distinct from the parity claim. The quoted parity conjecture becomes a theorem under the stated normalization; no additional source dependency is asserted.
 
 ## ASSUMED-UNVERIFIED
 

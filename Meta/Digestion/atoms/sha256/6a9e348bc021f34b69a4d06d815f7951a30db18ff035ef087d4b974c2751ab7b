@@ -1,0 +1,15 @@
+把 $\mathcal C=\bigoplus_\alpha M_{r_\alpha}$ 嵌入 $B(H)$，令 $C$ 为中心块 pinching。数学延拓 $\widehat\Phi=\Phi C$ 是双随机、自伴完全正映射。它有 Hermitian Kraus 算子 $h_j$，$\sum_jh_j^2=I_H$：把任意 Kraus 表示与其伴随表示平均，再将每对 $`K,K^*`$ 换成 $`(K+K^*)/2`$ 与 $`(K-K^*)/(2i)`$。这里使用的逐项恒等式是
+
+$$
+\operatorname{Re}K\,X\operatorname{Re}K+\operatorname{Im}K\,X\operatorname{Im}K
+=\tfrac12(KXK^*+K^*XK).
+$$
+
+对任何位于一个中心块的单位向量 $\psi$，记 $p_\psi=|\psi\rangle\langle\psi|$，谱下界给
+
+$$
+\sum_j\operatorname{Var}_\psi(h_j)
+ =1-\tau\bigl(p_\psi\Phi(p_\psi)\bigr)\le\delta.
+\tag{86.3}
+$$
+

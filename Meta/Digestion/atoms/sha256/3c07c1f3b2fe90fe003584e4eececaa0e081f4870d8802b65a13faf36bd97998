@@ -1,0 +1,43 @@
+**定义 B-34.1（固定标号域与条件完成纤维）。** 固定定义B-32.1的同一个严格凸标号 $n$ 边形，取任意 $n\ge11$ 及任意可行的六耳放置 $D=\{f_{ab}:1\le a<b\le4\}$。四个固定实际见证满足完整等号 $\operatorname{Ear}(T_a)=S_a$，并且 $D$ 恰有一对交叉耳，即 $q=1$。由定理B-32.3，这一对本身是抽象 $K_4$ 的一个完美匹配，记为 $P=\{x,y\}$；其余两个完美匹配记为 $A,B$。置 $K=A\cup B$，则 $K$ 的四条耳两两不交叉。仍令
+
+$$
+\begin{aligned}
+\mathcal H&=\{T\in\mathcal T_n:\operatorname{Ear}(T)\cap S_a\ne\varnothing\ (1\le a\le4)\},\\
+\mathcal X_A&=\{T\in\mathcal T_n:A\subseteq\operatorname{Ear}(T),
+B\cap\operatorname{Ear}(T)=\varnothing\},\\
+\mathcal X_B&=\{T\in\mathcal T_n:B\subseteq\operatorname{Ear}(T),
+A\cap\operatorname{Ear}(T)=\varnothing\},\\
+\mathcal U&=\mathcal H\setminus(\mathcal X_A\cup\mathcal X_B).
+\end{aligned} \tag{34.1}
+$$
+
+每个完美匹配接触每颗星，故两条件纤维都在 $\mathcal H$ 内。这里的纤维含全部实际完成，未禁止任何未明列的耳。耳相交以及两族交叉相交始终指完整耳集相交；后者要求对每个跨族成员对成立。
+
+令 $\mathcal E_n=\{e_i:0\le i<n\}$ 为全部实际耳，并定义
+
+$$
+E=\{e\in\mathcal E_n\setminus K:e\text{ 与 }K\text{ 中每条耳均不交叉}\}.
+\tag{34.2}
+$$
+
+于是 $P\subseteq E$，而 $E\ne\mathcal E_n$。对 $F\in\mathcal X_A,G\in\mathcal X_B$，准确有
+
+$$
+\operatorname{Ear}(F)\cap\operatorname{Ear}(G)
+=(\operatorname{Ear}(F)\cap E)\cap(\operatorname{Ear}(G)\cap E).
+\tag{34.3}
+$$
+
+事实上，共同耳不能在 $A$ 或 $B$ 内；又因两成员分别强制 $A$ 和 $B$，共同耳不能与 $K$ 中任何耳交叉。反向包含直接成立。式(34.3)保留了 $D$ 外的全部潜在共同耳。
+
+本节所需的 Catalan 记号取约定B-32.2的同一公式，并使用以下下标范围：
+
+$$
+c_j=C_{n-j-2}\quad(0\le j\le\lfloor n/2\rfloor),\qquad
+ a=c_2-2c_3+c_4,\qquad
+ L=c_2+6c_3-10c_4+4c_5.
+\tag{34.4}
+$$
+
+本节的 $a$ 专指式(34.4)，不指式(33.16)后表中的二元精确迹权重。此处所有剩余多边形至少有 $\lceil n/2\rceil\ge6$ 个顶点。
+

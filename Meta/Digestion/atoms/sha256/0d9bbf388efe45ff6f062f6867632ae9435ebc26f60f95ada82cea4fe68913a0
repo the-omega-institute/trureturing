@@ -1,0 +1,14 @@
+## 7. 来源与完整白话
+
+[1] R. Łukasik, *Some generalization of Cauchy’s and the quadratic functional equations*, Aequationes Mathematicae 83 (2012), 75–86, [DOI:10.1007/s00010-011-0106-x](https://doi.org/10.1007/s00010-011-0106-x)，Theorem 4, pp. 82–83。有限自同构群的平均方程允许到群阶为止的广义多项式；本文不把三向平均式本身或一般极化工具声称为新发现。任意自同态的可见商、非负性排除奇部、缺陷关系与原接口对应给出本稿的具体推导。
+
+[2] R. Mosseri and R. Dandoloff, *Geometry of entangled states, Bloch spheres and Hopf fibrations*, [quant-ph/0108137](https://arxiv.org/abs/quant-ph/0108137)，§2。只用于复二维振幅的相位商几何。
+
+[3] P. Busch, *Quantum states and generalized observables: a simple proof of Gleason’s theorem*, [quant-ph/9909073](https://arxiv.org/abs/quant-ph/9909073)。全效果评价及其非负、归一和可加前件不省略。
+
+[4] J. Watrous, *The Theory of Quantum Information*, Chapter 2, Theorem 2.22, [公开章节](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)。有限维 CP、Choi、Kraus、Stinespring 等价不供应原过程的来源条件。
+
+**内容对应。**母卷 C133 与标量合分续篇提供共同实线性域上的比较对象；本稿的整数前端与它们只按命题 4.1 的实现性对应，不偷加原实数旋钮。函数方程、正形式完成、效果与 CP 表示均有既有数学背景；本稿保留原标签、有限深度边界及过程和联合的完整参数对应，不提出文献优先权主张。
+
+**完整白话。**拿两份带着完整来历的历史作比较，先不说它们有复振幅，也不说读数应当平方。只允许有限地合并正反比较配方，并给第二份盖上同一种标记：不盖、盖一次、盖两次的三次读数，加起来恰好等于两份单独读数各取三倍。若所有这些有限比较都非负，多余的增长方式就会被排除；标记在看得见的部分闭成三等分的一圈，正反配方同值，交叉影响也被迫按加法相容。六角格、复平面和平方律由此逐步出现，完整结果记录再把它们变成 Born 概率。历史与盖章日志仍在原处，仪器怎样接续、两系统怎样联合和物理时间怎样流动，则由各自实际关系接上。
+

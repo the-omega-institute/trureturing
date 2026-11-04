@@ -70,5 +70,15 @@ internal sealed class PrimeValuation5040SigmaDocument : IScribeDocumentDefinitio
                         + "sigma(m)/m <= B. With W coprime to each of 2,3,5,7 and "
                         + "jointFiber primes5040 profile5040 W (5040*n), the conclusion is "
                         + "sigma(5040*n)/(5040*n) <= (403/105)*B."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("normalized-sigma-5040-threshold"),
+                DeclarationHandle.Create(Prefix + "normalized_sigma_5040_gt_two_iff"),
+                H("Exact abundancy threshold transfer"),
+                StatementSource.FromAuthor(Disp(F.Id("normalizedSigma5040GtTwoIff"))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On the coprime residual fibre, exceeding the strict abundancy threshold 2 "
+                        + "is equivalent to the residual normalized ratio exceeding 210/403."))),
                 DescribeRole.Theorem))));
 }

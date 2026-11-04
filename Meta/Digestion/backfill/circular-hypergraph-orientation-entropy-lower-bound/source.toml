@@ -1,0 +1,5 @@
+source_id = "circular-hypergraph-orientation-entropy-lower-bound"
+path = "docs/develop/theory/CIRCULAR_HYPERGRAPH_ORIENTATION_ENTROPY_LOWER_BOUND.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

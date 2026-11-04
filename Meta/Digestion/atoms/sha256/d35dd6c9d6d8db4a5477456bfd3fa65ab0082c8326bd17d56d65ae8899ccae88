@@ -1,0 +1,47 @@
+### 定理 16.1（Petz 恢复按处理路径的相反次序组合）
+
+设 $\mathcal N$ 后接 $\mathcal M$，并令
+$\tau=\mathcal N\sigma$、$\upsilon=\mathcal M\tau$。
+在这三个参照均忠实的声明载体上，有
+
+<a id="eq-v90-petz-chain"></a>
+
+$$
+\boxed{\quad
+\mathcal R_{\sigma,\mathcal M\mathcal N}
+=\mathcal R_{\sigma,\mathcal N}\,
+ \mathcal R_{\tau,\mathcal M}.
+\quad}
+\tag{16.1}
+$$
+
+**证明。**
+用加权共轭表示，右侧等于
+
+$$
+\Gamma_\sigma\mathcal N^*\Gamma_\tau^{-1}
+\Gamma_\tau\mathcal M^*\Gamma_\upsilon^{-1}
+=\Gamma_\sigma(\mathcal M\mathcal N)^*\Gamma_\upsilon^{-1},
+$$
+
+恰为左侧。这个等式对全部输出算子成立；不要求各段先已无损。
+
+现在回到本轮实际采用的内生二元问题。给两个态 $\rho_0,\rho_1$，令
+
+$$
+\sigma_0=\frac{\rho_0+\rho_1}{2},\qquad
+d_0=\frac{\rho_0-\rho_1}{2}.
+$$
+
+依次施加声明的 CPTP 映射 $\mathcal N_1,\ldots,\mathcal N_m$，
+定义 $\sigma_i=\mathcal N_i(\sigma_{i-1})$、$d_i=\mathcal N_i(d_{i-1})$，
+并在各忠实参照载体上记
+
+$$
+J_i=\operatorname{Tr}\!\left[(\sigma_i^{-1/4}d_i\sigma_i^{-1/4})^2\right],
+\qquad \ell_i=J_{i-1}-J_i\ge0.
+$$
+
+这里 $J_i$ 就是第 $i$ 段后实际二态的 $\mathcal I$。
+中点随过程共同传递，因此两端相对于中点的平方距离始终同为 $J_i$。
+

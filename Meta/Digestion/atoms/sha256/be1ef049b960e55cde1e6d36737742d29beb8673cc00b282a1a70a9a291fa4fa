@@ -1,0 +1,41 @@
+#### 定理 10.2（非正交与奇异 Gram 的精确最优值）
+
+令 $G^+$ 为 Moore--Penrose 逆，则
+
+<a id="eq-optgram"></a>
+
+$$
+\boxed{
+t_*=\min_{\mathbf1^*c=1}c^*Gc
+=
+\begin{cases}
+(\mathbf1^*G^+\mathbf1)^{-1},&\mathbf1\in\operatorname{ran}  G,\\
+0,&\mathbf1\notin\operatorname{ran}  G.
+\end{cases}
+}\tag{10.3}
+$$
+
+第一种情况下分母严格为正。
+
+**证明。**
+
+$`\{Xc:\mathbf1^*c=1\}=x_1+D`$，
+故最小范数点定理给首项。
+若 $\mathbf1\in\operatorname{ran}  G$，Cauchy--Schwarz 给
+
+$$
+|\mathbf1^*c|^2
+=\left|(G^{+1/2}\mathbf1)^*G^{1/2}c\right|^2
+\le(\mathbf1^*G^+\mathbf1)(c^*Gc).
+$$
+
+在约束下得到下界；取
+$`c_*=G^+\mathbf1/(\mathbf1^*G^+\mathbf1)`$ 达到。
+若 $\mathbf1\notin\operatorname{ran}  G=(\operatorname{ker}  G)^\perp$，
+有 $k\in\operatorname{ker}  G$ 且 $`\mathbf1^*k\ne0`$。
+令 $`c=k/(\mathbf1^*k)`$，则约束成立而 $`c^*Gc=0`$。
+
+□
+
+<a id="statement-10-3"></a>
+

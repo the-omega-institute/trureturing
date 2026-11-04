@@ -1,0 +1,28 @@
+**Definition 3.1 (one source and total paid samples).** Fix one hidden
+$i\in\{0,1\}$ throughout a run and use exactly the groups $S_i$ of
+[FINITE_GROUP_POWER_MAP_SEPARATION, Definition 1.2 and Theorem 1.3](FINITE_GROUP_POWER_MAP_SEPARATION.md).
+Write $O_6(S_i)$ for their order-six elements. Each paid draw satisfies
+
+$$
+\Pr(x_j=x\mid i,\text{actual past})=\frac1{1944}
+\quad(x\in O_6(S_i)).
+\tag{UJB.7501}
+$$
+
+A supplied legal, nondestructive same-source fork/read returns opaque
+references $a_j=x_j^2$ and $t_j=x_j^3$ from that very draw. The observer
+may retain these references and compare stable equality within each
+endpoint type, including against old references. Coordinates, names,
+cross-type comparisons, multiplication, inverse, conditioning the sampler
+and reset are unavailable. Initialization, control, private randomness,
+permissions and any refusal or timing information are source-blind;
+permission to draw and compare persists. The only source-dependent
+observations are the stated typed equalities. Any old source-dependent
+records must come from this same contract and their draws count in the
+total $n$; changing the current batch does not erase their cost.
+
+The complete equality record is $H_n=(\pi_A,\pi_T)$, two partitions of
+the same ordered index set $[n]$, with $j\sim_A k$ iff $a_j=a_k$ and
+$j\sim_T k$ iff $t_j=t_k$. Thus $n$ counts all acquired samples, not
+live storage, comparisons, elementary native actions or elapsed time.
+

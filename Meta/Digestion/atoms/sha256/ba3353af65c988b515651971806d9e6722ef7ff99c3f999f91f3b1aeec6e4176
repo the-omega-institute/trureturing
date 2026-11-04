@@ -1,0 +1,12 @@
+**Definition 1.1 (domain and forcing rule).** Let $G=(V,E)$ be a finite nonempty connected simple undirected graph, with $V=[n]=\{1,\ldots,n\}$, $m=|E|$, and cycle rank $q=m-n+1$. Let $k\geq1$ be an integer. A placement is a set $S\subseteq V$ chosen before any faults. Given $F\subseteq E$, ordinary zero forcing in $G-F=(V,E\setminus F)$ starts with exactly $S$ blue. A move $u\to v$ is legal when $u$ is blue and $v$ is its unique white neighbor in $G-F$. The placement is $k$-contingent if
+
+$$
+ \forall F\subseteq E\quad |F|\leq k\quad
+ \exists\text{ a legal sequence from }S\text{ coloring every vertex of }G-F.
+ \tag{1.1}
+$$
+
+The sequence can depend on $F$; $S$ cannot. Write $z_k(G)$ for the least size of such a placement. The set $V$ is always feasible, so this minimum exists. Deleted edges remain absent throughout a sequence; sources must be blue. Disconnected graphs $G-F$ and isolated vertices retain their original vertex labels.
+
+This is the definition in Aksoy, Petyuk, Roy, and Young, “$(n-k)$-contingent Zero-Forcing for Power Grids,” in *Seven open problems in applied combinatorics*, [arXiv:2303.11464v1](https://arxiv.org/abs/2303.11464v1), `Sections/zero-forcing.tex`, definition of contingent zero forcing. Its $Z$ is our $S$ and its $E'$ is our $F$. The $n$ in the published name is not an additional restriction on $k$ in (1.1). Here arbitrarily long positive binary integers $k$ are allowed.
+

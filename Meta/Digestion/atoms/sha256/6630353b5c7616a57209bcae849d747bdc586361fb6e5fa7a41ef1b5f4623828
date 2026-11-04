@@ -1,0 +1,128 @@
+**Theorem 40.4 (relative neighborhoods and exclusion of mixed minimizing coalescence).**
+Give $\mathscr D=(0,4]\times U(4)$ the relative product topology
+from the real level coordinate and the matrix Frobenius norm.
+For $(\xi,U)\in\mathscr D$ compute the original data on
+$w=\operatorname{diag}(UU_+^\dagger)$ and set
+
+$$
+ k=t_+(w,\xi),\qquad
+ D(w,\xi)=b_+(w)+2u(w)v(w)\sqrt{\frac{k}{1-k}}
+ \quad (0<k<1).
+\tag{40.20}
+$$
+
+The set
+
+$$
+ \Omega=\left\{(\xi,U)\in\mathscr D:
+ \begin{array}{c}
+ uv>0,\quad 0<k<1,\quad k<J_+,\\
+ t_-<0,\quad D(w,\xi)>49/180
+ \end{array}\right\}
+\tag{40.21}
+$$
+
+is relatively open, invariant under $U\mapsto\lambda U$, and
+contains all selected feedbacks over $(0,4]$.
+For every $(\xi,U)\in\Omega$ there is a unique fixed-feedback
+minimizing effect $\widehat E$ at original level $\xi$.
+It has rank one and is given by
+
+$$
+ \widehat E=
+ \left[T\begin{pmatrix}
+ 1-k&\sqrt{k(1-k)}\,\bar P Q/(uv)\\
+ \sqrt{k(1-k)}\,P\bar Q/(uv)&k
+ \end{pmatrix}T^\dagger\right]^{\mathsf T}.
+\tag{40.22}
+$$
+
+For every original effect $E$ at that same $U$ and level,
+
+$$
+ \rho(\widehat E,U)=\rho(E,U)=\xi,\qquad
+ f(E,U)\ge f(\widehat E,U)+\frac{49}{360}\epsilon(E).
+\tag{40.23}
+$$
+
+This includes all actual nondiagonal feedbacks in $\Omega$.
+For each nonempty compact $K\subset(0,4]$, write
+$\mathscr U_\xi=\{U:(E,U)\in\mathcal G_\xi\}$.
+There is $r_K>0$ such that, uniformly for $\xi\in K$,
+
+$$
+ \operatorname{dist}_{\mathrm F}(U,\mathscr U_\xi)<r_K
+       \quad\Longrightarrow\quad (\xi,U)\in\Omega.
+\tag{40.24}
+$$
+
+Both the radius and the minimizing effect refer to actual matrices;
+the distance is to the full common-scalar orbits.
+The coefficient $49/360$ in (40.23) is independent of $K$.
+
+In particular, suppose $\xi_n\in(0,4]$ tends to
+$\xi_0\in(0,4]$, $\operatorname{dist}_{\mathrm F}(U_n,\mathscr U_{\xi_n})\to0$,
+and each $E_n$ minimizes its original fixed-$U_n$ level problem.
+Then $E_n$ has rank one for all sufficiently large $n$.
+The same conclusion holds for full-domain global minimizers.
+Thus a mixed minimizing branch cannot coalesce with a selected
+geometric pair at a positive level in this relative range.
+
+*Proof.* The diagonal map from the actual unitary group is continuous,
+as are $A,B,u,v,b_\pm,t_\pm,J_\pm$. On $0<k<1$ the expression
+$D$ is continuous. All inequalities in (40.21) are strict, proving
+relative openness. They are common-phase invariant, as are
+$\bar P Q/(uv)$ and the selected feedback orbits.
+Theorems 37.5 and 40.3 give (40.15) and $D>49/90$ at every
+selected feedback. Hence this entire graph lies in $\Omega$.
+
+For an actual $U$ in $\Omega$, $t_-<0$ excludes the negative
+sign at the prescribed level for every effect.
+The conditions $0<k<1$ and $k<J_+$ make the positive arc nonempty
+and put its pure endpoint strictly below both possible upper endpoints.
+The phase-aligned effect (40.22) is positive with trace one and
+determinant zero. Its positive distance is exactly $\xi$, and its
+positive sign is strictly minimizing because $k<J_+$.
+Every other effect at that original level is on this same positive
+arc, with population $q\ge k$ and impurity $2(q-k)$.
+Convexity (36.15), including the upper endpoint by continuity, gives
+
+$$
+ g(E,U)-g(\widehat E,U)
+      \ge D(w,\xi)(q-k)
+      \ge\frac{49}{360}\epsilon(E).
+\tag{40.25}
+$$
+
+When $q>k$ the inequality before the fixed constant is strictly
+positive. When $q=k$, $uv>0$ and $k(1-k)>0$ give a unique
+aligning phase. This proves uniqueness, (40.23), and the actual
+same-feedback realization. The calculation used only data of the
+specified $U$, so it applies to every actual lift without imposing
+any diagonal-feedback restriction.
+
+The continuity of the scalar selector and the Hausdorff continuity
+of $\mathcal G_\xi$ are supplied by Theorem 39.2.
+Consequently the selected feedback graph over compact $K$ is compact
+in $K\times U(4)$ and lies inside the relatively open $\Omega$.
+A positive product-metric neighborhood of that compact graph lies
+inside $\Omega\cap(K\times U(4))$. At a fixed level this proves
+(40.24); since each feedback orbit is compact, the distance used
+there is attained. It is invariant under the single scalar action.
+For the sequence in the statement choose one compact positive-level
+interval containing its tail. Equation (40.24) puts its tail in
+$\Omega$, where a mixed effect has a strictly better same-feedback
+competitor by (40.23). This contradicts either fixed-feedback or
+full-domain minimality, proving eventual purity. $\square$
+
+The neighborhood assertion at $\xi=4$ is relative to $\xi\le4$;
+it asserts no exclusion for levels above four. Zero is excluded:
+no positive neighborhood radius uniform down to $\xi=0$ is asserted.
+At boundaries where $uv=0$, $k\in\{0,1\}$, $k=J_+$,
+$t_-=0$ or the derivative margin fails, Theorem 40.4 gives no
+conclusion; the complete degenerate profile remains (36.5)--(36.7).
+Away from selected feedbacks the value at (40.22) is not asserted
+to equal or exceed $N_{\mathrm{geo}}(\xi)+\kappa\xi$.
+Pure nongeometric minimizing branches may coalesce, and mixed
+branches separated from the selected graph are not excluded.
+

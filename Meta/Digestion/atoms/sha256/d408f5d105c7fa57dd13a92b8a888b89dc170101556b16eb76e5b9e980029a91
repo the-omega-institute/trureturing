@@ -1,0 +1,24 @@
+### 定义 5.2（本节实际门资源）
+
+给定并供应同一个完整酉
+
+$$
+U:H\otimes E_0\longrightarrow K\otimes E,\qquad m=\dim E,
+$$
+
+及其逆门 $U^*$、原初始化态 $\lvert 0\rangle\in E_0$、对该初始化支持的投影和输出解码。其中
+
+$$
+\mathcal N(X)=\operatorname{Tr}_E\bigl[U(X\otimes\lvert 0\rangle\langle 0\rvert)U^*\bigr].
+$$
+
+不同维数通过共同有限载体中的已声明编码处理；若以上张量分解不便使用，可用已供应的初始化等距 $J:H\to K\otimes E$ 及投影 $JJ^*$ 表达同一操作。
+另供应最大混合辅助态 $I_E/m$，以及两个带成功旗的滤片
+
+$$
+A_\tau=c\tau^{-1/2},\qquad A_\sigma=\sigma^{1/2},
+ \qquad 0<c^2\le\lambda_{\min}^{+}(\tau).
+$$
+
+两者均为收缩，所以对应合法的迹不增 CP 支路。这里 $\tau$ 必须来自上述*同一个实际* $U$ 所定义的 $\mathcal N(\sigma)$。
+

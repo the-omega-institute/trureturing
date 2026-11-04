@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1b3e23ad4511670a7d057615aa7ec18edf5bc1b48190c30a972cac9acefafc2b
+  normalized_sha256: sha256:1b3e23ad4511670a7d057615aa7ec18edf5bc1b48190c30a972cac9acefafc2b
+cas_ref: sha256:1b3e23ad4511670a7d057615aa7ec18edf5bc1b48190c30a972cac9acefafc2b
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/S4OppositePairKernelClassification.trivial_pair_action_iff
+    target_statement_id: sha256:f41ae0c968c5c04cead92fcef15a6c683d8d2cf46c5520a171b564472aa4f75a
+receipts:
+  unresolved_subitems: []

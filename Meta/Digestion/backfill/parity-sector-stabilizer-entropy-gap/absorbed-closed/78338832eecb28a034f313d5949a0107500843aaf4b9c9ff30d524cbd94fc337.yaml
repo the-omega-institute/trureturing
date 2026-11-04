@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:78338832eecb28a034f313d5949a0107500843aaf4b9c9ff30d524cbd94fc337
+  normalized_sha256: sha256:78338832eecb28a034f313d5949a0107500843aaf4b9c9ff30d524cbd94fc337
+cas_ref: sha256:78338832eecb28a034f313d5949a0107500843aaf4b9c9ff30d524cbd94fc337
+coverage_gids:
+  - gid: D5/S3/Quantum/Magic/ParitySectorMoments.evenClockDiag
+    target_statement_id: sha256:c36ade190eadf8e176de5a906b6e297f1ec42a8b198c9f87174d65c7588ff679
+  - gid: D5/S3/Quantum/Magic/ParitySectorMoments.evenClockPowerSum
+    target_statement_id: sha256:54e140009f2b6b51bbc4582146a3906841760d81f1037d0acf4b570418de0f15
+  - gid: D5/S3/Quantum/Magic/ParitySectorMoments.oddClockDiag
+    target_statement_id: sha256:40d80e2b2127bf2ce16a85df8f29be014be077e0d3adca28f17aadeeba223ae6
+  - gid: D5/S3/Quantum/Magic/ParitySectorMoments.oddClockPowerSum
+    target_statement_id: sha256:81f5e1eda6b30c87bffdc9e204c6a2378a9be48825580b590ebd96eee79d31d9
+  - gid: D5/S3/Quantum/Magic/ParitySectorMoments.parity_clock_compression_and_power_sums
+    target_statement_id: sha256:0102c8c727963e7475a2765e773c27672cc74a15e4c3e39ce8c81c693bff0af7
+receipts:
+  unresolved_subitems: []

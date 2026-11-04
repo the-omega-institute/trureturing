@@ -1,0 +1,23 @@
+### 定理 4：缺陷维数恒等式
+
+$$
+\boxed{
+\kappa
+=
+\nu_-(\mathcal P_F)
+=
+q
+=
+\dim K_J
+=
+\operatorname{rank}H_g.
+}
+
+$$
+
+<a id="eq-4-2"></a>
+
+(4.2)
+
+有限维时秩和维数采用通常定义；无限情形统一记作 $\infty$。
+

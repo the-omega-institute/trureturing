@@ -1,0 +1,18 @@
+**有限验算。** 取 $X=\{0,1\}$、$U=(-1,1)$、$p_\theta(1)=(1+\theta)/2$、$p_\theta(0)=(1-\theta)/2$。在 $\theta=0$，
+
+$$
+I(0)=\frac{(1/2)^2}{1/2}+\frac{(-1/2)^2}{1/2}=1,
+\qquad
+A_\varepsilon=\mathsf A(p_0,p_\varepsilon)
+=\frac{\sqrt{1+\varepsilon}+\sqrt{1-\varepsilon}}2.
+$$
+
+对 $0<|\varepsilon|<1$，由 $A_\varepsilon^2=(1+\sqrt{1-\varepsilon^2})/2$ 两次有理化，精确得到
+
+$$
+\frac{\mathsf H^2(p_0,p_\varepsilon)}{\varepsilon^2}
+=\frac{1-A_\varepsilon}{\varepsilon^2}
+=\frac{1}{2(1+\sqrt{1-\varepsilon^2})(1+A_\varepsilon)}
+\longrightarrow\frac18.
+$$
+

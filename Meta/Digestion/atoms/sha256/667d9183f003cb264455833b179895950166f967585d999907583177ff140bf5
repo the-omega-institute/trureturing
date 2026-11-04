@@ -1,0 +1,49 @@
+**Theorem 32.1 (linear necessary peak and joint attainment of orders).**
+For every admissible deterministic recorder $R$ and every integer
+$N\ge4$,
+
+$$
+P_R^{\max}(N)\ge m_N>\frac{N+1}{10},\qquad
+m_N=\max\{2^k:5\cdot2^k-1\le N\}.
+\tag{IV.96}
+$$
+
+Together with Theorems 30.2 and 31.2, this says explicitly
+
+$$
+\begin{aligned}
+&\exists c_T,c_P>0\ \exists N_0\ \forall R\ \forall N\ge N_0:\quad
+T_R^{\max}(N)\ge c_TN\log_2N,\quad P_R^{\max}(N)\ge c_PN,\\
+&\exists\text{ one computable }R_*\ \exists C_T,C_P>0\
+\forall N\ge1\ \forall h\ (|h|=N):\quad
+T_*(h)\le C_TN\log_2(N+2),\quad p_*(h)\le C_PN.
+\end{aligned}
+\tag{IV.97}
+$$
+
+Thus the same recorder attains the optimal asymptotic orders in the two
+coordinates. The two maxima in the first line are separate: their
+witness histories need not coincide.
+
+**Proof.** Use $A_0,A_1$ and $B_k$ from (IV.71), with $m=2^k$.
+The existing current-orientation count (IV.64), as applied in Theorem
+27.2, gives exactly $2^m$ reachable ordered terms over
+$U(B_k(A_0))$, independently choosing $A_0$ or $A_1$ at each bottom
+block. They have $a=m,c=2m$, hence all have grade $5m-1$. Choose one
+legal history for each ordered term. By (IV.82) their settled record
+words must be distinct. Words of lengths zero through $m-1$ number
+only $2^m-1$. At least one of these histories therefore has a settled
+record of length at least $m$, without any prefix-free assumption.
+
+Take $m=m_N$. Extend that witnessing history by exactly
+$N-(5m-1)$ further events, if needed, by repeatedly splitting its current
+leftmost beta leaf. Such a leaf exists and every split creates the next
+left beta, so any required finite extension is legal. The earlier
+length-$m$ word remains in the **peak** even if later updates erase it.
+Maximality of the power of two gives $2m>(N+1)/5$, proving (IV.96).
+The lower uses the orientation fibre, not the much larger full-history
+fibre. Apply (IV.85) for the other coordinate and (IV.92) for the one
+common upper recorder to obtain (IV.97). This compares orders of these
+two worst-case resources; it supplies no sharp constants, full Pareto
+frontier or total-resource optimum. $\square$
+

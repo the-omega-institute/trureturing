@@ -1,0 +1,20 @@
+#### 说明 2.5（接回 v16 的变分）
+
+给定有限路径权 $q_h>0$、代价 $c_h$ 与 $\tau>0$，
+
+$$
+\mathcal Z=\sum_hq_he^{-c_h/\tau}
+$$
+
+是加乘电路，$-\tau\log\mathcal Z$ 是其对数表示。若 $q$ 为参考概率律，则
+
+$$
+\mathbb{E}_Pc+\tau D\!\left(P\middle\Vert q\right) 
+=-\tau\log\mathcal Z+\tau D\!\left(P\middle\Vert P^*\right) ,\quad
+P_h^*=q_he^{-c_h/\tau}/\mathcal Z.
+$$
+
+展开对数即得。这是递归配分计算与 Gibbs 最小化的精确桥；代价、参考律和温度的选取仍是该问题的数据。
+
+<a id="sec-3"></a>
+

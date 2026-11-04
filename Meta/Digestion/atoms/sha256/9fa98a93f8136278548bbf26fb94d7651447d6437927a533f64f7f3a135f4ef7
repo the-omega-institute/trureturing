@@ -1,0 +1,38 @@
+#### 定理 3.1（同纤维上的两种最优）
+
+设 $R>0$ 且 $0<X,Y<R$。最大 Shannon 熵的唯一完成为
+
+$$
+\kappa_*=\frac{XY}{R}.
+$$
+
+若只知 $\kappa\in[\kappa_-,\kappa_+]$，以最坏绝对误差评价点预测，则唯一 minimax 预测为
+
+$$
+\widehat\kappa_{\rm mm}=\frac{\kappa_-+\kappa_+}{2},\qquad
+\inf_a\sup_\kappa|a-\kappa|=\frac{\kappa_+-\kappa_-}{2}.
+$$
+
+**证明。**
+
+使用自然对数，令 $H(p)=-\sum_i p_i\log p_i$。纤维内部
+
+$$
+H'(\kappa)=\log\frac{(X-\kappa)(Y-\kappa)}{\kappa(R-X-Y+\kappa)},\qquad
+H''(\kappa)=-\left(\frac{1}{p_0}+\frac{1}{p_1}+\frac{1}{p_3}+\frac{1}{p_{13}}\right)<0.
+$$
+
+令一阶导数为零得 $R\kappa=XY$。所列严格边际条件保证它位于纤维内部，严格凹性给唯一性。另一方面，最坏绝对误差等于 $\max(|a-\kappa_-|,|a-\kappa_+|)$，唯一在区间中点取两端平衡并达到半宽。端点退化时直接按单点处理；$R=0$ 时只有顶点态，不使用 $XY/R$。
+
+∎
+
+特别取 $X=Y=1/5,Z=0$，可行纤维为 $[0,1/5]$，但
+
+$$
+\kappa_*=\frac{1}{25}\ne \frac{1}{10}=\widehat\kappa_{\rm mm}.
+$$
+
+这个项目已有的反例准确说明：**关系相容本身不足以选择唯一概率或唯一“最佳预测”。** 最大熵描述一个补全规则；它不是未知真实来源必然采用该规则的证明。
+
+<a id="statement-3-2"></a>
+

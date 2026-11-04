@@ -1,0 +1,83 @@
+**定理 2.2（交替前的单位矩与非零系数证书）。** 在定义 2.1 下，有精确恒等式
+
+$$
+\boxed{\sum_{i<j}\langle U_{ij},z_{ij}\otimes v\rangle
+=\beta r^2Z^2,}
+\tag{2.5}
+$$
+
+以及精确正交分解和有限报告上界
+
+$$
+\boxed{\sum_{i<j}\|U_{ij}\|^2
+=\beta^2r^2Z^2
++\kappa^2\|w\|^2\sum_{i<j}\|D_1z_{ij}\|^2
+\le u^2m^2.}
+\tag{2.6}
+$$
+
+所以当 $Z>0$ 时，同一实际系数满足
+
+$$
+\boxed{|\beta|\le\frac{u m}{rZ}.}
+\tag{2.7}
+$$
+
+完整混合族还给出
+
+$$
+\boxed{m+|\kappa|Q\ge r\sqrt{A^2+\beta^2h^2}\ge rA.}
+\tag{2.8}
+$$
+
+若 $A>0$ 且 $m<rA$，则 $Q>0,Z>0,\kappa\ne0$，并有
+
+$$
+\boxed{|\kappa|\ge\frac{rA-m}{Q}>0.}
+\tag{2.9}
+$$
+
+特别地，若已证上界 $\overline m<rA$，则
+
+$$
+\mu_{\rm cert}=\frac{rA-\overline m}{Q}
+\quad\text{满足}\quad 0<\mu_{\rm cert}\le|\kappa|.
+\tag{2.10}
+$$
+
+这是充分阈值；未通过该阈值不判定 $\kappa=0$，也不否定其他条件证书。
+
+证明。只复用原卷定义 8.1 所具有的斜伴随性，即[比较曲率 V95，定理 2.1 第一项](AURIC_COMPARISON_DYNAMICAL_CURVATURE_FINITE_FRAME_QUANTUM_V95.md)。特别地，$D_1$ 斜伴；这不等于 $D_1=0$。原卷引理 16.3 在全部当前输入上给
+
+$$
+R_{ijk}=(K_{ij}+\beta L_{z_{ij}})e_k\otimes v
+-\kappa C_{z_{ij}}e_k\otimes w.
+\tag{2.11}
+$$
+
+由于 $L_a1=a$ 及 $S$ 交换，$K_{ij}1=0$；又 $L_z1=z$、$C_z1=B(1,z)=D_1z$。因此
+
+$$
+U_{ij}=\beta z_{ij}\otimes v-\kappa D_1z_{ij}\otimes w.
+\tag{2.12}
+$$
+
+斜伴随性使 $g_J(z_{ij},D_1z_{ij})=0$，即使 $v,w$ 不正交，(2.12) 的两项仍正交。与 $z_{ij}\otimes v$ 配对并求和得到 (2.5)，取范数平方并求和得到 (2.6) 的等式。对 (2.3) 逐对使用 Cauchy–Schwarz 不等式，得到
+
+$$
+\|U_{ij}\|^2\le
+\left(\sum_k g_J(1,e_k)^2\right)\sum_k\|R_{ijk}\|^2
+=u^2\sum_k\|R_{ijk}\|^2.
+$$
+
+求和得到 (2.6) 的不等式；$Z>0$ 时可以除以 $rZ$，得到 (2.7)。这一步没有用 $B$ 的交替性。
+
+在以 $(i,j,k)$ 为标签的正交直和中，把 (2.11) 的第一项族记为 $E$，把 $C_{z_{ij}}e_k\otimes w$ 的族记为 $F$。于是 $R_{\rm mix}=E-\kappa F$ 且 $\|F\|=Q$。Frobenius 性使每个 $L_z$ 自伴，$K_{ij}$ 是两个自伴算子的交换子，因而斜伴。实自伴与实斜伴算子在 Hilbert–Schmidt 内积下正交，所以
+
+$$
+\|E\|^2=r^2\sum_{i<j}\|K_{ij}+\beta L_{z_{ij}}\|_{\rm HS}^2
+=r^2(A^2+\beta^2h^2).
+$$
+
+三角不等式 $\|E\|\le\|R_{\rm mix}\|+|\kappa|\|F\|$ 给出 (2.8)。若 $m<rA$，则 $|\kappa|Q\ge rA-m>0$，故 $\kappa\ne0,Q>0$。由 $Q>0$ 可知某个 $C_{z_{ij}}\ne0$，从而某个 $z_{ij}\ne0$，所以 $Z>0$。现在除以正的 $Q$ 得 (2.9)；再用 $m\le\overline m$ 得 (2.10)。式 (2.4) 的上界分别来自直和中的三角不等式和逐报告三角不等式。∎
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3b15748a9a17c8ff537b42bedcaefb4dfee0d4d4600c2feea84dc5fad15c6259
+  normalized_sha256: sha256:3b15748a9a17c8ff537b42bedcaefb4dfee0d4d4600c2feea84dc5fad15c6259
+cas_ref: sha256:3b15748a9a17c8ff537b42bedcaefb4dfee0d4d4600c2feea84dc5fad15c6259
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/SharpSymmetricSlice.sharp_symmetric_slice
+    target_statement_id: sha256:b5acb4e45e077fcf7cb3c49b8f83635e62e09332aa078979d75a11f0375cbb36
+receipts:
+  unresolved_subitems: []

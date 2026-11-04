@@ -1,0 +1,56 @@
+#### 定理 4.3（给定关系强度唯一补全及尖锐稳定界）
+
+固定 $r>0$ 和 $0<X,Y<r$。在开纤维 $\kappa\in(L,U)$ 上，
+$\theta=\log\eta_{\mathrm{odds}}$ 是从该区间到 $\mathbb R$ 的严格增双射。
+记相应五模式律为 $p_\theta$，则
+
+$$
+\boxed{
+\frac{d\kappa}{d\theta}
+=\left(\frac1{p_N}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}\right)^{-1}
+\le\frac r{16}.
+}
+$$
+
+从而
+
+$$
+\boxed{
+\operatorname{TV}(p_\theta,p_{\theta'})
+\le\min\left\{2w,\frac r8|\theta-\theta'|\right\}.
+}
+$$
+
+常数 $r/8$ 作为所有此类固定边缘的统一 Lipschitz 常数是尖锐的。
+对底面条件律，同样有 $\operatorname{TV}(Q_\theta/r,Q_{\theta'}/r)\le|\theta-\theta'|/8$。
+
+**证明。**
+
+对数展开并求导得
+
+$$
+\frac{d\theta}{d\kappa}
+=\frac1{r-X-Y+\kappa}+\frac1\kappa
++\frac1{X-\kappa}+\frac1{Y-\kappa}>0.
+$$
+
+当 $\kappa\downarrow L$，分子中的至少一个概率趋零，分母仍正，故赔率趋零；
+当 $\kappa\uparrow U$，分母趋零而分子仍正，故赔率趋无穷。
+由连续严格单调得到双射。
+四格质量之和为 $r$，Cauchy 不等式给
+$(\sum_s p_s)(\sum_s1/p_s)\ge16$，这里求和只在底面四格。
+求逆、积分并使用 $\operatorname{TV}=2|\Delta\kappa|$ 即得界；
+全纤维直径为 $2w$，给另一截断。
+等号导数在四格全为 $r/4$ 时达到，即 $X=Y=r/2,\theta=0$。
+取该点任意小的关系参数变化，TV 与 $|\Delta\theta|$ 之比趋 $r/8$，
+故统一常数不能降低。底面条件化将 TV 除以 $r$。
+
+∎
+
+这条定理具体回答“关系是否能约束两端”：在给定三轴的内部纤维上，
+指定任意有限关系强度 $\theta$ 都唯一选出联合律。
+它还说明，归一化与关系规则共同完成的是一项*带条件的重构*。
+若边缘落在退化边界，纤维可能本来只有一点；若出现零格，不使用有限对数赔率。
+
+<a id="statement-4-4"></a>
+

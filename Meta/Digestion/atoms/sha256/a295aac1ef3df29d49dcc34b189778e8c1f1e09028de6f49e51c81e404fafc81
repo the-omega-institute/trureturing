@@ -1,0 +1,83 @@
+**Theorem 30.3 (exact adaptive-membership ambiguity on one complete
+observation fibre).** The words $w_{n,z}$ are lawful, have the same endpoint
+$t_n$ and satisfy $O_{C_*}(w_{n,z})=o_n$. On the entire fibre
+
+$$
+\mathcal F_n=\{w\in\mathcal H(t_n):O_{C_*}(w)=o_n\},
+\tag{AA.102}
+$$
+
+the set of selected identity words is exactly
+
+$$
+\{e_0\cdots e_{n-1}: e_i\in\{P_{p_i},S_{p_i}\}\}.
+\tag{AA.103}
+$$
+
+It has $2^n$ values. Consequently a supplement $\lambda$ that, together
+with (AA.97), recovers every indexed literal selected event on
+$\mathcal F_n$ must have at least $2^n$ conditional values there. Any
+fixed-width binary data field serving that purpose needs at least $n$
+bits. An $n$-bit field attains this conditional bound on this entire
+specified fibre. The attainment concerns selected identity words, not
+reconstruction of every full history or an installed minimum-cost record.
+
+Proof. After the root promotion, each spine split creates its next left
+$\beta$ and its right $\alpha$. Thus the increasing spine splits are
+legal. Each $r_i$ is a distinct born-$\alpha$ leaf; promoting and splitting
+it creates $g_i$ as a $\beta$ leaf and $p_i$ as an $\alpha$ leaf. Every
+setup event belongs to Other in the table, so setup leaves state zero.
+In a gadget the split at $g_i$ and promotion at $p_i$ act on different
+leaves and are causally incomparable. Different gadgets have no cross-
+precedence after setup. The split at $p_i$ follows its promotion. Both displayed orders are
+therefore legal. Each gadget ends with the same two child subtrees,
+$\langle\beta,\alpha\rangle$ at $g_i$ and at $p_i$. This proves equality
+of endpoints, including all omitted leaves at their birth types. It also
+follows from Theorem 17.2's exact event-membership correspondence.
+
+Starting at zero, $B_i(0)$ has state/bit sequence
+$(2,1),(2,0),(0,0)$, while $B_i(1)$ has
+$(1,0),(1,0),(0,1)$. Thus each gadget returns to zero and selects exactly
+one event at $p_i$: its promotion for zero and its split for one.
+The selected addresses are $p_0,\ldots,p_{n-1}$ in that order for every
+$z$. Their side projections are precisely (AA.101). This proves the
+common observation and realizes every word in (AA.103), with the same
+installed selector and initialization.
+
+In the installation of §32, comparison is at MarkedReady with all other
+parser, evaluation, continuation and output control reset. Thus these
+witnesses also have equal settled service-control fields; only the acquired
+membership records differ among the specified retained annotations.
+
+For the converse, Theorem 17.2 determines the entire occurred event set
+at $t_n$. Besides $P_\varepsilon$, it consists, for each $i$, of
+
+$$
+S_{s_i},\quad P_{r_i},\quad S_{r_i},\quad
+S_{g_i},\quad P_{p_i},\quad S_{p_i}.
+\tag{AA.104}
+$$
+
+Among these, only $P_{p_i}$ and $S_{p_i}$ can ever be selected; $G$ is
+always unselected. In any member of $\mathcal F_n$, $V_{r_i}=R$ forces
+exactly one selected event strictly below $r_i$. It must be one of those
+two events at $p_i$. There are no other possibly selected identities.
+The tape at $s_i$ places this right-cone event before every selected event
+in its left cone. Recursing down the spine gives their increasing-$i$
+order. Hence every selected word on the full fibre has the form (AA.103).
+This establishes an exact output alphabet, without claiming that the
+fibre contains only the displayed $2^n$ full histories.
+
+Two different words in (AA.103) differ at some index $i+1$. If a supplement
+identified their readings, exact selected recall at that index would
+require two different kind/address answers from one decoder input.
+The standard distinguishing-family argument of PG §40.4 and NCR §8
+therefore gives the alphabet and fixed-width bounds. Conversely, on
+$\mathcal F_n$ retain the bit specifying promotion or split at each
+$p_i$ in increasing order. Equations (AA.99) and (AA.103) reconstruct the
+entire selected word from these $n$ bits and the fixed observation; every
+bit vector is realized above. This is the matching conditional coding
+statement. It neither supplies those bits from $o_n$ alone nor asserts
+$n$ bits suffice at other observations, for other selectors or for all
+simultaneously constructed material. $\square$
+

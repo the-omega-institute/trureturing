@@ -173,7 +173,7 @@ def u (m : ℕ) (z c : ℂ) (σ : Finset (Fin (2*m))) (k : Fin (2*m)) : ℂ :=
   else if σ.card = m+1 ∧ k ∈ σ then z^m*c*f m ((symmDiff σ {k}))
   else 0
 
-private theorem sum_two_values {d : ℕ} (σ : Finset (Fin d)) (C D : ℂ) :
+theorem sum_two_values {d : ℕ} (σ : Finset (Fin d)) (C D : ℂ) :
     ∑ k, (if k ∈ σ then C else D) = (σ.card : ℂ)*C + ((d-σ.card : ℕ) : ℂ)*D := by
   rw [sum_ite]
   have h1 : (univ : Finset (Fin d)).filter (fun k => k ∈ σ) = σ := by ext; simp

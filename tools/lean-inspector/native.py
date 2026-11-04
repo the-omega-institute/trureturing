@@ -8,6 +8,7 @@ from functools import lru_cache
 import io
 import os
 from pathlib import Path
+import re
 import shutil
 import stat
 import struct
@@ -28,6 +29,14 @@ ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
 NATIVE_BATCH_MODULES = 100
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
+
+
+def batch_modules():
+    """Runtime capacity only: keep report identities and reusable rows unchanged."""
+    value = os.environ.get('STRATALINT_NATIVE_BATCH_MODULES', str(NATIVE_BATCH_MODULES))
+    if not re.fullmatch(r'[1-9][0-9]{0,2}', value) or int(value) > NATIVE_BATCH_MODULES:
+        raise ValueError(f'STRATALINT_NATIVE_BATCH_MODULES requires an integer from 1 to {NATIVE_BATCH_MODULES}')
+    return int(value)
 
 
 def activity(kind, count):
@@ -412,9 +421,9 @@ def module(root, name, source, utility_path, executable, output, analyzer="", pr
         module_finish(*args)
 
 
-def produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer=""):
+def produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer="", previous=""):
     """Keep spooled rows, compacted rows and validation certificates target-local."""
-    produce_fib(row, output, analyzer)
+    produce_fib(row, output, analyzer, previous)
     name = row['module']
     row_dir = directory / name
     row_dir.mkdir()
@@ -438,7 +447,11 @@ def produce_row(row, directory, spool, root, origin, utility_path, output, templ
         os.replace(artifact, output)
 
 
-def produce_batch_chunk(requests):
+def produce_batch_chunk(requests, *, generated_index=None):
+    inspect_batch_chunk(requests, generated_index=generated_index)
+
+
+def inspect_batch_chunk(requests, *, check_constants=False, generated_index=None):
     root = Path(requests[0][0])
     template_inputs = selection.Selection(root)
     executable = requests[0][4]
@@ -455,22 +468,29 @@ def produce_batch_chunk(requests):
         for request in requests:
             _, name, source, utility_path, _, output = request[:6]
             analyzer = request[6] if len(request) > 6 else ""
+            previous = request[7] if len(request) > 7 else ""
             if name in bindings:
                 raise ValueError('duplicate native batch module')
             record = public.read_json(Path(utility_path).read_bytes())
             utilities.extend(record['utilities'])
             triples.extend([name, record['source_path'], 'sha256:' + public.digest(source)])
             validate_dependency_paths(root, utility_path)
-            bindings[name] = (utility_path, Path(output), analyzer)
+            bindings[name] = (utility_path, Path(output), analyzer, previous)
         utility_file = directory / 'utility.json'
         utility_file.write_bytes(materials.canonical_json(utilities))
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
                      '--utility-input', str(utility_file), *triples]
+        if check_constants:
+            arguments.insert(0, '--check-batch-constants')
+        if generated_index is not None:
+            arguments[0:0] = ['--generated-index', str(generated_index)]
         argument_file = directory / 'arguments.json'
         argument_file.write_text(json.dumps(arguments))
         capture = retain_request(root, executable, arguments, utilities, origin)
-        with phase('native-inspect', request_capture=capture):
+        with phase('native-constant-check' if check_constants else 'native-inspect', request_capture=capture):
             run_inspector(root, executable, arguments, argument_file)
+        if check_constants:
+            return
         declarations = 0
         completed = []
         for row in public.report_rows(directory / 'spool.json', materials.SPOOL_SCHEMA):
@@ -478,8 +498,8 @@ def produce_batch_chunk(requests):
                 raise ValueError('incomplete native inspection batch')
             completed.append(row['module'])
             declarations += len(row['declarations'])
-            utility_path, output, analyzer = bindings[row['module']]
-            produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer)
+            utility_path, output, analyzer, previous = bindings[row['module']]
+            produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs, analyzer, previous)
             del row
         if completed != sorted(bindings):
             raise ValueError('incomplete native inspection batch')
@@ -496,7 +516,34 @@ def produce_batch_chunk(requests):
         print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={declarations}')
 
 
+def produce_split_batch(requests, size):
+    """Keep the legacy generated-name index and publication boundary across caps.
+
+    The index contains the Inspector's existing identity strings, keyed by its
+    injective Name encoding. It is private to this partition, never a cache or
+    report input. ConstantInfo comparisons remain entirely in the raw reader.
+    """
+    root = Path(requests[0][0])
+    with tempfile.TemporaryDirectory(prefix='.partition.', dir=state(root)) as directory:
+        directory = Path(directory)
+        generated_index = directory / 'generated.json'
+        generated_index.write_text('[]')
+        staged = []
+        for index, request in enumerate(requests):
+            copy = list(request)
+            copy.extend([""] * max(0, 8 - len(copy)))
+            copy[7] = copy[7] or copy[5]
+            copy[5] = str(directory / f'{index}.zip')
+            staged.append(copy)
+        for offset in range(0, len(staged), size):
+            produce_batch_chunk(staged[offset:offset + size], generated_index=generated_index)
+        for request, copy in zip(requests, staged):
+            Path(request[5]).parent.mkdir(parents=True, exist_ok=True)
+            os.replace(copy[5], request[5])
+
+
 def produce_batch(requests):
+    size = batch_modules()
     requests = sorted(requests, key=lambda row: row[1])
     if not requests:
         return
@@ -505,15 +552,20 @@ def produce_batch(requests):
         raise ValueError('mixed native batch owners')
     if any(left[1] == right[1] for left, right in zip(requests, requests[1:])):
         raise ValueError('duplicate native batch module')
-    # Chunks bound per-process memory; each chunk validates its modules
-    # before writing their artifacts.
+    # Compatibility belongs to the original fixed windows and raw/judged
+    # partitions. A smaller extraction capacity must not shrink that scope.
     for start in range(0, len(requests), NATIVE_BATCH_MODULES):
         chunk = requests[start:start + NATIVE_BATCH_MODULES]
         raw, judged = [], []
         for row in chunk:
             (judged if input_projection(root, row[1])['inputs'] else raw).append(row)
         for group in (raw, judged):
-            if group:
+            if len(group) > size:
+                # Complete legacy comparison scope, with one target closure
+                # resident at a time and only detached owner/name state retained.
+                inspect_batch_chunk(group, check_constants=True)
+                produce_split_batch(group, size)
+            elif group:
                 produce_batch_chunk(group)
 
 
@@ -674,6 +726,9 @@ def _publish(root, destination):
 
 
 def main():
+    if sys.argv[1:] == ['batch-size']:
+        print(f'LEAN_INSPECTOR_BATCH_MODULES {batch_modules()}')
+        return
     actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
                'module': module, 'module-stage': module_stage, 'module-finish': module_finish,
                'aggregate': aggregate, 'publish': publish, 'batch': batch,

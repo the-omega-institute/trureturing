@@ -1,0 +1,141 @@
+**命题 26.1（三个源调用、两个原设置调用与实际校准）。** 从式 (23.1) 的同一个根出发，选择备选源字按时间依次调用 $K_3,K_2,K_1$，即
+
+$$
+\psi_{\rm alt}=K_1K_2K_3J|00\rangle.
+\tag{26.1}
+$$
+
+再依原表调用 $K_{10},K_{13}$，依次计算投影读取 $X=b_{10},Y=b_{13}$，在局部结果路由前的原共同切口 $t_*$ 取已得事件 $\mathcal E_{00}=\{X=0,Y=0\}$。令待校准的原生因子恰为 $R=H_{\{1\}}$，于是 $d=2$，原生补因子 $Z=H_{\{-1,0,\ldots,14\}\setminus\{1\}}$ 的维数为 $e=32768$。该事件的同一校准为
+
+$$
+\begin{gathered}
+p=r^2=\varphi^{-4},\qquad \Xi=p\chi,\qquad \rho=\chi,\\
+\chi=
+\begin{pmatrix}
+s&r\beta\zeta^{-4}\\
+r\beta\zeta^4&r
+\end{pmatrix},\qquad
+\det\chi=r^2=\varphi^{-4}>0,
+\qquad r=t^2,\quad s=t.
+\end{gathered}
+\tag{26.2}
+$$
+
+若 $A$ 为该原生位的计算基对角代数，则原始可见校准和精确系数为
+
+$$
+h=P_A(\chi)=\operatorname{diag}(s,r),\qquad
+\lambda=r,\qquad \mu=pr=r^3,\qquad
+\epsilon=4r\beta,\qquad \delta_{\rm raw}=4r^3\beta.
+\tag{26.3}
+$$
+
+这些是同一 $\rho$ 上命题 25.1 的实例，未把可任意准备的数学态当作输入。
+
+证明。活跃黄金块记作
+
+$$
+K_Q=\begin{pmatrix}a&b\\b&c\end{pmatrix},\qquad
+ a=\zeta[1+(\zeta-1)t]=-t,\quad
+ b=\zeta(\zeta-1)\beta^3=-\beta\zeta^4,\quad
+ c=\zeta[1+(\zeta-1)t^2]=-t\zeta^3.
+\tag{26.4}
+$$
+
+由 $\zeta^4-\zeta^3+\zeta^2-\zeta+1=0$ 可得 $t\zeta(\zeta-1)=-\zeta^4$，再用 $\zeta^5=-1$ 分别化简对角项和 $\beta^3=\beta t$ 的非对角项，即得这些等式；特别 $|a|^2=|c|^2=r$、$|b|^2=s$、$r+s=1$。根上 $(b_1,b_2,b_3)=(0,0,1)$，其两外邻 $b_0=b_4=0$；其他源位不变。第一次 $K_3$ 给 $b|000\rangle+c|001\rangle$；第二次 $K_2$ 只在 $b_3=0$ 的分支活跃，在 $b_3=1$ 时是标量 $\zeta$，所以给
+
+$$
+ab|000\rangle+b^2|010\rangle+\zeta c|001\rangle.
+$$
+
+第三次 $K_1$ 在 $b_2=0$ 时活跃，在 $b_2=1$ 时是 $\zeta$，故得到精确的五项向量
+
+$$
+\begin{aligned}
+\psi_{123}={}&a^2b|000\rangle+ab^2|100\rangle
+       +\zeta ac|001\rangle+\zeta bc|101\rangle
+       +\zeta b^2|010\rangle\\
+={}&(a|0\rangle+b|1\rangle)_{b_1}
+       \otimes(ab|00\rangle+\zeta c|01\rangle)_{b_2b_3}
+       +|0\rangle_{b_1}\otimes\zeta b^2|10\rangle_{b_2b_3}.
+\end{aligned}
+\tag{26.5}
+$$
+
+全部五个基词合法且系数非零。右边两个补向量正交，平方范数分别为
+
+$$
+|ab|^2+|c|^2=rs+r=s,\qquad |b|^4=s^2=r.
+$$
+
+第一因子的 $f=a|0\rangle+b|1\rangle$ 已归一。因此实际偏迹为
+
+$$
+\chi=s|f\rangle\langle f|+r|0\rangle\langle0|.
+\tag{26.6}
+$$
+
+这两个权重由同一原生向量中的正交补项算出，不是外加校准混合。其对角元为 $sr+r=s$、$s^2=r$，非对角元为 $sa\overline b=r\beta\zeta^{-4}$。又 $sr-r^2\beta^2=t^3-t^5=t^4=r^2$，证明式 (26.2) 的满秩。实际特征值为
+
+$$
+\lambda_\pm(\chi)=\frac{1\pm\sqrt{1-4r^2}}2>0.
+\tag{26.7}
+$$
+
+原来四个设置邻位 $b_9,b_{11},b_{12},b_{14}$ 始终为零，所以两个设置调用都作用于原来的 $000$ 块，输出同一个 $f$。两个计算投影报告的完整分支原生密度正是
+
+$$
+D_{xy}=p_xp_y\,|xy\rangle\langle xy|_{XY}
+       \otimes|\psi_{\rm alt}\rangle\langle\psi_{\rm alt}|
+       \otimes|0000\rangle\langle0000|_{9,11,12,14},
+\qquad p_0=r,\quad p_1=s.
+\tag{26.8}
+$$
+
+非设置控制在此切口为原规定的固定 $c_*$。这是 Setting-Source 式 (9.8)–(9.10) 在允许备选字上的直接基向量对应，未加 ready 条件。将 $x=y=0$ 的已得分支约化到 $b_1$ 就是 $\Xi=r^2\chi$；除以实际质量 $r^2$ 才得到 $\rho=\chi$。因此 $\det\Xi=r^6=\varphi^{-12}$，不是 $\det\chi$。
+
+为明确完整终端律，可取原控制表中的 $u_0=u_1=v_0=v_1$ 全为空字，随后作一次全部十六位的计算基终端投影。此时
+
+$$
+\Pr(x,y,z,h)=p_xp_y\,
+ |\langle z|(|xy\rangle\otimes\psi_{\rm alt}\otimes|0000\rangle)|^2
+ \mathbf1_{\{h=h_{xy}(z)\}}.
+\tag{26.9}
+$$
+
+因子按原式 (8.7) 排列，$h$ 保留五次实际调用、两次设置报告、终端词及停止。每条路径恰有五次正向门调用，没有逆门；到 $t_*$ 有两次二值投影和四个设置历史，之后是一次 $2^{16}$ 结果的完整计算投影。等价地，终端可逐位读，最大十八次二值投影。最大调用数 $L=5$ 在每个设置分支相同；非设置控制表可取阶段 $0,\ldots,8$：阶段 $0,\ldots,4$ 依次执行这五个门，阶段 $5,6$ 依次读 $X,Y$，阶段 $7$ 是 $t_*$ 并执行终端投影，阶段 $8$ 为正常停止；再保留三个零质量失败、拒绝、提前停止吸收标签，共十二个控制标签。固定程序只有一个已选值，前缀调用档案由阶段唯一决定，报告仍留在原 $X,Y$ 单元；没有结果依赖地址或额外读表副本。正常终止质量为一，失败、拒绝及提前停止质量为零而标签保留。终端标签域有 $4\cdot2^{16}$ 个 $(x,y,z)$ 位置；式 (26.5) 的五个非零源词与四个设置值给出二十个正质量位置，其余原生离码及非法标签仍有定义并赋零质量。事件 $\mathcal E_{00}$ 在终端测量前已经获得，不依赖这些未来结果。
+
+最后计算实际 GNS 对应。记 $\gamma=r\beta\zeta^{-4}$。由原式 (20.7)，
+
+$$
+E(x)=\operatorname{diag}\left(x_{00}+x_{01}\overline\gamma/s,
+                              x_{11}+x_{10}\gamma/r\right).
+\tag{26.10}
+$$
+
+对角 $A$ 下，$a=\operatorname{diag}(a_0,a_1)$ 与 $h$ 交换，原式 (20.8) 中的矩阵为
+
+$$
+\chi a-a\chi=(a_1-a_0)
+\begin{pmatrix}0&\gamma\\-\overline\gamma&0\end{pmatrix}.
+$$
+
+其两个奇异值均为 $|\gamma||a_1-a_0|$，故普通迹范数为 $2|\gamma||a_1-a_0|$。完整复收缩球上 $|a_1-a_0|\le2$，并在 $a=\operatorname{diag}(1,-1)$ 取等，因此 $\epsilon=4|\gamma|=4r\beta$，由式 (25.2) 得 $\delta_{\rm raw}=p\epsilon=4r^3\beta$。也可直接取
+
+$$
+u=\gamma/|\gamma|,\qquad
+x=\begin{pmatrix}0&u\\-\overline u&0\end{pmatrix},\qquad
+a=\operatorname{diag}(1,-1).
+$$
+
+此时 $x^\dagger x=I$、$\|a\|_{\rm op}=1$，且式 (20.8) 给出 $\operatorname{Tr}(\chi(E(x)a-xa))=\operatorname{Tr}((\chi a-a\chi)x)=4|\gamma|$。这是原数学比较域中达到缺陷的收缩对，不增加任何原生取得或控制权限。原命题 20.2 的 $q=I$，故 $\sigma=h$、$F=P_A$；态的迹范数误差 $\|\chi-h\|_1=2|\gamma|=\epsilon/2$ 与上述完整复比较缺陷不同。每个有限放大上的两个非对角块压缩给
+
+$$
+\|E-F\|_{\rm cb}=|\gamma|/r=\beta,
+\qquad
+\frac\epsilon\lambda=\frac{\delta_{\rm raw}}\mu=4\beta.
+\tag{26.11}
+$$
+
+上界取两个输入块的范数，较大系数为 $|\gamma|/r$；取相应矩阵单位达到它。式 (26.11) 的充分界不被冒称最优。由于 $\gamma\ne0$，原 $E$ 也不保持所有 Hermitian 输入的伴随，不能当作正映射。这里并未要求缺陷很小；它提供确切、非零缺陷、实际忠实校准的源对应。证毕。
+

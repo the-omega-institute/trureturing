@@ -15,6 +15,9 @@ internal sealed class SpinCoupledEvenHypercubeGroverFixedPointDocument : IScribe
         "For every even dimension d at least four, the all-plus spin-coupled Grover operator has a nonzero fixed vector with nonconstant position weights. A product of signed coordinate-pair indicators supplies an explicit vector on three adjacent Hamming layers.",
         H("A nonuniform fixed point on every even hypercube"),
         Blocks(
+            Node("sum-two-values", "Summing two constant values", SumTwoValuesFormula(),
+                "A sum that is constant on a finite set and its complement is the cardinality-weighted sum of those two values, with the complementary cardinality computed in the natural numbers.",
+                "sum_two_values", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("flip-card-not-mem", "Adding an absent hypercube coordinate", FlipCardNotMemFormula(),
                 "Toggling a coordinate absent from a finite hypercube vertex increases its cardinality by one.",
                 "flip_card_not_mem", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -103,6 +106,15 @@ internal sealed class SpinCoupledEvenHypercubeGroverFixedPointDocument : IScribe
         return Disp(All("d", BbN, All("s", Vertices(d), All("k", Fin(d),
             Imp(new Formula.Not(Parenthesized(Member(k, s))),
                 Eq(Card(Toggle(s, k)), Add(Card(s), D(1))))))));
+    }
+
+    private static Formula SumTwoValuesFormula()
+    {
+        Formula d = F.Id("d"), s = F.Id("s"), c = F.Id("C"), e = F.Id("D");
+        return Disp(All("d", BbN, All("s", Vertices(d), All("C", BbC, All("D", BbC,
+            Eq(SumOver("k", Fin(d), Call("ite", Member(F.Id("k"), s), c, e)),
+                Add(Mul(Cast(Card(s), BbC), c),
+                    Mul(Cast(Cast(Sub(d, Card(s)), BbN), BbC), e))))))));
     }
 
     private static Formula SignFormula()
