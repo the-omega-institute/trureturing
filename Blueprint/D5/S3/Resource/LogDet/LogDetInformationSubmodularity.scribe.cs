@@ -102,22 +102,32 @@ internal sealed class LogDetInformationSubmodularityDocument : IScribeDocumentDe
         return result;
     }
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
     private static Formula LogDetMonotonicityFormula()
     {
         Formula index = F.Id("Index");
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
-        Formula matrix = Call("Matrix", index, index, complex);
-        Formula left = F.Id("P");
-        Formula right = F.Id("Q");
-        Formula logDet(Formula value) => Call("log", Call("re", Call("det", value)));
-        Formula premises = And(
-            Call("Fintype", index), Call("DecidableEq", index), Call("Nonempty", index),
-            Call("PosDef", left), Call("PosDef", right), Seq(left, Sp, Leq, Sp, right));
-        return Disp(new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("Index", Call("Type")), Bound("P", matrix), Bound("Q", matrix)],
-            new Formula.Logic(premises, FormulaLogicOperator.Implies,
-                Seq(logDet(left), Sp, Leq, Sp, logDet(right)))));
+        Formula name(params string[] parts) => Seq(Operatorname, Grp(Seq(
+            parts.SelectMany((part, i) => i == 0
+                ? new Formula[] { F.Id(part) } : [Dot, F.Id(part)]).ToArray())));
+        Formula at(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+        Formula matrix = at(name("Matrix"), index, index, complex);
+        Formula left = F.Id("left");
+        Formula right = F.Id("right");
+        Formula logDet(Formula value) => at(name("Real", "log"),
+            at(name("Complex", "re"), at(name("Matrix", "det"), value)));
+        Formula implication(Formula hypothesis, Formula body) => new Formula.Logic(
+            Parenthesized(hypothesis), FormulaLogicOperator.Implies, Parenthesized(body));
+        Formula body = implication(at(name("Matrix", "PosDef"), left),
+            implication(at(name("Matrix", "PosDef"), right),
+                implication(Seq(left, Sp, Leq, Sp, right),
+                    Seq(logDet(left), Sp, Leq, Sp, logDet(right)))));
+        return Disp(Seq(Forall, Sp, Parenthesized(Seq(index, Colon, Sp, name("Type"))), Comma, Sp,
+            OpenBracket, at(name("Fintype"), index), CloseBracket, Sp,
+            OpenBracket, at(name("DecidableEq"), index), CloseBracket, Sp,
+            OpenBracket, at(name("Nonempty"), index), CloseBracket, Sp,
+            Forall, Sp, Parenthesized(Seq(left, Sp, right, Colon, Sp, matrix)), Comma, Sp, body));
     }
 
     private static Formula TheoremFormula()
