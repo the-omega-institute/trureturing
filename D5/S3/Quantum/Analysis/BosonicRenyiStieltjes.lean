@@ -468,7 +468,7 @@ private lemma logarithmic_derivative {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (resolvent_integrable ha0 ha2 ha1 hv).aestronglyMeasurable hbound
     ((weight_integrable ha0 ha2 ha1).mul_const C) hdiff).2
 
-private lemma entropy_difference_pos {α ν : ℝ} (ha0 : 0 < α) (hv : 1 ≤ ν) :
+lemma entropy_difference_pos {α ν : ℝ} (ha0 : 0 < α) (hv : 1 ≤ ν) :
     0 < ((ν + 1) / 2) ^ α - ((ν - 1) / 2) ^ α := by
   exact sub_pos.mpr (Real.rpow_lt_rpow (by linarith) (by linarith) ha0)
 
@@ -728,7 +728,7 @@ private lemma logarithm_normalization {ν x : ℝ} (hv : 1 < ν) (hx : x ∈ Icc
   rw [heq, Real.log_mul (pow_ne_zero 2 hv0.ne') hqp.ne', Real.log_pow]
   ring
 
-private lemma normalized_log_integrable {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+lemma normalized_log_integrable {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 < ν) :
     IntegrableOn (fun x => renyiWeight α x * Real.log (1 - (x / ν) ^ 2)) (Ioo 0 1) := by
   have hi := (logarithmic_integrable ha0 ha2 ha1 hv.le).sub
@@ -741,7 +741,7 @@ private lemma normalized_log_integrable {α ν : ℝ} (ha0 : 0 < α) (ha2 : α <
   rw [← logarithm_normalization hv ⟨hx.1.le, hx.2.le⟩]
   ring
 
-private lemma normalized_integral_eq {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+lemma normalized_integral_eq {α ν : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hv : 1 < ν) :
     (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (1 - (x / ν) ^ 2)) =
       (∫ x in Ioo (0 : ℝ) 1, renyiWeight α x * Real.log (ν ^ 2 - x ^ 2)) - Real.log ν := by
