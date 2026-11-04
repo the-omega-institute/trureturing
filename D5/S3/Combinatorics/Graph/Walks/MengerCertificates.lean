@@ -255,7 +255,7 @@ private lemma fam_step {G : SimpleGraph V} {e : Sym2 V} {x y : V} (hxy : G.Adj x
     · obtain ⟨v, hv, hvs⟩ := hY a ha b hb (q.toDeleteEdges {e} (fun e' he' h' => hq (by
         rw [Set.mem_singleton_iff] at h'
         exact h' ▸ he')))
-      exact ⟨v, Finset.mem_insert_of_mem hv, by simpa using hvs⟩
+      exact ⟨v, Finset.mem_insert_of_mem hv, by rwa [Walk.support_transfer] at hvs⟩
   have hc1 : (insert x Y).card = Y.card + 1 := Finset.card_insert_of_notMem hxY
   have hk1 := hk _ hsep1
   have hk0 : 0 < k := by omega
