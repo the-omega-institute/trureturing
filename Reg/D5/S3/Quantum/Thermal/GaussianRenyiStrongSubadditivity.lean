@@ -326,5 +326,108 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
 
 end ShiftedPosDef
 
+namespace LogKoteljanskii
+
+open scoped ComplexOrder
+
+universe u
+
+#print _root_.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.log_koteljanskii
+
+abbrev signature : Signature :=
+  Reg.Support.UniverseSingleReadout.signature
+    (Σ ι : Type u, Σ _ : DecidableEq ι, Matrix ι ι ℂ)
+    (fun p => Finset (Sigma.fst p)) (fun _ => ℝ)
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ p B =>
+    letI := Sigma.fst (Sigma.snd p)
+    Real.log ((Sigma.snd (Sigma.snd p)).submatrix (Subtype.val : ↥B → Sigma.fst p)
+      Subtype.val).det.re) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {ι : Type u} [DecidableEq ι]
+    (H : Matrix ι ι ℂ) (_hH : H.PosDef) (A B C : Finset ι),
+    Disjoint A B → Disjoint A C → Disjoint B C →
+    Real.log (H.submatrix (Subtype.val : ↥(A ∪ B ∪ C) → ι) Subtype.val).det.re +
+        R.readout () ⟨ι, inferInstance, H⟩ B ≤
+      Real.log (H.submatrix (Subtype.val : ↥(A ∪ B) → ι) Subtype.val).det.re +
+        Real.log (H.submatrix (Subtype.val : ↥(B ∪ C) → ι) Subtype.val).det.re
+
+theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
+  intro h
+  let ι := ULift.{u} Unit
+  have hblock (Z : Finset ι) :
+      (1 : Matrix ι ι ℂ).submatrix (Subtype.val : ↥Z → ι) Subtype.val = 1 :=
+    Matrix.submatrix_one _ Subtype.val_injective
+  have hh := @h ι inferInstance 1 Matrix.PosDef.one ∅ ∅ ∅
+    (by simp) (by simp) (by simp)
+  norm_num [rejected, realize, hblock] at hh
+
+lemma dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  let ι := ULift.{u} Unit
+  refine ⟨⟨ι, inferInstance, 2⟩, ∅, {⟨()⟩}, ?_⟩
+  change Real.log ((2 : Matrix ι ι ℂ).submatrix
+    (Subtype.val : ↥(∅ : Finset ι) → ι) Subtype.val).det.re ≠
+    Real.log ((2 : Matrix ι ι ℂ).submatrix
+      (Subtype.val : ↥({⟨()⟩} : Finset ι) → ι) Subtype.val).det.re
+  simpa [Matrix.det_unique, Matrix.submatrix_apply, Matrix.ofNat_apply]
+    using (ne_of_lt (Real.log_pos (by norm_num : (1 : ℝ) < 2)))
+
+def source_registration : Registration arena.{u} (type_of% @log_koteljanskii.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@log_koteljanskii, rejected, rejected_law⟩
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@log_koteljanskii) (Realization signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.LogKoteljanskii.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.LogKoteljanskii.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p B =>
+    letI := Sigma.fst (Sigma.snd p)
+    Real.log ((Sigma.snd (Sigma.snd p)).submatrix (Subtype.val : ↥B → Sigma.fst p)
+      Subtype.val).det.re) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
+    definition := none
+    coordinates := #[0, 1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end LogKoteljanskii
+
 end
 end Reg.D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
