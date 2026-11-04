@@ -2381,3 +2381,446 @@ premises; none supplies a price, execution, grant or receipt deletion
 for (IS.41)–(IS.42).
 
 ## 追加锚（本行以下为增补区）
+
+## 19. A guarded star consumer of the actual indexed partitions
+
+**Definition 19.1 (the changed consumer and its domain).** Keep ML-F,
+UJB15–17 and Definitions 1.1, 7.1 and 17.1, including every finite
+represented input with $N\ge4$, $0\le a/b\le1$, $b>0$, and the
+original-indexed cache and finite cylinder list. The numerator and
+denominator of the prior are the received words, without cancellation.
+The only production body changed here is `evaluator_program.inject`.
+Its inputs remain the actual current restricted-growth partitions
+$p,q$ and their block counts $r,s$, the actual $N$, and the source
+selector supplied by normalizer. In particular every block occurs.
+The source selectors admitted by that caller are precisely $0,1$.
+
+Retain the occurrence scan, its distinct-edge `seen` table, both degree
+arrays and its rejecting return, and the existing source-specific type
+and capacity assignments. After those assignments, before `mapsize`,
+`map`, `more` or any type occupancy is initialized, execute:
+
+1. Test $r=1$. If true, call the represented `falling(27,s)` and
+   `mul(72,result)`, publish that computed word as $J$, and return.
+2. Otherwise test $s=1$. If true, call `falling(8,r)` and
+   `mul(243,result)`, publish $J$, and return.
+3. Otherwise enter the existing complete general inject body.
+
+The first branch owns the overlap $r=s=1$. These are calls to the
+existing bit-stack routines, lowered by the existing IS2 path; no
+host integer or probability callback supplies their return. `inject.general`
+and the two star labels are source addresses, without runtime actions.
+The tests run afresh for every inject call. Neither a frame fingerprint,
+a previous normalizer result nor a cache-wide classification selects them.
+The caller's $r\le72$, $s\le243$, positive $L_p,R_q$ and valid-conjunction
+checks retain their original positions. No active-row projection or
+four-edge inversion is part of this construction.
+
+**Theorem 19.2 (ordinary source, guard and arithmetic correspondence).**
+For every invocation in Definition 19.1 the changed routine returns the
+same exact $J_i(H_{p,q})$ as UJB15.3, on each literal source. Its general
+branch has the original domain. A repeated sample incidence does not
+change this count or authorize a change to $N$.
+
+Proof. UJB15's literal $G_0$ has 36 left types of capacity two and
+27 right types of capacity nine; its incidence relation is the fixed
+line/point relation with three point neighbors per line type and four
+line neighbors per point type. Thus its actual literal populations
+are $72,243$ and its degrees are $27,8$. The supplied $G_1$ is nine
+components $K_{8,27}$ and has the same populations and degrees. Each
+is simple and has 1944 edges. These are the original source identities,
+not new combinatorial suppliers.
+
+The unchanged occurrence scan increments a degree only on the first
+occurrence of a pair $(p_j,q_j)$. After its first $j$ samples, `seen`
+is exactly the set of pairs in that prefix and the degree arrays are
+its two incidence degrees. Induction follows directly from get/test/put
+and the two increments. A degree above 27 on the left or above eight
+on the right makes every injective literal realization impossible.
+Returning zero there is consequently sound, including repeated and
+out-of-support inputs.
+
+If $r=1$, surjectivity of $q$ implies that the distinct constraint graph
+is the entire distinguished star $\{0\}\times[s]$. Choose its actual
+left center in 72 ways. The distinguished leaves must be different
+literal neighbors, so the supplied count is $72(27)_s$. If $s=1$,
+choose its actual right center in 243 ways and obtain $243(8)_r$.
+At $r=s=1$ both give 1944; the deterministic first branch is sound.
+The same argument includes the degree endpoints and zero beyond them.
+The existing guards can return those zero cases earlier.
+
+The falling routine's loop invariant after $k$ factors is the product
+of the first $k$ nonnegative factors $\max(c-j,0)$. Its existing
+subtraction borrow test prevents an underflow word from entering the
+product. At the zero factor the product becomes zero and remains so.
+The existing canonical multiplication computes that natural product
+at arbitrary finite width. Their established ML/IS2 contracts therefore
+produce these exact counts from the represented arguments. No type map
+is initialized on either star path. In the remaining branch the old
+capacity products, every occurrence test and complete odometer are
+unchanged, so UJB15.3 applies verbatim. Repeated occurrences constrain
+an already required edge; they remain separate sample positions in
+the probability law. $\square$
+
+**Theorem 19.3 (all legal native cuts and the service continuation).**
+Under the initialized owned-material, current-rights and sufficient
+finite reserve premises of ML-I/ML-P and §2, the changed routine has
+that same native correspondence at every legal finite prefix,
+including pending arithmetic and return prefixes. At a completed
+inject call its caller-visible words and continuation agree with the
+old specification. This is a conditional statement about the supplied
+material, not a reservation for an entire session.
+
+Proof. Reuse Theorem 1.4 and §2's literal lowering for eq, falling,
+mul, their calls and the unchanged remaining routines. An argument
+binding copies an actual immutable head; the eight-bit return stack
+names a compiled continuation. Each arithmetic push extracts and
+initializes a fresh granted cell before publishing its head. All
+intermediate heads decode as the corresponding current stack words;
+private partial products, the literal PC, saved operands and busy
+state remain part of the configuration. The earlier termination
+measures apply to the finite falling loop and each multiplication.
+Nothing requires an unfinished product to decode as a returned $J$.
+
+At every primitive prefix the existing grant, allocation, frozen-tail
+and successor invariants still apply. Denied rights or missing reserve
+material cause the existing refusal, without an invented result or a
+jump to a successful continuation. This assertion includes prefixes
+that stop before a return and prefixes inside a nonhalting outer
+computation. It does not identify the old map enumerator's internal
+PC with the new arithmetic PC. Their relation is at completed routine
+boundaries; Theorem 19.2 supplies the value equality there.
+
+Only the existing caller-visible $J$ is consumed after inject. Its
+scratch words do not select a source reply or service return. Composition
+still receives the frontend's actual `eval.input` chain in
+`is2.received`, binds `output.return` to the compiled returned node,
+and uses the original End/Ack/indirect Return path. The returned node
+clears `eval.busy` and continues to the same service return handler.
+OriginalConnection, OriginalPort, cache indices, pending actual Read,
+all receipt occurrence objects and Close remain unchanged. Source and
+mutable B owners are separate from this arithmetic work material.
+Thus the existing same-source continuation proof applies to the
+changed completed evaluator output as well. It neither predicts an
+actual Read reply nor executes an outstanding original session.
+$\square$
+
+**Theorem 19.4 (absolute laws, cylinders and positive-only ratios).**
+On every admitted ML-F frame, including zero evidence, the changed
+complete evaluator has exactly the old absolute outputs and encoded
+return. For every current restriction $D$ it computes
+
+$$
+ Z_i(D)=\frac1{1944^N}\sum_{p,q}
+       \frac{J_i(H_{p,q})L_p(D)R_q(D)}{(128)_r(256)_s},\qquad
+ Z(D)=\frac{b-a}{b}Z_0(D)+\frac ab Z_1(D).                 \tag{IS.43}
+$$
+
+For every represented cylinder $C$, the same statement holds at
+$D\wedge C$. Conditional ratios are returned exactly when $Z(D)>0$.
+
+Proof. Normalizer still derives the partitions from the actual
+restriction on each invocation, including every conjunction. It keeps
+all original label intersections, zero label counts, source capacities,
+128/256 falling denominators and the actual factor $1944^N$.
+Theorem 19.2 replaces each $J_i$ by an equal integer before the same
+multiply and qadd. Hence every term and every partial sum is equal.
+The existing rational reduction and framing routines consequently
+return the same canonical rational words and output bits.
+
+Conflicting coordinate constraints or the explicit empty-event flag
+retain valid=0 and the early zero normalizer return. Partial slots,
+unread positions, repeated incidences and old sample indices keep
+their original restrictions; the shared full injections have exactly
+the extension factors of UJB16.2. The represented prior words are
+passed unchanged to the old mixture routine, including endpoints and
+unreduced words. If the actual mixture numerator is zero the old ratio
+absence bit remains zero. Otherwise the same positive denominator
+and cross-products give $Z(D\wedge C)/Z(D)$. No ratio at a null
+conditioning event is introduced. This termwise equality establishes
+the whole original domain, beyond the finite component checks.
+$\square$
+
+## 20. The changed image and its common-cut populations
+
+**Definition 20.1 (literal binding).** The complete changed production
+image is the fixed composition generated by ep.build, SharingGraph,
+prune, field_graph and compose. Its stack SHA-256 is
+`ff8ea0ad5ffe02bbc1bbc59240170407ef17702a0472f15f6be83b398c443afc`;
+its composed field fingerprint is
+`326af82c315be2e1fb83cf6df5bcffdbb75888543473a3d3261f7d3d4a8d8d30`.
+It has 11143 reachable stack states, 361 stack registers, 63182 field
+nodes, 229773 native code vertices, 605 reference registers and 57
+bit registers. The source result register is `inject.J`, stack index 284.
+
+The field indices of `is2.start`, `is2.print`, `is2.returned`,
+`service.return` and `evaluate.begin` are respectively
+$2163,62776,62818,1445,2156$. ChronologyDirect checks this fingerprint
+and those actual entry identities. It also checks that the returned
+node is the literal `put(eval.busy,0)` with both successors equal to
+`service.return`, and retains the actual `output.return`, `is2.received`
+and `eval.input` registers. Compose's bind points at that node, and
+Direct's installed relocation translates the reference to its actual
+native entry. No stale installed address is copied between images.
+
+**Proposition 20.2 (changed retained layout).** With the same complete
+message schedule, no initial Direct received bits, and reserve $K$,
+the changed production construction has
+
+$$
+\begin{aligned}
+ n'&=K+230436,& R'&=4K+919701,& B'&=8K+4825298,\\
+ O'_C&=3K+789881,& A'_C&=13K+3090505,& C'_C&=16K+11818995.
+                                                               \tag{IS.44}
+\end{aligned}
+$$
+
+The installation demand bound is
+
+$$
+ I'_{\rm install}\le128n'+16R'+4B'+64.                        \tag{IS.45}
+$$
+
+Proof. Apply the actual layout identities (IS.15) and (IS.18) with
+$F=229773$, $R=605$, $B=57$; the initializer and shared wire banks
+are unchanged. Thus $n'=K+F+R+B+1$, the source reference count is
+$4(K+F+1)+R$, and the source bit count is $8(K+1)+21F+B$.
+The unchanged initializer seed contributes $(98572,98908,2168397)$
+objects, reference slots and bits. The two installed copies and the
+retained descriptors give (IS.44). This counts unused reserve cells,
+source shadows, code targets and every descriptor simultaneously.
+
+At the same $K$, the new code has 4055 additional native vertices,
+one additional reference register and no additional bit register.
+The increases in $(n,R,B)$ are $(4056,16221,85155)$, and the increases
+in $(O_C,A_C,C_C)$ are $(12168,52722,170310)$. The installer bound
+increases by 1119324 transitions at that common reserve. This last
+number is a bound delta, not an executed installation count.
+The original source, connection, separately retained mutable B owner,
+and one subtraction for physically shared immutable wires retain
+exactly §§10, 13 and 17's identities at the common cuts. $\square$
+
+All earlier source proofs, installed censuses and finite checks retain
+their stated image pins. Their general lowering and counting identities
+are reused here; their old numerical image census or installation
+measurements do not certify this changed image.
+
+## 21. Complete-message demand after the local substitution
+
+**Proposition 21.1 (prospective demand, with the remaining costs).**
+Retain Theorem 15.2's source-derived normalizer call shapes and the
+same three messages, priors, cylinders and acquisition schedules.
+In (IS.37), only inject's own sites change to $(809,520)$; its new
+syntactic child multiplicities are
+
+| Child of inject | add | eq | falling | get | incident | lt | mul | odometer | put | sub | zeros |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| multiplicity | 11 | 3 | 2 | 12 | 1 | 6 | 6 | 1 | 5 | 2 | 6 |
+
+Use $\lambda_{\rm inject}=2N+2$ for these three message shapes.
+Set its incident and odometer edges to zero. In the null-nine row
+also keep its eq edge zero, because the earlier degree return precedes
+both new tests. Other own sites, local multipliers and the previous
+proved normalizer-edge deletions remain those of Definition 15.3.
+The retained syntactic fallback sites and other child multiplicities
+overcharge these paths and hence remain safe upper bounds. Denote
+the resulting costs by $(S'_x,A'_x)$.
+
+Keep the exact frontend extraction count $A_F$, frontend action bound
+$S_F$, message lengths, source/connection counts and output bound $Y$
+of §§16–18. Set
+
+$$
+\begin{aligned}
+ K'&=5+L+A_F+A'_x,\\
+ V'_{\rm exec}&=128(S'_x+L+2Y+361+64)+5S_F.                 \tag{IS.46}
+\end{aligned}
+$$
+
+At that same reserve use (IS.44)–(IS.45), retain $500K'$ as the exact
+reserve object-payload contribution, and use the common-cut host
+inventory (IS.41)–(IS.42). Its recurring name and head scans now cost
+$605(S'_x+2)$ and $361(S'_x+2)$ visits; distinct new spine traversals
+are at most $L+A'_x$, and its retained freezing dictionary has at most
+$2L+A'_x+5$ entries. Five root/token tuple replacements still recur.
+Every frontend, provider, delivery, output join, runtime, allocator,
+compiler, inherited-owner and release term remains in that account.
+
+Proof. Every positive-frame surviving inject call has $r=1,s\le2$ by
+Theorem 15.2; this remains true for its valid represented cylinders.
+Its old settings loop is therefore absent. Every retained preliminary
+occurrence and new arithmetic site is bounded by $2N+2$ visits,
+with the falling loop separately charged through its callee costs.
+This multiplier also covers the degree-rejected nine-sample call.
+Apply the same acyclic two-coordinate induction as Theorem 15.4.
+The new falling operands have smaller widths than that proof's
+scalar bound, so none of its record or scalar estimates is weakened.
+The source constants, sixteen-entry partial countlabels tables and
+all preliminary rejected partitions remain charged. Then apply the
+same extraction and common-cut arguments, with 361 resets and the
+new image populations. $\square$
+
+The null-nine frame already degree-prunes, so it has no map enumeration
+saving. Counting unreachable new sites can enlarge its sufficient
+certificate. For the positive rows the removed executed loops are
+real, but the displayed reserve and execution certificates are only
+sufficient demands. Their change is not a measurement of minimum
+storage, host time, a complete-session speedup or physical feasibility.
+In particular changing this consumer does not instantiate the
+allocator/compiler/runtime prices, retained B manifestation and
+same-scope offers still absent from (IS.41)–(IS.42).
+
+## 追加锚（本行以下为增补区）
+
+## 22. Source-derived whole-message substitutions and their limits
+
+The source-only recurrence of Proposition 21.1 gives the following
+sufficient quantities for the changed complete production image.
+These are prospective source calculations, with zero complete
+production installations or evaluator executions.
+
+| Frame | $S'_x$ | $A'_x$ | $K'$ | $500K'$ bytes |
+| --- | ---: | ---: | ---: | ---: |
+| positive-full | 197318401152964 | 54686262652896 | 54686262672001 | 27343131336000500 |
+| positive-partial | 3589096854758896 | 995388032623900 | 995388032642555 | 497694016321277500 |
+| null-nine-distinct-left | 2704019037395564 | 750329641444152 | 750329641519983 | 375164820759991500 |
+
+| Frame | installation upper bound | execution upper bound |
+| --- | ---: | ---: |
+| positive-full | 12249722902040504 | 25256760257769984 |
+| positive-partial | 222966919375444600 | 459404402237230848 |
+| null-nine-distinct-left | 168073839763988472 | 346114453368816448 |
+
+For the common-cut native object/reference/bit union including the
+original source, connection and retained $u_B=128$ B owner, with the
+single shared-wire subtraction, the resulting populations are:
+
+| Frame | objects | reference slots | bit fields |
+| --- | ---: | ---: | ---: |
+| positive-full | 164058790003864 | 710921422969555 | 874980231144452 |
+| positive-partial | 2986164099915399 | 12940044432586628 | 15926208550673191 |
+| null-nine-distinct-left | 2250988926601060 | 9754285348048746 | 12005274292764439 |
+
+These counts exclude the separately listed runtime wrapper/container
+requests exactly as §17 does; they are not a complete host-memory
+price. The $u_B=128$ instance is the inherited retained owner for
+this comparison, not a reserve for every finite B prefix. The actual
+owner manifest, physical sharing and runtime prices still require
+same-cut evidence before a full run.
+
+The positive rows have smaller sufficient reserve and transition
+coordinates than §18's original image. The largest displayed reserve
+and execution demand is still positive-partial. Thus the limiting
+message and reserve/execution coordinates have not disappeared; their
+sufficient values changed. The null-nine sufficient values increase
+because the syntactic certificate charges added sites that its degree
+return never executes. It obtains no enumeration saving. None of
+these comparisons establishes a strict reduction of actual complete
+host work, full resource feasibility or an available offer. All the
+unpriced coordinates in (IS.41) remain, as do (IS.42)'s offers and
+ABI obligations. A smaller sufficient $K$ alone does not settle this
+consumer's worth criterion.
+
+## 23. Finite native evidence and the unresolved star return
+
+The reusable private experiment program is
+`rro-lab-execution/native-prerequisite/guarded_star_component.py`;
+`guarded-star-component-results.json` binds its source and data bytes.
+Its production-image construction is source-only. Its executing driver
+is a separate component: first read the actual original frame's prior
+and acquired cache, derive its partitions by the existing side/blocks
+routines, then call the unchanged-signature guarded inject. Further
+public component arguments exercise both orientations, repeated
+incidences, degree endpoints, overdegree, native conjunction conflict
+and a nonstar conjunction. Expected counts are read only by the
+checking observer after a returned word; they never supply a runtime
+word or a Read reply.
+
+The component compiles only the routine closure it uses. It retains
+exactly the production inject prefix through `inject.general`; that
+cut has a rejecting terminal in the component and the full original
+enumerator in production. A reached component cut would therefore
+be a stopped fallback-entry prefix, not completed fallback execution.
+No such cut was reached in the bounded result below.
+
+The component's distinct field fingerprint is
+`bd9abc7d8c0ffd455537a875c25af8b20beb848d4663adb79892535329f6969b`.
+It has 4824 stack states, 36683 field nodes, 133198 native code
+vertices, 406 reference registers and 57 bit registers. Its single
+actual installed owner used a supplied 140000-cell reserve. All
+273662 source blocks and their installed relocations were verified.
+Its actual retained native census was 919559 objects, 3653637
+reference slots and 10002845 bit fields at reference width 20,
+including source shadows, descriptors, the initializer and shared
+wire banks. These are component populations, not (IS.44)'s complete
+production-image populations.
+
+The one bounded batch returned exit 1 with these executed readings:
+
+| Reading | Result |
+| --- | ---: |
+| actual installation transitions | 23887951 |
+| actual subsequent native transitions | 10386962 |
+| aggregate native transitions, including installation | 34274913 |
+| original source calls / fresh acquisition receipt occurrences | 74 / 74 |
+| native transitions before the component request | 1187381 |
+| initialized reserve cells consumed at termination | 140000 |
+| completed native star returns | 0 |
+| reached general-entry prefixes | 0 |
+| measured batch seconds | 67.18984474998433 |
+| self peak resident bytes | 312410112 |
+| compiler-child peak resident bytes | 43417600 |
+| conservative sum of the two resident peaks | 355827712 |
+
+The acquired cache matched the original positive-full frame with
+SHA-256 `37dfee71eda5a8fbee3d373aab446982f15976785ef965ec2e4a1b6ea98c5402`.
+Its 74 authentic receipt occurrence identities were distinct. The
+source preparer, original provider, frontend, actual acquired-cache
+framing, compiler and input delivery were executed and retained;
+they were not numerical evidence oracles. Their work remains distinct
+from native transitions: the provider/source hosted operations and
+compiler/runtime costs are not priced by that transition count.
+The source census was 10064 objects, 11727 reference slots and
+9393 bit fields; the connection census was 4724 objects, 4882
+reference slots and 4574 bit fields. No mutable B instance was
+installed for this isolated component batch; its whole-session term
+in §§20–22 remains prospective and separately required.
+
+The batch terminated with a native fault, exhausted supplied pool and
+no completed case. It did not retain the terminal fault label or exact
+pending arithmetic location, so that location is unverified. Its 12
+planned cases remain uncompleted: acquired $r=s=1$ on each source,
+repeated-incidence $r=1,s=2$ and $r=2,s=1$ on each source,
+$s=27,28$ at $r=1$, $r=8,9$ at $s=1$, a conjunction conflict,
+and the nonstar-conjunction prefix. Receipt preservation after this
+failed component, computed End/Ack/Return, post-evaluation old-slot
+Read and Close were not checked. No full original evaluator or
+chronology ran. The allowance was not renewed and no reserve was
+expanded.
+
+Consequently the required actually computed native star return and
+strict native work-removal comparison remain unresolved. The new
+ordinary source/guard/arithmetic and all-cut construction in §19 is
+conditional; the finite batch does not certify its completed consumer.
+The next necessary evidence is a genuinely backed acquisition-to-star
+return prefix with all new guard/arithmetic costs charged, followed
+by the remaining planned cases and complete-session cost comparison
+under a separately authorized allowance. The failed fixed reserve
+does not prove that another faithful execution is impossible.
+
+The supplied star count identities and original degree/source
+identities are reused from [UJB15–17](RECURSIVE_RELATIONAL_OBSERVATION_UNIFIED_JOINT_LAW_BRIDGE.md)
+and the original supplier sources. The arithmetic and lowering
+contracts are those of [ML](RECURSIVE_RELATIONAL_OBSERVATION_MONOTONE_LAB_INDEXED_EXECUTION.md)
+and §§1–2; persistence and amortized-counting context remains the
+existing [Tarjan note](../../../Library/Computability/tarjan1985amortized.md).
+The existing NWMG literature correspondence keeps its original
+scope. The contribution here is the concrete changed consumer,
+ordinary native correspondence and changed-image accounting, with
+its explicit failed execution boundary. It is repo-derived ordinary
+mathematics and implementation, without a fresh Lean verification,
+world-originality claim, independent acceptance or completion of any
+of the six original outcomes. The continuing research goal remains
+unchanged and active.
+
+## 追加锚（本行以下为增补区）
