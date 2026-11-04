@@ -32,6 +32,28 @@ The path bijection and matrix factorization follow by induction through every or
 
 This composition theorem does not establish total Born-mass normalization, arithmetic integrality or nonphysical-conjugate estimates for the actual native gates. It does not construct a Petz compiler, compute the actual chi reference, or prove either numerical obstruction or resource lower bound. Those conclusions require their respective native arithmetic and reference-state bridges. No protection of the complement of b1, auxiliary preparation, reset, new controlled operation or postselection is assumed.
 
+**Theorem 1.2 (Integral raw event masses exclude both reference-comparison values).**
+
+$$(\forall L: \operatorname{Type}\left(\right), (\forall T: \operatorname{Tree}\left(L\right), (\forall e: \operatorname{Events}\left(T\right), ((\operatorname{IsIntegral}\left(\operatorname{Int}\left(\right), \operatorname{eventMass}\left(T, e\right)\right) \land \operatorname{eventMass}\left(T, e\right) \ne \frac{13-5\sqrt{5}}{22}) \land \operatorname{eventMass}\left(T, e\right) \ne \frac{9\sqrt{5}-19}{22}))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_event_arithmetic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Ian Stewart and David Tall (2025). *Algebraic Number Theory and Fermat's Last Theorem*. DOI: [10.1201/9781003462002](https://doi.org/10.1201/9781003462002).
+
+*Commentary.*
+
+For every type L of terminal labels, every finite full-menu native tree T and every Boolean event e on its complete terminal path and terminal sixteen-bit word, the raw mass p=eventMass(T,e) is an algebraic integer over the ordinary integers. All fourteen actual gate addresses, deterministic feedback, complete diagonal zero-one measurements, zero outcomes, stops and expanded inverse calls are included. The input is the same fixed computational root Omega; no arbitrary input vector or external probability weights occur.
+
+The scalars t, beta and zeta of the actual matrices are algebraic integers: rational-angle exponential and cosine integrality give zeta and t, and beta squared equals t. Every number projection and bit flip has integer entries. Finite matrix addition, multiplication and powers therefore preserve entrywise integrality. Induction through the actual tree gives integral branch-matrix entries. Applying the fixed root, multiplying each amplitude by its physical complex conjugate and summing the selected raw events preserve integrality. The real event mass is reflected from its injective complex embedding. No success normalization is performed.
+
+Set q=(13-5 sqrt(5))/22 and w=(9 sqrt(5)-19)/22. In the existing quadratic golden field with generator phi, these are the images of coordinate pairs (9/11,-5/11) and (-14/11,9/11). Their field norms are respectively 1/11 and -1/11. Integrality would force an integer field norm; both rational values fail that condition. Consequently p differs from both q and w. This argument only needs absolute algebraic integrality of p and does not assert that p lies in the quadratic field.
+
+These exclusions apply directly to any original-record event formed by the stop-aware graft above. They do not establish that the actual chi preparation and its faithful-support Petz pullback have ideal masses q and w. That realization bridge, the quadratic-field membership of general native events, the whole-tree nonphysical-conjugate estimate and the factor-eleven resource and total-variation bounds require further results. Total Born-mass normalization and the equality of the ninth gate power with its inverse are not used or proved here.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_event_arithmetic`
 - Truth anchor: `D5/S3/Quantum/Dynamics/NativeProtocolGraft.original_native_projection`
+- Dependency: [D5/S3/Arith/Lattices/GoldenIntegerRing](../../Arith/Lattices/GoldenIntegerRing.md)

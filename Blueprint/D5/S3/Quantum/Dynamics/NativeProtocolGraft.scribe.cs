@@ -52,13 +52,13 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
     {
         Formula L = F.Id("L"), T = F.Id("T"), e = F.Id("e");
         Formula p = Call("eventMass", T, e);
-        Formula q = Seq(Frac, Grp(D(13), Minus, D(5), Sqrt, Grp(D(5))), Grp(D(22)));
-        Formula w = Seq(Frac, Grp(D(9), Sqrt, Grp(D(5)), Minus, D(19)), Grp(D(22)));
+        Formula q = Seq(Frac, Grp(D(1,3), Minus, D(5), Sqrt, Grp(D(5))), Grp(D(2,2)));
+        Formula w = Seq(Frac, Grp(D(9), Sqrt, Grp(D(5)), Minus, D(1,9)), Grp(D(2,2)));
         Formula neq(Formula a, Formula b) =>
             new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
         return Disp(All("L", Call("Type"), All("T", Call("Tree", L),
             All("e", Call("Events", T), And(Call("IsIntegral", Call("Int"), p),
-                neq(p, q), neq(p, w)))));
+                neq(p, q), neq(p, w))))));
     }
     private static Formula Statement()
     {
