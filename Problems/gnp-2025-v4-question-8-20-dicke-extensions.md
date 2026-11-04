@@ -41,7 +41,7 @@ partial traces, and transposes use the standard tensor basis. The assertion is
 equivalence of these predicates for every $n,r,Y$, including all-zero weights,
 without trace normalization or invertibility.
 
-The [Library note](../Library/QuantumEntanglement/gnp2025dickeextensions.md) holds the source
+The [Library note](../Library/Quantum/gnp2025dickeextensions.md) holds the source
 identity and bounded source checks. The original
 [preregistration](https://github.com/the-omega-institute/trureturing/issues/26251#issuecomment-6617097653)
 fixes this event before execution; its tier is the first-tier short complete-proof

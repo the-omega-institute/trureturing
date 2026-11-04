@@ -8,7 +8,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumEntanglement/gnp2025dickeextensions");
+        LibraryNoteRef.Create("D5/L/Quantum/gnp2025dickeextensions");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Star and complete graph Bose symmetric fully PPT extensions of unnormalized Dicke diagonal operators.",
