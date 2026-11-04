@@ -5,13 +5,14 @@ year: 2022
 title: "Bounds on skewness and kurtosis of steady-state currents"
 doi: 10.1103/PhysRevE.106.024119
 url: https://arxiv.org/abs/2204.08421v4
-claim: "The paper derives bounds on the skewness and kurtosis of steady-state currents for several classes of systems; for unicyclic Markovian networks it infers numerically that the extremal values are attained when all clockwise rates are equal but one, and on that topology finds the minimum skewness -(8-8N+N^2)/(16(N-1)^2) of a unidirectional N-state cycle at a = 1/(N-1); in the limit N -> infinity it gives the minimum kurtosis -(1+sqrt(5))/10 for a = A/N, A = (3-sqrt(5))/2, and the minimum of skewness plus kurtosis -8/27 for A = 1/2."
+claim: "The paper derives bounds on the skewness and kurtosis of steady-state currents for several classes of systems; for unicyclic Markovian networks it infers numerically that the extremal values are attained when all clockwise rates are equal but one, and on that topology finds the minimum skewness -(8-8N+N^2)/(16(N-1)^2) of a unidirectional N-state cycle at a = 1/(N-1); in the limit N -> infinity it gives the minimum kurtosis -(1+sqrt(5))/10 for a = A/N, A = (3-sqrt(5))/2, and the minimum of skewness plus kurtosis -8/27 for A = 1/2; it lists the product of skewness and kurtosis in [-0.054, 1] (eq. produni), the lower value approximate."
 strata_touched:
   - D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum
   - D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound
   - D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound
   - D5/S3/StatisticalMechanics/UnicyclicSkewnessMinusKurtosisUpperBound
   - D5/S3/StatisticalMechanics/UnicyclicSkewnessMinusKurtosisLowerBound
+  - D5/S3/StatisticalMechanics/UnicyclicSkewnessTimesKurtosisLowerBound
 license: citation-only
 triage: anchor
 ---

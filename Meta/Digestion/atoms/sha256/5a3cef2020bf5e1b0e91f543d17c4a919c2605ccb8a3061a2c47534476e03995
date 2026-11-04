@@ -1,0 +1,25 @@
+### 定理 2.2（二元比较配平与球面 Darboux 关系）
+
+对任意光滑正则球面曲线，记 $n=n_k$、$T=n_{k+1}$、$N=n\times T$、$v=v_k$、$\kappa=\kappa_k$。则
+
+$$
+\boxed{
+\dot n=vT,\qquad
+\dot T=v(-n+\kappa N),\qquad
+\dot N=-v\kappa T.}
+$$
+
+**证明。**由 $n\cdot n=1$ 得 $n\cdot T=0$。对这个二元正交关系求导，
+
+$$
+0=\frac d{dt}(n\cdot T)=\dot n\cdot T+n\cdot\dot T=v+n\cdot\dot T,
+$$
+
+所以 $\dot T$ 沿 $n$ 的分量为 $-v$。由 $T\cdot T=1$，它没有沿 $T$ 的分量；在正交定向框架 $(n,T,N)$ 中剩余分量唯一写成 $v\kappa N$。最后
+
+$$
+\dot N=\dot n\times T+n\times\dot T=vn\times(\kappa N)=-v\kappa T.
+$$
+
+这里的 $+v$ 与 $-v$ 是同一个二元比较的两端变化，恰好配平。三个框架向量共同满足 $\dot e=\omega_{\rm D}\times e$，其中 $\omega_{\rm D}=v(N+\kappa n)$。这是移动框架的运动学角速度；仅凭一条轨迹，尚不能把它认作唯一的实际 Hamiltonian。
+

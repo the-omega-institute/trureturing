@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:09aa90fd3a605a60f5dba8ae4a29c33ffbd9df7897c3e54d73af73f7f5d8cc24
+  normalized_sha256: sha256:09aa90fd3a605a60f5dba8ae4a29c33ffbd9df7897c3e54d73af73f7f5d8cc24
+cas_ref: sha256:09aa90fd3a605a60f5dba8ae4a29c33ffbd9df7897c3e54d73af73f7f5d8cc24
+coverage_gids:
+  - gid: D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.rank_locus_inhabited_and_phase_recovery
+    target_statement_id: sha256:a6e91eb6099e764a5800ec747633dc4c5d8ca817805bfdfc255011b6210cce1a
+receipts:
+  unresolved_subitems: []

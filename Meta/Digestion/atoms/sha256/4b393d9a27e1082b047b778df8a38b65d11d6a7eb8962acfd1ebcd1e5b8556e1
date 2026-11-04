@@ -1,0 +1,32 @@
+### 命题 8.1（所有相容压缩的显式形式）
+
+条件 3 成立当且仅当校准满足
+
+$$
+\rho=\bigoplus_\alpha p_\alpha\sigma_\alpha\otimes\tau_\alpha;
+$$
+
+此时唯一映射为
+
+$$
+\boxed{
+E(x)=\bigoplus_\alpha
+\left[(\operatorname{id}\otimes\phi_{\tau_\alpha})(P_\alpha xP_\alpha)\right]\otimes I_{m_\alpha},
+\qquad \phi_{\tau_\alpha}(b)=\operatorname{tr}(\tau_\alpha b).}
+$$
+
+**证明。**双模性给出 $E(P_\alpha xP_\beta)=0$（$\alpha\ne\beta$）。在一个固定块内取矩阵单位 $e_{ij}$。像落在 $M_n\otimes I_m$，且
+
+$$
+E(e_{11}\otimes b)=f(b)e_{11}\otimes I.
+$$
+
+两侧矩阵单位作用得到 $E(e_{ij}\otimes b)=f(b)e_{ij}\otimes I$。正性及保单位元给 $f(b)\ge0$（$b\ge0$）与 $f(I)=1$，故 $f(b)=\operatorname{tr}(\tau b)$。保校准性对跨块矩阵成立迫使 $P_\alpha\rho P_\beta=0$。令 $\rho_\alpha=P_\alpha\rho P_\alpha$、$r_\alpha=\operatorname{tr}_{m_\alpha}\rho_\alpha$，则对本块任意 $x$，
+
+$$
+\operatorname{tr}(\rho_\alpha x)
+=\operatorname{tr}\bigl((r_\alpha\otimes\tau_\alpha)x\bigr),
+$$
+
+从而 $\rho_\alpha=r_\alpha\otimes\tau_\alpha$。归一化 $r_\alpha$ 得到块乘积形式。反向将此形式代入显式公式，左右两种次序都化为同一块迹配对，故满足 $C_{88}$。
+

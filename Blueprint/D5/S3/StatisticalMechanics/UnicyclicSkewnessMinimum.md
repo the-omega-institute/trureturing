@@ -56,9 +56,9 @@ $$\forall (n: \mathbb{N}), (\forall (x: \operatorname{Fin}\left(n\right) \to \ma
 
 For every natural n and every real vector x indexed by Fin n, this functional is three times the square of the second power sum minus twice the third power sum. Its definition requires neither positivity nor membership in the simplex.
 
-**Theorem 1.5 (Positive inverse rates normalize to the simplex).**
+**Theorem 1.5 (Normalized inverse rates belong to the standard simplex).**
 
-$$\forall (n: \mathbb{N}), (((0: \mathbb{N}) < n) \to (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \to (\lambda (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, 1, \lambda (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)}) \in \operatorname{stdSimplex}\left(\mathbb{R}, \operatorname{Fin}\left(n\right)\right)))))$$
+$$\forall (n: \mathbb{N}), (((0: \mathbb{N}) < n) \to (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \to ((\lambda (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, 1, \lambda (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)})) \in \operatorname{stdSimplex}\left(\mathbb{R}, \operatorname{Fin}\left(n\right)\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum.normalized_simplex` (`✓ std3`). ∎
 
@@ -68,7 +68,7 @@ $$\forall (n: \mathbb{N}), (((0: \mathbb{N}) < n) \to (\forall (k: \operatorname
 
 *Commentary.*
 
-For every positive natural n and every strictly positive real vector k, the inverse rates divided by their first power sum form a nonnegative vector whose coordinates sum to one. This normalization is shared by the coupled skewness and kurtosis bounds.
+For every positive natural n and every positive real rate vector k on Fin n, the inverse rates divided by their first power sum are nonnegative and sum to one.
 
 **Theorem 1.6 (Skewness as a functional of normalized inverse rates).**
 

@@ -1,0 +1,52 @@
+**定义 130.1（尚需控制的归一接续）。** 对固定 $0<c<1$，原问题仍是：在同一完整族 $B_*\le c$ 下，是否存在不依赖维数的 $w_c(s,h)$，使
+
+$$
+D\le w_c(\bar S,\bar H),\qquad
+w_c(s,h)\longrightarrow0\quad((s,h)\to(0,0)).
+\tag{130.1}
+$$
+
+定理 129.1 只处理 $\bar H=0$ 的边界，不断言 (130.1) 在 $\bar H>0$ 时成立。
+
+原卷 (93.4) 的归一坐标可直接用于这里，并非新加的返回假设。固定 $E\ne0$，写 $P=P_E,q=q_E$，定义数学 CP 映射
+
+$$
+\begin{aligned}
+\Phi_E^{\mathrm{out}}(X)
+&=E^{-1/2}PT_E(X)PE^{-1/2},\qquad X\in\mathcal C_E,\\
+\Psi_E(Y)
+&=q^{-1}T_{E^\vee}(\sqrt E\,Y\sqrt E),\qquad Y\in\mathcal C_E.
+\end{aligned}
+\tag{130.2}
+$$
+
+逆仅在支撑上取，$\Psi_E:\mathcal C_E\to\mathcal A$ 恰好保迹，因为 $q^{-1}\sqrt E E^\vee\sqrt E=P$。成功效果还使 $T_{E^\vee}$ 只读取 $P$，所以
+
+$$
+\Psi_E\Phi_E^{\mathrm{out}}
+=q^{-1}T_{E^\vee}T_E|_{\mathcal C_E},
+\qquad
+(\Phi_E^{\mathrm{out}})^\dagger(P)=T_E^\dagger(E^+).
+\tag{130.3}
+$$
+
+对原返回残差取迹，再在自伴极值态上取值，直接复用原卷 (93.4) 后的质量估计，得到
+
+$$
+(1-b(E,F))P
+\le T_E^\dagger(E^+)
+\le(1+b(E,F))P.
+\tag{130.4}
+$$
+
+因此 $B_*\le c$ 给同一式的 $1\pm c$ 界。这个界只控制白化映射的输入质量，不使它幺，不使 $\Phi_E^{\mathrm{out}}$ 等于定理 129.1 的自同构，也不将带噪半程关系变成归一映射的精确平方关系。
+
+推论 128.1 控制的是原分支的未白化明暗输出。一般有 $\|E^{-1/2}\|_{P\mathscr H}=q_E^{-1/2}$ 及
+
+$$
+\|q_E^{-1}T_{E^\vee}\|_\diamond=q_E^{-1},
+\tag{130.5}
+$$
+
+因为 $\|E^\vee\|=1$。虽然完整配对的 $\Psi_E$ 本身保迹且有 diamond 范数一，原泄漏的小量仍不能不经证明就穿过 $\Phi_E^{\mathrm{out}}$ 中的白化因子。对 (130.1) 尚需一个在原平方链上、与同一实际补偿相容的统一估计：它必须同时控制白化后的暗输出贡献和同一谱层内部的耗散。定理 127.2 的对易界在标量效果上不限制谱层内噪声，故单凭该界和未白化泄漏界不提供这个估计。
+

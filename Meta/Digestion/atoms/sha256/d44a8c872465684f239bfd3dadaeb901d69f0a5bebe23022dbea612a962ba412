@@ -1,0 +1,99 @@
+**Theorem 41.3 (exact constant-defect motion at unchanged actual feedback).**
+For every original $(E,U)\in\mathcal K$ there is a continuous family
+$E_\theta\in\operatorname{Dens}_2$, $0\le\theta\le\epsilon(E)$,
+starting at $E_0=E$, such that the actual matrix $U$ and the
+certificate-basis population $p$ remain unchanged and
+
+$$
+\begin{aligned}
+ g(E_\theta,U)&=g(E,U),&
+ \epsilon(E_\theta)&=\epsilon(E)-\theta,\\
+ \rho_\sigma(E_\theta,U)&=\rho_\sigma(E,U)+\theta
+                                      &&(\sigma=+,-),\\
+ \rho(E_\theta,U)&=\rho(E,U)+\theta.
+\end{aligned}
+\tag{41.10}
+$$
+
+Every original minimizing sign, including a tie, is preserved.
+If $\epsilon(E)>0$, then $E_\theta$ is positive definite for
+$0\le\theta<\epsilon(E)$ and has rank one at $\theta=\epsilon(E)$.
+For $\epsilon(E)=0$ the family consists of its original single point.
+
+*Proof.* Use the actual coordinates (41.2) and set $C=P\bar Q$.
+Choose a unit complex number $\zeta$ such that
+
+$$
+ \operatorname{Re}(C\zeta)=0,\qquad
+ a_0:=\operatorname{Re}(z\bar\zeta)\ge0.
+\tag{41.11}
+$$
+
+If $C\ne0$, the two choices $\pm i\bar C/|C|$ satisfy the first
+condition; one of them satisfies the second. If $C=0$, start with
+any unit direction and choose its sign to satisfy the second condition.
+When $a_0=0$ either sign is allowed. For $0\le\theta\le\epsilon$
+put
+
+$$
+\begin{aligned}
+ \nu_\theta&=\sqrt{a_0^2+\theta/2}-a_0,&
+ z_\theta&=z+\nu_\theta\zeta,\\
+ F_\theta&=\begin{pmatrix}p&z_\theta\\\bar z_\theta&1-p\end{pmatrix},&
+ E_\theta&=(TF_\theta T^\dagger)^{\mathsf T}.
+\end{aligned}
+\tag{41.12}
+$$
+
+The square root is nonnegative and $a_0\ge0$, so $\nu_0=0$.
+Thus this family is continuous and begins at exactly the input effect,
+with no preliminary phase alignment. Its two relevant identities are
+
+$$
+\begin{aligned}
+ |z_\theta|^2
+   &=|z|^2+2a_0\nu_\theta+\nu_\theta^2
+     =|z|^2+\theta/2,\\
+ \operatorname{Re}(Cz_\theta)&=\operatorname{Re}(Cz),\\
+ \det F_\theta
+   &=p(1-p)-|z_\theta|^2=(\epsilon-\theta)/2\ge0.
+\end{aligned}
+\tag{41.13}
+$$
+
+The diagonal entries of $F_\theta$ are nonnegative and its trace is one.
+Together with the determinant inequality this proves positivity.
+Unitary conjugation and ordinary transpose preserve positivity, trace,
+eigenvalues and $\operatorname{Tr}(E^2)$; hence
+$E_\theta$ is an original normalized effect with impurity
+$\epsilon-\theta$. Formula (41.3), including its actual coherence
+term, gives exactly constant $g$. The same formula for each sign
+distance gives the identical increment $\theta$ for both signs.
+Taking their minimum proves the last line of (41.10) and preserves
+the entire minimizing-sign set. Because $U$ itself never changes,
+the scalar phases minimizing its distance to each $U_\sigma$ also
+remain unchanged, including the full phase circle when the trace is zero.
+
+For $\epsilon>0$, positivity of the initial determinant forces
+$0<p<1$. The determinant in (41.13) is strictly positive before the
+terminal parameter and zero there. Trace one then gives exactly the
+rank assertions. If $p=0$ or $p=1$, positivity initially forces
+$z=0$ and $\epsilon=0$, so only the original point is used.
+Every other already pure input likewise has the singleton family.
+At $z=0$ one has $a_0=0$ and the formula is still continuous;
+no derivative at the initial parameter is needed.
+If either $P=0$ or $Q=0$, then $C=0$ and the stated arbitrary-direction
+choice avoids division by that amplitude. This also covers both
+amplitudes zero. No condition on $A$ or $B$ is used, so zero feedback
+traces, sign ties and all population and rank boundaries are included.
+
+All amplitudes, feedback traces and every off-diagonal entry of $U$
+remain those of the original actual matrix throughout. In particular
+the construction covers every nondiagonal unitary lift without a new
+realization assumption. Under the single common scalar action on $U$,
+$C=P\bar Q$ is invariant. The choices in (41.11) are pointwise choices
+for each input pair; the theorem asserts continuity in $\theta$ for
+that pair, and asserts no globally continuous selection of directions
+over $\mathcal K$. It is a family in the original mathematical domain,
+with no assertion of a physical control implementation. $\square$
+

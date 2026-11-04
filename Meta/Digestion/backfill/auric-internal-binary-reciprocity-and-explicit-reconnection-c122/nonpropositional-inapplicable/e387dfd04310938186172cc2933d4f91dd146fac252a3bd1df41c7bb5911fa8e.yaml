@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e387dfd04310938186172cc2933d4f91dd146fac252a3bd1df41c7bb5911fa8e
+  normalized_sha256: sha256:e387dfd04310938186172cc2933d4f91dd146fac252a3bd1df41c7bb5911fa8e
+cas_ref: sha256:e387dfd04310938186172cc2933d4f91dd146fac252a3bd1df41c7bb5911fa8e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Resource contract for coherent amplification: controlled purification, retained branch records, supplied C and its inverse, initialization and good-flag reflections, and known auxiliary coin rotations. These are declared operational hypotheses, not a theorem constructing those resources from destructive measurement.'
+    previous_atom_id: 8409bf1796105f11169912acd64fbd1dee3c56f0fdbc194963ec74697648e8db
+    next_atom_id: 930110f1b6829e7911ea6e3766b0901a0883e3a5c1c2e73edabeb6449fbe0763

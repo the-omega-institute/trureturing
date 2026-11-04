@@ -1,0 +1,34 @@
+**定义 28.1（同源局部准备与完整原仪器）。** 设 $H=\mathbb C^d$、$d\ge1$，$M$ 为非零有限维复记忆空间。标签选择以前固定同一归一联合态 $\rho\in\mathcal B(H\otimes M)$，允许任意混合性和相关性。记
+
+$$
+\rho_M=\operatorname{Tr}_H\rho,\qquad
+M_0=\operatorname{supp}\rho_M,\qquad I_0=I_{M_0}.
+\tag{28.1}
+$$
+
+$\rho$ 的输入支撑包含于 $H\otimes M_0$：若 $m\in\ker\rho_M$，则 $\sum_i\langle e_i,m|\rho|e_i,m\rangle=0$，正性使 $\rho$ 消灭整个 $H\otimes\ker\rho_M$。以后把 $\rho$ 视为该输入子空间上的算子，但不将原输出记忆压回 $M_0$。
+
+对每个秩一投影 $p=|z\rangle\langle z|$、$\|z\|=1$，已合法的原局部准备成功支恰为 $\operatorname{Ad}_{p}\otimes\operatorname{id}_M$；同一准备装置的全部原失败记录及其动作保留。其未归一化成功输出为
+
+$$
+\begin{aligned}
+X_p&=(p\otimes I_M)\rho(p\otimes I_M)=p\otimes\sigma_p,\\
+\sigma_p&=(\langle z|\otimes I_M)\rho(|z\rangle\otimes I_M)
+=\operatorname{Tr}_H[(p\otimes I_M)\rho]\ge0,\\
+\eta_p&=\operatorname{Tr}\sigma_p=\operatorname{Tr}(p\rho_H)\in[0,1].
+\end{aligned}
+\tag{28.2}
+$$
+
+$\sigma_p$ 与相位选择无关。$\eta_p=0$ 时 $X_p=0$，仍保留该标签，不定义其归一准备态。准备改变记忆条件态的关系由同一个 $\rho$ 决定，不用一族独立供应的乘积态代替；相关准备的这一对象区别参见 [Modi，arXiv:1011.6138v4](https://arxiv.org/pdf/1011.6138v4)。
+
+原被调用装置固定为一份完整有限 CP 仪器
+
+$$
+\{V_j:\mathcal B(H\otimes M)\to\mathcal B(H\otimes M)\}_{j\in\mathsf J},
+\qquad \sum_{j\in\mathsf J}V_j^{\dagger}(I_{H\otimes M})=I_{H\otimes M}.
+\tag{28.3}
+$$
+
+$\mathsf J$ 是原实际细记录集合，含全部成功和失败；同一标签有多个数学 Kraus 算子时，不将这些指标提升为新原记录。选定非空 $\mathsf C\subseteq\mathsf J$，只对这些原支要求零泄漏。令 $\iota:H\otimes M_0\hookrightarrow H\otimes M$ 为原包含，并记 $V_{j,0}(Y)=V_j(\iota Y\iota^{\dagger})$。输出仍在完整 $H\otimes M$ 中。完全正的 Kraus 表示及完整性采用 [Watrous，TQI 第 2 章，定理 2.22、2.26](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf) 的有限维约定。
+

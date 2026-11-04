@@ -1,0 +1,24 @@
+### 23.2 切向量描述门在一点的作用，不能替代完整门
+
+给归一纯态曲线选取水平相位规范，可令
+$\langle\psi|\dot\psi\rangle=0$。
+酉演化在这一规范下的切向量为
+
+$$
+v_H(\psi)=-\frac{i}{\hbar}
+\bigl(H-\langle\psi|H|\psi\rangle I\bigr)\lvert \psi\rangle.
+$$
+
+所以“态与切向正交”是局部水平描述。
+若取两态相位使 $\langle A|B\rangle=\cos\theta\ge0$，且
+$0<\theta\le\pi/2$，则有精确分解
+
+$$
+\lvert B\rangle=\cos\theta\lvert A\rangle+\sin\theta\lvert \eta\rangle,
+\qquad\langle A|\eta\rangle=0,\quad\left\lVert \eta\right\rVert=1.
+$$
+
+$B=A+\delta v$ 只是一阶近似，不能直接作为有限态变化的归一等式。
+不同门在一个态上可以有相同切向作用，却在其他态上不同；
+因此内容即地址的识别须声明比较范围，是单态、全态、结果历史还是完整内部记录。
+

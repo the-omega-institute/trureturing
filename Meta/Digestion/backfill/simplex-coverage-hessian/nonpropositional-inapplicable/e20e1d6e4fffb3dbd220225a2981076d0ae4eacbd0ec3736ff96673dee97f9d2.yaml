@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e20e1d6e4fffb3dbd220225a2981076d0ae4eacbd0ec3736ff96673dee97f9d2
+  normalized_sha256: sha256:e20e1d6e4fffb3dbd220225a2981076d0ae4eacbd0ec3736ff96673dee97f9d2
+cas_ref: sha256:e20e1d6e4fffb3dbd220225a2981076d0ae4eacbd0ec3736ff96673dee97f9d2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Scope and dependency-routing boundary for Theorem 11.3: the event/word/factorial identities do not settle the optimizer. The listed transport, comparison and expectation obligations remain separate; this receipt asserts none of them and adds no mathematical claim.'
+    previous_atom_id: 00de670fec1d13763f18e5c3f8fe44dc669be779e602196521a1f66739b03563
+    next_atom_id: be999dcc9c0bfb27b70a609ab35f32d6ff8539ce41b0d2814362b9b368d71cd8

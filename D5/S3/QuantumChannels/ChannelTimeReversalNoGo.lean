@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: No randomisation-consistent channel symmetry reverses every unitary. -/
-/- proof_shape: result: bind-only; consumers: none (settling result)
+/- Owner publication escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25799. proof_shape: result: bind-only; consumers: none (settling result)
    escape_witness: none
    admission_basis: open-problem-resolution (#16378; Proved)
    Selected frozen dependencies (declaration statement_id, base e4cd4993c1aed7cf4dcbf1c93079e5ed0a892b37):
@@ -79,6 +79,13 @@ import D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation
 import D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Fibers.RankOneFeedbackProtocol
+import D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
+import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
+import D5.S3.Quantum.FiniteDimensional
+import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+import D5.S3.Quantum.Magic.WignerDistanceMinimum
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsCPTP)
@@ -171,7 +178,7 @@ private lemma finite_randomisation {d : ℕ} {S : MatrixMap (Fin d) (Fin d) ℂ 
   have hpair : (∑ i ∈ s, p i • (Phi i, S (Phi i))) = (∑ i ∈ s, (p i : ℂ) • Phi i, ∑ i ∈ s, (p i : ℂ) • S (Phi i)) := by
     exact (prod_mk_sum s (fun i => (p i : ℂ) • Phi i) (fun i => (p i : ℂ) • S (Phi i))).symm
   rw [hpair] at hmem; exact hmem.2.symm
-private lemma unitaryChannel_cptp {d : ℕ} {U : Matrix (Fin d) (Fin d) ℂ} (hU : U ∈ Matrix.unitaryGroup (Fin d) ℂ) : IsCPTP (unitaryChannel U) := by
+lemma unitaryChannel_cptp {d : ℕ} {U : Matrix (Fin d) (Fin d) ℂ} (hU : U ∈ Matrix.unitaryGroup (Fin d) ℂ) : IsCPTP (unitaryChannel U) := by
   constructor
   · let K : Fin 1 → Matrix (Fin d) (Fin d) ℂ := fun _ => U
     have heq : unitaryChannel U = MatrixMap.of_kraus K K := by

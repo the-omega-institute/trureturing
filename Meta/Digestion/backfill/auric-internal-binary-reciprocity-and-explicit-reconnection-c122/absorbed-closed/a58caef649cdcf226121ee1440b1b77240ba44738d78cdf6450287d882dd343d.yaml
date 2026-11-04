@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a58caef649cdcf226121ee1440b1b77240ba44738d78cdf6450287d882dd343d
+  normalized_sha256: sha256:a58caef649cdcf226121ee1440b1b77240ba44738d78cdf6450287d882dd343d
+cas_ref: sha256:a58caef649cdcf226121ee1440b1b77240ba44738d78cdf6450287d882dd343d
+coverage_gids:
+  - gid: D5/S3/Quantum/Recovery/CoherentUniformAmplification.uniform_operator_rotation
+    target_statement_id: sha256:837490a9d46a19a6a3f1eb52995c63238ab0923dec24628c8a40cab4ff0c00b4
+receipts:
+  unresolved_subitems: []

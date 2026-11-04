@@ -1,0 +1,58 @@
+**Lemma 46.2 (actual pair reconstruction and the coupled triangle).** Every
+point of (46.10) is attained by a whole phase feedback, and every whole phase
+feedback with (46.7) gives a point of (46.10). More precisely, write
+$r=\sqrt X$, $z=\sqrt Y$. There are phases $\alpha,\beta$ and signs
+$\varepsilon_1,\varepsilon_2\in\{\pm1\}$ such that, in the fixed pair order,
+
+$$
+\begin{aligned}
+(v_j)_{j\in J}
+ &=e^{i\alpha}\bigl(r+i\varepsilon_1\sqrt{1-X},
+                         r-i\varepsilon_1\sqrt{1-X}\bigr),\\
+(v_j)_{j\in K}
+ &=e^{i\beta}\bigl(z+i\varepsilon_2\sqrt{1-Y},
+                         z-i\varepsilon_2\sqrt{1-Y}\bigr),
+\end{aligned}
+\tag{46.14}
+$$
+
+and
+
+$$
+ \cos(\alpha-\beta)=Z.
+\tag{46.15}
+$$
+
+There remains one arbitrary common scalar multiplying all four entries.
+For these pairs the largest crossed modulus is $2C$, and it is attained by
+choosing $\varepsilon_1\varepsilon_2$ to have the sign of
+$\sin(\alpha-\beta)$; if that sine vanishes either product is allowed.
+
+*Proof.* Since $r,z\le1$ and $r+z\ge1+x$, each of $r,z$ is at least $x$.
+Also $(1-r)(1-z)\ge0$ gives $rz\ge r+z-1\ge x$, hence
+$XY\ge x^2$. The trace equation for the two pair sums is
+
+$$
+ L^2=X+Y+2\sqrt{XY}\cos(\alpha-\beta),
+\tag{46.16}
+$$
+
+which proves (46.15) and the necessity of (46.10). Conversely,
+(46.10) gives $X,Y\in[x^2,1]$ and $r+z\ge L$, while
+$|r-z|\le1<L$. These two triangle inequalities give $|Z|\le1$
+and hence the two pairs in (46.14);
+taking a cosine with value $Z$ realizes the trace. This proves exact
+attainment, including the boundary. Expanding (46.4) on (46.14) gives
+$|M|=2R$ and
+
+$$
+ \frac{|N|^2}{4}=\ell^2(1-X)+m^2(1-Y)
+ +2\ell m\varepsilon_1\varepsilon_2
+       \sqrt{(1-X)(1-Y)}\sin(\alpha-\beta).
+\tag{46.17}
+$$
+
+The stated orientation realizes $C$ and no larger value is possible. The
+construction is a single whole feedback, so no independently chosen pair or
+column has been introduced. $\square$
+

@@ -1,0 +1,75 @@
+### 命题 17.1（差额的积向量证书）
+
+沿用定理 16.1 的非零支撑与基。定义数学重加权映射
+
+$$
+\Phi(Y)=T(A_P^{-1}Y A_P^{-1}),\qquad
+Y\in\mathcal B(PH).
+\tag{17.1}
+$$
+
+$\Phi$ 正且保迹，$T(X)=\Phi(AXA)$。这只是同一线性映射的输入坐标变换，不被认作菜单中另有的实际过程。写 $C_\Phi$ 为输入在前的 Choi 矩阵，并将 $f_1,\ldots,f_r$ 补成整个 $K$ 的正交基。令
+
+$$
+W=s A_P\otimes I_K-|a_J\rangle\langle a_J|.
+\tag{17.2}
+$$
+
+对 $i<j$ 与 $\theta\in\{0,\pi/2,\pi,3\pi/2\}$，定义
+
+$$
+\begin{aligned}
+x_{ij\theta}&=\sqrt{a_i}e_i+e^{i\theta}\sqrt{a_j}e_j,\\
+y_{ij\theta}&=\sqrt{a_j}f_i-e^{-i\theta}\sqrt{a_i}f_j,\\
+D_{ij}&=\frac14\sum_\theta
+ |x_{ij\theta}\otimes y_{ij\theta}\rangle
+ \langle x_{ij\theta}\otimes y_{ij\theta}|.
+\end{aligned}
+\tag{17.3}
+$$
+
+记 $|i,k\rangle=e_i\otimes f_k$。则有有限可分分解
+
+$$
+\begin{aligned}
+W={}&\sum_{i<j}D_{ij}
+ +\sum_{\substack{1\le i,j\le r\\i\ne j}}
+       a_i(s-a_i)|i,j\rangle\langle i,j|\\
+ &+\sum_{i=1}^r\sum_{k=r+1}^{\dim K}
+       s a_i|i,k\rangle\langle i,k|,
+\end{aligned}
+\tag{17.4}
+$$
+
+并且
+
+$$
+\operatorname{Tr}(C_\Phi W)=s^2-z.
+\tag{17.5}
+$$
+
+**证明。** 保迹性来自 $\operatorname{Tr}\Phi(Y)=\operatorname{Tr}(A_P^{-1}EA_P^{-1}Y)=\operatorname{Tr}Y$。四相位平均消去非零相位次数的项，余项准确为
+
+$$
+\begin{aligned}
+D_{ij}={}&a_i a_j\bigl(
+ |i,i\rangle\langle i,i|+|j,j\rangle\langle j,j|
+ -|i,i\rangle\langle j,j|-|j,j\rangle\langle i,i|\bigr)\\
+ &+a_i^2|i,j\rangle\langle i,j|
+  +a_j^2|j,i\rangle\langle j,i|.
+\end{aligned}
+$$
+
+累加后，$|i,i\rangle$ 的对角系数是 $a_i(s-a_i)$，$|i,j\rangle$ 在 $i\ne j$ 时先有 $a_i^2$，再由 (17.4) 的剩余项补至 $s a_i$；支撑像以外的全部输出系数由最后一项保留。这恰等于 (17.2)。所有剩余系数非负。保迹给 $\operatorname{Tr}[C_\Phi(A_P\otimes I_K)]=s$，而 $C_T=(A_P\otimes I_K)C_\Phi(A_P\otimes I_K)$，故 (17.5) 成立。
+
+可分性也直接来自成熟结果：置
+
+$$
+\eta=s^{-1/2}\sum_i\sqrt{a_i}\,e_i\otimes f_i,\qquad
+\|\eta\|=1.
+$$
+
+则 $W=(\sqrt{s}A_P^{1/2}\otimes I_K)
+(I-|\eta\rangle\langle\eta|)
+(\sqrt{s}A_P^{1/2}\otimes I_K)$，而秩一投影的补由 Gurvits–Barnum 球定理可分 [6](#ref-positive-gb)、[8](#ref-positive-repo-gb)。式 (17.4) 把此处所用的有限比较项具体展开，没有重新证明一般可分球。$\square$
+

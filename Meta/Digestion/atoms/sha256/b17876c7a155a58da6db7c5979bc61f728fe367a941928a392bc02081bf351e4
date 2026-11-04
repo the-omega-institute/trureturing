@@ -1,0 +1,42 @@
+**定理 24.2（完整障碍及有证明的生成元缩短）。** 在 P/G 下，原 D、C，以及以下精确有限条件互相等价：先有 (24.3)，再有
+
+$$
+(T^2+\operatorname{Id})P_i=0,
+\qquad
+\mathcal B_T(P_i,g_\gamma)=0
+\quad\text{对所有 }i,\gamma,
+\qquad
+\mathcal B_T(X,Y):=T[X,Y]-[X,TY],
+\tag{24.4}
+$$
+
+其中 $g_\gamma$ 跑遍 $P_j,K_{jk}$ 这份完整张成表。用全部 $g_\gamma,g_\eta$ 检验平方及双线性缺陷亦等价。非退化型 (22.5) 还给完全等价的三变量标量障碍
+
+$$
+\mathcal T_T(X,Y,W)=\beta(\mathcal B_T(X,Y),W),
+\qquad
+\mathcal T_T(P_i,g_\gamma,g_\eta)=0
+\quad\text{对所有 }i,\gamma,\eta.
+\tag{24.5}
+$$
+
+未通过关系一致性、平方或任一缺陷，都是对原固定 $D$ 的确切否定证据，不是给原 $d$ 换一个拟合值的许可证。
+
+**证明。** 若 C 成立，取其唯一 $J$；锚定式给 $D_c=0$，质心律给 $JK_{ij}=Q_{ij}$，所以 $t=Js$，自动尊重全部关系并满足 (24.3)–(24.5)。反过来，(24.3) 先给良定 $T$。由张成，(24.4) 的第二式说明 $T$ 与每个 $\operatorname{ad}_{P_i}$ 在全部 $\mathfrak h$ 上交换。Jacobi 给
+
+$$
+\operatorname{ad}_{K_{ij}}
+=[\operatorname{ad}_{P_i},\operatorname{ad}_{P_j}].
+\tag{24.6}
+$$
+
+所以 $T$ 也与每个 $\operatorname{ad}_{K_{ij}}$ 交换，遂与全部 $\operatorname{ad}_X$ 交换，成为质心元。这证明只缩短第一槽到 $P_i$ 的检验已足够，未遗漏 $\mathfrak k$ 的作用。质心在组合下封闭，故 $T^2+\operatorname{Id}$ 也在质心中；它在 $P_j$ 上为零就给
+
+$$
+(T^2+\operatorname{Id})K_{ij}
+=[P_i,(T^2+\operatorname{Id})P_j]=0.
+\tag{24.7}
+$$
+
+于是平方关系在全部 $\mathfrak h$ 上成立。原 $D$ 实线性、(24.3) 的中心零式和 $TP_i=A_i$ 使 $D_a=TL_{a_0}$ 在每个 $a\in E$ 上成立，取 $J=T$ 即得 C。定理 23.1 给与原 D 的等价。$\beta$ 非退化且 $g_\eta$ 张成，使 (24.5) 与相应算子值缺陷为零等价。$m=0$ 时 (24.3) 只剩对全部原 $D$ 的零检验，延拓到零空间的平方及缺陷条件为空，与定理 23.1 的纯经典情形一致。∎
+

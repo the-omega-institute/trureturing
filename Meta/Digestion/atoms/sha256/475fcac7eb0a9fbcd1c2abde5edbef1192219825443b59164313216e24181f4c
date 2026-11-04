@@ -1,0 +1,53 @@
+### 定理 18.2（参考记录的正性与完整过程）
+
+<a id="thm-c92-choi-channel"></a>
+
+候选 $\Lambda$ 为完全正且保迹，当且仅当
+
+<a id="eq-c92-channel-conditions"></a>
+
+$$
+J_\Lambda\ge0,\qquad \operatorname{Tr}_O J_\Lambda=I_B/d.
+\tag{18.2}
+$$
+
+在保迹前件下，$J_\Lambda$ 的正性正是对完整参考记录使用 C92 的单 patch 情形。
+若只给若干输出边际的 Choi 记录，它们满足 C92 当且仅当存在一份共同正记录；
+只要共同参考边际已锁定为 $I_B/d$，它就对应一个共同 CPTP 过程。
+
+**证明。**
+若 $\Lambda$ 完全正，式 [(18.1)](#eq-c92-choi) 的输入为正，故 $J_\Lambda\ge0$。
+保迹逐个矩阵单位给出
+$\operatorname{Tr}\Lambda(\lvert i\rangle\langle j\rvert)=\delta_{ij}$，因此 $\operatorname{Tr}_OJ_\Lambda=I_B/d$。
+
+反之，将正矩阵写为有限秩一和
+$J_\Lambda=\sum_\alpha\lvert v_\alpha\rangle\langle v_\alpha\rvert$，
+把本征值平方根吸收入 $v_\alpha$。
+逐个定义 $M_\alpha:H_Q\to H_O$，使
+
+$$
+\lvert v_\alpha\rangle=\frac1{\sqrt d}\sum_j\lvert j\rangle_B\otimes M_\alpha\lvert j\rangle_Q.
+$$
+
+比较式 [(18.1)](#eq-c92-choi) 的全部 $B$ 端矩阵块，得到
+
+$$
+\Lambda(X)=\sum_\alpha M_\alpha X M_\alpha^\dagger.
+$$
+
+对任意额外有限参考 $R$，每项
+$(I_R\otimes M_\alpha)Y(I_R\otimes M_\alpha^\dagger)$
+都将 $Y\ge0$ 送至正矩阵，故 $\Lambda$ 完全正。
+参考边际条件给
+$(\sum_\alpha M_\alpha^\dagger M_\alpha)^{\mathsf T}=I$，
+从而 $\sum_\alpha M_\alpha^\dagger M_\alpha=I$，证明保迹。
+Choi 的逐块定义也证明该对应为一一对应。
+
+对多份局部 Choi 记录使用定理 [4.1](#thm-c92-extension)。
+共同记录的参考边际由任一给定记录固定，
+故每个共同正归一态延拓都满足式 [(18.2)](#eq-c92-channel-conditions)。
+再用刚证明的一一对应，即得共同过程。
+
+数学表示中参考位于同一个整体，且其校准已经声明。
+这不要求复制一个未知输入，也不从矩阵存在自动推出实验室已具有相应控制设备。
+

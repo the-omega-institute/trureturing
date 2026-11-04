@@ -1,0 +1,62 @@
+### 定理 5.3（成功概率与未知输入无关的回推支路）
+
+<a id="thm-c122-heralded-petz"></a>
+
+在上述资源下，按以下顺序操作：先施加 $A_\tau$；附加 $I_E/m$ 后运行 $U^*$，只接受 $E_0$ 返回 $\lvert 0\rangle$ 的分支；最后施加 $A_\sigma$。全部成功的支路恰为
+
+<a id="eq-c122-petz-success-map"></a>
+
+$$
+\mathcal S_{\rm succ}(X)
+ =\frac{c^2}{m}\,\mathcal P_{\sigma,\mathcal N}(X).
+\tag{35}
+$$
+
+对任意 $P$ 支持的归一化输入，成功概率均为
+
+<a id="eq-c122-constant-success"></a>
+
+$$
+p=\frac{c^2}{m}.
+\tag{36}
+$$
+
+结论包括输入与任意参考的纠缠；成功后归一化的联合通道为
+$\mathcal P_{\sigma,\mathcal N}\otimes\operatorname{id}$。
+
+**证明。**
+令
+$K_a=(I_K\otimes\langle a\rvert)U(I_H\otimes\lvert 0\rangle)$。
+逆门加初始化投影作用于 $Y\otimes I_E/m$ 的成功映射为
+
+$$
+\frac1m(I_H\otimes\langle 0\rvert)U^*(Y\otimes I_E)U(I_H\otimes\lvert 0\rangle)
+ =\frac1m\sum_aK_a^*YK_a=\frac1m\mathcal N^*(Y).
+$$
+
+夹上两个滤片后，成功支路的 Kraus 算子为
+
+$$
+M_a=\frac c{\sqrt m}\sigma^{1/2}K_a^*\tau^{-1/2}.
+$$
+
+因此得到式 [(35)](#eq-c122-petz-success-map)，并且
+
+$$
+\sum_aM_a^*M_a
+ =\frac{c^2}{m}\tau^{-1/2}\mathcal N(\sigma)\tau^{-1/2}
+ =pP.
+$$
+
+该算符等式直接给出所有 $P$ 支持输入的同一成功率，在张量参考后仍成立。
+又因 $\sigma\ge\mu I_H$ 对某个 $\mu>0$ 成立，
+$\tau\ge\mu\mathcal N(I_H)$。任意源态的输出都支持于 $P$，所以实际向前过程的输出满足本定理的支持承诺。
+
+这条逆酉、辅助态与滤片的路线是已知 Petz 实现算法的精确有限版本；相应的近似矩阵函数和放大算法见 Gily
+'en 等 [10](#ref-gilyen2022)。本节给出其供应前件和归一化证明，不将此电路称为新算法。
+
+若取 $c^2=\lambda_{\min}^{+}(\tau)$，单次成功率为
+$\lambda_{\min}^{+}(\tau)/m$。这已经显示最小正谱值的资源作用；它不是协议无关的最优代价下界。有限次数的概率抽样也不能自行证明某个特征值*恰好为零*。精确支持、正谱下界和滤片精度必须有明示证书，或转而在一个已知的名义模型中构造全空间通道。
+
+**白话。**先按输出参照重新加权，再沿同一完整门倒走，检查是否回到原来的初始化记录，最后按输入参照加权。三步合起来的成功机会对所有未知内容都一样，所以成功没有额外挑选某种输入。但失败仍然是一次真实结果，不能因为公式能归一化，就把失败从操作成本里删掉。
+

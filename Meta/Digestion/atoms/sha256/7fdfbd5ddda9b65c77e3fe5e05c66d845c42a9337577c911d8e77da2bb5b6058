@@ -1,0 +1,16 @@
+### 定义 2.2（合成算符与合成响应）
+
+对任意局部 Hermitian 族 $h=(h_C)_{C\in\mathscr C}$，定义
+
+<a id="eq-c92-composite"></a>
+
+$$
+W(h)=\sum_{C\in\mathscr C}\iota_C(h_C),\qquad
+ b_R(h)=\sum_{C\in\mathscr C}\operatorname{Tr}(R_Ch_C).
+\tag{2.1}
+$$
+
+$W(h)$ 是把局部关系放进共同载体后得到的同一个算符内容；
+$b_R(h)$ 是从已给局部资料汇总出的同一关系的响应。
+两者有各自独立的定义，因此可以检查是否相容。
+

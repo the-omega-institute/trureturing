@@ -1,0 +1,16 @@
+**Corollary 44.4 (the older high-impurity screen is contained).** Every
+original pair with $\epsilon(E)\ge3/8$ lies in the sector (44.12).
+
+**Proof.** Positivity gives $\epsilon=2(p(1-p)-|z|^2)\le2p(1-p)$. Thus
+$\epsilon\ge3/8$ implies $p(1-p)\ge3/16$, hence $1/4\le p\le3/4$.
+Since $d^2>2e^2$ by the strict half-angle inequality used below, $0<k<1/2$
+and
+
+$$
+\theta(p)=\frac{3k}{8}+\frac{(1-k)p}{2}
+ \le\frac{3k}{8}+\frac{3(1-k)}8=\frac38.
+\tag{44.20}
+$$
+
+Therefore $\epsilon\ge3/8\ge\theta(p)$. $\square$
+

@@ -1,0 +1,122 @@
+**Theorem 24.2 (exact source-relative access support).** For every total
+fixed $\chi$, every reachable finite $t$, and every fixed $A\subseteq I(t)$,
+selected chronology is recoverable from the old full-tape observation
+if and only if
+
+$$
+R_\chi(t)\subseteq A.
+\tag{AA.83}
+$$
+
+For direct already acquired selected tapes, replacing $W$ by $V$ and
+$A$ by $B\subseteq I(t)$ gives instead the exact condition
+$H_\chi(t)\subseteq B$. In particular the selected words have conditional
+alphabet size
+
+$$
+F_\chi(t)=\prod_{p\in I(t)}\binom{a_p+b_p}{a_p}.
+\tag{AA.84}
+$$
+
+Every indispensable full coordinate has two lawful histories that agree
+on all other full coordinates and disagree on selected chronology. The
+criterion concerns this representation and fixed-coordinate access; it
+is not a bound on arbitrary encoded advice, adaptive bit probes or
+all representations of the selected word.
+
+Proof. Use Theorem 19.2's bijection between $\mathcal H(t)$ and the
+Cartesian product of full binary shuffles. First consider two product
+points differing only by one adjacent $LR\leftrightarrow RL$ exchange
+in coordinate $p$. With all child coordinates fixed, this exchanges two
+consecutive events $e,f$ in the strict-descendant word at $p$, one in
+each child cone. Their local identities are fixed. At every proper
+ancestor the shuffle is fixed, so the slots occupied by the whole
+$p$-subtree word are fixed. In the global word the change therefore has
+exactly the form
+
+$$
+u\,e\,z\,f\,v\quad\longleftrightarrow\quad
+u\,f\,z\,e\,v,
+\tag{AA.85}
+$$
+
+where $u,v,z$ are otherwise unchanged. Every event of $z$ has address
+prefix-incomparable with $p$. Indeed $e,f$ are consecutive in the
+$p$-subtree list, while events at $p$ or its ancestors precede that
+list. This slot statement also follows inductively by substituting
+the fixed child list into each fixed ancestor shuffle. Both global
+words are lawful by the full product bijection.
+
+Deleting unselected events in (AA.85) changes the selected word only if
+both $e,f$ are selected, or exactly one is selected and $z$ contains a
+selected event. The first alternative requires $a_pb_p>0$. In the
+second, a selected left event with a right event requires $a_py_p>0$,
+or a selected right event with a left event requires $b_px_p>0$;
+a selected event in $z$ requires $o_p>0$. Consequently every such exchange
+at $p\notin R_\chi(t)$ preserves $\nu_\chi$.
+
+Binary words with fixed multiplicities are connected by adjacent exchanges:
+move their left symbols one at a time to the prescribed positions, leaving
+the earlier matched prefix fixed. Hence two product points agreeing on
+$A\supseteq R_\chi(t)$ can be joined by exchanges only at coordinates
+outside $R_\chi(t)$. The preceding argument proves that their selected
+words agree. An explicit mathematical recovery is to keep the supplied $W_p$
+for $p\in A$, fill each missing coordinate with $L^{x_p}R^{y_p}$, decode
+that full product by Theorem 19.2 and then select by $\chi$. The decoded
+full word is a representative, not an assertion of the actual full
+history. Its selected subword is the actual one by this invariance.
+This construction is relative to the values of $\chi$ on the finite
+$E(t)$; it does not give a uniform effective evaluator for an arbitrary
+total predicate. Section 26 supplies such an installed evaluator when
+claiming operational recovery.
+
+For necessity, LAB events in opposite child cones of $p$ are causally
+incomparable. An event at an address prefix-incomparable with $p$ is
+incomparable with both cones. For any pair or triple of such events,
+take the union of their strict causal predecessor sets. This is a lower
+set containing none of the chosen events. Execute that lower set first;
+then all chosen events are enabled. After either ordering of them the
+occurred set is identical, and a common finite extension of the remaining
+order completes to $t$. The source correspondence is Theorem 17.2;
+finite enabled extension and its legal-swap method are credited to
+`EnabledPathSwapConnectivity.result`.
+
+If $a_pb_p>0$, choose selected events $e$ and $f$ in opposite child
+cones and execute them adjacently in opposite orders after that prefix.
+Only $W_p$ changes: above $p$ both events have the same side, below it
+no coordinate contains both, and all other coordinates omit them.
+Their selected relative order reverses.
+
+Otherwise a nonzero second term of (AA.82) supplies a selected event $e$
+in one cone, an unselected event $f$ in the other, and a selected event
+$g$ prefix-incomparable with $p$. The opposite-cone event is unselected
+because $a_pb_p=0$. Execute the enabled triple as $egf$ and $fge$, with
+the common prefix and suffix just constructed. At $p$ the two events
+have exchanged opposite sides. At any proper ancestor of $p$ they
+have equal sides, even if that ancestor also contains $g$; exchanging
+their identities preserves the side word. At a descendant of $p$ or
+a branch outside its subtree, at most one of $e,f$ occurs, and its
+relative order within that coordinate is unchanged. Thus all full
+coordinates except $p$ agree. The selected subwords contain $eg$ and
+$ge$, respectively, in the same surrounding selected context. Omitting
+$p$ therefore prevents recovery even if every other full tape is given.
+This proves (AA.83), including empty or singleton selected sets.
+
+For the selected-tape comparison, at each root retain its forced local
+selected prefix, then shuffle the two selected child lists using $V_p$.
+This is the same credited binary routing method, now applied to the
+selected subword. Every choice of the binary words with counts $a_p,b_p$
+is realizable: inductively choose full child lists realizing the chosen
+selected child lists; for each next requested selected event emit its
+child's unselected pending prefix and then that event. After all selected
+events emit the unselected tails. Prepend the forced full local prefix.
+This makes a lawful full child shuffle with exactly the prescribed
+selected projection. Induction proves a bijection between selected words
+and the selected-tape product. The singleton coordinates outside $H_\chi$
+are forced unary or empty words, whereas changing a nonsingleton coordinate
+in $H_\chi$ while fixing the others changes the selected word. This gives
+the direct-access condition and (AA.84). The product representation,
+rank/select navigation and finite-word counting are intermediate suppliers;
+the full-coordinate dependence in (AA.82) is the additional conclusion.
+$\square$
+

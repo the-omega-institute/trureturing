@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7049e982ede3aeec8bda98d3054b5a727c150341995727c32298b41a0d5e3e08
+  normalized_sha256: sha256:7049e982ede3aeec8bda98d3054b5a727c150341995727c32298b41a0d5e3e08
+cas_ref: sha256:7049e982ede3aeec8bda98d3054b5a727c150341995727c32298b41a0d5e3e08
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 2.1 introduces the actual L2 Hilbert space, Schwartz embedding J, the operator S, its finite physical Hermite span restriction T, and the compact-test predicate Weak. These are definitions, not an assertion of graph equality, closability or existence of a physical Hilbert basis. The existing public SchwartzWeakAdjoint.Hilbert, schwartzOperator and Weak give the L2 space, actual embedded Schwartz operator and compact-test relation, using the full SchwartzCutoffGraph.differential sum. The finite restriction is the existing C := Submodule.span complex (Set.range e), T := S.domRestrict C construction in PhysicalGraphClosure.physical_graph_closure, whose physical-basis hypotheses are not discharged here. The stipulation imposes no separate square-integrability on the two differential summands. The adjacent cutoff and full-graph propositions are separate obligations.
+    previous_atom_id: 71d57c93e85e0675c5603783058153600f6de3864a8162271185adcf305dc051
+    next_atom_id: 92262bd336aa2b68ae8fee1dad6ed863460a70c92c92f9f932bcb6d373bd1ee2

@@ -1,0 +1,48 @@
+**Corollary 12.3 (The four-party consumer for unrestricted pure Gaussian data).** Let $q=4$ and take arbitrary data of Definition 12.1 on the distinct parties $A,B,C,D$. Use exactly $\mathrm{GM}_2^{(4)}$ of Definition 11.1, with real $\alpha,\beta$ satisfying $\alpha+\beta=1/3$. Set
+
+$$
+C_{\mathrm{tot}}=\sum_{C\in\mathcal C}S_2^{(2)}(C),\qquad
+P_{\mathrm{tot}}=\sum_{P\in\mathcal P}S_2^{(2)}(P),
+$$
+
+with the four single cuts $\mathcal C$ and three pair cuts $\mathcal P$ of Definition 11.1. Then
+
+$$
+\mathrm{GM}_2^{(4)}=(\beta-1/4)(C_{\mathrm{tot}}-P_{\mathrm{tot}}).
+$$
+
+In particular $\mathrm{GM}_2^{(4)}=0$ at $\alpha=1/12$, $\beta=1/4$ for every such Gaussian datum. The four-party definition is supplied by Iizuka and Nishida, [arXiv:2502.07995v1, §5, Eqs. (65)–(66)](https://arxiv.org/html/2502.07995v1#S5.E65), equivalently [v5, §5.1, Eqs. (67)–(68)](https://arxiv.org/html/2502.07995v5#S5.SS1), with their $(a,b)=(\alpha,\beta)$. The convention written using $\mathrm{GM}^{(3)}$ has the shifted coefficients of Definition 11.1. The cut-count algebra is that of Corollary 7.2 and Remark 11.2; the enlarged Gaussian domain is the consequence here.
+
+**Proof.** Theorem 12.2 gives
+
+$$
+S_2^{(4)}=\frac14(C_{\mathrm{tot}}+P_{\mathrm{tot}}).
+$$
+
+For any of the six merges $XY:Z:W$, the same global state is still a pure Gaussian state, now with party sizes $N_X+N_Y,N_Z,N_W$. Regrouping coordinates conjugates $A,B$ by a coordinate permutation and preserves $A>0$. Camargo–Nishida's unrestricted tripartite factorization, Eq. (58), therefore gives
+
+$$
+S_2^{(3)}(XY:Z:W)=\frac12\big(
+S_2^{(2)}(XY:ZW)+S_2^{(2)}(Z:XYW)+S_2^{(2)}(W:XYZ)\big).
+$$
+
+The partial traces in this formula are those of the original four-party state. Each pair cut is supplied by two complementary choices of merged pair, and each single cut by the three choices of a merged pair among its complementary three parties. These are exactly the multiplicities in Remark 11.2. Thus
+
+$$
+\sum_{XY\in\mathcal M}S_2^{(3)}(XY:Z:W)
+=P_{\mathrm{tot}}+\frac32C_{\mathrm{tot}}.
+$$
+
+Substitution into Definition 11.1 gives
+
+$$
+\begin{aligned}
+\mathrm{GM}_2^{(4)}
+&=\left(\frac14-\frac12+\beta\right)C_{\mathrm{tot}}
+ +\left(\frac14-\frac13+\alpha\right)P_{\mathrm{tot}}\\
+&=(\beta-1/4)C_{\mathrm{tot}}+(1/4-\beta)P_{\mathrm{tot}},
+\end{aligned}
+$$
+
+where the last equality uses $\alpha+\beta=1/3$. This proves the formula and its stated zero. The vanishing is a property of this entropy combination and entails no separability conclusion. ∎
+

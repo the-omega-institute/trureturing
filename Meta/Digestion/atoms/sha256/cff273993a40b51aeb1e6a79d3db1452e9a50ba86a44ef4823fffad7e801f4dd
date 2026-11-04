@@ -1,0 +1,79 @@
+**Theorem 32.3 (actual acquisition, retention, output and continued use).**
+Under Assumption 32.1, the installation of Definition 32.2 acquires exactly
+$\mathcal R_C(w)$ after every completed request, where $w$ is its own
+actual successful generation word. Every actually supplied finite complete
+request beginning at MarkedReady returns its specified full reply in
+finite work and returns to MarkedReady on the same live source. An
+in-range NextSelected performs one actual enabled source event, preserves
+all earlier selected recalls and makes the new event callable precisely
+when $C$ selects it at that receipt. These assertions compose for every
+finite sequence of complete requests. Every finite lawful LAB generation
+word can occur with this same driver. A proper request prefix waits with
+its acquired backing; a supplied finite completion suffices for return.
+
+Proof. At initialization there is the allocated $\alpha$, no branch tape,
+zero root marks and $q_0$. This is the record of the empty word. Suppose
+the invariant holds at MarkedReady. The input latch/copy invariant of
+§20 retains exactly the supplied frame, without presuming a missing bit.
+For a complete finite frame, finite guarded navigation and source tests
+supply the same current Tag, event-membership query or refusal as §20.
+They preserve the invariant and do not change selection state.
+
+For successful growth, actual source editing produces one event $e$ on
+this bound object. Old $q$ and actual $e$ remain available until Evaluate
+has returned $(q',b)$. The evaluation-complete flag prevents duplicate
+receipts; no refusal or query enters that phase. By the definition of
+transduction the new semantic data must be
+
+$$
+(t,\nu,q)\longmapsto
+\begin{cases}
+(t\cdot e,\nu e,q'),&C(q,e)=(q',1),\\
+(t\cdot e,\nu,q'),&C(q,e)=(q',0),
+\end{cases}
+\tag{AA.106}
+$$
+
+where $t\cdot e$ denotes the actual enabled LAB edit, not a free action
+on an arbitrary term. The mark write is exactly the new local selected
+membership. All earlier event identities persist. A split's new logical
+children have no earlier local events; its new tape has no earlier
+strict-descendant event. At every proper ancestor, projection of the
+new selected word appends exactly the side written by Maintain when
+$b=1$, and makes no change when $b=0$. These statements prove the full
+record invariant after Commit, including final control and all selected
+tapes. They do not assume the missing membership relation as an input.
+
+Every loop used here terminates on its declared finite operands. $C$
+terminates on every finite acquired event by assumption. The guarded
+source navigation and descriptor scans are finite; ancestor maintenance
+shortens a parent chain of length $|\operatorname{addr}(e)|$. Descriptor
+insertion traverses a finite source. Tape-cell construction consists of
+finitely many field operations at each visited ancestor. Reserved or
+unfinished fields remain pending and unservable. Finite answer construction,
+printing, End, local acknowledgement, root return and scratch cleanup
+restore exactly MarkedReady. No eventual external acknowledgement is
+used to assert this termination.
+
+For FetchSelected, Theorem 31.2 decodes the actual recorded selected word;
+its finite scans and subtree descents give the implemented termination
+measure. For NextSelected, every returned old address is still a logical
+source position because LAB has no deletion. Its current finite left
+descent reaches a leaf, whose tag permits exactly one growth template.
+The current source-write right and actual root binding execute this on
+the live object. Applying the preceding growth argument gives (AA.106)
+and the two-identity reply. An out-of-range call instead leaves the
+record unchanged. Thus earlier selected indices persist and a selected
+new event is exactly the new last entry. Queries, refusals and BadFrame
+preserve the record.
+
+Induction on completed requests now gives arbitrary finite interleavings.
+For any finite lawful generation word, supply its complete addressed
+growth frames in order, with the required finite material; the guards
+accept each by Theorem 17.2 and this construction places no further
+restriction on their schedule. Retention and callability follow from
+the real root, record heads, backing, live grants and installed entry
+remaining accessible after each return. They do not follow from a
+symbolic inverse. This proof gives pointwise finite completion, not
+an infinite-run or uniformly bounded-storage assertion. $\square$
+

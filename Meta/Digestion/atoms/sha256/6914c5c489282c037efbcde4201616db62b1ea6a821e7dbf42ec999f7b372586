@@ -1,0 +1,11 @@
+**命题 10.3（每个原选面设备的运输）。** A–D 下，令 $p_F=\kappa_o(P_F^*u_o)$，则 $p_F$ 是投影，且
+
+$$
+\sigma_oP_F\sigma_o^{-1}(X)=p_FXp_F.
+\tag{10.5}
+$$
+
+$Q_F$ 对应 $(I-p_F)X(I-p_F)$。这包括跨中心的面、零面和全面；原实现仍分别为指定的 $\mathsf p_F$ 及其原失败设备。
+
+证明。BBKM Theorem 6.1/Appendix B 的 compression 对规范配对自伴随，给 $P_F\phi_o=\phi_oP_F^*$。Jordan 表示中的面滤子为 Peirce 二次压缩 $2L_{p_F}^2-L_{p_F}$，由 Proposition 3.1 的双射它恰是原选中的滤子，而非另一个同面过程。在定理 10.2 的 special Jordan 代数中该二次压缩就是 $X\mapsto p_FXp_F$。这是标准 Jordan compression calculus，亦见 [原生切分 Atlas，定义 28.1、定理 28.2 的 slit 合同](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md)。这里只消费其压缩公式，不消费该定理的强对称与简单性分类。∎
+

@@ -1,0 +1,34 @@
+**定理 2.4（实际额外通道及零分母的范围）。** 对两方原完整基，定义双线性映射的 Hilbert–Schmidt 量
+
+$$
+f_J^2=\sum_{i,j=1}^{n_J}\|B_J(e_i,e_j)\|^2,
+\qquad
+\mathcal E_\beta=\beta B_A\otimes B_B.
+\tag{2.17}
+$$
+
+$\mathcal E_\beta$ 是实际 $T$ 的额外双线性通道，而 $\beta$ 只是其系数。在原卷定义 14.1 的乘积内积下，
+
+$$
+\boxed{\|\mathcal E_\beta\|_{\rm HS}=|\beta|f_Af_B,\qquad
+\|\mathcal E_\beta(H,X)\|
+\le|\beta|f_Af_B\|H\|\|X\|.}
+\tag{2.18}
+$$
+
+这里双线性映射的 Hilbert–Schmidt 范数指其在两个输入空间的 Hilbert 张量积上线性化后的范数。若任一方 $J$ 的 $Z_J>0$，则全部联合输入还满足
+
+$$
+\boxed{\|\mathcal E_\beta(H,X)\|
+\le\frac{u_Jm_Jf_Af_B}{r_JZ_J}\|H\|\|X\|.}
+\tag{2.19}
+$$
+
+两方均有正分母时可取两个系数上界的较小者。使用 $\overline m_J$ 仍给有效上界。因此从系数控制取得通道的统一小量还需要控制 $f_Af_B$ 及活动分母，不能把系数和通道的范数认作同一数量。
+
+下列退化均保留在原定义的范围内：若 $Z=0$，则 $Q=h=0$，混合报告满足 $m=rA$，(2.5) 为零矩，不能除以 $Z$；若 $Q=0$，则精确地 $m=r\sqrt{A^2+\beta^2h^2}$，所以严格阈值 $m<rA$ 不可能成立。若 $A=0$，该严格阈值同样不成立。若 $Q>0$ 但 $\overline m\ge rA$，式 (2.10) 不提供正的 $\mu$；若 $\kappa=0$，不得使用 (2.13) 除以它。若 $\overline\varepsilon_{\rm self}=0$ 且已有正的 $\mu$，(2.14) 则确实推出全局交替。$r=0$ 不属于原参照对的允许范围；在删去活动前件的扩大范围内，以上需除以 $r$ 的结论均不适用。充分阈值失效的这些情形不被排除，也不自动具有相反结论。
+
+证明。把两个联合输入的因子重排，$\mathcal E_\beta$ 的线性化就是 $\beta\widetilde B_A\otimes\widetilde B_B$，其中 $\widetilde B_J:J\otimes J\to J$ 是 $B_J$ 的线性化；重排是正交映射。对正交张量基求像的范数平方，得到 $\|\mathcal E_\beta\|_{\rm HS}^2=\beta^2f_A^2f_B^2$。算子范数不超过 Hilbert–Schmidt 范数，且 $\|H\otimes X\|=\|H\|\|X\|$，故 (2.18) 对任意联合输入成立，未把它们限制为简单张量。代入 (2.7) 得 (2.19)。
+
+若 $Z=0$，所有 $z_{ij}=0$，所以 $C_{z_{ij}}=L_{z_{ij}}=0$，由 (2.11) 得 $m=rA$。若 $Q=0$，则 (2.11) 的最后一项族为零，证明 (2.8) 时计算的 $\|E\|$ 就等于 $m$。其余结论分别由非负性、正分母要求及定理 2.3 直接得到。∎
+

@@ -1,0 +1,111 @@
+**Theorem 3.3 (exact first total sample horizon).** Under Definition 3.1,
+the complete laws of $H_n$ for $S_0,S_1$ agree for every $0\le n\le3$
+and differ for every $n\ge4$. The same equality through three holds for
+any common adaptive comparison, retention and stopping protocol with
+that total sample cap. At four define
+
+$$
+\begin{aligned}
+R&=\{a_1=a_2,\ a_3=a_4,\ t_1=t_4,\ t_2=t_3\},\\
+R_{\mathrm{str}}&=R\cap\{a_1\ne a_3,\ t_1\ne t_2\}.
+\end{aligned}
+$$
+
+Their exact probabilities are
+
+$$
+\begin{aligned}
+\Pr_0(R)&=\frac1{68024448},&
+\Pr_1(R)&=\frac1{34012224},\\
+\Pr_0(R_{\mathrm{str}})&=\frac{37}{3673320192},&
+\Pr_1(R_{\mathrm{str}})&=\frac{91}{3673320192}.
+\end{aligned}
+\tag{UJB.7504}
+$$
+
+Proof. For prescribed within-type equalities on $[n]$, make a typed
+bipartite multigraph $F$ whose vertices are the required equality blocks
+and whose edge $j$ joins its two blocks. Satisfying edge sequences are
+exactly type-preserving homomorphisms $F\to G_i$, so the probability is
+$\operatorname{hom}_{\mathrm{type}}(F,G_i)/M^n$. Parallel edges impose
+the same incidence constraint and can be collapsed in the numerator;
+the denominator retains the original exponent $n$. For $n\le3$ the
+resulting simple bipartite graph is a forest without isolated vertices.
+A connected tree with $\ell$ left and $r$ right vertices has exactly
+
+$$
+M\,8^{\ell-1}27^{r-1}
+\tag{UJB.7505}
+$$
+
+typed homomorphisms: choose one root edge in $M$ ways, then extend
+outward, with eight choices for each new left vertex and $27$ for each
+new right vertex. Collisions are permitted in a homomorphism, so no
+additional exclusions arise. Multiply over components. These counts
+are the same for both sources. An exact atom $H_n=(\pi_A,\pi_T)$ also
+excludes every equality between different blocks within each type.
+Expand the product of these inequality indicators by finite
+inclusion-exclusion. Each term merely coarsens the equality blocks and
+still has at most $n$ edges, so every term has equal probability for the
+two sources. This proves equality of every atom and hence the whole law;
+$n=0$ is immediate. This is the finite typed specialization of the
+homomorphism/injectivity counting method of Lovász–Szegedy, §§2.1, 2.4
+[LS](https://arxiv.org/abs/math/0408173v2); absent cross-edges are not
+required, so these are not induced-subgraph counts.
+
+For the four-edge cycle, let $c_i(t,t')$ count common left neighbors.
+For $t=(w,z)$, $t'=(w',z')$, and $d=w-w'$, (UJB.7502) gives
+
+$$
+c_i(t,t')=|\{v\ne0:B_i(v,d)=0\}|=3^{2-\operatorname{rank}L_i(d)}-1,
+$$
+
+where the matrices of $L_i(d):v\mapsto B_i(v,d)$ are
+
+$$
+L_0(d)=\begin{pmatrix}d_1&d_2\\d_2&d_3\end{pmatrix},\qquad
+L_1(d)=\begin{pmatrix}d_1&-d_2\\d_2&d_1\end{pmatrix}.
+$$
+
+For $L_0$, rank zero occurs only at $d=0$. Among nonzero $d$, rank one
+occurs in six cases with $d_1\ne0$, where $d_3=d_2^2/d_1$, and in two
+cases with $d_1=d_2=0$, $d_3\ne0$. Thus the rank multiplicities are
+$(1,8,18)$. For $L_1$, $d_1^2+d_2^2$ vanishes in $F$ exactly when
+$d_1=d_2=0$. Retaining all three values of $d_3$ gives rank
+multiplicities $(3,0,24)$. For each $d$, ordered $(t,t')$ have
+$27\cdot9^2=2187$ realizations, including any diagonal pairs. Therefore
+
+$$
+\begin{array}{c|rrr}
+ &c=0&c=2&c=8\\ \hline
+G_0&39366&17496&2187\\
+G_1&52488&0&6561
+\end{array}
+\tag{UJB.7506}
+$$
+
+counts all $243^2$ ordered pairs. The two left neighbors in $R$ may be
+chosen independently, giving
+$H_i:=\sum_{t,t'}c_i(t,t')^2$, with $(H_0,H_1)=(209952,419904)$.
+For the strict event use
+$Q_i:=\sum_{t\ne t'}c_i(t,t')(c_i(t,t')-1)$.
+Now $\sum_{t,t'}c_i(t,t')=72\cdot27^2=52488$, while each of the
+$243$ diagonal pairs has $c_i(t,t)=8$. Hence
+
+$$
+Q_i=H_i-52488-243\cdot8\cdot7,\qquad
+(Q_0,Q_1)=(143856,353808).
+\tag{UJB.7507}
+$$
+
+Divide these ordered counts by $M^4$, without an automorphism divisor,
+to obtain (UJB.7504). Projection to the first four draws proves
+inequality for every $n\ge4$.
+
+Finally every allowed protocol capped at $n$ is a common randomized
+function of $H_n$: retain only its requested comparisons and records,
+and follow its source-blind control and coins. For this mathematical
+coupling one can pre-generate $n$ edges and expose the requested prefix;
+unexposed draws supply no free observations or reset. Equal full laws
+therefore imply equal bounded adaptive transcript laws. $\square$
+

@@ -86,50 +86,12 @@ internal sealed class UnicyclicSkewnessMinusKurtosisLowerBoundDocument : IScribe
                         + "N/(N − 1) tends to one. The proof directly evaluates its own finite "
                         + "vectors and requires no finite-family identification.")),
                     Paragraph(Text(
-                        "Publication binding: the complete conjunction is the separately preregistered "
-                        + "external assertion in issue #25782 (https://github.com/the-omega-institute/trureturing/issues/25782), "
-                        + "source-screen Tier 1, source year 2022. The independent source screen establishes "
-                        + "source readiness only. The frozen result statement ID is "
-                        + "sha256:9e112720537c1dfd894f6dd624b465d17d20bff60039fe4b6d621f10bcb542a8; "
-                        + "the actual frozen module ID is "
-                        + "sha256:600dd89006d5b3c22e1ed3de8482e0263a19f08afa9c1e2ee752f7b203150ae1. "
-                        + "The primary main.tex SHA-256 is "
-                        + "0d8f9bf311a07990b64d4746e9ec4fb1e164deec23b270503642b94766baf84e.")),
-                    Paragraph(Text(
-                        "All eight theorem declarations have proof_shape: bind-only under the repository "
-                        + "normalization rule; this is a semantic assessment, not a machine classification. "
-                        + "The seven live helper consumers are: polynomial_lower_bound and coarse_lower_bound "
-                        + "feed simplex_lower_bound; simplex_lower_bound feeds universal_lower_bound; "
-                        + "universal_lower_bound feeds result; sharp_rates_positive feeds sharp_limit and result; "
-                        + "sharp_value feeds sharp_limit; sharp_limit feeds result. The terminal result's "
-                        + "intended admission_basis is open-problem-resolution; utility: none. Helpers organize "
-                        + "the proof and receive no independent content or resolution credit; no escape witness "
-                        + "is claimed. Its axiom closure is Classical.choice, Quot.sound and propext, with no "
-                        + "new axiom or sorry. Existing common-vector normalization and moment extraction are reused.")),
-                    Paragraph(Text(
-                        "The owning Reg reconstructs the whole claim with Params = Nat, State N = Fin N → ℝ "
-                        + "and Output = ℝ through the existing DependentFamily enrollment. The actual law, "
-                        + "variation, sensitivity and observational binding concern this entire family, "
-                        + "including N = 2; no fixed-N surrogate is substituted. Its current binding is "
-                        + "fb9829368b277c193c04d46777f8acb16d60e534c6c9a3dcff784d7e2bb8b245; "
-                        + "familyRecord = none and continuation = unknown, which asserts neither undecidability "
-                        + "nor inexhaustibility. The result claims neither strict finite inequality nor "
-                        + "finite-N optimizer classification.")),
-                    Paragraph(Text(
-                        "The bounded literature check covered exact arXiv metadata and independently retrieved "
-                        + "2305.09759v1, 2411.19643v3 and 2610.12652v1 without identifying settlement of this target. "
-                        + "Citation-list retrieval from OpenAlex and Semantic Scholar returned 429; unauthenticated "
-                        + "code search and the journal PDF returned 401. Loogle, LeanSearch and Reservoir coverage "
-                        + "was not completed. These are search limitations, not no-hit evidence. Generic pinned "
-                        + "Mathlib normalization, positive sums, moments, reciprocal limits and GLB interfaces "
-                        + "are reused; the Mathlib revision is 56a005855ea17e0b0958f73ec801ae140b0a1679.")),
-                    Paragraph(Text(
                         "For N = 2 the interpretation is two oriented, channel-labelled phase stages "
                         + "with one marked winding crossing; that physical identification is not explicitly supplied by the source notation. The theorem proves the rational inverse-rate "
                         + "expressions; it constructs no stochastic process, renewal identification or "
                         + "empirical correspondence. Physical N = 1, bidirectional, thermal and multicyclic "
-                        + "networks and finite-time cumulants are outside its scope. Bounded source and "
-                        + "literature searches do not establish worldwide openness or priority."))),
+                        + "networks and finite-time cumulants are outside its scope. The result claims neither "
+                        + "strict finite inequality nor finite-N optimizer classification."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("ptaszynski-skewness-minus-kurtosis-lower-bound"),
