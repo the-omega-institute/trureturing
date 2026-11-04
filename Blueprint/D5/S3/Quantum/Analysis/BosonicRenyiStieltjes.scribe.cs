@@ -85,6 +85,13 @@ internal sealed class BosonicRenyiStieltjesDocument : IScribeDocumentDefinition
                     Pow(Sub(D(1), X("x")), Mul(D(2), Alpha))),
                 Mul(Mul(D(2), Pow(Sub(D(1), Pow(X("x"), D(2))), Alpha)), CosAngle))))))));
     private static Formula WeightIntegrable() => All("α", OrderRange(Integrable(Local("renyiWeight", Alpha), Ioo01)));
+    private static Formula PowerPoissonRescale() => All("a", All("b", All("α",
+        Imp(NE(X("b"), D(0)), Equal(
+            Sub(Add(Pow(X("a"), D(2)), Pow(X("b"), D(2))),
+                Mul(Mul(D(2), Mul(X("a"), X("b"))), CosAngle)),
+            Mul(Pow(X("b"), D(2)),
+                Add(Sub(D(1), Mul(Mul(D(2), Div(X("a"), X("b"))), CosAngle)),
+                    Pow(Div(X("a"), X("b")), D(2)))))))));
     private static Formula WeightMass() => All("α", OrderRange(
         Equal(Integral("x", Ioo01, Local("renyiWeight", Alpha, X("x"))), Div(D(1), D(2)))));
     private static Formula Representation()
@@ -115,6 +122,11 @@ internal sealed class BosonicRenyiStieltjesDocument : IScribeDocumentDefinition
                 H("The logarithmic density"), StatementSource.FromAuthor(Disp(WeightDefinition())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The real density combines a signed sine factor with a power of 1−x² and a power Poisson denominator. Its positivity and integrability are asserted only for the order and interval ranges specified below."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("power-poisson-rescale"), DeclarationHandle.Create(Module + ".power_poisson_rescale"),
+                H("Rescaling the Poisson quadratic"), StatementSource.FromAuthor(Disp(PowerPoissonRescale())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For nonzero b, the homogeneous power denominator is b squared times the Poisson quadratic at a divided by b."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("weight-denominator-positive"), DeclarationHandle.Create(Module + ".weight_denominator_pos"),
                 H("Strict positivity of the power denominator"), StatementSource.FromAuthor(Disp(WeightDenominatorPositive())),

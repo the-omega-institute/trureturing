@@ -40,6 +40,12 @@ private def poissonAngle (α p : ℝ) : ℝ :=
 private def weightPrimitive (α x : ℝ) : ℝ :=
   poissonAngle α (((1 - x) / (1 + x)) ^ α) / (Real.pi * (α - 1))
 
+lemma power_poisson_rescale (a b α : ℝ) (hb : b ≠ 0) :
+    a ^ 2 + b ^ 2 - 2 * (a * b) * Real.cos (Real.pi * α) =
+      b ^ 2 * (1 - 2 * (a / b) * Real.cos (Real.pi * α) + (a / b) ^ 2) := by
+  field_simp
+  <;> ring
+
 lemma weight_denominator_pos {α x : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hx0 : 0 ≤ x) (hx1 : x < 1) :
     0 < (1 + x) ^ (2 * α) + (1 - x) ^ (2 * α) -
@@ -54,9 +60,8 @@ lemma weight_denominator_pos {α x : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
   let b := (1 - x) ^ α
   have hb : 0 < b := Real.rpow_pos_of_pos hm _
   have heq : a ^ 2 + b ^ 2 - 2 * (a * b) * Real.cos (Real.pi * α) =
-      b ^ 2 * (1 - 2 * (a / b) * Real.cos (Real.pi * α) + (a / b) ^ 2) := by
-    field_simp
-    ring
+      b ^ 2 * (1 - 2 * (a / b) * Real.cos (Real.pi * α) + (a / b) ^ 2) :=
+    power_poisson_rescale a b α hb.ne'
   change 0 < a ^ 2 + b ^ 2 - 2 * (a * b) * Real.cos (Real.pi * α)
   rw [heq]
   exact mul_pos (sq_pos_of_pos hb)
