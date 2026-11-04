@@ -40,7 +40,7 @@ internal sealed class ThreeWayPositiveKernelDocument : IScribeDocumentDefinition
             Add(Multiply(D(3),Q(x)),Multiply(D(3),Q(y))))));
         var existence=Call("Nonempty",Call("HilbertRepresentation",u,q));
         var iff=Seq(Paren(balance),Sp,Iff,Sp,existence);
-        var converse=All("R",Rep(),balance);
+        var converse=Seq(Call("Nonempty",Rep()),Sp,Rightarrow,Sp,Paren(balance));
         var eq=All("x",a,Equal(Call("e",Call("label",V("R"),x)),Call("label",V("S"),x)));
         var unique=All("R",Rep(),All("S",Rep(),Seq(Exists,Bang,Sp,V("e"),Sp,Colon,Sp,
             Call("LinearIsometryEquiv",Complex,Call("H",V("R")),Call("H",V("S"))),Comma,Sp,eq)));
