@@ -94,7 +94,7 @@ private theorem phase_character (k : ZMod 3) :
   change (Real.Angle.toCircle (AddCircle.equivAddCircle (1 : ℝ) (2 * Real.pi) _ _
     (ZMod.toAddCircle k)) : ℂ) = _
   rw [ZMod.toAddCircle_apply, AddCircle.equivAddCircle_apply_mk]
-  simp only [inv_one, one_mul]
+  simp (config := { congrConsts := false }) only [inv_one, one_mul]
   change (Real.Angle.toCircle (((k.val : ℝ) / 3 * (2 * Real.pi) : ℝ) : Real.Angle) : ℂ) = _
   rw [Real.Angle.toCircle_coe, ZMod.stdAddChar_apply, ZMod.toCircle_eq_circleExp]
   congr 2
