@@ -7,6 +7,7 @@
    digest: Stopped tables collect arbitrary first-zero classes with terminal mass. -/
 
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
+import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PreselectedResidualBound
 
 /-! Weighted rewards on the original full Boolean carrier and complete catalogs. -/
 
@@ -345,4 +346,137 @@ theorem arbitrary_input_lower_bound {L : ℕ} (hL : 3 ≤ L)
     linarith
   exact max_le (max_le hd h2) hm
 
+
+open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PreselectedResidualBound
+
+/-- The source's clamped allocation of pair mass to the first chain word. -/
+def balancedSplit (a b S : ℝ) : ℝ := min S (max 0 ((b + S - a) / 2))
+
+private theorem balanced_split_spec (a b S : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
+    (hS : 0 ≤ S) :
+    0 ≤ balancedSplit a b S ∧ balancedSplit a b S ≤ S ∧
+    min (a + balancedSplit a b S) (b + (S - balancedSplit a b S)) =
+      min ((a+b+S)/2) (S + min a b) := by
+  unfold balancedSplit
+  constructor
+  · exact le_min hS (le_max_left _ _)
+  constructor
+  · exact min_le_left _ _
+  · rcases le_total 0 ((b+S-a)/2) with h | h
+    · rw [max_eq_right h]
+      rcases le_total S ((b+S-a)/2) with k | k
+      · rw [min_eq_left k]
+        have hab : a+S ≤ b := by linarith
+        rw [min_eq_left (by linarith : a+S ≤ b+(S-S)),
+          min_eq_left (by linarith : a ≤ b), min_eq_right (by linarith : S+a ≤ (a+b+S)/2)]
+      · rw [min_eq_right k]
+        have heq : a+(b+S-a)/2 = b+(S-(b+S-a)/2) := by ring
+        rw [min_eq_left heq.le]
+        apply min_eq_left_iff.mpr
+        rcases le_total a b with hab | hab
+        · rw [min_eq_left hab]; linarith
+        · rw [min_eq_right hab]; linarith
+    · rw [max_eq_left h, min_eq_right hS]
+      rw [add_zero, sub_zero, min_eq_right (by linarith : b+S ≤ a),
+        min_eq_right (by linarith : b ≤ a), min_eq_right (by linarith : S+b ≤ (a+b+S)/2)]
+      ring
+
+private theorem chain_firstZero {L : ℕ} (i j : Fin L) :
+    FirstZero (chainWord L i.val) j ↔ j = i := by
+  constructor
+  · intro h
+    have hji : i.val ≤ j.val := by simpa [chainWord] using h.1
+    have hij : j.val ≤ i.val := by
+      by_contra hh
+      have := h.2 i (show i < j from by omega)
+      simp [chainWord] at this
+    exact Fin.ext (by omega)
+  · rintro rfl
+    constructor
+    · simp [chainWord]
+    · intro k hk
+      simpa [chainWord] using hk
+
+private theorem chain_injective (L : ℕ) :
+    Function.Injective (fun i : Fin L => chainWord L i.val) := by
+  intro i j h
+  apply (chain_firstZero j i).mp
+  rw [← h]
+  exact (chain_firstZero i i).mpr rfl
+
+private theorem chain_not_terminal {L : ℕ} (i : Fin L) :
+    chainWord L i.val ≠ (fun _ => true) := by
+  intro h
+  have := congrFun h i
+  simp [chainWord] at this
+
+/-- The actual A-free FullScore of 206.7; every unspecified cube row is zero. -/
+def balancedChain {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
+    (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) : FullScore L where
+  A := fun _ => 0
+  C := fun b => ∑ i, point (chainWord L i.val) (g i) b
+  P := fun b => point (chainWord L 0) (balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S) b +
+    point (chainWord L 1) (S-balancedSplit (g ⟨0,by omega⟩) (g ⟨1,by omega⟩) S) b
+  T := t
+  nonnegA := by simp
+  nonnegC := by intro b; apply Finset.sum_nonneg; intro i _; unfold point; split <;> simp [hg]
+  nonnegP := by
+    intro b
+    have h := balanced_split_spec _ _ S (hg ⟨0,by omega⟩) (hg ⟨1,by omega⟩) hS
+    apply add_nonneg <;> unfold point <;> split
+    · exact h.1
+    · rfl
+    · exact sub_nonneg.mpr h.2.1
+    · rfl
+  nonnegT := ht
+  terminalA := rfl
+  terminalC := by
+    apply Finset.sum_eq_zero
+    intro i _
+    exact if_neg (Ne.symm (chain_not_terminal i))
+  terminalP := by
+    have h0 := chain_not_terminal (⟨0,by omega⟩ : Fin L)
+    have h1 := chain_not_terminal (⟨1,by omega⟩ : Fin L)
+    simp only [point, if_neg (Ne.symm h0), if_neg (Ne.symm h1), add_zero]
+
+private theorem sum_point {L : ℕ} (a : Word L) (w : ℝ) (f : Word L → ℝ) :
+    (∑ b, point a w b * f b) = w * f a := by
+  classical
+  simp [point]
+
+private theorem chain_gamma {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
+    (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) (j : Fin L) :
+    gamma (balancedChain hL g S t hg hS ht) j = g j := by
+  classical
+  unfold gamma
+  change (∑ b, if FirstZero b j then ∑ i, point (chainWord L i.val) (g i) b else 0) = _
+  simp_rw [Finset.ite_sum, Finset.sum_const_zero]
+  rw [Finset.sum_comm]
+  have hp (i : Fin L) :
+      (∑ b, if FirstZero b j then point (chainWord L i.val) (g i) b else 0) =
+        if j = i then g i else 0 := by
+    have := sum_point (chainWord L i.val) (g i) (fun b => if FirstZero b j then 1 else 0)
+    simpa only [mul_ite,mul_one,mul_zero,chain_firstZero,ite_mul,one_mul,zero_mul] using this
+  simp_rw [hp]
+  simp
+
+private theorem chain_pair_total {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
+    (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) :
+    pairTotal (balancedChain hL g S t hg hS ht) = S := by
+  classical
+  simp [pairTotal,balancedChain,Finset.sum_add_distrib,point]
+
+private theorem chain_early_pair {L : ℕ} (hL : 3 ≤ L) (g : Fin L → ℝ) (S t : ℝ)
+    (hg : ∀ i, 0 ≤ g i) (hS : 0 ≤ S) (ht : 0 ≤ t) :
+    EarlyPair (balancedChain hL g S t hg hS ht) := by
+  classical
+  intro b i hi hlate
+  have off (k : Fin L) (hk : k.val < 2) : b ≠ chainWord L k.val := by
+    intro hb
+    rw [hb,chain_firstZero] at hi
+    subst i
+    omega
+  simp [balancedChain,point,off ⟨0,by omega⟩ (by simp),off ⟨1,by omega⟩ (by simp)]
+
 end D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.HighTerminalChain
+
