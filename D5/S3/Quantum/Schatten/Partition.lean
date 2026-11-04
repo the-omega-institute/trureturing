@@ -74,6 +74,7 @@ private lemma rootTrace_add_posDef {A B : Matrix d d ℂ}
     (by linarith [hq.1]) (by norm_num : (0 : ℝ) < 1 / 2)] at h
   linarith
 
+set_option backward.isDefEq.respectTransparency false in
 private lemma rootTrace_tendsto {α : Type*} {l : Filter α}
     {A Z : Matrix d d ℂ} {As Zs : α → Matrix d d ℂ}
     (hA : A.PosSemidef) (hAs : ∀ᶠ i in l, (As i).PosSemidef)
