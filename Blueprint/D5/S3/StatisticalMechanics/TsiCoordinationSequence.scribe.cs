@@ -162,17 +162,17 @@ internal sealed class TsiCoordinationSequenceDocument : IScribeDocumentDefinitio
             Add(Multiply(D(1, 3), new Formula.Power(X("n"), D(2))), constant));
 
     private static Formula IntervalDistanceFormula() => All("c", Integers(), All("i", Integers(),
-        Equal(DeltaAt(X("c"), X("i")),
+        Equal(GapFormula(X("c"), X("i")),
             Add(At(Qualified("Int", "toNat"), Subtract(At(Qualified("min"), D(0), X("c")), X("i"))),
                 At(Qualified("Int", "toNat"), Subtract(X("i"), At(Qualified("max"), D(0), X("c"))))))));
 
-    private static Formula RadiusFormula() => IntegerTripleBinders(Equal(RadiusAt(),
+    private static Formula RadiusFormula() => IntegerTripleBinders(Equal(RadiusFormulaExpression(),
         Add(Add(At(Qualified("Int", "natAbs"), X("k")),
-            DeltaAt(IntegerDivide(Add(X("k"), D(1)), D(2)), X("i"))),
-            DeltaAt(IntegerDivide(X("k"), D(2)), X("j")))));
+            GapFormula(IntegerDivide(Add(X("k"), D(1)), D(2)), X("i"))),
+            GapFormula(IntegerDivide(X("k"), D(2)), X("j")))));
 
     private static Formula MetricFormula() => IntegerTripleBinders(
-        Equal(Distance(Triple(X("i"), X("j"), X("k"))), RadiusAt()));
+        Equal(Distance(Triple(X("i"), X("j"), X("k"))), RadiusFormulaExpression()));
 
     private static Formula SumFormula() => All("n", Naturals(), Arrow(Less(D(0), X("n")),
         Equal(Add(LocalCall("shell", X("n")), Multiply(D(2), X("n"))),
@@ -182,8 +182,13 @@ internal sealed class TsiCoordinationSequenceDocument : IScribeDocumentDefinitio
 
     private static Formula IntegerTripleBinders(Formula body) =>
         All("i", Integers(), All("j", Integers(), All("k", Integers(), body)));
-    private static Formula DeltaAt(Formula c, Formula i) => At(DeltaLower, c, i);
-    private static Formula RadiusAt() => At(Rho, X("i"), X("j"), X("k"));
+    private static Formula GapFormula(Formula c, Formula i) =>
+        Add(At(Qualified("Int", "toNat"), Subtract(At(Qualified("min"), D(0), c), i)),
+            At(Qualified("Int", "toNat"), Subtract(i, At(Qualified("max"), D(0), c))));
+    private static Formula RadiusFormulaExpression() =>
+        Add(Add(At(Qualified("Int", "natAbs"), X("k")),
+                GapFormula(IntegerDivide(Add(X("k"), D(1)), D(2)), X("i"))),
+            GapFormula(IntegerDivide(X("k"), D(2)), X("j")));
     private static Formula Distance(Formula v) => At(Qualified("SimpleGraph", "dist"),
         Local("tsiGraph"), Typed(Triple(D(0), D(0), D(0)), Vertices()), v);
     private static Formula Coordinate(Formula v, int coordinate) => coordinate switch
