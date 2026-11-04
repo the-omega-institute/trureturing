@@ -13,7 +13,7 @@ import D5.S3.Constants.Moments.CountableHankelIntegerWitness
 /-!
 The spectrum is the complete actual positive-height zero family and keeps its
 analytic multiplicities. Only the failure of standard Mathlib RH is assumed
-for the negative witness. The all-degree sign criterion remains unproved.
+for the negative witness. The universal all-degree sign assertion remains unproved.
 -/
 
 set_option autoImplicit false
@@ -55,7 +55,8 @@ private theorem node_large_finite (r : ℝ) (hr : 0 < r) :
     exact (le_div_iff₀ hgp).mp h
   rw [inv_eq_one_div]
   apply (le_div_iff₀ hr).mpr
-  nlinarith
+  have hg2 : ‖actualData.gamma n‖ ≤ ‖actualData.gamma n‖ ^ 2 := by nlinarith
+  exact (mul_le_mul_of_nonneg_right hg2 hr.le).trans (by nlinarith [hm])
 
 private theorem rh_failure_nonreal (hRH : ¬ RiemannHypothesis) :
     ∃ n : PositiveZero, conj (node n) ≠ node n := by
